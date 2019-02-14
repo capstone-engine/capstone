@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "capstone_test.h"
 
 single_dict arches[] = {
@@ -11,35 +15,6 @@ single_dict arches[] = {
 	{"CS_ARCH_XCORE", CS_ARCH_XCORE},
 	{"CS_ARCH_M68K", CS_ARCH_M68K}
 };
-
-/*
-single_dict modes[] = {
-	{"CS_MODE_16", CS_MODE_16},
-	{"CS_MODE_32", CS_MODE_32},
-	{"CS_MODE_64", CS_MODE_64},
-	{"CS_MODE_MIPS32", CS_MODE_MIPS32},
-	{"0", CS_MODE_ARM},
-	{"CS_MODE_MIPS64", CS_MODE_MIPS64},
-	{"CS_MODE_ARM", CS_MODE_ARM},
-	{"CS_MODE_THUMB", CS_MODE_THUMB},
-	{"CS_MODE_ARM+CS_MODE_V8", CS_MODE_ARM+CS_MODE_V8},
-	{"CS_MODE_THUMB+CS_MODE_V8", CS_MODE_THUMB+CS_MODE_V8},
-	{"CS_MODE_THUMB+CS_MODE_MCLASS", CS_MODE_THUMB+CS_MODE_MCLASS},
-	{"CS_MODE_LITTLE_ENDIAN", CS_MODE_LITTLE_ENDIAN},
-	{"CS_MODE_BIG_ENDIAN", CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_64+CS_MODE_LITTLE_ENDIAN", CS_MODE_64+CS_MODE_LITTLE_ENDIAN},
-	{"CS_MODE_64+CS_MODE_BIG_ENDIAN", CS_MODE_64+CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_MIPS32+CS_MODE_MICRO", CS_MODE_MIPS32+CS_MODE_MICRO},
-	{"CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN+CS_MODE_MICRO", CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_BIG_ENDIAN+CS_MODE_V9", CS_MODE_BIG_ENDIAN + CS_MODE_V9},
-	{"CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN", CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN},
-	{"CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN", CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN},
-	{"CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN", CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_THUMB | CS_MODE_BIG_ENDIAN", CS_MODE_THUMB | CS_MODE_BIG_ENDIAN}
-};
-*/
 
 single_dict modes[] = {
 	{"CS_MODE_LITTLE_ENDIAN", CS_MODE_LITTLE_ENDIAN},
@@ -123,24 +98,9 @@ double_dict options[] = {
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 
-static int quadruple_compare(const char *src1, const char *src2, const char *des1, const char *des2, const char *opcode)
-{
-	if (strcmp(src1, des2) && strcmp(src2, des2) && strcmp(src1, des1) && strcmp(src1, des2)) {
-		fprintf(stderr,"[  ERROR   ] --- %s --- \"%s\" != \"%s\"", opcode, src2, des2);
-		if (strcmp(src1, src2))
-			fprintf(stderr, " (\"%s\" != \"%s\")", src1, des2);
-		else if (strcmp(des1, des2))
-			fprintf(stderr, " (\"%s\" != \"%s\")", src2, des1);
-		fprintf(stderr, "\n");
-		return 0;
-	}
-
-	return 1;
-}
-
 void test_single_MC(csh *handle, int mc_mode, char *line)
 {
-	char **list_part, **list_byte;//, **list_data;
+	char **list_part, **list_byte;
 	int size_part, size_byte, size_data, size_insn;
 	int i, count, count_noreg;
 	unsigned char *code;
@@ -162,9 +122,8 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	}
 
 	code = (unsigned char *)malloc(size_byte * sizeof(char));
-	for (i=0; i<size_byte; ++i) {
+	for (i = 0; i < size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-		//	printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
@@ -185,7 +144,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		_fail(__FILE__, __LINE__);
 	}
 
-	for (p=list_part[1]; *p; ++p) *p = tolower(*p);
+	for (p = list_part[1]; *p; ++p) *p = tolower(*p);
 	trim_str(list_part[1]);
 	strcpy(tmp_mc, list_part[1]);
 	replace_hex(tmp_mc);
@@ -196,6 +155,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		tmp[strlen(insn[0].mnemonic)] = ' ';
 		strcpy(tmp + strlen(insn[0].mnemonic) + 1, insn[0].op_str);
 	}
+
 	trim_str(tmp);
 	strcpy(origin, tmp);
 	replace_hex(tmp);
@@ -224,6 +184,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		}
 
 		cs_option(*handle, CS_OPT_SYNTAX, 0);
+
 	} else if (strcmp(tmp, tmp_mc)) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\" ( \"%s\" != \"%s\" )\n", list_part[0], origin, list_part[1], tmp, tmp_mc);
 		free_strs(list_part, size_part);
@@ -245,7 +206,7 @@ int get_value(single_dict d[], unsigned int size, const char *str)
 {
 	int i;
 
-	for (i=0; i<size; ++i)
+	for (i = 0; i < size; ++i)
 		if (!strcmp(d[i].str, str))
 			return d[i].value;
 	return -1;
@@ -255,7 +216,7 @@ int get_index(double_dict d[], unsigned int size, const char *s)
 {
 	int i;
 
-	for (i=0; i<size; ++i) {
+	for (i = 0; i < size; ++i) {
 		if (!strcmp(s, d[i].str))
 			return i;
 	}
@@ -337,13 +298,12 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	}
 
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
-	for (i=0; i<size_byte; ++i) {
+	for (i = 0; i < size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
-		// printf("Byte: 0x%.2x\n", (int)code[i]);
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
-	for (i=0; i < count; ++i) {
+	for (i = 0; i < count; ++i) {
 		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
 		if (strlen(insn[i].op_str) > 0) {
@@ -381,10 +341,10 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		_fail(__FILE__, __LINE__);
 	}
 
-	for (i=0; i<size_part_cs_result; ++i) {
+	for (i = 0; i < size_part_cs_result; ++i) {
 		trim_str(list_part_cs_result[i]);
 		trim_str(list_part_issue_result[i]);
-		// assert_string_equal(list_part_cs_result[i], list_part_issue_result[i]);
+
 		if (strcmp(list_part_cs_result[i], list_part_issue_result[i])) {
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\"\n", list_part[0], list_part_cs_result[i], list_part_issue_result[i]);
 			cs_free(insn, count);

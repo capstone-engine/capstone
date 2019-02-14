@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "factory.h"
 
 static const char *s_access[] = {
@@ -41,8 +45,6 @@ char *get_detail_m680x(csh *handle, cs_mode mode, cs_insn *insn)
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 
-	// detail can be NULL on "data" instruction if SKIPDATA option is
-	// turned ON
 	if (detail == NULL)
 		return result;
 

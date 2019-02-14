@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "factory.h"
 
 static void print_string_hex(char **result, const char *comment, unsigned char *str, size_t len)
@@ -192,7 +196,6 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 
-	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return result;
 
@@ -205,7 +208,6 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 	add_str(&result, " ; modrm: 0x%x", x86->modrm);
 	add_str(&result, " ; disp: 0x%" PRIx64 "", x86->disp);
 
-	// SIB is not available in 16-bit mode
 	if ((mode & CS_MODE_16) == 0) {
 		add_str(&result, " ; sib: 0x%x", x86->sib);
 		if (x86->sib_base != X86_REG_INVALID)
@@ -216,32 +218,26 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 			add_str(&result, " ; sib_scale: %d", x86->sib_scale);
 	}
 
-	// XOP code condition
 	if (x86->xop_cc != X86_XOP_CC_INVALID) {
 		add_str(&result, " ; xop_cc: %u", x86->xop_cc);
 	}
 
-	// SSE code condition
 	if (x86->sse_cc != X86_SSE_CC_INVALID) {
 		add_str(&result, " ; sse_cc: %u", x86->sse_cc);
 	}
 
-	// AVX code condition
 	if (x86->avx_cc != X86_AVX_CC_INVALID) {
 		add_str(&result, " ; avx_cc: %u", x86->avx_cc);
 	}
 
-	// AVX Suppress All Exception
 	if (x86->avx_sae) {
 		add_str(&result, " ; avx_sae: %u", x86->avx_sae);
 	}
 
-	// AVX Rounding Mode
 	if (x86->avx_rm != X86_AVX_RM_INVALID) {
 		add_str(&result, " ; avx_rm: %u", x86->avx_rm);
 	}
 
-	// Print out all immediate operands
 	count = cs_op_count(*ud, ins, X86_OP_IMM);
 	if (count > 0) {
 		add_str(&result, " ; imm_count: %u", count);
@@ -254,7 +250,6 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 	if (x86->op_count)
 		add_str(&result, " ; op_count: %u", x86->op_count);
 
-	// Print out all operands
 	for (i = 0; i < x86->op_count; i++) {
 		cs_x86_op *op = &(x86->operands[i]);
 
@@ -282,11 +277,9 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 				break;
 		}
 
-		// AVX broadcast type
 		if (op->avx_bcast != X86_AVX_BCAST_INVALID)
 			add_str(&result, " ; operands[%u].avx_bcast: %u", i, op->avx_bcast);
 
-		// AVX zero opmask {z}
 		if (op->avx_zero_opmask != false)
 			add_str(&result, " ; operands[%u].avx_zero_opmask: TRUE", i);
 
@@ -307,7 +300,6 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 		}
 	}
 
-	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(*ud, ins, regs_read, &regs_read_count, regs_write, &regs_write_count)) {
 		if (regs_read_count) {
 			add_str(&result, " ; Registers read:");

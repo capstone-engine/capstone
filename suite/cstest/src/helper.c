@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "helper.h"
 
 char **split(char *str, char *delim, int *size)
@@ -19,14 +23,13 @@ char **split(char *str, char *delim, int *size)
 		cnt ++;
 	}
 
-	if ( strlen(src) > 0 ) {
+	if (strlen(src) > 0) {
 		result = (char **)realloc(result, sizeof(char *) * (cnt + 1));
 		result[cnt] = strdup(src);
 		cnt ++;
 	}
 
 	*size = cnt;
-
 	return result;
 }
 
@@ -35,15 +38,16 @@ void print_strs(char **list_str, int size)
 	int i;
 
 	printf("[+] Debug %d strings:\n", size);
-	for (i=0; i<size; ++i)
+	for (i = 0; i < size; ++i)
 		printf("String %d'th: %s\n", i+1, list_str[i]);
 }
 
 void free_strs(char **list_str, int size)
 {
 	int i;
-	for (i=0; i<size; ++i)
+	for (i = 0; i < size; ++i)
 		free(list_str[i]);
+
 	free(list_str);
 }
 
@@ -79,7 +83,6 @@ char *readfile(const char *filename)
 	result[size] = '\0';
 
 	fclose(fp);
-
 	return result;
 }
 
@@ -98,7 +101,6 @@ void add_str(char **src, const char *format, ...)
 	len2 = strlen(tmp);
 
 	*src = (char *)realloc(*src, sizeof(char) * (len1 + len2 + 10));
-
 	memcpy(*src + len1, tmp, len2 + 1);
 	free(tmp);
 }
@@ -128,7 +130,6 @@ void replace_hex(char *src)
 				value = value*0x10 + (*found - 'a' + 10);
 			else
 				value = value*0x10 + (*found - '0');
-				//	printf("====> %d -- %llu\n", *found, value);
 			found++;
 		}
 
@@ -231,7 +232,6 @@ void listdir(const char *name, char ***files, int *num_files)
 			if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
 				continue;
 			snprintf(path, sizeof(path), "%s/%s", name, entry->d_name);
-			//			printf("[%s]\n", entry->d_name);
 			listdir(path, files, num_files);
 		} else {
 			cnt = *num_files;
@@ -257,7 +257,7 @@ void trim_str(char *str)
 	while (start < strlen(str) && isspace(str[start])) start++;
 	while (end >= 0 && isspace(str[end])) end--;
 
-	for (i=start; i<=end; ++i)
+	for (i = start; i <= end; ++i)
 		tmp[j++] = str[i];
 
 	tmp[j] = '\0';

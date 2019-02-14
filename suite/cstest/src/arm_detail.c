@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "factory.h" 
 
 char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
@@ -86,10 +90,8 @@ char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
 
 		if (op->shift.type != ARM_SFT_INVALID && op->shift.value) {
 			if (op->shift.type < ARM_SFT_ASR_REG)
-				// shift with constant value
 				add_str(&result, " ; Shift: %u = %u", op->shift.type, op->shift.value);
 			else
-				// shift with register
 				add_str(&result, " ; Shift: %u = %s", op->shift.type, cs_reg_name(*handle, op->shift.value));
 		}
 
@@ -128,7 +130,6 @@ char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
 	if (arm->mem_barrier)
 		add_str(&result, " ; Memory-barrier: %u", arm->mem_barrier);
 
-	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(*handle, ins, regs_read, &regs_read_count, regs_write, &regs_write_count)) {
 		if (regs_read_count) {
 			add_str(&result, " ; Registers read:");
