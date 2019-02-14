@@ -327,41 +327,29 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		}
 	}
 
-	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);
+	//	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);
 	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
-	if (size_part_cs_result != size_part_issue_result) {
-		fprintf(stderr, "[  ERROR   ] --- %s --- Number of details( Capstone: %d --- Issue: %d ) doesn't match\n", list_part[0], size_part_cs_result, size_part_issue_result);
-		cs_free(insn, count);
-		free_strs(list_part, size_part);
-		free_strs(list_byte, size_byte);
-		free(cs_result);
-		free_strs(list_part_cs_result, size_part_cs_result);
-		free_strs(list_part_issue_result, size_part_issue_result);
-		_fail(__FILE__, __LINE__);
-	}
-
-	for (i = 0; i < size_part_cs_result; ++i) {
-		trim_str(list_part_cs_result[i]);
+	for (i = 0; i < size_part_issue_result; ++i) {
 		trim_str(list_part_issue_result[i]);
 
-		if (strcmp(list_part_cs_result[i], list_part_issue_result[i])) {
-			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\"\n", list_part[0], list_part_cs_result[i], list_part_issue_result[i]);
+		if ((strstr(cs_result, list_part_issue_result[i])) == NULL) {
+			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" not in \"%s\"\n", list_part[0], list_part_issue_result[i], cs_result);
 			cs_free(insn, count);
 			free_strs(list_part, size_part);
 			free_strs(list_byte, size_byte);
 			free(cs_result);
-			free_strs(list_part_cs_result, size_part_cs_result);
+			//	free_strs(list_part_cs_result, size_part_cs_result);
 			free_strs(list_part_issue_result, size_part_issue_result);
 
 			_fail(__FILE__, __LINE__);
 		}
 	}
-
+	
 	cs_free(insn, count);
 	free_strs(list_part, size_part);
 	free_strs(list_byte, size_byte);
 	free(cs_result);
-	free_strs(list_part_cs_result, size_part_cs_result);
+	//	free_strs(list_part_cs_result, size_part_cs_result);
 	free_strs(list_part_issue_result, size_part_issue_result);
 }
