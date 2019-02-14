@@ -18,6 +18,7 @@ script:
         - cmake .. && make -j2 && sudo make install
         - cd ../.. && make
         - python cstest_report.py -t build/cstest -d ../MC
+        - python cstest_report.py -t build/cstest -f issues.cs
 compiler:
         - clang
         - gcc
