@@ -5,7 +5,7 @@ before_install:
 before_script:
         - wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         - unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
-        - git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/
+        - git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
 script:
         - ./make.sh
         - make check
