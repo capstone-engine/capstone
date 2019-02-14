@@ -54,17 +54,18 @@
 #define BPF_JUMP_JSLE	0xd0	///< eBPF only: signed '<='
 
 #define BPF_SRC(code) ((code) & 0x80)
-
 ///< Source operand
 #define BPF_SRC_K	0x00
 #define BPF_SRC_X	0x80
 
+#define BPF_SIZE(code) ((code) & 0x18)
 ///< Size modifier
 #define BPF_SIZE_W   0x00	///< word
 #define BPF_SIZE_H   0x08	///< half word
 #define BPF_SIZE_B   0x10	///< byte
 #define BPF_SIZE_DW  0x18	///< eBPF only: double word
 
+#define BPF_MODE(code) ((code) & 0xe0)
 ///< Mode modifier
 #define BPF_MODE_IMM	0x00	///< used for 32-bit mov in cBPF and 64-bit in eBPF
 #define BPF_MODE_ABS	0x20

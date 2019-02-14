@@ -10,6 +10,7 @@
 
 #include "BPFConstants.h"
 #include "BPFDisassembler.h"
+#include "BPFMapping.h"
 
 static uint16_t read_u16(cs_struct *ud, const uint8_t *code)
 {
@@ -75,8 +76,6 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 	return bpf;
 }
 
-#define EBPF_MODE(ud) ((ud)->mode & CS_MODE_BPF_EXTENDED)
-
 static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 		uint64_t address)
 {
@@ -92,37 +91,38 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 	opcode = bpf->op;
 	MI->address = address;
 	MI->OpcodePub = MI->Opcode = opcode;
+
+#define PUSH_GROUP(grp) do { \
+		detail->groups[detail->groups_count] = grp; \
+		detail->groups_count++; \
+	} while(0)
+
 	switch (BPF_CLASS(bpf->op)) {
 		default:	// will never happen
 			break;
 		case BPF_CLASS_LD:
 			if (detail) {
-				detail->groups[detail->groups_count] = BPF_GRP_LOAD;
-				detail->groups_count++;
+				PUSH_GROUP(BPF_GRP_LOAD);
 			}
 			break;
 		case BPF_CLASS_LDX:
 			if (detail) {
-				detail->groups[detail->groups_count] = BPF_GRP_LOAD;
-				detail->groups_count++;
+				PUSH_GROUP(BPF_GRP_LOAD);
 			}
 			break;
 		case BPF_CLASS_ST:
 			if (detail) {
-				detail->groups[detail->groups_count] = BPF_GRP_STORE;
-				detail->groups_count++;
+				PUSH_GROUP(BPF_GRP_STORE);
 			}
 			break;
 		case BPF_CLASS_STX:
 			if (detail) {
-				detail->groups[detail->groups_count] = BPF_GRP_STORE;
-				detail->groups_count++;
+				PUSH_GROUP(BPF_GRP_STORE);
 			}
 			break;
 		case BPF_CLASS_ALU:
 			if (detail) {
-				detail->groups[detail->groups_count] = BPF_GRP_ALU;
-				detail->groups_count++;
+				PUSH_GROUP(BPF_GRP_ALU);
 			}
 			break;
 		case BPF_CLASS_JMP:
@@ -136,8 +136,7 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 					else if (opcode == 0x95)
 						grp = BPF_GRP_RETURN;
 				}
-				detail->groups[detail->groups_count] = grp;
-				detail->groups_count++;
+				PUSH_GROUP(grp);
 			}
 			break;
 		case BPF_CLASS_RET:
@@ -145,24 +144,20 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 			if (EBPF_MODE(ud))
 				return false;
 			if (detail) {
-				detail->groups[detail->groups_count] = BPF_GRP_RETURN;
-				detail->groups_count++;
+				PUSH_GROUP(BPF_GRP_RETURN);
 			}
 		// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
 		case BPF_CLASS_MISC:
 		/* case BPF_CLASS_ALU64: */
 			if (detail) {
-				bpf_insn_group grp;
-
 				if (EBPF_MODE(ud))
-					grp = BPF_GRP_ALU;
+					PUSH_GROUP(BPF_GRP_ALU); // ALU64 in eBPF
 				else
-					grp = BPF_GRP_MISC;
-				detail->groups[detail->groups_count] = grp;
-				detail->groups_count++;
+					PUSH_GROUP(BPF_GRP_MISC);
 			}
 	}
-	return false;
+#undef PUSH_GROUP
+	return true;
 }
 
 bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,

@@ -481,10 +481,15 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_BPF_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_BPF)
     set(SOURCES_BPF
         arch/BPF/BPFDisassembler.c
+        arch/BPF/BPFInstPrinter.c
+        arch/BPF/BPFMapping.c
         arch/BPF/BPFModule.c
 	)
     set(HEADERS_BPF
+        arch/BPF/BPFConstants.h
         arch/BPF/BPFDisassembler.h
+        arch/BPF/BPFInstPrinter.h
+        arch/BPF/BPFMapping.h
         arch/BPF/BPFModule.h
     )
     set(TEST_SOURCES ${TEST_SOURCES} test_bpf.c)

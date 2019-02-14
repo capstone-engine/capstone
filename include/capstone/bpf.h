@@ -26,6 +26,12 @@ typedef enum bpf_op_type {
 /// BPF registers
 typedef enum bpf_reg {
 	BPF_REG_INVALID = 0,
+
+	///< cBPF
+	BPF_REG_A,
+	BPF_REG_X,
+
+	///< eBPF
 	BPF_REG_R0,
 	BPF_REG_R1,
 	BPF_REG_R2,
@@ -53,7 +59,7 @@ typedef struct cs_bpf_op {
 	bpf_op_type type;
 	union {
 		uint8_t reg;	///< register value for REG operand
-		uint32_t imm;	///< immediate value IMM operand
+		uint64_t imm;	///< immediate value IMM operand
 		bpf_op_mem mem;	///< base/index/scale/disp value for MEM operand
 	};
 } cs_bpf_op;
@@ -66,7 +72,95 @@ typedef struct cs_bpf {
 
 /// BPF instruction
 typedef enum bpf_insn {
-	BPF_INSN_ENDING,
+	BPF_INS_INVALID = 0,
+
+	///< ALU
+	BPF_INS_ADD,
+	BPF_INS_SUB,
+	BPF_INS_MUL,
+	BPF_INS_DIV,
+	BPF_INS_OR,
+	BPF_INS_AND,
+	BPF_INS_LSH,
+	BPF_INS_RSH,
+	BPF_INS_NEG,
+	BPF_INS_MOD,
+	BPF_INS_XOR,
+	BPF_INS_MOV,	///< eBPF only
+	BPF_INS_ARSH,	///< eBPF only
+
+	///< ALU64, eBPF only
+	BPF_INS_ADD64,
+	BPF_INS_SUB64,
+	BPF_INS_MUL64,
+	BPF_INS_DIV64,
+	BPF_INS_OR64,
+	BPF_INS_AND64,
+	BPF_INS_LSH64,
+	BPF_INS_RSH64,
+	BPF_INS_NEG64,
+	BPF_INS_MOD64,
+	BPF_INS_XOR64,
+	BPF_INS_MOV64,
+	BPF_INS_ARSH64,
+
+	///< Byteswap, eBPF only
+	BPF_INS_LE16,
+	BPF_INS_LE32,
+	BPF_INS_LE64,
+	BPF_INS_BE16,
+	BPF_INS_BE32,
+	BPF_INS_BE64,
+
+	///< Load
+	BPF_INS_LDDW,		///< eBPF only, load 64-bit imm
+	BPF_INS_LDABSW,
+	BPF_INS_LDABSH,
+	BPF_INS_LDABSB,
+	BPF_INS_LDABSDW,	///< eBPF only
+	BPF_INS_LDINDW,
+	BPF_INS_LDINDH,
+	BPF_INS_LDINDB,
+	BPF_INS_LDINDDW,	///< eBPF only
+	BPF_INS_LDXW,
+	BPF_INS_LDXH,
+	BPF_INS_LDXB,
+	BPF_INS_LDXDW,		///< eBPF only
+
+	///< Store
+	BPF_INS_STW,
+	BPF_INS_STH,
+	BPF_INS_STB,
+	BPF_INS_STDW,	///< eBPF only
+	BPF_INS_STXW,
+	BPF_INS_STXH,
+	BPF_INS_STXB,
+	BPF_INS_STXDW,	///< eBPF only
+
+	///< Jump
+	BPF_INS_JA,
+	BPF_INS_JEQ,
+	BPF_INS_JGT,
+	BPF_INS_JGE,
+	BPF_INS_JSET,
+	BPF_INS_JNE,	///< eBPF only
+	BPF_INS_JSGT,	///< eBPF only
+	BPF_INS_JSGE,	///< eBPF only
+	BPF_INS_CALL,	///< eBPF only
+	BPF_INS_EXIT,	///< eBPF only
+	BPF_INS_JLT,	///< eBPF only
+	BPF_INS_JLE,	///< eBPF only
+	BPF_INS_JSLT,	///< eBPF only
+	BPF_INS_JSLE,	///< eBPF only
+
+	///< Return, cBPF only
+	BPF_INS_RET,
+
+	///< Misc, cBPF only
+	BPF_INS_TAX,
+	BPF_INS_TXA,
+
+	BPF_INS_ENDING,
 } bpf_insn;
 
 /// Group of BPF instructions
