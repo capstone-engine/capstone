@@ -11,9 +11,8 @@ script:
         - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so.* bindings/python/libcapstone.so; fi
         - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.*.dylib bindings/python/libcapstone.dylib; fi
         - if [[ "$NOPYTEST" != "true" ]]; then cd bindings/python && make check; fi
-        - cd suite/cstest
-        - make
-        - python cstest_report.py -t build/cstest -d ../MC
+        - pwd && cd suite/cstest && make
+        - python suite/cstest/cstest_report.py -t suite/cstest/build/cstest -d suite/MC
 compiler:
         - clang
         - gcc
