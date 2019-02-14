@@ -1,3 +1,3 @@
 cd cmocka && mkdir build && cd build
-cmake .. && make -j2 && sudo make install
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && make -j2 && sudo make install
 cd ../.. && make
