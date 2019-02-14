@@ -10,7 +10,9 @@ static void print_string_hex(char **result, const char *comment, unsigned char *
 
 	add_str(result, "%s", comment);
 	for (c = str; c < str + len; c++) {
-		add_str(result, "0x%02x ", *c & 0xff);
+		add_str(result, "0x%02x", *c & 0xff);
+		if (c < str + len - 1)
+			add_str(result, " ");
 	}
 
 }
