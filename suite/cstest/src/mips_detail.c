@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "factory.h"
 
 char *get_detail_mips(csh *handle, cs_mode mode, cs_insn *ins)

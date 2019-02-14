@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "factory.h"
 
 static const char *get_am_name(mos65xx_address_mode mode)
@@ -45,7 +49,6 @@ char *get_detail_mos65xx(csh *handle, cs_mode mode, cs_insn *ins)
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
 
-	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
 		return result;
 

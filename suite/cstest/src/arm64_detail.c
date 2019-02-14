@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "factory.h"
 
 char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
@@ -112,7 +116,6 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 	if (arm64->cc)
 		add_str(&result, " ; Code-condition: %u", arm64->cc);
 
-	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(*handle, ins, regs_read, &regs_read_count, regs_write, &regs_write_count)) {
 		if (regs_read_count) {
 			add_str(&result, " ; Registers read:");

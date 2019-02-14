@@ -1,3 +1,7 @@
+/* Capstone testing regression */
+/* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
+
+
 #include "helper.h"
 #include "capstone_test.h"
 #include <unistd.h>
@@ -25,7 +29,8 @@ static int setup_MC(void **state)
 	}
 
 	tmp_counter = 0;
-	while (tmp_counter < size_lines && list_lines[tmp_counter][0] != '#') tmp_counter++;
+	while (tmp_counter < size_lines && list_lines[tmp_counter][0] != '#')
+		tmp_counter++;
 
 	list_params = split(list_lines[tmp_counter] + 2, ", ", &size_params);
 	if (size_params != 3) {
@@ -33,10 +38,13 @@ static int setup_MC(void **state)
 		failed_setup = 1;
 		return -1;
 	}
+
 	arch = get_value(arches, NUMARCH, list_params[0]);
-	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) mc_mode = 2;
-	else mc_mode = 1;
-	//	mode = get_value(modes, NUMMODE, list_params[1]);
+	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) 
+		mc_mode = 2;
+	else 
+		mc_mode = 1;
+
 	mode = 0;
 	for (i = 0; i < NUMMODE; ++i) {
 		if (strstr(list_params[1], modes[i].str)) {
@@ -64,7 +72,6 @@ static int setup_MC(void **state)
 	}
 
 	handle = (csh *)malloc(sizeof(csh));
-
 	if(cs_open(arch, mode, handle) != CS_ERR_OK) {
 		fprintf(stderr, "[  ERROR   ] --- Cannot initialize capstone\n");
 		failed_setup = 1;
@@ -84,12 +91,13 @@ static int setup_MC(void **state)
 	*state = (void *)handle;
 	counter++;
 	if (e_flag == 0)
-		while (counter < size_lines && strncmp(list_lines[counter], "0x", 2)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "0x", 2))
+			counter++;
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// 0x", 5)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// 0x", 5))
+			counter++;
 
 	free_strs(list_params, size_params);
-	
 	return 0;
 }
 
@@ -121,28 +129,32 @@ static int setup_issue(void **state)
 	failed_setup = 0;
 
 	if (e_flag == 0)
-		while (counter < size_lines && strncmp(list_lines[counter], "!# ", 3)) counter++; // get issue line
+		while (counter < size_lines && strncmp(list_lines[counter], "!# ", 3))
+			counter++; // get issue line
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6))
+			counter++;
 
 	counter++;
-
 	if (e_flag == 0)
-		while (counter < size_lines && strncmp(list_lines[counter], "!#", 2)) counter++; // get arch line
+		while (counter < size_lines && strncmp(list_lines[counter], "!#", 2))
+			counter++; // get arch line
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6))
+			counter++;
 
 	if (e_flag == 0)
 		list_params = split(list_lines[counter] + 3, ", ", &size_params);
 	else
 		list_params = split(list_lines[counter] + 6, ", ", &size_params);
 
-	//	print_strs(list_params, size_params);
 	arch = get_value(arches, NUMARCH, list_params[0]);
 
-	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) mc_mode = 2;
-	else mc_mode = 1;
-	//	mode = get_value(modes, NUMMODE, list_params[1]);
+	if (!strcmp(list_params[0], "CS_ARCH_ARM64"))
+		mc_mode = 2;
+	else
+		mc_mode = 1;
+
 	mode = 0;
 	for (i = 0; i < NUMMODE; ++i) {
 		if (strstr(list_params[1], modes[i].str)) {
@@ -170,7 +182,6 @@ static int setup_issue(void **state)
 	}
 
 	handle = (csh *)calloc(1, sizeof(csh));
-
 	if(cs_open(arch, mode, handle) != CS_ERR_OK) {
 		fprintf(stderr, "[  ERROR   ] --- Cannot initialize capstone\n");
 		failed_setup = 1;
@@ -184,6 +195,7 @@ static int setup_issue(void **state)
 				failed_setup = 1;
 				return -1;
 			}
+
 			if (i == 0) {
 				result = set_function(arch);
 				if (result == -1) {
@@ -191,6 +203,7 @@ static int setup_issue(void **state)
 					failed_setup = 1;
 					return -1;
 				}
+
 				getDetail = 1;
 			}
 		}
@@ -200,12 +213,13 @@ static int setup_issue(void **state)
 	issue_mode = mode;
 
 	if (e_flag == 0)
-		while (counter < size_lines && strncmp(list_lines[counter], "0x", 2)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "0x", 2))
+			counter++;
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// 0x", 5)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// 0x", 5))
+			counter++;
 
 	free_strs(list_params, size_params);
-
 	return 0;
 }
 
@@ -215,16 +229,19 @@ static void test_issue(void **state)
 		test_single_issue((csh *)*state, issue_mode, list_lines[counter], getDetail);
 	else
 		test_single_issue((csh *)*state, issue_mode, list_lines[counter] + 3, getDetail);
-	//	counter ++;
+
 	return;
 }
 
 static int teardown_issue(void **state)
 {
 	if (e_flag == 0)
-		while (counter < size_lines && strncmp(list_lines[counter], "!# ", 3)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "!# ", 3))
+			counter++;
 	else
-		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6)) counter++;
+		while (counter < size_lines && strncmp(list_lines[counter], "// !# ", 6))
+			counter++;
+
 	cs_close(*state);
 	free(*state);
 	function = NULL;
@@ -248,17 +265,12 @@ static void test_file(const char *filename)
 	if (strstr(filename, "issue")) {
 		number_of_tests = 0;
 		list_lines = split(content, "\n", &size_lines);	
-		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * size_lines / 3);
 		tests = NULL;
 		for (i = 0; i < size_lines; ++i) {
 			if ((!strncmp(list_lines[i], "// !# issue", 11) && e_flag == 1) || 
 					(!strncmp(list_lines[i], "!# issue", 8) && e_flag == 0)) {
-				//	tmp = (char *)malloc(sizeof(char) * 100);
-				//	sscanf(list_lines[i], "!# issue %d\n", &issue_num);			
-				//	sprintf(tmp, "Issue #%d", issue_num);
 				tests = (struct CMUnitTest *)realloc(tests, sizeof(struct CMUnitTest) * (number_of_tests + 1));
 				tests[number_of_tests] = (struct CMUnitTest)cmocka_unit_test_setup_teardown(test_issue, setup_issue, teardown_issue);
-				//	tests[number_of_tests].name = tmp;
 				tests[number_of_tests].name = strdup(list_lines[i]);
 				number_of_tests ++;
 			}
@@ -270,7 +282,6 @@ static void test_file(const char *filename)
 		number_of_tests = 0;
 
 		tests = NULL;
-		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * (size_lines - 1));
 		for (i = 1; i < size_lines; ++i) {
 			if ((!strncmp(list_lines[i], "// 0x", 5) && e_flag == 1) || (!strncmp(list_lines[i], "0x", 2) && e_flag == 0)) {
 				tmp = (char *)malloc(sizeof(char) * 100);
@@ -281,6 +292,7 @@ static void test_file(const char *filename)
 				number_of_tests ++;
 			}
 		}
+
 		_cmocka_run_group_tests("Testing MC", tests, number_of_tests, NULL, NULL);
 	}
 
