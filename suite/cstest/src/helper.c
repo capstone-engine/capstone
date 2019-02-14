@@ -147,8 +147,8 @@ void replace_hex(char *src)
 
 void replace_negative(char *src, int mode)
 {
-	char *tmp, *result, *found, *origin;
-	int i, cnt;
+	char *tmp, *result, *found, *origin, *orig_found;
+	int i, cnt, valid;
 	char *value;
 	unsigned short int tmp_short;
 	unsigned int tmp_int;
@@ -158,15 +158,18 @@ void replace_negative(char *src, int mode)
 	result[0] = '\0';
 	tmp = strdup(src);
 	origin = tmp;
+	puts(tmp);	
 
 	while ((found = strstr(tmp, "-")) != NULL) {
-		*found = '\0';
+		orig_found = found;
 		found ++;
+		valid = 0;
 		
 		value = strdup("-");
 		cnt = 2;
 
 		while (*found != '\0' && isdigit(*found)) {
+			valid = 1;
 			value = (char *)realloc(value, cnt + 1);
 			value[cnt - 1] = *found;
 			value[cnt] = '\0';
@@ -174,20 +177,24 @@ void replace_negative(char *src, int mode)
 			found++;
 		}
 
-		if (mode == X86_16) {
-			sscanf(value, "%hu", &tmp_short);
-			add_str(&result, "%s%hu", tmp, tmp_short);
-		} else if (mode == X86_32) {
-			sscanf(value, "%u", &tmp_int);
-			add_str(&result, "%s%u", tmp, tmp_int);
-		} else if (mode == X86_64) {
-			sscanf(value, "%lu", &tmp_long);
-			add_str(&result, "%s%lu", tmp, tmp_long);
+		if (valid == 1) {
+			*orig_found = '\0';
+			if (mode == X86_16) {
+				sscanf(value, "%hu", &tmp_short);
+				add_str(&result, "%s%hu", tmp, tmp_short);
+			} else if (mode == X86_32) {
+				sscanf(value, "%u", &tmp_int);
+				add_str(&result, "%s%u", tmp, tmp_int);
+			} else if (mode == X86_64) {
+				sscanf(value, "%lu", &tmp_long);
+				add_str(&result, "%s%lu", tmp, tmp_long);
+			}
+			tmp = found;
 		}
-		tmp = found;
 		free(value);
 	}
-	
+
+	puts(tmp);	
 	add_str(&result, "%s", tmp);
 	if (strlen(result) >= MAXMEM) {
 		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_negative()\n");
