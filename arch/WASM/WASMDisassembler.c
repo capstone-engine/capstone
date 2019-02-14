@@ -574,6 +574,15 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 
 	tmp_len += var_len;
 	MI->wasm_data.brtable.length = length;
+	if (length >= UINT32_MAX/sizeof(cs_wasm_op) - 2) {
+		// integer overflow check before later malloc
+		// implicitly including length >= UINT32_MAX - tmp_len
+		return false;
+	}
+	if (code_len < tmp_len + length) {
+		// safety check that we have minimum enough data to read
+		return false;
+	}
 	MI->wasm_data.brtable.target = cs_mem_malloc(sizeof(int32_t) * length);
 	if (MI->wasm_data.brtable.target == NULL) {
 		return false;
