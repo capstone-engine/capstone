@@ -134,7 +134,7 @@ static int setup_issue(void **state)
 		while (counter < size_lines && strncmp(list_lines[counter], "// !#", 5)) counter++;
 
 	if (e_flag == 0)
-		list_params = split(list_lines[counter] + 2, ", ", &size_params);
+		list_params = split(list_lines[counter] + 3, ", ", &size_params);
 	else
 		list_params = split(list_lines[counter] + 5, ", ", &size_params);
 
