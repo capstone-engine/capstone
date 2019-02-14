@@ -122,7 +122,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	}
 
 	code = (unsigned char *)malloc(size_byte * sizeof(char));
-	for (i=0; i < size_byte; ++i) {
+	for (i = 0; i < size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
 	}
 
@@ -144,7 +144,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		_fail(__FILE__, __LINE__);
 	}
 
-	for (p=list_part[1]; *p; ++p) *p = tolower(*p);
+	for (p = list_part[1]; *p; ++p) *p = tolower(*p);
 	trim_str(list_part[1]);
 	strcpy(tmp_mc, list_part[1]);
 	replace_hex(tmp_mc);
@@ -206,7 +206,7 @@ int get_value(single_dict d[], unsigned int size, const char *str)
 {
 	int i;
 
-	for (i=0; i < size; ++i)
+	for (i = 0; i < size; ++i)
 		if (!strcmp(d[i].str, str))
 			return d[i].value;
 	return -1;
@@ -216,7 +216,7 @@ int get_index(double_dict d[], unsigned int size, const char *s)
 {
 	int i;
 
-	for (i=0; i < size; ++i) {
+	for (i = 0; i < size; ++i) {
 		if (!strcmp(s, d[i].str))
 			return i;
 	}
@@ -298,12 +298,12 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	}
 
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
-	for (i=0; i < size_byte; ++i) {
+	for (i = 0; i < size_byte; ++i) {
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
-	for (i=0; i < count; ++i) {
+	for (i = 0; i < count; ++i) {
 		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
 		if (strlen(insn[i].op_str) > 0) {
@@ -341,7 +341,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		_fail(__FILE__, __LINE__);
 	}
 
-	for (i=0; i < size_part_cs_result; ++i) {
+	for (i = 0; i < size_part_cs_result; ++i) {
 		trim_str(list_part_cs_result[i]);
 		trim_str(list_part_issue_result[i]);
 

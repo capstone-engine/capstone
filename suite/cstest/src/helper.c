@@ -38,14 +38,14 @@ void print_strs(char **list_str, int size)
 	int i;
 
 	printf("[+] Debug %d strings:\n", size);
-	for (i=0; i < size; ++i)
+	for (i = 0; i < size; ++i)
 		printf("String %d'th: %s\n", i+1, list_str[i]);
 }
 
 void free_strs(char **list_str, int size)
 {
 	int i;
-	for (i=0; i < size; ++i)
+	for (i = 0; i < size; ++i)
 		free(list_str[i]);
 
 	free(list_str);
@@ -257,7 +257,7 @@ void trim_str(char *str)
 	while (start < strlen(str) && isspace(str[start])) start++;
 	while (end >= 0 && isspace(str[end])) end--;
 
-	for (i=start; i<=end; ++i)
+	for (i = start; i <= end; ++i)
 		tmp[j++] = str[i];
 
 	tmp[j] = '\0';
