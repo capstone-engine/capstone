@@ -12,7 +12,7 @@ script:
         - sudo make install
         - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so.* bindings/python/libcapstone.so; fi
         - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.*.dylib bindings/python/libcapstone.dylib; fi
-        - if [[ "$NOPYTEST" != "true" ]]; then cd bindings/python && make check; fi
+        - if [[ "$NOPYTEST" != "true" ]]; then cd bindings/python && make check; cd ../..; fi
         - cd ../../suite/cstest
         - cd cmocka && mkdir build && cd build
         - cmake .. && make -j2 && sudo make install
