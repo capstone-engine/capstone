@@ -33,7 +33,7 @@
 
 #define NUMARCH 9
 #define NUMMODE 33
-#define NUMOPTION 40
+#define NUMOPTION 41
 #define MAXMEM 1024
 
 typedef struct {
