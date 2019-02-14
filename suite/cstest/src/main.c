@@ -38,7 +38,7 @@ static int setup_MC(void **state)
 	else mc_mode = 1;
 	//	mode = get_value(modes, NUMMODE, list_params[1]);
 	mode = 0;
-	for (i=0; i<NUMMODE; ++i) {
+	for (i = 0; i < NUMMODE; ++i) {
 		if (strstr(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
 			switch (modes[i].value) {
@@ -71,7 +71,7 @@ static int setup_MC(void **state)
 		return -1;
 	}
 	
-	for (i=0; i<NUMOPTION; ++i) {
+	for (i = 0; i < NUMOPTION; ++i) {
 		if (strstr(list_params[2], options[i].str)) {
 			if (cs_option(*handle, options[i].first_value, options[i].second_value) != CS_ERR_OK) {
 				fprintf(stderr, "[  ERROR   ] --- Option is not supported for this arch/mode\n");
@@ -127,7 +127,6 @@ static int setup_issue(void **state)
 
 	counter++;
 
-	
 	if (e_flag == 0)
 		while (counter < size_lines && strncmp(list_lines[counter], "!#", 2)) counter++; // get arch line
 	else
@@ -145,7 +144,7 @@ static int setup_issue(void **state)
 	else mc_mode = 1;
 	//	mode = get_value(modes, NUMMODE, list_params[1]);
 	mode = 0;
-	for (i=0; i<NUMMODE; ++i) {
+	for (i = 0; i < NUMMODE; ++i) {
 		if (strstr(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
 			switch (modes[i].value) {
@@ -178,7 +177,7 @@ static int setup_issue(void **state)
 		return -1;
 	}
 	
-	for (i=0; i<NUMOPTION; ++i) {
+	for (i = 0; i < NUMOPTION; ++i) {
 		if (strstr(list_params[2], options[i].str)) {
 			if (cs_option(*handle, options[i].first_value, options[i].second_value) != CS_ERR_OK) {
 				fprintf(stderr, "[  ERROR   ] --- Option is not supported for this arch/mode\n");
@@ -251,7 +250,7 @@ static void test_file(const char *filename)
 		list_lines = split(content, "\n", &size_lines);	
 		// tests = (struct CMUnitTest *)malloc(sizeof(struct CMUnitTest) * size_lines / 3);
 		tests = NULL;
-		for (i=0; i < size_lines; ++i) {
+		for (i = 0; i < size_lines; ++i) {
 			if ((!strncmp(list_lines[i], "// !# issue", 11) && e_flag == 1) || 
 					(!strncmp(list_lines[i], "!# issue", 8) && e_flag == 0)) {
 				//	tmp = (char *)malloc(sizeof(char) * 100);
@@ -299,7 +298,7 @@ static void test_folder(const char *folder)
 	files = NULL;
 	num_files = 0;
 	listdir(folder, &files, &num_files);
-	for (i=0; i<num_files; ++i) {
+	for (i = 0; i < num_files; ++i) {
 		if (strcmp("cs", get_filename_ext(files[i])))
 			continue;
 		test_file(files[i]);
