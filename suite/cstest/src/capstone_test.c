@@ -345,7 +345,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 			_fail(__FILE__, __LINE__);
 		}
 	}
-	
+
 	cs_free(insn, count);
 	free_strs(list_part, size_part);
 	free_strs(list_byte, size_byte);
