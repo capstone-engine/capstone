@@ -105,9 +105,10 @@ void add_str(char **src, const char *format, ...)
 
 void replace_hex(char *src)
 {
-	char *tmp, *result, *found, *origin;
-	int i;
+	char *tmp, *result, *found, *origin, *orig_found;
+	int i, valid;
 	unsigned long long int value;
+	char *tmp_tmp;
 
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
@@ -115,11 +116,14 @@ void replace_hex(char *src)
 	origin = tmp;
 
 	while ((found = strstr(tmp, "0x")) != NULL) {
-		*found = '\0';
+		orig_found = found;
 		found += 2;
 		value = 0;
+		valid = 0;
 
+		tmp_tmp = strndup(tmp, orig_found - tmp);
 		while (*found != '\0' && isxdigit(*found)) {
+			valid = 1;
 			if (*found >= 'a' && *found <='f')
 				value = value*0x10 + (*found - 'a' + 10);
 			else
@@ -128,8 +132,10 @@ void replace_hex(char *src)
 			found++;
 		}
 
-		add_str(&result, "%s%llu", tmp, value);
+		if (valid == 1) add_str(&result, "%s%llu", tmp_tmp, value);
+		else add_str(&result, "%s0x", tmp_tmp);
 		tmp = found;
+		free(tmp_tmp);
 	}
 
 	add_str(&result, "%s", tmp);
@@ -149,7 +155,7 @@ void replace_negative(char *src, int mode)
 {
 	char *tmp, *result, *found, *origin, *orig_found;
 	int i, cnt, valid;
-	char *value;
+	char *value, *tmp_tmp;
 	unsigned short int tmp_short;
 	unsigned int tmp_int;
 	unsigned long int tmp_long;
@@ -158,7 +164,6 @@ void replace_negative(char *src, int mode)
 	result[0] = '\0';
 	tmp = strdup(src);
 	origin = tmp;
-	puts(tmp);	
 
 	while ((found = strstr(tmp, "-")) != NULL) {
 		orig_found = found;
@@ -177,24 +182,27 @@ void replace_negative(char *src, int mode)
 			found++;
 		}
 
+		tmp_tmp = strndup(tmp, orig_found - tmp);
 		if (valid == 1) {
 			*orig_found = '\0';
 			if (mode == X86_16) {
 				sscanf(value, "%hu", &tmp_short);
-				add_str(&result, "%s%hu", tmp, tmp_short);
+				add_str(&result, "%s%hu", tmp_tmp, tmp_short);
 			} else if (mode == X86_32) {
 				sscanf(value, "%u", &tmp_int);
-				add_str(&result, "%s%u", tmp, tmp_int);
+				add_str(&result, "%s%u", tmp_tmp, tmp_int);
 			} else if (mode == X86_64) {
 				sscanf(value, "%lu", &tmp_long);
-				add_str(&result, "%s%lu", tmp, tmp_long);
+				add_str(&result, "%s%lu", tmp_tmp, tmp_long);
 			}
-			tmp = found;
 		}
+		else add_str(&result, "%s-", tmp_tmp);
+
+		tmp = found;
 		free(value);
+		free(tmp_tmp);
 	}
 
-	puts(tmp);	
 	add_str(&result, "%s", tmp);
 	if (strlen(result) >= MAXMEM) {
 		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_negative()\n");
