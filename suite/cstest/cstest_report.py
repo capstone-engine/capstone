@@ -19,8 +19,8 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 
 #	stdout
 	failed_tests = []
-#	print '---> stdout\n', stdout
-#	print '---> stderr\n', stderr
+	print '---> stdout\n', stdout
+	print '---> stderr\n', stderr
 	matches = re.finditer(r'\[\s+RUN\s+\]\s+(.*)\n\[\s+FAILED\s+\]', stdout)
 	for match in matches:
 		failed_tests.append(match.group(1))
