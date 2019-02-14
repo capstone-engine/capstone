@@ -1,6 +1,6 @@
 !# issue 0
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_UNSIGNED
-0x66,0x83,0xc0,0x80 == add ax, bx, 0xff80
+0x66,0x83,0xc0,0x80 == add ax, 0xff80
 
 !# issue 0
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_UNSIGNED
