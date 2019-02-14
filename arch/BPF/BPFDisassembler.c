@@ -47,7 +47,7 @@ static bpf_internal* fetch_cbpf(cs_struct *ud, const uint8_t *code,
 {
 	bpf_internal *bpf;
 
-	bpf	= alloc_bpf_internal(code_len);
+	bpf = alloc_bpf_internal(code_len);
 	if (bpf == NULL)
 		return NULL;
 
@@ -104,71 +104,71 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf,
 #endif
 
 	switch (BPF_CLASS(bpf->op)) {
-		default:	// will never happen
-			break;
-		case BPF_CLASS_LD:
-			if (detail) {
-				PUSH_GROUP(BPF_GRP_LOAD);
-			}
-			break;
-		case BPF_CLASS_LDX:
-			if (detail) {
-				PUSH_GROUP(BPF_GRP_LOAD);
-			}
-			break;
-		case BPF_CLASS_ST:
-			if (detail) {
-				PUSH_GROUP(BPF_GRP_STORE);
-			}
-			break;
-		case BPF_CLASS_STX:
-			if (detail) {
-				PUSH_GROUP(BPF_GRP_STORE);
-			}
-			break;
-		case BPF_CLASS_ALU:
-			if (detail) {
-				PUSH_GROUP(BPF_GRP_ALU);
-			}
-			break;
-		case BPF_CLASS_JMP:
-			if (detail) {
-				bpf_insn_group grp = BPF_GRP_JUMP;
+	default:	// will never happen
+		break;
+	case BPF_CLASS_LD:
+		if (detail) {
+			PUSH_GROUP(BPF_GRP_LOAD);
+		}
+		break;
+	case BPF_CLASS_LDX:
+		if (detail) {
+			PUSH_GROUP(BPF_GRP_LOAD);
+		}
+		break;
+	case BPF_CLASS_ST:
+		if (detail) {
+			PUSH_GROUP(BPF_GRP_STORE);
+		}
+		break;
+	case BPF_CLASS_STX:
+		if (detail) {
+			PUSH_GROUP(BPF_GRP_STORE);
+		}
+		break;
+	case BPF_CLASS_ALU:
+		if (detail) {
+			PUSH_GROUP(BPF_GRP_ALU);
+		}
+		break;
+	case BPF_CLASS_JMP:
+		if (detail) {
+			bpf_insn_group grp = BPF_GRP_JUMP;
 
-				if (EBPF_MODE(ud)) {
-					// TODO: use BPF_INSN_CALL / BPF_INSN_RETURN_R0 on MI to check
-					if (opcode == 0x85)
-						grp = BPF_GRP_CALL;
-					else if (opcode == 0x95)
-						grp = BPF_GRP_RETURN;
-				}
-				PUSH_GROUP(grp);
-			}
-			break;
-		case BPF_CLASS_RET:
-			// this class in eBPF is reserved.
-			if (EBPF_MODE(ud))
-				return false;
-			if (detail) {
-				PUSH_GROUP(BPF_GRP_RETURN);
-			}
-		// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
-		case BPF_CLASS_MISC:
-		/* case BPF_CLASS_ALU64: */
 			if (EBPF_MODE(ud)) {
+				// TODO: use BPF_INSN_CALL / BPF_INSN_RETURN_R0 on MI to check
+				if (opcode == 0x85)
+					grp = BPF_GRP_CALL;
+				else if (opcode == 0x95)
+					grp = BPF_GRP_RETURN;
 			}
-			else {
-				if (opcode & 0x80)
-					MCInst_setOpcode(MI, BPF_INS_TXA);
-				else
-					MCInst_setOpcode(MI, BPF_INS_TAX);
-			}
-			if (detail) {
-				if (EBPF_MODE(ud))
-					PUSH_GROUP(BPF_GRP_ALU); // ALU64 in eBPF
-				else
-					PUSH_GROUP(BPF_GRP_MISC);
-			}
+			PUSH_GROUP(grp);
+		}
+		break;
+	case BPF_CLASS_RET:
+		// this class in eBPF is reserved.
+		if (EBPF_MODE(ud))
+			return false;
+		if (detail) {
+			PUSH_GROUP(BPF_GRP_RETURN);
+		}
+	// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
+	case BPF_CLASS_MISC:
+	/* case BPF_CLASS_ALU64: */
+		if (EBPF_MODE(ud)) {
+		}
+		else {
+			if (opcode & 0x80)
+				MCInst_setOpcode(MI, BPF_INS_TXA);
+			else
+				MCInst_setOpcode(MI, BPF_INS_TAX);
+		}
+		if (detail) {
+			if (EBPF_MODE(ud))
+				PUSH_GROUP(BPF_GRP_ALU); // ALU64 in eBPF
+			else
+				PUSH_GROUP(BPF_GRP_MISC);
+		}
 	}
 #undef PUSH_GROUP
 	return true;

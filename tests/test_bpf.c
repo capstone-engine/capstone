@@ -53,11 +53,11 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 	for (i = 0; i < bpf->op_count; i++) {
 		cs_bpf_op *op = &(bpf->operands[i]);
 		switch (op->type) {
-			default:
-				break;
-			case BPF_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
-				break;
+		default:
+			break;
+		case BPF_OP_IMM:
+			printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+			break;
 		}
 	}
 }

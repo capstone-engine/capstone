@@ -22,23 +22,23 @@
 #define BPF_OP(code) ((code) & 0xf0)
 
 ///< Types of ALU instruction
-#define BPF_ALU_ADD		0x00
-#define BPF_ALU_SUB		0x10
-#define BPF_ALU_MUL		0x20
-#define BPF_ALU_DIV		0x30
-#define BPF_ALU_OR		0x40
-#define BPF_ALU_AND		0x50
-#define BPF_ALU_LSH		0x60
-#define BPF_ALU_RSH		0x70
-#define BPF_ALU_NEG		0x80
-#define BPF_ALU_MOD		0x90
-#define BPF_ALU_XOR		0xa0
-#define BPF_ALU_MOV		0xb0  ///< eBPF only: mov reg to reg
+#define BPF_ALU_ADD	0x00
+#define BPF_ALU_SUB	0x10
+#define BPF_ALU_MUL	0x20
+#define BPF_ALU_DIV	0x30
+#define BPF_ALU_OR	0x40
+#define BPF_ALU_AND	0x50
+#define BPF_ALU_LSH	0x60
+#define BPF_ALU_RSH	0x70
+#define BPF_ALU_NEG	0x80
+#define BPF_ALU_MOD	0x90
+#define BPF_ALU_XOR	0xa0
+#define BPF_ALU_MOV	0xb0  ///< eBPF only: mov reg to reg
 #define BPF_ALU_ARSH	0xc0  ///< eBPF only: sign extending shift right
-#define BPF_ALU_END		0xd0  ///< eBPF only: endianness conversion
+#define BPF_ALU_END	0xd0  ///< eBPF only: endianness conversion
 
 ///< Types of jmp instruction
-#define BPF_JUMP_JA		0x00	///< goto
+#define BPF_JUMP_JA	0x00	///< goto
 #define BPF_JUMP_JEQ	0x10	///< '=='
 #define BPF_JUMP_JGT	0x20	///< unsigned '>'
 #define BPF_JUMP_JGE	0x30	///< unsigned '>='
