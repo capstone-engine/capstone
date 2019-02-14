@@ -79,7 +79,9 @@ if __name__ == '__main__':
 		opts, args = getopt.getopt(sys.argv[1:], "ct:f:d:D")
 		for opt, arg in opts:
 			if opt == '-f':
-				get_report_file(toolpath, arg, details, cmt_out)
+				result = get_report_file(toolpath, arg, details, cmt_out)
+				if result == 0:
+					sys.exit(1)
 				Done = True
 			elif opt == '-d':
 				get_report_folder(toolpath, arg, details, cmt_out)
