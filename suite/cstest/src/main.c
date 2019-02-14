@@ -334,9 +334,6 @@ int main(int argc, char *argv[])
 
 	if (flag == 0) {
 		printf("Usage: %s [-e] [-f <file_name.cs>] [-d <directory>]\n", argv[0]);
-		char tmp[] = "bsoctr- cr2";
-		replace_negative(tmp, 1);
-		puts(tmp);
 		exit(-1);
 	}
 
