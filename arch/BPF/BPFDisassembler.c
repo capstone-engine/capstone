@@ -120,29 +120,108 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 
 static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
+	if (!EBPF_MODE(ud)) {
+		/*
+		 *  +-----+-----------+--------------------+
+		 *  | ldb |    [k]    |       [x+k]        |
+		 *  | ldh |    [k]    |       [x+k]        |
+		 *  +-----+----+------+------+-----+-------+
+		 */
+		if (BPF_SIZE(bpf->op) == BPF_SIZE_DW)
+			return false;
+		if (BPF_SIZE(bpf->op) == BPF_SIZE_B || BPF_SIZE(bpf->op) == BPF_SIZE_H) {
+			/* no ldx */
+			if (BPF_CLASS(bpf->op) != BPF_CLASS_LD)
+				return false;
+			/* can only be BPF_ABS and BPF_IND */
+			if (BPF_MODE(bpf->op) == BPF_MODE_ABS) {
+				MCOperand_CreateImm0(MI, bpf->k);
+				return true;
+			}
+			else if (BPF_MODE(bpf->op) == BPF_MODE_IND) {
+				MCOperand_CreateReg0(MI, BPF_REG_X);
+				MCOperand_CreateImm0(MI, bpf->k);
+				return true;
+			}
+			return false;
+		}
+		/*
+		 *  +-----+----+------+------+-----+-------+
+		 *  | ld  | #k | #len | M[k] | [k] | [x+k] |
+		 *  +-----+----+------+------+-----+-------+
+		 *  | ldx | #k | #len | M[k] | 4*([k]&0xf) |
+		 *  +-----+----+------+------+-------------+
+		 */
+		switch (BPF_MODE(bpf->op)) {
+		default:
+			break;
+		case BPF_MODE_IMM:
+			MCOperand_CreateImm0(MI, bpf->k);
+			return true;
+		case BPF_MODE_LEN:
+			MCOperand_CreateImm0(MI, 0); // XXX(david942j)
+			return true;
+		case BPF_MODE_MEM:
+			MCOperand_CreateImm0(MI, bpf->k);
+			return true;
+		}
+		if (BPF_CLASS(bpf->op) == BPF_CLASS_LD) {
+			if (BPF_MODE(bpf->op) == BPF_MODE_ABS) {
+				MCOperand_CreateImm0(MI, bpf->k);
+				return true;
+			}
+			else if (BPF_MODE(bpf->op) == BPF_MODE_IND) {
+				MCOperand_CreateReg0(MI, BPF_REG_X);
+				MCOperand_CreateImm0(MI, bpf->k);
+				return true;
+			}
+		}
+		else { /* LDX */
+			if (BPF_MODE(bpf->op) == BPF_MODE_MSH) {
+				MCOperand_CreateImm0(MI, bpf->k);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/* eBPF mode */
 	/*
-	 *  +--------+--------+-------------------+
-	 *  | 3 bits | 2 bits |      3 bits       |
-	 *  |  mode  |  size  | instruction class |
-	 *  +--------+--------+-------------------+
-	 *  (MSB)                             (LSB)
+	 * - IMM: lddw imm64
+	 * - ABS: ld{w,h,b,dw} [k]
+	 * - IND: ld{w,h,b,dw} [src+k]
+	 * - MEM: ldx{w,h,b,dw} dst, [src+off]
 	 */
-	if (!EBPF_MODE(ud) && BPF_SIZE(bpf->op) == BPF_SIZE_DW)
+	if (BPF_CLASS(bpf->op) == BPF_CLASS_LD) {
+		switch (BPF_MODE(bpf->op)) {
+		case BPF_MODE_IMM:
+			if (bpf->op != (BPF_CLASS_LD | BPF_SIZE_DW | BPF_MODE_IMM))
+				return false;
+			MCOperand_CreateImm0(MI, bpf->k);
+			return true;
+		case BPF_MODE_ABS:
+			MCOperand_CreateImm0(MI, bpf->k);
+			return true;
+		case BPF_MODE_IND:
+			CHECK_READABLE_AND_PUSH(ud, MI, bpf->src);
+			MCOperand_CreateImm0(MI, bpf->k);
+			return true;
+		}
 		return false;
 
-	return true;
+	}
+	/* LDX */
+	if (BPF_MODE(bpf->op) == BPF_MODE_MEM) {
+		CHECK_WRITABLE_AND_PUSH(ud, MI, bpf->dst);
+		CHECK_READABLE_AND_PUSH(ud, MI, bpf->src);
+		MCOperand_CreateImm0(MI, bpf->offset);
+		return true;
+	}
+	return false;
 }
 
 static bool decodeStore(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
-	/*
-	 *  +--------+--------+-------------------+
-	 *  | 3 bits | 2 bits |      3 bits       |
-	 *  |  mode  |  size  | instruction class |
-	 *  +--------+--------+-------------------+
-	 *  (MSB)                             (LSB)
-	 */
-
 	/* in cBPF, only BPF_ST* | BPF_MEM | BPF_W is valid
 	 * while in eBPF:
 	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
@@ -307,8 +386,6 @@ static bool decodeReturn(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
 	/* Here only handles the BPF_RET class in cBPF */
 	switch (BPF_RVAL(bpf->op)) {
-	default:
-		return false;
 	case BPF_SRC_K:
 		MCOperand_CreateImm0(MI, bpf->k);
 		return true;
@@ -319,6 +396,7 @@ static bool decodeReturn(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		MCOperand_CreateReg0(MI, BPF_REG_A);
 		return true;
 	}
+	return false;
 }
 
 static bool decodeMISC(cs_struct *ud, MCInst *MI, bpf_internal *bpf)

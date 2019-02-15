@@ -113,19 +113,13 @@ typedef enum bpf_insn {
 	BPF_INS_BE64,
 
 	///< Load
-	BPF_INS_LDDW,		///< eBPF only, load 64-bit imm
-	BPF_INS_LDABSW,
-	BPF_INS_LDABSH,
-	BPF_INS_LDABSB,
-	BPF_INS_LDABSDW,	///< eBPF only
-	BPF_INS_LDINDW,
-	BPF_INS_LDINDH,
-	BPF_INS_LDINDB,
-	BPF_INS_LDINDDW,	///< eBPF only
-	BPF_INS_LDXW,
-	BPF_INS_LDXH,
-	BPF_INS_LDXB,
-	BPF_INS_LDXDW,		///< eBPF only
+	BPF_INS_LDW,	///< eBPF only
+	BPF_INS_LDH,
+	BPF_INS_LDB,
+	BPF_INS_LDDW,	///< eBPF only: load 64-bit imm
+	BPF_INS_LDXW,	///< eBPF only
+	BPF_INS_LDXH,	///< eBPF only
+	BPF_INS_LDXB,	///< eBPF only
 
 	///< Store
 	BPF_INS_STW,	///< eBPF only
@@ -138,8 +132,6 @@ typedef enum bpf_insn {
 	BPF_INS_STXDW,	///< eBPF only
 	BPF_INS_XADDW,	///< eBPF only
 	BPF_INS_XADDDW,	///< eBPF only
-	BPF_INS_ST = BPF_INS_STW,	///< cBPF only
-	BPF_INS_STX = BPF_INS_STXW,	///< cBPF only
 
 	///< Jump
 	BPF_INS_JMP,
@@ -165,6 +157,12 @@ typedef enum bpf_insn {
 	BPF_INS_TXA,
 
 	BPF_INS_ENDING,
+
+	// alias instructions
+	BPF_INS_LD = BPF_INS_LDW,	///< cBPF only
+	BPF_INS_LDX = BPF_INS_LDXW,	///< cBPF only
+	BPF_INS_ST = BPF_INS_STW,	///< cBPF only
+	BPF_INS_STX = BPF_INS_STXW,	///< cBPF only
 } bpf_insn;
 
 /// Group of BPF instructions

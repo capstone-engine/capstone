@@ -67,7 +67,13 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_BE32, "be32" },
 	{ BPF_INS_BE64, "be64" },
 
-	{ BPF_INS_LDABSB, "ldabsb" },
+	{ BPF_INS_LDW, "ldw" },
+	{ BPF_INS_LDH, "ldh" },
+	{ BPF_INS_LDB, "ldb" },
+	{ BPF_INS_LDDW,	"lddw" },
+	{ BPF_INS_LDXW, "ldxw" },
+	{ BPF_INS_LDXH, "ldxh" },
+	{ BPF_INS_LDXB, "ldxb" },
 
 	{ BPF_INS_STW, "stw" },
 	{ BPF_INS_STH, "sth" },
@@ -105,9 +111,13 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 const char *BPF_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	/* handle some special cases in cBPF */
+	/* We have some special cases because 'ld' in cBPF is equivalent to 'ldw'
+	 * in eBPF, and we don't want to see 'ldw' appears in cBPF mode.
+	 */
 	if (!EBPF_MODE(handle)) {
 		switch (id) {
+		case BPF_INS_LD: return "ld";
+		case BPF_INS_LDX: return "ldx";
 		case BPF_INS_ST: return "st";
 		case BPF_INS_STX: return "stx";
 		}
@@ -142,6 +152,59 @@ const char *BPF_reg_name(csh handle, unsigned int reg)
 #else
 	return NULL;
 #endif
+}
+
+static bpf_insn op2insn_LD(unsigned opcode)
+{
+#define CASE(c) case BPF_SIZE_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_LD) \
+			return BPF_INS_LD##c; \
+		else \
+			return BPF_INS_LDX##c;
+
+	switch (BPF_SIZE(opcode)) {
+	case BPF_SIZE_DW:
+		/* ldxdw not exists */
+		if (BPF_CLASS(opcode) == BPF_CLASS_LD)
+			return BPF_INS_LDDW;
+		else
+			break;
+	CASE(W);
+	CASE(H);
+	CASE(B);
+	}
+#undef CASE
+
+	return BPF_INS_INVALID;
+}
+
+static bpf_insn op2insn_ST(unsigned opcode)
+{
+	/*
+	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
+	 * - BPF_ST* | BPF_MEM | BPF_{W,H,B,DW}
+	 */
+
+	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_W))
+		return BPF_INS_XADDW;
+	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_DW))
+		return BPF_INS_XADDDW;
+
+	/* should be BPF_MEM */
+#define CASE(c) case BPF_SIZE_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_ST) \
+			return BPF_INS_ST##c; \
+		else \
+			return BPF_INS_STX##c;
+	switch (BPF_SIZE(opcode)) {
+	CASE(W);
+	CASE(H);
+	CASE(B);
+	CASE(DW);
+	}
+#undef CASE
+
+	return BPF_INS_INVALID;
 }
 
 static bpf_insn op2insn_ALU(unsigned opcode)
@@ -185,35 +248,6 @@ static bpf_insn op2insn_ALU(unsigned opcode)
 	CASE(XOR);
 	CASE(MOV);
 	CASE(ARSH);
-	}
-#undef CASE
-
-	return BPF_INS_INVALID;
-}
-
-static bpf_insn op2insn_ST(unsigned opcode)
-{
-	/*
-	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
-	 * - BPF_ST* | BPF_MEM | BPF_{W,H,B,DW}
-	 */
-
-	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_W))
-		return BPF_INS_XADDW;
-	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_DW))
-		return BPF_INS_XADDDW;
-
-	/* should be BPF_MEM */
-#define CASE(c) case BPF_SIZE_##c: \
-		if (BPF_CLASS(opcode) == BPF_CLASS_ST) \
-			return BPF_INS_ST##c; \
-		else \
-			return BPF_INS_STX##c;
-	switch (BPF_SIZE(opcode)) {
-	CASE(W);
-	CASE(H);
-	CASE(B);
-	CASE(DW);
 	}
 #undef CASE
 
@@ -273,9 +307,11 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 	default:	// will never happen
 		break;
 	case BPF_CLASS_LD:
+		id = op2insn_LD(opcode);
 		PUSH_GROUP(BPF_GRP_LOAD);
 		break;
 	case BPF_CLASS_LDX:
+		id = op2insn_LD(opcode);
 		PUSH_GROUP(BPF_GRP_LOAD);
 		break;
 	case BPF_CLASS_ST:
