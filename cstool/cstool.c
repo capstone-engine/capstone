@@ -8,6 +8,8 @@
 
 #include <capstone/capstone.h>
 
+void print_string_hex(const char *comment, unsigned char *str, size_t len);
+
 static struct {
 	const char *name;
 	cs_arch arch;
@@ -56,7 +58,8 @@ static struct {
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "evm", CS_ARCH_EVM, 0 },
-    { "mos65xx", CS_ARCH_MOS65XX, 0 },
+	{ "wasm", CS_ARCH_WASM, 0 },
+	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
 	{ NULL }
 };
 
@@ -72,6 +75,7 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
+void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
@@ -134,8 +138,8 @@ static uint8_t *preprocess(char *code, size_t *size)
 
 static void usage(char *prog)
 {
-	printf("cstool for Capstone Disassembler, v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-d|-u|-s|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
+	printf("Syntax: %s [-d|-s|-u|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -214,6 +218,10 @@ static void usage(char *prog)
 		printf("        mox65xx     MOS65XX family\n");
 	}
 
+	if (cs_support(CS_ARCH_WASM)) {
+		printf("        wasm:      Web Assembly\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -u show immediates as unsigned\n");
@@ -259,6 +267,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_EVM:
 			print_insn_detail_evm(handle, ins);
+			break;
+		case CS_ARCH_WASM:
+			print_insn_detail_wasm(handle, ins);
 			break;
 		case CS_ARCH_MOS65XX:
 			print_insn_detail_mos65xx(handle, ins);
@@ -357,6 +368,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
+				}
+
+				if (cs_support(CS_ARCH_WASM)) {
+					printf("wasm=1 ");
 				}
 
 				if (cs_support(CS_ARCH_MOS65XX)) {

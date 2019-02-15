@@ -35,7 +35,8 @@ int main(int argc, char** argv)
         if (dir->d_type != DT_REG) {
             continue;
         }
-        //printf("Running %s\n", dir->d_name);
+        printf("Running %s\n", dir->d_name);
+        fflush(stdout);
         fp = fopen(dir->d_name, "rb");
         if (fp == NULL) {
             r = 3;
@@ -71,6 +72,7 @@ int main(int argc, char** argv)
         fclose(fp);
     }
     closedir(d);
+    printf("Ok : whole directory finished\n");
     return r;
 }
 

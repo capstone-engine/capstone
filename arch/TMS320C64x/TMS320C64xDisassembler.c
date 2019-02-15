@@ -244,7 +244,7 @@ static DecodeStatus DecodePCRelScst21(MCInst *Inst, unsigned Val,
 		imm |= ~((1 << 21) - 1);
 
 	/* Address is relative to the address of the first instruction in the fetch packet */
-	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm << 2));
+	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm * 4));
 
 	return MCDisassembler_Success;
 }
@@ -596,7 +596,7 @@ bool TMS320C64x_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	if(MI->flat_insn->detail)
 		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, tms320c64x)+sizeof(cs_tms320c64x));
 
-	insn = (code[3] << 0) | (code[2] << 8) | (code[1] << 16) | (code[0] << 24);
+	insn = (code[3] << 0) | (code[2] << 8) | (code[1] << 16) | ((uint32_t) code[0] << 24);
 	result = decodeInstruction_4(DecoderTable32, MI, insn, address, info, 0);
 
 	if(result == MCDisassembler_Success) {

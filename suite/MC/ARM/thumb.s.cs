@@ -1,4 +1,4 @@
-# CS_ARCH_ARM, CS_MODE_THUMB, 
+# CS_ARCH_ARM, CS_MODE_THUMB, None
 0x91,0x42 = cmp r1, r2
 0x16,0xbc = pop {r1, r2, r4}
 0xfe,0xde = trap 

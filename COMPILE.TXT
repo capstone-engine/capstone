@@ -87,6 +87,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	/usr/include/capstone/arm.h
 	/usr/include/capstone/arm64.h
 	/usr/include/capstone/evm.h
+	/usr/include/capstone/wasm.h
 	/usr/include/capstone/m68k.h
 	/usr/include/capstone/m680x.h
 	/usr/include/capstone/mips.h
