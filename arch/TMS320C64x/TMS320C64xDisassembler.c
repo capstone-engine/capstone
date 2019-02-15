@@ -196,7 +196,7 @@ static DecodeStatus DecodePCRelScst7(MCInst *Inst, unsigned Val,
 		imm |= ~((1 << 7) - 1);
 
 	/* Address is relative to the address of the first instruction in the fetch packet */
-	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm << 2));
+	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm * 4));
 
 	return MCDisassembler_Success;
 }
@@ -212,7 +212,7 @@ static DecodeStatus DecodePCRelScst10(MCInst *Inst, unsigned Val,
 		imm |= ~((1 << 10) - 1);
 
 	/* Address is relative to the address of the first instruction in the fetch packet */
-	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm << 2));
+	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm * 4));
 
 	return MCDisassembler_Success;
 }
@@ -228,7 +228,7 @@ static DecodeStatus DecodePCRelScst12(MCInst *Inst, unsigned Val,
 		imm |= ~((1 << 12) - 1);
 
 	/* Address is relative to the address of the first instruction in the fetch packet */
-	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm << 2));
+	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm * 4));
 
 	return MCDisassembler_Success;
 }
