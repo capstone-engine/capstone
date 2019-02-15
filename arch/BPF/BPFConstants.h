@@ -54,9 +54,11 @@
 #define BPF_JUMP_JSLE	0xd0	///< eBPF only: signed '<='
 
 #define BPF_SRC(code) ((code) & 0x08)
+#define BPF_SRC_OLD(code) ((code) & 0x18) /* cBPF only */
 ///< Source operand
 #define BPF_SRC_K	0x00
 #define BPF_SRC_X	0x08
+#define BPF_SRC_A	0x10 /* cBPF only */
 
 #define BPF_SRC_LITTLE	BPF_SRC_K
 #define BPF_SRC_BIG	BPF_SRC_X
@@ -78,6 +80,7 @@
 #define BPF_MODE_MSH	0xa0	///< cBPF only, reserved in eBPF
 #define BPF_MODE_XADD	0xc0	///< eBPF only: exclusive add
 
+#define BPF_MISCOP(code) ((code) & 0x80)
 ///< Operation of misc
 #define BPF_MISCOP_TAX	0x00
 #define BPF_MISCOP_TXA	0x80

@@ -198,7 +198,20 @@ static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 
 static bool decodeReturn(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
-	return true;
+	/* Here only handles the BPF_RET class in cBPF */
+	switch (BPF_SRC_OLD(bpf->op)) {
+	default:
+		return false;
+	case BPF_SRC_K:
+		MCOperand_CreateImm0(MI, bpf->k);
+		return true;
+	case BPF_SRC_X:
+		MCOperand_CreateReg0(MI, BPF_REG_X);
+		return true;
+	case BPF_SRC_A:
+		MCOperand_CreateReg0(MI, BPF_REG_A);
+		return true;
+	}
 }
 
 static bool decodeMISC(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
@@ -244,8 +257,8 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		if (EBPF_MODE(ud))
 			return false;
 		return decodeReturn(ud, MI, bpf);
-	/* case BPF_CLASS_MISC: */
-	case BPF_CLASS_ALU64:
+	case BPF_CLASS_MISC:
+	/* case BPF_CLASS_ALU64: */
 		if (EBPF_MODE(ud))
 			return decodeALU(ud, MI, bpf);
 		else

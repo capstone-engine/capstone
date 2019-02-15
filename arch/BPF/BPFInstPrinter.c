@@ -21,4 +21,7 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 	MCInst_setOpcodePub(MI, insn.id);
 
 	SStream_concat(O, BPF_insn_name((csh)MI->csh, insn.id));
+	if (MI->flat_insn->detail) {
+		MI->flat_insn->detail->bpf.op_count = MCInst_getNumOperands(MI);
+	}
 }

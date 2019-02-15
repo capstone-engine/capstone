@@ -70,6 +70,7 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_LDABSB, "ldabsb" },
 
 	{ BPF_INS_RET, "ret" },
+
 	{ BPF_INS_TAX, "tax" },
 	{ BPF_INS_TXA, "txa" },
 };
@@ -212,6 +213,7 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 		PUSH_GROUP(grp);
 		break;
 	case BPF_CLASS_RET:
+		id = BPF_INS_RET;
 		PUSH_GROUP(BPF_GRP_RETURN);
 		break;
 	// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
@@ -223,7 +225,7 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 			PUSH_GROUP(BPF_GRP_ALU);
 		}
 		else {
-			if (opcode & 0x80)
+			if (BPF_MISCOP(opcode) == BPF_MISCOP_TXA)
 				id = BPF_INS_TXA;
 			else
 				id = BPF_INS_TAX;

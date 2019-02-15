@@ -55,9 +55,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 		switch (op->type) {
 		default:
 			break;
-		case BPF_OP_IMM:
-			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm);
-			break;
+		/* case BPF_OP_IMM: */
+			/* printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm); */
+			/* break; */
 		}
 	}
 }
@@ -65,11 +65,13 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 static void test()
 {
 #define CBPF_CODE	"\x94\x09\x00\x00\x37\x13\x03\x00" \
-					"\x87\x00\x00\x00\x00\x00\x00\x00" \
-					"\x07\x00\x00\x00\x00\x00\x00\x00"
+			"\x87\x00\x00\x00\x00\x00\x00\x00" \
+			"\x07\x00\x00\x00\x00\x00\x00\x00" \
+			"\x16\x00\x00\x00\x00\x00\x00\x00"
+
 #define EBPF_CODE	"\x97\x09\x00\x00\x37\x13\x03\x00" \
-					"\xdc\x02\x00\x00\x20\x00\x00\x00" \
-					"\x30\x00\x00\x00\x00\x00\x00\x00"
+			"\xdc\x02\x00\x00\x20\x00\x00\x00" \
+			"\x30\x00\x00\x00\x00\x00\x00\x00"
 	struct platform platforms[] = {
 		{
 			CS_ARCH_BPF,
