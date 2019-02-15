@@ -476,7 +476,6 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_MOS65XX_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_mos65xx.c)
 endif ()
 
-# TODO(david942j): check if all sources and headers are included
 if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_BPF_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_BPF)
     set(SOURCES_BPF

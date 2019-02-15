@@ -20,7 +20,10 @@ typedef enum bpf_op_type {
 
 	BPF_OP_REG,
 	BPF_OP_IMM,
-	BPF_OP_MEM
+	BPF_OP_MEM,
+	BPF_OP_MMEM,	///< M[k] in cBPF
+	BPF_OP_MSH,	///< corresponds to cBPF's BPF_MSH mode
+	BPF_OP_EXT,	///< cBPF's extension (not eBPF)
 } bpf_op_type;
 
 /// BPF registers
@@ -51,8 +54,14 @@ typedef enum bpf_reg {
 /// This is associated with BPF_OP_MEM operand type above
 typedef struct bpf_op_mem {
 	bpf_reg base;	///< base register
-	int32_t disp;	///< offset value
+	uint32_t disp;	///< offset value
 } bpf_op_mem;
+
+typedef enum bpf_ext_type {
+	BPF_EXT_INVALID = 0,
+
+	BPF_EXT_LEN,
+} bpf_ext_type;
 
 /// Instruction operand
 typedef struct cs_bpf_op {

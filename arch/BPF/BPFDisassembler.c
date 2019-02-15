@@ -159,7 +159,6 @@ static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 			MCOperand_CreateImm0(MI, bpf->k);
 			return true;
 		case BPF_MODE_LEN:
-			MCOperand_CreateImm0(MI, 0); // XXX(david942j)
 			return true;
 		case BPF_MODE_MEM:
 			MCOperand_CreateImm0(MI, bpf->k);
