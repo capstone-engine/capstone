@@ -29,6 +29,8 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 static void print_insn_detail(csh cs_handle, cs_insn *ins)
 {
 	cs_bpf *bpf;
+	cs_regs regs_read, regs_write;
+	uint8_t regs_read_count, regs_write_count;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
@@ -53,11 +55,39 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 	for (i = 0; i < bpf->op_count; i++) {
 		cs_bpf_op *op = &(bpf->operands[i]);
 		switch (op->type) {
-		default:
+		case BPF_OP_IMM:
+			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm);
 			break;
-		/* case BPF_OP_IMM: */
-			/* printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm); */
-			/* break; */
+		case BPF_OP_REG:
+			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(cs_handle, op->reg));
+			break;
+		case BPF_OP_MEM:
+			printf("\t\toperands[%u].type: MEM\n", i);
+			if (op->mem.base != BPF_REG_INVALID)
+				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
+						i, cs_reg_name(cs_handle, op->mem.base));
+			printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+		}
+	}
+
+	/* print all registers that are involved in this instruction */
+	if (!cs_regs_access(cs_handle, ins,
+			regs_read, &regs_read_count,
+			regs_write, &regs_write_count)) {
+		if (regs_read_count) {
+			printf("\tRegisters read:");
+			for(i = 0; i < regs_read_count; i++) {
+				printf(" %s", cs_reg_name(cs_handle, regs_read[i]));
+			}
+			printf("\n");
+		}
+
+		if (regs_write_count) {
+			printf("\tRegisters modified:");
+			for(i = 0; i < regs_write_count; i++) {
+				printf(" %s", cs_reg_name(cs_handle, regs_write[i]));
+			}
+			printf("\n");
 		}
 	}
 }
@@ -71,7 +101,8 @@ static void test()
 
 #define EBPF_CODE	"\x97\x09\x00\x00\x37\x13\x03\x00" \
 			"\xdc\x02\x00\x00\x20\x00\x00\x00" \
-			"\x30\x00\x00\x00\x00\x00\x00\x00"
+			"\x30\x00\x00\x00\x00\x00\x00\x00" \
+			"\xdb\xa9\x00\x01\x00\x00\x00\x00"
 	struct platform platforms[] = {
 		{
 			CS_ARCH_BPF,

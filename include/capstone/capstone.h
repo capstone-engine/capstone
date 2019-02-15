@@ -319,7 +319,7 @@ typedef struct cs_detail {
 		cs_evm evm;	    ///< Ethereum architecture
 		cs_mos65xx mos65xx;	///< MOS65XX architecture (including MOS6502)
 		cs_wasm wasm;	///< Web Assembly architecture
-		cs_bpf bpf;		///< Berkeley Packet Filter architecture (including eBPF)
+		cs_bpf bpf;	///< Berkeley Packet Filter architecture (including eBPF)
 	};
 } cs_detail;
 

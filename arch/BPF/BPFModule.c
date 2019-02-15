@@ -11,14 +11,12 @@
 cs_err BPF_global_init(cs_struct *ud)
 {
 	ud->printer = BPF_printInst;
-	ud->printer_info = NULL;
 	ud->reg_name = BPF_reg_name;
 	ud->insn_id = BPF_get_insn_id;
 	ud->insn_name = BPF_insn_name;
 	ud->group_name = BPF_group_name;
-	/* ud->post_printer = BPF_post_printer; */
 #ifndef CAPSTONE_DIET
-	/* ud->reg_access = BPF_reg_access; */
+	ud->reg_access = BPF_reg_access;
 #endif
 	ud->disasm = BPF_getInstruction;
 

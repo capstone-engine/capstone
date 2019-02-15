@@ -1,6 +1,8 @@
 /* Capstone Disassembly Engine */
 /* BPF Backend by david942j <david942j@gmail.com>, 2019 */
 
+#include <string.h>
+
 #include "BPFConstants.h"
 #include "BPFMapping.h"
 #include "../../utils.h"
@@ -360,4 +362,48 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 
 	insn->id = id;
 #undef PUSH_GROUP
+}
+
+void BPF_reg_access(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count)
+{
+	//... I need bpf mode..?
+	unsigned i;
+	uint8_t read_count, write_count;
+	cs_bpf *bpf = &(insn->detail->bpf);
+
+	read_count = insn->detail->regs_read_count;
+	write_count = insn->detail->regs_write_count;
+
+	// implicit registers
+	memcpy(regs_read, insn->detail->regs_read, read_count * sizeof(insn->detail->regs_read[0]));
+	memcpy(regs_write, insn->detail->regs_write, write_count * sizeof(insn->detail->regs_write[0]));
+
+	for (i = 0; i < bpf->op_count; i++) {
+		cs_bpf_op *op = &(bpf->operands[i]);
+		switch (op->type) {
+		default:
+			break;
+		case BPF_OP_REG:
+			if (op->access & CS_AC_READ) {
+				regs_read[read_count] = (uint16_t)op->mem.base;
+				read_count++;
+			}
+			if (op->access & CS_AC_WRITE) {
+				regs_write[write_count] = (uint16_t)op->mem.base;
+				write_count++;
+			}
+			break;
+		case BPF_OP_MEM:
+			if (op->mem.base != BPF_REG_INVALID) {
+				regs_read[read_count] = (uint16_t)op->mem.base;
+				read_count++;
+			}
+			break;
+		}
+	}
+
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
 }

@@ -281,9 +281,6 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 			return false;
 	}
 
-	/* NEG's source must be BPF_SRC_X */
-	if (BPF_OP(bpf->op) == BPF_ALU_NEG && BPF_SRC(bpf->op) != BPF_SRC_X)
-		return false;
 	/* ALU64 class doesn't have ENDian */
 	/* ENDian's imm must be one of 16, 32, 64 */
 	if (BPF_OP(bpf->op) == BPF_ALU_END) {
@@ -297,6 +294,9 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 
 	/* cBPF */
 	if (!EBPF_MODE(ud)) {
+		/* cBPF's NEG has no operands */
+		if (BPF_OP(bpf->op) == BPF_ALU_NEG)
+			return true;
 		if (BPF_SRC(bpf->op) == BPF_SRC_K)
 			MCOperand_CreateImm0(MI, bpf->k);
 		else /* BPF_SRC_X */

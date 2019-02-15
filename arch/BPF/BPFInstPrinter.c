@@ -19,11 +19,12 @@ static void push_bpf_imm(cs_bpf *bpf, uint64_t val) {
 	op->imm = val;
 }
 
-static void push_bpf_reg(cs_bpf *bpf, unsigned val) {
+static void push_bpf_reg(cs_bpf *bpf, unsigned val, uint8_t ac_mode) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_REG;
 	op->reg = val;
+	op->access = ac_mode;
 }
 
 static void push_bpf_mem(cs_bpf *bpf, bpf_reg reg, uint64_t val) {
@@ -83,7 +84,7 @@ static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
 		case BPF_MODE_MEM:
 			if (EBPF_MODE(MI->csh)) {
 				/* ldx{w,h,b,dw} dst, [src+off] */
-				push_bpf_reg(bpf, MCOperand_getReg(MCInst_getOperand(MI, 0)));
+				push_bpf_reg(bpf, MCOperand_getReg(MCInst_getOperand(MI, 0)), CS_AC_WRITE);
 				op = MCInst_getOperand(MI, 1);
 				op2 = MCInst_getOperand(MI, 2);
 				push_bpf_mem(bpf, MCOperand_getReg(op), (uint64_t)MCOperand_getImm(op2));
@@ -112,6 +113,7 @@ static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
 		/* eBPF has two cases:
 		 * - st [dst + off], src
 		 * - xadd [dst + off], src
+		 * they have same form of operands.
 		 */
 		op = MCInst_getOperand(MI, 0);
 		op2 = MCInst_getOperand(MI, 1);
@@ -120,16 +122,21 @@ static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
 		if (MCOperand_isImm(op))
 			push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
 		else if (MCOperand_isReg(op))
-			push_bpf_reg(bpf, MCOperand_getReg(op));
+			push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 		return;
 	}
 	/* convert 1-to-1 */
 	for (i = 0; i < mc_op_count; i++) {
 		op = MCInst_getOperand(MI, i);
-		if (MCOperand_isImm(op))
+		if (MCOperand_isImm(op)) {
 			push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
-		else if (MCOperand_isReg(op))
-			push_bpf_reg(bpf, MCOperand_getReg(op));
+		}
+		else if (MCOperand_isReg(op)) {
+			// TODO(david942j): decide this register is read and/or written.
+			uint8_t ac = 0;
+
+			push_bpf_reg(bpf, MCOperand_getReg(op), ac);
+		}
 	}
 }
 
@@ -157,6 +164,8 @@ static void BPF_printOperand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 			sprintf(buf, "%#x", op->mem.disp);
 			SStream_concat(O, buf);
 		}
+		if (op->mem.base == BPF_REG_INVALID && op->mem.disp == 0) // special case
+			SStream_concat(O, "0x0");
 		SStream_concat(O, "]");
 	}
 	else if (op->type == BPF_OP_MMEM) {
@@ -206,7 +215,6 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 #ifndef CAPSTONE_DIET
 	if (MI->flat_insn->detail) {
-		/* MI->flat_insn->detail->bpf.op_count = MCInst_getNumOperands(MI); */
 		MI->flat_insn->detail->bpf = bpf;
 	}
 #endif

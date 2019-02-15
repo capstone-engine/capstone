@@ -71,6 +71,11 @@ typedef struct cs_bpf_op {
 		uint64_t imm;	///< immediate value IMM operand
 		bpf_op_mem mem;	///< base/index/scale/disp value for MEM operand
 	};
+
+	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	/// This field is combined of cs_ac_type.
+	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	uint8_t access;
 } cs_bpf_op;
 
 /// Instruction structure
