@@ -8,7 +8,7 @@
 
 typedef struct bpf_internal {
 	uint16_t op;
-	uint32_t k;
+	uint64_t k;
 	/* for cBPF */
 	uint8_t jt;
 	uint8_t jf;
@@ -16,6 +16,9 @@ typedef struct bpf_internal {
 	uint8_t dst;
 	uint8_t src;
 	uint16_t offset;
+
+	/* length of this bpf instruction */
+	uint8_t insn_size;
 } bpf_internal;
 
 bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
