@@ -69,6 +69,21 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 
 	{ BPF_INS_LDABSB, "ldabsb" },
 
+	{ BPF_INS_JMP, "jmp" },
+	{ BPF_INS_JEQ, "jeq" },
+	{ BPF_INS_JGT, "jgt" },
+	{ BPF_INS_JGE, "jge" },
+	{ BPF_INS_JSET, "jset" },
+	{ BPF_INS_JNE, "jne" },
+	{ BPF_INS_JSGT,	"jsgt" },
+	{ BPF_INS_JSGE,	"jsge" },
+	{ BPF_INS_CALL,	"call" },
+	{ BPF_INS_EXIT,	"exit" },
+	{ BPF_INS_JLT, "jlt" },
+	{ BPF_INS_JLE, "jle" },
+	{ BPF_INS_JSLT, "jslt" },
+	{ BPF_INS_JSLE,	"jsle" },
+
 	{ BPF_INS_RET, "ret" },
 
 	{ BPF_INS_TAX, "tax" },
@@ -158,6 +173,30 @@ static bpf_insn op2insn_ALU(unsigned opcode)
 	return BPF_INS_INVALID;
 }
 
+static bpf_insn op2insn_JMP(unsigned opcode)
+{
+#define CASE(c) case BPF_JUMP_##c: return BPF_INS_##c
+	switch (BPF_OP(opcode)) {
+	default:
+		return BPF_INS_INVALID;
+	case BPF_JUMP_JA:
+		return BPF_INS_JMP;
+	CASE(JEQ);
+	CASE(JGT);
+	CASE(JGE);
+	CASE(JSET);
+	CASE(JNE);
+	CASE(JSGT);
+	CASE(JSGE);
+	CASE(CALL);
+	CASE(EXIT);
+	CASE(JLT);
+	CASE(JLE);
+	CASE(JSLT);
+	CASE(JSLE);
+	}
+}
+
 /*
  * 1. Convert opcode(id) to BPF_INS_*
  * 2. Set regs_read/regs_write/groups
@@ -203,11 +242,11 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 		break;
 	case BPF_CLASS_JMP:
 		grp = BPF_GRP_JUMP;
+		id = op2insn_JMP(opcode);
 		if (EBPF_MODE(ud)) {
-			// TODO: use BPF_INSN_CALL / BPF_INSN_RETURN_R0 on MI to check
-			if (opcode == 0x85)
+			if (id == BPF_INS_CALL)
 				grp = BPF_GRP_CALL;
-			else if (opcode == 0x95)
+			else if (id == BPF_INS_EXIT)
 				grp = BPF_GRP_RETURN;
 		}
 		PUSH_GROUP(grp);

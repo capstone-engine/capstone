@@ -108,6 +108,16 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 			return false; \
 	} while (0)
 
+#define CHECK_READABLE_AND_PUSH(ud, MI, r) do { \
+		CHECK_READABLE_REG(ud, r + BPF_REG_R0); \
+		MCOperand_CreateReg0(MI, r + BPF_REG_R0); \
+	} while (0)
+
+#define CHECK_WRITABLE_AND_PUSH(ud, MI, r) do { \
+		CHECK_WRITABLE_REG(ud, r + BPF_REG_R0); \
+		MCOperand_CreateReg0(MI, r + BPF_REG_R0); \
+	} while (0)
+
 static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
 	return true;
@@ -154,7 +164,7 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	/* cBPF */
 	if (!EBPF_MODE(ud)) {
 		if (BPF_SRC(bpf->op) == BPF_SRC_K)
-			MCOperand_CreateImm0(MI, (int64_t)bpf->k);
+			MCOperand_CreateImm0(MI, bpf->k);
 		else /* BPF_SRC_X */
 			MCOperand_CreateReg0(MI, BPF_REG_X);
 		return true;
@@ -168,8 +178,7 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	 * - le<imm> dst
 	 */
 	/* every ALU instructions have dst op */
-	CHECK_WRITABLE_REG(ud, bpf->dst + BPF_REG_R0);
-	MCOperand_CreateReg0(MI, bpf->dst + BPF_REG_R0);
+	CHECK_WRITABLE_AND_PUSH(ud, MI, bpf->dst);
 
 	/* special cases */
 	if (BPF_OP(bpf->op) == BPF_ALU_NEG)
@@ -182,17 +191,59 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 
 	/* normal cases */
 	if (BPF_SRC(bpf->op) == BPF_SRC_K) {
-		MCOperand_CreateImm0(MI, (int64_t)bpf->k);
+		MCOperand_CreateImm0(MI, bpf->k);
 	}
 	else { /* BPF_SRC_X */
-		CHECK_READABLE_REG(ud, bpf->src + BPF_REG_R0);
-		MCOperand_CreateReg0(MI, bpf->src + BPF_REG_R0);
+		CHECK_READABLE_AND_PUSH(ud, MI, bpf->src);
 	}
 	return true;
 }
 
 static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
+	/* cBPF and eBPF are very different in class jump */
+	if (!EBPF_MODE(ud)) {
+		if (BPF_OP(bpf->op) > BPF_JUMP_JSET)
+			return false;
+
+		if (BPF_SRC(bpf->op) == BPF_SRC_K)
+			MCOperand_CreateImm0(MI, bpf->k);
+		else /* BPF_SRC_X */
+			MCOperand_CreateReg0(MI, BPF_REG_X);
+		MCOperand_CreateImm0(MI, bpf->jt);
+		MCOperand_CreateImm0(MI, bpf->jf);
+	}
+	else {
+		if (BPF_OP(bpf->op) > BPF_JUMP_JSLE)
+			return false;
+
+		/* No operands for exit */
+		if (BPF_OP(bpf->op) == BPF_JUMP_EXIT) {
+			return bpf->op == (BPF_CLASS_JMP | BPF_JUMP_EXIT);
+		}
+		if (BPF_OP(bpf->op) == BPF_JUMP_CALL) {
+			if (bpf->op != (BPF_CLASS_JMP | BPF_JUMP_CALL))
+				return false;
+			MCOperand_CreateImm0(MI, bpf->k);
+			return true;
+		}
+
+		/* ja is a special case of jumps */
+		if (BPF_OP(bpf->op) == BPF_JUMP_JA) {
+			if (BPF_SRC(bpf->op) != BPF_SRC_K)
+				return false;
+			MCOperand_CreateImm0(MI, bpf->offset);
+			return true;
+		}
+
+		/* <j>  dst, src, +off */
+		CHECK_READABLE_AND_PUSH(ud, MI, bpf->dst);
+		if (BPF_SRC(bpf->op) == BPF_SRC_K)
+			MCOperand_CreateImm0(MI, bpf->k);
+		else
+			CHECK_READABLE_AND_PUSH(ud, MI, bpf->src);
+		MCOperand_CreateImm0(MI, bpf->offset);
+	}
 	return true;
 }
 

@@ -138,7 +138,7 @@ typedef enum bpf_insn {
 	BPF_INS_STXDW,	///< eBPF only
 
 	///< Jump
-	BPF_INS_JA,
+	BPF_INS_JMP,
 	BPF_INS_JEQ,
 	BPF_INS_JGT,
 	BPF_INS_JGE,
