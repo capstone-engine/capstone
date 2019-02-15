@@ -120,11 +120,67 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 
 static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
+	/*
+	 *  +--------+--------+-------------------+
+	 *  | 3 bits | 2 bits |      3 bits       |
+	 *  |  mode  |  size  | instruction class |
+	 *  +--------+--------+-------------------+
+	 *  (MSB)                             (LSB)
+	 */
+	if (!EBPF_MODE(ud) && BPF_SIZE(bpf->op) == BPF_SIZE_DW)
+		return false;
+
 	return true;
 }
 
 static bool decodeStore(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
+	/*
+	 *  +--------+--------+-------------------+
+	 *  | 3 bits | 2 bits |      3 bits       |
+	 *  |  mode  |  size  | instruction class |
+	 *  +--------+--------+-------------------+
+	 *  (MSB)                             (LSB)
+	 */
+
+	/* in cBPF, only BPF_ST* | BPF_MEM | BPF_W is valid
+	 * while in eBPF:
+	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
+	 * - BPF_ST* | BPF_MEM | BPF_{W,H,B,DW}
+	 * are valid
+	 */
+	if (!EBPF_MODE(ud)) {
+		/* can only store to M[] */
+		if (bpf->op != (BPF_CLASS(bpf->op) | BPF_MODE_MEM | BPF_SIZE_W))
+			return false;
+		MCOperand_CreateImm0(MI, bpf->k);
+		return true;
+	}
+
+	/* eBPF */
+
+	if (BPF_MODE(bpf->op) == BPF_MODE_XADD) {
+		if (BPF_CLASS(bpf->op) != BPF_CLASS_STX)
+			return false;
+		if (BPF_SIZE(bpf->op) != BPF_SIZE_W && BPF_SIZE(bpf->op) != BPF_SIZE_DW)
+			return false;
+		/* xadd [dst + off], src */
+		CHECK_READABLE_AND_PUSH(ud, MI, bpf->dst);
+		MCOperand_CreateImm0(MI, bpf->offset);
+		CHECK_READABLE_AND_PUSH(ud, MI, bpf->src);
+		return true;
+	}
+
+	if (BPF_MODE(bpf->op) != BPF_MODE_MEM)
+		return false;
+
+	/* st [dst + off], src */
+	CHECK_READABLE_AND_PUSH(ud, MI, bpf->dst);
+	MCOperand_CreateImm0(MI, bpf->offset);
+	if (BPF_CLASS(bpf->op) == BPF_CLASS_ST)
+		MCOperand_CreateImm0(MI, bpf->k);
+	else
+		CHECK_READABLE_AND_PUSH(ud, MI, bpf->src);
 	return true;
 }
 
@@ -132,7 +188,7 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
 	/*
 	 *  +----------------+--------+--------------------+
-	 *  |   4 bits       |  1 bit |   3 bits           |
+	 *  |   4 bits       |  1 bit |      3 bits        |
 	 *  | operation code | source | instruction class  |
 	 *  +----------------+--------+--------------------+
 	 *  (MSB)                                      (LSB)
@@ -250,7 +306,7 @@ static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 static bool decodeReturn(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
 	/* Here only handles the BPF_RET class in cBPF */
-	switch (BPF_SRC_OLD(bpf->op)) {
+	switch (BPF_RVAL(bpf->op)) {
 	default:
 		return false;
 	case BPF_SRC_K:

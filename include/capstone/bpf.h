@@ -128,14 +128,18 @@ typedef enum bpf_insn {
 	BPF_INS_LDXDW,		///< eBPF only
 
 	///< Store
-	BPF_INS_STW,
-	BPF_INS_STH,
-	BPF_INS_STB,
+	BPF_INS_STW,	///< eBPF only
+	BPF_INS_STH,	///< eBPF only
+	BPF_INS_STB,	///< eBPF only
 	BPF_INS_STDW,	///< eBPF only
-	BPF_INS_STXW,
-	BPF_INS_STXH,
-	BPF_INS_STXB,
+	BPF_INS_STXW,	///< eBPF only
+	BPF_INS_STXH,	///< eBPF only
+	BPF_INS_STXB,	///< eBPF only
 	BPF_INS_STXDW,	///< eBPF only
+	BPF_INS_XADDW,	///< eBPF only
+	BPF_INS_XADDDW,	///< eBPF only
+	BPF_INS_ST = BPF_INS_STW,	///< cBPF only
+	BPF_INS_STX = BPF_INS_STXW,	///< cBPF only
 
 	///< Jump
 	BPF_INS_JMP,

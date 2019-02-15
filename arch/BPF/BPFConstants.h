@@ -54,7 +54,7 @@
 #define BPF_JUMP_JSLE	0xd0	///< eBPF only: signed '<='
 
 #define BPF_SRC(code) ((code) & 0x08)
-#define BPF_SRC_OLD(code) ((code) & 0x18) /* cBPF only */
+#define BPF_RVAL(code) ((code) & 0x18) /* cBPF only: for return types */
 ///< Source operand
 #define BPF_SRC_K	0x00
 #define BPF_SRC_X	0x08

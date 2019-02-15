@@ -69,6 +69,17 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 
 	{ BPF_INS_LDABSB, "ldabsb" },
 
+	{ BPF_INS_STW, "stw" },
+	{ BPF_INS_STH, "sth" },
+	{ BPF_INS_STB, "stb" },
+	{ BPF_INS_STDW,	"stdw" },
+	{ BPF_INS_STXW, "stxw" },
+	{ BPF_INS_STXH, "stxh" },
+	{ BPF_INS_STXB, "stxb" },
+	{ BPF_INS_STXDW, "stxdw" },
+	{ BPF_INS_XADDW, "xaddw" },
+	{ BPF_INS_XADDDW, "xadddw" },
+
 	{ BPF_INS_JMP, "jmp" },
 	{ BPF_INS_JEQ, "jeq" },
 	{ BPF_INS_JGT, "jgt" },
@@ -94,6 +105,13 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 const char *BPF_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	/* handle some special cases in cBPF */
+	if (!EBPF_MODE(handle)) {
+		switch (id) {
+		case BPF_INS_ST: return "st";
+		case BPF_INS_STX: return "stx";
+		}
+	}
 	return id2name(insn_name_maps, ARR_SIZE(insn_name_maps), id);
 #else
 	return NULL;
@@ -116,9 +134,9 @@ const char *BPF_reg_name(csh handle, unsigned int reg)
 
 	/* cBPF mode */
 	if (reg == BPF_REG_A)
-		return "A";
+		return "a";
 	else if (reg == BPF_REG_X)
-		return "X";
+		return "x";
 	else
 		return NULL;
 #else
@@ -173,12 +191,39 @@ static bpf_insn op2insn_ALU(unsigned opcode)
 	return BPF_INS_INVALID;
 }
 
+static bpf_insn op2insn_ST(unsigned opcode)
+{
+	/*
+	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
+	 * - BPF_ST* | BPF_MEM | BPF_{W,H,B,DW}
+	 */
+
+	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_W))
+		return BPF_INS_XADDW;
+	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_DW))
+		return BPF_INS_XADDDW;
+
+	/* should be BPF_MEM */
+#define CASE(c) case BPF_SIZE_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_ST) \
+			return BPF_INS_ST##c; \
+		else \
+			return BPF_INS_STX##c;
+	switch (BPF_SIZE(opcode)) {
+	CASE(W);
+	CASE(H);
+	CASE(B);
+	CASE(DW);
+	}
+#undef CASE
+
+	return BPF_INS_INVALID;
+}
+
 static bpf_insn op2insn_JMP(unsigned opcode)
 {
 #define CASE(c) case BPF_JUMP_##c: return BPF_INS_##c
 	switch (BPF_OP(opcode)) {
-	default:
-		return BPF_INS_INVALID;
 	case BPF_JUMP_JA:
 		return BPF_INS_JMP;
 	CASE(JEQ);
@@ -195,6 +240,9 @@ static bpf_insn op2insn_JMP(unsigned opcode)
 	CASE(JSLT);
 	CASE(JSLE);
 	}
+#undef CASE
+
+	return BPF_INS_INVALID;
 }
 
 /*
@@ -231,9 +279,11 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 		PUSH_GROUP(BPF_GRP_LOAD);
 		break;
 	case BPF_CLASS_ST:
+		id = op2insn_ST(opcode);
 		PUSH_GROUP(BPF_GRP_STORE);
 		break;
 	case BPF_CLASS_STX:
+		id = op2insn_ST(opcode);
 		PUSH_GROUP(BPF_GRP_STORE);
 		break;
 	case BPF_CLASS_ALU:
