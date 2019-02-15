@@ -763,7 +763,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		} else {
 			if (MI->csh->doing_mem) {
 				if (MI->csh->imm_unsigned) {
-					printInt64Bang(O, imm & 0xffff);
+					printUInt64Bang(O, imm);
 				} else {
 					printInt64Bang(O, imm);
 				}
