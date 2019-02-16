@@ -340,6 +340,12 @@ static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		if (BPF_OP(bpf->op) > BPF_JUMP_JSET)
 			return false;
 
+		/* ja is a special case of jumps */
+		if (BPF_OP(bpf->op) == BPF_JUMP_JA) {
+			MCOperand_CreateImm0(MI, bpf->k);
+			return true;
+		}
+
 		if (BPF_SRC(bpf->op) == BPF_SRC_K)
 			MCOperand_CreateImm0(MI, bpf->k);
 		else /* BPF_SRC_X */
