@@ -389,10 +389,6 @@ static bool read_varuint32(const uint8_t *code, size_t code_len, uint16_t *param
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands = cs_mem_malloc(sizeof(cs_wasm_op));
-		if (!(MI->flat_insn->detail->wasm.operands)) {
-			return false;
-		}
 		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_VARUINT32;
 		MI->flat_insn->detail->wasm.operands[0].size= len;
 		MI->flat_insn->detail->wasm.operands[0].varuint32= data;
@@ -423,10 +419,6 @@ static bool read_varuint64(const uint8_t *code, size_t code_len, uint16_t *param
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands = cs_mem_malloc(sizeof(cs_wasm_op));
-		if (!(MI->flat_insn->detail->wasm.operands)) {
-			return false;
-		}
 		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_VARUINT64;
 		MI->flat_insn->detail->wasm.operands[0].size = len;
 		MI->flat_insn->detail->wasm.operands[0].varuint64 = data;
@@ -452,15 +444,10 @@ static bool read_memoryimmediate(const uint8_t *code, size_t code_len, uint16_t 
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.op_count = 2;
-		MI->flat_insn->detail->wasm.operands = cs_mem_malloc(sizeof(cs_wasm_op) * 2);
-		if (!(MI->flat_insn->detail->wasm.operands)) {
-			return false;
-		}
 	}
 
 	data[0] = get_varuint32(code, code_len, &tmp);
 	if (tmp == -1) {
-		cs_mem_free(MI->flat_insn->detail->wasm.operands);
 		return false;
 	}
 
@@ -473,7 +460,6 @@ static bool read_memoryimmediate(const uint8_t *code, size_t code_len, uint16_t 
 	len = tmp;
 	data[1] = get_varuint32(&code[len], code_len - len, &tmp);
 	if (len == -1) {
-		cs_mem_free(MI->flat_insn->detail->wasm.operands);
 		return false;
 	}
 
@@ -508,10 +494,6 @@ static bool read_uint32(const uint8_t *code, size_t code_len, uint16_t *param_si
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands = cs_mem_malloc(sizeof(cs_wasm_op));
-		if (!MI->flat_insn->detail->wasm.operands) {
-			return false;
-		}
 		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_UINT32;
 		MI->flat_insn->detail->wasm.operands[0].size = 4;
 		get_uint32(code, &(MI->flat_insn->detail->wasm.operands[0].uint32));
@@ -539,10 +521,6 @@ static bool read_uint64(const uint8_t *code, size_t code_len, uint16_t *param_si
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands = cs_mem_malloc(sizeof(cs_wasm_op));
-		if (!MI->flat_insn->detail->wasm.operands) {
-			return false;
-		}
 		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_UINT64;
 		MI->flat_insn->detail->wasm.operands[0].size = 8;
 		get_uint64(code, &(MI->flat_insn->detail->wasm.operands[0].uint64));
@@ -574,55 +552,33 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 
 	tmp_len += var_len;
 	MI->wasm_data.brtable.length = length;
-	if (length >= UINT32_MAX/sizeof(cs_wasm_op) - 2) {
-		// integer overflow check before later malloc
-		// implicitly including length >= UINT32_MAX - tmp_len
+	if (length >= UINT32_MAX - tmp_len) {
+		// integer overflow check
 		return false;
 	}
 	if (code_len < tmp_len + length) {
 		// safety check that we have minimum enough data to read
 		return false;
 	}
-	MI->wasm_data.brtable.target = cs_mem_malloc(sizeof(int32_t) * length);
-	if (MI->wasm_data.brtable.target == NULL) {
-		return false;
-	}
+	// base address + 1 byte opcode + tmp_len for number of cases = start of targets
+	MI->wasm_data.brtable.address = MI->address + 1 + tmp_len;
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = length + 2;
-		MI->flat_insn->detail->wasm.operands = cs_mem_malloc(sizeof(cs_wasm_op) * (length + 2));
-		if (!MI->flat_insn->detail->wasm.operands) {
-			cs_mem_free(MI->wasm_data.brtable.target);
-			return false;
-		}
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_VARUINT32;
-		MI->flat_insn->detail->wasm.operands[0].size = var_len;
-		MI->flat_insn->detail->wasm.operands[0].varuint32= length;
+		MI->flat_insn->detail->wasm.op_count = 1;
+		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_BRTABLE;
+		MI->flat_insn->detail->wasm.operands[0].brtable.length = MI->wasm_data.brtable.length;
+		MI->flat_insn->detail->wasm.operands[0].brtable.address = MI->wasm_data.brtable.address;
 	}
 
 	// read data
 	for(i = 0; i < length; i++){
 		if (code_len < tmp_len) {
-			cs_mem_free(MI->wasm_data.brtable.target);
-			if (MI->flat_insn->detail) {
-				cs_mem_free(MI->flat_insn->detail->wasm.operands);
-			}
 			return false;
 		}
 
-		MI->wasm_data.brtable.target[i] = get_varuint32(code + tmp_len, code_len - tmp_len, &var_len);
+		get_varuint32(code + tmp_len, code_len - tmp_len, &var_len);
 		if (var_len == -1) {
-			cs_mem_free(MI->wasm_data.brtable.target);
-			if (MI->flat_insn->detail) {
-				cs_mem_free(MI->flat_insn->detail->wasm.operands);
-			}
 			return false;
-		}
-
-		if (MI->flat_insn->detail) {
-			MI->flat_insn->detail->wasm.operands[i + 1].type = WASM_OP_VARUINT32;
-			MI->flat_insn->detail->wasm.operands[i + 1].size = var_len;
-			MI->flat_insn->detail->wasm.operands[i + 1].varuint32= MI->wasm_data.brtable.target[i];
 		}
 
 		tmp_len += var_len;
@@ -631,22 +587,17 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 	// read default target
 	default_target = get_varuint32(code + tmp_len, code_len - tmp_len, &var_len);
 	if (var_len == -1) {
-		cs_mem_free(MI->wasm_data.brtable.target);
-		if (MI->flat_insn->detail) {
-			cs_mem_free(MI->flat_insn->detail->wasm.operands);
-		}
 		return false;
-	}
-
-	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.operands[length + 1].type = WASM_OP_VARUINT32;
-		MI->flat_insn->detail->wasm.operands[length + 1].size = var_len;
-		MI->flat_insn->detail->wasm.operands[length + 1].varuint32 = default_target;
 	}
 
 	MI->wasm_data.brtable.default_target = default_target;
 	MI->wasm_data.type = WASM_OP_BRTABLE;
 	*param_size = tmp_len + var_len;
+
+	if (MI->flat_insn->detail) {
+		MI->flat_insn->detail->wasm.operands[0].size = *param_size;
+		MI->flat_insn->detail->wasm.operands[0].brtable.default_target = MI->wasm_data.brtable.default_target;
+	}
 
 	return true;
 }
@@ -668,10 +619,6 @@ static bool read_varint7(const uint8_t *code, size_t code_len, uint16_t *param_s
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands = cs_mem_malloc(sizeof(cs_wasm_op));
-		if (!MI->flat_insn->detail->wasm.operands) {
-			return false;
-		}
 		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_INT7;
 		MI->flat_insn->detail->wasm.operands[0].size = 1;
 		MI->flat_insn->detail->wasm.operands[0].int7 = MI->wasm_data.int7;
@@ -1048,7 +995,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = MI->wasm_data.brtable.length + 2;
+				MI->flat_insn->detail->wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_CONTROL;
 				MI->flat_insn->detail->groups_count++;
 			}
