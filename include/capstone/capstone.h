@@ -315,7 +315,6 @@ typedef struct cs_detail {
 		cs_mos65xx mos65xx;	///< MOS65XX architecture (including MOS6502)
 		cs_wasm wasm;	///< Web Assembly architecture
 	};
-	cs_arch arch; ///Used architecture (for architecture-specific free)
 } cs_detail;
 
 /// Detail information of disassembled instruction
