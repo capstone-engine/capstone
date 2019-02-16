@@ -321,7 +321,7 @@ static uint64_t get_varuint64(const uint8_t *code, size_t code_len, size_t *leng
 			return 0;
 		}
 
-		data = data + ((code[i] & 0x7f) << (i * 7));
+		data = data + (((uint64_t) code[i] & 0x7f) << (i * 7));
 		if (code[i] >> 7 == 0) {
 			break;
 		}
