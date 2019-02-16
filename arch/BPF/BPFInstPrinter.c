@@ -12,6 +12,14 @@ static cs_bpf_op *expand_bpf_operands(cs_bpf *bpf)
 	return &bpf->operands[bpf->op_count - 1];
 }
 
+static void push_bpf_reg(cs_bpf *bpf, unsigned val, uint8_t ac_mode) {
+	cs_bpf_op *op = expand_bpf_operands(bpf);
+
+	op->type = BPF_OP_REG;
+	op->reg = val;
+	op->access = ac_mode;
+}
+
 static void push_bpf_imm(cs_bpf *bpf, uint64_t val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
@@ -19,12 +27,12 @@ static void push_bpf_imm(cs_bpf *bpf, uint64_t val) {
 	op->imm = val;
 }
 
-static void push_bpf_reg(cs_bpf *bpf, unsigned val, uint8_t ac_mode) {
+static void push_bpf_off(cs_bpf *bpf, uint32_t val) {
+
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
-	op->type = BPF_OP_REG;
-	op->reg = val;
-	op->access = ac_mode;
+	op->type = BPF_OP_OFF;
+	op->off = val;
 }
 
 static void push_bpf_mem(cs_bpf *bpf, bpf_reg reg, uint64_t val) {
@@ -56,7 +64,7 @@ static void push_bpf_ext(cs_bpf *bpf, bpf_ext_type val) {
 	op->ext = val;
 }
 
-static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
+static void convert_operands(MCInst *MI, cs_bpf *bpf)
 {
 	unsigned opcode = MCInst_getOpcode(MI);
 	unsigned mc_op_count = MCInst_getNumOperands(MI);
@@ -124,9 +132,35 @@ static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
 			push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 		return;
 	}
-	if (!EBPF_MODE(MI->csh) || BPF_CLASS(opcode) == BPF_CLASS_JMP) {
+
+	if (BPF_CLASS(opcode) == BPF_CLASS_JMP) {
+		for (i = 0; i < mc_op_count; i++) {
+			op = MCInst_getOperand(MI, i);
+			if (MCOperand_isImm(op)) {
+				/* decide the imm is BPF_OP_IMM or BPF_OP_OFF type here */
+				/*
+				 * 1. ja +off
+				 * 2. call +off // eBPF
+				 * 3. j {x,k}, +jt, +jf // cBPF
+				 * 4. j dst_reg, {src_reg, k}, +off // eBPF
+				 */
+				if (BPF_OP(opcode) == BPF_JUMP_JA ||
+						BPF_OP(opcode) == BPF_JUMP_CALL ||
+						(!EBPF_MODE(MI->csh) && i >= 1) ||
+						(EBPF_MODE(MI->csh) && i == 2))
+					push_bpf_off(bpf, MCOperand_getImm(op));
+				else
+					push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+			}
+			else if (MCOperand_isReg(op)) {
+				push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
+			}
+		}
+		return;
+	}
+
+	if (!EBPF_MODE(MI->csh)) {
 		/* In cBPF mode, all registers in operands are accessed as read */
-		/* or, eBPF's jmp class also contains no write-acceseed registers */
 		for (i = 0; i < mc_op_count; i++) {
 			op = MCInst_getOperand(MI, i);
 			if (MCOperand_isImm(op))
@@ -164,23 +198,24 @@ static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
 	}
 }
 
-static void BPF_printOperand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
+static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 {
 	char buf[32];
-	unsigned opcode = MCInst_getOpcode(MI);
 
 	switch (op->type) {
 	case BPF_OP_INVALID:
 		SStream_concat(O, "invalid");
 		break;
+	case BPF_OP_REG:
+		SStream_concat(O, BPF_reg_name((csh)MI->csh, op->reg));
+		break;
 	case BPF_OP_IMM:
-		if (BPF_CLASS(opcode) == BPF_CLASS_JMP)
-			SStream_concat(O, "+");
 		sprintf(buf, "0x%lx", op->imm);
 		SStream_concat(O, buf);
 		break;
-	case BPF_OP_REG:
-		SStream_concat(O, BPF_reg_name((csh)MI->csh, op->reg));
+	case BPF_OP_OFF:
+		sprintf(buf, "+0x%x", op->off);
+		SStream_concat(O, buf);
 		break;
 	case BPF_OP_MEM:
 		SStream_concat(O, "[");
@@ -233,13 +268,13 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 	MCInst_setOpcodePub(MI, insn.id);
 
 	SStream_concat(O, BPF_insn_name((csh)MI->csh, insn.id));
-	BPF_convertOperands(MI, &bpf);
+	convert_operands(MI, &bpf);
 	for (i = 0; i < bpf.op_count; i++) {
 		if (i == 0)
 			SStream_concat(O, "\t");
 		else
 			SStream_concat(O, ", ");
-		BPF_printOperand(MI, O, &bpf.operands[i]);
+		print_operand(MI, O, &bpf.operands[i]);
 	}
 
 #ifndef CAPSTONE_DIET

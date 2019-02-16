@@ -20,6 +20,7 @@ typedef enum bpf_op_type {
 
 	BPF_OP_REG,
 	BPF_OP_IMM,
+	BPF_OP_OFF,
 	BPF_OP_MEM,
 	BPF_OP_MMEM,	///< M[k] in cBPF
 	BPF_OP_MSH,	///< corresponds to cBPF's BPF_MSH mode
@@ -69,6 +70,7 @@ typedef struct cs_bpf_op {
 	union {
 		uint8_t reg;	///< register value for REG operand
 		uint64_t imm;	///< immediate value IMM operand
+		uint32_t off;	///< offset value, used in jump class
 		bpf_op_mem mem;	///< base/index/scale/disp value for MEM operand
 		/* cBPF only */
 		uint32_t mmem;	///< M[k] in cBPF

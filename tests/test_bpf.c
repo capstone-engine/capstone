@@ -62,11 +62,14 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 		case BPF_OP_INVALID:
 			printf("\t\toperands[%u].type: INVALID\n", i);
 			break;
+		case BPF_OP_REG:
+			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(cs_handle, op->reg));
+			break;
 		case BPF_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm);
 			break;
-		case BPF_OP_REG:
-			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(cs_handle, op->reg));
+		case BPF_OP_OFF:
+			printf("\t\toperands[%u].type: OFF = +0x%x\n", i, op->off);
 			break;
 		case BPF_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
