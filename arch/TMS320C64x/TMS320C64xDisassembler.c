@@ -272,6 +272,8 @@ static DecodeStatus DecodeMemOperandSc(MCInst *Inst, unsigned Val,
 	else if((base >= TMS320C64X_REG_B0) && (base <= TMS320C64X_REG_B31))
 		base = (base - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 	basereg = getReg(GPRegsDecoderTable, base);
+	if (basereg ==  ~0U)
+		return MCDisassembler_Fail;
 
 	switch(mode) {
 		case 0:
@@ -293,6 +295,8 @@ static DecodeStatus DecodeMemOperandSc(MCInst *Inst, unsigned Val,
 			else if((offset >= TMS320C64X_REG_B0) && (offset <= TMS320C64X_REG_B31))
 				offset = (offset - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 			offsetreg = getReg(GPRegsDecoderTable, offset);
+			if (offsetreg ==  ~0U)
+				return MCDisassembler_Fail;
 			MCOperand_CreateImm0(Inst, (scaled << 19) | (basereg << 12) | (offsetreg << 5) | (mode << 1) | unit);
 			break;
 		default:
