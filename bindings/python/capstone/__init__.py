@@ -829,6 +829,9 @@ class Cs(object):
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
         self._skipdata_cb = (None, None)
+        # store reference to option object to avoid it being freed
+        # because C code uses it by reference
+        self._skipdata_opt = _cs_opt_skipdata()
         self._skipdata = False
 
 
@@ -903,12 +906,11 @@ class Cs(object):
 
     @skipdata_setup.setter
     def skipdata_setup(self, opt):
-        _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
-        _skipdata_opt.mnemonic = _mnem.encode()
-        _skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
-        _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
-        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
+        self._skipdata_opt.mnemonic = _mnem.encode()
+        self._skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
+        self._skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
+        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(self._skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
             raise CsError(status)
 
