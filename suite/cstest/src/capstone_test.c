@@ -270,6 +270,7 @@ int set_function(int arch)
 			break;
 		case CS_ARCH_BPF:
 			function = get_detail_bpf;
+			break;
 		default:
 			return -1;
 	}
