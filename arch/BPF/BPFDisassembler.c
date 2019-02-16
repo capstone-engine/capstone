@@ -27,14 +27,6 @@ static uint32_t read_u32(cs_struct *ud, const uint8_t *code)
 		return ((uint32_t)read_u16(ud, code + 2) << 16) | read_u16(ud, code);
 }
 
-static uint64_t read_u64(cs_struct *ud, const uint8_t *code)
-{
-	if (MODE_IS_BIG_ENDIAN(ud->mode))
-		return ((uint64_t)read_u32(ud, code) << 32) | read_u32(ud, code + 4);
-	else
-		return ((uint64_t)read_u32(ud, code + 4) << 32) | read_u32(ud, code);
-}
-
 ///< Malloc bpf_internal, also checks if code_len is large enough.
 static bpf_internal *alloc_bpf_internal(size_t code_len)
 {
@@ -80,13 +72,13 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 	bpf->op = (uint16_t)code[0];
 
 	// eBPF has one 16-byte instruction: BPF_LD | BPF_DW | BPF_IMM,
-	// in this case imm is fetched from the next 8-byte block.
+	// in this case imm is combined with next 8-byte block's imm.
 	if (bpf->op == (BPF_CLASS_LD | BPF_SIZE_DW | BPF_MODE_IMM)) {
 		if (code_len < 16) {
 			cs_mem_free(bpf);
 			return NULL;
 		}
-		bpf->k = read_u64(ud, code + 8);
+		bpf->k = read_u32(ud, code + 4) | (((uint64_t)read_u32(ud, code + 12)) << 32);
 		bpf->insn_size = 16;
 	}
 	else {
