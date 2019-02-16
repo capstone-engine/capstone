@@ -140,6 +140,7 @@ typedef enum bpf_insn {
 	BPF_INS_LDXW,	///< eBPF only
 	BPF_INS_LDXH,	///< eBPF only
 	BPF_INS_LDXB,	///< eBPF only
+	BPF_INS_LDXDW,	///< eBPF only
 
 	///< Store
 	BPF_INS_STW,	///< eBPF only

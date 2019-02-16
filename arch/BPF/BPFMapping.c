@@ -76,6 +76,7 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_LDXW, "ldxw" },
 	{ BPF_INS_LDXH, "ldxh" },
 	{ BPF_INS_LDXB, "ldxb" },
+	{ BPF_INS_LDXDW, "ldxdw" },
 
 	{ BPF_INS_STW, "stw" },
 	{ BPF_INS_STH, "sth" },
@@ -165,15 +166,10 @@ static bpf_insn op2insn_ld(unsigned opcode)
 			return BPF_INS_LDX##c;
 
 	switch (BPF_SIZE(opcode)) {
-	case BPF_SIZE_DW:
-		/* ldxdw not exists */
-		if (BPF_CLASS(opcode) == BPF_CLASS_LD)
-			return BPF_INS_LDDW;
-		else
-			break;
 	CASE(W);
 	CASE(H);
 	CASE(B);
+	CASE(DW);
 	}
 #undef CASE
 
