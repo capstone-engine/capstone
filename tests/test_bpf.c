@@ -26,6 +26,10 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 	printf("\n");
 }
 
+static char * ext_name[] = {
+	[BPF_EXT_LEN] = "#len",
+};
+
 static void print_insn_detail(csh cs_handle, cs_insn *ins)
 {
 	cs_bpf *bpf;
@@ -55,6 +59,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 	for (i = 0; i < bpf->op_count; i++) {
 		cs_bpf_op *op = &(bpf->operands[i]);
 		switch (op->type) {
+		case BPF_OP_INVALID:
+			printf("\t\toperands[%u].type: INVALID\n", i);
+			break;
 		case BPF_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm);
 			break;
@@ -67,6 +74,16 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 						i, cs_reg_name(cs_handle, op->mem.base));
 			printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+			break;
+		case BPF_OP_MMEM:
+			printf("\t\toperands[%u].type: MMEM = M[0x%x]\n", i, op->mmem);
+			break;
+		case BPF_OP_MSH:
+			printf("\t\toperands[%u].type: MSH = 4*([0x%x]&0xf)\n", i, op->msh);
+			break;
+		case BPF_OP_EXT:
+			printf("\t\toperands[%u].type: EXT = %s\n", i, ext_name[op->ext]);
+			break;
 		}
 	}
 
@@ -97,26 +114,29 @@ static void test()
 #define CBPF_CODE	"\x94\x09\x00\x00\x37\x13\x03\x00" \
 			"\x87\x00\x00\x00\x00\x00\x00\x00" \
 			"\x07\x00\x00\x00\x00\x00\x00\x00" \
-			"\x16\x00\x00\x00\x00\x00\x00\x00"
+			"\x16\x00\x00\x00\x00\x00\x00\x00" \
+			"\x80\x00\x00\x00\x00\x00\x00\x00"
 
 #define EBPF_CODE	"\x97\x09\x00\x00\x37\x13\x03\x00" \
 			"\xdc\x02\x00\x00\x20\x00\x00\x00" \
 			"\x30\x00\x00\x00\x00\x00\x00\x00" \
-			"\xdb\xa9\x00\x01\x00\x00\x00\x00"
+			"\xdb\x3a\x00\x01\x00\x00\x00\x00" \
+			"\x84\x02\x00\x00\x00\x00\x00\x00" \
+			"\x6d\x33\x17\x02\x00\x00\x00\x00"
 	struct platform platforms[] = {
-		{
-			CS_ARCH_BPF,
-			CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
-			(unsigned char *)EBPF_CODE,
-			sizeof(EBPF_CODE) - 1,
-			"eBPF Le"
-		},
 		{
 			CS_ARCH_BPF,
 			CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC,
 			(unsigned char *)CBPF_CODE,
 			sizeof(CBPF_CODE) - 1,
 			"cBPF Le"
+		},
+		{
+			CS_ARCH_BPF,
+			CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
+			(unsigned char *)EBPF_CODE,
+			sizeof(EBPF_CODE) - 1,
+			"eBPF Le"
 		},
 	};
 	uint64_t address = 0x0;

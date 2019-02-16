@@ -39,21 +39,21 @@ static void push_bpf_mmem(cs_bpf *bpf, uint64_t val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MMEM;
-	op->imm = val;
+	op->mmem = val;
 }
 
 static void push_bpf_msh(cs_bpf *bpf, uint64_t val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MSH;
-	op->imm = val;
+	op->msh = val;
 }
 
 static void push_bpf_ext(cs_bpf *bpf, bpf_ext_type val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_EXT;
-	op->imm = val;
+	op->ext = val;
 }
 
 static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
@@ -66,7 +66,6 @@ static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
 
 	bpf->op_count = 0;
 	bpf->operands = NULL;
-	/* so sad cBPF and eBPF are very different in these case.. */
 	if (BPF_CLASS(opcode) == BPF_CLASS_LD || BPF_CLASS(opcode) == BPF_CLASS_LDX) {
 		switch (BPF_MODE(opcode)) {
 		case BPF_MODE_IMM:
@@ -125,18 +124,43 @@ static void BPF_convertOperands(MCInst *MI, cs_bpf *bpf)
 			push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 		return;
 	}
-	/* convert 1-to-1 */
-	for (i = 0; i < mc_op_count; i++) {
-		op = MCInst_getOperand(MI, i);
-		if (MCOperand_isImm(op)) {
-			push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+	if (!EBPF_MODE(MI->csh) || BPF_CLASS(opcode) == BPF_CLASS_JMP) {
+		/* In cBPF mode, all registers in operands are accessed as read */
+		/* or, eBPF's jmp class also contains no write-acceseed registers */
+		for (i = 0; i < mc_op_count; i++) {
+			op = MCInst_getOperand(MI, i);
+			if (MCOperand_isImm(op))
+				push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+			else if (MCOperand_isReg(op))
+				push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 		}
-		else if (MCOperand_isReg(op)) {
-			// TODO(david942j): decide this register is read and/or written.
-			uint8_t ac = 0;
+		return;
+	}
 
-			push_bpf_reg(bpf, MCOperand_getReg(op), ac);
-		}
+	/* remain cases are: eBPF mode && ALU */
+	/* if (BPF_CLASS(opcode) == BPF_CLASS_ALU || BPF_CLASS(opcode) == BPF_CLASS_ALU64) */
+
+	/* We have three types:
+	 * 1. {l,b}e dst // dst = byteswap(dst)
+	 * 2. neg dst // dst = -dst
+	 * 3. op dst, {src_reg, imm}
+	 * so we can simply check the number of operands,
+	 * only one operand means we are in case 1. and 2.,
+	 * otherwise in case 3.
+	 */
+	if (mc_op_count == 1) {
+		op = MCInst_getOperand(MI, 0);
+		push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ | CS_AC_WRITE);
+	}
+	else { // if (mc_op_count == 2)
+		op = MCInst_getOperand(MI, 0);
+		push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_WRITE);
+
+		op = MCInst_getOperand(MI, 1);
+		if (MCOperand_isImm(op))
+			push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+		else if (MCOperand_isReg(op))
+			push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 	}
 }
 
@@ -145,16 +169,20 @@ static void BPF_printOperand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 	char buf[32];
 	unsigned opcode = MCInst_getOpcode(MI);
 
-	if (op->type == BPF_OP_IMM) {
+	switch (op->type) {
+	case BPF_OP_INVALID:
+		SStream_concat(O, "invalid");
+		break;
+	case BPF_OP_IMM:
 		if (BPF_CLASS(opcode) == BPF_CLASS_JMP)
 			SStream_concat(O, "+");
 		sprintf(buf, "0x%lx", op->imm);
 		SStream_concat(O, buf);
-	}
-	else if (op->type == BPF_OP_REG) {
+		break;
+	case BPF_OP_REG:
 		SStream_concat(O, BPF_reg_name((csh)MI->csh, op->reg));
-	}
-	else if (op->type == BPF_OP_MEM) {
+		break;
+	case BPF_OP_MEM:
 		SStream_concat(O, "[");
 		if (op->mem.base != BPF_REG_INVALID)
 			SStream_concat(O, BPF_reg_name((csh)MI->csh, op->mem.base));
@@ -167,23 +195,24 @@ static void BPF_printOperand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		if (op->mem.base == BPF_REG_INVALID && op->mem.disp == 0) // special case
 			SStream_concat(O, "0x0");
 		SStream_concat(O, "]");
-	}
-	else if (op->type == BPF_OP_MMEM) {
+		break;
+	case BPF_OP_MMEM:
 		SStream_concat(O, "m[");
 		sprintf(buf, "0x%lx", op->imm);
 		SStream_concat(O, buf);
 		SStream_concat(O, "]");
-	}
-	else if (op->type == BPF_OP_MSH) {
+		break;
+	case BPF_OP_MSH:
 		sprintf(buf, "4*([0x%lx]&0xf)", op->imm);
 		SStream_concat(O, buf);
-	}
-	else if (op->type == BPF_OP_EXT) {
+		break;
+	case BPF_OP_EXT:
 		switch (op->imm) {
 		case BPF_EXT_LEN:
 			SStream_concat(O, "#len");
 			break;
 		}
+		break;
 	}
 }
 

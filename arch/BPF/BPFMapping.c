@@ -9,8 +9,8 @@
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
-	// generic groups
 	{ BPF_GRP_INVALID, NULL },
+
 	{ BPF_GRP_LOAD, "load" },
 	{ BPF_GRP_STORE, "store" },
 	{ BPF_GRP_ALU, "alu" },
@@ -156,7 +156,7 @@ const char *BPF_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-static bpf_insn op2insn_LD(unsigned opcode)
+static bpf_insn op2insn_ld(unsigned opcode)
 {
 #define CASE(c) case BPF_SIZE_##c: \
 		if (BPF_CLASS(opcode) == BPF_CLASS_LD) \
@@ -180,7 +180,7 @@ static bpf_insn op2insn_LD(unsigned opcode)
 	return BPF_INS_INVALID;
 }
 
-static bpf_insn op2insn_ST(unsigned opcode)
+static bpf_insn op2insn_st(unsigned opcode)
 {
 	/*
 	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
@@ -209,7 +209,7 @@ static bpf_insn op2insn_ST(unsigned opcode)
 	return BPF_INS_INVALID;
 }
 
-static bpf_insn op2insn_ALU(unsigned opcode)
+static bpf_insn op2insn_alu(unsigned opcode)
 {
 	/* Endian is a special case */
 	if (BPF_OP(opcode) == BPF_ALU_END) {
@@ -256,7 +256,7 @@ static bpf_insn op2insn_ALU(unsigned opcode)
 	return BPF_INS_INVALID;
 }
 
-static bpf_insn op2insn_JMP(unsigned opcode)
+static bpf_insn op2insn_jmp(unsigned opcode)
 {
 #define CASE(c) case BPF_JUMP_##c: return BPF_INS_##c
 	switch (BPF_OP(opcode)) {
@@ -309,34 +309,26 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 	default:	// will never happen
 		break;
 	case BPF_CLASS_LD:
-		id = op2insn_LD(opcode);
-		PUSH_GROUP(BPF_GRP_LOAD);
-		break;
 	case BPF_CLASS_LDX:
-		id = op2insn_LD(opcode);
+		id = op2insn_ld(opcode);
 		PUSH_GROUP(BPF_GRP_LOAD);
 		break;
 	case BPF_CLASS_ST:
-		id = op2insn_ST(opcode);
-		PUSH_GROUP(BPF_GRP_STORE);
-		break;
 	case BPF_CLASS_STX:
-		id = op2insn_ST(opcode);
+		id = op2insn_st(opcode);
 		PUSH_GROUP(BPF_GRP_STORE);
 		break;
 	case BPF_CLASS_ALU:
-		id = op2insn_ALU(opcode);
+		id = op2insn_alu(opcode);
 		PUSH_GROUP(BPF_GRP_ALU);
 		break;
 	case BPF_CLASS_JMP:
 		grp = BPF_GRP_JUMP;
-		id = op2insn_JMP(opcode);
-		if (EBPF_MODE(ud)) {
-			if (id == BPF_INS_CALL)
-				grp = BPF_GRP_CALL;
-			else if (id == BPF_INS_EXIT)
-				grp = BPF_GRP_RETURN;
-		}
+		id = op2insn_jmp(opcode);
+		if (id == BPF_INS_CALL)
+			grp = BPF_GRP_CALL;
+		else if (id == BPF_INS_EXIT)
+			grp = BPF_GRP_RETURN;
 		PUSH_GROUP(grp);
 		break;
 	case BPF_CLASS_RET:
@@ -348,7 +340,7 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 	/* case BPF_CLASS_ALU64: */
 		if (EBPF_MODE(ud)) {
 			// ALU64 in eBPF
-			id = op2insn_ALU(opcode);
+			id = op2insn_alu(opcode);
 			PUSH_GROUP(BPF_GRP_ALU);
 		}
 		else {
@@ -358,20 +350,50 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 				id = BPF_INS_TAX;
 			PUSH_GROUP(BPF_GRP_MISC);
 		}
+		break;
 	}
 
 	insn->id = id;
 #undef PUSH_GROUP
 }
 
+static void sort_and_uniq(cs_regs arr, uint8_t n, uint8_t *new_n)
+{
+	/* arr is always a tiny (usually n < 3) array,
+	 * a simple O(n^2) sort is efficient enough. */
+	int i;
+	int j;
+	int iMin;
+	typeof(arr[0]) tmp;
+
+	/* a modified selection sort for sorting and making unique */
+	for (j = 0; j < n; j++) {
+		/* arr[iMin] will be min(arr[j .. n-1]) */
+		iMin = j;
+		for (i = j + 1; i < n; i++) {
+			if (arr[i] < arr[iMin])
+				iMin = i;
+		}
+		if (j != 0 && arr[iMin] == arr[j - 1]) { // duplicate ele found
+			arr[iMin] = arr[n - 1];
+			--n;
+		}
+		else {
+			tmp = arr[iMin];
+			arr[iMin] = arr[j];
+			arr[j] = tmp;
+		}
+	}
+
+	*new_n = n;
+}
 void BPF_reg_access(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count)
 {
-	//... I need bpf mode..?
 	unsigned i;
 	uint8_t read_count, write_count;
-	cs_bpf *bpf = &(insn->detail->bpf);
+	const cs_bpf *bpf = &(insn->detail->bpf);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -381,29 +403,31 @@ void BPF_reg_access(const cs_insn *insn,
 	memcpy(regs_write, insn->detail->regs_write, write_count * sizeof(insn->detail->regs_write[0]));
 
 	for (i = 0; i < bpf->op_count; i++) {
-		cs_bpf_op *op = &(bpf->operands[i]);
+		const cs_bpf_op *op = &(bpf->operands[i]);
 		switch (op->type) {
 		default:
 			break;
 		case BPF_OP_REG:
 			if (op->access & CS_AC_READ) {
-				regs_read[read_count] = (uint16_t)op->mem.base;
+				regs_read[read_count] = op->reg;
 				read_count++;
 			}
 			if (op->access & CS_AC_WRITE) {
-				regs_write[write_count] = (uint16_t)op->mem.base;
+				regs_write[write_count] = op->reg;
 				write_count++;
 			}
 			break;
 		case BPF_OP_MEM:
 			if (op->mem.base != BPF_REG_INVALID) {
-				regs_read[read_count] = (uint16_t)op->mem.base;
+				regs_read[read_count] = op->mem.base;
 				read_count++;
 			}
 			break;
 		}
 	}
 
+	sort_and_uniq(regs_read, read_count, &read_count);
+	sort_and_uniq(regs_write, write_count, &write_count);
 	*regs_read_count = read_count;
 	*regs_write_count = write_count;
 }

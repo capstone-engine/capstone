@@ -70,6 +70,10 @@ typedef struct cs_bpf_op {
 		uint8_t reg;	///< register value for REG operand
 		uint64_t imm;	///< immediate value IMM operand
 		bpf_op_mem mem;	///< base/index/scale/disp value for MEM operand
+		/* cBPF only */
+		uint32_t mmem;	///< M[k] in cBPF
+		uint32_t msh;	///< corresponds to cBPF's BPF_MSH mode
+		uint32_t ext;	///< cBPF's extension (not eBPF)
 	};
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
