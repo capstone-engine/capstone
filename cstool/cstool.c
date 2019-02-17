@@ -60,6 +60,10 @@ static struct {
 	{ "evm", CS_ARCH_EVM, 0 },
 	{ "wasm", CS_ARCH_WASM, 0 },
 	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
+	{ "bpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "bpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "ebpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "ebpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
 	{ NULL }
 };
 
@@ -77,6 +81,7 @@ void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
 void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
+void print_insn_detail_bpf(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
@@ -222,6 +227,13 @@ static void usage(char *prog)
 		printf("        wasm:      Web Assembly\n");
 	}
 
+	if (cs_support(CS_ARCH_BPF)) {
+		printf("        bpf         Classic BPF\n");
+		printf("        bpfbe       Classic BPF + big endian\n");
+		printf("        ebpf        Extended BPF\n");
+		printf("        ebpfbe      Extended BPF + big endian\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -u show immediates as unsigned\n");
@@ -273,6 +285,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_MOS65XX:
 			print_insn_detail_mos65xx(handle, ins);
+			break;
+		case CS_ARCH_BPF:
+			print_insn_detail_bpf(handle, ins);
 			break;
 		default: break;
 	}
