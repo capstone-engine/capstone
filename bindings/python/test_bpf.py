@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-# Capstone Python bindings test of BPF
-# By david942j <david942jgmail.com>, 2019
+# Capstone Python bindings
+# BPF tests by david942j <david942j@gmail.com>, 2019
 
 from __future__ import print_function
 from capstone import *
@@ -32,47 +32,42 @@ def print_insn_detail(insn):
         print('\tGroups: ' + ' '.join(map(lambda g: insn.group_name(g), insn.groups)))
 
     print("\tOperand count: %u" % len(insn.operands))
-    if len(insn.operands) > 0:
-        c = 0
-        for i in insn.operands:
-            if i.type == BPF_OP_REG:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
-            if i.type == BPF_OP_IMM:
-                print("\t\toperands[%u].type: IMM = %s" % (c, hex(i.imm)[:-1]))
-            if i.type == BPF_OP_OFF:
-                print("\t\toperands[%u].type: OFF = +0x%s" % (c, to_x_32(i.off)))
-            if i.type == BPF_OP_MEM:
-                print("\t\toperands[%u].type: MEM" % c)
-                if i.mem.base != 0:
-                    print("\t\t\toperands[%u].mem.base: REG = %s" \
-                        % (c, insn.reg_name(i.mem.base)))
-                print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                    % (c, to_x_32(i.mem.disp)))
-            if i.type == BPF_OP_MMEM:
-                print("\t\toperands[%u].type: MMEM = 0x%s" % (c, to_x_32(i.mmem)))
-            if i.type == BPF_OP_MSH:
-                print("\t\toperands[%u].type: MSH = 4*([0x%s]&0xf)" % (c, to_x_32(i.msh)))
-            if i.type == BPF_OP_EXT:
-                print("\t\toperands[%u].type: EXT = %s" % (c, ext_name[i.ext]))
-
-            c += 1
+    for c, op in enumerate(insn.operands):
+        print("\t\toperands[%u].type: " % c, end='')
+        if op.type == BPF_OP_REG:
+            print("REG = " + insn.reg_name(op.reg))
+        elif op.type == BPF_OP_IMM:
+            print("IMM = " + hex(op.imm)[:-1])
+        elif op.type == BPF_OP_OFF:
+            print("OFF = +0x" + to_x_32(op.off))
+        elif op.type == BPF_OP_MEM:
+            print("MEM")
+            if op.mem.base != 0:
+                print("\t\t\toperands[%u].mem.base: REG = %s" \
+                    % (c, insn.reg_name(op.mem.base)))
+            print("\t\t\toperands[%u].mem.disp: 0x%s" \
+                % (c, to_x_32(op.mem.disp)))
+        elif op.type == BPF_OP_MMEM:
+            print("MMEM = 0x" + to_x_32(op.mmem))
+        elif op.type == BPF_OP_MSH:
+            print("MSH = 4*([0x%s]&0xf)" % to_x_32(op.msh))
+        elif op.type == BPF_OP_EXT:
+            print("EXT = " + ext_name[op.ext])
 
     (regs_read, regs_write) = insn.regs_access()
 
     if len(regs_read) > 0:
         print("\tRegisters read:", end="")
         for r in regs_read:
-            print(" %s" %(insn.reg_name(r)), end="")
+            print(" %s" % insn.reg_name(r), end="")
         print("")
 
     if len(regs_write) > 0:
         print("\tRegisters modified:", end="")
         for r in regs_write:
-            print(" %s" %(insn.reg_name(r)), end="")
+            print(" %s" % insn.reg_name(r), end="")
         print("")
 
-
-# ## Test class Cs
 def test_class():
 
     for (arch, mode, code, comment, syntax) in all_tests:

@@ -48,7 +48,7 @@ typedef enum bpf_reg {
 	BPF_REG_R9,
 	BPF_REG_R10,
 
-	BPF_REG_ENDING,		// <-- mark the end of the list or registers
+	BPF_REG_ENDING,
 } bpf_reg;
 
 /// Instruction's operand referring to memory
@@ -198,7 +198,7 @@ typedef enum bpf_insn_group {
 	BPF_GRP_RETURN,
 	BPF_GRP_MISC, ///< cBPF only
 
-	BPF_GRP_ENDING,   ///< <-- mark the end of the list of groups
+	BPF_GRP_ENDING,
 } bpf_insn_group;
 
 #ifdef __cplusplus

@@ -1,6 +1,8 @@
 /* Capstone Disassembly Engine */
 /* BPF Backend by david942j <david942j@gmail.com>, 2019 */
 
+#include <capstone/platform.h>
+
 #include "BPFConstants.h"
 #include "BPFInstPrinter.h"
 #include "BPFMapping.h"
@@ -11,7 +13,7 @@ static cs_bpf_op *expand_bpf_operands(cs_bpf *bpf)
 	return &bpf->operands[bpf->op_count++];
 }
 
-static void push_bpf_reg(cs_bpf *bpf, unsigned val, uint8_t ac_mode) {
+static void push_op_reg(cs_bpf *bpf, bpf_op_type val, uint8_t ac_mode) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_REG;
@@ -19,14 +21,14 @@ static void push_bpf_reg(cs_bpf *bpf, unsigned val, uint8_t ac_mode) {
 	op->access = ac_mode;
 }
 
-static void push_bpf_imm(cs_bpf *bpf, uint64_t val) {
+static void push_op_imm(cs_bpf *bpf, uint64_t val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_IMM;
 	op->imm = val;
 }
 
-static void push_bpf_off(cs_bpf *bpf, uint32_t val) {
+static void push_op_off(cs_bpf *bpf, uint32_t val) {
 
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
@@ -34,7 +36,7 @@ static void push_bpf_off(cs_bpf *bpf, uint32_t val) {
 	op->off = val;
 }
 
-static void push_bpf_mem(cs_bpf *bpf, bpf_reg reg, uint64_t val) {
+static void push_op_mem(cs_bpf *bpf, bpf_reg reg, uint32_t val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MEM;
@@ -42,21 +44,21 @@ static void push_bpf_mem(cs_bpf *bpf, bpf_reg reg, uint64_t val) {
 	op->mem.disp = val;
 }
 
-static void push_bpf_mmem(cs_bpf *bpf, uint64_t val) {
+static void push_op_mmem(cs_bpf *bpf, uint32_t val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MMEM;
 	op->mmem = val;
 }
 
-static void push_bpf_msh(cs_bpf *bpf, uint64_t val) {
+static void push_op_msh(cs_bpf *bpf, uint32_t val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MSH;
 	op->msh = val;
 }
 
-static void push_bpf_ext(cs_bpf *bpf, bpf_ext_type val) {
+static void push_op_ext(cs_bpf *bpf, bpf_ext_type val) {
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_EXT;
@@ -75,35 +77,35 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	if (BPF_CLASS(opcode) == BPF_CLASS_LD || BPF_CLASS(opcode) == BPF_CLASS_LDX) {
 		switch (BPF_MODE(opcode)) {
 		case BPF_MODE_IMM:
-			push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, 0)));
+			push_op_imm(bpf, MCOperand_getImm(MCInst_getOperand(MI, 0)));
 			break;
 		case BPF_MODE_ABS:
 			op = MCInst_getOperand(MI, 0);
-			push_bpf_mem(bpf, BPF_REG_INVALID, (uint64_t)MCOperand_getImm(op));
+			push_op_mem(bpf, BPF_REG_INVALID, MCOperand_getImm(op));
 			break;
 		case BPF_MODE_IND:
 			op = MCInst_getOperand(MI, 0);
 			op2 = MCInst_getOperand(MI, 1);
-			push_bpf_mem(bpf, MCOperand_getReg(op), (uint64_t)MCOperand_getImm(op2));
+			push_op_mem(bpf, MCOperand_getReg(op), MCOperand_getImm(op2));
 			break;
 		case BPF_MODE_MEM:
 			if (EBPF_MODE(MI->csh)) {
 				/* ldx{w,h,b,dw} dst, [src+off] */
-				push_bpf_reg(bpf, MCOperand_getReg(MCInst_getOperand(MI, 0)), CS_AC_WRITE);
+				push_op_reg(bpf, MCOperand_getReg(MCInst_getOperand(MI, 0)), CS_AC_WRITE);
 				op = MCInst_getOperand(MI, 1);
 				op2 = MCInst_getOperand(MI, 2);
-				push_bpf_mem(bpf, MCOperand_getReg(op), (uint64_t)MCOperand_getImm(op2));
+				push_op_mem(bpf, MCOperand_getReg(op), MCOperand_getImm(op2));
 			}
 			else {
-				push_bpf_mmem(bpf, (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, 0)));
+				push_op_mmem(bpf, MCOperand_getImm(MCInst_getOperand(MI, 0)));
 			}
 			break;
 		case BPF_MODE_LEN:
-			push_bpf_ext(bpf, BPF_EXT_LEN);
+			push_op_ext(bpf, BPF_EXT_LEN);
 			break;
 		case BPF_MODE_MSH:
 			op = MCInst_getOperand(MI, 0);
-			push_bpf_msh(bpf, (uint64_t)MCOperand_getImm(op));
+			push_op_msh(bpf, MCOperand_getImm(op));
 			break;
 		/* case BPF_MODE_XADD: // not exists */
 		}
@@ -112,7 +114,7 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	if (BPF_CLASS(opcode) == BPF_CLASS_ST || BPF_CLASS(opcode) == BPF_CLASS_STX) {
 		if (!EBPF_MODE(MI->csh)) {
 			// cBPF has only one case - st* M[k]
-			push_bpf_mmem(bpf, (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, 0)));
+			push_op_mmem(bpf, MCOperand_getImm(MCInst_getOperand(MI, 0)));
 			return;
 		}
 		/* eBPF has two cases:
@@ -122,12 +124,12 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 		 */
 		op = MCInst_getOperand(MI, 0);
 		op2 = MCInst_getOperand(MI, 1);
-		push_bpf_mem(bpf, MCOperand_getReg(op), (uint64_t)MCOperand_getImm(op2));
+		push_op_mem(bpf, MCOperand_getReg(op), MCOperand_getImm(op2));
 		op = MCInst_getOperand(MI, 2);
 		if (MCOperand_isImm(op))
-			push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+			push_op_imm(bpf, MCOperand_getImm(op));
 		else if (MCOperand_isReg(op))
-			push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
+			push_op_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 		return;
 	}
 
@@ -146,12 +148,12 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 						BPF_OP(opcode) == BPF_JUMP_CALL ||
 						(!EBPF_MODE(MI->csh) && i >= 1) ||
 						(EBPF_MODE(MI->csh) && i == 2))
-					push_bpf_off(bpf, MCOperand_getImm(op));
+					push_op_off(bpf, MCOperand_getImm(op));
 				else
-					push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+					push_op_imm(bpf, MCOperand_getImm(op));
 			}
 			else if (MCOperand_isReg(op)) {
-				push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
+				push_op_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 			}
 		}
 		return;
@@ -162,9 +164,9 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 		for (i = 0; i < mc_op_count; i++) {
 			op = MCInst_getOperand(MI, i);
 			if (MCOperand_isImm(op))
-				push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+				push_op_imm(bpf, MCOperand_getImm(op));
 			else if (MCOperand_isReg(op))
-				push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
+				push_op_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 		}
 		return;
 	}
@@ -173,26 +175,26 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	/* if (BPF_CLASS(opcode) == BPF_CLASS_ALU || BPF_CLASS(opcode) == BPF_CLASS_ALU64) */
 
 	/* We have three types:
-	 * 1. {l,b}e dst // dst = byteswap(dst)
-	 * 2. neg dst // dst = -dst
-	 * 3. op dst, {src_reg, imm} // dst = dst op src
+	 * 1. {l,b}e dst               // dst = byteswap(dst)
+	 * 2. neg dst                  // dst = -dst
+	 * 3. <op> dst, {src_reg, imm} // dst = dst <op> src
 	 * so we can simply check the number of operands,
-	 * only one operand means we are in case 1. and 2.,
+	 * exactly one operand means we are in case 1. and 2.,
 	 * otherwise in case 3.
 	 */
 	if (mc_op_count == 1) {
 		op = MCInst_getOperand(MI, 0);
-		push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ | CS_AC_WRITE);
+		push_op_reg(bpf, MCOperand_getReg(op), CS_AC_READ | CS_AC_WRITE);
 	}
 	else { // if (mc_op_count == 2)
 		op = MCInst_getOperand(MI, 0);
-		push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ | CS_AC_WRITE);
+		push_op_reg(bpf, MCOperand_getReg(op), CS_AC_READ | CS_AC_WRITE);
 
 		op = MCInst_getOperand(MI, 1);
 		if (MCOperand_isImm(op))
-			push_bpf_imm(bpf, (uint64_t)MCOperand_getImm(op));
+			push_op_imm(bpf, MCOperand_getImm(op));
 		else if (MCOperand_isReg(op))
-			push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
+			push_op_reg(bpf, MCOperand_getReg(op), CS_AC_READ);
 	}
 }
 
@@ -208,7 +210,7 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		SStream_concat(O, BPF_reg_name((csh)MI->csh, op->reg));
 		break;
 	case BPF_OP_IMM:
-		sprintf(buf, "0x%lx", op->imm);
+		sprintf(buf, "0x%" PRIx64, op->imm);
 		SStream_concat(O, buf);
 		break;
 	case BPF_OP_OFF:
@@ -222,7 +224,7 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		if (op->mem.disp != 0) {
 			if (op->mem.base != BPF_REG_INVALID)
 				SStream_concat(O, "+");
-			sprintf(buf, "%#x", op->mem.disp);
+			sprintf(buf, "0x%x", op->mem.disp);
 			SStream_concat(O, buf);
 		}
 		if (op->mem.base == BPF_REG_INVALID && op->mem.disp == 0) // special case
@@ -231,16 +233,16 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		break;
 	case BPF_OP_MMEM:
 		SStream_concat(O, "m[");
-		sprintf(buf, "0x%lx", op->imm);
+		sprintf(buf, "0x%x", op->mmem);
 		SStream_concat(O, buf);
 		SStream_concat(O, "]");
 		break;
 	case BPF_OP_MSH:
-		sprintf(buf, "4*([0x%lx]&0xf)", op->imm);
+		sprintf(buf, "4*([0x%x]&0xf)", op->msh);
 		SStream_concat(O, buf);
 		break;
 	case BPF_OP_EXT:
-		switch (op->imm) {
+		switch (op->ext) {
 		case BPF_EXT_LEN:
 			SStream_concat(O, "#len");
 			break;
@@ -260,8 +262,8 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 	cs_insn insn;
 	cs_bpf bpf;
 
-	/* set pubOpcode */
 	insn.detail = NULL;
+	/* set pubOpcode as instruction id */
 	BPF_get_insn_id((cs_struct*)MI->csh, &insn, MCInst_getOpcode(MI));
 	MCInst_setOpcodePub(MI, insn.id);
 

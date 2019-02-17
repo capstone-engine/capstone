@@ -72,7 +72,7 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 	bpf->op = (uint16_t)code[0];
 
 	// eBPF has one 16-byte instruction: BPF_LD | BPF_DW | BPF_IMM,
-	// in this case imm is combined with next 8-byte block's imm.
+	// in this case imm is combined with the next block's imm.
 	if (bpf->op == (BPF_CLASS_LD | BPF_SIZE_DW | BPF_MODE_IMM)) {
 		if (code_len < 16) {
 			cs_mem_free(bpf);
@@ -117,7 +117,7 @@ static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		 *  +-----+-----------+--------------------+
 		 *  | ldb |    [k]    |       [x+k]        |
 		 *  | ldh |    [k]    |       [x+k]        |
-		 *  +-----+----+------+------+-----+-------+
+		 *  +-----+-----------+--------------------+
 		 */
 		if (BPF_SIZE(bpf->op) == BPF_SIZE_DW)
 			return false;
@@ -256,36 +256,12 @@ static bool decodeStore(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 
 static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
-	/*
-	 *  +----------------+--------+--------------------+
-	 *  |   4 bits       |  1 bit |      3 bits        |
-	 *  | operation code | source | instruction class  |
-	 *  +----------------+--------+--------------------+
-	 *  (MSB)                                      (LSB)
-	 */
-
-	if (!EBPF_MODE(ud)) {
-		if (BPF_OP(bpf->op) > BPF_ALU_XOR)
-			return false;
-	}
-	else {
-		if (BPF_OP(bpf->op) > BPF_ALU_END)
-			return false;
-	}
-
-	/* ALU64 class doesn't have ENDian */
-	/* ENDian's imm must be one of 16, 32, 64 */
-	if (BPF_OP(bpf->op) == BPF_ALU_END) {
-		if (BPF_CLASS(bpf->op) == BPF_CLASS_ALU64)
-			return false;
-		if (bpf->k != 16 && bpf->k != 32 && bpf->k != 64)
-			return false;
-	}
-
 	/* Set MI->Operands */
 
 	/* cBPF */
 	if (!EBPF_MODE(ud)) {
+		if (BPF_OP(bpf->op) > BPF_ALU_XOR)
+			return false;
 		/* cBPF's NEG has no operands */
 		if (BPF_OP(bpf->op) == BPF_ALU_NEG)
 			return true;
@@ -297,6 +273,17 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	}
 
 	/* eBPF */
+
+	if (BPF_OP(bpf->op) > BPF_ALU_END)
+		return false;
+	/* ALU64 class doesn't have ENDian */
+	/* ENDian's imm must be one of 16, 32, 64 */
+	if (BPF_OP(bpf->op) == BPF_ALU_END) {
+		if (BPF_CLASS(bpf->op) == BPF_CLASS_ALU64)
+			return false;
+		if (bpf->k != 16 && bpf->k != 32 && bpf->k != 64)
+			return false;
+	}
 
 	/* - op dst, imm
 	 * - op dst, src
@@ -310,7 +297,7 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	if (BPF_OP(bpf->op) == BPF_ALU_NEG)
 		return true;
 	if (BPF_OP(bpf->op) == BPF_ALU_END) {
-		/* ENDian instructions use BPF_SRC to decide using little or big endian */
+		/* bpf->k must be one of 16, 32, 64 */
 		MCInst_setOpcode(MI, MCInst_getOpcode(MI) | (bpf->k << 4));
 		return true;
 	}
@@ -408,7 +395,6 @@ static bool decodeMISC(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 {
 	cs_detail *detail;
-	uint8_t opcode;
 
 	detail = MI->flat_insn->detail;
 	// initialize detail
@@ -416,12 +402,10 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		memset(detail, 0, offsetof(cs_detail, bpf) + sizeof(cs_bpf));
 	}
 
-	opcode = bpf->op;
-
 	MCInst_clear(MI);
-	MCInst_setOpcode(MI, opcode);
+	MCInst_setOpcode(MI, bpf->op);
 
-	switch (BPF_CLASS(opcode)) {
+	switch (BPF_CLASS(bpf->op)) {
 	default: /* should never happen */
 		return false;
 	case BPF_CLASS_LD:
@@ -449,7 +433,7 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 }
 
 bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
-		MCInst *instr, uint16_t *size, uint64_t _address, void *info)
+		MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
 	cs_struct *cs;
 	bpf_internal *bpf;
@@ -461,7 +445,7 @@ bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		bpf = fetch_cbpf(cs, code, code_len);
 	if (bpf == NULL)
 		return false;
-	if (!getInstruction((cs_struct*)ud, instr, bpf)) {
+	if (!getInstruction(cs, instr, bpf)) {
 		cs_mem_free(bpf);
 		return false;
 	}

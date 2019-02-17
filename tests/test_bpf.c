@@ -52,40 +52,40 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 	bpf = &(ins->detail->bpf);
 
-	int i;
+	unsigned i;
 
 	printf("\tOperand count: %u\n", bpf->op_count);
-
 	for (i = 0; i < bpf->op_count; i++) {
 		cs_bpf_op *op = &(bpf->operands[i]);
+		printf("\t\toperands[%u].type: ", i);
 		switch (op->type) {
 		case BPF_OP_INVALID:
-			printf("\t\toperands[%u].type: INVALID\n", i);
+			printf("INVALID\n");
 			break;
 		case BPF_OP_REG:
-			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(cs_handle, op->reg));
+			printf("REG = %s\n", cs_reg_name(handle, op->reg));
 			break;
 		case BPF_OP_IMM:
-			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm);
+			printf("IMM = 0x%" PRIx64 "\n", op->imm);
 			break;
 		case BPF_OP_OFF:
-			printf("\t\toperands[%u].type: OFF = +0x%x\n", i, op->off);
+			printf("OFF = +0x%x\n", op->off);
 			break;
 		case BPF_OP_MEM:
-			printf("\t\toperands[%u].type: MEM\n", i);
+			printf("MEM\n");
 			if (op->mem.base != BPF_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-						i, cs_reg_name(cs_handle, op->mem.base));
+						i, cs_reg_name(handle, op->mem.base));
 			printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 			break;
 		case BPF_OP_MMEM:
-			printf("\t\toperands[%u].type: MMEM = M[0x%x]\n", i, op->mmem);
+			printf("MMEM = M[0x%x]\n", op->mmem);
 			break;
 		case BPF_OP_MSH:
-			printf("\t\toperands[%u].type: MSH = 4*([0x%x]&0xf)\n", i, op->msh);
+			printf("MSH = 4*([0x%x]&0xf)\n", op->msh);
 			break;
 		case BPF_OP_EXT:
-			printf("\t\toperands[%u].type: EXT = %s\n", i, ext_name[op->ext]);
+			printf("EXT = %s\n", ext_name[op->ext]);
 			break;
 		}
 	}
@@ -96,17 +96,15 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 			regs_write, &regs_write_count)) {
 		if (regs_read_count) {
 			printf("\tRegisters read:");
-			for(i = 0; i < regs_read_count; i++) {
+			for(i = 0; i < regs_read_count; i++)
 				printf(" %s", cs_reg_name(cs_handle, regs_read[i]));
-			}
 			printf("\n");
 		}
 
 		if (regs_write_count) {
 			printf("\tRegisters modified:");
-			for(i = 0; i < regs_write_count; i++) {
+			for(i = 0; i < regs_write_count; i++)
 				printf(" %s", cs_reg_name(cs_handle, regs_write[i]));
-			}
 			printf("\n");
 		}
 	}

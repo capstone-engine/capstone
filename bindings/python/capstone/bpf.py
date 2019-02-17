@@ -1,5 +1,5 @@
-# Capstone Python bindings of BPF
-# By david942j <david942j@gmail.com>, 2019
+# Capstone Python bindings
+# BPF by david942j <david942j@gmail.com>, 2019
 
 import ctypes
 from . import copy_ctypes_list

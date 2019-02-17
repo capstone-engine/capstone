@@ -501,8 +501,6 @@ void BPF_reg_access(const cs_insn *insn,
 		}
 	}
 
-	sort_and_uniq(regs_read, read_count, &read_count);
-	sort_and_uniq(regs_write, write_count, &write_count);
-	*regs_read_count = read_count;
-	*regs_write_count = write_count;
+	sort_and_uniq(regs_read, read_count, regs_read_count);
+	sort_and_uniq(regs_write, write_count, regs_write_count);
 }

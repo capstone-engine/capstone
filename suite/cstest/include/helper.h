@@ -17,8 +17,6 @@
 #define X86_32 1
 #define X86_64 2
 
-#define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
-
 char **split(char *str, char *delim, int *size);
 void print_strs(char **list_str, int size);
 void free_strs(char **list_str, int size);
