@@ -280,6 +280,8 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 #ifndef CAPSTONE_DIET
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->bpf = bpf;
+		return;
 	}
 #endif
+	cs_mem_free(bpf.operands);
 }
