@@ -87,12 +87,12 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 			break;
 		case BPF_MODE_ABS:
 			op = MCInst_getOperand(MI, 0);
-			push_op_mem(bpf, BPF_REG_INVALID, MCOperand_getImm(op));
+			push_op_mem(bpf, BPF_REG_INVALID, (uint32_t)MCOperand_getImm(op));
 			break;
 		case BPF_MODE_IND:
 			op = MCInst_getOperand(MI, 0);
 			op2 = MCInst_getOperand(MI, 1);
-			push_op_mem(bpf, MCOperand_getReg(op), MCOperand_getImm(op2));
+			push_op_mem(bpf, MCOperand_getReg(op), (uint32_t)MCOperand_getImm(op2));
 			break;
 		case BPF_MODE_MEM:
 			if (EBPF_MODE(MI->csh)) {
@@ -100,10 +100,10 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 				push_op_reg(bpf, MCOperand_getReg(MCInst_getOperand(MI, 0)), CS_AC_WRITE);
 				op = MCInst_getOperand(MI, 1);
 				op2 = MCInst_getOperand(MI, 2);
-				push_op_mem(bpf, MCOperand_getReg(op), MCOperand_getImm(op2));
+				push_op_mem(bpf, MCOperand_getReg(op), (uint32_t)MCOperand_getImm(op2));
 			}
 			else {
-				push_op_mmem(bpf, MCOperand_getImm(MCInst_getOperand(MI, 0)));
+				push_op_mmem(bpf, (uint32_t)MCOperand_getImm(MCInst_getOperand(MI, 0)));
 			}
 			break;
 		case BPF_MODE_LEN:
@@ -111,7 +111,7 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 			break;
 		case BPF_MODE_MSH:
 			op = MCInst_getOperand(MI, 0);
-			push_op_msh(bpf, MCOperand_getImm(op));
+			push_op_msh(bpf, (uint32_t)MCOperand_getImm(op));
 			break;
 		/* case BPF_MODE_XADD: // not exists */
 		}
@@ -120,7 +120,7 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	if (BPF_CLASS(opcode) == BPF_CLASS_ST || BPF_CLASS(opcode) == BPF_CLASS_STX) {
 		if (!EBPF_MODE(MI->csh)) {
 			// cBPF has only one case - st* M[k]
-			push_op_mmem(bpf, MCOperand_getImm(MCInst_getOperand(MI, 0)));
+			push_op_mmem(bpf, (uint32_t)MCOperand_getImm(MCInst_getOperand(MI, 0)));
 			return;
 		}
 		/* eBPF has two cases:
@@ -130,7 +130,7 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 		 */
 		op = MCInst_getOperand(MI, 0);
 		op2 = MCInst_getOperand(MI, 1);
-		push_op_mem(bpf, MCOperand_getReg(op), MCOperand_getImm(op2));
+		push_op_mem(bpf, MCOperand_getReg(op), (uint32_t)MCOperand_getImm(op2));
 		op = MCInst_getOperand(MI, 2);
 		if (MCOperand_isImm(op))
 			push_op_imm(bpf, MCOperand_getImm(op));
@@ -154,7 +154,7 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 						BPF_OP(opcode) == BPF_JUMP_CALL ||
 						(!EBPF_MODE(MI->csh) && i >= 1) ||
 						(EBPF_MODE(MI->csh) && i == 2))
-					push_op_off(bpf, MCOperand_getImm(op));
+					push_op_off(bpf, (uint32_t)MCOperand_getImm(op));
 				else
 					push_op_imm(bpf, MCOperand_getImm(op));
 			}
@@ -206,8 +206,6 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 
 static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 {
-	char buf[32];
-
 	switch (op->type) {
 	case BPF_OP_INVALID:
 		SStream_concat(O, "invalid");
@@ -216,12 +214,10 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		SStream_concat(O, BPF_reg_name((csh)MI->csh, op->reg));
 		break;
 	case BPF_OP_IMM:
-		sprintf(buf, "0x%" PRIx64, op->imm);
-		SStream_concat(O, buf);
+		SStream_concat(O, "0x%" PRIx64, op->imm);
 		break;
 	case BPF_OP_OFF:
-		sprintf(buf, "+0x%x", op->off);
-		SStream_concat(O, buf);
+		SStream_concat(O, "+0x%x", op->off);
 		break;
 	case BPF_OP_MEM:
 		SStream_concat(O, "[");
@@ -230,22 +226,17 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		if (op->mem.disp != 0) {
 			if (op->mem.base != BPF_REG_INVALID)
 				SStream_concat(O, "+");
-			sprintf(buf, "0x%x", op->mem.disp);
-			SStream_concat(O, buf);
+			SStream_concat(O, "0x%x", op->mem.disp);
 		}
 		if (op->mem.base == BPF_REG_INVALID && op->mem.disp == 0) // special case
 			SStream_concat(O, "0x0");
 		SStream_concat(O, "]");
 		break;
 	case BPF_OP_MMEM:
-		SStream_concat(O, "m[");
-		sprintf(buf, "0x%x", op->mmem);
-		SStream_concat(O, buf);
-		SStream_concat(O, "]");
+		SStream_concat(O, "m[0x%x]", op->mmem);
 		break;
 	case BPF_OP_MSH:
-		sprintf(buf, "4*([0x%x]&0xf)", op->msh);
-		SStream_concat(O, buf);
+		SStream_concat(O, "4*([0x%x]&0xf)", op->msh);
 		break;
 	case BPF_OP_EXT:
 		switch (op->ext) {

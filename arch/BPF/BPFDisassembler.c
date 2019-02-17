@@ -298,7 +298,7 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		return true;
 	if (BPF_OP(bpf->op) == BPF_ALU_END) {
 		/* bpf->k must be one of 16, 32, 64 */
-		MCInst_setOpcode(MI, MCInst_getOpcode(MI) | (bpf->k << 4));
+		MCInst_setOpcode(MI, MCInst_getOpcode(MI) | ((uint32_t)bpf->k << 4));
 		return true;
 	}
 
