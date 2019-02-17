@@ -20,7 +20,7 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
+		printf(" 0x%02x", *c & 0xff);
 	}
 
 	printf("\n");
@@ -43,9 +43,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 	if (ins->detail->groups_count) {
 		int j;
 
-		printf("\tGroups: ");
+		printf("\tGroups:");
 		for(j = 0; j < ins->detail->groups_count; j++) {
-			printf("%s ", cs_group_name(handle, ins->detail->groups[j]));
+			printf(" %s", cs_group_name(handle, ins->detail->groups[j]));
 		}
 		printf("\n");
 	}
@@ -110,6 +110,7 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 			printf("\n");
 		}
 	}
+	puts("");
 }
 
 static void test()
@@ -168,7 +169,6 @@ static void test()
 				printf("0x%" PRIx64 ":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(handle, &insn[j]);
 			}
-			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
@@ -179,8 +179,6 @@ static void test()
 			printf("ERROR: Failed to disasm given code!\n");
 			abort();
 		}
-
-		printf("\n");
 
 		cs_close(&handle);
 	}
