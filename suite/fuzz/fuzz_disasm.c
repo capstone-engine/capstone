@@ -189,14 +189,24 @@ static struct platform platforms[] = {
         CS_MODE_BIG_ENDIAN,
         "tms320c64x"
     },
-#if CS_NEXT_VERSION >= 5
     {
         //item 28
         CS_ARCH_WASM,
         (cs_mode)0,
         "WASM"
     },
-#endif
+    {
+        //item 29
+        CS_ARCH_BPF,
+        CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC,
+        "cBPF"
+    },
+    {
+        //item 30
+        CS_ARCH_BPF,
+        CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
+        "eBPF"
+    },
 };
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
