@@ -439,7 +439,7 @@ static void sort_and_uniq(cs_regs arr, uint8_t n, uint8_t *new_n)
 	int i;
 	int j;
 	int iMin;
-	typeof(arr[0]) tmp;
+	int tmp;
 
 	/* a modified selection sort for sorting and making unique */
 	for (j = 0; j < n; j++) {
