@@ -177,7 +177,7 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	/* We have three types:
 	 * 1. {l,b}e dst // dst = byteswap(dst)
 	 * 2. neg dst // dst = -dst
-	 * 3. op dst, {src_reg, imm}
+	 * 3. op dst, {src_reg, imm} // dst = dst op src
 	 * so we can simply check the number of operands,
 	 * only one operand means we are in case 1. and 2.,
 	 * otherwise in case 3.
@@ -188,7 +188,7 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	}
 	else { // if (mc_op_count == 2)
 		op = MCInst_getOperand(MI, 0);
-		push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_WRITE);
+		push_bpf_reg(bpf, MCOperand_getReg(op), CS_AC_READ | CS_AC_WRITE);
 
 		op = MCInst_getOperand(MI, 1);
 		if (MCOperand_isImm(op))
