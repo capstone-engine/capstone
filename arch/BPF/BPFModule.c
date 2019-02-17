@@ -25,9 +25,8 @@ cs_err BPF_global_init(cs_struct *ud)
 
 cs_err BPF_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
-	if (type == CS_OPT_MODE) {
+	if (type == CS_OPT_MODE)
 		handle->mode = (cs_mode)value;
-	}
 
 	return CS_ERR_OK;
 }

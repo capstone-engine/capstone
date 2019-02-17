@@ -9,14 +9,14 @@ static csh handle;
 struct platform {
 	cs_arch arch;
 	cs_mode mode;
-	unsigned char *code;
+	const unsigned char *code;
 	size_t size;
-	char *comment;
+	const char *comment;
 };
 
-static void print_string_hex(const char *comment, unsigned char *str, size_t len)
+static void print_string_hex(const char *comment, const unsigned char *str, size_t len)
 {
-	unsigned char *c;
+	const unsigned char *c;
 
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
@@ -26,7 +26,7 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 	printf("\n");
 }
 
-static char * ext_name[] = {
+static const char * ext_name[] = {
 	[BPF_EXT_LEN] = "#len",
 };
 
@@ -35,6 +35,7 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 	cs_bpf *bpf;
 	cs_regs regs_read, regs_write;
 	uint8_t regs_read_count, regs_write_count;
+	unsigned i;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
@@ -44,15 +45,12 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 		int j;
 
 		printf("\tGroups:");
-		for(j = 0; j < ins->detail->groups_count; j++) {
+		for(j = 0; j < ins->detail->groups_count; j++)
 			printf(" %s", cs_group_name(handle, ins->detail->groups[j]));
-		}
 		printf("\n");
 	}
 
 	bpf = &(ins->detail->bpf);
-
-	unsigned i;
 
 	printf("\tOperand count: %u\n", bpf->op_count);
 	for (i = 0; i < bpf->op_count; i++) {

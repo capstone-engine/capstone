@@ -13,7 +13,8 @@ static cs_bpf_op *expand_bpf_operands(cs_bpf *bpf)
 	return &bpf->operands[bpf->op_count++];
 }
 
-static void push_op_reg(cs_bpf *bpf, bpf_op_type val, uint8_t ac_mode) {
+static void push_op_reg(cs_bpf *bpf, bpf_op_type val, uint8_t ac_mode)
+{
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_REG;
@@ -21,22 +22,24 @@ static void push_op_reg(cs_bpf *bpf, bpf_op_type val, uint8_t ac_mode) {
 	op->access = ac_mode;
 }
 
-static void push_op_imm(cs_bpf *bpf, uint64_t val) {
+static void push_op_imm(cs_bpf *bpf, uint64_t val)
+{
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_IMM;
 	op->imm = val;
 }
 
-static void push_op_off(cs_bpf *bpf, uint32_t val) {
-
+static void push_op_off(cs_bpf *bpf, uint32_t val)
+{
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_OFF;
 	op->off = val;
 }
 
-static void push_op_mem(cs_bpf *bpf, bpf_reg reg, uint32_t val) {
+static void push_op_mem(cs_bpf *bpf, bpf_reg reg, uint32_t val)
+{
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MEM;
@@ -44,21 +47,24 @@ static void push_op_mem(cs_bpf *bpf, bpf_reg reg, uint32_t val) {
 	op->mem.disp = val;
 }
 
-static void push_op_mmem(cs_bpf *bpf, uint32_t val) {
+static void push_op_mmem(cs_bpf *bpf, uint32_t val)
+{
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MMEM;
 	op->mmem = val;
 }
 
-static void push_op_msh(cs_bpf *bpf, uint32_t val) {
+static void push_op_msh(cs_bpf *bpf, uint32_t val)
+{
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MSH;
 	op->msh = val;
 }
 
-static void push_op_ext(cs_bpf *bpf, bpf_ext_type val) {
+static void push_op_ext(cs_bpf *bpf, bpf_ext_type val)
+{
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_EXT;

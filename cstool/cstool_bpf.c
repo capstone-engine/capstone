@@ -3,12 +3,15 @@
 #include <capstone/capstone.h>
 #include <capstone/platform.h>
 
-static char * ext_name[] = {
+static const char * ext_name[] = {
 	[BPF_EXT_LEN] = "#len",
 };
 
+void print_insn_detail_bpf(csh handle, cs_insn *ins);
+
 void print_insn_detail_bpf(csh handle, cs_insn *ins)
 {
+	unsigned i;
 	cs_bpf *bpf;
 	cs_regs regs_read, regs_write;
 	uint8_t regs_read_count, regs_write_count;
@@ -18,8 +21,6 @@ void print_insn_detail_bpf(csh handle, cs_insn *ins)
 		return;
 
 	bpf = &(ins->detail->bpf);
-
-	unsigned i;
 
 	printf("\tOperand count: %u\n", bpf->op_count);
 
