@@ -277,6 +277,79 @@ static bpf_insn op2insn_jmp(unsigned opcode)
 	return BPF_INS_INVALID;
 }
 
+static void update_regs_access(cs_struct *ud, cs_detail *detail,
+		bpf_insn insn_id, unsigned int opcode)
+{
+	if (insn_id == BPF_INS_INVALID)
+		return;
+#define PUSH_READ(r) do { \
+		detail->regs_read[detail->regs_read_count] = r; \
+		detail->regs_read_count++; \
+	} while (0)
+#define PUSH_WRITE(r) do { \
+		detail->regs_write[detail->regs_write_count] = r; \
+		detail->regs_write_count++; \
+	} while (0)
+	/*
+	 * In eBPF mode, only these instructions have implicit registers access:
+	 * - ld{w,h,b,dw} * // w: r0
+	 * - exit // r: r0
+	 */
+	if (EBPF_MODE(ud)) {
+		switch (insn_id) {
+		default:
+			break;
+		case BPF_INS_LDW:
+		case BPF_INS_LDH:
+		case BPF_INS_LDB:
+		case BPF_INS_LDDW:
+			PUSH_WRITE(BPF_REG_R0);
+			break;
+		case BPF_INS_EXIT:
+			PUSH_READ(BPF_REG_R0);
+			break;
+		}
+		return;
+	}
+
+	/* cBPF mode */
+	switch (BPF_CLASS(opcode)) {
+	default:
+		break;
+	case BPF_CLASS_LD:
+		PUSH_WRITE(BPF_REG_A);
+		break;
+	case BPF_CLASS_LDX:
+		PUSH_WRITE(BPF_REG_X);
+		break;
+	case BPF_CLASS_ST:
+		PUSH_READ(BPF_REG_A);
+		break;
+	case BPF_CLASS_STX:
+		PUSH_READ(BPF_REG_X);
+		break;
+	case BPF_CLASS_ALU:
+		PUSH_READ(BPF_REG_A);
+		PUSH_WRITE(BPF_REG_A);
+		break;
+	case BPF_CLASS_JMP:
+		if (insn_id != BPF_INS_JMP) // except the unconditional jump
+			PUSH_READ(BPF_REG_A);
+		break;
+	/* case BPF_CLASS_RET: */
+	case BPF_CLASS_MISC:
+		if (insn_id == BPF_INS_TAX) {
+			PUSH_READ(BPF_REG_A);
+			PUSH_WRITE(BPF_REG_X);
+		}
+		else {
+			PUSH_READ(BPF_REG_X);
+			PUSH_WRITE(BPF_REG_A);
+		}
+		break;
+	}
+}
+
 /*
  * 1. Convert opcode(id) to BPF_INS_*
  * 2. Set regs_read/regs_write/groups
@@ -351,6 +424,12 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 
 	insn->id = id;
 #undef PUSH_GROUP
+
+#ifndef CAPSTONE_DIET
+	if (detail) {
+		update_regs_access(ud, detail, id, opcode);
+	}
+#endif
 }
 
 static void sort_and_uniq(cs_regs arr, uint8_t n, uint8_t *new_n)
