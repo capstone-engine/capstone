@@ -70,8 +70,8 @@ typedef struct cs_bpf_op {
 	union {
 		uint8_t reg;	///< register value for REG operand
 		uint64_t imm;	///< immediate value IMM operand
-		uint32_t off;	///< offset value, used in jump class
-		bpf_op_mem mem;	///< base/index/scale/disp value for MEM operand
+		uint32_t off;	///< offset value, used in jump & call
+		bpf_op_mem mem;	///< base/disp value for MEM operand
 		/* cBPF only */
 		uint32_t mmem;	///< M[k] in cBPF
 		uint32_t msh;	///< corresponds to cBPF's BPF_MSH mode
@@ -87,7 +87,7 @@ typedef struct cs_bpf_op {
 /// Instruction structure
 typedef struct cs_bpf {
 	uint8_t op_count;
-	cs_bpf_op *operands;
+	cs_bpf_op operands[4];
 } cs_bpf;
 
 /// BPF instruction

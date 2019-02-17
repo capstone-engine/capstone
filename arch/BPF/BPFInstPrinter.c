@@ -7,9 +7,8 @@
 
 static cs_bpf_op *expand_bpf_operands(cs_bpf *bpf)
 {
-	bpf->op_count++;
-	bpf->operands = cs_mem_realloc(bpf->operands, bpf->op_count * sizeof(cs_bpf_op));
-	return &bpf->operands[bpf->op_count - 1];
+	/* assert(bpf->op_count < 3); */
+	return &bpf->operands[bpf->op_count++];
 }
 
 static void push_bpf_reg(cs_bpf *bpf, unsigned val, uint8_t ac_mode) {
@@ -73,7 +72,6 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	unsigned i;
 
 	bpf->op_count = 0;
-	bpf->operands = NULL;
 	if (BPF_CLASS(opcode) == BPF_CLASS_LD || BPF_CLASS(opcode) == BPF_CLASS_LDX) {
 		switch (BPF_MODE(opcode)) {
 		case BPF_MODE_IMM:
@@ -280,8 +278,6 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 #ifndef CAPSTONE_DIET
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->bpf = bpf;
-		return;
 	}
 #endif
-	cs_mem_free(bpf.operands);
 }
