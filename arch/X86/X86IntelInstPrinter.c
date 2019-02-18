@@ -721,6 +721,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = val;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = 1;
 
 #ifndef CAPSTONE_DIET
 		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
