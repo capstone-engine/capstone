@@ -1,3 +1,11 @@
+!# issue 1389
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x73,0xf9,0x01 == pslldq xmm1, 1 ; operands[1].size: 1
+
+!# issue 1389
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_DETAIL
+0x66,0x0f,0x73,0xf9,0x01 == pslldq $1, %xmm1 ; operands[0].size: 1
+
 !# issue 0
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_UNSIGNED
 0x66,0x83,0xc0,0x80 == add ax, 0xff80
