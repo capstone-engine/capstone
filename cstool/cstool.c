@@ -393,6 +393,10 @@ int main(int argc, char **argv)
 					printf("mos65xx=1 ");
 				}
 
+				if (cs_support(CS_ARCH_BPF)) {
+					printf("bpf=1 ");
+				}
+
 				if (cs_support(CS_SUPPORT_DIET)) {
 					printf("diet=1 ");
 				}
