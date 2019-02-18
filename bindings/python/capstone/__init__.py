@@ -31,12 +31,12 @@ __all__ = [
     'CS_ARCH_SPARC',
     'CS_ARCH_SYSZ',
     'CS_ARCH_XCORE',
-    'CS_ARCH_MOS65XX',
     'CS_ARCH_M68K',
     'CS_ARCH_TMS320C64X',
     'CS_ARCH_M680X',
     'CS_ARCH_EVM',
     'CS_ARCH_BPF',
+    'CS_ARCH_MOS65XX',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
