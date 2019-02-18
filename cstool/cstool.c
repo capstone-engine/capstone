@@ -56,7 +56,7 @@ static struct {
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "evm", CS_ARCH_EVM, 0 },
-    { "mos65xx", CS_ARCH_MOS65XX, 0 },
+	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
 	{ NULL }
 };
 

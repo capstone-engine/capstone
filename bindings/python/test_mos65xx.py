@@ -3,7 +3,7 @@
 # Capstone Python bindings, by Sebastian Macke <Sebastian Macke>
 from __future__ import print_function
 from capstone import *
-from capstone.mips import *
+from capstone.mos65xx import *
 from xprint import to_hex, to_x
 
 MOS65XX_CODE = b"\x0d\x34\x12\x00\x81\x65\x87\x6c\x01\x00\x85\xFF\x10\x00\x19\x42\x42\x00\x49\x42"
@@ -40,11 +40,11 @@ def print_insn_detail(insn):
         c = -1
         for i in insn.operands:
             c += 1
-            if i.type == MIPS_OP_REG:
+            if i.type == MOS65XX_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
-            if i.type == MIPS_OP_IMM:
+            if i.type == MOS65XX_OP_IMM:
                 print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
-            if i.type == MIPS_OP_MEM:
+            if i.type == MOS65XX_OP_MEM:
                 print("\t\toperands[%u].type: MEM = 0x%s" % (c, to_x(i.mem)))
 
 
