@@ -1423,8 +1423,8 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 		case CS_ARCH_EVM:
 			break;
 		case CS_ARCH_MOS65XX:
-			for (i = 0; i < insn->detail->m680x.op_count; i++)
-				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
+			for (i = 0; i < insn->detail->mos65xx.op_count; i++)
+				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_WASM:

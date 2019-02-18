@@ -69,7 +69,7 @@ int main()
 	}
 
 	if (cs_support(CS_ARCH_MOS65XX)) {
-		printf("mox65xx=1 ");
+		printf("mos65xx=1 ");
 	}
 
 	if (cs_support(CS_SUPPORT_DIET)) {
