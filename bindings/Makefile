@@ -13,6 +13,7 @@ TEST_SPARC = $(TMPDIR)/test_sparc
 TEST_SYSZ = $(TMPDIR)/test_systemz
 TEST_X86 = $(TMPDIR)/test_x86
 TEST_XCORE = $(TMPDIR)/test_xcore
+TEST_BPF = $(TMPDIR)/test_bpf
 
 PYTHON2 = python
 
@@ -42,6 +43,7 @@ expected:
 	../tests/test_systemz > $(TEST_SYSZ)_e
 	../tests/test_x86 > $(TEST_X86)_e
 	../tests/test_xcore > $(TEST_XCORE)_e
+	../tests/test_bpf > $(TEST_BPF)_e
 
 python: FORCE
 	cd python && $(MAKE)
@@ -56,6 +58,7 @@ python: FORCE
 	$(PYTHON2) python/test_systemz.py > $(TEST_SYSZ)_o
 	$(PYTHON2) python/test_x86.py > $(TEST_X86)_o
 	$(PYTHON2) python/test_xcore.py > $(TEST_XCORE)_o
+	$(PYTHON2) python/test_bpf.py > $(TEST_BPF)_o
 	$(MAKE) test_diff
 
 java: FORCE
@@ -85,6 +88,7 @@ test_diff: FORCE
 	$(DIFF) $(TEST_SYSZ)_e $(TEST_SYSZ)_o
 	$(DIFF) $(TEST_X86)_e $(TEST_X86)_o
 	$(DIFF) $(TEST_XCORE)_e $(TEST_XCORE)_o
+	$(DIFF) $(TEST_BPF)_e $(TEST_BPF)_o
 
 clean:
 	rm -rf $(TMPDIR)

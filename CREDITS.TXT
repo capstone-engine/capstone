@@ -81,3 +81,4 @@ Tong Yu(Spike) & Kai Jern, Lau (xwings): WASM architecture.
 Sebastian Macke: MOS65XX architecture
 Ilya Leoshkevich: SystemZ architecture improvements.
 Do Minh Tuan: Regression testing tool (cstest)
+david942j: BPF (both classic and extended) architecture.

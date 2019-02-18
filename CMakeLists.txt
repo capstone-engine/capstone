@@ -28,8 +28,8 @@ option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -115,6 +115,7 @@ set(HEADERS_COMMON
     include/capstone/tms320c64x.h
     include/capstone/m680x.h
     include/capstone/mos65xx.h
+    include/capstone/bpf.h
     include/capstone/platform.h
     )
 
@@ -475,6 +476,24 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_MOS65XX_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_mos65xx.c)
 endif ()
 
+if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_BPF_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_BPF)
+    set(SOURCES_BPF
+        arch/BPF/BPFDisassembler.c
+        arch/BPF/BPFInstPrinter.c
+        arch/BPF/BPFMapping.c
+        arch/BPF/BPFModule.c
+	)
+    set(HEADERS_BPF
+        arch/BPF/BPFConstants.h
+        arch/BPF/BPFDisassembler.h
+        arch/BPF/BPFInstPrinter.h
+        arch/BPF/BPFMapping.h
+        arch/BPF/BPFModule.h
+    )
+    set(TEST_SOURCES ${TEST_SOURCES} test_bpf.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
@@ -495,6 +514,7 @@ set(ALL_SOURCES
     ${SOURCES_EVM}
     ${SOURCES_WASM}
     ${SOURCES_MOS65XX}
+    ${SOURCES_BPF}
     )
 
 set(ALL_HEADERS
@@ -514,6 +534,7 @@ set(ALL_HEADERS
     ${HEADERS_EVM}
     ${HEADERS_WASM}
     ${HEADERS_MOS65XX}
+    ${HEADERS_BPF}
     )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
@@ -596,6 +617,7 @@ source_group("Source\\M680X" FILES ${SOURCES_M680X})
 source_group("Source\\EVM" FILES ${SOURCES_EVM})
 source_group("Source\\WASM" FILES ${SOURCES_WASM})
 source_group("Source\\MOS65XX" FILES ${SOURCES_MOS65XX})
+source_group("Source\\BPF" FILES ${SOURCES_BPF})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -613,6 +635,7 @@ source_group("Include\\M680X" FILES ${HEADERS_MC680X})
 source_group("Include\\EVM" FILES ${HEADERS_EVM})
 source_group("Include\\WASM" FILES ${HEADERS_WASM})
 source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
+source_group("Include\\BPF" FILES ${HEADERS_BPF})
 
 ### test library 64bit routine:
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
