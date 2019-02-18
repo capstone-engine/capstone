@@ -224,8 +224,8 @@ static void usage(char *prog)
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -u show immediates as unsigned\n");
 	printf("        -s decode in SKIPDATA mode\n");
+	printf("        -u show immediates as unsigned\n");
 	printf("        -v show version & Capstone core build info\n\n");
 }
 
