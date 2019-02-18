@@ -219,7 +219,7 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_WASM)) {
-		printf("        wasm:      Web Assembly\n");
+		printf("        wasm:       Web Assembly\n");
 	}
 
 	printf("\nExtra options:\n");
