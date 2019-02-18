@@ -583,6 +583,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = val;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = 1;
 		MI->flat_insn->detail->x86.op_count++;
 	}
 }
