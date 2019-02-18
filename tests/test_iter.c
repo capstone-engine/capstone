@@ -82,7 +82,7 @@ static void test()
 #ifdef CAPSTONE_HAS_MOS65XX
 #define MOS65XX_CODE "\x0d\x34\x12\x08\x09\xFF\x10\x80\x20\x00\x00\x98"
 #endif
-
+#define EBPF_CODE "\x97\x09\x00\x00\x37\x13\x03\x00\xdc\x02\x00\x00\x20\x00\x00\x00\x30\x00\x00\x00\x00\x00\x00\x00\xdb\x3a\x00\x01\x00\x00\x00\x00\x84\x02\x00\x00\x00\x00\x00\x00\x6d\x33\x17\x02\x00\x00\x00\x00"
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
@@ -231,6 +231,15 @@ static void test()
 			(unsigned char*)MOS65XX_CODE,
 			sizeof(MOS65XX_CODE) - 1,
 			"MOS65XX"
+		},
+#endif
+#ifdef CAPSTONE_HAS_BPF
+		{
+			CS_ARCH_BPF,
+			CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
+			(unsigned char*) EBPF_CODE,
+			sizeof(EBPF_CODE) - 1,
+			"eBPF"
 		},
 #endif
 	};
