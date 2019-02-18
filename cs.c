@@ -209,13 +209,13 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #else
 	NULL,
 #endif
-#ifdef CAPSTONE_HAS_WASM
-	WASM_option,
+#ifdef CAPSTONE_HAS_MOS65XX
+	MOS65XX_option,
 #else
 	NULL,
 #endif
-#ifdef CAPSTONE_HAS_MOS65XX
-	MOS65XX_option,
+#ifdef CAPSTONE_HAS_WASM
+	WASM_option,
 #else
 	NULL,
 #endif
@@ -296,13 +296,13 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #else
 	0,
 #endif
-#ifdef CAPSTONE_HAS_WASM
-	0,
-#else
-    0,
-#endif
 #ifdef CAPSTONE_HAS_MOS65XX
 	~(CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_WASM
+	0,
 #else
 	0,
 #endif
@@ -352,14 +352,14 @@ static uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_EVM
 	| (1 << CS_ARCH_EVM)
 #endif
+#ifdef CAPSTONE_HAS_MOS65XX
+	| (1 << CS_ARCH_MOS65XX)
+#endif
 #ifdef CAPSTONE_HAS_WASM
 	| (1 << CS_ARCH_WASM)
 #endif
-#ifdef CAPSTONE_HAS_MOS65XX
-    | (1 << CS_ARCH_MOS65XX)
-#endif
 #ifdef CAPSTONE_HAS_BPF
-    | (1 << CS_ARCH_BPF)
+	| (1 << CS_ARCH_BPF)
 #endif
 ;
 
