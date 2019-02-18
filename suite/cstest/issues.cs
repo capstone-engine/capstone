@@ -1,3 +1,19 @@
+!# issue 0
+!# CS_ARCH_X86, CS_MODE_64, None
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue 0
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue 0
+!# CS_ARCH_X86, CS_MODE_32, None
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue 0
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0x1000: 0xeb,0xfe == jmp 0x1000
+
 !# issue 1389
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x66,0x0f,0x73,0xf9,0x01 == pslldq xmm1, 1 ; operands[1].size: 1
