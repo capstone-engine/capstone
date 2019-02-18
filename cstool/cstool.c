@@ -211,7 +211,7 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_MOS65XX)) {
-		printf("        mox65xx     MOS65XX family\n");
+		printf("        mos65xx     MOS65XX family\n");
 	}
 
 	printf("\nExtra options:\n");
@@ -360,7 +360,7 @@ int main(int argc, char **argv)
 				}
 
 				if (cs_support(CS_ARCH_MOS65XX)) {
-					printf("mox65xx=1 ");
+					printf("mos65xx=1 ");
 				}
 
 				if (cs_support(CS_SUPPORT_DIET)) {
