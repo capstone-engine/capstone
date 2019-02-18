@@ -329,7 +329,7 @@ static void test()
 			(unsigned char*)WASM_CODE,
 			sizeof(WASM_CODE) - 1,
 			"WASM",
-        },
+		},
 #endif
 #ifdef CAPSTONE_HAS_MOS65XX
 		{
