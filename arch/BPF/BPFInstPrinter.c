@@ -146,12 +146,10 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 				/* decide the imm is BPF_OP_IMM or BPF_OP_OFF type here */
 				/*
 				 * 1. ja +off
-				 * 2. call +off // eBPF
-				 * 3. j {x,k}, +jt, +jf // cBPF
-				 * 4. j dst_reg, {src_reg, k}, +off // eBPF
+				 * 2. j {x,k}, +jt, +jf // cBPF
+				 * 3. j dst_reg, {src_reg, k}, +off // eBPF
 				 */
 				if (BPF_OP(opcode) == BPF_JUMP_JA ||
-						BPF_OP(opcode) == BPF_JUMP_CALL ||
 						(!EBPF_MODE(MI->csh) && i >= 1) ||
 						(EBPF_MODE(MI->csh) && i == 2))
 					push_op_off(bpf, (uint32_t)MCOperand_getImm(op));

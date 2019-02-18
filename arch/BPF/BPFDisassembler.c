@@ -337,9 +337,8 @@ static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 			return false;
 
 		/* No operands for exit */
-		if (BPF_OP(bpf->op) == BPF_JUMP_EXIT) {
+		if (BPF_OP(bpf->op) == BPF_JUMP_EXIT)
 			return bpf->op == (BPF_CLASS_JMP | BPF_JUMP_EXIT);
-		}
 		if (BPF_OP(bpf->op) == BPF_JUMP_CALL) {
 			if (bpf->op != (BPF_CLASS_JMP | BPF_JUMP_CALL))
 				return false;
