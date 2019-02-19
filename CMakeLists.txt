@@ -594,15 +594,9 @@ source_group("Include\\EVM" FILES ${HEADERS_EVM})
 source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 
 ### test library 64bit routine:
-get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
+include("GNUInstallDirs")
 
-if (NOT APPLE AND "${LIB64}" STREQUAL "TRUE")
-    set(LIBSUFFIX 64)
-else()
-    set(LIBSUFFIX "")
-endif()
-
-set(INSTALL_LIB_DIR     lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
+set(INSTALL_LIB_DIR     ${CMAKE_INSTALL_LIBDIR} CACHE PATH "Installation directory for libraries")
 mark_as_advanced(INSTALL_LIB_DIR)
 
 ## installation
@@ -629,5 +623,5 @@ add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
 install(TARGETS cstool DESTINATION bin)
-install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION lib{LIBSUFFIX}/pkgconfig)
+install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif ()
