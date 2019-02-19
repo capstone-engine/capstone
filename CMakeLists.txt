@@ -629,5 +629,5 @@ add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
 install(TARGETS cstool DESTINATION bin)
-install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION lib/pkgconfig)
+install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION lib{LIBSUFFIX}/pkgconfig)
 endif ()
