@@ -596,9 +596,6 @@ source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 ### test library 64bit routine:
 include("GNUInstallDirs")
 
-set(INSTALL_LIB_DIR     ${CMAKE_INSTALL_LIBDIR} CACHE PATH "Installation directory for libraries")
-mark_as_advanced(INSTALL_LIB_DIR)
-
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
 configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
@@ -606,15 +603,15 @@ configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
             RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-            ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
     install(TARGETS capstone-shared
             RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-            ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 endif ()
 
 if (CAPSTONE_BUILD_SHARED AND CAPSTONE_BUILD_CSTOOL)
