@@ -86,6 +86,7 @@ Tests:
 - tests/test_iter.c
 - tests/test_newarch.c
 - suite/fuzz/fuzz_disasm.c: add the architecture and its modes to the list of fuzzed platforms
+- suite/capstone_get_setup.c
 
 Bindings:
 - bindings/Makefile
