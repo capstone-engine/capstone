@@ -1,3 +1,19 @@
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xfa == endbr64
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1e,0xfa == endbr64
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xfb == endbr32
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1e,0xfb == endbr32
+
 !# issue x64 jmp
 !# CS_ARCH_X86, CS_MODE_64, None
 0x1000: 0xeb,0xfe == jmp 0x1000
