@@ -1,8 +1,48 @@
-!# issue 0
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xfa == endbr64
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1e,0xfa == endbr64
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xfb == endbr32
+
+!# issue 1129
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1e,0xfb == endbr32
+
+!# issue x64 jmp
+!# CS_ARCH_X86, CS_MODE_64, None
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue x64att jmp
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue x32 jmp
+!# CS_ARCH_X86, CS_MODE_32, None
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue x32att jmp
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0x1000: 0xeb,0xfe == jmp 0x1000
+
+!# issue 1389
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x73,0xf9,0x01 == pslldq xmm1, 1 ; operands[1].size: 1
+
+!# issue 1389
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_DETAIL
+0x66,0x0f,0x73,0xf9,0x01 == pslldq $1, %xmm1 ; operands[0].size: 1
+
+!# issue x64 unsigned
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_UNSIGNED
 0x66,0x83,0xc0,0x80 == add ax, 0xff80
 
-!# issue 0
+!# issue x64att unsigned
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_UNSIGNED
 0x66,0x83,0xc0,0x80 == addw $0xff80, %ax
 

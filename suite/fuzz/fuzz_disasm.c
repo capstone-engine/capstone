@@ -177,14 +177,36 @@ static struct platform platforms[] = {
         (cs_mode)0,
         "EVM"
     },
-#ifdef CAPSTONE_HAS_MOS65XX
     {
         //item 26
         CS_ARCH_MOS65XX,
         (cs_mode)0,
         "MOS65XX"
     },
-#endif
+    {
+        //item 27
+        CS_ARCH_TMS320C64X,
+        CS_MODE_BIG_ENDIAN,
+        "tms320c64x"
+    },
+    {
+        //item 28
+        CS_ARCH_WASM,
+        (cs_mode)0,
+        "WASM"
+    },
+    {
+        //item 29
+        CS_ARCH_BPF,
+        CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC,
+        "cBPF"
+    },
+    {
+        //item 30
+        CS_ARCH_BPF,
+        CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
+        "eBPF"
+    },
 };
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {

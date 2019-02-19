@@ -13,7 +13,8 @@ single_dict arches[] = {
 	{"CS_ARCH_SYSZ", CS_ARCH_SYSZ},
 	{"CS_ARCH_X86", CS_ARCH_X86},
 	{"CS_ARCH_XCORE", CS_ARCH_XCORE},
-	{"CS_ARCH_M68K", CS_ARCH_M68K}
+	{"CS_ARCH_M68K", CS_ARCH_M68K},
+	{"CS_ARCH_BPF", CS_ARCH_BPF},
 };
 
 single_dict modes[] = {
@@ -49,7 +50,9 @@ single_dict modes[] = {
 	{"CS_MODE_M680X_6809", CS_MODE_M680X_6809},
 	{"CS_MODE_M680X_6811", CS_MODE_M680X_6811},
 	{"CS_MODE_M680X_CPU12", CS_MODE_M680X_CPU12},
-	{"CS_MODE_M680X_HCS08", CS_MODE_M680X_HCS08}	
+	{"CS_MODE_M680X_HCS08", CS_MODE_M680X_HCS08},
+	{"CS_MODE_BPF_CLASSIC", CS_MODE_BPF_CLASSIC},
+	{"CS_MODE_BPF_EXTENDED", CS_MODE_BPF_EXTENDED},
 };
 
 double_dict options[] = {
@@ -93,7 +96,7 @@ double_dict options[] = {
 	{"CS_MODE_M680X_6811", CS_OPT_MODE, CS_MODE_M680X_6811},
 	{"CS_MODE_M680X_CPU12", CS_OPT_MODE, CS_MODE_M680X_CPU12},
 	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08},
-	{"CS_OPT_UNSIGNED", CS_OPT_UNSIGNED, CS_OPT_ON}
+	{"CS_OPT_UNSIGNED", CS_OPT_UNSIGNED, CS_OPT_ON},
 };
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
@@ -264,6 +267,9 @@ int set_function(int arch)
 			break;
 		case CS_ARCH_TMS320C64X:
 			function = get_detail_tms320c64x;
+			break;
+		case CS_ARCH_BPF:
+			function = get_detail_bpf;
 			break;
 		default:
 			return -1;

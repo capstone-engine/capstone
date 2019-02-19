@@ -108,6 +108,7 @@ struct MCInst {
 	uint8_t popcode_adjust;   // Pseudo X86 instruction adjust
 	char assembly[8];	// for special instruction, so that we dont need printer
 	unsigned char evm_data[32];	// for EVM PUSH operand
+	cs_wasm_op wasm_data;    // for WASM operand
 };
 
 void MCInst_Init(MCInst *inst);

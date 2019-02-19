@@ -68,7 +68,9 @@ tests/test_m68k
 tests/test_tms320c64x
 tests/test_m680x
 tests/test_evm
+tests/test_wasm
 tests/test_mos65xx
+tests/test_bpf
 
 # regress binaries
 suite/regress/invalid_read_in_print_operand
@@ -98,6 +100,7 @@ build*/
 *.backup
 *.VC.db
 *.VC.opendb
+.vscode/
 
 # CMake build directories
 build*/
