@@ -28,13 +28,13 @@ typedef enum wasm_op_type {
 
 typedef struct cs_wasm_brtable {
 	uint32_t length;
-	uint32_t *target;
+	uint64_t address;
 	uint32_t default_target;
 } cs_wasm_brtable;
 
 typedef struct cs_wasm_op {
 	wasm_op_type type;
-	uint8_t size;
+	uint32_t size;
 	union {
 		int8_t int7;
 		uint32_t varuint32;
@@ -49,7 +49,7 @@ typedef struct cs_wasm_op {
 /// Instruction structure
 typedef struct cs_wasm {
 	uint8_t op_count;
-	cs_wasm_op *operands;
+	cs_wasm_op operands[2];
 } cs_wasm;
 
 /// WASM instruction
