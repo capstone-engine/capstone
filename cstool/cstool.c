@@ -8,6 +8,8 @@
 
 #include <capstone/capstone.h>
 
+void print_string_hex(const char *comment, unsigned char *str, size_t len);
+
 static struct {
 	const char *name;
 	cs_arch arch;
@@ -56,7 +58,12 @@ static struct {
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "evm", CS_ARCH_EVM, 0 },
+	{ "wasm", CS_ARCH_WASM, 0 },
 	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
+	{ "bpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "bpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "ebpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "ebpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
 	{ NULL }
 };
 
@@ -72,7 +79,9 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
+void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
+void print_insn_detail_bpf(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
@@ -135,7 +144,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-u|-d|-s|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-d|-s|-u|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -214,10 +223,21 @@ static void usage(char *prog)
 		printf("        mos65xx     MOS65XX family\n");
 	}
 
+	if (cs_support(CS_ARCH_WASM)) {
+		printf("        wasm:       Web Assembly\n");
+	}
+
+	if (cs_support(CS_ARCH_BPF)) {
+		printf("        bpf         Classic BPF\n");
+		printf("        bpfbe       Classic BPF + big endian\n");
+		printf("        ebpf        Extended BPF\n");
+		printf("        ebpfbe      Extended BPF + big endian\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -u show immediates as unsigned\n");
 	printf("        -s decode in SKIPDATA mode\n");
+	printf("        -u show immediates as unsigned\n");
 	printf("        -v show version & Capstone core build info\n\n");
 }
 
@@ -260,8 +280,14 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_EVM:
 			print_insn_detail_evm(handle, ins);
 			break;
+		case CS_ARCH_WASM:
+			print_insn_detail_wasm(handle, ins);
+			break;
 		case CS_ARCH_MOS65XX:
 			print_insn_detail_mos65xx(handle, ins);
+			break;
+		case CS_ARCH_BPF:
+			print_insn_detail_bpf(handle, ins);
 			break;
 		default: break;
 	}
@@ -359,8 +385,16 @@ int main(int argc, char **argv)
 					printf("evm=1 ");
 				}
 
+				if (cs_support(CS_ARCH_WASM)) {
+					printf("wasm=1 ");
+				}
+
 				if (cs_support(CS_ARCH_MOS65XX)) {
 					printf("mos65xx=1 ");
+				}
+
+				if (cs_support(CS_ARCH_BPF)) {
+					printf("bpf=1 ");
 				}
 
 				if (cs_support(CS_SUPPORT_DIET)) {

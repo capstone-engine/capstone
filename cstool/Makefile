@@ -28,7 +28,7 @@ endif
 all: $(TARGET)
 
 $(TARGET): ../$(LIBCAPSTONE) $(OBJECTS)
-ifeq ($(V),0)
+ifeq ($(V), 0)
 	$(call log,LINK,$@)
 	@${CC} $(OBJECTS) $(LDFLAGS) -o $@
 else
@@ -39,7 +39,7 @@ clean:
 	${RM} -rf *.o $(TARGET)
 
 %.o: %.c
-ifeq ($(V),0)
+ifeq ($(V), 0)
 	$(call log,CC,$@)
 	@${CC} $(CFLAGS) -c $< -o $@
 else
