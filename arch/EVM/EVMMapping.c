@@ -16,8 +16,8 @@ static cs_evm insns[256] = {
 };
 #endif
 
-// look for @id in @insns, given its size in @max. first time call will update @cache.
-// return 0 if not found
+// look for @id in @insns, given its size in @max.
+// return -1 if not found
 static int evm_insn_find(cs_evm *insns, unsigned int max, unsigned int id)
 {
 	if (id >= max)
@@ -35,21 +35,16 @@ void EVM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	insn->id = id;
 #ifndef CAPSTONE_DIET
-	int i = evm_insn_find(insns, ARR_SIZE(insns), id);
-	//printf(">> id = %u\n", id);
-	if (i >= 0) {
+	if (evm_insn_find(insns, ARR_SIZE(insns), id) > 0) {
 		if (h->detail) {
-			cs_struct handle;
-			handle.detail = h->detail;
-
-			memcpy(&insn->detail->evm, &insns[i], sizeof(insns[i]));
+			memcpy(&insn->detail->evm, &insns[id], sizeof(insns[id]));
 		}
 	}
 #endif
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[] = {
+static name_map insn_name_maps[256] = {
 	{ EVM_INS_STOP, "stop" },
 	{ EVM_INS_ADD, "add" },
 	{ EVM_INS_MUL, "mul" },
@@ -327,8 +322,6 @@ static name_map group_name_maps[] = {
 	{ EVM_GRP_INVALID, NULL },
 	{ EVM_GRP_JUMP,	"jump" },
 	// special groups
-	{ EVM_GRP_MATH,	"math" },
-
 	{ EVM_GRP_MATH,	"math" },
 	{ EVM_GRP_STACK_WRITE, "stack_write" },
 	{ EVM_GRP_STACK_READ, "stack_read" },

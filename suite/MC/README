@@ -4,3 +4,7 @@ Format of input files:
 
 # ARCH, MODE, OPTION
 hexcode = assembly
+
+Format of issue file:
+# ARCH, MODE, OPTION
+hexcode = assembly | regs_read | regs_read_count | regs_write | regs_write_count | groups | groups_count

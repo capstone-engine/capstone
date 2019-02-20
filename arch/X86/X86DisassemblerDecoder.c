@@ -1313,7 +1313,6 @@ static int getID(struct InternalInstruction *insn)
 		}
 	}
 
-
 	/*
 	 * Absolute moves need special handling.
 	 * -For 16-bit mode because the meaning of the AdSize and OpSize prefixes are
@@ -1563,7 +1562,6 @@ static int readDisplacement(struct InternalInstruction *insn)
 			break;
 	}
 
-	insn->consumedDisplacement = true;
 	return 0;
 }
 

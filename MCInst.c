@@ -32,6 +32,7 @@ void MCInst_Init(MCInst *inst)
 	inst->ac_idx = 0;
 	inst->popcode_adjust = 0;
 	inst->assembly[0] = '\0';
+	inst->wasm_data.type = WASM_OP_INVALID;
 }
 
 void MCInst_clear(MCInst *inst)
@@ -88,12 +89,6 @@ void MCInst_addOperand2(MCInst *inst, MCOperand *Op)
 	inst->Operands[inst->size] = *Op;
 
 	inst->size++;
-}
-
-void MCOperand_Init(MCOperand *op)
-{
-	op->Kind = kInvalid;
-	op->FPImmVal = 0.0;
 }
 
 bool MCOperand_isValid(const MCOperand *op)

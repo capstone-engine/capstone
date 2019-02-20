@@ -13,7 +13,7 @@
 #define GET_INSTRINFO_ENUM
 #include "XCoreGenInstrInfo.inc"
 
-static name_map reg_name_maps[] = {
+static const name_map reg_name_maps[] = {
 	{ XCORE_REG_INVALID, NULL },
 
 	{ XCORE_REG_CP, "cp" },
@@ -49,7 +49,7 @@ static name_map reg_name_maps[] = {
 const char *XCore_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= XCORE_REG_ENDING)
+	if (reg >= ARR_SIZE(reg_name_maps))
 		return NULL;
 
 	return reg_name_maps[reg].name;
@@ -71,7 +71,7 @@ xcore_reg XCore_reg_id(char *name)
 	return 0;
 }
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{
 		0, 0,
@@ -114,7 +114,7 @@ void XCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[] = {
+static const name_map insn_name_maps[] = {
 	{ XCORE_INS_INVALID, NULL },
 
 	{ XCORE_INS_ADD, "add" },
@@ -240,7 +240,7 @@ static name_map insn_name_maps[] = {
 };
 
 // special alias insn
-static name_map alias_insn_names[] = {
+static const name_map alias_insn_names[] = {
 	{ 0, NULL }
 };
 #endif
@@ -266,7 +266,7 @@ const char *XCore_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	{ XCORE_GRP_INVALID, NULL },
 	{ XCORE_GRP_JUMP, "jump" },
 };
@@ -284,7 +284,7 @@ const char *XCore_group_name(csh handle, unsigned int id)
 // map internal raw register to 'public' register
 xcore_reg XCore_map_register(unsigned int r)
 {
-	static unsigned int map[] = { 0,
+	static const unsigned int map[] = { 0,
 	};
 
 	if (r < ARR_SIZE(map))

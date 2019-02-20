@@ -28,7 +28,7 @@ void SStream_Init(SStream *ss)
 	ss->buffer[0] = '\0';
 }
 
-void SStream_concat0(SStream *ss, char *s)
+void SStream_concat0(SStream *ss, const char *s)
 {
 #ifndef CAPSTONE_DIET
 	unsigned int len = (unsigned int) strlen(s);
@@ -45,6 +45,9 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	va_list ap;
 	int ret;
 
+	if (ss->index >= sizeof(ss->buffer)) {
+		return;
+	}
 	va_start(ap, fmt);
 	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);
@@ -66,8 +69,7 @@ void printInt64Bang(SStream *O, int64_t val)
 				SStream_concat(O, "#-0x%"PRIx64, (uint64_t)val);
 			else
 				SStream_concat(O, "#-0x%"PRIx64, (uint64_t)-val);
-		}
-		else
+		} else
 			SStream_concat(O, "#-%"PRIu64, -val);
 	}
 }
@@ -94,8 +96,7 @@ void printInt64(SStream *O, int64_t val)
 				SStream_concat(O, "-0x%"PRIx64, (uint64_t)val);
 			else
 				SStream_concat(O, "-0x%"PRIx64, (uint64_t)-val);
-		}
-		else
+		} else
 			SStream_concat(O, "-%"PRIu64, -val);
 	}
 }
@@ -105,8 +106,12 @@ void printInt32BangDec(SStream *O, int32_t val)
 {
 	if (val >= 0)
 		SStream_concat(O, "#%u", val);
-	else
-		SStream_concat(O, "#-%u", (uint32_t)-val);
+	else {
+		if (val == INT_MIN)
+			SStream_concat(O, "#-%u", val);
+		else
+			SStream_concat(O, "#-%u", (uint32_t)-val);
+	}
 }
 
 void printInt32Bang(SStream *O, int32_t val)
@@ -122,8 +127,7 @@ void printInt32Bang(SStream *O, int32_t val)
 				SStream_concat(O, "#-0x%x", (uint32_t)val);
 			else
 				SStream_concat(O, "#-0x%x", (uint32_t)-val);
-		}
-		else
+		} else
 			SStream_concat(O, "#-%u", -val);
 	}
 }
@@ -141,8 +145,7 @@ void printInt32(SStream *O, int32_t val)
 				SStream_concat(O, "-0x%x", (uint32_t)val);
 			else
 				SStream_concat(O, "-0x%x", (uint32_t)-val);
-			}
-		else
+		} else
 			SStream_concat(O, "-%u", -val);
 	}
 }
@@ -162,24 +165,3 @@ void printUInt32(SStream *O, uint32_t val)
 	else
 		SStream_concat(O, "%u", val);
 }
-
-/*
-   int main()
-   {
-   SStream ss;
-   int64_t i;
-
-   SStream_Init(&ss);
-
-   SStream_concat(&ss, "hello ");
-   SStream_concat(&ss, "%d - 0x%x", 200, 16);
-
-   i = 123;
-   SStream_concat(&ss, " + %ld", i);
-   SStream_concat(&ss, "%s", "haaaaa");
-
-   printf("%s\n", ss.buffer);
-
-   return 0;
-   }
- */

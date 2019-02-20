@@ -34,7 +34,7 @@
 #include "../../MathExtras.h"
 #include "XCoreMapping.h"
 
-static char *getRegisterName(unsigned RegNo);
+static const char *getRegisterName(unsigned RegNo);
 
 void XCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
@@ -208,17 +208,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 	} else if (MCOperand_isImm(MO)) {
 		int32_t Imm = (int32_t)MCOperand_getImm(MO);
 
-		if (Imm >= 0) {
-			if (Imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", Imm);
-			else
-				SStream_concat(O, "%u", Imm);
-		} else {
-			if (Imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", -Imm);
-			else
-				SStream_concat(O, "-%u", -Imm);
-		}
+		printInt32(O, Imm);
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {

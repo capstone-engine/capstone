@@ -1,13 +1,9 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [xcore_const.py]
 
-# Operand type for instruction's operands
-
 XCORE_OP_INVALID = 0
 XCORE_OP_REG = 1
 XCORE_OP_IMM = 2
 XCORE_OP_MEM = 3
-
-# XCore registers
 
 XCORE_REG_INVALID = 0
 XCORE_REG_CP = 1
@@ -26,8 +22,6 @@ XCORE_REG_R8 = 13
 XCORE_REG_R9 = 14
 XCORE_REG_R10 = 15
 XCORE_REG_R11 = 16
-
-# pseudo registers
 XCORE_REG_PC = 17
 XCORE_REG_SCP = 18
 XCORE_REG_SSR = 19
@@ -38,8 +32,6 @@ XCORE_REG_KEP = 23
 XCORE_REG_KSP = 24
 XCORE_REG_ID = 25
 XCORE_REG_ENDING = 26
-
-# XCore instruction
 
 XCORE_INS_INVALID = 0
 XCORE_INS_ADD = 1
@@ -164,10 +156,6 @@ XCORE_INS_XOR = 119
 XCORE_INS_ZEXT = 120
 XCORE_INS_ENDING = 121
 
-# Group of XCore instructions
-
 XCORE_GRP_INVALID = 0
-
-# Generic groups
 XCORE_GRP_JUMP = 1
 XCORE_GRP_ENDING = 2

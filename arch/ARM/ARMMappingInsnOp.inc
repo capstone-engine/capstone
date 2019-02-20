@@ -962,7 +962,7 @@
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 {	/* ARM_STMDB_UPD, ARM_INS_STMDB: stmdb${p}	$rn!, $regs */
-	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_READ, 0 }
 },
 {	/* ARM_STMIA, ARM_INS_STM: stm${p}	$rn, $regs */
 	{ CS_AC_READ, CS_AC_READ, 0 }

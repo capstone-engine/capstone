@@ -76,7 +76,7 @@ enum {
 static void translateRegister(MCInst *mcInst, Reg reg)
 {
 #define ENTRY(x) X86_##x,
-	uint8_t llvmRegnums[] = {
+	static const uint8_t llvmRegnums[] = {
 		ALL_REGS
 			0
 	};
@@ -178,6 +178,7 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 	} // By default sign-extend all X86 immediates based on their encoding.
 	else if (type == TYPE_IMM8 || type == TYPE_IMM16 || type == TYPE_IMM32 ||
 			type == TYPE_IMM64 || type == TYPE_IMMv) {
+
 		switch (operand->encoding) {
 			default:
 				break;
@@ -267,7 +268,9 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 				case X86_VCMPSSZrr:   NewOpc = X86_VCMPSSZrri_alt;  break;
 			}
 			// Switch opcode to the one that doesn't get special printing.
-			MCInst_setOpcode(mcInst, NewOpc);
+			if (NewOpc != 0) {
+				MCInst_setOpcode(mcInst, NewOpc);
+			}
 		}
 #endif
 	} else if (type == TYPE_AVX512ICC) {
@@ -486,12 +489,12 @@ static bool translateRMRegister(MCInst *mcInst, InternalInstruction *insn)
 static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 {
 	// Addresses in an MCInst are represented as five operands:
-	//   1. basereg       (register)  The R/M base, or (if there is a SIB) the 
+	//   1. basereg       (register)  The R/M base, or (if there is a SIB) the
 	//                                SIB base
-	//   2. scaleamount   (immediate) 1, or (if there is a SIB) the specified 
+	//   2. scaleamount   (immediate) 1, or (if there is a SIB) the specified
 	//                                scale amount
 	//   3. indexreg      (register)  x86_registerNONE, or (if there is a SIB)
-	//                                the index (which is multiplied by the 
+	//                                the index (which is multiplied by the
 	//                                scale amount)
 	//   4. displacement  (immediate) 0, or the displacement if there is one
 	//   5. segmentreg    (register)  x86_registerNONE for now, but could be set
@@ -643,7 +646,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 						//   placeholders to keep the compiler happy.
 #define ENTRY(x)                                        \
 					case EA_BASE_##x:                                 \
-						  MCOperand_CreateReg0(mcInst, X86_##x); break; 
+						  MCOperand_CreateReg0(mcInst, X86_##x); break;
 						ALL_EA_BASES
 #undef ENTRY
 #define ENTRY(x) case EA_REG_##x:
@@ -677,7 +680,7 @@ static bool translateRMMemory(MCInst *mcInst, InternalInstruction *insn)
 /// @return             - 0 on success; nonzero otherwise
 static bool translateRM(MCInst *mcInst, const OperandSpecifier *operand,
 		InternalInstruction *insn)
-{  
+{
 	switch (operand->type) {
 		case TYPE_R8:
 		case TYPE_R16:
@@ -748,7 +751,7 @@ static bool translateMaskRegister(MCInst *mcInst, uint8_t maskRegNum)
 	return false;
 }
 
-/// translateOperand - Translates an operand stored in an internal instruction 
+/// translateOperand - Translates an operand stored in an internal instruction
 ///   to LLVM's format and appends it to an MCInst.
 ///
 /// @param mcInst       - The MCInst to append to.
@@ -993,13 +996,14 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				}
 				return false;
 			case 4: {
-						unsigned char b1 = 0, b2 = 0, b3 = 0, b4 = 0;
+						if (handle->mode != CS_MODE_16) {
+							unsigned char b1 = 0, b2 = 0, b3 = 0, b4 = 0;
 
-						reader(&info, &b1, address);
-						reader(&info, &b2, address + 1);
-						reader(&info, &b3, address + 2);
-						reader(&info, &b4, address + 3);
-						if (handle->mode & CS_MODE_64) {
+							reader(&info, &b1, address);
+							reader(&info, &b2, address + 1);
+							reader(&info, &b3, address + 2);
+							reader(&info, &b4, address + 3);
+
 							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfa) {
 								instr->Opcode = X86_ENDBR64;
 								instr->OpcodePub = X86_INS_ENDBR64;
@@ -1011,9 +1015,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 									instr->flat_insn->detail->x86.opcode[3] = b4;
 								}
 								return true;
-							}
-						} else if (handle->mode & CS_MODE_32) {
-							if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfb) {
+							} else if (b1 == 0xf3 && b2 == 0x0f && b3 == 0x1e && b4 == 0xfb) {
 								instr->Opcode = X86_ENDBR32;
 								instr->OpcodePub = X86_INS_ENDBR32;
 								strncpy(instr->assembly, "endbr32", 8);

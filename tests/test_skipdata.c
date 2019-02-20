@@ -12,7 +12,7 @@ struct platform {
 	cs_mode mode;
 	unsigned char *code;
 	size_t size;
-	char *comment;
+	const char *comment;
 	cs_opt_type opt_type;
 	cs_opt_value opt_value;
 	cs_opt_type opt_skipdata;

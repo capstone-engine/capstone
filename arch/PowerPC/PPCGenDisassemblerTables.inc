@@ -28,7 +28,7 @@ static InsnType fname(InsnType insn, unsigned startBit, \
 // FieldFromInstruction(fieldFromInstruction_2, uint16_t)
 FieldFromInstruction(fieldFromInstruction_4, uint32_t)
 
-static uint8_t DecoderTable32[] = {
+static const uint8_t DecoderTable32[] = {
 /* 0 */       MCD_OPC_ExtractField, 26, 6,  // Inst{31-26} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 10, 0, // Skip to: 17
 /* 7 */       MCD_OPC_CheckField, 1, 10, 128, 2, 231, 38, // Skip to: 9973

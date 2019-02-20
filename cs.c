@@ -55,6 +55,7 @@
 #include "arch/AArch64/AArch64Module.h"
 #include "arch/ARM/ARMModule.h"
 #include "arch/EVM/EVMModule.h"
+#include "arch/WASM/WASMModule.h"
 #include "arch/M680X/M680XModule.h"
 #include "arch/M68K/M68KModule.h"
 #include "arch/Mips/MipsModule.h"
@@ -65,6 +66,9 @@
 #include "arch/X86/X86Module.h"
 #include "arch/XCore/XCoreModule.h"
 #include "arch/RISCV/RISCVModule.h"
+#include "arch/MOS65XX/MOS65XXModule.h"
+#include "arch/BPF/BPFModule.h"
+>>>>>>> upstream/next
 
 // constructor initialization for all archs
 static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
@@ -130,6 +134,21 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #endif
 #ifdef CAPSTONE_HAS_RISCV
 	RISCV_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_MOS65XX
+	MOS65XX_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_WASM
+	WASM_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_BPF
+	BPF_global_init,
 #else
 	NULL,
 #endif
@@ -199,6 +218,21 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #endif
 #ifdef CAPSTONE_HAS_RISCV
 	RISCV_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_MOS65XX
+	MOS65XX_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_WASM
+	WASM_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_BPF
+	BPF_option,
 #else
 	NULL,
 #endif
@@ -275,11 +309,26 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 	0,
 #endif
 #ifdef CAPSTONE_HAS_RISCV
-        0,
+	~(CS_MODE_LITTLE_ENDIAN),
 #else
         0,
 #endif
-
+#ifdef CAPSTONE_HAS_MOS65XX
+	~(CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_WASM
+	0,
+#else
+	0,
+#endif
+#ifdef CAPSTONE_HAS_BPF
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | CS_MODE_BPF_EXTENDED
+	  | CS_MODE_BIG_ENDIAN),
+#else
+	0,
+#endif
 };
 
 // bitmask of enabled architectures
@@ -323,6 +372,15 @@ static uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_RISCV
 	| (1 << CS_ARCH_RISCV)
 #endif
+#ifdef CAPSTONE_HAS_MOS65XX
+	| (1 << CS_ARCH_MOS65XX)
+#endif
+#ifdef CAPSTONE_HAS_WASM
+	| (1 << CS_ARCH_WASM)
+#endif
+#ifdef CAPSTONE_HAS_BPF
+	| (1 << CS_ARCH_BPF)
+#endif
 ;
 
 
@@ -346,7 +404,6 @@ cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
 cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
 cs_free_t cs_mem_free = cs_winkernel_free;
 cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
-
 #else
 // OSX kernel
 extern void* kern_os_malloc(size_t size);
@@ -363,7 +420,6 @@ cs_calloc_t cs_mem_calloc = cs_kern_os_calloc;
 cs_realloc_t cs_mem_realloc = kern_os_realloc;
 cs_free_t cs_mem_free = kern_os_free;
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
-
 #endif  // !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 #else
 // User-defined
@@ -395,7 +451,9 @@ bool CAPSTONE_API cs_support(int query)
 				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
 				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
 				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
-				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM));
+				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM) |
+				(1 << CS_ARCH_MOS65XX) | (1 << CS_ARCH_WASM) |
+				(1 << CS_ARCH_BPF));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -661,6 +719,15 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_EVM:
 			// EVM alignment is 1.
 			return 1;
+		case CS_ARCH_WASM:
+			//WASM alignment is 1
+			return 1;
+		case CS_ARCH_MOS65XX:
+			// MOS65XX alignment is 1.
+			return 1;
+		case CS_ARCH_BPF:
+			// both classic and extended BPF have alignment 8.
+			return 8;
 	}
 }
 
@@ -900,6 +967,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			mci.flat_insn->size = insn_size;
 
 			// map internal instruction opcode to public insn ID
+
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
 			handle->printer(&mci, &ss, handle->printer_info);
@@ -1373,11 +1441,21 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 					count++;
 			break;
 		case CS_ARCH_EVM:
-#if 0
-			for (i = 0; i < insn->detail->evm.op_count; i++)
-				if (insn->detail->evm.operands[i].type == (evm_op_type)op_type)
+			break;
+		case CS_ARCH_MOS65XX:
+			for (i = 0; i < insn->detail->mos65xx.op_count; i++)
+				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
 					count++;
-#endif
+			break;
+		case CS_ARCH_WASM:
+			for (i = 0; i < insn->detail->wasm.op_count; i++)
+				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
+					count++;
+			break;
+		case CS_ARCH_BPF:
+			for (i = 0; i < insn->detail->bpf.op_count; i++)
+				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+					count++;
 			break;
 	}
 
@@ -1513,6 +1591,30 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 #endif
+			break;
+		case CS_ARCH_MOS65XX:
+			for (i = 0; i < insn->detail->mos65xx.op_count; i++) {
+				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_WASM:
+			for (i = 0; i < insn->detail->wasm.op_count; i++) {
+				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_BPF:
+			for (i = 0; i < insn->detail->bpf.op_count; i++) {
+				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
 			break;
 	}
 

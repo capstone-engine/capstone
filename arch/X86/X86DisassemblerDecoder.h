@@ -616,7 +616,6 @@ typedef struct InternalInstruction {
   uint8_t immediateOffset;
   uint8_t modRMOffset;
 
-
   // end-of-zero-members
 
   /* Reader interface (C) */

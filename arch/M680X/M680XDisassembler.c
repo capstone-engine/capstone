@@ -650,14 +650,14 @@ static bool is_indexed09_post_byte_valid(const m680x_info *info,
 	case 0x9D: // [n16,PCR]
 		insn_description->insn_size += 2;
 		retval = read_byte(info, &ir, *address + 1);
-		address += 2;
+		*address += 2;
 		return retval;
 
 	case 0x9F: // [n]
 		insn_description->insn_size += 2;
 		retval = (post_byte & 0x60) == 0 &&
 			read_byte(info, &ir, *address + 1);
-		address += 2;
+		*address += 2;
 		return retval;
 	}
 
@@ -1802,9 +1802,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	e_access_mode access_mode;
 
 	if (detail != NULL) {
-		detail->regs_read_count = 0;
-		detail->regs_write_count = 0;
-		detail->groups_count = 0;
+		memset(detail, 0, offsetof(cs_detail, m680x)+sizeof(cs_m680x));
 	}
 
 	memset(&insn_description, 0, sizeof(insn_description));

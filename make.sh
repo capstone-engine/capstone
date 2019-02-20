@@ -59,7 +59,7 @@ build_iOS() {
   fi
   export CC="$IOS_CC"
   export LIBARCHS="$IOS_ARCHS"
-  CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" ${MAKE}
+  CFLAGS="$IOS_CFLAGS" LDFLAGS="$IOS_LDFLAGS" MACOS_UNIVERSAL=yes ${MAKE}
 }
 
 install() {
@@ -129,6 +129,7 @@ case "$TARGET" in
   "ios_armv7s" ) build_iOS armv7s $*;;
   "ios_arm64" ) build_iOS arm64 $*;;
   "osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes ${MAKE} $*;;
+  "mac-universal" ) MACOS_UNIVERSAL=yes ${MAKE} $*;;
   "mac-universal-no" ) MACOS_UNIVERSAL=no ${MAKE} $*;;
   * )
     echo "Usage: $0 ["`grep '^  "' $0 | cut -d '"' -f 2 | tr "\\n" "|"`"]"
