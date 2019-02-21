@@ -29,13 +29,7 @@ typedef const MCPhysReg* iterator;
 typedef struct MCRegisterClass {
 	iterator RegsBegin;
 	const uint8_t *RegSet;
-	uint32_t NameIdx;
-	uint16_t RegsSize;
 	uint16_t RegSetSize;
-	uint16_t ID;
-	uint16_t RegSize, Alignment; // Size & Alignment of register in bytes
-	int8_t CopyCost;
-	bool Allocatable;
 } MCRegisterClass;
 
 /// MCRegisterDesc - This record contains information about a particular
