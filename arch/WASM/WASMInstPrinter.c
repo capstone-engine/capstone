@@ -7,8 +7,6 @@
 
 void WASM_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 {
-	int i;
-
 	SStream_concat(O, WASM_insn_name((csh)MI->csh, MI->Opcode));
 
 	switch (MI->wasm_data.type) {
