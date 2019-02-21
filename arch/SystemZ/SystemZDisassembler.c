@@ -473,7 +473,7 @@ void SystemZ_init(MCRegisterInfo *MRI)
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, SystemZRegDesc, 98,
 			0, 0,
-			NULL, 12,
+			SystemZMCRegisterClasses, 12,
 			0, 0,
 			SystemZRegDiffLists,
 			0,

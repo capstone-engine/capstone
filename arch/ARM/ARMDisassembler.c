@@ -437,7 +437,7 @@ void ARM_init(MCRegisterInfo *MRI)
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, 289,
 			0, 0, 
-			NULL, 100,
+			ARMMCRegisterClasses, 100,
 			0, 0, ARMRegDiffLists, 0, 
 			ARMSubRegIdxLists, 57,
 			0);
