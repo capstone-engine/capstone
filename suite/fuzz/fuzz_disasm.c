@@ -207,6 +207,18 @@ static struct platform platforms[] = {
         CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
         "eBPF"
     },
+    {
+        //item 31
+        CS_ARCH_BPF,
+        CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC,
+        "cBPF"
+    },
+    {
+        //item 32
+        CS_ARCH_BPF,
+        CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED,
+        "eBPF"
+    },
 };
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
