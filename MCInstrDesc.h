@@ -120,21 +120,8 @@ enum {
 /// for each target instruction class, and the MachineInstr class points to
 /// this struct directly to describe itself.
 typedef struct MCInstrDesc {
-	unsigned short  Opcode;        // The opcode number
 	unsigned char  NumOperands;   // Num of args (may be more if variable_ops)
-	unsigned char  NumDefs;       // Num of args that are definitions
-	unsigned short  SchedClass;    // enum identifying instr sched class
-	unsigned char  Size;          // Number of bytes in encoding.
-	unsigned        Flags;         // Flags identifying machine instr class
-	uint64_t        TSFlags;       // Target Specific Flag values
-	char ImplicitUses;  // Registers implicitly read by this instr
-	char ImplicitDefs;  // Registers implicitly defined by this instr
 	const MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
-	uint64_t DeprecatedFeatureMask;// Feature bits that this is deprecated on, if any     
-	// A complex method to determine is a certain is deprecated or not, and return        
-	// the reason for deprecation.
-	//bool (*ComplexDeprecationInfo)(MCInst &, MCSubtargetInfo &, std::string &);           
-	unsigned char ComplexDeprecationInfo;	// dummy field, just to satisfy initializer
 } MCInstrDesc;
 
 bool MCOperandInfo_isPredicate(const MCOperandInfo *m);
