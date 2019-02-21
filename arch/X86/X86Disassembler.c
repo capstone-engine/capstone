@@ -917,7 +917,7 @@ void X86_init(MCRegisterInfo *MRI)
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, X86RegDesc, 234,
 			0, 0,
-			NULL, 79,
+			X86MCRegisterClasses, 79,
 			0, 0, X86RegDiffLists, 0,
 			X86SubRegIdxLists, 7,
 			0);

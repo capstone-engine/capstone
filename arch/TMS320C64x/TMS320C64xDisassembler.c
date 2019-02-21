@@ -617,7 +617,7 @@ void TMS320C64x_init(MCRegisterInfo *MRI)
 {
 	MCRegisterInfo_InitMCRegisterInfo(MRI, TMS320C64xRegDesc, 90,
 			0, 0,
-			NULL, 7,
+			TMS320C64xMCRegisterClasses, 7,
 			0, 0,
 			TMS320C64xRegDiffLists,
 			0,
