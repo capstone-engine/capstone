@@ -69,61 +69,89 @@ static DecodeStatus decodeSImmOperandAndLsl1(MCInst *Inst, uint64_t Imm,
 
 void RISCV_init(MCRegisterInfo * MRI)
 {
-	/*InitMCRegisterInfo(RISCVRegDesc, 97, RA, PC,
-	   RISCVMCRegisterClasses, 3,
-	   RISCVRegUnitRoots,
-	   64,
-	   RISCVRegDiffLists,
-	   RISCVLaneMaskLists,
-	   RISCVRegStrings,
-	   RISCVRegClassStrings,
-	   RISCVSubRegIdxLists,
-	   2,
-	   RISCVSubRegIdxRanges,
-	   RISCVRegEncodingTable);
-	 */
+  /*
+  InitMCRegisterInfo(RISCVRegDesc, 97, RA, PC,
+                     RISCVMCRegisterClasses, 11,
+                     RISCVRegUnitRoots,
+                     64,
+                     RISCVRegDiffLists,
+                     RISCVLaneMaskLists,
+                     RISCVRegStrings,
+                     RISCVRegClassStrings,
+                     RISCVSubRegIdxLists,
+                     2,
+                     RISCVSubRegIdxRanges,
+                     RISCVRegEncodingTable);
+  */
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, RISCVRegDesc, 97,
 					  0, 0,
-					  RISCVMCRegisterClasses, 3,
+					  RISCVMCRegisterClasses, 11,
 					  0, 0,
 					  RISCVRegDiffLists,
 					  0, RISCVSubRegIdxLists, 2, 0);
 }
 
-static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst * MI,
-				 const uint8_t * code, size_t code_len,
-				 uint64_t * Size, uint64_t Address,
-				 MCRegisterInfo * MRI)
+/// 
+static void clear_MI_insn_detail (MCInst *MI) {
+  if (MI->flat_insn->detail) {
+    memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+  }
+
+  return;
+}
+
+///
+static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
+				 const uint8_t *code, size_t code_len,
+				 uint64_t *Size, uint64_t Address,
+				 MCRegisterInfo *MRI)
 {
-	uint32_t Inst = 0;
+  // TODO: This will need modification when supporting instruction set
+  // extensions with instructions > 32-bits (up to 176 bits wide).
+  uint32_t Inst = 0;
+  DecodeStatus Result;
 
-	/*MCInst &MI, uint64_t &Size,
-	   ArrayRef<uint8_t> Bytes,
-	   uint64_t Address,
-	   raw_ostream &OS,
-	   raw_ostream &CS) const { */
+  // It's a 32 bit instruction if bit 0 and 1 are 1.
+  if ((code[0] & 0x3) == 0x3) {
+      if (code_len < 4) {
+        *Size = 0;
+        return MCDisassembler_Fail;
+      }
 
-	// TODO: although assuming 4-byte instructions is sufficient for RV32 and
-	// RV64, this will need modification when supporting the compressed
-	// instruction set extension (RVC) which uses 16-bit instructions. Other
-	// instruction set extensions have the option of defining instructions up to
-	// 176 bits wide.
-	*Size = 4;
-	if (code_len < 4) {
-		*Size = 0;
-		return MCDisassembler_Fail;
-	}
+      *Size = 4;
+      // Get the four bytes of the instruction.
+      //Encoded as little endian 32 bits.
+      Inst = code[0] | (code[1] << 8) | (code[2] << 16) | (code[3] << 24);
+      clear_MI_insn_detail(MI);
+      Result = decodeInstruction(DecoderTable32, MI, Inst, Address, MRI, mode);
+  } else {
+    if (code_len < 2) {
+      *Size = 0;
+      return MCDisassembler_Fail;
+    }
 
-	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
-	}
-	// Get the four bytes of the instruction.
-	//Encoded as little endian 32 bits.
-	Inst = (code[0] << 0) |
-	    (code[1] << 8) | (code[2] << 16) | (code[3] << 24);
+    if (!getFeatureBits(mode) {
+      // Trying RISCV32Only_16 table (16-bit Instruction)
+      Inst = code[0] | (code[1] << 8);
+      clear_MI_insn_detail(MI);
+      Result = decodeInstruction(DecoderTableRISCV32Only_16, MI, Inst, Address,
+                                 MRI, mode);
+      if (Result != MCDisassembler_Fail) {
+        *Size = 2;
+        return Result;
+      }
+    }
+    
+    // Trying RISCV_C table (16-bit Instruction)
+    Inst = code[0] | (code[1] << 8);
+    clear_MI_insn_detail(MI);
+    // Calling the auto-generated decoder function.
+    Result = decodeInstruction(DecoderTable16, MI, Inst, Address, MRI, mode);
+    *Size = 2;
+  }
 
-	return decodeInstruction(DecoderTable32, MI, Inst, Address, MRI, mode);
+  return Result;
 }
 
 bool RISCV_getInstruction(csh ud, const uint8_t * code, size_t code_len,
