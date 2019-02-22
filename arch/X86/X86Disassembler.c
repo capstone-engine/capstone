@@ -996,6 +996,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				}
 				return false;
 			case 4: {
+#ifndef CAPSTONE_X86_REDUCE
 						if (handle->mode != CS_MODE_16) {
 							unsigned char b1 = 0, b2 = 0, b3 = 0, b4 = 0;
 
@@ -1028,6 +1029,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 								return true;
 							}
 						}
+#endif
 				}
 				return false;
 		}
