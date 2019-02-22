@@ -549,7 +549,11 @@ typedef void (*dlog_t)(void* arg, const char *log);
 /// The specification for how to extract and interpret a full instruction and
 /// its operands.
 struct InstructionSpecifier {
+#ifdef CAPSTONE_X86_REDUCE
+	uint8_t operands;
+#else
 	uint16_t operands;
+#endif
 };
 
 /*
