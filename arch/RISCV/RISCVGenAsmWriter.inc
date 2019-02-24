@@ -1209,20 +1209,20 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     break;
   case 1:
     // PseudoCALL, PseudoLA, PseudoLI, PseudoLLA, PseudoTAIL, ADD, ADDI, ADDI...
-    printOperand(MI, 0, STI, O);
+    printOperand(MI, 0, O);
     break;
   case 2:
     // C_ADD, C_ADDI, C_ADDI16SP, C_ADDIW, C_ADDW, C_AND, C_ANDI, C_OR, C_SLL...
-    printOperand(MI, 1, STI, O);
+    printOperand(MI, 1, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 2, STI, O);
+    printOperand(MI, 2, O);
     return;
     break;
   case 3:
     // FENCE
-    printFenceArg(MI, 0, STI, O);
+    printFenceArg(MI, 0, O);
     SStream_concat0(O, ", ");
-    printFenceArg(MI, 1, STI, O);
+    printFenceArg(MI, 1, O);
     return;
     break;
   }
@@ -1242,7 +1242,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 2:
     // LR_D, LR_D_AQ, LR_D_AQ_RL, LR_D_RL, LR_W, LR_W_AQ, LR_W_AQ_RL, LR_W_RL
     SStream_concat0(O, ", (");
-    printOperand(MI, 1, STI, O);
+    printOperand(MI, 1, O);
     SStream_concat0(O, ")");
     return;
     break;
@@ -1254,17 +1254,17 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   default: assert(0 && "Invalid command number.");
   case 0:
     // PseudoLA, PseudoLI, PseudoLLA, ADD, ADDI, ADDIW, ADDW, AND, ANDI, AUIP...
-    printOperand(MI, 1, STI, O);
+    printOperand(MI, 1, O);
     break;
   case 1:
     // AMOADD_D, AMOADD_D_AQ, AMOADD_D_AQ_RL, AMOADD_D_RL, AMOADD_W, AMOADD_W...
-    printOperand(MI, 2, STI, O);
+    printOperand(MI, 2, O);
     break;
   case 2:
     // CSRRC, CSRRCI, CSRRS, CSRRSI, CSRRW, CSRRWI
-    printCSRSystemRegister(MI, 1, STI, O);
+    printCSRSystemRegister(MI, 1, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 2, STI, O);
+    printOperand(MI, 2, O);
     return;
     break;
   }
@@ -1284,14 +1284,14 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   case 2:
     // AMOADD_D, AMOADD_D_AQ, AMOADD_D_AQ_RL, AMOADD_D_RL, AMOADD_W, AMOADD_W...
     SStream_concat0(O, ", (");
-    printOperand(MI, 1, STI, O);
+    printOperand(MI, 1, O);
     SStream_concat0(O, ")");
     return;
     break;
   case 3:
     // C_FLD, C_FLDSP, C_FLW, C_FLWSP, C_FSD, C_FSDSP, C_FSW, C_FSWSP, C_LD, ...
     SStream_concat0(O, "(");
-    printOperand(MI, 1, STI, O);
+    printOperand(MI, 1, O);
     SStream_concat0(O, ")");
     return;
     break;
@@ -1301,11 +1301,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   // Fragment 4 encoded into 1 bits for 2 unique commands.
   if ((Bits >> 20) & 1) {
     // FCVT_D_L, FCVT_D_LU, FCVT_LU_D, FCVT_LU_S, FCVT_L_D, FCVT_L_S, FCVT_S_...
-    printFRMArg(MI, 2, STI, O);
+    printFRMArg(MI, 2, O);
     return;
   } else {
     // ADD, ADDI, ADDIW, ADDW, AND, ANDI, BEQ, BGE, BGEU, BLT, BLTU, BNE, C_A...
-    printOperand(MI, 2, STI, O);
+    printOperand(MI, 2, O);
   }
 
 
@@ -1322,13 +1322,13 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   // Fragment 6 encoded into 1 bits for 2 unique commands.
   if ((Bits >> 22) & 1) {
     // FMADD_D, FMADD_S, FMSUB_D, FMSUB_S, FNMADD_D, FNMADD_S, FNMSUB_D, FNMS...
-    printOperand(MI, 3, STI, O);
+    printOperand(MI, 3, O);
     SStream_concat0(O, ", ");
-    printFRMArg(MI, 4, STI, O);
+    printFRMArg(MI, 4, O);
     return;
   } else {
     // FADD_D, FADD_S, FDIV_D, FDIV_S, FMUL_D, FMUL_S, FSUB_D, FSUB_S
-    printFRMArg(MI, 3, STI, O);
+    printFRMArg(MI, 3, O);
     return;
   }
 

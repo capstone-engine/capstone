@@ -56,6 +56,49 @@ enum FenceField {
   RISCVFenceField_W = 1
 };
 
+// Describes the supported floating point rounding mode encodings.
+enum RoundingMode {
+  RISCVFPRndMode_RNE = 0,
+  RISCVFPRndMode_RTZ = 1,
+  RISCVFPRndMode_RDN = 2,
+  RISCVFPRndMode_RUP = 3,
+  RISCVFPRndMode_RMM = 4,
+  RISCVFPRndMode_DYN = 7,
+  RISCVFPRndMode_Invalid
+}
+
+inline static char *roundingModeToString(RoundingMode RndMode) {
+  switch (RndMode) {
+  default:
+    assert(0 && "Unknown floating point rounding mode");
+  case RISCVFPRndMode_RNE:
+    return "rne";
+  case RISCVFPRndMode_RTZ:
+    return "rtz";
+  case RISCVFPRndMode_RDN:
+    return "rdn";
+  case RISCVFPRndMode_RUP:
+    return "rup";
+  case RISCVFPRndMode_RMM:
+    return "rmm";
+  case RISCVFPRndMode_DYN:
+    return "dyn";
+  }
+}
+
+inline static bool RISCVFPRndMode_isValidRoundingMode(unsigned Mode) {
+  switch (Mode) {
+  default:
+    return false;
+  case RISCVFPRndMode_RNE:
+  case RISCVFPRndMode_RTZ:
+  case RISCVFPRndMode_RDN:
+  case RISCVFPRndMode_RUP:
+  case RISCVFPRndMode_RMM:
+  case RISCVFPRndMode_DYN:
+    return true;
+  }
+}
 //Todo_rod: Not including this since so far it is used by printFRMArg from InstPrinter which I ahvent included yet.
 // Describes the supported floating point rounding mode encodings.
 /*namespace RISCVFPRndMode {
