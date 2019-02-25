@@ -23,7 +23,7 @@ static const name_map reg_name_maps[] = {
 	{RISCV_REG_X5, "t0"},
 	{RISCV_REG_X6, "t1"},
 	{RISCV_REG_X7, "t2"},
-	{RISCV_REG_X8, "s0"},
+	{RISCV_REG_X8, "s0/fp"},
 	{RISCV_REG_X9, "s1"},
 	{RISCV_REG_X10, "a0"},
 	{RISCV_REG_X11, "a1"},
@@ -198,21 +198,22 @@ const char *RISCV_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
-	// generic groups
-	{RISCV_GRP_INVALID, NULL},
-	{RISCV_GRP_JUMP, "jump"},
-
-	// architecture-specific groups
-	{RISCV_GRP_RV32I, "rv32i"},
-	{RISCV_GRP_RV64I, "rv64i"},
-	{RISCV_GRP_RV32M, "rv32m"},
-	{RISCV_GRP_RV64M, "rv64m"},
-	{RISCV_GRP_RV32A, "rv32a"},
-	{RISCV_GRP_RV64A, "rv64a"},
-	{RISCV_GRP_RV32F, "rv32f"},
-	{RISCV_GRP_RV64F, "rv64f"},
-	{RISCV_GRP_RV32D, "rv32d"},
-	{RISCV_GRP_RV64D, "rv64d"},
+  {RISCV_GRP_INVALID, NULL},
+  {RISCV_GRP_ISRV32,  "isrv32"},
+  {RISCV_GRP_ISRVA,   "isrva"},
+  {RISCV_GRP_ISRVC,   "isrvc"},
+  {RISCV_GRP_ISRVD,   "isrvd"},
+  {RISCV_GRP_ISRVCD,  "isrvcd"},
+  {RISCV_GRP_ISRVF,   "isrvf"},
+  {RISCV_GRP_ISRV32C, "isrv32c"},
+  {RISCV_GRP_ISRV32CF, "isrv32cf"},
+  {RISCV_GRP_ISRVM,    "isrvm"},
+  {RISCV_GRP_ISRV64,   "isrv64"},
+  {RISCV_GRP_ISRV64A,  "isrv64a"},
+  {RISCV_GRP_ISRV64C,  "isrv64c"},
+  {RISCV_GRP_ISRV64D,  "isrv64d"},
+  {RISCV_GRP_ISRV64F,  "isrv64f"},
+  {RISCV_GRP_ISRV64M,  "isrv64m"}
 };
 #endif
 
