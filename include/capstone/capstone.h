@@ -85,6 +85,7 @@ typedef enum cs_arch {
 	CS_ARCH_M680X,		///< 680X architecture
 	CS_ARCH_EVM,		///< Ethereum architecture
 	CS_ARCH_RISCV,          ///< RISCV architecture
+	CS_ARCH_RISCVC,         ///< RISCV compressed architecture
 	CS_ARCH_MOS65XX,	///< MOS65XX architecture (including MOS6502)
 	CS_ARCH_WASM,		///< WebAssembly architecture
 	CS_ARCH_BPF,		///< Berkeley Packet Filter architecture (including eBPF)
@@ -320,7 +321,7 @@ typedef struct cs_detail {
 		cs_tms320c64x tms320c64x;  ///< TMS320C64x architecture
 		cs_m680x m680x; ///< M680X architecture
 		cs_evm evm;	    ///< Ethereum architecture
-		cs_riscv riscv; // RISCV architecture
+		cs_riscv riscv; ///< RISCV architecture
 		cs_mos65xx mos65xx;	///< MOS65XX architecture (including MOS6502)
 		cs_wasm wasm;	///< Web Assembly architecture
 		cs_bpf bpf;	///< Berkeley Packet Filter architecture (including eBPF)

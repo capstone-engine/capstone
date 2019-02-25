@@ -446,14 +446,14 @@ CAPSTONE_EXPORT
 bool CAPSTONE_API cs_support(int query)
 {
 	if (query == CS_ARCH_ALL)
-		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
-				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
-				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
-				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
-				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
-				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM) |
-				(1 << CS_ARCH_MOS65XX) | (1 << CS_ARCH_WASM) |
-				(1 << CS_ARCH_BPF));
+		return all_arch == ((1 << CS_ARCH_ARM)  | (1 << CS_ARCH_ARM64)      |
+				   (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
+				   (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
+				   (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
+				   (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
+				   (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
+				   (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    | 
+				   (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -694,12 +694,14 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_MIPS:
 		case CS_ARCH_PPC:
 		case CS_ARCH_SPARC:
+		case CS_ARCH_RISCV
 			// skip 4 bytes
 			return 4;
 		case CS_ARCH_SYSZ:
 			// SystemZ instruction's length can be 2, 4 or 6 bytes,
 			// so we just skip 2 bytes
 			return 2;
+		case CS_ARCH_RISCVC:
 		case CS_ARCH_X86:
 			// X86 has no restriction on instruction alignment
 			return 1;
@@ -1442,6 +1444,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 			break;
 		case CS_ARCH_EVM:
 			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++)
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
+					count++;
+			break;
 		case CS_ARCH_MOS65XX:
 			for (i = 0; i < insn->detail->mos65xx.op_count; i++)
 				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
@@ -1591,6 +1598,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 #endif
+			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++) {
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
 			break;
 		case CS_ARCH_MOS65XX:
 			for (i = 0; i < insn->detail->mos65xx.op_count; i++) {
