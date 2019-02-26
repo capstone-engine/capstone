@@ -1,4 +1,4 @@
-# CS_ARCH_ARM, CS_MODE_THUMB, None
+# CS_ARCH_ARM, CS_MODE_THUMB, 
 0x00,0xbf = nop 
 0x10,0xbf = yield 
 0x20,0xbf = wfe 
