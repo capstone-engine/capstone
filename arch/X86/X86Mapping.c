@@ -971,8 +971,13 @@ unsigned int find_insn(unsigned int id)
 	unsigned int left, right, m;
 	unsigned int max = ARR_SIZE(insns);
 
-	left = 0;
 	right = max - 1;
+
+	if (id < insns[0].id || id > insns[right].id)
+		// not found
+		return -1;
+
+	left = 0;
 
 	while(left <= right) {
 		m = (left + right) / 2;
@@ -2093,8 +2098,13 @@ uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size)
 	// binary searching since the IDs are sorted in order
 	unsigned int left, right, m;
 
-	left = 0;
 	right = ARR_SIZE(x86_imm_size) - 1;
+
+	if (id < x86_imm_size[0].id || id > x86_imm_size[right].id)
+		// not found
+		return 0;
+
+	left = 0;
 
 	while (left <= right) {
 		m = (left + right) / 2;
