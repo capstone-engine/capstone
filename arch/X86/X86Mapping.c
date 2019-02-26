@@ -965,10 +965,11 @@ static void arr_replace(uint16_t *arr, uint8_t max, x86_reg r1, x86_reg r2)
 
 // look for @id in @insns
 // return -1 if not found
-static unsigned int find_insn(const insn_map_x86 *insns, unsigned int max, unsigned int id)
+unsigned int find_insn(unsigned int id)
 {
 	// binary searching since the IDs are sorted in order
 	unsigned int left, right, m;
+	unsigned int max = ARR_SIZE(insns);
 
 	left = 0;
 	right = max - 1;
@@ -993,7 +994,7 @@ static unsigned int find_insn(const insn_map_x86 *insns, unsigned int max, unsig
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), id);
+	unsigned int i = find_insn(id);
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 
@@ -1584,7 +1585,7 @@ bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1,
 static bool valid_repne(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -1653,7 +1654,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 static bool valid_bnd(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -1698,7 +1699,7 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 static bool valid_rep(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -1753,7 +1754,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 static bool valid_repe(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -2014,7 +2015,7 @@ static insn_op insn_ops[] = {
 // given internal insn id, return operand access info
 uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags)
 {
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), id);
+	unsigned int i = find_insn(id);
 	if (i != -1) {
 		*eflags = insn_ops[i].flags;
 		return insn_ops[i].access;
