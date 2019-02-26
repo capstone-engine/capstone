@@ -96,11 +96,14 @@ def test_file(fname):
         # ignore all the input lines having # in front.
         if line.startswith('#'):
             continue
+        if line.startswith('// '):
+            line=line[3:]
         #print("Check %s" %line)
         code = line.split(' = ')[0]
         if len(code) < 2:
             continue
-        asm  = ''.join(line.split(' = ')[1:])
+        if code.find('//') >= 0:
+            continue
         hex_code = code.replace('0x', '')
         hex_code = hex_code.replace(',', '')
         hex_data = hex_code.decode('hex')

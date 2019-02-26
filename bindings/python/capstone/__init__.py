@@ -31,11 +31,11 @@ __all__ = [
     'CS_ARCH_SPARC',
     'CS_ARCH_SYSZ',
     'CS_ARCH_XCORE',
-    'CS_ARCH_MOS65XX',
     'CS_ARCH_M68K',
     'CS_ARCH_TMS320C64X',
     'CS_ARCH_M680X',
     'CS_ARCH_EVM',
+    'CS_ARCH_MOS65XX',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -834,6 +834,9 @@ class Cs(object):
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
         self._skipdata_cb = (None, None)
+        # store reference to option object to avoid it being freed
+        # because C code uses it by reference
+        self._skipdata_opt = _cs_opt_skipdata()
         self._skipdata = False
 
 
@@ -908,12 +911,11 @@ class Cs(object):
 
     @skipdata_setup.setter
     def skipdata_setup(self, opt):
-        _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
-        _skipdata_opt.mnemonic = _mnem.encode()
-        _skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
-        _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
-        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
+        self._skipdata_opt.mnemonic = _mnem.encode()
+        self._skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
+        self._skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
+        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(self._skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
             raise CsError(status)
 
@@ -1051,7 +1053,7 @@ class Cs(object):
             print(code)
             code = code.encode()
             print(code)'''
-        # Hack, unicorn's memory accessors give you back bytearrays, but they
+        # Hi, Hacker! Unicorn's memory accessors give you back bytearrays, but they
         # cause TypeErrors when you hand them into Capstone.
         if isinstance(code, bytearray):
             code = bytes(code)
@@ -1079,6 +1081,10 @@ class Cs(object):
             raise CsError(CS_ERR_DIET)
 
         all_insn = ctypes.POINTER(_cs_insn)()
+        # Hi, Hacker! Unicorn's memory accessors give you back bytearrays, but they
+        # cause TypeErrors when you hand them into Capstone.
+        if isinstance(code, bytearray):
+            code = bytes(code)
         res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
