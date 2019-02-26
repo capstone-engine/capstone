@@ -14,7 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_MCINST_H
 #define CS_MCINST_H
@@ -96,6 +96,11 @@ struct MCInst {
 	uint64_t address;	// address of this insn
 	cs_struct *csh;	// save the main csh
 	uint8_t x86opsize;	// opsize for [mem] operand
+
+	// These flags could be used to pass some info from one target subcomponent
+	// to another, for example, from disassembler to asm printer. The values of
+	// the flags have any sense on target level only (e.g. prefixes on x86).
+	unsigned flags;
 
 	// (Optional) instruction prefix, which can be up to 4 bytes.
 	// A prefix byte gets value 0 when irrelevant.

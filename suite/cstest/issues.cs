@@ -1,3 +1,63 @@
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x48,0x0f,0x1e,0xc8 == rdsspq rax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x1e,0xc8 == rdsspd eax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x48,0x0f,0xae,0xe8 == incsspq rax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0xae,0xe8 == incsspd eax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x01,0xea == saveprevssp
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x01,0x28 == rstorssp dword ptr [rax]
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x67,0xf3,0x0f,0x01,0x28 == rstorssp dword ptr [eax]
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x48,0x0f,0x38,0xf6,0x00 == wrssq qword ptr [rax], rax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x67,0x0f,0x38,0xf6,0x00 == wrssd dword ptr [eax], eax
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0x01,0xe8 == setssbsy
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0x0f,0xae,0x30 == clrssbsy dword ptr [rax]
+
+!# issue 1346
+!# CS_ARCH_X86, CS_MODE_64, None
+0x67,0xf3,0x0f,0xae,0x30 == clrssbsy dword ptr [eax]
+
+!# issue 1206
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe2,0x7d,0x5a,0x0c,0x0e == vbroadcasti128 ymm1, xmmword ptr [rsi + rcx]
+
+!# issue xchg 16bit
+!# CS_ARCH_X86, CS_MODE_16, None
+0x91 == xchg cx, ax
+
+!# issue ROL 1, ATT syntax
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
+0x66,0x48,0xf3,0xd1,0xc0 == rolw $1, %ax
+
 !# issue 1129
 !# CS_ARCH_X86, CS_MODE_64, None
 0xf3,0x0f,0x1e,0xfa == endbr64
@@ -60,11 +120,11 @@
 
 !# issue 1262
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
-0x0: 0x0f,0x95,0x44,0x24,0x5e == setne byte ptr [rsp + 0x5e] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x95 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x5e ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x5e ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
+0x0: 0x0f,0x95,0x44,0x24,0x5e == setne byte ptr [rsp + 0x5e] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x95 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x5e ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x5e ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
 
 !# issue 1262
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
-0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x94 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
+0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x94 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
 
 !# issue 1255
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
@@ -152,7 +212,7 @@
 
 !# issue 809
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
-0x0: 0x0f,0x29,0x8d,0xf0,0xfd,0xff,0xff == movaps xmmword ptr [rbp - 0x210], xmm1 ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x29 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x8d ; disp: 0xfffffffffffffdf0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: MEM ; operands[0].mem.base: REG = rbp ; operands[0].mem.disp: 0xfffffffffffffdf0 ; operands[0].size: 16 ; operands[0].access: WRITE ; operands[1].type: REG = xmm1 ; operands[1].size: 16 ; operands[1].access: READ ; Registers read: rbp xmm1 ; Groups: sse1 
+0x0: 0x0f,0x29,0x8d,0xf0,0xfd,0xff,0xff == movaps xmmword ptr [rbp - 0x210], xmm1 ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x29 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x8d ; disp: 0xfffffffffffffdf0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: MEM ; operands[0].mem.base: REG = rbp ; operands[0].mem.disp: 0xfffffffffffffdf0 ; operands[0].size: 16 ; operands[0].access: WRITE ; operands[1].type: REG = xmm1 ; operands[1].size: 16 ; operands[1].access: READ ; Registers read: rbp xmm1 ; Groups: sse1 
 
 !# issue 807
 !# CS_ARCH_X86, CS_MODE_64, None
@@ -168,7 +228,7 @@
 
 !# issue 804
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
-0x0: 0x66,0x48,0xf3,0xd1,0xc0 == rol $1, %ax
+0x0: 0x66,0x48,0xf3,0xd1,0xc0 == rolw $1, %ax
 
 !# issue 789
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
@@ -228,7 +288,7 @@
 
 !# issue 545
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x0: 0x95 == xchg eax, ebp ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x95 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: REG = eax ; operands[0].size: 4 ; operands[0].access: READ | WRITE ; operands[1].type: REG = ebp ; operands[1].size: 4 ; operands[1].access: READ | WRITE ; Registers read: eax ebp ; Registers modified: eax ebp ; Groups: not64bitmode 
+0x0: 0x95 == xchg ebp, eax ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x95 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: REG = ebp ; operands[0].size: 4 ; operands[0].access: READ | WRITE ; operands[1].type: REG = eax ; operands[1].size: 4 ; operands[1].access: READ | WRITE ; Registers read: ebp eax ; Registers modified: ebp eax ; Groups: not64bitmode 
 
 !# issue 544
 !# CS_ARCH_X86, CS_MODE_32, None
@@ -248,11 +308,11 @@
 
 !# issue 492
 !# CS_ARCH_X86, CS_MODE_32, None
-0x0: 0xff,0x18 == lcall [eax]
+0x0: 0xff,0x18 == call ptr [eax]
 
 !# issue 492
 !# CS_ARCH_X86, CS_MODE_32, None
-0x0: 0xff,0x28 == ljmp [eax]
+0x0: 0xff,0x28 == jmp ptr [eax]
 
 !# issue 492
 !# CS_ARCH_X86, CS_MODE_32, None
@@ -344,7 +404,7 @@
 
 !# issue 450
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x0: 0xff,0x2d,0x34,0x35,0x23,0x01 == ljmp [0x1233534] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xff 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x2d ; disp: 0x1233534 ; sib: 0x0 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.disp: 0x1233534 ; operands[0].size: 6 ; Groups: jump 
+0x0: 0xff,0x2d,0x34,0x35,0x23,0x01 == jmp ptr [0x1233534] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xff 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x2d ; disp: 0x1233534 ; sib: 0x0 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.disp: 0x1233534 ; operands[0].size: 6 ; Groups: jump 
 
 !# issue 448
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
@@ -360,7 +420,7 @@
 
 !# issue 353
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
-0x0: 0xe6,0xa2 == out 0xa2, al ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xe6 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; imm_count: 1 ; imms[1]: 0xa2 ; op_count: 2 ; operands[0].type: IMM = 0xa2 ; operands[0].size: 4 ; operands[1].type: REG = al ; operands[1].size: 1 ; operands[1].access: READ ; Registers read: al
+0x0: 0xe6,0xa2 == out 0xa2, al ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xe6 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 4 ; modrm: 0x0 ; disp: 0x0 ; sib: 0x0 ; imm_count: 1 ; imms[1]: 0xa2 ; op_count: 2 ; operands[0].type: IMM = 0xa2 ; operands[0].size: 1 ; operands[1].type: REG = al ; operands[1].size: 1 ; operands[1].access: READ ; Registers read: al
 
 !# issue 305
 !# CS_ARCH_X86, CS_MODE_32, None
@@ -374,9 +434,9 @@
 !# CS_ARCH_X86, CS_MODE_32, None
 0x0: 0x66,0xf3,0xf2,0x0f,0x59,0xff == mulsd xmm7, xmm7
 
-!# issue 298
-!# CS_ARCH_X86, CS_MODE_32, None
-0x0: 0xf2,0x66,0x0f,0x59,0xff == mulpd xmm7, xmm7
+// !# issue 298
+// !# CS_ARCH_X86, CS_MODE_32, None
+// 0x0: 0xf2,0x66,0x0f,0x59,0xff == mulpd xmm7, xmm7
 
 !# issue 294
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
