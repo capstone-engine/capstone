@@ -6230,7 +6230,7 @@
 
 {	/* X86_MOVDQUmr, X86_INS_MOVDQU: movdqu */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_MOVDQUrm, X86_INS_MOVDQU: movdqu */
@@ -6350,7 +6350,7 @@
 
 {	/* X86_MOVPDI2DImr, X86_INS_MOVD: movd */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_MOVPDI2DIrr, X86_INS_MOVD: movd */

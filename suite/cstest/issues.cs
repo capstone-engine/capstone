@@ -1,3 +1,15 @@
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7f,0x4c,0x24,0x40 == movdqa xmmword ptr [rsp + 0x40], xmm1 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7e,0x04,0x24 == movd dword ptr [rsp], xmm0 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0xf3,0x41,0x0f,0x7f,0x4d,0x00 == movdqu xmmword ptr [r13], xmm1 ; operands[0].access: WRITE
+
 !# issue 1346
 !# CS_ARCH_X86, CS_MODE_64, None
 0xf3,0x48,0x0f,0x1e,0xc8 == rdsspq rax
