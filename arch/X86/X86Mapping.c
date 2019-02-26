@@ -857,7 +857,7 @@ static const char *insn_name_maps[] = {
 const char *X86_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= X86_INS_ENDING)
+	if (id >= ARR_SIZE(insn_name_maps))
 		return NULL;
 
 	return insn_name_maps[id];
