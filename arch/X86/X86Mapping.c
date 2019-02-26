@@ -843,8 +843,8 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 }
 
 #ifndef CAPSTONE_DIET
-static const name_map insn_name_maps[] = {
-	{ X86_INS_INVALID, NULL },
+static const char *insn_name_maps[] = {
+	NULL, // X86_INS_INVALID
 #ifndef CAPSTONE_X86_REDUCE
 #include "X86MappingInsnName.inc"
 #else
@@ -860,7 +860,7 @@ const char *X86_insn_name(csh handle, unsigned int id)
 	if (id >= X86_INS_ENDING)
 		return NULL;
 
-	return insn_name_maps[id].name;
+	return insn_name_maps[id];
 #else
 	return NULL;
 #endif
