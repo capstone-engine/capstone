@@ -1,332 +1,332 @@
-	 { X86_INS_AAA, "aaa" },
-	 { X86_INS_AAD, "aad" },
-	 { X86_INS_AAM, "aam" },
-	 { X86_INS_AAS, "aas" },
-	 { X86_INS_ADC, "adc" },
-	 { X86_INS_ADCX, "adcx" },
-	 { X86_INS_ADD, "add" },
-	 { X86_INS_ADOX, "adox" },
-	 { X86_INS_AND, "and" },
-	 { X86_INS_ANDN, "andn" },
-	 { X86_INS_ARPL, "arpl" },
-	 { X86_INS_BOUND, "bound" },
-	 { X86_INS_BSF, "bsf" },
-	 { X86_INS_BSR, "bsr" },
-	 { X86_INS_BSWAP, "bswap" },
-	 { X86_INS_BT, "bt" },
-	 { X86_INS_BTC, "btc" },
-	 { X86_INS_BTR, "btr" },
-	 { X86_INS_BTS, "bts" },
-	 { X86_INS_CALL, "call" },
-	 { X86_INS_CALLL, "calll" },
-	 { X86_INS_CALLW, "callw" },
-	 { X86_INS_CBW, "cbw" },
-	 { X86_INS_CDQ, "cdq" },
-	 { X86_INS_CDQE, "cdqe" },
-	 { X86_INS_CLAC, "clac" },
-	 { X86_INS_CLC, "clc" },
-	 { X86_INS_CLD, "cld" },
-	 { X86_INS_CLGI, "clgi" },
-	 { X86_INS_CLI, "cli" },
-	 { X86_INS_CLR, "clr" },
-	 { X86_INS_CLRSSBSY, "clrssbsy" },
-	 { X86_INS_CLTS, "clts" },
-	 { X86_INS_CMC, "cmc" },
-	 { X86_INS_CMOVA, "cmova" },
-	 { X86_INS_CMOVAE, "cmovae" },
-	 { X86_INS_CMOVB, "cmovb" },
-	 { X86_INS_CMOVBE, "cmovbe" },
-	 { X86_INS_CMOVE, "cmove" },
-	 { X86_INS_CMOVG, "cmovg" },
-	 { X86_INS_CMOVGE, "cmovge" },
-	 { X86_INS_CMOVL, "cmovl" },
-	 { X86_INS_CMOVLE, "cmovle" },
-	 { X86_INS_CMOVNE, "cmovne" },
-	 { X86_INS_CMOVNO, "cmovno" },
-	 { X86_INS_CMOVNP, "cmovnp" },
-	 { X86_INS_CMOVNS, "cmovns" },
-	 { X86_INS_CMOVO, "cmovo" },
-	 { X86_INS_CMOVP, "cmovp" },
-	 { X86_INS_CMOVS, "cmovs" },
-	 { X86_INS_CMP, "cmp" },
-	 { X86_INS_CMPS, "cmps" },
-	 { X86_INS_CMPSB, "cmpsb" },
-	 { X86_INS_CMPSD, "cmpsd" },
-	 { X86_INS_CMPSQ, "cmpsq" },
-	 { X86_INS_CMPSW, "cmpsw" },
-	 { X86_INS_CMPXCHG, "cmpxchg" },
-	 { X86_INS_CMPXCHG16B, "cmpxchg16b" },
-	 { X86_INS_CMPXCHG8B, "cmpxchg8b" },
-	 { X86_INS_CPUID, "cpuid" },
-	 { X86_INS_CQO, "cqo" },
-	 { X86_INS_CWD, "cwd" },
-	 { X86_INS_CWDE, "cwde" },
-	 { X86_INS_DAA, "daa" },
-	 { X86_INS_DAS, "das" },
-	 { X86_INS_DATA16, "data16" },
-	 { X86_INS_DEC, "dec" },
-	 { X86_INS_DIV, "div" },
-	 { X86_INS_ENDBR32, "endbr32" },
-	 { X86_INS_ENDBR64, "endbr64" },
-	 { X86_INS_ENTER, "enter" },
-	 { X86_INS_FSETPM, "fsetpm" },
-	 { X86_INS_GETSEC, "getsec" },
-	 { X86_INS_HLT, "hlt" },
-	 { X86_INS_IDIV, "idiv" },
-	 { X86_INS_IMUL, "imul" },
-	 { X86_INS_IN, "in" },
-	 { X86_INS_INB, "inb" },
-	 { X86_INS_INC, "inc" },
-	 { X86_INS_INCSSPD, "incsspd" },
-	 { X86_INS_INCSSPQ, "incsspq" },
-	 { X86_INS_INL, "inl" },
-	 { X86_INS_INS, "ins" },
-	 { X86_INS_INSB, "insb" },
-	 { X86_INS_INSD, "insd" },
-	 { X86_INS_INSW, "insw" },
-	 { X86_INS_INT, "int" },
-	 { X86_INS_INT1, "int1" },
-	 { X86_INS_INT3, "int3" },
-	 { X86_INS_INTO, "into" },
-	 { X86_INS_INVD, "invd" },
-	 { X86_INS_INVEPT, "invept" },
-	 { X86_INS_INVLPG, "invlpg" },
-	 { X86_INS_INVLPGA, "invlpga" },
-	 { X86_INS_INVPCID, "invpcid" },
-	 { X86_INS_INVVPID, "invvpid" },
-	 { X86_INS_INW, "inw" },
-	 { X86_INS_IRET, "iret" },
-	 { X86_INS_IRETD, "iretd" },
-	 { X86_INS_IRETQ, "iretq" },
-	 { X86_INS_JA, "ja" },
-	 { X86_INS_JAE, "jae" },
-	 { X86_INS_JB, "jb" },
-	 { X86_INS_JBE, "jbe" },
-	 { X86_INS_JCXZ, "jcxz" },
-	 { X86_INS_JE, "je" },
-	 { X86_INS_JECXZ, "jecxz" },
-	 { X86_INS_JG, "jg" },
-	 { X86_INS_JGE, "jge" },
-	 { X86_INS_JL, "jl" },
-	 { X86_INS_JLE, "jle" },
-	 { X86_INS_JMP, "jmp" },
-	 { X86_INS_JMPL, "jmpl" },
-	 { X86_INS_JMPW, "jmpw" },
-	 { X86_INS_JNE, "jne" },
-	 { X86_INS_JNO, "jno" },
-	 { X86_INS_JNP, "jnp" },
-	 { X86_INS_JNS, "jns" },
-	 { X86_INS_JO, "jo" },
-	 { X86_INS_JP, "jp" },
-	 { X86_INS_JRCXZ, "jrcxz" },
-	 { X86_INS_JS, "js" },
-	 { X86_INS_LAHF, "lahf" },
-	 { X86_INS_LAR, "lar" },
-	 { X86_INS_LCALL, "lcall" },
-	 { X86_INS_LDS, "lds" },
-	 { X86_INS_LEA, "lea" },
-	 { X86_INS_LEAVE, "leave" },
-	 { X86_INS_LES, "les" },
-	 { X86_INS_LFS, "lfs" },
-	 { X86_INS_LGDT, "lgdt" },
-	 { X86_INS_LGS, "lgs" },
-	 { X86_INS_LIDT, "lidt" },
-	 { X86_INS_LJMP, "ljmp" },
-	 { X86_INS_LLDT, "lldt" },
-	 { X86_INS_LMSW, "lmsw" },
-	 { X86_INS_LOCK, "lock" },
-	 { X86_INS_LODS, "lods" },
-	 { X86_INS_LODSB, "lodsb" },
-	 { X86_INS_LODSD, "lodsd" },
-	 { X86_INS_LODSQ, "lodsq" },
-	 { X86_INS_LODSW, "lodsw" },
-	 { X86_INS_LOOP, "loop" },
-	 { X86_INS_LOOPE, "loope" },
-	 { X86_INS_LOOPNE, "loopne" },
-	 { X86_INS_LSL, "lsl" },
-	 { X86_INS_LSS, "lss" },
-	 { X86_INS_LTR, "ltr" },
-	 { X86_INS_MONITORX, "monitorx" },
-	 { X86_INS_MONTMUL, "montmul" },
-	 { X86_INS_MOV, "mov" },
-	 { X86_INS_MOVABS, "movabs" },
-	 { X86_INS_MOVBE, "movbe" },
-	 { X86_INS_MOVS, "movs" },
-	 { X86_INS_MOVSB, "movsb" },
-	 { X86_INS_MOVSD, "movsd" },
-	 { X86_INS_MOVSQ, "movsq" },
-	 { X86_INS_MOVSW, "movsw" },
-	 { X86_INS_MOVSX, "movsx" },
-	 { X86_INS_MOVSXD, "movsxd" },
-	 { X86_INS_MOVZX, "movzx" },
-	 { X86_INS_MUL, "mul" },
-	 { X86_INS_MULX, "mulx" },
-	 { X86_INS_MWAITX, "mwaitx" },
-	 { X86_INS_NEG, "neg" },
-	 { X86_INS_NOP, "nop" },
-	 { X86_INS_NOT, "not" },
-	 { X86_INS_OR, "or" },
-	 { X86_INS_OUT, "out" },
-	 { X86_INS_OUTB, "outb" },
-	 { X86_INS_OUTL, "outl" },
-	 { X86_INS_OUTS, "outs" },
-	 { X86_INS_OUTSB, "outsb" },
-	 { X86_INS_OUTSD, "outsd" },
-	 { X86_INS_OUTSW, "outsw" },
-	 { X86_INS_OUTW, "outw" },
-	 { X86_INS_PCONFIG, "pconfig" },
-	 { X86_INS_POP, "pop" },
-	 { X86_INS_POPAL, "popal" },
-	 { X86_INS_POPAW, "popaw" },
-	 { X86_INS_POPF, "popf" },
-	 { X86_INS_POPFD, "popfd" },
-	 { X86_INS_POPFQ, "popfq" },
-	 { X86_INS_PTWRITE, "ptwrite" },
-	 { X86_INS_PUSH, "push" },
-	 { X86_INS_PUSHAL, "pushal" },
-	 { X86_INS_PUSHAW, "pushaw" },
-	 { X86_INS_PUSHF, "pushf" },
-	 { X86_INS_PUSHFD, "pushfd" },
-	 { X86_INS_PUSHFQ, "pushfq" },
-	 { X86_INS_RCL, "rcl" },
-	 { X86_INS_RCR, "rcr" },
-	 { X86_INS_RDFSBASE, "rdfsbase" },
-	 { X86_INS_RDGSBASE, "rdgsbase" },
-	 { X86_INS_RDMSR, "rdmsr" },
-	 { X86_INS_RDPID, "rdpid" },
-	 { X86_INS_RDPKRU, "rdpkru" },
-	 { X86_INS_RDPMC, "rdpmc" },
-	 { X86_INS_RDRAND, "rdrand" },
-	 { X86_INS_RDSEED, "rdseed" },
-	 { X86_INS_RDSSPD, "rdsspd" },
-	 { X86_INS_RDSSPQ, "rdsspq" },
-	 { X86_INS_RDTSC, "rdtsc" },
-	 { X86_INS_RDTSCP, "rdtscp" },
-	 { X86_INS_REP, "rep" },
-	 { X86_INS_REPNE, "repne" },
-	 { X86_INS_RET, "ret" },
-	 { X86_INS_RETF, "retf" },
-	 { X86_INS_RETFQ, "retfq" },
-	 { X86_INS_REX64, "rex64" },
-	 { X86_INS_ROL, "rol" },
-	 { X86_INS_ROR, "ror" },
-	 { X86_INS_RORX, "rorx" },
-	 { X86_INS_RSM, "rsm" },
-	 { X86_INS_RSTORSSP, "rstorssp" },
-	 { X86_INS_SAHF, "sahf" },
-	 { X86_INS_SAL, "sal" },
-	 { X86_INS_SALC, "salc" },
-	 { X86_INS_SAR, "sar" },
-	 { X86_INS_SARX, "sarx" },
-	 { X86_INS_SAVEPREVSSP, "saveprevssp" },
-	 { X86_INS_SBB, "sbb" },
-	 { X86_INS_SCAS, "scas" },
-	 { X86_INS_SCASB, "scasb" },
-	 { X86_INS_SCASD, "scasd" },
-	 { X86_INS_SCASQ, "scasq" },
-	 { X86_INS_SCASW, "scasw" },
-	 { X86_INS_SETA, "seta" },
-	 { X86_INS_SETAE, "setae" },
-	 { X86_INS_SETB, "setb" },
-	 { X86_INS_SETBE, "setbe" },
-	 { X86_INS_SETE, "sete" },
-	 { X86_INS_SETG, "setg" },
-	 { X86_INS_SETGE, "setge" },
-	 { X86_INS_SETL, "setl" },
-	 { X86_INS_SETLE, "setle" },
-	 { X86_INS_SETNE, "setne" },
-	 { X86_INS_SETNO, "setno" },
-	 { X86_INS_SETNP, "setnp" },
-	 { X86_INS_SETNS, "setns" },
-	 { X86_INS_SETO, "seto" },
-	 { X86_INS_SETP, "setp" },
-	 { X86_INS_SETS, "sets" },
-	 { X86_INS_SETSSBSY, "setssbsy" },
-	 { X86_INS_SGDT, "sgdt" },
-	 { X86_INS_SHL, "shl" },
-	 { X86_INS_SHLD, "shld" },
-	 { X86_INS_SHLX, "shlx" },
-	 { X86_INS_SHR, "shr" },
-	 { X86_INS_SHRD, "shrd" },
-	 { X86_INS_SHRX, "shrx" },
-	 { X86_INS_SIDT, "sidt" },
-	 { X86_INS_SKINIT, "skinit" },
-	 { X86_INS_SLDT, "sldt" },
-	 { X86_INS_SMSW, "smsw" },
-	 { X86_INS_STAC, "stac" },
-	 { X86_INS_STC, "stc" },
-	 { X86_INS_STD, "std" },
-	 { X86_INS_STGI, "stgi" },
-	 { X86_INS_STI, "sti" },
-	 { X86_INS_STOS, "stos" },
-	 { X86_INS_STOSB, "stosb" },
-	 { X86_INS_STOSD, "stosd" },
-	 { X86_INS_STOSQ, "stosq" },
-	 { X86_INS_STOSW, "stosw" },
-	 { X86_INS_STR, "str" },
-	 { X86_INS_SUB, "sub" },
-	 { X86_INS_SWAPGS, "swapgs" },
-	 { X86_INS_SYSCALL, "syscall" },
-	 { X86_INS_SYSENTER, "sysenter" },
-	 { X86_INS_SYSEXIT, "sysexit" },
-	 { X86_INS_SYSEXITQ, "sysexitq" },
-	 { X86_INS_SYSRET, "sysret" },
-	 { X86_INS_SYSRETQ, "sysretq" },
-	 { X86_INS_TEST, "test" },
-	 { X86_INS_UD0, "ud0" },
-	 { X86_INS_UD1, "ud1" },
-	 { X86_INS_UD2, "ud2" },
-	 { X86_INS_VERR, "verr" },
-	 { X86_INS_VERW, "verw" },
-	 { X86_INS_VMCALL, "vmcall" },
-	 { X86_INS_VMCLEAR, "vmclear" },
-	 { X86_INS_VMFUNC, "vmfunc" },
-	 { X86_INS_VMLAUNCH, "vmlaunch" },
-	 { X86_INS_VMLOAD, "vmload" },
-	 { X86_INS_VMMCALL, "vmmcall" },
-	 { X86_INS_VMPTRLD, "vmptrld" },
-	 { X86_INS_VMPTRST, "vmptrst" },
-	 { X86_INS_VMREAD, "vmread" },
-	 { X86_INS_VMRESUME, "vmresume" },
-	 { X86_INS_VMRUN, "vmrun" },
-	 { X86_INS_VMSAVE, "vmsave" },
-	 { X86_INS_VMWRITE, "vmwrite" },
-	 { X86_INS_VMXOFF, "vmxoff" },
-	 { X86_INS_VMXON, "vmxon" },
-	 { X86_INS_WBINVD, "wbinvd" },
-	 { X86_INS_WBNOINVD, "wbnoinvd" },
-	 { X86_INS_WRFSBASE, "wrfsbase" },
-	 { X86_INS_WRGSBASE, "wrgsbase" },
-	 { X86_INS_WRMSR, "wrmsr" },
-	 { X86_INS_WRPKRU, "wrpkru" },
-	 { X86_INS_WRSSD, "wrssd" },
-	 { X86_INS_WRSSQ, "wrssq" },
-	 { X86_INS_WRUSSD, "wrussd" },
-	 { X86_INS_WRUSSQ, "wrussq" },
-	 { X86_INS_XADD, "xadd" },
-	 { X86_INS_XCHG, "xchg" },
-	 { X86_INS_XCRYPTCBC, "xcryptcbc" },
-	 { X86_INS_XCRYPTCFB, "xcryptcfb" },
-	 { X86_INS_XCRYPTCTR, "xcryptctr" },
-	 { X86_INS_XCRYPTECB, "xcryptecb" },
-	 { X86_INS_XCRYPTOFB, "xcryptofb" },
-	 { X86_INS_XGETBV, "xgetbv" },
-	 { X86_INS_XLATB, "xlatb" },
-	 { X86_INS_XOR, "xor" },
-	 { X86_INS_XRSTOR, "xrstor" },
-	 { X86_INS_XRSTOR64, "xrstor64" },
-	 { X86_INS_XRSTORS, "xrstors" },
-	 { X86_INS_XRSTORS64, "xrstors64" },
-	 { X86_INS_XSAVE, "xsave" },
-	 { X86_INS_XSAVE64, "xsave64" },
-	 { X86_INS_XSAVEC, "xsavec" },
-	 { X86_INS_XSAVEC64, "xsavec64" },
-	 { X86_INS_XSAVEOPT, "xsaveopt" },
-	 { X86_INS_XSAVEOPT64, "xsaveopt64" },
-	 { X86_INS_XSAVES, "xsaves" },
-	 { X86_INS_XSAVES64, "xsaves64" },
-	 { X86_INS_XSETBV, "xsetbv" },
-	 { X86_INS_XSHA1, "xsha1" },
-	 { X86_INS_XSHA256, "xsha256" },
-	 { X86_INS_XSTORE, "xstore" },
-	 { X86_INS_XSTORERNG, "xstorerng" },
+	"aaa", // X86_INS_AAA
+	"aad", // X86_INS_AAD
+	"aam", // X86_INS_AAM
+	"aas", // X86_INS_AAS
+	"adc", // X86_INS_ADC
+	"adcx", // X86_INS_ADCX
+	"add", // X86_INS_ADD
+	"adox", // X86_INS_ADOX
+	"and", // X86_INS_AND
+	"andn", // X86_INS_ANDN
+	"arpl", // X86_INS_ARPL
+	"bound", // X86_INS_BOUND
+	"bsf", // X86_INS_BSF
+	"bsr", // X86_INS_BSR
+	"bswap", // X86_INS_BSWAP
+	"bt", // X86_INS_BT
+	"btc", // X86_INS_BTC
+	"btr", // X86_INS_BTR
+	"bts", // X86_INS_BTS
+	"call", // X86_INS_CALL
+	"calll", // X86_INS_CALLL
+	"callw", // X86_INS_CALLW
+	"cbw", // X86_INS_CBW
+	"cdq", // X86_INS_CDQ
+	"cdqe", // X86_INS_CDQE
+	"clac", // X86_INS_CLAC
+	"clc", // X86_INS_CLC
+	"cld", // X86_INS_CLD
+	"clgi", // X86_INS_CLGI
+	"cli", // X86_INS_CLI
+	"clr", // X86_INS_CLR
+	"clrssbsy", // X86_INS_CLRSSBSY
+	"clts", // X86_INS_CLTS
+	"cmc", // X86_INS_CMC
+	"cmova", // X86_INS_CMOVA
+	"cmovae", // X86_INS_CMOVAE
+	"cmovb", // X86_INS_CMOVB
+	"cmovbe", // X86_INS_CMOVBE
+	"cmove", // X86_INS_CMOVE
+	"cmovg", // X86_INS_CMOVG
+	"cmovge", // X86_INS_CMOVGE
+	"cmovl", // X86_INS_CMOVL
+	"cmovle", // X86_INS_CMOVLE
+	"cmovne", // X86_INS_CMOVNE
+	"cmovno", // X86_INS_CMOVNO
+	"cmovnp", // X86_INS_CMOVNP
+	"cmovns", // X86_INS_CMOVNS
+	"cmovo", // X86_INS_CMOVO
+	"cmovp", // X86_INS_CMOVP
+	"cmovs", // X86_INS_CMOVS
+	"cmp", // X86_INS_CMP
+	"cmps", // X86_INS_CMPS
+	"cmpsb", // X86_INS_CMPSB
+	"cmpsd", // X86_INS_CMPSD
+	"cmpsq", // X86_INS_CMPSQ
+	"cmpsw", // X86_INS_CMPSW
+	"cmpxchg", // X86_INS_CMPXCHG
+	"cmpxchg16b", // X86_INS_CMPXCHG16B
+	"cmpxchg8b", // X86_INS_CMPXCHG8B
+	"cpuid", // X86_INS_CPUID
+	"cqo", // X86_INS_CQO
+	"cwd", // X86_INS_CWD
+	"cwde", // X86_INS_CWDE
+	"daa", // X86_INS_DAA
+	"das", // X86_INS_DAS
+	"data16", // X86_INS_DATA16
+	"dec", // X86_INS_DEC
+	"div", // X86_INS_DIV
+	"endbr32", // X86_INS_ENDBR32
+	"endbr64", // X86_INS_ENDBR64
+	"enter", // X86_INS_ENTER
+	"fsetpm", // X86_INS_FSETPM
+	"getsec", // X86_INS_GETSEC
+	"hlt", // X86_INS_HLT
+	"idiv", // X86_INS_IDIV
+	"imul", // X86_INS_IMUL
+	"in", // X86_INS_IN
+	"inb", // X86_INS_INB
+	"inc", // X86_INS_INC
+	"incsspd", // X86_INS_INCSSPD
+	"incsspq", // X86_INS_INCSSPQ
+	"inl", // X86_INS_INL
+	"ins", // X86_INS_INS
+	"insb", // X86_INS_INSB
+	"insd", // X86_INS_INSD
+	"insw", // X86_INS_INSW
+	"int", // X86_INS_INT
+	"int1", // X86_INS_INT1
+	"int3", // X86_INS_INT3
+	"into", // X86_INS_INTO
+	"invd", // X86_INS_INVD
+	"invept", // X86_INS_INVEPT
+	"invlpg", // X86_INS_INVLPG
+	"invlpga", // X86_INS_INVLPGA
+	"invpcid", // X86_INS_INVPCID
+	"invvpid", // X86_INS_INVVPID
+	"inw", // X86_INS_INW
+	"iret", // X86_INS_IRET
+	"iretd", // X86_INS_IRETD
+	"iretq", // X86_INS_IRETQ
+	"ja", // X86_INS_JA
+	"jae", // X86_INS_JAE
+	"jb", // X86_INS_JB
+	"jbe", // X86_INS_JBE
+	"jcxz", // X86_INS_JCXZ
+	"je", // X86_INS_JE
+	"jecxz", // X86_INS_JECXZ
+	"jg", // X86_INS_JG
+	"jge", // X86_INS_JGE
+	"jl", // X86_INS_JL
+	"jle", // X86_INS_JLE
+	"jmp", // X86_INS_JMP
+	"jmpl", // X86_INS_JMPL
+	"jmpw", // X86_INS_JMPW
+	"jne", // X86_INS_JNE
+	"jno", // X86_INS_JNO
+	"jnp", // X86_INS_JNP
+	"jns", // X86_INS_JNS
+	"jo", // X86_INS_JO
+	"jp", // X86_INS_JP
+	"jrcxz", // X86_INS_JRCXZ
+	"js", // X86_INS_JS
+	"lahf", // X86_INS_LAHF
+	"lar", // X86_INS_LAR
+	"lcall", // X86_INS_LCALL
+	"lds", // X86_INS_LDS
+	"lea", // X86_INS_LEA
+	"leave", // X86_INS_LEAVE
+	"les", // X86_INS_LES
+	"lfs", // X86_INS_LFS
+	"lgdt", // X86_INS_LGDT
+	"lgs", // X86_INS_LGS
+	"lidt", // X86_INS_LIDT
+	"ljmp", // X86_INS_LJMP
+	"lldt", // X86_INS_LLDT
+	"lmsw", // X86_INS_LMSW
+	"lock", // X86_INS_LOCK
+	"lods", // X86_INS_LODS
+	"lodsb", // X86_INS_LODSB
+	"lodsd", // X86_INS_LODSD
+	"lodsq", // X86_INS_LODSQ
+	"lodsw", // X86_INS_LODSW
+	"loop", // X86_INS_LOOP
+	"loope", // X86_INS_LOOPE
+	"loopne", // X86_INS_LOOPNE
+	"lsl", // X86_INS_LSL
+	"lss", // X86_INS_LSS
+	"ltr", // X86_INS_LTR
+	"monitorx", // X86_INS_MONITORX
+	"montmul", // X86_INS_MONTMUL
+	"mov", // X86_INS_MOV
+	"movabs", // X86_INS_MOVABS
+	"movbe", // X86_INS_MOVBE
+	"movs", // X86_INS_MOVS
+	"movsb", // X86_INS_MOVSB
+	"movsd", // X86_INS_MOVSD
+	"movsq", // X86_INS_MOVSQ
+	"movsw", // X86_INS_MOVSW
+	"movsx", // X86_INS_MOVSX
+	"movsxd", // X86_INS_MOVSXD
+	"movzx", // X86_INS_MOVZX
+	"mul", // X86_INS_MUL
+	"mulx", // X86_INS_MULX
+	"mwaitx", // X86_INS_MWAITX
+	"neg", // X86_INS_NEG
+	"nop", // X86_INS_NOP
+	"not", // X86_INS_NOT
+	"or", // X86_INS_OR
+	"out", // X86_INS_OUT
+	"outb", // X86_INS_OUTB
+	"outl", // X86_INS_OUTL
+	"outs", // X86_INS_OUTS
+	"outsb", // X86_INS_OUTSB
+	"outsd", // X86_INS_OUTSD
+	"outsw", // X86_INS_OUTSW
+	"outw", // X86_INS_OUTW
+	"pconfig", // X86_INS_PCONFIG
+	"pop", // X86_INS_POP
+	"popal", // X86_INS_POPAL
+	"popaw", // X86_INS_POPAW
+	"popf", // X86_INS_POPF
+	"popfd", // X86_INS_POPFD
+	"popfq", // X86_INS_POPFQ
+	"ptwrite", // X86_INS_PTWRITE
+	"push", // X86_INS_PUSH
+	"pushal", // X86_INS_PUSHAL
+	"pushaw", // X86_INS_PUSHAW
+	"pushf", // X86_INS_PUSHF
+	"pushfd", // X86_INS_PUSHFD
+	"pushfq", // X86_INS_PUSHFQ
+	"rcl", // X86_INS_RCL
+	"rcr", // X86_INS_RCR
+	"rdfsbase", // X86_INS_RDFSBASE
+	"rdgsbase", // X86_INS_RDGSBASE
+	"rdmsr", // X86_INS_RDMSR
+	"rdpid", // X86_INS_RDPID
+	"rdpkru", // X86_INS_RDPKRU
+	"rdpmc", // X86_INS_RDPMC
+	"rdrand", // X86_INS_RDRAND
+	"rdseed", // X86_INS_RDSEED
+	"rdsspd", // X86_INS_RDSSPD
+	"rdsspq", // X86_INS_RDSSPQ
+	"rdtsc", // X86_INS_RDTSC
+	"rdtscp", // X86_INS_RDTSCP
+	"rep", // X86_INS_REP
+	"repne", // X86_INS_REPNE
+	"ret", // X86_INS_RET
+	"retf", // X86_INS_RETF
+	"retfq", // X86_INS_RETFQ
+	"rex64", // X86_INS_REX64
+	"rol", // X86_INS_ROL
+	"ror", // X86_INS_ROR
+	"rorx", // X86_INS_RORX
+	"rsm", // X86_INS_RSM
+	"rstorssp", // X86_INS_RSTORSSP
+	"sahf", // X86_INS_SAHF
+	"sal", // X86_INS_SAL
+	"salc", // X86_INS_SALC
+	"sar", // X86_INS_SAR
+	"sarx", // X86_INS_SARX
+	"saveprevssp", // X86_INS_SAVEPREVSSP
+	"sbb", // X86_INS_SBB
+	"scas", // X86_INS_SCAS
+	"scasb", // X86_INS_SCASB
+	"scasd", // X86_INS_SCASD
+	"scasq", // X86_INS_SCASQ
+	"scasw", // X86_INS_SCASW
+	"seta", // X86_INS_SETA
+	"setae", // X86_INS_SETAE
+	"setb", // X86_INS_SETB
+	"setbe", // X86_INS_SETBE
+	"sete", // X86_INS_SETE
+	"setg", // X86_INS_SETG
+	"setge", // X86_INS_SETGE
+	"setl", // X86_INS_SETL
+	"setle", // X86_INS_SETLE
+	"setne", // X86_INS_SETNE
+	"setno", // X86_INS_SETNO
+	"setnp", // X86_INS_SETNP
+	"setns", // X86_INS_SETNS
+	"seto", // X86_INS_SETO
+	"setp", // X86_INS_SETP
+	"sets", // X86_INS_SETS
+	"setssbsy", // X86_INS_SETSSBSY
+	"sgdt", // X86_INS_SGDT
+	"shl", // X86_INS_SHL
+	"shld", // X86_INS_SHLD
+	"shlx", // X86_INS_SHLX
+	"shr", // X86_INS_SHR
+	"shrd", // X86_INS_SHRD
+	"shrx", // X86_INS_SHRX
+	"sidt", // X86_INS_SIDT
+	"skinit", // X86_INS_SKINIT
+	"sldt", // X86_INS_SLDT
+	"smsw", // X86_INS_SMSW
+	"stac", // X86_INS_STAC
+	"stc", // X86_INS_STC
+	"std", // X86_INS_STD
+	"stgi", // X86_INS_STGI
+	"sti", // X86_INS_STI
+	"stos", // X86_INS_STOS
+	"stosb", // X86_INS_STOSB
+	"stosd", // X86_INS_STOSD
+	"stosq", // X86_INS_STOSQ
+	"stosw", // X86_INS_STOSW
+	"str", // X86_INS_STR
+	"sub", // X86_INS_SUB
+	"swapgs", // X86_INS_SWAPGS
+	"syscall", // X86_INS_SYSCALL
+	"sysenter", // X86_INS_SYSENTER
+	"sysexit", // X86_INS_SYSEXIT
+	"sysexitq", // X86_INS_SYSEXITQ
+	"sysret", // X86_INS_SYSRET
+	"sysretq", // X86_INS_SYSRETQ
+	"test", // X86_INS_TEST
+	"ud0", // X86_INS_UD0
+	"ud1", // X86_INS_UD1
+	"ud2", // X86_INS_UD2
+	"verr", // X86_INS_VERR
+	"verw", // X86_INS_VERW
+	"vmcall", // X86_INS_VMCALL
+	"vmclear", // X86_INS_VMCLEAR
+	"vmfunc", // X86_INS_VMFUNC
+	"vmlaunch", // X86_INS_VMLAUNCH
+	"vmload", // X86_INS_VMLOAD
+	"vmmcall", // X86_INS_VMMCALL
+	"vmptrld", // X86_INS_VMPTRLD
+	"vmptrst", // X86_INS_VMPTRST
+	"vmread", // X86_INS_VMREAD
+	"vmresume", // X86_INS_VMRESUME
+	"vmrun", // X86_INS_VMRUN
+	"vmsave", // X86_INS_VMSAVE
+	"vmwrite", // X86_INS_VMWRITE
+	"vmxoff", // X86_INS_VMXOFF
+	"vmxon", // X86_INS_VMXON
+	"wbinvd", // X86_INS_WBINVD
+	"wbnoinvd", // X86_INS_WBNOINVD
+	"wrfsbase", // X86_INS_WRFSBASE
+	"wrgsbase", // X86_INS_WRGSBASE
+	"wrmsr", // X86_INS_WRMSR
+	"wrpkru", // X86_INS_WRPKRU
+	"wrssd", // X86_INS_WRSSD
+	"wrssq", // X86_INS_WRSSQ
+	"wrussd", // X86_INS_WRUSSD
+	"wrussq", // X86_INS_WRUSSQ
+	"xadd", // X86_INS_XADD
+	"xchg", // X86_INS_XCHG
+	"xcryptcbc", // X86_INS_XCRYPTCBC
+	"xcryptcfb", // X86_INS_XCRYPTCFB
+	"xcryptctr", // X86_INS_XCRYPTCTR
+	"xcryptecb", // X86_INS_XCRYPTECB
+	"xcryptofb", // X86_INS_XCRYPTOFB
+	"xgetbv", // X86_INS_XGETBV
+	"xlatb", // X86_INS_XLATB
+	"xor", // X86_INS_XOR
+	"xrstor", // X86_INS_XRSTOR
+	"xrstor64", // X86_INS_XRSTOR64
+	"xrstors", // X86_INS_XRSTORS
+	"xrstors64", // X86_INS_XRSTORS64
+	"xsave", // X86_INS_XSAVE
+	"xsave64", // X86_INS_XSAVE64
+	"xsavec", // X86_INS_XSAVEC
+	"xsavec64", // X86_INS_XSAVEC64
+	"xsaveopt", // X86_INS_XSAVEOPT
+	"xsaveopt64", // X86_INS_XSAVEOPT64
+	"xsaves", // X86_INS_XSAVES
+	"xsaves64", // X86_INS_XSAVES64
+	"xsetbv", // X86_INS_XSETBV
+	"xsha1", // X86_INS_XSHA1
+	"xsha256", // X86_INS_XSHA256
+	"xstore", // X86_INS_XSTORE
+	"xstorerng", // X86_INS_XSTORERNG
