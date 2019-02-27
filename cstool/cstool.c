@@ -58,6 +58,7 @@ static struct {
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "evm", CS_ARCH_EVM, 0 },
+	{ "riscv", CS_ARCH_RISCV, CS_MODE_LITTLE_ENDIAN },
 	{ "wasm", CS_ARCH_WASM, 0 },
 	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
 	{ "bpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC },
@@ -79,6 +80,7 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
+void print_insn_detail_riscv(csh handle, cs_insn *ins);
 void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
 void print_insn_detail_bpf(csh handle, cs_insn *ins);
@@ -280,6 +282,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_EVM:
 			print_insn_detail_evm(handle, ins);
 			break;
+		case CS_ARCH_RISCV:
+			print_insn_detail_riscv(handle, ins);
+			break;
 		case CS_ARCH_WASM:
 			print_insn_detail_wasm(handle, ins);
 			break;
@@ -383,6 +388,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
+				}
+				
+				if (cs_support(CS_ARCH_RISCV)) {
+					printf("riscv=1 ");
 				}
 
 				if (cs_support(CS_ARCH_WASM)) {

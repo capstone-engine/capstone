@@ -410,17 +410,17 @@ static const MCRegisterDesc RISCVRegDesc[] = { // Descriptors
   };
 
 static const MCRegisterClass RISCVMCRegisterClasses[] = {
-  { FPR32, FPR32Bits, 8, 32, sizeof(FPR32Bits), RISCV_FPR32RegClassID, 1, true },
-  { GPR, GPRBits, 67, 32, sizeof(GPRBits), RISCV_GPRRegClassID, 1, true },
-  { GPRNoX0, GPRNoX0Bits, 0, 31, sizeof(GPRNoX0Bits), RISCV_GPRNoX0RegClassID, 1, true },
-  { GPRNoX0X2, GPRNoX0X2Bits, 14, 30, sizeof(GPRNoX0X2Bits), RISCV_GPRNoX0X2RegClassID, 1, true },
-  { GPRTC, GPRTCBits, 58, 15, sizeof(GPRTCBits), RISCV_GPRTCRegClassID, 1, true },
-  { FPR32C, FPR32CBits, 30, 8, sizeof(FPR32CBits), RISCV_FPR32CRegClassID, 1, true },
-  { GPRC, GPRCBits, 44, 8, sizeof(GPRCBits), RISCV_GPRCRegClassID, 1, true },
-  { GPRC_and_GPRTC, GPRC_and_GPRTCBits, 49, 6, sizeof(GPRC_and_GPRTCBits), RISCV_GPRC_and_GPRTCRegClassID, 1, true },
-  { SP, SPBits, 64, 1, sizeof(SPBits), RISCV_SPRegClassID, 1, true },
-  { FPR64, FPR64Bits, 24, 32, sizeof(FPR64Bits), RISCV_FPR64RegClassID, 1, true },
-  { FPR64C, FPR64CBits, 37, 8, sizeof(FPR64CBits), RISCV_FPR64CRegClassID, 1, true },
+  { FPR32, FPR32Bits, sizeof(FPR32Bits) },
+  { GPR, GPRBits, sizeof(GPRBits) },
+  { GPRNoX0, GPRNoX0Bits, sizeof(GPRNoX0Bits) },
+  { GPRNoX0X2, GPRNoX0X2Bits, sizeof(GPRNoX0X2Bits) },
+  { GPRTC, GPRTCBits, sizeof(GPRTCBits) },
+  { FPR32C, FPR32CBits, sizeof(FPR32CBits) },
+  { GPRC, GPRCBits, sizeof(GPRCBits) },
+  { GPRC_and_GPRTC, GPRC_and_GPRTCBits, sizeof(GPRC_and_GPRTCBits) },
+  { SP, SPBits, sizeof(SPBits) },
+  { FPR64, FPR64Bits, sizeof(FPR64Bits) },
+  { FPR64C, FPR64CBits, sizeof(FPR64CBits) },
 };
 
 #endif // GET_REGINFO_MC_DESC
