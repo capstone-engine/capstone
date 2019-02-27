@@ -20,7 +20,7 @@ cs_err RISCV_global_init(cs_struct * ud)
 	ud->printer_info = mri;
 	ud->getinsn_info = mri;
 	ud->disasm = RISCV_getInstruction;
-	ud->post_printer = RISCV_post_printer;
+	ud->post_printer = NULL;
 
 	ud->reg_name = RISCV_reg_name;
 	ud->insn_id = RISCV_get_insn_id;
