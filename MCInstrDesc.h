@@ -13,11 +13,12 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_LLVM_MC_MCINSTRDESC_H
 #define CS_LLVM_MC_MCINSTRDESC_H
 
+#include "MCRegisterInfo.h"
 #include "capstone/platform.h"
 
 //===----------------------------------------------------------------------===//
@@ -41,11 +42,22 @@ enum MCOI_OperandFlags {
 
 /// Operand Type - Operands are tagged with one of the values of this enum.
 enum MCOI_OperandType {
-	MCOI_OPERAND_UNKNOWN,
-	MCOI_OPERAND_IMMEDIATE,
-	MCOI_OPERAND_REGISTER,
-	MCOI_OPERAND_MEMORY,
-	MCOI_OPERAND_PCREL
+	MCOI_OPERAND_UNKNOWN = 0,
+	MCOI_OPERAND_IMMEDIATE = 1,
+	MCOI_OPERAND_REGISTER = 2,
+	MCOI_OPERAND_MEMORY = 3,
+	MCOI_OPERAND_PCREL = 4,
+
+	MCOI_OPERAND_FIRST_GENERIC = 6,
+	MCOI_OPERAND_GENERIC_0 = 6,
+	MCOI_OPERAND_GENERIC_1 = 7,
+	MCOI_OPERAND_GENERIC_2 = 8,
+	MCOI_OPERAND_GENERIC_3 = 9,
+	MCOI_OPERAND_GENERIC_4 = 10,
+	MCOI_OPERAND_GENERIC_5 = 11,
+	MCOI_OPERAND_LAST_GENERIC = 11,
+
+	MCOI_OPERAND_FIRST_TARGET = 12,
 };
 
 
@@ -53,20 +65,20 @@ enum MCOI_OperandType {
 /// instruction, indicating the register class for register operands, etc.
 ///
 typedef struct MCOperandInfo {
-	/// RegClass - This specifies the register class enumeration of the operand
+	/// This specifies the register class enumeration of the operand
 	/// if the operand is a register.  If isLookupPtrRegClass is set, then this is
 	/// an index that is passed to TargetRegisterInfo::getPointerRegClass(x) to
 	/// get a dynamic register class.
 	int16_t RegClass;
 
-	/// Flags - These are flags from the MCOI::OperandFlags enum.
+	/// These are flags from the MCOI::OperandFlags enum.
 	uint8_t Flags;
 
-	/// OperandType - Information about the type of the operand.
+	/// Information about the type of the operand.
 	uint8_t OperandType;
 
-	/// Lower 16 bits are used to specify which constraints are set. The higher 16
-	/// bits are used to specify the value of constraints (4 bits each).
+	/// The lower 16 bits are used to specify which constraints are set.
+	/// The higher 16 bits are used to specify the value of constraints (4 bits each).
 	uint32_t Constraints;
 	/// Currently no other information.
 } MCOperandInfo;
@@ -77,8 +89,8 @@ typedef struct MCOperandInfo {
 //===----------------------------------------------------------------------===//
 
 /// MCInstrDesc flags - These should be considered private to the
-/// implementation of the MCInstrDesc class.  Clients should use the predicate
-/// methods on MCInstrDesc, not use these directly.  These all correspond to
+/// implementation of the MCInstrDesc class. Clients should use the predicate
+/// methods on MCInstrDesc, not use these directly. These all correspond to
 /// bitfields in the MCInstrDesc::Flags field.
 enum {
 	MCID_Variadic = 0,
@@ -92,6 +104,7 @@ enum {
 	MCID_IndirectBranch,
 	MCID_Compare,
 	MCID_MoveImm,
+	MCID_MoveReg,
 	MCID_Bitcast,
 	MCID_Select,
 	MCID_DelaySlot,
@@ -111,30 +124,20 @@ enum {
 	MCID_ExtraDefRegAllocReq,
 	MCID_RegSequence,
 	MCID_ExtractSubreg,
-	MCID_InsertSubreg
+	MCID_InsertSubreg,
+	MCID_Convergent,
+	MCID_Add,
+	MCID_Trap,
 };
 
 /// MCInstrDesc - Describe properties that are true of each instruction in the
-/// target description file.  This captures information about side effects,
-/// register use and many other things.  There is one instance of this struct
+/// target description file. This captures information about side effects,
+/// register use and many other things. There is one instance of this struct
 /// for each target instruction class, and the MachineInstr class points to
 /// this struct directly to describe itself.
 typedef struct MCInstrDesc {
-	unsigned short  Opcode;        // The opcode number
 	unsigned char  NumOperands;   // Num of args (may be more if variable_ops)
-	unsigned char  NumDefs;       // Num of args that are definitions
-	unsigned short  SchedClass;    // enum identifying instr sched class
-	unsigned char  Size;          // Number of bytes in encoding.
-	unsigned        Flags;         // Flags identifying machine instr class
-	uint64_t        TSFlags;       // Target Specific Flag values
-	char ImplicitUses;  // Registers implicitly read by this instr
-	char ImplicitDefs;  // Registers implicitly defined by this instr
 	const MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
-	uint64_t DeprecatedFeatureMask;// Feature bits that this is deprecated on, if any     
-	// A complex method to determine is a certain is deprecated or not, and return        
-	// the reason for deprecation.
-	//bool (*ComplexDeprecationInfo)(MCInst &, MCSubtargetInfo &, std::string &);           
-	unsigned char ComplexDeprecationInfo;	// dummy field, just to satisfy initializer
 } MCInstrDesc;
 
 bool MCOperandInfo_isPredicate(const MCOperandInfo *m);

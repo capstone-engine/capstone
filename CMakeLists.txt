@@ -269,6 +269,7 @@ if (CAPSTONE_X86_SUPPORT)
         arch/X86/X86Disassembler.c
         arch/X86/X86DisassemblerDecoder.c
         arch/X86/X86IntelInstPrinter.c
+        arch/X86/X86InstPrinterCommon.c
         arch/X86/X86Mapping.c
         arch/X86/X86Module.c
     )
