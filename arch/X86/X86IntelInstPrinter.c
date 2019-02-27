@@ -13,7 +13,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifdef CAPSTONE_HAS_X86
 
@@ -43,7 +43,6 @@
 
 #include "X86InstPrinter.h"
 #include "X86Mapping.h"
-#include "X86InstPrinterCommon.h"
 
 #define GET_INSTRINFO_ENUM
 #ifdef CAPSTONE_X86_REDUCE
@@ -114,7 +113,6 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 					MI->x86opsize = 4;
 					break;
 				case X86_INS_LJMP:
-				case X86_INS_JMP:
 				case X86_INS_LCALL:
 				case X86_INS_SGDT:
 				case X86_INS_SIDT:
@@ -182,17 +180,17 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 #ifndef CAPSTONE_X86_REDUCE
-static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
-{
-	SStream_concat0(O, "zmmword ptr ");
-	MI->x86opsize = 64;
-	printMemReference(MI, OpNo, O);
-}
-
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "ymmword ptr ");
 	MI->x86opsize = 32;
+	printMemReference(MI, OpNo, O);
+}
+
+static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	SStream_concat0(O, "zmmword ptr ");
+	MI->x86opsize = 64;
 	printMemReference(MI, OpNo, O);
 }
 
@@ -202,6 +200,12 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 		default:
 			SStream_concat0(O, "dword ptr ");
 			MI->x86opsize = 4;
+			break;
+		case X86_FBSTPm:
+		case X86_FBLDm:
+			// TODO: fix this in tablegen instead
+			SStream_concat0(O, "tbyte ptr ");
+			MI->x86opsize = 10;
 			break;
 		case X86_FSTENVm:
 		case X86_FLDENVm:
@@ -232,15 +236,7 @@ static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf80mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	switch(MCInst_getOpcode(MI)) {
-		default:
-			SStream_concat0(O, "xword ptr ");
-			break;
-		case X86_FBLDm:
-		case X86_FBSTPm:
-			break;
-	}
-
+	SStream_concat0(O, "xword ptr ");
 	MI->x86opsize = 10;
 	printMemReference(MI, OpNo, O);
 }
@@ -265,6 +261,96 @@ static void printf512mem(MCInst *MI, unsigned OpNo, SStream *O)
 	MI->x86opsize = 64;
 	printMemReference(MI, OpNo, O);
 }
+
+static void printSSECC(MCInst *MI, unsigned Op, SStream *OS)
+{
+	uint8_t Imm = (uint8_t)(MCOperand_getImm(MCInst_getOperand(MI, Op)) & 7);
+	switch (Imm) {
+		default: break;	// never reach
+		case    0: SStream_concat0(OS, "eq"); op_addSseCC(MI, X86_SSE_CC_EQ); break;
+		case    1: SStream_concat0(OS, "lt"); op_addSseCC(MI, X86_SSE_CC_LT); break;
+		case    2: SStream_concat0(OS, "le"); op_addSseCC(MI, X86_SSE_CC_LE); break;
+		case    3: SStream_concat0(OS, "unord"); op_addSseCC(MI, X86_SSE_CC_UNORD); break;
+		case    4: SStream_concat0(OS, "neq"); op_addSseCC(MI, X86_SSE_CC_NEQ); break;
+		case    5: SStream_concat0(OS, "nlt"); op_addSseCC(MI, X86_SSE_CC_NLT); break;
+		case    6: SStream_concat0(OS, "nle"); op_addSseCC(MI, X86_SSE_CC_NLE); break;
+		case    7: SStream_concat0(OS, "ord"); op_addSseCC(MI, X86_SSE_CC_ORD); break;
+	}
+
+	MI->popcode_adjust = Imm + 1;
+}
+
+static void printAVXCC(MCInst *MI, unsigned Op, SStream *O)
+{
+	uint8_t Imm = (uint8_t)(MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x1f);
+	switch (Imm) {
+		default: break;//printf("Invalid avxcc argument!\n"); break;
+		case    0: SStream_concat0(O, "eq"); op_addAvxCC(MI, X86_AVX_CC_EQ); break;
+		case    1: SStream_concat0(O, "lt"); op_addAvxCC(MI, X86_AVX_CC_LT); break;
+		case    2: SStream_concat0(O, "le"); op_addAvxCC(MI, X86_AVX_CC_LE); break;
+		case    3: SStream_concat0(O, "unord"); op_addAvxCC(MI, X86_AVX_CC_UNORD); break;
+		case    4: SStream_concat0(O, "neq"); op_addAvxCC(MI, X86_AVX_CC_NEQ); break;
+		case    5: SStream_concat0(O, "nlt"); op_addAvxCC(MI, X86_AVX_CC_NLT); break;
+		case    6: SStream_concat0(O, "nle"); op_addAvxCC(MI, X86_AVX_CC_NLE); break;
+		case    7: SStream_concat0(O, "ord"); op_addAvxCC(MI, X86_AVX_CC_ORD); break;
+		case    8: SStream_concat0(O, "eq_uq"); op_addAvxCC(MI, X86_AVX_CC_EQ_UQ); break;
+		case    9: SStream_concat0(O, "nge"); op_addAvxCC(MI, X86_AVX_CC_NGE); break;
+		case  0xa: SStream_concat0(O, "ngt"); op_addAvxCC(MI, X86_AVX_CC_NGT); break;
+		case  0xb: SStream_concat0(O, "false"); op_addAvxCC(MI, X86_AVX_CC_FALSE); break;
+		case  0xc: SStream_concat0(O, "neq_oq"); op_addAvxCC(MI, X86_AVX_CC_NEQ_OQ); break;
+		case  0xd: SStream_concat0(O, "ge"); op_addAvxCC(MI, X86_AVX_CC_GE); break;
+		case  0xe: SStream_concat0(O, "gt"); op_addAvxCC(MI, X86_AVX_CC_GT); break;
+		case  0xf: SStream_concat0(O, "true"); op_addAvxCC(MI, X86_AVX_CC_TRUE); break;
+		case 0x10: SStream_concat0(O, "eq_os"); op_addAvxCC(MI, X86_AVX_CC_EQ_OS); break;
+		case 0x11: SStream_concat0(O, "lt_oq"); op_addAvxCC(MI, X86_AVX_CC_LT_OQ); break;
+		case 0x12: SStream_concat0(O, "le_oq"); op_addAvxCC(MI, X86_AVX_CC_LE_OQ); break;
+		case 0x13: SStream_concat0(O, "unord_s"); op_addAvxCC(MI, X86_AVX_CC_UNORD_S); break;
+		case 0x14: SStream_concat0(O, "neq_us"); op_addAvxCC(MI, X86_AVX_CC_NEQ_US); break;
+		case 0x15: SStream_concat0(O, "nlt_uq"); op_addAvxCC(MI, X86_AVX_CC_NLT_UQ); break;
+		case 0x16: SStream_concat0(O, "nle_uq"); op_addAvxCC(MI, X86_AVX_CC_NLE_UQ); break;
+		case 0x17: SStream_concat0(O, "ord_s"); op_addAvxCC(MI, X86_AVX_CC_ORD_S); break;
+		case 0x18: SStream_concat0(O, "eq_us"); op_addAvxCC(MI, X86_AVX_CC_EQ_US); break;
+		case 0x19: SStream_concat0(O, "nge_uq"); op_addAvxCC(MI, X86_AVX_CC_NGE_UQ); break;
+		case 0x1a: SStream_concat0(O, "ngt_uq"); op_addAvxCC(MI, X86_AVX_CC_NGT_UQ); break;
+		case 0x1b: SStream_concat0(O, "false_os"); op_addAvxCC(MI, X86_AVX_CC_FALSE_OS); break;
+		case 0x1c: SStream_concat0(O, "neq_os"); op_addAvxCC(MI, X86_AVX_CC_NEQ_OS); break;
+		case 0x1d: SStream_concat0(O, "ge_oq"); op_addAvxCC(MI, X86_AVX_CC_GE_OQ); break;
+		case 0x1e: SStream_concat0(O, "gt_oq"); op_addAvxCC(MI, X86_AVX_CC_GT_OQ); break;
+		case 0x1f: SStream_concat0(O, "true_us"); op_addAvxCC(MI, X86_AVX_CC_TRUE_US); break;
+	}
+
+	MI->popcode_adjust = Imm + 1;
+}
+
+static void printXOPCC(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op));
+
+	switch (Imm) {
+		default: // llvm_unreachable("Invalid xopcc argument!");
+		case 0: SStream_concat0(O, "lt"); op_addXopCC(MI, X86_XOP_CC_LT); break;
+		case 1: SStream_concat0(O, "le"); op_addXopCC(MI, X86_XOP_CC_LE); break;
+		case 2: SStream_concat0(O, "gt"); op_addXopCC(MI, X86_XOP_CC_GT); break;
+		case 3: SStream_concat0(O, "ge"); op_addXopCC(MI, X86_XOP_CC_GE); break;
+		case 4: SStream_concat0(O, "eq"); op_addXopCC(MI, X86_XOP_CC_EQ); break;
+		case 5: SStream_concat0(O, "neq"); op_addXopCC(MI, X86_XOP_CC_NEQ); break;
+		case 6: SStream_concat0(O, "false"); op_addXopCC(MI, X86_XOP_CC_FALSE); break;
+		case 7: SStream_concat0(O, "true"); op_addXopCC(MI, X86_XOP_CC_TRUE); break;
+	}
+}
+
+static void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
+{
+	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0x3;
+	switch (Imm) {
+		case 0: SStream_concat0(O, "{rn-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RN); break;
+		case 1: SStream_concat0(O, "{rd-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RD); break;
+		case 2: SStream_concat0(O, "{ru-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RU); break;
+		case 3: SStream_concat0(O, "{rz-sae}"); op_addAvxSae(MI); op_addAvxRoundingMode(MI, X86_AVX_RM_RZ); break;
+		default: break;	// never reach
+	}
+}
+
 #endif
 
 static const char *getRegisterName(unsigned RegNo);
@@ -453,14 +539,14 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 #endif
 	}
 
-	SegReg = MCInst_getOperand(MI, Op + 1);
+	SegReg = MCInst_getOperand(MI, Op+1);
 	reg = MCOperand_getReg(SegReg);
 
 	// If this has a segment register, print it.
 	if (reg) {
-		_printOperand(MI, Op + 1, O);
+		_printOperand(MI, Op+1, O);
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_register_map(reg);
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
 		}
 		SStream_concat0(O, ":");
 	}
@@ -595,7 +681,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		_printOperand(MI, Op + 1, O);
 		SStream_concat0(O, ":");
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_register_map(reg);
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
 		}
 	}
 
@@ -621,6 +707,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		MI->op1_size = MI->x86opsize;
 }
 
+#ifndef CAPSTONE_X86_REDUCE
 static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 {
 	uint8_t val = MCOperand_getImm(MCInst_getOperand(MI, Op)) & 0xff;
@@ -644,6 +731,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.op_count++;
 	}
 }
+#endif
 
 static void printMemOffs8(MCInst *MI, unsigned OpNo, SStream *O)
 {
@@ -674,9 +762,9 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 #ifndef CAPSTONE_DIET
-static char *printAliasInstr(MCInst *MI, SStream *OS);
+static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 #endif
-static void printInstruction(MCInst *MI, SStream *O);
+static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
 
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
@@ -694,15 +782,12 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 #ifndef CAPSTONE_DIET
 	// Try to print any aliases first.
-	mnem = printAliasInstr(MI, O);
+	mnem = printAliasInstr(MI, O, Info);
 	if (mnem)
 		cs_mem_free(mnem);
 	else
 #endif
-	{
-		X86_lockrep(MI, O);
-		printInstruction(MI, O);
-	}
+		printInstruction(MI, O, Info);
 
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI), &access1);
 	if (MI->csh->detail) {
@@ -760,6 +845,19 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			imm = imm & 0xffffffff;
 		}
 
+		if (MI->csh->mode == CS_MODE_16 &&
+				(MI->Opcode != X86_JMP_4 && MI->Opcode != X86_CALLpcrel32))
+			imm = imm & 0xffff;
+
+		// Hack: X86 16bit with opcode X86_JMP_4
+		if (MI->csh->mode == CS_MODE_16 &&
+				(MI->Opcode == X86_JMP_4 && MI->x86_prefix[2] != 0x66))
+			imm = imm & 0xffff;
+
+		// CALL/JMP rel16 is special
+		if (MI->Opcode == X86_CALLpcrel16 || MI->Opcode == X86_JMP_2)
+			imm = imm & 0xffff;
+
 		printImm(MI, O, imm, true);
 
 		if (MI->csh->detail) {
@@ -800,15 +898,15 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printRegName(O, reg);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_register_map(reg);
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = reg;
 			} else {
 #ifndef CAPSTONE_DIET
 				uint8_t access[6];
 #endif
 
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = X86_register_map(reg);
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[X86_register_map(reg)];
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
+				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
 
 #ifndef CAPSTONE_DIET
 				get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
@@ -820,7 +918,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		if (MI->op1_size == 0)
-			MI->op1_size = MI->csh->regsize_map[X86_register_map(reg)];
+			MI->op1_size = MI->csh->regsize_map[reg];
 	} else if (MCOperand_isImm(Op)) {
 		uint8_t encsize;
 		int64_t imm = MCOperand_getImm(Op);
@@ -836,7 +934,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				break;
 
 			case X86_INS_MOVABS:
-			case X86_INS_MOV:
 				// do not print number in negative form
 				printImm(MI, O, imm, true);
 				break;
@@ -851,13 +948,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 			case X86_INS_LCALL:
 			case X86_INS_LJMP:
-			case X86_INS_JMP:
 				// always print address in positive form
 				if (OpNo == 1) {	// ptr16 part
 					imm = imm & 0xffff;
 					opsize = 2;
-				} else
-					opsize = 4;
+				}
 				printImm(MI, O, imm, true);
 				break;
 
@@ -936,8 +1031,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_register_map(MCOperand_getReg(BaseReg));
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_register_map(MCOperand_getReg(IndexReg));
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = MCOperand_getReg(BaseReg);
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = MCOperand_getReg(IndexReg);
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
 
@@ -952,7 +1047,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	if (reg) {
 		_printOperand(MI, Op + X86_AddrSegmentReg, O);
 		if (MI->csh->detail) {
-			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_register_map(reg);
+			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = reg;
 		}
 		SStream_concat0(O, ":");
 	}
@@ -987,8 +1082,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				}
 			} else {
 				// memory reference to an immediate address
-				if (MI->csh->mode == CS_MODE_64)
-					MI->op1_size = 8;
 				if (DispVal < 0) {
 					printImm(MI, O, arch_masks[MI->csh->mode] & DispVal, true);
 				} else {
@@ -1029,6 +1122,9 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 	printMemReference(MI, OpNo, O);
 }
+
+#define GET_REGINFO_ENUM
+#include "X86GenRegisterInfo.inc"
 
 #define PRINT_ALIAS_INSTR
 #ifdef CAPSTONE_X86_REDUCE

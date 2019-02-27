@@ -13,7 +13,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_SUPPORT_LEB128_H
 #define CS_LLVM_SUPPORT_LEB128_H

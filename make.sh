@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Capstone Disassembly Engine
-# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019
+# By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015
 
 # Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
 

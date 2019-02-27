@@ -179,16 +179,21 @@ X86_REDUCE = _reduce
 CFLAGS += -DCAPSTONE_X86_REDUCE -Os
 endif
 
-
 DEP_X86 =
-DEP_X86 += $(wildcard arch/X86/X86*.inc)
+DEP_X86 += arch/X86/X86GenAsmWriter$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86GenAsmWriter1$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86GenDisassemblerTables$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86GenInstrInfo$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86GenRegisterInfo.inc
+DEP_X86 += arch/X86/X86MappingInsn$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86MappingInsnOp$(X86_REDUCE).inc
+DEP_X86 += arch/X86/X86ImmSize.inc
 
 LIBOBJ_X86 =
 ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_X86
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86DisassemblerDecoder.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Disassembler.o
-    LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86InstPrinterCommon.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86IntelInstPrinter.o
 # assembly syntax is irrelevant in Diet mode, when this info is suppressed
 ifeq (,$(findstring yes,$(CAPSTONE_DIET)))

@@ -14,7 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #ifndef CS_LLVM_MC_MCREGISTERINFO_H
 #define CS_LLVM_MC_MCREGISTERINFO_H
@@ -36,7 +36,9 @@ typedef struct MCRegisterClass {
 /// register.  The SubRegs field is a zero terminated array of registers that
 /// are sub-registers of the specific register, e.g. AL, AH are sub-registers
 /// of AX. The SuperRegs field is a zero terminated array of registers that are
+/// super-registers of the specific register, e.g. RAX, EAX, are
 /// super-registers of AX.
+///
 typedef struct MCRegisterDesc {
 	uint32_t Name;      // Printable name for the reg (for debugging)
 	uint32_t SubRegs;   // Sub-register set, described above
@@ -52,7 +54,7 @@ typedef struct MCRegisterDesc {
 
 	/// Index into list with lane mask sequences. The sequence contains a lanemask
 	/// for every register unit.
-	uint16_t RegUnitLaneMasks;	// ???
+	uint16_t RegUnitLaneMasks;
 } MCRegisterDesc;
 
 /// MCRegisterInfo base class - We assume that the target defines a static
@@ -66,6 +68,7 @@ typedef struct MCRegisterDesc {
 /// specialize this class. MCRegisterInfo should only contain getters to access
 /// TableGen generated physical register data. It must not be extended with
 /// virtual methods.
+///
 typedef struct MCRegisterInfo {
 	const MCRegisterDesc *Desc;                 // Pointer to the descriptor array
 	unsigned NumRegs;                           // Number of entries in the array
@@ -76,9 +79,7 @@ typedef struct MCRegisterInfo {
 	unsigned NumRegUnits;                       // Number of regunits.
 	uint16_t (*RegUnitRoots)[2];          // Pointer to regunit root table.
 	const MCPhysReg *DiffLists;                 // Pointer to the difflists array
-	// const LaneBitmask *RegUnitMaskSequences;    // Pointer to lane mask sequences
 	const char *RegStrings;                     // Pointer to the string table.
-	// const char *RegClassStrings;                // Pointer to the class strings.
 	const uint16_t *SubRegIndices;              // Pointer to the subreg lookup
 	// array.
 	unsigned NumSubRegIndices;                  // Number of subreg indices.

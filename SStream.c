@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #include <stdarg.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
@@ -45,6 +45,9 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	va_list ap;
 	int ret;
 
+	if (ss->index >= sizeof(ss->buffer)) {
+		return;
+	}
 	va_start(ap, fmt);
 	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);
