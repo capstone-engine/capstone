@@ -67,6 +67,7 @@
 #include "arch/XCore/XCoreModule.h"
 #include "arch/RISCV/RISCVModule.h"
 #include "arch/MOS65XX/MOS65XXModule.h"
+#include "arch/BPF/BPFModule.h"
 
 // constructor initialization for all archs
 static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
@@ -142,6 +143,11 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #endif
 #ifdef CAPSTONE_HAS_WASM
 	WASM_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_BPF
+	BPF_global_init,
 #else
 	NULL,
 #endif
@@ -224,12 +230,11 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #else
 	NULL,
 #endif
-#ifdef CAPSTONE_HAS_MOS65XX
-	MOS65XX_option,
+#ifdef CAPSTONE_HAS_BPF
+	BPF_option,
 #else
 	NULL,
 #endif
-
 };
 
 // bitmask for finding disallowed modes for an arch:
@@ -315,10 +320,11 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #ifdef CAPSTONE_HAS_WASM
 	0,
 #else
-    0,
+	0,
 #endif
-#ifdef CAPSTONE_HAS_MOS65XX
-	~(CS_MODE_BIG_ENDIAN),
+#ifdef CAPSTONE_HAS_BPF
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | CS_MODE_BPF_EXTENDED
+	  | CS_MODE_BIG_ENDIAN),
 #else
 	0,
 #endif
@@ -371,8 +377,8 @@ static uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_WASM
 	| (1 << CS_ARCH_WASM)
 #endif
-#ifdef CAPSTONE_HAS_MOS65XX
-    | (1 << CS_ARCH_MOS65XX)
+#ifdef CAPSTONE_HAS_BPF
+	| (1 << CS_ARCH_BPF)
 #endif
 ;
 
@@ -446,7 +452,7 @@ bool CAPSTONE_API cs_support(int query)
 				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
 				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    | 
-				    (1 << CS_ARCH_WASM) );
+				    (1 << CS_ARCH_WASM) | (1 << CS_ARCH_BPF));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -720,6 +726,9 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_MOS65XX:
 			// MOS65XX alignment is 1.
 			return 1;
+		case CS_ARCH_BPF:
+			// both classic and extended BPF have alignment 8.
+			return 8;
 	}
 }
 
@@ -963,7 +972,6 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
 			handle->printer(&mci, &ss, handle->printer_info);
-
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
 			// adjust for pseudo opcode (X86)
@@ -1441,13 +1449,18 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 					count++;
 			break;
 		case CS_ARCH_MOS65XX:
-			for (i = 0; i < insn->detail->m680x.op_count; i++)
-				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
+			for (i = 0; i < insn->detail->mos65xx.op_count; i++)
+				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_WASM:
 			for (i = 0; i < insn->detail->wasm.op_count; i++)
 				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
+					count++;
+			break;
+		case CS_ARCH_BPF:
+			for (i = 0; i < insn->detail->bpf.op_count; i++)
+				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
 					count++;
 			break;
 	}
@@ -1609,7 +1622,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
-
+		case CS_ARCH_BPF:
+			for (i = 0; i < insn->detail->bpf.op_count; i++) {
+				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
 	}
 
 	return -1;
