@@ -209,7 +209,6 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #else
 	NULL,
 #endif
-<<<<<<< HEAD
 #ifdef CAPSTONE_HAS_RISCV
 	RISCV_option,
 #else
@@ -220,8 +219,6 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #else
 	NULL,
 #endif
-=======
->>>>>>> upstream/next
 #ifdef CAPSTONE_HAS_WASM
 	WASM_option,
 #else
@@ -305,7 +302,6 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #else
 	0,
 #endif
-<<<<<<< HEAD
 #ifdef CAPSTONE_HAS_RISCV
 	~(CS_MODE_LITTLE_ENDIAN),
 #else
@@ -316,8 +312,6 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #else
 	0,
 #endif
-=======
->>>>>>> upstream/next
 #ifdef CAPSTONE_HAS_WASM
 	0,
 #else
@@ -368,15 +362,12 @@ static uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_EVM
 	| (1 << CS_ARCH_EVM)
 #endif
-<<<<<<< HEAD
 #ifdef CAPSTONE_HAS_RISCV
 	| (1 << CS_ARCH_RISCV)
 #endif
 #ifdef CAPSTONE_HAS_MOS65XX
 	| (1 << CS_ARCH_MOS65XX)
 #endif
-=======
->>>>>>> upstream/next
 #ifdef CAPSTONE_HAS_WASM
 	| (1 << CS_ARCH_WASM)
 #endif
@@ -448,24 +439,14 @@ CAPSTONE_EXPORT
 bool CAPSTONE_API cs_support(int query)
 {
 	if (query == CS_ARCH_ALL)
-<<<<<<< HEAD
-		return all_arch == ((1 << CS_ARCH_ARM)  | (1 << CS_ARCH_ARM64)      |
-				   (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
-				   (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
-				   (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
-				   (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
-				   (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
-				   (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    | 
-				   (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF));
-=======
-		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
-				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
-				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
-				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
-				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
-				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM) |
-				(1 << CS_ARCH_MOS65XX) | (1 << CS_ARCH_WASM));
->>>>>>> upstream/next
+		return all_arch == ((1 << CS_ARCH_ARM)   | (1 << CS_ARCH_ARM64)      |
+				    (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
+				    (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
+				    (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
+				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
+				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
+				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    | 
+				    (1 << CS_ARCH_WASM) );
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
