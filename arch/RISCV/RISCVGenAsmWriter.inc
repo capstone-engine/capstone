@@ -2568,7 +2568,7 @@ static bool printAliasInstr(MCInst *MI, SStream * OS, void *info)
     ++I;
   tmpString[I] = 0;
   SStream_concat0(OS, "\t");
-  SStream_concat0(OS, tmpSting);
+  SStream_concat0(OS, tmpString);
   SStream_concat0(OS, "\n");
   if (AsmString[I] != '\0') {
     if (AsmString[I] == ' ' || AsmString[I] == '\t') {
@@ -2582,11 +2582,11 @@ static bool printAliasInstr(MCInst *MI, SStream * OS, void *info)
           ++I;
           int OpIdx = AsmString[I++] - 1;
           int PrintMethodIdx = AsmString[I++] - 1;
-          printCustomAliasOperand(MI, OpIdx, PrintMethodIdx, OS)
+          printCustomAliasOperand(MI, OpIdx, PrintMethodIdx, OS);
         } else
-          printOperand(MI, unsigned(AsmString[I++]) - 1, OS)
+          printOperand(MI, (unsigned)(AsmString[I++]) - 1, OS);
       } else {
-        SStream_concat0(OS, AsmString[I++]);
+        SStream_concat0(OS, &AsmString[I++]);
       }
     } while (AsmString[I] != '\0');
   }

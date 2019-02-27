@@ -234,7 +234,8 @@ static void test()
 			(unsigned char *)RISCV_CODE,
 			sizeof(RISCV_CODE) - 1,
 			"RISCV"
-		}
+		},
+#endif
 #ifdef CAPSTONE_HAS_MOS65XX
 		{
 			CS_ARCH_MOS65XX,
@@ -253,6 +254,7 @@ static void test()
 			"eBPF"
 		},
 #endif
+	};
 
 	csh handle;
 	uint64_t address;

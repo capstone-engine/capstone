@@ -13,6 +13,7 @@
 //===----------------------------------------------------------------------===//
 #ifndef CS_RISCVBASEINFO_H
 #define CS_RISCVBASEINFO_H
+#include <assert.h>
 
 //#include "RISCVMCTargetDesc.h"
 
@@ -65,9 +66,9 @@ enum RoundingMode {
   RISCVFPRndMode_RMM = 4,
   RISCVFPRndMode_DYN = 7,
   RISCVFPRndMode_Invalid
-}
+};
 
-inline static char *roundingModeToString(RoundingMode RndMode) {
+inline static char *roundingModeToString(enum RoundingMode RndMode) {
   switch (RndMode) {
   default:
     assert(0 && "Unknown floating point rounding mode");
@@ -99,50 +100,5 @@ inline static bool RISCVFPRndMode_isValidRoundingMode(unsigned Mode) {
     return true;
   }
 }
-//Todo_rod: Not including this since so far it is used by printFRMArg from InstPrinter which I ahvent included yet.
-// Describes the supported floating point rounding mode encodings.
-/*namespace RISCVFPRndMode {
-enum RoundingMode {
-	RISCVFPRndMode_RNE = 0,
-	RISCVFPRndMode_RTZ = 1,
-	RISCVFPRndMode_RDN = 2,
-	RISCVFPRndMode_RUP = 3,
-	RISCVFPRndMode_RMM = 4,
-	RISCVFPRndMode_DYN = 7,
-	RISCVFPRndMode_Invalid
-};
 
-inline static StringRef roundingModeToString(RoundingMode RndMode) 
-{	
-	switch (RndMode) {
-		default:
-			llvm_unreachable("Unknown floating point rounding mode");
-		case RISCVFPRndMode::RNE:
-			return "rne";
-		case RISCVFPRndMode::RTZ:
-			return "rtz";
-		case RISCVFPRndMode::RDN:
-			return "rdn";
-		case RISCVFPRndMode::RUP:
-			return "rup";
-		case RISCVFPRndMode::RMM:
-			return "rmm";
-		case RISCVFPRndMode::DYN:
-			return "dyn";
-	}
-} 
-
-inline static RoundingMode stringToRoundingMode(StringRef Str) 
-{
-	return StringSwitch <RoundingMode>(Str)
-	    .Case("rne", RISCVFPRndMode::RNE)
-	    .Case("rtz", RISCVFPRndMode::RTZ)
-	    .Case("rdn", RISCVFPRndMode::RDN)
-	    .Case("rup", RISCVFPRndMode::RUP)
-	    .Case("rmm", RISCVFPRndMode::RMM)
-	    .Case("dyn", RISCVFPRndMode::DYN)
-	    .Default(RISCVFPRndMode::Invalid);
-}
-}				// namespace RISCVFPRndMode
-*/
 #endif

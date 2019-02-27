@@ -451,7 +451,6 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_EVM_SUPPORT)
 endif ()
 
 if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_RISCV_SUPPORT)
-if (CAPSTONE_RISCV_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_RISCV)
     set(SOURCES_RISCV
         arch/RISCV/RISCVDisassembler.c
@@ -464,11 +463,13 @@ if (CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVDisassembler.h
         arch/RISCV/RISCVGenAsmWriter.inc
         arch/RISCV/RISCVGenDisassemblerTables.inc
+        arch/RISCV/RISCVGenInsnNameMaps.inc
         arch/RISCV/RISCVGenInstrInfo.inc
         arch/RISCV/RISCVGenRegisterInfo.inc
         arch/RISCV/RISCVGenSubtargetInfo.inc
         arch/RISCV/RISCVInstPrinter.h
         arch/RISCV/RISCVMapping.h
+        arch/RISCV/RISCVMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
 endif ()

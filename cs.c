@@ -68,7 +68,6 @@
 #include "arch/RISCV/RISCVModule.h"
 #include "arch/MOS65XX/MOS65XXModule.h"
 #include "arch/BPF/BPFModule.h"
->>>>>>> upstream/next
 
 // constructor initialization for all archs
 static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
@@ -694,7 +693,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_MIPS:
 		case CS_ARCH_PPC:
 		case CS_ARCH_SPARC:
-		case CS_ARCH_RISCV
+		case CS_ARCH_RISCV:
 			// skip 4 bytes
 			return 4;
 		case CS_ARCH_SYSZ:

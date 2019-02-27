@@ -141,79 +141,82 @@ static const insn_map insns[] = {
 };
 
 // given internal insn id, return public instruction info
-void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id)
-{
-	unsigned int i;
+void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id) {
+  unsigned int i;
 
-	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	if (i != 0) {
-		insn->id = insns[i].mapid;
+  i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
+  if (i != 0) {
+    insn->id = insns[i].mapid;
 
-		if (h->detail) {
+    if (h->detail) {
 #ifndef CAPSTONE_DIET
-			memcpy(insn->detail->regs_read,
-			       insns[i].regs_use, sizeof(insns[i].regs_use));
-			insn->detail->regs_read_count =
-			    (uint8_t) count_positive(insns[i].regs_use);
+      memcpy(insn->detail->regs_read,
+      insns[i].regs_use, sizeof(insns[i].regs_use));
+      insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
 
-			memcpy(insn->detail->regs_write,
-			       insns[i].regs_mod, sizeof(insns[i].regs_mod));
-			insn->detail->regs_write_count =
-			    (uint8_t) count_positive(insns[i].regs_mod);
+      memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
+      insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
 
-			memcpy(insn->detail->groups, insns[i].groups,
-			       sizeof(insns[i].groups));
-			insn->detail->groups_count =
-			    (uint8_t) count_positive(insns[i].groups);
+      memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
+      insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
 
-			if (insns[i].branch || insns[i].indirect_branch) {
-				// this insn also belongs to JUMP group. add JUMP group
-				insn->detail->groups[insn->detail->
-						     groups_count] =
-				    RISCV_GRP_JUMP;
-				insn->detail->groups_count++;
-			}
+      if (insns[i].branch || insns[i].indirect_branch) {
+        // this insn also belongs to JUMP group. add JUMP group
+        insn->detail->groups[insn->detail->groups_count] = RISCV_GRP_JUMP;
+        insn->detail->groups_count++;
+      }
 #endif
-		}
-	}
+    }
+  }
 }
 
 static const name_map insn_name_maps[] = {
-	{RISCV_INS_INVALID, NULL},
+  {RISCV_INS_INVALID, NULL},
 
 #include "RISCVGenInsnNameMaps.inc"
 };
 
-const char *RISCV_insn_name(csh handle, unsigned int id)
-{
+const char *RISCV_insn_name(csh handle, unsigned int id) {
 #ifndef CAPSTONE_DIET
-	if (id >= RISCV_INS_ENDING)
-		return NULL;
+  if (id >= RISCV_INS_ENDING)
+    return NULL;
 
-	return insn_name_maps[id].name;
+  return insn_name_maps[id].name;
 #else
-	return NULL;
+  return NULL;
 #endif
 }
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
-  {RISCV_GRP_INVALID, NULL},
-  {RISCV_GRP_ISRV32,  "isrv32"},
-  {RISCV_GRP_ISRVA,   "isrva"},
-  {RISCV_GRP_ISRVC,   "isrvc"},
-  {RISCV_GRP_ISRVD,   "isrvd"},
-  {RISCV_GRP_ISRVCD,  "isrvcd"},
-  {RISCV_GRP_ISRVF,   "isrvf"},
-  {RISCV_GRP_ISRV32C, "isrv32c"},
-  {RISCV_GRP_ISRV32CF, "isrv32cf"},
-  {RISCV_GRP_ISRVM,    "isrvm"},
-  {RISCV_GRP_ISRV64,   "isrv64"},
-  {RISCV_GRP_ISRV64A,  "isrv64a"},
-  {RISCV_GRP_ISRV64C,  "isrv64c"},
-  {RISCV_GRP_ISRV64D,  "isrv64d"},
-  {RISCV_GRP_ISRV64F,  "isrv64f"},
-  {RISCV_GRP_ISRV64M,  "isrv64m"}
+  {RISCV_GRP_INVALID,    NULL},
+  {RISCV_GRP_JUMP,       "jump" },
+  
+  // architecture specific
+  {RISCV_GRP_ISRV32,     "isrv32"},
+  {RISCV_GRP_ISRV64,     "isrv64"},
+  {RISCV_GRP_HASSTDEXTA, "hasstdexta"},
+  {RISCV_GRP_HASSTDEXTC, "hasstdextc"},
+  {RISCV_GRP_HASSTDEXTD, "hasstdextd"},
+  {RISCV_GRP_HASSTDEXTF, "hasstdextf"},
+  {RISCV_GRP_HASSTDEXTM, "hasstdextm"},
+  
+  /*
+  {RISCV_GRP_ISRVA,      "isrva"},
+  {RISCV_GRP_ISRVC,      "isrvc"},
+  {RISCV_GRP_ISRVD,      "isrvd"},
+  {RISCV_GRP_ISRVCD,     "isrvcd"},
+  {RISCV_GRP_ISRVF,      "isrvf"},
+  {RISCV_GRP_ISRV32C,    "isrv32c"},
+  {RISCV_GRP_ISRV32CF,   "isrv32cf"},
+  {RISCV_GRP_ISRVM,      "isrvm"},
+  {RISCV_GRP_ISRV64A,    "isrv64a"},
+  {RISCV_GRP_ISRV64C,    "isrv64c"},
+  {RISCV_GRP_ISRV64D,    "isrv64d"},
+  {RISCV_GRP_ISRV64F,    "isrv64f"},
+  {RISCV_GRP_ISRV64M,    "isrv64m"}
+  */
+  {RISCV_GRP_ENDING,     NULL}
 };
 #endif
 
@@ -221,15 +224,11 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	// verify group id
-	if (id >= RISCV_GRP_ENDING
-	    || (id > RISCV_GRP_JUMP && id < RISCV_GRP_RV32I))
+	if (id >= RISCV_GRP_ENDING || 
+            (id > RISCV_GRP_JUMP && id < RISCV_GRP_ISRV32))
 		return NULL;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 
-	// NOTE: when new generic groups are added, 2 must be changed accordingly
-	if (id >= 128)
-		return group_name_maps[id - 128 + 2].name;
-	else
-		return group_name_maps[id].name;
 #else
 	return NULL;
 #endif

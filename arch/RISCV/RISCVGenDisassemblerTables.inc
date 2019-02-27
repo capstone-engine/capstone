@@ -1103,13 +1103,14 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
   }
 }
 
-#define DecodeToMCInst(fname,fieldname, InsnType) \
+#define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-                uint64_t Address, const void *Decoder) \
-{ \
+                          uint64_t Address, const void *Decoder,\
+                          bool *DecodeComplete) {\
+  *DecodeComplete = true;\
   InsnType tmp; \
   switch (Idx) { \
-  default: assert(0 && "Invalid index!");
+  default: assert(0 && "Invalid index!");\
   case 0: \
     return S; \
   case 1: \
@@ -1651,11 +1652,11 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
   } \
 }
 
-static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,\
-                                      InsnType insn, uint64_t Address,\
-                                      const void *DisAsm,\
-                                      int feature) {\
-  uint64_t Bits = getFeatureBits(feature); \
+#define DecodeInstruction(fname, fieldname, decoder, InsnType) \
+static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI,\
+                          InsnType insn, uint64_t Address,\
+                          const void *DisAsm, int feature) {\
+  uint64_t Bits = getFeatureBits(feature);\
 \
   const uint8_t *Ptr = DecodeTable;\
   uint32_t CurFieldValue = 0;\
@@ -1669,52 +1670,42 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,\
       unsigned Start = *++Ptr;\
       unsigned Len = *++Ptr;\
       ++Ptr;\
-      CurFieldValue = fieldFromInstruction(insn, Start, Len);\
+      CurFieldValue = fieldname(insn, Start, Len);\
       break;\
     }\
     case MCD_OPC_FilterValue: {\
-      // Decode the field value.\
       unsigned Len;\
       InsnType Val = decodeULEB128(++Ptr, &Len);\
       Ptr += Len;\
-      // NumToSkip is a plain 24-bit integer.\
       unsigned NumToSkip = *Ptr++;\
       NumToSkip |= (*Ptr++) << 8;\
       NumToSkip |= (*Ptr++) << 16;\
 \
-      // Perform the filter operation.\
       if (Val != CurFieldValue)\
         Ptr += NumToSkip;\
-\
       break;\
     }\
     case MCD_OPC_CheckField: {\
       unsigned Start = *++Ptr;\
       unsigned Len = *++Ptr;\
-      InsnType FieldValue = fieldFromInstruction(insn, Start, Len);\
-      // Decode the field value.\
+      InsnType FieldValue = fieldname(insn, Start, Len);\
       uint32_t ExpectedValue = decodeULEB128(++Ptr, &Len);\
       Ptr += Len;\
-      // NumToSkip is a plain 24-bit integer.\
       unsigned NumToSkip = *Ptr++;\
       NumToSkip |= (*Ptr++) << 8;\
       NumToSkip |= (*Ptr++) << 16;\
 \
-      // If the actual and expected values don't match, skip.\
       if (ExpectedValue != FieldValue)\
         Ptr += NumToSkip;\
       break;\
     }\
     case MCD_OPC_CheckPredicate: {\
       unsigned Len;\
-      // Decode the Predicate Index value.\
       unsigned PIdx = decodeULEB128(++Ptr, &Len);\
       Ptr += Len;\
-      // NumToSkip is a plain 24-bit integer.\
       unsigned NumToSkip = *Ptr++;\
       NumToSkip |= (*Ptr++) << 8;\
       NumToSkip |= (*Ptr++) << 16;\
-      // Check the predicate.\
       bool Pred;\
       if (!(Pred = checkDecoderPredicate(PIdx, Bits)))\
         Ptr += NumToSkip;\
@@ -1723,7 +1714,6 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,\
     }\
     case MCD_OPC_Decode: {\
       unsigned Len;\
-      // Decode the Opcode value.\
       unsigned Opc = decodeULEB128(++Ptr, &Len);\
       Ptr += Len;\
       unsigned DecodeIdx = decodeULEB128(Ptr, &Len);\
@@ -1732,44 +1722,37 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,\
       MCInst_clear(MI);\
       MCInst_setOpcode(MI, Opc);\
       bool DecodeComplete;\
-      S = decodeToMCInst(S, DecodeIdx, insn, MI, Address, DisAsm, DecodeComplete);\
+      S = decoder(S, DecodeIdx, insn, MI, Address, DisAsm, &DecodeComplete);\
       assert(DecodeComplete);\
 \
       return S;\
     }\
     case MCD_OPC_TryDecode: {\
       unsigned Len;\
-      // Decode the Opcode value.\
       unsigned Opc = decodeULEB128(++Ptr, &Len);\
       Ptr += Len;\
       unsigned DecodeIdx = decodeULEB128(Ptr, &Len);\
       Ptr += Len;\
-      // NumToSkip is a plain 24-bit integer.\
       unsigned NumToSkip = *Ptr++;\
       NumToSkip |= (*Ptr++) << 8;\
       NumToSkip |= (*Ptr++) << 16;\
 \
-      // Perform the decode operation.\
       MCInst TmpMI;\
       MCInst_setOpcode(&TmpMI, Opc);\
-      bool DecodeComplete;
-      S = decodeToMCInst(S, DecodeIdx, insn, &TmpMI, Address, DisAsm, DecodeComplete);\
+      bool DecodeComplete;\
+      S = decoder(S, DecodeIdx, insn, &TmpMI, Address, DisAsm, &DecodeComplete);\
+\
       if (DecodeComplete) {\
-        // Decoding complete.\
-        MI = &TmpMI;\
+        *MI = TmpMI;\
         return S;\
       } else {\
         assert(S == MCDisassembler_Fail);\
-        // If the decoding was incomplete, skip.\
         Ptr += NumToSkip;\
-        // Reset decode status. This also drops a SoftFail status that could be\
-        // set before the decode attempt.\
         S = MCDisassembler_Success;\
       }\
       break;\
     }\
     case MCD_OPC_SoftFail: {\
-      // Decode the mask values.\
       unsigned Len;\
       InsnType PositiveMask = decodeULEB128(++Ptr, &Len);\
       Ptr += Len;\
@@ -1785,9 +1768,10 @@ static DecodeStatus decodeInstruction(const uint8_t DecodeTable[], MCInst *MI,\
     }\
     }\
   }\
-  assert(0 && "bogosity detected in disassembler state machine!");
+  assert(0 && "bogosity detected in disassembler state machine!");\
 }
 
-FieldFromInstruction(fieldFromInstruction, uint64_t)
-DecodeToMCInst(decodeToMCInst, fieldFromInstruction, uint64_t)
-DecodeInstruction(decodeInstruction, fieldFromInstruction, decodeToMCInst, uint64_t)
+// For RISCV instruction is 32 bits.
+FieldFromInstruction(fieldFromInstruction, uint32_t)
+DecodeToMCInst(decodeToMCInst, fieldFromInstruction, uint32_t)
+DecodeInstruction(decodeInstruction, fieldFromInstruction, decodeToMCInst, uint32_t)

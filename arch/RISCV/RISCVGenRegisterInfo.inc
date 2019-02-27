@@ -128,6 +128,22 @@ enum {
   RISCV_FPR64RegClassID = 9,
   RISCV_FPR64CRegClassID = 10,
 };
+
+// Register alternate name indices
+
+enum {
+  RISCV_ABIRegAltName,	// 0
+  RISCV_NoRegAltName,	// 1
+  RISCV_NUM_TARGET_REG_ALT_NAMES = 2
+};
+
+// Subregister indices
+
+enum {
+  RISCV_NoSubRegister,
+  RISCV_sub_32,	// 1
+  RISCV_NUM_TARGET_SUBREGS
+};
 #endif // GET_REGINFO_ENUM
 
 /*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
