@@ -1,3 +1,11 @@
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0f,0x0d,0x44,0x11,0x40 == prefetch byte ptr [rcx + rdx + 0x40]
+
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x41,0x0f,0x0d,0x44,0x12,0x40 == prefetch byte ptr [r10 + rdx + 0x40]
+
 !# issue 1304
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x66,0x0f,0x7f,0x4c,0x24,0x40 == movdqa xmmword ptr [rsp + 0x40], xmm1 ; operands[0].access: WRITE
