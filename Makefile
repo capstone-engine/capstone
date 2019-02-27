@@ -250,6 +250,7 @@ DEP_RISCV += $(wildcard arch/RISCV/RISCV*.inc)
 LIBOBJ_RISCV =
 ifneq (,$(findstring riscv,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_RISCV
+	LIBSRC_RISCV += $(wildcard arch/RISCV/RISCV*.c)
 	LIBOBJ_RISCV += $(LIBSRC_RISCV:%.c=$(OBJDIR)/%.o)
 endif
 
