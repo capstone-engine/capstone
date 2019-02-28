@@ -308,7 +308,7 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 	0,
 #endif
 #ifdef CAPSTONE_HAS_RISCV
-	~(CS_MODE_LITTLE_ENDIAN),
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_RISCV | CS_MODE_RISCVC),
 #else
         0,
 #endif
@@ -694,13 +694,15 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_PPC:
 		case CS_ARCH_SPARC:
 		case CS_ARCH_RISCV:
+			// special compress mode
+			if (handle->mode & CS_MODE_RISCVC)
+				return 1;
 			// skip 4 bytes
 			return 4;
 		case CS_ARCH_SYSZ:
 			// SystemZ instruction's length can be 2, 4 or 6 bytes,
 			// so we just skip 2 bytes
 			return 2;
-		case CS_ARCH_RISCVC:
 		case CS_ARCH_X86:
 			// X86 has no restriction on instruction alignment
 			return 1;
