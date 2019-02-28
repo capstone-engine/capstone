@@ -26,6 +26,7 @@
 #include "../../MCDisassembler.h"
 #include "../../MathExtras.h"
 #include "RISCVBaseInfo.h"
+#include "RISCVDisassembler.h"
 
 ///
 static uint64_t getFeatureBits(int mode) 

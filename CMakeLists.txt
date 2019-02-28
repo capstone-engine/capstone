@@ -470,6 +470,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVGenSubtargetInfo.inc
         arch/RISCV/RISCVInstPrinter.h
         arch/RISCV/RISCVMapping.h
+        arch/RISCV/RISCVModule.h
         arch/RISCV/RISCVMappingInsn.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
