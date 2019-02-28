@@ -1,3 +1,31 @@
+!# issue 1335
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x1f,0xc0 == nop eax
+
+!# issue 1335
+!# CS_ARCH_X86, CS_MODE_64, None
+0x48,0x0f,0x1f,0x00 == nop qword ptr [rax]
+
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0f,0x0d,0x44,0x11,0x40 == prefetch byte ptr [rcx + rdx + 0x40]
+
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x41,0x0f,0x0d,0x44,0x12,0x40 == prefetch byte ptr [r10 + rdx + 0x40]
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7f,0x4c,0x24,0x40 == movdqa xmmword ptr [rsp + 0x40], xmm1 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7e,0x04,0x24 == movd dword ptr [rsp], xmm0 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0xf3,0x41,0x0f,0x7f,0x4d,0x00 == movdqu xmmword ptr [r13], xmm1 ; operands[0].access: WRITE
+
 !# issue 1346
 !# CS_ARCH_X86, CS_MODE_64, None
 0xf3,0x48,0x0f,0x1e,0xc8 == rdsspq rax
