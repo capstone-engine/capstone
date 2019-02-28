@@ -11,7 +11,7 @@ struct platform {
 	cs_mode mode;
 	unsigned char *code;
 	size_t size;
-	char *comment;
+	const char *comment;
 };
 
 static csh handle;
