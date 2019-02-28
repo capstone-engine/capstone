@@ -51,8 +51,10 @@ static const char *getRegisterName(unsigned RegNo, unsigned AltIdx);
 #define PRINT_ALIAS_INSTR
 #include "RISCVGenAsmWriter.inc"
 
-void RISCV_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) {
-  assert(0 && "RISCV post-printer doesn't implementated.");
+/// NULL
+void RISCV_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) 
+{
+  	assert(0 && "RISCV post-printer doesn't implementated.");
 	/*
 	   if (((cs_struct *)ud)->detail != CS_OPT_ON)
 	   return;
@@ -61,80 +63,84 @@ void RISCV_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) {
 
 //void RISCVInstPrinter::printInst(const MCInst *MI, raw_ostream &O,
 //                                 StringRef Annot, const MCSubtargetInfo &STI) 
-void RISCV_printInst(MCInst *MI, SStream *O, void *info) {
-  MCRegisterInfo *MRI = (MCRegisterInfo *) info;
-  //bool Res = false;
-  MCInst *NewMI = MI;
-  // TODO: RISCV compressd instructions.
-  //MCInst UncompressedMI;
-  //if (!NoAliases)
-    //Res = uncompressInst(UncompressedMI, *MI, MRI, STI);
-  //if (Res)
-    //NewMI = const_cast<MCInst *>(&UncompressedMI);
-  if (/*NoAliases ||*/ !printAliasInstr(NewMI, O, info))
-    printInstruction(NewMI, O, MRI);
-  //printAnnotation(O, Annot);
+void RISCV_printInst(MCInst *MI, SStream *O, void *info) 
+{
+  	MCRegisterInfo *MRI = (MCRegisterInfo *) info;
+  	//bool Res = false;
+  	MCInst *NewMI = MI;
+  	// TODO: RISCV compressd instructions.
+  	//MCInst UncompressedMI;
+  	//if (!NoAliases)
+    	//Res = uncompressInst(UncompressedMI, *MI, MRI, STI);
+  	//if (Res)
+    	//NewMI = const_cast<MCInst *>(&UncompressedMI);
+  	if (/*NoAliases ||*/ !printAliasInstr(NewMI, O, info))
+    		printInstruction(NewMI, O, MRI);
+  		//printAnnotation(O, Annot);
 }
 
-static void printRegName(SStream *OS, unsigned RegNo) {
-  SStream_concat0(OS, getRegisterName(RegNo, RISCV_ABIRegAltName));
+static void printRegName(SStream *OS, unsigned RegNo) 
+{
+  	SStream_concat0(OS, getRegisterName(RegNo, RISCV_ABIRegAltName));
 }
 
 /**
 void RISCVInstPrinter::printOperand(const MCInst *MI, unsigned OpNo,
                                     raw_ostream &O, const char *Modifier) 
 */
-static void printOperand(MCInst *MI, unsigned OpNo, SStream *O) {
-  unsigned reg;
-  int64_t Imm = 0;
+static void printOperand(MCInst *MI, unsigned OpNo, SStream *O) 
+{
+  	unsigned reg;
+  	int64_t Imm = 0;
 
-  MCOperand *MO = MCInst_getOperand(MI, OpNo);
+  	MCOperand *MO = MCInst_getOperand(MI, OpNo);
   
-  //
-  if (MCOperand_isReg(MO)) {
-    reg = MCOperand_getReg(MO);
-    printRegName(O, reg);
-    if (MI->csh->detail) {
-      MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_REG;
-      MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].reg = reg;
-      MI->flat_insn->detail->riscv.op_count++;
-    }
+  	//
+  	if (MCOperand_isReg(MO)) {
+    		reg = MCOperand_getReg(MO);
+    		printRegName(O, reg);
+    		if (MI->csh->detail) {
+      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_REG;
+      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].reg = reg;
+      			MI->flat_insn->detail->riscv.op_count++;
+    		}
 
-    return;
-  }
+    		return;
+  	}
 
-  //
-  if (MCOperand_isImm(MO)) {
-    Imm = MCOperand_getImm(MO);
-    if (Imm >= 0) {
-      if (Imm > HEX_THRESHOLD)
-        SStream_concat(O, "0x%" PRIx64, Imm);
-      else
-	SStream_concat(O, "%" PRIu64, Imm);
-    } else {
-      if (Imm < -HEX_THRESHOLD)
-	SStream_concat(O, "-0x%" PRIx64, -Imm);
-      else
-	SStream_concat(O, "-%" PRIu64, -Imm);
-    }
+  	//
+  	if (MCOperand_isImm(MO)) {
+    		Imm = MCOperand_getImm(MO);
+    		if (Imm >= 0) {
+      			if (Imm > HEX_THRESHOLD)
+        			SStream_concat(O, "0x%" PRIx64, Imm);
+      			else
+				SStream_concat(O, "%" PRIu64, Imm);
+    		} else {
+      			if (Imm < -HEX_THRESHOLD)
+				SStream_concat(O, "-0x%" PRIx64, -Imm);
+      			else
+				SStream_concat(O, "-%" PRIu64, -Imm);
+    		}
 
-    if (MI->csh->detail) {
-      MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_IMM;
-      MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].imm = Imm;
-      MI->flat_insn->detail->riscv.op_count++;
-    }
-    return;
-  }
+    		if (MI->csh->detail) {
+      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_IMM;
+      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].imm = Imm;
+      			MI->flat_insn->detail->riscv.op_count++;
+    		}
+    		return;
+  	}
 
-  //assert(MO.isExpr() && "Unknown operand kind in printOperand");
-  assert(0 && "Unknown operand kind in printOperand");
-  //MO.getExpr()->print(O, &MAI);
+  	//assert(MO.isExpr() && "Unknown operand kind in printOperand");
+  	assert(0 && "Unknown operand kind in printOperand");
+  	//MO.getExpr()->print(O, &MAI);
 }
 
 static void printCSRSystemRegister(const MCInst *MI, unsigned OpNo,
                                    //const MCSubtargetInfo &STI,
-                                   SStream *O) {
-  assert (0 && "CSR system register hav't support.");
+                                   SStream *O) 
+{
+  	assert (0 && "CSR system register hav't support.");
 #if 0
   unsigned Imm = MI->getOperand(OpNo).getImm();
   auto SysReg = RISCVSysReg::lookupSysRegByEncoding(Imm);
@@ -145,31 +151,33 @@ static void printCSRSystemRegister(const MCInst *MI, unsigned OpNo,
 #endif
 }
 
-static void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O) {
-  unsigned FenceArg = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-  assert (((FenceArg >> 4) == 0) && "Invalid immediate in printFenceArg");
+static void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O) 
+{
+  	unsigned FenceArg = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+  	assert (((FenceArg >> 4) == 0) && "Invalid immediate in printFenceArg");
 
-  if ((FenceArg & RISCVFenceField_I) != 0)
-    SStream_concat0(O, "i");
-  if ((FenceArg & RISCVFenceField_O) != 0)
-    SStream_concat0(O, "o");
-  if ((FenceArg & RISCVFenceField_R) != 0)
-    SStream_concat0(O, "r");
-  if ((FenceArg & RISCVFenceField_W) != 0)
-    SStream_concat0(O, "w");
-  if (FenceArg == 0)
-    SStream_concat0(O, "unkonwn");
+  	if ((FenceArg & RISCVFenceField_I) != 0)
+    		SStream_concat0(O, "i");
+  	if ((FenceArg & RISCVFenceField_O) != 0)
+    		SStream_concat0(O, "o");
+ 	if ((FenceArg & RISCVFenceField_R) != 0)
+    		SStream_concat0(O, "r");
+  	if ((FenceArg & RISCVFenceField_W) != 0)
+    		SStream_concat0(O, "w");
+  	if (FenceArg == 0)
+    		SStream_concat0(O, "unkonwn");
 }
 
-static void printFRMArg(MCInst *MI, unsigned OpNo, SStream *O) {
-  enum RoundingMode FRMArg = 
-    (enum RoundingMode)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+static void printFRMArg(MCInst *MI, unsigned OpNo, SStream *O) 
+{
+  	enum RoundingMode FRMArg = 
+    	  (enum RoundingMode)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
 #if 0
   auto FRMArg =
       static_cast<RISCVFPRndMode::RoundingMode>(MI->getOperand(OpNo).getImm());
   O << RISCVFPRndMode::roundingModeToString(FRMArg);
 #endif
-  SStream_concat0(O, roundingModeToString(FRMArg));
+  	SStream_concat0(O, roundingModeToString(FRMArg));
 }
   
 #endif				// CAPSTONE_HAS_RISCV

@@ -28,7 +28,7 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case RISCV_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, (long)op->imm);
 				break;
 			case RISCV_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
@@ -36,7 +36,7 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
 				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%lx\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: 0x%lx\n", i, (long)op->mem.disp);
 
 				break;
 		}
