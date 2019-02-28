@@ -5,6 +5,7 @@ before_install:
 before_script:
         - wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         - unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
+        # TODO remove built in cmocka compile and use system cmocka (including brewfile) once xenial is default
         - git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
         - chmod +x suite/cstest/build_cstest.sh
 script:
