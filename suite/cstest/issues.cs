@@ -1,3 +1,7 @@
+!# issue 1335
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x1f,0xc0 == nop eax
+
 !# issue 1259
 !# CS_ARCH_X86, CS_MODE_64, None
 0x0f,0x0d,0x44,0x11,0x40 == prefetch byte ptr [rcx + rdx + 0x40]
