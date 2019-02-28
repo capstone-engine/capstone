@@ -25,6 +25,22 @@ os:
         - osx
 matrix:
     include:
+        - name: xenial gcc
+          os: linux
+          dist: xenial
+          compiler: gcc
+          addons:
+            apt:
+              packages:
+                - libcmocka-dev
+        - name: xenial clang
+          os: linux
+          dist: xenial
+          compiler: clang
+          addons:
+            apt:
+              packages:
+                - libcmocka-dev
         - name: fuzza
           env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address" NOPYTEST=true
           compiler: clang
