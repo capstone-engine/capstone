@@ -267,17 +267,17 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 32 */
-    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_REG, TYPE_R32 },
     { ENCODING_RM, TYPE_M },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_VVVV, TYPE_R32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 33 */
-    { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_VVVV, TYPE_R32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -285,7 +285,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   { /* 34 */
     { ENCODING_REG, TYPE_R64 },
     { ENCODING_RM, TYPE_M },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_VVVV, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -293,12 +293,108 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   { /* 35 */
     { ENCODING_REG, TYPE_R64 },
     { ENCODING_RM, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_VVVV, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 36 */
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 37 */
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 38 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_ID, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 39 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_ID, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 40 */
+    { ENCODING_VVVV, TYPE_R32 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 41 */
+    { ENCODING_VVVV, TYPE_R32 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 42 */
+    { ENCODING_VVVV, TYPE_R64 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 43 */
+    { ENCODING_VVVV, TYPE_R64 },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 44 */
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 45 */
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 46 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 47 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 48 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_Rv, TYPE_Rv },
     { ENCODING_NONE, TYPE_NONE },
@@ -306,7 +402,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 37 */
+  { /* 49 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RO, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
@@ -314,7 +410,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 38 */
+  { /* 50 */
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
@@ -322,7 +418,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 39 */
+  { /* 51 */
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_REG, TYPE_Rv },
     { ENCODING_NONE, TYPE_NONE },
@@ -330,7 +426,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 40 */
+  { /* 52 */
     { ENCODING_RM, TYPE_R64 },
     { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
@@ -338,7 +434,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 41 */
+  { /* 53 */
     { ENCODING_RM, TYPE_R64 },
     { ENCODING_REG, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
@@ -346,7 +442,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 42 */
+  { /* 54 */
     { ENCODING_RM, TYPE_M },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -354,7 +450,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 43 */
+  { /* 55 */
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -362,7 +458,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 44 */
+  { /* 56 */
     { ENCODING_ID, TYPE_REL },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -370,104 +466,8 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 45 */
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 46 */
-    { ENCODING_IW, TYPE_REL },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 47 */
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_Iv, TYPE_IMM },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 48 */
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_ID, TYPE_IMM },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 49 */
-    { ENCODING_RM, TYPE_R8 },
-    { ENCODING_IB, TYPE_IMM },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 50 */
-    { ENCODING_REG, TYPE_R8 },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 51 */
-    { ENCODING_RM, TYPE_R8 },
-    { ENCODING_REG, TYPE_R8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 52 */
-    { ENCODING_REG, TYPE_R8 },
-    { ENCODING_RM, TYPE_R8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 53 */
-    { ENCODING_DI, TYPE_DSTIDX },
-    { ENCODING_SI, TYPE_SRCIDX },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 54 */
-    { ENCODING_DUP, TYPE_DUP1 },
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 55 */
-    { ENCODING_DUP, TYPE_DUP1 },
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 56 */
-    { ENCODING_DUP, TYPE_DUP1 },
-    { ENCODING_RM, TYPE_R8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
   { /* 57 */
-    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_RM, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -475,15 +475,15 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 58 */
-    { ENCODING_IW, TYPE_IMM },
-    { ENCODING_IB, TYPE_IMM },
+    { ENCODING_IW, TYPE_REL },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 59 */
-    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_RM, TYPE_Rv },
     { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -491,79 +491,79 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 60 */
-    { ENCODING_Iv, TYPE_IMM },
-    { ENCODING_IW, TYPE_IMM },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_ID, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 61 */
-    { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_IB, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 62 */
-    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_REG, TYPE_R8 },
     { ENCODING_RM, TYPE_M },
-    { ENCODING_IB, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 63 */
-    { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_REG, TYPE_R8 },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 64 */
-    { ENCODING_REG, TYPE_Rv },
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_IB, TYPE_IMM },
+    { ENCODING_REG, TYPE_R8 },
+    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 65 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_ID, TYPE_IMM },
+    { ENCODING_DI, TYPE_DSTIDX },
+    { ENCODING_SI, TYPE_SRCIDX },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 66 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_IB, TYPE_IMM },
+    { ENCODING_DUP, TYPE_DUP1 },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 67 */
-    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_R64 },
-    { ENCODING_ID, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 68 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_IB, TYPE_IMM },
+    { ENCODING_DUP, TYPE_DUP1 },
+    { ENCODING_RM, TYPE_R8 },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 69 */
-    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_RM, TYPE_R8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -571,79 +571,79 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 70 */
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_IW, TYPE_IMM },
+    { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 71 */
-    { ENCODING_DI, TYPE_DSTIDX },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 72 */
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_M },
+    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_IW, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 73 */
-    { ENCODING_IB, TYPE_REL },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 74 */
-    { ENCODING_Iv, TYPE_REL },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 75 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 76 */
-    { ENCODING_RM, TYPE_R16 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 77 */
-    { ENCODING_SI, TYPE_SRCIDX },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 78 */
-    { ENCODING_IW, TYPE_IMM },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 79 */
-    { ENCODING_Ia, TYPE_MOFFS },
+    { ENCODING_IB, TYPE_UIMM8 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -651,47 +651,47 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 80 */
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_REG, TYPE_SEGMENTREG },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 81 */
-    { ENCODING_Rv, TYPE_Rv },
-    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_DI, TYPE_DSTIDX },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 82 */
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_REG, TYPE_SEGMENTREG },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 83 */
-    { ENCODING_REG, TYPE_SEGMENTREG },
+    { ENCODING_REG, TYPE_R32 },
     { ENCODING_RM, TYPE_M },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
+  { /* 83 */
+    { ENCODING_IB, TYPE_REL },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
   { /* 84 */
-    { ENCODING_REG, TYPE_SEGMENTREG },
-    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_Iv, TYPE_REL },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 85 */
-    { ENCODING_REG, TYPE_CONTROLREG },
+    { ENCODING_REG, TYPE_R64 },
     { ENCODING_RM, TYPE_R32 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -699,71 +699,71 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 86 */
-    { ENCODING_REG, TYPE_DEBUGREG },
-    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_RM, TYPE_R16 },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 87 */
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_REG, TYPE_CONTROLREG },
+    { ENCODING_SI, TYPE_SRCIDX },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 88 */
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_REG, TYPE_DEBUGREG },
+    { ENCODING_IW, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 89 */
-    { ENCODING_REG, TYPE_CONTROLREG },
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_VVVV, TYPE_R32 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 90 */
-    { ENCODING_REG, TYPE_DEBUGREG },
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_VVVV, TYPE_R32 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 91 */
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_REG, TYPE_CONTROLREG },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_VVVV, TYPE_R64 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 92 */
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_REG, TYPE_DEBUGREG },
-    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_VVVV, TYPE_R64 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_Iv, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 93 */
-    { ENCODING_RO, TYPE_R64 },
-    { ENCODING_IO, TYPE_IMM },
+    { ENCODING_Ia, TYPE_MOFFS },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 94 */
-    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_RM, TYPE_M },
     { ENCODING_REG, TYPE_SEGMENTREG },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -771,6 +771,118 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 95 */
+    { ENCODING_Rv, TYPE_Rv },
+    { ENCODING_Iv, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 96 */
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_REG, TYPE_SEGMENTREG },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 97 */
+    { ENCODING_REG, TYPE_SEGMENTREG },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 98 */
+    { ENCODING_REG, TYPE_SEGMENTREG },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 99 */
+    { ENCODING_REG, TYPE_CONTROLREG },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 100 */
+    { ENCODING_REG, TYPE_DEBUGREG },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 101 */
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_REG, TYPE_CONTROLREG },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 102 */
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_REG, TYPE_DEBUGREG },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 103 */
+    { ENCODING_REG, TYPE_CONTROLREG },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 104 */
+    { ENCODING_REG, TYPE_DEBUGREG },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 105 */
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_REG, TYPE_CONTROLREG },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 106 */
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_REG, TYPE_DEBUGREG },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 107 */
+    { ENCODING_RO, TYPE_R64 },
+    { ENCODING_IO, TYPE_IMM },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 108 */
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_REG, TYPE_SEGMENTREG },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 109 */
     { ENCODING_REG, TYPE_SEGMENTREG },
     { ENCODING_RM, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
@@ -778,7 +890,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 96 */
+  { /* 110 */
     { ENCODING_RB, TYPE_R8 },
     { ENCODING_IB, TYPE_IMM },
     { ENCODING_NONE, TYPE_NONE },
@@ -786,7 +898,23 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 97 */
+  { /* 111 */
+    { ENCODING_REG, TYPE_R16 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 112 */
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 113 */
     { ENCODING_REG, TYPE_Rv },
     { ENCODING_RM, TYPE_R8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -794,7 +922,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 98 */
+  { /* 114 */
     { ENCODING_REG, TYPE_Rv },
     { ENCODING_RM, TYPE_R16 },
     { ENCODING_NONE, TYPE_NONE },
@@ -802,7 +930,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 99 */
+  { /* 115 */
     { ENCODING_REG, TYPE_R64 },
     { ENCODING_RM, TYPE_R16 },
     { ENCODING_NONE, TYPE_NONE },
@@ -810,7 +938,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 100 */
+  { /* 116 */
     { ENCODING_REG, TYPE_R64 },
     { ENCODING_RM, TYPE_R8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -818,7 +946,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 101 */
+  { /* 117 */
     { ENCODING_Rv, TYPE_Rv },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -826,7 +954,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 102 */
+  { /* 118 */
     { ENCODING_RO, TYPE_R64 },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
@@ -834,7 +962,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 103 */
+  { /* 119 */
     { ENCODING_RM, TYPE_M },
     { ENCODING_IB, TYPE_UIMM8 },
     { ENCODING_NONE, TYPE_NONE },
@@ -842,7 +970,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 104 */
+  { /* 120 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_Rv },
     { ENCODING_IB, TYPE_UIMM8 },
@@ -850,7 +978,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 105 */
+  { /* 121 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_R64 },
     { ENCODING_IB, TYPE_UIMM8 },
@@ -858,7 +986,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 106 */
+  { /* 122 */
     { ENCODING_DUP, TYPE_DUP1 },
     { ENCODING_RM, TYPE_R8 },
     { ENCODING_IB, TYPE_UIMM8 },
@@ -866,143 +994,103 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 107 */
-    { ENCODING_DUP, TYPE_DUP1 },
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 108 */
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 109 */
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 110 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 111 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 112 */
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_VVVV, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 113 */
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_VVVV, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 114 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_VVVV, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 115 */
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_VVVV, TYPE_R64 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 116 */
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_REG, TYPE_Rv },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 117 */
-    { ENCODING_DUP, TYPE_DUP1 },
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_REG, TYPE_Rv },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 118 */
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 119 */
-    { ENCODING_DUP, TYPE_DUP1 },
-    { ENCODING_RM, TYPE_R64 },
-    { ENCODING_REG, TYPE_R64 },
-    { ENCODING_IB, TYPE_UIMM8 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 120 */
-    { ENCODING_RM, TYPE_M },
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 121 */
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
-  { /* 122 */
-    { ENCODING_REG, TYPE_R32 },
-    { ENCODING_RM, TYPE_R32 },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-    { ENCODING_NONE, TYPE_NONE },
-  },
   { /* 123 */
-    { ENCODING_DUP, TYPE_DUP2 },
-    { ENCODING_DUP, TYPE_DUP3 },
-    { ENCODING_RM, TYPE_Rv },
-    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_DUP, TYPE_DUP1 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
   { /* 124 */
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 125 */
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 126 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 127 */
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 128 */
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 129 */
+    { ENCODING_DUP, TYPE_DUP1 },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 130 */
+    { ENCODING_RM, TYPE_M },
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 131 */
+    { ENCODING_DUP, TYPE_DUP1 },
+    { ENCODING_RM, TYPE_R64 },
+    { ENCODING_REG, TYPE_R64 },
+    { ENCODING_IB, TYPE_UIMM8 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 132 */
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 133 */
+    { ENCODING_REG, TYPE_R32 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 134 */
+    { ENCODING_DUP, TYPE_DUP2 },
+    { ENCODING_DUP, TYPE_DUP3 },
+    { ENCODING_RM, TYPE_Rv },
+    { ENCODING_REG, TYPE_Rv },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
+  { /* 135 */
     { ENCODING_DUP, TYPE_DUP2 },
     { ENCODING_DUP, TYPE_DUP3 },
     { ENCODING_RM, TYPE_R64 },
@@ -1010,7 +1098,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 125 */
+  { /* 136 */
     { ENCODING_DUP, TYPE_DUP2 },
     { ENCODING_DUP, TYPE_DUP3 },
     { ENCODING_RM, TYPE_R8 },
@@ -1018,7 +1106,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 126 */
+  { /* 137 */
     { ENCODING_DUP, TYPE_DUP2 },
     { ENCODING_DUP, TYPE_DUP3 },
     { ENCODING_REG, TYPE_Rv },
@@ -1026,7 +1114,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 127 */
+  { /* 138 */
     { ENCODING_DUP, TYPE_DUP2 },
     { ENCODING_DUP, TYPE_DUP3 },
     { ENCODING_REG, TYPE_R64 },
@@ -1034,7 +1122,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
-  { /* 128 */
+  { /* 139 */
     { ENCODING_DUP, TYPE_DUP2 },
     { ENCODING_DUP, TYPE_DUP3 },
     { ENCODING_REG, TYPE_R8 },
@@ -1044,7 +1132,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
 };
 
-static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1589] = {
+static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1663] = {
   { /* 0 */
     0,
     /*  */
@@ -1551,5853 +1639,6149 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1589] = 
   },
   { /* 126 */
     0,
-    /*  */
-  },
-  { /* 127 */
-    0,
-    /*  */
-  },
-  { /* 128 */
-    0,
-    /*  */
-  },
-  { /* 129 */
-    0,
-    /*  */
-  },
-  { /* 130 */
-    0,
     /* AAA */
   },
-  { /* 131 */
+  { /* 127 */
     1,
     /* AAD8i8 */
   },
-  { /* 132 */
+  { /* 128 */
     1,
     /* AAM8i8 */
   },
-  { /* 133 */
+  { /* 129 */
     0,
     /* AAS */
   },
-  { /* 134 */
+  { /* 130 */
     2,
     /* ADC16i16 */
   },
-  { /* 135 */
+  { /* 131 */
     3,
     /* ADC16mi */
   },
-  { /* 136 */
+  { /* 132 */
     4,
     /* ADC16mi8 */
   },
-  { /* 137 */
+  { /* 133 */
     5,
     /* ADC16mr */
   },
-  { /* 138 */
+  { /* 134 */
     6,
     /* ADC16ri */
   },
-  { /* 139 */
+  { /* 135 */
     7,
     /* ADC16ri8 */
   },
-  { /* 140 */
+  { /* 136 */
     8,
     /* ADC16rm */
   },
-  { /* 141 */
+  { /* 137 */
     9,
     /* ADC16rr */
   },
-  { /* 142 */
+  { /* 138 */
     10,
     /* ADC16rr_REV */
   },
-  { /* 143 */
+  { /* 139 */
     2,
     /* ADC32i32 */
   },
-  { /* 144 */
+  { /* 140 */
     3,
     /* ADC32mi */
   },
-  { /* 145 */
+  { /* 141 */
     4,
     /* ADC32mi8 */
   },
-  { /* 146 */
+  { /* 142 */
     5,
     /* ADC32mr */
   },
-  { /* 147 */
+  { /* 143 */
     6,
     /* ADC32ri */
   },
-  { /* 148 */
+  { /* 144 */
     7,
     /* ADC32ri8 */
   },
-  { /* 149 */
+  { /* 145 */
     8,
     /* ADC32rm */
   },
-  { /* 150 */
+  { /* 146 */
     9,
     /* ADC32rr */
   },
-  { /* 151 */
+  { /* 147 */
     10,
     /* ADC32rr_REV */
   },
-  { /* 152 */
+  { /* 148 */
     11,
     /* ADC64i32 */
   },
-  { /* 153 */
+  { /* 149 */
     12,
     /* ADC64mi32 */
   },
-  { /* 154 */
+  { /* 150 */
     4,
     /* ADC64mi8 */
   },
-  { /* 155 */
+  { /* 151 */
     13,
     /* ADC64mr */
   },
-  { /* 156 */
+  { /* 152 */
     14,
     /* ADC64ri32 */
   },
-  { /* 157 */
+  { /* 153 */
     15,
     /* ADC64ri8 */
   },
-  { /* 158 */
+  { /* 154 */
     16,
     /* ADC64rm */
   },
-  { /* 159 */
+  { /* 155 */
     17,
     /* ADC64rr */
   },
-  { /* 160 */
+  { /* 156 */
     18,
     /* ADC64rr_REV */
   },
-  { /* 161 */
+  { /* 157 */
     1,
     /* ADC8i8 */
   },
-  { /* 162 */
+  { /* 158 */
     4,
     /* ADC8mi */
   },
-  { /* 163 */
+  { /* 159 */
     4,
     /* ADC8mi8 */
   },
-  { /* 164 */
+  { /* 160 */
     19,
     /* ADC8mr */
   },
-  { /* 165 */
+  { /* 161 */
     20,
     /* ADC8ri */
   },
-  { /* 166 */
+  { /* 162 */
     20,
     /* ADC8ri8 */
   },
-  { /* 167 */
+  { /* 163 */
     21,
     /* ADC8rm */
   },
-  { /* 168 */
+  { /* 164 */
     22,
     /* ADC8rr */
   },
-  { /* 169 */
+  { /* 165 */
     23,
     /* ADC8rr_REV */
   },
-  { /* 170 */
+  { /* 166 */
     24,
     /* ADCX32rm */
   },
-  { /* 171 */
+  { /* 167 */
     25,
     /* ADCX32rr */
   },
-  { /* 172 */
+  { /* 168 */
     16,
     /* ADCX64rm */
   },
-  { /* 173 */
+  { /* 169 */
     18,
     /* ADCX64rr */
   },
-  { /* 174 */
+  { /* 170 */
     2,
     /* ADD16i16 */
   },
-  { /* 175 */
+  { /* 171 */
     3,
     /* ADD16mi */
   },
-  { /* 176 */
+  { /* 172 */
     4,
     /* ADD16mi8 */
   },
-  { /* 177 */
+  { /* 173 */
     5,
     /* ADD16mr */
   },
-  { /* 178 */
+  { /* 174 */
     6,
     /* ADD16ri */
   },
-  { /* 179 */
+  { /* 175 */
     7,
     /* ADD16ri8 */
   },
-  { /* 180 */
+  { /* 176 */
     8,
     /* ADD16rm */
   },
-  { /* 181 */
+  { /* 177 */
     9,
     /* ADD16rr */
   },
-  { /* 182 */
+  { /* 178 */
     10,
     /* ADD16rr_REV */
   },
-  { /* 183 */
+  { /* 179 */
     2,
     /* ADD32i32 */
   },
-  { /* 184 */
+  { /* 180 */
     3,
     /* ADD32mi */
   },
-  { /* 185 */
+  { /* 181 */
     4,
     /* ADD32mi8 */
   },
-  { /* 186 */
+  { /* 182 */
     5,
     /* ADD32mr */
   },
-  { /* 187 */
+  { /* 183 */
     6,
     /* ADD32ri */
   },
-  { /* 188 */
+  { /* 184 */
     7,
     /* ADD32ri8 */
   },
-  { /* 189 */
+  { /* 185 */
     8,
     /* ADD32rm */
   },
-  { /* 190 */
+  { /* 186 */
     9,
     /* ADD32rr */
   },
-  { /* 191 */
+  { /* 187 */
     10,
     /* ADD32rr_REV */
   },
-  { /* 192 */
+  { /* 188 */
     11,
     /* ADD64i32 */
   },
-  { /* 193 */
+  { /* 189 */
     12,
     /* ADD64mi32 */
   },
-  { /* 194 */
+  { /* 190 */
     4,
     /* ADD64mi8 */
   },
-  { /* 195 */
+  { /* 191 */
     13,
     /* ADD64mr */
   },
-  { /* 196 */
+  { /* 192 */
     14,
     /* ADD64ri32 */
   },
-  { /* 197 */
+  { /* 193 */
     15,
     /* ADD64ri8 */
   },
-  { /* 198 */
+  { /* 194 */
     16,
     /* ADD64rm */
   },
-  { /* 199 */
+  { /* 195 */
     17,
     /* ADD64rr */
   },
-  { /* 200 */
+  { /* 196 */
     18,
     /* ADD64rr_REV */
   },
-  { /* 201 */
+  { /* 197 */
     1,
     /* ADD8i8 */
   },
-  { /* 202 */
+  { /* 198 */
     4,
     /* ADD8mi */
   },
-  { /* 203 */
+  { /* 199 */
     4,
     /* ADD8mi8 */
   },
-  { /* 204 */
+  { /* 200 */
     19,
     /* ADD8mr */
   },
-  { /* 205 */
+  { /* 201 */
     20,
     /* ADD8ri */
   },
-  { /* 206 */
+  { /* 202 */
     20,
     /* ADD8ri8 */
   },
-  { /* 207 */
+  { /* 203 */
     21,
     /* ADD8rm */
   },
-  { /* 208 */
+  { /* 204 */
     22,
     /* ADD8rr */
   },
-  { /* 209 */
+  { /* 205 */
     23,
     /* ADD8rr_REV */
   },
-  { /* 210 */
+  { /* 206 */
     24,
     /* ADOX32rm */
   },
-  { /* 211 */
+  { /* 207 */
     25,
     /* ADOX32rr */
   },
-  { /* 212 */
+  { /* 208 */
     16,
     /* ADOX64rm */
   },
-  { /* 213 */
+  { /* 209 */
     18,
     /* ADOX64rr */
   },
-  { /* 214 */
+  { /* 210 */
     2,
     /* AND16i16 */
   },
-  { /* 215 */
+  { /* 211 */
     3,
     /* AND16mi */
   },
-  { /* 216 */
+  { /* 212 */
     4,
     /* AND16mi8 */
   },
-  { /* 217 */
+  { /* 213 */
     5,
     /* AND16mr */
   },
-  { /* 218 */
+  { /* 214 */
     6,
     /* AND16ri */
   },
-  { /* 219 */
+  { /* 215 */
     7,
     /* AND16ri8 */
   },
-  { /* 220 */
+  { /* 216 */
     8,
     /* AND16rm */
   },
-  { /* 221 */
+  { /* 217 */
     9,
     /* AND16rr */
   },
-  { /* 222 */
+  { /* 218 */
     10,
     /* AND16rr_REV */
   },
-  { /* 223 */
+  { /* 219 */
     2,
     /* AND32i32 */
   },
-  { /* 224 */
+  { /* 220 */
     3,
     /* AND32mi */
   },
-  { /* 225 */
+  { /* 221 */
     4,
     /* AND32mi8 */
   },
-  { /* 226 */
+  { /* 222 */
     5,
     /* AND32mr */
   },
-  { /* 227 */
+  { /* 223 */
     6,
     /* AND32ri */
   },
-  { /* 228 */
+  { /* 224 */
     7,
     /* AND32ri8 */
   },
-  { /* 229 */
+  { /* 225 */
     8,
     /* AND32rm */
   },
-  { /* 230 */
+  { /* 226 */
     9,
     /* AND32rr */
   },
-  { /* 231 */
+  { /* 227 */
     10,
     /* AND32rr_REV */
   },
-  { /* 232 */
+  { /* 228 */
     11,
     /* AND64i32 */
   },
-  { /* 233 */
+  { /* 229 */
     12,
     /* AND64mi32 */
   },
-  { /* 234 */
+  { /* 230 */
     4,
     /* AND64mi8 */
   },
-  { /* 235 */
+  { /* 231 */
     13,
     /* AND64mr */
   },
-  { /* 236 */
+  { /* 232 */
     14,
     /* AND64ri32 */
   },
-  { /* 237 */
+  { /* 233 */
     15,
     /* AND64ri8 */
   },
-  { /* 238 */
+  { /* 234 */
     16,
     /* AND64rm */
   },
-  { /* 239 */
+  { /* 235 */
     17,
     /* AND64rr */
   },
-  { /* 240 */
+  { /* 236 */
     18,
     /* AND64rr_REV */
   },
-  { /* 241 */
+  { /* 237 */
     1,
     /* AND8i8 */
   },
-  { /* 242 */
+  { /* 238 */
     4,
     /* AND8mi */
   },
-  { /* 243 */
+  { /* 239 */
     4,
     /* AND8mi8 */
   },
-  { /* 244 */
+  { /* 240 */
     19,
     /* AND8mr */
   },
-  { /* 245 */
+  { /* 241 */
     20,
     /* AND8ri */
   },
-  { /* 246 */
+  { /* 242 */
     20,
     /* AND8ri8 */
   },
-  { /* 247 */
+  { /* 243 */
     21,
     /* AND8rm */
   },
-  { /* 248 */
+  { /* 244 */
     22,
     /* AND8rr */
   },
-  { /* 249 */
+  { /* 245 */
     23,
     /* AND8rr_REV */
   },
-  { /* 250 */
+  { /* 246 */
     26,
     /* ANDN32rm */
   },
-  { /* 251 */
+  { /* 247 */
     27,
     /* ANDN32rr */
   },
-  { /* 252 */
+  { /* 248 */
     28,
     /* ANDN64rm */
   },
-  { /* 253 */
+  { /* 249 */
     29,
     /* ANDN64rr */
   },
-  { /* 254 */
+  { /* 250 */
     30,
     /* ARPL16mr */
   },
-  { /* 255 */
+  { /* 251 */
     31,
     /* ARPL16rr */
   },
-  { /* 256 */
+  { /* 252 */
     32,
-    /* BOUNDS16rm */
+    /* BEXTR32rm */
+  },
+  { /* 253 */
+    33,
+    /* BEXTR32rr */
+  },
+  { /* 254 */
+    34,
+    /* BEXTR64rm */
+  },
+  { /* 255 */
+    35,
+    /* BEXTR64rr */
+  },
+  { /* 256 */
+    36,
+    /* BEXTRI32mi */
   },
   { /* 257 */
-    32,
-    /* BOUNDS32rm */
+    37,
+    /* BEXTRI32ri */
   },
   { /* 258 */
-    32,
-    /* BSF16rm */
+    38,
+    /* BEXTRI64mi */
   },
   { /* 259 */
-    33,
-    /* BSF16rr */
+    39,
+    /* BEXTRI64ri */
   },
   { /* 260 */
-    32,
-    /* BSF32rm */
+    40,
+    /* BLCFILL32rm */
   },
   { /* 261 */
-    33,
-    /* BSF32rr */
+    41,
+    /* BLCFILL32rr */
   },
   { /* 262 */
-    34,
-    /* BSF64rm */
+    42,
+    /* BLCFILL64rm */
   },
   { /* 263 */
-    35,
-    /* BSF64rr */
+    43,
+    /* BLCFILL64rr */
   },
   { /* 264 */
-    32,
-    /* BSR16rm */
+    40,
+    /* BLCI32rm */
   },
   { /* 265 */
-    33,
-    /* BSR16rr */
+    41,
+    /* BLCI32rr */
   },
   { /* 266 */
-    32,
-    /* BSR32rm */
+    42,
+    /* BLCI64rm */
   },
   { /* 267 */
-    33,
-    /* BSR32rr */
+    43,
+    /* BLCI64rr */
   },
   { /* 268 */
-    34,
-    /* BSR64rm */
+    40,
+    /* BLCIC32rm */
   },
   { /* 269 */
-    35,
-    /* BSR64rr */
+    41,
+    /* BLCIC32rr */
   },
   { /* 270 */
-    36,
-    /* BSWAP16r_BAD */
+    42,
+    /* BLCIC64rm */
   },
   { /* 271 */
-    36,
-    /* BSWAP32r */
+    43,
+    /* BLCIC64rr */
   },
   { /* 272 */
-    37,
-    /* BSWAP64r */
+    40,
+    /* BLCMSK32rm */
   },
   { /* 273 */
-    4,
-    /* BT16mi8 */
+    41,
+    /* BLCMSK32rr */
   },
   { /* 274 */
-    5,
-    /* BT16mr */
+    42,
+    /* BLCMSK64rm */
   },
   { /* 275 */
-    38,
-    /* BT16ri8 */
+    43,
+    /* BLCMSK64rr */
   },
   { /* 276 */
-    39,
-    /* BT16rr */
+    40,
+    /* BLCS32rm */
   },
   { /* 277 */
-    4,
-    /* BT32mi8 */
+    41,
+    /* BLCS32rr */
   },
   { /* 278 */
-    5,
-    /* BT32mr */
+    42,
+    /* BLCS64rm */
   },
   { /* 279 */
-    38,
-    /* BT32ri8 */
+    43,
+    /* BLCS64rr */
   },
   { /* 280 */
-    39,
-    /* BT32rr */
+    40,
+    /* BLSFILL32rm */
   },
   { /* 281 */
-    4,
-    /* BT64mi8 */
+    41,
+    /* BLSFILL32rr */
   },
   { /* 282 */
-    13,
-    /* BT64mr */
+    42,
+    /* BLSFILL64rm */
   },
   { /* 283 */
-    40,
-    /* BT64ri8 */
+    43,
+    /* BLSFILL64rr */
   },
   { /* 284 */
-    41,
-    /* BT64rr */
+    40,
+    /* BLSI32rm */
   },
   { /* 285 */
-    4,
-    /* BTC16mi8 */
+    41,
+    /* BLSI32rr */
   },
   { /* 286 */
-    5,
-    /* BTC16mr */
+    42,
+    /* BLSI64rm */
   },
   { /* 287 */
-    7,
-    /* BTC16ri8 */
+    43,
+    /* BLSI64rr */
   },
   { /* 288 */
-    9,
-    /* BTC16rr */
+    40,
+    /* BLSIC32rm */
   },
   { /* 289 */
-    4,
-    /* BTC32mi8 */
+    41,
+    /* BLSIC32rr */
   },
   { /* 290 */
-    5,
-    /* BTC32mr */
+    42,
+    /* BLSIC64rm */
   },
   { /* 291 */
-    7,
-    /* BTC32ri8 */
+    43,
+    /* BLSIC64rr */
   },
   { /* 292 */
-    9,
-    /* BTC32rr */
+    40,
+    /* BLSMSK32rm */
   },
   { /* 293 */
-    4,
-    /* BTC64mi8 */
+    41,
+    /* BLSMSK32rr */
   },
   { /* 294 */
-    13,
-    /* BTC64mr */
+    42,
+    /* BLSMSK64rm */
   },
   { /* 295 */
-    15,
-    /* BTC64ri8 */
+    43,
+    /* BLSMSK64rr */
   },
   { /* 296 */
-    17,
-    /* BTC64rr */
+    40,
+    /* BLSR32rm */
   },
   { /* 297 */
-    4,
-    /* BTR16mi8 */
+    41,
+    /* BLSR32rr */
   },
   { /* 298 */
-    5,
-    /* BTR16mr */
+    42,
+    /* BLSR64rm */
   },
   { /* 299 */
-    7,
-    /* BTR16ri8 */
+    43,
+    /* BLSR64rr */
   },
   { /* 300 */
-    9,
-    /* BTR16rr */
+    44,
+    /* BOUNDS16rm */
   },
   { /* 301 */
-    4,
-    /* BTR32mi8 */
+    44,
+    /* BOUNDS32rm */
   },
   { /* 302 */
-    5,
-    /* BTR32mr */
+    44,
+    /* BSF16rm */
   },
   { /* 303 */
-    7,
-    /* BTR32ri8 */
+    45,
+    /* BSF16rr */
   },
   { /* 304 */
-    9,
-    /* BTR32rr */
+    44,
+    /* BSF32rm */
   },
   { /* 305 */
-    4,
-    /* BTR64mi8 */
+    45,
+    /* BSF32rr */
   },
   { /* 306 */
-    13,
-    /* BTR64mr */
+    46,
+    /* BSF64rm */
   },
   { /* 307 */
-    15,
-    /* BTR64ri8 */
+    47,
+    /* BSF64rr */
   },
   { /* 308 */
-    17,
-    /* BTR64rr */
+    44,
+    /* BSR16rm */
   },
   { /* 309 */
-    4,
-    /* BTS16mi8 */
+    45,
+    /* BSR16rr */
   },
   { /* 310 */
-    5,
-    /* BTS16mr */
+    44,
+    /* BSR32rm */
   },
   { /* 311 */
-    7,
-    /* BTS16ri8 */
+    45,
+    /* BSR32rr */
   },
   { /* 312 */
-    9,
-    /* BTS16rr */
+    46,
+    /* BSR64rm */
   },
   { /* 313 */
-    4,
-    /* BTS32mi8 */
+    47,
+    /* BSR64rr */
   },
   { /* 314 */
-    5,
-    /* BTS32mr */
+    48,
+    /* BSWAP16r_BAD */
   },
   { /* 315 */
-    7,
-    /* BTS32ri8 */
+    48,
+    /* BSWAP32r */
   },
   { /* 316 */
-    9,
-    /* BTS32rr */
+    49,
+    /* BSWAP64r */
   },
   { /* 317 */
     4,
-    /* BTS64mi8 */
+    /* BT16mi8 */
   },
   { /* 318 */
+    5,
+    /* BT16mr */
+  },
+  { /* 319 */
+    50,
+    /* BT16ri8 */
+  },
+  { /* 320 */
+    51,
+    /* BT16rr */
+  },
+  { /* 321 */
+    4,
+    /* BT32mi8 */
+  },
+  { /* 322 */
+    5,
+    /* BT32mr */
+  },
+  { /* 323 */
+    50,
+    /* BT32ri8 */
+  },
+  { /* 324 */
+    51,
+    /* BT32rr */
+  },
+  { /* 325 */
+    4,
+    /* BT64mi8 */
+  },
+  { /* 326 */
+    13,
+    /* BT64mr */
+  },
+  { /* 327 */
+    52,
+    /* BT64ri8 */
+  },
+  { /* 328 */
+    53,
+    /* BT64rr */
+  },
+  { /* 329 */
+    4,
+    /* BTC16mi8 */
+  },
+  { /* 330 */
+    5,
+    /* BTC16mr */
+  },
+  { /* 331 */
+    7,
+    /* BTC16ri8 */
+  },
+  { /* 332 */
+    9,
+    /* BTC16rr */
+  },
+  { /* 333 */
+    4,
+    /* BTC32mi8 */
+  },
+  { /* 334 */
+    5,
+    /* BTC32mr */
+  },
+  { /* 335 */
+    7,
+    /* BTC32ri8 */
+  },
+  { /* 336 */
+    9,
+    /* BTC32rr */
+  },
+  { /* 337 */
+    4,
+    /* BTC64mi8 */
+  },
+  { /* 338 */
+    13,
+    /* BTC64mr */
+  },
+  { /* 339 */
+    15,
+    /* BTC64ri8 */
+  },
+  { /* 340 */
+    17,
+    /* BTC64rr */
+  },
+  { /* 341 */
+    4,
+    /* BTR16mi8 */
+  },
+  { /* 342 */
+    5,
+    /* BTR16mr */
+  },
+  { /* 343 */
+    7,
+    /* BTR16ri8 */
+  },
+  { /* 344 */
+    9,
+    /* BTR16rr */
+  },
+  { /* 345 */
+    4,
+    /* BTR32mi8 */
+  },
+  { /* 346 */
+    5,
+    /* BTR32mr */
+  },
+  { /* 347 */
+    7,
+    /* BTR32ri8 */
+  },
+  { /* 348 */
+    9,
+    /* BTR32rr */
+  },
+  { /* 349 */
+    4,
+    /* BTR64mi8 */
+  },
+  { /* 350 */
+    13,
+    /* BTR64mr */
+  },
+  { /* 351 */
+    15,
+    /* BTR64ri8 */
+  },
+  { /* 352 */
+    17,
+    /* BTR64rr */
+  },
+  { /* 353 */
+    4,
+    /* BTS16mi8 */
+  },
+  { /* 354 */
+    5,
+    /* BTS16mr */
+  },
+  { /* 355 */
+    7,
+    /* BTS16ri8 */
+  },
+  { /* 356 */
+    9,
+    /* BTS16rr */
+  },
+  { /* 357 */
+    4,
+    /* BTS32mi8 */
+  },
+  { /* 358 */
+    5,
+    /* BTS32mr */
+  },
+  { /* 359 */
+    7,
+    /* BTS32ri8 */
+  },
+  { /* 360 */
+    9,
+    /* BTS32rr */
+  },
+  { /* 361 */
+    4,
+    /* BTS64mi8 */
+  },
+  { /* 362 */
     13,
     /* BTS64mr */
   },
-  { /* 319 */
+  { /* 363 */
     15,
     /* BTS64ri8 */
   },
-  { /* 320 */
+  { /* 364 */
     17,
     /* BTS64rr */
   },
-  { /* 321 */
-    42,
+  { /* 365 */
+    32,
+    /* BZHI32rm */
+  },
+  { /* 366 */
+    33,
+    /* BZHI32rr */
+  },
+  { /* 367 */
+    34,
+    /* BZHI64rm */
+  },
+  { /* 368 */
+    35,
+    /* BZHI64rr */
+  },
+  { /* 369 */
+    54,
     /* CALL16m */
   },
-  { /* 322 */
+  { /* 370 */
     0,
     /*  */
   },
-  { /* 323 */
-    43,
+  { /* 371 */
+    55,
     /* CALL16r */
   },
-  { /* 324 */
+  { /* 372 */
     0,
     /*  */
   },
-  { /* 325 */
-    42,
+  { /* 373 */
+    54,
     /* CALL32m */
   },
-  { /* 326 */
+  { /* 374 */
     0,
     /*  */
   },
-  { /* 327 */
-    43,
+  { /* 375 */
+    55,
     /* CALL32r */
   },
-  { /* 328 */
+  { /* 376 */
     0,
     /*  */
   },
-  { /* 329 */
-    42,
+  { /* 377 */
+    54,
     /* CALL64m */
   },
-  { /* 330 */
+  { /* 378 */
     0,
     /*  */
   },
-  { /* 331 */
-    44,
+  { /* 379 */
+    56,
     /* CALL64pcrel32 */
   },
-  { /* 332 */
-    45,
+  { /* 380 */
+    57,
     /* CALL64r */
   },
-  { /* 333 */
+  { /* 381 */
     0,
     /*  */
   },
-  { /* 334 */
-    46,
+  { /* 382 */
+    58,
     /* CALLpcrel16 */
   },
-  { /* 335 */
-    44,
+  { /* 383 */
+    56,
     /* CALLpcrel32 */
   },
-  { /* 336 */
+  { /* 384 */
     0,
     /* CBW */
   },
-  { /* 337 */
+  { /* 385 */
     0,
     /* CDQ */
   },
-  { /* 338 */
+  { /* 386 */
     0,
     /* CDQE */
   },
-  { /* 339 */
+  { /* 387 */
     0,
     /* CLAC */
   },
-  { /* 340 */
+  { /* 388 */
     0,
     /* CLC */
   },
-  { /* 341 */
+  { /* 389 */
     0,
     /* CLD */
   },
-  { /* 342 */
+  { /* 390 */
+    54,
+    /* CLDEMOTE */
+  },
+  { /* 391 */
+    54,
+    /* CLFLUSHOPT */
+  },
+  { /* 392 */
     0,
     /* CLGI */
   },
-  { /* 343 */
+  { /* 393 */
     0,
     /* CLI */
   },
-  { /* 344 */
-    42,
+  { /* 394 */
+    54,
     /* CLRSSBSY */
   },
-  { /* 345 */
+  { /* 395 */
     0,
     /* CLTS */
   },
-  { /* 346 */
+  { /* 396 */
+    54,
+    /* CLWB */
+  },
+  { /* 397 */
+    0,
+    /* CLZEROr */
+  },
+  { /* 398 */
     0,
     /* CMC */
   },
-  { /* 347 */
+  { /* 399 */
     8,
     /* CMOVA16rm */
   },
-  { /* 348 */
+  { /* 400 */
     10,
     /* CMOVA16rr */
   },
-  { /* 349 */
+  { /* 401 */
     8,
     /* CMOVA32rm */
   },
-  { /* 350 */
+  { /* 402 */
     10,
     /* CMOVA32rr */
   },
-  { /* 351 */
+  { /* 403 */
     16,
     /* CMOVA64rm */
   },
-  { /* 352 */
+  { /* 404 */
     18,
     /* CMOVA64rr */
   },
-  { /* 353 */
+  { /* 405 */
     8,
     /* CMOVAE16rm */
   },
-  { /* 354 */
+  { /* 406 */
     10,
     /* CMOVAE16rr */
   },
-  { /* 355 */
+  { /* 407 */
     8,
     /* CMOVAE32rm */
   },
-  { /* 356 */
+  { /* 408 */
     10,
     /* CMOVAE32rr */
   },
-  { /* 357 */
+  { /* 409 */
     16,
     /* CMOVAE64rm */
   },
-  { /* 358 */
+  { /* 410 */
     18,
     /* CMOVAE64rr */
   },
-  { /* 359 */
+  { /* 411 */
     8,
     /* CMOVB16rm */
   },
-  { /* 360 */
+  { /* 412 */
     10,
     /* CMOVB16rr */
   },
-  { /* 361 */
+  { /* 413 */
     8,
     /* CMOVB32rm */
   },
-  { /* 362 */
+  { /* 414 */
     10,
     /* CMOVB32rr */
   },
-  { /* 363 */
+  { /* 415 */
     16,
     /* CMOVB64rm */
   },
-  { /* 364 */
+  { /* 416 */
     18,
     /* CMOVB64rr */
   },
-  { /* 365 */
+  { /* 417 */
     8,
     /* CMOVBE16rm */
   },
-  { /* 366 */
+  { /* 418 */
     10,
     /* CMOVBE16rr */
   },
-  { /* 367 */
+  { /* 419 */
     8,
     /* CMOVBE32rm */
   },
-  { /* 368 */
+  { /* 420 */
     10,
     /* CMOVBE32rr */
   },
-  { /* 369 */
+  { /* 421 */
     16,
     /* CMOVBE64rm */
   },
-  { /* 370 */
+  { /* 422 */
     18,
     /* CMOVBE64rr */
   },
-  { /* 371 */
+  { /* 423 */
     8,
     /* CMOVE16rm */
   },
-  { /* 372 */
+  { /* 424 */
     10,
     /* CMOVE16rr */
   },
-  { /* 373 */
+  { /* 425 */
     8,
     /* CMOVE32rm */
   },
-  { /* 374 */
+  { /* 426 */
     10,
     /* CMOVE32rr */
   },
-  { /* 375 */
+  { /* 427 */
     16,
     /* CMOVE64rm */
   },
-  { /* 376 */
+  { /* 428 */
     18,
     /* CMOVE64rr */
   },
-  { /* 377 */
+  { /* 429 */
     8,
     /* CMOVG16rm */
   },
-  { /* 378 */
+  { /* 430 */
     10,
     /* CMOVG16rr */
   },
-  { /* 379 */
+  { /* 431 */
     8,
     /* CMOVG32rm */
   },
-  { /* 380 */
+  { /* 432 */
     10,
     /* CMOVG32rr */
   },
-  { /* 381 */
+  { /* 433 */
     16,
     /* CMOVG64rm */
   },
-  { /* 382 */
+  { /* 434 */
     18,
     /* CMOVG64rr */
   },
-  { /* 383 */
+  { /* 435 */
     8,
     /* CMOVGE16rm */
   },
-  { /* 384 */
+  { /* 436 */
     10,
     /* CMOVGE16rr */
   },
-  { /* 385 */
+  { /* 437 */
     8,
     /* CMOVGE32rm */
   },
-  { /* 386 */
+  { /* 438 */
     10,
     /* CMOVGE32rr */
   },
-  { /* 387 */
+  { /* 439 */
     16,
     /* CMOVGE64rm */
   },
-  { /* 388 */
+  { /* 440 */
     18,
     /* CMOVGE64rr */
   },
-  { /* 389 */
+  { /* 441 */
     8,
     /* CMOVL16rm */
   },
-  { /* 390 */
+  { /* 442 */
     10,
     /* CMOVL16rr */
   },
-  { /* 391 */
+  { /* 443 */
     8,
     /* CMOVL32rm */
   },
-  { /* 392 */
+  { /* 444 */
     10,
     /* CMOVL32rr */
   },
-  { /* 393 */
+  { /* 445 */
     16,
     /* CMOVL64rm */
   },
-  { /* 394 */
+  { /* 446 */
     18,
     /* CMOVL64rr */
   },
-  { /* 395 */
+  { /* 447 */
     8,
     /* CMOVLE16rm */
   },
-  { /* 396 */
+  { /* 448 */
     10,
     /* CMOVLE16rr */
   },
-  { /* 397 */
+  { /* 449 */
     8,
     /* CMOVLE32rm */
   },
-  { /* 398 */
+  { /* 450 */
     10,
     /* CMOVLE32rr */
   },
-  { /* 399 */
+  { /* 451 */
     16,
     /* CMOVLE64rm */
   },
-  { /* 400 */
+  { /* 452 */
     18,
     /* CMOVLE64rr */
   },
-  { /* 401 */
+  { /* 453 */
     8,
     /* CMOVNE16rm */
   },
-  { /* 402 */
+  { /* 454 */
     10,
     /* CMOVNE16rr */
   },
-  { /* 403 */
+  { /* 455 */
     8,
     /* CMOVNE32rm */
   },
-  { /* 404 */
+  { /* 456 */
     10,
     /* CMOVNE32rr */
   },
-  { /* 405 */
+  { /* 457 */
     16,
     /* CMOVNE64rm */
   },
-  { /* 406 */
+  { /* 458 */
     18,
     /* CMOVNE64rr */
   },
-  { /* 407 */
+  { /* 459 */
     8,
     /* CMOVNO16rm */
   },
-  { /* 408 */
+  { /* 460 */
     10,
     /* CMOVNO16rr */
   },
-  { /* 409 */
+  { /* 461 */
     8,
     /* CMOVNO32rm */
   },
-  { /* 410 */
+  { /* 462 */
     10,
     /* CMOVNO32rr */
   },
-  { /* 411 */
+  { /* 463 */
     16,
     /* CMOVNO64rm */
   },
-  { /* 412 */
+  { /* 464 */
     18,
     /* CMOVNO64rr */
   },
-  { /* 413 */
+  { /* 465 */
     8,
     /* CMOVNP16rm */
   },
-  { /* 414 */
+  { /* 466 */
     10,
     /* CMOVNP16rr */
   },
-  { /* 415 */
+  { /* 467 */
     8,
     /* CMOVNP32rm */
   },
-  { /* 416 */
+  { /* 468 */
     10,
     /* CMOVNP32rr */
   },
-  { /* 417 */
+  { /* 469 */
     16,
     /* CMOVNP64rm */
   },
-  { /* 418 */
+  { /* 470 */
     18,
     /* CMOVNP64rr */
   },
-  { /* 419 */
+  { /* 471 */
     8,
     /* CMOVNS16rm */
   },
-  { /* 420 */
+  { /* 472 */
     10,
     /* CMOVNS16rr */
   },
-  { /* 421 */
+  { /* 473 */
     8,
     /* CMOVNS32rm */
   },
-  { /* 422 */
+  { /* 474 */
     10,
     /* CMOVNS32rr */
   },
-  { /* 423 */
+  { /* 475 */
     16,
     /* CMOVNS64rm */
   },
-  { /* 424 */
+  { /* 476 */
     18,
     /* CMOVNS64rr */
   },
-  { /* 425 */
+  { /* 477 */
     8,
     /* CMOVO16rm */
   },
-  { /* 426 */
+  { /* 478 */
     10,
     /* CMOVO16rr */
   },
-  { /* 427 */
+  { /* 479 */
     8,
     /* CMOVO32rm */
   },
-  { /* 428 */
+  { /* 480 */
     10,
     /* CMOVO32rr */
   },
-  { /* 429 */
+  { /* 481 */
     16,
     /* CMOVO64rm */
   },
-  { /* 430 */
+  { /* 482 */
     18,
     /* CMOVO64rr */
   },
-  { /* 431 */
+  { /* 483 */
     8,
     /* CMOVP16rm */
   },
-  { /* 432 */
+  { /* 484 */
     10,
     /* CMOVP16rr */
   },
-  { /* 433 */
+  { /* 485 */
     8,
     /* CMOVP32rm */
   },
-  { /* 434 */
+  { /* 486 */
     10,
     /* CMOVP32rr */
   },
-  { /* 435 */
+  { /* 487 */
     16,
     /* CMOVP64rm */
   },
-  { /* 436 */
+  { /* 488 */
     18,
     /* CMOVP64rr */
   },
-  { /* 437 */
+  { /* 489 */
     8,
     /* CMOVS16rm */
   },
-  { /* 438 */
+  { /* 490 */
     10,
     /* CMOVS16rr */
   },
-  { /* 439 */
+  { /* 491 */
     8,
     /* CMOVS32rm */
   },
-  { /* 440 */
+  { /* 492 */
     10,
     /* CMOVS32rr */
   },
-  { /* 441 */
+  { /* 493 */
     16,
     /* CMOVS64rm */
   },
-  { /* 442 */
+  { /* 494 */
     18,
     /* CMOVS64rr */
   },
-  { /* 443 */
+  { /* 495 */
     2,
     /* CMP16i16 */
   },
-  { /* 444 */
+  { /* 496 */
     3,
     /* CMP16mi */
   },
-  { /* 445 */
+  { /* 497 */
     4,
     /* CMP16mi8 */
   },
-  { /* 446 */
+  { /* 498 */
     5,
     /* CMP16mr */
   },
-  { /* 447 */
-    47,
+  { /* 499 */
+    59,
     /* CMP16ri */
   },
-  { /* 448 */
-    38,
+  { /* 500 */
+    50,
     /* CMP16ri8 */
   },
-  { /* 449 */
-    32,
+  { /* 501 */
+    44,
     /* CMP16rm */
   },
-  { /* 450 */
-    39,
+  { /* 502 */
+    51,
     /* CMP16rr */
   },
-  { /* 451 */
-    33,
+  { /* 503 */
+    45,
     /* CMP16rr_REV */
   },
-  { /* 452 */
+  { /* 504 */
     2,
     /* CMP32i32 */
   },
-  { /* 453 */
+  { /* 505 */
     3,
     /* CMP32mi */
   },
-  { /* 454 */
+  { /* 506 */
     4,
     /* CMP32mi8 */
   },
-  { /* 455 */
+  { /* 507 */
     5,
     /* CMP32mr */
   },
-  { /* 456 */
-    47,
+  { /* 508 */
+    59,
     /* CMP32ri */
   },
-  { /* 457 */
-    38,
+  { /* 509 */
+    50,
     /* CMP32ri8 */
   },
-  { /* 458 */
-    32,
+  { /* 510 */
+    44,
     /* CMP32rm */
   },
-  { /* 459 */
-    39,
+  { /* 511 */
+    51,
     /* CMP32rr */
   },
-  { /* 460 */
-    33,
+  { /* 512 */
+    45,
     /* CMP32rr_REV */
   },
-  { /* 461 */
+  { /* 513 */
     11,
     /* CMP64i32 */
   },
-  { /* 462 */
+  { /* 514 */
     12,
     /* CMP64mi32 */
   },
-  { /* 463 */
+  { /* 515 */
     4,
     /* CMP64mi8 */
   },
-  { /* 464 */
+  { /* 516 */
     13,
     /* CMP64mr */
   },
-  { /* 465 */
-    48,
+  { /* 517 */
+    60,
     /* CMP64ri32 */
   },
-  { /* 466 */
-    40,
+  { /* 518 */
+    52,
     /* CMP64ri8 */
   },
-  { /* 467 */
-    34,
+  { /* 519 */
+    46,
     /* CMP64rm */
   },
-  { /* 468 */
-    41,
+  { /* 520 */
+    53,
     /* CMP64rr */
   },
-  { /* 469 */
-    35,
+  { /* 521 */
+    47,
     /* CMP64rr_REV */
   },
-  { /* 470 */
+  { /* 522 */
     1,
     /* CMP8i8 */
   },
-  { /* 471 */
+  { /* 523 */
     4,
     /* CMP8mi */
   },
-  { /* 472 */
+  { /* 524 */
     4,
     /* CMP8mi8 */
   },
-  { /* 473 */
+  { /* 525 */
     19,
     /* CMP8mr */
   },
-  { /* 474 */
-    49,
+  { /* 526 */
+    61,
     /* CMP8ri */
   },
-  { /* 475 */
-    49,
+  { /* 527 */
+    61,
     /* CMP8ri8 */
   },
-  { /* 476 */
-    50,
+  { /* 528 */
+    62,
     /* CMP8rm */
   },
-  { /* 477 */
-    51,
+  { /* 529 */
+    63,
     /* CMP8rr */
   },
-  { /* 478 */
-    52,
+  { /* 530 */
+    64,
     /* CMP8rr_REV */
   },
-  { /* 479 */
-    53,
+  { /* 531 */
+    65,
     /* CMPSB */
   },
-  { /* 480 */
-    53,
+  { /* 532 */
+    65,
     /* CMPSL */
   },
-  { /* 481 */
-    53,
+  { /* 533 */
+    65,
     /* CMPSQ */
   },
-  { /* 482 */
-    53,
+  { /* 534 */
+    65,
     /* CMPSW */
   },
-  { /* 483 */
-    42,
+  { /* 535 */
+    54,
     /* CMPXCHG16B */
   },
-  { /* 484 */
+  { /* 536 */
     5,
     /* CMPXCHG16rm */
   },
-  { /* 485 */
-    39,
+  { /* 537 */
+    51,
     /* CMPXCHG16rr */
   },
-  { /* 486 */
+  { /* 538 */
     5,
     /* CMPXCHG32rm */
   },
-  { /* 487 */
-    39,
+  { /* 539 */
+    51,
     /* CMPXCHG32rr */
   },
-  { /* 488 */
+  { /* 540 */
     13,
     /* CMPXCHG64rm */
   },
-  { /* 489 */
-    41,
+  { /* 541 */
+    53,
     /* CMPXCHG64rr */
   },
-  { /* 490 */
-    42,
+  { /* 542 */
+    54,
     /* CMPXCHG8B */
   },
-  { /* 491 */
+  { /* 543 */
     19,
     /* CMPXCHG8rm */
   },
-  { /* 492 */
-    51,
+  { /* 544 */
+    63,
     /* CMPXCHG8rr */
   },
-  { /* 493 */
+  { /* 545 */
     0,
     /* CPUID */
   },
-  { /* 494 */
+  { /* 546 */
     0,
     /* CQO */
   },
-  { /* 495 */
+  { /* 547 */
     0,
     /* CWD */
   },
-  { /* 496 */
+  { /* 548 */
     0,
     /* CWDE */
   },
-  { /* 497 */
+  { /* 549 */
     0,
     /* DAA */
   },
-  { /* 498 */
+  { /* 550 */
     0,
     /* DAS */
   },
-  { /* 499 */
+  { /* 551 */
     0,
     /* DATA16_PREFIX */
   },
-  { /* 500 */
-    42,
+  { /* 552 */
+    54,
     /* DEC16m */
   },
-  { /* 501 */
-    54,
+  { /* 553 */
+    66,
     /* DEC16r */
   },
-  { /* 502 */
-    36,
+  { /* 554 */
+    48,
     /* DEC16r_alt */
   },
-  { /* 503 */
-    42,
+  { /* 555 */
+    54,
     /* DEC32m */
   },
-  { /* 504 */
-    54,
+  { /* 556 */
+    66,
     /* DEC32r */
   },
-  { /* 505 */
-    36,
+  { /* 557 */
+    48,
     /* DEC32r_alt */
   },
-  { /* 506 */
-    42,
+  { /* 558 */
+    54,
     /* DEC64m */
   },
-  { /* 507 */
-    55,
+  { /* 559 */
+    67,
     /* DEC64r */
   },
-  { /* 508 */
-    42,
+  { /* 560 */
+    54,
     /* DEC8m */
   },
-  { /* 509 */
-    56,
+  { /* 561 */
+    68,
     /* DEC8r */
   },
-  { /* 510 */
-    42,
+  { /* 562 */
+    54,
     /* DIV16m */
   },
-  { /* 511 */
-    43,
+  { /* 563 */
+    55,
     /* DIV16r */
   },
-  { /* 512 */
-    42,
+  { /* 564 */
+    54,
     /* DIV32m */
   },
-  { /* 513 */
-    43,
+  { /* 565 */
+    55,
     /* DIV32r */
   },
-  { /* 514 */
-    42,
-    /* DIV64m */
-  },
-  { /* 515 */
-    45,
-    /* DIV64r */
-  },
-  { /* 516 */
-    42,
-    /* DIV8m */
-  },
-  { /* 517 */
-    57,
-    /* DIV8r */
-  },
-  { /* 518 */
-    0,
-    /* ENDBR32 */
-  },
-  { /* 519 */
-    0,
-    /* ENDBR64 */
-  },
-  { /* 520 */
-    58,
-    /* ENTER */
-  },
-  { /* 521 */
-    59,
-    /* FARCALL16i */
-  },
-  { /* 522 */
-    42,
-    /* FARCALL16m */
-  },
-  { /* 523 */
-    60,
-    /* FARCALL32i */
-  },
-  { /* 524 */
-    42,
-    /* FARCALL32m */
-  },
-  { /* 525 */
-    42,
-    /* FARCALL64 */
-  },
-  { /* 526 */
-    59,
-    /* FARJMP16i */
-  },
-  { /* 527 */
-    42,
-    /* FARJMP16m */
-  },
-  { /* 528 */
-    60,
-    /* FARJMP32i */
-  },
-  { /* 529 */
-    42,
-    /* FARJMP32m */
-  },
-  { /* 530 */
-    42,
-    /* FARJMP64 */
-  },
-  { /* 531 */
-    0,
-    /* FSETPM */
-  },
-  { /* 532 */
-    0,
-    /* GETSEC */
-  },
-  { /* 533 */
-    0,
-    /* HLT */
-  },
-  { /* 534 */
-    42,
-    /* IDIV16m */
-  },
-  { /* 535 */
-    43,
-    /* IDIV16r */
-  },
-  { /* 536 */
-    42,
-    /* IDIV32m */
-  },
-  { /* 537 */
-    43,
-    /* IDIV32r */
-  },
-  { /* 538 */
-    42,
-    /* IDIV64m */
-  },
-  { /* 539 */
-    45,
-    /* IDIV64r */
-  },
-  { /* 540 */
-    42,
-    /* IDIV8m */
-  },
-  { /* 541 */
-    57,
-    /* IDIV8r */
-  },
-  { /* 542 */
-    42,
-    /* IMUL16m */
-  },
-  { /* 543 */
-    43,
-    /* IMUL16r */
-  },
-  { /* 544 */
-    8,
-    /* IMUL16rm */
-  },
-  { /* 545 */
-    61,
-    /* IMUL16rmi */
-  },
-  { /* 546 */
-    62,
-    /* IMUL16rmi8 */
-  },
-  { /* 547 */
-    10,
-    /* IMUL16rr */
-  },
-  { /* 548 */
-    63,
-    /* IMUL16rri */
-  },
-  { /* 549 */
-    64,
-    /* IMUL16rri8 */
-  },
-  { /* 550 */
-    42,
-    /* IMUL32m */
-  },
-  { /* 551 */
-    43,
-    /* IMUL32r */
-  },
-  { /* 552 */
-    8,
-    /* IMUL32rm */
-  },
-  { /* 553 */
-    61,
-    /* IMUL32rmi */
-  },
-  { /* 554 */
-    62,
-    /* IMUL32rmi8 */
-  },
-  { /* 555 */
-    10,
-    /* IMUL32rr */
-  },
-  { /* 556 */
-    63,
-    /* IMUL32rri */
-  },
-  { /* 557 */
-    64,
-    /* IMUL32rri8 */
-  },
-  { /* 558 */
-    42,
-    /* IMUL64m */
-  },
-  { /* 559 */
-    45,
-    /* IMUL64r */
-  },
-  { /* 560 */
-    16,
-    /* IMUL64rm */
-  },
-  { /* 561 */
-    65,
-    /* IMUL64rmi32 */
-  },
-  { /* 562 */
-    66,
-    /* IMUL64rmi8 */
-  },
-  { /* 563 */
-    18,
-    /* IMUL64rr */
-  },
-  { /* 564 */
-    67,
-    /* IMUL64rri32 */
-  },
-  { /* 565 */
-    68,
-    /* IMUL64rri8 */
-  },
   { /* 566 */
-    42,
-    /* IMUL8m */
+    54,
+    /* DIV64m */
   },
   { /* 567 */
     57,
-    /* IMUL8r */
+    /* DIV64r */
   },
   { /* 568 */
-    69,
-    /* IN16ri */
+    54,
+    /* DIV8m */
   },
   { /* 569 */
-    0,
-    /* IN16rr */
+    69,
+    /* DIV8r */
   },
   { /* 570 */
-    69,
-    /* IN32ri */
+    0,
+    /* ENDBR32 */
   },
   { /* 571 */
     0,
-    /* IN32rr */
+    /* ENDBR64 */
   },
   { /* 572 */
-    69,
-    /* IN8ri */
+    70,
+    /* ENTER */
   },
   { /* 573 */
+    71,
+    /* FARCALL16i */
+  },
+  { /* 574 */
+    54,
+    /* FARCALL16m */
+  },
+  { /* 575 */
+    72,
+    /* FARCALL32i */
+  },
+  { /* 576 */
+    54,
+    /* FARCALL32m */
+  },
+  { /* 577 */
+    54,
+    /* FARCALL64 */
+  },
+  { /* 578 */
+    71,
+    /* FARJMP16i */
+  },
+  { /* 579 */
+    54,
+    /* FARJMP16m */
+  },
+  { /* 580 */
+    72,
+    /* FARJMP32i */
+  },
+  { /* 581 */
+    54,
+    /* FARJMP32m */
+  },
+  { /* 582 */
+    54,
+    /* FARJMP64 */
+  },
+  { /* 583 */
+    0,
+    /* FSETPM */
+  },
+  { /* 584 */
+    0,
+    /* GETSEC */
+  },
+  { /* 585 */
+    0,
+    /* HLT */
+  },
+  { /* 586 */
+    54,
+    /* IDIV16m */
+  },
+  { /* 587 */
+    55,
+    /* IDIV16r */
+  },
+  { /* 588 */
+    54,
+    /* IDIV32m */
+  },
+  { /* 589 */
+    55,
+    /* IDIV32r */
+  },
+  { /* 590 */
+    54,
+    /* IDIV64m */
+  },
+  { /* 591 */
+    57,
+    /* IDIV64r */
+  },
+  { /* 592 */
+    54,
+    /* IDIV8m */
+  },
+  { /* 593 */
+    69,
+    /* IDIV8r */
+  },
+  { /* 594 */
+    54,
+    /* IMUL16m */
+  },
+  { /* 595 */
+    55,
+    /* IMUL16r */
+  },
+  { /* 596 */
+    8,
+    /* IMUL16rm */
+  },
+  { /* 597 */
+    73,
+    /* IMUL16rmi */
+  },
+  { /* 598 */
+    74,
+    /* IMUL16rmi8 */
+  },
+  { /* 599 */
+    10,
+    /* IMUL16rr */
+  },
+  { /* 600 */
+    75,
+    /* IMUL16rri */
+  },
+  { /* 601 */
+    76,
+    /* IMUL16rri8 */
+  },
+  { /* 602 */
+    54,
+    /* IMUL32m */
+  },
+  { /* 603 */
+    55,
+    /* IMUL32r */
+  },
+  { /* 604 */
+    8,
+    /* IMUL32rm */
+  },
+  { /* 605 */
+    73,
+    /* IMUL32rmi */
+  },
+  { /* 606 */
+    74,
+    /* IMUL32rmi8 */
+  },
+  { /* 607 */
+    10,
+    /* IMUL32rr */
+  },
+  { /* 608 */
+    75,
+    /* IMUL32rri */
+  },
+  { /* 609 */
+    76,
+    /* IMUL32rri8 */
+  },
+  { /* 610 */
+    54,
+    /* IMUL64m */
+  },
+  { /* 611 */
+    57,
+    /* IMUL64r */
+  },
+  { /* 612 */
+    16,
+    /* IMUL64rm */
+  },
+  { /* 613 */
+    38,
+    /* IMUL64rmi32 */
+  },
+  { /* 614 */
+    77,
+    /* IMUL64rmi8 */
+  },
+  { /* 615 */
+    18,
+    /* IMUL64rr */
+  },
+  { /* 616 */
+    39,
+    /* IMUL64rri32 */
+  },
+  { /* 617 */
+    78,
+    /* IMUL64rri8 */
+  },
+  { /* 618 */
+    54,
+    /* IMUL8m */
+  },
+  { /* 619 */
+    69,
+    /* IMUL8r */
+  },
+  { /* 620 */
+    79,
+    /* IN16ri */
+  },
+  { /* 621 */
+    0,
+    /* IN16rr */
+  },
+  { /* 622 */
+    79,
+    /* IN32ri */
+  },
+  { /* 623 */
+    0,
+    /* IN32rr */
+  },
+  { /* 624 */
+    79,
+    /* IN8ri */
+  },
+  { /* 625 */
     0,
     /* IN8rr */
   },
-  { /* 574 */
-    42,
+  { /* 626 */
+    54,
     /* INC16m */
   },
-  { /* 575 */
-    54,
+  { /* 627 */
+    66,
     /* INC16r */
   },
-  { /* 576 */
-    36,
+  { /* 628 */
+    48,
     /* INC16r_alt */
   },
-  { /* 577 */
-    42,
+  { /* 629 */
+    54,
     /* INC32m */
   },
-  { /* 578 */
-    54,
+  { /* 630 */
+    66,
     /* INC32r */
   },
-  { /* 579 */
-    36,
+  { /* 631 */
+    48,
     /* INC32r_alt */
   },
-  { /* 580 */
-    42,
+  { /* 632 */
+    54,
     /* INC64m */
   },
-  { /* 581 */
-    55,
+  { /* 633 */
+    67,
     /* INC64r */
   },
-  { /* 582 */
-    42,
+  { /* 634 */
+    54,
     /* INC8m */
   },
-  { /* 583 */
-    56,
+  { /* 635 */
+    68,
     /* INC8r */
   },
-  { /* 584 */
-    70,
+  { /* 636 */
+    80,
     /* INCSSPD */
   },
-  { /* 585 */
-    45,
+  { /* 637 */
+    57,
     /* INCSSPQ */
   },
-  { /* 586 */
-    71,
+  { /* 638 */
+    81,
     /* INSB */
   },
-  { /* 587 */
-    71,
+  { /* 639 */
+    81,
     /* INSL */
   },
-  { /* 588 */
-    71,
+  { /* 640 */
+    81,
     /* INSW */
   },
-  { /* 589 */
-    69,
-    /* INT */
-  },
-  { /* 590 */
-    0,
-    /* INT1 */
-  },
-  { /* 591 */
-    0,
-    /* INT3 */
-  },
-  { /* 592 */
-    0,
-    /* INTO */
-  },
-  { /* 593 */
-    0,
-    /* INVD */
-  },
-  { /* 594 */
-    72,
-    /* INVEPT32 */
-  },
-  { /* 595 */
-    34,
-    /* INVEPT64 */
-  },
-  { /* 596 */
-    42,
-    /* INVLPG */
-  },
-  { /* 597 */
-    0,
-    /* INVLPGA32 */
-  },
-  { /* 598 */
-    0,
-    /* INVLPGA64 */
-  },
-  { /* 599 */
-    72,
-    /* INVPCID32 */
-  },
-  { /* 600 */
-    34,
-    /* INVPCID64 */
-  },
-  { /* 601 */
-    72,
-    /* INVVPID32 */
-  },
-  { /* 602 */
-    34,
-    /* INVVPID64 */
-  },
-  { /* 603 */
-    0,
-    /*  */
-  },
-  { /* 604 */
-    0,
-    /* IRET16 */
-  },
-  { /* 605 */
-    0,
-    /* IRET32 */
-  },
-  { /* 606 */
-    0,
-    /* IRET64 */
-  },
-  { /* 607 */
-    0,
-    /*  */
-  },
-  { /* 608 */
-    73,
-    /* JAE_1 */
-  },
-  { /* 609 */
-    74,
-    /* JAE_2 */
-  },
-  { /* 610 */
-    74,
-    /* JAE_4 */
-  },
-  { /* 611 */
-    73,
-    /* JA_1 */
-  },
-  { /* 612 */
-    74,
-    /* JA_2 */
-  },
-  { /* 613 */
-    74,
-    /* JA_4 */
-  },
-  { /* 614 */
-    73,
-    /* JBE_1 */
-  },
-  { /* 615 */
-    74,
-    /* JBE_2 */
-  },
-  { /* 616 */
-    74,
-    /* JBE_4 */
-  },
-  { /* 617 */
-    73,
-    /* JB_1 */
-  },
-  { /* 618 */
-    74,
-    /* JB_2 */
-  },
-  { /* 619 */
-    74,
-    /* JB_4 */
-  },
-  { /* 620 */
-    73,
-    /* JCXZ */
-  },
-  { /* 621 */
-    73,
-    /* JECXZ */
-  },
-  { /* 622 */
-    73,
-    /* JE_1 */
-  },
-  { /* 623 */
-    74,
-    /* JE_2 */
-  },
-  { /* 624 */
-    74,
-    /* JE_4 */
-  },
-  { /* 625 */
-    73,
-    /* JGE_1 */
-  },
-  { /* 626 */
-    74,
-    /* JGE_2 */
-  },
-  { /* 627 */
-    74,
-    /* JGE_4 */
-  },
-  { /* 628 */
-    73,
-    /* JG_1 */
-  },
-  { /* 629 */
-    74,
-    /* JG_2 */
-  },
-  { /* 630 */
-    74,
-    /* JG_4 */
-  },
-  { /* 631 */
-    73,
-    /* JLE_1 */
-  },
-  { /* 632 */
-    74,
-    /* JLE_2 */
-  },
-  { /* 633 */
-    74,
-    /* JLE_4 */
-  },
-  { /* 634 */
-    73,
-    /* JL_1 */
-  },
-  { /* 635 */
-    74,
-    /* JL_2 */
-  },
-  { /* 636 */
-    74,
-    /* JL_4 */
-  },
-  { /* 637 */
-    42,
-    /* JMP16m */
-  },
-  { /* 638 */
-    0,
-    /*  */
-  },
-  { /* 639 */
-    43,
-    /* JMP16r */
-  },
-  { /* 640 */
-    0,
-    /*  */
-  },
   { /* 641 */
-    42,
-    /* JMP32m */
+    79,
+    /* INT */
   },
   { /* 642 */
     0,
-    /*  */
+    /* INT1 */
   },
   { /* 643 */
-    43,
-    /* JMP32r */
+    0,
+    /* INT3 */
   },
   { /* 644 */
     0,
-    /*  */
+    /* INTO */
   },
   { /* 645 */
-    42,
-    /* JMP64m */
+    0,
+    /* INVD */
   },
   { /* 646 */
-    0,
-    /*  */
+    82,
+    /* INVEPT32 */
   },
   { /* 647 */
-    45,
-    /* JMP64r */
+    46,
+    /* INVEPT64 */
   },
   { /* 648 */
-    0,
-    /*  */
+    54,
+    /* INVLPG */
   },
   { /* 649 */
-    73,
-    /* JMP_1 */
+    0,
+    /* INVLPGA32 */
   },
   { /* 650 */
-    74,
-    /* JMP_2 */
+    0,
+    /* INVLPGA64 */
   },
   { /* 651 */
-    74,
-    /* JMP_4 */
+    82,
+    /* INVPCID32 */
   },
   { /* 652 */
-    73,
-    /* JNE_1 */
+    46,
+    /* INVPCID64 */
   },
   { /* 653 */
-    74,
-    /* JNE_2 */
+    82,
+    /* INVVPID32 */
   },
   { /* 654 */
-    74,
-    /* JNE_4 */
+    46,
+    /* INVVPID64 */
   },
   { /* 655 */
-    73,
-    /* JNO_1 */
+    0,
+    /* IRET16 */
   },
   { /* 656 */
-    74,
-    /* JNO_2 */
+    0,
+    /* IRET32 */
   },
   { /* 657 */
-    74,
-    /* JNO_4 */
+    0,
+    /* IRET64 */
   },
   { /* 658 */
-    73,
-    /* JNP_1 */
+    83,
+    /* JAE_1 */
   },
   { /* 659 */
-    74,
-    /* JNP_2 */
+    84,
+    /* JAE_2 */
   },
   { /* 660 */
-    74,
-    /* JNP_4 */
+    84,
+    /* JAE_4 */
   },
   { /* 661 */
-    73,
-    /* JNS_1 */
+    83,
+    /* JA_1 */
   },
   { /* 662 */
-    74,
-    /* JNS_2 */
+    84,
+    /* JA_2 */
   },
   { /* 663 */
-    74,
-    /* JNS_4 */
+    84,
+    /* JA_4 */
   },
   { /* 664 */
-    73,
-    /* JO_1 */
+    83,
+    /* JBE_1 */
   },
   { /* 665 */
-    74,
-    /* JO_2 */
+    84,
+    /* JBE_2 */
   },
   { /* 666 */
-    74,
-    /* JO_4 */
+    84,
+    /* JBE_4 */
   },
   { /* 667 */
-    73,
-    /* JP_1 */
+    83,
+    /* JB_1 */
   },
   { /* 668 */
-    74,
-    /* JP_2 */
+    84,
+    /* JB_2 */
   },
   { /* 669 */
-    74,
-    /* JP_4 */
+    84,
+    /* JB_4 */
   },
   { /* 670 */
-    73,
-    /* JRCXZ */
+    83,
+    /* JCXZ */
   },
   { /* 671 */
-    73,
-    /* JS_1 */
+    83,
+    /* JECXZ */
   },
   { /* 672 */
-    74,
-    /* JS_2 */
+    83,
+    /* JE_1 */
   },
   { /* 673 */
-    74,
-    /* JS_4 */
+    84,
+    /* JE_2 */
   },
   { /* 674 */
-    0,
-    /* LAHF */
+    84,
+    /* JE_4 */
   },
   { /* 675 */
-    32,
-    /* LAR16rm */
+    83,
+    /* JGE_1 */
   },
   { /* 676 */
-    33,
-    /* LAR16rr */
+    84,
+    /* JGE_2 */
   },
   { /* 677 */
-    32,
-    /* LAR32rm */
+    84,
+    /* JGE_4 */
   },
   { /* 678 */
-    33,
-    /* LAR32rr */
+    83,
+    /* JG_1 */
   },
   { /* 679 */
-    34,
-    /* LAR64rm */
+    84,
+    /* JG_2 */
   },
   { /* 680 */
-    75,
-    /* LAR64rr */
+    84,
+    /* JG_4 */
   },
   { /* 681 */
-    32,
-    /* LDS16rm */
+    83,
+    /* JLE_1 */
   },
   { /* 682 */
-    32,
-    /* LDS32rm */
+    84,
+    /* JLE_2 */
   },
   { /* 683 */
-    32,
-    /* LEA16r */
+    84,
+    /* JLE_4 */
   },
   { /* 684 */
-    32,
-    /* LEA32r */
+    83,
+    /* JL_1 */
   },
   { /* 685 */
-    32,
-    /* LEA64_32r */
+    84,
+    /* JL_2 */
   },
   { /* 686 */
-    34,
-    /* LEA64r */
+    84,
+    /* JL_4 */
   },
   { /* 687 */
-    0,
-    /* LEAVE */
+    54,
+    /* JMP16m */
   },
   { /* 688 */
     0,
-    /* LEAVE64 */
+    /*  */
   },
   { /* 689 */
-    32,
-    /* LES16rm */
+    55,
+    /* JMP16r */
   },
   { /* 690 */
-    32,
-    /* LES32rm */
+    0,
+    /*  */
   },
   { /* 691 */
-    32,
-    /* LFS16rm */
+    54,
+    /* JMP32m */
   },
   { /* 692 */
-    32,
-    /* LFS32rm */
+    0,
+    /*  */
   },
   { /* 693 */
-    34,
-    /* LFS64rm */
+    55,
+    /* JMP32r */
   },
   { /* 694 */
-    42,
-    /* LGDT16m */
+    0,
+    /*  */
   },
   { /* 695 */
-    42,
-    /* LGDT32m */
+    54,
+    /* JMP64m */
   },
   { /* 696 */
-    42,
-    /* LGDT64m */
+    0,
+    /*  */
   },
   { /* 697 */
-    32,
-    /* LGS16rm */
+    57,
+    /* JMP64r */
   },
   { /* 698 */
-    32,
-    /* LGS32rm */
+    0,
+    /*  */
   },
   { /* 699 */
-    34,
-    /* LGS64rm */
+    83,
+    /* JMP_1 */
   },
   { /* 700 */
-    42,
-    /* LIDT16m */
+    84,
+    /* JMP_2 */
   },
   { /* 701 */
-    42,
-    /* LIDT32m */
+    84,
+    /* JMP_4 */
   },
   { /* 702 */
-    42,
-    /* LIDT64m */
+    83,
+    /* JNE_1 */
   },
   { /* 703 */
-    42,
-    /* LLDT16m */
+    84,
+    /* JNE_2 */
   },
   { /* 704 */
-    76,
-    /* LLDT16r */
+    84,
+    /* JNE_4 */
   },
   { /* 705 */
-    42,
-    /* LMSW16m */
+    83,
+    /* JNO_1 */
   },
   { /* 706 */
-    76,
-    /* LMSW16r */
+    84,
+    /* JNO_2 */
   },
   { /* 707 */
+    84,
+    /* JNO_4 */
+  },
+  { /* 708 */
+    83,
+    /* JNP_1 */
+  },
+  { /* 709 */
+    84,
+    /* JNP_2 */
+  },
+  { /* 710 */
+    84,
+    /* JNP_4 */
+  },
+  { /* 711 */
+    83,
+    /* JNS_1 */
+  },
+  { /* 712 */
+    84,
+    /* JNS_2 */
+  },
+  { /* 713 */
+    84,
+    /* JNS_4 */
+  },
+  { /* 714 */
+    83,
+    /* JO_1 */
+  },
+  { /* 715 */
+    84,
+    /* JO_2 */
+  },
+  { /* 716 */
+    84,
+    /* JO_4 */
+  },
+  { /* 717 */
+    83,
+    /* JP_1 */
+  },
+  { /* 718 */
+    84,
+    /* JP_2 */
+  },
+  { /* 719 */
+    84,
+    /* JP_4 */
+  },
+  { /* 720 */
+    83,
+    /* JRCXZ */
+  },
+  { /* 721 */
+    83,
+    /* JS_1 */
+  },
+  { /* 722 */
+    84,
+    /* JS_2 */
+  },
+  { /* 723 */
+    84,
+    /* JS_4 */
+  },
+  { /* 724 */
+    0,
+    /* LAHF */
+  },
+  { /* 725 */
+    44,
+    /* LAR16rm */
+  },
+  { /* 726 */
+    45,
+    /* LAR16rr */
+  },
+  { /* 727 */
+    44,
+    /* LAR32rm */
+  },
+  { /* 728 */
+    45,
+    /* LAR32rr */
+  },
+  { /* 729 */
+    46,
+    /* LAR64rm */
+  },
+  { /* 730 */
+    85,
+    /* LAR64rr */
+  },
+  { /* 731 */
+    44,
+    /* LDS16rm */
+  },
+  { /* 732 */
+    44,
+    /* LDS32rm */
+  },
+  { /* 733 */
+    44,
+    /* LEA16r */
+  },
+  { /* 734 */
+    44,
+    /* LEA32r */
+  },
+  { /* 735 */
+    44,
+    /* LEA64_32r */
+  },
+  { /* 736 */
+    46,
+    /* LEA64r */
+  },
+  { /* 737 */
+    0,
+    /* LEAVE */
+  },
+  { /* 738 */
+    0,
+    /* LEAVE64 */
+  },
+  { /* 739 */
+    44,
+    /* LES16rm */
+  },
+  { /* 740 */
+    44,
+    /* LES32rm */
+  },
+  { /* 741 */
+    44,
+    /* LFS16rm */
+  },
+  { /* 742 */
+    44,
+    /* LFS32rm */
+  },
+  { /* 743 */
+    46,
+    /* LFS64rm */
+  },
+  { /* 744 */
+    54,
+    /* LGDT16m */
+  },
+  { /* 745 */
+    54,
+    /* LGDT32m */
+  },
+  { /* 746 */
+    54,
+    /* LGDT64m */
+  },
+  { /* 747 */
+    44,
+    /* LGS16rm */
+  },
+  { /* 748 */
+    44,
+    /* LGS32rm */
+  },
+  { /* 749 */
+    46,
+    /* LGS64rm */
+  },
+  { /* 750 */
+    54,
+    /* LIDT16m */
+  },
+  { /* 751 */
+    54,
+    /* LIDT32m */
+  },
+  { /* 752 */
+    54,
+    /* LIDT64m */
+  },
+  { /* 753 */
+    54,
+    /* LLDT16m */
+  },
+  { /* 754 */
+    86,
+    /* LLDT16r */
+  },
+  { /* 755 */
+    80,
+    /* LLWPCB */
+  },
+  { /* 756 */
+    57,
+    /* LLWPCB64 */
+  },
+  { /* 757 */
+    54,
+    /* LMSW16m */
+  },
+  { /* 758 */
+    86,
+    /* LMSW16r */
+  },
+  { /* 759 */
     0,
     /* LOCK_PREFIX */
   },
-  { /* 708 */
-    77,
+  { /* 760 */
+    87,
     /* LODSB */
   },
-  { /* 709 */
-    77,
-    /* LODSL */
-  },
-  { /* 710 */
-    77,
-    /* LODSQ */
-  },
-  { /* 711 */
-    77,
-    /* LODSW */
-  },
-  { /* 712 */
-    73,
-    /* LOOP */
-  },
-  { /* 713 */
-    73,
-    /* LOOPE */
-  },
-  { /* 714 */
-    73,
-    /* LOOPNE */
-  },
-  { /* 715 */
-    78,
-    /* LRETIL */
-  },
-  { /* 716 */
-    78,
-    /* LRETIQ */
-  },
-  { /* 717 */
-    2,
-    /* LRETIW */
-  },
-  { /* 718 */
-    0,
-    /* LRETL */
-  },
-  { /* 719 */
-    0,
-    /* LRETQ */
-  },
-  { /* 720 */
-    0,
-    /* LRETW */
-  },
-  { /* 721 */
-    32,
-    /* LSL16rm */
-  },
-  { /* 722 */
-    33,
-    /* LSL16rr */
-  },
-  { /* 723 */
-    32,
-    /* LSL32rm */
-  },
-  { /* 724 */
-    33,
-    /* LSL32rr */
-  },
-  { /* 725 */
-    34,
-    /* LSL64rm */
-  },
-  { /* 726 */
-    75,
-    /* LSL64rr */
-  },
-  { /* 727 */
-    32,
-    /* LSS16rm */
-  },
-  { /* 728 */
-    32,
-    /* LSS32rm */
-  },
-  { /* 729 */
-    34,
-    /* LSS64rm */
-  },
-  { /* 730 */
-    42,
-    /* LTRm */
-  },
-  { /* 731 */
-    76,
-    /* LTRr */
-  },
-  { /* 732 */
-    0,
-    /*  */
-  },
-  { /* 733 */
-    0,
-    /* MONITORXrrr */
-  },
-  { /* 734 */
-    0,
-    /* MONTMUL */
-  },
-  { /* 735 */
-    79,
-    /* MOV16ao16 */
-  },
-  { /* 736 */
-    79,
-    /* MOV16ao32 */
-  },
-  { /* 737 */
-    79,
-    /* MOV16ao64 */
-  },
-  { /* 738 */
-    3,
-    /* MOV16mi */
-  },
-  { /* 739 */
-    5,
-    /* MOV16mr */
-  },
-  { /* 740 */
-    80,
-    /* MOV16ms */
-  },
-  { /* 741 */
-    79,
-    /* MOV16o16a */
-  },
-  { /* 742 */
-    79,
-    /* MOV16o32a */
-  },
-  { /* 743 */
-    79,
-    /* MOV16o64a */
-  },
-  { /* 744 */
-    81,
-    /* MOV16ri */
-  },
-  { /* 745 */
-    47,
-    /* MOV16ri_alt */
-  },
-  { /* 746 */
-    32,
-    /* MOV16rm */
-  },
-  { /* 747 */
-    39,
-    /* MOV16rr */
-  },
-  { /* 748 */
-    33,
-    /* MOV16rr_REV */
-  },
-  { /* 749 */
-    82,
-    /* MOV16rs */
-  },
-  { /* 750 */
-    83,
-    /* MOV16sm */
-  },
-  { /* 751 */
-    84,
-    /* MOV16sr */
-  },
-  { /* 752 */
-    79,
-    /* MOV32ao16 */
-  },
-  { /* 753 */
-    79,
-    /* MOV32ao32 */
-  },
-  { /* 754 */
-    79,
-    /* MOV32ao64 */
-  },
-  { /* 755 */
-    85,
-    /* MOV32cr */
-  },
-  { /* 756 */
-    86,
-    /* MOV32dr */
-  },
-  { /* 757 */
-    3,
-    /* MOV32mi */
-  },
-  { /* 758 */
-    5,
-    /* MOV32mr */
-  },
-  { /* 759 */
-    79,
-    /* MOV32o16a */
-  },
-  { /* 760 */
-    79,
-    /* MOV32o32a */
-  },
   { /* 761 */
-    79,
-    /* MOV32o64a */
+    87,
+    /* LODSL */
   },
   { /* 762 */
     87,
-    /* MOV32rc */
+    /* LODSQ */
   },
   { /* 763 */
-    88,
-    /* MOV32rd */
+    87,
+    /* LODSW */
   },
   { /* 764 */
-    81,
-    /* MOV32ri */
+    83,
+    /* LOOP */
   },
   { /* 765 */
-    47,
-    /* MOV32ri_alt */
+    83,
+    /* LOOPE */
   },
   { /* 766 */
-    32,
-    /* MOV32rm */
+    83,
+    /* LOOPNE */
   },
   { /* 767 */
-    39,
-    /* MOV32rr */
+    88,
+    /* LRETIL */
   },
   { /* 768 */
-    33,
-    /* MOV32rr_REV */
+    88,
+    /* LRETIQ */
   },
   { /* 769 */
-    82,
-    /* MOV32rs */
+    2,
+    /* LRETIW */
   },
   { /* 770 */
-    84,
-    /* MOV32sr */
+    0,
+    /* LRETL */
   },
   { /* 771 */
-    79,
-    /* MOV64ao32 */
+    0,
+    /* LRETQ */
   },
   { /* 772 */
-    79,
-    /* MOV64ao64 */
+    0,
+    /* LRETW */
   },
   { /* 773 */
-    89,
-    /* MOV64cr */
+    44,
+    /* LSL16rm */
   },
   { /* 774 */
-    90,
-    /* MOV64dr */
+    45,
+    /* LSL16rr */
   },
   { /* 775 */
-    12,
-    /* MOV64mi32 */
+    44,
+    /* LSL32rm */
   },
   { /* 776 */
-    13,
-    /* MOV64mr */
+    45,
+    /* LSL32rr */
   },
   { /* 777 */
-    79,
-    /* MOV64o32a */
+    46,
+    /* LSL64rm */
   },
   { /* 778 */
-    79,
-    /* MOV64o64a */
+    85,
+    /* LSL64rr */
   },
   { /* 779 */
-    91,
-    /* MOV64rc */
+    44,
+    /* LSS16rm */
   },
   { /* 780 */
-    92,
-    /* MOV64rd */
+    44,
+    /* LSS32rm */
   },
   { /* 781 */
-    93,
-    /* MOV64ri */
+    46,
+    /* LSS64rm */
   },
   { /* 782 */
-    48,
-    /* MOV64ri32 */
+    54,
+    /* LTRm */
   },
   { /* 783 */
-    34,
-    /* MOV64rm */
+    86,
+    /* LTRr */
   },
   { /* 784 */
-    41,
-    /* MOV64rr */
+    89,
+    /* LWPINS32rmi */
   },
   { /* 785 */
-    35,
-    /* MOV64rr_REV */
+    90,
+    /* LWPINS32rri */
   },
   { /* 786 */
-    94,
-    /* MOV64rs */
+    91,
+    /* LWPINS64rmi */
   },
   { /* 787 */
-    95,
-    /* MOV64sr */
+    92,
+    /* LWPINS64rri */
   },
   { /* 788 */
-    79,
-    /* MOV8ao16 */
+    89,
+    /* LWPVAL32rmi */
   },
   { /* 789 */
-    79,
-    /* MOV8ao32 */
+    90,
+    /* LWPVAL32rri */
   },
   { /* 790 */
-    79,
-    /* MOV8ao64 */
+    91,
+    /* LWPVAL64rmi */
   },
   { /* 791 */
-    4,
-    /* MOV8mi */
+    92,
+    /* LWPVAL64rri */
   },
   { /* 792 */
-    19,
-    /* MOV8mr */
+    44,
+    /* LZCNT16rm */
   },
   { /* 793 */
-    0,
-    /*  */
+    45,
+    /* LZCNT16rr */
   },
   { /* 794 */
-    79,
-    /* MOV8o16a */
+    44,
+    /* LZCNT32rm */
   },
   { /* 795 */
-    79,
-    /* MOV8o32a */
+    45,
+    /* LZCNT32rr */
   },
   { /* 796 */
-    79,
-    /* MOV8o64a */
+    46,
+    /* LZCNT64rm */
   },
   { /* 797 */
-    96,
-    /* MOV8ri */
+    47,
+    /* LZCNT64rr */
   },
   { /* 798 */
-    49,
-    /* MOV8ri_alt */
+    0,
+    /* MONITORXrrr */
   },
   { /* 799 */
-    50,
-    /* MOV8rm */
+    0,
+    /* MONTMUL */
   },
   { /* 800 */
-    0,
-    /*  */
+    93,
+    /* MOV16ao16 */
   },
   { /* 801 */
-    51,
-    /* MOV8rr */
+    93,
+    /* MOV16ao32 */
   },
   { /* 802 */
-    0,
-    /*  */
+    93,
+    /* MOV16ao64 */
   },
   { /* 803 */
-    52,
-    /* MOV8rr_REV */
+    3,
+    /* MOV16mi */
   },
   { /* 804 */
     5,
-    /* MOVBE16mr */
+    /* MOV16mr */
   },
   { /* 805 */
-    32,
-    /* MOVBE16rm */
+    94,
+    /* MOV16ms */
   },
   { /* 806 */
-    5,
-    /* MOVBE32mr */
+    93,
+    /* MOV16o16a */
   },
   { /* 807 */
-    32,
-    /* MOVBE32rm */
+    93,
+    /* MOV16o32a */
   },
   { /* 808 */
-    13,
-    /* MOVBE64mr */
+    93,
+    /* MOV16o64a */
   },
   { /* 809 */
-    34,
-    /* MOVBE64rm */
+    95,
+    /* MOV16ri */
   },
   { /* 810 */
-    53,
-    /* MOVSB */
+    59,
+    /* MOV16ri_alt */
   },
   { /* 811 */
-    53,
-    /* MOVSL */
+    44,
+    /* MOV16rm */
   },
   { /* 812 */
-    53,
-    /* MOVSQ */
+    51,
+    /* MOV16rr */
   },
   { /* 813 */
-    53,
-    /* MOVSW */
+    45,
+    /* MOV16rr_REV */
   },
   { /* 814 */
-    32,
-    /* MOVSX16rm16 */
+    96,
+    /* MOV16rs */
   },
   { /* 815 */
-    32,
-    /* MOVSX16rm8 */
+    97,
+    /* MOV16sm */
   },
   { /* 816 */
-    33,
-    /* MOVSX16rr16 */
+    98,
+    /* MOV16sr */
   },
   { /* 817 */
-    97,
-    /* MOVSX16rr8 */
+    93,
+    /* MOV32ao16 */
   },
   { /* 818 */
-    32,
-    /* MOVSX32rm16 */
+    93,
+    /* MOV32ao32 */
   },
   { /* 819 */
-    32,
-    /* MOVSX32rm8 */
+    93,
+    /* MOV32ao64 */
   },
   { /* 820 */
-    0,
-    /*  */
+    99,
+    /* MOV32cr */
   },
   { /* 821 */
-    98,
-    /* MOVSX32rr16 */
+    100,
+    /* MOV32dr */
   },
   { /* 822 */
-    97,
-    /* MOVSX32rr8 */
+    3,
+    /* MOV32mi */
   },
   { /* 823 */
-    0,
-    /*  */
+    5,
+    /* MOV32mr */
   },
   { /* 824 */
-    34,
-    /* MOVSX64rm16 */
+    93,
+    /* MOV32o16a */
   },
   { /* 825 */
-    34,
-    /* MOVSX64rm32 */
+    93,
+    /* MOV32o32a */
   },
   { /* 826 */
-    34,
-    /* MOVSX64rm8 */
+    93,
+    /* MOV32o64a */
   },
   { /* 827 */
-    99,
-    /* MOVSX64rr16 */
+    101,
+    /* MOV32rc */
   },
   { /* 828 */
-    75,
-    /* MOVSX64rr32 */
+    102,
+    /* MOV32rd */
   },
   { /* 829 */
-    100,
-    /* MOVSX64rr8 */
+    95,
+    /* MOV32ri */
   },
   { /* 830 */
-    32,
-    /* MOVZX16rm16 */
+    59,
+    /* MOV32ri_alt */
   },
   { /* 831 */
-    32,
-    /* MOVZX16rm8 */
+    44,
+    /* MOV32rm */
   },
   { /* 832 */
-    33,
-    /* MOVZX16rr16 */
+    51,
+    /* MOV32rr */
   },
   { /* 833 */
-    97,
-    /* MOVZX16rr8 */
+    45,
+    /* MOV32rr_REV */
   },
   { /* 834 */
-    32,
-    /* MOVZX32rm16 */
+    96,
+    /* MOV32rs */
   },
   { /* 835 */
-    32,
-    /* MOVZX32rm8 */
+    98,
+    /* MOV32sr */
   },
   { /* 836 */
-    0,
-    /*  */
+    93,
+    /* MOV64ao32 */
   },
   { /* 837 */
-    98,
-    /* MOVZX32rr16 */
+    93,
+    /* MOV64ao64 */
   },
   { /* 838 */
-    97,
-    /* MOVZX32rr8 */
+    103,
+    /* MOV64cr */
   },
   { /* 839 */
+    104,
+    /* MOV64dr */
+  },
+  { /* 840 */
+    12,
+    /* MOV64mi32 */
+  },
+  { /* 841 */
+    13,
+    /* MOV64mr */
+  },
+  { /* 842 */
+    93,
+    /* MOV64o32a */
+  },
+  { /* 843 */
+    93,
+    /* MOV64o64a */
+  },
+  { /* 844 */
+    105,
+    /* MOV64rc */
+  },
+  { /* 845 */
+    106,
+    /* MOV64rd */
+  },
+  { /* 846 */
+    107,
+    /* MOV64ri */
+  },
+  { /* 847 */
+    60,
+    /* MOV64ri32 */
+  },
+  { /* 848 */
+    46,
+    /* MOV64rm */
+  },
+  { /* 849 */
+    53,
+    /* MOV64rr */
+  },
+  { /* 850 */
+    47,
+    /* MOV64rr_REV */
+  },
+  { /* 851 */
+    108,
+    /* MOV64rs */
+  },
+  { /* 852 */
+    109,
+    /* MOV64sr */
+  },
+  { /* 853 */
+    93,
+    /* MOV8ao16 */
+  },
+  { /* 854 */
+    93,
+    /* MOV8ao32 */
+  },
+  { /* 855 */
+    93,
+    /* MOV8ao64 */
+  },
+  { /* 856 */
+    4,
+    /* MOV8mi */
+  },
+  { /* 857 */
+    19,
+    /* MOV8mr */
+  },
+  { /* 858 */
     0,
     /*  */
   },
-  { /* 840 */
-    34,
-    /* MOVZX64rm16 */
-  },
-  { /* 841 */
-    34,
-    /* MOVZX64rm8 */
-  },
-  { /* 842 */
-    99,
-    /* MOVZX64rr16 */
-  },
-  { /* 843 */
-    100,
-    /* MOVZX64rr8 */
-  },
-  { /* 844 */
-    42,
-    /* MUL16m */
-  },
-  { /* 845 */
-    43,
-    /* MUL16r */
-  },
-  { /* 846 */
-    42,
-    /* MUL32m */
-  },
-  { /* 847 */
-    43,
-    /* MUL32r */
-  },
-  { /* 848 */
-    42,
-    /* MUL64m */
-  },
-  { /* 849 */
-    45,
-    /* MUL64r */
-  },
-  { /* 850 */
-    42,
-    /* MUL8m */
-  },
-  { /* 851 */
-    57,
-    /* MUL8r */
-  },
-  { /* 852 */
-    26,
-    /* MULX32rm */
-  },
-  { /* 853 */
-    27,
-    /* MULX32rr */
-  },
-  { /* 854 */
-    28,
-    /* MULX64rm */
-  },
-  { /* 855 */
-    29,
-    /* MULX64rr */
-  },
-  { /* 856 */
-    0,
-    /* MWAITXrrr */
-  },
-  { /* 857 */
-    42,
-    /* NEG16m */
-  },
-  { /* 858 */
-    54,
-    /* NEG16r */
-  },
   { /* 859 */
-    42,
-    /* NEG32m */
+    93,
+    /* MOV8o16a */
   },
   { /* 860 */
-    54,
-    /* NEG32r */
+    93,
+    /* MOV8o32a */
   },
   { /* 861 */
-    42,
-    /* NEG64m */
+    93,
+    /* MOV8o64a */
   },
   { /* 862 */
-    55,
-    /* NEG64r */
+    110,
+    /* MOV8ri */
   },
   { /* 863 */
-    42,
-    /* NEG8m */
+    61,
+    /* MOV8ri_alt */
   },
   { /* 864 */
-    56,
-    /* NEG8r */
+    62,
+    /* MOV8rm */
   },
   { /* 865 */
     0,
-    /* NOOP */
+    /*  */
   },
   { /* 866 */
-    42,
-    /* NOOP18_16m4 */
+    63,
+    /* MOV8rr */
   },
   { /* 867 */
-    42,
-    /* NOOP18_16m5 */
+    0,
+    /*  */
   },
   { /* 868 */
-    42,
-    /* NOOP18_16m6 */
+    64,
+    /* MOV8rr_REV */
   },
   { /* 869 */
-    42,
-    /* NOOP18_16m7 */
+    5,
+    /* MOVBE16mr */
   },
   { /* 870 */
-    43,
-    /* NOOP18_16r4 */
+    44,
+    /* MOVBE16rm */
   },
   { /* 871 */
-    43,
-    /* NOOP18_16r5 */
+    5,
+    /* MOVBE32mr */
   },
   { /* 872 */
-    43,
-    /* NOOP18_16r6 */
+    44,
+    /* MOVBE32rm */
   },
   { /* 873 */
-    43,
-    /* NOOP18_16r7 */
+    13,
+    /* MOVBE64mr */
   },
   { /* 874 */
-    42,
-    /* NOOP18_m4 */
+    46,
+    /* MOVBE64rm */
   },
   { /* 875 */
-    42,
-    /* NOOP18_m5 */
+    111,
+    /* MOVDIR64B16 */
   },
   { /* 876 */
-    42,
-    /* NOOP18_m6 */
+    82,
+    /* MOVDIR64B32 */
   },
   { /* 877 */
-    42,
-    /* NOOP18_m7 */
+    46,
+    /* MOVDIR64B64 */
   },
   { /* 878 */
-    43,
-    /* NOOP18_r4 */
+    112,
+    /* MOVDIRI32 */
   },
   { /* 879 */
-    43,
-    /* NOOP18_r5 */
+    13,
+    /* MOVDIRI64 */
   },
   { /* 880 */
-    43,
-    /* NOOP18_r6 */
+    65,
+    /* MOVSB */
   },
   { /* 881 */
-    43,
-    /* NOOP18_r7 */
+    65,
+    /* MOVSL */
   },
   { /* 882 */
-    33,
-    /* NOOP19rr */
+    65,
+    /* MOVSQ */
   },
   { /* 883 */
-    42,
-    /* NOOPL */
+    65,
+    /* MOVSW */
   },
   { /* 884 */
-    42,
-    /* NOOPL_19 */
+    44,
+    /* MOVSX16rm16 */
   },
   { /* 885 */
-    42,
-    /* NOOPL_1d */
+    44,
+    /* MOVSX16rm8 */
   },
   { /* 886 */
-    42,
-    /* NOOPL_1e */
+    45,
+    /* MOVSX16rr16 */
   },
   { /* 887 */
-    43,
-    /* NOOPLr */
+    113,
+    /* MOVSX16rr8 */
   },
   { /* 888 */
-    42,
-    /* NOOPQ */
+    44,
+    /* MOVSX32rm16 */
   },
   { /* 889 */
-    45,
-    /* NOOPQr */
+    44,
+    /* MOVSX32rm8 */
   },
   { /* 890 */
-    42,
-    /* NOOPW */
+    0,
+    /*  */
   },
   { /* 891 */
-    42,
-    /* NOOPW_19 */
+    114,
+    /* MOVSX32rr16 */
   },
   { /* 892 */
-    42,
-    /* NOOPW_1c */
+    113,
+    /* MOVSX32rr8 */
   },
   { /* 893 */
-    42,
-    /* NOOPW_1d */
+    0,
+    /*  */
   },
   { /* 894 */
-    42,
-    /* NOOPW_1e */
+    46,
+    /* MOVSX64rm16 */
   },
   { /* 895 */
-    43,
-    /* NOOPWr */
+    46,
+    /* MOVSX64rm32 */
   },
   { /* 896 */
-    42,
-    /* NOT16m */
+    46,
+    /* MOVSX64rm8 */
   },
   { /* 897 */
-    54,
-    /* NOT16r */
+    115,
+    /* MOVSX64rr16 */
   },
   { /* 898 */
-    42,
-    /* NOT32m */
+    85,
+    /* MOVSX64rr32 */
   },
   { /* 899 */
-    54,
-    /* NOT32r */
+    116,
+    /* MOVSX64rr8 */
   },
   { /* 900 */
-    42,
-    /* NOT64m */
+    44,
+    /* MOVZX16rm16 */
   },
   { /* 901 */
-    55,
-    /* NOT64r */
+    44,
+    /* MOVZX16rm8 */
   },
   { /* 902 */
-    42,
-    /* NOT8m */
+    45,
+    /* MOVZX16rr16 */
   },
   { /* 903 */
-    56,
-    /* NOT8r */
+    113,
+    /* MOVZX16rr8 */
   },
   { /* 904 */
+    44,
+    /* MOVZX32rm16 */
+  },
+  { /* 905 */
+    44,
+    /* MOVZX32rm8 */
+  },
+  { /* 906 */
+    0,
+    /*  */
+  },
+  { /* 907 */
+    114,
+    /* MOVZX32rr16 */
+  },
+  { /* 908 */
+    113,
+    /* MOVZX32rr8 */
+  },
+  { /* 909 */
+    0,
+    /*  */
+  },
+  { /* 910 */
+    46,
+    /* MOVZX64rm16 */
+  },
+  { /* 911 */
+    46,
+    /* MOVZX64rm8 */
+  },
+  { /* 912 */
+    115,
+    /* MOVZX64rr16 */
+  },
+  { /* 913 */
+    116,
+    /* MOVZX64rr8 */
+  },
+  { /* 914 */
+    54,
+    /* MUL16m */
+  },
+  { /* 915 */
+    55,
+    /* MUL16r */
+  },
+  { /* 916 */
+    54,
+    /* MUL32m */
+  },
+  { /* 917 */
+    55,
+    /* MUL32r */
+  },
+  { /* 918 */
+    54,
+    /* MUL64m */
+  },
+  { /* 919 */
+    57,
+    /* MUL64r */
+  },
+  { /* 920 */
+    54,
+    /* MUL8m */
+  },
+  { /* 921 */
+    69,
+    /* MUL8r */
+  },
+  { /* 922 */
+    26,
+    /* MULX32rm */
+  },
+  { /* 923 */
+    27,
+    /* MULX32rr */
+  },
+  { /* 924 */
+    28,
+    /* MULX64rm */
+  },
+  { /* 925 */
+    29,
+    /* MULX64rr */
+  },
+  { /* 926 */
+    0,
+    /* MWAITXrrr */
+  },
+  { /* 927 */
+    54,
+    /* NEG16m */
+  },
+  { /* 928 */
+    66,
+    /* NEG16r */
+  },
+  { /* 929 */
+    54,
+    /* NEG32m */
+  },
+  { /* 930 */
+    66,
+    /* NEG32r */
+  },
+  { /* 931 */
+    54,
+    /* NEG64m */
+  },
+  { /* 932 */
+    67,
+    /* NEG64r */
+  },
+  { /* 933 */
+    54,
+    /* NEG8m */
+  },
+  { /* 934 */
+    68,
+    /* NEG8r */
+  },
+  { /* 935 */
+    0,
+    /* NOOP */
+  },
+  { /* 936 */
+    54,
+    /* NOOP18_16m4 */
+  },
+  { /* 937 */
+    54,
+    /* NOOP18_16m5 */
+  },
+  { /* 938 */
+    54,
+    /* NOOP18_16m6 */
+  },
+  { /* 939 */
+    54,
+    /* NOOP18_16m7 */
+  },
+  { /* 940 */
+    55,
+    /* NOOP18_16r4 */
+  },
+  { /* 941 */
+    55,
+    /* NOOP18_16r5 */
+  },
+  { /* 942 */
+    55,
+    /* NOOP18_16r6 */
+  },
+  { /* 943 */
+    55,
+    /* NOOP18_16r7 */
+  },
+  { /* 944 */
+    54,
+    /* NOOP18_m4 */
+  },
+  { /* 945 */
+    54,
+    /* NOOP18_m5 */
+  },
+  { /* 946 */
+    54,
+    /* NOOP18_m6 */
+  },
+  { /* 947 */
+    54,
+    /* NOOP18_m7 */
+  },
+  { /* 948 */
+    55,
+    /* NOOP18_r4 */
+  },
+  { /* 949 */
+    55,
+    /* NOOP18_r5 */
+  },
+  { /* 950 */
+    55,
+    /* NOOP18_r6 */
+  },
+  { /* 951 */
+    55,
+    /* NOOP18_r7 */
+  },
+  { /* 952 */
+    45,
+    /* NOOP19rr */
+  },
+  { /* 953 */
+    54,
+    /* NOOPL */
+  },
+  { /* 954 */
+    54,
+    /* NOOPL_19 */
+  },
+  { /* 955 */
+    54,
+    /* NOOPL_1d */
+  },
+  { /* 956 */
+    54,
+    /* NOOPL_1e */
+  },
+  { /* 957 */
+    55,
+    /* NOOPLr */
+  },
+  { /* 958 */
+    54,
+    /* NOOPQ */
+  },
+  { /* 959 */
+    57,
+    /* NOOPQr */
+  },
+  { /* 960 */
+    54,
+    /* NOOPW */
+  },
+  { /* 961 */
+    54,
+    /* NOOPW_19 */
+  },
+  { /* 962 */
+    54,
+    /* NOOPW_1c */
+  },
+  { /* 963 */
+    54,
+    /* NOOPW_1d */
+  },
+  { /* 964 */
+    54,
+    /* NOOPW_1e */
+  },
+  { /* 965 */
+    55,
+    /* NOOPWr */
+  },
+  { /* 966 */
+    54,
+    /* NOT16m */
+  },
+  { /* 967 */
+    66,
+    /* NOT16r */
+  },
+  { /* 968 */
+    54,
+    /* NOT32m */
+  },
+  { /* 969 */
+    66,
+    /* NOT32r */
+  },
+  { /* 970 */
+    54,
+    /* NOT64m */
+  },
+  { /* 971 */
+    67,
+    /* NOT64r */
+  },
+  { /* 972 */
+    54,
+    /* NOT8m */
+  },
+  { /* 973 */
+    68,
+    /* NOT8r */
+  },
+  { /* 974 */
     2,
     /* OR16i16 */
   },
-  { /* 905 */
+  { /* 975 */
     3,
     /* OR16mi */
   },
-  { /* 906 */
+  { /* 976 */
     4,
     /* OR16mi8 */
   },
-  { /* 907 */
+  { /* 977 */
     5,
     /* OR16mr */
   },
-  { /* 908 */
+  { /* 978 */
     6,
     /* OR16ri */
   },
-  { /* 909 */
+  { /* 979 */
     7,
     /* OR16ri8 */
   },
-  { /* 910 */
+  { /* 980 */
     8,
     /* OR16rm */
   },
-  { /* 911 */
+  { /* 981 */
     9,
     /* OR16rr */
   },
-  { /* 912 */
+  { /* 982 */
     10,
     /* OR16rr_REV */
   },
-  { /* 913 */
+  { /* 983 */
     2,
     /* OR32i32 */
   },
-  { /* 914 */
+  { /* 984 */
     3,
     /* OR32mi */
   },
-  { /* 915 */
+  { /* 985 */
     4,
     /* OR32mi8 */
   },
-  { /* 916 */
+  { /* 986 */
     5,
     /* OR32mr */
   },
-  { /* 917 */
+  { /* 987 */
     6,
     /* OR32ri */
   },
-  { /* 918 */
+  { /* 988 */
     7,
     /* OR32ri8 */
   },
-  { /* 919 */
+  { /* 989 */
     8,
     /* OR32rm */
   },
-  { /* 920 */
+  { /* 990 */
     9,
     /* OR32rr */
   },
-  { /* 921 */
+  { /* 991 */
     10,
     /* OR32rr_REV */
   },
-  { /* 922 */
+  { /* 992 */
     11,
     /* OR64i32 */
   },
-  { /* 923 */
+  { /* 993 */
     12,
     /* OR64mi32 */
   },
-  { /* 924 */
+  { /* 994 */
     4,
     /* OR64mi8 */
   },
-  { /* 925 */
+  { /* 995 */
     13,
     /* OR64mr */
   },
-  { /* 926 */
+  { /* 996 */
     14,
     /* OR64ri32 */
   },
-  { /* 927 */
+  { /* 997 */
     15,
     /* OR64ri8 */
   },
-  { /* 928 */
+  { /* 998 */
     16,
     /* OR64rm */
   },
-  { /* 929 */
+  { /* 999 */
     17,
     /* OR64rr */
   },
-  { /* 930 */
+  { /* 1000 */
     18,
     /* OR64rr_REV */
   },
-  { /* 931 */
+  { /* 1001 */
     1,
     /* OR8i8 */
   },
-  { /* 932 */
+  { /* 1002 */
     4,
     /* OR8mi */
   },
-  { /* 933 */
+  { /* 1003 */
     4,
     /* OR8mi8 */
   },
-  { /* 934 */
+  { /* 1004 */
     19,
     /* OR8mr */
   },
-  { /* 935 */
+  { /* 1005 */
     20,
     /* OR8ri */
   },
-  { /* 936 */
+  { /* 1006 */
     20,
     /* OR8ri8 */
   },
-  { /* 937 */
+  { /* 1007 */
     21,
     /* OR8rm */
   },
-  { /* 938 */
+  { /* 1008 */
     22,
     /* OR8rr */
   },
-  { /* 939 */
+  { /* 1009 */
     23,
     /* OR8rr_REV */
   },
-  { /* 940 */
-    69,
-    /* OUT16ir */
-  },
-  { /* 941 */
-    0,
-    /* OUT16rr */
-  },
-  { /* 942 */
-    69,
-    /* OUT32ir */
-  },
-  { /* 943 */
-    0,
-    /* OUT32rr */
-  },
-  { /* 944 */
-    69,
-    /* OUT8ir */
-  },
-  { /* 945 */
-    0,
-    /* OUT8rr */
-  },
-  { /* 946 */
-    77,
-    /* OUTSB */
-  },
-  { /* 947 */
-    77,
-    /* OUTSL */
-  },
-  { /* 948 */
-    77,
-    /* OUTSW */
-  },
-  { /* 949 */
-    0,
-    /* PCONFIG */
-  },
-  { /* 950 */
-    101,
-    /* POP16r */
-  },
-  { /* 951 */
-    42,
-    /* POP16rmm */
-  },
-  { /* 952 */
-    43,
-    /* POP16rmr */
-  },
-  { /* 953 */
-    101,
-    /* POP32r */
-  },
-  { /* 954 */
-    42,
-    /* POP32rmm */
-  },
-  { /* 955 */
-    43,
-    /* POP32rmr */
-  },
-  { /* 956 */
-    102,
-    /* POP64r */
-  },
-  { /* 957 */
-    42,
-    /* POP64rmm */
-  },
-  { /* 958 */
-    45,
-    /* POP64rmr */
-  },
-  { /* 959 */
-    0,
-    /* POPA16 */
-  },
-  { /* 960 */
-    0,
-    /* POPA32 */
-  },
-  { /* 961 */
-    0,
-    /* POPDS16 */
-  },
-  { /* 962 */
-    0,
-    /* POPDS32 */
-  },
-  { /* 963 */
-    0,
-    /* POPES16 */
-  },
-  { /* 964 */
-    0,
-    /* POPES32 */
-  },
-  { /* 965 */
-    0,
-    /* POPF16 */
-  },
-  { /* 966 */
-    0,
-    /* POPF32 */
-  },
-  { /* 967 */
-    0,
-    /* POPF64 */
-  },
-  { /* 968 */
-    0,
-    /* POPFS16 */
-  },
-  { /* 969 */
-    0,
-    /* POPFS32 */
-  },
-  { /* 970 */
-    0,
-    /* POPFS64 */
-  },
-  { /* 971 */
-    0,
-    /* POPGS16 */
-  },
-  { /* 972 */
-    0,
-    /* POPGS32 */
-  },
-  { /* 973 */
-    0,
-    /* POPGS64 */
-  },
-  { /* 974 */
-    0,
-    /* POPSS16 */
-  },
-  { /* 975 */
-    0,
-    /* POPSS32 */
-  },
-  { /* 976 */
-    42,
-    /* PTWRITE64m */
-  },
-  { /* 977 */
-    45,
-    /* PTWRITE64r */
-  },
-  { /* 978 */
-    42,
-    /* PTWRITEm */
-  },
-  { /* 979 */
-    70,
-    /* PTWRITEr */
-  },
-  { /* 980 */
-    1,
-    /* PUSH16i8 */
-  },
-  { /* 981 */
-    101,
-    /* PUSH16r */
-  },
-  { /* 982 */
-    42,
-    /* PUSH16rmm */
-  },
-  { /* 983 */
-    43,
-    /* PUSH16rmr */
-  },
-  { /* 984 */
-    1,
-    /* PUSH32i8 */
-  },
-  { /* 985 */
-    101,
-    /* PUSH32r */
-  },
-  { /* 986 */
-    42,
-    /* PUSH32rmm */
-  },
-  { /* 987 */
-    43,
-    /* PUSH32rmr */
-  },
-  { /* 988 */
-    11,
-    /* PUSH64i32 */
-  },
-  { /* 989 */
-    1,
-    /* PUSH64i8 */
-  },
-  { /* 990 */
-    102,
-    /* PUSH64r */
-  },
-  { /* 991 */
-    42,
-    /* PUSH64rmm */
-  },
-  { /* 992 */
-    45,
-    /* PUSH64rmr */
-  },
-  { /* 993 */
-    0,
-    /* PUSHA16 */
-  },
-  { /* 994 */
-    0,
-    /* PUSHA32 */
-  },
-  { /* 995 */
-    0,
-    /* PUSHCS16 */
-  },
-  { /* 996 */
-    0,
-    /* PUSHCS32 */
-  },
-  { /* 997 */
-    0,
-    /* PUSHDS16 */
-  },
-  { /* 998 */
-    0,
-    /* PUSHDS32 */
-  },
-  { /* 999 */
-    0,
-    /* PUSHES16 */
-  },
-  { /* 1000 */
-    0,
-    /* PUSHES32 */
-  },
-  { /* 1001 */
-    0,
-    /* PUSHF16 */
-  },
-  { /* 1002 */
-    0,
-    /* PUSHF32 */
-  },
-  { /* 1003 */
-    0,
-    /* PUSHF64 */
-  },
-  { /* 1004 */
-    0,
-    /* PUSHFS16 */
-  },
-  { /* 1005 */
-    0,
-    /* PUSHFS32 */
-  },
-  { /* 1006 */
-    0,
-    /* PUSHFS64 */
-  },
-  { /* 1007 */
-    0,
-    /* PUSHGS16 */
-  },
-  { /* 1008 */
-    0,
-    /* PUSHGS32 */
-  },
-  { /* 1009 */
-    0,
-    /* PUSHGS64 */
-  },
   { /* 1010 */
-    0,
-    /* PUSHSS16 */
+    79,
+    /* OUT16ir */
   },
   { /* 1011 */
     0,
-    /* PUSHSS32 */
+    /* OUT16rr */
   },
   { /* 1012 */
-    2,
-    /* PUSHi16 */
+    79,
+    /* OUT32ir */
   },
   { /* 1013 */
-    2,
-    /* PUSHi32 */
+    0,
+    /* OUT32rr */
   },
   { /* 1014 */
-    42,
-    /* RCL16m1 */
+    79,
+    /* OUT8ir */
   },
   { /* 1015 */
-    42,
-    /* RCL16mCL */
+    0,
+    /* OUT8rr */
   },
   { /* 1016 */
-    103,
-    /* RCL16mi */
+    87,
+    /* OUTSB */
   },
   { /* 1017 */
-    54,
-    /* RCL16r1 */
+    87,
+    /* OUTSL */
   },
   { /* 1018 */
-    54,
-    /* RCL16rCL */
+    87,
+    /* OUTSW */
   },
   { /* 1019 */
-    104,
-    /* RCL16ri */
+    0,
+    /* PCONFIG */
   },
   { /* 1020 */
-    42,
-    /* RCL32m1 */
+    26,
+    /* PDEP32rm */
   },
   { /* 1021 */
-    42,
-    /* RCL32mCL */
+    27,
+    /* PDEP32rr */
   },
   { /* 1022 */
-    103,
-    /* RCL32mi */
+    28,
+    /* PDEP64rm */
   },
   { /* 1023 */
-    54,
-    /* RCL32r1 */
+    29,
+    /* PDEP64rr */
   },
   { /* 1024 */
-    54,
-    /* RCL32rCL */
+    26,
+    /* PEXT32rm */
   },
   { /* 1025 */
-    104,
-    /* RCL32ri */
+    27,
+    /* PEXT32rr */
   },
   { /* 1026 */
-    42,
-    /* RCL64m1 */
+    28,
+    /* PEXT64rm */
   },
   { /* 1027 */
-    42,
-    /* RCL64mCL */
+    29,
+    /* PEXT64rr */
   },
   { /* 1028 */
-    103,
-    /* RCL64mi */
+    117,
+    /* POP16r */
   },
   { /* 1029 */
-    55,
-    /* RCL64r1 */
+    54,
+    /* POP16rmm */
   },
   { /* 1030 */
     55,
-    /* RCL64rCL */
+    /* POP16rmr */
   },
   { /* 1031 */
-    105,
-    /* RCL64ri */
+    117,
+    /* POP32r */
   },
   { /* 1032 */
-    42,
-    /* RCL8m1 */
+    54,
+    /* POP32rmm */
   },
   { /* 1033 */
-    42,
-    /* RCL8mCL */
+    55,
+    /* POP32rmr */
   },
   { /* 1034 */
-    103,
-    /* RCL8mi */
+    118,
+    /* POP64r */
   },
   { /* 1035 */
-    56,
-    /* RCL8r1 */
+    54,
+    /* POP64rmm */
   },
   { /* 1036 */
-    56,
-    /* RCL8rCL */
+    57,
+    /* POP64rmr */
   },
   { /* 1037 */
-    106,
-    /* RCL8ri */
+    0,
+    /* POPA16 */
   },
   { /* 1038 */
-    42,
-    /* RCR16m1 */
+    0,
+    /* POPA32 */
   },
   { /* 1039 */
-    42,
-    /* RCR16mCL */
+    0,
+    /* POPDS16 */
   },
   { /* 1040 */
-    103,
-    /* RCR16mi */
+    0,
+    /* POPDS32 */
   },
   { /* 1041 */
-    54,
-    /* RCR16r1 */
+    0,
+    /* POPES16 */
   },
   { /* 1042 */
-    54,
-    /* RCR16rCL */
+    0,
+    /* POPES32 */
   },
   { /* 1043 */
-    104,
-    /* RCR16ri */
+    0,
+    /* POPF16 */
   },
   { /* 1044 */
-    42,
-    /* RCR32m1 */
+    0,
+    /* POPF32 */
   },
   { /* 1045 */
-    42,
-    /* RCR32mCL */
+    0,
+    /* POPF64 */
   },
   { /* 1046 */
-    103,
-    /* RCR32mi */
+    0,
+    /* POPFS16 */
   },
   { /* 1047 */
-    54,
-    /* RCR32r1 */
+    0,
+    /* POPFS32 */
   },
   { /* 1048 */
-    54,
-    /* RCR32rCL */
+    0,
+    /* POPFS64 */
   },
   { /* 1049 */
-    104,
-    /* RCR32ri */
+    0,
+    /* POPGS16 */
   },
   { /* 1050 */
-    42,
-    /* RCR64m1 */
+    0,
+    /* POPGS32 */
   },
   { /* 1051 */
-    42,
-    /* RCR64mCL */
+    0,
+    /* POPGS64 */
   },
   { /* 1052 */
-    103,
-    /* RCR64mi */
+    0,
+    /* POPSS16 */
   },
   { /* 1053 */
-    55,
-    /* RCR64r1 */
+    0,
+    /* POPSS32 */
   },
   { /* 1054 */
-    55,
-    /* RCR64rCL */
+    54,
+    /* PTWRITE64m */
   },
   { /* 1055 */
-    105,
-    /* RCR64ri */
+    57,
+    /* PTWRITE64r */
   },
   { /* 1056 */
-    42,
-    /* RCR8m1 */
+    54,
+    /* PTWRITEm */
   },
   { /* 1057 */
-    42,
-    /* RCR8mCL */
+    80,
+    /* PTWRITEr */
   },
   { /* 1058 */
-    103,
-    /* RCR8mi */
+    1,
+    /* PUSH16i8 */
   },
   { /* 1059 */
-    56,
-    /* RCR8r1 */
+    117,
+    /* PUSH16r */
   },
   { /* 1060 */
-    56,
-    /* RCR8rCL */
+    54,
+    /* PUSH16rmm */
   },
   { /* 1061 */
-    106,
-    /* RCR8ri */
+    55,
+    /* PUSH16rmr */
   },
   { /* 1062 */
-    0,
-    /*  */
+    1,
+    /* PUSH32i8 */
   },
   { /* 1063 */
-    0,
-    /*  */
+    117,
+    /* PUSH32r */
   },
   { /* 1064 */
-    70,
-    /* RDFSBASE */
+    54,
+    /* PUSH32rmm */
   },
   { /* 1065 */
-    45,
-    /* RDFSBASE64 */
+    55,
+    /* PUSH32rmr */
   },
   { /* 1066 */
-    70,
-    /* RDGSBASE */
+    11,
+    /* PUSH64i32 */
   },
   { /* 1067 */
-    45,
-    /* RDGSBASE64 */
+    1,
+    /* PUSH64i8 */
   },
   { /* 1068 */
-    0,
-    /* RDMSR */
+    118,
+    /* PUSH64r */
   },
   { /* 1069 */
-    70,
-    /* RDPID32 */
+    54,
+    /* PUSH64rmm */
   },
   { /* 1070 */
-    45,
-    /* RDPID64 */
+    57,
+    /* PUSH64rmr */
   },
   { /* 1071 */
     0,
-    /*  */
+    /* PUSHA16 */
   },
   { /* 1072 */
     0,
-    /* RDPKRUr */
+    /* PUSHA32 */
   },
   { /* 1073 */
     0,
-    /* RDPMC */
+    /* PUSHCS16 */
   },
   { /* 1074 */
-    43,
-    /* RDRAND16r */
+    0,
+    /* PUSHCS32 */
   },
   { /* 1075 */
-    43,
-    /* RDRAND32r */
+    0,
+    /* PUSHDS16 */
   },
   { /* 1076 */
-    45,
-    /* RDRAND64r */
+    0,
+    /* PUSHDS32 */
   },
   { /* 1077 */
-    43,
-    /* RDSEED16r */
+    0,
+    /* PUSHES16 */
   },
   { /* 1078 */
-    43,
-    /* RDSEED32r */
+    0,
+    /* PUSHES32 */
   },
   { /* 1079 */
-    45,
-    /* RDSEED64r */
+    0,
+    /* PUSHF16 */
   },
   { /* 1080 */
-    107,
-    /* RDSSPD */
+    0,
+    /* PUSHF32 */
   },
   { /* 1081 */
-    55,
-    /* RDSSPQ */
+    0,
+    /* PUSHF64 */
   },
   { /* 1082 */
     0,
-    /* RDTSC */
+    /* PUSHFS16 */
   },
   { /* 1083 */
     0,
-    /* RDTSCP */
+    /* PUSHFS32 */
   },
   { /* 1084 */
     0,
-    /* REPNE_PREFIX */
+    /* PUSHFS64 */
   },
   { /* 1085 */
     0,
-    /* REP_PREFIX */
+    /* PUSHGS16 */
   },
   { /* 1086 */
     0,
-    /*  */
+    /* PUSHGS32 */
   },
   { /* 1087 */
-    78,
-    /* RETIL */
+    0,
+    /* PUSHGS64 */
   },
   { /* 1088 */
-    78,
-    /* RETIQ */
+    0,
+    /* PUSHSS16 */
   },
   { /* 1089 */
-    2,
-    /* RETIW */
+    0,
+    /* PUSHSS32 */
   },
   { /* 1090 */
-    0,
-    /* RETL */
+    2,
+    /* PUSHi16 */
   },
   { /* 1091 */
-    0,
-    /* RETQ */
+    2,
+    /* PUSHi32 */
   },
   { /* 1092 */
-    0,
-    /* RETW */
+    54,
+    /* RCL16m1 */
   },
   { /* 1093 */
-    0,
-    /* REX64_PREFIX */
+    54,
+    /* RCL16mCL */
   },
   { /* 1094 */
-    42,
-    /* ROL16m1 */
+    119,
+    /* RCL16mi */
   },
   { /* 1095 */
-    42,
-    /* ROL16mCL */
+    66,
+    /* RCL16r1 */
   },
   { /* 1096 */
-    103,
-    /* ROL16mi */
+    66,
+    /* RCL16rCL */
   },
   { /* 1097 */
-    54,
-    /* ROL16r1 */
+    120,
+    /* RCL16ri */
   },
   { /* 1098 */
     54,
-    /* ROL16rCL */
+    /* RCL32m1 */
   },
   { /* 1099 */
-    104,
-    /* ROL16ri */
+    54,
+    /* RCL32mCL */
   },
   { /* 1100 */
-    42,
-    /* ROL32m1 */
+    119,
+    /* RCL32mi */
   },
   { /* 1101 */
-    42,
-    /* ROL32mCL */
+    66,
+    /* RCL32r1 */
   },
   { /* 1102 */
-    103,
-    /* ROL32mi */
+    66,
+    /* RCL32rCL */
   },
   { /* 1103 */
-    54,
-    /* ROL32r1 */
+    120,
+    /* RCL32ri */
   },
   { /* 1104 */
     54,
-    /* ROL32rCL */
+    /* RCL64m1 */
   },
   { /* 1105 */
-    104,
-    /* ROL32ri */
+    54,
+    /* RCL64mCL */
   },
   { /* 1106 */
-    42,
-    /* ROL64m1 */
+    119,
+    /* RCL64mi */
   },
   { /* 1107 */
-    42,
-    /* ROL64mCL */
+    67,
+    /* RCL64r1 */
   },
   { /* 1108 */
-    103,
-    /* ROL64mi */
+    67,
+    /* RCL64rCL */
   },
   { /* 1109 */
-    55,
-    /* ROL64r1 */
+    121,
+    /* RCL64ri */
   },
   { /* 1110 */
-    55,
-    /* ROL64rCL */
+    54,
+    /* RCL8m1 */
   },
   { /* 1111 */
-    105,
-    /* ROL64ri */
+    54,
+    /* RCL8mCL */
   },
   { /* 1112 */
-    42,
-    /* ROL8m1 */
+    119,
+    /* RCL8mi */
   },
   { /* 1113 */
-    42,
-    /* ROL8mCL */
+    68,
+    /* RCL8r1 */
   },
   { /* 1114 */
-    103,
-    /* ROL8mi */
+    68,
+    /* RCL8rCL */
   },
   { /* 1115 */
-    56,
-    /* ROL8r1 */
+    122,
+    /* RCL8ri */
   },
   { /* 1116 */
-    56,
-    /* ROL8rCL */
+    54,
+    /* RCR16m1 */
   },
   { /* 1117 */
-    106,
-    /* ROL8ri */
+    54,
+    /* RCR16mCL */
   },
   { /* 1118 */
-    42,
-    /* ROR16m1 */
+    119,
+    /* RCR16mi */
   },
   { /* 1119 */
-    42,
-    /* ROR16mCL */
+    66,
+    /* RCR16r1 */
   },
   { /* 1120 */
-    103,
-    /* ROR16mi */
+    66,
+    /* RCR16rCL */
   },
   { /* 1121 */
-    54,
-    /* ROR16r1 */
+    120,
+    /* RCR16ri */
   },
   { /* 1122 */
     54,
-    /* ROR16rCL */
+    /* RCR32m1 */
   },
   { /* 1123 */
-    104,
-    /* ROR16ri */
+    54,
+    /* RCR32mCL */
   },
   { /* 1124 */
-    42,
-    /* ROR32m1 */
+    119,
+    /* RCR32mi */
   },
   { /* 1125 */
-    42,
-    /* ROR32mCL */
+    66,
+    /* RCR32r1 */
   },
   { /* 1126 */
-    103,
-    /* ROR32mi */
+    66,
+    /* RCR32rCL */
   },
   { /* 1127 */
-    54,
-    /* ROR32r1 */
+    120,
+    /* RCR32ri */
   },
   { /* 1128 */
     54,
-    /* ROR32rCL */
+    /* RCR64m1 */
   },
   { /* 1129 */
-    104,
-    /* ROR32ri */
+    54,
+    /* RCR64mCL */
   },
   { /* 1130 */
-    42,
-    /* ROR64m1 */
+    119,
+    /* RCR64mi */
   },
   { /* 1131 */
-    42,
-    /* ROR64mCL */
+    67,
+    /* RCR64r1 */
   },
   { /* 1132 */
-    103,
-    /* ROR64mi */
+    67,
+    /* RCR64rCL */
   },
   { /* 1133 */
-    55,
-    /* ROR64r1 */
+    121,
+    /* RCR64ri */
   },
   { /* 1134 */
-    55,
-    /* ROR64rCL */
+    54,
+    /* RCR8m1 */
   },
   { /* 1135 */
-    105,
-    /* ROR64ri */
+    54,
+    /* RCR8mCL */
   },
   { /* 1136 */
-    42,
-    /* ROR8m1 */
+    119,
+    /* RCR8mi */
   },
   { /* 1137 */
-    42,
-    /* ROR8mCL */
+    68,
+    /* RCR8r1 */
   },
   { /* 1138 */
-    103,
-    /* ROR8mi */
+    68,
+    /* RCR8rCL */
   },
   { /* 1139 */
-    56,
-    /* ROR8r1 */
+    122,
+    /* RCR8ri */
   },
   { /* 1140 */
-    56,
-    /* ROR8rCL */
+    80,
+    /* RDFSBASE */
   },
   { /* 1141 */
-    106,
-    /* ROR8ri */
+    57,
+    /* RDFSBASE64 */
   },
   { /* 1142 */
-    108,
-    /* RORX32mi */
+    80,
+    /* RDGSBASE */
   },
   { /* 1143 */
-    109,
-    /* RORX32ri */
+    57,
+    /* RDGSBASE64 */
   },
   { /* 1144 */
-    110,
-    /* RORX64mi */
+    0,
+    /* RDMSR */
   },
   { /* 1145 */
-    111,
-    /* RORX64ri */
+    80,
+    /* RDPID32 */
   },
   { /* 1146 */
-    0,
-    /* RSM */
+    57,
+    /* RDPID64 */
   },
   { /* 1147 */
-    42,
-    /* RSTORSSP */
+    0,
+    /* RDPKRUr */
   },
   { /* 1148 */
     0,
-    /* SAHF */
+    /* RDPMC */
   },
   { /* 1149 */
-    42,
-    /* SAL16m1 */
+    55,
+    /* RDRAND16r */
   },
   { /* 1150 */
-    42,
-    /* SAL16mCL */
+    55,
+    /* RDRAND32r */
   },
   { /* 1151 */
+    57,
+    /* RDRAND64r */
+  },
+  { /* 1152 */
+    55,
+    /* RDSEED16r */
+  },
+  { /* 1153 */
+    55,
+    /* RDSEED32r */
+  },
+  { /* 1154 */
+    57,
+    /* RDSEED64r */
+  },
+  { /* 1155 */
+    123,
+    /* RDSSPD */
+  },
+  { /* 1156 */
+    67,
+    /* RDSSPQ */
+  },
+  { /* 1157 */
+    0,
+    /* RDTSC */
+  },
+  { /* 1158 */
+    0,
+    /* RDTSCP */
+  },
+  { /* 1159 */
+    0,
+    /* REPNE_PREFIX */
+  },
+  { /* 1160 */
+    0,
+    /* REP_PREFIX */
+  },
+  { /* 1161 */
+    88,
+    /* RETIL */
+  },
+  { /* 1162 */
+    88,
+    /* RETIQ */
+  },
+  { /* 1163 */
+    2,
+    /* RETIW */
+  },
+  { /* 1164 */
+    0,
+    /* RETL */
+  },
+  { /* 1165 */
+    0,
+    /* RETQ */
+  },
+  { /* 1166 */
+    0,
+    /* RETW */
+  },
+  { /* 1167 */
+    0,
+    /* REX64_PREFIX */
+  },
+  { /* 1168 */
+    54,
+    /* ROL16m1 */
+  },
+  { /* 1169 */
+    54,
+    /* ROL16mCL */
+  },
+  { /* 1170 */
+    119,
+    /* ROL16mi */
+  },
+  { /* 1171 */
+    66,
+    /* ROL16r1 */
+  },
+  { /* 1172 */
+    66,
+    /* ROL16rCL */
+  },
+  { /* 1173 */
+    120,
+    /* ROL16ri */
+  },
+  { /* 1174 */
+    54,
+    /* ROL32m1 */
+  },
+  { /* 1175 */
+    54,
+    /* ROL32mCL */
+  },
+  { /* 1176 */
+    119,
+    /* ROL32mi */
+  },
+  { /* 1177 */
+    66,
+    /* ROL32r1 */
+  },
+  { /* 1178 */
+    66,
+    /* ROL32rCL */
+  },
+  { /* 1179 */
+    120,
+    /* ROL32ri */
+  },
+  { /* 1180 */
+    54,
+    /* ROL64m1 */
+  },
+  { /* 1181 */
+    54,
+    /* ROL64mCL */
+  },
+  { /* 1182 */
+    119,
+    /* ROL64mi */
+  },
+  { /* 1183 */
+    67,
+    /* ROL64r1 */
+  },
+  { /* 1184 */
+    67,
+    /* ROL64rCL */
+  },
+  { /* 1185 */
+    121,
+    /* ROL64ri */
+  },
+  { /* 1186 */
+    54,
+    /* ROL8m1 */
+  },
+  { /* 1187 */
+    54,
+    /* ROL8mCL */
+  },
+  { /* 1188 */
+    119,
+    /* ROL8mi */
+  },
+  { /* 1189 */
+    68,
+    /* ROL8r1 */
+  },
+  { /* 1190 */
+    68,
+    /* ROL8rCL */
+  },
+  { /* 1191 */
+    122,
+    /* ROL8ri */
+  },
+  { /* 1192 */
+    54,
+    /* ROR16m1 */
+  },
+  { /* 1193 */
+    54,
+    /* ROR16mCL */
+  },
+  { /* 1194 */
+    119,
+    /* ROR16mi */
+  },
+  { /* 1195 */
+    66,
+    /* ROR16r1 */
+  },
+  { /* 1196 */
+    66,
+    /* ROR16rCL */
+  },
+  { /* 1197 */
+    120,
+    /* ROR16ri */
+  },
+  { /* 1198 */
+    54,
+    /* ROR32m1 */
+  },
+  { /* 1199 */
+    54,
+    /* ROR32mCL */
+  },
+  { /* 1200 */
+    119,
+    /* ROR32mi */
+  },
+  { /* 1201 */
+    66,
+    /* ROR32r1 */
+  },
+  { /* 1202 */
+    66,
+    /* ROR32rCL */
+  },
+  { /* 1203 */
+    120,
+    /* ROR32ri */
+  },
+  { /* 1204 */
+    54,
+    /* ROR64m1 */
+  },
+  { /* 1205 */
+    54,
+    /* ROR64mCL */
+  },
+  { /* 1206 */
+    119,
+    /* ROR64mi */
+  },
+  { /* 1207 */
+    67,
+    /* ROR64r1 */
+  },
+  { /* 1208 */
+    67,
+    /* ROR64rCL */
+  },
+  { /* 1209 */
+    121,
+    /* ROR64ri */
+  },
+  { /* 1210 */
+    54,
+    /* ROR8m1 */
+  },
+  { /* 1211 */
+    54,
+    /* ROR8mCL */
+  },
+  { /* 1212 */
+    119,
+    /* ROR8mi */
+  },
+  { /* 1213 */
+    68,
+    /* ROR8r1 */
+  },
+  { /* 1214 */
+    68,
+    /* ROR8rCL */
+  },
+  { /* 1215 */
+    122,
+    /* ROR8ri */
+  },
+  { /* 1216 */
+    124,
+    /* RORX32mi */
+  },
+  { /* 1217 */
+    125,
+    /* RORX32ri */
+  },
+  { /* 1218 */
+    126,
+    /* RORX64mi */
+  },
+  { /* 1219 */
+    127,
+    /* RORX64ri */
+  },
+  { /* 1220 */
+    0,
+    /* RSM */
+  },
+  { /* 1221 */
+    54,
+    /* RSTORSSP */
+  },
+  { /* 1222 */
+    0,
+    /* SAHF */
+  },
+  { /* 1223 */
+    54,
+    /* SAL16m1 */
+  },
+  { /* 1224 */
+    54,
+    /* SAL16mCL */
+  },
+  { /* 1225 */
     4,
     /* SAL16mi */
   },
-  { /* 1152 */
-    54,
+  { /* 1226 */
+    66,
     /* SAL16r1 */
   },
-  { /* 1153 */
-    54,
+  { /* 1227 */
+    66,
     /* SAL16rCL */
   },
-  { /* 1154 */
+  { /* 1228 */
     7,
     /* SAL16ri */
   },
-  { /* 1155 */
-    42,
+  { /* 1229 */
+    54,
     /* SAL32m1 */
   },
-  { /* 1156 */
-    42,
-    /* SAL32mCL */
-  },
-  { /* 1157 */
-    4,
-    /* SAL32mi */
-  },
-  { /* 1158 */
-    54,
-    /* SAL32r1 */
-  },
-  { /* 1159 */
-    54,
-    /* SAL32rCL */
-  },
-  { /* 1160 */
-    7,
-    /* SAL32ri */
-  },
-  { /* 1161 */
-    42,
-    /* SAL64m1 */
-  },
-  { /* 1162 */
-    42,
-    /* SAL64mCL */
-  },
-  { /* 1163 */
-    4,
-    /* SAL64mi */
-  },
-  { /* 1164 */
-    55,
-    /* SAL64r1 */
-  },
-  { /* 1165 */
-    55,
-    /* SAL64rCL */
-  },
-  { /* 1166 */
-    15,
-    /* SAL64ri */
-  },
-  { /* 1167 */
-    42,
-    /* SAL8m1 */
-  },
-  { /* 1168 */
-    42,
-    /* SAL8mCL */
-  },
-  { /* 1169 */
-    4,
-    /* SAL8mi */
-  },
-  { /* 1170 */
-    56,
-    /* SAL8r1 */
-  },
-  { /* 1171 */
-    56,
-    /* SAL8rCL */
-  },
-  { /* 1172 */
-    20,
-    /* SAL8ri */
-  },
-  { /* 1173 */
-    0,
-    /* SALC */
-  },
-  { /* 1174 */
-    42,
-    /* SAR16m1 */
-  },
-  { /* 1175 */
-    42,
-    /* SAR16mCL */
-  },
-  { /* 1176 */
-    103,
-    /* SAR16mi */
-  },
-  { /* 1177 */
-    54,
-    /* SAR16r1 */
-  },
-  { /* 1178 */
-    54,
-    /* SAR16rCL */
-  },
-  { /* 1179 */
-    104,
-    /* SAR16ri */
-  },
-  { /* 1180 */
-    42,
-    /* SAR32m1 */
-  },
-  { /* 1181 */
-    42,
-    /* SAR32mCL */
-  },
-  { /* 1182 */
-    103,
-    /* SAR32mi */
-  },
-  { /* 1183 */
-    54,
-    /* SAR32r1 */
-  },
-  { /* 1184 */
-    54,
-    /* SAR32rCL */
-  },
-  { /* 1185 */
-    104,
-    /* SAR32ri */
-  },
-  { /* 1186 */
-    42,
-    /* SAR64m1 */
-  },
-  { /* 1187 */
-    42,
-    /* SAR64mCL */
-  },
-  { /* 1188 */
-    103,
-    /* SAR64mi */
-  },
-  { /* 1189 */
-    55,
-    /* SAR64r1 */
-  },
-  { /* 1190 */
-    55,
-    /* SAR64rCL */
-  },
-  { /* 1191 */
-    105,
-    /* SAR64ri */
-  },
-  { /* 1192 */
-    42,
-    /* SAR8m1 */
-  },
-  { /* 1193 */
-    42,
-    /* SAR8mCL */
-  },
-  { /* 1194 */
-    103,
-    /* SAR8mi */
-  },
-  { /* 1195 */
-    56,
-    /* SAR8r1 */
-  },
-  { /* 1196 */
-    56,
-    /* SAR8rCL */
-  },
-  { /* 1197 */
-    106,
-    /* SAR8ri */
-  },
-  { /* 1198 */
-    112,
-    /* SARX32rm */
-  },
-  { /* 1199 */
-    113,
-    /* SARX32rr */
-  },
-  { /* 1200 */
-    114,
-    /* SARX64rm */
-  },
-  { /* 1201 */
-    115,
-    /* SARX64rr */
-  },
-  { /* 1202 */
-    0,
-    /* SAVEPREVSSP */
-  },
-  { /* 1203 */
-    2,
-    /* SBB16i16 */
-  },
-  { /* 1204 */
-    3,
-    /* SBB16mi */
-  },
-  { /* 1205 */
-    4,
-    /* SBB16mi8 */
-  },
-  { /* 1206 */
-    5,
-    /* SBB16mr */
-  },
-  { /* 1207 */
-    6,
-    /* SBB16ri */
-  },
-  { /* 1208 */
-    7,
-    /* SBB16ri8 */
-  },
-  { /* 1209 */
-    8,
-    /* SBB16rm */
-  },
-  { /* 1210 */
-    9,
-    /* SBB16rr */
-  },
-  { /* 1211 */
-    10,
-    /* SBB16rr_REV */
-  },
-  { /* 1212 */
-    2,
-    /* SBB32i32 */
-  },
-  { /* 1213 */
-    3,
-    /* SBB32mi */
-  },
-  { /* 1214 */
-    4,
-    /* SBB32mi8 */
-  },
-  { /* 1215 */
-    5,
-    /* SBB32mr */
-  },
-  { /* 1216 */
-    6,
-    /* SBB32ri */
-  },
-  { /* 1217 */
-    7,
-    /* SBB32ri8 */
-  },
-  { /* 1218 */
-    8,
-    /* SBB32rm */
-  },
-  { /* 1219 */
-    9,
-    /* SBB32rr */
-  },
-  { /* 1220 */
-    10,
-    /* SBB32rr_REV */
-  },
-  { /* 1221 */
-    11,
-    /* SBB64i32 */
-  },
-  { /* 1222 */
-    12,
-    /* SBB64mi32 */
-  },
-  { /* 1223 */
-    4,
-    /* SBB64mi8 */
-  },
-  { /* 1224 */
-    13,
-    /* SBB64mr */
-  },
-  { /* 1225 */
-    14,
-    /* SBB64ri32 */
-  },
-  { /* 1226 */
-    15,
-    /* SBB64ri8 */
-  },
-  { /* 1227 */
-    16,
-    /* SBB64rm */
-  },
-  { /* 1228 */
-    17,
-    /* SBB64rr */
-  },
-  { /* 1229 */
-    18,
-    /* SBB64rr_REV */
-  },
   { /* 1230 */
-    1,
-    /* SBB8i8 */
+    54,
+    /* SAL32mCL */
   },
   { /* 1231 */
     4,
-    /* SBB8mi */
+    /* SAL32mi */
   },
   { /* 1232 */
+    66,
+    /* SAL32r1 */
+  },
+  { /* 1233 */
+    66,
+    /* SAL32rCL */
+  },
+  { /* 1234 */
+    7,
+    /* SAL32ri */
+  },
+  { /* 1235 */
+    54,
+    /* SAL64m1 */
+  },
+  { /* 1236 */
+    54,
+    /* SAL64mCL */
+  },
+  { /* 1237 */
+    4,
+    /* SAL64mi */
+  },
+  { /* 1238 */
+    67,
+    /* SAL64r1 */
+  },
+  { /* 1239 */
+    67,
+    /* SAL64rCL */
+  },
+  { /* 1240 */
+    15,
+    /* SAL64ri */
+  },
+  { /* 1241 */
+    54,
+    /* SAL8m1 */
+  },
+  { /* 1242 */
+    54,
+    /* SAL8mCL */
+  },
+  { /* 1243 */
+    4,
+    /* SAL8mi */
+  },
+  { /* 1244 */
+    68,
+    /* SAL8r1 */
+  },
+  { /* 1245 */
+    68,
+    /* SAL8rCL */
+  },
+  { /* 1246 */
+    20,
+    /* SAL8ri */
+  },
+  { /* 1247 */
+    0,
+    /* SALC */
+  },
+  { /* 1248 */
+    54,
+    /* SAR16m1 */
+  },
+  { /* 1249 */
+    54,
+    /* SAR16mCL */
+  },
+  { /* 1250 */
+    119,
+    /* SAR16mi */
+  },
+  { /* 1251 */
+    66,
+    /* SAR16r1 */
+  },
+  { /* 1252 */
+    66,
+    /* SAR16rCL */
+  },
+  { /* 1253 */
+    120,
+    /* SAR16ri */
+  },
+  { /* 1254 */
+    54,
+    /* SAR32m1 */
+  },
+  { /* 1255 */
+    54,
+    /* SAR32mCL */
+  },
+  { /* 1256 */
+    119,
+    /* SAR32mi */
+  },
+  { /* 1257 */
+    66,
+    /* SAR32r1 */
+  },
+  { /* 1258 */
+    66,
+    /* SAR32rCL */
+  },
+  { /* 1259 */
+    120,
+    /* SAR32ri */
+  },
+  { /* 1260 */
+    54,
+    /* SAR64m1 */
+  },
+  { /* 1261 */
+    54,
+    /* SAR64mCL */
+  },
+  { /* 1262 */
+    119,
+    /* SAR64mi */
+  },
+  { /* 1263 */
+    67,
+    /* SAR64r1 */
+  },
+  { /* 1264 */
+    67,
+    /* SAR64rCL */
+  },
+  { /* 1265 */
+    121,
+    /* SAR64ri */
+  },
+  { /* 1266 */
+    54,
+    /* SAR8m1 */
+  },
+  { /* 1267 */
+    54,
+    /* SAR8mCL */
+  },
+  { /* 1268 */
+    119,
+    /* SAR8mi */
+  },
+  { /* 1269 */
+    68,
+    /* SAR8r1 */
+  },
+  { /* 1270 */
+    68,
+    /* SAR8rCL */
+  },
+  { /* 1271 */
+    122,
+    /* SAR8ri */
+  },
+  { /* 1272 */
+    32,
+    /* SARX32rm */
+  },
+  { /* 1273 */
+    33,
+    /* SARX32rr */
+  },
+  { /* 1274 */
+    34,
+    /* SARX64rm */
+  },
+  { /* 1275 */
+    35,
+    /* SARX64rr */
+  },
+  { /* 1276 */
+    0,
+    /* SAVEPREVSSP */
+  },
+  { /* 1277 */
+    2,
+    /* SBB16i16 */
+  },
+  { /* 1278 */
+    3,
+    /* SBB16mi */
+  },
+  { /* 1279 */
+    4,
+    /* SBB16mi8 */
+  },
+  { /* 1280 */
+    5,
+    /* SBB16mr */
+  },
+  { /* 1281 */
+    6,
+    /* SBB16ri */
+  },
+  { /* 1282 */
+    7,
+    /* SBB16ri8 */
+  },
+  { /* 1283 */
+    8,
+    /* SBB16rm */
+  },
+  { /* 1284 */
+    9,
+    /* SBB16rr */
+  },
+  { /* 1285 */
+    10,
+    /* SBB16rr_REV */
+  },
+  { /* 1286 */
+    2,
+    /* SBB32i32 */
+  },
+  { /* 1287 */
+    3,
+    /* SBB32mi */
+  },
+  { /* 1288 */
+    4,
+    /* SBB32mi8 */
+  },
+  { /* 1289 */
+    5,
+    /* SBB32mr */
+  },
+  { /* 1290 */
+    6,
+    /* SBB32ri */
+  },
+  { /* 1291 */
+    7,
+    /* SBB32ri8 */
+  },
+  { /* 1292 */
+    8,
+    /* SBB32rm */
+  },
+  { /* 1293 */
+    9,
+    /* SBB32rr */
+  },
+  { /* 1294 */
+    10,
+    /* SBB32rr_REV */
+  },
+  { /* 1295 */
+    11,
+    /* SBB64i32 */
+  },
+  { /* 1296 */
+    12,
+    /* SBB64mi32 */
+  },
+  { /* 1297 */
+    4,
+    /* SBB64mi8 */
+  },
+  { /* 1298 */
+    13,
+    /* SBB64mr */
+  },
+  { /* 1299 */
+    14,
+    /* SBB64ri32 */
+  },
+  { /* 1300 */
+    15,
+    /* SBB64ri8 */
+  },
+  { /* 1301 */
+    16,
+    /* SBB64rm */
+  },
+  { /* 1302 */
+    17,
+    /* SBB64rr */
+  },
+  { /* 1303 */
+    18,
+    /* SBB64rr_REV */
+  },
+  { /* 1304 */
+    1,
+    /* SBB8i8 */
+  },
+  { /* 1305 */
+    4,
+    /* SBB8mi */
+  },
+  { /* 1306 */
     4,
     /* SBB8mi8 */
   },
-  { /* 1233 */
+  { /* 1307 */
     19,
     /* SBB8mr */
   },
-  { /* 1234 */
+  { /* 1308 */
     20,
     /* SBB8ri */
   },
-  { /* 1235 */
+  { /* 1309 */
     20,
     /* SBB8ri8 */
   },
-  { /* 1236 */
+  { /* 1310 */
     21,
     /* SBB8rm */
   },
-  { /* 1237 */
+  { /* 1311 */
     22,
     /* SBB8rr */
   },
-  { /* 1238 */
+  { /* 1312 */
     23,
     /* SBB8rr_REV */
   },
-  { /* 1239 */
-    71,
+  { /* 1313 */
+    81,
     /* SCASB */
   },
-  { /* 1240 */
-    71,
+  { /* 1314 */
+    81,
     /* SCASL */
   },
-  { /* 1241 */
-    71,
+  { /* 1315 */
+    81,
     /* SCASQ */
   },
-  { /* 1242 */
-    71,
+  { /* 1316 */
+    81,
     /* SCASW */
   },
-  { /* 1243 */
-    42,
+  { /* 1317 */
+    54,
     /* SETAEm */
   },
-  { /* 1244 */
-    57,
+  { /* 1318 */
+    69,
     /* SETAEr */
   },
-  { /* 1245 */
-    42,
+  { /* 1319 */
+    54,
     /* SETAm */
   },
-  { /* 1246 */
-    57,
+  { /* 1320 */
+    69,
     /* SETAr */
   },
-  { /* 1247 */
-    42,
+  { /* 1321 */
+    54,
     /* SETBEm */
   },
-  { /* 1248 */
-    57,
-    /* SETBEr */
-  },
-  { /* 1249 */
-    42,
-    /* SETBm */
-  },
-  { /* 1250 */
-    57,
-    /* SETBr */
-  },
-  { /* 1251 */
-    42,
-    /* SETEm */
-  },
-  { /* 1252 */
-    57,
-    /* SETEr */
-  },
-  { /* 1253 */
-    42,
-    /* SETGEm */
-  },
-  { /* 1254 */
-    57,
-    /* SETGEr */
-  },
-  { /* 1255 */
-    42,
-    /* SETGm */
-  },
-  { /* 1256 */
-    57,
-    /* SETGr */
-  },
-  { /* 1257 */
-    42,
-    /* SETLEm */
-  },
-  { /* 1258 */
-    57,
-    /* SETLEr */
-  },
-  { /* 1259 */
-    42,
-    /* SETLm */
-  },
-  { /* 1260 */
-    57,
-    /* SETLr */
-  },
-  { /* 1261 */
-    42,
-    /* SETNEm */
-  },
-  { /* 1262 */
-    57,
-    /* SETNEr */
-  },
-  { /* 1263 */
-    42,
-    /* SETNOm */
-  },
-  { /* 1264 */
-    57,
-    /* SETNOr */
-  },
-  { /* 1265 */
-    42,
-    /* SETNPm */
-  },
-  { /* 1266 */
-    57,
-    /* SETNPr */
-  },
-  { /* 1267 */
-    42,
-    /* SETNSm */
-  },
-  { /* 1268 */
-    57,
-    /* SETNSr */
-  },
-  { /* 1269 */
-    42,
-    /* SETOm */
-  },
-  { /* 1270 */
-    57,
-    /* SETOr */
-  },
-  { /* 1271 */
-    42,
-    /* SETPm */
-  },
-  { /* 1272 */
-    57,
-    /* SETPr */
-  },
-  { /* 1273 */
-    0,
-    /* SETSSBSY */
-  },
-  { /* 1274 */
-    42,
-    /* SETSm */
-  },
-  { /* 1275 */
-    57,
-    /* SETSr */
-  },
-  { /* 1276 */
-    42,
-    /* SGDT16m */
-  },
-  { /* 1277 */
-    42,
-    /* SGDT32m */
-  },
-  { /* 1278 */
-    42,
-    /* SGDT64m */
-  },
-  { /* 1279 */
-    42,
-    /* SHL16m1 */
-  },
-  { /* 1280 */
-    42,
-    /* SHL16mCL */
-  },
-  { /* 1281 */
-    103,
-    /* SHL16mi */
-  },
-  { /* 1282 */
-    54,
-    /* SHL16r1 */
-  },
-  { /* 1283 */
-    54,
-    /* SHL16rCL */
-  },
-  { /* 1284 */
-    104,
-    /* SHL16ri */
-  },
-  { /* 1285 */
-    42,
-    /* SHL32m1 */
-  },
-  { /* 1286 */
-    42,
-    /* SHL32mCL */
-  },
-  { /* 1287 */
-    103,
-    /* SHL32mi */
-  },
-  { /* 1288 */
-    54,
-    /* SHL32r1 */
-  },
-  { /* 1289 */
-    54,
-    /* SHL32rCL */
-  },
-  { /* 1290 */
-    104,
-    /* SHL32ri */
-  },
-  { /* 1291 */
-    42,
-    /* SHL64m1 */
-  },
-  { /* 1292 */
-    42,
-    /* SHL64mCL */
-  },
-  { /* 1293 */
-    103,
-    /* SHL64mi */
-  },
-  { /* 1294 */
-    55,
-    /* SHL64r1 */
-  },
-  { /* 1295 */
-    55,
-    /* SHL64rCL */
-  },
-  { /* 1296 */
-    105,
-    /* SHL64ri */
-  },
-  { /* 1297 */
-    42,
-    /* SHL8m1 */
-  },
-  { /* 1298 */
-    42,
-    /* SHL8mCL */
-  },
-  { /* 1299 */
-    103,
-    /* SHL8mi */
-  },
-  { /* 1300 */
-    56,
-    /* SHL8r1 */
-  },
-  { /* 1301 */
-    56,
-    /* SHL8rCL */
-  },
-  { /* 1302 */
-    106,
-    /* SHL8ri */
-  },
-  { /* 1303 */
-    5,
-    /* SHLD16mrCL */
-  },
-  { /* 1304 */
-    116,
-    /* SHLD16mri8 */
-  },
-  { /* 1305 */
-    9,
-    /* SHLD16rrCL */
-  },
-  { /* 1306 */
-    117,
-    /* SHLD16rri8 */
-  },
-  { /* 1307 */
-    5,
-    /* SHLD32mrCL */
-  },
-  { /* 1308 */
-    116,
-    /* SHLD32mri8 */
-  },
-  { /* 1309 */
-    9,
-    /* SHLD32rrCL */
-  },
-  { /* 1310 */
-    117,
-    /* SHLD32rri8 */
-  },
-  { /* 1311 */
-    13,
-    /* SHLD64mrCL */
-  },
-  { /* 1312 */
-    118,
-    /* SHLD64mri8 */
-  },
-  { /* 1313 */
-    17,
-    /* SHLD64rrCL */
-  },
-  { /* 1314 */
-    119,
-    /* SHLD64rri8 */
-  },
-  { /* 1315 */
-    112,
-    /* SHLX32rm */
-  },
-  { /* 1316 */
-    113,
-    /* SHLX32rr */
-  },
-  { /* 1317 */
-    114,
-    /* SHLX64rm */
-  },
-  { /* 1318 */
-    115,
-    /* SHLX64rr */
-  },
-  { /* 1319 */
-    42,
-    /* SHR16m1 */
-  },
-  { /* 1320 */
-    42,
-    /* SHR16mCL */
-  },
-  { /* 1321 */
-    103,
-    /* SHR16mi */
-  },
   { /* 1322 */
-    54,
-    /* SHR16r1 */
+    69,
+    /* SETBEr */
   },
   { /* 1323 */
     54,
-    /* SHR16rCL */
+    /* SETBm */
   },
   { /* 1324 */
-    104,
-    /* SHR16ri */
+    69,
+    /* SETBr */
   },
   { /* 1325 */
-    42,
-    /* SHR32m1 */
+    54,
+    /* SETEm */
   },
   { /* 1326 */
-    42,
-    /* SHR32mCL */
+    69,
+    /* SETEr */
   },
   { /* 1327 */
-    103,
-    /* SHR32mi */
+    54,
+    /* SETGEm */
   },
   { /* 1328 */
-    54,
-    /* SHR32r1 */
+    69,
+    /* SETGEr */
   },
   { /* 1329 */
     54,
-    /* SHR32rCL */
+    /* SETGm */
   },
   { /* 1330 */
-    104,
-    /* SHR32ri */
+    69,
+    /* SETGr */
   },
   { /* 1331 */
-    42,
-    /* SHR64m1 */
+    54,
+    /* SETLEm */
   },
   { /* 1332 */
-    42,
-    /* SHR64mCL */
+    69,
+    /* SETLEr */
   },
   { /* 1333 */
-    103,
-    /* SHR64mi */
+    54,
+    /* SETLm */
   },
   { /* 1334 */
-    55,
-    /* SHR64r1 */
+    69,
+    /* SETLr */
   },
   { /* 1335 */
-    55,
-    /* SHR64rCL */
+    54,
+    /* SETNEm */
   },
   { /* 1336 */
-    105,
-    /* SHR64ri */
+    69,
+    /* SETNEr */
   },
   { /* 1337 */
-    42,
-    /* SHR8m1 */
+    54,
+    /* SETNOm */
   },
   { /* 1338 */
-    42,
-    /* SHR8mCL */
+    69,
+    /* SETNOr */
   },
   { /* 1339 */
-    103,
-    /* SHR8mi */
+    54,
+    /* SETNPm */
   },
   { /* 1340 */
-    56,
-    /* SHR8r1 */
+    69,
+    /* SETNPr */
   },
   { /* 1341 */
-    56,
-    /* SHR8rCL */
+    54,
+    /* SETNSm */
   },
   { /* 1342 */
-    106,
-    /* SHR8ri */
+    69,
+    /* SETNSr */
   },
   { /* 1343 */
+    54,
+    /* SETOm */
+  },
+  { /* 1344 */
+    69,
+    /* SETOr */
+  },
+  { /* 1345 */
+    54,
+    /* SETPm */
+  },
+  { /* 1346 */
+    69,
+    /* SETPr */
+  },
+  { /* 1347 */
+    0,
+    /* SETSSBSY */
+  },
+  { /* 1348 */
+    54,
+    /* SETSm */
+  },
+  { /* 1349 */
+    69,
+    /* SETSr */
+  },
+  { /* 1350 */
+    54,
+    /* SGDT16m */
+  },
+  { /* 1351 */
+    54,
+    /* SGDT32m */
+  },
+  { /* 1352 */
+    54,
+    /* SGDT64m */
+  },
+  { /* 1353 */
+    54,
+    /* SHL16m1 */
+  },
+  { /* 1354 */
+    54,
+    /* SHL16mCL */
+  },
+  { /* 1355 */
+    119,
+    /* SHL16mi */
+  },
+  { /* 1356 */
+    66,
+    /* SHL16r1 */
+  },
+  { /* 1357 */
+    66,
+    /* SHL16rCL */
+  },
+  { /* 1358 */
+    120,
+    /* SHL16ri */
+  },
+  { /* 1359 */
+    54,
+    /* SHL32m1 */
+  },
+  { /* 1360 */
+    54,
+    /* SHL32mCL */
+  },
+  { /* 1361 */
+    119,
+    /* SHL32mi */
+  },
+  { /* 1362 */
+    66,
+    /* SHL32r1 */
+  },
+  { /* 1363 */
+    66,
+    /* SHL32rCL */
+  },
+  { /* 1364 */
+    120,
+    /* SHL32ri */
+  },
+  { /* 1365 */
+    54,
+    /* SHL64m1 */
+  },
+  { /* 1366 */
+    54,
+    /* SHL64mCL */
+  },
+  { /* 1367 */
+    119,
+    /* SHL64mi */
+  },
+  { /* 1368 */
+    67,
+    /* SHL64r1 */
+  },
+  { /* 1369 */
+    67,
+    /* SHL64rCL */
+  },
+  { /* 1370 */
+    121,
+    /* SHL64ri */
+  },
+  { /* 1371 */
+    54,
+    /* SHL8m1 */
+  },
+  { /* 1372 */
+    54,
+    /* SHL8mCL */
+  },
+  { /* 1373 */
+    119,
+    /* SHL8mi */
+  },
+  { /* 1374 */
+    68,
+    /* SHL8r1 */
+  },
+  { /* 1375 */
+    68,
+    /* SHL8rCL */
+  },
+  { /* 1376 */
+    122,
+    /* SHL8ri */
+  },
+  { /* 1377 */
+    5,
+    /* SHLD16mrCL */
+  },
+  { /* 1378 */
+    128,
+    /* SHLD16mri8 */
+  },
+  { /* 1379 */
+    9,
+    /* SHLD16rrCL */
+  },
+  { /* 1380 */
+    129,
+    /* SHLD16rri8 */
+  },
+  { /* 1381 */
+    5,
+    /* SHLD32mrCL */
+  },
+  { /* 1382 */
+    128,
+    /* SHLD32mri8 */
+  },
+  { /* 1383 */
+    9,
+    /* SHLD32rrCL */
+  },
+  { /* 1384 */
+    129,
+    /* SHLD32rri8 */
+  },
+  { /* 1385 */
+    13,
+    /* SHLD64mrCL */
+  },
+  { /* 1386 */
+    130,
+    /* SHLD64mri8 */
+  },
+  { /* 1387 */
+    17,
+    /* SHLD64rrCL */
+  },
+  { /* 1388 */
+    131,
+    /* SHLD64rri8 */
+  },
+  { /* 1389 */
+    32,
+    /* SHLX32rm */
+  },
+  { /* 1390 */
+    33,
+    /* SHLX32rr */
+  },
+  { /* 1391 */
+    34,
+    /* SHLX64rm */
+  },
+  { /* 1392 */
+    35,
+    /* SHLX64rr */
+  },
+  { /* 1393 */
+    54,
+    /* SHR16m1 */
+  },
+  { /* 1394 */
+    54,
+    /* SHR16mCL */
+  },
+  { /* 1395 */
+    119,
+    /* SHR16mi */
+  },
+  { /* 1396 */
+    66,
+    /* SHR16r1 */
+  },
+  { /* 1397 */
+    66,
+    /* SHR16rCL */
+  },
+  { /* 1398 */
+    120,
+    /* SHR16ri */
+  },
+  { /* 1399 */
+    54,
+    /* SHR32m1 */
+  },
+  { /* 1400 */
+    54,
+    /* SHR32mCL */
+  },
+  { /* 1401 */
+    119,
+    /* SHR32mi */
+  },
+  { /* 1402 */
+    66,
+    /* SHR32r1 */
+  },
+  { /* 1403 */
+    66,
+    /* SHR32rCL */
+  },
+  { /* 1404 */
+    120,
+    /* SHR32ri */
+  },
+  { /* 1405 */
+    54,
+    /* SHR64m1 */
+  },
+  { /* 1406 */
+    54,
+    /* SHR64mCL */
+  },
+  { /* 1407 */
+    119,
+    /* SHR64mi */
+  },
+  { /* 1408 */
+    67,
+    /* SHR64r1 */
+  },
+  { /* 1409 */
+    67,
+    /* SHR64rCL */
+  },
+  { /* 1410 */
+    121,
+    /* SHR64ri */
+  },
+  { /* 1411 */
+    54,
+    /* SHR8m1 */
+  },
+  { /* 1412 */
+    54,
+    /* SHR8mCL */
+  },
+  { /* 1413 */
+    119,
+    /* SHR8mi */
+  },
+  { /* 1414 */
+    68,
+    /* SHR8r1 */
+  },
+  { /* 1415 */
+    68,
+    /* SHR8rCL */
+  },
+  { /* 1416 */
+    122,
+    /* SHR8ri */
+  },
+  { /* 1417 */
     5,
     /* SHRD16mrCL */
   },
-  { /* 1344 */
-    116,
+  { /* 1418 */
+    128,
     /* SHRD16mri8 */
   },
-  { /* 1345 */
+  { /* 1419 */
     9,
     /* SHRD16rrCL */
   },
-  { /* 1346 */
-    117,
+  { /* 1420 */
+    129,
     /* SHRD16rri8 */
   },
-  { /* 1347 */
+  { /* 1421 */
     5,
     /* SHRD32mrCL */
   },
-  { /* 1348 */
-    116,
+  { /* 1422 */
+    128,
     /* SHRD32mri8 */
   },
-  { /* 1349 */
+  { /* 1423 */
     9,
     /* SHRD32rrCL */
   },
-  { /* 1350 */
-    117,
+  { /* 1424 */
+    129,
     /* SHRD32rri8 */
   },
-  { /* 1351 */
+  { /* 1425 */
     13,
     /* SHRD64mrCL */
   },
-  { /* 1352 */
-    118,
+  { /* 1426 */
+    130,
     /* SHRD64mri8 */
   },
-  { /* 1353 */
+  { /* 1427 */
     17,
     /* SHRD64rrCL */
   },
-  { /* 1354 */
-    119,
+  { /* 1428 */
+    131,
     /* SHRD64rri8 */
   },
-  { /* 1355 */
-    112,
+  { /* 1429 */
+    32,
     /* SHRX32rm */
   },
-  { /* 1356 */
-    113,
+  { /* 1430 */
+    33,
     /* SHRX32rr */
   },
-  { /* 1357 */
-    114,
+  { /* 1431 */
+    34,
     /* SHRX64rm */
   },
-  { /* 1358 */
-    115,
+  { /* 1432 */
+    35,
     /* SHRX64rr */
   },
-  { /* 1359 */
-    42,
+  { /* 1433 */
+    54,
     /* SIDT16m */
   },
-  { /* 1360 */
-    42,
+  { /* 1434 */
+    54,
     /* SIDT32m */
   },
-  { /* 1361 */
-    42,
-    /* SIDT64m */
-  },
-  { /* 1362 */
-    0,
-    /* SKINIT */
-  },
-  { /* 1363 */
-    42,
-    /* SLDT16m */
-  },
-  { /* 1364 */
-    43,
-    /* SLDT16r */
-  },
-  { /* 1365 */
-    43,
-    /* SLDT32r */
-  },
-  { /* 1366 */
-    45,
-    /* SLDT64r */
-  },
-  { /* 1367 */
-    42,
-    /* SMSW16m */
-  },
-  { /* 1368 */
-    43,
-    /* SMSW16r */
-  },
-  { /* 1369 */
-    43,
-    /* SMSW32r */
-  },
-  { /* 1370 */
-    45,
-    /* SMSW64r */
-  },
-  { /* 1371 */
-    0,
-    /* STAC */
-  },
-  { /* 1372 */
-    0,
-    /* STC */
-  },
-  { /* 1373 */
-    0,
-    /* STD */
-  },
-  { /* 1374 */
-    0,
-    /* STGI */
-  },
-  { /* 1375 */
-    0,
-    /* STI */
-  },
-  { /* 1376 */
-    71,
-    /* STOSB */
-  },
-  { /* 1377 */
-    71,
-    /* STOSL */
-  },
-  { /* 1378 */
-    71,
-    /* STOSQ */
-  },
-  { /* 1379 */
-    71,
-    /* STOSW */
-  },
-  { /* 1380 */
-    43,
-    /* STR16r */
-  },
-  { /* 1381 */
-    43,
-    /* STR32r */
-  },
-  { /* 1382 */
-    45,
-    /* STR64r */
-  },
-  { /* 1383 */
-    42,
-    /* STRm */
-  },
-  { /* 1384 */
-    2,
-    /* SUB16i16 */
-  },
-  { /* 1385 */
-    3,
-    /* SUB16mi */
-  },
-  { /* 1386 */
-    4,
-    /* SUB16mi8 */
-  },
-  { /* 1387 */
-    5,
-    /* SUB16mr */
-  },
-  { /* 1388 */
-    6,
-    /* SUB16ri */
-  },
-  { /* 1389 */
-    7,
-    /* SUB16ri8 */
-  },
-  { /* 1390 */
-    8,
-    /* SUB16rm */
-  },
-  { /* 1391 */
-    9,
-    /* SUB16rr */
-  },
-  { /* 1392 */
-    10,
-    /* SUB16rr_REV */
-  },
-  { /* 1393 */
-    2,
-    /* SUB32i32 */
-  },
-  { /* 1394 */
-    3,
-    /* SUB32mi */
-  },
-  { /* 1395 */
-    4,
-    /* SUB32mi8 */
-  },
-  { /* 1396 */
-    5,
-    /* SUB32mr */
-  },
-  { /* 1397 */
-    6,
-    /* SUB32ri */
-  },
-  { /* 1398 */
-    7,
-    /* SUB32ri8 */
-  },
-  { /* 1399 */
-    8,
-    /* SUB32rm */
-  },
-  { /* 1400 */
-    9,
-    /* SUB32rr */
-  },
-  { /* 1401 */
-    10,
-    /* SUB32rr_REV */
-  },
-  { /* 1402 */
-    11,
-    /* SUB64i32 */
-  },
-  { /* 1403 */
-    12,
-    /* SUB64mi32 */
-  },
-  { /* 1404 */
-    4,
-    /* SUB64mi8 */
-  },
-  { /* 1405 */
-    13,
-    /* SUB64mr */
-  },
-  { /* 1406 */
-    14,
-    /* SUB64ri32 */
-  },
-  { /* 1407 */
-    15,
-    /* SUB64ri8 */
-  },
-  { /* 1408 */
-    16,
-    /* SUB64rm */
-  },
-  { /* 1409 */
-    17,
-    /* SUB64rr */
-  },
-  { /* 1410 */
-    18,
-    /* SUB64rr_REV */
-  },
-  { /* 1411 */
-    1,
-    /* SUB8i8 */
-  },
-  { /* 1412 */
-    4,
-    /* SUB8mi */
-  },
-  { /* 1413 */
-    4,
-    /* SUB8mi8 */
-  },
-  { /* 1414 */
-    19,
-    /* SUB8mr */
-  },
-  { /* 1415 */
-    20,
-    /* SUB8ri */
-  },
-  { /* 1416 */
-    20,
-    /* SUB8ri8 */
-  },
-  { /* 1417 */
-    21,
-    /* SUB8rm */
-  },
-  { /* 1418 */
-    22,
-    /* SUB8rr */
-  },
-  { /* 1419 */
-    23,
-    /* SUB8rr_REV */
-  },
-  { /* 1420 */
-    0,
-    /* SWAPGS */
-  },
-  { /* 1421 */
-    0,
-    /* SYSCALL */
-  },
-  { /* 1422 */
-    0,
-    /* SYSENTER */
-  },
-  { /* 1423 */
-    0,
-    /* SYSEXIT */
-  },
-  { /* 1424 */
-    0,
-    /* SYSEXIT64 */
-  },
-  { /* 1425 */
-    0,
-    /* SYSRET */
-  },
-  { /* 1426 */
-    0,
-    /* SYSRET64 */
-  },
-  { /* 1427 */
-    0,
-    /*  */
-  },
-  { /* 1428 */
-    0,
-    /*  */
-  },
-  { /* 1429 */
-    0,
-    /*  */
-  },
-  { /* 1430 */
-    0,
-    /*  */
-  },
-  { /* 1431 */
-    0,
-    /*  */
-  },
-  { /* 1432 */
-    0,
-    /*  */
-  },
-  { /* 1433 */
-    0,
-    /*  */
-  },
-  { /* 1434 */
-    0,
-    /*  */
-  },
   { /* 1435 */
-    0,
-    /*  */
+    54,
+    /* SIDT64m */
   },
   { /* 1436 */
     0,
-    /*  */
+    /* SKINIT */
   },
   { /* 1437 */
-    0,
-    /*  */
+    54,
+    /* SLDT16m */
   },
   { /* 1438 */
-    0,
-    /*  */
+    55,
+    /* SLDT16r */
   },
   { /* 1439 */
-    0,
-    /*  */
+    55,
+    /* SLDT32r */
   },
   { /* 1440 */
-    0,
-    /*  */
+    57,
+    /* SLDT64r */
   },
   { /* 1441 */
-    0,
-    /*  */
+    80,
+    /* SLWPCB */
   },
   { /* 1442 */
-    0,
-    /*  */
+    57,
+    /* SLWPCB64 */
   },
   { /* 1443 */
-    0,
-    /*  */
+    54,
+    /* SMSW16m */
   },
   { /* 1444 */
-    0,
-    /*  */
+    55,
+    /* SMSW16r */
   },
   { /* 1445 */
-    2,
-    /* TEST16i16 */
+    55,
+    /* SMSW32r */
   },
   { /* 1446 */
-    3,
-    /* TEST16mi */
+    57,
+    /* SMSW64r */
   },
   { /* 1447 */
-    5,
-    /* TEST16mr */
+    0,
+    /* STAC */
   },
   { /* 1448 */
-    47,
-    /* TEST16ri */
+    0,
+    /* STC */
   },
   { /* 1449 */
-    39,
-    /* TEST16rr */
+    0,
+    /* STD */
   },
   { /* 1450 */
-    2,
-    /* TEST32i32 */
+    0,
+    /* STGI */
   },
   { /* 1451 */
-    3,
-    /* TEST32mi */
+    0,
+    /* STI */
   },
   { /* 1452 */
-    5,
-    /* TEST32mr */
+    81,
+    /* STOSB */
   },
   { /* 1453 */
-    47,
-    /* TEST32ri */
+    81,
+    /* STOSL */
   },
   { /* 1454 */
-    39,
-    /* TEST32rr */
+    81,
+    /* STOSQ */
   },
   { /* 1455 */
-    11,
-    /* TEST64i32 */
+    81,
+    /* STOSW */
   },
   { /* 1456 */
-    12,
-    /* TEST64mi32 */
+    55,
+    /* STR16r */
   },
   { /* 1457 */
-    13,
-    /* TEST64mr */
+    55,
+    /* STR32r */
   },
   { /* 1458 */
-    48,
-    /* TEST64ri32 */
+    57,
+    /* STR64r */
   },
   { /* 1459 */
-    41,
-    /* TEST64rr */
+    54,
+    /* STRm */
   },
   { /* 1460 */
-    1,
-    /* TEST8i8 */
+    2,
+    /* SUB16i16 */
   },
   { /* 1461 */
-    4,
-    /* TEST8mi */
+    3,
+    /* SUB16mi */
   },
   { /* 1462 */
-    19,
-    /* TEST8mr */
+    4,
+    /* SUB16mi8 */
   },
   { /* 1463 */
-    49,
-    /* TEST8ri */
+    5,
+    /* SUB16mr */
   },
   { /* 1464 */
-    51,
-    /* TEST8rr */
+    6,
+    /* SUB16ri */
   },
   { /* 1465 */
-    0,
-    /* UD0 */
+    7,
+    /* SUB16ri8 */
   },
   { /* 1466 */
-    0,
-    /* UD1 */
+    8,
+    /* SUB16rm */
   },
   { /* 1467 */
-    0,
-    /* UD2 */
+    9,
+    /* SUB16rr */
   },
   { /* 1468 */
-    42,
-    /* VERRm */
+    10,
+    /* SUB16rr_REV */
   },
   { /* 1469 */
-    76,
-    /* VERRr */
+    2,
+    /* SUB32i32 */
   },
   { /* 1470 */
-    42,
-    /* VERWm */
+    3,
+    /* SUB32mi */
   },
   { /* 1471 */
-    76,
-    /* VERWr */
+    4,
+    /* SUB32mi8 */
   },
   { /* 1472 */
-    0,
-    /* VMCALL */
+    5,
+    /* SUB32mr */
   },
   { /* 1473 */
-    42,
-    /* VMCLEARm */
+    6,
+    /* SUB32ri */
   },
   { /* 1474 */
-    0,
-    /* VMFUNC */
+    7,
+    /* SUB32ri8 */
   },
   { /* 1475 */
-    0,
-    /* VMLAUNCH */
+    8,
+    /* SUB32rm */
   },
   { /* 1476 */
-    0,
-    /* VMLOAD32 */
+    9,
+    /* SUB32rr */
   },
   { /* 1477 */
-    0,
-    /* VMLOAD64 */
+    10,
+    /* SUB32rr_REV */
   },
   { /* 1478 */
-    0,
-    /* VMMCALL */
+    11,
+    /* SUB64i32 */
   },
   { /* 1479 */
-    42,
-    /* VMPTRLDm */
+    12,
+    /* SUB64mi32 */
   },
   { /* 1480 */
-    42,
-    /* VMPTRSTm */
+    4,
+    /* SUB64mi8 */
   },
   { /* 1481 */
-    120,
-    /* VMREAD32mr */
+    13,
+    /* SUB64mr */
   },
   { /* 1482 */
-    121,
-    /* VMREAD32rr */
+    14,
+    /* SUB64ri32 */
   },
   { /* 1483 */
-    13,
-    /* VMREAD64mr */
+    15,
+    /* SUB64ri8 */
   },
   { /* 1484 */
-    41,
-    /* VMREAD64rr */
+    16,
+    /* SUB64rm */
   },
   { /* 1485 */
-    0,
-    /* VMRESUME */
+    17,
+    /* SUB64rr */
   },
   { /* 1486 */
-    0,
-    /* VMRUN32 */
+    18,
+    /* SUB64rr_REV */
   },
   { /* 1487 */
-    0,
-    /* VMRUN64 */
+    1,
+    /* SUB8i8 */
   },
   { /* 1488 */
-    0,
-    /* VMSAVE32 */
+    4,
+    /* SUB8mi */
   },
   { /* 1489 */
-    0,
-    /* VMSAVE64 */
+    4,
+    /* SUB8mi8 */
   },
   { /* 1490 */
-    72,
-    /* VMWRITE32rm */
+    19,
+    /* SUB8mr */
   },
   { /* 1491 */
-    122,
-    /* VMWRITE32rr */
+    20,
+    /* SUB8ri */
   },
   { /* 1492 */
-    34,
-    /* VMWRITE64rm */
+    20,
+    /* SUB8ri8 */
   },
   { /* 1493 */
-    35,
-    /* VMWRITE64rr */
+    21,
+    /* SUB8rm */
   },
   { /* 1494 */
-    0,
-    /* VMXOFF */
+    22,
+    /* SUB8rr */
   },
   { /* 1495 */
-    42,
-    /* VMXON */
+    23,
+    /* SUB8rr_REV */
   },
   { /* 1496 */
     0,
-    /* WBINVD */
+    /* SWAPGS */
   },
   { /* 1497 */
     0,
-    /* WBNOINVD */
+    /* SYSCALL */
   },
   { /* 1498 */
     0,
-    /*  */
+    /* SYSENTER */
   },
   { /* 1499 */
     0,
-    /*  */
+    /* SYSEXIT */
   },
   { /* 1500 */
-    70,
-    /* WRFSBASE */
+    0,
+    /* SYSEXIT64 */
   },
   { /* 1501 */
-    45,
-    /* WRFSBASE64 */
+    0,
+    /* SYSRET */
   },
   { /* 1502 */
-    70,
-    /* WRGSBASE */
+    0,
+    /* SYSRET64 */
   },
   { /* 1503 */
-    45,
-    /* WRGSBASE64 */
+    40,
+    /* T1MSKC32rm */
   },
   { /* 1504 */
+    41,
+    /* T1MSKC32rr */
+  },
+  { /* 1505 */
+    42,
+    /* T1MSKC64rm */
+  },
+  { /* 1506 */
+    43,
+    /* T1MSKC64rr */
+  },
+  { /* 1507 */
+    2,
+    /* TEST16i16 */
+  },
+  { /* 1508 */
+    3,
+    /* TEST16mi */
+  },
+  { /* 1509 */
+    5,
+    /* TEST16mr */
+  },
+  { /* 1510 */
+    59,
+    /* TEST16ri */
+  },
+  { /* 1511 */
+    51,
+    /* TEST16rr */
+  },
+  { /* 1512 */
+    2,
+    /* TEST32i32 */
+  },
+  { /* 1513 */
+    3,
+    /* TEST32mi */
+  },
+  { /* 1514 */
+    5,
+    /* TEST32mr */
+  },
+  { /* 1515 */
+    59,
+    /* TEST32ri */
+  },
+  { /* 1516 */
+    51,
+    /* TEST32rr */
+  },
+  { /* 1517 */
+    11,
+    /* TEST64i32 */
+  },
+  { /* 1518 */
+    12,
+    /* TEST64mi32 */
+  },
+  { /* 1519 */
+    13,
+    /* TEST64mr */
+  },
+  { /* 1520 */
+    60,
+    /* TEST64ri32 */
+  },
+  { /* 1521 */
+    53,
+    /* TEST64rr */
+  },
+  { /* 1522 */
+    1,
+    /* TEST8i8 */
+  },
+  { /* 1523 */
+    4,
+    /* TEST8mi */
+  },
+  { /* 1524 */
+    19,
+    /* TEST8mr */
+  },
+  { /* 1525 */
+    61,
+    /* TEST8ri */
+  },
+  { /* 1526 */
+    63,
+    /* TEST8rr */
+  },
+  { /* 1527 */
+    80,
+    /* TPAUSE */
+  },
+  { /* 1528 */
+    44,
+    /* TZCNT16rm */
+  },
+  { /* 1529 */
+    45,
+    /* TZCNT16rr */
+  },
+  { /* 1530 */
+    44,
+    /* TZCNT32rm */
+  },
+  { /* 1531 */
+    45,
+    /* TZCNT32rr */
+  },
+  { /* 1532 */
+    46,
+    /* TZCNT64rm */
+  },
+  { /* 1533 */
+    47,
+    /* TZCNT64rr */
+  },
+  { /* 1534 */
+    40,
+    /* TZMSK32rm */
+  },
+  { /* 1535 */
+    41,
+    /* TZMSK32rr */
+  },
+  { /* 1536 */
+    42,
+    /* TZMSK64rm */
+  },
+  { /* 1537 */
+    43,
+    /* TZMSK64rr */
+  },
+  { /* 1538 */
+    0,
+    /* UD0 */
+  },
+  { /* 1539 */
+    0,
+    /* UD1 */
+  },
+  { /* 1540 */
+    0,
+    /* UD2 */
+  },
+  { /* 1541 */
+    86,
+    /* UMONITOR16 */
+  },
+  { /* 1542 */
+    80,
+    /* UMONITOR32 */
+  },
+  { /* 1543 */
+    57,
+    /* UMONITOR64 */
+  },
+  { /* 1544 */
+    80,
+    /* UMWAIT */
+  },
+  { /* 1545 */
+    54,
+    /* VERRm */
+  },
+  { /* 1546 */
+    86,
+    /* VERRr */
+  },
+  { /* 1547 */
+    54,
+    /* VERWm */
+  },
+  { /* 1548 */
+    86,
+    /* VERWr */
+  },
+  { /* 1549 */
+    0,
+    /* VMCALL */
+  },
+  { /* 1550 */
+    54,
+    /* VMCLEARm */
+  },
+  { /* 1551 */
+    0,
+    /* VMFUNC */
+  },
+  { /* 1552 */
+    0,
+    /* VMLAUNCH */
+  },
+  { /* 1553 */
+    0,
+    /* VMLOAD32 */
+  },
+  { /* 1554 */
+    0,
+    /* VMLOAD64 */
+  },
+  { /* 1555 */
+    0,
+    /* VMMCALL */
+  },
+  { /* 1556 */
+    54,
+    /* VMPTRLDm */
+  },
+  { /* 1557 */
+    54,
+    /* VMPTRSTm */
+  },
+  { /* 1558 */
+    112,
+    /* VMREAD32mr */
+  },
+  { /* 1559 */
+    132,
+    /* VMREAD32rr */
+  },
+  { /* 1560 */
+    13,
+    /* VMREAD64mr */
+  },
+  { /* 1561 */
+    53,
+    /* VMREAD64rr */
+  },
+  { /* 1562 */
+    0,
+    /* VMRESUME */
+  },
+  { /* 1563 */
+    0,
+    /* VMRUN32 */
+  },
+  { /* 1564 */
+    0,
+    /* VMRUN64 */
+  },
+  { /* 1565 */
+    0,
+    /* VMSAVE32 */
+  },
+  { /* 1566 */
+    0,
+    /* VMSAVE64 */
+  },
+  { /* 1567 */
+    82,
+    /* VMWRITE32rm */
+  },
+  { /* 1568 */
+    133,
+    /* VMWRITE32rr */
+  },
+  { /* 1569 */
+    46,
+    /* VMWRITE64rm */
+  },
+  { /* 1570 */
+    47,
+    /* VMWRITE64rr */
+  },
+  { /* 1571 */
+    0,
+    /* VMXOFF */
+  },
+  { /* 1572 */
+    54,
+    /* VMXON */
+  },
+  { /* 1573 */
+    0,
+    /* WBINVD */
+  },
+  { /* 1574 */
+    0,
+    /* WBNOINVD */
+  },
+  { /* 1575 */
+    80,
+    /* WRFSBASE */
+  },
+  { /* 1576 */
+    57,
+    /* WRFSBASE64 */
+  },
+  { /* 1577 */
+    80,
+    /* WRGSBASE */
+  },
+  { /* 1578 */
+    57,
+    /* WRGSBASE64 */
+  },
+  { /* 1579 */
     0,
     /* WRMSR */
   },
-  { /* 1505 */
-    0,
-    /*  */
-  },
-  { /* 1506 */
+  { /* 1580 */
     0,
     /* WRPKRUr */
   },
-  { /* 1507 */
-    120,
+  { /* 1581 */
+    112,
     /* WRSSD */
   },
-  { /* 1508 */
+  { /* 1582 */
     13,
     /* WRSSQ */
   },
-  { /* 1509 */
-    120,
+  { /* 1583 */
+    112,
     /* WRUSSD */
   },
-  { /* 1510 */
+  { /* 1584 */
     13,
     /* WRUSSQ */
   },
-  { /* 1511 */
+  { /* 1585 */
     8,
     /* XADD16rm */
   },
-  { /* 1512 */
-    123,
+  { /* 1586 */
+    134,
     /* XADD16rr */
   },
-  { /* 1513 */
+  { /* 1587 */
     8,
     /* XADD32rm */
   },
-  { /* 1514 */
-    123,
+  { /* 1588 */
+    134,
     /* XADD32rr */
   },
-  { /* 1515 */
+  { /* 1589 */
     16,
     /* XADD64rm */
   },
-  { /* 1516 */
-    124,
+  { /* 1590 */
+    135,
     /* XADD64rr */
   },
-  { /* 1517 */
+  { /* 1591 */
     21,
     /* XADD8rm */
   },
-  { /* 1518 */
-    125,
+  { /* 1592 */
+    136,
     /* XADD8rr */
   },
-  { /* 1519 */
-    36,
+  { /* 1593 */
+    48,
     /* XCHG16ar */
   },
-  { /* 1520 */
+  { /* 1594 */
     8,
     /* XCHG16rm */
   },
-  { /* 1521 */
-    126,
+  { /* 1595 */
+    137,
     /* XCHG16rr */
   },
-  { /* 1522 */
-    36,
+  { /* 1596 */
+    48,
     /* XCHG32ar */
   },
-  { /* 1523 */
+  { /* 1597 */
     8,
     /* XCHG32rm */
   },
-  { /* 1524 */
-    126,
+  { /* 1598 */
+    137,
     /* XCHG32rr */
   },
-  { /* 1525 */
-    37,
+  { /* 1599 */
+    49,
     /* XCHG64ar */
   },
-  { /* 1526 */
+  { /* 1600 */
     16,
     /* XCHG64rm */
   },
-  { /* 1527 */
-    127,
+  { /* 1601 */
+    138,
     /* XCHG64rr */
   },
-  { /* 1528 */
+  { /* 1602 */
     21,
     /* XCHG8rm */
   },
-  { /* 1529 */
-    128,
+  { /* 1603 */
+    139,
     /* XCHG8rr */
   },
-  { /* 1530 */
+  { /* 1604 */
     0,
     /* XCRYPTCBC */
   },
-  { /* 1531 */
+  { /* 1605 */
     0,
     /* XCRYPTCFB */
   },
-  { /* 1532 */
+  { /* 1606 */
     0,
     /* XCRYPTCTR */
   },
-  { /* 1533 */
+  { /* 1607 */
     0,
     /* XCRYPTECB */
   },
-  { /* 1534 */
+  { /* 1608 */
     0,
     /* XCRYPTOFB */
   },
-  { /* 1535 */
+  { /* 1609 */
     0,
     /* XGETBV */
   },
-  { /* 1536 */
+  { /* 1610 */
     0,
     /* XLAT */
   },
-  { /* 1537 */
+  { /* 1611 */
     2,
     /* XOR16i16 */
   },
-  { /* 1538 */
+  { /* 1612 */
     3,
     /* XOR16mi */
   },
-  { /* 1539 */
+  { /* 1613 */
     4,
     /* XOR16mi8 */
   },
-  { /* 1540 */
+  { /* 1614 */
     5,
     /* XOR16mr */
   },
-  { /* 1541 */
+  { /* 1615 */
     6,
     /* XOR16ri */
   },
-  { /* 1542 */
+  { /* 1616 */
     7,
     /* XOR16ri8 */
   },
-  { /* 1543 */
+  { /* 1617 */
     8,
     /* XOR16rm */
   },
-  { /* 1544 */
+  { /* 1618 */
     9,
     /* XOR16rr */
   },
-  { /* 1545 */
+  { /* 1619 */
     10,
     /* XOR16rr_REV */
   },
-  { /* 1546 */
+  { /* 1620 */
     2,
     /* XOR32i32 */
   },
-  { /* 1547 */
+  { /* 1621 */
     3,
     /* XOR32mi */
   },
-  { /* 1548 */
+  { /* 1622 */
     4,
     /* XOR32mi8 */
   },
-  { /* 1549 */
+  { /* 1623 */
     5,
     /* XOR32mr */
   },
-  { /* 1550 */
+  { /* 1624 */
     6,
     /* XOR32ri */
   },
-  { /* 1551 */
+  { /* 1625 */
     7,
     /* XOR32ri8 */
   },
-  { /* 1552 */
+  { /* 1626 */
     8,
     /* XOR32rm */
   },
-  { /* 1553 */
+  { /* 1627 */
     9,
     /* XOR32rr */
   },
-  { /* 1554 */
+  { /* 1628 */
     10,
     /* XOR32rr_REV */
   },
-  { /* 1555 */
+  { /* 1629 */
     11,
     /* XOR64i32 */
   },
-  { /* 1556 */
+  { /* 1630 */
     12,
     /* XOR64mi32 */
   },
-  { /* 1557 */
+  { /* 1631 */
     4,
     /* XOR64mi8 */
   },
-  { /* 1558 */
+  { /* 1632 */
     13,
     /* XOR64mr */
   },
-  { /* 1559 */
+  { /* 1633 */
     14,
     /* XOR64ri32 */
   },
-  { /* 1560 */
+  { /* 1634 */
     15,
     /* XOR64ri8 */
   },
-  { /* 1561 */
+  { /* 1635 */
     16,
     /* XOR64rm */
   },
-  { /* 1562 */
+  { /* 1636 */
     17,
     /* XOR64rr */
   },
-  { /* 1563 */
+  { /* 1637 */
     18,
     /* XOR64rr_REV */
   },
-  { /* 1564 */
+  { /* 1638 */
     1,
     /* XOR8i8 */
   },
-  { /* 1565 */
+  { /* 1639 */
     4,
     /* XOR8mi */
   },
-  { /* 1566 */
+  { /* 1640 */
     4,
     /* XOR8mi8 */
   },
-  { /* 1567 */
+  { /* 1641 */
     19,
     /* XOR8mr */
   },
-  { /* 1568 */
+  { /* 1642 */
     20,
     /* XOR8ri */
   },
-  { /* 1569 */
+  { /* 1643 */
     20,
     /* XOR8ri8 */
   },
-  { /* 1570 */
+  { /* 1644 */
     21,
     /* XOR8rm */
   },
-  { /* 1571 */
+  { /* 1645 */
     22,
     /* XOR8rr */
   },
-  { /* 1572 */
+  { /* 1646 */
     23,
     /* XOR8rr_REV */
   },
-  { /* 1573 */
-    42,
+  { /* 1647 */
+    54,
     /* XRSTOR */
   },
-  { /* 1574 */
-    42,
+  { /* 1648 */
+    54,
     /* XRSTOR64 */
   },
-  { /* 1575 */
-    42,
+  { /* 1649 */
+    54,
     /* XRSTORS */
   },
-  { /* 1576 */
-    42,
+  { /* 1650 */
+    54,
     /* XRSTORS64 */
   },
-  { /* 1577 */
-    42,
+  { /* 1651 */
+    54,
     /* XSAVE */
   },
-  { /* 1578 */
-    42,
+  { /* 1652 */
+    54,
     /* XSAVE64 */
   },
-  { /* 1579 */
-    42,
+  { /* 1653 */
+    54,
     /* XSAVEC */
   },
-  { /* 1580 */
-    42,
+  { /* 1654 */
+    54,
     /* XSAVEC64 */
   },
-  { /* 1581 */
-    42,
+  { /* 1655 */
+    54,
     /* XSAVEOPT */
   },
-  { /* 1582 */
-    42,
+  { /* 1656 */
+    54,
     /* XSAVEOPT64 */
   },
-  { /* 1583 */
-    42,
+  { /* 1657 */
+    54,
     /* XSAVES */
   },
-  { /* 1584 */
-    42,
+  { /* 1658 */
+    54,
     /* XSAVES64 */
   },
-  { /* 1585 */
+  { /* 1659 */
     0,
     /* XSETBV */
   },
-  { /* 1586 */
+  { /* 1660 */
     0,
     /* XSHA1 */
   },
-  { /* 1587 */
+  { /* 1661 */
     0,
     /* XSHA256 */
   },
-  { /* 1588 */
+  { /* 1662 */
     0,
     /* XSTORE */
   },
@@ -23794,328 +24178,328 @@ static const InstrUID modRMTable[] = {
 /* EmptyTable */
   0x0,
 /* Table1 */
-  0xcc, /* ADD8mr */
-  0xd0, /* ADD8rr */
+  0xc8, /* ADD8mr */
+  0xcc, /* ADD8rr */
 /* Table3 */
-  0xba, /* ADD32mr */
-  0xbe, /* ADD32rr */
+  0xb6, /* ADD32mr */
+  0xba, /* ADD32rr */
 /* Table5 */
-  0xcf, /* ADD8rm */
-  0xd1, /* ADD8rr_REV */
+  0xcb, /* ADD8rm */
+  0xcd, /* ADD8rr_REV */
 /* Table7 */
-  0xbd, /* ADD32rm */
-  0xbf, /* ADD32rr_REV */
+  0xb9, /* ADD32rm */
+  0xbb, /* ADD32rr_REV */
 /* Table9 */
-  0xc9, /* ADD8i8 */
+  0xc5, /* ADD8i8 */
 /* Table10 */
-  0xb7, /* ADD32i32 */
+  0xb3, /* ADD32i32 */
 /* Table11 */
-  0x3e8, /* PUSHES32 */
+  0x436, /* PUSHES32 */
 /* Table12 */
-  0x3c4, /* POPES32 */
+  0x412, /* POPES32 */
 /* Table13 */
-  0x3a6, /* OR8mr */
-  0x3aa, /* OR8rr */
+  0x3ec, /* OR8mr */
+  0x3f0, /* OR8rr */
 /* Table15 */
-  0x394, /* OR32mr */
-  0x398, /* OR32rr */
+  0x3da, /* OR32mr */
+  0x3de, /* OR32rr */
 /* Table17 */
-  0x3a9, /* OR8rm */
-  0x3ab, /* OR8rr_REV */
+  0x3ef, /* OR8rm */
+  0x3f1, /* OR8rr_REV */
 /* Table19 */
-  0x397, /* OR32rm */
-  0x399, /* OR32rr_REV */
+  0x3dd, /* OR32rm */
+  0x3df, /* OR32rr_REV */
 /* Table21 */
-  0x3a3, /* OR8i8 */
+  0x3e9, /* OR8i8 */
 /* Table22 */
-  0x391, /* OR32i32 */
+  0x3d7, /* OR32i32 */
 /* Table23 */
-  0x3e4, /* PUSHCS32 */
+  0x432, /* PUSHCS32 */
 /* Table24 */
-  0xa4, /* ADC8mr */
-  0xa8, /* ADC8rr */
+  0xa0, /* ADC8mr */
+  0xa4, /* ADC8rr */
 /* Table26 */
-  0x92, /* ADC32mr */
-  0x96, /* ADC32rr */
+  0x8e, /* ADC32mr */
+  0x92, /* ADC32rr */
 /* Table28 */
-  0xa7, /* ADC8rm */
-  0xa9, /* ADC8rr_REV */
+  0xa3, /* ADC8rm */
+  0xa5, /* ADC8rr_REV */
 /* Table30 */
-  0x95, /* ADC32rm */
-  0x97, /* ADC32rr_REV */
+  0x91, /* ADC32rm */
+  0x93, /* ADC32rr_REV */
 /* Table32 */
-  0xa1, /* ADC8i8 */
+  0x9d, /* ADC8i8 */
 /* Table33 */
-  0x8f, /* ADC32i32 */
+  0x8b, /* ADC32i32 */
 /* Table34 */
-  0x3f3, /* PUSHSS32 */
+  0x441, /* PUSHSS32 */
 /* Table35 */
-  0x3cf, /* POPSS32 */
+  0x41d, /* POPSS32 */
 /* Table36 */
-  0x4d1, /* SBB8mr */
-  0x4d5, /* SBB8rr */
+  0x51b, /* SBB8mr */
+  0x51f, /* SBB8rr */
 /* Table38 */
-  0x4bf, /* SBB32mr */
-  0x4c3, /* SBB32rr */
+  0x509, /* SBB32mr */
+  0x50d, /* SBB32rr */
 /* Table40 */
-  0x4d4, /* SBB8rm */
-  0x4d6, /* SBB8rr_REV */
+  0x51e, /* SBB8rm */
+  0x520, /* SBB8rr_REV */
 /* Table42 */
-  0x4c2, /* SBB32rm */
-  0x4c4, /* SBB32rr_REV */
+  0x50c, /* SBB32rm */
+  0x50e, /* SBB32rr_REV */
 /* Table44 */
-  0x4ce, /* SBB8i8 */
+  0x518, /* SBB8i8 */
 /* Table45 */
-  0x4bc, /* SBB32i32 */
+  0x506, /* SBB32i32 */
 /* Table46 */
-  0x3e6, /* PUSHDS32 */
+  0x434, /* PUSHDS32 */
 /* Table47 */
-  0x3c2, /* POPDS32 */
+  0x410, /* POPDS32 */
 /* Table48 */
-  0xf4, /* AND8mr */
-  0xf8, /* AND8rr */
+  0xf0, /* AND8mr */
+  0xf4, /* AND8rr */
 /* Table50 */
-  0xe2, /* AND32mr */
-  0xe6, /* AND32rr */
+  0xde, /* AND32mr */
+  0xe2, /* AND32rr */
 /* Table52 */
-  0xf7, /* AND8rm */
-  0xf9, /* AND8rr_REV */
+  0xf3, /* AND8rm */
+  0xf5, /* AND8rr_REV */
 /* Table54 */
-  0xe5, /* AND32rm */
-  0xe7, /* AND32rr_REV */
+  0xe1, /* AND32rm */
+  0xe3, /* AND32rr_REV */
 /* Table56 */
-  0xf1, /* AND8i8 */
+  0xed, /* AND8i8 */
 /* Table57 */
-  0xdf, /* AND32i32 */
+  0xdb, /* AND32i32 */
 /* Table58 */
-  0x1f1, /* DAA */
+  0x225, /* DAA */
 /* Table59 */
-  0x586, /* SUB8mr */
-  0x58a, /* SUB8rr */
+  0x5d2, /* SUB8mr */
+  0x5d6, /* SUB8rr */
 /* Table61 */
-  0x574, /* SUB32mr */
-  0x578, /* SUB32rr */
+  0x5c0, /* SUB32mr */
+  0x5c4, /* SUB32rr */
 /* Table63 */
-  0x589, /* SUB8rm */
-  0x58b, /* SUB8rr_REV */
+  0x5d5, /* SUB8rm */
+  0x5d7, /* SUB8rr_REV */
 /* Table65 */
-  0x577, /* SUB32rm */
-  0x579, /* SUB32rr_REV */
+  0x5c3, /* SUB32rm */
+  0x5c5, /* SUB32rr_REV */
 /* Table67 */
-  0x583, /* SUB8i8 */
+  0x5cf, /* SUB8i8 */
 /* Table68 */
-  0x571, /* SUB32i32 */
+  0x5bd, /* SUB32i32 */
 /* Table69 */
-  0x1f2, /* DAS */
+  0x226, /* DAS */
 /* Table70 */
-  0x61f, /* XOR8mr */
-  0x623, /* XOR8rr */
+  0x669, /* XOR8mr */
+  0x66d, /* XOR8rr */
 /* Table72 */
-  0x60d, /* XOR32mr */
-  0x611, /* XOR32rr */
+  0x657, /* XOR32mr */
+  0x65b, /* XOR32rr */
 /* Table74 */
-  0x622, /* XOR8rm */
-  0x624, /* XOR8rr_REV */
+  0x66c, /* XOR8rm */
+  0x66e, /* XOR8rr_REV */
 /* Table76 */
-  0x610, /* XOR32rm */
-  0x612, /* XOR32rr_REV */
+  0x65a, /* XOR32rm */
+  0x65c, /* XOR32rr_REV */
 /* Table78 */
-  0x61c, /* XOR8i8 */
+  0x666, /* XOR8i8 */
 /* Table79 */
-  0x60a, /* XOR32i32 */
+  0x654, /* XOR32i32 */
 /* Table80 */
-  0x82, /* AAA */
+  0x7e, /* AAA */
 /* Table81 */
-  0x1d9, /* CMP8mr */
-  0x1dd, /* CMP8rr */
+  0x20d, /* CMP8mr */
+  0x211, /* CMP8rr */
 /* Table83 */
-  0x1c7, /* CMP32mr */
-  0x1cb, /* CMP32rr */
+  0x1fb, /* CMP32mr */
+  0x1ff, /* CMP32rr */
 /* Table85 */
-  0x1dc, /* CMP8rm */
-  0x1de, /* CMP8rr_REV */
+  0x210, /* CMP8rm */
+  0x212, /* CMP8rr_REV */
 /* Table87 */
-  0x1ca, /* CMP32rm */
-  0x1cc, /* CMP32rr_REV */
+  0x1fe, /* CMP32rm */
+  0x200, /* CMP32rr_REV */
 /* Table89 */
-  0x1d6, /* CMP8i8 */
+  0x20a, /* CMP8i8 */
 /* Table90 */
-  0x1c4, /* CMP32i32 */
+  0x1f8, /* CMP32i32 */
 /* Table91 */
-  0x85, /* AAS */
+  0x81, /* AAS */
 /* Table92 */
-  0x243, /* INC32r_alt */
+  0x277, /* INC32r_alt */
 /* Table93 */
-  0x1f9, /* DEC32r_alt */
+  0x22d, /* DEC32r_alt */
 /* Table94 */
-  0x3d9, /* PUSH32r */
+  0x427, /* PUSH32r */
 /* Table95 */
-  0x3b9, /* POP32r */
+  0x407, /* POP32r */
 /* Table96 */
-  0x3e2, /* PUSHA32 */
+  0x430, /* PUSHA32 */
 /* Table97 */
-  0x3c0, /* POPA32 */
+  0x40e, /* POPA32 */
 /* Table98 */
-  0x101, /* BOUNDS32rm */
+  0x12d, /* BOUNDS32rm */
   0x0, /*  */
 /* Table100 */
-  0xfe, /* ARPL16mr */
-  0xff, /* ARPL16rr */
+  0xfa, /* ARPL16mr */
+  0xfb, /* ARPL16rr */
 /* Table102 */
-  0x1f3, /* DATA16_PREFIX */
+  0x227, /* DATA16_PREFIX */
 /* Table103 */
-  0x3f5, /* PUSHi32 */
+  0x443, /* PUSHi32 */
 /* Table104 */
-  0x229, /* IMUL32rmi */
-  0x22c, /* IMUL32rri */
+  0x25d, /* IMUL32rmi */
+  0x260, /* IMUL32rri */
 /* Table106 */
-  0x3d8, /* PUSH32i8 */
+  0x426, /* PUSH32i8 */
 /* Table107 */
-  0x22a, /* IMUL32rmi8 */
-  0x22d, /* IMUL32rri8 */
+  0x25e, /* IMUL32rmi8 */
+  0x261, /* IMUL32rri8 */
 /* Table109 */
-  0x24a, /* INSB */
+  0x27e, /* INSB */
 /* Table110 */
-  0x24b, /* INSL */
+  0x27f, /* INSL */
 /* Table111 */
-  0x3b2, /* OUTSB */
+  0x3f8, /* OUTSB */
 /* Table112 */
-  0x3b3, /* OUTSL */
+  0x3f9, /* OUTSL */
 /* Table113 */
-  0x298, /* JO_1 */
+  0x2ca, /* JO_1 */
 /* Table114 */
-  0x28f, /* JNO_1 */
+  0x2c1, /* JNO_1 */
 /* Table115 */
-  0x269, /* JB_1 */
+  0x29b, /* JB_1 */
 /* Table116 */
-  0x260, /* JAE_1 */
+  0x292, /* JAE_1 */
 /* Table117 */
-  0x26e, /* JE_1 */
+  0x2a0, /* JE_1 */
 /* Table118 */
-  0x28c, /* JNE_1 */
+  0x2be, /* JNE_1 */
 /* Table119 */
-  0x266, /* JBE_1 */
+  0x298, /* JBE_1 */
 /* Table120 */
-  0x263, /* JA_1 */
+  0x295, /* JA_1 */
 /* Table121 */
-  0x29f, /* JS_1 */
+  0x2d1, /* JS_1 */
 /* Table122 */
-  0x295, /* JNS_1 */
+  0x2c7, /* JNS_1 */
 /* Table123 */
-  0x29b, /* JP_1 */
+  0x2cd, /* JP_1 */
 /* Table124 */
-  0x292, /* JNP_1 */
+  0x2c4, /* JNP_1 */
 /* Table125 */
-  0x27a, /* JL_1 */
+  0x2ac, /* JL_1 */
 /* Table126 */
-  0x271, /* JGE_1 */
+  0x2a3, /* JGE_1 */
 /* Table127 */
-  0x277, /* JLE_1 */
+  0x2a9, /* JLE_1 */
 /* Table128 */
-  0x274, /* JG_1 */
+  0x2a6, /* JG_1 */
 /* Table129 */
-  0xca, /* ADD8mi */
-  0x3a4, /* OR8mi */
-  0xa2, /* ADC8mi */
-  0x4cf, /* SBB8mi */
-  0xf2, /* AND8mi */
-  0x584, /* SUB8mi */
-  0x61d, /* XOR8mi */
-  0x1d7, /* CMP8mi */
-  0xcd, /* ADD8ri */
-  0x3a7, /* OR8ri */
-  0xa5, /* ADC8ri */
-  0x4d2, /* SBB8ri */
-  0xf5, /* AND8ri */
-  0x587, /* SUB8ri */
-  0x620, /* XOR8ri */
-  0x1da, /* CMP8ri */
+  0xc6, /* ADD8mi */
+  0x3ea, /* OR8mi */
+  0x9e, /* ADC8mi */
+  0x519, /* SBB8mi */
+  0xee, /* AND8mi */
+  0x5d0, /* SUB8mi */
+  0x667, /* XOR8mi */
+  0x20b, /* CMP8mi */
+  0xc9, /* ADD8ri */
+  0x3ed, /* OR8ri */
+  0xa1, /* ADC8ri */
+  0x51c, /* SBB8ri */
+  0xf1, /* AND8ri */
+  0x5d3, /* SUB8ri */
+  0x66a, /* XOR8ri */
+  0x20e, /* CMP8ri */
 /* Table145 */
-  0xb8, /* ADD32mi */
-  0x392, /* OR32mi */
-  0x90, /* ADC32mi */
-  0x4bd, /* SBB32mi */
-  0xe0, /* AND32mi */
-  0x572, /* SUB32mi */
-  0x60b, /* XOR32mi */
-  0x1c5, /* CMP32mi */
-  0xbb, /* ADD32ri */
-  0x395, /* OR32ri */
-  0x93, /* ADC32ri */
-  0x4c0, /* SBB32ri */
-  0xe3, /* AND32ri */
-  0x575, /* SUB32ri */
-  0x60e, /* XOR32ri */
-  0x1c8, /* CMP32ri */
+  0xb4, /* ADD32mi */
+  0x3d8, /* OR32mi */
+  0x8c, /* ADC32mi */
+  0x507, /* SBB32mi */
+  0xdc, /* AND32mi */
+  0x5be, /* SUB32mi */
+  0x655, /* XOR32mi */
+  0x1f9, /* CMP32mi */
+  0xb7, /* ADD32ri */
+  0x3db, /* OR32ri */
+  0x8f, /* ADC32ri */
+  0x50a, /* SBB32ri */
+  0xdf, /* AND32ri */
+  0x5c1, /* SUB32ri */
+  0x658, /* XOR32ri */
+  0x1fc, /* CMP32ri */
 /* Table161 */
-  0xcb, /* ADD8mi8 */
-  0x3a5, /* OR8mi8 */
-  0xa3, /* ADC8mi8 */
-  0x4d0, /* SBB8mi8 */
-  0xf3, /* AND8mi8 */
-  0x585, /* SUB8mi8 */
-  0x61e, /* XOR8mi8 */
-  0x1d8, /* CMP8mi8 */
-  0xce, /* ADD8ri8 */
-  0x3a8, /* OR8ri8 */
-  0xa6, /* ADC8ri8 */
-  0x4d3, /* SBB8ri8 */
-  0xf6, /* AND8ri8 */
-  0x588, /* SUB8ri8 */
-  0x621, /* XOR8ri8 */
-  0x1db, /* CMP8ri8 */
+  0xc7, /* ADD8mi8 */
+  0x3eb, /* OR8mi8 */
+  0x9f, /* ADC8mi8 */
+  0x51a, /* SBB8mi8 */
+  0xef, /* AND8mi8 */
+  0x5d1, /* SUB8mi8 */
+  0x668, /* XOR8mi8 */
+  0x20c, /* CMP8mi8 */
+  0xca, /* ADD8ri8 */
+  0x3ee, /* OR8ri8 */
+  0xa2, /* ADC8ri8 */
+  0x51d, /* SBB8ri8 */
+  0xf2, /* AND8ri8 */
+  0x5d4, /* SUB8ri8 */
+  0x66b, /* XOR8ri8 */
+  0x20f, /* CMP8ri8 */
 /* Table177 */
-  0xb9, /* ADD32mi8 */
-  0x393, /* OR32mi8 */
-  0x91, /* ADC32mi8 */
-  0x4be, /* SBB32mi8 */
-  0xe1, /* AND32mi8 */
-  0x573, /* SUB32mi8 */
-  0x60c, /* XOR32mi8 */
-  0x1c6, /* CMP32mi8 */
-  0xbc, /* ADD32ri8 */
-  0x396, /* OR32ri8 */
-  0x94, /* ADC32ri8 */
-  0x4c1, /* SBB32ri8 */
-  0xe4, /* AND32ri8 */
-  0x576, /* SUB32ri8 */
-  0x60f, /* XOR32ri8 */
-  0x1c9, /* CMP32ri8 */
+  0xb5, /* ADD32mi8 */
+  0x3d9, /* OR32mi8 */
+  0x8d, /* ADC32mi8 */
+  0x508, /* SBB32mi8 */
+  0xdd, /* AND32mi8 */
+  0x5bf, /* SUB32mi8 */
+  0x656, /* XOR32mi8 */
+  0x1fa, /* CMP32mi8 */
+  0xb8, /* ADD32ri8 */
+  0x3dc, /* OR32ri8 */
+  0x90, /* ADC32ri8 */
+  0x50b, /* SBB32ri8 */
+  0xe0, /* AND32ri8 */
+  0x5c2, /* SUB32ri8 */
+  0x659, /* XOR32ri8 */
+  0x1fd, /* CMP32ri8 */
 /* Table193 */
-  0x5b6, /* TEST8mr */
-  0x5b8, /* TEST8rr */
+  0x5f4, /* TEST8mr */
+  0x5f6, /* TEST8rr */
 /* Table195 */
-  0x5ac, /* TEST32mr */
-  0x5ae, /* TEST32rr */
+  0x5ea, /* TEST32mr */
+  0x5ec, /* TEST32rr */
 /* Table197 */
-  0x5f8, /* XCHG8rm */
-  0x5f9, /* XCHG8rr */
+  0x642, /* XCHG8rm */
+  0x643, /* XCHG8rr */
 /* Table199 */
-  0x5f3, /* XCHG32rm */
-  0x5f4, /* XCHG32rr */
+  0x63d, /* XCHG32rm */
+  0x63e, /* XCHG32rr */
 /* Table201 */
-  0x318, /* MOV8mr */
-  0x321, /* MOV8rr */
+  0x359, /* MOV8mr */
+  0x362, /* MOV8rr */
 /* Table203 */
-  0x2f6, /* MOV32mr */
-  0x2ff, /* MOV32rr */
+  0x337, /* MOV32mr */
+  0x340, /* MOV32rr */
 /* Table205 */
-  0x31f, /* MOV8rm */
-  0x323, /* MOV8rr_REV */
+  0x360, /* MOV8rm */
+  0x364, /* MOV8rr_REV */
 /* Table207 */
-  0x2fe, /* MOV32rm */
-  0x300, /* MOV32rr_REV */
+  0x33f, /* MOV32rm */
+  0x341, /* MOV32rr_REV */
 /* Table209 */
-  0x2e4, /* MOV16ms */
-  0x301, /* MOV32rs */
+  0x325, /* MOV16ms */
+  0x342, /* MOV32rs */
 /* Table211 */
-  0x2ac, /* LEA32r */
+  0x2de, /* LEA32r */
   0x0, /*  */
 /* Table213 */
-  0x2ee, /* MOV16sm */
-  0x302, /* MOV32sr */
+  0x32f, /* MOV16sm */
+  0x343, /* MOV32sr */
 /* Table215 */
-  0x3ba, /* POP32rmm */
+  0x408, /* POP32rmm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24123,7 +24507,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3bb, /* POP32rmr */
+  0x409, /* POP32rmr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24132,105 +24516,105 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table231 */
-  0x361, /* NOOP */
+  0x3a7, /* NOOP */
 /* Table232 */
-  0x5f2, /* XCHG32ar */
+  0x63c, /* XCHG32ar */
 /* Table233 */
-  0x1f0, /* CWDE */
+  0x224, /* CWDE */
 /* Table234 */
-  0x151, /* CDQ */
+  0x181, /* CDQ */
 /* Table235 */
-  0x20b, /* FARCALL32i */
+  0x23f, /* FARCALL32i */
 /* Table236 */
-  0x3ea, /* PUSHF32 */
+  0x438, /* PUSHF32 */
 /* Table237 */
-  0x3c6, /* POPF32 */
+  0x414, /* POPF32 */
 /* Table238 */
-  0x47c, /* SAHF */
+  0x4c6, /* SAHF */
 /* Table239 */
-  0x2a2, /* LAHF */
+  0x2d4, /* LAHF */
 /* Table240 */
-  0x315, /* MOV8ao32 */
+  0x356, /* MOV8ao32 */
 /* Table241 */
-  0x2f1, /* MOV32ao32 */
+  0x332, /* MOV32ao32 */
 /* Table242 */
-  0x31b, /* MOV8o32a */
+  0x35c, /* MOV8o32a */
 /* Table243 */
-  0x2f8, /* MOV32o32a */
+  0x339, /* MOV32o32a */
 /* Table244 */
-  0x32a, /* MOVSB */
+  0x370, /* MOVSB */
 /* Table245 */
-  0x32b, /* MOVSL */
+  0x371, /* MOVSL */
 /* Table246 */
-  0x1df, /* CMPSB */
+  0x213, /* CMPSB */
 /* Table247 */
-  0x1e0, /* CMPSL */
+  0x214, /* CMPSL */
 /* Table248 */
-  0x5b4, /* TEST8i8 */
+  0x5f2, /* TEST8i8 */
 /* Table249 */
-  0x5aa, /* TEST32i32 */
+  0x5e8, /* TEST32i32 */
 /* Table250 */
-  0x560, /* STOSB */
+  0x5ac, /* STOSB */
 /* Table251 */
-  0x561, /* STOSL */
+  0x5ad, /* STOSL */
 /* Table252 */
-  0x2c4, /* LODSB */
+  0x2f8, /* LODSB */
 /* Table253 */
-  0x2c5, /* LODSL */
+  0x2f9, /* LODSL */
 /* Table254 */
-  0x4d7, /* SCASB */
+  0x521, /* SCASB */
 /* Table255 */
-  0x4d8, /* SCASL */
+  0x522, /* SCASL */
 /* Table256 */
-  0x31d, /* MOV8ri */
+  0x35e, /* MOV8ri */
 /* Table257 */
-  0x2fc, /* MOV32ri */
+  0x33d, /* MOV32ri */
 /* Table258 */
-  0x45a, /* ROL8mi */
-  0x472, /* ROR8mi */
-  0x40a, /* RCL8mi */
-  0x422, /* RCR8mi */
-  0x513, /* SHL8mi */
-  0x53b, /* SHR8mi */
-  0x491, /* SAL8mi */
-  0x4aa, /* SAR8mi */
-  0x45d, /* ROL8ri */
-  0x475, /* ROR8ri */
-  0x40d, /* RCL8ri */
-  0x425, /* RCR8ri */
-  0x516, /* SHL8ri */
-  0x53e, /* SHR8ri */
-  0x494, /* SAL8ri */
-  0x4ad, /* SAR8ri */
+  0x4a4, /* ROL8mi */
+  0x4bc, /* ROR8mi */
+  0x458, /* RCL8mi */
+  0x470, /* RCR8mi */
+  0x55d, /* SHL8mi */
+  0x585, /* SHR8mi */
+  0x4db, /* SAL8mi */
+  0x4f4, /* SAR8mi */
+  0x4a7, /* ROL8ri */
+  0x4bf, /* ROR8ri */
+  0x45b, /* RCL8ri */
+  0x473, /* RCR8ri */
+  0x560, /* SHL8ri */
+  0x588, /* SHR8ri */
+  0x4de, /* SAL8ri */
+  0x4f7, /* SAR8ri */
 /* Table274 */
-  0x44e, /* ROL32mi */
-  0x466, /* ROR32mi */
-  0x3fe, /* RCL32mi */
-  0x416, /* RCR32mi */
-  0x507, /* SHL32mi */
-  0x52f, /* SHR32mi */
-  0x485, /* SAL32mi */
-  0x49e, /* SAR32mi */
-  0x451, /* ROL32ri */
-  0x469, /* ROR32ri */
-  0x401, /* RCL32ri */
-  0x419, /* RCR32ri */
-  0x50a, /* SHL32ri */
-  0x532, /* SHR32ri */
-  0x488, /* SAL32ri */
-  0x4a1, /* SAR32ri */
+  0x498, /* ROL32mi */
+  0x4b0, /* ROR32mi */
+  0x44c, /* RCL32mi */
+  0x464, /* RCR32mi */
+  0x551, /* SHL32mi */
+  0x579, /* SHR32mi */
+  0x4cf, /* SAL32mi */
+  0x4e8, /* SAR32mi */
+  0x49b, /* ROL32ri */
+  0x4b3, /* ROR32ri */
+  0x44f, /* RCL32ri */
+  0x467, /* RCR32ri */
+  0x554, /* SHL32ri */
+  0x57c, /* SHR32ri */
+  0x4d2, /* SAL32ri */
+  0x4eb, /* SAR32ri */
 /* Table290 */
-  0x43f, /* RETIL */
+  0x489, /* RETIL */
 /* Table291 */
-  0x442, /* RETL */
+  0x48c, /* RETL */
 /* Table292 */
-  0x2b2, /* LES32rm */
+  0x2e4, /* LES32rm */
   0x0, /*  */
 /* Table294 */
-  0x2aa, /* LDS32rm */
+  0x2dc, /* LDS32rm */
   0x0, /*  */
 /* Table296 */
-  0x317, /* MOV8mi */
+  0x358, /* MOV8mi */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24238,7 +24622,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x31e, /* MOV8ri_alt */
+  0x35f, /* MOV8ri_alt */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24247,7 +24631,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table312 */
-  0x2f5, /* MOV32mi */
+  0x336, /* MOV32mi */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24255,7 +24639,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x2fd, /* MOV32ri_alt */
+  0x33e, /* MOV32ri_alt */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24264,97 +24648,97 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table328 */
-  0x208, /* ENTER */
+  0x23c, /* ENTER */
 /* Table329 */
-  0x2af, /* LEAVE */
+  0x2e1, /* LEAVE */
 /* Table330 */
-  0x2cb, /* LRETIL */
+  0x2ff, /* LRETIL */
 /* Table331 */
-  0x2ce, /* LRETL */
+  0x302, /* LRETL */
 /* Table332 */
-  0x24f, /* INT3 */
+  0x283, /* INT3 */
 /* Table333 */
-  0x24d, /* INT */
+  0x281, /* INT */
 /* Table334 */
-  0x250, /* INTO */
+  0x284, /* INTO */
 /* Table335 */
-  0x25d, /* IRET32 */
+  0x290, /* IRET32 */
 /* Table336 */
-  0x458, /* ROL8m1 */
-  0x470, /* ROR8m1 */
-  0x408, /* RCL8m1 */
-  0x420, /* RCR8m1 */
-  0x511, /* SHL8m1 */
-  0x539, /* SHR8m1 */
-  0x48f, /* SAL8m1 */
-  0x4a8, /* SAR8m1 */
-  0x45b, /* ROL8r1 */
-  0x473, /* ROR8r1 */
-  0x40b, /* RCL8r1 */
-  0x423, /* RCR8r1 */
-  0x514, /* SHL8r1 */
-  0x53c, /* SHR8r1 */
-  0x492, /* SAL8r1 */
-  0x4ab, /* SAR8r1 */
+  0x4a2, /* ROL8m1 */
+  0x4ba, /* ROR8m1 */
+  0x456, /* RCL8m1 */
+  0x46e, /* RCR8m1 */
+  0x55b, /* SHL8m1 */
+  0x583, /* SHR8m1 */
+  0x4d9, /* SAL8m1 */
+  0x4f2, /* SAR8m1 */
+  0x4a5, /* ROL8r1 */
+  0x4bd, /* ROR8r1 */
+  0x459, /* RCL8r1 */
+  0x471, /* RCR8r1 */
+  0x55e, /* SHL8r1 */
+  0x586, /* SHR8r1 */
+  0x4dc, /* SAL8r1 */
+  0x4f5, /* SAR8r1 */
 /* Table352 */
-  0x44c, /* ROL32m1 */
-  0x464, /* ROR32m1 */
-  0x3fc, /* RCL32m1 */
-  0x414, /* RCR32m1 */
-  0x505, /* SHL32m1 */
-  0x52d, /* SHR32m1 */
-  0x483, /* SAL32m1 */
-  0x49c, /* SAR32m1 */
-  0x44f, /* ROL32r1 */
-  0x467, /* ROR32r1 */
-  0x3ff, /* RCL32r1 */
-  0x417, /* RCR32r1 */
-  0x508, /* SHL32r1 */
-  0x530, /* SHR32r1 */
-  0x486, /* SAL32r1 */
-  0x49f, /* SAR32r1 */
+  0x496, /* ROL32m1 */
+  0x4ae, /* ROR32m1 */
+  0x44a, /* RCL32m1 */
+  0x462, /* RCR32m1 */
+  0x54f, /* SHL32m1 */
+  0x577, /* SHR32m1 */
+  0x4cd, /* SAL32m1 */
+  0x4e6, /* SAR32m1 */
+  0x499, /* ROL32r1 */
+  0x4b1, /* ROR32r1 */
+  0x44d, /* RCL32r1 */
+  0x465, /* RCR32r1 */
+  0x552, /* SHL32r1 */
+  0x57a, /* SHR32r1 */
+  0x4d0, /* SAL32r1 */
+  0x4e9, /* SAR32r1 */
 /* Table368 */
-  0x459, /* ROL8mCL */
-  0x471, /* ROR8mCL */
-  0x409, /* RCL8mCL */
-  0x421, /* RCR8mCL */
-  0x512, /* SHL8mCL */
-  0x53a, /* SHR8mCL */
-  0x490, /* SAL8mCL */
-  0x4a9, /* SAR8mCL */
-  0x45c, /* ROL8rCL */
-  0x474, /* ROR8rCL */
-  0x40c, /* RCL8rCL */
-  0x424, /* RCR8rCL */
-  0x515, /* SHL8rCL */
-  0x53d, /* SHR8rCL */
-  0x493, /* SAL8rCL */
-  0x4ac, /* SAR8rCL */
+  0x4a3, /* ROL8mCL */
+  0x4bb, /* ROR8mCL */
+  0x457, /* RCL8mCL */
+  0x46f, /* RCR8mCL */
+  0x55c, /* SHL8mCL */
+  0x584, /* SHR8mCL */
+  0x4da, /* SAL8mCL */
+  0x4f3, /* SAR8mCL */
+  0x4a6, /* ROL8rCL */
+  0x4be, /* ROR8rCL */
+  0x45a, /* RCL8rCL */
+  0x472, /* RCR8rCL */
+  0x55f, /* SHL8rCL */
+  0x587, /* SHR8rCL */
+  0x4dd, /* SAL8rCL */
+  0x4f6, /* SAR8rCL */
 /* Table384 */
-  0x44d, /* ROL32mCL */
-  0x465, /* ROR32mCL */
-  0x3fd, /* RCL32mCL */
-  0x415, /* RCR32mCL */
-  0x506, /* SHL32mCL */
-  0x52e, /* SHR32mCL */
-  0x484, /* SAL32mCL */
-  0x49d, /* SAR32mCL */
-  0x450, /* ROL32rCL */
-  0x468, /* ROR32rCL */
-  0x400, /* RCL32rCL */
-  0x418, /* RCR32rCL */
-  0x509, /* SHL32rCL */
-  0x531, /* SHR32rCL */
-  0x487, /* SAL32rCL */
-  0x4a0, /* SAR32rCL */
+  0x497, /* ROL32mCL */
+  0x4af, /* ROR32mCL */
+  0x44b, /* RCL32mCL */
+  0x463, /* RCR32mCL */
+  0x550, /* SHL32mCL */
+  0x578, /* SHR32mCL */
+  0x4ce, /* SAL32mCL */
+  0x4e7, /* SAR32mCL */
+  0x49a, /* ROL32rCL */
+  0x4b2, /* ROR32rCL */
+  0x44e, /* RCL32rCL */
+  0x466, /* RCR32rCL */
+  0x553, /* SHL32rCL */
+  0x57b, /* SHR32rCL */
+  0x4d1, /* SAL32rCL */
+  0x4ea, /* SAR32rCL */
 /* Table400 */
-  0x84, /* AAM8i8 */
+  0x80, /* AAM8i8 */
 /* Table401 */
-  0x83, /* AAD8i8 */
+  0x7f, /* AAD8i8 */
 /* Table402 */
-  0x495, /* SALC */
+  0x4df, /* SALC */
 /* Table403 */
-  0x600, /* XLAT */
+  0x64a, /* XLAT */
 /* Table404 */
   0x0, /*  */
   0x0, /*  */
@@ -24400,7 +24784,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x213, /* FSETPM */
+  0x247, /* FSETPM */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24429,106 +24813,106 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table476 */
-  0x2ca, /* LOOPNE */
+  0x2fe, /* LOOPNE */
 /* Table477 */
-  0x2c9, /* LOOPE */
+  0x2fd, /* LOOPE */
 /* Table478 */
-  0x2c8, /* LOOP */
+  0x2fc, /* LOOP */
 /* Table479 */
-  0x26d, /* JECXZ */
+  0x29f, /* JECXZ */
 /* Table480 */
-  0x23c, /* IN8ri */
+  0x270, /* IN8ri */
 /* Table481 */
-  0x23a, /* IN32ri */
+  0x26e, /* IN32ri */
 /* Table482 */
-  0x3b0, /* OUT8ir */
+  0x3f6, /* OUT8ir */
 /* Table483 */
-  0x3ae, /* OUT32ir */
+  0x3f4, /* OUT32ir */
 /* Table484 */
-  0x14f, /* CALLpcrel32 */
+  0x17f, /* CALLpcrel32 */
 /* Table485 */
-  0x28b, /* JMP_4 */
+  0x2bd, /* JMP_4 */
 /* Table486 */
-  0x210, /* FARJMP32i */
+  0x244, /* FARJMP32i */
 /* Table487 */
-  0x289, /* JMP_1 */
+  0x2bb, /* JMP_1 */
 /* Table488 */
-  0x23d, /* IN8rr */
+  0x271, /* IN8rr */
 /* Table489 */
-  0x23b, /* IN32rr */
+  0x26f, /* IN32rr */
 /* Table490 */
-  0x3b1, /* OUT8rr */
+  0x3f7, /* OUT8rr */
 /* Table491 */
-  0x3af, /* OUT32rr */
+  0x3f5, /* OUT32rr */
 /* Table492 */
-  0x2c3, /* LOCK_PREFIX */
+  0x2f7, /* LOCK_PREFIX */
 /* Table493 */
-  0x24e, /* INT1 */
+  0x282, /* INT1 */
 /* Table494 */
-  0x43c, /* REPNE_PREFIX */
+  0x487, /* REPNE_PREFIX */
 /* Table495 */
-  0x43d, /* REP_PREFIX */
+  0x488, /* REP_PREFIX */
 /* Table496 */
-  0x215, /* HLT */
+  0x249, /* HLT */
 /* Table497 */
-  0x15a, /* CMC */
+  0x18e, /* CMC */
 /* Table498 */
-  0x5b5, /* TEST8mi */
+  0x5f3, /* TEST8mi */
   0x0, /*  */
-  0x386, /* NOT8m */
-  0x35f, /* NEG8m */
-  0x352, /* MUL8m */
-  0x236, /* IMUL8m */
-  0x204, /* DIV8m */
-  0x21c, /* IDIV8m */
-  0x5b7, /* TEST8ri */
+  0x3cc, /* NOT8m */
+  0x3a5, /* NEG8m */
+  0x398, /* MUL8m */
+  0x26a, /* IMUL8m */
+  0x238, /* DIV8m */
+  0x250, /* IDIV8m */
+  0x5f5, /* TEST8ri */
   0x0, /*  */
-  0x387, /* NOT8r */
-  0x360, /* NEG8r */
-  0x353, /* MUL8r */
-  0x237, /* IMUL8r */
-  0x205, /* DIV8r */
-  0x21d, /* IDIV8r */
+  0x3cd, /* NOT8r */
+  0x3a6, /* NEG8r */
+  0x399, /* MUL8r */
+  0x26b, /* IMUL8r */
+  0x239, /* DIV8r */
+  0x251, /* IDIV8r */
 /* Table514 */
-  0x5ab, /* TEST32mi */
+  0x5e9, /* TEST32mi */
   0x0, /*  */
-  0x382, /* NOT32m */
-  0x35b, /* NEG32m */
-  0x34e, /* MUL32m */
-  0x226, /* IMUL32m */
-  0x200, /* DIV32m */
-  0x218, /* IDIV32m */
-  0x5ad, /* TEST32ri */
+  0x3c8, /* NOT32m */
+  0x3a1, /* NEG32m */
+  0x394, /* MUL32m */
+  0x25a, /* IMUL32m */
+  0x234, /* DIV32m */
+  0x24c, /* IDIV32m */
+  0x5eb, /* TEST32ri */
   0x0, /*  */
-  0x383, /* NOT32r */
-  0x35c, /* NEG32r */
-  0x34f, /* MUL32r */
-  0x227, /* IMUL32r */
-  0x201, /* DIV32r */
-  0x219, /* IDIV32r */
+  0x3c9, /* NOT32r */
+  0x3a2, /* NEG32r */
+  0x395, /* MUL32r */
+  0x25b, /* IMUL32r */
+  0x235, /* DIV32r */
+  0x24d, /* IDIV32r */
 /* Table530 */
-  0x154, /* CLC */
+  0x184, /* CLC */
 /* Table531 */
-  0x55c, /* STC */
+  0x5a8, /* STC */
 /* Table532 */
-  0x157, /* CLI */
+  0x189, /* CLI */
 /* Table533 */
-  0x55f, /* STI */
+  0x5ab, /* STI */
 /* Table534 */
-  0x155, /* CLD */
+  0x185, /* CLD */
 /* Table535 */
-  0x55d, /* STD */
+  0x5a9, /* STD */
 /* Table536 */
-  0x246, /* INC8m */
-  0x1fc, /* DEC8m */
+  0x27a, /* INC8m */
+  0x230, /* DEC8m */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x247, /* INC8r */
-  0x1fd, /* DEC8r */
+  0x27b, /* INC8r */
+  0x231, /* DEC8r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24536,37 +24920,37 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table552 */
-  0x241, /* INC32m */
-  0x1f7, /* DEC32m */
-  0x145, /* CALL32m */
-  0x20c, /* FARCALL32m */
-  0x281, /* JMP32m */
-  0x211, /* FARJMP32m */
-  0x3da, /* PUSH32rmm */
+  0x275, /* INC32m */
+  0x22b, /* DEC32m */
+  0x175, /* CALL32m */
+  0x240, /* FARCALL32m */
+  0x2b3, /* JMP32m */
+  0x245, /* FARJMP32m */
+  0x428, /* PUSH32rmm */
   0x0, /*  */
-  0x242, /* INC32r */
-  0x1f8, /* DEC32r */
-  0x147, /* CALL32r */
+  0x276, /* INC32r */
+  0x22c, /* DEC32r */
+  0x177, /* CALL32r */
   0x0, /*  */
-  0x283, /* JMP32r */
+  0x2b5, /* JMP32r */
   0x0, /*  */
-  0x3db, /* PUSH32rmr */
+  0x429, /* PUSH32rmr */
   0x0, /*  */
 /* Table568 */
-  0x445, /* REX64_PREFIX */
+  0x48f, /* REX64_PREFIX */
 /* Table569 */
-  0x3de, /* PUSH64r */
+  0x42c, /* PUSH64r */
 /* Table570 */
-  0x3bc, /* POP64r */
+  0x40a, /* POP64r */
 /* Table571 */
-  0x3dc, /* PUSH64i32 */
+  0x42a, /* PUSH64i32 */
 /* Table572 */
-  0x3dd, /* PUSH64i8 */
+  0x42b, /* PUSH64i8 */
 /* Table573 */
-  0x2ad, /* LEA64_32r */
+  0x2df, /* LEA64_32r */
   0x0, /*  */
 /* Table575 */
-  0x3bd, /* POP64rmm */
+  0x40b, /* POP64rmm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24574,7 +24958,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3be, /* POP64rmr */
+  0x40c, /* POP64rmr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24583,208 +24967,208 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table591 */
-  0x3eb, /* PUSHF64 */
+  0x439, /* PUSHF64 */
 /* Table592 */
-  0x3c7, /* POPF64 */
+  0x415, /* POPF64 */
 /* Table593 */
-  0x316, /* MOV8ao64 */
+  0x357, /* MOV8ao64 */
 /* Table594 */
-  0x2f2, /* MOV32ao64 */
+  0x333, /* MOV32ao64 */
 /* Table595 */
-  0x31c, /* MOV8o64a */
+  0x35d, /* MOV8o64a */
 /* Table596 */
-  0x2f9, /* MOV32o64a */
+  0x33a, /* MOV32o64a */
 /* Table597 */
-  0x440, /* RETIQ */
+  0x48a, /* RETIQ */
 /* Table598 */
-  0x443, /* RETQ */
+  0x48d, /* RETQ */
 /* Table599 */
-  0x2b0, /* LEAVE64 */
+  0x2e2, /* LEAVE64 */
 /* Table600 */
-  0x29e, /* JRCXZ */
+  0x2d0, /* JRCXZ */
 /* Table601 */
-  0x14b, /* CALL64pcrel32 */
+  0x17b, /* CALL64pcrel32 */
 /* Table602 */
-  0x241, /* INC32m */
-  0x1f7, /* DEC32m */
-  0x149, /* CALL64m */
-  0x20c, /* FARCALL32m */
-  0x285, /* JMP64m */
-  0x211, /* FARJMP32m */
-  0x3df, /* PUSH64rmm */
+  0x275, /* INC32m */
+  0x22b, /* DEC32m */
+  0x179, /* CALL64m */
+  0x240, /* FARCALL32m */
+  0x2b7, /* JMP64m */
+  0x245, /* FARJMP32m */
+  0x42d, /* PUSH64rmm */
   0x0, /*  */
-  0x242, /* INC32r */
-  0x1f8, /* DEC32r */
-  0x14c, /* CALL64r */
+  0x276, /* INC32r */
+  0x22c, /* DEC32r */
+  0x17c, /* CALL64r */
   0x0, /*  */
-  0x287, /* JMP64r */
+  0x2b9, /* JMP64r */
   0x0, /*  */
-  0x3e0, /* PUSH64rmr */
+  0x42e, /* PUSH64rmr */
   0x0, /*  */
 /* Table618 */
-  0xb1, /* ADD16mr */
-  0xb5, /* ADD16rr */
+  0xad, /* ADD16mr */
+  0xb1, /* ADD16rr */
 /* Table620 */
-  0xb4, /* ADD16rm */
-  0xb6, /* ADD16rr_REV */
+  0xb0, /* ADD16rm */
+  0xb2, /* ADD16rr_REV */
 /* Table622 */
-  0xae, /* ADD16i16 */
+  0xaa, /* ADD16i16 */
 /* Table623 */
-  0x3e7, /* PUSHES16 */
+  0x435, /* PUSHES16 */
 /* Table624 */
-  0x3c3, /* POPES16 */
+  0x411, /* POPES16 */
 /* Table625 */
-  0x38b, /* OR16mr */
-  0x38f, /* OR16rr */
+  0x3d1, /* OR16mr */
+  0x3d5, /* OR16rr */
 /* Table627 */
-  0x38e, /* OR16rm */
-  0x390, /* OR16rr_REV */
+  0x3d4, /* OR16rm */
+  0x3d6, /* OR16rr_REV */
 /* Table629 */
-  0x388, /* OR16i16 */
+  0x3ce, /* OR16i16 */
 /* Table630 */
-  0x3e3, /* PUSHCS16 */
+  0x431, /* PUSHCS16 */
 /* Table631 */
-  0x89, /* ADC16mr */
-  0x8d, /* ADC16rr */
+  0x85, /* ADC16mr */
+  0x89, /* ADC16rr */
 /* Table633 */
-  0x8c, /* ADC16rm */
-  0x8e, /* ADC16rr_REV */
+  0x88, /* ADC16rm */
+  0x8a, /* ADC16rr_REV */
 /* Table635 */
-  0x86, /* ADC16i16 */
+  0x82, /* ADC16i16 */
 /* Table636 */
-  0x3f2, /* PUSHSS16 */
+  0x440, /* PUSHSS16 */
 /* Table637 */
-  0x3ce, /* POPSS16 */
+  0x41c, /* POPSS16 */
 /* Table638 */
-  0x4b6, /* SBB16mr */
-  0x4ba, /* SBB16rr */
+  0x500, /* SBB16mr */
+  0x504, /* SBB16rr */
 /* Table640 */
-  0x4b9, /* SBB16rm */
-  0x4bb, /* SBB16rr_REV */
+  0x503, /* SBB16rm */
+  0x505, /* SBB16rr_REV */
 /* Table642 */
-  0x4b3, /* SBB16i16 */
+  0x4fd, /* SBB16i16 */
 /* Table643 */
-  0x3e5, /* PUSHDS16 */
+  0x433, /* PUSHDS16 */
 /* Table644 */
-  0x3c1, /* POPDS16 */
+  0x40f, /* POPDS16 */
 /* Table645 */
-  0xd9, /* AND16mr */
-  0xdd, /* AND16rr */
+  0xd5, /* AND16mr */
+  0xd9, /* AND16rr */
 /* Table647 */
-  0xdc, /* AND16rm */
-  0xde, /* AND16rr_REV */
+  0xd8, /* AND16rm */
+  0xda, /* AND16rr_REV */
 /* Table649 */
-  0xd6, /* AND16i16 */
+  0xd2, /* AND16i16 */
 /* Table650 */
-  0x56b, /* SUB16mr */
-  0x56f, /* SUB16rr */
+  0x5b7, /* SUB16mr */
+  0x5bb, /* SUB16rr */
 /* Table652 */
-  0x56e, /* SUB16rm */
-  0x570, /* SUB16rr_REV */
+  0x5ba, /* SUB16rm */
+  0x5bc, /* SUB16rr_REV */
 /* Table654 */
-  0x568, /* SUB16i16 */
+  0x5b4, /* SUB16i16 */
 /* Table655 */
-  0x604, /* XOR16mr */
-  0x608, /* XOR16rr */
+  0x64e, /* XOR16mr */
+  0x652, /* XOR16rr */
 /* Table657 */
-  0x607, /* XOR16rm */
-  0x609, /* XOR16rr_REV */
+  0x651, /* XOR16rm */
+  0x653, /* XOR16rr_REV */
 /* Table659 */
-  0x601, /* XOR16i16 */
+  0x64b, /* XOR16i16 */
 /* Table660 */
-  0x1be, /* CMP16mr */
-  0x1c2, /* CMP16rr */
+  0x1f2, /* CMP16mr */
+  0x1f6, /* CMP16rr */
 /* Table662 */
-  0x1c1, /* CMP16rm */
-  0x1c3, /* CMP16rr_REV */
+  0x1f5, /* CMP16rm */
+  0x1f7, /* CMP16rr_REV */
 /* Table664 */
-  0x1bb, /* CMP16i16 */
+  0x1ef, /* CMP16i16 */
 /* Table665 */
-  0x240, /* INC16r_alt */
+  0x274, /* INC16r_alt */
 /* Table666 */
-  0x1f6, /* DEC16r_alt */
+  0x22a, /* DEC16r_alt */
 /* Table667 */
-  0x3d5, /* PUSH16r */
+  0x423, /* PUSH16r */
 /* Table668 */
-  0x3b6, /* POP16r */
+  0x404, /* POP16r */
 /* Table669 */
-  0x3e1, /* PUSHA16 */
+  0x42f, /* PUSHA16 */
 /* Table670 */
-  0x3bf, /* POPA16 */
+  0x40d, /* POPA16 */
 /* Table671 */
-  0x100, /* BOUNDS16rm */
+  0x12c, /* BOUNDS16rm */
   0x0, /*  */
 /* Table673 */
-  0x3f4, /* PUSHi16 */
+  0x442, /* PUSHi16 */
 /* Table674 */
-  0x221, /* IMUL16rmi */
-  0x224, /* IMUL16rri */
+  0x255, /* IMUL16rmi */
+  0x258, /* IMUL16rri */
 /* Table676 */
-  0x3d4, /* PUSH16i8 */
+  0x422, /* PUSH16i8 */
 /* Table677 */
-  0x222, /* IMUL16rmi8 */
-  0x225, /* IMUL16rri8 */
+  0x256, /* IMUL16rmi8 */
+  0x259, /* IMUL16rri8 */
 /* Table679 */
-  0x24c, /* INSW */
+  0x280, /* INSW */
 /* Table680 */
-  0x3b4, /* OUTSW */
+  0x3fa, /* OUTSW */
 /* Table681 */
-  0xaf, /* ADD16mi */
-  0x389, /* OR16mi */
-  0x87, /* ADC16mi */
-  0x4b4, /* SBB16mi */
-  0xd7, /* AND16mi */
-  0x569, /* SUB16mi */
-  0x602, /* XOR16mi */
-  0x1bc, /* CMP16mi */
-  0xb2, /* ADD16ri */
-  0x38c, /* OR16ri */
-  0x8a, /* ADC16ri */
-  0x4b7, /* SBB16ri */
-  0xda, /* AND16ri */
-  0x56c, /* SUB16ri */
-  0x605, /* XOR16ri */
-  0x1bf, /* CMP16ri */
+  0xab, /* ADD16mi */
+  0x3cf, /* OR16mi */
+  0x83, /* ADC16mi */
+  0x4fe, /* SBB16mi */
+  0xd3, /* AND16mi */
+  0x5b5, /* SUB16mi */
+  0x64c, /* XOR16mi */
+  0x1f0, /* CMP16mi */
+  0xae, /* ADD16ri */
+  0x3d2, /* OR16ri */
+  0x86, /* ADC16ri */
+  0x501, /* SBB16ri */
+  0xd6, /* AND16ri */
+  0x5b8, /* SUB16ri */
+  0x64f, /* XOR16ri */
+  0x1f3, /* CMP16ri */
 /* Table697 */
-  0xb0, /* ADD16mi8 */
-  0x38a, /* OR16mi8 */
-  0x88, /* ADC16mi8 */
-  0x4b5, /* SBB16mi8 */
-  0xd8, /* AND16mi8 */
-  0x56a, /* SUB16mi8 */
-  0x603, /* XOR16mi8 */
-  0x1bd, /* CMP16mi8 */
-  0xb3, /* ADD16ri8 */
-  0x38d, /* OR16ri8 */
-  0x8b, /* ADC16ri8 */
-  0x4b8, /* SBB16ri8 */
-  0xdb, /* AND16ri8 */
-  0x56d, /* SUB16ri8 */
-  0x606, /* XOR16ri8 */
-  0x1c0, /* CMP16ri8 */
+  0xac, /* ADD16mi8 */
+  0x3d0, /* OR16mi8 */
+  0x84, /* ADC16mi8 */
+  0x4ff, /* SBB16mi8 */
+  0xd4, /* AND16mi8 */
+  0x5b6, /* SUB16mi8 */
+  0x64d, /* XOR16mi8 */
+  0x1f1, /* CMP16mi8 */
+  0xaf, /* ADD16ri8 */
+  0x3d3, /* OR16ri8 */
+  0x87, /* ADC16ri8 */
+  0x502, /* SBB16ri8 */
+  0xd7, /* AND16ri8 */
+  0x5b9, /* SUB16ri8 */
+  0x650, /* XOR16ri8 */
+  0x1f4, /* CMP16ri8 */
 /* Table713 */
-  0x5a7, /* TEST16mr */
-  0x5a9, /* TEST16rr */
+  0x5e5, /* TEST16mr */
+  0x5e7, /* TEST16rr */
 /* Table715 */
-  0x5f0, /* XCHG16rm */
-  0x5f1, /* XCHG16rr */
+  0x63a, /* XCHG16rm */
+  0x63b, /* XCHG16rr */
 /* Table717 */
-  0x2e3, /* MOV16mr */
-  0x2eb, /* MOV16rr */
+  0x324, /* MOV16mr */
+  0x32c, /* MOV16rr */
 /* Table719 */
-  0x2ea, /* MOV16rm */
-  0x2ec, /* MOV16rr_REV */
+  0x32b, /* MOV16rm */
+  0x32d, /* MOV16rr_REV */
 /* Table721 */
-  0x2e4, /* MOV16ms */
-  0x2ed, /* MOV16rs */
+  0x325, /* MOV16ms */
+  0x32e, /* MOV16rs */
 /* Table723 */
-  0x2ab, /* LEA16r */
+  0x2dd, /* LEA16r */
   0x0, /*  */
 /* Table725 */
-  0x2ee, /* MOV16sm */
-  0x2ef, /* MOV16sr */
+  0x32f, /* MOV16sm */
+  0x330, /* MOV16sr */
 /* Table727 */
-  0x3b7, /* POP16rmm */
+  0x405, /* POP16rmm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24792,7 +25176,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3b8, /* POP16rmr */
+  0x406, /* POP16rmr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24801,64 +25185,64 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table743 */
-  0x5ef, /* XCHG16ar */
+  0x639, /* XCHG16ar */
 /* Table744 */
-  0x150, /* CBW */
+  0x180, /* CBW */
 /* Table745 */
-  0x1ef, /* CWD */
+  0x223, /* CWD */
 /* Table746 */
-  0x209, /* FARCALL16i */
+  0x23d, /* FARCALL16i */
 /* Table747 */
-  0x3e9, /* PUSHF16 */
+  0x437, /* PUSHF16 */
 /* Table748 */
-  0x3c5, /* POPF16 */
+  0x413, /* POPF16 */
 /* Table749 */
-  0x2e0, /* MOV16ao32 */
+  0x321, /* MOV16ao32 */
 /* Table750 */
-  0x2e6, /* MOV16o32a */
+  0x327, /* MOV16o32a */
 /* Table751 */
-  0x32d, /* MOVSW */
+  0x373, /* MOVSW */
 /* Table752 */
-  0x1e2, /* CMPSW */
+  0x216, /* CMPSW */
 /* Table753 */
-  0x5a5, /* TEST16i16 */
+  0x5e3, /* TEST16i16 */
 /* Table754 */
-  0x563, /* STOSW */
+  0x5af, /* STOSW */
 /* Table755 */
-  0x2c7, /* LODSW */
+  0x2fb, /* LODSW */
 /* Table756 */
-  0x4da, /* SCASW */
+  0x524, /* SCASW */
 /* Table757 */
-  0x2e8, /* MOV16ri */
+  0x329, /* MOV16ri */
 /* Table758 */
-  0x448, /* ROL16mi */
-  0x460, /* ROR16mi */
-  0x3f8, /* RCL16mi */
-  0x410, /* RCR16mi */
-  0x501, /* SHL16mi */
-  0x529, /* SHR16mi */
-  0x47f, /* SAL16mi */
-  0x498, /* SAR16mi */
-  0x44b, /* ROL16ri */
-  0x463, /* ROR16ri */
-  0x3fb, /* RCL16ri */
-  0x413, /* RCR16ri */
-  0x504, /* SHL16ri */
-  0x52c, /* SHR16ri */
-  0x482, /* SAL16ri */
-  0x49b, /* SAR16ri */
+  0x492, /* ROL16mi */
+  0x4aa, /* ROR16mi */
+  0x446, /* RCL16mi */
+  0x45e, /* RCR16mi */
+  0x54b, /* SHL16mi */
+  0x573, /* SHR16mi */
+  0x4c9, /* SAL16mi */
+  0x4e2, /* SAR16mi */
+  0x495, /* ROL16ri */
+  0x4ad, /* ROR16ri */
+  0x449, /* RCL16ri */
+  0x461, /* RCR16ri */
+  0x54e, /* SHL16ri */
+  0x576, /* SHR16ri */
+  0x4cc, /* SAL16ri */
+  0x4e5, /* SAR16ri */
 /* Table774 */
-  0x441, /* RETIW */
+  0x48b, /* RETIW */
 /* Table775 */
-  0x444, /* RETW */
+  0x48e, /* RETW */
 /* Table776 */
-  0x2b1, /* LES16rm */
+  0x2e3, /* LES16rm */
   0x0, /*  */
 /* Table778 */
-  0x2a9, /* LDS16rm */
+  0x2db, /* LDS16rm */
   0x0, /*  */
 /* Table780 */
-  0x2e2, /* MOV16mi */
+  0x323, /* MOV16mi */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24866,7 +25250,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x2e9, /* MOV16ri_alt */
+  0x32a, /* MOV16ri_alt */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -24875,278 +25259,278 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table796 */
-  0x2cd, /* LRETIW */
+  0x301, /* LRETIW */
 /* Table797 */
-  0x2d0, /* LRETW */
+  0x304, /* LRETW */
 /* Table798 */
-  0x25c, /* IRET16 */
+  0x28f, /* IRET16 */
 /* Table799 */
-  0x446, /* ROL16m1 */
-  0x45e, /* ROR16m1 */
-  0x3f6, /* RCL16m1 */
-  0x40e, /* RCR16m1 */
-  0x4ff, /* SHL16m1 */
-  0x527, /* SHR16m1 */
-  0x47d, /* SAL16m1 */
-  0x496, /* SAR16m1 */
-  0x449, /* ROL16r1 */
-  0x461, /* ROR16r1 */
-  0x3f9, /* RCL16r1 */
-  0x411, /* RCR16r1 */
-  0x502, /* SHL16r1 */
-  0x52a, /* SHR16r1 */
-  0x480, /* SAL16r1 */
-  0x499, /* SAR16r1 */
+  0x490, /* ROL16m1 */
+  0x4a8, /* ROR16m1 */
+  0x444, /* RCL16m1 */
+  0x45c, /* RCR16m1 */
+  0x549, /* SHL16m1 */
+  0x571, /* SHR16m1 */
+  0x4c7, /* SAL16m1 */
+  0x4e0, /* SAR16m1 */
+  0x493, /* ROL16r1 */
+  0x4ab, /* ROR16r1 */
+  0x447, /* RCL16r1 */
+  0x45f, /* RCR16r1 */
+  0x54c, /* SHL16r1 */
+  0x574, /* SHR16r1 */
+  0x4ca, /* SAL16r1 */
+  0x4e3, /* SAR16r1 */
 /* Table815 */
-  0x447, /* ROL16mCL */
-  0x45f, /* ROR16mCL */
-  0x3f7, /* RCL16mCL */
-  0x40f, /* RCR16mCL */
-  0x500, /* SHL16mCL */
-  0x528, /* SHR16mCL */
-  0x47e, /* SAL16mCL */
-  0x497, /* SAR16mCL */
-  0x44a, /* ROL16rCL */
-  0x462, /* ROR16rCL */
-  0x3fa, /* RCL16rCL */
-  0x412, /* RCR16rCL */
-  0x503, /* SHL16rCL */
-  0x52b, /* SHR16rCL */
-  0x481, /* SAL16rCL */
-  0x49a, /* SAR16rCL */
+  0x491, /* ROL16mCL */
+  0x4a9, /* ROR16mCL */
+  0x445, /* RCL16mCL */
+  0x45d, /* RCR16mCL */
+  0x54a, /* SHL16mCL */
+  0x572, /* SHR16mCL */
+  0x4c8, /* SAL16mCL */
+  0x4e1, /* SAR16mCL */
+  0x494, /* ROL16rCL */
+  0x4ac, /* ROR16rCL */
+  0x448, /* RCL16rCL */
+  0x460, /* RCR16rCL */
+  0x54d, /* SHL16rCL */
+  0x575, /* SHR16rCL */
+  0x4cb, /* SAL16rCL */
+  0x4e4, /* SAR16rCL */
 /* Table831 */
-  0x238, /* IN16ri */
+  0x26c, /* IN16ri */
 /* Table832 */
-  0x3ac, /* OUT16ir */
+  0x3f2, /* OUT16ir */
 /* Table833 */
-  0x14e, /* CALLpcrel16 */
+  0x17e, /* CALLpcrel16 */
 /* Table834 */
-  0x28a, /* JMP_2 */
+  0x2bc, /* JMP_2 */
 /* Table835 */
-  0x20e, /* FARJMP16i */
+  0x242, /* FARJMP16i */
 /* Table836 */
-  0x239, /* IN16rr */
+  0x26d, /* IN16rr */
 /* Table837 */
-  0x3ad, /* OUT16rr */
+  0x3f3, /* OUT16rr */
 /* Table838 */
-  0x5a6, /* TEST16mi */
+  0x5e4, /* TEST16mi */
   0x0, /*  */
-  0x380, /* NOT16m */
-  0x359, /* NEG16m */
-  0x34c, /* MUL16m */
-  0x21e, /* IMUL16m */
-  0x1fe, /* DIV16m */
-  0x216, /* IDIV16m */
-  0x5a8, /* TEST16ri */
+  0x3c6, /* NOT16m */
+  0x39f, /* NEG16m */
+  0x392, /* MUL16m */
+  0x252, /* IMUL16m */
+  0x232, /* DIV16m */
+  0x24a, /* IDIV16m */
+  0x5e6, /* TEST16ri */
   0x0, /*  */
-  0x381, /* NOT16r */
-  0x35a, /* NEG16r */
-  0x34d, /* MUL16r */
-  0x21f, /* IMUL16r */
-  0x1ff, /* DIV16r */
-  0x217, /* IDIV16r */
+  0x3c7, /* NOT16r */
+  0x3a0, /* NEG16r */
+  0x393, /* MUL16r */
+  0x253, /* IMUL16r */
+  0x233, /* DIV16r */
+  0x24b, /* IDIV16r */
 /* Table854 */
-  0x23e, /* INC16m */
-  0x1f4, /* DEC16m */
-  0x141, /* CALL16m */
-  0x20a, /* FARCALL16m */
-  0x27d, /* JMP16m */
-  0x20f, /* FARJMP16m */
-  0x3d6, /* PUSH16rmm */
+  0x272, /* INC16m */
+  0x228, /* DEC16m */
+  0x171, /* CALL16m */
+  0x23e, /* FARCALL16m */
+  0x2af, /* JMP16m */
+  0x243, /* FARJMP16m */
+  0x424, /* PUSH16rmm */
   0x0, /*  */
-  0x23f, /* INC16r */
-  0x1f5, /* DEC16r */
-  0x143, /* CALL16r */
+  0x273, /* INC16r */
+  0x229, /* DEC16r */
+  0x173, /* CALL16r */
   0x0, /*  */
-  0x27f, /* JMP16r */
+  0x2b1, /* JMP16r */
   0x0, /*  */
-  0x3d7, /* PUSH16rmr */
+  0x425, /* PUSH16rmr */
   0x0, /*  */
 /* Table870 */
-  0x314, /* MOV8ao16 */
+  0x355, /* MOV8ao16 */
 /* Table871 */
-  0x2f0, /* MOV32ao16 */
+  0x331, /* MOV32ao16 */
 /* Table872 */
-  0x31a, /* MOV8o16a */
+  0x35b, /* MOV8o16a */
 /* Table873 */
-  0x2f7, /* MOV32o16a */
+  0x338, /* MOV32o16a */
 /* Table874 */
-  0x26c, /* JCXZ */
+  0x29e, /* JCXZ */
 /* Table875 */
-  0x2df, /* MOV16ao16 */
+  0x320, /* MOV16ao16 */
 /* Table876 */
-  0x2e5, /* MOV16o16a */
+  0x326, /* MOV16o16a */
 /* Table877 */
-  0xc3, /* ADD64mr */
-  0xc7, /* ADD64rr */
+  0xbf, /* ADD64mr */
+  0xc3, /* ADD64rr */
 /* Table879 */
-  0xc6, /* ADD64rm */
-  0xc8, /* ADD64rr_REV */
+  0xc2, /* ADD64rm */
+  0xc4, /* ADD64rr_REV */
 /* Table881 */
-  0xc0, /* ADD64i32 */
+  0xbc, /* ADD64i32 */
 /* Table882 */
-  0x39d, /* OR64mr */
-  0x3a1, /* OR64rr */
+  0x3e3, /* OR64mr */
+  0x3e7, /* OR64rr */
 /* Table884 */
-  0x3a0, /* OR64rm */
-  0x3a2, /* OR64rr_REV */
+  0x3e6, /* OR64rm */
+  0x3e8, /* OR64rr_REV */
 /* Table886 */
-  0x39a, /* OR64i32 */
+  0x3e0, /* OR64i32 */
 /* Table887 */
-  0x9b, /* ADC64mr */
-  0x9f, /* ADC64rr */
+  0x97, /* ADC64mr */
+  0x9b, /* ADC64rr */
 /* Table889 */
-  0x9e, /* ADC64rm */
-  0xa0, /* ADC64rr_REV */
+  0x9a, /* ADC64rm */
+  0x9c, /* ADC64rr_REV */
 /* Table891 */
-  0x98, /* ADC64i32 */
+  0x94, /* ADC64i32 */
 /* Table892 */
-  0x4c8, /* SBB64mr */
-  0x4cc, /* SBB64rr */
+  0x512, /* SBB64mr */
+  0x516, /* SBB64rr */
 /* Table894 */
-  0x4cb, /* SBB64rm */
-  0x4cd, /* SBB64rr_REV */
+  0x515, /* SBB64rm */
+  0x517, /* SBB64rr_REV */
 /* Table896 */
-  0x4c5, /* SBB64i32 */
+  0x50f, /* SBB64i32 */
 /* Table897 */
-  0xeb, /* AND64mr */
-  0xef, /* AND64rr */
+  0xe7, /* AND64mr */
+  0xeb, /* AND64rr */
 /* Table899 */
-  0xee, /* AND64rm */
-  0xf0, /* AND64rr_REV */
+  0xea, /* AND64rm */
+  0xec, /* AND64rr_REV */
 /* Table901 */
-  0xe8, /* AND64i32 */
+  0xe4, /* AND64i32 */
 /* Table902 */
-  0x57d, /* SUB64mr */
-  0x581, /* SUB64rr */
+  0x5c9, /* SUB64mr */
+  0x5cd, /* SUB64rr */
 /* Table904 */
-  0x580, /* SUB64rm */
-  0x582, /* SUB64rr_REV */
+  0x5cc, /* SUB64rm */
+  0x5ce, /* SUB64rr_REV */
 /* Table906 */
-  0x57a, /* SUB64i32 */
+  0x5c6, /* SUB64i32 */
 /* Table907 */
-  0x616, /* XOR64mr */
-  0x61a, /* XOR64rr */
+  0x660, /* XOR64mr */
+  0x664, /* XOR64rr */
 /* Table909 */
-  0x619, /* XOR64rm */
-  0x61b, /* XOR64rr_REV */
+  0x663, /* XOR64rm */
+  0x665, /* XOR64rr_REV */
 /* Table911 */
-  0x613, /* XOR64i32 */
+  0x65d, /* XOR64i32 */
 /* Table912 */
-  0x1d0, /* CMP64mr */
-  0x1d4, /* CMP64rr */
+  0x204, /* CMP64mr */
+  0x208, /* CMP64rr */
 /* Table914 */
-  0x1d3, /* CMP64rm */
-  0x1d5, /* CMP64rr_REV */
+  0x207, /* CMP64rm */
+  0x209, /* CMP64rr_REV */
 /* Table916 */
-  0x1cd, /* CMP64i32 */
+  0x201, /* CMP64i32 */
 /* Table917 */
-  0x339, /* MOVSX64rm32 */
-  0x33c, /* MOVSX64rr32 */
+  0x37f, /* MOVSX64rm32 */
+  0x382, /* MOVSX64rr32 */
 /* Table919 */
-  0x231, /* IMUL64rmi32 */
-  0x234, /* IMUL64rri32 */
+  0x265, /* IMUL64rmi32 */
+  0x268, /* IMUL64rri32 */
 /* Table921 */
-  0x232, /* IMUL64rmi8 */
-  0x235, /* IMUL64rri8 */
+  0x266, /* IMUL64rmi8 */
+  0x269, /* IMUL64rri8 */
 /* Table923 */
-  0xc1, /* ADD64mi32 */
-  0x39b, /* OR64mi32 */
-  0x99, /* ADC64mi32 */
-  0x4c6, /* SBB64mi32 */
-  0xe9, /* AND64mi32 */
-  0x57b, /* SUB64mi32 */
-  0x614, /* XOR64mi32 */
-  0x1ce, /* CMP64mi32 */
-  0xc4, /* ADD64ri32 */
-  0x39e, /* OR64ri32 */
-  0x9c, /* ADC64ri32 */
-  0x4c9, /* SBB64ri32 */
-  0xec, /* AND64ri32 */
-  0x57e, /* SUB64ri32 */
-  0x617, /* XOR64ri32 */
-  0x1d1, /* CMP64ri32 */
+  0xbd, /* ADD64mi32 */
+  0x3e1, /* OR64mi32 */
+  0x95, /* ADC64mi32 */
+  0x510, /* SBB64mi32 */
+  0xe5, /* AND64mi32 */
+  0x5c7, /* SUB64mi32 */
+  0x65e, /* XOR64mi32 */
+  0x202, /* CMP64mi32 */
+  0xc0, /* ADD64ri32 */
+  0x3e4, /* OR64ri32 */
+  0x98, /* ADC64ri32 */
+  0x513, /* SBB64ri32 */
+  0xe8, /* AND64ri32 */
+  0x5ca, /* SUB64ri32 */
+  0x661, /* XOR64ri32 */
+  0x205, /* CMP64ri32 */
 /* Table939 */
-  0xc2, /* ADD64mi8 */
-  0x39c, /* OR64mi8 */
-  0x9a, /* ADC64mi8 */
-  0x4c7, /* SBB64mi8 */
-  0xea, /* AND64mi8 */
-  0x57c, /* SUB64mi8 */
-  0x615, /* XOR64mi8 */
-  0x1cf, /* CMP64mi8 */
-  0xc5, /* ADD64ri8 */
-  0x39f, /* OR64ri8 */
-  0x9d, /* ADC64ri8 */
-  0x4ca, /* SBB64ri8 */
-  0xed, /* AND64ri8 */
-  0x57f, /* SUB64ri8 */
-  0x618, /* XOR64ri8 */
-  0x1d2, /* CMP64ri8 */
+  0xbe, /* ADD64mi8 */
+  0x3e2, /* OR64mi8 */
+  0x96, /* ADC64mi8 */
+  0x511, /* SBB64mi8 */
+  0xe6, /* AND64mi8 */
+  0x5c8, /* SUB64mi8 */
+  0x65f, /* XOR64mi8 */
+  0x203, /* CMP64mi8 */
+  0xc1, /* ADD64ri8 */
+  0x3e5, /* OR64ri8 */
+  0x99, /* ADC64ri8 */
+  0x514, /* SBB64ri8 */
+  0xe9, /* AND64ri8 */
+  0x5cb, /* SUB64ri8 */
+  0x662, /* XOR64ri8 */
+  0x206, /* CMP64ri8 */
 /* Table955 */
-  0x5b1, /* TEST64mr */
-  0x5b3, /* TEST64rr */
+  0x5ef, /* TEST64mr */
+  0x5f1, /* TEST64rr */
 /* Table957 */
-  0x5f6, /* XCHG64rm */
-  0x5f7, /* XCHG64rr */
+  0x640, /* XCHG64rm */
+  0x641, /* XCHG64rr */
 /* Table959 */
-  0x308, /* MOV64mr */
-  0x310, /* MOV64rr */
+  0x349, /* MOV64mr */
+  0x351, /* MOV64rr */
 /* Table961 */
-  0x30f, /* MOV64rm */
-  0x311, /* MOV64rr_REV */
+  0x350, /* MOV64rm */
+  0x352, /* MOV64rr_REV */
 /* Table963 */
-  0x2e4, /* MOV16ms */
-  0x312, /* MOV64rs */
+  0x325, /* MOV16ms */
+  0x353, /* MOV64rs */
 /* Table965 */
-  0x2ae, /* LEA64r */
+  0x2e0, /* LEA64r */
   0x0, /*  */
 /* Table967 */
-  0x2ee, /* MOV16sm */
-  0x313, /* MOV64sr */
+  0x32f, /* MOV16sm */
+  0x354, /* MOV64sr */
 /* Table969 */
-  0x5f5, /* XCHG64ar */
+  0x63f, /* XCHG64ar */
 /* Table970 */
-  0x152, /* CDQE */
+  0x182, /* CDQE */
 /* Table971 */
-  0x1ee, /* CQO */
+  0x222, /* CQO */
 /* Table972 */
-  0x304, /* MOV64ao64 */
+  0x345, /* MOV64ao64 */
 /* Table973 */
-  0x30a, /* MOV64o64a */
+  0x34b, /* MOV64o64a */
 /* Table974 */
-  0x32c, /* MOVSQ */
+  0x372, /* MOVSQ */
 /* Table975 */
-  0x1e1, /* CMPSQ */
+  0x215, /* CMPSQ */
 /* Table976 */
-  0x5af, /* TEST64i32 */
+  0x5ed, /* TEST64i32 */
 /* Table977 */
-  0x562, /* STOSQ */
+  0x5ae, /* STOSQ */
 /* Table978 */
-  0x2c6, /* LODSQ */
+  0x2fa, /* LODSQ */
 /* Table979 */
-  0x4d9, /* SCASQ */
+  0x523, /* SCASQ */
 /* Table980 */
-  0x30d, /* MOV64ri */
+  0x34e, /* MOV64ri */
 /* Table981 */
-  0x454, /* ROL64mi */
-  0x46c, /* ROR64mi */
-  0x404, /* RCL64mi */
-  0x41c, /* RCR64mi */
-  0x50d, /* SHL64mi */
-  0x535, /* SHR64mi */
-  0x48b, /* SAL64mi */
-  0x4a4, /* SAR64mi */
-  0x457, /* ROL64ri */
-  0x46f, /* ROR64ri */
-  0x407, /* RCL64ri */
-  0x41f, /* RCR64ri */
-  0x510, /* SHL64ri */
-  0x538, /* SHR64ri */
-  0x48e, /* SAL64ri */
-  0x4a7, /* SAR64ri */
+  0x49e, /* ROL64mi */
+  0x4b6, /* ROR64mi */
+  0x452, /* RCL64mi */
+  0x46a, /* RCR64mi */
+  0x557, /* SHL64mi */
+  0x57f, /* SHR64mi */
+  0x4d5, /* SAL64mi */
+  0x4ee, /* SAR64mi */
+  0x4a1, /* ROL64ri */
+  0x4b9, /* ROR64ri */
+  0x455, /* RCL64ri */
+  0x46d, /* RCR64ri */
+  0x55a, /* SHL64ri */
+  0x582, /* SHR64ri */
+  0x4d8, /* SAL64ri */
+  0x4f1, /* SAR64ri */
 /* Table997 */
-  0x307, /* MOV64mi32 */
+  0x348, /* MOV64mi32 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25154,7 +25538,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x30e, /* MOV64ri32 */
+  0x34f, /* MOV64ri32 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25163,434 +25547,451 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table1013 */
-  0x2cc, /* LRETIQ */
+  0x300, /* LRETIQ */
 /* Table1014 */
-  0x2cf, /* LRETQ */
+  0x303, /* LRETQ */
 /* Table1015 */
-  0x25e, /* IRET64 */
+  0x291, /* IRET64 */
 /* Table1016 */
-  0x452, /* ROL64m1 */
-  0x46a, /* ROR64m1 */
-  0x402, /* RCL64m1 */
-  0x41a, /* RCR64m1 */
-  0x50b, /* SHL64m1 */
-  0x533, /* SHR64m1 */
-  0x489, /* SAL64m1 */
-  0x4a2, /* SAR64m1 */
-  0x455, /* ROL64r1 */
-  0x46d, /* ROR64r1 */
-  0x405, /* RCL64r1 */
-  0x41d, /* RCR64r1 */
-  0x50e, /* SHL64r1 */
-  0x536, /* SHR64r1 */
-  0x48c, /* SAL64r1 */
-  0x4a5, /* SAR64r1 */
+  0x49c, /* ROL64m1 */
+  0x4b4, /* ROR64m1 */
+  0x450, /* RCL64m1 */
+  0x468, /* RCR64m1 */
+  0x555, /* SHL64m1 */
+  0x57d, /* SHR64m1 */
+  0x4d3, /* SAL64m1 */
+  0x4ec, /* SAR64m1 */
+  0x49f, /* ROL64r1 */
+  0x4b7, /* ROR64r1 */
+  0x453, /* RCL64r1 */
+  0x46b, /* RCR64r1 */
+  0x558, /* SHL64r1 */
+  0x580, /* SHR64r1 */
+  0x4d6, /* SAL64r1 */
+  0x4ef, /* SAR64r1 */
 /* Table1032 */
-  0x453, /* ROL64mCL */
-  0x46b, /* ROR64mCL */
-  0x403, /* RCL64mCL */
-  0x41b, /* RCR64mCL */
-  0x50c, /* SHL64mCL */
-  0x534, /* SHR64mCL */
-  0x48a, /* SAL64mCL */
-  0x4a3, /* SAR64mCL */
-  0x456, /* ROL64rCL */
-  0x46e, /* ROR64rCL */
-  0x406, /* RCL64rCL */
-  0x41e, /* RCR64rCL */
-  0x50f, /* SHL64rCL */
-  0x537, /* SHR64rCL */
-  0x48d, /* SAL64rCL */
-  0x4a6, /* SAR64rCL */
+  0x49d, /* ROL64mCL */
+  0x4b5, /* ROR64mCL */
+  0x451, /* RCL64mCL */
+  0x469, /* RCR64mCL */
+  0x556, /* SHL64mCL */
+  0x57e, /* SHR64mCL */
+  0x4d4, /* SAL64mCL */
+  0x4ed, /* SAR64mCL */
+  0x4a0, /* ROL64rCL */
+  0x4b8, /* ROR64rCL */
+  0x454, /* RCL64rCL */
+  0x46c, /* RCR64rCL */
+  0x559, /* SHL64rCL */
+  0x581, /* SHR64rCL */
+  0x4d7, /* SAL64rCL */
+  0x4f0, /* SAR64rCL */
 /* Table1048 */
-  0x5b0, /* TEST64mi32 */
+  0x5ee, /* TEST64mi32 */
   0x0, /*  */
-  0x384, /* NOT64m */
-  0x35d, /* NEG64m */
-  0x350, /* MUL64m */
-  0x22e, /* IMUL64m */
-  0x202, /* DIV64m */
-  0x21a, /* IDIV64m */
-  0x5b2, /* TEST64ri32 */
+  0x3ca, /* NOT64m */
+  0x3a3, /* NEG64m */
+  0x396, /* MUL64m */
+  0x262, /* IMUL64m */
+  0x236, /* DIV64m */
+  0x24e, /* IDIV64m */
+  0x5f0, /* TEST64ri32 */
   0x0, /*  */
-  0x385, /* NOT64r */
-  0x35e, /* NEG64r */
-  0x351, /* MUL64r */
-  0x22f, /* IMUL64r */
-  0x203, /* DIV64r */
-  0x21b, /* IDIV64r */
+  0x3cb, /* NOT64r */
+  0x3a4, /* NEG64r */
+  0x397, /* MUL64r */
+  0x263, /* IMUL64r */
+  0x237, /* DIV64r */
+  0x24f, /* IDIV64r */
 /* Table1064 */
-  0x244, /* INC64m */
-  0x1fa, /* DEC64m */
-  0x149, /* CALL64m */
-  0x20d, /* FARCALL64 */
-  0x285, /* JMP64m */
-  0x212, /* FARJMP64 */
-  0x3df, /* PUSH64rmm */
+  0x278, /* INC64m */
+  0x22e, /* DEC64m */
+  0x179, /* CALL64m */
+  0x241, /* FARCALL64 */
+  0x2b7, /* JMP64m */
+  0x246, /* FARJMP64 */
+  0x42d, /* PUSH64rmm */
   0x0, /*  */
-  0x245, /* INC64r */
-  0x1fb, /* DEC64r */
-  0x14c, /* CALL64r */
+  0x279, /* INC64r */
+  0x22f, /* DEC64r */
+  0x17c, /* CALL64r */
   0x0, /*  */
-  0x287, /* JMP64r */
+  0x2b9, /* JMP64r */
   0x0, /*  */
-  0x3e0, /* PUSH64rmr */
+  0x42e, /* PUSH64rmr */
   0x0, /*  */
 /* Table1080 */
-  0x303, /* MOV64ao32 */
+  0x344, /* MOV64ao32 */
 /* Table1081 */
-  0x309, /* MOV64o32a */
+  0x34a, /* MOV64o32a */
 /* Table1082 */
-  0x244, /* INC64m */
-  0x1fa, /* DEC64m */
-  0x149, /* CALL64m */
-  0x20d, /* FARCALL64 */
-  0x285, /* JMP64m */
-  0x212, /* FARJMP64 */
-  0x3d6, /* PUSH16rmm */
+  0x278, /* INC64m */
+  0x22e, /* DEC64m */
+  0x179, /* CALL64m */
+  0x241, /* FARCALL64 */
+  0x2b7, /* JMP64m */
+  0x246, /* FARJMP64 */
+  0x424, /* PUSH16rmm */
   0x0, /*  */
-  0x245, /* INC64r */
-  0x1fb, /* DEC64r */
-  0x14c, /* CALL64r */
+  0x279, /* INC64r */
+  0x22f, /* DEC64r */
+  0x17c, /* CALL64r */
   0x0, /*  */
-  0x287, /* JMP64r */
+  0x2b9, /* JMP64r */
   0x0, /*  */
-  0x3d7, /* PUSH16rmr */
+  0x425, /* PUSH16rmr */
   0x0, /*  */
 /* Table1098 */
-  0x2e1, /* MOV16ao64 */
+  0x322, /* MOV16ao64 */
 /* Table1099 */
-  0x2e7, /* MOV16o64a */
+  0x328, /* MOV16o64a */
 /* Table1100 */
-  0x23e, /* INC16m */
-  0x1f4, /* DEC16m */
-  0x149, /* CALL64m */
-  0x20a, /* FARCALL16m */
-  0x285, /* JMP64m */
-  0x20f, /* FARJMP16m */
-  0x3d6, /* PUSH16rmm */
+  0x272, /* INC16m */
+  0x228, /* DEC16m */
+  0x179, /* CALL64m */
+  0x23e, /* FARCALL16m */
+  0x2b7, /* JMP64m */
+  0x243, /* FARJMP16m */
+  0x424, /* PUSH16rmm */
   0x0, /*  */
-  0x23f, /* INC16r */
-  0x1f5, /* DEC16r */
-  0x14c, /* CALL64r */
+  0x273, /* INC16r */
+  0x229, /* DEC16r */
+  0x17c, /* CALL64r */
   0x0, /*  */
-  0x287, /* JMP64r */
+  0x2b9, /* JMP64r */
   0x0, /*  */
-  0x3d7, /* PUSH16rmr */
+  0x425, /* PUSH16rmr */
   0x0, /*  */
 /* Table1116 */
-  0x553, /* SLDT16m */
-  0x567, /* STRm */
-  0x2bf, /* LLDT16m */
-  0x2da, /* LTRm */
-  0x5bc, /* VERRm */
-  0x5be, /* VERWm */
+  0x59d, /* SLDT16m */
+  0x5b3, /* STRm */
+  0x2f1, /* LLDT16m */
+  0x30e, /* LTRm */
+  0x609, /* VERRm */
+  0x60b, /* VERWm */
   0x0, /*  */
   0x0, /*  */
-  0x555, /* SLDT32r */
-  0x565, /* STR32r */
-  0x2c0, /* LLDT16r */
-  0x2db, /* LTRr */
-  0x5bd, /* VERRr */
-  0x5bf, /* VERWr */
+  0x59f, /* SLDT32r */
+  0x5b1, /* STR32r */
+  0x2f2, /* LLDT16r */
+  0x30f, /* LTRr */
+  0x60a, /* VERRr */
+  0x60c, /* VERWr */
   0x0, /*  */
   0x0, /*  */
 /* Table1132 */
-  0x4fd, /* SGDT32m */
-  0x550, /* SIDT32m */
-  0x2b7, /* LGDT32m */
-  0x2bd, /* LIDT32m */
-  0x557, /* SMSW16m */
+  0x547, /* SGDT32m */
+  0x59a, /* SIDT32m */
+  0x2e9, /* LGDT32m */
+  0x2ef, /* LIDT32m */
+  0x5a3, /* SMSW16m */
   0x0, /*  */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
   0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x5c2, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5ce, /* VMRUN32 */
-  0x5c6, /* VMMCALL */
-  0x5c4, /* VMLOAD32 */
-  0x5d0, /* VMSAVE32 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x255, /* INVLPGA32 */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
+  0x60f, /* VMFUNC */
   0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x61b, /* VMRUN32 */
+  0x613, /* VMMCALL */
+  0x611, /* VMLOAD32 */
+  0x61d, /* VMSAVE32 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x289, /* INVLPGA32 */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
 /* Table1204 */
-  0x2a5, /* LAR32rm */
-  0x2a6, /* LAR32rr */
+  0x2d7, /* LAR32rm */
+  0x2d8, /* LAR32rr */
 /* Table1206 */
-  0x2d3, /* LSL32rm */
-  0x2d4, /* LSL32rr */
+  0x307, /* LSL32rm */
+  0x308, /* LSL32rr */
 /* Table1208 */
-  0x58d, /* SYSCALL */
+  0x5d9, /* SYSCALL */
 /* Table1209 */
-  0x159, /* CLTS */
+  0x18b, /* CLTS */
 /* Table1210 */
-  0x591, /* SYSRET */
+  0x5dd, /* SYSRET */
 /* Table1211 */
-  0x251, /* INVD */
+  0x285, /* INVD */
 /* Table1212 */
-  0x5d8, /* WBINVD */
+  0x625, /* WBINVD */
 /* Table1213 */
-  0x5bb, /* UD2 */
+  0x604, /* UD2 */
 /* Table1214 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x36a, /* NOOP18_m4 */
-  0x36b, /* NOOP18_m5 */
-  0x36c, /* NOOP18_m6 */
-  0x36d, /* NOOP18_m7 */
+  0x3b0, /* NOOP18_m4 */
+  0x3b1, /* NOOP18_m5 */
+  0x3b2, /* NOOP18_m6 */
+  0x3b3, /* NOOP18_m7 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x36e, /* NOOP18_r4 */
-  0x36f, /* NOOP18_r5 */
-  0x370, /* NOOP18_r6 */
-  0x371, /* NOOP18_r7 */
+  0x3b4, /* NOOP18_r4 */
+  0x3b5, /* NOOP18_r5 */
+  0x3b6, /* NOOP18_r6 */
+  0x3b7, /* NOOP18_r7 */
 /* Table1230 */
-  0x374, /* NOOPL_19 */
-  0x372, /* NOOP19rr */
+  0x3ba, /* NOOPL_19 */
+  0x3b8, /* NOOP19rr */
 /* Table1232 */
-  0x375, /* NOOPL_1d */
+  0x186, /* CLDEMOTE */
   0x0, /*  */
-/* Table1234 */
-  0x376, /* NOOPL_1e */
   0x0, /*  */
-/* Table1236 */
-  0x373, /* NOOPL */
-  0x377, /* NOOPLr */
-/* Table1238 */
   0x0, /*  */
-  0x2fa, /* MOV32rc */
-/* Table1240 */
   0x0, /*  */
-  0x2fb, /* MOV32rd */
-/* Table1242 */
   0x0, /*  */
-  0x2f3, /* MOV32cr */
-/* Table1244 */
   0x0, /*  */
-  0x2f4, /* MOV32dr */
-/* Table1246 */
-  0x5e0, /* WRMSR */
-/* Table1247 */
-  0x43a, /* RDTSC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
 /* Table1248 */
-  0x42c, /* RDMSR */
-/* Table1249 */
-  0x431, /* RDPMC */
+  0x3bb, /* NOOPL_1d */
+  0x0, /*  */
 /* Table1250 */
-  0x58e, /* SYSENTER */
-/* Table1251 */
-  0x58f, /* SYSEXIT */
+  0x3bc, /* NOOPL_1e */
+  0x0, /*  */
 /* Table1252 */
-  0x214, /* GETSEC */
-/* Table1253 */
-  0x1ab, /* CMOVO32rm */
-  0x1ac, /* CMOVO32rr */
-/* Table1255 */
-  0x199, /* CMOVNO32rm */
-  0x19a, /* CMOVNO32rr */
-/* Table1257 */
-  0x169, /* CMOVB32rm */
-  0x16a, /* CMOVB32rr */
-/* Table1259 */
-  0x163, /* CMOVAE32rm */
-  0x164, /* CMOVAE32rr */
-/* Table1261 */
-  0x175, /* CMOVE32rm */
-  0x176, /* CMOVE32rr */
+  0x3b9, /* NOOPL */
+  0x3bd, /* NOOPLr */
+/* Table1254 */
+  0x0, /*  */
+  0x33b, /* MOV32rc */
+/* Table1256 */
+  0x0, /*  */
+  0x33c, /* MOV32rd */
+/* Table1258 */
+  0x0, /*  */
+  0x334, /* MOV32cr */
+/* Table1260 */
+  0x0, /*  */
+  0x335, /* MOV32dr */
+/* Table1262 */
+  0x62b, /* WRMSR */
 /* Table1263 */
-  0x193, /* CMOVNE32rm */
-  0x194, /* CMOVNE32rr */
+  0x485, /* RDTSC */
+/* Table1264 */
+  0x478, /* RDMSR */
 /* Table1265 */
-  0x16f, /* CMOVBE32rm */
-  0x170, /* CMOVBE32rr */
+  0x47c, /* RDPMC */
+/* Table1266 */
+  0x5da, /* SYSENTER */
 /* Table1267 */
-  0x15d, /* CMOVA32rm */
-  0x15e, /* CMOVA32rr */
+  0x5db, /* SYSEXIT */
+/* Table1268 */
+  0x248, /* GETSEC */
 /* Table1269 */
-  0x1b7, /* CMOVS32rm */
-  0x1b8, /* CMOVS32rr */
+  0x1df, /* CMOVO32rm */
+  0x1e0, /* CMOVO32rr */
 /* Table1271 */
-  0x1a5, /* CMOVNS32rm */
-  0x1a6, /* CMOVNS32rr */
+  0x1cd, /* CMOVNO32rm */
+  0x1ce, /* CMOVNO32rr */
 /* Table1273 */
-  0x1b1, /* CMOVP32rm */
-  0x1b2, /* CMOVP32rr */
+  0x19d, /* CMOVB32rm */
+  0x19e, /* CMOVB32rr */
 /* Table1275 */
-  0x19f, /* CMOVNP32rm */
-  0x1a0, /* CMOVNP32rr */
+  0x197, /* CMOVAE32rm */
+  0x198, /* CMOVAE32rr */
 /* Table1277 */
-  0x187, /* CMOVL32rm */
-  0x188, /* CMOVL32rr */
+  0x1a9, /* CMOVE32rm */
+  0x1aa, /* CMOVE32rr */
 /* Table1279 */
-  0x181, /* CMOVGE32rm */
-  0x182, /* CMOVGE32rr */
+  0x1c7, /* CMOVNE32rm */
+  0x1c8, /* CMOVNE32rr */
 /* Table1281 */
-  0x18d, /* CMOVLE32rm */
-  0x18e, /* CMOVLE32rr */
+  0x1a3, /* CMOVBE32rm */
+  0x1a4, /* CMOVBE32rr */
 /* Table1283 */
-  0x17b, /* CMOVG32rm */
-  0x17c, /* CMOVG32rr */
+  0x191, /* CMOVA32rm */
+  0x192, /* CMOVA32rr */
 /* Table1285 */
-  0x5c9, /* VMREAD32mr */
-  0x5ca, /* VMREAD32rr */
+  0x1eb, /* CMOVS32rm */
+  0x1ec, /* CMOVS32rr */
 /* Table1287 */
-  0x5d2, /* VMWRITE32rm */
-  0x5d3, /* VMWRITE32rr */
+  0x1d9, /* CMOVNS32rm */
+  0x1da, /* CMOVNS32rr */
 /* Table1289 */
-  0x29a, /* JO_4 */
-/* Table1290 */
-  0x291, /* JNO_4 */
+  0x1e5, /* CMOVP32rm */
+  0x1e6, /* CMOVP32rr */
 /* Table1291 */
-  0x26b, /* JB_4 */
-/* Table1292 */
-  0x262, /* JAE_4 */
+  0x1d3, /* CMOVNP32rm */
+  0x1d4, /* CMOVNP32rr */
 /* Table1293 */
-  0x270, /* JE_4 */
-/* Table1294 */
-  0x28e, /* JNE_4 */
+  0x1bb, /* CMOVL32rm */
+  0x1bc, /* CMOVL32rr */
 /* Table1295 */
-  0x268, /* JBE_4 */
-/* Table1296 */
-  0x265, /* JA_4 */
+  0x1b5, /* CMOVGE32rm */
+  0x1b6, /* CMOVGE32rr */
 /* Table1297 */
-  0x2a1, /* JS_4 */
-/* Table1298 */
-  0x297, /* JNS_4 */
+  0x1c1, /* CMOVLE32rm */
+  0x1c2, /* CMOVLE32rr */
 /* Table1299 */
-  0x29d, /* JP_4 */
-/* Table1300 */
-  0x294, /* JNP_4 */
+  0x1af, /* CMOVG32rm */
+  0x1b0, /* CMOVG32rr */
 /* Table1301 */
-  0x27c, /* JL_4 */
-/* Table1302 */
-  0x273, /* JGE_4 */
+  0x616, /* VMREAD32mr */
+  0x617, /* VMREAD32rr */
 /* Table1303 */
-  0x279, /* JLE_4 */
-/* Table1304 */
-  0x276, /* JG_4 */
+  0x61f, /* VMWRITE32rm */
+  0x620, /* VMWRITE32rr */
 /* Table1305 */
-  0x4f5, /* SETOm */
-  0x4f6, /* SETOr */
+  0x2cc, /* JO_4 */
+/* Table1306 */
+  0x2c3, /* JNO_4 */
 /* Table1307 */
-  0x4ef, /* SETNOm */
-  0x4f0, /* SETNOr */
+  0x29d, /* JB_4 */
+/* Table1308 */
+  0x294, /* JAE_4 */
 /* Table1309 */
-  0x4e1, /* SETBm */
-  0x4e2, /* SETBr */
+  0x2a2, /* JE_4 */
+/* Table1310 */
+  0x2c0, /* JNE_4 */
 /* Table1311 */
-  0x4db, /* SETAEm */
-  0x4dc, /* SETAEr */
+  0x29a, /* JBE_4 */
+/* Table1312 */
+  0x297, /* JA_4 */
 /* Table1313 */
-  0x4e3, /* SETEm */
-  0x4e4, /* SETEr */
+  0x2d3, /* JS_4 */
+/* Table1314 */
+  0x2c9, /* JNS_4 */
 /* Table1315 */
-  0x4ed, /* SETNEm */
-  0x4ee, /* SETNEr */
+  0x2cf, /* JP_4 */
+/* Table1316 */
+  0x2c6, /* JNP_4 */
 /* Table1317 */
-  0x4df, /* SETBEm */
-  0x4e0, /* SETBEr */
+  0x2ae, /* JL_4 */
+/* Table1318 */
+  0x2a5, /* JGE_4 */
 /* Table1319 */
-  0x4dd, /* SETAm */
-  0x4de, /* SETAr */
+  0x2ab, /* JLE_4 */
+/* Table1320 */
+  0x2a8, /* JG_4 */
 /* Table1321 */
-  0x4fa, /* SETSm */
-  0x4fb, /* SETSr */
+  0x53f, /* SETOm */
+  0x540, /* SETOr */
 /* Table1323 */
-  0x4f3, /* SETNSm */
-  0x4f4, /* SETNSr */
+  0x539, /* SETNOm */
+  0x53a, /* SETNOr */
 /* Table1325 */
-  0x4f7, /* SETPm */
-  0x4f8, /* SETPr */
+  0x52b, /* SETBm */
+  0x52c, /* SETBr */
 /* Table1327 */
-  0x4f1, /* SETNPm */
-  0x4f2, /* SETNPr */
+  0x525, /* SETAEm */
+  0x526, /* SETAEr */
 /* Table1329 */
-  0x4eb, /* SETLm */
-  0x4ec, /* SETLr */
+  0x52d, /* SETEm */
+  0x52e, /* SETEr */
 /* Table1331 */
-  0x4e5, /* SETGEm */
-  0x4e6, /* SETGEr */
+  0x537, /* SETNEm */
+  0x538, /* SETNEr */
 /* Table1333 */
-  0x4e9, /* SETLEm */
-  0x4ea, /* SETLEr */
+  0x529, /* SETBEm */
+  0x52a, /* SETBEr */
 /* Table1335 */
-  0x4e7, /* SETGm */
-  0x4e8, /* SETGr */
+  0x527, /* SETAm */
+  0x528, /* SETAr */
 /* Table1337 */
-  0x3ed, /* PUSHFS32 */
-/* Table1338 */
-  0x3c9, /* POPFS32 */
+  0x544, /* SETSm */
+  0x545, /* SETSr */
 /* Table1339 */
-  0x1ed, /* CPUID */
-/* Table1340 */
-  0x116, /* BT32mr */
-  0x118, /* BT32rr */
-/* Table1342 */
-  0x51c, /* SHLD32mri8 */
-  0x51e, /* SHLD32rri8 */
-/* Table1344 */
-  0x51b, /* SHLD32mrCL */
-  0x51d, /* SHLD32rrCL */
-/* Table1346 */
+  0x53d, /* SETNSm */
+  0x53e, /* SETNSr */
+/* Table1341 */
+  0x541, /* SETPm */
+  0x542, /* SETPr */
+/* Table1343 */
+  0x53b, /* SETNPm */
+  0x53c, /* SETNPr */
+/* Table1345 */
+  0x535, /* SETLm */
+  0x536, /* SETLr */
+/* Table1347 */
+  0x52f, /* SETGEm */
+  0x530, /* SETGEr */
+/* Table1349 */
+  0x533, /* SETLEm */
+  0x534, /* SETLEr */
+/* Table1351 */
+  0x531, /* SETGm */
+  0x532, /* SETGr */
+/* Table1353 */
+  0x43b, /* PUSHFS32 */
+/* Table1354 */
+  0x417, /* POPFS32 */
+/* Table1355 */
+  0x221, /* CPUID */
+/* Table1356 */
+  0x142, /* BT32mr */
+  0x144, /* BT32rr */
+/* Table1358 */
+  0x566, /* SHLD32mri8 */
+  0x568, /* SHLD32rri8 */
+/* Table1360 */
+  0x565, /* SHLD32mrCL */
+  0x567, /* SHLD32rrCL */
+/* Table1362 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25599,7 +26000,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x2de, /* MONTMUL */
+  0x31f, /* MONTMUL */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25607,7 +26008,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x632, /* XSHA1 */
+  0x67c, /* XSHA1 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25615,7 +26016,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x633, /* XSHA256 */
+  0x67d, /* XSHA256 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25663,7 +26064,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1418 */
+/* Table1434 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25672,7 +26073,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x634, /* XSTORE */
+  0x67e, /* XSTORE */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25680,7 +26081,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5fd, /* XCRYPTECB */
+  0x647, /* XCRYPTECB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25688,7 +26089,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5fa, /* XCRYPTCBC */
+  0x644, /* XCRYPTCBC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25696,7 +26097,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5fc, /* XCRYPTCTR */
+  0x646, /* XCRYPTCTR */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25704,7 +26105,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5fb, /* XCRYPTCFB */
+  0x645, /* XCRYPTCFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25712,7 +26113,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5fe, /* XCRYPTOFB */
+  0x648, /* XCRYPTOFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -25736,655 +26137,592 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1490 */
-  0x3f0, /* PUSHGS32 */
-/* Table1491 */
-  0x3cc, /* POPGS32 */
-/* Table1492 */
-  0x47a, /* RSM */
-/* Table1493 */
-  0x13a, /* BTS32mr */
-  0x13c, /* BTS32rr */
-/* Table1495 */
-  0x544, /* SHRD32mri8 */
-  0x546, /* SHRD32rri8 */
-/* Table1497 */
-  0x543, /* SHRD32mrCL */
-  0x545, /* SHRD32rrCL */
-/* Table1499 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x629, /* XSAVE */
-  0x625, /* XRSTOR */
-  0x62d, /* XSAVEOPT */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
+/* Table1506 */
+  0x43e, /* PUSHGS32 */
+/* Table1507 */
+  0x41a, /* POPGS32 */
+/* Table1508 */
+  0x4c4, /* RSM */
+/* Table1509 */
+  0x166, /* BTS32mr */
+  0x168, /* BTS32rr */
+/* Table1511 */
+  0x58e, /* SHRD32mri8 */
+  0x590, /* SHRD32rri8 */
+/* Table1513 */
+  0x58d, /* SHRD32mrCL */
+  0x58f, /* SHRD32rrCL */
 /* Table1515 */
-  0x228, /* IMUL32rm */
-  0x22b, /* IMUL32rr */
-/* Table1517 */
-  0x1eb, /* CMPXCHG8rm */
-  0x1ec, /* CMPXCHG8rr */
-/* Table1519 */
-  0x1e6, /* CMPXCHG32rm */
-  0x1e7, /* CMPXCHG32rr */
-/* Table1521 */
-  0x2d8, /* LSS32rm */
   0x0, /*  */
-/* Table1523 */
-  0x12e, /* BTR32mr */
-  0x130, /* BTR32rr */
-/* Table1525 */
-  0x2b4, /* LFS32rm */
   0x0, /*  */
-/* Table1527 */
-  0x2ba, /* LGS32rm */
   0x0, /*  */
-/* Table1529 */
-  0x343, /* MOVZX32rm8 */
-  0x346, /* MOVZX32rr8 */
+  0x0, /*  */
+  0x673, /* XSAVE */
+  0x66f, /* XRSTOR */
+  0x677, /* XSAVEOPT */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
 /* Table1531 */
-  0x342, /* MOVZX32rm16 */
-  0x345, /* MOVZX32rr16 */
+  0x25c, /* IMUL32rm */
+  0x25f, /* IMUL32rr */
 /* Table1533 */
-  0x5ba, /* UD1 */
-/* Table1534 */
+  0x21f, /* CMPXCHG8rm */
+  0x220, /* CMPXCHG8rr */
+/* Table1535 */
+  0x21a, /* CMPXCHG32rm */
+  0x21b, /* CMPXCHG32rr */
+/* Table1537 */
+  0x30c, /* LSS32rm */
   0x0, /*  */
+/* Table1539 */
+  0x15a, /* BTR32mr */
+  0x15c, /* BTR32rr */
+/* Table1541 */
+  0x2e6, /* LFS32rm */
   0x0, /*  */
+/* Table1543 */
+  0x2ec, /* LGS32rm */
   0x0, /*  */
-  0x0, /*  */
-  0x115, /* BT32mi8 */
-  0x139, /* BTS32mi8 */
-  0x12d, /* BTR32mi8 */
-  0x121, /* BTC32mi8 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x117, /* BT32ri8 */
-  0x13b, /* BTS32ri8 */
-  0x12f, /* BTR32ri8 */
-  0x123, /* BTC32ri8 */
+/* Table1545 */
+  0x389, /* MOVZX32rm8 */
+  0x38c, /* MOVZX32rr8 */
+/* Table1547 */
+  0x388, /* MOVZX32rm16 */
+  0x38b, /* MOVZX32rr16 */
+/* Table1549 */
+  0x603, /* UD1 */
 /* Table1550 */
-  0x122, /* BTC32mr */
-  0x124, /* BTC32rr */
-/* Table1552 */
-  0x104, /* BSF32rm */
-  0x105, /* BSF32rr */
-/* Table1554 */
-  0x10a, /* BSR32rm */
-  0x10b, /* BSR32rr */
-/* Table1556 */
-  0x333, /* MOVSX32rm8 */
-  0x336, /* MOVSX32rr8 */
-/* Table1558 */
-  0x332, /* MOVSX32rm16 */
-  0x335, /* MOVSX32rr16 */
-/* Table1560 */
-  0x5ed, /* XADD8rm */
-  0x5ee, /* XADD8rr */
-/* Table1562 */
-  0x5e9, /* XADD32rm */
-  0x5ea, /* XADD32rr */
-/* Table1564 */
-  0x0, /*  */
-  0x1ea, /* CMPXCHG8B */
-  0x0, /*  */
-  0x627, /* XRSTORS */
-  0x62b, /* XSAVEC */
-  0x62f, /* XSAVES */
-  0x5c7, /* VMPTRLDm */
-  0x5c8, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x141, /* BT32mi8 */
+  0x165, /* BTS32mi8 */
+  0x159, /* BTR32mi8 */
+  0x14d, /* BTC32mi8 */
   0x0, /*  */
   0x0, /*  */
-  0x433, /* RDRAND32r */
-  0x436, /* RDSEED32r */
+  0x0, /*  */
+  0x0, /*  */
+  0x143, /* BT32ri8 */
+  0x167, /* BTS32ri8 */
+  0x15b, /* BTR32ri8 */
+  0x14f, /* BTC32ri8 */
+/* Table1566 */
+  0x14e, /* BTC32mr */
+  0x150, /* BTC32rr */
+/* Table1568 */
+  0x130, /* BSF32rm */
+  0x131, /* BSF32rr */
+/* Table1570 */
+  0x136, /* BSR32rm */
+  0x137, /* BSR32rr */
+/* Table1572 */
+  0x379, /* MOVSX32rm8 */
+  0x37c, /* MOVSX32rr8 */
+/* Table1574 */
+  0x378, /* MOVSX32rm16 */
+  0x37b, /* MOVSX32rr16 */
+/* Table1576 */
+  0x637, /* XADD8rm */
+  0x638, /* XADD8rr */
+/* Table1578 */
+  0x633, /* XADD32rm */
+  0x634, /* XADD32rr */
 /* Table1580 */
-  0x10f, /* BSWAP32r */
-/* Table1581 */
-  0x5b9, /* UD0 */
-/* Table1582 */
-  0x4fe, /* SGDT64m */
-  0x551, /* SIDT64m */
-  0x2b8, /* LGDT64m */
-  0x2be, /* LIDT64m */
-  0x557, /* SMSW16m */
   0x0, /*  */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
+  0x21e, /* CMPXCHG8B */
   0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x5c2, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5cf, /* VMRUN64 */
-  0x5c6, /* VMMCALL */
-  0x5c5, /* VMLOAD64 */
-  0x5d1, /* VMSAVE64 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x256, /* INVLPGA64 */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
+  0x671, /* XRSTORS */
+  0x675, /* XSAVEC */
+  0x679, /* XSAVES */
+  0x614, /* VMPTRLDm */
+  0x615, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
+  0x47e, /* RDRAND32r */
+  0x481, /* RDSEED32r */
+/* Table1596 */
+  0x13b, /* BSWAP32r */
+/* Table1597 */
+  0x602, /* UD0 */
+/* Table1598 */
+  0x548, /* SGDT64m */
+  0x59b, /* SIDT64m */
+  0x2ea, /* LGDT64m */
+  0x2f0, /* LIDT64m */
+  0x5a3, /* SMSW16m */
+  0x0, /*  */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
+  0x0, /*  */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1654 */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
   0x0, /*  */
-  0x30b, /* MOV64rc */
-/* Table1656 */
   0x0, /*  */
-  0x30c, /* MOV64rd */
-/* Table1658 */
   0x0, /*  */
-  0x305, /* MOV64cr */
-/* Table1660 */
   0x0, /*  */
-  0x306, /* MOV64dr */
-/* Table1662 */
-  0x5cb, /* VMREAD64mr */
-  0x5cc, /* VMREAD64rr */
-/* Table1664 */
-  0x5d4, /* VMWRITE64rm */
-  0x5d5, /* VMWRITE64rr */
-/* Table1666 */
-  0x3ee, /* PUSHFS64 */
-/* Table1667 */
-  0x3ca, /* POPFS64 */
-/* Table1668 */
-  0x3f1, /* PUSHGS64 */
-/* Table1669 */
-  0x3cd, /* POPGS64 */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x60f, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x61c, /* VMRUN64 */
+  0x613, /* VMMCALL */
+  0x612, /* VMLOAD64 */
+  0x61e, /* VMSAVE64 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x28a, /* INVLPGA64 */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
 /* Table1670 */
-  0x553, /* SLDT16m */
-  0x567, /* STRm */
-  0x2bf, /* LLDT16m */
-  0x2da, /* LTRm */
-  0x5bc, /* VERRm */
-  0x5be, /* VERWm */
   0x0, /*  */
+  0x34c, /* MOV64rc */
+/* Table1672 */
   0x0, /*  */
-  0x554, /* SLDT16r */
-  0x564, /* STR16r */
-  0x2c0, /* LLDT16r */
-  0x2db, /* LTRr */
-  0x5bd, /* VERRr */
-  0x5bf, /* VERWr */
+  0x34d, /* MOV64rd */
+/* Table1674 */
   0x0, /*  */
+  0x346, /* MOV64cr */
+/* Table1676 */
   0x0, /*  */
+  0x347, /* MOV64dr */
+/* Table1678 */
+  0x618, /* VMREAD64mr */
+  0x619, /* VMREAD64rr */
+/* Table1680 */
+  0x621, /* VMWRITE64rm */
+  0x622, /* VMWRITE64rr */
+/* Table1682 */
+  0x43c, /* PUSHFS64 */
+/* Table1683 */
+  0x418, /* POPFS64 */
+/* Table1684 */
+  0x43f, /* PUSHGS64 */
+/* Table1685 */
+  0x41b, /* POPGS64 */
 /* Table1686 */
-  0x4fc, /* SGDT16m */
-  0x54f, /* SIDT16m */
-  0x2b6, /* LGDT16m */
-  0x2bc, /* LIDT16m */
-  0x557, /* SMSW16m */
-  0x0, /*  */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
-  0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
+  0x59d, /* SLDT16m */
+  0x5b3, /* STRm */
+  0x2f1, /* LLDT16m */
+  0x30e, /* LTRm */
+  0x609, /* VERRm */
+  0x60b, /* VERWm */
   0x0, /*  */
   0x0, /*  */
+  0x59e, /* SLDT16r */
+  0x5b0, /* STR16r */
+  0x2f2, /* LLDT16r */
+  0x30f, /* LTRr */
+  0x60a, /* VERRr */
+  0x60c, /* VERWr */
   0x0, /*  */
   0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
+/* Table1702 */
+  0x546, /* SGDT16m */
+  0x599, /* SIDT16m */
+  0x2e8, /* LGDT16m */
+  0x2ee, /* LIDT16m */
+  0x5a3, /* SMSW16m */
   0x0, /*  */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
   0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x5c2, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5ce, /* VMRUN32 */
-  0x5c6, /* VMMCALL */
-  0x5c4, /* VMLOAD32 */
-  0x5d0, /* VMSAVE32 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x255, /* INVLPGA32 */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table1758 */
-  0x2a3, /* LAR16rm */
-  0x2a4, /* LAR16rr */
-/* Table1760 */
-  0x2d1, /* LSL16rm */
-  0x2d2, /* LSL16rr */
-/* Table1762 */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x60f, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x61b, /* VMRUN32 */
+  0x613, /* VMMCALL */
+  0x611, /* VMLOAD32 */
+  0x61d, /* VMSAVE32 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x289, /* INVLPGA32 */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x362, /* NOOP18_16m4 */
-  0x363, /* NOOP18_16m5 */
-  0x364, /* NOOP18_16m6 */
-  0x365, /* NOOP18_16m7 */
+  0x0, /*  */
+  0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x0, /*  */
-  0x366, /* NOOP18_16r4 */
-  0x367, /* NOOP18_16r5 */
-  0x368, /* NOOP18_16r6 */
-  0x369, /* NOOP18_16r7 */
+/* Table1774 */
+  0x2d5, /* LAR16rm */
+  0x2d6, /* LAR16rr */
+/* Table1776 */
+  0x305, /* LSL16rm */
+  0x306, /* LSL16rr */
 /* Table1778 */
-  0x37b, /* NOOPW_19 */
-  0x372, /* NOOP19rr */
-/* Table1780 */
-  0x37c, /* NOOPW_1c */
   0x0, /*  */
-/* Table1782 */
-  0x37d, /* NOOPW_1d */
   0x0, /*  */
-/* Table1784 */
-  0x37e, /* NOOPW_1e */
   0x0, /*  */
-/* Table1786 */
-  0x37a, /* NOOPW */
-  0x37f, /* NOOPWr */
-/* Table1788 */
-  0x1a9, /* CMOVO16rm */
-  0x1aa, /* CMOVO16rr */
-/* Table1790 */
-  0x197, /* CMOVNO16rm */
-  0x198, /* CMOVNO16rr */
-/* Table1792 */
-  0x167, /* CMOVB16rm */
-  0x168, /* CMOVB16rr */
+  0x0, /*  */
+  0x3a8, /* NOOP18_16m4 */
+  0x3a9, /* NOOP18_16m5 */
+  0x3aa, /* NOOP18_16m6 */
+  0x3ab, /* NOOP18_16m7 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x3ac, /* NOOP18_16r4 */
+  0x3ad, /* NOOP18_16r5 */
+  0x3ae, /* NOOP18_16r6 */
+  0x3af, /* NOOP18_16r7 */
 /* Table1794 */
-  0x161, /* CMOVAE16rm */
-  0x162, /* CMOVAE16rr */
+  0x3c1, /* NOOPW_19 */
+  0x3b8, /* NOOP19rr */
 /* Table1796 */
-  0x173, /* CMOVE16rm */
-  0x174, /* CMOVE16rr */
+  0x3c2, /* NOOPW_1c */
+  0x0, /*  */
 /* Table1798 */
-  0x191, /* CMOVNE16rm */
-  0x192, /* CMOVNE16rr */
+  0x3c3, /* NOOPW_1d */
+  0x0, /*  */
 /* Table1800 */
-  0x16d, /* CMOVBE16rm */
-  0x16e, /* CMOVBE16rr */
+  0x3c4, /* NOOPW_1e */
+  0x0, /*  */
 /* Table1802 */
-  0x15b, /* CMOVA16rm */
-  0x15c, /* CMOVA16rr */
+  0x3c0, /* NOOPW */
+  0x3c5, /* NOOPWr */
 /* Table1804 */
-  0x1b5, /* CMOVS16rm */
-  0x1b6, /* CMOVS16rr */
+  0x1dd, /* CMOVO16rm */
+  0x1de, /* CMOVO16rr */
 /* Table1806 */
-  0x1a3, /* CMOVNS16rm */
-  0x1a4, /* CMOVNS16rr */
+  0x1cb, /* CMOVNO16rm */
+  0x1cc, /* CMOVNO16rr */
 /* Table1808 */
-  0x1af, /* CMOVP16rm */
-  0x1b0, /* CMOVP16rr */
+  0x19b, /* CMOVB16rm */
+  0x19c, /* CMOVB16rr */
 /* Table1810 */
-  0x19d, /* CMOVNP16rm */
-  0x19e, /* CMOVNP16rr */
+  0x195, /* CMOVAE16rm */
+  0x196, /* CMOVAE16rr */
 /* Table1812 */
-  0x185, /* CMOVL16rm */
-  0x186, /* CMOVL16rr */
+  0x1a7, /* CMOVE16rm */
+  0x1a8, /* CMOVE16rr */
 /* Table1814 */
-  0x17f, /* CMOVGE16rm */
-  0x180, /* CMOVGE16rr */
+  0x1c5, /* CMOVNE16rm */
+  0x1c6, /* CMOVNE16rr */
 /* Table1816 */
-  0x18b, /* CMOVLE16rm */
-  0x18c, /* CMOVLE16rr */
+  0x1a1, /* CMOVBE16rm */
+  0x1a2, /* CMOVBE16rr */
 /* Table1818 */
-  0x179, /* CMOVG16rm */
-  0x17a, /* CMOVG16rr */
+  0x18f, /* CMOVA16rm */
+  0x190, /* CMOVA16rr */
 /* Table1820 */
-  0x299, /* JO_2 */
-/* Table1821 */
-  0x290, /* JNO_2 */
+  0x1e9, /* CMOVS16rm */
+  0x1ea, /* CMOVS16rr */
 /* Table1822 */
-  0x26a, /* JB_2 */
-/* Table1823 */
-  0x261, /* JAE_2 */
+  0x1d7, /* CMOVNS16rm */
+  0x1d8, /* CMOVNS16rr */
 /* Table1824 */
-  0x26f, /* JE_2 */
-/* Table1825 */
-  0x28d, /* JNE_2 */
+  0x1e3, /* CMOVP16rm */
+  0x1e4, /* CMOVP16rr */
 /* Table1826 */
-  0x267, /* JBE_2 */
-/* Table1827 */
-  0x264, /* JA_2 */
+  0x1d1, /* CMOVNP16rm */
+  0x1d2, /* CMOVNP16rr */
 /* Table1828 */
-  0x2a0, /* JS_2 */
-/* Table1829 */
-  0x296, /* JNS_2 */
+  0x1b9, /* CMOVL16rm */
+  0x1ba, /* CMOVL16rr */
 /* Table1830 */
-  0x29c, /* JP_2 */
-/* Table1831 */
-  0x293, /* JNP_2 */
+  0x1b3, /* CMOVGE16rm */
+  0x1b4, /* CMOVGE16rr */
 /* Table1832 */
-  0x27b, /* JL_2 */
-/* Table1833 */
-  0x272, /* JGE_2 */
+  0x1bf, /* CMOVLE16rm */
+  0x1c0, /* CMOVLE16rr */
 /* Table1834 */
-  0x278, /* JLE_2 */
-/* Table1835 */
-  0x275, /* JG_2 */
+  0x1ad, /* CMOVG16rm */
+  0x1ae, /* CMOVG16rr */
 /* Table1836 */
-  0x3ec, /* PUSHFS16 */
+  0x2cb, /* JO_2 */
 /* Table1837 */
-  0x3c8, /* POPFS16 */
+  0x2c2, /* JNO_2 */
 /* Table1838 */
-  0x112, /* BT16mr */
-  0x114, /* BT16rr */
+  0x29c, /* JB_2 */
+/* Table1839 */
+  0x293, /* JAE_2 */
 /* Table1840 */
-  0x518, /* SHLD16mri8 */
-  0x51a, /* SHLD16rri8 */
+  0x2a1, /* JE_2 */
+/* Table1841 */
+  0x2bf, /* JNE_2 */
 /* Table1842 */
-  0x517, /* SHLD16mrCL */
-  0x519, /* SHLD16rrCL */
+  0x299, /* JBE_2 */
+/* Table1843 */
+  0x296, /* JA_2 */
 /* Table1844 */
-  0x3ef, /* PUSHGS16 */
+  0x2d2, /* JS_2 */
 /* Table1845 */
-  0x3cb, /* POPGS16 */
+  0x2c8, /* JNS_2 */
 /* Table1846 */
-  0x136, /* BTS16mr */
-  0x138, /* BTS16rr */
+  0x2ce, /* JP_2 */
+/* Table1847 */
+  0x2c5, /* JNP_2 */
 /* Table1848 */
-  0x540, /* SHRD16mri8 */
-  0x542, /* SHRD16rri8 */
+  0x2ad, /* JL_2 */
+/* Table1849 */
+  0x2a4, /* JGE_2 */
 /* Table1850 */
-  0x53f, /* SHRD16mrCL */
-  0x541, /* SHRD16rrCL */
+  0x2aa, /* JLE_2 */
+/* Table1851 */
+  0x2a7, /* JG_2 */
 /* Table1852 */
-  0x220, /* IMUL16rm */
-  0x223, /* IMUL16rr */
+  0x43a, /* PUSHFS16 */
+/* Table1853 */
+  0x416, /* POPFS16 */
 /* Table1854 */
-  0x1e4, /* CMPXCHG16rm */
-  0x1e5, /* CMPXCHG16rr */
+  0x13e, /* BT16mr */
+  0x140, /* BT16rr */
 /* Table1856 */
-  0x2d7, /* LSS16rm */
-  0x0, /*  */
+  0x562, /* SHLD16mri8 */
+  0x564, /* SHLD16rri8 */
 /* Table1858 */
-  0x12a, /* BTR16mr */
-  0x12c, /* BTR16rr */
+  0x561, /* SHLD16mrCL */
+  0x563, /* SHLD16rrCL */
 /* Table1860 */
-  0x2b3, /* LFS16rm */
-  0x0, /*  */
+  0x43d, /* PUSHGS16 */
+/* Table1861 */
+  0x419, /* POPGS16 */
 /* Table1862 */
-  0x2b9, /* LGS16rm */
-  0x0, /*  */
+  0x162, /* BTS16mr */
+  0x164, /* BTS16rr */
 /* Table1864 */
-  0x33f, /* MOVZX16rm8 */
-  0x341, /* MOVZX16rr8 */
+  0x58a, /* SHRD16mri8 */
+  0x58c, /* SHRD16rri8 */
 /* Table1866 */
-  0x33e, /* MOVZX16rm16 */
-  0x340, /* MOVZX16rr16 */
+  0x589, /* SHRD16mrCL */
+  0x58b, /* SHRD16rrCL */
 /* Table1868 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x111, /* BT16mi8 */
-  0x135, /* BTS16mi8 */
-  0x129, /* BTR16mi8 */
-  0x11d, /* BTC16mi8 */
+  0x0, /*  */
+  0x0, /*  */
+  0x18c, /* CLWB */
+  0x187, /* CLFLUSHOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x113, /* BT16ri8 */
-  0x137, /* BTS16ri8 */
-  0x12b, /* BTR16ri8 */
-  0x11f, /* BTC16ri8 */
+  0x0, /*  */
+  0x0, /*  */
+  0x5f7, /* TPAUSE */
+  0x0, /*  */
 /* Table1884 */
-  0x11e, /* BTC16mr */
-  0x120, /* BTC16rr */
+  0x254, /* IMUL16rm */
+  0x257, /* IMUL16rr */
 /* Table1886 */
-  0x102, /* BSF16rm */
-  0x103, /* BSF16rr */
+  0x218, /* CMPXCHG16rm */
+  0x219, /* CMPXCHG16rr */
 /* Table1888 */
-  0x108, /* BSR16rm */
-  0x109, /* BSR16rr */
+  0x30b, /* LSS16rm */
+  0x0, /*  */
 /* Table1890 */
-  0x32f, /* MOVSX16rm8 */
-  0x331, /* MOVSX16rr8 */
+  0x156, /* BTR16mr */
+  0x158, /* BTR16rr */
 /* Table1892 */
-  0x32e, /* MOVSX16rm16 */
-  0x330, /* MOVSX16rr16 */
+  0x2e5, /* LFS16rm */
+  0x0, /*  */
 /* Table1894 */
-  0x5e7, /* XADD16rm */
-  0x5e8, /* XADD16rr */
+  0x2eb, /* LGS16rm */
+  0x0, /*  */
 /* Table1896 */
-  0x0, /*  */
-  0x1ea, /* CMPXCHG8B */
-  0x0, /*  */
-  0x627, /* XRSTORS */
-  0x62b, /* XSAVEC */
-  0x62f, /* XSAVES */
-  0x5c1, /* VMCLEARm */
-  0x0, /*  */
+  0x385, /* MOVZX16rm8 */
+  0x387, /* MOVZX16rr8 */
+/* Table1898 */
+  0x384, /* MOVZX16rm16 */
+  0x386, /* MOVZX16rr16 */
+/* Table1900 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x432, /* RDRAND16r */
-  0x435, /* RDSEED16r */
-/* Table1912 */
-  0x10e, /* BSWAP16r_BAD */
-/* Table1913 */
-  0x0, /*  */
-  0x1ea, /* CMPXCHG8B */
-  0x0, /*  */
-  0x627, /* XRSTORS */
-  0x62b, /* XSAVEC */
-  0x62f, /* XSAVES */
-  0x5c1, /* VMCLEARm */
-  0x5c8, /* VMPTRSTm */
+  0x13d, /* BT16mi8 */
+  0x161, /* BTS16mi8 */
+  0x155, /* BTR16mi8 */
+  0x149, /* BTC16mi8 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x13f, /* BT16ri8 */
+  0x163, /* BTS16ri8 */
+  0x157, /* BTR16ri8 */
+  0x14b, /* BTC16ri8 */
+/* Table1916 */
+  0x14a, /* BTC16mr */
+  0x14c, /* BTC16rr */
+/* Table1918 */
+  0x12e, /* BSF16rm */
+  0x12f, /* BSF16rr */
+/* Table1920 */
+  0x134, /* BSR16rm */
+  0x135, /* BSR16rr */
+/* Table1922 */
+  0x375, /* MOVSX16rm8 */
+  0x377, /* MOVSX16rr8 */
+/* Table1924 */
+  0x374, /* MOVSX16rm16 */
+  0x376, /* MOVSX16rr16 */
+/* Table1926 */
+  0x631, /* XADD16rm */
+  0x632, /* XADD16rr */
+/* Table1928 */
+  0x0, /*  */
+  0x21e, /* CMPXCHG8B */
+  0x0, /*  */
+  0x671, /* XRSTORS */
+  0x675, /* XSAVEC */
+  0x679, /* XSAVES */
+  0x60e, /* VMCLEARm */
   0x0, /*  */
   0x0, /*  */
-  0x432, /* RDRAND16r */
-  0x435, /* RDSEED16r */
-/* Table1929 */
-  0x0, /*  */
-  0x1ea, /* CMPXCHG8B */
-  0x0, /*  */
-  0x627, /* XRSTORS */
-  0x62b, /* XSAVEC */
-  0x62f, /* XSAVES */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
+  0x47d, /* RDRAND16r */
+  0x480, /* RDSEED16r */
+/* Table1944 */
+  0x13a, /* BSWAP16r_BAD */
 /* Table1945 */
-  0x4fd, /* SGDT32m */
-  0x550, /* SIDT32m */
-  0x2b7, /* LGDT32m */
-  0x2bd, /* LIDT32m */
-  0x557, /* SMSW16m */
-  0x47b, /* RSTORSSP */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
   0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x673, /* XSAVE */
+  0x66f, /* XRSTOR */
+  0x18c, /* CLWB */
+  0x187, /* CLFLUSHOPT */
   0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
   0x0, /*  */
+  0x5f7, /* TPAUSE */
   0x0, /*  */
-  0x5c2, /* VMFUNC */
+/* Table1961 */
   0x0, /*  */
+  0x21e, /* CMPXCHG8B */
   0x0, /*  */
+  0x671, /* XRSTORS */
+  0x675, /* XSAVEC */
+  0x679, /* XSAVES */
+  0x60e, /* VMCLEARm */
+  0x615, /* VMPTRSTm */
   0x0, /*  */
-  0x5ce, /* VMRUN32 */
-  0x5c6, /* VMMCALL */
-  0x5c4, /* VMLOAD32 */
-  0x5d0, /* VMSAVE32 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x255, /* INVLPGA32 */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x4f9, /* SETSSBSY */
   0x0, /*  */
-  0x4b2, /* SAVEPREVSSP */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
   0x0, /*  */
+  0x47d, /* RDRAND16r */
+  0x480, /* RDSEED16r */
+/* Table1977 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2017 */
-  0x5d9, /* WBNOINVD */
-/* Table2018 */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26393,20 +26731,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x438, /* RDSSPD */
-  0x438, /* RDSSPD */
-  0x438, /* RDSSPD */
-  0x438, /* RDSSPD */
-  0x438, /* RDSSPD */
-  0x438, /* RDSSPD */
-  0x438, /* RDSSPD */
-  0x438, /* RDSSPD */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x608, /* UMWAIT */
   0x0, /*  */
+/* Table1993 */
   0x0, /*  */
+  0x21e, /* CMPXCHG8B */
   0x0, /*  */
+  0x671, /* XRSTORS */
+  0x675, /* XSAVEC */
+  0x679, /* XSAVES */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26417,63 +26753,121 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+/* Table2009 */
+  0x547, /* SGDT32m */
+  0x59a, /* SIDT32m */
+  0x2e9, /* LGDT32m */
+  0x2ef, /* LIDT32m */
+  0x5a3, /* SMSW16m */
+  0x4c5, /* RSTORSSP */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
   0x0, /*  */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
+  0x60f, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x61b, /* VMRUN32 */
+  0x613, /* VMMCALL */
+  0x611, /* VMLOAD32 */
+  0x61d, /* VMSAVE32 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x289, /* INVLPGA32 */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x543, /* SETSSBSY */
   0x0, /*  */
+  0x4fc, /* SAVEPREVSSP */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+/* Table2081 */
+  0x626, /* WBNOINVD */
+/* Table2082 */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x207, /* ENDBR64 */
-  0x206, /* ENDBR32 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x483, /* RDSSPD */
+  0x483, /* RDSSPD */
+  0x483, /* RDSSPD */
+  0x483, /* RDSSPD */
+  0x483, /* RDSSPD */
+  0x483, /* RDSSPD */
+  0x483, /* RDSSPD */
+  0x483, /* RDSSPD */
   0x0, /*  */
-/* Table2090 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3d2, /* PTWRITEm */
   0x0, /*  */
-  0x158, /* CLRSSBSY */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x3d3, /* PTWRITEr */
-  0x248, /* INCSSPD */
   0x0, /*  */
   0x0, /*  */
-/* Table2106 */
   0x0, /*  */
-  0x1ea, /* CMPXCHG8B */
   0x0, /*  */
-  0x627, /* XRSTORS */
-  0x62b, /* XSAVEC */
-  0x62f, /* XSAVES */
-  0x5d7, /* VMXON */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26482,567 +26876,563 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x42d, /* RDPID32 */
-/* Table2122 */
-  0x553, /* SLDT16m */
-  0x567, /* STRm */
-  0x2bf, /* LLDT16m */
-  0x2da, /* LTRm */
-  0x5bc, /* VERRm */
-  0x5be, /* VERWm */
   0x0, /*  */
   0x0, /*  */
-  0x556, /* SLDT64r */
-  0x566, /* STR64r */
-  0x2c0, /* LLDT16r */
-  0x2db, /* LTRr */
-  0x5bd, /* VERRr */
-  0x5bf, /* VERWr */
   0x0, /*  */
   0x0, /*  */
-/* Table2138 */
-  0x4fe, /* SGDT64m */
-  0x551, /* SIDT64m */
-  0x2b8, /* LGDT64m */
-  0x2be, /* LIDT64m */
-  0x557, /* SMSW16m */
   0x0, /*  */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
   0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x5c2, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5cf, /* VMRUN64 */
-  0x5c6, /* VMMCALL */
-  0x5c5, /* VMLOAD64 */
-  0x5d1, /* VMSAVE64 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x256, /* INVLPGA64 */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
+  0x23b, /* ENDBR64 */
+  0x23a, /* ENDBR32 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+/* Table2154 */
   0x0, /*  */
   0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
   0x0, /*  */
   0x0, /*  */
+  0x420, /* PTWRITEm */
   0x0, /*  */
+  0x18a, /* CLRSSBSY */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x421, /* PTWRITEr */
+  0x27c, /* INCSSPD */
+  0x606, /* UMONITOR32 */
+  0x0, /*  */
+/* Table2170 */
+  0x5fa, /* TZCNT32rm */
+  0x5fb, /* TZCNT32rr */
+/* Table2172 */
+  0x31a, /* LZCNT32rm */
+  0x31b, /* LZCNT32rr */
+/* Table2174 */
+  0x0, /*  */
+  0x21e, /* CMPXCHG8B */
+  0x0, /*  */
+  0x671, /* XRSTORS */
+  0x675, /* XSAVEC */
+  0x679, /* XSAVES */
+  0x624, /* VMXON */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x479, /* RDPID32 */
+/* Table2190 */
+  0x5f8, /* TZCNT16rm */
+  0x5f9, /* TZCNT16rr */
+/* Table2192 */
+  0x318, /* LZCNT16rm */
+  0x319, /* LZCNT16rr */
+/* Table2194 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x605, /* UMONITOR16 */
   0x0, /*  */
 /* Table2210 */
-  0x2a7, /* LAR64rm */
-  0x2a8, /* LAR64rr */
-/* Table2212 */
-  0x2d5, /* LSL64rm */
-  0x2d6, /* LSL64rr */
-/* Table2214 */
-  0x592, /* SYSRET64 */
-/* Table2215 */
-  0x378, /* NOOPQ */
-  0x379, /* NOOPQr */
-/* Table2217 */
-  0x590, /* SYSEXIT64 */
-/* Table2218 */
-  0x1ad, /* CMOVO64rm */
-  0x1ae, /* CMOVO64rr */
-/* Table2220 */
-  0x19b, /* CMOVNO64rm */
-  0x19c, /* CMOVNO64rr */
-/* Table2222 */
-  0x16b, /* CMOVB64rm */
-  0x16c, /* CMOVB64rr */
-/* Table2224 */
-  0x165, /* CMOVAE64rm */
-  0x166, /* CMOVAE64rr */
+  0x59d, /* SLDT16m */
+  0x5b3, /* STRm */
+  0x2f1, /* LLDT16m */
+  0x30e, /* LTRm */
+  0x609, /* VERRm */
+  0x60b, /* VERWm */
+  0x0, /*  */
+  0x0, /*  */
+  0x5a0, /* SLDT64r */
+  0x5b2, /* STR64r */
+  0x2f2, /* LLDT16r */
+  0x30f, /* LTRr */
+  0x60a, /* VERRr */
+  0x60c, /* VERWr */
+  0x0, /*  */
+  0x0, /*  */
 /* Table2226 */
-  0x177, /* CMOVE64rm */
-  0x178, /* CMOVE64rr */
-/* Table2228 */
-  0x195, /* CMOVNE64rm */
-  0x196, /* CMOVNE64rr */
-/* Table2230 */
-  0x171, /* CMOVBE64rm */
-  0x172, /* CMOVBE64rr */
-/* Table2232 */
-  0x15f, /* CMOVA64rm */
-  0x160, /* CMOVA64rr */
-/* Table2234 */
-  0x1b9, /* CMOVS64rm */
-  0x1ba, /* CMOVS64rr */
-/* Table2236 */
-  0x1a7, /* CMOVNS64rm */
-  0x1a8, /* CMOVNS64rr */
-/* Table2238 */
-  0x1b3, /* CMOVP64rm */
-  0x1b4, /* CMOVP64rr */
-/* Table2240 */
-  0x1a1, /* CMOVNP64rm */
-  0x1a2, /* CMOVNP64rr */
-/* Table2242 */
-  0x189, /* CMOVL64rm */
-  0x18a, /* CMOVL64rr */
-/* Table2244 */
-  0x183, /* CMOVGE64rm */
-  0x184, /* CMOVGE64rr */
-/* Table2246 */
-  0x18f, /* CMOVLE64rm */
-  0x190, /* CMOVLE64rr */
-/* Table2248 */
-  0x17d, /* CMOVG64rm */
-  0x17e, /* CMOVG64rr */
-/* Table2250 */
-  0x11a, /* BT64mr */
-  0x11c, /* BT64rr */
-/* Table2252 */
-  0x520, /* SHLD64mri8 */
-  0x522, /* SHLD64rri8 */
-/* Table2254 */
-  0x51f, /* SHLD64mrCL */
-  0x521, /* SHLD64rrCL */
-/* Table2256 */
-  0x13e, /* BTS64mr */
-  0x140, /* BTS64rr */
-/* Table2258 */
-  0x548, /* SHRD64mri8 */
-  0x54a, /* SHRD64rri8 */
-/* Table2260 */
-  0x547, /* SHRD64mrCL */
-  0x549, /* SHRD64rrCL */
-/* Table2262 */
+  0x548, /* SGDT64m */
+  0x59b, /* SIDT64m */
+  0x2ea, /* LGDT64m */
+  0x2f0, /* LIDT64m */
+  0x5a3, /* SMSW16m */
+  0x0, /*  */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
+  0x0, /*  */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x62a, /* XSAVE64 */
-  0x626, /* XRSTOR64 */
-  0x62e, /* XSAVEOPT64 */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x60f, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x61c, /* VMRUN64 */
+  0x613, /* VMMCALL */
+  0x612, /* VMLOAD64 */
+  0x61e, /* VMSAVE64 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x28a, /* INVLPGA64 */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2278 */
-  0x230, /* IMUL64rm */
-  0x233, /* IMUL64rr */
-/* Table2280 */
-  0x1e8, /* CMPXCHG64rm */
-  0x1e9, /* CMPXCHG64rr */
-/* Table2282 */
-  0x2d9, /* LSS64rm */
-  0x0, /*  */
-/* Table2284 */
-  0x132, /* BTR64mr */
-  0x134, /* BTR64rr */
-/* Table2286 */
-  0x2b5, /* LFS64rm */
-  0x0, /*  */
-/* Table2288 */
-  0x2bb, /* LGS64rm */
-  0x0, /*  */
-/* Table2290 */
-  0x349, /* MOVZX64rm8 */
-  0x34b, /* MOVZX64rr8 */
-/* Table2292 */
-  0x348, /* MOVZX64rm16 */
-  0x34a, /* MOVZX64rr16 */
-/* Table2294 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x119, /* BT64mi8 */
-  0x13d, /* BTS64mi8 */
-  0x131, /* BTR64mi8 */
-  0x125, /* BTC64mi8 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x11b, /* BT64ri8 */
-  0x13f, /* BTS64ri8 */
-  0x133, /* BTR64ri8 */
-  0x127, /* BTC64ri8 */
+/* Table2298 */
+  0x2d9, /* LAR64rm */
+  0x2da, /* LAR64rr */
+/* Table2300 */
+  0x309, /* LSL64rm */
+  0x30a, /* LSL64rr */
+/* Table2302 */
+  0x5de, /* SYSRET64 */
+/* Table2303 */
+  0x3be, /* NOOPQ */
+  0x3bf, /* NOOPQr */
+/* Table2305 */
+  0x5dc, /* SYSEXIT64 */
+/* Table2306 */
+  0x1e1, /* CMOVO64rm */
+  0x1e2, /* CMOVO64rr */
+/* Table2308 */
+  0x1cf, /* CMOVNO64rm */
+  0x1d0, /* CMOVNO64rr */
 /* Table2310 */
-  0x126, /* BTC64mr */
-  0x128, /* BTC64rr */
+  0x19f, /* CMOVB64rm */
+  0x1a0, /* CMOVB64rr */
 /* Table2312 */
-  0x106, /* BSF64rm */
-  0x107, /* BSF64rr */
+  0x199, /* CMOVAE64rm */
+  0x19a, /* CMOVAE64rr */
 /* Table2314 */
-  0x10c, /* BSR64rm */
-  0x10d, /* BSR64rr */
+  0x1ab, /* CMOVE64rm */
+  0x1ac, /* CMOVE64rr */
 /* Table2316 */
-  0x33a, /* MOVSX64rm8 */
-  0x33d, /* MOVSX64rr8 */
+  0x1c9, /* CMOVNE64rm */
+  0x1ca, /* CMOVNE64rr */
 /* Table2318 */
-  0x338, /* MOVSX64rm16 */
-  0x33b, /* MOVSX64rr16 */
+  0x1a5, /* CMOVBE64rm */
+  0x1a6, /* CMOVBE64rr */
 /* Table2320 */
-  0x5eb, /* XADD64rm */
-  0x5ec, /* XADD64rr */
+  0x193, /* CMOVA64rm */
+  0x194, /* CMOVA64rr */
 /* Table2322 */
-  0x0, /*  */
-  0x1e3, /* CMPXCHG16B */
-  0x0, /*  */
-  0x628, /* XRSTORS64 */
-  0x62c, /* XSAVEC64 */
-  0x630, /* XSAVES64 */
-  0x5c7, /* VMPTRLDm */
-  0x5c8, /* VMPTRSTm */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x434, /* RDRAND64r */
-  0x437, /* RDSEED64r */
+  0x1ed, /* CMOVS64rm */
+  0x1ee, /* CMOVS64rr */
+/* Table2324 */
+  0x1db, /* CMOVNS64rm */
+  0x1dc, /* CMOVNS64rr */
+/* Table2326 */
+  0x1e7, /* CMOVP64rm */
+  0x1e8, /* CMOVP64rr */
+/* Table2328 */
+  0x1d5, /* CMOVNP64rm */
+  0x1d6, /* CMOVNP64rr */
+/* Table2330 */
+  0x1bd, /* CMOVL64rm */
+  0x1be, /* CMOVL64rr */
+/* Table2332 */
+  0x1b7, /* CMOVGE64rm */
+  0x1b8, /* CMOVGE64rr */
+/* Table2334 */
+  0x1c3, /* CMOVLE64rm */
+  0x1c4, /* CMOVLE64rr */
+/* Table2336 */
+  0x1b1, /* CMOVG64rm */
+  0x1b2, /* CMOVG64rr */
 /* Table2338 */
-  0x110, /* BSWAP64r */
-/* Table2339 */
-  0x0, /*  */
-  0x1e3, /* CMPXCHG16B */
-  0x0, /*  */
-  0x628, /* XRSTORS64 */
-  0x62c, /* XSAVEC64 */
-  0x630, /* XSAVES64 */
-  0x5c1, /* VMCLEARm */
-  0x5c8, /* VMPTRSTm */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x434, /* RDRAND64r */
-  0x437, /* RDSEED64r */
-/* Table2355 */
-  0x4fe, /* SGDT64m */
-  0x551, /* SIDT64m */
-  0x2b8, /* LGDT64m */
-  0x2be, /* LIDT64m */
-  0x557, /* SMSW16m */
-  0x0, /*  */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
-  0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
+  0x146, /* BT64mr */
+  0x148, /* BT64rr */
+/* Table2340 */
+  0x56a, /* SHLD64mri8 */
+  0x56c, /* SHLD64rri8 */
+/* Table2342 */
+  0x569, /* SHLD64mrCL */
+  0x56b, /* SHLD64rrCL */
+/* Table2344 */
+  0x16a, /* BTS64mr */
+  0x16c, /* BTS64rr */
+/* Table2346 */
+  0x592, /* SHRD64mri8 */
+  0x594, /* SHRD64rri8 */
+/* Table2348 */
+  0x591, /* SHRD64mrCL */
+  0x593, /* SHRD64rrCL */
+/* Table2350 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x5c2, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5cf, /* VMRUN64 */
-  0x5c6, /* VMMCALL */
-  0x5c5, /* VMLOAD64 */
-  0x5d1, /* VMSAVE64 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x256, /* INVLPGA64 */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
-  0x558, /* SMSW16r */
+  0x674, /* XSAVE64 */
+  0x670, /* XRSTOR64 */
+  0x678, /* XSAVEOPT64 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table2366 */
+  0x264, /* IMUL64rm */
+  0x267, /* IMUL64rr */
+/* Table2368 */
+  0x21c, /* CMPXCHG64rm */
+  0x21d, /* CMPXCHG64rr */
+/* Table2370 */
+  0x30d, /* LSS64rm */
+  0x0, /*  */
+/* Table2372 */
+  0x15e, /* BTR64mr */
+  0x160, /* BTR64rr */
+/* Table2374 */
+  0x2e7, /* LFS64rm */
+  0x0, /*  */
+/* Table2376 */
+  0x2ed, /* LGS64rm */
+  0x0, /*  */
+/* Table2378 */
+  0x38f, /* MOVZX64rm8 */
+  0x391, /* MOVZX64rr8 */
+/* Table2380 */
+  0x38e, /* MOVZX64rm16 */
+  0x390, /* MOVZX64rr16 */
+/* Table2382 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x145, /* BT64mi8 */
+  0x169, /* BTS64mi8 */
+  0x15d, /* BTR64mi8 */
+  0x151, /* BTC64mi8 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x147, /* BT64ri8 */
+  0x16b, /* BTS64ri8 */
+  0x15f, /* BTR64ri8 */
+  0x153, /* BTC64ri8 */
+/* Table2398 */
+  0x152, /* BTC64mr */
+  0x154, /* BTC64rr */
+/* Table2400 */
+  0x132, /* BSF64rm */
+  0x133, /* BSF64rr */
+/* Table2402 */
+  0x138, /* BSR64rm */
+  0x139, /* BSR64rr */
+/* Table2404 */
+  0x380, /* MOVSX64rm8 */
+  0x383, /* MOVSX64rr8 */
+/* Table2406 */
+  0x37e, /* MOVSX64rm16 */
+  0x381, /* MOVSX64rr16 */
+/* Table2408 */
+  0x635, /* XADD64rm */
+  0x636, /* XADD64rr */
+/* Table2410 */
+  0x0, /*  */
+  0x217, /* CMPXCHG16B */
+  0x0, /*  */
+  0x672, /* XRSTORS64 */
+  0x676, /* XSAVEC64 */
+  0x67a, /* XSAVES64 */
+  0x614, /* VMPTRLDm */
+  0x615, /* VMPTRSTm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47f, /* RDRAND64r */
+  0x482, /* RDSEED64r */
+/* Table2426 */
+  0x13c, /* BSWAP64r */
 /* Table2427 */
-  0x4fe, /* SGDT64m */
-  0x551, /* SIDT64m */
-  0x2b8, /* LGDT64m */
-  0x2be, /* LIDT64m */
-  0x557, /* SMSW16m */
-  0x47b, /* RSTORSSP */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
-  0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x5c2, /* VMFUNC */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x5cf, /* VMRUN64 */
-  0x5c6, /* VMMCALL */
-  0x5c5, /* VMLOAD64 */
-  0x5d1, /* VMSAVE64 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x256, /* INVLPGA64 */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x559, /* SMSW32r */
-  0x4f9, /* SETSSBSY */
-  0x0, /*  */
-  0x4b2, /* SAVEPREVSSP */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-/* Table2499 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x3d2, /* PTWRITEm */
-  0x0, /*  */
-  0x158, /* CLRSSBSY */
-  0x0, /*  */
-  0x428, /* RDFSBASE */
-  0x42a, /* RDGSBASE */
-  0x5dc, /* WRFSBASE */
-  0x5de, /* WRGSBASE */
-  0x3d3, /* PTWRITEr */
-  0x248, /* INCSSPD */
-  0x0, /*  */
-  0x0, /*  */
-/* Table2515 */
-  0x0, /*  */
-  0x1ea, /* CMPXCHG8B */
-  0x0, /*  */
-  0x627, /* XRSTORS */
-  0x62b, /* XSAVEC */
-  0x62f, /* XSAVES */
-  0x5d7, /* VMXON */
+  0x674, /* XSAVE64 */
+  0x670, /* XRSTOR64 */
+  0x678, /* XSAVEOPT64 */
+  0x187, /* CLFLUSHOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x5f7, /* TPAUSE */
+  0x0, /*  */
+/* Table2443 */
+  0x0, /*  */
+  0x217, /* CMPXCHG16B */
+  0x0, /*  */
+  0x672, /* XRSTORS64 */
+  0x676, /* XSAVEC64 */
+  0x67a, /* XSAVES64 */
+  0x60e, /* VMCLEARm */
+  0x615, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
-  0x42e, /* RDPID64 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47f, /* RDRAND64r */
+  0x482, /* RDSEED64r */
+/* Table2459 */
+  0x548, /* SGDT64m */
+  0x59b, /* SIDT64m */
+  0x2ea, /* LGDT64m */
+  0x2f0, /* LIDT64m */
+  0x5a3, /* SMSW16m */
+  0x0, /*  */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
+  0x0, /*  */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x60f, /* VMFUNC */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x61c, /* VMRUN64 */
+  0x613, /* VMMCALL */
+  0x612, /* VMLOAD64 */
+  0x61e, /* VMSAVE64 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x28a, /* INVLPGA64 */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x5a4, /* SMSW16r */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
 /* Table2531 */
-  0x4fe, /* SGDT64m */
-  0x551, /* SIDT64m */
-  0x2b8, /* LGDT64m */
-  0x2be, /* LIDT64m */
-  0x557, /* SMSW16m */
-  0x47b, /* RSTORSSP */
-  0x2c1, /* LMSW16m */
-  0x254, /* INVLPG */
+  0x548, /* SGDT64m */
+  0x59b, /* SIDT64m */
+  0x2ea, /* LGDT64m */
+  0x2f0, /* LIDT64m */
+  0x5a3, /* SMSW16m */
+  0x4c5, /* RSTORSSP */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
   0x0, /*  */
-  0x5c0, /* VMCALL */
-  0x5c3, /* VMLAUNCH */
-  0x5cd, /* VMRESUME */
-  0x5d6, /* VMXOFF */
-  0x3b5, /* PCONFIG */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x153, /* CLAC */
-  0x55b, /* STAC */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5ff, /* XGETBV */
-  0x631, /* XSETBV */
-  0x0, /*  */
-  0x0, /*  */
-  0x5c2, /* VMFUNC */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5cf, /* VMRUN64 */
-  0x5c6, /* VMMCALL */
-  0x5c5, /* VMLOAD64 */
-  0x5d1, /* VMSAVE64 */
-  0x55e, /* STGI */
-  0x156, /* CLGI */
-  0x552, /* SKINIT */
-  0x256, /* INVLPGA64 */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x55a, /* SMSW64r */
-  0x4f9, /* SETSSBSY */
   0x0, /*  */
-  0x4b2, /* SAVEPREVSSP */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
+  0x0, /*  */
+  0x0, /*  */
+  0x60f, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x430, /* RDPKRUr */
-  0x5e2, /* WRPKRUr */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x2c2, /* LMSW16r */
-  0x58c, /* SWAPGS */
-  0x43b, /* RDTSCP */
-  0x2dd, /* MONITORXrrr */
-  0x358, /* MWAITXrrr */
+  0x61c, /* VMRUN64 */
+  0x613, /* VMMCALL */
+  0x612, /* VMLOAD64 */
+  0x61e, /* VMSAVE64 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x28a, /* INVLPGA64 */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x5a5, /* SMSW32r */
+  0x543, /* SETSSBSY */
   0x0, /*  */
+  0x4fc, /* SAVEPREVSSP */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
 /* Table2603 */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
-  0x376, /* NOOPL_1e */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x420, /* PTWRITEm */
   0x0, /*  */
+  0x18a, /* CLRSSBSY */
   0x0, /*  */
+  0x474, /* RDFSBASE */
+  0x476, /* RDGSBASE */
+  0x627, /* WRFSBASE */
+  0x629, /* WRGSBASE */
+  0x421, /* PTWRITEr */
+  0x27c, /* INCSSPD */
+  0x607, /* UMONITOR64 */
   0x0, /*  */
+/* Table2619 */
   0x0, /*  */
-  0x439, /* RDSSPQ */
-  0x439, /* RDSSPQ */
-  0x439, /* RDSSPQ */
-  0x439, /* RDSSPQ */
-  0x439, /* RDSSPQ */
-  0x439, /* RDSSPQ */
-  0x439, /* RDSSPQ */
-  0x439, /* RDSSPQ */
+  0x21e, /* CMPXCHG8B */
   0x0, /*  */
+  0x671, /* XRSTORS */
+  0x675, /* XSAVEC */
+  0x679, /* XSAVES */
+  0x624, /* VMXON */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27051,212 +27441,575 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x47a, /* RDPID64 */
+/* Table2635 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x420, /* PTWRITEm */
   0x0, /*  */
+  0x18a, /* CLRSSBSY */
   0x0, /*  */
+  0x474, /* RDFSBASE */
+  0x476, /* RDGSBASE */
+  0x627, /* WRFSBASE */
+  0x629, /* WRGSBASE */
+  0x421, /* PTWRITEr */
+  0x27c, /* INCSSPD */
+  0x606, /* UMONITOR32 */
   0x0, /*  */
+/* Table2651 */
+  0x548, /* SGDT64m */
+  0x59b, /* SIDT64m */
+  0x2ea, /* LGDT64m */
+  0x2f0, /* LIDT64m */
+  0x5a3, /* SMSW16m */
+  0x4c5, /* RSTORSSP */
+  0x2f5, /* LMSW16m */
+  0x288, /* INVLPG */
   0x0, /*  */
+  0x60d, /* VMCALL */
+  0x610, /* VMLAUNCH */
+  0x61a, /* VMRESUME */
+  0x623, /* VMXOFF */
+  0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x183, /* CLAC */
+  0x5a7, /* STAC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x649, /* XGETBV */
+  0x67b, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
+  0x60f, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x61c, /* VMRUN64 */
+  0x613, /* VMMCALL */
+  0x612, /* VMLOAD64 */
+  0x61e, /* VMSAVE64 */
+  0x5aa, /* STGI */
+  0x188, /* CLGI */
+  0x59c, /* SKINIT */
+  0x28a, /* INVLPGA64 */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x5a6, /* SMSW64r */
+  0x543, /* SETSSBSY */
   0x0, /*  */
+  0x4fc, /* SAVEPREVSSP */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
+  0x47b, /* RDPKRUr */
+  0x62c, /* WRPKRUr */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x2f6, /* LMSW16r */
+  0x5d8, /* SWAPGS */
+  0x486, /* RDTSCP */
+  0x31e, /* MONITORXrrr */
+  0x39e, /* MWAITXrrr */
+  0x18d, /* CLZEROr */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x207, /* ENDBR64 */
-  0x206, /* ENDBR32 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-/* Table2675 */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x3d0, /* PTWRITE64m */
-  0x625, /* XRSTOR */
-  0x158, /* CLRSSBSY */
-  0x0, /*  */
-  0x429, /* RDFSBASE64 */
-  0x42b, /* RDGSBASE64 */
-  0x5dd, /* WRFSBASE64 */
-  0x5df, /* WRGSBASE64 */
-  0x3d1, /* PTWRITE64r */
-  0x249, /* INCSSPQ */
-  0x0, /*  */
-  0x0, /*  */
-/* Table2691 */
-  0x0, /*  */
-  0x1e3, /* CMPXCHG16B */
-  0x0, /*  */
-  0x628, /* XRSTORS64 */
-  0x62c, /* XSAVEC64 */
-  0x630, /* XSAVES64 */
-  0x5d7, /* VMXON */
-  0x5c8, /* VMPTRSTm */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x433, /* RDRAND32r */
-  0x42e, /* RDPID64 */
-/* Table2707 */
-  0x0, /*  */
-  0x1e3, /* CMPXCHG16B */
-  0x0, /*  */
-  0x628, /* XRSTORS64 */
-  0x62c, /* XSAVEC64 */
-  0x630, /* XSAVES64 */
-  0x5c7, /* VMPTRLDm */
-  0x5c8, /* VMPTRSTm */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x0, /*  */
-  0x433, /* RDRAND32r */
-  0x436, /* RDSEED32r */
 /* Table2723 */
-  0x0, /*  */
-  0x1e3, /* CMPXCHG16B */
-  0x0, /*  */
-  0x628, /* XRSTORS64 */
-  0x62c, /* XSAVEC64 */
-  0x630, /* XSAVES64 */
-  0x5c1, /* VMCLEARm */
-  0x5c8, /* VMPTRSTm */
-  0x0, /*  */
-  0x0, /*  */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
+  0x3bc, /* NOOPL_1e */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x432, /* RDRAND16r */
-  0x435, /* RDSEED16r */
-/* Table2739 */
-  0x327, /* MOVBE32rm */
   0x0, /*  */
-/* Table2741 */
-  0x326, /* MOVBE32mr */
   0x0, /*  */
-/* Table2743 */
-  0x5e3, /* WRSSD */
   0x0, /*  */
-/* Table2745 */
-  0x252, /* INVEPT32 */
   0x0, /*  */
-/* Table2747 */
-  0x259, /* INVVPID32 */
+  0x484, /* RDSSPQ */
+  0x484, /* RDSSPQ */
+  0x484, /* RDSSPQ */
+  0x484, /* RDSSPQ */
+  0x484, /* RDSSPQ */
+  0x484, /* RDSSPQ */
+  0x484, /* RDSSPQ */
+  0x484, /* RDSSPQ */
   0x0, /*  */
-/* Table2749 */
-  0x257, /* INVPCID32 */
   0x0, /*  */
-/* Table2751 */
-  0x325, /* MOVBE16rm */
   0x0, /*  */
-/* Table2753 */
-  0x324, /* MOVBE16mr */
   0x0, /*  */
-/* Table2755 */
-  0x5e5, /* WRUSSD */
   0x0, /*  */
-/* Table2757 */
-  0xaa, /* ADCX32rm */
-  0xab, /* ADCX32rr */
-/* Table2759 */
-  0xd2, /* ADOX32rm */
-  0xd3, /* ADOX32rr */
-/* Table2761 */
-  0x329, /* MOVBE64rm */
   0x0, /*  */
-/* Table2763 */
-  0x328, /* MOVBE64mr */
   0x0, /*  */
-/* Table2765 */
-  0x5e4, /* WRSSQ */
   0x0, /*  */
-/* Table2767 */
-  0x253, /* INVEPT64 */
   0x0, /*  */
-/* Table2769 */
-  0x25a, /* INVVPID64 */
   0x0, /*  */
-/* Table2771 */
-  0x258, /* INVPCID64 */
   0x0, /*  */
-/* Table2773 */
-  0x5e4, /* WRSSQ */
-  0xab, /* ADCX32rr */
-/* Table2775 */
-  0xd4, /* ADOX64rm */
-  0xd5, /* ADOX64rr */
-/* Table2777 */
-  0x5e6, /* WRUSSQ */
   0x0, /*  */
-/* Table2779 */
-  0xac, /* ADCX64rm */
-  0xad, /* ADCX64rr */
-/* Table2781 */
-  0xfa, /* ANDN32rm */
-  0xfb, /* ANDN32rr */
-/* Table2783 */
-  0x4ae, /* SARX32rm */
-  0x4af, /* SARX32rr */
-/* Table2785 */
-  0x354, /* MULX32rm */
-  0x355, /* MULX32rr */
-/* Table2787 */
-  0x54b, /* SHRX32rm */
-  0x54c, /* SHRX32rr */
-/* Table2789 */
-  0x523, /* SHLX32rm */
-  0x524, /* SHLX32rr */
-/* Table2791 */
-  0xfc, /* ANDN64rm */
-  0xfd, /* ANDN64rr */
-/* Table2793 */
-  0x4b0, /* SARX64rm */
-  0x4b1, /* SARX64rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x23b, /* ENDBR64 */
+  0x23a, /* ENDBR32 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
 /* Table2795 */
-  0x356, /* MULX64rm */
-  0x357, /* MULX64rr */
-/* Table2797 */
-  0x54d, /* SHRX64rm */
-  0x54e, /* SHRX64rr */
-/* Table2799 */
-  0x525, /* SHLX64rm */
-  0x526, /* SHLX64rr */
-/* Table2801 */
-  0x476, /* RORX32mi */
-  0x477, /* RORX32ri */
-/* Table2803 */
-  0x478, /* RORX64mi */
-  0x479, /* RORX64ri */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x41e, /* PTWRITE64m */
+  0x66f, /* XRSTOR */
+  0x18a, /* CLRSSBSY */
+  0x0, /*  */
+  0x475, /* RDFSBASE64 */
+  0x477, /* RDGSBASE64 */
+  0x628, /* WRFSBASE64 */
+  0x62a, /* WRGSBASE64 */
+  0x41f, /* PTWRITE64r */
+  0x27d, /* INCSSPQ */
+  0x607, /* UMONITOR64 */
+  0x0, /*  */
+/* Table2811 */
+  0x5fc, /* TZCNT64rm */
+  0x5fd, /* TZCNT64rr */
+/* Table2813 */
+  0x31c, /* LZCNT64rm */
+  0x31d, /* LZCNT64rr */
+/* Table2815 */
+  0x0, /*  */
+  0x217, /* CMPXCHG16B */
+  0x0, /*  */
+  0x672, /* XRSTORS64 */
+  0x676, /* XSAVEC64 */
+  0x67a, /* XSAVES64 */
+  0x624, /* VMXON */
+  0x615, /* VMPTRSTm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47e, /* RDRAND32r */
+  0x47a, /* RDPID64 */
+/* Table2831 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x673, /* XSAVE */
+  0x66f, /* XRSTOR */
+  0x677, /* XSAVEOPT */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x608, /* UMWAIT */
+  0x0, /*  */
+/* Table2847 */
+  0x0, /*  */
+  0x217, /* CMPXCHG16B */
+  0x0, /*  */
+  0x672, /* XRSTORS64 */
+  0x676, /* XSAVEC64 */
+  0x67a, /* XSAVES64 */
+  0x614, /* VMPTRLDm */
+  0x615, /* VMPTRSTm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47e, /* RDRAND32r */
+  0x481, /* RDSEED32r */
+/* Table2863 */
+  0x0, /*  */
+  0x217, /* CMPXCHG16B */
+  0x0, /*  */
+  0x672, /* XRSTORS64 */
+  0x676, /* XSAVEC64 */
+  0x67a, /* XSAVES64 */
+  0x60e, /* VMCLEARm */
+  0x615, /* VMPTRSTm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x47d, /* RDRAND16r */
+  0x480, /* RDSEED16r */
+/* Table2879 */
+  0x368, /* MOVBE32rm */
+  0x0, /*  */
+/* Table2881 */
+  0x367, /* MOVBE32mr */
+  0x0, /*  */
+/* Table2883 */
+  0x62d, /* WRSSD */
+  0x0, /*  */
+/* Table2885 */
+  0x36e, /* MOVDIRI32 */
+  0x0, /*  */
+/* Table2887 */
+  0x286, /* INVEPT32 */
+  0x0, /*  */
+/* Table2889 */
+  0x28d, /* INVVPID32 */
+  0x0, /*  */
+/* Table2891 */
+  0x28b, /* INVPCID32 */
+  0x0, /*  */
+/* Table2893 */
+  0x366, /* MOVBE16rm */
+  0x0, /*  */
+/* Table2895 */
+  0x365, /* MOVBE16mr */
+  0x0, /*  */
+/* Table2897 */
+  0x62f, /* WRUSSD */
+  0x0, /*  */
+/* Table2899 */
+  0xa6, /* ADCX32rm */
+  0xa7, /* ADCX32rr */
+/* Table2901 */
+  0x36c, /* MOVDIR64B32 */
+  0x0, /*  */
+/* Table2903 */
+  0x36b, /* MOVDIR64B16 */
+  0x0, /*  */
+/* Table2905 */
+  0xce, /* ADOX32rm */
+  0xcf, /* ADOX32rr */
+/* Table2907 */
+  0x36a, /* MOVBE64rm */
+  0x0, /*  */
+/* Table2909 */
+  0x369, /* MOVBE64mr */
+  0x0, /*  */
+/* Table2911 */
+  0x62e, /* WRSSQ */
+  0x0, /*  */
+/* Table2913 */
+  0x36f, /* MOVDIRI64 */
+  0x0, /*  */
+/* Table2915 */
+  0x287, /* INVEPT64 */
+  0x0, /*  */
+/* Table2917 */
+  0x28e, /* INVVPID64 */
+  0x0, /*  */
+/* Table2919 */
+  0x28c, /* INVPCID64 */
+  0x0, /*  */
+/* Table2921 */
+  0x62e, /* WRSSQ */
+  0xa7, /* ADCX32rr */
+/* Table2923 */
+  0x36d, /* MOVDIR64B64 */
+  0x0, /*  */
+/* Table2925 */
+  0xd0, /* ADOX64rm */
+  0xd1, /* ADOX64rr */
+/* Table2927 */
+  0x630, /* WRUSSQ */
+  0x0, /*  */
+/* Table2929 */
+  0xa8, /* ADCX64rm */
+  0xa9, /* ADCX64rr */
+/* Table2931 */
+  0xf6, /* ANDN32rm */
+  0xf7, /* ANDN32rr */
+/* Table2933 */
+  0x0, /*  */
+  0x128, /* BLSR32rm */
+  0x124, /* BLSMSK32rm */
+  0x11c, /* BLSI32rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x129, /* BLSR32rr */
+  0x125, /* BLSMSK32rr */
+  0x11d, /* BLSI32rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table2949 */
+  0x16d, /* BZHI32rm */
+  0x16e, /* BZHI32rr */
+/* Table2951 */
+  0xfc, /* BEXTR32rm */
+  0xfd, /* BEXTR32rr */
+/* Table2953 */
+  0x400, /* PEXT32rm */
+  0x401, /* PEXT32rr */
+/* Table2955 */
+  0x4f8, /* SARX32rm */
+  0x4f9, /* SARX32rr */
+/* Table2957 */
+  0x3fc, /* PDEP32rm */
+  0x3fd, /* PDEP32rr */
+/* Table2959 */
+  0x39a, /* MULX32rm */
+  0x39b, /* MULX32rr */
+/* Table2961 */
+  0x595, /* SHRX32rm */
+  0x596, /* SHRX32rr */
+/* Table2963 */
+  0x56d, /* SHLX32rm */
+  0x56e, /* SHLX32rr */
+/* Table2965 */
+  0xf8, /* ANDN64rm */
+  0xf9, /* ANDN64rr */
+/* Table2967 */
+  0x0, /*  */
+  0x12a, /* BLSR64rm */
+  0x126, /* BLSMSK64rm */
+  0x11e, /* BLSI64rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x12b, /* BLSR64rr */
+  0x127, /* BLSMSK64rr */
+  0x11f, /* BLSI64rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table2983 */
+  0x16f, /* BZHI64rm */
+  0x170, /* BZHI64rr */
+/* Table2985 */
+  0xfe, /* BEXTR64rm */
+  0xff, /* BEXTR64rr */
+/* Table2987 */
+  0x402, /* PEXT64rm */
+  0x403, /* PEXT64rr */
+/* Table2989 */
+  0x4fa, /* SARX64rm */
+  0x4fb, /* SARX64rr */
+/* Table2991 */
+  0x3fe, /* PDEP64rm */
+  0x3ff, /* PDEP64rr */
+/* Table2993 */
+  0x39c, /* MULX64rm */
+  0x39d, /* MULX64rr */
+/* Table2995 */
+  0x597, /* SHRX64rm */
+  0x598, /* SHRX64rr */
+/* Table2997 */
+  0x56f, /* SHLX64rm */
+  0x570, /* SHLX64rr */
+/* Table2999 */
+  0x4c0, /* RORX32mi */
+  0x4c1, /* RORX32ri */
+/* Table3001 */
+  0x4c2, /* RORX64mi */
+  0x4c3, /* RORX64ri */
+/* Table3003 */
+  0x0, /*  */
+  0x104, /* BLCFILL32rm */
+  0x118, /* BLSFILL32rm */
+  0x114, /* BLCS32rm */
+  0x5fe, /* TZMSK32rm */
+  0x10c, /* BLCIC32rm */
+  0x120, /* BLSIC32rm */
+  0x5df, /* T1MSKC32rm */
+  0x0, /*  */
+  0x105, /* BLCFILL32rr */
+  0x119, /* BLSFILL32rr */
+  0x115, /* BLCS32rr */
+  0x5ff, /* TZMSK32rr */
+  0x10d, /* BLCIC32rr */
+  0x121, /* BLSIC32rr */
+  0x5e0, /* T1MSKC32rr */
+/* Table3019 */
+  0x0, /*  */
+  0x110, /* BLCMSK32rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x108, /* BLCI32rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x111, /* BLCMSK32rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x109, /* BLCI32rr */
+  0x0, /*  */
+/* Table3035 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x2f3, /* LLWPCB */
+  0x5a1, /* SLWPCB */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table3051 */
+  0x0, /*  */
+  0x106, /* BLCFILL64rm */
+  0x11a, /* BLSFILL64rm */
+  0x116, /* BLCS64rm */
+  0x600, /* TZMSK64rm */
+  0x10e, /* BLCIC64rm */
+  0x122, /* BLSIC64rm */
+  0x5e1, /* T1MSKC64rm */
+  0x0, /*  */
+  0x107, /* BLCFILL64rr */
+  0x11b, /* BLSFILL64rr */
+  0x117, /* BLCS64rr */
+  0x601, /* TZMSK64rr */
+  0x10f, /* BLCIC64rr */
+  0x123, /* BLSIC64rr */
+  0x5e2, /* T1MSKC64rr */
+/* Table3067 */
+  0x0, /*  */
+  0x112, /* BLCMSK64rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x10a, /* BLCI64rm */
+  0x0, /*  */
+  0x0, /*  */
+  0x113, /* BLCMSK64rr */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x10b, /* BLCI64rr */
+  0x0, /*  */
+/* Table3083 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x2f4, /* LLWPCB64 */
+  0x5a2, /* SLWPCB64 */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table3099 */
+  0x100, /* BEXTRI32mi */
+  0x101, /* BEXTRI32ri */
+/* Table3101 */
+  0x310, /* LWPINS32rmi */
+  0x314, /* LWPVAL32rmi */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x311, /* LWPINS32rri */
+  0x315, /* LWPVAL32rri */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+/* Table3117 */
+  0x102, /* BEXTRI64mi */
+  0x103, /* BEXTRI64ri */
+/* Table3119 */
+  0x312, /* LWPINS64rmi */
+  0x316, /* LWPVAL64rmi */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x313, /* LWPINS64rri */
+  0x317, /* LWPVAL64rri */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
+  0x0, /*  */
   0x0
 };
 
