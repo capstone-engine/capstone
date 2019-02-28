@@ -364,13 +364,13 @@ static int getInstructionLength(mos65xx_address_mode am)
 		case MOS65XX_AM_ZPY:
 		case MOS65XX_AM_ZP:
 		case MOS65XX_AM_REL:
+		case MOS65XX_AM_INDX:
+		case MOS65XX_AM_INDY:
 			return 2;
 
 		case MOS65XX_AM_ABS:
 		case MOS65XX_AM_ABSX:
 		case MOS65XX_AM_ABSY:
-		case MOS65XX_AM_INDX:
-		case MOS65XX_AM_INDY:
 		case MOS65XX_AM_IND:
 			return 3;
 		default:
@@ -496,11 +496,11 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 			break;
 
 		case MOS65XX_AM_INDX:
-			SStream_concat(O, " ($%04X,x)", value);
+			SStream_concat(O, " ($%02X,x)", value);
 			break;
 
 		case MOS65XX_AM_INDY:
-			SStream_concat(O, " ($%04X),y", value);
+			SStream_concat(O, " ($%02X),y", value);
 			break;
 	}
 #endif
