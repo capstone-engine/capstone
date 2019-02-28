@@ -1597,40 +1597,35 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 			default:
 				return false;
 
-			case X86_INS_CMPS:
 			case X86_INS_CMPSB:
+			case X86_INS_CMPSS:
 			case X86_INS_CMPSW:
 			case X86_INS_CMPSQ:
 
-			case X86_INS_SCAS:
 			case X86_INS_SCASB:
 			case X86_INS_SCASW:
 			case X86_INS_SCASQ:
 
-			case X86_INS_MOVS:
 			case X86_INS_MOVSB:
+			case X86_INS_MOVSS:
 			case X86_INS_MOVSW:
 			case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
 
-			case X86_INS_LODS:
 			case X86_INS_LODSB:
 			case X86_INS_LODSW:
 			case X86_INS_LODSD:
 			case X86_INS_LODSQ:
 
-			case X86_INS_STOS:
 			case X86_INS_STOSB:
 			case X86_INS_STOSW:
 			case X86_INS_STOSD:
 			case X86_INS_STOSQ:
 
-			case X86_INS_INS:
 			case X86_INS_INSB:
 			case X86_INS_INSW:
 			case X86_INS_INSD:
 
-			case X86_INS_OUTS:
 			case X86_INS_OUTSB:
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:

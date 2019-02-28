@@ -158,13 +158,13 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
-#ifndef CAPSTONE_X86_REDUCE
 static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MI->x86opsize = 64;
 	printMemReference(MI, OpNo, O);
 }
 
+#ifndef CAPSTONE_X86_REDUCE
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MI->x86opsize = 32;
@@ -814,7 +814,6 @@ static void printRegName(SStream *OS, unsigned RegNo)
 
 void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 {
-	char *mnem;
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
 	int i;
@@ -838,14 +837,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		return;
 	}
 
-	// Try to print any aliases first.
-	mnem = printAliasInstr(MI, OS);
-	if (mnem)
-		cs_mem_free(mnem);
-	else {
-		X86_lockrep(MI, OS);
-		printInstruction(MI, OS);
-	}
+	X86_lockrep(MI, OS);
+	printInstruction(MI, OS);
 
 	if (MI->has_imm) {
 		// if op_count > 1, then this operand's size is taken from the destination op

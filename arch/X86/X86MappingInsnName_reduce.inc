@@ -1,3 +1,7 @@
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* This is auto-gen data for Capstone disassembly engine (www.capstone-engine.org) */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+
 	"aaa", // X86_INS_AAA
 	"aad", // X86_INS_AAD
 	"aam", // X86_INS_AAM
@@ -9,6 +13,17 @@
 	"and", // X86_INS_AND
 	"andn", // X86_INS_ANDN
 	"arpl", // X86_INS_ARPL
+	"bextr", // X86_INS_BEXTR
+	"blcfill", // X86_INS_BLCFILL
+	"blci", // X86_INS_BLCI
+	"blcic", // X86_INS_BLCIC
+	"blcmsk", // X86_INS_BLCMSK
+	"blcs", // X86_INS_BLCS
+	"blsfill", // X86_INS_BLSFILL
+	"blsi", // X86_INS_BLSI
+	"blsic", // X86_INS_BLSIC
+	"blsmsk", // X86_INS_BLSMSK
+	"blsr", // X86_INS_BLSR
 	"bound", // X86_INS_BOUND
 	"bsf", // X86_INS_BSF
 	"bsr", // X86_INS_BSR
@@ -17,20 +32,22 @@
 	"btc", // X86_INS_BTC
 	"btr", // X86_INS_BTR
 	"bts", // X86_INS_BTS
+	"bzhi", // X86_INS_BZHI
 	"call", // X86_INS_CALL
-	"calll", // X86_INS_CALLL
-	"callw", // X86_INS_CALLW
 	"cbw", // X86_INS_CBW
 	"cdq", // X86_INS_CDQ
 	"cdqe", // X86_INS_CDQE
 	"clac", // X86_INS_CLAC
 	"clc", // X86_INS_CLC
 	"cld", // X86_INS_CLD
+	"cldemote", // X86_INS_CLDEMOTE
+	"clflushopt", // X86_INS_CLFLUSHOPT
 	"clgi", // X86_INS_CLGI
 	"cli", // X86_INS_CLI
-	"clr", // X86_INS_CLR
 	"clrssbsy", // X86_INS_CLRSSBSY
 	"clts", // X86_INS_CLTS
+	"clwb", // X86_INS_CLWB
+	"clzero", // X86_INS_CLZERO
 	"cmc", // X86_INS_CMC
 	"cmova", // X86_INS_CMOVA
 	"cmovae", // X86_INS_CMOVAE
@@ -49,13 +66,12 @@
 	"cmovp", // X86_INS_CMOVP
 	"cmovs", // X86_INS_CMOVS
 	"cmp", // X86_INS_CMP
-	"cmps", // X86_INS_CMPS
 	"cmpsb", // X86_INS_CMPSB
 	"cmpsd", // X86_INS_CMPSD
 	"cmpsq", // X86_INS_CMPSQ
 	"cmpsw", // X86_INS_CMPSW
-	"cmpxchg", // X86_INS_CMPXCHG
 	"cmpxchg16b", // X86_INS_CMPXCHG16B
+	"cmpxchg", // X86_INS_CMPXCHG
 	"cmpxchg8b", // X86_INS_CMPXCHG8B
 	"cpuid", // X86_INS_CPUID
 	"cqo", // X86_INS_CQO
@@ -69,18 +85,18 @@
 	"endbr32", // X86_INS_ENDBR32
 	"endbr64", // X86_INS_ENDBR64
 	"enter", // X86_INS_ENTER
+	"lcall", // X86_INS_LCALL
+	"ljmp", // X86_INS_LJMP
+	"jmp", // X86_INS_JMP
 	"fsetpm", // X86_INS_FSETPM
 	"getsec", // X86_INS_GETSEC
 	"hlt", // X86_INS_HLT
 	"idiv", // X86_INS_IDIV
 	"imul", // X86_INS_IMUL
 	"in", // X86_INS_IN
-	"inb", // X86_INS_INB
 	"inc", // X86_INS_INC
 	"incsspd", // X86_INS_INCSSPD
 	"incsspq", // X86_INS_INCSSPQ
-	"inl", // X86_INS_INL
-	"ins", // X86_INS_INS
 	"insb", // X86_INS_INSB
 	"insd", // X86_INS_INSD
 	"insw", // X86_INS_INSW
@@ -94,24 +110,20 @@
 	"invlpga", // X86_INS_INVLPGA
 	"invpcid", // X86_INS_INVPCID
 	"invvpid", // X86_INS_INVVPID
-	"inw", // X86_INS_INW
 	"iret", // X86_INS_IRET
 	"iretd", // X86_INS_IRETD
 	"iretq", // X86_INS_IRETQ
-	"ja", // X86_INS_JA
 	"jae", // X86_INS_JAE
-	"jb", // X86_INS_JB
+	"ja", // X86_INS_JA
 	"jbe", // X86_INS_JBE
+	"jb", // X86_INS_JB
 	"jcxz", // X86_INS_JCXZ
-	"je", // X86_INS_JE
 	"jecxz", // X86_INS_JECXZ
-	"jg", // X86_INS_JG
+	"je", // X86_INS_JE
 	"jge", // X86_INS_JGE
-	"jl", // X86_INS_JL
+	"jg", // X86_INS_JG
 	"jle", // X86_INS_JLE
-	"jmp", // X86_INS_JMP
-	"jmpl", // X86_INS_JMPL
-	"jmpw", // X86_INS_JMPW
+	"jl", // X86_INS_JL
 	"jne", // X86_INS_JNE
 	"jno", // X86_INS_JNO
 	"jnp", // X86_INS_JNP
@@ -122,7 +134,6 @@
 	"js", // X86_INS_JS
 	"lahf", // X86_INS_LAHF
 	"lar", // X86_INS_LAR
-	"lcall", // X86_INS_LCALL
 	"lds", // X86_INS_LDS
 	"lea", // X86_INS_LEA
 	"leave", // X86_INS_LEAVE
@@ -131,11 +142,10 @@
 	"lgdt", // X86_INS_LGDT
 	"lgs", // X86_INS_LGS
 	"lidt", // X86_INS_LIDT
-	"ljmp", // X86_INS_LJMP
 	"lldt", // X86_INS_LLDT
+	"llwpcb", // X86_INS_LLWPCB
 	"lmsw", // X86_INS_LMSW
 	"lock", // X86_INS_LOCK
-	"lods", // X86_INS_LODS
 	"lodsb", // X86_INS_LODSB
 	"lodsd", // X86_INS_LODSD
 	"lodsq", // X86_INS_LODSQ
@@ -143,15 +153,21 @@
 	"loop", // X86_INS_LOOP
 	"loope", // X86_INS_LOOPE
 	"loopne", // X86_INS_LOOPNE
+	"retf", // X86_INS_RETF
+	"retfq", // X86_INS_RETFQ
 	"lsl", // X86_INS_LSL
 	"lss", // X86_INS_LSS
 	"ltr", // X86_INS_LTR
+	"lwpins", // X86_INS_LWPINS
+	"lwpval", // X86_INS_LWPVAL
+	"lzcnt", // X86_INS_LZCNT
 	"monitorx", // X86_INS_MONITORX
 	"montmul", // X86_INS_MONTMUL
 	"mov", // X86_INS_MOV
 	"movabs", // X86_INS_MOVABS
 	"movbe", // X86_INS_MOVBE
-	"movs", // X86_INS_MOVS
+	"movdir64b", // X86_INS_MOVDIR64B
+	"movdiri", // X86_INS_MOVDIRI
 	"movsb", // X86_INS_MOVSB
 	"movsd", // X86_INS_MOVSD
 	"movsq", // X86_INS_MOVSQ
@@ -167,24 +183,22 @@
 	"not", // X86_INS_NOT
 	"or", // X86_INS_OR
 	"out", // X86_INS_OUT
-	"outb", // X86_INS_OUTB
-	"outl", // X86_INS_OUTL
-	"outs", // X86_INS_OUTS
 	"outsb", // X86_INS_OUTSB
 	"outsd", // X86_INS_OUTSD
 	"outsw", // X86_INS_OUTSW
-	"outw", // X86_INS_OUTW
 	"pconfig", // X86_INS_PCONFIG
+	"pdep", // X86_INS_PDEP
+	"pext", // X86_INS_PEXT
 	"pop", // X86_INS_POP
-	"popal", // X86_INS_POPAL
 	"popaw", // X86_INS_POPAW
+	"popal", // X86_INS_POPAL
 	"popf", // X86_INS_POPF
 	"popfd", // X86_INS_POPFD
 	"popfq", // X86_INS_POPFQ
 	"ptwrite", // X86_INS_PTWRITE
 	"push", // X86_INS_PUSH
-	"pushal", // X86_INS_PUSHAL
 	"pushaw", // X86_INS_PUSHAW
+	"pushal", // X86_INS_PUSHAL
 	"pushf", // X86_INS_PUSHF
 	"pushfd", // X86_INS_PUSHFD
 	"pushfq", // X86_INS_PUSHFQ
@@ -202,11 +216,9 @@
 	"rdsspq", // X86_INS_RDSSPQ
 	"rdtsc", // X86_INS_RDTSC
 	"rdtscp", // X86_INS_RDTSCP
-	"rep", // X86_INS_REP
 	"repne", // X86_INS_REPNE
+	"rep", // X86_INS_REP
 	"ret", // X86_INS_RET
-	"retf", // X86_INS_RETF
-	"retfq", // X86_INS_RETFQ
 	"rex64", // X86_INS_REX64
 	"rol", // X86_INS_ROL
 	"ror", // X86_INS_ROR
@@ -220,28 +232,27 @@
 	"sarx", // X86_INS_SARX
 	"saveprevssp", // X86_INS_SAVEPREVSSP
 	"sbb", // X86_INS_SBB
-	"scas", // X86_INS_SCAS
 	"scasb", // X86_INS_SCASB
 	"scasd", // X86_INS_SCASD
 	"scasq", // X86_INS_SCASQ
 	"scasw", // X86_INS_SCASW
-	"seta", // X86_INS_SETA
 	"setae", // X86_INS_SETAE
-	"setb", // X86_INS_SETB
+	"seta", // X86_INS_SETA
 	"setbe", // X86_INS_SETBE
+	"setb", // X86_INS_SETB
 	"sete", // X86_INS_SETE
-	"setg", // X86_INS_SETG
 	"setge", // X86_INS_SETGE
-	"setl", // X86_INS_SETL
+	"setg", // X86_INS_SETG
 	"setle", // X86_INS_SETLE
+	"setl", // X86_INS_SETL
 	"setne", // X86_INS_SETNE
 	"setno", // X86_INS_SETNO
 	"setnp", // X86_INS_SETNP
 	"setns", // X86_INS_SETNS
 	"seto", // X86_INS_SETO
 	"setp", // X86_INS_SETP
-	"sets", // X86_INS_SETS
 	"setssbsy", // X86_INS_SETSSBSY
+	"sets", // X86_INS_SETS
 	"sgdt", // X86_INS_SGDT
 	"shl", // X86_INS_SHL
 	"shld", // X86_INS_SHLD
@@ -252,13 +263,13 @@
 	"sidt", // X86_INS_SIDT
 	"skinit", // X86_INS_SKINIT
 	"sldt", // X86_INS_SLDT
+	"slwpcb", // X86_INS_SLWPCB
 	"smsw", // X86_INS_SMSW
 	"stac", // X86_INS_STAC
 	"stc", // X86_INS_STC
 	"std", // X86_INS_STD
 	"stgi", // X86_INS_STGI
 	"sti", // X86_INS_STI
-	"stos", // X86_INS_STOS
 	"stosb", // X86_INS_STOSB
 	"stosd", // X86_INS_STOSD
 	"stosq", // X86_INS_STOSQ
@@ -272,10 +283,16 @@
 	"sysexitq", // X86_INS_SYSEXITQ
 	"sysret", // X86_INS_SYSRET
 	"sysretq", // X86_INS_SYSRETQ
+	"t1mskc", // X86_INS_T1MSKC
 	"test", // X86_INS_TEST
+	"tpause", // X86_INS_TPAUSE
+	"tzcnt", // X86_INS_TZCNT
+	"tzmsk", // X86_INS_TZMSK
 	"ud0", // X86_INS_UD0
 	"ud1", // X86_INS_UD1
 	"ud2", // X86_INS_UD2
+	"umonitor", // X86_INS_UMONITOR
+	"umwait", // X86_INS_UMWAIT
 	"verr", // X86_INS_VERR
 	"verw", // X86_INS_VERW
 	"vmcall", // X86_INS_VMCALL
@@ -329,4 +346,3 @@
 	"xsha1", // X86_INS_XSHA1
 	"xsha256", // X86_INS_XSHA256
 	"xstore", // X86_INS_XSTORE
-	"xstorerng", // X86_INS_XSTORERNG

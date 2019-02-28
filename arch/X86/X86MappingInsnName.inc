@@ -1,7 +1,12 @@
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* This is auto-gen data for Capstone disassembly engine (www.capstone-engine.org) */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+
 	"aaa", // X86_INS_AAA
 	"aad", // X86_INS_AAD
 	"aam", // X86_INS_AAM
 	"aas", // X86_INS_AAS
+	"fabs", // X86_INS_FABS
 	"adc", // X86_INS_ADC
 	"adcx", // X86_INS_ADCX
 	"add", // X86_INS_ADD
@@ -11,11 +16,13 @@
 	"addss", // X86_INS_ADDSS
 	"addsubpd", // X86_INS_ADDSUBPD
 	"addsubps", // X86_INS_ADDSUBPS
+	"fadd", // X86_INS_FADD
+	"fiadd", // X86_INS_FIADD
 	"adox", // X86_INS_ADOX
-	"aesdec", // X86_INS_AESDEC
 	"aesdeclast", // X86_INS_AESDECLAST
-	"aesenc", // X86_INS_AESENC
+	"aesdec", // X86_INS_AESDEC
 	"aesenclast", // X86_INS_AESENCLAST
+	"aesenc", // X86_INS_AESENC
 	"aesimc", // X86_INS_AESIMC
 	"aeskeygenassist", // X86_INS_AESKEYGENASSIST
 	"and", // X86_INS_AND
@@ -57,11 +64,10 @@
 	"bts", // X86_INS_BTS
 	"bzhi", // X86_INS_BZHI
 	"call", // X86_INS_CALL
-	"calll", // X86_INS_CALLL
-	"callw", // X86_INS_CALLW
 	"cbw", // X86_INS_CBW
 	"cdq", // X86_INS_CDQ
 	"cdqe", // X86_INS_CDQE
+	"fchs", // X86_INS_FCHS
 	"clac", // X86_INS_CLAC
 	"clc", // X86_INS_CLC
 	"cld", // X86_INS_CLD
@@ -70,7 +76,6 @@
 	"clflushopt", // X86_INS_CLFLUSHOPT
 	"clgi", // X86_INS_CLGI
 	"cli", // X86_INS_CLI
-	"clr", // X86_INS_CLR
 	"clrssbsy", // X86_INS_CLRSSBSY
 	"clts", // X86_INS_CLTS
 	"clwb", // X86_INS_CLWB
@@ -80,45 +85,54 @@
 	"cmovae", // X86_INS_CMOVAE
 	"cmovb", // X86_INS_CMOVB
 	"cmovbe", // X86_INS_CMOVBE
+	"fcmovbe", // X86_INS_FCMOVBE
+	"fcmovb", // X86_INS_FCMOVB
 	"cmove", // X86_INS_CMOVE
+	"fcmove", // X86_INS_FCMOVE
 	"cmovg", // X86_INS_CMOVG
 	"cmovge", // X86_INS_CMOVGE
 	"cmovl", // X86_INS_CMOVL
 	"cmovle", // X86_INS_CMOVLE
+	"fcmovnbe", // X86_INS_FCMOVNBE
+	"fcmovnb", // X86_INS_FCMOVNB
 	"cmovne", // X86_INS_CMOVNE
+	"fcmovne", // X86_INS_FCMOVNE
 	"cmovno", // X86_INS_CMOVNO
 	"cmovnp", // X86_INS_CMOVNP
+	"fcmovnu", // X86_INS_FCMOVNU
+	"fcmovnp", // X86_INS_FCMOVNP
 	"cmovns", // X86_INS_CMOVNS
 	"cmovo", // X86_INS_CMOVO
 	"cmovp", // X86_INS_CMOVP
+	"fcmovu", // X86_INS_FCMOVU
 	"cmovs", // X86_INS_CMOVS
 	"cmp", // X86_INS_CMP
 	"cmppd", // X86_INS_CMPPD
 	"cmpps", // X86_INS_CMPPS
-	"cmps", // X86_INS_CMPS
 	"cmpsb", // X86_INS_CMPSB
 	"cmpsd", // X86_INS_CMPSD
 	"cmpsq", // X86_INS_CMPSQ
 	"cmpss", // X86_INS_CMPSS
 	"cmpsw", // X86_INS_CMPSW
-	"cmpxchg", // X86_INS_CMPXCHG
 	"cmpxchg16b", // X86_INS_CMPXCHG16B
+	"cmpxchg", // X86_INS_CMPXCHG
 	"cmpxchg8b", // X86_INS_CMPXCHG8B
 	"comisd", // X86_INS_COMISD
 	"comiss", // X86_INS_COMISS
+	"fcomp", // X86_INS_FCOMP
+	"fcompi", // X86_INS_FCOMPI
+	"fcomi", // X86_INS_FCOMI
+	"fcom", // X86_INS_FCOM
+	"fcos", // X86_INS_FCOS
 	"cpuid", // X86_INS_CPUID
 	"cqo", // X86_INS_CQO
 	"crc32", // X86_INS_CRC32
 	"cvtdq2pd", // X86_INS_CVTDQ2PD
 	"cvtdq2ps", // X86_INS_CVTDQ2PS
 	"cvtpd2dq", // X86_INS_CVTPD2DQ
-	"cvtpd2pi", // X86_INS_CVTPD2PI
 	"cvtpd2ps", // X86_INS_CVTPD2PS
-	"cvtpi2pd", // X86_INS_CVTPI2PD
-	"cvtpi2ps", // X86_INS_CVTPI2PS
 	"cvtps2dq", // X86_INS_CVTPS2DQ
 	"cvtps2pd", // X86_INS_CVTPS2PD
-	"cvtps2pi", // X86_INS_CVTPS2PI
 	"cvtsd2si", // X86_INS_CVTSD2SI
 	"cvtsd2ss", // X86_INS_CVTSD2SS
 	"cvtsi2sd", // X86_INS_CVTSI2SD
@@ -126,9 +140,7 @@
 	"cvtss2sd", // X86_INS_CVTSS2SD
 	"cvtss2si", // X86_INS_CVTSS2SI
 	"cvttpd2dq", // X86_INS_CVTTPD2DQ
-	"cvttpd2pi", // X86_INS_CVTTPD2PI
 	"cvttps2dq", // X86_INS_CVTTPS2DQ
-	"cvttps2pi", // X86_INS_CVTTPS2PI
 	"cvttsd2si", // X86_INS_CVTTSD2SI
 	"cvttss2si", // X86_INS_CVTTSS2SI
 	"cwd", // X86_INS_CWD
@@ -140,11 +152,16 @@
 	"div", // X86_INS_DIV
 	"divpd", // X86_INS_DIVPD
 	"divps", // X86_INS_DIVPS
+	"fdivr", // X86_INS_FDIVR
+	"fidivr", // X86_INS_FIDIVR
+	"fdivrp", // X86_INS_FDIVRP
 	"divsd", // X86_INS_DIVSD
 	"divss", // X86_INS_DIVSS
+	"fdiv", // X86_INS_FDIV
+	"fidiv", // X86_INS_FIDIV
+	"fdivp", // X86_INS_FDIVP
 	"dppd", // X86_INS_DPPD
 	"dpps", // X86_INS_DPPS
-	"emms", // X86_INS_EMMS
 	"encls", // X86_INS_ENCLS
 	"enclu", // X86_INS_ENCLU
 	"enclv", // X86_INS_ENCLV
@@ -154,51 +171,21 @@
 	"extractps", // X86_INS_EXTRACTPS
 	"extrq", // X86_INS_EXTRQ
 	"f2xm1", // X86_INS_F2XM1
-	"fabs", // X86_INS_FABS
-	"fadd", // X86_INS_FADD
-	"faddp", // X86_INS_FADDP
+	"lcall", // X86_INS_LCALL
+	"ljmp", // X86_INS_LJMP
+	"jmp", // X86_INS_JMP
 	"fbld", // X86_INS_FBLD
 	"fbstp", // X86_INS_FBSTP
-	"fchs", // X86_INS_FCHS
-	"fcmovb", // X86_INS_FCMOVB
-	"fcmovbe", // X86_INS_FCMOVBE
-	"fcmove", // X86_INS_FCMOVE
-	"fcmovnb", // X86_INS_FCMOVNB
-	"fcmovnbe", // X86_INS_FCMOVNBE
-	"fcmovne", // X86_INS_FCMOVNE
-	"fcmovnu", // X86_INS_FCMOVNU
-	"fcmovu", // X86_INS_FCMOVU
-	"fcom", // X86_INS_FCOM
-	"fcomi", // X86_INS_FCOMI
-	"fcomp", // X86_INS_FCOMP
-	"fcompi", // X86_INS_FCOMPI
 	"fcompp", // X86_INS_FCOMPP
-	"fcos", // X86_INS_FCOS
 	"fdecstp", // X86_INS_FDECSTP
 	"fdisi8087_nop", // X86_INS_FDISI8087_NOP
-	"fdiv", // X86_INS_FDIV
-	"fdivp", // X86_INS_FDIVP
-	"fdivr", // X86_INS_FDIVR
-	"fdivrp", // X86_INS_FDIVRP
 	"femms", // X86_INS_FEMMS
 	"feni8087_nop", // X86_INS_FENI8087_NOP
 	"ffree", // X86_INS_FFREE
 	"ffreep", // X86_INS_FFREEP
-	"fiadd", // X86_INS_FIADD
 	"ficom", // X86_INS_FICOM
 	"ficomp", // X86_INS_FICOMP
-	"fidiv", // X86_INS_FIDIV
-	"fidivr", // X86_INS_FIDIVR
-	"fild", // X86_INS_FILD
-	"fimul", // X86_INS_FIMUL
 	"fincstp", // X86_INS_FINCSTP
-	"fist", // X86_INS_FIST
-	"fistp", // X86_INS_FISTP
-	"fisttp", // X86_INS_FISTTP
-	"fisub", // X86_INS_FISUB
-	"fisubr", // X86_INS_FISUBR
-	"fld", // X86_INS_FLD
-	"fld1", // X86_INS_FLD1
 	"fldcw", // X86_INS_FLDCW
 	"fldenv", // X86_INS_FLDENV
 	"fldl2e", // X86_INS_FLDL2E
@@ -206,42 +193,24 @@
 	"fldlg2", // X86_INS_FLDLG2
 	"fldln2", // X86_INS_FLDLN2
 	"fldpi", // X86_INS_FLDPI
-	"fldz", // X86_INS_FLDZ
-	"fmul", // X86_INS_FMUL
-	"fmulp", // X86_INS_FMULP
 	"fnclex", // X86_INS_FNCLEX
 	"fninit", // X86_INS_FNINIT
 	"fnop", // X86_INS_FNOP
-	"fnsave", // X86_INS_FNSAVE
 	"fnstcw", // X86_INS_FNSTCW
-	"fnstenv", // X86_INS_FNSTENV
 	"fnstsw", // X86_INS_FNSTSW
 	"fpatan", // X86_INS_FPATAN
+	"fstpnce", // X86_INS_FSTPNCE
 	"fprem", // X86_INS_FPREM
 	"fprem1", // X86_INS_FPREM1
 	"fptan", // X86_INS_FPTAN
 	"frndint", // X86_INS_FRNDINT
 	"frstor", // X86_INS_FRSTOR
+	"fnsave", // X86_INS_FNSAVE
 	"fscale", // X86_INS_FSCALE
 	"fsetpm", // X86_INS_FSETPM
-	"fsin", // X86_INS_FSIN
 	"fsincos", // X86_INS_FSINCOS
-	"fsqrt", // X86_INS_FSQRT
-	"fst", // X86_INS_FST
-	"fstp", // X86_INS_FSTP
-	"fstpnce", // X86_INS_FSTPNCE
-	"fsub", // X86_INS_FSUB
-	"fsubp", // X86_INS_FSUBP
-	"fsubr", // X86_INS_FSUBR
-	"fsubrp", // X86_INS_FSUBRP
-	"ftst", // X86_INS_FTST
-	"fucom", // X86_INS_FUCOM
-	"fucomi", // X86_INS_FUCOMI
-	"fucomp", // X86_INS_FUCOMP
-	"fucompi", // X86_INS_FUCOMPI
-	"fucompp", // X86_INS_FUCOMPP
+	"fnstenv", // X86_INS_FNSTENV
 	"fxam", // X86_INS_FXAM
-	"fxch", // X86_INS_FXCH
 	"fxrstor", // X86_INS_FXRSTOR
 	"fxrstor64", // X86_INS_FXRSTOR64
 	"fxsave", // X86_INS_FXSAVE
@@ -259,18 +228,16 @@
 	"hsubpd", // X86_INS_HSUBPD
 	"hsubps", // X86_INS_HSUBPS
 	"idiv", // X86_INS_IDIV
+	"fild", // X86_INS_FILD
 	"imul", // X86_INS_IMUL
 	"in", // X86_INS_IN
-	"inb", // X86_INS_INB
 	"inc", // X86_INS_INC
 	"incsspd", // X86_INS_INCSSPD
 	"incsspq", // X86_INS_INCSSPQ
-	"inl", // X86_INS_INL
-	"ins", // X86_INS_INS
 	"insb", // X86_INS_INSB
-	"insd", // X86_INS_INSD
 	"insertps", // X86_INS_INSERTPS
 	"insertq", // X86_INS_INSERTQ
+	"insd", // X86_INS_INSD
 	"insw", // X86_INS_INSW
 	"int", // X86_INS_INT
 	"int1", // X86_INS_INT1
@@ -282,24 +249,23 @@
 	"invlpga", // X86_INS_INVLPGA
 	"invpcid", // X86_INS_INVPCID
 	"invvpid", // X86_INS_INVVPID
-	"inw", // X86_INS_INW
 	"iret", // X86_INS_IRET
 	"iretd", // X86_INS_IRETD
 	"iretq", // X86_INS_IRETQ
-	"ja", // X86_INS_JA
+	"fisttp", // X86_INS_FISTTP
+	"fist", // X86_INS_FIST
+	"fistp", // X86_INS_FISTP
 	"jae", // X86_INS_JAE
-	"jb", // X86_INS_JB
+	"ja", // X86_INS_JA
 	"jbe", // X86_INS_JBE
+	"jb", // X86_INS_JB
 	"jcxz", // X86_INS_JCXZ
-	"je", // X86_INS_JE
 	"jecxz", // X86_INS_JECXZ
-	"jg", // X86_INS_JG
+	"je", // X86_INS_JE
 	"jge", // X86_INS_JGE
-	"jl", // X86_INS_JL
+	"jg", // X86_INS_JG
 	"jle", // X86_INS_JLE
-	"jmp", // X86_INS_JMP
-	"jmpl", // X86_INS_JMPL
-	"jmpw", // X86_INS_JMPW
+	"jl", // X86_INS_JL
 	"jne", // X86_INS_JNE
 	"jno", // X86_INS_JNO
 	"jnp", // X86_INS_JNP
@@ -361,10 +327,12 @@
 	"kxorw", // X86_INS_KXORW
 	"lahf", // X86_INS_LAHF
 	"lar", // X86_INS_LAR
-	"lcall", // X86_INS_LCALL
 	"lddqu", // X86_INS_LDDQU
 	"ldmxcsr", // X86_INS_LDMXCSR
 	"lds", // X86_INS_LDS
+	"fldz", // X86_INS_FLDZ
+	"fld1", // X86_INS_FLD1
+	"fld", // X86_INS_FLD
 	"lea", // X86_INS_LEA
 	"leave", // X86_INS_LEAVE
 	"les", // X86_INS_LES
@@ -373,12 +341,10 @@
 	"lgdt", // X86_INS_LGDT
 	"lgs", // X86_INS_LGS
 	"lidt", // X86_INS_LIDT
-	"ljmp", // X86_INS_LJMP
 	"lldt", // X86_INS_LLDT
 	"llwpcb", // X86_INS_LLWPCB
 	"lmsw", // X86_INS_LMSW
 	"lock", // X86_INS_LOCK
-	"lods", // X86_INS_LODS
 	"lodsb", // X86_INS_LODSB
 	"lodsd", // X86_INS_LODSD
 	"lodsq", // X86_INS_LODSQ
@@ -386,6 +352,8 @@
 	"loop", // X86_INS_LOOP
 	"loope", // X86_INS_LOOPE
 	"loopne", // X86_INS_LOOPNE
+	"retf", // X86_INS_RETF
+	"retfq", // X86_INS_RETFQ
 	"lsl", // X86_INS_LSL
 	"lss", // X86_INS_LSS
 	"ltr", // X86_INS_LTR
@@ -393,7 +361,6 @@
 	"lwpval", // X86_INS_LWPVAL
 	"lzcnt", // X86_INS_LZCNT
 	"maskmovdqu", // X86_INS_MASKMOVDQU
-	"maskmovq", // X86_INS_MASKMOVQ
 	"maxpd", // X86_INS_MAXPD
 	"maxps", // X86_INS_MAXPS
 	"maxsd", // X86_INS_MAXSD
@@ -403,19 +370,105 @@
 	"minps", // X86_INS_MINPS
 	"minsd", // X86_INS_MINSD
 	"minss", // X86_INS_MINSS
-	"monitor", // X86_INS_MONITOR
+	"cvtpd2pi", // X86_INS_CVTPD2PI
+	"cvtpi2pd", // X86_INS_CVTPI2PD
+	"cvtpi2ps", // X86_INS_CVTPI2PS
+	"cvtps2pi", // X86_INS_CVTPS2PI
+	"cvttpd2pi", // X86_INS_CVTTPD2PI
+	"cvttps2pi", // X86_INS_CVTTPS2PI
+	"emms", // X86_INS_EMMS
+	"maskmovq", // X86_INS_MASKMOVQ
+	"movd", // X86_INS_MOVD
+	"movq", // X86_INS_MOVQ
+	"movdq2q", // X86_INS_MOVDQ2Q
+	"movntq", // X86_INS_MOVNTQ
+	"movq2dq", // X86_INS_MOVQ2DQ
+	"pabsb", // X86_INS_PABSB
+	"pabsd", // X86_INS_PABSD
+	"pabsw", // X86_INS_PABSW
+	"packssdw", // X86_INS_PACKSSDW
+	"packsswb", // X86_INS_PACKSSWB
+	"packuswb", // X86_INS_PACKUSWB
+	"paddb", // X86_INS_PADDB
+	"paddd", // X86_INS_PADDD
+	"paddq", // X86_INS_PADDQ
+	"paddsb", // X86_INS_PADDSB
+	"paddsw", // X86_INS_PADDSW
+	"paddusb", // X86_INS_PADDUSB
+	"paddusw", // X86_INS_PADDUSW
+	"paddw", // X86_INS_PADDW
+	"palignr", // X86_INS_PALIGNR
+	"pandn", // X86_INS_PANDN
+	"pand", // X86_INS_PAND
+	"pavgb", // X86_INS_PAVGB
+	"pavgw", // X86_INS_PAVGW
+	"pcmpeqb", // X86_INS_PCMPEQB
+	"pcmpeqd", // X86_INS_PCMPEQD
+	"pcmpeqw", // X86_INS_PCMPEQW
+	"pcmpgtb", // X86_INS_PCMPGTB
+	"pcmpgtd", // X86_INS_PCMPGTD
+	"pcmpgtw", // X86_INS_PCMPGTW
+	"pextrw", // X86_INS_PEXTRW
+	"phaddd", // X86_INS_PHADDD
+	"phaddsw", // X86_INS_PHADDSW
+	"phaddw", // X86_INS_PHADDW
+	"phsubd", // X86_INS_PHSUBD
+	"phsubsw", // X86_INS_PHSUBSW
+	"phsubw", // X86_INS_PHSUBW
+	"pinsrw", // X86_INS_PINSRW
+	"pmaddubsw", // X86_INS_PMADDUBSW
+	"pmaddwd", // X86_INS_PMADDWD
+	"pmaxsw", // X86_INS_PMAXSW
+	"pmaxub", // X86_INS_PMAXUB
+	"pminsw", // X86_INS_PMINSW
+	"pminub", // X86_INS_PMINUB
+	"pmovmskb", // X86_INS_PMOVMSKB
+	"pmulhrsw", // X86_INS_PMULHRSW
+	"pmulhuw", // X86_INS_PMULHUW
+	"pmulhw", // X86_INS_PMULHW
+	"pmullw", // X86_INS_PMULLW
+	"pmuludq", // X86_INS_PMULUDQ
+	"por", // X86_INS_POR
+	"psadbw", // X86_INS_PSADBW
+	"pshufb", // X86_INS_PSHUFB
+	"pshufw", // X86_INS_PSHUFW
+	"psignb", // X86_INS_PSIGNB
+	"psignd", // X86_INS_PSIGND
+	"psignw", // X86_INS_PSIGNW
+	"pslld", // X86_INS_PSLLD
+	"psllq", // X86_INS_PSLLQ
+	"psllw", // X86_INS_PSLLW
+	"psrad", // X86_INS_PSRAD
+	"psraw", // X86_INS_PSRAW
+	"psrld", // X86_INS_PSRLD
+	"psrlq", // X86_INS_PSRLQ
+	"psrlw", // X86_INS_PSRLW
+	"psubb", // X86_INS_PSUBB
+	"psubd", // X86_INS_PSUBD
+	"psubq", // X86_INS_PSUBQ
+	"psubsb", // X86_INS_PSUBSB
+	"psubsw", // X86_INS_PSUBSW
+	"psubusb", // X86_INS_PSUBUSB
+	"psubusw", // X86_INS_PSUBUSW
+	"psubw", // X86_INS_PSUBW
+	"punpckhbw", // X86_INS_PUNPCKHBW
+	"punpckhdq", // X86_INS_PUNPCKHDQ
+	"punpckhwd", // X86_INS_PUNPCKHWD
+	"punpcklbw", // X86_INS_PUNPCKLBW
+	"punpckldq", // X86_INS_PUNPCKLDQ
+	"punpcklwd", // X86_INS_PUNPCKLWD
+	"pxor", // X86_INS_PXOR
 	"monitorx", // X86_INS_MONITORX
+	"monitor", // X86_INS_MONITOR
 	"montmul", // X86_INS_MONTMUL
 	"mov", // X86_INS_MOV
 	"movabs", // X86_INS_MOVABS
 	"movapd", // X86_INS_MOVAPD
 	"movaps", // X86_INS_MOVAPS
 	"movbe", // X86_INS_MOVBE
-	"movd", // X86_INS_MOVD
 	"movddup", // X86_INS_MOVDDUP
 	"movdir64b", // X86_INS_MOVDIR64B
 	"movdiri", // X86_INS_MOVDIRI
-	"movdq2q", // X86_INS_MOVDQ2Q
 	"movdqa", // X86_INS_MOVDQA
 	"movdqu", // X86_INS_MOVDQU
 	"movhlps", // X86_INS_MOVHLPS
@@ -426,17 +479,13 @@
 	"movlps", // X86_INS_MOVLPS
 	"movmskpd", // X86_INS_MOVMSKPD
 	"movmskps", // X86_INS_MOVMSKPS
-	"movntdq", // X86_INS_MOVNTDQ
 	"movntdqa", // X86_INS_MOVNTDQA
+	"movntdq", // X86_INS_MOVNTDQ
 	"movnti", // X86_INS_MOVNTI
 	"movntpd", // X86_INS_MOVNTPD
 	"movntps", // X86_INS_MOVNTPS
-	"movntq", // X86_INS_MOVNTQ
 	"movntsd", // X86_INS_MOVNTSD
 	"movntss", // X86_INS_MOVNTSS
-	"movq", // X86_INS_MOVQ
-	"movq2dq", // X86_INS_MOVQ2DQ
-	"movs", // X86_INS_MOVS
 	"movsb", // X86_INS_MOVSB
 	"movsd", // X86_INS_MOVSD
 	"movshdup", // X86_INS_MOVSHDUP
@@ -456,8 +505,11 @@
 	"mulsd", // X86_INS_MULSD
 	"mulss", // X86_INS_MULSS
 	"mulx", // X86_INS_MULX
-	"mwait", // X86_INS_MWAIT
+	"fmul", // X86_INS_FMUL
+	"fimul", // X86_INS_FIMUL
+	"fmulp", // X86_INS_FMULP
 	"mwaitx", // X86_INS_MWAITX
+	"mwait", // X86_INS_MWAIT
 	"neg", // X86_INS_NEG
 	"nop", // X86_INS_NOP
 	"not", // X86_INS_NOT
@@ -465,52 +517,19 @@
 	"orpd", // X86_INS_ORPD
 	"orps", // X86_INS_ORPS
 	"out", // X86_INS_OUT
-	"outb", // X86_INS_OUTB
-	"outl", // X86_INS_OUTL
-	"outs", // X86_INS_OUTS
 	"outsb", // X86_INS_OUTSB
 	"outsd", // X86_INS_OUTSD
 	"outsw", // X86_INS_OUTSW
-	"outw", // X86_INS_OUTW
-	"pabsb", // X86_INS_PABSB
-	"pabsd", // X86_INS_PABSD
-	"pabsw", // X86_INS_PABSW
-	"packssdw", // X86_INS_PACKSSDW
-	"packsswb", // X86_INS_PACKSSWB
 	"packusdw", // X86_INS_PACKUSDW
-	"packuswb", // X86_INS_PACKUSWB
-	"paddb", // X86_INS_PADDB
-	"paddd", // X86_INS_PADDD
-	"paddq", // X86_INS_PADDQ
-	"paddsb", // X86_INS_PADDSB
-	"paddsw", // X86_INS_PADDSW
-	"paddusb", // X86_INS_PADDUSB
-	"paddusw", // X86_INS_PADDUSW
-	"paddw", // X86_INS_PADDW
-	"palignr", // X86_INS_PALIGNR
-	"pand", // X86_INS_PAND
-	"pandn", // X86_INS_PANDN
 	"pause", // X86_INS_PAUSE
-	"pavgb", // X86_INS_PAVGB
 	"pavgusb", // X86_INS_PAVGUSB
-	"pavgw", // X86_INS_PAVGW
 	"pblendvb", // X86_INS_PBLENDVB
 	"pblendw", // X86_INS_PBLENDW
-	"pclmulhqhqdq", // X86_INS_PCLMULHQHQDQ
-	"pclmulhqlqdq", // X86_INS_PCLMULHQLQDQ
-	"pclmullqhqdq", // X86_INS_PCLMULLQHQDQ
-	"pclmullqlqdq", // X86_INS_PCLMULLQLQDQ
 	"pclmulqdq", // X86_INS_PCLMULQDQ
-	"pcmpeqb", // X86_INS_PCMPEQB
-	"pcmpeqd", // X86_INS_PCMPEQD
 	"pcmpeqq", // X86_INS_PCMPEQQ
-	"pcmpeqw", // X86_INS_PCMPEQW
 	"pcmpestri", // X86_INS_PCMPESTRI
 	"pcmpestrm", // X86_INS_PCMPESTRM
-	"pcmpgtb", // X86_INS_PCMPGTB
-	"pcmpgtd", // X86_INS_PCMPGTD
 	"pcmpgtq", // X86_INS_PCMPGTQ
-	"pcmpgtw", // X86_INS_PCMPGTW
 	"pcmpistri", // X86_INS_PCMPISTRI
 	"pcmpistrm", // X86_INS_PCMPISTRM
 	"pconfig", // X86_INS_PCONFIG
@@ -519,7 +538,6 @@
 	"pextrb", // X86_INS_PEXTRB
 	"pextrd", // X86_INS_PEXTRD
 	"pextrq", // X86_INS_PEXTRQ
-	"pextrw", // X86_INS_PEXTRW
 	"pf2id", // X86_INS_PF2ID
 	"pf2iw", // X86_INS_PF2IW
 	"pfacc", // X86_INS_PFACC
@@ -532,41 +550,27 @@
 	"pfmul", // X86_INS_PFMUL
 	"pfnacc", // X86_INS_PFNACC
 	"pfpnacc", // X86_INS_PFPNACC
-	"pfrcp", // X86_INS_PFRCP
 	"pfrcpit1", // X86_INS_PFRCPIT1
 	"pfrcpit2", // X86_INS_PFRCPIT2
+	"pfrcp", // X86_INS_PFRCP
 	"pfrsqit1", // X86_INS_PFRSQIT1
 	"pfrsqrt", // X86_INS_PFRSQRT
-	"pfsub", // X86_INS_PFSUB
 	"pfsubr", // X86_INS_PFSUBR
-	"phaddd", // X86_INS_PHADDD
-	"phaddsw", // X86_INS_PHADDSW
-	"phaddw", // X86_INS_PHADDW
+	"pfsub", // X86_INS_PFSUB
 	"phminposuw", // X86_INS_PHMINPOSUW
-	"phsubd", // X86_INS_PHSUBD
-	"phsubsw", // X86_INS_PHSUBSW
-	"phsubw", // X86_INS_PHSUBW
 	"pi2fd", // X86_INS_PI2FD
 	"pi2fw", // X86_INS_PI2FW
 	"pinsrb", // X86_INS_PINSRB
 	"pinsrd", // X86_INS_PINSRD
 	"pinsrq", // X86_INS_PINSRQ
-	"pinsrw", // X86_INS_PINSRW
-	"pmaddubsw", // X86_INS_PMADDUBSW
-	"pmaddwd", // X86_INS_PMADDWD
 	"pmaxsb", // X86_INS_PMAXSB
 	"pmaxsd", // X86_INS_PMAXSD
-	"pmaxsw", // X86_INS_PMAXSW
-	"pmaxub", // X86_INS_PMAXUB
 	"pmaxud", // X86_INS_PMAXUD
 	"pmaxuw", // X86_INS_PMAXUW
 	"pminsb", // X86_INS_PMINSB
 	"pminsd", // X86_INS_PMINSD
-	"pminsw", // X86_INS_PMINSW
-	"pminub", // X86_INS_PMINUB
 	"pminud", // X86_INS_PMINUD
 	"pminuw", // X86_INS_PMINUW
-	"pmovmskb", // X86_INS_PMOVMSKB
 	"pmovsxbd", // X86_INS_PMOVSXBD
 	"pmovsxbq", // X86_INS_PMOVSXBQ
 	"pmovsxbw", // X86_INS_PMOVSXBW
@@ -580,21 +584,15 @@
 	"pmovzxwd", // X86_INS_PMOVZXWD
 	"pmovzxwq", // X86_INS_PMOVZXWQ
 	"pmuldq", // X86_INS_PMULDQ
-	"pmulhrsw", // X86_INS_PMULHRSW
 	"pmulhrw", // X86_INS_PMULHRW
-	"pmulhuw", // X86_INS_PMULHUW
-	"pmulhw", // X86_INS_PMULHW
 	"pmulld", // X86_INS_PMULLD
-	"pmullw", // X86_INS_PMULLW
-	"pmuludq", // X86_INS_PMULUDQ
 	"pop", // X86_INS_POP
-	"popal", // X86_INS_POPAL
 	"popaw", // X86_INS_POPAW
+	"popal", // X86_INS_POPAL
 	"popcnt", // X86_INS_POPCNT
 	"popf", // X86_INS_POPF
 	"popfd", // X86_INS_POPFD
 	"popfq", // X86_INS_POPFQ
-	"por", // X86_INS_POR
 	"prefetch", // X86_INS_PREFETCH
 	"prefetchnta", // X86_INS_PREFETCHNTA
 	"prefetcht0", // X86_INS_PREFETCHT0
@@ -602,51 +600,22 @@
 	"prefetcht2", // X86_INS_PREFETCHT2
 	"prefetchw", // X86_INS_PREFETCHW
 	"prefetchwt1", // X86_INS_PREFETCHWT1
-	"psadbw", // X86_INS_PSADBW
-	"pshufb", // X86_INS_PSHUFB
 	"pshufd", // X86_INS_PSHUFD
 	"pshufhw", // X86_INS_PSHUFHW
 	"pshuflw", // X86_INS_PSHUFLW
-	"pshufw", // X86_INS_PSHUFW
-	"psignb", // X86_INS_PSIGNB
-	"psignd", // X86_INS_PSIGND
-	"psignw", // X86_INS_PSIGNW
-	"pslld", // X86_INS_PSLLD
 	"pslldq", // X86_INS_PSLLDQ
-	"psllq", // X86_INS_PSLLQ
-	"psllw", // X86_INS_PSLLW
-	"psrad", // X86_INS_PSRAD
-	"psraw", // X86_INS_PSRAW
-	"psrld", // X86_INS_PSRLD
 	"psrldq", // X86_INS_PSRLDQ
-	"psrlq", // X86_INS_PSRLQ
-	"psrlw", // X86_INS_PSRLW
-	"psubb", // X86_INS_PSUBB
-	"psubd", // X86_INS_PSUBD
-	"psubq", // X86_INS_PSUBQ
-	"psubsb", // X86_INS_PSUBSB
-	"psubsw", // X86_INS_PSUBSW
-	"psubusb", // X86_INS_PSUBUSB
-	"psubusw", // X86_INS_PSUBUSW
-	"psubw", // X86_INS_PSUBW
 	"pswapd", // X86_INS_PSWAPD
 	"ptest", // X86_INS_PTEST
 	"ptwrite", // X86_INS_PTWRITE
-	"punpckhbw", // X86_INS_PUNPCKHBW
-	"punpckhdq", // X86_INS_PUNPCKHDQ
 	"punpckhqdq", // X86_INS_PUNPCKHQDQ
-	"punpckhwd", // X86_INS_PUNPCKHWD
-	"punpcklbw", // X86_INS_PUNPCKLBW
-	"punpckldq", // X86_INS_PUNPCKLDQ
 	"punpcklqdq", // X86_INS_PUNPCKLQDQ
-	"punpcklwd", // X86_INS_PUNPCKLWD
 	"push", // X86_INS_PUSH
-	"pushal", // X86_INS_PUSHAL
 	"pushaw", // X86_INS_PUSHAW
+	"pushal", // X86_INS_PUSHAL
 	"pushf", // X86_INS_PUSHF
 	"pushfd", // X86_INS_PUSHFD
 	"pushfq", // X86_INS_PUSHFQ
-	"pxor", // X86_INS_PXOR
 	"rcl", // X86_INS_RCL
 	"rcpps", // X86_INS_RCPPS
 	"rcpss", // X86_INS_RCPSS
@@ -663,11 +632,9 @@
 	"rdsspq", // X86_INS_RDSSPQ
 	"rdtsc", // X86_INS_RDTSC
 	"rdtscp", // X86_INS_RDTSCP
-	"rep", // X86_INS_REP
 	"repne", // X86_INS_REPNE
+	"rep", // X86_INS_REP
 	"ret", // X86_INS_RET
-	"retf", // X86_INS_RETF
-	"retfq", // X86_INS_RETFQ
 	"rex64", // X86_INS_REX64
 	"rol", // X86_INS_ROL
 	"ror", // X86_INS_ROR
@@ -687,28 +654,27 @@
 	"sarx", // X86_INS_SARX
 	"saveprevssp", // X86_INS_SAVEPREVSSP
 	"sbb", // X86_INS_SBB
-	"scas", // X86_INS_SCAS
 	"scasb", // X86_INS_SCASB
 	"scasd", // X86_INS_SCASD
 	"scasq", // X86_INS_SCASQ
 	"scasw", // X86_INS_SCASW
-	"seta", // X86_INS_SETA
 	"setae", // X86_INS_SETAE
-	"setb", // X86_INS_SETB
+	"seta", // X86_INS_SETA
 	"setbe", // X86_INS_SETBE
+	"setb", // X86_INS_SETB
 	"sete", // X86_INS_SETE
-	"setg", // X86_INS_SETG
 	"setge", // X86_INS_SETGE
-	"setl", // X86_INS_SETL
+	"setg", // X86_INS_SETG
 	"setle", // X86_INS_SETLE
+	"setl", // X86_INS_SETL
 	"setne", // X86_INS_SETNE
 	"setno", // X86_INS_SETNO
 	"setnp", // X86_INS_SETNP
 	"setns", // X86_INS_SETNS
 	"seto", // X86_INS_SETO
 	"setp", // X86_INS_SETP
-	"sets", // X86_INS_SETS
 	"setssbsy", // X86_INS_SETSSBSY
+	"sets", // X86_INS_SETS
 	"sfence", // X86_INS_SFENCE
 	"sgdt", // X86_INS_SGDT
 	"sha1msg1", // X86_INS_SHA1MSG1
@@ -727,6 +693,7 @@
 	"shufpd", // X86_INS_SHUFPD
 	"shufps", // X86_INS_SHUFPS
 	"sidt", // X86_INS_SIDT
+	"fsin", // X86_INS_FSIN
 	"skinit", // X86_INS_SKINIT
 	"sldt", // X86_INS_SLDT
 	"slwpcb", // X86_INS_SLWPCB
@@ -735,23 +702,31 @@
 	"sqrtps", // X86_INS_SQRTPS
 	"sqrtsd", // X86_INS_SQRTSD
 	"sqrtss", // X86_INS_SQRTSS
+	"fsqrt", // X86_INS_FSQRT
 	"stac", // X86_INS_STAC
 	"stc", // X86_INS_STC
 	"std", // X86_INS_STD
 	"stgi", // X86_INS_STGI
 	"sti", // X86_INS_STI
 	"stmxcsr", // X86_INS_STMXCSR
-	"stos", // X86_INS_STOS
 	"stosb", // X86_INS_STOSB
 	"stosd", // X86_INS_STOSD
 	"stosq", // X86_INS_STOSQ
 	"stosw", // X86_INS_STOSW
 	"str", // X86_INS_STR
+	"fst", // X86_INS_FST
+	"fstp", // X86_INS_FSTP
 	"sub", // X86_INS_SUB
 	"subpd", // X86_INS_SUBPD
 	"subps", // X86_INS_SUBPS
+	"fsubr", // X86_INS_FSUBR
+	"fisubr", // X86_INS_FISUBR
+	"fsubrp", // X86_INS_FSUBRP
 	"subsd", // X86_INS_SUBSD
 	"subss", // X86_INS_SUBSS
+	"fsub", // X86_INS_FSUB
+	"fisub", // X86_INS_FISUB
+	"fsubp", // X86_INS_FSUBP
 	"swapgs", // X86_INS_SWAPGS
 	"syscall", // X86_INS_SYSCALL
 	"sysenter", // X86_INS_SYSENTER
@@ -762,10 +737,16 @@
 	"t1mskc", // X86_INS_T1MSKC
 	"test", // X86_INS_TEST
 	"tpause", // X86_INS_TPAUSE
+	"ftst", // X86_INS_FTST
 	"tzcnt", // X86_INS_TZCNT
 	"tzmsk", // X86_INS_TZMSK
 	"ucomisd", // X86_INS_UCOMISD
 	"ucomiss", // X86_INS_UCOMISS
+	"fucompi", // X86_INS_FUCOMPI
+	"fucomi", // X86_INS_FUCOMI
+	"fucompp", // X86_INS_FUCOMPP
+	"fucomp", // X86_INS_FUCOMP
+	"fucom", // X86_INS_FUCOM
 	"ud0", // X86_INS_UD0
 	"ud1", // X86_INS_UD1
 	"ud2", // X86_INS_UD2
@@ -785,10 +766,10 @@
 	"vaddss", // X86_INS_VADDSS
 	"vaddsubpd", // X86_INS_VADDSUBPD
 	"vaddsubps", // X86_INS_VADDSUBPS
-	"vaesdec", // X86_INS_VAESDEC
 	"vaesdeclast", // X86_INS_VAESDECLAST
-	"vaesenc", // X86_INS_VAESENC
+	"vaesdec", // X86_INS_VAESDEC
 	"vaesenclast", // X86_INS_VAESENCLAST
+	"vaesenc", // X86_INS_VAESENC
 	"vaesimc", // X86_INS_VAESIMC
 	"vaeskeygenassist", // X86_INS_VAESKEYGENASSIST
 	"valignd", // X86_INS_VALIGND
@@ -829,15 +810,9 @@
 	"vcvtdq2pd", // X86_INS_VCVTDQ2PD
 	"vcvtdq2ps", // X86_INS_VCVTDQ2PS
 	"vcvtpd2dq", // X86_INS_VCVTPD2DQ
-	"vcvtpd2dqx", // X86_INS_VCVTPD2DQX
-	"vcvtpd2dqy", // X86_INS_VCVTPD2DQY
 	"vcvtpd2ps", // X86_INS_VCVTPD2PS
-	"vcvtpd2psx", // X86_INS_VCVTPD2PSX
-	"vcvtpd2psy", // X86_INS_VCVTPD2PSY
 	"vcvtpd2qq", // X86_INS_VCVTPD2QQ
 	"vcvtpd2udq", // X86_INS_VCVTPD2UDQ
-	"vcvtpd2udqx", // X86_INS_VCVTPD2UDQX
-	"vcvtpd2udqy", // X86_INS_VCVTPD2UDQY
 	"vcvtpd2uqq", // X86_INS_VCVTPD2UQQ
 	"vcvtph2ps", // X86_INS_VCVTPH2PS
 	"vcvtps2dq", // X86_INS_VCVTPS2DQ
@@ -848,8 +823,6 @@
 	"vcvtps2uqq", // X86_INS_VCVTPS2UQQ
 	"vcvtqq2pd", // X86_INS_VCVTQQ2PD
 	"vcvtqq2ps", // X86_INS_VCVTQQ2PS
-	"vcvtqq2psx", // X86_INS_VCVTQQ2PSX
-	"vcvtqq2psy", // X86_INS_VCVTQQ2PSY
 	"vcvtsd2si", // X86_INS_VCVTSD2SI
 	"vcvtsd2ss", // X86_INS_VCVTSD2SS
 	"vcvtsd2usi", // X86_INS_VCVTSD2USI
@@ -859,12 +832,8 @@
 	"vcvtss2si", // X86_INS_VCVTSS2SI
 	"vcvtss2usi", // X86_INS_VCVTSS2USI
 	"vcvttpd2dq", // X86_INS_VCVTTPD2DQ
-	"vcvttpd2dqx", // X86_INS_VCVTTPD2DQX
-	"vcvttpd2dqy", // X86_INS_VCVTTPD2DQY
 	"vcvttpd2qq", // X86_INS_VCVTTPD2QQ
 	"vcvttpd2udq", // X86_INS_VCVTTPD2UDQ
-	"vcvttpd2udqx", // X86_INS_VCVTTPD2UDQX
-	"vcvttpd2udqy", // X86_INS_VCVTTPD2UDQY
 	"vcvttpd2uqq", // X86_INS_VCVTTPD2UQQ
 	"vcvttps2dq", // X86_INS_VCVTTPS2DQ
 	"vcvttps2qq", // X86_INS_VCVTTPS2QQ
@@ -878,8 +847,6 @@
 	"vcvtudq2ps", // X86_INS_VCVTUDQ2PS
 	"vcvtuqq2pd", // X86_INS_VCVTUQQ2PD
 	"vcvtuqq2ps", // X86_INS_VCVTUQQ2PS
-	"vcvtuqq2psx", // X86_INS_VCVTUQQ2PSX
-	"vcvtuqq2psy", // X86_INS_VCVTUQQ2PSY
 	"vcvtusi2sd", // X86_INS_VCVTUSI2SD
 	"vcvtusi2ss", // X86_INS_VCVTUSI2SS
 	"vdbpsadbw", // X86_INS_VDBPSADBW
@@ -1055,18 +1022,19 @@
 	"vmlaunch", // X86_INS_VMLAUNCH
 	"vmload", // X86_INS_VMLOAD
 	"vmmcall", // X86_INS_VMMCALL
+	"vmovq", // X86_INS_VMOVQ
 	"vmovapd", // X86_INS_VMOVAPD
 	"vmovaps", // X86_INS_VMOVAPS
-	"vmovd", // X86_INS_VMOVD
 	"vmovddup", // X86_INS_VMOVDDUP
-	"vmovdqa", // X86_INS_VMOVDQA
+	"vmovd", // X86_INS_VMOVD
 	"vmovdqa32", // X86_INS_VMOVDQA32
 	"vmovdqa64", // X86_INS_VMOVDQA64
-	"vmovdqu", // X86_INS_VMOVDQU
+	"vmovdqa", // X86_INS_VMOVDQA
 	"vmovdqu16", // X86_INS_VMOVDQU16
 	"vmovdqu32", // X86_INS_VMOVDQU32
 	"vmovdqu64", // X86_INS_VMOVDQU64
 	"vmovdqu8", // X86_INS_VMOVDQU8
+	"vmovdqu", // X86_INS_VMOVDQU
 	"vmovhlps", // X86_INS_VMOVHLPS
 	"vmovhpd", // X86_INS_VMOVHPD
 	"vmovhps", // X86_INS_VMOVHPS
@@ -1075,11 +1043,10 @@
 	"vmovlps", // X86_INS_VMOVLPS
 	"vmovmskpd", // X86_INS_VMOVMSKPD
 	"vmovmskps", // X86_INS_VMOVMSKPS
-	"vmovntdq", // X86_INS_VMOVNTDQ
 	"vmovntdqa", // X86_INS_VMOVNTDQA
+	"vmovntdq", // X86_INS_VMOVNTDQ
 	"vmovntpd", // X86_INS_VMOVNTPD
 	"vmovntps", // X86_INS_VMOVNTPS
-	"vmovq", // X86_INS_VMOVQ
 	"vmovsd", // X86_INS_VMOVSD
 	"vmovshdup", // X86_INS_VMOVSHDUP
 	"vmovsldup", // X86_INS_VMOVSLDUP
@@ -1102,8 +1069,8 @@
 	"vmxon", // X86_INS_VMXON
 	"vorpd", // X86_INS_VORPD
 	"vorps", // X86_INS_VORPS
-	"vp4dpwssd", // X86_INS_VP4DPWSSD
 	"vp4dpwssds", // X86_INS_VP4DPWSSDS
+	"vp4dpwssd", // X86_INS_VP4DPWSSD
 	"vpabsb", // X86_INS_VPABSB
 	"vpabsd", // X86_INS_VPABSD
 	"vpabsq", // X86_INS_VPABSQ
@@ -1121,12 +1088,12 @@
 	"vpaddusw", // X86_INS_VPADDUSW
 	"vpaddw", // X86_INS_VPADDW
 	"vpalignr", // X86_INS_VPALIGNR
-	"vpand", // X86_INS_VPAND
 	"vpandd", // X86_INS_VPANDD
-	"vpandn", // X86_INS_VPANDN
 	"vpandnd", // X86_INS_VPANDND
 	"vpandnq", // X86_INS_VPANDNQ
+	"vpandn", // X86_INS_VPANDN
 	"vpandq", // X86_INS_VPANDQ
+	"vpand", // X86_INS_VPAND
 	"vpavgb", // X86_INS_VPAVGB
 	"vpavgw", // X86_INS_VPAVGW
 	"vpblendd", // X86_INS_VPBLENDD
@@ -1142,10 +1109,6 @@
 	"vpbroadcastmw2d", // X86_INS_VPBROADCASTMW2D
 	"vpbroadcastq", // X86_INS_VPBROADCASTQ
 	"vpbroadcastw", // X86_INS_VPBROADCASTW
-	"vpclmulhqhqdq", // X86_INS_VPCLMULHQHQDQ
-	"vpclmulhqlqdq", // X86_INS_VPCLMULHQLQDQ
-	"vpclmullqhqdq", // X86_INS_VPCLMULLQHQDQ
-	"vpclmullqlqdq", // X86_INS_VPCLMULLQLQDQ
 	"vpclmulqdq", // X86_INS_VPCLMULQDQ
 	"vpcmov", // X86_INS_VPCMOV
 	"vpcmp", // X86_INS_VPCMP
@@ -1184,10 +1147,10 @@
 	"vpcomw", // X86_INS_VPCOMW
 	"vpconflictd", // X86_INS_VPCONFLICTD
 	"vpconflictq", // X86_INS_VPCONFLICTQ
-	"vpdpbusd", // X86_INS_VPDPBUSD
 	"vpdpbusds", // X86_INS_VPDPBUSDS
-	"vpdpwssd", // X86_INS_VPDPWSSD
+	"vpdpbusd", // X86_INS_VPDPBUSD
 	"vpdpwssds", // X86_INS_VPDPWSSDS
+	"vpdpwssd", // X86_INS_VPDPWSSD
 	"vperm2f128", // X86_INS_VPERM2F128
 	"vperm2i128", // X86_INS_VPERM2I128
 	"vpermb", // X86_INS_VPERMB
@@ -1199,8 +1162,8 @@
 	"vpermi2q", // X86_INS_VPERMI2Q
 	"vpermi2w", // X86_INS_VPERMI2W
 	"vpermil2pd", // X86_INS_VPERMIL2PD
-	"vpermil2ps", // X86_INS_VPERMIL2PS
 	"vpermilpd", // X86_INS_VPERMILPD
+	"vpermil2ps", // X86_INS_VPERMIL2PS
 	"vpermilps", // X86_INS_VPERMILPS
 	"vpermpd", // X86_INS_VPERMPD
 	"vpermps", // X86_INS_VPERMPS
@@ -1227,8 +1190,8 @@
 	"vphaddbd", // X86_INS_VPHADDBD
 	"vphaddbq", // X86_INS_VPHADDBQ
 	"vphaddbw", // X86_INS_VPHADDBW
-	"vphaddd", // X86_INS_VPHADDD
 	"vphadddq", // X86_INS_VPHADDDQ
+	"vphaddd", // X86_INS_VPHADDD
 	"vphaddsw", // X86_INS_VPHADDSW
 	"vphaddubd", // X86_INS_VPHADDUBD
 	"vphaddubq", // X86_INS_VPHADDUBQ
@@ -1236,16 +1199,16 @@
 	"vphaddudq", // X86_INS_VPHADDUDQ
 	"vphadduwd", // X86_INS_VPHADDUWD
 	"vphadduwq", // X86_INS_VPHADDUWQ
-	"vphaddw", // X86_INS_VPHADDW
 	"vphaddwd", // X86_INS_VPHADDWD
 	"vphaddwq", // X86_INS_VPHADDWQ
+	"vphaddw", // X86_INS_VPHADDW
 	"vphminposuw", // X86_INS_VPHMINPOSUW
 	"vphsubbw", // X86_INS_VPHSUBBW
-	"vphsubd", // X86_INS_VPHSUBD
 	"vphsubdq", // X86_INS_VPHSUBDQ
+	"vphsubd", // X86_INS_VPHSUBD
 	"vphsubsw", // X86_INS_VPHSUBSW
-	"vphsubw", // X86_INS_VPHSUBW
 	"vphsubwd", // X86_INS_VPHSUBWD
+	"vphsubw", // X86_INS_VPHSUBW
 	"vpinsrb", // X86_INS_VPINSRB
 	"vpinsrd", // X86_INS_VPINSRD
 	"vpinsrq", // X86_INS_VPINSRQ
@@ -1338,9 +1301,9 @@
 	"vpopcntd", // X86_INS_VPOPCNTD
 	"vpopcntq", // X86_INS_VPOPCNTQ
 	"vpopcntw", // X86_INS_VPOPCNTW
-	"vpor", // X86_INS_VPOR
 	"vpord", // X86_INS_VPORD
 	"vporq", // X86_INS_VPORQ
+	"vpor", // X86_INS_VPOR
 	"vpperm", // X86_INS_VPPERM
 	"vprold", // X86_INS_VPROLD
 	"vprolq", // X86_INS_VPROLQ
@@ -1364,13 +1327,13 @@
 	"vpshaq", // X86_INS_VPSHAQ
 	"vpshaw", // X86_INS_VPSHAW
 	"vpshlb", // X86_INS_VPSHLB
-	"vpshld", // X86_INS_VPSHLD
 	"vpshldd", // X86_INS_VPSHLDD
 	"vpshldq", // X86_INS_VPSHLDQ
 	"vpshldvd", // X86_INS_VPSHLDVD
 	"vpshldvq", // X86_INS_VPSHLDVQ
 	"vpshldvw", // X86_INS_VPSHLDVW
 	"vpshldw", // X86_INS_VPSHLDW
+	"vpshld", // X86_INS_VPSHLD
 	"vpshlq", // X86_INS_VPSHLQ
 	"vpshlw", // X86_INS_VPSHLW
 	"vpshrdd", // X86_INS_VPSHRDD
@@ -1379,16 +1342,16 @@
 	"vpshrdvq", // X86_INS_VPSHRDVQ
 	"vpshrdvw", // X86_INS_VPSHRDVW
 	"vpshrdw", // X86_INS_VPSHRDW
-	"vpshufb", // X86_INS_VPSHUFB
 	"vpshufbitqmb", // X86_INS_VPSHUFBITQMB
+	"vpshufb", // X86_INS_VPSHUFB
 	"vpshufd", // X86_INS_VPSHUFD
 	"vpshufhw", // X86_INS_VPSHUFHW
 	"vpshuflw", // X86_INS_VPSHUFLW
 	"vpsignb", // X86_INS_VPSIGNB
 	"vpsignd", // X86_INS_VPSIGND
 	"vpsignw", // X86_INS_VPSIGNW
-	"vpslld", // X86_INS_VPSLLD
 	"vpslldq", // X86_INS_VPSLLDQ
+	"vpslld", // X86_INS_VPSLLD
 	"vpsllq", // X86_INS_VPSLLQ
 	"vpsllvd", // X86_INS_VPSLLVD
 	"vpsllvq", // X86_INS_VPSLLVQ
@@ -1400,8 +1363,8 @@
 	"vpsravq", // X86_INS_VPSRAVQ
 	"vpsravw", // X86_INS_VPSRAVW
 	"vpsraw", // X86_INS_VPSRAW
-	"vpsrld", // X86_INS_VPSRLD
 	"vpsrldq", // X86_INS_VPSRLDQ
+	"vpsrld", // X86_INS_VPSRLD
 	"vpsrlq", // X86_INS_VPSRLQ
 	"vpsrlvd", // X86_INS_VPSRLVD
 	"vpsrlvq", // X86_INS_VPSRLVQ
@@ -1417,7 +1380,6 @@
 	"vpsubw", // X86_INS_VPSUBW
 	"vpternlogd", // X86_INS_VPTERNLOGD
 	"vpternlogq", // X86_INS_VPTERNLOGQ
-	"vptest", // X86_INS_VPTEST
 	"vptestmb", // X86_INS_VPTESTMB
 	"vptestmd", // X86_INS_VPTESTMD
 	"vptestmq", // X86_INS_VPTESTMQ
@@ -1426,6 +1388,7 @@
 	"vptestnmd", // X86_INS_VPTESTNMD
 	"vptestnmq", // X86_INS_VPTESTNMQ
 	"vptestnmw", // X86_INS_VPTESTNMW
+	"vptest", // X86_INS_VPTEST
 	"vpunpckhbw", // X86_INS_VPUNPCKHBW
 	"vpunpckhdq", // X86_INS_VPUNPCKHDQ
 	"vpunpckhqdq", // X86_INS_VPUNPCKHQDQ
@@ -1434,9 +1397,9 @@
 	"vpunpckldq", // X86_INS_VPUNPCKLDQ
 	"vpunpcklqdq", // X86_INS_VPUNPCKLQDQ
 	"vpunpcklwd", // X86_INS_VPUNPCKLWD
-	"vpxor", // X86_INS_VPXOR
 	"vpxord", // X86_INS_VPXORD
 	"vpxorq", // X86_INS_VPXORQ
+	"vpxor", // X86_INS_VPXOR
 	"vrangepd", // X86_INS_VRANGEPD
 	"vrangeps", // X86_INS_VRANGEPS
 	"vrangesd", // X86_INS_VRANGESD
@@ -1532,6 +1495,7 @@
 	"xadd", // X86_INS_XADD
 	"xbegin", // X86_INS_XBEGIN
 	"xchg", // X86_INS_XCHG
+	"fxch", // X86_INS_FXCH
 	"xcryptcbc", // X86_INS_XCRYPTCBC
 	"xcryptcfb", // X86_INS_XCRYPTCFB
 	"xcryptctr", // X86_INS_XCRYPTCTR
@@ -1560,5 +1524,4 @@
 	"xsha1", // X86_INS_XSHA1
 	"xsha256", // X86_INS_XSHA256
 	"xstore", // X86_INS_XSTORE
-	"xstorerng", // X86_INS_XSTORERNG
 	"xtest", // X86_INS_XTEST
