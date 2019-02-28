@@ -843,8 +843,8 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 }
 
 #ifndef CAPSTONE_DIET
-static const name_map insn_name_maps[] = {
-	{ X86_INS_INVALID, NULL },
+static const char *insn_name_maps[] = {
+	NULL, // X86_INS_INVALID
 #ifndef CAPSTONE_X86_REDUCE
 #include "X86MappingInsnName.inc"
 #else
@@ -857,10 +857,10 @@ static const name_map insn_name_maps[] = {
 const char *X86_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= X86_INS_ENDING)
+	if (id >= ARR_SIZE(insn_name_maps))
 		return NULL;
 
-	return insn_name_maps[id].name;
+	return insn_name_maps[id];
 #else
 	return NULL;
 #endif
@@ -965,13 +965,19 @@ static void arr_replace(uint16_t *arr, uint8_t max, x86_reg r1, x86_reg r2)
 
 // look for @id in @insns
 // return -1 if not found
-static unsigned int find_insn(const insn_map_x86 *insns, unsigned int max, unsigned int id)
+unsigned int find_insn(unsigned int id)
 {
 	// binary searching since the IDs are sorted in order
 	unsigned int left, right, m;
+	unsigned int max = ARR_SIZE(insns);
+
+	right = max - 1;
+
+	if (id < insns[0].id || id > insns[right].id)
+		// not found
+		return -1;
 
 	left = 0;
-	right = max - 1;
 
 	while(left <= right) {
 		m = (left + right) / 2;
@@ -993,7 +999,7 @@ static unsigned int find_insn(const insn_map_x86 *insns, unsigned int max, unsig
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), id);
+	unsigned int i = find_insn(id);
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 
@@ -1584,47 +1590,42 @@ bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1,
 static bool valid_repne(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
 			default:
 				return false;
 
-			case X86_INS_CMPS:
 			case X86_INS_CMPSB:
+			case X86_INS_CMPSS:
 			case X86_INS_CMPSW:
 			case X86_INS_CMPSQ:
 
-			case X86_INS_SCAS:
 			case X86_INS_SCASB:
 			case X86_INS_SCASW:
 			case X86_INS_SCASQ:
 
-			case X86_INS_MOVS:
 			case X86_INS_MOVSB:
+			case X86_INS_MOVSS:
 			case X86_INS_MOVSW:
 			case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
 
-			case X86_INS_LODS:
 			case X86_INS_LODSB:
 			case X86_INS_LODSW:
 			case X86_INS_LODSD:
 			case X86_INS_LODSQ:
 
-			case X86_INS_STOS:
 			case X86_INS_STOSB:
 			case X86_INS_STOSW:
 			case X86_INS_STOSD:
 			case X86_INS_STOSQ:
 
-			case X86_INS_INS:
 			case X86_INS_INSB:
 			case X86_INS_INSW:
 			case X86_INS_INSD:
 
-			case X86_INS_OUTS:
 			case X86_INS_OUTSB:
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:
@@ -1653,7 +1654,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 static bool valid_bnd(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -1698,7 +1699,7 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 static bool valid_rep(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -1753,7 +1754,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 static bool valid_repe(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), opcode);
+	unsigned int i = find_insn(opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch(id) {
@@ -2014,7 +2015,7 @@ static insn_op insn_ops[] = {
 // given internal insn id, return operand access info
 uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags)
 {
-	unsigned int i = find_insn(insns, ARR_SIZE(insns), id);
+	unsigned int i = find_insn(id);
 	if (i != -1) {
 		*eflags = insn_ops[i].flags;
 		return insn_ops[i].access;
@@ -2092,8 +2093,13 @@ uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size)
 	// binary searching since the IDs are sorted in order
 	unsigned int left, right, m;
 
-	left = 0;
 	right = ARR_SIZE(x86_imm_size) - 1;
+
+	if (id < x86_imm_size[0].id || id > x86_imm_size[right].id)
+		// not found
+		return 0;
+
+	left = 0;
 
 	while (left <= right) {
 		m = (left + right) / 2;

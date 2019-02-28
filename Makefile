@@ -188,7 +188,7 @@ ifneq (,$(findstring x86,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_X86
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86DisassemblerDecoder.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86Disassembler.o
-    LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86InstPrinterCommon.o
+	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86InstPrinterCommon.o
 	LIBOBJ_X86 += $(OBJDIR)/arch/X86/X86IntelInstPrinter.o
 # assembly syntax is irrelevant in Diet mode, when this info is suppressed
 ifeq (,$(findstring yes,$(CAPSTONE_DIET)))

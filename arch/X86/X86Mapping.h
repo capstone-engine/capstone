@@ -89,4 +89,6 @@ uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size);
 
 unsigned short X86_register_map(unsigned short id);
 
+unsigned int find_insn(unsigned int id);
+
 #endif

@@ -189,7 +189,7 @@ static const unsigned char index_x86DisassemblerOneByteOpcodes[] = {
   0,
 };
 
-static const struct OpcodeDecision  x86DisassemblerOneByteOpcodes[] = {
+static const struct OpcodeDecision x86DisassemblerOneByteOpcodes[] = {
   { {
     { MODRM_SPLITRM, 1 },
     { MODRM_SPLITRM, 3 },
@@ -5282,7 +5282,7 @@ static const unsigned char index_x86DisassemblerTwoByteOpcodes[] = {
   182,
 };
 
-static const struct OpcodeDecision  x86DisassemblerTwoByteOpcodes[] = {
+static const struct OpcodeDecision x86DisassemblerTwoByteOpcodes[] = {
   { {
     { MODRM_SPLITREG, 1750 },
     { MODRM_SPLITMISC, 1766 },
@@ -52429,7 +52429,7 @@ static const unsigned char index_x86DisassemblerThreeByte38Opcodes[] = {
   100,
 };
 
-static const struct OpcodeDecision  x86DisassemblerThreeByte38Opcodes[] = {
+static const struct OpcodeDecision x86DisassemblerThreeByte38Opcodes[] = {
   { {
     { MODRM_SPLITRM, 10817 },
     { MODRM_SPLITRM, 10819 },
@@ -78420,7 +78420,7 @@ static const unsigned char index_x86DisassemblerThreeByte3AOpcodes[] = {
   61,
 };
 
-static const struct OpcodeDecision  x86DisassemblerThreeByte3AOpcodes[] = {
+static const struct OpcodeDecision x86DisassemblerThreeByte3AOpcodes[] = {
   { {
     { MODRM_ONEENTRY, 0 },
     { MODRM_ONEENTRY, 0 },
@@ -94349,7 +94349,7 @@ static const unsigned char index_x86DisassemblerXOP8Opcodes[] = {
   0,
 };
 
-static const struct OpcodeDecision  x86DisassemblerXOP8Opcodes[] = {
+static const struct OpcodeDecision x86DisassemblerXOP8Opcodes[] = {
   { {
     { MODRM_ONEENTRY, 0 },
     { MODRM_ONEENTRY, 0 },
@@ -95572,7 +95572,7 @@ static const unsigned char index_x86DisassemblerXOP9Opcodes[] = {
   0,
 };
 
-static const struct OpcodeDecision  x86DisassemblerXOP9Opcodes[] = {
+static const struct OpcodeDecision x86DisassemblerXOP9Opcodes[] = {
   { {
     { MODRM_ONEENTRY, 0 },
     { MODRM_SPLITREG, 19709 },
@@ -96537,7 +96537,7 @@ static const unsigned char index_x86DisassemblerXOPAOpcodes[] = {
   0,
 };
 
-static const struct OpcodeDecision  x86DisassemblerXOPAOpcodes[] = {
+static const struct OpcodeDecision x86DisassemblerXOPAOpcodes[] = {
   { {
     { MODRM_ONEENTRY, 0 },
     { MODRM_ONEENTRY, 0 },
@@ -97244,7 +97244,7 @@ static const unsigned char index_x86Disassembler3DNowOpcodes[] = {
   0,
 };
 
-static const struct OpcodeDecision  x86Disassembler3DNowOpcodes[] = {
+static const struct OpcodeDecision x86Disassembler3DNowOpcodes[] = {
   { {
     { MODRM_ONEENTRY, 0 },
     { MODRM_ONEENTRY, 0 },
@@ -102148,3 +102148,4 @@ static const struct OpcodeDecision  x86Disassembler3DNowOpcodes[] = {
     { MODRM_ONEENTRY, 0 },
   } },
 };
+

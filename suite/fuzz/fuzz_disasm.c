@@ -16,6 +16,7 @@ struct platform {
     cs_arch arch;
     cs_mode mode;
     const char *comment;
+    const char *cstoolname;
 };
 
 static FILE *outfile = NULL;
@@ -25,201 +26,238 @@ static struct platform platforms[] = {
         // item 0
         CS_ARCH_X86,
         CS_MODE_32,
-        "X86 32 (Intel syntax)"
+        "X86 32 (Intel syntax)",
+        "x32"
     },
     {
         // item 1
         CS_ARCH_X86,
         CS_MODE_64,
-        "X86 64 (Intel syntax)"
+        "X86 64 (Intel syntax)",
+        "x64"
     },
     {
         // item 2
         CS_ARCH_ARM,
         CS_MODE_ARM,
-        "ARM"
+        "ARM",
+        "arm"
     },
     {
         // item 3
         CS_ARCH_ARM,
         CS_MODE_THUMB,
-        "THUMB"
+        "THUMB",
+        "thumb"
     },
     {
         // item 4
         CS_ARCH_ARM,
         (cs_mode)(CS_MODE_ARM + CS_MODE_V8),
-        "Arm-V8"
+        "Arm-V8",
+        "armv8"
     },
     {
         // item 5
         CS_ARCH_ARM,
         (cs_mode)(CS_MODE_THUMB+CS_MODE_V8),
-        "THUMB+V8"
+        "THUMB+V8",
+        "thumbv8"
     },
     {
         // item 6
         CS_ARCH_ARM,
         (cs_mode)(CS_MODE_THUMB + CS_MODE_MCLASS),
-        "Thumb-MClass"
+        "Thumb-MClass",
+        "cortexm"
     },
     {
         // item 7
         CS_ARCH_ARM64,
         (cs_mode)0,
-        "ARM-64"
+        "ARM-64",
+        "arm64"
     },
     {
         // item 8
         CS_ARCH_MIPS,
         (cs_mode)(CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN),
-        "MIPS-32 (Big-endian)"
+        "MIPS-32 (Big-endian)",
+        "mipsbe"
     },
     {
         // item 9
         CS_ARCH_MIPS,
         (cs_mode)(CS_MODE_MIPS32 + CS_MODE_MICRO),
-        "MIPS-32 (micro)"
+        "MIPS-32 (micro)",
+        "mipsmicro"
     },
     {
         //item 10
         CS_ARCH_MIPS,
         CS_MODE_MIPS64,
-        "MIPS-64-EL (Little-endian)"
+        "MIPS-64-EL (Little-endian)",
+        "mips64"
     },
     {
         //item 11
         CS_ARCH_MIPS,
         CS_MODE_MIPS32,
-        "MIPS-32-EL (Little-endian)"
+        "MIPS-32-EL (Little-endian)",
+        "mips"
     },
     {
         //item 12
         CS_ARCH_MIPS,
         (cs_mode)(CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN),
-        "MIPS-64 (Big-endian)"
+        "MIPS-64 (Big-endian)",
+        "mips64be"
     },
     {
         //item 13
         CS_ARCH_MIPS,
         (cs_mode)(CS_MODE_MIPS32 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
-        "MIPS-32 | Micro (Big-endian)"
+        "MIPS-32 | Micro (Big-endian)",
+        "mipsbemicro"
     },
     {
         //item 14
         CS_ARCH_PPC,
         CS_MODE_BIG_ENDIAN,
-        "PPC-64"
+        "PPC-64",
+        "ppc64"
     },
     {
         //item 15
         CS_ARCH_SPARC,
         CS_MODE_BIG_ENDIAN,
-        "Sparc"
+        "Sparc",
+        "sparc"
     },
     {
         //item 16
         CS_ARCH_SPARC,
         (cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_V9),
-        "SparcV9"
+        "SparcV9",
+        "sparcv9"
     },
     {
         //item 17
         CS_ARCH_SYSZ,
         (cs_mode)0,
-        "SystemZ"
+        "SystemZ",
+        "systemz"
     },
     {
         //item 18
         CS_ARCH_XCORE,
         (cs_mode)0,
-        "XCore"
+        "XCore",
+        "xcore"
     },
     {
         //item 19
         CS_ARCH_MIPS,
         (cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_BIG_ENDIAN),
-        "MIPS-32R6 (Big-endian)"
+        "MIPS-32R6 (Big-endian)",
+        "mipsbe32r6"
     },
     {
         //item 20
         CS_ARCH_MIPS,
         (cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN),
-        "MIPS-32R6 (Micro+Big-endian)"
+        "MIPS-32R6 (Micro+Big-endian)",
+        "mipsbe32r6micro"
     },
     {
         //item 21
         CS_ARCH_MIPS,
         CS_MODE_MIPS32R6,
-        "MIPS-32R6 (Little-endian)"
+        "MIPS-32R6 (Little-endian)",
+        "mips32r6"
     },
     {
         //item 22
         CS_ARCH_MIPS,
         (cs_mode)(CS_MODE_MIPS32R6 + CS_MODE_MICRO),
-        "MIPS-32R6 (Micro+Little-endian)"
+        "MIPS-32R6 (Micro+Little-endian)",
+        "mips32r6micro"
     },
     {
         //item 23
         CS_ARCH_M68K,
         (cs_mode)0,
-        "M68K"
+        "M68K",
+        "m68k"
     },
     {
         //item 24
         CS_ARCH_M680X,
         (cs_mode)CS_MODE_M680X_6809,
-        "M680X_M6809"
+        "M680X_M6809",
+        "m6809"
     },
     {
         //item 25
         CS_ARCH_EVM,
         (cs_mode)0,
-        "EVM"
+        "EVM",
+        "evm"
     },
     {
         //item 26
         CS_ARCH_MOS65XX,
         (cs_mode)0,
-        "MOS65XX"
+        "MOS65XX",
+        "mos65xx"
     },
     {
         //item 27
         CS_ARCH_TMS320C64X,
         CS_MODE_BIG_ENDIAN,
+        "tms320c64x",
         "tms320c64x"
     },
     {
         //item 28
         CS_ARCH_WASM,
         (cs_mode)0,
-        "WASM"
+        "WASM",
+        "wasm"
     },
     {
         //item 29
         CS_ARCH_BPF,
         CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC,
-        "cBPF"
+        "cBPF",
+        "bpf"
     },
     {
         //item 30
         CS_ARCH_BPF,
         CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
-        "eBPF"
+        "eBPF",
+        "ebpf"
     },
     {
         //item 31
         CS_ARCH_BPF,
         CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC,
-        "cBPF"
+        "cBPF",
+        "bpfbe"
     },
     {
         //item 32
         CS_ARCH_BPF,
         CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED,
-        "eBPF"
+        "eBPF",
+        "ebpfbe"
     },
 };
+
+const char * cs_fuzz_arch(uint8_t arch) {
+    return platforms[arch % sizeof(platforms)/sizeof(platforms[0])].cstoolname;
+}
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     csh handle;
