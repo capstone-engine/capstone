@@ -320,7 +320,7 @@ static void clear_MI_insn_detail(MCInst *MI)
 ///
 static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
 				 const uint8_t *code, size_t code_len,
-				 uint64_t *Size, uint64_t Address,
+				 uint16_t *Size, uint64_t Address,
 				 MCRegisterInfo *MRI) 
 {
   	// TODO: This will need modification when supporting instruction set
@@ -371,9 +371,9 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
 }
 
 ///
-bool RISCV_getInstruction(csh ud, const uint8_t * code, size_t code_len,
-		     MCInst * instr, uint64_t * size, uint64_t address,
-		     void *info) 
+bool RISCV_getInstruction(csh ud, const uint8_t *code, size_t code_len,
+		          MCInst *instr, uint16_t *size, uint64_t address,
+		          void *info) 
 {
   	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 
