@@ -5,6 +5,7 @@ before_install:
 before_script:
         - wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         - unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
+        # TODO remove built in cmocka compile and use system cmocka (including brewfile) once xenial is default
         - git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
         - chmod +x suite/cstest/build_cstest.sh
 script:
@@ -25,6 +26,22 @@ os:
         - osx
 matrix:
     include:
+        - name: xenial gcc
+          os: linux
+          dist: xenial
+          compiler: gcc
+          addons:
+            apt:
+              packages:
+                - libcmocka-dev
+        - name: xenial clang
+          os: linux
+          dist: xenial
+          compiler: clang
+          addons:
+            apt:
+              packages:
+                - libcmocka-dev
         - name: fuzza
           env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address" NOPYTEST=true
           compiler: clang
