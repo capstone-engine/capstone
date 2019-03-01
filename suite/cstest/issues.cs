@@ -154,6 +154,14 @@
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x94 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
 
+!# issue 1263
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0: 0x67,0x48,0x89,0x18 == mov qword ptr [eax], rbx
+
+!# issue 1263
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0: 0x67,0x48,0x8b,0x03 == mov rax, qword ptr [ebx]
+
 !# issue 1255
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0xdb,0x7c,0x24,0x40 == fstp xword ptr [rsp + 0x40] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0xdb 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x7c ; disp: 0x40 ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x40 ; operands[0].size: 10 ; operands[0].access: WRITE ; Registers read: rsp ; Registers modified: fpsw ; FPU_FLAGS: MOD_C1 UNDEF_C0 UNDEF_C2 UNDEF_C3 ; Groups: fpu 
