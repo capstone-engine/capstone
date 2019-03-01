@@ -273,38 +273,21 @@ if (CAPSTONE_X86_SUPPORT)
         arch/X86/X86Disassembler.h
         arch/X86/X86DisassemblerDecoder.h
         arch/X86/X86DisassemblerDecoderCommon.h
+        arch/X86/X86InstPrinter.h
+        arch/X86/X86Mapping.h
         arch/X86/X86GenAsmWriter.inc
+        arch/X86/X86GenAsmWriter_reduce.inc
         arch/X86/X86GenAsmWriter1.inc
         arch/X86/X86GenAsmWriter1_reduce.inc
-        arch/X86/X86GenAsmWriter_reduce.inc
         arch/X86/X86GenDisassemblerTables.inc
         arch/X86/X86GenDisassemblerTables_reduce.inc
         arch/X86/X86GenInstrInfo.inc
         arch/X86/X86GenInstrInfo_reduce.inc
         arch/X86/X86GenRegisterInfo.inc
-        arch/X86/X86InstPrinter.h
-        arch/X86/X86Mapping.h
         arch/X86/X86MappingInsn.inc
+        arch/X86/X86MappingInsn_reduce.inc
         arch/X86/X86MappingInsnOp.inc
         arch/X86/X86MappingInsnOp_reduce.inc
-        arch/X86/X86MappingInsn_reduce.inc
-        )
-    set(HEADERS_X86
-        arch/X86/X86BaseInfo.h
-        arch/X86/X86Disassembler.h
-        arch/X86/X86DisassemblerDecoder.h
-        arch/X86/X86DisassemblerDecoderCommon.h
-        arch/X86/X86GenAsmWriter.inc
-        arch/X86/X86GenAsmWriter1.inc
-        arch/X86/X86GenAsmWriter1_reduce.inc
-        arch/X86/X86GenAsmWriter_reduce.inc
-        arch/X86/X86GenDisassemblerTables.inc
-        arch/X86/X86GenDisassemblerTables_reduce.inc
-        arch/X86/X86GenInstrInfo.inc
-        arch/X86/X86GenInstrInfo_reduce.inc
-        arch/X86/X86GenRegisterInfo.inc
-        arch/X86/X86InstPrinter.h
-        arch/X86/X86Mapping.h
         )
     if (NOT CAPSTONE_BUILD_DIET)
         set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
