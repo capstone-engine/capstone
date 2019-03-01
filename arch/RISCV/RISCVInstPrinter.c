@@ -51,16 +51,6 @@ static const char *getRegisterName(unsigned RegNo, unsigned AltIdx);
 #define PRINT_ALIAS_INSTR
 #include "RISCVGenAsmWriter.inc"
 
-/// NULL
-void RISCV_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) 
-{
-  	assert(0 && "RISCV post-printer doesn't implementated.");
-	/*
-	   if (((cs_struct *)ud)->detail != CS_OPT_ON)
-	   return;
-	 */
-}
-
 //void RISCVInstPrinter::printInst(const MCInst *MI, raw_ostream &O,
 //                                 StringRef Annot, const MCSubtargetInfo &STI) 
 void RISCV_printInst(MCInst *MI, SStream *O, void *info) 
@@ -95,7 +85,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
   	MCOperand *MO = MCInst_getOperand(MI, OpNo);
   
-  	//
   	if (MCOperand_isReg(MO)) {
     		reg = MCOperand_getReg(MO);
     		printRegName(O, reg);
@@ -105,11 +94,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
       			MI->flat_insn->detail->riscv.op_count++;
     		}
 
-    		return;
-  	}
-
-  	//
-  	if (MCOperand_isImm(MO)) {
+  	} else {
+		assert(MCOperand_isImm(MO) && "Unknown operand kind in printOperand");
     		Imm = MCOperand_getImm(MO);
     		if (Imm >= 0) {
       			if (Imm > HEX_THRESHOLD)
@@ -128,12 +114,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
       			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].imm = Imm;
       			MI->flat_insn->detail->riscv.op_count++;
     		}
-    		return;
   	}
 
   	//assert(MO.isExpr() && "Unknown operand kind in printOperand");
-  	assert(0 && "Unknown operand kind in printOperand");
-  	//MO.getExpr()->print(O, &MAI);
+	
+	return;
 }
 
 static void printCSRSystemRegister(const MCInst *MI, unsigned OpNo,
@@ -154,7 +139,7 @@ static void printCSRSystemRegister(const MCInst *MI, unsigned OpNo,
 static void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O) 
 {
   	unsigned FenceArg = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-  	assert (((FenceArg >> 4) == 0) && "Invalid immediate in printFenceArg");
+  	//assert (((FenceArg >> 4) == 0) && "Invalid immediate in printFenceArg");
 
   	if ((FenceArg & RISCVFenceField_I) != 0)
     		SStream_concat0(O, "i");

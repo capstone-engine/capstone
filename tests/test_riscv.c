@@ -91,7 +91,7 @@ static void test()
 	struct platform platforms[] = {
 		{
 			CS_ARCH_RISCV,
-			CS_MODE_LITTLE_ENDIAN,
+			CS_MODE_LITTLE_ENDIAN | CS_MODE_RISCV,
 			(unsigned char *)RISCV_CODE,
 			sizeof(RISCV_CODE) - 1,
 			"RISCV"

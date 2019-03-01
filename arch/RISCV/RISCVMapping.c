@@ -230,7 +230,6 @@ const char *RISCV_group_name(csh handle, unsigned int id)
             (id > RISCV_GRP_JUMP && id < RISCV_GRP_ISRV32))
 		return NULL;
 	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
-
 #else
 	return NULL;
 #endif
