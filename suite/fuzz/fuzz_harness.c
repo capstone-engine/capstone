@@ -117,6 +117,16 @@ int main(int argc, char **argv)
       (cs_mode)CS_MODE_M680X_6809,
       "M680X_M6809"
     },
+    {
+      CS_ARCH_RISCV,
+      (cs_mode)CS_MODE_RISCV32,
+      "riscv32"
+    },
+    {
+      CS_ARCH_M680X,
+      (cs_mode)CS_MODE_RISCV64,
+      "riscv64"
+    },
   };
 
   // Read input

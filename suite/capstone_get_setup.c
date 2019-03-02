@@ -47,6 +47,10 @@ int main()
 	if (cs_support(CS_ARCH_XCORE)) {
 		printf("xcore=1 ");
 	}
+	
+	if (cs_support(CS_ARCH_RISCV)) {
+		printf("riscv=1 ");
+	}
 
 	if (cs_support(CS_ARCH_M68K)) {
 		printf("m68k=1 ");

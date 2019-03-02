@@ -13,6 +13,7 @@ single_dict arches[] = {
 	{"CS_ARCH_SYSZ", CS_ARCH_SYSZ},
 	{"CS_ARCH_X86", CS_ARCH_X86},
 	{"CS_ARCH_XCORE", CS_ARCH_XCORE},
+	{"CS_ARCH_RISCV", CS_ARCH_RISCV},
 	{"CS_ARCH_M68K", CS_ARCH_M68K},
 	{"CS_ARCH_BPF", CS_ARCH_BPF},
 };
@@ -51,6 +52,8 @@ single_dict modes[] = {
 	{"CS_MODE_M680X_6811", CS_MODE_M680X_6811},
 	{"CS_MODE_M680X_CPU12", CS_MODE_M680X_CPU12},
 	{"CS_MODE_M680X_HCS08", CS_MODE_M680X_HCS08},
+	{"CS_MODE_RISCV32", CS_MODE_RISCV32},
+	{"CS_MODE_RISCV64", CS_MODE_RISCV64},
 	{"CS_MODE_BPF_CLASSIC", CS_MODE_BPF_CLASSIC},
 	{"CS_MODE_BPF_EXTENDED", CS_MODE_BPF_EXTENDED},
 };
@@ -77,6 +80,8 @@ double_dict options[] = {
 	{"CS_MODE_MIPS2", CS_OPT_MODE, CS_MODE_MIPS2},
 	{"CS_MODE_V9", CS_OPT_MODE, CS_MODE_V9},
 	{"CS_MODE_QPX", CS_OPT_MODE, CS_MODE_QPX},
+	{"CS_MODE_RISCV32", CS_OPT_MODE, CS_MODE_RISCV32},
+	{"CS_MODE_RISCV64", CS_OPT_MODE, CS_MODE_RISCV64},
 	{"CS_MODE_M68K_000", CS_OPT_MODE, CS_MODE_M68K_000},
 	{"CS_MODE_M68K_010", CS_OPT_MODE, CS_MODE_M68K_010},
 	{"CS_MODE_M68K_020", CS_OPT_MODE, CS_MODE_M68K_020},
@@ -252,6 +257,9 @@ int set_function(int arch)
 			break;
 		case CS_ARCH_XCORE:
 			function = get_detail_xcore;
+			break;
+		case CS_ARCH_RISCV:
+			function = get_detail_riscv;
 			break;
 		case CS_ARCH_M68K:
 			function = get_detail_m68k;

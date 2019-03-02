@@ -31,6 +31,7 @@ def test_file(fname):
         "CS_ARCH_SYSZ": CS_ARCH_SYSZ,
         "CS_ARCH_X86": CS_ARCH_X86,
         "CS_ARCH_XCORE": CS_ARCH_XCORE,
+        "CS_ARCH_RISCV": CS_ARCH_RISCV,
     }
     
     modes = {
@@ -57,6 +58,8 @@ def test_file(fname):
         "CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN,
         "CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN,
         "CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN,
+        "CS_MODE_RISCV32": CS_MODE_RISCV32,
+        "CS_MODE_RISCV64": CS_MODE_RISCV64,
     }
 
     mc_modes = {
@@ -87,6 +90,8 @@ def test_file(fname):
         ("CS_ARCH_M68K", "0"): 23,
         ("CS_ARCH_M680X", "CS_MODE_M680X_6809"): 24,
         ("CS_ARCH_EVM", "0"): 25,
+        ("CS_ARCH_RISCV", "CS_MODE_RISCV32"): 26,
+        ("CS_ARCH_RISCV", "CS_MODE_RISCV64"): 27,
         ("CS_ARCH_BPF", "CS_MODE_LITTLE_ENDIAN+CS_MODE_BPF_CLASSIC"): 29,
         ("CS_ARCH_BPF", "CS_MODE_LITTLE_ENDIAN+CS_MODE_BPF_EXTENDED"): 30,
         ("CS_ARCH_BPF", "CS_MODE_BIG_ENDIAN+CS_MODE_BPF_CLASSIC"): 31,
