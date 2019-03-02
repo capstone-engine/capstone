@@ -1,3 +1,7 @@
+!# issue x86 BND register (OSS-fuzz #13467)
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x0f,0x1a,0x1a == bndldx bnd3, [edx] ; operands[0].type: REG = bnd3
+
 !# issue 1335
 !# CS_ARCH_X86, CS_MODE_32, None
 0x0f,0x1f,0xc0 == nop eax
