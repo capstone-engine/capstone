@@ -119,6 +119,7 @@ endif
 
 
 DEP_M68K =
+DEP_M68K += $(wildcard arch/M68K/M68K*.inc)
 DEP_M68K += $(wildcard arch/M68K/M68K*.h)
 
 LIBOBJ_M68K =
