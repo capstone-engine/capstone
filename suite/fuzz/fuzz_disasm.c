@@ -253,6 +253,83 @@ static struct platform platforms[] = {
         "eBPF",
         "ebpfbe"
     },
+    {
+        // item 33
+        CS_ARCH_X86,
+        CS_MODE_16,
+        "X86 16 (Intel syntax)",
+        "x16"
+    },
+    {
+        // item 34
+        CS_ARCH_M68K,
+        CS_MODE_M68K_040,
+        "M68K mode 40",
+        "m68k40"
+    },
+    {
+        //item 35
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6800,
+        "M680X_M6800",
+        "m6800"
+    },
+    {
+        //item 36
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6801,
+        "M680X_M6801",
+        "m6801"
+    },
+    {
+        //item 37
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6805,
+        "M680X_M6805",
+        "m6805"
+    },
+    {
+        //item 38
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6808,
+        "M680X_M6808",
+        "m6808"
+    },
+    {
+        //item 39
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6811,
+        "M680X_M6811",
+        "m6811"
+    },
+    {
+        //item 40
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_CPU12,
+        "M680X_cpu12",
+        "cpu12"
+    },
+    {
+        //item 41
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6301,
+        "M680X_M6808",
+        "hd6301"
+    },
+    {
+        //item 42
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_6309,
+        "M680X_M6808",
+        "hd6309"
+    },
+    {
+        //item 43
+        CS_ARCH_M680X,
+        (cs_mode)CS_MODE_M680X_HCS08,
+        "M680X_M6808",
+        "hcs08"
+    },
 };
 
 const char * cs_fuzz_arch(uint8_t arch) {
@@ -290,6 +367,10 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     }
 
     cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+    if (Data[0]&0x80) {
+        //hack
+        cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
+    }
 
     uint64_t address = 0x1000;
     size_t count = cs_disasm(handle, Data+1, Size-1, address, 0, &all_insn);
