@@ -51,7 +51,7 @@ static uint64_t getFeatureBits(int mode)
 	} else
 		assert (mode == CS_MODE_RISCVC);
 
-	return;
+	return 0;
 }
 
 #define GET_REGINFO_ENUM
