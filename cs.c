@@ -308,7 +308,7 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 	0,
 #endif
 #ifdef CAPSTONE_HAS_RISCV
-	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_RISCV | CS_MODE_RISCVC),
+	~(CS_MODE_LITTLE_ENDIAN | CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC),
 #else
         0,
 #endif

@@ -28,11 +28,28 @@
 #include "RISCVBaseInfo.h"
 #include "RISCVDisassembler.h"
 
-///
+
+/* Need the feature infos define in 
+  RISCVGenSubtargetInfo.inc. */
+#define GET_SUBTARGETINFO_ENUM
+#include "RISCVGenSubtargetInfo.inc"
+
+/* When we specify the RISCV64 mode, It means It is RV64IMAFD.
+  Similar, RISCV32 means RV32IMAFD.
+*/
 static uint64_t getFeatureBits(int mode) 
 {
-  	// support everything
-  	return (uint64_t) - 1;
+	if (mode == CS_MODE_RISCV32)
+		// return b11110
+		return RISCV_FeatureStdExtM | RISCV_FeatureStdExtA |
+		       RISCV_FeatureStdExtF | RISCV_FeatureStdExtD ;
+	else {
+		assert(mode == CS_MODE_RISCV64);
+		// return b11111
+		return RISCV_Feature64Bit   | RISCV_FeatureStdExtM | 
+		       RISCV_FeatureStdExtA | RISCV_FeatureStdExtF | 
+		       RISCV_FeatureStdExtD ;
+	}
 }
 
 #define GET_REGINFO_ENUM
@@ -303,8 +320,6 @@ static DecodeStatus decodeFRMArg(MCInst *Inst, uint64_t Imm,
 }
 
 
-#define GET_SUBTARGETINFO_ENUM
-#include "RISCVGenSubtargetInfo.inc"
 #include "RISCVGenDisassemblerTables.inc"
 
 /// 
@@ -347,12 +362,13 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
       			return MCDisassembler_Fail;
     		}
 
-    		if (!getFeatureBits(mode)) {
-      		// Trying RISCV32Only_16 table (16-bit Instruction)
-      		Inst = code[0] | (code[1] << 8);
-      		clear_MI_insn_detail(MI);
-      		Result = decodeInstruction(DecoderTableRISCV32Only_16, MI, Inst, Address,
-                                 	   MRI, mode);
+		// If not b4bit.
+    		if (! (getFeatureBits(mode) & ((uint64_t)RISCV_Feature64Bit))) {
+      			// Trying RISCV32Only_16 table (16-bit Instruction)
+      			Inst = code[0] | (code[1] << 8);
+      			clear_MI_insn_detail(MI);
+      			Result = decodeInstruction(DecoderTableRISCV32Only_16, MI, Inst, Address,
+                                 	   	   MRI, mode);
       			if (Result != MCDisassembler_Fail) {
         			*Size = 2;
         			return Result;
