@@ -21,10 +21,6 @@ char *get_detail_riscv(csh *handle, cs_mode mode, cs_insn *ins)
 		add_str(&result, " ; op_count: %u", riscv->op_count);
 
 	for (i = 0; i < riscv->op_count; i++) {
-
-
-
-
 		cs_riscv_op *op = &(riscv->operands[i]);
 		switch((int)op->type) {
 			default:
