@@ -9,6 +9,8 @@
 
 #include <capstone/capstone.h>
 
+const char * cs_fuzz_arch(uint8_t arch);
+
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size);
 
 
