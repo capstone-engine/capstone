@@ -975,21 +975,21 @@ static void build_cas2(m68k_info *info, int size)
 
 	op0->address_mode = M68K_AM_NONE;
 	op0->type = M68K_OP_REG_PAIR;
-	op0->reg_pair.reg_0 = (extension >> 16) & 7;
-	op0->reg_pair.reg_1 = extension & 7;
+	op0->reg_pair.reg_0 = ((extension >> 16) & 7) + M68K_REG_D0;
+	op0->reg_pair.reg_1 = (extension & 7) + M68K_REG_D0;
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->reg_pair.reg_0 = (extension >> 22) & 7;
-	op1->reg_pair.reg_1 = (extension >> 6) & 7;
+	op1->reg_pair.reg_0 = ((extension >> 22) & 7) + M68K_REG_D0;
+	op1->reg_pair.reg_1 = ((extension >> 6) & 7) + M68K_REG_D0;
 
 	reg_0 = (extension >> 28) & 7;
 	reg_1 = (extension >> 12) & 7;
 
 	op2->address_mode = M68K_AM_NONE;
 	op2->type = M68K_OP_REG_PAIR;
-	op2->reg_pair.reg_0 = reg_0 + (BIT_1F(extension) ? 8 : 0);
-	op2->reg_pair.reg_1 = reg_1 + (BIT_F(extension) ? 8 : 0);
+	op2->reg_pair.reg_0 = reg_0 + (BIT_1F(extension) ? 8 : 0) + M68K_REG_D0;
+	op2->reg_pair.reg_1 = reg_1 + (BIT_F(extension) ? 8 : 0) + M68K_REG_D0;
 }
 
 static void build_chk2_cmp2(m68k_info *info, int size)
@@ -2233,8 +2233,8 @@ static void d68020_divl(m68k_info *info)
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->reg_pair.reg_0 = reg_0;
-	op1->reg_pair.reg_1 = reg_1;
+	op1->reg_pair.reg_0 = reg_0 + M68K_REG_D0;
+	op1->reg_pair.reg_1 = reg_1 + M68K_REG_D0;
 
 	if ((reg_0 == reg_1) || !BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
@@ -2778,8 +2778,8 @@ static void d68020_mull(m68k_info *info)
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->reg_pair.reg_0 = reg_0;
-	op1->reg_pair.reg_1 = reg_1;
+	op1->reg_pair.reg_0 = reg_0 + M68K_REG_D0;
+	op1->reg_pair.reg_1 = reg_1 + M68K_REG_D0;
 
 	if (!BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
@@ -3496,8 +3496,8 @@ static void update_op_reg_list(m68k_info *info, cs_m68k_op *op, int write)
 			break;
 
 		case M68K_OP_REG_PAIR:
-			add_reg_to_rw_list(info, M68K_REG_D0 + op->reg_pair.reg_0, write);
-			add_reg_to_rw_list(info, M68K_REG_D0 + op->reg_pair.reg_1, write);
+			add_reg_to_rw_list(info, op->reg_pair.reg_0, write);
+			add_reg_to_rw_list(info, op->reg_pair.reg_1, write);
 			break;
 	}
 }
