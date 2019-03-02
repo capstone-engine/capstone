@@ -27,7 +27,7 @@
  * THE SOFTWARE.
  */
 
-/* The code bellow is based on MUSASHI but has been heavily modified for Capstone by
+/* The code below is based on MUSASHI but has been heavily modified for Capstone by
  * Daniel Collin <daniel@collin.com> 2015-2019 */
 
 /* ======================================================================== */
