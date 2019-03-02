@@ -39,7 +39,7 @@ char *get_detail_riscv(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: MEM", i);
 				if (op->mem.base != RISCV_REG_INVALID)
 					add_str(&result, " ; operands[%u].mem.base: REG = %s",
-							i, cs_reg_name(handle, op->mem.base));
+							i, cs_reg_name(*handle, op->mem.base));
 				if (op->mem.disp != 0)
 					add_str(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
 				break;
