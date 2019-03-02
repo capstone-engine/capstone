@@ -125,7 +125,9 @@ static void printCSRSystemRegister(const MCInst *MI, unsigned OpNo,
                                    //const MCSubtargetInfo &STI,
                                    SStream *O) 
 {
-  	assert (0 && "CSR system register hav't support.");
+	// TODO: Not yeat implementated.
+	return;
+  	//assert (0 && "CSR system register hav't support.");
 #if 0
   unsigned Imm = MI->getOperand(OpNo).getImm();
   auto SysReg = RISCVSysReg::lookupSysRegByEncoding(Imm);
