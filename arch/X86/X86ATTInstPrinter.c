@@ -794,13 +794,13 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 				 MI->x86opsize = 8;
 				 break;
 	}
+
 	printMemReference(MI, OpNo, O);
 }
 
 #include "X86InstPrinter.h"
 
 // Include the auto-generated portion of the assembly writer.
-#define PRINT_ALIAS_INSTR
 #ifdef CAPSTONE_X86_REDUCE
 #include "X86GenAsmWriter_reduce.inc"
 #else

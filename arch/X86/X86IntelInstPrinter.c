@@ -1012,10 +1012,10 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 				 MI->x86opsize = 8;
 				 break;
 	}
+
 	printMemReference(MI, OpNo, O);
 }
 
-#define PRINT_ALIAS_INSTR
 #ifdef CAPSTONE_X86_REDUCE
 #include "X86GenAsmWriter1_reduce.inc"
 #else
