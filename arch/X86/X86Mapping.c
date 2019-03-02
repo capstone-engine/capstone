@@ -326,6 +326,11 @@ static const name_map reg_name_maps[] = {
 	{ X86_REG_R13W, "r13w" },
 	{ X86_REG_R14W, "r14w" },
 	{ X86_REG_R15W, "r15w" },
+
+	{ X86_REG_BND0, "bnd0" },
+	{ X86_REG_BND1, "bnd1" },
+	{ X86_REG_BND2, "bnd2" },
+	{ X86_REG_BND3, "bnd3" },
 };
 #endif
 
