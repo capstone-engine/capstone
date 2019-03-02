@@ -578,6 +578,10 @@ const uint8_t regsize_map_32 [] = {
 	2,	// { X86_REG_R13W, "r13w" },
 	2,	// { X86_REG_R14W, "r14w" },
 	2,	// { X86_REG_R15W, "r15w" },
+	16, // { X86_REG_BND0, "bnd0" },
+	16, // { X86_REG_BND1, "bnd0" },
+	16, // { X86_REG_BND2, "bnd0" },
+	16, // { X86_REG_BND3, "bnd0" },
 };
 
 // register size in 64bit mode
@@ -824,6 +828,10 @@ const uint8_t regsize_map_64 [] = {
 	2,	// { X86_REG_R13W, "r13w" },
 	2,	// { X86_REG_R14W, "r14w" },
 	2,	// { X86_REG_R15W, "r15w" },
+	16, // { X86_REG_BND0, "bnd0" },
+	16, // { X86_REG_BND1, "bnd0" },
+	16, // { X86_REG_BND2, "bnd0" },
+	16, // { X86_REG_BND3, "bnd0" },
 };
 
 const char *X86_reg_name(csh handle, unsigned int reg)
