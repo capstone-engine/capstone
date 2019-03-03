@@ -1187,7 +1187,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   };
 
 #ifndef CAPSTONE_DIET
-  SStream_concat0(O, "\t");
+  //SStream_concat0(O, "\t");
 #endif
 
   // Emit the opcode for the instruction.

@@ -230,6 +230,11 @@ static void usage(char *prog)
 		printf("        evm         Ethereum Virtual Machine\n");
 	}
 
+	if (cs_support(CS_ARCH_RISCV)) {
+		printf("        riscv32     riscv32\n");
+		printf("        riscv64     riscv32\n");
+	}
+
 	if (cs_support(CS_ARCH_MOS65XX)) {
 		printf("        mos65xx     MOS65XX family\n");
 	}
