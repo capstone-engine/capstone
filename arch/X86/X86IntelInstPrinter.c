@@ -1022,4 +1022,6 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 #include "X86GenAsmWriter1.inc"
 #endif
 
+#include "X86GenRegisterName1.inc"
+
 #endif
