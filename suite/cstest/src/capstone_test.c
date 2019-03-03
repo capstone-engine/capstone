@@ -145,6 +145,8 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	}
 
 	for (p = list_part[1]; *p; ++p) *p = tolower(*p);
+	for (p = list_part[1]; *p; ++p)
+		if (*p == '\t') *p = ' ';
 	trim_str(list_part[1]);
 	strcpy(tmp_mc, list_part[1]);
 	replace_hex(tmp_mc);
