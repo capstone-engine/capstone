@@ -57,7 +57,6 @@ static uint64_t getFeatureBits(int mode)
 #define GET_INSTRINFO_ENUM
 #include "RISCVGenInstrInfo.inc"
 
-///
 static const unsigned GPRDecoderTable[] = {
   	RISCV_X0,  RISCV_X1,  RISCV_X2,  RISCV_X3,
   	RISCV_X4,  RISCV_X5,  RISCV_X6,  RISCV_X7,
@@ -69,7 +68,6 @@ static const unsigned GPRDecoderTable[] = {
   	RISCV_X28, RISCV_X29, RISCV_X30, RISCV_X31
 };
 
-///
 static DecodeStatus DecodeGPRRegisterClass(MCInst *Inst, uint64_t RegNo,
 		       	uint64_t Address, const void *Decoder) 
 {
@@ -87,7 +85,6 @@ static DecodeStatus DecodeGPRRegisterClass(MCInst *Inst, uint64_t RegNo,
   	return MCDisassembler_Success;
 }
 
-///
 static const unsigned FPR32DecoderTable[] = {
   	RISCV_F0_32,  RISCV_F1_32,  RISCV_F2_32,  RISCV_F3_32,
   	RISCV_F4_32,  RISCV_F5_32,  RISCV_F6_32,  RISCV_F7_32,
@@ -99,7 +96,6 @@ static const unsigned FPR32DecoderTable[] = {
   	RISCV_F28_32, RISCV_F29_32, RISCV_F30_32, RISCV_F31_32
 };
 
-///
 static DecodeStatus DecodeFPR32RegisterClass(MCInst *Inst, uint64_t RegNo,
 			 uint64_t Address, const void *Decoder) 
 {
@@ -116,7 +112,6 @@ static DecodeStatus DecodeFPR32RegisterClass(MCInst *Inst, uint64_t RegNo,
   	return MCDisassembler_Success;
 }
 
-///
 static DecodeStatus DecodeFPR32CRegisterClass(MCInst *Inst, uint64_t RegNo,
                                               uint64_t Address,
                                               const void *Decoder) 
@@ -128,7 +123,6 @@ static DecodeStatus DecodeFPR32CRegisterClass(MCInst *Inst, uint64_t RegNo,
   	return MCDisassembler_Success;
 }
 
-///
 static const unsigned FPR64DecoderTable[] = {
   	RISCV_F0_64,  RISCV_F1_64,  RISCV_F2_64,  RISCV_F3_64,
   	RISCV_F4_64,  RISCV_F5_64,  RISCV_F6_64,  RISCV_F7_64,
@@ -140,7 +134,6 @@ static const unsigned FPR64DecoderTable[] = {
   	RISCV_F28_64, RISCV_F29_64, RISCV_F30_64, RISCV_F31_64
 };
 
-///
 static DecodeStatus DecodeFPR64RegisterClass(MCInst *Inst, uint64_t RegNo,
 			 uint64_t Address, const void *Decoder) 
 {
@@ -157,7 +150,6 @@ static DecodeStatus DecodeFPR64RegisterClass(MCInst *Inst, uint64_t RegNo,
   	return MCDisassembler_Success;
 }
 
-///
 static DecodeStatus DecodeFPR64CRegisterClass(MCInst *Inst, uint64_t RegNo,
                                               uint64_t Address,
                                               const void *Decoder) 
@@ -171,7 +163,6 @@ static DecodeStatus DecodeFPR64CRegisterClass(MCInst *Inst, uint64_t RegNo,
   	return MCDisassembler_Success;
 }
 
-///
 static DecodeStatus DecodeGPRNoX0RegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
                                                const void *Decoder) 
@@ -181,7 +172,6 @@ static DecodeStatus DecodeGPRNoX0RegisterClass(MCInst *Inst, uint64_t RegNo,
   	return DecodeGPRRegisterClass(Inst, RegNo, Address, Decoder);
 }
 
-///
 static DecodeStatus DecodeGPRNoX0X2RegisterClass(MCInst *Inst, uint64_t RegNo,
                                                  uint64_t Address,
                                                  const void *Decoder) 
@@ -191,7 +181,6 @@ static DecodeStatus DecodeGPRNoX0X2RegisterClass(MCInst *Inst, uint64_t RegNo,
   	return DecodeGPRNoX0RegisterClass(Inst, RegNo, Address, Decoder);
 }
 
-///
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
                                             const void *Decoder) 
@@ -228,7 +217,6 @@ static void addImplySP(MCInst *Inst, int64_t Address, const void *Decoder)
   	}
 }
 
-///
 static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
                                       int64_t Address, const void *Decoder,
 				      unsigned N) 
@@ -240,7 +228,6 @@ static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
   	return MCDisassembler_Success;
 }
 
-///
 static DecodeStatus decodeUImmNonZeroOperand(MCInst *Inst, uint64_t Imm,
                                              int64_t Address,
                                              const void *Decoder, 
@@ -251,7 +238,6 @@ static DecodeStatus decodeUImmNonZeroOperand(MCInst *Inst, uint64_t Imm,
   	return decodeUImmOperand(Inst, Imm, Address, Decoder, N);
 }
 
-///
 static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm,
                                       int64_t Address, const void *Decoder,
 				      unsigned N) 
@@ -264,7 +250,6 @@ static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm,
   	return MCDisassembler_Success;
 }
 
-///
 static DecodeStatus decodeSImmNonZeroOperand(MCInst *Inst, uint64_t Imm,
                                              int64_t Address,
                                              const void *Decoder,
@@ -275,7 +260,6 @@ static DecodeStatus decodeSImmNonZeroOperand(MCInst *Inst, uint64_t Imm,
   	return decodeSImmOperand(Inst, Imm, Address, Decoder, N);
 }
 
-///
 static DecodeStatus decodeSImmOperandAndLsl1(MCInst *Inst, uint64_t Imm,
                                              int64_t Address,
                                              const void *Decoder,
@@ -290,7 +274,6 @@ static DecodeStatus decodeSImmOperandAndLsl1(MCInst *Inst, uint64_t Imm,
   	return MCDisassembler_Success;
 }
 
-///
 static DecodeStatus decodeCLUIImmOperand(MCInst *Inst, uint64_t Imm,
                                          int64_t Address,
                                          const void *Decoder) 
@@ -304,7 +287,6 @@ static DecodeStatus decodeCLUIImmOperand(MCInst *Inst, uint64_t Imm,
   	return MCDisassembler_Success;
 }
 
-///
 static DecodeStatus decodeFRMArg(MCInst *Inst, uint64_t Imm,
                                  int64_t Address,
                                  const void *Decoder) 
@@ -321,7 +303,6 @@ static DecodeStatus decodeFRMArg(MCInst *Inst, uint64_t Imm,
 
 #include "RISCVGenDisassemblerTables.inc"
 
-/// 
 static void clear_MI_insn_detail(MCInst *MI) 
 {
   	if (MI->flat_insn->detail) {
@@ -331,7 +312,6 @@ static void clear_MI_insn_detail(MCInst *MI)
   	return;
 }
 
-///
 static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
 				 const uint8_t *code, size_t code_len,
 				 uint16_t *Size, uint64_t Address,
@@ -385,7 +365,6 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
   	return Result;
 }
 
-///
 bool RISCV_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		          MCInst *instr, uint16_t *size, uint64_t address,
 		          void *info) 
@@ -400,7 +379,6 @@ bool RISCV_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 }
 
-///
 void RISCV_init(MCRegisterInfo * MRI) 
 {
   	/*
