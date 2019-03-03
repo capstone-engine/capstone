@@ -283,7 +283,7 @@ typedef struct cs_opt_skipdata {
 /// if cs_detail changes, in particular if a field is added after the union,
 /// then update arch/ARCH/ARCHDisassembler.c accordingly
 typedef struct cs_detail {
-	uint16_t regs_read[16]; ///< list of implicit registers read by this insn
+	uint16_t regs_read[12]; ///< list of implicit registers read by this insn
 	uint8_t regs_read_count; ///< number of implicit registers read by this insn
 
 	uint16_t regs_write[20]; ///< list of implicit registers modified by this insn
@@ -329,7 +329,7 @@ typedef struct cs_insn {
 
 	/// Machine bytes of this instruction, with number of bytes indicated by @size above
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	uint8_t bytes[24];
+	uint8_t bytes[16];
 
 	/// Ascii text of instruction mnemonic
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
