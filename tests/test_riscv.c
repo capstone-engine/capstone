@@ -91,14 +91,14 @@ static void test()
 	struct platform platforms[] = {
 		{
 			CS_ARCH_RISCV,
-			CS_MODE_LITTLE_ENDIAN | CS_MODE_RISCV32,
+			CS_MODE_RISCV32,
 			(unsigned char *)RISCV_CODE32,
 			sizeof(RISCV_CODE32) - 1,
 			"RISCV32G"
 		},
 		{
 			CS_ARCH_RISCV,
-			CS_MODE_LITTLE_ENDIAN | CS_MODE_RISCV64,
+			CS_MODE_RISCV64,
 			(unsigned char *)RISCV_CODE64,
 			sizeof(RISCV_CODE64) - 1,
 			"RISCV64G"
