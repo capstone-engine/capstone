@@ -1,3 +1,35 @@
+!# issue x86 BND register (OSS-fuzz #13467)
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x0f,0x1a,0x1a == bndldx bnd3, [edx] ; operands[0].type: REG = bnd3
+
+!# issue 1335
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x1f,0xc0 == nop eax
+
+!# issue 1335
+!# CS_ARCH_X86, CS_MODE_64, None
+0x48,0x0f,0x1f,0x00 == nop qword ptr [rax]
+
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0f,0x0d,0x44,0x11,0x40 == prefetch byte ptr [rcx + rdx + 0x40]
+
+!# issue 1259
+!# CS_ARCH_X86, CS_MODE_64, None
+0x41,0x0f,0x0d,0x44,0x12,0x40 == prefetch byte ptr [r10 + rdx + 0x40]
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7f,0x4c,0x24,0x40 == movdqa xmmword ptr [rsp + 0x40], xmm1 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x66,0x0f,0x7e,0x04,0x24 == movd dword ptr [rsp], xmm0 ; operands[0].access: WRITE
+
+!# issue 1304
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0xf3,0x41,0x0f,0x7f,0x4d,0x00 == movdqu xmmword ptr [r13], xmm1 ; operands[0].access: WRITE
+
 !# issue 1346
 !# CS_ARCH_X86, CS_MODE_64, None
 0xf3,0x48,0x0f,0x1e,0xc8 == rdsspq rax
@@ -125,6 +157,14 @@
 !# issue 1262
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x94 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
+
+!# issue 1263
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0: 0x67,0x48,0x89,0x18 == mov qword ptr [eax], rbx
+
+!# issue 1263
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0: 0x67,0x48,0x8b,0x03 == mov rax, qword ptr [ebx]
 
 !# issue 1255
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL

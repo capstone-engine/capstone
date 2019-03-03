@@ -181,7 +181,6 @@ static void printi128mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
-#ifndef CAPSTONE_X86_REDUCE
 static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "zmmword ptr ");
@@ -189,6 +188,7 @@ static void printi512mem(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemReference(MI, OpNo, O);
 }
 
+#ifndef CAPSTONE_X86_REDUCE
 static void printi256mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	SStream_concat0(O, "ymmword ptr ");
@@ -673,16 +673,10 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 	printMemOffset(MI, OpNo, O);
 }
 
-#ifndef CAPSTONE_DIET
-static char *printAliasInstr(MCInst *MI, SStream *OS);
-#endif
 static void printInstruction(MCInst *MI, SStream *O);
 
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
-#ifndef CAPSTONE_DIET
-	char *mnem;
-#endif
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
 
@@ -692,17 +686,8 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 		return;
 	}
 
-#ifndef CAPSTONE_DIET
-	// Try to print any aliases first.
-	mnem = printAliasInstr(MI, O);
-	if (mnem)
-		cs_mem_free(mnem);
-	else
-#endif
-	{
-		X86_lockrep(MI, O);
-		printInstruction(MI, O);
-	}
+	X86_lockrep(MI, O);
+	printInstruction(MI, O);
 
 	reg = X86_insn_reg_intel(MCInst_getOpcode(MI), &access1);
 	if (MI->csh->detail) {
@@ -1027,10 +1012,10 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 				 MI->x86opsize = 8;
 				 break;
 	}
+
 	printMemReference(MI, OpNo, O);
 }
 
-#define PRINT_ALIAS_INSTR
 #ifdef CAPSTONE_X86_REDUCE
 #include "X86GenAsmWriter1_reduce.inc"
 #else

@@ -153,6 +153,8 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	}
 
 	for (p = list_part[1]; *p; ++p) *p = tolower(*p);
+	for (p = list_part[1]; *p; ++p)
+		if (*p == '\t') *p = ' ';
 	trim_str(list_part[1]);
 	strcpy(tmp_mc, list_part[1]);
 	replace_hex(tmp_mc);
@@ -293,7 +295,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	int i, count, j;
 	unsigned char *code;
 	cs_insn *insn;
-	char *cs_result, *tmp;
+	char *cs_result, *tmp, *p;
 	char **offset_opcode;
 	int size_offset_opcode;
 	unsigned long offset;
@@ -345,6 +347,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	trim_str(cs_result);
 	add_str(&cs_result, " ;");
 	//	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);
+	for (p = list_part[1]; *p; ++p) if (*p == '\t') *p = ' ';
 	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
 	for (i = 0; i < size_part_issue_result; ++i) {

@@ -955,7 +955,13 @@ static bool is16BitEquivalent(unsigned orig, unsigned equiv)
  */
 static bool is64Bit(uint16_t id)
 {
-	return insns[id].is64bit;
+	unsigned int i = find_insn(id);
+	if (i != -1) {
+		return insns[i].is64bit;
+	}
+
+	// not found??
+	return false;
 }
 
 /*
