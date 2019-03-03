@@ -352,7 +352,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
       		*Size = 4;
       		// Get the four bytes of the instruction.
       		//Encoded as little endian 32 bits.
-      		Inst = code[0] | (code[1] << 8) | (code[2] << 16) | (code[3] << 24);
+      		Inst = code[0] | (code[1] << 8) | (code[2] << 16) | ((uint32_t)code[3] << 24);
 		clear_MI_insn_detail(MI);
       		Result = decodeInstruction(DecoderTable32, MI, Inst, Address, MRI, mode);
   	} else {

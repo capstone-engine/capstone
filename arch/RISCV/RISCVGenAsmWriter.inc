@@ -1186,10 +1186,6 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     4U,	// XORI
   };
 
-#ifndef CAPSTONE_DIET
-  //SStream_concat0(O, "\t");
-#endif
-
   // Emit the opcode for the instruction.
   uint32_t Bits = 0;
   Bits |= OpInfo0[MCInst_getOpcode(MI)] << 0;
