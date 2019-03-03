@@ -1,6 +1,10 @@
 # How to update RISCV tables.
 
 * Checkout LLVM. Patches are tested on commit `b81d715c`.
+  ```
+      git clone https://github.com/llvm/llvm-project.git
+      git checkout b81d715c
+  ```
 * Apply patches from the current directory.
 * Run tablegen.
   ```
