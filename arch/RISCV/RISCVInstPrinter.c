@@ -152,7 +152,7 @@ static void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O)
   	if ((FenceArg & RISCVFenceField_W) != 0)
     		SStream_concat0(O, "w");
   	if (FenceArg == 0)
-    		SStream_concat0(O, "unkonwn");
+    		SStream_concat0(O, "unknown");
 }
 
 static void printFRMArg(MCInst *MI, unsigned OpNo, SStream *O) 
