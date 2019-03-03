@@ -179,7 +179,7 @@ struct platform platforms[] = {
         "riscv32"
     },
     {
-        //item 25
+        //item 27
         CS_ARCH_RISCV,
         (cs_mode)CS_MODE_RISCV64,
         "riscv64"

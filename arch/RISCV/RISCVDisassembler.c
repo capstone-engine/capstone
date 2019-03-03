@@ -339,8 +339,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
 {
   	// TODO: This will need modification when supporting instruction set
   	// extensions with instructions > 32-bits (up to 176 bits wide).
-  	unsigned long container = 0;
-  	unsigned int Inst = 0;
+  	uint32_t Inst = 0;
   	DecodeStatus Result;
 
   	// It's a 32 bit instruction if bit 0 and 1 are 1.
@@ -353,9 +352,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
       	*Size = 4;
       	// Get the four bytes of the instruction.
       	//Encoded as little endian 32 bits.
-      	container = code[0] | (code[1] << 8) | (code[2] << 16) | (code[3] << 24);
-      	//Inst = code[0] | (code[1] << 8) | (code[2] << 16) | (code[3] << 24);
-      	Inst = (unsigned int)container;
+      	Inst = code[0] | (code[1] << 8) | (code[2] << 16) | (code[3] << 24);
 	clear_MI_insn_detail(MI);
       	Result = decodeInstruction(DecoderTable32, MI, Inst, Address, MRI, mode);
   	} else {

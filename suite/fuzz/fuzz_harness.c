@@ -123,7 +123,7 @@ int main(int argc, char **argv)
       "riscv32"
     },
     {
-      CS_ARCH_M680X,
+      CS_ARCH_RISCV,
       (cs_mode)CS_MODE_RISCV64,
       "riscv64"
     },
