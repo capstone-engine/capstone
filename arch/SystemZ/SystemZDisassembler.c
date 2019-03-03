@@ -471,9 +471,9 @@ void SystemZ_init(MCRegisterInfo *MRI)
 			SystemZRegEncodingTable);
 	*/
 
-	MCRegisterInfo_InitMCRegisterInfo(MRI, SystemZRegDesc, 98,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, SystemZRegDesc, 194,
 			0, 0,
-			SystemZMCRegisterClasses, 12,
+			SystemZMCRegisterClasses, 21,
 			0, 0,
 			SystemZRegDiffLists,
 			0,
