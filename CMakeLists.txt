@@ -290,6 +290,8 @@ if (CAPSTONE_X86_SUPPORT)
         arch/X86/X86GenInstrInfo.inc
         arch/X86/X86GenInstrInfo_reduce.inc
         arch/X86/X86GenRegisterInfo.inc
+        arch/X86/X86GenRegisterName.inc
+        arch/X86/X86GenRegisterName1.inc
         arch/X86/X86MappingInsn.inc
         arch/X86/X86MappingInsn_reduce.inc
         arch/X86/X86MappingInsnOp.inc
