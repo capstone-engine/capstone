@@ -110,6 +110,11 @@ static void registerBits(SStream* O, const cs_m68k_op* op)
 
 	buffer[0] = 0;
 
+	if (!data) {
+		SStream_concat(O, "%s", "#$0");
+		return;
+	}
+
 	printRegbitsRange(buffer, data & 0xff, "d");
 	printRegbitsRange(buffer, (data >> 8) & 0xff, "a");
 	printRegbitsRange(buffer, (data >> 16) & 0xff, "fp");
