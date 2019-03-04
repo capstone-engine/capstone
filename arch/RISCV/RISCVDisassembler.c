@@ -116,9 +116,11 @@ static DecodeStatus DecodeFPR32CRegisterClass(MCInst *Inst, uint64_t RegNo,
                                               uint64_t Address,
                                               const void *Decoder) 
 {
+  	unsigned Reg = 0;
+
   	if (RegNo > 8) 
     		return MCDisassembler_Fail;
-  	unsigned Reg = FPR32DecoderTable[RegNo + 8];
+  	Reg = FPR32DecoderTable[RegNo + 8];
   	MCOperand_CreateReg0(Inst, Reg);
   	return MCDisassembler_Success;
 }

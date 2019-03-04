@@ -241,7 +241,7 @@ static void test()
 			CS_MODE_RISCV64,
 			(unsigned char *)RISCV_CODE64,
 			sizeof(RISCV_CODE64) - 1,
-			"RISCV32"
+			"RISCV64"
 		},
 #endif
 #ifdef CAPSTONE_HAS_MOS65XX

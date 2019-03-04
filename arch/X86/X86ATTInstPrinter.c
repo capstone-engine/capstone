@@ -807,6 +807,8 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 #include "X86GenAsmWriter.inc"
 #endif
 
+#include "X86GenRegisterName.inc"
+
 static void printRegName(SStream *OS, unsigned RegNo)
 {
 	SStream_concat(OS, "%%%s", getRegisterName(RegNo));
