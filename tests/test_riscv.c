@@ -94,14 +94,14 @@ static void test()
 			CS_MODE_RISCV32,
 			(unsigned char *)RISCV_CODE32,
 			sizeof(RISCV_CODE32) - 1,
-			"RISCV32G"
+			"riscv32"
 		},
 		{
 			CS_ARCH_RISCV,
 			CS_MODE_RISCV64,
 			(unsigned char *)RISCV_CODE64,
 			sizeof(RISCV_CODE64) - 1,
-			"RISCV64G"
+			"riscv64"
 		}
 	};
 	
