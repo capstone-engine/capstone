@@ -336,12 +336,14 @@ static struct platform platforms[] = {
         //item 44
         CS_ARCH_RISCV,
         CS_MODE_RISCV32,
+	"RISCV"
         "riscv32"
     },
     {
         //item 45
         CS_ARCH_RISCV,
         CS_MODE_RISCV64,
+	"RISCV"
         "riscv64"
     },
 };
