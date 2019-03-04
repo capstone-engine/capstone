@@ -13,7 +13,7 @@ Created by Nguyen Anh Quynh, then developed and maintained by a small community,
 Capstone offers some unparalleled features:
 
 - Support multiple hardware architectures: ARM, ARM64 (ARMv8), BPF, Ethereum VM, Webassembly, 
-  M68K, Mips, MOS65XX, PPC, Sparc, SystemZ, TMS320C64X, M680X, XCore, RISCV(rv32G/rv64G) 
+  M68K, Mips, MOS65XX, PPC, Sparc, SystemZ, TMS320C64X, M680X, XCore, RISC-V(rv32G/rv64G) 
   and X86 (including X86_64).
 
 - Having clean/simple/lightweight/intuitive architecture-neutral API.
