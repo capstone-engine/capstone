@@ -333,13 +333,13 @@ static struct platform platforms[] = {
         "hcs08"
     },
     {
-        //item 33
+        //item 44
         CS_ARCH_RISCV,
         CS_MODE_RISCV32,
         "riscv32"
     },
     {
-        //item 34
+        //item 45
         CS_ARCH_RISCV,
         CS_MODE_RISCV64,
         "riscv64"

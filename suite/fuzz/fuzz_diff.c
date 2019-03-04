@@ -172,18 +172,6 @@ struct platform platforms[] = {
         (cs_mode)0,
         "EVM"
     },
-    {
-        //item 26
-        CS_ARCH_RISCV,
-        (cs_mode)CS_MODE_RISCV32,
-        "riscv32"
-    },
-    {
-        //item 27
-        CS_ARCH_RISCV,
-        (cs_mode)CS_MODE_RISCV64,
-        "riscv64"
-    },
 };
 
 void LLVMFuzzerInit();
