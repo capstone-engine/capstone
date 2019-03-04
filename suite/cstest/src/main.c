@@ -6,6 +6,108 @@
 #include "capstone_test.h"
 #include <unistd.h>
 
+#define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
+
+static single_dict arches[] = {
+	{"CS_ARCH_ARM", CS_ARCH_ARM},
+	{"CS_ARCH_ARM64", CS_ARCH_ARM64},
+	{"CS_ARCH_MIPS", CS_ARCH_MIPS},
+	{"CS_ARCH_PPC", CS_ARCH_PPC},
+	{"CS_ARCH_SPARC", CS_ARCH_SPARC},
+	{"CS_ARCH_SYSZ", CS_ARCH_SYSZ},
+	{"CS_ARCH_X86", CS_ARCH_X86},
+	{"CS_ARCH_XCORE", CS_ARCH_XCORE},
+	{"CS_ARCH_RISCV", CS_ARCH_RISCV},
+	{"CS_ARCH_M68K", CS_ARCH_M68K},
+	{"CS_ARCH_BPF", CS_ARCH_BPF},
+};
+
+ static single_dict modes[] = {
+	{"CS_MODE_LITTLE_ENDIAN", CS_MODE_LITTLE_ENDIAN},
+	{"CS_MODE_ARM", CS_MODE_ARM},
+	{"CS_MODE_16", CS_MODE_16},
+	{"CS_MODE_32", CS_MODE_32},
+	{"CS_MODE_64", CS_MODE_64},
+	{"CS_MODE_THUMB", CS_MODE_THUMB},
+	{"CS_MODE_MCLASS", CS_MODE_MCLASS},
+	{"CS_MODE_V8", CS_MODE_V8},
+	{"CS_MODE_MICRO", CS_MODE_MICRO},
+	{"CS_MODE_MIPS3", CS_MODE_MIPS3},
+	{"CS_MODE_MIPS32R6", CS_MODE_MIPS32R6},
+	{"CS_MODE_MIPS2", CS_MODE_MIPS2},
+	{"CS_MODE_V9", CS_MODE_V9},
+	{"CS_MODE_QPX", CS_MODE_QPX},
+	{"CS_MODE_M68K_000", CS_MODE_M68K_000},
+	{"CS_MODE_M68K_010", CS_MODE_M68K_010},
+	{"CS_MODE_M68K_020", CS_MODE_M68K_020},
+	{"CS_MODE_M68K_030", CS_MODE_M68K_030},
+	{"CS_MODE_M68K_040", CS_MODE_M68K_040},
+	{"CS_MODE_M68K_060", CS_MODE_M68K_060},
+	{"CS_MODE_BIG_ENDIAN", CS_MODE_BIG_ENDIAN},
+	{"CS_MODE_MIPS32", CS_MODE_MIPS32},
+	{"CS_MODE_MIPS64", CS_MODE_MIPS64},
+	{"CS_MODE_M680X_6301", CS_MODE_M680X_6301},
+	{"CS_MODE_M680X_6309", CS_MODE_M680X_6309},
+	{"CS_MODE_M680X_6800", CS_MODE_M680X_6800},
+	{"CS_MODE_M680X_6801", CS_MODE_M680X_6801},
+	{"CS_MODE_M680X_6805", CS_MODE_M680X_6805},
+	{"CS_MODE_M680X_6808", CS_MODE_M680X_6808},
+	{"CS_MODE_M680X_6809", CS_MODE_M680X_6809},
+	{"CS_MODE_M680X_6811", CS_MODE_M680X_6811},
+	{"CS_MODE_M680X_CPU12", CS_MODE_M680X_CPU12},
+	{"CS_MODE_M680X_HCS08", CS_MODE_M680X_HCS08},
+	{"CS_MODE_RISCV32", CS_MODE_RISCV32},
+	{"CS_MODE_RISCV64", CS_MODE_RISCV64},
+	{"CS_MODE_BPF_CLASSIC", CS_MODE_BPF_CLASSIC},
+	{"CS_MODE_BPF_EXTENDED", CS_MODE_BPF_EXTENDED},
+};
+
+ static double_dict options[] = {
+	{"CS_OPT_DETAIL", CS_OPT_DETAIL, CS_OPT_ON},
+	{"CS_OPT_SKIPDATA", CS_OPT_SKIPDATA, CS_OPT_ON},
+	{"CS_OPT_SYNTAX_DEFAULT", CS_OPT_SYNTAX, CS_OPT_SYNTAX_DEFAULT},
+	{"CS_OPT_SYNTAX_INTEL", CS_OPT_SYNTAX, CS_OPT_SYNTAX_INTEL},
+	{"CS_OPT_SYNTAX_ATT", CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT},
+	{"CS_OPT_SYNTAX_NOREGNAME", CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME},
+	{"CS_OPT_SYNTAX_MASM", CS_OPT_SYNTAX, CS_OPT_SYNTAX_MASM},
+	{"CS_MODE_LITTLE_ENDIAN", CS_OPT_MODE, CS_MODE_LITTLE_ENDIAN},
+	{"CS_MODE_ARM", CS_OPT_MODE, CS_MODE_ARM},
+	{"CS_MODE_16", CS_OPT_MODE, CS_MODE_16},
+	{"CS_MODE_32", CS_OPT_MODE, CS_MODE_32},
+	{"CS_MODE_64", CS_OPT_MODE, CS_MODE_64},
+	{"CS_MODE_THUMB", CS_OPT_MODE, CS_MODE_THUMB},
+	{"CS_MODE_MCLASS", CS_OPT_MODE, CS_MODE_MCLASS},
+	{"CS_MODE_V8", CS_OPT_MODE, CS_MODE_V8},
+	{"CS_MODE_MICRO", CS_OPT_MODE, CS_MODE_MICRO},
+	{"CS_MODE_MIPS3", CS_OPT_MODE, CS_MODE_MIPS3},
+	{"CS_MODE_MIPS32R6", CS_OPT_MODE, CS_MODE_MIPS32R6},
+	{"CS_MODE_MIPS2", CS_OPT_MODE, CS_MODE_MIPS2},
+	{"CS_MODE_V9", CS_OPT_MODE, CS_MODE_V9},
+	{"CS_MODE_QPX", CS_OPT_MODE, CS_MODE_QPX},
+	{"CS_MODE_RISCV32", CS_OPT_MODE, CS_MODE_RISCV32},
+	{"CS_MODE_RISCV64", CS_OPT_MODE, CS_MODE_RISCV64},
+	{"CS_MODE_M68K_000", CS_OPT_MODE, CS_MODE_M68K_000},
+	{"CS_MODE_M68K_010", CS_OPT_MODE, CS_MODE_M68K_010},
+	{"CS_MODE_M68K_020", CS_OPT_MODE, CS_MODE_M68K_020},
+	{"CS_MODE_M68K_030", CS_OPT_MODE, CS_MODE_M68K_030},
+	{"CS_MODE_M68K_040", CS_OPT_MODE, CS_MODE_M68K_040},
+	{"CS_MODE_M68K_060", CS_OPT_MODE, CS_MODE_M68K_060},
+	{"CS_MODE_BIG_ENDIAN", CS_OPT_MODE, CS_MODE_BIG_ENDIAN},
+	{"CS_MODE_MIPS32", CS_OPT_MODE, CS_MODE_MIPS32},
+	{"CS_MODE_MIPS64", CS_OPT_MODE, CS_MODE_MIPS64},
+	{"CS_MODE_M680X_6301", CS_OPT_MODE, CS_MODE_M680X_6301},
+	{"CS_MODE_M680X_6309", CS_OPT_MODE, CS_MODE_M680X_6309},
+	{"CS_MODE_M680X_6800", CS_OPT_MODE, CS_MODE_M680X_6800},
+	{"CS_MODE_M680X_6801", CS_OPT_MODE, CS_MODE_M680X_6801},
+	{"CS_MODE_M680X_6805", CS_OPT_MODE, CS_MODE_M680X_6805},
+	{"CS_MODE_M680X_6808", CS_OPT_MODE, CS_MODE_M680X_6808},
+	{"CS_MODE_M680X_6809", CS_OPT_MODE, CS_MODE_M680X_6809},
+	{"CS_MODE_M680X_6811", CS_OPT_MODE, CS_MODE_M680X_6811},
+	{"CS_MODE_M680X_CPU12", CS_OPT_MODE, CS_MODE_M680X_CPU12},
+	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08},
+	{"CS_OPT_UNSIGNED", CS_OPT_UNSIGNED, CS_OPT_ON},
+};
+
 static int counter;
 static char **list_lines;
 static int failed_setup;
@@ -39,14 +141,14 @@ static int setup_MC(void **state)
 		return -1;
 	}
 
-	arch = get_value(arches, NUMARCH, list_params[0]);
+	arch = get_value(arches, ARR_SIZE(arches), list_params[0]);
 	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) 
 		mc_mode = 2;
 	else 
 		mc_mode = 1;
 
 	mode = 0;
-	for (i = 0; i < NUMMODE; ++i) {
+	for (i = 0; i < ARR_SIZE(modes); ++i) {
 		if (strstr(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
 			switch (modes[i].value) {
@@ -78,7 +180,7 @@ static int setup_MC(void **state)
 		return -1;
 	}
 	
-	for (i = 0; i < NUMOPTION; ++i) {
+	for (i = 0; i < ARR_SIZE(options); ++i) {
 		if (strstr(list_params[2], options[i].str)) {
 			if (cs_option(*handle, options[i].first_value, options[i].second_value) != CS_ERR_OK) {
 				fprintf(stderr, "[  ERROR   ] --- Option is not supported for this arch/mode\n");
@@ -148,7 +250,7 @@ static int setup_issue(void **state)
 	else
 		list_params = split(list_lines[counter] + 6, ", ", &size_params);
 
-	arch = get_value(arches, NUMARCH, list_params[0]);
+	arch = get_value(arches, ARR_SIZE(arches), list_params[0]);
 
 	if (!strcmp(list_params[0], "CS_ARCH_ARM64"))
 		mc_mode = 2;
@@ -156,7 +258,7 @@ static int setup_issue(void **state)
 		mc_mode = 1;
 
 	mode = 0;
-	for (i = 0; i < NUMMODE; ++i) {
+	for (i = 0; i < ARR_SIZE(modes); ++i) {
 		if (strstr(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
 			switch (modes[i].value) {
@@ -188,7 +290,7 @@ static int setup_issue(void **state)
 		return -1;
 	}
 	
-	for (i = 0; i < NUMOPTION; ++i) {
+	for (i = 0; i < ARR_SIZE(options); ++i) {
 		if (strstr(list_params[2], options[i].str)) {
 			if (cs_option(*handle, options[i].first_value, options[i].second_value) != CS_ERR_OK) {
 				fprintf(stderr, "[  ERROR   ] --- Option is not supported for this arch/mode\n");
