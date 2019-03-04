@@ -1220,112 +1220,112 @@
 
 {	/* X86_BNDCL32rm, X86_INS_BNDCL: bndcl */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCL32rr, X86_INS_BNDCL: bndcl */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCL64rm, X86_INS_BNDCL: bndcl */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCL64rr, X86_INS_BNDCL: bndcl */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCN32rm, X86_INS_BNDCN: bndcn */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCN32rr, X86_INS_BNDCN: bndcn */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCN64rm, X86_INS_BNDCN: bndcn */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCN64rr, X86_INS_BNDCN: bndcn */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCU32rm, X86_INS_BNDCU: bndcu */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCU32rr, X86_INS_BNDCU: bndcu */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCU64rm, X86_INS_BNDCU: bndcu */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDCU64rr, X86_INS_BNDCU: bndcu */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDLDXrm, X86_INS_BNDLDX: bndldx */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMK32rm, X86_INS_BNDMK: bndmk */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMK64rm, X86_INS_BNDMK: bndmk */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMOV32mr, X86_INS_BNDMOV: bndmov */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMOV32rm, X86_INS_BNDMOV: bndmov */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMOV64mr, X86_INS_BNDMOV: bndmov */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMOV64rm, X86_INS_BNDMOV: bndmov */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMOVrr, X86_INS_BNDMOV: bndmov */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDMOVrr_REV, X86_INS_BNDMOV: bndmov */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BNDSTXmr, X86_INS_BNDSTX: bndstx */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_BOUNDS16rm, X86_INS_BOUND: bound */
