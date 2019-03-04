@@ -805,14 +805,6 @@ static DecodeStatus _Thumb_getInstruction(cs_struct *ud, MCInst *MI, const uint8
 		return result;
 	}
 
-	MCInst_clear(MI);
-	result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, NULL, ud->mode);
-	if (result != MCDisassembler_Fail) {
-		*Size = 4;
-		UpdateThumbVFPPredicate(ud, MI);
-		return result;
-	}
-
 	if (fieldFromInstruction_4(insn32, 28, 4) == 0xE) {
 		MCInst_clear(MI);
 		result = decodeInstruction_4(DecoderTableVFP32, MI, insn32, Address, NULL, ud->mode);
