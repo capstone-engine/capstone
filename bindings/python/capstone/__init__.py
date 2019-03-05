@@ -203,6 +203,7 @@ CS_MODE_BPF_CLASSIC = 0          # Classic BPF mode (default)
 CS_MODE_BPF_EXTENDED = (1 << 0)  # Extended BPF mode
 CS_MODE_RISCV32 = (1 << 0)       # RISCV32 mode
 CS_MODE_RISCV64 = (1 << 1)       # RISCV64 mode
+CS_MODE_RISCVC  = (1 << 2)       # RISCV compressed mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
