@@ -8,13 +8,13 @@ from .riscv_const import *
 class RISCVOpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint8),
-        ('disp', ctypes.c_int32),
+        ('disp', ctypes.c_int64),
     )
 
 class RISCVOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int32),
+        ('imm', ctypes.c_int64),
         ('mem', RISCVOpMem),
     )
 
