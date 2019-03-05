@@ -160,9 +160,6 @@ int set_function(int arch)
 		case CS_ARCH_XCORE:
 			function = get_detail_xcore;
 			break;
-		case CS_ARCH_RISCV:
-			function = get_detail_riscv;
-			break;
 		case CS_ARCH_M68K:
 			function = get_detail_m68k;
 			break;
@@ -180,6 +177,9 @@ int set_function(int arch)
 			break;
 		case CS_ARCH_BPF:
 			function = get_detail_bpf;
+			break;
+		case CS_ARCH_RISCV:
+			function = get_detail_riscv;
 			break;
 		default:
 			return -1;

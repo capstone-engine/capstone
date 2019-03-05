@@ -131,11 +131,6 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #else
 	NULL,
 #endif
-#ifdef CAPSTONE_HAS_RISCV
-	RISCV_global_init,
-#else
-	NULL,
-#endif
 #ifdef CAPSTONE_HAS_MOS65XX
 	MOS65XX_global_init,
 #else
@@ -148,6 +143,11 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #endif
 #ifdef CAPSTONE_HAS_BPF
 	BPF_global_init,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	RISCV_global_init,
 #else
 	NULL,
 #endif
@@ -215,11 +215,6 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #else
 	NULL,
 #endif
-#ifdef CAPSTONE_HAS_RISCV
-	RISCV_option,
-#else
-	NULL,
-#endif
 #ifdef CAPSTONE_HAS_MOS65XX
 	MOS65XX_option,
 #else
@@ -232,6 +227,11 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #endif
 #ifdef CAPSTONE_HAS_BPF
 	BPF_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	RISCV_option,
 #else
 	NULL,
 #endif
@@ -307,11 +307,6 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #else
 	0,
 #endif
-#ifdef CAPSTONE_HAS_RISCV
-	~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC),
-#else
-        0,
-#endif
 #ifdef CAPSTONE_HAS_MOS65XX
 	~(CS_MODE_BIG_ENDIAN),
 #else
@@ -327,6 +322,11 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 	  | CS_MODE_BIG_ENDIAN),
 #else
 	0,
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC),
+#else
+        0,
 #endif
 };
 
@@ -368,9 +368,6 @@ static uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_EVM
 	| (1 << CS_ARCH_EVM)
 #endif
-#ifdef CAPSTONE_HAS_RISCV
-	| (1 << CS_ARCH_RISCV)
-#endif
 #ifdef CAPSTONE_HAS_MOS65XX
 	| (1 << CS_ARCH_MOS65XX)
 #endif
@@ -379,6 +376,9 @@ static uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_BPF
 	| (1 << CS_ARCH_BPF)
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	| (1 << CS_ARCH_RISCV)
 #endif
 ;
 
@@ -693,10 +693,6 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_MIPS:
 		case CS_ARCH_PPC:
 		case CS_ARCH_SPARC:
-		case CS_ARCH_RISCV:
-			// special compress mode
-			if (handle->mode & CS_MODE_RISCVC)
-				return 1;
 			// skip 4 bytes
 			return 4;
 		case CS_ARCH_SYSZ:
@@ -731,6 +727,11 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_BPF:
 			// both classic and extended BPF have alignment 8.
 			return 8;
+		case CS_ARCH_RISCV:
+			// special compress mode
+			if (handle->mode & CS_MODE_RISCVC)
+				return 1;
+			return 4;
 	}
 }
 
@@ -1445,11 +1446,6 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 			break;
 		case CS_ARCH_EVM:
 			break;
-		case CS_ARCH_RISCV:
-			for (i = 0; i < insn->detail->riscv.op_count; i++)
-				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
-					count++;
-			break;
 		case CS_ARCH_MOS65XX:
 			for (i = 0; i < insn->detail->mos65xx.op_count; i++)
 				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
@@ -1463,6 +1459,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 		case CS_ARCH_BPF:
 			for (i = 0; i < insn->detail->bpf.op_count; i++)
 				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+					count++;
+			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++)
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
 					count++;
 			break;
 	}
@@ -1600,14 +1601,6 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 			}
 #endif
 			break;
-		case CS_ARCH_RISCV:
-			for (i = 0; i < insn->detail->riscv.op_count; i++) {
-				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
 		case CS_ARCH_MOS65XX:
 			for (i = 0; i < insn->detail->mos65xx.op_count; i++) {
 				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
@@ -1627,6 +1620,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_BPF:
 			for (i = 0; i < insn->detail->bpf.op_count; i++) {
 				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++) {
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

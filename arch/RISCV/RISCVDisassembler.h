@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
-/* By Rodrigo Cortes Porto <porto703@gmail.com>, 2018 */
-/* By Shawn Chang <citypw@gmail.com>, HardenedLinux@2018 */
-
+/* RISC-V Backend By Rodrigo Cortes Porto <porto703@gmail.com> & 
+   Shawn Chang <citypw@gmail.com>, HardenedLinux@2018 */
+    
 #ifndef CS_RISCVDISASSEMBLER_H
 #define CS_RISCVDISASSEMBLER_H
 

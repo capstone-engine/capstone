@@ -84,10 +84,10 @@ typedef enum cs_arch {
 	CS_ARCH_TMS320C64X,	///< TMS320C64x architecture
 	CS_ARCH_M680X,		///< 680X architecture
 	CS_ARCH_EVM,		///< Ethereum architecture
-	CS_ARCH_RISCV,          ///< RISCV architecture
 	CS_ARCH_MOS65XX,	///< MOS65XX architecture (including MOS6502)
 	CS_ARCH_WASM,		///< WebAssembly architecture
 	CS_ARCH_BPF,		///< Berkeley Packet Filter architecture (including eBPF)
+	CS_ARCH_RISCV,          ///< RISCV architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -138,11 +138,11 @@ typedef enum cs_mode {
 	CS_MODE_M680X_CPU12 = 1 << 9, ///< M680X Motorola/Freescale/NXP CPU12
 					///< used on M68HC12/HCS12
 	CS_MODE_M680X_HCS08 = 1 << 10, ///< M680X Freescale/NXP HCS08 mode
+	CS_MODE_BPF_CLASSIC = 0,	///< Classic BPF mode (default)
+	CS_MODE_BPF_EXTENDED = 1 << 0,	///< Extended BPF mode
 	CS_MODE_RISCV32  = 1 << 0,        ///< RISCV RV32G
 	CS_MODE_RISCV64  = 1 << 1,        ///< RISCV RV64G
 	CS_MODE_RISCVC   = 1 << 2,        ///< RISCV compressed instructure mode
-	CS_MODE_BPF_CLASSIC = 0,	///< Classic BPF mode (default)
-	CS_MODE_BPF_EXTENDED = 1 << 0,	///< Extended BPF mode
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);

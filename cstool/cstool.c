@@ -66,14 +66,14 @@ static struct {
 	{ "hd6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "evm", CS_ARCH_EVM, 0 },
-	{ "riscv32", CS_ARCH_RISCV, CS_MODE_RISCV32 },
-	{ "riscv64", CS_ARCH_RISCV, CS_MODE_RISCV64 },
 	{ "wasm", CS_ARCH_WASM, 0 },
 	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
 	{ "bpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC },
 	{ "bpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC },
 	{ "ebpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED },
 	{ "ebpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "riscv32", CS_ARCH_RISCV, CS_MODE_RISCV32 },
+	{ "riscv64", CS_ARCH_RISCV, CS_MODE_RISCV64 },
 	{ NULL }
 };
 
@@ -230,11 +230,6 @@ static void usage(char *prog)
 		printf("        evm         Ethereum Virtual Machine\n");
 	}
 
-	if (cs_support(CS_ARCH_RISCV)) {
-		printf("        riscv32     riscv32\n");
-		printf("        riscv64     riscv64\n");
-	}
-
 	if (cs_support(CS_ARCH_MOS65XX)) {
 		printf("        mos65xx     MOS65XX family\n");
 	}
@@ -248,6 +243,11 @@ static void usage(char *prog)
 		printf("        bpfbe       Classic BPF + big endian\n");
 		printf("        ebpf        Extended BPF\n");
 		printf("        ebpfbe      Extended BPF + big endian\n");
+	}
+
+	if (cs_support(CS_ARCH_RISCV)) {
+		printf("        riscv32     riscv32\n");
+		printf("        riscv64     riscv64\n");
 	}
 
 	printf("\nExtra options:\n");
@@ -296,9 +296,6 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_EVM:
 			print_insn_detail_evm(handle, ins);
 			break;
-		case CS_ARCH_RISCV:
-			print_insn_detail_riscv(handle, ins);
-			break;
 		case CS_ARCH_WASM:
 			print_insn_detail_wasm(handle, ins);
 			break;
@@ -307,6 +304,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_BPF:
 			print_insn_detail_bpf(handle, ins);
+			break;
+		case CS_ARCH_RISCV:
+			print_insn_detail_riscv(handle, ins);
 			break;
 		default: break;
 	}
@@ -404,10 +404,6 @@ int main(int argc, char **argv)
 					printf("evm=1 ");
 				}
 				
-				if (cs_support(CS_ARCH_RISCV)) {
-					printf("riscv=1 ");
-				}
-
 				if (cs_support(CS_ARCH_WASM)) {
 					printf("wasm=1 ");
 				}
@@ -418,6 +414,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_BPF)) {
 					printf("bpf=1 ");
+				}
+
+				if (cs_support(CS_ARCH_RISCV)) {
+					printf("riscv=1 ");
 				}
 
 				if (cs_support(CS_SUPPORT_DIET)) {
