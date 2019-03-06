@@ -2567,7 +2567,7 @@ static bool printAliasInstr(MCInst *MI, SStream * OS, void *info)
   SStream_concat0(OS, tmpString);
   if (AsmString[I] != '\0') {
     if (AsmString[I] == ' ' || AsmString[I] == '\t') {
-      SStream_concat0(OS, "\t");
+      SStream_concat0(OS, " ");
       ++I;
     }
     do {
