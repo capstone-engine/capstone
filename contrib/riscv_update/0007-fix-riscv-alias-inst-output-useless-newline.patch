@@ -1,0 +1,32 @@
+From 9028d6a0ce67296be48a3dae07d954ebe26942e1 Mon Sep 17 00:00:00 2001
+From: fanfuqiang <feqin1023@gmail.com>
+Date: Thu, 7 Mar 2019 00:08:08 +0800
+Subject: [PATCH] fix riscv alias inst output useless newline
+
+---
+ llvm/utils/TableGen/AsmWriterEmitter.cpp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/llvm/utils/TableGen/AsmWriterEmitter.cpp b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+index 21630f4ce..9db5f7f54 100644
+--- a/llvm/utils/TableGen/AsmWriterEmitter.cpp
++++ b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+@@ -1191,14 +1191,13 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+   O << "  tmpString[I] = 0;\n";
+   O << "  SStream_concat0(OS, \"\\t\");\n";
+   O << "  SStream_concat0(OS, tmpString);\n";
+-  O << "  SStream_concat0(OS, \"\\n\");\n";
+ #else
+   O << "  OS << '\\t' << StringRef(AsmString, I);\n";
+ #endif
+   O << "  if (AsmString[I] != '\\0') {\n";
+   O << "    if (AsmString[I] == ' ' || AsmString[I] == '\\t') {\n";
+ #ifdef CAPSTONE
+-  O << "      SStream_concat0(OS, \"\\t\");\n";
++  O << "      SStream_concat0(OS, \" \");\n";
+ #else
+   O << "      OS << '\\t';\n";
+ #endif
+-- 
+2.20.1
+
