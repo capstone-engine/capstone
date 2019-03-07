@@ -1006,8 +1006,16 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 				 break;
 		case X86_LEA32r:
 		case X86_LEA64_32r:
+		case X86_BNDCL32rm:
+		case X86_BNDCN32rm:
+		case X86_BNDCU32rm:
+		case X86_BNDSTXmr:
+		case X86_BNDLDXrm:
 				 MI->x86opsize = 4;
 				 break;
+		case X86_BNDCL64rm:
+		case X86_BNDCN64rm:
+		case X86_BNDCU64rm:
 		case X86_LEA64r:
 				 MI->x86opsize = 8;
 				 break;
