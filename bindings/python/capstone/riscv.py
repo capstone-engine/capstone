@@ -39,8 +39,9 @@ class RISCVOp(ctypes.Structure):
 
 class CsRISCV(ctypes.Structure):
     _fields_ = (
-        ('op_count', ctypes.c_uint8),
-        ('operands', RISCVOp * 8),
+	('need_effective_addr', ctypes.c_bool),
+        ('op_count',            ctypes.c_uint8),
+        ('operands',            RISCVOp * 8),
     )
 
 def get_arch_info(a):
