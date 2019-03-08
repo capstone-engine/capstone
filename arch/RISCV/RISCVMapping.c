@@ -7,6 +7,7 @@
 #include "../../utils.h"
 
 #include "RISCVMapping.h"
+#include "RISCVInstPrinter.h"
 
 #define GET_INSTRINFO_ENUM
 #include "RISCVGenInstrInfo.inc"
@@ -23,7 +24,7 @@ static const name_map reg_name_maps[] = {
 	{RISCV_REG_X5, "t0"},
 	{RISCV_REG_X6, "t1"},
 	{RISCV_REG_X7, "t2"},
-	{RISCV_REG_X8, "s0"},
+	{RISCV_REG_X8, "s0/fp"},
 	{RISCV_REG_X9, "s1"},
 	{RISCV_REG_X10, "a0"},
 	{RISCV_REG_X11, "a1"},
@@ -120,7 +121,10 @@ const char *RISCV_reg_name(csh handle, unsigned int reg)
 #ifndef CAPSTONE_DIET
 	if (reg >= RISCV_REG_ENDING)
 		return NULL;
-
+	// Special for X8, we do not want to bother it is s0 or fp, 
+	// calls the auto generated table.
+	if (RISCV_REG_X8 == reg)
+		return get_reg_name_autogentable(reg);
 	return reg_name_maps[reg].name;
 #else
 	return NULL;

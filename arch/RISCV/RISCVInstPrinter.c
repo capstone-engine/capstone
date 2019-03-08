@@ -104,6 +104,12 @@ void RISCV_printInst(MCInst *MI, SStream *O, void *info)
 	return;
 }
 
+// export for RISCV_reg_name()
+const char *get_reg_name_autogentable(unsigned reg)
+{
+	return getRegisterName(reg, RISCV_ABIRegAltName);
+}
+
 static void printRegName(SStream *OS, unsigned RegNo) 
 {
   	SStream_concat0(OS, getRegisterName(RegNo, RISCV_ABIRegAltName));
