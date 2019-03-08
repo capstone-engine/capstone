@@ -23,7 +23,7 @@ static const name_map reg_name_maps[] = {
 	{RISCV_REG_X5, "t0"},
 	{RISCV_REG_X6, "t1"},
 	{RISCV_REG_X7, "t2"},
-	{RISCV_REG_X8, "s0/fp"},
+	{RISCV_REG_X8, "s0"},
 	{RISCV_REG_X9, "s1"},
 	{RISCV_REG_X10, "a0"},
 	{RISCV_REG_X11, "a1"},
@@ -115,18 +115,6 @@ static const name_map reg_name_maps[] = {
 	{RISCV_REG_F31_64, "ft11"},
 };
 #endif
-
-const char *RISCV_reg_name(csh handle, unsigned int reg)
-{
-#ifndef CAPSTONE_DIET
-	if (reg >= RISCV_REG_ENDING)
-		return NULL;
-
-	return reg_name_maps[reg].name;
-#else
-	return NULL;
-#endif
-}
 
 static const insn_map insns[] = {
 	// dummy item

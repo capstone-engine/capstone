@@ -51,22 +51,65 @@ static const char *getRegisterName(unsigned RegNo, unsigned AltIdx);
 #define PRINT_ALIAS_INSTR
 #include "RISCVGenAsmWriter.inc"
 
+
+static void fixDetailOfEffectiveAddr(MCInst *MI)
+{
+	unsigned reg = 0;
+	int64_t imm = 0;
+
+	assert(3 == MI->flat_insn->detail->riscv.op_count);
+	assert(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[0].type);
+
+	if (RISCV_OP_IMM == MI->flat_insn->detail->riscv.operands[1].type) {
+		assert(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[2].type);
+		imm = MI->flat_insn->detail->riscv.operands[1].imm;
+		reg = MI->flat_insn->detail->riscv.operands[2].reg;
+	} else if (RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[1].type) {
+		assert(RISCV_OP_IMM == MI->flat_insn->detail->riscv.operands[2].type);
+		reg = MI->flat_insn->detail->riscv.operands[1].reg;
+		imm = MI->flat_insn->detail->riscv.operands[2].imm;
+	}
+
+	// set up effective address.
+	MI->flat_insn->detail->riscv.operands[1].type = RISCV_OP_MEM;
+	MI->flat_insn->detail->riscv.op_count--;
+     	MI->flat_insn->detail->riscv.operands[1].mem.base = reg;
+     	MI->flat_insn->detail->riscv.operands[1].mem.disp = imm;
+
+	return;
+}
+
+
 //void RISCVInstPrinter::printInst(const MCInst *MI, raw_ostream &O,
 //                                 StringRef Annot, const MCSubtargetInfo &STI) 
 void RISCV_printInst(MCInst *MI, SStream *O, void *info) 
 {
   	MCRegisterInfo *MRI = (MCRegisterInfo *) info;
   	//bool Res = false;
-  	MCInst *NewMI = MI;
+  	//MCInst *NewMI = MI;
   	// TODO: RISCV compressd instructions.
   	//MCInst UncompressedMI;
   	//if (!NoAliases)
     	//Res = uncompressInst(UncompressedMI, *MI, MRI, STI);
   	//if (Res)
     	//NewMI = const_cast<MCInst *>(&UncompressedMI);
-  	if (/*NoAliases ||*/ !printAliasInstr(NewMI, O, info))
-    		printInstruction(NewMI, O, MRI);
+  	if (/*NoAliases ||*/ !printAliasInstr(MI, O, info))
+    		printInstruction(MI, O, MRI);
   		//printAnnotation(O, Annot);
+	// fix load/store type insttuction
+	if (MI->flat_insn->detail->riscv.need_effective_addr)
+		fixDetailOfEffectiveAddr(MI);
+	
+	return;
+}
+
+const char *RISCV_reg_name(csh handle, unsigned int reg)
+{
+#ifndef CAPSTONE_DIET
+  	return getRegisterName(reg, RISCV_ABIRegAltName);
+#else
+	return NULL;
+#endif
 }
 
 static void printRegName(SStream *OS, unsigned RegNo) 
@@ -93,7 +136,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
       			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].reg = reg;
       			MI->flat_insn->detail->riscv.op_count++;
     		}
-
   	} else {
 		assert(MCOperand_isImm(MO) && "Unknown operand kind in printOperand");
     		Imm = MCOperand_getImm(MO);
@@ -113,8 +155,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
       			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_IMM;
       			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].imm = Imm;
       			MI->flat_insn->detail->riscv.op_count++;
-    		}
-  	}
+		}
+    	}
 
   	//assert(MO.isExpr() && "Unknown operand kind in printOperand");
 	

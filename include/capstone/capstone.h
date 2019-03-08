@@ -323,10 +323,10 @@ typedef struct cs_detail {
 		cs_tms320c64x tms320c64x;  ///< TMS320C64x architecture
 		cs_m680x m680x; ///< M680X architecture
 		cs_evm evm;	    ///< Ethereum architecture
-		cs_riscv riscv; ///< RISCV architecture
 		cs_mos65xx mos65xx;	///< MOS65XX architecture (including MOS6502)
 		cs_wasm wasm;	///< Web Assembly architecture
 		cs_bpf bpf;	///< Berkeley Packet Filter architecture (including eBPF)
+		cs_riscv riscv; ///< RISCV architecture
 	};
 } cs_detail;
 

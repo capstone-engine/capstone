@@ -1493,6 +1493,8 @@ static bool printAliasInstr(MCInst *MI, SStream * OS, void *info)
 {
   MCRegisterInfo *MRI = (MCRegisterInfo *) info;
   const char *AsmString;
+  unsigned I = 0;
+  char *tmpString;
   switch (MCInst_getOpcode(MI)) {
   default: return false;
   case RISCV_ADDI:
@@ -2557,8 +2559,7 @@ static bool printAliasInstr(MCInst *MI, SStream * OS, void *info)
     return false;
   }
 
-  unsigned I = 0;
-  char *tmpString = cs_strdup(AsmString);
+  tmpString = cs_strdup(AsmString);
   while (AsmString[I] != ' ' && AsmString[I] != '\t' &&
          AsmString[I] != '$' && AsmString[I] != '\0')
     ++I;

@@ -315,6 +315,24 @@ static void clear_MI_insn_detail(MCInst *MI)
   	return;
 }
 
+// mark the load/store instructions through the opcode.
+static void markLSInsn(MCInst *MI, uint32_t in)
+{
+	/* 
+	   I   ld 0000011 = 0x03
+	       st 0100011 = 0x23
+	   F/D ld 0000111 = 0x07
+	       st 0100111 = 0x27
+	*/
+#define MASK_LS_INSN 0x0000007f
+	uint32_t opcode = in & MASK_LS_INSN;
+	if (0 == (opcode ^ 0x03) || 0 == (opcode ^ 0x07) ||
+	    0 == (opcode ^ 0x23) || 0 == (opcode ^ 0x27))
+		MI->flat_insn->detail->riscv.need_effective_addr = 1;
+#undef MASK_LS_INSN
+	return;
+}
+
 static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
 				 const uint8_t *code, size_t code_len,
 				 uint16_t *Size, uint64_t Address,
@@ -337,6 +355,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
       		//Encoded as little endian 32 bits.
       		Inst = code[0] | (code[1] << 8) | (code[2] << 16) | ((uint32_t)code[3] << 24);
 		clear_MI_insn_detail(MI);
+		markLSInsn(MI, Inst);
       		Result = decodeInstruction(DecoderTable32, MI, Inst, Address, MRI, mode);
   	} else {
     		if (code_len < 2) {
