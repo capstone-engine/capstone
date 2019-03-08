@@ -97,7 +97,8 @@ void RISCV_printInst(MCInst *MI, SStream *O, void *info)
     		printInstruction(MI, O, MRI);
   		//printAnnotation(O, Annot);
 	// fix load/store type insttuction
-	if (MI->flat_insn->detail->riscv.need_effective_addr)
+    	if (MI->csh->detail && 
+	    MI->flat_insn->detail->riscv.need_effective_addr)
 		fixDetailOfEffectiveAddr(MI);
 	
 	return;

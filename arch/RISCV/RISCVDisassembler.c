@@ -328,7 +328,7 @@ static void markLSInsn(MCInst *MI, uint32_t in)
 	uint32_t opcode = in & MASK_LS_INSN;
 	if (0 == (opcode ^ 0x03) || 0 == (opcode ^ 0x07) ||
 	    0 == (opcode ^ 0x23) || 0 == (opcode ^ 0x27))
-		MI->flat_insn->detail->riscv.need_effective_addr = 1;
+		MI->flat_insn->detail->riscv.need_effective_addr = true;
 #undef MASK_LS_INSN
 	return;
 }
@@ -355,7 +355,9 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
       		//Encoded as little endian 32 bits.
       		Inst = code[0] | (code[1] << 8) | (code[2] << 16) | ((uint32_t)code[3] << 24);
 		clear_MI_insn_detail(MI);
-		markLSInsn(MI, Inst);
+		// Now we need mark what instruction need fix effective address output.
+    		if (MI->csh->detail) 
+			markLSInsn(MI, Inst);
       		Result = decodeInstruction(DecoderTable32, MI, Inst, Address, MRI, mode);
   	} else {
     		if (code_len < 2) {
