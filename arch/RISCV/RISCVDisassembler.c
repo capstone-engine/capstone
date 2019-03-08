@@ -306,7 +306,7 @@ static DecodeStatus decodeFRMArg(MCInst *Inst, uint64_t Imm,
 
 #include "RISCVGenDisassemblerTables.inc"
 
-static void clear_MI_insn_detail(MCInst *MI) 
+static void init_MI_insn_detail(MCInst *MI) 
 {
   	if (MI->flat_insn->detail) {
     		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
@@ -354,7 +354,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
       		// Get the four bytes of the instruction.
       		//Encoded as little endian 32 bits.
       		Inst = code[0] | (code[1] << 8) | (code[2] << 16) | ((uint32_t)code[3] << 24);
-		clear_MI_insn_detail(MI);
+		init_MI_insn_detail(MI);
 		// Now we need mark what instruction need fix effective address output.
     		if (MI->csh->detail) 
 			markLSInsn(MI, Inst);
@@ -369,7 +369,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
     		if (! (getFeatureBits(mode) & ((uint64_t)RISCV_Feature64Bit))) {
       			// Trying RISCV32Only_16 table (16-bit Instruction)
       			Inst = code[0] | (code[1] << 8);
-      			clear_MI_insn_detail(MI);
+      			init_MI_insn_detail(MI);
       			Result = decodeInstruction(DecoderTableRISCV32Only_16, MI, Inst, Address,
                                  	   	   MRI, mode);
       			if (Result != MCDisassembler_Fail) {
@@ -380,7 +380,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
     
     		// Trying RISCV_C table (16-bit Instruction)
     		Inst = code[0] | (code[1] << 8);
-    		clear_MI_insn_detail(MI);
+    		init_MI_insn_detail(MI);
     		// Calling the auto-generated decoder function.
     		Result = decodeInstruction(DecoderTable16, MI, Inst, Address, MRI, mode);
     		*Size = 2;
