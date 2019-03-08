@@ -104,15 +104,6 @@ void RISCV_printInst(MCInst *MI, SStream *O, void *info)
 	return;
 }
 
-const char *RISCV_reg_name(csh handle, unsigned int reg)
-{
-#ifndef CAPSTONE_DIET
-  	return getRegisterName(reg, RISCV_ABIRegAltName);
-#else
-	return NULL;
-#endif
-}
-
 static void printRegName(SStream *OS, unsigned RegNo) 
 {
   	SStream_concat0(OS, getRegisterName(RegNo, RISCV_ABIRegAltName));
