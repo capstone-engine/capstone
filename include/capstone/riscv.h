@@ -50,11 +50,11 @@ typedef struct cs_riscv_op {
 
 // Instruction structure
 typedef struct cs_riscv {
+	// Does this instruction need effective address or not.
+	bool need_effective_addr;
 	// Number of operands of this instruction, 
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
-	// Does this instruction need effective address or not.
-	bool need_effective_addr;
 	cs_riscv_op operands[8]; // operands for this instruction.
 } cs_riscv;
 
