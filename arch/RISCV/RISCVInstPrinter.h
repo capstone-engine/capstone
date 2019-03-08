@@ -17,8 +17,6 @@
 #include "../../MCInst.h"
 #include "../../SStream.h"
 
-const char *get_reg_name_autogentable(unsigned reg);
-
 void RISCV_printInst(MCInst * MI, SStream * O, void *info);
 
 void RISCV_post_printer(csh ud, cs_insn * insn, char *insn_asm, MCInst * mci);
