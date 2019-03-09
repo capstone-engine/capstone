@@ -332,6 +332,20 @@ static struct platform platforms[] = {
         "M680X_M6808",
         "hcs08"
     },
+    {
+        //item 44
+        CS_ARCH_RISCV,
+        CS_MODE_RISCV32,
+	"RISCV"
+        "riscv32"
+    },
+    {
+        //item 45
+        CS_ARCH_RISCV,
+        CS_MODE_RISCV64,
+	"RISCV"
+        "riscv64"
+    },
 };
 
 const char * cs_fuzz_arch(uint8_t arch) {

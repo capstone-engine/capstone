@@ -18,6 +18,7 @@ char *get_detail_sparc(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_sysz(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_x86(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_xcore(csh *handle, cs_mode mode, cs_insn *ins);
+char *get_detail_riscv(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_m68k(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_mos65xx(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_tms320c64x(csh *handle, cs_mode mode, cs_insn *ins);

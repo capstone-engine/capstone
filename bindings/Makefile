@@ -14,6 +14,7 @@ TEST_SYSZ = $(TMPDIR)/test_systemz
 TEST_X86 = $(TMPDIR)/test_x86
 TEST_XCORE = $(TMPDIR)/test_xcore
 TEST_BPF = $(TMPDIR)/test_bpf
+TEST_RISCV = $(TMPDIR)/test_riscv
 
 PYTHON2 = python
 
@@ -44,6 +45,7 @@ expected:
 	../tests/test_x86 > $(TEST_X86)_e
 	../tests/test_xcore > $(TEST_XCORE)_e
 	../tests/test_bpf > $(TEST_BPF)_e
+	../tests/test_riscv > $(TEST_RISCV)_e
 
 python: FORCE
 	cd python && $(MAKE)
@@ -59,6 +61,7 @@ python: FORCE
 	$(PYTHON2) python/test_x86.py > $(TEST_X86)_o
 	$(PYTHON2) python/test_xcore.py > $(TEST_XCORE)_o
 	$(PYTHON2) python/test_bpf.py > $(TEST_BPF)_o
+	$(PYTHON2) python/test_riscv.py > $(TEST_RISCV)_o
 	$(MAKE) test_diff
 
 java: FORCE
