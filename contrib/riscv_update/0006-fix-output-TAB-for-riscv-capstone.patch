@@ -1,0 +1,32 @@
+From 5adfa13945a8eb1a104db57b29d27ceba0a2d948 Mon Sep 17 00:00:00 2001
+From: fanfuqiang <feqin1023@gmail.com>
+Date: Sun, 3 Mar 2019 23:16:27 +0800
+Subject: [PATCH] fix output TAB for riscv capstone
+
+---
+ llvm/utils/TableGen/AsmWriterEmitter.cpp | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/llvm/utils/TableGen/AsmWriterEmitter.cpp b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+index ac82573fe..21630f4ce 100644
+--- a/llvm/utils/TableGen/AsmWriterEmitter.cpp
++++ b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+@@ -435,14 +435,7 @@ void AsmWriterEmitter::EmitPrintInstruction(raw_ostream &O) {
+   }
+ 
+   // Emit the initial tab character.
+-#ifdef CAPSTONE
+-  O << "#ifndef CAPSTONE_DIET\n"
+-    << "  SStream_concat0(O, \"\\t\");\n"
+-    << "#endif\n\n";
+-#else
+-  O << "  O << \"\\t\";\n\n";
+-#endif
+-
++  //O << "  O << \"\\t\";\n\n";
+   O << "  // Emit the opcode for the instruction.\n";
+   O << BitsString;
+ 
+-- 
+2.20.1
+

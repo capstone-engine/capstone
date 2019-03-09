@@ -51,9 +51,6 @@ typedef struct {
 	unsigned int second_value;
 } double_dict;
 
-extern single_dict arches[];
-extern single_dict modes[];
-extern double_dict options[];
 extern char *(*function)(csh *, cs_mode, cs_insn*);
 
 int get_index(double_dict d[], unsigned size, const char *str);

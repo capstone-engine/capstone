@@ -72,6 +72,8 @@ static struct {
 	{ "bpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC },
 	{ "ebpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED },
 	{ "ebpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "riscv32", CS_ARCH_RISCV, CS_MODE_RISCV32 },
+	{ "riscv64", CS_ARCH_RISCV, CS_MODE_RISCV64 },
 	{ NULL }
 };
 
@@ -87,6 +89,7 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
+void print_insn_detail_riscv(csh handle, cs_insn *ins);
 void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
 void print_insn_detail_bpf(csh handle, cs_insn *ins);
@@ -242,6 +245,11 @@ static void usage(char *prog)
 		printf("        ebpfbe      Extended BPF + big endian\n");
 	}
 
+	if (cs_support(CS_ARCH_RISCV)) {
+		printf("        riscv32     riscv32\n");
+		printf("        riscv64     riscv64\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -s decode in SKIPDATA mode\n");
@@ -296,6 +304,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_BPF:
 			print_insn_detail_bpf(handle, ins);
+			break;
+		case CS_ARCH_RISCV:
+			print_insn_detail_riscv(handle, ins);
 			break;
 		default: break;
 	}
@@ -392,7 +403,7 @@ int main(int argc, char **argv)
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
 				}
-
+				
 				if (cs_support(CS_ARCH_WASM)) {
 					printf("wasm=1 ");
 				}
@@ -403,6 +414,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_BPF)) {
 					printf("bpf=1 ");
+				}
+
+				if (cs_support(CS_ARCH_RISCV)) {
+					printf("riscv=1 ");
 				}
 
 				if (cs_support(CS_SUPPORT_DIET)) {

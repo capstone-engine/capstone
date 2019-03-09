@@ -36,6 +36,7 @@ __all__ = [
     'CS_ARCH_M680X',
     'CS_ARCH_EVM',
     'CS_ARCH_BPF',
+    'CS_ARCH_RISCV',
     'CS_ARCH_MOS65XX',
     'CS_ARCH_ALL',
 
@@ -74,6 +75,8 @@ __all__ = [
     'CS_MODE_M680X_HCS08',
     'CS_MODE_BPF_CLASSIC',
     'CS_MODE_BPF_EXTENDED',
+    'CS_MODE_RISCV32',
+    'CS_MODE_RISCV64',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -158,7 +161,8 @@ CS_ARCH_EVM = 11
 CS_ARCH_MOS65XX = 12
 CS_ARCH_WASM = 13
 CS_ARCH_BPF = 14
-CS_ARCH_MAX = 15
+CS_ARCH_RISCV = 15
+CS_ARCH_MAX = 16
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -195,8 +199,11 @@ CS_MODE_M680X_6809 = (1 << 7)  # M680X M6809 mode
 CS_MODE_M680X_6811 = (1 << 8)  # M680X M68HC11 mode
 CS_MODE_M680X_CPU12 = (1 << 9)  # M680X CPU12 mode
 CS_MODE_M680X_HCS08 = (1 << 10)  # M680X HCS08 mode
-CS_MODE_BPF_CLASSIC = 0        # Classic BPF mode (default)
-CS_MODE_BPF_EXTENDED = 1 << 0  # Extended BPF mode
+CS_MODE_BPF_CLASSIC = 0          # Classic BPF mode (default)
+CS_MODE_BPF_EXTENDED = (1 << 0)  # Extended BPF mode
+CS_MODE_RISCV32 = (1 << 0)       # RISCV32 mode
+CS_MODE_RISCV64 = (1 << 1)       # RISCV64 mode
+CS_MODE_RISCVC  = (1 << 2)       # RISCV compressed mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -336,7 +343,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf, riscv
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -354,6 +361,7 @@ class _cs_arch(ctypes.Union):
         ('evm', evm.CsEvm),
         ('mos65xx', mos65xx.CsMOS65xx),
         ('bpf', bpf.CsBPF),
+        ('riscv', riscv.CsRISCV),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -672,6 +680,8 @@ class CsInsn(object):
             (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(self._raw.detail.contents.arch.mos65xx)
         elif arch == CS_ARCH_BPF:
             (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
+        elif arch == CS_ARCH_RISCV:
+            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
 
 
     def __getattr__(self, name):
@@ -1131,7 +1141,7 @@ def debug():
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
         "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
-        'bpf': CS_ARCH_BPF,
+        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV,
     }
 
     all_archs = ""

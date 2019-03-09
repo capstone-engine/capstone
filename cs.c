@@ -65,6 +65,7 @@
 #include "arch/TMS320C64x/TMS320C64xModule.h"
 #include "arch/X86/X86Module.h"
 #include "arch/XCore/XCoreModule.h"
+#include "arch/RISCV/RISCVModule.h"
 #include "arch/MOS65XX/MOS65XXModule.h"
 #include "arch/BPF/BPFModule.h"
 
@@ -145,6 +146,11 @@ static cs_err (*cs_arch_init[MAX_ARCH])(cs_struct *) = {
 #else
 	NULL,
 #endif
+#ifdef CAPSTONE_HAS_RISCV
+	RISCV_global_init,
+#else
+	NULL,
+#endif
 };
 
 // support cs_option() for all archs
@@ -221,6 +227,11 @@ static cs_err (*cs_arch_option[MAX_ARCH]) (cs_struct *, cs_opt_type, size_t valu
 #endif
 #ifdef CAPSTONE_HAS_BPF
 	BPF_option,
+#else
+	NULL,
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	RISCV_option,
 #else
 	NULL,
 #endif
@@ -312,6 +323,11 @@ static cs_mode cs_arch_disallowed_mode_mask[MAX_ARCH] = {
 #else
 	0,
 #endif
+#ifdef CAPSTONE_HAS_RISCV
+	~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC),
+#else
+        0,
+#endif
 };
 
 // bitmask of enabled architectures
@@ -360,6 +376,9 @@ static uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_BPF
 	| (1 << CS_ARCH_BPF)
+#endif
+#ifdef CAPSTONE_HAS_RISCV
+	| (1 << CS_ARCH_RISCV)
 #endif
 ;
 
@@ -426,14 +445,14 @@ CAPSTONE_EXPORT
 bool CAPSTONE_API cs_support(int query)
 {
 	if (query == CS_ARCH_ALL)
-		return all_arch == ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_ARM64) |
-				(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
-				(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
-				(1 << CS_ARCH_SYSZ) | (1 << CS_ARCH_XCORE) |
-				(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
-				(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM) |
-				(1 << CS_ARCH_MOS65XX) | (1 << CS_ARCH_WASM) |
-				(1 << CS_ARCH_BPF));
+		return all_arch == ((1 << CS_ARCH_ARM)   | (1 << CS_ARCH_ARM64)      |
+				    (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
+				    (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
+				    (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
+				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
+				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
+				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    | 
+				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -708,6 +727,11 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_BPF:
 			// both classic and extended BPF have alignment 8.
 			return 8;
+		case CS_ARCH_RISCV:
+			// special compress mode
+			if (handle->mode & CS_MODE_RISCVC)
+				return 1;
+			return 4;
 	}
 }
 
@@ -1437,6 +1461,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++)
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -1591,6 +1620,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_BPF:
 			for (i = 0; i < insn->detail->bpf.op_count; i++) {
 				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_RISCV:
+			for (i = 0; i < insn->detail->riscv.op_count; i++) {
+				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

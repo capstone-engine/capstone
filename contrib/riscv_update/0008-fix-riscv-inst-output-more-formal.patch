@@ -1,0 +1,24 @@
+From 6830f128011a19e77e8c131cdfcf2f87fb78e316 Mon Sep 17 00:00:00 2001
+From: fanfuqiang <feqin1023@gmail.com>
+Date: Thu, 7 Mar 2019 00:31:51 +0800
+Subject: [PATCH] fix riscv inst output more formal
+
+---
+ llvm/utils/TableGen/AsmWriterEmitter.cpp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/llvm/utils/TableGen/AsmWriterEmitter.cpp b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+index 9db5f7f54..fff9f7677 100644
+--- a/llvm/utils/TableGen/AsmWriterEmitter.cpp
++++ b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+@@ -1189,7 +1189,6 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+   O << "    ++I;\n";
+ #ifdef CAPSTONE
+   O << "  tmpString[I] = 0;\n";
+-  O << "  SStream_concat0(OS, \"\\t\");\n";
+   O << "  SStream_concat0(OS, tmpString);\n";
+ #else
+   O << "  OS << '\\t' << StringRef(AsmString, I);\n";
+-- 
+2.20.1
+

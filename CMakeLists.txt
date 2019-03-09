@@ -28,8 +28,8 @@ option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM RISCV MOS65XX WASM BPF)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM RISCV MOS65XX WASM BPF)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -111,6 +111,7 @@ set(HEADERS_COMMON
     include/capstone/sparc.h
     include/capstone/systemz.h
     include/capstone/xcore.h
+    include/capstone/riscv.h
     include/capstone/m68k.h
     include/capstone/tms320c64x.h
     include/capstone/m680x.h
@@ -443,6 +444,31 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_EVM_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_evm.c)
 endif ()
 
+if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_RISCV_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_RISCV)
+    set(SOURCES_RISCV
+        arch/RISCV/RISCVDisassembler.c
+        arch/RISCV/RISCVInstPrinter.c
+        arch/RISCV/RISCVMapping.c
+        arch/RISCV/RISCVModule.c
+        )
+    set(HEADERS_RISCV
+        arch/RISCV/RISCVBaseInfo.h
+        arch/RISCV/RISCVDisassembler.h
+        arch/RISCV/RISCVGenAsmWriter.inc
+        arch/RISCV/RISCVGenDisassemblerTables.inc
+        arch/RISCV/RISCVGenInsnNameMaps.inc
+        arch/RISCV/RISCVGenInstrInfo.inc
+        arch/RISCV/RISCVGenRegisterInfo.inc
+        arch/RISCV/RISCVGenSubtargetInfo.inc
+        arch/RISCV/RISCVInstPrinter.h
+        arch/RISCV/RISCVMapping.h
+        arch/RISCV/RISCVModule.h
+        arch/RISCV/RISCVMappingInsn.inc
+        )
+    set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
+endif ()
+
 if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_WASM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_WASM)
     set(SOURCES_WASM
@@ -506,6 +532,7 @@ set(ALL_SOURCES
     ${SOURCES_TMS320C64X}
     ${SOURCES_M680X}
     ${SOURCES_EVM}
+    ${SOURCES_RISCV}
     ${SOURCES_WASM}
     ${SOURCES_MOS65XX}
     ${SOURCES_BPF}
@@ -526,6 +553,7 @@ set(ALL_HEADERS
     ${HEADERS_TMS320C64X}
     ${HEADERS_M680X}
     ${HEADERS_EVM}
+    ${HEADERS_RISCV}
     ${HEADERS_WASM}
     ${HEADERS_MOS65XX}
     ${HEADERS_BPF}
@@ -609,10 +637,10 @@ source_group("Source\\M68K" FILES ${SOURCES_M68K})
 source_group("Source\\TMS320C64x" FILES ${SOURCES_TMS320C64X})
 source_group("Source\\M680X" FILES ${SOURCES_M680X})
 source_group("Source\\EVM" FILES ${SOURCES_EVM})
+source_group("Source\\RISCV" FILES ${SOURCES_RISCV})
 source_group("Source\\WASM" FILES ${SOURCES_WASM})
 source_group("Source\\MOS65XX" FILES ${SOURCES_MOS65XX})
 source_group("Source\\BPF" FILES ${SOURCES_BPF})
-
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
 source_group("Include\\ARM" FILES ${HEADERS_ARM})
@@ -627,6 +655,7 @@ source_group("Include\\M68K" FILES ${HEADERS_M68K})
 source_group("Include\\TMS320C64x" FILES ${HEADERS_TMS320C64X})
 source_group("Include\\M680X" FILES ${HEADERS_MC680X})
 source_group("Include\\EVM" FILES ${HEADERS_EVM})
+source_group("Include\\RISCV" FILES ${HEADERS_RISCV})
 source_group("Include\\WASM" FILES ${HEADERS_WASM})
 source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 source_group("Include\\BPF" FILES ${HEADERS_BPF})
