@@ -39,7 +39,7 @@ typedef enum mos65xx_address_mode {
 	MOS65XX_AM_IND, ///< absolute indirect addressing
 } mos65xx_address_mode;
 
-/// M68K instruction
+/// MOS65XX instruction
 typedef enum mos65xx_insn {
 	MOS65XX_INS_INVALID = 0,
 	MOS65XX_INS_ADC,
@@ -101,7 +101,7 @@ typedef enum mos65xx_insn {
 	MOS65XX_INS_ENDING,   // <-- mark the end of the list of instructions
 } mos65xx_insn;
 
-/// Group of M68K instructions
+/// Group of MOS65XX instructions
 typedef enum mos65xx_group_type {
 	MOS65XX_GRP_INVALID = 0,  ///< CS_GRP_INVALID
 	MOS65XX_GRP_JUMP,		 ///< = CS_GRP_JUMP

@@ -1,7 +1,7 @@
-SOURCE=src
-INCLUDE=include
-BUILD=build
-LIBRARY= -lcmocka -lcapstone
+SOURCE = src
+INCLUDE = include
+BUILD = build
+LIBRARY = -lcmocka -lcapstone -L../..
 
 all:
 	rm -rf $(BUILD)

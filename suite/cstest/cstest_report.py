@@ -46,6 +46,10 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 		print '[-] Detailed report for {}:\n'.format(filepath)
 		for c, f, d in details:
 			print '\t[+] {}: {}\n\t\t{}\n'.format(f, c, d)
+		print '\n'
+		return 0
+	elif len(details) > 0:
+		for c, f, d in details:
 			if len(f) > 0 and cmt_out is True:
 				tmp_cmd = ['sed', '-E', '-i.bak', 's/({})(.*)/\/\/ \\1\\2/g'.format(c), filepath]
 				sed_proc = Popen(tmp_cmd, stdout=PIPE, stderr=PIPE)
@@ -53,9 +57,7 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 				tmp_cmd2 = ['rm', '-f', filepath + '.bak']
 				rm_proc = Popen(tmp_cmd2, stdout=PIPE, stderr=PIPE)
 				rm_proc.communicate()
-		print '\n'
-		return 0
-	elif len(details) > 0:
+
 		return 0;
 	return 1
 

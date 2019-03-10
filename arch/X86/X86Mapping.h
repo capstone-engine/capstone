@@ -1,11 +1,27 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_X86_MAP_H
 #define CS_X86_MAP_H
 
 #include "capstone/capstone.h"
 #include "../../cs_priv.h"
+
+// map instruction to its characteristics
+typedef struct insn_map_x86 {
+	unsigned short id;
+	unsigned short mapid;
+	unsigned char is64bit;
+#ifndef CAPSTONE_DIET
+	uint16_t regs_use[12]; // list of implicit registers used by this instruction
+	uint16_t regs_mod[20]; // list of implicit registers modified by this instruction
+	unsigned char groups[8]; // list of group this instruction belong to
+	bool branch;	// branch instruction?
+	bool indirect_branch;	// indirect branch instruction?
+#endif
+} insn_map_x86;
+
+extern const insn_map_x86 insns[];
 
 // map sib_base to x86_reg
 x86_reg x86_map_sib_base(int r);
@@ -70,5 +86,9 @@ void X86_reg_access(const cs_insn *insn,
 
 // given the instruction id, return the size of its immediate operand (or 0)
 uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size);
+
+unsigned short X86_register_map(unsigned short id);
+
+unsigned int find_insn(unsigned int id);
 
 #endif

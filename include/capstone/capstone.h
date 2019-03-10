@@ -86,6 +86,8 @@ typedef enum cs_arch {
 	CS_ARCH_EVM,		///< Ethereum architecture
 	CS_ARCH_MOS65XX,	///< MOS65XX architecture (including MOS6502)
 	CS_ARCH_WASM,		///< WebAssembly architecture
+	CS_ARCH_BPF,		///< Berkeley Packet Filter architecture (including eBPF)
+	CS_ARCH_RISCV,          ///< RISCV architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -136,6 +138,11 @@ typedef enum cs_mode {
 	CS_MODE_M680X_CPU12 = 1 << 9, ///< M680X Motorola/Freescale/NXP CPU12
 					///< used on M68HC12/HCS12
 	CS_MODE_M680X_HCS08 = 1 << 10, ///< M680X Freescale/NXP HCS08 mode
+	CS_MODE_BPF_CLASSIC = 0,	///< Classic BPF mode (default)
+	CS_MODE_BPF_EXTENDED = 1 << 0,	///< Extended BPF mode
+	CS_MODE_RISCV32  = 1 << 0,        ///< RISCV RV32G
+	CS_MODE_RISCV64  = 1 << 1,        ///< RISCV RV64G
+	CS_MODE_RISCVC   = 1 << 2,        ///< RISCV compressed instructure mode
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
@@ -259,8 +266,10 @@ typedef struct cs_opt_skipdata {
 	/// X86:     1 bytes.
 	/// XCore:   2 bytes.
 	/// EVM:     1 bytes.
+	/// RISCV:   4 bytes.
 	/// WASM:    1 bytes.
 	/// MOS65XX: 1 bytes.
+	/// BPF:     8 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
 
 	/// User-defined data to be passed to @callback function pointer.
@@ -280,8 +289,10 @@ typedef struct cs_opt_skipdata {
 #include "tms320c64x.h"
 #include "m680x.h"
 #include "evm.h"
+#include "riscv.h"
 #include "wasm.h"
 #include "mos65xx.h"
+#include "bpf.h"
 
 /// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 /// Initialized as memset(., 0, offsetof(cs_detail, ARCH)+sizeof(cs_ARCH))
@@ -314,6 +325,8 @@ typedef struct cs_detail {
 		cs_evm evm;	    ///< Ethereum architecture
 		cs_mos65xx mos65xx;	///< MOS65XX architecture (including MOS6502)
 		cs_wasm wasm;	///< Web Assembly architecture
+		cs_bpf bpf;	///< Berkeley Packet Filter architecture (including eBPF)
+		cs_riscv riscv; ///< RISCV architecture
 	};
 } cs_detail;
 

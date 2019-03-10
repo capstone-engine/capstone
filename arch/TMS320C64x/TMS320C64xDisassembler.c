@@ -196,7 +196,7 @@ static DecodeStatus DecodePCRelScst7(MCInst *Inst, unsigned Val,
 		imm |= ~((1 << 7) - 1);
 
 	/* Address is relative to the address of the first instruction in the fetch packet */
-	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm << 2));
+	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm * 4));
 
 	return MCDisassembler_Success;
 }
@@ -212,7 +212,7 @@ static DecodeStatus DecodePCRelScst10(MCInst *Inst, unsigned Val,
 		imm |= ~((1 << 10) - 1);
 
 	/* Address is relative to the address of the first instruction in the fetch packet */
-	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm << 2));
+	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm * 4));
 
 	return MCDisassembler_Success;
 }
@@ -228,7 +228,7 @@ static DecodeStatus DecodePCRelScst12(MCInst *Inst, unsigned Val,
 		imm |= ~((1 << 12) - 1);
 
 	/* Address is relative to the address of the first instruction in the fetch packet */
-	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm << 2));
+	MCOperand_CreateImm0(Inst, (Address & ~31) + (imm * 4));
 
 	return MCDisassembler_Success;
 }
@@ -272,6 +272,8 @@ static DecodeStatus DecodeMemOperandSc(MCInst *Inst, unsigned Val,
 	else if((base >= TMS320C64X_REG_B0) && (base <= TMS320C64X_REG_B31))
 		base = (base - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 	basereg = getReg(GPRegsDecoderTable, base);
+	if (basereg ==  ~0U)
+		return MCDisassembler_Fail;
 
 	switch(mode) {
 		case 0:
@@ -293,6 +295,8 @@ static DecodeStatus DecodeMemOperandSc(MCInst *Inst, unsigned Val,
 			else if((offset >= TMS320C64X_REG_B0) && (offset <= TMS320C64X_REG_B31))
 				offset = (offset - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 			offsetreg = getReg(GPRegsDecoderTable, offset);
+			if (offsetreg ==  ~0U)
+				return MCDisassembler_Fail;
 			MCOperand_CreateImm0(Inst, (scaled << 19) | (basereg << 12) | (offsetreg << 5) | (mode << 1) | unit);
 			break;
 		default:

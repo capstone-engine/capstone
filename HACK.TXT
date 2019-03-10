@@ -7,6 +7,7 @@ Capstone source is organized as followings.
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- ARM64 (aka ARMv8) engine
 │   ├── ARM         <- ARM engine
+│   ├── BPF         <- Berkeley Packet Filter engine
 │   ├── EVM         <- Ethereum engine
 │   ├── M680X       <- M680X engine
 │   ├── M68K        <- M68K engine
@@ -85,6 +86,9 @@ Tests:
 - tests/test_iter.c
 - tests/test_newarch.c
 - suite/fuzz/fuzz_disasm.c: add the architecture and its modes to the list of fuzzed platforms
+- suite/capstone_get_setup.c
+- suite/MC/newarch/mode.mc: samples
+- suite/test_corpus.py: correspondence between architecture and mode as text and architecture number for fuzzing
 
 Bindings:
 - bindings/Makefile

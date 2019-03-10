@@ -7,7 +7,7 @@
 \*===----------------------------------------------------------------------===*/
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 
 #ifdef GET_REGINFO_ENUM
@@ -506,236 +506,236 @@ static const MCRegisterDesc SystemZRegDesc[] = { // Descriptors
 
   // GRX32Bit Register Class...
   static const MCPhysReg GRX32Bit[] = {
-    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15L, SystemZ_R15H, SystemZ_R14L, SystemZ_R14H, SystemZ_R13L, SystemZ_R13H, SystemZ_R12L, SystemZ_R12H, SystemZ_R11L, SystemZ_R11H, SystemZ_R10L, SystemZ_R10H, SystemZ_R9L, SystemZ_R9H, SystemZ_R8L, SystemZ_R8H, SystemZ_R7L, SystemZ_R7H, SystemZ_R6L, SystemZ_R6H, 
+    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15L, SystemZ_R15H, SystemZ_R14L, SystemZ_R14H, SystemZ_R13L, SystemZ_R13H, SystemZ_R12L, SystemZ_R12H, SystemZ_R11L, SystemZ_R11H, SystemZ_R10L, SystemZ_R10H, SystemZ_R9L, SystemZ_R9H, SystemZ_R8L, SystemZ_R8H, SystemZ_R7L, SystemZ_R7H, SystemZ_R6L, SystemZ_R6H,
   };
 
   // GRX32Bit Bit set.
   static const uint8_t GRX32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03,
   };
 
   // VR32Bit Register Class...
   static const MCPhysReg VR32Bit[] = {
-    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F16S, SystemZ_F17S, SystemZ_F18S, SystemZ_F19S, SystemZ_F20S, SystemZ_F21S, SystemZ_F22S, SystemZ_F23S, SystemZ_F24S, SystemZ_F25S, SystemZ_F26S, SystemZ_F27S, SystemZ_F28S, SystemZ_F29S, SystemZ_F30S, SystemZ_F31S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S, 
+    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F16S, SystemZ_F17S, SystemZ_F18S, SystemZ_F19S, SystemZ_F20S, SystemZ_F21S, SystemZ_F22S, SystemZ_F23S, SystemZ_F24S, SystemZ_F25S, SystemZ_F26S, SystemZ_F27S, SystemZ_F28S, SystemZ_F29S, SystemZ_F30S, SystemZ_F31S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S,
   };
 
   // VR32Bit Bit set.
   static const uint8_t VR32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03,
   };
 
   // AR32Bit Register Class...
   static const MCPhysReg AR32Bit[] = {
-    SystemZ_A0, SystemZ_A1, SystemZ_A2, SystemZ_A3, SystemZ_A4, SystemZ_A5, SystemZ_A6, SystemZ_A7, SystemZ_A8, SystemZ_A9, SystemZ_A10, SystemZ_A11, SystemZ_A12, SystemZ_A13, SystemZ_A14, SystemZ_A15, 
+    SystemZ_A0, SystemZ_A1, SystemZ_A2, SystemZ_A3, SystemZ_A4, SystemZ_A5, SystemZ_A6, SystemZ_A7, SystemZ_A8, SystemZ_A9, SystemZ_A10, SystemZ_A11, SystemZ_A12, SystemZ_A13, SystemZ_A14, SystemZ_A15,
   };
 
   // AR32Bit Bit set.
   static const uint8_t AR32BitBits[] = {
-    0xfc, 0xff, 0x03, 
+    0xfc, 0xff, 0x03,
   };
 
   // FP32Bit Register Class...
   static const MCPhysReg FP32Bit[] = {
-    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S, 
+    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S,
   };
 
   // FP32Bit Bit set.
   static const uint8_t FP32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // GR32Bit Register Class...
   static const MCPhysReg GR32Bit[] = {
-    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
+    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L,
   };
 
   // GR32Bit Bit set.
   static const uint8_t GR32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // GRH32Bit Register Class...
   static const MCPhysReg GRH32Bit[] = {
-    SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15H, SystemZ_R14H, SystemZ_R13H, SystemZ_R12H, SystemZ_R11H, SystemZ_R10H, SystemZ_R9H, SystemZ_R8H, SystemZ_R7H, SystemZ_R6H, 
+    SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15H, SystemZ_R14H, SystemZ_R13H, SystemZ_R12H, SystemZ_R11H, SystemZ_R10H, SystemZ_R9H, SystemZ_R8H, SystemZ_R7H, SystemZ_R6H,
   };
 
   // GRH32Bit Bit set.
   static const uint8_t GRH32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // ADDR32Bit Register Class...
   static const MCPhysReg ADDR32Bit[] = {
-    SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
+    SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L,
   };
 
   // ADDR32Bit Bit set.
   static const uint8_t ADDR32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03,
   };
 
   // CCR Register Class...
   static const MCPhysReg CCR[] = {
-    SystemZ_CC, 
+    SystemZ_CC,
   };
 
   // CCR Bit set.
   static const uint8_t CCRBits[] = {
-    0x02, 
+    0x02,
   };
 
   // AnyRegBit Register Class...
   static const MCPhysReg AnyRegBit[] = {
-    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R6D, SystemZ_R7D, SystemZ_R8D, SystemZ_R9D, SystemZ_R10D, SystemZ_R11D, SystemZ_R12D, SystemZ_R13D, SystemZ_R14D, SystemZ_R15D, SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
+    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R6D, SystemZ_R7D, SystemZ_R8D, SystemZ_R9D, SystemZ_R10D, SystemZ_R11D, SystemZ_R12D, SystemZ_R13D, SystemZ_R14D, SystemZ_R15D, SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
   };
 
   // AnyRegBit Bit set.
   static const uint8_t AnyRegBitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 0x00, 0xfc, 0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 0x00, 0xfc, 0xff, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // AnyRegBit_with_subreg_r32 Register Class...
   static const MCPhysReg AnyRegBit_with_subreg_r32[] = {
-    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
+    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
   };
 
   // AnyRegBit_with_subreg_r32 Bit set.
   static const uint8_t AnyRegBit_with_subreg_r32Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // VR64Bit Register Class...
   static const MCPhysReg VR64Bit[] = {
-    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F16D, SystemZ_F17D, SystemZ_F18D, SystemZ_F19D, SystemZ_F20D, SystemZ_F21D, SystemZ_F22D, SystemZ_F23D, SystemZ_F24D, SystemZ_F25D, SystemZ_F26D, SystemZ_F27D, SystemZ_F28D, SystemZ_F29D, SystemZ_F30D, SystemZ_F31D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, 
+    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F16D, SystemZ_F17D, SystemZ_F18D, SystemZ_F19D, SystemZ_F20D, SystemZ_F21D, SystemZ_F22D, SystemZ_F23D, SystemZ_F24D, SystemZ_F25D, SystemZ_F26D, SystemZ_F27D, SystemZ_F28D, SystemZ_F29D, SystemZ_F30D, SystemZ_F31D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D,
   };
 
   // VR64Bit Bit set.
   static const uint8_t VR64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03,
   };
 
   // AnyRegBit_with_subreg_r64 Register Class...
   static const MCPhysReg AnyRegBit_with_subreg_r64[] = {
-    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
+    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
   };
 
   // AnyRegBit_with_subreg_r64 Bit set.
   static const uint8_t AnyRegBit_with_subreg_r64Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // CR64Bit Register Class...
   static const MCPhysReg CR64Bit[] = {
-    SystemZ_C0, SystemZ_C1, SystemZ_C2, SystemZ_C3, SystemZ_C4, SystemZ_C5, SystemZ_C6, SystemZ_C7, SystemZ_C8, SystemZ_C9, SystemZ_C10, SystemZ_C11, SystemZ_C12, SystemZ_C13, SystemZ_C14, SystemZ_C15, 
+    SystemZ_C0, SystemZ_C1, SystemZ_C2, SystemZ_C3, SystemZ_C4, SystemZ_C5, SystemZ_C6, SystemZ_C7, SystemZ_C8, SystemZ_C9, SystemZ_C10, SystemZ_C11, SystemZ_C12, SystemZ_C13, SystemZ_C14, SystemZ_C15,
   };
 
   // CR64Bit Bit set.
   static const uint8_t CR64BitBits[] = {
-    0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // FP64Bit Register Class...
   static const MCPhysReg FP64Bit[] = {
-    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, 
+    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D,
   };
 
   // FP64Bit Bit set.
   static const uint8_t FP64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // GR64Bit Register Class...
   static const MCPhysReg GR64Bit[] = {
-    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
+    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D,
   };
 
   // GR64Bit Bit set.
   static const uint8_t GR64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // ADDR64Bit Register Class...
   static const MCPhysReg ADDR64Bit[] = {
-    SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
+    SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D,
   };
 
   // ADDR64Bit Bit set.
   static const uint8_t ADDR64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03,
   };
 
   // VR128Bit Register Class...
   static const MCPhysReg VR128Bit[] = {
-    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V16, SystemZ_V17, SystemZ_V18, SystemZ_V19, SystemZ_V20, SystemZ_V21, SystemZ_V22, SystemZ_V23, SystemZ_V24, SystemZ_V25, SystemZ_V26, SystemZ_V27, SystemZ_V28, SystemZ_V29, SystemZ_V30, SystemZ_V31, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
+    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V16, SystemZ_V17, SystemZ_V18, SystemZ_V19, SystemZ_V20, SystemZ_V21, SystemZ_V22, SystemZ_V23, SystemZ_V24, SystemZ_V25, SystemZ_V26, SystemZ_V27, SystemZ_V28, SystemZ_V29, SystemZ_V30, SystemZ_V31, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
   };
 
   // VR128Bit Bit set.
   static const uint8_t VR128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03,
   };
 
   // VF128Bit Register Class...
   static const MCPhysReg VF128Bit[] = {
-    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
+    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
   };
 
   // VF128Bit Bit set.
   static const uint8_t VF128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03,
   };
 
   // FP128Bit Register Class...
   static const MCPhysReg FP128Bit[] = {
-    SystemZ_F0Q, SystemZ_F1Q, SystemZ_F4Q, SystemZ_F5Q, SystemZ_F8Q, SystemZ_F9Q, SystemZ_F12Q, SystemZ_F13Q, 
+    SystemZ_F0Q, SystemZ_F1Q, SystemZ_F4Q, SystemZ_F5Q, SystemZ_F8Q, SystemZ_F9Q, SystemZ_F12Q, SystemZ_F13Q,
   };
 
   // FP128Bit Bit set.
   static const uint8_t FP128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03,
   };
 
   // GR128Bit Register Class...
   static const MCPhysReg GR128Bit[] = {
-    SystemZ_R0Q, SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
+    SystemZ_R0Q, SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q,
   };
 
   // GR128Bit Bit set.
   static const uint8_t GR128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03,
   };
 
   // ADDR128Bit Register Class...
   static const MCPhysReg ADDR128Bit[] = {
-    SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
+    SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q,
   };
 
   // ADDR128Bit Bit set.
   static const uint8_t ADDR128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03,
   };
 
 static const MCRegisterClass SystemZMCRegisterClasses[] = {
-  { GRX32Bit, GRX32BitBits, 107, 32, sizeof(GRX32BitBits), SystemZ_GRX32BitRegClassID, 4, 1, true },
-  { VR32Bit, VR32BitBits, 99, 32, sizeof(VR32BitBits), SystemZ_VR32BitRegClassID, 4, 1, true },
-  { AR32Bit, AR32BitBits, 73, 16, sizeof(AR32BitBits), SystemZ_AR32BitRegClassID, 4, 1, false },
-  { FP32Bit, FP32BitBits, 65, 16, sizeof(FP32BitBits), SystemZ_FP32BitRegClassID, 4, 1, true },
-  { GR32Bit, GR32BitBits, 91, 16, sizeof(GR32BitBits), SystemZ_GR32BitRegClassID, 4, 1, true },
-  { GRH32Bit, GRH32BitBits, 56, 16, sizeof(GRH32BitBits), SystemZ_GRH32BitRegClassID, 4, 1, true },
-  { ADDR32Bit, ADDR32BitBits, 81, 15, sizeof(ADDR32BitBits), SystemZ_ADDR32BitRegClassID, 4, 1, true },
-  { CCR, CCRBits, 52, 1, sizeof(CCRBits), SystemZ_CCRRegClassID, 4, -1, false },
-  { AnyRegBit, AnyRegBitBits, 205, 48, sizeof(AnyRegBitBits), SystemZ_AnyRegBitRegClassID, 8, 1, false },
-  { AnyRegBit_with_subreg_r32, AnyRegBit_with_subreg_r32Bits, 0, 32, sizeof(AnyRegBit_with_subreg_r32Bits), SystemZ_AnyRegBit_with_subreg_r32RegClassID, 8, 1, false },
-  { VR64Bit, VR64BitBits, 150, 32, sizeof(VR64BitBits), SystemZ_VR64BitRegClassID, 8, 1, true },
-  { AnyRegBit_with_subreg_r64, AnyRegBit_with_subreg_r64Bits, 26, 16, sizeof(AnyRegBit_with_subreg_r64Bits), SystemZ_AnyRegBit_with_subreg_r64RegClassID, 8, 1, false },
-  { CR64Bit, CR64BitBits, 124, 16, sizeof(CR64BitBits), SystemZ_CR64BitRegClassID, 8, 1, false },
-  { FP64Bit, FP64BitBits, 116, 16, sizeof(FP64BitBits), SystemZ_FP64BitRegClassID, 8, 1, true },
-  { GR64Bit, GR64BitBits, 142, 16, sizeof(GR64BitBits), SystemZ_GR64BitRegClassID, 8, 1, true },
-  { ADDR64Bit, ADDR64BitBits, 132, 15, sizeof(ADDR64BitBits), SystemZ_ADDR64BitRegClassID, 8, 1, true },
-  { VR128Bit, VR128BitBits, 196, 32, sizeof(VR128BitBits), SystemZ_VR128BitRegClassID, 16, 1, true },
-  { VF128Bit, VF128BitBits, 158, 16, sizeof(VF128BitBits), SystemZ_VF128BitRegClassID, 16, 1, true },
-  { FP128Bit, FP128BitBits, 167, 8, sizeof(FP128BitBits), SystemZ_FP128BitRegClassID, 16, 1, true },
-  { GR128Bit, GR128BitBits, 187, 8, sizeof(GR128BitBits), SystemZ_GR128BitRegClassID, 16, 1, true },
-  { ADDR128Bit, ADDR128BitBits, 176, 7, sizeof(ADDR128BitBits), SystemZ_ADDR128BitRegClassID, 16, 1, true },
+  { GRX32Bit, GRX32BitBits, sizeof(GRX32BitBits) },
+  { VR32Bit, VR32BitBits, sizeof(VR32BitBits) },
+  { AR32Bit, AR32BitBits, sizeof(AR32BitBits) },
+  { FP32Bit, FP32BitBits, sizeof(FP32BitBits) },
+  { GR32Bit, GR32BitBits, sizeof(GR32BitBits) },
+  { GRH32Bit, GRH32BitBits, sizeof(GRH32BitBits) },
+  { ADDR32Bit, ADDR32BitBits, sizeof(ADDR32BitBits) },
+  { CCR, CCRBits, sizeof(CCRBits) },
+  { AnyRegBit, AnyRegBitBits, sizeof(AnyRegBitBits) },
+  { AnyRegBit_with_subreg_r32, AnyRegBit_with_subreg_r32Bits, sizeof(AnyRegBit_with_subreg_r32Bits) },
+  { VR64Bit, VR64BitBits, sizeof(VR64BitBits) },
+  { AnyRegBit_with_subreg_r64, AnyRegBit_with_subreg_r64Bits, sizeof(AnyRegBit_with_subreg_r64Bits) },
+  { CR64Bit, CR64BitBits, sizeof(CR64BitBits) },
+  { FP64Bit, FP64BitBits, sizeof(FP64BitBits) },
+  { GR64Bit, GR64BitBits, sizeof(GR64BitBits) },
+  { ADDR64Bit, ADDR64BitBits, sizeof(ADDR64BitBits) },
+  { VR128Bit, VR128BitBits, sizeof(VR128BitBits) },
+  { VF128Bit, VF128BitBits, sizeof(VF128BitBits) },
+  { FP128Bit, FP128BitBits, sizeof(FP128BitBits) },
+  { GR128Bit, GR128BitBits, sizeof(GR128BitBits) },
+  { ADDR128Bit, ADDR128BitBits, sizeof(ADDR128BitBits) },
 };
 
 #endif // GET_REGINFO_MC_DESC

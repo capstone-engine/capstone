@@ -86,9 +86,6 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 static void test()
 {
-// #define WASM_CODE "\x00\x0e\x01\x04\x20\x00\x00\x00\x00"
-// #define WASM_CODE "\x20\x00\x20\x01\x41\x20\x10\xc9\x01\x45\x0b"
-// #define WASM_CODE "\x43\x01\x01\x01\x01"
 #define WASM_CODE "\x20\x00\x20\x01\x41\x20\x10\xc9\x01\x45\x0b"
 	struct platform platforms[] = {
 		{

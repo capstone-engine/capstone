@@ -90,7 +90,15 @@ int main(int argc, char** argv)
             } else if (strcmp(arch, "CS_ARCH_M680X") == 0 && strcmp(mode, "CS_MODE_M680X_6809") == 0) {
                 Data[0] = 24;
             } else if (strcmp(arch, "CS_ARCH_EVM") == 0 && strcmp(mode, "0") == 0) {
-                Data[0] = 25;
+                Data[0] = 25; 
+	    } else if (strcmp(arch, "CS_ARCH_BPF") == 0 && strstr(mode, "CS_MODE_BPF_CLASSIC") != NULL) {
+                Data[0] = 29;
+            } else if (strcmp(arch, "CS_ARCH_BPF") == 0 && strstr(mode, "CS_MODE_BPF_EXTENDED") != NULL) {
+                Data[0] = 30;
+            } else if (strcmp(arch, "CS_ARCH_RISCV") == 0 && strcmp(mode, "CS_MODE_RISCV32") == 0) {
+                Data[0] = 44;
+            } else if (strcmp(arch, "CS_ARCH_RISCV") == 0 && strcmp(mode, "CS_MODE_RISCV64") == 0) {
+                Data[0] = 45;
             } else {
                 printf("Unknown mode\n");
                 //fail instead of continue

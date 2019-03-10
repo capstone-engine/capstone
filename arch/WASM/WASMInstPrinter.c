@@ -7,8 +7,6 @@
 
 void WASM_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 {
-	int i;
-
 	SStream_concat(O, WASM_insn_name((csh)MI->csh, MI->Opcode));
 
 	switch (MI->wasm_data.type) {
@@ -41,16 +39,8 @@ void WASM_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 		case WASM_OP_BRTABLE:
 			SStream_concat(O, "\t0x%x, [", MI->wasm_data.brtable.length);
-			for (i = 0; i < MI->wasm_data.brtable.length; i++) {
-				if (i == 0) {
-					SStream_concat(O, "0x%x", MI->wasm_data.brtable.target[i]);
-				} else {
-					SStream_concat(O, ",0x%x", MI->wasm_data.brtable.target[i]);
-				}
-			}
-
+			SStream_concat(O, "0x%x", MI->wasm_data.brtable.address);
 			SStream_concat(O, "], 0x%x", MI->wasm_data.brtable.default_target);
-			cs_mem_free(MI->wasm_data.brtable.target);
 
 			break;
 	}

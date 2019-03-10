@@ -4,98 +4,6 @@
 
 #include "capstone_test.h"
 
-single_dict arches[] = {
-	{"CS_ARCH_ARM", CS_ARCH_ARM},
-	{"CS_ARCH_ARM64", CS_ARCH_ARM64},
-	{"CS_ARCH_MIPS", CS_ARCH_MIPS},
-	{"CS_ARCH_PPC", CS_ARCH_PPC},
-	{"CS_ARCH_SPARC", CS_ARCH_SPARC},
-	{"CS_ARCH_SYSZ", CS_ARCH_SYSZ},
-	{"CS_ARCH_X86", CS_ARCH_X86},
-	{"CS_ARCH_XCORE", CS_ARCH_XCORE},
-	{"CS_ARCH_M68K", CS_ARCH_M68K}
-};
-
-single_dict modes[] = {
-	{"CS_MODE_LITTLE_ENDIAN", CS_MODE_LITTLE_ENDIAN},
-	{"CS_MODE_ARM", CS_MODE_ARM},
-	{"CS_MODE_16", CS_MODE_16},
-	{"CS_MODE_32", CS_MODE_32},
-	{"CS_MODE_64", CS_MODE_64},
-	{"CS_MODE_THUMB", CS_MODE_THUMB},
-	{"CS_MODE_MCLASS", CS_MODE_MCLASS},
-	{"CS_MODE_V8", CS_MODE_V8},
-	{"CS_MODE_MICRO", CS_MODE_MICRO},
-	{"CS_MODE_MIPS3", CS_MODE_MIPS3},
-	{"CS_MODE_MIPS32R6", CS_MODE_MIPS32R6},
-	{"CS_MODE_MIPS2", CS_MODE_MIPS2},
-	{"CS_MODE_V9", CS_MODE_V9},
-	{"CS_MODE_QPX", CS_MODE_QPX},
-	{"CS_MODE_M68K_000", CS_MODE_M68K_000},
-	{"CS_MODE_M68K_010", CS_MODE_M68K_010},
-	{"CS_MODE_M68K_020", CS_MODE_M68K_020},
-	{"CS_MODE_M68K_030", CS_MODE_M68K_030},
-	{"CS_MODE_M68K_040", CS_MODE_M68K_040},
-	{"CS_MODE_M68K_060", CS_MODE_M68K_060},
-	{"CS_MODE_BIG_ENDIAN", CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_MIPS32", CS_MODE_MIPS32},
-	{"CS_MODE_MIPS64", CS_MODE_MIPS64},
-	{"CS_MODE_M680X_6301", CS_MODE_M680X_6301},
-	{"CS_MODE_M680X_6309", CS_MODE_M680X_6309},
-	{"CS_MODE_M680X_6800", CS_MODE_M680X_6800},
-	{"CS_MODE_M680X_6801", CS_MODE_M680X_6801},
-	{"CS_MODE_M680X_6805", CS_MODE_M680X_6805},
-	{"CS_MODE_M680X_6808", CS_MODE_M680X_6808},
-	{"CS_MODE_M680X_6809", CS_MODE_M680X_6809},
-	{"CS_MODE_M680X_6811", CS_MODE_M680X_6811},
-	{"CS_MODE_M680X_CPU12", CS_MODE_M680X_CPU12},
-	{"CS_MODE_M680X_HCS08", CS_MODE_M680X_HCS08}	
-};
-
-double_dict options[] = {
-	{"CS_OPT_DETAIL", CS_OPT_DETAIL, CS_OPT_ON},
-	{"CS_OPT_SKIPDATA", CS_OPT_SKIPDATA, CS_OPT_ON},
-	{"CS_OPT_SYNTAX_DEFAULT", CS_OPT_SYNTAX, CS_OPT_SYNTAX_DEFAULT},
-	{"CS_OPT_SYNTAX_INTEL", CS_OPT_SYNTAX, CS_OPT_SYNTAX_INTEL},
-	{"CS_OPT_SYNTAX_ATT", CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT},
-	{"CS_OPT_SYNTAX_NOREGNAME", CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME},
-	{"CS_OPT_SYNTAX_MASM", CS_OPT_SYNTAX, CS_OPT_SYNTAX_MASM},
-	{"CS_MODE_LITTLE_ENDIAN", CS_OPT_MODE, CS_MODE_LITTLE_ENDIAN},
-	{"CS_MODE_ARM", CS_OPT_MODE, CS_MODE_ARM},
-	{"CS_MODE_16", CS_OPT_MODE, CS_MODE_16},
-	{"CS_MODE_32", CS_OPT_MODE, CS_MODE_32},
-	{"CS_MODE_64", CS_OPT_MODE, CS_MODE_64},
-	{"CS_MODE_THUMB", CS_OPT_MODE, CS_MODE_THUMB},
-	{"CS_MODE_MCLASS", CS_OPT_MODE, CS_MODE_MCLASS},
-	{"CS_MODE_V8", CS_OPT_MODE, CS_MODE_V8},
-	{"CS_MODE_MICRO", CS_OPT_MODE, CS_MODE_MICRO},
-	{"CS_MODE_MIPS3", CS_OPT_MODE, CS_MODE_MIPS3},
-	{"CS_MODE_MIPS32R6", CS_OPT_MODE, CS_MODE_MIPS32R6},
-	{"CS_MODE_MIPS2", CS_OPT_MODE, CS_MODE_MIPS2},
-	{"CS_MODE_V9", CS_OPT_MODE, CS_MODE_V9},
-	{"CS_MODE_QPX", CS_OPT_MODE, CS_MODE_QPX},
-	{"CS_MODE_M68K_000", CS_OPT_MODE, CS_MODE_M68K_000},
-	{"CS_MODE_M68K_010", CS_OPT_MODE, CS_MODE_M68K_010},
-	{"CS_MODE_M68K_020", CS_OPT_MODE, CS_MODE_M68K_020},
-	{"CS_MODE_M68K_030", CS_OPT_MODE, CS_MODE_M68K_030},
-	{"CS_MODE_M68K_040", CS_OPT_MODE, CS_MODE_M68K_040},
-	{"CS_MODE_M68K_060", CS_OPT_MODE, CS_MODE_M68K_060},
-	{"CS_MODE_BIG_ENDIAN", CS_OPT_MODE, CS_MODE_BIG_ENDIAN},
-	{"CS_MODE_MIPS32", CS_OPT_MODE, CS_MODE_MIPS32},
-	{"CS_MODE_MIPS64", CS_OPT_MODE, CS_MODE_MIPS64},
-	{"CS_MODE_M680X_6301", CS_OPT_MODE, CS_MODE_M680X_6301},
-	{"CS_MODE_M680X_6309", CS_OPT_MODE, CS_MODE_M680X_6309},
-	{"CS_MODE_M680X_6800", CS_OPT_MODE, CS_MODE_M680X_6800},
-	{"CS_MODE_M680X_6801", CS_OPT_MODE, CS_MODE_M680X_6801},
-	{"CS_MODE_M680X_6805", CS_OPT_MODE, CS_MODE_M680X_6805},
-	{"CS_MODE_M680X_6808", CS_OPT_MODE, CS_MODE_M680X_6808},
-	{"CS_MODE_M680X_6809", CS_OPT_MODE, CS_MODE_M680X_6809},
-	{"CS_MODE_M680X_6811", CS_OPT_MODE, CS_MODE_M680X_6811},
-	{"CS_MODE_M680X_CPU12", CS_OPT_MODE, CS_MODE_M680X_CPU12},
-	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08},
-	{"CS_OPT_UNSIGNED", CS_OPT_UNSIGNED, CS_OPT_ON}
-};
-
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 
 void test_single_MC(csh *handle, int mc_mode, char *line)
@@ -145,6 +53,8 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	}
 
 	for (p = list_part[1]; *p; ++p) *p = tolower(*p);
+	for (p = list_part[1]; *p; ++p)
+		if (*p == '\t') *p = ' ';
 	trim_str(list_part[1]);
 	strcpy(tmp_mc, list_part[1]);
 	replace_hex(tmp_mc);
@@ -265,6 +175,12 @@ int set_function(int arch)
 		case CS_ARCH_TMS320C64X:
 			function = get_detail_tms320c64x;
 			break;
+		case CS_ARCH_BPF:
+			function = get_detail_bpf;
+			break;
+		case CS_ARCH_RISCV:
+			function = get_detail_riscv;
+			break;
 		default:
 			return -1;
 	}
@@ -279,7 +195,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	int i, count, j;
 	unsigned char *code;
 	cs_insn *insn;
-	char *cs_result, *tmp;
+	char *cs_result, *tmp, *p;
 	char **offset_opcode;
 	int size_offset_opcode;
 	unsigned long offset;
@@ -331,6 +247,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	trim_str(cs_result);
 	add_str(&cs_result, " ;");
 	//	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);
+	for (p = list_part[1]; *p; ++p) if (*p == '\t') *p = ' ';
 	list_part_issue_result = split(list_part[1], " ; ", &size_part_issue_result);
 
 	for (i = 0; i < size_part_issue_result; ++i) {

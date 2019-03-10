@@ -23,7 +23,7 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
-		printf("0x%02x ", *c & 0xff);
+		printf(" 0x%02x", *c & 0xff);
 	}
 
 	printf("\n");
@@ -103,7 +103,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define MOS65XX_CODE "\x0d\x34\x12\x00\x81\x65\x87\x6c\x01\x00\x85\xFF\x10\x00\x19\x42\x42\x00\x49\x42"
+#define MOS65XX_CODE "\x0d\x34\x12\x00\x81\x87\x6c\x01\x00\x85\xFF\x10\x00\x19\x42\x42\x00\x49\x42"
 
 	struct platform platforms[] = {
 		{
@@ -142,6 +142,7 @@ static void test()
 			for (j = 0; j < count; j++) {
 				printf("0x%" PRIx64 ":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(&insn[j]);
+				puts("");
 			}
 			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
 

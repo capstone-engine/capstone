@@ -31,11 +31,13 @@ __all__ = [
     'CS_ARCH_SPARC',
     'CS_ARCH_SYSZ',
     'CS_ARCH_XCORE',
-    'CS_ARCH_MOS65XX',
     'CS_ARCH_M68K',
     'CS_ARCH_TMS320C64X',
     'CS_ARCH_M680X',
     'CS_ARCH_EVM',
+    'CS_ARCH_BPF',
+    'CS_ARCH_RISCV',
+    'CS_ARCH_MOS65XX',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -71,6 +73,10 @@ __all__ = [
     'CS_MODE_M680X_6811',
     'CS_MODE_M680X_CPU12',
     'CS_MODE_M680X_HCS08',
+    'CS_MODE_BPF_CLASSIC',
+    'CS_MODE_BPF_EXTENDED',
+    'CS_MODE_RISCV32',
+    'CS_MODE_RISCV64',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -153,7 +159,10 @@ CS_ARCH_TMS320C64X = 9
 CS_ARCH_M680X = 10
 CS_ARCH_EVM = 11
 CS_ARCH_MOS65XX = 12
-CS_ARCH_MAX = 13
+CS_ARCH_WASM = 13
+CS_ARCH_BPF = 14
+CS_ARCH_RISCV = 15
+CS_ARCH_MAX = 16
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -190,6 +199,11 @@ CS_MODE_M680X_6809 = (1 << 7)  # M680X M6809 mode
 CS_MODE_M680X_6811 = (1 << 8)  # M680X M68HC11 mode
 CS_MODE_M680X_CPU12 = (1 << 9)  # M680X CPU12 mode
 CS_MODE_M680X_HCS08 = (1 << 10)  # M680X HCS08 mode
+CS_MODE_BPF_CLASSIC = 0          # Classic BPF mode (default)
+CS_MODE_BPF_EXTENDED = (1 << 0)  # Extended BPF mode
+CS_MODE_RISCV32 = (1 << 0)       # RISCV32 mode
+CS_MODE_RISCV64 = (1 << 1)       # RISCV64 mode
+CS_MODE_RISCVC  = (1 << 2)       # RISCV compressed mode
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -329,7 +343,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf, riscv
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -346,6 +360,8 @@ class _cs_arch(ctypes.Union):
         ('m680x', m680x.CsM680x),
         ('evm', evm.CsEvm),
         ('mos65xx', mos65xx.CsMOS65xx),
+        ('bpf', bpf.CsBPF),
+        ('riscv', riscv.CsRISCV),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -662,6 +678,10 @@ class CsInsn(object):
             (self.pop, self.push, self.fee) = evm.get_arch_info(self._raw.detail.contents.arch.evm)
         elif arch == CS_ARCH_MOS65XX:
             (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(self._raw.detail.contents.arch.mos65xx)
+        elif arch == CS_ARCH_BPF:
+            (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
+        elif arch == CS_ARCH_RISCV:
+            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
 
 
     def __getattr__(self, name):
@@ -834,6 +854,9 @@ class Cs(object):
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
         self._skipdata_cb = (None, None)
+        # store reference to option object to avoid it being freed
+        # because C code uses it by reference
+        self._skipdata_opt = _cs_opt_skipdata()
         self._skipdata = False
 
 
@@ -908,12 +931,11 @@ class Cs(object):
 
     @skipdata_setup.setter
     def skipdata_setup(self, opt):
-        _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
-        _skipdata_opt.mnemonic = _mnem.encode()
-        _skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
-        _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
-        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
+        self._skipdata_opt.mnemonic = _mnem.encode()
+        self._skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
+        self._skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
+        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(self._skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
             raise CsError(status)
 
@@ -1051,7 +1073,7 @@ class Cs(object):
             print(code)
             code = code.encode()
             print(code)'''
-        # Hack, unicorn's memory accessors give you back bytearrays, but they
+        # Hi, Hacker! Unicorn's memory accessors give you back bytearrays, but they
         # cause TypeErrors when you hand them into Capstone.
         if isinstance(code, bytearray):
             code = bytes(code)
@@ -1079,6 +1101,10 @@ class Cs(object):
             raise CsError(CS_ERR_DIET)
 
         all_insn = ctypes.POINTER(_cs_insn)()
+        # Hi, Hacker! Unicorn's memory accessors give you back bytearrays, but they
+        # cause TypeErrors when you hand them into Capstone.
+        if isinstance(code, bytearray):
+            code = bytes(code)
         res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
@@ -1110,10 +1136,13 @@ def debug():
     else:
         diet = "standard"
 
-    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K, \
-        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X, \
-        "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX }
+    archs = {
+        "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K,
+        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
+        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
+        "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
+        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV,
+    }
 
     all_archs = ""
     keys = archs.keys()

@@ -20,6 +20,8 @@ static struct {
 	{ "armbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN },
 	{ "arml", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
 	{ "armle", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
+	{ "armv8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 },
+	{ "thumbv8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 },
 	{ "cortexm", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS },
 	{ "thumb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB },
 	{ "thumbbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN },
@@ -27,6 +29,12 @@ static struct {
 	{ "arm64", CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN },
 	{ "arm64be", CS_ARCH_ARM64, CS_MODE_BIG_ENDIAN },
 	{ "mips", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_LITTLE_ENDIAN },
+	{ "mipsmicro", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_MICRO },
+	{ "mipsbemicro", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_MICRO | CS_MODE_BIG_ENDIAN },
+	{ "mipsbe32r6", CS_ARCH_MIPS, CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN},
+	{ "mipsbe32r6micro", CS_ARCH_MIPS, CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN | CS_MODE_MICRO },
+	{ "mips32r6", CS_ARCH_MIPS, CS_MODE_MIPS32R6 },
+	{ "mips32r6micro", CS_ARCH_MIPS, CS_MODE_MIPS32R6 | CS_MODE_MICRO },
 	{ "mipsbe", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN },
 	{ "mips64", CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN },
 	{ "mips64be", CS_ARCH_MIPS, CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN },
@@ -39,13 +47,13 @@ static struct {
 	{ "ppc64", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc64be", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN },
 	{ "sparc", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
+	{ "sparcv9", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },
 	{ "systemz", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
 	{ "sysz", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
 	{ "s390x", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
 	{ "xcore", CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN },
 	{ "m68k", CS_ARCH_M68K, CS_MODE_BIG_ENDIAN },
 	{ "m68k40", CS_ARCH_M68K, CS_MODE_M68K_040 },
-	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
 	{ "tms320c64x", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
 	{ "m6800", CS_ARCH_M680X, CS_MODE_M680X_6800 },
 	{ "m6801", CS_ARCH_M680X, CS_MODE_M680X_6801 },
@@ -60,6 +68,12 @@ static struct {
 	{ "evm", CS_ARCH_EVM, 0 },
 	{ "wasm", CS_ARCH_WASM, 0 },
 	{ "mos65xx", CS_ARCH_MOS65XX, 0 },
+	{ "bpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "bpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC },
+	{ "ebpf", CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "ebpfbe", CS_ARCH_BPF, CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
+	{ "riscv32", CS_ARCH_RISCV, CS_MODE_RISCV32 },
+	{ "riscv64", CS_ARCH_RISCV, CS_MODE_RISCV64 },
 	{ NULL }
 };
 
@@ -75,8 +89,10 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 void print_insn_detail_m680x(csh handle, cs_insn *ins);
 void print_insn_detail_evm(csh handle, cs_insn *ins);
+void print_insn_detail_riscv(csh handle, cs_insn *ins);
 void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
+void print_insn_detail_bpf(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
@@ -215,17 +231,29 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_MOS65XX)) {
-		printf("        mox65xx     MOS65XX family\n");
+		printf("        mos65xx     MOS65XX family\n");
 	}
 
 	if (cs_support(CS_ARCH_WASM)) {
-		printf("        wasm:      Web Assembly\n");
+		printf("        wasm:       Web Assembly\n");
+	}
+
+	if (cs_support(CS_ARCH_BPF)) {
+		printf("        bpf         Classic BPF\n");
+		printf("        bpfbe       Classic BPF + big endian\n");
+		printf("        ebpf        Extended BPF\n");
+		printf("        ebpfbe      Extended BPF + big endian\n");
+	}
+
+	if (cs_support(CS_ARCH_RISCV)) {
+		printf("        riscv32     riscv32\n");
+		printf("        riscv64     riscv64\n");
 	}
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -u show immediates as unsigned\n");
 	printf("        -s decode in SKIPDATA mode\n");
+	printf("        -u show immediates as unsigned\n");
 	printf("        -v show version & Capstone core build info\n\n");
 }
 
@@ -273,6 +301,12 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_MOS65XX:
 			print_insn_detail_mos65xx(handle, ins);
+			break;
+		case CS_ARCH_BPF:
+			print_insn_detail_bpf(handle, ins);
+			break;
+		case CS_ARCH_RISCV:
+			print_insn_detail_riscv(handle, ins);
 			break;
 		default: break;
 	}
@@ -369,13 +403,21 @@ int main(int argc, char **argv)
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
 				}
-
+				
 				if (cs_support(CS_ARCH_WASM)) {
 					printf("wasm=1 ");
 				}
 
 				if (cs_support(CS_ARCH_MOS65XX)) {
-					printf("mox65xx=1 ");
+					printf("mos65xx=1 ");
+				}
+
+				if (cs_support(CS_ARCH_BPF)) {
+					printf("bpf=1 ");
+				}
+
+				if (cs_support(CS_ARCH_RISCV)) {
+					printf("riscv=1 ");
 				}
 
 				if (cs_support(CS_SUPPORT_DIET)) {

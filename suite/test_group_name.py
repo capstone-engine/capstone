@@ -9,6 +9,7 @@ from capstone.sparc import *
 from capstone.systemz import *
 from capstone.x86 import *
 from capstone.xcore import *
+from capstone.riscv import *
 import sys
 
 class GroupTest:
@@ -224,6 +225,26 @@ xcore_dict = {
     XCORE_GRP_JUMP: "jump",
 }
 
+riscv32_dict = {
+    RISCV_GRP_JUMP       : "jump",
+    RISCV_GRP_ISRV32     : "isrv32",
+    RISCV_GRP_HASSTDEXTA : "hasstdexta",
+    RISCV_GRP_HASSTDEXTC : "hasstdextc",
+    RISCV_GRP_HASSTDEXTD : "hasstdextd",
+    RISCV_GRP_HASSTDEXTF : "hasstdextf",
+    RISCV_GRP_HASSTDEXTM : "hasstdextm",    
+}
+
+riscv64_dict = {    
+    RISCV_GRP_JUMP       : "jump",
+    RISCV_GRP_ISRV64     : "isrv64",
+    RISCV_GRP_HASSTDEXTA : "hasstdexta",
+    RISCV_GRP_HASSTDEXTC : "hasstdextc",
+    RISCV_GRP_HASSTDEXTD : "hasstdextd",
+    RISCV_GRP_HASSTDEXTF : "hasstdextf",
+    RISCV_GRP_HASSTDEXTM : "hasstdextm",    
+}
+
 tests = [
     GroupTest('arm', CS_ARCH_ARM, CS_MODE_THUMB, arm_dict),
     GroupTest('arm64', CS_ARCH_ARM64, CS_MODE_ARM, arm64_dict),
@@ -234,6 +255,8 @@ tests = [
     GroupTest('x86', CS_ARCH_X86, CS_MODE_32, x86_dict),
     GroupTest('xcore', CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN, xcore_dict),
     GroupTest('m68k', CS_ARCH_M68K, CS_MODE_BIG_ENDIAN, xcore_dict),
+    GroupTest('riscv32', CS_ARCH_RISCV, CS_MODE_RISCV32, riscv32_dict),
+    GroupTest('riscv64', CS_ARCH_RISCV, CS_MODE_RISCV64, riscv64_dict),
 ]
 
 if __name__ == '__main__':
