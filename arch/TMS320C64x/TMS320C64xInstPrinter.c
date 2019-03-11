@@ -3,6 +3,17 @@
 
 #ifdef CAPSTONE_HAS_TMS320C64X
 
+#ifdef _MSC_VER
+// Disable security warnings for strcpy
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+// Banned API Usage : strcpy is a Banned API as listed in dontuse.h for
+// security purposes.
+#pragma warning(disable:28719)
+#endif
+
 #include <ctype.h>
 #include <string.h>
 
