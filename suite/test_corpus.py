@@ -106,7 +106,10 @@ def test_file(fname):
             continue
         hex_code = code.replace('0x', '')
         hex_code = hex_code.replace(',', '')
-        hex_data = hex_code.decode('hex')
+        try:
+            hex_data = hex_code.strip().decode('hex')
+        except:
+            print "skipping", hex_code
         fout = open("fuzz/corpus/%s_%s" % (os.path.basename(fname), hex_code), 'w')
         if (arch, mode) not in mc_modes:
             print "fail", arch, mode
