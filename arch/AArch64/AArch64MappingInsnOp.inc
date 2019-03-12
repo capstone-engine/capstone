@@ -3568,135 +3568,135 @@
 },
 {    /* AArch64_LDARB, ARM64_INS_LDARB: ldarb    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDARH, ARM64_INS_LDARH: ldarh    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDARW, ARM64_INS_LDAR: ldar    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDARX, ARM64_INS_LDAR: ldar    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDAXPW, ARM64_INS_LDAXP: ldaxp    $rt, $rt2, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDAXPX, ARM64_INS_LDAXP: ldaxp    $rt, $rt2, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDAXRB, ARM64_INS_LDAXRB: ldaxrb    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDAXRH, ARM64_INS_LDAXRH: ldaxrh    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDAXRW, ARM64_INS_LDAXR: ldaxr    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDAXRX, ARM64_INS_LDAXR: ldaxr    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDNPDi, ARM64_INS_LDNP: ldnp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDNPQi, ARM64_INS_LDNP: ldnp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDNPSi, ARM64_INS_LDNP: ldnp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDNPWi, ARM64_INS_LDNP: ldnp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDNPXi, ARM64_INS_LDNP: ldnp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPDi, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPDpost, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPDpre, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPQi, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPQpost, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPQpre, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPSWi, ARM64_INS_LDPSW: ldpsw    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPSWpost, ARM64_INS_LDPSW: ldpsw    $rt, $rt2, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPSWpre, ARM64_INS_LDPSW: ldpsw    $rt, $rt2, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPSi, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPSpost, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPSpre, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPWi, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPWpost, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPWpre, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPXi, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPXpost, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDPXpre, ARM64_INS_LDP: ldp    $rt, $rt2, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRBBpost, ARM64_INS_LDRB: ldrb    $rt, [$rn], $offset */
 	0,
@@ -3708,15 +3708,15 @@
 },
 {    /* AArch64_LDRBBroW, ARM64_INS_LDRB: ldrb    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRBBroX, ARM64_INS_LDRB: ldrb    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRBBui, ARM64_INS_LDRB: ldrb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRBpost, ARM64_INS_LDR: ldr    $rt, [$rn], $offset */
 	0,
@@ -3728,7 +3728,7 @@
 },
 {    /* AArch64_LDRBroW, ARM64_INS_LDR: ldr    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRBroX, ARM64_INS_LDR: ldr    $rt, [$rn, $rm, $extend] */
 	0,
@@ -3772,15 +3772,15 @@
 },
 {    /* AArch64_LDRHHroW, ARM64_INS_LDRH: ldrh    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRHHroX, ARM64_INS_LDRH: ldrh    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRHHui, ARM64_INS_LDRH: ldrh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRHpost, ARM64_INS_LDR: ldr    $rt, [$rn], $offset */
 	0,
@@ -3792,15 +3792,15 @@
 },
 {    /* AArch64_LDRHroW, ARM64_INS_LDR: ldr    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRHroX, ARM64_INS_LDR: ldr    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRHui, ARM64_INS_LDR: ldr    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRQl, ARM64_INS_LDR: ldr    $rt, $label */
 	0,
@@ -3828,83 +3828,83 @@
 },
 {    /* AArch64_LDRSBWpost, ARM64_INS_LDRSB: ldrsb    $rt, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSBWpre, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSBWroW, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSBWroX, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSBWui, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSBXpost, ARM64_INS_LDRSB: ldrsb    $rt, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSBXpre, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSBXroW, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSBXroX, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSBXui, ARM64_INS_LDRSB: ldrsb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSHWpost, ARM64_INS_LDRSH: ldrsh    $rt, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSHWpre, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSHWroW, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSHWroX, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSHWui, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSHXpost, ARM64_INS_LDRSH: ldrsh    $rt, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSHXpre, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSHXroW, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSHXroX, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSHXui, ARM64_INS_LDRSH: ldrsh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSWl, ARM64_INS_LDRSW: ldrsw    $rt, $label */
 	0,
@@ -3912,23 +3912,23 @@
 },
 {    /* AArch64_LDRSWpost, ARM64_INS_LDRSW: ldrsw    $rt, [$rn], $offset */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSWpre, ARM64_INS_LDRSW: ldrsw    $rt, [$rn, $offset]! */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSWroW, ARM64_INS_LDRSW: ldrsw    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSWroX, ARM64_INS_LDRSW: ldrsw    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSWui, ARM64_INS_LDRSW: ldrsw    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDRSl, ARM64_INS_LDR: ldr    $rt, $label */
 	0,
@@ -3944,7 +3944,7 @@
 },
 {    /* AArch64_LDRSroW, ARM64_INS_LDR: ldr    $rt, [$rn, $rm, $extend] */
 	0,
-	{ CS_AC_WRITE, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ }
 },
 {    /* AArch64_LDRSroX, ARM64_INS_LDR: ldr    $rt, [$rn, $rm, $extend] */
 	0,
@@ -4004,119 +4004,119 @@
 },
 {    /* AArch64_LDTRBi, ARM64_INS_LDTRB: ldtrb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRHi, ARM64_INS_LDTRH: ldtrh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRSBWi, ARM64_INS_LDTRSB: ldtrsb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRSBXi, ARM64_INS_LDTRSB: ldtrsb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRSHWi, ARM64_INS_LDTRSH: ldtrsh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRSHXi, ARM64_INS_LDTRSH: ldtrsh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRSWi, ARM64_INS_LDTRSW: ldtrsw    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRWi, ARM64_INS_LDTR: ldtr    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDTRXi, ARM64_INS_LDTR: ldtr    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURBBi, ARM64_INS_LDURB: ldurb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURBi, ARM64_INS_LDUR: ldur    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURDi, ARM64_INS_LDUR: ldur    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURHHi, ARM64_INS_LDURH: ldurh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURHi, ARM64_INS_LDUR: ldur    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURQi, ARM64_INS_LDUR: ldur    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURSBWi, ARM64_INS_LDURSB: ldursb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURSBXi, ARM64_INS_LDURSB: ldursb    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURSHWi, ARM64_INS_LDURSH: ldursh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURSHXi, ARM64_INS_LDURSH: ldursh    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURSWi, ARM64_INS_LDURSW: ldursw    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURSi, ARM64_INS_LDUR: ldur    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURWi, ARM64_INS_LDUR: ldur    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDURXi, ARM64_INS_LDUR: ldur    $rt, [$rn, $offset] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0}
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0}
 },
 {    /* AArch64_LDXPW, ARM64_INS_LDXP: ldxp    $rt, $rt2, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDXPX, ARM64_INS_LDXP: ldxp    $rt, $rt2, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDXRB, ARM64_INS_LDXRB: ldxrb    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDXRH, ARM64_INS_LDXRH: ldxrh    $rt, [$rn] */
 	0,
-	{  CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{  CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDXRW, ARM64_INS_LDXR: ldxr    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LDXRX, ARM64_INS_LDXR: ldxr    $rt, [$rn] */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {    /* AArch64_LSLVWr, ARM64_INS_LSL: lsl    $rd, $rn, $rm */
 	0,
