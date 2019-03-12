@@ -4428,7 +4428,7 @@
 },
 {    /* AArch64_ORRWri, ARM64_INS_ORR: orr    $rd, $rn, $imm */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_ORRWrs, ARM64_INS_ORR: orr    $rd, $rn, $rm */
 	0,
@@ -4436,7 +4436,7 @@
 },
 {    /* AArch64_ORRXri, ARM64_INS_ORR: orr    $rd, $rn, $imm */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 {    /* AArch64_ORRXrs, ARM64_INS_ORR: orr    $rd, $rn, $rm */
 	0,
