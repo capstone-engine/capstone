@@ -173,8 +173,8 @@ static void usage(char *prog)
 		printf("        thumb       thumb mode\n");
 		printf("        thumbbe     thumb + big endian\n");
 		printf("        cortexm     thumb + cortex-m extensions\n");
-		printf("        armv8       armv8\n");
-		printf("        thumbv8     thumbv8\n");
+		printf("        armv8       arm v8\n");
+		printf("        thumbv8     thumb v8\n");
 	}
 
 	if (cs_support(CS_ARCH_ARM64)) {
