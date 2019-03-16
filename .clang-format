@@ -1,0 +1,9 @@
+BasedOnStyle: LLVM
+BraceWrapping:
+  AfterClass:      true
+  AfterControlStatement: false
+  AfterFunction:   true
+BreakBeforeBraces: Custom
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForIndentation
