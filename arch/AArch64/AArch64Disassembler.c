@@ -319,13 +319,14 @@ bool AArch64_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 }
 
 static const unsigned FPR128DecoderTable[] = {
-		AArch64_Q0,	AArch64_Q1,	AArch64_Q2,	AArch64_Q3,	AArch64_Q4,
-		AArch64_Q5,	AArch64_Q6,	AArch64_Q7,	AArch64_Q8,	AArch64_Q9,
+  AArch64_Q0,  AArch64_Q1,  AArch64_Q2,  AArch64_Q3,  AArch64_Q4,
+		AArch64_Q5,  AArch64_Q6,  AArch64_Q7,  AArch64_Q8,  AArch64_Q9,
 		AArch64_Q10, AArch64_Q11, AArch64_Q12, AArch64_Q13, AArch64_Q14,
 		AArch64_Q15, AArch64_Q16, AArch64_Q17, AArch64_Q18, AArch64_Q19,
 		AArch64_Q20, AArch64_Q21, AArch64_Q22, AArch64_Q23, AArch64_Q24,
 		AArch64_Q25, AArch64_Q26, AArch64_Q27, AArch64_Q28, AArch64_Q29,
-		AArch64_Q30, AArch64_Q31};
+		AArch64_Q30, AArch64_Q31
+	};
 
 static DecodeStatus DecodeFPR128RegisterClass(MCInst *Inst, unsigned RegNo,
 		 uint64_t Addr,
@@ -350,13 +351,14 @@ static DecodeStatus DecodeFPR128_loRegisterClass(MCInst *Inst, unsigned RegNo,
 
 
 static const unsigned FPR64DecoderTable[] = {
-		AArch64_D0,	AArch64_D1,	AArch64_D2,	AArch64_D3,	AArch64_D4,
-		AArch64_D5,	AArch64_D6,	AArch64_D7,	AArch64_D8,	AArch64_D9,
+  AArch64_D0,  AArch64_D1,  AArch64_D2,  AArch64_D3,  AArch64_D4,
+		AArch64_D5,  AArch64_D6,  AArch64_D7,  AArch64_D8,  AArch64_D9,
 		AArch64_D10, AArch64_D11, AArch64_D12, AArch64_D13, AArch64_D14,
 		AArch64_D15, AArch64_D16, AArch64_D17, AArch64_D18, AArch64_D19,
 		AArch64_D20, AArch64_D21, AArch64_D22, AArch64_D23, AArch64_D24,
 		AArch64_D25, AArch64_D26, AArch64_D27, AArch64_D28, AArch64_D29,
-		AArch64_D30, AArch64_D31};
+		AArch64_D30, AArch64_D31
+	};
 
 static DecodeStatus DecodeFPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr,
@@ -371,13 +373,14 @@ static DecodeStatus DecodeFPR64RegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned FPR32DecoderTable[] = {
-		AArch64_S0,	AArch64_S1,	AArch64_S2,	AArch64_S3,	AArch64_S4,
-		AArch64_S5,	AArch64_S6,	AArch64_S7,	AArch64_S8,	AArch64_S9,
+  AArch64_S0,  AArch64_S1,  AArch64_S2,  AArch64_S3,  AArch64_S4,
+		AArch64_S5,  AArch64_S6,  AArch64_S7,  AArch64_S8,  AArch64_S9,
 		AArch64_S10, AArch64_S11, AArch64_S12, AArch64_S13, AArch64_S14,
 		AArch64_S15, AArch64_S16, AArch64_S17, AArch64_S18, AArch64_S19,
 		AArch64_S20, AArch64_S21, AArch64_S22, AArch64_S23, AArch64_S24,
 		AArch64_S25, AArch64_S26, AArch64_S27, AArch64_S28, AArch64_S29,
-		AArch64_S30, AArch64_S31};
+		AArch64_S30, AArch64_S31
+	};
 
 static DecodeStatus DecodeFPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr,
@@ -392,13 +395,14 @@ static DecodeStatus DecodeFPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned FPR16DecoderTable[] = {
-		AArch64_H0,	AArch64_H1,	AArch64_H2,	AArch64_H3,	AArch64_H4,
-		AArch64_H5,	AArch64_H6,	AArch64_H7,	AArch64_H8,	AArch64_H9,
+  AArch64_H0,  AArch64_H1,  AArch64_H2,  AArch64_H3,  AArch64_H4,
+		AArch64_H5,  AArch64_H6,  AArch64_H7,  AArch64_H8,  AArch64_H9,
 		AArch64_H10, AArch64_H11, AArch64_H12, AArch64_H13, AArch64_H14,
 		AArch64_H15, AArch64_H16, AArch64_H17, AArch64_H18, AArch64_H19,
 		AArch64_H20, AArch64_H21, AArch64_H22, AArch64_H23, AArch64_H24,
 		AArch64_H25, AArch64_H26, AArch64_H27, AArch64_H28, AArch64_H29,
-		AArch64_H30, AArch64_H31};
+		AArch64_H30, AArch64_H31
+	};
 
 static DecodeStatus DecodeFPR16RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr,
@@ -413,13 +417,14 @@ static DecodeStatus DecodeFPR16RegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned FPR8DecoderTable[] = {
-		AArch64_B0,	AArch64_B1,	AArch64_B2,	AArch64_B3,	AArch64_B4,
-		AArch64_B5,	AArch64_B6,	AArch64_B7,	AArch64_B8,	AArch64_B9,
+  AArch64_B0,  AArch64_B1,  AArch64_B2,  AArch64_B3,  AArch64_B4,
+		AArch64_B5,  AArch64_B6,  AArch64_B7,  AArch64_B8,  AArch64_B9,
 		AArch64_B10, AArch64_B11, AArch64_B12, AArch64_B13, AArch64_B14,
 		AArch64_B15, AArch64_B16, AArch64_B17, AArch64_B18, AArch64_B19,
 		AArch64_B20, AArch64_B21, AArch64_B22, AArch64_B23, AArch64_B24,
 		AArch64_B25, AArch64_B26, AArch64_B27, AArch64_B28, AArch64_B29,
-		AArch64_B30, AArch64_B31};
+		AArch64_B30, AArch64_B31
+	};
 
 static DecodeStatus DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr,
@@ -434,14 +439,14 @@ static DecodeStatus DecodeFPR8RegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned GPR64DecoderTable[] = {
-		AArch64_X0,	AArch64_X1,	AArch64_X2,	AArch64_X3,	AArch64_X4,
-		AArch64_X5,	AArch64_X6,	AArch64_X7,	AArch64_X8,	AArch64_X9,
+  AArch64_X0,  AArch64_X1,  AArch64_X2,  AArch64_X3,  AArch64_X4,
+		AArch64_X5,  AArch64_X6,  AArch64_X7,  AArch64_X8,  AArch64_X9,
 		AArch64_X10, AArch64_X11, AArch64_X12, AArch64_X13, AArch64_X14,
 		AArch64_X15, AArch64_X16, AArch64_X17, AArch64_X18, AArch64_X19,
 		AArch64_X20, AArch64_X21, AArch64_X22, AArch64_X23, AArch64_X24,
 		AArch64_X25, AArch64_X26, AArch64_X27, AArch64_X28, AArch64_FP,
-		AArch64_LR,	AArch64_XZR};
-
+		AArch64_LR,  AArch64_XZR
+	};
 static DecodeStatus DecodeGPR64commonRegisterClass(MCInst *Inst, unsigned RegNo,
 			unint64_t Addr,
 			const void *Decoder)
@@ -480,13 +485,14 @@ static DecodeStatus DecodeGPR64spRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned GPR32DecoderTable[] = {
-		AArch64_W0,	AArch64_W1,	AArch64_W2,	AArch64_W3,	AArch64_W4,
-		AArch64_W5,	AArch64_W6,	AArch64_W7,	AArch64_W8,	AArch64_W9,
+  AArch64_W0,  AArch64_W1,  AArch64_W2,  AArch64_W3,  AArch64_W4,
+		AArch64_W5,  AArch64_W6,  AArch64_W7,  AArch64_W8,  AArch64_W9,
 		AArch64_W10, AArch64_W11, AArch64_W12, AArch64_W13, AArch64_W14,
 		AArch64_W15, AArch64_W16, AArch64_W17, AArch64_W18, AArch64_W19,
 		AArch64_W20, AArch64_W21, AArch64_W22, AArch64_W23, AArch64_W24,
 		AArch64_W25, AArch64_W26, AArch64_W27, AArch64_W28, AArch64_W29,
-		AArch64_W30, AArch64_WZR};
+		AArch64_W30, AArch64_WZR
+	};
 
 static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr,
@@ -520,7 +526,8 @@ static const unsigned ZPRDecoderTable[] = {
 		AArch64_Z15, AArch64_Z16, AArch64_Z17, AArch64_Z18, AArch64_Z19,
 		AArch64_Z20, AArch64_Z21, AArch64_Z22, AArch64_Z23, AArch64_Z24,
 		AArch64_Z25, AArch64_Z26, AArch64_Z27, AArch64_Z28, AArch64_Z29,
-		AArch64_Z30, AArch64_Z31};
+		AArch64_Z30, AArch64_Z31
+	};
 
 static DecodeStatus DecodeZPRRegisterClass(MCInst *Inst, unsigned RegNo,
 		 uint64_t Address,
@@ -560,7 +567,8 @@ static const unsigned ZZDecoderTable[] = {
 		AArch64_Z16_Z17, AArch64_Z17_Z18, AArch64_Z18_Z19, AArch64_Z19_Z20,
 		AArch64_Z20_Z21, AArch64_Z21_Z22, AArch64_Z22_Z23, AArch64_Z23_Z24,
 		AArch64_Z24_Z25, AArch64_Z25_Z26, AArch64_Z26_Z27, AArch64_Z27_Z28,
-		AArch64_Z28_Z29, AArch64_Z29_Z30, AArch64_Z30_Z31, AArch64_Z31_Z0};
+		AArch64_Z28_Z29, AArch64_Z29_Z30, AArch64_Z30_Z31, AArch64_Z31_Z0
+  };
 
 static DecodeStatus DecodeZPR2RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address,
@@ -574,17 +582,18 @@ static DecodeStatus DecodeZPR2RegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned ZZZDecoderTable[] = {
-		AArch64_Z0_Z1_Z2,		AArch64_Z1_Z2_Z3,		AArch64_Z2_Z3_Z4,
-		AArch64_Z3_Z4_Z5,		AArch64_Z4_Z5_Z6,		AArch64_Z5_Z6_Z7,
-		AArch64_Z6_Z7_Z8,		AArch64_Z7_Z8_Z9,		AArch64_Z8_Z9_Z10,
-		AArch64_Z9_Z10_Z11,	AArch64_Z10_Z11_Z12, AArch64_Z11_Z12_Z13,
+		AArch64_Z0_Z1_Z2,		 AArch64_Z1_Z2_Z3,		AArch64_Z2_Z3_Z4,
+		AArch64_Z3_Z4_Z5,		 AArch64_Z4_Z5_Z6,		AArch64_Z5_Z6_Z7,
+		AArch64_Z6_Z7_Z8,		 AArch64_Z7_Z8_Z9,		AArch64_Z8_Z9_Z10,
+		AArch64_Z9_Z10_Z11,	 AArch64_Z10_Z11_Z12, AArch64_Z11_Z12_Z13,
 		AArch64_Z12_Z13_Z14, AArch64_Z13_Z14_Z15, AArch64_Z14_Z15_Z16,
 		AArch64_Z15_Z16_Z17, AArch64_Z16_Z17_Z18, AArch64_Z17_Z18_Z19,
 		AArch64_Z18_Z19_Z20, AArch64_Z19_Z20_Z21, AArch64_Z20_Z21_Z22,
 		AArch64_Z21_Z22_Z23, AArch64_Z22_Z23_Z24, AArch64_Z23_Z24_Z25,
 		AArch64_Z24_Z25_Z26, AArch64_Z25_Z26_Z27, AArch64_Z26_Z27_Z28,
 		AArch64_Z27_Z28_Z29, AArch64_Z28_Z29_Z30, AArch64_Z29_Z30_Z31,
-		AArch64_Z30_Z31_Z0,	AArch64_Z31_Z0_Z1};
+		AArch64_Z30_Z31_Z0,	 AArch64_Z31_Z0_Z1
+  };
 
 static DecodeStatus DecodeZPR3RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address,
@@ -598,17 +607,18 @@ static DecodeStatus DecodeZPR3RegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned ZZZZDecoderTable[] = {
-		AArch64_Z0_Z1_Z2_Z3,		 AArch64_Z1_Z2_Z3_Z4,		 AArch64_Z2_Z3_Z4_Z5,
-		AArch64_Z3_Z4_Z5_Z6,		 AArch64_Z4_Z5_Z6_Z7,		 AArch64_Z5_Z6_Z7_Z8,
+		AArch64_Z0_Z1_Z2_Z3,		 AArch64_Z1_Z2_Z3_Z4,		  AArch64_Z2_Z3_Z4_Z5,
+		AArch64_Z3_Z4_Z5_Z6,		 AArch64_Z4_Z5_Z6_Z7,		  AArch64_Z5_Z6_Z7_Z8,
 		AArch64_Z6_Z7_Z8_Z9,		 AArch64_Z7_Z8_Z9_Z10,		AArch64_Z8_Z9_Z10_Z11,
-		AArch64_Z9_Z10_Z11_Z12,	AArch64_Z10_Z11_Z12_Z13, AArch64_Z11_Z12_Z13_Z14,
+		AArch64_Z9_Z10_Z11_Z12,	 AArch64_Z10_Z11_Z12_Z13, AArch64_Z11_Z12_Z13_Z14,
 		AArch64_Z12_Z13_Z14_Z15, AArch64_Z13_Z14_Z15_Z16, AArch64_Z14_Z15_Z16_Z17,
 		AArch64_Z15_Z16_Z17_Z18, AArch64_Z16_Z17_Z18_Z19, AArch64_Z17_Z18_Z19_Z20,
 		AArch64_Z18_Z19_Z20_Z21, AArch64_Z19_Z20_Z21_Z22, AArch64_Z20_Z21_Z22_Z23,
 		AArch64_Z21_Z22_Z23_Z24, AArch64_Z22_Z23_Z24_Z25, AArch64_Z23_Z24_Z25_Z26,
 		AArch64_Z24_Z25_Z26_Z27, AArch64_Z25_Z26_Z27_Z28, AArch64_Z26_Z27_Z28_Z29,
 		AArch64_Z27_Z28_Z29_Z30, AArch64_Z28_Z29_Z30_Z31, AArch64_Z29_Z30_Z31_Z0,
-		AArch64_Z30_Z31_Z0_Z1,	 AArch64_Z31_Z0_Z1_Z2};
+		AArch64_Z30_Z31_Z0_Z1,	 AArch64_Z31_Z0_Z1_Z2
+  };
 
 static DecodeStatus DecodeZPR4RegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Address,
@@ -622,9 +632,10 @@ static DecodeStatus DecodeZPR4RegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned PPRDecoderTable[] = {
-		AArch64_P0,	AArch64_P1,	AArch64_P2,	AArch64_P3, AArch64_P4,	AArch64_P5,
-		AArch64_P6,	AArch64_P7,	AArch64_P8,	AArch64_P9, AArch64_P10, AArch64_P11,
-		AArch64_P12, AArch64_P13, AArch64_P14, AArch64_P15};
+		AArch64_P0,	 AArch64_P1,	AArch64_P2,	 AArch64_P3, AArch64_P4,	AArch64_P5,
+		AArch64_P6,	 AArch64_P7,	AArch64_P8,	 AArch64_P9, AArch64_P10, AArch64_P11,
+		AArch64_P12, AArch64_P13, AArch64_P14, AArch64_P15
+  };
 
 static DecodeStatus DecodePPRRegisterClass(MCInst *Inst, unsigned RegNo,
 		 uint64_t Addr, const void *Decoder)
@@ -655,7 +666,8 @@ static const unsigned VectorDecoderTable[] = {
 		AArch64_Q15, AArch64_Q16, AArch64_Q17, AArch64_Q18, AArch64_Q19,
 		AArch64_Q20, AArch64_Q21, AArch64_Q22, AArch64_Q23, AArch64_Q24,
 		AArch64_Q25, AArch64_Q26, AArch64_Q27, AArch64_Q28, AArch64_Q29,
-		AArch64_Q30, AArch64_Q31};
+		AArch64_Q30, AArch64_Q31
+  };
 
 static DecodeStatus DecodeVectorRegisterClass(MCInst *Inst, unsigned RegNo,
 		 uint64_t Addr,
@@ -670,14 +682,15 @@ static DecodeStatus DecodeVectorRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned QQDecoderTable[] = {
-		AArch64_Q0_Q1,	 AArch64_Q1_Q2,	 AArch64_Q2_Q3,	 AArch64_Q3_Q4,
-		AArch64_Q4_Q5,	 AArch64_Q5_Q6,	 AArch64_Q6_Q7,	 AArch64_Q7_Q8,
+		AArch64_Q0_Q1,	 AArch64_Q1_Q2,	  AArch64_Q2_Q3,	 AArch64_Q3_Q4,
+		AArch64_Q4_Q5,	 AArch64_Q5_Q6,	  AArch64_Q6_Q7,	 AArch64_Q7_Q8,
 		AArch64_Q8_Q9,	 AArch64_Q9_Q10,	AArch64_Q10_Q11, AArch64_Q11_Q12,
 		AArch64_Q12_Q13, AArch64_Q13_Q14, AArch64_Q14_Q15, AArch64_Q15_Q16,
 		AArch64_Q16_Q17, AArch64_Q17_Q18, AArch64_Q18_Q19, AArch64_Q19_Q20,
 		AArch64_Q20_Q21, AArch64_Q21_Q22, AArch64_Q22_Q23, AArch64_Q23_Q24,
 		AArch64_Q24_Q25, AArch64_Q25_Q26, AArch64_Q26_Q27, AArch64_Q27_Q28,
-		AArch64_Q28_Q29, AArch64_Q29_Q30, AArch64_Q30_Q31, AArch64_Q31_Q0};
+		AArch64_Q28_Q29, AArch64_Q29_Q30, AArch64_Q30_Q31, AArch64_Q31_Q0
+  };
 
 static DecodeStatus DecodeQQRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr, const void *Decoder)
@@ -690,17 +703,18 @@ static DecodeStatus DecodeQQRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned QQQDecoderTable[] = {
-		AArch64_Q0_Q1_Q2,		AArch64_Q1_Q2_Q3,		AArch64_Q2_Q3_Q4,
-		AArch64_Q3_Q4_Q5,		AArch64_Q4_Q5_Q6,		AArch64_Q5_Q6_Q7,
-		AArch64_Q6_Q7_Q8,		AArch64_Q7_Q8_Q9,		AArch64_Q8_Q9_Q10,
-		AArch64_Q9_Q10_Q11,	AArch64_Q10_Q11_Q12, AArch64_Q11_Q12_Q13,
+		AArch64_Q0_Q1_Q2,		 AArch64_Q1_Q2_Q3,		AArch64_Q2_Q3_Q4,
+		AArch64_Q3_Q4_Q5,		 AArch64_Q4_Q5_Q6,		AArch64_Q5_Q6_Q7,
+		AArch64_Q6_Q7_Q8,		 AArch64_Q7_Q8_Q9,		AArch64_Q8_Q9_Q10,
+		AArch64_Q9_Q10_Q11,	 AArch64_Q10_Q11_Q12, AArch64_Q11_Q12_Q13,
 		AArch64_Q12_Q13_Q14, AArch64_Q13_Q14_Q15, AArch64_Q14_Q15_Q16,
 		AArch64_Q15_Q16_Q17, AArch64_Q16_Q17_Q18, AArch64_Q17_Q18_Q19,
 		AArch64_Q18_Q19_Q20, AArch64_Q19_Q20_Q21, AArch64_Q20_Q21_Q22,
 		AArch64_Q21_Q22_Q23, AArch64_Q22_Q23_Q24, AArch64_Q23_Q24_Q25,
 		AArch64_Q24_Q25_Q26, AArch64_Q25_Q26_Q27, AArch64_Q26_Q27_Q28,
 		AArch64_Q27_Q28_Q29, AArch64_Q28_Q29_Q30, AArch64_Q29_Q30_Q31,
-		AArch64_Q30_Q31_Q0,	AArch64_Q31_Q0_Q1};
+		AArch64_Q30_Q31_Q0,	 AArch64_Q31_Q0_Q1
+  };
 
 static DecodeStatus DecodeQQQRegisterClass(MCInst *Inst, unsigned RegNo,
 		 uint64_t Addr, const void *Decoder)
@@ -713,17 +727,18 @@ static DecodeStatus DecodeQQQRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned QQQQDecoderTable[] = {
-		AArch64_Q0_Q1_Q2_Q3,		 AArch64_Q1_Q2_Q3_Q4,		 AArch64_Q2_Q3_Q4_Q5,
-		AArch64_Q3_Q4_Q5_Q6,		 AArch64_Q4_Q5_Q6_Q7,		 AArch64_Q5_Q6_Q7_Q8,
+		AArch64_Q0_Q1_Q2_Q3,		 AArch64_Q1_Q2_Q3_Q4,		  AArch64_Q2_Q3_Q4_Q5,
+		AArch64_Q3_Q4_Q5_Q6,		 AArch64_Q4_Q5_Q6_Q7,		  AArch64_Q5_Q6_Q7_Q8,
 		AArch64_Q6_Q7_Q8_Q9,		 AArch64_Q7_Q8_Q9_Q10,		AArch64_Q8_Q9_Q10_Q11,
-		AArch64_Q9_Q10_Q11_Q12,	AArch64_Q10_Q11_Q12_Q13, AArch64_Q11_Q12_Q13_Q14,
+		AArch64_Q9_Q10_Q11_Q12,	 AArch64_Q10_Q11_Q12_Q13, AArch64_Q11_Q12_Q13_Q14,
 		AArch64_Q12_Q13_Q14_Q15, AArch64_Q13_Q14_Q15_Q16, AArch64_Q14_Q15_Q16_Q17,
 		AArch64_Q15_Q16_Q17_Q18, AArch64_Q16_Q17_Q18_Q19, AArch64_Q17_Q18_Q19_Q20,
 		AArch64_Q18_Q19_Q20_Q21, AArch64_Q19_Q20_Q21_Q22, AArch64_Q20_Q21_Q22_Q23,
 		AArch64_Q21_Q22_Q23_Q24, AArch64_Q22_Q23_Q24_Q25, AArch64_Q23_Q24_Q25_Q26,
 		AArch64_Q24_Q25_Q26_Q27, AArch64_Q25_Q26_Q27_Q28, AArch64_Q26_Q27_Q28_Q29,
 		AArch64_Q27_Q28_Q29_Q30, AArch64_Q28_Q29_Q30_Q31, AArch64_Q29_Q30_Q31_Q0,
-		AArch64_Q30_Q31_Q0_Q1,	 AArch64_Q31_Q0_Q1_Q2};
+		AArch64_Q30_Q31_Q0_Q1,	 AArch64_Q31_Q0_Q1_Q2
+  };
 
 static DecodeStatus DecodeQQQQRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr,
@@ -737,14 +752,15 @@ static DecodeStatus DecodeQQQQRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned DDDecoderTable[] = {
-		AArch64_D0_D1,	 AArch64_D1_D2,	 AArch64_D2_D3,	 AArch64_D3_D4,
-		AArch64_D4_D5,	 AArch64_D5_D6,	 AArch64_D6_D7,	 AArch64_D7_D8,
+		AArch64_D0_D1,	 AArch64_D1_D2,	  AArch64_D2_D3,	 AArch64_D3_D4,
+		AArch64_D4_D5,	 AArch64_D5_D6,	  AArch64_D6_D7,	 AArch64_D7_D8,
 		AArch64_D8_D9,	 AArch64_D9_D10,	AArch64_D10_D11, AArch64_D11_D12,
 		AArch64_D12_D13, AArch64_D13_D14, AArch64_D14_D15, AArch64_D15_D16,
 		AArch64_D16_D17, AArch64_D17_D18, AArch64_D18_D19, AArch64_D19_D20,
 		AArch64_D20_D21, AArch64_D21_D22, AArch64_D22_D23, AArch64_D23_D24,
 		AArch64_D24_D25, AArch64_D25_D26, AArch64_D26_D27, AArch64_D27_D28,
-		AArch64_D28_D29, AArch64_D29_D30, AArch64_D30_D31, AArch64_D31_D0};
+		AArch64_D28_D29, AArch64_D29_D30, AArch64_D30_D31, AArch64_D31_D0
+  };
 
 static DecodeStatus DecodeDDRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr, const void *Decoder)
@@ -757,17 +773,18 @@ static DecodeStatus DecodeDDRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned DDDDecoderTable[] = {
-		AArch64_D0_D1_D2,		AArch64_D1_D2_D3,		AArch64_D2_D3_D4,
-		AArch64_D3_D4_D5,		AArch64_D4_D5_D6,		AArch64_D5_D6_D7,
-		AArch64_D6_D7_D8,		AArch64_D7_D8_D9,		AArch64_D8_D9_D10,
-		AArch64_D9_D10_D11,	AArch64_D10_D11_D12, AArch64_D11_D12_D13,
+		AArch64_D0_D1_D2,		 AArch64_D1_D2_D3,		AArch64_D2_D3_D4,
+		AArch64_D3_D4_D5,		 AArch64_D4_D5_D6,		AArch64_D5_D6_D7,
+		AArch64_D6_D7_D8,		 AArch64_D7_D8_D9,		AArch64_D8_D9_D10,
+		AArch64_D9_D10_D11,	 AArch64_D10_D11_D12, AArch64_D11_D12_D13,
 		AArch64_D12_D13_D14, AArch64_D13_D14_D15, AArch64_D14_D15_D16,
 		AArch64_D15_D16_D17, AArch64_D16_D17_D18, AArch64_D17_D18_D19,
 		AArch64_D18_D19_D20, AArch64_D19_D20_D21, AArch64_D20_D21_D22,
 		AArch64_D21_D22_D23, AArch64_D22_D23_D24, AArch64_D23_D24_D25,
 		AArch64_D24_D25_D26, AArch64_D25_D26_D27, AArch64_D26_D27_D28,
 		AArch64_D27_D28_D29, AArch64_D28_D29_D30, AArch64_D29_D30_D31,
-		AArch64_D30_D31_D0,	AArch64_D31_D0_D1};
+		AArch64_D30_D31_D0,	 AArch64_D31_D0_D1
+  };
 
 static DecodeStatus DecodeDDDRegisterClass(MCInst *Inst, unsigned RegNo,
 		 uint64_t Addr, const void *Decoder)
@@ -780,17 +797,18 @@ static DecodeStatus DecodeDDDRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static const unsigned DDDDDecoderTable[] = {
-		AArch64_D0_D1_D2_D3,		 AArch64_D1_D2_D3_D4,		 AArch64_D2_D3_D4_D5,
-		AArch64_D3_D4_D5_D6,		 AArch64_D4_D5_D6_D7,		 AArch64_D5_D6_D7_D8,
+		AArch64_D0_D1_D2_D3,		 AArch64_D1_D2_D3_D4,		  AArch64_D2_D3_D4_D5,
+		AArch64_D3_D4_D5_D6,		 AArch64_D4_D5_D6_D7,		  AArch64_D5_D6_D7_D8,
 		AArch64_D6_D7_D8_D9,		 AArch64_D7_D8_D9_D10,		AArch64_D8_D9_D10_D11,
-		AArch64_D9_D10_D11_D12,	AArch64_D10_D11_D12_D13, AArch64_D11_D12_D13_D14,
+		AArch64_D9_D10_D11_D12,	 AArch64_D10_D11_D12_D13, AArch64_D11_D12_D13_D14,
 		AArch64_D12_D13_D14_D15, AArch64_D13_D14_D15_D16, AArch64_D14_D15_D16_D17,
 		AArch64_D15_D16_D17_D18, AArch64_D16_D17_D18_D19, AArch64_D17_D18_D19_D20,
 		AArch64_D18_D19_D20_D21, AArch64_D19_D20_D21_D22, AArch64_D20_D21_D22_D23,
 		AArch64_D21_D22_D23_D24, AArch64_D22_D23_D24_D25, AArch64_D23_D24_D25_D26,
 		AArch64_D24_D25_D26_D27, AArch64_D25_D26_D27_D28, AArch64_D26_D27_D28_D29,
 		AArch64_D27_D28_D29_D30, AArch64_D28_D29_D30_D31, AArch64_D29_D30_D31_D0,
-		AArch64_D30_D31_D0_D1,	 AArch64_D31_D0_D1_D2};
+		AArch64_D30_D31_D0_D1,	 AArch64_D31_D0_D1_D2
+  };
 
 static DecodeStatus DecodeDDDDRegisterClass(MCInst *Inst, unsigned RegNo,
 		uint64_t Addr,
