@@ -222,8 +222,8 @@
 !# CS_ARCH_X86, CS_MODE_64, None
 0x0: 0xf0,0x0f,0x1f,0x00 == lock nop dword ptr [rax]
 
-!# issue 913
-!# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
+// !# issue 913
+// !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0x0: 0x04,0x10,0x9d,0xe4 == pop {r1} ; op_count: 1 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; Write-back: True ; Registers read: sp ; Registers modified: sp r1 ; Groups: arm 
 
 !# issue 884
