@@ -1721,8 +1721,8 @@ static void printAddrMode5FP16Operand(MCInst *MI, unsigned OpNum, SStream *O,
 {
   MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
   MCOperand *MO2 = MCInst_getOperand(MI, OpNum + 1);
-  unsigned ImmOffs = getAM5FP16Offset(MCOperand_getImm(MO2));
-  unsigned Op = getAM5FP16Op(MCOperand_getImm(MO2));
+  unsigned ImmOffs = (unsigned)getAM5FP16Offset(MCOperand_getImm(MO2));
+  unsigned Op = (unsigned)getAM5FP16Op(MCOperand_getImm(MO2));
 
   if (!MCOperand_isReg(MO1)) {  // FIXME: This is for CP entries, but isn't right.
 	  printOperand(MI, OpNum, O);
@@ -3648,8 +3648,8 @@ static void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printComplexRotationOp(MCInst *MI, unsigned OpNo, SStream *O, int64_t Angle, int64_t Remainder)
 {
-	unsigned Val = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-	unsigned tmp = (Val * Angle) + Remainder;
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned tmp = (unsigned)((Val * Angle) + Remainder);
 
 	printUInt32Bang(O, tmp);
 	if (MI->csh->detail) {
