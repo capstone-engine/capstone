@@ -1,4 +1,4 @@
-# CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8, None
+# CS_ARCH_ARM, CS_MODE_ARM+CS_MODE_V8, None
 0xa0,0x0b,0x71,0xee = vadd.f64 d16, d17, d16
 0xe0,0x0b,0x71,0xee = vsub.f64 d16, d17, d16
 0xa0,0x0b,0xc1,0xee = vdiv.f64 d16, d17, d16
