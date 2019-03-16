@@ -9253,7 +9253,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
       AsmString = "dfb";
       break;
     }
-    return NULL;
+    return false;
   case ARM_HINT:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9327,7 +9327,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
       AsmString = "csdb$\xFF\x02\x01";
       break;
     }
-    return NULL;
+    return false;
   case ARM_t2DSB:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9337,7 +9337,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
       AsmString = "dfb$\xFF\x02\x01";
       break;
     }
-    return NULL;
+    return false;
   case ARM_t2HINT:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9413,7 +9413,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
       AsmString = "csdb$\xFF\x02\x01";
       break;
     }
-    return NULL;
+    return false;
   case ARM_t2SUBS_PC_LR:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9425,7 +9425,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
       AsmString = "eret$\xFF\x02\x01";
       break;
     }
-    return NULL;
+    return false;
   case ARM_tHINT:
     if (MCInst_getNumOperands(MI) == 3 &&
         MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
@@ -9482,7 +9482,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
       AsmString = "sevl$\xFF\x02\x01";
       break;
     }
-    return NULL;
+    return false;
   }
 
 

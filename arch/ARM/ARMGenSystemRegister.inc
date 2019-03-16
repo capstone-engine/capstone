@@ -55,31 +55,31 @@ static MClassSysReg MClassSysRegsList[] = {
   { "eapsr_nzcvqg", ARM_SYSREG_EAPSR_NZCVQG, 0xC02, 0x302, 0xC02,  {ARM_FeatureDSP}  }, // 5
   { "xpsr_g", ARM_SYSREG_XPSR_G, 0x403, 0x3, 0x403,  {ARM_FeatureDSP}  }, // 6
   { "xpsr_nzcvqg", ARM_SYSREG_XPSR_NZCVQG, 0xC03, 0x303, 0xC03,  {ARM_FeatureDSP}  }, // 7
-  { "apsr", ARM_SYSREG_APSR, 0x800, 0x100, 0x800,  {}  }, // 8
-  { "apsr_nzcvq", ARM_SYSREG_APSR_NZCVQ, 0x1800, 0x200, 0x800,  {}  }, // 9
-  { "iapsr", ARM_SYSREG_IAPSR, 0x801, 0x101, 0x801,  {}  }, // 10
-  { "iapsr_nzcvq", ARM_SYSREG_IAPSR_NZCVQ, 0x1801, 0x201, 0x801,  {}  }, // 11
-  { "eapsr", ARM_SYSREG_EAPSR, 0x802, 0x102, 0x802,  {}  }, // 12
-  { "eapsr_nzcvq", ARM_SYSREG_EAPSR_NZCVQ, 0x1802, 0x202, 0x802,  {}  }, // 13
-  { "xpsr", ARM_SYSREG_XPSR, 0x803, 0x103, 0x803,  {}  }, // 14
-  { "xpsr_nzcvq", ARM_SYSREG_XPSR_NZCVQ, 0x1803, 0x203, 0x803,  {}  }, // 15
-  { "ipsr", ARM_SYSREG_IPSR, 0x805, 0x105, 0x805,  {}  }, // 16
-  { "epsr", ARM_SYSREG_EPSR, 0x806, 0x106, 0x806,  {}  }, // 17
-  { "iepsr", ARM_SYSREG_IEPSR, 0x807, 0x107, 0x807,  {}  }, // 18
-  { "msp", ARM_SYSREG_MSP, 0x808, 0x108, 0x808,  {}  }, // 19
-  { "psp", ARM_SYSREG_PSP, 0x809, 0x109, 0x809,  {}  }, // 20
+  { "apsr", ARM_SYSREG_APSR, 0x800, 0x100, 0x800,  { 0 }  }, // 8
+  { "apsr_nzcvq", ARM_SYSREG_APSR_NZCVQ, 0x1800, 0x200, 0x800,  { 0 }  }, // 9
+  { "iapsr", ARM_SYSREG_IAPSR, 0x801, 0x101, 0x801,  { 0 }  }, // 10
+  { "iapsr_nzcvq", ARM_SYSREG_IAPSR_NZCVQ, 0x1801, 0x201, 0x801,  { 0 }  }, // 11
+  { "eapsr", ARM_SYSREG_EAPSR, 0x802, 0x102, 0x802,  { 0 }  }, // 12
+  { "eapsr_nzcvq", ARM_SYSREG_EAPSR_NZCVQ, 0x1802, 0x202, 0x802,  { 0 }  }, // 13
+  { "xpsr", ARM_SYSREG_XPSR, 0x803, 0x103, 0x803,  { 0 }  }, // 14
+  { "xpsr_nzcvq", ARM_SYSREG_XPSR_NZCVQ, 0x1803, 0x203, 0x803,  { 0 }  }, // 15
+  { "ipsr", ARM_SYSREG_IPSR, 0x805, 0x105, 0x805,  { 0 }  }, // 16
+  { "epsr", ARM_SYSREG_EPSR, 0x806, 0x106, 0x806,  { 0 }  }, // 17
+  { "iepsr", ARM_SYSREG_IEPSR, 0x807, 0x107, 0x807,  { 0 }  }, // 18
+  { "msp", ARM_SYSREG_MSP, 0x808, 0x108, 0x808,  { 0 }  }, // 19
+  { "psp", ARM_SYSREG_PSP, 0x809, 0x109, 0x809,  { 0 }  }, // 20
   { "msplim", ARM_SYSREG_MSPLIM, 0x80A, 0x10A, 0x80A,  {ARM_HasV8MBaselineOps}  }, // 21
   { "psplim", ARM_SYSREG_PSPLIM, 0x80B, 0x10B, 0x80B,  {ARM_HasV8MBaselineOps}  }, // 22
-  { "primask", ARM_SYSREG_PRIMASK, 0x810, 0x110, 0x810,  {}  }, // 23
+  { "primask", ARM_SYSREG_PRIMASK, 0x810, 0x110, 0x810,  { 0 }  }, // 23
   { "basepri", ARM_SYSREG_BASEPRI, 0x811, 0x111, 0x811,  {ARM_HasV7Ops}  }, // 24
   { "basepri_max", ARM_SYSREG_BASEPRI_MAX, 0x812, 0x112, 0x812,  {ARM_HasV7Ops}  }, // 25
   { "faultmask", ARM_SYSREG_FAULTMASK, 0x813, 0x113, 0x813,  {ARM_HasV7Ops}  }, // 26
-  { "control", ARM_SYSREG_CONTROL, 0x814, 0x114, 0x814,  {}  }, // 27
+  { "control", ARM_SYSREG_CONTROL, 0x814, 0x114, 0x814,  { 0 }  }, // 27
   { "msp_ns", ARM_SYSREG_MSP_NS, 0x888, 0x188, 0x888,  {ARM_Feature8MSecExt}  }, // 28
   { "psp_ns", ARM_SYSREG_PSP_NS, 0x889, 0x189, 0x889,  {ARM_Feature8MSecExt}  }, // 29
   { "msplim_ns", ARM_SYSREG_MSPLIM_NS, 0x88A, 0x18A, 0x88A,  {ARM_Feature8MSecExt, ARM_HasV8MBaselineOps}  }, // 30
   { "psplim_ns", ARM_SYSREG_PSPLIM_NS, 0x88B, 0x18B, 0x88B,  {ARM_Feature8MSecExt, ARM_HasV8MBaselineOps}  }, // 31
-  { "primask_ns", ARM_SYSREG_PRIMASK_NS, 0x890, 0x190, 0x890,  {}  }, // 32
+  { "primask_ns", ARM_SYSREG_PRIMASK_NS, 0x890, 0x190, 0x890,  { 0 }  }, // 32
   { "basepri_ns", ARM_SYSREG_BASEPRI_NS, 0x891, 0x191, 0x891,  {ARM_Feature8MSecExt, ARM_HasV7Ops}  }, // 33
   { "faultmask_ns", ARM_SYSREG_FAULTMASK_NS, 0x893, 0x193, 0x893,  {ARM_Feature8MSecExt, ARM_HasV7Ops}  }, // 34
   { "control_ns", ARM_SYSREG_CONTROL_NS, 0x894, 0x194, 0x894,  {ARM_Feature8MSecExt}  }, // 35
