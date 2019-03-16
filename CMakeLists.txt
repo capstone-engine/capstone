@@ -147,7 +147,6 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_ARM_SUPPORT)
         arch/ARM/ARMGenRegisterName_digit.inc
         arch/ARM/ARMGenSystemRegister.inc
         arch/ARM/ARMMappingInsnName.inc
-        arch/ARM/ARMRegisterName.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif ()
