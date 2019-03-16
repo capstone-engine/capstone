@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifdef CAPSTONE_HAS_ARM
 
@@ -948,5 +948,36 @@ void ARM_reg_access(const cs_insn *insn,
 	*regs_write_count = write_count;
 }
 #endif
+
+// binary search for encoding in IndexType array
+// return -1 if not found, or index if found
+unsigned int binsearch_IndexType(const struct IndexType *index, size_t size, uint16_t encoding)
+{
+	// binary searching since the index is sorted in encoding order
+	unsigned int left, right, m;
+
+	right = size - 1;
+
+	if (encoding < index[0].encoding || encoding > index[right].encoding)
+		// not found
+		return -1;
+
+	left = 0;
+
+	while(left <= right) {
+		m = (left + right) / 2;
+		if (encoding == index[m].encoding) {
+			return m;
+		}
+
+		if (encoding < index[m].encoding)
+			right = m - 1;
+		else
+			left = m + 1;
+	}
+
+	// not found
+	return -1;
+}
 
 #endif

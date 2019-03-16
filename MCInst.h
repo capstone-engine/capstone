@@ -20,6 +20,7 @@
 #define CS_MCINST_H
 
 #include "include/capstone/capstone.h"
+#include "MCRegisterInfo.h"
 
 typedef struct MCInst MCInst;
 typedef struct cs_struct cs_struct;
@@ -114,6 +115,7 @@ struct MCInst {
 	char assembly[8];	// for special instruction, so that we dont need printer
 	unsigned char evm_data[32];	// for EVM PUSH operand
 	cs_wasm_op wasm_data;    // for WASM operand
+	MCRegisterInfo *MRI;
 };
 
 void MCInst_Init(MCInst *inst);
