@@ -954,7 +954,7 @@ void ARM_reg_access(const cs_insn *insn,
 unsigned int binsearch_IndexType(const struct IndexType *index, size_t size, uint16_t encoding)
 {
 	// binary searching since the index is sorted in encoding order
-	unsigned int left, right, m;
+	size_t left, right, m;
 
 	right = size - 1;
 
