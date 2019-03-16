@@ -5,5 +5,4 @@ BraceWrapping:
   AfterFunction:   true
 BreakBeforeBraces: Custom
 IndentWidth: 4
-TabWidth: 4
 UseTab: ForIndentation
