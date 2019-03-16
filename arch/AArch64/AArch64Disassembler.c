@@ -218,7 +218,8 @@ static DecodeStatus DecodeImm8OptLsl(MCInst *Inst, unsigned Imm, uint64_t Addr,
 static DecodeStatus DecodeSVEIncDecImm(MCInst *Inst, unsigned Imm,
                                        uint64_t Addr, const void *Decoder);
 
-static bool Check(DecodeStatus *Out, DecodeStatus In) {
+static bool Check(DecodeStatus *Out, DecodeStatus In)
+{
   switch (In) {
   default: // never reach
     return true;
@@ -236,7 +237,8 @@ static bool Check(DecodeStatus *Out, DecodeStatus In) {
 }
 
 // Hacky: enable all features for disassembler
-static uint64_t getFeatureBits(int feature) {
+static uint64_t getFeatureBits(int feature)
+{
   // enable all features
   return (uint64_t)-1;
 }
@@ -260,7 +262,8 @@ static uint64_t getFeatureBits(int feature) {
 static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
                                     const uint8_t *code, size_t code_len,
                                     uint16_t *Size, uint64_t Address,
-                                    MCRegisterInfo *MRI) {
+                                    MCRegisterInfo *MRI)
+{
   uint32_t insn;
   DecodeStatus result;
   size_t i;
@@ -299,7 +302,8 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 
 bool AArch64_getInstruction(csh ud, const uint8_t *code, size_t code_len,
                             MCInst *instr, uint16_t *size, uint64_t address,
-                            void *info) {
+                            void *info)
+{
   DecodeStatus status = _getInstruction((cs_struct *)ud, instr, code, code_len,
                                         size, address, (MCRegisterInfo *)info);
 
@@ -880,13 +884,15 @@ static DecodeStatus DecodeFMOVLaneInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeVecShiftRImm(MCInst *Inst, unsigned Imm,
-                                       unsigned Add) {
+                                       unsigned Add)
+{
   MCOperand_CreateImm0(Inst, Add - Imm);
   return Success;
 }
 
 static DecodeStatus DecodeVecShiftLImm(MCInst *Inst, unsigned Imm,
-                                       unsigned Add) {
+                                       unsigned Add)
+{
   MCOperand_CreateImm0(Inst, (Imm + Add) & (Add - 1));
   return Success;
 }
@@ -1893,7 +1899,8 @@ static DecodeStatus DecodeSVEIncDecImm(MCInst *Inst, unsigned Imm,
   return Success;
 }
 
-void AArch64_init(MCRegisterInfo *MRI) {
+void AArch64_init(MCRegisterInfo *MRI)
+{
   /*
           InitMCRegisterInfo(AArch64RegDesc, 420,
                   RA, PC,
@@ -1905,9 +1912,13 @@ void AArch64_init(MCRegisterInfo *MRI) {
                   AArch64RegEncodingTable);
   */
 
-  MCRegisterInfo_InitMCRegisterInfo(
-      MRI, AArch64RegDesc, 420, 0, 0, AArch64MCRegisterClasses, 43, 0, 0,
-      AArch64RegDiffLists, 0, AArch64SubRegIdxLists, 53, 0);
+	MCRegisterInfo_InitMCRegisterInfo(MRI, AArch64RegDesc, 420,
+				0, 0,
+				AArch64MCRegisterClasses, 43,
+				0, 0, AArch64RegDiffLists,
+				0,
+				AArch64SubRegIdxLists, 53,
+				0);
 }
 
 #endif
