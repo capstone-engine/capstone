@@ -1,72 +1,162 @@
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
-|*                                                                            *|
-|*Subtarget Enumeration Source Fragment                                       *|
+
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+
+/*===- TableGen'erated file -------------------------------------*- C++ -*-===*|*                                                                            *|
+|* Subtarget Enumeration Source Fragment                                      *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
+enum {
+  ARM_ARMv2 = 0,
+  ARM_ARMv2a = 1,
+  ARM_ARMv3 = 2,
+  ARM_ARMv3m = 3,
+  ARM_ARMv4 = 4,
+  ARM_ARMv4t = 5,
+  ARM_ARMv5t = 6,
+  ARM_ARMv5te = 7,
+  ARM_ARMv5tej = 8,
+  ARM_ARMv6 = 9,
+  ARM_ARMv6j = 10,
+  ARM_ARMv6k = 11,
+  ARM_ARMv6kz = 12,
+  ARM_ARMv6m = 13,
+  ARM_ARMv6sm = 14,
+  ARM_ARMv6t2 = 15,
+  ARM_ARMv7a = 16,
+  ARM_ARMv7em = 17,
+  ARM_ARMv7k = 18,
+  ARM_ARMv7m = 19,
+  ARM_ARMv7r = 20,
+  ARM_ARMv7s = 21,
+  ARM_ARMv7ve = 22,
+  ARM_ARMv8a = 23,
+  ARM_ARMv8mBaseline = 24,
+  ARM_ARMv8mMainline = 25,
+  ARM_ARMv8r = 26,
+  ARM_ARMv81a = 27,
+  ARM_ARMv82a = 28,
+  ARM_ARMv83a = 29,
+  ARM_ARMv84a = 30,
+  ARM_Feature8MSecExt = 31,
+  ARM_FeatureAClass = 32,
+  ARM_FeatureAES = 33,
+  ARM_FeatureAcquireRelease = 34,
+  ARM_FeatureAvoidMOVsShOp = 35,
+  ARM_FeatureAvoidPartialCPSR = 36,
+  ARM_FeatureCRC = 37,
+  ARM_FeatureCheapPredicableCPSR = 38,
+  ARM_FeatureCheckVLDnAlign = 39,
+  ARM_FeatureCrypto = 40,
+  ARM_FeatureD16 = 41,
+  ARM_FeatureDB = 42,
+  ARM_FeatureDFB = 43,
+  ARM_FeatureDSP = 44,
+  ARM_FeatureDontWidenVMOVS = 45,
+  ARM_FeatureDotProd = 46,
+  ARM_FeatureExecuteOnly = 47,
+  ARM_FeatureExpandMLx = 48,
+  ARM_FeatureFP16 = 49,
+  ARM_FeatureFPAO = 50,
+  ARM_FeatureFPARMv8 = 51,
+  ARM_FeatureFullFP16 = 52,
+  ARM_FeatureFuseAES = 53,
+  ARM_FeatureFuseLiterals = 54,
+  ARM_FeatureHWDivARM = 55,
+  ARM_FeatureHWDivThumb = 56,
+  ARM_FeatureHasNoBranchPredictor = 57,
+  ARM_FeatureHasRetAddrStack = 58,
+  ARM_FeatureHasSlowFPVMLx = 59,
+  ARM_FeatureHasVMLxHazards = 60,
+  ARM_FeatureLongCalls = 61,
+  ARM_FeatureMClass = 62,
+  ARM_FeatureMP = 63,
+  ARM_FeatureMuxedUnits = 64,
+  ARM_FeatureNEON = 65,
+  ARM_FeatureNEONForFP = 66,
+  ARM_FeatureNEONForFPMovs = 67,
+  ARM_FeatureNaClTrap = 68,
+  ARM_FeatureNoARM = 69,
+  ARM_FeatureNoMovt = 70,
+  ARM_FeatureNoNegativeImmediates = 71,
+  ARM_FeatureNoPostRASched = 72,
+  ARM_FeatureNonpipelinedVFP = 73,
+  ARM_FeaturePerfMon = 74,
+  ARM_FeaturePref32BitThumb = 75,
+  ARM_FeaturePrefISHSTBarrier = 76,
+  ARM_FeaturePreferVMOVSR = 77,
+  ARM_FeatureProfUnpredicate = 78,
+  ARM_FeatureRAS = 79,
+  ARM_FeatureRClass = 80,
+  ARM_FeatureReadTp = 81,
+  ARM_FeatureReserveR9 = 82,
+  ARM_FeatureSHA2 = 83,
+  ARM_FeatureSlowFPBrcc = 84,
+  ARM_FeatureSlowLoadDSubreg = 85,
+  ARM_FeatureSlowOddRegister = 86,
+  ARM_FeatureSlowVDUP32 = 87,
+  ARM_FeatureSlowVGETLNi32 = 88,
+  ARM_FeatureSplatVFPToNeon = 89,
+  ARM_FeatureStrictAlign = 90,
+  ARM_FeatureThumb2 = 91,
+  ARM_FeatureTrustZone = 92,
+  ARM_FeatureUseAA = 93,
+  ARM_FeatureUseMISched = 94,
+  ARM_FeatureV7Clrex = 95,
+  ARM_FeatureVFP2 = 96,
+  ARM_FeatureVFP3 = 97,
+  ARM_FeatureVFP4 = 98,
+  ARM_FeatureVFPOnlySP = 99,
+  ARM_FeatureVMLxForwarding = 100,
+  ARM_FeatureVirtualization = 101,
+  ARM_FeatureZCZeroing = 102,
+  ARM_HasV4TOps = 103,
+  ARM_HasV5TEOps = 104,
+  ARM_HasV5TOps = 105,
+  ARM_HasV6KOps = 106,
+  ARM_HasV6MOps = 107,
+  ARM_HasV6Ops = 108,
+  ARM_HasV6T2Ops = 109,
+  ARM_HasV7Ops = 110,
+  ARM_HasV8MBaselineOps = 111,
+  ARM_HasV8MMainlineOps = 112,
+  ARM_HasV8Ops = 113,
+  ARM_HasV8_1aOps = 114,
+  ARM_HasV8_2aOps = 115,
+  ARM_HasV8_3aOps = 116,
+  ARM_HasV8_4aOps = 117,
+  ARM_IWMMXT = 118,
+  ARM_IWMMXT2 = 119,
+  ARM_ModeSoftFloat = 120,
+  ARM_ModeThumb = 121,
+  ARM_ProcA5 = 122,
+  ARM_ProcA7 = 123,
+  ARM_ProcA8 = 124,
+  ARM_ProcA9 = 125,
+  ARM_ProcA12 = 126,
+  ARM_ProcA15 = 127,
+  ARM_ProcA17 = 128,
+  ARM_ProcA32 = 129,
+  ARM_ProcA35 = 130,
+  ARM_ProcA53 = 131,
+  ARM_ProcA55 = 132,
+  ARM_ProcA57 = 133,
+  ARM_ProcA72 = 134,
+  ARM_ProcA73 = 135,
+  ARM_ProcA75 = 136,
+  ARM_ProcExynosM1 = 137,
+  ARM_ProcKrait = 138,
+  ARM_ProcKryo = 139,
+  ARM_ProcM3 = 140,
+  ARM_ProcR4 = 141,
+  ARM_ProcR5 = 142,
+  ARM_ProcR7 = 143,
+  ARM_ProcR52 = 144,
+  ARM_ProcSwift = 145,
+  ARM_XScale = 146,
+};
 
-#ifdef GET_SUBTARGETINFO_ENUM
-#undef GET_SUBTARGETINFO_ENUM
-
-#define ARM_FeatureAClass (1ULL << 0)
-#define ARM_FeatureAvoidMOVsShOp (1ULL << 1)
-#define ARM_FeatureAvoidPartialCPSR (1ULL << 2)
-#define ARM_FeatureCRC (1ULL << 3)
-#define ARM_FeatureCrypto (1ULL << 4)
-#define ARM_FeatureD16 (1ULL << 5)
-#define ARM_FeatureDB (1ULL << 6)
-#define ARM_FeatureDSPThumb2 (1ULL << 7)
-#define ARM_FeatureFP16 (1ULL << 8)
-#define ARM_FeatureFPARMv8 (1ULL << 9)
-#define ARM_FeatureHWDiv (1ULL << 10)
-#define ARM_FeatureHWDivARM (1ULL << 11)
-#define ARM_FeatureHasRAS (1ULL << 12)
-#define ARM_FeatureHasSlowFPVMLx (1ULL << 13)
-#define ARM_FeatureMClass (1ULL << 14)
-#define ARM_FeatureMP (1ULL << 15)
-#define ARM_FeatureNEON (1ULL << 16)
-#define ARM_FeatureNEONForFP (1ULL << 17)
-#define ARM_FeatureNaClTrap (1ULL << 18)
-#define ARM_FeatureNoARM (1ULL << 19)
-#define ARM_FeaturePerfMon (1ULL << 20)
-#define ARM_FeaturePref32BitThumb (1ULL << 21)
-#define ARM_FeatureRClass (1ULL << 22)
-#define ARM_FeatureSlowFPBrcc (1ULL << 23)
-#define ARM_FeatureT2XtPk (1ULL << 24)
-#define ARM_FeatureThumb2 (1ULL << 25)
-#define ARM_FeatureTrustZone (1ULL << 26)
-#define ARM_FeatureVFP2 (1ULL << 27)
-#define ARM_FeatureVFP3 (1ULL << 28)
-#define ARM_FeatureVFP4 (1ULL << 29)
-#define ARM_FeatureVFPOnlySP (1ULL << 30)
-#define ARM_FeatureVMLxForwarding (1ULL << 31)
-#define ARM_FeatureVirtualization (1ULL << 32)
-#define ARM_FeatureZCZeroing (1ULL << 33)
-#define ARM_HasV4TOps (1ULL << 34)
-#define ARM_HasV5TEOps (1ULL << 35)
-#define ARM_HasV5TOps (1ULL << 36)
-#define ARM_HasV6MOps (1ULL << 37)
-#define ARM_HasV6Ops (1ULL << 38)
-#define ARM_HasV6T2Ops (1ULL << 39)
-#define ARM_HasV7Ops (1ULL << 40)
-#define ARM_HasV8Ops (1ULL << 41)
-#define ARM_ModeThumb (1ULL << 42)
-#define ARM_ProcA5 (1ULL << 43)
-#define ARM_ProcA7 (1ULL << 44)
-#define ARM_ProcA8 (1ULL << 45)
-#define ARM_ProcA9 (1ULL << 46)
-#define ARM_ProcA12 (1ULL << 47)
-#define ARM_ProcA15 (1ULL << 48)
-#define ARM_ProcA17 (1ULL << 49)
-#define ARM_ProcA53 (1ULL << 50)
-#define ARM_ProcA57 (1ULL << 51)
-#define ARM_ProcKrait (1ULL << 52)
-#define ARM_ProcR5 (1ULL << 53)
-#define ARM_ProcSwift (1ULL << 54)
-
-#endif // GET_SUBTARGETINFO_ENUM
