@@ -3,3 +3,4 @@ BraceWrapping:
   AfterControlStatement: false
   AfterFunction:   true
 BreakBeforeBraces: Custom
+UseTab: Always
