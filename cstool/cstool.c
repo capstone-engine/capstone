@@ -22,6 +22,8 @@ static struct {
 	{ "armle", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
 	{ "armv8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 },
 	{ "thumbv8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 },
+	{ "armv8be", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
+	{ "thumbv8be", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
 	{ "cortexm", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS },
 	{ "thumb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB },
 	{ "thumbbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN },
@@ -173,6 +175,10 @@ static void usage(char *prog)
 		printf("        thumb       thumb mode\n");
 		printf("        thumbbe     thumb + big endian\n");
 		printf("        cortexm     thumb + cortex-m extensions\n");
+		printf("        armv8       arm v8\n");
+		printf("        thumbv8     thumb v8\n");
+		printf("        armv8be     arm v8 + big endian\n");
+		printf("        thumbv8be   thumb v8 + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_ARM64)) {

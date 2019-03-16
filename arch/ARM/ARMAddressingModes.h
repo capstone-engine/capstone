@@ -12,7 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
 #define CS_LLVM_TARGET_ARM_ARMADDRESSINGMODES_H
@@ -551,6 +551,34 @@ static inline unsigned char ARM_AM_getAM5Offset(unsigned AM5Opc)
 	return AM5Opc & 0xFF;
 }
 static inline ARM_AM_AddrOpc ARM_AM_getAM5Op(unsigned AM5Opc)
+{
+	return ((AM5Opc >> 8) & 1) ? ARM_AM_sub : ARM_AM_add;
+}
+
+//===--------------------------------------------------------------------===//
+// Addressing Mode #5 FP16
+//===--------------------------------------------------------------------===//
+//
+// This is used for coprocessor instructions, such as 16-bit FP load/stores.
+//
+// addrmode5fp16 := reg +/- imm8*2
+//
+// The first operand is always a Reg.  The second operand encodes the
+// operation (add or subtract) in bit 8 and the immediate in bits 0-7.
+
+/// getAM5FP16Opc - This function encodes the addrmode5fp16 opc field.
+static inline unsigned getAM5FP16Opc(ARM_AM_AddrOpc Opc, unsigned char Offset)
+{
+	bool isSub = Opc == ARM_AM_sub;
+	return ((int)isSub << 8) | Offset;
+}
+
+static inline unsigned char getAM5FP16Offset(unsigned AM5Opc)
+{
+	return AM5Opc & 0xFF;
+}
+
+static inline ARM_AM_AddrOpc getAM5FP16Op(unsigned AM5Opc)
 {
 	return ((AM5Opc >> 8) & 1) ? ARM_AM_sub : ARM_AM_add;
 }
