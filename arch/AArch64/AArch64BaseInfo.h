@@ -255,7 +255,7 @@ inline static unsigned getNZCVToSatisfyCondCode(CondCode Code)
 	// NZCV flags encoded as expected by ccmp instructions, ARMv8 ISA 5.5.7.
 	enum { N = 8, Z = 4, C = 2, V = 1 };
 	switch (Code) {
-		default: llvm_unreachable("Unknown condition code");
+		default: // llvm_unreachable("Unknown condition code");
 		case EQ: return Z; // Z == 1
 		case NE: return 0; // Z == 0
 		case HS: return C; // C == 1
