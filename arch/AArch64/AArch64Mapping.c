@@ -399,7 +399,7 @@ const char *AArch64_insn_name(csh handle, unsigned int id)
 		return NULL;
 
 	if (id < ARR_SIZE(insn_name_maps))
-		return insn_name_maps[id].name;
+		return insn_name_maps[id];
 
 	// then find alias insn
 	for (i = 0; i < ARR_SIZE(alias_insn_name_maps); i++) {
