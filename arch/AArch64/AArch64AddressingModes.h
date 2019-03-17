@@ -15,7 +15,7 @@
 #define CS_AARCH64_ADDRESSINGMODES_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #include "../../MathExtras.h"
 
@@ -214,9 +214,9 @@ static inline float AArch64_AM_getFPImmFloat(unsigned Imm)
 static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType10(uint8_t Imm)
 {
 	static const uint32_t lookup[16] = {
-		0x00000000, 0x000000ff, 0x0000ff00, 0x0000ffff, 
-		0x00ff0000, 0x00ff00ff, 0x00ffff00, 0x00ffffff, 
-		0xff000000, 0xff0000ff, 0xff00ff00, 0xff00ffff, 
+		0x00000000, 0x000000ff, 0x0000ff00, 0x0000ffff,
+		0x00ff0000, 0x00ff00ff, 0x00ffff00, 0x00ffffff,
+		0xff000000, 0xff0000ff, 0xff00ff00, 0xff00ffff,
 		0xffff0000, 0xffff00ff, 0xffffff00, 0xffffffff
         };
 	return lookup[Imm & 0x0f] | ((uint64_t)lookup[Imm >> 4] << 32);

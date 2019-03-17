@@ -15,7 +15,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_LLVM_AARCH64_BASEINFO_H
 #define CS_LLVM_AARCH64_BASEINFO_H
