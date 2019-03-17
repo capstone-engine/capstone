@@ -39,7 +39,7 @@
 
 
 static const char *getRegisterName(unsigned RegNo, int AltIdx);
-static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
+static void printOperand(MCInst *MI, unsigned OpNum, SStream *O);
 static bool printSysAlias(MCInst *MI, SStream *O);
 static char *printAliasInstr(MCInst *MI, SStream *OS, void *info);
 static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
@@ -83,7 +83,11 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
-void AArch64_printRegName(MCInst *MI, SStream *O, void *Info) {}
+void AArch64_printRegName(SStream *O, unsigned RegNo)
+{
+	// This is for .cfi directives.
+	SStream_concat0(O, getRegisterName(RegNo, AArch64_NoRegAltName));
+}
 
 void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 {
@@ -729,9 +733,9 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 	return Asm != NULL;
 }
 
-static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
+static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
@@ -791,11 +795,25 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printImm(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printImm(MCInst *MI, unsigned OpNum, SStream *O) {
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
+	SStream_concat0(O, "#", MCOperand_getImm(Op));
+	if (MI->csh->detail) {
+#ifndef CAPSTONE_DIET
+		uint8_t access;
+		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+		MI->ac_idx++;
+#endif
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
 
-static void printImmHex(MCInst *MI, unsigned OpNo, SStream *O)
+static void printImmHex(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	SStream_concat(O, "#%#llx", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
@@ -810,10 +828,10 @@ static void printImmHex(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printPostIncOperand(MCInst *MI, unsigned OpNo,
+static void printPostIncOperand(MCInst *MI, unsigned OpNum,
 		unsigned Imm, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
@@ -848,14 +866,14 @@ static void printPostIncOperand(MCInst *MI, unsigned OpNo,
 	//llvm_unreachable("unknown operand kind in printPostIncOperand64");
 }
 
-static void printPostIncOperand2(MCInst *MI, unsigned OpNo, SStream *O, int Amount)
+static void printPostIncOperand2(MCInst *MI, unsigned OpNum, SStream *O, int Amount)
 {
-	printPostIncOperand(MI, OpNo, Amount, O);
+	printPostIncOperand(MI, OpNum, Amount, O);
 }
 
-static void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
+static void printVRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	//assert(Op.isReg() && "Non-register vreg operand!");
 	unsigned Reg = MCOperand_getReg(Op);
 	SStream_concat0(O, getRegisterName(Reg, AArch64_vreg));
@@ -872,9 +890,9 @@ static void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
+static void printSysCROperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	//assert(Op.isImm() && "System instruction C[nm] operands must be immediates!");
 	SStream_concat(O, "c%u", MCOperand_getImm(Op));
 	if (MI->csh->detail) {
@@ -1118,16 +1136,10 @@ static void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 	printArithExtend(MI, OpNum + 1, O);
 }
 
-static void printMemExtendImpl(MCInst *MI, unsigned OpNo, SStream *O)
+static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
+			       char SrcRegKind, SStream *O)
 {
-}
-
-static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind, unsigned Width)
-{
-	unsigned SignExtend = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	unsigned DoShift = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
-
-	// sxtw, sxtx, uxtw or lsl (== uxtx)
+		// sxtw, sxtx, uxtw or lsl (== uxtx)
 	bool IsLSL = !SignExtend && SrcRegKind == 'x';
 	if (IsLSL) {
 		SStream_concat0(O, "lsl");
@@ -1179,7 +1191,29 @@ static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKi
 	}
 }
 
-static void printRegWithShiftExtend(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind, unsigned Width)
+{
+	unsigned SignExtend = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned DoShift = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	printMemExtendImpl(SignExtend, DoShift, Width, SrcRegKind, O)
+}
+
+static void printRegWithShiftExtend(MCInst *MI, unsigned OpNum, SStream *O,
+				    bool SignExtend, int ExtWidth,
+				    char SrcRegKind, char Suffix)
+{
+	printOperand(MI, OpNum, O);
+	if (Suffix == 's' || Suffix == 'd')
+		SStream_concat0(O, ".", Suffix);
+//   else
+//     assert(Suffix == 0 && "Unsupported suffix size");
+
+	bool DoShift = ExtWidth != 8;
+	if (SignExtend || DoShift || SrcRegKind == 'w') {
+		SStream_concat0(O, ", ");
+		printMemExtendImpl(SignExtend, DoShift, ExtWidth, SrcRegKind, O);
+	}
+}
 
 static void printCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 {
@@ -1200,7 +1234,10 @@ static void printInverseCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 }
 
-static void printAMNoIndex(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	SStream_concat0(O, "[", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName), "]");
+}
 
 static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 {
@@ -1250,12 +1287,25 @@ static void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStrea
 	}
 }
 
-static void printUImm12Offset2(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
+static void printUImm12Offset2(MCInst *MI, unsigned OpNum, SStream *O, unsigned int Scale)
 {
 	printUImm12Offset(MI, OpNum, Scale, O);
 }
 
-static void printAMIndexedWB(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printAMIndexedWB(MCInst *MI, unsigned OpNum, SStream *O, unsigned int Scale)
+{
+	MCOperand *MO = MCInst_getOperand(MI, OpNum + 1);
+	SStream_concat0(O, "[", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
+	if (MCOperand_isImm(MO)) {
+		int64_t val = Scale * MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+		printInt64Bang(O, val);
+	// } else {
+	//   // assert(MO1.isExpr() && "Unexpected operand type!");
+	//   SStream_concat0(O, ", ");
+	//   MO1.getExpr()->print(O, &MAI);
+	}
+	SStream_concat0(O, "]");
+}
 
 static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
@@ -1287,7 +1337,16 @@ static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 }
 
-static void printPSBHintOp(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, OpNum);
+	unsigned int psbhintop = MCOperand_getImm(Op);
+	//   auto PSB = AArch64PSBHint::lookupPSBByEncoding(psbhintop);
+	//   if (PSB)
+	//     O << PSB->Name;
+	//   else
+	printInt32Bang(O, psbhintop);
+}
 
 static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
@@ -1360,8 +1419,16 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride)
 	return Reg;
 }
 
-static void printGPRSeqPairsClassOperand(MCInst *MI, unsigned OpNo, SStream *O)
+static void printGPRSeqPairsClassOperand(MCInst *MI, unsigned OpNum, SStream *O, unsigned int size)
 {
+	// static_assert(size == 64 || size == 32,
+	//		"Template parameter must be either 32 or 64");
+	unsigned Reg = MI->getOperand(OpNum).getReg();
+	unsigned Sube = (size == 32) ? AArch64_sube32 : AArch64_sube64;
+	unsigned Subo = (size == 32) ? AArch64_subo32 : AArch64_subo64;
+	unsigned Even = MCRegisterInfo_getSubReg(MRI, Reg, Sube);
+	unsigned Odd = MCRegisterInfo_getSubReg(MRI, Reg, Subo);
+	SStream_concat0(O, getRegisterName(Even, AArch64_NoRegAltName), ", ", getRegisterName(Odd, AArch64_NoRegAltName);
 }
 
 static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *LayoutSuffix, MCRegisterInfo *MRI, arm64_vas vas, arm64_vess vess)
@@ -1420,8 +1487,9 @@ static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *Layout
 	SStream_concat0(O, "}");
 }
 
-static void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNo, SStream *O)
+static void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
 {
+	printVectorList(MI, OpNum, O, "");
 }
 
 static void printTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, unsigned NumLanes, char LaneKind, MCRegisterInfo *MRI)
@@ -1568,9 +1636,9 @@ static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 }
 
-static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
+static void printBarrierOption(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	unsigned Opcode = MCInst_getOpcode(MI);
 	bool Valid;
 	const char *Name;
@@ -1609,9 +1677,9 @@ static void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
+static void printMRSSystemRegister(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	char Name[128];
 
 	A64SysRegMapper_toString(&AArch64_MRSMapper, Val, Name);
@@ -1630,9 +1698,9 @@ static void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
+static void printMSRSystemRegister(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	char Name[128];
 
 	A64SysRegMapper_toString(&AArch64_MSRMapper, Val, Name);
@@ -1651,9 +1719,9 @@ static void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
+static void printSystemPStateField(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	bool Valid;
 	const char *Name;
 
@@ -1687,9 +1755,9 @@ static void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
+static void printSIMDType10Operand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	uint8_t RawVal = (uint8_t)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+	uint8_t RawVal = (uint8_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
 	SStream_concat(O, "#%#016llx", Val);
 	if (MI->csh->detail) {
@@ -1705,15 +1773,127 @@ static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printComplexRotationOp(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printSVEPattern(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printSVERegOp(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printImmSVE(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printImm8OptLsl(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printSVELogicalImm(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printZPRasFPR(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printExactFPImm(MCInst *MI, unsigned OpNo, SStream *O) {}
-static void printGPR64as32(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printComplexRotationOp(MCInst *MI, unsigned OpNum, SStream *O, int64_t Angle, int64_t Remainder)
+{
+	unsigned int Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	printInt64Bang((Val * Angle) + Remainder);
+}
+
+static void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	// TODO: Fix this
+	// if (auto Pat = AArch64SVEPredPattern::lookupSVEPREDPATByEncoding(Val))
+	// 	O << Pat->Name;
+	// else
+	SStream_concat0(O, "#", Val);
+}
+
+static void printSVERegOp(MCInst *MI, unsigned OpNum, SStream *O, char suffix)
+{
+	switch (suffix) {
+		case 0:
+		case 'b':
+		case 'h':
+		case 's':
+		case 'd':
+		case 'q':
+			break;
+		default:
+			// llvm_unreachable("Invalid kind specifier.");
+	}
+
+	unsigned int Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
+	if (suffix != 0)
+		SStream_concat0(O, ".", suffix);
+}
+
+// TODO: should I make a few more versions of this func to handle the other templates?
+static void printImmSVE(uint64_t Val, SStream *O)
+{
+	// do not print number in negative form
+	if (Val >= 0 && Val <= HEX_THRESHOLD)
+		SStream_concat(O, "#%u", (int)Val);
+	else
+		SStream_concat(O, "#0x%"PRIx64, Val);
+	// Do the opposite to that used for instruction operands.
+	// TODO: Add CommentStream support
+	// if (CommentStream) {
+	// 	// do not print number in negative form
+	// 	if (Val >= 0 && Val <= HEX_THRESHOLD)
+	// 		SStream_concat(CommentStream, "=#%u\n", (int)Val);
+	// 	else
+	// 		SStream_concat(CommentStream, "=#0x%llx\n", Val);
+	// }
+}
+
+static void printImm8OptLsl(MCInst *MI, unsigned OpNum, SStream *O, bool is_signed)
+{
+	unsigned UnscaledVal = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Shift = MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	// assert(AArch64_AM::getShiftType(Shift) == AArch64_AM::LSL &&
+	// 	"Unexepected shift type!");
+
+	// #0 lsl #8 is never pretty printed
+	if ((UnscaledVal == 0) && (AArch64_AM_getShiftValue(Shift) != 0)) {
+		SStream_concat0(O, "#", UnscaledVal);
+		printShifter(MI, OpNum + 1, O);
+		return;
+	}
+
+	if (is_signed)
+		int8_t Val = (int8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift));
+	else
+		uint8_t Val = (uint8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift));
+
+	printImmSVE(Val, O);
+}
+
+static void printSVELogicalImm(MCInst *MI, unsigned OpNum, SStream *O, bool Signed)
+{
+	// typedef typename std::make_signed<T>::type SignedT;
+	// typedef typename std::make_unsigned<T>::type UnsignedT;
+	uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	uint64_t PrintVal = AArch64_AM_decodeLogicalImmediate(Val, 64);
+
+	// Prefer the default format for 16bit values, hex otherwise.
+	if (Signed)
+		printImmSVE((int16_t)PrintVal, O);
+	else
+		printUInt64Bang(O, PrintVal)
+}
+
+static void printZPRasFPR(MCInst *MI, unsigned OpNum, SStream *O, int Width)
+{
+	unsigned int Base;
+	switch (Width) {
+	case 8:   Base = AArch64_B0; break;
+	case 16:  Base = AArch64_H0; break;
+	case 32:  Base = AArch64_S0; break;
+	case 64:  Base = AArch64_D0; break;
+	case 128: Base = AArch64_Q0; break;
+	default:
+	// llvm_unreachable("Unsupported width");
+	}
+	unsigned int Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum))
+	SStream_concat0(O, getRegisterName(Reg - AArch64_Z0 + Base, AArch64_NoRegAltName));
+}
+
+static void printExactFPImm(MCInst *MI, unsigned OpNum, SStream *O, unsigned ImmIs0, unsigned ImmIs1)
+{
+	// TODO: fix this !!!!
+	// auto *Imm0Desc = AArch64ExactFPImm::lookupExactFPImmByEnum(ImmIs0);
+	// auto *Imm1Desc = AArch64ExactFPImm::lookupExactFPImmByEnum(ImmIs1);
+	// unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	// O << "#" << (Val ? Imm1Desc->Repr : Imm0Desc->Repr);
+}
+
+static void printGPR64as32(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	unsigned int Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum))
+	SStream_concat0(O, getRegisterName(getWRegFromXReg(Reg), AArch64_NoRegAltName));
+}
 
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
