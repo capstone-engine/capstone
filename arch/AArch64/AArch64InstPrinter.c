@@ -83,6 +83,8 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
+void AArch64_printRegName(MCInst *MI, SStream *O, void *Info) {}
+
 void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	// Check for special encodings and print the canonical alias instead.
@@ -789,7 +791,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static void printHexImm(MCInst *MI, unsigned OpNo, SStream *O)
+static void printImm(MCInst *MI, unsigned OpNo, SStream *O) {}
+
+static void printImmHex(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	SStream_concat(O, "#%#llx", MCOperand_getImm(Op));
@@ -1114,6 +1118,10 @@ static void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 	printArithExtend(MI, OpNum + 1, O);
 }
 
+static void printMemExtendImpl(MCInst *MI, unsigned OpNo, SStream *O)
+{
+}
+
 static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind, unsigned Width)
 {
 	unsigned SignExtend = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
@@ -1171,6 +1179,8 @@ static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKi
 	}
 }
 
+static void printRegWithShiftExtend(MCInst *MI, unsigned OpNo, SStream *O) {}
+
 static void printCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	A64CC_CondCode CC = (A64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
@@ -1189,6 +1199,8 @@ static void printInverseCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 		MI->flat_insn->detail->arm64.cc = (arm64_cc)(getInvertedCondCode(CC) + 1);
 	}
 }
+
+static void printAMNoIndex(MCInst *MI, unsigned OpNo, SStream *O) {}
 
 static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
 {
@@ -1243,6 +1255,8 @@ static void printUImm12Offset2(MCInst *MI, unsigned OpNum, SStream *O, int Scale
 	printUImm12Offset(MI, OpNum, Scale, O);
 }
 
+static void printAMIndexedWB(MCInst *MI, unsigned OpNo, SStream *O) {}
+
 static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	unsigned prfop = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
@@ -1272,6 +1286,8 @@ static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O)
 		}
 	}
 }
+
+static void printPSBHintOp(MCInst *MI, unsigned OpNo, SStream *O) {}
 
 static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
@@ -1344,6 +1360,10 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride)
 	return Reg;
 }
 
+static void printGPRSeqPairsClassOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+}
+
 static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *LayoutSuffix, MCRegisterInfo *MRI, arm64_vas vas, arm64_vess vess)
 {
 #define GETREGCLASS_CONTAIN0(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), _reg)
@@ -1398,6 +1418,10 @@ static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O, char *Layout
 	}
 
 	SStream_concat0(O, "}");
+}
+
+static void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNo, SStream *O)
+{
 }
 
 static void printTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, unsigned NumLanes, char LaneKind, MCRegisterInfo *MRI)
@@ -1681,6 +1705,15 @@ static void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
+static void printComplexRotationOp(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printSVEPattern(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printSVERegOp(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printImmSVE(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printImm8OptLsl(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printSVELogicalImm(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printZPRasFPR(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printExactFPImm(MCInst *MI, unsigned OpNo, SStream *O) {}
+static void printGPR64as32(MCInst *MI, unsigned OpNo, SStream *O) {}
 
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
