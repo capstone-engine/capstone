@@ -195,14 +195,14 @@ static DecodeStatus DecodeVecShiftL8Imm(MCInst *Inst, unsigned Imm,
 		uint64_t Addr, const void *Decoder);
 static DecodeStatus DecodeWSeqPairsClassRegisterClass(MCInst *Inst,
 						      unsigned RegNo,
-						      unint64_t Addr,
+						      uint64_t Addr,
 						      const void *Decoder);
 static DecodeStatus DecodeXSeqPairsClassRegisterClass(MCInst *Inst,
 						      unsigned RegNo,
-						      unint64_t Addr,
+						      uint64_t Addr,
 						      const void *Decoder);
 static DecodeStatus DecodeSVELogicalImmInstruction(MCInst *Inst, uint32_t insn,
-						   unint64_t Address,
+						   uint64_t Address,
 						   const void *Decoder);
 static DecodeStatus DecodeSImm(MCInst *Inst, uint64_t Imm, uint64_t Address,
 			       const void *Decoder);
@@ -442,7 +442,7 @@ static const unsigned GPR64DecoderTable[] = {
 	AArch64_LR,  AArch64_XZR
 };
 static DecodeStatus DecodeGPR64commonRegisterClass(MCInst *Inst, unsigned RegNo,
-						   unint64_t Addr,
+						   uint64_t Addr,
 						   const void *Decoder)
 {
   if (RegNo > 30)
@@ -834,7 +834,7 @@ static DecodeStatus DecodeFixedPointScaleImm32(MCInst *Inst, unsigned Imm,
 		const void *Decoder)
 {
 	// scale{5} is asserted as 1 in tblgen.
-	Imm |= 0x20;  
+	Imm |= 0x20;
 	MCOperand_CreateImm0(Inst, 64 - Imm);
 	return Success;
 }
@@ -1815,7 +1815,7 @@ static DecodeStatus DecodeTestAndBranch(MCInst *Inst, uint32_t insn,
 static DecodeStatus DecodeGPRSeqPairsClassRegisterClass(MCInst *Inst,
 							unsigned RegClassID,
 							unsigned RegNo,
-							unint64_t Addr,
+							uint64_t Addr,
 							const void *Decoder)
 {
   // Register number must be even (see CASP instruction)
@@ -1829,7 +1829,7 @@ static DecodeStatus DecodeGPRSeqPairsClassRegisterClass(MCInst *Inst,
 
 static DecodeStatus DecodeWSeqPairsClassRegisterClass(MCInst *Inst,
 						      unsigned RegNo,
-						      unint64_t Addr,
+						      uint64_t Addr,
 						      const void *Decoder)
 {
   return DecodeGPRSeqPairsClassRegisterClass(
@@ -1838,7 +1838,7 @@ static DecodeStatus DecodeWSeqPairsClassRegisterClass(MCInst *Inst,
 
 static DecodeStatus DecodeXSeqPairsClassRegisterClass(MCInst *Inst,
 						      unsigned RegNo,
-						      unint64_t Addr,
+						      uint64_t Addr,
 						      const void *Decoder)
 {
   return DecodeGPRSeqPairsClassRegisterClass(
@@ -1846,7 +1846,7 @@ static DecodeStatus DecodeXSeqPairsClassRegisterClass(MCInst *Inst,
 }
 
 static DecodeStatus DecodeSVELogicalImmInstruction(MCInst *Inst, uint32_t insn,
-						   unint64_t Addr,
+						   uint64_t Addr,
 						   const void *Decoder)
 {
   unsigned Zdn = fieldFromInstruction(insn, 0, 5);
@@ -1911,10 +1911,10 @@ void AArch64_init(MCRegisterInfo *MRI)
 	*/
 
 	MCRegisterInfo_InitMCRegisterInfo(MRI, AArch64RegDesc, 420,
-			0, 0, 
+			0, 0,
 			AArch64MCRegisterClasses, 43,
 			0, 0, AArch64RegDiffLists,
-			0, 
+			0,
 			AArch64SubRegIdxLists, 53,
 			0);
 }
