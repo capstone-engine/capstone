@@ -22,7 +22,7 @@ struct platform {
 
 static FILE *outfile = NULL;
 
-struct struct platform platforms[] = {
+struct platform platforms[] = {
     {
         // item 0
         CS_ARCH_X86,
