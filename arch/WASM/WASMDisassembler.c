@@ -540,7 +540,7 @@ static bool read_uint64(const uint8_t *code, size_t code_len, uint16_t *param_si
 // return 	| true/false if the function successfully finished 
 static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_size, MCInst *MI)
 {
-	uint32_t length, default_target;
+	uint32_t length, default_target, table_item;
 	int tmp_len = 0, i;
 	size_t var_len;
 
@@ -568,6 +568,8 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_BRTABLE;
 		MI->flat_insn->detail->wasm.operands[0].brtable.length = MI->wasm_data.brtable.length;
 		MI->flat_insn->detail->wasm.operands[0].brtable.address = MI->wasm_data.brtable.address;
+		MI->flat_insn->detail->wasm.operands[0].brtable.table_detail = cs_mem_malloc(sizeof(uint32_t) * MI->wasm_data.brtable.length);
+		// [FIXME] !!! We should find a way to free it somewhere 
 	}
 
 	// read data
@@ -576,9 +578,16 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 			return false;
 		}
 
-		get_varuint32(code + tmp_len, code_len - tmp_len, &var_len);
+		table_item = get_varuint32(code + tmp_len, code_len - tmp_len, &var_len);
 		if (var_len == -1) {
+			if (MI->flat_insn->detail){
+				cs_mem_free(MI->flat_insn->detail->wasm.operands[0].brtable.table_detail);
+			}
 			return false;
+		}
+		
+		if (MI->flat_insn->detail) {
+			MI->flat_insn->detail->wasm.operands[0].brtable.table_detail[i] = table_item;
 		}
 
 		tmp_len += var_len;
@@ -587,6 +596,9 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 	// read default target
 	default_target = get_varuint32(code + tmp_len, code_len - tmp_len, &var_len);
 	if (var_len == -1) {
+		if (MI->flat_insn->detail){
+			cs_mem_free(MI->flat_insn->detail->wasm.operands[0].brtable.table_detail);
+		}
 		return false;
 	}
 

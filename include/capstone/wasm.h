@@ -30,6 +30,7 @@ typedef struct cs_wasm_brtable {
 	uint32_t length;
 	uint64_t address;
 	uint32_t default_target;
+	uint32_t* table_detail; // this param will store all of table details
 } cs_wasm_brtable;
 
 typedef struct cs_wasm_op {
