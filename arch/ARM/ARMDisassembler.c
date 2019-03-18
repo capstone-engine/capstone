@@ -948,6 +948,10 @@ bool Thumb_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 {
 	DecodeStatus status = _Thumb_getInstruction((cs_struct *)ud, instr, code, code_len, size, address);
 
+	// TODO: fix table gen to eliminate these special cases
+	if (instr->Opcode == ARM_t__brkdiv0)
+		return false;
+
 	//return status == MCDisassembler_Success;
 	return status != MCDisassembler_Fail;
 }
