@@ -2979,6 +2979,7 @@ enum {
 	ARM_tUDF	= 3213,
 	ARM_tUXTB	= 3214,
 	ARM_tUXTH	= 3215,
+	ARM_t__brkdiv0	= 3216,
 	ARM_INSTRUCTION_LIST_END = 3217
 };
 
