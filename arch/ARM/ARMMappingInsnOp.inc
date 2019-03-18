@@ -10727,6 +10727,3 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_t__brkdiv0, ARM_INS_BRK: brkdiv0 */
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
-},
