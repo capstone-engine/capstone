@@ -18769,3 +18769,10 @@
 	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_V6, 0 }, 0, 0
 #endif
 },
+
+{
+	ARM_t__brkdiv0, ARM64_INS_BRK,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { ARM_GRP_THUMB, ARM_GRP_THUMB1ONLY, ARM_GRP_V6, 0 }, 0, 0
+#endif
+},
