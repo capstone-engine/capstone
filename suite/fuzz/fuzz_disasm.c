@@ -207,52 +207,10 @@ struct platform platforms[] = {
     },
     {
         //item 26
-        CS_ARCH_MOS65XX,
-        (cs_mode)0,
-        "MOS65XX",
-        "mos65xx"
-    },
-    {
-        //item 27
         CS_ARCH_TMS320C64X,
         CS_MODE_BIG_ENDIAN,
         "tms320c64x",
         "tms320c64x"
-    },
-    {
-        //item 28
-        CS_ARCH_WASM,
-        (cs_mode)0,
-        "WASM",
-        "wasm"
-    },
-    {
-        //item 29
-        CS_ARCH_BPF,
-        CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC,
-        "cBPF",
-        "bpf"
-    },
-    {
-        //item 30
-        CS_ARCH_BPF,
-        CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED,
-        "eBPF",
-        "ebpf"
-    },
-    {
-        //item 31
-        CS_ARCH_BPF,
-        CS_MODE_BIG_ENDIAN | CS_MODE_BPF_CLASSIC,
-        "cBPF",
-        "bpfbe"
-    },
-    {
-        //item 32
-        CS_ARCH_BPF,
-        CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED,
-        "eBPF",
-        "ebpfbe"
     },
 };
 
