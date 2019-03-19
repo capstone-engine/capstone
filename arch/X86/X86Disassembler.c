@@ -253,26 +253,6 @@ static void translateImmediate(MCInst *mcInst, uint64_t immediate,
 					immediate |= ~(0xffffffffull);
 				break;
 		}
-	} // By default sign-extend all X86 immediates based on their encoding.
-	else if (type == TYPE_IMM) {
-		switch (operand->encoding) {
-			default:
-				break;
-			case ENCODING_IB:
-				if(immediate & 0x80)
-					immediate |= ~(0xffull);
-				break;
-			case ENCODING_IW:
-				if(immediate & 0x8000)
-					immediate |= ~(0xffffull);
-				break;
-			case ENCODING_ID:
-				if(immediate & 0x80000000)
-					immediate |= ~(0xffffffffull);
-				break;
-			case ENCODING_IO:
-				break;
-		}
 	} else if (type == TYPE_IMM3) {
 #ifndef CAPSTONE_X86_REDUCE
 		// Check for immediates that printSSECC can't handle.
