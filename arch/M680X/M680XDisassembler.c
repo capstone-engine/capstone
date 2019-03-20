@@ -112,24 +112,24 @@ typedef enum e_access {
 
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
-	m680x_insn insn : 9;
-	insn_hdlr_id handler_id1 : 6; /* first instruction handler id */
-	insn_hdlr_id handler_id2 : 6; /* second instruction handler id */
+	unsigned insn : 9;        // A value of type m680x_insn
+	unsigned handler_id1 : 6; // Type insn_hdlr_id, first instr. handler id
+	unsigned handler_id2 : 6; // Type insn_hdlr_id, second instr. handler id
 } inst_page1;
 
 /* Properties of one instruction in any other PAGE X */
 typedef struct inst_pageX {
-	unsigned opcode : 8;
-	m680x_insn insn : 9;
-	insn_hdlr_id handler_id1 : 6; /* first instruction handler id */
-	insn_hdlr_id handler_id2 : 6; /* second instruction handler id */
+	unsigned opcode : 8;      // The opcode byte
+	unsigned insn : 9;        // A value of type m680x_insn
+	unsigned handler_id1 : 6; // Type insn_hdlr_id, first instr. handler id
+	unsigned handler_id2 : 6; // Type insn_hdlr_id, second instr. handler id
 } inst_pageX;
 
 typedef struct insn_props {
 	unsigned group : 4;
-	e_access_mode access_mode : 5;
-	m680x_reg reg0 : 5;
-	m680x_reg reg1 : 5;
+	unsigned access_mode : 5; // A value of type e_access_mode
+	unsigned reg0 : 5;        // A value of type m680x_reg
+	unsigned reg1 : 5;        // A value of type m680x_reg
 	bool cc_modified : 1;
 	bool update_reg_access : 1;
 } insn_props;
