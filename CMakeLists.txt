@@ -28,8 +28,8 @@ option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -116,6 +116,7 @@ set(HEADERS_COMMON
     include/capstone/m680x.h
     include/capstone/mos65xx.h
     include/capstone/bpf.h
+    include/capstone/riscv.h
     include/capstone/platform.h
     )
 
@@ -487,6 +488,24 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_BPF_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_bpf.c)
 endif ()
 
+if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_RISCV_SUPPORT)
+	add_definitions(-DCAPSTONE_HAS_RISCV)
+	set(SOURCES_RISCV
+		arch/RISCV/RISCVDisassembler.c
+		arch/RISCV/RISCVInstPrinter.c
+		arch/RISCV/RISCVMapping.c
+		arch/RISCV/RISCVModule.c
+	)
+set(HEADERS_RISCV
+	    arch/RISCV/RISCVBaseInfo.h
+	    arch/RISCV/RISCVDisassembler.h
+	    arch/RISCV/RISCVInstPrinter.h
+	    arch/RISCV/RISCVMapping.h
+	    arch/RISCV/RISCVModule.h
+	)
+	set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif ()
@@ -508,6 +527,7 @@ set(ALL_SOURCES
     ${SOURCES_WASM}
     ${SOURCES_MOS65XX}
     ${SOURCES_BPF}
+    ${SOURCES_RISCV}
     )
 
 set(ALL_HEADERS
@@ -528,6 +548,7 @@ set(ALL_HEADERS
     ${HEADERS_WASM}
     ${HEADERS_MOS65XX}
     ${HEADERS_BPF}
+    ${HEADERS_RISCV}
     )
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
@@ -611,6 +632,7 @@ source_group("Source\\EVM" FILES ${SOURCES_EVM})
 source_group("Source\\WASM" FILES ${SOURCES_WASM})
 source_group("Source\\MOS65XX" FILES ${SOURCES_MOS65XX})
 source_group("Source\\BPF" FILES ${SOURCES_BPF})
+source_group("Source\\RISCV" FILES ${SOURCES_RISCV})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -629,6 +651,7 @@ source_group("Include\\EVM" FILES ${HEADERS_EVM})
 source_group("Include\\WASM" FILES ${HEADERS_WASM})
 source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 source_group("Include\\BPF" FILES ${HEADERS_BPF})
+source_group("Include\\RISCV" FILES ${HEADERS_RISCV})
 
 ### test library 64bit routine:
 include("GNUInstallDirs")
