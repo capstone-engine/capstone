@@ -496,12 +496,19 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_RISCV_SUPPORT)
 		arch/RISCV/RISCVMapping.c
 		arch/RISCV/RISCVModule.c
 	)
-set(HEADERS_RISCV
-	    arch/RISCV/RISCVBaseInfo.h
-	    arch/RISCV/RISCVDisassembler.h
-	    arch/RISCV/RISCVInstPrinter.h
-	    arch/RISCV/RISCVMapping.h
-	    arch/RISCV/RISCVModule.h
+	set(HEADERS_RISCV
+		arch/RISCV/RISCVBaseInfo.h
+	    	arch/RISCV/RISCVDisassembler.h
+	    	arch/RISCV/RISCVInstPrinter.h
+	    	arch/RISCV/RISCVMapping.h
+	    	arch/RISCV/RISCVModule.h
+	    	arch/RISCV/RISCVGenAsmWriter.inc
+	    	arch/RISCV/RISCVGenDisassemblerTables.inc
+	    	arch/RISCV/RISCVGenInsnNameMaps.inc
+	    	arch/RISCV/RISCVGenInstrInfo.inc
+	    	arch/RISCV/RISCVGenRegisterInfo.inc
+	    	arch/RISCV/RISCVGenSubtargetInfo.inc
+	    	arch/RISCV/RISCVMappingInsn.inc
 	)
 	set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
 endif ()
