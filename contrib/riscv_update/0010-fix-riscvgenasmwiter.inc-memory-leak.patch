@@ -1,0 +1,24 @@
+From 533ce514a7365932e9919be6e63c605d7edf655c Mon Sep 17 00:00:00 2001
+From: fanfuqiang <feqin1023@gmail.com>
+Date: Wed, 20 Mar 2019 12:26:19 +0800
+Subject: [PATCH] fix riscvgenasmwiter.inc memory leak
+
+---
+ llvm/utils/TableGen/AsmWriterEmitter.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/llvm/utils/TableGen/AsmWriterEmitter.cpp b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+index 90540000f..bc32a494b 100644
+--- a/llvm/utils/TableGen/AsmWriterEmitter.cpp
++++ b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+@@ -1194,6 +1194,7 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+ #ifdef CAPSTONE
+   O << "  tmpString[I] = 0;\n";
+   O << "  SStream_concat0(OS, tmpString);\n";
++  O << "  cs_mem_free(tmpString);\n";
+ #else
+   O << "  OS << '\\t' << StringRef(AsmString, I);\n";
+ #endif
+-- 
+2.20.1
+
