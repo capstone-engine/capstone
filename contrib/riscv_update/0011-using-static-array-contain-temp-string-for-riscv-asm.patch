@@ -1,0 +1,53 @@
+From 93d420c95c3cf1d6a369be1ca7f2333fdf670283 Mon Sep 17 00:00:00 2001
+From: fanfuqiang <feqin1023@gmail.com>
+Date: Wed, 20 Mar 2019 15:15:01 +0800
+Subject: [PATCH] using static array contain temp string for riscv asmwriter
+
+---
+ llvm/utils/TableGen/AsmWriterEmitter.cpp | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/llvm/utils/TableGen/AsmWriterEmitter.cpp b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+index bc32a494b..8e2bd70c6 100644
+--- a/llvm/utils/TableGen/AsmWriterEmitter.cpp
++++ b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+@@ -1171,7 +1171,10 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+   O.indent(2) << "const char *AsmString;\n";
+ #ifdef CAPSTONE
+   O << "  unsigned I = 0;\n";
+-  O << "  char *tmpString;\n";
++  O << "#define ASMSTRING_CONTAIN_SIZE 64\n";
++  O << "  unsigned AsmStringLen = 0;\n";
++  O << "  char tmpString_[ASMSTRING_CONTAIN_SIZE];\n";
++  O << "  char *tmpString = tmpString_;\n";
+   O.indent(2) << "switch (MCInst_getOpcode(MI)) {\n";
+ #else
+   O.indent(2) << "switch (MI->getOpcode()) {\n";
+@@ -1186,7 +1189,11 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+   O << "  unsigned I = 0;\n";
+ #endif
+ #ifdef CAPSTONE
+-  O << "  tmpString = cs_strdup(AsmString);\n";
++  O << "  AsmStringLen = strlen(AsmString);\n";
++  O << "  if (ASMSTRING_CONTAIN_SIZE - 1 < AsmStringLen)\n";
++  O << "    tmpString = cs_strdup(AsmString);\n";
++  O << "  else\n";
++  O << "    tmpString = memcpy(tmpString, AsmString, 1 + AsmStringLen);\n\n";
+ #endif
+   O << "  while (AsmString[I] != ' ' && AsmString[I] != '\\t' &&\n";
+   O << "         AsmString[I] != '$' && AsmString[I] != '\\0')\n";
+@@ -1194,7 +1201,10 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+ #ifdef CAPSTONE
+   O << "  tmpString[I] = 0;\n";
+   O << "  SStream_concat0(OS, tmpString);\n";
+-  O << "  cs_mem_free(tmpString);\n";
++  O << "  if (ASMSTRING_CONTAIN_SIZE - 1 < AsmStringLen)\n";
++  O << "    /* Free the possible cs_strdup() memory. PR#1424. */\n";
++  O << "    cs_mem_free(tmpString);\n";
++  O << "#undef ASMSTRING_CONTAIN_SIZE\n\n";
+ #else
+   O << "  OS << '\\t' << StringRef(AsmString, I);\n";
+ #endif
+-- 
+2.20.1
+

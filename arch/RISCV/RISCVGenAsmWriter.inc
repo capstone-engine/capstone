@@ -1494,7 +1494,10 @@ static bool printAliasInstr(MCInst *MI, SStream * OS, void *info)
   MCRegisterInfo *MRI = (MCRegisterInfo *) info;
   const char *AsmString;
   unsigned I = 0;
-  char *tmpString;
+#define ASMSTRING_CONTAIN_SIZE 64
+  unsigned AsmStringLen = 0;
+  char tmpString_[ASMSTRING_CONTAIN_SIZE];
+  char *tmpString = tmpString_;
   switch (MCInst_getOpcode(MI)) {
   default: return false;
   case RISCV_ADDI:
@@ -2559,13 +2562,22 @@ static bool printAliasInstr(MCInst *MI, SStream * OS, void *info)
     return false;
   }
 
-  tmpString = cs_strdup(AsmString);
+  AsmStringLen = strlen(AsmString);
+  if (ASMSTRING_CONTAIN_SIZE - 1 < AsmStringLen)
+    tmpString = cs_strdup(AsmString);
+  else
+    tmpString = memcpy(tmpString, AsmString, 1 + AsmStringLen);
+
   while (AsmString[I] != ' ' && AsmString[I] != '\t' &&
          AsmString[I] != '$' && AsmString[I] != '\0')
     ++I;
   tmpString[I] = 0;
   SStream_concat0(OS, tmpString);
-  cs_mem_free(tmpString);
+  if (ASMSTRING_CONTAIN_SIZE - 1 < AsmStringLen)
+    /* Free the possible cs_strdup() memory. PR#1424. */
+    cs_mem_free(tmpString);
+#undef ASMSTRING_CONTAIN_SIZE
+
   if (AsmString[I] != '\0') {
     if (AsmString[I] == ' ' || AsmString[I] == '\t') {
       SStream_concat0(OS, " ");
