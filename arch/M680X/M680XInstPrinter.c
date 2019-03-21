@@ -196,7 +196,7 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 
 		if (op->idx.base_reg == M680X_REG_PC &&
 			(op->idx.offset_bits > 0))
-			SStream_concat(O, "R");
+			SStream_concat(O, "r");
 
 		printIncDec(true, O, info, op);
 
