@@ -1,3 +1,19 @@
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe1,0xf8,0x90,0xc0 == kmovq k0, k0
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe1,0xfb,0x92,0xc3 == kmovq k0, rbx
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0x62,0xf1,0x7d,0x48,0x74,0x83,0x12,0x00,0x00,0x00 == vpcmpeqb k0, zmm0, zmmword ptr [rbx + 0x12]
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0x62,0xf2,0x7d,0x48,0x30,0x43,0x08 == vpmovzxbw zmm0, ymmword ptr [rbx + 0x100]
+
 !# issue x86 BND register (OSS-fuzz #13467)
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
 0x0f,0x1a,0x1a == bndldx bnd3, [edx] ; operands[0].type: REG = bnd3
