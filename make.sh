@@ -5,9 +5,7 @@
 
 # Note: to cross-compile "nix32" on Linux, package gcc-multilib is required.
 
-MAKE_JOBS=$((${MAKE_JOBS}+0))
-[ ${MAKE_JOBS} -lt 1 ] && \
-  MAKE_JOBS=4
+MAKE_JOBS=${MAKE_JOBS:-4}
 
 # build Android lib for only one supported architecture
 build_android() {
@@ -91,47 +89,48 @@ uninstall() {
   fi
 }
 
+UNAME="${UNAME:-$(uname)}"
+
 if [ "$UNAME" = SunOS ]; then
-  [ -z "${MAKE}" ] && MAKE=gmake
+  MAKE="${MAKE:-gmake}"
   export INSTALL_BIN=ginstall
   export CC=gcc
 fi
 
-if [ -n "`echo "$UNAME" | grep BSD`" ]; then
+MAKE="${MAKE:-make}"
+
+if echo "$UNAME" | grep -q BSD; then
   MAKE=gmake
   export PREFIX=/usr/local
 fi
 
-[ -z "${UNAME}" ] && UNAME=$(uname)
-[ -z "${MAKE}" ] && MAKE=make
-[ -n "${MAKE_JOBS}" ] && MAKE="$MAKE -j${MAKE_JOBS}"
+MAKE="$MAKE -j${MAKE_JOBS}"
 
 TARGET="$1"
-[ -n "$TARGET" ] && shift
+[ $# -gt 0 ] && shift
 
 case "$TARGET" in
-  "" ) ${MAKE} $*;;
-  "default" ) ${MAKE} $*;;
-  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' ${MAKE} $*;;
+  "" | "default" ) ${MAKE} "$@";;
+  "debug" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_STATIC=yes CFLAGS='-O0 -g -fsanitize=address' LDFLAGS='-fsanitize=address' ${MAKE} "$@";;
   "install" ) install;;
   "uninstall" ) uninstall;;
-  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 ${MAKE} $*;;
-  "cross-win32" ) CROSS=i686-w64-mingw32- ${MAKE} $*;;
-  "cross-win64" ) CROSS=x86_64-w64-mingw32- ${MAKE} $*;;
-  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- ${MAKE} $*;;
-  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- ${MAKE} $*;;
-  "cross-android" ) build_android $*;;
-  "cross-android64" ) CROSS=aarch64-linux-gnu- ${MAKE} $*;;	# Linux cross build
-  "clang" ) CC=clang ${MAKE} $*;;
-  "gcc" ) CC=gcc ${MAKE} $*;;
-  "ios" ) build_iOS $*;;
-  "ios_armv7" ) build_iOS armv7 $*;;
-  "ios_armv7s" ) build_iOS armv7s $*;;
-  "ios_arm64" ) build_iOS arm64 $*;;
-  "osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes ${MAKE} $*;;
-  "mac-universal" ) MACOS_UNIVERSAL=yes ${MAKE} $*;;
-  "mac-universal-no" ) MACOS_UNIVERSAL=no ${MAKE} $*;;
+  "nix32" ) CFLAGS=-m32 LDFLAGS=-m32 ${MAKE} "$@";;
+  "cross-win32" ) CROSS=i686-w64-mingw32- ${MAKE} "$@";;
+  "cross-win64" ) CROSS=x86_64-w64-mingw32- ${MAKE} "$@";;
+  "cygwin-mingw32" ) CROSS=i686-pc-mingw32- ${MAKE} "$@";;
+  "cygwin-mingw64" ) CROSS=x86_64-w64-mingw32- ${MAKE} "$@";;
+  "cross-android" ) build_android "$@";;
+  "cross-android64" ) CROSS=aarch64-linux-gnu- ${MAKE} "$@";;	# Linux cross build
+  "clang" ) CC=clang ${MAKE} "$@";;
+  "gcc" ) CC=gcc ${MAKE} "$@";;
+  "ios" ) build_iOS "$@";;
+  "ios_armv7" ) build_iOS armv7 "$@";;
+  "ios_armv7s" ) build_iOS armv7s "$@";;
+  "ios_arm64" ) build_iOS arm64 "$@";;
+  "osx-kernel" ) CAPSTONE_USE_SYS_DYN_MEM=yes CAPSTONE_HAS_OSXKERNEL=yes CAPSTONE_ARCHS=x86 CAPSTONE_SHARED=no CAPSTONE_BUILD_CORE_ONLY=yes ${MAKE} "$@";;
+  "mac-universal" ) MACOS_UNIVERSAL=yes ${MAKE} "$@";;
+  "mac-universal-no" ) MACOS_UNIVERSAL=no ${MAKE} "$@";;
   * )
-    echo "Usage: $0 ["`grep '^  "' $0 | cut -d '"' -f 2 | tr "\\n" "|"`"]"
+    echo "Usage: $0 ["$(grep '^  "' $0 | cut -d '"' -f 2 | tr "\\n" "|")"]"
     exit 1;;
 esac
