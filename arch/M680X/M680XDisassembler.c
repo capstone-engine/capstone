@@ -112,24 +112,24 @@ typedef enum e_access {
 
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
-	m680x_insn insn : 9;
-	insn_hdlr_id handler_id1 : 6; /* first instruction handler id */
-	insn_hdlr_id handler_id2 : 6; /* second instruction handler id */
+	unsigned insn : 9;        // A value of type m680x_insn
+	unsigned handler_id1 : 6; // Type insn_hdlr_id, first instr. handler id
+	unsigned handler_id2 : 6; // Type insn_hdlr_id, second instr. handler id
 } inst_page1;
 
 /* Properties of one instruction in any other PAGE X */
 typedef struct inst_pageX {
-	unsigned opcode : 8;
-	m680x_insn insn : 9;
-	insn_hdlr_id handler_id1 : 6; /* first instruction handler id */
-	insn_hdlr_id handler_id2 : 6; /* second instruction handler id */
+	unsigned opcode : 8;      // The opcode byte
+	unsigned insn : 9;        // A value of type m680x_insn
+	unsigned handler_id1 : 6; // Type insn_hdlr_id, first instr. handler id
+	unsigned handler_id2 : 6; // Type insn_hdlr_id, second instr. handler id
 } inst_pageX;
 
 typedef struct insn_props {
 	unsigned group : 4;
-	e_access_mode access_mode : 5;
-	m680x_reg reg0 : 5;
-	m680x_reg reg1 : 5;
+	unsigned access_mode : 5; // A value of type e_access_mode
+	unsigned reg0 : 5;        // A value of type m680x_reg
+	unsigned reg1 : 5;        // A value of type m680x_reg
 	bool cc_modified : 1;
 	bool update_reg_access : 1;
 } insn_props;
@@ -619,12 +619,20 @@ typedef struct insn_desc {
 	uint16_t insn_size;
 } insn_desc;
 
-static bool is_indexed09_post_byte_valid(const m680x_info *info,
-	uint16_t *address, uint8_t post_byte, insn_desc *insn_description)
+// If successfull return the additional byte size needed for M6809
+// indexed addressing mode (including the indexed addressing post_byte).
+// On error return -1.
+static int get_indexed09_post_byte_size(const m680x_info *info,
+					uint16_t address)
 {
 	uint8_t ir = 0;
-	bool retval;
+	uint8_t post_byte;
 
+	// Read the indexed addressing post byte.
+	if (!read_byte(info, &post_byte, address))
+		return -1;
+
+	// Depending on the indexed addressing mode more bytes have to be read.
 	switch (post_byte & 0x9F) {
 	case 0x87:
 	case 0x8A:
@@ -635,64 +643,71 @@ static bool is_indexed09_post_byte_valid(const m680x_info *info,
 	case 0x97:
 	case 0x9A:
 	case 0x9E:
-		return false; // illegal indexed post bytes
+		return -1; // illegal indexed post bytes
 
 	case 0x88: // n8,R
 	case 0x8C: // n8,PCR
 	case 0x98: // [n8,R]
 	case 0x9C: // [n8,PCR]
-		insn_description->insn_size++;
-		return read_byte(info, &ir, (*address)++);
+		if (!read_byte(info, &ir, address + 1))
+			return -1;
+		return 2;
 
 	case 0x89: // n16,R
 	case 0x8D: // n16,PCR
 	case 0x99: // [n16,R]
 	case 0x9D: // [n16,PCR]
-		insn_description->insn_size += 2;
-		retval = read_byte(info, &ir, *address + 1);
-		*address += 2;
-		return retval;
+		if (!read_byte(info, &ir, address + 2))
+			return -1;
+		return 3;
 
 	case 0x9F: // [n]
-		insn_description->insn_size += 2;
-		retval = (post_byte & 0x60) == 0 &&
-			read_byte(info, &ir, *address + 1);
-		*address += 2;
-		return retval;
+		if ((post_byte & 0x60) != 0 ||
+			!read_byte(info, &ir, address + 2))
+			return -1;
+		return  3;
 	}
 
-	return true; // Any other indexed post byte is valid and
+	// Any other indexed post byte is valid and
 	// no additional bytes have to be read.
+	return 1;
 }
 
-static bool is_indexed12_post_byte_valid(const m680x_info *info,
-	uint16_t *address, uint8_t post_byte, insn_desc *insn_description,
-	bool is_subset)
+// If successfull return the additional byte size needed for CPU12
+// indexed addressing mode (including the indexed addressing post_byte).
+// On error return -1.
+static int get_indexed12_post_byte_size(const m680x_info *info,
+					uint16_t address, bool is_subset)
 {
 	uint8_t ir;
-	bool result;
+	uint8_t post_byte;
 
+	// Read the indexed addressing post byte.
+	if (!read_byte(info, &post_byte, address))
+		return -1;
+
+	// Depending on the indexed addressing mode more bytes have to be read.
 	if (!(post_byte & 0x20)) // n5,R
-		return true;
+		return 1;
 
 	switch (post_byte & 0xe7) {
 	case 0xe0:
 	case 0xe1: // n9,R
 		if (is_subset)
-			return false;
+			return -1;
 
-		insn_description->insn_size++;
-		return read_byte(info, &ir, (*address)++);
+		if (!read_byte(info, &ir, address))
+			return -1;
+		return 2;
 
 	case 0xe2: // n16,R
 	case 0xe3: // [n16,R]
 		if (is_subset)
-			return false;
+			return -1;
 
-		insn_description->insn_size += 2;
-		result = read_byte(info, &ir, *address + 1);
-		*address += 2;
-		return result;
+		if (!read_byte(info, &ir, address + 1))
+			return -1;
+		return 3;
 
 	case 0xe4: // A,R
 	case 0xe5: // B,R
@@ -702,7 +717,7 @@ static bool is_indexed12_post_byte_valid(const m680x_info *info,
 		break;
 	}
 
-	return true;
+	return 1;
 }
 
 // Check for M6809/HD6309 TFR/EXG instruction for valid register
@@ -727,20 +742,57 @@ static bool is_tfm_reg_valid(const m680x_info *info, uint8_t reg_nibble)
 	return reg_nibble <= 4;
 }
 
-static bool is_loop_post_byte_valid(const m680x_info *info, uint8_t post_byte)
+// If successfull return the additional byte size needed for CPU12
+// loop instructions DBEQ/DBNE/IBEQ/IBNE/TBEQ/TBNE (including the post byte).
+// On error return -1.
+static int get_loop_post_byte_size(const m680x_info *info, uint16_t address)
 {
-	// According to documentation bit 3 is don't care and not checked here.
-	if (post_byte >= 0xc0)
-		return false;
+	uint8_t post_byte;
+	uint8_t rr;
 
-	return ((post_byte & 0x07) != 2 && ((post_byte & 0x07) != 3));
+	if (!read_byte(info, &post_byte, address))
+		return -1;
+
+	// According to documentation bit 3 is don't care and not checked here.
+	if ((post_byte >= 0xc0) ||
+		((post_byte & 0x07) == 2) || ((post_byte & 0x07) == 3))
+		return -1;
+
+	if (!read_byte(info, &rr, address + 1))
+		return -1;
+
+	return 2;
+}
+
+// If successfull return the additional byte size needed for HD6309
+// bit move instructions BAND/BEOR/BIAND/BIEOR/BIOR/BOR/LDBT/STBT
+// (including the post byte).
+// On error return -1.
+static int get_bitmv_post_byte_size(const m680x_info *info, uint16_t address)
+{
+	uint8_t post_byte;
+	uint8_t rr;
+
+	if (!read_byte(info, &post_byte, address))
+		return -1;
+
+	if ((post_byte & 0xc0) == 0xc0)
+		return -1; // Invalid register specified
+	else {
+		if (!read_byte(info, &rr, address + 1))
+			return -1;
+	}
+
+	return 2;
 }
 
 static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 	insn_desc *insn_description)
 {
 	int i;
-	bool retval;
+	bool retval = true;
+	uint16_t size = 0;
+	int sz;
 
 	for (i = 0; i < 2; i++) {
 		uint8_t ir = 0;
@@ -749,9 +801,8 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		switch (insn_description->hid[i]) {
 
 		case imm32_hid:
-			insn_description->insn_size += 4;
-			retval = read_byte(info, &ir, address + 3);
-			address += 4;
+			if ((retval = read_byte(info, &ir, address + size + 3)))
+				size += 4;
 			break;
 
 		case ext_hid:
@@ -761,9 +812,8 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case opidxdr_hid:
 		case idxX16_hid:
 		case idxS16_hid:
-			insn_description->insn_size += 2;
-			retval = read_byte(info, &ir, address + 1);
-			address += 2;
+			if ((retval = read_byte(info, &ir, address + size + 1)))
+				size += 2;
 			break;
 
 		case rel8_hid:
@@ -775,8 +825,8 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case idxY_hid:
 		case idxS_hid:
 		case index_hid:
-			insn_description->insn_size += 1;
-			retval = read_byte(info, &ir, address++);
+			if ((retval = read_byte(info, &ir, address + size)))
+				size++;
 			break;
 
 		case illgl_hid:
@@ -788,14 +838,11 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 			break;
 
 		case idx09_hid:
-			insn_description->insn_size += 1;
-
-			if (!read_byte(info, &ir, address++))
-				retval = false;
+			sz = get_indexed09_post_byte_size(info, address + size);
+			if (sz >= 0)
+				size += sz;
 			else
-				retval = is_indexed09_post_byte_valid(info,
-						&address, ir, insn_description);
-
+				retval = false;
 			break;
 
 		case idx12s_hid:
@@ -804,103 +851,76 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		// intentionally fall through
 
 		case idx12_hid:
-			insn_description->insn_size += 1;
-
-			if (!read_byte(info, &ir, address++))
-				retval = false;
+			sz = get_indexed12_post_byte_size(info,
+					address + size, is_subset);
+			if (sz >= 0)
+				size += sz;
 			else
-				retval = is_indexed12_post_byte_valid(info,
-						&address, ir, insn_description,
-						is_subset);
-
+				retval = false;
 			break;
 
 		case exti12x_hid:
 		case imm16i12x_hid:
-			insn_description->insn_size += 1;
-
-			if (!read_byte(info, &ir, address++))
+			sz = get_indexed12_post_byte_size(info,
+					address + size, false);
+			if (sz >= 0) {
+				size += sz;
+				if ((retval = read_byte(info, &ir,
+						address + size + 1)))
+					size += 2;
+			} else
 				retval = false;
-			else if (!is_indexed12_post_byte_valid(info, &address,
-					ir, insn_description, false))
-				retval = false;
-			else {
-				insn_description->insn_size += 2;
-				retval = read_byte(info, &ir, address + 1);
-				address += 2;
-			}
-
 			break;
 
 		case imm8i12x_hid:
-			insn_description->insn_size += 1;
-
-			if (!read_byte(info, &ir, address++))
+			sz = get_indexed12_post_byte_size(info,
+					address + size, false);
+			if (sz >= 0) {
+				size += sz;
+				if ((retval = read_byte(info, &ir,
+						address + size)))
+					size++;
+			} else
 				retval = false;
-			else if (!is_indexed12_post_byte_valid(info, &address,
-					ir, insn_description, false))
-				retval = false;
-			else {
-				insn_description->insn_size += 1;
-				retval = read_byte(info, &ir, address++);
-			}
-
 			break;
 
 		case tfm_hid:
-			insn_description->insn_size += 1;
-
-			if (!read_byte(info, &ir, address++))
-				retval = false;
-			else
+			if ((retval = read_byte(info, &ir, address + size))) {
+				size++;
 				retval = is_tfm_reg_valid(info, (ir >> 4) & 0x0F) &&
 					is_tfm_reg_valid(info, ir & 0x0F);
-
+			}
 			break;
 
 		case rr09_hid:
-			insn_description->insn_size += 1;
-
-			if (!read_byte(info, &ir, address++))
-				retval = false;
-			else
+			if ((retval = read_byte(info, &ir, address + size))) {
+				size++;
 				retval = is_tfr09_reg_valid(info, (ir >> 4) & 0x0F) &&
 					is_tfr09_reg_valid(info, ir & 0x0F);
-
+			}
 			break;
 
 		case rr12_hid:
-			insn_description->insn_size += 1;
-
-			if (!read_byte(info, &ir, address++))
-				retval = false;
-			else
+			if ((retval = read_byte(info, &ir, address + size))) {
+				size++;
 				retval = is_exg_tfr12_post_byte_valid(info, ir);
-
+			}
 			break;
 
 		case bitmv_hid:
-			insn_description->insn_size += 2;
-
-			if (!read_byte(info, &ir, address++))
-				retval = false;
-			else if ((ir & 0xc0) == 0xc0)
-				retval = false; // Invalid register specified
+			sz = get_bitmv_post_byte_size(info, address + size);
+			if (sz >= 0)
+				size += sz;
 			else
-				retval = read_byte(info, &ir, address++);
-
+				retval = false;
 			break;
 
 		case loop_hid:
-			insn_description->insn_size += 2;
-
-			if (!read_byte(info, &ir, address++))
-				retval = false;
-			else if (!is_loop_post_byte_valid(info, ir))
-				retval = false;
+			sz = get_loop_post_byte_size(info, address + size);
+			if (sz >= 0)
+				size += sz;
 			else
-				retval = read_byte(info, &ir, address++);
-
+				retval = false;
 			break;
 
 		default:
@@ -913,6 +933,8 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		if (!retval)
 			return false;
 	}
+
+	insn_description->insn_size += size;
 
 	return retval;
 }
