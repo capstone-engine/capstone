@@ -26,7 +26,7 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 	printf("%s", comment);
 
 	for (c = str; c < str + len; c++)
-		printf("0x%02X ", *c & 0xff);
+		printf("0x%02x ", *c & 0xff);
 
 	printf("\n");
 }
@@ -36,7 +36,7 @@ static void print_string_hex_short(unsigned char *str, size_t len)
 	unsigned char *c;
 
 	for (c = str; c < str + len; c++)
-		printf("%02X", *c & 0xff);
+		printf("%02x", *c & 0xff);
 }
 
 static const char *s_access[] = {
@@ -115,18 +115,18 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 			break;
 
 		case M680X_OP_DIRECT:
-			printf("\t\toperands[%u].type: DIRECT = 0x%02X\n", i,
+			printf("\t\toperands[%u].type: DIRECT = 0x%02x\n", i,
 				op->direct_addr);
 			break;
 
 		case M680X_OP_EXTENDED:
-			printf("\t\toperands[%u].type: EXTENDED %s = 0x%04X\n",
+			printf("\t\toperands[%u].type: EXTENDED %s = 0x%04x\n",
 				i, op->ext.indirect ? "INDIRECT" : "",
 				op->ext.address);
 			break;
 
 		case M680X_OP_RELATIVE:
-			printf("\t\toperands[%u].type: RELATIVE = 0x%04X\n", i,
+			printf("\t\toperands[%u].type: RELATIVE = 0x%04x\n", i,
 				op->rel.address);
 			break;
 
@@ -149,7 +149,7 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 				printf("\t\t\toffset: %d\n", op->idx.offset);
 
 				if (op->idx.base_reg == M680X_REG_PC)
-					printf("\t\t\toffset address: 0x%X\n",
+					printf("\t\t\toffset address: 0x%x\n",
 						op->idx.offset_addr);
 
 				printf("\t\t\toffset bits: %u\n",
@@ -361,7 +361,7 @@ static void test()
 
 			for (j = 0; j < count; j++) {
 				int slen;
-				printf("0x%04X: ", (uint16_t)insn[j].address);
+				printf("0x%04x: ", (uint16_t)insn[j].address);
 				print_string_hex_short(insn[j].bytes,
 					insn[j].size);
 				printf("%.*s", 1 + ((5 - insn[j].size) * 2),
