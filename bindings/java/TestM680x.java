@@ -38,7 +38,7 @@ public class TestM680x {
   static public String stringToHexUc(byte[] code) {
     StringBuilder buf = new StringBuilder(800);
     for (byte ch: code) {
-      buf.append(String.format(" 0x%02X", ch));
+      buf.append(String.format(" 0x%02x", ch));
     }
     return buf.toString();
   }
@@ -46,7 +46,7 @@ public class TestM680x {
   static public String stringToHexShortUc(byte[] code) {
     StringBuilder buf = new StringBuilder(800);
     for (byte ch: code) {
-      buf.append(String.format("%02X", ch));
+      buf.append(String.format("%02x", ch));
     }
     return buf.toString();
   }
@@ -63,7 +63,7 @@ public class TestM680x {
 */
   public static void print_ins_detail(Capstone.CsInsn ins) {
     String bytes = stringToHexShortUc(ins.bytes);
-    System.out.printf("0x%04X:\t%s\t%s\t%s\n", ins.address, bytes, ins.mnemonic, ins.opStr);
+    System.out.printf("0x%04x:\t%s\t%s\t%s\n", ins.address, bytes, ins.mnemonic, ins.opStr);
 
     M680x.OpInfo operands = (M680x.OpInfo) ins.operands;
 
@@ -83,12 +83,12 @@ public class TestM680x {
         if (i.type == M680X_OP_IMMEDIATE)
           System.out.printf("\t\toperands[%d].type: IMMEDIATE = #%d\n", c, i.value.imm);
         if (i.type == M680X_OP_DIRECT)
-          System.out.printf("\t\toperands[%d].type: DIRECT = 0x%02X\n", c, i.value.direct_addr);
+          System.out.printf("\t\toperands[%d].type: DIRECT = 0x%02x\n", c, i.value.direct_addr);
         if (i.type == M680X_OP_EXTENDED)
-          System.out.printf("\t\toperands[%d].type: EXTENDED %s = 0x%04X\n", c,
+          System.out.printf("\t\toperands[%d].type: EXTENDED %s = 0x%04x\n", c,
             i.value.ext.indirect != 0 ? "INDIRECT" : "", i.value.ext.address);
         if (i.type == M680X_OP_RELATIVE)
-          System.out.printf("\t\toperands[%d].type: RELATIVE = 0x%04X\n", c, i.value.rel.address );
+          System.out.printf("\t\toperands[%d].type: RELATIVE = 0x%04x\n", c, i.value.rel.address );
         if (i.type == M680X_OP_INDEXED) {
           System.out.printf("\t\toperands[%d].type: INDEXED%s\n", c,
             (i.value.idx.flags & M680X_IDX_INDIRECT) != 0 ? " INDIRECT" : "");
@@ -107,7 +107,7 @@ public class TestM680x {
               (i.value.idx.inc_dec == 0)) {
             System.out.printf("\t\t\toffset: %d\n", i.value.idx.offset);
             if (i.value.idx.base_reg == M680X_REG_PC)
-              System.out.printf("\t\t\toffset address: 0x%04X\n", i.value.idx.offset_addr);
+              System.out.printf("\t\t\toffset address: 0x%04x\n", i.value.idx.offset_addr);
             System.out.printf("\t\t\toffset bits: %d\n", i.value.idx.offset_bits);
           }
           if (i.value.idx.inc_dec != 0) {

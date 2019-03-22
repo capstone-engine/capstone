@@ -8,10 +8,10 @@ open M680x_const
 
 
 let print_char_hex ch =
-	printf " 0x%02X" (Char.code ch)
+	printf " 0x%02x" (Char.code ch)
 
 let print_int_hex_short value =
-	printf "%02X" value
+	printf "%02x" value
 
 let print_string_hex comment str =
 	printf "%s" comment;
@@ -74,15 +74,15 @@ let print_op handle flags i op =
 	| M680X_OP_IMMEDIATE imm ->
 		printf "\t\toperands[%d].type: IMMEDIATE = #%d\n" i imm;
 	| M680X_OP_DIRECT direct_addr ->
-		printf "\t\toperands[%d].type: DIRECT = 0x%02X\n" i direct_addr;
+		printf "\t\toperands[%d].type: DIRECT = 0x%02x\n" i direct_addr;
 	| M680X_OP_EXTENDED ext -> (
 		printf "\t\toperands[%d].type: EXTENDED " i;
 		if ext.indirect then
 			printf "INDIRECT";
-		printf " = 0x%04X\n" ext.addr_ext;
+		printf " = 0x%04x\n" ext.addr_ext;
 		);
 	| M680X_OP_RELATIVE rel ->
-		printf "\t\toperands[%d].type: RELATIVE = 0x%04X\n" i rel.addr_rel;
+		printf "\t\toperands[%d].type: RELATIVE = 0x%04x\n" i rel.addr_rel;
 	| M680X_OP_INDEXED idx -> (
 		printf "\t\toperands[%d].type: INDEXED" i;
 		if (bit_set idx.flags _M680X_IDX_INDIRECT) then
@@ -95,7 +95,7 @@ let print_op handle flags i op =
 		if idx.offset_bits != 0 && idx.offset_reg == 0 && idx.inc_dec == 0 then begin
 			printf "\t\t\toffset: %d\n" idx.offset;
 			if idx.base_reg == _M680X_REG_PC then
-				printf "\t\t\toffset address: 0x%X\n" idx.offset_addr;
+				printf "\t\t\toffset address: 0x%x\n" idx.offset_addr;
 			printf "\t\t\toffset bits: %u\n" idx.offset_bits;
 		end;
 		if idx.inc_dec != 0 then
@@ -128,7 +128,7 @@ let print_reg handle reg =
 	printf " %s" (cs_reg_name handle reg)
 
 let print_insn handle insn =
-	printf "0x%04X:\t" insn.address;
+	printf "0x%04x:\t" insn.address;
 	print_array_hex_short insn.bytes;
 	printf "\t%s\t%s\n" insn.mnemonic insn.op_str;
 	print_detail handle insn;

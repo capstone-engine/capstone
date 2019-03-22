@@ -1758,7 +1758,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	if (info->insn == M680X_INS_ILLGL) {
 		fprintf(stderr, "Internal error: Unexpected post byte "
-			"in loop instruction %02X.\n", post_byte);
+			"in loop instruction %02x.\n", post_byte);
 		illegal_hdlr(MI, info, address);
 	};
 
