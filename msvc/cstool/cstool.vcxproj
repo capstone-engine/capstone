@@ -157,6 +157,7 @@
     <ClCompile Include="..\..\cstool\cstool.c" />
     <ClCompile Include="..\..\cstool\cstool_arm.c" />
     <ClCompile Include="..\..\cstool\cstool_arm64.c" />
+    <ClCompile Include="..\..\cstool\cstool_evm.c" />
     <ClCompile Include="..\..\cstool\cstool_m680x.c" />
     <ClCompile Include="..\..\cstool\cstool_m68k.c" />
     <ClCompile Include="..\..\cstool\cstool_mips.c" />
