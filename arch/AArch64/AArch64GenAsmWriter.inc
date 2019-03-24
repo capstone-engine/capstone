@@ -6012,7 +6012,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     // CMEQv16i8rz, CMGEv16i8rz, CMGTv16i8rz, CMLEv16i8rz, CMLTv16i8rz
     SStream_concat0(O, ".16b, #0"); 
 	arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_16B);
-	arm64_op_addFP(MI, 0.0);
+	arm64_op_addImm(MI, 0.0);
     return;
     break;
   case 17:
