@@ -154,7 +154,8 @@ typedef struct insn_props {
 // See also X86 reader(...)
 static bool read_byte(const m680x_info *info, uint8_t *byte, uint16_t address)
 {
-	if (address - info->offset >= info->size)
+	if (address < info->offset ||
+		(uint32_t)(address - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
@@ -166,7 +167,8 @@ static bool read_byte(const m680x_info *info, uint8_t *byte, uint16_t address)
 static bool read_byte_sign_extended(const m680x_info *info, int16_t *word,
 	uint16_t address)
 {
-	if (address - info->offset >= info->size)
+	if (address < info->offset ||
+		(uint32_t)(address - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
@@ -180,7 +182,8 @@ static bool read_byte_sign_extended(const m680x_info *info, int16_t *word,
 
 static bool read_word(const m680x_info *info, uint16_t *word, uint16_t address)
 {
-	if (address + 1 - info->offset >= info->size)
+	if (address < info->offset ||
+		(uint32_t)(address + 1 - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
@@ -193,7 +196,8 @@ static bool read_word(const m680x_info *info, uint16_t *word, uint16_t address)
 static bool read_sdword(const m680x_info *info, int32_t *sdword,
 	uint16_t address)
 {
-	if (address + 3 - info->offset >= info->size)
+	if (address < info->offset ||
+		(uint32_t)(address + 3 - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
@@ -210,10 +214,12 @@ static bool read_sdword(const m680x_info *info, int32_t *sdword,
 // used which contains the opcode. Using a binary search for the right opcode
 // is much faster (= O(log n) ) in comparison to a linear search ( = O(n) ).
 static int binary_search(const inst_pageX *const inst_pageX_table,
-	int table_size, uint8_t opcode)
+	size_t table_size, unsigned int opcode)
 {
+	// As part of the algorithm last may get negative.
+	// => signed integer has to be used.
 	int first = 0;
-	int last = table_size - 1;
+	int last = (int)table_size - 1;
 	int middle = (first + last) / 2;
 
 	while (first <= last) {
@@ -240,6 +246,8 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 	const m680x_info *const info = (const m680x_info *)handle->printer_info;
 	const cpu_tables *cpu = info->cpu;
 	uint8_t insn_prefix = (id >> 8) & 0xff;
+	// opcode is the first instruction byte without the prefix.
+	uint8_t opcode = id & 0xff;
 	int index;
 	int i;
 
@@ -252,7 +260,7 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 
 		if (cpu->pageX_prefix[i] == insn_prefix) {
 			index = binary_search(cpu->inst_pageX_table[i],
-					cpu->pageX_table_size[i], id & 0xff);
+					cpu->pageX_table_size[i], opcode);
 			insn->id = (index >= 0) ?
 				cpu->inst_pageX_table[i][index].insn :
 				M680X_INS_ILLGL;
@@ -276,7 +284,7 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 
 		if ((index = binary_search(cpu->inst_overlay_table[i],
 						cpu->overlay_table_size[i],
-						id & 0xff)) >= 0) {
+						opcode)) >= 0) {
 			insn->id = cpu->inst_overlay_table[i][index].insn;
 			return;
 		}
@@ -946,7 +954,7 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 {
 	const inst_pageX *inst_table = NULL;
 	const cpu_tables *cpu = info->cpu;
-	int table_size = 0;
+	size_t table_size = 0;
 	uint16_t base_address = address;
 	uint8_t ir; // instruction register
 	int i;
@@ -976,7 +984,8 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 			insn_description->opcode =
 				(insn_description->opcode << 8) | ir;
 
-			if ((index = binary_search(inst_table, table_size,					ir)) < 0)
+			if ((index = binary_search(inst_table, table_size,
+				ir)) < 0)
 				return false;
 
 			insn_description->hid[0] =
@@ -1893,7 +1902,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		if (g_insn_props[info->insn].update_reg_access)
 			set_changed_regs_read_write_counts(MI, info);
 
-		info->insn_size = insn_description.insn_size;
+		info->insn_size = (uint8_t)insn_description.insn_size;
 
 		return info->insn_size;
 	}
@@ -2193,7 +2202,7 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	if (cpu_type != M680X_CPU_TYPE_INVALID &&
 		m680x_setup_internals(info, cpu_type, (uint16_t)address, code,
-			code_len))
+			(uint16_t)code_len))
 		insn_size = m680x_disassemble(MI, info, (uint16_t)address);
 
 	if (insn_size == 0) {
