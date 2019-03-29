@@ -2872,37 +2872,37 @@
 {
 	X86_CMPXCHG16rm, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_CMPXCHG16rr, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_CMPXCHG32rm, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_EAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_CMPXCHG32rr, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_EAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_CMPXCHG64rm, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_RAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_CMPXCHG64rr, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_RAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
@@ -2914,13 +2914,13 @@
 {
 	X86_CMPXCHG8rm, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
 	X86_CMPXCHG8rr, X86_INS_CMPXCHG,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 {
