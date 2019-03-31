@@ -105,6 +105,9 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 			case TMS320C64X_FUNIT_S:
 				SStream_concat(&ss, ".S%s%u", tmp, tms320c64x->funit.side);
 				break;
+			case TMS320C64X_FUNIT_NO:
+			case TMS320C64X_FUNIT_INVALID:
+				break;
 		}
 		if (tms320c64x->funit.crosspath > 0)
 			SStream_concat0(&ss, "X");

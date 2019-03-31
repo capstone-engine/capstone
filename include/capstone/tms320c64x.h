@@ -15,67 +15,6 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-typedef enum tms320c64x_op_type {
-	TMS320C64X_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-	TMS320C64X_OP_REG, ///< = CS_OP_REG (Register operand).
-	TMS320C64X_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
-	TMS320C64X_OP_MEM, ///< = CS_OP_MEM (Memory operand).
-	TMS320C64X_OP_REGPAIR = 64, ///< Register pair for double word ops
-} tms320c64x_op_type;
-
-typedef enum tms320c64x_mem_disp {
-	TMS320C64X_MEM_DISP_INVALID = 0,
-	TMS320C64X_MEM_DISP_CONSTANT,
-	TMS320C64X_MEM_DISP_REGISTER,
-} tms320c64x_mem_disp;
-
-typedef enum tms320c64x_mem_dir {
-	TMS320C64X_MEM_DIR_INVALID = 0,
-	TMS320C64X_MEM_DIR_FW,
-	TMS320C64X_MEM_DIR_BW,
-} tms320c64x_mem_dir;
-
-typedef enum tms320c64x_mem_mod {
-	TMS320C64X_MEM_MOD_INVALID = 0,
-	TMS320C64X_MEM_MOD_NO,
-	TMS320C64X_MEM_MOD_PRE,
-	TMS320C64X_MEM_MOD_POST,
-} tms320c64x_mem_mod;
-
-typedef struct tms320c64x_op_mem {
-	unsigned int	base;	///< base register
-	unsigned int	disp;	///< displacement/offset value
-	unsigned int	unit;	///< unit of base and offset register
-	unsigned int	scaled;	///< offset scaled
-	unsigned int	disptype;	///< displacement type
-	unsigned int	direction;	///< direction
-	unsigned int	modify;	///< modification
-} tms320c64x_op_mem;
-
-typedef struct cs_tms320c64x_op {
-	tms320c64x_op_type type;	///< operand type
-	union {
-		unsigned int reg;	///< register value for REG operand or first register for REGPAIR operand
-		int32_t imm;		///< immediate value for IMM operand
-		tms320c64x_op_mem mem;		///< base/disp value for MEM operand
-	};
-} cs_tms320c64x_op;
-
-typedef struct cs_tms320c64x {
-	uint8_t op_count;
-	cs_tms320c64x_op operands[8]; ///< operands for this instruction.
-	struct {
-		unsigned int reg;
-		unsigned int zero;
-	} condition;
-	struct {
-		unsigned int unit;
-		unsigned int side;
-		unsigned int crosspath;
-	} funit;
-	unsigned int parallel;
-} cs_tms320c64x;
-
 typedef enum tms320c64x_reg {
 	TMS320C64X_REG_INVALID = 0,
 
@@ -175,6 +114,90 @@ typedef enum tms320c64x_reg {
 	TMS320C64X_REG_EFR = TMS320C64X_REG_ECR,
 	TMS320C64X_REG_IFR = TMS320C64X_REG_ISR,
 } tms320c64x_reg;
+
+typedef enum tms320c64x_insn_group {
+	TMS320C64X_GRP_INVALID = 0, ///< = CS_GRP_INVALID
+
+	TMS320C64X_GRP_JUMP,	///< = CS_GRP_JUMP
+
+	TMS320C64X_GRP_FUNIT_D = 128,
+	TMS320C64X_GRP_FUNIT_L,
+	TMS320C64X_GRP_FUNIT_M,
+	TMS320C64X_GRP_FUNIT_S,
+	TMS320C64X_GRP_FUNIT_NO,
+
+	TMS320C64X_GRP_ENDING,   // <-- mark the end of the list of groups
+} tms320c64x_insn_group;
+
+typedef enum tms320c64x_funit {
+	TMS320C64X_FUNIT_INVALID = 0,
+	TMS320C64X_FUNIT_D,
+	TMS320C64X_FUNIT_L,
+	TMS320C64X_FUNIT_M,
+	TMS320C64X_FUNIT_S,
+	TMS320C64X_FUNIT_NO
+} tms320c64x_funit;
+
+typedef enum tms320c64x_op_type {
+	TMS320C64X_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	TMS320C64X_OP_REG, ///< = CS_OP_REG (Register operand).
+	TMS320C64X_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	TMS320C64X_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	TMS320C64X_OP_REGPAIR = 64, ///< Register pair for double word ops
+} tms320c64x_op_type;
+
+typedef enum tms320c64x_mem_disp {
+	TMS320C64X_MEM_DISP_INVALID = 0,
+	TMS320C64X_MEM_DISP_CONSTANT,
+	TMS320C64X_MEM_DISP_REGISTER,
+} tms320c64x_mem_disp;
+
+typedef enum tms320c64x_mem_dir {
+	TMS320C64X_MEM_DIR_INVALID = 0,
+	TMS320C64X_MEM_DIR_FW,
+	TMS320C64X_MEM_DIR_BW,
+} tms320c64x_mem_dir;
+
+typedef enum tms320c64x_mem_mod {
+	TMS320C64X_MEM_MOD_INVALID = 0,
+	TMS320C64X_MEM_MOD_NO,
+	TMS320C64X_MEM_MOD_PRE,
+	TMS320C64X_MEM_MOD_POST,
+} tms320c64x_mem_mod;
+
+typedef struct tms320c64x_op_mem {
+	tms320c64x_reg base;		///< base register
+	uint16_t disp;			///< displacement/offset value
+	uint8_t unit;			///< unit of base and offset register
+	bool scaled;			///< offset scaled
+	tms320c64x_mem_disp disptype;	///< displacement type
+	tms320c64x_mem_dir direction;	///< direction
+	tms320c64x_mem_mod modify; 	///< modification
+} tms320c64x_op_mem;
+
+typedef struct cs_tms320c64x_op {
+	tms320c64x_op_type type;	///< operand type
+	union {
+		tms320c64x_reg reg;	///< register value for REG operand or first register for REGPAIR operand
+		int32_t imm;		///< immediate value for IMM operand
+		tms320c64x_op_mem mem;	///< base/disp value for MEM operand
+	};
+} cs_tms320c64x_op;
+
+typedef struct cs_tms320c64x {
+	uint8_t op_count;
+	cs_tms320c64x_op operands[8]; ///< operands for this instruction.
+	struct {
+		tms320c64x_reg reg;
+		bool zero;
+	} condition;
+	struct {
+		tms320c64x_funit unit;
+		uint8_t side;
+		int8_t crosspath;
+	} funit;
+	int8_t parallel;
+} cs_tms320c64x;
 
 typedef enum tms320c64x_insn {
 	TMS320C64X_INS_INVALID = 0,
@@ -327,29 +350,6 @@ typedef enum tms320c64x_insn {
 
 	TMS320C64X_INS_ENDING,   // <-- mark the end of the list of instructions
 } tms320c64x_insn;
-
-typedef enum tms320c64x_insn_group {
-	TMS320C64X_GRP_INVALID = 0, ///< = CS_GRP_INVALID
-
-	TMS320C64X_GRP_JUMP,	///< = CS_GRP_JUMP
-
-	TMS320C64X_GRP_FUNIT_D = 128,
-	TMS320C64X_GRP_FUNIT_L,
-	TMS320C64X_GRP_FUNIT_M,
-	TMS320C64X_GRP_FUNIT_S,
-	TMS320C64X_GRP_FUNIT_NO,
-
-	TMS320C64X_GRP_ENDING,   // <-- mark the end of the list of groups
-} tms320c64x_insn_group;
-
-typedef enum tms320c64x_funit {
-	TMS320C64X_FUNIT_INVALID = 0,
-	TMS320C64X_FUNIT_D,
-	TMS320C64X_FUNIT_L,
-	TMS320C64X_FUNIT_M,
-	TMS320C64X_FUNIT_S,
-	TMS320C64X_FUNIT_NO
-} tms320c64x_funit;
 
 #ifdef __cplusplus
 }
