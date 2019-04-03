@@ -70,8 +70,6 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		SStream_Init(&ss);
 		if (tms320c64x->condition.reg != TMS320C64X_REG_INVALID)
 			SStream_concat(&ss, "[%c%s]|", (tms320c64x->condition.zero == 1) ? '!' : '|', cs_reg_name(ud, tms320c64x->condition.reg));
-		else
-			SStream_concat0(&ss, "||||||");
 
 		p = strchr(insn_asm, '\t');
 		if (p != NULL)
