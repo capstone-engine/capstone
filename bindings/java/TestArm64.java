@@ -75,8 +75,6 @@ public class TestArm64 {
           System.out.printf("\t\t\tExt: %d\n", i.ext);
         if (i.vas != ARM64_VAS_INVALID)
           System.out.printf("\t\t\tVector Arrangement Specifier: 0x%x\n", i.vas);
-        if (i.vess != ARM64_VESS_INVALID)
-          System.out.printf("\t\t\tVector Element Size Specifier: %d\n", i.vess);
         if (i.vector_index != -1)
           System.out.printf("\t\t\tVector Index: %d\n", i.vector_index);
 

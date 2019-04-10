@@ -13,4 +13,6 @@ void AArch64_init(MCRegisterInfo *MRI);
 bool AArch64_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		MCInst *instr, uint16_t *size, uint64_t address, void *info);
 
+uint64_t AArch64_getFeatureBits(int feature);
+
 #endif
