@@ -24,7 +24,6 @@
 //===----------------------------------------------------------------------===//
 // Shifts
 //
-
 typedef enum AArch64_AM_ShiftExtendType {
 	AArch64_AM_InvalidShiftExtend = -1,
 	AArch64_AM_LSL = 0,
@@ -142,7 +141,7 @@ static inline AArch64_AM_ShiftExtendType AArch64_AM_getArithExtendType(unsigned 
 ///            101 ==> sxth
 ///            110 ==> sxtw
 ///            111 ==> sxtx
-inline unsigned AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType ET)
+static inline unsigned AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType ET)
 {
 	switch (ET) {
 		default: // llvm_unreachable("Invalid extend type requested");
@@ -181,13 +180,6 @@ static inline AArch64_AM_ShiftExtendType AArch64_AM_getMemExtendType(unsigned Im
 {
 	return AArch64_AM_getExtendType((Imm >> 1) & 0x7);
 }
-
-#if 0
-static inline unsigned AArch64_AM_getMemExtendImm(AArch64_AM_ShiftExtendType ET, bool DoShift)
-{
-	return (AArch64_AM_getExtendEncoding(ET) << 1) | unsigned(DoShift);
-}
-#endif
 
 static inline uint64_t ror(uint64_t elt, unsigned size)
 {
@@ -373,99 +365,6 @@ static inline float AArch64_AM_getFPImmFloat(unsigned Imm)
 
 	return FPUnion.F;
 }
-
-#if 0
-/// getFP16Imm - Return an 8-bit floating-point version of the 16-bit
-/// floating-point value. If the value cannot be represented as an 8-bit
-/// floating-point value, then return -1.
-static inline int AArch64_AM_getFP16Imm(const APInt &Imm)
-{
-	uint32_t Sign = Imm.lshr(15).getZExtValue() & 1;
-	int32_t Exp = (Imm.lshr(10).getSExtValue() & 0x1f) - 15; // -14 to 15
-	int32_t Mantissa = Imm.getZExtValue() & 0x3ff;	   // 10 bits
-
-	// We can handle 4 bits of mantissa.
-	// mantissa = (16+UInt(e:f:g:h))/16.
-	if (Mantissa & 0x3f)
-		return -1;
-	Mantissa >>= 6;
-
-	// We can handle 3 bits of exponent: exp == UInt(NOT(b):c:d)-3
-	if (Exp < -3 || Exp > 4)
-		return -1;
-
-	Exp = ((Exp + 3) & 0x7) ^ 4;
-
-	return ((int)Sign << 7) | (Exp << 4) | Mantissa;
-}
-
-static inline int getFP16Imm(const APFloat &FPImm)
-{
-	return getFP16Imm(FPImm.bitcastToAPInt());
-}
-
-/// getFP32Imm - Return an 8-bit floating-point version of the 32-bit
-/// floating-point value. If the value cannot be represented as an 8-bit
-/// floating-point value, then return -1.
-static inline int AArch64_AM_getFP32Imm(const APInt &Imm)
-{
-	uint32_t Sign = Imm.lshr(31).getZExtValue() & 1;
-	int32_t Exp = (Imm.lshr(23).getSExtValue() & 0xff) - 127; // -126 to 127
-	int64_t Mantissa = Imm.getZExtValue() & 0x7fffff;	 // 23 bits
-
-	// We can handle 4 bits of mantissa.
-	// mantissa = (16+UInt(e:f:g:h))/16.
-	if (Mantissa & 0x7ffff)
-		return -1;
-	Mantissa >>= 19;
-	if ((Mantissa & 0xf) != Mantissa)
-		return -1;
-
-	// We can handle 3 bits of exponent: exp == UInt(NOT(b):c:d)-3
-	if (Exp < -3 || Exp > 4)
-		return -1;
-
-	Exp = ((Exp + 3) & 0x7) ^ 4;
-
-	return ((int)Sign << 7) | (Exp << 4) | Mantissa;
-}
-
-static inline int AArch64_AM_getFP32Imm(const APFloat &FPImm)
-{
-	return getFP32Imm(FPImm.bitcastToAPInt());
-}
-
-/// getFP64Imm - Return an 8-bit floating-point version of the 64-bit
-/// floating-point value. If the value cannot be represented as an 8-bit
-/// floating-point value, then return -1.
-static inline int AArch64_AM_getFP64Imm(const APInt &Imm)
-{
-	uint64_t Sign = Imm.lshr(63).getZExtValue() & 1;
-	int64_t Exp = (Imm.lshr(52).getSExtValue() & 0x7ff) - 1023; // -1022 to 1023
-	uint64_t Mantissa = Imm.getZExtValue() & 0xfffffffffffffULL;
-
-	// We can handle 4 bits of mantissa.
-	// mantissa = (16+UInt(e:f:g:h))/16.
-	if (Mantissa & 0xffffffffffffULL)
-		return -1;
-	Mantissa >>= 48;
-	if ((Mantissa & 0xf) != Mantissa)
-		return -1;
-
-	// We can handle 3 bits of exponent: exp == UInt(NOT(b):c:d)-3
-	if (Exp < -3 || Exp > 4)
-		return -1;
-
-	Exp = ((Exp + 3) & 0x7) ^ 4;
-
-	return ((int)Sign << 7) | (Exp << 4) | Mantissa;
-}
-
-static inline int AArch64_AM_getFP64Imm(const APFloat &FPImm)
-{
-	return getFP64Imm(FPImm.bitcastToAPInt());
-}
-#endif
 
 //===--------------------------------------------------------------------===//
 // AdvSIMD Modified Immediates
