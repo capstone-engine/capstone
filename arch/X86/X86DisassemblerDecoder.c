@@ -579,15 +579,16 @@ static int readPrefixes(struct InternalInstruction* insn)
 
 		if (lookAtByte(insn, &byte2)) {
 			// dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
-			return -1;
-		}
-
-		if ((insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) &&
-				((~byte1 & 0xc) == 0xc) && ((byte2 & 0x4) == 0x4)) {
-			insn->vectorExtensionType = TYPE_EVEX;
-		} else {
 			unconsumeByte(insn); /* unconsume byte1 */
 			unconsumeByte(insn); /* unconsume byte  */
+		} else {
+			if ((insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) &&
+					((~byte1 & 0xc) == 0xc) && ((byte2 & 0x4) == 0x4)) {
+				insn->vectorExtensionType = TYPE_EVEX;
+			} else {
+				unconsumeByte(insn); /* unconsume byte1 */
+				unconsumeByte(insn); /* unconsume byte  */
+			}
 		}
 
 		if (insn->vectorExtensionType == TYPE_EVEX) {

@@ -1,3 +1,7 @@
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, None
+0x62,0x00 == bound eax, qword ptr [eax]
+
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
 0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; Vector Arrangement Specifier: 0xb
