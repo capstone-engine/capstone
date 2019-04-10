@@ -39,6 +39,15 @@ void SStream_concat0(SStream *ss, const char *s)
 #endif
 }
 
+void SStream_concat1(SStream *ss, const char c)
+{
+#ifndef CAPSTONE_DIET
+	ss->buffer[ss->index] = c;
+	ss->index++;
+	ss->buffer[ss->index] = '\0';
+#endif
+}
+
 void SStream_concat(SStream *ss, const char *fmt, ...)
 {
 #ifndef CAPSTONE_DIET

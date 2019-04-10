@@ -1,10 +1,12 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_ARM64_MAP_H
 #define CS_ARM64_MAP_H
 
 #include "capstone/capstone.h"
+
+#define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 // return name of regiser in friendly string
 const char *AArch64_reg_name(csh handle, unsigned int reg);
@@ -17,7 +19,7 @@ const char *AArch64_insn_name(csh handle, unsigned int id);
 const char *AArch64_group_name(csh handle, unsigned int id);
 
 // map instruction name to public instruction ID
-arm64_reg AArch64_map_insn(const char *name);
+arm64_insn AArch64_map_insn(const char *name);
 
 // map internal vregister to public register
 arm64_reg AArch64_map_vregister(unsigned int r);
@@ -25,8 +27,6 @@ arm64_reg AArch64_map_vregister(unsigned int r);
 void arm64_op_addReg(MCInst *MI, int reg);
 
 void arm64_op_addVectorArrSpecifier(MCInst * MI, int sp);
-
-void arm64_op_addVectorElementSizeSpecifier(MCInst * MI, int sp);
 
 void arm64_op_addFP(MCInst *MI, float fp);
 
