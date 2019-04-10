@@ -627,12 +627,15 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		return;
 	}
 
+	MI->MRI = Info;
+
+	// printf(">>> aaaa opcode = %u\n", MCInst_getOpcode(MI));
+
 	mnem = printAliasInstr(MI, O, (MCRegisterInfo *)Info);
 	if (mnem) {
 		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
 		cs_mem_free(mnem);
 
-		// printf("opcode = %u\n", MCInst_getOpcode(MI));
 		switch(MCInst_getOpcode(MI)) {
 			default: break;
 			case AArch64_UMOVvi64:
@@ -644,7 +647,6 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		}
 
 	} else {
-		MI->MRI = Info;
 		printInstruction(MI, O);
 	}
 }
