@@ -15056,8 +15056,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
 { \
   unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \
   InsnType Val, FieldValue, PositiveMask, NegativeMask; \
-  MCInst TmpMI; \
-  bool Pred, Fail, DecodeComplete; \
+  bool Pred, Fail, DecodeComplete = true; \
   uint32_t ExpectedValue; \
   const uint8_t *Ptr = DecodeTable; \
   uint32_t CurFieldValue = 0; \
@@ -15140,11 +15139,10 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
       /* Perform the decode operation. */ \
-      MCInst_setOpcode(&TmpMI, Opc); \
-      S = decoder(S, DecodeIdx, insn, &TmpMI, Address, &DecodeComplete); \
+      MCInst_setOpcode(MI, Opc); \
+      S = decoder(S, DecodeIdx, insn, MI, Address, &DecodeComplete); \
       if (DecodeComplete) { \
         /* Decoding complete. */ \
-        MI = &TmpMI; \
         return S; \
       } else { \
         /* assert(S == MCDisassembler_Fail); */ \

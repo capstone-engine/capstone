@@ -895,7 +895,9 @@ static inline bool AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate(int64_t Imm
 
 inline static bool isAnyMOVZMovAlias(uint64_t Value, int RegWidth)
 {
-	for (int Shift = 0; Shift <= RegWidth - 16; Shift += 16)
+	int Shift;
+
+	for (Shift = 0; Shift <= RegWidth - 16; Shift += 16)
 		if ((Value & ~(0xffffULL << Shift)) == 0)
 			return true;
 
