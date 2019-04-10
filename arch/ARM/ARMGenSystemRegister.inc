@@ -165,7 +165,7 @@ MClassSysReg *lookupMClassSysRegByM2M3Encoding8(uint16_t encoding)
     { 0x303, 7 },
   };
 
-  i = binsearch_IndexType(Index, ARR_SIZE(Index), encoding);
+  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), encoding);
   if (i == -1)
     return NULL;
   else
@@ -215,7 +215,7 @@ MClassSysReg *lookupMClassSysRegByM1Encoding12(uint16_t encoding)
     { 0x1803, 15 },
   };
 
-  i = binsearch_IndexType(Index, ARR_SIZE(Index), encoding);
+  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), encoding);
   if (i == -1)
     return NULL;
   else
@@ -261,7 +261,7 @@ BankedReg *lookupBankedRegByEncoding(uint8_t encoding)
     { 0x3E, 32 },
   };
 
-  i = binsearch_IndexType(Index, ARR_SIZE(Index), encoding);
+  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), encoding);
   if (i == -1)
     return NULL;
   else

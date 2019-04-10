@@ -1,3 +1,19 @@
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; Vector Arrangement Specifier: 0xb
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; Vector Arrangement Specifier: 0xd
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; Vector Arrangement Specifier: 0x4
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; Vector Arrangement Specifier: 0x8
+
 !# issue 1211
 !# CS_ARCH_X86, CS_MODE_64, None
 0xc4,0xe1,0xf8,0x90,0xc0 == kmovq k0, k0

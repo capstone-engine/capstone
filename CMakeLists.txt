@@ -165,27 +165,21 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_ARM64_SUPPORT)
         arch/AArch64/AArch64AddressingModes.h
         arch/AArch64/AArch64BaseInfo.h
         arch/AArch64/AArch64Disassembler.h
+        arch/AArch64/AArch64InstPrinter.h
+        arch/AArch64/AArch64Mapping.h
         arch/AArch64/AArch64GenAsmWriter.inc
         arch/AArch64/AArch64GenDisassemblerTables.inc
         arch/AArch64/AArch64GenInstrInfo.inc
         arch/AArch64/AArch64GenRegisterInfo.inc
+        arch/AArch64/AArch64GenRegisterName.inc
+        arch/AArch64/AArch64GenRegisterV.inc
         arch/AArch64/AArch64GenSubtargetInfo.inc
-        arch/AArch64/AArch64InstPrinter.h
-        arch/AArch64/AArch64Mapping.h
+        arch/AArch64/AArch64GenSystemOperands.inc
+        arch/AArch64/AArch64GenSystemOperands_enum.inc
         arch/AArch64/AArch64MappingInsn.inc
-        )
-    set(HEADERS_ARM64
-        arch/AArch64/AArch64AddressingModes.h
-        arch/AArch64/AArch64BaseInfo.h
-        arch/AArch64/AArch64Disassembler.h
-        arch/AArch64/AArch64GenAsmWriter.inc
-        arch/AArch64/AArch64GenDisassemblerTables.inc
-        arch/AArch64/AArch64GenInstrInfo.inc
-        arch/AArch64/AArch64GenRegisterInfo.inc
-        arch/AArch64/AArch64GenSubtargetInfo.inc
-        arch/AArch64/AArch64InstPrinter.h
-        arch/AArch64/AArch64Mapping.h
-        )
+        arch/AArch64/AArch64MappingInsnName.inc
+        arch/AArch64/AArch64MappingInsnOp.inc
+    )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
 endif ()
 

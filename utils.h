@@ -68,5 +68,14 @@ bool arr_exist8(unsigned char *arr, unsigned char max, unsigned int id);
 
 bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id);
 
+struct IndexType {
+	uint16_t encoding;
+	unsigned index;
+};
+
+// binary search for encoding in IndexType array
+// return -1 if not found, or index if found
+unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t size, uint16_t encoding);
+
 #endif
 

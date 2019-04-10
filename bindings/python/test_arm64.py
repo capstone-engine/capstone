@@ -69,9 +69,6 @@ def print_insn_detail(insn):
             if i.vas != ARM64_VAS_INVALID:
                 print("\t\t\tVector Arrangement Specifier: 0x%x" % i.vas)
 
-            if i.vess != ARM64_VESS_INVALID:
-                print("\t\t\tVector Element Size Specifier: %u" % i.vess)
-
             if i.vector_index != -1:
                 print("\t\t\tVector Index: %u" % i.vector_index)
 

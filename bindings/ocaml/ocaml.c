@@ -122,7 +122,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
-								tmp2 = caml_alloc(6, 0);
+								tmp2 = caml_alloc(5, 0);
 								switch(insn[j-1].detail->arm.operands[i].type) {
 									case ARM_OP_REG:
 									case ARM_OP_SYSREG:
@@ -253,10 +253,9 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 
 								Store_field(tmp2, 0, Val_int(insn[j-1].detail->arm64.operands[i].vector_index));
 								Store_field(tmp2, 1, Val_int(insn[j-1].detail->arm64.operands[i].vas));
-								Store_field(tmp2, 2, Val_int(insn[j-1].detail->arm64.operands[i].vess));
-								Store_field(tmp2, 3, tmp3);
-								Store_field(tmp2, 4, Val_int(insn[j-1].detail->arm64.operands[i].ext));
-								Store_field(tmp2, 5, tmp);
+								Store_field(tmp2, 2, tmp3);
+								Store_field(tmp2, 3, Val_int(insn[j-1].detail->arm64.operands[i].ext));
+								Store_field(tmp2, 4, tmp);
 
 								Store_field(array, i, tmp2);
 							}

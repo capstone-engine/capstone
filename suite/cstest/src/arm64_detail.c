@@ -33,7 +33,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
 				break;
 			case ARM64_OP_IMM:
-				add_str(&result, " ; operands[%u].type: IMM = 0x%" PRIx64 "", i, op->imm);
+				add_str(&result, " ; operands[%u].type: IMM = 0x%" PRIx64, i, op->imm);
 				break;
 			case ARM64_OP_FP:
 #if defined(_KERNEL_MODE)
@@ -75,7 +75,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: BARRIER = 0x%x", i, op->barrier);
 				break;
 		}
-
+		
 		access = op->access;
 		switch(access) {
 			default:
@@ -90,18 +90,17 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].access: READ | WRITE", i);
 				break;
 		}
-
-		if (op->shift.type != ARM64_SFT_INVALID && op->shift.value)
-			add_str(&result, " ; Shift: type = %u, value = %u", op->shift.type, op->shift.value);
+		
+		if (op->shift.type != ARM64_SFT_INVALID &&
+			op->shift.value)
+			add_str(&result, " ; Shift: type = %u, value = %u",
+				   op->shift.type, op->shift.value);
 
 		if (op->ext != ARM64_EXT_INVALID)
 			add_str(&result, " ; Ext: %u", op->ext);
 
 		if (op->vas != ARM64_VAS_INVALID)
 			add_str(&result, " ; Vector Arrangement Specifier: 0x%x", op->vas);
-
-		if (op->vess != ARM64_VESS_INVALID)
-			add_str(&result, " ; Vector Element Size Specifier: %u", op->vess);
 
 		if (op->vector_index != -1)
 			add_str(&result, " ; Vector Index: %u", op->vector_index);
@@ -116,14 +115,17 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 	if (arm64->cc)
 		add_str(&result, " ; Code-condition: %u", arm64->cc);
 
-	if (!cs_regs_access(*handle, ins, regs_read, &regs_read_count, regs_write, &regs_write_count)) {
+	// Print out all registers accessed by this instruction (either implicit or explicit)
+	if (!cs_regs_access(*handle, ins,
+						regs_read, &regs_read_count,
+						regs_write, &regs_write_count)) {
 		if (regs_read_count) {
 			add_str(&result, " ; Registers read:");
 			for(i = 0; i < regs_read_count; i++) {
 				add_str(&result, " %s", cs_reg_name(*handle, regs_read[i]));
 			}
 		}
-
+		
 		if (regs_write_count) {
 			add_str(&result, " ; Registers modified:");
 			for(i = 0; i < regs_write_count; i++) {
