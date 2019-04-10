@@ -1381,10 +1381,14 @@ static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O, bool IsSVEPr
 		const SVEPRFM *PRFM = lookupSVEPRFMByEncoding(prfop);
 		if (PRFM)
 			SStream_concat0(O, PRFM->Name);
+
+		return;
 	} else {
 		const PRFM *PRFM = lookupPRFMByEncoding(prfop);
 		if (PRFM)
 			SStream_concat0(O, PRFM->Name);
+
+		return;
 	}
 
 	// FIXME: set OpcodePub?
