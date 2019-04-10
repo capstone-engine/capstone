@@ -4183,7 +4183,7 @@
 },
 
 {
-	ARM_SUBri, ARM_INS_ADD,
+	ARM_SUBri, ARM_INS_SUB,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { ARM_GRP_ARM, 0 }, 0, 0
 #endif
