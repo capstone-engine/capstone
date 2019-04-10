@@ -267,6 +267,13 @@ const char *ARM_reg_name2(csh handle, unsigned int reg)
 }
 
 static const insn_map insns[] = {
+	// dummy item
+	{
+		0, 0,
+#ifndef CAPSTONE_DIET
+		{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+	},
 #include "ARMMappingInsn.inc"
 };
 
@@ -306,7 +313,7 @@ static unsigned int find_insn(unsigned int id)
 void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
 	unsigned int i = find_insn(id);
-	if (i != 0) {
+	if (i != -1) {
 		insn->id = insns[i].mapid;
 
 		// printf("id = %u, mapid = %u\n", id, insn->id);
