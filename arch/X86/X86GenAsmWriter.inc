@@ -47558,6 +47558,16 @@ static void printInstruction(MCInst *MI, SStream *O)
   Bits |= (uint64_t)OpInfo2[opcode] << 48;
   SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
 
+  // TODO: dirty quick hack. fix tablegen instead
+  switch(MCInst_getOpcode(MI)) {
+    default: break;
+    case X86_RCR8m1:
+    case X86_RCR16m1:
+    case X86_RCR32m1:
+    case X86_RCR64m1:
+      SStream_concat0(O, "\t$1, ");
+      break;
+  }
 
   // Fragment 0 encoded into 7 bits for 103 unique commands.
   // printf("Fragment 0: %"PRIu64"\n", ((Bits >> 14) & 127));
