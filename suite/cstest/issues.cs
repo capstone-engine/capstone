@@ -1,5 +1,13 @@
 !# issue 1456
 !# CS_ARCH_X86, CS_MODE_32, None
+0xd1,0x5e,0x48 == rcr dword ptr [esi + 0x48], 1
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0xd1,0x5e,0x48 == rcrl $1, 0x48(%esi)
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, None
 0x62,0x00 == bound eax, qword ptr [eax]
 
 !# issue 1454
