@@ -318,7 +318,7 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		default: break;
 	}
-
+	printf("\tId: %d\n", ins->id);
 	if (ins->detail->groups_count) {
 		int j;
 
