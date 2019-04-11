@@ -729,6 +729,28 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	if (MI->op1_size == 0 && reg)
 		MI->op1_size = MI->csh->regsize_map[reg];
+
+	// TODO: dirty quick hack. fix tablegen instead
+	// printf("opcode = %u\n", MCInst_getOpcode(MI));
+	switch(MCInst_getOpcode(MI)) {
+		default:
+			break;
+
+		case X86_RCR8m1:
+		case X86_RCR16m1:
+		case X86_RCR32m1:
+		case X86_RCR64m1:
+			SStream_concat0(O, ", 1");
+
+			if (MI->csh->detail) {
+				MI->flat_insn->detail->x86.operands[1].type = X86_OP_IMM;
+				MI->flat_insn->detail->x86.operands[1].imm = 1;
+				MI->flat_insn->detail->x86.operands[1].size = 1;
+				MI->flat_insn->detail->x86.op_count = 2;
+			}
+
+			break;
+	}
 }
 
 /// printPCRelImm - This is used to print an immediate value that ends up
