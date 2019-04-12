@@ -1,4 +1,10 @@
 !# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
+
+0xd1,0x5e,0x48 == rcrl $1, 0x48(%esi)
+
+!# issue 1456
 !# CS_ARCH_X86, CS_MODE_32, None
 0xd1,0x5e,0x48 == rcr dword ptr [esi + 0x48], 1
 
