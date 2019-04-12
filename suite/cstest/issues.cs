@@ -1,4 +1,10 @@
 !# issue 1456
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x0c,0x00,0x80,0x12 == mov w12, #-1 ; operands[1].type: IMM = 0xffffffffffffffff
+
+0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
+
+!# issue 1456
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
 0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
 

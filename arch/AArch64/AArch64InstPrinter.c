@@ -105,6 +105,8 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 	int LSB, Width;
 	char *mnem;
 
+	// printf(">>> opcode = %u\n", MCInst_getOpcode(MI));
+
 	if (Opcode == AArch64_SYSxt && printSysAlias(MI, O))
 		return;
 
@@ -575,7 +577,7 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				MI->flat_insn->detail->arm64.op_count++;
 
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = RegWidth;
+				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = SignExtend64(Value, RegWidth);
 				MI->flat_insn->detail->arm64.op_count++;
 			}
 
@@ -628,8 +630,6 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 	}
 
 	MI->MRI = Info;
-
-	// printf(">>> aaaa opcode = %u\n", MCInst_getOpcode(MI));
 
 	mnem = printAliasInstr(MI, O, (MCRegisterInfo *)Info);
 	if (mnem) {
