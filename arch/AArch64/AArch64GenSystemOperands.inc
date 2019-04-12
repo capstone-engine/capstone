@@ -2041,7 +2041,7 @@ const ExactFPImm *lookupExactFPImmByEnum(uint16_t Encoding)
     { 0x3, 3 },
   };
 
-  if (Encoding >= ARR_SIZE(TSBsList))
+  if (Encoding >= ARR_SIZE(ExactFPImmsList))
     return NULL;
   else
     return &ExactFPImmsList[Index[Encoding].index];
