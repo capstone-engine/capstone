@@ -3693,28 +3693,28 @@
 },
 
 {
-	AArch64_CSINCWr, ARM64_INS_CINC,
+	AArch64_CSINCWr, ARM64_INS_CSINC,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_CSINCXr, ARM64_INS_CINC,
+	AArch64_CSINCXr, ARM64_INS_CSINC,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_CSINVWr, ARM64_INS_CINV,
+	AArch64_CSINVWr, ARM64_INS_CSINV,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_CSINVXr, ARM64_INS_CINV,
+	AArch64_CSINVXr, ARM64_INS_CSINV,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
