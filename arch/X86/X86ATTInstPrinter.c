@@ -621,7 +621,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_INS_MOVABS:
 			case X86_INS_MOV:
 				// do not print number in negative form
-				SStream_concat(O, "$0x%"PRIx64, imm);
+				if (imm > HEX_THRESHOLD)
+					SStream_concat(O, "$0x%"PRIx64, imm);
+				else
+					SStream_concat(O, "$%"PRIu64, imm);
 				break;
 
 			case X86_INS_IN:
