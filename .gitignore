@@ -117,6 +117,7 @@ fuzz_harness
 test_iter_benchmark
 fuzz_bindisasm
 fuzz_disasm
+fuzz_decode_platform
 capstone_get_setup
 
 
