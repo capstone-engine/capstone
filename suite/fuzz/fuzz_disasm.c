@@ -11,26 +11,17 @@
 
 #include "platform.h"
 
-const char * cs_fuzz_arch(uint8_t arch);
-
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size);
 
 
 static FILE *outfile = NULL;
-
-static struct platform platforms[] = {
-#include "platforms.inc"
-};
-
-const char * cs_fuzz_arch(uint8_t arch) {
-    return platforms[arch % sizeof(platforms)/sizeof(platforms[0])].cstoolname;
-}
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     csh handle;
     cs_insn *all_insn;
     cs_detail *detail;
     cs_err err;
+    unsigned int i;
 
     if (Size < 1) {
         // 1 byte for arch choice
@@ -48,8 +39,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         }
     }
 
-    int platforms_len = sizeof(platforms)/sizeof(platforms[0]);
-    int i = (int)Data[0] % platforms_len;
+    i = get_platform_entry((uint8_t)Data[0]);
 
     err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
     if (err) {
