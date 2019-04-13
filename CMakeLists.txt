@@ -613,7 +613,7 @@ if (CAPSTONE_BUILD_TESTS)
         add_test(NAME "capstone_${ARM_REGRESS_BIN}" COMMAND ${ARM_REGRESS_BIN})
     endif()
     # fuzz target built with the tests
-    add_executable(fuzz_disasm suite/fuzz/onefile.c suite/fuzz/fuzz_disasm.c)
+    add_executable(fuzz_disasm suite/fuzz/onefile.c suite/fuzz/fuzz_disasm.c suite/fuzz/platform.c)
     target_link_libraries(fuzz_disasm ${default-target})
 endif ()
 
