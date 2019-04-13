@@ -8,25 +8,20 @@
 
 #include "platform.h"
 
-static struct platform platforms[] = {
-#include "platforms.inc"
-};
-
 int main(int argc, char **argv)
 {
-    unsigned int platforms_len = sizeof(platforms)/sizeof(platforms[0]), data, i;
+    unsigned char data;
 
-	if (argc != 2) {
-		printf("Decoding OSS fuzz platform\n", argv[0]);
-		printf("Syntax: %s <hex-byte>\n", argv[0]);
-		return -1;
-	}
+    if (argc != 2) {
+        printf("Decoding OSS fuzz platform\n");
+        printf("Syntax: %s <hex-byte>\n", argv[0]);
+        return -1;
+    }
 
-	data = (unsigned int)strtol(argv[1], NULL, 16);
-	i = (unsigned int)data % platforms_len;
+    data = (unsigned int)strtol(argv[1], NULL, 16);
 
-	printf("cstool arch+mode = %s\n", platforms[i].cstoolname);
+    printf("cstool arch+mode = %s\n", get_platform_cstoolname(data));
 
-	return 0;
+    return 0;
 }
 

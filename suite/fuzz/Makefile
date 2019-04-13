@@ -38,7 +38,7 @@ ARCHIVE = $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
 
 .PHONY: all clean
 
-SOURCES = fuzz_disasm.c drivermc.c fuzz_harness.c driverbin.c
+SOURCES = fuzz_disasm.c drivermc.c fuzz_harness.c driverbin.c platform.c
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,fuzz_disasm$(BIN_EXT))
 BINARYBIN = $(addprefix $(TESTDIR)/,fuzz_bindisasm$(BIN_EXT))
@@ -49,7 +49,7 @@ all: $(BINARY) $(BINARYBIN) $(PLATFORMDECODE)
 clean:
 	rm -rf fuzz_harness $(OBJS) $(PLATFORMDECODE) $(BINARY) $(BINARYBIN) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
 
-$(BINARY): fuzz_disasm.o drivermc.o
+$(BINARY): fuzz_disasm.o drivermc.o platform.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 	$(call log,LINK,$(notdir $@))
@@ -58,7 +58,7 @@ else
 	$(link-static)
 endif
 
-$(BINARYBIN): fuzz_disasm.o driverbin.o
+$(BINARYBIN): fuzz_disasm.o driverbin.o platform.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 	$(call log,LINK,$(notdir $@))
@@ -67,7 +67,7 @@ else
 	$(link-static)
 endif
 
-$(PLATFORMDECODE): fuzz_decode_platform.o
+$(PLATFORMDECODE): fuzz_decode_platform.o platform.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 	$(call log,LINK,$(notdir $@))

@@ -1,3 +1,6 @@
+#include "platform.h"
+
+struct platform platforms[] = {
     {
         // item 0
         CS_ARCH_X86,
@@ -327,3 +330,36 @@
         "ppc+qpx",
         "ppcqpxbe"
     },
+
+    // dummy entry to mark the end of this array.
+    // DO NOT DELETE THIS
+    {
+        0,
+        0,
+        NULL,
+        NULL,
+    },
+};
+
+// get length of platforms[]
+unsigned int platform_len(void)
+{
+    unsigned int c;
+
+    for(c = 0; platforms[c].cstoolname; c++);
+
+    return c;
+}
+
+// get platform entry encoded n (first byte for input data of OSS fuzz)
+unsigned int get_platform_entry(uint8_t n)
+{
+    return n % platform_len();
+}
+
+// get cstoolname from encoded n (first byte for input data of OSS fuzz)
+const char *get_platform_cstoolname(uint8_t n)
+{
+    return platforms[get_platform_entry(n)].cstoolname;
+}
+
