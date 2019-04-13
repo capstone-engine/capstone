@@ -9,17 +9,12 @@
 
 #include <capstone/capstone.h>
 
+#include "platform.h"
+
 const char * cs_fuzz_arch(uint8_t arch);
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size);
 
-
-struct platform {
-    cs_arch arch;
-    cs_mode mode;
-    const char *comment;
-    const char *cstoolname;
-};
 
 static FILE *outfile = NULL;
 
