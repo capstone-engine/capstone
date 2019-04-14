@@ -221,6 +221,7 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc, unsi
 
 	//assert (!(ShOpc == ARM_AM_ror && !ShImm) && "Cannot have ror #0");
 	SStream_concat0(O, ARM_AM_getShiftOpcStr(ShOpc));
+
 	if (MI->csh->detail) {
 		if (MI->csh->doing_mem)
 			MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = (arm_shifter)ShOpc;
@@ -962,18 +963,16 @@ static void printSORegImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 	printRegName(MI->csh, O, MCOperand_getReg(MO1));
 
-	// Print the shift opc.
-	printRegImmShift(MI, O, ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)),
-			getSORegOffset((unsigned int)MCOperand_getImm(MO2)));
-
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].type = ARM_OP_REG;
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].reg = MCOperand_getReg(MO1);
 		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].access = CS_AC_READ;
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.type = MCOperand_getImm(MO2) & 7;
-		MI->flat_insn->detail->arm.operands[MI->flat_insn->detail->arm.op_count].shift.value = (unsigned int)MCOperand_getImm(MO2) >> 3;
 		MI->flat_insn->detail->arm.op_count++;
 	}
+
+	// Print the shift opc.
+	printRegImmShift(MI, O, ARM_AM_getSORegShOp((unsigned int)MCOperand_getImm(MO2)),
+			getSORegOffset((unsigned int)MCOperand_getImm(MO2)));
 }
 
 //===--------------------------------------------------------------------===//
