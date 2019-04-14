@@ -1,4 +1,8 @@
 !# issue 1456
+!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x31,0x02,0xa0,0xe1 == lsr r0, r1, r2 ; operands[2].type: REG = r2
+
+!# issue 1456
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
 0x0c,0x00,0x80,0x12 == mov w12, #-1 ; operands[1].type: IMM = 0xffffffffffffffff
 
