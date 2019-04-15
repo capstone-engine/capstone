@@ -680,7 +680,7 @@ void ARM_printInst(MCInst *MI, SStream *O, void *Info)
 			if (MCOperand_getReg(MCInst_getOperand(MI, 2)) == ARM_SP) {
 				MCOperand *MO2 = MCInst_getOperand(MI, 4);
 
-				if (MCOperand_getImm(MO2) == 4) {
+				if (getAM2Offset((unsigned int)MCOperand_getImm(MO2)) == 4) {
 					SStream_concat0(O, "pop");
 					MCInst_setOpcodePub(MI, ARM_INS_POP);
 					printPredicateOperand(MI, 5, O);

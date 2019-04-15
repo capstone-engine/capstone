@@ -1,3 +1,7 @@
+!# issue 1456 ARM POP
+!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, None
+0x04,0x10,0x9d,0xe4 == pop {r1}
+
 !# issue 1456
 !# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
 0x31,0x02,0xa0,0xe1 == lsr r0, r1, r2 ; operands[2].type: REG = r2
