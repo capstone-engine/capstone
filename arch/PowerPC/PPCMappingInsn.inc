@@ -452,7 +452,7 @@
 #endif
 },
 {
-	PPC_BCTRL8_LDinto_toc, PPC_INS_BCT,	// FIXME
+	PPC_BCTRL8_LDinto_toc, PPC_INS_BCTRL,
 #ifndef CAPSTONE_DIET
 	{ PPC_REG_CTR8, PPC_REG_RM, 0 }, { PPC_REG_LR8, PPC_REG_X2, 0 }, { PPC_GRP_MODE64, 0 }, 0, 0
 #endif
