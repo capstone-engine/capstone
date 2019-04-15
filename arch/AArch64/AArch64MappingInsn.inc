@@ -4155,7 +4155,7 @@
 },
 
 {
-	AArch64_EORWri, ARM64_INS_EON,
+	AArch64_EORWri, ARM64_INS_EOR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -4169,7 +4169,7 @@
 },
 
 {
-	AArch64_EORXri, ARM64_INS_EON,
+	AArch64_EORXri, ARM64_INS_EOR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -16888,14 +16888,14 @@
 },
 
 {
-	AArch64_MSUBWrrr, ARM64_INS_MNEG,
+	AArch64_MSUBWrrr, ARM64_INS_MSUB,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_MSUBXrrr, ARM64_INS_MNEG,
+	AArch64_MSUBXrrr, ARM64_INS_MSUB,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -17210,14 +17210,14 @@
 },
 
 {
-	AArch64_NOTv16i8, ARM64_INS_MVN,
+	AArch64_NOTv16i8, ARM64_INS_NOT,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { ARM64_GRP_NEON, 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_NOTv8i8, ARM64_INS_MVN,
+	AArch64_NOTv8i8, ARM64_INS_NOT,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { ARM64_GRP_NEON, 0 }, 0, 0
 #endif
@@ -17231,14 +17231,14 @@
 },
 
 {
-	AArch64_ORNWrs, ARM64_INS_MVN,
+	AArch64_ORNWrs, ARM64_INS_ORN,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_ORNXrs, ARM64_INS_MVN,
+	AArch64_ORNXrs, ARM64_INS_ORN,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
