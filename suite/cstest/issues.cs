@@ -1,5 +1,5 @@
 !# issue 1456 ARM printPKHASRShiftImm
-!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, None
+!# CS_ARCH_ARM, CS_MODE_THUMB, None
 0xca,0xea,0x21,0x06 == pkhtb r6, sl, r1, asr #0x20
 
 !# issue 1456 EIZ
