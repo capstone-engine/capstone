@@ -392,6 +392,16 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 static const char *insn_name_maps[] = {
 	NULL, // ARM64_INS_INVALID
 #include "AArch64MappingInsnName.inc"
+	"sbfiz",
+	"ubfiz",
+	"sbfx",
+	"ubfx",
+	"bfi",
+	"bfxil",
+	"ic",
+	"dc",
+	"at",
+	"tlbi",
 };
 
 const char *AArch64_insn_name(csh handle, unsigned int id)
