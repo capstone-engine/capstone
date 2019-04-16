@@ -976,7 +976,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		NeedPlus = true;
 	}
 
-	if (MCOperand_getReg(IndexReg) != X86_EIZ) {
+	if (MCOperand_getReg(IndexReg) && MCOperand_getReg(IndexReg) != X86_EIZ) {
 		if (NeedPlus) SStream_concat0(O, " + ");
 		_printOperand(MI, Op + X86_AddrIndexReg, O);
 		if (ScaleVal != 1)
