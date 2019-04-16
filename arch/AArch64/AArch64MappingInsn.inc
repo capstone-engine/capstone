@@ -3721,14 +3721,14 @@
 },
 
 {
-	AArch64_CSNEGWr, ARM64_INS_CNEG,
+	AArch64_CSNEGWr, ARM64_INS_CSNEG,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_CSNEGXr, ARM64_INS_CNEG,
+	AArch64_CSNEGXr, ARM64_INS_CSNEG,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -4190,7 +4190,7 @@
 },
 
 {
-	AArch64_EOR_ZI, ARM64_INS_EON,
+	AArch64_EOR_ZI, ARM64_INS_EOR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -11344,7 +11344,7 @@
 },
 
 {
-	AArch64_HINT, ARM64_INS_CSDB,
+	AArch64_HINT, ARM64_INS_HINT,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -15943,21 +15943,21 @@
 },
 
 {
-	AArch64_LDURBBi, ARM64_INS_LDRB,
+	AArch64_LDURBBi, ARM64_INS_LDURB,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURBi, ARM64_INS_LDR,
+	AArch64_LDURBi, ARM64_INS_LDURB,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURDi, ARM64_INS_LDR,
+	AArch64_LDURDi, ARM64_INS_LDUR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -15971,70 +15971,70 @@
 },
 
 {
-	AArch64_LDURHi, ARM64_INS_LDR,
+	AArch64_LDURHi, ARM64_INS_LDUR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURQi, ARM64_INS_LDR,
+	AArch64_LDURQi, ARM64_INS_LDUR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURSBWi, ARM64_INS_LDRSB,
+	AArch64_LDURSBWi, ARM64_INS_LDURSB,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURSBXi, ARM64_INS_LDRSB,
+	AArch64_LDURSBXi, ARM64_INS_LDURSB,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURSHWi, ARM64_INS_LDRSH,
+	AArch64_LDURSHWi, ARM64_INS_LDURSH,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURSHXi, ARM64_INS_LDRSH,
+	AArch64_LDURSHXi, ARM64_INS_LDURSH,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURSWi, ARM64_INS_LDRSW,
+	AArch64_LDURSWi, ARM64_INS_LDURSW,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURSi, ARM64_INS_LDR,
+	AArch64_LDURSi, ARM64_INS_LDUR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURWi, ARM64_INS_LDR,
+	AArch64_LDURWi, ARM64_INS_LDUR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_LDURXi, ARM64_INS_LDR,
+	AArch64_LDURXi, ARM64_INS_LDUR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -18862,42 +18862,42 @@
 },
 
 {
-	AArch64_SBCSWr, ARM64_INS_NGCS,
+	AArch64_SBCSWr, ARM64_INS_SBCS,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { ARM64_REG_NZCV, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_SBCSXr, ARM64_INS_NGCS,
+	AArch64_SBCSXr, ARM64_INS_SBCS,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { ARM64_REG_NZCV, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_SBCWr, ARM64_INS_NGC,
+	AArch64_SBCWr, ARM64_INS_SBC,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_SBCXr, ARM64_INS_NGC,
+	AArch64_SBCXr, ARM64_INS_SBC,
 #ifndef CAPSTONE_DIET
 	{ ARM64_REG_NZCV, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_SBFMWri, ARM64_INS_ASR,
+	AArch64_SBFMWri, ARM64_INS_SBFM,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_SBFMXri, ARM64_INS_ASR,
+	AArch64_SBFMXri, ARM64_INS_SBFM,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
