@@ -766,7 +766,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		if (MCOperand_getReg(BaseReg))
 			_printOperand(MI, Op + X86_AddrBaseReg, O);
 
-        if (MCOperand_getReg(IndexReg) != X86_EIZ) {
+        if (MCOperand_getReg(IndexReg) && MCOperand_getReg(IndexReg) != X86_EIZ) {
 			SStream_concat0(O, ", ");
 			_printOperand(MI, Op + X86_AddrIndexReg, O);
 			ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
