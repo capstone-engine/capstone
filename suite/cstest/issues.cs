@@ -1,3 +1,7 @@
+!# issue 1456 ARM printPKHASRShiftImm
+!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, None
+0xca,0xea,0x21,0x06 == pkhtb r6, sl, r1, asr #0x20
+
 !# issue 1456 EIZ
 !# CS_ARCH_X86, CS_MODE_32, None
 0x8d,0xb4,0x26,0x00,0x00,0x00,0x00 == lea esi, [esi]
