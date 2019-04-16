@@ -26807,14 +26807,14 @@
 },
 
 {
-	AArch64_UBFMWri, ARM64_INS_LSR,
+	AArch64_UBFMWri, ARM64_INS_UBFM,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	AArch64_UBFMXri, ARM64_INS_LSR,
+	AArch64_UBFMXri, ARM64_INS_UBFM,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -27829,7 +27829,7 @@
 },
 
 {
-	AArch64_UMSUBLrrr, ARM64_INS_UMNEGL,
+	AArch64_UMSUBLrrr, ARM64_INS_UMSUBL,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
