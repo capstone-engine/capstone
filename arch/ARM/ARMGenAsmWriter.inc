@@ -9513,7 +9513,7 @@ static bool printAliasInstr(MCInst *MI, SStream *OS)
         } else
             printOperand(MI, (unsigned)(AsmString[I++]) - 1, OS);
       } else {
-          SStream_concat0(OS, &AsmString[I++]);
+          SStream_concat1(OS, AsmString[I++]);
       }
     } while (AsmString[I] != '\0');
   }
