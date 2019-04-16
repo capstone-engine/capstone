@@ -1591,7 +1591,7 @@ static void printPKHASRShiftImm(MCInst *MI, unsigned OpNum, SStream *O)
 
 	// A shift amount of 32 is encoded as 0.
 	if (Imm == 0)
-		return;
+		Imm = 32;
 
 	//assert(Imm > 0 && Imm <= 32 && "Invalid PKH shift immediate value!");
 	if (Imm > HEX_THRESHOLD)
