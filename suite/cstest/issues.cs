@@ -1,3 +1,7 @@
+!# issue 1456 EIZ
+!# CS_ARCH_X86, CS_MODE_32, None
+0x8d,0xb4,0x26,0x00,0x00,0x00,0x00 == lea esi, [esi]
+
 !# issue 1456 ARM POP
 !# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, None
 0x04,0x10,0x9d,0xe4 == pop {r1}
