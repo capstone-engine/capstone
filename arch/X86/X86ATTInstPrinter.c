@@ -53,6 +53,9 @@
 #include "X86GenInstrInfo.inc"
 #endif
 
+#define GET_REGINFO_ENUM
+#include "X86GenRegisterInfo.inc"
+
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
@@ -715,7 +718,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_register_map(MCOperand_getReg(BaseReg));
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_register_map(MCOperand_getReg(IndexReg));
+        if (MCOperand_getReg(IndexReg) != X86_EIZ) {
+            MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_register_map(MCOperand_getReg(IndexReg));
+        }
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = 1;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
 
@@ -761,7 +766,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		if (MCOperand_getReg(BaseReg))
 			_printOperand(MI, Op + X86_AddrBaseReg, O);
 
-		if (MCOperand_getReg(IndexReg)) {
+        if (MCOperand_getReg(IndexReg) != X86_EIZ) {
 			SStream_concat0(O, ", ");
 			_printOperand(MI, Op + X86_AddrIndexReg, O);
 			ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
