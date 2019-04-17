@@ -1,3 +1,7 @@
+!# issue 1456 xmmword
+!# CS_ARCH_X86, CS_MODE_32, None
+0x66,0x0f,0x2f,0x00 == comisd xmm0, xmmword ptr [eax]
+
 !# issue 1456 ARM printPKHASRShiftImm
 !# CS_ARCH_ARM, CS_MODE_THUMB, None
 0xca,0xea,0x21,0x06 == pkhtb r6, sl, r1, asr #0x20

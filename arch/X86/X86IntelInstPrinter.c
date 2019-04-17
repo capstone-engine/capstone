@@ -228,8 +228,15 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
-	MI->x86opsize = 8;
+    // TODO: fix COMISD in Tablegen instead (#1456)
+    if (MI->op1_size == 16) {
+        SStream_concat0(O, "xmmword ptr ");
+        MI->x86opsize = 16;
+    } else {
+        SStream_concat0(O, "qword ptr ");
+        MI->x86opsize = 8;
+    }
+
 	printMemReference(MI, OpNo, O);
 }
 
