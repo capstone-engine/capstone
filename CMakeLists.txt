@@ -27,6 +27,7 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
+option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether a particular architecture is enabled by default" ON)
 
 set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX)
@@ -37,7 +38,7 @@ math(EXPR count "${count}-1")
 foreach(i RANGE ${count})
   list(GET SUPPORTED_ARCHITECTURES ${i} supported_architecture)
   list(GET SUPPORTED_ARCHITECTURE_LABELS ${i} supported_architecture_label)
-  option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ON)
+  option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ${CAPSTONE_ARCHITECTURE_DEFAULT})
 endforeach(i)
 
 # propagate architecture support variables to preprocessor
