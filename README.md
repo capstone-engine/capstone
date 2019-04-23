@@ -3,6 +3,8 @@ Capstone Engine
 
 [![Build Status](https://travis-ci.org/aquynh/capstone.svg?branch=master)](https://travis-ci.org/aquynh/capstone)
 [![Build status](https://ci.appveyor.com/api/projects/status/a4wvbn89wu3pinas/branch/master?svg=true)](https://ci.appveyor.com/project/aquynh/capstone/branch/master)
+[![pypi package](https://badge.fury.io/py/capstone.svg)](https://pypi.python.org/pypi/capstone)
+[![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
 
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.

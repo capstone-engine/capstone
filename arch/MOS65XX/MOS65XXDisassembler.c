@@ -364,13 +364,13 @@ static int getInstructionLength(mos65xx_address_mode am)
 		case MOS65XX_AM_ZPY:
 		case MOS65XX_AM_ZP:
 		case MOS65XX_AM_REL:
+		case MOS65XX_AM_INDX:
+		case MOS65XX_AM_INDY:
 			return 2;
 
 		case MOS65XX_AM_ABS:
 		case MOS65XX_AM_ABSX:
 		case MOS65XX_AM_ABSY:
-		case MOS65XX_AM_INDX:
-		case MOS65XX_AM_INDY:
 		case MOS65XX_AM_IND:
 			return 3;
 		default:
@@ -460,47 +460,47 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 			break;
 
 		case MOS65XX_AM_ABS:
-			SStream_concat(O, " $%04X", value);
+			SStream_concat(O, " $0x%04x", value);
 			break;
 
 		case MOS65XX_AM_IMM:
-			SStream_concat(O, " #$%02X", value);
+			SStream_concat(O, " #$0x%02x", value);
 			break;
 
 		case MOS65XX_AM_ZP:
-			SStream_concat(O, " $%02X", value);
+			SStream_concat(O, " $0x%02x", value);
 			break;
 
 		case MOS65XX_AM_ABSX:
-			SStream_concat(O, " $%04X,x", value);
+			SStream_concat(O, " $0x%04x, x", value);
 			break;
 
 		case MOS65XX_AM_ABSY:
-			SStream_concat(O, " $%04X,y", value);
+			SStream_concat(O, " $0x%04x, y", value);
 			break;
 
 		case MOS65XX_AM_ZPX:
-			SStream_concat(O, " $%02X,x", value);
+			SStream_concat(O, " $0x%02x, x", value);
 			break;
 
 		case MOS65XX_AM_ZPY:
-			SStream_concat(O, " $%02X,y", value);
+			SStream_concat(O, " $0x%02x, y", value);
 			break;
 
 		case MOS65XX_AM_REL:
-			SStream_concat(O, " $%04X", MI->address + (signed char) value + 2);
+			SStream_concat(O, " $0x%04x", MI->address + (signed char) value + 2);
 			break;
 
 		case MOS65XX_AM_IND:
-			SStream_concat(O, " ($%04X)", value);
+			SStream_concat(O, " ($0x%04x)", value);
 			break;
 
 		case MOS65XX_AM_INDX:
-			SStream_concat(O, " ($%04X,x)", value);
+			SStream_concat(O, " ($0x%02x, x)", value);
 			break;
 
 		case MOS65XX_AM_INDY:
-			SStream_concat(O, " ($%04X),y", value);
+			SStream_concat(O, " ($0x%02x), y", value);
 			break;
 	}
 #endif

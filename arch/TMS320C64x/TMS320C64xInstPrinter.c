@@ -3,6 +3,17 @@
 
 #ifdef CAPSTONE_HAS_TMS320C64X
 
+#ifdef _MSC_VER
+// Disable security warnings for strcpy
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+// Banned API Usage : strcpy is a Banned API as listed in dontuse.h for
+// security purposes.
+#pragma warning(disable:28719)
+#endif
+
 #include <ctype.h>
 #include <string.h>
 
@@ -68,13 +79,13 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 
 		SStream_concat0(&ss, insn_asm);
 		if ((p != NULL) && (((p2 = strchr(p, '[')) != NULL) || ((p2 = strchr(p, '(')) != NULL))) {
-			while ((p2 > p) && ((*p2 != 'A') && (*p2 != 'B')))
+			while ((p2 > p) && ((*p2 != 'a') && (*p2 != 'b')))
 				p2--;
 			if (p2 == p) {
 				strcpy(insn_asm, "Invalid!");
 				return;
 			}
-			if (*p2 == 'A')
+			if (*p2 == 'a')
 				strcpy(tmp, "1T");
 			else
 				strcpy(tmp, "2T");

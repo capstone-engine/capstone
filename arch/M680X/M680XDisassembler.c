@@ -1709,7 +1709,7 @@ static void ext_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	indexed12_hdlr(MI, info, address);
 	read_word(info, &imm16, *address);
 	op0->type = M680X_OP_EXTENDED;
-	op0->imm = (int16_t)imm16;
+	op0->ext.address = (int16_t)imm16;
 	set_operand_size(info, op0, 1);
 }
 

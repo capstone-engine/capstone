@@ -197,6 +197,7 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 			break;
 	}
+
 	printMemReference(MI, OpNo, O);
 }
 
@@ -330,13 +331,36 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
 	} else if (MCOperand_isImm(Op)) {
+		uint8_t encsize;
+		uint8_t opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
+
 		// Print X86 immediates as signed values.
 		int64_t imm = MCOperand_getImm(Op);
 		if (imm < 0) {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "$-0x%"PRIx64, -imm);
-			else
-				SStream_concat(O, "$-%"PRIu64, -imm);
+			if (MI->csh->imm_unsigned) {
+				if (opsize) {
+					switch(opsize) {
+						default:
+							break;
+						case 1:
+							imm &= 0xff;
+							break;
+						case 2:
+							imm &= 0xffff;
+							break;
+						case 4:
+							imm &= 0xffffffff;
+							break;
+					}
+				}
+
+				SStream_concat(O, "$0x%"PRIx64, imm);
+			} else {
+				if (imm < -HEX_THRESHOLD)
+					SStream_concat(O, "$-0x%"PRIx64, -imm);
+				else
+					SStream_concat(O, "$-%"PRIu64, -imm);
+			}
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "$0x%"PRIx64, imm);
@@ -559,6 +583,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = val;
+		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = 1;
 		MI->flat_insn->detail->x86.op_count++;
 	}
 }
@@ -672,12 +697,32 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					else
 						SStream_concat(O, "$%"PRIu64, imm);
 				} else {
-					if (imm == 0x8000000000000000LL)  // imm == -imm
-						SStream_concat0(O, "$0x8000000000000000");
-					else if (imm < -HEX_THRESHOLD)
-						SStream_concat(O, "$-0x%"PRIx64, -imm);
-					else
-						SStream_concat(O, "$-%"PRIu64, -imm);
+					if (MI->csh->imm_unsigned) {
+						if (opsize) {
+							switch(opsize) {
+								default:
+									break;
+								case 1:
+									imm &= 0xff;
+									break;
+								case 2:
+									imm &= 0xffff;
+									break;
+								case 4:
+									imm &= 0xffffffff;
+									break;
+							}
+						}
+
+						SStream_concat(O, "$0x%"PRIx64, imm);
+					} else {
+						if (imm == 0x8000000000000000LL)  // imm == -imm
+							SStream_concat0(O, "$0x8000000000000000");
+						else if (imm < -HEX_THRESHOLD)
+							SStream_concat(O, "$-0x%"PRIx64, -imm);
+						else
+							SStream_concat(O, "$-%"PRIu64, -imm);
+					}
 				}
 				break;
 
@@ -763,6 +808,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *SegReg = MCInst_getOperand(MI, Op + X86_AddrSegmentReg);
 	uint64_t ScaleVal;
 	int segreg;
+	int64_t DispVal = 1;
 
 	if (MI->csh->detail) {
 		uint8_t access[6];
@@ -791,7 +837,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	if (MCOperand_isImm(DispSpec)) {
-		int64_t DispVal = MCOperand_getImm(DispSpec);
+		DispVal = MCOperand_getImm(DispSpec);
 		if (MI->csh->detail)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = DispVal;
 		if (DispVal) {
@@ -809,7 +855,6 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				}
 			}
 		} else {
-            SStream_concat0(O, "0");
 		}
 	}
 
@@ -830,6 +875,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			}
 		}
 		SStream_concat0(O, ")");
+	} else {
+		if (!DispVal)
+			SStream_concat0(O, "0");
 	}
 
 	if (MI->csh->detail)

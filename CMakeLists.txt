@@ -27,7 +27,7 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
-option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether a particular architecture is enabled by default" ON)
+option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 
 set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX)
@@ -595,16 +595,7 @@ source_group("Include\\EVM" FILES ${HEADERS_EVM})
 source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 
 ### test library 64bit routine:
-get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
-
-if (NOT APPLE AND "${LIB64}" STREQUAL "TRUE")
-    set(LIBSUFFIX 64)
-else()
-    set(LIBSUFFIX "")
-endif()
-
-set(INSTALL_LIB_DIR     lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
-mark_as_advanced(INSTALL_LIB_DIR)
+include("GNUInstallDirs")
 
 ## installation
 install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
@@ -613,15 +604,15 @@ configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
             RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-            ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
     install(TARGETS capstone-shared
             RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-            ARCHIVE DESTINATION ${INSTALL_LIB_DIR})
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif ()
 
 if (CAPSTONE_BUILD_SHARED AND CAPSTONE_BUILD_CSTOOL)
@@ -630,5 +621,5 @@ add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
 install(TARGETS cstool DESTINATION bin)
-install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION lib/pkgconfig)
+install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif ()
