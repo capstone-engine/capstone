@@ -6,19 +6,21 @@
 
 set flags="-DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_STATIC_RUNTIME=ON"
 
-if "%1"=="ARM" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_ARM_SUPPORT=ON"
-if "%1"=="ARM64" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_ARM64_SUPPORT=ON"
-if "%1"=="M68K" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_M68K_SUPPORT=ON"
-if "%1"=="MIPS" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_MIPS_SUPPORT=ON"
-if "%1"=="PowerPC" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_PPC_SUPPORT=ON"
-if "%1"=="Sparc" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_SPARC_SUPPORT=ON"
-if "%1"=="SystemZ" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_SYSZ_SUPPORT=ON"
-if "%1"=="XCore" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_XCORE_SUPPORT=ON"
-if "%1"=="x86" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_X86_SUPPORT=ON"
-if "%1"=="TMS320C64x" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_TMS320C64X_SUPPORT=ON"
-if "%1"=="M680x" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_M680X_SUPPORT=ON"
-if "%1"=="EVM" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_EVM_SUPPORT=ON"
-if "%1"=="MOS65XX" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_MOS65XX_SUPPORT=ON"
+if "%1"=="ARM" set %arch%=ARM
+if "%1"=="ARM64" set %arch%=ARM64
+if "%1"=="M68K" set %arch%=M68K
+if "%1"=="MIPS" set %arch%=MIPS
+if "%1"=="PowerPC" set %arch%=PPC
+if "%1"=="Sparc" set %arch%=SPARC
+if "%1"=="SystemZ" set %arch%=SYSZ
+if "%1"=="XCore" set %arch%=XCORE
+if "%1"=="x86" set %arch%=X86
+if "%1"=="TMS320C64x" set %arch%=TMS320C64X
+if "%1"=="M680x" set %arch%=M680X
+if "%1"=="EVM" set %arch%=EVM
+if "%1"=="MOS65XX" set %arch%=MOS65XX
+
+if not "%arch%"=="" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_%arch%_SUPPORT=ON"
 
 cmake %flags% -G "NMake Makefiles" ..
 nmake
