@@ -52,7 +52,7 @@ case $1 in
     ;;
 esac
 
-if "${ARCH}" == ""; then
+if [ "x${ARCH}" = "x" ]; then
   FLAGS+=" -DCAPSTONE_ARCHITECTURE_DEFAULT=ON"
 else
   FLAGS+=" -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_${ARCH}_SUPPORT=ON"
