@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Capstone disassembler engine (www.capstone-engine.org)
 # Build Capstone libs for specified architecture, or all if none is specified (libcapstone.so & libcapstone.a) on *nix with CMake & make
 # By Nguyen Anh Quynh, Jorn Vernee, 2019
@@ -50,10 +52,12 @@ case $1 in
     ;;
 esac
 
-if test "x$ARCH" = "x"; then
-  FLAGS+=" -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_$ARCH_SUPPORT=ON"
+if "${ARCH}" == ""; then
+  FLAGS+=" -DCAPSTONE_ARCHITECTURE_DEFAULT=ON"
+else
+  FLAGS+=" -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_${ARCH}_SUPPORT=ON"
 fi
-	
+
 cmake $FLAGS ..
 
 make -j8
