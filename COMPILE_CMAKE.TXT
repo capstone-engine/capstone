@@ -35,7 +35,7 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_X86_EVM: support EVM. Run cmake with -DCAPSTONE_EVM_SUPPORT=0 to remove EVM.
   - CAPSTONE_ARCHITECUTRE_DEFAULT: Whether architectures are enabled by default.
       Set this of OFF with -DCAPSTONE_ARCHITECUTRE_DEFAULT=OFF to dissable all architectures by default.
-	  You can then enable them again with one of the CAPSTONE_<ARCH>_SUPPORT options.
+      You can then enable them again with one of the CAPSTONE_<ARCH>_SUPPORT options.
 
   By default, all architectures are compiled in.
 
@@ -62,14 +62,14 @@ Get CMake for free from http://www.cmake.org.
   (*) You can let CMake select a generator for you. Do:
   
       mkdir build
-	  cd build
-	  cmake ..
-	  
-	This last command is also where you can pass additional CMake configuration flags
-	using `-D<key>=<value>`. Then to build use:
-	
-	  cmake --build . --config Release
-	  
+      cd build
+      cmake ..
+      
+    This last command is also where you can pass additional CMake configuration flags
+    using `-D<key>=<value>`. Then to build use:
+    
+      cmake --build . --config Release
+      
 
   (*) To build Capstone using Nmake of Windows SDK, do:
 
