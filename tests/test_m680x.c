@@ -7,8 +7,6 @@
 #include <capstone/platform.h>
 #include <capstone/capstone.h>
 
-#define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
-
 #define WITH_DETAILS
 
 struct platform {
