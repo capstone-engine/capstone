@@ -27,6 +27,7 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
+option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 
 set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX)
@@ -37,7 +38,7 @@ math(EXPR count "${count}-1")
 foreach(i RANGE ${count})
   list(GET SUPPORTED_ARCHITECTURES ${i} supported_architecture)
   list(GET SUPPORTED_ARCHITECTURE_LABELS ${i} supported_architecture_label)
-  option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ON)
+  option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ${CAPSTONE_ARCHITECTURE_DEFAULT})
 endforeach(i)
 
 # propagate architecture support variables to preprocessor
@@ -49,7 +50,6 @@ foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
   endif()
 endforeach(supported_architecture)
 
-option(CAPSTONE_X86_ONLY "Enable just x86, and disable building every other architectures" OFF)
 option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
@@ -120,7 +120,7 @@ set(HEADERS_COMMON
 set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_ARM_SUPPORT)
+if (CAPSTONE_ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
     set(SOURCES_ARM
         arch/ARM/ARMDisassembler.c
@@ -157,7 +157,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_ARM_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_ARM64_SUPPORT)
+if (CAPSTONE_ARM64_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM64)
     set(SOURCES_ARM64
         arch/AArch64/AArch64BaseInfo.c
@@ -194,7 +194,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_ARM64_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_MIPS_SUPPORT)
+if (CAPSTONE_MIPS_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_MIPS)
     set(SOURCES_MIPS
         arch/Mips/MipsDisassembler.c
@@ -226,7 +226,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_MIPS_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_mips.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_PPC_SUPPORT)
+if (CAPSTONE_PPC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_POWERPC)
     set(SOURCES_PPC
         arch/PowerPC/PPCDisassembler.c
@@ -313,7 +313,7 @@ if (CAPSTONE_X86_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_x86.c test_customized_mnem.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_SPARC_SUPPORT)
+if (CAPSTONE_SPARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SPARC)
     set(SOURCES_SPARC
         arch/Sparc/SparcDisassembler.c
@@ -336,7 +336,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_SPARC_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_SYSZ_SUPPORT)
+if (CAPSTONE_SYSZ_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SYSZ)
     set(SOURCES_SYSZ
         arch/SystemZ/SystemZDisassembler.c
@@ -361,7 +361,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_SYSZ_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_XCORE_SUPPORT)
+if (CAPSTONE_XCORE_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_XCORE)
     set(SOURCES_XCORE
         arch/XCore/XCoreDisassembler.c
@@ -382,7 +382,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_XCORE_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_M68K_SUPPORT)
+if (CAPSTONE_M68K_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_M68K)
     set(SOURCES_M68K
 		arch/M68K/M68KDisassembler.c
@@ -395,7 +395,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_M68K_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_m68k.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_TMS320C64X_SUPPORT)
+if (CAPSTONE_TMS320C64X_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_TMS320C64X)
     set(SOURCES_TMS320C64X
         arch/TMS320C64x/TMS320C64xDisassembler.c
@@ -415,7 +415,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_TMS320C64X_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_tms320c64x.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_M680X_SUPPORT)
+if (CAPSTONE_M680X_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_M680X)
     set(SOURCES_M680X
 		arch/M680X/M680XDisassembler.c
@@ -430,7 +430,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_M680X_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_m680x.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_EVM_SUPPORT)
+if (CAPSTONE_EVM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_EVM)
     set(SOURCES_EVM
         arch/EVM/EVMDisassembler.c
@@ -447,7 +447,7 @@ if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_EVM_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_evm.c)
 endif ()
 
-if (NOT CAPSTONE_X86_ONLY AND CAPSTONE_MOS65XX_SUPPORT)
+if (CAPSTONE_MOS65XX_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_MOS65XX)
     set(SOURCES_MOS65XX
             arch/MOS65XX/MOS65XXModule.c
