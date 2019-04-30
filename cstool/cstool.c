@@ -48,6 +48,8 @@ static struct {
 	{ "x64att", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64, CS_OPT_SYNTAX_ATT
 	{ "ppc64", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc64be", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN },
+	{ "ppc64qpx", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64beqpx", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_BIG_ENDIAN },
 	{ "sparc", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
 	{ "sparcv9", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },
 	{ "systemz", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
@@ -196,6 +198,8 @@ static void usage(char *prog)
 	if (cs_support(CS_ARCH_PPC)) {
 		printf("        ppc64       ppc64 + little endian\n");
 		printf("        ppc64be     ppc64 + big endian\n");
+		printf("        ppc64qpx    ppc64 + qpx + little endian\n");
+		printf("        ppc64beqpx  ppc64 + qpx + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_SPARC)) {

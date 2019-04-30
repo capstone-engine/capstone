@@ -226,25 +226,17 @@ if (CAPSTONE_PPC_SUPPORT)
     set(HEADERS_PPC
         arch/PowerPC/PPCDisassembler.h
         arch/PowerPC/PPCGenAsmWriter.inc
-        arch/PowerPC/PPCGenDisassemblerTables.inc
-        arch/PowerPC/PPCGenInstrInfo.inc
-        arch/PowerPC/PPCGenRegisterInfo.inc
-        arch/PowerPC/PPCGenSubtargetInfo.inc
         arch/PowerPC/PPCInstPrinter.h
         arch/PowerPC/PPCMapping.h
-        arch/PowerPC/PPCMappingInsn.inc
         arch/PowerPC/PPCPredicates.h
-        )
-    set(HEADERS_PPC
-        arch/PowerPC/PPCDisassembler.h
         arch/PowerPC/PPCGenAsmWriter.inc
+        arch/PowerPC/PPCGenRegisterName.inc
         arch/PowerPC/PPCGenDisassemblerTables.inc
-        arch/PowerPC/PPCGenInstrInfo.inc
-        arch/PowerPC/PPCGenRegisterInfo.inc
+        arch/PowerPC/PPCMappingInsn.inc
+        arch/PowerPC/PPCMappingInsnName.inc
         arch/PowerPC/PPCGenSubtargetInfo.inc
-        arch/PowerPC/PPCInstPrinter.h
-        arch/PowerPC/PPCMapping.h
-        arch/PowerPC/PPCPredicates.h
+        arch/PowerPC/PPCGenRegisterInfo.inc
+        arch/PowerPC/PPCGenInstrInfo.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
 endif ()

@@ -107,6 +107,14 @@ void printInt64(SStream *O, int64_t val)
 	}
 }
 
+void printUInt64(SStream *O, uint64_t val)
+{
+	if (val > HEX_THRESHOLD)
+		SStream_concat(O, "0x%"PRIx64, val);
+	else
+		SStream_concat(O, "%"PRIu64, val);
+}
+
 // print number in decimal mode
 void printInt32BangDec(SStream *O, int32_t val)
 {
