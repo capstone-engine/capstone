@@ -118,6 +118,8 @@ typedef enum cs_mode {
 	CS_MODE_MIPS2 = 1 << 7, ///< Mips II ISA
 	CS_MODE_V9 = 1 << 4, ///< SparcV9 mode (Sparc)
 	CS_MODE_QPX = 1 << 4, ///< Quad Processing eXtensions mode (PPC)
+	CS_MODE_SPE = 1 << 5, ///< Signal Processing Engine mode (PPC)
+	CS_MODE_BOOKE = 1 << 6, ///< Book-E mode (PPC)
 	CS_MODE_M68K_000 = 1 << 1, ///< M68K 68000 mode
 	CS_MODE_M68K_010 = 1 << 2, ///< M68K 68010 mode
 	CS_MODE_M68K_020 = 1 << 3, ///< M68K 68020 mode

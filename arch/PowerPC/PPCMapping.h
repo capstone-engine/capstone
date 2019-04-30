@@ -24,11 +24,14 @@ struct ppc_alias {
 	const char *mnem;
 };
 
-// given alias mnemonic, return instruction ID & CC
-bool PPC_alias_insn(const char *name, struct ppc_alias *alias);
+// map instruction name to public instruction ID
+ppc_insn PPC_map_insn(const char *name);
 
 // check if this insn is relative branch
 bool PPC_abs_branch(cs_struct *h, unsigned int id);
+
+// map internal raw register to 'public' register
+ppc_reg PPC_map_register(unsigned int r);
 
 #endif
 
