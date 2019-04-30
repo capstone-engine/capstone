@@ -1719,7 +1719,7 @@
 },
 
 {
-	PPC_CRXOR, PPC_INS_CRCLR,
+	PPC_CRXOR, PPC_INS_CRXOR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
