@@ -7,22 +7,28 @@
 ```bash
 $ python convert_unit_tests.py --help
 
-usage: convert_unit_tests.py [-h] input output
+usage: convert_unit_tests.py [-h] --arch ARCH --mode MODE --opt OPT
+                             input output
 
 Convert LLVM MC unit tests into Capstone MC unit tests
 
 positional arguments:
-  input       Input folder
-  output      Output folder
+  input        Input folder
+  output       Output folder
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help   show this help message and exit
+  --arch ARCH  Capstone architecture
+  --mode MODE  Capstone mode
+  --opt OPT    Capstone option
 ```
 
 ### Usage Example
 
 ```bash
-$ python convert_unit_tests.py /path/to/llvm-project/llvm/test/MC/AArch64 /path/to/capstone/suite/MC/AArch64
+$ python convert_unit_tests.py --arch CS_ARCH_ARM64 --mode 0 --opt None \
+                               /path/to/llvm-project/llvm/test/MC/AArch64 \
+                               /path/to/capstone/suite/MC/AArch64
 
  > Processing: inst-directive-other.s
  > Processing: coff-align.s

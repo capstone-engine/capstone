@@ -7,6 +7,9 @@ def main():
     parser = argparse.ArgumentParser(
         description="Convert LLVM MC unit tests into Capstone MC unit tests"
     )
+    parser.add_argument("--arch", required=True, help="Capstone architecture")
+    parser.add_argument("--mode", required=True, help="Capstone mode")
+    parser.add_argument("--opt", required=True, help="Capstone option")
     parser.add_argument("input", action="store", help="Input folder")
     parser.add_argument("output", action="store", help="Output folder")
     args = parser.parse_args()
@@ -38,7 +41,7 @@ def main():
             out_file = os.path.join(args.output, os.path.basename(test_file) + ".cs")
             print("  - Writting file: {}".format(out_file))
             with open(out_file, "w") as f:
-                f.write("# CS_ARCH_ARM64, 0, None\n")
+                f.write("# {}, {}, {}\n".format(args.arch, args.mode, args.opt))
                 f.writelines(lines)
 
 
