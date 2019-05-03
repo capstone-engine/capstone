@@ -5328,7 +5328,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 73: \
     tmp = fieldname(insn, 21, 5); \
-    if (DecodeCRRC0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (decodeUImmOperand(MI, tmp, Address, Decoder, 5) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 11, 5); \
@@ -5336,7 +5336,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   case 74: \
     tmp = fieldname(insn, 21, 5); \
-    if (DecodeCRRC0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (decodeUImmOperand(MI, tmp, Address, Decoder, 5) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 11, 5); \

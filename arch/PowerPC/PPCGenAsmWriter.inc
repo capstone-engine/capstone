@@ -6040,9 +6040,9 @@ static void printInstruction(MCInst *MI, SStream *O)
     break;
   case 17:
     // TABORTDC, TABORTDCI, TABORTWC, TABORTWCI
-    printU5ImmOperand(MI, 1, O);
+    printU5ImmOperand(MI, 0, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 2, O);
+    printOperand(MI, 1, O);
     SStream_concat0(O, ", ");
     break;
   case 18:
@@ -6184,12 +6184,12 @@ static void printInstruction(MCInst *MI, SStream *O)
     break;
   case 17:
     // TABORTDC, TABORTWC
-    printOperand(MI, 3, O);
+    printOperand(MI, 2, O);
     return;
     break;
   case 18:
     // TABORTDCI, TABORTWCI
-    printU5ImmOperand(MI, 3, O);
+    printU5ImmOperand(MI, 2, O);
     return;
     break;
   case 19:
