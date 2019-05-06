@@ -831,6 +831,9 @@ static int readOpcode(struct InternalInstruction* insn)
 	if (consumeByte(insn, &current))
 		return -1;
 
+    // save this first byte for MOVcr, MOVdr, MOVrc, MOVrd
+    insn->firstByte = current;
+
 	if (current == 0x0f) {
 		// dbgprintf(insn, "Found a two-byte escape prefix (0x%hhx)", current);
 		if (consumeByte(insn, &current))
@@ -1145,11 +1148,11 @@ static int getID(struct InternalInstruction *insn)
 		}
 	}
 
-	if (getIDWithAttrMask(&instructionID, insn, attrMask))
+	if (getIDWithAttrMask(&instructionID, insn, attrMask)) {
 		return -1;
+	}
 
 	/* The following clauses compensate for limitations of the tables. */
-
 	if (insn->mode != MODE_64BIT &&
 			insn->vectorExtensionType != TYPE_NO_VEX_XOP) {
 		/*
@@ -1207,8 +1210,9 @@ static int getID(struct InternalInstruction *insn)
 				attrMask ^= ATTR_OPSIZE;
 		}
 
-		if (getIDWithAttrMask(&instructionID, insn, attrMask))
+		if (getIDWithAttrMask(&instructionID, insn, attrMask)) {
 			return -1;
+		}
 
 		insn->instructionID = instructionID;
 		insn->spec = specifierForUID(instructionID);
@@ -1445,6 +1449,11 @@ static int readModRM(struct InternalInstruction* insn)
 
     // save original ModRM for later reference
     insn->orgModRM = insn->modRM;
+
+	// handle MOVcr, MOVdr, MOVrc, MOVrd by pretending they have MRM.mod = 3
+	if ((insn->firstByte == 0x0f && insn->opcodeType == TWOBYTE) &&
+			(insn->opcode >= 0x20 && insn->opcode <= 0x23 ))
+		insn->modRM |= 0xC0;
 
 	mod = modFromModRM(insn->modRM);
 	rm  = rmFromModRM(insn->modRM);
@@ -2095,6 +2104,8 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADC8mi8:
 			case X86_ADC8mr:
 			case X86_ADC8rm:
+			case X86_ADC32rm:
+			case X86_ADC64rm:
 
 			// ADD
 			case X86_ADD16mi:
@@ -2109,6 +2120,9 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADD8mi:
 			case X86_ADD8mi8:
 			case X86_ADD8mr:
+			case X86_ADD8rm:
+			case X86_ADD32rm:
+			case X86_ADD64rm:
 
 			// AND
 			case X86_AND16mi:
@@ -2123,6 +2137,9 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_AND8mi:
 			case X86_AND8mi8:
 			case X86_AND8mr:
+			case X86_AND8rm:
+			case X86_AND32rm:
+			case X86_AND64rm:
 
 			// BTC
 			case X86_BTC16mi8:
@@ -2188,6 +2205,9 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_OR8mi8:
 			case X86_OR8mi:
 			case X86_OR8mr:
+			case X86_OR8rm:
+			case X86_OR32rm:
+			case X86_OR64rm:
 
 			// SBB
 			case X86_SBB16mi:
@@ -2216,6 +2236,9 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_SUB8mi8:
 			case X86_SUB8mi:
 			case X86_SUB8mr:
+			case X86_SUB8rm:
+			case X86_SUB32rm:
+			case X86_SUB64rm:
 
 			// XADD
 			case X86_XADD16rm:
@@ -2242,6 +2265,9 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_XOR8mi8:
 			case X86_XOR8mi:
 			case X86_XOR8mr:
+			case X86_XOR8rm:
+			case X86_XOR32rm:
+			case X86_XOR64rm:
 
 				// this instruction can be used with LOCK prefix
 				return false;

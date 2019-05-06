@@ -1,3 +1,39 @@
+!# issue 1456 test alt 1
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf6,0x08,0x00 == test byte ptr [eax], 0
+
+!# issue 1456 test alt 2
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf7,0x08,0x00,0x00,0x00,0x00 == test dword ptr [eax], 0
+
+!# issue 1472 lock sub
+!# CS_ARCH_X86, CS_MODE_32, None
+F0 2B 45 08 -> lock sub eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock or
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x0B,0x45,0x08 == lock or eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock and
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x23,0x45,0x08 == lock and eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock add
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x03,0x45,0x08 == lock add eax, dword ptr [ebp + 8]
+
+!# issue 1456 MOV dr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x23,0x00 == mov dr0, eax
+
+!# issue 1456 MOV dr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x21,0x00 == mov eax, dr0
+
+!# issue 1456 MOV cr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x22,0x00 == mov cr0, eax
+
 !# issue 1472 lock adc
 !# CS_ARCH_X86, CS_MODE_32, None
 0xf0,0x12,0x45,0x08 == lock adc al, byte ptr [ebp + 8]
