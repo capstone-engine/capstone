@@ -1,3 +1,7 @@
+!# issue 1472 lock adc
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf0,0x12,0x45,0x08 == lock adc al, byte ptr [ebp + 8]
+
 !# issue 1456 xmmword
 !# CS_ARCH_X86, CS_MODE_32, None
 0x66,0x0f,0x2f,0x00 == comisd xmm0, xmmword ptr [eax]

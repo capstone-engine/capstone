@@ -2094,6 +2094,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADC8mi:
 			case X86_ADC8mi8:
 			case X86_ADC8mr:
+			case X86_ADC8rm:
 
 			// ADD
 			case X86_ADD16mi:
