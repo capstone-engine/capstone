@@ -63,7 +63,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADC16rr_REV,  X86_INS_ADC: adc{w}	$dst $src2 */
+{	/* X86_ADC16rr_REV, X86_INS_ADC: adc{w}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -108,7 +108,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADC32rr_REV,  X86_INS_ADC: adc{l}	$dst $src2 */
+{	/* X86_ADC32rr_REV, X86_INS_ADC: adc{l}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -153,7 +153,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADC64rr_REV,  X86_INS_ADC: adc{q}	$dst $src2 */
+{	/* X86_ADC64rr_REV, X86_INS_ADC: adc{q}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -168,7 +168,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_ADC8mi8,  X86_INS_ADC: adc{b}	$dst $src */
+{	/* X86_ADC8mi8, X86_INS_ADC: adc{b}	$dst $src */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -183,7 +183,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_ADC8ri8,  X86_INS_ADC: adc{b}	$src1 $src2 */
+{	/* X86_ADC8ri8, X86_INS_ADC: adc{b}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -198,7 +198,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADC8rr_REV,  X86_INS_ADC: adc{b}	$dst $src2 */
+{	/* X86_ADC8rr_REV, X86_INS_ADC: adc{b}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -263,7 +263,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADD16rr_REV,  X86_INS_ADD: add{w}	$dst $src2 */
+{	/* X86_ADD16rr_REV, X86_INS_ADD: add{w}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -308,7 +308,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADD32rr_REV,  X86_INS_ADD: add{l}	$dst $src2 */
+{	/* X86_ADD32rr_REV, X86_INS_ADD: add{l}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -353,7 +353,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADD64rr_REV,  X86_INS_ADD: add{q}	$dst $src2 */
+{	/* X86_ADD64rr_REV, X86_INS_ADD: add{q}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -368,7 +368,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_ADD8mi8,  X86_INS_ADD: add{b}	$dst $src */
+{	/* X86_ADD8mi8, X86_INS_ADD: add{b}	$dst $src */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -383,7 +383,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_ADD8ri8,  X86_INS_ADD: add{b}	$src1 $src2 */
+{	/* X86_ADD8ri8, X86_INS_ADD: add{b}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -398,7 +398,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_ADD8rr_REV,  X86_INS_ADD: add{b}	$dst $src2 */
+{	/* X86_ADD8rr_REV, X86_INS_ADD: add{b}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -463,7 +463,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_AND16rr_REV,  X86_INS_AND: and{w}	$dst $src2 */
+{	/* X86_AND16rr_REV, X86_INS_AND: and{w}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -508,7 +508,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_AND32rr_REV,  X86_INS_AND: and{l}	$dst $src2 */
+{	/* X86_AND32rr_REV, X86_INS_AND: and{l}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -553,7 +553,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_AND64rr_REV,  X86_INS_AND: and{q}	$dst $src2 */
+{	/* X86_AND64rr_REV, X86_INS_AND: and{q}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -568,7 +568,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_AND8mi8,  X86_INS_AND: and{b}	$dst $src */
+{	/* X86_AND8mi8, X86_INS_AND: and{b}	$dst $src */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -583,7 +583,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_AND8ri8,  X86_INS_AND: and{b}	$src1 $src2 */
+{	/* X86_AND8ri8, X86_INS_AND: and{b}	$src1 $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -598,7 +598,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_AND8rr_REV,  X86_INS_AND: and{b}	$dst $src2 */
+{	/* X86_AND8rr_REV, X86_INS_AND: and{b}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -1888,7 +1888,7 @@
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* X86_CMP16rr_REV,  X86_INS_CMP: cmp{w}	$src1 $src2 */
+{	/* X86_CMP16rr_REV, X86_INS_CMP: cmp{w}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
@@ -1933,7 +1933,7 @@
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* X86_CMP32rr_REV,  X86_INS_CMP: cmp{l}	$src1 $src2 */
+{	/* X86_CMP32rr_REV, X86_INS_CMP: cmp{l}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
@@ -1978,7 +1978,7 @@
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* X86_CMP64rr_REV,  X86_INS_CMP: cmp{q}	$src1 $src2 */
+{	/* X86_CMP64rr_REV, X86_INS_CMP: cmp{q}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
@@ -1993,7 +1993,7 @@
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_CMP8mi8,  X86_INS_CMP: cmp{b}	$dst $src */
+{	/* X86_CMP8mi8, X86_INS_CMP: cmp{b}	$dst $src */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
 },
@@ -2008,7 +2008,7 @@
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_CMP8ri8,  X86_INS_CMP: cmp{b}	$src1 $src2 */
+{	/* X86_CMP8ri8, X86_INS_CMP: cmp{b}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
 },
@@ -2023,7 +2023,7 @@
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* X86_CMP8rr_REV,  X86_INS_CMP: cmp{b}	$src1 $src2 */
+{	/* X86_CMP8rr_REV, X86_INS_CMP: cmp{b}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
@@ -2238,7 +2238,7 @@
 	{ CS_AC_IGNORE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_FARCALL16i,  X86_INS_LCALL: lcall{w}	$seg : $off */
+{	/* X86_FARCALL16i, X86_INS_LCALL: lcall{w}	$seg : $off */
 	0,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2248,7 +2248,7 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_FARCALL32i,  X86_INS_LCALL: lcall{l}	$seg : $off */
+{	/* X86_FARCALL32i, X86_INS_LCALL: lcall{l}	$seg : $off */
 	0,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2263,17 +2263,17 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_FARJMP16i,  X86_INS_LJMP: ljmp{w}	$seg : $off */
+{	/* X86_FARJMP16i, X86_INS_LJMP: ljmp{w}	$seg : $off */
 	0,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_FARJMP16m,  X86_INS_LJMP: ljmp{w}	{*}$dst */
+{	/* X86_FARJMP16m, X86_INS_LJMP: ljmp{w}	{*}$dst */
 	0,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_FARJMP32i,  X86_INS_LJMP: ljmp{l}	$seg : $off */
+{	/* X86_FARJMP32i, X86_INS_LJMP: ljmp{l}	$seg : $off */
 	0,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2668,12 +2668,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JAE_2,  X86_INS_JAE: jae	$dst */
+{	/* X86_JAE_2, X86_INS_JAE: jae	$dst */
 	X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JAE_4,  X86_INS_JAE: jae	$dst */
+{	/* X86_JAE_4, X86_INS_JAE: jae	$dst */
 	X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2683,12 +2683,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JA_2,  X86_INS_JA: ja	$dst */
+{	/* X86_JA_2, X86_INS_JA: ja	$dst */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JA_4,  X86_INS_JA: ja	$dst */
+{	/* X86_JA_4, X86_INS_JA: ja	$dst */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2698,12 +2698,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JBE_2,  X86_INS_JBE: jbe	$dst */
+{	/* X86_JBE_2, X86_INS_JBE: jbe	$dst */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JBE_4,  X86_INS_JBE: jbe	$dst */
+{	/* X86_JBE_4, X86_INS_JBE: jbe	$dst */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2713,12 +2713,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JB_2,  X86_INS_JB: jb	$dst */
+{	/* X86_JB_2, X86_INS_JB: jb	$dst */
 	X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JB_4,  X86_INS_JB: jb	$dst */
+{	/* X86_JB_4, X86_INS_JB: jb	$dst */
 	X86_EFLAGS_TEST_CF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2738,12 +2738,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JE_2,  X86_INS_JE: je	$dst */
+{	/* X86_JE_2, X86_INS_JE: je	$dst */
 	X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JE_4,  X86_INS_JE: je	$dst */
+{	/* X86_JE_4, X86_INS_JE: je	$dst */
 	X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2753,12 +2753,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JGE_2,  X86_INS_JGE: jge	$dst */
+{	/* X86_JGE_2, X86_INS_JGE: jge	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JGE_4,  X86_INS_JGE: jge	$dst */
+{	/* X86_JGE_4, X86_INS_JGE: jge	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2768,12 +2768,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JG_2,  X86_INS_JG: jg	$dst */
+{	/* X86_JG_2, X86_INS_JG: jg	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JG_4,  X86_INS_JG: jg	$dst */
+{	/* X86_JG_4, X86_INS_JG: jg	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2783,12 +2783,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JLE_2,  X86_INS_JLE: jle	$dst */
+{	/* X86_JLE_2, X86_INS_JLE: jle	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JLE_4,  X86_INS_JLE: jle	$dst */
+{	/* X86_JLE_4, X86_INS_JLE: jle	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2798,12 +2798,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JL_2,  X86_INS_JL: jl	$dst */
+{	/* X86_JL_2, X86_INS_JL: jl	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JL_4,  X86_INS_JL: jl	$dst */
+{	/* X86_JL_4, X86_INS_JL: jl	$dst */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2873,12 +2873,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JMP_2,  X86_INS_JMP: jmp	$dst */
+{	/* X86_JMP_2, X86_INS_JMP: jmp	$dst */
 	0,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JMP_4,  X86_INS_JMP: jmp	$dst */
+{	/* X86_JMP_4, X86_INS_JMP: jmp	$dst */
 	0,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2888,12 +2888,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNE_2,  X86_INS_JNE: jne	$dst */
+{	/* X86_JNE_2, X86_INS_JNE: jne	$dst */
 	X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNE_4,  X86_INS_JNE: jne	$dst */
+{	/* X86_JNE_4, X86_INS_JNE: jne	$dst */
 	X86_EFLAGS_TEST_ZF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2903,12 +2903,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNO_2,  X86_INS_JNO: jno	$dst */
+{	/* X86_JNO_2, X86_INS_JNO: jno	$dst */
 	X86_EFLAGS_TEST_OF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNO_4,  X86_INS_JNO: jno	$dst */
+{	/* X86_JNO_4, X86_INS_JNO: jno	$dst */
 	X86_EFLAGS_TEST_OF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2918,12 +2918,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNP_2,  X86_INS_JNP: jnp	$dst */
+{	/* X86_JNP_2, X86_INS_JNP: jnp	$dst */
 	X86_EFLAGS_TEST_PF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNP_4,  X86_INS_JNP: jnp	$dst */
+{	/* X86_JNP_4, X86_INS_JNP: jnp	$dst */
 	X86_EFLAGS_TEST_PF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2933,12 +2933,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNS_2,  X86_INS_JNS: jns	$dst */
+{	/* X86_JNS_2, X86_INS_JNS: jns	$dst */
 	X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JNS_4,  X86_INS_JNS: jns	$dst */
+{	/* X86_JNS_4, X86_INS_JNS: jns	$dst */
 	X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2948,12 +2948,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JO_2,  X86_INS_JO: jo	$dst */
+{	/* X86_JO_2, X86_INS_JO: jo	$dst */
 	X86_EFLAGS_TEST_OF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JO_4,  X86_INS_JO: jo	$dst */
+{	/* X86_JO_4, X86_INS_JO: jo	$dst */
 	X86_EFLAGS_TEST_OF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2963,12 +2963,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JP_2,  X86_INS_JP: jp	$dst */
+{	/* X86_JP_2, X86_INS_JP: jp	$dst */
 	X86_EFLAGS_TEST_PF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JP_4,  X86_INS_JP: jp	$dst */
+{	/* X86_JP_4, X86_INS_JP: jp	$dst */
 	X86_EFLAGS_TEST_PF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -2983,12 +2983,12 @@
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JS_2,  X86_INS_JS: js	$dst */
+{	/* X86_JS_2, X86_INS_JS: js	$dst */
 	X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_JS_4,  X86_INS_JS: js	$dst */
+{	/* X86_JS_4, X86_INS_JS: js	$dst */
 	X86_EFLAGS_TEST_SF,
 	{ CS_AC_IGNORE, 0 }
 },
@@ -3423,7 +3423,7 @@
 	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_MOV16ri_alt,  X86_INS_MOV: mov{w}	$dst $src */
+{	/* X86_MOV16ri_alt, X86_INS_MOV: mov{w}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -3438,7 +3438,7 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_MOV16rr_REV,  X86_INS_MOV: mov{w}	$dst $src */
+{	/* X86_MOV16rr_REV, X86_INS_MOV: mov{w}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -3523,7 +3523,7 @@
 	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_MOV32ri_alt,  X86_INS_MOV: mov{l}	$dst $src */
+{	/* X86_MOV32ri_alt, X86_INS_MOV: mov{l}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -3538,7 +3538,7 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_MOV32rr_REV,  X86_INS_MOV: mov{l}	$dst $src */
+{	/* X86_MOV32rr_REV, X86_INS_MOV: mov{l}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -3623,7 +3623,7 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_MOV64rr_REV,  X86_INS_MOV: mov{q}	$dst $src */
+{	/* X86_MOV64rr_REV, X86_INS_MOV: mov{q}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -3663,7 +3663,7 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_MOV8mr_NOREX,  X86_INS_MOV: mov{b}	$dst $src */
+{	/* X86_MOV8mr_NOREX, X86_INS_MOV: mov{b}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -3688,7 +3688,7 @@
 	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_MOV8ri_alt,  X86_INS_MOV: mov{b}	$dst $src */
+{	/* X86_MOV8ri_alt, X86_INS_MOV: mov{b}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -3698,7 +3698,7 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_MOV8rm_NOREX,  X86_INS_MOV: mov{b}	$dst $src */
+{	/* X86_MOV8rm_NOREX, X86_INS_MOV: mov{b}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -3708,12 +3708,12 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_MOV8rr_NOREX,  X86_INS_MOV: mov{b}	$dst $src */
+{	/* X86_MOV8rr_NOREX, X86_INS_MOV: mov{b}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_MOV8rr_REV,  X86_INS_MOV: mov{b}	$dst $src */
+{	/* X86_MOV8rr_REV, X86_INS_MOV: mov{b}	$dst $src */
 	0,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -4283,7 +4283,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_OR16rr_REV,  X86_INS_OR: or{w}	$dst $src2 */
+{	/* X86_OR16rr_REV, X86_INS_OR: or{w}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -4328,7 +4328,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_OR32rr_REV,  X86_INS_OR: or{l}	$dst $src2 */
+{	/* X86_OR32rr_REV, X86_INS_OR: or{l}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -4373,7 +4373,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_OR64rr_REV,  X86_INS_OR: or{q}	$dst $src2 */
+{	/* X86_OR64rr_REV, X86_INS_OR: or{q}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -4388,7 +4388,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_OR8mi8,  X86_INS_OR: or{b}	$dst $src */
+{	/* X86_OR8mi8, X86_INS_OR: or{b}	$dst $src */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -4403,7 +4403,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_OR8ri8,  X86_INS_OR: or{b}	$src1 $src2 */
+{	/* X86_OR8ri8, X86_INS_OR: or{b}	$src1 $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -4418,7 +4418,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_OR8rr_REV,  X86_INS_OR: or{b}	$dst $src2 */
+{	/* X86_OR8rr_REV, X86_INS_OR: or{b}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -4523,7 +4523,7 @@
 	{ CS_AC_WRITE, 0 }
 },
 
-{	/* X86_POP16rmr,  X86_INS_POP: pop{w}	$reg */
+{	/* X86_POP16rmr, X86_INS_POP: pop{w}	$reg */
 	0,
 	{ CS_AC_WRITE, 0 }
 },
@@ -4538,7 +4538,7 @@
 	{ CS_AC_WRITE, 0 }
 },
 
-{	/* X86_POP32rmr,  X86_INS_POP: pop{l}	$reg */
+{	/* X86_POP32rmr, X86_INS_POP: pop{l}	$reg */
 	0,
 	{ CS_AC_WRITE, 0 }
 },
@@ -4553,7 +4553,7 @@
 	{ CS_AC_WRITE, 0 }
 },
 
-{	/* X86_POP64rmr,  X86_INS_POP: pop{q}	$reg */
+{	/* X86_POP64rmr, X86_INS_POP: pop{q}	$reg */
 	0,
 	{ CS_AC_WRITE, 0 }
 },
@@ -4678,7 +4678,7 @@
 	{ CS_AC_READ, 0 }
 },
 
-{	/* X86_PUSH16rmr,  X86_INS_PUSH: push{w}	$reg */
+{	/* X86_PUSH16rmr, X86_INS_PUSH: push{w}	$reg */
 	0,
 	{ CS_AC_READ, 0 }
 },
@@ -4698,7 +4698,7 @@
 	{ CS_AC_READ, 0 }
 },
 
-{	/* X86_PUSH32rmr,  X86_INS_PUSH: push{l}	$reg */
+{	/* X86_PUSH32rmr, X86_INS_PUSH: push{l}	$reg */
 	0,
 	{ CS_AC_READ, 0 }
 },
@@ -4723,7 +4723,7 @@
 	{ CS_AC_READ, 0 }
 },
 
-{	/* X86_PUSH64rmr,  X86_INS_PUSH: push{q}	$reg */
+{	/* X86_PUSH64rmr, X86_INS_PUSH: push{q}	$reg */
 	0,
 	{ CS_AC_READ, 0 }
 },
@@ -5798,7 +5798,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SBB16rr_REV,  X86_INS_SBB: sbb{w}	$dst $src2 */
+{	/* X86_SBB16rr_REV, X86_INS_SBB: sbb{w}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -5843,7 +5843,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SBB32rr_REV,  X86_INS_SBB: sbb{l}	$dst $src2 */
+{	/* X86_SBB32rr_REV, X86_INS_SBB: sbb{l}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -5888,7 +5888,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SBB64rr_REV,  X86_INS_SBB: sbb{q}	$dst $src2 */
+{	/* X86_SBB64rr_REV, X86_INS_SBB: sbb{q}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -5903,7 +5903,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_SBB8mi8,  X86_INS_SBB: sbb{b}	$dst $src */
+{	/* X86_SBB8mi8, X86_INS_SBB: sbb{b}	$dst $src */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -5918,7 +5918,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_SBB8ri8,  X86_INS_SBB: sbb{b}	$src1 $src2 */
+{	/* X86_SBB8ri8, X86_INS_SBB: sbb{b}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -5933,7 +5933,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SBB8rr_REV,  X86_INS_SBB: sbb{b}	$dst $src2 */
+{	/* X86_SBB8rr_REV, X86_INS_SBB: sbb{b}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -6713,7 +6713,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SUB16rr_REV,  X86_INS_SUB: sub{w}	$dst $src2 */
+{	/* X86_SUB16rr_REV, X86_INS_SUB: sub{w}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -6758,7 +6758,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SUB32rr_REV,  X86_INS_SUB: sub{l}	$dst $src2 */
+{	/* X86_SUB32rr_REV, X86_INS_SUB: sub{l}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -6803,7 +6803,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SUB64rr_REV,  X86_INS_SUB: sub{q}	$dst $src2 */
+{	/* X86_SUB64rr_REV, X86_INS_SUB: sub{q}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -6818,7 +6818,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_SUB8mi8,  X86_INS_SUB: sub{b}	$dst $src */
+{	/* X86_SUB8mi8, X86_INS_SUB: sub{b}	$dst $src */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -6833,7 +6833,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_SUB8ri8,  X86_INS_SUB: sub{b}	$src1 $src2 */
+{	/* X86_SUB8ri8, X86_INS_SUB: sub{b}	$src1 $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -6848,7 +6848,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_SUB8rr_REV,  X86_INS_SUB: sub{b}	$dst $src2 */
+{	/* X86_SUB8rr_REV, X86_INS_SUB: sub{b}	$dst $src2 */
 	X86_EFLAGS_MODIFY_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_MODIFY_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -6918,6 +6918,11 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
+{	/* X86_TEST16mi_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
+},
+
 {	/* X86_TEST16mr, X86_INS_TEST: test */
 	0,
 	{ 0 }
@@ -6926,6 +6931,11 @@
 {	/* X86_TEST16ri, X86_INS_TEST: test */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+},
+
+{	/* X86_TEST16ri_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
 },
 
 {	/* X86_TEST16rr, X86_INS_TEST: test */
@@ -6943,6 +6953,11 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
+{	/* X86_TEST32mi_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
+},
+
 {	/* X86_TEST32mr, X86_INS_TEST: test */
 	0,
 	{ 0 }
@@ -6951,6 +6966,11 @@
 {	/* X86_TEST32ri, X86_INS_TEST: test */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+},
+
+{	/* X86_TEST32ri_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
 },
 
 {	/* X86_TEST32rr, X86_INS_TEST: test */
@@ -6968,6 +6988,11 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
+{	/* X86_TEST64mi32_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
+},
+
 {	/* X86_TEST64mr, X86_INS_TEST: test */
 	0,
 	{ 0 }
@@ -6976,6 +7001,11 @@
 {	/* X86_TEST64ri32, X86_INS_TEST: test */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+},
+
+{	/* X86_TEST64ri32_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
 },
 
 {	/* X86_TEST64rr, X86_INS_TEST: test */
@@ -6993,6 +7023,11 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
+{	/* X86_TEST8mi_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
+},
+
 {	/* X86_TEST8mr, X86_INS_TEST: test */
 	0,
 	{ 0 }
@@ -7001,6 +7036,11 @@
 {	/* X86_TEST8ri, X86_INS_TEST: test */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ, CS_AC_IGNORE, 0 }
+},
+
+{	/* X86_TEST8ri_alt, X86_INS_TEST: test */
+	0,
+	{ 0 }
 },
 
 {	/* X86_TEST8rr, X86_INS_TEST: test */
@@ -7468,7 +7508,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_XOR16rr_REV,  X86_INS_XOR: xor{w}	$dst $src2 */
+{	/* X86_XOR16rr_REV, X86_INS_XOR: xor{w}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -7513,7 +7553,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_XOR32rr_REV,  X86_INS_XOR: xor{l}	$dst $src2 */
+{	/* X86_XOR32rr_REV, X86_INS_XOR: xor{l}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -7558,7 +7598,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_XOR64rr_REV,  X86_INS_XOR: xor{q}	$dst $src2 */
+{	/* X86_XOR64rr_REV, X86_INS_XOR: xor{q}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
@@ -7573,7 +7613,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_XOR8mi8,  X86_INS_XOR: xor{b}	$dst $src */
+{	/* X86_XOR8mi8, X86_INS_XOR: xor{b}	$dst $src */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -7588,7 +7628,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
 
-{	/* X86_XOR8ri8,  X86_INS_XOR: xor{b}	$src1 $src2 */
+{	/* X86_XOR8ri8, X86_INS_XOR: xor{b}	$src1 $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_IGNORE, 0 }
 },
@@ -7603,7 +7643,7 @@
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_XOR8rr_REV,  X86_INS_XOR: xor{b}	$dst $src2 */
+{	/* X86_XOR8rr_REV, X86_INS_XOR: xor{b}	$dst $src2 */
 	X86_EFLAGS_RESET_OF | X86_EFLAGS_MODIFY_SF | X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_UNDEFINED_AF | X86_EFLAGS_MODIFY_PF | X86_EFLAGS_RESET_CF,
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
 },

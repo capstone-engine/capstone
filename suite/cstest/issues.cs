@@ -8,7 +8,7 @@
 
 !# issue 1472 lock sub
 !# CS_ARCH_X86, CS_MODE_32, None
-F0 2B 45 08 -> lock sub eax, dword ptr [ebp + 8]
+0xF0,0x2B,0x45,0x08 == lock sub eax, dword ptr [ebp + 8]
 
 !# issue 1472 lock or
 !# CS_ARCH_X86, CS_MODE_32, None
