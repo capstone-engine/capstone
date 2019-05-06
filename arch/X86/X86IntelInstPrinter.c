@@ -228,14 +228,14 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-    // TODO: fix COMISD in Tablegen instead (#1456)
-    if (MI->op1_size == 16) {
-        SStream_concat0(O, "xmmword ptr ");
-        MI->x86opsize = 16;
-    } else {
-        SStream_concat0(O, "qword ptr ");
-        MI->x86opsize = 8;
-    }
+	// TODO: fix COMISD in Tablegen instead (#1456)
+	if (MI->op1_size == 16) {
+		SStream_concat0(O, "xmmword ptr ");
+		MI->x86opsize = 16;
+	} else {
+		SStream_concat0(O, "qword ptr ");
+		MI->x86opsize = 8;
+	}
 
 	printMemReference(MI, OpNo, O);
 }
@@ -690,6 +690,8 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
 
+	// printf("opcode = %u\n", MCInst_getOpcode(MI));
+
 	// perhaps this instruction does not need printer
 	if (MI->assembly[0]) {
 		strncpy(O->buffer, MI->assembly, sizeof(O->buffer));
@@ -739,28 +741,6 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	if (MI->op1_size == 0 && reg)
 		MI->op1_size = MI->csh->regsize_map[reg];
-
-	// TODO: dirty quick hack. fix tablegen instead
-	// printf("opcode = %u\n", MCInst_getOpcode(MI));
-	switch(MCInst_getOpcode(MI)) {
-		default:
-			break;
-
-		case X86_RCR8m1:
-		case X86_RCR16m1:
-		case X86_RCR32m1:
-		case X86_RCR64m1:
-			SStream_concat0(O, ", 1");
-
-			if (MI->csh->detail) {
-				MI->flat_insn->detail->x86.operands[1].type = X86_OP_IMM;
-				MI->flat_insn->detail->x86.operands[1].imm = 1;
-				MI->flat_insn->detail->x86.operands[1].size = 1;
-				MI->flat_insn->detail->x86.op_count = 2;
-			}
-
-			break;
-	}
 }
 
 /// printPCRelImm - This is used to print an immediate value that ends up
