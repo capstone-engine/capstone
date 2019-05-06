@@ -2104,6 +2104,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADC8mi8:
 			case X86_ADC8mr:
 			case X86_ADC8rm:
+			case X86_ADC16rm:
 			case X86_ADC32rm:
 			case X86_ADC64rm:
 
@@ -2121,6 +2122,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADD8mi8:
 			case X86_ADD8mr:
 			case X86_ADD8rm:
+			case X86_ADD16rm:
 			case X86_ADD32rm:
 			case X86_ADD64rm:
 
@@ -2138,6 +2140,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_AND8mi8:
 			case X86_AND8mr:
 			case X86_AND8rm:
+			case X86_AND16rm:
 			case X86_AND32rm:
 			case X86_AND64rm:
 
@@ -2198,7 +2201,6 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_OR32mi:
 			case X86_OR32mi8:
 			case X86_OR32mr:
-			//case X86_OR32mrLocked:
 			case X86_OR64mi32:
 			case X86_OR64mi8:
 			case X86_OR64mr:
@@ -2206,6 +2208,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_OR8mi:
 			case X86_OR8mr:
 			case X86_OR8rm:
+			case X86_OR16rm:
 			case X86_OR32rm:
 			case X86_OR64rm:
 
@@ -2237,6 +2240,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_SUB8mi:
 			case X86_SUB8mr:
 			case X86_SUB8rm:
+			case X86_SUB16rm:
 			case X86_SUB32rm:
 			case X86_SUB64rm:
 
@@ -2266,6 +2270,7 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_XOR8mi:
 			case X86_XOR8mr:
 			case X86_XOR8rm:
+			case X86_XOR16rm:
 			case X86_XOR32rm:
 			case X86_XOR64rm:
 
