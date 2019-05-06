@@ -2177,6 +2177,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADC8mi:
 			case X86_ADC8mi8:
 			case X86_ADC8mr:
+			case X86_ADC8rm:
+			case X86_ADC16rm:
+			case X86_ADC32rm:
+			case X86_ADC64rm:
 
 			// ADD
 			case X86_ADD16mi:
@@ -2191,6 +2195,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADD8mi:
 			case X86_ADD8mi8:
 			case X86_ADD8mr:
+			case X86_ADD8rm:
+			case X86_ADD16rm:
+			case X86_ADD32rm:
+			case X86_ADD64rm:
 
 			// AND
 			case X86_AND16mi:
@@ -2205,6 +2213,11 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_AND8mi:
 			case X86_AND8mi8:
 			case X86_AND8mr:
+			case X86_AND8rm:
+			case X86_AND16rm:
+			case X86_AND32rm:
+			case X86_AND64rm:
+
 
 			// BTC
 			case X86_BTC16mi8:
@@ -2270,6 +2283,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_OR8mi8:
 			case X86_OR8mi:
 			case X86_OR8mr:
+			case X86_OR8rm:
+			case X86_OR16rm:
+			case X86_OR32rm:
+			case X86_OR64rm:
 
 			// SBB
 			case X86_SBB16mi:
@@ -2298,6 +2315,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_SUB8mi8:
 			case X86_SUB8mi:
 			case X86_SUB8mr:
+			case X86_SUB8rm:
+			case X86_SUB16rm:
+			case X86_SUB32rm:
+			case X86_SUB64rm:
 
 			// XADD
 			case X86_XADD16rm:
@@ -2324,6 +2345,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_XOR8mi8:
 			case X86_XOR8mi:
 			case X86_XOR8mr:
+			case X86_XOR8rm:
+			case X86_XOR16rm:
+			case X86_XOR32rm:
+			case X86_XOR64rm:
 
 				// this instruction can be used with LOCK prefix
 				return false;
