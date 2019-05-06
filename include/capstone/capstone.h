@@ -547,18 +547,6 @@ size_t CAPSTONE_API cs_disasm(csh handle,
 		cs_insn **insn);
 
 /**
-  Deprecated function - to be retired in the next version!
-  Use cs_disasm() instead of cs_disasm_ex()
-*/
-CAPSTONE_EXPORT
-CAPSTONE_DEPRECATED
-size_t CAPSTONE_API cs_disasm_ex(csh handle,
-		const uint8_t *code, size_t code_size,
-		uint64_t address,
-		size_t count,
-		cs_insn **insn);
-
-/**
  Free memory allocated by cs_malloc() or cs_disasm() (argument @insn)
 
  @insn: pointer returned by @insn argument in cs_disasm() or cs_malloc()

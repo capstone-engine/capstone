@@ -1000,13 +1000,6 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 }
 
 CAPSTONE_EXPORT
-CAPSTONE_DEPRECATED
-size_t CAPSTONE_API cs_disasm_ex(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
-{
-	return cs_disasm(ud, buffer, size, offset, count, insn);
-}
-
-CAPSTONE_EXPORT
 void CAPSTONE_API cs_free(cs_insn *insn, size_t count)
 {
 	size_t i;
