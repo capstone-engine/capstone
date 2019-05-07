@@ -102,7 +102,7 @@ struct platform platforms[] = {
     {
         //item 14
         CS_ARCH_PPC,
-        CS_MODE_BIG_ENDIAN,
+        CS_MODE_64 | CS_MODE_BIG_ENDIAN,
         "PPC-64",
         "ppc64be"
     },
@@ -326,7 +326,7 @@ struct platform platforms[] = {
     {
         //item 46
         CS_ARCH_PPC,
-        CS_MODE_BIG_ENDIAN | CS_MODE_QPX,
+        CS_MODE_64 | CS_MODE_BIG_ENDIAN | CS_MODE_QPX,
         "ppc+qpx",
         "ppc64beqpx"
     },
