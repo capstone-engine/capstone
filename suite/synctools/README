@@ -1,0 +1,57 @@
+Sync tools to port LLVM inc files to Capstone.
+
+For X86
+=======
+0. cd tablegen/, then follow its README.
+
+1. Run genall-{full|reduce}.sh, then copy generated .inc files to arch/<ARCH>/ directory
+
+    $ ./genall-full.sh tablegen ~/projects/tmp/capstone777.git/arch/X86
+    $ ./genall-reduce.sh tablegen ~/projects/tmp/capstone777.git/arch/X86
+
+2. Run disassemblertables_reduce2 & disassemblertables_reduce2 to generate optimized (index table) X86GenDisassemblerTables2.inc & X86GenDisassemblerTables_reduce2.inc
+
+    # use 2x name to avoid overwritting X86GenDisassemblerTables2.inc & X86GenDisassemblerTables_reduce2.inc
+
+    $ make
+    $ ./disassemblertables2 > X86GenDisassemblerTables2x.inc
+    $ ./disassemblertables_reduce2 > X86GenDisassemblerTables_reduce2x.inc
+
+3. cd strinforeduce/, and follow its README.
+
+4. Copy all generated .inc files to arch/X86/
+
+    $ cp X86GenAsmWriter_reduce.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenAsmWriter1_reduce.inc ~/projects/capstone.git/arch/X86
+    $ cp X86MappingInsnName_reduce.inc ~/projects/capstone.git/arch/X86
+    $ cp X86MappingInsn_reduce.inc ~/projects/capstone.git/arch/X86
+    $ cp X86MappingInsnOp_reduce.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenInstrInfo_reduce.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenDisassemblerTables_reduce.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenDisassemblerTables_reduce2x.inc ~/projects/capstone.git/arch/X86/X86GenDisassemblerTables_reduce2.inc
+
+    $ cp X86GenAsmWriter.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenAsmWriter1.inc ~/projects/capstone.git/arch/X86
+    $ cp X86MappingInsnName.inc ~/projects/capstone.git/arch/X86
+    $ cp X86MappingInsn.inc ~/projects/capstone.git/arch/X86
+    $ cp X86MappingInsnOp.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenInstrInfo.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenDisassemblerTables.inc ~/projects/capstone.git/arch/X86
+    $ cp X86GenDisassemblerTables2x.inc ~/projects/capstone.git/arch/X86/X86GenDisassemblerTables2.inc
+
+5. copy insn_list.txt to include/capstone/<arch.h>
+
+For non-X86
+===========
+
+0. cd tablegen/, then follow its README.
+
+	1. Run gen-tablegen-arch.sh
+
+2. Run genall-arch.sh
+
+   ./genall-arch.sh tablegen ~/projects/capstone.git/arch/ARM ARM
+   ./genall-arch.sh tablegen ~/projects/capstone.git/arch/ARM AArch64
+   ./genall-arch.sh tablegen ~/projects/capstone.git/arch/ARM PowerPC
+
+3. Copy generated *.inc files to arch/<arch>/
