@@ -1,3 +1,7 @@
+!# issue 1468 B target
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x4b,0xff,0xf8,0x00 == b 0x800
+
 !# issue 1456 test alt 1
 !# CS_ARCH_X86, CS_MODE_32, None
 0xf6,0x08,0x00 == test byte ptr [eax], 0
