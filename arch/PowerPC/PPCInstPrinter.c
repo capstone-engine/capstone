@@ -272,6 +272,13 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		}
 	}
 
+	if ((MCInst_getOpcode(MI) == PPC_B)||(MCInst_getOpcode(MI) == PPC_BA)||
+			(MCInst_getOpcode(MI) == PPC_BL)||(MCInst_getOpcode(MI) == PPC_BLA)) {
+		int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 0));
+		bd = SignExtend64(bd, 24);
+		MCOperand_setImm(MCInst_getOperand(MI, 0), bd);
+	}
+
 	mnem = printAliasInstr(MI, O, Info);
 	if (mnem != NULL) {
 		if (strlen(mnem) > 0) {
@@ -668,7 +675,7 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		return;
 	}
 
-	imm = MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
+	imm = SignExtend32(MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4, 32);
 
 	if (!PPC_abs_branch(MI->csh, MCInst_getOpcode(MI))) {
 		imm = MI->address + imm;
