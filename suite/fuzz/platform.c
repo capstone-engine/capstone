@@ -104,7 +104,7 @@ struct platform platforms[] = {
         CS_ARCH_PPC,
         CS_MODE_BIG_ENDIAN,
         "PPC-64",
-        "ppc64be"
+        "ppc64"
     },
     {
         //item 15
@@ -328,7 +328,7 @@ struct platform platforms[] = {
         CS_ARCH_PPC,
         CS_MODE_BIG_ENDIAN | CS_MODE_QPX,
         "ppc+qpx",
-        "ppc64beqpx"
+        "ppcqpxbe"
     },
 
     // dummy entry to mark the end of this array.
