@@ -55,6 +55,8 @@ __all__ = [
     'CS_MODE_V8',
     'CS_MODE_V9',
     'CS_MODE_QPX',
+    'CS_MODE_SPE',
+    'CS_MODE_BOOKE',
     'CS_MODE_M68K_000',
     'CS_MODE_M68K_010',
     'CS_MODE_M68K_020',
@@ -180,6 +182,8 @@ CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
 CS_MODE_MIPS2 = (1 << 7)       # Mips II ISA
 CS_MODE_V9 = (1 << 4)          # Sparc V9 mode (for Sparc)
 CS_MODE_QPX = (1 << 4)         # Quad Processing eXtensions mode (PPC)
+CS_MODE_SPE = (1 << 5)         # Signal Processing Engine mode (PPC)
+CS_MODE_BOOKE = (1 << 6)       # Book-E mode (PPC)
 CS_MODE_M68K_000 = (1 << 1)    # M68K 68000 mode
 CS_MODE_M68K_010 = (1 << 2)    # M68K 68010 mode
 CS_MODE_M68K_020 = (1 << 3)    # M68K 68020 mode
