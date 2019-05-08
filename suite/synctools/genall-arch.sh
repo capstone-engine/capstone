@@ -59,10 +59,6 @@ case $3 in
   # PowerPC
   ./insn3.py $1/${ARCH}GenAsmMatcher.inc > insn_list.txt
   # then copy these instructions to include/capstone/arch.h
-  echo "Generating ${ARCH}GenSystemRegister.inc"
-  ./systemregister.py $1/${ARCH}GenSystemRegister.inc > ${ARCH}GenSystemRegister.inc
-  echo "Generating instruction enum in insn_list.txt (for include/capstone/<arch>.h)"
-  ./insn.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc $2/${ARCH}MappingInsn.inc > insn_list.txt
   ;;
   *)
   echo "Generating ${ARCH}GenSystemRegister.inc"
