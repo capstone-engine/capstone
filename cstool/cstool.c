@@ -46,6 +46,10 @@ static struct {
 	{ "x32att", CS_ARCH_X86, CS_MODE_32 }, // CS_MODE_32, CS_OPT_SYNTAX_ATT
 	{ "x64", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64
 	{ "x64att", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64, CS_OPT_SYNTAX_ATT
+	{ "ppc32", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc32be", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN },
+	{ "ppc32qpx", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc32beqpx", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_BIG_ENDIAN },
 	{ "ppc64", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc64be", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN },
 	{ "ppc64qpx", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
@@ -196,6 +200,10 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_PPC)) {
+		printf("        ppc32       ppc32 + little endian\n");
+		printf("        ppc32be     ppc32 + big endian\n");
+		printf("        ppc32qpx    ppc32 + qpx + little endian\n");
+		printf("        ppc32beqpx  ppc32 + qpx + big endian\n");
 		printf("        ppc64       ppc64 + little endian\n");
 		printf("        ppc64be     ppc64 + big endian\n");
 		printf("        ppc64qpx    ppc64 + qpx + little endian\n");
