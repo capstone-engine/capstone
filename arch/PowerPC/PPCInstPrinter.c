@@ -799,9 +799,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 #endif
 
 		if (MI->csh->detail) {
-            // map this internal reg ID to public reg ID
-            reg = PPC_map_register(reg);
-
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].mem.base = reg;
 			} else {

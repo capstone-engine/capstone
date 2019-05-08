@@ -1,3 +1,7 @@
+!# issue 1469 PPC CRx
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x4c,0x02,0x39,0x82 == crxor cr0lt, cr0eq, cr1un ; operands[0].type: REG = cr0lt
+
 !# issue 1468 B target
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
 0x1000: 0x4b,0xff,0xf8,0x00 == b 0x800

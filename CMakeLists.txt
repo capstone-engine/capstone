@@ -237,7 +237,6 @@ if (CAPSTONE_PPC_SUPPORT)
         arch/PowerPC/PPCGenSubtargetInfo.inc
         arch/PowerPC/PPCGenRegisterInfo.inc
         arch/PowerPC/PPCGenInstrInfo.inc
-        arch/PowerPC/PPCRegisterMapping.inc
         )
     set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
 endif ()

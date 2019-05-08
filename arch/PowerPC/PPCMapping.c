@@ -295,20 +295,6 @@ const char *PPC_reg_name(csh handle, unsigned int reg)
     return NULL;
 }
 
-static const unsigned short reg_mapping[] = {
-#include "PPCRegisterMapping.inc"
-};
-
-// map internal raw register to 'public' register
-ppc_reg PPC_map_register(unsigned int r)
-{
-        if (r < ARR_SIZE(reg_mapping))
-                return reg_mapping[r - 1];
-
-        // cannot find this register
-        return 0;
-}
-
 static const insn_map insns[] = {
 	// dummy item
 	{
