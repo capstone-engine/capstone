@@ -239,6 +239,8 @@ static void usage(char *prog)
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 {
+	printf("\tID: %u (%s)\n", ins->id, cs_insn_name(handle, ins->id));
+
 	switch(arch) {
 		case CS_ARCH_X86:
 			print_insn_detail_x86(handle, md, ins);
