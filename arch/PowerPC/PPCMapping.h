@@ -9,6 +9,9 @@
 // return name of regiser in friendly string
 const char *PPC_reg_name(csh handle, unsigned int reg);
 
+// return register id, given register name
+ppc_reg PPC_name_reg(const char *name);
+
 // given internal insn id, return public instruction info
 void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
