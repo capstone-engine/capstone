@@ -1093,7 +1093,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned reg = MCOperand_getReg(Op);
 		const char *RegName = getRegisterName(reg);
 
-		printf("reg = %u (%s)\n", reg, RegName);
+		// printf("reg = %u (%s)\n", reg, RegName);
 
 		// convert internal register ID to public register ID
 		reg = PPC_name_reg(RegName);
