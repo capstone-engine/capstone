@@ -1474,7 +1474,7 @@
 },
 
 {
-	PPC_CMPD, PPC_INS_CMP,
+	PPC_CMPD, PPC_INS_CMPD,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -1516,7 +1516,7 @@
 },
 
 {
-	PPC_CMPLWI, PPC_INS_CMPLI,
+	PPC_CMPLWI, PPC_INS_CMPLWI,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -1537,7 +1537,7 @@
 },
 
 {
-	PPC_CMPWI, PPC_INS_CMPI,
+	PPC_CMPWI, PPC_INS_CMPWI,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -1691,7 +1691,7 @@
 },
 
 {
-	PPC_CROR, PPC_INS_CRMOVE,
+	PPC_CROR, PPC_INS_CROR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -1705,7 +1705,7 @@
 },
 
 {
-	PPC_CRSET, PPC_INS_CREQV,
+	PPC_CRSET, PPC_INS_CRSET,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -10217,7 +10217,7 @@
 },
 
 {
-	PPC_VOR, PPC_INS_VMR,
+	PPC_VOR, PPC_INS_VOR,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { PPC_GRP_ALTIVEC, 0 }, 0, 0
 #endif
@@ -11015,7 +11015,7 @@
 },
 
 {
-	PPC_XORI, PPC_INS_XNOP,
+	PPC_XORI, PPC_INS_XORI,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
