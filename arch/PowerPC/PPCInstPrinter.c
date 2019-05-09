@@ -791,6 +791,11 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 #ifndef CAPSTONE_DIET
 		const char *RegName = getRegisterName(reg);
 
+		// printf("reg = %u (%s)\n", reg, RegName);
+
+		// convert internal register ID to public register ID
+		reg = PPC_name_reg(RegName);
+
 		// The linux and AIX assembler does not take register prefixes.
 		if (MI->csh->syntax == CS_OPT_SYNTAX_NOREGNAME)
 			RegName = stripRegisterPrefix(RegName);
