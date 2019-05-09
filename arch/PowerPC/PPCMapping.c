@@ -13,7 +13,6 @@
 #define GET_INSTRINFO_ENUM
 #include "PPCGenInstrInfo.inc"
 
-#ifndef CAPSTONE_DIET
 // NOTE: this reg_name_maps[] reflects the order of registers in ppc_reg
 static const name_map reg_name_maps[] = {
 	{ PPC_REG_INVALID, NULL },
@@ -263,7 +262,6 @@ static const name_map reg_name_maps[] = {
     { PPC_REG_CR6UN, "cr6un" },
     { PPC_REG_CR7UN, "cr7un" },
 };
-#endif
 
 const char *PPC_reg_name(csh handle, unsigned int reg)
 {
@@ -293,6 +291,19 @@ const char *PPC_reg_name(csh handle, unsigned int reg)
 
     // not found
     return NULL;
+}
+
+ppc_reg PPC_name_reg(const char *name)
+{
+	unsigned int i;
+
+	for(i = 1; i < ARR_SIZE(reg_name_maps); i++) {
+		if (!strcmp(name, reg_name_maps[i].name))
+			return reg_name_maps[i].id;
+	}
+
+	// not found
+	return 0;
 }
 
 static const insn_map insns[] = {
