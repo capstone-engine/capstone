@@ -417,7 +417,6 @@ const char *PPC_group_name(csh handle, unsigned int id)
 #endif
 }
 
-#if 0
 static const struct ppc_alias alias_insn_name_maps[] = {
 	//{ PPC_INS_BTA, "bta" },
 	{ PPC_INS_B, PPC_BC_LT, "blt" },
@@ -513,32 +512,20 @@ static const struct ppc_alias alias_insn_name_maps[] = {
 bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 {
 	size_t i;
-#ifndef CAPSTONE_DIET
-	int x;
-#endif
+
+	alias->cc = PPC_BC_INVALID;
 
 	for(i = 0; i < ARR_SIZE(alias_insn_name_maps); i++) {
 		if (!strcmp(name, alias_insn_name_maps[i].mnem)) {
-			alias->id = alias_insn_name_maps[i].id;
+			// alias->id = alias_insn_name_maps[i].id;
 			alias->cc = alias_insn_name_maps[i].cc;
 			return true;
 		}
 	}
 
-#ifndef CAPSTONE_DIET
-	// not really an alias insn
-	x = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
-	if (x != -1) {
-		alias->id = insn_name_maps[x].id;
-		alias->cc = PPC_BC_INVALID;
-		return true;
-	}
-#endif
-
 	// not found
 	return false;
 }
-#endif
 
 // check if this insn is relative branch
 bool PPC_abs_branch(cs_struct *h, unsigned int id)
