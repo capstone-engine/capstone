@@ -94,7 +94,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 	char *mnem;
 	unsigned int opcode = MCInst_getOpcode(MI);
 
-    // printf("opcode = %u\n", opcode);
+	// printf("opcode = %u\n", opcode);
 
 	// Check for slwi/srwi mnemonics.
 	if (opcode == PPC_RLWINM) {
