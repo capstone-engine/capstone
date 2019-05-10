@@ -574,6 +574,13 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		MCOperand_setImm(MCInst_getOperand(MI, 0), bd);
 	}
 
+	if ((MCInst_getOpcode(MI) == PPC_gBC) || (MCInst_getOpcode(MI) == PPC_gBCA) ||
+			(MCInst_getOpcode(MI) == PPC_gBCL) || (MCInst_getOpcode(MI) == PPC_gBCLA)) {
+		int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 2));
+		bd = SignExtend64(bd, 14);
+		MCOperand_setImm(MCInst_getOperand(MI, 2), bd);
+	}
+
 	mnem = printAliasBcc(MI, O, Info);
 	if (!mnem)
 		mnem = printAliasInstr(MI, O, Info);
@@ -977,6 +984,7 @@ static void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	imm = SignExtend32(MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4, 32);
+	//imm = MCOperand_getImm(MCInst_getOperand(MI, OpNo)) * 4;
 
 	if (!PPC_abs_branch(MI->csh, MCInst_getOpcode(MI))) {
 		imm = MI->address + imm;
