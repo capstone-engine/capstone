@@ -567,15 +567,15 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		}
 	}
 
-	if ((MCInst_getOpcode(MI) == PPC_B)||(MCInst_getOpcode(MI) == PPC_BA)||
-			(MCInst_getOpcode(MI) == PPC_BL)||(MCInst_getOpcode(MI) == PPC_BLA)) {
+	if (opcode == PPC_B || opcode == PPC_BA || opcode == PPC_BL ||
+			opcode == PPC_BLA) {
 		int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 0));
 		bd = SignExtend64(bd, 24);
 		MCOperand_setImm(MCInst_getOperand(MI, 0), bd);
 	}
 
-	if ((MCInst_getOpcode(MI) == PPC_gBC) || (MCInst_getOpcode(MI) == PPC_gBCA) ||
-			(MCInst_getOpcode(MI) == PPC_gBCL) || (MCInst_getOpcode(MI) == PPC_gBCLA)) {
+	if (opcode == PPC_gBC || opcode == PPC_gBCA || opcode == PPC_gBCL ||
+			opcode == PPC_gBCLA) {
 		int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 2));
 		bd = SignExtend64(bd, 14);
 		MCOperand_setImm(MCInst_getOperand(MI, 2), bd);
