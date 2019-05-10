@@ -19,9 +19,6 @@ echo "Generating ${ARCH}MappingInsnName.inc"
 echo "Generating ${ARCH}MappingInsn.inc"
 ./mapping_insn-arch.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc $2/${ARCH}MappingInsn.inc > ${ARCH}MappingInsn.inc
 
-echo "Generating ${ARCH}MappingInsnOp.inc"
-./mapping_insn_op-arch.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc  $2/${ARCH}MappingInsnOp.inc > ${ARCH}MappingInsnOp.inc 
-
 echo "Generating ${ARCH}GenInstrInfo.inc"
 ./instrinfo-arch.py $1/${ARCH}GenInstrInfo.inc ${ARCH} > ${ARCH}GenInstrInfo.inc
 
@@ -46,6 +43,8 @@ case $3 in
   echo "Generating instruction enum in insn_list.txt (for include/capstone/<arch>.h)"
   ./insn.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc $2/${ARCH}MappingInsn.inc > insn_list.txt
   # then copy these instructions to include/capstone/<arch>.h
+  echo "Generating ${ARCH}MappingInsnOp.inc"
+  ./mapping_insn_op-arch.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc  $2/${ARCH}MappingInsnOp.inc > ${ARCH}MappingInsnOp.inc 
   ;;
   AArch64)
   echo "Generating ${ARCH}GenSystemOperands.inc"
@@ -54,6 +53,8 @@ case $3 in
   ./insn.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc $2/${ARCH}MappingInsn.inc > insn_list.txt
   # then copy these instructions to include/capstone/<arch>.h
   ./arm64_gen_vreg > AArch64GenRegisterV.inc
+  echo "Generating ${ARCH}MappingInsnOp.inc"
+  ./mapping_insn_op-arch.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc  $2/${ARCH}MappingInsnOp.inc > ${ARCH}MappingInsnOp.inc 
   ;;
   PowerPC)
   # PowerPC
