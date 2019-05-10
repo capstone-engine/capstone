@@ -592,6 +592,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 				mnem[strlen(mnem) - 1] = '\0';
 
             MCInst_setOpcodePub(MI, PPC_map_insn(mnem));
+
             if (MI->csh->detail) {
 				struct ppc_alias alias;
 
