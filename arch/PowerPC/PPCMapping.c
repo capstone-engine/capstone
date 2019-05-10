@@ -1435,6 +1435,20 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+// map instruction name to public instruction ID
+ppc_insn PPC_map_insn(const char *name)
+{
+	unsigned int i;
+
+	for(i = 1; i < ARR_SIZE(insn_name_maps); i++) {
+		if (!strcmp(name, insn_name_maps[i].name))
+			return i;
+	}
+
+	// not found
+	return PPC_INS_INVALID;
+}
+
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
 	// generic groups
@@ -1637,9 +1651,6 @@ static const struct ppc_alias alias_insn_name_maps[] = {
 bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 {
 	size_t i;
-#ifndef CAPSTONE_DIET
-	int x;
-#endif
 
 	for(i = 0; i < ARR_SIZE(alias_insn_name_maps); i++) {
 		if (!strcmp(name, alias_insn_name_maps[i].mnem)) {
@@ -1648,16 +1659,6 @@ bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 			return true;
 		}
 	}
-
-#ifndef CAPSTONE_DIET
-	// not really an alias insn
-	x = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
-	if (x != -1) {
-		alias->id = insn_name_maps[x].id;
-		alias->cc = PPC_BC_INVALID;
-		return true;
-	}
-#endif
 
 	// not found
 	return false;
