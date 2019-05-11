@@ -384,6 +384,11 @@ static char *printAliasBcc(MCInst *MI, SStream *OS, void *info)
 	return tmp;
 }
 
+static bool isBOCTRBranch(unsigned int op)
+{
+	return ((op >= PPC_BDNZ) && (op <= PPC_BDZp));
+}
+
 void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	char *mnem;
@@ -579,6 +584,14 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 2));
 		bd = SignExtend64(bd, 14);
 		MCOperand_setImm(MCInst_getOperand(MI, 2), bd);
+	}
+
+	if (isBOCTRBranch(MCInst_getOpcode(MI))) {
+		if (MCOperand_isImm(MCInst_getOperand(MI,0))) {
+			int64_t bd = MCOperand_getImm(MCInst_getOperand(MI, 0));
+			bd = SignExtend64(bd, 14);
+			MCOperand_setImm(MCInst_getOperand(MI, 0), bd);
+		}
 	}
 
 	mnem = printAliasBcc(MI, O, Info);
