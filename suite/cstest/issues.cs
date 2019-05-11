@@ -1,3 +1,7 @@
+!# issue PPC JUMP group
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump
+
 !# issue 1468 PPC bdnz
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
 0x101086c: 0x42,0x00,0xff,0xf8 == bdnz 0x1010864
