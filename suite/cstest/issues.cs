@@ -1,3 +1,7 @@
+!# issue 1468 PPC bdnz
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x101086c: 0x42,0x00,0xff,0xf8 == bdnz 0x1010864
+
 !# issue PPC bdnzt
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
 0x1000: 0x41,0x00,0xff,0xac == bdnzt lt, 0xfac
