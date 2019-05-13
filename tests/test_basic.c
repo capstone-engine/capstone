@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,16 +97,16 @@ static void test()
 	};
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
-		{ 
+		{
 			CS_ARCH_X86,
-			CS_MODE_16,
+			(cs_mode)CS_MODE_16,
 			(unsigned char*)X86_CODE16,
 			sizeof(X86_CODE16) - 1,
 			"X86 16bit (Intel syntax)"
 		},
 		{
 			CS_ARCH_X86,
-			CS_MODE_32,
+			(cs_mode)CS_MODE_32,
 			(unsigned char*)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32bit (ATT syntax)",
@@ -115,14 +115,14 @@ static void test()
 		},
 		{
 			CS_ARCH_X86,
-			CS_MODE_32,
+			(cs_mode)CS_MODE_32,
 			(unsigned char*)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32 (Intel syntax)"
 		},
 		{
 			CS_ARCH_X86,
-			CS_MODE_32,
+			(cs_mode)CS_MODE_32,
 			(unsigned char*)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32 (MASM syntax)",
@@ -131,37 +131,37 @@ static void test()
 		},
 		{
 			CS_ARCH_X86,
-			CS_MODE_64,
+			(cs_mode)CS_MODE_64,
 			(unsigned char*)X86_CODE64,
 			sizeof(X86_CODE64) - 1,
 			"X86 64 (Intel syntax)"
 		},
 #endif
 #ifdef CAPSTONE_HAS_ARM
-		{ 
+		{
 			CS_ARCH_ARM,
-			CS_MODE_ARM,
+			(cs_mode)CS_MODE_ARM,
 			(unsigned char*)ARM_CODE,
 			sizeof(ARM_CODE) - 1,
 			"ARM"
 		},
 		{
 			CS_ARCH_ARM,
-			CS_MODE_THUMB,
+			(cs_mode)CS_MODE_THUMB,
 			(unsigned char*)THUMB_CODE2,
 			sizeof(THUMB_CODE2) - 1,
 			"THUMB-2"
 		},
-		{ 
+		{
 			CS_ARCH_ARM,
-			CS_MODE_ARM,
+			(cs_mode)CS_MODE_ARM,
 			(unsigned char*)ARM_CODE2,
 			sizeof(ARM_CODE2) - 1,
 			"ARM: Cortex-A15 + NEON"
 		},
 		{
 			CS_ARCH_ARM,
-			CS_MODE_THUMB,
+			(cs_mode)CS_MODE_THUMB,
 			(unsigned char*)THUMB_CODE,
 			sizeof(THUMB_CODE) - 1,
 			"THUMB"
@@ -214,7 +214,7 @@ static void test()
 #ifdef CAPSTONE_HAS_ARM64
 		{
 			CS_ARCH_ARM64,
-			CS_MODE_ARM,
+			(cs_mode)CS_MODE_ARM,
 			(unsigned char*)ARM64_CODE,
 			sizeof(ARM64_CODE) - 1,
 			"ARM-64"
@@ -223,14 +223,14 @@ static void test()
 #ifdef CAPSTONE_HAS_POWERPC
 		{
 			CS_ARCH_PPC,
-			CS_MODE_BIG_ENDIAN,
+			(cs_mode)CS_MODE_BIG_ENDIAN,
 			(unsigned char*)PPC_CODE,
 			sizeof(PPC_CODE) - 1,
 			"PPC-64"
 		},
 		{
 			CS_ARCH_PPC,
-			CS_MODE_BIG_ENDIAN,
+			(cs_mode)CS_MODE_BIG_ENDIAN,
 			(unsigned char*)PPC_CODE,
 			sizeof(PPC_CODE) - 1,
 			"PPC-64, print register with number only",
@@ -239,7 +239,7 @@ static void test()
 		},
 		{
 			CS_ARCH_PPC,
-			CS_MODE_BIG_ENDIAN + CS_MODE_QPX,
+			(cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_QPX),
 			(unsigned char*)PPC_CODE2,
 			sizeof(PPC_CODE2) - 1,
 			"PPC-64 + QPX",
@@ -248,7 +248,7 @@ static void test()
 #ifdef CAPSTONE_HAS_SPARC
 		{
 			CS_ARCH_SPARC,
-			CS_MODE_BIG_ENDIAN,
+			(cs_mode)CS_MODE_BIG_ENDIAN,
 			(unsigned char*)SPARC_CODE,
 			sizeof(SPARC_CODE) - 1,
 			"Sparc"
@@ -291,7 +291,7 @@ static void test()
 #ifdef CAPSTONE_HAS_TMS320C64X
 		{
 			CS_ARCH_TMS320C64X,
-			0,
+			(cs_mode)0,
 			(unsigned char*)TMS320C64X_CODE,
 			sizeof(TMS320C64X_CODE) - 1,
 			"TMS320C64x",
@@ -300,7 +300,7 @@ static void test()
 #ifdef CAPSTONE_HAS_M680X
 		{
 			CS_ARCH_M680X,
-			(cs_mode)(CS_MODE_M680X_6809),
+			(cs_mode)CS_MODE_M680X_6809,
 			(unsigned char*)M680X_CODE,
 			sizeof(M680X_CODE) - 1,
 			"M680X_M6809",
@@ -309,7 +309,7 @@ static void test()
 #ifdef CAPSTONE_HAS_EVM
 		{
 			CS_ARCH_EVM,
-			0,
+			(cs_mode)0,
 			(unsigned char*)EVM_CODE,
 			sizeof(EVM_CODE) - 1,
 			"EVM",

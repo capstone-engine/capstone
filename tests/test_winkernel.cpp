@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
+/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016-2019 */
 
 #include <ntddk.h>
 
@@ -160,7 +160,7 @@ EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRING Regis
 // This functions mimics printf() but does not return the same value as printf()
 // would do. printf() is required to exercise regression tests.
 _Use_decl_annotations_
-int __cdecl printf(const char * format, ...)
+int __cdecl printf(const char * const format, ...)
 {
 	NTSTATUS status;
 	va_list args;
