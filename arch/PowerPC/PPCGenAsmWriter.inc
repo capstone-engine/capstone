@@ -6047,7 +6047,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     break;
   case 18:
     // TBEGIN, TEND, TSR, XSRQPI, XSRQPIX, XSRQPXP
-    printU1ImmOperand(MI, 1, O);
+    printU1ImmOperand(MI, 0, O);
     break;
   case 19:
     // gBCAat, gBCLAat, gBCLat, gBCat
