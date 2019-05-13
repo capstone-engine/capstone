@@ -13,8 +13,8 @@ and follow the instructions below.
 
 NOTE: This requires Visual Studio 2010 or newer versions.
 
-If you wish to embed Capstone in a kernel driver, Visual Studio 2013 or newer
-versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
+If you wish to embed Capstone in a kernel driver, Visual Studio 2017 or newer
+versions, and Windows Driver Kit 10 or newer versions are required.
 
 
 (0) Tailor Capstone to your need.
