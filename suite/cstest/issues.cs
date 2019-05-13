@@ -1,3 +1,15 @@
+!# issue PPC JUMP group
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump
+
+!# issue 1468 PPC bdnz
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x101086c: 0x42,0x00,0xff,0xf8 == bdnz 0x1010864
+
+!# issue PPC bdnzt
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x41,0x00,0xff,0xac == bdnzt lt, 0xfac
+
 !# issue 1469 PPC CRx
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x4c,0x02,0x39,0x82 == crxor cr0lt, cr0eq, cr1un ; operands[0].type: REG = cr0lt

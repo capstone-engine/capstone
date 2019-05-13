@@ -29,3 +29,5 @@ echo "Generating GenInstrInfo.inc"
 
 echo "Generating GenDisassemblerTables.inc & X86GenDisassemblerTables2.inc"
 ./disassemblertables.py $1/X86GenDisassemblerTables.inc X86GenDisassemblerTables.inc X86GenDisassemblerTables2.inc
+
+make x86
