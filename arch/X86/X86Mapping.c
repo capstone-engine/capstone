@@ -3312,7 +3312,10 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 			break;
 		case 0xf0:
 #ifndef CAPSTONE_DIET
-			SStream_concat(O, "lock|");
+			if (MI->xAcquireRelease)
+				SStream_concat(O, "xacquire|lock|");
+			else
+				SStream_concat(O, "lock|");
 #endif
 			break;
 		case 0xf2:	// repne

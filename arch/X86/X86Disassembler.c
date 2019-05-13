@@ -857,13 +857,8 @@ static int reader(const struct reader_info *info, uint8_t *byte, uint64_t addres
 }
 
 // copy x86 detail information from internal structure to public structure
-static void update_pub_insn(cs_insn *pub, InternalInstruction *inter, uint8_t *prefixes)
+static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
 {
-	prefixes[0] = inter->prefix0;
-	prefixes[1] = inter->prefix1;
-	prefixes[2] = inter->prefix2;
-	prefixes[3] = inter->prefix3;
-
 	if (inter->vectorExtensionType != 0)
 		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
 	else {
@@ -1051,14 +1046,16 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			instr->imm_size = insn.immSize;
+
+			// copy all prefixes
+			instr->x86_prefix[0] = insn.prefix0;
+			instr->x86_prefix[1] = insn.prefix1;
+			instr->x86_prefix[2] = insn.prefix2;
+			instr->x86_prefix[3] = insn.prefix3;
+			instr->xAcquireRelease = insn.xAcquireRelease;
+
 			if (handle->detail) {
-				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
-			} else {
-				// still copy all prefixes
-				instr->x86_prefix[0] = insn.prefix0;
-				instr->x86_prefix[1] = insn.prefix1;
-				instr->x86_prefix[2] = insn.prefix2;
-				instr->x86_prefix[3] = insn.prefix3;
+				update_pub_insn(instr->flat_insn, &insn);
 			}
 		}
 
