@@ -1,3 +1,7 @@
+!# issue 1477 X86 xacquire
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf2,0xf0,0x31,0x1f == xacquire lock xor dword ptr [rdi], ebx
+
 !# issue PPC JUMP group
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump

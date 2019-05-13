@@ -471,7 +471,9 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if (((nextByte == 0xf0) ||
 				((nextByte & 0xfe) == 0x86 || (nextByte & 0xf8) == 0x90))) {
 				insn->xAcquireRelease = true;
-				if (!(byte == 0xf3 && nextByte == 0x90)) // PAUSE instruction support
+
+				if (!(byte == 0xf3 && nextByte == 0x90) &&  // PAUSE instruction support
+					!(byte == 0xf2 && nextByte == 0xf0))
 					break;
 			}
 
