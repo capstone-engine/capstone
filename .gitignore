@@ -85,6 +85,7 @@ _*
 packages/freebsd/ports/devel/capstone/distinfo
 
 # VisualStudio
+**/.vs/
 ProjectUpgradeLog.log
 Debug/
 Release/
