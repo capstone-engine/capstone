@@ -1,5 +1,5 @@
 /* Capstone Driver */
-/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
+/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016-2019 */
 
 // Firstly, compile capstone_static_winkernel and
 // generate capstone_static_winkernel.lib. It can be done by adding the
@@ -11,6 +11,8 @@
 // Platform to "All Platforms". Then, add the following entries:
 //    - C/C++ > General > Additional Include Directories
 //      - $(SolutionDir)capstone\include
+//    - C/C++ > Preprocessor > Preprocessor Definitions
+//      - _NO_CRT_STDIO_INLINE
 //    - Linker > Input > Additional Dependencies
 //      - $(OutDir)capstone_static_winkernel.lib
 //      - ntstrsafe.lib
@@ -88,7 +90,7 @@ exit:;
 }
 
 // printf()
-_Use_decl_annotations_ int __cdecl printf(const char *_Format, ...) {
+_Use_decl_annotations_ int __cdecl printf(const char * const _Format, ...) {
   NTSTATUS status;
   va_list args;
 
