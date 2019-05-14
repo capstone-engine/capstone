@@ -1,3 +1,11 @@
+!# issue X86 xrelease xchg
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x87,0x03 == xrelease xchg dword ptr [ebx], eax
+
+!# issue X86 xacquire xchg
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf2,0x87,0x03 == xacquire xchg dword ptr [ebx], eax
+
 !# issue X86 xrelease
 !# CS_ARCH_X86, CS_MODE_64, None
 0xf3,0xf0,0x31,0x1f == xrelease lock xor dword ptr [rdi], ebx
