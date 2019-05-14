@@ -471,11 +471,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if (((nextByte == 0xf0) ||
 				((nextByte & 0xfe) == 0x86 || (nextByte & 0xf8) == 0x90))) {
 				insn->xAcquireRelease = byte;
-
-				if (!(byte == 0xf3 && nextByte == 0x90) &&  // PAUSE instruction support
-					!(byte == 0xf2 && nextByte == 0xf0) && // xacquire
-					!(byte == 0xf3 && nextByte == 0xf0)) // xrelease
-					break;
 			}
 
 			/*
@@ -487,9 +482,6 @@ static int readPrefixes(struct InternalInstruction* insn)
 			if (byte == 0xf3 && (nextByte == 0x88 || nextByte == 0x89 ||
 						nextByte == 0xc6 || nextByte == 0xc7)) {
 				insn->xAcquireRelease = byte;
-
-				if (nextByte != 0x90) // PAUSE instruction support
-					break;
 			}
 
 			if (isREX(insn, nextByte)) {
