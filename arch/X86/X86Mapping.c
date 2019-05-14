@@ -3185,6 +3185,20 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 }
 #endif
 
+// return true if the opcode is XCHG [mem]
+static bool xchg_mem(unsigned int opcode)
+{
+	switch(opcode) {
+		default:
+			return false;
+		case X86_XCHG8rm:
+		case X86_XCHG16rm:
+		case X86_XCHG32rm:
+		case X86_XCHG64rm:
+				 return true;
+	}
+}
+
 // given MCInst's id, find out if this insn is valid for REP prefix
 static bool valid_rep(cs_struct *h, unsigned int opcode)
 {
@@ -3322,8 +3336,11 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 			break;
 		case 0xf2:	// repne
 			opcode = MCInst_getOpcode(MI);
+
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
-			if (valid_repne(MI->csh, opcode)) {
+			if (xchg_mem(opcode) && MI->xAcquireRelease) {
+				SStream_concat(O, "xacquire|");
+			} else if (valid_repne(MI->csh, opcode)) {
 				SStream_concat(O, "repne|");
 				add_cx(MI);
 			} else if (valid_bnd(MI->csh, opcode)) {
@@ -3356,8 +3373,11 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 
 		case 0xf3:
 			opcode = MCInst_getOpcode(MI);
+
 #ifndef CAPSTONE_DIET	// only care about memonic in standard (non-diet) mode
-			if (valid_rep(MI->csh, opcode)) {
+			if (xchg_mem(opcode) && MI->xAcquireRelease) {
+				SStream_concat(O, "xrelease|");
+			} else if (valid_rep(MI->csh, opcode)) {
 				SStream_concat(O, "rep|");
 				add_cx(MI);
 			} else if (valid_repe(MI->csh, opcode)) {
