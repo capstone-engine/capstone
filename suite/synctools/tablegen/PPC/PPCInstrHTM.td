@@ -28,7 +28,7 @@ def TCHECK_RET : Pseudo<(outs crrc:$out), (ins), "#TCHECK_RET", []>;
 let Predicates = [HasHTM] in {
 
 def TBEGIN : XForm_htm0 <31, 654,
-                         (outs crrc0:$ret), (ins u1imm:$R), "tbegin. $R", IIC_SprMTSPR, []>;
+                         (outs), (ins u1imm:$R), "tbegin. $R", IIC_SprMTSPR, []>;
 
 def TEND : XForm_htm1 <31, 686,
                        (outs crrc0:$ret), (ins u1imm:$A), "tend. $A", IIC_SprMTSPR, []>;
