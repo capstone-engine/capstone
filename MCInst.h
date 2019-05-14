@@ -116,7 +116,7 @@ struct MCInst {
 	unsigned char evm_data[32];	// for EVM PUSH operand
 	cs_wasm_op wasm_data;    // for WASM operand
 	MCRegisterInfo *MRI;
-	bool xAcquireRelease;   // X86 xacquire/xrelease
+	uint8_t xAcquireRelease;   // X86 xacquire/xrelease
 };
 
 void MCInst_Init(MCInst *inst);

@@ -1,3 +1,7 @@
+!# issue X86 xrelease
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0xf0,0x31,0x1f == xrelease lock xor dword ptr [rdi], ebx
+
 !# issue 1477 X86 xacquire
 !# CS_ARCH_X86, CS_MODE_64, None
 0xf2,0xf0,0x31,0x1f == xacquire lock xor dword ptr [rdi], ebx
