@@ -1675,7 +1675,7 @@
 
 {	/* X86_CALL16m, X86_INS_CALL: call */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_CALL16m_NT, X86_INS_CALL: call */
@@ -1695,7 +1695,7 @@
 
 {	/* X86_CALL32m, X86_INS_CALL: call */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_CALL32m_NT, X86_INS_CALL: call */
@@ -1715,7 +1715,7 @@
 
 {	/* X86_CALL64m, X86_INS_CALL: call */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_CALL64m_NT, X86_INS_CALL: call */
@@ -3750,7 +3750,7 @@
 
 {	/* X86_FARCALL16m, X86_INS_LCALL: lcall */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_FARCALL32i, X86_INS_LCALL: lcall{l}	$seg : $off */
@@ -3760,7 +3760,7 @@
 
 {	/* X86_FARCALL32m, X86_INS_CALL: call */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_FARCALL64, X86_INS_LCALL: lcall */
@@ -3775,7 +3775,7 @@
 
 {	/* X86_FARJMP16m, X86_INS_LJMP: ljmp{w}	{*}$dst */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_FARJMP32i, X86_INS_LJMP: ljmp{l}	$seg : $off */
@@ -3785,7 +3785,7 @@
 
 {	/* X86_FARJMP32m, X86_INS_JMP: jmp */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_FARJMP64, X86_INS_LJMP: ljmp */
@@ -4845,7 +4845,7 @@
 
 {	/* X86_JMP16m, X86_INS_JMP: jmp */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_JMP16m_NT, X86_INS_JMP: jmp */
@@ -4865,7 +4865,7 @@
 
 {	/* X86_JMP32m, X86_INS_JMP: jmp */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_JMP32m_NT, X86_INS_JMP: jmp */
@@ -4885,7 +4885,7 @@
 
 {	/* X86_JMP64m, X86_INS_JMP: jmp */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* X86_JMP64m_NT, X86_INS_JMP: jmp */
