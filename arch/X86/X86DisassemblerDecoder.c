@@ -546,7 +546,8 @@ static int readPrefixes(struct InternalInstruction *insn)
 			 */
 			if (((nextByte == 0xf0) ||
 				((nextByte & 0xfe) == 0x86 || (nextByte & 0xf8) == 0x90)))
-				insn->xAcquireRelease = true;
+				insn->xAcquireRelease = byte;
+
 			/*
 			 * Also if the byte is 0xf3, and the following condition is met:
 			 * - it is followed by a "mov mem, reg" (opcode 0x88/0x89) or
@@ -556,7 +557,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 			if (byte == 0xf3 &&
 					(nextByte == 0x88 || nextByte == 0x89 ||
 					 nextByte == 0xc6 || nextByte == 0xc7))
-				insn->xAcquireRelease = true;
+				insn->xAcquireRelease = byte;
 
 			if (insn->mode == MODE_64BIT && (nextByte & 0xf0) == 0x40) {
 				if (consumeByte(insn, &nextByte))

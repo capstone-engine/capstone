@@ -608,8 +608,8 @@ typedef struct InternalInstruction {
   uint8_t                       sibScale;
   SIBBase                       sibBase;
   uint8_t                       numImmediatesConsumed;
-  /* true if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
-  bool xAcquireRelease;
+  /* 0xf2 or 0xf3 is xacquire or xrelease */
+  uint8_t xAcquireRelease;
 
   /* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
   uint8_t vectorExtensionPrefix[4];

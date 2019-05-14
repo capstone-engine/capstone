@@ -32,7 +32,7 @@ void MCInst_Init(MCInst *inst)
 	inst->ac_idx = 0;
 	inst->popcode_adjust = 0;
 	inst->assembly[0] = '\0';
-	inst->xAcquireRelease = false;
+	inst->xAcquireRelease = 0;
 }
 
 void MCInst_clear(MCInst *inst)
