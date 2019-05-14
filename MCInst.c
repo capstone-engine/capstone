@@ -33,7 +33,7 @@ void MCInst_Init(MCInst *inst)
 	inst->popcode_adjust = 0;
 	inst->assembly[0] = '\0';
 	inst->wasm_data.type = WASM_OP_INVALID;
-	inst->xAcquireRelease = false;
+	inst->xAcquireRelease = 0;
 }
 
 void MCInst_clear(MCInst *inst)

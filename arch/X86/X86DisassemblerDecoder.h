@@ -586,8 +586,8 @@ typedef struct InternalInstruction {
   uint8_t                       RC;
 
   uint8_t                       numImmediatesConsumed;
-  /* true if the prefix byte, 0xf2 or 0xf3 is xacquire or xrelease */
-  bool xAcquireRelease;
+  /* 0xf2 or 0xf3 is xacquire or xrelease */
+  uint8_t xAcquireRelease;
 
   // Address-size override
   bool hasAdSize;
