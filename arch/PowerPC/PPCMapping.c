@@ -531,7 +531,7 @@ bool PPC_alias_insn(const char *name, struct ppc_alias *alias)
 bool PPC_abs_branch(cs_struct *h, unsigned int id)
 {
 	unsigned int i;
-	// list all relative branch instructions
+	// list all absolute branch instructions
 	static const unsigned int insn_abs[] = {
 		PPC_BA,
 		PPC_BCCA,
@@ -550,6 +550,7 @@ bool PPC_abs_branch(cs_struct *h, unsigned int id)
 		PPC_BLA,
 		PPC_gBCA,
 		PPC_gBCLA,
+		PPC_BDZLA,
 		0
 	};
 

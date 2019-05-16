@@ -1,3 +1,11 @@
+!# issue 968 PPC absolute branch: bdnzla
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x42,0x00,0x12,0x37 == bdnzla 0x1234
+
+!# issue 968 PPC absolute branch: bdzla
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x42,0x40,0x12,0x37 == bdzla 0x1234
+
 !# issue X86 xrelease xchg
 !# CS_ARCH_X86, CS_MODE_32, None
 0xf3,0x87,0x03 == xrelease xchg dword ptr [ebx], eax
