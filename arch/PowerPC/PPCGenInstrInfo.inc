@@ -2425,12 +2425,12 @@ static MCOperandInfo OperandInfo245[] = { { 1, 0|(1<<MCOI_LookupPtrRegClass), MC
 static MCOperandInfo OperandInfo246[] = { { PPC_CRRC0RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
 static MCOperandInfo OperandInfo247[] = { { PPC_CRRC0RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
 static MCOperandInfo OperandInfo248[] = { { PPC_CRRC0RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
-static MCOperandInfo OperandInfo249[] = { { PPC_CRRC0RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
-static MCOperandInfo OperandInfo250[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
-static MCOperandInfo OperandInfo251[] = { { PPC_CTRRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
-static MCOperandInfo OperandInfo252[] = { { PPC_CTRRC8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
-static MCOperandInfo OperandInfo253[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { PPC_G8RCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { PPC_G8RCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
-static MCOperandInfo OperandInfo254[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { PPC_G8RCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo249[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo250[] = { { PPC_CTRRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo251[] = { { PPC_CTRRC8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static MCOperandInfo OperandInfo252[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { PPC_G8RCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { PPC_G8RCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static MCOperandInfo OperandInfo253[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { PPC_G8RCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static MCOperandInfo OperandInfo254[] = { { PPC_CRRC0RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
 static MCOperandInfo OperandInfo255[] = { { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
 static MCOperandInfo OperandInfo256[] = { { PPC_CRRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
 static MCOperandInfo OperandInfo257[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { PPC_GPRCRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
@@ -4050,18 +4050,18 @@ static const MCInstrDesc PPCInsts[] = {
   { 1, OperandInfo2 },
   { 0, nullptr },
   { 0, nullptr },
+  { 1, OperandInfo2 },
+  { 1, OperandInfo147 },
+  { 1, OperandInfo147 },
   { 2, OperandInfo249 },
-  { 1, OperandInfo147 },
-  { 1, OperandInfo147 },
-  { 2, OperandInfo250 },
-  { 2, OperandInfo250 },
-  { 2, OperandInfo250 },
+  { 2, OperandInfo249 },
+  { 2, OperandInfo249 },
+  { 2, OperandInfo249 },
   { 2, OperandInfo250 },
   { 2, OperandInfo251 },
-  { 2, OperandInfo252 },
+  { 3, OperandInfo252 },
   { 3, OperandInfo253 },
-  { 3, OperandInfo254 },
-  { 2, OperandInfo249 },
+  { 2, OperandInfo254 },
   { 0, nullptr },
   { 2, OperandInfo36 },
   { 1, OperandInfo149 },
@@ -4079,7 +4079,7 @@ static const MCInstrDesc PPCInsts[] = {
   { 0, nullptr },
   { 1, OperandInfo147 },
   { 2, OperandInfo256 },
-  { 2, OperandInfo249 },
+  { 2, OperandInfo254 },
   { 3, OperandInfo79 },
   { 3, OperandInfo257 },
   { 2, OperandInfo36 },

@@ -3184,7 +3184,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     608340U,	// TAILBA8
     15470U,	// TAILBCTR
     15470U,	// TAILBCTR8
-    820308U,	// TBEGIN
+    263252U,	// TBEGIN
     546018U,	// TCHECK
     15049U,	// TCHECK_RET
     538003403U,	// TCRETURNai
@@ -6034,7 +6034,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     return;
     break;
   case 16:
-    // RFEBB
+    // RFEBB, TBEGIN
     printU1ImmOperand(MI, 0, O);
     return;
     break;
@@ -6046,7 +6046,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     SStream_concat0(O, ", ");
     break;
   case 18:
-    // TBEGIN, TEND, TSR, XSRQPI, XSRQPIX, XSRQPXP
+    // TEND, TSR, XSRQPI, XSRQPIX, XSRQPXP
     printU1ImmOperand(MI, 1, O);
     break;
   case 19:
