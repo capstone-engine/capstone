@@ -24028,7 +24028,12 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
             printOperand(MI, (unsigned)(AsmString[I++]) - 1, OS);
 		}
       } else {
-          SStream_concat1(OS, AsmString[I++]);
+        if (AsmString[I] == '[') {
+          set_mem_access(MI, true);
+        } else if (AsmString[I] == ']') {
+          set_mem_access(MI, false);
+        }
+        SStream_concat1(OS, AsmString[I++]);
       }
     } while (AsmString[I] != '\0');
   }

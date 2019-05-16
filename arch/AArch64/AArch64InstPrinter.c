@@ -645,7 +645,6 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				 arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1S);
 				 break;
 		}
-
 	} else {
 		printInstruction(MI, O);
 	}

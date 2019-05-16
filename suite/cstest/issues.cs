@@ -1,3 +1,7 @@
+!# issue 1481 ARM64 LDR operand2
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0xe9,0x03,0x40,0xf9 == ldr x9, [sp] ; operands[1].mem.base: REG = sp
+
 !# issue 968 PPC absolute branch: bdnzla
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
 0x1000: 0x42,0x00,0x12,0x37 == bdnzla 0x1234
