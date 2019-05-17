@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -92,14 +92,14 @@ static void test()
 #ifdef CAPSTONE_HAS_X86
 		{
 			CS_ARCH_X86,
-			CS_MODE_16,
+			(cs_mode)CS_MODE_16,
 			(unsigned char *)X86_CODE16,
 			sizeof(X86_CODE32) - 1,
 			"X86 16bit (Intel syntax)"
 		},
 		{
 			CS_ARCH_X86,
-			CS_MODE_32,
+			(cs_mode)CS_MODE_32,
 			(unsigned char *)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32bit (ATT syntax)",
@@ -108,14 +108,14 @@ static void test()
 		},
 		{
 			CS_ARCH_X86,
-			CS_MODE_32,
+			(cs_mode)CS_MODE_32,
 			(unsigned char *)X86_CODE32,
 			sizeof(X86_CODE32) - 1,
 			"X86 32 (Intel syntax)"
 		},
 		{
 			CS_ARCH_X86,
-			CS_MODE_64,
+			(cs_mode)CS_MODE_64,
 			(unsigned char *)X86_CODE64,
 			sizeof(X86_CODE64) - 1,
 			"X86 64 (Intel syntax)"
@@ -124,28 +124,28 @@ static void test()
 #ifdef CAPSTONE_HAS_ARM
 		{
 			CS_ARCH_ARM,
-			CS_MODE_ARM,
+			(cs_mode)CS_MODE_ARM,
 			(unsigned char *)ARM_CODE,
 			sizeof(ARM_CODE) - 1,
 			"ARM"
 		},
 		{
 			CS_ARCH_ARM,
-			CS_MODE_THUMB,
+			(cs_mode)CS_MODE_THUMB,
 			(unsigned char *)THUMB_CODE2,
 			sizeof(THUMB_CODE2) - 1,
 			"THUMB-2"
 		},
 		{
 			CS_ARCH_ARM,
-			CS_MODE_ARM,
+			(cs_mode)CS_MODE_ARM,
 			(unsigned char *)ARM_CODE2,
 			sizeof(ARM_CODE2) - 1,
 			"ARM: Cortex-A15 + NEON"
 		},
 		{
 			CS_ARCH_ARM,
-			CS_MODE_THUMB,
+			(cs_mode)CS_MODE_THUMB,
 			(unsigned char *)THUMB_CODE,
 			sizeof(THUMB_CODE) - 1,
 			"THUMB"
@@ -198,7 +198,7 @@ static void test()
 #ifdef CAPSTONE_HAS_ARM64
 		{
 			CS_ARCH_ARM64,
-			CS_MODE_ARM,
+			(cs_mode)CS_MODE_ARM,
 			(unsigned char *)ARM64_CODE,
 			sizeof(ARM64_CODE) - 1,
 			"ARM-64"
@@ -207,14 +207,14 @@ static void test()
 #ifdef CAPSTONE_HAS_POWERPC
 		{
 			CS_ARCH_PPC,
-			CS_MODE_BIG_ENDIAN,
+			(cs_mode)CS_MODE_BIG_ENDIAN,
 			(unsigned char*)PPC_CODE,
 			sizeof(PPC_CODE) - 1,
 			"PPC-64"
 		},
 		{
 			CS_ARCH_PPC,
-			CS_MODE_BIG_ENDIAN + CS_MODE_QPX,
+			(cs_mode)(CS_MODE_BIG_ENDIAN + CS_MODE_QPX),
 			(unsigned char*)PPC_CODE2,
 			sizeof(PPC_CODE2) - 1,
 			"PPC-64 + QPX",
@@ -223,7 +223,7 @@ static void test()
 #ifdef CAPSTONE_HAS_SPARC
 		{
 			CS_ARCH_SPARC,
-			CS_MODE_BIG_ENDIAN,
+			(cs_mode)CS_MODE_BIG_ENDIAN,
 			(unsigned char*)SPARC_CODE,
 			sizeof(SPARC_CODE) - 1,
 			"Sparc"

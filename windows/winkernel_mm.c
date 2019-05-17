@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016 */
+/* By Satoshi Tanda <tanda.sat@gmail.com>, 2016-2019 */
 
 #include "winkernel_mm.h"
 #include <ntddk.h>
@@ -33,7 +33,6 @@ void * CAPSTONE_API cs_winkernel_malloc(size_t size)
 	NT_ASSERT(size);
 
 	// FP; a use of NonPagedPool is required for Windows 7 support
-#pragma prefast(suppress : 30030)		// Allocating executable POOL_TYPE memory
 	size_t number_of_bytes = 0;
 	CS_WINKERNEL_MEMBLOCK *block = NULL;
 	// A specially crafted size value can trigger the overflow.
@@ -42,6 +41,7 @@ void * CAPSTONE_API cs_winkernel_malloc(size_t size)
 	if (!NT_SUCCESS(RtlSizeTAdd(size, FIELD_OFFSET(CS_WINKERNEL_MEMBLOCK, data), &number_of_bytes))) {
 		return NULL;
 	}
+#pragma prefast(suppress : 30030)		// Allocating executable POOL_TYPE memory
 	block = (CS_WINKERNEL_MEMBLOCK *)ExAllocatePoolWithTag(
 			NonPagedPool, number_of_bytes, CS_WINKERNEL_POOL_TAG);
 	if (!block) {
