@@ -295,6 +295,7 @@ static char *printAliasBcc(MCInst *MI, SStream *OS, void *info)
 		int cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
 
 		if (decCtr) {
+			int cd;
 			needComma = true;
 			SStream_concat0(&ss, " ");
 
@@ -302,8 +303,8 @@ static char *printAliasBcc(MCInst *MI, SStream *OS, void *info)
 				SStream_concat(&ss, "4*cr%d+", cr - PPC_CR0);
 			}
 
-			cr = getBICRCond(MCOperand_getReg(MCInst_getOperand(MI, 1)));
-			switch(cr) {
+			cd = getBICRCond(MCOperand_getReg(MCInst_getOperand(MI, 1)));
+			switch(cd) {
 				case CREQ:
 					SStream_concat0(&ss, "eq");
 					op_addBC(MI, PPC_BC_EQ);
@@ -322,18 +323,13 @@ static char *printAliasBcc(MCInst *MI, SStream *OS, void *info)
 					break;
 			}
 
-#if 0
-			cr = getBICR(MCOperand_getReg(MCInst_getOperand(MI, 1)));
 			if (cr > PPC_CR0) {
 				if (MI->csh->detail) {
-					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_CRX;
-					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].crx.scale = 4;
-					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].crx.reg = PPC_REG_CR0 + cr - PPC_CR0;
-					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].crx.cond = MI->flat_insn->detail->ppc.bc;
+					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_REG;
+					MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 1));
 					MI->flat_insn->detail->ppc.op_count++;
 				}
 			}
-#endif
 		} else {
 			if (cr > PPC_CR0) {
 				needComma = true;
