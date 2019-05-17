@@ -1,3 +1,11 @@
+!# issue 970 PPC bdnzt lt
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x00,0xff,0xac == bdnzt lt, 0xffffffffffffffac ; operands[0].type: REG = cr0lt
+
+!# issue 970 PPC bdnzt eq
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x02,0xff,0xac == bdnzt eq, 0xffffffffffffffac ; operands[0].type: REG = cr0eq
+
 !# issue 969 PPC bdnzflr operand 2
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x4c,0x10,0x00,0x20 == bdnzflr 4*cr4+lt ; operands[0].type: REG = cr4lt

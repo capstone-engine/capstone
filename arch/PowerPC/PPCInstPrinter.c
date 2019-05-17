@@ -124,6 +124,15 @@ static void op_addReg(MCInst *MI, unsigned int reg)
 	}
 }
 
+static void add_CRxx(MCInst *MI, ppc_reg reg)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_REG;
+		MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].reg = reg;
+		MI->flat_insn->detail->ppc.op_count++;
+	}
+}
+
 static char *printAliasBcc(MCInst *MI, SStream *OS, void *info)
 {
 #define GETREGCLASS_CONTAIN(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), MCOperand_getReg(MCInst_getOperand(MI, _reg)))
@@ -307,18 +316,26 @@ static char *printAliasBcc(MCInst *MI, SStream *OS, void *info)
 			switch(cd) {
 				case CREQ:
 					SStream_concat0(&ss, "eq");
+					if (cr <= PPC_CR0)
+						add_CRxx(MI, PPC_REG_CR0EQ);
 					op_addBC(MI, PPC_BC_EQ);
 					break;
 				case CRGT:
 					SStream_concat0(&ss, "gt");
+					if (cr <= PPC_CR0)
+						add_CRxx(MI, PPC_REG_CR0GT);
 					op_addBC(MI, PPC_BC_GT);
 					break;
 				case CRLT:
 					SStream_concat0(&ss, "lt");
+					if (cr <= PPC_CR0)
+						add_CRxx(MI, PPC_REG_CR0LT);
 					op_addBC(MI, PPC_BC_LT);
 					break;
 				case CRUN:
 					SStream_concat0(&ss, "so");
+					if (cr <= PPC_CR0)
+						add_CRxx(MI, PPC_REG_CR0UN);
 					op_addBC(MI, PPC_BC_SO);
 					break;
 			}
