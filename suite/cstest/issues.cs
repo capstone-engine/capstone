@@ -1,3 +1,9 @@
+!# issue 969 PPC bdnzflr operand 2
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x4c,0x10,0x00,0x20 == bdnzflr 4*cr4+lt ; operands[0].type: REG = cr4lt
+
+0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump
+
 !# issue 1481 ARM64 LDR operand2
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
 0xe9,0x03,0x40,0xf9 == ldr x9, [sp] ; operands[1].mem.base: REG = sp
