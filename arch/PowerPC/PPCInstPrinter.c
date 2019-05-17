@@ -85,6 +85,10 @@ void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	} else if (strrchr(insn_asm, '-') != NULL) {
 		insn->detail->ppc.bh = PPC_BH_MINUS;
 	}
+
+	if (strrchr(insn_asm, '.') != NULL) {
+		insn->detail->ppc.update_cr0 = true;
+	}
 }
 
 #define GET_INSTRINFO_ENUM

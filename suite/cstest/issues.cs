@@ -1,3 +1,7 @@
+!# issue 1478 tbegin.
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x7c,0x20,0x05,0x1d == tbegin. 1 ; Update-CR0: True
+
 !# issue 970 PPC bdnzt lt
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x41,0x00,0xff,0xac == bdnzt lt, 0xffffffffffffffac ; operands[0].type: REG = cr0lt
