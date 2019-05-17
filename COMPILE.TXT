@@ -25,7 +25,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   The other way of customize Capstone without having to edit config.mk is to
   pass the desired options on the commandline to ./make.sh. Currently,
-  Capstone supports 5 options, as followings.
+  Capstone supports 7 options, as followings.
 
   - CAPSTONE_ARCHS: specify list of architectures to compiled in.
   - CAPSTONE_USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
