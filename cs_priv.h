@@ -4,6 +4,9 @@
 #ifndef CS_PRIV_H
 #define CS_PRIV_H
 
+#ifdef CAPSTONE_DEBUG
+#include <assert.h>
+#endif
 #include <capstone/capstone.h>
 
 #include "MCInst.h"
@@ -85,5 +88,13 @@ extern cs_calloc_t cs_mem_calloc;
 extern cs_realloc_t cs_mem_realloc;
 extern cs_free_t cs_mem_free;
 extern cs_vsnprintf_t cs_vsnprintf;
+
+// By defining CAPSTONE_DEBUG assertions can be used.
+// For any release build CAPSTONE_DEBUG has to be undefined.
+#ifdef CAPSTONE_DEBUG
+#define CS_ASSERT(expr) assert(expr)
+#else
+#define CS_ASSERT(expr)
+#endif
 
 #endif

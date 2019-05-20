@@ -924,8 +924,7 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 			break;
 
 		default:
-			fprintf(stderr, "Internal error: Unexpected instruction "
-				"handler id %d\n", insn_description->hid[i]);
+			CS_ASSERT(0 && "Unexpected instruction handler id");
 			retval = false;
 			break;
 		}
@@ -1091,7 +1090,7 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op0 = &info->m680x.operands[0];
 	uint8_t reg_bits = 0;
 	uint16_t bit_index;
-	const m680x_reg *reg_to_reg_ids;
+	const m680x_reg *reg_to_reg_ids = NULL;
 
 	read_byte(info, &reg_bits, (*address)++);
 
@@ -1105,9 +1104,8 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		break;
 
 	default:
-		fprintf(stderr, "Internal error: Unexpected operand0 register "
-			"%d\n", op0->reg);
-		abort();
+		CS_ASSERT(0 && "Unexpected operand0 register");
+		break;
 	}
 
 	if ((info->insn == M680X_INS_PULU ||
@@ -1551,8 +1549,7 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	default:
 		op->imm = 0;
-		fprintf(stderr, "Internal error: Unexpected immediate byte "
-			"size %d.\n", op->size);
+		CS_ASSERT(0 && "Unexpected immediate byte size");
 	}
 
 	*address += op->size;
@@ -1757,8 +1754,6 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	info->insn = index_to_insn_id[(post_byte >> 5) & 0x07];
 
 	if (info->insn == M680X_INS_ILLGL) {
-		fprintf(stderr, "Internal error: Unexpected post byte "
-			"in loop instruction %02x.\n", post_byte);
 		illegal_hdlr(MI, info, address);
 	};
 
@@ -2136,8 +2131,6 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 	const uint8_t *code, uint16_t code_len)
 {
 	if (cpu_type == M680X_CPU_TYPE_INVALID) {
-		fprintf(stderr, "M680X_CPU_TYPE_%s is not suppported\n",
-			s_cpu_type[cpu_type]);
 		return false;
 	}
 
@@ -2215,85 +2208,74 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 cs_err M680X_disassembler_init(cs_struct *ud)
 {
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6800_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and g_m6800_reg_byte_size\n");
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_m6800_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6801_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and g_m6801_reg_byte_size\n");
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_m6801_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6805_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and g_m6805_reg_byte_size\n");
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_m6805_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6808_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and g_m6808_reg_byte_size\n");
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_m6808_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6811_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and g_m6811_reg_byte_size\n");
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_m6811_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_cpu12_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and g_cpu12_reg_byte_size\n");
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_cpu12_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6809_reg_byte_size)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and g_m6809_reg_byte_size\n");
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_m6809_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_INS_ENDING != ARR_SIZE(g_insn_props)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_insn and g_insn_props\n");
+		CS_ASSERT(M680X_INS_ENDING == ARR_SIZE(g_insn_props));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_CPU_TYPE_ENDING != ARR_SIZE(s_cpu_type)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"e_cpu_type and s_cpu_type\n");
+		CS_ASSERT(M680X_CPU_TYPE_ENDING == ARR_SIZE(s_cpu_type));
 
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_CPU_TYPE_ENDING != ARR_SIZE(g_cpu_tables)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"e_cpu_type and g_cpu_tables\n");
+		CS_ASSERT(M680X_CPU_TYPE_ENDING == ARR_SIZE(g_cpu_tables));
 
 		return CS_ERR_MODE;
 	}
 
 	if (HANDLER_ID_ENDING != ARR_SIZE(g_insn_handler)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"insn_hdlr_id and g_insn_handler\n");
+		CS_ASSERT(HANDLER_ID_ENDING == ARR_SIZE(g_insn_handler));
 
 		return CS_ERR_MODE;
 	}
 
 	if (ACCESS_MODE_ENDING !=  MATRIX_SIZE(g_access_mode_to_access)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"e_access_mode and g_access_mode_to_access\n");
+		CS_ASSERT(ACCESS_MODE_ENDING ==
+			MATRIX_SIZE(g_access_mode_to_access));
 
 		return CS_ERR_MODE;
 	}
