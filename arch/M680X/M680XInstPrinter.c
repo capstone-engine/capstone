@@ -7,6 +7,7 @@
 #include <string.h>
 #include <capstone/platform.h>
 
+#include "../../cs_priv.h"
 #include "../../MCInst.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
@@ -336,23 +337,17 @@ cs_err M680X_instprinter_init(cs_struct *ud)
 #ifndef CAPSTONE_DIET
 
 	if (M680X_REG_ENDING != ARR_SIZE(s_reg_names)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_reg and s_reg_names\n");
-
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(s_reg_names));
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_INS_ENDING != ARR_SIZE(s_instruction_names)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_insn and s_instruction_names\n");
-
+		CS_ASSERT(M680X_INS_ENDING == ARR_SIZE(s_instruction_names));
 		return CS_ERR_MODE;
 	}
 
 	if (M680X_GRP_ENDING != ARR_SIZE(s_group_names)) {
-		fprintf(stderr, "Internal error: Size mismatch in enum "
-			"m680x_group_type and s_group_names\n");
-
+		CS_ASSERT(M680X_GRP_ENDING == ARR_SIZE(s_group_names));
 		return CS_ERR_MODE;
 	}
 
