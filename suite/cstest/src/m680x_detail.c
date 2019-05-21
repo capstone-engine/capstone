@@ -81,15 +81,15 @@ char *get_detail_m680x(csh *handle, cs_mode mode, cs_insn *insn)
 				break;
 
 			case M680X_OP_DIRECT:
-				add_str(&result, " ; operands[%u].type: DIRECT = 0x%02X", i, op->direct_addr);
+				add_str(&result, " ; operands[%u].type: DIRECT = 0x%02x", i, op->direct_addr);
 				break;
 
 			case M680X_OP_EXTENDED:
-				add_str(&result, " ; operands[%u].type: EXTENDED %s = 0x%04X", i, op->ext.indirect ? "INDIRECT" : "", op->ext.address);
+				add_str(&result, " ; operands[%u].type: EXTENDED %s = 0x%04x", i, op->ext.indirect ? "INDIRECT" : "", op->ext.address);
 				break;
 
 			case M680X_OP_RELATIVE:
-				add_str(&result, " ; operands[%u].type: RELATIVE = 0x%04X", i, op->rel.address);
+				add_str(&result, " ; operands[%u].type: RELATIVE = 0x%04x", i, op->rel.address);
 				break;
 
 			case M680X_OP_INDEXED:
@@ -107,7 +107,7 @@ char *get_detail_m680x(csh *handle, cs_mode mode, cs_insn *insn)
 					add_str(&result, " ; offset: %d", op->idx.offset);
 
 					if (op->idx.base_reg == M680X_REG_PC)
-						add_str(&result, " ; offset address: 0x%X", op->idx.offset_addr);
+						add_str(&result, " ; offset address: 0x%x", op->idx.offset_addr);
 
 					add_str(&result, " ; offset bits: %u", op->idx.offset_bits);
 				}

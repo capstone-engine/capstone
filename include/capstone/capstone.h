@@ -118,6 +118,8 @@ typedef enum cs_mode {
 	CS_MODE_MIPS2 = 1 << 7, ///< Mips II ISA
 	CS_MODE_V9 = 1 << 4, ///< SparcV9 mode (Sparc)
 	CS_MODE_QPX = 1 << 4, ///< Quad Processing eXtensions mode (PPC)
+	CS_MODE_SPE = 1 << 5, ///< Signal Processing Engine mode (PPC)
+	CS_MODE_BOOKE = 1 << 6, ///< Book-E mode (PPC)
 	CS_MODE_M68K_000 = 1 << 1, ///< M68K 68000 mode
 	CS_MODE_M68K_010 = 1 << 2, ///< M68K 68010 mode
 	CS_MODE_M68K_020 = 1 << 3, ///< M68K 68020 mode
@@ -394,7 +396,7 @@ typedef enum cs_err {
 	CS_ERR_SKIPDATA, ///< Access irrelevant data for "data" instruction in SKIPDATA mode
 	CS_ERR_X86_ATT,  ///< X86 AT&T syntax is unsupported (opt-out at compile time)
 	CS_ERR_X86_INTEL, ///< X86 Intel syntax is unsupported (opt-out at compile time)
-	CS_ERR_X86_MASM, ///< X86 Intel syntax is unsupported (opt-out at compile time)
+	CS_ERR_X86_MASM, ///< X86 Masm syntax is unsupported (opt-out at compile time)
 } cs_err;
 
 /**
@@ -539,18 +541,6 @@ const char * CAPSTONE_API cs_strerror(cs_err code);
 */
 CAPSTONE_EXPORT
 size_t CAPSTONE_API cs_disasm(csh handle,
-		const uint8_t *code, size_t code_size,
-		uint64_t address,
-		size_t count,
-		cs_insn **insn);
-
-/**
-  Deprecated function - to be retired in the next version!
-  Use cs_disasm() instead of cs_disasm_ex()
-*/
-CAPSTONE_EXPORT
-CAPSTONE_DEPRECATED
-size_t CAPSTONE_API cs_disasm_ex(csh handle,
 		const uint8_t *code, size_t code_size,
 		uint64_t address,
 		size_t count,

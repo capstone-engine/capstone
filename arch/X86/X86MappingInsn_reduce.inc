@@ -2876,42 +2876,42 @@
 {
 	X86_CMPXCHG16rm, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG16rr, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG32rm, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_EAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG32rr, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_EAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG64rm, X86_INS_CMPXCHG, 1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_RAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG64rr, X86_INS_CMPXCHG, 1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_RAX, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -2925,14 +2925,14 @@
 {
 	X86_CMPXCHG8rm, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG8rr, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -9685,6 +9685,13 @@
 },
 
 {
+	X86_TEST16mi_alt, X86_INS_TEST, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
 	X86_TEST16mr, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
@@ -9695,6 +9702,13 @@
 	X86_TEST16ri, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
+	X86_TEST16ri_alt, X86_INS_TEST, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -9720,6 +9734,13 @@
 },
 
 {
+	X86_TEST32mi_alt, X86_INS_TEST, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
 	X86_TEST32mr, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
@@ -9730,6 +9751,13 @@
 	X86_TEST32ri, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
+	X86_TEST32ri_alt, X86_INS_TEST, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -9755,6 +9783,13 @@
 },
 
 {
+	X86_TEST64mi32_alt, X86_INS_TEST, 1,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
 	X86_TEST64mr, X86_INS_TEST, 1,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
@@ -9765,6 +9800,13 @@
 	X86_TEST64ri32, X86_INS_TEST, 1,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
+	X86_TEST64ri32_alt, X86_INS_TEST, 1,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -9790,6 +9832,13 @@
 },
 
 {
+	X86_TEST8mi_alt, X86_INS_TEST, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
 	X86_TEST8mr, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
@@ -9800,6 +9849,13 @@
 	X86_TEST8ri, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
+	X86_TEST8ri_alt, X86_INS_TEST, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 

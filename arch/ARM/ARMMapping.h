@@ -29,15 +29,6 @@ void ARM_reg_access(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count);
 
-struct IndexType {
-	uint16_t encoding;
-	unsigned index;
-};
-
-// binary search for encoding in IndexType array
-// return -1 if not found, or index if found
-unsigned int binsearch_IndexType(const struct IndexType *index, size_t size, uint16_t encoding);
-
 typedef struct BankedReg {
 	const char *Name;
 	arm_sysreg sysreg;

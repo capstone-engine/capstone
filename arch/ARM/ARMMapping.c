@@ -274,16 +274,49 @@ static const insn_map insns[] = {
 		{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 	},
-
 #include "ARMMappingInsn.inc"
 };
 
+// look for @id in @insns
+// return -1 if not found
+static unsigned int find_insn(unsigned int id)
+{
+	// binary searching since the IDs are sorted in order
+	unsigned int left, right, m;
+	unsigned int max = ARR_SIZE(insns);
+
+	right = max - 1;
+
+	if (id < insns[0].id || id > insns[right].id)
+		// not found
+		return -1;
+
+	left = 0;
+
+	while(left <= right) {
+		m = (left + right) / 2;
+		if (id == insns[m].id) {
+			return m;
+		}
+
+		if (id < insns[m].id)
+			right = m - 1;
+		else
+			left = m + 1;
+	}
+
+	// not found
+	// printf("NOT FOUNDDDDDDDDDDDDDDD id = %u\n", id);
+	return -1;
+}
+
 void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	//printf(">> id = %u\n", id);
-	if (i != 0) {
+	unsigned int i = find_insn(id);
+	if (i != -1) {
 		insn->id = insns[i].mapid;
+
+		// printf("id = %u, mapid = %u\n", id, insn->id);
 
 		if (h->detail) {
 #ifndef CAPSTONE_DIET
@@ -514,36 +547,5 @@ void ARM_reg_access(const cs_insn *insn,
 	*regs_write_count = write_count;
 }
 #endif
-
-// binary search for encoding in IndexType array
-// return -1 if not found, or index if found
-unsigned int binsearch_IndexType(const struct IndexType *index, size_t size, uint16_t encoding)
-{
-	// binary searching since the index is sorted in encoding order
-	size_t left, right, m;
-
-	right = size - 1;
-
-	if (encoding < index[0].encoding || encoding > index[right].encoding)
-		// not found
-		return -1;
-
-	left = 0;
-
-	while(left <= right) {
-		m = (left + right) / 2;
-		if (encoding == index[m].encoding) {
-			return m;
-		}
-
-		if (encoding < index[m].encoding)
-			right = m - 1;
-		else
-			left = m + 1;
-	}
-
-	// not found
-	return -1;
-}
 
 #endif

@@ -4006,25 +4006,25 @@ static void printInstruction(MCInst *MI, SStream *O)
     551725185U,	// RCPSSm_Int
     551839873U,	// RCPSSr
     8448129U,	// RCPSSr_Int
-    224620U,	// RCR16m1
+    226025U,	// RCR16m1
     226494U,	// RCR16mCL
     1089400172U,	// RCR16mi
     29417U,	// RCR16r1
     29886U,	// RCR16rCL
     551873900U,	// RCR16ri
-    235085U,	// RCR32m1
+    242249U,	// RCR32m1
     242654U,	// RCR32mCL
     552523341U,	// RCR32mi
     29257U,	// RCR32r1
     29662U,	// RCR32rCL
     551867981U,	// RCR32ri
-    450116U,	// RCR64m1
+    455321U,	// RCR64m1
     455758U,	// RCR64mCL
     820960836U,	// RCR64mi
     29337U,	// RCR64r1
     29774U,	// RCR64rCL
     551870020U,	// RCR64ri
-    476502U,	// RCR8m1
+    487929U,	// RCR8m1
     488302U,	// RCR8mCL
     284083542U,	// RCR8mi
     29177U,	// RCR8r1
@@ -4526,23 +4526,31 @@ static void printInstruction(MCInst *MI, SStream *O)
     551836145U,	// T1MSKC64rr
     2125608U,	// TEST16i16
     4239144U,	// TEST16mi
+    4239144U,	// TEST16mi_alt
     4239144U,	// TEST16mr
     551841576U,	// TEST16ri
+    551841576U,	// TEST16ri_alt
     551841576U,	// TEST16rr
     10508146U,	// TEST32i32
     12621682U,	// TEST32mi
+    12621682U,	// TEST32mi_alt
     12621682U,	// TEST32mr
     551835506U,	// TEST32ri
+    551835506U,	// TEST32ri_alt
     551835506U,	// TEST32rr
     16801761U,	// TEST64i32
     18915297U,	// TEST64mi32
+    18915297U,	// TEST64mi32_alt
     18915297U,	// TEST64mr
     551837665U,	// TEST64ri32
+    551837665U,	// TEST64ri32_alt
     551837665U,	// TEST64rr
     20989523U,	// TEST8i8
     23103059U,	// TEST8mi
+    23103059U,	// TEST8mi_alt
     23103059U,	// TEST8mr
     551831123U,	// TEST8ri
+    551831123U,	// TEST8ri_alt
     551831123U,	// TEST8rr
     20993U,	// TPAUSE
     15901U,	// TST_F
@@ -19806,23 +19814,31 @@ static void printInstruction(MCInst *MI, SStream *O)
     0U,	// T1MSKC64rr
     0U,	// TEST16i16
     0U,	// TEST16mi
+    0U,	// TEST16mi_alt
     0U,	// TEST16mr
     0U,	// TEST16ri
+    0U,	// TEST16ri_alt
     0U,	// TEST16rr
     0U,	// TEST32i32
     0U,	// TEST32mi
+    0U,	// TEST32mi_alt
     0U,	// TEST32mr
     0U,	// TEST32ri
+    0U,	// TEST32ri_alt
     0U,	// TEST32rr
     0U,	// TEST64i32
     0U,	// TEST64mi32
+    0U,	// TEST64mi32_alt
     0U,	// TEST64mr
     0U,	// TEST64ri32
+    0U,	// TEST64ri32_alt
     0U,	// TEST64rr
     0U,	// TEST8i8
     0U,	// TEST8mi
+    0U,	// TEST8mi_alt
     0U,	// TEST8mr
     0U,	// TEST8ri
+    0U,	// TEST8ri_alt
     0U,	// TEST8rr
     0U,	// TPAUSE
     0U,	// TST_F
@@ -35086,23 +35102,31 @@ static void printInstruction(MCInst *MI, SStream *O)
     0U,	// T1MSKC64rr
     0U,	// TEST16i16
     0U,	// TEST16mi
+    0U,	// TEST16mi_alt
     0U,	// TEST16mr
     0U,	// TEST16ri
+    0U,	// TEST16ri_alt
     0U,	// TEST16rr
     0U,	// TEST32i32
     0U,	// TEST32mi
+    0U,	// TEST32mi_alt
     0U,	// TEST32mr
     0U,	// TEST32ri
+    0U,	// TEST32ri_alt
     0U,	// TEST32rr
     0U,	// TEST64i32
     0U,	// TEST64mi32
+    0U,	// TEST64mi32_alt
     0U,	// TEST64mr
     0U,	// TEST64ri32
+    0U,	// TEST64ri32_alt
     0U,	// TEST64rr
     0U,	// TEST8i8
     0U,	// TEST8mi
+    0U,	// TEST8mi_alt
     0U,	// TEST8mr
     0U,	// TEST8ri
+    0U,	// TEST8ri_alt
     0U,	// TEST8rr
     0U,	// TPAUSE
     0U,	// TST_F
@@ -49170,5 +49194,6 @@ static void printInstruction(MCInst *MI, SStream *O)
   }
 
 }
+
 
 

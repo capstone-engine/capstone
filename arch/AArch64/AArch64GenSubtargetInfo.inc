@@ -1,29 +1,82 @@
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
-|*                                                                            *|
-|*Subtarget Enumeration Source Fragment                                       *|
+
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+
+/*===- TableGen'erated file -------------------------------------*- C++ -*-===*|*                                                                            *|
+|* Subtarget Enumeration Source Fragment                                      *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
-
-
-#ifdef GET_SUBTARGETINFO_ENUM
-#undef GET_SUBTARGETINFO_ENUM
 
 enum {
-  AArch64_FeatureCRC =  1ULL << 0,
-  AArch64_FeatureCrypto =  1ULL << 1,
-  AArch64_FeatureFPARMv8 =  1ULL << 2,
-  AArch64_FeatureNEON =  1ULL << 3,
-  AArch64_FeatureZCRegMove =  1ULL << 4,
-  AArch64_FeatureZCZeroing =  1ULL << 5,
-  AArch64_ProcA53 =  1ULL << 6,
-  AArch64_ProcA57 =  1ULL << 7,
-  AArch64_ProcCyclone =  1ULL << 8
+  AArch64_FeatureAES = 0,
+  AArch64_FeatureAggressiveFMA = 1,
+  AArch64_FeatureAlternateSExtLoadCVTF32Pattern = 2,
+  AArch64_FeatureArithmeticBccFusion = 3,
+  AArch64_FeatureArithmeticCbzFusion = 4,
+  AArch64_FeatureBalanceFPOps = 5,
+  AArch64_FeatureCRC = 6,
+  AArch64_FeatureCrypto = 7,
+  AArch64_FeatureCustomCheapAsMoveHandling = 8,
+  AArch64_FeatureDisableLatencySchedHeuristic = 9,
+  AArch64_FeatureDotProd = 10,
+  AArch64_FeatureExynosCheapAsMoveHandling = 11,
+  AArch64_FeatureFPARMv8 = 12,
+  AArch64_FeatureFullFP16 = 13,
+  AArch64_FeatureFuseAES = 14,
+  AArch64_FeatureFuseAddress = 15,
+  AArch64_FeatureFuseCCSelect = 16,
+  AArch64_FeatureFuseLiterals = 17,
+  AArch64_FeatureLSE = 18,
+  AArch64_FeatureLSLFast = 19,
+  AArch64_FeatureNEON = 20,
+  AArch64_FeatureNoNegativeImmediates = 21,
+  AArch64_FeaturePerfMon = 22,
+  AArch64_FeaturePostRAScheduler = 23,
+  AArch64_FeaturePredictableSelectIsExpensive = 24,
+  AArch64_FeatureRAS = 25,
+  AArch64_FeatureRCPC = 26,
+  AArch64_FeatureRDM = 27,
+  AArch64_FeatureReserveX18 = 28,
+  AArch64_FeatureReserveX20 = 29,
+  AArch64_FeatureSHA2 = 30,
+  AArch64_FeatureSHA3 = 31,
+  AArch64_FeatureSM4 = 32,
+  AArch64_FeatureSPE = 33,
+  AArch64_FeatureSVE = 34,
+  AArch64_FeatureSlowMisaligned128Store = 35,
+  AArch64_FeatureSlowPaired128 = 36,
+  AArch64_FeatureSlowSTRQro = 37,
+  AArch64_FeatureStrictAlign = 38,
+  AArch64_FeatureUseAA = 39,
+  AArch64_FeatureUseRSqrt = 40,
+  AArch64_FeatureZCRegMove = 41,
+  AArch64_FeatureZCZeroing = 42,
+  AArch64_FeatureZCZeroingFPWorkaround = 43,
+  AArch64_HasV8_1aOps = 44,
+  AArch64_HasV8_2aOps = 45,
+  AArch64_HasV8_3aOps = 46,
+  AArch64_HasV8_4aOps = 47,
+  AArch64_ProcA35 = 48,
+  AArch64_ProcA53 = 49,
+  AArch64_ProcA55 = 50,
+  AArch64_ProcA57 = 51,
+  AArch64_ProcA72 = 52,
+  AArch64_ProcA73 = 53,
+  AArch64_ProcA75 = 54,
+  AArch64_ProcCyclone = 55,
+  AArch64_ProcExynosM1 = 56,
+  AArch64_ProcExynosM2 = 57,
+  AArch64_ProcExynosM3 = 58,
+  AArch64_ProcFalkor = 59,
+  AArch64_ProcKryo = 60,
+  AArch64_ProcSaphira = 61,
+  AArch64_ProcThunderX = 62,
+  AArch64_ProcThunderX2T99 = 63,
+  AArch64_ProcThunderXT81 = 64,
+  AArch64_ProcThunderXT83 = 65,
+  AArch64_ProcThunderXT88 = 66,
 };
-
-#endif // GET_SUBTARGETINFO_ENUM
 

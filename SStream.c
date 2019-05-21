@@ -39,6 +39,15 @@ void SStream_concat0(SStream *ss, const char *s)
 #endif
 }
 
+void SStream_concat1(SStream *ss, const char c)
+{
+#ifndef CAPSTONE_DIET
+	ss->buffer[ss->index] = c;
+	ss->index++;
+	ss->buffer[ss->index] = '\0';
+#endif
+}
+
 void SStream_concat(SStream *ss, const char *fmt, ...)
 {
 #ifndef CAPSTONE_DIET
@@ -96,6 +105,14 @@ void printInt64(SStream *O, int64_t val)
 		} else
 			SStream_concat(O, "-%"PRIu64, -val);
 	}
+}
+
+void printUInt64(SStream *O, uint64_t val)
+{
+	if (val > HEX_THRESHOLD)
+		SStream_concat(O, "0x%"PRIx64, val);
+	else
+		SStream_concat(O, "%"PRIu64, val);
 }
 
 // print number in decimal mode

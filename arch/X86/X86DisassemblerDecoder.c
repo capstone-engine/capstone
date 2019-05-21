@@ -470,9 +470,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 			 */
 			if (((nextByte == 0xf0) ||
 				((nextByte & 0xfe) == 0x86 || (nextByte & 0xf8) == 0x90))) {
-				insn->xAcquireRelease = true;
-				if (!(byte == 0xf3 && nextByte == 0x90)) // PAUSE instruction support
-					break;
+				insn->xAcquireRelease = byte;
 			}
 
 			/*
@@ -483,9 +481,7 @@ static int readPrefixes(struct InternalInstruction* insn)
 			 */
 			if (byte == 0xf3 && (nextByte == 0x88 || nextByte == 0x89 ||
 						nextByte == 0xc6 || nextByte == 0xc7)) {
-				insn->xAcquireRelease = true;
-				if (nextByte != 0x90) // PAUSE instruction support
-					break;
+				insn->xAcquireRelease = byte;
 			}
 
 			if (isREX(insn, nextByte)) {
@@ -579,15 +575,16 @@ static int readPrefixes(struct InternalInstruction* insn)
 
 		if (lookAtByte(insn, &byte2)) {
 			// dbgprintf(insn, "Couldn't read third byte of EVEX prefix");
-			return -1;
-		}
-
-		if ((insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) &&
-				((~byte1 & 0xc) == 0xc) && ((byte2 & 0x4) == 0x4)) {
-			insn->vectorExtensionType = TYPE_EVEX;
-		} else {
 			unconsumeByte(insn); /* unconsume byte1 */
 			unconsumeByte(insn); /* unconsume byte  */
+		} else {
+			if ((insn->mode == MODE_64BIT || (byte1 & 0xc0) == 0xc0) &&
+					((~byte1 & 0xc) == 0xc) && ((byte2 & 0x4) == 0x4)) {
+				insn->vectorExtensionType = TYPE_EVEX;
+			} else {
+				unconsumeByte(insn); /* unconsume byte1 */
+				unconsumeByte(insn); /* unconsume byte  */
+			}
 		}
 
 		if (insn->vectorExtensionType == TYPE_EVEX) {
@@ -829,6 +826,9 @@ static int readOpcode(struct InternalInstruction* insn)
 
 	if (consumeByte(insn, &current))
 		return -1;
+
+    // save this first byte for MOVcr, MOVdr, MOVrc, MOVrd
+    insn->firstByte = current;
 
 	if (current == 0x0f) {
 		// dbgprintf(insn, "Found a two-byte escape prefix (0x%hhx)", current);
@@ -1144,11 +1144,11 @@ static int getID(struct InternalInstruction *insn)
 		}
 	}
 
-	if (getIDWithAttrMask(&instructionID, insn, attrMask))
+	if (getIDWithAttrMask(&instructionID, insn, attrMask)) {
 		return -1;
+	}
 
 	/* The following clauses compensate for limitations of the tables. */
-
 	if (insn->mode != MODE_64BIT &&
 			insn->vectorExtensionType != TYPE_NO_VEX_XOP) {
 		/*
@@ -1206,8 +1206,9 @@ static int getID(struct InternalInstruction *insn)
 				attrMask ^= ATTR_OPSIZE;
 		}
 
-		if (getIDWithAttrMask(&instructionID, insn, attrMask))
+		if (getIDWithAttrMask(&instructionID, insn, attrMask)) {
 			return -1;
+		}
 
 		insn->instructionID = instructionID;
 		insn->spec = specifierForUID(instructionID);
@@ -1444,6 +1445,11 @@ static int readModRM(struct InternalInstruction* insn)
 
     // save original ModRM for later reference
     insn->orgModRM = insn->modRM;
+
+	// handle MOVcr, MOVdr, MOVrc, MOVrd by pretending they have MRM.mod = 3
+	if ((insn->firstByte == 0x0f && insn->opcodeType == TWOBYTE) &&
+			(insn->opcode >= 0x20 && insn->opcode <= 0x23 ))
+		insn->modRM |= 0xC0;
 
 	mod = modFromModRM(insn->modRM);
 	rm  = rmFromModRM(insn->modRM);
@@ -2093,6 +2099,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADC8mi:
 			case X86_ADC8mi8:
 			case X86_ADC8mr:
+			case X86_ADC8rm:
+			case X86_ADC16rm:
+			case X86_ADC32rm:
+			case X86_ADC64rm:
 
 			// ADD
 			case X86_ADD16mi:
@@ -2107,6 +2117,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_ADD8mi:
 			case X86_ADD8mi8:
 			case X86_ADD8mr:
+			case X86_ADD8rm:
+			case X86_ADD16rm:
+			case X86_ADD32rm:
+			case X86_ADD64rm:
 
 			// AND
 			case X86_AND16mi:
@@ -2121,6 +2135,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_AND8mi:
 			case X86_AND8mi8:
 			case X86_AND8mr:
+			case X86_AND8rm:
+			case X86_AND16rm:
+			case X86_AND32rm:
+			case X86_AND64rm:
 
 			// BTC
 			case X86_BTC16mi8:
@@ -2179,13 +2197,16 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_OR32mi:
 			case X86_OR32mi8:
 			case X86_OR32mr:
-			//case X86_OR32mrLocked:
 			case X86_OR64mi32:
 			case X86_OR64mi8:
 			case X86_OR64mr:
 			case X86_OR8mi8:
 			case X86_OR8mi:
 			case X86_OR8mr:
+			case X86_OR8rm:
+			case X86_OR16rm:
+			case X86_OR32rm:
+			case X86_OR64rm:
 
 			// SBB
 			case X86_SBB16mi:
@@ -2214,6 +2235,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_SUB8mi8:
 			case X86_SUB8mi:
 			case X86_SUB8mr:
+			case X86_SUB8rm:
+			case X86_SUB16rm:
+			case X86_SUB32rm:
+			case X86_SUB64rm:
 
 			// XADD
 			case X86_XADD16rm:
@@ -2240,6 +2265,10 @@ static bool checkPrefix(struct InternalInstruction *insn)
 			case X86_XOR8mi8:
 			case X86_XOR8mi:
 			case X86_XOR8mr:
+			case X86_XOR8rm:
+			case X86_XOR16rm:
+			case X86_XOR32rm:
+			case X86_XOR64rm:
 
 				// this instruction can be used with LOCK prefix
 				return false;

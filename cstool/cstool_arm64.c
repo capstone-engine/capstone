@@ -102,9 +102,6 @@ void print_insn_detail_arm64(csh handle, cs_insn *ins)
 		if (op->vas != ARM64_VAS_INVALID)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
 
-		if (op->vess != ARM64_VESS_INVALID)
-			printf("\t\t\tVector Element Size Specifier: %u\n", op->vess);
-
 		if (op->vector_index != -1)
 			printf("\t\t\tVector Index: %u\n", op->vector_index);
 	}

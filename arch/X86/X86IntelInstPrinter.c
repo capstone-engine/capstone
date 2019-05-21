@@ -52,6 +52,9 @@
 #include "X86GenInstrInfo.inc"
 #endif
 
+#define GET_REGINFO_ENUM
+#include "X86GenRegisterInfo.inc"
+
 #include "X86BaseInfo.h"
 
 static void printMemReference(MCInst *MI, unsigned Op, SStream *O);
@@ -225,8 +228,15 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	SStream_concat0(O, "qword ptr ");
-	MI->x86opsize = 8;
+	// TODO: fix COMISD in Tablegen instead (#1456)
+	if (MI->op1_size == 16) {
+		SStream_concat0(O, "xmmword ptr ");
+		MI->x86opsize = 16;
+	} else {
+		SStream_concat0(O, "qword ptr ");
+		MI->x86opsize = 8;
+	}
+
 	printMemReference(MI, OpNo, O);
 }
 
@@ -680,6 +690,8 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
 
+	// printf("opcode = %u\n", MCInst_getOpcode(MI));
+
 	// perhaps this instruction does not need printer
 	if (MI->assembly[0]) {
 		strncpy(O->buffer, MI->assembly, sizeof(O->buffer));
@@ -922,7 +934,9 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->x86opsize;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_INVALID;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_register_map(MCOperand_getReg(BaseReg));
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_register_map(MCOperand_getReg(IndexReg));
+        if (MCOperand_getReg(IndexReg) != X86_EIZ) {
+            MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.index = X86_register_map(MCOperand_getReg(IndexReg));
+        }
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = 0;
 
@@ -949,7 +963,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		NeedPlus = true;
 	}
 
-	if (MCOperand_getReg(IndexReg)) {
+	if (MCOperand_getReg(IndexReg) && MCOperand_getReg(IndexReg) != X86_EIZ) {
 		if (NeedPlus) SStream_concat0(O, " + ");
 		_printOperand(MI, Op + X86_AddrIndexReg, O);
 		if (ScaleVal != 1)

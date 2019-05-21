@@ -26,6 +26,13 @@
 typedef uint16_t MCPhysReg;
 typedef const MCPhysReg* iterator;
 
+typedef struct MCRegisterClass2 {
+	iterator RegsBegin;
+	const uint8_t *RegSet;
+	uint8_t RegsSize;
+	uint8_t RegSetSize;
+} MCRegisterClass2;
+
 typedef struct MCRegisterClass {
 	iterator RegsBegin;
 	const uint8_t *RegSet;

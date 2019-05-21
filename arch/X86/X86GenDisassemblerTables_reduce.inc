@@ -1132,7 +1132,7 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
   },
 };
 
-static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1663] = {
+static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1671] = {
   { /* 0 */
     0,
     /*  */
@@ -7170,618 +7170,650 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[1663] = 
     /* TEST16mi */
   },
   { /* 1509 */
+    3,
+    /* TEST16mi_alt */
+  },
+  { /* 1510 */
     5,
     /* TEST16mr */
   },
-  { /* 1510 */
+  { /* 1511 */
     59,
     /* TEST16ri */
   },
-  { /* 1511 */
+  { /* 1512 */
+    59,
+    /* TEST16ri_alt */
+  },
+  { /* 1513 */
     51,
     /* TEST16rr */
   },
-  { /* 1512 */
+  { /* 1514 */
     2,
     /* TEST32i32 */
   },
-  { /* 1513 */
+  { /* 1515 */
     3,
     /* TEST32mi */
   },
-  { /* 1514 */
+  { /* 1516 */
+    3,
+    /* TEST32mi_alt */
+  },
+  { /* 1517 */
     5,
     /* TEST32mr */
   },
-  { /* 1515 */
+  { /* 1518 */
     59,
     /* TEST32ri */
   },
-  { /* 1516 */
+  { /* 1519 */
+    59,
+    /* TEST32ri_alt */
+  },
+  { /* 1520 */
     51,
     /* TEST32rr */
   },
-  { /* 1517 */
+  { /* 1521 */
     11,
     /* TEST64i32 */
   },
-  { /* 1518 */
+  { /* 1522 */
     12,
     /* TEST64mi32 */
   },
-  { /* 1519 */
+  { /* 1523 */
+    12,
+    /* TEST64mi32_alt */
+  },
+  { /* 1524 */
     13,
     /* TEST64mr */
   },
-  { /* 1520 */
+  { /* 1525 */
     60,
     /* TEST64ri32 */
   },
-  { /* 1521 */
+  { /* 1526 */
+    60,
+    /* TEST64ri32_alt */
+  },
+  { /* 1527 */
     53,
     /* TEST64rr */
   },
-  { /* 1522 */
+  { /* 1528 */
     1,
     /* TEST8i8 */
   },
-  { /* 1523 */
+  { /* 1529 */
     4,
     /* TEST8mi */
   },
-  { /* 1524 */
+  { /* 1530 */
+    4,
+    /* TEST8mi_alt */
+  },
+  { /* 1531 */
     19,
     /* TEST8mr */
   },
-  { /* 1525 */
+  { /* 1532 */
     61,
     /* TEST8ri */
   },
-  { /* 1526 */
+  { /* 1533 */
+    61,
+    /* TEST8ri_alt */
+  },
+  { /* 1534 */
     63,
     /* TEST8rr */
   },
-  { /* 1527 */
+  { /* 1535 */
     80,
     /* TPAUSE */
   },
-  { /* 1528 */
+  { /* 1536 */
     44,
     /* TZCNT16rm */
   },
-  { /* 1529 */
+  { /* 1537 */
     45,
     /* TZCNT16rr */
   },
-  { /* 1530 */
+  { /* 1538 */
     44,
     /* TZCNT32rm */
   },
-  { /* 1531 */
+  { /* 1539 */
     45,
     /* TZCNT32rr */
   },
-  { /* 1532 */
+  { /* 1540 */
     46,
     /* TZCNT64rm */
   },
-  { /* 1533 */
+  { /* 1541 */
     47,
     /* TZCNT64rr */
   },
-  { /* 1534 */
+  { /* 1542 */
     40,
     /* TZMSK32rm */
   },
-  { /* 1535 */
+  { /* 1543 */
     41,
     /* TZMSK32rr */
   },
-  { /* 1536 */
+  { /* 1544 */
     42,
     /* TZMSK64rm */
   },
-  { /* 1537 */
+  { /* 1545 */
     43,
     /* TZMSK64rr */
   },
-  { /* 1538 */
+  { /* 1546 */
     0,
     /* UD0 */
   },
-  { /* 1539 */
+  { /* 1547 */
     0,
     /* UD1 */
   },
-  { /* 1540 */
+  { /* 1548 */
     0,
     /* UD2 */
   },
-  { /* 1541 */
+  { /* 1549 */
     86,
     /* UMONITOR16 */
   },
-  { /* 1542 */
+  { /* 1550 */
     80,
     /* UMONITOR32 */
   },
-  { /* 1543 */
+  { /* 1551 */
     57,
     /* UMONITOR64 */
   },
-  { /* 1544 */
+  { /* 1552 */
     80,
     /* UMWAIT */
   },
-  { /* 1545 */
+  { /* 1553 */
     54,
     /* VERRm */
   },
-  { /* 1546 */
+  { /* 1554 */
     86,
     /* VERRr */
   },
-  { /* 1547 */
+  { /* 1555 */
     54,
     /* VERWm */
   },
-  { /* 1548 */
+  { /* 1556 */
     86,
     /* VERWr */
   },
-  { /* 1549 */
+  { /* 1557 */
     0,
     /* VMCALL */
   },
-  { /* 1550 */
+  { /* 1558 */
     54,
     /* VMCLEARm */
   },
-  { /* 1551 */
+  { /* 1559 */
     0,
     /* VMFUNC */
   },
-  { /* 1552 */
+  { /* 1560 */
     0,
     /* VMLAUNCH */
   },
-  { /* 1553 */
+  { /* 1561 */
     0,
     /* VMLOAD32 */
   },
-  { /* 1554 */
+  { /* 1562 */
     0,
     /* VMLOAD64 */
   },
-  { /* 1555 */
+  { /* 1563 */
     0,
     /* VMMCALL */
   },
-  { /* 1556 */
+  { /* 1564 */
     54,
     /* VMPTRLDm */
   },
-  { /* 1557 */
+  { /* 1565 */
     54,
     /* VMPTRSTm */
   },
-  { /* 1558 */
+  { /* 1566 */
     112,
     /* VMREAD32mr */
   },
-  { /* 1559 */
+  { /* 1567 */
     132,
     /* VMREAD32rr */
   },
-  { /* 1560 */
+  { /* 1568 */
     13,
     /* VMREAD64mr */
   },
-  { /* 1561 */
+  { /* 1569 */
     53,
     /* VMREAD64rr */
   },
-  { /* 1562 */
+  { /* 1570 */
     0,
     /* VMRESUME */
   },
-  { /* 1563 */
+  { /* 1571 */
     0,
     /* VMRUN32 */
   },
-  { /* 1564 */
+  { /* 1572 */
     0,
     /* VMRUN64 */
   },
-  { /* 1565 */
+  { /* 1573 */
     0,
     /* VMSAVE32 */
   },
-  { /* 1566 */
+  { /* 1574 */
     0,
     /* VMSAVE64 */
   },
-  { /* 1567 */
+  { /* 1575 */
     82,
     /* VMWRITE32rm */
   },
-  { /* 1568 */
+  { /* 1576 */
     133,
     /* VMWRITE32rr */
   },
-  { /* 1569 */
+  { /* 1577 */
     46,
     /* VMWRITE64rm */
   },
-  { /* 1570 */
+  { /* 1578 */
     47,
     /* VMWRITE64rr */
   },
-  { /* 1571 */
+  { /* 1579 */
     0,
     /* VMXOFF */
   },
-  { /* 1572 */
+  { /* 1580 */
     54,
     /* VMXON */
   },
-  { /* 1573 */
+  { /* 1581 */
     0,
     /* WBINVD */
   },
-  { /* 1574 */
+  { /* 1582 */
     0,
     /* WBNOINVD */
   },
-  { /* 1575 */
+  { /* 1583 */
     80,
     /* WRFSBASE */
   },
-  { /* 1576 */
+  { /* 1584 */
     57,
     /* WRFSBASE64 */
   },
-  { /* 1577 */
+  { /* 1585 */
     80,
     /* WRGSBASE */
   },
-  { /* 1578 */
+  { /* 1586 */
     57,
     /* WRGSBASE64 */
   },
-  { /* 1579 */
+  { /* 1587 */
     0,
     /* WRMSR */
   },
-  { /* 1580 */
+  { /* 1588 */
     0,
     /* WRPKRUr */
   },
-  { /* 1581 */
+  { /* 1589 */
     112,
     /* WRSSD */
   },
-  { /* 1582 */
+  { /* 1590 */
     13,
     /* WRSSQ */
   },
-  { /* 1583 */
+  { /* 1591 */
     112,
     /* WRUSSD */
   },
-  { /* 1584 */
+  { /* 1592 */
     13,
     /* WRUSSQ */
   },
-  { /* 1585 */
+  { /* 1593 */
     8,
     /* XADD16rm */
   },
-  { /* 1586 */
+  { /* 1594 */
     134,
     /* XADD16rr */
   },
-  { /* 1587 */
+  { /* 1595 */
     8,
     /* XADD32rm */
   },
-  { /* 1588 */
+  { /* 1596 */
     134,
     /* XADD32rr */
   },
-  { /* 1589 */
+  { /* 1597 */
     16,
     /* XADD64rm */
   },
-  { /* 1590 */
+  { /* 1598 */
     135,
     /* XADD64rr */
   },
-  { /* 1591 */
+  { /* 1599 */
     21,
     /* XADD8rm */
   },
-  { /* 1592 */
+  { /* 1600 */
     136,
     /* XADD8rr */
   },
-  { /* 1593 */
+  { /* 1601 */
     48,
     /* XCHG16ar */
   },
-  { /* 1594 */
+  { /* 1602 */
     8,
     /* XCHG16rm */
   },
-  { /* 1595 */
+  { /* 1603 */
     137,
     /* XCHG16rr */
   },
-  { /* 1596 */
+  { /* 1604 */
     48,
     /* XCHG32ar */
   },
-  { /* 1597 */
+  { /* 1605 */
     8,
     /* XCHG32rm */
   },
-  { /* 1598 */
+  { /* 1606 */
     137,
     /* XCHG32rr */
   },
-  { /* 1599 */
+  { /* 1607 */
     49,
     /* XCHG64ar */
   },
-  { /* 1600 */
+  { /* 1608 */
     16,
     /* XCHG64rm */
   },
-  { /* 1601 */
+  { /* 1609 */
     138,
     /* XCHG64rr */
   },
-  { /* 1602 */
+  { /* 1610 */
     21,
     /* XCHG8rm */
   },
-  { /* 1603 */
+  { /* 1611 */
     139,
     /* XCHG8rr */
   },
-  { /* 1604 */
+  { /* 1612 */
     0,
     /* XCRYPTCBC */
   },
-  { /* 1605 */
+  { /* 1613 */
     0,
     /* XCRYPTCFB */
   },
-  { /* 1606 */
+  { /* 1614 */
     0,
     /* XCRYPTCTR */
   },
-  { /* 1607 */
+  { /* 1615 */
     0,
     /* XCRYPTECB */
   },
-  { /* 1608 */
+  { /* 1616 */
     0,
     /* XCRYPTOFB */
   },
-  { /* 1609 */
+  { /* 1617 */
     0,
     /* XGETBV */
   },
-  { /* 1610 */
+  { /* 1618 */
     0,
     /* XLAT */
   },
-  { /* 1611 */
+  { /* 1619 */
     2,
     /* XOR16i16 */
   },
-  { /* 1612 */
+  { /* 1620 */
     3,
     /* XOR16mi */
   },
-  { /* 1613 */
+  { /* 1621 */
     4,
     /* XOR16mi8 */
   },
-  { /* 1614 */
+  { /* 1622 */
     5,
     /* XOR16mr */
   },
-  { /* 1615 */
+  { /* 1623 */
     6,
     /* XOR16ri */
   },
-  { /* 1616 */
+  { /* 1624 */
     7,
     /* XOR16ri8 */
   },
-  { /* 1617 */
+  { /* 1625 */
     8,
     /* XOR16rm */
   },
-  { /* 1618 */
+  { /* 1626 */
     9,
     /* XOR16rr */
   },
-  { /* 1619 */
+  { /* 1627 */
     10,
     /* XOR16rr_REV */
   },
-  { /* 1620 */
+  { /* 1628 */
     2,
     /* XOR32i32 */
   },
-  { /* 1621 */
+  { /* 1629 */
     3,
     /* XOR32mi */
   },
-  { /* 1622 */
+  { /* 1630 */
     4,
     /* XOR32mi8 */
   },
-  { /* 1623 */
+  { /* 1631 */
     5,
     /* XOR32mr */
   },
-  { /* 1624 */
+  { /* 1632 */
     6,
     /* XOR32ri */
   },
-  { /* 1625 */
+  { /* 1633 */
     7,
     /* XOR32ri8 */
   },
-  { /* 1626 */
+  { /* 1634 */
     8,
     /* XOR32rm */
   },
-  { /* 1627 */
+  { /* 1635 */
     9,
     /* XOR32rr */
   },
-  { /* 1628 */
+  { /* 1636 */
     10,
     /* XOR32rr_REV */
   },
-  { /* 1629 */
+  { /* 1637 */
     11,
     /* XOR64i32 */
   },
-  { /* 1630 */
+  { /* 1638 */
     12,
     /* XOR64mi32 */
   },
-  { /* 1631 */
+  { /* 1639 */
     4,
     /* XOR64mi8 */
   },
-  { /* 1632 */
+  { /* 1640 */
     13,
     /* XOR64mr */
   },
-  { /* 1633 */
+  { /* 1641 */
     14,
     /* XOR64ri32 */
   },
-  { /* 1634 */
+  { /* 1642 */
     15,
     /* XOR64ri8 */
   },
-  { /* 1635 */
+  { /* 1643 */
     16,
     /* XOR64rm */
   },
-  { /* 1636 */
+  { /* 1644 */
     17,
     /* XOR64rr */
   },
-  { /* 1637 */
+  { /* 1645 */
     18,
     /* XOR64rr_REV */
   },
-  { /* 1638 */
+  { /* 1646 */
     1,
     /* XOR8i8 */
   },
-  { /* 1639 */
+  { /* 1647 */
     4,
     /* XOR8mi */
   },
-  { /* 1640 */
+  { /* 1648 */
     4,
     /* XOR8mi8 */
   },
-  { /* 1641 */
+  { /* 1649 */
     19,
     /* XOR8mr */
   },
-  { /* 1642 */
+  { /* 1650 */
     20,
     /* XOR8ri */
   },
-  { /* 1643 */
+  { /* 1651 */
     20,
     /* XOR8ri8 */
   },
-  { /* 1644 */
+  { /* 1652 */
     21,
     /* XOR8rm */
   },
-  { /* 1645 */
+  { /* 1653 */
     22,
     /* XOR8rr */
   },
-  { /* 1646 */
+  { /* 1654 */
     23,
     /* XOR8rr_REV */
   },
-  { /* 1647 */
+  { /* 1655 */
     54,
     /* XRSTOR */
   },
-  { /* 1648 */
+  { /* 1656 */
     54,
     /* XRSTOR64 */
   },
-  { /* 1649 */
+  { /* 1657 */
     54,
     /* XRSTORS */
   },
-  { /* 1650 */
+  { /* 1658 */
     54,
     /* XRSTORS64 */
   },
-  { /* 1651 */
+  { /* 1659 */
     54,
     /* XSAVE */
   },
-  { /* 1652 */
+  { /* 1660 */
     54,
     /* XSAVE64 */
   },
-  { /* 1653 */
+  { /* 1661 */
     54,
     /* XSAVEC */
   },
-  { /* 1654 */
+  { /* 1662 */
     54,
     /* XSAVEC64 */
   },
-  { /* 1655 */
+  { /* 1663 */
     54,
     /* XSAVEOPT */
   },
-  { /* 1656 */
+  { /* 1664 */
     54,
     /* XSAVEOPT64 */
   },
-  { /* 1657 */
+  { /* 1665 */
     54,
     /* XSAVES */
   },
-  { /* 1658 */
+  { /* 1666 */
     54,
     /* XSAVES64 */
   },
-  { /* 1659 */
+  { /* 1667 */
     0,
     /* XSETBV */
   },
-  { /* 1660 */
+  { /* 1668 */
     0,
     /* XSHA1 */
   },
-  { /* 1661 */
+  { /* 1669 */
     0,
     /* XSHA256 */
   },
-  { /* 1662 */
+  { /* 1670 */
     0,
     /* XSTORE */
   },
@@ -24292,21 +24324,21 @@ static const InstrUID modRMTable[] = {
 /* Table69 */
   0x226, /* DAS */
 /* Table70 */
-  0x669, /* XOR8mr */
-  0x66d, /* XOR8rr */
+  0x671, /* XOR8mr */
+  0x675, /* XOR8rr */
 /* Table72 */
-  0x657, /* XOR32mr */
-  0x65b, /* XOR32rr */
+  0x65f, /* XOR32mr */
+  0x663, /* XOR32rr */
 /* Table74 */
-  0x66c, /* XOR8rm */
-  0x66e, /* XOR8rr_REV */
+  0x674, /* XOR8rm */
+  0x676, /* XOR8rr_REV */
 /* Table76 */
-  0x65a, /* XOR32rm */
-  0x65c, /* XOR32rr_REV */
+  0x662, /* XOR32rm */
+  0x664, /* XOR32rr_REV */
 /* Table78 */
-  0x666, /* XOR8i8 */
+  0x66e, /* XOR8i8 */
 /* Table79 */
-  0x654, /* XOR32i32 */
+  0x65c, /* XOR32i32 */
 /* Table80 */
   0x7e, /* AAA */
 /* Table81 */
@@ -24404,7 +24436,7 @@ static const InstrUID modRMTable[] = {
   0x519, /* SBB8mi */
   0xee, /* AND8mi */
   0x5d0, /* SUB8mi */
-  0x667, /* XOR8mi */
+  0x66f, /* XOR8mi */
   0x20b, /* CMP8mi */
   0xc9, /* ADD8ri */
   0x3ed, /* OR8ri */
@@ -24412,7 +24444,7 @@ static const InstrUID modRMTable[] = {
   0x51c, /* SBB8ri */
   0xf1, /* AND8ri */
   0x5d3, /* SUB8ri */
-  0x66a, /* XOR8ri */
+  0x672, /* XOR8ri */
   0x20e, /* CMP8ri */
 /* Table145 */
   0xb4, /* ADD32mi */
@@ -24421,7 +24453,7 @@ static const InstrUID modRMTable[] = {
   0x507, /* SBB32mi */
   0xdc, /* AND32mi */
   0x5be, /* SUB32mi */
-  0x655, /* XOR32mi */
+  0x65d, /* XOR32mi */
   0x1f9, /* CMP32mi */
   0xb7, /* ADD32ri */
   0x3db, /* OR32ri */
@@ -24429,7 +24461,7 @@ static const InstrUID modRMTable[] = {
   0x50a, /* SBB32ri */
   0xdf, /* AND32ri */
   0x5c1, /* SUB32ri */
-  0x658, /* XOR32ri */
+  0x660, /* XOR32ri */
   0x1fc, /* CMP32ri */
 /* Table161 */
   0xc7, /* ADD8mi8 */
@@ -24438,7 +24470,7 @@ static const InstrUID modRMTable[] = {
   0x51a, /* SBB8mi8 */
   0xef, /* AND8mi8 */
   0x5d1, /* SUB8mi8 */
-  0x668, /* XOR8mi8 */
+  0x670, /* XOR8mi8 */
   0x20c, /* CMP8mi8 */
   0xca, /* ADD8ri8 */
   0x3ee, /* OR8ri8 */
@@ -24446,7 +24478,7 @@ static const InstrUID modRMTable[] = {
   0x51d, /* SBB8ri8 */
   0xf2, /* AND8ri8 */
   0x5d4, /* SUB8ri8 */
-  0x66b, /* XOR8ri8 */
+  0x673, /* XOR8ri8 */
   0x20f, /* CMP8ri8 */
 /* Table177 */
   0xb5, /* ADD32mi8 */
@@ -24455,7 +24487,7 @@ static const InstrUID modRMTable[] = {
   0x508, /* SBB32mi8 */
   0xdd, /* AND32mi8 */
   0x5bf, /* SUB32mi8 */
-  0x656, /* XOR32mi8 */
+  0x65e, /* XOR32mi8 */
   0x1fa, /* CMP32mi8 */
   0xb8, /* ADD32ri8 */
   0x3dc, /* OR32ri8 */
@@ -24463,20 +24495,20 @@ static const InstrUID modRMTable[] = {
   0x50b, /* SBB32ri8 */
   0xe0, /* AND32ri8 */
   0x5c2, /* SUB32ri8 */
-  0x659, /* XOR32ri8 */
+  0x661, /* XOR32ri8 */
   0x1fd, /* CMP32ri8 */
 /* Table193 */
-  0x5f4, /* TEST8mr */
-  0x5f6, /* TEST8rr */
+  0x5fb, /* TEST8mr */
+  0x5fe, /* TEST8rr */
 /* Table195 */
-  0x5ea, /* TEST32mr */
-  0x5ec, /* TEST32rr */
+  0x5ed, /* TEST32mr */
+  0x5f0, /* TEST32rr */
 /* Table197 */
-  0x642, /* XCHG8rm */
-  0x643, /* XCHG8rr */
+  0x64a, /* XCHG8rm */
+  0x64b, /* XCHG8rr */
 /* Table199 */
-  0x63d, /* XCHG32rm */
-  0x63e, /* XCHG32rr */
+  0x645, /* XCHG32rm */
+  0x646, /* XCHG32rr */
 /* Table201 */
   0x359, /* MOV8mr */
   0x362, /* MOV8rr */
@@ -24518,7 +24550,7 @@ static const InstrUID modRMTable[] = {
 /* Table231 */
   0x3a7, /* NOOP */
 /* Table232 */
-  0x63c, /* XCHG32ar */
+  0x644, /* XCHG32ar */
 /* Table233 */
   0x224, /* CWDE */
 /* Table234 */
@@ -24550,9 +24582,9 @@ static const InstrUID modRMTable[] = {
 /* Table247 */
   0x214, /* CMPSL */
 /* Table248 */
-  0x5f2, /* TEST8i8 */
+  0x5f8, /* TEST8i8 */
 /* Table249 */
-  0x5e8, /* TEST32i32 */
+  0x5ea, /* TEST32i32 */
 /* Table250 */
   0x5ac, /* STOSB */
 /* Table251 */
@@ -24738,7 +24770,7 @@ static const InstrUID modRMTable[] = {
 /* Table402 */
   0x4df, /* SALC */
 /* Table403 */
-  0x64a, /* XLAT */
+  0x652, /* XLAT */
 /* Table404 */
   0x0, /*  */
   0x0, /*  */
@@ -24857,16 +24889,16 @@ static const InstrUID modRMTable[] = {
 /* Table497 */
   0x18e, /* CMC */
 /* Table498 */
-  0x5f3, /* TEST8mi */
-  0x0, /*  */
+  0x5f9, /* TEST8mi */
+  0x5fa, /* TEST8mi_alt */
   0x3cc, /* NOT8m */
   0x3a5, /* NEG8m */
   0x398, /* MUL8m */
   0x26a, /* IMUL8m */
   0x238, /* DIV8m */
   0x250, /* IDIV8m */
-  0x5f5, /* TEST8ri */
-  0x0, /*  */
+  0x5fc, /* TEST8ri */
+  0x5fd, /* TEST8ri_alt */
   0x3cd, /* NOT8r */
   0x3a6, /* NEG8r */
   0x399, /* MUL8r */
@@ -24874,16 +24906,16 @@ static const InstrUID modRMTable[] = {
   0x239, /* DIV8r */
   0x251, /* IDIV8r */
 /* Table514 */
-  0x5e9, /* TEST32mi */
-  0x0, /*  */
+  0x5eb, /* TEST32mi */
+  0x5ec, /* TEST32mi_alt */
   0x3c8, /* NOT32m */
   0x3a1, /* NEG32m */
   0x394, /* MUL32m */
   0x25a, /* IMUL32m */
   0x234, /* DIV32m */
   0x24c, /* IDIV32m */
-  0x5eb, /* TEST32ri */
-  0x0, /*  */
+  0x5ee, /* TEST32ri */
+  0x5ef, /* TEST32ri_alt */
   0x3c9, /* NOT32r */
   0x3a2, /* NEG32r */
   0x395, /* MUL32r */
@@ -25068,13 +25100,13 @@ static const InstrUID modRMTable[] = {
 /* Table654 */
   0x5b4, /* SUB16i16 */
 /* Table655 */
-  0x64e, /* XOR16mr */
-  0x652, /* XOR16rr */
+  0x656, /* XOR16mr */
+  0x65a, /* XOR16rr */
 /* Table657 */
-  0x651, /* XOR16rm */
-  0x653, /* XOR16rr_REV */
+  0x659, /* XOR16rm */
+  0x65b, /* XOR16rr_REV */
 /* Table659 */
-  0x64b, /* XOR16i16 */
+  0x653, /* XOR16i16 */
 /* Table660 */
   0x1f2, /* CMP16mr */
   0x1f6, /* CMP16rr */
@@ -25119,7 +25151,7 @@ static const InstrUID modRMTable[] = {
   0x4fe, /* SBB16mi */
   0xd3, /* AND16mi */
   0x5b5, /* SUB16mi */
-  0x64c, /* XOR16mi */
+  0x654, /* XOR16mi */
   0x1f0, /* CMP16mi */
   0xae, /* ADD16ri */
   0x3d2, /* OR16ri */
@@ -25127,7 +25159,7 @@ static const InstrUID modRMTable[] = {
   0x501, /* SBB16ri */
   0xd6, /* AND16ri */
   0x5b8, /* SUB16ri */
-  0x64f, /* XOR16ri */
+  0x657, /* XOR16ri */
   0x1f3, /* CMP16ri */
 /* Table697 */
   0xac, /* ADD16mi8 */
@@ -25136,7 +25168,7 @@ static const InstrUID modRMTable[] = {
   0x4ff, /* SBB16mi8 */
   0xd4, /* AND16mi8 */
   0x5b6, /* SUB16mi8 */
-  0x64d, /* XOR16mi8 */
+  0x655, /* XOR16mi8 */
   0x1f1, /* CMP16mi8 */
   0xaf, /* ADD16ri8 */
   0x3d3, /* OR16ri8 */
@@ -25144,14 +25176,14 @@ static const InstrUID modRMTable[] = {
   0x502, /* SBB16ri8 */
   0xd7, /* AND16ri8 */
   0x5b9, /* SUB16ri8 */
-  0x650, /* XOR16ri8 */
+  0x658, /* XOR16ri8 */
   0x1f4, /* CMP16ri8 */
 /* Table713 */
-  0x5e5, /* TEST16mr */
-  0x5e7, /* TEST16rr */
+  0x5e6, /* TEST16mr */
+  0x5e9, /* TEST16rr */
 /* Table715 */
-  0x63a, /* XCHG16rm */
-  0x63b, /* XCHG16rr */
+  0x642, /* XCHG16rm */
+  0x643, /* XCHG16rr */
 /* Table717 */
   0x324, /* MOV16mr */
   0x32c, /* MOV16rr */
@@ -25185,7 +25217,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table743 */
-  0x639, /* XCHG16ar */
+  0x641, /* XCHG16ar */
 /* Table744 */
   0x180, /* CBW */
 /* Table745 */
@@ -25314,15 +25346,15 @@ static const InstrUID modRMTable[] = {
   0x3f3, /* OUT16rr */
 /* Table838 */
   0x5e4, /* TEST16mi */
-  0x0, /*  */
+  0x5e5, /* TEST16mi_alt */
   0x3c6, /* NOT16m */
   0x39f, /* NEG16m */
   0x392, /* MUL16m */
   0x252, /* IMUL16m */
   0x232, /* DIV16m */
   0x24a, /* IDIV16m */
-  0x5e6, /* TEST16ri */
-  0x0, /*  */
+  0x5e7, /* TEST16ri */
+  0x5e8, /* TEST16ri_alt */
   0x3c7, /* NOT16r */
   0x3a0, /* NEG16r */
   0x393, /* MUL16r */
@@ -25409,13 +25441,13 @@ static const InstrUID modRMTable[] = {
 /* Table906 */
   0x5c6, /* SUB64i32 */
 /* Table907 */
-  0x660, /* XOR64mr */
-  0x664, /* XOR64rr */
+  0x668, /* XOR64mr */
+  0x66c, /* XOR64rr */
 /* Table909 */
-  0x663, /* XOR64rm */
-  0x665, /* XOR64rr_REV */
+  0x66b, /* XOR64rm */
+  0x66d, /* XOR64rr_REV */
 /* Table911 */
-  0x65d, /* XOR64i32 */
+  0x665, /* XOR64i32 */
 /* Table912 */
   0x204, /* CMP64mr */
   0x208, /* CMP64rr */
@@ -25440,7 +25472,7 @@ static const InstrUID modRMTable[] = {
   0x510, /* SBB64mi32 */
   0xe5, /* AND64mi32 */
   0x5c7, /* SUB64mi32 */
-  0x65e, /* XOR64mi32 */
+  0x666, /* XOR64mi32 */
   0x202, /* CMP64mi32 */
   0xc0, /* ADD64ri32 */
   0x3e4, /* OR64ri32 */
@@ -25448,7 +25480,7 @@ static const InstrUID modRMTable[] = {
   0x513, /* SBB64ri32 */
   0xe8, /* AND64ri32 */
   0x5ca, /* SUB64ri32 */
-  0x661, /* XOR64ri32 */
+  0x669, /* XOR64ri32 */
   0x205, /* CMP64ri32 */
 /* Table939 */
   0xbe, /* ADD64mi8 */
@@ -25457,7 +25489,7 @@ static const InstrUID modRMTable[] = {
   0x511, /* SBB64mi8 */
   0xe6, /* AND64mi8 */
   0x5c8, /* SUB64mi8 */
-  0x65f, /* XOR64mi8 */
+  0x667, /* XOR64mi8 */
   0x203, /* CMP64mi8 */
   0xc1, /* ADD64ri8 */
   0x3e5, /* OR64ri8 */
@@ -25465,14 +25497,14 @@ static const InstrUID modRMTable[] = {
   0x514, /* SBB64ri8 */
   0xe9, /* AND64ri8 */
   0x5cb, /* SUB64ri8 */
-  0x662, /* XOR64ri8 */
+  0x66a, /* XOR64ri8 */
   0x206, /* CMP64ri8 */
 /* Table955 */
-  0x5ef, /* TEST64mr */
-  0x5f1, /* TEST64rr */
+  0x5f4, /* TEST64mr */
+  0x5f7, /* TEST64rr */
 /* Table957 */
-  0x640, /* XCHG64rm */
-  0x641, /* XCHG64rr */
+  0x648, /* XCHG64rm */
+  0x649, /* XCHG64rr */
 /* Table959 */
   0x349, /* MOV64mr */
   0x351, /* MOV64rr */
@@ -25489,7 +25521,7 @@ static const InstrUID modRMTable[] = {
   0x32f, /* MOV16sm */
   0x354, /* MOV64sr */
 /* Table969 */
-  0x63f, /* XCHG64ar */
+  0x647, /* XCHG64ar */
 /* Table970 */
   0x182, /* CDQE */
 /* Table971 */
@@ -25503,7 +25535,7 @@ static const InstrUID modRMTable[] = {
 /* Table975 */
   0x215, /* CMPSQ */
 /* Table976 */
-  0x5ed, /* TEST64i32 */
+  0x5f1, /* TEST64i32 */
 /* Table977 */
   0x5ae, /* STOSQ */
 /* Table978 */
@@ -25587,16 +25619,16 @@ static const InstrUID modRMTable[] = {
   0x4d7, /* SAL64rCL */
   0x4f0, /* SAR64rCL */
 /* Table1048 */
-  0x5ee, /* TEST64mi32 */
-  0x0, /*  */
+  0x5f2, /* TEST64mi32 */
+  0x5f3, /* TEST64mi32_alt */
   0x3ca, /* NOT64m */
   0x3a3, /* NEG64m */
   0x396, /* MUL64m */
   0x262, /* IMUL64m */
   0x236, /* DIV64m */
   0x24e, /* IDIV64m */
-  0x5f0, /* TEST64ri32 */
-  0x0, /*  */
+  0x5f5, /* TEST64ri32 */
+  0x5f6, /* TEST64ri32_alt */
   0x3cb, /* NOT64r */
   0x3a4, /* NEG64r */
   0x397, /* MUL64r */
@@ -25667,16 +25699,16 @@ static const InstrUID modRMTable[] = {
   0x5b3, /* STRm */
   0x2f1, /* LLDT16m */
   0x30e, /* LTRm */
-  0x609, /* VERRm */
-  0x60b, /* VERWm */
+  0x611, /* VERRm */
+  0x613, /* VERWm */
   0x0, /*  */
   0x0, /*  */
   0x59f, /* SLDT32r */
   0x5b1, /* STR32r */
   0x2f2, /* LLDT16r */
   0x30f, /* LTRr */
-  0x60a, /* VERRr */
-  0x60c, /* VERWr */
+  0x612, /* VERRr */
+  0x614, /* VERWr */
   0x0, /*  */
   0x0, /*  */
 /* Table1132 */
@@ -25689,10 +25721,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -25704,18 +25736,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61b, /* VMRUN32 */
-  0x613, /* VMMCALL */
-  0x611, /* VMLOAD32 */
-  0x61d, /* VMSAVE32 */
+  0x623, /* VMRUN32 */
+  0x61b, /* VMMCALL */
+  0x619, /* VMLOAD32 */
+  0x625, /* VMSAVE32 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -25735,7 +25767,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -25767,9 +25799,9 @@ static const InstrUID modRMTable[] = {
 /* Table1211 */
   0x285, /* INVD */
 /* Table1212 */
-  0x625, /* WBINVD */
+  0x62d, /* WBINVD */
 /* Table1213 */
-  0x604, /* UD2 */
+  0x60c, /* UD2 */
 /* Table1214 */
   0x0, /*  */
   0x0, /*  */
@@ -25829,7 +25861,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x335, /* MOV32dr */
 /* Table1262 */
-  0x62b, /* WRMSR */
+  0x633, /* WRMSR */
 /* Table1263 */
   0x485, /* RDTSC */
 /* Table1264 */
@@ -25891,11 +25923,11 @@ static const InstrUID modRMTable[] = {
   0x1af, /* CMOVG32rm */
   0x1b0, /* CMOVG32rr */
 /* Table1301 */
-  0x616, /* VMREAD32mr */
-  0x617, /* VMREAD32rr */
+  0x61e, /* VMREAD32mr */
+  0x61f, /* VMREAD32rr */
 /* Table1303 */
-  0x61f, /* VMWRITE32rm */
-  0x620, /* VMWRITE32rr */
+  0x627, /* VMWRITE32rm */
+  0x628, /* VMWRITE32rr */
 /* Table1305 */
   0x2cc, /* JO_4 */
 /* Table1306 */
@@ -26008,7 +26040,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x67c, /* XSHA1 */
+  0x684, /* XSHA1 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26016,7 +26048,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x67d, /* XSHA256 */
+  0x685, /* XSHA256 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26073,7 +26105,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x67e, /* XSTORE */
+  0x686, /* XSTORE */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26081,7 +26113,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x647, /* XCRYPTECB */
+  0x64f, /* XCRYPTECB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26089,7 +26121,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x644, /* XCRYPTCBC */
+  0x64c, /* XCRYPTCBC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26097,7 +26129,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x646, /* XCRYPTCTR */
+  0x64e, /* XCRYPTCTR */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26105,7 +26137,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x645, /* XCRYPTCFB */
+  0x64d, /* XCRYPTCFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26113,7 +26145,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x648, /* XCRYPTOFB */
+  0x650, /* XCRYPTOFB */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26157,9 +26189,9 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x673, /* XSAVE */
-  0x66f, /* XRSTOR */
-  0x677, /* XSAVEOPT */
+  0x67b, /* XSAVE */
+  0x677, /* XRSTOR */
+  0x67f, /* XSAVEOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26197,7 +26229,7 @@ static const InstrUID modRMTable[] = {
   0x388, /* MOVZX32rm16 */
   0x38b, /* MOVZX32rr16 */
 /* Table1549 */
-  0x603, /* UD1 */
+  0x60b, /* UD1 */
 /* Table1550 */
   0x0, /*  */
   0x0, /*  */
@@ -26231,20 +26263,20 @@ static const InstrUID modRMTable[] = {
   0x378, /* MOVSX32rm16 */
   0x37b, /* MOVSX32rr16 */
 /* Table1576 */
-  0x637, /* XADD8rm */
-  0x638, /* XADD8rr */
+  0x63f, /* XADD8rm */
+  0x640, /* XADD8rr */
 /* Table1578 */
-  0x633, /* XADD32rm */
-  0x634, /* XADD32rr */
+  0x63b, /* XADD32rm */
+  0x63c, /* XADD32rr */
 /* Table1580 */
   0x0, /*  */
   0x21e, /* CMPXCHG8B */
   0x0, /*  */
-  0x671, /* XRSTORS */
-  0x675, /* XSAVEC */
-  0x679, /* XSAVES */
-  0x614, /* VMPTRLDm */
-  0x615, /* VMPTRSTm */
+  0x679, /* XRSTORS */
+  0x67d, /* XSAVEC */
+  0x681, /* XSAVES */
+  0x61c, /* VMPTRLDm */
+  0x61d, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26256,7 +26288,7 @@ static const InstrUID modRMTable[] = {
 /* Table1596 */
   0x13b, /* BSWAP32r */
 /* Table1597 */
-  0x602, /* UD0 */
+  0x60a, /* UD0 */
 /* Table1598 */
   0x548, /* SGDT64m */
   0x59b, /* SIDT64m */
@@ -26267,10 +26299,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -26282,18 +26314,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61c, /* VMRUN64 */
-  0x613, /* VMMCALL */
-  0x612, /* VMLOAD64 */
-  0x61e, /* VMSAVE64 */
+  0x624, /* VMRUN64 */
+  0x61b, /* VMMCALL */
+  0x61a, /* VMLOAD64 */
+  0x626, /* VMSAVE64 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -26313,7 +26345,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -26343,11 +26375,11 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x347, /* MOV64dr */
 /* Table1678 */
-  0x618, /* VMREAD64mr */
-  0x619, /* VMREAD64rr */
+  0x620, /* VMREAD64mr */
+  0x621, /* VMREAD64rr */
 /* Table1680 */
-  0x621, /* VMWRITE64rm */
-  0x622, /* VMWRITE64rr */
+  0x629, /* VMWRITE64rm */
+  0x62a, /* VMWRITE64rr */
 /* Table1682 */
   0x43c, /* PUSHFS64 */
 /* Table1683 */
@@ -26361,16 +26393,16 @@ static const InstrUID modRMTable[] = {
   0x5b3, /* STRm */
   0x2f1, /* LLDT16m */
   0x30e, /* LTRm */
-  0x609, /* VERRm */
-  0x60b, /* VERWm */
+  0x611, /* VERRm */
+  0x613, /* VERWm */
   0x0, /*  */
   0x0, /*  */
   0x59e, /* SLDT16r */
   0x5b0, /* STR16r */
   0x2f2, /* LLDT16r */
   0x30f, /* LTRr */
-  0x60a, /* VERRr */
-  0x60c, /* VERWr */
+  0x612, /* VERRr */
+  0x614, /* VERWr */
   0x0, /*  */
   0x0, /*  */
 /* Table1702 */
@@ -26383,10 +26415,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -26398,18 +26430,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61b, /* VMRUN32 */
-  0x613, /* VMMCALL */
-  0x611, /* VMLOAD32 */
-  0x61d, /* VMSAVE32 */
+  0x623, /* VMRUN32 */
+  0x61b, /* VMMCALL */
+  0x619, /* VMLOAD32 */
+  0x625, /* VMSAVE32 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -26429,7 +26461,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -26605,7 +26637,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5f7, /* TPAUSE */
+  0x5ff, /* TPAUSE */
   0x0, /*  */
 /* Table1884 */
   0x254, /* IMUL16rm */
@@ -26664,16 +26696,16 @@ static const InstrUID modRMTable[] = {
   0x374, /* MOVSX16rm16 */
   0x376, /* MOVSX16rr16 */
 /* Table1926 */
-  0x631, /* XADD16rm */
-  0x632, /* XADD16rr */
+  0x639, /* XADD16rm */
+  0x63a, /* XADD16rr */
 /* Table1928 */
   0x0, /*  */
   0x21e, /* CMPXCHG8B */
   0x0, /*  */
-  0x671, /* XRSTORS */
-  0x675, /* XSAVEC */
-  0x679, /* XSAVES */
-  0x60e, /* VMCLEARm */
+  0x679, /* XRSTORS */
+  0x67d, /* XSAVEC */
+  0x681, /* XSAVES */
+  0x616, /* VMCLEARm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26690,8 +26722,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x673, /* XSAVE */
-  0x66f, /* XRSTOR */
+  0x67b, /* XSAVE */
+  0x677, /* XRSTOR */
   0x18c, /* CLWB */
   0x187, /* CLFLUSHOPT */
   0x0, /*  */
@@ -26700,17 +26732,17 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5f7, /* TPAUSE */
+  0x5ff, /* TPAUSE */
   0x0, /*  */
 /* Table1961 */
   0x0, /*  */
   0x21e, /* CMPXCHG8B */
   0x0, /*  */
-  0x671, /* XRSTORS */
-  0x675, /* XSAVEC */
-  0x679, /* XSAVES */
-  0x60e, /* VMCLEARm */
-  0x615, /* VMPTRSTm */
+  0x679, /* XRSTORS */
+  0x67d, /* XSAVEC */
+  0x681, /* XSAVES */
+  0x616, /* VMCLEARm */
+  0x61d, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26734,15 +26766,15 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x608, /* UMWAIT */
+  0x610, /* UMWAIT */
   0x0, /*  */
 /* Table1993 */
   0x0, /*  */
   0x21e, /* CMPXCHG8B */
   0x0, /*  */
-  0x671, /* XRSTORS */
-  0x675, /* XSAVEC */
-  0x679, /* XSAVES */
+  0x679, /* XRSTORS */
+  0x67d, /* XSAVEC */
+  0x681, /* XSAVES */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26763,10 +26795,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -26778,18 +26810,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61b, /* VMRUN32 */
-  0x613, /* VMMCALL */
-  0x611, /* VMLOAD32 */
-  0x61d, /* VMSAVE32 */
+  0x623, /* VMRUN32 */
+  0x61b, /* VMMCALL */
+  0x619, /* VMLOAD32 */
+  0x625, /* VMSAVE32 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -26809,7 +26841,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -26827,7 +26859,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
 /* Table2081 */
-  0x626, /* WBNOINVD */
+  0x62e, /* WBNOINVD */
 /* Table2082 */
   0x3bc, /* NOOPL_1e */
   0x3bc, /* NOOPL_1e */
@@ -26916,11 +26948,11 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x421, /* PTWRITEr */
   0x27c, /* INCSSPD */
-  0x606, /* UMONITOR32 */
+  0x60e, /* UMONITOR32 */
   0x0, /*  */
 /* Table2170 */
-  0x5fa, /* TZCNT32rm */
-  0x5fb, /* TZCNT32rr */
+  0x602, /* TZCNT32rm */
+  0x603, /* TZCNT32rr */
 /* Table2172 */
   0x31a, /* LZCNT32rm */
   0x31b, /* LZCNT32rr */
@@ -26928,10 +26960,10 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x21e, /* CMPXCHG8B */
   0x0, /*  */
-  0x671, /* XRSTORS */
-  0x675, /* XSAVEC */
-  0x679, /* XSAVES */
-  0x624, /* VMXON */
+  0x679, /* XRSTORS */
+  0x67d, /* XSAVEC */
+  0x681, /* XSAVES */
+  0x62c, /* VMXON */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -26942,8 +26974,8 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x479, /* RDPID32 */
 /* Table2190 */
-  0x5f8, /* TZCNT16rm */
-  0x5f9, /* TZCNT16rr */
+  0x600, /* TZCNT16rm */
+  0x601, /* TZCNT16rr */
 /* Table2192 */
   0x318, /* LZCNT16rm */
   0x319, /* LZCNT16rr */
@@ -26962,23 +26994,23 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x605, /* UMONITOR16 */
+  0x60d, /* UMONITOR16 */
   0x0, /*  */
 /* Table2210 */
   0x59d, /* SLDT16m */
   0x5b3, /* STRm */
   0x2f1, /* LLDT16m */
   0x30e, /* LTRm */
-  0x609, /* VERRm */
-  0x60b, /* VERWm */
+  0x611, /* VERRm */
+  0x613, /* VERWm */
   0x0, /*  */
   0x0, /*  */
   0x5a0, /* SLDT64r */
   0x5b2, /* STR64r */
   0x2f2, /* LLDT16r */
   0x30f, /* LTRr */
-  0x60a, /* VERRr */
-  0x60c, /* VERWr */
+  0x612, /* VERRr */
+  0x614, /* VERWr */
   0x0, /*  */
   0x0, /*  */
 /* Table2226 */
@@ -26991,10 +27023,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -27006,18 +27038,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61c, /* VMRUN64 */
-  0x613, /* VMMCALL */
-  0x612, /* VMLOAD64 */
-  0x61e, /* VMSAVE64 */
+  0x624, /* VMRUN64 */
+  0x61b, /* VMMCALL */
+  0x61a, /* VMLOAD64 */
+  0x626, /* VMSAVE64 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -27037,7 +27069,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -27138,9 +27170,9 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x674, /* XSAVE64 */
-  0x670, /* XRSTOR64 */
-  0x678, /* XSAVEOPT64 */
+  0x67c, /* XSAVE64 */
+  0x678, /* XRSTOR64 */
+  0x680, /* XSAVEOPT64 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27207,17 +27239,17 @@ static const InstrUID modRMTable[] = {
   0x37e, /* MOVSX64rm16 */
   0x381, /* MOVSX64rr16 */
 /* Table2408 */
-  0x635, /* XADD64rm */
-  0x636, /* XADD64rr */
+  0x63d, /* XADD64rm */
+  0x63e, /* XADD64rr */
 /* Table2410 */
   0x0, /*  */
   0x217, /* CMPXCHG16B */
   0x0, /*  */
-  0x672, /* XRSTORS64 */
-  0x676, /* XSAVEC64 */
-  0x67a, /* XSAVES64 */
-  0x614, /* VMPTRLDm */
-  0x615, /* VMPTRSTm */
+  0x67a, /* XRSTORS64 */
+  0x67e, /* XSAVEC64 */
+  0x682, /* XSAVES64 */
+  0x61c, /* VMPTRLDm */
+  0x61d, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27233,9 +27265,9 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x674, /* XSAVE64 */
-  0x670, /* XRSTOR64 */
-  0x678, /* XSAVEOPT64 */
+  0x67c, /* XSAVE64 */
+  0x678, /* XRSTOR64 */
+  0x680, /* XSAVEOPT64 */
   0x187, /* CLFLUSHOPT */
   0x0, /*  */
   0x0, /*  */
@@ -27243,17 +27275,17 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x5f7, /* TPAUSE */
+  0x5ff, /* TPAUSE */
   0x0, /*  */
 /* Table2443 */
   0x0, /*  */
   0x217, /* CMPXCHG16B */
   0x0, /*  */
-  0x672, /* XRSTORS64 */
-  0x676, /* XSAVEC64 */
-  0x67a, /* XSAVES64 */
-  0x60e, /* VMCLEARm */
-  0x615, /* VMPTRSTm */
+  0x67a, /* XRSTORS64 */
+  0x67e, /* XSAVEC64 */
+  0x682, /* XSAVES64 */
+  0x616, /* VMCLEARm */
+  0x61d, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27272,10 +27304,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -27287,18 +27319,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61c, /* VMRUN64 */
-  0x613, /* VMMCALL */
-  0x612, /* VMLOAD64 */
-  0x61e, /* VMSAVE64 */
+  0x624, /* VMRUN64 */
+  0x61b, /* VMMCALL */
+  0x61a, /* VMLOAD64 */
+  0x626, /* VMSAVE64 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -27318,7 +27350,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -27345,10 +27377,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -27360,18 +27392,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61c, /* VMRUN64 */
-  0x613, /* VMMCALL */
-  0x612, /* VMLOAD64 */
-  0x61e, /* VMSAVE64 */
+  0x624, /* VMRUN64 */
+  0x61b, /* VMMCALL */
+  0x61a, /* VMLOAD64 */
+  0x626, /* VMSAVE64 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -27391,7 +27423,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -27419,20 +27451,20 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x474, /* RDFSBASE */
   0x476, /* RDGSBASE */
-  0x627, /* WRFSBASE */
-  0x629, /* WRGSBASE */
+  0x62f, /* WRFSBASE */
+  0x631, /* WRGSBASE */
   0x421, /* PTWRITEr */
   0x27c, /* INCSSPD */
-  0x607, /* UMONITOR64 */
+  0x60f, /* UMONITOR64 */
   0x0, /*  */
 /* Table2619 */
   0x0, /*  */
   0x21e, /* CMPXCHG8B */
   0x0, /*  */
-  0x671, /* XRSTORS */
-  0x675, /* XSAVEC */
-  0x679, /* XSAVES */
-  0x624, /* VMXON */
+  0x679, /* XRSTORS */
+  0x67d, /* XSAVEC */
+  0x681, /* XSAVES */
+  0x62c, /* VMXON */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27453,11 +27485,11 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x474, /* RDFSBASE */
   0x476, /* RDGSBASE */
-  0x627, /* WRFSBASE */
-  0x629, /* WRGSBASE */
+  0x62f, /* WRFSBASE */
+  0x631, /* WRGSBASE */
   0x421, /* PTWRITEr */
   0x27c, /* INCSSPD */
-  0x606, /* UMONITOR32 */
+  0x60e, /* UMONITOR32 */
   0x0, /*  */
 /* Table2651 */
   0x548, /* SGDT64m */
@@ -27469,10 +27501,10 @@ static const InstrUID modRMTable[] = {
   0x2f5, /* LMSW16m */
   0x288, /* INVLPG */
   0x0, /*  */
-  0x60d, /* VMCALL */
-  0x610, /* VMLAUNCH */
-  0x61a, /* VMRESUME */
-  0x623, /* VMXOFF */
+  0x615, /* VMCALL */
+  0x618, /* VMLAUNCH */
+  0x622, /* VMRESUME */
+  0x62b, /* VMXOFF */
   0x3fb, /* PCONFIG */
   0x0, /*  */
   0x0, /*  */
@@ -27484,18 +27516,18 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x649, /* XGETBV */
-  0x67b, /* XSETBV */
+  0x651, /* XGETBV */
+  0x683, /* XSETBV */
   0x0, /*  */
   0x0, /*  */
-  0x60f, /* VMFUNC */
+  0x617, /* VMFUNC */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x61c, /* VMRUN64 */
-  0x613, /* VMMCALL */
-  0x612, /* VMLOAD64 */
-  0x61e, /* VMSAVE64 */
+  0x624, /* VMRUN64 */
+  0x61b, /* VMMCALL */
+  0x61a, /* VMLOAD64 */
+  0x626, /* VMSAVE64 */
   0x5aa, /* STGI */
   0x188, /* CLGI */
   0x59c, /* SKINIT */
@@ -27515,7 +27547,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x47b, /* RDPKRUr */
-  0x62c, /* WRPKRUr */
+  0x634, /* WRPKRUr */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
   0x2f6, /* LMSW16r */
@@ -27611,20 +27643,20 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x41e, /* PTWRITE64m */
-  0x66f, /* XRSTOR */
+  0x677, /* XRSTOR */
   0x18a, /* CLRSSBSY */
   0x0, /*  */
   0x475, /* RDFSBASE64 */
   0x477, /* RDGSBASE64 */
-  0x628, /* WRFSBASE64 */
-  0x62a, /* WRGSBASE64 */
+  0x630, /* WRFSBASE64 */
+  0x632, /* WRGSBASE64 */
   0x41f, /* PTWRITE64r */
   0x27d, /* INCSSPQ */
-  0x607, /* UMONITOR64 */
+  0x60f, /* UMONITOR64 */
   0x0, /*  */
 /* Table2811 */
-  0x5fc, /* TZCNT64rm */
-  0x5fd, /* TZCNT64rr */
+  0x604, /* TZCNT64rm */
+  0x605, /* TZCNT64rr */
 /* Table2813 */
   0x31c, /* LZCNT64rm */
   0x31d, /* LZCNT64rr */
@@ -27632,11 +27664,11 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x217, /* CMPXCHG16B */
   0x0, /*  */
-  0x672, /* XRSTORS64 */
-  0x676, /* XSAVEC64 */
-  0x67a, /* XSAVES64 */
-  0x624, /* VMXON */
-  0x615, /* VMPTRSTm */
+  0x67a, /* XRSTORS64 */
+  0x67e, /* XSAVEC64 */
+  0x682, /* XSAVES64 */
+  0x62c, /* VMXON */
+  0x61d, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27650,9 +27682,9 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x673, /* XSAVE */
-  0x66f, /* XRSTOR */
-  0x677, /* XSAVEOPT */
+  0x67b, /* XSAVE */
+  0x677, /* XRSTOR */
+  0x67f, /* XSAVEOPT */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27660,17 +27692,17 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-  0x608, /* UMWAIT */
+  0x610, /* UMWAIT */
   0x0, /*  */
 /* Table2847 */
   0x0, /*  */
   0x217, /* CMPXCHG16B */
   0x0, /*  */
-  0x672, /* XRSTORS64 */
-  0x676, /* XSAVEC64 */
-  0x67a, /* XSAVES64 */
-  0x614, /* VMPTRLDm */
-  0x615, /* VMPTRSTm */
+  0x67a, /* XRSTORS64 */
+  0x67e, /* XSAVEC64 */
+  0x682, /* XSAVES64 */
+  0x61c, /* VMPTRLDm */
+  0x61d, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27683,11 +27715,11 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x217, /* CMPXCHG16B */
   0x0, /*  */
-  0x672, /* XRSTORS64 */
-  0x676, /* XSAVEC64 */
-  0x67a, /* XSAVES64 */
-  0x60e, /* VMCLEARm */
-  0x615, /* VMPTRSTm */
+  0x67a, /* XRSTORS64 */
+  0x67e, /* XSAVEC64 */
+  0x682, /* XSAVES64 */
+  0x616, /* VMCLEARm */
+  0x61d, /* VMPTRSTm */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -27703,7 +27735,7 @@ static const InstrUID modRMTable[] = {
   0x367, /* MOVBE32mr */
   0x0, /*  */
 /* Table2883 */
-  0x62d, /* WRSSD */
+  0x635, /* WRSSD */
   0x0, /*  */
 /* Table2885 */
   0x36e, /* MOVDIRI32 */
@@ -27724,7 +27756,7 @@ static const InstrUID modRMTable[] = {
   0x365, /* MOVBE16mr */
   0x0, /*  */
 /* Table2897 */
-  0x62f, /* WRUSSD */
+  0x637, /* WRUSSD */
   0x0, /*  */
 /* Table2899 */
   0xa6, /* ADCX32rm */
@@ -27745,7 +27777,7 @@ static const InstrUID modRMTable[] = {
   0x369, /* MOVBE64mr */
   0x0, /*  */
 /* Table2911 */
-  0x62e, /* WRSSQ */
+  0x636, /* WRSSQ */
   0x0, /*  */
 /* Table2913 */
   0x36f, /* MOVDIRI64 */
@@ -27760,7 +27792,7 @@ static const InstrUID modRMTable[] = {
   0x28c, /* INVPCID64 */
   0x0, /*  */
 /* Table2921 */
-  0x62e, /* WRSSQ */
+  0x636, /* WRSSQ */
   0xa7, /* ADCX32rr */
 /* Table2923 */
   0x36d, /* MOVDIR64B64 */
@@ -27769,7 +27801,7 @@ static const InstrUID modRMTable[] = {
   0xd0, /* ADOX64rm */
   0xd1, /* ADOX64rr */
 /* Table2927 */
-  0x630, /* WRUSSQ */
+  0x638, /* WRUSSQ */
   0x0, /*  */
 /* Table2929 */
   0xa8, /* ADCX64rm */
@@ -27873,7 +27905,7 @@ static const InstrUID modRMTable[] = {
   0x104, /* BLCFILL32rm */
   0x118, /* BLSFILL32rm */
   0x114, /* BLCS32rm */
-  0x5fe, /* TZMSK32rm */
+  0x606, /* TZMSK32rm */
   0x10c, /* BLCIC32rm */
   0x120, /* BLSIC32rm */
   0x5df, /* T1MSKC32rm */
@@ -27881,7 +27913,7 @@ static const InstrUID modRMTable[] = {
   0x105, /* BLCFILL32rr */
   0x119, /* BLSFILL32rr */
   0x115, /* BLCS32rr */
-  0x5ff, /* TZMSK32rr */
+  0x607, /* TZMSK32rr */
   0x10d, /* BLCIC32rr */
   0x121, /* BLSIC32rr */
   0x5e0, /* T1MSKC32rr */
@@ -27924,7 +27956,7 @@ static const InstrUID modRMTable[] = {
   0x106, /* BLCFILL64rm */
   0x11a, /* BLSFILL64rm */
   0x116, /* BLCS64rm */
-  0x600, /* TZMSK64rm */
+  0x608, /* TZMSK64rm */
   0x10e, /* BLCIC64rm */
   0x122, /* BLSIC64rm */
   0x5e1, /* T1MSKC64rm */
@@ -27932,7 +27964,7 @@ static const InstrUID modRMTable[] = {
   0x107, /* BLCFILL64rr */
   0x11b, /* BLSFILL64rr */
   0x117, /* BLCS64rr */
-  0x601, /* TZMSK64rr */
+  0x609, /* TZMSK64rr */
   0x10f, /* BLCIC64rr */
   0x123, /* BLSIC64rr */
   0x5e2, /* T1MSKC64rr */

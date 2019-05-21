@@ -1,3 +1,189 @@
+!# issue 1478 tbegin.
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x7c,0x20,0x05,0x1d == tbegin. 1 ; Update-CR0: True
+
+!# issue 970 PPC bdnzt lt
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x00,0xff,0xac == bdnzt lt, 0xffffffffffffffac ; operands[0].type: REG = cr0lt
+
+!# issue 970 PPC bdnzt eq
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x02,0xff,0xac == bdnzt eq, 0xffffffffffffffac ; operands[0].type: REG = cr0eq
+
+!# issue 969 PPC bdnzflr operand 2
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x4c,0x10,0x00,0x20 == bdnzflr 4*cr4+lt ; operands[0].type: REG = cr4lt
+
+0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump
+
+!# issue 1481 ARM64 LDR operand2
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0xe9,0x03,0x40,0xf9 == ldr x9, [sp] ; operands[1].mem.base: REG = sp
+
+!# issue 968 PPC absolute branch: bdnzla
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x42,0x00,0x12,0x37 == bdnzla 0x1234
+
+!# issue 968 PPC absolute branch: bdzla
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x42,0x40,0x12,0x37 == bdzla 0x1234
+
+!# issue X86 xrelease xchg
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x87,0x03 == xrelease xchg dword ptr [ebx], eax
+
+!# issue X86 xacquire xchg
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf2,0x87,0x03 == xacquire xchg dword ptr [ebx], eax
+
+!# issue X86 xrelease
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf3,0xf0,0x31,0x1f == xrelease lock xor dword ptr [rdi], ebx
+
+!# issue 1477 X86 xacquire
+!# CS_ARCH_X86, CS_MODE_64, None
+0xf2,0xf0,0x31,0x1f == xacquire lock xor dword ptr [rdi], ebx
+
+!# issue PPC JUMP group
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x41,0x82,0x00,0x10 == beq 0x10 ; Groups: jump
+
+!# issue 1468 PPC bdnz
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x101086c: 0x42,0x00,0xff,0xf8 == bdnz 0x1010864
+
+!# issue PPC bdnzt
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x41,0x00,0xff,0xac == bdnzt lt, 0xfac
+
+!# issue 1469 PPC CRx
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x4c,0x02,0x39,0x82 == crxor cr0lt, cr0eq, cr1un ; operands[0].type: REG = cr0lt
+
+!# issue 1468 B target
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, None
+0x1000: 0x4b,0xff,0xf8,0x00 == b 0x800
+
+!# issue 1456 test alt 1
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf6,0x08,0x00 == test byte ptr [eax], 0
+
+!# issue 1456 test alt 2
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf7,0x08,0x00,0x00,0x00,0x00 == test dword ptr [eax], 0
+
+!# issue 1472 lock sub
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x2B,0x45,0x08 == lock sub eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock or
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x0B,0x45,0x08 == lock or eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock and
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x23,0x45,0x08 == lock and eax, dword ptr [ebp + 8]
+
+!# issue 1472 lock add
+!# CS_ARCH_X86, CS_MODE_32, None
+0xF0,0x03,0x45,0x08 == lock add eax, dword ptr [ebp + 8]
+
+!# issue 1456 MOV dr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x23,0x00 == mov dr0, eax
+
+!# issue 1456 MOV dr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x21,0x00 == mov eax, dr0
+
+!# issue 1456 MOV cr
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x22,0x00 == mov cr0, eax
+
+!# issue 1472 lock adc
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf0,0x12,0x45,0x08 == lock adc al, byte ptr [ebp + 8]
+
+!# issue 1456 xmmword
+!# CS_ARCH_X86, CS_MODE_32, None
+0x66,0x0f,0x2f,0x00 == comisd xmm0, xmmword ptr [eax]
+
+!# issue 1456 ARM printPKHASRShiftImm
+!# CS_ARCH_ARM, CS_MODE_THUMB, None
+0xca,0xea,0x21,0x06 == pkhtb r6, sl, r1, asr #0x20
+
+!# issue 1456 EIZ
+!# CS_ARCH_X86, CS_MODE_32, None
+0x8d,0xb4,0x26,0x00,0x00,0x00,0x00 == lea esi, [esi]
+
+!# issue 1456 ARM POP
+!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, None
+0x04,0x10,0x9d,0xe4 == pop {r1}
+
+!# issue 1456
+!# CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x31,0x02,0xa0,0xe1 == lsr r0, r1, r2 ; operands[2].type: REG = r2
+
+!# issue 1456
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x0c,0x00,0x80,0x12 == mov w12, #-1 ; operands[1].type: IMM = 0xffffffffffffffff
+
+0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
+
+0xd1,0x5e,0x48 == rcrl $1, 0x48(%esi)
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, None
+0xd1,0x5e,0x48 == rcr dword ptr [esi + 0x48], 1
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT
+0xd1,0x5e,0x48 == rcrl $1, 0x48(%esi)
+
+!# issue 1456
+!# CS_ARCH_X86, CS_MODE_32, None
+0x62,0x00 == bound eax, qword ptr [eax]
+
+!# issue 1454
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0xf0,0x0f,0xb1,0x1e == lock cmpxchg dword ptr [esi], ebx ; Registers read: eax esi ebx
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; Vector Arrangement Specifier: 0xb
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; Vector Arrangement Specifier: 0xd
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; Vector Arrangement Specifier: 0x4
+
+!# issue 1452
+!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; Vector Arrangement Specifier: 0x8
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe1,0xf8,0x90,0xc0 == kmovq k0, k0
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0xc4,0xe1,0xfb,0x92,0xc3 == kmovq k0, rbx
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0x62,0xf1,0x7d,0x48,0x74,0x83,0x12,0x00,0x00,0x00 == vpcmpeqb k0, zmm0, zmmword ptr [rbx + 0x12]
+
+!# issue 1211
+!# CS_ARCH_X86, CS_MODE_64, None
+0x62,0xf2,0x7d,0x48,0x30,0x43,0x08 == vpmovzxbw zmm0, ymmword ptr [rbx + 0x100]
+
 !# issue x86 BND register (OSS-fuzz #13467)
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
 0x0f,0x1a,0x1a == bndldx bnd3, [edx] ; operands[0].type: REG = bnd3

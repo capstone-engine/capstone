@@ -25,7 +25,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
   The other way of customize Capstone without having to edit config.mk is to
   pass the desired options on the commandline to ./make.sh. Currently,
-  Capstone supports 5 options, as followings.
+  Capstone supports 8 options, as followings.
 
   - CAPSTONE_ARCHS: specify list of architectures to compiled in.
   - CAPSTONE_USE_SYS_DYN_MEM: change this if you have your own dynamic memory management.
@@ -34,6 +34,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   - CAPSTONE_X86_ATT_DISABLE: disables AT&T syntax on x86.
   - CAPSTONE_STATIC: build static library.
   - CAPSTONE_SHARED: build dynamic (shared) library.
+  - CAPSTONE_DEBUG: enable debug build supporting assert().
 
   By default, Capstone uses system dynamic memory management, both DIET and X86_REDUCE
   modes are disable, and builds all the static & shared libraries.
