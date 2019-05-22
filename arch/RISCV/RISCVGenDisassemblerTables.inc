@@ -11,7 +11,7 @@
 
 #include "../../MCInst.h"
 #include "../../LEB128.h"
-#include <assert.h>
+#include "../../cs_priv.h"
 
 // Helper functions for extracting fields from encoded instructions.
 // InsnType must either be integral or an APInt-like object that must:
@@ -1071,7 +1071,7 @@ static const uint8_t DecoderTableRISCV32Only_16[] = {
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits)
 {
   switch (Idx) {
-  default: assert(0 && "Invalid index!");
+  default: CS_ASSERT(0 && "Invalid index!");
   case 0:
     return (Bits & RISCV_FeatureStdExtC);
   case 1:
@@ -1110,7 +1110,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
   *DecodeComplete = true;\
   InsnType tmp; \
   switch (Idx) { \
-  default: assert(0 && "Invalid index!");\
+  default: CS_ASSERT(0 && "Invalid index!");\
   case 0: \
     return S; \
   case 1: \
@@ -1722,7 +1722,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI,\
       MCInst_setOpcode(MI, Opc);\
       bool DecodeComplete;\
       S = decoder(S, DecodeIdx, insn, MI, Address, DisAsm, &DecodeComplete);\
-      assert(DecodeComplete);\
+      CS_ASSERT(DecodeComplete);\
 \
       return S;\
     }\
@@ -1745,7 +1745,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI,\
         *MI = TmpMI;\
         return S;\
       } else {\
-        assert(S == MCDisassembler_Fail);\
+        CS_ASSERT(S == MCDisassembler_Fail);\
         Ptr += NumToSkip;\
         S = MCDisassembler_Success;\
       }\
@@ -1767,7 +1767,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI,\
     }\
     }\
   }\
-  assert(0 && "bogosity detected in disassembler state machine!");\
+  CS_ASSERT(0 && "bogosity detected in disassembler state machine!");\
 }
 
 // For RISCV instruction is 32 bits.

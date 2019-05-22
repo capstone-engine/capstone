@@ -1190,7 +1190,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   uint32_t Bits = 0;
   Bits |= OpInfo0[MCInst_getOpcode(MI)] << 0;
   Bits |= OpInfo1[MCInst_getOpcode(MI)] << 16;
-  // assert(Bits != 0 && "Cannot print this instruction.");
+  CS_ASSERT(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
   SStream_concat0(O, AsmStrs+(Bits & 4095)-1);
 #endif
@@ -1198,7 +1198,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 0 encoded into 2 bits for 4 unique commands.
   switch ((Bits >> 12) & 3) {
-  default: assert(0 && "Invalid command number.");
+  default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_LABEL, BUNDLE, LIFETIME_START, LIFETIME_END, FENTRY_CAL...
     return;
@@ -1226,7 +1226,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 1 encoded into 2 bits for 3 unique commands.
   switch ((Bits >> 14) & 3) {
-  default: assert(0 && "Invalid command number.");
+  default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // PseudoCALL, PseudoTAIL, C_J, C_JAL, C_JALR, C_JR
     return;
@@ -1247,7 +1247,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 2 encoded into 2 bits for 3 unique commands.
   switch ((Bits >> 16) & 3) {
-  default: assert(0 && "Invalid command number.");
+  default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // PseudoLA, PseudoLI, PseudoLLA, ADD, ADDI, ADDIW, ADDW, AND, ANDI, AUIP...
     printOperand(MI, 1, O);
@@ -1268,7 +1268,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 3 encoded into 2 bits for 4 unique commands.
   switch ((Bits >> 18) & 3) {
-  default: assert(0 && "Invalid command number.");
+  default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // PseudoLA, PseudoLI, PseudoLLA, AUIPC, C_BEQZ, C_BNEZ, C_LI, C_LUI, C_M...
     return;
@@ -1337,7 +1337,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 static const char *
 getRegisterName(unsigned RegNo, unsigned AltIdx)
 {
-  assert(RegNo && RegNo < 97 && "Invalid register number!");
+  CS_ASSERT(RegNo && RegNo < 97 && "Invalid register number!");
 
 #ifndef CAPSTONE_DIET
   static const char AsmStrsABIRegAltName[] = {
@@ -1468,13 +1468,13 @@ getRegisterName(unsigned RegNo, unsigned AltIdx)
   };
 
   switch(AltIdx) {
-  default: assert(0 && "Invalid register alt name index!");
+  default: CS_ASSERT(0 && "Invalid register alt name index!");
   case RISCV_ABIRegAltName:
-    assert(*(AsmStrsABIRegAltName+RegAsmOffsetABIRegAltName[RegNo-1]) &&
+    CS_ASSERT(*(AsmStrsABIRegAltName+RegAsmOffsetABIRegAltName[RegNo-1]) &&
            "Invalid alt name index for register!");
     return AsmStrsABIRegAltName+RegAsmOffsetABIRegAltName[RegNo-1];
   case RISCV_NoRegAltName:
-    assert(*(AsmStrsNoRegAltName+RegAsmOffsetNoRegAltName[RegNo-1]) &&
+    CS_ASSERT(*(AsmStrsNoRegAltName+RegAsmOffsetNoRegAltName[RegNo-1]) &&
            "Invalid alt name index for register!");
     return AsmStrsNoRegAltName+RegAsmOffsetNoRegAltName[RegNo-1];
   }
@@ -2608,7 +2608,7 @@ static void printCustomAliasOperand(
          SStream *OS) {
   switch (PrintMethodIdx) {
   default:
-    assert(0 && "Unknown PrintMethod kind");
+    CS_ASSERT(0 && "Unknown PrintMethod kind");
     break;
   case 0:
     printCSRSystemRegister(MI, OpIdx, OS);
