@@ -224,7 +224,7 @@ static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
                                       int64_t Address, const void *Decoder,
 				      unsigned N) 
 {
-  	//assert(isUInt<N>(Imm) && "Invalid immediate");
+  	//CS_ASSERT(isUInt<N>(Imm) && "Invalid immediate");
   	addImplySP(Inst, Address, Decoder);
   	//Inst.addOperand(MCOperand::createImm(Imm));
   	MCOperand_CreateImm0(Inst, Imm);
@@ -245,7 +245,7 @@ static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm,
                                       int64_t Address, const void *Decoder,
 				      unsigned N) 
 {
-  	//assert(isUInt<N>(Imm) && "Invalid immediate");
+  	//CS_ASSERT(isUInt<N>(Imm) && "Invalid immediate");
   	addImplySP(Inst, Address, Decoder);
   	// Sign-extend the number in the bottom N bits of Imm
   	//Inst.addOperand(MCOperand::createImm(SignExtend64<N>(Imm)));
@@ -268,7 +268,7 @@ static DecodeStatus decodeSImmOperandAndLsl1(MCInst *Inst, uint64_t Imm,
                                              const void *Decoder,
 					     unsigned N) 
 {
-  	//assert(isUInt<N>(Imm) && "Invalid immediate");
+  	//CS_ASSERT(isUInt<N>(Imm) && "Invalid immediate");
   	// Sign-extend the number in the bottom N bits of Imm after accounting for
   	// the fact that the N bit immediate is stored in N-1 bits (the LSB is
   	// always zero)
@@ -281,7 +281,7 @@ static DecodeStatus decodeCLUIImmOperand(MCInst *Inst, uint64_t Imm,
                                          int64_t Address,
                                          const void *Decoder) 
 {
-  	//assert(isUInt<6>(Imm) && "Invalid immediate");
+  	//CS_ASSERT(isUInt<6>(Imm) && "Invalid immediate");
   	if (Imm > 31) {
     		Imm = (SignExtend64(Imm, 6) & 0xfffff);
   	}
@@ -294,7 +294,7 @@ static DecodeStatus decodeFRMArg(MCInst *Inst, uint64_t Imm,
                                  int64_t Address,
                                  const void *Decoder) 
 {
-  	//assert(isUInt<3>(Imm) && "Invalid immediate");
+  	//CS_ASSERT(isUInt<3>(Imm) && "Invalid immediate");
   	if (!RISCVFPRndMode_isValidRoundingMode(Imm))
     		return MCDisassembler_Fail;
 
