@@ -10,6 +10,21 @@
 #include "SystemZMapping.h"
 #include "SystemZModule.h"
 
+static size_t CAPSTONE_API default_skipdata_cb(const uint8_t *code,
+					       size_t code_size,
+					       size_t offset, void *user_data)
+{
+	// The length of any instruction is encoded in the top two bits.
+	switch (code[offset] >> 6) {
+	case 0:
+		return 2;
+	default:
+		return 4;
+	case 3:
+		return 6;
+	}
+}
+
 cs_err SystemZ_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
@@ -26,6 +41,7 @@ cs_err SystemZ_global_init(cs_struct *ud)
 	ud->insn_id = SystemZ_get_insn_id;
 	ud->insn_name = SystemZ_insn_name;
 	ud->group_name = SystemZ_group_name;
+	ud->skipdata_setup.callback = default_skipdata_cb;
 
 	return CS_ERR_OK;
 }
