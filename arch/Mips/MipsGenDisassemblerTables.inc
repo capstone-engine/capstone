@@ -24,7 +24,7 @@ static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
   return (insn & fieldMask) >> startBit; \
 }
 
-static uint8_t DecoderTableCOP3_32[] = {
+static const uint8_t DecoderTableCOP3_32[] = {
 /* 0 */       MCD_OPC_ExtractField, 26, 6,  // Inst{31-26} ...
 /* 3 */       MCD_OPC_FilterValue, 51, 8, 0, // Skip to: 15
 /* 7 */       MCD_OPC_CheckPredicate, 1, 40, 0, // Skip to: 51
@@ -42,7 +42,7 @@ static uint8_t DecoderTableCOP3_32[] = {
   0
 };
 
-static uint8_t DecoderTableMicroMips16[] = {
+static const uint8_t DecoderTableMicroMips16[] = {
 /* 0 */       MCD_OPC_ExtractField, 10, 6,  // Inst{15-10} ...
 /* 3 */       MCD_OPC_FilterValue, 1, 26, 0, // Skip to: 33
 /* 7 */       MCD_OPC_ExtractField, 0, 1,  // Inst{0} ...
