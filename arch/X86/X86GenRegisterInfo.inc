@@ -405,7 +405,7 @@ static const uint16_t X86SubRegIdxLists[] = {
   /* 12 */ 6, 5, 0,
 };
 
-static MCRegisterDesc X86RegDesc[] = { // Descriptors
+static const MCRegisterDesc X86RegDesc[] = { // Descriptors
   { 5, 0, 0, 0, 0, 0 },
   { 850, 2, 90, 3, 2273, 0 },
   { 878, 2, 86, 3, 2273, 0 },
@@ -656,7 +656,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR8 Bit set.
-  static uint8_t GR8Bits[] = {
+  static const uint8_t GR8Bits[] = {
     0xb6, 0xa6, 0x01, 0x00, 0x00, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -676,7 +676,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK1 Bit set.
-  static uint8_t VK1Bits[] = {
+  static const uint8_t VK1Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -686,7 +686,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK2 Bit set.
-  static uint8_t VK2Bits[] = {
+  static const uint8_t VK2Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -696,7 +696,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK4 Bit set.
-  static uint8_t VK4Bits[] = {
+  static const uint8_t VK4Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -706,7 +706,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK8 Bit set.
-  static uint8_t VK8Bits[] = {
+  static const uint8_t VK8Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -716,7 +716,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK1WM Bit set.
-  static uint8_t VK1WMBits[] = {
+  static const uint8_t VK1WMBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
@@ -726,7 +726,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK2WM Bit set.
-  static uint8_t VK2WMBits[] = {
+  static const uint8_t VK2WMBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
@@ -736,7 +736,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK4WM Bit set.
-  static uint8_t VK4WMBits[] = {
+  static const uint8_t VK4WMBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
@@ -746,67 +746,67 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK8WM Bit set.
-  static uint8_t VK8WMBits[] = {
+  static const uint8_t VK8WMBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
   // GR8_ABCD_H Register Class...
-  static MCPhysReg GR8_ABCD_H[] = {
+  static const MCPhysReg GR8_ABCD_H[] = {
     X86_AH, X86_CH, X86_DH, X86_BH, 
   };
 
   // GR8_ABCD_H Bit set.
-  static uint8_t GR8_ABCD_HBits[] = {
+  static const uint8_t GR8_ABCD_HBits[] = {
     0x12, 0x22, 
   };
 
   // GR8_ABCD_L Register Class...
-  static MCPhysReg GR8_ABCD_L[] = {
+  static const MCPhysReg GR8_ABCD_L[] = {
     X86_AL, X86_CL, X86_DL, X86_BL, 
   };
 
   // GR8_ABCD_L Bit set.
-  static uint8_t GR8_ABCD_LBits[] = {
+  static const uint8_t GR8_ABCD_LBits[] = {
     0x24, 0x04, 0x01, 
   };
 
   // GR16 Register Class...
-  static MCPhysReg GR16[] = {
+  static const MCPhysReg GR16[] = {
     X86_AX, X86_CX, X86_DX, X86_SI, X86_DI, X86_BX, X86_BP, X86_SP, X86_R8W, X86_R9W, X86_R10W, X86_R11W, X86_R14W, X86_R15W, X86_R12W, X86_R13W, 
   };
 
   // GR16 Bit set.
-  static uint8_t GR16Bits[] = {
+  static const uint8_t GR16Bits[] = {
     0x48, 0x51, 0x04, 0x00, 0x00, 0xa0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
   // GR16_NOREX Register Class...
-  static MCPhysReg GR16_NOREX[] = {
+  static const MCPhysReg GR16_NOREX[] = {
     X86_AX, X86_CX, X86_DX, X86_SI, X86_DI, X86_BX, X86_BP, X86_SP, 
   };
 
   // GR16_NOREX Bit set.
-  static uint8_t GR16_NOREXBits[] = {
+  static const uint8_t GR16_NOREXBits[] = {
     0x48, 0x51, 0x04, 0x00, 0x00, 0xa0, 
   };
 
   // VK16 Register Class...
-  static MCPhysReg VK16[] = {
+  static const MCPhysReg VK16[] = {
     X86_K0, X86_K1, X86_K2, X86_K3, X86_K4, X86_K5, X86_K6, X86_K7, 
   };
 
   // VK16 Bit set.
-  static uint8_t VK16Bits[] = {
+  static const uint8_t VK16Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
   // VK16WM Register Class...
-  static MCPhysReg VK16WM[] = {
+  static const MCPhysReg VK16WM[] = {
     X86_K1, X86_K2, X86_K3, X86_K4, X86_K5, X86_K6, X86_K7, 
   };
 
   // VK16WM Bit set.
-  static uint8_t VK16WMBits[] = {
+  static const uint8_t VK16WMBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
@@ -846,7 +846,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // FR32X Bit set.
-  static uint8_t FR32XBits[] = {
+  static const uint8_t FR32XBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
   };
 
@@ -856,7 +856,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // FR32 Bit set.
-  static uint8_t FR32Bits[] = {
+  static const uint8_t FR32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
@@ -866,7 +866,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR32 Bit set.
-  static uint8_t GR32Bits[] = {
+  static const uint8_t GR32Bits[] = {
     0x00, 0x00, 0xf8, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -876,7 +876,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR32_NOAX Bit set.
-  static uint8_t GR32_NOAXBits[] = {
+  static const uint8_t GR32_NOAXBits[] = {
     0x00, 0x00, 0xf0, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -886,7 +886,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR32_NOSP Bit set.
-  static uint8_t GR32_NOSPBits[] = {
+  static const uint8_t GR32_NOSPBits[] = {
     0x00, 0x00, 0xf8, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -896,7 +896,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR32_NOAX_and_GR32_NOSP Bit set.
-  static uint8_t GR32_NOAX_and_GR32_NOSPBits[] = {
+  static const uint8_t GR32_NOAX_and_GR32_NOSPBits[] = {
     0x00, 0x00, 0xf0, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -926,7 +926,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK32 Bit set.
-  static uint8_t VK32Bits[] = {
+  static const uint8_t VK32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -956,7 +956,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // RFP32 Bit set.
-  static uint8_t RFP32Bits[] = {
+  static const uint8_t RFP32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01, 
   };
 
@@ -966,7 +966,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK32WM Bit set.
-  static uint8_t VK32WMBits[] = {
+  static const uint8_t VK32WMBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
@@ -1056,7 +1056,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // RFP64 Bit set.
-  static uint8_t RFP64Bits[] = {
+  static const uint8_t RFP64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01, 
   };
 
@@ -1066,7 +1066,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // FR64X Bit set.
-  static uint8_t FR64XBits[] = {
+  static const uint8_t FR64XBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
   };
 
@@ -1076,7 +1076,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64 Bit set.
-  static uint8_t GR64Bits[] = {
+  static const uint8_t GR64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0xf8, 0x1b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1096,7 +1096,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // FR64 Bit set.
-  static uint8_t FR64Bits[] = {
+  static const uint8_t FR64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
@@ -1106,7 +1106,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_with_sub_8bit Bit set.
-  static uint8_t GR64_with_sub_8bitBits[] = {
+  static const uint8_t GR64_with_sub_8bitBits[] = {
     0x00, 0x00, 0x00, 0x00, 0xf8, 0x19, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1116,7 +1116,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_NOSP Bit set.
-  static uint8_t GR64_NOSPBits[] = {
+  static const uint8_t GR64_NOSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0xf8, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1126,7 +1126,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_with_sub_32bit_in_GR32_NOAX Bit set.
-  static uint8_t GR64_with_sub_32bit_in_GR32_NOAXBits[] = {
+  static const uint8_t GR64_with_sub_32bit_in_GR32_NOAXBits[] = {
     0x00, 0x00, 0x00, 0x00, 0xf0, 0x19, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1136,7 +1136,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_with_sub_32bit_in_GR32_NOAX_and_GR32_NOSP Bit set.
-  static uint8_t GR64_with_sub_32bit_in_GR32_NOAX_and_GR32_NOSPBits[] = {
+  static const uint8_t GR64_with_sub_32bit_in_GR32_NOAX_and_GR32_NOSPBits[] = {
     0x00, 0x00, 0x00, 0x00, 0xf0, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1156,7 +1156,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_TC Bit set.
-  static uint8_t GR64_TCBits[] = {
+  static const uint8_t GR64_TCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0xc8, 0x0b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2c, 
   };
 
@@ -1166,7 +1166,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_NOSP_and_GR64_TC Bit set.
-  static uint8_t GR64_NOSP_and_GR64_TCBits[] = {
+  static const uint8_t GR64_NOSP_and_GR64_TCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0xc8, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2c, 
   };
 
@@ -1186,7 +1186,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK64 Bit set.
-  static uint8_t VK64Bits[] = {
+  static const uint8_t VK64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1196,7 +1196,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VR64 Bit set.
-  static uint8_t VR64Bits[] = {
+  static const uint8_t VR64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1216,7 +1216,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_TC_and_GR64_with_sub_32bit_in_GR32_NOAX Bit set.
-  static uint8_t GR64_TC_and_GR64_with_sub_32bit_in_GR32_NOAXBits[] = {
+  static const uint8_t GR64_TC_and_GR64_with_sub_32bit_in_GR32_NOAXBits[] = {
     0x00, 0x00, 0x00, 0x00, 0xc0, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2c, 
   };
 
@@ -1236,7 +1236,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VK64WM Bit set.
-  static uint8_t VK64WMBits[] = {
+  static const uint8_t VK64WMBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
   };
 
@@ -1256,7 +1256,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_TCW64 Bit set.
-  static uint8_t GR64_TCW64Bits[] = {
+  static const uint8_t GR64_TCW64Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x48, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2c, 
   };
 
@@ -1286,7 +1286,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // GR64_TCW64_and_GR64_with_sub_32bit_in_GR32_NOAX Bit set.
-  static uint8_t GR64_TCW64_and_GR64_with_sub_32bit_in_GR32_NOAXBits[] = {
+  static const uint8_t GR64_TCW64_and_GR64_with_sub_32bit_in_GR32_NOAXBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2c, 
   };
 
@@ -1366,7 +1366,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // RST Bit set.
-  static uint8_t RSTBits[] = {
+  static const uint8_t RSTBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
   };
 
@@ -1376,7 +1376,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // RFP80 Bit set.
-  static uint8_t RFP80Bits[] = {
+  static const uint8_t RFP80Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01, 
   };
 
@@ -1386,7 +1386,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VR128X Bit set.
-  static uint8_t VR128XBits[] = {
+  static const uint8_t VR128XBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
   };
 
@@ -1396,7 +1396,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VR128 Bit set.
-  static uint8_t VR128Bits[] = {
+  static const uint8_t VR128Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
@@ -1406,7 +1406,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VR256X Bit set.
-  static uint8_t VR256XBits[] = {
+  static const uint8_t VR256XBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
   };
 
@@ -1416,7 +1416,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VR256 Bit set.
-  static uint8_t VR256Bits[] = {
+  static const uint8_t VR256Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
@@ -1426,7 +1426,7 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VR512 Bit set.
-  static uint8_t VR512Bits[] = {
+  static const uint8_t VR512Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0x03, 
   };
 
@@ -1436,11 +1436,11 @@ static MCRegisterDesc X86RegDesc[] = { // Descriptors
   };
 
   // VR512_with_sub_xmm_in_FR32 Bit set.
-  static uint8_t VR512_with_sub_xmm_in_FR32Bits[] = {
+  static const uint8_t VR512_with_sub_xmm_in_FR32Bits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0x03, 
   };
 
-static MCRegisterClass X86MCRegisterClasses[] = {
+static const MCRegisterClass X86MCRegisterClasses[] = {
   { GR8, GR8Bits, 130, 20, sizeof(GR8Bits), X86_GR8RegClassID, 1, 1, 1, 1 },
   { GR8_NOREX, GR8_NOREXBits, 897, 8, sizeof(GR8_NOREXBits), X86_GR8_NOREXRegClassID, 1, 1, 1, 1 },
   { VK1, VK1Bits, 6, 8, sizeof(VK1Bits), X86_VK1RegClassID, 1, 1, 1, 1 },

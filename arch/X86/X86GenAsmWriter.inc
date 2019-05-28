@@ -17728,7 +17728,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   };
 
 #ifndef CAPSTONE_DIET
-  static char AsmStrs[] = {
+  static const char AsmStrs[] = {
   /* 0 */ 'p', 'r', 'e', 'f', 'e', 't', 'c', 'h', 't', '0', 9, 0,
   /* 12 */ 's', 'h', 'a', '1', 'm', 's', 'g', '1', 9, 0,
   /* 22 */ 's', 'h', 'a', '2', '5', '6', 'm', 's', 'g', '1', 9, 0,
