@@ -27,7 +27,7 @@
 
 #include "capstone/tms320c64x.h"
 
-static char *getRegisterName(unsigned RegNo);
+static const char *getRegisterName(unsigned RegNo);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printMemOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printMemOperand2(MCInst *MI, unsigned OpNo, SStream *O);
