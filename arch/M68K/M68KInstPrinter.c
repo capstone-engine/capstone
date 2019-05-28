@@ -367,7 +367,7 @@ const char* M68K_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	{ M68K_GRP_INVALID , NULL },
 	{ M68K_GRP_JUMP, "jump" },
 	{ M68K_GRP_RET , "ret" },
