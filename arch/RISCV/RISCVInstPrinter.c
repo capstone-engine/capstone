@@ -93,7 +93,14 @@ void RISCV_printInst(MCInst *MI, SStream *O, void *info)
     	//Res = uncompressInst(UncompressedMI, *MI, MRI, STI);
   	//if (Res)
     	//NewMI = const_cast<MCInst *>(&UncompressedMI);
-  	if (/*NoAliases ||*/ !printAliasInstr(MI, O, info))
+	/* When Capstone enable print details, The riscv port will display no-consistency display
+	   for some alias instructions. for example `jalr x0, x1, 0` ALIAS `ret` in RISCV port.
+	   But `jalr x0, x1, 0` will only display `ret` and the details part only display
+	   `jalr`, This is because the LLVM do not need the details part like capstone, so LLVM 
+	   missing the operands process(x0, x1, 0), for LLVM print `ret` is enough.
+	   for now, when enable detail, we disable alias instructure.  */
+	// TODO: what should we print for `jalr x0, x1, 0` typs?
+    	if (MI->csh->detail || !printAliasInstr(MI, O, info))
     		printInstruction(MI, O, MRI);
   		//printAnnotation(O, Annot);
 	// fix load/store type insttuction
