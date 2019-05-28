@@ -411,7 +411,7 @@ static const uint16_t PPCSubRegIdxLists[] = {
   /* 5 */ 6, 5, 4, 7, 0,
 };
 
-static MCRegisterDesc PPCRegDesc[] = { // Descriptors
+static const MCRegisterDesc PPCRegDesc[] = { // Descriptors
   { 4, 0, 0, 0, 0, 0 },
   { 1109, 1, 9, 1, 1201, 0 },
   { 1266, 1, 1, 1, 1201, 0 },
@@ -731,7 +731,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // GPRC Bit set.
-  static uint8_t GPRCBits[] = {
+  static const uint8_t GPRCBits[] = {
     0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -741,7 +741,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // GPRC_NOR0 Bit set.
-  static uint8_t GPRC_NOR0Bits[] = {
+  static const uint8_t GPRC_NOR0Bits[] = {
     0x12, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -751,7 +751,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // GPRC_and_GPRC_NOR0 Bit set.
-  static uint8_t GPRC_and_GPRC_NOR0Bits[] = {
+  static const uint8_t GPRC_and_GPRC_NOR0Bits[] = {
     0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -761,7 +761,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // CRBITRC Bit set.
-  static uint8_t CRBITRCBits[] = {
+  static const uint8_t CRBITRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f, 
   };
 
@@ -771,7 +771,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // F4RC Bit set.
-  static uint8_t F4RCBits[] = {
+  static const uint8_t F4RCBits[] = {
     0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
@@ -781,7 +781,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // CRRC Bit set.
-  static uint8_t CRRCBits[] = {
+  static const uint8_t CRRCBits[] = {
     0x00, 0xfc, 0x03, 
   };
 
@@ -801,7 +801,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // CTRRC Bit set.
-  static uint8_t CTRRCBits[] = {
+  static const uint8_t CTRRCBits[] = {
     0x08, 
   };
 
@@ -811,7 +811,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // VRSAVERC Bit set.
-  static uint8_t VRSAVERCBits[] = {
+  static const uint8_t VRSAVERCBits[] = {
     0x80, 
   };
 
@@ -821,7 +821,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // VSFRC Bit set.
-  static uint8_t VSFRCBits[] = {
+  static const uint8_t VSFRCBits[] = {
     0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -831,7 +831,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // G8RC Bit set.
-  static uint8_t G8RCBits[] = {
+  static const uint8_t G8RCBits[] = {
     0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -841,7 +841,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // G8RC_NOX0 Bit set.
-  static uint8_t G8RC_NOX0Bits[] = {
+  static const uint8_t G8RC_NOX0Bits[] = {
     0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f, 
   };
 
@@ -851,7 +851,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // G8RC_and_G8RC_NOX0 Bit set.
-  static uint8_t G8RC_and_G8RC_NOX0Bits[] = {
+  static const uint8_t G8RC_and_G8RC_NOX0Bits[] = {
     0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -861,7 +861,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // F8RC Bit set.
-  static uint8_t F8RCBits[] = {
+  static const uint8_t F8RCBits[] = {
     0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
@@ -871,7 +871,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // VFRC Bit set.
-  static uint8_t VFRCBits[] = {
+  static const uint8_t VFRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -881,7 +881,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // CTRRC8 Bit set.
-  static uint8_t CTRRC8Bits[] = {
+  static const uint8_t CTRRC8Bits[] = {
     0x00, 0x00, 0x04, 
   };
 
@@ -891,17 +891,17 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // VSRC Bit set.
-  static uint8_t VSRCBits[] = {
+  static const uint8_t VSRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x1f, 
   };
 
   // QSRC Register Class...
-  static MCPhysReg QSRC[] = {
+  static const MCPhysReg QSRC[] = {
     PPC_QF0, PPC_QF1, PPC_QF2, PPC_QF3, PPC_QF4, PPC_QF5, PPC_QF6, PPC_QF7, PPC_QF8, PPC_QF9, PPC_QF10, PPC_QF11, PPC_QF12, PPC_QF13, PPC_QF31, PPC_QF30, PPC_QF29, PPC_QF28, PPC_QF27, PPC_QF26, PPC_QF25, PPC_QF24, PPC_QF23, PPC_QF22, PPC_QF21, PPC_QF20, PPC_QF19, PPC_QF18, PPC_QF17, PPC_QF16, PPC_QF15, PPC_QF14, 
   };
 
   // QSRC Bit set.
-  static uint8_t QSRCBits[] = {
+  static const uint8_t QSRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -911,7 +911,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // VRRC Bit set.
-  static uint8_t VRRCBits[] = {
+  static const uint8_t VRRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -921,7 +921,7 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // VSHRC Bit set.
-  static uint8_t VSHRCBits[] = {
+  static const uint8_t VSHRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
@@ -931,32 +931,32 @@ static MCRegisterDesc PPCRegDesc[] = { // Descriptors
   };
 
   // VSLRC Bit set.
-  static uint8_t VSLRCBits[] = {
+  static const uint8_t VSLRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
   // QBRC Register Class...
-  static MCPhysReg QBRC[] = {
+  static const MCPhysReg QBRC[] = {
     PPC_QF0, PPC_QF1, PPC_QF2, PPC_QF3, PPC_QF4, PPC_QF5, PPC_QF6, PPC_QF7, PPC_QF8, PPC_QF9, PPC_QF10, PPC_QF11, PPC_QF12, PPC_QF13, PPC_QF31, PPC_QF30, PPC_QF29, PPC_QF28, PPC_QF27, PPC_QF26, PPC_QF25, PPC_QF24, PPC_QF23, PPC_QF22, PPC_QF21, PPC_QF20, PPC_QF19, PPC_QF18, PPC_QF17, PPC_QF16, PPC_QF15, PPC_QF14, 
   };
 
   // QBRC Bit set.
-  static uint8_t QBRCBits[] = {
+  static const uint8_t QBRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
   // QFRC Register Class...
-  static MCPhysReg QFRC[] = {
+  static const MCPhysReg QFRC[] = {
     PPC_QF0, PPC_QF1, PPC_QF2, PPC_QF3, PPC_QF4, PPC_QF5, PPC_QF6, PPC_QF7, PPC_QF8, PPC_QF9, PPC_QF10, PPC_QF11, PPC_QF12, PPC_QF13, PPC_QF31, PPC_QF30, PPC_QF29, PPC_QF28, PPC_QF27, PPC_QF26, PPC_QF25, PPC_QF24, PPC_QF23, PPC_QF22, PPC_QF21, PPC_QF20, PPC_QF19, PPC_QF18, PPC_QF17, PPC_QF16, PPC_QF15, PPC_QF14, 
   };
 
   // QFRC Bit set.
-  static uint8_t QFRCBits[] = {
+  static const uint8_t QFRCBits[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x1f, 
   };
 
 
-static MCRegisterClass PPCMCRegisterClasses[] = {
+static const MCRegisterClass PPCMCRegisterClasses[] = {
   { GPRC, GPRCBits, 102, 34, sizeof(GPRCBits), PPC_GPRCRegClassID, 4, 4, 1, 1 },
   { GPRC_NOR0, GPRC_NOR0Bits, 9, 34, sizeof(GPRC_NOR0Bits), PPC_GPRC_NOR0RegClassID, 4, 4, 1, 1 },
   { GPRC_and_GPRC_NOR0, GPRC_and_GPRC_NOR0Bits, 0, 33, sizeof(GPRC_and_GPRC_NOR0Bits), PPC_GPRC_and_GPRC_NOR0RegClassID, 4, 4, 1, 1 },

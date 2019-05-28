@@ -2375,7 +2375,7 @@ static const uint8_t DecoderTable32[] = {
   0
 };
 
-static uint8_t DecoderTableQPX32[] = {
+static const uint8_t DecoderTableQPX32[] = {
 /* 0 */       MCD_OPC_ExtractField, 0, 6,  // Inst{5-0} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 59, 0, // Skip to: 66
 /* 7 */       MCD_OPC_ExtractField, 6, 5,  // Inst{10-6} ...
