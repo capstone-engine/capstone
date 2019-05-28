@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 /* This code is used to build the static lookup table used inside the M68KDisassembler.c code
  * To run this use the Makefile in the same directory
@@ -422,7 +423,7 @@ static void build_opcode_table(void)
 	qsort((void *)g_opcode_info, opcode_info_length, sizeof(g_opcode_info[0]), compare_nof_true_bits);
 
 	printf("/* This table is auto-generated. DO NOT MANUALLY EDIT! Look in M68KInstructionTblGen.c for more info */\n");
-	printf("static instruction_struct g_instruction_table[] = {\n");
+	printf("static const instruction_struct g_instruction_table[] = {\n");
 
 	for(i=0;i<0x10000;i++) {
 		const char *name = "d68000_invalid";
