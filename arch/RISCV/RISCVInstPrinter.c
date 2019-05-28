@@ -57,15 +57,15 @@ static void fixDetailOfEffectiveAddr(MCInst *MI)
 	unsigned reg = 0;
 	int64_t imm = 0;
 
-	assert(3 == MI->flat_insn->detail->riscv.op_count);
-	assert(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[0].type);
+	CS_ASSERT(3 == MI->flat_insn->detail->riscv.op_count);
+	CS_ASSERT(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[0].type);
 
 	if (RISCV_OP_IMM == MI->flat_insn->detail->riscv.operands[1].type) {
-		assert(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[2].type);
+		CS_ASSERT(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[2].type);
 		imm = MI->flat_insn->detail->riscv.operands[1].imm;
 		reg = MI->flat_insn->detail->riscv.operands[2].reg;
 	} else if (RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[1].type) {
-		assert(RISCV_OP_IMM == MI->flat_insn->detail->riscv.operands[2].type);
+		CS_ASSERT(RISCV_OP_IMM == MI->flat_insn->detail->riscv.operands[2].type);
 		reg = MI->flat_insn->detail->riscv.operands[1].reg;
 		imm = MI->flat_insn->detail->riscv.operands[2].imm;
 	}
@@ -129,7 +129,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
       			MI->flat_insn->detail->riscv.op_count++;
     		}
   	} else {
-		assert(MCOperand_isImm(MO) && "Unknown operand kind in printOperand");
+		CS_ASSERT(MCOperand_isImm(MO) && "Unknown operand kind in printOperand");
     		Imm = MCOperand_getImm(MO);
     		if (Imm >= 0) {
       			if (Imm > HEX_THRESHOLD)
@@ -150,7 +150,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
     	}
 
-  	//assert(MO.isExpr() && "Unknown operand kind in printOperand");
+  	//CS_ASSERT(MO.isExpr() && "Unknown operand kind in printOperand");
 	
 	return;
 }
@@ -161,7 +161,7 @@ static void printCSRSystemRegister(const MCInst *MI, unsigned OpNo,
 {
 	// TODO: Not yeat implementated.
 	return;
-  	//assert (0 && "CSR system register hav't support.");
+  	//CS_ASSERT (0 && "CSR system register hav't support.");
 #if 0
   unsigned Imm = MI->getOperand(OpNo).getImm();
   auto SysReg = RISCVSysReg::lookupSysRegByEncoding(Imm);
@@ -175,7 +175,7 @@ static void printCSRSystemRegister(const MCInst *MI, unsigned OpNo,
 static void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O) 
 {
   	unsigned FenceArg = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-  	//assert (((FenceArg >> 4) == 0) && "Invalid immediate in printFenceArg");
+  	//CS_ASSERT (((FenceArg >> 4) == 0) && "Invalid immediate in printFenceArg");
 
   	if ((FenceArg & RISCVFenceField_I) != 0)
     		SStream_concat0(O, "i");

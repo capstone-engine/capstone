@@ -13,7 +13,7 @@
 //===----------------------------------------------------------------------===//
 #ifndef CS_RISCVBASEINFO_H
 #define CS_RISCVBASEINFO_H
-#include <assert.h>
+#include "../../cs_priv.h"
 
 //#include "RISCVMCTargetDesc.h"
 
@@ -72,7 +72,7 @@ inline static const char *roundingModeToString(enum RoundingMode RndMode)
 {
   	switch (RndMode) {
   	default:
-    		assert(0 && "Unknown floating point rounding mode");
+    		CS_ASSERT(0 && "Unknown floating point rounding mode");
   	case RISCVFPRndMode_RNE:
     		return "rne";
   	case RISCVFPRndMode_RTZ:
