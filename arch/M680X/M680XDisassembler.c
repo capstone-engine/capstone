@@ -1370,11 +1370,11 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 }
 
 
-m680x_reg g_idx12_to_reg_ids[4] = {
+static const m680x_reg g_idx12_to_reg_ids[4] = {
 	M680X_REG_X, M680X_REG_Y, M680X_REG_S, M680X_REG_PC,
 };
 
-m680x_reg g_or12_to_reg_ids[3] = {
+static const m680x_reg g_or12_to_reg_ids[3] = {
 	M680X_REG_A, M680X_REG_B, M680X_REG_D
 };
 
