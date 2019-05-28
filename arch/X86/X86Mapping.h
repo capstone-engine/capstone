@@ -78,7 +78,7 @@ void op_addAvxSae(MCInst *MI);
 void op_addAvxRoundingMode(MCInst *MI, int v);
 
 // given internal insn id, return operand access info
-uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags);
+const uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags);
 
 void X86_reg_access(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,

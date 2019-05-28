@@ -284,7 +284,7 @@ static void _printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64_t *eflags)
 {
 	uint8_t count, i;
-	uint8_t *arr = X86_get_op_access(h, id, eflags);
+	const uint8_t *arr = X86_get_op_access(h, id, eflags);
 
 	if (!arr) {
 		access[0] = 0;

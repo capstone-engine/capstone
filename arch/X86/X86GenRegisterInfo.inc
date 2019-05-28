@@ -487,7 +487,7 @@ static const uint16_t X86SubRegIdxLists[] = {
   /* 22 */ 8, 7, 0,
 };
 
-static MCRegisterDesc X86RegDesc[] = {
+static const MCRegisterDesc X86RegDesc[] = {
   { 5, 0, 0, 0, 0, 0 },
   { 873, 2, 184, 2, 4641, 0 },
   { 1014, 2, 180, 2, 4641, 0 },
@@ -1457,7 +1457,7 @@ static MCRegisterDesc X86RegDesc[] = {
   };
 
 
-static MCRegisterClass X86MCRegisterClasses[] = {
+static const MCRegisterClass X86MCRegisterClasses[] = {
   { GR8, GR8Bits, sizeof(GR8Bits) },
   { GRH8, GRH8Bits, sizeof(GRH8Bits) },
   { GR8_NOREX, GR8_NOREXBits, sizeof(GR8_NOREXBits) },
