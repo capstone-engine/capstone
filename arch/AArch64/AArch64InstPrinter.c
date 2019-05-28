@@ -54,7 +54,7 @@ static void printCustomAliasOperand(MCInst *MI, unsigned OpIdx,
 static cs_ac_type get_op_access(cs_struct *h, unsigned int id, unsigned int index)
 {
 #ifndef CAPSTONE_DIET
-	uint8_t *arr = AArch64_get_op_access(h, id);
+	const uint8_t *arr = AArch64_get_op_access(h, id);
 
 	if (arr[index] == CS_AC_IGNORE)
 		return 0;

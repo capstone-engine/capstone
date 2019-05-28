@@ -1032,7 +1032,7 @@ static const uint16_t AArch64SubRegIdxLists[] = {
   /* 181 */ 21, 20, 2, 14, 7, 1, 25, 22, 52, 49, 51, 50, 48, 53, 23, 64, 61, 63, 62, 60, 65, 24, 58, 55, 57, 56, 54, 59, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 0,
 };
 
-static MCRegisterDesc AArch64RegDesc[] = {
+static const MCRegisterDesc AArch64RegDesc[] = {
   { 3, 0, 0, 0, 0, 0 },
   { 2489, 8, 8, 4, 20465, 0 },
   { 2482, 878, 405, 5, 20465, 27 },
@@ -2498,7 +2498,7 @@ static MCRegisterDesc AArch64RegDesc[] = {
   };
 
 
-static MCRegisterClass AArch64MCRegisterClasses[] = {
+static const MCRegisterClass AArch64MCRegisterClasses[] = {
   { FPR8, FPR8Bits, sizeof(FPR8Bits) },
   { FPR16, FPR16Bits, sizeof(FPR16Bits) },
   { PPR, PPRBits, sizeof(PPRBits) },
