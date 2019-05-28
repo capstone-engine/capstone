@@ -87,7 +87,7 @@ static const char s_instruction_names[][6] = {
 	"xgdx", "xgdy",
 };
 
-static name_map s_group_names[] = {
+static const name_map s_group_names[] = {
 	{ M680X_GRP_INVALID, "<invalid>" },
 	{ M680X_GRP_JUMP,  "jump" },
 	{ M680X_GRP_CALL,  "call" },
