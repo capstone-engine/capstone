@@ -884,7 +884,7 @@ static const uint16_t ARMSubRegIdxLists[] = {
 };
 
 
-static MCRegisterDesc ARMRegDesc[] = { // Descriptors
+static const MCRegisterDesc ARMRegDesc[] = { // Descriptors
   { 12, 0, 0, 0, 0, 0 },
   { 1235, 16, 16, 2, 66945, 0 },
   { 1268, 16, 16, 2, 66945, 0 },
@@ -1177,7 +1177,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
 };
 
   // SPR Register Class...
-  static MCPhysReg SPR[] = {
+  static const MCPhysReg SPR[] = {
     ARM_S0, ARM_S2, ARM_S4, ARM_S6, ARM_S8, ARM_S10, ARM_S12, ARM_S14, ARM_S16, ARM_S18, ARM_S20, ARM_S22, ARM_S24, ARM_S26, ARM_S28, ARM_S30, ARM_S1, ARM_S3, ARM_S5, ARM_S7, ARM_S9, ARM_S11, ARM_S13, ARM_S15, ARM_S17, ARM_S19, ARM_S21, ARM_S23, ARM_S25, ARM_S27, ARM_S29, ARM_S31, 
   };
 
@@ -1187,7 +1187,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPR Register Class...
-  static MCPhysReg GPR[] = {
+  static const MCPhysReg GPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC, 
   };
 
@@ -1197,7 +1197,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRwithAPSR Register Class...
-  static MCPhysReg GPRwithAPSR[] = {
+  static const MCPhysReg GPRwithAPSR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_APSR_NZCV, 
   };
 
@@ -1207,7 +1207,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // SPR_8 Register Class...
-  static MCPhysReg SPR_8[] = {
+  static const MCPhysReg SPR_8[] = {
     ARM_S0, ARM_S1, ARM_S2, ARM_S3, ARM_S4, ARM_S5, ARM_S6, ARM_S7, ARM_S8, ARM_S9, ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15, 
   };
 
@@ -1217,7 +1217,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRnopc Register Class...
-  static MCPhysReg GPRnopc[] = {
+  static const MCPhysReg GPRnopc[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, 
   };
 
@@ -1227,7 +1227,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // rGPR Register Class...
-  static MCPhysReg rGPR[] = {
+  static const MCPhysReg rGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, 
   };
 
@@ -1237,7 +1237,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // hGPR Register Class...
-  static MCPhysReg hGPR[] = {
+  static const MCPhysReg hGPR[] = {
     ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC, 
   };
 
@@ -1247,7 +1247,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // tGPR Register Class...
-  static MCPhysReg tGPR[] = {
+  static const MCPhysReg tGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, 
   };
 
@@ -1257,7 +1257,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRnopc_and_hGPR Register Class...
-  static MCPhysReg GPRnopc_and_hGPR[] = {
+  static const MCPhysReg GPRnopc_and_hGPR[] = {
     ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, 
   };
 
@@ -1267,7 +1267,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // hGPR_and_rGPR Register Class...
-  static MCPhysReg hGPR_and_rGPR[] = {
+  static const MCPhysReg hGPR_and_rGPR[] = {
     ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, 
   };
 
@@ -1277,7 +1277,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // tcGPR Register Class...
-  static MCPhysReg tcGPR[] = {
+  static const MCPhysReg tcGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R12, 
   };
 
@@ -1287,7 +1287,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // tGPR_and_tcGPR Register Class...
-  static MCPhysReg tGPR_and_tcGPR[] = {
+  static const MCPhysReg tGPR_and_tcGPR[] = {
     ARM_R0, ARM_R1, ARM_R2, ARM_R3, 
   };
 
@@ -1297,7 +1297,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // CCR Register Class...
-  static MCPhysReg CCR[] = {
+  static const MCPhysReg CCR[] = {
     ARM_CPSR, 
   };
 
@@ -1307,7 +1307,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRsp Register Class...
-  static MCPhysReg GPRsp[] = {
+  static const MCPhysReg GPRsp[] = {
     ARM_SP, 
   };
 
@@ -1317,7 +1317,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // hGPR_and_tcGPR Register Class...
-  static MCPhysReg hGPR_and_tcGPR[] = {
+  static const MCPhysReg hGPR_and_tcGPR[] = {
     ARM_R12, 
   };
 
@@ -1327,7 +1327,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPR Register Class...
-  static MCPhysReg DPR[] = {
+  static const MCPhysReg DPR[] = {
     ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, ARM_D16, ARM_D17, ARM_D18, ARM_D19, ARM_D20, ARM_D21, ARM_D22, ARM_D23, ARM_D24, ARM_D25, ARM_D26, ARM_D27, ARM_D28, ARM_D29, ARM_D30, ARM_D31, 
   };
 
@@ -1337,7 +1337,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPR_VFP2 Register Class...
-  static MCPhysReg DPR_VFP2[] = {
+  static const MCPhysReg DPR_VFP2[] = {
     ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, 
   };
 
@@ -1347,7 +1347,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPR_8 Register Class...
-  static MCPhysReg DPR_8[] = {
+  static const MCPhysReg DPR_8[] = {
     ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, 
   };
 
@@ -1357,7 +1357,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair Register Class...
-  static MCPhysReg GPRPair[] = {
+  static const MCPhysReg GPRPair[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, ARM_R8_R9, ARM_R10_R11, ARM_R12_SP, 
   };
 
@@ -1367,7 +1367,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair_with_gsub_1_in_rGPR Register Class...
-  static MCPhysReg GPRPair_with_gsub_1_in_rGPR[] = {
+  static const MCPhysReg GPRPair_with_gsub_1_in_rGPR[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, ARM_R8_R9, ARM_R10_R11, 
   };
 
@@ -1377,7 +1377,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair_with_gsub_0_in_tGPR Register Class...
-  static MCPhysReg GPRPair_with_gsub_0_in_tGPR[] = {
+  static const MCPhysReg GPRPair_with_gsub_0_in_tGPR[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, 
   };
 
@@ -1387,7 +1387,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair_with_gsub_0_in_hGPR Register Class...
-  static MCPhysReg GPRPair_with_gsub_0_in_hGPR[] = {
+  static const MCPhysReg GPRPair_with_gsub_0_in_hGPR[] = {
     ARM_R8_R9, ARM_R10_R11, ARM_R12_SP, 
   };
 
@@ -1397,7 +1397,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair_with_gsub_0_in_tcGPR Register Class...
-  static MCPhysReg GPRPair_with_gsub_0_in_tcGPR[] = {
+  static const MCPhysReg GPRPair_with_gsub_0_in_tcGPR[] = {
     ARM_R0_R1, ARM_R2_R3, ARM_R12_SP, 
   };
 
@@ -1407,7 +1407,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair_with_gsub_1_in_hGPR_and_rGPR Register Class...
-  static MCPhysReg GPRPair_with_gsub_1_in_hGPR_and_rGPR[] = {
+  static const MCPhysReg GPRPair_with_gsub_1_in_hGPR_and_rGPR[] = {
     ARM_R8_R9, ARM_R10_R11, 
   };
 
@@ -1417,7 +1417,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair_with_gsub_1_in_tcGPR Register Class...
-  static MCPhysReg GPRPair_with_gsub_1_in_tcGPR[] = {
+  static const MCPhysReg GPRPair_with_gsub_1_in_tcGPR[] = {
     ARM_R0_R1, ARM_R2_R3, 
   };
 
@@ -1427,7 +1427,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // GPRPair_with_gsub_1_in_GPRsp Register Class...
-  static MCPhysReg GPRPair_with_gsub_1_in_GPRsp[] = {
+  static const MCPhysReg GPRPair_with_gsub_1_in_GPRsp[] = {
     ARM_R12_SP, 
   };
 
@@ -1437,7 +1437,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPairSpc Register Class...
-  static MCPhysReg DPairSpc[] = {
+  static const MCPhysReg DPairSpc[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, ARM_D14_D16, ARM_D15_D17, ARM_D16_D18, ARM_D17_D19, ARM_D18_D20, ARM_D19_D21, ARM_D20_D22, ARM_D21_D23, ARM_D22_D24, ARM_D23_D25, ARM_D24_D26, ARM_D25_D27, ARM_D26_D28, ARM_D27_D29, ARM_D28_D30, ARM_D29_D31, 
   };
 
@@ -1447,7 +1447,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPairSpc_with_ssub_0 Register Class...
-  static MCPhysReg DPairSpc_with_ssub_0[] = {
+  static const MCPhysReg DPairSpc_with_ssub_0[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, ARM_D14_D16, ARM_D15_D17, 
   };
 
@@ -1457,7 +1457,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPairSpc_with_dsub_2_then_ssub_0 Register Class...
-  static MCPhysReg DPairSpc_with_dsub_2_then_ssub_0[] = {
+  static const MCPhysReg DPairSpc_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, 
   };
 
@@ -1467,7 +1467,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPairSpc_with_dsub_0_in_DPR_8 Register Class...
-  static MCPhysReg DPairSpc_with_dsub_0_in_DPR_8[] = {
+  static const MCPhysReg DPairSpc_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, 
   };
 
@@ -1477,7 +1477,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPairSpc_with_dsub_2_in_DPR_8 Register Class...
-  static MCPhysReg DPairSpc_with_dsub_2_in_DPR_8[] = {
+  static const MCPhysReg DPairSpc_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, 
   };
 
@@ -1487,7 +1487,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPair Register Class...
-  static MCPhysReg DPair[] = {
+  static const MCPhysReg DPair[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, ARM_D15_D16, ARM_Q8, ARM_D17_D18, ARM_Q9, ARM_D19_D20, ARM_Q10, ARM_D21_D22, ARM_Q11, ARM_D23_D24, ARM_Q12, ARM_D25_D26, ARM_Q13, ARM_D27_D28, ARM_Q14, ARM_D29_D30, ARM_Q15, 
   };
 
@@ -1497,7 +1497,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPair_with_ssub_0 Register Class...
-  static MCPhysReg DPair_with_ssub_0[] = {
+  static const MCPhysReg DPair_with_ssub_0[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, ARM_D15_D16, 
   };
 
@@ -1507,7 +1507,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QPR Register Class...
-  static MCPhysReg QPR[] = {
+  static const MCPhysReg QPR[] = {
     ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7, ARM_Q8, ARM_Q9, ARM_Q10, ARM_Q11, ARM_Q12, ARM_Q13, ARM_Q14, ARM_Q15, 
   };
 
@@ -1517,7 +1517,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPair_with_ssub_2 Register Class...
-  static MCPhysReg DPair_with_ssub_2[] = {
+  static const MCPhysReg DPair_with_ssub_2[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, 
   };
 
@@ -1527,7 +1527,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPair_with_dsub_0_in_DPR_8 Register Class...
-  static MCPhysReg DPair_with_dsub_0_in_DPR_8[] = {
+  static const MCPhysReg DPair_with_dsub_0_in_DPR_8[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, 
   };
 
@@ -1537,7 +1537,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QPR_VFP2 Register Class...
-  static MCPhysReg QPR_VFP2[] = {
+  static const MCPhysReg QPR_VFP2[] = {
     ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7, 
   };
 
@@ -1547,7 +1547,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DPair_with_dsub_1_in_DPR_8 Register Class...
-  static MCPhysReg DPair_with_dsub_1_in_DPR_8[] = {
+  static const MCPhysReg DPair_with_dsub_1_in_DPR_8[] = {
     ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, 
   };
 
@@ -1557,7 +1557,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QPR_8 Register Class...
-  static MCPhysReg QPR_8[] = {
+  static const MCPhysReg QPR_8[] = {
     ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, 
   };
 
@@ -1567,7 +1567,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple Register Class...
-  static MCPhysReg DTriple[] = {
+  static const MCPhysReg DTriple[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17, ARM_D16_D17_D18, ARM_D17_D18_D19, ARM_D18_D19_D20, ARM_D19_D20_D21, ARM_D20_D21_D22, ARM_D21_D22_D23, ARM_D22_D23_D24, ARM_D23_D24_D25, ARM_D24_D25_D26, ARM_D25_D26_D27, ARM_D26_D27_D28, ARM_D27_D28_D29, ARM_D28_D29_D30, ARM_D29_D30_D31, 
   };
 
@@ -1577,7 +1577,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTripleSpc Register Class...
-  static MCPhysReg DTripleSpc[] = {
+  static const MCPhysReg DTripleSpc[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23, ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27, ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31, 
   };
 
@@ -1587,7 +1587,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTripleSpc_with_ssub_0 Register Class...
-  static MCPhysReg DTripleSpc_with_ssub_0[] = {
+  static const MCPhysReg DTripleSpc_with_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, 
   };
 
@@ -1597,7 +1597,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_ssub_0 Register Class...
-  static MCPhysReg DTriple_with_ssub_0[] = {
+  static const MCPhysReg DTriple_with_ssub_0[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17, 
   };
 
@@ -1607,7 +1607,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DTriple_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DTriple_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, ARM_D15_D16_D17, ARM_D17_D18_D19, ARM_D19_D20_D21, ARM_D21_D22_D23, ARM_D23_D24_D25, ARM_D25_D26_D27, ARM_D27_D28_D29, ARM_D29_D30_D31, 
   };
 
@@ -1617,7 +1617,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_qsub_0_in_QPR Register Class...
-  static MCPhysReg DTriple_with_qsub_0_in_QPR[] = {
+  static const MCPhysReg DTriple_with_qsub_0_in_QPR[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16, ARM_D16_D17_D18, ARM_D18_D19_D20, ARM_D20_D21_D22, ARM_D22_D23_D24, ARM_D24_D25_D26, ARM_D26_D27_D28, ARM_D28_D29_D30, 
   };
 
@@ -1627,7 +1627,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_ssub_2 Register Class...
-  static MCPhysReg DTriple_with_ssub_2[] = {
+  static const MCPhysReg DTriple_with_ssub_2[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, 
   };
 
@@ -1637,7 +1637,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTripleSpc_with_dsub_2_then_ssub_0 Register Class...
-  static MCPhysReg DTripleSpc_with_dsub_2_then_ssub_0[] = {
+  static const MCPhysReg DTripleSpc_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, 
   };
 
@@ -1647,7 +1647,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_2_then_ssub_0 Register Class...
-  static MCPhysReg DTriple_with_dsub_2_then_ssub_0[] = {
+  static const MCPhysReg DTriple_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, 
   };
 
@@ -1657,7 +1657,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTripleSpc_with_dsub_4_then_ssub_0 Register Class...
-  static MCPhysReg DTripleSpc_with_dsub_4_then_ssub_0[] = {
+  static const MCPhysReg DTripleSpc_with_dsub_4_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, 
   };
 
@@ -1667,7 +1667,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTripleSpc_with_dsub_0_in_DPR_8 Register Class...
-  static MCPhysReg DTripleSpc_with_dsub_0_in_DPR_8[] = {
+  static const MCPhysReg DTripleSpc_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, 
   };
 
@@ -1677,7 +1677,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_0_in_DPR_8 Register Class...
-  static MCPhysReg DTriple_with_dsub_0_in_DPR_8[] = {
+  static const MCPhysReg DTriple_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, 
   };
 
@@ -1687,7 +1687,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_qsub_0_in_QPR_VFP2 Register Class...
-  static MCPhysReg DTriple_with_qsub_0_in_QPR_VFP2[] = {
+  static const MCPhysReg DTriple_with_qsub_0_in_QPR_VFP2[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16, 
   };
 
@@ -1697,7 +1697,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DTriple_with_ssub_0_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, ARM_D15_D16_D17, 
   };
 
@@ -1707,7 +1707,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR_VFP2 Register Class...
-  static MCPhysReg DTriple_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
+  static const MCPhysReg DTriple_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, 
   };
 
@@ -1717,7 +1717,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_1_in_DPR_8 Register Class...
-  static MCPhysReg DTriple_with_dsub_1_in_DPR_8[] = {
+  static const MCPhysReg DTriple_with_dsub_1_in_DPR_8[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, 
   };
 
@@ -1727,7 +1727,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPR Register Class...
-  static MCPhysReg DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPR[] = {
+  static const MCPhysReg DTriple_with_dsub_2_then_ssub_0_and_DTriple_with_qsub_0_in_QPR[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, 
   };
 
@@ -1737,7 +1737,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTripleSpc_with_dsub_2_in_DPR_8 Register Class...
-  static MCPhysReg DTripleSpc_with_dsub_2_in_DPR_8[] = {
+  static const MCPhysReg DTripleSpc_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, 
   };
 
@@ -1747,7 +1747,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_2_in_DPR_8 Register Class...
-  static MCPhysReg DTriple_with_dsub_2_in_DPR_8[] = {
+  static const MCPhysReg DTriple_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, 
   };
 
@@ -1757,7 +1757,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTripleSpc_with_dsub_4_in_DPR_8 Register Class...
-  static MCPhysReg DTripleSpc_with_dsub_4_in_DPR_8[] = {
+  static const MCPhysReg DTripleSpc_with_dsub_4_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, 
   };
 
@@ -1767,7 +1767,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, 
   };
 
@@ -1777,7 +1777,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_qsub_0_in_QPR_8 Register Class...
-  static MCPhysReg DTriple_with_qsub_0_in_QPR_8[] = {
+  static const MCPhysReg DTriple_with_qsub_0_in_QPR_8[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, 
   };
 
@@ -1787,7 +1787,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_1_dsub_2_in_QPR_8 Register Class...
-  static MCPhysReg DTriple_with_dsub_1_dsub_2_in_QPR_8[] = {
+  static const MCPhysReg DTriple_with_dsub_1_dsub_2_in_QPR_8[] = {
     ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, 
   };
 
@@ -1797,7 +1797,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPR Register Class...
-  static MCPhysReg DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPR[] = {
+  static const MCPhysReg DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_QPR[] = {
     ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, 
   };
 
@@ -1807,7 +1807,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuadSpc Register Class...
-  static MCPhysReg DQuadSpc[] = {
+  static const MCPhysReg DQuadSpc[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23, ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27, ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31, 
   };
 
@@ -1817,7 +1817,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuadSpc_with_ssub_0 Register Class...
-  static MCPhysReg DQuadSpc_with_ssub_0[] = {
+  static const MCPhysReg DQuadSpc_with_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, 
   };
 
@@ -1827,7 +1827,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuadSpc_with_dsub_2_then_ssub_0 Register Class...
-  static MCPhysReg DQuadSpc_with_dsub_2_then_ssub_0[] = {
+  static const MCPhysReg DQuadSpc_with_dsub_2_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, 
   };
 
@@ -1837,7 +1837,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuadSpc_with_dsub_4_then_ssub_0 Register Class...
-  static MCPhysReg DQuadSpc_with_dsub_4_then_ssub_0[] = {
+  static const MCPhysReg DQuadSpc_with_dsub_4_then_ssub_0[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, 
   };
 
@@ -1847,7 +1847,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuadSpc_with_dsub_0_in_DPR_8 Register Class...
-  static MCPhysReg DQuadSpc_with_dsub_0_in_DPR_8[] = {
+  static const MCPhysReg DQuadSpc_with_dsub_0_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, 
   };
 
@@ -1857,7 +1857,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuadSpc_with_dsub_2_in_DPR_8 Register Class...
-  static MCPhysReg DQuadSpc_with_dsub_2_in_DPR_8[] = {
+  static const MCPhysReg DQuadSpc_with_dsub_2_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, 
   };
 
@@ -1867,7 +1867,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuadSpc_with_dsub_4_in_DPR_8 Register Class...
-  static MCPhysReg DQuadSpc_with_dsub_4_in_DPR_8[] = {
+  static const MCPhysReg DQuadSpc_with_dsub_4_in_DPR_8[] = {
     ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, 
   };
 
@@ -1877,7 +1877,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad Register Class...
-  static MCPhysReg DQuad[] = {
+  static const MCPhysReg DQuad[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, ARM_D15_D16_D17_D18, ARM_Q8_Q9, ARM_D17_D18_D19_D20, ARM_Q9_Q10, ARM_D19_D20_D21_D22, ARM_Q10_Q11, ARM_D21_D22_D23_D24, ARM_Q11_Q12, ARM_D23_D24_D25_D26, ARM_Q12_Q13, ARM_D25_D26_D27_D28, ARM_Q13_Q14, ARM_D27_D28_D29_D30, ARM_Q14_Q15, 
   };
 
@@ -1887,7 +1887,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_ssub_0 Register Class...
-  static MCPhysReg DQuad_with_ssub_0[] = {
+  static const MCPhysReg DQuad_with_ssub_0[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, ARM_D15_D16_D17_D18, 
   };
 
@@ -1897,7 +1897,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_ssub_2 Register Class...
-  static MCPhysReg DQuad_with_ssub_2[] = {
+  static const MCPhysReg DQuad_with_ssub_2[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, 
   };
 
@@ -1907,7 +1907,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQPR Register Class...
-  static MCPhysReg QQPR[] = {
+  static const MCPhysReg QQPR[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, ARM_Q7_Q8, ARM_Q8_Q9, ARM_Q9_Q10, ARM_Q10_Q11, ARM_Q11_Q12, ARM_Q12_Q13, ARM_Q13_Q14, ARM_Q14_Q15, 
   };
 
@@ -1917,7 +1917,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18, ARM_D17_D18_D19_D20, ARM_D19_D20_D21_D22, ARM_D21_D22_D23_D24, ARM_D23_D24_D25_D26, ARM_D25_D26_D27_D28, ARM_D27_D28_D29_D30, 
   };
 
@@ -1927,7 +1927,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_2_then_ssub_0 Register Class...
-  static MCPhysReg DQuad_with_dsub_2_then_ssub_0[] = {
+  static const MCPhysReg DQuad_with_dsub_2_then_ssub_0[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, 
   };
 
@@ -1937,7 +1937,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_3_then_ssub_0 Register Class...
-  static MCPhysReg DQuad_with_dsub_3_then_ssub_0[] = {
+  static const MCPhysReg DQuad_with_dsub_3_then_ssub_0[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, 
   };
 
@@ -1947,7 +1947,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_0_in_DPR_8 Register Class...
-  static MCPhysReg DQuad_with_dsub_0_in_DPR_8[] = {
+  static const MCPhysReg DQuad_with_dsub_0_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, 
   };
 
@@ -1957,7 +1957,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_qsub_0_in_QPR_VFP2 Register Class...
-  static MCPhysReg DQuad_with_qsub_0_in_QPR_VFP2[] = {
+  static const MCPhysReg DQuad_with_qsub_0_in_QPR_VFP2[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, ARM_Q7_Q8, 
   };
 
@@ -1967,7 +1967,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DQuad_with_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18, 
   };
 
@@ -1977,7 +1977,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR_VFP2 Register Class...
-  static MCPhysReg DQuad_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
+  static const MCPhysReg DQuad_with_dsub_1_dsub_2_in_QPR_VFP2[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, 
   };
 
@@ -1987,7 +1987,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_1_in_DPR_8 Register Class...
-  static MCPhysReg DQuad_with_dsub_1_in_DPR_8[] = {
+  static const MCPhysReg DQuad_with_dsub_1_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, 
   };
 
@@ -1997,7 +1997,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_qsub_1_in_QPR_VFP2 Register Class...
-  static MCPhysReg DQuad_with_qsub_1_in_QPR_VFP2[] = {
+  static const MCPhysReg DQuad_with_qsub_1_in_QPR_VFP2[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, 
   };
 
@@ -2007,7 +2007,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_2_in_DPR_8 Register Class...
-  static MCPhysReg DQuad_with_dsub_2_in_DPR_8[] = {
+  static const MCPhysReg DQuad_with_dsub_2_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, 
   };
 
@@ -2017,7 +2017,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DQuad_with_dsub_3_then_ssub_0_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, 
   };
 
@@ -2027,7 +2027,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_3_in_DPR_8 Register Class...
-  static MCPhysReg DQuad_with_dsub_3_in_DPR_8[] = {
+  static const MCPhysReg DQuad_with_dsub_3_in_DPR_8[] = {
     ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, 
   };
 
@@ -2037,7 +2037,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, 
   };
 
@@ -2047,7 +2047,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_qsub_0_in_QPR_8 Register Class...
-  static MCPhysReg DQuad_with_qsub_0_in_QPR_8[] = {
+  static const MCPhysReg DQuad_with_qsub_0_in_QPR_8[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, 
   };
 
@@ -2057,7 +2057,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_1_dsub_2_in_QPR_8 Register Class...
-  static MCPhysReg DQuad_with_dsub_1_dsub_2_in_QPR_8[] = {
+  static const MCPhysReg DQuad_with_dsub_1_dsub_2_in_QPR_8[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, 
   };
 
@@ -2067,7 +2067,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_qsub_1_in_QPR_8 Register Class...
-  static MCPhysReg DQuad_with_qsub_1_in_QPR_8[] = {
+  static const MCPhysReg DQuad_with_qsub_1_in_QPR_8[] = {
     ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, 
   };
 
@@ -2077,7 +2077,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR Register Class...
-  static MCPhysReg DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
+  static const MCPhysReg DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_dsub_1_dsub_2_in_QPR[] = {
     ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, 
   };
 
@@ -2087,7 +2087,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR Register Class...
-  static MCPhysReg QQQQPR[] = {
+  static const MCPhysReg QQQQPR[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, ARM_Q7_Q8_Q9_Q10, ARM_Q8_Q9_Q10_Q11, ARM_Q9_Q10_Q11_Q12, ARM_Q10_Q11_Q12_Q13, ARM_Q11_Q12_Q13_Q14, ARM_Q12_Q13_Q14_Q15, 
   };
 
@@ -2097,7 +2097,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_ssub_0 Register Class...
-  static MCPhysReg QQQQPR_with_ssub_0[] = {
+  static const MCPhysReg QQQQPR_with_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, ARM_Q7_Q8_Q9_Q10, 
   };
 
@@ -2107,7 +2107,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_dsub_2_then_ssub_0 Register Class...
-  static MCPhysReg QQQQPR_with_dsub_2_then_ssub_0[] = {
+  static const MCPhysReg QQQQPR_with_dsub_2_then_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, 
   };
 
@@ -2117,7 +2117,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_dsub_5_then_ssub_0 Register Class...
-  static MCPhysReg QQQQPR_with_dsub_5_then_ssub_0[] = {
+  static const MCPhysReg QQQQPR_with_dsub_5_then_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, 
   };
 
@@ -2127,7 +2127,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_dsub_7_then_ssub_0 Register Class...
-  static MCPhysReg QQQQPR_with_dsub_7_then_ssub_0[] = {
+  static const MCPhysReg QQQQPR_with_dsub_7_then_ssub_0[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, 
   };
 
@@ -2137,7 +2137,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_dsub_0_in_DPR_8 Register Class...
-  static MCPhysReg QQQQPR_with_dsub_0_in_DPR_8[] = {
+  static const MCPhysReg QQQQPR_with_dsub_0_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, 
   };
 
@@ -2147,7 +2147,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_dsub_2_in_DPR_8 Register Class...
-  static MCPhysReg QQQQPR_with_dsub_2_in_DPR_8[] = {
+  static const MCPhysReg QQQQPR_with_dsub_2_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, 
   };
 
@@ -2157,7 +2157,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_dsub_4_in_DPR_8 Register Class...
-  static MCPhysReg QQQQPR_with_dsub_4_in_DPR_8[] = {
+  static const MCPhysReg QQQQPR_with_dsub_4_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, 
   };
 
@@ -2167,7 +2167,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
   };
 
   // QQQQPR_with_dsub_6_in_DPR_8 Register Class...
-  static MCPhysReg QQQQPR_with_dsub_6_in_DPR_8[] = {
+  static const MCPhysReg QQQQPR_with_dsub_6_in_DPR_8[] = {
     ARM_Q0_Q1_Q2_Q3, 
   };
 
@@ -2176,7 +2176,7 @@ static MCRegisterDesc ARMRegDesc[] = { // Descriptors
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 
   };
 
-static MCRegisterClass ARMMCRegisterClasses[] = {
+static const MCRegisterClass ARMMCRegisterClasses[] = {
   { SPR, SPRBits, 2228, 32, sizeof(SPRBits), ARM_SPRRegClassID, 4, 4, 1, 1 },
   { GPR, GPRBits, 1512, 16, sizeof(GPRBits), ARM_GPRRegClassID, 4, 4, 1, 1 },
   { GPRwithAPSR, GPRwithAPSRBits, 2232, 16, sizeof(GPRwithAPSRBits), ARM_GPRwithAPSRRegClassID, 4, 4, 1, 1 },

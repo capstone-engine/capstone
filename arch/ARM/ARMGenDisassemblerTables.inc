@@ -7170,7 +7170,7 @@ static const uint8_t DecoderTableThumb32[] = {
   0
 };
 
-static uint8_t DecoderTableThumb216[] = {
+static const uint8_t DecoderTableThumb216[] = {
 /* 0 */       MCD_OPC_CheckPredicate, 24, 12, 0, // Skip to: 16
 /* 4 */       MCD_OPC_CheckField, 8, 8, 191, 1, 5, 0, // Skip to: 16
 /* 11 */      MCD_OPC_Decode, 171, 18, 232, 1, // Opcode: t2IT

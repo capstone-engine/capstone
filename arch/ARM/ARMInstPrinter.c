@@ -126,7 +126,7 @@ static void printInstSyncBOption(MCInst *MI, unsigned OpNum, SStream *O);
 // copy & normalize access info
 static uint8_t get_op_access(cs_struct *h, unsigned int id, unsigned int index)
 {
-	uint8_t *arr = ARM_get_op_access(h, id);
+	const uint8_t *arr = ARM_get_op_access(h, id);
 
 	if (arr[index] == CS_AC_IGNORE)
 		return 0;
