@@ -1003,7 +1003,7 @@ typedef struct insn_op {
 	uint8_t access[5];
 } insn_op;
 
-static insn_op insn_ops[] = {
+static const insn_op insn_ops[] = {
     {
          /* NULL item */
         0, { 0 }
@@ -1013,7 +1013,7 @@ static insn_op insn_ops[] = {
 };
 
 // given internal insn id, return operand access info
-uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id)
+const uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id)
 {
 	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {

@@ -638,7 +638,7 @@ static const uint16_t AArch64SubRegIdxLists[] = {
   /* 86 */ 10, 2, 14, 7, 1, 11, 26, 28, 27, 25, 12, 34, 36, 35, 33, 13, 30, 32, 31, 29, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 0,
 };
 
-static MCRegisterDesc AArch64RegDesc[] = { // Descriptors
+static const MCRegisterDesc AArch64RegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
   { 1518, 266, 4, 5, 10001, 26 },
   { 1525, 266, 4, 5, 10001, 26 },
@@ -1491,7 +1491,7 @@ static MCRegisterDesc AArch64RegDesc[] = { // Descriptors
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x01, 
   };
 
-static MCRegisterClass AArch64MCRegisterClasses[] = {
+static const MCRegisterClass AArch64MCRegisterClasses[] = {
   { FPR8, FPR8Bits, 39, 32, sizeof(FPR8Bits), AArch64_FPR8RegClassID, 1, 1, 1, 1 },
   { FPR16, FPR16Bits, 26, 32, sizeof(FPR16Bits), AArch64_FPR16RegClassID, 2, 2, 1, 1 },
   { GPR32all, GPR32allBits, 58, 33, sizeof(GPR32allBits), AArch64_GPR32allRegClassID, 4, 4, 1, 1 },
