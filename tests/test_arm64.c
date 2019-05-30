@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -165,60 +165,6 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-//#define ARM64_CODE "\xe1\x0b\x40\xb9"	// ldr		w1, [sp, #0x8]
-//#define ARM64_CODE "\x21\x7c\x00\x53"	// lsr	w1, w1, #0x0
-//#define ARM64_CODE "\x21\x7c\x02\x9b"
-//#define ARM64_CODE "\x20\x04\x81\xda"	// csneg	x0, x1, x1, eq | cneg x0, x1, ne
-//#define ARM64_CODE "\x20\x08\x02\x8b"		// add	x0, x1, x2, lsl #2
-
-//#define ARM64_CODE "\x20\xcc\x20\x8b"
-//#define ARM64_CODE "\xe2\x8f\x40\xa9"	// ldp	x2, x3, [sp, #8]
-//#define ARM64_CODE "\x20\x40\x60\x1e"	// fmov d0, d1
-//#define ARM64_CODE "\x20\x7c\x7d\x93"	// sbfiz	x0, x1, #3, #32
-
-//#define ARM64_CODE "\x20\x88\x43\xb3"	// bfxil	x0, x1, #3, #32
-//#define ARM64_CODE "\x01\x71\x08\xd5"	// sys	#0, c7, c1, #0, x1
-//#define ARM64_CODE "\x00\x71\x28\xd5"	// sysl	x0, #0, c7, c1, #0
-
-//#define ARM64_CODE "\x20\xf4\x18\x9e"	// fcvtzs	x0, s1, #3
-//#define ARM64_CODE "\x20\x74\x0b\xd5"	// dc	zva, x0: FIXME: handle as "sys" insn
-//#define ARM64_CODE "\x00\x90\x24\x1e"	// fmov s0, ##10.00000000
-//#define ARM64_CODE "\xe1\x0b\x40\xb9"	// ldr		w1, [sp, #0x8]
-//#define ARM64_CODE "\x20\x78\x62\xf8"	// ldr x0, [x1, x2, lsl #3]
-//#define ARM64_CODE "\x41\x14\x44\xb3"	// bfm	x1, x2, #4, #5
-//#define ARM64_CODE "\x80\x23\x29\xd5"	// sysl	x0, #1, c2, c3, #4
-//#define ARM64_CODE "\x20\x00\x24\x1e"	// fcvtas	w0, s1
-//#define ARM64_CODE "\x41\x04\x40\xd2"	// eor	x1, x2, #0x3
-//#define ARM64_CODE "\x9f\x33\x03\xd5"	// 	dsb	osh
-//#define ARM64_CODE "\x41\x10\x23\x8a"	// bic	x1, x2, x3, lsl #4
-//#define ARM64_CODE "\x16\x41\x3c\xd5"	// mrs	x22, sp_el1
-//#define ARM64_CODE "\x41\x1c\x63\x0e"	// bic	v1.8b, v2.8b, v3.8b
-//#define ARM64_CODE "\x41\xd4\xe3\x6e"	// fabd	v1.2d, v2.2d, v3.2d
-//#define ARM64_CODE "\x20\x8c\x62\x2e"	// cmeq	v0.4h, v1.4h, v2.4h
-//#define ARM64_CODE "\x20\x98\x20\x4e"	// cmeq	v0.16b, v1.16b, #0
-//#define ARM64_CODE "\x20\x2c\x05\x4e"	// smov	x0, v1.b[2]
-//#define ARM64_CODE "\x21\xe4\x00\x2f"	// movi d1, #0xff
-//#define ARM64_CODE "\x60\x78\x08\xd5"	// at	s1e0w, x0	// FIXME: same problem with dc ZVA
-//#define ARM64_CODE "\x20\x00\xa0\xf2"	// movk	x0, #1, lsl #16
-//#define ARM64_CODE "\x20\x08\x00\xb1"	// adds	x0, x1, #0x2
-//#define ARM64_CODE "\x41\x04\x00\x0f"	// movi v1.2s, #0x2
-//#define ARM64_CODE "\x06\x00\x00\x14"	// b 0x44
-//#define ARM64_CODE "\x00\x90\x24\x1e"	// fmov s0, ##10.00000000
-//#define ARM64_CODE "\x5f\x3f\x03\xd5"	// clrex
-//#define ARM64_CODE "\x5f\x3e\x03\xd5"	// clrex #14
-//#define ARM64_CODE "\x20\x00\x02\xab"	// adds	 x0, x1, x2 (alias of adds x0, x1, x2, lsl #0)
-//#define ARM64_CODE "\x20\xf4\x18\x9e"	// fcvtzs	x0, s1, #3
-//#define ARM64_CODE "\x20\xfc\x02\x9b"	// mneg	x0, x1, x2
-//#define ARM64_CODE "\xd0\xb6\x1e\xd5"	// msr	s3_6_c11_c6_6, x16
-
-//#define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b"
-
-//#define ARM64_CODE "\x09\x00\x38\xd5"	// DBarrier
-//#define ARM64_CODE "\x20\xe4\x3d\x0f\xa2\x00\xae\x9e"
-//#define ARM64_CODE "\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5"	// DBarrier
-//#define ARM64_CODE "\x10\x5b\xe8\x3c"
-//#define ARM64_CODE "\x00\x18\xa0\x5f\xa2\x00\xae\x9e"
-
 #define ARM64_CODE "\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c"
 
 	struct platform platforms[] = {

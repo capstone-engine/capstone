@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -184,70 +184,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 static void test()
 {
-//#define ARM_CODE "\x04\xe0\x2d\xe5"	// str	lr, [sp, #-0x4]!
-//#define ARM_CODE "\xe0\x83\x22\xe5"	// str	r8, [r2, #-0x3e0]!
-//#define ARM_CODE "\xf1\x02\x03\x0e"	// mcreq	p0x2, #0x0, r0, c0x3, c0x1, #0x7
-//#define ARM_CODE "\x00\x00\xa0\xe3"	// mov	r0, #0x0 
-//#define ARM_CODE "\x02\x30\xc1\xe7"	// strb	r3, [r1, r2]
-//#define ARM_CODE "\x00\x00\x53\xe3"	// cmp	r3, #0x0
-//#define ARM_CODE "\x02\x00\xa1\xe2"	// adc r0, r1, r2
-//#define ARM_CODE "\x21\x01\xa0\xe0"	// adc	r0, r0, r1, lsr #2
-//#define ARM_CODE "\x21\x01\xb0\xe0"	// adcs	r0, r0, r1, lsr #2
-//#define ARM_CODE "\x32\x03\xa1\xe0"	// adc	r0, r1, r2, lsr r3
-//#define ARM_CODE "\x22\x01\xa1\xe0"	// adc	r0, r1, r2, lsr #2
-//#define ARM_CODE "\x65\x61\x4f\x50"	// subpl	r6, pc, r5, ror #2
-//#define ARM_CODE "\x30\x30\x53\xe5"	// ldrb	r3, [r3, #-0x30]
-//#define ARM_CODE "\xb6\x10\xdf\xe1"	// ldrh	r1, [pc, #0x6]
-//#define ARM_CODE "\x02\x00\x9f\xef"	// svc #0x9f0002
-//#define ARM_CODE "\x00\xc0\x27\xea"	// b 0x9F0002: FIXME: disasm as "b	#0x9f0000"
-//#define ARM_CODE "\x12\x13\xa0\xe1"	// lsl r1, r2, r3
-//#define ARM_CODE "\x82\x11\xa0\xe1"	// lsl	r1, r2, #0x3
-//#define ARM_CODE "\x00\xc0\xa0\xe1"	// mov ip, r0
-//#define ARM_CODE "\x02\x00\x12\xe3"	// tst r2, #2
-//#define ARM_CODE "\x51\x12\xa0\xe1"	// asr r1, r2
-//#define ARM_CODE "\x72\x10\xef\xe6"	// uxtb r1, r2
-//#define ARM_CODE "\xe0\x0a\xb7\xee"	// vcvt.f64.f32	d0, s1
-//#define ARM_CODE "\x9f\x0f\x91\xe1"	// ldrex	r0, [r1]
-//#define ARM_CODE "\x0f\x06\x20\xf4"	// vld1.8	{d0, d1, d2}, [r0]
-//#define ARM_CODE "\x72\x00\xa1\xe6"	// sxtab r0, r1, r2
-//#define ARM_CODE "\x50\x06\x84\xf2"	// vmov.i32	q0, #0x40000000
-//#define ARM_CODE "\x73\xe0\xb8\xee"	// mrc	p0, #5, lr, c8, c3, #3
-//#define ARM_CODE "\x12\x02\x81\xe6"	// pkhbt	r0, r1, r2, lsl #0x4
-//#define ARM_CODE "\x12\x00\xa0\xe6"	// ssat	r0, #0x1, r2
-//#define ARM_CODE "\x03\x60\x2d\xe9"	// push	{r0, r1, sp, lr}
-//#define ARM_CODE "\x8f\x40\x60\xf4"	// vld4.32	{d20, d21, d22, d23}, [r0]
-//#define ARM_CODE "\xd0\x00\xc2\xe1"	// ldrd	r0, r1, [r2]
-//#define ARM_CODE "\x08\xf0\xd0\xf5"	// pld	[r0, #0x8]
-//#define ARM_CODE "\x10\x8b\xbc\xec"	// ldc	p11, c8, [r12], #64
-//#define ARM_CODE "\xd4\x30\xd2\xe1"	// ldrsb	r3, [r2, #0x4] 
-//#define ARM_CODE "\x11\x0f\xbe\xf2"	// vcvt.s32.f32	d0, d1, #2
-//#define ARM_CODE "\x01\x01\x70\xe1"	// cmn	r0, r1, lsl #2
-//#define ARM_CODE "\x06\x00\x91\xe2"	// adds	r0, r1, #6
-//#define ARM_CODE "\x5b\xf0\x7f\xf5"	// dmb	ish
-//#define ARM_CODE "\xf7\xff\xff\xfe"
-//#define ARM_CODE "\x00\x20\xbd\xe8" // ldm	sp!, {sp}
-//#define ARM_CODE "\x00\xa0\xbd\xe8"	// pop {sp, pc}
-//#define ARM_CODE "\x90\x04\x0E\x00"	// muleq	lr, r0, r4
-//#define ARM_CODE "\x90\x24\x0E\x00"	// muleq	lr, r0, r4
-//#define ARM_CODE "\xb6\x10\x5f\xe1"	// ldrh	r1, [pc, #-6]
-
 #define ARM_CODE "\x86\x48\x60\xf4\x4d\x0f\xe2\xf4\xED\xFF\xFF\xEB\x04\xe0\x2d\xe5\x00\x00\x00\x00\xe0\x83\x22\xe5\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3\x00\x02\x01\xf1\x05\x40\xd0\xe8\xf4\x80\x00\x00"
-
-//#define ARM_CODE "\x86\x48\x60\xf4"
-
-//#define ARM_CODE2 "\xf0\x24"
-//#define ARM_CODE2 "\x83\xb0"
 #define ARM_CODE2 "\xd1\xe8\x00\xf0\xf0\x24\x04\x07\x1f\x3c\xf2\xc0\x00\x00\x4f\xf0\x00\x01\x46\x6c"
-//#define THUMB_CODE "\x70\x47"	// bl 0x26
-//#define THUMB_CODE "\x07\xdd"	// ble 0x1c
-//#define THUMB_CODE "\x00\x47"	// bx r0
-//#define THUMB_CODE "\x01\x47"	// bx r0
-//#define THUMB_CODE "\x02\x47"	// bx r0
-//#define THUMB_CODE "\x0a\xbf" // itet eq
-
 #define THUMB_CODE "\x60\xf9\x1f\x04\xe0\xf9\x4f\x07\x70\x47\x00\xf0\x10\xe8\xeb\x46\x83\xb0\xc9\x68\x1f\xb1\x30\xbf\xaf\xf3\x20\x84\x52\xf8\x23\xf0"
-//#define THUMB_CODE "\xe0\xf9\x4f\x07"
-
 #define THUMB_CODE2 "\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0\x18\xbf\xad\xbf\xf3\xff\x0b\x0c\x86\xf3\x00\x89\x80\xf3\x00\x8c\x4f\xfa\x99\xf6\xd0\xff\xa2\x01"
 #define THUMB_MCLASS "\xef\xf3\x02\x80"
 #define ARMV8 "\xe0\x3b\xb2\xee\x42\x00\x01\xe1\x51\xf0\x7f\xf5"
