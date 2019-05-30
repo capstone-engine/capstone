@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2015-2019 */
 
 // This sample code demonstrates the option CS_OPT_MNEMONIC
 // to customize instruction mnemonic.

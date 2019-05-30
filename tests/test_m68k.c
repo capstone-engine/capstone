@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Daniel Collin, 2013-2019 */
 
 #include <stdio.h>
 #include <assert.h>
