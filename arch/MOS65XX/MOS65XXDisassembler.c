@@ -238,6 +238,8 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 	OpInfo opinfo = OpInfoTable[opcode];
 
+	const char *prefix = info->hex_prefix ? info->hex_prefix : "0x";
+
 	SStream_concat0(O, InstructionInfoTable[opinfo.ins].name);
 	switch (opinfo.ins) {
 		/* special case - bit included as part of the instruction name */
@@ -265,45 +267,45 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 		case MOS65XX_AM_IMM:
 			if (MI->imm_size == 1)
-				SStream_concat(O, " #0x%02x", value);
+				SStream_concat(O, " #%s%02x", prefix, value);
 			else
-				SStream_concat(O, " #0x%04x", value);
+				SStream_concat(O, " #%s%04x", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP:
-			SStream_concat(O, " 0x%02x", value);
+			SStream_concat(O, " %s%02x", prefix, value);
 			break;
 
 		case MOS65XX_AM_ABS:
-			SStream_concat(O, " 0x%04x", value);
+			SStream_concat(O, " %s%04x", prefix, value);
 			break;
 
 		case MOS65XX_AM_ABS_LONG_X:
-			SStream_concat(O, " 0x%06x, x", value);
+			SStream_concat(O, " %s%06x, x", prefix, value);
 			break;
 
 		case MOS65XX_AM_INT:
-			SStream_concat(O, " 0x%02x", value);
+			SStream_concat(O, " %s%02x", prefix, value);
 			break;
 
 		case MOS65XX_AM_ABS_X:
-			SStream_concat(O, " 0x%04x, x", value);
+			SStream_concat(O, " %s%04x, x", prefix, value);
 			break;
 
 		case MOS65XX_AM_ABS_Y:
-			SStream_concat(O, " 0x%04x, y", value);
+			SStream_concat(O, " %s%04x, y", prefix, value);
 			break;
 
 		case MOS65XX_AM_ABS_LONG:
-			SStream_concat(O, " 0x%06x", value);
+			SStream_concat(O, " %s%06x", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP_X:
-			SStream_concat(O, " 0x%02x, x", value);
+			SStream_concat(O, " %s%02x, x", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP_Y:
-			SStream_concat(O, " 0x%02x, y", value);
+			SStream_concat(O, " %s%02x, y", prefix, value);
 			break;
 
 		case MOS65XX_AM_REL:
@@ -312,60 +314,62 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 			else
 				value = 3 + (signed short)value;
 
-			SStream_concat(O, " 0x%04x", 
+			SStream_concat(O, " %s%04x", prefix, 
 				(MI->address + value) & 0xffff);
 			break;
 
 		case MOS65XX_AM_ABS_IND:
-			SStream_concat(O, " (0x%04x)", value);
+			SStream_concat(O, " (%s%04x)", prefix, value);
 			break;
 
 		case MOS65XX_AM_ABS_X_IND:
-			SStream_concat(O, " (0x%04x, x)", value);
+			SStream_concat(O, " (%s%04x, x)", prefix, value);
 			break;
 
 		case MOS65XX_AM_ABS_IND_LONG:
-			SStream_concat(O, " [0x%04x]", value);
+			SStream_concat(O, " [%s%04x]", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP_IND:
-			SStream_concat(O, " (0x%02x)", value);
+			SStream_concat(O, " (%s%02x)", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP_X_IND:
-			SStream_concat(O, " (0x%02x, x)", value);
+			SStream_concat(O, " (%s%02x, x)", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP_IND_Y:
-			SStream_concat(O, " (0x%02x), y", value);
+			SStream_concat(O, " (%s%02x), y", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP_IND_LONG:
-			SStream_concat(O, " [0x%02x]", value);
+			SStream_concat(O, " [%s%02x]", prefix, value);
 			break;
 
 		case MOS65XX_AM_ZP_IND_LONG_Y:
-			SStream_concat(O, " [0x%02x], y", value);
+			SStream_concat(O, " [%s%02x], y", prefix, value);
 			break;
 
 		case MOS65XX_AM_SR:
-			SStream_concat(O, " 0x%02x, s", value);
+			SStream_concat(O, " %s%02x, s", prefix, value);
 			break;
 
 		case MOS65XX_AM_SR_IND_Y:
-			SStream_concat(O, " (0x%02x, s), y", value);
+			SStream_concat(O, " (%s%02x, s), y", prefix, value);
 			break;
 
 		case MOS65XX_AM_BLOCK:
-			SStream_concat(O, " 0x%02x, 0x%02x",
-				MI->Operands[0].ImmVal, MI->Operands[1].ImmVal);
+			SStream_concat(O, " %s%02x, %s%02x",
+				prefix, MI->Operands[0].ImmVal,
+				prefix, MI->Operands[1].ImmVal);
 			break;
 
 		case MOS65XX_AM_ZP_REL:
 			value =	3 + (signed char)MI->Operands[1].ImmVal;
 			/* BBR0, zp, rel  and BBS0, zp, rel */
-			SStream_concat(O, " 0x%02x, 0x%04x",
-				MI->Operands[0].ImmVal, (MI->address + value) & 0xffff);
+			SStream_concat(O, " %s%02x, %s%04x",
+				prefix, MI->Operands[0].ImmVal,
+				prefix, (MI->address + value) & 0xffff);
 			break;
 
 	}

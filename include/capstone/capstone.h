@@ -204,6 +204,7 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_ATT,   ///< X86 ATT asm syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_NOREGNAME, ///< Prints register name with only number (CS_OPT_SYNTAX)
 	CS_OPT_SYNTAX_MASM, ///< X86 Intel Masm syntax (CS_OPT_SYNTAX).
+	CS_OPT_SYNTAX_MOTOROLA, ///< MOS65XX use $ as hex prefix
 } cs_opt_value;
 
 /// Common instruction operand types - to be consistent across all architectures.

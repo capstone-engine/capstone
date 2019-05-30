@@ -188,6 +188,7 @@ static void test()
 		}
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_MOTOROLA);
 
 		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
 

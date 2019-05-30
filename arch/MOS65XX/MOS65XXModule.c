@@ -14,6 +14,7 @@ cs_err MOS65XX_global_init(cs_struct *ud)
 	mos65xx_info *info;
 
 	info = cs_mem_malloc(sizeof(*info));
+	info->hex_prefix = NULL;
 	info->cpu_type = MOS65XX_CPU_TYPE_6502;
 	info->long_m = 0;
 	info->long_x = 0;
@@ -55,6 +56,21 @@ cs_err MOS65XX_option(cs_struct *handle, cs_opt_type type, size_t value)
 			info->long_x = value & CS_MODE_MOS65XX_65816_LONG_X ? 1 : 0;
 
 			handle->mode = (cs_mode)value;
+			break;
+		case CS_OPT_SYNTAX:
+			switch(value) {
+				default:
+					// wrong syntax value
+					handle->errnum = CS_ERR_OPTION;
+					return CS_ERR_OPTION;
+				case CS_OPT_SYNTAX_DEFAULT:
+					info->hex_prefix = NULL;
+					break;
+				case CS_OPT_SYNTAX_MOTOROLA:
+					info->hex_prefix = "$";
+					break;
+			}
+			handle->syntax = (int)value;
 			break;
 	}
 	return CS_ERR_OK;
