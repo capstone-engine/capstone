@@ -443,30 +443,30 @@ enum TraceSyncBOpt {
 	CSYNC = 0
 };
 
-MClassSysReg *lookupMClassSysRegByM2M3Encoding8(uint16_t encoding);
-MClassSysReg *lookupMClassSysRegByM1Encoding12(uint16_t M1Encoding12);
+const MClassSysReg *lookupMClassSysRegByM2M3Encoding8(uint16_t encoding);
+const MClassSysReg *lookupMClassSysRegByM1Encoding12(uint16_t M1Encoding12);
 
 // returns APSR with _<bits> qualifier.
 // Note: ARMv7-M deprecates using MSR APSR without a _<bits> qualifier
-static inline MClassSysReg *lookupMClassSysRegAPSRNonDeprecated(unsigned SYSm)
+static inline const MClassSysReg *lookupMClassSysRegAPSRNonDeprecated(unsigned SYSm)
 {
 	return lookupMClassSysRegByM2M3Encoding8((1<<9) | (SYSm & 0xFF));
 }
 
-static inline MClassSysReg *lookupMClassSysRegBy8bitSYSmValue(unsigned SYSm)
+static inline const MClassSysReg *lookupMClassSysRegBy8bitSYSmValue(unsigned SYSm)
 {
 	return lookupMClassSysRegByM2M3Encoding8((1<<8) | (SYSm & 0xFF));
 }
 
 // returns true if TestFeatures are all present in FeaturesRequired
-static inline bool MClassSysReg_isInRequiredFeatures(MClassSysReg *TheReg, int TestFeatures)
+static inline bool MClassSysReg_isInRequiredFeatures(const MClassSysReg *TheReg, int TestFeatures)
 {
 	return (TheReg->FeaturesRequired[0] == TestFeatures || TheReg->FeaturesRequired[1] == TestFeatures);
 }
 
 // lookup system register using 12-bit SYSm value.
 // Note: the search is uniqued using M1 mask
-static inline MClassSysReg *lookupMClassSysRegBy12bitSYSmValue(unsigned SYSm)
+static inline const MClassSysReg *lookupMClassSysRegBy12bitSYSmValue(unsigned SYSm)
 {
   return lookupMClassSysRegByM1Encoding12(SYSm);
 }

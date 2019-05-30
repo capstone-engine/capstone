@@ -11359,7 +11359,6 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 		uint64_t Address, bool *Decoder) \
 { \
   InsnType tmp; \
-  /* printf("Idx = %u\n", Idx); */\
   switch (Idx) { \
   default: /* llvm_unreachable("Invalid index!");*/  \
   case 0: \
@@ -15112,7 +15111,6 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       /* Check the predicate. */ \
       if (!(Pred = checkDecoderPredicate(PIdx, MI))) \
         Ptr += NumToSkip; \
-		/* printf("55 PIdx = %u, Pred = %u\n", PIdx, Pred); */ \
       (void)Pred; \
       break; \
     } \

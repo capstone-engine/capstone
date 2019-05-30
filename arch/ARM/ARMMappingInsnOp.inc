@@ -1547,7 +1547,7 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_LDRcp,  ARM_INS_LDR: ldr${p}	$rt $addr */
+{	/* ARM_LDRcp,   ARM_INS_LDR: ldr${p}	$rt $addr */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
@@ -4623,43 +4623,43 @@
 	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD2LNd16,  ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn */
+{	/* ARM_VLD2LNd16,   ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD2LNd16_UPD,  ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
+{	/* ARM_VLD2LNd16_UPD,   ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD2LNd32,  ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn */
+{	/* ARM_VLD2LNd32,   ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD2LNd32_UPD,  ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
+{	/* ARM_VLD2LNd32_UPD,   ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD2LNd8,  ARM_INS_VLD2: vld2${p}.8	\{$vd[$lane] $dst2[$lane]\} $rn */
+{	/* ARM_VLD2LNd8,   ARM_INS_VLD2: vld2${p}.8	\{$vd[$lane] $dst2[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD2LNd8_UPD,  ARM_INS_VLD2: vld2${p}.8	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
+{	/* ARM_VLD2LNd8_UPD,   ARM_INS_VLD2: vld2${p}.8	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD2LNq16,  ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn */
+{	/* ARM_VLD2LNq16,   ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD2LNq16_UPD,  ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
+{	/* ARM_VLD2LNq16_UPD,   ARM_INS_VLD2: vld2${p}.16	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD2LNq32,  ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn */
+{	/* ARM_VLD2LNq32,   ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD2LNq32_UPD,  ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
+{	/* ARM_VLD2LNq32_UPD,   ARM_INS_VLD2: vld2${p}.32	\{$vd[$lane] $dst2[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
@@ -4819,43 +4819,43 @@
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD3LNd16,  ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
+{	/* ARM_VLD3LNd16,   ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD3LNd16_UPD,  ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
+{	/* ARM_VLD3LNd16_UPD,   ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD3LNd32,  ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
+{	/* ARM_VLD3LNd32,   ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD3LNd32_UPD,  ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
+{	/* ARM_VLD3LNd32_UPD,   ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD3LNd8,  ARM_INS_VLD3: vld3${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
+{	/* ARM_VLD3LNd8,   ARM_INS_VLD3: vld3${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD3LNd8_UPD,  ARM_INS_VLD3: vld3${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
+{	/* ARM_VLD3LNd8_UPD,   ARM_INS_VLD3: vld3${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD3LNq16,  ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
+{	/* ARM_VLD3LNq16,   ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD3LNq16_UPD,  ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
+{	/* ARM_VLD3LNq16_UPD,   ARM_INS_VLD3: vld3${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD3LNq32,  ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
+{	/* ARM_VLD3LNq32,   ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD3LNq32_UPD,  ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
+{	/* ARM_VLD3LNq32_UPD,   ARM_INS_VLD3: vld3${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
@@ -4955,43 +4955,43 @@
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD4LNd16,  ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
+{	/* ARM_VLD4LNd16,   ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD4LNd16_UPD,  ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
+{	/* ARM_VLD4LNd16_UPD,   ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD4LNd32,  ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
+{	/* ARM_VLD4LNd32,   ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD4LNd32_UPD,  ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
+{	/* ARM_VLD4LNd32_UPD,   ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD4LNd8,  ARM_INS_VLD4: vld4${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
+{	/* ARM_VLD4LNd8,   ARM_INS_VLD4: vld4${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD4LNd8_UPD,  ARM_INS_VLD4: vld4${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
+{	/* ARM_VLD4LNd8_UPD,   ARM_INS_VLD4: vld4${p}.8	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD4LNq16,  ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
+{	/* ARM_VLD4LNq16,   ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD4LNq16_UPD,  ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
+{	/* ARM_VLD4LNq16_UPD,   ARM_INS_VLD4: vld4${p}.16	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
-{	/* ARM_VLD4LNq32,  ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
+{	/* ARM_VLD4LNq32,   ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VLD4LNq32_UPD,  ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
+{	/* ARM_VLD4LNq32_UPD,   ARM_INS_VLD4: vld4${p}.32	\{$vd[$lane] $dst2[$lane] $dst3[$lane] $dst4[$lane]\} $rn$rm */
 	{ CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, CS_AC_WRITE, 0 }
 },
 
@@ -8099,43 +8099,43 @@
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNd16,  ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn */
+{	/* ARM_VST2LNd16,   ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNd16_UPD,  ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn$rm */
+{	/* ARM_VST2LNd16_UPD,   ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNd32,  ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn */
+{	/* ARM_VST2LNd32,   ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNd32_UPD,  ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn$rm */
+{	/* ARM_VST2LNd32_UPD,   ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNd8,  ARM_INS_VST2: vst2${p}.8	\{$vd[$lane] $src2[$lane]\} $rn */
+{	/* ARM_VST2LNd8,   ARM_INS_VST2: vst2${p}.8	\{$vd[$lane] $src2[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNd8_UPD,  ARM_INS_VST2: vst2${p}.8	\{$vd[$lane] $src2[$lane]\} $rn$rm */
+{	/* ARM_VST2LNd8_UPD,   ARM_INS_VST2: vst2${p}.8	\{$vd[$lane] $src2[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNq16,  ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn */
+{	/* ARM_VST2LNq16,   ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNq16_UPD,  ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn$rm */
+{	/* ARM_VST2LNq16_UPD,   ARM_INS_VST2: vst2${p}.16	\{$vd[$lane] $src2[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNq32,  ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn */
+{	/* ARM_VST2LNq32,   ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST2LNq32_UPD,  ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn$rm */
+{	/* ARM_VST2LNq32_UPD,   ARM_INS_VST2: vst2${p}.32	\{$vd[$lane] $src2[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
@@ -8247,43 +8247,43 @@
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNd16,  ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
+{	/* ARM_VST3LNd16,   ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNd16_UPD,  ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
+{	/* ARM_VST3LNd16_UPD,   ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNd32,  ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
+{	/* ARM_VST3LNd32,   ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNd32_UPD,  ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
+{	/* ARM_VST3LNd32_UPD,   ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNd8,  ARM_INS_VST3: vst3${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
+{	/* ARM_VST3LNd8,   ARM_INS_VST3: vst3${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNd8_UPD,  ARM_INS_VST3: vst3${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
+{	/* ARM_VST3LNd8_UPD,   ARM_INS_VST3: vst3${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNq16,  ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
+{	/* ARM_VST3LNq16,   ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNq16_UPD,  ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
+{	/* ARM_VST3LNq16_UPD,   ARM_INS_VST3: vst3${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNq32,  ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
+{	/* ARM_VST3LNq32,   ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST3LNq32_UPD,  ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
+{	/* ARM_VST3LNq32_UPD,   ARM_INS_VST3: vst3${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
@@ -8335,43 +8335,43 @@
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNd16,  ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
+{	/* ARM_VST4LNd16,   ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNd16_UPD,  ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
+{	/* ARM_VST4LNd16_UPD,   ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNd32,  ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
+{	/* ARM_VST4LNd32,   ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNd32_UPD,  ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
+{	/* ARM_VST4LNd32_UPD,   ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNd8,  ARM_INS_VST4: vst4${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
+{	/* ARM_VST4LNd8,   ARM_INS_VST4: vst4${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNd8_UPD,  ARM_INS_VST4: vst4${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
+{	/* ARM_VST4LNd8_UPD,   ARM_INS_VST4: vst4${p}.8	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNq16,  ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
+{	/* ARM_VST4LNq16,   ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNq16_UPD,  ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
+{	/* ARM_VST4LNq16_UPD,   ARM_INS_VST4: vst4${p}.16	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNq32,  ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
+{	/* ARM_VST4LNq32,   ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
-{	/* ARM_VST4LNq32_UPD,  ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
+{	/* ARM_VST4LNq32_UPD,   ARM_INS_VST4: vst4${p}.32	\{$vd[$lane] $src2[$lane] $src3[$lane] $src4[$lane]\} $rn$rm */
 	{ CS_AC_READ, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
@@ -9463,11 +9463,11 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_t2MOVsra_flag,  ARM_INS_ASR: asrs${p}.w	$rd $rm #1 */
+{	/* ARM_t2MOVsra_flag,   ARM_INS_ASR: asrs${p}.w	$rd $rm #1 */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* ARM_t2MOVsrl_flag,  ARM_INS_LSR: lsrs${p}.w	$rd $rm #1 */
+{	/* ARM_t2MOVsrl_flag,   ARM_INS_LSR: lsrs${p}.w	$rd $rm #1 */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
@@ -10726,4 +10726,3 @@
 {	/* ARM_tUXTH, ARM_INS_UXTH: uxth */
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
-
