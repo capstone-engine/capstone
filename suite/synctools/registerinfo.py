@@ -215,7 +215,7 @@ for line in lines:
 
     if arch + 'RegDesc' in line:
         finding_struct = False
-        print("static MCRegisterDesc " + arch + "RegDesc[] = {")
+        print("static const MCRegisterDesc " + arch + "RegDesc[] = {")
         continue
 
     if finding_struct:
@@ -266,11 +266,7 @@ for line in lines:
 
     if 'MCRegisterClass ' + arch + 'MCRegisterClasses[] = {' in line:
         finding_struct = False
-        if arch.upper() == 'ARM':
-            print("static MCRegisterClass " + arch + "MCRegisterClasses[] = {")
-        else:
-            print("static MCRegisterClass " + arch + "MCRegisterClasses[] = {")
-            #print("static MCRegisterClass2 " + arch + "MCRegisterClasses[] = {")
+        print("static const MCRegisterClass " + arch + "MCRegisterClasses[] = {")
         continue
 
     if finding_struct:
@@ -285,10 +281,6 @@ for line in lines:
 
         # { GR8, GR8Bits, 130, 20, sizeof(GR8Bits), X86_GR8RegClassID, 1, 1, 1, 1 },
         tmp = line.split(',')
-        if arch.upper() == 'ARM':
-            print("  %s, %s, %s }," %(tmp[0].strip(), tmp[1].strip(), tmp[4].strip()))
-        else:   # AArch64
-            print("  %s, %s, %s }," %(tmp[0].strip(), tmp[1].strip(), tmp[4].strip()))
-            #print("  %s, %s, %s, %s }," %(tmp[0].strip(), tmp[1].strip(), tmp[3].strip(), tmp[4].strip()))
+        print("  %s, %s, %s }," %(tmp[0].strip(), tmp[1].strip(), tmp[4].strip()))
 
 print("#endif // GET_REGINFO_MC_DESC")
