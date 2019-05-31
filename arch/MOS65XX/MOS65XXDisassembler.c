@@ -49,8 +49,6 @@ static const struct InstructionInfo InstructionInfoTable[]= {
 };
 #endif
 
-
-
 #ifndef CAPSTONE_DIET
 static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 {
@@ -75,7 +73,6 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 		detail->groups[0] = MOS65XX_GRP_BRANCH_RELATIVE;
 		detail->groups_count++;	
 	}
-
 
 	if (insinfo.read != MOS65XX_REG_INVALID) {
 		detail->regs_read[detail->regs_read_count++] = insinfo.read;
@@ -154,8 +151,6 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 			break;
 	}
 
-
-
 	if (cpu_type == MOS65XX_CPU_TYPE_65816) {
 		switch (opinfo.am) {
 			case MOS65XX_AM_ZP:
@@ -194,11 +189,9 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 				if (opinfo.ins == MOS65XX_INS_PEI || opinfo.ins == MOS65XX_INS_PEA) break;
 				detail->regs_read[detail->regs_read_count++] = MOS65XX_REG_B;
 				break;
-
 			default:
 				break;
 		}
-	
 	}
 
 	if (insinfo.modifies_status) {
@@ -438,9 +431,7 @@ bool MOS65XX_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	MCInst_setOpcode(MI, cpu_offset + opcode);
 	MCInst_setOpcodePub(MI, opinfo.ins);
 
-
 	*size = len;
-
 
 	/* needed to differentiate relative vs relative long */
 	MI->op1_size = len - 1;
