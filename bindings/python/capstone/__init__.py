@@ -79,6 +79,13 @@ __all__ = [
     'CS_MODE_BPF_EXTENDED',
     'CS_MODE_RISCV32',
     'CS_MODE_RISCV64',
+    'CS_MODE_MOS65XX_6502',
+    'CS_MODE_MOS65XX_65C02',
+    'CS_MODE_MOS65XX_W65C02',
+    'CS_MODE_MOS65XX_65816',
+    'CS_MODE_MOS65XX_65816_LONG_M',
+    'CS_MODE_MOS65XX_65816_LONG_X',
+    'CS_MODE_MOS65XX_65816_LONG_MX',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -86,6 +93,7 @@ __all__ = [
     'CS_OPT_SYNTAX_ATT',
     'CS_OPT_SYNTAX_NOREGNAME',
     'CS_OPT_SYNTAX_MASM',
+    'CS_OPT_SYNTAX_MOTOROLA',
 
     'CS_OPT_DETAIL',
     'CS_OPT_MODE',
@@ -208,6 +216,13 @@ CS_MODE_BPF_EXTENDED = (1 << 0)  # Extended BPF mode
 CS_MODE_RISCV32 = (1 << 0)       # RISCV32 mode
 CS_MODE_RISCV64 = (1 << 1)       # RISCV64 mode
 CS_MODE_RISCVC  = (1 << 2)       # RISCV compressed mode
+CS_MODE_MOS65XX_6502 = (1 << 1) # MOS65XXX MOS 6502
+CS_MODE_MOS65XX_65C02 = (1 << 2) # MOS65XXX WDC 65c02
+CS_MODE_MOS65XX_W65C02 = (1 << 3) # MOS65XXX WDC W65c02
+CS_MODE_MOS65XX_65816 = (1 << 4) # MOS65XXX WDC 65816, 8-bit m/x
+CS_MODE_MOS65XX_65816_LONG_M = (1 << 5) # MOS65XXX WDC 65816, 16-bit m, 8-bit x 
+CS_MODE_MOS65XX_65816_LONG_X = (1 << 6) # MOS65XXX WDC 65816, 8-bit m, 16-bit x
+CS_MODE_MOS65XX_65816_LONG_MX = CS_MODE_MOS65XX_65816_LONG_M | CS_MODE_MOS65XX_65816_LONG_X
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -250,6 +265,7 @@ CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OP
 CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
 CS_OPT_SYNTAX_MASM = 4      # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_MOTOROLA = 5 # MOS65XX use $ as hex prefix
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine

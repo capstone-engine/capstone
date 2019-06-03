@@ -11,31 +11,55 @@ static const char *get_am_name(mos65xx_address_mode mode)
 		case MOS65XX_AM_NONE:
 			return "No address mode";
 		case MOS65XX_AM_IMP:
-			return "implied addressing (no addressing mode)";
+			return "implied";
 		case MOS65XX_AM_ACC:
-			return "accumulator addressing";
-		case MOS65XX_AM_ABS:
-			return "absolute addressing";
-		case MOS65XX_AM_ZP:
-			return "zeropage addressing";
+			return "accumulator";
 		case MOS65XX_AM_IMM:
-			return "8 Bit immediate value";
-		case MOS65XX_AM_ABSX:
-			return "indexed absolute addressing by the X index register";
-		case MOS65XX_AM_ABSY:
-			return "indexed absolute addressing by the Y index register";
-		case MOS65XX_AM_INDX:
-			return "indexed indirect addressing by the X index register";
-		case MOS65XX_AM_INDY:
-			return "indirect indexed addressing by the Y index register";
-		case MOS65XX_AM_ZPX:
-			return "indexed zeropage addressing by the X index register";
-		case MOS65XX_AM_ZPY:
-			return "indexed zeropage addressing by the Y index register";
+			return "immediate value";
 		case MOS65XX_AM_REL:
-			return "relative addressing used by branches";
-		case MOS65XX_AM_IND:
-			return "absolute indirect addressing";
+			return "relative";
+		case MOS65XX_AM_INT:
+			return "interrupt signature";
+		case MOS65XX_AM_BLOCK:
+			return "block move";
+		case MOS65XX_AM_ZP:
+			return "zero page";
+		case MOS65XX_AM_ZP_X:
+			return "zero page indexed with x";
+		case MOS65XX_AM_ZP_Y:
+			return "zero page indexed with y";
+		case MOS65XX_AM_ZP_REL:
+			return "relative bit branch";
+		case MOS65XX_AM_ZP_IND:
+			return "zero page indirect";
+		case MOS65XX_AM_ZP_X_IND:
+			return "zero page indexed with x indirect";
+		case MOS65XX_AM_ZP_IND_Y:
+			return "zero page indirect indexed with y";
+		case MOS65XX_AM_ZP_IND_LONG:
+			return "zero page indirect long";
+		case MOS65XX_AM_ZP_IND_LONG_Y:
+			return "zero page indirect long indexed with y";
+		case MOS65XX_AM_ABS:
+			return "absolute";
+		case MOS65XX_AM_ABS_X:
+			return "absolute indexed with x";
+		case MOS65XX_AM_ABS_Y:
+			return "absolute indexed with y";
+		case MOS65XX_AM_ABS_IND:
+			return "absolute indirect";
+		case MOS65XX_AM_ABS_X_IND:
+			return "absolute indexed with x indirect";
+		case MOS65XX_AM_ABS_IND_LONG:
+			return "absolute indirect long";
+		case MOS65XX_AM_ABS_LONG:
+			return "absolute long";
+		case MOS65XX_AM_ABS_LONG_X:
+			return "absolute long indexed with x";
+		case MOS65XX_AM_SR:
+			return "stack relative";
+		case MOS65XX_AM_SR_IND_Y:
+			return "stack relative indirect indexed with y";
 	}
 }
 
