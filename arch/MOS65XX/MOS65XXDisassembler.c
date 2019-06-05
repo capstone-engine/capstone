@@ -65,12 +65,12 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 	detail->mos65xx.op_count = 0;
 
 	if (insinfo.group_type != MOS65XX_GRP_INVALID) {
-		detail->groups[0] = insinfo.group_type;
+		detail->groups[detail->groups_count] = insinfo.group_type;
 		detail->groups_count++;
 	}
 
 	if (opinfo.am == MOS65XX_AM_REL || opinfo.am == MOS65XX_AM_ZP_REL) {
-		detail->groups[0] = MOS65XX_GRP_BRANCH_RELATIVE;
+		detail->groups[detail->groups_count] = MOS65XX_GRP_BRANCH_RELATIVE;
 		detail->groups_count++;	
 	}
 
