@@ -1,3 +1,7 @@
+!# issue 1504 movhps qword ptr
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0f,0x16,0x08 == movhps xmm1, qword ptr [rax] ; Opcode:0x0f 0x16 0x00 0x00
+
 !# issue 1505 opcode 0f
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0f,0xa5,0xc2 == shld edx, eax, cl ; Opcode:0x0f 0xa5 0x00 0x00
