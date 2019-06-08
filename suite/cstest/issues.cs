@@ -1,3 +1,7 @@
+!# issue 1505 opcode 0f
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0f,0xa5,0xc2 == shld edx, eax, cl ; Opcode:0x0f 0xa5 0x00 0x00
+
 !# issue 1478 tbegin.
 !# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x7c,0x20,0x05,0x1d == tbegin. 1 ; Update-CR0: True
