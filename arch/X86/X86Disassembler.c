@@ -869,9 +869,9 @@ static int reader(const struct reader_info *info, uint8_t *byte, uint64_t addres
 // copy x86 detail information from internal structure to public structure
 static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
 {
-	if (inter->vectorExtensionType != 0)
+	if (inter->vectorExtensionType != 0) {
 		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
-	else {
+	} else {
 		if (inter->twoByteEscape) {
 			if (inter->threeByteEscape) {
 				pub->detail->x86.opcode[0] = inter->twoByteEscape;
