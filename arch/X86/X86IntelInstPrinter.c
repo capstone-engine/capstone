@@ -230,8 +230,18 @@ static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	// TODO: fix COMISD in Tablegen instead (#1456)
 	if (MI->op1_size == 16) {
-		SStream_concat0(O, "xmmword ptr ");
-		MI->x86opsize = 16;
+		// printf("printf64mem id = %u\n", MCInst_getOpcode(MI));
+		switch(MCInst_getOpcode(MI)) {
+			default:
+				SStream_concat0(O, "qword ptr ");
+				MI->x86opsize = 8;
+				break;
+			case X86_MOVPQI2QImr:
+			case X86_COMISDrm:
+				SStream_concat0(O, "xmmword ptr ");
+				MI->x86opsize = 16;
+				break;
+		}
 	} else {
 		SStream_concat0(O, "qword ptr ");
 		MI->x86opsize = 8;

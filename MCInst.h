@@ -87,11 +87,11 @@ MCOperand *MCOperand_CreateImm1(MCInst *inst, int64_t Val);
 /// MCInst - Instances of this class represent a single low-level machine
 /// instruction.
 struct MCInst {
-	unsigned OpcodePub;
+	unsigned OpcodePub;  // public opcode (<arch>_INS_yyy in header files <arch>.h)
 	uint8_t size;	// number of operands
 	bool has_imm;	// indicate this instruction has an X86_OP_IMM operand - used for ATT syntax
 	uint8_t op1_size; // size of 1st operand - for X86 Intel syntax
-	unsigned Opcode;
+	unsigned Opcode;  // private opcode
 	MCOperand Operands[48];
 	cs_insn *flat_insn;	// insn to be exposed to public
 	uint64_t address;	// address of this insn
