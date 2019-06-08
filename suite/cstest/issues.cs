@@ -338,11 +338,11 @@
 
 !# issue 1262
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
-0x0: 0x0f,0x95,0x44,0x24,0x5e == setne byte ptr [rsp + 0x5e] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x95 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x5e ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x5e ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
+0x0: 0x0f,0x95,0x44,0x24,0x5e == setne byte ptr [rsp + 0x5e] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x95 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x5e ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x5e ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
 
 !# issue 1262
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
-0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x94 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
+0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x94 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
 
 !# issue 1263
 !# CS_ARCH_X86, CS_MODE_64, None
@@ -438,7 +438,7 @@
 
 !# issue 809
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
-0x0: 0x0f,0x29,0x8d,0xf0,0xfd,0xff,0xff == movaps xmmword ptr [rbp - 0x210], xmm1 ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x29 0x00 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x8d ; disp: 0xfffffffffffffdf0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: MEM ; operands[0].mem.base: REG = rbp ; operands[0].mem.disp: 0xfffffffffffffdf0 ; operands[0].size: 16 ; operands[0].access: WRITE ; operands[1].type: REG = xmm1 ; operands[1].size: 16 ; operands[1].access: READ ; Registers read: rbp xmm1 ; Groups: sse1 
+0x0: 0x0f,0x29,0x8d,0xf0,0xfd,0xff,0xff == movaps xmmword ptr [rbp - 0x210], xmm1 ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x29 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x8d ; disp: 0xfffffffffffffdf0 ; sib: 0x0 ; op_count: 2 ; operands[0].type: MEM ; operands[0].mem.base: REG = rbp ; operands[0].mem.disp: 0xfffffffffffffdf0 ; operands[0].size: 16 ; operands[0].access: WRITE ; operands[1].type: REG = xmm1 ; operands[1].size: 16 ; operands[1].access: READ ; Registers read: rbp xmm1 ; Groups: sse1 
 
 !# issue 807
 !# CS_ARCH_X86, CS_MODE_64, None
