@@ -159,11 +159,8 @@ static InstrUID decode(OpcodeType type,
                        uint8_t modRM)
 {
 	const struct ModRMDecision *dec = NULL;
-	static unsigned int index = -1;
-	static struct OpcodeDecision emptyDecision;
-
-	if (index == -1)
-		memset((void *)&emptyDecision, 0, sizeof(emptyDecision));
+	unsigned int index;
+	static struct OpcodeDecision emptyDecision = { 0 };
 
 	switch (type) {
 		default: break;	// never reach
