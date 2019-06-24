@@ -1130,6 +1130,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNo);
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
+#ifndef CAPSTONE_DIET
 		const char *RegName = getRegisterName(reg);
 
 		// printf("reg = %u (%s)\n", reg, RegName);
@@ -1144,6 +1145,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			cs_mem_free(name);
 		} else
 			SStream_concat0(O, RegName);
+#endif
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
