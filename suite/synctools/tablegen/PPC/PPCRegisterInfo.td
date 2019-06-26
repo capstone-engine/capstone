@@ -1,9 +1,8 @@
 //===-- PPCRegisterInfo.td - The PowerPC Register File -----*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -85,6 +84,12 @@ class VSRL<FPR SubReg, string n> : PPCReg<n> {
   let SubRegIndices = [sub_64];
 }
 
+// VSXReg - One of the VSX registers in the range vs32-vs63 with numbering
+// and encoding to match.
+class VSXReg<bits<6> num, string n> : PPCReg<n> {
+  let HWEncoding{5-0} = num;
+}
+
 // CR - One of the 8 4-bit condition registers
 class CR<bits<3> num, string n, list<Register> subregs> : PPCReg<n> {
   let HWEncoding{2-0} = num;
@@ -148,7 +153,7 @@ foreach Index = 0-31 in {
 // Dummy VSX registers, this defines string: "vs32"-"vs63", and is only used for
 // asm printing.
 foreach Index = 32-63 in {
-  def VSX#Index : PPCReg<"vs"#Index>;
+  def VSX#Index : VSXReg<Index, "vs"#Index>;
 }
 
 // The reprsentation of r0 when treated as the constant 0.
@@ -164,38 +169,38 @@ def BP   : GPR<0 /* arbitrary */, "**BASE POINTER**">;
 def BP8  : GP8<BP, "**BASE POINTER**">;
 
 // Condition register bits
-def CR0LT : CRBIT< 0, "cr0lt">;
-def CR0GT : CRBIT< 1, "cr0gt">;
-def CR0EQ : CRBIT< 2, "cr0eq">;
-def CR0UN : CRBIT< 3, "cr0un">;
-def CR1LT : CRBIT< 4, "cr1lt">;
-def CR1GT : CRBIT< 5, "cr1gt">;
-def CR1EQ : CRBIT< 6, "cr1eq">;
-def CR1UN : CRBIT< 7, "cr1un">;
-def CR2LT : CRBIT< 8, "cr2lt">;
-def CR2GT : CRBIT< 9, "cr2gt">;
-def CR2EQ : CRBIT<10, "cr2eq">;
-def CR2UN : CRBIT<11, "cr2un">;
-def CR3LT : CRBIT<12, "cr3lt">;
-def CR3GT : CRBIT<13, "cr3gt">;
-def CR3EQ : CRBIT<14, "cr3eq">;
-def CR3UN : CRBIT<15, "cr3un">;
-def CR4LT : CRBIT<16, "cr4lt">;
-def CR4GT : CRBIT<17, "cr4gt">;
-def CR4EQ : CRBIT<18, "cr4eq">;
-def CR4UN : CRBIT<19, "cr4un">;
-def CR5LT : CRBIT<20, "cr5lt">;
-def CR5GT : CRBIT<21, "cr5gt">;
-def CR5EQ : CRBIT<22, "cr5eq">;
-def CR5UN : CRBIT<23, "cr5un">;
-def CR6LT : CRBIT<24, "cr6lt">;
-def CR6GT : CRBIT<25, "cr6gt">;
-def CR6EQ : CRBIT<26, "cr6eq">;
-def CR6UN : CRBIT<27, "cr6un">;
-def CR7LT : CRBIT<28, "cr7lt">;
-def CR7GT : CRBIT<29, "cr7gt">;
-def CR7EQ : CRBIT<30, "cr7eq">;
-def CR7UN : CRBIT<31, "cr7un">;
+def CR0LT : CRBIT< 0, "0">;
+def CR0GT : CRBIT< 1, "1">;
+def CR0EQ : CRBIT< 2, "2">;
+def CR0UN : CRBIT< 3, "3">;
+def CR1LT : CRBIT< 4, "4">;
+def CR1GT : CRBIT< 5, "5">;
+def CR1EQ : CRBIT< 6, "6">;
+def CR1UN : CRBIT< 7, "7">;
+def CR2LT : CRBIT< 8, "8">;
+def CR2GT : CRBIT< 9, "9">;
+def CR2EQ : CRBIT<10, "10">;
+def CR2UN : CRBIT<11, "11">;
+def CR3LT : CRBIT<12, "12">;
+def CR3GT : CRBIT<13, "13">;
+def CR3EQ : CRBIT<14, "14">;
+def CR3UN : CRBIT<15, "15">;
+def CR4LT : CRBIT<16, "16">;
+def CR4GT : CRBIT<17, "17">;
+def CR4EQ : CRBIT<18, "18">;
+def CR4UN : CRBIT<19, "19">;
+def CR5LT : CRBIT<20, "20">;
+def CR5GT : CRBIT<21, "21">;
+def CR5EQ : CRBIT<22, "22">;
+def CR5UN : CRBIT<23, "23">;
+def CR6LT : CRBIT<24, "24">;
+def CR6GT : CRBIT<25, "25">;
+def CR6EQ : CRBIT<26, "26">;
+def CR6UN : CRBIT<27, "27">;
+def CR7LT : CRBIT<28, "28">;
+def CR7GT : CRBIT<29, "29">;
+def CR7EQ : CRBIT<30, "30">;
+def CR7UN : CRBIT<31, "31">;
 
 // Condition registers
 let SubRegIndices = [sub_lt, sub_gt, sub_eq, sub_un] in {
@@ -368,8 +373,6 @@ def CRBITRC : RegisterClass<"PPC", [i1], 32,
 
 def CRRC : RegisterClass<"PPC", [i32], 32, (add CR0, CR1, CR5, CR6,
                                                 CR7, CR2, CR3, CR4)>;
-
-def CRRC0 : RegisterClass<"PPC", [i32], 32, (add CR0)>;
 
 // The CTR registers are not allocatable because they're used by the
 // decrement-and-branch instructions, and thus need to stay live across
