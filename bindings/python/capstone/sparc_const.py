@@ -1,10 +1,6 @@
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [sparc_const.py]
 
-# Enums corresponding to Sparc condition codes, both icc's and fcc's.
-
 SPARC_CC_INVALID = 0
-
-# Integer condition codes
 SPARC_CC_ICC_A = 8+256
 SPARC_CC_ICC_N = 0+256
 SPARC_CC_ICC_NE = 9+256
@@ -21,8 +17,6 @@ SPARC_CC_ICC_POS = 14+256
 SPARC_CC_ICC_NEG = 6+256
 SPARC_CC_ICC_VC = 15+256
 SPARC_CC_ICC_VS = 7+256
-
-# Floating condition codes
 SPARC_CC_FCC_A = 8+16+256
 SPARC_CC_FCC_N = 0+16+256
 SPARC_CC_FCC_U = 7+16+256
@@ -40,21 +34,15 @@ SPARC_CC_FCC_LE = 13+16+256
 SPARC_CC_FCC_ULE = 14+16+256
 SPARC_CC_FCC_O = 15+16+256
 
-# Branch hint
-
 SPARC_HINT_INVALID = 0
 SPARC_HINT_A = 1<<0
 SPARC_HINT_PT = 1<<1
 SPARC_HINT_PN = 1<<2
 
-# Operand type for instruction's operands
-
 SPARC_OP_INVALID = 0
 SPARC_OP_REG = 1
 SPARC_OP_IMM = 2
 SPARC_OP_MEM = 3
-
-# SPARC registers
 
 SPARC_REG_INVALID = 0
 SPARC_REG_F0 = 1
@@ -147,8 +135,6 @@ SPARC_REG_XCC = 87
 SPARC_REG_ENDING = 88
 SPARC_REG_O6 = SPARC_REG_SP
 SPARC_REG_I6 = SPARC_REG_FP
-
-# SPARC instruction
 
 SPARC_INS_INVALID = 0
 SPARC_INS_ADDCC = 1
@@ -431,14 +417,8 @@ SPARC_INS_RET = 277
 SPARC_INS_RETL = 278
 SPARC_INS_ENDING = 279
 
-# Group of SPARC instructions
-
 SPARC_GRP_INVALID = 0
-
-# Generic groups
 SPARC_GRP_JUMP = 1
-
-# Architecture-specific groups
 SPARC_GRP_HARDQUAD = 128
 SPARC_GRP_V9 = 129
 SPARC_GRP_VIS = 130

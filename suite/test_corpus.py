@@ -31,6 +31,7 @@ def test_file(fname):
         "CS_ARCH_SYSZ": CS_ARCH_SYSZ,
         "CS_ARCH_X86": CS_ARCH_X86,
         "CS_ARCH_XCORE": CS_ARCH_XCORE,
+        "CS_ARCH_RISCV": CS_ARCH_RISCV,
     }
     
     modes = {
@@ -57,6 +58,8 @@ def test_file(fname):
         "CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN,
         "CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN,
         "CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN,
+        "CS_MODE_RISCV32": CS_MODE_RISCV32,
+        "CS_MODE_RISCV64": CS_MODE_RISCV64,
     }
 
     mc_modes = {
@@ -87,6 +90,12 @@ def test_file(fname):
         ("CS_ARCH_M68K", "0"): 23,
         ("CS_ARCH_M680X", "CS_MODE_M680X_6809"): 24,
         ("CS_ARCH_EVM", "0"): 25,
+        ("CS_ARCH_BPF", "CS_MODE_LITTLE_ENDIAN+CS_MODE_BPF_CLASSIC"): 29,
+        ("CS_ARCH_BPF", "CS_MODE_LITTLE_ENDIAN+CS_MODE_BPF_EXTENDED"): 30,
+        ("CS_ARCH_BPF", "CS_MODE_BIG_ENDIAN+CS_MODE_BPF_CLASSIC"): 31,
+        ("CS_ARCH_BPF", "CS_MODE_BIG_ENDIAN+CS_MODE_BPF_EXTENDED"): 32,
+        ("CS_ARCH_RISCV", "CS_MODE_RISCV32"): 44,
+        ("CS_ARCH_RISCV", "CS_MODE_RISCV64"): 45,
     }
 
     #if not option in ('', 'None'):
@@ -96,14 +105,20 @@ def test_file(fname):
         # ignore all the input lines having # in front.
         if line.startswith('#'):
             continue
+        if line.startswith('// '):
+            line=line[3:]
         #print("Check %s" %line)
         code = line.split(' = ')[0]
         if len(code) < 2:
             continue
-        asm  = ''.join(line.split(' = ')[1:])
+        if code.find('//') >= 0:
+            continue
         hex_code = code.replace('0x', '')
         hex_code = hex_code.replace(',', '')
-        hex_data = hex_code.decode('hex')
+        try:
+            hex_data = hex_code.strip().decode('hex')
+        except:
+            print "skipping", hex_code
         fout = open("fuzz/corpus/%s_%s" % (os.path.basename(fname), hex_code), 'w')
         if (arch, mode) not in mc_modes:
             print "fail", arch, mode

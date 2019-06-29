@@ -55,6 +55,15 @@ Félix Cloutier: Xcode project.
 Benoit Lecocq: OpenBSD package.
 Christophe Avoinne (Hlide): Improve memory management for better performance.
 Michael Cohen & Nguyen Tan Cong: Python module installer.
+Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
+Felix Gröbert (Google): fuzz testing harness.
+Xipiter LLC: Capstone logo redesigned.
+Satoshi Tanda: Support Windows kernel driver.
+Tang Yuhang: cstool.
+Andrew Dutcher: better Python setup.
+Ruben Boonen: PowerShell binding.
+David Zimmer: VB6 binding.
+Philippe Antoine: Integration with oss-fuzz and various fixes.
 Bui Dinh Cuong: Explicit registers accessed for Arm64.
 Vincent Bénony: Explicit registers accessed for X86.
 Adel Gadllah, Francisco Alonso & Stefan Cornelius: RPM package.
@@ -68,4 +77,10 @@ Fotis Loukos: TMS320C64x architecture.
 Wolfgang Schwotzer: M680X architecture.
 Philippe Antoine: Integration with oss-fuzz and various fixes.
 Stephen Eckels (stevemk14ebr): x86 encoding features
-
+Tong Yu(Spike) & Kai Jern, Lau (xwings): WASM architecture.
+Sebastian Macke: MOS65XX architecture
+Ilya Leoshkevich: SystemZ architecture improvements.
+Do Minh Tuan: Regression testing tool (cstest)
+david942j: BPF (both classic and extended) architecture.
+fanfuqiang & citypw & porto703 : RISCV architecture.
+Josh "blacktop" Maine: Arm64 architecture improvements.

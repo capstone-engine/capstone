@@ -35,6 +35,9 @@ __all__ = [
     'CS_ARCH_TMS320C64X',
     'CS_ARCH_M680X',
     'CS_ARCH_EVM',
+    'CS_ARCH_BPF',
+    'CS_ARCH_RISCV',
+    'CS_ARCH_MOS65XX',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -52,6 +55,8 @@ __all__ = [
     'CS_MODE_V8',
     'CS_MODE_V9',
     'CS_MODE_QPX',
+    'CS_MODE_SPE',
+    'CS_MODE_BOOKE',
     'CS_MODE_M68K_000',
     'CS_MODE_M68K_010',
     'CS_MODE_M68K_020',
@@ -70,6 +75,17 @@ __all__ = [
     'CS_MODE_M680X_6811',
     'CS_MODE_M680X_CPU12',
     'CS_MODE_M680X_HCS08',
+    'CS_MODE_BPF_CLASSIC',
+    'CS_MODE_BPF_EXTENDED',
+    'CS_MODE_RISCV32',
+    'CS_MODE_RISCV64',
+    'CS_MODE_MOS65XX_6502',
+    'CS_MODE_MOS65XX_65C02',
+    'CS_MODE_MOS65XX_W65C02',
+    'CS_MODE_MOS65XX_65816',
+    'CS_MODE_MOS65XX_65816_LONG_M',
+    'CS_MODE_MOS65XX_65816_LONG_X',
+    'CS_MODE_MOS65XX_65816_LONG_MX',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -77,6 +93,7 @@ __all__ = [
     'CS_OPT_SYNTAX_ATT',
     'CS_OPT_SYNTAX_NOREGNAME',
     'CS_OPT_SYNTAX_MASM',
+    'CS_OPT_SYNTAX_MOTOROLA',
 
     'CS_OPT_DETAIL',
     'CS_OPT_MODE',
@@ -128,7 +145,7 @@ __all__ = [
 # Capstone C interface
 
 # API version
-CS_API_MAJOR = 4
+CS_API_MAJOR = 5
 CS_API_MINOR = 0
 
 # Package version
@@ -151,7 +168,11 @@ CS_ARCH_M68K = 8
 CS_ARCH_TMS320C64X = 9
 CS_ARCH_M680X = 10
 CS_ARCH_EVM = 11
-CS_ARCH_MAX = 12
+CS_ARCH_MOS65XX = 12
+CS_ARCH_WASM = 13
+CS_ARCH_BPF = 14
+CS_ARCH_RISCV = 15
+CS_ARCH_MAX = 16
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -169,6 +190,8 @@ CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
 CS_MODE_MIPS2 = (1 << 7)       # Mips II ISA
 CS_MODE_V9 = (1 << 4)          # Sparc V9 mode (for Sparc)
 CS_MODE_QPX = (1 << 4)         # Quad Processing eXtensions mode (PPC)
+CS_MODE_SPE = (1 << 5)         # Signal Processing Engine mode (PPC)
+CS_MODE_BOOKE = (1 << 6)       # Book-E mode (PPC)
 CS_MODE_M68K_000 = (1 << 1)    # M68K 68000 mode
 CS_MODE_M68K_010 = (1 << 2)    # M68K 68010 mode
 CS_MODE_M68K_020 = (1 << 3)    # M68K 68020 mode
@@ -188,6 +211,18 @@ CS_MODE_M680X_6809 = (1 << 7)  # M680X M6809 mode
 CS_MODE_M680X_6811 = (1 << 8)  # M680X M68HC11 mode
 CS_MODE_M680X_CPU12 = (1 << 9)  # M680X CPU12 mode
 CS_MODE_M680X_HCS08 = (1 << 10)  # M680X HCS08 mode
+CS_MODE_BPF_CLASSIC = 0          # Classic BPF mode (default)
+CS_MODE_BPF_EXTENDED = (1 << 0)  # Extended BPF mode
+CS_MODE_RISCV32 = (1 << 0)       # RISCV32 mode
+CS_MODE_RISCV64 = (1 << 1)       # RISCV64 mode
+CS_MODE_RISCVC  = (1 << 2)       # RISCV compressed mode
+CS_MODE_MOS65XX_6502 = (1 << 1) # MOS65XXX MOS 6502
+CS_MODE_MOS65XX_65C02 = (1 << 2) # MOS65XXX WDC 65c02
+CS_MODE_MOS65XX_W65C02 = (1 << 3) # MOS65XXX WDC W65c02
+CS_MODE_MOS65XX_65816 = (1 << 4) # MOS65XXX WDC 65816, 8-bit m/x
+CS_MODE_MOS65XX_65816_LONG_M = (1 << 5) # MOS65XXX WDC 65816, 16-bit m, 8-bit x 
+CS_MODE_MOS65XX_65816_LONG_X = (1 << 6) # MOS65XXX WDC 65816, 8-bit m, 16-bit x
+CS_MODE_MOS65XX_65816_LONG_MX = CS_MODE_MOS65XX_65816_LONG_M | CS_MODE_MOS65XX_65816_LONG_X
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -230,6 +265,7 @@ CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OP
 CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
 CS_OPT_SYNTAX_MASM = 4      # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_MOTOROLA = 5 # MOS65XX use $ as hex prefix
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -327,7 +363,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf, riscv
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -343,11 +379,14 @@ class _cs_arch(ctypes.Union):
         ('tms320c64x', tms320c64x.CsTMS320C64x),
         ('m680x', m680x.CsM680x),
         ('evm', evm.CsEvm),
+        ('mos65xx', mos65xx.CsMOS65xx),
+        ('bpf', bpf.CsBPF),
+        ('riscv', riscv.CsRISCV),
     )
 
 class _cs_detail(ctypes.Structure):
     _fields_ = (
-        ('regs_read', ctypes.c_uint16 * 12),
+        ('regs_read', ctypes.c_uint16 * 16),
         ('regs_read_count', ctypes.c_ubyte),
         ('regs_write', ctypes.c_uint16 * 20),
         ('regs_write_count', ctypes.c_ubyte),
@@ -361,7 +400,7 @@ class _cs_insn(ctypes.Structure):
         ('id', ctypes.c_uint),
         ('address', ctypes.c_uint64),
         ('size', ctypes.c_uint16),
-        ('bytes', ctypes.c_ubyte * 16),
+        ('bytes', ctypes.c_ubyte * 24),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 160),
         ('detail', ctypes.POINTER(_cs_detail)),
@@ -657,6 +696,12 @@ class CsInsn(object):
             (self.flags, self.operands) = m680x.get_arch_info(self._raw.detail.contents.arch.m680x)
         elif arch == CS_ARCH_EVM:
             (self.pop, self.push, self.fee) = evm.get_arch_info(self._raw.detail.contents.arch.evm)
+        elif arch == CS_ARCH_MOS65XX:
+            (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(self._raw.detail.contents.arch.mos65xx)
+        elif arch == CS_ARCH_BPF:
+            (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
+        elif arch == CS_ARCH_RISCV:
+            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
 
 
     def __getattr__(self, name):
@@ -828,6 +873,10 @@ class Cs(object):
 
         # default mnemonic for SKIPDATA
         self._skipdata_mnem = ".byte"
+        self._skipdata_cb = (None, None)
+        # store reference to option object to avoid it being freed
+        # because C code uses it by reference
+        self._skipdata_opt = _cs_opt_skipdata()
         self._skipdata = False
 
 
@@ -897,21 +946,44 @@ class Cs(object):
 
     @property
     def skipdata_setup(self):
-        return
+        return (self._skipdata_mnem,) + self._skipdata_cb
 
 
     @skipdata_setup.setter
     def skipdata_setup(self, opt):
-        _skipdata_opt = _cs_opt_skipdata()
         _mnem, _cb, _ud = opt
-        _skipdata_opt.mnemonic = _mnem.encode()
-        _skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb)
-        _skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
-        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(_skipdata_opt), ctypes.c_void_p))
+        self._skipdata_opt.mnemonic = _mnem.encode()
+        self._skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
+        self._skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
+        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(self._skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
             raise CsError(status)
 
-        self._skipdata_opt = _skipdata_opt
+        self._skipdata_mnem = _mnem
+        self._skipdata_cb = (_cb, _ud)
+
+
+    @property
+    def skipdata_mnem(self):
+        return self._skipdata_mnem
+
+
+    @skipdata_mnem.setter
+    def skipdata_mnem(self, mnem):
+        self.skipdata_setup = (mnem,) + self._skipdata_cb
+
+
+    @property
+    def skipdata_callback(self):
+        return self._skipdata_cb
+
+
+    @skipdata_callback.setter
+    def skipdata_callback(self, val):
+        if not isinstance(val, tuple):
+            val = (val, None)
+        func, data = val
+        self.skipdata_setup = (self._skipdata_mnem, func, data)
 
 
     # customize instruction mnemonic
@@ -1021,11 +1093,11 @@ class Cs(object):
             print(code)
             code = code.encode()
             print(code)'''
-        # Hack, unicorn's memory accessors give you back bytearrays, but they
-        # cause TypeErrors when you hand them into Capstone.
+        # Pass a bytearray by reference
+        size = len(code)
         if isinstance(code, bytearray):
-            code = bytes(code)
-        res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+            code = ctypes.byref(ctypes.c_char.from_buffer(code))
+        res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
                 for i in range(res):
@@ -1049,7 +1121,11 @@ class Cs(object):
             raise CsError(CS_ERR_DIET)
 
         all_insn = ctypes.POINTER(_cs_insn)()
-        res = _cs.cs_disasm(self.csh, code, len(code), offset, count, ctypes.byref(all_insn))
+        size = len(code)
+        # Pass a bytearray by reference
+        if isinstance(code, bytearray):
+            code = ctypes.byref(ctypes.c_char.from_buffer(code))
+        res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
                 for i in range(res):
@@ -1080,10 +1156,13 @@ def debug():
     else:
         diet = "standard"
 
-    archs = { "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K, \
-        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC, \
-        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X, \
-        "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM }
+    archs = {
+        "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K,
+        "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
+        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
+        "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
+        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV,
+    }
 
     all_archs = ""
     keys = archs.keys()

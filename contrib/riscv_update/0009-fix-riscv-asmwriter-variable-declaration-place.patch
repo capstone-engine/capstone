@@ -1,0 +1,38 @@
+From b1a7abb285aaa1436d563a30f65813513a512850 Mon Sep 17 00:00:00 2001
+From: fanfuqiang <feqin1023@gmail.com>
+Date: Fri, 8 Mar 2019 11:09:54 +0800
+Subject: [PATCH] fix riscv asmwriter variable declaration place
+
+---
+ llvm/utils/TableGen/AsmWriterEmitter.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/llvm/utils/TableGen/AsmWriterEmitter.cpp b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+index fff9f7677..90540000f 100644
+--- a/llvm/utils/TableGen/AsmWriterEmitter.cpp
++++ b/llvm/utils/TableGen/AsmWriterEmitter.cpp
+@@ -1170,6 +1170,8 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+   O << HeaderO.str();
+   O.indent(2) << "const char *AsmString;\n";
+ #ifdef CAPSTONE
++  O << "  unsigned I = 0;\n";
++  O << "  char *tmpString;\n";
+   O.indent(2) << "switch (MCInst_getOpcode(MI)) {\n";
+ #else
+   O.indent(2) << "switch (MI->getOpcode()) {\n";
+@@ -1180,9 +1182,11 @@ void AsmWriterEmitter::EmitPrintAliasInstruction(raw_ostream &O) {
+ 
+   // Code that prints the alias, replacing the operands with the ones from the
+   // MCInst.
++#ifndef CAPSTONE
+   O << "  unsigned I = 0;\n";
++#endif
+ #ifdef CAPSTONE
+-  O << "  char *tmpString = cs_strdup(AsmString);\n";
++  O << "  tmpString = cs_strdup(AsmString);\n";
+ #endif
+   O << "  while (AsmString[I] != ' ' && AsmString[I] != '\\t' &&\n";
+   O << "         AsmString[I] != '$' && AsmString[I] != '\\0')\n";
+-- 
+2.20.1
+

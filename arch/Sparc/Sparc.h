@@ -20,7 +20,7 @@
 
 #include "capstone/sparc.h"
 
-inline static char *SPARCCondCodeToString(sparc_cc CC)
+inline static const char *SPARCCondCodeToString(sparc_cc CC)
 {
 	switch (CC) {
 		default:	return NULL;	// unreachable

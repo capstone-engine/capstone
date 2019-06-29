@@ -1,7 +1,8 @@
 /* Capstone Disassembler Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
+/* By Daniel Collin, 2013-2019 */
 
 #include <stdio.h>
+#include <assert.h>
 
 #include <capstone/platform.h>
 #include <capstone/capstone.h>
@@ -134,6 +135,14 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: FP_DOUBLE\n", i);
 				printf("\t\t\toperands[%u].dimm: %lf\n", i, op->dimm);
 				break;
+			case M68K_OP_REG_BITS:
+				printf("\t\toperands[%u].type: REG_BITS = $%x\n", i, op->register_bits);
+				break;
+			case M68K_OP_REG_PAIR:
+				printf("\t\toperands[%u].type: REG_PAIR = (%s, %s)\n", i,
+					cs_reg_name(handle, op->reg_pair.reg_0),
+					cs_reg_name(handle, op->reg_pair.reg_1));
+				break;
 		}
 	}
 
@@ -142,7 +151,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define M68K_CODE "\x4C\x00\x54\x04\x48\xe7\xe0\x30\x4C\xDF\x0C\x07\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
+#define M68K_CODE "\xf0\x10\xf0\x00\x48\xaf\xff\xff\x7f\xff\x11\xb0\x01\x37\x7f\xff\xff\xff\x12\x34\x56\x78\x01\x33\x10\x10\x10\x10\x32\x32\x32\x32\x4C\x00\x54\x04\x48\xe7\xe0\x30\x4C\xDF\x0C\x07\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
 	struct platform platforms[] = {
 		{
 			CS_ARCH_M68K,
@@ -177,6 +186,8 @@ static void test()
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
+				assert(address == insn[j].address && "this means the size of the previous instruction was incorrect");
+				address += insn[j].size;
 				printf("0x%" PRIx64 ":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 				print_insn_detail(&insn[j]);
 			}

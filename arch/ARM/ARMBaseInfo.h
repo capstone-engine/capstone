@@ -15,7 +15,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_ARMBASEINFO_H
 #define CS_ARMBASEINFO_H
@@ -70,7 +70,7 @@ inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC)
 	}
 }
 
-inline static char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC)
+inline static const char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC)
 {
 	switch (CC) {
 		case ARMCC_EQ:  return "eq";
@@ -92,7 +92,7 @@ inline static char *ARMCC_ARMCondCodeToString(ARMCC_CondCodes CC)
 	}
 }
 
-inline static char *ARM_PROC_IFlagsToString(unsigned val)
+inline static const char *ARM_PROC_IFlagsToString(unsigned val)
 {
 	switch (val) {
 		case ARM_CPSFLAG_F: return "f";
@@ -102,7 +102,7 @@ inline static char *ARM_PROC_IFlagsToString(unsigned val)
 	}
 }
 
-inline static char *ARM_PROC_IModToString(unsigned val)
+inline static const char *ARM_PROC_IModToString(unsigned val)
 {
 	switch (val) {
 		case ARM_CPSMODE_IE: return "ie";
@@ -111,9 +111,10 @@ inline static char *ARM_PROC_IModToString(unsigned val)
 	}
 }
 
-inline static char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
+inline static const char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
 {
-	switch (val) {
+	// TODO: add details
+	switch (val + 1) {
 		default: return "BUGBUG";
 		case ARM_MB_SY:    return "sy";
 		case ARM_MB_ST:    return "st";
@@ -121,16 +122,16 @@ inline static char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
 		case ARM_MB_RESERVED_12: return "#0xc";
 		case ARM_MB_ISH:   return "ish";
 		case ARM_MB_ISHST: return "ishst";
-		case ARM_MB_ISHLD: return HasV8 ?  "ishld" : "#0x9";
-		case ARM_MB_RESERVED_8: return "#0x8";
+		case ARM_MB_ISHLD: return HasV8 ?  "ishld" : "#9";
+		case ARM_MB_RESERVED_8: return "#8";
 		case ARM_MB_NSH:   return "nsh";
 		case ARM_MB_NSHST: return "nshst";
-		case ARM_MB_NSHLD: return HasV8 ? "nshld" : "#0x5";
-		case ARM_MB_RESERVED_4: return "#0x4";
+		case ARM_MB_NSHLD: return HasV8 ? "nshld" : "#5";
+		case ARM_MB_RESERVED_4: return "#4";
 		case ARM_MB_OSH:   return "osh";
 		case ARM_MB_OSHST: return "oshst";
-		case ARM_MB_OSHLD: return HasV8 ? "oshld" : "#0x1";
-		case ARM_MB_RESERVED_0: return "#0x0";
+		case ARM_MB_OSHLD: return HasV8 ? "oshld" : "#1";
+		case ARM_MB_RESERVED_0: return "#0";
 	}
 }
 
@@ -153,7 +154,7 @@ enum ARM_ISB_InstSyncBOpt {
     ARM_ISB_SY = 15
 };
 
-inline static char *ARM_ISB_InstSyncBOptToString(unsigned val)
+inline static const char *ARM_ISB_InstSyncBOptToString(unsigned val)
 {
 	switch (val) {
 		default: // never reach
@@ -222,7 +223,7 @@ typedef enum ARMII_AddrMode {
 	ARMII_AddrMode_i12    = 16
 } ARMII_AddrMode;
 
-inline static char *ARMII_AddrModeToString(ARMII_AddrMode addrmode)
+inline static const char *ARMII_AddrModeToString(ARMII_AddrMode addrmode)
 {
 	switch (addrmode) {
 		case ARMII_AddrModeNone:    return "AddrModeNone";
@@ -428,5 +429,58 @@ enum {
 	ARMII_I_BitShift     = 25,
 	ARMII_CondShift      = 28
 };
+
+typedef struct MClassSysReg {
+	const char *Name;
+	arm_sysreg sysreg;
+	uint16_t M1Encoding12;
+	uint16_t M2M3Encoding8;
+	uint16_t Encoding;
+	int FeaturesRequired[2];	// 2 is enough for MClassSysRegsList
+} MClassSysReg;
+
+enum TraceSyncBOpt {
+	CSYNC = 0
+};
+
+MClassSysReg *lookupMClassSysRegByM2M3Encoding8(uint16_t encoding);
+MClassSysReg *lookupMClassSysRegByM1Encoding12(uint16_t M1Encoding12);
+
+// returns APSR with _<bits> qualifier.
+// Note: ARMv7-M deprecates using MSR APSR without a _<bits> qualifier
+static inline MClassSysReg *lookupMClassSysRegAPSRNonDeprecated(unsigned SYSm)
+{
+	return lookupMClassSysRegByM2M3Encoding8((1<<9) | (SYSm & 0xFF));
+}
+
+static inline MClassSysReg *lookupMClassSysRegBy8bitSYSmValue(unsigned SYSm)
+{
+	return lookupMClassSysRegByM2M3Encoding8((1<<8) | (SYSm & 0xFF));
+}
+
+// returns true if TestFeatures are all present in FeaturesRequired
+static inline bool MClassSysReg_isInRequiredFeatures(MClassSysReg *TheReg, int TestFeatures)
+{
+	return (TheReg->FeaturesRequired[0] == TestFeatures || TheReg->FeaturesRequired[1] == TestFeatures);
+}
+
+// lookup system register using 12-bit SYSm value.
+// Note: the search is uniqued using M1 mask
+static inline MClassSysReg *lookupMClassSysRegBy12bitSYSmValue(unsigned SYSm)
+{
+  return lookupMClassSysRegByM1Encoding12(SYSm);
+}
+
+static inline const char *ARM_TSB_TraceSyncBOptToString(unsigned val)
+{
+	switch (val) {
+		default:
+			// llvm_unreachable("Unknown trace synchronization barrier operation");
+			return NULL;
+
+		case CSYNC:
+			return "csync";
+	}
+}
 
 #endif

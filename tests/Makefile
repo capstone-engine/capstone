@@ -44,7 +44,7 @@ BIN_EXT = .exe
 AR_EXT = lib
 else
 # mingw?
-IS_MINGW := $(shell $(CC) --version | grep -i mingw | wc -l)
+IS_MINGW := $(shell $(CC) --version 2>/dev/null | grep -i "\(mingw\|MSYS\)" | wc -l)
 ifeq ($(IS_MINGW),1)
 CFLAGS := $(CFLAGS:-fPIC=)
 BIN_EXT = .exe
@@ -112,6 +112,22 @@ endif
 ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_EVM
 SOURCES += test_evm.c
+endif
+ifneq (,$(findstring riscv,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_RISCV
+SOURCES += test_riscv.c
+endif
+ifneq (,$(findstring wasm,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_WASM
+SOURCES += test_wasm.c
+endif
+ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_MOS65XX
+SOURCES += test_mos65xx.c
+endif
+ifneq (,$(findstring bpf,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_BPF
+SOURCES += test_bpf.c
 endif
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))

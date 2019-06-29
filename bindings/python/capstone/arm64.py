@@ -34,7 +34,6 @@ class Arm64Op(ctypes.Structure):
     _fields_ = (
         ('vector_index', ctypes.c_int),
         ('vas', ctypes.c_int),
-        ('vess', ctypes.c_int),
         ('shift', Arm64OpShift),
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),

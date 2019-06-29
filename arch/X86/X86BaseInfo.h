@@ -18,7 +18,7 @@
 #define CS_X86_BASEINFO_H
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 // Enums for memory operand decoding.  Each memory operand is represented with
 // a 5 operand sequence in the form:
@@ -35,6 +35,16 @@ enum {
 
 	/// AddrNumOperands - Total number of operands in a memory reference.
 	X86_AddrNumOperands = 5
+};
+
+enum IPREFIXES {
+	X86_IP_NO_PREFIX = 0,
+	X86_IP_HAS_OP_SIZE = 1,
+	X86_IP_HAS_AD_SIZE = 2,
+	X86_IP_HAS_REPEAT_NE = 4,
+	X86_IP_HAS_REPEAT = 8,
+	X86_IP_HAS_LOCK = 16,
+	X86_IP_HAS_NOTRACK = 64
 };
 
 #endif

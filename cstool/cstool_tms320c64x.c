@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <capstone/capstone.h>
 
-void print_string_hex(const char *comment, unsigned char *str, size_t len);
+void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);
 
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins)
 {

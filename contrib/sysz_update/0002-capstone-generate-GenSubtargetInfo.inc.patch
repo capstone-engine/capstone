@@ -1,0 +1,86 @@
+From 46ca491e1bbbc9ace2a91fe6a7b112c83b9b88cc Mon Sep 17 00:00:00 2001
+From: mephi42 <mephi42@gmail.com>
+Date: Tue, 7 Aug 2018 17:42:59 +0200
+Subject: [PATCH 2/7] capstone: generate *GenSubtargetInfo.inc
+
+---
+ utils/TableGen/SubtargetEmitter.cpp | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/utils/TableGen/SubtargetEmitter.cpp b/utils/TableGen/SubtargetEmitter.cpp
+index c5da8d8142f..98ab3240472 100644
+--- a/utils/TableGen/SubtargetEmitter.cpp
++++ b/utils/TableGen/SubtargetEmitter.cpp
+@@ -147,7 +147,9 @@ void SubtargetEmitter::Enumeration(raw_ostream &OS) {
+   if (N > MAX_SUBTARGET_FEATURES)
+     PrintFatalError("Too many subtarget features! Bump MAX_SUBTARGET_FEATURES.");
+ 
++#ifndef CAPSTONE
+   OS << "namespace " << Target << " {\n";
++#endif
+ 
+   // Open enumeration.
+   OS << "enum {\n";
+@@ -158,12 +160,22 @@ void SubtargetEmitter::Enumeration(raw_ostream &OS) {
+     Record *Def = DefList[i];
+ 
+     // Get and emit name
+-    OS << "  " << Def->getName() << " = " << i << ",\n";
++    OS << "  "
++#ifdef CAPSTONE
++       << Target << "_"
++#endif
++       << Def->getName() << " = "
++#ifdef CAPSTONE
++       << "1ULL << "
++#endif
++       << i << ",\n";
+   }
+ 
+   // Close enumeration and namespace
+   OS << "};\n";
++#ifndef CAPSTONE
+   OS << "} // end namespace " << Target << "\n";
++#endif
+ }
+ 
+ //
+@@ -1709,14 +1721,27 @@ void SubtargetEmitter::emitGenMCSubtargetInfo(raw_ostream &OS) {
+ void SubtargetEmitter::run(raw_ostream &OS) {
+   emitSourceFileHeader("Subtarget Enumeration Source Fragment", OS);
+ 
++#ifdef CAPSTONE
++  OS << "/* Capstone Disassembly Engine, http://www.capstone-engine.org */\n"
++        "/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */\n"
++        "\n";
++#endif
++
+   OS << "\n#ifdef GET_SUBTARGETINFO_ENUM\n";
+   OS << "#undef GET_SUBTARGETINFO_ENUM\n\n";
+ 
++#ifndef CAPSTONE
+   OS << "namespace llvm {\n";
++#endif
+   Enumeration(OS);
++#ifdef CAPSTONE
++  OS << "\n";
++#else
+   OS << "} // end namespace llvm\n\n";
++#endif
+   OS << "#endif // GET_SUBTARGETINFO_ENUM\n\n";
+ 
++#ifndef CAPSTONE
+   OS << "\n#ifdef GET_SUBTARGETINFO_MC_DESC\n";
+   OS << "#undef GET_SUBTARGETINFO_MC_DESC\n\n";
+ 
+@@ -1857,6 +1882,7 @@ void SubtargetEmitter::run(raw_ostream &OS) {
+   OS << "} // end namespace llvm\n\n";
+ 
+   OS << "#endif // GET_SUBTARGETINFO_CTOR\n\n";
++#endif
+ }
+ 
+ namespace llvm {
+-- 
+2.19.1
+

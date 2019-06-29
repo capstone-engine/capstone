@@ -16,6 +16,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "M68KInstPrinter.h"
+
 #include "M68KDisassembler.h"
 
 #include "../../cs_priv.h"
@@ -70,7 +72,7 @@ static const char* s_instruction_names[] = {
 
 
 #ifndef CAPSTONE_DIET
-const char* getRegName(m68k_reg reg)
+static const char* getRegName(m68k_reg reg)
 {
 	return s_reg_names[(int)reg];
 }
@@ -108,6 +110,11 @@ static void registerBits(SStream* O, const cs_m68k_op* op)
 
 	buffer[0] = 0;
 
+	if (!data) {
+		SStream_concat(O, "%s", "#$0");
+		return;
+	}
+
 	printRegbitsRange(buffer, data & 0xff, "d");
 	printRegbitsRange(buffer, (data >> 8) & 0xff, "a");
 	printRegbitsRange(buffer, (data >> 16) & 0xff, "fp");
@@ -117,11 +124,11 @@ static void registerBits(SStream* O, const cs_m68k_op* op)
 
 static void registerPair(SStream* O, const cs_m68k_op* op)
 {
-	SStream_concat(O, "%s:%s", s_reg_names[M68K_REG_D0 + op->reg_pair.reg_0],
-			s_reg_names[M68K_REG_D0 + op->reg_pair.reg_1]);
+	SStream_concat(O, "%s:%s", s_reg_names[op->reg_pair.reg_0],
+			s_reg_names[op->reg_pair.reg_1]);
 }
 
-void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst, const cs_m68k_op* op)
+static void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst, const cs_m68k_op* op)
 {
 	switch (op->address_mode) {
 		case M68K_AM_NONE:

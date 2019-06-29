@@ -1,9 +1,12 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_PRIV_H
 #define CS_PRIV_H
 
+#ifdef CAPSTONE_DEBUG
+#include <assert.h>
+#endif
 #include <capstone/capstone.h>
 
 #include "MCInst.h"
@@ -22,7 +25,7 @@ typedef const char *(*GetName_t)(csh handle, unsigned int id);
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // return register name, given register ID
-typedef char *(*GetRegisterName_t)(unsigned RegNo);
+typedef const char *(*GetRegisterName_t)(unsigned RegNo);
 
 // return registers accessed by instruction
 typedef void (*GetRegisterAccess_t)(const cs_insn *insn,
@@ -70,7 +73,7 @@ struct cs_struct {
 	bool skipdata;	// set this to True if we skip data when disassembling
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
-	uint8_t *regsize_map;	// map to register size (x86-only for now)
+	const uint8_t *regsize_map;	// map to register size (x86-only for now)
 	GetRegisterAccess_t reg_access;
 	struct insn_mnem *mnem_list;	// linked list of customized instruction mnemonic
 };
@@ -85,5 +88,13 @@ extern cs_calloc_t cs_mem_calloc;
 extern cs_realloc_t cs_mem_realloc;
 extern cs_free_t cs_mem_free;
 extern cs_vsnprintf_t cs_vsnprintf;
+
+// By defining CAPSTONE_DEBUG assertions can be used.
+// For any release build CAPSTONE_DEBUG has to be undefined.
+#ifdef CAPSTONE_DEBUG
+#define CS_ASSERT(expr) assert(expr)
+#else
+#define CS_ASSERT(expr)
+#endif
 
 #endif

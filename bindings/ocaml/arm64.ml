@@ -32,7 +32,6 @@ type arm64_op_value =
 type arm64_op = {
 	vector_index: int;
 	vas: int;
-	vess: int;
 	shift: arm64_op_shift;
 	ext: int;
 	value: arm64_op_value;

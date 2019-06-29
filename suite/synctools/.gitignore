@@ -1,0 +1,9 @@
+*.inc
+
+disassemblertables_reduce2
+disassemblertables2
+ppc_gen_reg
+arm64_gen_vreg
+
+strinforeduce/strinforeduce
+strinforeduce/strinforeduce_reduce

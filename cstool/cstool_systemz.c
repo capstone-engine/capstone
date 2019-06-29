@@ -5,7 +5,7 @@
 
 #include <capstone/capstone.h>
 
-void print_string_hex(char *comment, unsigned char *str, size_t len);
+void print_insn_detail_sysz(csh handle, cs_insn *ins);
 
 void print_insn_detail_sysz(csh handle, cs_insn *ins)
 {

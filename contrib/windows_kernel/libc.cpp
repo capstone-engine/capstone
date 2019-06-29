@@ -5,6 +5,7 @@
 
 #include "libc.h"
 #include <memory>
+#include <Ntintsafe.h>
 
 #pragma warning(push)               
 #pragma warning (disable : 4565)
@@ -19,6 +20,7 @@ struct MEMBLOCK
 	size_t	size;
 #pragma warning(push)               
 #pragma warning (disable : 4200)
+	__declspec(align(MEMORY_ALLOCATION_ALIGNMENT))
 	char data[0]; 
 #pragma warning(pop)
 };
@@ -33,10 +35,17 @@ __cdecl malloc(
 	__in size_t size
 	)
 {
+	/* A specially crafted size value can trigger the overflow.
+	If the sum in a value that overflows or underflows the capacity of the type,
+	the function returns nullptr. */
+	size_t number_of_bytes = 0;
+	if (!NT_SUCCESS(RtlSizeTAdd(size, sizeof(MEMBLOCK), &number_of_bytes))){
+		return nullptr;
+	}
 	MEMBLOCK *pBlock = static_cast<MEMBLOCK*>(
 		ExAllocatePoolWithTag(
 			NonPagedPoolNxCacheAligned, 
-			size + sizeof(MEMBLOCK), 
+			number_of_bytes, 
 			_LIBC_POOL_TAG));
 
 	if (nullptr == pBlock)

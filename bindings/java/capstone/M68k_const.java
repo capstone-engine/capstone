@@ -4,8 +4,6 @@ package capstone;
 public class M68k_const {
 	public static final int M68K_OPERAND_COUNT = 4;
 
-	// M68K registers and special registers
-
 	public static final int M68K_REG_INVALID = 0;
 	public static final int M68K_REG_D0 = 1;
 	public static final int M68K_REG_D1 = 2;
@@ -55,8 +53,6 @@ public class M68k_const {
 	public static final int M68K_REG_FPIAR = 46;
 	public static final int M68K_REG_ENDING = 47;
 
-	// M68K Addressing Modes
-
 	public static final int M68K_AM_NONE = 0;
 	public static final int M68K_AM_REG_DIRECT_DATA = 1;
 	public static final int M68K_AM_REG_DIRECT_ADDR = 2;
@@ -78,8 +74,6 @@ public class M68k_const {
 	public static final int M68K_AM_IMMEDIATE = 18;
 	public static final int M68K_AM_BRANCH_DISPLACEMENT = 19;
 
-	// Operand type for instruction's operands
-
 	public static final int M68K_OP_INVALID = 0;
 	public static final int M68K_OP_REG = 1;
 	public static final int M68K_OP_IMM = 2;
@@ -89,8 +83,6 @@ public class M68k_const {
 	public static final int M68K_OP_REG_BITS = 6;
 	public static final int M68K_OP_REG_PAIR = 7;
 	public static final int M68K_OP_BR_DISP = 8;
-
-	// Operand type for instruction's operands
 
 	public static final int M68K_OP_BR_DISP_SIZE_INVALID = 0;
 	public static final int M68K_OP_BR_DISP_SIZE_BYTE = 1;
@@ -110,8 +102,6 @@ public class M68k_const {
 	public static final int M68K_SIZE_TYPE_INVALID = 0;
 	public static final int M68K_SIZE_TYPE_CPU = 1;
 	public static final int M68K_SIZE_TYPE_FPU = 2;
-
-	// M68K instruction
 
 	public static final int M68K_INS_INVALID = 0;
 	public static final int M68K_INS_ABCD = 1;
@@ -489,8 +479,6 @@ public class M68k_const {
 	public static final int M68K_INS_UNLK = 373;
 	public static final int M68K_INS_UNPK = 374;
 	public static final int M68K_INS_ENDING = 375;
-
-	// Group of M68K instructions
 
 	public static final int M68K_GRP_INVALID = 0;
 	public static final int M68K_GRP_JUMP = 1;

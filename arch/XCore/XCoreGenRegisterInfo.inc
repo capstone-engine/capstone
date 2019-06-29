@@ -7,7 +7,7 @@
 \*===----------------------------------------------------------------------===*/
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 
 #ifdef GET_REGINFO_ENUM
@@ -54,11 +54,11 @@ enum {
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
 
-static MCPhysReg XCoreRegDiffLists[] = {
+static const MCPhysReg XCoreRegDiffLists[] = {
   /* 0 */ 65535, 0,
 };
 
-static uint16_t XCoreSubRegIdxLists[] = {
+static const uint16_t XCoreSubRegIdxLists[] = {
   /* 0 */ 0,
 };
 
@@ -83,28 +83,28 @@ static MCRegisterDesc XCoreRegDesc[] = { // Descriptors
 };
 
   // RRegs Register Class...
-  static MCPhysReg RRegs[] = {
-    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11, XCore_CP, XCore_DP, XCore_SP, XCore_LR, 
+  static const MCPhysReg RRegs[] = {
+    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11, XCore_CP, XCore_DP, XCore_SP, XCore_LR,
   };
 
   // RRegs Bit set.
-  static uint8_t RRegsBits[] = {
-    0xfe, 0xff, 0x01, 
+  static const uint8_t RRegsBits[] = {
+    0xfe, 0xff, 0x01,
   };
 
   // GRRegs Register Class...
-  static MCPhysReg GRRegs[] = {
-    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11, 
+  static const MCPhysReg GRRegs[] = {
+    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11,
   };
 
   // GRRegs Bit set.
-  static uint8_t GRRegsBits[] = {
-    0xe0, 0xff, 0x01, 
+  static const uint8_t GRRegsBits[] = {
+    0xe0, 0xff, 0x01,
   };
 
 static MCRegisterClass XCoreMCRegisterClasses[] = {
-  { RRegs, RRegsBits, 1, 16, sizeof(RRegsBits), XCore_RRegsRegClassID, 4, 4, 1, 0 },
-  { GRRegs, GRRegsBits, 0, 12, sizeof(GRRegsBits), XCore_GRRegsRegClassID, 4, 4, 1, 1 },
+  { RRegs, RRegsBits, sizeof(RRegsBits) },
+  { GRRegs, GRRegsBits, sizeof(GRRegsBits) },
 };
 
 #endif // GET_REGINFO_MC_DESC

@@ -1,11 +1,27 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_X86_MAP_H
 #define CS_X86_MAP_H
 
 #include "capstone/capstone.h"
 #include "../../cs_priv.h"
+
+// map instruction to its characteristics
+typedef struct insn_map_x86 {
+	unsigned short id;
+	unsigned short mapid;
+	unsigned char is64bit;
+#ifndef CAPSTONE_DIET
+	uint16_t regs_use[12]; // list of implicit registers used by this instruction
+	uint16_t regs_mod[20]; // list of implicit registers modified by this instruction
+	unsigned char groups[8]; // list of group this instruction belong to
+	bool branch;	// branch instruction?
+	bool indirect_branch;	// indirect branch instruction?
+#endif
+} insn_map_x86;
+
+extern const insn_map_x86 insns[];
 
 // map sib_base to x86_reg
 x86_reg x86_map_sib_base(int r);
@@ -36,15 +52,15 @@ x86_reg X86_insn_reg_att(unsigned int id, enum cs_ac_type *access);
 bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2);
 bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1, x86_reg *reg2, enum cs_ac_type *access2);
 
-extern uint64_t arch_masks[9];
+extern const uint64_t arch_masks[9];
 
 // handle LOCK/REP/REPNE prefixes
 // return True if we patch mnemonic, like in MULPD case
 bool X86_lockrep(MCInst *MI, SStream *O);
 
 // map registers to sizes
-extern uint8_t regsize_map_32[];
-extern uint8_t regsize_map_64[];
+extern const uint8_t regsize_map_32[];
+extern const uint8_t regsize_map_64[];
 
 void op_addReg(MCInst *MI, int reg);
 void op_addImm(MCInst *MI, int v);
@@ -70,5 +86,9 @@ void X86_reg_access(const cs_insn *insn,
 
 // given the instruction id, return the size of its immediate operand (or 0)
 uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size);
+
+unsigned short X86_register_map(unsigned short id);
+
+unsigned int find_insn(unsigned int id);
 
 #endif

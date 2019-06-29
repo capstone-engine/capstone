@@ -12,9 +12,9 @@ static const ULONG CS_WINKERNEL_POOL_TAG = 'kwsC';
 // A structure to implement realloc()
 typedef struct _CS_WINKERNEL_MEMBLOCK {
 	size_t size;   // A number of bytes allocated
-	char data[1];  // An address returned to a caller
+	__declspec(align(MEMORY_ALLOCATION_ALIGNMENT))
+	char data[ANYSIZE_ARRAY];  // An address returned to a caller
 } CS_WINKERNEL_MEMBLOCK;
-C_ASSERT(sizeof(CS_WINKERNEL_MEMBLOCK) == sizeof(void *) * 2);
 
 
 // free()
@@ -39,7 +39,7 @@ void * CAPSTONE_API cs_winkernel_malloc(size_t size)
 	// A specially crafted size value can trigger the overflow.
 	// If the sum in a value that overflows or underflows the capacity of the type,
 	// the function returns NULL.
-	if (!NT_SUCCESS(RtlSizeTAdd(size, sizeof(CS_WINKERNEL_MEMBLOCK), &number_of_bytes))) {
+	if (!NT_SUCCESS(RtlSizeTAdd(size, FIELD_OFFSET(CS_WINKERNEL_MEMBLOCK, data), &number_of_bytes))) {
 		return NULL;
 	}
 	block = (CS_WINKERNEL_MEMBLOCK *)ExAllocatePoolWithTag(

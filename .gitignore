@@ -68,6 +68,13 @@ tests/test_m68k
 tests/test_tms320c64x
 tests/test_m680x
 tests/test_evm
+tests/test_wasm
+tests/test_mos65xx
+tests/test_bpf
+tests/test_riscv
+
+# regress binaries
+suite/regress/invalid_read_in_print_operand
 
 # vim tmp file
 *.swp
@@ -94,6 +101,10 @@ build*/
 *.backup
 *.VC.db
 *.VC.opendb
+.vscode/
+
+# CMake build directories
+build*/
 
 # Xcode
 xcode/Capstone.xcodeproj/xcuserdata
@@ -104,6 +115,10 @@ test_arm_regression
 test_arm_regression.o
 fuzz_harness
 test_iter_benchmark
+fuzz_bindisasm
+fuzz_disasm
+fuzz_decode_platform
+capstone_get_setup
 
 
 *.s

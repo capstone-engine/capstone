@@ -91,7 +91,8 @@ def test_file(fname):
         "CS_ARCH_SYSZ": CS_ARCH_SYSZ,
         "CS_ARCH_X86": CS_ARCH_X86,
         "CS_ARCH_XCORE": CS_ARCH_XCORE,
-        "CS_ARCH_M68K": CS_ARCH_M68K,
+        "CS_ARCH_RISCV": CS_ARCH_RISCV
+        # "CS_ARCH_M68K": CS_ARCH_M68K,
     }
     
     modes = {
@@ -118,6 +119,8 @@ def test_file(fname):
         "CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN,
         "CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN,
         "CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN,
+        "CS_MODE_RISCV32": CS_MODE_RISCV32,
+        "CS_MODE_RISCV64": CS_MODE_RISCV64,
     }
     
     options = {
@@ -145,6 +148,8 @@ def test_file(fname):
         ('CS_ARCH_SPARC', 'CS_MODE_BIG_ENDIAN'): ['-triple=sparc'],
         ('CS_ARCH_SPARC', 'CS_MODE_BIG_ENDIAN+CS_MODE_V9'): ['-triple=sparcv9'],
         ('CS_ARCH_SYSZ', '0'): ['-triple=s390x', '-mcpu=z196'],
+        ('CS_ARCH_RISCV', 'CS_MODE_RISCV32'): ['-triple=riscv32'],
+        ('CS_ARCH_RISCV', 'CS_MODE_RISCV64'): ['-triple=riscv64'],
     }
 
     #if not option in ('', 'None'):

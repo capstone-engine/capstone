@@ -3,7 +3,7 @@
 
 #include <capstone/capstone.h>
 
-void print_string_hex(char *comment, unsigned char *str, size_t len);
+void print_insn_detail_arm(csh handle, cs_insn *ins);
 
 void print_insn_detail_arm(csh handle, cs_insn *ins)
 {
@@ -49,7 +49,7 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.scale != 1)
-					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);
+					printf("\t\t\toperands[%u].mem.scale: %d\n", i, op->mem.scale);
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 				if (op->mem.lshift != 0)

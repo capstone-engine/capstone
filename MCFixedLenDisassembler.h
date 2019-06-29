@@ -10,7 +10,7 @@
 //===----------------------------------------------------------------------===//
 
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #ifndef CS_LLVM_MC_MCFIXEDLENDISASSEMBLER_H
 #define CS_LLVM_MC_MCFIXEDLENDISASSEMBLER_H
@@ -23,6 +23,8 @@ enum DecoderOps {
 							  //                uleb128 Val, uint16_t NumToSkip)
 	MCD_OPC_CheckPredicate,   // OPC_CheckPredicate(uleb128 PIdx, uint16_t NumToSkip)
 	MCD_OPC_Decode,           // OPC_Decode(uleb128 Opcode, uleb128 DIdx)
+        MCD_OPC_TryDecode,        // OPC_TryDecode(uleb128 Opcode, uleb128 DIdx,
+                                  //               uint16_t NumToSkip)	
 	MCD_OPC_SoftFail,         // OPC_SoftFail(uleb128 PMask, uleb128 NMask)
 	MCD_OPC_Fail              // OPC_Fail()
 };

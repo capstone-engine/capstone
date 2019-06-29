@@ -18,63 +18,63 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-//> Enums corresponding to Sparc condition codes, both icc's and fcc's.
+/// Enums corresponding to Sparc condition codes, both icc's and fcc's.
 typedef enum sparc_cc {
-	SPARC_CC_INVALID = 0,	// invalid CC (default)
-	//> Integer condition codes
-	SPARC_CC_ICC_A   =  8+256,  // Always
-	SPARC_CC_ICC_N   =  0+256,  // Never
-	SPARC_CC_ICC_NE  =  9+256,  // Not Equal
-	SPARC_CC_ICC_E   =  1+256,  // Equal
-	SPARC_CC_ICC_G   = 10+256,  // Greater
-	SPARC_CC_ICC_LE  =  2+256,  // Less or Equal
-	SPARC_CC_ICC_GE  = 11+256,  // Greater or Equal
-	SPARC_CC_ICC_L   =  3+256,  // Less
-	SPARC_CC_ICC_GU  = 12+256,  // Greater Unsigned
-	SPARC_CC_ICC_LEU =  4+256,  // Less or Equal Unsigned
-	SPARC_CC_ICC_CC  = 13+256,  // Carry Clear/Great or Equal Unsigned
-	SPARC_CC_ICC_CS  =  5+256,  // Carry Set/Less Unsigned
-	SPARC_CC_ICC_POS = 14+256,  // Positive
-	SPARC_CC_ICC_NEG =  6+256,  // Negative
-	SPARC_CC_ICC_VC  = 15+256,  // Overflow Clear
-	SPARC_CC_ICC_VS  =  7+256,  // Overflow Set
+	SPARC_CC_INVALID = 0,	///< invalid CC (default)
+	// Integer condition codes
+	SPARC_CC_ICC_A   =  8+256,  ///< Always
+	SPARC_CC_ICC_N   =  0+256,  ///< Never
+	SPARC_CC_ICC_NE  =  9+256,  ///< Not Equal
+	SPARC_CC_ICC_E   =  1+256,  ///< Equal
+	SPARC_CC_ICC_G   = 10+256,  ///< Greater
+	SPARC_CC_ICC_LE  =  2+256,  ///< Less or Equal
+	SPARC_CC_ICC_GE  = 11+256,  ///< Greater or Equal
+	SPARC_CC_ICC_L   =  3+256,  ///< Less
+	SPARC_CC_ICC_GU  = 12+256,  ///< Greater Unsigned
+	SPARC_CC_ICC_LEU =  4+256,  ///< Less or Equal Unsigned
+	SPARC_CC_ICC_CC  = 13+256,  ///< Carry Clear/Great or Equal Unsigned
+	SPARC_CC_ICC_CS  =  5+256,  ///< Carry Set/Less Unsigned
+	SPARC_CC_ICC_POS = 14+256,  ///< Positive
+	SPARC_CC_ICC_NEG =  6+256,  ///< Negative
+	SPARC_CC_ICC_VC  = 15+256,  ///< Overflow Clear
+	SPARC_CC_ICC_VS  =  7+256,  ///< Overflow Set
 
-	//> Floating condition codes
-	SPARC_CC_FCC_A   =  8+16+256,  // Always
-	SPARC_CC_FCC_N   =  0+16+256,  // Never
-	SPARC_CC_FCC_U   =  7+16+256,  // Unordered
-	SPARC_CC_FCC_G   =  6+16+256,  // Greater
-	SPARC_CC_FCC_UG  =  5+16+256,  // Unordered or Greater
-	SPARC_CC_FCC_L   =  4+16+256,  // Less
-	SPARC_CC_FCC_UL  =  3+16+256,  // Unordered or Less
-	SPARC_CC_FCC_LG  =  2+16+256,  // Less or Greater
-	SPARC_CC_FCC_NE  =  1+16+256,  // Not Equal
-	SPARC_CC_FCC_E   =  9+16+256,  // Equal
-	SPARC_CC_FCC_UE  = 10+16+256,  // Unordered or Equal
-	SPARC_CC_FCC_GE  = 11+16+256,  // Greater or Equal
-	SPARC_CC_FCC_UGE = 12+16+256,  // Unordered or Greater or Equal
-	SPARC_CC_FCC_LE  = 13+16+256,  // Less or Equal
-	SPARC_CC_FCC_ULE = 14+16+256,  // Unordered or Less or Equal
-	SPARC_CC_FCC_O   = 15+16+256,  // Ordered
+	// Floating condition codes
+	SPARC_CC_FCC_A   =  8+16+256,  ///< Always
+	SPARC_CC_FCC_N   =  0+16+256,  ///< Never
+	SPARC_CC_FCC_U   =  7+16+256,  ///< Unordered
+	SPARC_CC_FCC_G   =  6+16+256,  ///< Greater
+	SPARC_CC_FCC_UG  =  5+16+256,  ///< Unordered or Greater
+	SPARC_CC_FCC_L   =  4+16+256,  ///< Less
+	SPARC_CC_FCC_UL  =  3+16+256,  ///< Unordered or Less
+	SPARC_CC_FCC_LG  =  2+16+256,  ///< Less or Greater
+	SPARC_CC_FCC_NE  =  1+16+256,  ///< Not Equal
+	SPARC_CC_FCC_E   =  9+16+256,  ///< Equal
+	SPARC_CC_FCC_UE  = 10+16+256,  ///< Unordered or Equal
+	SPARC_CC_FCC_GE  = 11+16+256,  ///< Greater or Equal
+	SPARC_CC_FCC_UGE = 12+16+256,  ///< Unordered or Greater or Equal
+	SPARC_CC_FCC_LE  = 13+16+256,  ///< Less or Equal
+	SPARC_CC_FCC_ULE = 14+16+256,  ///< Unordered or Less or Equal
+	SPARC_CC_FCC_O   = 15+16+256,  ///< Ordered
 } sparc_cc;
 
-//> Branch hint
+/// Branch hint
 typedef enum sparc_hint {
-	SPARC_HINT_INVALID = 0,	// no hint
-	SPARC_HINT_A	= 1 << 0,	// annul delay slot instruction
-	SPARC_HINT_PT	= 1 << 1,	// branch taken
-	SPARC_HINT_PN	= 1 << 2,	// branch NOT taken
+	SPARC_HINT_INVALID = 0,	///< no hint
+	SPARC_HINT_A	= 1 << 0,	///< annul delay slot instruction
+	SPARC_HINT_PT	= 1 << 1,	///< branch taken
+	SPARC_HINT_PN	= 1 << 2,	///< branch NOT taken
 } sparc_hint;
 
-//> Operand type for instruction's operands
+/// Operand type for instruction's operands
 typedef enum sparc_op_type {
-	SPARC_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	SPARC_OP_REG, // = CS_OP_REG (Register operand).
-	SPARC_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	SPARC_OP_MEM, // = CS_OP_MEM (Memory operand).
+	SPARC_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	SPARC_OP_REG, ///< = CS_OP_REG (Register operand).
+	SPARC_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	SPARC_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } sparc_op_type;
 
-//> SPARC registers
+/// SPARC registers
 typedef enum sparc_reg {
 	SPARC_REG_INVALID = 0,
 
@@ -175,37 +175,37 @@ typedef enum sparc_reg {
 	SPARC_REG_I6 = SPARC_REG_FP,
 } sparc_reg;
 
-// Instruction's operand referring to memory
-// This is associated with SPARC_OP_MEM operand type above
+/// Instruction's operand referring to memory
+/// This is associated with SPARC_OP_MEM operand type above
 typedef struct sparc_op_mem {
-	uint8_t base;		// base register, can be safely interpreted as
-				// a value of type `sparc_reg`, but it is only
-				// one byte wide
-	uint8_t index;		// index register, same conditions apply here
-	int32_t disp;		// displacement/offset value
+	uint8_t base;		///< base register, can be safely interpreted as
+				///< a value of type `sparc_reg`, but it is only
+				///< one byte wide
+	uint8_t index;		///< index register, same conditions apply here
+	int32_t disp;		///< displacement/offset value
 } sparc_op_mem;
 
-// Instruction operand
+/// Instruction operand
 typedef struct cs_sparc_op {
-	sparc_op_type type;	// operand type
+	sparc_op_type type;	///< operand type
 	union {
-		sparc_reg reg;	// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		sparc_op_mem mem;		// base/disp value for MEM operand
+		sparc_reg reg;	///< register value for REG operand
+		int64_t imm;		///< immediate value for IMM operand
+		sparc_op_mem mem;		///< base/disp value for MEM operand
 	};
 } cs_sparc_op;
 
-// Instruction structure
+/// Instruction structure
 typedef struct cs_sparc {
-	sparc_cc cc;	// code condition for this insn
-	sparc_hint hint;	// branch hint: encoding as bitwise OR of sparc_hint.
-	// Number of operands of this instruction, 
-	// or 0 when instruction has no operand.
+	sparc_cc cc;	///< code condition for this insn
+	sparc_hint hint;	///< branch hint: encoding as bitwise OR of sparc_hint.
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_sparc_op operands[4]; // operands for this instruction.
+	cs_sparc_op operands[4]; ///< operands for this instruction.
 } cs_sparc;
 
-//> SPARC instruction
+/// SPARC instruction
 typedef enum sparc_insn {
 	SPARC_INS_INVALID = 0,
 
@@ -493,15 +493,15 @@ typedef enum sparc_insn {
 	SPARC_INS_ENDING,   // <-- mark the end of the list of instructions
 } sparc_insn;
 
-//> Group of SPARC instructions
+/// Group of SPARC instructions
 typedef enum sparc_insn_group {
-	SPARC_GRP_INVALID = 0, // = CS_GRP_INVALID
+	SPARC_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	//> Generic groups
+	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	SPARC_GRP_JUMP,	// = CS_GRP_JUMP
+	SPARC_GRP_JUMP,	///< = CS_GRP_JUMP
 
-	//> Architecture-specific groups
+	// Architecture-specific groups
 	SPARC_GRP_HARDQUAD = 128,
 	SPARC_GRP_V9,
 	SPARC_GRP_VIS,

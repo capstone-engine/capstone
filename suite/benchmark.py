@@ -37,6 +37,7 @@ all_tests = (
         (CS_ARCH_SYSZ, 0, "SystemZ", 0),
         (CS_ARCH_XCORE, 0, "XCore", 0),
         (CS_ARCH_M68K, 0, "M68K", 0),
+        (CS_ARCH_RISCV, 0, "RISCV", 0),
         )
 
 

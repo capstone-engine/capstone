@@ -27,8 +27,8 @@
  * THE SOFTWARE.
  */
 
-/* The code bellow is based on MUSASHI but has been heavily modified for capstore by
- * Daniel Collin <daniel@collin.com> 2015-2016 */
+/* The code below is based on MUSASHI but has been heavily modified for Capstone by
+ * Daniel Collin <daniel@collin.com> 2015-2019 */
 
 /* ======================================================================== */
 /* ================================ INCLUDES ============================== */
@@ -47,21 +47,9 @@
 #include "M68KInstPrinter.h"
 #include "M68KDisassembler.h"
 
-#ifndef DECL_SPEC
-#ifdef _MSC_VER
-#define DECL_SPEC __cdecl
-#else
-#define DECL_SPEC
-#endif	// _MSC_VER
-#endif	// DECL_SPEC
-
 /* ======================================================================== */
 /* ============================ GENERAL DEFINES =========================== */
 /* ======================================================================== */
-
-/* unsigned int and int must be at least 32 bits wide */
-#undef uint
-#define uint unsigned int
 
 /* Bit Isolation Functions */
 #define BIT_0(A)  ((A) & 0x00000001)
@@ -221,39 +209,25 @@ static int make_int_8(int value);
 static int make_int_16(int value);
 
 /* Stuff to build the opcode handler jump table */
-static void build_opcode_table(void);
-static int valid_ea(uint opcode, uint mask);
-static int DECL_SPEC compare_nof_true_bits(const void *aptr, const void *bptr);
 static void d68000_invalid(m68k_info *info);
 static int instruction_is_valid(m68k_info *info, const unsigned int word_check);
 
-/* used to build opcode handler jump table */
 typedef struct {
-	void (*opcode_handler)(m68k_info *info); /* handler function */
-	uint mask;                    /* mask on opcode */
-	uint match;                   /* what to match after masking */
-	uint ea_mask;                 /* what ea modes are allowed */
-	uint mask2;                   /* mask the 2nd word */
-	uint match2;                  /* what to match after masking */
-} opcode_struct;
-
-typedef struct {
-	void (*instruction)(m68k_info *info);    /* handler function */
-	uint word2_mask;              /* mask the 2nd word */
-	uint word2_match;             /* what to match after masking */
+	void (*instruction)(m68k_info *info);   /* handler function */
+	uint16_t word2_mask;              		/* mask the 2nd word */
+	uint16_t word2_match;             		/* what to match after masking */
 } instruction_struct;
 
 /* ======================================================================== */
 /* ================================= DATA ================================= */
 /* ======================================================================== */
 
-/* Opcode handler jump table */
 static instruction_struct g_instruction_table[0x10000];
 
 /* used by ops like asr, ror, addq, etc */
-static uint g_3bit_qdata_table[8] = {8, 1, 2, 3, 4, 5, 6, 7};
+static uint32_t g_3bit_qdata_table[8] = {8, 1, 2, 3, 4, 5, 6, 7};
 
-static uint g_5bit_data_table[32] = {
+static uint32_t g_5bit_data_table[32] = {
 	32,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
 	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
 };
@@ -301,12 +275,12 @@ static m68k_insn s_trap_lut[] = {
 static unsigned int peek_imm_8(const m68k_info *info)  { return (m68k_read_safe_16((info), (info)->pc)&0xff); }
 static unsigned int peek_imm_16(const m68k_info *info) { return m68k_read_safe_16((info), (info)->pc); }
 static unsigned int peek_imm_32(const m68k_info *info) { return m68k_read_safe_32((info), (info)->pc); }
-static unsigned int peek_imm_64(const m68k_info *info) { return (unsigned int)m68k_read_safe_64((info), (info)->pc); }
+static unsigned long long peek_imm_64(const m68k_info *info) { return m68k_read_safe_64((info), (info)->pc); }
 
 static unsigned int read_imm_8(m68k_info *info)  { const unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
 static unsigned int read_imm_16(m68k_info *info) { const unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
 static unsigned int read_imm_32(m68k_info *info) { const unsigned int value = peek_imm_32(info); (info)->pc+=4; return value; }
-static unsigned int read_imm_64(m68k_info *info) { const unsigned int value = peek_imm_64(info); (info)->pc+=8; return value; }
+static unsigned long long read_imm_64(m68k_info *info) { const unsigned long long value = peek_imm_64(info); (info)->pc+=8; return value; }
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
@@ -333,15 +307,15 @@ static int make_int_16(int value)
 	return (value & 0x8000) ? value | ~0xffff : value & 0xffff;
 }
 
-static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint instruction, uint size, bool is_pc)
+static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint32_t instruction, uint32_t size, bool is_pc)
 {
-	uint extension = read_imm_16(info);
+	uint32_t extension = read_imm_16(info);
 
 	op->address_mode = M68K_AM_AREGI_INDEX_BASE_DISP;
 
 	if (EXT_FULL(extension)) {
-		uint preindex;
-		uint postindex;
+		uint32_t preindex;
+		uint32_t postindex;
 
 		op->mem.base_reg = M68K_REG_INVALID;
 		op->mem.index_reg = M68K_REG_INVALID;
@@ -418,7 +392,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint in
 }
 
 /* Make string of effective address mode */
-void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint instruction, uint size)
+static void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint32_t instruction, uint32_t size)
 {
 	// default to memory
 
@@ -830,7 +804,7 @@ static void build_d_d_ea(m68k_info *info, int opcode, int size)
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 	cs_m68k_op* op2;
-	uint extension = read_imm_16(info);
+	uint32_t extension = read_imm_16(info);
 	cs_m68k* ext = build_init_op(info, opcode, 3, size);
 
 	op0 = &ext->operands[0];
@@ -853,7 +827,7 @@ static void build_bitfield_ins(m68k_info *info, int opcode, int has_d_arg)
 	cs_m68k_op* op_ea;
 	cs_m68k_op* op1;
 	cs_m68k* ext = build_init_op(info, opcode, 1, 0);
-	uint extension = read_imm_16(info);
+	uint32_t extension = read_imm_16(info);
 
 	op_ea = &ext->operands[0];
 	op1 = &ext->operands[1];
@@ -892,10 +866,10 @@ static void build_d(m68k_info *info, int opcode, int size)
 	op->reg = M68K_REG_D0 + (info->ir & 7);
 }
 
-static uint16_t reverse_bits(uint v)
+static uint16_t reverse_bits(uint32_t v)
 {
-	uint r = v; // r will be reversed bits of v; first get LSB of v
-	uint s = 16 - 1; // extra shift needed at end
+	uint32_t r = v; // r will be reversed bits of v; first get LSB of v
+	uint32_t s = 16 - 1; // extra shift needed at end
 
 	for (v >>= 1; v; v >>= 1) {
 		r <<= 1;
@@ -906,10 +880,10 @@ static uint16_t reverse_bits(uint v)
 	return r <<= s; // shift when v's highest bits are zero
 }
 
-static uint8_t reverse_bits_8(uint v)
+static uint8_t reverse_bits_8(uint32_t v)
 {
-	uint r = v; // r will be reversed bits of v; first get LSB of v
-	uint s = 8 - 1; // extra shift needed at end
+	uint32_t r = v; // r will be reversed bits of v; first get LSB of v
+	uint32_t s = 8 - 1; // extra shift needed at end
 
 	for (v >>= 1; v; v >>= 1) {
 		r <<= 1;
@@ -980,8 +954,8 @@ static void build_invalid(m68k_info *info, int data)
 
 static void build_cas2(m68k_info *info, int size)
 {
-	uint word3;
-	uint extension;
+	uint32_t word3;
+	uint32_t extension;
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 	cs_m68k_op* op2;
@@ -1001,21 +975,21 @@ static void build_cas2(m68k_info *info, int size)
 
 	op0->address_mode = M68K_AM_NONE;
 	op0->type = M68K_OP_REG_PAIR;
-	op0->reg_pair.reg_0 = (extension >> 16) & 7;
-	op0->reg_pair.reg_1 = extension & 7;
+	op0->reg_pair.reg_0 = ((extension >> 16) & 7) + M68K_REG_D0;
+	op0->reg_pair.reg_1 = (extension & 7) + M68K_REG_D0;
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->reg_pair.reg_0 = (extension >> 22) & 7;
-	op1->reg_pair.reg_1 = (extension >> 6) & 7;
+	op1->reg_pair.reg_0 = ((extension >> 22) & 7) + M68K_REG_D0;
+	op1->reg_pair.reg_1 = ((extension >> 6) & 7) + M68K_REG_D0;
 
 	reg_0 = (extension >> 28) & 7;
 	reg_1 = (extension >> 12) & 7;
 
 	op2->address_mode = M68K_AM_NONE;
 	op2->type = M68K_OP_REG_PAIR;
-	op2->reg_pair.reg_0 = reg_0 + (BIT_1F(extension) ? 8 : 0);
-	op2->reg_pair.reg_1 = reg_1 + (BIT_F(extension) ? 8 : 0);
+	op2->reg_pair.reg_0 = reg_0 + (BIT_1F(extension) ? 8 : 0) + M68K_REG_D0;
+	op2->reg_pair.reg_1 = reg_1 + (BIT_F(extension) ? 8 : 0) + M68K_REG_D0;
 }
 
 static void build_chk2_cmp2(m68k_info *info, int size)
@@ -1024,7 +998,7 @@ static void build_chk2_cmp2(m68k_info *info, int size)
 	cs_m68k_op* op1;
 	cs_m68k* ext = build_init_op(info, M68K_INS_CHK2, 2, size);
 
-	uint extension = read_imm_16(info);
+	uint32_t extension = read_imm_16(info);
 
 	if (BIT_B(extension))
 		MCInst_setOpcode(info->inst, M68K_INS_CHK2);
@@ -1157,7 +1131,7 @@ static void build_moves(m68k_info *info, int size)
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 	cs_m68k* ext = build_init_op(info, M68K_INS_MOVES, 2, size);
-	uint extension = read_imm_16(info);
+	uint32_t extension = read_imm_16(info);
 
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
@@ -1817,7 +1791,7 @@ static void d68020_cpbcc_16(m68k_info *info)
 	op0 = &ext->operands[0];
 
 	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_WORD, make_int_16(read_imm_16(info)));
-	
+
 	set_insn_group(info, M68K_GRP_JUMP);
 	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
@@ -1848,7 +1822,7 @@ static void d68020_cpdbcc(m68k_info *info)
 	cs_m68k* ext;
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
-	uint ext1, ext2;
+	uint32_t ext1, ext2;
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
@@ -1870,7 +1844,7 @@ static void d68020_cpdbcc(m68k_info *info)
 	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
 }
 
-static void fmove_fpcr(m68k_info *info, uint extension)
+static void fmove_fpcr(m68k_info *info, uint32_t extension)
 {
 	cs_m68k_op* special;
 	cs_m68k_op* op_ea;
@@ -1899,13 +1873,13 @@ static void fmove_fpcr(m68k_info *info, uint extension)
 		special->reg = M68K_REG_FPIAR;
 }
 
-static void fmovem(m68k_info *info, uint extension)
+static void fmovem(m68k_info *info, uint32_t extension)
 {
 	cs_m68k_op* op_reglist;
 	cs_m68k_op* op_ea;
 	int dir = (extension >> 13) & 0x1;
 	int mode = (extension >> 11) & 0x3;
-	uint reglist = extension & 0xff;
+	uint32_t reglist = extension & 0xff;
 	cs_m68k* ext = build_init_op(info, M68K_INS_FMOVEM, 2, 0);
 
 	op_reglist = &ext->operands[0];
@@ -1946,7 +1920,7 @@ static void d68020_cpgen(m68k_info *info)
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
 	bool supports_single_op;
-	uint next;
+	uint32_t next;
 	int rm, src, dst, opmode;
 
 
@@ -2148,7 +2122,7 @@ static void d68020_cpscc(m68k_info *info)
 
 static void d68020_cptrapcc_0(m68k_info *info)
 {
-	uint extension1;
+	uint32_t extension1;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
 	extension1 = read_imm_16(info);
@@ -2161,7 +2135,7 @@ static void d68020_cptrapcc_0(m68k_info *info)
 
 static void d68020_cptrapcc_16(m68k_info *info)
 {
-	uint extension1, extension2;
+	uint32_t extension1, extension2;
 	cs_m68k_op* op0;
 	cs_m68k* ext;
 
@@ -2184,7 +2158,7 @@ static void d68020_cptrapcc_16(m68k_info *info)
 
 static void d68020_cptrapcc_32(m68k_info *info)
 {
-	uint extension1, extension2;
+	uint32_t extension1, extension2;
 	cs_m68k* ext;
 	cs_m68k_op* op0;
 
@@ -2233,11 +2207,11 @@ static void d68000_divu(m68k_info *info)
 
 static void d68020_divl(m68k_info *info)
 {
-	uint extension, insn_signed;
+	uint32_t extension, insn_signed;
 	cs_m68k* ext;
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
-	uint reg_0, reg_1;
+	uint32_t reg_0, reg_1;
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
@@ -2259,8 +2233,8 @@ static void d68020_divl(m68k_info *info)
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->reg_pair.reg_0 = reg_0;
-	op1->reg_pair.reg_1 = reg_1;
+	op1->reg_pair.reg_0 = reg_0 + M68K_REG_D0;
+	op1->reg_pair.reg_1 = reg_1 + M68K_REG_D0;
 
 	if ((reg_0 == reg_1) || !BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
@@ -2584,7 +2558,7 @@ static void d68000_move_to_usp(m68k_info *info)
 
 static void d68010_movec(m68k_info *info)
 {
-	uint extension;
+	uint32_t extension;
 	m68k_reg reg;
 	cs_m68k* ext;
 	cs_m68k_op* op0;
@@ -2687,7 +2661,7 @@ static void d68010_moves_8(m68k_info *info)
 
 static void d68010_moves_16(m68k_info *info)
 {
-	//uint extension;
+	//uint32_t extension;
 	LIMIT_CPU_TYPES(info, M68010_PLUS);
 	build_moves(info, 2);
 }
@@ -2778,12 +2752,11 @@ static void d68000_mulu(m68k_info *info)
 
 static void d68020_mull(m68k_info *info)
 {
-	uint extension, insn_signed;
+	uint32_t extension, insn_signed;
 	cs_m68k* ext;
 	cs_m68k_op* op0;
 	cs_m68k_op* op1;
-	uint reg_0, reg_1;
-
+	uint32_t reg_0, reg_1;
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
@@ -2805,8 +2778,8 @@ static void d68020_mull(m68k_info *info)
 
 	op1->address_mode = M68K_AM_NONE;
 	op1->type = M68K_OP_REG_PAIR;
-	op1->reg_pair.reg_0 = reg_0;
-	op1->reg_pair.reg_1 = reg_1;
+	op1->reg_pair.reg_0 = reg_0 + M68K_REG_D0;
+	op1->reg_pair.reg_1 = reg_1 + M68K_REG_D0;
 
 	if (!BIT_A(extension)) {
 		op1->type = M68K_OP_REG;
@@ -3400,431 +3373,8 @@ static void d68020_unpk_mm(m68k_info *info)
 	build_mm(info, M68K_INS_UNPK, 0, read_imm_16(info));
 }
 
-/* ======================================================================== */
-/* ======================= INSTRUCTION TABLE BUILDER ====================== */
-/* ======================================================================== */
-
-/* EA Masks:
-   800 = data register direct
-   400 = address register direct
-   200 = address register indirect
-   100 = ARI postincrement
-   80 = ARI pre-decrement
-   40 = ARI displacement
-   20 = ARI index
-   10 = absolute short
-   8 = absolute long
-   4 = immediate / sr
-   2 = pc displacement
-   1 = pc idx
- */
-
-static opcode_struct g_opcode_info[] = {
-	/*  opcode handler         mask    match   ea_mask   mask2   match2*/
-	{d68000_1010         , 0xf000, 0xa000, 0x000},
-	{d68000_1111         , 0xf000, 0xf000, 0x000},
-	{d68000_abcd_rr      , 0xf1f8, 0xc100, 0x000},
-	{d68000_abcd_mm      , 0xf1f8, 0xc108, 0x000},
-	{d68000_add_er_8     , 0xf1c0, 0xd000, 0xbff},
-	{d68000_add_er_16    , 0xf1c0, 0xd040, 0xfff},
-	{d68000_add_er_32    , 0xf1c0, 0xd080, 0xfff},
-	{d68000_add_re_8     , 0xf1c0, 0xd100, 0x3f8},
-	{d68000_add_re_16    , 0xf1c0, 0xd140, 0x3f8},
-	{d68000_add_re_32    , 0xf1c0, 0xd180, 0x3f8},
-	{d68000_adda_16      , 0xf1c0, 0xd0c0, 0xfff},
-	{d68000_adda_32      , 0xf1c0, 0xd1c0, 0xfff},
-	{d68000_addi_8       , 0xffc0, 0x0600, 0xbf8},
-	{d68000_addi_16      , 0xffc0, 0x0640, 0xbf8},
-	{d68000_addi_32      , 0xffc0, 0x0680, 0xbf8},
-	{d68000_addq_8       , 0xf1c0, 0x5000, 0xbf8},
-	{d68000_addq_16      , 0xf1c0, 0x5040, 0xff8},
-	{d68000_addq_32      , 0xf1c0, 0x5080, 0xff8},
-	{d68000_addx_rr_8    , 0xf1f8, 0xd100, 0x000},
-	{d68000_addx_rr_16   , 0xf1f8, 0xd140, 0x000},
-	{d68000_addx_rr_32   , 0xf1f8, 0xd180, 0x000},
-	{d68000_addx_mm_8    , 0xf1f8, 0xd108, 0x000},
-	{d68000_addx_mm_16   , 0xf1f8, 0xd148, 0x000},
-	{d68000_addx_mm_32   , 0xf1f8, 0xd188, 0x000},
-	{d68000_and_er_8     , 0xf1c0, 0xc000, 0xbff},
-	{d68000_and_er_16    , 0xf1c0, 0xc040, 0xbff},
-	{d68000_and_er_32    , 0xf1c0, 0xc080, 0xbff},
-	{d68000_and_re_8     , 0xf1c0, 0xc100, 0x3f8},
-	{d68000_and_re_16    , 0xf1c0, 0xc140, 0x3f8},
-	{d68000_and_re_32    , 0xf1c0, 0xc180, 0x3f8},
-	{d68000_andi_to_ccr  , 0xffff, 0x023c, 0x000, 0xff00, 0x0000},
-	{d68000_andi_to_sr   , 0xffff, 0x027c, 0x000},
-	{d68000_andi_8       , 0xffc0, 0x0200, 0xbf8},
-	{d68000_andi_16      , 0xffc0, 0x0240, 0xbf8},
-	{d68000_andi_32      , 0xffc0, 0x0280, 0xbf8},
-	{d68000_asr_s_8      , 0xf1f8, 0xe000, 0x000},
-	{d68000_asr_s_16     , 0xf1f8, 0xe040, 0x000},
-	{d68000_asr_s_32     , 0xf1f8, 0xe080, 0x000},
-	{d68000_asr_r_8      , 0xf1f8, 0xe020, 0x000},
-	{d68000_asr_r_16     , 0xf1f8, 0xe060, 0x000},
-	{d68000_asr_r_32     , 0xf1f8, 0xe0a0, 0x000},
-	{d68000_asr_ea       , 0xffc0, 0xe0c0, 0x3f8},
-	{d68000_asl_s_8      , 0xf1f8, 0xe100, 0x000},
-	{d68000_asl_s_16     , 0xf1f8, 0xe140, 0x000},
-	{d68000_asl_s_32     , 0xf1f8, 0xe180, 0x000},
-	{d68000_asl_r_8      , 0xf1f8, 0xe120, 0x000},
-	{d68000_asl_r_16     , 0xf1f8, 0xe160, 0x000},
-	{d68000_asl_r_32     , 0xf1f8, 0xe1a0, 0x000},
-	{d68000_asl_ea       , 0xffc0, 0xe1c0, 0x3f8},
-	{d68000_bcc_8        , 0xf000, 0x6000, 0x000},
-	{d68000_bcc_16       , 0xf0ff, 0x6000, 0x000},
-	{d68020_bcc_32       , 0xf0ff, 0x60ff, 0x000},
-	{d68000_bchg_r       , 0xf1c0, 0x0140, 0xbf8},
-	{d68000_bchg_s       , 0xffc0, 0x0840, 0xbf8, 0xff00, 0x0000},
-	{d68000_bclr_r       , 0xf1c0, 0x0180, 0xbf8},
-	{d68000_bclr_s       , 0xffc0, 0x0880, 0xbf8, 0xff00, 0x0000},
-	{d68020_bfchg        , 0xffc0, 0xeac0, 0xa78, 0xf000, 0x0000},
-	{d68020_bfclr        , 0xffc0, 0xecc0, 0xa78, 0xf000, 0x0000},
-	{d68020_bfexts       , 0xffc0, 0xebc0, 0xa7b, 0x8000, 0x0000},
-	{d68020_bfextu       , 0xffc0, 0xe9c0, 0xa7b, 0x8000, 0x0000},
-	{d68020_bfffo        , 0xffc0, 0xedc0, 0xa7b, 0x8000, 0x0000},
-	{d68020_bfins        , 0xffc0, 0xefc0, 0xa78, 0x8000, 0x0000},
-	{d68020_bfset        , 0xffc0, 0xeec0, 0xa78, 0xf000, 0x0000},
-	{d68020_bftst        , 0xffc0, 0xe8c0, 0xa7b, 0xf000, 0x0000},
-	{d68010_bkpt         , 0xfff8, 0x4848, 0x000},
-	{d68000_bra_8        , 0xff00, 0x6000, 0x000},
-	{d68000_bra_16       , 0xffff, 0x6000, 0x000},
-	{d68020_bra_32       , 0xffff, 0x60ff, 0x000},
-	{d68000_bset_r       , 0xf1c0, 0x01c0, 0xbf8},
-	{d68000_bset_s       , 0xffc0, 0x08c0, 0xbf8, 0xfe00, 0x0000 },
-	{d68000_bsr_8        , 0xff00, 0x6100, 0x000},
-	{d68000_bsr_16       , 0xffff, 0x6100, 0x000},
-	{d68020_bsr_32       , 0xffff, 0x61ff, 0x000},
-	{d68000_btst_r       , 0xf1c0, 0x0100, 0xbff},
-	{d68000_btst_s       , 0xffc0, 0x0800, 0xbfb, 0xff00, 0x0000},
-	{d68020_callm        , 0xffc0, 0x06c0, 0x27b, 0xff00, 0x0000},
-	{d68020_cas_8        , 0xffc0, 0x0ac0, 0x3f8, 0xfe38, 0x0000},
-	{d68020_cas_16       , 0xffc0, 0x0cc0, 0x3f8, 0xfe38, 0x0000},
-	{d68020_cas_32       , 0xffc0, 0x0ec0, 0x3f8, 0xfe38, 0x0000},
-	{d68020_cas2_16      , 0xffff, 0x0cfc, 0x000, 0x0e38, 0x0000/*, 0x0e38, 0x0000 */},
-	{d68020_cas2_32      , 0xffff, 0x0efc, 0x000, 0x0e38, 0x0000/*, 0x0e38, 0x0000 */},
-	{d68000_chk_16       , 0xf1c0, 0x4180, 0xbff},
-	{d68020_chk_32       , 0xf1c0, 0x4100, 0xbff},
-	{d68020_chk2_cmp2_8  , 0xffc0, 0x00c0, 0x27b, 0x07ff, 0x0000},
-	{d68020_chk2_cmp2_16 , 0xffc0, 0x02c0, 0x27b, 0x07ff, 0x0000},
-	{d68020_chk2_cmp2_32 , 0xffc0, 0x04c0, 0x27b, 0x07ff, 0x0000},
-	{d68040_cinv         , 0xff20, 0xf400, 0x000},
-	{d68000_clr_8        , 0xffc0, 0x4200, 0xbf8},
-	{d68000_clr_16       , 0xffc0, 0x4240, 0xbf8},
-	{d68000_clr_32       , 0xffc0, 0x4280, 0xbf8},
-	{d68000_cmp_8        , 0xf1c0, 0xb000, 0xbff},
-	{d68000_cmp_16       , 0xf1c0, 0xb040, 0xfff},
-	{d68000_cmp_32       , 0xf1c0, 0xb080, 0xfff},
-	{d68000_cmpa_16      , 0xf1c0, 0xb0c0, 0xfff},
-	{d68000_cmpa_32      , 0xf1c0, 0xb1c0, 0xfff},
-	{d68000_cmpi_8       , 0xffc0, 0x0c00, 0xbf8},
-	{d68020_cmpi_pcdi_8  , 0xffff, 0x0c3a, 0x000},
-	{d68020_cmpi_pcix_8  , 0xffff, 0x0c3b, 0x000},
-	{d68000_cmpi_16      , 0xffc0, 0x0c40, 0xbf8},
-	{d68020_cmpi_pcdi_16 , 0xffff, 0x0c7a, 0x000},
-	{d68020_cmpi_pcix_16 , 0xffff, 0x0c7b, 0x000},
-	{d68000_cmpi_32      , 0xffc0, 0x0c80, 0xbf8},
-	{d68020_cmpi_pcdi_32 , 0xffff, 0x0cba, 0x000},
-	{d68020_cmpi_pcix_32 , 0xffff, 0x0cbb, 0x000},
-	{d68000_cmpm_8       , 0xf1f8, 0xb108, 0x000},
-	{d68000_cmpm_16      , 0xf1f8, 0xb148, 0x000},
-	{d68000_cmpm_32      , 0xf1f8, 0xb188, 0x000},
-	{d68020_cpbcc_16     , 0xf1c0, 0xf080, 0x000},
-	{d68020_cpbcc_32     , 0xf1c0, 0xf0c0, 0x000},
-	{d68020_cpdbcc       , 0xf1f8, 0xf048, 0x000},
-	{d68020_cpgen        , 0xf1c0, 0xf000, 0x000},
-	{d68020_cprestore    , 0xf1c0, 0xf140, 0x37f},
-	{d68020_cpsave       , 0xf1c0, 0xf100, 0x2f8},
-	{d68020_cpscc        , 0xf1c0, 0xf040, 0xbf8},
-	{d68020_cptrapcc_0   , 0xf1ff, 0xf07c, 0x000},
-	{d68020_cptrapcc_16  , 0xf1ff, 0xf07a, 0x000},
-	{d68020_cptrapcc_32  , 0xf1ff, 0xf07b, 0x000},
-	{d68040_cpush        , 0xff20, 0xf420, 0x000},
-	{d68000_dbcc         , 0xf0f8, 0x50c8, 0x000},
-	{d68000_dbra         , 0xfff8, 0x51c8, 0x000},
-	{d68000_divs         , 0xf1c0, 0x81c0, 0xbff},
-	{d68000_divu         , 0xf1c0, 0x80c0, 0xbff},
-	{d68020_divl         , 0xff80, 0x4c00, 0xbff, 0x83f8, 0x0000},
-	{d68000_eor_8        , 0xf1c0, 0xb100, 0xbf8},
-	{d68000_eor_16       , 0xf1c0, 0xb140, 0xbf8},
-	{d68000_eor_32       , 0xf1c0, 0xb180, 0xbf8},
-	{d68000_eori_to_ccr  , 0xffff, 0x0a3c, 0x000, 0xff00, 0x0000},
-	{d68000_eori_to_sr   , 0xffff, 0x0a7c, 0x000},
-	{d68000_eori_8       , 0xffc0, 0x0a00, 0xbf8},
-	{d68000_eori_16      , 0xffc0, 0x0a40, 0xbf8},
-	{d68000_eori_32      , 0xffc0, 0x0a80, 0xbf8},
-	{d68000_exg_dd       , 0xf1f8, 0xc140, 0x000},
-	{d68000_exg_aa       , 0xf1f8, 0xc148, 0x000},
-	{d68000_exg_da       , 0xf1f8, 0xc188, 0x000},
-	{d68020_extb_32      , 0xfff8, 0x49c0, 0x000},
-	{d68000_ext_16       , 0xfff8, 0x4880, 0x000},
-	{d68000_ext_32       , 0xfff8, 0x48c0, 0x000},
-	{d68000_illegal      , 0xffff, 0x4afc, 0x000},
-	{d68000_jmp          , 0xffc0, 0x4ec0, 0x27b},
-	{d68000_jsr          , 0xffc0, 0x4e80, 0x27b},
-	{d68000_lea          , 0xf1c0, 0x41c0, 0x27b},
-	{d68000_link_16      , 0xfff8, 0x4e50, 0x000},
-	{d68020_link_32      , 0xfff8, 0x4808, 0x000},
-	{d68000_lsr_s_8      , 0xf1f8, 0xe008, 0x000},
-	{d68000_lsr_s_16     , 0xf1f8, 0xe048, 0x000},
-	{d68000_lsr_s_32     , 0xf1f8, 0xe088, 0x000},
-	{d68000_lsr_r_8      , 0xf1f8, 0xe028, 0x000},
-	{d68000_lsr_r_16     , 0xf1f8, 0xe068, 0x000},
-	{d68000_lsr_r_32     , 0xf1f8, 0xe0a8, 0x000},
-	{d68000_lsr_ea       , 0xffc0, 0xe2c0, 0x3f8},
-	{d68000_lsl_s_8      , 0xf1f8, 0xe108, 0x000},
-	{d68000_lsl_s_16     , 0xf1f8, 0xe148, 0x000},
-	{d68000_lsl_s_32     , 0xf1f8, 0xe188, 0x000},
-	{d68000_lsl_r_8      , 0xf1f8, 0xe128, 0x000},
-	{d68000_lsl_r_16     , 0xf1f8, 0xe168, 0x000},
-	{d68000_lsl_r_32     , 0xf1f8, 0xe1a8, 0x000},
-	{d68000_lsl_ea       , 0xffc0, 0xe3c0, 0x3f8},
-	{d68000_move_8       , 0xf000, 0x1000, 0xbff},
-	{d68000_move_16      , 0xf000, 0x3000, 0xfff},
-	{d68000_move_32      , 0xf000, 0x2000, 0xfff},
-	{d68000_movea_16     , 0xf1c0, 0x3040, 0xfff},
-	{d68000_movea_32     , 0xf1c0, 0x2040, 0xfff},
-	{d68000_move_to_ccr  , 0xffc0, 0x44c0, 0xbff},
-	{d68010_move_fr_ccr  , 0xffc0, 0x42c0, 0xbf8},
-	{d68000_move_to_sr   , 0xffc0, 0x46c0, 0xbff},
-	{d68000_move_fr_sr   , 0xffc0, 0x40c0, 0xbf8},
-	{d68000_move_to_usp  , 0xfff8, 0x4e60, 0x000},
-	{d68000_move_fr_usp  , 0xfff8, 0x4e68, 0x000},
-	{d68010_movec        , 0xfffe, 0x4e7a, 0x000},
-	{d68000_movem_pd_16  , 0xfff8, 0x48a0, 0x000},
-	{d68000_movem_pd_32  , 0xfff8, 0x48e0, 0x000},
-	{d68000_movem_re_16  , 0xffc0, 0x4880, 0x2f8},
-	{d68000_movem_re_32  , 0xffc0, 0x48c0, 0x2f8},
-	{d68000_movem_er_16  , 0xffc0, 0x4c80, 0x37b},
-	{d68000_movem_er_32  , 0xffc0, 0x4cc0, 0x37b},
-	{d68000_movep_er_16  , 0xf1f8, 0x0108, 0x000},
-	{d68000_movep_er_32  , 0xf1f8, 0x0148, 0x000},
-	{d68000_movep_re_16  , 0xf1f8, 0x0188, 0x000},
-	{d68000_movep_re_32  , 0xf1f8, 0x01c8, 0x000},
-	{d68010_moves_8      , 0xffc0, 0x0e00, 0x3f8, 0x07ff, 0x0000},
-	{d68010_moves_16     , 0xffc0, 0x0e40, 0x3f8, 0x07ff, 0x0000},
-	{d68010_moves_32     , 0xffc0, 0x0e80, 0x3f8, 0x07ff, 0x0000},
-	{d68000_moveq        , 0xf100, 0x7000, 0x000},
-	{d68040_move16_pi_pi , 0xfff8, 0xf620, 0x000, 0x8fff, 0x8000},
-	{d68040_move16_pi_al , 0xfff8, 0xf600, 0x000},
-	{d68040_move16_al_pi , 0xfff8, 0xf608, 0x000},
-	{d68040_move16_ai_al , 0xfff8, 0xf610, 0x000},
-	{d68040_move16_al_ai , 0xfff8, 0xf618, 0x000},
-	{d68000_muls         , 0xf1c0, 0xc1c0, 0xbff},
-	{d68000_mulu         , 0xf1c0, 0xc0c0, 0xbff},
-	{d68020_mull         , 0xffc0, 0x4c00, 0xbff, 0x83f8, 0x0000},
-	{d68000_nbcd         , 0xffc0, 0x4800, 0xbf8},
-	{d68000_neg_8        , 0xffc0, 0x4400, 0xbf8},
-	{d68000_neg_16       , 0xffc0, 0x4440, 0xbf8},
-	{d68000_neg_32       , 0xffc0, 0x4480, 0xbf8},
-	{d68000_negx_8       , 0xffc0, 0x4000, 0xbf8},
-	{d68000_negx_16      , 0xffc0, 0x4040, 0xbf8},
-	{d68000_negx_32      , 0xffc0, 0x4080, 0xbf8},
-	{d68000_nop          , 0xffff, 0x4e71, 0x000},
-	{d68000_not_8        , 0xffc0, 0x4600, 0xbf8},
-	{d68000_not_16       , 0xffc0, 0x4640, 0xbf8},
-	{d68000_not_32       , 0xffc0, 0x4680, 0xbf8},
-	{d68000_or_er_8      , 0xf1c0, 0x8000, 0xbff},
-	{d68000_or_er_16     , 0xf1c0, 0x8040, 0xbff},
-	{d68000_or_er_32     , 0xf1c0, 0x8080, 0xbff},
-	{d68000_or_re_8      , 0xf1c0, 0x8100, 0x3f8},
-	{d68000_or_re_16     , 0xf1c0, 0x8140, 0x3f8},
-	{d68000_or_re_32     , 0xf1c0, 0x8180, 0x3f8},
-	{d68000_ori_to_ccr   , 0xffff, 0x003c, 0x000, 0xff00, 0x0000},
-	{d68000_ori_to_sr    , 0xffff, 0x007c, 0x000},
-	{d68000_ori_8        , 0xffc0, 0x0000, 0xbf8},
-	{d68000_ori_16       , 0xffc0, 0x0040, 0xbf8},
-	{d68000_ori_32       , 0xffc0, 0x0080, 0xbf8},
-	{d68020_pack_rr      , 0xf1f8, 0x8140, 0x000},
-	{d68020_pack_mm      , 0xf1f8, 0x8148, 0x000},
-	{d68000_pea          , 0xffc0, 0x4840, 0x27b},
-	{d68000_reset        , 0xffff, 0x4e70, 0x000},
-	{d68000_ror_s_8      , 0xf1f8, 0xe018, 0x000},
-	{d68000_ror_s_16     , 0xf1f8, 0xe058, 0x000},
-	{d68000_ror_s_32     , 0xf1f8, 0xe098, 0x000},
-	{d68000_ror_r_8      , 0xf1f8, 0xe038, 0x000},
-	{d68000_ror_r_16     , 0xf1f8, 0xe078, 0x000},
-	{d68000_ror_r_32     , 0xf1f8, 0xe0b8, 0x000},
-	{d68000_ror_ea       , 0xffc0, 0xe6c0, 0x3f8},
-	{d68000_rol_s_8      , 0xf1f8, 0xe118, 0x000},
-	{d68000_rol_s_16     , 0xf1f8, 0xe158, 0x000},
-	{d68000_rol_s_32     , 0xf1f8, 0xe198, 0x000},
-	{d68000_rol_r_8      , 0xf1f8, 0xe138, 0x000},
-	{d68000_rol_r_16     , 0xf1f8, 0xe178, 0x000},
-	{d68000_rol_r_32     , 0xf1f8, 0xe1b8, 0x000},
-	{d68000_rol_ea       , 0xffc0, 0xe7c0, 0x3f8},
-	{d68000_roxr_s_8     , 0xf1f8, 0xe010, 0x000},
-	{d68000_roxr_s_16    , 0xf1f8, 0xe050, 0x000},
-	{d68000_roxr_s_32    , 0xf1f8, 0xe090, 0x000},
-	{d68000_roxr_r_8     , 0xf1f8, 0xe030, 0x000},
-	{d68000_roxr_r_16    , 0xf1f8, 0xe070, 0x000},
-	{d68000_roxr_r_32    , 0xf1f8, 0xe0b0, 0x000},
-	{d68000_roxr_ea      , 0xffc0, 0xe4c0, 0x3f8},
-	{d68000_roxl_s_8     , 0xf1f8, 0xe110, 0x000},
-	{d68000_roxl_s_16    , 0xf1f8, 0xe150, 0x000},
-	{d68000_roxl_s_32    , 0xf1f8, 0xe190, 0x000},
-	{d68000_roxl_r_8     , 0xf1f8, 0xe130, 0x000},
-	{d68000_roxl_r_16    , 0xf1f8, 0xe170, 0x000},
-	{d68000_roxl_r_32    , 0xf1f8, 0xe1b0, 0x000},
-	{d68000_roxl_ea      , 0xffc0, 0xe5c0, 0x3f8},
-	{d68010_rtd          , 0xffff, 0x4e74, 0x000},
-	{d68000_rte          , 0xffff, 0x4e73, 0x000},
-	{d68020_rtm          , 0xfff0, 0x06c0, 0x000},
-	{d68000_rtr          , 0xffff, 0x4e77, 0x000},
-	{d68000_rts          , 0xffff, 0x4e75, 0x000},
-	{d68000_sbcd_rr      , 0xf1f8, 0x8100, 0x000},
-	{d68000_sbcd_mm      , 0xf1f8, 0x8108, 0x000},
-	{d68000_scc          , 0xf0c0, 0x50c0, 0xbf8},
-	{d68000_stop         , 0xffff, 0x4e72, 0x000},
-	{d68000_sub_er_8     , 0xf1c0, 0x9000, 0xbff},
-	{d68000_sub_er_16    , 0xf1c0, 0x9040, 0xfff},
-	{d68000_sub_er_32    , 0xf1c0, 0x9080, 0xfff},
-	{d68000_sub_re_8     , 0xf1c0, 0x9100, 0x3f8},
-	{d68000_sub_re_16    , 0xf1c0, 0x9140, 0x3f8},
-	{d68000_sub_re_32    , 0xf1c0, 0x9180, 0x3f8},
-	{d68000_suba_16      , 0xf1c0, 0x90c0, 0xfff},
-	{d68000_suba_32      , 0xf1c0, 0x91c0, 0xfff},
-	{d68000_subi_8       , 0xffc0, 0x0400, 0xbf8},
-	{d68000_subi_16      , 0xffc0, 0x0440, 0xbf8},
-	{d68000_subi_32      , 0xffc0, 0x0480, 0xbf8},
-	{d68000_subq_8       , 0xf1c0, 0x5100, 0xbf8},
-	{d68000_subq_16      , 0xf1c0, 0x5140, 0xff8},
-	{d68000_subq_32      , 0xf1c0, 0x5180, 0xff8},
-	{d68000_subx_rr_8    , 0xf1f8, 0x9100, 0x000},
-	{d68000_subx_rr_16   , 0xf1f8, 0x9140, 0x000},
-	{d68000_subx_rr_32   , 0xf1f8, 0x9180, 0x000},
-	{d68000_subx_mm_8    , 0xf1f8, 0x9108, 0x000},
-	{d68000_subx_mm_16   , 0xf1f8, 0x9148, 0x000},
-	{d68000_subx_mm_32   , 0xf1f8, 0x9188, 0x000},
-	{d68000_swap         , 0xfff8, 0x4840, 0x000},
-	{d68000_tas          , 0xffc0, 0x4ac0, 0xbf8},
-	{d68000_trap         , 0xfff0, 0x4e40, 0x000},
-	{d68020_trapcc_0     , 0xf0ff, 0x50fc, 0x000},
-	{d68020_trapcc_16    , 0xf0ff, 0x50fa, 0x000},
-	{d68020_trapcc_32    , 0xf0ff, 0x50fb, 0x000},
-	{d68000_trapv        , 0xffff, 0x4e76, 0x000},
-	{d68000_tst_8        , 0xffc0, 0x4a00, 0xbf8},
-	{d68020_tst_pcdi_8   , 0xffff, 0x4a3a, 0x000},
-	{d68020_tst_pcix_8   , 0xffff, 0x4a3b, 0x000},
-	{d68020_tst_i_8      , 0xffff, 0x4a3c, 0x000},
-	{d68000_tst_16       , 0xffc0, 0x4a40, 0xbf8},
-	{d68020_tst_a_16     , 0xfff8, 0x4a48, 0x000},
-	{d68020_tst_pcdi_16  , 0xffff, 0x4a7a, 0x000},
-	{d68020_tst_pcix_16  , 0xffff, 0x4a7b, 0x000},
-	{d68020_tst_i_16     , 0xffff, 0x4a7c, 0x000},
-	{d68000_tst_32       , 0xffc0, 0x4a80, 0xbf8},
-	{d68020_tst_a_32     , 0xfff8, 0x4a88, 0x000},
-	{d68020_tst_pcdi_32  , 0xffff, 0x4aba, 0x000},
-	{d68020_tst_pcix_32  , 0xffff, 0x4abb, 0x000},
-	{d68020_tst_i_32     , 0xffff, 0x4abc, 0x000},
-	{d68000_unlk         , 0xfff8, 0x4e58, 0x000},
-	{d68020_unpk_rr      , 0xf1f8, 0x8180, 0x000},
-	{d68020_unpk_mm      , 0xf1f8, 0x8188, 0x000},
-	{0, 0, 0, 0}
-};
-
-/* Check if opcode is using a valid ea mode */
-static int valid_ea(uint opcode, uint mask)
-{
-	if (mask == 0)
-		return 1;
-
-	switch(opcode & 0x3f) {
-		case 0x00: case 0x01: case 0x02: case 0x03:
-		case 0x04: case 0x05: case 0x06: case 0x07:
-			return (mask & 0x800) != 0;
-		case 0x08: case 0x09: case 0x0a: case 0x0b:
-		case 0x0c: case 0x0d: case 0x0e: case 0x0f:
-			return (mask & 0x400) != 0;
-		case 0x10: case 0x11: case 0x12: case 0x13:
-		case 0x14: case 0x15: case 0x16: case 0x17:
-			return (mask & 0x200) != 0;
-		case 0x18: case 0x19: case 0x1a: case 0x1b:
-		case 0x1c: case 0x1d: case 0x1e: case 0x1f:
-			return (mask & 0x100) != 0;
-		case 0x20: case 0x21: case 0x22: case 0x23:
-		case 0x24: case 0x25: case 0x26: case 0x27:
-			return (mask & 0x080) != 0;
-		case 0x28: case 0x29: case 0x2a: case 0x2b:
-		case 0x2c: case 0x2d: case 0x2e: case 0x2f:
-			return (mask & 0x040) != 0;
-		case 0x30: case 0x31: case 0x32: case 0x33:
-		case 0x34: case 0x35: case 0x36: case 0x37:
-			return (mask & 0x020) != 0;
-		case 0x38:
-			return (mask & 0x010) != 0;
-		case 0x39:
-			return (mask & 0x008) != 0;
-		case 0x3a:
-			return (mask & 0x002) != 0;
-		case 0x3b:
-			return (mask & 0x001) != 0;
-		case 0x3c:
-			return (mask & 0x004) != 0;
-	}
-	return 0;
-
-}
-
-/* Used by qsort */
-static int DECL_SPEC compare_nof_true_bits(const void *aptr, const void *bptr)
-{
-	uint a = ((const opcode_struct*)aptr)->mask;
-	uint b = ((const opcode_struct*)bptr)->mask;
-
-	a = ((a & 0xAAAA) >> 1) + (a & 0x5555);
-	a = ((a & 0xCCCC) >> 2) + (a & 0x3333);
-	a = ((a & 0xF0F0) >> 4) + (a & 0x0F0F);
-	a = ((a & 0xFF00) >> 8) + (a & 0x00FF);
-
-	b = ((b & 0xAAAA) >> 1) + (b & 0x5555);
-	b = ((b & 0xCCCC) >> 2) + (b & 0x3333);
-	b = ((b & 0xF0F0) >> 4) + (b & 0x0F0F);
-	b = ((b & 0xFF00) >> 8) + (b & 0x00FF);
-
-	return b - a; /* reversed to get greatest to least sorting */
-}
-
-/* build the opcode handler jump table */
-static void build_opcode_table(void)
-{
-	uint i;
-	uint opcode;
-	opcode_struct* ostruct;
-	uint opcode_info_length = 0;
-
-	/* Already initialized ? */
-	if (g_instruction_table[0].instruction != NULL) {
-		return;
-	}
-
-	for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
-		opcode_info_length++;
-
-	qsort((void *)g_opcode_info, opcode_info_length, sizeof(g_opcode_info[0]), compare_nof_true_bits);
-
-	for(i=0;i<0x10000;i++) {
-		g_instruction_table[i].instruction = d68000_invalid; /* default to invalid, undecoded opcode */
-		opcode = i;
-		/* search through opcode info for a match */
-		for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++) {
-			/* match opcode mask and allowed ea modes */
-			if ((opcode & ostruct->mask) == ostruct->match) {
-				/* Handle destination ea for move instructions */
-				if ((ostruct->opcode_handler == d68000_move_8 ||
-							ostruct->opcode_handler == d68000_move_16 ||
-							ostruct->opcode_handler == d68000_move_32) &&
-						!valid_ea(((opcode>>9)&7) | ((opcode>>3)&0x38), 0xbf8))
-					continue;
-				if (valid_ea(opcode, ostruct->ea_mask)) {
-					g_instruction_table[i].instruction = ostruct->opcode_handler;
-					g_instruction_table[i].word2_mask = ostruct->mask2;
-					g_instruction_table[i].word2_match = ostruct->match2;
-					break;
-				}
-			}
-		}
-	}
-}
+/* This table is auto-generated. Look in contrib/m68k_instruction_tbl_gen for more info */
+#include "M68KInstructionTable.inc"
 
 static int instruction_is_valid(m68k_info *info, const unsigned int word_check)
 {
@@ -3946,8 +3496,8 @@ static void update_op_reg_list(m68k_info *info, cs_m68k_op *op, int write)
 			break;
 
 		case M68K_OP_REG_PAIR:
-			add_reg_to_rw_list(info, M68K_REG_D0 + op->reg_pair.reg_0, write);
-			add_reg_to_rw_list(info, M68K_REG_D0 + op->reg_pair.reg_1, write);
+			add_reg_to_rw_list(info, op->reg_pair.reg_0, write);
+			add_reg_to_rw_list(info, op->reg_pair.reg_1, write);
 			break;
 	}
 }
@@ -4023,8 +3573,6 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 	unsigned int size;
 
 	inst->Opcode = M68K_INS_INVALID;
-
-	build_opcode_table();
 
 	memset(ext, 0, sizeof(cs_m68k));
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;

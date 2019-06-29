@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
@@ -12,7 +12,7 @@
 #include "utils.h"
 
 // create a cache for fast id lookup
-static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
+static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
 {
 	// NOTE: assume that the max id is always put at the end of insns array
 	unsigned short max_id = insns[size - 1].id;
@@ -28,7 +28,7 @@ static unsigned short *make_id2insn(insn_map *insns, unsigned int size)
 
 // look for @id in @insns, given its size in @max. first time call will update @cache.
 // return 0 if not found
-unsigned short insn_find(insn_map *insns, unsigned int max, unsigned int id, unsigned short **cache)
+unsigned short insn_find(const insn_map *insns, unsigned int max, unsigned int id, unsigned short **cache)
 {
 	if (id > insns[max - 1].id)
 		return 0;
@@ -39,7 +39,7 @@ unsigned short insn_find(insn_map *insns, unsigned int max, unsigned int id, uns
 	return (*cache)[id];
 }
 
-int name2id(name_map* map, int max, const char *name)
+int name2id(const name_map* map, int max, const char *name)
 {
 	int i;
 
@@ -53,7 +53,7 @@ int name2id(name_map* map, int max, const char *name)
 	return -1;
 }
 
-char *id2name(name_map* map, int max, const unsigned int id)
+const char *id2name(const name_map* map, int max, const unsigned int id)
 {
 	int i;
 
@@ -69,7 +69,7 @@ char *id2name(name_map* map, int max, const unsigned int id)
 
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
-unsigned int count_positive(uint16_t *list)
+unsigned int count_positive(const uint16_t *list)
 {
 	unsigned int c;
 
@@ -80,7 +80,7 @@ unsigned int count_positive(uint16_t *list)
 
 // count number of positive members in a list.
 // NOTE: list must be guaranteed to end in 0
-unsigned int count_positive8(unsigned char *list)
+unsigned int count_positive8(const unsigned char *list)
 {
 	unsigned int c;
 
@@ -100,7 +100,7 @@ char *cs_strdup(const char *str)
 	return (char *)memmove(new, str, len);
 }
 
-// we need this since Windows doesnt have snprintf()
+// we need this since Windows doesn't have snprintf()
 int cs_snprintf(char *buffer, size_t size, const char *fmt, ...)
 {
 	int ret;
@@ -137,3 +137,33 @@ bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
 	return false;
 }
 
+// binary search for encoding in IndexType array
+// return -1 if not found, or index if found
+unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t size, uint16_t encoding)
+{
+	// binary searching since the index is sorted in encoding order
+	size_t left, right, m;
+
+	right = size - 1;
+
+	if (encoding < index[0].encoding || encoding > index[right].encoding)
+		// not found
+		return -1;
+
+	left = 0;
+
+	while(left <= right) {
+		m = (left + right) / 2;
+		if (encoding == index[m].encoding) {
+			return m;
+		}
+
+		if (encoding < index[m].encoding)
+			right = m - 1;
+		else
+			left = m + 1;
+	}
+
+	// not found
+	return -1;
+}

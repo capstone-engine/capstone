@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h' ]
+include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h' ]
 
 template = {
     'java': {
@@ -26,6 +26,7 @@ template = {
             'tms320c64x.h': 'TMS320C64x',
             'm680x.h': 'M680x',
             'evm.h': 'Evm',
+            'wasm.h': 'Wasm',
             'comment_open': '\t//',
             'comment_close': '',
         },
@@ -47,6 +48,10 @@ template = {
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
             'evm.h': 'evm',
+            'wasm.h': 'wasm',
+            'mos65xx.h': 'mos65xx',
+            'bpf.h': 'bpf',
+            'riscv.h': 'riscv',
             'comment_open': '#',
             'comment_close': '',
         },
@@ -68,6 +73,7 @@ template = {
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
             'evm.h': 'evm',
+            'wasm.h': 'wasm',
             'comment_open': '(*',
             'comment_close': ' *)',
         },
@@ -78,9 +84,13 @@ MARKUP = '//>'
 
 def gen(lang):
     global include, INCL_DIR
+    print('Generating bindings for', lang)
     templ = template[lang]
     print('Generating bindings for', lang)
     for target in include:
+        if target not in templ:
+            print("Warning: No binding found for %s" % target)
+            continue
         prefix = templ[target]
         outfile = open(templ['out_file'] %(prefix), 'wb')   # open as binary prevents windows newlines
         outfile.write((templ['header'] % (prefix)).encode("utf-8"))
@@ -123,7 +133,7 @@ def gen(lang):
                 f = re.split('\s+', t)
 
                 if f[0].startswith(prefix.upper()):
-                    if len(f) > 1 and f[1] not in '//=':
+                    if len(f) > 1 and f[1] not in ('//', '///<', '='):
                         print("Error: Unable to convert %s" % f)
                         continue
                     elif len(f) > 1 and f[1] == '=':
