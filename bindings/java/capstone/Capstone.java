@@ -96,7 +96,7 @@ public class Capstone {
   }
 
   public static class CsInsn {
-    private NativeLong csh;
+    private Pointer csh;
     private CS cs;
     private _cs_insn raw;
     private int arch;
@@ -121,7 +121,7 @@ public class Capstone {
     public byte[] groups;
     public OpInfo operands;
 
-    public CsInsn (_cs_insn insn, int _arch, NativeLong _csh, CS _cs, boolean diet) {
+    public CsInsn (_cs_insn insn, int _arch, Pointer _csh, CS _cs, boolean diet) {
       id = insn.id;
       address = insn.address;
       size = insn.size;
@@ -294,31 +294,31 @@ public class Capstone {
   }
 
   private interface CS extends Library {
-    public int cs_open(int arch, int mode, NativeLongByReference handle);
-    public NativeLong cs_disasm(NativeLong handle, byte[] code, NativeLong code_len,
+    public int cs_open(int arch, int mode, PointerByReference handle);
+    public NativeLong cs_disasm(Pointer handle, byte[] code, NativeLong code_len,
         long addr, NativeLong count, PointerByReference insn);
     public void cs_free(Pointer p, NativeLong count);
-    public int cs_close(NativeLongByReference handle);
-    public int cs_option(NativeLong handle, int option, NativeLong optionValue);
+    public int cs_close(PointerByReference handle);
+    public int cs_option(Pointer handle, int option, NativeLong optionValue);
 
-    public String cs_reg_name(NativeLong csh, int id);
-    public int cs_op_count(NativeLong csh, Pointer insn, int type);
-    public int cs_op_index(NativeLong csh, Pointer insn, int type, int index);
+    public String cs_reg_name(Pointer csh, int id);
+    public int cs_op_count(Pointer csh, Pointer insn, int type);
+    public int cs_op_index(Pointer csh, Pointer insn, int type, int index);
 
-    public String cs_insn_name(NativeLong csh, int id);
-    public String cs_group_name(NativeLong csh, int id);
-    public byte cs_insn_group(NativeLong csh, Pointer insn, int id);
-    public byte cs_reg_read(NativeLong csh, Pointer insn, int id);
-    public byte cs_reg_write(NativeLong csh, Pointer insn, int id);
-    public int cs_errno(NativeLong csh);
+    public String cs_insn_name(Pointer csh, int id);
+    public String cs_group_name(Pointer csh, int id);
+    public byte cs_insn_group(Pointer csh, Pointer insn, int id);
+    public byte cs_reg_read(Pointer csh, Pointer insn, int id);
+    public byte cs_reg_write(Pointer csh, Pointer insn, int id);
+    public int cs_errno(Pointer csh);
     public int cs_version(IntByReference major, IntByReference minor);
     public boolean cs_support(int query);
     public String cs_strerror(int code);
-    public int cs_regs_access(NativeLong handle, Pointer insn, Pointer regs_read, ByteByReference regs_read_count, Pointer regs_write, ByteByReference regs_write_count);
+    public int cs_regs_access(Pointer handle, Pointer insn, Pointer regs_read, ByteByReference regs_read_count, Pointer regs_write, ByteByReference regs_write_count);
   }
 
   // Capstone API version
-  public static final int CS_API_MAJOR = 4;
+  public static final int CS_API_MAJOR = 5;
   public static final int CS_API_MINOR = 0;
 
   // architectures
@@ -420,8 +420,8 @@ public class Capstone {
   public static final int CS_SUPPORT_X86_REDUCE = CS_ARCH_ALL+2;  // X86 reduce mode
 
   protected class NativeStruct {
-      private NativeLong csh;
-      private NativeLongByReference handleRef;
+      private Pointer csh;
+      private PointerByReference handleRef;
   }
 
   private static final CsInsn[] EMPTY_INSN = new CsInsn[0];
@@ -436,15 +436,17 @@ public class Capstone {
 
   public Capstone(int arch, int mode) {
     cs = (CS)Native.loadLibrary("capstone", CS.class);
-    int version = cs.cs_version(null, null);
-    if (version != (CS_API_MAJOR << 8) + CS_API_MINOR) {
-      throw new RuntimeException("Different API version between core & binding (CS_ERR_VERSION)");
+    int coreVersion = cs.cs_version(null, null);
+    int bindingVersion = (CS_API_MAJOR << 8) + CS_API_MINOR;
+    if (coreVersion != bindingVersion) {
+      throw  new RuntimeException("Different API version between core " + coreVersion +
+              " & binding " + bindingVersion + " (CS_ERR_VERSION)");
     }
 
     this.arch = arch;
     this.mode = mode;
     ns = new NativeStruct();
-    ns.handleRef = new NativeLongByReference();
+    ns.handleRef = new PointerByReference();
     if (cs.cs_open(arch, mode, ns.handleRef) != CS_ERR_OK) {
       throw new RuntimeException("ERROR: Wrong arch or mode");
     }
