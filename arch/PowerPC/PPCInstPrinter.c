@@ -459,20 +459,30 @@ static void printU12ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printS16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	if (MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
-		unsigned short Imm = (unsigned short)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-        if (Imm > HEX_THRESHOLD)
-            SStream_concat(O, "0x%x", Imm);
-        else
-            SStream_concat(O, "%u", Imm);
+    if (MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
+        int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+        if (Imm > 0) {
+            if (Imm > HEX_THRESHOLD) {
+                SStream_concat(O, "0x%hx", Imm);
+            }
+            else
+                SStream_concat(O, "%d", Imm);
+        } else {
+            if (Imm < -HEX_THRESHOLD) {
+                SStream_concat(O, "-0x%hx", ~Imm + 1);
+            }
+            else
+                SStream_concat(O, "%d", Imm);
+        }
 
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
-			MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Imm;
-			MI->flat_insn->detail->ppc.op_count++;
-		}
-	} else
-		printOperand(MI, OpNo, O);
+
+        if (MI->csh->detail) {
+            MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].type = PPC_OP_IMM;
+            MI->flat_insn->detail->ppc.operands[MI->flat_insn->detail->ppc.op_count].imm = Imm;
+            MI->flat_insn->detail->ppc.op_count++;
+        }
+    } else
+        printOperand(MI, OpNo, O);
 }
 
 static void printS16ImmOperand_Mem(MCInst *MI, unsigned OpNo, SStream *O)
