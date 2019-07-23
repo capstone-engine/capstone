@@ -8,6 +8,7 @@ before_script:
         # TODO remove built in cmocka compile and use system cmocka (including brewfile) once xenial is default
         - git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
         - chmod +x suite/cstest/build_cstest.sh
+        - if [[ ${TRAVIS_OS_NAME} = linux ]]; then export PATH="/usr/lib/llvm-9/bin:${PATH}"; fi
 script:
         - ./make.sh
         - make check
@@ -18,6 +19,7 @@ script:
         - if [[ "$NOPYTEST" != "true" ]]; then cd suite/cstest && ./build_cstest.sh; fi
         - if [[ "$NOPYTEST" != "true" ]]; then python cstest_report.py -D -t build/cstest -d ../MC; fi
         - if [[ "$NOPYTEST" != "true" ]]; then python cstest_report.py -D -t build/cstest -f issues.cs; fi
+        - if [ -n "$QA_FUZZIT" ]; then suite/fuzz/fuzzit.sh; fi
 compiler:
         - clang
         - gcc
@@ -43,14 +45,22 @@ matrix:
               packages:
                 - libcmocka-dev
         - name: fuzza
-          env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address" NOPYTEST=true
+          env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize=fuzzer-no-link" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize=fuzzer-no-link" LDFLAGS="-fsanitize=address" NOPYTEST=true QA_FUZZIT=asan
           compiler: clang
           os: linux
         - name: fuzzm
-          env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" LDFLAGS="-fsanitize=memory" NOPYTEST=true
+          env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory -fsanitize=fuzzer-no-link" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory -fsanitize=fuzzer-no-link" LDFLAGS="-fsanitize=memory" NOPYTEST=true QA_FUZZIT=msan
           compiler: clang
           os: linux
         - name: fuzzu
-          env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined -fno-sanitize-recover=undefined,integer" LDFLAGS="-fsanitize=undefined" NOPYTEST=true
+          env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined -fsanitize=fuzzer-no-link" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined -fno-sanitize-recover=undefined,integer -fsanitize=fuzzer-no-link" LDFLAGS="-fsanitize=undefined" NOPYTEST=true QA_FUZZIT=ubsan
           compiler: clang
           os: linux
+
+addons:
+  apt:
+    sources:
+      - llvm-toolchain-trusty
+      - ubuntu-toolchain-r-test
+    packages:
+      - clang-9
