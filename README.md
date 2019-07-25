@@ -5,6 +5,7 @@ Capstone Engine
 [![Build status](https://ci.appveyor.com/api/projects/status/a4wvbn89wu3pinas/branch/next?svg=true)](https://ci.appveyor.com/project/aquynh/capstone/branch/next)
 [![pypi package](https://badge.fury.io/py/capstone.svg)](https://pypi.python.org/pypi/capstone)
 [![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
+[![Fuzzit Status](https://app.fuzzit.dev/badge?org_id=ANOh0D48gSLBxNZcDQMI&branch=master)](https://app.fuzzit.dev/admin/ANOh0D48gSLBxNZcDQMI/dashboard)<br/>
 
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
@@ -59,6 +60,12 @@ Hack
 ----
 
 See HACK.TXT file for the structure of the source code.
+
+
+Fuzz
+----
+
+See suite/fuzz/README.md for more information.
 
 
 License
