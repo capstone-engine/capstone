@@ -579,5 +579,3 @@ define generate-pkgcfg
 	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
 endef
-
-
