@@ -53,6 +53,7 @@ all: $(REPRODUCERMC) $(REPRODUCERBIN) $(FUZZERBIN) $(PLATFORMDECODE)
 
 clean:
 	rm -rf fuzz_harness $(OBJS) $(PLATFORMDECODE) $(REPRODUCERMC) $(REPRODUCERBIN) $(FUZZERBIN) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	rm -rf *.d $(OBJDIR)/*.d
 
 $(REPRODUCERMC): fuzz_disasm.o drivermc.o platform.o
 	@mkdir -p $(@D)

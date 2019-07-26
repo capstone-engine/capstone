@@ -37,6 +37,7 @@ endif
 
 clean:
 	${RM} -rf *.o $(TARGET)
+	${RM} -rf *.d
 
 %.o: %.c
 ifeq ($(V), 0)
