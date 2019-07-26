@@ -15,6 +15,7 @@ build_android() {
     echo "ERROR! Please set \$NDK to point at your Android NDK directory."
     exit 1
   fi
+
   HOSTOS=$(uname -s | tr 'LD' 'ld')
   HOSTARCH=$(uname -m)
 
@@ -24,13 +25,11 @@ build_android() {
   case "$TARGARCH" in
     arm)
       [ -n "$APILEVEL" ] || APILEVEL="android-14"  # default to ICS
-      [ -n "$GCCVER" ] || GCCVER="4.8"
-      CROSS=arm-linux-androideabi-
+      CROSS=arm-linux-androideabi
       ;;
     arm64)
       [ -n "$APILEVEL" ] || APILEVEL="android-21"  # first with arm64
-      [ -n "$GCCVER" ] || GCCVER="4.9"
-      CROSS=aarch64-linux-android-
+      CROSS=aarch64-linux-android
       ;;
 
     *)
@@ -39,10 +38,16 @@ build_android() {
       ;;
   esac
 
-  TOOLCHAIN="$NDK/toolchains/$CROSS$GCCVER/prebuilt/$HOSTOS-$HOSTARCH"
-  PLATFORM="$NDK/platforms/$APILEVEL/arch-$TARGARCH"
+  STANDALONE=`realpath android-ndk-${TARGARCH}-${APILEVEL}`
 
-  CROSS="$TOOLCHAIN/bin/$CROSS" CFLAGS="--sysroot=$PLATFORM" LDFLAGS="--sysroot=$PLATFORM" ${MAKE} $*
+  [ -d $STANDALONE ] || {
+      python ${NDK}/build/tools/make_standalone_toolchain.py \
+             --arch ${TARGARCH} \
+             --api ${APILEVEL##*-} \
+             --install-dir ${STANDALONE}
+  }
+
+  ANDROID=1 CROSS="${STANDALONE}/${CROSS}/bin" CFLAGS="--sysroot=${STANDALONE}/sysroot" ${MAKE} $*
 }
 
 # build iOS lib for all iDevices, or only specific device
