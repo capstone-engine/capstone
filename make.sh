@@ -47,7 +47,6 @@ build_android() {
              --install-dir ${STANDALONE}
   }
 
-  #CC="${STANDALONE}/bin/clang" CFLAGS="--sysroot=${STANDALONE}/sysroot" ${MAKE} $*
   ANDROID=1 CROSS="${STANDALONE}/${CROSS}/bin" CFLAGS="--sysroot=${STANDALONE}/sysroot" ${MAKE} $*
 }
 
