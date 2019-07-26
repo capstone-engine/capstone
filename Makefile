@@ -444,17 +444,12 @@ else
 	$(generate-pkgcfg)
 endif
 
-# destination path macro we'll use below
-df = $(*F)
-
 # create a list of auto dependencies
 AUTODEPS:= $(patsubst %.o,%.d, $(LIBOBJ))
 
 
 # include by auto dependencies
 -include $(AUTODEPS)
-
-
 
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
