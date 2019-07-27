@@ -447,7 +447,6 @@ endif
 # create a list of auto dependencies
 AUTODEPS:= $(patsubst %.o,%.d, $(LIBOBJ))
 
-
 # include by auto dependencies
 -include $(AUTODEPS)
 
