@@ -411,7 +411,7 @@ else
 endif
 endif
 
-$(LIBOBJ): config.mk *.h include/capstone/*.h
+$(LIBOBJ): config.mk
 
 $(LIBOBJ_ARM): $(DEP_ARM)
 $(LIBOBJ_ARM64): $(DEP_ARM64)
@@ -449,6 +449,12 @@ else
 	$(generate-pkgcfg)
 endif
 
+# create a list of auto dependencies
+AUTODEPS:= $(patsubst %.o,%.d, $(LIBOBJ))
+
+# include by auto dependencies
+-include $(AUTODEPS)
+
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
 	$(call install-library,$(LIBDIR))
@@ -472,6 +478,7 @@ clean:
 	rm -f $(LIBOBJ)
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).pc
 	rm -f $(PKGCFGF)
+	rm -f $(AUTODEPS)
 	[ ${ANDROID} -eq 1 ] && rm -rf android-ndk-*
 	$(MAKE) -C cstool clean
 
