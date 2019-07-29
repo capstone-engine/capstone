@@ -430,7 +430,7 @@ clean:
 	rm -f $(LIBOBJ)
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).pc
 	rm -f $(PKGCFGF)
-	[ ${ANDROID} -eq 1 ] && rm -rf android-ndk-*
+	[ "${ANDROID}" = "1" ] && rm -rf android-ndk-* || true
 	$(MAKE) -C cstool clean
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
