@@ -22,6 +22,11 @@ endif
 
 ifeq ($(CROSS),)
 RANLIB ?= ranlib
+else ifeq ($(ANDROID), 1)
+CC = $(CROSS)/../../bin/clang
+AR = $(CROSS)/ar
+RANLIB = $(CROSS)/ranlib
+STRIP = $(CROSS)/strip
 else
 CC = $(CROSS)gcc
 AR = $(CROSS)ar
@@ -474,6 +479,7 @@ clean:
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).pc
 	rm -f $(PKGCFGF)
 	rm -f $(AUTODEPS)
+	[ ${ANDROID} -eq 1 ] && rm -rf android-ndk-*
 	$(MAKE) -C cstool clean
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))

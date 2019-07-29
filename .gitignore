@@ -124,3 +124,6 @@ capstone_get_setup
 *.s
 
 cstool/cstool
+
+# android
+android-ndk-*
