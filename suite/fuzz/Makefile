@@ -27,6 +27,7 @@ LDFLAGS += -L$(LIBDIR)
 
 CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
 LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+FUZZLDFLAGS =
 
 LIBNAME = capstone
 
@@ -40,16 +41,21 @@ ARCHIVE = $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
 
 SOURCES = fuzz_disasm.c drivermc.c fuzz_harness.c driverbin.c platform.c
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
-BINARY = $(addprefix $(TESTDIR)/,fuzz_disasm$(BIN_EXT))
-BINARYBIN = $(addprefix $(TESTDIR)/,fuzz_bindisasm$(BIN_EXT))
+# reproducer using MC file as input
+REPRODUCERMC = $(addprefix $(TESTDIR)/,fuzz_disasm$(BIN_EXT))
+# reproducer using raw binary file as input (as produced by fuzzer)
+REPRODUCERBIN = $(addprefix $(TESTDIR)/,fuzz_bindisasm$(BIN_EXT))
+# fuzzer
+FUZZERBIN = $(addprefix $(TESTDIR)/,fuzz_bindisasm2$(BIN_EXT))
 PLATFORMDECODE = $(addprefix $(TESTDIR)/,fuzz_decode_platform$(BIN_EXT))
 
-all: $(BINARY) $(BINARYBIN) $(PLATFORMDECODE)
+all: $(REPRODUCERMC) $(REPRODUCERBIN) $(FUZZERBIN) $(PLATFORMDECODE)
 
 clean:
-	rm -rf fuzz_harness $(OBJS) $(PLATFORMDECODE) $(BINARY) $(BINARYBIN) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	rm -rf fuzz_harness $(OBJS) $(PLATFORMDECODE) $(REPRODUCERMC) $(REPRODUCERBIN) $(FUZZERBIN) $(OBJDIR)/lib$(LIBNAME).* $(OBJDIR)/$(LIBNAME).*
+	rm -f *.d $(OBJDIR)/*.d
 
-$(BINARY): fuzz_disasm.o drivermc.o platform.o
+$(REPRODUCERMC): fuzz_disasm.o drivermc.o platform.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 	$(call log,LINK,$(notdir $@))
@@ -58,13 +64,24 @@ else
 	$(link-static)
 endif
 
-$(BINARYBIN): fuzz_disasm.o driverbin.o platform.o
+$(REPRODUCERBIN): fuzz_disasm.o driverbin.o platform.o
 	@mkdir -p $(@D)
 ifeq ($(V),0)
 	$(call log,LINK,$(notdir $@))
 	@$(link-static)
 else
 	$(link-static)
+endif
+
+$(FUZZERBIN): FUZZLDFLAGS="-fsanitize=fuzzer"
+
+$(FUZZERBIN): fuzz_disasm.o platform.o
+	@mkdir -p $(@D)
+ifeq ($(V),0)
+	$(call log,LINK,$(notdir $@))
+	@$(link-static) || touch $(FUZZERBIN)
+else
+	$(link-static) || touch $(FUZZERBIN)
 endif
 
 $(PLATFORMDECODE): fuzz_decode_platform.o platform.o
@@ -88,7 +105,7 @@ endif
 
 
 define link-static
-	$(CC) $(LDFLAGS) $^ $(ARCHIVE) -o $@
+	$(CC) $(LDFLAGS) $(FUZZLDFLAGS) $^ $(ARCHIVE) -o $@
 endef
 
 fuzz_harness: fuzz_harness.o

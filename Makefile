@@ -22,6 +22,11 @@ endif
 
 ifeq ($(CROSS),)
 RANLIB ?= ranlib
+else ifeq ($(ANDROID), 1)
+CC = $(CROSS)/../../bin/clang
+AR = $(CROSS)/ar
+RANLIB = $(CROSS)/ranlib
+STRIP = $(CROSS)/strip
 else
 CC = $(CROSS)gcc
 AR = $(CROSS)ar
@@ -406,7 +411,7 @@ else
 endif
 endif
 
-$(LIBOBJ): config.mk *.h include/capstone/*.h
+$(LIBOBJ): config.mk
 
 $(LIBOBJ_ARM): $(DEP_ARM)
 $(LIBOBJ_ARM64): $(DEP_ARM64)
@@ -444,6 +449,12 @@ else
 	$(generate-pkgcfg)
 endif
 
+# create a list of auto dependencies
+AUTODEPS:= $(patsubst %.o,%.d, $(LIBOBJ))
+
+# include by auto dependencies
+-include $(AUTODEPS)
+
 install: $(PKGCFGF) $(ARCHIVE) $(LIBRARY)
 	mkdir -p $(LIBDIR)
 	$(call install-library,$(LIBDIR))
@@ -467,6 +478,8 @@ clean:
 	rm -f $(LIBOBJ)
 	rm -f $(BLDIR)/lib$(LIBNAME).* $(BLDIR)/$(LIBNAME).pc
 	rm -f $(PKGCFGF)
+	rm -f $(AUTODEPS)
+	[ "${ANDROID}" = "1" ] && rm -rf android-ndk-* || true
 	$(MAKE) -C cstool clean
 
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
