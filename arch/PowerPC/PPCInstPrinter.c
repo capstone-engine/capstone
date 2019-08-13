@@ -780,6 +780,12 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 				 break;
 	}
 
+    if (MCInst_getNumOperands(MI) == 3 &&
+        MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+        ((MCOperand_getImm(MCInst_getOperand(MI, 0)) & 0x14) == 0x14)) {
+        return NULL;
+    }
+
 	if (MCInst_getNumOperands(MI) == 3 &&
 			MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
 			(MCOperand_getImm(MCInst_getOperand(MI, 0)) >= 0) &&
@@ -876,7 +882,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 
 	if (MCInst_getNumOperands(MI) == 3 &&
 			MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
-			((MCOperand_getImm(MCInst_getOperand(MI, 0)) & 0x12)== 16)) {
+			((MCOperand_getImm(MCInst_getOperand(MI, 0)) & 0x16)== 16)) {
 		SStream_concat(&ss, opCode, "dnz");
 
 		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 24)
@@ -890,7 +896,7 @@ static char *printAliasInstrEx(MCInst *MI, SStream *OS, void *info)
 
 	if (MCInst_getNumOperands(MI) == 3 &&
 			MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
-			((MCOperand_getImm(MCInst_getOperand(MI, 0)) & 0x12)== 18)) {
+			((MCOperand_getImm(MCInst_getOperand(MI, 0)) & 0x16)== 18)) {
 		SStream_concat(&ss, opCode, "dz");
 
 		if (MCOperand_getImm(MCInst_getOperand(MI, 0)) == 26)
