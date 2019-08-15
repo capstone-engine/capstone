@@ -20,6 +20,8 @@ os:
   - linux
   - osx
 addons:
+  homebrew:
+    brewfile: true
   apt:
     packages:
       - libcmocka-dev
