@@ -31,11 +31,11 @@ matrix:
     - language: android
       install: echo y | sdkmanager "ndk-bundle"
       env: ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle NDK=$ANDROID_NDK_HOME
-      script: ./make.sh cross-android arm
+      script: ./make.sh cross-android arm libcapstone.so.5
     - language: android
       install: echo y | sdkmanager "ndk-bundle"
       env: ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle NDK=$ANDROID_NDK_HOME
-      script: ./make.sh cross-android arm64
+      script: ./make.sh cross-android arm64 libcapstone.so.5
     - name: fuzza
       env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address" NOPYTEST=true
       compiler: clang

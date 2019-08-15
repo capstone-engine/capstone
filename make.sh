@@ -24,7 +24,7 @@ build_android() {
 
   case "$TARGARCH" in
     arm)
-      [ -n "$APILEVEL" ] || APILEVEL="android-14"  # default to ICS
+      [ -n "$APILEVEL" ] || APILEVEL="android-16"  # default to ICS
       CROSS=arm-linux-androideabi
       ;;
     arm64)
