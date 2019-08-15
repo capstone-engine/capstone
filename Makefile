@@ -475,25 +475,18 @@ dist:
 	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tgz
 	git archive --format=zip --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).zip
 
-
-TESTS = test_basic test_detail test_arm test_arm64 test_m68k test_mips test_ppc test_sparc
-TESTS += test_systemz test_x86 test_xcore test_iter test_evm test_mos65xx
-TESTS += test_basic.static test_detail.static test_arm.static test_arm64.static
-TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
-TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
-TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static
-TESTS += test_mos65xx.static
-check: $(TESTS) fuzztest fuzzallcorp
+check: $(LIBRARY) $(ARCHIVE)
 	make -C bindings/python check
-test_%:
-	./tests/$@ > /dev/null && echo OK || echo FAILED
+	make -C tests check
 
 FUZZ_INPUTS = $(shell find suite/MC -type f -name '*.cs')
 
-fuzztest:
+fuzztest: $(LIBRARY) $(ARCHIVE)
+	make -C suite/fuzz
 	./suite/fuzz/fuzz_disasm $(FUZZ_INPUTS)
 
-fuzzallcorp:
+fuzzallcorp: $(LIBRARY) $(ARHIVE)
+	make -C suite/fuzz
 ifneq ($(wildcard suite/fuzz/corpus-libFuzzer-capstone_fuzz_disasmnext-latest),)
 	./suite/fuzz/fuzz_bindisasm suite/fuzz/corpus-libFuzzer-capstone_fuzz_disasmnext-latest/
 else

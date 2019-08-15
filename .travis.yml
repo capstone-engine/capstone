@@ -55,11 +55,14 @@ matrix:
       env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address" NOPYTEST=true
       compiler: clang
       os: linux
+      script: make fuzztest fuzzallcorp
     - name: fuzzm
       env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" LDFLAGS="-fsanitize=memory" NOPYTEST=true
       compiler: clang
       os: linux
+      script: make fuzztest fuzzallcorp
     - name: fuzzu
       env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined -fno-sanitize-recover=undefined,integer" LDFLAGS="-fsanitize=undefined" NOPYTEST=true
       compiler: clang
       os: linux
+      script: make fuzztest fuzzallcorp
