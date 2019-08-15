@@ -28,6 +28,20 @@ addons:
       - libcmocka-dev
 matrix:
   include:
+    - os: osx
+      addons:
+        homebrew:
+          update: true
+          brewfile: Brewfile.android
+      env: ANDROID_NDK_HOME="/usr/local/share/android-ndk" NDK=$ANDROID_NDK_HOME
+      script: ./make.sh cross-android arm libcapstone.so.5
+    - os: osx
+      addons:
+        homebrew:
+          update: true
+          brewfile: Brewfile.android
+      env: ANDROID_NDK_HOME="/usr/local/share/android-ndk" NDK=$ANDROID_NDK_HOME
+      script: ./make.sh cross-android arm64 libcapstone.so.5
     - language: android
       install: echo y | sdkmanager "ndk-bundle"
       env: ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle NDK=$ANDROID_NDK_HOME

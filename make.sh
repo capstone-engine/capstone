@@ -38,7 +38,12 @@ build_android() {
       ;;
   esac
 
-  STANDALONE=`readlink -f android-ndk-${TARGARCH}-${APILEVEL}`
+  if [ "$UNAME" = Darwin ]; then
+    READLINK=greadlink
+  else
+    READLINK=readlink
+  fi
+  STANDALONE=`${READLINK} -f android-ndk-${TARGARCH}-${APILEVEL}`
 
   [ -d $STANDALONE ] || {
       python ${NDK}/build/tools/make_standalone_toolchain.py \
