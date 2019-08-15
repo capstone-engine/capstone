@@ -7,9 +7,6 @@ script:
   - ./make.sh
   - make check
   - sudo make install
-  - if [[ "$NOPYTEST" != "true" ]]; then pushd suite/cstest && make && popd; fi
-  - if [[ "$NOPYTEST" != "true" ]]; then pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd; fi
-  - if [[ "$NOPYTEST" != "true" ]]; then pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd; fi
 compiler:
   - clang
   - gcc
@@ -32,7 +29,7 @@ matrix:
           update: true
           brewfile: Brewfile.android
       env: ANDROID_NDK_HOME="/usr/local/share/android-ndk" NDK=$ANDROID_NDK_HOME
-      script: ./make.sh cross-android arm libcapstone.so.5
+      script: ./make.sh cross-android arm libcapstone.so.5 libcapstone.a
     - name: android arm64
       os: osx
       addons:
@@ -40,29 +37,42 @@ matrix:
           update: true
           brewfile: Brewfile.android
       env: ANDROID_NDK_HOME="/usr/local/share/android-ndk" NDK=$ANDROID_NDK_HOME
-      script: ./make.sh cross-android arm64 libcapstone.so.5
+      script: ./make.sh cross-android arm64 libcapstone.so.5 libcapstone.a
     - name: android arm
       language: android
       install: echo y | sdkmanager "ndk-bundle"
       env: ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle NDK=$ANDROID_NDK_HOME
-      script: ./make.sh cross-android arm libcapstone.so.5
+      script: ./make.sh cross-android arm libcapstone.so.5 libcapstone.a
     - name: android arm64
       language: android
       install: echo y | sdkmanager "ndk-bundle"
       env: ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle NDK=$ANDROID_NDK_HOME
-      script: ./make.sh cross-android arm64 libcapstone.so.5
+      script: ./make.sh cross-android arm64 libcapstone.so.5 libcapstone.a
     - name: fuzza
-      env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address" NOPYTEST=true
+      env: ASAN_OPTIONS=detect_leaks=0 CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address" LDFLAGS="-fsanitize=address"
       compiler: clang
       os: linux
-      script: make fuzztest fuzzallcorp
+      script:
+        - make fuzztest fuzzallcorp
+        - pushd suite/cstest && make && popd
+        - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
+        - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
     - name: fuzzm
-      env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" LDFLAGS="-fsanitize=memory" NOPYTEST=true
+      env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=memory" LDFLAGS="-fsanitize=memory"
       compiler: clang
       os: linux
-      script: make fuzztest fuzzallcorp
+      script:
+        - make fuzztest fuzzallcorp
+        - pushd suite/cstest && make && popd
+        - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
+        - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
     - name: fuzzu
-      env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined -fno-sanitize-recover=undefined,integer" LDFLAGS="-fsanitize=undefined" NOPYTEST=true
+      env: CXXFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined" CFLAGS="-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=undefined -fno-sanitize-recover=undefined,integer" LDFLAGS="-fsanitize=undefined"
       compiler: clang
       os: linux
-      script: make fuzztest fuzzallcorp
+      script:
+        - make fuzztest fuzzallcorp
+        - pushd suite/cstest && make && popd
+        - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
+        - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
+ 
