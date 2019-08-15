@@ -1,12 +1,7 @@
 PYTHON2 = python
 PYTHON3 = python3
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S), Linux)
-ENV_VARS = LD_LIBRARY_PATH=../../ DYLD_LIBRARY_PATH=../../
-else
 ENV_VARS = LD_LIBRARY_PATH=../../ DYLD_LIBRARY_PATH=../../ LIBCAPSTONE_PATH=../../
-endif
 
 .PHONY: gen_const install install3 install_cython sdist sdist3 bdist bdist3 clean check
 
