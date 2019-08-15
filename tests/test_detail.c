@@ -79,7 +79,7 @@ static void test()
 			CS_ARCH_X86,
 			(cs_mode)CS_MODE_16,
 			(unsigned char *)X86_CODE16,
-			sizeof(X86_CODE32) - 1,
+			sizeof(X86_CODE16) - 1,
 			"X86 16bit (Intel syntax)"
 		},
 		{
