@@ -21,6 +21,7 @@ os:
   - osx
 addons:
   homebrew:
+    update: true
     brewfile: true
   apt:
     packages:
