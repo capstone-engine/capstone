@@ -1,13 +1,16 @@
-SOURCE=src
-INCLUDE=include
-BUILD=build
-LIBRARY= -lcmocka -lcapstone
+SRC = $(wildcard src/*.c)
+OBJ = $(SRC:src/%.c=src/%.o)
 
-all:
-	rm -rf $(BUILD)
-	mkdir $(BUILD)
-	$(CC) $(SOURCE)/*.c -I$(INCLUDE) -o $(BUILD)/cstest $(LIBRARY)
-cstest:
-	$(BUILD)/cstest -d ../MC	
+CFLAGS += -I include -I ../../include
+LBLIBS += -lcmocka -lcapstone
+EXE = cstest
+
+.PHONY = all clean
+
+all: $(EXE)
+$(EXE): $(OBJ)
+src/%.o: src/%.c
+check: $(EXE)
+	cstest -d ../MC	
 clean:
-	rm -rf $(BUILD)
+	rm -rf $(EXE)

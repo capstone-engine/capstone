@@ -54,7 +54,7 @@ matrix:
       os: linux
       script:
         - make fuzztest fuzzallcorp
-        - pushd suite/cstest && make && popd
+        - pushd suite/cstest && make cstest && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
     - name: fuzzm
@@ -63,7 +63,7 @@ matrix:
       os: linux
       script:
         - make fuzztest fuzzallcorp
-        - pushd suite/cstest && make && popd
+        - pushd suite/cstest && make cstest && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
     - name: fuzzu
@@ -72,7 +72,7 @@ matrix:
       os: linux
       script:
         - make fuzztest fuzzallcorp
-        - pushd suite/cstest && make && popd
+        - pushd suite/cstest && make cstest && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
  
