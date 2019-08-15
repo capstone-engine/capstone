@@ -1,6 +1,13 @@
 PYTHON2 = python
 PYTHON3 = python3
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+ENV_VARS = LD_LIBRARY_PATH=../../ DYLD_LIBRARY_PATH=../../
+else
+ENV_VARS = LD_LIBRARY_PATH=../../ DYLD_LIBRARY_PATH=../../ LIBCAPSTONE_PATH=../../
+endif
+
 .PHONY: gen_const install install3 install_cython sdist sdist3 bdist bdist3 clean check
 
 gen_const:
@@ -75,7 +82,7 @@ TESTS += test_m680x.py test_skipdata.py test_mos65xx.py
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
-		./$$t > /dev/null; \
+		$(ENV_VARS) ./$$t > /dev/null; \
 		if [ $$? -eq 0 ]; then echo OK; else echo FAILED; exit 1; fi \
 	done
 

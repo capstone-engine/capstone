@@ -379,8 +379,10 @@ $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
 	$(call log,LINK,$(@:$(BLDIR)/%=%))
 	@$(create-library)
+	@-ln -sf $(LIBRARY) lib$(LIBNAME).$(EXT)
 else
 	$(create-library)
+	-ln -sf $(LIBRARY) lib$(LIBNAME).$(EXT)
 endif
 endif
 
@@ -482,6 +484,7 @@ TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static
 TESTS += test_mos65xx.static
 check: $(TESTS) fuzztest fuzzallcorp
+	make -C bindings/python check
 test_%:
 	./tests/$@ > /dev/null && echo OK || echo FAILED
 

@@ -7,9 +7,6 @@ script:
   - ./make.sh
   - make check
   - sudo make install
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp libcapstone.so.* bindings/python/libcapstone.so; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cp libcapstone.*.dylib bindings/python/libcapstone.dylib; fi
-  - if [[ "$NOPYTEST" != "true" ]]; then pushd bindings/python && make check && popd; fi
   - if [[ "$NOPYTEST" != "true" ]]; then pushd suite/cstest && make && popd; fi
   - if [[ "$NOPYTEST" != "true" ]]; then pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd; fi
   - if [[ "$NOPYTEST" != "true" ]]; then pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd; fi
