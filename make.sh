@@ -38,7 +38,7 @@ build_android() {
       ;;
   esac
 
-  STANDALONE=`realpath android-ndk-${TARGARCH}-${APILEVEL}`
+  STANDALONE=`readlink -f android-ndk-${TARGARCH}-${APILEVEL}`
 
   [ -d $STANDALONE ] || {
       python ${NDK}/build/tools/make_standalone_toolchain.py \
