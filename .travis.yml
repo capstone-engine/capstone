@@ -28,7 +28,7 @@ addons:
       - libcmocka-dev
 matrix:
   include:
-    - name: macOS android arm
+    - name: android arm
       os: osx
       addons:
         homebrew:
@@ -36,7 +36,7 @@ matrix:
           brewfile: Brewfile.android
       env: ANDROID_NDK_HOME="/usr/local/share/android-ndk" NDK=$ANDROID_NDK_HOME
       script: ./make.sh cross-android arm libcapstone.so.5
-    - name: macOS android arm64
+    - name: android arm64
       os: osx
       addons:
         homebrew:
