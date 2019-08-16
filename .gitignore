@@ -122,3 +122,5 @@ cstool/cstool
 
 # android
 android-ndk-*
+
+corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
