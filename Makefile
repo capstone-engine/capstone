@@ -481,6 +481,9 @@ check: $(LIBRARY) $(ARCHIVE)
 
 FUZZ_INPUTS = $(shell find suite/MC -type f -name '*.cs')
 
+fuzz: fuzztest fuzzallcorp
+	make -C suite/cstest
+
 fuzztest: $(LIBRARY) $(ARCHIVE)
 	make -C suite/fuzz
 	./suite/fuzz/fuzz_disasm $(FUZZ_INPUTS)

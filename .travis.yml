@@ -53,8 +53,7 @@ matrix:
       compiler: clang
       os: linux
       script:
-        - make fuzztest fuzzallcorp
-        - pushd suite/cstest && make check && popd
+        - make fuzz
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
     - name: fuzzm
@@ -62,8 +61,7 @@ matrix:
       compiler: clang
       os: linux
       script:
-        - make fuzztest fuzzallcorp
-        - pushd suite/cstest && make check && popd
+        - make fuzz
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
     - name: fuzzu
@@ -71,8 +69,7 @@ matrix:
       compiler: clang
       os: linux
       script:
-        - make fuzztest fuzzallcorp
-        - pushd suite/cstest && make check && popd
+        - make fuzz
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -d ../MC && popd
         - pushd suite/cstest && python cstest_report.py -D -t build/cstest -f issues.cs && popd
  
