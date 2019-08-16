@@ -17,6 +17,6 @@ $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 src/%.o: src/%.c
 check: all
-	$(ENV_VARS) ./cstest -d ../MC
+	$(ENV_VARS) ./$(EXE) -d ../MC
 clean:
 	rm -rf $(EXE)
