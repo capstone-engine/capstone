@@ -3,9 +3,9 @@ See <language>/README for how to compile & install each binding.
 
 More bindings created & maintained by the community are available as followings.
 
-- Gapstone: Go binding (by Ben Nagy).
+- Gapstone: Go binding (by Scott Knight).
 
-	https://github.com/bnagy/gapstone
+	https://github.com/knightsc/gapstone
 
 - Crabstone: Ruby binding (by Ben Nagy).
 
