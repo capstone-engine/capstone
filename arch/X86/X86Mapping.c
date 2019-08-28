@@ -3215,6 +3215,8 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 			case X86_INS_OUTSB:
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:
+
+			case X86_INS_RET:
 				return true;
 
 			// following are some confused instructions, which have the same
