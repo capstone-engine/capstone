@@ -437,3 +437,7 @@
 !# issue 1528
 !# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, None
 0x0: 0x38,0x43,0x80,0x00 == add r2, r3, -0x8000
+
+!# issue 664
+!# CS_ARCH_X86, CS_MODE_LITTLE_ENDIAN, None
+0x0: 0xf3,0xc3 == rep ret
