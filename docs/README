@@ -60,3 +60,7 @@ Documentation of Capstone disassembly framework.
 * Sample application on how to embed Capstone into Mac OSX Kext (kernel).
 
 	https://github.com/aquynh/CapstoneTest
+	
+* A Micro Capstone-Engine API Documentation in Chinese
+
+        https://github.com/kabeor/Micro-Capstone-Engine-API-Documentation/blob/master/Micro%20Capstone-Engine%20API%20Documentation.md
