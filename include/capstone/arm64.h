@@ -803,27 +803,6 @@ typedef enum arm64_sysreg {
 	ARM64_SYSREG_CPM_IOACC_CTL_EL3 = 0xFF90,
 } arm64_sysreg;
 
-#if 0
-typedef enum arm64_msr_reg {
-	// System registers for MSR
-	ARM64_SYSREG_DBGDTRTX_EL0      = 0x9828, // 10  011  0000  0101  000
-	ARM64_SYSREG_OSLAR_EL1         = 0x8084, // 10  000  0001  0000  100
-	ARM64_SYSREG_PMSWINC_EL0       = 0xdce4,  // 11  011  1001  1100  100
-
-	// Trace Registers
-	ARM64_SYSREG_TRCOSLAR          = 0x8884, // 10  001  0001  0000  100
-	ARM64_SYSREG_TRCLAR            = 0x8be6, // 10  001  0111  1100  110
-
-	// GICv3 registers
-	ARM64_SYSREG_ICC_EOIR1_EL1     = 0xc661, // 11  000  1100  1100  001
-	ARM64_SYSREG_ICC_EOIR0_EL1     = 0xc641, // 11  000  1100  1000  001
-	ARM64_SYSREG_ICC_DIR_EL1       = 0xc659, // 11  000  1100  1011  001
-	ARM64_SYSREG_ICC_SGI1R_EL1     = 0xc65d, // 11  000  1100  1011  101
-	ARM64_SYSREG_ICC_ASGI1R_EL1    = 0xc65e, // 11  000  1100  1011  110
-	ARM64_SYSREG_ICC_SGI0R_EL1     = 0xc65f, // 11  000  1100  1011  111
-} arm64_msr_reg;
-#endif
-
 /// System PState Field (MSR instruction)
 typedef enum arm64_pstate {
 	ARM64_PSTATE_INVALID = 0,
@@ -1033,35 +1012,6 @@ typedef enum arm64_prefetch_op {
 	ARM64_PRFM_PSTL3KEEP = 0x14 + 1,
 	ARM64_PRFM_PSTL3STRM = 0x15 + 1,
 } arm64_prefetch_op;
-
-#if 0
-static const SVEPREDPAT SVEPREDPATsList[] = {
-  { "pow2", 0x0 }, // 0
-  { "vl1", 0x1 }, // 1
-  { "vl2", 0x2 }, // 2
-  { "vl3", 0x3 }, // 3
-  { "vl4", 0x4 }, // 4
-  { "vl5", 0x5 }, // 5
-  { "vl6", 0x6 }, // 6
-  { "vl7", 0x7 }, // 7
-  { "vl8", 0x8 }, // 8
-  { "vl16", 0x9 }, // 9
-  { "vl32", 0xa }, // 10
-  { "vl64", 0xb }, // 11
-  { "vl128", 0xc }, // 12
-  { "vl256", 0xd }, // 13
-  { "mul4", 0x1d }, // 14
-  { "mul3", 0x1e }, // 15
-  { "all", 0x1f }, // 16
-};
-
-static const ExactFPImm ExactFPImmsList[] = {
-  { "zero", 0x0, "0.0" }, // 0
-  { "half", 0x1, "0.5" }, // 1
-  { "one", 0x2, "1.0" }, // 2
-  { "two", 0x3, "2.0" }, // 3
-};
-#endif
 
 /// ARM64 registers
 typedef enum arm64_reg {
