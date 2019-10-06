@@ -2,6 +2,7 @@
 # Common functions used by Makefile & tests/Makefile
 
 define compile
+        @$(CC) -MM -MP -MT $@ -MT $(@:.o=.d) $(CFLAGS) $< > $(@:.o=.d)
 	${CC} ${CFLAGS} -c $< -o $@
 endef
 

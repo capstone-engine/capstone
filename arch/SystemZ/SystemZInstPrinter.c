@@ -297,16 +297,15 @@ static void printU48ImmOperand(MCInst *MI, int OpNum, SStream *O)
 static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	int32_t imm;
 
 	if (MCOperand_isImm(MO)) {
-		imm = (int32_t)MCOperand_getImm(MO);
+		int64_t imm = (int64_t)MCOperand_getImm(MO);
 
-		printInt32(O, imm);
+		printInt64(O, imm);
 
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
-			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)imm;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = imm;
 			MI->flat_insn->detail->sysz.op_count++;
 		}
 	}
