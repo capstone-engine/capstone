@@ -776,17 +776,6 @@ public class Arm64_const {
 	public static final int ARM64_SYSREG_ZCR_EL3 = 0xF090;
 	public static final int ARM64_SYSREG_ZCR_EL12 = 0xE890;
 	public static final int ARM64_SYSREG_CPM_IOACC_CTL_EL3 = 0xFF90;
-	public static final int ARM64_SYSREG_DBGDTRTX_EL0 = 0x9828;
-	public static final int ARM64_SYSREG_OSLAR_EL1 = 0x8084;
-	public static final int ARM64_SYSREG_PMSWINC_EL0 = 0xdce4;
-	public static final int ARM64_SYSREG_TRCOSLAR = 0x8884;
-	public static final int ARM64_SYSREG_TRCLAR = 0x8be6;
-	public static final int ARM64_SYSREG_ICC_EOIR1_EL1 = 0xc661;
-	public static final int ARM64_SYSREG_ICC_EOIR0_EL1 = 0xc641;
-	public static final int ARM64_SYSREG_ICC_DIR_EL1 = 0xc659;
-	public static final int ARM64_SYSREG_ICC_SGI1R_EL1 = 0xc65d;
-	public static final int ARM64_SYSREG_ICC_ASGI1R_EL1 = 0xc65e;
-	public static final int ARM64_SYSREG_ICC_SGI0R_EL1 = 0xc65f;
 
 	public static final int ARM64_PSTATE_INVALID = 0;
 	public static final int ARM64_PSTATE_SPSEL = 0x05;
