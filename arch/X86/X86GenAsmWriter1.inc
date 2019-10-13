@@ -604,9 +604,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     82568U,	// CMPXCHG8B
     1150639U,	// CMPXCHG8rm
     336613039U,	// CMPXCHG8rr
-    537938945U,	// COMISDrm
+    571493377U,	// COMISDrm
     336612353U,	// COMISDrr
-    537942914U,	// COMISSrm
+    605051778U,	// COMISSrm
     336616322U,	// COMISSrr
     20794U,	// COMP_FST0r
     20311U,	// COM_FIPr
@@ -996,9 +996,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     38988189U,	// Int_CMPSDrr
     274901405U,	// Int_CMPSSrm
     40036765U,	// Int_CMPSSrr
-    537938945U,	// Int_COMISDrm
+    571493377U,	// Int_COMISDrm
     336612353U,	// Int_COMISDrr
-    537942914U,	// Int_COMISSrm
+    605051778U,	// Int_COMISSrm
     336616322U,	// Int_COMISSrr
     235952812U,	// Int_CVTSD2SSrm
     34626220U,	// Int_CVTSD2SSrr
@@ -1031,11 +1031,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2489690529U,	// Int_VCMPSSrr
     537938953U,	// Int_VCOMISDZrm
     336612361U,	// Int_VCOMISDZrr
-    537938953U,	// Int_VCOMISDrm
+    571493385U,	// Int_VCOMISDrm
     336612361U,	// Int_VCOMISDrr
     537942922U,	// Int_VCOMISSZrm
     336616330U,	// Int_VCOMISSZrr
-    537942922U,	// Int_VCOMISSrm
+    605051786U,	// Int_VCOMISSrm
     336616330U,	// Int_VCOMISSrr
     2484099755U,	// Int_VCVTSD2SSrm
     2484099755U,	// Int_VCVTSD2SSrr
@@ -3329,11 +3329,11 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
     2484100011U,	// VCMPSSrr_alt
     537938953U,	// VCOMISDZrm
     336612361U,	// VCOMISDZrr
-    537938953U,	// VCOMISDrm
+    571493385U,	// VCOMISDrm
     336612361U,	// VCOMISDrr
     537942922U,	// VCOMISSZrm
     336616330U,	// VCOMISSZrr
-    537942922U,	// VCOMISSrm
+    605051786U,	// VCOMISSrm
     336616330U,	// VCOMISSrr
     2164853197U,	// VCOMPRESSPDZ128mrk
     2197834189U,	// VCOMPRESSPDZ128rrk

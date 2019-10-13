@@ -1,4 +1,6 @@
 .DS_Store
+# vs project files
+msvc/
 
 # Object files
 *.o
