@@ -12,6 +12,7 @@
 
 #ifdef CAPSTONE_HAS_SYSZ
 
+#include <capstone/platform.h>
 #include "SystemZMCTargetDesc.h"
 
 #define GET_REGINFO_ENUM
@@ -113,30 +114,80 @@ const unsigned SystemZMC_CR64Regs[16] = {
   SystemZ_C12, SystemZ_C13, SystemZ_C14, SystemZ_C15
 };
 
+/* All register classes that have 0-15.  */
+#define DEF_REG16(N) \
+    [SystemZ_R ## N ## L] = N, \
+    [SystemZ_R ## N ## H] = N, \
+    [SystemZ_R ## N ## D] = N, \
+    [SystemZ_F ## N ## S] = N, \
+    [SystemZ_F ## N ## D] = N, \
+    [SystemZ_V ## N] = N, \
+    [SystemZ_A ## N] = N, \
+    [SystemZ_C ## N] = N
+
+/* All register classes that (also) have 16-31.  */
+#define DEF_REG32(N) \
+    [SystemZ_F ## N ## S] = N, \
+    [SystemZ_F ## N ## D] = N, \
+    [SystemZ_V ## N] = N
+
+static const uint8_t Map[SystemZ_NUM_TARGET_REGS] = {
+    DEF_REG16(0),
+    DEF_REG16(1),
+    DEF_REG16(2),
+    DEF_REG16(3),
+    DEF_REG16(4),
+    DEF_REG16(5),
+    DEF_REG16(6),
+    DEF_REG16(8),
+    DEF_REG16(9),
+    DEF_REG16(10),
+    DEF_REG16(11),
+    DEF_REG16(12),
+    DEF_REG16(13),
+    DEF_REG16(14),
+    DEF_REG16(15),
+
+    DEF_REG32(16),
+    DEF_REG32(17),
+    DEF_REG32(18),
+    DEF_REG32(19),
+    DEF_REG32(20),
+    DEF_REG32(21),
+    DEF_REG32(22),
+    DEF_REG32(23),
+    DEF_REG32(24),
+    DEF_REG32(25),
+    DEF_REG32(26),
+    DEF_REG32(27),
+    DEF_REG32(28),
+    DEF_REG32(29),
+    DEF_REG32(30),
+    DEF_REG32(31),
+
+    /* The float Q registers are non-sequential.  */
+    [SystemZ_F0Q] = 0,
+    [SystemZ_F1Q] = 1,
+    [SystemZ_F4Q] = 4,
+    [SystemZ_F5Q] = 5,
+    [SystemZ_F8Q] = 8,
+    [SystemZ_F9Q] = 9,
+    [SystemZ_F12Q] = 12,
+    [SystemZ_F13Q] = 13,
+
+    /* The integer Q registers are all even.  */
+    [SystemZ_R0Q] = 0,
+    [SystemZ_R2Q] = 2,
+    [SystemZ_R4Q] = 4,
+    [SystemZ_R6Q] = 6,
+    [SystemZ_R8Q] = 8,
+    [SystemZ_R10Q] = 10,
+    [SystemZ_R12Q] = 12,
+    [SystemZ_R14Q] = 14,
+};
+
 unsigned SystemZMC_getFirstReg(unsigned Reg)
 {
-	static unsigned Map[SystemZ_NUM_TARGET_REGS];
-	static int Initialized = 0;
-	unsigned I;
-
-	if (!Initialized) {
-		Initialized = 1;
-		for (I = 0; I < 16; ++I) {
-			Map[SystemZMC_GR32Regs[I]] = I;
-			Map[SystemZMC_GRH32Regs[I]] = I;
-			Map[SystemZMC_GR64Regs[I]] = I;
-			Map[SystemZMC_GR128Regs[I]] = I;
-			Map[SystemZMC_FP32Regs[I]] = I;
-			Map[SystemZMC_FP64Regs[I]] = I;
-			Map[SystemZMC_FP128Regs[I]] = I;
-			Map[SystemZMC_VR32Regs[I]] = I;
-			Map[SystemZMC_VR64Regs[I]] = I;
-			Map[SystemZMC_VR128Regs[I]] = I;
-			Map[SystemZMC_AR32Regs[I]] = I;
-			Map[SystemZMC_CR64Regs[I]] = I;
-		}
-	}
-
 	// assert(Reg < SystemZ_NUM_TARGET_REGS);
 	return Map[Reg];
 }
