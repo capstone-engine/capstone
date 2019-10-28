@@ -34,6 +34,10 @@ RANLIB = $(CROSS)ranlib
 STRIP = $(CROSS)strip
 endif
 
+ifeq ($(OS),OS/390)
+RANLIB = touch
+endif
+
 ifneq (,$(findstring yes,$(CAPSTONE_DIET)))
 CFLAGS ?= -Os
 CFLAGS += -DCAPSTONE_DIET
@@ -45,7 +49,14 @@ ifneq (,$(findstring yes,$(CAPSTONE_X86_ATT_DISABLE)))
 CFLAGS += -DCAPSTONE_X86_ATT_DISABLE
 endif
 
+ifeq ($(CC),xlc)
+CFLAGS += -qcpluscmt -qkeyword=inline -qlanglvl=extc1x -Iinclude
+ifneq ($(OS),OS/390)
+CFLAGS += -fPIC
+endif
+else
 CFLAGS += -fPIC -Wall -Wwrite-strings -Wmissing-prototypes -Iinclude
+endif
 
 ifeq ($(CAPSTONE_USE_SYS_DYN_MEM),yes)
 CFLAGS += -DCAPSTONE_USE_SYS_DYN_MEM
@@ -335,7 +346,11 @@ endif
 else
 CFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
 LDFLAGS += $(foreach arch,$(LIBARCHS),-arch $(arch))
+ifeq ($(OS), AIX)
+$(LIBNAME)_LDFLAGS += -qmkshrobj
+else
 $(LIBNAME)_LDFLAGS += -shared
+endif
 # Cygwin?
 IS_CYGWIN := $(shell $(CC) -dumpmachine 2>/dev/null | grep -i cygwin | wc -l)
 ifeq ($(IS_CYGWIN),1)
@@ -556,9 +571,12 @@ define install-library
 endef
 endif
 
+ifeq ($(AR_FLAGS),)
+AR_FLAGS := q
+endif
 
 define create-archive
-	$(AR) q $(ARCHIVE) $(LIBOBJ)
+	$(AR) $(AR_FLAGS) $(ARCHIVE) $(LIBOBJ)
 	$(RANLIB) $(ARCHIVE)
 endef
 

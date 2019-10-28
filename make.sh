@@ -145,6 +145,9 @@ case "$TARGET" in
       ${MAKE} "$@";;
   "mac-universal" ) MACOS_UNIVERSAL=yes ${MAKE} "$@";;
   "mac-universal-no" ) MACOS_UNIVERSAL=no ${MAKE} "$@";;
+  "xlc31" ) CC=xlc CFLAGS=-q31 LDFLAGS=-q31 ${MAKE} "$@";;
+  "xlc32" ) CC=xlc CFLAGS=-q32 LDFLAGS=-q32 ${MAKE} "$@";;
+  "xlc64" ) CC=xlc CFLAGS=-q64 LDFLAGS=-q64 ${MAKE} "$@";;
   * )
     echo "Usage: $0 ["$(grep '^  "' $0 | cut -d '"' -f 2 | tr "\\n" "|")"]"
     exit 1;;
