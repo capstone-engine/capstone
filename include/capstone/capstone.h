@@ -30,14 +30,14 @@ extern "C" {
 #endif
 #else
 #define CAPSTONE_API
-#if defined(__GNUC__) && !defined(CAPSTONE_STATIC)
+#if (defined(__GNUC__) || defined(__IBMC__)) && !defined(CAPSTONE_STATIC)
 #define CAPSTONE_EXPORT __attribute__((visibility("default")))
 #else    // defined(CAPSTONE_STATIC)
 #define CAPSTONE_EXPORT
 #endif
 #endif
 
-#ifdef __GNUC__
+#if (defined(__GNUC__) || defined(__IBMC__))
 #define CAPSTONE_DEPRECATED __attribute__((deprecated))
 #elif defined(_MSC_VER)
 #define CAPSTONE_DEPRECATED __declspec(deprecated)
