@@ -62,6 +62,15 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Disp;
 			MI->flat_insn->detail->sysz.op_count++;
 		}
+	} else {
+		SStream_concat(O, "(%%%s)", getRegisterName(Index));
+		if (MI->csh->detail) {
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
+			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = Disp;
+			MI->flat_insn->detail->sysz.op_count++;
+		}
 	}
 }
 
