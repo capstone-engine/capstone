@@ -226,6 +226,7 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 {
 #ifndef CAPSTONE_DIET
+	unsigned int value;
 	unsigned opcode = MCInst_getOpcode(MI);
 	mos65xx_info *info = (mos65xx_info *)PrinterInfo;
 
@@ -245,7 +246,8 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 		default:
 			break;
 	}
-	unsigned int value = MI->Operands[0].ImmVal;
+
+	value = MI->Operands[0].ImmVal;
 
 	switch (opinfo.am) {
 		default:
