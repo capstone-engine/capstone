@@ -444,9 +444,9 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 {
 #ifndef CAPSTONE_DIET
 	unsigned char opcode = MI->Opcode;
+	unsigned int value = MI->Operands[0].ImmVal;
 
 	SStream_concat0(O, InstructionInfoTable[OpInfoTable[MI->Opcode].ins].name);
-	unsigned int value = MI->Operands[0].ImmVal;
 
 	switch (OpInfoTable[opcode].am) {
 		default:
