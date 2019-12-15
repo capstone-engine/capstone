@@ -597,7 +597,7 @@ source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 include("GNUInstallDirs")
 
 ## installation
-install(FILES ${HEADERS_COMMON} DESTINATION include/capstone)
+install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
 configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 
 if (CAPSTONE_BUILD_STATIC)
