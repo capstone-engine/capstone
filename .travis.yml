@@ -43,6 +43,7 @@ matrix:
             apt:
               packages:
                 - libcmocka-dev
+                - unzip
         - name: bionic gcc (PowerPC)
           arch: ppc64le
           os: linux
