@@ -134,8 +134,7 @@ for line in lines:
     line = line.rstrip()
 
     if 'static const MCOperandInfo ' in line:
-        line2 = line.replace('static const MCOperandInfo ', 'static MCOperandInfo ')
-        line2 = line2.replace('::', '_')
+        line2 = line.replace('::', '_')
         print(line2)
 
     elif 'Insts[] = {' in line:

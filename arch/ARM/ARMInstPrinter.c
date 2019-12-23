@@ -131,7 +131,7 @@ static void printAddrMode5FP16Operand(MCInst *MI, unsigned OpNum, SStream *O, bo
 // copy & normalize access info
 static uint8_t get_op_access(cs_struct *h, unsigned int id, unsigned int index)
 {
-	uint8_t *arr = ARM_get_op_access(h, id);
+	const uint8_t *arr = ARM_get_op_access(h, id);
 
 	if (!arr || arr[index] == CS_AC_IGNORE)
 		return 0;
@@ -1734,7 +1734,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	unsigned reg;
 
 	if (ARM_getFeatureBits(MI->csh->mode, ARM_FeatureMClass)) {
-		MClassSysReg *TheReg;
+		const MClassSysReg *TheReg;
 		unsigned SYSm = (unsigned)MCOperand_getImm(Op) & 0xFFF;  // 12-bit SYMm
 		unsigned Opcode = MCInst_getOpcode(MI);
 
@@ -1827,7 +1827,7 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 static void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	uint32_t Banked = (uint32_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	BankedReg *TheReg = lookupBankedRegByEncoding(Banked);
+	const BankedReg *TheReg = lookupBankedRegByEncoding(Banked);
 
 	SStream_concat0(O, TheReg->Name);
 	ARM_addSysReg(MI, TheReg->sysreg);

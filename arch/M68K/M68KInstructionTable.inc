@@ -1,5 +1,5 @@
 /* This table is auto-generated. DO NOT MANUALLY EDIT! Look in M68KInstructionTblGen.c for more info */
-static instruction_struct g_instruction_table[] = {
+static const instruction_struct g_instruction_table[] = {
 	{ d68000_ori_8, 0x0, 0x0 },
 	{ d68000_ori_8, 0x0, 0x0 },
 	{ d68000_ori_8, 0x0, 0x0 },

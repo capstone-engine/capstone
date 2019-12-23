@@ -9,7 +9,7 @@
 #include "WASMMapping.h"
 #include "../../cs_priv.h"
 
-static short opcodes[256] = {
+static const short opcodes[256] = {
 	WASM_INS_UNREACHABLE,
 	WASM_INS_NOP,
 	WASM_INS_BLOCK,
