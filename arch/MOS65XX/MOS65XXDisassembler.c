@@ -20,12 +20,12 @@ static const struct OpInfo OpInfoTable[]= {
 
 };
 
-static const char* RegNames[] = {
+static const char* const RegNames[] = {
 	"invalid", "A", "X", "Y", "P", "SP", "DP", "B", "K" 
 };
 
 #ifndef CAPSTONE_DIET
-static const char* GroupNames[] = {
+static const char* const GroupNames[] = {
 	NULL,
 	"jump",
 	"call",

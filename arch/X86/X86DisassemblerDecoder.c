@@ -160,7 +160,7 @@ static InstrUID decode(OpcodeType type,
 {
 	const struct ModRMDecision *dec = NULL;
 	unsigned int index;
-	static struct OpcodeDecision emptyDecision = { 0 };
+	static const struct OpcodeDecision emptyDecision = { 0 };
 
 	switch (type) {
 		default: break;	// never reach

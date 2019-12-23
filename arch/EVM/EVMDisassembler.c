@@ -8,7 +8,7 @@
 #include "EVMDisassembler.h"
 #include "EVMMapping.h"
 
-static short opcodes[256] = {
+static const short opcodes[256] = {
 	EVM_INS_STOP,
 	EVM_INS_ADD,
 	EVM_INS_MUL,

@@ -62,7 +62,7 @@ static const uint16_t XCoreSubRegIdxLists[] = {
   /* 0 */ 0,
 };
 
-static MCRegisterDesc XCoreRegDesc[] = { // Descriptors
+static const MCRegisterDesc XCoreRegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
   { 38, 1, 1, 0, 1, 0 },
   { 41, 1, 1, 0, 1, 0 },
@@ -102,7 +102,7 @@ static MCRegisterDesc XCoreRegDesc[] = { // Descriptors
     0xe0, 0xff, 0x01,
   };
 
-static MCRegisterClass XCoreMCRegisterClasses[] = {
+static const MCRegisterClass XCoreMCRegisterClasses[] = {
   { RRegs, RRegsBits, sizeof(RRegsBits) },
   { GRRegs, GRRegsBits, sizeof(GRRegsBits) },
 };

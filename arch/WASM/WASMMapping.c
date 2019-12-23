@@ -17,7 +17,7 @@ void WASM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map insn_name_maps[256] = {
+static const name_map insn_name_maps[256] = {
 	{ WASM_INS_UNREACHABLE, "unreachable" },
 	{ WASM_INS_NOP, "nop" },
 	{ WASM_INS_BLOCK, "block" },
@@ -290,7 +290,7 @@ const char *WASM_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	// generic groups
 	{ WASM_GRP_INVALID, NULL },
 	// special groups
@@ -303,7 +303,7 @@ static name_map group_name_maps[] = {
 #endif
 
 #ifndef CAPSTONE_DIET
-static name_map kind_name_maps[] = {
+static const name_map kind_name_maps[] = {
 	{ WASM_OP_INVALID, "Invalid" },
 	{ WASM_OP_NONE, "None" },
 	{ WASM_OP_INT7, "uint7" },

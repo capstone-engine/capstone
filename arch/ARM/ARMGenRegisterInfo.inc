@@ -875,7 +875,7 @@ static const uint16_t ARMSubRegIdxLists[] = {
   /* 474 */ 11, 13, 1, 17, 18, 2, 19, 20, 14, 3, 21, 22, 4, 23, 24, 33, 34, 35, 36, 37, 12, 15, 5, 25, 26, 6, 27, 28, 16, 7, 29, 30, 8, 31, 32, 51, 52, 53, 54, 55, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 0,
 };
 
-static MCRegisterDesc ARMRegDesc[] = {
+static const MCRegisterDesc ARMRegDesc[] = {
   { 12, 0, 0, 0, 0, 0 },
   { 1235, 16, 16, 2, 66945, 0 },
   { 1268, 16, 16, 2, 66945, 0 },
@@ -1993,7 +1993,7 @@ static MCRegisterDesc ARMRegDesc[] = {
   };
 
 
-static MCRegisterClass ARMMCRegisterClasses[] = {
+static const MCRegisterClass ARMMCRegisterClasses[] = {
   { HPR, HPRBits, sizeof(HPRBits) },
   { SPR, SPRBits, sizeof(SPRBits) },
   { GPR, GPRBits, sizeof(GPRBits) },
