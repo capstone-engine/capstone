@@ -82,22 +82,23 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   NOTE: The core framework installed by "./make.sh install" consist of
   following files:
 
-	/usr/include/capstone/capstone.h
-	/usr/include/capstone/x86.h
 	/usr/include/capstone/arm.h
 	/usr/include/capstone/arm64.h
+	/usr/include/capstone/capstone.h
 	/usr/include/capstone/evm.h
-	/usr/include/capstone/m68k.h
 	/usr/include/capstone/m680x.h
+	/usr/include/capstone/m68k.h
 	/usr/include/capstone/mips.h
+	/usr/include/capstone/mos65xx.h
+	/usr/include/capstone/platform.h
 	/usr/include/capstone/ppc.h
 	/usr/include/capstone/sparc.h
 	/usr/include/capstone/systemz.h
 	/usr/include/capstone/tms320c64x.h
+	/usr/include/capstone/x86.h
 	/usr/include/capstone/xcore.h
-	/usr/include/capstone/platform.h
-	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
 	/usr/lib/libcapstone.a
+	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
 
 
 
@@ -121,7 +122,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 (4) Cross-compile for iOS from Mac OSX.
 
-  To cross-compile for iOS (iPhone/iPad/iPod), Mac OSX with XCode installed is required. 
+  To cross-compile for iOS (iPhone/iPad/iPod), Mac OSX with XCode installed is required.
 
 	- To cross-compile for ArmV7 (iPod 4, iPad 1/2/3, iPhone4, iPhone4S), run:
 		$ ./make.sh ios_armv7
