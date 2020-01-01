@@ -34,6 +34,34 @@ matrix:
             apt:
               packages:
                 - libcmocka-dev
+        - name: bionic gcc (ARM64)
+          arch: arm64
+          os: linux
+          dist: bionic
+          compiler: gcc
+          addons:
+            apt:
+              packages:
+                - libcmocka-dev
+                - unzip
+        - name: bionic gcc (PowerPC)
+          arch: ppc64le
+          os: linux
+          dist: bionic
+          compiler: gcc
+          addons:
+            apt:
+              packages:
+                - libcmocka-dev
+        - name: bionic gcc (System Z)
+          arch: s390x
+          os: linux
+          dist: bionic
+          compiler: gcc
+          addons:
+            apt:
+              packages:
+                - libcmocka-dev
         - name: xenial clang
           os: linux
           dist: xenial
