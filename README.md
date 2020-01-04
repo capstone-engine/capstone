@@ -25,7 +25,7 @@ Capstone offers some unparalleled features:
 - Implemented in pure C language, with lightweight bindings for D, Clojure, F#,
   Common Lisp, Visual Basic, PHP, PowerShell, Emacs, Haskell, Perl, Python,
   Ruby, C#, NodeJS, Java, GO, C++, OCaml, Lua, Rust, Delphi, Free Pascal & Vala
-  ready either in main code, or provided externally by the community).
+  (ready either in main code, or provided externally by the community).
 
 - Native support for all popular platforms: Windows, Mac OSX, iOS, Android,
   Linux, \*BSD, Solaris, etc.
