@@ -88,10 +88,10 @@ LIBDATADIR = $(LIBDIR)
 
 ifndef USE_GENERIC_LIBDATADIR
 ifeq ($(UNAME_S), FreeBSD)
-LIBDATADIR = $(PREFIX)/libdata
+LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
 endif
 ifeq ($(UNAME_S), DragonFly)
-LIBDATADIR = $(PREFIX)/libdata
+LIBDATADIR = $(DESTDIR)$(PREFIX)/libdata
 endif
 endif
 
