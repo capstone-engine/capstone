@@ -3099,7 +3099,6 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 
 			case X86_INS_MOVSB:
 			case X86_INS_MOVSW:
-			case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
 
 			case X86_INS_LODSB:
@@ -3121,6 +3120,11 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 			case X86_INS_OUTSD:
 
 				return true;
+
+			case X86_INS_MOVSD:
+				if (opcode == X86_MOVSW) // REP MOVSB
+					return true;
+				return false;
 
 			case X86_INS_CMPSD:
 				if (opcode == X86_CMPSL) // REP CMPSD
