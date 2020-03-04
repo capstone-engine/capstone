@@ -37,19 +37,21 @@
 
 /* When we specify the RISCV64 mode, It means It is RV64IMAFD.
   Similar, RISCV32 means RV32IMAFD.
+  When the RISCVC mode is also specified, we should enable the compression feature
 */
 static uint64_t getFeatureBits(int mode) 
 {
-	if (mode == CS_MODE_RISCV32)
-		// return b11110
+	if (mode & CS_MODE_RISCV32)
+		// return b111010, with 2nd bit reflecting C
 		return RISCV_FeatureStdExtM | RISCV_FeatureStdExtA |
-		       RISCV_FeatureStdExtF | RISCV_FeatureStdExtD ;
+		       RISCV_FeatureStdExtF | RISCV_FeatureStdExtD |
+		       (mode & CS_MODE_RISCVC ? RISCV_FeatureStdExtC: 0l) ;
 	else
-		
-		// CS_MODE_RISCV64, return b11111
+		// CS_MODE_RISCV64, return b111011, with 2nd bit reflecting C
 		return RISCV_Feature64Bit   | RISCV_FeatureStdExtM | 
 		       RISCV_FeatureStdExtA | RISCV_FeatureStdExtF | 
-		       RISCV_FeatureStdExtD ;
+		       RISCV_FeatureStdExtD |
+		       (mode & CS_MODE_RISCVC ? RISCV_FeatureStdExtC: 0l) ;
 }
 
 #define GET_REGINFO_ENUM
