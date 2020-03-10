@@ -7,6 +7,10 @@ More bindings created & maintained by the community are available as followings.
 
 	https://github.com/knightsc/gapstone
 
+- Crabstone: Ruby binding for Capstone 3+ (by david942j).
+
+	https://github.com/david942j/crabstone
+
 - Crabstone: Ruby binding (by Ben Nagy).
 
 	https://github.com/bnagy/crabstone
