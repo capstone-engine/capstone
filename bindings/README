@@ -47,6 +47,10 @@ More bindings created & maintained by the community are available as followings.
 
     https://github.com/ibabushkin/hapstone
 
+- CL-Capstone: Common Lisp bindings (by GrammaTech).
+
+    https://github.com/GrammaTech/cl-capstone
+
 - Emacs-capstone: Emacs (elisp) binding (by Bas Alberts)
 
     https://github.com/collarchoke/emacs-capstone
