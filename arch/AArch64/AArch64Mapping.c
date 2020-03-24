@@ -430,7 +430,7 @@ static const name_map group_name_maps[] = {
 	{ ARM64_GRP_PRIVILEGE, "privilege" },
 	{ ARM64_GRP_INT, "int" },
 	{ ARM64_GRP_BRANCH_RELATIVE, "branch_relative" },
-	{ ARM64_GRP_PAC, "Pointer Authentication" },
+	{ ARM64_GRP_PAC, "pointer authentication" },
 
 	// architecture-specific groups
 	{ ARM64_GRP_CRYPTO, "crypto" },
