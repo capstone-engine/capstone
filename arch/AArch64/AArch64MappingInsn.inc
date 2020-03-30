@@ -1007,98 +1007,98 @@
 {
 	AArch64_AUTDA, ARM64_INS_AUTDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTDB, ARM64_INS_AUTDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTDZA, ARM64_INS_AUTDZA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTDZB, ARM64_INS_AUTDZB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIA, ARM64_INS_AUTIA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIA1716, ARM64_INS_AUTIA1716,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIASP, ARM64_INS_AUTIASP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIAZ, ARM64_INS_AUTIAZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIB, ARM64_INS_AUTIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIB1716, ARM64_INS_AUTIB1716,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIBSP, ARM64_INS_AUTIBSP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIBZ, ARM64_INS_AUTIBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIZA, ARM64_INS_AUTIZA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_AUTIZB, ARM64_INS_AUTIZB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
@@ -1294,28 +1294,28 @@
 {
 	AArch64_BLRAA, ARM64_INS_BLRAA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_BRANCH_RELATIVE, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_BLRAAZ, ARM64_INS_BLRAAZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_BRANCH_RELATIVE, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_BLRAB, ARM64_INS_BLRAB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_BRANCH_RELATIVE, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_BLRABZ, ARM64_INS_BLRABZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_BRANCH_RELATIVE, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
@@ -1329,28 +1329,28 @@
 {
 	AArch64_BRAA, ARM64_INS_BRAA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_BRAAZ, ARM64_INS_BRAAZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_BRAB, ARM64_INS_BRAB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_BRABZ, ARM64_INS_BRABZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_JUMP, ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
@@ -4255,14 +4255,14 @@
 {
 	AArch64_ERETAA, ARM64_INS_ERETAA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_ERETAB, ARM64_INS_ERETAB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
@@ -17422,105 +17422,105 @@
 {
 	AArch64_PACDA, ARM64_INS_PACDA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACDB, ARM64_INS_PACDB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACDZA, ARM64_INS_PACDZA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACDZB, ARM64_INS_PACDZB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACGA, ARM64_INS_PACGA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIA, ARM64_INS_PACIA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIA1716, ARM64_INS_PACIA1716,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIASP, ARM64_INS_PACIASP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIAZ, ARM64_INS_PACIAZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIB, ARM64_INS_PACIB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIB1716, ARM64_INS_PACIB1716,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIBSP, ARM64_INS_PACIBSP,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIBZ, ARM64_INS_PACIBZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIZA, ARM64_INS_PACIZA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_PACIZB, ARM64_INS_PACIZB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
@@ -18108,14 +18108,14 @@
 {
 	AArch64_RETAA, ARM64_INS_RETAA,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, ARM64_GRP_RET, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_RETAB, ARM64_INS_RETAB,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, ARM64_GRP_RET,0 }, 0, 0
 #endif
 },
 
@@ -30078,21 +30078,21 @@
 {
 	AArch64_XPACD, ARM64_INS_XPACD,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_XPACI, ARM64_INS_XPACI,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
 {
 	AArch64_XPACLRI, ARM64_INS_XPACLRI,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { ARM64_GRP_PAC, 0 }, 0, 0
 #endif
 },
 
