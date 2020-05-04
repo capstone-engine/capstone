@@ -539,6 +539,9 @@ class CsInsn(object):
             self._raw.detail = ctypes.pointer(all_info.detail._type_())
             ctypes.memmove(ctypes.byref(self._raw.detail[0]), ctypes.byref(all_info.detail[0]), ctypes.sizeof(type(all_info.detail[0])))
 
+    def __repr__(self):
+        return '<CsInsn 0x%x [%s]: %s %s>' % (self.address, self.bytes.hex(), self.mnemonic, self.op_str)
+            
     # return instruction's ID.
     @property
     def id(self):
