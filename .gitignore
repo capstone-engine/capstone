@@ -115,6 +115,13 @@ fuzz_bindisasm
 fuzz_disasm
 capstone_get_setup
 
+suite/fuzz/fuzz_bindisasm2
+suite/fuzz/fuzz_decode_platform
+tests/test_bpf
+tests/test_mos65xx
+tests/test_riscv
+tests/test_wasm
+
 
 *.s
 
