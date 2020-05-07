@@ -1,5 +1,76 @@
 This file details the changelog of Capstone.
 
+----------------------------
+Version 4.0.2: May 8th, 2020
+
+
+[ Core ]
+
+- Windows kernel-mode driver support
+- Fix installation path on FreeBSD and DragonFly
+
+
+[ cstool ]
+
+- Add armv8, ppc32 & thumbv8 modes
+- Print instruction ID
+
+
+[ X86 ]
+
+- Support CS_OPT_UNSIGNED for ATT syntax
+- Fix operand size for some instructions
+- Fix LOCK prefixes
+- Recognize xacquire/xrelease prefix
+- Fix call/jmp access mode of mem operand
+- Add ENDBR32, ENDBR64 to reduce mode
+- Other minor fixes
+
+
+[ ARM64 ]
+
+- Support CS_OPT_UNSIGNED
+- Fix register access flags for memory instructions
+- Fix UMOV vess
+
+
+[ ARM ]
+
+- Update writeback for STR_POST_REG
+
+
+[ M68K ]
+
+- Store correct register value in op.reg_pair
+
+
+[ PowerPC ]
+
+- BDZLA is absolute branch
+
+
+[ SystemZ ]
+
+- Fix truncated 64bit imm operand
+- Fix base/index printing
+
+
+[ Python ]
+
+- Fix skipdata struct being destroyed
+- Add __repr__ for capstone.CsInsn
+
+
+[ Java ]
+
+- Fix Java bindings to use pointers instead of longs
+
+
+[ Ocaml ]
+
+- Fix x86_op record
+
+
 ---------------------------------
 Version 4.0.1: January 10th, 2019
 
