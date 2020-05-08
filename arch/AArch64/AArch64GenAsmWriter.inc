@@ -14993,6 +14993,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 64 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv16b_POST GPR64sp:$Rn, VecListFour16b:$Vt, XZR)
@@ -15006,6 +15008,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv1d_POST GPR64sp:$Rn, VecListFour1d:$Vt, XZR)
@@ -15019,6 +15023,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 64 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv2d_POST GPR64sp:$Rn, VecListFour2d:$Vt, XZR)
@@ -15032,6 +15038,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv2s_POST GPR64sp:$Rn, VecListFour2s:$Vt, XZR)
@@ -15045,6 +15053,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv4h_POST GPR64sp:$Rn, VecListFour4h:$Vt, XZR)
@@ -15058,6 +15068,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 64 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv4s_POST GPR64sp:$Rn, VecListFour4s:$Vt, XZR)
@@ -15071,6 +15083,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv8b_POST GPR64sp:$Rn, VecListFour8b:$Vt, XZR)
@@ -15084,6 +15098,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 64 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Fourv8h_POST GPR64sp:$Rn, VecListFour8h:$Vt, XZR)
@@ -15145,6 +15161,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev16b_POST GPR64sp:$Rn, VecListOne16b:$Vt, XZR)
@@ -15158,6 +15176,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR64RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev1d_POST GPR64sp:$Rn, VecListOne1d:$Vt, XZR)
@@ -15171,6 +15191,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev2d_POST GPR64sp:$Rn, VecListOne2d:$Vt, XZR)
@@ -15184,6 +15206,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR64RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev2s_POST GPR64sp:$Rn, VecListOne2s:$Vt, XZR)
@@ -15197,6 +15221,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR64RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev4h_POST GPR64sp:$Rn, VecListOne4h:$Vt, XZR)
@@ -15210,6 +15236,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev4s_POST GPR64sp:$Rn, VecListOne4s:$Vt, XZR)
@@ -15223,6 +15251,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR64RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev8b_POST GPR64sp:$Rn, VecListOne8b:$Vt, XZR)
@@ -15236,6 +15266,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Onev8h_POST GPR64sp:$Rn, VecListOne8h:$Vt, XZR)
@@ -15769,6 +15801,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 48 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev16b_POST GPR64sp:$Rn, VecListThree16b:$Vt, XZR)
@@ -15782,6 +15816,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 24 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev1d_POST GPR64sp:$Rn, VecListThree1d:$Vt, XZR)
@@ -15795,6 +15831,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 48 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev2d_POST GPR64sp:$Rn, VecListThree2d:$Vt, XZR)
@@ -15808,6 +15846,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 24 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev2s_POST GPR64sp:$Rn, VecListThree2s:$Vt, XZR)
@@ -15821,6 +15861,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 24 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev4h_POST GPR64sp:$Rn, VecListThree4h:$Vt, XZR)
@@ -15834,6 +15876,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 48 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev4s_POST GPR64sp:$Rn, VecListThree4s:$Vt, XZR)
@@ -15847,6 +15891,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 24 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev8b_POST GPR64sp:$Rn, VecListThree8b:$Vt, XZR)
@@ -15860,6 +15906,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 48 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Threev8h_POST GPR64sp:$Rn, VecListThree8h:$Vt, XZR)
@@ -15873,6 +15921,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov16b_POST GPR64sp:$Rn, VecListTwo16b:$Vt, XZR)
@@ -15886,6 +15936,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov1d_POST GPR64sp:$Rn, VecListTwo1d:$Vt, XZR)
@@ -15899,6 +15951,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov2d_POST GPR64sp:$Rn, VecListTwo2d:$Vt, XZR)
@@ -15912,6 +15966,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov2s_POST GPR64sp:$Rn, VecListTwo2s:$Vt, XZR)
@@ -15925,6 +15981,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov4h_POST GPR64sp:$Rn, VecListTwo4h:$Vt, XZR)
@@ -15938,6 +15996,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov4s_POST GPR64sp:$Rn, VecListTwo4s:$Vt, XZR)
@@ -15951,6 +16011,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_DDRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 16 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov8b_POST GPR64sp:$Rn, VecListTwo8b:$Vt, XZR)
@@ -15964,6 +16026,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_QQRegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 32 &&
         MCOperand_getReg(MCInst_getOperand(MI, 3)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1Twov8h_POST GPR64sp:$Rn, VecListTwo8h:$Vt, XZR)
@@ -16009,6 +16073,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 2 &&
         MCOperand_getReg(MCInst_getOperand(MI, 5)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1i16_POST GPR64sp:$Rn, VecListOneh:$Vt, VectorIndexH:$idx, XZR)
@@ -16022,6 +16088,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 4 &&
         MCOperand_getReg(MCInst_getOperand(MI, 5)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1i32_POST GPR64sp:$Rn, VecListOnes:$Vt, VectorIndexS:$idx, XZR)
@@ -16035,6 +16103,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8 &&
         MCOperand_getReg(MCInst_getOperand(MI, 5)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1i64_POST GPR64sp:$Rn, VecListOned:$Vt, VectorIndexD:$idx, XZR)
@@ -16048,6 +16118,8 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
         GETREGCLASS_CONTAIN(AArch64_GPR64spRegClassID, 0) &&
         MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
         GETREGCLASS_CONTAIN(AArch64_FPR128RegClassID, 1) &&
+        MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+        MCOperand_getImm(MCInst_getOperand(MI, 2)) == 1 &&
         MCOperand_getReg(MCInst_getOperand(MI, 5)) == AArch64_XZR &&
         AArch64_getFeatureBits(AArch64_FeatureNEON)) {
       // (LD1i8_POST GPR64sp:$Rn, VecListOneb:$Vt, VectorIndexB:$idx, XZR)

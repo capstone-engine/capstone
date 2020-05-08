@@ -8495,7 +8495,7 @@
 
 {	/* AArch64_LD1Fourv1d, AArch64_INS_LD1: ld1 */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ,  0 }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, 0 }
 },
 
 {	/* AArch64_LD1Fourv1d_POST, AArch64_INS_LD1: ld1 */
@@ -8620,7 +8620,7 @@
 
 {	/* AArch64_LD1Onev2d_POST, AArch64_INS_LD1: ld1 */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ }
+	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_LD1Onev2s, AArch64_INS_LD1: ld1 */
