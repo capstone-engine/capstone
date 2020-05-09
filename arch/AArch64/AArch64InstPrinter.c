@@ -638,6 +638,18 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 		switch(MCInst_getOpcode(MI)) {
 			default: break;
+			case AArch64_LD1Onev1d_POST:
+			case AArch64_LD1Onev2s_POST:
+			case AArch64_LD1Onev4h_POST:
+			case AArch64_LD1Onev8b_POST:
+				 arm64_op_addImm(MI, 8);
+				 break;
+			case AArch64_LD1Onev16b_POST:
+			case AArch64_LD1Onev2d_POST:
+			case AArch64_LD1Onev4s_POST:
+			case AArch64_LD1Onev8h_POST:
+				 arm64_op_addImm(MI, 16);
+				 break;
 			case AArch64_UMOVvi64:
 				 arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1D);
 				 break;
