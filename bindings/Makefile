@@ -14,7 +14,7 @@ TEST_SYSZ = $(TMPDIR)/test_systemz
 TEST_X86 = $(TMPDIR)/test_x86
 TEST_XCORE = $(TMPDIR)/test_xcore
 
-PYTHON2 = python
+PYTHON2 ?= python
 
 .PHONY: all expected python java ocaml
 
