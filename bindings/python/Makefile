@@ -1,5 +1,5 @@
-PYTHON2 = python
-PYTHON3 = python3
+PYTHON2 ?= python
+PYTHON3 ?= python3
 
 .PHONY: gen_const install install3 install_cython sdist sdist3 bdist bdist3 clean check
 
