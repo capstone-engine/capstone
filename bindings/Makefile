@@ -16,7 +16,7 @@ TEST_XCORE = $(TMPDIR)/test_xcore
 TEST_BPF = $(TMPDIR)/test_bpf
 TEST_RISCV = $(TMPDIR)/test_riscv
 
-PYTHON2 = python
+PYTHON2 ?= python
 
 .PHONY: all expected python java ocaml
 

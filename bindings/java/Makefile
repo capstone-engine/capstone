@@ -20,7 +20,7 @@ else
   endif
 endif
 
-PYTHON2 = python
+PYTHON2 ?= python
 
 CAPSTONE_JAVA = Capstone.java Arm_const.java Arm64_const.java Mips_const.java \
 				X86_const.java Xcore_const.java Ppc_const.java Sparc_const.java\
