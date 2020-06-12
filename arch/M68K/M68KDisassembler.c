@@ -1582,7 +1582,7 @@ static void d68000_bsr_16(m68k_info *info)
 static void d68020_bsr_32(m68k_info *info)
 {
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
-	build_relative_branch(info, M68K_INS_BSR, 4, peek_imm_32(info));
+	build_relative_branch(info, M68K_INS_BSR, 4, read_imm_32(info));
 }
 
 static void d68000_btst_r(m68k_info *info)
