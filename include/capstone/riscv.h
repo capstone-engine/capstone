@@ -13,7 +13,7 @@ extern "C" {
 #include <stdint.h>
 #endif
 
-#include "capstone/platform.h"
+#include "platform.h"
 
 // GCC MIPS toolchain has a default macro called "mips" which breaks
 // compilation
