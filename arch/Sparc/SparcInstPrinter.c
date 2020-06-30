@@ -218,7 +218,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 			case SP_BPFCCA:
 			case SP_BPFCCANT:
 			case SP_BPFCCNT:
-				Imm = SignExtend32(Imm, 19);
+				Imm = SignExtend32((uint32_t)Imm, 19);
 				Imm = MI->address + Imm * 4;
 				break;
 
@@ -229,7 +229,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 			case SP_BCONDA:
 			case SP_FBCOND:
 			case SP_FBCONDA:
-				Imm = SignExtend32(Imm, 22);
+				Imm = SignExtend32((uint32_t)Imm, 22);
 				Imm = MI->address + Imm * 4;
 				break;
 
@@ -258,16 +258,16 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 			case SP_BPZapt:
 			case SP_BPZnapn:
 			case SP_BPZnapt:
-				Imm = SignExtend32(Imm, 16);
+				Imm = SignExtend32((uint32_t)Imm, 16);
 				Imm = MI->address + Imm * 4;
 				break;
 		}
-		
+
 		printInt64(O, Imm);
 
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = Imm;
+				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = (uint32_t)Imm;
 			} else {
 				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_IMM;
 				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].imm = Imm;

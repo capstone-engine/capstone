@@ -386,7 +386,7 @@ static void printBDRAddrOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, "%"PRIu64, Disp);
 
 	SStream_concat0(O, "(");
-	SStream_concat(O, "%%%s", getRegisterName(Length));
+	SStream_concat(O, "%%%s", getRegisterName((unsigned int)Length));
 
 	if (Base)
 		SStream_concat(O, ", %%%s", getRegisterName(Base));
@@ -394,8 +394,8 @@ static void printBDRAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
-		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = (uint8_t)SystemZ_map_register(Length);
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register((unsigned int)Base);
+		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = (uint8_t)SystemZ_map_register((unsigned int)Length);
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.disp = (int64_t)Disp;
 		MI->flat_insn->detail->sysz.op_count++;
 	}
