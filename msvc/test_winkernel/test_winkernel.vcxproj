@@ -18,7 +18,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <Import Project="..\capstone.props" />
+  <Import Condition="Exists('..\capstone.props')" Project="..\capstone.props" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C6E4974C-2CAF-499A-802A-FB906F86B4C8}</ProjectGuid>
     <TemplateGuid>{1bc93793-694f-48fe-9372-81e2b05556fd}</TemplateGuid>

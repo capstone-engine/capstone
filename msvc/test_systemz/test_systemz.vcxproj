@@ -18,7 +18,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <Import Project="..\capstone.props" />
+  <Import Condition="Exists('..\capstone.props')" Project="..\capstone.props" />
   <ItemGroup>
     <ClCompile Include="..\..\tests\test_systemz.c" />
   </ItemGroup>

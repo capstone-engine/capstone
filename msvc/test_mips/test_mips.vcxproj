@@ -18,7 +18,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <Import Project="..\capstone.props" />
+  <Import Condition="Exists('..\capstone.props')" Project="..\capstone.props" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{28B2D82F-3E95-4ECE-8118-0E891BD453E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
