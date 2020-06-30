@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VisualStudioEdition Condition="'$(VisualStudioVersion)' == '10.0'">2010</VisualStudioEdition>
+    <VisualStudioEdition Condition="'$(VisualStudioVersion)' == '11.0'">2012</VisualStudioEdition>
+    <VisualStudioEdition Condition="'$(VisualStudioVersion)' == '12.0'">2013</VisualStudioEdition>
+    <VisualStudioEdition Condition="'$(VisualStudioVersion)' == '14.0'">2015</VisualStudioEdition>
+    <VisualStudioEdition Condition="'$(VisualStudioVersion)' == '15.0'">2017</VisualStudioEdition>
+    <VisualStudioEdition Condition="'$(VisualStudioVersion)' == '16.0'">2019</VisualStudioEdition>
+  </PropertyGroup>
+  <PropertyGroup>
+     <PlatformToolset Condition="$(VisualStudioEdition) == 2010">v100</PlatformToolset>
+     <PlatformToolset Condition="$(VisualStudioEdition) == 2012">v110</PlatformToolset>
+     <PlatformToolset Condition="$(VisualStudioEdition) == 2013">v120</PlatformToolset>
+     <PlatformToolset Condition="$(VisualStudioEdition) == 2015">v140</PlatformToolset>
+     <PlatformToolset Condition="$(VisualStudioEdition) == 2017">v141</PlatformToolset>
+     <PlatformToolset Condition="$(VisualStudioEdition) == 2019">v142</PlatformToolset>
+  </PropertyGroup>
+</Project>
