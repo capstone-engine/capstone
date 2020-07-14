@@ -2620,7 +2620,7 @@ static void d68010_movec(m68k_info *info)
 		case 0x807: reg = M68K_REG_SRP; break;
 	}
 
-	if (BIT_1(info->ir)) {
+	if (BIT_0(info->ir)) {
 		op0->reg = (BIT_F(extension) ? M68K_REG_A0 : M68K_REG_D0) + ((extension >> 12) & 7);
 		op1->reg = reg;
 	} else {
