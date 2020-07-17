@@ -21,6 +21,8 @@ cs_err PPC_global_init(cs_struct *ud)
 	ud->getinsn_info = mri;
 	ud->disasm = PPC_getInstruction;
 	ud->post_printer = PPC_post_printer;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	ud->reg_name = PPC_reg_name;
 	ud->insn_id = PPC_get_insn_id;

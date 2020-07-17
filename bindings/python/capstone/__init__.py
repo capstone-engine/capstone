@@ -443,6 +443,7 @@ _setup_prototype(_cs, "cs_version", ctypes.c_int, ctypes.POINTER(ctypes.c_int), 
 _setup_prototype(_cs, "cs_support", ctypes.c_bool, ctypes.c_int)
 _setup_prototype(_cs, "cs_strerror", ctypes.c_char_p, ctypes.c_int)
 _setup_prototype(_cs, "cs_regs_access", ctypes.c_int, ctypes.c_size_t, ctypes.POINTER(_cs_insn), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8), ctypes.POINTER(ctypes.c_uint16*64), ctypes.POINTER(ctypes.c_uint8))
+_setup_prototype(_cs, "cs_reg_is_subreg", ctypes.c_bool, ctypes.c_size_t, ctypes.c_uint, ctypes.c_uint)
 
 
 # access to error code via @errno of CsError
@@ -1143,6 +1144,9 @@ class Cs(object):
             return
             yield
 
+
+    def reg_is_subreg(self, reg_a, reg_b):
+        return _cs.cs_reg_is_subreg(self.csh, reg_a, reg_b)
 
 # print out debugging info
 def debug():

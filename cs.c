@@ -1599,3 +1599,28 @@ cs_err CAPSTONE_API cs_regs_access(csh ud, const cs_insn *insn,
 	return CS_ERR_OK;
 #endif
 }
+
+CAPSTONE_EXPORT
+bool CAPSTONE_API cs_reg_is_subreg(csh ud, unsigned int reg_a, unsigned int reg_b)
+{
+	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
+	unsigned res;
+
+	if (!handle || handle->printer_info == NULL) {
+		return false;
+	}
+
+	if(handle->register_map_public_to_private) {
+		reg_a = handle->register_map_public_to_private(reg_a);
+		reg_b = handle->register_map_public_to_private(reg_b);
+	}
+
+	res = MCRegisterInfo_isSubRegister(handle->printer_info, reg_a, reg_b);
+
+	if(handle->register_map_private_to_public) {
+		res = handle->register_map_private_to_public(res);
+	}
+
+	return res;
+}
+

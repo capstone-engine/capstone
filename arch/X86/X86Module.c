@@ -9,6 +9,7 @@
 #include "X86InstPrinter.h"
 #include "X86Mapping.h"
 #include "X86Module.h"
+#include "X86Mapping.h"
 
 cs_err X86_global_init(cs_struct *ud)
 {
@@ -16,6 +17,7 @@ cs_err X86_global_init(cs_struct *ud)
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	X86_init(mri);
+	X86_reverse_register_map_init();
 
 	// by default, we use Intel syntax
 	ud->printer = X86_Intel_printInst;
@@ -27,6 +29,8 @@ cs_err X86_global_init(cs_struct *ud)
 	ud->insn_name = X86_insn_name;
 	ud->group_name = X86_group_name;
 	ud->post_printer = NULL;;
+	ud->register_map_private_to_public = X86_register_map;
+	ud->register_map_public_to_private = X86_reverse_register_map;
 #ifndef CAPSTONE_DIET
 	ud->reg_access = X86_reg_access;
 #endif

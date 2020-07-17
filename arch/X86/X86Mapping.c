@@ -2178,12 +2178,41 @@ static const struct register_map {
 #include "X86MappingReg.inc"
 };
 
+// map public register id to internal register id. Dynamically generated and sorted by public id.
+static struct reverse_register_map {
+	unsigned short		pub_id;
+	unsigned short		id;
+} reverse_reg_map [X86_REG_ENDING];
+
+void X86_reverse_register_map_init() {
+	reverse_reg_map[0].pub_id = 0;
+	reverse_reg_map[0].id = 0;
+	unsigned short pub_id;
+	for(int id = 1; id < ARR_SIZE(reg_map); id++) {
+		pub_id = reg_map[id].pub_id;
+		if(pub_id) {
+			reverse_reg_map[pub_id].pub_id = pub_id;
+			reverse_reg_map[pub_id].id = id;
+		}
+	}
+}
+
 // return 0 on invalid input, or public register ID otherwise
 // NOTE: reg_map is sorted in order of internal register
 unsigned short X86_register_map(unsigned short id)
 {
 	if (id < ARR_SIZE(reg_map))
 		return reg_map[id].pub_id;
+
+	return 0;
+}
+
+// return 0 on invalid input, or internal register ID otherwise
+// NOTE: reverse_reg_map is sorted in order of public register
+unsigned short X86_reverse_register_map(unsigned short pub_id)
+{
+	if (pub_id < X86_REG_ENDING)
+		return reverse_reg_map[pub_id].id;
 
 	return 0;
 }

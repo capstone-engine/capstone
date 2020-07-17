@@ -67,6 +67,8 @@ cdef extern from "<capstone/capstone.h>":
 
     cs_err cs_regs_access(csh handle, cs_insn *insn, uint16_t *regs_read, uint8_t *read_count, uint16_t *regs_write, uint8_t *write_count)
 
+    bool cs_reg_is_subreg(csffh handle, unsigned int reg_a, unsigned int reg_b)
+
     int cs_op_index(csh handle, cs_insn *insn, unsigned int op_type,
         unsigned int position)
 

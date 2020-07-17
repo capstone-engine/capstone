@@ -32,6 +32,8 @@ typedef void (*GetRegisterAccess_t)(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count);
 
+typedef unsigned short (*TranslateRegisterID_t)(unsigned short id);
+
 // for ARM only
 typedef struct ARM_ITStatus {
 	unsigned char ITStates[8];
@@ -62,6 +64,8 @@ struct cs_struct {
 	GetName_t insn_name;
 	GetName_t group_name;
 	GetID_t insn_id;
+	TranslateRegisterID_t register_map_private_to_public;
+	TranslateRegisterID_t register_map_public_to_private;
 	PostPrinter_t post_printer;
 	cs_err errnum;
 	ARM_ITStatus ITBlock;	// for Arm only

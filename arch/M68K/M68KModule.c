@@ -24,6 +24,8 @@ cs_err M68K_global_init(cs_struct *ud)
 	ud->disasm = M68K_getInstruction;
 	ud->skipdata_size = 2;
 	ud->post_printer = NULL;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	ud->reg_name = M68K_reg_name;
 	ud->insn_id = M68K_get_insn_id;

@@ -1,5 +1,5 @@
 /* Capstone Disassembly Engine */
-/* RISC-V Backend By Rodrigo Cortes Porto <porto703@gmail.com> & 
+/* RISC-V Backend By Rodrigo Cortes Porto <porto703@gmail.com> &
    Shawn Chang <citypw@gmail.com>, HardenedLinux@2018 */
 
 #ifdef CAPSTONE_HAS_RISCV
@@ -22,6 +22,8 @@ cs_err RISCV_global_init(cs_struct * ud)
 	ud->getinsn_info = mri;
 	ud->disasm = RISCV_getInstruction;
 	ud->post_printer = NULL;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	ud->reg_name = RISCV_reg_name;
 	ud->insn_id = RISCV_get_insn_id;

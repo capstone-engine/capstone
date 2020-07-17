@@ -87,7 +87,10 @@ void X86_reg_access(const cs_insn *insn,
 // given the instruction id, return the size of its immediate operand (or 0)
 uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size);
 
+void X86_reverse_register_map_init(void);
 unsigned short X86_register_map(unsigned short id);
+unsigned short X86_reverse_register_map(unsigned short pub_id);
+
 
 unsigned int find_insn(unsigned int id);
 

@@ -21,6 +21,8 @@ cs_err WASM_global_init(cs_struct *ud)
 	ud->insn_name = WASM_insn_name;
 	ud->group_name = WASM_group_name;
 	ud->disasm = WASM_getInstruction;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	return CS_ERR_OK;
 }

@@ -21,6 +21,8 @@ cs_err EVM_global_init(cs_struct *ud)
 	ud->insn_name = EVM_insn_name;
 	ud->group_name = EVM_group_name;
 	ud->disasm = EVM_getInstruction;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	return CS_ERR_OK;
 }

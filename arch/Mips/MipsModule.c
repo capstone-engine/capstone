@@ -33,6 +33,8 @@ cs_err Mips_global_init(cs_struct *ud)
 	ud->insn_id = Mips_get_insn_id;
 	ud->insn_name = Mips_insn_name;
 	ud->group_name = Mips_group_name;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	ud->disasm = Mips_getInstruction;
 

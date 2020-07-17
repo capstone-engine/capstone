@@ -21,6 +21,8 @@ cs_err XCore_global_init(cs_struct *ud)
 	ud->getinsn_info = mri;
 	ud->disasm = XCore_getInstruction;
 	ud->post_printer = XCore_post_printer;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	ud->reg_name = XCore_reg_name;
 	ud->insn_id = XCore_get_insn_id;

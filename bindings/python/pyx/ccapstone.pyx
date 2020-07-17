@@ -330,6 +330,9 @@ cdef class Cs(object):
         finally:
             cc.cs_free(allinsn, res)
 
+    def reg_is_subreg(self, reg_a, reg_b):
+        return cc.cs_reg_is_subreg(self._csh, reg_a, reg_b)
+
 
 # print out debugging info
 def debug():

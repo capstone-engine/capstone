@@ -778,6 +778,22 @@ cs_err CAPSTONE_API cs_regs_access(csh handle, const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count);
 
+
+/**
+ Check if a register is a sub-register of another one.
+
+ Example: The X86 AH register is a sub-register of EAX, so
+ cs_reg_is_subreg(handle, X86_REG_EAX, X86_REG_AH) will return true.
+
+ @handle: handle returned by cs_open()
+ @reg_a: the super-register
+ @reg_b: the sub-register
+
+ @return true if reg_b is a sub-register of reg_a, or false otherwise.
+*/
+CAPSTONE_EXPORT
+bool CAPSTONE_API cs_reg_is_subreg(csh handle, unsigned int reg_a, unsigned int reg_b);
+
 #ifdef __cplusplus
 }
 #endif

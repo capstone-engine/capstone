@@ -25,6 +25,8 @@ cs_err AArch64_global_init(cs_struct *ud)
 	ud->insn_name = AArch64_insn_name;
 	ud->group_name = AArch64_group_name;
 	ud->post_printer = AArch64_post_printer;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 #ifndef CAPSTONE_DIET
 	ud->reg_access = AArch64_reg_access;
 #endif

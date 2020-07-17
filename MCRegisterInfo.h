@@ -105,6 +105,13 @@ void MCRegisterInfo_InitMCRegisterInfo(MCRegisterInfo *RI,
 		unsigned NumIndices,
 		const uint16_t *RET);
 
+
+// Returns true if RegB is a sub-register of RegA.
+bool MCRegisterInfo_isSubRegister(const MCRegisterInfo *RI, unsigned RegA, unsigned RegB);
+
+// Returns true if RegB is a super-register of RegA.
+bool MCRegisterInfo_isSuperRegister(const MCRegisterInfo *RI, unsigned RegA, unsigned RegB);
+
 unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI, unsigned Reg, unsigned SubIdx, const MCRegisterClass *RC);
 
 unsigned MCRegisterInfo_getSubReg(const MCRegisterInfo *RI, unsigned Reg, unsigned Idx);

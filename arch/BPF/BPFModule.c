@@ -15,6 +15,8 @@ cs_err BPF_global_init(cs_struct *ud)
 	ud->insn_id = BPF_get_insn_id;
 	ud->insn_name = BPF_insn_name;
 	ud->group_name = BPF_group_name;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 #ifndef CAPSTONE_DIET
 	ud->reg_access = BPF_reg_access;
 #endif

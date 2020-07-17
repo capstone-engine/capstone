@@ -25,6 +25,8 @@ cs_err ARM_global_init(cs_struct *ud)
 	ud->insn_name = ARM_insn_name;
 	ud->group_name = ARM_group_name;
 	ud->post_printer = ARM_post_printer;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 #ifndef CAPSTONE_DIET
 	ud->reg_access = ARM_reg_access;
 #endif

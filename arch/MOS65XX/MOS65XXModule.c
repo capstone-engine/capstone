@@ -27,6 +27,8 @@ cs_err MOS65XX_global_init(cs_struct *ud)
 	ud->group_name = MOS65XX_group_name;
 	ud->disasm = MOS65XX_getInstruction;
 	ud->reg_name = MOS65XX_reg_name;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	if (ud->mode) {
 		MOS65XX_option(ud, CS_OPT_MODE, ud->mode);

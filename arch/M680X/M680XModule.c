@@ -60,6 +60,8 @@ cs_err M680X_global_init(cs_struct *ud)
 	ud->group_name = M680X_group_name;
 	ud->skipdata_size = 1;
 	ud->post_printer = NULL;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 #ifndef CAPSTONE_DIET
 	ud->reg_access = M680X_reg_access;
 #endif

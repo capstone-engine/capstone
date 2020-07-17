@@ -83,6 +83,34 @@ static bool DiffListIterator_isValid(DiffListIterator *d)
 	return (d->List != 0);
 }
 
+
+bool MCRegisterInfo_isSubRegister(const MCRegisterInfo *RI, unsigned RegA, unsigned RegB) {
+	return MCRegisterInfo_isSuperRegister(RI, RegB, RegA);
+}
+
+bool MCRegisterInfo_isSuperRegister(const MCRegisterInfo *RI, unsigned RegA, unsigned RegB)
+{
+	DiffListIterator iter;
+
+	if (RegA >= RI->NumRegs) {
+		return 0;
+	}
+
+	DiffListIterator_init(&iter, (MCPhysReg)RegA, RI->DiffLists + RI->Desc[RegA].SuperRegs);
+	DiffListIterator_next(&iter);
+
+	while(DiffListIterator_isValid(&iter)) {
+		uint16_t val = DiffListIterator_getVal(&iter);
+		if(val == RegB){
+			return true;
+		}
+
+		DiffListIterator_next(&iter);
+	}
+
+	return false;
+}
+
 unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI, unsigned Reg, unsigned SubIdx, const MCRegisterClass *RC)
 {
 	DiffListIterator iter;

@@ -22,6 +22,8 @@ cs_err TMS320C64x_global_init(cs_struct *ud)
 	ud->getinsn_info = mri;
 	ud->disasm = TMS320C64x_getInstruction;
 	ud->post_printer = TMS320C64x_post_printer;
+	ud->register_map_private_to_public = NULL;
+	ud->register_map_public_to_private = NULL;
 
 	ud->reg_name = TMS320C64x_reg_name;
 	ud->insn_id = TMS320C64x_get_insn_id;
