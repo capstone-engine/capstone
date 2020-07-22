@@ -18,6 +18,12 @@ class SubRegTest(unittest.TestCase):
 
         self.assertFalse(cs.reg_is_subreg(X86_REG_RBX, X86_REG_DH))
 
+        self.assertTrue(cs.reg_is_subreg(X86_REG_R10, X86_REG_R10B))
+        self.assertTrue(cs.reg_is_subreg(X86_REG_R10, X86_REG_R10W))
+        self.assertTrue(cs.reg_is_subreg(X86_REG_R10, X86_REG_R10D))
+        self.assertTrue(cs.reg_is_subreg(X86_REG_R10W, X86_REG_R10B))
+        self.assertTrue(cs.reg_is_subreg(X86_REG_R10D, X86_REG_R10W))
+
         # XMM regs
         self.assertTrue(cs.reg_is_subreg(X86_REG_YMM0, X86_REG_XMM0))
         self.assertTrue(cs.reg_is_subreg(X86_REG_ZMM0, X86_REG_YMM0))
