@@ -3122,7 +3122,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 				return true;
 
 			case X86_INS_MOVSD:
-				if (opcode == X86_MOVSW) // REP MOVSB
+				if (opcode == X86_MOVSL) // REP MOVSD
 					return true;
 				return false;
 
