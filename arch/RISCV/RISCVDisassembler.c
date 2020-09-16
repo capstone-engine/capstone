@@ -40,16 +40,15 @@
 */
 static uint64_t getFeatureBits(int mode) 
 {
-	if (mode == CS_MODE_RISCV32)
-		// return b11110
-		return RISCV_FeatureStdExtM | RISCV_FeatureStdExtA |
+	uint64_t ret = RISCV_FeatureStdExtM | RISCV_FeatureStdExtA |
 		       RISCV_FeatureStdExtF | RISCV_FeatureStdExtD ;
-	else
-		
-		// CS_MODE_RISCV64, return b11111
-		return RISCV_Feature64Bit   | RISCV_FeatureStdExtM | 
-		       RISCV_FeatureStdExtA | RISCV_FeatureStdExtF | 
-		       RISCV_FeatureStdExtD ;
+
+	if (mode & CS_MODE_RISCV64)
+		ret |= RISCV_Feature64Bit;
+	if (mode & CS_MODE_RISCVC)
+		ret |= RISCV_FeatureStdExtC;
+
+	return ret;
 }
 
 #define GET_REGINFO_ENUM

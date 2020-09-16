@@ -655,7 +655,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_RISCV:
 			// special compress mode
 			if (handle->mode & CS_MODE_RISCVC)
-				return 1;
+				return 2;
 			return 4;
 	}
 }
