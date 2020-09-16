@@ -21,6 +21,7 @@ void MCInst_Init(MCInst *inst)
 
 	for (i = 0; i < 48; i++) {
 		inst->Operands[i].Kind = kInvalid;
+		inst->Operands[i].ImmVal = 0;
 	}
 
 	inst->Opcode = 0;
