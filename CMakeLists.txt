@@ -658,25 +658,51 @@ include("GNUInstallDirs")
 install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
 configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 
+include(CMakePackageConfigHelpers)
+set(CAPSTONE_CMAKE_CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/capstone")
+configure_package_config_file(
+    capstone-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/capstone-config.cmake
+    INSTALL_DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR}
+)
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/capstone-config-version.cmake
+    VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
+    COMPATIBILITY SameMajorVersion
+)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/capstone-config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/capstone-config-version.cmake"
+    DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR}
+)
+
 if (CAPSTONE_BUILD_STATIC)
     install(TARGETS capstone-static
-            RUNTIME DESTINATION bin
+            EXPORT capstone-targets
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 endif ()
 
 if (CAPSTONE_BUILD_SHARED)
     install(TARGETS capstone-shared
-            RUNTIME DESTINATION bin
+            EXPORT capstone-targets
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 endif ()
+
+install(EXPORT capstone-targets
+        NAMESPACE capstone::
+        DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR})
 
 if (CAPSTONE_BUILD_SHARED AND CAPSTONE_BUILD_CSTOOL)
 FILE(GLOB CSTOOL_SRC cstool/*.c)
 add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
-install(TARGETS cstool DESTINATION bin)
+install(TARGETS cstool DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif ()

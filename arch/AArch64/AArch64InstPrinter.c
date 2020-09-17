@@ -638,6 +638,60 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 
 		switch(MCInst_getOpcode(MI)) {
 			default: break;
+			case AArch64_LD1i8_POST:
+				 arm64_op_addImm(MI, 1);
+				 break;
+			case AArch64_LD1i16_POST:
+				 arm64_op_addImm(MI, 2);
+				 break;
+			case AArch64_LD1i32_POST:
+				 arm64_op_addImm(MI, 4);
+				 break;
+			case AArch64_LD1Onev1d_POST:
+			case AArch64_LD1Onev2s_POST:
+			case AArch64_LD1Onev4h_POST:
+			case AArch64_LD1Onev8b_POST:
+			case AArch64_LD1i64_POST:
+				 arm64_op_addImm(MI, 8);
+				 break;
+			case AArch64_LD1Onev16b_POST:
+			case AArch64_LD1Onev2d_POST:
+			case AArch64_LD1Onev4s_POST:
+			case AArch64_LD1Onev8h_POST:
+			case AArch64_LD1Twov1d_POST:
+			case AArch64_LD1Twov2s_POST:
+			case AArch64_LD1Twov4h_POST:
+			case AArch64_LD1Twov8b_POST:
+				 arm64_op_addImm(MI, 16);
+				 break;
+			case AArch64_LD1Threev1d_POST:
+			case AArch64_LD1Threev2s_POST:
+			case AArch64_LD1Threev4h_POST:
+			case AArch64_LD1Threev8b_POST:
+				 arm64_op_addImm(MI, 24);
+				 break;
+			case AArch64_LD1Fourv1d_POST:
+			case AArch64_LD1Fourv2s_POST:
+			case AArch64_LD1Fourv4h_POST:
+			case AArch64_LD1Fourv8b_POST:
+			case AArch64_LD1Twov16b_POST:
+			case AArch64_LD1Twov2d_POST:
+			case AArch64_LD1Twov4s_POST:
+			case AArch64_LD1Twov8h_POST:
+				 arm64_op_addImm(MI, 32);
+				 break;
+			case AArch64_LD1Threev16b_POST:
+			case AArch64_LD1Threev2d_POST:
+			case AArch64_LD1Threev4s_POST:
+			case AArch64_LD1Threev8h_POST:
+				 arm64_op_addImm(MI, 48);
+				 break;
+			case AArch64_LD1Fourv16b_POST:
+			case AArch64_LD1Fourv2d_POST:
+			case AArch64_LD1Fourv4s_POST:
+			case AArch64_LD1Fourv8h_POST:
+				 arm64_op_addImm(MI, 64);
+				 break;
 			case AArch64_UMOVvi64:
 				 arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1D);
 				 break;
