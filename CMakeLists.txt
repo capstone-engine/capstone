@@ -28,6 +28,7 @@ option(CAPSTONE_BUILD_TESTS "Build tests" ON)
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
+option(CAPSTONE_INSTALL "Generate install target" ON)
 
 set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX)
@@ -597,17 +598,19 @@ source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 include("GNUInstallDirs")
 
 ## installation
-install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
+if (CAPSTONE_INSTALL)
+    install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
+endif ()
 configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 
-if (CAPSTONE_BUILD_STATIC)
+if (CAPSTONE_BUILD_STATIC AND CAPSTONE_INSTALL)
     install(TARGETS capstone-static
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif ()
 
-if (CAPSTONE_BUILD_SHARED)
+if (CAPSTONE_BUILD_SHARED AND CAPSTONE_INSTALL)
     install(TARGETS capstone-shared
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -619,6 +622,8 @@ FILE(GLOB CSTOOL_SRC cstool/*.c)
 add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
-install(TARGETS cstool DESTINATION bin)
-install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+if (CAPSTONE_INSTALL)
+    install(TARGETS cstool DESTINATION bin)
+    install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+endif ()
 endif ()
