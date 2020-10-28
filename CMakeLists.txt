@@ -29,6 +29,7 @@ option(CAPSTONE_BUILD_CSTOOL "Build cstool" ON)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
+option(CAPSTONE_INSTALL "Generate install target" OFF)
 
 set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV)
@@ -655,7 +656,9 @@ source_group("Include\\RISCV" FILES ${HEADERS_RISCV})
 include("GNUInstallDirs")
 
 ## installation
+if (CAPSTONE_INSTALL)
 install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
+endif ()
 configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 
 include(CMakePackageConfigHelpers)
@@ -670,6 +673,8 @@ write_basic_package_version_file(
     VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
     COMPATIBILITY SameMajorVersion
 )
+
+if (CAPSTONE_INSTALL)
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/capstone-config.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/capstone-config-version.cmake"
@@ -697,12 +702,15 @@ endif ()
 install(EXPORT capstone-targets
         NAMESPACE capstone::
         DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR})
+endif ()
 
 if (CAPSTONE_BUILD_SHARED AND CAPSTONE_BUILD_CSTOOL)
 FILE(GLOB CSTOOL_SRC cstool/*.c)
 add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
+if (CAPSTONE_INSTALL)
 install(TARGETS cstool DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+endif ()
 endif ()
