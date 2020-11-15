@@ -77,3 +77,6 @@ Fotis Loukos: TMS320C64x architecture.
 Wolfgang Schwotzer: M680X architecture.
 Philippe Antoine: Integration with oss-fuzz and various fixes.
 Stephen Eckels (stevemk14ebr): x86 encoding features
+Sebastian Macke: MOS65XX architecture
+Do Minh Tuan: Regression testing tool (cstest)
+Kevin Foo (chfl4gs): PyPI github actions workflow.
