@@ -203,7 +203,7 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 			break;
 		case MOS65XX_AM_IMM:
 			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_IMM;
-			detail->mos65xx.operands[detail->mos65xx.op_count].mem = MI->Operands[0].ImmVal;
+			detail->mos65xx.operands[detail->mos65xx.op_count].imm = MI->Operands[0].ImmVal;
 			detail->mos65xx.op_count++;
 			break;
 		case MOS65XX_AM_ACC:
