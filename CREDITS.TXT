@@ -80,3 +80,4 @@ Stephen Eckels (stevemk14ebr): x86 encoding features
 Sebastian Macke: MOS65XX architecture
 Ilya Leoshkevich: SystemZ architecture improvements.
 Do Minh Tuan: Regression testing tool (cstest)
+Kevin Foo (chfl4gs): PyPI github actions workflow.
