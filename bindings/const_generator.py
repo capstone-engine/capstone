@@ -220,7 +220,7 @@ def gen(lang):
             if line.startswith('/// ') and 'enum_doc' in templ:
                 doc_lines.append(line[4: ])
                 continue
-            elif line.startswith('}'):
+            elif line.startswith('}') or line.startswith('#'):
                 doc_lines = []
                 pass
 
