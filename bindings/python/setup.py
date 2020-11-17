@@ -219,7 +219,7 @@ Capstone offers some unparalleled features:
 
 - Having clean/simple/lightweight/intuitive architecture-neutral API.
 
-- Provide details on disassembled instruction (called “decomposer” by others).
+- Provide details on disassembled instruction (called "decomposer" by others).
 
 - Provide semantics of the disassembled instruction, such as list of implicit
   registers read & written.
