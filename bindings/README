@@ -70,3 +70,7 @@ More bindings created & maintained by the community are available as followings.
 - capstone-d: D binding (by Dimitri Bohlender)
 
 	https://github.com/bohlender/capstone-d
+
+- Swift binding (by Jesús A. Álvarez)
+
+	https://github.com/zydeco/capstone-swift
