@@ -24,7 +24,7 @@ Capstone offers some unparalleled features:
 - Provide semantics of the disassembled instruction, such as list of implicit
   registers read & written.
 
-- Implemented in pure C language, with lightweight bindings for D, Clojure, F#,
+- Implemented in pure C language, with lightweight bindings for Swift, D, Clojure, F#,
   Common Lisp, Visual Basic, PHP, PowerShell, Emacs, Haskell, Perl, Python,
   Ruby, C#, NodeJS, Java, GO, C++, OCaml, Lua, Rust, Delphi, Free Pascal & Vala
   ready either in main code, or provided externally by the community).
