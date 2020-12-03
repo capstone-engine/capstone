@@ -2063,17 +2063,14 @@ static void d68020_cpgen(m68k_info *info)
 	ext->op_size.cpu_size = 0;
 
 	// Special case - adjust direction of fmove
-	if ((opmode == 0x00) && ((next >> 13) & 0x1) != 0)
-	{
+	if ((opmode == 0x00) && ((next >> 13) & 0x1) != 0) {
 		op0 = &ext->operands[1];
 		op1 = &ext->operands[0];
-	}
-	else
-	{
+	} else {
 		op0 = &ext->operands[0];
 		op1 = &ext->operands[1];
 	}
-	
+
 	if (rm == 0 && supports_single_op && src == dst) {
 		ext->op_count = 1;
 		op0->reg = M68K_REG_FP0 + dst;
