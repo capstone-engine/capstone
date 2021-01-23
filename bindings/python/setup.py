@@ -199,10 +199,11 @@ if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
     name = get_platform()
     if 'linux' in name:
         # linux_* platform tags are disallowed because the python ecosystem is fubar
-        # linux builds should be built in the centos 5 vm for maximum compatibility
+        # linux builds should be built in the centos 6 vm for maximum compatibility
         # see https://github.com/pypa/manylinux
-        # see also https://github.com/angr/angr-dev/blob/master/bdist.sh
-        sys.argv.insert(idx + 1, 'manylinux1_' + platform.machine())
+        # see also https://github.com/angr/angr-dev/blob/master/bdist.sh and
+        # https://www.python.org/dev/peps/pep-0599/
+        sys.argv.insert(idx + 1, 'manylinux2014_' + platform.machine())
     else:
         # https://www.python.org/dev/peps/pep-0425/
         sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_'))
