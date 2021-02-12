@@ -2232,6 +2232,7 @@ public class Arm64_const {
 	public static final int ARM64_GRP_INT = 4;
 	public static final int ARM64_GRP_PRIVILEGE = 6;
 	public static final int ARM64_GRP_BRANCH_RELATIVE = 7;
+	public static final int ARM64_GRP_PAC = 8;
 	public static final int ARM64_GRP_CRYPTO = 128;
 	public static final int ARM64_GRP_FPARMV8 = 129;
 	public static final int ARM64_GRP_NEON = 130;

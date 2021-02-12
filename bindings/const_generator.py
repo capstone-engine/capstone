@@ -77,10 +77,117 @@ template = {
             'comment_open': '(*',
             'comment_close': ' *)',
         },
+    'swift': {
+            'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT (%s)\n\n",
+            'footer': "",
+            'enum_doc': '/// %s\n',
+            'enum_header': 'public enum %s: %s {\n',
+            'enum_default_type': 'UInt32',
+            'enum_types': {
+                'UInt16': r'^\w+Reg$',
+                'UInt8': r'^\w+Grp$'
+            },
+            'option_set_header': 'public struct %s: OptionSet {\n    public typealias RawValue = %s\n    public let rawValue: RawValue\n    public init(rawValue: RawValue) { self.rawValue = rawValue }\n',
+            'option_sets': {
+                'X86Eflags': 'UInt64',
+                'X86FpuFlags': 'UInt64',
+                'SparcHint': 'UInt32',
+                'M680xIdx': 'UInt8',
+                'M680xOpFlags': 'UInt8',
+            },
+            'rename': {
+                r'^M680X_(\w+_OP_IN_MNEM)$': r'M680X_OP_FLAGS_\1',
+            },
+            'option_format': '    public static let {option} = {type}(rawValue: {value})\n',
+            'enum_extra_options': {
+                # swift enum != OptionSet, so options must be specified
+                'ArmSysreg': {
+                    'spsrCx': 'spsrC + spsrX',
+                    'spsrCs': 'spsrC + spsrS',
+                    'spsrXs': 'spsrX + spsrS',
+                    'spsrCxs': 'spsrC + spsrX + spsrS',
+                    'spsrCf': 'spsrC + spsrF',
+                    'spsrXf': 'spsrX + spsrF',
+                    'spsrCxf': 'spsrC + spsrX + spsrF',
+                    'spsrSf': 'spsrS + spsrF',
+                    'spsrCsf': 'spsrC + spsrS + spsrF',
+                    'spsrXsf': 'spsrX + spsrS + spsrF',
+                    'spsrCxsf': 'spsrC + spsrX + spsrS + spsrF',
+                    'cpsrCx': 'cpsrC + cpsrX',
+                    'cpsrCs': 'cpsrC + cpsrS',
+                    'cpsrXs': 'cpsrX + cpsrS',
+                    'cpsrCxs': 'cpsrC + cpsrX + cpsrS',
+                    'cpsrCf': 'cpsrC + cpsrF',
+                    'cpsrXf': 'cpsrX + cpsrF',
+                    'cpsrCxf': 'cpsrC + cpsrX + cpsrF',
+                    'cpsrSf': 'cpsrS + cpsrF',
+                    'cpsrCsf': 'cpsrC + cpsrS + cpsrF',
+                    'cpsrXsf': 'cpsrX + cpsrS + cpsrF',
+                    'cpsrCxsf': 'cpsrC + cpsrX + cpsrS + cpsrF',
+                }
+            },
+            'enum_footer': '}\n\n',
+            'doc_line_format': '    /// %s\n',
+            'line_format': '    case %s = %s\n',
+            'dup_line_format': '    public static let %s = %s\n',
+            'out_file': './swift/Sources/Capstone/%sEnums.swift',
+            'reserved_words': [
+                'break', 'class', 'for', 'false', 'in', 'init', 'return', 'true'
+            ],
+            'reserved_word_format': '`%s`',
+            # prefixes for constant filenames of all archs - case sensitive
+            'arm.h': 'Arm',
+            'arm64.h': 'Arm64',
+            'm68k.h': 'M68k',
+            'mips.h': 'Mips',
+            'x86.h': 'X86',
+            'ppc.h': 'Ppc',
+            'sparc.h': 'Sparc',
+            'systemz.h': 'Sysz',
+            'xcore.h': 'Xcore',
+            'tms320c64x.h': 'TMS320C64x',
+            'm680x.h': 'M680x',
+            'evm.h': 'Evm',
+            'mos65xx.h': 'Mos65xx',
+            'comment_open': '\t//',
+            'comment_close': '',
+        },
 }
 
 # markup for comments to be added to autogen files
 MARKUP = '//>'
+
+def camelize(name):
+    parts = name.split('_')
+    return parts[0].lower() + ''.join(map(str.capitalize, parts[1:]))
+
+def pascalize(name):
+    parts = name.split('_')
+    return ''.join(map(str.capitalize, parts))
+
+def pascalize_const(name):
+    parts = name.split('_',2)
+    match = re.match('^(CC|DISP|MOD|DIR|BCAST|RM|FLAGS|SIZE|BR_DISP_SIZE)_', parts[2])
+    if match:
+        parts = name.split('_', 2 + match.group(0).count('_'))
+    item = camelize(parts[-1])
+    if item[0].isdigit():
+        item = parts[-2].lower() + item
+    return (pascalize('_'.join(parts[0:-1])), item)
+
+def enum_type(name, templ):
+    for enum_type, pattern in templ['enum_types'].items():
+        if re.match(pattern, name):
+            return enum_type
+    return templ['enum_default_type']
+
+def write_enum_extra_options(outfile, templ, enum, enum_values):
+    if 'enum_extra_options' in templ and enum in templ['enum_extra_options']:
+        for name, value in templ['enum_extra_options'][enum].items():
+            if type(value) is str:
+                # evaluate within existing enum
+                value = eval(value, None, enum_values)
+            outfile.write((templ['line_format'] %(name, value)).encode("utf-8"))
 
 def gen(lang):
     global include, INCL_DIR
@@ -96,6 +203,9 @@ def gen(lang):
         outfile.write((templ['header'] % (prefix)).encode("utf-8"))
 
         lines = open(INCL_DIR + target).readlines()
+        enums = {}
+        values = {}
+        doc_lines = []
 
         count = 0
         for line in lines:
@@ -106,6 +216,13 @@ def gen(lang):
                                               line.replace(MARKUP, ''), \
                                               templ['comment_close']) ).encode("utf-8"))
                 continue
+
+            if line.startswith('/// ') and 'enum_doc' in templ:
+                doc_lines.append(line[4: ])
+                continue
+            elif line.startswith('}') or line.startswith('#'):
+                doc_lines = []
+                pass
 
             if line == '' or line.startswith('//'):
                 continue
@@ -155,8 +272,72 @@ def gen(lang):
                             if rhs[0].isalpha():
                                 rhs = '_' + rhs
 
-                    outfile.write((templ['line_format'] %(f[0].strip(), rhs)).encode("utf-8"))
+                    if lang == 'swift':
+                        value = eval(rhs, None, values)
+                        exec('%s = %d' %(f[0].strip(), value), None, values)
+                    else:
+                        value = rhs
 
+                    name = f[0].strip()
+
+                    if 'rename' in templ:
+                        # constant renaming
+                        for pattern, replacement in templ['rename'].items():
+                            if re.match(pattern, name):
+                                name = re.sub(pattern, replacement, name)
+                                break
+
+
+                    if 'enum_header' in templ:
+                        # separate constants by enums based on name
+                        enum, name = pascalize_const(name)
+                        if enum not in enums:
+                            if len(enums) > 0:
+                                write_enum_extra_options(outfile, templ, last_enum, enums[last_enum])
+                                outfile.write((templ['enum_footer']).encode("utf-8"))
+                            last_enum = enum
+
+                            if 'enum_doc' in templ:
+                                for doc_line in doc_lines:
+                                    outfile.write((templ['enum_doc'] %(doc_line)).encode("utf-8"))
+                                doc_lines = []
+
+                            if 'option_sets' in templ and enum in templ['option_sets']:
+                                outfile.write((templ['option_set_header'] %(enum, templ['option_sets'][enum])).encode("utf-8"))
+                            else:
+                                outfile.write((templ['enum_header'] %(enum, enum_type(enum, templ))).encode("utf-8"))
+                            enums[enum] = {}
+
+                        if 'option_sets' in templ and enum in templ['option_sets']:
+                            # option set format
+                            line_format = templ['option_format'].format(option='%s',type=enum,value='%s')
+                            if value == 0:
+                                continue # skip empty option
+                            # option set values need not be literals
+                            value = rhs
+                        elif 'dup_line_format' in templ and value in enums[enum].values():
+                            # different format for duplicate values?
+                            line_format = templ['dup_line_format']
+                        else:
+                            line_format = templ['line_format']
+                        enums[enum][name] = value
+
+                        # escape reserved words
+                        if 'reserved_words' in templ and name in templ['reserved_words']:
+                            name = templ['reserved_word_format'] %(name)
+
+                        # print documentation?
+                        if 'doc_line_format' in templ and '///<' in line:
+                            doc = line.split('///<')[1].strip()
+                            outfile.write((templ['doc_line_format'] %(doc)).encode("utf-8"))
+                    else:
+                        line_format = templ['line_format']
+
+                    outfile.write((line_format %(name, value)).encode("utf-8"))
+
+        if 'enum_footer' in templ:
+            write_enum_extra_options(outfile, templ, enum, enums[enum])
+            outfile.write((templ['enum_footer']).encode("utf-8"))
         outfile.write((templ['footer']).encode("utf-8"))
         outfile.close()
 

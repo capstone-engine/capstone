@@ -2130,11 +2130,6 @@ static const cpu_tables g_cpu_tables[] = {
 	},
 };
 
-static const char * const s_cpu_type[] = {
-	"INVALID", "6301", "6309", "6800", "6801", "6805", "6808",
-	"6809", "6811", "CPU12", "HCS08",
-};
-
 static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 	uint16_t address,
 	const uint8_t *code, uint16_t code_len)
@@ -2260,12 +2255,6 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 
 	if (M680X_INS_ENDING != ARR_SIZE(g_insn_props)) {
 		CS_ASSERT(M680X_INS_ENDING == ARR_SIZE(g_insn_props));
-
-		return CS_ERR_MODE;
-	}
-
-	if (M680X_CPU_TYPE_ENDING != ARR_SIZE(s_cpu_type)) {
-		CS_ASSERT(M680X_CPU_TYPE_ENDING == ARR_SIZE(s_cpu_type));
 
 		return CS_ERR_MODE;
 	}
