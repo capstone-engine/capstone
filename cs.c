@@ -69,7 +69,7 @@
 #include "arch/MOS65XX/MOS65XXModule.h"
 #include "arch/BPF/BPFModule.h"
 
-static struct {
+static const struct {
 	// constructor initialization
 	cs_err (*arch_init)(cs_struct *);
 	// support cs_option()
@@ -234,7 +234,7 @@ static struct {
 };
 
 // bitmask of enabled architectures
-static uint32_t all_arch = 0
+static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_ARM
 	| (1 << CS_ARCH_ARM)
 #endif
@@ -655,7 +655,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_RISCV:
 			// special compress mode
 			if (handle->mode & CS_MODE_RISCVC)
-				return 1;
+				return 2;
 			return 4;
 	}
 }

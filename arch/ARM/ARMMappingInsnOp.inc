@@ -10052,7 +10052,7 @@
 },
 
 {	/* ARM_t2STMDB_UPD, ARM_INS_PUSH: push */
-	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* ARM_t2STMIA, ARM_INS_STM: stm */

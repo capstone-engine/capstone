@@ -62,7 +62,7 @@ for line in lines:
 
     if 'MClassSysRegsList[]' in line:
         count += 1
-        print('static MClassSysReg MClassSysRegsList[] = {')
+        print('static const MClassSysReg MClassSysRegsList[] = {')
         continue
 
     if count == 1:
@@ -89,7 +89,7 @@ for line in lines:
 
     if 'BankedRegsList[]' in line:
         count += 1
-        print('static BankedReg BankedRegsList[] = {')
+        print('static const BankedReg BankedRegsList[] = {')
         continue
 
     if count == 1:
@@ -115,7 +115,7 @@ for line in lines:
 
     if 'lookupMClassSysRegByM2M3Encoding8' in line and '{' in line:
         count += 1
-        print('MClassSysReg *lookupMClassSysRegByM2M3Encoding8(uint16_t encoding)\n{')
+        print('const MClassSysReg *lookupMClassSysRegByM2M3Encoding8(uint16_t encoding)\n{')
         print('  unsigned int i;')
         continue
 
@@ -151,7 +151,7 @@ for line in lines:
 
     if 'lookupMClassSysRegByM1Encoding12' in line and '{' in line:
         count += 1
-        print('MClassSysReg *lookupMClassSysRegByM1Encoding12(uint16_t encoding)\n{')
+        print('const MClassSysReg *lookupMClassSysRegByM1Encoding12(uint16_t encoding)\n{')
         print('  unsigned int i;')
         continue
 
@@ -186,7 +186,7 @@ for line in lines:
 
     if 'lookupBankedRegByEncoding' in line and '{' in line:
         count += 1
-        print('BankedReg *lookupBankedRegByEncoding(uint8_t encoding)\n{')
+        print('const BankedReg *lookupBankedRegByEncoding(uint8_t encoding)\n{')
         print('  unsigned int i;')
         continue
 

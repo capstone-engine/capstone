@@ -150,6 +150,12 @@ typedef struct m68k_op_br_disp {
 	uint8_t disp_size;		///< Size from m68k_op_br_disp_size type above
 } m68k_op_br_disp;
 
+/// Register pair in one operand.
+typedef struct cs_m68k_op_reg_pair {
+	m68k_reg reg_0;
+	m68k_reg reg_1;
+} cs_m68k_op_reg_pair;
+
 /// Instruction operand
 typedef struct cs_m68k_op {
 	union {
@@ -157,10 +163,7 @@ typedef struct cs_m68k_op {
 		double dimm; 		    ///< double imm
 		float simm; 		    ///< float imm
 		m68k_reg reg;		    ///< register value for REG operand
-		struct {		    ///< register pair in one operand
-			m68k_reg reg_0;
-			m68k_reg reg_1;
-		} reg_pair;
+		cs_m68k_op_reg_pair reg_pair; ///< register pair in one operand
 	};
 
 	m68k_op_mem mem; 	    ///< data when operand is targeting memory

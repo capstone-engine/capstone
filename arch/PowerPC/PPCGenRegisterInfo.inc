@@ -453,7 +453,7 @@ static const uint16_t PPCSubRegIdxLists[] = {
   /* 4 */ 5, 4, 3, 6, 0,
 };
 
-static MCRegisterDesc PPCRegDesc[] = {
+static const MCRegisterDesc PPCRegDesc[] = {
   { 4, 0, 0, 0, 0, 0 },
   { 1237, 1, 9, 1, 1281, 0 },
   { 1406, 1, 1, 1, 1281, 0 },
@@ -1090,7 +1090,7 @@ static MCRegisterDesc PPCRegDesc[] = {
   };
 
 
-static MCRegisterClass PPCMCRegisterClasses[] = {
+static const MCRegisterClass PPCMCRegisterClasses[] = {
   { VSSRC, VSSRCBits, sizeof(VSSRCBits) },
   { GPRC, GPRCBits, sizeof(GPRCBits) },
   { GPRC_NOR0, GPRC_NOR0Bits, sizeof(GPRC_NOR0Bits) },

@@ -15,7 +15,7 @@
 
 #ifndef CAPSTONE_DIET
 // NOTE: this reg_name_maps[] reflects the order of registers in arm64_reg
-static const char *reg_name_maps[] = {
+static const char * const reg_name_maps[] = {
 	NULL, /* ARM64_REG_INVALID */
 
 	"ffr",
@@ -389,7 +389,7 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-static const char *insn_name_maps[] = {
+static const char * const insn_name_maps[] = {
 	NULL, // ARM64_INS_INVALID
 #include "AArch64MappingInsnName.inc"
 	"sbfiz",
@@ -430,6 +430,7 @@ static const name_map group_name_maps[] = {
 	{ ARM64_GRP_PRIVILEGE, "privilege" },
 	{ ARM64_GRP_INT, "int" },
 	{ ARM64_GRP_BRANCH_RELATIVE, "branch_relative" },
+	{ ARM64_GRP_PAC, "pointer authentication" },
 
 	// architecture-specific groups
 	{ ARM64_GRP_CRYPTO, "crypto" },
@@ -523,7 +524,7 @@ typedef struct insn_op {
 	uint8_t access[5];
 } insn_op;
 
-static insn_op insn_ops[] = {
+static const insn_op insn_ops[] = {
     {
          /* NULL item */
         0, { 0 }
@@ -533,7 +534,7 @@ static insn_op insn_ops[] = {
 };
 
 // given internal insn id, return operand access info
-uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id)
+const uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id)
 {
 	int i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
 	if (i != 0) {

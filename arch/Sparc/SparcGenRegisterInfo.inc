@@ -235,7 +235,7 @@ static const uint16_t SparcSubRegIdxLists[] = {
   /* 6 */ 2, 1, 3, 4, 5, 6, 0,
 };
 
-static MCRegisterDesc SparcRegDesc[] = { // Descriptors
+static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
   { 406, 4, 4, 2, 3393, 0 },
   { 410, 4, 4, 2, 3393, 0 },
@@ -437,7 +437,7 @@ static MCRegisterDesc SparcRegDesc[] = { // Descriptors
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x7f,
   };
 
-static MCRegisterClass SparcMCRegisterClasses[] = {
+static const MCRegisterClass SparcMCRegisterClasses[] = {
   { FCCRegs, FCCRegsBits, sizeof(FCCRegsBits) },
   { FPRegs, FPRegsBits, sizeof(FPRegsBits) },
   { IntRegs, IntRegsBits, sizeof(IntRegsBits) },

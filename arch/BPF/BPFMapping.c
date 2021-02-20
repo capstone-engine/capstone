@@ -137,7 +137,7 @@ const char *BPF_reg_name(csh handle, unsigned int reg)
 	if (EBPF_MODE(handle)) {
 		if (reg < BPF_REG_R0 || reg > BPF_REG_R10)
 			return NULL;
-		static const char* reg_names[11] = {
+		static const char reg_names[11][4] = {
 			"r0", "r1", "r2", "r3", "r4",
 			"r5", "r6", "r7", "r8", "r9",
 			"r10"

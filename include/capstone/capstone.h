@@ -30,14 +30,14 @@ extern "C" {
 #endif
 #else
 #define CAPSTONE_API
-#if defined(__GNUC__) && !defined(CAPSTONE_STATIC)
+#if (defined(__GNUC__) || defined(__IBMC__)) && !defined(CAPSTONE_STATIC)
 #define CAPSTONE_EXPORT __attribute__((visibility("default")))
 #else    // defined(CAPSTONE_STATIC)
 #define CAPSTONE_EXPORT
 #endif
 #endif
 
-#ifdef __GNUC__
+#if (defined(__GNUC__) || defined(__IBMC__))
 #define CAPSTONE_DEPRECATED __attribute__((deprecated))
 #elif defined(_MSC_VER)
 #define CAPSTONE_DEPRECATED __declspec(deprecated)
@@ -126,7 +126,7 @@ typedef enum cs_mode {
 	CS_MODE_M68K_030 = 1 << 4, ///< M68K 68030 mode
 	CS_MODE_M68K_040 = 1 << 5, ///< M68K 68040 mode
 	CS_MODE_M68K_060 = 1 << 6, ///< M68K 68060 mode
-	CS_MODE_BIG_ENDIAN = 1 << 31,	///< big-endian mode
+	CS_MODE_BIG_ENDIAN = 1U << 31,	///< big-endian mode
 	CS_MODE_MIPS32 = CS_MODE_32,	///< Mips32 ISA (Mips)
 	CS_MODE_MIPS64 = CS_MODE_64,	///< Mips64 ISA (Mips)
 	CS_MODE_M680X_6301 = 1 << 1, ///< M680X Hitachi 6301,6303 mode

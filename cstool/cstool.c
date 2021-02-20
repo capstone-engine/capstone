@@ -538,10 +538,14 @@ int main(int argc, char **argv)
 					putchar(' ');
 				printf("%02x", insn[i].bytes[j]);
 			}
-			// X86 instruction size is variable.
+			// X86 and s390 instruction sizes are variable.
 			// align assembly instruction after the opcode
 			if (arch == CS_ARCH_X86) {
 				for (; j < 16; j++) {
+					printf("   ");
+				}
+			} else if (arch == CS_ARCH_SYSZ) {
+				for (; j < 6; j++) {
 					printf("   ");
 				}
 			}

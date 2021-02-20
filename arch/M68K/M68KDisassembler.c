@@ -222,38 +222,38 @@ typedef struct {
 /* ================================= DATA ================================= */
 /* ======================================================================== */
 
-static instruction_struct g_instruction_table[0x10000];
+static const instruction_struct g_instruction_table[0x10000];
 
 /* used by ops like asr, ror, addq, etc */
-static uint32_t g_3bit_qdata_table[8] = {8, 1, 2, 3, 4, 5, 6, 7};
+static const uint32_t g_3bit_qdata_table[8] = {8, 1, 2, 3, 4, 5, 6, 7};
 
-static uint32_t g_5bit_data_table[32] = {
+static const uint32_t g_5bit_data_table[32] = {
 	32,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
 	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
 };
 
-static m68k_insn s_branch_lut[] = {
+static const m68k_insn s_branch_lut[] = {
 	M68K_INS_INVALID, M68K_INS_INVALID, M68K_INS_BHI, M68K_INS_BLS,
 	M68K_INS_BCC, M68K_INS_BCS, M68K_INS_BNE, M68K_INS_BEQ,
 	M68K_INS_BVC, M68K_INS_BVS, M68K_INS_BPL, M68K_INS_BMI,
 	M68K_INS_BGE, M68K_INS_BLT, M68K_INS_BGT, M68K_INS_BLE,
 };
 
-static m68k_insn s_dbcc_lut[] = {
+static const m68k_insn s_dbcc_lut[] = {
 	M68K_INS_DBT, M68K_INS_DBF, M68K_INS_DBHI, M68K_INS_DBLS,
 	M68K_INS_DBCC, M68K_INS_DBCS, M68K_INS_DBNE, M68K_INS_DBEQ,
 	M68K_INS_DBVC, M68K_INS_DBVS, M68K_INS_DBPL, M68K_INS_DBMI,
 	M68K_INS_DBGE, M68K_INS_DBLT, M68K_INS_DBGT, M68K_INS_DBLE,
 };
 
-static m68k_insn s_scc_lut[] = {
+static const m68k_insn s_scc_lut[] = {
 	M68K_INS_ST, M68K_INS_SF, M68K_INS_SHI, M68K_INS_SLS,
 	M68K_INS_SCC, M68K_INS_SCS, M68K_INS_SNE, M68K_INS_SEQ,
 	M68K_INS_SVC, M68K_INS_SVS, M68K_INS_SPL, M68K_INS_SMI,
 	M68K_INS_SGE, M68K_INS_SLT, M68K_INS_SGT, M68K_INS_SLE,
 };
 
-static m68k_insn s_trap_lut[] = {
+static const m68k_insn s_trap_lut[] = {
 	M68K_INS_TRAPT, M68K_INS_TRAPF, M68K_INS_TRAPHI, M68K_INS_TRAPLS,
 	M68K_INS_TRAPCC, M68K_INS_TRAPCS, M68K_INS_TRAPNE, M68K_INS_TRAPEQ,
 	M68K_INS_TRAPVC, M68K_INS_TRAPVS, M68K_INS_TRAPPL, M68K_INS_TRAPMI,
@@ -1582,7 +1582,7 @@ static void d68000_bsr_16(m68k_info *info)
 static void d68020_bsr_32(m68k_info *info)
 {
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
-	build_relative_branch(info, M68K_INS_BSR, 4, peek_imm_32(info));
+	build_relative_branch(info, M68K_INS_BSR, 4, read_imm_32(info));
 }
 
 static void d68000_btst_r(m68k_info *info)
@@ -2036,8 +2036,14 @@ static void d68020_cpgen(m68k_info *info)
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;
 	ext->op_size.cpu_size = 0;
 
-	op0 = &ext->operands[0];
-	op1 = &ext->operands[1];
+	// Special case - adjust direction of fmove
+	if ((opmode == 0x00) && ((next >> 13) & 0x1) != 0) {
+		op0 = &ext->operands[1];
+		op1 = &ext->operands[0];
+	} else {
+		op0 = &ext->operands[0];
+		op1 = &ext->operands[1];
+	}
 
 	if (rm == 0 && supports_single_op && src == dst) {
 		ext->op_count = 1;
@@ -2594,7 +2600,7 @@ static void d68010_movec(m68k_info *info)
 		case 0x807: reg = M68K_REG_SRP; break;
 	}
 
-	if (BIT_1(info->ir)) {
+	if (BIT_0(info->ir)) {
 		op0->reg = (BIT_F(extension) ? M68K_REG_A0 : M68K_REG_D0) + ((extension >> 12) & 7);
 		op1->reg = reg;
 	} else {
@@ -3379,7 +3385,7 @@ static void d68020_unpk_mm(m68k_info *info)
 static int instruction_is_valid(m68k_info *info, const unsigned int word_check)
 {
 	const unsigned int instruction = info->ir;
-	instruction_struct *i = &g_instruction_table[instruction];
+	const instruction_struct *i = &g_instruction_table[instruction];
 
 	if ( (i->word2_mask && ((word_check & i->word2_mask) != i->word2_match)) ||
 		(i->instruction == d68000_invalid) ) {

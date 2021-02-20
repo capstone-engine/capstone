@@ -856,7 +856,7 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 }
 
 #ifndef CAPSTONE_DIET
-static const char *insn_name_maps[] = {
+static const char * const insn_name_maps[] = {
 	NULL, // X86_INS_INVALID
 #ifndef CAPSTONE_X86_REDUCE
 #include "X86MappingInsnName.inc"
@@ -1216,7 +1216,7 @@ struct insn_reg2 {
 	enum cs_ac_type access1, access2;
 };
 
-static struct insn_reg insn_regs_att[] = {
+static const struct insn_reg insn_regs_att[] = {
 	{ X86_INSB, X86_REG_DX, CS_AC_READ },
 	{ X86_INSL, X86_REG_DX, CS_AC_READ },
 	{ X86_INSW, X86_REG_DX, CS_AC_READ },
@@ -1309,7 +1309,7 @@ static struct insn_reg insn_regs_att[] = {
 	{ X86_XCHG64ar, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
 };
 
-static struct insn_reg insn_regs_att_extra[] = {
+static const struct insn_reg insn_regs_att_extra[] = {
 	// dummy entry, to avoid empty array
 	{ 0, 0 },
 #ifndef CAPSTONE_X86_REDUCE
@@ -1330,7 +1330,7 @@ static struct insn_reg insn_regs_att_extra[] = {
 #endif
 };
 
-static struct insn_reg insn_regs_intel[] = {
+static const struct insn_reg insn_regs_intel[] = {
 	{ X86_ADC16i16, X86_REG_AX, CS_AC_WRITE | CS_AC_READ },
 	{ X86_ADC32i32, X86_REG_EAX, CS_AC_WRITE | CS_AC_READ },
 	{ X86_ADC64i32, X86_REG_RAX, CS_AC_WRITE | CS_AC_READ },
@@ -1420,7 +1420,7 @@ static struct insn_reg insn_regs_intel[] = {
 	{ X86_XOR8i8, X86_REG_AL, CS_AC_WRITE | CS_AC_READ },
 };
 
-static struct insn_reg insn_regs_intel_extra[] = {
+static const struct insn_reg insn_regs_intel_extra[] = {
 	// dummy entry, to avoid empty array
 	{ 0, 0, 0 },
 #ifndef CAPSTONE_X86_REDUCE
@@ -1446,7 +1446,7 @@ static struct insn_reg insn_regs_intel_extra[] = {
 #endif
 };
 
-static struct insn_reg2 insn_regs_intel2[] = {
+static const struct insn_reg2 insn_regs_intel2[] = {
 	{ X86_IN16rr, X86_REG_AX, X86_REG_DX, CS_AC_WRITE, CS_AC_READ },
 	{ X86_IN32rr, X86_REG_EAX, X86_REG_DX, CS_AC_WRITE, CS_AC_READ },
 	{ X86_IN8rr, X86_REG_AL, X86_REG_DX, CS_AC_WRITE, CS_AC_READ },
@@ -1457,7 +1457,7 @@ static struct insn_reg2 insn_regs_intel2[] = {
 	{ X86_OUT8rr, X86_REG_DX, X86_REG_AL, CS_AC_READ, CS_AC_READ },
 };
 
-static int binary_search1(struct insn_reg *insns, unsigned int max, unsigned int id)
+static int binary_search1(const struct insn_reg *insns, unsigned int max, unsigned int id)
 {
 	unsigned int first, last, mid;
 
@@ -1486,7 +1486,7 @@ static int binary_search1(struct insn_reg *insns, unsigned int max, unsigned int
 	return -1;
 }
 
-static int binary_search2(struct insn_reg2 *insns, unsigned int max, unsigned int id)
+static int binary_search2(const struct insn_reg2 *insns, unsigned int max, unsigned int id)
 {
 	unsigned int first, last, mid;
 
@@ -1622,7 +1622,6 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 			case X86_INS_MOVSB:
 			case X86_INS_MOVSS:
 			case X86_INS_MOVSW:
-			case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
 
 			case X86_INS_LODSB:
@@ -1644,6 +1643,11 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 			case X86_INS_OUTSD:
 
 				return true;
+
+			case X86_INS_MOVSD:
+				if (opcode == X86_MOVSW) // REP MOVSB
+					return true;
+				return false;
 
 			case X86_INS_CMPSD:
 				if (opcode == X86_CMPSL) // REP CMPSD
@@ -2042,7 +2046,7 @@ typedef struct insn_op {
 	uint8_t access[6];
 } insn_op;
 
-static insn_op insn_ops[] = {
+static const insn_op insn_ops[] = {
 #ifdef CAPSTONE_X86_REDUCE
 #include "X86MappingInsnOp_reduce.inc"
 #else
@@ -2051,7 +2055,7 @@ static insn_op insn_ops[] = {
 };
 
 // given internal insn id, return operand access info
-uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags)
+const uint8_t *X86_get_op_access(cs_struct *h, unsigned int id, uint64_t *eflags)
 {
 	unsigned int i = find_insn(id);
 	if (i != -1) {
@@ -2117,7 +2121,7 @@ void X86_reg_access(const cs_insn *insn,
 
 // map immediate size to instruction id
 // this array is sorted for binary searching
-static struct size_id {
+static const struct size_id {
 	uint8_t		enc_size;
 	uint8_t		size;
 	uint16_t 	id;
@@ -2165,7 +2169,7 @@ uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size)
 #include "X86GenRegisterInfo.inc"
 
 // map internal register id to public register id
-static struct register_map {
+static const struct register_map {
 	unsigned short		id;
 	unsigned short		pub_id;
 } reg_map [] = {
