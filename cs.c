@@ -576,7 +576,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		while(tmp) {
 			if (tmp->insn.id == insn->id) {
 				// found this instruction, so copy its mnemonic
-				(void)strncpy(insn->mnemonic, tmp->insn.mnemonic, sizeof(insn->mnemonic) - 1);
+				(void)strncpy(insn->mnemonic, tmp->insn.mnemonic, sizeof(insn->mnemonic));
 				insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
 				break;
 			}
