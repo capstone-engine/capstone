@@ -9900,22 +9900,22 @@
 
 {	/* X86_POPDS16, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPDS32, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPES16, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPES32, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPF16, X86_INS_POPF: popf */
@@ -9935,42 +9935,42 @@
 
 {	/* X86_POPFS16, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPFS32, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPFS64, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPGS16, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPGS32, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPGS64, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPSS16, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_POPSS32, X86_INS_POP: pop */
 	0,
-	{ CS_AC_IGNORE, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_PORrm, X86_INS_POR: por */
