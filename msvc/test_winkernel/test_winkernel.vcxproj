@@ -18,6 +18,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <Import Condition="Exists('..\capstone.props')" Project="..\capstone.props" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C6E4974C-2CAF-499A-802A-FB906F86B4C8}</ProjectGuid>
     <TemplateGuid>{1bc93793-694f-48fe-9372-81e2b05556fd}</TemplateGuid>
@@ -83,6 +84,7 @@
       <WppKernelMode>true</WppKernelMode>
       <AdditionalIncludeDirectories>..\..\include;..\headers;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_M68K;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>capstone_static_winkernel.lib;ntstrsafe.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -107,6 +109,7 @@
       <WppKernelMode>true</WppKernelMode>
       <AdditionalIncludeDirectories>..\..\include;..\headers;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CAPSTONE_X86_ATT_DISABLE_NO;CAPSTONE_DIET_NO;CAPSTONE_X86_REDUCE_NO;CAPSTONE_HAS_ARM;CAPSTONE_HAS_ARM64;CAPSTONE_HAS_M68K;CAPSTONE_HAS_MIPS;CAPSTONE_HAS_POWERPC;CAPSTONE_HAS_SPARC;CAPSTONE_HAS_SYSZ;CAPSTONE_HAS_X86;CAPSTONE_HAS_XCORE;CAPSTONE_USE_SYS_DYN_MEM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>capstone_static_winkernel.lib;ntstrsafe.lib;%(AdditionalDependencies)</AdditionalDependencies>

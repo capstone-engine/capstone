@@ -18,6 +18,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <Import Condition="Exists('..\capstone.props')" Project="..\capstone.props" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{28B2D82F-3E95-4ECE-8118-0E891BD453E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -85,6 +86,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\include;..\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\include;..\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
