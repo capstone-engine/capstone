@@ -203,7 +203,7 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 			break;
 		case MOS65XX_AM_IMM:
 			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_IMM;
-			detail->mos65xx.operands[detail->mos65xx.op_count].mem = MI->Operands[0].ImmVal;
+			detail->mos65xx.operands[detail->mos65xx.op_count].imm = MI->Operands[0].ImmVal;
 			detail->mos65xx.op_count++;
 			break;
 		case MOS65XX_AM_ACC:
@@ -211,7 +211,27 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 			detail->mos65xx.operands[detail->mos65xx.op_count].reg = MOS65XX_REG_ACC;
 			detail->mos65xx.op_count++;
 			break;
-
+		case MOS65XX_AM_REL: {
+			int value = MI->Operands[0].ImmVal;
+			if (MI->op1_size == 1)
+				value = 2 + (signed char)value;
+			else
+				value = 3 + (signed short)value;
+			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_MEM;
+			detail->mos65xx.operands[detail->mos65xx.op_count].mem = (MI->address + value) & 0xffff;
+			detail->mos65xx.op_count++;
+			break;
+		}
+		case MOS65XX_AM_ZP_REL: {
+			int value =	3 + (signed char)MI->Operands[1].ImmVal;
+			/* BBR0, zp, rel  and BBS0, zp, rel */
+			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_MEM;
+			detail->mos65xx.operands[detail->mos65xx.op_count].mem = MI->Operands[0].ImmVal;
+			detail->mos65xx.operands[detail->mos65xx.op_count+1].type = MOS65XX_OP_MEM;
+			detail->mos65xx.operands[detail->mos65xx.op_count+1].mem = (MI->address + value) & 0xffff;
+			detail->mos65xx.op_count+=2;
+			break;
+		}
 		default:
 			for (i = 0; i < MI->size; ++i) {
 				detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_MEM;
