@@ -830,12 +830,12 @@ class CsInsn(object):
         if regs_read_count.value > 0:
             regs_read = regs_read[:regs_read_count.value]
         else:
-            regs_read = ()
+            regs_read = []
 
         if regs_write_count.value > 0:
             regs_write = regs_write[:regs_write_count.value]
         else:
-            regs_write = ()
+            regs_write = []
 
         return (regs_read, regs_write)
 
