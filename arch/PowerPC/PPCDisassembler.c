@@ -219,9 +219,11 @@ static uint64_t getFeatureBits(int feature)
 #endif
 
 static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
-		const unsigned *Regs)
+		const unsigned *Regs, size_t RegsLen)
 {
-	// assert(RegNo < N && "Invalid register number");
+	if (RegNo >= RegsLen / sizeof(unsigned)) {
+		return MCDisassembler_Fail;
+	}
 	MCOperand_CreateReg0(Inst, Regs[RegNo]);
 	return MCDisassembler_Success;
 }
@@ -229,85 +231,85 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
 static DecodeStatus DecodeCRRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, CRRegs);
+	return decodeRegisterClass(Inst, RegNo, CRRegs, sizeof(CRRegs));
 }
 
 static DecodeStatus DecodeCRRC0RegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, CRRegs);
+	return decodeRegisterClass(Inst, RegNo, CRRegs, sizeof(CRRegs));
 }
 
 static DecodeStatus DecodeCRBITRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, CRBITRegs);
+	return decodeRegisterClass(Inst, RegNo, CRBITRegs, sizeof(CRBITRegs));
 }
 
 static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, FRegs);
+	return decodeRegisterClass(Inst, RegNo, FRegs, sizeof(FRegs));
 }
 
 static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, FRegs);
+	return decodeRegisterClass(Inst, RegNo, FRegs, sizeof(FRegs));
 }
 
 static DecodeStatus DecodeVFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, VFRegs);
+	return decodeRegisterClass(Inst, RegNo, VFRegs, sizeof(VFRegs));
 }
 
 static DecodeStatus DecodeVRRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, VRegs);
+	return decodeRegisterClass(Inst, RegNo, VRegs, sizeof(VRegs));
 }
 
 static DecodeStatus DecodeVSRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, VSRegs);
+	return decodeRegisterClass(Inst, RegNo, VSRegs, sizeof(VSRegs));
 }
 
 static DecodeStatus DecodeVSFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, VSFRegs);
+	return decodeRegisterClass(Inst, RegNo, VSFRegs, sizeof(VSFRegs));
 }
 
 static DecodeStatus DecodeVSSRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, VSSRegs);
+	return decodeRegisterClass(Inst, RegNo, VSSRegs, sizeof(VSSRegs));
 }
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, GPRegs);
+	return decodeRegisterClass(Inst, RegNo, GPRegs, sizeof(GPRegs));
 }
 
 static DecodeStatus DecodeGPRC_NOR0RegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, GP0Regs);
+	return decodeRegisterClass(Inst, RegNo, GP0Regs, sizeof(GP0Regs));
 }
 
 static DecodeStatus DecodeG8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, G8Regs);
+	return decodeRegisterClass(Inst, RegNo, G8Regs, sizeof(G8Regs));
 }
 
 static DecodeStatus DecodeG8RC_NOX0RegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, G80Regs);
+	return decodeRegisterClass(Inst, RegNo, G80Regs, sizeof(G80Regs));
 }
 
 #define DecodePointerLikeRegClass0 DecodeGPRCRegisterClass
@@ -316,19 +318,19 @@ static DecodeStatus DecodeG8RC_NOX0RegisterClass(MCInst *Inst, uint64_t RegNo,
 static DecodeStatus DecodeQFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 		uint64_t Address, const void *Decoder)
 {
-	return decodeRegisterClass(Inst, RegNo, QFRegs);
+	return decodeRegisterClass(Inst, RegNo, QFRegs, sizeof(QFRegs));
 }
 
 static DecodeStatus DecodeSPE4RCRegisterClass(MCInst *Inst, uint64_t RegNo,
         uint64_t Address, const void *Decoder)
 {
-    return decodeRegisterClass(Inst, RegNo, GPRegs);
+    return decodeRegisterClass(Inst, RegNo, GPRegs, sizeof(GPRegs));
 }
 
 static DecodeStatus DecodeSPERCRegisterClass(MCInst *Inst, uint64_t RegNo,
         uint64_t Address, const void *Decoder)
 {
-    return decodeRegisterClass(Inst, RegNo, SPERegs);
+    return decodeRegisterClass(Inst, RegNo, SPERegs, sizeof(SPERegs));
 }
 
 #define DecodeQSRCRegisterClass DecodeQFRCRegisterClass
