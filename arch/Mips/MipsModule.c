@@ -43,10 +43,9 @@ cs_err Mips_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_MODE) {
 		handle->mode = updated_mode(value);
-		return CS_ERR_OK;
 	}
 
-	return CS_ERR_OPTION;
+	return CS_ERR_OK;
 }
 
 #endif
