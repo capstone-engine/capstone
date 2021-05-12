@@ -5,7 +5,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <inttypes.h>
 
 #include <capstone/capstone.h>
 
@@ -193,6 +192,11 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     cs_detail *detail;
     cs_err err;
 
+    int platforms_len;
+    int i;
+    uint64_t address;
+    size_t count;
+
     if (Size < 1) {
         // 1 byte for arch choice
         return 0;
@@ -209,8 +213,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         }
     }
 
-    int platforms_len = sizeof(platforms)/sizeof(platforms[0]);
-    int i = (int)Data[0] % platforms_len;
+    platforms_len = sizeof(platforms)/sizeof(platforms[0]);
+    i = (int)Data[0] % platforms_len;
 
     err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
     if (err) {
@@ -219,8 +223,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
 
     cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-    uint64_t address = 0x1000;
-    size_t count = cs_disasm(handle, Data+1, Size-1, address, 0, &all_insn);
+    address = 0x1000;
+    count = cs_disasm(handle, Data+1, Size-1, address, 0, &all_insn);
 
     if (count) {
         size_t j;
