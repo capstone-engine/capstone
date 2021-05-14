@@ -17636,7 +17636,7 @@ static const uint8_t DecoderTable32[] = {
 static bool checkDecoderPredicate(unsigned Idx, MCInst *MI)
 {
   switch (Idx) {
-  default: /* llvm_unreachable("Invalid index!");*/ 
+  default: /* llvm_unreachable("Invalid index!");*/
   case 0:
     return (AArch64_getFeatureBits(AArch64_FeatureSVE));
   case 1:

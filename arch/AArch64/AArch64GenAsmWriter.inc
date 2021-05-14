@@ -24042,7 +24042,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
 
   return tmpString;
 }
-        
+
 static void printCustomAliasOperand(
          MCInst *MI, unsigned OpIdx,
          unsigned PrintMethodIdx,

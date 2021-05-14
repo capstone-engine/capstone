@@ -115,7 +115,7 @@ static void test()
 		},
 		{
 			CS_ARCH_MIPS,
-			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_LITTLE_ENDIAN),
+			(cs_mode)(CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN),
 			(unsigned char *)MIPS_64SD,
 			sizeof(MIPS_64SD) - 1,
 			"MIPS-64-EL (Little-endian)"
@@ -128,6 +128,7 @@ static void test()
 	size_t count;
 
 	for (i = 0; i < sizeof(platforms)/sizeof(platforms[0]); i++) {
+        if(i != 5) continue;
 		cs_err err = cs_open(platforms[i].arch, platforms[i].mode, &handle);
 		if (err) {
 			printf("Failed on cs_open() with error returned: %u\n", err);
@@ -158,6 +159,7 @@ static void test()
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code, platforms[i].size);
 			printf("ERROR: Failed to disasm given code!\n");
+            fflush(stdout);
 			abort();
 		}
 

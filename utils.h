@@ -22,7 +22,7 @@ typedef struct insn_map {
 #ifndef CAPSTONE_DIET
 	uint16_t regs_use[12]; // list of implicit registers used by this instruction
 	uint16_t regs_mod[20]; // list of implicit registers modified by this instruction
-	unsigned char groups[8]; // list of group this instruction belong to
+	unsigned char groups[16]; // list of group this instruction belong to
 	bool branch;	// branch instruction?
 	bool indirect_branch;	// indirect branch instruction?
 #endif
