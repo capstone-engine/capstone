@@ -140,8 +140,8 @@ def build_libraries():
         # Do not build tests & static library
         os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
         os.system("nmake")
-    elif "freebsd" in SYSTEM:
-        # FreeBSD distinguishes make (BSD) vs gmake (GNU). Use cmake + bsd make :-)
+    elif "bsd" in SYSTEM:
+        # *BSD distinguishes make (BSD) vs gmake (GNU). Use cmake + bsd make :-)
         if not os.path.exists("build"): os.mkdir("build")
         os.chdir("build")
         # Do not build tests & static library
