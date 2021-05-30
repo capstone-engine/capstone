@@ -13,6 +13,8 @@
 #define GET_INSTRINFO_ENUM
 #include "AArch64GenInstrInfo.inc"
 
+#include "AArch64BaseInfo.h"
+
 #ifndef CAPSTONE_DIET
 // NOTE: this reg_name_maps[] reflects the order of registers in arm64_reg
 static const char * const reg_name_maps[] = {
@@ -341,10 +343,13 @@ static const char * const reg_name_maps[] = {
 const char *AArch64_reg_name(csh handle, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	if (reg >= ARR_SIZE(reg_name_maps))
-		return NULL;
+	if (reg < ARR_SIZE(reg_name_maps))
+		return reg_name_maps[reg];
+	SysReg *Reg = lookupSysRegByEncoding(reg);
+	if (Reg != NULL)
+		return Reg->Name;
+	return NULL;
 
-	return reg_name_maps[reg];
 #else
 	return NULL;
 #endif
@@ -563,6 +568,7 @@ void AArch64_reg_access(const cs_insn *insn,
 	for (i = 0; i < arm64->op_count; i++) {
 		cs_arm64_op *op = &(arm64->operands[i]);
 		switch((int)op->type) {
+			case ARM64_OP_SYS:
 			case ARM64_OP_REG:
 				if ((op->access & CS_AC_READ) && !arr_exist(regs_read, read_count, op->reg)) {
 					regs_read[read_count] = (uint16_t)op->reg;

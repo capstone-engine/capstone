@@ -12025,7 +12025,7 @@
 
 {	/* AArch64_MRS, AArch64_INS_MRS: mrs */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_WRITE | CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_MSB_ZPmZZ_B, AArch64_INS_MSB: msb */
