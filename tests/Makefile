@@ -20,6 +20,8 @@ endif
 
 ifeq ($(CROSS),)
 CC ?= cc
+else ifeq ($(ANDROID), 1)
+CC = $(CROSS)/../../bin/clang
 else
 CC = $(CROSS)gcc
 endif
