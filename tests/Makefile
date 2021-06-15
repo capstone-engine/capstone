@@ -22,6 +22,7 @@ ifeq ($(CROSS),)
 CC ?= cc
 else ifeq ($(ANDROID), 1)
 CC = $(CROSS)/../../bin/clang
+LDFLAGS += -pie -fPIE
 else
 CC = $(CROSS)gcc
 endif
