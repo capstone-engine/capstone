@@ -55,6 +55,32 @@ jobs:
       with:
          path: ${{ github.workspace }}/bindings/python/dist/*
 
+  build-aarch64:
+    name: "build (ubuntu-latest, aarch64)"
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      img: quay.io/pypa/manylinux2014_aarch64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up QEMU
+      id: qemu
+      uses: docker/setup-qemu-action@v1
+    - name: Build Wheel
+      run: |
+            docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
+            ${{ env.img }} \
+            bash -exc 'yum install sudo -y && \
+            sudo yum install epel-release -y && \
+            sudo yum install python-pip -y && \
+            pip install setuptools wheel && \
+            ./bindings/python/build_wheel.sh'
+    - uses: actions/upload-artifact@v2
+      with:
+         path: ${{ github.workspace }}/bindings/python/dist/*
+         
   publish:
     needs: [build]
     runs-on: ubuntu-latest
