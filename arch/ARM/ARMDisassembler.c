@@ -971,7 +971,7 @@ static DecodeStatus DecodeGPRPairRegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 13)
 		return MCDisassembler_Fail;
 
-	if ((RegNo & 1) || RegNo == 0xe)
+	if (RegNo & 1)
 		S = MCDisassembler_SoftFail;
 
 	RegisterPair = GPRPairDecoderTable[RegNo/2];
