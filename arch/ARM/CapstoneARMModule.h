@@ -618,7 +618,8 @@ static DecodeStatus DecodeVSTRVLDR_SYSREG(MCInst *Inst, unsigned Val,
 					  bool Writeback);
 
 static DecodeStatus DecodeMVE_MEM_1_pre(MCInst *Inst, unsigned Val,
-    uint64_t Address, MCRegisterInfo *Decoder, int shift);
+					uint64_t Address,
+					MCRegisterInfo *Decoder, int shift);
 
 static DecodeStatus DecodeMVE_MEM_2_pre(MCInst *Inst, unsigned Val,
 					uint64_t Address,

@@ -186,7 +186,7 @@ for line in lines:
         else:
             read_depth = 1
         continue
-    if "static const uint16_t" in line:
+    if "static const uint16_t" in line or "static const unsigned" in line:
         if read_depth < 1:
             buffer.append(line)
             const_table = 0
