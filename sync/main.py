@@ -6,7 +6,7 @@ import re
 # NOTE : unfortunately not all of the disassembler details are recorded in llvm *.td file
 # this script is for dumping those codes into our project
 
-arch = "ARM"  # TODO
+arch = "SystemZ"  # TODO
 
 f = open(sys.argv[1])
 lines = f.readlines()

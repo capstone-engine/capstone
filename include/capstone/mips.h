@@ -21,9 +21,9 @@ extern "C" {
 /// Operand type for instruction's operands
 typedef enum mips_op_type {
   MIPS_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-  MIPS_OP_REG,	       ///< = CS_OP_REG (Register operand).
-  MIPS_OP_IMM,	       ///< = CS_OP_IMM (Immediate operand).
-  MIPS_OP_MEM,	       ///< = CS_OP_MEM (Memory operand).
+  MIPS_OP_REG,	 ///< = CS_OP_REG (Register operand).
+  MIPS_OP_IMM,	 ///< = CS_OP_IMM (Immediate operand).
+  MIPS_OP_MEM,	 ///< = CS_OP_MEM (Memory operand).
 } mips_op_type;
 
 /// MIPS registers
@@ -234,7 +234,7 @@ typedef enum mips_reg {
 /// This is associated with MIPS_OP_MEM operand type above
 typedef struct mips_op_mem {
   mips_reg base; ///< base register
-  int64_t disp;	 ///< displacement/offset value
+  int64_t disp;  ///< displacement/offset value
 } mips_op_mem;
 
 /// Instruction operand
