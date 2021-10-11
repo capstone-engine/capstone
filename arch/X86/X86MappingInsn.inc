@@ -732,7 +732,7 @@
 },
 
 {
-	X86_ADD_FPrST0, X86_INS_FADD, 0,
+	X86_ADD_FPrST0, X86_INS_FADDP, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif

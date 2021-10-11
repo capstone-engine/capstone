@@ -18930,11 +18930,11 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[15285] =
     /* UCOM_Fr */
   },
   { /* 2877 */
-    0,
+    87,
     /* UD0 */
   },
   { /* 2878 */
-    0,
+    87,
     /* UD1 */
   },
   { /* 2879 */
@@ -87908,7 +87908,8 @@ static const InstrUID modRMTable[] = {
   0x6c4, /* MOVZX32rr16 */
 /* Table2413 */
   0xb3e, /* UD1 */
-/* Table2414 */
+  0x0, /*  */
+/* Table2415 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -87925,43 +87926,43 @@ static const InstrUID modRMTable[] = {
   0x1d6, /* BTS32ri8 */
   0x1ca, /* BTR32ri8 */
   0x1be, /* BTC32ri8 */
-/* Table2430 */
+/* Table2431 */
   0x1bd, /* BTC32mr */
   0x1bf, /* BTC32rr */
-/* Table2432 */
+/* Table2433 */
   0x19f, /* BSF32rm */
   0x1a0, /* BSF32rr */
-/* Table2434 */
+/* Table2435 */
   0x1a5, /* BSR32rm */
   0x1a6, /* BSR32rr */
-/* Table2436 */
+/* Table2437 */
   0x6a9, /* MOVSX32rm8 */
   0x6ac, /* MOVSX32rr8 */
-/* Table2438 */
+/* Table2439 */
   0x6a8, /* MOVSX32rm16 */
   0x6ab, /* MOVSX32rr16 */
-/* Table2440 */
+/* Table2441 */
   0x3b63, /* XADD8rm */
   0x3b64, /* XADD8rr */
-/* Table2442 */
+/* Table2443 */
   0x3b5f, /* XADD32rm */
   0x3b60, /* XADD32rr */
-/* Table2444 */
+/* Table2445 */
   0x2ab, /* CMPPSrmi */
   0x2ad, /* CMPPSrri */
-/* Table2446 */
+/* Table2447 */
   0x684, /* MOVNTImr */
   0x0, /*  */
-/* Table2448 */
+/* Table2449 */
   0x5ab, /* MMX_PINSRWrm */
   0x5ac, /* MMX_PINSRWrr */
-/* Table2450 */
+/* Table2451 */
   0x0, /*  */
   0x59e, /* MMX_PEXTRWrr */
-/* Table2452 */
+/* Table2453 */
   0xa59, /* SHUFPSrmi */
   0xa5a, /* SHUFPSrri */
-/* Table2454 */
+/* Table2455 */
   0x0, /*  */
   0x2c6, /* CMPXCHG8B */
   0x0, /*  */
@@ -87978,140 +87979,141 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91b, /* RDRAND32r */
   0x91e, /* RDSEED32r */
-/* Table2470 */
-  0x1aa, /* BSWAP32r */
 /* Table2471 */
+  0x1aa, /* BSWAP32r */
+/* Table2472 */
   0x5e8, /* MMX_PSRLWrm */
   0x5e9, /* MMX_PSRLWrr */
-/* Table2473 */
+/* Table2474 */
   0x5e2, /* MMX_PSRLDrm */
   0x5e3, /* MMX_PSRLDrr */
-/* Table2475 */
+/* Table2476 */
   0x5e5, /* MMX_PSRLQrm */
   0x5e6, /* MMX_PSRLQrr */
-/* Table2477 */
+/* Table2478 */
   0x57c, /* MMX_PADDQirm */
   0x57d, /* MMX_PADDQirr */
-/* Table2479 */
+/* Table2480 */
   0x5c0, /* MMX_PMULLWirm */
   0x5c1, /* MMX_PMULLWirr */
-/* Table2481 */
+/* Table2482 */
   0x0, /*  */
   0x5b9, /* MMX_PMOVMSKBrr */
-/* Table2483 */
+/* Table2484 */
   0x5f4, /* MMX_PSUBUSBirm */
   0x5f5, /* MMX_PSUBUSBirr */
-/* Table2485 */
+/* Table2486 */
   0x5f6, /* MMX_PSUBUSWirm */
   0x5f7, /* MMX_PSUBUSWirr */
-/* Table2487 */
+/* Table2488 */
   0x5b7, /* MMX_PMINUBirm */
   0x5b8, /* MMX_PMINUBirr */
-/* Table2489 */
+/* Table2490 */
   0x58c, /* MMX_PANDirm */
   0x58d, /* MMX_PANDirr */
-/* Table2491 */
+/* Table2492 */
   0x582, /* MMX_PADDUSBirm */
   0x583, /* MMX_PADDUSBirr */
-/* Table2493 */
+/* Table2494 */
   0x584, /* MMX_PADDUSWirm */
   0x585, /* MMX_PADDUSWirr */
-/* Table2495 */
+/* Table2496 */
   0x5b3, /* MMX_PMAXUBirm */
   0x5b4, /* MMX_PMAXUBirr */
-/* Table2497 */
+/* Table2498 */
   0x58a, /* MMX_PANDNirm */
   0x58b, /* MMX_PANDNirr */
-/* Table2499 */
+/* Table2500 */
   0x58e, /* MMX_PAVGBirm */
   0x58f, /* MMX_PAVGBirr */
-/* Table2501 */
+/* Table2502 */
   0x5df, /* MMX_PSRAWrm */
   0x5e0, /* MMX_PSRAWrr */
-/* Table2503 */
+/* Table2504 */
   0x5dc, /* MMX_PSRADrm */
   0x5dd, /* MMX_PSRADrr */
-/* Table2505 */
+/* Table2506 */
   0x590, /* MMX_PAVGWirm */
   0x591, /* MMX_PAVGWirr */
-/* Table2507 */
+/* Table2508 */
   0x5bc, /* MMX_PMULHUWirm */
   0x5bd, /* MMX_PMULHUWirr */
-/* Table2509 */
+/* Table2510 */
   0x5be, /* MMX_PMULHWirm */
   0x5bf, /* MMX_PMULHWirr */
-/* Table2511 */
+/* Table2512 */
   0x565, /* MMX_MOVNTQmr */
   0x0, /*  */
-/* Table2513 */
+/* Table2514 */
   0x5f0, /* MMX_PSUBSBirm */
   0x5f1, /* MMX_PSUBSBirr */
-/* Table2515 */
+/* Table2516 */
   0x5f2, /* MMX_PSUBSWirm */
   0x5f3, /* MMX_PSUBSWirr */
-/* Table2517 */
+/* Table2518 */
   0x5b5, /* MMX_PMINSWirm */
   0x5b6, /* MMX_PMINSWirr */
-/* Table2519 */
+/* Table2520 */
   0x5c4, /* MMX_PORirm */
   0x5c5, /* MMX_PORirr */
-/* Table2521 */
+/* Table2522 */
   0x57e, /* MMX_PADDSBirm */
   0x57f, /* MMX_PADDSBirr */
-/* Table2523 */
+/* Table2524 */
   0x580, /* MMX_PADDSWirm */
   0x581, /* MMX_PADDSWirr */
-/* Table2525 */
+/* Table2526 */
   0x5b1, /* MMX_PMAXSWirm */
   0x5b2, /* MMX_PMAXSWirr */
-/* Table2527 */
+/* Table2528 */
   0x606, /* MMX_PXORirm */
   0x607, /* MMX_PXORirr */
-/* Table2529 */
+/* Table2530 */
   0x5d9, /* MMX_PSLLWrm */
   0x5da, /* MMX_PSLLWrr */
-/* Table2531 */
+/* Table2532 */
   0x5d3, /* MMX_PSLLDrm */
   0x5d4, /* MMX_PSLLDrr */
-/* Table2533 */
+/* Table2534 */
   0x5d6, /* MMX_PSLLQrm */
   0x5d7, /* MMX_PSLLQrr */
-/* Table2535 */
+/* Table2536 */
   0x5c2, /* MMX_PMULUDQirm */
   0x5c3, /* MMX_PMULUDQirr */
-/* Table2537 */
+/* Table2538 */
   0x5af, /* MMX_PMADDWDirm */
   0x5b0, /* MMX_PMADDWDirr */
-/* Table2539 */
+/* Table2540 */
   0x5c6, /* MMX_PSADBWirm */
   0x5c7, /* MMX_PSADBWirr */
-/* Table2541 */
+/* Table2542 */
   0x0, /*  */
   0x559, /* MMX_MASKMOVQ */
-/* Table2543 */
+/* Table2544 */
   0x5ea, /* MMX_PSUBBirm */
   0x5eb, /* MMX_PSUBBirr */
-/* Table2545 */
+/* Table2546 */
   0x5f8, /* MMX_PSUBWirm */
   0x5f9, /* MMX_PSUBWirr */
-/* Table2547 */
+/* Table2548 */
   0x5ec, /* MMX_PSUBDirm */
   0x5ed, /* MMX_PSUBDirr */
-/* Table2549 */
+/* Table2550 */
   0x5ee, /* MMX_PSUBQirm */
   0x5ef, /* MMX_PSUBQirr */
-/* Table2551 */
+/* Table2552 */
   0x578, /* MMX_PADDBirm */
   0x579, /* MMX_PADDBirr */
-/* Table2553 */
+/* Table2554 */
   0x586, /* MMX_PADDWirm */
   0x587, /* MMX_PADDWirr */
-/* Table2555 */
+/* Table2556 */
   0x57a, /* MMX_PADDDirm */
   0x57b, /* MMX_PADDDirr */
-/* Table2557 */
-  0xb3d, /* UD0 */
 /* Table2558 */
+  0xb3d, /* UD0 */
+  0x0, /*  */
+/* Table2560 */
   0x9f8, /* SGDT64m */
   0xa5d, /* SIDT64m */
   0x4ed, /* LGDT64m */
@@ -88184,36 +88186,36 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2630 */
-  0x0, /*  */
-  0x637, /* MOV64rc */
 /* Table2632 */
   0x0, /*  */
-  0x638, /* MOV64rd */
+  0x637, /* MOV64rc */
 /* Table2634 */
   0x0, /*  */
-  0x631, /* MOV64cr */
+  0x638, /* MOV64rd */
 /* Table2636 */
   0x0, /*  */
-  0x632, /* MOV64dr */
+  0x631, /* MOV64cr */
 /* Table2638 */
+  0x0, /*  */
+  0x632, /* MOV64dr */
+/* Table2640 */
   0x1f7a, /* VMREAD64mr */
   0x1f7b, /* VMREAD64rr */
-/* Table2640 */
+/* Table2642 */
   0x1fe5, /* VMWRITE64rm */
   0x1fe6, /* VMWRITE64rr */
-/* Table2642 */
-  0x8d1, /* PUSHFS64 */
-/* Table2643 */
-  0x856, /* POPFS64 */
 /* Table2644 */
-  0x8d4, /* PUSHGS64 */
+  0x8d1, /* PUSHFS64 */
 /* Table2645 */
-  0x859, /* POPGS64 */
+  0x856, /* POPFS64 */
 /* Table2646 */
+  0x8d4, /* PUSHGS64 */
+/* Table2647 */
+  0x859, /* POPGS64 */
+/* Table2648 */
   0x0, /*  */
   0x55a, /* MMX_MASKMOVQ64 */
-/* Table2648 */
+/* Table2650 */
   0xa63, /* SLDT16m */
   0xa8a, /* STRm */
   0x4f4, /* LLDT16m */
@@ -88230,7 +88232,7 @@ static const InstrUID modRMTable[] = {
   0x1285, /* VERWr */
   0x0, /*  */
   0x0, /*  */
-/* Table2664 */
+/* Table2666 */
   0x9f6, /* SGDT16m */
   0xa5b, /* SIDT16m */
   0x4eb, /* LGDT16m */
@@ -88303,37 +88305,37 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table2736 */
+/* Table2738 */
   0x4c3, /* LAR16rm */
   0x4c4, /* LAR16rr */
-/* Table2738 */
+/* Table2740 */
   0x508, /* LSL16rm */
   0x509, /* LSL16rr */
-/* Table2740 */
+/* Table2742 */
   0x6b5, /* MOVUPDrm */
   0x6b6, /* MOVUPDrr */
-/* Table2742 */
+/* Table2744 */
   0x6b4, /* MOVUPDmr */
   0x6b7, /* MOVUPDrr_REV */
-/* Table2744 */
+/* Table2746 */
   0x67c, /* MOVLPDrm */
   0x0, /*  */
-/* Table2746 */
+/* Table2748 */
   0x67b, /* MOVLPDmr */
   0x0, /*  */
-/* Table2748 */
+/* Table2750 */
   0xb48, /* UNPCKLPDrm */
   0xb49, /* UNPCKLPDrr */
-/* Table2750 */
+/* Table2752 */
   0xb44, /* UNPCKHPDrm */
   0xb45, /* UNPCKHPDrr */
-/* Table2752 */
+/* Table2754 */
   0x677, /* MOVHPDrm */
   0x0, /*  */
-/* Table2754 */
+/* Table2756 */
   0x676, /* MOVHPDmr */
   0x0, /*  */
-/* Table2756 */
+/* Table2758 */
   0x85f, /* PREFETCHNTA */
   0x860, /* PREFETCHT0 */
   0x861, /* PREFETCHT1 */
@@ -88350,193 +88352,193 @@ static const InstrUID modRMTable[] = {
   0x70a, /* NOOP18_16r5 */
   0x70b, /* NOOP18_16r6 */
   0x70c, /* NOOP18_16r7 */
-/* Table2772 */
+/* Table2774 */
   0x71e, /* NOOPW_19 */
   0x715, /* NOOP19rr */
-/* Table2774 */
+/* Table2776 */
   0x195, /* BNDMOV32rm */
   0x198, /* BNDMOVrr */
-/* Table2776 */
+/* Table2778 */
   0x194, /* BNDMOV32mr */
   0x199, /* BNDMOVrr_REV */
-/* Table2778 */
+/* Table2780 */
   0x71f, /* NOOPW_1c */
   0x0, /*  */
-/* Table2780 */
+/* Table2782 */
   0x720, /* NOOPW_1d */
   0x0, /*  */
-/* Table2782 */
+/* Table2784 */
   0x721, /* NOOPW_1e */
   0x0, /*  */
-/* Table2784 */
+/* Table2786 */
   0x71d, /* NOOPW */
   0x722, /* NOOPWr */
-/* Table2786 */
+/* Table2788 */
   0x655, /* MOVAPDrm */
   0x656, /* MOVAPDrr */
-/* Table2788 */
+/* Table2790 */
   0x654, /* MOVAPDmr */
   0x657, /* MOVAPDrr_REV */
-/* Table2790 */
+/* Table2792 */
   0x54e, /* MMX_CVTPI2PDirm */
   0x54f, /* MMX_CVTPI2PDirr */
-/* Table2792 */
+/* Table2794 */
   0x685, /* MOVNTPDmr */
   0x0, /*  */
-/* Table2794 */
+/* Table2796 */
   0x554, /* MMX_CVTTPD2PIirm */
   0x555, /* MMX_CVTTPD2PIirr */
-/* Table2796 */
+/* Table2798 */
   0x54c, /* MMX_CVTPD2PIirm */
   0x54d, /* MMX_CVTPD2PIirr */
-/* Table2798 */
+/* Table2800 */
   0xb2a, /* UCOMISDrm */
   0xb2c, /* UCOMISDrr */
-/* Table2800 */
+/* Table2802 */
   0x2c9, /* COMISDrm */
   0x2cb, /* COMISDrr */
-/* Table2802 */
+/* Table2804 */
   0x26d, /* CMOVO16rm */
   0x26e, /* CMOVO16rr */
-/* Table2804 */
+/* Table2806 */
   0x257, /* CMOVNO16rm */
   0x258, /* CMOVNO16rr */
-/* Table2806 */
+/* Table2808 */
   0x20f, /* CMOVB16rm */
   0x210, /* CMOVB16rr */
-/* Table2808 */
+/* Table2810 */
   0x209, /* CMOVAE16rm */
   0x20a, /* CMOVAE16rr */
-/* Table2810 */
+/* Table2812 */
   0x223, /* CMOVE16rm */
   0x224, /* CMOVE16rr */
-/* Table2812 */
+/* Table2814 */
   0x24d, /* CMOVNE16rm */
   0x24e, /* CMOVNE16rr */
-/* Table2814 */
+/* Table2816 */
   0x215, /* CMOVBE16rm */
   0x216, /* CMOVBE16rr */
-/* Table2816 */
+/* Table2818 */
   0x203, /* CMOVA16rm */
   0x204, /* CMOVA16rr */
-/* Table2818 */
+/* Table2820 */
   0x27d, /* CMOVS16rm */
   0x27e, /* CMOVS16rr */
-/* Table2820 */
+/* Table2822 */
   0x267, /* CMOVNS16rm */
   0x268, /* CMOVNS16rr */
-/* Table2822 */
+/* Table2824 */
   0x273, /* CMOVP16rm */
   0x274, /* CMOVP16rr */
-/* Table2824 */
+/* Table2826 */
   0x25d, /* CMOVNP16rm */
   0x25e, /* CMOVNP16rr */
-/* Table2826 */
+/* Table2828 */
   0x239, /* CMOVL16rm */
   0x23a, /* CMOVL16rr */
-/* Table2828 */
+/* Table2830 */
   0x233, /* CMOVGE16rm */
   0x234, /* CMOVGE16rr */
-/* Table2830 */
+/* Table2832 */
   0x23f, /* CMOVLE16rm */
   0x240, /* CMOVLE16rr */
-/* Table2832 */
+/* Table2834 */
   0x22d, /* CMOVG16rm */
   0x22e, /* CMOVG16rr */
-/* Table2834 */
+/* Table2836 */
   0x0, /*  */
   0x67f, /* MOVMSKPDrr */
-/* Table2836 */
+/* Table2838 */
   0xa6d, /* SQRTPDm */
   0xa6e, /* SQRTPDr */
-/* Table2838 */
+/* Table2840 */
   0x147, /* ANDPDrm */
   0x148, /* ANDPDrr */
-/* Table2840 */
+/* Table2842 */
   0x143, /* ANDNPDrm */
   0x144, /* ANDNPDrr */
-/* Table2842 */
+/* Table2844 */
   0x74f, /* ORPDrm */
   0x750, /* ORPDrr */
-/* Table2844 */
+/* Table2846 */
   0x3b9f, /* XORPDrm */
   0x3ba0, /* XORPDrr */
-/* Table2846 */
+/* Table2848 */
   0xe6, /* ADDPDrm */
   0xe7, /* ADDPDrr */
-/* Table2848 */
+/* Table2850 */
   0x6d5, /* MULPDrm */
   0x6d6, /* MULPDrr */
-/* Table2850 */
+/* Table2852 */
   0x2eb, /* CVTPD2PSrm */
   0x2ec, /* CVTPD2PSrr */
-/* Table2852 */
+/* Table2854 */
   0x2ed, /* CVTPS2DQrm */
   0x2ee, /* CVTPS2DQrr */
-/* Table2854 */
+/* Table2856 */
   0xac1, /* SUBPDrm */
   0xac2, /* SUBPDrr */
-/* Table2856 */
+/* Table2858 */
   0x540, /* MINPDrm */
   0x541, /* MINPDrr */
-/* Table2858 */
+/* Table2860 */
   0x33c, /* DIVPDrm */
   0x33d, /* DIVPDrr */
-/* Table2860 */
+/* Table2862 */
   0x52b, /* MAXPDrm */
   0x52c, /* MAXPDrr */
-/* Table2862 */
+/* Table2864 */
   0x8af, /* PUNPCKLBWrm */
   0x8b0, /* PUNPCKLBWrr */
-/* Table2864 */
+/* Table2866 */
   0x8b5, /* PUNPCKLWDrm */
   0x8b6, /* PUNPCKLWDrr */
-/* Table2866 */
+/* Table2868 */
   0x8b1, /* PUNPCKLDQrm */
   0x8b2, /* PUNPCKLDQrr */
-/* Table2868 */
+/* Table2870 */
   0x764, /* PACKSSWBrm */
   0x765, /* PACKSSWBrr */
-/* Table2870 */
+/* Table2872 */
   0x799, /* PCMPGTBrm */
   0x79a, /* PCMPGTBrr */
-/* Table2872 */
+/* Table2874 */
   0x79f, /* PCMPGTWrm */
   0x7a0, /* PCMPGTWrr */
-/* Table2874 */
+/* Table2876 */
   0x79b, /* PCMPGTDrm */
   0x79c, /* PCMPGTDrr */
-/* Table2876 */
+/* Table2878 */
   0x768, /* PACKUSWBrm */
   0x769, /* PACKUSWBrr */
-/* Table2878 */
+/* Table2880 */
   0x8a7, /* PUNPCKHBWrm */
   0x8a8, /* PUNPCKHBWrr */
-/* Table2880 */
+/* Table2882 */
   0x8ad, /* PUNPCKHWDrm */
   0x8ae, /* PUNPCKHWDrr */
-/* Table2882 */
+/* Table2884 */
   0x8a9, /* PUNPCKHDQrm */
   0x8aa, /* PUNPCKHDQrr */
-/* Table2884 */
+/* Table2886 */
   0x762, /* PACKSSDWrm */
   0x763, /* PACKSSDWrr */
-/* Table2886 */
+/* Table2888 */
   0x8b3, /* PUNPCKLQDQrm */
   0x8b4, /* PUNPCKLQDQrr */
-/* Table2888 */
+/* Table2890 */
   0x8ab, /* PUNPCKHQDQrm */
   0x8ac, /* PUNPCKHQDQrr */
-/* Table2890 */
+/* Table2892 */
   0x664, /* MOVDI2PDIrm */
   0x665, /* MOVDI2PDIrr */
-/* Table2892 */
+/* Table2894 */
   0x66e, /* MOVDQArm */
   0x66f, /* MOVDQArr */
-/* Table2894 */
+/* Table2896 */
   0x869, /* PSHUFDmi */
   0x86a, /* PSHUFDri */
-/* Table2896 */
+/* Table2898 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -88553,7 +88555,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x87c, /* PSLLWri */
   0x0, /*  */
-/* Table2912 */
+/* Table2914 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -88570,7 +88572,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x876, /* PSLLDri */
   0x0, /*  */
-/* Table2928 */
+/* Table2930 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -88587,92 +88589,92 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x879, /* PSLLQri */
   0x875, /* PSLLDQri */
-/* Table2944 */
+/* Table2946 */
   0x78d, /* PCMPEQBrm */
   0x78e, /* PCMPEQBrr */
-/* Table2946 */
+/* Table2948 */
   0x793, /* PCMPEQWrm */
   0x794, /* PCMPEQWrr */
-/* Table2948 */
+/* Table2950 */
   0x78f, /* PCMPEQDrm */
   0x790, /* PCMPEQDrr */
-/* Table2950 */
-  0x0, /*  */
-  0x37c, /* EXTRQI */
 /* Table2952 */
   0x0, /*  */
-  0x37b, /* EXTRQ */
+  0x37c, /* EXTRQI */
 /* Table2954 */
+  0x0, /*  */
+  0x37b, /* EXTRQ */
+/* Table2956 */
   0x3c2, /* HADDPDrm */
   0x3c3, /* HADDPDrr */
-/* Table2956 */
+/* Table2958 */
   0x3c7, /* HSUBPDrm */
   0x3c8, /* HSUBPDrr */
-/* Table2958 */
+/* Table2960 */
   0x689, /* MOVPDI2DImr */
   0x68a, /* MOVPDI2DIrr */
-/* Table2960 */
+/* Table2962 */
   0x66d, /* MOVDQAmr */
   0x670, /* MOVDQArr_REV */
-/* Table2962 */
-  0x476, /* JO_2 */
-/* Table2963 */
-  0x46d, /* JNO_2 */
 /* Table2964 */
-  0x447, /* JB_2 */
+  0x476, /* JO_2 */
 /* Table2965 */
-  0x43e, /* JAE_2 */
+  0x46d, /* JNO_2 */
 /* Table2966 */
-  0x44c, /* JE_2 */
+  0x447, /* JB_2 */
 /* Table2967 */
-  0x46a, /* JNE_2 */
+  0x43e, /* JAE_2 */
 /* Table2968 */
-  0x444, /* JBE_2 */
+  0x44c, /* JE_2 */
 /* Table2969 */
-  0x441, /* JA_2 */
+  0x46a, /* JNE_2 */
 /* Table2970 */
-  0x47d, /* JS_2 */
+  0x444, /* JBE_2 */
 /* Table2971 */
-  0x473, /* JNS_2 */
+  0x441, /* JA_2 */
 /* Table2972 */
-  0x479, /* JP_2 */
+  0x47d, /* JS_2 */
 /* Table2973 */
-  0x470, /* JNP_2 */
+  0x473, /* JNS_2 */
 /* Table2974 */
-  0x458, /* JL_2 */
+  0x479, /* JP_2 */
 /* Table2975 */
-  0x44f, /* JGE_2 */
+  0x470, /* JNP_2 */
 /* Table2976 */
-  0x455, /* JLE_2 */
+  0x458, /* JL_2 */
 /* Table2977 */
-  0x452, /* JG_2 */
+  0x44f, /* JGE_2 */
 /* Table2978 */
-  0x8cf, /* PUSHFS16 */
+  0x455, /* JLE_2 */
 /* Table2979 */
-  0x854, /* POPFS16 */
+  0x452, /* JG_2 */
 /* Table2980 */
+  0x8cf, /* PUSHFS16 */
+/* Table2981 */
+  0x854, /* POPFS16 */
+/* Table2982 */
   0x1ad, /* BT16mr */
   0x1af, /* BT16rr */
-/* Table2982 */
+/* Table2984 */
   0xa20, /* SHLD16mri8 */
   0xa22, /* SHLD16rri8 */
-/* Table2984 */
+/* Table2986 */
   0xa1f, /* SHLD16mrCL */
   0xa21, /* SHLD16rrCL */
-/* Table2986 */
-  0x8d2, /* PUSHGS16 */
-/* Table2987 */
-  0x857, /* POPGS16 */
 /* Table2988 */
+  0x8d2, /* PUSHGS16 */
+/* Table2989 */
+  0x857, /* POPGS16 */
+/* Table2990 */
   0x1d1, /* BTS16mr */
   0x1d3, /* BTS16rr */
-/* Table2990 */
+/* Table2992 */
   0xa48, /* SHRD16mri8 */
   0xa4a, /* SHRD16rri8 */
-/* Table2992 */
+/* Table2994 */
   0xa47, /* SHRD16mrCL */
   0xa49, /* SHRD16rrCL */
-/* Table2994 */
+/* Table2996 */
   0x3b6, /* FXSAVE */
   0x3b4, /* FXRSTOR */
   0x4ca, /* LDMXCSR */
@@ -88689,31 +88691,31 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0xb1b, /* TPAUSE */
   0x0, /*  */
-/* Table3010 */
+/* Table3012 */
   0x3e1, /* IMUL16rm */
   0x3e4, /* IMUL16rr */
-/* Table3012 */
+/* Table3014 */
   0x2c0, /* CMPXCHG16rm */
   0x2c1, /* CMPXCHG16rr */
-/* Table3014 */
+/* Table3016 */
   0x50e, /* LSS16rm */
   0x0, /*  */
-/* Table3016 */
+/* Table3018 */
   0x1c5, /* BTR16mr */
   0x1c7, /* BTR16rr */
-/* Table3018 */
+/* Table3020 */
   0x4e8, /* LFS16rm */
   0x0, /*  */
-/* Table3020 */
+/* Table3022 */
   0x4ee, /* LGS16rm */
   0x0, /*  */
-/* Table3022 */
+/* Table3024 */
   0x6be, /* MOVZX16rm8 */
   0x6c0, /* MOVZX16rr8 */
-/* Table3024 */
+/* Table3026 */
   0x6bd, /* MOVZX16rm16 */
   0x6bf, /* MOVZX16rr16 */
-/* Table3026 */
+/* Table3028 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -88730,37 +88732,37 @@ static const InstrUID modRMTable[] = {
   0x1d2, /* BTS16ri8 */
   0x1c6, /* BTR16ri8 */
   0x1ba, /* BTC16ri8 */
-/* Table3042 */
+/* Table3044 */
   0x1b9, /* BTC16mr */
   0x1bb, /* BTC16rr */
-/* Table3044 */
+/* Table3046 */
   0x19d, /* BSF16rm */
   0x19e, /* BSF16rr */
-/* Table3046 */
+/* Table3048 */
   0x1a3, /* BSR16rm */
   0x1a4, /* BSR16rr */
-/* Table3048 */
+/* Table3050 */
   0x6a5, /* MOVSX16rm8 */
   0x6a7, /* MOVSX16rr8 */
-/* Table3050 */
+/* Table3052 */
   0x6a4, /* MOVSX16rm16 */
   0x6a6, /* MOVSX16rr16 */
-/* Table3052 */
+/* Table3054 */
   0x3b5d, /* XADD16rm */
   0x3b5e, /* XADD16rr */
-/* Table3054 */
+/* Table3056 */
   0x2a7, /* CMPPDrmi */
   0x2a9, /* CMPPDrri */
-/* Table3056 */
+/* Table3058 */
   0x7f5, /* PINSRWrm */
   0x7f6, /* PINSRWrr */
-/* Table3058 */
+/* Table3060 */
   0x0, /*  */
   0x7b5, /* PEXTRWrr */
-/* Table3060 */
+/* Table3062 */
   0xa57, /* SHUFPDrmi */
   0xa58, /* SHUFPDrri */
-/* Table3062 */
+/* Table3064 */
   0x0, /*  */
   0x2c6, /* CMPXCHG8B */
   0x0, /*  */
@@ -88777,159 +88779,159 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91a, /* RDRAND16r */
   0x91d, /* RDSEED16r */
-/* Table3078 */
+/* Table3080 */
   0x1a9, /* BSWAP16r_BAD */
-/* Table3079 */
+/* Table3081 */
   0xf2, /* ADDSUBPDrm */
   0xf3, /* ADDSUBPDrr */
-/* Table3081 */
+/* Table3083 */
   0x88d, /* PSRLWrm */
   0x88e, /* PSRLWrr */
-/* Table3083 */
+/* Table3085 */
   0x887, /* PSRLDrm */
   0x888, /* PSRLDrr */
-/* Table3085 */
+/* Table3087 */
   0x88a, /* PSRLQrm */
   0x88b, /* PSRLQrr */
-/* Table3087 */
+/* Table3089 */
   0x76e, /* PADDQrm */
   0x76f, /* PADDQrr */
-/* Table3089 */
+/* Table3091 */
   0x838, /* PMULLWrm */
   0x839, /* PMULLWrr */
-/* Table3091 */
+/* Table3093 */
   0x68b, /* MOVPQI2QImr */
   0x68c, /* MOVPQI2QIrr */
-/* Table3093 */
+/* Table3095 */
   0x0, /*  */
   0x813, /* PMOVMSKBrr */
-/* Table3095 */
+/* Table3097 */
   0x899, /* PSUBUSBrm */
   0x89a, /* PSUBUSBrr */
-/* Table3097 */
+/* Table3099 */
   0x89b, /* PSUBUSWrm */
   0x89c, /* PSUBUSWrr */
-/* Table3099 */
+/* Table3101 */
   0x80d, /* PMINUBrm */
   0x80e, /* PMINUBrr */
-/* Table3101 */
+/* Table3103 */
   0x77e, /* PANDrm */
   0x77f, /* PANDrr */
-/* Table3103 */
+/* Table3105 */
   0x774, /* PADDUSBrm */
   0x775, /* PADDUSBrr */
-/* Table3105 */
+/* Table3107 */
   0x776, /* PADDUSWrm */
   0x777, /* PADDUSWrr */
-/* Table3107 */
+/* Table3109 */
   0x801, /* PMAXUBrm */
   0x802, /* PMAXUBrr */
-/* Table3109 */
+/* Table3111 */
   0x77c, /* PANDNrm */
   0x77d, /* PANDNrr */
-/* Table3111 */
+/* Table3113 */
   0x781, /* PAVGBrm */
   0x782, /* PAVGBrr */
-/* Table3113 */
+/* Table3115 */
   0x883, /* PSRAWrm */
   0x884, /* PSRAWrr */
-/* Table3115 */
+/* Table3117 */
   0x880, /* PSRADrm */
   0x881, /* PSRADrr */
-/* Table3117 */
+/* Table3119 */
   0x785, /* PAVGWrm */
   0x786, /* PAVGWrr */
-/* Table3119 */
+/* Table3121 */
   0x832, /* PMULHUWrm */
   0x833, /* PMULHUWrr */
-/* Table3121 */
+/* Table3123 */
   0x834, /* PMULHWrm */
   0x835, /* PMULHWrr */
-/* Table3123 */
+/* Table3125 */
   0x311, /* CVTTPD2DQrm */
   0x312, /* CVTTPD2DQrr */
-/* Table3125 */
+/* Table3127 */
   0x682, /* MOVNTDQmr */
   0x0, /*  */
-/* Table3127 */
+/* Table3129 */
   0x895, /* PSUBSBrm */
   0x896, /* PSUBSBrr */
-/* Table3129 */
+/* Table3131 */
   0x897, /* PSUBSWrm */
   0x898, /* PSUBSWrr */
-/* Table3131 */
+/* Table3133 */
   0x80b, /* PMINSWrm */
   0x80c, /* PMINSWrr */
-/* Table3133 */
+/* Table3135 */
   0x85c, /* PORrm */
   0x85d, /* PORrr */
-/* Table3135 */
+/* Table3137 */
   0x770, /* PADDSBrm */
   0x771, /* PADDSBrr */
-/* Table3137 */
+/* Table3139 */
   0x772, /* PADDSWrm */
   0x773, /* PADDSWrr */
-/* Table3139 */
+/* Table3141 */
   0x7ff, /* PMAXSWrm */
   0x800, /* PMAXSWrr */
-/* Table3141 */
+/* Table3143 */
   0x8d9, /* PXORrm */
   0x8da, /* PXORrr */
-/* Table3143 */
+/* Table3145 */
   0x87d, /* PSLLWrm */
   0x87e, /* PSLLWrr */
-/* Table3145 */
+/* Table3147 */
   0x877, /* PSLLDrm */
   0x878, /* PSLLDrr */
-/* Table3147 */
+/* Table3149 */
   0x87a, /* PSLLQrm */
   0x87b, /* PSLLQrr */
-/* Table3149 */
+/* Table3151 */
   0x83a, /* PMULUDQrm */
   0x83b, /* PMULUDQrr */
-/* Table3151 */
+/* Table3153 */
   0x7f9, /* PMADDWDrm */
   0x7fa, /* PMADDWDrr */
-/* Table3153 */
+/* Table3155 */
   0x865, /* PSADBWrm */
   0x866, /* PSADBWrr */
-/* Table3155 */
+/* Table3157 */
   0x0, /*  */
   0x521, /* MASKMOVDQU */
-/* Table3157 */
+/* Table3159 */
   0x88f, /* PSUBBrm */
   0x890, /* PSUBBrr */
-/* Table3159 */
+/* Table3161 */
   0x89d, /* PSUBWrm */
   0x89e, /* PSUBWrr */
-/* Table3161 */
+/* Table3163 */
   0x891, /* PSUBDrm */
   0x892, /* PSUBDrr */
-/* Table3163 */
+/* Table3165 */
   0x893, /* PSUBQrm */
   0x894, /* PSUBQrr */
-/* Table3165 */
+/* Table3167 */
   0x76a, /* PADDBrm */
   0x76b, /* PADDBrr */
-/* Table3167 */
+/* Table3169 */
   0x778, /* PADDWrm */
   0x779, /* PADDWrr */
-/* Table3169 */
+/* Table3171 */
   0x76c, /* PADDDrm */
   0x76d, /* PADDDrr */
-/* Table3171 */
+/* Table3173 */
   0x67c, /* MOVLPDrm */
   0x675, /* MOVHLPSrr */
-/* Table3173 */
+/* Table3175 */
   0x677, /* MOVHPDrm */
   0x67a, /* MOVLHPSrr */
-/* Table3175 */
+/* Table3177 */
   0x1f78, /* VMREAD32mr */
   0x37c, /* EXTRQI */
-/* Table3177 */
+/* Table3179 */
   0x1fe3, /* VMWRITE32rm */
   0x37b, /* EXTRQ */
-/* Table3179 */
+/* Table3181 */
   0x3b6, /* FXSAVE */
   0x3b4, /* FXRSTOR */
   0x4ca, /* LDMXCSR */
@@ -89002,7 +89004,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table3251 */
+/* Table3253 */
   0x0, /*  */
   0x2c6, /* CMPXCHG8B */
   0x0, /*  */
@@ -89019,73 +89021,73 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91a, /* RDRAND16r */
   0x91d, /* RDSEED16r */
-/* Table3267 */
+/* Table3269 */
   0x692, /* MOVSDrm */
   0x693, /* MOVSDrr */
-/* Table3269 */
+/* Table3271 */
   0x691, /* MOVSDmr */
   0x694, /* MOVSDrr_REV */
-/* Table3271 */
+/* Table3273 */
   0x662, /* MOVDDUPrm */
   0x663, /* MOVDDUPrr */
-/* Table3273 */
+/* Table3275 */
   0x18d, /* BNDCU32rm */
   0x18e, /* BNDCU32rr */
-/* Table3275 */
+/* Table3277 */
   0x189, /* BNDCN32rm */
   0x18a, /* BNDCN32rr */
-/* Table3277 */
+/* Table3279 */
   0x2f9, /* CVTSI2SDrm */
   0x2fb, /* CVTSI2SDrr */
-/* Table3279 */
+/* Table3281 */
   0x687, /* MOVNTSD */
   0x0, /*  */
-/* Table3281 */
+/* Table3283 */
   0x319, /* CVTTSD2SIrm */
   0x31b, /* CVTTSD2SIrr */
-/* Table3283 */
+/* Table3285 */
   0x2f3, /* CVTSD2SIrm_Int */
   0x2f4, /* CVTSD2SIrr_Int */
-/* Table3285 */
+/* Table3287 */
   0xa71, /* SQRTSDm */
   0xa73, /* SQRTSDr */
-/* Table3287 */
+/* Table3289 */
   0xea, /* ADDSDrm */
   0xec, /* ADDSDrr */
-/* Table3289 */
+/* Table3291 */
   0x6d9, /* MULSDrm */
   0x6db, /* MULSDrr */
-/* Table3291 */
+/* Table3293 */
   0x2f5, /* CVTSD2SSrm */
   0x2f7, /* CVTSD2SSrr */
-/* Table3293 */
+/* Table3295 */
   0xad7, /* SUBSDrm */
   0xad9, /* SUBSDrr */
-/* Table3295 */
+/* Table3297 */
   0x544, /* MINSDrm */
   0x546, /* MINSDrr */
-/* Table3297 */
+/* Table3299 */
   0x352, /* DIVSDrm */
   0x354, /* DIVSDrr */
-/* Table3299 */
+/* Table3301 */
   0x52f, /* MAXSDrm */
   0x531, /* MAXSDrr */
-/* Table3301 */
+/* Table3303 */
   0x86d, /* PSHUFLWmi */
   0x86e, /* PSHUFLWri */
-/* Table3303 */
-  0x0, /*  */
-  0x40f, /* INSERTQI */
 /* Table3305 */
   0x0, /*  */
-  0x40e, /* INSERTQ */
+  0x40f, /* INSERTQI */
 /* Table3307 */
+  0x0, /*  */
+  0x40e, /* INSERTQ */
+/* Table3309 */
   0x3c4, /* HADDPSrm */
   0x3c5, /* HADDPSrr */
-/* Table3309 */
+/* Table3311 */
   0x3c9, /* HSUBPSrm */
   0x3ca, /* HSUBPSrr */
-/* Table3311 */
+/* Table3313 */
   0x3b6, /* FXSAVE */
   0x3b4, /* FXRSTOR */
   0x4ca, /* LDMXCSR */
@@ -89102,10 +89104,10 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0xb43, /* UMWAIT */
   0x0, /*  */
-/* Table3327 */
+/* Table3329 */
   0x2b0, /* CMPSDrm */
   0x2b3, /* CMPSDrr */
-/* Table3329 */
+/* Table3331 */
   0x0, /*  */
   0x2c6, /* CMPXCHG8B */
   0x0, /*  */
@@ -89122,19 +89124,19 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table3345 */
+/* Table3347 */
   0xf4, /* ADDSUBPSrm */
   0xf5, /* ADDSUBPSrr */
-/* Table3347 */
+/* Table3349 */
   0x0, /*  */
   0x563, /* MMX_MOVDQ2Qrr */
-/* Table3349 */
+/* Table3351 */
   0x2e9, /* CVTPD2DQrm */
   0x2ea, /* CVTPD2DQrr */
-/* Table3351 */
+/* Table3353 */
   0x4c9, /* LDDQUrm */
   0x0, /*  */
-/* Table3353 */
+/* Table3355 */
   0x9f7, /* SGDT32m */
   0xa5c, /* SIDT32m */
   0x4ec, /* LGDT32m */
@@ -89207,27 +89209,27 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table3425 */
+/* Table3427 */
   0x3b50, /* WBNOINVD */
-/* Table3426 */
+/* Table3428 */
   0x6a0, /* MOVSSrm */
   0x6a1, /* MOVSSrr */
-/* Table3428 */
+/* Table3430 */
   0x69f, /* MOVSSmr */
   0x6a2, /* MOVSSrr_REV */
-/* Table3430 */
+/* Table3432 */
   0x69a, /* MOVSLDUPrm */
   0x69b, /* MOVSLDUPrr */
-/* Table3432 */
+/* Table3434 */
   0x697, /* MOVSHDUPrm */
   0x698, /* MOVSHDUPrr */
-/* Table3434 */
+/* Table3436 */
   0x185, /* BNDCL32rm */
   0x186, /* BNDCL32rr */
-/* Table3436 */
+/* Table3438 */
   0x192, /* BNDMK32rm */
   0x0, /*  */
-/* Table3438 */
+/* Table3440 */
   0x719, /* NOOPL_1e */
   0x719, /* NOOPL_1e */
   0x719, /* NOOPL_1e */
@@ -89300,64 +89302,64 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table3510 */
+/* Table3512 */
   0x2fd, /* CVTSI2SSrm */
   0x2ff, /* CVTSI2SSrr */
-/* Table3512 */
+/* Table3514 */
   0x688, /* MOVNTSS */
   0x0, /*  */
-/* Table3514 */
+/* Table3516 */
   0x321, /* CVTTSS2SIrm */
   0x323, /* CVTTSS2SIrr */
-/* Table3516 */
+/* Table3518 */
   0x30f, /* CVTSS2SIrm_Int */
   0x310, /* CVTSS2SIrr_Int */
-/* Table3518 */
+/* Table3520 */
   0xa75, /* SQRTSSm */
   0xa77, /* SQRTSSr */
-/* Table3520 */
+/* Table3522 */
   0x970, /* RSQRTSSm */
   0x972, /* RSQRTSSr */
-/* Table3522 */
+/* Table3524 */
   0x8f5, /* RCPSSm */
   0x8f7, /* RCPSSr */
-/* Table3524 */
+/* Table3526 */
   0xee, /* ADDSSrm */
   0xf0, /* ADDSSrr */
-/* Table3526 */
+/* Table3528 */
   0x6dd, /* MULSSrm */
   0x6df, /* MULSSrr */
-/* Table3528 */
+/* Table3530 */
   0x309, /* CVTSS2SDrm */
   0x30b, /* CVTSS2SDrr */
-/* Table3530 */
+/* Table3532 */
   0x313, /* CVTTPS2DQrm */
   0x314, /* CVTTPS2DQrr */
-/* Table3532 */
+/* Table3534 */
   0xadb, /* SUBSSrm */
   0xadd, /* SUBSSrr */
-/* Table3534 */
+/* Table3536 */
   0x548, /* MINSSrm */
   0x54a, /* MINSSrr */
-/* Table3536 */
+/* Table3538 */
   0x356, /* DIVSSrm */
   0x358, /* DIVSSrr */
-/* Table3538 */
+/* Table3540 */
   0x533, /* MAXSSrm */
   0x535, /* MAXSSrr */
-/* Table3540 */
+/* Table3542 */
   0x672, /* MOVDQUrm */
   0x673, /* MOVDQUrr */
-/* Table3542 */
+/* Table3544 */
   0x86b, /* PSHUFHWmi */
   0x86c, /* PSHUFHWri */
-/* Table3544 */
+/* Table3546 */
   0x68f, /* MOVQI2PQIrm */
   0x6bc, /* MOVZPQILo2PQIrr */
-/* Table3546 */
+/* Table3548 */
   0x671, /* MOVDQUmr */
   0x674, /* MOVDQUrr_REV */
-/* Table3548 */
+/* Table3550 */
   0x3b6, /* FXSAVE */
   0x3b4, /* FXRSTOR */
   0x4ca, /* LDMXCSR */
@@ -89374,19 +89376,19 @@ static const InstrUID modRMTable[] = {
   0x409, /* INCSSPD */
   0xb41, /* UMONITOR32 */
   0x0, /*  */
-/* Table3564 */
+/* Table3566 */
   0x849, /* POPCNT32rm */
   0x84a, /* POPCNT32rr */
-/* Table3566 */
+/* Table3568 */
   0xb22, /* TZCNT32rm */
   0xb23, /* TZCNT32rr */
-/* Table3568 */
+/* Table3570 */
   0x51d, /* LZCNT32rm */
   0x51e, /* LZCNT32rr */
-/* Table3570 */
+/* Table3572 */
   0x2b8, /* CMPSSrm */
   0x2bb, /* CMPSSrr */
-/* Table3572 */
+/* Table3574 */
   0x0, /*  */
   0x2c6, /* CMPXCHG8B */
   0x0, /*  */
@@ -89403,22 +89405,22 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x916, /* RDPID32 */
-/* Table3588 */
+/* Table3590 */
   0x0, /*  */
   0x566, /* MMX_MOVQ2DQrr */
-/* Table3590 */
+/* Table3592 */
   0x2e5, /* CVTDQ2PDrm */
   0x2e6, /* CVTDQ2PDrr */
-/* Table3592 */
+/* Table3594 */
   0x847, /* POPCNT16rm */
   0x848, /* POPCNT16rr */
-/* Table3594 */
+/* Table3596 */
   0xb20, /* TZCNT16rm */
   0xb21, /* TZCNT16rr */
-/* Table3596 */
+/* Table3598 */
   0x51b, /* LZCNT16rm */
   0x51c, /* LZCNT16rr */
-/* Table3598 */
+/* Table3600 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -89435,7 +89437,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0xb40, /* UMONITOR16 */
   0x0, /*  */
-/* Table3614 */
+/* Table3616 */
   0xa63, /* SLDT16m */
   0xa8a, /* STRm */
   0x4f4, /* LLDT16m */
@@ -89452,7 +89454,7 @@ static const InstrUID modRMTable[] = {
   0x1285, /* VERWr */
   0x0, /*  */
   0x0, /*  */
-/* Table3630 */
+/* Table3632 */
   0x9f8, /* SGDT64m */
   0xa5d, /* SIDT64m */
   0x4ed, /* LGDT64m */
@@ -89525,92 +89527,92 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table3702 */
+/* Table3704 */
   0x4c7, /* LAR64rm */
   0x4c8, /* LAR64rr */
-/* Table3704 */
+/* Table3706 */
   0x50c, /* LSL64rm */
   0x50d, /* LSL64rr */
-/* Table3706 */
+/* Table3708 */
   0xafa, /* SYSRET64 */
-/* Table3707 */
+/* Table3709 */
   0x71b, /* NOOPQ */
   0x71c, /* NOOPQr */
-/* Table3709 */
+/* Table3711 */
   0xaf8, /* SYSEXIT64 */
-/* Table3710 */
+/* Table3712 */
   0x271, /* CMOVO64rm */
   0x272, /* CMOVO64rr */
-/* Table3712 */
+/* Table3714 */
   0x25b, /* CMOVNO64rm */
   0x25c, /* CMOVNO64rr */
-/* Table3714 */
+/* Table3716 */
   0x213, /* CMOVB64rm */
   0x214, /* CMOVB64rr */
-/* Table3716 */
+/* Table3718 */
   0x20d, /* CMOVAE64rm */
   0x20e, /* CMOVAE64rr */
-/* Table3718 */
+/* Table3720 */
   0x227, /* CMOVE64rm */
   0x228, /* CMOVE64rr */
-/* Table3720 */
+/* Table3722 */
   0x251, /* CMOVNE64rm */
   0x252, /* CMOVNE64rr */
-/* Table3722 */
+/* Table3724 */
   0x219, /* CMOVBE64rm */
   0x21a, /* CMOVBE64rr */
-/* Table3724 */
+/* Table3726 */
   0x207, /* CMOVA64rm */
   0x208, /* CMOVA64rr */
-/* Table3726 */
+/* Table3728 */
   0x281, /* CMOVS64rm */
   0x282, /* CMOVS64rr */
-/* Table3728 */
+/* Table3730 */
   0x26b, /* CMOVNS64rm */
   0x26c, /* CMOVNS64rr */
-/* Table3730 */
+/* Table3732 */
   0x277, /* CMOVP64rm */
   0x278, /* CMOVP64rr */
-/* Table3732 */
+/* Table3734 */
   0x261, /* CMOVNP64rm */
   0x262, /* CMOVNP64rr */
-/* Table3734 */
+/* Table3736 */
   0x23d, /* CMOVL64rm */
   0x23e, /* CMOVL64rr */
-/* Table3736 */
+/* Table3738 */
   0x237, /* CMOVGE64rm */
   0x238, /* CMOVGE64rr */
-/* Table3738 */
+/* Table3740 */
   0x243, /* CMOVLE64rm */
   0x244, /* CMOVLE64rr */
-/* Table3740 */
+/* Table3742 */
   0x231, /* CMOVG64rm */
   0x232, /* CMOVG64rr */
-/* Table3742 */
+/* Table3744 */
   0x561, /* MMX_MOVD64to64rm */
   0x562, /* MMX_MOVD64to64rr */
-/* Table3744 */
+/* Table3746 */
   0x55b, /* MMX_MOVD64from64rm */
   0x55c, /* MMX_MOVD64from64rr */
-/* Table3746 */
+/* Table3748 */
   0x1b5, /* BT64mr */
   0x1b7, /* BT64rr */
-/* Table3748 */
+/* Table3750 */
   0xa28, /* SHLD64mri8 */
   0xa2a, /* SHLD64rri8 */
-/* Table3750 */
+/* Table3752 */
   0xa27, /* SHLD64mrCL */
   0xa29, /* SHLD64rrCL */
-/* Table3752 */
+/* Table3754 */
   0x1d9, /* BTS64mr */
   0x1db, /* BTS64rr */
-/* Table3754 */
+/* Table3756 */
   0xa50, /* SHRD64mri8 */
   0xa52, /* SHRD64rri8 */
-/* Table3756 */
+/* Table3758 */
   0xa4f, /* SHRD64mrCL */
   0xa51, /* SHRD64rrCL */
-/* Table3758 */
+/* Table3760 */
   0x3b7, /* FXSAVE64 */
   0x3b5, /* FXRSTOR64 */
   0x4ca, /* LDMXCSR */
@@ -89683,31 +89685,31 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table3830 */
+/* Table3832 */
   0x3f1, /* IMUL64rm */
   0x3f4, /* IMUL64rr */
-/* Table3832 */
+/* Table3834 */
   0x2c4, /* CMPXCHG64rm */
   0x2c5, /* CMPXCHG64rr */
-/* Table3834 */
+/* Table3836 */
   0x510, /* LSS64rm */
   0x0, /*  */
-/* Table3836 */
+/* Table3838 */
   0x1cd, /* BTR64mr */
   0x1cf, /* BTR64rr */
-/* Table3838 */
+/* Table3840 */
   0x4ea, /* LFS64rm */
   0x0, /*  */
-/* Table3840 */
+/* Table3842 */
   0x4f0, /* LGS64rm */
   0x0, /*  */
-/* Table3842 */
+/* Table3844 */
   0x6c8, /* MOVZX64rm8 */
   0x6ca, /* MOVZX64rr8 */
-/* Table3844 */
+/* Table3846 */
   0x6c7, /* MOVZX64rm16 */
   0x6c9, /* MOVZX64rr16 */
-/* Table3846 */
+/* Table3848 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -89724,28 +89726,28 @@ static const InstrUID modRMTable[] = {
   0x1da, /* BTS64ri8 */
   0x1ce, /* BTR64ri8 */
   0x1c2, /* BTC64ri8 */
-/* Table3862 */
+/* Table3864 */
   0x1c1, /* BTC64mr */
   0x1c3, /* BTC64rr */
-/* Table3864 */
+/* Table3866 */
   0x1a1, /* BSF64rm */
   0x1a2, /* BSF64rr */
-/* Table3866 */
+/* Table3868 */
   0x1a7, /* BSR64rm */
   0x1a8, /* BSR64rr */
-/* Table3868 */
+/* Table3870 */
   0x6b0, /* MOVSX64rm8 */
   0x6b3, /* MOVSX64rr8 */
-/* Table3870 */
+/* Table3872 */
   0x6ae, /* MOVSX64rm16 */
   0x6b1, /* MOVSX64rr16 */
-/* Table3872 */
+/* Table3874 */
   0x3b61, /* XADD64rm */
   0x3b62, /* XADD64rr */
-/* Table3874 */
+/* Table3876 */
   0x683, /* MOVNTI_64mr */
   0x0, /*  */
-/* Table3876 */
+/* Table3878 */
   0x0, /*  */
   0x2bf, /* CMPXCHG16B */
   0x0, /*  */
@@ -89762,21 +89764,21 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91c, /* RDRAND64r */
   0x91f, /* RDSEED64r */
-/* Table3892 */
+/* Table3894 */
   0x1ab, /* BSWAP64r */
-/* Table3893 */
+/* Table3895 */
   0x197, /* BNDMOV64rm */
   0x198, /* BNDMOVrr */
-/* Table3895 */
+/* Table3897 */
   0x196, /* BNDMOV64mr */
   0x199, /* BNDMOVrr_REV */
-/* Table3897 */
+/* Table3899 */
   0x1f7a, /* VMREAD64mr */
   0x37c, /* EXTRQI */
-/* Table3899 */
+/* Table3901 */
   0x1fe5, /* VMWRITE64rm */
   0x37b, /* EXTRQ */
-/* Table3901 */
+/* Table3903 */
   0x3b7, /* FXSAVE64 */
   0x3b5, /* FXRSTOR64 */
   0x4ca, /* LDMXCSR */
@@ -89849,7 +89851,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table3973 */
+/* Table3975 */
   0x0, /*  */
   0x2bf, /* CMPXCHG16B */
   0x0, /*  */
@@ -89866,10 +89868,10 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91c, /* RDRAND64r */
   0x91f, /* RDSEED64r */
-/* Table3989 */
+/* Table3991 */
   0x0, /*  */
   0x522, /* MASKMOVDQU64 */
-/* Table3991 */
+/* Table3993 */
   0x9f8, /* SGDT64m */
   0xa5d, /* SIDT64m */
   0x4ed, /* LGDT64m */
@@ -89942,13 +89944,13 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4063 */
+/* Table4065 */
   0x18f, /* BNDCU64rm */
   0x190, /* BNDCU64rr */
-/* Table4065 */
+/* Table4067 */
   0x18b, /* BNDCN64rm */
   0x18c, /* BNDCN64rr */
-/* Table4067 */
+/* Table4069 */
   0x9f8, /* SGDT64m */
   0xa5d, /* SIDT64m */
   0x4ed, /* LGDT64m */
@@ -90021,13 +90023,13 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4139 */
+/* Table4141 */
   0x187, /* BNDCL64rm */
   0x188, /* BNDCL64rr */
-/* Table4141 */
+/* Table4143 */
   0x193, /* BNDMK64rm */
   0x0, /*  */
-/* Table4143 */
+/* Table4145 */
   0x3b6, /* FXSAVE */
   0x3b4, /* FXRSTOR */
   0x4ca, /* LDMXCSR */
@@ -90044,7 +90046,7 @@ static const InstrUID modRMTable[] = {
   0x409, /* INCSSPD */
   0xb42, /* UMONITOR64 */
   0x0, /*  */
-/* Table4159 */
+/* Table4161 */
   0x0, /*  */
   0x2c6, /* CMPXCHG8B */
   0x0, /*  */
@@ -90061,7 +90063,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x917, /* RDPID64 */
-/* Table4175 */
+/* Table4177 */
   0x3b6, /* FXSAVE */
   0x3b4, /* FXRSTOR */
   0x4ca, /* LDMXCSR */
@@ -90078,7 +90080,7 @@ static const InstrUID modRMTable[] = {
   0x409, /* INCSSPD */
   0xb41, /* UMONITOR32 */
   0x0, /*  */
-/* Table4191 */
+/* Table4193 */
   0x9f8, /* SGDT64m */
   0xa5d, /* SIDT64m */
   0x4ed, /* LGDT64m */
@@ -90151,7 +90153,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4263 */
+/* Table4265 */
   0x719, /* NOOPL_1e */
   0x719, /* NOOPL_1e */
   0x719, /* NOOPL_1e */
@@ -90224,16 +90226,16 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4335 */
+/* Table4337 */
   0x305, /* CVTSI642SSrm */
   0x307, /* CVTSI642SSrr */
-/* Table4337 */
+/* Table4339 */
   0x31d, /* CVTTSS2SI64rm */
   0x31f, /* CVTTSS2SI64rr */
-/* Table4339 */
+/* Table4341 */
   0x30d, /* CVTSS2SI64rm_Int */
   0x30e, /* CVTSS2SI64rr_Int */
-/* Table4341 */
+/* Table4343 */
   0x3b7, /* FXSAVE64 */
   0x3b5, /* FXRSTOR64 */
   0x4ca, /* LDMXCSR */
@@ -90306,16 +90308,16 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4413 */
+/* Table4415 */
   0x84b, /* POPCNT64rm */
   0x84c, /* POPCNT64rr */
-/* Table4415 */
+/* Table4417 */
   0xb24, /* TZCNT64rm */
   0xb25, /* TZCNT64rr */
-/* Table4417 */
+/* Table4419 */
   0x51f, /* LZCNT64rm */
   0x520, /* LZCNT64rr */
-/* Table4419 */
+/* Table4421 */
   0x0, /*  */
   0x2bf, /* CMPXCHG16B */
   0x0, /*  */
@@ -90332,22 +90334,22 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91b, /* RDRAND32r */
   0x917, /* RDPID64 */
-/* Table4435 */
+/* Table4437 */
   0x301, /* CVTSI642SDrm */
   0x303, /* CVTSI642SDrr */
-/* Table4437 */
+/* Table4439 */
   0x315, /* CVTTSD2SI64rm */
   0x317, /* CVTTSD2SI64rr */
-/* Table4439 */
+/* Table4441 */
   0x2f1, /* CVTSD2SI64rm_Int */
   0x2f2, /* CVTSD2SI64rr_Int */
-/* Table4441 */
+/* Table4443 */
   0x1f7a, /* VMREAD64mr */
   0x40f, /* INSERTQI */
-/* Table4443 */
+/* Table4445 */
   0x1fe5, /* VMWRITE64rm */
   0x40e, /* INSERTQ */
-/* Table4445 */
+/* Table4447 */
   0x3b7, /* FXSAVE64 */
   0x3b5, /* FXRSTOR64 */
   0x4ca, /* LDMXCSR */
@@ -90420,7 +90422,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4517 */
+/* Table4519 */
   0x0, /*  */
   0x2bf, /* CMPXCHG16B */
   0x0, /*  */
@@ -90437,13 +90439,13 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91b, /* RDRAND32r */
   0x91e, /* RDSEED32r */
-/* Table4533 */
+/* Table4535 */
   0x640, /* MOV64toPQIrm */
   0x641, /* MOV64toPQIrr */
-/* Table4535 */
+/* Table4537 */
   0x68d, /* MOVPQIto64mr */
   0x68e, /* MOVPQIto64rr */
-/* Table4537 */
+/* Table4539 */
   0x3b7, /* FXSAVE64 */
   0x3b5, /* FXRSTOR64 */
   0x4ca, /* LDMXCSR */
@@ -90516,7 +90518,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4609 */
+/* Table4611 */
   0x0, /*  */
   0x2bf, /* CMPXCHG16B */
   0x0, /*  */
@@ -90533,117 +90535,117 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x91a, /* RDRAND16r */
   0x91d, /* RDSEED16r */
-/* Table4625 */
+/* Table4627 */
   0x1f6d, /* VMOVUPSrm */
   0x1f6e, /* VMOVUPSrr */
-/* Table4627 */
+/* Table4629 */
   0x1f6c, /* VMOVUPSmr */
   0x1f6f, /* VMOVUPSrr_REV */
-/* Table4629 */
+/* Table4631 */
   0x1ea5, /* VMOVLPSrm */
   0x1e93, /* VMOVHLPSrr */
-/* Table4631 */
+/* Table4633 */
   0x1ea4, /* VMOVLPSmr */
   0x0, /*  */
-/* Table4633 */
+/* Table4635 */
   0x3b0c, /* VUNPCKLPSrm */
   0x3b0d, /* VUNPCKLPSrr */
-/* Table4635 */
+/* Table4637 */
   0x3ace, /* VUNPCKHPSrm */
   0x3acf, /* VUNPCKHPSrr */
-/* Table4637 */
+/* Table4639 */
   0x1e9b, /* VMOVHPSrm */
   0x1e9d, /* VMOVLHPSrr */
-/* Table4639 */
+/* Table4641 */
   0x1e9a, /* VMOVHPSmr */
   0x0, /*  */
-/* Table4641 */
+/* Table4643 */
   0x1d9b, /* VMOVAPSrm */
   0x1d9c, /* VMOVAPSrr */
-/* Table4643 */
+/* Table4645 */
   0x1d9a, /* VMOVAPSmr */
   0x1d9d, /* VMOVAPSrr_REV */
-/* Table4645 */
+/* Table4647 */
   0x1ebd, /* VMOVNTPSmr */
   0x0, /*  */
-/* Table4647 */
+/* Table4649 */
   0x3a8e, /* VUCOMISSrm */
   0x3a90, /* VUCOMISSrr */
-/* Table4649 */
+/* Table4651 */
   0xde4, /* VCOMISSrm */
   0xde6, /* VCOMISSrr */
-/* Table4651 */
-  0x0, /*  */
-  0x4a2, /* KNOTWrr */
 /* Table4653 */
   0x0, /*  */
-  0x1ea9, /* VMOVMSKPSrr */
+  0x4a2, /* KNOTWrr */
 /* Table4655 */
+  0x0, /*  */
+  0x1ea9, /* VMOVMSKPSrr */
+/* Table4657 */
   0x39f5, /* VSQRTPSm */
   0x39f6, /* VSQRTPSr */
-/* Table4657 */
+/* Table4659 */
   0x38c5, /* VRSQRTPSm */
   0x38c6, /* VRSQRTPSr */
-/* Table4659 */
+/* Table4661 */
   0x37a1, /* VRCPPSm */
   0x37a2, /* VRCPPSr */
-/* Table4661 */
+/* Table4663 */
   0xc9e, /* VANDPSrm */
   0xc9f, /* VANDPSrr */
-/* Table4663 */
+/* Table4665 */
   0xc60, /* VANDNPSrm */
   0xc61, /* VANDNPSrr */
-/* Table4665 */
+/* Table4667 */
   0x2025, /* VORPSrm */
   0x2026, /* VORPSrr */
-/* Table4667 */
+/* Table4669 */
   0x3b4a, /* VXORPSrm */
   0x3b4b, /* VXORPSrr */
-/* Table4669 */
+/* Table4671 */
   0xb9a, /* VADDPSrm */
   0xb9b, /* VADDPSrr */
-/* Table4671 */
+/* Table4673 */
   0x1fc3, /* VMULPSrm */
   0x1fc4, /* VMULPSrr */
-/* Table4673 */
+/* Table4675 */
   0xf40, /* VCVTPS2PDrm */
   0xf41, /* VCVTPS2PDrr */
-/* Table4675 */
+/* Table4677 */
   0xe45, /* VCVTDQ2PSrm */
   0xe46, /* VCVTDQ2PSrr */
-/* Table4677 */
+/* Table4679 */
   0x3a58, /* VSUBPSrm */
   0x3a59, /* VSUBPSrr */
-/* Table4679 */
+/* Table4681 */
   0x1d20, /* VMINPSrm */
   0x1d21, /* VMINPSrr */
-/* Table4681 */
+/* Table4683 */
   0x125c, /* VDIVPSrm */
   0x125d, /* VDIVPSrr */
-/* Table4683 */
+/* Table4685 */
   0x1c75, /* VMAXPSrm */
   0x1c76, /* VMAXPSrr */
-/* Table4685 */
+/* Table4687 */
   0x3b4d, /* VZEROUPPER */
-/* Table4686 */
+/* Table4688 */
   0x49b, /* KMOVWkm */
   0x49a, /* KMOVWkk */
-/* Table4688 */
+/* Table4690 */
   0x49d, /* KMOVWmk */
   0x0, /*  */
-/* Table4690 */
-  0x0, /*  */
-  0x49c, /* KMOVWkr */
 /* Table4692 */
   0x0, /*  */
-  0x49e, /* KMOVWrk */
+  0x49c, /* KMOVWkr */
 /* Table4694 */
   0x0, /*  */
-  0x4a9, /* KORTESTWrr */
+  0x49e, /* KMOVWrk */
 /* Table4696 */
   0x0, /*  */
-  0x4b6, /* KTESTWrr */
+  0x4a9, /* KORTESTWrr */
 /* Table4698 */
+  0x0, /*  */
+  0x4b6, /* KTESTWrr */
+/* Table4700 */
   0x0, /*  */
   0x0, /*  */
   0x1be2, /* VLDMXCSR */
@@ -90660,289 +90662,289 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table4714 */
+/* Table4716 */
   0xdaa, /* VCMPPSrmi */
   0xdac, /* VCMPPSrri */
-/* Table4716 */
+/* Table4718 */
   0x39b1, /* VSHUFPSrmi */
   0x39b2, /* VSHUFPSrri */
-/* Table4718 */
+/* Table4720 */
   0x1f1b, /* VMOVSSrm */
   0x1f1c, /* VMOVSSrr */
-/* Table4720 */
+/* Table4722 */
   0x1f1a, /* VMOVSSmr */
   0x1f1d, /* VMOVSSrr_REV */
-/* Table4722 */
+/* Table4724 */
   0x1f09, /* VMOVSLDUPrm */
   0x1f0a, /* VMOVSLDUPrr */
-/* Table4724 */
+/* Table4726 */
   0x1ef3, /* VMOVSHDUPrm */
   0x1ef4, /* VMOVSHDUPrr */
-/* Table4726 */
+/* Table4728 */
   0x101b, /* VCVTSI2SSrm */
   0x101d, /* VCVTSI2SSrr */
-/* Table4728 */
+/* Table4730 */
   0x1172, /* VCVTTSS2SIrm */
   0x1174, /* VCVTTSS2SIrr */
-/* Table4730 */
+/* Table4732 */
   0x1048, /* VCVTSS2SIrm_Int */
   0x1049, /* VCVTSS2SIrr_Int */
-/* Table4732 */
+/* Table4734 */
   0x3a11, /* VSQRTSSm */
   0x3a13, /* VSQRTSSr */
-/* Table4734 */
+/* Table4736 */
   0x38c7, /* VRSQRTSSm */
   0x38c9, /* VRSQRTSSr */
-/* Table4736 */
+/* Table4738 */
   0x37a3, /* VRCPSSm */
   0x37a5, /* VRCPSSr */
-/* Table4738 */
+/* Table4740 */
   0xbb6, /* VADDSSrm */
   0xbb8, /* VADDSSrr */
-/* Table4740 */
+/* Table4742 */
   0x1fdf, /* VMULSSrm */
   0x1fe1, /* VMULSSrr */
-/* Table4742 */
+/* Table4744 */
   0x103c, /* VCVTSS2SDrm */
   0x103e, /* VCVTSS2SDrr */
-/* Table4744 */
+/* Table4746 */
   0x10ec, /* VCVTTPS2DQrm */
   0x10ed, /* VCVTTPS2DQrr */
-/* Table4746 */
+/* Table4748 */
   0x3a74, /* VSUBSSrm */
   0x3a76, /* VSUBSSrr */
-/* Table4748 */
+/* Table4750 */
   0x1d3c, /* VMINSSrm */
   0x1d3e, /* VMINSSrr */
-/* Table4750 */
+/* Table4752 */
   0x1278, /* VDIVSSrm */
   0x127a, /* VDIVSSrr */
-/* Table4752 */
+/* Table4754 */
   0x1c91, /* VMAXSSrm */
   0x1c93, /* VMAXSSrr */
-/* Table4754 */
+/* Table4756 */
   0x1e8f, /* VMOVDQUrm */
   0x1e90, /* VMOVDQUrr */
-/* Table4756 */
+/* Table4758 */
   0x3199, /* VPSHUFHWmi */
   0x319a, /* VPSHUFHWri */
-/* Table4758 */
+/* Table4760 */
   0x1ecb, /* VMOVQI2PQIrm */
   0x1f71, /* VMOVZPQILo2PQIrr */
-/* Table4760 */
+/* Table4762 */
   0x1e8e, /* VMOVDQUmr */
   0x1e91, /* VMOVDQUrr_REV */
-/* Table4762 */
+/* Table4764 */
   0xdd0, /* VCMPSSrm */
   0xdd3, /* VCMPSSrr */
-/* Table4764 */
+/* Table4766 */
   0xe23, /* VCVTDQ2PDrm */
   0xe24, /* VCVTDQ2PDrr */
-/* Table4766 */
+/* Table4768 */
   0x1ed8, /* VMOVSDrm */
   0x1ed9, /* VMOVSDrr */
-/* Table4768 */
+/* Table4770 */
   0x1ed7, /* VMOVSDmr */
   0x1eda, /* VMOVSDrr_REV */
-/* Table4770 */
+/* Table4772 */
   0x1db2, /* VMOVDDUPrm */
   0x1db3, /* VMOVDDUPrr */
-/* Table4772 */
+/* Table4774 */
   0x1012, /* VCVTSI2SDrm */
   0x1014, /* VCVTSI2SDrr */
-/* Table4774 */
+/* Table4776 */
   0x1156, /* VCVTTSD2SIrm */
   0x1158, /* VCVTTSD2SIrr */
-/* Table4776 */
+/* Table4778 */
   0xff6, /* VCVTSD2SIrm_Int */
   0xff7, /* VCVTSD2SIrr_Int */
-/* Table4778 */
+/* Table4780 */
   0x3a02, /* VSQRTSDm */
   0x3a04, /* VSQRTSDr */
-/* Table4780 */
+/* Table4782 */
   0xba7, /* VADDSDrm */
   0xba9, /* VADDSDrr */
-/* Table4782 */
+/* Table4784 */
   0x1fd0, /* VMULSDrm */
   0x1fd2, /* VMULSDrr */
-/* Table4784 */
+/* Table4786 */
   0x1003, /* VCVTSD2SSrm */
   0x1005, /* VCVTSD2SSrr */
-/* Table4786 */
+/* Table4788 */
   0x3a65, /* VSUBSDrm */
   0x3a67, /* VSUBSDrr */
-/* Table4788 */
+/* Table4790 */
   0x1d2d, /* VMINSDrm */
   0x1d2f, /* VMINSDrr */
-/* Table4790 */
+/* Table4792 */
   0x1269, /* VDIVSDrm */
   0x126b, /* VDIVSDrr */
-/* Table4792 */
+/* Table4794 */
   0x1c82, /* VMAXSDrm */
   0x1c84, /* VMAXSDrr */
-/* Table4794 */
+/* Table4796 */
   0x31af, /* VPSHUFLWmi */
   0x31b0, /* VPSHUFLWri */
-/* Table4796 */
+/* Table4798 */
   0x1b86, /* VHADDPSrm */
   0x1b87, /* VHADDPSrr */
-/* Table4798 */
+/* Table4800 */
   0x1b8e, /* VHSUBPSrm */
   0x1b8f, /* VHSUBPSrr */
-/* Table4800 */
-  0x0, /*  */
-  0x492, /* KMOVDkr */
 /* Table4802 */
   0x0, /*  */
-  0x494, /* KMOVDrk */
+  0x492, /* KMOVDkr */
 /* Table4804 */
+  0x0, /*  */
+  0x494, /* KMOVDrk */
+/* Table4806 */
   0xdbc, /* VCMPSDrm */
   0xdbf, /* VCMPSDrr */
-/* Table4806 */
+/* Table4808 */
   0xbc0, /* VADDSUBPSrm */
   0xbc1, /* VADDSUBPSrr */
-/* Table4808 */
+/* Table4810 */
   0xe67, /* VCVTPD2DQrm */
   0xe68, /* VCVTPD2DQrr */
-/* Table4810 */
+/* Table4812 */
   0x1be1, /* VLDDQUrm */
   0x0, /*  */
-/* Table4812 */
+/* Table4814 */
   0x1f44, /* VMOVUPDrm */
   0x1f45, /* VMOVUPDrr */
-/* Table4814 */
+/* Table4816 */
   0x1f43, /* VMOVUPDmr */
   0x1f46, /* VMOVUPDrr_REV */
-/* Table4816 */
+/* Table4818 */
   0x1ea1, /* VMOVLPDrm */
   0x0, /*  */
-/* Table4818 */
+/* Table4820 */
   0x1ea0, /* VMOVLPDmr */
   0x0, /*  */
-/* Table4820 */
+/* Table4822 */
   0x3aed, /* VUNPCKLPDrm */
   0x3aee, /* VUNPCKLPDrr */
-/* Table4822 */
+/* Table4824 */
   0x3aaf, /* VUNPCKHPDrm */
   0x3ab0, /* VUNPCKHPDrr */
-/* Table4824 */
+/* Table4826 */
   0x1e97, /* VMOVHPDrm */
   0x0, /*  */
-/* Table4826 */
+/* Table4828 */
   0x1e96, /* VMOVHPDmr */
   0x0, /*  */
-/* Table4828 */
+/* Table4830 */
   0x1d72, /* VMOVAPDrm */
   0x1d73, /* VMOVAPDrr */
-/* Table4830 */
+/* Table4832 */
   0x1d71, /* VMOVAPDmr */
   0x1d74, /* VMOVAPDrr_REV */
-/* Table4832 */
+/* Table4834 */
   0x1eb8, /* VMOVNTPDmr */
   0x0, /*  */
-/* Table4834 */
+/* Table4836 */
   0x3a85, /* VUCOMISDrm */
   0x3a87, /* VUCOMISDrr */
-/* Table4836 */
+/* Table4838 */
   0xddb, /* VCOMISDrm */
   0xddd, /* VCOMISDrr */
-/* Table4838 */
-  0x0, /*  */
-  0x49f, /* KNOTBrr */
 /* Table4840 */
   0x0, /*  */
-  0x1ea7, /* VMOVMSKPDrr */
+  0x49f, /* KNOTBrr */
 /* Table4842 */
+  0x0, /*  */
+  0x1ea7, /* VMOVMSKPDrr */
+/* Table4844 */
   0x39d3, /* VSQRTPDm */
   0x39d4, /* VSQRTPDr */
-/* Table4844 */
+/* Table4846 */
   0xc7f, /* VANDPDrm */
   0xc80, /* VANDPDrr */
-/* Table4846 */
+/* Table4848 */
   0xc41, /* VANDNPDrm */
   0xc42, /* VANDNPDrr */
-/* Table4848 */
+/* Table4850 */
   0x2006, /* VORPDrm */
   0x2007, /* VORPDrr */
-/* Table4850 */
+/* Table4852 */
   0x3b2b, /* VXORPDrm */
   0x3b2c, /* VXORPDrr */
-/* Table4852 */
+/* Table4854 */
   0xb78, /* VADDPDrm */
   0xb79, /* VADDPDrr */
-/* Table4854 */
+/* Table4856 */
   0x1fa1, /* VMULPDrm */
   0x1fa2, /* VMULPDrr */
-/* Table4856 */
+/* Table4858 */
   0xe89, /* VCVTPD2PSrm */
   0xe8a, /* VCVTPD2PSrr */
-/* Table4858 */
+/* Table4860 */
   0xf1e, /* VCVTPS2DQrm */
   0xf1f, /* VCVTPS2DQrr */
-/* Table4860 */
+/* Table4862 */
   0x3a36, /* VSUBPDrm */
   0x3a37, /* VSUBPDrr */
-/* Table4862 */
+/* Table4864 */
   0x1cfe, /* VMINPDrm */
   0x1cff, /* VMINPDrr */
-/* Table4864 */
+/* Table4866 */
   0x123a, /* VDIVPDrm */
   0x123b, /* VDIVPDrr */
-/* Table4866 */
+/* Table4868 */
   0x1c53, /* VMAXPDrm */
   0x1c54, /* VMAXPDrr */
-/* Table4868 */
+/* Table4870 */
   0x3655, /* VPUNPCKLBWrm */
   0x3656, /* VPUNPCKLBWrr */
-/* Table4870 */
+/* Table4872 */
   0x36a9, /* VPUNPCKLWDrm */
   0x36aa, /* VPUNPCKLWDrr */
-/* Table4872 */
+/* Table4874 */
   0x3674, /* VPUNPCKLDQrm */
   0x3675, /* VPUNPCKLDQrr */
-/* Table4874 */
+/* Table4876 */
   0x20c6, /* VPACKSSWBrm */
   0x20c7, /* VPACKSSWBrr */
-/* Table4876 */
+/* Table4878 */
   0x2409, /* VPCMPGTBrm */
   0x240a, /* VPCMPGTBrr */
-/* Table4878 */
+/* Table4880 */
   0x2445, /* VPCMPGTWrm */
   0x2446, /* VPCMPGTWrr */
-/* Table4880 */
+/* Table4882 */
   0x241f, /* VPCMPGTDrm */
   0x2420, /* VPCMPGTDrr */
-/* Table4882 */
+/* Table4884 */
   0x20fb, /* VPACKUSWBrm */
   0x20fc, /* VPACKUSWBrr */
-/* Table4884 */
+/* Table4886 */
   0x35eb, /* VPUNPCKHBWrm */
   0x35ec, /* VPUNPCKHBWrr */
-/* Table4886 */
+/* Table4888 */
   0x363f, /* VPUNPCKHWDrm */
   0x3640, /* VPUNPCKHWDrr */
-/* Table4888 */
+/* Table4890 */
   0x360a, /* VPUNPCKHDQrm */
   0x360b, /* VPUNPCKHDQrr */
-/* Table4890 */
+/* Table4892 */
   0x20b0, /* VPACKSSDWrm */
   0x20b1, /* VPACKSSDWrr */
-/* Table4892 */
+/* Table4894 */
   0x3693, /* VPUNPCKLQDQrm */
   0x3694, /* VPUNPCKLQDQrr */
-/* Table4894 */
+/* Table4896 */
   0x3629, /* VPUNPCKHQDQrm */
   0x362a, /* VPUNPCKHQDQrr */
-/* Table4896 */
+/* Table4898 */
   0x1db6, /* VMOVDI2PDIrm */
   0x1db7, /* VMOVDI2PDIrr */
-/* Table4898 */
+/* Table4900 */
   0x1e03, /* VMOVDQArm */
   0x1e04, /* VMOVDQArr */
-/* Table4900 */
+/* Table4902 */
   0x3183, /* VPSHUFDmi */
   0x3184, /* VPSHUFDri */
-/* Table4902 */
+/* Table4904 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -90959,7 +90961,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x32a2, /* VPSLLWri */
   0x0, /*  */
-/* Table4918 */
+/* Table4920 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -90976,7 +90978,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31f5, /* VPSLLDri */
   0x0, /*  */
-/* Table4934 */
+/* Table4936 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -90993,528 +90995,528 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3228, /* VPSLLQri */
   0x31c4, /* VPSLLDQri */
-/* Table4950 */
+/* Table4952 */
   0x23b9, /* VPCMPEQBrm */
   0x23ba, /* VPCMPEQBrr */
-/* Table4952 */
+/* Table4954 */
   0x23f5, /* VPCMPEQWrm */
   0x23f6, /* VPCMPEQWrr */
-/* Table4954 */
+/* Table4956 */
   0x23cf, /* VPCMPEQDrm */
   0x23d0, /* VPCMPEQDrr */
-/* Table4956 */
+/* Table4958 */
   0x1b82, /* VHADDPDrm */
   0x1b83, /* VHADDPDrr */
-/* Table4958 */
+/* Table4960 */
   0x1b8a, /* VHSUBPDrm */
   0x1b8b, /* VHSUBPDrr */
-/* Table4960 */
+/* Table4962 */
   0x1ec0, /* VMOVPDI2DImr */
   0x1ec1, /* VMOVPDI2DIrr */
-/* Table4962 */
+/* Table4964 */
   0x1e02, /* VMOVDQAmr */
   0x1e05, /* VMOVDQArr_REV */
-/* Table4964 */
+/* Table4966 */
   0x48c, /* KMOVBkm */
   0x48b, /* KMOVBkk */
-/* Table4966 */
+/* Table4968 */
   0x48e, /* KMOVBmk */
   0x0, /*  */
-/* Table4968 */
-  0x0, /*  */
-  0x48d, /* KMOVBkr */
 /* Table4970 */
   0x0, /*  */
-  0x48f, /* KMOVBrk */
+  0x48d, /* KMOVBkr */
 /* Table4972 */
   0x0, /*  */
-  0x4a6, /* KORTESTBrr */
+  0x48f, /* KMOVBrk */
 /* Table4974 */
   0x0, /*  */
-  0x4b3, /* KTESTBrr */
+  0x4a6, /* KORTESTBrr */
 /* Table4976 */
+  0x0, /*  */
+  0x4b3, /* KTESTBrr */
+/* Table4978 */
   0xd7a, /* VCMPPDrmi */
   0xd7c, /* VCMPPDrri */
-/* Table4978 */
+/* Table4980 */
   0x28f9, /* VPINSRWrm */
   0x28fa, /* VPINSRWrr */
-/* Table4980 */
+/* Table4982 */
   0x0, /*  */
   0x289d, /* VPEXTRWrr */
-/* Table4982 */
+/* Table4984 */
   0x3992, /* VSHUFPDrmi */
   0x3993, /* VSHUFPDrri */
-/* Table4984 */
+/* Table4986 */
   0xbbc, /* VADDSUBPDrm */
   0xbbd, /* VADDSUBPDrr */
-/* Table4986 */
+/* Table4988 */
   0x3461, /* VPSRLWrm */
   0x3462, /* VPSRLWrr */
-/* Table4988 */
+/* Table4990 */
   0x33b4, /* VPSRLDrm */
   0x33b5, /* VPSRLDrr */
-/* Table4990 */
+/* Table4992 */
   0x33e7, /* VPSRLQrm */
   0x33e8, /* VPSRLQrr */
-/* Table4992 */
+/* Table4994 */
   0x214f, /* VPADDQrm */
   0x2150, /* VPADDQrr */
-/* Table4994 */
+/* Table4996 */
   0x2e2a, /* VPMULLWrm */
   0x2e2b, /* VPMULLWrr */
-/* Table4996 */
+/* Table4998 */
   0x1ec4, /* VMOVPQI2QImr */
   0x1ec5, /* VMOVPQI2QIrr */
-/* Table4998 */
+/* Table5000 */
   0x0, /*  */
   0x2b7c, /* VPMOVMSKBrr */
-/* Table5000 */
+/* Table5002 */
   0x34f7, /* VPSUBUSBrm */
   0x34f8, /* VPSUBUSBrr */
-/* Table5002 */
+/* Table5004 */
   0x350d, /* VPSUBUSWrm */
   0x350e, /* VPSUBUSWrr */
-/* Table5004 */
+/* Table5006 */
   0x2af9, /* VPMINUBrm */
   0x2afa, /* VPMINUBrr */
-/* Table5006 */
+/* Table5008 */
   0x2247, /* VPANDrm */
   0x2248, /* VPANDrr */
-/* Table5008 */
+/* Table5010 */
   0x2191, /* VPADDUSBrm */
   0x2192, /* VPADDUSBrr */
-/* Table5010 */
+/* Table5012 */
   0x21a7, /* VPADDUSWrm */
   0x21a8, /* VPADDUSWrr */
-/* Table5012 */
+/* Table5014 */
   0x2a2d, /* VPMAXUBrm */
   0x2a2e, /* VPMAXUBrr */
-/* Table5014 */
+/* Table5016 */
   0x2228, /* VPANDNrm */
   0x2229, /* VPANDNrr */
-/* Table5016 */
+/* Table5018 */
   0x225d, /* VPAVGBrm */
   0x225e, /* VPAVGBrr */
-/* Table5018 */
+/* Table5020 */
   0x3379, /* VPSRAWrm */
   0x337a, /* VPSRAWrr */
-/* Table5020 */
+/* Table5022 */
   0x32d6, /* VPSRADrm */
   0x32d7, /* VPSRADrr */
-/* Table5022 */
+/* Table5024 */
   0x2273, /* VPAVGWrm */
   0x2274, /* VPAVGWrr */
-/* Table5024 */
+/* Table5026 */
   0x2dc4, /* VPMULHUWrm */
   0x2dc5, /* VPMULHUWrr */
-/* Table5026 */
+/* Table5028 */
   0x2dda, /* VPMULHWrm */
   0x2ddb, /* VPMULHWrr */
-/* Table5028 */
+/* Table5030 */
   0x1070, /* VCVTTPD2DQrm */
   0x1071, /* VCVTTPD2DQrr */
-/* Table5030 */
+/* Table5032 */
   0x1eb3, /* VMOVNTDQmr */
   0x0, /*  */
-/* Table5032 */
+/* Table5034 */
   0x34cb, /* VPSUBSBrm */
   0x34cc, /* VPSUBSBrr */
-/* Table5034 */
+/* Table5036 */
   0x34e1, /* VPSUBSWrm */
   0x34e2, /* VPSUBSWrr */
-/* Table5036 */
+/* Table5038 */
   0x2ae3, /* VPMINSWrm */
   0x2ae4, /* VPMINSWrr */
-/* Table5038 */
+/* Table5040 */
   0x2ef8, /* VPORrm */
   0x2ef9, /* VPORrr */
-/* Table5040 */
+/* Table5042 */
   0x2165, /* VPADDSBrm */
   0x2166, /* VPADDSBrr */
-/* Table5042 */
+/* Table5044 */
   0x217b, /* VPADDSWrm */
   0x217c, /* VPADDSWrr */
-/* Table5044 */
+/* Table5046 */
   0x2a17, /* VPMAXSWrm */
   0x2a18, /* VPMAXSWrr */
-/* Table5046 */
+/* Table5048 */
   0x36e3, /* VPXORrm */
   0x36e4, /* VPXORrr */
-/* Table5048 */
+/* Table5050 */
   0x32a3, /* VPSLLWrm */
   0x32a4, /* VPSLLWrr */
-/* Table5050 */
+/* Table5052 */
   0x31f6, /* VPSLLDrm */
   0x31f7, /* VPSLLDrr */
-/* Table5052 */
+/* Table5054 */
   0x3229, /* VPSLLQrm */
   0x322a, /* VPSLLQrr */
-/* Table5054 */
+/* Table5056 */
   0x2e64, /* VPMULUDQrm */
   0x2e65, /* VPMULUDQrr */
-/* Table5056 */
+/* Table5058 */
   0x29a9, /* VPMADDWDrm */
   0x29aa, /* VPMADDWDrr */
-/* Table5058 */
+/* Table5060 */
   0x2ff6, /* VPSADBWrm */
   0x2ff7, /* VPSADBWrr */
-/* Table5060 */
+/* Table5062 */
   0x0, /*  */
   0x1be3, /* VMASKMOVDQU */
-/* Table5062 */
+/* Table5064 */
   0x3477, /* VPSUBBrm */
   0x3478, /* VPSUBBrr */
-/* Table5064 */
+/* Table5066 */
   0x3523, /* VPSUBWrm */
   0x3524, /* VPSUBWrr */
-/* Table5066 */
+/* Table5068 */
   0x3496, /* VPSUBDrm */
   0x3497, /* VPSUBDrr */
-/* Table5068 */
+/* Table5070 */
   0x34b5, /* VPSUBQrm */
   0x34b6, /* VPSUBQrr */
-/* Table5070 */
+/* Table5072 */
   0x2111, /* VPADDBrm */
   0x2112, /* VPADDBrr */
-/* Table5072 */
+/* Table5074 */
   0x21bd, /* VPADDWrm */
   0x21be, /* VPADDWrr */
-/* Table5074 */
+/* Table5076 */
   0x2130, /* VPADDDrm */
   0x2131, /* VPADDDrr */
-/* Table5076 */
+/* Table5078 */
   0x0, /*  */
   0x4a1, /* KNOTQrr */
-/* Table5078 */
+/* Table5080 */
   0x496, /* KMOVQkm */
   0x495, /* KMOVQkk */
-/* Table5080 */
+/* Table5082 */
   0x498, /* KMOVQmk */
   0x0, /*  */
-/* Table5082 */
-  0x0, /*  */
-  0x4a8, /* KORTESTQrr */
 /* Table5084 */
   0x0, /*  */
-  0x4b5, /* KTESTQrr */
+  0x4a8, /* KORTESTQrr */
 /* Table5086 */
+  0x0, /*  */
+  0x4b5, /* KTESTQrr */
+/* Table5088 */
   0x102d, /* VCVTSI642SSrm */
   0x102f, /* VCVTSI642SSrr */
-/* Table5088 */
+/* Table5090 */
   0x1169, /* VCVTTSS2SI64rm */
   0x116b, /* VCVTTSS2SI64rr */
-/* Table5090 */
+/* Table5092 */
   0x1043, /* VCVTSS2SI64rm_Int */
   0x1044, /* VCVTSS2SI64rr_Int */
-/* Table5092 */
+/* Table5094 */
   0x1024, /* VCVTSI642SDrm */
   0x1026, /* VCVTSI642SDrr */
-/* Table5094 */
+/* Table5096 */
   0x114d, /* VCVTTSD2SI64rm */
   0x114f, /* VCVTTSD2SI64rr */
-/* Table5096 */
+/* Table5098 */
   0xff1, /* VCVTSD2SI64rm_Int */
   0xff2, /* VCVTSD2SI64rr_Int */
-/* Table5098 */
-  0x0, /*  */
-  0x497, /* KMOVQkr */
 /* Table5100 */
   0x0, /*  */
-  0x499, /* KMOVQrk */
+  0x497, /* KMOVQkr */
 /* Table5102 */
   0x0, /*  */
-  0x4a0, /* KNOTDrr */
+  0x499, /* KMOVQrk */
 /* Table5104 */
+  0x0, /*  */
+  0x4a0, /* KNOTDrr */
+/* Table5106 */
   0x1d46, /* VMOV64toPQIrm */
   0x1d47, /* VMOV64toPQIrr */
-/* Table5106 */
+/* Table5108 */
   0x1ec8, /* VMOVPQIto64mr */
   0x1ec9, /* VMOVPQIto64rr */
-/* Table5108 */
+/* Table5110 */
   0x491, /* KMOVDkm */
   0x490, /* KMOVDkk */
-/* Table5110 */
+/* Table5112 */
   0x493, /* KMOVDmk */
   0x0, /*  */
-/* Table5112 */
-  0x0, /*  */
-  0x4a7, /* KORTESTDrr */
 /* Table5114 */
   0x0, /*  */
-  0x4b4, /* KTESTDrr */
+  0x4a7, /* KORTESTDrr */
 /* Table5116 */
+  0x0, /*  */
+  0x4b4, /* KTESTDrr */
+/* Table5118 */
   0x1f48, /* VMOVUPSYrm */
   0x1f49, /* VMOVUPSYrr */
-/* Table5118 */
+/* Table5120 */
   0x1f47, /* VMOVUPSYmr */
   0x1f4a, /* VMOVUPSYrr_REV */
-/* Table5120 */
+/* Table5122 */
   0x3aef, /* VUNPCKLPSYrm */
   0x3af0, /* VUNPCKLPSYrr */
-/* Table5122 */
+/* Table5124 */
   0x3ab1, /* VUNPCKHPSYrm */
   0x3ab2, /* VUNPCKHPSYrr */
-/* Table5124 */
+/* Table5126 */
   0x1d76, /* VMOVAPSYrm */
   0x1d77, /* VMOVAPSYrr */
-/* Table5126 */
+/* Table5128 */
   0x1d75, /* VMOVAPSYmr */
   0x1d78, /* VMOVAPSYrr_REV */
-/* Table5128 */
+/* Table5130 */
   0x1eb9, /* VMOVNTPSYmr */
   0x0, /*  */
-/* Table5130 */
-  0x0, /*  */
-  0x48a, /* KANDWrr */
 /* Table5132 */
   0x0, /*  */
-  0x488, /* KANDNWrr */
+  0x48a, /* KANDWrr */
 /* Table5134 */
   0x0, /*  */
-  0x4aa, /* KORWrr */
+  0x488, /* KANDNWrr */
 /* Table5136 */
   0x0, /*  */
-  0x4bd, /* KXNORWrr */
+  0x4aa, /* KORWrr */
 /* Table5138 */
   0x0, /*  */
-  0x4c1, /* KXORWrr */
+  0x4bd, /* KXNORWrr */
 /* Table5140 */
   0x0, /*  */
-  0x482, /* KADDWrr */
+  0x4c1, /* KXORWrr */
 /* Table5142 */
   0x0, /*  */
-  0x4b9, /* KUNPCKWDrr */
+  0x482, /* KADDWrr */
 /* Table5144 */
   0x0, /*  */
-  0x1ea8, /* VMOVMSKPSYrr */
+  0x4b9, /* KUNPCKWDrr */
 /* Table5146 */
+  0x0, /*  */
+  0x1ea8, /* VMOVMSKPSYrr */
+/* Table5148 */
   0x39d5, /* VSQRTPSYm */
   0x39d6, /* VSQRTPSYr */
-/* Table5148 */
+/* Table5150 */
   0x38c3, /* VRSQRTPSYm */
   0x38c4, /* VRSQRTPSYr */
-/* Table5150 */
+/* Table5152 */
   0x379f, /* VRCPPSYm */
   0x37a0, /* VRCPPSYr */
-/* Table5152 */
+/* Table5154 */
   0xc81, /* VANDPSYrm */
   0xc82, /* VANDPSYrr */
-/* Table5154 */
+/* Table5156 */
   0xc43, /* VANDNPSYrm */
   0xc44, /* VANDNPSYrr */
-/* Table5156 */
+/* Table5158 */
   0x2008, /* VORPSYrm */
   0x2009, /* VORPSYrr */
-/* Table5158 */
+/* Table5160 */
   0x3b2d, /* VXORPSYrm */
   0x3b2e, /* VXORPSYrr */
-/* Table5160 */
+/* Table5162 */
   0xb7a, /* VADDPSYrm */
   0xb7b, /* VADDPSYrr */
-/* Table5162 */
+/* Table5164 */
   0x1fa3, /* VMULPSYrm */
   0x1fa4, /* VMULPSYrr */
-/* Table5164 */
+/* Table5166 */
   0xf20, /* VCVTPS2PDYrm */
   0xf21, /* VCVTPS2PDYrr */
-/* Table5166 */
+/* Table5168 */
   0xe25, /* VCVTDQ2PSYrm */
   0xe26, /* VCVTDQ2PSYrr */
-/* Table5168 */
+/* Table5170 */
   0x3a38, /* VSUBPSYrm */
   0x3a39, /* VSUBPSYrr */
-/* Table5170 */
+/* Table5172 */
   0x1d00, /* VMINPSYrm */
   0x1d01, /* VMINPSYrr */
-/* Table5172 */
+/* Table5174 */
   0x123c, /* VDIVPSYrm */
   0x123d, /* VDIVPSYrr */
-/* Table5174 */
+/* Table5176 */
   0x1c55, /* VMAXPSYrm */
   0x1c56, /* VMAXPSYrr */
-/* Table5176 */
+/* Table5178 */
   0x3b4c, /* VZEROALL */
-/* Table5177 */
+/* Table5179 */
   0xd7e, /* VCMPPSYrmi */
   0xd80, /* VCMPPSYrri */
-/* Table5179 */
+/* Table5181 */
   0x3994, /* VSHUFPSYrmi */
   0x3995, /* VSHUFPSYrri */
-/* Table5181 */
+/* Table5183 */
   0x1ef5, /* VMOVSLDUPYrm */
   0x1ef6, /* VMOVSLDUPYrr */
-/* Table5183 */
+/* Table5185 */
   0x1edf, /* VMOVSHDUPYrm */
   0x1ee0, /* VMOVSHDUPYrr */
-/* Table5185 */
+/* Table5187 */
   0x10cc, /* VCVTTPS2DQYrm */
   0x10cd, /* VCVTTPS2DQYrr */
-/* Table5187 */
+/* Table5189 */
   0x1e8b, /* VMOVDQUYrm */
   0x1e8c, /* VMOVDQUYrr */
-/* Table5189 */
+/* Table5191 */
   0x3185, /* VPSHUFHWYmi */
   0x3186, /* VPSHUFHWYri */
-/* Table5191 */
+/* Table5193 */
   0x1e8a, /* VMOVDQUYmr */
   0x1e8d, /* VMOVDQUYrr_REV */
-/* Table5193 */
+/* Table5195 */
   0xe06, /* VCVTDQ2PDYrm */
   0xe07, /* VCVTDQ2PDYrr */
-/* Table5195 */
+/* Table5197 */
   0x1d9e, /* VMOVDDUPYrm */
   0x1d9f, /* VMOVDDUPYrr */
-/* Table5197 */
+/* Table5199 */
   0x319b, /* VPSHUFLWYmi */
   0x319c, /* VPSHUFLWYri */
-/* Table5199 */
+/* Table5201 */
   0x1b84, /* VHADDPSYrm */
   0x1b85, /* VHADDPSYrr */
-/* Table5201 */
+/* Table5203 */
   0x1b8c, /* VHSUBPSYrm */
   0x1b8d, /* VHSUBPSYrr */
-/* Table5203 */
+/* Table5205 */
   0xbbe, /* VADDSUBPSYrm */
   0xbbf, /* VADDSUBPSYrr */
-/* Table5205 */
+/* Table5207 */
   0xe47, /* VCVTPD2DQYrm */
   0xe48, /* VCVTPD2DQYrr */
-/* Table5207 */
+/* Table5209 */
   0x1be0, /* VLDDQUYrm */
   0x0, /*  */
-/* Table5209 */
+/* Table5211 */
   0x1f1f, /* VMOVUPDYrm */
   0x1f20, /* VMOVUPDYrr */
-/* Table5211 */
+/* Table5213 */
   0x1f1e, /* VMOVUPDYmr */
   0x1f21, /* VMOVUPDYrr_REV */
-/* Table5213 */
+/* Table5215 */
   0x3ad0, /* VUNPCKLPDYrm */
   0x3ad1, /* VUNPCKLPDYrr */
-/* Table5215 */
+/* Table5217 */
   0x3a92, /* VUNPCKHPDYrm */
   0x3a93, /* VUNPCKHPDYrr */
-/* Table5217 */
+/* Table5219 */
   0x1d4d, /* VMOVAPDYrm */
   0x1d4e, /* VMOVAPDYrr */
-/* Table5219 */
+/* Table5221 */
   0x1d4c, /* VMOVAPDYmr */
   0x1d4f, /* VMOVAPDYrr_REV */
-/* Table5221 */
+/* Table5223 */
   0x1eb4, /* VMOVNTPDYmr */
   0x0, /*  */
-/* Table5223 */
-  0x0, /*  */
-  0x483, /* KANDBrr */
 /* Table5225 */
   0x0, /*  */
-  0x485, /* KANDNBrr */
+  0x483, /* KANDBrr */
 /* Table5227 */
   0x0, /*  */
-  0x4a3, /* KORBrr */
+  0x485, /* KANDNBrr */
 /* Table5229 */
   0x0, /*  */
-  0x4ba, /* KXNORBrr */
+  0x4a3, /* KORBrr */
 /* Table5231 */
   0x0, /*  */
-  0x4be, /* KXORBrr */
+  0x4ba, /* KXNORBrr */
 /* Table5233 */
   0x0, /*  */
-  0x47f, /* KADDBrr */
+  0x4be, /* KXORBrr */
 /* Table5235 */
   0x0, /*  */
-  0x4b7, /* KUNPCKBWrr */
+  0x47f, /* KADDBrr */
 /* Table5237 */
   0x0, /*  */
-  0x1ea6, /* VMOVMSKPDYrr */
+  0x4b7, /* KUNPCKBWrr */
 /* Table5239 */
+  0x0, /*  */
+  0x1ea6, /* VMOVMSKPDYrr */
+/* Table5241 */
   0x39b3, /* VSQRTPDYm */
   0x39b4, /* VSQRTPDYr */
-/* Table5241 */
+/* Table5243 */
   0xc62, /* VANDPDYrm */
   0xc63, /* VANDPDYrr */
-/* Table5243 */
+/* Table5245 */
   0xc24, /* VANDNPDYrm */
   0xc25, /* VANDNPDYrr */
-/* Table5245 */
+/* Table5247 */
   0x1fe9, /* VORPDYrm */
   0x1fea, /* VORPDYrr */
-/* Table5247 */
+/* Table5249 */
   0x3b0e, /* VXORPDYrm */
   0x3b0f, /* VXORPDYrr */
-/* Table5249 */
+/* Table5251 */
   0xb58, /* VADDPDYrm */
   0xb59, /* VADDPDYrr */
-/* Table5251 */
+/* Table5253 */
   0x1f81, /* VMULPDYrm */
   0x1f82, /* VMULPDYrr */
-/* Table5253 */
+/* Table5255 */
   0xe69, /* VCVTPD2PSYrm */
   0xe6a, /* VCVTPD2PSYrr */
-/* Table5255 */
+/* Table5257 */
   0xefe, /* VCVTPS2DQYrm */
   0xeff, /* VCVTPS2DQYrr */
-/* Table5257 */
+/* Table5259 */
   0x3a16, /* VSUBPDYrm */
   0x3a17, /* VSUBPDYrr */
-/* Table5259 */
+/* Table5261 */
   0x1cde, /* VMINPDYrm */
   0x1cdf, /* VMINPDYrr */
-/* Table5261 */
+/* Table5263 */
   0x121a, /* VDIVPDYrm */
   0x121b, /* VDIVPDYrr */
-/* Table5263 */
+/* Table5265 */
   0x1c33, /* VMAXPDYrm */
   0x1c34, /* VMAXPDYrr */
-/* Table5265 */
+/* Table5267 */
   0x3641, /* VPUNPCKLBWYrm */
   0x3642, /* VPUNPCKLBWYrr */
-/* Table5267 */
+/* Table5269 */
   0x3695, /* VPUNPCKLWDYrm */
   0x3696, /* VPUNPCKLWDYrr */
-/* Table5269 */
+/* Table5271 */
   0x3657, /* VPUNPCKLDQYrm */
   0x3658, /* VPUNPCKLDQYrr */
-/* Table5271 */
+/* Table5273 */
   0x20b2, /* VPACKSSWBYrm */
   0x20b3, /* VPACKSSWBYrr */
-/* Table5273 */
+/* Table5275 */
   0x23fb, /* VPCMPGTBYrm */
   0x23fc, /* VPCMPGTBYrr */
-/* Table5275 */
+/* Table5277 */
   0x2437, /* VPCMPGTWYrm */
   0x2438, /* VPCMPGTWYrr */
-/* Table5277 */
+/* Table5279 */
   0x240b, /* VPCMPGTDYrm */
   0x240c, /* VPCMPGTDYrr */
-/* Table5279 */
+/* Table5281 */
   0x20e7, /* VPACKUSWBYrm */
   0x20e8, /* VPACKUSWBYrr */
-/* Table5281 */
+/* Table5283 */
   0x35d7, /* VPUNPCKHBWYrm */
   0x35d8, /* VPUNPCKHBWYrr */
-/* Table5283 */
+/* Table5285 */
   0x362b, /* VPUNPCKHWDYrm */
   0x362c, /* VPUNPCKHWDYrr */
-/* Table5285 */
+/* Table5287 */
   0x35ed, /* VPUNPCKHDQYrm */
   0x35ee, /* VPUNPCKHDQYrr */
-/* Table5287 */
+/* Table5289 */
   0x2093, /* VPACKSSDWYrm */
   0x2094, /* VPACKSSDWYrr */
-/* Table5289 */
+/* Table5291 */
   0x3676, /* VPUNPCKLQDQYrm */
   0x3677, /* VPUNPCKLQDQYrr */
-/* Table5291 */
+/* Table5293 */
   0x360c, /* VPUNPCKHQDQYrm */
   0x360d, /* VPUNPCKHQDQYrr */
-/* Table5293 */
+/* Table5295 */
   0x1dff, /* VMOVDQAYrm */
   0x1e00, /* VMOVDQAYrr */
-/* Table5295 */
+/* Table5297 */
   0x3166, /* VPSHUFDYmi */
   0x3167, /* VPSHUFDYri */
-/* Table5297 */
+/* Table5299 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -91531,7 +91533,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x327b, /* VPSLLWYri */
   0x0, /*  */
-/* Table5313 */
+/* Table5315 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -91548,7 +91550,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31c5, /* VPSLLDYri */
   0x0, /*  */
-/* Table5329 */
+/* Table5331 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -91565,445 +91567,445 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31f8, /* VPSLLQYri */
   0x31bd, /* VPSLLDQYri */
-/* Table5345 */
+/* Table5347 */
   0x23ab, /* VPCMPEQBYrm */
   0x23ac, /* VPCMPEQBYrr */
-/* Table5347 */
+/* Table5349 */
   0x23e7, /* VPCMPEQWYrm */
   0x23e8, /* VPCMPEQWYrr */
-/* Table5349 */
+/* Table5351 */
   0x23bb, /* VPCMPEQDYrm */
   0x23bc, /* VPCMPEQDYrr */
-/* Table5351 */
+/* Table5353 */
   0x1b80, /* VHADDPDYrm */
   0x1b81, /* VHADDPDYrr */
-/* Table5353 */
+/* Table5355 */
   0x1b88, /* VHSUBPDYrm */
   0x1b89, /* VHSUBPDYrr */
-/* Table5355 */
+/* Table5357 */
   0x1dfe, /* VMOVDQAYmr */
   0x1e01, /* VMOVDQAYrr_REV */
-/* Table5357 */
+/* Table5359 */
   0xd4e, /* VCMPPDYrmi */
   0xd50, /* VCMPPDYrri */
-/* Table5359 */
+/* Table5361 */
   0x3975, /* VSHUFPDYrmi */
   0x3976, /* VSHUFPDYrri */
-/* Table5361 */
+/* Table5363 */
   0xbba, /* VADDSUBPDYrm */
   0xbbb, /* VADDSUBPDYrr */
-/* Table5363 */
+/* Table5365 */
   0x343a, /* VPSRLWYrm */
   0x343b, /* VPSRLWYrr */
-/* Table5365 */
+/* Table5367 */
   0x3384, /* VPSRLDYrm */
   0x3385, /* VPSRLDYrr */
-/* Table5367 */
+/* Table5369 */
   0x33b7, /* VPSRLQYrm */
   0x33b8, /* VPSRLQYrr */
-/* Table5369 */
+/* Table5371 */
   0x2132, /* VPADDQYrm */
   0x2133, /* VPADDQYrr */
-/* Table5371 */
+/* Table5373 */
   0x2e16, /* VPMULLWYrm */
   0x2e17, /* VPMULLWYrr */
-/* Table5373 */
+/* Table5375 */
   0x0, /*  */
   0x2b7b, /* VPMOVMSKBYrr */
-/* Table5375 */
+/* Table5377 */
   0x34e3, /* VPSUBUSBYrm */
   0x34e4, /* VPSUBUSBYrr */
-/* Table5377 */
+/* Table5379 */
   0x34f9, /* VPSUBUSWYrm */
   0x34fa, /* VPSUBUSWYrr */
-/* Table5379 */
+/* Table5381 */
   0x2ae5, /* VPMINUBYrm */
   0x2ae6, /* VPMINUBYrr */
-/* Table5381 */
+/* Table5383 */
   0x2245, /* VPANDYrm */
   0x2246, /* VPANDYrr */
-/* Table5383 */
+/* Table5385 */
   0x217d, /* VPADDUSBYrm */
   0x217e, /* VPADDUSBYrr */
-/* Table5385 */
+/* Table5387 */
   0x2193, /* VPADDUSWYrm */
   0x2194, /* VPADDUSWYrr */
-/* Table5387 */
+/* Table5389 */
   0x2a19, /* VPMAXUBYrm */
   0x2a1a, /* VPMAXUBYrr */
-/* Table5389 */
+/* Table5391 */
   0x2226, /* VPANDNYrm */
   0x2227, /* VPANDNYrr */
-/* Table5391 */
+/* Table5393 */
   0x2249, /* VPAVGBYrm */
   0x224a, /* VPAVGBYrr */
-/* Table5393 */
+/* Table5395 */
   0x3352, /* VPSRAWYrm */
   0x3353, /* VPSRAWYrr */
-/* Table5395 */
+/* Table5397 */
   0x32a6, /* VPSRADYrm */
   0x32a7, /* VPSRADYrr */
-/* Table5397 */
+/* Table5399 */
   0x225f, /* VPAVGWYrm */
   0x2260, /* VPAVGWYrr */
-/* Table5399 */
+/* Table5401 */
   0x2db0, /* VPMULHUWYrm */
   0x2db1, /* VPMULHUWYrr */
-/* Table5401 */
+/* Table5403 */
   0x2dc6, /* VPMULHWYrm */
   0x2dc7, /* VPMULHWYrr */
-/* Table5403 */
+/* Table5405 */
   0x1050, /* VCVTTPD2DQYrm */
   0x1051, /* VCVTTPD2DQYrr */
-/* Table5405 */
+/* Table5407 */
   0x1eaf, /* VMOVNTDQYmr */
   0x0, /*  */
-/* Table5407 */
+/* Table5409 */
   0x34b7, /* VPSUBSBYrm */
   0x34b8, /* VPSUBSBYrr */
-/* Table5409 */
+/* Table5411 */
   0x34cd, /* VPSUBSWYrm */
   0x34ce, /* VPSUBSWYrr */
-/* Table5411 */
+/* Table5413 */
   0x2acf, /* VPMINSWYrm */
   0x2ad0, /* VPMINSWYrr */
-/* Table5413 */
+/* Table5415 */
   0x2ef6, /* VPORYrm */
   0x2ef7, /* VPORYrr */
-/* Table5415 */
+/* Table5417 */
   0x2151, /* VPADDSBYrm */
   0x2152, /* VPADDSBYrr */
-/* Table5417 */
+/* Table5419 */
   0x2167, /* VPADDSWYrm */
   0x2168, /* VPADDSWYrr */
-/* Table5419 */
+/* Table5421 */
   0x2a03, /* VPMAXSWYrm */
   0x2a04, /* VPMAXSWYrr */
-/* Table5421 */
+/* Table5423 */
   0x36e1, /* VPXORYrm */
   0x36e2, /* VPXORYrr */
-/* Table5423 */
+/* Table5425 */
   0x327c, /* VPSLLWYrm */
   0x327d, /* VPSLLWYrr */
-/* Table5425 */
+/* Table5427 */
   0x31c6, /* VPSLLDYrm */
   0x31c7, /* VPSLLDYrr */
-/* Table5427 */
+/* Table5429 */
   0x31f9, /* VPSLLQYrm */
   0x31fa, /* VPSLLQYrr */
-/* Table5429 */
+/* Table5431 */
   0x2e47, /* VPMULUDQYrm */
   0x2e48, /* VPMULUDQYrr */
-/* Table5431 */
+/* Table5433 */
   0x2995, /* VPMADDWDYrm */
   0x2996, /* VPMADDWDYrr */
-/* Table5433 */
+/* Table5435 */
   0x2fee, /* VPSADBWYrm */
   0x2fef, /* VPSADBWYrr */
-/* Table5435 */
+/* Table5437 */
   0x3463, /* VPSUBBYrm */
   0x3464, /* VPSUBBYrr */
-/* Table5437 */
+/* Table5439 */
   0x350f, /* VPSUBWYrm */
   0x3510, /* VPSUBWYrr */
-/* Table5439 */
+/* Table5441 */
   0x3479, /* VPSUBDYrm */
   0x347a, /* VPSUBDYrr */
-/* Table5441 */
+/* Table5443 */
   0x3498, /* VPSUBQYrm */
   0x3499, /* VPSUBQYrr */
-/* Table5443 */
+/* Table5445 */
   0x20fd, /* VPADDBYrm */
   0x20fe, /* VPADDBYrr */
-/* Table5445 */
+/* Table5447 */
   0x21a9, /* VPADDWYrm */
   0x21aa, /* VPADDWYrr */
-/* Table5447 */
+/* Table5449 */
   0x2113, /* VPADDDYrm */
   0x2114, /* VPADDDYrr */
-/* Table5449 */
-  0x0, /*  */
-  0x489, /* KANDQrr */
 /* Table5451 */
   0x0, /*  */
-  0x487, /* KANDNQrr */
+  0x489, /* KANDQrr */
 /* Table5453 */
   0x0, /*  */
-  0x4a5, /* KORQrr */
+  0x487, /* KANDNQrr */
 /* Table5455 */
   0x0, /*  */
-  0x4bc, /* KXNORQrr */
+  0x4a5, /* KORQrr */
 /* Table5457 */
   0x0, /*  */
-  0x4c0, /* KXORQrr */
+  0x4bc, /* KXNORQrr */
 /* Table5459 */
   0x0, /*  */
-  0x481, /* KADDQrr */
+  0x4c0, /* KXORQrr */
 /* Table5461 */
   0x0, /*  */
-  0x4b8, /* KUNPCKDQrr */
+  0x481, /* KADDQrr */
 /* Table5463 */
   0x0, /*  */
-  0x484, /* KANDDrr */
+  0x4b8, /* KUNPCKDQrr */
 /* Table5465 */
   0x0, /*  */
-  0x486, /* KANDNDrr */
+  0x484, /* KANDDrr */
 /* Table5467 */
   0x0, /*  */
-  0x4a4, /* KORDrr */
+  0x486, /* KANDNDrr */
 /* Table5469 */
   0x0, /*  */
-  0x4bb, /* KXNORDrr */
+  0x4a4, /* KORDrr */
 /* Table5471 */
   0x0, /*  */
-  0x4bf, /* KXORDrr */
+  0x4bb, /* KXNORDrr */
 /* Table5473 */
   0x0, /*  */
-  0x480, /* KADDDrr */
+  0x4bf, /* KXORDrr */
 /* Table5475 */
+  0x0, /*  */
+  0x480, /* KADDDrr */
+/* Table5477 */
   0x1f4d, /* VMOVUPSZ128rm */
   0x1f50, /* VMOVUPSZ128rr */
-/* Table5477 */
+/* Table5479 */
   0x1f4b, /* VMOVUPSZ128mr */
   0x1f51, /* VMOVUPSZ128rr_REV */
-/* Table5479 */
+/* Table5481 */
   0x1ea3, /* VMOVLPSZ128rm */
   0x1e92, /* VMOVHLPSZrr */
-/* Table5481 */
+/* Table5483 */
   0x1ea2, /* VMOVLPSZ128mr */
   0x0, /*  */
-/* Table5483 */
+/* Table5485 */
   0x3af1, /* VUNPCKLPSZ128rm */
   0x3af7, /* VUNPCKLPSZ128rr */
-/* Table5485 */
+/* Table5487 */
   0x3ab3, /* VUNPCKHPSZ128rm */
   0x3ab9, /* VUNPCKHPSZ128rr */
-/* Table5487 */
+/* Table5489 */
   0x1e99, /* VMOVHPSZ128rm */
   0x1e9c, /* VMOVLHPSZrr */
-/* Table5489 */
+/* Table5491 */
   0x1e98, /* VMOVHPSZ128mr */
   0x0, /*  */
-/* Table5491 */
+/* Table5493 */
   0x1d7b, /* VMOVAPSZ128rm */
   0x1d7e, /* VMOVAPSZ128rr */
-/* Table5493 */
+/* Table5495 */
   0x1d79, /* VMOVAPSZ128mr */
   0x1d7f, /* VMOVAPSZ128rr_REV */
-/* Table5495 */
+/* Table5497 */
   0x1eba, /* VMOVNTPSZ128mr */
   0x0, /*  */
-/* Table5497 */
+/* Table5499 */
   0x3a89, /* VUCOMISSZrm */
   0x3a8b, /* VUCOMISSZrr */
-/* Table5499 */
+/* Table5501 */
   0xddf, /* VCOMISSZrm */
   0xde1, /* VCOMISSZrr */
-/* Table5501 */
+/* Table5503 */
   0x39d7, /* VSQRTPSZ128m */
   0x39dd, /* VSQRTPSZ128r */
-/* Table5503 */
+/* Table5505 */
   0xc83, /* VANDPSZ128rm */
   0xc89, /* VANDPSZ128rr */
-/* Table5505 */
+/* Table5507 */
   0xc45, /* VANDNPSZ128rm */
   0xc4b, /* VANDNPSZ128rr */
-/* Table5507 */
+/* Table5509 */
   0x200a, /* VORPSZ128rm */
   0x2010, /* VORPSZ128rr */
-/* Table5509 */
+/* Table5511 */
   0x3b2f, /* VXORPSZ128rm */
   0x3b35, /* VXORPSZ128rr */
-/* Table5511 */
+/* Table5513 */
   0xb7c, /* VADDPSZ128rm */
   0xb82, /* VADDPSZ128rr */
-/* Table5513 */
+/* Table5515 */
   0x1fa5, /* VMULPSZ128rm */
   0x1fab, /* VMULPSZ128rr */
-/* Table5515 */
+/* Table5517 */
   0xf22, /* VCVTPS2PDZ128rm */
   0xf28, /* VCVTPS2PDZ128rr */
-/* Table5517 */
+/* Table5519 */
   0xe27, /* VCVTDQ2PSZ128rm */
   0xe2d, /* VCVTDQ2PSZ128rr */
-/* Table5519 */
+/* Table5521 */
   0x3a3a, /* VSUBPSZ128rm */
   0x3a40, /* VSUBPSZ128rr */
-/* Table5521 */
+/* Table5523 */
   0x1d02, /* VMINPSZ128rm */
   0x1d08, /* VMINPSZ128rr */
-/* Table5523 */
+/* Table5525 */
   0x123e, /* VDIVPSZ128rm */
   0x1244, /* VDIVPSZ128rr */
-/* Table5525 */
+/* Table5527 */
   0x1c57, /* VMAXPSZ128rm */
   0x1c5d, /* VMAXPSZ128rr */
-/* Table5527 */
+/* Table5529 */
   0x110c, /* VCVTTPS2UDQZ128rm */
   0x1112, /* VCVTTPS2UDQZ128rr */
-/* Table5529 */
+/* Table5531 */
   0xf76, /* VCVTPS2UDQZ128rm */
   0xf7c, /* VCVTPS2UDQZ128rr */
-/* Table5531 */
+/* Table5533 */
   0xd86, /* VCMPPSZ128rmi */
   0xd8a, /* VCMPPSZ128rri */
-/* Table5533 */
+/* Table5535 */
   0x3999, /* VSHUFPSZ128rmi */
   0x399c, /* VSHUFPSZ128rri */
-/* Table5535 */
+/* Table5537 */
   0x1f11, /* VMOVSSZrm */
   0x1f14, /* VMOVSSZrr */
-/* Table5537 */
+/* Table5539 */
   0x1f0f, /* VMOVSSZmr */
   0x1f15, /* VMOVSSZrr_REV */
-/* Table5539 */
+/* Table5541 */
   0x1ef7, /* VMOVSLDUPZ128rm */
   0x1efa, /* VMOVSLDUPZ128rr */
-/* Table5541 */
+/* Table5543 */
   0x1ee1, /* VMOVSHDUPZ128rm */
   0x1ee4, /* VMOVSHDUPZ128rr */
-/* Table5543 */
+/* Table5545 */
   0x1016, /* VCVTSI2SSZrm */
   0x1018, /* VCVTSI2SSZrr */
-/* Table5545 */
+/* Table5547 */
   0x116e, /* VCVTTSS2SIZrm_Int */
   0x1170, /* VCVTTSS2SIZrr_Int */
-/* Table5547 */
+/* Table5549 */
   0x1045, /* VCVTSS2SIZrm_Int */
   0x1046, /* VCVTSS2SIZrr_Int */
-/* Table5549 */
+/* Table5551 */
   0x3a07, /* VSQRTSSZm_Int */
   0x3a0b, /* VSQRTSSZr_Int */
-/* Table5551 */
+/* Table5553 */
   0xbac, /* VADDSSZrm_Int */
   0xbb0, /* VADDSSZrr_Int */
-/* Table5553 */
+/* Table5555 */
   0x1fd5, /* VMULSSZrm_Int */
   0x1fd9, /* VMULSSZrr_Int */
-/* Table5555 */
+/* Table5557 */
   0x1032, /* VCVTSS2SDZrm_Int */
   0x1036, /* VCVTSS2SDZrr_Int */
-/* Table5557 */
+/* Table5559 */
   0x10ce, /* VCVTTPS2DQZ128rm */
   0x10d4, /* VCVTTPS2DQZ128rr */
-/* Table5559 */
+/* Table5561 */
   0x3a6a, /* VSUBSSZrm_Int */
   0x3a6e, /* VSUBSSZrr_Int */
-/* Table5561 */
+/* Table5563 */
   0x1d32, /* VMINSSZrm_Int */
   0x1d36, /* VMINSSZrr_Int */
-/* Table5563 */
+/* Table5565 */
   0x126e, /* VDIVSSZrm_Int */
   0x1272, /* VDIVSSZrr_Int */
-/* Table5565 */
+/* Table5567 */
   0x1c87, /* VMAXSSZrm_Int */
   0x1c8b, /* VMAXSSZrr_Int */
-/* Table5567 */
+/* Table5569 */
   0x1e29, /* VMOVDQU32Z128rm */
   0x1e2c, /* VMOVDQU32Z128rr */
-/* Table5569 */
+/* Table5571 */
   0x3187, /* VPSHUFHWZ128mi */
   0x318a, /* VPSHUFHWZ128ri */
-/* Table5571 */
+/* Table5573 */
   0x117c, /* VCVTTSS2USIZrm_Int */
   0x117e, /* VCVTTSS2USIZrr_Int */
-/* Table5573 */
+/* Table5575 */
   0x104d, /* VCVTSS2USIZrm_Int */
   0x104e, /* VCVTSS2USIZrr_Int */
-/* Table5575 */
+/* Table5577 */
   0x1180, /* VCVTUDQ2PDZ128rm */
   0x1186, /* VCVTUDQ2PDZ128rr */
-/* Table5577 */
+/* Table5579 */
   0x11f9, /* VCVTUSI2SSZrm */
   0x11fb, /* VCVTUSI2SSZrr */
-/* Table5579 */
+/* Table5581 */
   0x1e27, /* VMOVDQU32Z128mr */
   0x1e2d, /* VMOVDQU32Z128rr_REV */
-/* Table5581 */
+/* Table5583 */
   0xdc3, /* VCMPSSZrm_Int */
   0xdc8, /* VCMPSSZrr_Int */
-/* Table5583 */
+/* Table5585 */
   0xe08, /* VCVTDQ2PDZ128rm */
   0xe0e, /* VCVTDQ2PDZ128rr */
-/* Table5585 */
+/* Table5587 */
   0x100d, /* VCVTSI2SDZrm */
   0x100f, /* VCVTSI2SDZrr */
-/* Table5587 */
+/* Table5589 */
   0x1152, /* VCVTTSD2SIZrm_Int */
   0x1154, /* VCVTTSD2SIZrr_Int */
-/* Table5589 */
+/* Table5591 */
   0xff3, /* VCVTSD2SIZrm_Int */
   0xff4, /* VCVTSD2SIZrr_Int */
-/* Table5591 */
+/* Table5593 */
   0x1e6b, /* VMOVDQU8Z128rm */
   0x1e6e, /* VMOVDQU8Z128rr */
-/* Table5593 */
+/* Table5595 */
   0x319d, /* VPSHUFLWZ128mi */
   0x31a0, /* VPSHUFLWZ128ri */
-/* Table5595 */
+/* Table5597 */
   0x1160, /* VCVTTSD2USIZrm_Int */
   0x1162, /* VCVTTSD2USIZrr_Int */
-/* Table5597 */
+/* Table5599 */
   0x100a, /* VCVTSD2USIZrm_Int */
   0x100b, /* VCVTSD2USIZrr_Int */
-/* Table5599 */
+/* Table5601 */
   0x119b, /* VCVTUDQ2PSZ128rm */
   0x11a1, /* VCVTUDQ2PSZ128rr */
-/* Table5601 */
+/* Table5603 */
   0x11f5, /* VCVTUSI2SDZrm */
   0x11f7, /* VCVTUSI2SDZrr */
-/* Table5603 */
+/* Table5605 */
   0x1e69, /* VMOVDQU8Z128mr */
   0x1e6f, /* VMOVDQU8Z128rr_REV */
-/* Table5605 */
+/* Table5607 */
   0xf00, /* VCVTPS2DQZ128rm */
   0xf06, /* VCVTPS2DQZ128rr */
-/* Table5607 */
+/* Table5609 */
   0x3643, /* VPUNPCKLBWZ128rm */
   0x3646, /* VPUNPCKLBWZ128rr */
-/* Table5609 */
+/* Table5611 */
   0x3697, /* VPUNPCKLWDZ128rm */
   0x369a, /* VPUNPCKLWDZ128rr */
-/* Table5611 */
+/* Table5613 */
   0x3659, /* VPUNPCKLDQZ128rm */
   0x365f, /* VPUNPCKLDQZ128rr */
-/* Table5613 */
+/* Table5615 */
   0x20b4, /* VPACKSSWBZ128rm */
   0x20b7, /* VPACKSSWBZ128rr */
-/* Table5615 */
+/* Table5617 */
   0x23fd, /* VPCMPGTBZ128rm */
   0x23ff, /* VPCMPGTBZ128rr */
-/* Table5617 */
+/* Table5619 */
   0x2439, /* VPCMPGTWZ128rm */
   0x243b, /* VPCMPGTWZ128rr */
-/* Table5619 */
+/* Table5621 */
   0x240d, /* VPCMPGTDZ128rm */
   0x2411, /* VPCMPGTDZ128rr */
-/* Table5621 */
+/* Table5623 */
   0x20e9, /* VPACKUSWBZ128rm */
   0x20ec, /* VPACKUSWBZ128rr */
-/* Table5623 */
+/* Table5625 */
   0x35d9, /* VPUNPCKHBWZ128rm */
   0x35dc, /* VPUNPCKHBWZ128rr */
-/* Table5625 */
+/* Table5627 */
   0x362d, /* VPUNPCKHWDZ128rm */
   0x3630, /* VPUNPCKHWDZ128rr */
-/* Table5627 */
+/* Table5629 */
   0x35ef, /* VPUNPCKHDQZ128rm */
   0x35f5, /* VPUNPCKHDQZ128rr */
-/* Table5629 */
+/* Table5631 */
   0x2095, /* VPACKSSDWZ128rm */
   0x209b, /* VPACKSSDWZ128rr */
-/* Table5631 */
+/* Table5633 */
   0x1db4, /* VMOVDI2PDIZrm */
   0x1db5, /* VMOVDI2PDIZrr */
-/* Table5633 */
+/* Table5635 */
   0x1dbe, /* VMOVDQA32Z128rm */
   0x1dc1, /* VMOVDQA32Z128rr */
-/* Table5635 */
+/* Table5637 */
   0x316b, /* VPSHUFDZ128mi */
   0x316e, /* VPSHUFDZ128ri */
-/* Table5637 */
+/* Table5639 */
   0x0, /*  */
   0x0, /*  */
   0x343c, /* VPSRLWZ128mi */
@@ -92020,7 +92022,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3281, /* VPSLLWZ128ri */
   0x0, /*  */
-/* Table5653 */
+/* Table5655 */
   0x2f6d, /* VPRORDZ128mi */
   0x2f01, /* VPROLDZ128mi */
   0x3389, /* VPSRLDZ128mi */
@@ -92037,7 +92039,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31ce, /* VPSLLDZ128ri */
   0x0, /*  */
-/* Table5669 */
+/* Table5671 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -92054,343 +92056,343 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x31bf, /* VPSLLDQZ128rr */
-/* Table5685 */
+/* Table5687 */
   0x23ad, /* VPCMPEQBZ128rm */
   0x23af, /* VPCMPEQBZ128rr */
-/* Table5687 */
+/* Table5689 */
   0x23e9, /* VPCMPEQWZ128rm */
   0x23eb, /* VPCMPEQWZ128rr */
-/* Table5689 */
+/* Table5691 */
   0x23bd, /* VPCMPEQDZ128rm */
   0x23c1, /* VPCMPEQDZ128rr */
-/* Table5691 */
+/* Table5693 */
   0x112a, /* VCVTTPS2UQQZ128rm */
   0x1130, /* VCVTTPS2UQQZ128rr */
-/* Table5693 */
+/* Table5695 */
   0xf94, /* VCVTPS2UQQZ128rm */
   0xf9a, /* VCVTPS2UQQZ128rr */
-/* Table5695 */
+/* Table5697 */
   0x10ee, /* VCVTTPS2QQZ128rm */
   0x10f4, /* VCVTTPS2QQZ128rr */
-/* Table5697 */
+/* Table5699 */
   0xf58, /* VCVTPS2QQZ128rm */
   0xf5e, /* VCVTPS2QQZ128rr */
-/* Table5699 */
+/* Table5701 */
   0x1ebe, /* VMOVPDI2DIZmr */
   0x1ebf, /* VMOVPDI2DIZrr */
-/* Table5701 */
+/* Table5703 */
   0x1dbc, /* VMOVDQA32Z128mr */
   0x1dc2, /* VMOVDQA32Z128rr_REV */
-/* Table5703 */
+/* Table5705 */
   0x28f7, /* VPINSRWZrm */
   0x28f8, /* VPINSRWZrr */
-/* Table5705 */
+/* Table5707 */
   0x0, /*  */
   0x289a, /* VPEXTRWZrr */
-/* Table5707 */
+/* Table5709 */
   0x3442, /* VPSRLWZ128rm */
   0x3445, /* VPSRLWZ128rr */
-/* Table5709 */
+/* Table5711 */
   0x338f, /* VPSRLDZ128rm */
   0x3392, /* VPSRLDZ128rr */
-/* Table5711 */
+/* Table5713 */
   0x2e18, /* VPMULLWZ128rm */
   0x2e1b, /* VPMULLWZ128rr */
-/* Table5713 */
+/* Table5715 */
   0x34e5, /* VPSUBUSBZ128rm */
   0x34e8, /* VPSUBUSBZ128rr */
-/* Table5715 */
+/* Table5717 */
   0x34fb, /* VPSUBUSWZ128rm */
   0x34fe, /* VPSUBUSWZ128rr */
-/* Table5717 */
+/* Table5719 */
   0x2ae7, /* VPMINUBZ128rm */
   0x2aea, /* VPMINUBZ128rr */
-/* Table5719 */
+/* Table5721 */
   0x21d5, /* VPANDDZ128rm */
   0x21db, /* VPANDDZ128rr */
-/* Table5721 */
+/* Table5723 */
   0x217f, /* VPADDUSBZ128rm */
   0x2182, /* VPADDUSBZ128rr */
-/* Table5723 */
+/* Table5725 */
   0x2195, /* VPADDUSWZ128rm */
   0x2198, /* VPADDUSWZ128rr */
-/* Table5725 */
+/* Table5727 */
   0x2a1b, /* VPMAXUBZ128rm */
   0x2a1e, /* VPMAXUBZ128rr */
-/* Table5727 */
+/* Table5729 */
   0x21f0, /* VPANDNDZ128rm */
   0x21f6, /* VPANDNDZ128rr */
-/* Table5729 */
+/* Table5731 */
   0x224b, /* VPAVGBZ128rm */
   0x224e, /* VPAVGBZ128rr */
-/* Table5731 */
+/* Table5733 */
   0x335a, /* VPSRAWZ128rm */
   0x335d, /* VPSRAWZ128rr */
-/* Table5733 */
+/* Table5735 */
   0x32b1, /* VPSRADZ128rm */
   0x32b4, /* VPSRADZ128rr */
-/* Table5735 */
+/* Table5737 */
   0x2261, /* VPAVGWZ128rm */
   0x2264, /* VPAVGWZ128rr */
-/* Table5737 */
+/* Table5739 */
   0x2db2, /* VPMULHUWZ128rm */
   0x2db5, /* VPMULHUWZ128rr */
-/* Table5739 */
+/* Table5741 */
   0x2dc8, /* VPMULHWZ128rm */
   0x2dcb, /* VPMULHWZ128rr */
-/* Table5741 */
+/* Table5743 */
   0x1eb0, /* VMOVNTDQZ128mr */
   0x0, /*  */
-/* Table5743 */
+/* Table5745 */
   0x34b9, /* VPSUBSBZ128rm */
   0x34bc, /* VPSUBSBZ128rr */
-/* Table5745 */
+/* Table5747 */
   0x34cf, /* VPSUBSWZ128rm */
   0x34d2, /* VPSUBSWZ128rr */
-/* Table5747 */
+/* Table5749 */
   0x2ad1, /* VPMINSWZ128rm */
   0x2ad4, /* VPMINSWZ128rr */
-/* Table5749 */
+/* Table5751 */
   0x2ec0, /* VPORDZ128rm */
   0x2ec6, /* VPORDZ128rr */
-/* Table5751 */
+/* Table5753 */
   0x2153, /* VPADDSBZ128rm */
   0x2156, /* VPADDSBZ128rr */
-/* Table5753 */
+/* Table5755 */
   0x2169, /* VPADDSWZ128rm */
   0x216c, /* VPADDSWZ128rr */
-/* Table5755 */
+/* Table5757 */
   0x2a05, /* VPMAXSWZ128rm */
   0x2a08, /* VPMAXSWZ128rr */
-/* Table5757 */
+/* Table5759 */
   0x36ab, /* VPXORDZ128rm */
   0x36b1, /* VPXORDZ128rr */
-/* Table5759 */
+/* Table5761 */
   0x3284, /* VPSLLWZ128rm */
   0x3287, /* VPSLLWZ128rr */
-/* Table5761 */
+/* Table5763 */
   0x31d1, /* VPSLLDZ128rm */
   0x31d4, /* VPSLLDZ128rr */
-/* Table5763 */
+/* Table5765 */
   0x2997, /* VPMADDWDZ128rm */
   0x299a, /* VPMADDWDZ128rr */
-/* Table5765 */
+/* Table5767 */
   0x2ff0, /* VPSADBWZ128rm */
   0x2ff1, /* VPSADBWZ128rr */
-/* Table5767 */
+/* Table5769 */
   0x3465, /* VPSUBBZ128rm */
   0x3468, /* VPSUBBZ128rr */
-/* Table5769 */
+/* Table5771 */
   0x3511, /* VPSUBWZ128rm */
   0x3514, /* VPSUBWZ128rr */
-/* Table5771 */
+/* Table5773 */
   0x347b, /* VPSUBDZ128rm */
   0x3481, /* VPSUBDZ128rr */
-/* Table5773 */
+/* Table5775 */
   0x20ff, /* VPADDBZ128rm */
   0x2102, /* VPADDBZ128rr */
-/* Table5775 */
+/* Table5777 */
   0x21ab, /* VPADDWZ128rm */
   0x21ae, /* VPADDWZ128rr */
-/* Table5777 */
+/* Table5779 */
   0x2115, /* VPADDDZ128rm */
   0x211b, /* VPADDDZ128rr */
-/* Table5779 */
+/* Table5781 */
   0xfd0, /* VCVTQQ2PSZ128rm */
   0xfd6, /* VCVTQQ2PSZ128rr */
-/* Table5781 */
+/* Table5783 */
   0x1090, /* VCVTTPD2UDQZ128rm */
   0x1096, /* VCVTTPD2UDQZ128rr */
-/* Table5783 */
+/* Table5785 */
   0xea9, /* VCVTPD2UDQZ128rm */
   0xeaf, /* VCVTPD2UDQZ128rr */
-/* Table5785 */
+/* Table5787 */
   0x1028, /* VCVTSI642SSZrm */
   0x102a, /* VCVTSI642SSZrr */
-/* Table5787 */
+/* Table5789 */
   0x1165, /* VCVTTSS2SI64Zrm_Int */
   0x1167, /* VCVTTSS2SI64Zrr_Int */
-/* Table5789 */
+/* Table5791 */
   0x1040, /* VCVTSS2SI64Zrm_Int */
   0x1041, /* VCVTSS2SI64Zrr_Int */
-/* Table5791 */
+/* Table5793 */
   0x1e4a, /* VMOVDQU64Z128rm */
   0x1e4d, /* VMOVDQU64Z128rr */
-/* Table5793 */
+/* Table5795 */
   0x1177, /* VCVTTSS2USI64Zrm_Int */
   0x1179, /* VCVTTSS2USI64Zrr_Int */
-/* Table5795 */
+/* Table5797 */
   0x104a, /* VCVTSS2USI64Zrm_Int */
   0x104b, /* VCVTSS2USI64Zrr_Int */
-/* Table5797 */
+/* Table5799 */
   0x11b9, /* VCVTUQQ2PDZ128rm */
   0x11bf, /* VCVTUQQ2PDZ128rr */
-/* Table5799 */
+/* Table5801 */
   0x1203, /* VCVTUSI642SSZrm */
   0x1205, /* VCVTUSI642SSZrr */
-/* Table5801 */
+/* Table5803 */
   0x1eca, /* VMOVQI2PQIZrm */
   0x1f70, /* VMOVZPQILo2PQIZrr */
-/* Table5803 */
+/* Table5805 */
   0x1e48, /* VMOVDQU64Z128mr */
   0x1e4e, /* VMOVDQU64Z128rr_REV */
-/* Table5805 */
+/* Table5807 */
   0xfb2, /* VCVTQQ2PDZ128rm */
   0xfb8, /* VCVTQQ2PDZ128rr */
-/* Table5807 */
+/* Table5809 */
   0x1ece, /* VMOVSDZrm */
   0x1ed1, /* VMOVSDZrr */
-/* Table5809 */
+/* Table5811 */
   0x1ecc, /* VMOVSDZmr */
   0x1ed2, /* VMOVSDZrr_REV */
-/* Table5811 */
+/* Table5813 */
   0x1da0, /* VMOVDDUPZ128rm */
   0x1da3, /* VMOVDDUPZ128rr */
-/* Table5813 */
+/* Table5815 */
   0x101f, /* VCVTSI642SDZrm */
   0x1021, /* VCVTSI642SDZrr */
-/* Table5815 */
+/* Table5817 */
   0x1149, /* VCVTTSD2SI64Zrm_Int */
   0x114b, /* VCVTTSD2SI64Zrr_Int */
-/* Table5817 */
+/* Table5819 */
   0xfee, /* VCVTSD2SI64Zrm_Int */
   0xfef, /* VCVTSD2SI64Zrr_Int */
-/* Table5819 */
+/* Table5821 */
   0x39f8, /* VSQRTSDZm_Int */
   0x39fc, /* VSQRTSDZr_Int */
-/* Table5821 */
+/* Table5823 */
   0xb9d, /* VADDSDZrm_Int */
   0xba1, /* VADDSDZrr_Int */
-/* Table5823 */
+/* Table5825 */
   0x1fc6, /* VMULSDZrm_Int */
   0x1fca, /* VMULSDZrr_Int */
-/* Table5825 */
+/* Table5827 */
   0xff9, /* VCVTSD2SSZrm_Int */
   0xffd, /* VCVTSD2SSZrr_Int */
-/* Table5827 */
+/* Table5829 */
   0x3a5b, /* VSUBSDZrm_Int */
   0x3a5f, /* VSUBSDZrr_Int */
-/* Table5829 */
+/* Table5831 */
   0x1d23, /* VMINSDZrm_Int */
   0x1d27, /* VMINSDZrr_Int */
-/* Table5831 */
+/* Table5833 */
   0x125f, /* VDIVSDZrm_Int */
   0x1263, /* VDIVSDZrr_Int */
-/* Table5833 */
+/* Table5835 */
   0x1c78, /* VMAXSDZrm_Int */
   0x1c7c, /* VMAXSDZrr_Int */
-/* Table5835 */
+/* Table5837 */
   0x1e08, /* VMOVDQU16Z128rm */
   0x1e0b, /* VMOVDQU16Z128rr */
-/* Table5837 */
+/* Table5839 */
   0x115b, /* VCVTTSD2USI64Zrm_Int */
   0x115d, /* VCVTTSD2USI64Zrr_Int */
-/* Table5839 */
+/* Table5841 */
   0x1007, /* VCVTSD2USI64Zrm_Int */
   0x1008, /* VCVTSD2USI64Zrr_Int */
-/* Table5841 */
+/* Table5843 */
   0x11d7, /* VCVTUQQ2PSZ128rm */
   0x11dd, /* VCVTUQQ2PSZ128rr */
-/* Table5843 */
+/* Table5845 */
   0x11fe, /* VCVTUSI642SDZrm */
   0x1200, /* VCVTUSI642SDZrr */
-/* Table5845 */
+/* Table5847 */
   0x1e06, /* VMOVDQU16Z128mr */
   0x1e0c, /* VMOVDQU16Z128rr_REV */
-/* Table5847 */
+/* Table5849 */
   0xdaf, /* VCMPSDZrm_Int */
   0xdb4, /* VCMPSDZrr_Int */
-/* Table5849 */
+/* Table5851 */
   0xe49, /* VCVTPD2DQZ128rm */
   0xe4f, /* VCVTPD2DQZ128rr */
-/* Table5851 */
+/* Table5853 */
   0x1f24, /* VMOVUPDZ128rm */
   0x1f27, /* VMOVUPDZ128rr */
-/* Table5853 */
+/* Table5855 */
   0x1f22, /* VMOVUPDZ128mr */
   0x1f28, /* VMOVUPDZ128rr_REV */
-/* Table5855 */
+/* Table5857 */
   0x1e9f, /* VMOVLPDZ128rm */
   0x0, /*  */
-/* Table5857 */
+/* Table5859 */
   0x1e9e, /* VMOVLPDZ128mr */
   0x0, /*  */
-/* Table5859 */
+/* Table5861 */
   0x3ad2, /* VUNPCKLPDZ128rm */
   0x3ad8, /* VUNPCKLPDZ128rr */
-/* Table5861 */
+/* Table5863 */
   0x3a94, /* VUNPCKHPDZ128rm */
   0x3a9a, /* VUNPCKHPDZ128rr */
-/* Table5863 */
+/* Table5865 */
   0x1e95, /* VMOVHPDZ128rm */
   0x0, /*  */
-/* Table5865 */
+/* Table5867 */
   0x1e94, /* VMOVHPDZ128mr */
   0x0, /*  */
-/* Table5867 */
+/* Table5869 */
   0x1d52, /* VMOVAPDZ128rm */
   0x1d55, /* VMOVAPDZ128rr */
-/* Table5869 */
+/* Table5871 */
   0x1d50, /* VMOVAPDZ128mr */
   0x1d56, /* VMOVAPDZ128rr_REV */
-/* Table5871 */
+/* Table5873 */
   0x1eb5, /* VMOVNTPDZ128mr */
   0x0, /*  */
-/* Table5873 */
+/* Table5875 */
   0x3a80, /* VUCOMISDZrm */
   0x3a82, /* VUCOMISDZrr */
-/* Table5875 */
+/* Table5877 */
   0xdd6, /* VCOMISDZrm */
   0xdd8, /* VCOMISDZrr */
-/* Table5877 */
+/* Table5879 */
   0x39b5, /* VSQRTPDZ128m */
   0x39bb, /* VSQRTPDZ128r */
-/* Table5879 */
+/* Table5881 */
   0xc64, /* VANDPDZ128rm */
   0xc6a, /* VANDPDZ128rr */
-/* Table5881 */
+/* Table5883 */
   0xc26, /* VANDNPDZ128rm */
   0xc2c, /* VANDNPDZ128rr */
-/* Table5883 */
+/* Table5885 */
   0x1feb, /* VORPDZ128rm */
   0x1ff1, /* VORPDZ128rr */
-/* Table5885 */
+/* Table5887 */
   0x3b10, /* VXORPDZ128rm */
   0x3b16, /* VXORPDZ128rr */
-/* Table5887 */
+/* Table5889 */
   0xb5a, /* VADDPDZ128rm */
   0xb60, /* VADDPDZ128rr */
-/* Table5889 */
+/* Table5891 */
   0x1f83, /* VMULPDZ128rm */
   0x1f89, /* VMULPDZ128rr */
-/* Table5891 */
+/* Table5893 */
   0xe6b, /* VCVTPD2PSZ128rm */
   0xe71, /* VCVTPD2PSZ128rr */
-/* Table5893 */
+/* Table5895 */
   0x3a18, /* VSUBPDZ128rm */
   0x3a1e, /* VSUBPDZ128rr */
-/* Table5895 */
+/* Table5897 */
   0x1ce0, /* VMINPDZ128rm */
   0x1ce6, /* VMINPDZ128rr */
-/* Table5897 */
+/* Table5899 */
   0x121c, /* VDIVPDZ128rm */
   0x1222, /* VDIVPDZ128rr */
-/* Table5899 */
+/* Table5901 */
   0x1c35, /* VMAXPDZ128rm */
   0x1c3b, /* VMAXPDZ128rr */
-/* Table5901 */
+/* Table5903 */
   0x3678, /* VPUNPCKLQDQZ128rm */
   0x367e, /* VPUNPCKLQDQZ128rr */
-/* Table5903 */
+/* Table5905 */
   0x360e, /* VPUNPCKHQDQZ128rm */
   0x3614, /* VPUNPCKHQDQZ128rr */
-/* Table5905 */
+/* Table5907 */
   0x1d44, /* VMOV64toPQIZrm */
   0x1d45, /* VMOV64toPQIZrr */
-/* Table5907 */
+/* Table5909 */
   0x1ddf, /* VMOVDQA64Z128rm */
   0x1de2, /* VMOVDQA64Z128rr */
-/* Table5909 */
+/* Table5911 */
   0x2f88, /* VPRORQZ128mi */
   0x2f1c, /* VPROLQZ128mi */
   0x0, /*  */
@@ -92407,7 +92409,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table5925 */
+/* Table5927 */
   0x0, /*  */
   0x0, /*  */
   0x33bc, /* VPSRLQZ128mi */
@@ -92424,220 +92426,220 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3201, /* VPSLLQZ128ri */
   0x31bf, /* VPSLLDQZ128rr */
-/* Table5941 */
+/* Table5943 */
   0x10ae, /* VCVTTPD2UQQZ128rm */
   0x10b4, /* VCVTTPD2UQQZ128rr */
-/* Table5943 */
+/* Table5945 */
   0xec7, /* VCVTPD2UQQZ128rm */
   0xecd, /* VCVTPD2UQQZ128rr */
-/* Table5945 */
+/* Table5947 */
   0x1072, /* VCVTTPD2QQZ128rm */
   0x1078, /* VCVTTPD2QQZ128rr */
-/* Table5947 */
+/* Table5949 */
   0xe8b, /* VCVTPD2QQZ128rm */
   0xe91, /* VCVTPD2QQZ128rr */
-/* Table5949 */
+/* Table5951 */
   0x1ec6, /* VMOVPQIto64Zmr */
   0x1ec7, /* VMOVPQIto64Zrr */
-/* Table5951 */
+/* Table5953 */
   0x1ddd, /* VMOVDQA64Z128mr */
   0x1de3, /* VMOVDQA64Z128rr_REV */
-/* Table5953 */
+/* Table5955 */
   0xd56, /* VCMPPDZ128rmi */
   0xd5a, /* VCMPPDZ128rri */
-/* Table5955 */
+/* Table5957 */
   0x397a, /* VSHUFPDZ128rmi */
   0x397d, /* VSHUFPDZ128rri */
-/* Table5957 */
+/* Table5959 */
   0x33c2, /* VPSRLQZ128rm */
   0x33c5, /* VPSRLQZ128rr */
-/* Table5959 */
+/* Table5961 */
   0x2134, /* VPADDQZ128rm */
   0x213a, /* VPADDQZ128rr */
-/* Table5961 */
+/* Table5963 */
   0x1ec2, /* VMOVPQI2QIZmr */
   0x1ec3, /* VMOVPQI2QIZrr */
-/* Table5963 */
+/* Table5965 */
   0x222a, /* VPANDQZ128rm */
   0x2230, /* VPANDQZ128rr */
-/* Table5965 */
+/* Table5967 */
   0x220b, /* VPANDNQZ128rm */
   0x2211, /* VPANDNQZ128rr */
-/* Table5967 */
+/* Table5969 */
   0x32e1, /* VPSRAQZ128rm */
   0x32e4, /* VPSRAQZ128rr */
-/* Table5969 */
+/* Table5971 */
   0x1052, /* VCVTTPD2DQZ128rm */
   0x1058, /* VCVTTPD2DQZ128rr */
-/* Table5971 */
+/* Table5973 */
   0x2edb, /* VPORQZ128rm */
   0x2ee1, /* VPORQZ128rr */
-/* Table5973 */
+/* Table5975 */
   0x36c6, /* VPXORQZ128rm */
   0x36cc, /* VPXORQZ128rr */
-/* Table5975 */
+/* Table5977 */
   0x3204, /* VPSLLQZ128rm */
   0x3207, /* VPSLLQZ128rr */
-/* Table5977 */
+/* Table5979 */
   0x2e49, /* VPMULUDQZ128rm */
   0x2e4f, /* VPMULUDQZ128rr */
-/* Table5979 */
+/* Table5981 */
   0x349a, /* VPSUBQZ128rm */
   0x34a0, /* VPSUBQZ128rr */
-/* Table5981 */
+/* Table5983 */
   0x1f58, /* VMOVUPSZ256rm */
   0x1f5b, /* VMOVUPSZ256rr */
-/* Table5983 */
+/* Table5985 */
   0x1f56, /* VMOVUPSZ256mr */
   0x1f5c, /* VMOVUPSZ256rr_REV */
-/* Table5985 */
+/* Table5987 */
   0x3afa, /* VUNPCKLPSZ256rm */
   0x3b00, /* VUNPCKLPSZ256rr */
-/* Table5987 */
+/* Table5989 */
   0x3abc, /* VUNPCKHPSZ256rm */
   0x3ac2, /* VUNPCKHPSZ256rr */
-/* Table5989 */
+/* Table5991 */
   0x1d86, /* VMOVAPSZ256rm */
   0x1d89, /* VMOVAPSZ256rr */
-/* Table5991 */
+/* Table5993 */
   0x1d84, /* VMOVAPSZ256mr */
   0x1d8a, /* VMOVAPSZ256rr_REV */
-/* Table5993 */
+/* Table5995 */
   0x1ebb, /* VMOVNTPSZ256mr */
   0x0, /*  */
-/* Table5995 */
+/* Table5997 */
   0x39e0, /* VSQRTPSZ256m */
   0x39e6, /* VSQRTPSZ256r */
-/* Table5997 */
+/* Table5999 */
   0xc8c, /* VANDPSZ256rm */
   0xc92, /* VANDPSZ256rr */
-/* Table5999 */
+/* Table6001 */
   0xc4e, /* VANDNPSZ256rm */
   0xc54, /* VANDNPSZ256rr */
-/* Table6001 */
+/* Table6003 */
   0x2013, /* VORPSZ256rm */
   0x2019, /* VORPSZ256rr */
-/* Table6003 */
+/* Table6005 */
   0x3b38, /* VXORPSZ256rm */
   0x3b3e, /* VXORPSZ256rr */
-/* Table6005 */
+/* Table6007 */
   0xb85, /* VADDPSZ256rm */
   0xb8b, /* VADDPSZ256rr */
-/* Table6007 */
+/* Table6009 */
   0x1fae, /* VMULPSZ256rm */
   0x1fb4, /* VMULPSZ256rr */
-/* Table6009 */
+/* Table6011 */
   0xf2b, /* VCVTPS2PDZ256rm */
   0xf31, /* VCVTPS2PDZ256rr */
-/* Table6011 */
+/* Table6013 */
   0xe30, /* VCVTDQ2PSZ256rm */
   0xe36, /* VCVTDQ2PSZ256rr */
-/* Table6013 */
+/* Table6015 */
   0x3a43, /* VSUBPSZ256rm */
   0x3a49, /* VSUBPSZ256rr */
-/* Table6015 */
+/* Table6017 */
   0x1d0b, /* VMINPSZ256rm */
   0x1d11, /* VMINPSZ256rr */
-/* Table6017 */
+/* Table6019 */
   0x1247, /* VDIVPSZ256rm */
   0x124d, /* VDIVPSZ256rr */
-/* Table6019 */
+/* Table6021 */
   0x1c60, /* VMAXPSZ256rm */
   0x1c66, /* VMAXPSZ256rr */
-/* Table6021 */
+/* Table6023 */
   0x1115, /* VCVTTPS2UDQZ256rm */
   0x111b, /* VCVTTPS2UDQZ256rr */
-/* Table6023 */
+/* Table6025 */
   0xf7f, /* VCVTPS2UDQZ256rm */
   0xf85, /* VCVTPS2UDQZ256rr */
-/* Table6025 */
+/* Table6027 */
   0xd92, /* VCMPPSZ256rmi */
   0xd96, /* VCMPPSZ256rri */
-/* Table6027 */
+/* Table6029 */
   0x39a2, /* VSHUFPSZ256rmi */
   0x39a5, /* VSHUFPSZ256rri */
-/* Table6029 */
+/* Table6031 */
   0x1efd, /* VMOVSLDUPZ256rm */
   0x1f00, /* VMOVSLDUPZ256rr */
-/* Table6031 */
+/* Table6033 */
   0x1ee7, /* VMOVSHDUPZ256rm */
   0x1eea, /* VMOVSHDUPZ256rr */
-/* Table6033 */
+/* Table6035 */
   0x10d7, /* VCVTTPS2DQZ256rm */
   0x10dd, /* VCVTTPS2DQZ256rr */
-/* Table6035 */
+/* Table6037 */
   0x1e34, /* VMOVDQU32Z256rm */
   0x1e37, /* VMOVDQU32Z256rr */
-/* Table6037 */
+/* Table6039 */
   0x318d, /* VPSHUFHWZ256mi */
   0x3190, /* VPSHUFHWZ256ri */
-/* Table6039 */
+/* Table6041 */
   0x1189, /* VCVTUDQ2PDZ256rm */
   0x118f, /* VCVTUDQ2PDZ256rr */
-/* Table6041 */
+/* Table6043 */
   0x1e32, /* VMOVDQU32Z256mr */
   0x1e38, /* VMOVDQU32Z256rr_REV */
-/* Table6043 */
+/* Table6045 */
   0xe11, /* VCVTDQ2PDZ256rm */
   0xe17, /* VCVTDQ2PDZ256rr */
-/* Table6045 */
+/* Table6047 */
   0x1e76, /* VMOVDQU8Z256rm */
   0x1e79, /* VMOVDQU8Z256rr */
-/* Table6047 */
+/* Table6049 */
   0x31a3, /* VPSHUFLWZ256mi */
   0x31a6, /* VPSHUFLWZ256ri */
-/* Table6049 */
+/* Table6051 */
   0x11a4, /* VCVTUDQ2PSZ256rm */
   0x11aa, /* VCVTUDQ2PSZ256rr */
-/* Table6051 */
+/* Table6053 */
   0x1e74, /* VMOVDQU8Z256mr */
   0x1e7a, /* VMOVDQU8Z256rr_REV */
-/* Table6053 */
+/* Table6055 */
   0xf09, /* VCVTPS2DQZ256rm */
   0xf0f, /* VCVTPS2DQZ256rr */
-/* Table6055 */
+/* Table6057 */
   0x3649, /* VPUNPCKLBWZ256rm */
   0x364c, /* VPUNPCKLBWZ256rr */
-/* Table6057 */
+/* Table6059 */
   0x369d, /* VPUNPCKLWDZ256rm */
   0x36a0, /* VPUNPCKLWDZ256rr */
-/* Table6059 */
+/* Table6061 */
   0x3662, /* VPUNPCKLDQZ256rm */
   0x3668, /* VPUNPCKLDQZ256rr */
-/* Table6061 */
+/* Table6063 */
   0x20ba, /* VPACKSSWBZ256rm */
   0x20bd, /* VPACKSSWBZ256rr */
-/* Table6063 */
+/* Table6065 */
   0x2401, /* VPCMPGTBZ256rm */
   0x2403, /* VPCMPGTBZ256rr */
-/* Table6065 */
+/* Table6067 */
   0x243d, /* VPCMPGTWZ256rm */
   0x243f, /* VPCMPGTWZ256rr */
-/* Table6067 */
+/* Table6069 */
   0x2413, /* VPCMPGTDZ256rm */
   0x2417, /* VPCMPGTDZ256rr */
-/* Table6069 */
+/* Table6071 */
   0x20ef, /* VPACKUSWBZ256rm */
   0x20f2, /* VPACKUSWBZ256rr */
-/* Table6071 */
+/* Table6073 */
   0x35df, /* VPUNPCKHBWZ256rm */
   0x35e2, /* VPUNPCKHBWZ256rr */
-/* Table6073 */
+/* Table6075 */
   0x3633, /* VPUNPCKHWDZ256rm */
   0x3636, /* VPUNPCKHWDZ256rr */
-/* Table6075 */
+/* Table6077 */
   0x35f8, /* VPUNPCKHDQZ256rm */
   0x35fe, /* VPUNPCKHDQZ256rr */
-/* Table6077 */
+/* Table6079 */
   0x209e, /* VPACKSSDWZ256rm */
   0x20a4, /* VPACKSSDWZ256rr */
-/* Table6079 */
+/* Table6081 */
   0x1dc9, /* VMOVDQA32Z256rm */
   0x1dcc, /* VMOVDQA32Z256rr */
-/* Table6081 */
+/* Table6083 */
   0x3174, /* VPSHUFDZ256mi */
   0x3177, /* VPSHUFDZ256ri */
-/* Table6083 */
+/* Table6085 */
   0x0, /*  */
   0x0, /*  */
   0x3448, /* VPSRLWZ256mi */
@@ -92654,7 +92656,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x328d, /* VPSLLWZ256ri */
   0x0, /*  */
-/* Table6099 */
+/* Table6101 */
   0x2f76, /* VPRORDZ256mi */
   0x2f0a, /* VPROLDZ256mi */
   0x3398, /* VPSRLDZ256mi */
@@ -92671,7 +92673,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31dd, /* VPSLLDZ256ri */
   0x0, /*  */
-/* Table6115 */
+/* Table6117 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -92688,241 +92690,241 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x31c1, /* VPSLLDQZ256rr */
-/* Table6131 */
+/* Table6133 */
   0x23b1, /* VPCMPEQBZ256rm */
   0x23b3, /* VPCMPEQBZ256rr */
-/* Table6133 */
+/* Table6135 */
   0x23ed, /* VPCMPEQWZ256rm */
   0x23ef, /* VPCMPEQWZ256rr */
-/* Table6135 */
+/* Table6137 */
   0x23c3, /* VPCMPEQDZ256rm */
   0x23c7, /* VPCMPEQDZ256rr */
-/* Table6137 */
+/* Table6139 */
   0x1133, /* VCVTTPS2UQQZ256rm */
   0x1139, /* VCVTTPS2UQQZ256rr */
-/* Table6139 */
+/* Table6141 */
   0xf9d, /* VCVTPS2UQQZ256rm */
   0xfa3, /* VCVTPS2UQQZ256rr */
-/* Table6141 */
+/* Table6143 */
   0x10f7, /* VCVTTPS2QQZ256rm */
   0x10fd, /* VCVTTPS2QQZ256rr */
-/* Table6143 */
+/* Table6145 */
   0xf61, /* VCVTPS2QQZ256rm */
   0xf67, /* VCVTPS2QQZ256rr */
-/* Table6145 */
+/* Table6147 */
   0x1dc7, /* VMOVDQA32Z256mr */
   0x1dcd, /* VMOVDQA32Z256rr_REV */
-/* Table6147 */
+/* Table6149 */
   0x344e, /* VPSRLWZ256rm */
   0x3451, /* VPSRLWZ256rr */
-/* Table6149 */
+/* Table6151 */
   0x339e, /* VPSRLDZ256rm */
   0x33a1, /* VPSRLDZ256rr */
-/* Table6151 */
+/* Table6153 */
   0x2e1e, /* VPMULLWZ256rm */
   0x2e21, /* VPMULLWZ256rr */
-/* Table6153 */
+/* Table6155 */
   0x34eb, /* VPSUBUSBZ256rm */
   0x34ee, /* VPSUBUSBZ256rr */
-/* Table6155 */
+/* Table6157 */
   0x3501, /* VPSUBUSWZ256rm */
   0x3504, /* VPSUBUSWZ256rr */
-/* Table6157 */
+/* Table6159 */
   0x2aed, /* VPMINUBZ256rm */
   0x2af0, /* VPMINUBZ256rr */
-/* Table6159 */
+/* Table6161 */
   0x21de, /* VPANDDZ256rm */
   0x21e4, /* VPANDDZ256rr */
-/* Table6161 */
+/* Table6163 */
   0x2185, /* VPADDUSBZ256rm */
   0x2188, /* VPADDUSBZ256rr */
-/* Table6163 */
+/* Table6165 */
   0x219b, /* VPADDUSWZ256rm */
   0x219e, /* VPADDUSWZ256rr */
-/* Table6165 */
+/* Table6167 */
   0x2a21, /* VPMAXUBZ256rm */
   0x2a24, /* VPMAXUBZ256rr */
-/* Table6167 */
+/* Table6169 */
   0x21f9, /* VPANDNDZ256rm */
   0x21ff, /* VPANDNDZ256rr */
-/* Table6169 */
+/* Table6171 */
   0x2251, /* VPAVGBZ256rm */
   0x2254, /* VPAVGBZ256rr */
-/* Table6171 */
+/* Table6173 */
   0x3366, /* VPSRAWZ256rm */
   0x3369, /* VPSRAWZ256rr */
-/* Table6173 */
+/* Table6175 */
   0x32c0, /* VPSRADZ256rm */
   0x32c3, /* VPSRADZ256rr */
-/* Table6175 */
+/* Table6177 */
   0x2267, /* VPAVGWZ256rm */
   0x226a, /* VPAVGWZ256rr */
-/* Table6177 */
+/* Table6179 */
   0x2db8, /* VPMULHUWZ256rm */
   0x2dbb, /* VPMULHUWZ256rr */
-/* Table6179 */
+/* Table6181 */
   0x2dce, /* VPMULHWZ256rm */
   0x2dd1, /* VPMULHWZ256rr */
-/* Table6181 */
+/* Table6183 */
   0x1eb1, /* VMOVNTDQZ256mr */
   0x0, /*  */
-/* Table6183 */
+/* Table6185 */
   0x34bf, /* VPSUBSBZ256rm */
   0x34c2, /* VPSUBSBZ256rr */
-/* Table6185 */
+/* Table6187 */
   0x34d5, /* VPSUBSWZ256rm */
   0x34d8, /* VPSUBSWZ256rr */
-/* Table6187 */
+/* Table6189 */
   0x2ad7, /* VPMINSWZ256rm */
   0x2ada, /* VPMINSWZ256rr */
-/* Table6189 */
+/* Table6191 */
   0x2ec9, /* VPORDZ256rm */
   0x2ecf, /* VPORDZ256rr */
-/* Table6191 */
+/* Table6193 */
   0x2159, /* VPADDSBZ256rm */
   0x215c, /* VPADDSBZ256rr */
-/* Table6193 */
+/* Table6195 */
   0x216f, /* VPADDSWZ256rm */
   0x2172, /* VPADDSWZ256rr */
-/* Table6195 */
+/* Table6197 */
   0x2a0b, /* VPMAXSWZ256rm */
   0x2a0e, /* VPMAXSWZ256rr */
-/* Table6197 */
+/* Table6199 */
   0x36b4, /* VPXORDZ256rm */
   0x36ba, /* VPXORDZ256rr */
-/* Table6199 */
+/* Table6201 */
   0x3290, /* VPSLLWZ256rm */
   0x3293, /* VPSLLWZ256rr */
-/* Table6201 */
+/* Table6203 */
   0x31e0, /* VPSLLDZ256rm */
   0x31e3, /* VPSLLDZ256rr */
-/* Table6203 */
+/* Table6205 */
   0x299d, /* VPMADDWDZ256rm */
   0x29a0, /* VPMADDWDZ256rr */
-/* Table6205 */
+/* Table6207 */
   0x2ff2, /* VPSADBWZ256rm */
   0x2ff3, /* VPSADBWZ256rr */
-/* Table6207 */
+/* Table6209 */
   0x346b, /* VPSUBBZ256rm */
   0x346e, /* VPSUBBZ256rr */
-/* Table6209 */
+/* Table6211 */
   0x3517, /* VPSUBWZ256rm */
   0x351a, /* VPSUBWZ256rr */
-/* Table6211 */
+/* Table6213 */
   0x3484, /* VPSUBDZ256rm */
   0x348a, /* VPSUBDZ256rr */
-/* Table6213 */
+/* Table6215 */
   0x2105, /* VPADDBZ256rm */
   0x2108, /* VPADDBZ256rr */
-/* Table6215 */
+/* Table6217 */
   0x21b1, /* VPADDWZ256rm */
   0x21b4, /* VPADDWZ256rr */
-/* Table6217 */
+/* Table6219 */
   0x211e, /* VPADDDZ256rm */
   0x2124, /* VPADDDZ256rr */
-/* Table6219 */
+/* Table6221 */
   0xfd9, /* VCVTQQ2PSZ256rm */
   0xfdf, /* VCVTQQ2PSZ256rr */
-/* Table6221 */
+/* Table6223 */
   0x1099, /* VCVTTPD2UDQZ256rm */
   0x109f, /* VCVTTPD2UDQZ256rr */
-/* Table6223 */
+/* Table6225 */
   0xeb2, /* VCVTPD2UDQZ256rm */
   0xeb8, /* VCVTPD2UDQZ256rr */
-/* Table6225 */
+/* Table6227 */
   0x1e55, /* VMOVDQU64Z256rm */
   0x1e58, /* VMOVDQU64Z256rr */
-/* Table6227 */
+/* Table6229 */
   0x11c2, /* VCVTUQQ2PDZ256rm */
   0x11c8, /* VCVTUQQ2PDZ256rr */
-/* Table6229 */
+/* Table6231 */
   0x1e53, /* VMOVDQU64Z256mr */
   0x1e59, /* VMOVDQU64Z256rr_REV */
-/* Table6231 */
+/* Table6233 */
   0xfbb, /* VCVTQQ2PDZ256rm */
   0xfc1, /* VCVTQQ2PDZ256rr */
-/* Table6233 */
+/* Table6235 */
   0x1da6, /* VMOVDDUPZ256rm */
   0x1da9, /* VMOVDDUPZ256rr */
-/* Table6235 */
+/* Table6237 */
   0x1e13, /* VMOVDQU16Z256rm */
   0x1e16, /* VMOVDQU16Z256rr */
-/* Table6237 */
+/* Table6239 */
   0x11e0, /* VCVTUQQ2PSZ256rm */
   0x11e6, /* VCVTUQQ2PSZ256rr */
-/* Table6239 */
+/* Table6241 */
   0x1e11, /* VMOVDQU16Z256mr */
   0x1e17, /* VMOVDQU16Z256rr_REV */
-/* Table6241 */
+/* Table6243 */
   0xe52, /* VCVTPD2DQZ256rm */
   0xe58, /* VCVTPD2DQZ256rr */
-/* Table6243 */
+/* Table6245 */
   0x1f2f, /* VMOVUPDZ256rm */
   0x1f32, /* VMOVUPDZ256rr */
-/* Table6245 */
+/* Table6247 */
   0x1f2d, /* VMOVUPDZ256mr */
   0x1f33, /* VMOVUPDZ256rr_REV */
-/* Table6247 */
+/* Table6249 */
   0x3adb, /* VUNPCKLPDZ256rm */
   0x3ae1, /* VUNPCKLPDZ256rr */
-/* Table6249 */
+/* Table6251 */
   0x3a9d, /* VUNPCKHPDZ256rm */
   0x3aa3, /* VUNPCKHPDZ256rr */
-/* Table6251 */
+/* Table6253 */
   0x1d5d, /* VMOVAPDZ256rm */
   0x1d60, /* VMOVAPDZ256rr */
-/* Table6253 */
+/* Table6255 */
   0x1d5b, /* VMOVAPDZ256mr */
   0x1d61, /* VMOVAPDZ256rr_REV */
-/* Table6255 */
+/* Table6257 */
   0x1eb6, /* VMOVNTPDZ256mr */
   0x0, /*  */
-/* Table6257 */
+/* Table6259 */
   0x39be, /* VSQRTPDZ256m */
   0x39c4, /* VSQRTPDZ256r */
-/* Table6259 */
+/* Table6261 */
   0xc6d, /* VANDPDZ256rm */
   0xc73, /* VANDPDZ256rr */
-/* Table6261 */
+/* Table6263 */
   0xc2f, /* VANDNPDZ256rm */
   0xc35, /* VANDNPDZ256rr */
-/* Table6263 */
+/* Table6265 */
   0x1ff4, /* VORPDZ256rm */
   0x1ffa, /* VORPDZ256rr */
-/* Table6265 */
+/* Table6267 */
   0x3b19, /* VXORPDZ256rm */
   0x3b1f, /* VXORPDZ256rr */
-/* Table6267 */
+/* Table6269 */
   0xb63, /* VADDPDZ256rm */
   0xb69, /* VADDPDZ256rr */
-/* Table6269 */
+/* Table6271 */
   0x1f8c, /* VMULPDZ256rm */
   0x1f92, /* VMULPDZ256rr */
-/* Table6271 */
+/* Table6273 */
   0xe74, /* VCVTPD2PSZ256rm */
   0xe7a, /* VCVTPD2PSZ256rr */
-/* Table6273 */
+/* Table6275 */
   0x3a21, /* VSUBPDZ256rm */
   0x3a27, /* VSUBPDZ256rr */
-/* Table6275 */
+/* Table6277 */
   0x1ce9, /* VMINPDZ256rm */
   0x1cef, /* VMINPDZ256rr */
-/* Table6277 */
+/* Table6279 */
   0x1225, /* VDIVPDZ256rm */
   0x122b, /* VDIVPDZ256rr */
-/* Table6279 */
+/* Table6281 */
   0x1c3e, /* VMAXPDZ256rm */
   0x1c44, /* VMAXPDZ256rr */
-/* Table6281 */
+/* Table6283 */
   0x3681, /* VPUNPCKLQDQZ256rm */
   0x3687, /* VPUNPCKLQDQZ256rr */
-/* Table6283 */
+/* Table6285 */
   0x3617, /* VPUNPCKHQDQZ256rm */
   0x361d, /* VPUNPCKHQDQZ256rr */
-/* Table6285 */
+/* Table6287 */
   0x1dea, /* VMOVDQA64Z256rm */
   0x1ded, /* VMOVDQA64Z256rr */
-/* Table6287 */
+/* Table6289 */
   0x2f91, /* VPRORQZ256mi */
   0x2f25, /* VPROLQZ256mi */
   0x0, /*  */
@@ -92939,7 +92941,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table6303 */
+/* Table6305 */
   0x0, /*  */
   0x0, /*  */
   0x33cb, /* VPSRLQZ256mi */
@@ -92956,214 +92958,214 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3210, /* VPSLLQZ256ri */
   0x31c1, /* VPSLLDQZ256rr */
-/* Table6319 */
+/* Table6321 */
   0x10b7, /* VCVTTPD2UQQZ256rm */
   0x10bd, /* VCVTTPD2UQQZ256rr */
-/* Table6321 */
+/* Table6323 */
   0xed0, /* VCVTPD2UQQZ256rm */
   0xed6, /* VCVTPD2UQQZ256rr */
-/* Table6323 */
+/* Table6325 */
   0x107b, /* VCVTTPD2QQZ256rm */
   0x1081, /* VCVTTPD2QQZ256rr */
-/* Table6325 */
+/* Table6327 */
   0xe94, /* VCVTPD2QQZ256rm */
   0xe9a, /* VCVTPD2QQZ256rr */
-/* Table6327 */
+/* Table6329 */
   0x1de8, /* VMOVDQA64Z256mr */
   0x1dee, /* VMOVDQA64Z256rr_REV */
-/* Table6329 */
+/* Table6331 */
   0xd62, /* VCMPPDZ256rmi */
   0xd66, /* VCMPPDZ256rri */
-/* Table6331 */
+/* Table6333 */
   0x3983, /* VSHUFPDZ256rmi */
   0x3986, /* VSHUFPDZ256rri */
-/* Table6333 */
+/* Table6335 */
   0x33d1, /* VPSRLQZ256rm */
   0x33d4, /* VPSRLQZ256rr */
-/* Table6335 */
+/* Table6337 */
   0x213d, /* VPADDQZ256rm */
   0x2143, /* VPADDQZ256rr */
-/* Table6337 */
+/* Table6339 */
   0x2233, /* VPANDQZ256rm */
   0x2239, /* VPANDQZ256rr */
-/* Table6339 */
+/* Table6341 */
   0x2214, /* VPANDNQZ256rm */
   0x221a, /* VPANDNQZ256rr */
-/* Table6341 */
+/* Table6343 */
   0x32f0, /* VPSRAQZ256rm */
   0x32f3, /* VPSRAQZ256rr */
-/* Table6343 */
+/* Table6345 */
   0x105b, /* VCVTTPD2DQZ256rm */
   0x1061, /* VCVTTPD2DQZ256rr */
-/* Table6345 */
+/* Table6347 */
   0x2ee4, /* VPORQZ256rm */
   0x2eea, /* VPORQZ256rr */
-/* Table6347 */
+/* Table6349 */
   0x36cf, /* VPXORQZ256rm */
   0x36d5, /* VPXORQZ256rr */
-/* Table6349 */
+/* Table6351 */
   0x3213, /* VPSLLQZ256rm */
   0x3216, /* VPSLLQZ256rr */
-/* Table6351 */
+/* Table6353 */
   0x2e52, /* VPMULUDQZ256rm */
   0x2e58, /* VPMULUDQZ256rr */
-/* Table6353 */
+/* Table6355 */
   0x34a3, /* VPSUBQZ256rm */
   0x34a9, /* VPSUBQZ256rr */
-/* Table6355 */
+/* Table6357 */
   0x1f63, /* VMOVUPSZrm */
   0x1f66, /* VMOVUPSZrr */
-/* Table6357 */
+/* Table6359 */
   0x1f61, /* VMOVUPSZmr */
   0x1f67, /* VMOVUPSZrr_REV */
-/* Table6359 */
+/* Table6361 */
   0x3b03, /* VUNPCKLPSZrm */
   0x3b09, /* VUNPCKLPSZrr */
-/* Table6361 */
+/* Table6363 */
   0x3ac5, /* VUNPCKHPSZrm */
   0x3acb, /* VUNPCKHPSZrr */
-/* Table6363 */
+/* Table6365 */
   0x1d91, /* VMOVAPSZrm */
   0x1d94, /* VMOVAPSZrr */
-/* Table6365 */
+/* Table6367 */
   0x1d8f, /* VMOVAPSZmr */
   0x1d95, /* VMOVAPSZrr_REV */
-/* Table6367 */
+/* Table6369 */
   0x1ebc, /* VMOVNTPSZmr */
   0x0, /*  */
-/* Table6369 */
+/* Table6371 */
   0x39e9, /* VSQRTPSZm */
   0x39ef, /* VSQRTPSZr */
-/* Table6371 */
+/* Table6373 */
   0xc95, /* VANDPSZrm */
   0xc9b, /* VANDPSZrr */
-/* Table6373 */
+/* Table6375 */
   0xc57, /* VANDNPSZrm */
   0xc5d, /* VANDNPSZrr */
-/* Table6375 */
+/* Table6377 */
   0x201c, /* VORPSZrm */
   0x2022, /* VORPSZrr */
-/* Table6377 */
+/* Table6379 */
   0x3b41, /* VXORPSZrm */
   0x3b47, /* VXORPSZrr */
-/* Table6379 */
+/* Table6381 */
   0xb8e, /* VADDPSZrm */
   0xb94, /* VADDPSZrr */
-/* Table6381 */
+/* Table6383 */
   0x1fb7, /* VMULPSZrm */
   0x1fbd, /* VMULPSZrr */
-/* Table6383 */
+/* Table6385 */
   0xf34, /* VCVTPS2PDZrm */
   0xf3a, /* VCVTPS2PDZrr */
-/* Table6385 */
+/* Table6387 */
   0xe39, /* VCVTDQ2PSZrm */
   0xe3f, /* VCVTDQ2PSZrr */
-/* Table6387 */
+/* Table6389 */
   0x3a4c, /* VSUBPSZrm */
   0x3a52, /* VSUBPSZrr */
-/* Table6389 */
+/* Table6391 */
   0x1d14, /* VMINPSZrm */
   0x1d1a, /* VMINPSZrr */
-/* Table6391 */
+/* Table6393 */
   0x1250, /* VDIVPSZrm */
   0x1256, /* VDIVPSZrr */
-/* Table6393 */
+/* Table6395 */
   0x1c69, /* VMAXPSZrm */
   0x1c6f, /* VMAXPSZrr */
-/* Table6395 */
+/* Table6397 */
   0x111e, /* VCVTTPS2UDQZrm */
   0x1124, /* VCVTTPS2UDQZrr */
-/* Table6397 */
+/* Table6399 */
   0xf88, /* VCVTPS2UDQZrm */
   0xf8e, /* VCVTPS2UDQZrr */
-/* Table6399 */
+/* Table6401 */
   0xd9e, /* VCMPPSZrmi */
   0xda2, /* VCMPPSZrri */
-/* Table6401 */
+/* Table6403 */
   0x39ab, /* VSHUFPSZrmi */
   0x39ae, /* VSHUFPSZrri */
-/* Table6403 */
+/* Table6405 */
   0x1f03, /* VMOVSLDUPZrm */
   0x1f06, /* VMOVSLDUPZrr */
-/* Table6405 */
+/* Table6407 */
   0x1eed, /* VMOVSHDUPZrm */
   0x1ef0, /* VMOVSHDUPZrr */
-/* Table6407 */
+/* Table6409 */
   0x10e0, /* VCVTTPS2DQZrm */
   0x10e6, /* VCVTTPS2DQZrr */
-/* Table6409 */
+/* Table6411 */
   0x1e3f, /* VMOVDQU32Zrm */
   0x1e42, /* VMOVDQU32Zrr */
-/* Table6411 */
+/* Table6413 */
   0x3193, /* VPSHUFHWZmi */
   0x3196, /* VPSHUFHWZri */
-/* Table6413 */
+/* Table6415 */
   0x1192, /* VCVTUDQ2PDZrm */
   0x1198, /* VCVTUDQ2PDZrr */
-/* Table6415 */
+/* Table6417 */
   0x1e3d, /* VMOVDQU32Zmr */
   0x1e43, /* VMOVDQU32Zrr_REV */
-/* Table6417 */
+/* Table6419 */
   0xe1a, /* VCVTDQ2PDZrm */
   0xe20, /* VCVTDQ2PDZrr */
-/* Table6419 */
+/* Table6421 */
   0x1e81, /* VMOVDQU8Zrm */
   0x1e84, /* VMOVDQU8Zrr */
-/* Table6421 */
+/* Table6423 */
   0x31a9, /* VPSHUFLWZmi */
   0x31ac, /* VPSHUFLWZri */
-/* Table6423 */
+/* Table6425 */
   0x11ad, /* VCVTUDQ2PSZrm */
   0x11b3, /* VCVTUDQ2PSZrr */
-/* Table6425 */
+/* Table6427 */
   0x1e7f, /* VMOVDQU8Zmr */
   0x1e85, /* VMOVDQU8Zrr_REV */
-/* Table6427 */
+/* Table6429 */
   0xf12, /* VCVTPS2DQZrm */
   0xf18, /* VCVTPS2DQZrr */
-/* Table6429 */
+/* Table6431 */
   0x364f, /* VPUNPCKLBWZrm */
   0x3652, /* VPUNPCKLBWZrr */
-/* Table6431 */
+/* Table6433 */
   0x36a3, /* VPUNPCKLWDZrm */
   0x36a6, /* VPUNPCKLWDZrr */
-/* Table6433 */
+/* Table6435 */
   0x366b, /* VPUNPCKLDQZrm */
   0x3671, /* VPUNPCKLDQZrr */
-/* Table6435 */
+/* Table6437 */
   0x20c0, /* VPACKSSWBZrm */
   0x20c3, /* VPACKSSWBZrr */
-/* Table6437 */
+/* Table6439 */
   0x2405, /* VPCMPGTBZrm */
   0x2407, /* VPCMPGTBZrr */
-/* Table6439 */
+/* Table6441 */
   0x2441, /* VPCMPGTWZrm */
   0x2443, /* VPCMPGTWZrr */
-/* Table6441 */
+/* Table6443 */
   0x2419, /* VPCMPGTDZrm */
   0x241d, /* VPCMPGTDZrr */
-/* Table6443 */
+/* Table6445 */
   0x20f5, /* VPACKUSWBZrm */
   0x20f8, /* VPACKUSWBZrr */
-/* Table6445 */
+/* Table6447 */
   0x35e5, /* VPUNPCKHBWZrm */
   0x35e8, /* VPUNPCKHBWZrr */
-/* Table6447 */
+/* Table6449 */
   0x3639, /* VPUNPCKHWDZrm */
   0x363c, /* VPUNPCKHWDZrr */
-/* Table6449 */
+/* Table6451 */
   0x3601, /* VPUNPCKHDQZrm */
   0x3607, /* VPUNPCKHDQZrr */
-/* Table6451 */
+/* Table6453 */
   0x20a7, /* VPACKSSDWZrm */
   0x20ad, /* VPACKSSDWZrr */
-/* Table6453 */
+/* Table6455 */
   0x1dd4, /* VMOVDQA32Zrm */
   0x1dd7, /* VMOVDQA32Zrr */
-/* Table6455 */
+/* Table6457 */
   0x317d, /* VPSHUFDZmi */
   0x3180, /* VPSHUFDZri */
-/* Table6457 */
+/* Table6459 */
   0x0, /*  */
   0x0, /*  */
   0x3454, /* VPSRLWZmi */
@@ -93180,7 +93182,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3299, /* VPSLLWZri */
   0x0, /*  */
-/* Table6473 */
+/* Table6475 */
   0x2f7f, /* VPRORDZmi */
   0x2f13, /* VPROLDZmi */
   0x33a7, /* VPSRLDZmi */
@@ -93197,7 +93199,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31ec, /* VPSLLDZri */
   0x0, /*  */
-/* Table6489 */
+/* Table6491 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -93214,241 +93216,241 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x31c3, /* VPSLLDQZrr */
-/* Table6505 */
+/* Table6507 */
   0x23b5, /* VPCMPEQBZrm */
   0x23b7, /* VPCMPEQBZrr */
-/* Table6507 */
+/* Table6509 */
   0x23f1, /* VPCMPEQWZrm */
   0x23f3, /* VPCMPEQWZrr */
-/* Table6509 */
+/* Table6511 */
   0x23c9, /* VPCMPEQDZrm */
   0x23cd, /* VPCMPEQDZrr */
-/* Table6511 */
+/* Table6513 */
   0x113c, /* VCVTTPS2UQQZrm */
   0x1142, /* VCVTTPS2UQQZrr */
-/* Table6513 */
+/* Table6515 */
   0xfa6, /* VCVTPS2UQQZrm */
   0xfac, /* VCVTPS2UQQZrr */
-/* Table6515 */
+/* Table6517 */
   0x1100, /* VCVTTPS2QQZrm */
   0x1106, /* VCVTTPS2QQZrr */
-/* Table6517 */
+/* Table6519 */
   0xf6a, /* VCVTPS2QQZrm */
   0xf70, /* VCVTPS2QQZrr */
-/* Table6519 */
+/* Table6521 */
   0x1dd2, /* VMOVDQA32Zmr */
   0x1dd8, /* VMOVDQA32Zrr_REV */
-/* Table6521 */
+/* Table6523 */
   0x345a, /* VPSRLWZrm */
   0x345d, /* VPSRLWZrr */
-/* Table6523 */
+/* Table6525 */
   0x33ad, /* VPSRLDZrm */
   0x33b0, /* VPSRLDZrr */
-/* Table6525 */
+/* Table6527 */
   0x2e24, /* VPMULLWZrm */
   0x2e27, /* VPMULLWZrr */
-/* Table6527 */
+/* Table6529 */
   0x34f1, /* VPSUBUSBZrm */
   0x34f4, /* VPSUBUSBZrr */
-/* Table6529 */
+/* Table6531 */
   0x3507, /* VPSUBUSWZrm */
   0x350a, /* VPSUBUSWZrr */
-/* Table6531 */
+/* Table6533 */
   0x2af3, /* VPMINUBZrm */
   0x2af6, /* VPMINUBZrr */
-/* Table6533 */
+/* Table6535 */
   0x21e7, /* VPANDDZrm */
   0x21ed, /* VPANDDZrr */
-/* Table6535 */
+/* Table6537 */
   0x218b, /* VPADDUSBZrm */
   0x218e, /* VPADDUSBZrr */
-/* Table6537 */
+/* Table6539 */
   0x21a1, /* VPADDUSWZrm */
   0x21a4, /* VPADDUSWZrr */
-/* Table6539 */
+/* Table6541 */
   0x2a27, /* VPMAXUBZrm */
   0x2a2a, /* VPMAXUBZrr */
-/* Table6541 */
+/* Table6543 */
   0x2202, /* VPANDNDZrm */
   0x2208, /* VPANDNDZrr */
-/* Table6543 */
+/* Table6545 */
   0x2257, /* VPAVGBZrm */
   0x225a, /* VPAVGBZrr */
-/* Table6545 */
+/* Table6547 */
   0x3372, /* VPSRAWZrm */
   0x3375, /* VPSRAWZrr */
-/* Table6547 */
+/* Table6549 */
   0x32cf, /* VPSRADZrm */
   0x32d2, /* VPSRADZrr */
-/* Table6549 */
+/* Table6551 */
   0x226d, /* VPAVGWZrm */
   0x2270, /* VPAVGWZrr */
-/* Table6551 */
+/* Table6553 */
   0x2dbe, /* VPMULHUWZrm */
   0x2dc1, /* VPMULHUWZrr */
-/* Table6553 */
+/* Table6555 */
   0x2dd4, /* VPMULHWZrm */
   0x2dd7, /* VPMULHWZrr */
-/* Table6555 */
+/* Table6557 */
   0x1eb2, /* VMOVNTDQZmr */
   0x0, /*  */
-/* Table6557 */
+/* Table6559 */
   0x34c5, /* VPSUBSBZrm */
   0x34c8, /* VPSUBSBZrr */
-/* Table6559 */
+/* Table6561 */
   0x34db, /* VPSUBSWZrm */
   0x34de, /* VPSUBSWZrr */
-/* Table6561 */
+/* Table6563 */
   0x2add, /* VPMINSWZrm */
   0x2ae0, /* VPMINSWZrr */
-/* Table6563 */
+/* Table6565 */
   0x2ed2, /* VPORDZrm */
   0x2ed8, /* VPORDZrr */
-/* Table6565 */
+/* Table6567 */
   0x215f, /* VPADDSBZrm */
   0x2162, /* VPADDSBZrr */
-/* Table6567 */
+/* Table6569 */
   0x2175, /* VPADDSWZrm */
   0x2178, /* VPADDSWZrr */
-/* Table6569 */
+/* Table6571 */
   0x2a11, /* VPMAXSWZrm */
   0x2a14, /* VPMAXSWZrr */
-/* Table6571 */
+/* Table6573 */
   0x36bd, /* VPXORDZrm */
   0x36c3, /* VPXORDZrr */
-/* Table6573 */
+/* Table6575 */
   0x329c, /* VPSLLWZrm */
   0x329f, /* VPSLLWZrr */
-/* Table6575 */
+/* Table6577 */
   0x31ef, /* VPSLLDZrm */
   0x31f2, /* VPSLLDZrr */
-/* Table6577 */
+/* Table6579 */
   0x29a3, /* VPMADDWDZrm */
   0x29a6, /* VPMADDWDZrr */
-/* Table6579 */
+/* Table6581 */
   0x2ff4, /* VPSADBWZrm */
   0x2ff5, /* VPSADBWZrr */
-/* Table6581 */
+/* Table6583 */
   0x3471, /* VPSUBBZrm */
   0x3474, /* VPSUBBZrr */
-/* Table6583 */
+/* Table6585 */
   0x351d, /* VPSUBWZrm */
   0x3520, /* VPSUBWZrr */
-/* Table6585 */
+/* Table6587 */
   0x348d, /* VPSUBDZrm */
   0x3493, /* VPSUBDZrr */
-/* Table6587 */
+/* Table6589 */
   0x210b, /* VPADDBZrm */
   0x210e, /* VPADDBZrr */
-/* Table6589 */
+/* Table6591 */
   0x21b7, /* VPADDWZrm */
   0x21ba, /* VPADDWZrr */
-/* Table6591 */
+/* Table6593 */
   0x2127, /* VPADDDZrm */
   0x212d, /* VPADDDZrr */
-/* Table6593 */
+/* Table6595 */
   0xfe2, /* VCVTQQ2PSZrm */
   0xfe8, /* VCVTQQ2PSZrr */
-/* Table6595 */
+/* Table6597 */
   0x10a2, /* VCVTTPD2UDQZrm */
   0x10a8, /* VCVTTPD2UDQZrr */
-/* Table6597 */
+/* Table6599 */
   0xebb, /* VCVTPD2UDQZrm */
   0xec1, /* VCVTPD2UDQZrr */
-/* Table6599 */
+/* Table6601 */
   0x1e60, /* VMOVDQU64Zrm */
   0x1e63, /* VMOVDQU64Zrr */
-/* Table6601 */
+/* Table6603 */
   0x11cb, /* VCVTUQQ2PDZrm */
   0x11d1, /* VCVTUQQ2PDZrr */
-/* Table6603 */
+/* Table6605 */
   0x1e5e, /* VMOVDQU64Zmr */
   0x1e64, /* VMOVDQU64Zrr_REV */
-/* Table6605 */
+/* Table6607 */
   0xfc4, /* VCVTQQ2PDZrm */
   0xfca, /* VCVTQQ2PDZrr */
-/* Table6607 */
+/* Table6609 */
   0x1dac, /* VMOVDDUPZrm */
   0x1daf, /* VMOVDDUPZrr */
-/* Table6609 */
+/* Table6611 */
   0x1e1e, /* VMOVDQU16Zrm */
   0x1e21, /* VMOVDQU16Zrr */
-/* Table6611 */
+/* Table6613 */
   0x11e9, /* VCVTUQQ2PSZrm */
   0x11ef, /* VCVTUQQ2PSZrr */
-/* Table6613 */
+/* Table6615 */
   0x1e1c, /* VMOVDQU16Zmr */
   0x1e22, /* VMOVDQU16Zrr_REV */
-/* Table6615 */
+/* Table6617 */
   0xe5b, /* VCVTPD2DQZrm */
   0xe61, /* VCVTPD2DQZrr */
-/* Table6617 */
+/* Table6619 */
   0x1f3a, /* VMOVUPDZrm */
   0x1f3d, /* VMOVUPDZrr */
-/* Table6619 */
+/* Table6621 */
   0x1f38, /* VMOVUPDZmr */
   0x1f3e, /* VMOVUPDZrr_REV */
-/* Table6621 */
+/* Table6623 */
   0x3ae4, /* VUNPCKLPDZrm */
   0x3aea, /* VUNPCKLPDZrr */
-/* Table6623 */
+/* Table6625 */
   0x3aa6, /* VUNPCKHPDZrm */
   0x3aac, /* VUNPCKHPDZrr */
-/* Table6625 */
+/* Table6627 */
   0x1d68, /* VMOVAPDZrm */
   0x1d6b, /* VMOVAPDZrr */
-/* Table6627 */
+/* Table6629 */
   0x1d66, /* VMOVAPDZmr */
   0x1d6c, /* VMOVAPDZrr_REV */
-/* Table6629 */
+/* Table6631 */
   0x1eb7, /* VMOVNTPDZmr */
   0x0, /*  */
-/* Table6631 */
+/* Table6633 */
   0x39c7, /* VSQRTPDZm */
   0x39cd, /* VSQRTPDZr */
-/* Table6633 */
+/* Table6635 */
   0xc76, /* VANDPDZrm */
   0xc7c, /* VANDPDZrr */
-/* Table6635 */
+/* Table6637 */
   0xc38, /* VANDNPDZrm */
   0xc3e, /* VANDNPDZrr */
-/* Table6637 */
+/* Table6639 */
   0x1ffd, /* VORPDZrm */
   0x2003, /* VORPDZrr */
-/* Table6639 */
+/* Table6641 */
   0x3b22, /* VXORPDZrm */
   0x3b28, /* VXORPDZrr */
-/* Table6641 */
+/* Table6643 */
   0xb6c, /* VADDPDZrm */
   0xb72, /* VADDPDZrr */
-/* Table6643 */
+/* Table6645 */
   0x1f95, /* VMULPDZrm */
   0x1f9b, /* VMULPDZrr */
-/* Table6645 */
+/* Table6647 */
   0xe7d, /* VCVTPD2PSZrm */
   0xe83, /* VCVTPD2PSZrr */
-/* Table6647 */
+/* Table6649 */
   0x3a2a, /* VSUBPDZrm */
   0x3a30, /* VSUBPDZrr */
-/* Table6649 */
+/* Table6651 */
   0x1cf2, /* VMINPDZrm */
   0x1cf8, /* VMINPDZrr */
-/* Table6651 */
+/* Table6653 */
   0x122e, /* VDIVPDZrm */
   0x1234, /* VDIVPDZrr */
-/* Table6653 */
+/* Table6655 */
   0x1c47, /* VMAXPDZrm */
   0x1c4d, /* VMAXPDZrr */
-/* Table6655 */
+/* Table6657 */
   0x368a, /* VPUNPCKLQDQZrm */
   0x3690, /* VPUNPCKLQDQZrr */
-/* Table6657 */
+/* Table6659 */
   0x3620, /* VPUNPCKHQDQZrm */
   0x3626, /* VPUNPCKHQDQZrr */
-/* Table6659 */
+/* Table6661 */
   0x1df5, /* VMOVDQA64Zrm */
   0x1df8, /* VMOVDQA64Zrr */
-/* Table6661 */
+/* Table6663 */
   0x2f9a, /* VPRORQZmi */
   0x2f2e, /* VPROLQZmi */
   0x0, /*  */
@@ -93465,7 +93467,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table6677 */
+/* Table6679 */
   0x0, /*  */
   0x0, /*  */
   0x33da, /* VPSRLQZmi */
@@ -93482,244 +93484,244 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x321f, /* VPSLLQZri */
   0x31c3, /* VPSLLDQZrr */
-/* Table6693 */
+/* Table6695 */
   0x10c0, /* VCVTTPD2UQQZrm */
   0x10c6, /* VCVTTPD2UQQZrr */
-/* Table6695 */
+/* Table6697 */
   0xed9, /* VCVTPD2UQQZrm */
   0xedf, /* VCVTPD2UQQZrr */
-/* Table6697 */
+/* Table6699 */
   0x1084, /* VCVTTPD2QQZrm */
   0x108a, /* VCVTTPD2QQZrr */
-/* Table6699 */
+/* Table6701 */
   0xe9d, /* VCVTPD2QQZrm */
   0xea3, /* VCVTPD2QQZrr */
-/* Table6701 */
+/* Table6703 */
   0x1df3, /* VMOVDQA64Zmr */
   0x1df9, /* VMOVDQA64Zrr_REV */
-/* Table6703 */
+/* Table6705 */
   0xd6e, /* VCMPPDZrmi */
   0xd72, /* VCMPPDZrri */
-/* Table6705 */
+/* Table6707 */
   0x398c, /* VSHUFPDZrmi */
   0x398f, /* VSHUFPDZrri */
-/* Table6707 */
+/* Table6709 */
   0x33e0, /* VPSRLQZrm */
   0x33e3, /* VPSRLQZrr */
-/* Table6709 */
+/* Table6711 */
   0x2146, /* VPADDQZrm */
   0x214c, /* VPADDQZrr */
-/* Table6711 */
+/* Table6713 */
   0x223c, /* VPANDQZrm */
   0x2242, /* VPANDQZrr */
-/* Table6713 */
+/* Table6715 */
   0x221d, /* VPANDNQZrm */
   0x2223, /* VPANDNQZrr */
-/* Table6715 */
+/* Table6717 */
   0x32ff, /* VPSRAQZrm */
   0x3302, /* VPSRAQZrr */
-/* Table6717 */
+/* Table6719 */
   0x1064, /* VCVTTPD2DQZrm */
   0x106a, /* VCVTTPD2DQZrr */
-/* Table6719 */
+/* Table6721 */
   0x2eed, /* VPORQZrm */
   0x2ef3, /* VPORQZrr */
-/* Table6721 */
+/* Table6723 */
   0x36d8, /* VPXORQZrm */
   0x36de, /* VPXORQZrr */
-/* Table6723 */
+/* Table6725 */
   0x3222, /* VPSLLQZrm */
   0x3225, /* VPSLLQZrr */
-/* Table6725 */
+/* Table6727 */
   0x2e5b, /* VPMULUDQZrm */
   0x2e61, /* VPMULUDQZrr */
-/* Table6727 */
+/* Table6729 */
   0x34ac, /* VPSUBQZrm */
   0x34b2, /* VPSUBQZrr */
-/* Table6729 */
+/* Table6731 */
   0x1f4e, /* VMOVUPSZ128rmk */
   0x1f52, /* VMOVUPSZ128rrk */
-/* Table6731 */
+/* Table6733 */
   0x1f4c, /* VMOVUPSZ128mrk */
   0x1f53, /* VMOVUPSZ128rrk_REV */
-/* Table6733 */
+/* Table6735 */
   0x3af5, /* VUNPCKLPSZ128rmk */
   0x3af8, /* VUNPCKLPSZ128rrk */
-/* Table6735 */
+/* Table6737 */
   0x3ab7, /* VUNPCKHPSZ128rmk */
   0x3aba, /* VUNPCKHPSZ128rrk */
-/* Table6737 */
+/* Table6739 */
   0x1d7c, /* VMOVAPSZ128rmk */
   0x1d80, /* VMOVAPSZ128rrk */
-/* Table6739 */
+/* Table6741 */
   0x1d7a, /* VMOVAPSZ128mrk */
   0x1d81, /* VMOVAPSZ128rrk_REV */
-/* Table6741 */
+/* Table6743 */
   0x39db, /* VSQRTPSZ128mk */
   0x39de, /* VSQRTPSZ128rk */
-/* Table6743 */
+/* Table6745 */
   0xc87, /* VANDPSZ128rmk */
   0xc8a, /* VANDPSZ128rrk */
-/* Table6745 */
+/* Table6747 */
   0xc49, /* VANDNPSZ128rmk */
   0xc4c, /* VANDNPSZ128rrk */
-/* Table6747 */
+/* Table6749 */
   0x200e, /* VORPSZ128rmk */
   0x2011, /* VORPSZ128rrk */
-/* Table6749 */
+/* Table6751 */
   0x3b33, /* VXORPSZ128rmk */
   0x3b36, /* VXORPSZ128rrk */
-/* Table6751 */
+/* Table6753 */
   0xb80, /* VADDPSZ128rmk */
   0xb83, /* VADDPSZ128rrk */
-/* Table6753 */
+/* Table6755 */
   0x1fa9, /* VMULPSZ128rmk */
   0x1fac, /* VMULPSZ128rrk */
-/* Table6755 */
+/* Table6757 */
   0xf26, /* VCVTPS2PDZ128rmk */
   0xf29, /* VCVTPS2PDZ128rrk */
-/* Table6757 */
+/* Table6759 */
   0xe2b, /* VCVTDQ2PSZ128rmk */
   0xe2e, /* VCVTDQ2PSZ128rrk */
-/* Table6759 */
+/* Table6761 */
   0x3a3e, /* VSUBPSZ128rmk */
   0x3a41, /* VSUBPSZ128rrk */
-/* Table6761 */
+/* Table6763 */
   0x1d06, /* VMINPSZ128rmk */
   0x1d09, /* VMINPSZ128rrk */
-/* Table6763 */
+/* Table6765 */
   0x1242, /* VDIVPSZ128rmk */
   0x1245, /* VDIVPSZ128rrk */
-/* Table6765 */
+/* Table6767 */
   0x1c5b, /* VMAXPSZ128rmk */
   0x1c5e, /* VMAXPSZ128rrk */
-/* Table6767 */
+/* Table6769 */
   0x1110, /* VCVTTPS2UDQZ128rmk */
   0x1113, /* VCVTTPS2UDQZ128rrk */
-/* Table6769 */
+/* Table6771 */
   0xf7a, /* VCVTPS2UDQZ128rmk */
   0xf7d, /* VCVTPS2UDQZ128rrk */
-/* Table6771 */
+/* Table6773 */
   0xd89, /* VCMPPSZ128rmik */
   0xd8d, /* VCMPPSZ128rrik */
-/* Table6773 */
+/* Table6775 */
   0x399a, /* VSHUFPSZ128rmik */
   0x399d, /* VSHUFPSZ128rrik */
-/* Table6775 */
+/* Table6777 */
   0x1f12, /* VMOVSSZrmk */
   0x1f16, /* VMOVSSZrrk */
-/* Table6777 */
+/* Table6779 */
   0x1f10, /* VMOVSSZmrk */
   0x1f17, /* VMOVSSZrrk_REV */
-/* Table6779 */
+/* Table6781 */
   0x1ef8, /* VMOVSLDUPZ128rmk */
   0x1efb, /* VMOVSLDUPZ128rrk */
-/* Table6781 */
+/* Table6783 */
   0x1ee2, /* VMOVSHDUPZ128rmk */
   0x1ee5, /* VMOVSHDUPZ128rrk */
-/* Table6783 */
+/* Table6785 */
   0x3a08, /* VSQRTSSZm_Intk */
   0x3a0c, /* VSQRTSSZr_Intk */
-/* Table6785 */
+/* Table6787 */
   0xbad, /* VADDSSZrm_Intk */
   0xbb1, /* VADDSSZrr_Intk */
-/* Table6787 */
+/* Table6789 */
   0x1fd6, /* VMULSSZrm_Intk */
   0x1fda, /* VMULSSZrr_Intk */
-/* Table6789 */
+/* Table6791 */
   0x1033, /* VCVTSS2SDZrm_Intk */
   0x1037, /* VCVTSS2SDZrr_Intk */
-/* Table6791 */
+/* Table6793 */
   0x10d2, /* VCVTTPS2DQZ128rmk */
   0x10d5, /* VCVTTPS2DQZ128rrk */
-/* Table6793 */
+/* Table6795 */
   0x3a6b, /* VSUBSSZrm_Intk */
   0x3a6f, /* VSUBSSZrr_Intk */
-/* Table6795 */
+/* Table6797 */
   0x1d33, /* VMINSSZrm_Intk */
   0x1d37, /* VMINSSZrr_Intk */
-/* Table6797 */
+/* Table6799 */
   0x126f, /* VDIVSSZrm_Intk */
   0x1273, /* VDIVSSZrr_Intk */
-/* Table6799 */
+/* Table6801 */
   0x1c88, /* VMAXSSZrm_Intk */
   0x1c8c, /* VMAXSSZrr_Intk */
-/* Table6801 */
+/* Table6803 */
   0x1e2a, /* VMOVDQU32Z128rmk */
   0x1e2e, /* VMOVDQU32Z128rrk */
-/* Table6803 */
+/* Table6805 */
   0x3188, /* VPSHUFHWZ128mik */
   0x318b, /* VPSHUFHWZ128rik */
-/* Table6805 */
+/* Table6807 */
   0x1184, /* VCVTUDQ2PDZ128rmk */
   0x1187, /* VCVTUDQ2PDZ128rrk */
-/* Table6807 */
+/* Table6809 */
   0x1e28, /* VMOVDQU32Z128mrk */
   0x1e2f, /* VMOVDQU32Z128rrk_REV */
-/* Table6809 */
+/* Table6811 */
   0xdc4, /* VCMPSSZrm_Intk */
   0xdc9, /* VCMPSSZrr_Intk */
-/* Table6811 */
+/* Table6813 */
   0xe0c, /* VCVTDQ2PDZ128rmk */
   0xe0f, /* VCVTDQ2PDZ128rrk */
-/* Table6813 */
+/* Table6815 */
   0x1e6c, /* VMOVDQU8Z128rmk */
   0x1e70, /* VMOVDQU8Z128rrk */
-/* Table6815 */
+/* Table6817 */
   0x319e, /* VPSHUFLWZ128mik */
   0x31a1, /* VPSHUFLWZ128rik */
-/* Table6817 */
+/* Table6819 */
   0x119f, /* VCVTUDQ2PSZ128rmk */
   0x11a2, /* VCVTUDQ2PSZ128rrk */
-/* Table6819 */
+/* Table6821 */
   0x1e6a, /* VMOVDQU8Z128mrk */
   0x1e71, /* VMOVDQU8Z128rrk_REV */
-/* Table6821 */
+/* Table6823 */
   0xf04, /* VCVTPS2DQZ128rmk */
   0xf07, /* VCVTPS2DQZ128rrk */
-/* Table6823 */
+/* Table6825 */
   0x3644, /* VPUNPCKLBWZ128rmk */
   0x3647, /* VPUNPCKLBWZ128rrk */
-/* Table6825 */
+/* Table6827 */
   0x3698, /* VPUNPCKLWDZ128rmk */
   0x369b, /* VPUNPCKLWDZ128rrk */
-/* Table6827 */
+/* Table6829 */
   0x365d, /* VPUNPCKLDQZ128rmk */
   0x3660, /* VPUNPCKLDQZ128rrk */
-/* Table6829 */
+/* Table6831 */
   0x20b5, /* VPACKSSWBZ128rmk */
   0x20b8, /* VPACKSSWBZ128rrk */
-/* Table6831 */
+/* Table6833 */
   0x23fe, /* VPCMPGTBZ128rmk */
   0x2400, /* VPCMPGTBZ128rrk */
-/* Table6833 */
+/* Table6835 */
   0x243a, /* VPCMPGTWZ128rmk */
   0x243c, /* VPCMPGTWZ128rrk */
-/* Table6835 */
+/* Table6837 */
   0x2410, /* VPCMPGTDZ128rmk */
   0x2412, /* VPCMPGTDZ128rrk */
-/* Table6837 */
+/* Table6839 */
   0x20ea, /* VPACKUSWBZ128rmk */
   0x20ed, /* VPACKUSWBZ128rrk */
-/* Table6839 */
+/* Table6841 */
   0x35da, /* VPUNPCKHBWZ128rmk */
   0x35dd, /* VPUNPCKHBWZ128rrk */
-/* Table6841 */
+/* Table6843 */
   0x362e, /* VPUNPCKHWDZ128rmk */
   0x3631, /* VPUNPCKHWDZ128rrk */
-/* Table6843 */
+/* Table6845 */
   0x35f3, /* VPUNPCKHDQZ128rmk */
   0x35f6, /* VPUNPCKHDQZ128rrk */
-/* Table6845 */
+/* Table6847 */
   0x2099, /* VPACKSSDWZ128rmk */
   0x209c, /* VPACKSSDWZ128rrk */
-/* Table6847 */
+/* Table6849 */
   0x1dbf, /* VMOVDQA32Z128rmk */
   0x1dc3, /* VMOVDQA32Z128rrk */
-/* Table6849 */
+/* Table6851 */
   0x316c, /* VPSHUFDZ128mik */
   0x316f, /* VPSHUFDZ128rik */
-/* Table6851 */
+/* Table6853 */
   0x0, /*  */
   0x0, /*  */
   0x343d, /* VPSRLWZ128mik */
@@ -93736,7 +93738,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3282, /* VPSLLWZ128rik */
   0x0, /*  */
-/* Table6867 */
+/* Table6869 */
   0x2f6e, /* VPRORDZ128mik */
   0x2f02, /* VPROLDZ128mik */
   0x338a, /* VPSRLDZ128mik */
@@ -93753,265 +93755,265 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31cf, /* VPSLLDZ128rik */
   0x0, /*  */
-/* Table6883 */
+/* Table6885 */
   0x23ae, /* VPCMPEQBZ128rmk */
   0x23b0, /* VPCMPEQBZ128rrk */
-/* Table6885 */
+/* Table6887 */
   0x23ea, /* VPCMPEQWZ128rmk */
   0x23ec, /* VPCMPEQWZ128rrk */
-/* Table6887 */
+/* Table6889 */
   0x23c0, /* VPCMPEQDZ128rmk */
   0x23c2, /* VPCMPEQDZ128rrk */
-/* Table6889 */
+/* Table6891 */
   0x112e, /* VCVTTPS2UQQZ128rmk */
   0x1131, /* VCVTTPS2UQQZ128rrk */
-/* Table6891 */
+/* Table6893 */
   0xf98, /* VCVTPS2UQQZ128rmk */
   0xf9b, /* VCVTPS2UQQZ128rrk */
-/* Table6893 */
+/* Table6895 */
   0x10f2, /* VCVTTPS2QQZ128rmk */
   0x10f5, /* VCVTTPS2QQZ128rrk */
-/* Table6895 */
+/* Table6897 */
   0xf5c, /* VCVTPS2QQZ128rmk */
   0xf5f, /* VCVTPS2QQZ128rrk */
-/* Table6897 */
+/* Table6899 */
   0x1dbd, /* VMOVDQA32Z128mrk */
   0x1dc4, /* VMOVDQA32Z128rrk_REV */
-/* Table6899 */
+/* Table6901 */
   0x3443, /* VPSRLWZ128rmk */
   0x3446, /* VPSRLWZ128rrk */
-/* Table6901 */
+/* Table6903 */
   0x3390, /* VPSRLDZ128rmk */
   0x3393, /* VPSRLDZ128rrk */
-/* Table6903 */
+/* Table6905 */
   0x2e19, /* VPMULLWZ128rmk */
   0x2e1c, /* VPMULLWZ128rrk */
-/* Table6905 */
+/* Table6907 */
   0x34e6, /* VPSUBUSBZ128rmk */
   0x34e9, /* VPSUBUSBZ128rrk */
-/* Table6907 */
+/* Table6909 */
   0x34fc, /* VPSUBUSWZ128rmk */
   0x34ff, /* VPSUBUSWZ128rrk */
-/* Table6909 */
+/* Table6911 */
   0x2ae8, /* VPMINUBZ128rmk */
   0x2aeb, /* VPMINUBZ128rrk */
-/* Table6911 */
+/* Table6913 */
   0x21d9, /* VPANDDZ128rmk */
   0x21dc, /* VPANDDZ128rrk */
-/* Table6913 */
+/* Table6915 */
   0x2180, /* VPADDUSBZ128rmk */
   0x2183, /* VPADDUSBZ128rrk */
-/* Table6915 */
+/* Table6917 */
   0x2196, /* VPADDUSWZ128rmk */
   0x2199, /* VPADDUSWZ128rrk */
-/* Table6917 */
+/* Table6919 */
   0x2a1c, /* VPMAXUBZ128rmk */
   0x2a1f, /* VPMAXUBZ128rrk */
-/* Table6919 */
+/* Table6921 */
   0x21f4, /* VPANDNDZ128rmk */
   0x21f7, /* VPANDNDZ128rrk */
-/* Table6921 */
+/* Table6923 */
   0x224c, /* VPAVGBZ128rmk */
   0x224f, /* VPAVGBZ128rrk */
-/* Table6923 */
+/* Table6925 */
   0x335b, /* VPSRAWZ128rmk */
   0x335e, /* VPSRAWZ128rrk */
-/* Table6925 */
+/* Table6927 */
   0x32b2, /* VPSRADZ128rmk */
   0x32b5, /* VPSRADZ128rrk */
-/* Table6927 */
+/* Table6929 */
   0x2262, /* VPAVGWZ128rmk */
   0x2265, /* VPAVGWZ128rrk */
-/* Table6929 */
+/* Table6931 */
   0x2db3, /* VPMULHUWZ128rmk */
   0x2db6, /* VPMULHUWZ128rrk */
-/* Table6931 */
+/* Table6933 */
   0x2dc9, /* VPMULHWZ128rmk */
   0x2dcc, /* VPMULHWZ128rrk */
-/* Table6933 */
+/* Table6935 */
   0x34ba, /* VPSUBSBZ128rmk */
   0x34bd, /* VPSUBSBZ128rrk */
-/* Table6935 */
+/* Table6937 */
   0x34d0, /* VPSUBSWZ128rmk */
   0x34d3, /* VPSUBSWZ128rrk */
-/* Table6937 */
+/* Table6939 */
   0x2ad2, /* VPMINSWZ128rmk */
   0x2ad5, /* VPMINSWZ128rrk */
-/* Table6939 */
+/* Table6941 */
   0x2ec4, /* VPORDZ128rmk */
   0x2ec7, /* VPORDZ128rrk */
-/* Table6941 */
+/* Table6943 */
   0x2154, /* VPADDSBZ128rmk */
   0x2157, /* VPADDSBZ128rrk */
-/* Table6943 */
+/* Table6945 */
   0x216a, /* VPADDSWZ128rmk */
   0x216d, /* VPADDSWZ128rrk */
-/* Table6945 */
+/* Table6947 */
   0x2a06, /* VPMAXSWZ128rmk */
   0x2a09, /* VPMAXSWZ128rrk */
-/* Table6947 */
+/* Table6949 */
   0x36af, /* VPXORDZ128rmk */
   0x36b2, /* VPXORDZ128rrk */
-/* Table6949 */
+/* Table6951 */
   0x3285, /* VPSLLWZ128rmk */
   0x3288, /* VPSLLWZ128rrk */
-/* Table6951 */
+/* Table6953 */
   0x31d2, /* VPSLLDZ128rmk */
   0x31d5, /* VPSLLDZ128rrk */
-/* Table6953 */
+/* Table6955 */
   0x2998, /* VPMADDWDZ128rmk */
   0x299b, /* VPMADDWDZ128rrk */
-/* Table6955 */
+/* Table6957 */
   0x3466, /* VPSUBBZ128rmk */
   0x3469, /* VPSUBBZ128rrk */
-/* Table6957 */
+/* Table6959 */
   0x3512, /* VPSUBWZ128rmk */
   0x3515, /* VPSUBWZ128rrk */
-/* Table6959 */
+/* Table6961 */
   0x347f, /* VPSUBDZ128rmk */
   0x3482, /* VPSUBDZ128rrk */
-/* Table6961 */
+/* Table6963 */
   0x2100, /* VPADDBZ128rmk */
   0x2103, /* VPADDBZ128rrk */
-/* Table6963 */
+/* Table6965 */
   0x21ac, /* VPADDWZ128rmk */
   0x21af, /* VPADDWZ128rrk */
-/* Table6965 */
+/* Table6967 */
   0x2119, /* VPADDDZ128rmk */
   0x211c, /* VPADDDZ128rrk */
-/* Table6967 */
+/* Table6969 */
   0xfd4, /* VCVTQQ2PSZ128rmk */
   0xfd7, /* VCVTQQ2PSZ128rrk */
-/* Table6969 */
+/* Table6971 */
   0x1094, /* VCVTTPD2UDQZ128rmk */
   0x1097, /* VCVTTPD2UDQZ128rrk */
-/* Table6971 */
+/* Table6973 */
   0xead, /* VCVTPD2UDQZ128rmk */
   0xeb0, /* VCVTPD2UDQZ128rrk */
-/* Table6973 */
+/* Table6975 */
   0x1e4b, /* VMOVDQU64Z128rmk */
   0x1e4f, /* VMOVDQU64Z128rrk */
-/* Table6975 */
+/* Table6977 */
   0x11bd, /* VCVTUQQ2PDZ128rmk */
   0x11c0, /* VCVTUQQ2PDZ128rrk */
-/* Table6977 */
+/* Table6979 */
   0x1e49, /* VMOVDQU64Z128mrk */
   0x1e50, /* VMOVDQU64Z128rrk_REV */
-/* Table6979 */
+/* Table6981 */
   0xfb6, /* VCVTQQ2PDZ128rmk */
   0xfb9, /* VCVTQQ2PDZ128rrk */
-/* Table6981 */
+/* Table6983 */
   0x1ecf, /* VMOVSDZrmk */
   0x1ed3, /* VMOVSDZrrk */
-/* Table6983 */
+/* Table6985 */
   0x1ecd, /* VMOVSDZmrk */
   0x1ed4, /* VMOVSDZrrk_REV */
-/* Table6985 */
+/* Table6987 */
   0x1da1, /* VMOVDDUPZ128rmk */
   0x1da4, /* VMOVDDUPZ128rrk */
-/* Table6987 */
+/* Table6989 */
   0x39f9, /* VSQRTSDZm_Intk */
   0x39fd, /* VSQRTSDZr_Intk */
-/* Table6989 */
+/* Table6991 */
   0xb9e, /* VADDSDZrm_Intk */
   0xba2, /* VADDSDZrr_Intk */
-/* Table6991 */
+/* Table6993 */
   0x1fc7, /* VMULSDZrm_Intk */
   0x1fcb, /* VMULSDZrr_Intk */
-/* Table6993 */
+/* Table6995 */
   0xffa, /* VCVTSD2SSZrm_Intk */
   0xffe, /* VCVTSD2SSZrr_Intk */
-/* Table6995 */
+/* Table6997 */
   0x3a5c, /* VSUBSDZrm_Intk */
   0x3a60, /* VSUBSDZrr_Intk */
-/* Table6997 */
+/* Table6999 */
   0x1d24, /* VMINSDZrm_Intk */
   0x1d28, /* VMINSDZrr_Intk */
-/* Table6999 */
+/* Table7001 */
   0x1260, /* VDIVSDZrm_Intk */
   0x1264, /* VDIVSDZrr_Intk */
-/* Table7001 */
+/* Table7003 */
   0x1c79, /* VMAXSDZrm_Intk */
   0x1c7d, /* VMAXSDZrr_Intk */
-/* Table7003 */
+/* Table7005 */
   0x1e09, /* VMOVDQU16Z128rmk */
   0x1e0d, /* VMOVDQU16Z128rrk */
-/* Table7005 */
+/* Table7007 */
   0x11db, /* VCVTUQQ2PSZ128rmk */
   0x11de, /* VCVTUQQ2PSZ128rrk */
-/* Table7007 */
+/* Table7009 */
   0x1e07, /* VMOVDQU16Z128mrk */
   0x1e0e, /* VMOVDQU16Z128rrk_REV */
-/* Table7009 */
+/* Table7011 */
   0xdb0, /* VCMPSDZrm_Intk */
   0xdb5, /* VCMPSDZrr_Intk */
-/* Table7011 */
+/* Table7013 */
   0xe4d, /* VCVTPD2DQZ128rmk */
   0xe50, /* VCVTPD2DQZ128rrk */
-/* Table7013 */
+/* Table7015 */
   0x1f25, /* VMOVUPDZ128rmk */
   0x1f29, /* VMOVUPDZ128rrk */
-/* Table7015 */
+/* Table7017 */
   0x1f23, /* VMOVUPDZ128mrk */
   0x1f2a, /* VMOVUPDZ128rrk_REV */
-/* Table7017 */
+/* Table7019 */
   0x3ad6, /* VUNPCKLPDZ128rmk */
   0x3ad9, /* VUNPCKLPDZ128rrk */
-/* Table7019 */
+/* Table7021 */
   0x3a98, /* VUNPCKHPDZ128rmk */
   0x3a9b, /* VUNPCKHPDZ128rrk */
-/* Table7021 */
+/* Table7023 */
   0x1d53, /* VMOVAPDZ128rmk */
   0x1d57, /* VMOVAPDZ128rrk */
-/* Table7023 */
+/* Table7025 */
   0x1d51, /* VMOVAPDZ128mrk */
   0x1d58, /* VMOVAPDZ128rrk_REV */
-/* Table7025 */
+/* Table7027 */
   0x39b9, /* VSQRTPDZ128mk */
   0x39bc, /* VSQRTPDZ128rk */
-/* Table7027 */
+/* Table7029 */
   0xc68, /* VANDPDZ128rmk */
   0xc6b, /* VANDPDZ128rrk */
-/* Table7029 */
+/* Table7031 */
   0xc2a, /* VANDNPDZ128rmk */
   0xc2d, /* VANDNPDZ128rrk */
-/* Table7031 */
+/* Table7033 */
   0x1fef, /* VORPDZ128rmk */
   0x1ff2, /* VORPDZ128rrk */
-/* Table7033 */
+/* Table7035 */
   0x3b14, /* VXORPDZ128rmk */
   0x3b17, /* VXORPDZ128rrk */
-/* Table7035 */
+/* Table7037 */
   0xb5e, /* VADDPDZ128rmk */
   0xb61, /* VADDPDZ128rrk */
-/* Table7037 */
+/* Table7039 */
   0x1f87, /* VMULPDZ128rmk */
   0x1f8a, /* VMULPDZ128rrk */
-/* Table7039 */
+/* Table7041 */
   0xe6f, /* VCVTPD2PSZ128rmk */
   0xe72, /* VCVTPD2PSZ128rrk */
-/* Table7041 */
+/* Table7043 */
   0x3a1c, /* VSUBPDZ128rmk */
   0x3a1f, /* VSUBPDZ128rrk */
-/* Table7043 */
+/* Table7045 */
   0x1ce4, /* VMINPDZ128rmk */
   0x1ce7, /* VMINPDZ128rrk */
-/* Table7045 */
+/* Table7047 */
   0x1220, /* VDIVPDZ128rmk */
   0x1223, /* VDIVPDZ128rrk */
-/* Table7047 */
+/* Table7049 */
   0x1c39, /* VMAXPDZ128rmk */
   0x1c3c, /* VMAXPDZ128rrk */
-/* Table7049 */
+/* Table7051 */
   0x367c, /* VPUNPCKLQDQZ128rmk */
   0x367f, /* VPUNPCKLQDQZ128rrk */
-/* Table7051 */
+/* Table7053 */
   0x3612, /* VPUNPCKHQDQZ128rmk */
   0x3615, /* VPUNPCKHQDQZ128rrk */
-/* Table7053 */
+/* Table7055 */
   0x1de0, /* VMOVDQA64Z128rmk */
   0x1de4, /* VMOVDQA64Z128rrk */
-/* Table7055 */
+/* Table7057 */
   0x2f89, /* VPRORQZ128mik */
   0x2f1d, /* VPROLQZ128mik */
   0x0, /*  */
@@ -94028,7 +94030,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table7071 */
+/* Table7073 */
   0x0, /*  */
   0x0, /*  */
   0x33bd, /* VPSRLQZ128mik */
@@ -94045,211 +94047,211 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3202, /* VPSLLQZ128rik */
   0x0, /*  */
-/* Table7087 */
+/* Table7089 */
   0x10b2, /* VCVTTPD2UQQZ128rmk */
   0x10b5, /* VCVTTPD2UQQZ128rrk */
-/* Table7089 */
+/* Table7091 */
   0xecb, /* VCVTPD2UQQZ128rmk */
   0xece, /* VCVTPD2UQQZ128rrk */
-/* Table7091 */
+/* Table7093 */
   0x1076, /* VCVTTPD2QQZ128rmk */
   0x1079, /* VCVTTPD2QQZ128rrk */
-/* Table7093 */
+/* Table7095 */
   0xe8f, /* VCVTPD2QQZ128rmk */
   0xe92, /* VCVTPD2QQZ128rrk */
-/* Table7095 */
+/* Table7097 */
   0x1dde, /* VMOVDQA64Z128mrk */
   0x1de5, /* VMOVDQA64Z128rrk_REV */
-/* Table7097 */
+/* Table7099 */
   0xd59, /* VCMPPDZ128rmik */
   0xd5d, /* VCMPPDZ128rrik */
-/* Table7099 */
+/* Table7101 */
   0x397b, /* VSHUFPDZ128rmik */
   0x397e, /* VSHUFPDZ128rrik */
-/* Table7101 */
+/* Table7103 */
   0x33c3, /* VPSRLQZ128rmk */
   0x33c6, /* VPSRLQZ128rrk */
-/* Table7103 */
+/* Table7105 */
   0x2138, /* VPADDQZ128rmk */
   0x213b, /* VPADDQZ128rrk */
-/* Table7105 */
+/* Table7107 */
   0x222e, /* VPANDQZ128rmk */
   0x2231, /* VPANDQZ128rrk */
-/* Table7107 */
+/* Table7109 */
   0x220f, /* VPANDNQZ128rmk */
   0x2212, /* VPANDNQZ128rrk */
-/* Table7109 */
+/* Table7111 */
   0x32e2, /* VPSRAQZ128rmk */
   0x32e5, /* VPSRAQZ128rrk */
-/* Table7111 */
+/* Table7113 */
   0x1056, /* VCVTTPD2DQZ128rmk */
   0x1059, /* VCVTTPD2DQZ128rrk */
-/* Table7113 */
+/* Table7115 */
   0x2edf, /* VPORQZ128rmk */
   0x2ee2, /* VPORQZ128rrk */
-/* Table7115 */
+/* Table7117 */
   0x36ca, /* VPXORQZ128rmk */
   0x36cd, /* VPXORQZ128rrk */
-/* Table7117 */
+/* Table7119 */
   0x3205, /* VPSLLQZ128rmk */
   0x3208, /* VPSLLQZ128rrk */
-/* Table7119 */
+/* Table7121 */
   0x2e4d, /* VPMULUDQZ128rmk */
   0x2e50, /* VPMULUDQZ128rrk */
-/* Table7121 */
+/* Table7123 */
   0x349e, /* VPSUBQZ128rmk */
   0x34a1, /* VPSUBQZ128rrk */
-/* Table7123 */
+/* Table7125 */
   0x1f59, /* VMOVUPSZ256rmk */
   0x1f5d, /* VMOVUPSZ256rrk */
-/* Table7125 */
+/* Table7127 */
   0x1f57, /* VMOVUPSZ256mrk */
   0x1f5e, /* VMOVUPSZ256rrk_REV */
-/* Table7127 */
+/* Table7129 */
   0x3afe, /* VUNPCKLPSZ256rmk */
   0x3b01, /* VUNPCKLPSZ256rrk */
-/* Table7129 */
+/* Table7131 */
   0x3ac0, /* VUNPCKHPSZ256rmk */
   0x3ac3, /* VUNPCKHPSZ256rrk */
-/* Table7131 */
+/* Table7133 */
   0x1d87, /* VMOVAPSZ256rmk */
   0x1d8b, /* VMOVAPSZ256rrk */
-/* Table7133 */
+/* Table7135 */
   0x1d85, /* VMOVAPSZ256mrk */
   0x1d8c, /* VMOVAPSZ256rrk_REV */
-/* Table7135 */
+/* Table7137 */
   0x39e4, /* VSQRTPSZ256mk */
   0x39e7, /* VSQRTPSZ256rk */
-/* Table7137 */
+/* Table7139 */
   0xc90, /* VANDPSZ256rmk */
   0xc93, /* VANDPSZ256rrk */
-/* Table7139 */
+/* Table7141 */
   0xc52, /* VANDNPSZ256rmk */
   0xc55, /* VANDNPSZ256rrk */
-/* Table7141 */
+/* Table7143 */
   0x2017, /* VORPSZ256rmk */
   0x201a, /* VORPSZ256rrk */
-/* Table7143 */
+/* Table7145 */
   0x3b3c, /* VXORPSZ256rmk */
   0x3b3f, /* VXORPSZ256rrk */
-/* Table7145 */
+/* Table7147 */
   0xb89, /* VADDPSZ256rmk */
   0xb8c, /* VADDPSZ256rrk */
-/* Table7147 */
+/* Table7149 */
   0x1fb2, /* VMULPSZ256rmk */
   0x1fb5, /* VMULPSZ256rrk */
-/* Table7149 */
+/* Table7151 */
   0xf2f, /* VCVTPS2PDZ256rmk */
   0xf32, /* VCVTPS2PDZ256rrk */
-/* Table7151 */
+/* Table7153 */
   0xe34, /* VCVTDQ2PSZ256rmk */
   0xe37, /* VCVTDQ2PSZ256rrk */
-/* Table7153 */
+/* Table7155 */
   0x3a47, /* VSUBPSZ256rmk */
   0x3a4a, /* VSUBPSZ256rrk */
-/* Table7155 */
+/* Table7157 */
   0x1d0f, /* VMINPSZ256rmk */
   0x1d12, /* VMINPSZ256rrk */
-/* Table7157 */
+/* Table7159 */
   0x124b, /* VDIVPSZ256rmk */
   0x124e, /* VDIVPSZ256rrk */
-/* Table7159 */
+/* Table7161 */
   0x1c64, /* VMAXPSZ256rmk */
   0x1c67, /* VMAXPSZ256rrk */
-/* Table7161 */
+/* Table7163 */
   0x1119, /* VCVTTPS2UDQZ256rmk */
   0x111c, /* VCVTTPS2UDQZ256rrk */
-/* Table7163 */
+/* Table7165 */
   0xf83, /* VCVTPS2UDQZ256rmk */
   0xf86, /* VCVTPS2UDQZ256rrk */
-/* Table7165 */
+/* Table7167 */
   0xd95, /* VCMPPSZ256rmik */
   0xd99, /* VCMPPSZ256rrik */
-/* Table7167 */
+/* Table7169 */
   0x39a3, /* VSHUFPSZ256rmik */
   0x39a6, /* VSHUFPSZ256rrik */
-/* Table7169 */
+/* Table7171 */
   0x1efe, /* VMOVSLDUPZ256rmk */
   0x1f01, /* VMOVSLDUPZ256rrk */
-/* Table7171 */
+/* Table7173 */
   0x1ee8, /* VMOVSHDUPZ256rmk */
   0x1eeb, /* VMOVSHDUPZ256rrk */
-/* Table7173 */
+/* Table7175 */
   0x10db, /* VCVTTPS2DQZ256rmk */
   0x10de, /* VCVTTPS2DQZ256rrk */
-/* Table7175 */
+/* Table7177 */
   0x1e35, /* VMOVDQU32Z256rmk */
   0x1e39, /* VMOVDQU32Z256rrk */
-/* Table7177 */
+/* Table7179 */
   0x318e, /* VPSHUFHWZ256mik */
   0x3191, /* VPSHUFHWZ256rik */
-/* Table7179 */
+/* Table7181 */
   0x118d, /* VCVTUDQ2PDZ256rmk */
   0x1190, /* VCVTUDQ2PDZ256rrk */
-/* Table7181 */
+/* Table7183 */
   0x1e33, /* VMOVDQU32Z256mrk */
   0x1e3a, /* VMOVDQU32Z256rrk_REV */
-/* Table7183 */
+/* Table7185 */
   0xe15, /* VCVTDQ2PDZ256rmk */
   0xe18, /* VCVTDQ2PDZ256rrk */
-/* Table7185 */
+/* Table7187 */
   0x1e77, /* VMOVDQU8Z256rmk */
   0x1e7b, /* VMOVDQU8Z256rrk */
-/* Table7187 */
+/* Table7189 */
   0x31a4, /* VPSHUFLWZ256mik */
   0x31a7, /* VPSHUFLWZ256rik */
-/* Table7189 */
+/* Table7191 */
   0x11a8, /* VCVTUDQ2PSZ256rmk */
   0x11ab, /* VCVTUDQ2PSZ256rrk */
-/* Table7191 */
+/* Table7193 */
   0x1e75, /* VMOVDQU8Z256mrk */
   0x1e7c, /* VMOVDQU8Z256rrk_REV */
-/* Table7193 */
+/* Table7195 */
   0xf0d, /* VCVTPS2DQZ256rmk */
   0xf10, /* VCVTPS2DQZ256rrk */
-/* Table7195 */
+/* Table7197 */
   0x364a, /* VPUNPCKLBWZ256rmk */
   0x364d, /* VPUNPCKLBWZ256rrk */
-/* Table7197 */
+/* Table7199 */
   0x369e, /* VPUNPCKLWDZ256rmk */
   0x36a1, /* VPUNPCKLWDZ256rrk */
-/* Table7199 */
+/* Table7201 */
   0x3666, /* VPUNPCKLDQZ256rmk */
   0x3669, /* VPUNPCKLDQZ256rrk */
-/* Table7201 */
+/* Table7203 */
   0x20bb, /* VPACKSSWBZ256rmk */
   0x20be, /* VPACKSSWBZ256rrk */
-/* Table7203 */
+/* Table7205 */
   0x2402, /* VPCMPGTBZ256rmk */
   0x2404, /* VPCMPGTBZ256rrk */
-/* Table7205 */
+/* Table7207 */
   0x243e, /* VPCMPGTWZ256rmk */
   0x2440, /* VPCMPGTWZ256rrk */
-/* Table7207 */
+/* Table7209 */
   0x2416, /* VPCMPGTDZ256rmk */
   0x2418, /* VPCMPGTDZ256rrk */
-/* Table7209 */
+/* Table7211 */
   0x20f0, /* VPACKUSWBZ256rmk */
   0x20f3, /* VPACKUSWBZ256rrk */
-/* Table7211 */
+/* Table7213 */
   0x35e0, /* VPUNPCKHBWZ256rmk */
   0x35e3, /* VPUNPCKHBWZ256rrk */
-/* Table7213 */
+/* Table7215 */
   0x3634, /* VPUNPCKHWDZ256rmk */
   0x3637, /* VPUNPCKHWDZ256rrk */
-/* Table7215 */
+/* Table7217 */
   0x35fc, /* VPUNPCKHDQZ256rmk */
   0x35ff, /* VPUNPCKHDQZ256rrk */
-/* Table7217 */
+/* Table7219 */
   0x20a2, /* VPACKSSDWZ256rmk */
   0x20a5, /* VPACKSSDWZ256rrk */
-/* Table7219 */
+/* Table7221 */
   0x1dca, /* VMOVDQA32Z256rmk */
   0x1dce, /* VMOVDQA32Z256rrk */
-/* Table7221 */
+/* Table7223 */
   0x3175, /* VPSHUFDZ256mik */
   0x3178, /* VPSHUFDZ256rik */
-/* Table7223 */
+/* Table7225 */
   0x0, /*  */
   0x0, /*  */
   0x3449, /* VPSRLWZ256mik */
@@ -94266,7 +94268,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x328e, /* VPSLLWZ256rik */
   0x0, /*  */
-/* Table7239 */
+/* Table7241 */
   0x2f77, /* VPRORDZ256mik */
   0x2f0b, /* VPROLDZ256mik */
   0x3399, /* VPSRLDZ256mik */
@@ -94283,232 +94285,232 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31de, /* VPSLLDZ256rik */
   0x0, /*  */
-/* Table7255 */
+/* Table7257 */
   0x23b2, /* VPCMPEQBZ256rmk */
   0x23b4, /* VPCMPEQBZ256rrk */
-/* Table7257 */
+/* Table7259 */
   0x23ee, /* VPCMPEQWZ256rmk */
   0x23f0, /* VPCMPEQWZ256rrk */
-/* Table7259 */
+/* Table7261 */
   0x23c6, /* VPCMPEQDZ256rmk */
   0x23c8, /* VPCMPEQDZ256rrk */
-/* Table7261 */
+/* Table7263 */
   0x1137, /* VCVTTPS2UQQZ256rmk */
   0x113a, /* VCVTTPS2UQQZ256rrk */
-/* Table7263 */
+/* Table7265 */
   0xfa1, /* VCVTPS2UQQZ256rmk */
   0xfa4, /* VCVTPS2UQQZ256rrk */
-/* Table7265 */
+/* Table7267 */
   0x10fb, /* VCVTTPS2QQZ256rmk */
   0x10fe, /* VCVTTPS2QQZ256rrk */
-/* Table7267 */
+/* Table7269 */
   0xf65, /* VCVTPS2QQZ256rmk */
   0xf68, /* VCVTPS2QQZ256rrk */
-/* Table7269 */
+/* Table7271 */
   0x1dc8, /* VMOVDQA32Z256mrk */
   0x1dcf, /* VMOVDQA32Z256rrk_REV */
-/* Table7271 */
+/* Table7273 */
   0x344f, /* VPSRLWZ256rmk */
   0x3452, /* VPSRLWZ256rrk */
-/* Table7273 */
+/* Table7275 */
   0x339f, /* VPSRLDZ256rmk */
   0x33a2, /* VPSRLDZ256rrk */
-/* Table7275 */
+/* Table7277 */
   0x2e1f, /* VPMULLWZ256rmk */
   0x2e22, /* VPMULLWZ256rrk */
-/* Table7277 */
+/* Table7279 */
   0x34ec, /* VPSUBUSBZ256rmk */
   0x34ef, /* VPSUBUSBZ256rrk */
-/* Table7279 */
+/* Table7281 */
   0x3502, /* VPSUBUSWZ256rmk */
   0x3505, /* VPSUBUSWZ256rrk */
-/* Table7281 */
+/* Table7283 */
   0x2aee, /* VPMINUBZ256rmk */
   0x2af1, /* VPMINUBZ256rrk */
-/* Table7283 */
+/* Table7285 */
   0x21e2, /* VPANDDZ256rmk */
   0x21e5, /* VPANDDZ256rrk */
-/* Table7285 */
+/* Table7287 */
   0x2186, /* VPADDUSBZ256rmk */
   0x2189, /* VPADDUSBZ256rrk */
-/* Table7287 */
+/* Table7289 */
   0x219c, /* VPADDUSWZ256rmk */
   0x219f, /* VPADDUSWZ256rrk */
-/* Table7289 */
+/* Table7291 */
   0x2a22, /* VPMAXUBZ256rmk */
   0x2a25, /* VPMAXUBZ256rrk */
-/* Table7291 */
+/* Table7293 */
   0x21fd, /* VPANDNDZ256rmk */
   0x2200, /* VPANDNDZ256rrk */
-/* Table7293 */
+/* Table7295 */
   0x2252, /* VPAVGBZ256rmk */
   0x2255, /* VPAVGBZ256rrk */
-/* Table7295 */
+/* Table7297 */
   0x3367, /* VPSRAWZ256rmk */
   0x336a, /* VPSRAWZ256rrk */
-/* Table7297 */
+/* Table7299 */
   0x32c1, /* VPSRADZ256rmk */
   0x32c4, /* VPSRADZ256rrk */
-/* Table7299 */
+/* Table7301 */
   0x2268, /* VPAVGWZ256rmk */
   0x226b, /* VPAVGWZ256rrk */
-/* Table7301 */
+/* Table7303 */
   0x2db9, /* VPMULHUWZ256rmk */
   0x2dbc, /* VPMULHUWZ256rrk */
-/* Table7303 */
+/* Table7305 */
   0x2dcf, /* VPMULHWZ256rmk */
   0x2dd2, /* VPMULHWZ256rrk */
-/* Table7305 */
+/* Table7307 */
   0x34c0, /* VPSUBSBZ256rmk */
   0x34c3, /* VPSUBSBZ256rrk */
-/* Table7307 */
+/* Table7309 */
   0x34d6, /* VPSUBSWZ256rmk */
   0x34d9, /* VPSUBSWZ256rrk */
-/* Table7309 */
+/* Table7311 */
   0x2ad8, /* VPMINSWZ256rmk */
   0x2adb, /* VPMINSWZ256rrk */
-/* Table7311 */
+/* Table7313 */
   0x2ecd, /* VPORDZ256rmk */
   0x2ed0, /* VPORDZ256rrk */
-/* Table7313 */
+/* Table7315 */
   0x215a, /* VPADDSBZ256rmk */
   0x215d, /* VPADDSBZ256rrk */
-/* Table7315 */
+/* Table7317 */
   0x2170, /* VPADDSWZ256rmk */
   0x2173, /* VPADDSWZ256rrk */
-/* Table7317 */
+/* Table7319 */
   0x2a0c, /* VPMAXSWZ256rmk */
   0x2a0f, /* VPMAXSWZ256rrk */
-/* Table7319 */
+/* Table7321 */
   0x36b8, /* VPXORDZ256rmk */
   0x36bb, /* VPXORDZ256rrk */
-/* Table7321 */
+/* Table7323 */
   0x3291, /* VPSLLWZ256rmk */
   0x3294, /* VPSLLWZ256rrk */
-/* Table7323 */
+/* Table7325 */
   0x31e1, /* VPSLLDZ256rmk */
   0x31e4, /* VPSLLDZ256rrk */
-/* Table7325 */
+/* Table7327 */
   0x299e, /* VPMADDWDZ256rmk */
   0x29a1, /* VPMADDWDZ256rrk */
-/* Table7327 */
+/* Table7329 */
   0x346c, /* VPSUBBZ256rmk */
   0x346f, /* VPSUBBZ256rrk */
-/* Table7329 */
+/* Table7331 */
   0x3518, /* VPSUBWZ256rmk */
   0x351b, /* VPSUBWZ256rrk */
-/* Table7331 */
+/* Table7333 */
   0x3488, /* VPSUBDZ256rmk */
   0x348b, /* VPSUBDZ256rrk */
-/* Table7333 */
+/* Table7335 */
   0x2106, /* VPADDBZ256rmk */
   0x2109, /* VPADDBZ256rrk */
-/* Table7335 */
+/* Table7337 */
   0x21b2, /* VPADDWZ256rmk */
   0x21b5, /* VPADDWZ256rrk */
-/* Table7337 */
+/* Table7339 */
   0x2122, /* VPADDDZ256rmk */
   0x2125, /* VPADDDZ256rrk */
-/* Table7339 */
+/* Table7341 */
   0xfdd, /* VCVTQQ2PSZ256rmk */
   0xfe0, /* VCVTQQ2PSZ256rrk */
-/* Table7341 */
+/* Table7343 */
   0x109d, /* VCVTTPD2UDQZ256rmk */
   0x10a0, /* VCVTTPD2UDQZ256rrk */
-/* Table7343 */
+/* Table7345 */
   0xeb6, /* VCVTPD2UDQZ256rmk */
   0xeb9, /* VCVTPD2UDQZ256rrk */
-/* Table7345 */
+/* Table7347 */
   0x1e56, /* VMOVDQU64Z256rmk */
   0x1e5a, /* VMOVDQU64Z256rrk */
-/* Table7347 */
+/* Table7349 */
   0x11c6, /* VCVTUQQ2PDZ256rmk */
   0x11c9, /* VCVTUQQ2PDZ256rrk */
-/* Table7349 */
+/* Table7351 */
   0x1e54, /* VMOVDQU64Z256mrk */
   0x1e5b, /* VMOVDQU64Z256rrk_REV */
-/* Table7351 */
+/* Table7353 */
   0xfbf, /* VCVTQQ2PDZ256rmk */
   0xfc2, /* VCVTQQ2PDZ256rrk */
-/* Table7353 */
+/* Table7355 */
   0x1da7, /* VMOVDDUPZ256rmk */
   0x1daa, /* VMOVDDUPZ256rrk */
-/* Table7355 */
+/* Table7357 */
   0x1e14, /* VMOVDQU16Z256rmk */
   0x1e18, /* VMOVDQU16Z256rrk */
-/* Table7357 */
+/* Table7359 */
   0x11e4, /* VCVTUQQ2PSZ256rmk */
   0x11e7, /* VCVTUQQ2PSZ256rrk */
-/* Table7359 */
+/* Table7361 */
   0x1e12, /* VMOVDQU16Z256mrk */
   0x1e19, /* VMOVDQU16Z256rrk_REV */
-/* Table7361 */
+/* Table7363 */
   0xe56, /* VCVTPD2DQZ256rmk */
   0xe59, /* VCVTPD2DQZ256rrk */
-/* Table7363 */
+/* Table7365 */
   0x1f30, /* VMOVUPDZ256rmk */
   0x1f34, /* VMOVUPDZ256rrk */
-/* Table7365 */
+/* Table7367 */
   0x1f2e, /* VMOVUPDZ256mrk */
   0x1f35, /* VMOVUPDZ256rrk_REV */
-/* Table7367 */
+/* Table7369 */
   0x3adf, /* VUNPCKLPDZ256rmk */
   0x3ae2, /* VUNPCKLPDZ256rrk */
-/* Table7369 */
+/* Table7371 */
   0x3aa1, /* VUNPCKHPDZ256rmk */
   0x3aa4, /* VUNPCKHPDZ256rrk */
-/* Table7371 */
+/* Table7373 */
   0x1d5e, /* VMOVAPDZ256rmk */
   0x1d62, /* VMOVAPDZ256rrk */
-/* Table7373 */
+/* Table7375 */
   0x1d5c, /* VMOVAPDZ256mrk */
   0x1d63, /* VMOVAPDZ256rrk_REV */
-/* Table7375 */
+/* Table7377 */
   0x39c2, /* VSQRTPDZ256mk */
   0x39c5, /* VSQRTPDZ256rk */
-/* Table7377 */
+/* Table7379 */
   0xc71, /* VANDPDZ256rmk */
   0xc74, /* VANDPDZ256rrk */
-/* Table7379 */
+/* Table7381 */
   0xc33, /* VANDNPDZ256rmk */
   0xc36, /* VANDNPDZ256rrk */
-/* Table7381 */
+/* Table7383 */
   0x1ff8, /* VORPDZ256rmk */
   0x1ffb, /* VORPDZ256rrk */
-/* Table7383 */
+/* Table7385 */
   0x3b1d, /* VXORPDZ256rmk */
   0x3b20, /* VXORPDZ256rrk */
-/* Table7385 */
+/* Table7387 */
   0xb67, /* VADDPDZ256rmk */
   0xb6a, /* VADDPDZ256rrk */
-/* Table7387 */
+/* Table7389 */
   0x1f90, /* VMULPDZ256rmk */
   0x1f93, /* VMULPDZ256rrk */
-/* Table7389 */
+/* Table7391 */
   0xe78, /* VCVTPD2PSZ256rmk */
   0xe7b, /* VCVTPD2PSZ256rrk */
-/* Table7391 */
+/* Table7393 */
   0x3a25, /* VSUBPDZ256rmk */
   0x3a28, /* VSUBPDZ256rrk */
-/* Table7393 */
+/* Table7395 */
   0x1ced, /* VMINPDZ256rmk */
   0x1cf0, /* VMINPDZ256rrk */
-/* Table7395 */
+/* Table7397 */
   0x1229, /* VDIVPDZ256rmk */
   0x122c, /* VDIVPDZ256rrk */
-/* Table7397 */
+/* Table7399 */
   0x1c42, /* VMAXPDZ256rmk */
   0x1c45, /* VMAXPDZ256rrk */
-/* Table7399 */
+/* Table7401 */
   0x3685, /* VPUNPCKLQDQZ256rmk */
   0x3688, /* VPUNPCKLQDQZ256rrk */
-/* Table7401 */
+/* Table7403 */
   0x361b, /* VPUNPCKHQDQZ256rmk */
   0x361e, /* VPUNPCKHQDQZ256rrk */
-/* Table7403 */
+/* Table7405 */
   0x1deb, /* VMOVDQA64Z256rmk */
   0x1def, /* VMOVDQA64Z256rrk */
-/* Table7405 */
+/* Table7407 */
   0x2f92, /* VPRORQZ256mik */
   0x2f26, /* VPROLQZ256mik */
   0x0, /*  */
@@ -94525,7 +94527,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table7421 */
+/* Table7423 */
   0x0, /*  */
   0x0, /*  */
   0x33cc, /* VPSRLQZ256mik */
@@ -94542,211 +94544,211 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3211, /* VPSLLQZ256rik */
   0x0, /*  */
-/* Table7437 */
+/* Table7439 */
   0x10bb, /* VCVTTPD2UQQZ256rmk */
   0x10be, /* VCVTTPD2UQQZ256rrk */
-/* Table7439 */
+/* Table7441 */
   0xed4, /* VCVTPD2UQQZ256rmk */
   0xed7, /* VCVTPD2UQQZ256rrk */
-/* Table7441 */
+/* Table7443 */
   0x107f, /* VCVTTPD2QQZ256rmk */
   0x1082, /* VCVTTPD2QQZ256rrk */
-/* Table7443 */
+/* Table7445 */
   0xe98, /* VCVTPD2QQZ256rmk */
   0xe9b, /* VCVTPD2QQZ256rrk */
-/* Table7445 */
+/* Table7447 */
   0x1de9, /* VMOVDQA64Z256mrk */
   0x1df0, /* VMOVDQA64Z256rrk_REV */
-/* Table7447 */
+/* Table7449 */
   0xd65, /* VCMPPDZ256rmik */
   0xd69, /* VCMPPDZ256rrik */
-/* Table7449 */
+/* Table7451 */
   0x3984, /* VSHUFPDZ256rmik */
   0x3987, /* VSHUFPDZ256rrik */
-/* Table7451 */
+/* Table7453 */
   0x33d2, /* VPSRLQZ256rmk */
   0x33d5, /* VPSRLQZ256rrk */
-/* Table7453 */
+/* Table7455 */
   0x2141, /* VPADDQZ256rmk */
   0x2144, /* VPADDQZ256rrk */
-/* Table7455 */
+/* Table7457 */
   0x2237, /* VPANDQZ256rmk */
   0x223a, /* VPANDQZ256rrk */
-/* Table7457 */
+/* Table7459 */
   0x2218, /* VPANDNQZ256rmk */
   0x221b, /* VPANDNQZ256rrk */
-/* Table7459 */
+/* Table7461 */
   0x32f1, /* VPSRAQZ256rmk */
   0x32f4, /* VPSRAQZ256rrk */
-/* Table7461 */
+/* Table7463 */
   0x105f, /* VCVTTPD2DQZ256rmk */
   0x1062, /* VCVTTPD2DQZ256rrk */
-/* Table7463 */
+/* Table7465 */
   0x2ee8, /* VPORQZ256rmk */
   0x2eeb, /* VPORQZ256rrk */
-/* Table7465 */
+/* Table7467 */
   0x36d3, /* VPXORQZ256rmk */
   0x36d6, /* VPXORQZ256rrk */
-/* Table7467 */
+/* Table7469 */
   0x3214, /* VPSLLQZ256rmk */
   0x3217, /* VPSLLQZ256rrk */
-/* Table7469 */
+/* Table7471 */
   0x2e56, /* VPMULUDQZ256rmk */
   0x2e59, /* VPMULUDQZ256rrk */
-/* Table7471 */
+/* Table7473 */
   0x34a7, /* VPSUBQZ256rmk */
   0x34aa, /* VPSUBQZ256rrk */
-/* Table7473 */
+/* Table7475 */
   0x1f64, /* VMOVUPSZrmk */
   0x1f68, /* VMOVUPSZrrk */
-/* Table7475 */
+/* Table7477 */
   0x1f62, /* VMOVUPSZmrk */
   0x1f69, /* VMOVUPSZrrk_REV */
-/* Table7477 */
+/* Table7479 */
   0x3b07, /* VUNPCKLPSZrmk */
   0x3b0a, /* VUNPCKLPSZrrk */
-/* Table7479 */
+/* Table7481 */
   0x3ac9, /* VUNPCKHPSZrmk */
   0x3acc, /* VUNPCKHPSZrrk */
-/* Table7481 */
+/* Table7483 */
   0x1d92, /* VMOVAPSZrmk */
   0x1d96, /* VMOVAPSZrrk */
-/* Table7483 */
+/* Table7485 */
   0x1d90, /* VMOVAPSZmrk */
   0x1d97, /* VMOVAPSZrrk_REV */
-/* Table7485 */
+/* Table7487 */
   0x39ed, /* VSQRTPSZmk */
   0x39f3, /* VSQRTPSZrk */
-/* Table7487 */
+/* Table7489 */
   0xc99, /* VANDPSZrmk */
   0xc9c, /* VANDPSZrrk */
-/* Table7489 */
+/* Table7491 */
   0xc5b, /* VANDNPSZrmk */
   0xc5e, /* VANDNPSZrrk */
-/* Table7491 */
+/* Table7493 */
   0x2020, /* VORPSZrmk */
   0x2023, /* VORPSZrrk */
-/* Table7493 */
+/* Table7495 */
   0x3b45, /* VXORPSZrmk */
   0x3b48, /* VXORPSZrrk */
-/* Table7495 */
+/* Table7497 */
   0xb92, /* VADDPSZrmk */
   0xb98, /* VADDPSZrrk */
-/* Table7497 */
+/* Table7499 */
   0x1fbb, /* VMULPSZrmk */
   0x1fc1, /* VMULPSZrrk */
-/* Table7499 */
+/* Table7501 */
   0xf38, /* VCVTPS2PDZrmk */
   0xf3e, /* VCVTPS2PDZrrk */
-/* Table7501 */
+/* Table7503 */
   0xe3d, /* VCVTDQ2PSZrmk */
   0xe43, /* VCVTDQ2PSZrrk */
-/* Table7503 */
+/* Table7505 */
   0x3a50, /* VSUBPSZrmk */
   0x3a56, /* VSUBPSZrrk */
-/* Table7505 */
+/* Table7507 */
   0x1d18, /* VMINPSZrmk */
   0x1d1e, /* VMINPSZrrk */
-/* Table7507 */
+/* Table7509 */
   0x1254, /* VDIVPSZrmk */
   0x125a, /* VDIVPSZrrk */
-/* Table7509 */
+/* Table7511 */
   0x1c6d, /* VMAXPSZrmk */
   0x1c73, /* VMAXPSZrrk */
-/* Table7511 */
+/* Table7513 */
   0x1122, /* VCVTTPS2UDQZrmk */
   0x1128, /* VCVTTPS2UDQZrrk */
-/* Table7513 */
+/* Table7515 */
   0xf8c, /* VCVTPS2UDQZrmk */
   0xf92, /* VCVTPS2UDQZrrk */
-/* Table7515 */
+/* Table7517 */
   0xda1, /* VCMPPSZrmik */
   0xda9, /* VCMPPSZrrik */
-/* Table7517 */
+/* Table7519 */
   0x39ac, /* VSHUFPSZrmik */
   0x39af, /* VSHUFPSZrrik */
-/* Table7519 */
+/* Table7521 */
   0x1f04, /* VMOVSLDUPZrmk */
   0x1f07, /* VMOVSLDUPZrrk */
-/* Table7521 */
+/* Table7523 */
   0x1eee, /* VMOVSHDUPZrmk */
   0x1ef1, /* VMOVSHDUPZrrk */
-/* Table7523 */
+/* Table7525 */
   0x10e4, /* VCVTTPS2DQZrmk */
   0x10ea, /* VCVTTPS2DQZrrk */
-/* Table7525 */
+/* Table7527 */
   0x1e40, /* VMOVDQU32Zrmk */
   0x1e44, /* VMOVDQU32Zrrk */
-/* Table7527 */
+/* Table7529 */
   0x3194, /* VPSHUFHWZmik */
   0x3197, /* VPSHUFHWZrik */
-/* Table7529 */
+/* Table7531 */
   0x1196, /* VCVTUDQ2PDZrmk */
   0x1199, /* VCVTUDQ2PDZrrk */
-/* Table7531 */
+/* Table7533 */
   0x1e3e, /* VMOVDQU32Zmrk */
   0x1e45, /* VMOVDQU32Zrrk_REV */
-/* Table7533 */
+/* Table7535 */
   0xe1e, /* VCVTDQ2PDZrmk */
   0xe21, /* VCVTDQ2PDZrrk */
-/* Table7535 */
+/* Table7537 */
   0x1e82, /* VMOVDQU8Zrmk */
   0x1e86, /* VMOVDQU8Zrrk */
-/* Table7537 */
+/* Table7539 */
   0x31aa, /* VPSHUFLWZmik */
   0x31ad, /* VPSHUFLWZrik */
-/* Table7539 */
+/* Table7541 */
   0x11b1, /* VCVTUDQ2PSZrmk */
   0x11b7, /* VCVTUDQ2PSZrrk */
-/* Table7541 */
+/* Table7543 */
   0x1e80, /* VMOVDQU8Zmrk */
   0x1e87, /* VMOVDQU8Zrrk_REV */
-/* Table7543 */
+/* Table7545 */
   0xf16, /* VCVTPS2DQZrmk */
   0xf1c, /* VCVTPS2DQZrrk */
-/* Table7545 */
+/* Table7547 */
   0x3650, /* VPUNPCKLBWZrmk */
   0x3653, /* VPUNPCKLBWZrrk */
-/* Table7547 */
+/* Table7549 */
   0x36a4, /* VPUNPCKLWDZrmk */
   0x36a7, /* VPUNPCKLWDZrrk */
-/* Table7549 */
+/* Table7551 */
   0x366f, /* VPUNPCKLDQZrmk */
   0x3672, /* VPUNPCKLDQZrrk */
-/* Table7551 */
+/* Table7553 */
   0x20c1, /* VPACKSSWBZrmk */
   0x20c4, /* VPACKSSWBZrrk */
-/* Table7553 */
+/* Table7555 */
   0x2406, /* VPCMPGTBZrmk */
   0x2408, /* VPCMPGTBZrrk */
-/* Table7555 */
+/* Table7557 */
   0x2442, /* VPCMPGTWZrmk */
   0x2444, /* VPCMPGTWZrrk */
-/* Table7557 */
+/* Table7559 */
   0x241c, /* VPCMPGTDZrmk */
   0x241e, /* VPCMPGTDZrrk */
-/* Table7559 */
+/* Table7561 */
   0x20f6, /* VPACKUSWBZrmk */
   0x20f9, /* VPACKUSWBZrrk */
-/* Table7561 */
+/* Table7563 */
   0x35e6, /* VPUNPCKHBWZrmk */
   0x35e9, /* VPUNPCKHBWZrrk */
-/* Table7563 */
+/* Table7565 */
   0x363a, /* VPUNPCKHWDZrmk */
   0x363d, /* VPUNPCKHWDZrrk */
-/* Table7565 */
+/* Table7567 */
   0x3605, /* VPUNPCKHDQZrmk */
   0x3608, /* VPUNPCKHDQZrrk */
-/* Table7567 */
+/* Table7569 */
   0x20ab, /* VPACKSSDWZrmk */
   0x20ae, /* VPACKSSDWZrrk */
-/* Table7569 */
+/* Table7571 */
   0x1dd5, /* VMOVDQA32Zrmk */
   0x1dd9, /* VMOVDQA32Zrrk */
-/* Table7571 */
+/* Table7573 */
   0x317e, /* VPSHUFDZmik */
   0x3181, /* VPSHUFDZrik */
-/* Table7573 */
+/* Table7575 */
   0x0, /*  */
   0x0, /*  */
   0x3455, /* VPSRLWZmik */
@@ -94763,7 +94765,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x329a, /* VPSLLWZrik */
   0x0, /*  */
-/* Table7589 */
+/* Table7591 */
   0x2f80, /* VPRORDZmik */
   0x2f14, /* VPROLDZmik */
   0x33a8, /* VPSRLDZmik */
@@ -94780,232 +94782,232 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31ed, /* VPSLLDZrik */
   0x0, /*  */
-/* Table7605 */
+/* Table7607 */
   0x23b6, /* VPCMPEQBZrmk */
   0x23b8, /* VPCMPEQBZrrk */
-/* Table7607 */
+/* Table7609 */
   0x23f2, /* VPCMPEQWZrmk */
   0x23f4, /* VPCMPEQWZrrk */
-/* Table7609 */
+/* Table7611 */
   0x23cc, /* VPCMPEQDZrmk */
   0x23ce, /* VPCMPEQDZrrk */
-/* Table7611 */
+/* Table7613 */
   0x1140, /* VCVTTPS2UQQZrmk */
   0x1146, /* VCVTTPS2UQQZrrk */
-/* Table7613 */
+/* Table7615 */
   0xfaa, /* VCVTPS2UQQZrmk */
   0xfb0, /* VCVTPS2UQQZrrk */
-/* Table7615 */
+/* Table7617 */
   0x1104, /* VCVTTPS2QQZrmk */
   0x110a, /* VCVTTPS2QQZrrk */
-/* Table7617 */
+/* Table7619 */
   0xf6e, /* VCVTPS2QQZrmk */
   0xf74, /* VCVTPS2QQZrrk */
-/* Table7619 */
+/* Table7621 */
   0x1dd3, /* VMOVDQA32Zmrk */
   0x1dda, /* VMOVDQA32Zrrk_REV */
-/* Table7621 */
+/* Table7623 */
   0x345b, /* VPSRLWZrmk */
   0x345e, /* VPSRLWZrrk */
-/* Table7623 */
+/* Table7625 */
   0x33ae, /* VPSRLDZrmk */
   0x33b1, /* VPSRLDZrrk */
-/* Table7625 */
+/* Table7627 */
   0x2e25, /* VPMULLWZrmk */
   0x2e28, /* VPMULLWZrrk */
-/* Table7627 */
+/* Table7629 */
   0x34f2, /* VPSUBUSBZrmk */
   0x34f5, /* VPSUBUSBZrrk */
-/* Table7629 */
+/* Table7631 */
   0x3508, /* VPSUBUSWZrmk */
   0x350b, /* VPSUBUSWZrrk */
-/* Table7631 */
+/* Table7633 */
   0x2af4, /* VPMINUBZrmk */
   0x2af7, /* VPMINUBZrrk */
-/* Table7633 */
+/* Table7635 */
   0x21eb, /* VPANDDZrmk */
   0x21ee, /* VPANDDZrrk */
-/* Table7635 */
+/* Table7637 */
   0x218c, /* VPADDUSBZrmk */
   0x218f, /* VPADDUSBZrrk */
-/* Table7637 */
+/* Table7639 */
   0x21a2, /* VPADDUSWZrmk */
   0x21a5, /* VPADDUSWZrrk */
-/* Table7639 */
+/* Table7641 */
   0x2a28, /* VPMAXUBZrmk */
   0x2a2b, /* VPMAXUBZrrk */
-/* Table7641 */
+/* Table7643 */
   0x2206, /* VPANDNDZrmk */
   0x2209, /* VPANDNDZrrk */
-/* Table7643 */
+/* Table7645 */
   0x2258, /* VPAVGBZrmk */
   0x225b, /* VPAVGBZrrk */
-/* Table7645 */
+/* Table7647 */
   0x3373, /* VPSRAWZrmk */
   0x3376, /* VPSRAWZrrk */
-/* Table7647 */
+/* Table7649 */
   0x32d0, /* VPSRADZrmk */
   0x32d3, /* VPSRADZrrk */
-/* Table7649 */
+/* Table7651 */
   0x226e, /* VPAVGWZrmk */
   0x2271, /* VPAVGWZrrk */
-/* Table7651 */
+/* Table7653 */
   0x2dbf, /* VPMULHUWZrmk */
   0x2dc2, /* VPMULHUWZrrk */
-/* Table7653 */
+/* Table7655 */
   0x2dd5, /* VPMULHWZrmk */
   0x2dd8, /* VPMULHWZrrk */
-/* Table7655 */
+/* Table7657 */
   0x34c6, /* VPSUBSBZrmk */
   0x34c9, /* VPSUBSBZrrk */
-/* Table7657 */
+/* Table7659 */
   0x34dc, /* VPSUBSWZrmk */
   0x34df, /* VPSUBSWZrrk */
-/* Table7659 */
+/* Table7661 */
   0x2ade, /* VPMINSWZrmk */
   0x2ae1, /* VPMINSWZrrk */
-/* Table7661 */
+/* Table7663 */
   0x2ed6, /* VPORDZrmk */
   0x2ed9, /* VPORDZrrk */
-/* Table7663 */
+/* Table7665 */
   0x2160, /* VPADDSBZrmk */
   0x2163, /* VPADDSBZrrk */
-/* Table7665 */
+/* Table7667 */
   0x2176, /* VPADDSWZrmk */
   0x2179, /* VPADDSWZrrk */
-/* Table7667 */
+/* Table7669 */
   0x2a12, /* VPMAXSWZrmk */
   0x2a15, /* VPMAXSWZrrk */
-/* Table7669 */
+/* Table7671 */
   0x36c1, /* VPXORDZrmk */
   0x36c4, /* VPXORDZrrk */
-/* Table7671 */
+/* Table7673 */
   0x329d, /* VPSLLWZrmk */
   0x32a0, /* VPSLLWZrrk */
-/* Table7673 */
+/* Table7675 */
   0x31f0, /* VPSLLDZrmk */
   0x31f3, /* VPSLLDZrrk */
-/* Table7675 */
+/* Table7677 */
   0x29a4, /* VPMADDWDZrmk */
   0x29a7, /* VPMADDWDZrrk */
-/* Table7677 */
+/* Table7679 */
   0x3472, /* VPSUBBZrmk */
   0x3475, /* VPSUBBZrrk */
-/* Table7679 */
+/* Table7681 */
   0x351e, /* VPSUBWZrmk */
   0x3521, /* VPSUBWZrrk */
-/* Table7681 */
+/* Table7683 */
   0x3491, /* VPSUBDZrmk */
   0x3494, /* VPSUBDZrrk */
-/* Table7683 */
+/* Table7685 */
   0x210c, /* VPADDBZrmk */
   0x210f, /* VPADDBZrrk */
-/* Table7685 */
+/* Table7687 */
   0x21b8, /* VPADDWZrmk */
   0x21bb, /* VPADDWZrrk */
-/* Table7687 */
+/* Table7689 */
   0x212b, /* VPADDDZrmk */
   0x212e, /* VPADDDZrrk */
-/* Table7689 */
+/* Table7691 */
   0xfe6, /* VCVTQQ2PSZrmk */
   0xfec, /* VCVTQQ2PSZrrk */
-/* Table7691 */
+/* Table7693 */
   0x10a6, /* VCVTTPD2UDQZrmk */
   0x10ac, /* VCVTTPD2UDQZrrk */
-/* Table7693 */
+/* Table7695 */
   0xebf, /* VCVTPD2UDQZrmk */
   0xec5, /* VCVTPD2UDQZrrk */
-/* Table7695 */
+/* Table7697 */
   0x1e61, /* VMOVDQU64Zrmk */
   0x1e65, /* VMOVDQU64Zrrk */
-/* Table7697 */
+/* Table7699 */
   0x11cf, /* VCVTUQQ2PDZrmk */
   0x11d5, /* VCVTUQQ2PDZrrk */
-/* Table7699 */
+/* Table7701 */
   0x1e5f, /* VMOVDQU64Zmrk */
   0x1e66, /* VMOVDQU64Zrrk_REV */
-/* Table7701 */
+/* Table7703 */
   0xfc8, /* VCVTQQ2PDZrmk */
   0xfce, /* VCVTQQ2PDZrrk */
-/* Table7703 */
+/* Table7705 */
   0x1dad, /* VMOVDDUPZrmk */
   0x1db0, /* VMOVDDUPZrrk */
-/* Table7705 */
+/* Table7707 */
   0x1e1f, /* VMOVDQU16Zrmk */
   0x1e23, /* VMOVDQU16Zrrk */
-/* Table7707 */
+/* Table7709 */
   0x11ed, /* VCVTUQQ2PSZrmk */
   0x11f3, /* VCVTUQQ2PSZrrk */
-/* Table7709 */
+/* Table7711 */
   0x1e1d, /* VMOVDQU16Zmrk */
   0x1e24, /* VMOVDQU16Zrrk_REV */
-/* Table7711 */
+/* Table7713 */
   0xe5f, /* VCVTPD2DQZrmk */
   0xe65, /* VCVTPD2DQZrrk */
-/* Table7713 */
+/* Table7715 */
   0x1f3b, /* VMOVUPDZrmk */
   0x1f3f, /* VMOVUPDZrrk */
-/* Table7715 */
+/* Table7717 */
   0x1f39, /* VMOVUPDZmrk */
   0x1f40, /* VMOVUPDZrrk_REV */
-/* Table7717 */
+/* Table7719 */
   0x3ae8, /* VUNPCKLPDZrmk */
   0x3aeb, /* VUNPCKLPDZrrk */
-/* Table7719 */
+/* Table7721 */
   0x3aaa, /* VUNPCKHPDZrmk */
   0x3aad, /* VUNPCKHPDZrrk */
-/* Table7721 */
+/* Table7723 */
   0x1d69, /* VMOVAPDZrmk */
   0x1d6d, /* VMOVAPDZrrk */
-/* Table7723 */
+/* Table7725 */
   0x1d67, /* VMOVAPDZmrk */
   0x1d6e, /* VMOVAPDZrrk_REV */
-/* Table7725 */
+/* Table7727 */
   0x39cb, /* VSQRTPDZmk */
   0x39d1, /* VSQRTPDZrk */
-/* Table7727 */
+/* Table7729 */
   0xc7a, /* VANDPDZrmk */
   0xc7d, /* VANDPDZrrk */
-/* Table7729 */
+/* Table7731 */
   0xc3c, /* VANDNPDZrmk */
   0xc3f, /* VANDNPDZrrk */
-/* Table7731 */
+/* Table7733 */
   0x2001, /* VORPDZrmk */
   0x2004, /* VORPDZrrk */
-/* Table7733 */
+/* Table7735 */
   0x3b26, /* VXORPDZrmk */
   0x3b29, /* VXORPDZrrk */
-/* Table7735 */
+/* Table7737 */
   0xb70, /* VADDPDZrmk */
   0xb76, /* VADDPDZrrk */
-/* Table7737 */
+/* Table7739 */
   0x1f99, /* VMULPDZrmk */
   0x1f9f, /* VMULPDZrrk */
-/* Table7739 */
+/* Table7741 */
   0xe81, /* VCVTPD2PSZrmk */
   0xe87, /* VCVTPD2PSZrrk */
-/* Table7741 */
+/* Table7743 */
   0x3a2e, /* VSUBPDZrmk */
   0x3a34, /* VSUBPDZrrk */
-/* Table7743 */
+/* Table7745 */
   0x1cf6, /* VMINPDZrmk */
   0x1cfc, /* VMINPDZrrk */
-/* Table7745 */
+/* Table7747 */
   0x1232, /* VDIVPDZrmk */
   0x1238, /* VDIVPDZrrk */
-/* Table7747 */
+/* Table7749 */
   0x1c4b, /* VMAXPDZrmk */
   0x1c51, /* VMAXPDZrrk */
-/* Table7749 */
+/* Table7751 */
   0x368e, /* VPUNPCKLQDQZrmk */
   0x3691, /* VPUNPCKLQDQZrrk */
-/* Table7751 */
+/* Table7753 */
   0x3624, /* VPUNPCKHQDQZrmk */
   0x3627, /* VPUNPCKHQDQZrrk */
-/* Table7753 */
+/* Table7755 */
   0x1df6, /* VMOVDQA64Zrmk */
   0x1dfa, /* VMOVDQA64Zrrk */
-/* Table7755 */
+/* Table7757 */
   0x2f9b, /* VPRORQZmik */
   0x2f2f, /* VPROLQZmik */
   0x0, /*  */
@@ -95022,7 +95024,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table7771 */
+/* Table7773 */
   0x0, /*  */
   0x0, /*  */
   0x33db, /* VPSRLQZmik */
@@ -95039,214 +95041,214 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3220, /* VPSLLQZrik */
   0x0, /*  */
-/* Table7787 */
+/* Table7789 */
   0x10c4, /* VCVTTPD2UQQZrmk */
   0x10ca, /* VCVTTPD2UQQZrrk */
-/* Table7789 */
+/* Table7791 */
   0xedd, /* VCVTPD2UQQZrmk */
   0xee3, /* VCVTPD2UQQZrrk */
-/* Table7791 */
+/* Table7793 */
   0x1088, /* VCVTTPD2QQZrmk */
   0x108e, /* VCVTTPD2QQZrrk */
-/* Table7793 */
+/* Table7795 */
   0xea1, /* VCVTPD2QQZrmk */
   0xea7, /* VCVTPD2QQZrrk */
-/* Table7795 */
+/* Table7797 */
   0x1df4, /* VMOVDQA64Zmrk */
   0x1dfb, /* VMOVDQA64Zrrk_REV */
-/* Table7797 */
+/* Table7799 */
   0xd71, /* VCMPPDZrmik */
   0xd79, /* VCMPPDZrrik */
-/* Table7799 */
+/* Table7801 */
   0x398d, /* VSHUFPDZrmik */
   0x3990, /* VSHUFPDZrrik */
-/* Table7801 */
+/* Table7803 */
   0x33e1, /* VPSRLQZrmk */
   0x33e4, /* VPSRLQZrrk */
-/* Table7803 */
+/* Table7805 */
   0x214a, /* VPADDQZrmk */
   0x214d, /* VPADDQZrrk */
-/* Table7805 */
+/* Table7807 */
   0x2240, /* VPANDQZrmk */
   0x2243, /* VPANDQZrrk */
-/* Table7807 */
+/* Table7809 */
   0x2221, /* VPANDNQZrmk */
   0x2224, /* VPANDNQZrrk */
-/* Table7809 */
+/* Table7811 */
   0x3300, /* VPSRAQZrmk */
   0x3303, /* VPSRAQZrrk */
-/* Table7811 */
+/* Table7813 */
   0x1068, /* VCVTTPD2DQZrmk */
   0x106e, /* VCVTTPD2DQZrrk */
-/* Table7813 */
+/* Table7815 */
   0x2ef1, /* VPORQZrmk */
   0x2ef4, /* VPORQZrrk */
-/* Table7815 */
+/* Table7817 */
   0x36dc, /* VPXORQZrmk */
   0x36df, /* VPXORQZrrk */
-/* Table7817 */
+/* Table7819 */
   0x3223, /* VPSLLQZrmk */
   0x3226, /* VPSLLQZrrk */
-/* Table7819 */
+/* Table7821 */
   0x2e5f, /* VPMULUDQZrmk */
   0x2e62, /* VPMULUDQZrrk */
-/* Table7821 */
+/* Table7823 */
   0x34b0, /* VPSUBQZrmk */
   0x34b3, /* VPSUBQZrrk */
-/* Table7823 */
+/* Table7825 */
   0x3af2, /* VUNPCKLPSZ128rmb */
   0x0, /*  */
-/* Table7825 */
+/* Table7827 */
   0x3ab4, /* VUNPCKHPSZ128rmb */
   0x0, /*  */
-/* Table7827 */
-  0x0, /*  */
-  0x3a8d, /* VUCOMISSZrrb */
 /* Table7829 */
   0x0, /*  */
-  0xde3, /* VCOMISSZrrb */
+  0x3a8d, /* VUCOMISSZrrb */
 /* Table7831 */
+  0x0, /*  */
+  0xde3, /* VCOMISSZrrb */
+/* Table7833 */
   0x39d8, /* VSQRTPSZ128mb */
   0x39f0, /* VSQRTPSZrb */
-/* Table7833 */
+/* Table7835 */
   0xc84, /* VANDPSZ128rmb */
   0x0, /*  */
-/* Table7835 */
+/* Table7837 */
   0xc46, /* VANDNPSZ128rmb */
   0x0, /*  */
-/* Table7837 */
+/* Table7839 */
   0x200b, /* VORPSZ128rmb */
   0x0, /*  */
-/* Table7839 */
+/* Table7841 */
   0x3b30, /* VXORPSZ128rmb */
   0x0, /*  */
-/* Table7841 */
+/* Table7843 */
   0xb7d, /* VADDPSZ128rmb */
   0xb95, /* VADDPSZrrb */
-/* Table7843 */
+/* Table7845 */
   0x1fa6, /* VMULPSZ128rmb */
   0x1fbe, /* VMULPSZrrb */
-/* Table7845 */
+/* Table7847 */
   0xf23, /* VCVTPS2PDZ128rmb */
   0xf3b, /* VCVTPS2PDZrrb */
-/* Table7847 */
+/* Table7849 */
   0xe28, /* VCVTDQ2PSZ128rmb */
   0xe40, /* VCVTDQ2PSZrrb */
-/* Table7849 */
+/* Table7851 */
   0x3a3b, /* VSUBPSZ128rmb */
   0x3a53, /* VSUBPSZrrb */
-/* Table7851 */
+/* Table7853 */
   0x1d03, /* VMINPSZ128rmb */
   0x1d1b, /* VMINPSZrrb */
-/* Table7853 */
+/* Table7855 */
   0x123f, /* VDIVPSZ128rmb */
   0x1257, /* VDIVPSZrrb */
-/* Table7855 */
+/* Table7857 */
   0x1c58, /* VMAXPSZ128rmb */
   0x1c70, /* VMAXPSZrrb */
-/* Table7857 */
+/* Table7859 */
   0x110d, /* VCVTTPS2UDQZ128rmb */
   0x1125, /* VCVTTPS2UDQZrrb */
-/* Table7859 */
+/* Table7861 */
   0xf77, /* VCVTPS2UDQZ128rmb */
   0xf8f, /* VCVTPS2UDQZrrb */
-/* Table7861 */
+/* Table7863 */
   0xd82, /* VCMPPSZ128rmbi */
   0xda5, /* VCMPPSZrrib */
-/* Table7863 */
+/* Table7865 */
   0x3996, /* VSHUFPSZ128rmbi */
   0x0, /*  */
-/* Table7865 */
-  0x0, /*  */
-  0x101a, /* VCVTSI2SSZrrb_Int */
 /* Table7867 */
   0x0, /*  */
-  0x1171, /* VCVTTSS2SIZrrb_Int */
+  0x101a, /* VCVTSI2SSZrrb_Int */
 /* Table7869 */
   0x0, /*  */
-  0x1047, /* VCVTSS2SIZrrb_Int */
+  0x1171, /* VCVTTSS2SIZrrb_Int */
 /* Table7871 */
   0x0, /*  */
-  0x3a0e, /* VSQRTSSZrb_Int */
+  0x1047, /* VCVTSS2SIZrrb_Int */
 /* Table7873 */
   0x0, /*  */
-  0xbb3, /* VADDSSZrrb_Int */
+  0x3a0e, /* VSQRTSSZrb_Int */
 /* Table7875 */
   0x0, /*  */
-  0x1fdc, /* VMULSSZrrb_Int */
+  0xbb3, /* VADDSSZrrb_Int */
 /* Table7877 */
   0x0, /*  */
-  0x1039, /* VCVTSS2SDZrrb_Int */
+  0x1fdc, /* VMULSSZrrb_Int */
 /* Table7879 */
+  0x0, /*  */
+  0x1039, /* VCVTSS2SDZrrb_Int */
+/* Table7881 */
   0x10cf, /* VCVTTPS2DQZ128rmb */
   0x10e7, /* VCVTTPS2DQZrrb */
-/* Table7881 */
-  0x0, /*  */
-  0x3a71, /* VSUBSSZrrb_Int */
 /* Table7883 */
   0x0, /*  */
-  0x1d39, /* VMINSSZrrb_Int */
+  0x3a71, /* VSUBSSZrrb_Int */
 /* Table7885 */
   0x0, /*  */
-  0x1275, /* VDIVSSZrrb_Int */
+  0x1d39, /* VMINSSZrrb_Int */
 /* Table7887 */
   0x0, /*  */
-  0x1c8e, /* VMAXSSZrrb_Int */
+  0x1275, /* VDIVSSZrrb_Int */
 /* Table7889 */
   0x0, /*  */
-  0x117f, /* VCVTTSS2USIZrrb_Int */
+  0x1c8e, /* VMAXSSZrrb_Int */
 /* Table7891 */
   0x0, /*  */
-  0x104f, /* VCVTSS2USIZrrb_Int */
+  0x117f, /* VCVTTSS2USIZrrb_Int */
 /* Table7893 */
+  0x0, /*  */
+  0x104f, /* VCVTSS2USIZrrb_Int */
+/* Table7895 */
   0x1181, /* VCVTUDQ2PDZ128rmb */
   0x0, /*  */
-/* Table7895 */
-  0x0, /*  */
-  0x11fd, /* VCVTUSI2SSZrrb_Int */
 /* Table7897 */
   0x0, /*  */
-  0xdca, /* VCMPSSZrrb_Int */
+  0x11fd, /* VCVTUSI2SSZrrb_Int */
 /* Table7899 */
+  0x0, /*  */
+  0xdca, /* VCMPSSZrrb_Int */
+/* Table7901 */
   0xe09, /* VCVTDQ2PDZ128rmb */
   0x0, /*  */
-/* Table7901 */
-  0x0, /*  */
-  0x1011, /* VCVTSI2SDZrrb_Int */
 /* Table7903 */
   0x0, /*  */
-  0x1155, /* VCVTTSD2SIZrrb_Int */
+  0x1011, /* VCVTSI2SDZrrb_Int */
 /* Table7905 */
   0x0, /*  */
-  0xff5, /* VCVTSD2SIZrrb_Int */
+  0x1155, /* VCVTTSD2SIZrrb_Int */
 /* Table7907 */
   0x0, /*  */
-  0x1163, /* VCVTTSD2USIZrrb_Int */
+  0xff5, /* VCVTSD2SIZrrb_Int */
 /* Table7909 */
   0x0, /*  */
-  0x100c, /* VCVTSD2USIZrrb_Int */
+  0x1163, /* VCVTTSD2USIZrrb_Int */
 /* Table7911 */
+  0x0, /*  */
+  0x100c, /* VCVTSD2USIZrrb_Int */
+/* Table7913 */
   0x119c, /* VCVTUDQ2PSZ128rmb */
   0x11b4, /* VCVTUDQ2PSZrrb */
-/* Table7913 */
+/* Table7915 */
   0xf01, /* VCVTPS2DQZ128rmb */
   0xf19, /* VCVTPS2DQZrrb */
-/* Table7915 */
+/* Table7917 */
   0x365a, /* VPUNPCKLDQZ128rmb */
   0x0, /*  */
-/* Table7917 */
+/* Table7919 */
   0x240e, /* VPCMPGTDZ128rmb */
   0x0, /*  */
-/* Table7919 */
+/* Table7921 */
   0x35f0, /* VPUNPCKHDQZ128rmb */
   0x0, /*  */
-/* Table7921 */
+/* Table7923 */
   0x2096, /* VPACKSSDWZ128rmb */
   0x0, /*  */
-/* Table7923 */
+/* Table7925 */
   0x3168, /* VPSHUFDZ128mbi */
   0x0, /*  */
-/* Table7925 */
+/* Table7927 */
   0x2f6a, /* VPRORDZ128mbi */
   0x2efe, /* VPROLDZ128mbi */
   0x3386, /* VPSRLDZ128mbi */
@@ -95263,178 +95265,178 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table7941 */
+/* Table7943 */
   0x23be, /* VPCMPEQDZ128rmb */
   0x0, /*  */
-/* Table7943 */
+/* Table7945 */
   0x112b, /* VCVTTPS2UQQZ128rmb */
   0x1143, /* VCVTTPS2UQQZrrb */
-/* Table7945 */
+/* Table7947 */
   0xf95, /* VCVTPS2UQQZ128rmb */
   0xfad, /* VCVTPS2UQQZrrb */
-/* Table7947 */
+/* Table7949 */
   0x10ef, /* VCVTTPS2QQZ128rmb */
   0x1107, /* VCVTTPS2QQZrrb */
-/* Table7949 */
+/* Table7951 */
   0xf59, /* VCVTPS2QQZ128rmb */
   0xf71, /* VCVTPS2QQZrrb */
-/* Table7951 */
+/* Table7953 */
   0x21d6, /* VPANDDZ128rmb */
   0x0, /*  */
-/* Table7953 */
+/* Table7955 */
   0x21f1, /* VPANDNDZ128rmb */
   0x0, /*  */
-/* Table7955 */
+/* Table7957 */
   0x2ec1, /* VPORDZ128rmb */
   0x0, /*  */
-/* Table7957 */
+/* Table7959 */
   0x36ac, /* VPXORDZ128rmb */
   0x0, /*  */
-/* Table7959 */
+/* Table7961 */
   0x347c, /* VPSUBDZ128rmb */
   0x0, /*  */
-/* Table7961 */
+/* Table7963 */
   0x2116, /* VPADDDZ128rmb */
   0x0, /*  */
-/* Table7963 */
+/* Table7965 */
   0xfd1, /* VCVTQQ2PSZ128rmb */
   0xfe9, /* VCVTQQ2PSZrrb */
-/* Table7965 */
+/* Table7967 */
   0x1091, /* VCVTTPD2UDQZ128rmb */
   0x10a9, /* VCVTTPD2UDQZrrb */
-/* Table7967 */
+/* Table7969 */
   0xeaa, /* VCVTPD2UDQZ128rmb */
   0xec2, /* VCVTPD2UDQZrrb */
-/* Table7969 */
-  0x0, /*  */
-  0x102c, /* VCVTSI642SSZrrb_Int */
 /* Table7971 */
   0x0, /*  */
-  0x1168, /* VCVTTSS2SI64Zrrb_Int */
+  0x102c, /* VCVTSI642SSZrrb_Int */
 /* Table7973 */
   0x0, /*  */
-  0x1042, /* VCVTSS2SI64Zrrb_Int */
+  0x1168, /* VCVTTSS2SI64Zrrb_Int */
 /* Table7975 */
   0x0, /*  */
-  0x117a, /* VCVTTSS2USI64Zrrb_Int */
+  0x1042, /* VCVTSS2SI64Zrrb_Int */
 /* Table7977 */
   0x0, /*  */
-  0x104c, /* VCVTSS2USI64Zrrb_Int */
+  0x117a, /* VCVTTSS2USI64Zrrb_Int */
 /* Table7979 */
+  0x0, /*  */
+  0x104c, /* VCVTSS2USI64Zrrb_Int */
+/* Table7981 */
   0x11ba, /* VCVTUQQ2PDZ128rmb */
   0x11d2, /* VCVTUQQ2PDZrrb */
-/* Table7981 */
+/* Table7983 */
   0x0, /*  */
   0x1207, /* VCVTUSI642SSZrrb_Int */
-/* Table7983 */
+/* Table7985 */
   0xfb3, /* VCVTQQ2PDZ128rmb */
   0xfcb, /* VCVTQQ2PDZrrb */
-/* Table7985 */
-  0x0, /*  */
-  0x1023, /* VCVTSI642SDZrrb_Int */
 /* Table7987 */
   0x0, /*  */
-  0x114c, /* VCVTTSD2SI64Zrrb_Int */
+  0x1023, /* VCVTSI642SDZrrb_Int */
 /* Table7989 */
   0x0, /*  */
-  0xff0, /* VCVTSD2SI64Zrrb_Int */
+  0x114c, /* VCVTTSD2SI64Zrrb_Int */
 /* Table7991 */
   0x0, /*  */
-  0x39ff, /* VSQRTSDZrb_Int */
+  0xff0, /* VCVTSD2SI64Zrrb_Int */
 /* Table7993 */
   0x0, /*  */
-  0xba4, /* VADDSDZrrb_Int */
+  0x39ff, /* VSQRTSDZrb_Int */
 /* Table7995 */
   0x0, /*  */
-  0x1fcd, /* VMULSDZrrb_Int */
+  0xba4, /* VADDSDZrrb_Int */
 /* Table7997 */
   0x0, /*  */
-  0x1000, /* VCVTSD2SSZrrb_Int */
+  0x1fcd, /* VMULSDZrrb_Int */
 /* Table7999 */
   0x0, /*  */
-  0x3a62, /* VSUBSDZrrb_Int */
+  0x1000, /* VCVTSD2SSZrrb_Int */
 /* Table8001 */
   0x0, /*  */
-  0x1d2a, /* VMINSDZrrb_Int */
+  0x3a62, /* VSUBSDZrrb_Int */
 /* Table8003 */
   0x0, /*  */
-  0x1266, /* VDIVSDZrrb_Int */
+  0x1d2a, /* VMINSDZrrb_Int */
 /* Table8005 */
   0x0, /*  */
-  0x1c7f, /* VMAXSDZrrb_Int */
+  0x1266, /* VDIVSDZrrb_Int */
 /* Table8007 */
   0x0, /*  */
-  0x115e, /* VCVTTSD2USI64Zrrb_Int */
+  0x1c7f, /* VMAXSDZrrb_Int */
 /* Table8009 */
   0x0, /*  */
-  0x1009, /* VCVTSD2USI64Zrrb_Int */
+  0x115e, /* VCVTTSD2USI64Zrrb_Int */
 /* Table8011 */
+  0x0, /*  */
+  0x1009, /* VCVTSD2USI64Zrrb_Int */
+/* Table8013 */
   0x11d8, /* VCVTUQQ2PSZ128rmb */
   0x11f0, /* VCVTUQQ2PSZrrb */
-/* Table8013 */
-  0x0, /*  */
-  0x1202, /* VCVTUSI642SDZrrb_Int */
 /* Table8015 */
   0x0, /*  */
-  0xdb6, /* VCMPSDZrrb_Int */
+  0x1202, /* VCVTUSI642SDZrrb_Int */
 /* Table8017 */
+  0x0, /*  */
+  0xdb6, /* VCMPSDZrrb_Int */
+/* Table8019 */
   0xe4a, /* VCVTPD2DQZ128rmb */
   0xe62, /* VCVTPD2DQZrrb */
-/* Table8019 */
+/* Table8021 */
   0x3ad3, /* VUNPCKLPDZ128rmb */
   0x0, /*  */
-/* Table8021 */
+/* Table8023 */
   0x3a95, /* VUNPCKHPDZ128rmb */
   0x0, /*  */
-/* Table8023 */
-  0x0, /*  */
-  0x3a84, /* VUCOMISDZrrb */
 /* Table8025 */
   0x0, /*  */
-  0xdda, /* VCOMISDZrrb */
+  0x3a84, /* VUCOMISDZrrb */
 /* Table8027 */
+  0x0, /*  */
+  0xdda, /* VCOMISDZrrb */
+/* Table8029 */
   0x39b6, /* VSQRTPDZ128mb */
   0x39ce, /* VSQRTPDZrb */
-/* Table8029 */
+/* Table8031 */
   0xc65, /* VANDPDZ128rmb */
   0x0, /*  */
-/* Table8031 */
+/* Table8033 */
   0xc27, /* VANDNPDZ128rmb */
   0x0, /*  */
-/* Table8033 */
+/* Table8035 */
   0x1fec, /* VORPDZ128rmb */
   0x0, /*  */
-/* Table8035 */
+/* Table8037 */
   0x3b11, /* VXORPDZ128rmb */
   0x0, /*  */
-/* Table8037 */
+/* Table8039 */
   0xb5b, /* VADDPDZ128rmb */
   0xb73, /* VADDPDZrrb */
-/* Table8039 */
+/* Table8041 */
   0x1f84, /* VMULPDZ128rmb */
   0x1f9c, /* VMULPDZrrb */
-/* Table8041 */
+/* Table8043 */
   0xe6c, /* VCVTPD2PSZ128rmb */
   0xe84, /* VCVTPD2PSZrrb */
-/* Table8043 */
+/* Table8045 */
   0x3a19, /* VSUBPDZ128rmb */
   0x3a31, /* VSUBPDZrrb */
-/* Table8045 */
+/* Table8047 */
   0x1ce1, /* VMINPDZ128rmb */
   0x1cf9, /* VMINPDZrrb */
-/* Table8047 */
+/* Table8049 */
   0x121d, /* VDIVPDZ128rmb */
   0x1235, /* VDIVPDZrrb */
-/* Table8049 */
+/* Table8051 */
   0x1c36, /* VMAXPDZ128rmb */
   0x1c4e, /* VMAXPDZrrb */
-/* Table8051 */
+/* Table8053 */
   0x3679, /* VPUNPCKLQDQZ128rmb */
   0x0, /*  */
-/* Table8053 */
+/* Table8055 */
   0x360f, /* VPUNPCKHQDQZ128rmb */
   0x0, /*  */
-/* Table8055 */
+/* Table8057 */
   0x2f85, /* VPRORQZ128mbi */
   0x2f19, /* VPROLQZ128mbi */
   0x0, /*  */
@@ -95451,7 +95453,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8071 */
+/* Table8073 */
   0x0, /*  */
   0x0, /*  */
   0x33b9, /* VPSRLQZ128mbi */
@@ -95468,136 +95470,136 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8087 */
+/* Table8089 */
   0x10af, /* VCVTTPD2UQQZ128rmb */
   0x10c7, /* VCVTTPD2UQQZrrb */
-/* Table8089 */
+/* Table8091 */
   0xec8, /* VCVTPD2UQQZ128rmb */
   0xee0, /* VCVTPD2UQQZrrb */
-/* Table8091 */
+/* Table8093 */
   0x1073, /* VCVTTPD2QQZ128rmb */
   0x108b, /* VCVTTPD2QQZrrb */
-/* Table8093 */
+/* Table8095 */
   0xe8c, /* VCVTPD2QQZ128rmb */
   0xea4, /* VCVTPD2QQZrrb */
-/* Table8095 */
+/* Table8097 */
   0xd52, /* VCMPPDZ128rmbi */
   0xd75, /* VCMPPDZrrib */
-/* Table8097 */
+/* Table8099 */
   0x3977, /* VSHUFPDZ128rmbi */
   0x0, /*  */
-/* Table8099 */
+/* Table8101 */
   0x2135, /* VPADDQZ128rmb */
   0x0, /*  */
-/* Table8101 */
+/* Table8103 */
   0x222b, /* VPANDQZ128rmb */
   0x0, /*  */
-/* Table8103 */
+/* Table8105 */
   0x220c, /* VPANDNQZ128rmb */
   0x0, /*  */
-/* Table8105 */
+/* Table8107 */
   0x1053, /* VCVTTPD2DQZ128rmb */
   0x106b, /* VCVTTPD2DQZrrb */
-/* Table8107 */
+/* Table8109 */
   0x2edc, /* VPORQZ128rmb */
   0x0, /*  */
-/* Table8109 */
+/* Table8111 */
   0x36c7, /* VPXORQZ128rmb */
   0x0, /*  */
-/* Table8111 */
+/* Table8113 */
   0x2e4a, /* VPMULUDQZ128rmb */
   0x0, /*  */
-/* Table8113 */
+/* Table8115 */
   0x349b, /* VPSUBQZ128rmb */
   0x0, /*  */
-/* Table8115 */
+/* Table8117 */
   0x3afb, /* VUNPCKLPSZ256rmb */
   0x0, /*  */
-/* Table8117 */
+/* Table8119 */
   0x3abd, /* VUNPCKHPSZ256rmb */
   0x0, /*  */
-/* Table8119 */
+/* Table8121 */
   0x39e1, /* VSQRTPSZ256mb */
   0x39f0, /* VSQRTPSZrb */
-/* Table8121 */
+/* Table8123 */
   0xc8d, /* VANDPSZ256rmb */
   0x0, /*  */
-/* Table8123 */
+/* Table8125 */
   0xc4f, /* VANDNPSZ256rmb */
   0x0, /*  */
-/* Table8125 */
+/* Table8127 */
   0x2014, /* VORPSZ256rmb */
   0x0, /*  */
-/* Table8127 */
+/* Table8129 */
   0x3b39, /* VXORPSZ256rmb */
   0x0, /*  */
-/* Table8129 */
+/* Table8131 */
   0xb86, /* VADDPSZ256rmb */
   0xb95, /* VADDPSZrrb */
-/* Table8131 */
+/* Table8133 */
   0x1faf, /* VMULPSZ256rmb */
   0x1fbe, /* VMULPSZrrb */
-/* Table8133 */
+/* Table8135 */
   0xf2c, /* VCVTPS2PDZ256rmb */
   0xf3b, /* VCVTPS2PDZrrb */
-/* Table8135 */
+/* Table8137 */
   0xe31, /* VCVTDQ2PSZ256rmb */
   0xe40, /* VCVTDQ2PSZrrb */
-/* Table8137 */
+/* Table8139 */
   0x3a44, /* VSUBPSZ256rmb */
   0x3a53, /* VSUBPSZrrb */
-/* Table8139 */
+/* Table8141 */
   0x1d0c, /* VMINPSZ256rmb */
   0x1d1b, /* VMINPSZrrb */
-/* Table8141 */
+/* Table8143 */
   0x1248, /* VDIVPSZ256rmb */
   0x1257, /* VDIVPSZrrb */
-/* Table8143 */
+/* Table8145 */
   0x1c61, /* VMAXPSZ256rmb */
   0x1c70, /* VMAXPSZrrb */
-/* Table8145 */
+/* Table8147 */
   0x1116, /* VCVTTPS2UDQZ256rmb */
   0x1125, /* VCVTTPS2UDQZrrb */
-/* Table8147 */
+/* Table8149 */
   0xf80, /* VCVTPS2UDQZ256rmb */
   0xf8f, /* VCVTPS2UDQZrrb */
-/* Table8149 */
+/* Table8151 */
   0xd8e, /* VCMPPSZ256rmbi */
   0xda5, /* VCMPPSZrrib */
-/* Table8151 */
+/* Table8153 */
   0x399f, /* VSHUFPSZ256rmbi */
   0x0, /*  */
-/* Table8153 */
+/* Table8155 */
   0x10d8, /* VCVTTPS2DQZ256rmb */
   0x10e7, /* VCVTTPS2DQZrrb */
-/* Table8155 */
+/* Table8157 */
   0x118a, /* VCVTUDQ2PDZ256rmb */
   0x0, /*  */
-/* Table8157 */
+/* Table8159 */
   0xe12, /* VCVTDQ2PDZ256rmb */
   0x0, /*  */
-/* Table8159 */
+/* Table8161 */
   0x11a5, /* VCVTUDQ2PSZ256rmb */
   0x11b4, /* VCVTUDQ2PSZrrb */
-/* Table8161 */
+/* Table8163 */
   0xf0a, /* VCVTPS2DQZ256rmb */
   0xf19, /* VCVTPS2DQZrrb */
-/* Table8163 */
+/* Table8165 */
   0x3663, /* VPUNPCKLDQZ256rmb */
   0x0, /*  */
-/* Table8165 */
+/* Table8167 */
   0x2414, /* VPCMPGTDZ256rmb */
   0x0, /*  */
-/* Table8167 */
+/* Table8169 */
   0x35f9, /* VPUNPCKHDQZ256rmb */
   0x0, /*  */
-/* Table8169 */
+/* Table8171 */
   0x209f, /* VPACKSSDWZ256rmb */
   0x0, /*  */
-/* Table8171 */
+/* Table8173 */
   0x3171, /* VPSHUFDZ256mbi */
   0x0, /*  */
-/* Table8173 */
+/* Table8175 */
   0x2f73, /* VPRORDZ256mbi */
   0x2f07, /* VPROLDZ256mbi */
   0x3395, /* VPSRLDZ256mbi */
@@ -95614,109 +95616,109 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8189 */
+/* Table8191 */
   0x23c4, /* VPCMPEQDZ256rmb */
   0x0, /*  */
-/* Table8191 */
+/* Table8193 */
   0x1134, /* VCVTTPS2UQQZ256rmb */
   0x1143, /* VCVTTPS2UQQZrrb */
-/* Table8193 */
+/* Table8195 */
   0xf9e, /* VCVTPS2UQQZ256rmb */
   0xfad, /* VCVTPS2UQQZrrb */
-/* Table8195 */
+/* Table8197 */
   0x10f8, /* VCVTTPS2QQZ256rmb */
   0x1107, /* VCVTTPS2QQZrrb */
-/* Table8197 */
+/* Table8199 */
   0xf62, /* VCVTPS2QQZ256rmb */
   0xf71, /* VCVTPS2QQZrrb */
-/* Table8199 */
+/* Table8201 */
   0x21df, /* VPANDDZ256rmb */
   0x0, /*  */
-/* Table8201 */
+/* Table8203 */
   0x21fa, /* VPANDNDZ256rmb */
   0x0, /*  */
-/* Table8203 */
+/* Table8205 */
   0x2eca, /* VPORDZ256rmb */
   0x0, /*  */
-/* Table8205 */
+/* Table8207 */
   0x36b5, /* VPXORDZ256rmb */
   0x0, /*  */
-/* Table8207 */
+/* Table8209 */
   0x3485, /* VPSUBDZ256rmb */
   0x0, /*  */
-/* Table8209 */
+/* Table8211 */
   0x211f, /* VPADDDZ256rmb */
   0x0, /*  */
-/* Table8211 */
+/* Table8213 */
   0xfda, /* VCVTQQ2PSZ256rmb */
   0xfe9, /* VCVTQQ2PSZrrb */
-/* Table8213 */
+/* Table8215 */
   0x109a, /* VCVTTPD2UDQZ256rmb */
   0x10a9, /* VCVTTPD2UDQZrrb */
-/* Table8215 */
+/* Table8217 */
   0xeb3, /* VCVTPD2UDQZ256rmb */
   0xec2, /* VCVTPD2UDQZrrb */
-/* Table8217 */
+/* Table8219 */
   0x11c3, /* VCVTUQQ2PDZ256rmb */
   0x11d2, /* VCVTUQQ2PDZrrb */
-/* Table8219 */
+/* Table8221 */
   0xfbc, /* VCVTQQ2PDZ256rmb */
   0xfcb, /* VCVTQQ2PDZrrb */
-/* Table8221 */
+/* Table8223 */
   0x11e1, /* VCVTUQQ2PSZ256rmb */
   0x11f0, /* VCVTUQQ2PSZrrb */
-/* Table8223 */
+/* Table8225 */
   0xe53, /* VCVTPD2DQZ256rmb */
   0xe62, /* VCVTPD2DQZrrb */
-/* Table8225 */
+/* Table8227 */
   0x3adc, /* VUNPCKLPDZ256rmb */
   0x0, /*  */
-/* Table8227 */
+/* Table8229 */
   0x3a9e, /* VUNPCKHPDZ256rmb */
   0x0, /*  */
-/* Table8229 */
+/* Table8231 */
   0x39bf, /* VSQRTPDZ256mb */
   0x39ce, /* VSQRTPDZrb */
-/* Table8231 */
+/* Table8233 */
   0xc6e, /* VANDPDZ256rmb */
   0x0, /*  */
-/* Table8233 */
+/* Table8235 */
   0xc30, /* VANDNPDZ256rmb */
   0x0, /*  */
-/* Table8235 */
+/* Table8237 */
   0x1ff5, /* VORPDZ256rmb */
   0x0, /*  */
-/* Table8237 */
+/* Table8239 */
   0x3b1a, /* VXORPDZ256rmb */
   0x0, /*  */
-/* Table8239 */
+/* Table8241 */
   0xb64, /* VADDPDZ256rmb */
   0xb73, /* VADDPDZrrb */
-/* Table8241 */
+/* Table8243 */
   0x1f8d, /* VMULPDZ256rmb */
   0x1f9c, /* VMULPDZrrb */
-/* Table8243 */
+/* Table8245 */
   0xe75, /* VCVTPD2PSZ256rmb */
   0xe84, /* VCVTPD2PSZrrb */
-/* Table8245 */
+/* Table8247 */
   0x3a22, /* VSUBPDZ256rmb */
   0x3a31, /* VSUBPDZrrb */
-/* Table8247 */
+/* Table8249 */
   0x1cea, /* VMINPDZ256rmb */
   0x1cf9, /* VMINPDZrrb */
-/* Table8249 */
+/* Table8251 */
   0x1226, /* VDIVPDZ256rmb */
   0x1235, /* VDIVPDZrrb */
-/* Table8251 */
+/* Table8253 */
   0x1c3f, /* VMAXPDZ256rmb */
   0x1c4e, /* VMAXPDZrrb */
-/* Table8253 */
+/* Table8255 */
   0x3682, /* VPUNPCKLQDQZ256rmb */
   0x0, /*  */
-/* Table8255 */
+/* Table8257 */
   0x3618, /* VPUNPCKHQDQZ256rmb */
   0x0, /*  */
-/* Table8257 */
+/* Table8259 */
   0x2f8e, /* VPRORQZ256mbi */
   0x2f22, /* VPROLQZ256mbi */
   0x0, /*  */
@@ -95733,7 +95735,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8273 */
+/* Table8275 */
   0x0, /*  */
   0x0, /*  */
   0x33c8, /* VPSRLQZ256mbi */
@@ -95750,136 +95752,136 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8289 */
+/* Table8291 */
   0x10b8, /* VCVTTPD2UQQZ256rmb */
   0x10c7, /* VCVTTPD2UQQZrrb */
-/* Table8291 */
+/* Table8293 */
   0xed1, /* VCVTPD2UQQZ256rmb */
   0xee0, /* VCVTPD2UQQZrrb */
-/* Table8293 */
+/* Table8295 */
   0x107c, /* VCVTTPD2QQZ256rmb */
   0x108b, /* VCVTTPD2QQZrrb */
-/* Table8295 */
+/* Table8297 */
   0xe95, /* VCVTPD2QQZ256rmb */
   0xea4, /* VCVTPD2QQZrrb */
-/* Table8297 */
+/* Table8299 */
   0xd5e, /* VCMPPDZ256rmbi */
   0xd75, /* VCMPPDZrrib */
-/* Table8299 */
+/* Table8301 */
   0x3980, /* VSHUFPDZ256rmbi */
   0x0, /*  */
-/* Table8301 */
+/* Table8303 */
   0x213e, /* VPADDQZ256rmb */
   0x0, /*  */
-/* Table8303 */
+/* Table8305 */
   0x2234, /* VPANDQZ256rmb */
   0x0, /*  */
-/* Table8305 */
+/* Table8307 */
   0x2215, /* VPANDNQZ256rmb */
   0x0, /*  */
-/* Table8307 */
+/* Table8309 */
   0x105c, /* VCVTTPD2DQZ256rmb */
   0x106b, /* VCVTTPD2DQZrrb */
-/* Table8309 */
+/* Table8311 */
   0x2ee5, /* VPORQZ256rmb */
   0x0, /*  */
-/* Table8311 */
+/* Table8313 */
   0x36d0, /* VPXORQZ256rmb */
   0x0, /*  */
-/* Table8313 */
+/* Table8315 */
   0x2e53, /* VPMULUDQZ256rmb */
   0x0, /*  */
-/* Table8315 */
+/* Table8317 */
   0x34a4, /* VPSUBQZ256rmb */
   0x0, /*  */
-/* Table8317 */
+/* Table8319 */
   0x3b04, /* VUNPCKLPSZrmb */
   0x0, /*  */
-/* Table8319 */
+/* Table8321 */
   0x3ac6, /* VUNPCKHPSZrmb */
   0x0, /*  */
-/* Table8321 */
+/* Table8323 */
   0x39ea, /* VSQRTPSZmb */
   0x39f0, /* VSQRTPSZrb */
-/* Table8323 */
+/* Table8325 */
   0xc96, /* VANDPSZrmb */
   0x0, /*  */
-/* Table8325 */
+/* Table8327 */
   0xc58, /* VANDNPSZrmb */
   0x0, /*  */
-/* Table8327 */
+/* Table8329 */
   0x201d, /* VORPSZrmb */
   0x0, /*  */
-/* Table8329 */
+/* Table8331 */
   0x3b42, /* VXORPSZrmb */
   0x0, /*  */
-/* Table8331 */
+/* Table8333 */
   0xb8f, /* VADDPSZrmb */
   0xb95, /* VADDPSZrrb */
-/* Table8333 */
+/* Table8335 */
   0x1fb8, /* VMULPSZrmb */
   0x1fbe, /* VMULPSZrrb */
-/* Table8335 */
+/* Table8337 */
   0xf35, /* VCVTPS2PDZrmb */
   0xf3b, /* VCVTPS2PDZrrb */
-/* Table8337 */
+/* Table8339 */
   0xe3a, /* VCVTDQ2PSZrmb */
   0xe40, /* VCVTDQ2PSZrrb */
-/* Table8339 */
+/* Table8341 */
   0x3a4d, /* VSUBPSZrmb */
   0x3a53, /* VSUBPSZrrb */
-/* Table8341 */
+/* Table8343 */
   0x1d15, /* VMINPSZrmb */
   0x1d1b, /* VMINPSZrrb */
-/* Table8343 */
+/* Table8345 */
   0x1251, /* VDIVPSZrmb */
   0x1257, /* VDIVPSZrrb */
-/* Table8345 */
+/* Table8347 */
   0x1c6a, /* VMAXPSZrmb */
   0x1c70, /* VMAXPSZrrb */
-/* Table8347 */
+/* Table8349 */
   0x111f, /* VCVTTPS2UDQZrmb */
   0x1125, /* VCVTTPS2UDQZrrb */
-/* Table8349 */
+/* Table8351 */
   0xf89, /* VCVTPS2UDQZrmb */
   0xf8f, /* VCVTPS2UDQZrrb */
-/* Table8351 */
+/* Table8353 */
   0xd9a, /* VCMPPSZrmbi */
   0xda5, /* VCMPPSZrrib */
-/* Table8353 */
+/* Table8355 */
   0x39a8, /* VSHUFPSZrmbi */
   0x0, /*  */
-/* Table8355 */
+/* Table8357 */
   0x10e1, /* VCVTTPS2DQZrmb */
   0x10e7, /* VCVTTPS2DQZrrb */
-/* Table8357 */
+/* Table8359 */
   0x1193, /* VCVTUDQ2PDZrmb */
   0x0, /*  */
-/* Table8359 */
+/* Table8361 */
   0xe1b, /* VCVTDQ2PDZrmb */
   0x0, /*  */
-/* Table8361 */
+/* Table8363 */
   0x11ae, /* VCVTUDQ2PSZrmb */
   0x11b4, /* VCVTUDQ2PSZrrb */
-/* Table8363 */
+/* Table8365 */
   0xf13, /* VCVTPS2DQZrmb */
   0xf19, /* VCVTPS2DQZrrb */
-/* Table8365 */
+/* Table8367 */
   0x366c, /* VPUNPCKLDQZrmb */
   0x0, /*  */
-/* Table8367 */
+/* Table8369 */
   0x241a, /* VPCMPGTDZrmb */
   0x0, /*  */
-/* Table8369 */
+/* Table8371 */
   0x3602, /* VPUNPCKHDQZrmb */
   0x0, /*  */
-/* Table8371 */
+/* Table8373 */
   0x20a8, /* VPACKSSDWZrmb */
   0x0, /*  */
-/* Table8373 */
+/* Table8375 */
   0x317a, /* VPSHUFDZmbi */
   0x0, /*  */
-/* Table8375 */
+/* Table8377 */
   0x2f7c, /* VPRORDZmbi */
   0x2f10, /* VPROLDZmbi */
   0x33a4, /* VPSRLDZmbi */
@@ -95896,109 +95898,109 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8391 */
+/* Table8393 */
   0x23ca, /* VPCMPEQDZrmb */
   0x0, /*  */
-/* Table8393 */
+/* Table8395 */
   0x113d, /* VCVTTPS2UQQZrmb */
   0x1143, /* VCVTTPS2UQQZrrb */
-/* Table8395 */
+/* Table8397 */
   0xfa7, /* VCVTPS2UQQZrmb */
   0xfad, /* VCVTPS2UQQZrrb */
-/* Table8397 */
+/* Table8399 */
   0x1101, /* VCVTTPS2QQZrmb */
   0x1107, /* VCVTTPS2QQZrrb */
-/* Table8399 */
+/* Table8401 */
   0xf6b, /* VCVTPS2QQZrmb */
   0xf71, /* VCVTPS2QQZrrb */
-/* Table8401 */
+/* Table8403 */
   0x21e8, /* VPANDDZrmb */
   0x0, /*  */
-/* Table8403 */
+/* Table8405 */
   0x2203, /* VPANDNDZrmb */
   0x0, /*  */
-/* Table8405 */
+/* Table8407 */
   0x2ed3, /* VPORDZrmb */
   0x0, /*  */
-/* Table8407 */
+/* Table8409 */
   0x36be, /* VPXORDZrmb */
   0x0, /*  */
-/* Table8409 */
+/* Table8411 */
   0x348e, /* VPSUBDZrmb */
   0x0, /*  */
-/* Table8411 */
+/* Table8413 */
   0x2128, /* VPADDDZrmb */
   0x0, /*  */
-/* Table8413 */
+/* Table8415 */
   0xfe3, /* VCVTQQ2PSZrmb */
   0xfe9, /* VCVTQQ2PSZrrb */
-/* Table8415 */
+/* Table8417 */
   0x10a3, /* VCVTTPD2UDQZrmb */
   0x10a9, /* VCVTTPD2UDQZrrb */
-/* Table8417 */
+/* Table8419 */
   0xebc, /* VCVTPD2UDQZrmb */
   0xec2, /* VCVTPD2UDQZrrb */
-/* Table8419 */
+/* Table8421 */
   0x11cc, /* VCVTUQQ2PDZrmb */
   0x11d2, /* VCVTUQQ2PDZrrb */
-/* Table8421 */
+/* Table8423 */
   0xfc5, /* VCVTQQ2PDZrmb */
   0xfcb, /* VCVTQQ2PDZrrb */
-/* Table8423 */
+/* Table8425 */
   0x11ea, /* VCVTUQQ2PSZrmb */
   0x11f0, /* VCVTUQQ2PSZrrb */
-/* Table8425 */
+/* Table8427 */
   0xe5c, /* VCVTPD2DQZrmb */
   0xe62, /* VCVTPD2DQZrrb */
-/* Table8427 */
+/* Table8429 */
   0x3ae5, /* VUNPCKLPDZrmb */
   0x0, /*  */
-/* Table8429 */
+/* Table8431 */
   0x3aa7, /* VUNPCKHPDZrmb */
   0x0, /*  */
-/* Table8431 */
+/* Table8433 */
   0x39c8, /* VSQRTPDZmb */
   0x39ce, /* VSQRTPDZrb */
-/* Table8433 */
+/* Table8435 */
   0xc77, /* VANDPDZrmb */
   0x0, /*  */
-/* Table8435 */
+/* Table8437 */
   0xc39, /* VANDNPDZrmb */
   0x0, /*  */
-/* Table8437 */
+/* Table8439 */
   0x1ffe, /* VORPDZrmb */
   0x0, /*  */
-/* Table8439 */
+/* Table8441 */
   0x3b23, /* VXORPDZrmb */
   0x0, /*  */
-/* Table8441 */
+/* Table8443 */
   0xb6d, /* VADDPDZrmb */
   0xb73, /* VADDPDZrrb */
-/* Table8443 */
+/* Table8445 */
   0x1f96, /* VMULPDZrmb */
   0x1f9c, /* VMULPDZrrb */
-/* Table8445 */
+/* Table8447 */
   0xe7e, /* VCVTPD2PSZrmb */
   0xe84, /* VCVTPD2PSZrrb */
-/* Table8447 */
+/* Table8449 */
   0x3a2b, /* VSUBPDZrmb */
   0x3a31, /* VSUBPDZrrb */
-/* Table8449 */
+/* Table8451 */
   0x1cf3, /* VMINPDZrmb */
   0x1cf9, /* VMINPDZrrb */
-/* Table8451 */
+/* Table8453 */
   0x122f, /* VDIVPDZrmb */
   0x1235, /* VDIVPDZrrb */
-/* Table8453 */
+/* Table8455 */
   0x1c48, /* VMAXPDZrmb */
   0x1c4e, /* VMAXPDZrrb */
-/* Table8455 */
+/* Table8457 */
   0x368b, /* VPUNPCKLQDQZrmb */
   0x0, /*  */
-/* Table8457 */
+/* Table8459 */
   0x3621, /* VPUNPCKHQDQZrmb */
   0x0, /*  */
-/* Table8459 */
+/* Table8461 */
   0x2f97, /* VPRORQZmbi */
   0x2f2b, /* VPROLQZmbi */
   0x0, /*  */
@@ -96015,7 +96017,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8475 */
+/* Table8477 */
   0x0, /*  */
   0x0, /*  */
   0x33d7, /* VPSRLQZmbi */
@@ -96032,163 +96034,163 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8491 */
+/* Table8493 */
   0x10c1, /* VCVTTPD2UQQZrmb */
   0x10c7, /* VCVTTPD2UQQZrrb */
-/* Table8493 */
+/* Table8495 */
   0xeda, /* VCVTPD2UQQZrmb */
   0xee0, /* VCVTPD2UQQZrrb */
-/* Table8495 */
+/* Table8497 */
   0x1085, /* VCVTTPD2QQZrmb */
   0x108b, /* VCVTTPD2QQZrrb */
-/* Table8497 */
+/* Table8499 */
   0xe9e, /* VCVTPD2QQZrmb */
   0xea4, /* VCVTPD2QQZrrb */
-/* Table8499 */
+/* Table8501 */
   0xd6a, /* VCMPPDZrmbi */
   0xd75, /* VCMPPDZrrib */
-/* Table8501 */
+/* Table8503 */
   0x3989, /* VSHUFPDZrmbi */
   0x0, /*  */
-/* Table8503 */
+/* Table8505 */
   0x2147, /* VPADDQZrmb */
   0x0, /*  */
-/* Table8505 */
+/* Table8507 */
   0x223d, /* VPANDQZrmb */
   0x0, /*  */
-/* Table8507 */
+/* Table8509 */
   0x221e, /* VPANDNQZrmb */
   0x0, /*  */
-/* Table8509 */
+/* Table8511 */
   0x1065, /* VCVTTPD2DQZrmb */
   0x106b, /* VCVTTPD2DQZrrb */
-/* Table8511 */
+/* Table8513 */
   0x2eee, /* VPORQZrmb */
   0x0, /*  */
-/* Table8513 */
+/* Table8515 */
   0x36d9, /* VPXORQZrmb */
   0x0, /*  */
-/* Table8515 */
+/* Table8517 */
   0x2e5c, /* VPMULUDQZrmb */
   0x0, /*  */
-/* Table8517 */
+/* Table8519 */
   0x34ad, /* VPSUBQZrmb */
   0x0, /*  */
-/* Table8519 */
+/* Table8521 */
   0x3af3, /* VUNPCKLPSZ128rmbk */
   0x0, /*  */
-/* Table8521 */
+/* Table8523 */
   0x3ab5, /* VUNPCKHPSZ128rmbk */
   0x0, /*  */
-/* Table8523 */
+/* Table8525 */
   0x39d9, /* VSQRTPSZ128mbk */
   0x39f1, /* VSQRTPSZrbk */
-/* Table8525 */
+/* Table8527 */
   0xc85, /* VANDPSZ128rmbk */
   0x0, /*  */
-/* Table8527 */
+/* Table8529 */
   0xc47, /* VANDNPSZ128rmbk */
   0x0, /*  */
-/* Table8529 */
+/* Table8531 */
   0x200c, /* VORPSZ128rmbk */
   0x0, /*  */
-/* Table8531 */
+/* Table8533 */
   0x3b31, /* VXORPSZ128rmbk */
   0x0, /*  */
-/* Table8533 */
+/* Table8535 */
   0xb7e, /* VADDPSZ128rmbk */
   0xb96, /* VADDPSZrrbk */
-/* Table8535 */
+/* Table8537 */
   0x1fa7, /* VMULPSZ128rmbk */
   0x1fbf, /* VMULPSZrrbk */
-/* Table8537 */
+/* Table8539 */
   0xf24, /* VCVTPS2PDZ128rmbk */
   0xf3c, /* VCVTPS2PDZrrbk */
-/* Table8539 */
+/* Table8541 */
   0xe29, /* VCVTDQ2PSZ128rmbk */
   0xe41, /* VCVTDQ2PSZrrbk */
-/* Table8541 */
+/* Table8543 */
   0x3a3c, /* VSUBPSZ128rmbk */
   0x3a54, /* VSUBPSZrrbk */
-/* Table8543 */
+/* Table8545 */
   0x1d04, /* VMINPSZ128rmbk */
   0x1d1c, /* VMINPSZrrbk */
-/* Table8545 */
+/* Table8547 */
   0x1240, /* VDIVPSZ128rmbk */
   0x1258, /* VDIVPSZrrbk */
-/* Table8547 */
+/* Table8549 */
   0x1c59, /* VMAXPSZ128rmbk */
   0x1c71, /* VMAXPSZrrbk */
-/* Table8549 */
+/* Table8551 */
   0x110e, /* VCVTTPS2UDQZ128rmbk */
   0x1126, /* VCVTTPS2UDQZrrbk */
-/* Table8551 */
+/* Table8553 */
   0xf78, /* VCVTPS2UDQZ128rmbk */
   0xf90, /* VCVTPS2UDQZrrbk */
-/* Table8553 */
+/* Table8555 */
   0xd85, /* VCMPPSZ128rmbik */
   0xda8, /* VCMPPSZrribk */
-/* Table8555 */
+/* Table8557 */
   0x3997, /* VSHUFPSZ128rmbik */
   0x0, /*  */
-/* Table8557 */
-  0x0, /*  */
-  0x3a0f, /* VSQRTSSZrb_Intk */
 /* Table8559 */
   0x0, /*  */
-  0xbb4, /* VADDSSZrrb_Intk */
+  0x3a0f, /* VSQRTSSZrb_Intk */
 /* Table8561 */
   0x0, /*  */
-  0x1fdd, /* VMULSSZrrb_Intk */
+  0xbb4, /* VADDSSZrrb_Intk */
 /* Table8563 */
   0x0, /*  */
-  0x103a, /* VCVTSS2SDZrrb_Intk */
+  0x1fdd, /* VMULSSZrrb_Intk */
 /* Table8565 */
+  0x0, /*  */
+  0x103a, /* VCVTSS2SDZrrb_Intk */
+/* Table8567 */
   0x10d0, /* VCVTTPS2DQZ128rmbk */
   0x10e8, /* VCVTTPS2DQZrrbk */
-/* Table8567 */
-  0x0, /*  */
-  0x3a72, /* VSUBSSZrrb_Intk */
 /* Table8569 */
   0x0, /*  */
-  0x1d3a, /* VMINSSZrrb_Intk */
+  0x3a72, /* VSUBSSZrrb_Intk */
 /* Table8571 */
   0x0, /*  */
-  0x1276, /* VDIVSSZrrb_Intk */
+  0x1d3a, /* VMINSSZrrb_Intk */
 /* Table8573 */
   0x0, /*  */
-  0x1c8f, /* VMAXSSZrrb_Intk */
+  0x1276, /* VDIVSSZrrb_Intk */
 /* Table8575 */
+  0x0, /*  */
+  0x1c8f, /* VMAXSSZrrb_Intk */
+/* Table8577 */
   0x1182, /* VCVTUDQ2PDZ128rmbk */
   0x0, /*  */
-/* Table8577 */
+/* Table8579 */
   0x0, /*  */
   0xdcb, /* VCMPSSZrrb_Intk */
-/* Table8579 */
+/* Table8581 */
   0xe0a, /* VCVTDQ2PDZ128rmbk */
   0x0, /*  */
-/* Table8581 */
+/* Table8583 */
   0x119d, /* VCVTUDQ2PSZ128rmbk */
   0x11b5, /* VCVTUDQ2PSZrrbk */
-/* Table8583 */
+/* Table8585 */
   0xf02, /* VCVTPS2DQZ128rmbk */
   0xf1a, /* VCVTPS2DQZrrbk */
-/* Table8585 */
+/* Table8587 */
   0x365b, /* VPUNPCKLDQZ128rmbk */
   0x0, /*  */
-/* Table8587 */
+/* Table8589 */
   0x240f, /* VPCMPGTDZ128rmbk */
   0x0, /*  */
-/* Table8589 */
+/* Table8591 */
   0x35f1, /* VPUNPCKHDQZ128rmbk */
   0x0, /*  */
-/* Table8591 */
+/* Table8593 */
   0x2097, /* VPACKSSDWZ128rmbk */
   0x0, /*  */
-/* Table8593 */
+/* Table8595 */
   0x3169, /* VPSHUFDZ128mbik */
   0x0, /*  */
-/* Table8595 */
+/* Table8597 */
   0x2f6b, /* VPRORDZ128mbik */
   0x2eff, /* VPROLDZ128mbik */
   0x3387, /* VPSRLDZ128mbik */
@@ -96205,136 +96207,136 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8611 */
+/* Table8613 */
   0x23bf, /* VPCMPEQDZ128rmbk */
   0x0, /*  */
-/* Table8613 */
+/* Table8615 */
   0x112c, /* VCVTTPS2UQQZ128rmbk */
   0x1144, /* VCVTTPS2UQQZrrbk */
-/* Table8615 */
+/* Table8617 */
   0xf96, /* VCVTPS2UQQZ128rmbk */
   0xfae, /* VCVTPS2UQQZrrbk */
-/* Table8617 */
+/* Table8619 */
   0x10f0, /* VCVTTPS2QQZ128rmbk */
   0x1108, /* VCVTTPS2QQZrrbk */
-/* Table8619 */
+/* Table8621 */
   0xf5a, /* VCVTPS2QQZ128rmbk */
   0xf72, /* VCVTPS2QQZrrbk */
-/* Table8621 */
+/* Table8623 */
   0x21d7, /* VPANDDZ128rmbk */
   0x0, /*  */
-/* Table8623 */
+/* Table8625 */
   0x21f2, /* VPANDNDZ128rmbk */
   0x0, /*  */
-/* Table8625 */
+/* Table8627 */
   0x2ec2, /* VPORDZ128rmbk */
   0x0, /*  */
-/* Table8627 */
+/* Table8629 */
   0x36ad, /* VPXORDZ128rmbk */
   0x0, /*  */
-/* Table8629 */
+/* Table8631 */
   0x347d, /* VPSUBDZ128rmbk */
   0x0, /*  */
-/* Table8631 */
+/* Table8633 */
   0x2117, /* VPADDDZ128rmbk */
   0x0, /*  */
-/* Table8633 */
+/* Table8635 */
   0xfd2, /* VCVTQQ2PSZ128rmbk */
   0xfea, /* VCVTQQ2PSZrrbk */
-/* Table8635 */
+/* Table8637 */
   0x1092, /* VCVTTPD2UDQZ128rmbk */
   0x10aa, /* VCVTTPD2UDQZrrbk */
-/* Table8637 */
+/* Table8639 */
   0xeab, /* VCVTPD2UDQZ128rmbk */
   0xec3, /* VCVTPD2UDQZrrbk */
-/* Table8639 */
+/* Table8641 */
   0x11bb, /* VCVTUQQ2PDZ128rmbk */
   0x11d3, /* VCVTUQQ2PDZrrbk */
-/* Table8641 */
+/* Table8643 */
   0xfb4, /* VCVTQQ2PDZ128rmbk */
   0xfcc, /* VCVTQQ2PDZrrbk */
-/* Table8643 */
-  0x0, /*  */
-  0x3a00, /* VSQRTSDZrb_Intk */
 /* Table8645 */
   0x0, /*  */
-  0xba5, /* VADDSDZrrb_Intk */
+  0x3a00, /* VSQRTSDZrb_Intk */
 /* Table8647 */
   0x0, /*  */
-  0x1fce, /* VMULSDZrrb_Intk */
+  0xba5, /* VADDSDZrrb_Intk */
 /* Table8649 */
   0x0, /*  */
-  0x1001, /* VCVTSD2SSZrrb_Intk */
+  0x1fce, /* VMULSDZrrb_Intk */
 /* Table8651 */
   0x0, /*  */
-  0x3a63, /* VSUBSDZrrb_Intk */
+  0x1001, /* VCVTSD2SSZrrb_Intk */
 /* Table8653 */
   0x0, /*  */
-  0x1d2b, /* VMINSDZrrb_Intk */
+  0x3a63, /* VSUBSDZrrb_Intk */
 /* Table8655 */
   0x0, /*  */
-  0x1267, /* VDIVSDZrrb_Intk */
+  0x1d2b, /* VMINSDZrrb_Intk */
 /* Table8657 */
   0x0, /*  */
-  0x1c80, /* VMAXSDZrrb_Intk */
+  0x1267, /* VDIVSDZrrb_Intk */
 /* Table8659 */
+  0x0, /*  */
+  0x1c80, /* VMAXSDZrrb_Intk */
+/* Table8661 */
   0x11d9, /* VCVTUQQ2PSZ128rmbk */
   0x11f1, /* VCVTUQQ2PSZrrbk */
-/* Table8661 */
+/* Table8663 */
   0x0, /*  */
   0xdb7, /* VCMPSDZrrb_Intk */
-/* Table8663 */
+/* Table8665 */
   0xe4b, /* VCVTPD2DQZ128rmbk */
   0xe63, /* VCVTPD2DQZrrbk */
-/* Table8665 */
+/* Table8667 */
   0x3ad4, /* VUNPCKLPDZ128rmbk */
   0x0, /*  */
-/* Table8667 */
+/* Table8669 */
   0x3a96, /* VUNPCKHPDZ128rmbk */
   0x0, /*  */
-/* Table8669 */
+/* Table8671 */
   0x39b7, /* VSQRTPDZ128mbk */
   0x39cf, /* VSQRTPDZrbk */
-/* Table8671 */
+/* Table8673 */
   0xc66, /* VANDPDZ128rmbk */
   0x0, /*  */
-/* Table8673 */
+/* Table8675 */
   0xc28, /* VANDNPDZ128rmbk */
   0x0, /*  */
-/* Table8675 */
+/* Table8677 */
   0x1fed, /* VORPDZ128rmbk */
   0x0, /*  */
-/* Table8677 */
+/* Table8679 */
   0x3b12, /* VXORPDZ128rmbk */
   0x0, /*  */
-/* Table8679 */
+/* Table8681 */
   0xb5c, /* VADDPDZ128rmbk */
   0xb74, /* VADDPDZrrbk */
-/* Table8681 */
+/* Table8683 */
   0x1f85, /* VMULPDZ128rmbk */
   0x1f9d, /* VMULPDZrrbk */
-/* Table8683 */
+/* Table8685 */
   0xe6d, /* VCVTPD2PSZ128rmbk */
   0xe85, /* VCVTPD2PSZrrbk */
-/* Table8685 */
+/* Table8687 */
   0x3a1a, /* VSUBPDZ128rmbk */
   0x3a32, /* VSUBPDZrrbk */
-/* Table8687 */
+/* Table8689 */
   0x1ce2, /* VMINPDZ128rmbk */
   0x1cfa, /* VMINPDZrrbk */
-/* Table8689 */
+/* Table8691 */
   0x121e, /* VDIVPDZ128rmbk */
   0x1236, /* VDIVPDZrrbk */
-/* Table8691 */
+/* Table8693 */
   0x1c37, /* VMAXPDZ128rmbk */
   0x1c4f, /* VMAXPDZrrbk */
-/* Table8693 */
+/* Table8695 */
   0x367a, /* VPUNPCKLQDQZ128rmbk */
   0x0, /*  */
-/* Table8695 */
+/* Table8697 */
   0x3610, /* VPUNPCKHQDQZ128rmbk */
   0x0, /*  */
-/* Table8697 */
+/* Table8699 */
   0x2f86, /* VPRORQZ128mbik */
   0x2f1a, /* VPROLQZ128mbik */
   0x0, /*  */
@@ -96351,7 +96353,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8713 */
+/* Table8715 */
   0x0, /*  */
   0x0, /*  */
   0x33ba, /* VPSRLQZ128mbik */
@@ -96368,136 +96370,136 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8729 */
+/* Table8731 */
   0x10b0, /* VCVTTPD2UQQZ128rmbk */
   0x10c8, /* VCVTTPD2UQQZrrbk */
-/* Table8731 */
+/* Table8733 */
   0xec9, /* VCVTPD2UQQZ128rmbk */
   0xee1, /* VCVTPD2UQQZrrbk */
-/* Table8733 */
+/* Table8735 */
   0x1074, /* VCVTTPD2QQZ128rmbk */
   0x108c, /* VCVTTPD2QQZrrbk */
-/* Table8735 */
+/* Table8737 */
   0xe8d, /* VCVTPD2QQZ128rmbk */
   0xea5, /* VCVTPD2QQZrrbk */
-/* Table8737 */
+/* Table8739 */
   0xd55, /* VCMPPDZ128rmbik */
   0xd78, /* VCMPPDZrribk */
-/* Table8739 */
+/* Table8741 */
   0x3978, /* VSHUFPDZ128rmbik */
   0x0, /*  */
-/* Table8741 */
+/* Table8743 */
   0x2136, /* VPADDQZ128rmbk */
   0x0, /*  */
-/* Table8743 */
+/* Table8745 */
   0x222c, /* VPANDQZ128rmbk */
   0x0, /*  */
-/* Table8745 */
+/* Table8747 */
   0x220d, /* VPANDNQZ128rmbk */
   0x0, /*  */
-/* Table8747 */
+/* Table8749 */
   0x1054, /* VCVTTPD2DQZ128rmbk */
   0x106c, /* VCVTTPD2DQZrrbk */
-/* Table8749 */
+/* Table8751 */
   0x2edd, /* VPORQZ128rmbk */
   0x0, /*  */
-/* Table8751 */
+/* Table8753 */
   0x36c8, /* VPXORQZ128rmbk */
   0x0, /*  */
-/* Table8753 */
+/* Table8755 */
   0x2e4b, /* VPMULUDQZ128rmbk */
   0x0, /*  */
-/* Table8755 */
+/* Table8757 */
   0x349c, /* VPSUBQZ128rmbk */
   0x0, /*  */
-/* Table8757 */
+/* Table8759 */
   0x3afc, /* VUNPCKLPSZ256rmbk */
   0x0, /*  */
-/* Table8759 */
+/* Table8761 */
   0x3abe, /* VUNPCKHPSZ256rmbk */
   0x0, /*  */
-/* Table8761 */
+/* Table8763 */
   0x39e2, /* VSQRTPSZ256mbk */
   0x39f1, /* VSQRTPSZrbk */
-/* Table8763 */
+/* Table8765 */
   0xc8e, /* VANDPSZ256rmbk */
   0x0, /*  */
-/* Table8765 */
+/* Table8767 */
   0xc50, /* VANDNPSZ256rmbk */
   0x0, /*  */
-/* Table8767 */
+/* Table8769 */
   0x2015, /* VORPSZ256rmbk */
   0x0, /*  */
-/* Table8769 */
+/* Table8771 */
   0x3b3a, /* VXORPSZ256rmbk */
   0x0, /*  */
-/* Table8771 */
+/* Table8773 */
   0xb87, /* VADDPSZ256rmbk */
   0xb96, /* VADDPSZrrbk */
-/* Table8773 */
+/* Table8775 */
   0x1fb0, /* VMULPSZ256rmbk */
   0x1fbf, /* VMULPSZrrbk */
-/* Table8775 */
+/* Table8777 */
   0xf2d, /* VCVTPS2PDZ256rmbk */
   0xf3c, /* VCVTPS2PDZrrbk */
-/* Table8777 */
+/* Table8779 */
   0xe32, /* VCVTDQ2PSZ256rmbk */
   0xe41, /* VCVTDQ2PSZrrbk */
-/* Table8779 */
+/* Table8781 */
   0x3a45, /* VSUBPSZ256rmbk */
   0x3a54, /* VSUBPSZrrbk */
-/* Table8781 */
+/* Table8783 */
   0x1d0d, /* VMINPSZ256rmbk */
   0x1d1c, /* VMINPSZrrbk */
-/* Table8783 */
+/* Table8785 */
   0x1249, /* VDIVPSZ256rmbk */
   0x1258, /* VDIVPSZrrbk */
-/* Table8785 */
+/* Table8787 */
   0x1c62, /* VMAXPSZ256rmbk */
   0x1c71, /* VMAXPSZrrbk */
-/* Table8787 */
+/* Table8789 */
   0x1117, /* VCVTTPS2UDQZ256rmbk */
   0x1126, /* VCVTTPS2UDQZrrbk */
-/* Table8789 */
+/* Table8791 */
   0xf81, /* VCVTPS2UDQZ256rmbk */
   0xf90, /* VCVTPS2UDQZrrbk */
-/* Table8791 */
+/* Table8793 */
   0xd91, /* VCMPPSZ256rmbik */
   0xda8, /* VCMPPSZrribk */
-/* Table8793 */
+/* Table8795 */
   0x39a0, /* VSHUFPSZ256rmbik */
   0x0, /*  */
-/* Table8795 */
+/* Table8797 */
   0x10d9, /* VCVTTPS2DQZ256rmbk */
   0x10e8, /* VCVTTPS2DQZrrbk */
-/* Table8797 */
+/* Table8799 */
   0x118b, /* VCVTUDQ2PDZ256rmbk */
   0x0, /*  */
-/* Table8799 */
+/* Table8801 */
   0xe13, /* VCVTDQ2PDZ256rmbk */
   0x0, /*  */
-/* Table8801 */
+/* Table8803 */
   0x11a6, /* VCVTUDQ2PSZ256rmbk */
   0x11b5, /* VCVTUDQ2PSZrrbk */
-/* Table8803 */
+/* Table8805 */
   0xf0b, /* VCVTPS2DQZ256rmbk */
   0xf1a, /* VCVTPS2DQZrrbk */
-/* Table8805 */
+/* Table8807 */
   0x3664, /* VPUNPCKLDQZ256rmbk */
   0x0, /*  */
-/* Table8807 */
+/* Table8809 */
   0x2415, /* VPCMPGTDZ256rmbk */
   0x0, /*  */
-/* Table8809 */
+/* Table8811 */
   0x35fa, /* VPUNPCKHDQZ256rmbk */
   0x0, /*  */
-/* Table8811 */
+/* Table8813 */
   0x20a0, /* VPACKSSDWZ256rmbk */
   0x0, /*  */
-/* Table8813 */
+/* Table8815 */
   0x3172, /* VPSHUFDZ256mbik */
   0x0, /*  */
-/* Table8815 */
+/* Table8817 */
   0x2f74, /* VPRORDZ256mbik */
   0x2f08, /* VPROLDZ256mbik */
   0x3396, /* VPSRLDZ256mbik */
@@ -96514,109 +96516,109 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8831 */
+/* Table8833 */
   0x23c5, /* VPCMPEQDZ256rmbk */
   0x0, /*  */
-/* Table8833 */
+/* Table8835 */
   0x1135, /* VCVTTPS2UQQZ256rmbk */
   0x1144, /* VCVTTPS2UQQZrrbk */
-/* Table8835 */
+/* Table8837 */
   0xf9f, /* VCVTPS2UQQZ256rmbk */
   0xfae, /* VCVTPS2UQQZrrbk */
-/* Table8837 */
+/* Table8839 */
   0x10f9, /* VCVTTPS2QQZ256rmbk */
   0x1108, /* VCVTTPS2QQZrrbk */
-/* Table8839 */
+/* Table8841 */
   0xf63, /* VCVTPS2QQZ256rmbk */
   0xf72, /* VCVTPS2QQZrrbk */
-/* Table8841 */
+/* Table8843 */
   0x21e0, /* VPANDDZ256rmbk */
   0x0, /*  */
-/* Table8843 */
+/* Table8845 */
   0x21fb, /* VPANDNDZ256rmbk */
   0x0, /*  */
-/* Table8845 */
+/* Table8847 */
   0x2ecb, /* VPORDZ256rmbk */
   0x0, /*  */
-/* Table8847 */
+/* Table8849 */
   0x36b6, /* VPXORDZ256rmbk */
   0x0, /*  */
-/* Table8849 */
+/* Table8851 */
   0x3486, /* VPSUBDZ256rmbk */
   0x0, /*  */
-/* Table8851 */
+/* Table8853 */
   0x2120, /* VPADDDZ256rmbk */
   0x0, /*  */
-/* Table8853 */
+/* Table8855 */
   0xfdb, /* VCVTQQ2PSZ256rmbk */
   0xfea, /* VCVTQQ2PSZrrbk */
-/* Table8855 */
+/* Table8857 */
   0x109b, /* VCVTTPD2UDQZ256rmbk */
   0x10aa, /* VCVTTPD2UDQZrrbk */
-/* Table8857 */
+/* Table8859 */
   0xeb4, /* VCVTPD2UDQZ256rmbk */
   0xec3, /* VCVTPD2UDQZrrbk */
-/* Table8859 */
+/* Table8861 */
   0x11c4, /* VCVTUQQ2PDZ256rmbk */
   0x11d3, /* VCVTUQQ2PDZrrbk */
-/* Table8861 */
+/* Table8863 */
   0xfbd, /* VCVTQQ2PDZ256rmbk */
   0xfcc, /* VCVTQQ2PDZrrbk */
-/* Table8863 */
+/* Table8865 */
   0x11e2, /* VCVTUQQ2PSZ256rmbk */
   0x11f1, /* VCVTUQQ2PSZrrbk */
-/* Table8865 */
+/* Table8867 */
   0xe54, /* VCVTPD2DQZ256rmbk */
   0xe63, /* VCVTPD2DQZrrbk */
-/* Table8867 */
+/* Table8869 */
   0x3add, /* VUNPCKLPDZ256rmbk */
   0x0, /*  */
-/* Table8869 */
+/* Table8871 */
   0x3a9f, /* VUNPCKHPDZ256rmbk */
   0x0, /*  */
-/* Table8871 */
+/* Table8873 */
   0x39c0, /* VSQRTPDZ256mbk */
   0x39cf, /* VSQRTPDZrbk */
-/* Table8873 */
+/* Table8875 */
   0xc6f, /* VANDPDZ256rmbk */
   0x0, /*  */
-/* Table8875 */
+/* Table8877 */
   0xc31, /* VANDNPDZ256rmbk */
   0x0, /*  */
-/* Table8877 */
+/* Table8879 */
   0x1ff6, /* VORPDZ256rmbk */
   0x0, /*  */
-/* Table8879 */
+/* Table8881 */
   0x3b1b, /* VXORPDZ256rmbk */
   0x0, /*  */
-/* Table8881 */
+/* Table8883 */
   0xb65, /* VADDPDZ256rmbk */
   0xb74, /* VADDPDZrrbk */
-/* Table8883 */
+/* Table8885 */
   0x1f8e, /* VMULPDZ256rmbk */
   0x1f9d, /* VMULPDZrrbk */
-/* Table8885 */
+/* Table8887 */
   0xe76, /* VCVTPD2PSZ256rmbk */
   0xe85, /* VCVTPD2PSZrrbk */
-/* Table8887 */
+/* Table8889 */
   0x3a23, /* VSUBPDZ256rmbk */
   0x3a32, /* VSUBPDZrrbk */
-/* Table8889 */
+/* Table8891 */
   0x1ceb, /* VMINPDZ256rmbk */
   0x1cfa, /* VMINPDZrrbk */
-/* Table8891 */
+/* Table8893 */
   0x1227, /* VDIVPDZ256rmbk */
   0x1236, /* VDIVPDZrrbk */
-/* Table8893 */
+/* Table8895 */
   0x1c40, /* VMAXPDZ256rmbk */
   0x1c4f, /* VMAXPDZrrbk */
-/* Table8895 */
+/* Table8897 */
   0x3683, /* VPUNPCKLQDQZ256rmbk */
   0x0, /*  */
-/* Table8897 */
+/* Table8899 */
   0x3619, /* VPUNPCKHQDQZ256rmbk */
   0x0, /*  */
-/* Table8899 */
+/* Table8901 */
   0x2f8f, /* VPRORQZ256mbik */
   0x2f23, /* VPROLQZ256mbik */
   0x0, /*  */
@@ -96633,7 +96635,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8915 */
+/* Table8917 */
   0x0, /*  */
   0x0, /*  */
   0x33c9, /* VPSRLQZ256mbik */
@@ -96650,136 +96652,136 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table8931 */
+/* Table8933 */
   0x10b9, /* VCVTTPD2UQQZ256rmbk */
   0x10c8, /* VCVTTPD2UQQZrrbk */
-/* Table8933 */
+/* Table8935 */
   0xed2, /* VCVTPD2UQQZ256rmbk */
   0xee1, /* VCVTPD2UQQZrrbk */
-/* Table8935 */
+/* Table8937 */
   0x107d, /* VCVTTPD2QQZ256rmbk */
   0x108c, /* VCVTTPD2QQZrrbk */
-/* Table8937 */
+/* Table8939 */
   0xe96, /* VCVTPD2QQZ256rmbk */
   0xea5, /* VCVTPD2QQZrrbk */
-/* Table8939 */
+/* Table8941 */
   0xd61, /* VCMPPDZ256rmbik */
   0xd78, /* VCMPPDZrribk */
-/* Table8941 */
+/* Table8943 */
   0x3981, /* VSHUFPDZ256rmbik */
   0x0, /*  */
-/* Table8943 */
+/* Table8945 */
   0x213f, /* VPADDQZ256rmbk */
   0x0, /*  */
-/* Table8945 */
+/* Table8947 */
   0x2235, /* VPANDQZ256rmbk */
   0x0, /*  */
-/* Table8947 */
+/* Table8949 */
   0x2216, /* VPANDNQZ256rmbk */
   0x0, /*  */
-/* Table8949 */
+/* Table8951 */
   0x105d, /* VCVTTPD2DQZ256rmbk */
   0x106c, /* VCVTTPD2DQZrrbk */
-/* Table8951 */
+/* Table8953 */
   0x2ee6, /* VPORQZ256rmbk */
   0x0, /*  */
-/* Table8953 */
+/* Table8955 */
   0x36d1, /* VPXORQZ256rmbk */
   0x0, /*  */
-/* Table8955 */
+/* Table8957 */
   0x2e54, /* VPMULUDQZ256rmbk */
   0x0, /*  */
-/* Table8957 */
+/* Table8959 */
   0x34a5, /* VPSUBQZ256rmbk */
   0x0, /*  */
-/* Table8959 */
+/* Table8961 */
   0x3b05, /* VUNPCKLPSZrmbk */
   0x0, /*  */
-/* Table8961 */
+/* Table8963 */
   0x3ac7, /* VUNPCKHPSZrmbk */
   0x0, /*  */
-/* Table8963 */
+/* Table8965 */
   0x39eb, /* VSQRTPSZmbk */
   0x39f1, /* VSQRTPSZrbk */
-/* Table8965 */
+/* Table8967 */
   0xc97, /* VANDPSZrmbk */
   0x0, /*  */
-/* Table8967 */
+/* Table8969 */
   0xc59, /* VANDNPSZrmbk */
   0x0, /*  */
-/* Table8969 */
+/* Table8971 */
   0x201e, /* VORPSZrmbk */
   0x0, /*  */
-/* Table8971 */
+/* Table8973 */
   0x3b43, /* VXORPSZrmbk */
   0x0, /*  */
-/* Table8973 */
+/* Table8975 */
   0xb90, /* VADDPSZrmbk */
   0xb96, /* VADDPSZrrbk */
-/* Table8975 */
+/* Table8977 */
   0x1fb9, /* VMULPSZrmbk */
   0x1fbf, /* VMULPSZrrbk */
-/* Table8977 */
+/* Table8979 */
   0xf36, /* VCVTPS2PDZrmbk */
   0xf3c, /* VCVTPS2PDZrrbk */
-/* Table8979 */
+/* Table8981 */
   0xe3b, /* VCVTDQ2PSZrmbk */
   0xe41, /* VCVTDQ2PSZrrbk */
-/* Table8981 */
+/* Table8983 */
   0x3a4e, /* VSUBPSZrmbk */
   0x3a54, /* VSUBPSZrrbk */
-/* Table8983 */
+/* Table8985 */
   0x1d16, /* VMINPSZrmbk */
   0x1d1c, /* VMINPSZrrbk */
-/* Table8985 */
+/* Table8987 */
   0x1252, /* VDIVPSZrmbk */
   0x1258, /* VDIVPSZrrbk */
-/* Table8987 */
+/* Table8989 */
   0x1c6b, /* VMAXPSZrmbk */
   0x1c71, /* VMAXPSZrrbk */
-/* Table8989 */
+/* Table8991 */
   0x1120, /* VCVTTPS2UDQZrmbk */
   0x1126, /* VCVTTPS2UDQZrrbk */
-/* Table8991 */
+/* Table8993 */
   0xf8a, /* VCVTPS2UDQZrmbk */
   0xf90, /* VCVTPS2UDQZrrbk */
-/* Table8993 */
+/* Table8995 */
   0xd9d, /* VCMPPSZrmbik */
   0xda8, /* VCMPPSZrribk */
-/* Table8995 */
+/* Table8997 */
   0x39a9, /* VSHUFPSZrmbik */
   0x0, /*  */
-/* Table8997 */
+/* Table8999 */
   0x10e2, /* VCVTTPS2DQZrmbk */
   0x10e8, /* VCVTTPS2DQZrrbk */
-/* Table8999 */
+/* Table9001 */
   0x1194, /* VCVTUDQ2PDZrmbk */
   0x0, /*  */
-/* Table9001 */
+/* Table9003 */
   0xe1c, /* VCVTDQ2PDZrmbk */
   0x0, /*  */
-/* Table9003 */
+/* Table9005 */
   0x11af, /* VCVTUDQ2PSZrmbk */
   0x11b5, /* VCVTUDQ2PSZrrbk */
-/* Table9005 */
+/* Table9007 */
   0xf14, /* VCVTPS2DQZrmbk */
   0xf1a, /* VCVTPS2DQZrrbk */
-/* Table9007 */
+/* Table9009 */
   0x366d, /* VPUNPCKLDQZrmbk */
   0x0, /*  */
-/* Table9009 */
+/* Table9011 */
   0x241b, /* VPCMPGTDZrmbk */
   0x0, /*  */
-/* Table9011 */
+/* Table9013 */
   0x3603, /* VPUNPCKHDQZrmbk */
   0x0, /*  */
-/* Table9013 */
+/* Table9015 */
   0x20a9, /* VPACKSSDWZrmbk */
   0x0, /*  */
-/* Table9015 */
+/* Table9017 */
   0x317b, /* VPSHUFDZmbik */
   0x0, /*  */
-/* Table9017 */
+/* Table9019 */
   0x2f7d, /* VPRORDZmbik */
   0x2f11, /* VPROLDZmbik */
   0x33a5, /* VPSRLDZmbik */
@@ -96796,109 +96798,109 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9033 */
+/* Table9035 */
   0x23cb, /* VPCMPEQDZrmbk */
   0x0, /*  */
-/* Table9035 */
+/* Table9037 */
   0x113e, /* VCVTTPS2UQQZrmbk */
   0x1144, /* VCVTTPS2UQQZrrbk */
-/* Table9037 */
+/* Table9039 */
   0xfa8, /* VCVTPS2UQQZrmbk */
   0xfae, /* VCVTPS2UQQZrrbk */
-/* Table9039 */
+/* Table9041 */
   0x1102, /* VCVTTPS2QQZrmbk */
   0x1108, /* VCVTTPS2QQZrrbk */
-/* Table9041 */
+/* Table9043 */
   0xf6c, /* VCVTPS2QQZrmbk */
   0xf72, /* VCVTPS2QQZrrbk */
-/* Table9043 */
+/* Table9045 */
   0x21e9, /* VPANDDZrmbk */
   0x0, /*  */
-/* Table9045 */
+/* Table9047 */
   0x2204, /* VPANDNDZrmbk */
   0x0, /*  */
-/* Table9047 */
+/* Table9049 */
   0x2ed4, /* VPORDZrmbk */
   0x0, /*  */
-/* Table9049 */
+/* Table9051 */
   0x36bf, /* VPXORDZrmbk */
   0x0, /*  */
-/* Table9051 */
+/* Table9053 */
   0x348f, /* VPSUBDZrmbk */
   0x0, /*  */
-/* Table9053 */
+/* Table9055 */
   0x2129, /* VPADDDZrmbk */
   0x0, /*  */
-/* Table9055 */
+/* Table9057 */
   0xfe4, /* VCVTQQ2PSZrmbk */
   0xfea, /* VCVTQQ2PSZrrbk */
-/* Table9057 */
+/* Table9059 */
   0x10a4, /* VCVTTPD2UDQZrmbk */
   0x10aa, /* VCVTTPD2UDQZrrbk */
-/* Table9059 */
+/* Table9061 */
   0xebd, /* VCVTPD2UDQZrmbk */
   0xec3, /* VCVTPD2UDQZrrbk */
-/* Table9061 */
+/* Table9063 */
   0x11cd, /* VCVTUQQ2PDZrmbk */
   0x11d3, /* VCVTUQQ2PDZrrbk */
-/* Table9063 */
+/* Table9065 */
   0xfc6, /* VCVTQQ2PDZrmbk */
   0xfcc, /* VCVTQQ2PDZrrbk */
-/* Table9065 */
+/* Table9067 */
   0x11eb, /* VCVTUQQ2PSZrmbk */
   0x11f1, /* VCVTUQQ2PSZrrbk */
-/* Table9067 */
+/* Table9069 */
   0xe5d, /* VCVTPD2DQZrmbk */
   0xe63, /* VCVTPD2DQZrrbk */
-/* Table9069 */
+/* Table9071 */
   0x3ae6, /* VUNPCKLPDZrmbk */
   0x0, /*  */
-/* Table9071 */
+/* Table9073 */
   0x3aa8, /* VUNPCKHPDZrmbk */
   0x0, /*  */
-/* Table9073 */
+/* Table9075 */
   0x39c9, /* VSQRTPDZmbk */
   0x39cf, /* VSQRTPDZrbk */
-/* Table9075 */
+/* Table9077 */
   0xc78, /* VANDPDZrmbk */
   0x0, /*  */
-/* Table9077 */
+/* Table9079 */
   0xc3a, /* VANDNPDZrmbk */
   0x0, /*  */
-/* Table9079 */
+/* Table9081 */
   0x1fff, /* VORPDZrmbk */
   0x0, /*  */
-/* Table9081 */
+/* Table9083 */
   0x3b24, /* VXORPDZrmbk */
   0x0, /*  */
-/* Table9083 */
+/* Table9085 */
   0xb6e, /* VADDPDZrmbk */
   0xb74, /* VADDPDZrrbk */
-/* Table9085 */
+/* Table9087 */
   0x1f97, /* VMULPDZrmbk */
   0x1f9d, /* VMULPDZrrbk */
-/* Table9087 */
+/* Table9089 */
   0xe7f, /* VCVTPD2PSZrmbk */
   0xe85, /* VCVTPD2PSZrrbk */
-/* Table9089 */
+/* Table9091 */
   0x3a2c, /* VSUBPDZrmbk */
   0x3a32, /* VSUBPDZrrbk */
-/* Table9091 */
+/* Table9093 */
   0x1cf4, /* VMINPDZrmbk */
   0x1cfa, /* VMINPDZrrbk */
-/* Table9093 */
+/* Table9095 */
   0x1230, /* VDIVPDZrmbk */
   0x1236, /* VDIVPDZrrbk */
-/* Table9095 */
+/* Table9097 */
   0x1c49, /* VMAXPDZrmbk */
   0x1c4f, /* VMAXPDZrrbk */
-/* Table9097 */
+/* Table9099 */
   0x368c, /* VPUNPCKLQDQZrmbk */
   0x0, /*  */
-/* Table9099 */
+/* Table9101 */
   0x3622, /* VPUNPCKHQDQZrmbk */
   0x0, /*  */
-/* Table9101 */
+/* Table9103 */
   0x2f98, /* VPRORQZmbik */
   0x2f2c, /* VPROLQZmbik */
   0x0, /*  */
@@ -96915,7 +96917,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9117 */
+/* Table9119 */
   0x0, /*  */
   0x0, /*  */
   0x33d8, /* VPSRLQZmbik */
@@ -96932,154 +96934,154 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9133 */
+/* Table9135 */
   0x10c2, /* VCVTTPD2UQQZrmbk */
   0x10c8, /* VCVTTPD2UQQZrrbk */
-/* Table9135 */
+/* Table9137 */
   0xedb, /* VCVTPD2UQQZrmbk */
   0xee1, /* VCVTPD2UQQZrrbk */
-/* Table9137 */
+/* Table9139 */
   0x1086, /* VCVTTPD2QQZrmbk */
   0x108c, /* VCVTTPD2QQZrrbk */
-/* Table9139 */
+/* Table9141 */
   0xe9f, /* VCVTPD2QQZrmbk */
   0xea5, /* VCVTPD2QQZrrbk */
-/* Table9141 */
+/* Table9143 */
   0xd6d, /* VCMPPDZrmbik */
   0xd78, /* VCMPPDZrribk */
-/* Table9143 */
+/* Table9145 */
   0x398a, /* VSHUFPDZrmbik */
   0x0, /*  */
-/* Table9145 */
+/* Table9147 */
   0x2148, /* VPADDQZrmbk */
   0x0, /*  */
-/* Table9147 */
+/* Table9149 */
   0x223e, /* VPANDQZrmbk */
   0x0, /*  */
-/* Table9149 */
+/* Table9151 */
   0x221f, /* VPANDNQZrmbk */
   0x0, /*  */
-/* Table9151 */
+/* Table9153 */
   0x1066, /* VCVTTPD2DQZrmbk */
   0x106c, /* VCVTTPD2DQZrrbk */
-/* Table9153 */
+/* Table9155 */
   0x2eef, /* VPORQZrmbk */
   0x0, /*  */
-/* Table9155 */
+/* Table9157 */
   0x36da, /* VPXORQZrmbk */
   0x0, /*  */
-/* Table9157 */
+/* Table9159 */
   0x2e5d, /* VPMULUDQZrmbk */
   0x0, /*  */
-/* Table9159 */
+/* Table9161 */
   0x34ae, /* VPSUBQZrmbk */
   0x0, /*  */
-/* Table9161 */
+/* Table9163 */
   0x3af4, /* VUNPCKLPSZ128rmbkz */
   0x0, /*  */
-/* Table9163 */
+/* Table9165 */
   0x3ab6, /* VUNPCKHPSZ128rmbkz */
   0x0, /*  */
-/* Table9165 */
+/* Table9167 */
   0x39da, /* VSQRTPSZ128mbkz */
   0x39f2, /* VSQRTPSZrbkz */
-/* Table9167 */
+/* Table9169 */
   0xc86, /* VANDPSZ128rmbkz */
   0x0, /*  */
-/* Table9169 */
+/* Table9171 */
   0xc48, /* VANDNPSZ128rmbkz */
   0x0, /*  */
-/* Table9171 */
+/* Table9173 */
   0x200d, /* VORPSZ128rmbkz */
   0x0, /*  */
-/* Table9173 */
+/* Table9175 */
   0x3b32, /* VXORPSZ128rmbkz */
   0x0, /*  */
-/* Table9175 */
+/* Table9177 */
   0xb7f, /* VADDPSZ128rmbkz */
   0xb97, /* VADDPSZrrbkz */
-/* Table9177 */
+/* Table9179 */
   0x1fa8, /* VMULPSZ128rmbkz */
   0x1fc0, /* VMULPSZrrbkz */
-/* Table9179 */
+/* Table9181 */
   0xf25, /* VCVTPS2PDZ128rmbkz */
   0xf3d, /* VCVTPS2PDZrrbkz */
-/* Table9181 */
+/* Table9183 */
   0xe2a, /* VCVTDQ2PSZ128rmbkz */
   0xe42, /* VCVTDQ2PSZrrbkz */
-/* Table9183 */
+/* Table9185 */
   0x3a3d, /* VSUBPSZ128rmbkz */
   0x3a55, /* VSUBPSZrrbkz */
-/* Table9185 */
+/* Table9187 */
   0x1d05, /* VMINPSZ128rmbkz */
   0x1d1d, /* VMINPSZrrbkz */
-/* Table9187 */
+/* Table9189 */
   0x1241, /* VDIVPSZ128rmbkz */
   0x1259, /* VDIVPSZrrbkz */
-/* Table9189 */
+/* Table9191 */
   0x1c5a, /* VMAXPSZ128rmbkz */
   0x1c72, /* VMAXPSZrrbkz */
-/* Table9191 */
+/* Table9193 */
   0x110f, /* VCVTTPS2UDQZ128rmbkz */
   0x1127, /* VCVTTPS2UDQZrrbkz */
-/* Table9193 */
+/* Table9195 */
   0xf79, /* VCVTPS2UDQZ128rmbkz */
   0xf91, /* VCVTPS2UDQZrrbkz */
-/* Table9195 */
+/* Table9197 */
   0x3998, /* VSHUFPSZ128rmbikz */
   0x0, /*  */
-/* Table9197 */
-  0x0, /*  */
-  0x3a10, /* VSQRTSSZrb_Intkz */
 /* Table9199 */
   0x0, /*  */
-  0xbb5, /* VADDSSZrrb_Intkz */
+  0x3a10, /* VSQRTSSZrb_Intkz */
 /* Table9201 */
   0x0, /*  */
-  0x1fde, /* VMULSSZrrb_Intkz */
+  0xbb5, /* VADDSSZrrb_Intkz */
 /* Table9203 */
   0x0, /*  */
-  0x103b, /* VCVTSS2SDZrrb_Intkz */
+  0x1fde, /* VMULSSZrrb_Intkz */
 /* Table9205 */
+  0x0, /*  */
+  0x103b, /* VCVTSS2SDZrrb_Intkz */
+/* Table9207 */
   0x10d1, /* VCVTTPS2DQZ128rmbkz */
   0x10e9, /* VCVTTPS2DQZrrbkz */
-/* Table9207 */
-  0x0, /*  */
-  0x3a73, /* VSUBSSZrrb_Intkz */
 /* Table9209 */
   0x0, /*  */
-  0x1d3b, /* VMINSSZrrb_Intkz */
+  0x3a73, /* VSUBSSZrrb_Intkz */
 /* Table9211 */
   0x0, /*  */
-  0x1277, /* VDIVSSZrrb_Intkz */
+  0x1d3b, /* VMINSSZrrb_Intkz */
 /* Table9213 */
   0x0, /*  */
-  0x1c90, /* VMAXSSZrrb_Intkz */
+  0x1277, /* VDIVSSZrrb_Intkz */
 /* Table9215 */
+  0x0, /*  */
+  0x1c90, /* VMAXSSZrrb_Intkz */
+/* Table9217 */
   0x1183, /* VCVTUDQ2PDZ128rmbkz */
   0x0, /*  */
-/* Table9217 */
+/* Table9219 */
   0xe0b, /* VCVTDQ2PDZ128rmbkz */
   0x0, /*  */
-/* Table9219 */
+/* Table9221 */
   0x119e, /* VCVTUDQ2PSZ128rmbkz */
   0x11b6, /* VCVTUDQ2PSZrrbkz */
-/* Table9221 */
+/* Table9223 */
   0xf03, /* VCVTPS2DQZ128rmbkz */
   0xf1b, /* VCVTPS2DQZrrbkz */
-/* Table9223 */
+/* Table9225 */
   0x365c, /* VPUNPCKLDQZ128rmbkz */
   0x0, /*  */
-/* Table9225 */
+/* Table9227 */
   0x35f2, /* VPUNPCKHDQZ128rmbkz */
   0x0, /*  */
-/* Table9227 */
+/* Table9229 */
   0x2098, /* VPACKSSDWZ128rmbkz */
   0x0, /*  */
-/* Table9229 */
+/* Table9231 */
   0x316a, /* VPSHUFDZ128mbikz */
   0x0, /*  */
-/* Table9231 */
+/* Table9233 */
   0x2f6c, /* VPRORDZ128mbikz */
   0x2f00, /* VPROLDZ128mbikz */
   0x3388, /* VPSRLDZ128mbikz */
@@ -97096,130 +97098,130 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9247 */
+/* Table9249 */
   0x112d, /* VCVTTPS2UQQZ128rmbkz */
   0x1145, /* VCVTTPS2UQQZrrbkz */
-/* Table9249 */
+/* Table9251 */
   0xf97, /* VCVTPS2UQQZ128rmbkz */
   0xfaf, /* VCVTPS2UQQZrrbkz */
-/* Table9251 */
+/* Table9253 */
   0x10f1, /* VCVTTPS2QQZ128rmbkz */
   0x1109, /* VCVTTPS2QQZrrbkz */
-/* Table9253 */
+/* Table9255 */
   0xf5b, /* VCVTPS2QQZ128rmbkz */
   0xf73, /* VCVTPS2QQZrrbkz */
-/* Table9255 */
+/* Table9257 */
   0x21d8, /* VPANDDZ128rmbkz */
   0x0, /*  */
-/* Table9257 */
+/* Table9259 */
   0x21f3, /* VPANDNDZ128rmbkz */
   0x0, /*  */
-/* Table9259 */
+/* Table9261 */
   0x2ec3, /* VPORDZ128rmbkz */
   0x0, /*  */
-/* Table9261 */
+/* Table9263 */
   0x36ae, /* VPXORDZ128rmbkz */
   0x0, /*  */
-/* Table9263 */
+/* Table9265 */
   0x347e, /* VPSUBDZ128rmbkz */
   0x0, /*  */
-/* Table9265 */
+/* Table9267 */
   0x2118, /* VPADDDZ128rmbkz */
   0x0, /*  */
-/* Table9267 */
+/* Table9269 */
   0xfd3, /* VCVTQQ2PSZ128rmbkz */
   0xfeb, /* VCVTQQ2PSZrrbkz */
-/* Table9269 */
+/* Table9271 */
   0x1093, /* VCVTTPD2UDQZ128rmbkz */
   0x10ab, /* VCVTTPD2UDQZrrbkz */
-/* Table9271 */
+/* Table9273 */
   0xeac, /* VCVTPD2UDQZ128rmbkz */
   0xec4, /* VCVTPD2UDQZrrbkz */
-/* Table9273 */
+/* Table9275 */
   0x11bc, /* VCVTUQQ2PDZ128rmbkz */
   0x11d4, /* VCVTUQQ2PDZrrbkz */
-/* Table9275 */
+/* Table9277 */
   0xfb5, /* VCVTQQ2PDZ128rmbkz */
   0xfcd, /* VCVTQQ2PDZrrbkz */
-/* Table9277 */
-  0x0, /*  */
-  0x3a01, /* VSQRTSDZrb_Intkz */
 /* Table9279 */
   0x0, /*  */
-  0xba6, /* VADDSDZrrb_Intkz */
+  0x3a01, /* VSQRTSDZrb_Intkz */
 /* Table9281 */
   0x0, /*  */
-  0x1fcf, /* VMULSDZrrb_Intkz */
+  0xba6, /* VADDSDZrrb_Intkz */
 /* Table9283 */
   0x0, /*  */
-  0x1002, /* VCVTSD2SSZrrb_Intkz */
+  0x1fcf, /* VMULSDZrrb_Intkz */
 /* Table9285 */
   0x0, /*  */
-  0x3a64, /* VSUBSDZrrb_Intkz */
+  0x1002, /* VCVTSD2SSZrrb_Intkz */
 /* Table9287 */
   0x0, /*  */
-  0x1d2c, /* VMINSDZrrb_Intkz */
+  0x3a64, /* VSUBSDZrrb_Intkz */
 /* Table9289 */
   0x0, /*  */
-  0x1268, /* VDIVSDZrrb_Intkz */
+  0x1d2c, /* VMINSDZrrb_Intkz */
 /* Table9291 */
   0x0, /*  */
-  0x1c81, /* VMAXSDZrrb_Intkz */
+  0x1268, /* VDIVSDZrrb_Intkz */
 /* Table9293 */
+  0x0, /*  */
+  0x1c81, /* VMAXSDZrrb_Intkz */
+/* Table9295 */
   0x11da, /* VCVTUQQ2PSZ128rmbkz */
   0x11f2, /* VCVTUQQ2PSZrrbkz */
-/* Table9295 */
+/* Table9297 */
   0xe4c, /* VCVTPD2DQZ128rmbkz */
   0xe64, /* VCVTPD2DQZrrbkz */
-/* Table9297 */
+/* Table9299 */
   0x3ad5, /* VUNPCKLPDZ128rmbkz */
   0x0, /*  */
-/* Table9299 */
+/* Table9301 */
   0x3a97, /* VUNPCKHPDZ128rmbkz */
   0x0, /*  */
-/* Table9301 */
+/* Table9303 */
   0x39b8, /* VSQRTPDZ128mbkz */
   0x39d0, /* VSQRTPDZrbkz */
-/* Table9303 */
+/* Table9305 */
   0xc67, /* VANDPDZ128rmbkz */
   0x0, /*  */
-/* Table9305 */
+/* Table9307 */
   0xc29, /* VANDNPDZ128rmbkz */
   0x0, /*  */
-/* Table9307 */
+/* Table9309 */
   0x1fee, /* VORPDZ128rmbkz */
   0x0, /*  */
-/* Table9309 */
+/* Table9311 */
   0x3b13, /* VXORPDZ128rmbkz */
   0x0, /*  */
-/* Table9311 */
+/* Table9313 */
   0xb5d, /* VADDPDZ128rmbkz */
   0xb75, /* VADDPDZrrbkz */
-/* Table9313 */
+/* Table9315 */
   0x1f86, /* VMULPDZ128rmbkz */
   0x1f9e, /* VMULPDZrrbkz */
-/* Table9315 */
+/* Table9317 */
   0xe6e, /* VCVTPD2PSZ128rmbkz */
   0xe86, /* VCVTPD2PSZrrbkz */
-/* Table9317 */
+/* Table9319 */
   0x3a1b, /* VSUBPDZ128rmbkz */
   0x3a33, /* VSUBPDZrrbkz */
-/* Table9319 */
+/* Table9321 */
   0x1ce3, /* VMINPDZ128rmbkz */
   0x1cfb, /* VMINPDZrrbkz */
-/* Table9321 */
+/* Table9323 */
   0x121f, /* VDIVPDZ128rmbkz */
   0x1237, /* VDIVPDZrrbkz */
-/* Table9323 */
+/* Table9325 */
   0x1c38, /* VMAXPDZ128rmbkz */
   0x1c50, /* VMAXPDZrrbkz */
-/* Table9325 */
+/* Table9327 */
   0x367b, /* VPUNPCKLQDQZ128rmbkz */
   0x0, /*  */
-/* Table9327 */
+/* Table9329 */
   0x3611, /* VPUNPCKHQDQZ128rmbkz */
   0x0, /*  */
-/* Table9329 */
+/* Table9331 */
   0x2f87, /* VPRORQZ128mbikz */
   0x2f1b, /* VPROLQZ128mbikz */
   0x0, /*  */
@@ -97236,7 +97238,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9345 */
+/* Table9347 */
   0x0, /*  */
   0x0, /*  */
   0x33bb, /* VPSRLQZ128mbikz */
@@ -97253,127 +97255,127 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9361 */
+/* Table9363 */
   0x10b1, /* VCVTTPD2UQQZ128rmbkz */
   0x10c9, /* VCVTTPD2UQQZrrbkz */
-/* Table9363 */
+/* Table9365 */
   0xeca, /* VCVTPD2UQQZ128rmbkz */
   0xee2, /* VCVTPD2UQQZrrbkz */
-/* Table9365 */
+/* Table9367 */
   0x1075, /* VCVTTPD2QQZ128rmbkz */
   0x108d, /* VCVTTPD2QQZrrbkz */
-/* Table9367 */
+/* Table9369 */
   0xe8e, /* VCVTPD2QQZ128rmbkz */
   0xea6, /* VCVTPD2QQZrrbkz */
-/* Table9369 */
+/* Table9371 */
   0x3979, /* VSHUFPDZ128rmbikz */
   0x0, /*  */
-/* Table9371 */
+/* Table9373 */
   0x2137, /* VPADDQZ128rmbkz */
   0x0, /*  */
-/* Table9373 */
+/* Table9375 */
   0x222d, /* VPANDQZ128rmbkz */
   0x0, /*  */
-/* Table9375 */
+/* Table9377 */
   0x220e, /* VPANDNQZ128rmbkz */
   0x0, /*  */
-/* Table9377 */
+/* Table9379 */
   0x1055, /* VCVTTPD2DQZ128rmbkz */
   0x106d, /* VCVTTPD2DQZrrbkz */
-/* Table9379 */
+/* Table9381 */
   0x2ede, /* VPORQZ128rmbkz */
   0x0, /*  */
-/* Table9381 */
+/* Table9383 */
   0x36c9, /* VPXORQZ128rmbkz */
   0x0, /*  */
-/* Table9383 */
+/* Table9385 */
   0x2e4c, /* VPMULUDQZ128rmbkz */
   0x0, /*  */
-/* Table9385 */
+/* Table9387 */
   0x349d, /* VPSUBQZ128rmbkz */
   0x0, /*  */
-/* Table9387 */
+/* Table9389 */
   0x3afd, /* VUNPCKLPSZ256rmbkz */
   0x0, /*  */
-/* Table9389 */
+/* Table9391 */
   0x3abf, /* VUNPCKHPSZ256rmbkz */
   0x0, /*  */
-/* Table9391 */
+/* Table9393 */
   0x39e3, /* VSQRTPSZ256mbkz */
   0x39f2, /* VSQRTPSZrbkz */
-/* Table9393 */
+/* Table9395 */
   0xc8f, /* VANDPSZ256rmbkz */
   0x0, /*  */
-/* Table9395 */
+/* Table9397 */
   0xc51, /* VANDNPSZ256rmbkz */
   0x0, /*  */
-/* Table9397 */
+/* Table9399 */
   0x2016, /* VORPSZ256rmbkz */
   0x0, /*  */
-/* Table9399 */
+/* Table9401 */
   0x3b3b, /* VXORPSZ256rmbkz */
   0x0, /*  */
-/* Table9401 */
+/* Table9403 */
   0xb88, /* VADDPSZ256rmbkz */
   0xb97, /* VADDPSZrrbkz */
-/* Table9403 */
+/* Table9405 */
   0x1fb1, /* VMULPSZ256rmbkz */
   0x1fc0, /* VMULPSZrrbkz */
-/* Table9405 */
+/* Table9407 */
   0xf2e, /* VCVTPS2PDZ256rmbkz */
   0xf3d, /* VCVTPS2PDZrrbkz */
-/* Table9407 */
+/* Table9409 */
   0xe33, /* VCVTDQ2PSZ256rmbkz */
   0xe42, /* VCVTDQ2PSZrrbkz */
-/* Table9409 */
+/* Table9411 */
   0x3a46, /* VSUBPSZ256rmbkz */
   0x3a55, /* VSUBPSZrrbkz */
-/* Table9411 */
+/* Table9413 */
   0x1d0e, /* VMINPSZ256rmbkz */
   0x1d1d, /* VMINPSZrrbkz */
-/* Table9413 */
+/* Table9415 */
   0x124a, /* VDIVPSZ256rmbkz */
   0x1259, /* VDIVPSZrrbkz */
-/* Table9415 */
+/* Table9417 */
   0x1c63, /* VMAXPSZ256rmbkz */
   0x1c72, /* VMAXPSZrrbkz */
-/* Table9417 */
+/* Table9419 */
   0x1118, /* VCVTTPS2UDQZ256rmbkz */
   0x1127, /* VCVTTPS2UDQZrrbkz */
-/* Table9419 */
+/* Table9421 */
   0xf82, /* VCVTPS2UDQZ256rmbkz */
   0xf91, /* VCVTPS2UDQZrrbkz */
-/* Table9421 */
+/* Table9423 */
   0x39a1, /* VSHUFPSZ256rmbikz */
   0x0, /*  */
-/* Table9423 */
+/* Table9425 */
   0x10da, /* VCVTTPS2DQZ256rmbkz */
   0x10e9, /* VCVTTPS2DQZrrbkz */
-/* Table9425 */
+/* Table9427 */
   0x118c, /* VCVTUDQ2PDZ256rmbkz */
   0x0, /*  */
-/* Table9427 */
+/* Table9429 */
   0xe14, /* VCVTDQ2PDZ256rmbkz */
   0x0, /*  */
-/* Table9429 */
+/* Table9431 */
   0x11a7, /* VCVTUDQ2PSZ256rmbkz */
   0x11b6, /* VCVTUDQ2PSZrrbkz */
-/* Table9431 */
+/* Table9433 */
   0xf0c, /* VCVTPS2DQZ256rmbkz */
   0xf1b, /* VCVTPS2DQZrrbkz */
-/* Table9433 */
+/* Table9435 */
   0x3665, /* VPUNPCKLDQZ256rmbkz */
   0x0, /*  */
-/* Table9435 */
+/* Table9437 */
   0x35fb, /* VPUNPCKHDQZ256rmbkz */
   0x0, /*  */
-/* Table9437 */
+/* Table9439 */
   0x20a1, /* VPACKSSDWZ256rmbkz */
   0x0, /*  */
-/* Table9439 */
+/* Table9441 */
   0x3173, /* VPSHUFDZ256mbikz */
   0x0, /*  */
-/* Table9441 */
+/* Table9443 */
   0x2f75, /* VPRORDZ256mbikz */
   0x2f09, /* VPROLDZ256mbikz */
   0x3397, /* VPSRLDZ256mbikz */
@@ -97390,106 +97392,106 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9457 */
+/* Table9459 */
   0x1136, /* VCVTTPS2UQQZ256rmbkz */
   0x1145, /* VCVTTPS2UQQZrrbkz */
-/* Table9459 */
+/* Table9461 */
   0xfa0, /* VCVTPS2UQQZ256rmbkz */
   0xfaf, /* VCVTPS2UQQZrrbkz */
-/* Table9461 */
+/* Table9463 */
   0x10fa, /* VCVTTPS2QQZ256rmbkz */
   0x1109, /* VCVTTPS2QQZrrbkz */
-/* Table9463 */
+/* Table9465 */
   0xf64, /* VCVTPS2QQZ256rmbkz */
   0xf73, /* VCVTPS2QQZrrbkz */
-/* Table9465 */
+/* Table9467 */
   0x21e1, /* VPANDDZ256rmbkz */
   0x0, /*  */
-/* Table9467 */
+/* Table9469 */
   0x21fc, /* VPANDNDZ256rmbkz */
   0x0, /*  */
-/* Table9469 */
+/* Table9471 */
   0x2ecc, /* VPORDZ256rmbkz */
   0x0, /*  */
-/* Table9471 */
+/* Table9473 */
   0x36b7, /* VPXORDZ256rmbkz */
   0x0, /*  */
-/* Table9473 */
+/* Table9475 */
   0x3487, /* VPSUBDZ256rmbkz */
   0x0, /*  */
-/* Table9475 */
+/* Table9477 */
   0x2121, /* VPADDDZ256rmbkz */
   0x0, /*  */
-/* Table9477 */
+/* Table9479 */
   0xfdc, /* VCVTQQ2PSZ256rmbkz */
   0xfeb, /* VCVTQQ2PSZrrbkz */
-/* Table9479 */
+/* Table9481 */
   0x109c, /* VCVTTPD2UDQZ256rmbkz */
   0x10ab, /* VCVTTPD2UDQZrrbkz */
-/* Table9481 */
+/* Table9483 */
   0xeb5, /* VCVTPD2UDQZ256rmbkz */
   0xec4, /* VCVTPD2UDQZrrbkz */
-/* Table9483 */
+/* Table9485 */
   0x11c5, /* VCVTUQQ2PDZ256rmbkz */
   0x11d4, /* VCVTUQQ2PDZrrbkz */
-/* Table9485 */
+/* Table9487 */
   0xfbe, /* VCVTQQ2PDZ256rmbkz */
   0xfcd, /* VCVTQQ2PDZrrbkz */
-/* Table9487 */
+/* Table9489 */
   0x11e3, /* VCVTUQQ2PSZ256rmbkz */
   0x11f2, /* VCVTUQQ2PSZrrbkz */
-/* Table9489 */
+/* Table9491 */
   0xe55, /* VCVTPD2DQZ256rmbkz */
   0xe64, /* VCVTPD2DQZrrbkz */
-/* Table9491 */
+/* Table9493 */
   0x3ade, /* VUNPCKLPDZ256rmbkz */
   0x0, /*  */
-/* Table9493 */
+/* Table9495 */
   0x3aa0, /* VUNPCKHPDZ256rmbkz */
   0x0, /*  */
-/* Table9495 */
+/* Table9497 */
   0x39c1, /* VSQRTPDZ256mbkz */
   0x39d0, /* VSQRTPDZrbkz */
-/* Table9497 */
+/* Table9499 */
   0xc70, /* VANDPDZ256rmbkz */
   0x0, /*  */
-/* Table9499 */
+/* Table9501 */
   0xc32, /* VANDNPDZ256rmbkz */
   0x0, /*  */
-/* Table9501 */
+/* Table9503 */
   0x1ff7, /* VORPDZ256rmbkz */
   0x0, /*  */
-/* Table9503 */
+/* Table9505 */
   0x3b1c, /* VXORPDZ256rmbkz */
   0x0, /*  */
-/* Table9505 */
+/* Table9507 */
   0xb66, /* VADDPDZ256rmbkz */
   0xb75, /* VADDPDZrrbkz */
-/* Table9507 */
+/* Table9509 */
   0x1f8f, /* VMULPDZ256rmbkz */
   0x1f9e, /* VMULPDZrrbkz */
-/* Table9509 */
+/* Table9511 */
   0xe77, /* VCVTPD2PSZ256rmbkz */
   0xe86, /* VCVTPD2PSZrrbkz */
-/* Table9511 */
+/* Table9513 */
   0x3a24, /* VSUBPDZ256rmbkz */
   0x3a33, /* VSUBPDZrrbkz */
-/* Table9513 */
+/* Table9515 */
   0x1cec, /* VMINPDZ256rmbkz */
   0x1cfb, /* VMINPDZrrbkz */
-/* Table9515 */
+/* Table9517 */
   0x1228, /* VDIVPDZ256rmbkz */
   0x1237, /* VDIVPDZrrbkz */
-/* Table9517 */
+/* Table9519 */
   0x1c41, /* VMAXPDZ256rmbkz */
   0x1c50, /* VMAXPDZrrbkz */
-/* Table9519 */
+/* Table9521 */
   0x3684, /* VPUNPCKLQDQZ256rmbkz */
   0x0, /*  */
-/* Table9521 */
+/* Table9523 */
   0x361a, /* VPUNPCKHQDQZ256rmbkz */
   0x0, /*  */
-/* Table9523 */
+/* Table9525 */
   0x2f90, /* VPRORQZ256mbikz */
   0x2f24, /* VPROLQZ256mbikz */
   0x0, /*  */
@@ -97506,7 +97508,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9539 */
+/* Table9541 */
   0x0, /*  */
   0x0, /*  */
   0x33ca, /* VPSRLQZ256mbikz */
@@ -97523,127 +97525,127 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9555 */
+/* Table9557 */
   0x10ba, /* VCVTTPD2UQQZ256rmbkz */
   0x10c9, /* VCVTTPD2UQQZrrbkz */
-/* Table9557 */
+/* Table9559 */
   0xed3, /* VCVTPD2UQQZ256rmbkz */
   0xee2, /* VCVTPD2UQQZrrbkz */
-/* Table9559 */
+/* Table9561 */
   0x107e, /* VCVTTPD2QQZ256rmbkz */
   0x108d, /* VCVTTPD2QQZrrbkz */
-/* Table9561 */
+/* Table9563 */
   0xe97, /* VCVTPD2QQZ256rmbkz */
   0xea6, /* VCVTPD2QQZrrbkz */
-/* Table9563 */
+/* Table9565 */
   0x3982, /* VSHUFPDZ256rmbikz */
   0x0, /*  */
-/* Table9565 */
+/* Table9567 */
   0x2140, /* VPADDQZ256rmbkz */
   0x0, /*  */
-/* Table9567 */
+/* Table9569 */
   0x2236, /* VPANDQZ256rmbkz */
   0x0, /*  */
-/* Table9569 */
+/* Table9571 */
   0x2217, /* VPANDNQZ256rmbkz */
   0x0, /*  */
-/* Table9571 */
+/* Table9573 */
   0x105e, /* VCVTTPD2DQZ256rmbkz */
   0x106d, /* VCVTTPD2DQZrrbkz */
-/* Table9573 */
+/* Table9575 */
   0x2ee7, /* VPORQZ256rmbkz */
   0x0, /*  */
-/* Table9575 */
+/* Table9577 */
   0x36d2, /* VPXORQZ256rmbkz */
   0x0, /*  */
-/* Table9577 */
+/* Table9579 */
   0x2e55, /* VPMULUDQZ256rmbkz */
   0x0, /*  */
-/* Table9579 */
+/* Table9581 */
   0x34a6, /* VPSUBQZ256rmbkz */
   0x0, /*  */
-/* Table9581 */
+/* Table9583 */
   0x3b06, /* VUNPCKLPSZrmbkz */
   0x0, /*  */
-/* Table9583 */
+/* Table9585 */
   0x3ac8, /* VUNPCKHPSZrmbkz */
   0x0, /*  */
-/* Table9585 */
+/* Table9587 */
   0x39ec, /* VSQRTPSZmbkz */
   0x39f2, /* VSQRTPSZrbkz */
-/* Table9587 */
+/* Table9589 */
   0xc98, /* VANDPSZrmbkz */
   0x0, /*  */
-/* Table9589 */
+/* Table9591 */
   0xc5a, /* VANDNPSZrmbkz */
   0x0, /*  */
-/* Table9591 */
+/* Table9593 */
   0x201f, /* VORPSZrmbkz */
   0x0, /*  */
-/* Table9593 */
+/* Table9595 */
   0x3b44, /* VXORPSZrmbkz */
   0x0, /*  */
-/* Table9595 */
+/* Table9597 */
   0xb91, /* VADDPSZrmbkz */
   0xb97, /* VADDPSZrrbkz */
-/* Table9597 */
+/* Table9599 */
   0x1fba, /* VMULPSZrmbkz */
   0x1fc0, /* VMULPSZrrbkz */
-/* Table9599 */
+/* Table9601 */
   0xf37, /* VCVTPS2PDZrmbkz */
   0xf3d, /* VCVTPS2PDZrrbkz */
-/* Table9601 */
+/* Table9603 */
   0xe3c, /* VCVTDQ2PSZrmbkz */
   0xe42, /* VCVTDQ2PSZrrbkz */
-/* Table9603 */
+/* Table9605 */
   0x3a4f, /* VSUBPSZrmbkz */
   0x3a55, /* VSUBPSZrrbkz */
-/* Table9605 */
+/* Table9607 */
   0x1d17, /* VMINPSZrmbkz */
   0x1d1d, /* VMINPSZrrbkz */
-/* Table9607 */
+/* Table9609 */
   0x1253, /* VDIVPSZrmbkz */
   0x1259, /* VDIVPSZrrbkz */
-/* Table9609 */
+/* Table9611 */
   0x1c6c, /* VMAXPSZrmbkz */
   0x1c72, /* VMAXPSZrrbkz */
-/* Table9611 */
+/* Table9613 */
   0x1121, /* VCVTTPS2UDQZrmbkz */
   0x1127, /* VCVTTPS2UDQZrrbkz */
-/* Table9613 */
+/* Table9615 */
   0xf8b, /* VCVTPS2UDQZrmbkz */
   0xf91, /* VCVTPS2UDQZrrbkz */
-/* Table9615 */
+/* Table9617 */
   0x39aa, /* VSHUFPSZrmbikz */
   0x0, /*  */
-/* Table9617 */
+/* Table9619 */
   0x10e3, /* VCVTTPS2DQZrmbkz */
   0x10e9, /* VCVTTPS2DQZrrbkz */
-/* Table9619 */
+/* Table9621 */
   0x1195, /* VCVTUDQ2PDZrmbkz */
   0x0, /*  */
-/* Table9621 */
+/* Table9623 */
   0xe1d, /* VCVTDQ2PDZrmbkz */
   0x0, /*  */
-/* Table9623 */
+/* Table9625 */
   0x11b0, /* VCVTUDQ2PSZrmbkz */
   0x11b6, /* VCVTUDQ2PSZrrbkz */
-/* Table9625 */
+/* Table9627 */
   0xf15, /* VCVTPS2DQZrmbkz */
   0xf1b, /* VCVTPS2DQZrrbkz */
-/* Table9627 */
+/* Table9629 */
   0x366e, /* VPUNPCKLDQZrmbkz */
   0x0, /*  */
-/* Table9629 */
+/* Table9631 */
   0x3604, /* VPUNPCKHDQZrmbkz */
   0x0, /*  */
-/* Table9631 */
+/* Table9633 */
   0x20aa, /* VPACKSSDWZrmbkz */
   0x0, /*  */
-/* Table9633 */
+/* Table9635 */
   0x317c, /* VPSHUFDZmbikz */
   0x0, /*  */
-/* Table9635 */
+/* Table9637 */
   0x2f7e, /* VPRORDZmbikz */
   0x2f12, /* VPROLDZmbikz */
   0x33a6, /* VPSRLDZmbikz */
@@ -97660,106 +97662,106 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9651 */
+/* Table9653 */
   0x113f, /* VCVTTPS2UQQZrmbkz */
   0x1145, /* VCVTTPS2UQQZrrbkz */
-/* Table9653 */
+/* Table9655 */
   0xfa9, /* VCVTPS2UQQZrmbkz */
   0xfaf, /* VCVTPS2UQQZrrbkz */
-/* Table9655 */
+/* Table9657 */
   0x1103, /* VCVTTPS2QQZrmbkz */
   0x1109, /* VCVTTPS2QQZrrbkz */
-/* Table9657 */
+/* Table9659 */
   0xf6d, /* VCVTPS2QQZrmbkz */
   0xf73, /* VCVTPS2QQZrrbkz */
-/* Table9659 */
+/* Table9661 */
   0x21ea, /* VPANDDZrmbkz */
   0x0, /*  */
-/* Table9661 */
+/* Table9663 */
   0x2205, /* VPANDNDZrmbkz */
   0x0, /*  */
-/* Table9663 */
+/* Table9665 */
   0x2ed5, /* VPORDZrmbkz */
   0x0, /*  */
-/* Table9665 */
+/* Table9667 */
   0x36c0, /* VPXORDZrmbkz */
   0x0, /*  */
-/* Table9667 */
+/* Table9669 */
   0x3490, /* VPSUBDZrmbkz */
   0x0, /*  */
-/* Table9669 */
+/* Table9671 */
   0x212a, /* VPADDDZrmbkz */
   0x0, /*  */
-/* Table9671 */
+/* Table9673 */
   0xfe5, /* VCVTQQ2PSZrmbkz */
   0xfeb, /* VCVTQQ2PSZrrbkz */
-/* Table9673 */
+/* Table9675 */
   0x10a5, /* VCVTTPD2UDQZrmbkz */
   0x10ab, /* VCVTTPD2UDQZrrbkz */
-/* Table9675 */
+/* Table9677 */
   0xebe, /* VCVTPD2UDQZrmbkz */
   0xec4, /* VCVTPD2UDQZrrbkz */
-/* Table9677 */
+/* Table9679 */
   0x11ce, /* VCVTUQQ2PDZrmbkz */
   0x11d4, /* VCVTUQQ2PDZrrbkz */
-/* Table9679 */
+/* Table9681 */
   0xfc7, /* VCVTQQ2PDZrmbkz */
   0xfcd, /* VCVTQQ2PDZrrbkz */
-/* Table9681 */
+/* Table9683 */
   0x11ec, /* VCVTUQQ2PSZrmbkz */
   0x11f2, /* VCVTUQQ2PSZrrbkz */
-/* Table9683 */
+/* Table9685 */
   0xe5e, /* VCVTPD2DQZrmbkz */
   0xe64, /* VCVTPD2DQZrrbkz */
-/* Table9685 */
+/* Table9687 */
   0x3ae7, /* VUNPCKLPDZrmbkz */
   0x0, /*  */
-/* Table9687 */
+/* Table9689 */
   0x3aa9, /* VUNPCKHPDZrmbkz */
   0x0, /*  */
-/* Table9689 */
+/* Table9691 */
   0x39ca, /* VSQRTPDZmbkz */
   0x39d0, /* VSQRTPDZrbkz */
-/* Table9691 */
+/* Table9693 */
   0xc79, /* VANDPDZrmbkz */
   0x0, /*  */
-/* Table9693 */
+/* Table9695 */
   0xc3b, /* VANDNPDZrmbkz */
   0x0, /*  */
-/* Table9695 */
+/* Table9697 */
   0x2000, /* VORPDZrmbkz */
   0x0, /*  */
-/* Table9697 */
+/* Table9699 */
   0x3b25, /* VXORPDZrmbkz */
   0x0, /*  */
-/* Table9699 */
+/* Table9701 */
   0xb6f, /* VADDPDZrmbkz */
   0xb75, /* VADDPDZrrbkz */
-/* Table9701 */
+/* Table9703 */
   0x1f98, /* VMULPDZrmbkz */
   0x1f9e, /* VMULPDZrrbkz */
-/* Table9703 */
+/* Table9705 */
   0xe80, /* VCVTPD2PSZrmbkz */
   0xe86, /* VCVTPD2PSZrrbkz */
-/* Table9705 */
+/* Table9707 */
   0x3a2d, /* VSUBPDZrmbkz */
   0x3a33, /* VSUBPDZrrbkz */
-/* Table9707 */
+/* Table9709 */
   0x1cf5, /* VMINPDZrmbkz */
   0x1cfb, /* VMINPDZrrbkz */
-/* Table9709 */
+/* Table9711 */
   0x1231, /* VDIVPDZrmbkz */
   0x1237, /* VDIVPDZrrbkz */
-/* Table9711 */
+/* Table9713 */
   0x1c4a, /* VMAXPDZrmbkz */
   0x1c50, /* VMAXPDZrrbkz */
-/* Table9713 */
+/* Table9715 */
   0x368d, /* VPUNPCKLQDQZrmbkz */
   0x0, /*  */
-/* Table9715 */
+/* Table9717 */
   0x3623, /* VPUNPCKHQDQZrmbkz */
   0x0, /*  */
-/* Table9717 */
+/* Table9719 */
   0x2f99, /* VPRORQZmbikz */
   0x2f2d, /* VPROLQZmbikz */
   0x0, /*  */
@@ -97776,7 +97778,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9733 */
+/* Table9735 */
   0x0, /*  */
   0x0, /*  */
   0x33d9, /* VPSRLQZmbikz */
@@ -97793,214 +97795,214 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table9749 */
+/* Table9751 */
   0x10c3, /* VCVTTPD2UQQZrmbkz */
   0x10c9, /* VCVTTPD2UQQZrrbkz */
-/* Table9751 */
+/* Table9753 */
   0xedc, /* VCVTPD2UQQZrmbkz */
   0xee2, /* VCVTPD2UQQZrrbkz */
-/* Table9753 */
+/* Table9755 */
   0x1087, /* VCVTTPD2QQZrmbkz */
   0x108d, /* VCVTTPD2QQZrrbkz */
-/* Table9755 */
+/* Table9757 */
   0xea0, /* VCVTPD2QQZrmbkz */
   0xea6, /* VCVTPD2QQZrrbkz */
-/* Table9757 */
+/* Table9759 */
   0x398b, /* VSHUFPDZrmbikz */
   0x0, /*  */
-/* Table9759 */
+/* Table9761 */
   0x2149, /* VPADDQZrmbkz */
   0x0, /*  */
-/* Table9761 */
+/* Table9763 */
   0x223f, /* VPANDQZrmbkz */
   0x0, /*  */
-/* Table9763 */
+/* Table9765 */
   0x2220, /* VPANDNQZrmbkz */
   0x0, /*  */
-/* Table9765 */
+/* Table9767 */
   0x1067, /* VCVTTPD2DQZrmbkz */
   0x106d, /* VCVTTPD2DQZrrbkz */
-/* Table9767 */
+/* Table9769 */
   0x2ef0, /* VPORQZrmbkz */
   0x0, /*  */
-/* Table9769 */
+/* Table9771 */
   0x36db, /* VPXORQZrmbkz */
   0x0, /*  */
-/* Table9771 */
+/* Table9773 */
   0x2e5e, /* VPMULUDQZrmbkz */
   0x0, /*  */
-/* Table9773 */
+/* Table9775 */
   0x34af, /* VPSUBQZrmbkz */
   0x0, /*  */
-/* Table9775 */
+/* Table9777 */
   0x1f4f, /* VMOVUPSZ128rmkz */
   0x1f54, /* VMOVUPSZ128rrkz */
-/* Table9777 */
+/* Table9779 */
   0x0, /*  */
   0x1f55, /* VMOVUPSZ128rrkz_REV */
-/* Table9779 */
+/* Table9781 */
   0x3af6, /* VUNPCKLPSZ128rmkz */
   0x3af9, /* VUNPCKLPSZ128rrkz */
-/* Table9781 */
+/* Table9783 */
   0x3ab8, /* VUNPCKHPSZ128rmkz */
   0x3abb, /* VUNPCKHPSZ128rrkz */
-/* Table9783 */
+/* Table9785 */
   0x1d7d, /* VMOVAPSZ128rmkz */
   0x1d82, /* VMOVAPSZ128rrkz */
-/* Table9785 */
+/* Table9787 */
   0x0, /*  */
   0x1d83, /* VMOVAPSZ128rrkz_REV */
-/* Table9787 */
+/* Table9789 */
   0x39dc, /* VSQRTPSZ128mkz */
   0x39df, /* VSQRTPSZ128rkz */
-/* Table9789 */
+/* Table9791 */
   0xc88, /* VANDPSZ128rmkz */
   0xc8b, /* VANDPSZ128rrkz */
-/* Table9791 */
+/* Table9793 */
   0xc4a, /* VANDNPSZ128rmkz */
   0xc4d, /* VANDNPSZ128rrkz */
-/* Table9793 */
+/* Table9795 */
   0x200f, /* VORPSZ128rmkz */
   0x2012, /* VORPSZ128rrkz */
-/* Table9795 */
+/* Table9797 */
   0x3b34, /* VXORPSZ128rmkz */
   0x3b37, /* VXORPSZ128rrkz */
-/* Table9797 */
+/* Table9799 */
   0xb81, /* VADDPSZ128rmkz */
   0xb84, /* VADDPSZ128rrkz */
-/* Table9799 */
+/* Table9801 */
   0x1faa, /* VMULPSZ128rmkz */
   0x1fad, /* VMULPSZ128rrkz */
-/* Table9801 */
+/* Table9803 */
   0xf27, /* VCVTPS2PDZ128rmkz */
   0xf2a, /* VCVTPS2PDZ128rrkz */
-/* Table9803 */
+/* Table9805 */
   0xe2c, /* VCVTDQ2PSZ128rmkz */
   0xe2f, /* VCVTDQ2PSZ128rrkz */
-/* Table9805 */
+/* Table9807 */
   0x3a3f, /* VSUBPSZ128rmkz */
   0x3a42, /* VSUBPSZ128rrkz */
-/* Table9807 */
+/* Table9809 */
   0x1d07, /* VMINPSZ128rmkz */
   0x1d0a, /* VMINPSZ128rrkz */
-/* Table9809 */
+/* Table9811 */
   0x1243, /* VDIVPSZ128rmkz */
   0x1246, /* VDIVPSZ128rrkz */
-/* Table9811 */
+/* Table9813 */
   0x1c5c, /* VMAXPSZ128rmkz */
   0x1c5f, /* VMAXPSZ128rrkz */
-/* Table9813 */
+/* Table9815 */
   0x1111, /* VCVTTPS2UDQZ128rmkz */
   0x1114, /* VCVTTPS2UDQZ128rrkz */
-/* Table9815 */
+/* Table9817 */
   0xf7b, /* VCVTPS2UDQZ128rmkz */
   0xf7e, /* VCVTPS2UDQZ128rrkz */
-/* Table9817 */
+/* Table9819 */
   0x399b, /* VSHUFPSZ128rmikz */
   0x399e, /* VSHUFPSZ128rrikz */
-/* Table9819 */
+/* Table9821 */
   0x1f13, /* VMOVSSZrmkz */
   0x1f18, /* VMOVSSZrrkz */
-/* Table9821 */
+/* Table9823 */
   0x0, /*  */
   0x1f19, /* VMOVSSZrrkz_REV */
-/* Table9823 */
+/* Table9825 */
   0x1ef9, /* VMOVSLDUPZ128rmkz */
   0x1efc, /* VMOVSLDUPZ128rrkz */
-/* Table9825 */
+/* Table9827 */
   0x1ee3, /* VMOVSHDUPZ128rmkz */
   0x1ee6, /* VMOVSHDUPZ128rrkz */
-/* Table9827 */
+/* Table9829 */
   0x3a09, /* VSQRTSSZm_Intkz */
   0x3a0d, /* VSQRTSSZr_Intkz */
-/* Table9829 */
+/* Table9831 */
   0xbae, /* VADDSSZrm_Intkz */
   0xbb2, /* VADDSSZrr_Intkz */
-/* Table9831 */
+/* Table9833 */
   0x1fd7, /* VMULSSZrm_Intkz */
   0x1fdb, /* VMULSSZrr_Intkz */
-/* Table9833 */
+/* Table9835 */
   0x1034, /* VCVTSS2SDZrm_Intkz */
   0x1038, /* VCVTSS2SDZrr_Intkz */
-/* Table9835 */
+/* Table9837 */
   0x10d3, /* VCVTTPS2DQZ128rmkz */
   0x10d6, /* VCVTTPS2DQZ128rrkz */
-/* Table9837 */
+/* Table9839 */
   0x3a6c, /* VSUBSSZrm_Intkz */
   0x3a70, /* VSUBSSZrr_Intkz */
-/* Table9839 */
+/* Table9841 */
   0x1d34, /* VMINSSZrm_Intkz */
   0x1d38, /* VMINSSZrr_Intkz */
-/* Table9841 */
+/* Table9843 */
   0x1270, /* VDIVSSZrm_Intkz */
   0x1274, /* VDIVSSZrr_Intkz */
-/* Table9843 */
+/* Table9845 */
   0x1c89, /* VMAXSSZrm_Intkz */
   0x1c8d, /* VMAXSSZrr_Intkz */
-/* Table9845 */
+/* Table9847 */
   0x1e2b, /* VMOVDQU32Z128rmkz */
   0x1e30, /* VMOVDQU32Z128rrkz */
-/* Table9847 */
+/* Table9849 */
   0x3189, /* VPSHUFHWZ128mikz */
   0x318c, /* VPSHUFHWZ128rikz */
-/* Table9849 */
+/* Table9851 */
   0x1185, /* VCVTUDQ2PDZ128rmkz */
   0x1188, /* VCVTUDQ2PDZ128rrkz */
-/* Table9851 */
+/* Table9853 */
   0x0, /*  */
   0x1e31, /* VMOVDQU32Z128rrkz_REV */
-/* Table9853 */
+/* Table9855 */
   0xe0d, /* VCVTDQ2PDZ128rmkz */
   0xe10, /* VCVTDQ2PDZ128rrkz */
-/* Table9855 */
+/* Table9857 */
   0x1e6d, /* VMOVDQU8Z128rmkz */
   0x1e72, /* VMOVDQU8Z128rrkz */
-/* Table9857 */
+/* Table9859 */
   0x319f, /* VPSHUFLWZ128mikz */
   0x31a2, /* VPSHUFLWZ128rikz */
-/* Table9859 */
+/* Table9861 */
   0x11a0, /* VCVTUDQ2PSZ128rmkz */
   0x11a3, /* VCVTUDQ2PSZ128rrkz */
-/* Table9861 */
+/* Table9863 */
   0x0, /*  */
   0x1e73, /* VMOVDQU8Z128rrkz_REV */
-/* Table9863 */
+/* Table9865 */
   0xf05, /* VCVTPS2DQZ128rmkz */
   0xf08, /* VCVTPS2DQZ128rrkz */
-/* Table9865 */
+/* Table9867 */
   0x3645, /* VPUNPCKLBWZ128rmkz */
   0x3648, /* VPUNPCKLBWZ128rrkz */
-/* Table9867 */
+/* Table9869 */
   0x3699, /* VPUNPCKLWDZ128rmkz */
   0x369c, /* VPUNPCKLWDZ128rrkz */
-/* Table9869 */
+/* Table9871 */
   0x365e, /* VPUNPCKLDQZ128rmkz */
   0x3661, /* VPUNPCKLDQZ128rrkz */
-/* Table9871 */
+/* Table9873 */
   0x20b6, /* VPACKSSWBZ128rmkz */
   0x20b9, /* VPACKSSWBZ128rrkz */
-/* Table9873 */
+/* Table9875 */
   0x20eb, /* VPACKUSWBZ128rmkz */
   0x20ee, /* VPACKUSWBZ128rrkz */
-/* Table9875 */
+/* Table9877 */
   0x35db, /* VPUNPCKHBWZ128rmkz */
   0x35de, /* VPUNPCKHBWZ128rrkz */
-/* Table9877 */
+/* Table9879 */
   0x362f, /* VPUNPCKHWDZ128rmkz */
   0x3632, /* VPUNPCKHWDZ128rrkz */
-/* Table9879 */
+/* Table9881 */
   0x35f4, /* VPUNPCKHDQZ128rmkz */
   0x35f7, /* VPUNPCKHDQZ128rrkz */
-/* Table9881 */
+/* Table9883 */
   0x209a, /* VPACKSSDWZ128rmkz */
   0x209d, /* VPACKSSDWZ128rrkz */
-/* Table9883 */
+/* Table9885 */
   0x1dc0, /* VMOVDQA32Z128rmkz */
   0x1dc5, /* VMOVDQA32Z128rrkz */
-/* Table9885 */
+/* Table9887 */
   0x316d, /* VPSHUFDZ128mikz */
   0x3170, /* VPSHUFDZ128rikz */
-/* Table9887 */
+/* Table9889 */
   0x0, /*  */
   0x0, /*  */
   0x343e, /* VPSRLWZ128mikz */
@@ -98017,7 +98019,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3283, /* VPSLLWZ128rikz */
   0x0, /*  */
-/* Table9903 */
+/* Table9905 */
   0x2f6f, /* VPRORDZ128mikz */
   0x2f03, /* VPROLDZ128mikz */
   0x338b, /* VPSRLDZ128mikz */
@@ -98034,253 +98036,253 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31d0, /* VPSLLDZ128rikz */
   0x0, /*  */
-/* Table9919 */
+/* Table9921 */
   0x112f, /* VCVTTPS2UQQZ128rmkz */
   0x1132, /* VCVTTPS2UQQZ128rrkz */
-/* Table9921 */
+/* Table9923 */
   0xf99, /* VCVTPS2UQQZ128rmkz */
   0xf9c, /* VCVTPS2UQQZ128rrkz */
-/* Table9923 */
+/* Table9925 */
   0x10f3, /* VCVTTPS2QQZ128rmkz */
   0x10f6, /* VCVTTPS2QQZ128rrkz */
-/* Table9925 */
+/* Table9927 */
   0xf5d, /* VCVTPS2QQZ128rmkz */
   0xf60, /* VCVTPS2QQZ128rrkz */
-/* Table9927 */
+/* Table9929 */
   0x0, /*  */
   0x1dc6, /* VMOVDQA32Z128rrkz_REV */
-/* Table9929 */
+/* Table9931 */
   0x3444, /* VPSRLWZ128rmkz */
   0x3447, /* VPSRLWZ128rrkz */
-/* Table9931 */
+/* Table9933 */
   0x3391, /* VPSRLDZ128rmkz */
   0x3394, /* VPSRLDZ128rrkz */
-/* Table9933 */
+/* Table9935 */
   0x2e1a, /* VPMULLWZ128rmkz */
   0x2e1d, /* VPMULLWZ128rrkz */
-/* Table9935 */
+/* Table9937 */
   0x34e7, /* VPSUBUSBZ128rmkz */
   0x34ea, /* VPSUBUSBZ128rrkz */
-/* Table9937 */
+/* Table9939 */
   0x34fd, /* VPSUBUSWZ128rmkz */
   0x3500, /* VPSUBUSWZ128rrkz */
-/* Table9939 */
+/* Table9941 */
   0x2ae9, /* VPMINUBZ128rmkz */
   0x2aec, /* VPMINUBZ128rrkz */
-/* Table9941 */
+/* Table9943 */
   0x21da, /* VPANDDZ128rmkz */
   0x21dd, /* VPANDDZ128rrkz */
-/* Table9943 */
+/* Table9945 */
   0x2181, /* VPADDUSBZ128rmkz */
   0x2184, /* VPADDUSBZ128rrkz */
-/* Table9945 */
+/* Table9947 */
   0x2197, /* VPADDUSWZ128rmkz */
   0x219a, /* VPADDUSWZ128rrkz */
-/* Table9947 */
+/* Table9949 */
   0x2a1d, /* VPMAXUBZ128rmkz */
   0x2a20, /* VPMAXUBZ128rrkz */
-/* Table9949 */
+/* Table9951 */
   0x21f5, /* VPANDNDZ128rmkz */
   0x21f8, /* VPANDNDZ128rrkz */
-/* Table9951 */
+/* Table9953 */
   0x224d, /* VPAVGBZ128rmkz */
   0x2250, /* VPAVGBZ128rrkz */
-/* Table9953 */
+/* Table9955 */
   0x335c, /* VPSRAWZ128rmkz */
   0x335f, /* VPSRAWZ128rrkz */
-/* Table9955 */
+/* Table9957 */
   0x32b3, /* VPSRADZ128rmkz */
   0x32b6, /* VPSRADZ128rrkz */
-/* Table9957 */
+/* Table9959 */
   0x2263, /* VPAVGWZ128rmkz */
   0x2266, /* VPAVGWZ128rrkz */
-/* Table9959 */
+/* Table9961 */
   0x2db4, /* VPMULHUWZ128rmkz */
   0x2db7, /* VPMULHUWZ128rrkz */
-/* Table9961 */
+/* Table9963 */
   0x2dca, /* VPMULHWZ128rmkz */
   0x2dcd, /* VPMULHWZ128rrkz */
-/* Table9963 */
+/* Table9965 */
   0x34bb, /* VPSUBSBZ128rmkz */
   0x34be, /* VPSUBSBZ128rrkz */
-/* Table9965 */
+/* Table9967 */
   0x34d1, /* VPSUBSWZ128rmkz */
   0x34d4, /* VPSUBSWZ128rrkz */
-/* Table9967 */
+/* Table9969 */
   0x2ad3, /* VPMINSWZ128rmkz */
   0x2ad6, /* VPMINSWZ128rrkz */
-/* Table9969 */
+/* Table9971 */
   0x2ec5, /* VPORDZ128rmkz */
   0x2ec8, /* VPORDZ128rrkz */
-/* Table9971 */
+/* Table9973 */
   0x2155, /* VPADDSBZ128rmkz */
   0x2158, /* VPADDSBZ128rrkz */
-/* Table9973 */
+/* Table9975 */
   0x216b, /* VPADDSWZ128rmkz */
   0x216e, /* VPADDSWZ128rrkz */
-/* Table9975 */
+/* Table9977 */
   0x2a07, /* VPMAXSWZ128rmkz */
   0x2a0a, /* VPMAXSWZ128rrkz */
-/* Table9977 */
+/* Table9979 */
   0x36b0, /* VPXORDZ128rmkz */
   0x36b3, /* VPXORDZ128rrkz */
-/* Table9979 */
+/* Table9981 */
   0x3286, /* VPSLLWZ128rmkz */
   0x3289, /* VPSLLWZ128rrkz */
-/* Table9981 */
+/* Table9983 */
   0x31d3, /* VPSLLDZ128rmkz */
   0x31d6, /* VPSLLDZ128rrkz */
-/* Table9983 */
+/* Table9985 */
   0x2999, /* VPMADDWDZ128rmkz */
   0x299c, /* VPMADDWDZ128rrkz */
-/* Table9985 */
+/* Table9987 */
   0x3467, /* VPSUBBZ128rmkz */
   0x346a, /* VPSUBBZ128rrkz */
-/* Table9987 */
+/* Table9989 */
   0x3513, /* VPSUBWZ128rmkz */
   0x3516, /* VPSUBWZ128rrkz */
-/* Table9989 */
+/* Table9991 */
   0x3480, /* VPSUBDZ128rmkz */
   0x3483, /* VPSUBDZ128rrkz */
-/* Table9991 */
+/* Table9993 */
   0x2101, /* VPADDBZ128rmkz */
   0x2104, /* VPADDBZ128rrkz */
-/* Table9993 */
+/* Table9995 */
   0x21ad, /* VPADDWZ128rmkz */
   0x21b0, /* VPADDWZ128rrkz */
-/* Table9995 */
+/* Table9997 */
   0x211a, /* VPADDDZ128rmkz */
   0x211d, /* VPADDDZ128rrkz */
-/* Table9997 */
+/* Table9999 */
   0xfd5, /* VCVTQQ2PSZ128rmkz */
   0xfd8, /* VCVTQQ2PSZ128rrkz */
-/* Table9999 */
+/* Table10001 */
   0x1095, /* VCVTTPD2UDQZ128rmkz */
   0x1098, /* VCVTTPD2UDQZ128rrkz */
-/* Table10001 */
+/* Table10003 */
   0xeae, /* VCVTPD2UDQZ128rmkz */
   0xeb1, /* VCVTPD2UDQZ128rrkz */
-/* Table10003 */
+/* Table10005 */
   0x1e4c, /* VMOVDQU64Z128rmkz */
   0x1e51, /* VMOVDQU64Z128rrkz */
-/* Table10005 */
+/* Table10007 */
   0x11be, /* VCVTUQQ2PDZ128rmkz */
   0x11c1, /* VCVTUQQ2PDZ128rrkz */
-/* Table10007 */
+/* Table10009 */
   0x0, /*  */
   0x1e52, /* VMOVDQU64Z128rrkz_REV */
-/* Table10009 */
+/* Table10011 */
   0xfb7, /* VCVTQQ2PDZ128rmkz */
   0xfba, /* VCVTQQ2PDZ128rrkz */
-/* Table10011 */
+/* Table10013 */
   0x1ed0, /* VMOVSDZrmkz */
   0x1ed5, /* VMOVSDZrrkz */
-/* Table10013 */
+/* Table10015 */
   0x0, /*  */
   0x1ed6, /* VMOVSDZrrkz_REV */
-/* Table10015 */
+/* Table10017 */
   0x1da2, /* VMOVDDUPZ128rmkz */
   0x1da5, /* VMOVDDUPZ128rrkz */
-/* Table10017 */
+/* Table10019 */
   0x39fa, /* VSQRTSDZm_Intkz */
   0x39fe, /* VSQRTSDZr_Intkz */
-/* Table10019 */
+/* Table10021 */
   0xb9f, /* VADDSDZrm_Intkz */
   0xba3, /* VADDSDZrr_Intkz */
-/* Table10021 */
+/* Table10023 */
   0x1fc8, /* VMULSDZrm_Intkz */
   0x1fcc, /* VMULSDZrr_Intkz */
-/* Table10023 */
+/* Table10025 */
   0xffb, /* VCVTSD2SSZrm_Intkz */
   0xfff, /* VCVTSD2SSZrr_Intkz */
-/* Table10025 */
+/* Table10027 */
   0x3a5d, /* VSUBSDZrm_Intkz */
   0x3a61, /* VSUBSDZrr_Intkz */
-/* Table10027 */
+/* Table10029 */
   0x1d25, /* VMINSDZrm_Intkz */
   0x1d29, /* VMINSDZrr_Intkz */
-/* Table10029 */
+/* Table10031 */
   0x1261, /* VDIVSDZrm_Intkz */
   0x1265, /* VDIVSDZrr_Intkz */
-/* Table10031 */
+/* Table10033 */
   0x1c7a, /* VMAXSDZrm_Intkz */
   0x1c7e, /* VMAXSDZrr_Intkz */
-/* Table10033 */
+/* Table10035 */
   0x1e0a, /* VMOVDQU16Z128rmkz */
   0x1e0f, /* VMOVDQU16Z128rrkz */
-/* Table10035 */
+/* Table10037 */
   0x11dc, /* VCVTUQQ2PSZ128rmkz */
   0x11df, /* VCVTUQQ2PSZ128rrkz */
-/* Table10037 */
+/* Table10039 */
   0x0, /*  */
   0x1e10, /* VMOVDQU16Z128rrkz_REV */
-/* Table10039 */
+/* Table10041 */
   0xe4e, /* VCVTPD2DQZ128rmkz */
   0xe51, /* VCVTPD2DQZ128rrkz */
-/* Table10041 */
+/* Table10043 */
   0x1f26, /* VMOVUPDZ128rmkz */
   0x1f2b, /* VMOVUPDZ128rrkz */
-/* Table10043 */
+/* Table10045 */
   0x0, /*  */
   0x1f2c, /* VMOVUPDZ128rrkz_REV */
-/* Table10045 */
+/* Table10047 */
   0x3ad7, /* VUNPCKLPDZ128rmkz */
   0x3ada, /* VUNPCKLPDZ128rrkz */
-/* Table10047 */
+/* Table10049 */
   0x3a99, /* VUNPCKHPDZ128rmkz */
   0x3a9c, /* VUNPCKHPDZ128rrkz */
-/* Table10049 */
+/* Table10051 */
   0x1d54, /* VMOVAPDZ128rmkz */
   0x1d59, /* VMOVAPDZ128rrkz */
-/* Table10051 */
+/* Table10053 */
   0x0, /*  */
   0x1d5a, /* VMOVAPDZ128rrkz_REV */
-/* Table10053 */
+/* Table10055 */
   0x39ba, /* VSQRTPDZ128mkz */
   0x39bd, /* VSQRTPDZ128rkz */
-/* Table10055 */
+/* Table10057 */
   0xc69, /* VANDPDZ128rmkz */
   0xc6c, /* VANDPDZ128rrkz */
-/* Table10057 */
+/* Table10059 */
   0xc2b, /* VANDNPDZ128rmkz */
   0xc2e, /* VANDNPDZ128rrkz */
-/* Table10059 */
+/* Table10061 */
   0x1ff0, /* VORPDZ128rmkz */
   0x1ff3, /* VORPDZ128rrkz */
-/* Table10061 */
+/* Table10063 */
   0x3b15, /* VXORPDZ128rmkz */
   0x3b18, /* VXORPDZ128rrkz */
-/* Table10063 */
+/* Table10065 */
   0xb5f, /* VADDPDZ128rmkz */
   0xb62, /* VADDPDZ128rrkz */
-/* Table10065 */
+/* Table10067 */
   0x1f88, /* VMULPDZ128rmkz */
   0x1f8b, /* VMULPDZ128rrkz */
-/* Table10067 */
+/* Table10069 */
   0xe70, /* VCVTPD2PSZ128rmkz */
   0xe73, /* VCVTPD2PSZ128rrkz */
-/* Table10069 */
+/* Table10071 */
   0x3a1d, /* VSUBPDZ128rmkz */
   0x3a20, /* VSUBPDZ128rrkz */
-/* Table10071 */
+/* Table10073 */
   0x1ce5, /* VMINPDZ128rmkz */
   0x1ce8, /* VMINPDZ128rrkz */
-/* Table10073 */
+/* Table10075 */
   0x1221, /* VDIVPDZ128rmkz */
   0x1224, /* VDIVPDZ128rrkz */
-/* Table10075 */
+/* Table10077 */
   0x1c3a, /* VMAXPDZ128rmkz */
   0x1c3d, /* VMAXPDZ128rrkz */
-/* Table10077 */
+/* Table10079 */
   0x367d, /* VPUNPCKLQDQZ128rmkz */
   0x3680, /* VPUNPCKLQDQZ128rrkz */
-/* Table10079 */
+/* Table10081 */
   0x3613, /* VPUNPCKHQDQZ128rmkz */
   0x3616, /* VPUNPCKHQDQZ128rrkz */
-/* Table10081 */
+/* Table10083 */
   0x1de1, /* VMOVDQA64Z128rmkz */
   0x1de6, /* VMOVDQA64Z128rrkz */
-/* Table10083 */
+/* Table10085 */
   0x2f8a, /* VPRORQZ128mikz */
   0x2f1e, /* VPROLQZ128mikz */
   0x0, /*  */
@@ -98297,7 +98299,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table10099 */
+/* Table10101 */
   0x0, /*  */
   0x0, /*  */
   0x33be, /* VPSRLQZ128mikz */
@@ -98314,196 +98316,196 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3203, /* VPSLLQZ128rikz */
   0x0, /*  */
-/* Table10115 */
+/* Table10117 */
   0x10b3, /* VCVTTPD2UQQZ128rmkz */
   0x10b6, /* VCVTTPD2UQQZ128rrkz */
-/* Table10117 */
+/* Table10119 */
   0xecc, /* VCVTPD2UQQZ128rmkz */
   0xecf, /* VCVTPD2UQQZ128rrkz */
-/* Table10119 */
+/* Table10121 */
   0x1077, /* VCVTTPD2QQZ128rmkz */
   0x107a, /* VCVTTPD2QQZ128rrkz */
-/* Table10121 */
+/* Table10123 */
   0xe90, /* VCVTPD2QQZ128rmkz */
   0xe93, /* VCVTPD2QQZ128rrkz */
-/* Table10123 */
+/* Table10125 */
   0x0, /*  */
   0x1de7, /* VMOVDQA64Z128rrkz_REV */
-/* Table10125 */
+/* Table10127 */
   0x397c, /* VSHUFPDZ128rmikz */
   0x397f, /* VSHUFPDZ128rrikz */
-/* Table10127 */
+/* Table10129 */
   0x33c4, /* VPSRLQZ128rmkz */
   0x33c7, /* VPSRLQZ128rrkz */
-/* Table10129 */
+/* Table10131 */
   0x2139, /* VPADDQZ128rmkz */
   0x213c, /* VPADDQZ128rrkz */
-/* Table10131 */
+/* Table10133 */
   0x222f, /* VPANDQZ128rmkz */
   0x2232, /* VPANDQZ128rrkz */
-/* Table10133 */
+/* Table10135 */
   0x2210, /* VPANDNQZ128rmkz */
   0x2213, /* VPANDNQZ128rrkz */
-/* Table10135 */
+/* Table10137 */
   0x32e3, /* VPSRAQZ128rmkz */
   0x32e6, /* VPSRAQZ128rrkz */
-/* Table10137 */
+/* Table10139 */
   0x1057, /* VCVTTPD2DQZ128rmkz */
   0x105a, /* VCVTTPD2DQZ128rrkz */
-/* Table10139 */
+/* Table10141 */
   0x2ee0, /* VPORQZ128rmkz */
   0x2ee3, /* VPORQZ128rrkz */
-/* Table10141 */
+/* Table10143 */
   0x36cb, /* VPXORQZ128rmkz */
   0x36ce, /* VPXORQZ128rrkz */
-/* Table10143 */
+/* Table10145 */
   0x3206, /* VPSLLQZ128rmkz */
   0x3209, /* VPSLLQZ128rrkz */
-/* Table10145 */
+/* Table10147 */
   0x2e4e, /* VPMULUDQZ128rmkz */
   0x2e51, /* VPMULUDQZ128rrkz */
-/* Table10147 */
+/* Table10149 */
   0x349f, /* VPSUBQZ128rmkz */
   0x34a2, /* VPSUBQZ128rrkz */
-/* Table10149 */
+/* Table10151 */
   0x1f5a, /* VMOVUPSZ256rmkz */
   0x1f5f, /* VMOVUPSZ256rrkz */
-/* Table10151 */
+/* Table10153 */
   0x0, /*  */
   0x1f60, /* VMOVUPSZ256rrkz_REV */
-/* Table10153 */
+/* Table10155 */
   0x3aff, /* VUNPCKLPSZ256rmkz */
   0x3b02, /* VUNPCKLPSZ256rrkz */
-/* Table10155 */
+/* Table10157 */
   0x3ac1, /* VUNPCKHPSZ256rmkz */
   0x3ac4, /* VUNPCKHPSZ256rrkz */
-/* Table10157 */
+/* Table10159 */
   0x1d88, /* VMOVAPSZ256rmkz */
   0x1d8d, /* VMOVAPSZ256rrkz */
-/* Table10159 */
+/* Table10161 */
   0x0, /*  */
   0x1d8e, /* VMOVAPSZ256rrkz_REV */
-/* Table10161 */
+/* Table10163 */
   0x39e5, /* VSQRTPSZ256mkz */
   0x39e8, /* VSQRTPSZ256rkz */
-/* Table10163 */
+/* Table10165 */
   0xc91, /* VANDPSZ256rmkz */
   0xc94, /* VANDPSZ256rrkz */
-/* Table10165 */
+/* Table10167 */
   0xc53, /* VANDNPSZ256rmkz */
   0xc56, /* VANDNPSZ256rrkz */
-/* Table10167 */
+/* Table10169 */
   0x2018, /* VORPSZ256rmkz */
   0x201b, /* VORPSZ256rrkz */
-/* Table10169 */
+/* Table10171 */
   0x3b3d, /* VXORPSZ256rmkz */
   0x3b40, /* VXORPSZ256rrkz */
-/* Table10171 */
+/* Table10173 */
   0xb8a, /* VADDPSZ256rmkz */
   0xb8d, /* VADDPSZ256rrkz */
-/* Table10173 */
+/* Table10175 */
   0x1fb3, /* VMULPSZ256rmkz */
   0x1fb6, /* VMULPSZ256rrkz */
-/* Table10175 */
+/* Table10177 */
   0xf30, /* VCVTPS2PDZ256rmkz */
   0xf33, /* VCVTPS2PDZ256rrkz */
-/* Table10177 */
+/* Table10179 */
   0xe35, /* VCVTDQ2PSZ256rmkz */
   0xe38, /* VCVTDQ2PSZ256rrkz */
-/* Table10179 */
+/* Table10181 */
   0x3a48, /* VSUBPSZ256rmkz */
   0x3a4b, /* VSUBPSZ256rrkz */
-/* Table10181 */
+/* Table10183 */
   0x1d10, /* VMINPSZ256rmkz */
   0x1d13, /* VMINPSZ256rrkz */
-/* Table10183 */
+/* Table10185 */
   0x124c, /* VDIVPSZ256rmkz */
   0x124f, /* VDIVPSZ256rrkz */
-/* Table10185 */
+/* Table10187 */
   0x1c65, /* VMAXPSZ256rmkz */
   0x1c68, /* VMAXPSZ256rrkz */
-/* Table10187 */
+/* Table10189 */
   0x111a, /* VCVTTPS2UDQZ256rmkz */
   0x111d, /* VCVTTPS2UDQZ256rrkz */
-/* Table10189 */
+/* Table10191 */
   0xf84, /* VCVTPS2UDQZ256rmkz */
   0xf87, /* VCVTPS2UDQZ256rrkz */
-/* Table10191 */
+/* Table10193 */
   0x39a4, /* VSHUFPSZ256rmikz */
   0x39a7, /* VSHUFPSZ256rrikz */
-/* Table10193 */
+/* Table10195 */
   0x1eff, /* VMOVSLDUPZ256rmkz */
   0x1f02, /* VMOVSLDUPZ256rrkz */
-/* Table10195 */
+/* Table10197 */
   0x1ee9, /* VMOVSHDUPZ256rmkz */
   0x1eec, /* VMOVSHDUPZ256rrkz */
-/* Table10197 */
+/* Table10199 */
   0x10dc, /* VCVTTPS2DQZ256rmkz */
   0x10df, /* VCVTTPS2DQZ256rrkz */
-/* Table10199 */
+/* Table10201 */
   0x1e36, /* VMOVDQU32Z256rmkz */
   0x1e3b, /* VMOVDQU32Z256rrkz */
-/* Table10201 */
+/* Table10203 */
   0x318f, /* VPSHUFHWZ256mikz */
   0x3192, /* VPSHUFHWZ256rikz */
-/* Table10203 */
+/* Table10205 */
   0x118e, /* VCVTUDQ2PDZ256rmkz */
   0x1191, /* VCVTUDQ2PDZ256rrkz */
-/* Table10205 */
+/* Table10207 */
   0x0, /*  */
   0x1e3c, /* VMOVDQU32Z256rrkz_REV */
-/* Table10207 */
+/* Table10209 */
   0xe16, /* VCVTDQ2PDZ256rmkz */
   0xe19, /* VCVTDQ2PDZ256rrkz */
-/* Table10209 */
+/* Table10211 */
   0x1e78, /* VMOVDQU8Z256rmkz */
   0x1e7d, /* VMOVDQU8Z256rrkz */
-/* Table10211 */
+/* Table10213 */
   0x31a5, /* VPSHUFLWZ256mikz */
   0x31a8, /* VPSHUFLWZ256rikz */
-/* Table10213 */
+/* Table10215 */
   0x11a9, /* VCVTUDQ2PSZ256rmkz */
   0x11ac, /* VCVTUDQ2PSZ256rrkz */
-/* Table10215 */
+/* Table10217 */
   0x0, /*  */
   0x1e7e, /* VMOVDQU8Z256rrkz_REV */
-/* Table10217 */
+/* Table10219 */
   0xf0e, /* VCVTPS2DQZ256rmkz */
   0xf11, /* VCVTPS2DQZ256rrkz */
-/* Table10219 */
+/* Table10221 */
   0x364b, /* VPUNPCKLBWZ256rmkz */
   0x364e, /* VPUNPCKLBWZ256rrkz */
-/* Table10221 */
+/* Table10223 */
   0x369f, /* VPUNPCKLWDZ256rmkz */
   0x36a2, /* VPUNPCKLWDZ256rrkz */
-/* Table10223 */
+/* Table10225 */
   0x3667, /* VPUNPCKLDQZ256rmkz */
   0x366a, /* VPUNPCKLDQZ256rrkz */
-/* Table10225 */
+/* Table10227 */
   0x20bc, /* VPACKSSWBZ256rmkz */
   0x20bf, /* VPACKSSWBZ256rrkz */
-/* Table10227 */
+/* Table10229 */
   0x20f1, /* VPACKUSWBZ256rmkz */
   0x20f4, /* VPACKUSWBZ256rrkz */
-/* Table10229 */
+/* Table10231 */
   0x35e1, /* VPUNPCKHBWZ256rmkz */
   0x35e4, /* VPUNPCKHBWZ256rrkz */
-/* Table10231 */
+/* Table10233 */
   0x3635, /* VPUNPCKHWDZ256rmkz */
   0x3638, /* VPUNPCKHWDZ256rrkz */
-/* Table10233 */
+/* Table10235 */
   0x35fd, /* VPUNPCKHDQZ256rmkz */
   0x3600, /* VPUNPCKHDQZ256rrkz */
-/* Table10235 */
+/* Table10237 */
   0x20a3, /* VPACKSSDWZ256rmkz */
   0x20a6, /* VPACKSSDWZ256rrkz */
-/* Table10237 */
+/* Table10239 */
   0x1dcb, /* VMOVDQA32Z256rmkz */
   0x1dd0, /* VMOVDQA32Z256rrkz */
-/* Table10239 */
+/* Table10241 */
   0x3176, /* VPSHUFDZ256mikz */
   0x3179, /* VPSHUFDZ256rikz */
-/* Table10241 */
+/* Table10243 */
   0x0, /*  */
   0x0, /*  */
   0x344a, /* VPSRLWZ256mikz */
@@ -98520,7 +98522,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x328f, /* VPSLLWZ256rikz */
   0x0, /*  */
-/* Table10257 */
+/* Table10259 */
   0x2f78, /* VPRORDZ256mikz */
   0x2f0c, /* VPROLDZ256mikz */
   0x339a, /* VPSRLDZ256mikz */
@@ -98537,223 +98539,223 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31df, /* VPSLLDZ256rikz */
   0x0, /*  */
-/* Table10273 */
+/* Table10275 */
   0x1138, /* VCVTTPS2UQQZ256rmkz */
   0x113b, /* VCVTTPS2UQQZ256rrkz */
-/* Table10275 */
+/* Table10277 */
   0xfa2, /* VCVTPS2UQQZ256rmkz */
   0xfa5, /* VCVTPS2UQQZ256rrkz */
-/* Table10277 */
+/* Table10279 */
   0x10fc, /* VCVTTPS2QQZ256rmkz */
   0x10ff, /* VCVTTPS2QQZ256rrkz */
-/* Table10279 */
+/* Table10281 */
   0xf66, /* VCVTPS2QQZ256rmkz */
   0xf69, /* VCVTPS2QQZ256rrkz */
-/* Table10281 */
+/* Table10283 */
   0x0, /*  */
   0x1dd1, /* VMOVDQA32Z256rrkz_REV */
-/* Table10283 */
+/* Table10285 */
   0x3450, /* VPSRLWZ256rmkz */
   0x3453, /* VPSRLWZ256rrkz */
-/* Table10285 */
+/* Table10287 */
   0x33a0, /* VPSRLDZ256rmkz */
   0x33a3, /* VPSRLDZ256rrkz */
-/* Table10287 */
+/* Table10289 */
   0x2e20, /* VPMULLWZ256rmkz */
   0x2e23, /* VPMULLWZ256rrkz */
-/* Table10289 */
+/* Table10291 */
   0x34ed, /* VPSUBUSBZ256rmkz */
   0x34f0, /* VPSUBUSBZ256rrkz */
-/* Table10291 */
+/* Table10293 */
   0x3503, /* VPSUBUSWZ256rmkz */
   0x3506, /* VPSUBUSWZ256rrkz */
-/* Table10293 */
+/* Table10295 */
   0x2aef, /* VPMINUBZ256rmkz */
   0x2af2, /* VPMINUBZ256rrkz */
-/* Table10295 */
+/* Table10297 */
   0x21e3, /* VPANDDZ256rmkz */
   0x21e6, /* VPANDDZ256rrkz */
-/* Table10297 */
+/* Table10299 */
   0x2187, /* VPADDUSBZ256rmkz */
   0x218a, /* VPADDUSBZ256rrkz */
-/* Table10299 */
+/* Table10301 */
   0x219d, /* VPADDUSWZ256rmkz */
   0x21a0, /* VPADDUSWZ256rrkz */
-/* Table10301 */
+/* Table10303 */
   0x2a23, /* VPMAXUBZ256rmkz */
   0x2a26, /* VPMAXUBZ256rrkz */
-/* Table10303 */
+/* Table10305 */
   0x21fe, /* VPANDNDZ256rmkz */
   0x2201, /* VPANDNDZ256rrkz */
-/* Table10305 */
+/* Table10307 */
   0x2253, /* VPAVGBZ256rmkz */
   0x2256, /* VPAVGBZ256rrkz */
-/* Table10307 */
+/* Table10309 */
   0x3368, /* VPSRAWZ256rmkz */
   0x336b, /* VPSRAWZ256rrkz */
-/* Table10309 */
+/* Table10311 */
   0x32c2, /* VPSRADZ256rmkz */
   0x32c5, /* VPSRADZ256rrkz */
-/* Table10311 */
+/* Table10313 */
   0x2269, /* VPAVGWZ256rmkz */
   0x226c, /* VPAVGWZ256rrkz */
-/* Table10313 */
+/* Table10315 */
   0x2dba, /* VPMULHUWZ256rmkz */
   0x2dbd, /* VPMULHUWZ256rrkz */
-/* Table10315 */
+/* Table10317 */
   0x2dd0, /* VPMULHWZ256rmkz */
   0x2dd3, /* VPMULHWZ256rrkz */
-/* Table10317 */
+/* Table10319 */
   0x34c1, /* VPSUBSBZ256rmkz */
   0x34c4, /* VPSUBSBZ256rrkz */
-/* Table10319 */
+/* Table10321 */
   0x34d7, /* VPSUBSWZ256rmkz */
   0x34da, /* VPSUBSWZ256rrkz */
-/* Table10321 */
+/* Table10323 */
   0x2ad9, /* VPMINSWZ256rmkz */
   0x2adc, /* VPMINSWZ256rrkz */
-/* Table10323 */
+/* Table10325 */
   0x2ece, /* VPORDZ256rmkz */
   0x2ed1, /* VPORDZ256rrkz */
-/* Table10325 */
+/* Table10327 */
   0x215b, /* VPADDSBZ256rmkz */
   0x215e, /* VPADDSBZ256rrkz */
-/* Table10327 */
+/* Table10329 */
   0x2171, /* VPADDSWZ256rmkz */
   0x2174, /* VPADDSWZ256rrkz */
-/* Table10329 */
+/* Table10331 */
   0x2a0d, /* VPMAXSWZ256rmkz */
   0x2a10, /* VPMAXSWZ256rrkz */
-/* Table10331 */
+/* Table10333 */
   0x36b9, /* VPXORDZ256rmkz */
   0x36bc, /* VPXORDZ256rrkz */
-/* Table10333 */
+/* Table10335 */
   0x3292, /* VPSLLWZ256rmkz */
   0x3295, /* VPSLLWZ256rrkz */
-/* Table10335 */
+/* Table10337 */
   0x31e2, /* VPSLLDZ256rmkz */
   0x31e5, /* VPSLLDZ256rrkz */
-/* Table10337 */
+/* Table10339 */
   0x299f, /* VPMADDWDZ256rmkz */
   0x29a2, /* VPMADDWDZ256rrkz */
-/* Table10339 */
+/* Table10341 */
   0x346d, /* VPSUBBZ256rmkz */
   0x3470, /* VPSUBBZ256rrkz */
-/* Table10341 */
+/* Table10343 */
   0x3519, /* VPSUBWZ256rmkz */
   0x351c, /* VPSUBWZ256rrkz */
-/* Table10343 */
+/* Table10345 */
   0x3489, /* VPSUBDZ256rmkz */
   0x348c, /* VPSUBDZ256rrkz */
-/* Table10345 */
+/* Table10347 */
   0x2107, /* VPADDBZ256rmkz */
   0x210a, /* VPADDBZ256rrkz */
-/* Table10347 */
+/* Table10349 */
   0x21b3, /* VPADDWZ256rmkz */
   0x21b6, /* VPADDWZ256rrkz */
-/* Table10349 */
+/* Table10351 */
   0x2123, /* VPADDDZ256rmkz */
   0x2126, /* VPADDDZ256rrkz */
-/* Table10351 */
+/* Table10353 */
   0xfde, /* VCVTQQ2PSZ256rmkz */
   0xfe1, /* VCVTQQ2PSZ256rrkz */
-/* Table10353 */
+/* Table10355 */
   0x109e, /* VCVTTPD2UDQZ256rmkz */
   0x10a1, /* VCVTTPD2UDQZ256rrkz */
-/* Table10355 */
+/* Table10357 */
   0xeb7, /* VCVTPD2UDQZ256rmkz */
   0xeba, /* VCVTPD2UDQZ256rrkz */
-/* Table10357 */
+/* Table10359 */
   0x1e57, /* VMOVDQU64Z256rmkz */
   0x1e5c, /* VMOVDQU64Z256rrkz */
-/* Table10359 */
+/* Table10361 */
   0x11c7, /* VCVTUQQ2PDZ256rmkz */
   0x11ca, /* VCVTUQQ2PDZ256rrkz */
-/* Table10361 */
+/* Table10363 */
   0x0, /*  */
   0x1e5d, /* VMOVDQU64Z256rrkz_REV */
-/* Table10363 */
+/* Table10365 */
   0xfc0, /* VCVTQQ2PDZ256rmkz */
   0xfc3, /* VCVTQQ2PDZ256rrkz */
-/* Table10365 */
+/* Table10367 */
   0x1da8, /* VMOVDDUPZ256rmkz */
   0x1dab, /* VMOVDDUPZ256rrkz */
-/* Table10367 */
+/* Table10369 */
   0x1e15, /* VMOVDQU16Z256rmkz */
   0x1e1a, /* VMOVDQU16Z256rrkz */
-/* Table10369 */
+/* Table10371 */
   0x11e5, /* VCVTUQQ2PSZ256rmkz */
   0x11e8, /* VCVTUQQ2PSZ256rrkz */
-/* Table10371 */
+/* Table10373 */
   0x0, /*  */
   0x1e1b, /* VMOVDQU16Z256rrkz_REV */
-/* Table10373 */
+/* Table10375 */
   0xe57, /* VCVTPD2DQZ256rmkz */
   0xe5a, /* VCVTPD2DQZ256rrkz */
-/* Table10375 */
+/* Table10377 */
   0x1f31, /* VMOVUPDZ256rmkz */
   0x1f36, /* VMOVUPDZ256rrkz */
-/* Table10377 */
+/* Table10379 */
   0x0, /*  */
   0x1f37, /* VMOVUPDZ256rrkz_REV */
-/* Table10379 */
+/* Table10381 */
   0x3ae0, /* VUNPCKLPDZ256rmkz */
   0x3ae3, /* VUNPCKLPDZ256rrkz */
-/* Table10381 */
+/* Table10383 */
   0x3aa2, /* VUNPCKHPDZ256rmkz */
   0x3aa5, /* VUNPCKHPDZ256rrkz */
-/* Table10383 */
+/* Table10385 */
   0x1d5f, /* VMOVAPDZ256rmkz */
   0x1d64, /* VMOVAPDZ256rrkz */
-/* Table10385 */
+/* Table10387 */
   0x0, /*  */
   0x1d65, /* VMOVAPDZ256rrkz_REV */
-/* Table10387 */
+/* Table10389 */
   0x39c3, /* VSQRTPDZ256mkz */
   0x39c6, /* VSQRTPDZ256rkz */
-/* Table10389 */
+/* Table10391 */
   0xc72, /* VANDPDZ256rmkz */
   0xc75, /* VANDPDZ256rrkz */
-/* Table10391 */
+/* Table10393 */
   0xc34, /* VANDNPDZ256rmkz */
   0xc37, /* VANDNPDZ256rrkz */
-/* Table10393 */
+/* Table10395 */
   0x1ff9, /* VORPDZ256rmkz */
   0x1ffc, /* VORPDZ256rrkz */
-/* Table10395 */
+/* Table10397 */
   0x3b1e, /* VXORPDZ256rmkz */
   0x3b21, /* VXORPDZ256rrkz */
-/* Table10397 */
+/* Table10399 */
   0xb68, /* VADDPDZ256rmkz */
   0xb6b, /* VADDPDZ256rrkz */
-/* Table10399 */
+/* Table10401 */
   0x1f91, /* VMULPDZ256rmkz */
   0x1f94, /* VMULPDZ256rrkz */
-/* Table10401 */
+/* Table10403 */
   0xe79, /* VCVTPD2PSZ256rmkz */
   0xe7c, /* VCVTPD2PSZ256rrkz */
-/* Table10403 */
+/* Table10405 */
   0x3a26, /* VSUBPDZ256rmkz */
   0x3a29, /* VSUBPDZ256rrkz */
-/* Table10405 */
+/* Table10407 */
   0x1cee, /* VMINPDZ256rmkz */
   0x1cf1, /* VMINPDZ256rrkz */
-/* Table10407 */
+/* Table10409 */
   0x122a, /* VDIVPDZ256rmkz */
   0x122d, /* VDIVPDZ256rrkz */
-/* Table10409 */
+/* Table10411 */
   0x1c43, /* VMAXPDZ256rmkz */
   0x1c46, /* VMAXPDZ256rrkz */
-/* Table10411 */
+/* Table10413 */
   0x3686, /* VPUNPCKLQDQZ256rmkz */
   0x3689, /* VPUNPCKLQDQZ256rrkz */
-/* Table10413 */
+/* Table10415 */
   0x361c, /* VPUNPCKHQDQZ256rmkz */
   0x361f, /* VPUNPCKHQDQZ256rrkz */
-/* Table10415 */
+/* Table10417 */
   0x1dec, /* VMOVDQA64Z256rmkz */
   0x1df1, /* VMOVDQA64Z256rrkz */
-/* Table10417 */
+/* Table10419 */
   0x2f93, /* VPRORQZ256mikz */
   0x2f27, /* VPROLQZ256mikz */
   0x0, /*  */
@@ -98770,7 +98772,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table10433 */
+/* Table10435 */
   0x0, /*  */
   0x0, /*  */
   0x33cd, /* VPSRLQZ256mikz */
@@ -98787,196 +98789,196 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3212, /* VPSLLQZ256rikz */
   0x0, /*  */
-/* Table10449 */
+/* Table10451 */
   0x10bc, /* VCVTTPD2UQQZ256rmkz */
   0x10bf, /* VCVTTPD2UQQZ256rrkz */
-/* Table10451 */
+/* Table10453 */
   0xed5, /* VCVTPD2UQQZ256rmkz */
   0xed8, /* VCVTPD2UQQZ256rrkz */
-/* Table10453 */
+/* Table10455 */
   0x1080, /* VCVTTPD2QQZ256rmkz */
   0x1083, /* VCVTTPD2QQZ256rrkz */
-/* Table10455 */
+/* Table10457 */
   0xe99, /* VCVTPD2QQZ256rmkz */
   0xe9c, /* VCVTPD2QQZ256rrkz */
-/* Table10457 */
+/* Table10459 */
   0x0, /*  */
   0x1df2, /* VMOVDQA64Z256rrkz_REV */
-/* Table10459 */
+/* Table10461 */
   0x3985, /* VSHUFPDZ256rmikz */
   0x3988, /* VSHUFPDZ256rrikz */
-/* Table10461 */
+/* Table10463 */
   0x33d3, /* VPSRLQZ256rmkz */
   0x33d6, /* VPSRLQZ256rrkz */
-/* Table10463 */
+/* Table10465 */
   0x2142, /* VPADDQZ256rmkz */
   0x2145, /* VPADDQZ256rrkz */
-/* Table10465 */
+/* Table10467 */
   0x2238, /* VPANDQZ256rmkz */
   0x223b, /* VPANDQZ256rrkz */
-/* Table10467 */
+/* Table10469 */
   0x2219, /* VPANDNQZ256rmkz */
   0x221c, /* VPANDNQZ256rrkz */
-/* Table10469 */
+/* Table10471 */
   0x32f2, /* VPSRAQZ256rmkz */
   0x32f5, /* VPSRAQZ256rrkz */
-/* Table10471 */
+/* Table10473 */
   0x1060, /* VCVTTPD2DQZ256rmkz */
   0x1063, /* VCVTTPD2DQZ256rrkz */
-/* Table10473 */
+/* Table10475 */
   0x2ee9, /* VPORQZ256rmkz */
   0x2eec, /* VPORQZ256rrkz */
-/* Table10475 */
+/* Table10477 */
   0x36d4, /* VPXORQZ256rmkz */
   0x36d7, /* VPXORQZ256rrkz */
-/* Table10477 */
+/* Table10479 */
   0x3215, /* VPSLLQZ256rmkz */
   0x3218, /* VPSLLQZ256rrkz */
-/* Table10479 */
+/* Table10481 */
   0x2e57, /* VPMULUDQZ256rmkz */
   0x2e5a, /* VPMULUDQZ256rrkz */
-/* Table10481 */
+/* Table10483 */
   0x34a8, /* VPSUBQZ256rmkz */
   0x34ab, /* VPSUBQZ256rrkz */
-/* Table10483 */
+/* Table10485 */
   0x1f65, /* VMOVUPSZrmkz */
   0x1f6a, /* VMOVUPSZrrkz */
-/* Table10485 */
+/* Table10487 */
   0x0, /*  */
   0x1f6b, /* VMOVUPSZrrkz_REV */
-/* Table10487 */
+/* Table10489 */
   0x3b08, /* VUNPCKLPSZrmkz */
   0x3b0b, /* VUNPCKLPSZrrkz */
-/* Table10489 */
+/* Table10491 */
   0x3aca, /* VUNPCKHPSZrmkz */
   0x3acd, /* VUNPCKHPSZrrkz */
-/* Table10491 */
+/* Table10493 */
   0x1d93, /* VMOVAPSZrmkz */
   0x1d98, /* VMOVAPSZrrkz */
-/* Table10493 */
+/* Table10495 */
   0x0, /*  */
   0x1d99, /* VMOVAPSZrrkz_REV */
-/* Table10495 */
+/* Table10497 */
   0x39ee, /* VSQRTPSZmkz */
   0x39f4, /* VSQRTPSZrkz */
-/* Table10497 */
+/* Table10499 */
   0xc9a, /* VANDPSZrmkz */
   0xc9d, /* VANDPSZrrkz */
-/* Table10499 */
+/* Table10501 */
   0xc5c, /* VANDNPSZrmkz */
   0xc5f, /* VANDNPSZrrkz */
-/* Table10501 */
+/* Table10503 */
   0x2021, /* VORPSZrmkz */
   0x2024, /* VORPSZrrkz */
-/* Table10503 */
+/* Table10505 */
   0x3b46, /* VXORPSZrmkz */
   0x3b49, /* VXORPSZrrkz */
-/* Table10505 */
+/* Table10507 */
   0xb93, /* VADDPSZrmkz */
   0xb99, /* VADDPSZrrkz */
-/* Table10507 */
+/* Table10509 */
   0x1fbc, /* VMULPSZrmkz */
   0x1fc2, /* VMULPSZrrkz */
-/* Table10509 */
+/* Table10511 */
   0xf39, /* VCVTPS2PDZrmkz */
   0xf3f, /* VCVTPS2PDZrrkz */
-/* Table10511 */
+/* Table10513 */
   0xe3e, /* VCVTDQ2PSZrmkz */
   0xe44, /* VCVTDQ2PSZrrkz */
-/* Table10513 */
+/* Table10515 */
   0x3a51, /* VSUBPSZrmkz */
   0x3a57, /* VSUBPSZrrkz */
-/* Table10515 */
+/* Table10517 */
   0x1d19, /* VMINPSZrmkz */
   0x1d1f, /* VMINPSZrrkz */
-/* Table10517 */
+/* Table10519 */
   0x1255, /* VDIVPSZrmkz */
   0x125b, /* VDIVPSZrrkz */
-/* Table10519 */
+/* Table10521 */
   0x1c6e, /* VMAXPSZrmkz */
   0x1c74, /* VMAXPSZrrkz */
-/* Table10521 */
+/* Table10523 */
   0x1123, /* VCVTTPS2UDQZrmkz */
   0x1129, /* VCVTTPS2UDQZrrkz */
-/* Table10523 */
+/* Table10525 */
   0xf8d, /* VCVTPS2UDQZrmkz */
   0xf93, /* VCVTPS2UDQZrrkz */
-/* Table10525 */
+/* Table10527 */
   0x39ad, /* VSHUFPSZrmikz */
   0x39b0, /* VSHUFPSZrrikz */
-/* Table10527 */
+/* Table10529 */
   0x1f05, /* VMOVSLDUPZrmkz */
   0x1f08, /* VMOVSLDUPZrrkz */
-/* Table10529 */
+/* Table10531 */
   0x1eef, /* VMOVSHDUPZrmkz */
   0x1ef2, /* VMOVSHDUPZrrkz */
-/* Table10531 */
+/* Table10533 */
   0x10e5, /* VCVTTPS2DQZrmkz */
   0x10eb, /* VCVTTPS2DQZrrkz */
-/* Table10533 */
+/* Table10535 */
   0x1e41, /* VMOVDQU32Zrmkz */
   0x1e46, /* VMOVDQU32Zrrkz */
-/* Table10535 */
+/* Table10537 */
   0x3195, /* VPSHUFHWZmikz */
   0x3198, /* VPSHUFHWZrikz */
-/* Table10537 */
+/* Table10539 */
   0x1197, /* VCVTUDQ2PDZrmkz */
   0x119a, /* VCVTUDQ2PDZrrkz */
-/* Table10539 */
+/* Table10541 */
   0x0, /*  */
   0x1e47, /* VMOVDQU32Zrrkz_REV */
-/* Table10541 */
+/* Table10543 */
   0xe1f, /* VCVTDQ2PDZrmkz */
   0xe22, /* VCVTDQ2PDZrrkz */
-/* Table10543 */
+/* Table10545 */
   0x1e83, /* VMOVDQU8Zrmkz */
   0x1e88, /* VMOVDQU8Zrrkz */
-/* Table10545 */
+/* Table10547 */
   0x31ab, /* VPSHUFLWZmikz */
   0x31ae, /* VPSHUFLWZrikz */
-/* Table10547 */
+/* Table10549 */
   0x11b2, /* VCVTUDQ2PSZrmkz */
   0x11b8, /* VCVTUDQ2PSZrrkz */
-/* Table10549 */
+/* Table10551 */
   0x0, /*  */
   0x1e89, /* VMOVDQU8Zrrkz_REV */
-/* Table10551 */
+/* Table10553 */
   0xf17, /* VCVTPS2DQZrmkz */
   0xf1d, /* VCVTPS2DQZrrkz */
-/* Table10553 */
+/* Table10555 */
   0x3651, /* VPUNPCKLBWZrmkz */
   0x3654, /* VPUNPCKLBWZrrkz */
-/* Table10555 */
+/* Table10557 */
   0x36a5, /* VPUNPCKLWDZrmkz */
   0x36a8, /* VPUNPCKLWDZrrkz */
-/* Table10557 */
+/* Table10559 */
   0x3670, /* VPUNPCKLDQZrmkz */
   0x3673, /* VPUNPCKLDQZrrkz */
-/* Table10559 */
+/* Table10561 */
   0x20c2, /* VPACKSSWBZrmkz */
   0x20c5, /* VPACKSSWBZrrkz */
-/* Table10561 */
+/* Table10563 */
   0x20f7, /* VPACKUSWBZrmkz */
   0x20fa, /* VPACKUSWBZrrkz */
-/* Table10563 */
+/* Table10565 */
   0x35e7, /* VPUNPCKHBWZrmkz */
   0x35ea, /* VPUNPCKHBWZrrkz */
-/* Table10565 */
+/* Table10567 */
   0x363b, /* VPUNPCKHWDZrmkz */
   0x363e, /* VPUNPCKHWDZrrkz */
-/* Table10567 */
+/* Table10569 */
   0x3606, /* VPUNPCKHDQZrmkz */
   0x3609, /* VPUNPCKHDQZrrkz */
-/* Table10569 */
+/* Table10571 */
   0x20ac, /* VPACKSSDWZrmkz */
   0x20af, /* VPACKSSDWZrrkz */
-/* Table10571 */
+/* Table10573 */
   0x1dd6, /* VMOVDQA32Zrmkz */
   0x1ddb, /* VMOVDQA32Zrrkz */
-/* Table10573 */
+/* Table10575 */
   0x317f, /* VPSHUFDZmikz */
   0x3182, /* VPSHUFDZrikz */
-/* Table10575 */
+/* Table10577 */
   0x0, /*  */
   0x0, /*  */
   0x3456, /* VPSRLWZmikz */
@@ -98993,7 +98995,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x329b, /* VPSLLWZrikz */
   0x0, /*  */
-/* Table10591 */
+/* Table10593 */
   0x2f81, /* VPRORDZmikz */
   0x2f15, /* VPROLDZmikz */
   0x33a9, /* VPSRLDZmikz */
@@ -99010,223 +99012,223 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x31ee, /* VPSLLDZrikz */
   0x0, /*  */
-/* Table10607 */
+/* Table10609 */
   0x1141, /* VCVTTPS2UQQZrmkz */
   0x1147, /* VCVTTPS2UQQZrrkz */
-/* Table10609 */
+/* Table10611 */
   0xfab, /* VCVTPS2UQQZrmkz */
   0xfb1, /* VCVTPS2UQQZrrkz */
-/* Table10611 */
+/* Table10613 */
   0x1105, /* VCVTTPS2QQZrmkz */
   0x110b, /* VCVTTPS2QQZrrkz */
-/* Table10613 */
+/* Table10615 */
   0xf6f, /* VCVTPS2QQZrmkz */
   0xf75, /* VCVTPS2QQZrrkz */
-/* Table10615 */
+/* Table10617 */
   0x0, /*  */
   0x1ddc, /* VMOVDQA32Zrrkz_REV */
-/* Table10617 */
+/* Table10619 */
   0x345c, /* VPSRLWZrmkz */
   0x345f, /* VPSRLWZrrkz */
-/* Table10619 */
+/* Table10621 */
   0x33af, /* VPSRLDZrmkz */
   0x33b2, /* VPSRLDZrrkz */
-/* Table10621 */
+/* Table10623 */
   0x2e26, /* VPMULLWZrmkz */
   0x2e29, /* VPMULLWZrrkz */
-/* Table10623 */
+/* Table10625 */
   0x34f3, /* VPSUBUSBZrmkz */
   0x34f6, /* VPSUBUSBZrrkz */
-/* Table10625 */
+/* Table10627 */
   0x3509, /* VPSUBUSWZrmkz */
   0x350c, /* VPSUBUSWZrrkz */
-/* Table10627 */
+/* Table10629 */
   0x2af5, /* VPMINUBZrmkz */
   0x2af8, /* VPMINUBZrrkz */
-/* Table10629 */
+/* Table10631 */
   0x21ec, /* VPANDDZrmkz */
   0x21ef, /* VPANDDZrrkz */
-/* Table10631 */
+/* Table10633 */
   0x218d, /* VPADDUSBZrmkz */
   0x2190, /* VPADDUSBZrrkz */
-/* Table10633 */
+/* Table10635 */
   0x21a3, /* VPADDUSWZrmkz */
   0x21a6, /* VPADDUSWZrrkz */
-/* Table10635 */
+/* Table10637 */
   0x2a29, /* VPMAXUBZrmkz */
   0x2a2c, /* VPMAXUBZrrkz */
-/* Table10637 */
+/* Table10639 */
   0x2207, /* VPANDNDZrmkz */
   0x220a, /* VPANDNDZrrkz */
-/* Table10639 */
+/* Table10641 */
   0x2259, /* VPAVGBZrmkz */
   0x225c, /* VPAVGBZrrkz */
-/* Table10641 */
+/* Table10643 */
   0x3374, /* VPSRAWZrmkz */
   0x3377, /* VPSRAWZrrkz */
-/* Table10643 */
+/* Table10645 */
   0x32d1, /* VPSRADZrmkz */
   0x32d4, /* VPSRADZrrkz */
-/* Table10645 */
+/* Table10647 */
   0x226f, /* VPAVGWZrmkz */
   0x2272, /* VPAVGWZrrkz */
-/* Table10647 */
+/* Table10649 */
   0x2dc0, /* VPMULHUWZrmkz */
   0x2dc3, /* VPMULHUWZrrkz */
-/* Table10649 */
+/* Table10651 */
   0x2dd6, /* VPMULHWZrmkz */
   0x2dd9, /* VPMULHWZrrkz */
-/* Table10651 */
+/* Table10653 */
   0x34c7, /* VPSUBSBZrmkz */
   0x34ca, /* VPSUBSBZrrkz */
-/* Table10653 */
+/* Table10655 */
   0x34dd, /* VPSUBSWZrmkz */
   0x34e0, /* VPSUBSWZrrkz */
-/* Table10655 */
+/* Table10657 */
   0x2adf, /* VPMINSWZrmkz */
   0x2ae2, /* VPMINSWZrrkz */
-/* Table10657 */
+/* Table10659 */
   0x2ed7, /* VPORDZrmkz */
   0x2eda, /* VPORDZrrkz */
-/* Table10659 */
+/* Table10661 */
   0x2161, /* VPADDSBZrmkz */
   0x2164, /* VPADDSBZrrkz */
-/* Table10661 */
+/* Table10663 */
   0x2177, /* VPADDSWZrmkz */
   0x217a, /* VPADDSWZrrkz */
-/* Table10663 */
+/* Table10665 */
   0x2a13, /* VPMAXSWZrmkz */
   0x2a16, /* VPMAXSWZrrkz */
-/* Table10665 */
+/* Table10667 */
   0x36c2, /* VPXORDZrmkz */
   0x36c5, /* VPXORDZrrkz */
-/* Table10667 */
+/* Table10669 */
   0x329e, /* VPSLLWZrmkz */
   0x32a1, /* VPSLLWZrrkz */
-/* Table10669 */
+/* Table10671 */
   0x31f1, /* VPSLLDZrmkz */
   0x31f4, /* VPSLLDZrrkz */
-/* Table10671 */
+/* Table10673 */
   0x29a5, /* VPMADDWDZrmkz */
   0x29a8, /* VPMADDWDZrrkz */
-/* Table10673 */
+/* Table10675 */
   0x3473, /* VPSUBBZrmkz */
   0x3476, /* VPSUBBZrrkz */
-/* Table10675 */
+/* Table10677 */
   0x351f, /* VPSUBWZrmkz */
   0x3522, /* VPSUBWZrrkz */
-/* Table10677 */
+/* Table10679 */
   0x3492, /* VPSUBDZrmkz */
   0x3495, /* VPSUBDZrrkz */
-/* Table10679 */
+/* Table10681 */
   0x210d, /* VPADDBZrmkz */
   0x2110, /* VPADDBZrrkz */
-/* Table10681 */
+/* Table10683 */
   0x21b9, /* VPADDWZrmkz */
   0x21bc, /* VPADDWZrrkz */
-/* Table10683 */
+/* Table10685 */
   0x212c, /* VPADDDZrmkz */
   0x212f, /* VPADDDZrrkz */
-/* Table10685 */
+/* Table10687 */
   0xfe7, /* VCVTQQ2PSZrmkz */
   0xfed, /* VCVTQQ2PSZrrkz */
-/* Table10687 */
+/* Table10689 */
   0x10a7, /* VCVTTPD2UDQZrmkz */
   0x10ad, /* VCVTTPD2UDQZrrkz */
-/* Table10689 */
+/* Table10691 */
   0xec0, /* VCVTPD2UDQZrmkz */
   0xec6, /* VCVTPD2UDQZrrkz */
-/* Table10691 */
+/* Table10693 */
   0x1e62, /* VMOVDQU64Zrmkz */
   0x1e67, /* VMOVDQU64Zrrkz */
-/* Table10693 */
+/* Table10695 */
   0x11d0, /* VCVTUQQ2PDZrmkz */
   0x11d6, /* VCVTUQQ2PDZrrkz */
-/* Table10695 */
+/* Table10697 */
   0x0, /*  */
   0x1e68, /* VMOVDQU64Zrrkz_REV */
-/* Table10697 */
+/* Table10699 */
   0xfc9, /* VCVTQQ2PDZrmkz */
   0xfcf, /* VCVTQQ2PDZrrkz */
-/* Table10699 */
+/* Table10701 */
   0x1dae, /* VMOVDDUPZrmkz */
   0x1db1, /* VMOVDDUPZrrkz */
-/* Table10701 */
+/* Table10703 */
   0x1e20, /* VMOVDQU16Zrmkz */
   0x1e25, /* VMOVDQU16Zrrkz */
-/* Table10703 */
+/* Table10705 */
   0x11ee, /* VCVTUQQ2PSZrmkz */
   0x11f4, /* VCVTUQQ2PSZrrkz */
-/* Table10705 */
+/* Table10707 */
   0x0, /*  */
   0x1e26, /* VMOVDQU16Zrrkz_REV */
-/* Table10707 */
+/* Table10709 */
   0xe60, /* VCVTPD2DQZrmkz */
   0xe66, /* VCVTPD2DQZrrkz */
-/* Table10709 */
+/* Table10711 */
   0x1f3c, /* VMOVUPDZrmkz */
   0x1f41, /* VMOVUPDZrrkz */
-/* Table10711 */
+/* Table10713 */
   0x0, /*  */
   0x1f42, /* VMOVUPDZrrkz_REV */
-/* Table10713 */
+/* Table10715 */
   0x3ae9, /* VUNPCKLPDZrmkz */
   0x3aec, /* VUNPCKLPDZrrkz */
-/* Table10715 */
+/* Table10717 */
   0x3aab, /* VUNPCKHPDZrmkz */
   0x3aae, /* VUNPCKHPDZrrkz */
-/* Table10717 */
+/* Table10719 */
   0x1d6a, /* VMOVAPDZrmkz */
   0x1d6f, /* VMOVAPDZrrkz */
-/* Table10719 */
+/* Table10721 */
   0x0, /*  */
   0x1d70, /* VMOVAPDZrrkz_REV */
-/* Table10721 */
+/* Table10723 */
   0x39cc, /* VSQRTPDZmkz */
   0x39d2, /* VSQRTPDZrkz */
-/* Table10723 */
+/* Table10725 */
   0xc7b, /* VANDPDZrmkz */
   0xc7e, /* VANDPDZrrkz */
-/* Table10725 */
+/* Table10727 */
   0xc3d, /* VANDNPDZrmkz */
   0xc40, /* VANDNPDZrrkz */
-/* Table10727 */
+/* Table10729 */
   0x2002, /* VORPDZrmkz */
   0x2005, /* VORPDZrrkz */
-/* Table10729 */
+/* Table10731 */
   0x3b27, /* VXORPDZrmkz */
   0x3b2a, /* VXORPDZrrkz */
-/* Table10731 */
+/* Table10733 */
   0xb71, /* VADDPDZrmkz */
   0xb77, /* VADDPDZrrkz */
-/* Table10733 */
+/* Table10735 */
   0x1f9a, /* VMULPDZrmkz */
   0x1fa0, /* VMULPDZrrkz */
-/* Table10735 */
+/* Table10737 */
   0xe82, /* VCVTPD2PSZrmkz */
   0xe88, /* VCVTPD2PSZrrkz */
-/* Table10737 */
+/* Table10739 */
   0x3a2f, /* VSUBPDZrmkz */
   0x3a35, /* VSUBPDZrrkz */
-/* Table10739 */
+/* Table10741 */
   0x1cf7, /* VMINPDZrmkz */
   0x1cfd, /* VMINPDZrrkz */
-/* Table10741 */
+/* Table10743 */
   0x1233, /* VDIVPDZrmkz */
   0x1239, /* VDIVPDZrrkz */
-/* Table10743 */
+/* Table10745 */
   0x1c4c, /* VMAXPDZrmkz */
   0x1c52, /* VMAXPDZrrkz */
-/* Table10745 */
+/* Table10747 */
   0x368f, /* VPUNPCKLQDQZrmkz */
   0x3692, /* VPUNPCKLQDQZrrkz */
-/* Table10747 */
+/* Table10749 */
   0x3625, /* VPUNPCKHQDQZrmkz */
   0x3628, /* VPUNPCKHQDQZrrkz */
-/* Table10749 */
+/* Table10751 */
   0x1df7, /* VMOVDQA64Zrmkz */
   0x1dfc, /* VMOVDQA64Zrrkz */
-/* Table10751 */
+/* Table10753 */
   0x2f9c, /* VPRORQZmikz */
   0x2f30, /* VPROLQZmikz */
   0x0, /*  */
@@ -99243,7 +99245,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table10767 */
+/* Table10769 */
   0x0, /*  */
   0x0, /*  */
   0x33dc, /* VPSRLQZmikz */
@@ -99260,373 +99262,373 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x3221, /* VPSLLQZrikz */
   0x0, /*  */
-/* Table10783 */
+/* Table10785 */
   0x10c5, /* VCVTTPD2UQQZrmkz */
   0x10cb, /* VCVTTPD2UQQZrrkz */
-/* Table10785 */
+/* Table10787 */
   0xede, /* VCVTPD2UQQZrmkz */
   0xee4, /* VCVTPD2UQQZrrkz */
-/* Table10787 */
+/* Table10789 */
   0x1089, /* VCVTTPD2QQZrmkz */
   0x108f, /* VCVTTPD2QQZrrkz */
-/* Table10789 */
+/* Table10791 */
   0xea2, /* VCVTPD2QQZrmkz */
   0xea8, /* VCVTPD2QQZrrkz */
-/* Table10791 */
+/* Table10793 */
   0x0, /*  */
   0x1dfd, /* VMOVDQA64Zrrkz_REV */
-/* Table10793 */
+/* Table10795 */
   0x398e, /* VSHUFPDZrmikz */
   0x3991, /* VSHUFPDZrrikz */
-/* Table10795 */
+/* Table10797 */
   0x33e2, /* VPSRLQZrmkz */
   0x33e5, /* VPSRLQZrrkz */
-/* Table10797 */
+/* Table10799 */
   0x214b, /* VPADDQZrmkz */
   0x214e, /* VPADDQZrrkz */
-/* Table10799 */
+/* Table10801 */
   0x2241, /* VPANDQZrmkz */
   0x2244, /* VPANDQZrrkz */
-/* Table10801 */
+/* Table10803 */
   0x2222, /* VPANDNQZrmkz */
   0x2225, /* VPANDNQZrrkz */
-/* Table10803 */
+/* Table10805 */
   0x3301, /* VPSRAQZrmkz */
   0x3304, /* VPSRAQZrrkz */
-/* Table10805 */
+/* Table10807 */
   0x1069, /* VCVTTPD2DQZrmkz */
   0x106f, /* VCVTTPD2DQZrrkz */
-/* Table10807 */
+/* Table10809 */
   0x2ef2, /* VPORQZrmkz */
   0x2ef5, /* VPORQZrrkz */
-/* Table10809 */
+/* Table10811 */
   0x36dd, /* VPXORQZrmkz */
   0x36e0, /* VPXORQZrrkz */
-/* Table10811 */
+/* Table10813 */
   0x3224, /* VPSLLQZrmkz */
   0x3227, /* VPSLLQZrrkz */
-/* Table10813 */
+/* Table10815 */
   0x2e60, /* VPMULUDQZrmkz */
   0x2e63, /* VPMULUDQZrrkz */
-/* Table10815 */
+/* Table10817 */
   0x34b1, /* VPSUBQZrmkz */
   0x34b4, /* VPSUBQZrrkz */
-/* Table10817 */
+/* Table10819 */
   0x5c8, /* MMX_PSHUFBrm */
   0x5c9, /* MMX_PSHUFBrr */
-/* Table10819 */
+/* Table10821 */
   0x5a3, /* MMX_PHADDWrm */
   0x5a4, /* MMX_PHADDWrr */
-/* Table10821 */
+/* Table10823 */
   0x59f, /* MMX_PHADDDrm */
   0x5a0, /* MMX_PHADDDrr */
-/* Table10823 */
+/* Table10825 */
   0x5a1, /* MMX_PHADDSWrm */
   0x5a2, /* MMX_PHADDSWrr */
-/* Table10825 */
+/* Table10827 */
   0x5ad, /* MMX_PMADDUBSWrm */
   0x5ae, /* MMX_PMADDUBSWrr */
-/* Table10827 */
+/* Table10829 */
   0x5a9, /* MMX_PHSUBWrm */
   0x5aa, /* MMX_PHSUBWrr */
-/* Table10829 */
+/* Table10831 */
   0x5a5, /* MMX_PHSUBDrm */
   0x5a6, /* MMX_PHSUBDrr */
-/* Table10831 */
+/* Table10833 */
   0x5a7, /* MMX_PHSUBSWrm */
   0x5a8, /* MMX_PHSUBSWrr */
-/* Table10833 */
+/* Table10835 */
   0x5cc, /* MMX_PSIGNBrm */
   0x5cd, /* MMX_PSIGNBrr */
-/* Table10835 */
+/* Table10837 */
   0x5d0, /* MMX_PSIGNWrm */
   0x5d1, /* MMX_PSIGNWrr */
-/* Table10837 */
+/* Table10839 */
   0x5ce, /* MMX_PSIGNDrm */
   0x5cf, /* MMX_PSIGNDrr */
-/* Table10839 */
+/* Table10841 */
   0x5ba, /* MMX_PMULHRSWrm */
   0x5bb, /* MMX_PMULHRSWrr */
-/* Table10841 */
+/* Table10843 */
   0x56c, /* MMX_PABSBrm */
   0x56d, /* MMX_PABSBrr */
-/* Table10843 */
+/* Table10845 */
   0x570, /* MMX_PABSWrm */
   0x571, /* MMX_PABSWrr */
-/* Table10845 */
+/* Table10847 */
   0x56e, /* MMX_PABSDrm */
   0x56f, /* MMX_PABSDrr */
-/* Table10847 */
+/* Table10849 */
   0x9fd, /* SHA1NEXTErm */
   0x9fe, /* SHA1NEXTErr */
-/* Table10849 */
+/* Table10851 */
   0x9f9, /* SHA1MSG1rm */
   0x9fa, /* SHA1MSG1rr */
-/* Table10851 */
+/* Table10853 */
   0x9fb, /* SHA1MSG2rm */
   0x9fc, /* SHA1MSG2rr */
-/* Table10853 */
+/* Table10855 */
   0xa05, /* SHA256RNDS2rm */
   0xa06, /* SHA256RNDS2rr */
-/* Table10855 */
+/* Table10857 */
   0xa01, /* SHA256MSG1rm */
   0xa02, /* SHA256MSG1rr */
-/* Table10857 */
+/* Table10859 */
   0xa03, /* SHA256MSG2rm */
   0xa04, /* SHA256MSG2rr */
-/* Table10859 */
+/* Table10861 */
   0x65f, /* MOVBE32rm */
   0x0, /*  */
-/* Table10861 */
+/* Table10863 */
   0x65e, /* MOVBE32mr */
   0x0, /*  */
-/* Table10863 */
+/* Table10865 */
   0x3b57, /* WRSSD */
   0x0, /*  */
-/* Table10865 */
+/* Table10867 */
   0x66b, /* MOVDIRI32 */
   0x0, /*  */
-/* Table10867 */
+/* Table10869 */
   0x867, /* PSHUFBrm */
   0x868, /* PSHUFBrr */
-/* Table10869 */
+/* Table10871 */
   0x7e1, /* PHADDWrm */
   0x7e2, /* PHADDWrr */
-/* Table10871 */
+/* Table10873 */
   0x7dd, /* PHADDDrm */
   0x7de, /* PHADDDrr */
-/* Table10873 */
+/* Table10875 */
   0x7df, /* PHADDSWrm */
   0x7e0, /* PHADDSWrr */
-/* Table10875 */
+/* Table10877 */
   0x7f7, /* PMADDUBSWrm */
   0x7f8, /* PMADDUBSWrr */
-/* Table10877 */
+/* Table10879 */
   0x7e9, /* PHSUBWrm */
   0x7ea, /* PHSUBWrr */
-/* Table10879 */
+/* Table10881 */
   0x7e5, /* PHSUBDrm */
   0x7e6, /* PHSUBDrr */
-/* Table10881 */
+/* Table10883 */
   0x7e7, /* PHSUBSWrm */
   0x7e8, /* PHSUBSWrr */
-/* Table10883 */
+/* Table10885 */
   0x86f, /* PSIGNBrm */
   0x870, /* PSIGNBrr */
-/* Table10885 */
+/* Table10887 */
   0x873, /* PSIGNWrm */
   0x874, /* PSIGNWrr */
-/* Table10887 */
+/* Table10889 */
   0x871, /* PSIGNDrm */
   0x872, /* PSIGNDrr */
-/* Table10889 */
+/* Table10891 */
   0x82e, /* PMULHRSWrm */
   0x82f, /* PMULHRSWrr */
-/* Table10891 */
+/* Table10893 */
   0x787, /* PBLENDVBrm0 */
   0x788, /* PBLENDVBrr0 */
-/* Table10893 */
+/* Table10895 */
   0x16f, /* BLENDVPSrm0 */
   0x170, /* BLENDVPSrr0 */
-/* Table10895 */
+/* Table10897 */
   0x16d, /* BLENDVPDrm0 */
   0x16e, /* BLENDVPDrr0 */
-/* Table10897 */
+/* Table10899 */
   0x8a1, /* PTESTrm */
   0x8a2, /* PTESTrr */
-/* Table10899 */
+/* Table10901 */
   0x75c, /* PABSBrm */
   0x75d, /* PABSBrr */
-/* Table10901 */
+/* Table10903 */
   0x760, /* PABSWrm */
   0x761, /* PABSWrr */
-/* Table10903 */
+/* Table10905 */
   0x75e, /* PABSDrm */
   0x75f, /* PABSDrr */
-/* Table10905 */
+/* Table10907 */
   0x818, /* PMOVSXBWrm */
   0x819, /* PMOVSXBWrr */
-/* Table10907 */
+/* Table10909 */
   0x814, /* PMOVSXBDrm */
   0x815, /* PMOVSXBDrr */
-/* Table10909 */
+/* Table10911 */
   0x816, /* PMOVSXBQrm */
   0x817, /* PMOVSXBQrr */
-/* Table10911 */
+/* Table10913 */
   0x81c, /* PMOVSXWDrm */
   0x81d, /* PMOVSXWDrr */
-/* Table10913 */
+/* Table10915 */
   0x81e, /* PMOVSXWQrm */
   0x81f, /* PMOVSXWQrr */
-/* Table10915 */
+/* Table10917 */
   0x81a, /* PMOVSXDQrm */
   0x81b, /* PMOVSXDQrr */
-/* Table10917 */
+/* Table10919 */
   0x82c, /* PMULDQrm */
   0x82d, /* PMULDQrr */
-/* Table10919 */
+/* Table10921 */
   0x791, /* PCMPEQQrm */
   0x792, /* PCMPEQQrr */
-/* Table10921 */
+/* Table10923 */
   0x681, /* MOVNTDQArm */
   0x0, /*  */
-/* Table10923 */
+/* Table10925 */
   0x766, /* PACKUSDWrm */
   0x767, /* PACKUSDWrr */
-/* Table10925 */
+/* Table10927 */
   0x824, /* PMOVZXBWrm */
   0x825, /* PMOVZXBWrr */
-/* Table10927 */
+/* Table10929 */
   0x820, /* PMOVZXBDrm */
   0x821, /* PMOVZXBDrr */
-/* Table10929 */
+/* Table10931 */
   0x822, /* PMOVZXBQrm */
   0x823, /* PMOVZXBQrr */
-/* Table10931 */
+/* Table10933 */
   0x828, /* PMOVZXWDrm */
   0x829, /* PMOVZXWDrr */
-/* Table10933 */
+/* Table10935 */
   0x82a, /* PMOVZXWQrm */
   0x82b, /* PMOVZXWQrr */
-/* Table10935 */
+/* Table10937 */
   0x826, /* PMOVZXDQrm */
   0x827, /* PMOVZXDQrr */
-/* Table10937 */
+/* Table10939 */
   0x79d, /* PCMPGTQrm */
   0x79e, /* PCMPGTQrr */
-/* Table10939 */
+/* Table10941 */
   0x807, /* PMINSBrm */
   0x808, /* PMINSBrr */
-/* Table10941 */
+/* Table10943 */
   0x809, /* PMINSDrm */
   0x80a, /* PMINSDrr */
-/* Table10943 */
+/* Table10945 */
   0x811, /* PMINUWrm */
   0x812, /* PMINUWrr */
-/* Table10945 */
+/* Table10947 */
   0x80f, /* PMINUDrm */
   0x810, /* PMINUDrr */
-/* Table10947 */
+/* Table10949 */
   0x7fb, /* PMAXSBrm */
   0x7fc, /* PMAXSBrr */
-/* Table10949 */
+/* Table10951 */
   0x7fd, /* PMAXSDrm */
   0x7fe, /* PMAXSDrr */
-/* Table10951 */
+/* Table10953 */
   0x805, /* PMAXUWrm */
   0x806, /* PMAXUWrr */
-/* Table10953 */
+/* Table10955 */
   0x803, /* PMAXUDrm */
   0x804, /* PMAXUDrr */
-/* Table10955 */
+/* Table10957 */
   0x836, /* PMULLDrm */
   0x837, /* PMULLDrr */
-/* Table10957 */
+/* Table10959 */
   0x7e3, /* PHMINPOSUWrm */
   0x7e4, /* PHMINPOSUWrr */
-/* Table10959 */
+/* Table10961 */
   0x417, /* INVEPT32 */
   0x0, /*  */
-/* Table10961 */
+/* Table10963 */
   0x41e, /* INVVPID32 */
   0x0, /*  */
-/* Table10963 */
+/* Table10965 */
   0x41c, /* INVPCID32 */
   0x0, /*  */
-/* Table10965 */
+/* Table10967 */
   0x3c0, /* GF2P8MULBrm */
   0x3c1, /* GF2P8MULBrr */
-/* Table10967 */
+/* Table10969 */
   0x117, /* AESIMCrm */
   0x118, /* AESIMCrr */
-/* Table10969 */
+/* Table10971 */
   0x115, /* AESENCrm */
   0x116, /* AESENCrr */
-/* Table10971 */
+/* Table10973 */
   0x113, /* AESENCLASTrm */
   0x114, /* AESENCLASTrr */
-/* Table10973 */
+/* Table10975 */
   0x111, /* AESDECrm */
   0x112, /* AESDECrr */
-/* Table10975 */
+/* Table10977 */
   0x10f, /* AESDECLASTrm */
   0x110, /* AESDECLASTrr */
-/* Table10977 */
+/* Table10979 */
   0x65d, /* MOVBE16rm */
   0x0, /*  */
-/* Table10979 */
+/* Table10981 */
   0x65c, /* MOVBE16mr */
   0x0, /*  */
-/* Table10981 */
+/* Table10983 */
   0x3b59, /* WRUSSD */
   0x0, /*  */
-/* Table10983 */
+/* Table10985 */
   0xbe, /* ADCX32rm */
   0xbf, /* ADCX32rr */
-/* Table10985 */
+/* Table10987 */
   0x669, /* MOVDIR64B32 */
   0x0, /*  */
-/* Table10987 */
+/* Table10989 */
   0x668, /* MOVDIR64B16 */
   0x0, /*  */
-/* Table10989 */
+/* Table10991 */
   0x2dd, /* CRC32r32m8 */
   0x2e0, /* CRC32r32r8 */
-/* Table10991 */
+/* Table10993 */
   0x2dc, /* CRC32r32m32 */
   0x2df, /* CRC32r32r32 */
-/* Table10993 */
+/* Table10995 */
   0x10b, /* ADOX32rm */
   0x10c, /* ADOX32rr */
-/* Table10995 */
+/* Table10997 */
   0x2db, /* CRC32r32m16 */
   0x2de, /* CRC32r32r16 */
-/* Table10997 */
+/* Table10999 */
   0x661, /* MOVBE64rm */
   0x0, /*  */
-/* Table10999 */
+/* Table11001 */
   0x660, /* MOVBE64mr */
   0x0, /*  */
-/* Table11001 */
-  0x3b58, /* WRSSQ */
-  0x0, /*  */
 /* Table11003 */
-  0x66c, /* MOVDIRI64 */
+  0x3b58, /* WRSSQ */
   0x0, /*  */
 /* Table11005 */
-  0x418, /* INVEPT64 */
+  0x66c, /* MOVDIRI64 */
   0x0, /*  */
 /* Table11007 */
-  0x41f, /* INVVPID64 */
+  0x418, /* INVEPT64 */
   0x0, /*  */
 /* Table11009 */
-  0x41d, /* INVPCID64 */
+  0x41f, /* INVVPID64 */
   0x0, /*  */
 /* Table11011 */
+  0x41d, /* INVPCID64 */
+  0x0, /*  */
+/* Table11013 */
   0x3b58, /* WRSSQ */
   0xbf, /* ADCX32rr */
-/* Table11013 */
+/* Table11015 */
   0x66a, /* MOVDIR64B64 */
   0x0, /*  */
-/* Table11015 */
+/* Table11017 */
   0x10d, /* ADOX64rm */
   0x10e, /* ADOX64rr */
-/* Table11017 */
+/* Table11019 */
   0x2e2, /* CRC32r64m8 */
   0x2e4, /* CRC32r64r8 */
-/* Table11019 */
+/* Table11021 */
   0x2e1, /* CRC32r64m64 */
   0x2e3, /* CRC32r64r64 */
-/* Table11021 */
+/* Table11023 */
   0x3b5a, /* WRUSSQ */
   0x0, /*  */
-/* Table11023 */
+/* Table11025 */
   0xc0, /* ADCX64rm */
   0xc1, /* ADCX64rr */
-/* Table11025 */
+/* Table11027 */
   0x13f, /* ANDN32rm */
   0x140, /* ANDN32rr */
-/* Table11027 */
+/* Table11029 */
   0x0, /*  */
   0x181, /* BLSR32rm */
   0x17d, /* BLSMSK32rm */
@@ -99643,340 +99645,340 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table11043 */
+/* Table11045 */
   0x1dc, /* BZHI32rm */
   0x1dd, /* BZHI32rr */
-/* Table11045 */
+/* Table11047 */
   0x14d, /* BEXTR32rm */
   0x14e, /* BEXTR32rr */
-/* Table11047 */
+/* Table11049 */
   0x7aa, /* PEXT32rm */
   0x7ab, /* PEXT32rr */
-/* Table11049 */
+/* Table11051 */
   0x9a7, /* SARX32rm */
   0x9a8, /* SARX32rr */
-/* Table11051 */
+/* Table11053 */
   0x7a6, /* PDEP32rm */
   0x7a7, /* PDEP32rr */
-/* Table11053 */
+/* Table11055 */
   0x6e1, /* MULX32rm */
   0x6e2, /* MULX32rr */
-/* Table11055 */
+/* Table11057 */
   0xa53, /* SHRX32rm */
   0xa54, /* SHRX32rr */
-/* Table11057 */
+/* Table11059 */
   0x3164, /* VPSHUFBrm */
   0x3165, /* VPSHUFBrr */
-/* Table11059 */
+/* Table11061 */
   0x28d5, /* VPHADDWrm */
   0x28d6, /* VPHADDWrr */
-/* Table11061 */
+/* Table11063 */
   0x28bd, /* VPHADDDrm */
   0x28be, /* VPHADDDrr */
-/* Table11063 */
+/* Table11065 */
   0x28c1, /* VPHADDSWrm */
   0x28c2, /* VPHADDSWrr */
-/* Table11065 */
+/* Table11067 */
   0x2993, /* VPMADDUBSWrm */
   0x2994, /* VPMADDUBSWrr */
-/* Table11067 */
+/* Table11069 */
   0x28e9, /* VPHSUBWrm */
   0x28ea, /* VPHSUBWrr */
-/* Table11069 */
+/* Table11071 */
   0x28df, /* VPHSUBDrm */
   0x28e0, /* VPHSUBDrr */
-/* Table11071 */
+/* Table11073 */
   0x28e3, /* VPHSUBSWrm */
   0x28e4, /* VPHSUBSWrr */
-/* Table11073 */
+/* Table11075 */
   0x31b3, /* VPSIGNBrm */
   0x31b4, /* VPSIGNBrr */
-/* Table11075 */
+/* Table11077 */
   0x31bb, /* VPSIGNWrm */
   0x31bc, /* VPSIGNWrr */
-/* Table11077 */
+/* Table11079 */
   0x31b7, /* VPSIGNDrm */
   0x31b8, /* VPSIGNDrr */
-/* Table11079 */
+/* Table11081 */
   0x2dae, /* VPMULHRSWrm */
   0x2daf, /* VPMULHRSWrr */
-/* Table11081 */
+/* Table11083 */
   0x2741, /* VPERMILPSrm */
   0x2742, /* VPERMILPSrr */
-/* Table11083 */
+/* Table11085 */
   0x2703, /* VPERMILPDrm */
   0x2704, /* VPERMILPDrr */
-/* Table11085 */
+/* Table11087 */
   0x3a7e, /* VTESTPSrm */
   0x3a7f, /* VTESTPSrr */
-/* Table11087 */
+/* Table11089 */
   0x3a7a, /* VTESTPDrm */
   0x3a7b, /* VTESTPDrr */
-/* Table11089 */
+/* Table11091 */
   0xefc, /* VCVTPH2PSrm */
   0xefd, /* VCVTPH2PSrr */
-/* Table11091 */
+/* Table11093 */
   0x35d5, /* VPTESTrm */
   0x35d6, /* VPTESTrr */
-/* Table11093 */
+/* Table11095 */
   0xd4c, /* VBROADCASTSSrm */
   0xd4d, /* VBROADCASTSSrr */
-/* Table11095 */
+/* Table11097 */
   0x2041, /* VPABSBrm */
   0x2042, /* VPABSBrr */
-/* Table11097 */
+/* Table11099 */
   0x2091, /* VPABSWrm */
   0x2092, /* VPABSWrr */
-/* Table11099 */
+/* Table11101 */
   0x2060, /* VPABSDrm */
   0x2061, /* VPABSDrr */
-/* Table11101 */
+/* Table11103 */
   0x2c47, /* VPMOVSXBWrm */
   0x2c48, /* VPMOVSXBWrr */
-/* Table11103 */
+/* Table11105 */
   0x2c1b, /* VPMOVSXBDrm */
   0x2c1c, /* VPMOVSXBDrr */
-/* Table11105 */
+/* Table11107 */
   0x2c31, /* VPMOVSXBQrm */
   0x2c32, /* VPMOVSXBQrr */
-/* Table11107 */
+/* Table11109 */
   0x2c73, /* VPMOVSXWDrm */
   0x2c74, /* VPMOVSXWDrr */
-/* Table11109 */
+/* Table11111 */
   0x2c89, /* VPMOVSXWQrm */
   0x2c8a, /* VPMOVSXWQrr */
-/* Table11111 */
+/* Table11113 */
   0x2c5d, /* VPMOVSXDQrm */
   0x2c5e, /* VPMOVSXDQrr */
-/* Table11113 */
+/* Table11115 */
   0x2d98, /* VPMULDQrm */
   0x2d99, /* VPMULDQrr */
-/* Table11115 */
+/* Table11117 */
   0x23e5, /* VPCMPEQQrm */
   0x23e6, /* VPCMPEQQrr */
-/* Table11117 */
+/* Table11119 */
   0x1eae, /* VMOVNTDQArm */
   0x0, /*  */
-/* Table11119 */
+/* Table11121 */
   0x20e5, /* VPACKUSDWrm */
   0x20e6, /* VPACKUSDWrr */
-/* Table11121 */
+/* Table11123 */
   0x1bec, /* VMASKMOVPSrm */
   0x0, /*  */
-/* Table11123 */
+/* Table11125 */
   0x1be8, /* VMASKMOVPDrm */
   0x0, /*  */
-/* Table11125 */
+/* Table11127 */
   0x1beb, /* VMASKMOVPSmr */
   0x0, /*  */
-/* Table11127 */
+/* Table11129 */
   0x1be7, /* VMASKMOVPDmr */
   0x0, /*  */
-/* Table11129 */
+/* Table11131 */
   0x2d37, /* VPMOVZXBWrm */
   0x2d38, /* VPMOVZXBWrr */
-/* Table11131 */
+/* Table11133 */
   0x2d0b, /* VPMOVZXBDrm */
   0x2d0c, /* VPMOVZXBDrr */
-/* Table11133 */
+/* Table11135 */
   0x2d21, /* VPMOVZXBQrm */
   0x2d22, /* VPMOVZXBQrr */
-/* Table11135 */
+/* Table11137 */
   0x2d63, /* VPMOVZXWDrm */
   0x2d64, /* VPMOVZXWDrr */
-/* Table11137 */
+/* Table11139 */
   0x2d79, /* VPMOVZXWQrm */
   0x2d7a, /* VPMOVZXWQrr */
-/* Table11139 */
+/* Table11141 */
   0x2d4d, /* VPMOVZXDQrm */
   0x2d4e, /* VPMOVZXDQrr */
-/* Table11141 */
+/* Table11143 */
   0x2435, /* VPCMPGTQrm */
   0x2436, /* VPCMPGTQrr */
-/* Table11143 */
+/* Table11145 */
   0x2a93, /* VPMINSBrm */
   0x2a94, /* VPMINSBrr */
-/* Table11145 */
+/* Table11147 */
   0x2ab2, /* VPMINSDrm */
   0x2ab3, /* VPMINSDrr */
-/* Table11147 */
+/* Table11149 */
   0x2b49, /* VPMINUWrm */
   0x2b4a, /* VPMINUWrr */
-/* Table11149 */
+/* Table11151 */
   0x2b18, /* VPMINUDrm */
   0x2b19, /* VPMINUDrr */
-/* Table11151 */
+/* Table11153 */
   0x29c7, /* VPMAXSBrm */
   0x29c8, /* VPMAXSBrr */
-/* Table11153 */
+/* Table11155 */
   0x29e6, /* VPMAXSDrm */
   0x29e7, /* VPMAXSDrr */
-/* Table11155 */
+/* Table11157 */
   0x2a7d, /* VPMAXUWrm */
   0x2a7e, /* VPMAXUWrr */
-/* Table11157 */
+/* Table11159 */
   0x2a4c, /* VPMAXUDrm */
   0x2a4d, /* VPMAXUDrr */
-/* Table11159 */
+/* Table11161 */
   0x2df9, /* VPMULLDrm */
   0x2dfa, /* VPMULLDrr */
-/* Table11161 */
+/* Table11163 */
   0x28d7, /* VPHMINPOSUWrm */
   0x28d8, /* VPHMINPOSUWrr */
-/* Table11163 */
+/* Table11165 */
   0x3406, /* VPSRLVDrm */
   0x3407, /* VPSRLVDrr */
-/* Table11165 */
+/* Table11167 */
   0x3322, /* VPSRAVDrm */
   0x3323, /* VPSRAVDrr */
-/* Table11167 */
+/* Table11169 */
   0x3248, /* VPSLLVDrm */
   0x3249, /* VPSLLVDrr */
-/* Table11169 */
+/* Table11171 */
   0x2317, /* VPBROADCASTDrm */
   0x2318, /* VPBROADCASTDrr */
-/* Table11171 */
+/* Table11173 */
   0x233c, /* VPBROADCASTQrm */
   0x233d, /* VPBROADCASTQrr */
-/* Table11173 */
+/* Table11175 */
   0x22f8, /* VPBROADCASTBrm */
   0x22f9, /* VPBROADCASTBrr */
-/* Table11175 */
+/* Table11177 */
   0x235b, /* VPBROADCASTWrm */
   0x235c, /* VPBROADCASTWrr */
-/* Table11177 */
+/* Table11179 */
   0x29ae, /* VPMASKMOVDrm */
   0x0, /*  */
-/* Table11179 */
+/* Table11181 */
   0x29ad, /* VPMASKMOVDmr */
   0x0, /*  */
-/* Table11181 */
+/* Table11183 */
   0x28a3, /* VPGATHERDDrm */
   0x0, /*  */
-/* Table11183 */
+/* Table11185 */
   0x28ad, /* VPGATHERQDrm */
   0x0, /*  */
-/* Table11185 */
+/* Table11187 */
   0x1a7d, /* VGATHERDPSrm */
   0x0, /*  */
-/* Table11187 */
+/* Table11189 */
   0x1a8f, /* VGATHERQPSrm */
   0x0, /*  */
-/* Table11189 */
+/* Table11191 */
   0x14e2, /* VFMADDSUB132PSm */
   0x14e3, /* VFMADDSUB132PSr */
-/* Table11191 */
+/* Table11193 */
   0x16ea, /* VFMSUBADD132PSm */
   0x16eb, /* VFMSUBADD132PSr */
-/* Table11193 */
+/* Table11195 */
   0x1396, /* VFMADD132PSm */
   0x1397, /* VFMADD132PSr */
-/* Table11195 */
+/* Table11197 */
   0x13b4, /* VFMADD132SSm */
   0x13b6, /* VFMADD132SSr */
-/* Table11197 */
+/* Table11199 */
   0x15be, /* VFMSUB132PSm */
   0x15bf, /* VFMSUB132PSr */
-/* Table11199 */
+/* Table11201 */
   0x15dc, /* VFMSUB132SSm */
   0x15de, /* VFMSUB132SSr */
-/* Table11201 */
+/* Table11203 */
   0x17e6, /* VFNMADD132PSm */
   0x17e7, /* VFNMADD132PSr */
-/* Table11203 */
+/* Table11205 */
   0x1804, /* VFNMADD132SSm */
   0x1806, /* VFNMADD132SSr */
-/* Table11205 */
+/* Table11207 */
   0x1932, /* VFNMSUB132PSm */
   0x1933, /* VFNMSUB132PSr */
-/* Table11207 */
+/* Table11209 */
   0x1950, /* VFNMSUB132SSm */
   0x1952, /* VFNMSUB132SSr */
-/* Table11209 */
+/* Table11211 */
   0x1526, /* VFMADDSUB213PSm */
   0x1527, /* VFMADDSUB213PSr */
-/* Table11211 */
+/* Table11213 */
   0x172e, /* VFMSUBADD213PSm */
   0x172f, /* VFMSUBADD213PSr */
-/* Table11213 */
+/* Table11215 */
   0x13fa, /* VFMADD213PSm */
   0x13fb, /* VFMADD213PSr */
-/* Table11215 */
+/* Table11217 */
   0x1418, /* VFMADD213SSm */
   0x141a, /* VFMADD213SSr */
-/* Table11217 */
+/* Table11219 */
   0x1622, /* VFMSUB213PSm */
   0x1623, /* VFMSUB213PSr */
-/* Table11219 */
+/* Table11221 */
   0x1640, /* VFMSUB213SSm */
   0x1642, /* VFMSUB213SSr */
-/* Table11221 */
+/* Table11223 */
   0x184a, /* VFNMADD213PSm */
   0x184b, /* VFNMADD213PSr */
-/* Table11223 */
+/* Table11225 */
   0x1868, /* VFNMADD213SSm */
   0x186a, /* VFNMADD213SSr */
-/* Table11225 */
+/* Table11227 */
   0x1996, /* VFNMSUB213PSm */
   0x1997, /* VFNMSUB213PSr */
-/* Table11227 */
+/* Table11229 */
   0x19b4, /* VFNMSUB213SSm */
   0x19b6, /* VFNMSUB213SSr */
-/* Table11229 */
+/* Table11231 */
   0x156a, /* VFMADDSUB231PSm */
   0x156b, /* VFMADDSUB231PSr */
-/* Table11231 */
+/* Table11233 */
   0x1772, /* VFMSUBADD231PSm */
   0x1773, /* VFMSUBADD231PSr */
-/* Table11233 */
+/* Table11235 */
   0x145e, /* VFMADD231PSm */
   0x145f, /* VFMADD231PSr */
-/* Table11235 */
+/* Table11237 */
   0x147c, /* VFMADD231SSm */
   0x147e, /* VFMADD231SSr */
-/* Table11237 */
+/* Table11239 */
   0x1686, /* VFMSUB231PSm */
   0x1687, /* VFMSUB231PSr */
-/* Table11239 */
+/* Table11241 */
   0x16a4, /* VFMSUB231SSm */
   0x16a6, /* VFMSUB231SSr */
-/* Table11241 */
+/* Table11243 */
   0x18ae, /* VFNMADD231PSm */
   0x18af, /* VFNMADD231PSr */
-/* Table11243 */
+/* Table11245 */
   0x18cc, /* VFNMADD231SSm */
   0x18ce, /* VFNMADD231SSr */
-/* Table11245 */
+/* Table11247 */
   0x19fa, /* VFNMSUB231PSm */
   0x19fb, /* VFNMSUB231PSr */
-/* Table11247 */
+/* Table11249 */
   0x1a18, /* VFNMSUB231SSm */
   0x1a1a, /* VFNMSUB231SSr */
-/* Table11249 */
+/* Table11251 */
   0x1b7e, /* VGF2P8MULBrm */
   0x1b7f, /* VGF2P8MULBrr */
-/* Table11251 */
+/* Table11253 */
   0xbea, /* VAESIMCrm */
   0xbeb, /* VAESIMCrr */
-/* Table11253 */
+/* Table11255 */
   0xbe8, /* VAESENCrm */
   0xbe9, /* VAESENCrr */
-/* Table11255 */
+/* Table11257 */
   0xbde, /* VAESENCLASTrm */
   0xbdf, /* VAESENCLASTrr */
-/* Table11257 */
+/* Table11259 */
   0xbd4, /* VAESDECrm */
   0xbd5, /* VAESDECrr */
-/* Table11259 */
+/* Table11261 */
   0xbca, /* VAESDECLASTrm */
   0xbcb, /* VAESDECLASTrr */
-/* Table11261 */
+/* Table11263 */
   0xa2b, /* SHLX32rm */
   0xa2c, /* SHLX32rr */
-/* Table11263 */
+/* Table11265 */
   0x141, /* ANDN64rm */
   0x142, /* ANDN64rr */
-/* Table11265 */
+/* Table11267 */
   0x0, /*  */
   0x183, /* BLSR64rm */
   0x17f, /* BLSMSK64rm */
@@ -99993,4312 +99995,4312 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table11281 */
+/* Table11283 */
   0x1de, /* BZHI64rm */
   0x1df, /* BZHI64rr */
-/* Table11283 */
+/* Table11285 */
   0x14f, /* BEXTR64rm */
   0x150, /* BEXTR64rr */
-/* Table11285 */
+/* Table11287 */
   0x7ac, /* PEXT64rm */
   0x7ad, /* PEXT64rr */
-/* Table11287 */
+/* Table11289 */
   0x9a9, /* SARX64rm */
   0x9aa, /* SARX64rr */
-/* Table11289 */
+/* Table11291 */
   0x7a8, /* PDEP64rm */
   0x7a9, /* PDEP64rr */
-/* Table11291 */
+/* Table11293 */
   0x6e3, /* MULX64rm */
   0x6e4, /* MULX64rr */
-/* Table11293 */
+/* Table11295 */
   0xa55, /* SHRX64rm */
   0xa56, /* SHRX64rr */
-/* Table11295 */
+/* Table11297 */
   0x3425, /* VPSRLVQrm */
   0x3426, /* VPSRLVQrr */
-/* Table11297 */
+/* Table11299 */
   0x3267, /* VPSLLVQrm */
   0x3268, /* VPSLLVQrr */
-/* Table11299 */
+/* Table11301 */
   0x29b2, /* VPMASKMOVQrm */
   0x0, /*  */
-/* Table11301 */
+/* Table11303 */
   0x29b1, /* VPMASKMOVQmr */
   0x0, /*  */
-/* Table11303 */
+/* Table11305 */
   0x28a8, /* VPGATHERDQrm */
   0x0, /*  */
-/* Table11305 */
+/* Table11307 */
   0x28b2, /* VPGATHERQQrm */
   0x0, /*  */
-/* Table11307 */
+/* Table11309 */
   0x1a78, /* VGATHERDPDrm */
   0x0, /*  */
-/* Table11309 */
+/* Table11311 */
   0x1a8a, /* VGATHERQPDrm */
   0x0, /*  */
-/* Table11311 */
+/* Table11313 */
   0x14c0, /* VFMADDSUB132PDm */
   0x14c1, /* VFMADDSUB132PDr */
-/* Table11313 */
+/* Table11315 */
   0x16c8, /* VFMSUBADD132PDm */
   0x16c9, /* VFMSUBADD132PDr */
-/* Table11315 */
+/* Table11317 */
   0x1374, /* VFMADD132PDm */
   0x1375, /* VFMADD132PDr */
-/* Table11317 */
+/* Table11319 */
   0x13a4, /* VFMADD132SDm */
   0x13a6, /* VFMADD132SDr */
-/* Table11319 */
+/* Table11321 */
   0x159c, /* VFMSUB132PDm */
   0x159d, /* VFMSUB132PDr */
-/* Table11321 */
+/* Table11323 */
   0x15cc, /* VFMSUB132SDm */
   0x15ce, /* VFMSUB132SDr */
-/* Table11323 */
+/* Table11325 */
   0x17c4, /* VFNMADD132PDm */
   0x17c5, /* VFNMADD132PDr */
-/* Table11325 */
+/* Table11327 */
   0x17f4, /* VFNMADD132SDm */
   0x17f6, /* VFNMADD132SDr */
-/* Table11327 */
+/* Table11329 */
   0x1910, /* VFNMSUB132PDm */
   0x1911, /* VFNMSUB132PDr */
-/* Table11329 */
+/* Table11331 */
   0x1940, /* VFNMSUB132SDm */
   0x1942, /* VFNMSUB132SDr */
-/* Table11331 */
+/* Table11333 */
   0x1504, /* VFMADDSUB213PDm */
   0x1505, /* VFMADDSUB213PDr */
-/* Table11333 */
+/* Table11335 */
   0x170c, /* VFMSUBADD213PDm */
   0x170d, /* VFMSUBADD213PDr */
-/* Table11335 */
+/* Table11337 */
   0x13d8, /* VFMADD213PDm */
   0x13d9, /* VFMADD213PDr */
-/* Table11337 */
+/* Table11339 */
   0x1408, /* VFMADD213SDm */
   0x140a, /* VFMADD213SDr */
-/* Table11339 */
+/* Table11341 */
   0x1600, /* VFMSUB213PDm */
   0x1601, /* VFMSUB213PDr */
-/* Table11341 */
+/* Table11343 */
   0x1630, /* VFMSUB213SDm */
   0x1632, /* VFMSUB213SDr */
-/* Table11343 */
+/* Table11345 */
   0x1828, /* VFNMADD213PDm */
   0x1829, /* VFNMADD213PDr */
-/* Table11345 */
+/* Table11347 */
   0x1858, /* VFNMADD213SDm */
   0x185a, /* VFNMADD213SDr */
-/* Table11347 */
+/* Table11349 */
   0x1974, /* VFNMSUB213PDm */
   0x1975, /* VFNMSUB213PDr */
-/* Table11349 */
+/* Table11351 */
   0x19a4, /* VFNMSUB213SDm */
   0x19a6, /* VFNMSUB213SDr */
-/* Table11351 */
+/* Table11353 */
   0x1548, /* VFMADDSUB231PDm */
   0x1549, /* VFMADDSUB231PDr */
-/* Table11353 */
+/* Table11355 */
   0x1750, /* VFMSUBADD231PDm */
   0x1751, /* VFMSUBADD231PDr */
-/* Table11355 */
+/* Table11357 */
   0x143c, /* VFMADD231PDm */
   0x143d, /* VFMADD231PDr */
-/* Table11357 */
+/* Table11359 */
   0x146c, /* VFMADD231SDm */
   0x146e, /* VFMADD231SDr */
-/* Table11359 */
+/* Table11361 */
   0x1664, /* VFMSUB231PDm */
   0x1665, /* VFMSUB231PDr */
-/* Table11361 */
+/* Table11363 */
   0x1694, /* VFMSUB231SDm */
   0x1696, /* VFMSUB231SDr */
-/* Table11363 */
+/* Table11365 */
   0x188c, /* VFNMADD231PDm */
   0x188d, /* VFNMADD231PDr */
-/* Table11365 */
+/* Table11367 */
   0x18bc, /* VFNMADD231SDm */
   0x18be, /* VFNMADD231SDr */
-/* Table11367 */
+/* Table11369 */
   0x19d8, /* VFNMSUB231PDm */
   0x19d9, /* VFNMSUB231PDr */
-/* Table11369 */
+/* Table11371 */
   0x1a08, /* VFNMSUB231SDm */
   0x1a0a, /* VFNMSUB231SDr */
-/* Table11371 */
+/* Table11373 */
   0xa2d, /* SHLX64rm */
   0xa2e, /* SHLX64rr */
-/* Table11373 */
+/* Table11375 */
   0x3150, /* VPSHUFBYrm */
   0x3151, /* VPSHUFBYrr */
-/* Table11375 */
+/* Table11377 */
   0x28d3, /* VPHADDWYrm */
   0x28d4, /* VPHADDWYrr */
-/* Table11377 */
+/* Table11379 */
   0x28bb, /* VPHADDDYrm */
   0x28bc, /* VPHADDDYrr */
-/* Table11379 */
+/* Table11381 */
   0x28bf, /* VPHADDSWYrm */
   0x28c0, /* VPHADDSWYrr */
-/* Table11381 */
+/* Table11383 */
   0x297f, /* VPMADDUBSWYrm */
   0x2980, /* VPMADDUBSWYrr */
-/* Table11383 */
+/* Table11385 */
   0x28e7, /* VPHSUBWYrm */
   0x28e8, /* VPHSUBWYrr */
-/* Table11385 */
+/* Table11387 */
   0x28dd, /* VPHSUBDYrm */
   0x28de, /* VPHSUBDYrr */
-/* Table11387 */
+/* Table11389 */
   0x28e1, /* VPHSUBSWYrm */
   0x28e2, /* VPHSUBSWYrr */
-/* Table11389 */
+/* Table11391 */
   0x31b1, /* VPSIGNBYrm */
   0x31b2, /* VPSIGNBYrr */
-/* Table11391 */
+/* Table11393 */
   0x31b9, /* VPSIGNWYrm */
   0x31ba, /* VPSIGNWYrr */
-/* Table11393 */
+/* Table11395 */
   0x31b5, /* VPSIGNDYrm */
   0x31b6, /* VPSIGNDYrr */
-/* Table11395 */
+/* Table11397 */
   0x2d9a, /* VPMULHRSWYrm */
   0x2d9b, /* VPMULHRSWYrr */
-/* Table11397 */
+/* Table11399 */
   0x2707, /* VPERMILPSYrm */
   0x2708, /* VPERMILPSYrr */
-/* Table11399 */
+/* Table11401 */
   0x26c9, /* VPERMILPDYrm */
   0x26ca, /* VPERMILPDYrr */
-/* Table11401 */
+/* Table11403 */
   0x3a7c, /* VTESTPSYrm */
   0x3a7d, /* VTESTPSYrr */
-/* Table11403 */
+/* Table11405 */
   0x3a78, /* VTESTPDYrm */
   0x3a79, /* VTESTPDYrr */
-/* Table11405 */
+/* Table11407 */
   0xee5, /* VCVTPH2PSYrm */
   0xee6, /* VCVTPH2PSYrr */
-/* Table11407 */
+/* Table11409 */
   0x2769, /* VPERMPSYrm */
   0x276a, /* VPERMPSYrr */
-/* Table11409 */
+/* Table11411 */
   0x35d3, /* VPTESTYrm */
   0x35d4, /* VPTESTYrr */
-/* Table11411 */
+/* Table11413 */
   0xd38, /* VBROADCASTSSYrm */
   0xd39, /* VBROADCASTSSYrr */
-/* Table11413 */
+/* Table11415 */
   0xd2a, /* VBROADCASTSDYrm */
   0xd2b, /* VBROADCASTSDYrr */
-/* Table11415 */
+/* Table11417 */
   0xce6, /* VBROADCASTF128 */
   0x0, /*  */
-/* Table11417 */
+/* Table11419 */
   0x202d, /* VPABSBYrm */
   0x202e, /* VPABSBYrr */
-/* Table11419 */
+/* Table11421 */
   0x207d, /* VPABSWYrm */
   0x207e, /* VPABSWYrr */
-/* Table11421 */
+/* Table11423 */
   0x2043, /* VPABSDYrm */
   0x2044, /* VPABSDYrr */
-/* Table11423 */
+/* Table11425 */
   0x2c33, /* VPMOVSXBWYrm */
   0x2c34, /* VPMOVSXBWYrr */
-/* Table11425 */
+/* Table11427 */
   0x2c07, /* VPMOVSXBDYrm */
   0x2c08, /* VPMOVSXBDYrr */
-/* Table11427 */
+/* Table11429 */
   0x2c1d, /* VPMOVSXBQYrm */
   0x2c1e, /* VPMOVSXBQYrr */
-/* Table11429 */
+/* Table11431 */
   0x2c5f, /* VPMOVSXWDYrm */
   0x2c60, /* VPMOVSXWDYrr */
-/* Table11431 */
+/* Table11433 */
   0x2c75, /* VPMOVSXWQYrm */
   0x2c76, /* VPMOVSXWQYrr */
-/* Table11433 */
+/* Table11435 */
   0x2c49, /* VPMOVSXDQYrm */
   0x2c4a, /* VPMOVSXDQYrr */
-/* Table11435 */
+/* Table11437 */
   0x2d7b, /* VPMULDQYrm */
   0x2d7c, /* VPMULDQYrr */
-/* Table11437 */
+/* Table11439 */
   0x23d1, /* VPCMPEQQYrm */
   0x23d2, /* VPCMPEQQYrr */
-/* Table11439 */
+/* Table11441 */
   0x1eaa, /* VMOVNTDQAYrm */
   0x0, /*  */
-/* Table11441 */
+/* Table11443 */
   0x20c8, /* VPACKUSDWYrm */
   0x20c9, /* VPACKUSDWYrr */
-/* Table11443 */
+/* Table11445 */
   0x1bea, /* VMASKMOVPSYrm */
   0x0, /*  */
-/* Table11445 */
+/* Table11447 */
   0x1be6, /* VMASKMOVPDYrm */
   0x0, /*  */
-/* Table11447 */
+/* Table11449 */
   0x1be9, /* VMASKMOVPSYmr */
   0x0, /*  */
-/* Table11449 */
+/* Table11451 */
   0x1be5, /* VMASKMOVPDYmr */
   0x0, /*  */
-/* Table11451 */
+/* Table11453 */
   0x2d23, /* VPMOVZXBWYrm */
   0x2d24, /* VPMOVZXBWYrr */
-/* Table11453 */
+/* Table11455 */
   0x2cf7, /* VPMOVZXBDYrm */
   0x2cf8, /* VPMOVZXBDYrr */
-/* Table11455 */
+/* Table11457 */
   0x2d0d, /* VPMOVZXBQYrm */
   0x2d0e, /* VPMOVZXBQYrr */
-/* Table11457 */
+/* Table11459 */
   0x2d4f, /* VPMOVZXWDYrm */
   0x2d50, /* VPMOVZXWDYrr */
-/* Table11459 */
+/* Table11461 */
   0x2d65, /* VPMOVZXWQYrm */
   0x2d66, /* VPMOVZXWQYrr */
-/* Table11461 */
+/* Table11463 */
   0x2d39, /* VPMOVZXDQYrm */
   0x2d3a, /* VPMOVZXDQYrr */
-/* Table11463 */
+/* Table11465 */
   0x2613, /* VPERMDYrm */
   0x2614, /* VPERMDYrr */
-/* Table11465 */
+/* Table11467 */
   0x2421, /* VPCMPGTQYrm */
   0x2422, /* VPCMPGTQYrr */
-/* Table11467 */
+/* Table11469 */
   0x2a7f, /* VPMINSBYrm */
   0x2a80, /* VPMINSBYrr */
-/* Table11469 */
+/* Table11471 */
   0x2a95, /* VPMINSDYrm */
   0x2a96, /* VPMINSDYrr */
-/* Table11471 */
+/* Table11473 */
   0x2b35, /* VPMINUWYrm */
   0x2b36, /* VPMINUWYrr */
-/* Table11473 */
+/* Table11475 */
   0x2afb, /* VPMINUDYrm */
   0x2afc, /* VPMINUDYrr */
-/* Table11475 */
+/* Table11477 */
   0x29b3, /* VPMAXSBYrm */
   0x29b4, /* VPMAXSBYrr */
-/* Table11477 */
+/* Table11479 */
   0x29c9, /* VPMAXSDYrm */
   0x29ca, /* VPMAXSDYrr */
-/* Table11479 */
+/* Table11481 */
   0x2a69, /* VPMAXUWYrm */
   0x2a6a, /* VPMAXUWYrr */
-/* Table11481 */
+/* Table11483 */
   0x2a2f, /* VPMAXUDYrm */
   0x2a30, /* VPMAXUDYrr */
-/* Table11483 */
+/* Table11485 */
   0x2ddc, /* VPMULLDYrm */
   0x2ddd, /* VPMULLDYrr */
-/* Table11485 */
+/* Table11487 */
   0x33e9, /* VPSRLVDYrm */
   0x33ea, /* VPSRLVDYrr */
-/* Table11487 */
+/* Table11489 */
   0x3305, /* VPSRAVDYrm */
   0x3306, /* VPSRAVDYrr */
-/* Table11489 */
+/* Table11491 */
   0x322b, /* VPSLLVDYrm */
   0x322c, /* VPSLLVDYrr */
-/* Table11491 */
+/* Table11493 */
   0x22fa, /* VPBROADCASTDYrm */
   0x22fb, /* VPBROADCASTDYrr */
-/* Table11493 */
+/* Table11495 */
   0x231f, /* VPBROADCASTQYrm */
   0x2320, /* VPBROADCASTQYrr */
-/* Table11495 */
+/* Table11497 */
   0xd05, /* VBROADCASTI128 */
   0x0, /*  */
-/* Table11497 */
+/* Table11499 */
   0x22db, /* VPBROADCASTBYrm */
   0x22dc, /* VPBROADCASTBYrr */
-/* Table11499 */
+/* Table11501 */
   0x233e, /* VPBROADCASTWYrm */
   0x233f, /* VPBROADCASTWYrr */
-/* Table11501 */
+/* Table11503 */
   0x29ac, /* VPMASKMOVDYrm */
   0x0, /*  */
-/* Table11503 */
+/* Table11505 */
   0x29ab, /* VPMASKMOVDYmr */
   0x0, /*  */
-/* Table11505 */
+/* Table11507 */
   0x289f, /* VPGATHERDDYrm */
   0x0, /*  */
-/* Table11507 */
+/* Table11509 */
   0x28a9, /* VPGATHERQDYrm */
   0x0, /*  */
-/* Table11509 */
+/* Table11511 */
   0x1a79, /* VGATHERDPSYrm */
   0x0, /*  */
-/* Table11511 */
+/* Table11513 */
   0x1a8b, /* VGATHERQPSYrm */
   0x0, /*  */
-/* Table11513 */
+/* Table11515 */
   0x14c2, /* VFMADDSUB132PSYm */
   0x14c3, /* VFMADDSUB132PSYr */
-/* Table11515 */
+/* Table11517 */
   0x16ca, /* VFMSUBADD132PSYm */
   0x16cb, /* VFMSUBADD132PSYr */
-/* Table11517 */
+/* Table11519 */
   0x1376, /* VFMADD132PSYm */
   0x1377, /* VFMADD132PSYr */
-/* Table11519 */
+/* Table11521 */
   0x159e, /* VFMSUB132PSYm */
   0x159f, /* VFMSUB132PSYr */
-/* Table11521 */
+/* Table11523 */
   0x17c6, /* VFNMADD132PSYm */
   0x17c7, /* VFNMADD132PSYr */
-/* Table11523 */
+/* Table11525 */
   0x1912, /* VFNMSUB132PSYm */
   0x1913, /* VFNMSUB132PSYr */
-/* Table11525 */
+/* Table11527 */
   0x1506, /* VFMADDSUB213PSYm */
   0x1507, /* VFMADDSUB213PSYr */
-/* Table11527 */
+/* Table11529 */
   0x170e, /* VFMSUBADD213PSYm */
   0x170f, /* VFMSUBADD213PSYr */
-/* Table11529 */
+/* Table11531 */
   0x13da, /* VFMADD213PSYm */
   0x13db, /* VFMADD213PSYr */
-/* Table11531 */
+/* Table11533 */
   0x1602, /* VFMSUB213PSYm */
   0x1603, /* VFMSUB213PSYr */
-/* Table11533 */
+/* Table11535 */
   0x182a, /* VFNMADD213PSYm */
   0x182b, /* VFNMADD213PSYr */
-/* Table11535 */
+/* Table11537 */
   0x1976, /* VFNMSUB213PSYm */
   0x1977, /* VFNMSUB213PSYr */
-/* Table11537 */
+/* Table11539 */
   0x154a, /* VFMADDSUB231PSYm */
   0x154b, /* VFMADDSUB231PSYr */
-/* Table11539 */
+/* Table11541 */
   0x1752, /* VFMSUBADD231PSYm */
   0x1753, /* VFMSUBADD231PSYr */
-/* Table11541 */
+/* Table11543 */
   0x143e, /* VFMADD231PSYm */
   0x143f, /* VFMADD231PSYr */
-/* Table11543 */
+/* Table11545 */
   0x1666, /* VFMSUB231PSYm */
   0x1667, /* VFMSUB231PSYr */
-/* Table11545 */
+/* Table11547 */
   0x188e, /* VFNMADD231PSYm */
   0x188f, /* VFNMADD231PSYr */
-/* Table11547 */
+/* Table11549 */
   0x19da, /* VFNMSUB231PSYm */
   0x19db, /* VFNMSUB231PSYr */
-/* Table11549 */
+/* Table11551 */
   0x1b6a, /* VGF2P8MULBYrm */
   0x1b6b, /* VGF2P8MULBYrr */
-/* Table11551 */
+/* Table11553 */
   0xbe0, /* VAESENCYrm */
   0xbe1, /* VAESENCYrr */
-/* Table11553 */
+/* Table11555 */
   0xbd6, /* VAESENCLASTYrm */
   0xbd7, /* VAESENCLASTYrr */
-/* Table11555 */
+/* Table11557 */
   0xbcc, /* VAESDECYrm */
   0xbcd, /* VAESDECYrr */
-/* Table11557 */
+/* Table11559 */
   0xbc2, /* VAESDECLASTYrm */
   0xbc3, /* VAESDECLASTYrr */
-/* Table11559 */
+/* Table11561 */
   0x3408, /* VPSRLVQYrm */
   0x3409, /* VPSRLVQYrr */
-/* Table11561 */
+/* Table11563 */
   0x324a, /* VPSLLVQYrm */
   0x324b, /* VPSLLVQYrr */
-/* Table11563 */
+/* Table11565 */
   0x29b0, /* VPMASKMOVQYrm */
   0x0, /*  */
-/* Table11565 */
+/* Table11567 */
   0x29af, /* VPMASKMOVQYmr */
   0x0, /*  */
-/* Table11567 */
+/* Table11569 */
   0x28a4, /* VPGATHERDQYrm */
   0x0, /*  */
-/* Table11569 */
+/* Table11571 */
   0x28ae, /* VPGATHERQQYrm */
   0x0, /*  */
-/* Table11571 */
+/* Table11573 */
   0x1a74, /* VGATHERDPDYrm */
   0x0, /*  */
-/* Table11573 */
+/* Table11575 */
   0x1a86, /* VGATHERQPDYrm */
   0x0, /*  */
-/* Table11575 */
+/* Table11577 */
   0x14a0, /* VFMADDSUB132PDYm */
   0x14a1, /* VFMADDSUB132PDYr */
-/* Table11577 */
+/* Table11579 */
   0x16a8, /* VFMSUBADD132PDYm */
   0x16a9, /* VFMSUBADD132PDYr */
-/* Table11579 */
+/* Table11581 */
   0x1354, /* VFMADD132PDYm */
   0x1355, /* VFMADD132PDYr */
-/* Table11581 */
+/* Table11583 */
   0x157c, /* VFMSUB132PDYm */
   0x157d, /* VFMSUB132PDYr */
-/* Table11583 */
+/* Table11585 */
   0x17a4, /* VFNMADD132PDYm */
   0x17a5, /* VFNMADD132PDYr */
-/* Table11585 */
+/* Table11587 */
   0x18f0, /* VFNMSUB132PDYm */
   0x18f1, /* VFNMSUB132PDYr */
-/* Table11587 */
+/* Table11589 */
   0x14e4, /* VFMADDSUB213PDYm */
   0x14e5, /* VFMADDSUB213PDYr */
-/* Table11589 */
+/* Table11591 */
   0x16ec, /* VFMSUBADD213PDYm */
   0x16ed, /* VFMSUBADD213PDYr */
-/* Table11591 */
+/* Table11593 */
   0x13b8, /* VFMADD213PDYm */
   0x13b9, /* VFMADD213PDYr */
-/* Table11593 */
+/* Table11595 */
   0x15e0, /* VFMSUB213PDYm */
   0x15e1, /* VFMSUB213PDYr */
-/* Table11595 */
+/* Table11597 */
   0x1808, /* VFNMADD213PDYm */
   0x1809, /* VFNMADD213PDYr */
-/* Table11597 */
+/* Table11599 */
   0x1954, /* VFNMSUB213PDYm */
   0x1955, /* VFNMSUB213PDYr */
-/* Table11599 */
+/* Table11601 */
   0x1528, /* VFMADDSUB231PDYm */
   0x1529, /* VFMADDSUB231PDYr */
-/* Table11601 */
+/* Table11603 */
   0x1730, /* VFMSUBADD231PDYm */
   0x1731, /* VFMSUBADD231PDYr */
-/* Table11603 */
+/* Table11605 */
   0x141c, /* VFMADD231PDYm */
   0x141d, /* VFMADD231PDYr */
-/* Table11605 */
+/* Table11607 */
   0x1644, /* VFMSUB231PDYm */
   0x1645, /* VFMSUB231PDYr */
-/* Table11607 */
+/* Table11609 */
   0x186c, /* VFNMADD231PDYm */
   0x186d, /* VFNMADD231PDYr */
-/* Table11609 */
+/* Table11611 */
   0x19b8, /* VFNMSUB231PDYm */
   0x19b9, /* VFNMSUB231PDYr */
-/* Table11611 */
+/* Table11613 */
   0x2cd6, /* VPMOVUSWBZ128mr */
   0x2cd8, /* VPMOVUSWBZ128rr */
-/* Table11613 */
+/* Table11615 */
   0x2c8b, /* VPMOVUSDBZ128mr */
   0x2c8d, /* VPMOVUSDBZ128rr */
-/* Table11615 */
+/* Table11617 */
   0x2ca9, /* VPMOVUSQBZ128mr */
   0x2cab, /* VPMOVUSQBZ128rr */
-/* Table11617 */
+/* Table11619 */
   0x2c9a, /* VPMOVUSDWZ128mr */
   0x2c9c, /* VPMOVUSDWZ128rr */
-/* Table11619 */
+/* Table11621 */
   0x2cc7, /* VPMOVUSQWZ128mr */
   0x2cc9, /* VPMOVUSQWZ128rr */
-/* Table11621 */
+/* Table11623 */
   0x2cb8, /* VPMOVUSQDZ128mr */
   0x2cba, /* VPMOVUSQDZ128rr */
-/* Table11623 */
+/* Table11625 */
   0x2bf8, /* VPMOVSWBZ128mr */
   0x2bfa, /* VPMOVSWBZ128rr */
-/* Table11625 */
+/* Table11627 */
   0x2bad, /* VPMOVSDBZ128mr */
   0x2baf, /* VPMOVSDBZ128rr */
-/* Table11627 */
+/* Table11629 */
   0x2bcb, /* VPMOVSQBZ128mr */
   0x2bcd, /* VPMOVSQBZ128rr */
-/* Table11629 */
+/* Table11631 */
   0x2bbc, /* VPMOVSDWZ128mr */
   0x2bbe, /* VPMOVSDWZ128rr */
-/* Table11631 */
+/* Table11633 */
   0x2be9, /* VPMOVSQWZ128mr */
   0x2beb, /* VPMOVSQWZ128rr */
-/* Table11633 */
+/* Table11635 */
   0x2bda, /* VPMOVSQDZ128mr */
   0x2bdc, /* VPMOVSQDZ128rr */
-/* Table11635 */
+/* Table11637 */
   0x3597, /* VPTESTNMBZ128rm */
   0x3599, /* VPTESTNMBZ128rr */
-/* Table11637 */
+/* Table11639 */
   0x35a3, /* VPTESTNMDZ128rm */
   0x35a7, /* VPTESTNMDZ128rr */
-/* Table11639 */
-  0x0, /*  */
-  0x2b6f, /* VPMOVM2BZ128rr */
 /* Table11641 */
   0x0, /*  */
-  0x2b4b, /* VPMOVB2MZ128rr */
+  0x2b6f, /* VPMOVM2BZ128rr */
 /* Table11643 */
+  0x0, /*  */
+  0x2b4b, /* VPMOVB2MZ128rr */
+/* Table11645 */
   0x2ce8, /* VPMOVWBZ128mr */
   0x2cea, /* VPMOVWBZ128rr */
-/* Table11645 */
+/* Table11647 */
   0x2b51, /* VPMOVDBZ128mr */
   0x2b53, /* VPMOVDBZ128rr */
-/* Table11647 */
+/* Table11649 */
   0x2b80, /* VPMOVQBZ128mr */
   0x2b82, /* VPMOVQBZ128rr */
-/* Table11649 */
+/* Table11651 */
   0x2b60, /* VPMOVDWZ128mr */
   0x2b62, /* VPMOVDWZ128rr */
-/* Table11651 */
+/* Table11653 */
   0x2b9e, /* VPMOVQWZ128mr */
   0x2ba0, /* VPMOVQWZ128rr */
-/* Table11653 */
+/* Table11655 */
   0x2b8f, /* VPMOVQDZ128mr */
   0x2b91, /* VPMOVQDZ128rr */
-/* Table11655 */
-  0x0, /*  */
-  0x2b72, /* VPMOVM2DZ128rr */
 /* Table11657 */
   0x0, /*  */
-  0x2b4e, /* VPMOVD2MZ128rr */
+  0x2b72, /* VPMOVM2DZ128rr */
 /* Table11659 */
   0x0, /*  */
-  0x231c, /* VPBROADCASTMW2DZ128rr */
+  0x2b4e, /* VPMOVD2MZ128rr */
 /* Table11661 */
+  0x0, /*  */
+  0x231c, /* VPBROADCASTMW2DZ128rr */
+/* Table11663 */
   0xb4f, /* V4FMADDSSrm */
   0x0, /*  */
-/* Table11663 */
+/* Table11665 */
   0xb55, /* V4FNMADDSSrm */
   0x0, /*  */
-/* Table11665 */
+/* Table11667 */
   0x3152, /* VPSHUFBZ128rm */
   0x3155, /* VPSHUFBZ128rr */
-/* Table11667 */
+/* Table11669 */
   0x2981, /* VPMADDUBSWZ128rm */
   0x2984, /* VPMADDUBSWZ128rr */
-/* Table11669 */
+/* Table11671 */
   0x2d9c, /* VPMULHRSWZ128rm */
   0x2d9f, /* VPMULHRSWZ128rr */
-/* Table11671 */
+/* Table11673 */
   0x2712, /* VPERMILPSZ128rm */
   0x2718, /* VPERMILPSZ128rr */
-/* Table11673 */
+/* Table11675 */
   0xee7, /* VCVTPH2PSZ128rm */
   0xeea, /* VCVTPH2PSZ128rr */
-/* Table11675 */
+/* Table11677 */
   0x2fa0, /* VPRORVDZ128rm */
   0x2fa6, /* VPRORVDZ128rr */
-/* Table11677 */
+/* Table11679 */
   0x2f34, /* VPROLVDZ128rm */
   0x2f3a, /* VPROLVDZ128rr */
-/* Table11679 */
+/* Table11681 */
   0xd3a, /* VBROADCASTSSZ128m */
   0xd3d, /* VBROADCASTSSZ128r */
-/* Table11681 */
+/* Table11683 */
   0x202f, /* VPABSBZ128rm */
   0x2032, /* VPABSBZ128rr */
-/* Table11683 */
+/* Table11685 */
   0x207f, /* VPABSWZ128rm */
   0x2082, /* VPABSWZ128rr */
-/* Table11685 */
+/* Table11687 */
   0x2045, /* VPABSDZ128rm */
   0x204b, /* VPABSDZ128rr */
-/* Table11687 */
+/* Table11689 */
   0x2c35, /* VPMOVSXBWZ128rm */
   0x2c38, /* VPMOVSXBWZ128rr */
-/* Table11689 */
+/* Table11691 */
   0x2c09, /* VPMOVSXBDZ128rm */
   0x2c0c, /* VPMOVSXBDZ128rr */
-/* Table11691 */
+/* Table11693 */
   0x2c1f, /* VPMOVSXBQZ128rm */
   0x2c22, /* VPMOVSXBQZ128rr */
-/* Table11693 */
+/* Table11695 */
   0x2c61, /* VPMOVSXWDZ128rm */
   0x2c64, /* VPMOVSXWDZ128rr */
-/* Table11695 */
+/* Table11697 */
   0x2c77, /* VPMOVSXWQZ128rm */
   0x2c7a, /* VPMOVSXWQZ128rr */
-/* Table11697 */
+/* Table11699 */
   0x2c4b, /* VPMOVSXDQZ128rm */
   0x2c4e, /* VPMOVSXDQZ128rr */
-/* Table11699 */
+/* Table11701 */
   0x355b, /* VPTESTMBZ128rm */
   0x355d, /* VPTESTMBZ128rr */
-/* Table11701 */
+/* Table11703 */
   0x3567, /* VPTESTMDZ128rm */
   0x356b, /* VPTESTMDZ128rr */
-/* Table11703 */
+/* Table11705 */
   0x1eab, /* VMOVNTDQAZ128rm */
   0x0, /*  */
-/* Table11705 */
+/* Table11707 */
   0x20ca, /* VPACKUSDWZ128rm */
   0x20d0, /* VPACKUSDWZ128rr */
-/* Table11707 */
+/* Table11709 */
   0x38e9, /* VSCALEFPSZ128rm */
   0x38ef, /* VSCALEFPSZ128rr */
-/* Table11709 */
+/* Table11711 */
   0x3910, /* VSCALEFSSZrm */
   0x3913, /* VSCALEFSSZrr */
-/* Table11711 */
+/* Table11713 */
   0x2d25, /* VPMOVZXBWZ128rm */
   0x2d28, /* VPMOVZXBWZ128rr */
-/* Table11713 */
+/* Table11715 */
   0x2cf9, /* VPMOVZXBDZ128rm */
   0x2cfc, /* VPMOVZXBDZ128rr */
-/* Table11715 */
+/* Table11717 */
   0x2d0f, /* VPMOVZXBQZ128rm */
   0x2d12, /* VPMOVZXBQZ128rr */
-/* Table11717 */
+/* Table11719 */
   0x2d51, /* VPMOVZXWDZ128rm */
   0x2d54, /* VPMOVZXWDZ128rr */
-/* Table11719 */
+/* Table11721 */
   0x2d67, /* VPMOVZXWQZ128rm */
   0x2d6a, /* VPMOVZXWQZ128rr */
-/* Table11721 */
+/* Table11723 */
   0x2d3b, /* VPMOVZXDQZ128rm */
   0x2d3e, /* VPMOVZXDQZ128rr */
-/* Table11723 */
+/* Table11725 */
   0x2a81, /* VPMINSBZ128rm */
   0x2a84, /* VPMINSBZ128rr */
-/* Table11725 */
+/* Table11727 */
   0x2a97, /* VPMINSDZ128rm */
   0x2a9d, /* VPMINSDZ128rr */
-/* Table11727 */
+/* Table11729 */
   0x2b37, /* VPMINUWZ128rm */
   0x2b3a, /* VPMINUWZ128rr */
-/* Table11729 */
+/* Table11731 */
   0x2afd, /* VPMINUDZ128rm */
   0x2b03, /* VPMINUDZ128rr */
-/* Table11731 */
+/* Table11733 */
   0x29b5, /* VPMAXSBZ128rm */
   0x29b8, /* VPMAXSBZ128rr */
-/* Table11733 */
+/* Table11735 */
   0x29cb, /* VPMAXSDZ128rm */
   0x29d1, /* VPMAXSDZ128rr */
-/* Table11735 */
+/* Table11737 */
   0x2a6b, /* VPMAXUWZ128rm */
   0x2a6e, /* VPMAXUWZ128rr */
-/* Table11737 */
+/* Table11739 */
   0x2a31, /* VPMAXUDZ128rm */
   0x2a37, /* VPMAXUDZ128rr */
-/* Table11739 */
+/* Table11741 */
   0x2dde, /* VPMULLDZ128rm */
   0x2de4, /* VPMULLDZ128rr */
-/* Table11741 */
+/* Table11743 */
   0x1aae, /* VGETEXPPSZ128m */
   0x1ab4, /* VGETEXPPSZ128r */
-/* Table11743 */
+/* Table11745 */
   0x1ad5, /* VGETEXPSSZm */
   0x1ad8, /* VGETEXPSSZr */
-/* Table11745 */
+/* Table11747 */
   0x28fb, /* VPLZCNTDZ128rm */
   0x2901, /* VPLZCNTDZ128rr */
-/* Table11747 */
+/* Table11749 */
   0x33eb, /* VPSRLVDZ128rm */
   0x33f1, /* VPSRLVDZ128rr */
-/* Table11749 */
+/* Table11751 */
   0x3307, /* VPSRAVDZ128rm */
   0x330d, /* VPSRAVDZ128rr */
-/* Table11751 */
+/* Table11753 */
   0x322d, /* VPSLLVDZ128rm */
   0x3233, /* VPSLLVDZ128rr */
-/* Table11753 */
+/* Table11755 */
   0x374e, /* VRCP14PSZ128m */
   0x3754, /* VRCP14PSZ128r */
-/* Table11755 */
+/* Table11757 */
   0x376f, /* VRCP14SSZrm */
   0x3772, /* VRCP14SSZrr */
-/* Table11757 */
+/* Table11759 */
   0x3872, /* VRSQRT14PSZ128m */
   0x3878, /* VRSQRT14PSZ128r */
-/* Table11759 */
+/* Table11761 */
   0x3893, /* VRSQRT14SSZrm */
   0x3896, /* VRSQRT14SSZrr */
-/* Table11761 */
+/* Table11763 */
   0x25ac, /* VPDPBUSDZ128m */
   0x25b2, /* VPDPBUSDZ128r */
-/* Table11763 */
+/* Table11765 */
   0x2591, /* VPDPBUSDSZ128m */
   0x2597, /* VPDPBUSDSZ128r */
-/* Table11765 */
+/* Table11767 */
   0x25e2, /* VPDPWSSDZ128m */
   0x25e8, /* VPDPWSSDZ128r */
-/* Table11767 */
+/* Table11769 */
   0x25c7, /* VPDPWSSDSZ128m */
   0x25cd, /* VPDPWSSDSZ128r */
-/* Table11769 */
+/* Table11771 */
   0x2e66, /* VPOPCNTBZ128rm */
   0x2e69, /* VPOPCNTBZ128rr */
-/* Table11771 */
+/* Table11773 */
   0x2e78, /* VPOPCNTDZ128rm */
   0x2e7e, /* VPOPCNTDZ128rr */
-/* Table11773 */
+/* Table11775 */
   0x22fc, /* VPBROADCASTDZ128m */
   0x22ff, /* VPBROADCASTDZ128r */
-/* Table11775 */
+/* Table11777 */
   0xd06, /* VBROADCASTI32X2Z128m */
   0xd09, /* VBROADCASTI32X2Z128r */
-/* Table11777 */
+/* Table11779 */
   0x2845, /* VPEXPANDBZ128rm */
   0x2848, /* VPEXPANDBZ128rr */
-/* Table11779 */
+/* Table11781 */
   0x2507, /* VPCOMPRESSBZ128mr */
   0x2509, /* VPCOMPRESSBZ128rr */
-/* Table11781 */
+/* Table11783 */
   0x228b, /* VPBLENDMDZ128rm */
   0x2291, /* VPBLENDMDZ128rr */
-/* Table11783 */
+/* Table11785 */
   0xcbb, /* VBLENDMPSZ128rm */
   0xcc1, /* VBLENDMPSZ128rr */
-/* Table11785 */
+/* Table11787 */
   0x2279, /* VPBLENDMBZ128rm */
   0x227c, /* VPBLENDMBZ128rr */
-/* Table11787 */
+/* Table11789 */
   0x304e, /* VPSHLDVDZ128m */
   0x3054, /* VPSHLDVDZ128r */
-/* Table11789 */
+/* Table11791 */
   0x30ea, /* VPSHRDVDZ128m */
   0x30f0, /* VPSHRDVDZ128r */
-/* Table11791 */
+/* Table11793 */
   0x2627, /* VPERMI2B128rm */
   0x262a, /* VPERMI2B128rr */
-/* Table11793 */
+/* Table11795 */
   0x2639, /* VPERMI2D128rm */
   0x263f, /* VPERMI2D128rr */
-/* Table11795 */
+/* Table11797 */
   0x266f, /* VPERMI2PS128rm */
   0x2675, /* VPERMI2PS128rr */
-/* Table11797 */
+/* Table11799 */
   0x22dd, /* VPBROADCASTBZ128m */
   0x22e0, /* VPBROADCASTBZ128r */
-/* Table11799 */
+/* Table11801 */
   0x2340, /* VPBROADCASTWZ128m */
   0x2343, /* VPBROADCASTWZ128r */
-/* Table11801 */
-  0x0, /*  */
-  0x22ef, /* VPBROADCASTBrZ128r */
 /* Table11803 */
   0x0, /*  */
-  0x2352, /* VPBROADCASTWrZ128r */
+  0x22ef, /* VPBROADCASTBrZ128r */
 /* Table11805 */
   0x0, /*  */
-  0x230e, /* VPBROADCASTDrZ128r */
+  0x2352, /* VPBROADCASTWrZ128r */
 /* Table11807 */
+  0x0, /*  */
+  0x230e, /* VPBROADCASTDrZ128r */
+/* Table11809 */
   0x27a3, /* VPERMT2B128rm */
   0x27a6, /* VPERMT2B128rr */
-/* Table11809 */
+/* Table11811 */
   0x27b5, /* VPERMT2D128rm */
   0x27bb, /* VPERMT2D128rr */
-/* Table11811 */
+/* Table11813 */
   0x27eb, /* VPERMT2PS128rm */
   0x27f1, /* VPERMT2PS128rr */
-/* Table11813 */
+/* Table11815 */
   0x12b0, /* VEXPANDPSZ128rm */
   0x12b3, /* VEXPANDPSZ128rr */
-/* Table11815 */
+/* Table11817 */
   0x2857, /* VPEXPANDDZ128rm */
   0x285a, /* VPEXPANDDZ128rr */
-/* Table11817 */
+/* Table11819 */
   0xdf7, /* VCOMPRESSPSZ128mr */
   0xdf9, /* VCOMPRESSPSZ128rr */
-/* Table11819 */
+/* Table11821 */
   0x2516, /* VPCOMPRESSDZ128mr */
   0x2518, /* VPCOMPRESSDZ128rr */
-/* Table11821 */
+/* Table11823 */
   0x2601, /* VPERMBZ128rm */
   0x2604, /* VPERMBZ128rr */
-/* Table11823 */
+/* Table11825 */
   0x3144, /* VPSHUFBITQMBZ128rm */
   0x3146, /* VPSHUFBITQMBZ128rr */
-/* Table11825 */
+/* Table11827 */
   0x14c4, /* VFMADDSUB132PSZ128m */
   0x14ca, /* VFMADDSUB132PSZ128r */
-/* Table11827 */
+/* Table11829 */
   0x16cc, /* VFMSUBADD132PSZ128m */
   0x16d2, /* VFMSUBADD132PSZ128r */
-/* Table11829 */
+/* Table11831 */
   0x1378, /* VFMADD132PSZ128m */
   0x137e, /* VFMADD132PSZ128r */
-/* Table11831 */
+/* Table11833 */
   0x13a9, /* VFMADD132SSZm_Int */
   0x13ad, /* VFMADD132SSZr_Int */
-/* Table11833 */
+/* Table11835 */
   0x15a0, /* VFMSUB132PSZ128m */
   0x15a6, /* VFMSUB132PSZ128r */
-/* Table11835 */
+/* Table11837 */
   0x15d1, /* VFMSUB132SSZm_Int */
   0x15d5, /* VFMSUB132SSZr_Int */
-/* Table11837 */
+/* Table11839 */
   0x17c8, /* VFNMADD132PSZ128m */
   0x17ce, /* VFNMADD132PSZ128r */
-/* Table11839 */
+/* Table11841 */
   0x17f9, /* VFNMADD132SSZm_Int */
   0x17fd, /* VFNMADD132SSZr_Int */
-/* Table11841 */
+/* Table11843 */
   0x1914, /* VFNMSUB132PSZ128m */
   0x191a, /* VFNMSUB132PSZ128r */
-/* Table11843 */
+/* Table11845 */
   0x1945, /* VFNMSUB132SSZm_Int */
   0x1949, /* VFNMSUB132SSZr_Int */
-/* Table11845 */
+/* Table11847 */
   0x1508, /* VFMADDSUB213PSZ128m */
   0x150e, /* VFMADDSUB213PSZ128r */
-/* Table11847 */
+/* Table11849 */
   0x1710, /* VFMSUBADD213PSZ128m */
   0x1716, /* VFMSUBADD213PSZ128r */
-/* Table11849 */
+/* Table11851 */
   0x13dc, /* VFMADD213PSZ128m */
   0x13e2, /* VFMADD213PSZ128r */
-/* Table11851 */
+/* Table11853 */
   0x140d, /* VFMADD213SSZm_Int */
   0x1411, /* VFMADD213SSZr_Int */
-/* Table11853 */
+/* Table11855 */
   0x1604, /* VFMSUB213PSZ128m */
   0x160a, /* VFMSUB213PSZ128r */
-/* Table11855 */
+/* Table11857 */
   0x1635, /* VFMSUB213SSZm_Int */
   0x1639, /* VFMSUB213SSZr_Int */
-/* Table11857 */
+/* Table11859 */
   0x182c, /* VFNMADD213PSZ128m */
   0x1832, /* VFNMADD213PSZ128r */
-/* Table11859 */
+/* Table11861 */
   0x185d, /* VFNMADD213SSZm_Int */
   0x1861, /* VFNMADD213SSZr_Int */
-/* Table11861 */
+/* Table11863 */
   0x1978, /* VFNMSUB213PSZ128m */
   0x197e, /* VFNMSUB213PSZ128r */
-/* Table11863 */
+/* Table11865 */
   0x19a9, /* VFNMSUB213SSZm_Int */
   0x19ad, /* VFNMSUB213SSZr_Int */
-/* Table11865 */
+/* Table11867 */
   0x154c, /* VFMADDSUB231PSZ128m */
   0x1552, /* VFMADDSUB231PSZ128r */
-/* Table11867 */
+/* Table11869 */
   0x1754, /* VFMSUBADD231PSZ128m */
   0x175a, /* VFMSUBADD231PSZ128r */
-/* Table11869 */
+/* Table11871 */
   0x1440, /* VFMADD231PSZ128m */
   0x1446, /* VFMADD231PSZ128r */
-/* Table11871 */
+/* Table11873 */
   0x1471, /* VFMADD231SSZm_Int */
   0x1475, /* VFMADD231SSZr_Int */
-/* Table11873 */
+/* Table11875 */
   0x1668, /* VFMSUB231PSZ128m */
   0x166e, /* VFMSUB231PSZ128r */
-/* Table11875 */
+/* Table11877 */
   0x1699, /* VFMSUB231SSZm_Int */
   0x169d, /* VFMSUB231SSZr_Int */
-/* Table11877 */
+/* Table11879 */
   0x1890, /* VFNMADD231PSZ128m */
   0x1896, /* VFNMADD231PSZ128r */
-/* Table11879 */
+/* Table11881 */
   0x18c1, /* VFNMADD231SSZm_Int */
   0x18c5, /* VFNMADD231SSZr_Int */
-/* Table11881 */
+/* Table11883 */
   0x19dc, /* VFNMSUB231PSZ128m */
   0x19e2, /* VFNMSUB231PSZ128r */
-/* Table11883 */
+/* Table11885 */
   0x1a0d, /* VFNMSUB231SSZm_Int */
   0x1a11, /* VFNMSUB231SSZr_Int */
-/* Table11885 */
+/* Table11887 */
   0x255b, /* VPCONFLICTDZ128rm */
   0x2561, /* VPCONFLICTDZ128rr */
-/* Table11887 */
+/* Table11889 */
   0x3796, /* VRCP28SSZm */
   0x3799, /* VRCP28SSZr */
-/* Table11889 */
+/* Table11891 */
   0x38ba, /* VRSQRT28SSZm */
   0x38bd, /* VRSQRT28SSZr */
-/* Table11891 */
+/* Table11893 */
   0x1b6c, /* VGF2P8MULBZ128rm */
   0x1b6f, /* VGF2P8MULBZ128rr */
-/* Table11893 */
+/* Table11895 */
   0xbe2, /* VAESENCZ128rm */
   0xbe3, /* VAESENCZ128rr */
-/* Table11895 */
+/* Table11897 */
   0xbd8, /* VAESENCLASTZ128rm */
   0xbd9, /* VAESENCLASTZ128rr */
-/* Table11897 */
+/* Table11899 */
   0xbce, /* VAESDECZ128rm */
   0xbcf, /* VAESDECZ128rr */
-/* Table11899 */
+/* Table11901 */
   0xbc4, /* VAESDECLASTZ128rm */
   0xbc5, /* VAESDECLASTZ128rr */
-/* Table11901 */
+/* Table11903 */
   0x35c7, /* VPTESTNMWZ128rm */
   0x35c9, /* VPTESTNMWZ128rr */
-/* Table11903 */
+/* Table11905 */
   0x35b5, /* VPTESTNMQZ128rm */
   0x35b9, /* VPTESTNMQZ128rr */
-/* Table11905 */
-  0x0, /*  */
-  0x2b78, /* VPMOVM2WZ128rr */
 /* Table11907 */
   0x0, /*  */
-  0x2ce5, /* VPMOVW2MZ128rr */
+  0x2b78, /* VPMOVM2WZ128rr */
 /* Table11909 */
   0x0, /*  */
-  0x2319, /* VPBROADCASTMB2QZ128rr */
+  0x2ce5, /* VPMOVW2MZ128rr */
 /* Table11911 */
   0x0, /*  */
-  0x2b75, /* VPMOVM2QZ128rr */
+  0x2319, /* VPBROADCASTMB2QZ128rr */
 /* Table11913 */
   0x0, /*  */
-  0x2b7d, /* VPMOVQ2MZ128rr */
+  0x2b75, /* VPMOVM2QZ128rr */
 /* Table11915 */
+  0x0, /*  */
+  0x2b7d, /* VPMOVQ2MZ128rr */
+/* Table11917 */
   0x26d4, /* VPERMILPDZ128rm */
   0x26da, /* VPERMILPDZ128rr */
-/* Table11917 */
+/* Table11919 */
   0x3427, /* VPSRLVWZ128rm */
   0x342a, /* VPSRLVWZ128rr */
-/* Table11919 */
+/* Table11921 */
   0x333f, /* VPSRAVWZ128rm */
   0x3342, /* VPSRAVWZ128rr */
-/* Table11921 */
+/* Table11923 */
   0x3269, /* VPSLLVWZ128rm */
   0x326c, /* VPSLLVWZ128rr */
-/* Table11923 */
+/* Table11925 */
   0x2fbb, /* VPRORVQZ128rm */
   0x2fc1, /* VPRORVQZ128rr */
-/* Table11925 */
+/* Table11927 */
   0x2f4f, /* VPROLVQZ128rm */
   0x2f55, /* VPROLVQZ128rr */
-/* Table11927 */
+/* Table11929 */
   0x2062, /* VPABSQZ128rm */
   0x2068, /* VPABSQZ128rr */
-/* Table11929 */
+/* Table11931 */
   0x358b, /* VPTESTMWZ128rm */
   0x358d, /* VPTESTMWZ128rr */
-/* Table11931 */
+/* Table11933 */
   0x3579, /* VPTESTMQZ128rm */
   0x357d, /* VPTESTMQZ128rr */
-/* Table11933 */
+/* Table11935 */
   0x2d7d, /* VPMULDQZ128rm */
   0x2d83, /* VPMULDQZ128rr */
-/* Table11935 */
+/* Table11937 */
   0x23d3, /* VPCMPEQQZ128rm */
   0x23d7, /* VPCMPEQQZ128rr */
-/* Table11937 */
+/* Table11939 */
   0x38cb, /* VSCALEFPDZ128rm */
   0x38d1, /* VSCALEFPDZ128rr */
-/* Table11939 */
+/* Table11941 */
   0x3907, /* VSCALEFSDZrm */
   0x390a, /* VSCALEFSDZrr */
-/* Table11941 */
+/* Table11943 */
   0x2423, /* VPCMPGTQZ128rm */
   0x2427, /* VPCMPGTQZ128rr */
-/* Table11943 */
+/* Table11945 */
   0x2ab4, /* VPMINSQZ128rm */
   0x2aba, /* VPMINSQZ128rr */
-/* Table11945 */
+/* Table11947 */
   0x2b1a, /* VPMINUQZ128rm */
   0x2b20, /* VPMINUQZ128rr */
-/* Table11947 */
+/* Table11949 */
   0x29e8, /* VPMAXSQZ128rm */
   0x29ee, /* VPMAXSQZ128rr */
-/* Table11949 */
+/* Table11951 */
   0x2a4e, /* VPMAXUQZ128rm */
   0x2a54, /* VPMAXUQZ128rr */
-/* Table11951 */
+/* Table11953 */
   0x2dfb, /* VPMULLQZ128rm */
   0x2e01, /* VPMULLQZ128rr */
-/* Table11953 */
+/* Table11955 */
   0x1a90, /* VGETEXPPDZ128m */
   0x1a96, /* VGETEXPPDZ128r */
-/* Table11955 */
+/* Table11957 */
   0x1acc, /* VGETEXPSDZm */
   0x1acf, /* VGETEXPSDZr */
-/* Table11957 */
+/* Table11959 */
   0x2916, /* VPLZCNTQZ128rm */
   0x291c, /* VPLZCNTQZ128rr */
-/* Table11959 */
+/* Table11961 */
   0x340a, /* VPSRLVQZ128rm */
   0x3410, /* VPSRLVQZ128rr */
-/* Table11961 */
+/* Table11963 */
   0x3324, /* VPSRAVQZ128rm */
   0x332a, /* VPSRAVQZ128rr */
-/* Table11963 */
+/* Table11965 */
   0x324c, /* VPSLLVQZ128rm */
   0x3252, /* VPSLLVQZ128rr */
-/* Table11965 */
+/* Table11967 */
   0x3733, /* VRCP14PDZ128m */
   0x3739, /* VRCP14PDZ128r */
-/* Table11967 */
+/* Table11969 */
   0x3769, /* VRCP14SDZrm */
   0x376c, /* VRCP14SDZrr */
-/* Table11969 */
+/* Table11971 */
   0x3857, /* VRSQRT14PDZ128m */
   0x385d, /* VRSQRT14PDZ128r */
-/* Table11971 */
+/* Table11973 */
   0x388d, /* VRSQRT14SDZrm */
   0x3890, /* VRSQRT14SDZrr */
-/* Table11973 */
+/* Table11975 */
   0x2eae, /* VPOPCNTWZ128rm */
   0x2eb1, /* VPOPCNTWZ128rr */
-/* Table11975 */
+/* Table11977 */
   0x2e93, /* VPOPCNTQZ128rm */
   0x2e99, /* VPOPCNTQZ128rr */
-/* Table11977 */
+/* Table11979 */
   0x2321, /* VPBROADCASTQZ128m */
   0x2324, /* VPBROADCASTQZ128r */
-/* Table11979 */
+/* Table11981 */
   0x287b, /* VPEXPANDWZ128rm */
   0x287e, /* VPEXPANDWZ128rr */
-/* Table11981 */
+/* Table11983 */
   0x2534, /* VPCOMPRESSWZ128mr */
   0x2536, /* VPCOMPRESSWZ128rr */
-/* Table11983 */
+/* Table11985 */
   0x22a6, /* VPBLENDMQZ128rm */
   0x22ac, /* VPBLENDMQZ128rr */
-/* Table11985 */
+/* Table11987 */
   0xca0, /* VBLENDMPDZ128rm */
   0xca6, /* VBLENDMPDZ128rr */
-/* Table11987 */
+/* Table11989 */
   0x22c1, /* VPBLENDMWZ128rm */
   0x22c4, /* VPBLENDMWZ128rr */
-/* Table11989 */
+/* Table11991 */
   0x3084, /* VPSHLDVWZ128m */
   0x3087, /* VPSHLDVWZ128r */
-/* Table11991 */
+/* Table11993 */
   0x3069, /* VPSHLDVQZ128m */
   0x306f, /* VPSHLDVQZ128r */
-/* Table11993 */
+/* Table11995 */
   0x3120, /* VPSHRDVWZ128m */
   0x3123, /* VPSHRDVWZ128r */
-/* Table11995 */
+/* Table11997 */
   0x3105, /* VPSHRDVQZ128m */
   0x310b, /* VPSHRDVQZ128r */
-/* Table11997 */
+/* Table11999 */
   0x26a5, /* VPERMI2W128rm */
   0x26a8, /* VPERMI2W128rr */
-/* Table11999 */
+/* Table12001 */
   0x268a, /* VPERMI2Q128rm */
   0x2690, /* VPERMI2Q128rr */
-/* Table12001 */
+/* Table12003 */
   0x2654, /* VPERMI2PD128rm */
   0x265a, /* VPERMI2PD128rr */
-/* Table12003 */
+/* Table12005 */
   0x0, /*  */
   0x2333, /* VPBROADCASTQrZ128r */
-/* Table12005 */
+/* Table12007 */
   0x2821, /* VPERMT2W128rm */
   0x2824, /* VPERMT2W128rr */
-/* Table12007 */
+/* Table12009 */
   0x2806, /* VPERMT2Q128rm */
   0x280c, /* VPERMT2Q128rr */
-/* Table12009 */
+/* Table12011 */
   0x27d0, /* VPERMT2PD128rm */
   0x27d6, /* VPERMT2PD128rr */
-/* Table12011 */
+/* Table12013 */
   0x2e2c, /* VPMULTISHIFTQBZ128rm */
   0x2e32, /* VPMULTISHIFTQBZ128rr */
-/* Table12013 */
+/* Table12015 */
   0x129e, /* VEXPANDPDZ128rm */
   0x12a1, /* VEXPANDPDZ128rr */
-/* Table12015 */
+/* Table12017 */
   0x2869, /* VPEXPANDQZ128rm */
   0x286c, /* VPEXPANDQZ128rr */
-/* Table12017 */
+/* Table12019 */
   0xde8, /* VCOMPRESSPDZ128mr */
   0xdea, /* VCOMPRESSPDZ128rr */
-/* Table12019 */
+/* Table12021 */
   0x2525, /* VPCOMPRESSQZ128mr */
   0x2527, /* VPCOMPRESSQZ128rr */
-/* Table12021 */
+/* Table12023 */
   0x2833, /* VPERMWZ128rm */
   0x2836, /* VPERMWZ128rr */
-/* Table12023 */
+/* Table12025 */
   0x14a2, /* VFMADDSUB132PDZ128m */
   0x14a8, /* VFMADDSUB132PDZ128r */
-/* Table12025 */
+/* Table12027 */
   0x16aa, /* VFMSUBADD132PDZ128m */
   0x16b0, /* VFMSUBADD132PDZ128r */
-/* Table12027 */
+/* Table12029 */
   0x1356, /* VFMADD132PDZ128m */
   0x135c, /* VFMADD132PDZ128r */
-/* Table12029 */
+/* Table12031 */
   0x1399, /* VFMADD132SDZm_Int */
   0x139d, /* VFMADD132SDZr_Int */
-/* Table12031 */
+/* Table12033 */
   0x157e, /* VFMSUB132PDZ128m */
   0x1584, /* VFMSUB132PDZ128r */
-/* Table12033 */
+/* Table12035 */
   0x15c1, /* VFMSUB132SDZm_Int */
   0x15c5, /* VFMSUB132SDZr_Int */
-/* Table12035 */
+/* Table12037 */
   0x17a6, /* VFNMADD132PDZ128m */
   0x17ac, /* VFNMADD132PDZ128r */
-/* Table12037 */
+/* Table12039 */
   0x17e9, /* VFNMADD132SDZm_Int */
   0x17ed, /* VFNMADD132SDZr_Int */
-/* Table12039 */
+/* Table12041 */
   0x18f2, /* VFNMSUB132PDZ128m */
   0x18f8, /* VFNMSUB132PDZ128r */
-/* Table12041 */
+/* Table12043 */
   0x1935, /* VFNMSUB132SDZm_Int */
   0x1939, /* VFNMSUB132SDZr_Int */
-/* Table12043 */
+/* Table12045 */
   0x14e6, /* VFMADDSUB213PDZ128m */
   0x14ec, /* VFMADDSUB213PDZ128r */
-/* Table12045 */
+/* Table12047 */
   0x16ee, /* VFMSUBADD213PDZ128m */
   0x16f4, /* VFMSUBADD213PDZ128r */
-/* Table12047 */
+/* Table12049 */
   0x13ba, /* VFMADD213PDZ128m */
   0x13c0, /* VFMADD213PDZ128r */
-/* Table12049 */
+/* Table12051 */
   0x13fd, /* VFMADD213SDZm_Int */
   0x1401, /* VFMADD213SDZr_Int */
-/* Table12051 */
+/* Table12053 */
   0x15e2, /* VFMSUB213PDZ128m */
   0x15e8, /* VFMSUB213PDZ128r */
-/* Table12053 */
+/* Table12055 */
   0x1625, /* VFMSUB213SDZm_Int */
   0x1629, /* VFMSUB213SDZr_Int */
-/* Table12055 */
+/* Table12057 */
   0x180a, /* VFNMADD213PDZ128m */
   0x1810, /* VFNMADD213PDZ128r */
-/* Table12057 */
+/* Table12059 */
   0x184d, /* VFNMADD213SDZm_Int */
   0x1851, /* VFNMADD213SDZr_Int */
-/* Table12059 */
+/* Table12061 */
   0x1956, /* VFNMSUB213PDZ128m */
   0x195c, /* VFNMSUB213PDZ128r */
-/* Table12061 */
+/* Table12063 */
   0x1999, /* VFNMSUB213SDZm_Int */
   0x199d, /* VFNMSUB213SDZr_Int */
-/* Table12063 */
+/* Table12065 */
   0x2964, /* VPMADD52LUQZ128m */
   0x296a, /* VPMADD52LUQZ128r */
-/* Table12065 */
+/* Table12067 */
   0x2949, /* VPMADD52HUQZ128m */
   0x294f, /* VPMADD52HUQZ128r */
-/* Table12067 */
+/* Table12069 */
   0x152a, /* VFMADDSUB231PDZ128m */
   0x1530, /* VFMADDSUB231PDZ128r */
-/* Table12069 */
+/* Table12071 */
   0x1732, /* VFMSUBADD231PDZ128m */
   0x1738, /* VFMSUBADD231PDZ128r */
-/* Table12071 */
+/* Table12073 */
   0x141e, /* VFMADD231PDZ128m */
   0x1424, /* VFMADD231PDZ128r */
-/* Table12073 */
+/* Table12075 */
   0x1461, /* VFMADD231SDZm_Int */
   0x1465, /* VFMADD231SDZr_Int */
-/* Table12075 */
+/* Table12077 */
   0x1646, /* VFMSUB231PDZ128m */
   0x164c, /* VFMSUB231PDZ128r */
-/* Table12077 */
+/* Table12079 */
   0x1689, /* VFMSUB231SDZm_Int */
   0x168d, /* VFMSUB231SDZr_Int */
-/* Table12079 */
+/* Table12081 */
   0x186e, /* VFNMADD231PDZ128m */
   0x1874, /* VFNMADD231PDZ128r */
-/* Table12081 */
+/* Table12083 */
   0x18b1, /* VFNMADD231SDZm_Int */
   0x18b5, /* VFNMADD231SDZr_Int */
-/* Table12083 */
+/* Table12085 */
   0x19ba, /* VFNMSUB231PDZ128m */
   0x19c0, /* VFNMSUB231PDZ128r */
-/* Table12085 */
+/* Table12087 */
   0x19fd, /* VFNMSUB231SDZm_Int */
   0x1a01, /* VFNMSUB231SDZr_Int */
-/* Table12087 */
+/* Table12089 */
   0x2576, /* VPCONFLICTQZ128rm */
   0x257c, /* VPCONFLICTQZ128rr */
-/* Table12089 */
+/* Table12091 */
   0x378d, /* VRCP28SDZm */
   0x3790, /* VRCP28SDZr */
-/* Table12091 */
+/* Table12093 */
   0x38b1, /* VRSQRT28SDZm */
   0x38b4, /* VRSQRT28SDZr */
-/* Table12093 */
+/* Table12095 */
   0x2cdb, /* VPMOVUSWBZ256mr */
   0x2cdd, /* VPMOVUSWBZ256rr */
-/* Table12095 */
+/* Table12097 */
   0x2c90, /* VPMOVUSDBZ256mr */
   0x2c92, /* VPMOVUSDBZ256rr */
-/* Table12097 */
+/* Table12099 */
   0x2cae, /* VPMOVUSQBZ256mr */
   0x2cb0, /* VPMOVUSQBZ256rr */
-/* Table12099 */
+/* Table12101 */
   0x2c9f, /* VPMOVUSDWZ256mr */
   0x2ca1, /* VPMOVUSDWZ256rr */
-/* Table12101 */
+/* Table12103 */
   0x2ccc, /* VPMOVUSQWZ256mr */
   0x2cce, /* VPMOVUSQWZ256rr */
-/* Table12103 */
+/* Table12105 */
   0x2cbd, /* VPMOVUSQDZ256mr */
   0x2cbf, /* VPMOVUSQDZ256rr */
-/* Table12105 */
+/* Table12107 */
   0x2bfd, /* VPMOVSWBZ256mr */
   0x2bff, /* VPMOVSWBZ256rr */
-/* Table12107 */
+/* Table12109 */
   0x2bb2, /* VPMOVSDBZ256mr */
   0x2bb4, /* VPMOVSDBZ256rr */
-/* Table12109 */
+/* Table12111 */
   0x2bd0, /* VPMOVSQBZ256mr */
   0x2bd2, /* VPMOVSQBZ256rr */
-/* Table12111 */
+/* Table12113 */
   0x2bc1, /* VPMOVSDWZ256mr */
   0x2bc3, /* VPMOVSDWZ256rr */
-/* Table12113 */
+/* Table12115 */
   0x2bee, /* VPMOVSQWZ256mr */
   0x2bf0, /* VPMOVSQWZ256rr */
-/* Table12115 */
+/* Table12117 */
   0x2bdf, /* VPMOVSQDZ256mr */
   0x2be1, /* VPMOVSQDZ256rr */
-/* Table12117 */
+/* Table12119 */
   0x359b, /* VPTESTNMBZ256rm */
   0x359d, /* VPTESTNMBZ256rr */
-/* Table12119 */
+/* Table12121 */
   0x35a9, /* VPTESTNMDZ256rm */
   0x35ad, /* VPTESTNMDZ256rr */
-/* Table12121 */
-  0x0, /*  */
-  0x2b70, /* VPMOVM2BZ256rr */
 /* Table12123 */
   0x0, /*  */
-  0x2b4c, /* VPMOVB2MZ256rr */
+  0x2b70, /* VPMOVM2BZ256rr */
 /* Table12125 */
+  0x0, /*  */
+  0x2b4c, /* VPMOVB2MZ256rr */
+/* Table12127 */
   0x2ced, /* VPMOVWBZ256mr */
   0x2cef, /* VPMOVWBZ256rr */
-/* Table12127 */
+/* Table12129 */
   0x2b56, /* VPMOVDBZ256mr */
   0x2b58, /* VPMOVDBZ256rr */
-/* Table12129 */
+/* Table12131 */
   0x2b85, /* VPMOVQBZ256mr */
   0x2b87, /* VPMOVQBZ256rr */
-/* Table12131 */
+/* Table12133 */
   0x2b65, /* VPMOVDWZ256mr */
   0x2b67, /* VPMOVDWZ256rr */
-/* Table12133 */
+/* Table12135 */
   0x2ba3, /* VPMOVQWZ256mr */
   0x2ba5, /* VPMOVQWZ256rr */
-/* Table12135 */
+/* Table12137 */
   0x2b94, /* VPMOVQDZ256mr */
   0x2b96, /* VPMOVQDZ256rr */
-/* Table12137 */
-  0x0, /*  */
-  0x2b73, /* VPMOVM2DZ256rr */
 /* Table12139 */
   0x0, /*  */
-  0x2b4f, /* VPMOVD2MZ256rr */
+  0x2b73, /* VPMOVM2DZ256rr */
 /* Table12141 */
   0x0, /*  */
-  0x231d, /* VPBROADCASTMW2DZ256rr */
+  0x2b4f, /* VPMOVD2MZ256rr */
 /* Table12143 */
+  0x0, /*  */
+  0x231d, /* VPBROADCASTMW2DZ256rr */
+/* Table12145 */
   0x3158, /* VPSHUFBZ256rm */
   0x315b, /* VPSHUFBZ256rr */
-/* Table12145 */
+/* Table12147 */
   0x2987, /* VPMADDUBSWZ256rm */
   0x298a, /* VPMADDUBSWZ256rr */
-/* Table12147 */
+/* Table12149 */
   0x2da2, /* VPMULHRSWZ256rm */
   0x2da5, /* VPMULHRSWZ256rr */
-/* Table12149 */
+/* Table12151 */
   0x2724, /* VPERMILPSZ256rm */
   0x272a, /* VPERMILPSZ256rr */
-/* Table12151 */
+/* Table12153 */
   0xeed, /* VCVTPH2PSZ256rm */
   0xef0, /* VCVTPH2PSZ256rr */
-/* Table12153 */
+/* Table12155 */
   0x2fa9, /* VPRORVDZ256rm */
   0x2faf, /* VPRORVDZ256rr */
-/* Table12155 */
+/* Table12157 */
   0x2f3d, /* VPROLVDZ256rm */
   0x2f43, /* VPROLVDZ256rr */
-/* Table12157 */
+/* Table12159 */
   0x276b, /* VPERMPSZ256rm */
   0x2771, /* VPERMPSZ256rr */
-/* Table12159 */
+/* Table12161 */
   0xd40, /* VBROADCASTSSZ256m */
   0xd43, /* VBROADCASTSSZ256r */
-/* Table12161 */
+/* Table12163 */
   0xce7, /* VBROADCASTF32X2Z256m */
   0xcea, /* VBROADCASTF32X2Z256r */
-/* Table12163 */
+/* Table12165 */
   0xcf3, /* VBROADCASTF32X4Z256rm */
   0x0, /*  */
-/* Table12165 */
+/* Table12167 */
   0x2035, /* VPABSBZ256rm */
   0x2038, /* VPABSBZ256rr */
-/* Table12167 */
+/* Table12169 */
   0x2085, /* VPABSWZ256rm */
   0x2088, /* VPABSWZ256rr */
-/* Table12169 */
+/* Table12171 */
   0x204e, /* VPABSDZ256rm */
   0x2054, /* VPABSDZ256rr */
-/* Table12171 */
+/* Table12173 */
   0x2c3b, /* VPMOVSXBWZ256rm */
   0x2c3e, /* VPMOVSXBWZ256rr */
-/* Table12173 */
+/* Table12175 */
   0x2c0f, /* VPMOVSXBDZ256rm */
   0x2c12, /* VPMOVSXBDZ256rr */
-/* Table12175 */
+/* Table12177 */
   0x2c25, /* VPMOVSXBQZ256rm */
   0x2c28, /* VPMOVSXBQZ256rr */
-/* Table12177 */
+/* Table12179 */
   0x2c67, /* VPMOVSXWDZ256rm */
   0x2c6a, /* VPMOVSXWDZ256rr */
-/* Table12179 */
+/* Table12181 */
   0x2c7d, /* VPMOVSXWQZ256rm */
   0x2c80, /* VPMOVSXWQZ256rr */
-/* Table12181 */
+/* Table12183 */
   0x2c51, /* VPMOVSXDQZ256rm */
   0x2c54, /* VPMOVSXDQZ256rr */
-/* Table12183 */
+/* Table12185 */
   0x355f, /* VPTESTMBZ256rm */
   0x3561, /* VPTESTMBZ256rr */
-/* Table12185 */
+/* Table12187 */
   0x356d, /* VPTESTMDZ256rm */
   0x3571, /* VPTESTMDZ256rr */
-/* Table12187 */
+/* Table12189 */
   0x1eac, /* VMOVNTDQAZ256rm */
   0x0, /*  */
-/* Table12189 */
+/* Table12191 */
   0x20d3, /* VPACKUSDWZ256rm */
   0x20d9, /* VPACKUSDWZ256rr */
-/* Table12191 */
+/* Table12193 */
   0x38f2, /* VSCALEFPSZ256rm */
   0x38f8, /* VSCALEFPSZ256rr */
-/* Table12193 */
+/* Table12195 */
   0x2d2b, /* VPMOVZXBWZ256rm */
   0x2d2e, /* VPMOVZXBWZ256rr */
-/* Table12195 */
+/* Table12197 */
   0x2cff, /* VPMOVZXBDZ256rm */
   0x2d02, /* VPMOVZXBDZ256rr */
-/* Table12197 */
+/* Table12199 */
   0x2d15, /* VPMOVZXBQZ256rm */
   0x2d18, /* VPMOVZXBQZ256rr */
-/* Table12199 */
+/* Table12201 */
   0x2d57, /* VPMOVZXWDZ256rm */
   0x2d5a, /* VPMOVZXWDZ256rr */
-/* Table12201 */
+/* Table12203 */
   0x2d6d, /* VPMOVZXWQZ256rm */
   0x2d70, /* VPMOVZXWQZ256rr */
-/* Table12203 */
+/* Table12205 */
   0x2d41, /* VPMOVZXDQZ256rm */
   0x2d44, /* VPMOVZXDQZ256rr */
-/* Table12205 */
+/* Table12207 */
   0x2615, /* VPERMDZ256rm */
   0x261b, /* VPERMDZ256rr */
-/* Table12207 */
+/* Table12209 */
   0x2a87, /* VPMINSBZ256rm */
   0x2a8a, /* VPMINSBZ256rr */
-/* Table12209 */
+/* Table12211 */
   0x2aa0, /* VPMINSDZ256rm */
   0x2aa6, /* VPMINSDZ256rr */
-/* Table12211 */
+/* Table12213 */
   0x2b3d, /* VPMINUWZ256rm */
   0x2b40, /* VPMINUWZ256rr */
-/* Table12213 */
+/* Table12215 */
   0x2b06, /* VPMINUDZ256rm */
   0x2b0c, /* VPMINUDZ256rr */
-/* Table12215 */
+/* Table12217 */
   0x29bb, /* VPMAXSBZ256rm */
   0x29be, /* VPMAXSBZ256rr */
-/* Table12217 */
+/* Table12219 */
   0x29d4, /* VPMAXSDZ256rm */
   0x29da, /* VPMAXSDZ256rr */
-/* Table12219 */
+/* Table12221 */
   0x2a71, /* VPMAXUWZ256rm */
   0x2a74, /* VPMAXUWZ256rr */
-/* Table12221 */
+/* Table12223 */
   0x2a3a, /* VPMAXUDZ256rm */
   0x2a40, /* VPMAXUDZ256rr */
-/* Table12223 */
+/* Table12225 */
   0x2de7, /* VPMULLDZ256rm */
   0x2ded, /* VPMULLDZ256rr */
-/* Table12225 */
+/* Table12227 */
   0x1ab7, /* VGETEXPPSZ256m */
   0x1abd, /* VGETEXPPSZ256r */
-/* Table12227 */
+/* Table12229 */
   0x2904, /* VPLZCNTDZ256rm */
   0x290a, /* VPLZCNTDZ256rr */
-/* Table12229 */
+/* Table12231 */
   0x33f4, /* VPSRLVDZ256rm */
   0x33fa, /* VPSRLVDZ256rr */
-/* Table12231 */
+/* Table12233 */
   0x3310, /* VPSRAVDZ256rm */
   0x3316, /* VPSRAVDZ256rr */
-/* Table12233 */
+/* Table12235 */
   0x3236, /* VPSLLVDZ256rm */
   0x323c, /* VPSLLVDZ256rr */
-/* Table12235 */
+/* Table12237 */
   0x3757, /* VRCP14PSZ256m */
   0x375d, /* VRCP14PSZ256r */
-/* Table12237 */
+/* Table12239 */
   0x387b, /* VRSQRT14PSZ256m */
   0x3881, /* VRSQRT14PSZ256r */
-/* Table12239 */
+/* Table12241 */
   0x25b5, /* VPDPBUSDZ256m */
   0x25bb, /* VPDPBUSDZ256r */
-/* Table12241 */
+/* Table12243 */
   0x259a, /* VPDPBUSDSZ256m */
   0x25a0, /* VPDPBUSDSZ256r */
-/* Table12243 */
+/* Table12245 */
   0x25eb, /* VPDPWSSDZ256m */
   0x25f1, /* VPDPWSSDZ256r */
-/* Table12245 */
+/* Table12247 */
   0x25d0, /* VPDPWSSDSZ256m */
   0x25d6, /* VPDPWSSDSZ256r */
-/* Table12247 */
+/* Table12249 */
   0x2e6c, /* VPOPCNTBZ256rm */
   0x2e6f, /* VPOPCNTBZ256rr */
-/* Table12249 */
+/* Table12251 */
   0x2e81, /* VPOPCNTDZ256rm */
   0x2e87, /* VPOPCNTDZ256rr */
-/* Table12251 */
+/* Table12253 */
   0x2302, /* VPBROADCASTDZ256m */
   0x2305, /* VPBROADCASTDZ256r */
-/* Table12253 */
+/* Table12255 */
   0xd0c, /* VBROADCASTI32X2Z256m */
   0xd0f, /* VBROADCASTI32X2Z256r */
-/* Table12255 */
+/* Table12257 */
   0xd18, /* VBROADCASTI32X4Z256rm */
   0x0, /*  */
-/* Table12257 */
+/* Table12259 */
   0x284b, /* VPEXPANDBZ256rm */
   0x284e, /* VPEXPANDBZ256rr */
-/* Table12259 */
+/* Table12261 */
   0x250c, /* VPCOMPRESSBZ256mr */
   0x250e, /* VPCOMPRESSBZ256rr */
-/* Table12261 */
+/* Table12263 */
   0x2294, /* VPBLENDMDZ256rm */
   0x229a, /* VPBLENDMDZ256rr */
-/* Table12263 */
+/* Table12265 */
   0xcc4, /* VBLENDMPSZ256rm */
   0xcca, /* VBLENDMPSZ256rr */
-/* Table12265 */
+/* Table12267 */
   0x227f, /* VPBLENDMBZ256rm */
   0x2282, /* VPBLENDMBZ256rr */
-/* Table12267 */
+/* Table12269 */
   0x3057, /* VPSHLDVDZ256m */
   0x305d, /* VPSHLDVDZ256r */
-/* Table12269 */
+/* Table12271 */
   0x30f3, /* VPSHRDVDZ256m */
   0x30f9, /* VPSHRDVDZ256r */
-/* Table12271 */
+/* Table12273 */
   0x262d, /* VPERMI2B256rm */
   0x2630, /* VPERMI2B256rr */
-/* Table12273 */
+/* Table12275 */
   0x2642, /* VPERMI2D256rm */
   0x2648, /* VPERMI2D256rr */
-/* Table12275 */
+/* Table12277 */
   0x2678, /* VPERMI2PS256rm */
   0x267e, /* VPERMI2PS256rr */
-/* Table12277 */
+/* Table12279 */
   0x22e3, /* VPBROADCASTBZ256m */
   0x22e6, /* VPBROADCASTBZ256r */
-/* Table12279 */
+/* Table12281 */
   0x2346, /* VPBROADCASTWZ256m */
   0x2349, /* VPBROADCASTWZ256r */
-/* Table12281 */
-  0x0, /*  */
-  0x22f2, /* VPBROADCASTBrZ256r */
 /* Table12283 */
   0x0, /*  */
-  0x2355, /* VPBROADCASTWrZ256r */
+  0x22f2, /* VPBROADCASTBrZ256r */
 /* Table12285 */
   0x0, /*  */
-  0x2311, /* VPBROADCASTDrZ256r */
+  0x2355, /* VPBROADCASTWrZ256r */
 /* Table12287 */
+  0x0, /*  */
+  0x2311, /* VPBROADCASTDrZ256r */
+/* Table12289 */
   0x27a9, /* VPERMT2B256rm */
   0x27ac, /* VPERMT2B256rr */
-/* Table12289 */
+/* Table12291 */
   0x27be, /* VPERMT2D256rm */
   0x27c4, /* VPERMT2D256rr */
-/* Table12291 */
+/* Table12293 */
   0x27f4, /* VPERMT2PS256rm */
   0x27fa, /* VPERMT2PS256rr */
-/* Table12293 */
+/* Table12295 */
   0x12b6, /* VEXPANDPSZ256rm */
   0x12b9, /* VEXPANDPSZ256rr */
-/* Table12295 */
+/* Table12297 */
   0x285d, /* VPEXPANDDZ256rm */
   0x2860, /* VPEXPANDDZ256rr */
-/* Table12297 */
+/* Table12299 */
   0xdfc, /* VCOMPRESSPSZ256mr */
   0xdfe, /* VCOMPRESSPSZ256rr */
-/* Table12299 */
+/* Table12301 */
   0x251b, /* VPCOMPRESSDZ256mr */
   0x251d, /* VPCOMPRESSDZ256rr */
-/* Table12301 */
+/* Table12303 */
   0x2607, /* VPERMBZ256rm */
   0x260a, /* VPERMBZ256rr */
-/* Table12303 */
+/* Table12305 */
   0x3148, /* VPSHUFBITQMBZ256rm */
   0x314a, /* VPSHUFBITQMBZ256rr */
-/* Table12305 */
+/* Table12307 */
   0x14cd, /* VFMADDSUB132PSZ256m */
   0x14d3, /* VFMADDSUB132PSZ256r */
-/* Table12307 */
+/* Table12309 */
   0x16d5, /* VFMSUBADD132PSZ256m */
   0x16db, /* VFMSUBADD132PSZ256r */
-/* Table12309 */
+/* Table12311 */
   0x1381, /* VFMADD132PSZ256m */
   0x1387, /* VFMADD132PSZ256r */
-/* Table12311 */
+/* Table12313 */
   0x15a9, /* VFMSUB132PSZ256m */
   0x15af, /* VFMSUB132PSZ256r */
-/* Table12313 */
+/* Table12315 */
   0x17d1, /* VFNMADD132PSZ256m */
   0x17d7, /* VFNMADD132PSZ256r */
-/* Table12315 */
+/* Table12317 */
   0x191d, /* VFNMSUB132PSZ256m */
   0x1923, /* VFNMSUB132PSZ256r */
-/* Table12317 */
+/* Table12319 */
   0x1511, /* VFMADDSUB213PSZ256m */
   0x1517, /* VFMADDSUB213PSZ256r */
-/* Table12319 */
+/* Table12321 */
   0x1719, /* VFMSUBADD213PSZ256m */
   0x171f, /* VFMSUBADD213PSZ256r */
-/* Table12321 */
+/* Table12323 */
   0x13e5, /* VFMADD213PSZ256m */
   0x13eb, /* VFMADD213PSZ256r */
-/* Table12323 */
+/* Table12325 */
   0x160d, /* VFMSUB213PSZ256m */
   0x1613, /* VFMSUB213PSZ256r */
-/* Table12325 */
+/* Table12327 */
   0x1835, /* VFNMADD213PSZ256m */
   0x183b, /* VFNMADD213PSZ256r */
-/* Table12327 */
+/* Table12329 */
   0x1981, /* VFNMSUB213PSZ256m */
   0x1987, /* VFNMSUB213PSZ256r */
-/* Table12329 */
+/* Table12331 */
   0x1555, /* VFMADDSUB231PSZ256m */
   0x155b, /* VFMADDSUB231PSZ256r */
-/* Table12331 */
+/* Table12333 */
   0x175d, /* VFMSUBADD231PSZ256m */
   0x1763, /* VFMSUBADD231PSZ256r */
-/* Table12333 */
+/* Table12335 */
   0x1449, /* VFMADD231PSZ256m */
   0x144f, /* VFMADD231PSZ256r */
-/* Table12335 */
+/* Table12337 */
   0x1671, /* VFMSUB231PSZ256m */
   0x1677, /* VFMSUB231PSZ256r */
-/* Table12337 */
+/* Table12339 */
   0x1899, /* VFNMADD231PSZ256m */
   0x189f, /* VFNMADD231PSZ256r */
-/* Table12339 */
+/* Table12341 */
   0x19e5, /* VFNMSUB231PSZ256m */
   0x19eb, /* VFNMSUB231PSZ256r */
-/* Table12341 */
+/* Table12343 */
   0x2564, /* VPCONFLICTDZ256rm */
   0x256a, /* VPCONFLICTDZ256rr */
-/* Table12343 */
+/* Table12345 */
   0x1b72, /* VGF2P8MULBZ256rm */
   0x1b75, /* VGF2P8MULBZ256rr */
-/* Table12345 */
+/* Table12347 */
   0xbe4, /* VAESENCZ256rm */
   0xbe5, /* VAESENCZ256rr */
-/* Table12347 */
+/* Table12349 */
   0xbda, /* VAESENCLASTZ256rm */
   0xbdb, /* VAESENCLASTZ256rr */
-/* Table12349 */
+/* Table12351 */
   0xbd0, /* VAESDECZ256rm */
   0xbd1, /* VAESDECZ256rr */
-/* Table12351 */
+/* Table12353 */
   0xbc6, /* VAESDECLASTZ256rm */
   0xbc7, /* VAESDECLASTZ256rr */
-/* Table12353 */
+/* Table12355 */
   0x35cb, /* VPTESTNMWZ256rm */
   0x35cd, /* VPTESTNMWZ256rr */
-/* Table12355 */
+/* Table12357 */
   0x35bb, /* VPTESTNMQZ256rm */
   0x35bf, /* VPTESTNMQZ256rr */
-/* Table12357 */
-  0x0, /*  */
-  0x2b79, /* VPMOVM2WZ256rr */
 /* Table12359 */
   0x0, /*  */
-  0x2ce6, /* VPMOVW2MZ256rr */
+  0x2b79, /* VPMOVM2WZ256rr */
 /* Table12361 */
   0x0, /*  */
-  0x231a, /* VPBROADCASTMB2QZ256rr */
+  0x2ce6, /* VPMOVW2MZ256rr */
 /* Table12363 */
   0x0, /*  */
-  0x2b76, /* VPMOVM2QZ256rr */
+  0x231a, /* VPBROADCASTMB2QZ256rr */
 /* Table12365 */
   0x0, /*  */
-  0x2b7e, /* VPMOVQ2MZ256rr */
+  0x2b76, /* VPMOVM2QZ256rr */
 /* Table12367 */
+  0x0, /*  */
+  0x2b7e, /* VPMOVQ2MZ256rr */
+/* Table12369 */
   0x26e6, /* VPERMILPDZ256rm */
   0x26ec, /* VPERMILPDZ256rr */
-/* Table12369 */
+/* Table12371 */
   0x342d, /* VPSRLVWZ256rm */
   0x3430, /* VPSRLVWZ256rr */
-/* Table12371 */
+/* Table12373 */
   0x3345, /* VPSRAVWZ256rm */
   0x3348, /* VPSRAVWZ256rr */
-/* Table12373 */
+/* Table12375 */
   0x326f, /* VPSLLVWZ256rm */
   0x3272, /* VPSLLVWZ256rr */
-/* Table12375 */
+/* Table12377 */
   0x2fc4, /* VPRORVQZ256rm */
   0x2fca, /* VPRORVQZ256rr */
-/* Table12377 */
+/* Table12379 */
   0x2f58, /* VPROLVQZ256rm */
   0x2f5e, /* VPROLVQZ256rr */
-/* Table12379 */
+/* Table12381 */
   0x274e, /* VPERMPDZ256rm */
   0x2754, /* VPERMPDZ256rr */
-/* Table12381 */
+/* Table12383 */
   0xd2c, /* VBROADCASTSDZ256m */
   0xd2f, /* VBROADCASTSDZ256r */
-/* Table12383 */
+/* Table12385 */
   0xcfc, /* VBROADCASTF64X2Z128rm */
   0x0, /*  */
-/* Table12385 */
+/* Table12387 */
   0x206b, /* VPABSQZ256rm */
   0x2071, /* VPABSQZ256rr */
-/* Table12387 */
+/* Table12389 */
   0x358f, /* VPTESTMWZ256rm */
   0x3591, /* VPTESTMWZ256rr */
-/* Table12389 */
+/* Table12391 */
   0x357f, /* VPTESTMQZ256rm */
   0x3583, /* VPTESTMQZ256rr */
-/* Table12391 */
+/* Table12393 */
   0x2d86, /* VPMULDQZ256rm */
   0x2d8c, /* VPMULDQZ256rr */
-/* Table12393 */
+/* Table12395 */
   0x23d9, /* VPCMPEQQZ256rm */
   0x23dd, /* VPCMPEQQZ256rr */
-/* Table12395 */
+/* Table12397 */
   0x38d4, /* VSCALEFPDZ256rm */
   0x38da, /* VSCALEFPDZ256rr */
-/* Table12397 */
+/* Table12399 */
   0x2788, /* VPERMQZ256rm */
   0x278e, /* VPERMQZ256rr */
-/* Table12399 */
+/* Table12401 */
   0x2429, /* VPCMPGTQZ256rm */
   0x242d, /* VPCMPGTQZ256rr */
-/* Table12401 */
+/* Table12403 */
   0x2abd, /* VPMINSQZ256rm */
   0x2ac3, /* VPMINSQZ256rr */
-/* Table12403 */
+/* Table12405 */
   0x2b23, /* VPMINUQZ256rm */
   0x2b29, /* VPMINUQZ256rr */
-/* Table12405 */
+/* Table12407 */
   0x29f1, /* VPMAXSQZ256rm */
   0x29f7, /* VPMAXSQZ256rr */
-/* Table12407 */
+/* Table12409 */
   0x2a57, /* VPMAXUQZ256rm */
   0x2a5d, /* VPMAXUQZ256rr */
-/* Table12409 */
+/* Table12411 */
   0x2e04, /* VPMULLQZ256rm */
   0x2e0a, /* VPMULLQZ256rr */
-/* Table12411 */
+/* Table12413 */
   0x1a99, /* VGETEXPPDZ256m */
   0x1a9f, /* VGETEXPPDZ256r */
-/* Table12413 */
+/* Table12415 */
   0x291f, /* VPLZCNTQZ256rm */
   0x2925, /* VPLZCNTQZ256rr */
-/* Table12415 */
+/* Table12417 */
   0x3413, /* VPSRLVQZ256rm */
   0x3419, /* VPSRLVQZ256rr */
-/* Table12417 */
+/* Table12419 */
   0x332d, /* VPSRAVQZ256rm */
   0x3333, /* VPSRAVQZ256rr */
-/* Table12419 */
+/* Table12421 */
   0x3255, /* VPSLLVQZ256rm */
   0x325b, /* VPSLLVQZ256rr */
-/* Table12421 */
+/* Table12423 */
   0x373c, /* VRCP14PDZ256m */
   0x3742, /* VRCP14PDZ256r */
-/* Table12423 */
+/* Table12425 */
   0x3860, /* VRSQRT14PDZ256m */
   0x3866, /* VRSQRT14PDZ256r */
-/* Table12425 */
+/* Table12427 */
   0x2eb4, /* VPOPCNTWZ256rm */
   0x2eb7, /* VPOPCNTWZ256rr */
-/* Table12427 */
+/* Table12429 */
   0x2e9c, /* VPOPCNTQZ256rm */
   0x2ea2, /* VPOPCNTQZ256rr */
-/* Table12429 */
+/* Table12431 */
   0x2327, /* VPBROADCASTQZ256m */
   0x232a, /* VPBROADCASTQZ256r */
-/* Table12431 */
+/* Table12433 */
   0xd21, /* VBROADCASTI64X2Z128rm */
   0x0, /*  */
-/* Table12433 */
+/* Table12435 */
   0x2881, /* VPEXPANDWZ256rm */
   0x2884, /* VPEXPANDWZ256rr */
-/* Table12435 */
+/* Table12437 */
   0x2539, /* VPCOMPRESSWZ256mr */
   0x253b, /* VPCOMPRESSWZ256rr */
-/* Table12437 */
+/* Table12439 */
   0x22af, /* VPBLENDMQZ256rm */
   0x22b5, /* VPBLENDMQZ256rr */
-/* Table12439 */
+/* Table12441 */
   0xca9, /* VBLENDMPDZ256rm */
   0xcaf, /* VBLENDMPDZ256rr */
-/* Table12441 */
+/* Table12443 */
   0x22c7, /* VPBLENDMWZ256rm */
   0x22ca, /* VPBLENDMWZ256rr */
-/* Table12443 */
+/* Table12445 */
   0x308a, /* VPSHLDVWZ256m */
   0x308d, /* VPSHLDVWZ256r */
-/* Table12445 */
+/* Table12447 */
   0x3072, /* VPSHLDVQZ256m */
   0x3078, /* VPSHLDVQZ256r */
-/* Table12447 */
+/* Table12449 */
   0x3126, /* VPSHRDVWZ256m */
   0x3129, /* VPSHRDVWZ256r */
-/* Table12449 */
+/* Table12451 */
   0x310e, /* VPSHRDVQZ256m */
   0x3114, /* VPSHRDVQZ256r */
-/* Table12451 */
+/* Table12453 */
   0x26ab, /* VPERMI2W256rm */
   0x26ae, /* VPERMI2W256rr */
-/* Table12453 */
+/* Table12455 */
   0x2693, /* VPERMI2Q256rm */
   0x2699, /* VPERMI2Q256rr */
-/* Table12455 */
+/* Table12457 */
   0x265d, /* VPERMI2PD256rm */
   0x2663, /* VPERMI2PD256rr */
-/* Table12457 */
+/* Table12459 */
   0x0, /*  */
   0x2336, /* VPBROADCASTQrZ256r */
-/* Table12459 */
+/* Table12461 */
   0x2827, /* VPERMT2W256rm */
   0x282a, /* VPERMT2W256rr */
-/* Table12461 */
+/* Table12463 */
   0x280f, /* VPERMT2Q256rm */
   0x2815, /* VPERMT2Q256rr */
-/* Table12463 */
+/* Table12465 */
   0x27d9, /* VPERMT2PD256rm */
   0x27df, /* VPERMT2PD256rr */
-/* Table12465 */
+/* Table12467 */
   0x2e35, /* VPMULTISHIFTQBZ256rm */
   0x2e3b, /* VPMULTISHIFTQBZ256rr */
-/* Table12467 */
+/* Table12469 */
   0x12a4, /* VEXPANDPDZ256rm */
   0x12a7, /* VEXPANDPDZ256rr */
-/* Table12469 */
+/* Table12471 */
   0x286f, /* VPEXPANDQZ256rm */
   0x2872, /* VPEXPANDQZ256rr */
-/* Table12471 */
+/* Table12473 */
   0xded, /* VCOMPRESSPDZ256mr */
   0xdef, /* VCOMPRESSPDZ256rr */
-/* Table12473 */
+/* Table12475 */
   0x252a, /* VPCOMPRESSQZ256mr */
   0x252c, /* VPCOMPRESSQZ256rr */
-/* Table12475 */
+/* Table12477 */
   0x2839, /* VPERMWZ256rm */
   0x283c, /* VPERMWZ256rr */
-/* Table12477 */
+/* Table12479 */
   0x14ab, /* VFMADDSUB132PDZ256m */
   0x14b1, /* VFMADDSUB132PDZ256r */
-/* Table12479 */
+/* Table12481 */
   0x16b3, /* VFMSUBADD132PDZ256m */
   0x16b9, /* VFMSUBADD132PDZ256r */
-/* Table12481 */
+/* Table12483 */
   0x135f, /* VFMADD132PDZ256m */
   0x1365, /* VFMADD132PDZ256r */
-/* Table12483 */
+/* Table12485 */
   0x1587, /* VFMSUB132PDZ256m */
   0x158d, /* VFMSUB132PDZ256r */
-/* Table12485 */
+/* Table12487 */
   0x17af, /* VFNMADD132PDZ256m */
   0x17b5, /* VFNMADD132PDZ256r */
-/* Table12487 */
+/* Table12489 */
   0x18fb, /* VFNMSUB132PDZ256m */
   0x1901, /* VFNMSUB132PDZ256r */
-/* Table12489 */
+/* Table12491 */
   0x14ef, /* VFMADDSUB213PDZ256m */
   0x14f5, /* VFMADDSUB213PDZ256r */
-/* Table12491 */
+/* Table12493 */
   0x16f7, /* VFMSUBADD213PDZ256m */
   0x16fd, /* VFMSUBADD213PDZ256r */
-/* Table12493 */
+/* Table12495 */
   0x13c3, /* VFMADD213PDZ256m */
   0x13c9, /* VFMADD213PDZ256r */
-/* Table12495 */
+/* Table12497 */
   0x15eb, /* VFMSUB213PDZ256m */
   0x15f1, /* VFMSUB213PDZ256r */
-/* Table12497 */
+/* Table12499 */
   0x1813, /* VFNMADD213PDZ256m */
   0x1819, /* VFNMADD213PDZ256r */
-/* Table12499 */
+/* Table12501 */
   0x195f, /* VFNMSUB213PDZ256m */
   0x1965, /* VFNMSUB213PDZ256r */
-/* Table12501 */
+/* Table12503 */
   0x296d, /* VPMADD52LUQZ256m */
   0x2973, /* VPMADD52LUQZ256r */
-/* Table12503 */
+/* Table12505 */
   0x2952, /* VPMADD52HUQZ256m */
   0x2958, /* VPMADD52HUQZ256r */
-/* Table12505 */
+/* Table12507 */
   0x1533, /* VFMADDSUB231PDZ256m */
   0x1539, /* VFMADDSUB231PDZ256r */
-/* Table12507 */
+/* Table12509 */
   0x173b, /* VFMSUBADD231PDZ256m */
   0x1741, /* VFMSUBADD231PDZ256r */
-/* Table12509 */
+/* Table12511 */
   0x1427, /* VFMADD231PDZ256m */
   0x142d, /* VFMADD231PDZ256r */
-/* Table12511 */
+/* Table12513 */
   0x164f, /* VFMSUB231PDZ256m */
   0x1655, /* VFMSUB231PDZ256r */
-/* Table12513 */
+/* Table12515 */
   0x1877, /* VFNMADD231PDZ256m */
   0x187d, /* VFNMADD231PDZ256r */
-/* Table12515 */
+/* Table12517 */
   0x19c3, /* VFNMSUB231PDZ256m */
   0x19c9, /* VFNMSUB231PDZ256r */
-/* Table12517 */
+/* Table12519 */
   0x257f, /* VPCONFLICTQZ256rm */
   0x2585, /* VPCONFLICTQZ256rr */
-/* Table12519 */
+/* Table12521 */
   0x2ce0, /* VPMOVUSWBZmr */
   0x2ce2, /* VPMOVUSWBZrr */
-/* Table12521 */
+/* Table12523 */
   0x2c95, /* VPMOVUSDBZmr */
   0x2c97, /* VPMOVUSDBZrr */
-/* Table12523 */
+/* Table12525 */
   0x2cb3, /* VPMOVUSQBZmr */
   0x2cb5, /* VPMOVUSQBZrr */
-/* Table12525 */
+/* Table12527 */
   0x2ca4, /* VPMOVUSDWZmr */
   0x2ca6, /* VPMOVUSDWZrr */
-/* Table12527 */
+/* Table12529 */
   0x2cd1, /* VPMOVUSQWZmr */
   0x2cd3, /* VPMOVUSQWZrr */
-/* Table12529 */
+/* Table12531 */
   0x2cc2, /* VPMOVUSQDZmr */
   0x2cc4, /* VPMOVUSQDZrr */
-/* Table12531 */
+/* Table12533 */
   0x2c02, /* VPMOVSWBZmr */
   0x2c04, /* VPMOVSWBZrr */
-/* Table12533 */
+/* Table12535 */
   0x2bb7, /* VPMOVSDBZmr */
   0x2bb9, /* VPMOVSDBZrr */
-/* Table12535 */
+/* Table12537 */
   0x2bd5, /* VPMOVSQBZmr */
   0x2bd7, /* VPMOVSQBZrr */
-/* Table12537 */
+/* Table12539 */
   0x2bc6, /* VPMOVSDWZmr */
   0x2bc8, /* VPMOVSDWZrr */
-/* Table12539 */
+/* Table12541 */
   0x2bf3, /* VPMOVSQWZmr */
   0x2bf5, /* VPMOVSQWZrr */
-/* Table12541 */
+/* Table12543 */
   0x2be4, /* VPMOVSQDZmr */
   0x2be6, /* VPMOVSQDZrr */
-/* Table12543 */
+/* Table12545 */
   0x359f, /* VPTESTNMBZrm */
   0x35a1, /* VPTESTNMBZrr */
-/* Table12545 */
+/* Table12547 */
   0x35af, /* VPTESTNMDZrm */
   0x35b3, /* VPTESTNMDZrr */
-/* Table12547 */
-  0x0, /*  */
-  0x2b71, /* VPMOVM2BZrr */
 /* Table12549 */
   0x0, /*  */
-  0x2b4d, /* VPMOVB2MZrr */
+  0x2b71, /* VPMOVM2BZrr */
 /* Table12551 */
+  0x0, /*  */
+  0x2b4d, /* VPMOVB2MZrr */
+/* Table12553 */
   0x2cf2, /* VPMOVWBZmr */
   0x2cf4, /* VPMOVWBZrr */
-/* Table12553 */
+/* Table12555 */
   0x2b5b, /* VPMOVDBZmr */
   0x2b5d, /* VPMOVDBZrr */
-/* Table12555 */
+/* Table12557 */
   0x2b8a, /* VPMOVQBZmr */
   0x2b8c, /* VPMOVQBZrr */
-/* Table12557 */
+/* Table12559 */
   0x2b6a, /* VPMOVDWZmr */
   0x2b6c, /* VPMOVDWZrr */
-/* Table12559 */
+/* Table12561 */
   0x2ba8, /* VPMOVQWZmr */
   0x2baa, /* VPMOVQWZrr */
-/* Table12561 */
+/* Table12563 */
   0x2b99, /* VPMOVQDZmr */
   0x2b9b, /* VPMOVQDZrr */
-/* Table12563 */
-  0x0, /*  */
-  0x2b74, /* VPMOVM2DZrr */
 /* Table12565 */
   0x0, /*  */
-  0x2b50, /* VPMOVD2MZrr */
+  0x2b74, /* VPMOVM2DZrr */
 /* Table12567 */
   0x0, /*  */
-  0x231e, /* VPBROADCASTMW2DZrr */
+  0x2b50, /* VPMOVD2MZrr */
 /* Table12569 */
+  0x0, /*  */
+  0x231e, /* VPBROADCASTMW2DZrr */
+/* Table12571 */
   0x202a, /* VP4DPWSSDrm */
   0x0, /*  */
-/* Table12571 */
+/* Table12573 */
   0x2027, /* VP4DPWSSDSrm */
   0x0, /*  */
-/* Table12573 */
+/* Table12575 */
   0xb4c, /* V4FMADDPSrm */
   0x0, /*  */
-/* Table12575 */
+/* Table12577 */
   0xb52, /* V4FNMADDPSrm */
   0x0, /*  */
-/* Table12577 */
+/* Table12579 */
   0x315e, /* VPSHUFBZrm */
   0x3161, /* VPSHUFBZrr */
-/* Table12579 */
+/* Table12581 */
   0x298d, /* VPMADDUBSWZrm */
   0x2990, /* VPMADDUBSWZrr */
-/* Table12581 */
+/* Table12583 */
   0x2da8, /* VPMULHRSWZrm */
   0x2dab, /* VPMULHRSWZrr */
-/* Table12583 */
+/* Table12585 */
   0x2736, /* VPERMILPSZrm */
   0x273c, /* VPERMILPSZrr */
-/* Table12585 */
+/* Table12587 */
   0xef3, /* VCVTPH2PSZrm */
   0xef6, /* VCVTPH2PSZrr */
-/* Table12587 */
+/* Table12589 */
   0x2fb2, /* VPRORVDZrm */
   0x2fb8, /* VPRORVDZrr */
-/* Table12589 */
+/* Table12591 */
   0x2f46, /* VPROLVDZrm */
   0x2f4c, /* VPROLVDZrr */
-/* Table12591 */
+/* Table12593 */
   0x2774, /* VPERMPSZrm */
   0x277a, /* VPERMPSZrr */
-/* Table12593 */
+/* Table12595 */
   0xd46, /* VBROADCASTSSZm */
   0xd49, /* VBROADCASTSSZr */
-/* Table12595 */
+/* Table12597 */
   0xced, /* VBROADCASTF32X2Zm */
   0xcf0, /* VBROADCASTF32X2Zr */
-/* Table12597 */
+/* Table12599 */
   0xcf6, /* VBROADCASTF32X4rm */
   0x0, /*  */
-/* Table12599 */
+/* Table12601 */
   0xcf9, /* VBROADCASTF32X8rm */
   0x0, /*  */
-/* Table12601 */
+/* Table12603 */
   0x203b, /* VPABSBZrm */
   0x203e, /* VPABSBZrr */
-/* Table12603 */
+/* Table12605 */
   0x208b, /* VPABSWZrm */
   0x208e, /* VPABSWZrr */
-/* Table12605 */
+/* Table12607 */
   0x2057, /* VPABSDZrm */
   0x205d, /* VPABSDZrr */
-/* Table12607 */
+/* Table12609 */
   0x2c41, /* VPMOVSXBWZrm */
   0x2c44, /* VPMOVSXBWZrr */
-/* Table12609 */
+/* Table12611 */
   0x2c15, /* VPMOVSXBDZrm */
   0x2c18, /* VPMOVSXBDZrr */
-/* Table12611 */
+/* Table12613 */
   0x2c2b, /* VPMOVSXBQZrm */
   0x2c2e, /* VPMOVSXBQZrr */
-/* Table12613 */
+/* Table12615 */
   0x2c6d, /* VPMOVSXWDZrm */
   0x2c70, /* VPMOVSXWDZrr */
-/* Table12615 */
+/* Table12617 */
   0x2c83, /* VPMOVSXWQZrm */
   0x2c86, /* VPMOVSXWQZrr */
-/* Table12617 */
+/* Table12619 */
   0x2c57, /* VPMOVSXDQZrm */
   0x2c5a, /* VPMOVSXDQZrr */
-/* Table12619 */
+/* Table12621 */
   0x3563, /* VPTESTMBZrm */
   0x3565, /* VPTESTMBZrr */
-/* Table12621 */
+/* Table12623 */
   0x3573, /* VPTESTMDZrm */
   0x3577, /* VPTESTMDZrr */
-/* Table12623 */
+/* Table12625 */
   0x1ead, /* VMOVNTDQAZrm */
   0x0, /*  */
-/* Table12625 */
+/* Table12627 */
   0x20dc, /* VPACKUSDWZrm */
   0x20e2, /* VPACKUSDWZrr */
-/* Table12627 */
+/* Table12629 */
   0x38fb, /* VSCALEFPSZrm */
   0x3901, /* VSCALEFPSZrr */
-/* Table12629 */
+/* Table12631 */
   0x2d31, /* VPMOVZXBWZrm */
   0x2d34, /* VPMOVZXBWZrr */
-/* Table12631 */
+/* Table12633 */
   0x2d05, /* VPMOVZXBDZrm */
   0x2d08, /* VPMOVZXBDZrr */
-/* Table12633 */
+/* Table12635 */
   0x2d1b, /* VPMOVZXBQZrm */
   0x2d1e, /* VPMOVZXBQZrr */
-/* Table12635 */
+/* Table12637 */
   0x2d5d, /* VPMOVZXWDZrm */
   0x2d60, /* VPMOVZXWDZrr */
-/* Table12637 */
+/* Table12639 */
   0x2d73, /* VPMOVZXWQZrm */
   0x2d76, /* VPMOVZXWQZrr */
-/* Table12639 */
+/* Table12641 */
   0x2d47, /* VPMOVZXDQZrm */
   0x2d4a, /* VPMOVZXDQZrr */
-/* Table12641 */
+/* Table12643 */
   0x261e, /* VPERMDZrm */
   0x2624, /* VPERMDZrr */
-/* Table12643 */
+/* Table12645 */
   0x2a8d, /* VPMINSBZrm */
   0x2a90, /* VPMINSBZrr */
-/* Table12645 */
+/* Table12647 */
   0x2aa9, /* VPMINSDZrm */
   0x2aaf, /* VPMINSDZrr */
-/* Table12647 */
+/* Table12649 */
   0x2b43, /* VPMINUWZrm */
   0x2b46, /* VPMINUWZrr */
-/* Table12649 */
+/* Table12651 */
   0x2b0f, /* VPMINUDZrm */
   0x2b15, /* VPMINUDZrr */
-/* Table12651 */
+/* Table12653 */
   0x29c1, /* VPMAXSBZrm */
   0x29c4, /* VPMAXSBZrr */
-/* Table12653 */
+/* Table12655 */
   0x29dd, /* VPMAXSDZrm */
   0x29e3, /* VPMAXSDZrr */
-/* Table12655 */
+/* Table12657 */
   0x2a77, /* VPMAXUWZrm */
   0x2a7a, /* VPMAXUWZrr */
-/* Table12657 */
+/* Table12659 */
   0x2a43, /* VPMAXUDZrm */
   0x2a49, /* VPMAXUDZrr */
-/* Table12659 */
+/* Table12661 */
   0x2df0, /* VPMULLDZrm */
   0x2df6, /* VPMULLDZrr */
-/* Table12661 */
+/* Table12663 */
   0x1ac0, /* VGETEXPPSZm */
   0x1ac6, /* VGETEXPPSZr */
-/* Table12663 */
+/* Table12665 */
   0x290d, /* VPLZCNTDZrm */
   0x2913, /* VPLZCNTDZrr */
-/* Table12665 */
+/* Table12667 */
   0x33fd, /* VPSRLVDZrm */
   0x3403, /* VPSRLVDZrr */
-/* Table12667 */
+/* Table12669 */
   0x3319, /* VPSRAVDZrm */
   0x331f, /* VPSRAVDZrr */
-/* Table12669 */
+/* Table12671 */
   0x323f, /* VPSLLVDZrm */
   0x3245, /* VPSLLVDZrr */
-/* Table12671 */
+/* Table12673 */
   0x3760, /* VRCP14PSZm */
   0x3766, /* VRCP14PSZr */
-/* Table12673 */
+/* Table12675 */
   0x3884, /* VRSQRT14PSZm */
   0x388a, /* VRSQRT14PSZr */
-/* Table12675 */
+/* Table12677 */
   0x25be, /* VPDPBUSDZm */
   0x25c4, /* VPDPBUSDZr */
-/* Table12677 */
+/* Table12679 */
   0x25a3, /* VPDPBUSDSZm */
   0x25a9, /* VPDPBUSDSZr */
-/* Table12679 */
+/* Table12681 */
   0x25f4, /* VPDPWSSDZm */
   0x25fa, /* VPDPWSSDZr */
-/* Table12681 */
+/* Table12683 */
   0x25d9, /* VPDPWSSDSZm */
   0x25df, /* VPDPWSSDSZr */
-/* Table12683 */
+/* Table12685 */
   0x2e72, /* VPOPCNTBZrm */
   0x2e75, /* VPOPCNTBZrr */
-/* Table12685 */
+/* Table12687 */
   0x2e8a, /* VPOPCNTDZrm */
   0x2e90, /* VPOPCNTDZrr */
-/* Table12687 */
+/* Table12689 */
   0x2308, /* VPBROADCASTDZm */
   0x230b, /* VPBROADCASTDZr */
-/* Table12689 */
+/* Table12691 */
   0xd12, /* VBROADCASTI32X2Zm */
   0xd15, /* VBROADCASTI32X2Zr */
-/* Table12691 */
+/* Table12693 */
   0xd1b, /* VBROADCASTI32X4rm */
   0x0, /*  */
-/* Table12693 */
+/* Table12695 */
   0xd1e, /* VBROADCASTI32X8rm */
   0x0, /*  */
-/* Table12695 */
+/* Table12697 */
   0x2851, /* VPEXPANDBZrm */
   0x2854, /* VPEXPANDBZrr */
-/* Table12697 */
+/* Table12699 */
   0x2511, /* VPCOMPRESSBZmr */
   0x2513, /* VPCOMPRESSBZrr */
-/* Table12699 */
+/* Table12701 */
   0x229d, /* VPBLENDMDZrm */
   0x22a3, /* VPBLENDMDZrr */
-/* Table12701 */
+/* Table12703 */
   0xccd, /* VBLENDMPSZrm */
   0xcd3, /* VBLENDMPSZrr */
-/* Table12703 */
+/* Table12705 */
   0x2285, /* VPBLENDMBZrm */
   0x2288, /* VPBLENDMBZrr */
-/* Table12705 */
+/* Table12707 */
   0x3060, /* VPSHLDVDZm */
   0x3066, /* VPSHLDVDZr */
-/* Table12707 */
+/* Table12709 */
   0x30fc, /* VPSHRDVDZm */
   0x3102, /* VPSHRDVDZr */
-/* Table12709 */
+/* Table12711 */
   0x2633, /* VPERMI2Brm */
   0x2636, /* VPERMI2Brr */
-/* Table12711 */
+/* Table12713 */
   0x264b, /* VPERMI2Drm */
   0x2651, /* VPERMI2Drr */
-/* Table12713 */
+/* Table12715 */
   0x2681, /* VPERMI2PSrm */
   0x2687, /* VPERMI2PSrr */
-/* Table12715 */
+/* Table12717 */
   0x22e9, /* VPBROADCASTBZm */
   0x22ec, /* VPBROADCASTBZr */
-/* Table12717 */
+/* Table12719 */
   0x234c, /* VPBROADCASTWZm */
   0x234f, /* VPBROADCASTWZr */
-/* Table12719 */
-  0x0, /*  */
-  0x22f5, /* VPBROADCASTBrZr */
 /* Table12721 */
   0x0, /*  */
-  0x2358, /* VPBROADCASTWrZr */
+  0x22f5, /* VPBROADCASTBrZr */
 /* Table12723 */
   0x0, /*  */
-  0x2314, /* VPBROADCASTDrZr */
+  0x2358, /* VPBROADCASTWrZr */
 /* Table12725 */
+  0x0, /*  */
+  0x2314, /* VPBROADCASTDrZr */
+/* Table12727 */
   0x27af, /* VPERMT2Brm */
   0x27b2, /* VPERMT2Brr */
-/* Table12727 */
+/* Table12729 */
   0x27c7, /* VPERMT2Drm */
   0x27cd, /* VPERMT2Drr */
-/* Table12729 */
+/* Table12731 */
   0x27fd, /* VPERMT2PSrm */
   0x2803, /* VPERMT2PSrr */
-/* Table12731 */
+/* Table12733 */
   0x12bc, /* VEXPANDPSZrm */
   0x12bf, /* VEXPANDPSZrr */
-/* Table12733 */
+/* Table12735 */
   0x2863, /* VPEXPANDDZrm */
   0x2866, /* VPEXPANDDZrr */
-/* Table12735 */
+/* Table12737 */
   0xe01, /* VCOMPRESSPSZmr */
   0xe03, /* VCOMPRESSPSZrr */
-/* Table12737 */
+/* Table12739 */
   0x2520, /* VPCOMPRESSDZmr */
   0x2522, /* VPCOMPRESSDZrr */
-/* Table12739 */
+/* Table12741 */
   0x260d, /* VPERMBZrm */
   0x2610, /* VPERMBZrr */
-/* Table12741 */
+/* Table12743 */
   0x314c, /* VPSHUFBITQMBZrm */
   0x314e, /* VPSHUFBITQMBZrr */
-/* Table12743 */
+/* Table12745 */
   0x14d6, /* VFMADDSUB132PSZm */
   0x14dc, /* VFMADDSUB132PSZr */
-/* Table12745 */
+/* Table12747 */
   0x16de, /* VFMSUBADD132PSZm */
   0x16e4, /* VFMSUBADD132PSZr */
-/* Table12747 */
+/* Table12749 */
   0x138a, /* VFMADD132PSZm */
   0x1390, /* VFMADD132PSZr */
-/* Table12749 */
+/* Table12751 */
   0x15b2, /* VFMSUB132PSZm */
   0x15b8, /* VFMSUB132PSZr */
-/* Table12751 */
+/* Table12753 */
   0x17da, /* VFNMADD132PSZm */
   0x17e0, /* VFNMADD132PSZr */
-/* Table12753 */
+/* Table12755 */
   0x1926, /* VFNMSUB132PSZm */
   0x192c, /* VFNMSUB132PSZr */
-/* Table12755 */
+/* Table12757 */
   0x151a, /* VFMADDSUB213PSZm */
   0x1520, /* VFMADDSUB213PSZr */
-/* Table12757 */
+/* Table12759 */
   0x1722, /* VFMSUBADD213PSZm */
   0x1728, /* VFMSUBADD213PSZr */
-/* Table12759 */
+/* Table12761 */
   0x13ee, /* VFMADD213PSZm */
   0x13f4, /* VFMADD213PSZr */
-/* Table12761 */
+/* Table12763 */
   0x1616, /* VFMSUB213PSZm */
   0x161c, /* VFMSUB213PSZr */
-/* Table12763 */
+/* Table12765 */
   0x183e, /* VFNMADD213PSZm */
   0x1844, /* VFNMADD213PSZr */
-/* Table12765 */
+/* Table12767 */
   0x198a, /* VFNMSUB213PSZm */
   0x1990, /* VFNMSUB213PSZr */
-/* Table12767 */
+/* Table12769 */
   0x155e, /* VFMADDSUB231PSZm */
   0x1564, /* VFMADDSUB231PSZr */
-/* Table12769 */
+/* Table12771 */
   0x1766, /* VFMSUBADD231PSZm */
   0x176c, /* VFMSUBADD231PSZr */
-/* Table12771 */
+/* Table12773 */
   0x1452, /* VFMADD231PSZm */
   0x1458, /* VFMADD231PSZr */
-/* Table12773 */
+/* Table12775 */
   0x167a, /* VFMSUB231PSZm */
   0x1680, /* VFMSUB231PSZr */
-/* Table12775 */
+/* Table12777 */
   0x18a2, /* VFNMADD231PSZm */
   0x18a8, /* VFNMADD231PSZr */
-/* Table12777 */
+/* Table12779 */
   0x19ee, /* VFNMSUB231PSZm */
   0x19f4, /* VFNMSUB231PSZr */
-/* Table12779 */
+/* Table12781 */
   0x256d, /* VPCONFLICTDZrm */
   0x2573, /* VPCONFLICTDZrr */
-/* Table12781 */
+/* Table12783 */
   0x1292, /* VEXP2PSZm */
   0x1298, /* VEXP2PSZr */
-/* Table12783 */
+/* Table12785 */
   0x3781, /* VRCP28PSZm */
   0x3787, /* VRCP28PSZr */
-/* Table12785 */
+/* Table12787 */
   0x38a5, /* VRSQRT28PSZm */
   0x38ab, /* VRSQRT28PSZr */
-/* Table12787 */
+/* Table12789 */
   0x1b78, /* VGF2P8MULBZrm */
   0x1b7b, /* VGF2P8MULBZrr */
-/* Table12789 */
+/* Table12791 */
   0xbe6, /* VAESENCZrm */
   0xbe7, /* VAESENCZrr */
-/* Table12791 */
+/* Table12793 */
   0xbdc, /* VAESENCLASTZrm */
   0xbdd, /* VAESENCLASTZrr */
-/* Table12793 */
+/* Table12795 */
   0xbd2, /* VAESDECZrm */
   0xbd3, /* VAESDECZrr */
-/* Table12795 */
+/* Table12797 */
   0xbc8, /* VAESDECLASTZrm */
   0xbc9, /* VAESDECLASTZrr */
-/* Table12797 */
+/* Table12799 */
   0x35cf, /* VPTESTNMWZrm */
   0x35d1, /* VPTESTNMWZrr */
-/* Table12799 */
+/* Table12801 */
   0x35c1, /* VPTESTNMQZrm */
   0x35c5, /* VPTESTNMQZrr */
-/* Table12801 */
-  0x0, /*  */
-  0x2b7a, /* VPMOVM2WZrr */
 /* Table12803 */
   0x0, /*  */
-  0x2ce7, /* VPMOVW2MZrr */
+  0x2b7a, /* VPMOVM2WZrr */
 /* Table12805 */
   0x0, /*  */
-  0x231b, /* VPBROADCASTMB2QZrr */
+  0x2ce7, /* VPMOVW2MZrr */
 /* Table12807 */
   0x0, /*  */
-  0x2b77, /* VPMOVM2QZrr */
+  0x231b, /* VPBROADCASTMB2QZrr */
 /* Table12809 */
   0x0, /*  */
-  0x2b7f, /* VPMOVQ2MZrr */
+  0x2b77, /* VPMOVM2QZrr */
 /* Table12811 */
+  0x0, /*  */
+  0x2b7f, /* VPMOVQ2MZrr */
+/* Table12813 */
   0x26f8, /* VPERMILPDZrm */
   0x26fe, /* VPERMILPDZrr */
-/* Table12813 */
+/* Table12815 */
   0x3433, /* VPSRLVWZrm */
   0x3436, /* VPSRLVWZrr */
-/* Table12815 */
+/* Table12817 */
   0x334b, /* VPSRAVWZrm */
   0x334e, /* VPSRAVWZrr */
-/* Table12817 */
+/* Table12819 */
   0x3275, /* VPSLLVWZrm */
   0x3278, /* VPSLLVWZrr */
-/* Table12819 */
+/* Table12821 */
   0x2fcd, /* VPRORVQZrm */
   0x2fd3, /* VPRORVQZrr */
-/* Table12821 */
+/* Table12823 */
   0x2f61, /* VPROLVQZrm */
   0x2f67, /* VPROLVQZrr */
-/* Table12823 */
+/* Table12825 */
   0x2760, /* VPERMPDZrm */
   0x2766, /* VPERMPDZrr */
-/* Table12825 */
+/* Table12827 */
   0xd32, /* VBROADCASTSDZm */
   0xd35, /* VBROADCASTSDZr */
-/* Table12827 */
+/* Table12829 */
   0xcff, /* VBROADCASTF64X2rm */
   0x0, /*  */
-/* Table12829 */
+/* Table12831 */
   0xd02, /* VBROADCASTF64X4rm */
   0x0, /*  */
-/* Table12831 */
+/* Table12833 */
   0x2074, /* VPABSQZrm */
   0x207a, /* VPABSQZrr */
-/* Table12833 */
+/* Table12835 */
   0x3593, /* VPTESTMWZrm */
   0x3595, /* VPTESTMWZrr */
-/* Table12835 */
+/* Table12837 */
   0x3585, /* VPTESTMQZrm */
   0x3589, /* VPTESTMQZrr */
-/* Table12837 */
+/* Table12839 */
   0x2d8f, /* VPMULDQZrm */
   0x2d95, /* VPMULDQZrr */
-/* Table12839 */
+/* Table12841 */
   0x23df, /* VPCMPEQQZrm */
   0x23e3, /* VPCMPEQQZrr */
-/* Table12841 */
+/* Table12843 */
   0x38dd, /* VSCALEFPDZrm */
   0x38e3, /* VSCALEFPDZrr */
-/* Table12843 */
+/* Table12845 */
   0x279a, /* VPERMQZrm */
   0x27a0, /* VPERMQZrr */
-/* Table12845 */
+/* Table12847 */
   0x242f, /* VPCMPGTQZrm */
   0x2433, /* VPCMPGTQZrr */
-/* Table12847 */
+/* Table12849 */
   0x2ac6, /* VPMINSQZrm */
   0x2acc, /* VPMINSQZrr */
-/* Table12849 */
+/* Table12851 */
   0x2b2c, /* VPMINUQZrm */
   0x2b32, /* VPMINUQZrr */
-/* Table12851 */
+/* Table12853 */
   0x29fa, /* VPMAXSQZrm */
   0x2a00, /* VPMAXSQZrr */
-/* Table12853 */
+/* Table12855 */
   0x2a60, /* VPMAXUQZrm */
   0x2a66, /* VPMAXUQZrr */
-/* Table12855 */
+/* Table12857 */
   0x2e0d, /* VPMULLQZrm */
   0x2e13, /* VPMULLQZrr */
-/* Table12857 */
+/* Table12859 */
   0x1aa2, /* VGETEXPPDZm */
   0x1aa8, /* VGETEXPPDZr */
-/* Table12859 */
+/* Table12861 */
   0x2928, /* VPLZCNTQZrm */
   0x292e, /* VPLZCNTQZrr */
-/* Table12861 */
+/* Table12863 */
   0x341c, /* VPSRLVQZrm */
   0x3422, /* VPSRLVQZrr */
-/* Table12863 */
+/* Table12865 */
   0x3336, /* VPSRAVQZrm */
   0x333c, /* VPSRAVQZrr */
-/* Table12865 */
+/* Table12867 */
   0x325e, /* VPSLLVQZrm */
   0x3264, /* VPSLLVQZrr */
-/* Table12867 */
+/* Table12869 */
   0x3745, /* VRCP14PDZm */
   0x374b, /* VRCP14PDZr */
-/* Table12869 */
+/* Table12871 */
   0x3869, /* VRSQRT14PDZm */
   0x386f, /* VRSQRT14PDZr */
-/* Table12871 */
+/* Table12873 */
   0x2eba, /* VPOPCNTWZrm */
   0x2ebd, /* VPOPCNTWZrr */
-/* Table12873 */
+/* Table12875 */
   0x2ea5, /* VPOPCNTQZrm */
   0x2eab, /* VPOPCNTQZrr */
-/* Table12875 */
+/* Table12877 */
   0x232d, /* VPBROADCASTQZm */
   0x2330, /* VPBROADCASTQZr */
-/* Table12877 */
+/* Table12879 */
   0xd24, /* VBROADCASTI64X2rm */
   0x0, /*  */
-/* Table12879 */
+/* Table12881 */
   0xd27, /* VBROADCASTI64X4rm */
   0x0, /*  */
-/* Table12881 */
+/* Table12883 */
   0x2887, /* VPEXPANDWZrm */
   0x288a, /* VPEXPANDWZrr */
-/* Table12883 */
+/* Table12885 */
   0x253e, /* VPCOMPRESSWZmr */
   0x2540, /* VPCOMPRESSWZrr */
-/* Table12885 */
+/* Table12887 */
   0x22b8, /* VPBLENDMQZrm */
   0x22be, /* VPBLENDMQZrr */
-/* Table12887 */
+/* Table12889 */
   0xcb2, /* VBLENDMPDZrm */
   0xcb8, /* VBLENDMPDZrr */
-/* Table12889 */
+/* Table12891 */
   0x22cd, /* VPBLENDMWZrm */
   0x22d0, /* VPBLENDMWZrr */
-/* Table12891 */
+/* Table12893 */
   0x3090, /* VPSHLDVWZm */
   0x3093, /* VPSHLDVWZr */
-/* Table12893 */
+/* Table12895 */
   0x307b, /* VPSHLDVQZm */
   0x3081, /* VPSHLDVQZr */
-/* Table12895 */
+/* Table12897 */
   0x312c, /* VPSHRDVWZm */
   0x312f, /* VPSHRDVWZr */
-/* Table12897 */
+/* Table12899 */
   0x3117, /* VPSHRDVQZm */
   0x311d, /* VPSHRDVQZr */
-/* Table12899 */
+/* Table12901 */
   0x26b1, /* VPERMI2Wrm */
   0x26b4, /* VPERMI2Wrr */
-/* Table12901 */
+/* Table12903 */
   0x269c, /* VPERMI2Qrm */
   0x26a2, /* VPERMI2Qrr */
-/* Table12903 */
+/* Table12905 */
   0x2666, /* VPERMI2PDrm */
   0x266c, /* VPERMI2PDrr */
-/* Table12905 */
+/* Table12907 */
   0x0, /*  */
   0x2339, /* VPBROADCASTQrZr */
-/* Table12907 */
+/* Table12909 */
   0x282d, /* VPERMT2Wrm */
   0x2830, /* VPERMT2Wrr */
-/* Table12909 */
+/* Table12911 */
   0x2818, /* VPERMT2Qrm */
   0x281e, /* VPERMT2Qrr */
-/* Table12911 */
+/* Table12913 */
   0x27e2, /* VPERMT2PDrm */
   0x27e8, /* VPERMT2PDrr */
-/* Table12913 */
+/* Table12915 */
   0x2e3e, /* VPMULTISHIFTQBZrm */
   0x2e44, /* VPMULTISHIFTQBZrr */
-/* Table12915 */
+/* Table12917 */
   0x12aa, /* VEXPANDPDZrm */
   0x12ad, /* VEXPANDPDZrr */
-/* Table12917 */
+/* Table12919 */
   0x2875, /* VPEXPANDQZrm */
   0x2878, /* VPEXPANDQZrr */
-/* Table12919 */
+/* Table12921 */
   0xdf2, /* VCOMPRESSPDZmr */
   0xdf4, /* VCOMPRESSPDZrr */
-/* Table12921 */
+/* Table12923 */
   0x252f, /* VPCOMPRESSQZmr */
   0x2531, /* VPCOMPRESSQZrr */
-/* Table12923 */
+/* Table12925 */
   0x283f, /* VPERMWZrm */
   0x2842, /* VPERMWZrr */
-/* Table12925 */
+/* Table12927 */
   0x14b4, /* VFMADDSUB132PDZm */
   0x14ba, /* VFMADDSUB132PDZr */
-/* Table12927 */
+/* Table12929 */
   0x16bc, /* VFMSUBADD132PDZm */
   0x16c2, /* VFMSUBADD132PDZr */
-/* Table12929 */
+/* Table12931 */
   0x1368, /* VFMADD132PDZm */
   0x136e, /* VFMADD132PDZr */
-/* Table12931 */
+/* Table12933 */
   0x1590, /* VFMSUB132PDZm */
   0x1596, /* VFMSUB132PDZr */
-/* Table12933 */
+/* Table12935 */
   0x17b8, /* VFNMADD132PDZm */
   0x17be, /* VFNMADD132PDZr */
-/* Table12935 */
+/* Table12937 */
   0x1904, /* VFNMSUB132PDZm */
   0x190a, /* VFNMSUB132PDZr */
-/* Table12937 */
+/* Table12939 */
   0x14f8, /* VFMADDSUB213PDZm */
   0x14fe, /* VFMADDSUB213PDZr */
-/* Table12939 */
+/* Table12941 */
   0x1700, /* VFMSUBADD213PDZm */
   0x1706, /* VFMSUBADD213PDZr */
-/* Table12941 */
+/* Table12943 */
   0x13cc, /* VFMADD213PDZm */
   0x13d2, /* VFMADD213PDZr */
-/* Table12943 */
+/* Table12945 */
   0x15f4, /* VFMSUB213PDZm */
   0x15fa, /* VFMSUB213PDZr */
-/* Table12945 */
+/* Table12947 */
   0x181c, /* VFNMADD213PDZm */
   0x1822, /* VFNMADD213PDZr */
-/* Table12947 */
+/* Table12949 */
   0x1968, /* VFNMSUB213PDZm */
   0x196e, /* VFNMSUB213PDZr */
-/* Table12949 */
+/* Table12951 */
   0x2976, /* VPMADD52LUQZm */
   0x297c, /* VPMADD52LUQZr */
-/* Table12951 */
+/* Table12953 */
   0x295b, /* VPMADD52HUQZm */
   0x2961, /* VPMADD52HUQZr */
-/* Table12953 */
+/* Table12955 */
   0x153c, /* VFMADDSUB231PDZm */
   0x1542, /* VFMADDSUB231PDZr */
-/* Table12955 */
+/* Table12957 */
   0x1744, /* VFMSUBADD231PDZm */
   0x174a, /* VFMSUBADD231PDZr */
-/* Table12957 */
+/* Table12959 */
   0x1430, /* VFMADD231PDZm */
   0x1436, /* VFMADD231PDZr */
-/* Table12959 */
+/* Table12961 */
   0x1658, /* VFMSUB231PDZm */
   0x165e, /* VFMSUB231PDZr */
-/* Table12961 */
+/* Table12963 */
   0x1880, /* VFNMADD231PDZm */
   0x1886, /* VFNMADD231PDZr */
-/* Table12963 */
+/* Table12965 */
   0x19cc, /* VFNMSUB231PDZm */
   0x19d2, /* VFNMSUB231PDZr */
-/* Table12965 */
+/* Table12967 */
   0x2588, /* VPCONFLICTQZrm */
   0x258e, /* VPCONFLICTQZrr */
-/* Table12967 */
+/* Table12969 */
   0x1286, /* VEXP2PDZm */
   0x128c, /* VEXP2PDZr */
-/* Table12969 */
+/* Table12971 */
   0x3775, /* VRCP28PDZm */
   0x377b, /* VRCP28PDZr */
-/* Table12971 */
+/* Table12973 */
   0x3899, /* VRSQRT28PDZm */
   0x389f, /* VRSQRT28PDZr */
-/* Table12973 */
+/* Table12975 */
   0x2cd7, /* VPMOVUSWBZ128mrk */
   0x2cd9, /* VPMOVUSWBZ128rrk */
-/* Table12975 */
+/* Table12977 */
   0x2c8c, /* VPMOVUSDBZ128mrk */
   0x2c8e, /* VPMOVUSDBZ128rrk */
-/* Table12977 */
+/* Table12979 */
   0x2caa, /* VPMOVUSQBZ128mrk */
   0x2cac, /* VPMOVUSQBZ128rrk */
-/* Table12979 */
+/* Table12981 */
   0x2c9b, /* VPMOVUSDWZ128mrk */
   0x2c9d, /* VPMOVUSDWZ128rrk */
-/* Table12981 */
+/* Table12983 */
   0x2cc8, /* VPMOVUSQWZ128mrk */
   0x2cca, /* VPMOVUSQWZ128rrk */
-/* Table12983 */
+/* Table12985 */
   0x2cb9, /* VPMOVUSQDZ128mrk */
   0x2cbb, /* VPMOVUSQDZ128rrk */
-/* Table12985 */
+/* Table12987 */
   0x2bf9, /* VPMOVSWBZ128mrk */
   0x2bfb, /* VPMOVSWBZ128rrk */
-/* Table12987 */
+/* Table12989 */
   0x2bae, /* VPMOVSDBZ128mrk */
   0x2bb0, /* VPMOVSDBZ128rrk */
-/* Table12989 */
+/* Table12991 */
   0x2bcc, /* VPMOVSQBZ128mrk */
   0x2bce, /* VPMOVSQBZ128rrk */
-/* Table12991 */
+/* Table12993 */
   0x2bbd, /* VPMOVSDWZ128mrk */
   0x2bbf, /* VPMOVSDWZ128rrk */
-/* Table12993 */
+/* Table12995 */
   0x2bea, /* VPMOVSQWZ128mrk */
   0x2bec, /* VPMOVSQWZ128rrk */
-/* Table12995 */
+/* Table12997 */
   0x2bdb, /* VPMOVSQDZ128mrk */
   0x2bdd, /* VPMOVSQDZ128rrk */
-/* Table12997 */
+/* Table12999 */
   0x3598, /* VPTESTNMBZ128rmk */
   0x359a, /* VPTESTNMBZ128rrk */
-/* Table12999 */
+/* Table13001 */
   0x35a6, /* VPTESTNMDZ128rmk */
   0x35a8, /* VPTESTNMDZ128rrk */
-/* Table13001 */
+/* Table13003 */
   0x2ce9, /* VPMOVWBZ128mrk */
   0x2ceb, /* VPMOVWBZ128rrk */
-/* Table13003 */
+/* Table13005 */
   0x2b52, /* VPMOVDBZ128mrk */
   0x2b54, /* VPMOVDBZ128rrk */
-/* Table13005 */
+/* Table13007 */
   0x2b81, /* VPMOVQBZ128mrk */
   0x2b83, /* VPMOVQBZ128rrk */
-/* Table13007 */
+/* Table13009 */
   0x2b61, /* VPMOVDWZ128mrk */
   0x2b63, /* VPMOVDWZ128rrk */
-/* Table13009 */
+/* Table13011 */
   0x2b9f, /* VPMOVQWZ128mrk */
   0x2ba1, /* VPMOVQWZ128rrk */
-/* Table13011 */
+/* Table13013 */
   0x2b90, /* VPMOVQDZ128mrk */
   0x2b92, /* VPMOVQDZ128rrk */
-/* Table13013 */
+/* Table13015 */
   0xb50, /* V4FMADDSSrmk */
   0x0, /*  */
-/* Table13015 */
+/* Table13017 */
   0xb56, /* V4FNMADDSSrmk */
   0x0, /*  */
-/* Table13017 */
+/* Table13019 */
   0x3153, /* VPSHUFBZ128rmk */
   0x3156, /* VPSHUFBZ128rrk */
-/* Table13019 */
+/* Table13021 */
   0x2982, /* VPMADDUBSWZ128rmk */
   0x2985, /* VPMADDUBSWZ128rrk */
-/* Table13021 */
+/* Table13023 */
   0x2d9d, /* VPMULHRSWZ128rmk */
   0x2da0, /* VPMULHRSWZ128rrk */
-/* Table13023 */
+/* Table13025 */
   0x2716, /* VPERMILPSZ128rmk */
   0x2719, /* VPERMILPSZ128rrk */
-/* Table13025 */
+/* Table13027 */
   0xee8, /* VCVTPH2PSZ128rmk */
   0xeeb, /* VCVTPH2PSZ128rrk */
-/* Table13027 */
+/* Table13029 */
   0x2fa4, /* VPRORVDZ128rmk */
   0x2fa7, /* VPRORVDZ128rrk */
-/* Table13029 */
+/* Table13031 */
   0x2f38, /* VPROLVDZ128rmk */
   0x2f3b, /* VPROLVDZ128rrk */
-/* Table13031 */
+/* Table13033 */
   0xd3b, /* VBROADCASTSSZ128mk */
   0xd3e, /* VBROADCASTSSZ128rk */
-/* Table13033 */
+/* Table13035 */
   0x2030, /* VPABSBZ128rmk */
   0x2033, /* VPABSBZ128rrk */
-/* Table13035 */
+/* Table13037 */
   0x2080, /* VPABSWZ128rmk */
   0x2083, /* VPABSWZ128rrk */
-/* Table13037 */
+/* Table13039 */
   0x2049, /* VPABSDZ128rmk */
   0x204c, /* VPABSDZ128rrk */
-/* Table13039 */
+/* Table13041 */
   0x2c36, /* VPMOVSXBWZ128rmk */
   0x2c39, /* VPMOVSXBWZ128rrk */
-/* Table13041 */
+/* Table13043 */
   0x2c0a, /* VPMOVSXBDZ128rmk */
   0x2c0d, /* VPMOVSXBDZ128rrk */
-/* Table13043 */
+/* Table13045 */
   0x2c20, /* VPMOVSXBQZ128rmk */
   0x2c23, /* VPMOVSXBQZ128rrk */
-/* Table13045 */
+/* Table13047 */
   0x2c62, /* VPMOVSXWDZ128rmk */
   0x2c65, /* VPMOVSXWDZ128rrk */
-/* Table13047 */
+/* Table13049 */
   0x2c78, /* VPMOVSXWQZ128rmk */
   0x2c7b, /* VPMOVSXWQZ128rrk */
-/* Table13049 */
+/* Table13051 */
   0x2c4c, /* VPMOVSXDQZ128rmk */
   0x2c4f, /* VPMOVSXDQZ128rrk */
-/* Table13051 */
+/* Table13053 */
   0x355c, /* VPTESTMBZ128rmk */
   0x355e, /* VPTESTMBZ128rrk */
-/* Table13053 */
+/* Table13055 */
   0x356a, /* VPTESTMDZ128rmk */
   0x356c, /* VPTESTMDZ128rrk */
-/* Table13055 */
+/* Table13057 */
   0x20ce, /* VPACKUSDWZ128rmk */
   0x20d1, /* VPACKUSDWZ128rrk */
-/* Table13057 */
+/* Table13059 */
   0x38ed, /* VSCALEFPSZ128rmk */
   0x38f0, /* VSCALEFPSZ128rrk */
-/* Table13059 */
+/* Table13061 */
   0x3911, /* VSCALEFSSZrmk */
   0x3917, /* VSCALEFSSZrrk */
-/* Table13061 */
+/* Table13063 */
   0x2d26, /* VPMOVZXBWZ128rmk */
   0x2d29, /* VPMOVZXBWZ128rrk */
-/* Table13063 */
+/* Table13065 */
   0x2cfa, /* VPMOVZXBDZ128rmk */
   0x2cfd, /* VPMOVZXBDZ128rrk */
-/* Table13065 */
+/* Table13067 */
   0x2d10, /* VPMOVZXBQZ128rmk */
   0x2d13, /* VPMOVZXBQZ128rrk */
-/* Table13067 */
+/* Table13069 */
   0x2d52, /* VPMOVZXWDZ128rmk */
   0x2d55, /* VPMOVZXWDZ128rrk */
-/* Table13069 */
+/* Table13071 */
   0x2d68, /* VPMOVZXWQZ128rmk */
   0x2d6b, /* VPMOVZXWQZ128rrk */
-/* Table13071 */
+/* Table13073 */
   0x2d3c, /* VPMOVZXDQZ128rmk */
   0x2d3f, /* VPMOVZXDQZ128rrk */
-/* Table13073 */
+/* Table13075 */
   0x2a82, /* VPMINSBZ128rmk */
   0x2a85, /* VPMINSBZ128rrk */
-/* Table13075 */
+/* Table13077 */
   0x2a9b, /* VPMINSDZ128rmk */
   0x2a9e, /* VPMINSDZ128rrk */
-/* Table13077 */
+/* Table13079 */
   0x2b38, /* VPMINUWZ128rmk */
   0x2b3b, /* VPMINUWZ128rrk */
-/* Table13079 */
+/* Table13081 */
   0x2b01, /* VPMINUDZ128rmk */
   0x2b04, /* VPMINUDZ128rrk */
-/* Table13081 */
+/* Table13083 */
   0x29b6, /* VPMAXSBZ128rmk */
   0x29b9, /* VPMAXSBZ128rrk */
-/* Table13083 */
+/* Table13085 */
   0x29cf, /* VPMAXSDZ128rmk */
   0x29d2, /* VPMAXSDZ128rrk */
-/* Table13085 */
+/* Table13087 */
   0x2a6c, /* VPMAXUWZ128rmk */
   0x2a6f, /* VPMAXUWZ128rrk */
-/* Table13087 */
+/* Table13089 */
   0x2a35, /* VPMAXUDZ128rmk */
   0x2a38, /* VPMAXUDZ128rrk */
-/* Table13089 */
+/* Table13091 */
   0x2de2, /* VPMULLDZ128rmk */
   0x2de5, /* VPMULLDZ128rrk */
-/* Table13091 */
+/* Table13093 */
   0x1ab2, /* VGETEXPPSZ128mk */
   0x1ab5, /* VGETEXPPSZ128rk */
-/* Table13093 */
+/* Table13095 */
   0x1ad6, /* VGETEXPSSZmk */
   0x1adc, /* VGETEXPSSZrk */
-/* Table13095 */
+/* Table13097 */
   0x28ff, /* VPLZCNTDZ128rmk */
   0x2902, /* VPLZCNTDZ128rrk */
-/* Table13097 */
+/* Table13099 */
   0x33ef, /* VPSRLVDZ128rmk */
   0x33f2, /* VPSRLVDZ128rrk */
-/* Table13099 */
+/* Table13101 */
   0x330b, /* VPSRAVDZ128rmk */
   0x330e, /* VPSRAVDZ128rrk */
-/* Table13101 */
+/* Table13103 */
   0x3231, /* VPSLLVDZ128rmk */
   0x3234, /* VPSLLVDZ128rrk */
-/* Table13103 */
+/* Table13105 */
   0x3752, /* VRCP14PSZ128mk */
   0x3755, /* VRCP14PSZ128rk */
-/* Table13105 */
+/* Table13107 */
   0x3770, /* VRCP14SSZrmk */
   0x3773, /* VRCP14SSZrrk */
-/* Table13107 */
+/* Table13109 */
   0x3876, /* VRSQRT14PSZ128mk */
   0x3879, /* VRSQRT14PSZ128rk */
-/* Table13109 */
+/* Table13111 */
   0x3894, /* VRSQRT14SSZrmk */
   0x3897, /* VRSQRT14SSZrrk */
-/* Table13111 */
+/* Table13113 */
   0x25b0, /* VPDPBUSDZ128mk */
   0x25b3, /* VPDPBUSDZ128rk */
-/* Table13113 */
+/* Table13115 */
   0x2595, /* VPDPBUSDSZ128mk */
   0x2598, /* VPDPBUSDSZ128rk */
-/* Table13115 */
+/* Table13117 */
   0x25e6, /* VPDPWSSDZ128mk */
   0x25e9, /* VPDPWSSDZ128rk */
-/* Table13117 */
+/* Table13119 */
   0x25cb, /* VPDPWSSDSZ128mk */
   0x25ce, /* VPDPWSSDSZ128rk */
-/* Table13119 */
+/* Table13121 */
   0x2e67, /* VPOPCNTBZ128rmk */
   0x2e6a, /* VPOPCNTBZ128rrk */
-/* Table13121 */
+/* Table13123 */
   0x2e7c, /* VPOPCNTDZ128rmk */
   0x2e7f, /* VPOPCNTDZ128rrk */
-/* Table13123 */
+/* Table13125 */
   0x22fd, /* VPBROADCASTDZ128mk */
   0x2300, /* VPBROADCASTDZ128rk */
-/* Table13125 */
+/* Table13127 */
   0xd07, /* VBROADCASTI32X2Z128mk */
   0xd0a, /* VBROADCASTI32X2Z128rk */
-/* Table13127 */
+/* Table13129 */
   0x2846, /* VPEXPANDBZ128rmk */
   0x2849, /* VPEXPANDBZ128rrk */
-/* Table13129 */
+/* Table13131 */
   0x2508, /* VPCOMPRESSBZ128mrk */
   0x250a, /* VPCOMPRESSBZ128rrk */
-/* Table13131 */
+/* Table13133 */
   0x228f, /* VPBLENDMDZ128rmk */
   0x2292, /* VPBLENDMDZ128rrk */
-/* Table13133 */
+/* Table13135 */
   0xcbf, /* VBLENDMPSZ128rmk */
   0xcc2, /* VBLENDMPSZ128rrk */
-/* Table13135 */
+/* Table13137 */
   0x227a, /* VPBLENDMBZ128rmk */
   0x227d, /* VPBLENDMBZ128rrk */
-/* Table13137 */
+/* Table13139 */
   0x3052, /* VPSHLDVDZ128mk */
   0x3055, /* VPSHLDVDZ128rk */
-/* Table13139 */
+/* Table13141 */
   0x30ee, /* VPSHRDVDZ128mk */
   0x30f1, /* VPSHRDVDZ128rk */
-/* Table13141 */
+/* Table13143 */
   0x2628, /* VPERMI2B128rmk */
   0x262b, /* VPERMI2B128rrk */
-/* Table13143 */
+/* Table13145 */
   0x263d, /* VPERMI2D128rmk */
   0x2640, /* VPERMI2D128rrk */
-/* Table13145 */
+/* Table13147 */
   0x2673, /* VPERMI2PS128rmk */
   0x2676, /* VPERMI2PS128rrk */
-/* Table13147 */
+/* Table13149 */
   0x22de, /* VPBROADCASTBZ128mk */
   0x22e1, /* VPBROADCASTBZ128rk */
-/* Table13149 */
+/* Table13151 */
   0x2341, /* VPBROADCASTWZ128mk */
   0x2344, /* VPBROADCASTWZ128rk */
-/* Table13151 */
-  0x0, /*  */
-  0x22f0, /* VPBROADCASTBrZ128rk */
 /* Table13153 */
   0x0, /*  */
-  0x2353, /* VPBROADCASTWrZ128rk */
+  0x22f0, /* VPBROADCASTBrZ128rk */
 /* Table13155 */
   0x0, /*  */
-  0x230f, /* VPBROADCASTDrZ128rk */
+  0x2353, /* VPBROADCASTWrZ128rk */
 /* Table13157 */
+  0x0, /*  */
+  0x230f, /* VPBROADCASTDrZ128rk */
+/* Table13159 */
   0x27a4, /* VPERMT2B128rmk */
   0x27a7, /* VPERMT2B128rrk */
-/* Table13159 */
+/* Table13161 */
   0x27b9, /* VPERMT2D128rmk */
   0x27bc, /* VPERMT2D128rrk */
-/* Table13161 */
+/* Table13163 */
   0x27ef, /* VPERMT2PS128rmk */
   0x27f2, /* VPERMT2PS128rrk */
-/* Table13163 */
+/* Table13165 */
   0x12b1, /* VEXPANDPSZ128rmk */
   0x12b4, /* VEXPANDPSZ128rrk */
-/* Table13165 */
+/* Table13167 */
   0x2858, /* VPEXPANDDZ128rmk */
   0x285b, /* VPEXPANDDZ128rrk */
-/* Table13167 */
+/* Table13169 */
   0xdf8, /* VCOMPRESSPSZ128mrk */
   0xdfa, /* VCOMPRESSPSZ128rrk */
-/* Table13169 */
+/* Table13171 */
   0x2517, /* VPCOMPRESSDZ128mrk */
   0x2519, /* VPCOMPRESSDZ128rrk */
-/* Table13171 */
+/* Table13173 */
   0x2602, /* VPERMBZ128rmk */
   0x2605, /* VPERMBZ128rrk */
-/* Table13173 */
+/* Table13175 */
   0x3145, /* VPSHUFBITQMBZ128rmk */
   0x3147, /* VPSHUFBITQMBZ128rrk */
-/* Table13175 */
+/* Table13177 */
   0x28a0, /* VPGATHERDDZ128rm */
   0x0, /*  */
-/* Table13177 */
+/* Table13179 */
   0x28aa, /* VPGATHERQDZ128rm */
   0x0, /*  */
-/* Table13179 */
+/* Table13181 */
   0x1a7a, /* VGATHERDPSZ128rm */
   0x0, /*  */
-/* Table13181 */
+/* Table13183 */
   0x1a8c, /* VGATHERQPSZ128rm */
   0x0, /*  */
-/* Table13183 */
+/* Table13185 */
   0x14c8, /* VFMADDSUB132PSZ128mk */
   0x14cb, /* VFMADDSUB132PSZ128rk */
-/* Table13185 */
+/* Table13187 */
   0x16d0, /* VFMSUBADD132PSZ128mk */
   0x16d3, /* VFMSUBADD132PSZ128rk */
-/* Table13187 */
+/* Table13189 */
   0x137c, /* VFMADD132PSZ128mk */
   0x137f, /* VFMADD132PSZ128rk */
-/* Table13189 */
+/* Table13191 */
   0x13aa, /* VFMADD132SSZm_Intk */
   0x13ae, /* VFMADD132SSZr_Intk */
-/* Table13191 */
+/* Table13193 */
   0x15a4, /* VFMSUB132PSZ128mk */
   0x15a7, /* VFMSUB132PSZ128rk */
-/* Table13193 */
+/* Table13195 */
   0x15d2, /* VFMSUB132SSZm_Intk */
   0x15d6, /* VFMSUB132SSZr_Intk */
-/* Table13195 */
+/* Table13197 */
   0x17cc, /* VFNMADD132PSZ128mk */
   0x17cf, /* VFNMADD132PSZ128rk */
-/* Table13197 */
+/* Table13199 */
   0x17fa, /* VFNMADD132SSZm_Intk */
   0x17fe, /* VFNMADD132SSZr_Intk */
-/* Table13199 */
+/* Table13201 */
   0x1918, /* VFNMSUB132PSZ128mk */
   0x191b, /* VFNMSUB132PSZ128rk */
-/* Table13201 */
+/* Table13203 */
   0x1946, /* VFNMSUB132SSZm_Intk */
   0x194a, /* VFNMSUB132SSZr_Intk */
-/* Table13203 */
+/* Table13205 */
   0x2ff8, /* VPSCATTERDDZ128mr */
   0x0, /*  */
-/* Table13205 */
+/* Table13207 */
   0x2ffe, /* VPSCATTERQDZ128mr */
   0x0, /*  */
-/* Table13207 */
+/* Table13209 */
   0x391c, /* VSCATTERDPSZ128mr */
   0x0, /*  */
-/* Table13209 */
+/* Table13211 */
   0x392a, /* VSCATTERQPSZ128mr */
   0x0, /*  */
-/* Table13211 */
+/* Table13213 */
   0x150c, /* VFMADDSUB213PSZ128mk */
   0x150f, /* VFMADDSUB213PSZ128rk */
-/* Table13213 */
+/* Table13215 */
   0x1714, /* VFMSUBADD213PSZ128mk */
   0x1717, /* VFMSUBADD213PSZ128rk */
-/* Table13215 */
+/* Table13217 */
   0x13e0, /* VFMADD213PSZ128mk */
   0x13e3, /* VFMADD213PSZ128rk */
-/* Table13217 */
+/* Table13219 */
   0x140e, /* VFMADD213SSZm_Intk */
   0x1412, /* VFMADD213SSZr_Intk */
-/* Table13219 */
+/* Table13221 */
   0x1608, /* VFMSUB213PSZ128mk */
   0x160b, /* VFMSUB213PSZ128rk */
-/* Table13221 */
+/* Table13223 */
   0x1636, /* VFMSUB213SSZm_Intk */
   0x163a, /* VFMSUB213SSZr_Intk */
-/* Table13223 */
+/* Table13225 */
   0x1830, /* VFNMADD213PSZ128mk */
   0x1833, /* VFNMADD213PSZ128rk */
-/* Table13225 */
+/* Table13227 */
   0x185e, /* VFNMADD213SSZm_Intk */
   0x1862, /* VFNMADD213SSZr_Intk */
-/* Table13227 */
+/* Table13229 */
   0x197c, /* VFNMSUB213PSZ128mk */
   0x197f, /* VFNMSUB213PSZ128rk */
-/* Table13229 */
+/* Table13231 */
   0x19aa, /* VFNMSUB213SSZm_Intk */
   0x19ae, /* VFNMSUB213SSZr_Intk */
-/* Table13231 */
+/* Table13233 */
   0x1550, /* VFMADDSUB231PSZ128mk */
   0x1553, /* VFMADDSUB231PSZ128rk */
-/* Table13233 */
+/* Table13235 */
   0x1758, /* VFMSUBADD231PSZ128mk */
   0x175b, /* VFMSUBADD231PSZ128rk */
-/* Table13235 */
+/* Table13237 */
   0x1444, /* VFMADD231PSZ128mk */
   0x1447, /* VFMADD231PSZ128rk */
-/* Table13237 */
+/* Table13239 */
   0x1472, /* VFMADD231SSZm_Intk */
   0x1476, /* VFMADD231SSZr_Intk */
-/* Table13239 */
+/* Table13241 */
   0x166c, /* VFMSUB231PSZ128mk */
   0x166f, /* VFMSUB231PSZ128rk */
-/* Table13241 */
+/* Table13243 */
   0x169a, /* VFMSUB231SSZm_Intk */
   0x169e, /* VFMSUB231SSZr_Intk */
-/* Table13243 */
+/* Table13245 */
   0x1894, /* VFNMADD231PSZ128mk */
   0x1897, /* VFNMADD231PSZ128rk */
-/* Table13245 */
+/* Table13247 */
   0x18c2, /* VFNMADD231SSZm_Intk */
   0x18c6, /* VFNMADD231SSZr_Intk */
-/* Table13247 */
+/* Table13249 */
   0x19e0, /* VFNMSUB231PSZ128mk */
   0x19e3, /* VFNMSUB231PSZ128rk */
-/* Table13249 */
+/* Table13251 */
   0x1a0e, /* VFNMSUB231SSZm_Intk */
   0x1a12, /* VFNMSUB231SSZr_Intk */
-/* Table13251 */
+/* Table13253 */
   0x255f, /* VPCONFLICTDZ128rmk */
   0x2562, /* VPCONFLICTDZ128rrk */
-/* Table13253 */
+/* Table13255 */
   0x3797, /* VRCP28SSZmk */
   0x379d, /* VRCP28SSZrk */
-/* Table13255 */
+/* Table13257 */
   0x38bb, /* VRSQRT28SSZmk */
   0x38c1, /* VRSQRT28SSZrk */
-/* Table13257 */
+/* Table13259 */
   0x1b6d, /* VGF2P8MULBZ128rmk */
   0x1b70, /* VGF2P8MULBZ128rrk */
-/* Table13259 */
+/* Table13261 */
   0x35c8, /* VPTESTNMWZ128rmk */
   0x35ca, /* VPTESTNMWZ128rrk */
-/* Table13261 */
+/* Table13263 */
   0x35b8, /* VPTESTNMQZ128rmk */
   0x35ba, /* VPTESTNMQZ128rrk */
-/* Table13263 */
+/* Table13265 */
   0x26d8, /* VPERMILPDZ128rmk */
   0x26db, /* VPERMILPDZ128rrk */
-/* Table13265 */
+/* Table13267 */
   0x3428, /* VPSRLVWZ128rmk */
   0x342b, /* VPSRLVWZ128rrk */
-/* Table13267 */
+/* Table13269 */
   0x3340, /* VPSRAVWZ128rmk */
   0x3343, /* VPSRAVWZ128rrk */
-/* Table13269 */
+/* Table13271 */
   0x326a, /* VPSLLVWZ128rmk */
   0x326d, /* VPSLLVWZ128rrk */
-/* Table13271 */
+/* Table13273 */
   0x2fbf, /* VPRORVQZ128rmk */
   0x2fc2, /* VPRORVQZ128rrk */
-/* Table13273 */
+/* Table13275 */
   0x2f53, /* VPROLVQZ128rmk */
   0x2f56, /* VPROLVQZ128rrk */
-/* Table13275 */
+/* Table13277 */
   0x2066, /* VPABSQZ128rmk */
   0x2069, /* VPABSQZ128rrk */
-/* Table13277 */
+/* Table13279 */
   0x358c, /* VPTESTMWZ128rmk */
   0x358e, /* VPTESTMWZ128rrk */
-/* Table13279 */
+/* Table13281 */
   0x357c, /* VPTESTMQZ128rmk */
   0x357e, /* VPTESTMQZ128rrk */
-/* Table13281 */
+/* Table13283 */
   0x2d81, /* VPMULDQZ128rmk */
   0x2d84, /* VPMULDQZ128rrk */
-/* Table13283 */
+/* Table13285 */
   0x23d6, /* VPCMPEQQZ128rmk */
   0x23d8, /* VPCMPEQQZ128rrk */
-/* Table13285 */
+/* Table13287 */
   0x38cf, /* VSCALEFPDZ128rmk */
   0x38d2, /* VSCALEFPDZ128rrk */
-/* Table13287 */
+/* Table13289 */
   0x3908, /* VSCALEFSDZrmk */
   0x390e, /* VSCALEFSDZrrk */
-/* Table13289 */
+/* Table13291 */
   0x2426, /* VPCMPGTQZ128rmk */
   0x2428, /* VPCMPGTQZ128rrk */
-/* Table13291 */
+/* Table13293 */
   0x2ab8, /* VPMINSQZ128rmk */
   0x2abb, /* VPMINSQZ128rrk */
-/* Table13293 */
+/* Table13295 */
   0x2b1e, /* VPMINUQZ128rmk */
   0x2b21, /* VPMINUQZ128rrk */
-/* Table13295 */
+/* Table13297 */
   0x29ec, /* VPMAXSQZ128rmk */
   0x29ef, /* VPMAXSQZ128rrk */
-/* Table13297 */
+/* Table13299 */
   0x2a52, /* VPMAXUQZ128rmk */
   0x2a55, /* VPMAXUQZ128rrk */
-/* Table13299 */
+/* Table13301 */
   0x2dff, /* VPMULLQZ128rmk */
   0x2e02, /* VPMULLQZ128rrk */
-/* Table13301 */
+/* Table13303 */
   0x1a94, /* VGETEXPPDZ128mk */
   0x1a97, /* VGETEXPPDZ128rk */
-/* Table13303 */
+/* Table13305 */
   0x1acd, /* VGETEXPSDZmk */
   0x1ad3, /* VGETEXPSDZrk */
-/* Table13305 */
+/* Table13307 */
   0x291a, /* VPLZCNTQZ128rmk */
   0x291d, /* VPLZCNTQZ128rrk */
-/* Table13307 */
+/* Table13309 */
   0x340e, /* VPSRLVQZ128rmk */
   0x3411, /* VPSRLVQZ128rrk */
-/* Table13309 */
+/* Table13311 */
   0x3328, /* VPSRAVQZ128rmk */
   0x332b, /* VPSRAVQZ128rrk */
-/* Table13311 */
+/* Table13313 */
   0x3250, /* VPSLLVQZ128rmk */
   0x3253, /* VPSLLVQZ128rrk */
-/* Table13313 */
+/* Table13315 */
   0x3737, /* VRCP14PDZ128mk */
   0x373a, /* VRCP14PDZ128rk */
-/* Table13315 */
+/* Table13317 */
   0x376a, /* VRCP14SDZrmk */
   0x376d, /* VRCP14SDZrrk */
-/* Table13317 */
+/* Table13319 */
   0x385b, /* VRSQRT14PDZ128mk */
   0x385e, /* VRSQRT14PDZ128rk */
-/* Table13319 */
+/* Table13321 */
   0x388e, /* VRSQRT14SDZrmk */
   0x3891, /* VRSQRT14SDZrrk */
-/* Table13321 */
+/* Table13323 */
   0x2eaf, /* VPOPCNTWZ128rmk */
   0x2eb2, /* VPOPCNTWZ128rrk */
-/* Table13323 */
+/* Table13325 */
   0x2e97, /* VPOPCNTQZ128rmk */
   0x2e9a, /* VPOPCNTQZ128rrk */
-/* Table13325 */
+/* Table13327 */
   0x2322, /* VPBROADCASTQZ128mk */
   0x2325, /* VPBROADCASTQZ128rk */
-/* Table13327 */
+/* Table13329 */
   0x287c, /* VPEXPANDWZ128rmk */
   0x287f, /* VPEXPANDWZ128rrk */
-/* Table13329 */
+/* Table13331 */
   0x2535, /* VPCOMPRESSWZ128mrk */
   0x2537, /* VPCOMPRESSWZ128rrk */
-/* Table13331 */
+/* Table13333 */
   0x22aa, /* VPBLENDMQZ128rmk */
   0x22ad, /* VPBLENDMQZ128rrk */
-/* Table13333 */
+/* Table13335 */
   0xca4, /* VBLENDMPDZ128rmk */
   0xca7, /* VBLENDMPDZ128rrk */
-/* Table13335 */
+/* Table13337 */
   0x22c2, /* VPBLENDMWZ128rmk */
   0x22c5, /* VPBLENDMWZ128rrk */
-/* Table13337 */
+/* Table13339 */
   0x3085, /* VPSHLDVWZ128mk */
   0x3088, /* VPSHLDVWZ128rk */
-/* Table13339 */
+/* Table13341 */
   0x306d, /* VPSHLDVQZ128mk */
   0x3070, /* VPSHLDVQZ128rk */
-/* Table13341 */
+/* Table13343 */
   0x3121, /* VPSHRDVWZ128mk */
   0x3124, /* VPSHRDVWZ128rk */
-/* Table13343 */
+/* Table13345 */
   0x3109, /* VPSHRDVQZ128mk */
   0x310c, /* VPSHRDVQZ128rk */
-/* Table13345 */
+/* Table13347 */
   0x26a6, /* VPERMI2W128rmk */
   0x26a9, /* VPERMI2W128rrk */
-/* Table13347 */
+/* Table13349 */
   0x268e, /* VPERMI2Q128rmk */
   0x2691, /* VPERMI2Q128rrk */
-/* Table13349 */
+/* Table13351 */
   0x2658, /* VPERMI2PD128rmk */
   0x265b, /* VPERMI2PD128rrk */
-/* Table13351 */
+/* Table13353 */
   0x0, /*  */
   0x2334, /* VPBROADCASTQrZ128rk */
-/* Table13353 */
+/* Table13355 */
   0x2822, /* VPERMT2W128rmk */
   0x2825, /* VPERMT2W128rrk */
-/* Table13355 */
+/* Table13357 */
   0x280a, /* VPERMT2Q128rmk */
   0x280d, /* VPERMT2Q128rrk */
-/* Table13357 */
+/* Table13359 */
   0x27d4, /* VPERMT2PD128rmk */
   0x27d7, /* VPERMT2PD128rrk */
-/* Table13359 */
+/* Table13361 */
   0x2e30, /* VPMULTISHIFTQBZ128rmk */
   0x2e33, /* VPMULTISHIFTQBZ128rrk */
-/* Table13361 */
+/* Table13363 */
   0x129f, /* VEXPANDPDZ128rmk */
   0x12a2, /* VEXPANDPDZ128rrk */
-/* Table13363 */
+/* Table13365 */
   0x286a, /* VPEXPANDQZ128rmk */
   0x286d, /* VPEXPANDQZ128rrk */
-/* Table13365 */
+/* Table13367 */
   0xde9, /* VCOMPRESSPDZ128mrk */
   0xdeb, /* VCOMPRESSPDZ128rrk */
-/* Table13367 */
+/* Table13369 */
   0x2526, /* VPCOMPRESSQZ128mrk */
   0x2528, /* VPCOMPRESSQZ128rrk */
-/* Table13369 */
+/* Table13371 */
   0x2834, /* VPERMWZ128rmk */
   0x2837, /* VPERMWZ128rrk */
-/* Table13371 */
+/* Table13373 */
   0x28a5, /* VPGATHERDQZ128rm */
   0x0, /*  */
-/* Table13373 */
+/* Table13375 */
   0x28af, /* VPGATHERQQZ128rm */
   0x0, /*  */
-/* Table13375 */
+/* Table13377 */
   0x1a75, /* VGATHERDPDZ128rm */
   0x0, /*  */
-/* Table13377 */
+/* Table13379 */
   0x1a87, /* VGATHERQPDZ128rm */
   0x0, /*  */
-/* Table13379 */
+/* Table13381 */
   0x14a6, /* VFMADDSUB132PDZ128mk */
   0x14a9, /* VFMADDSUB132PDZ128rk */
-/* Table13381 */
+/* Table13383 */
   0x16ae, /* VFMSUBADD132PDZ128mk */
   0x16b1, /* VFMSUBADD132PDZ128rk */
-/* Table13383 */
+/* Table13385 */
   0x135a, /* VFMADD132PDZ128mk */
   0x135d, /* VFMADD132PDZ128rk */
-/* Table13385 */
+/* Table13387 */
   0x139a, /* VFMADD132SDZm_Intk */
   0x139e, /* VFMADD132SDZr_Intk */
-/* Table13387 */
+/* Table13389 */
   0x1582, /* VFMSUB132PDZ128mk */
   0x1585, /* VFMSUB132PDZ128rk */
-/* Table13389 */
+/* Table13391 */
   0x15c2, /* VFMSUB132SDZm_Intk */
   0x15c6, /* VFMSUB132SDZr_Intk */
-/* Table13391 */
+/* Table13393 */
   0x17aa, /* VFNMADD132PDZ128mk */
   0x17ad, /* VFNMADD132PDZ128rk */
-/* Table13393 */
+/* Table13395 */
   0x17ea, /* VFNMADD132SDZm_Intk */
   0x17ee, /* VFNMADD132SDZr_Intk */
-/* Table13395 */
+/* Table13397 */
   0x18f6, /* VFNMSUB132PDZ128mk */
   0x18f9, /* VFNMSUB132PDZ128rk */
-/* Table13397 */
+/* Table13399 */
   0x1936, /* VFNMSUB132SDZm_Intk */
   0x193a, /* VFNMSUB132SDZr_Intk */
-/* Table13399 */
+/* Table13401 */
   0x2ffb, /* VPSCATTERDQZ128mr */
   0x0, /*  */
-/* Table13401 */
+/* Table13403 */
   0x3001, /* VPSCATTERQQZ128mr */
   0x0, /*  */
-/* Table13403 */
+/* Table13405 */
   0x3919, /* VSCATTERDPDZ128mr */
   0x0, /*  */
-/* Table13405 */
+/* Table13407 */
   0x3927, /* VSCATTERQPDZ128mr */
   0x0, /*  */
-/* Table13407 */
+/* Table13409 */
   0x14ea, /* VFMADDSUB213PDZ128mk */
   0x14ed, /* VFMADDSUB213PDZ128rk */
-/* Table13409 */
+/* Table13411 */
   0x16f2, /* VFMSUBADD213PDZ128mk */
   0x16f5, /* VFMSUBADD213PDZ128rk */
-/* Table13411 */
+/* Table13413 */
   0x13be, /* VFMADD213PDZ128mk */
   0x13c1, /* VFMADD213PDZ128rk */
-/* Table13413 */
+/* Table13415 */
   0x13fe, /* VFMADD213SDZm_Intk */
   0x1402, /* VFMADD213SDZr_Intk */
-/* Table13415 */
+/* Table13417 */
   0x15e6, /* VFMSUB213PDZ128mk */
   0x15e9, /* VFMSUB213PDZ128rk */
-/* Table13417 */
+/* Table13419 */
   0x1626, /* VFMSUB213SDZm_Intk */
   0x162a, /* VFMSUB213SDZr_Intk */
-/* Table13419 */
+/* Table13421 */
   0x180e, /* VFNMADD213PDZ128mk */
   0x1811, /* VFNMADD213PDZ128rk */
-/* Table13421 */
+/* Table13423 */
   0x184e, /* VFNMADD213SDZm_Intk */
   0x1852, /* VFNMADD213SDZr_Intk */
-/* Table13423 */
+/* Table13425 */
   0x195a, /* VFNMSUB213PDZ128mk */
   0x195d, /* VFNMSUB213PDZ128rk */
-/* Table13425 */
+/* Table13427 */
   0x199a, /* VFNMSUB213SDZm_Intk */
   0x199e, /* VFNMSUB213SDZr_Intk */
-/* Table13427 */
+/* Table13429 */
   0x2968, /* VPMADD52LUQZ128mk */
   0x296b, /* VPMADD52LUQZ128rk */
-/* Table13429 */
+/* Table13431 */
   0x294d, /* VPMADD52HUQZ128mk */
   0x2950, /* VPMADD52HUQZ128rk */
-/* Table13431 */
+/* Table13433 */
   0x152e, /* VFMADDSUB231PDZ128mk */
   0x1531, /* VFMADDSUB231PDZ128rk */
-/* Table13433 */
+/* Table13435 */
   0x1736, /* VFMSUBADD231PDZ128mk */
   0x1739, /* VFMSUBADD231PDZ128rk */
-/* Table13435 */
+/* Table13437 */
   0x1422, /* VFMADD231PDZ128mk */
   0x1425, /* VFMADD231PDZ128rk */
-/* Table13437 */
+/* Table13439 */
   0x1462, /* VFMADD231SDZm_Intk */
   0x1466, /* VFMADD231SDZr_Intk */
-/* Table13439 */
+/* Table13441 */
   0x164a, /* VFMSUB231PDZ128mk */
   0x164d, /* VFMSUB231PDZ128rk */
-/* Table13441 */
+/* Table13443 */
   0x168a, /* VFMSUB231SDZm_Intk */
   0x168e, /* VFMSUB231SDZr_Intk */
-/* Table13443 */
+/* Table13445 */
   0x1872, /* VFNMADD231PDZ128mk */
   0x1875, /* VFNMADD231PDZ128rk */
-/* Table13445 */
+/* Table13447 */
   0x18b2, /* VFNMADD231SDZm_Intk */
   0x18b6, /* VFNMADD231SDZr_Intk */
-/* Table13447 */
+/* Table13449 */
   0x19be, /* VFNMSUB231PDZ128mk */
   0x19c1, /* VFNMSUB231PDZ128rk */
-/* Table13449 */
+/* Table13451 */
   0x19fe, /* VFNMSUB231SDZm_Intk */
   0x1a02, /* VFNMSUB231SDZr_Intk */
-/* Table13451 */
+/* Table13453 */
   0x257a, /* VPCONFLICTQZ128rmk */
   0x257d, /* VPCONFLICTQZ128rrk */
-/* Table13453 */
+/* Table13455 */
   0x378e, /* VRCP28SDZmk */
   0x3794, /* VRCP28SDZrk */
-/* Table13455 */
+/* Table13457 */
   0x38b2, /* VRSQRT28SDZmk */
   0x38b8, /* VRSQRT28SDZrk */
-/* Table13457 */
+/* Table13459 */
   0x2cdc, /* VPMOVUSWBZ256mrk */
   0x2cde, /* VPMOVUSWBZ256rrk */
-/* Table13459 */
+/* Table13461 */
   0x2c91, /* VPMOVUSDBZ256mrk */
   0x2c93, /* VPMOVUSDBZ256rrk */
-/* Table13461 */
+/* Table13463 */
   0x2caf, /* VPMOVUSQBZ256mrk */
   0x2cb1, /* VPMOVUSQBZ256rrk */
-/* Table13463 */
+/* Table13465 */
   0x2ca0, /* VPMOVUSDWZ256mrk */
   0x2ca2, /* VPMOVUSDWZ256rrk */
-/* Table13465 */
+/* Table13467 */
   0x2ccd, /* VPMOVUSQWZ256mrk */
   0x2ccf, /* VPMOVUSQWZ256rrk */
-/* Table13467 */
+/* Table13469 */
   0x2cbe, /* VPMOVUSQDZ256mrk */
   0x2cc0, /* VPMOVUSQDZ256rrk */
-/* Table13469 */
+/* Table13471 */
   0x2bfe, /* VPMOVSWBZ256mrk */
   0x2c00, /* VPMOVSWBZ256rrk */
-/* Table13471 */
+/* Table13473 */
   0x2bb3, /* VPMOVSDBZ256mrk */
   0x2bb5, /* VPMOVSDBZ256rrk */
-/* Table13473 */
+/* Table13475 */
   0x2bd1, /* VPMOVSQBZ256mrk */
   0x2bd3, /* VPMOVSQBZ256rrk */
-/* Table13475 */
+/* Table13477 */
   0x2bc2, /* VPMOVSDWZ256mrk */
   0x2bc4, /* VPMOVSDWZ256rrk */
-/* Table13477 */
+/* Table13479 */
   0x2bef, /* VPMOVSQWZ256mrk */
   0x2bf1, /* VPMOVSQWZ256rrk */
-/* Table13479 */
+/* Table13481 */
   0x2be0, /* VPMOVSQDZ256mrk */
   0x2be2, /* VPMOVSQDZ256rrk */
-/* Table13481 */
+/* Table13483 */
   0x359c, /* VPTESTNMBZ256rmk */
   0x359e, /* VPTESTNMBZ256rrk */
-/* Table13483 */
+/* Table13485 */
   0x35ac, /* VPTESTNMDZ256rmk */
   0x35ae, /* VPTESTNMDZ256rrk */
-/* Table13485 */
+/* Table13487 */
   0x2cee, /* VPMOVWBZ256mrk */
   0x2cf0, /* VPMOVWBZ256rrk */
-/* Table13487 */
+/* Table13489 */
   0x2b57, /* VPMOVDBZ256mrk */
   0x2b59, /* VPMOVDBZ256rrk */
-/* Table13489 */
+/* Table13491 */
   0x2b86, /* VPMOVQBZ256mrk */
   0x2b88, /* VPMOVQBZ256rrk */
-/* Table13491 */
+/* Table13493 */
   0x2b66, /* VPMOVDWZ256mrk */
   0x2b68, /* VPMOVDWZ256rrk */
-/* Table13493 */
+/* Table13495 */
   0x2ba4, /* VPMOVQWZ256mrk */
   0x2ba6, /* VPMOVQWZ256rrk */
-/* Table13495 */
+/* Table13497 */
   0x2b95, /* VPMOVQDZ256mrk */
   0x2b97, /* VPMOVQDZ256rrk */
-/* Table13497 */
+/* Table13499 */
   0x3159, /* VPSHUFBZ256rmk */
   0x315c, /* VPSHUFBZ256rrk */
-/* Table13499 */
+/* Table13501 */
   0x2988, /* VPMADDUBSWZ256rmk */
   0x298b, /* VPMADDUBSWZ256rrk */
-/* Table13501 */
+/* Table13503 */
   0x2da3, /* VPMULHRSWZ256rmk */
   0x2da6, /* VPMULHRSWZ256rrk */
-/* Table13503 */
+/* Table13505 */
   0x2728, /* VPERMILPSZ256rmk */
   0x272b, /* VPERMILPSZ256rrk */
-/* Table13505 */
+/* Table13507 */
   0xeee, /* VCVTPH2PSZ256rmk */
   0xef1, /* VCVTPH2PSZ256rrk */
-/* Table13507 */
+/* Table13509 */
   0x2fad, /* VPRORVDZ256rmk */
   0x2fb0, /* VPRORVDZ256rrk */
-/* Table13509 */
+/* Table13511 */
   0x2f41, /* VPROLVDZ256rmk */
   0x2f44, /* VPROLVDZ256rrk */
-/* Table13511 */
+/* Table13513 */
   0x276f, /* VPERMPSZ256rmk */
   0x2772, /* VPERMPSZ256rrk */
-/* Table13513 */
+/* Table13515 */
   0xd41, /* VBROADCASTSSZ256mk */
   0xd44, /* VBROADCASTSSZ256rk */
-/* Table13515 */
+/* Table13517 */
   0xce8, /* VBROADCASTF32X2Z256mk */
   0xceb, /* VBROADCASTF32X2Z256rk */
-/* Table13517 */
+/* Table13519 */
   0xcf4, /* VBROADCASTF32X4Z256rmk */
   0x0, /*  */
-/* Table13519 */
+/* Table13521 */
   0x2036, /* VPABSBZ256rmk */
   0x2039, /* VPABSBZ256rrk */
-/* Table13521 */
+/* Table13523 */
   0x2086, /* VPABSWZ256rmk */
   0x2089, /* VPABSWZ256rrk */
-/* Table13523 */
+/* Table13525 */
   0x2052, /* VPABSDZ256rmk */
   0x2055, /* VPABSDZ256rrk */
-/* Table13525 */
+/* Table13527 */
   0x2c3c, /* VPMOVSXBWZ256rmk */
   0x2c3f, /* VPMOVSXBWZ256rrk */
-/* Table13527 */
+/* Table13529 */
   0x2c10, /* VPMOVSXBDZ256rmk */
   0x2c13, /* VPMOVSXBDZ256rrk */
-/* Table13529 */
+/* Table13531 */
   0x2c26, /* VPMOVSXBQZ256rmk */
   0x2c29, /* VPMOVSXBQZ256rrk */
-/* Table13531 */
+/* Table13533 */
   0x2c68, /* VPMOVSXWDZ256rmk */
   0x2c6b, /* VPMOVSXWDZ256rrk */
-/* Table13533 */
+/* Table13535 */
   0x2c7e, /* VPMOVSXWQZ256rmk */
   0x2c81, /* VPMOVSXWQZ256rrk */
-/* Table13535 */
+/* Table13537 */
   0x2c52, /* VPMOVSXDQZ256rmk */
   0x2c55, /* VPMOVSXDQZ256rrk */
-/* Table13537 */
+/* Table13539 */
   0x3560, /* VPTESTMBZ256rmk */
   0x3562, /* VPTESTMBZ256rrk */
-/* Table13539 */
+/* Table13541 */
   0x3570, /* VPTESTMDZ256rmk */
   0x3572, /* VPTESTMDZ256rrk */
-/* Table13541 */
+/* Table13543 */
   0x20d7, /* VPACKUSDWZ256rmk */
   0x20da, /* VPACKUSDWZ256rrk */
-/* Table13543 */
+/* Table13545 */
   0x38f6, /* VSCALEFPSZ256rmk */
   0x38f9, /* VSCALEFPSZ256rrk */
-/* Table13545 */
+/* Table13547 */
   0x2d2c, /* VPMOVZXBWZ256rmk */
   0x2d2f, /* VPMOVZXBWZ256rrk */
-/* Table13547 */
+/* Table13549 */
   0x2d00, /* VPMOVZXBDZ256rmk */
   0x2d03, /* VPMOVZXBDZ256rrk */
-/* Table13549 */
+/* Table13551 */
   0x2d16, /* VPMOVZXBQZ256rmk */
   0x2d19, /* VPMOVZXBQZ256rrk */
-/* Table13551 */
+/* Table13553 */
   0x2d58, /* VPMOVZXWDZ256rmk */
   0x2d5b, /* VPMOVZXWDZ256rrk */
-/* Table13553 */
+/* Table13555 */
   0x2d6e, /* VPMOVZXWQZ256rmk */
   0x2d71, /* VPMOVZXWQZ256rrk */
-/* Table13555 */
+/* Table13557 */
   0x2d42, /* VPMOVZXDQZ256rmk */
   0x2d45, /* VPMOVZXDQZ256rrk */
-/* Table13557 */
+/* Table13559 */
   0x2619, /* VPERMDZ256rmk */
   0x261c, /* VPERMDZ256rrk */
-/* Table13559 */
+/* Table13561 */
   0x2a88, /* VPMINSBZ256rmk */
   0x2a8b, /* VPMINSBZ256rrk */
-/* Table13561 */
+/* Table13563 */
   0x2aa4, /* VPMINSDZ256rmk */
   0x2aa7, /* VPMINSDZ256rrk */
-/* Table13563 */
+/* Table13565 */
   0x2b3e, /* VPMINUWZ256rmk */
   0x2b41, /* VPMINUWZ256rrk */
-/* Table13565 */
+/* Table13567 */
   0x2b0a, /* VPMINUDZ256rmk */
   0x2b0d, /* VPMINUDZ256rrk */
-/* Table13567 */
+/* Table13569 */
   0x29bc, /* VPMAXSBZ256rmk */
   0x29bf, /* VPMAXSBZ256rrk */
-/* Table13569 */
+/* Table13571 */
   0x29d8, /* VPMAXSDZ256rmk */
   0x29db, /* VPMAXSDZ256rrk */
-/* Table13571 */
+/* Table13573 */
   0x2a72, /* VPMAXUWZ256rmk */
   0x2a75, /* VPMAXUWZ256rrk */
-/* Table13573 */
+/* Table13575 */
   0x2a3e, /* VPMAXUDZ256rmk */
   0x2a41, /* VPMAXUDZ256rrk */
-/* Table13575 */
+/* Table13577 */
   0x2deb, /* VPMULLDZ256rmk */
   0x2dee, /* VPMULLDZ256rrk */
-/* Table13577 */
+/* Table13579 */
   0x1abb, /* VGETEXPPSZ256mk */
   0x1abe, /* VGETEXPPSZ256rk */
-/* Table13579 */
+/* Table13581 */
   0x2908, /* VPLZCNTDZ256rmk */
   0x290b, /* VPLZCNTDZ256rrk */
-/* Table13581 */
+/* Table13583 */
   0x33f8, /* VPSRLVDZ256rmk */
   0x33fb, /* VPSRLVDZ256rrk */
-/* Table13583 */
+/* Table13585 */
   0x3314, /* VPSRAVDZ256rmk */
   0x3317, /* VPSRAVDZ256rrk */
-/* Table13585 */
+/* Table13587 */
   0x323a, /* VPSLLVDZ256rmk */
   0x323d, /* VPSLLVDZ256rrk */
-/* Table13587 */
+/* Table13589 */
   0x375b, /* VRCP14PSZ256mk */
   0x375e, /* VRCP14PSZ256rk */
-/* Table13589 */
+/* Table13591 */
   0x387f, /* VRSQRT14PSZ256mk */
   0x3882, /* VRSQRT14PSZ256rk */
-/* Table13591 */
+/* Table13593 */
   0x25b9, /* VPDPBUSDZ256mk */
   0x25bc, /* VPDPBUSDZ256rk */
-/* Table13593 */
+/* Table13595 */
   0x259e, /* VPDPBUSDSZ256mk */
   0x25a1, /* VPDPBUSDSZ256rk */
-/* Table13595 */
+/* Table13597 */
   0x25ef, /* VPDPWSSDZ256mk */
   0x25f2, /* VPDPWSSDZ256rk */
-/* Table13597 */
+/* Table13599 */
   0x25d4, /* VPDPWSSDSZ256mk */
   0x25d7, /* VPDPWSSDSZ256rk */
-/* Table13599 */
+/* Table13601 */
   0x2e6d, /* VPOPCNTBZ256rmk */
   0x2e70, /* VPOPCNTBZ256rrk */
-/* Table13601 */
+/* Table13603 */
   0x2e85, /* VPOPCNTDZ256rmk */
   0x2e88, /* VPOPCNTDZ256rrk */
-/* Table13603 */
+/* Table13605 */
   0x2303, /* VPBROADCASTDZ256mk */
   0x2306, /* VPBROADCASTDZ256rk */
-/* Table13605 */
+/* Table13607 */
   0xd0d, /* VBROADCASTI32X2Z256mk */
   0xd10, /* VBROADCASTI32X2Z256rk */
-/* Table13607 */
+/* Table13609 */
   0xd19, /* VBROADCASTI32X4Z256rmk */
   0x0, /*  */
-/* Table13609 */
+/* Table13611 */
   0x284c, /* VPEXPANDBZ256rmk */
   0x284f, /* VPEXPANDBZ256rrk */
-/* Table13611 */
+/* Table13613 */
   0x250d, /* VPCOMPRESSBZ256mrk */
   0x250f, /* VPCOMPRESSBZ256rrk */
-/* Table13613 */
+/* Table13615 */
   0x2298, /* VPBLENDMDZ256rmk */
   0x229b, /* VPBLENDMDZ256rrk */
-/* Table13615 */
+/* Table13617 */
   0xcc8, /* VBLENDMPSZ256rmk */
   0xccb, /* VBLENDMPSZ256rrk */
-/* Table13617 */
+/* Table13619 */
   0x2280, /* VPBLENDMBZ256rmk */
   0x2283, /* VPBLENDMBZ256rrk */
-/* Table13619 */
+/* Table13621 */
   0x305b, /* VPSHLDVDZ256mk */
   0x305e, /* VPSHLDVDZ256rk */
-/* Table13621 */
+/* Table13623 */
   0x30f7, /* VPSHRDVDZ256mk */
   0x30fa, /* VPSHRDVDZ256rk */
-/* Table13623 */
+/* Table13625 */
   0x262e, /* VPERMI2B256rmk */
   0x2631, /* VPERMI2B256rrk */
-/* Table13625 */
+/* Table13627 */
   0x2646, /* VPERMI2D256rmk */
   0x2649, /* VPERMI2D256rrk */
-/* Table13627 */
+/* Table13629 */
   0x267c, /* VPERMI2PS256rmk */
   0x267f, /* VPERMI2PS256rrk */
-/* Table13629 */
+/* Table13631 */
   0x22e4, /* VPBROADCASTBZ256mk */
   0x22e7, /* VPBROADCASTBZ256rk */
-/* Table13631 */
+/* Table13633 */
   0x2347, /* VPBROADCASTWZ256mk */
   0x234a, /* VPBROADCASTWZ256rk */
-/* Table13633 */
-  0x0, /*  */
-  0x22f3, /* VPBROADCASTBrZ256rk */
 /* Table13635 */
   0x0, /*  */
-  0x2356, /* VPBROADCASTWrZ256rk */
+  0x22f3, /* VPBROADCASTBrZ256rk */
 /* Table13637 */
   0x0, /*  */
-  0x2312, /* VPBROADCASTDrZ256rk */
+  0x2356, /* VPBROADCASTWrZ256rk */
 /* Table13639 */
+  0x0, /*  */
+  0x2312, /* VPBROADCASTDrZ256rk */
+/* Table13641 */
   0x27aa, /* VPERMT2B256rmk */
   0x27ad, /* VPERMT2B256rrk */
-/* Table13641 */
+/* Table13643 */
   0x27c2, /* VPERMT2D256rmk */
   0x27c5, /* VPERMT2D256rrk */
-/* Table13643 */
+/* Table13645 */
   0x27f8, /* VPERMT2PS256rmk */
   0x27fb, /* VPERMT2PS256rrk */
-/* Table13645 */
+/* Table13647 */
   0x12b7, /* VEXPANDPSZ256rmk */
   0x12ba, /* VEXPANDPSZ256rrk */
-/* Table13647 */
+/* Table13649 */
   0x285e, /* VPEXPANDDZ256rmk */
   0x2861, /* VPEXPANDDZ256rrk */
-/* Table13649 */
+/* Table13651 */
   0xdfd, /* VCOMPRESSPSZ256mrk */
   0xdff, /* VCOMPRESSPSZ256rrk */
-/* Table13651 */
+/* Table13653 */
   0x251c, /* VPCOMPRESSDZ256mrk */
   0x251e, /* VPCOMPRESSDZ256rrk */
-/* Table13653 */
+/* Table13655 */
   0x2608, /* VPERMBZ256rmk */
   0x260b, /* VPERMBZ256rrk */
-/* Table13655 */
+/* Table13657 */
   0x3149, /* VPSHUFBITQMBZ256rmk */
   0x314b, /* VPSHUFBITQMBZ256rrk */
-/* Table13657 */
+/* Table13659 */
   0x28a1, /* VPGATHERDDZ256rm */
   0x0, /*  */
-/* Table13659 */
+/* Table13661 */
   0x28ab, /* VPGATHERQDZ256rm */
   0x0, /*  */
-/* Table13661 */
+/* Table13663 */
   0x1a7b, /* VGATHERDPSZ256rm */
   0x0, /*  */
-/* Table13663 */
+/* Table13665 */
   0x1a8d, /* VGATHERQPSZ256rm */
   0x0, /*  */
-/* Table13665 */
+/* Table13667 */
   0x14d1, /* VFMADDSUB132PSZ256mk */
   0x14d4, /* VFMADDSUB132PSZ256rk */
-/* Table13667 */
+/* Table13669 */
   0x16d9, /* VFMSUBADD132PSZ256mk */
   0x16dc, /* VFMSUBADD132PSZ256rk */
-/* Table13669 */
+/* Table13671 */
   0x1385, /* VFMADD132PSZ256mk */
   0x1388, /* VFMADD132PSZ256rk */
-/* Table13671 */
+/* Table13673 */
   0x15ad, /* VFMSUB132PSZ256mk */
   0x15b0, /* VFMSUB132PSZ256rk */
-/* Table13673 */
+/* Table13675 */
   0x17d5, /* VFNMADD132PSZ256mk */
   0x17d8, /* VFNMADD132PSZ256rk */
-/* Table13675 */
+/* Table13677 */
   0x1921, /* VFNMSUB132PSZ256mk */
   0x1924, /* VFNMSUB132PSZ256rk */
-/* Table13677 */
+/* Table13679 */
   0x2ff9, /* VPSCATTERDDZ256mr */
   0x0, /*  */
-/* Table13679 */
+/* Table13681 */
   0x2fff, /* VPSCATTERQDZ256mr */
   0x0, /*  */
-/* Table13681 */
+/* Table13683 */
   0x391d, /* VSCATTERDPSZ256mr */
   0x0, /*  */
-/* Table13683 */
+/* Table13685 */
   0x392b, /* VSCATTERQPSZ256mr */
   0x0, /*  */
-/* Table13685 */
+/* Table13687 */
   0x1515, /* VFMADDSUB213PSZ256mk */
   0x1518, /* VFMADDSUB213PSZ256rk */
-/* Table13687 */
+/* Table13689 */
   0x171d, /* VFMSUBADD213PSZ256mk */
   0x1720, /* VFMSUBADD213PSZ256rk */
-/* Table13689 */
+/* Table13691 */
   0x13e9, /* VFMADD213PSZ256mk */
   0x13ec, /* VFMADD213PSZ256rk */
-/* Table13691 */
+/* Table13693 */
   0x1611, /* VFMSUB213PSZ256mk */
   0x1614, /* VFMSUB213PSZ256rk */
-/* Table13693 */
+/* Table13695 */
   0x1839, /* VFNMADD213PSZ256mk */
   0x183c, /* VFNMADD213PSZ256rk */
-/* Table13695 */
+/* Table13697 */
   0x1985, /* VFNMSUB213PSZ256mk */
   0x1988, /* VFNMSUB213PSZ256rk */
-/* Table13697 */
+/* Table13699 */
   0x1559, /* VFMADDSUB231PSZ256mk */
   0x155c, /* VFMADDSUB231PSZ256rk */
-/* Table13699 */
+/* Table13701 */
   0x1761, /* VFMSUBADD231PSZ256mk */
   0x1764, /* VFMSUBADD231PSZ256rk */
-/* Table13701 */
+/* Table13703 */
   0x144d, /* VFMADD231PSZ256mk */
   0x1450, /* VFMADD231PSZ256rk */
-/* Table13703 */
+/* Table13705 */
   0x1675, /* VFMSUB231PSZ256mk */
   0x1678, /* VFMSUB231PSZ256rk */
-/* Table13705 */
+/* Table13707 */
   0x189d, /* VFNMADD231PSZ256mk */
   0x18a0, /* VFNMADD231PSZ256rk */
-/* Table13707 */
+/* Table13709 */
   0x19e9, /* VFNMSUB231PSZ256mk */
   0x19ec, /* VFNMSUB231PSZ256rk */
-/* Table13709 */
+/* Table13711 */
   0x2568, /* VPCONFLICTDZ256rmk */
   0x256b, /* VPCONFLICTDZ256rrk */
-/* Table13711 */
+/* Table13713 */
   0x1b73, /* VGF2P8MULBZ256rmk */
   0x1b76, /* VGF2P8MULBZ256rrk */
-/* Table13713 */
+/* Table13715 */
   0x35cc, /* VPTESTNMWZ256rmk */
   0x35ce, /* VPTESTNMWZ256rrk */
-/* Table13715 */
+/* Table13717 */
   0x35be, /* VPTESTNMQZ256rmk */
   0x35c0, /* VPTESTNMQZ256rrk */
-/* Table13717 */
+/* Table13719 */
   0x26ea, /* VPERMILPDZ256rmk */
   0x26ed, /* VPERMILPDZ256rrk */
-/* Table13719 */
+/* Table13721 */
   0x342e, /* VPSRLVWZ256rmk */
   0x3431, /* VPSRLVWZ256rrk */
-/* Table13721 */
+/* Table13723 */
   0x3346, /* VPSRAVWZ256rmk */
   0x3349, /* VPSRAVWZ256rrk */
-/* Table13723 */
+/* Table13725 */
   0x3270, /* VPSLLVWZ256rmk */
   0x3273, /* VPSLLVWZ256rrk */
-/* Table13725 */
+/* Table13727 */
   0x2fc8, /* VPRORVQZ256rmk */
   0x2fcb, /* VPRORVQZ256rrk */
-/* Table13727 */
+/* Table13729 */
   0x2f5c, /* VPROLVQZ256rmk */
   0x2f5f, /* VPROLVQZ256rrk */
-/* Table13729 */
+/* Table13731 */
   0x2752, /* VPERMPDZ256rmk */
   0x2755, /* VPERMPDZ256rrk */
-/* Table13731 */
+/* Table13733 */
   0xd2d, /* VBROADCASTSDZ256mk */
   0xd30, /* VBROADCASTSDZ256rk */
-/* Table13733 */
+/* Table13735 */
   0xcfd, /* VBROADCASTF64X2Z128rmk */
   0x0, /*  */
-/* Table13735 */
+/* Table13737 */
   0x206f, /* VPABSQZ256rmk */
   0x2072, /* VPABSQZ256rrk */
-/* Table13737 */
+/* Table13739 */
   0x3590, /* VPTESTMWZ256rmk */
   0x3592, /* VPTESTMWZ256rrk */
-/* Table13739 */
+/* Table13741 */
   0x3582, /* VPTESTMQZ256rmk */
   0x3584, /* VPTESTMQZ256rrk */
-/* Table13741 */
+/* Table13743 */
   0x2d8a, /* VPMULDQZ256rmk */
   0x2d8d, /* VPMULDQZ256rrk */
-/* Table13743 */
+/* Table13745 */
   0x23dc, /* VPCMPEQQZ256rmk */
   0x23de, /* VPCMPEQQZ256rrk */
-/* Table13745 */
+/* Table13747 */
   0x38d8, /* VSCALEFPDZ256rmk */
   0x38db, /* VSCALEFPDZ256rrk */
-/* Table13747 */
+/* Table13749 */
   0x278c, /* VPERMQZ256rmk */
   0x278f, /* VPERMQZ256rrk */
-/* Table13749 */
+/* Table13751 */
   0x242c, /* VPCMPGTQZ256rmk */
   0x242e, /* VPCMPGTQZ256rrk */
-/* Table13751 */
+/* Table13753 */
   0x2ac1, /* VPMINSQZ256rmk */
   0x2ac4, /* VPMINSQZ256rrk */
-/* Table13753 */
+/* Table13755 */
   0x2b27, /* VPMINUQZ256rmk */
   0x2b2a, /* VPMINUQZ256rrk */
-/* Table13755 */
+/* Table13757 */
   0x29f5, /* VPMAXSQZ256rmk */
   0x29f8, /* VPMAXSQZ256rrk */
-/* Table13757 */
+/* Table13759 */
   0x2a5b, /* VPMAXUQZ256rmk */
   0x2a5e, /* VPMAXUQZ256rrk */
-/* Table13759 */
+/* Table13761 */
   0x2e08, /* VPMULLQZ256rmk */
   0x2e0b, /* VPMULLQZ256rrk */
-/* Table13761 */
+/* Table13763 */
   0x1a9d, /* VGETEXPPDZ256mk */
   0x1aa0, /* VGETEXPPDZ256rk */
-/* Table13763 */
+/* Table13765 */
   0x2923, /* VPLZCNTQZ256rmk */
   0x2926, /* VPLZCNTQZ256rrk */
-/* Table13765 */
+/* Table13767 */
   0x3417, /* VPSRLVQZ256rmk */
   0x341a, /* VPSRLVQZ256rrk */
-/* Table13767 */
+/* Table13769 */
   0x3331, /* VPSRAVQZ256rmk */
   0x3334, /* VPSRAVQZ256rrk */
-/* Table13769 */
+/* Table13771 */
   0x3259, /* VPSLLVQZ256rmk */
   0x325c, /* VPSLLVQZ256rrk */
-/* Table13771 */
+/* Table13773 */
   0x3740, /* VRCP14PDZ256mk */
   0x3743, /* VRCP14PDZ256rk */
-/* Table13773 */
+/* Table13775 */
   0x3864, /* VRSQRT14PDZ256mk */
   0x3867, /* VRSQRT14PDZ256rk */
-/* Table13775 */
+/* Table13777 */
   0x2eb5, /* VPOPCNTWZ256rmk */
   0x2eb8, /* VPOPCNTWZ256rrk */
-/* Table13777 */
+/* Table13779 */
   0x2ea0, /* VPOPCNTQZ256rmk */
   0x2ea3, /* VPOPCNTQZ256rrk */
-/* Table13779 */
+/* Table13781 */
   0x2328, /* VPBROADCASTQZ256mk */
   0x232b, /* VPBROADCASTQZ256rk */
-/* Table13781 */
+/* Table13783 */
   0xd22, /* VBROADCASTI64X2Z128rmk */
   0x0, /*  */
-/* Table13783 */
+/* Table13785 */
   0x2882, /* VPEXPANDWZ256rmk */
   0x2885, /* VPEXPANDWZ256rrk */
-/* Table13785 */
+/* Table13787 */
   0x253a, /* VPCOMPRESSWZ256mrk */
   0x253c, /* VPCOMPRESSWZ256rrk */
-/* Table13787 */
+/* Table13789 */
   0x22b3, /* VPBLENDMQZ256rmk */
   0x22b6, /* VPBLENDMQZ256rrk */
-/* Table13789 */
+/* Table13791 */
   0xcad, /* VBLENDMPDZ256rmk */
   0xcb0, /* VBLENDMPDZ256rrk */
-/* Table13791 */
+/* Table13793 */
   0x22c8, /* VPBLENDMWZ256rmk */
   0x22cb, /* VPBLENDMWZ256rrk */
-/* Table13793 */
+/* Table13795 */
   0x308b, /* VPSHLDVWZ256mk */
   0x308e, /* VPSHLDVWZ256rk */
-/* Table13795 */
+/* Table13797 */
   0x3076, /* VPSHLDVQZ256mk */
   0x3079, /* VPSHLDVQZ256rk */
-/* Table13797 */
+/* Table13799 */
   0x3127, /* VPSHRDVWZ256mk */
   0x312a, /* VPSHRDVWZ256rk */
-/* Table13799 */
+/* Table13801 */
   0x3112, /* VPSHRDVQZ256mk */
   0x3115, /* VPSHRDVQZ256rk */
-/* Table13801 */
+/* Table13803 */
   0x26ac, /* VPERMI2W256rmk */
   0x26af, /* VPERMI2W256rrk */
-/* Table13803 */
+/* Table13805 */
   0x2697, /* VPERMI2Q256rmk */
   0x269a, /* VPERMI2Q256rrk */
-/* Table13805 */
+/* Table13807 */
   0x2661, /* VPERMI2PD256rmk */
   0x2664, /* VPERMI2PD256rrk */
-/* Table13807 */
+/* Table13809 */
   0x0, /*  */
   0x2337, /* VPBROADCASTQrZ256rk */
-/* Table13809 */
+/* Table13811 */
   0x2828, /* VPERMT2W256rmk */
   0x282b, /* VPERMT2W256rrk */
-/* Table13811 */
+/* Table13813 */
   0x2813, /* VPERMT2Q256rmk */
   0x2816, /* VPERMT2Q256rrk */
-/* Table13813 */
+/* Table13815 */
   0x27dd, /* VPERMT2PD256rmk */
   0x27e0, /* VPERMT2PD256rrk */
-/* Table13815 */
+/* Table13817 */
   0x2e39, /* VPMULTISHIFTQBZ256rmk */
   0x2e3c, /* VPMULTISHIFTQBZ256rrk */
-/* Table13817 */
+/* Table13819 */
   0x12a5, /* VEXPANDPDZ256rmk */
   0x12a8, /* VEXPANDPDZ256rrk */
-/* Table13819 */
+/* Table13821 */
   0x2870, /* VPEXPANDQZ256rmk */
   0x2873, /* VPEXPANDQZ256rrk */
-/* Table13821 */
+/* Table13823 */
   0xdee, /* VCOMPRESSPDZ256mrk */
   0xdf0, /* VCOMPRESSPDZ256rrk */
-/* Table13823 */
+/* Table13825 */
   0x252b, /* VPCOMPRESSQZ256mrk */
   0x252d, /* VPCOMPRESSQZ256rrk */
-/* Table13825 */
+/* Table13827 */
   0x283a, /* VPERMWZ256rmk */
   0x283d, /* VPERMWZ256rrk */
-/* Table13827 */
+/* Table13829 */
   0x28a6, /* VPGATHERDQZ256rm */
   0x0, /*  */
-/* Table13829 */
+/* Table13831 */
   0x28b0, /* VPGATHERQQZ256rm */
   0x0, /*  */
-/* Table13831 */
+/* Table13833 */
   0x1a76, /* VGATHERDPDZ256rm */
   0x0, /*  */
-/* Table13833 */
+/* Table13835 */
   0x1a88, /* VGATHERQPDZ256rm */
   0x0, /*  */
-/* Table13835 */
+/* Table13837 */
   0x14af, /* VFMADDSUB132PDZ256mk */
   0x14b2, /* VFMADDSUB132PDZ256rk */
-/* Table13837 */
+/* Table13839 */
   0x16b7, /* VFMSUBADD132PDZ256mk */
   0x16ba, /* VFMSUBADD132PDZ256rk */
-/* Table13839 */
+/* Table13841 */
   0x1363, /* VFMADD132PDZ256mk */
   0x1366, /* VFMADD132PDZ256rk */
-/* Table13841 */
+/* Table13843 */
   0x158b, /* VFMSUB132PDZ256mk */
   0x158e, /* VFMSUB132PDZ256rk */
-/* Table13843 */
+/* Table13845 */
   0x17b3, /* VFNMADD132PDZ256mk */
   0x17b6, /* VFNMADD132PDZ256rk */
-/* Table13845 */
+/* Table13847 */
   0x18ff, /* VFNMSUB132PDZ256mk */
   0x1902, /* VFNMSUB132PDZ256rk */
-/* Table13847 */
+/* Table13849 */
   0x2ffc, /* VPSCATTERDQZ256mr */
   0x0, /*  */
-/* Table13849 */
+/* Table13851 */
   0x3002, /* VPSCATTERQQZ256mr */
   0x0, /*  */
-/* Table13851 */
+/* Table13853 */
   0x391a, /* VSCATTERDPDZ256mr */
   0x0, /*  */
-/* Table13853 */
+/* Table13855 */
   0x3928, /* VSCATTERQPDZ256mr */
   0x0, /*  */
-/* Table13855 */
+/* Table13857 */
   0x14f3, /* VFMADDSUB213PDZ256mk */
   0x14f6, /* VFMADDSUB213PDZ256rk */
-/* Table13857 */
+/* Table13859 */
   0x16fb, /* VFMSUBADD213PDZ256mk */
   0x16fe, /* VFMSUBADD213PDZ256rk */
-/* Table13859 */
+/* Table13861 */
   0x13c7, /* VFMADD213PDZ256mk */
   0x13ca, /* VFMADD213PDZ256rk */
-/* Table13861 */
+/* Table13863 */
   0x15ef, /* VFMSUB213PDZ256mk */
   0x15f2, /* VFMSUB213PDZ256rk */
-/* Table13863 */
+/* Table13865 */
   0x1817, /* VFNMADD213PDZ256mk */
   0x181a, /* VFNMADD213PDZ256rk */
-/* Table13865 */
+/* Table13867 */
   0x1963, /* VFNMSUB213PDZ256mk */
   0x1966, /* VFNMSUB213PDZ256rk */
-/* Table13867 */
+/* Table13869 */
   0x2971, /* VPMADD52LUQZ256mk */
   0x2974, /* VPMADD52LUQZ256rk */
-/* Table13869 */
+/* Table13871 */
   0x2956, /* VPMADD52HUQZ256mk */
   0x2959, /* VPMADD52HUQZ256rk */
-/* Table13871 */
+/* Table13873 */
   0x1537, /* VFMADDSUB231PDZ256mk */
   0x153a, /* VFMADDSUB231PDZ256rk */
-/* Table13873 */
+/* Table13875 */
   0x173f, /* VFMSUBADD231PDZ256mk */
   0x1742, /* VFMSUBADD231PDZ256rk */
-/* Table13875 */
+/* Table13877 */
   0x142b, /* VFMADD231PDZ256mk */
   0x142e, /* VFMADD231PDZ256rk */
-/* Table13877 */
+/* Table13879 */
   0x1653, /* VFMSUB231PDZ256mk */
   0x1656, /* VFMSUB231PDZ256rk */
-/* Table13879 */
+/* Table13881 */
   0x187b, /* VFNMADD231PDZ256mk */
   0x187e, /* VFNMADD231PDZ256rk */
-/* Table13881 */
+/* Table13883 */
   0x19c7, /* VFNMSUB231PDZ256mk */
   0x19ca, /* VFNMSUB231PDZ256rk */
-/* Table13883 */
+/* Table13885 */
   0x2583, /* VPCONFLICTQZ256rmk */
   0x2586, /* VPCONFLICTQZ256rrk */
-/* Table13885 */
+/* Table13887 */
   0x2ce1, /* VPMOVUSWBZmrk */
   0x2ce3, /* VPMOVUSWBZrrk */
-/* Table13887 */
+/* Table13889 */
   0x2c96, /* VPMOVUSDBZmrk */
   0x2c98, /* VPMOVUSDBZrrk */
-/* Table13889 */
+/* Table13891 */
   0x2cb4, /* VPMOVUSQBZmrk */
   0x2cb6, /* VPMOVUSQBZrrk */
-/* Table13891 */
+/* Table13893 */
   0x2ca5, /* VPMOVUSDWZmrk */
   0x2ca7, /* VPMOVUSDWZrrk */
-/* Table13893 */
+/* Table13895 */
   0x2cd2, /* VPMOVUSQWZmrk */
   0x2cd4, /* VPMOVUSQWZrrk */
-/* Table13895 */
+/* Table13897 */
   0x2cc3, /* VPMOVUSQDZmrk */
   0x2cc5, /* VPMOVUSQDZrrk */
-/* Table13897 */
+/* Table13899 */
   0x2c03, /* VPMOVSWBZmrk */
   0x2c05, /* VPMOVSWBZrrk */
-/* Table13899 */
+/* Table13901 */
   0x2bb8, /* VPMOVSDBZmrk */
   0x2bba, /* VPMOVSDBZrrk */
-/* Table13901 */
+/* Table13903 */
   0x2bd6, /* VPMOVSQBZmrk */
   0x2bd8, /* VPMOVSQBZrrk */
-/* Table13903 */
+/* Table13905 */
   0x2bc7, /* VPMOVSDWZmrk */
   0x2bc9, /* VPMOVSDWZrrk */
-/* Table13905 */
+/* Table13907 */
   0x2bf4, /* VPMOVSQWZmrk */
   0x2bf6, /* VPMOVSQWZrrk */
-/* Table13907 */
+/* Table13909 */
   0x2be5, /* VPMOVSQDZmrk */
   0x2be7, /* VPMOVSQDZrrk */
-/* Table13909 */
+/* Table13911 */
   0x35a0, /* VPTESTNMBZrmk */
   0x35a2, /* VPTESTNMBZrrk */
-/* Table13911 */
+/* Table13913 */
   0x35b2, /* VPTESTNMDZrmk */
   0x35b4, /* VPTESTNMDZrrk */
-/* Table13913 */
+/* Table13915 */
   0x2cf3, /* VPMOVWBZmrk */
   0x2cf5, /* VPMOVWBZrrk */
-/* Table13915 */
+/* Table13917 */
   0x2b5c, /* VPMOVDBZmrk */
   0x2b5e, /* VPMOVDBZrrk */
-/* Table13917 */
+/* Table13919 */
   0x2b8b, /* VPMOVQBZmrk */
   0x2b8d, /* VPMOVQBZrrk */
-/* Table13919 */
+/* Table13921 */
   0x2b6b, /* VPMOVDWZmrk */
   0x2b6d, /* VPMOVDWZrrk */
-/* Table13921 */
+/* Table13923 */
   0x2ba9, /* VPMOVQWZmrk */
   0x2bab, /* VPMOVQWZrrk */
-/* Table13923 */
+/* Table13925 */
   0x2b9a, /* VPMOVQDZmrk */
   0x2b9c, /* VPMOVQDZrrk */
-/* Table13925 */
+/* Table13927 */
   0x202b, /* VP4DPWSSDrmk */
   0x0, /*  */
-/* Table13927 */
+/* Table13929 */
   0x2028, /* VP4DPWSSDSrmk */
   0x0, /*  */
-/* Table13929 */
+/* Table13931 */
   0xb4d, /* V4FMADDPSrmk */
   0x0, /*  */
-/* Table13931 */
+/* Table13933 */
   0xb53, /* V4FNMADDPSrmk */
   0x0, /*  */
-/* Table13933 */
+/* Table13935 */
   0x315f, /* VPSHUFBZrmk */
   0x3162, /* VPSHUFBZrrk */
-/* Table13935 */
+/* Table13937 */
   0x298e, /* VPMADDUBSWZrmk */
   0x2991, /* VPMADDUBSWZrrk */
-/* Table13937 */
+/* Table13939 */
   0x2da9, /* VPMULHRSWZrmk */
   0x2dac, /* VPMULHRSWZrrk */
-/* Table13939 */
+/* Table13941 */
   0x273a, /* VPERMILPSZrmk */
   0x273d, /* VPERMILPSZrrk */
-/* Table13941 */
+/* Table13943 */
   0xef4, /* VCVTPH2PSZrmk */
   0xefa, /* VCVTPH2PSZrrk */
-/* Table13943 */
+/* Table13945 */
   0x2fb6, /* VPRORVDZrmk */
   0x2fb9, /* VPRORVDZrrk */
-/* Table13945 */
+/* Table13947 */
   0x2f4a, /* VPROLVDZrmk */
   0x2f4d, /* VPROLVDZrrk */
-/* Table13947 */
+/* Table13949 */
   0x2778, /* VPERMPSZrmk */
   0x277b, /* VPERMPSZrrk */
-/* Table13949 */
+/* Table13951 */
   0xd47, /* VBROADCASTSSZmk */
   0xd4a, /* VBROADCASTSSZrk */
-/* Table13951 */
+/* Table13953 */
   0xcee, /* VBROADCASTF32X2Zmk */
   0xcf1, /* VBROADCASTF32X2Zrk */
-/* Table13953 */
+/* Table13955 */
   0xcf7, /* VBROADCASTF32X4rmk */
   0x0, /*  */
-/* Table13955 */
+/* Table13957 */
   0xcfa, /* VBROADCASTF32X8rmk */
   0x0, /*  */
-/* Table13957 */
+/* Table13959 */
   0x203c, /* VPABSBZrmk */
   0x203f, /* VPABSBZrrk */
-/* Table13959 */
+/* Table13961 */
   0x208c, /* VPABSWZrmk */
   0x208f, /* VPABSWZrrk */
-/* Table13961 */
+/* Table13963 */
   0x205b, /* VPABSDZrmk */
   0x205e, /* VPABSDZrrk */
-/* Table13963 */
+/* Table13965 */
   0x2c42, /* VPMOVSXBWZrmk */
   0x2c45, /* VPMOVSXBWZrrk */
-/* Table13965 */
+/* Table13967 */
   0x2c16, /* VPMOVSXBDZrmk */
   0x2c19, /* VPMOVSXBDZrrk */
-/* Table13967 */
+/* Table13969 */
   0x2c2c, /* VPMOVSXBQZrmk */
   0x2c2f, /* VPMOVSXBQZrrk */
-/* Table13969 */
+/* Table13971 */
   0x2c6e, /* VPMOVSXWDZrmk */
   0x2c71, /* VPMOVSXWDZrrk */
-/* Table13971 */
+/* Table13973 */
   0x2c84, /* VPMOVSXWQZrmk */
   0x2c87, /* VPMOVSXWQZrrk */
-/* Table13973 */
+/* Table13975 */
   0x2c58, /* VPMOVSXDQZrmk */
   0x2c5b, /* VPMOVSXDQZrrk */
-/* Table13975 */
+/* Table13977 */
   0x3564, /* VPTESTMBZrmk */
   0x3566, /* VPTESTMBZrrk */
-/* Table13977 */
+/* Table13979 */
   0x3576, /* VPTESTMDZrmk */
   0x3578, /* VPTESTMDZrrk */
-/* Table13979 */
+/* Table13981 */
   0x20e0, /* VPACKUSDWZrmk */
   0x20e3, /* VPACKUSDWZrrk */
-/* Table13981 */
+/* Table13983 */
   0x38ff, /* VSCALEFPSZrmk */
   0x3905, /* VSCALEFPSZrrk */
-/* Table13983 */
+/* Table13985 */
   0x2d32, /* VPMOVZXBWZrmk */
   0x2d35, /* VPMOVZXBWZrrk */
-/* Table13985 */
+/* Table13987 */
   0x2d06, /* VPMOVZXBDZrmk */
   0x2d09, /* VPMOVZXBDZrrk */
-/* Table13987 */
+/* Table13989 */
   0x2d1c, /* VPMOVZXBQZrmk */
   0x2d1f, /* VPMOVZXBQZrrk */
-/* Table13989 */
+/* Table13991 */
   0x2d5e, /* VPMOVZXWDZrmk */
   0x2d61, /* VPMOVZXWDZrrk */
-/* Table13991 */
+/* Table13993 */
   0x2d74, /* VPMOVZXWQZrmk */
   0x2d77, /* VPMOVZXWQZrrk */
-/* Table13993 */
+/* Table13995 */
   0x2d48, /* VPMOVZXDQZrmk */
   0x2d4b, /* VPMOVZXDQZrrk */
-/* Table13995 */
+/* Table13997 */
   0x2622, /* VPERMDZrmk */
   0x2625, /* VPERMDZrrk */
-/* Table13997 */
+/* Table13999 */
   0x2a8e, /* VPMINSBZrmk */
   0x2a91, /* VPMINSBZrrk */
-/* Table13999 */
+/* Table14001 */
   0x2aad, /* VPMINSDZrmk */
   0x2ab0, /* VPMINSDZrrk */
-/* Table14001 */
+/* Table14003 */
   0x2b44, /* VPMINUWZrmk */
   0x2b47, /* VPMINUWZrrk */
-/* Table14003 */
+/* Table14005 */
   0x2b13, /* VPMINUDZrmk */
   0x2b16, /* VPMINUDZrrk */
-/* Table14005 */
+/* Table14007 */
   0x29c2, /* VPMAXSBZrmk */
   0x29c5, /* VPMAXSBZrrk */
-/* Table14007 */
+/* Table14009 */
   0x29e1, /* VPMAXSDZrmk */
   0x29e4, /* VPMAXSDZrrk */
-/* Table14009 */
+/* Table14011 */
   0x2a78, /* VPMAXUWZrmk */
   0x2a7b, /* VPMAXUWZrrk */
-/* Table14011 */
+/* Table14013 */
   0x2a47, /* VPMAXUDZrmk */
   0x2a4a, /* VPMAXUDZrrk */
-/* Table14013 */
+/* Table14015 */
   0x2df4, /* VPMULLDZrmk */
   0x2df7, /* VPMULLDZrrk */
-/* Table14015 */
+/* Table14017 */
   0x1ac4, /* VGETEXPPSZmk */
   0x1aca, /* VGETEXPPSZrk */
-/* Table14017 */
+/* Table14019 */
   0x2911, /* VPLZCNTDZrmk */
   0x2914, /* VPLZCNTDZrrk */
-/* Table14019 */
+/* Table14021 */
   0x3401, /* VPSRLVDZrmk */
   0x3404, /* VPSRLVDZrrk */
-/* Table14021 */
+/* Table14023 */
   0x331d, /* VPSRAVDZrmk */
   0x3320, /* VPSRAVDZrrk */
-/* Table14023 */
+/* Table14025 */
   0x3243, /* VPSLLVDZrmk */
   0x3246, /* VPSLLVDZrrk */
-/* Table14025 */
+/* Table14027 */
   0x3764, /* VRCP14PSZmk */
   0x3767, /* VRCP14PSZrk */
-/* Table14027 */
+/* Table14029 */
   0x3888, /* VRSQRT14PSZmk */
   0x388b, /* VRSQRT14PSZrk */
-/* Table14029 */
+/* Table14031 */
   0x25c2, /* VPDPBUSDZmk */
   0x25c5, /* VPDPBUSDZrk */
-/* Table14031 */
+/* Table14033 */
   0x25a7, /* VPDPBUSDSZmk */
   0x25aa, /* VPDPBUSDSZrk */
-/* Table14033 */
+/* Table14035 */
   0x25f8, /* VPDPWSSDZmk */
   0x25fb, /* VPDPWSSDZrk */
-/* Table14035 */
+/* Table14037 */
   0x25dd, /* VPDPWSSDSZmk */
   0x25e0, /* VPDPWSSDSZrk */
-/* Table14037 */
+/* Table14039 */
   0x2e73, /* VPOPCNTBZrmk */
   0x2e76, /* VPOPCNTBZrrk */
-/* Table14039 */
+/* Table14041 */
   0x2e8e, /* VPOPCNTDZrmk */
   0x2e91, /* VPOPCNTDZrrk */
-/* Table14041 */
+/* Table14043 */
   0x2309, /* VPBROADCASTDZmk */
   0x230c, /* VPBROADCASTDZrk */
-/* Table14043 */
+/* Table14045 */
   0xd13, /* VBROADCASTI32X2Zmk */
   0xd16, /* VBROADCASTI32X2Zrk */
-/* Table14045 */
+/* Table14047 */
   0xd1c, /* VBROADCASTI32X4rmk */
   0x0, /*  */
-/* Table14047 */
+/* Table14049 */
   0xd1f, /* VBROADCASTI32X8rmk */
   0x0, /*  */
-/* Table14049 */
+/* Table14051 */
   0x2852, /* VPEXPANDBZrmk */
   0x2855, /* VPEXPANDBZrrk */
-/* Table14051 */
+/* Table14053 */
   0x2512, /* VPCOMPRESSBZmrk */
   0x2514, /* VPCOMPRESSBZrrk */
-/* Table14053 */
+/* Table14055 */
   0x22a1, /* VPBLENDMDZrmk */
   0x22a4, /* VPBLENDMDZrrk */
-/* Table14055 */
+/* Table14057 */
   0xcd1, /* VBLENDMPSZrmk */
   0xcd4, /* VBLENDMPSZrrk */
-/* Table14057 */
+/* Table14059 */
   0x2286, /* VPBLENDMBZrmk */
   0x2289, /* VPBLENDMBZrrk */
-/* Table14059 */
+/* Table14061 */
   0x3064, /* VPSHLDVDZmk */
   0x3067, /* VPSHLDVDZrk */
-/* Table14061 */
+/* Table14063 */
   0x3100, /* VPSHRDVDZmk */
   0x3103, /* VPSHRDVDZrk */
-/* Table14063 */
+/* Table14065 */
   0x2634, /* VPERMI2Brmk */
   0x2637, /* VPERMI2Brrk */
-/* Table14065 */
+/* Table14067 */
   0x264f, /* VPERMI2Drmk */
   0x2652, /* VPERMI2Drrk */
-/* Table14067 */
+/* Table14069 */
   0x2685, /* VPERMI2PSrmk */
   0x2688, /* VPERMI2PSrrk */
-/* Table14069 */
+/* Table14071 */
   0x22ea, /* VPBROADCASTBZmk */
   0x22ed, /* VPBROADCASTBZrk */
-/* Table14071 */
+/* Table14073 */
   0x234d, /* VPBROADCASTWZmk */
   0x2350, /* VPBROADCASTWZrk */
-/* Table14073 */
-  0x0, /*  */
-  0x22f6, /* VPBROADCASTBrZrk */
 /* Table14075 */
   0x0, /*  */
-  0x2359, /* VPBROADCASTWrZrk */
+  0x22f6, /* VPBROADCASTBrZrk */
 /* Table14077 */
   0x0, /*  */
-  0x2315, /* VPBROADCASTDrZrk */
+  0x2359, /* VPBROADCASTWrZrk */
 /* Table14079 */
+  0x0, /*  */
+  0x2315, /* VPBROADCASTDrZrk */
+/* Table14081 */
   0x27b0, /* VPERMT2Brmk */
   0x27b3, /* VPERMT2Brrk */
-/* Table14081 */
+/* Table14083 */
   0x27cb, /* VPERMT2Drmk */
   0x27ce, /* VPERMT2Drrk */
-/* Table14083 */
+/* Table14085 */
   0x2801, /* VPERMT2PSrmk */
   0x2804, /* VPERMT2PSrrk */
-/* Table14085 */
+/* Table14087 */
   0x12bd, /* VEXPANDPSZrmk */
   0x12c0, /* VEXPANDPSZrrk */
-/* Table14087 */
+/* Table14089 */
   0x2864, /* VPEXPANDDZrmk */
   0x2867, /* VPEXPANDDZrrk */
-/* Table14089 */
+/* Table14091 */
   0xe02, /* VCOMPRESSPSZmrk */
   0xe04, /* VCOMPRESSPSZrrk */
-/* Table14091 */
+/* Table14093 */
   0x2521, /* VPCOMPRESSDZmrk */
   0x2523, /* VPCOMPRESSDZrrk */
-/* Table14093 */
+/* Table14095 */
   0x260e, /* VPERMBZrmk */
   0x2611, /* VPERMBZrrk */
-/* Table14095 */
+/* Table14097 */
   0x314d, /* VPSHUFBITQMBZrmk */
   0x314f, /* VPSHUFBITQMBZrrk */
-/* Table14097 */
+/* Table14099 */
   0x28a2, /* VPGATHERDDZrm */
   0x0, /*  */
-/* Table14099 */
+/* Table14101 */
   0x28ac, /* VPGATHERQDZrm */
   0x0, /*  */
-/* Table14101 */
+/* Table14103 */
   0x1a7c, /* VGATHERDPSZrm */
   0x0, /*  */
-/* Table14103 */
+/* Table14105 */
   0x1a8e, /* VGATHERQPSZrm */
   0x0, /*  */
-/* Table14105 */
+/* Table14107 */
   0x14da, /* VFMADDSUB132PSZmk */
   0x14e0, /* VFMADDSUB132PSZrk */
-/* Table14107 */
+/* Table14109 */
   0x16e2, /* VFMSUBADD132PSZmk */
   0x16e8, /* VFMSUBADD132PSZrk */
-/* Table14109 */
+/* Table14111 */
   0x138e, /* VFMADD132PSZmk */
   0x1394, /* VFMADD132PSZrk */
-/* Table14111 */
+/* Table14113 */
   0x15b6, /* VFMSUB132PSZmk */
   0x15bc, /* VFMSUB132PSZrk */
-/* Table14113 */
+/* Table14115 */
   0x17de, /* VFNMADD132PSZmk */
   0x17e4, /* VFNMADD132PSZrk */
-/* Table14115 */
+/* Table14117 */
   0x192a, /* VFNMSUB132PSZmk */
   0x1930, /* VFNMSUB132PSZrk */
-/* Table14117 */
+/* Table14119 */
   0x2ffa, /* VPSCATTERDDZmr */
   0x0, /*  */
-/* Table14119 */
+/* Table14121 */
   0x3000, /* VPSCATTERQDZmr */
   0x0, /*  */
-/* Table14121 */
+/* Table14123 */
   0x391e, /* VSCATTERDPSZmr */
   0x0, /*  */
-/* Table14123 */
+/* Table14125 */
   0x392c, /* VSCATTERQPSZmr */
   0x0, /*  */
-/* Table14125 */
+/* Table14127 */
   0x151e, /* VFMADDSUB213PSZmk */
   0x1524, /* VFMADDSUB213PSZrk */
-/* Table14127 */
+/* Table14129 */
   0x1726, /* VFMSUBADD213PSZmk */
   0x172c, /* VFMSUBADD213PSZrk */
-/* Table14129 */
+/* Table14131 */
   0x13f2, /* VFMADD213PSZmk */
   0x13f8, /* VFMADD213PSZrk */
-/* Table14131 */
+/* Table14133 */
   0x161a, /* VFMSUB213PSZmk */
   0x1620, /* VFMSUB213PSZrk */
-/* Table14133 */
+/* Table14135 */
   0x1842, /* VFNMADD213PSZmk */
   0x1848, /* VFNMADD213PSZrk */
-/* Table14135 */
+/* Table14137 */
   0x198e, /* VFNMSUB213PSZmk */
   0x1994, /* VFNMSUB213PSZrk */
-/* Table14137 */
+/* Table14139 */
   0x1562, /* VFMADDSUB231PSZmk */
   0x1568, /* VFMADDSUB231PSZrk */
-/* Table14139 */
+/* Table14141 */
   0x176a, /* VFMSUBADD231PSZmk */
   0x1770, /* VFMSUBADD231PSZrk */
-/* Table14141 */
+/* Table14143 */
   0x1456, /* VFMADD231PSZmk */
   0x145c, /* VFMADD231PSZrk */
-/* Table14143 */
+/* Table14145 */
   0x167e, /* VFMSUB231PSZmk */
   0x1684, /* VFMSUB231PSZrk */
-/* Table14145 */
+/* Table14147 */
   0x18a6, /* VFNMADD231PSZmk */
   0x18ac, /* VFNMADD231PSZrk */
-/* Table14147 */
+/* Table14149 */
   0x19f2, /* VFNMSUB231PSZmk */
   0x19f8, /* VFNMSUB231PSZrk */
-/* Table14149 */
+/* Table14151 */
   0x2571, /* VPCONFLICTDZrmk */
   0x2574, /* VPCONFLICTDZrrk */
-/* Table14151 */
+/* Table14153 */
   0x0, /*  */
   0x1a7f, /* VGATHERPF0DPSm */
   0x1a83, /* VGATHERPF1DPSm */
@@ -104315,7 +104317,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table14167 */
+/* Table14169 */
   0x0, /*  */
   0x1a81, /* VGATHERPF0QPSm */
   0x1a85, /* VGATHERPF1QPSm */
@@ -104332,283 +104334,283 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table14183 */
+/* Table14185 */
   0x1296, /* VEXP2PSZmk */
   0x129c, /* VEXP2PSZrk */
-/* Table14185 */
+/* Table14187 */
   0x3785, /* VRCP28PSZmk */
   0x378b, /* VRCP28PSZrk */
-/* Table14187 */
+/* Table14189 */
   0x38a9, /* VRSQRT28PSZmk */
   0x38af, /* VRSQRT28PSZrk */
-/* Table14189 */
+/* Table14191 */
   0x1b79, /* VGF2P8MULBZrmk */
   0x1b7c, /* VGF2P8MULBZrrk */
-/* Table14191 */
+/* Table14193 */
   0x35d0, /* VPTESTNMWZrmk */
   0x35d2, /* VPTESTNMWZrrk */
-/* Table14193 */
+/* Table14195 */
   0x35c4, /* VPTESTNMQZrmk */
   0x35c6, /* VPTESTNMQZrrk */
-/* Table14195 */
+/* Table14197 */
   0x26fc, /* VPERMILPDZrmk */
   0x26ff, /* VPERMILPDZrrk */
-/* Table14197 */
+/* Table14199 */
   0x3434, /* VPSRLVWZrmk */
   0x3437, /* VPSRLVWZrrk */
-/* Table14199 */
+/* Table14201 */
   0x334c, /* VPSRAVWZrmk */
   0x334f, /* VPSRAVWZrrk */
-/* Table14201 */
+/* Table14203 */
   0x3276, /* VPSLLVWZrmk */
   0x3279, /* VPSLLVWZrrk */
-/* Table14203 */
+/* Table14205 */
   0x2fd1, /* VPRORVQZrmk */
   0x2fd4, /* VPRORVQZrrk */
-/* Table14205 */
+/* Table14207 */
   0x2f65, /* VPROLVQZrmk */
   0x2f68, /* VPROLVQZrrk */
-/* Table14207 */
+/* Table14209 */
   0x2764, /* VPERMPDZrmk */
   0x2767, /* VPERMPDZrrk */
-/* Table14209 */
+/* Table14211 */
   0xd33, /* VBROADCASTSDZmk */
   0xd36, /* VBROADCASTSDZrk */
-/* Table14211 */
+/* Table14213 */
   0xd00, /* VBROADCASTF64X2rmk */
   0x0, /*  */
-/* Table14213 */
+/* Table14215 */
   0xd03, /* VBROADCASTF64X4rmk */
   0x0, /*  */
-/* Table14215 */
+/* Table14217 */
   0x2078, /* VPABSQZrmk */
   0x207b, /* VPABSQZrrk */
-/* Table14217 */
+/* Table14219 */
   0x3594, /* VPTESTMWZrmk */
   0x3596, /* VPTESTMWZrrk */
-/* Table14219 */
+/* Table14221 */
   0x3588, /* VPTESTMQZrmk */
   0x358a, /* VPTESTMQZrrk */
-/* Table14221 */
+/* Table14223 */
   0x2d93, /* VPMULDQZrmk */
   0x2d96, /* VPMULDQZrrk */
-/* Table14223 */
+/* Table14225 */
   0x23e2, /* VPCMPEQQZrmk */
   0x23e4, /* VPCMPEQQZrrk */
-/* Table14225 */
+/* Table14227 */
   0x38e1, /* VSCALEFPDZrmk */
   0x38e7, /* VSCALEFPDZrrk */
-/* Table14227 */
+/* Table14229 */
   0x279e, /* VPERMQZrmk */
   0x27a1, /* VPERMQZrrk */
-/* Table14229 */
+/* Table14231 */
   0x2432, /* VPCMPGTQZrmk */
   0x2434, /* VPCMPGTQZrrk */
-/* Table14231 */
+/* Table14233 */
   0x2aca, /* VPMINSQZrmk */
   0x2acd, /* VPMINSQZrrk */
-/* Table14233 */
+/* Table14235 */
   0x2b30, /* VPMINUQZrmk */
   0x2b33, /* VPMINUQZrrk */
-/* Table14235 */
+/* Table14237 */
   0x29fe, /* VPMAXSQZrmk */
   0x2a01, /* VPMAXSQZrrk */
-/* Table14237 */
+/* Table14239 */
   0x2a64, /* VPMAXUQZrmk */
   0x2a67, /* VPMAXUQZrrk */
-/* Table14239 */
+/* Table14241 */
   0x2e11, /* VPMULLQZrmk */
   0x2e14, /* VPMULLQZrrk */
-/* Table14241 */
+/* Table14243 */
   0x1aa6, /* VGETEXPPDZmk */
   0x1aac, /* VGETEXPPDZrk */
-/* Table14243 */
+/* Table14245 */
   0x292c, /* VPLZCNTQZrmk */
   0x292f, /* VPLZCNTQZrrk */
-/* Table14245 */
+/* Table14247 */
   0x3420, /* VPSRLVQZrmk */
   0x3423, /* VPSRLVQZrrk */
-/* Table14247 */
+/* Table14249 */
   0x333a, /* VPSRAVQZrmk */
   0x333d, /* VPSRAVQZrrk */
-/* Table14249 */
+/* Table14251 */
   0x3262, /* VPSLLVQZrmk */
   0x3265, /* VPSLLVQZrrk */
-/* Table14251 */
+/* Table14253 */
   0x3749, /* VRCP14PDZmk */
   0x374c, /* VRCP14PDZrk */
-/* Table14253 */
+/* Table14255 */
   0x386d, /* VRSQRT14PDZmk */
   0x3870, /* VRSQRT14PDZrk */
-/* Table14255 */
+/* Table14257 */
   0x2ebb, /* VPOPCNTWZrmk */
   0x2ebe, /* VPOPCNTWZrrk */
-/* Table14257 */
+/* Table14259 */
   0x2ea9, /* VPOPCNTQZrmk */
   0x2eac, /* VPOPCNTQZrrk */
-/* Table14259 */
+/* Table14261 */
   0x232e, /* VPBROADCASTQZmk */
   0x2331, /* VPBROADCASTQZrk */
-/* Table14261 */
+/* Table14263 */
   0xd25, /* VBROADCASTI64X2rmk */
   0x0, /*  */
-/* Table14263 */
+/* Table14265 */
   0xd28, /* VBROADCASTI64X4rmk */
   0x0, /*  */
-/* Table14265 */
+/* Table14267 */
   0x2888, /* VPEXPANDWZrmk */
   0x288b, /* VPEXPANDWZrrk */
-/* Table14267 */
+/* Table14269 */
   0x253f, /* VPCOMPRESSWZmrk */
   0x2541, /* VPCOMPRESSWZrrk */
-/* Table14269 */
+/* Table14271 */
   0x22bc, /* VPBLENDMQZrmk */
   0x22bf, /* VPBLENDMQZrrk */
-/* Table14271 */
+/* Table14273 */
   0xcb6, /* VBLENDMPDZrmk */
   0xcb9, /* VBLENDMPDZrrk */
-/* Table14273 */
+/* Table14275 */
   0x22ce, /* VPBLENDMWZrmk */
   0x22d1, /* VPBLENDMWZrrk */
-/* Table14275 */
+/* Table14277 */
   0x3091, /* VPSHLDVWZmk */
   0x3094, /* VPSHLDVWZrk */
-/* Table14277 */
+/* Table14279 */
   0x307f, /* VPSHLDVQZmk */
   0x3082, /* VPSHLDVQZrk */
-/* Table14279 */
+/* Table14281 */
   0x312d, /* VPSHRDVWZmk */
   0x3130, /* VPSHRDVWZrk */
-/* Table14281 */
+/* Table14283 */
   0x311b, /* VPSHRDVQZmk */
   0x311e, /* VPSHRDVQZrk */
-/* Table14283 */
+/* Table14285 */
   0x26b2, /* VPERMI2Wrmk */
   0x26b5, /* VPERMI2Wrrk */
-/* Table14285 */
+/* Table14287 */
   0x26a0, /* VPERMI2Qrmk */
   0x26a3, /* VPERMI2Qrrk */
-/* Table14287 */
+/* Table14289 */
   0x266a, /* VPERMI2PDrmk */
   0x266d, /* VPERMI2PDrrk */
-/* Table14289 */
+/* Table14291 */
   0x0, /*  */
   0x233a, /* VPBROADCASTQrZrk */
-/* Table14291 */
+/* Table14293 */
   0x282e, /* VPERMT2Wrmk */
   0x2831, /* VPERMT2Wrrk */
-/* Table14293 */
+/* Table14295 */
   0x281c, /* VPERMT2Qrmk */
   0x281f, /* VPERMT2Qrrk */
-/* Table14295 */
+/* Table14297 */
   0x27e6, /* VPERMT2PDrmk */
   0x27e9, /* VPERMT2PDrrk */
-/* Table14297 */
+/* Table14299 */
   0x2e42, /* VPMULTISHIFTQBZrmk */
   0x2e45, /* VPMULTISHIFTQBZrrk */
-/* Table14299 */
+/* Table14301 */
   0x12ab, /* VEXPANDPDZrmk */
   0x12ae, /* VEXPANDPDZrrk */
-/* Table14301 */
+/* Table14303 */
   0x2876, /* VPEXPANDQZrmk */
   0x2879, /* VPEXPANDQZrrk */
-/* Table14303 */
+/* Table14305 */
   0xdf3, /* VCOMPRESSPDZmrk */
   0xdf5, /* VCOMPRESSPDZrrk */
-/* Table14305 */
+/* Table14307 */
   0x2530, /* VPCOMPRESSQZmrk */
   0x2532, /* VPCOMPRESSQZrrk */
-/* Table14307 */
+/* Table14309 */
   0x2840, /* VPERMWZrmk */
   0x2843, /* VPERMWZrrk */
-/* Table14309 */
+/* Table14311 */
   0x28a7, /* VPGATHERDQZrm */
   0x0, /*  */
-/* Table14311 */
+/* Table14313 */
   0x28b1, /* VPGATHERQQZrm */
   0x0, /*  */
-/* Table14313 */
+/* Table14315 */
   0x1a77, /* VGATHERDPDZrm */
   0x0, /*  */
-/* Table14315 */
+/* Table14317 */
   0x1a89, /* VGATHERQPDZrm */
   0x0, /*  */
-/* Table14317 */
+/* Table14319 */
   0x14b8, /* VFMADDSUB132PDZmk */
   0x14be, /* VFMADDSUB132PDZrk */
-/* Table14319 */
+/* Table14321 */
   0x16c0, /* VFMSUBADD132PDZmk */
   0x16c6, /* VFMSUBADD132PDZrk */
-/* Table14321 */
+/* Table14323 */
   0x136c, /* VFMADD132PDZmk */
   0x1372, /* VFMADD132PDZrk */
-/* Table14323 */
+/* Table14325 */
   0x1594, /* VFMSUB132PDZmk */
   0x159a, /* VFMSUB132PDZrk */
-/* Table14325 */
+/* Table14327 */
   0x17bc, /* VFNMADD132PDZmk */
   0x17c2, /* VFNMADD132PDZrk */
-/* Table14327 */
+/* Table14329 */
   0x1908, /* VFNMSUB132PDZmk */
   0x190e, /* VFNMSUB132PDZrk */
-/* Table14329 */
+/* Table14331 */
   0x2ffd, /* VPSCATTERDQZmr */
   0x0, /*  */
-/* Table14331 */
+/* Table14333 */
   0x3003, /* VPSCATTERQQZmr */
   0x0, /*  */
-/* Table14333 */
+/* Table14335 */
   0x391b, /* VSCATTERDPDZmr */
   0x0, /*  */
-/* Table14335 */
+/* Table14337 */
   0x3929, /* VSCATTERQPDZmr */
   0x0, /*  */
-/* Table14337 */
+/* Table14339 */
   0x14fc, /* VFMADDSUB213PDZmk */
   0x1502, /* VFMADDSUB213PDZrk */
-/* Table14339 */
+/* Table14341 */
   0x1704, /* VFMSUBADD213PDZmk */
   0x170a, /* VFMSUBADD213PDZrk */
-/* Table14341 */
+/* Table14343 */
   0x13d0, /* VFMADD213PDZmk */
   0x13d6, /* VFMADD213PDZrk */
-/* Table14343 */
+/* Table14345 */
   0x15f8, /* VFMSUB213PDZmk */
   0x15fe, /* VFMSUB213PDZrk */
-/* Table14345 */
+/* Table14347 */
   0x1820, /* VFNMADD213PDZmk */
   0x1826, /* VFNMADD213PDZrk */
-/* Table14347 */
+/* Table14349 */
   0x196c, /* VFNMSUB213PDZmk */
   0x1972, /* VFNMSUB213PDZrk */
-/* Table14349 */
+/* Table14351 */
   0x297a, /* VPMADD52LUQZmk */
   0x297d, /* VPMADD52LUQZrk */
-/* Table14351 */
+/* Table14353 */
   0x295f, /* VPMADD52HUQZmk */
   0x2962, /* VPMADD52HUQZrk */
-/* Table14353 */
+/* Table14355 */
   0x1540, /* VFMADDSUB231PDZmk */
   0x1546, /* VFMADDSUB231PDZrk */
-/* Table14355 */
+/* Table14357 */
   0x1748, /* VFMSUBADD231PDZmk */
   0x174e, /* VFMSUBADD231PDZrk */
-/* Table14357 */
+/* Table14359 */
   0x1434, /* VFMADD231PDZmk */
   0x143a, /* VFMADD231PDZrk */
-/* Table14359 */
+/* Table14361 */
   0x165c, /* VFMSUB231PDZmk */
   0x1662, /* VFMSUB231PDZrk */
-/* Table14361 */
+/* Table14363 */
   0x1884, /* VFNMADD231PDZmk */
   0x188a, /* VFNMADD231PDZrk */
-/* Table14363 */
+/* Table14365 */
   0x19d0, /* VFNMSUB231PDZmk */
   0x19d6, /* VFNMSUB231PDZrk */
-/* Table14365 */
+/* Table14367 */
   0x258c, /* VPCONFLICTQZrmk */
   0x258f, /* VPCONFLICTQZrrk */
-/* Table14367 */
+/* Table14369 */
   0x0, /*  */
   0x1a7e, /* VGATHERPF0DPDm */
   0x1a82, /* VGATHERPF1DPDm */
@@ -104625,7 +104627,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table14383 */
+/* Table14385 */
   0x0, /*  */
   0x1a80, /* VGATHERPF0QPDm */
   0x1a84, /* VGATHERPF1QPDm */
@@ -104642,7972 +104644,7972 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table14399 */
+/* Table14401 */
   0x128a, /* VEXP2PDZmk */
   0x1290, /* VEXP2PDZrk */
-/* Table14401 */
+/* Table14403 */
   0x3779, /* VRCP28PDZmk */
   0x377f, /* VRCP28PDZrk */
-/* Table14403 */
+/* Table14405 */
   0x389d, /* VRSQRT28PDZmk */
   0x38a3, /* VRSQRT28PDZrk */
-/* Table14405 */
+/* Table14407 */
   0x35a4, /* VPTESTNMDZ128rmb */
   0x0, /*  */
-/* Table14407 */
+/* Table14409 */
   0x2713, /* VPERMILPSZ128rmb */
   0x0, /*  */
-/* Table14409 */
+/* Table14411 */
   0x0, /*  */
   0xef7, /* VCVTPH2PSZrrb */
-/* Table14411 */
+/* Table14413 */
   0x2fa1, /* VPRORVDZ128rmb */
   0x0, /*  */
-/* Table14413 */
+/* Table14415 */
   0x2f35, /* VPROLVDZ128rmb */
   0x0, /*  */
-/* Table14415 */
+/* Table14417 */
   0x2046, /* VPABSDZ128rmb */
   0x0, /*  */
-/* Table14417 */
+/* Table14419 */
   0x3568, /* VPTESTMDZ128rmb */
   0x0, /*  */
-/* Table14419 */
+/* Table14421 */
   0x20cb, /* VPACKUSDWZ128rmb */
   0x0, /*  */
-/* Table14421 */
+/* Table14423 */
   0x38ea, /* VSCALEFPSZ128rmb */
   0x3902, /* VSCALEFPSZrrb */
-/* Table14423 */
+/* Table14425 */
   0x0, /*  */
   0x3914, /* VSCALEFSSZrrb_Int */
-/* Table14425 */
+/* Table14427 */
   0x2a98, /* VPMINSDZ128rmb */
   0x0, /*  */
-/* Table14427 */
+/* Table14429 */
   0x2afe, /* VPMINUDZ128rmb */
   0x0, /*  */
-/* Table14429 */
+/* Table14431 */
   0x29cc, /* VPMAXSDZ128rmb */
   0x0, /*  */
-/* Table14431 */
+/* Table14433 */
   0x2a32, /* VPMAXUDZ128rmb */
   0x0, /*  */
-/* Table14433 */
+/* Table14435 */
   0x2ddf, /* VPMULLDZ128rmb */
   0x0, /*  */
-/* Table14435 */
+/* Table14437 */
   0x1aaf, /* VGETEXPPSZ128mb */
   0x1ac7, /* VGETEXPPSZrb */
-/* Table14437 */
+/* Table14439 */
   0x0, /*  */
   0x1ad9, /* VGETEXPSSZrb */
-/* Table14439 */
+/* Table14441 */
   0x28fc, /* VPLZCNTDZ128rmb */
   0x0, /*  */
-/* Table14441 */
+/* Table14443 */
   0x33ec, /* VPSRLVDZ128rmb */
   0x0, /*  */
-/* Table14443 */
+/* Table14445 */
   0x3308, /* VPSRAVDZ128rmb */
   0x0, /*  */
-/* Table14445 */
+/* Table14447 */
   0x322e, /* VPSLLVDZ128rmb */
   0x0, /*  */
-/* Table14447 */
+/* Table14449 */
   0x374f, /* VRCP14PSZ128mb */
   0x0, /*  */
-/* Table14449 */
+/* Table14451 */
   0x3873, /* VRSQRT14PSZ128mb */
   0x0, /*  */
-/* Table14451 */
+/* Table14453 */
   0x25ad, /* VPDPBUSDZ128mb */
   0x0, /*  */
-/* Table14453 */
+/* Table14455 */
   0x2592, /* VPDPBUSDSZ128mb */
   0x0, /*  */
-/* Table14455 */
+/* Table14457 */
   0x25e3, /* VPDPWSSDZ128mb */
   0x0, /*  */
-/* Table14457 */
+/* Table14459 */
   0x25c8, /* VPDPWSSDSZ128mb */
   0x0, /*  */
-/* Table14459 */
+/* Table14461 */
   0x2e79, /* VPOPCNTDZ128rmb */
   0x0, /*  */
-/* Table14461 */
+/* Table14463 */
   0x228c, /* VPBLENDMDZ128rmb */
   0x0, /*  */
-/* Table14463 */
+/* Table14465 */
   0xcbc, /* VBLENDMPSZ128rmb */
   0x0, /*  */
-/* Table14465 */
+/* Table14467 */
   0x304f, /* VPSHLDVDZ128mb */
   0x0, /*  */
-/* Table14467 */
+/* Table14469 */
   0x30eb, /* VPSHRDVDZ128mb */
   0x0, /*  */
-/* Table14469 */
+/* Table14471 */
   0x263a, /* VPERMI2D128rmb */
   0x0, /*  */
-/* Table14471 */
+/* Table14473 */
   0x2670, /* VPERMI2PS128rmb */
   0x0, /*  */
-/* Table14473 */
+/* Table14475 */
   0x27b6, /* VPERMT2D128rmb */
   0x0, /*  */
-/* Table14475 */
+/* Table14477 */
   0x27ec, /* VPERMT2PS128rmb */
   0x0, /*  */
-/* Table14477 */
+/* Table14479 */
   0x14c5, /* VFMADDSUB132PSZ128mb */
   0x14dd, /* VFMADDSUB132PSZrb */
-/* Table14479 */
+/* Table14481 */
   0x16cd, /* VFMSUBADD132PSZ128mb */
   0x16e5, /* VFMSUBADD132PSZrb */
-/* Table14481 */
+/* Table14483 */
   0x1379, /* VFMADD132PSZ128mb */
   0x1391, /* VFMADD132PSZrb */
-/* Table14483 */
+/* Table14485 */
   0x0, /*  */
   0x13b1, /* VFMADD132SSZrb_Int */
-/* Table14485 */
+/* Table14487 */
   0x15a1, /* VFMSUB132PSZ128mb */
   0x15b9, /* VFMSUB132PSZrb */
-/* Table14487 */
+/* Table14489 */
   0x0, /*  */
   0x15d9, /* VFMSUB132SSZrb_Int */
-/* Table14489 */
+/* Table14491 */
   0x17c9, /* VFNMADD132PSZ128mb */
   0x17e1, /* VFNMADD132PSZrb */
-/* Table14491 */
+/* Table14493 */
   0x0, /*  */
   0x1801, /* VFNMADD132SSZrb_Int */
-/* Table14493 */
+/* Table14495 */
   0x1915, /* VFNMSUB132PSZ128mb */
   0x192d, /* VFNMSUB132PSZrb */
-/* Table14495 */
+/* Table14497 */
   0x0, /*  */
   0x194d, /* VFNMSUB132SSZrb_Int */
-/* Table14497 */
+/* Table14499 */
   0x1509, /* VFMADDSUB213PSZ128mb */
   0x1521, /* VFMADDSUB213PSZrb */
-/* Table14499 */
+/* Table14501 */
   0x1711, /* VFMSUBADD213PSZ128mb */
   0x1729, /* VFMSUBADD213PSZrb */
-/* Table14501 */
+/* Table14503 */
   0x13dd, /* VFMADD213PSZ128mb */
   0x13f5, /* VFMADD213PSZrb */
-/* Table14503 */
+/* Table14505 */
   0x0, /*  */
   0x1415, /* VFMADD213SSZrb_Int */
-/* Table14505 */
+/* Table14507 */
   0x1605, /* VFMSUB213PSZ128mb */
   0x161d, /* VFMSUB213PSZrb */
-/* Table14507 */
+/* Table14509 */
   0x0, /*  */
   0x163d, /* VFMSUB213SSZrb_Int */
-/* Table14509 */
+/* Table14511 */
   0x182d, /* VFNMADD213PSZ128mb */
   0x1845, /* VFNMADD213PSZrb */
-/* Table14511 */
+/* Table14513 */
   0x0, /*  */
   0x1865, /* VFNMADD213SSZrb_Int */
-/* Table14513 */
+/* Table14515 */
   0x1979, /* VFNMSUB213PSZ128mb */
   0x1991, /* VFNMSUB213PSZrb */
-/* Table14515 */
+/* Table14517 */
   0x0, /*  */
   0x19b1, /* VFNMSUB213SSZrb_Int */
-/* Table14517 */
+/* Table14519 */
   0x154d, /* VFMADDSUB231PSZ128mb */
   0x1565, /* VFMADDSUB231PSZrb */
-/* Table14519 */
+/* Table14521 */
   0x1755, /* VFMSUBADD231PSZ128mb */
   0x176d, /* VFMSUBADD231PSZrb */
-/* Table14521 */
+/* Table14523 */
   0x1441, /* VFMADD231PSZ128mb */
   0x1459, /* VFMADD231PSZrb */
-/* Table14523 */
+/* Table14525 */
   0x0, /*  */
   0x1479, /* VFMADD231SSZrb_Int */
-/* Table14525 */
+/* Table14527 */
   0x1669, /* VFMSUB231PSZ128mb */
   0x1681, /* VFMSUB231PSZrb */
-/* Table14527 */
+/* Table14529 */
   0x0, /*  */
   0x16a1, /* VFMSUB231SSZrb_Int */
-/* Table14529 */
+/* Table14531 */
   0x1891, /* VFNMADD231PSZ128mb */
   0x18a9, /* VFNMADD231PSZrb */
-/* Table14531 */
+/* Table14533 */
   0x0, /*  */
   0x18c9, /* VFNMADD231SSZrb_Int */
-/* Table14533 */
+/* Table14535 */
   0x19dd, /* VFNMSUB231PSZ128mb */
   0x19f5, /* VFNMSUB231PSZrb */
-/* Table14535 */
+/* Table14537 */
   0x0, /*  */
   0x1a15, /* VFNMSUB231SSZrb_Int */
-/* Table14537 */
+/* Table14539 */
   0x255c, /* VPCONFLICTDZ128rmb */
   0x0, /*  */
-/* Table14539 */
-  0x0, /*  */
-  0x1299, /* VEXP2PSZrb */
 /* Table14541 */
   0x0, /*  */
-  0x3788, /* VRCP28PSZrb */
+  0x1299, /* VEXP2PSZrb */
 /* Table14543 */
   0x0, /*  */
-  0x379a, /* VRCP28SSZrb */
+  0x3788, /* VRCP28PSZrb */
 /* Table14545 */
   0x0, /*  */
-  0x38ac, /* VRSQRT28PSZrb */
+  0x379a, /* VRCP28SSZrb */
 /* Table14547 */
   0x0, /*  */
-  0x38be, /* VRSQRT28SSZrb */
+  0x38ac, /* VRSQRT28PSZrb */
 /* Table14549 */
+  0x0, /*  */
+  0x38be, /* VRSQRT28SSZrb */
+/* Table14551 */
   0x35b6, /* VPTESTNMQZ128rmb */
   0x0, /*  */
-/* Table14551 */
+/* Table14553 */
   0x26d5, /* VPERMILPDZ128rmb */
   0x0, /*  */
-/* Table14553 */
+/* Table14555 */
   0x2fbc, /* VPRORVQZ128rmb */
   0x0, /*  */
-/* Table14555 */
+/* Table14557 */
   0x2f50, /* VPROLVQZ128rmb */
   0x0, /*  */
-/* Table14557 */
+/* Table14559 */
   0x2063, /* VPABSQZ128rmb */
   0x0, /*  */
-/* Table14559 */
+/* Table14561 */
   0x357a, /* VPTESTMQZ128rmb */
   0x0, /*  */
-/* Table14561 */
+/* Table14563 */
   0x2d7e, /* VPMULDQZ128rmb */
   0x0, /*  */
-/* Table14563 */
+/* Table14565 */
   0x23d4, /* VPCMPEQQZ128rmb */
   0x0, /*  */
-/* Table14565 */
+/* Table14567 */
   0x38cc, /* VSCALEFPDZ128rmb */
   0x38e4, /* VSCALEFPDZrrb */
-/* Table14567 */
+/* Table14569 */
   0x0, /*  */
   0x390b, /* VSCALEFSDZrrb_Int */
-/* Table14569 */
+/* Table14571 */
   0x2424, /* VPCMPGTQZ128rmb */
   0x0, /*  */
-/* Table14571 */
+/* Table14573 */
   0x2ab5, /* VPMINSQZ128rmb */
   0x0, /*  */
-/* Table14573 */
+/* Table14575 */
   0x2b1b, /* VPMINUQZ128rmb */
   0x0, /*  */
-/* Table14575 */
+/* Table14577 */
   0x29e9, /* VPMAXSQZ128rmb */
   0x0, /*  */
-/* Table14577 */
+/* Table14579 */
   0x2a4f, /* VPMAXUQZ128rmb */
   0x0, /*  */
-/* Table14579 */
+/* Table14581 */
   0x2dfc, /* VPMULLQZ128rmb */
   0x0, /*  */
-/* Table14581 */
+/* Table14583 */
   0x1a91, /* VGETEXPPDZ128mb */
   0x1aa9, /* VGETEXPPDZrb */
-/* Table14583 */
+/* Table14585 */
   0x0, /*  */
   0x1ad0, /* VGETEXPSDZrb */
-/* Table14585 */
+/* Table14587 */
   0x2917, /* VPLZCNTQZ128rmb */
   0x0, /*  */
-/* Table14587 */
+/* Table14589 */
   0x340b, /* VPSRLVQZ128rmb */
   0x0, /*  */
-/* Table14589 */
+/* Table14591 */
   0x3325, /* VPSRAVQZ128rmb */
   0x0, /*  */
-/* Table14591 */
+/* Table14593 */
   0x324d, /* VPSLLVQZ128rmb */
   0x0, /*  */
-/* Table14593 */
+/* Table14595 */
   0x3734, /* VRCP14PDZ128mb */
   0x0, /*  */
-/* Table14595 */
+/* Table14597 */
   0x3858, /* VRSQRT14PDZ128mb */
   0x0, /*  */
-/* Table14597 */
+/* Table14599 */
   0x2e94, /* VPOPCNTQZ128rmb */
   0x0, /*  */
-/* Table14599 */
+/* Table14601 */
   0x22a7, /* VPBLENDMQZ128rmb */
   0x0, /*  */
-/* Table14601 */
+/* Table14603 */
   0xca1, /* VBLENDMPDZ128rmb */
   0x0, /*  */
-/* Table14603 */
+/* Table14605 */
   0x306a, /* VPSHLDVQZ128mb */
   0x0, /*  */
-/* Table14605 */
+/* Table14607 */
   0x3106, /* VPSHRDVQZ128mb */
   0x0, /*  */
-/* Table14607 */
+/* Table14609 */
   0x268b, /* VPERMI2Q128rmb */
   0x0, /*  */
-/* Table14609 */
+/* Table14611 */
   0x2655, /* VPERMI2PD128rmb */
   0x0, /*  */
-/* Table14611 */
+/* Table14613 */
   0x2807, /* VPERMT2Q128rmb */
   0x0, /*  */
-/* Table14613 */
+/* Table14615 */
   0x27d1, /* VPERMT2PD128rmb */
   0x0, /*  */
-/* Table14615 */
+/* Table14617 */
   0x2e2d, /* VPMULTISHIFTQBZ128rmb */
   0x0, /*  */
-/* Table14617 */
+/* Table14619 */
   0x14a3, /* VFMADDSUB132PDZ128mb */
   0x14bb, /* VFMADDSUB132PDZrb */
-/* Table14619 */
+/* Table14621 */
   0x16ab, /* VFMSUBADD132PDZ128mb */
   0x16c3, /* VFMSUBADD132PDZrb */
-/* Table14621 */
+/* Table14623 */
   0x1357, /* VFMADD132PDZ128mb */
   0x136f, /* VFMADD132PDZrb */
-/* Table14623 */
+/* Table14625 */
   0x0, /*  */
   0x13a1, /* VFMADD132SDZrb_Int */
-/* Table14625 */
+/* Table14627 */
   0x157f, /* VFMSUB132PDZ128mb */
   0x1597, /* VFMSUB132PDZrb */
-/* Table14627 */
+/* Table14629 */
   0x0, /*  */
   0x15c9, /* VFMSUB132SDZrb_Int */
-/* Table14629 */
+/* Table14631 */
   0x17a7, /* VFNMADD132PDZ128mb */
   0x17bf, /* VFNMADD132PDZrb */
-/* Table14631 */
+/* Table14633 */
   0x0, /*  */
   0x17f1, /* VFNMADD132SDZrb_Int */
-/* Table14633 */
+/* Table14635 */
   0x18f3, /* VFNMSUB132PDZ128mb */
   0x190b, /* VFNMSUB132PDZrb */
-/* Table14635 */
+/* Table14637 */
   0x0, /*  */
   0x193d, /* VFNMSUB132SDZrb_Int */
-/* Table14637 */
+/* Table14639 */
   0x14e7, /* VFMADDSUB213PDZ128mb */
   0x14ff, /* VFMADDSUB213PDZrb */
-/* Table14639 */
+/* Table14641 */
   0x16ef, /* VFMSUBADD213PDZ128mb */
   0x1707, /* VFMSUBADD213PDZrb */
-/* Table14641 */
+/* Table14643 */
   0x13bb, /* VFMADD213PDZ128mb */
   0x13d3, /* VFMADD213PDZrb */
-/* Table14643 */
+/* Table14645 */
   0x0, /*  */
   0x1405, /* VFMADD213SDZrb_Int */
-/* Table14645 */
+/* Table14647 */
   0x15e3, /* VFMSUB213PDZ128mb */
   0x15fb, /* VFMSUB213PDZrb */
-/* Table14647 */
+/* Table14649 */
   0x0, /*  */
   0x162d, /* VFMSUB213SDZrb_Int */
-/* Table14649 */
+/* Table14651 */
   0x180b, /* VFNMADD213PDZ128mb */
   0x1823, /* VFNMADD213PDZrb */
-/* Table14651 */
+/* Table14653 */
   0x0, /*  */
   0x1855, /* VFNMADD213SDZrb_Int */
-/* Table14653 */
+/* Table14655 */
   0x1957, /* VFNMSUB213PDZ128mb */
   0x196f, /* VFNMSUB213PDZrb */
-/* Table14655 */
+/* Table14657 */
   0x0, /*  */
   0x19a1, /* VFNMSUB213SDZrb_Int */
-/* Table14657 */
+/* Table14659 */
   0x2965, /* VPMADD52LUQZ128mb */
   0x0, /*  */
-/* Table14659 */
+/* Table14661 */
   0x294a, /* VPMADD52HUQZ128mb */
   0x0, /*  */
-/* Table14661 */
+/* Table14663 */
   0x152b, /* VFMADDSUB231PDZ128mb */
   0x1543, /* VFMADDSUB231PDZrb */
-/* Table14663 */
+/* Table14665 */
   0x1733, /* VFMSUBADD231PDZ128mb */
   0x174b, /* VFMSUBADD231PDZrb */
-/* Table14665 */
+/* Table14667 */
   0x141f, /* VFMADD231PDZ128mb */
   0x1437, /* VFMADD231PDZrb */
-/* Table14667 */
+/* Table14669 */
   0x0, /*  */
   0x1469, /* VFMADD231SDZrb_Int */
-/* Table14669 */
+/* Table14671 */
   0x1647, /* VFMSUB231PDZ128mb */
   0x165f, /* VFMSUB231PDZrb */
-/* Table14671 */
+/* Table14673 */
   0x0, /*  */
   0x1691, /* VFMSUB231SDZrb_Int */
-/* Table14673 */
+/* Table14675 */
   0x186f, /* VFNMADD231PDZ128mb */
   0x1887, /* VFNMADD231PDZrb */
-/* Table14675 */
+/* Table14677 */
   0x0, /*  */
   0x18b9, /* VFNMADD231SDZrb_Int */
-/* Table14677 */
+/* Table14679 */
   0x19bb, /* VFNMSUB231PDZ128mb */
   0x19d3, /* VFNMSUB231PDZrb */
-/* Table14679 */
+/* Table14681 */
   0x0, /*  */
   0x1a05, /* VFNMSUB231SDZrb_Int */
-/* Table14681 */
+/* Table14683 */
   0x2577, /* VPCONFLICTQZ128rmb */
   0x0, /*  */
-/* Table14683 */
-  0x0, /*  */
-  0x128d, /* VEXP2PDZrb */
 /* Table14685 */
   0x0, /*  */
-  0x377c, /* VRCP28PDZrb */
+  0x128d, /* VEXP2PDZrb */
 /* Table14687 */
   0x0, /*  */
-  0x3791, /* VRCP28SDZrb */
+  0x377c, /* VRCP28PDZrb */
 /* Table14689 */
   0x0, /*  */
-  0x38a0, /* VRSQRT28PDZrb */
+  0x3791, /* VRCP28SDZrb */
 /* Table14691 */
   0x0, /*  */
-  0x38b5, /* VRSQRT28SDZrb */
+  0x38a0, /* VRSQRT28PDZrb */
 /* Table14693 */
+  0x0, /*  */
+  0x38b5, /* VRSQRT28SDZrb */
+/* Table14695 */
   0x35aa, /* VPTESTNMDZ256rmb */
   0x0, /*  */
-/* Table14695 */
+/* Table14697 */
   0x2725, /* VPERMILPSZ256rmb */
   0x0, /*  */
-/* Table14697 */
+/* Table14699 */
   0x2faa, /* VPRORVDZ256rmb */
   0x0, /*  */
-/* Table14699 */
+/* Table14701 */
   0x2f3e, /* VPROLVDZ256rmb */
   0x0, /*  */
-/* Table14701 */
+/* Table14703 */
   0x276c, /* VPERMPSZ256rmb */
   0x0, /*  */
-/* Table14703 */
+/* Table14705 */
   0x204f, /* VPABSDZ256rmb */
   0x0, /*  */
-/* Table14705 */
+/* Table14707 */
   0x356e, /* VPTESTMDZ256rmb */
   0x0, /*  */
-/* Table14707 */
+/* Table14709 */
   0x20d4, /* VPACKUSDWZ256rmb */
   0x0, /*  */
-/* Table14709 */
+/* Table14711 */
   0x38f3, /* VSCALEFPSZ256rmb */
   0x3902, /* VSCALEFPSZrrb */
-/* Table14711 */
+/* Table14713 */
   0x2616, /* VPERMDZ256rmb */
   0x0, /*  */
-/* Table14713 */
+/* Table14715 */
   0x2aa1, /* VPMINSDZ256rmb */
   0x0, /*  */
-/* Table14715 */
+/* Table14717 */
   0x2b07, /* VPMINUDZ256rmb */
   0x0, /*  */
-/* Table14717 */
+/* Table14719 */
   0x29d5, /* VPMAXSDZ256rmb */
   0x0, /*  */
-/* Table14719 */
+/* Table14721 */
   0x2a3b, /* VPMAXUDZ256rmb */
   0x0, /*  */
-/* Table14721 */
+/* Table14723 */
   0x2de8, /* VPMULLDZ256rmb */
   0x0, /*  */
-/* Table14723 */
+/* Table14725 */
   0x1ab8, /* VGETEXPPSZ256mb */
   0x1ac7, /* VGETEXPPSZrb */
-/* Table14725 */
+/* Table14727 */
   0x2905, /* VPLZCNTDZ256rmb */
   0x0, /*  */
-/* Table14727 */
+/* Table14729 */
   0x33f5, /* VPSRLVDZ256rmb */
   0x0, /*  */
-/* Table14729 */
+/* Table14731 */
   0x3311, /* VPSRAVDZ256rmb */
   0x0, /*  */
-/* Table14731 */
+/* Table14733 */
   0x3237, /* VPSLLVDZ256rmb */
   0x0, /*  */
-/* Table14733 */
+/* Table14735 */
   0x3758, /* VRCP14PSZ256mb */
   0x0, /*  */
-/* Table14735 */
+/* Table14737 */
   0x387c, /* VRSQRT14PSZ256mb */
   0x0, /*  */
-/* Table14737 */
+/* Table14739 */
   0x25b6, /* VPDPBUSDZ256mb */
   0x0, /*  */
-/* Table14739 */
+/* Table14741 */
   0x259b, /* VPDPBUSDSZ256mb */
   0x0, /*  */
-/* Table14741 */
+/* Table14743 */
   0x25ec, /* VPDPWSSDZ256mb */
   0x0, /*  */
-/* Table14743 */
+/* Table14745 */
   0x25d1, /* VPDPWSSDSZ256mb */
   0x0, /*  */
-/* Table14745 */
+/* Table14747 */
   0x2e82, /* VPOPCNTDZ256rmb */
   0x0, /*  */
-/* Table14747 */
+/* Table14749 */
   0x2295, /* VPBLENDMDZ256rmb */
   0x0, /*  */
-/* Table14749 */
+/* Table14751 */
   0xcc5, /* VBLENDMPSZ256rmb */
   0x0, /*  */
-/* Table14751 */
+/* Table14753 */
   0x3058, /* VPSHLDVDZ256mb */
   0x0, /*  */
-/* Table14753 */
+/* Table14755 */
   0x30f4, /* VPSHRDVDZ256mb */
   0x0, /*  */
-/* Table14755 */
+/* Table14757 */
   0x2643, /* VPERMI2D256rmb */
   0x0, /*  */
-/* Table14757 */
+/* Table14759 */
   0x2679, /* VPERMI2PS256rmb */
   0x0, /*  */
-/* Table14759 */
+/* Table14761 */
   0x27bf, /* VPERMT2D256rmb */
   0x0, /*  */
-/* Table14761 */
+/* Table14763 */
   0x27f5, /* VPERMT2PS256rmb */
   0x0, /*  */
-/* Table14763 */
+/* Table14765 */
   0x14ce, /* VFMADDSUB132PSZ256mb */
   0x14dd, /* VFMADDSUB132PSZrb */
-/* Table14765 */
+/* Table14767 */
   0x16d6, /* VFMSUBADD132PSZ256mb */
   0x16e5, /* VFMSUBADD132PSZrb */
-/* Table14767 */
+/* Table14769 */
   0x1382, /* VFMADD132PSZ256mb */
   0x1391, /* VFMADD132PSZrb */
-/* Table14769 */
+/* Table14771 */
   0x15aa, /* VFMSUB132PSZ256mb */
   0x15b9, /* VFMSUB132PSZrb */
-/* Table14771 */
+/* Table14773 */
   0x17d2, /* VFNMADD132PSZ256mb */
   0x17e1, /* VFNMADD132PSZrb */
-/* Table14773 */
+/* Table14775 */
   0x191e, /* VFNMSUB132PSZ256mb */
   0x192d, /* VFNMSUB132PSZrb */
-/* Table14775 */
+/* Table14777 */
   0x1512, /* VFMADDSUB213PSZ256mb */
   0x1521, /* VFMADDSUB213PSZrb */
-/* Table14777 */
+/* Table14779 */
   0x171a, /* VFMSUBADD213PSZ256mb */
   0x1729, /* VFMSUBADD213PSZrb */
-/* Table14779 */
+/* Table14781 */
   0x13e6, /* VFMADD213PSZ256mb */
   0x13f5, /* VFMADD213PSZrb */
-/* Table14781 */
+/* Table14783 */
   0x160e, /* VFMSUB213PSZ256mb */
   0x161d, /* VFMSUB213PSZrb */
-/* Table14783 */
+/* Table14785 */
   0x1836, /* VFNMADD213PSZ256mb */
   0x1845, /* VFNMADD213PSZrb */
-/* Table14785 */
+/* Table14787 */
   0x1982, /* VFNMSUB213PSZ256mb */
   0x1991, /* VFNMSUB213PSZrb */
-/* Table14787 */
+/* Table14789 */
   0x1556, /* VFMADDSUB231PSZ256mb */
   0x1565, /* VFMADDSUB231PSZrb */
-/* Table14789 */
+/* Table14791 */
   0x175e, /* VFMSUBADD231PSZ256mb */
   0x176d, /* VFMSUBADD231PSZrb */
-/* Table14791 */
+/* Table14793 */
   0x144a, /* VFMADD231PSZ256mb */
   0x1459, /* VFMADD231PSZrb */
-/* Table14793 */
+/* Table14795 */
   0x1672, /* VFMSUB231PSZ256mb */
   0x1681, /* VFMSUB231PSZrb */
-/* Table14795 */
+/* Table14797 */
   0x189a, /* VFNMADD231PSZ256mb */
   0x18a9, /* VFNMADD231PSZrb */
-/* Table14797 */
+/* Table14799 */
   0x19e6, /* VFNMSUB231PSZ256mb */
   0x19f5, /* VFNMSUB231PSZrb */
-/* Table14799 */
+/* Table14801 */
   0x2565, /* VPCONFLICTDZ256rmb */
   0x0, /*  */
-/* Table14801 */
+/* Table14803 */
   0x35bc, /* VPTESTNMQZ256rmb */
   0x0, /*  */
-/* Table14803 */
+/* Table14805 */
   0x26e7, /* VPERMILPDZ256rmb */
   0x0, /*  */
-/* Table14805 */
+/* Table14807 */
   0x2fc5, /* VPRORVQZ256rmb */
   0x0, /*  */
-/* Table14807 */
+/* Table14809 */
   0x2f59, /* VPROLVQZ256rmb */
   0x0, /*  */
-/* Table14809 */
+/* Table14811 */
   0x274f, /* VPERMPDZ256rmb */
   0x0, /*  */
-/* Table14811 */
+/* Table14813 */
   0x206c, /* VPABSQZ256rmb */
   0x0, /*  */
-/* Table14813 */
+/* Table14815 */
   0x3580, /* VPTESTMQZ256rmb */
   0x0, /*  */
-/* Table14815 */
+/* Table14817 */
   0x2d87, /* VPMULDQZ256rmb */
   0x0, /*  */
-/* Table14817 */
+/* Table14819 */
   0x23da, /* VPCMPEQQZ256rmb */
   0x0, /*  */
-/* Table14819 */
+/* Table14821 */
   0x38d5, /* VSCALEFPDZ256rmb */
   0x38e4, /* VSCALEFPDZrrb */
-/* Table14821 */
+/* Table14823 */
   0x2789, /* VPERMQZ256rmb */
   0x0, /*  */
-/* Table14823 */
+/* Table14825 */
   0x242a, /* VPCMPGTQZ256rmb */
   0x0, /*  */
-/* Table14825 */
+/* Table14827 */
   0x2abe, /* VPMINSQZ256rmb */
   0x0, /*  */
-/* Table14827 */
+/* Table14829 */
   0x2b24, /* VPMINUQZ256rmb */
   0x0, /*  */
-/* Table14829 */
+/* Table14831 */
   0x29f2, /* VPMAXSQZ256rmb */
   0x0, /*  */
-/* Table14831 */
+/* Table14833 */
   0x2a58, /* VPMAXUQZ256rmb */
   0x0, /*  */
-/* Table14833 */
+/* Table14835 */
   0x2e05, /* VPMULLQZ256rmb */
   0x0, /*  */
-/* Table14835 */
+/* Table14837 */
   0x1a9a, /* VGETEXPPDZ256mb */
   0x1aa9, /* VGETEXPPDZrb */
-/* Table14837 */
+/* Table14839 */
   0x2920, /* VPLZCNTQZ256rmb */
   0x0, /*  */
-/* Table14839 */
+/* Table14841 */
   0x3414, /* VPSRLVQZ256rmb */
   0x0, /*  */
-/* Table14841 */
+/* Table14843 */
   0x332e, /* VPSRAVQZ256rmb */
   0x0, /*  */
-/* Table14843 */
+/* Table14845 */
   0x3256, /* VPSLLVQZ256rmb */
   0x0, /*  */
-/* Table14845 */
+/* Table14847 */
   0x373d, /* VRCP14PDZ256mb */
   0x0, /*  */
-/* Table14847 */
+/* Table14849 */
   0x3861, /* VRSQRT14PDZ256mb */
   0x0, /*  */
-/* Table14849 */
+/* Table14851 */
   0x2e9d, /* VPOPCNTQZ256rmb */
   0x0, /*  */
-/* Table14851 */
+/* Table14853 */
   0x22b0, /* VPBLENDMQZ256rmb */
   0x0, /*  */
-/* Table14853 */
+/* Table14855 */
   0xcaa, /* VBLENDMPDZ256rmb */
   0x0, /*  */
-/* Table14855 */
+/* Table14857 */
   0x3073, /* VPSHLDVQZ256mb */
   0x0, /*  */
-/* Table14857 */
+/* Table14859 */
   0x310f, /* VPSHRDVQZ256mb */
   0x0, /*  */
-/* Table14859 */
+/* Table14861 */
   0x2694, /* VPERMI2Q256rmb */
   0x0, /*  */
-/* Table14861 */
+/* Table14863 */
   0x265e, /* VPERMI2PD256rmb */
   0x0, /*  */
-/* Table14863 */
+/* Table14865 */
   0x2810, /* VPERMT2Q256rmb */
   0x0, /*  */
-/* Table14865 */
+/* Table14867 */
   0x27da, /* VPERMT2PD256rmb */
   0x0, /*  */
-/* Table14867 */
+/* Table14869 */
   0x2e36, /* VPMULTISHIFTQBZ256rmb */
   0x0, /*  */
-/* Table14869 */
+/* Table14871 */
   0x14ac, /* VFMADDSUB132PDZ256mb */
   0x14bb, /* VFMADDSUB132PDZrb */
-/* Table14871 */
+/* Table14873 */
   0x16b4, /* VFMSUBADD132PDZ256mb */
   0x16c3, /* VFMSUBADD132PDZrb */
-/* Table14873 */
+/* Table14875 */
   0x1360, /* VFMADD132PDZ256mb */
   0x136f, /* VFMADD132PDZrb */
-/* Table14875 */
+/* Table14877 */
   0x1588, /* VFMSUB132PDZ256mb */
   0x1597, /* VFMSUB132PDZrb */
-/* Table14877 */
+/* Table14879 */
   0x17b0, /* VFNMADD132PDZ256mb */
   0x17bf, /* VFNMADD132PDZrb */
-/* Table14879 */
+/* Table14881 */
   0x18fc, /* VFNMSUB132PDZ256mb */
   0x190b, /* VFNMSUB132PDZrb */
-/* Table14881 */
+/* Table14883 */
   0x14f0, /* VFMADDSUB213PDZ256mb */
   0x14ff, /* VFMADDSUB213PDZrb */
-/* Table14883 */
+/* Table14885 */
   0x16f8, /* VFMSUBADD213PDZ256mb */
   0x1707, /* VFMSUBADD213PDZrb */
-/* Table14885 */
+/* Table14887 */
   0x13c4, /* VFMADD213PDZ256mb */
   0x13d3, /* VFMADD213PDZrb */
-/* Table14887 */
+/* Table14889 */
   0x15ec, /* VFMSUB213PDZ256mb */
   0x15fb, /* VFMSUB213PDZrb */
-/* Table14889 */
+/* Table14891 */
   0x1814, /* VFNMADD213PDZ256mb */
   0x1823, /* VFNMADD213PDZrb */
-/* Table14891 */
+/* Table14893 */
   0x1960, /* VFNMSUB213PDZ256mb */
   0x196f, /* VFNMSUB213PDZrb */
-/* Table14893 */
+/* Table14895 */
   0x296e, /* VPMADD52LUQZ256mb */
   0x0, /*  */
-/* Table14895 */
+/* Table14897 */
   0x2953, /* VPMADD52HUQZ256mb */
   0x0, /*  */
-/* Table14897 */
+/* Table14899 */
   0x1534, /* VFMADDSUB231PDZ256mb */
   0x1543, /* VFMADDSUB231PDZrb */
-/* Table14899 */
+/* Table14901 */
   0x173c, /* VFMSUBADD231PDZ256mb */
   0x174b, /* VFMSUBADD231PDZrb */
-/* Table14901 */
+/* Table14903 */
   0x1428, /* VFMADD231PDZ256mb */
   0x1437, /* VFMADD231PDZrb */
-/* Table14903 */
+/* Table14905 */
   0x1650, /* VFMSUB231PDZ256mb */
   0x165f, /* VFMSUB231PDZrb */
-/* Table14905 */
+/* Table14907 */
   0x1878, /* VFNMADD231PDZ256mb */
   0x1887, /* VFNMADD231PDZrb */
-/* Table14907 */
+/* Table14909 */
   0x19c4, /* VFNMSUB231PDZ256mb */
   0x19d3, /* VFNMSUB231PDZrb */
-/* Table14909 */
+/* Table14911 */
   0x2580, /* VPCONFLICTQZ256rmb */
   0x0, /*  */
-/* Table14911 */
+/* Table14913 */
   0x35b0, /* VPTESTNMDZrmb */
   0x0, /*  */
-/* Table14913 */
+/* Table14915 */
   0x2737, /* VPERMILPSZrmb */
   0x0, /*  */
-/* Table14915 */
+/* Table14917 */
   0x2fb3, /* VPRORVDZrmb */
   0x0, /*  */
-/* Table14917 */
+/* Table14919 */
   0x2f47, /* VPROLVDZrmb */
   0x0, /*  */
-/* Table14919 */
+/* Table14921 */
   0x2775, /* VPERMPSZrmb */
   0x0, /*  */
-/* Table14921 */
+/* Table14923 */
   0x2058, /* VPABSDZrmb */
   0x0, /*  */
-/* Table14923 */
+/* Table14925 */
   0x3574, /* VPTESTMDZrmb */
   0x0, /*  */
-/* Table14925 */
+/* Table14927 */
   0x20dd, /* VPACKUSDWZrmb */
   0x0, /*  */
-/* Table14927 */
+/* Table14929 */
   0x38fc, /* VSCALEFPSZrmb */
   0x3902, /* VSCALEFPSZrrb */
-/* Table14929 */
+/* Table14931 */
   0x261f, /* VPERMDZrmb */
   0x0, /*  */
-/* Table14931 */
+/* Table14933 */
   0x2aaa, /* VPMINSDZrmb */
   0x0, /*  */
-/* Table14933 */
+/* Table14935 */
   0x2b10, /* VPMINUDZrmb */
   0x0, /*  */
-/* Table14935 */
+/* Table14937 */
   0x29de, /* VPMAXSDZrmb */
   0x0, /*  */
-/* Table14937 */
+/* Table14939 */
   0x2a44, /* VPMAXUDZrmb */
   0x0, /*  */
-/* Table14939 */
+/* Table14941 */
   0x2df1, /* VPMULLDZrmb */
   0x0, /*  */
-/* Table14941 */
+/* Table14943 */
   0x1ac1, /* VGETEXPPSZmb */
   0x1ac7, /* VGETEXPPSZrb */
-/* Table14943 */
+/* Table14945 */
   0x290e, /* VPLZCNTDZrmb */
   0x0, /*  */
-/* Table14945 */
+/* Table14947 */
   0x33fe, /* VPSRLVDZrmb */
   0x0, /*  */
-/* Table14947 */
+/* Table14949 */
   0x331a, /* VPSRAVDZrmb */
   0x0, /*  */
-/* Table14949 */
+/* Table14951 */
   0x3240, /* VPSLLVDZrmb */
   0x0, /*  */
-/* Table14951 */
+/* Table14953 */
   0x3761, /* VRCP14PSZmb */
   0x0, /*  */
-/* Table14953 */
+/* Table14955 */
   0x3885, /* VRSQRT14PSZmb */
   0x0, /*  */
-/* Table14955 */
+/* Table14957 */
   0x25bf, /* VPDPBUSDZmb */
   0x0, /*  */
-/* Table14957 */
+/* Table14959 */
   0x25a4, /* VPDPBUSDSZmb */
   0x0, /*  */
-/* Table14959 */
+/* Table14961 */
   0x25f5, /* VPDPWSSDZmb */
   0x0, /*  */
-/* Table14961 */
+/* Table14963 */
   0x25da, /* VPDPWSSDSZmb */
   0x0, /*  */
-/* Table14963 */
+/* Table14965 */
   0x2e8b, /* VPOPCNTDZrmb */
   0x0, /*  */
-/* Table14965 */
+/* Table14967 */
   0x229e, /* VPBLENDMDZrmb */
   0x0, /*  */
-/* Table14967 */
+/* Table14969 */
   0xcce, /* VBLENDMPSZrmb */
   0x0, /*  */
-/* Table14969 */
+/* Table14971 */
   0x3061, /* VPSHLDVDZmb */
   0x0, /*  */
-/* Table14971 */
+/* Table14973 */
   0x30fd, /* VPSHRDVDZmb */
   0x0, /*  */
-/* Table14973 */
+/* Table14975 */
   0x264c, /* VPERMI2Drmb */
   0x0, /*  */
-/* Table14975 */
+/* Table14977 */
   0x2682, /* VPERMI2PSrmb */
   0x0, /*  */
-/* Table14977 */
+/* Table14979 */
   0x27c8, /* VPERMT2Drmb */
   0x0, /*  */
-/* Table14979 */
+/* Table14981 */
   0x27fe, /* VPERMT2PSrmb */
   0x0, /*  */
-/* Table14981 */
+/* Table14983 */
   0x14d7, /* VFMADDSUB132PSZmb */
   0x14dd, /* VFMADDSUB132PSZrb */
-/* Table14983 */
+/* Table14985 */
   0x16df, /* VFMSUBADD132PSZmb */
   0x16e5, /* VFMSUBADD132PSZrb */
-/* Table14985 */
+/* Table14987 */
   0x138b, /* VFMADD132PSZmb */
   0x1391, /* VFMADD132PSZrb */
-/* Table14987 */
+/* Table14989 */
   0x15b3, /* VFMSUB132PSZmb */
   0x15b9, /* VFMSUB132PSZrb */
-/* Table14989 */
+/* Table14991 */
   0x17db, /* VFNMADD132PSZmb */
   0x17e1, /* VFNMADD132PSZrb */
-/* Table14991 */
+/* Table14993 */
   0x1927, /* VFNMSUB132PSZmb */
   0x192d, /* VFNMSUB132PSZrb */
-/* Table14993 */
+/* Table14995 */
   0x151b, /* VFMADDSUB213PSZmb */
   0x1521, /* VFMADDSUB213PSZrb */
-/* Table14995 */
+/* Table14997 */
   0x1723, /* VFMSUBADD213PSZmb */
   0x1729, /* VFMSUBADD213PSZrb */
-/* Table14997 */
+/* Table14999 */
   0x13ef, /* VFMADD213PSZmb */
   0x13f5, /* VFMADD213PSZrb */
-/* Table14999 */
+/* Table15001 */
   0x1617, /* VFMSUB213PSZmb */
   0x161d, /* VFMSUB213PSZrb */
-/* Table15001 */
+/* Table15003 */
   0x183f, /* VFNMADD213PSZmb */
   0x1845, /* VFNMADD213PSZrb */
-/* Table15003 */
+/* Table15005 */
   0x198b, /* VFNMSUB213PSZmb */
   0x1991, /* VFNMSUB213PSZrb */
-/* Table15005 */
+/* Table15007 */
   0x155f, /* VFMADDSUB231PSZmb */
   0x1565, /* VFMADDSUB231PSZrb */
-/* Table15007 */
+/* Table15009 */
   0x1767, /* VFMSUBADD231PSZmb */
   0x176d, /* VFMSUBADD231PSZrb */
-/* Table15009 */
+/* Table15011 */
   0x1453, /* VFMADD231PSZmb */
   0x1459, /* VFMADD231PSZrb */
-/* Table15011 */
+/* Table15013 */
   0x167b, /* VFMSUB231PSZmb */
   0x1681, /* VFMSUB231PSZrb */
-/* Table15013 */
+/* Table15015 */
   0x18a3, /* VFNMADD231PSZmb */
   0x18a9, /* VFNMADD231PSZrb */
-/* Table15015 */
+/* Table15017 */
   0x19ef, /* VFNMSUB231PSZmb */
   0x19f5, /* VFNMSUB231PSZrb */
-/* Table15017 */
+/* Table15019 */
   0x256e, /* VPCONFLICTDZrmb */
   0x0, /*  */
-/* Table15019 */
+/* Table15021 */
   0x1293, /* VEXP2PSZmb */
   0x1299, /* VEXP2PSZrb */
-/* Table15021 */
+/* Table15023 */
   0x3782, /* VRCP28PSZmb */
   0x3788, /* VRCP28PSZrb */
-/* Table15023 */
+/* Table15025 */
   0x38a6, /* VRSQRT28PSZmb */
   0x38ac, /* VRSQRT28PSZrb */
-/* Table15025 */
+/* Table15027 */
   0x35c2, /* VPTESTNMQZrmb */
   0x0, /*  */
-/* Table15027 */
+/* Table15029 */
   0x26f9, /* VPERMILPDZrmb */
   0x0, /*  */
-/* Table15029 */
+/* Table15031 */
   0x2fce, /* VPRORVQZrmb */
   0x0, /*  */
-/* Table15031 */
+/* Table15033 */
   0x2f62, /* VPROLVQZrmb */
   0x0, /*  */
-/* Table15033 */
+/* Table15035 */
   0x2761, /* VPERMPDZrmb */
   0x0, /*  */
-/* Table15035 */
+/* Table15037 */
   0x2075, /* VPABSQZrmb */
   0x0, /*  */
-/* Table15037 */
+/* Table15039 */
   0x3586, /* VPTESTMQZrmb */
   0x0, /*  */
-/* Table15039 */
+/* Table15041 */
   0x2d90, /* VPMULDQZrmb */
   0x0, /*  */
-/* Table15041 */
+/* Table15043 */
   0x23e0, /* VPCMPEQQZrmb */
   0x0, /*  */
-/* Table15043 */
+/* Table15045 */
   0x38de, /* VSCALEFPDZrmb */
   0x38e4, /* VSCALEFPDZrrb */
-/* Table15045 */
+/* Table15047 */
   0x279b, /* VPERMQZrmb */
   0x0, /*  */
-/* Table15047 */
+/* Table15049 */
   0x2430, /* VPCMPGTQZrmb */
   0x0, /*  */
-/* Table15049 */
+/* Table15051 */
   0x2ac7, /* VPMINSQZrmb */
   0x0, /*  */
-/* Table15051 */
+/* Table15053 */
   0x2b2d, /* VPMINUQZrmb */
   0x0, /*  */
-/* Table15053 */
+/* Table15055 */
   0x29fb, /* VPMAXSQZrmb */
   0x0, /*  */
-/* Table15055 */
+/* Table15057 */
   0x2a61, /* VPMAXUQZrmb */
   0x0, /*  */
-/* Table15057 */
+/* Table15059 */
   0x2e0e, /* VPMULLQZrmb */
   0x0, /*  */
-/* Table15059 */
+/* Table15061 */
   0x1aa3, /* VGETEXPPDZmb */
   0x1aa9, /* VGETEXPPDZrb */
-/* Table15061 */
+/* Table15063 */
   0x2929, /* VPLZCNTQZrmb */
   0x0, /*  */
-/* Table15063 */
+/* Table15065 */
   0x341d, /* VPSRLVQZrmb */
   0x0, /*  */
-/* Table15065 */
+/* Table15067 */
   0x3337, /* VPSRAVQZrmb */
   0x0, /*  */
-/* Table15067 */
+/* Table15069 */
   0x325f, /* VPSLLVQZrmb */
   0x0, /*  */
-/* Table15069 */
+/* Table15071 */
   0x3746, /* VRCP14PDZmb */
   0x0, /*  */
-/* Table15071 */
+/* Table15073 */
   0x386a, /* VRSQRT14PDZmb */
   0x0, /*  */
-/* Table15073 */
+/* Table15075 */
   0x2ea6, /* VPOPCNTQZrmb */
   0x0, /*  */
-/* Table15075 */
+/* Table15077 */
   0x22b9, /* VPBLENDMQZrmb */
   0x0, /*  */
-/* Table15077 */
+/* Table15079 */
   0xcb3, /* VBLENDMPDZrmb */
   0x0, /*  */
-/* Table15079 */
+/* Table15081 */
   0x307c, /* VPSHLDVQZmb */
   0x0, /*  */
-/* Table15081 */
+/* Table15083 */
   0x3118, /* VPSHRDVQZmb */
   0x0, /*  */
-/* Table15083 */
+/* Table15085 */
   0x269d, /* VPERMI2Qrmb */
   0x0, /*  */
-/* Table15085 */
+/* Table15087 */
   0x2667, /* VPERMI2PDrmb */
   0x0, /*  */
-/* Table15087 */
+/* Table15089 */
   0x2819, /* VPERMT2Qrmb */
   0x0, /*  */
-/* Table15089 */
+/* Table15091 */
   0x27e3, /* VPERMT2PDrmb */
   0x0, /*  */
-/* Table15091 */
+/* Table15093 */
   0x2e3f, /* VPMULTISHIFTQBZrmb */
   0x0, /*  */
-/* Table15093 */
+/* Table15095 */
   0x14b5, /* VFMADDSUB132PDZmb */
   0x14bb, /* VFMADDSUB132PDZrb */
-/* Table15095 */
+/* Table15097 */
   0x16bd, /* VFMSUBADD132PDZmb */
   0x16c3, /* VFMSUBADD132PDZrb */
-/* Table15097 */
+/* Table15099 */
   0x1369, /* VFMADD132PDZmb */
   0x136f, /* VFMADD132PDZrb */
-/* Table15099 */
+/* Table15101 */
   0x1591, /* VFMSUB132PDZmb */
   0x1597, /* VFMSUB132PDZrb */
-/* Table15101 */
+/* Table15103 */
   0x17b9, /* VFNMADD132PDZmb */
   0x17bf, /* VFNMADD132PDZrb */
-/* Table15103 */
+/* Table15105 */
   0x1905, /* VFNMSUB132PDZmb */
   0x190b, /* VFNMSUB132PDZrb */
-/* Table15105 */
+/* Table15107 */
   0x14f9, /* VFMADDSUB213PDZmb */
   0x14ff, /* VFMADDSUB213PDZrb */
-/* Table15107 */
+/* Table15109 */
   0x1701, /* VFMSUBADD213PDZmb */
   0x1707, /* VFMSUBADD213PDZrb */
-/* Table15109 */
+/* Table15111 */
   0x13cd, /* VFMADD213PDZmb */
   0x13d3, /* VFMADD213PDZrb */
-/* Table15111 */
+/* Table15113 */
   0x15f5, /* VFMSUB213PDZmb */
   0x15fb, /* VFMSUB213PDZrb */
-/* Table15113 */
+/* Table15115 */
   0x181d, /* VFNMADD213PDZmb */
   0x1823, /* VFNMADD213PDZrb */
-/* Table15115 */
+/* Table15117 */
   0x1969, /* VFNMSUB213PDZmb */
   0x196f, /* VFNMSUB213PDZrb */
-/* Table15117 */
+/* Table15119 */
   0x2977, /* VPMADD52LUQZmb */
   0x0, /*  */
-/* Table15119 */
+/* Table15121 */
   0x295c, /* VPMADD52HUQZmb */
   0x0, /*  */
-/* Table15121 */
+/* Table15123 */
   0x153d, /* VFMADDSUB231PDZmb */
   0x1543, /* VFMADDSUB231PDZrb */
-/* Table15123 */
+/* Table15125 */
   0x1745, /* VFMSUBADD231PDZmb */
   0x174b, /* VFMSUBADD231PDZrb */
-/* Table15125 */
+/* Table15127 */
   0x1431, /* VFMADD231PDZmb */
   0x1437, /* VFMADD231PDZrb */
-/* Table15127 */
+/* Table15129 */
   0x1659, /* VFMSUB231PDZmb */
   0x165f, /* VFMSUB231PDZrb */
-/* Table15129 */
+/* Table15131 */
   0x1881, /* VFNMADD231PDZmb */
   0x1887, /* VFNMADD231PDZrb */
-/* Table15131 */
+/* Table15133 */
   0x19cd, /* VFNMSUB231PDZmb */
   0x19d3, /* VFNMSUB231PDZrb */
-/* Table15133 */
+/* Table15135 */
   0x2589, /* VPCONFLICTQZrmb */
   0x0, /*  */
-/* Table15135 */
+/* Table15137 */
   0x1287, /* VEXP2PDZmb */
   0x128d, /* VEXP2PDZrb */
-/* Table15137 */
+/* Table15139 */
   0x3776, /* VRCP28PDZmb */
   0x377c, /* VRCP28PDZrb */
-/* Table15139 */
+/* Table15141 */
   0x389a, /* VRSQRT28PDZmb */
   0x38a0, /* VRSQRT28PDZrb */
-/* Table15141 */
+/* Table15143 */
   0x35a5, /* VPTESTNMDZ128rmbk */
   0x0, /*  */
-/* Table15143 */
+/* Table15145 */
   0x2714, /* VPERMILPSZ128rmbk */
   0x0, /*  */
-/* Table15145 */
+/* Table15147 */
   0x0, /*  */
   0xef8, /* VCVTPH2PSZrrbk */
-/* Table15147 */
+/* Table15149 */
   0x2fa2, /* VPRORVDZ128rmbk */
   0x0, /*  */
-/* Table15149 */
+/* Table15151 */
   0x2f36, /* VPROLVDZ128rmbk */
   0x0, /*  */
-/* Table15151 */
+/* Table15153 */
   0x2047, /* VPABSDZ128rmbk */
   0x0, /*  */
-/* Table15153 */
+/* Table15155 */
   0x3569, /* VPTESTMDZ128rmbk */
   0x0, /*  */
-/* Table15155 */
+/* Table15157 */
   0x20cc, /* VPACKUSDWZ128rmbk */
   0x0, /*  */
-/* Table15157 */
+/* Table15159 */
   0x38eb, /* VSCALEFPSZ128rmbk */
   0x3903, /* VSCALEFPSZrrbk */
-/* Table15159 */
+/* Table15161 */
   0x0, /*  */
   0x3915, /* VSCALEFSSZrrb_Intk */
-/* Table15161 */
+/* Table15163 */
   0x2a99, /* VPMINSDZ128rmbk */
   0x0, /*  */
-/* Table15163 */
+/* Table15165 */
   0x2aff, /* VPMINUDZ128rmbk */
   0x0, /*  */
-/* Table15165 */
+/* Table15167 */
   0x29cd, /* VPMAXSDZ128rmbk */
   0x0, /*  */
-/* Table15167 */
+/* Table15169 */
   0x2a33, /* VPMAXUDZ128rmbk */
   0x0, /*  */
-/* Table15169 */
+/* Table15171 */
   0x2de0, /* VPMULLDZ128rmbk */
   0x0, /*  */
-/* Table15171 */
+/* Table15173 */
   0x1ab0, /* VGETEXPPSZ128mbk */
   0x1ac8, /* VGETEXPPSZrbk */
-/* Table15173 */
+/* Table15175 */
   0x0, /*  */
   0x1ada, /* VGETEXPSSZrbk */
-/* Table15175 */
+/* Table15177 */
   0x28fd, /* VPLZCNTDZ128rmbk */
   0x0, /*  */
-/* Table15177 */
+/* Table15179 */
   0x33ed, /* VPSRLVDZ128rmbk */
   0x0, /*  */
-/* Table15179 */
+/* Table15181 */
   0x3309, /* VPSRAVDZ128rmbk */
   0x0, /*  */
-/* Table15181 */
+/* Table15183 */
   0x322f, /* VPSLLVDZ128rmbk */
   0x0, /*  */
-/* Table15183 */
+/* Table15185 */
   0x3750, /* VRCP14PSZ128mbk */
   0x0, /*  */
-/* Table15185 */
+/* Table15187 */
   0x3874, /* VRSQRT14PSZ128mbk */
   0x0, /*  */
-/* Table15187 */
+/* Table15189 */
   0x25ae, /* VPDPBUSDZ128mbk */
   0x0, /*  */
-/* Table15189 */
+/* Table15191 */
   0x2593, /* VPDPBUSDSZ128mbk */
   0x0, /*  */
-/* Table15191 */
+/* Table15193 */
   0x25e4, /* VPDPWSSDZ128mbk */
   0x0, /*  */
-/* Table15193 */
+/* Table15195 */
   0x25c9, /* VPDPWSSDSZ128mbk */
   0x0, /*  */
-/* Table15195 */
+/* Table15197 */
   0x2e7a, /* VPOPCNTDZ128rmbk */
   0x0, /*  */
-/* Table15197 */
+/* Table15199 */
   0x228d, /* VPBLENDMDZ128rmbk */
   0x0, /*  */
-/* Table15199 */
+/* Table15201 */
   0xcbd, /* VBLENDMPSZ128rmbk */
   0x0, /*  */
-/* Table15201 */
+/* Table15203 */
   0x3050, /* VPSHLDVDZ128mbk */
   0x0, /*  */
-/* Table15203 */
+/* Table15205 */
   0x30ec, /* VPSHRDVDZ128mbk */
   0x0, /*  */
-/* Table15205 */
+/* Table15207 */
   0x263b, /* VPERMI2D128rmbk */
   0x0, /*  */
-/* Table15207 */
+/* Table15209 */
   0x2671, /* VPERMI2PS128rmbk */
   0x0, /*  */
-/* Table15209 */
+/* Table15211 */
   0x27b7, /* VPERMT2D128rmbk */
   0x0, /*  */
-/* Table15211 */
+/* Table15213 */
   0x27ed, /* VPERMT2PS128rmbk */
   0x0, /*  */
-/* Table15213 */
+/* Table15215 */
   0x14c6, /* VFMADDSUB132PSZ128mbk */
   0x14de, /* VFMADDSUB132PSZrbk */
-/* Table15215 */
+/* Table15217 */
   0x16ce, /* VFMSUBADD132PSZ128mbk */
   0x16e6, /* VFMSUBADD132PSZrbk */
-/* Table15217 */
+/* Table15219 */
   0x137a, /* VFMADD132PSZ128mbk */
   0x1392, /* VFMADD132PSZrbk */
-/* Table15219 */
+/* Table15221 */
   0x0, /*  */
   0x13b2, /* VFMADD132SSZrb_Intk */
-/* Table15221 */
+/* Table15223 */
   0x15a2, /* VFMSUB132PSZ128mbk */
   0x15ba, /* VFMSUB132PSZrbk */
-/* Table15223 */
+/* Table15225 */
   0x0, /*  */
   0x15da, /* VFMSUB132SSZrb_Intk */
-/* Table15225 */
+/* Table15227 */
   0x17ca, /* VFNMADD132PSZ128mbk */
   0x17e2, /* VFNMADD132PSZrbk */
-/* Table15227 */
+/* Table15229 */
   0x0, /*  */
   0x1802, /* VFNMADD132SSZrb_Intk */
-/* Table15229 */
+/* Table15231 */
   0x1916, /* VFNMSUB132PSZ128mbk */
   0x192e, /* VFNMSUB132PSZrbk */
-/* Table15231 */
+/* Table15233 */
   0x0, /*  */
   0x194e, /* VFNMSUB132SSZrb_Intk */
-/* Table15233 */
+/* Table15235 */
   0x150a, /* VFMADDSUB213PSZ128mbk */
   0x1522, /* VFMADDSUB213PSZrbk */
-/* Table15235 */
+/* Table15237 */
   0x1712, /* VFMSUBADD213PSZ128mbk */
   0x172a, /* VFMSUBADD213PSZrbk */
-/* Table15237 */
+/* Table15239 */
   0x13de, /* VFMADD213PSZ128mbk */
   0x13f6, /* VFMADD213PSZrbk */
-/* Table15239 */
+/* Table15241 */
   0x0, /*  */
   0x1416, /* VFMADD213SSZrb_Intk */
-/* Table15241 */
+/* Table15243 */
   0x1606, /* VFMSUB213PSZ128mbk */
   0x161e, /* VFMSUB213PSZrbk */
-/* Table15243 */
+/* Table15245 */
   0x0, /*  */
   0x163e, /* VFMSUB213SSZrb_Intk */
-/* Table15245 */
+/* Table15247 */
   0x182e, /* VFNMADD213PSZ128mbk */
   0x1846, /* VFNMADD213PSZrbk */
-/* Table15247 */
+/* Table15249 */
   0x0, /*  */
   0x1866, /* VFNMADD213SSZrb_Intk */
-/* Table15249 */
+/* Table15251 */
   0x197a, /* VFNMSUB213PSZ128mbk */
   0x1992, /* VFNMSUB213PSZrbk */
-/* Table15251 */
+/* Table15253 */
   0x0, /*  */
   0x19b2, /* VFNMSUB213SSZrb_Intk */
-/* Table15253 */
+/* Table15255 */
   0x154e, /* VFMADDSUB231PSZ128mbk */
   0x1566, /* VFMADDSUB231PSZrbk */
-/* Table15255 */
+/* Table15257 */
   0x1756, /* VFMSUBADD231PSZ128mbk */
   0x176e, /* VFMSUBADD231PSZrbk */
-/* Table15257 */
+/* Table15259 */
   0x1442, /* VFMADD231PSZ128mbk */
   0x145a, /* VFMADD231PSZrbk */
-/* Table15259 */
+/* Table15261 */
   0x0, /*  */
   0x147a, /* VFMADD231SSZrb_Intk */
-/* Table15261 */
+/* Table15263 */
   0x166a, /* VFMSUB231PSZ128mbk */
   0x1682, /* VFMSUB231PSZrbk */
-/* Table15263 */
+/* Table15265 */
   0x0, /*  */
   0x16a2, /* VFMSUB231SSZrb_Intk */
-/* Table15265 */
+/* Table15267 */
   0x1892, /* VFNMADD231PSZ128mbk */
   0x18aa, /* VFNMADD231PSZrbk */
-/* Table15267 */
+/* Table15269 */
   0x0, /*  */
   0x18ca, /* VFNMADD231SSZrb_Intk */
-/* Table15269 */
+/* Table15271 */
   0x19de, /* VFNMSUB231PSZ128mbk */
   0x19f6, /* VFNMSUB231PSZrbk */
-/* Table15271 */
+/* Table15273 */
   0x0, /*  */
   0x1a16, /* VFNMSUB231SSZrb_Intk */
-/* Table15273 */
+/* Table15275 */
   0x255d, /* VPCONFLICTDZ128rmbk */
   0x0, /*  */
-/* Table15275 */
-  0x0, /*  */
-  0x129a, /* VEXP2PSZrbk */
 /* Table15277 */
   0x0, /*  */
-  0x3789, /* VRCP28PSZrbk */
+  0x129a, /* VEXP2PSZrbk */
 /* Table15279 */
   0x0, /*  */
-  0x379b, /* VRCP28SSZrbk */
+  0x3789, /* VRCP28PSZrbk */
 /* Table15281 */
   0x0, /*  */
-  0x38ad, /* VRSQRT28PSZrbk */
+  0x379b, /* VRCP28SSZrbk */
 /* Table15283 */
   0x0, /*  */
-  0x38bf, /* VRSQRT28SSZrbk */
+  0x38ad, /* VRSQRT28PSZrbk */
 /* Table15285 */
+  0x0, /*  */
+  0x38bf, /* VRSQRT28SSZrbk */
+/* Table15287 */
   0x35b7, /* VPTESTNMQZ128rmbk */
   0x0, /*  */
-/* Table15287 */
+/* Table15289 */
   0x26d6, /* VPERMILPDZ128rmbk */
   0x0, /*  */
-/* Table15289 */
+/* Table15291 */
   0x2fbd, /* VPRORVQZ128rmbk */
   0x0, /*  */
-/* Table15291 */
+/* Table15293 */
   0x2f51, /* VPROLVQZ128rmbk */
   0x0, /*  */
-/* Table15293 */
+/* Table15295 */
   0x2064, /* VPABSQZ128rmbk */
   0x0, /*  */
-/* Table15295 */
+/* Table15297 */
   0x357b, /* VPTESTMQZ128rmbk */
   0x0, /*  */
-/* Table15297 */
+/* Table15299 */
   0x2d7f, /* VPMULDQZ128rmbk */
   0x0, /*  */
-/* Table15299 */
+/* Table15301 */
   0x23d5, /* VPCMPEQQZ128rmbk */
   0x0, /*  */
-/* Table15301 */
+/* Table15303 */
   0x38cd, /* VSCALEFPDZ128rmbk */
   0x38e5, /* VSCALEFPDZrrbk */
-/* Table15303 */
+/* Table15305 */
   0x0, /*  */
   0x390c, /* VSCALEFSDZrrb_Intk */
-/* Table15305 */
+/* Table15307 */
   0x2425, /* VPCMPGTQZ128rmbk */
   0x0, /*  */
-/* Table15307 */
+/* Table15309 */
   0x2ab6, /* VPMINSQZ128rmbk */
   0x0, /*  */
-/* Table15309 */
+/* Table15311 */
   0x2b1c, /* VPMINUQZ128rmbk */
   0x0, /*  */
-/* Table15311 */
+/* Table15313 */
   0x29ea, /* VPMAXSQZ128rmbk */
   0x0, /*  */
-/* Table15313 */
+/* Table15315 */
   0x2a50, /* VPMAXUQZ128rmbk */
   0x0, /*  */
-/* Table15315 */
+/* Table15317 */
   0x2dfd, /* VPMULLQZ128rmbk */
   0x0, /*  */
-/* Table15317 */
+/* Table15319 */
   0x1a92, /* VGETEXPPDZ128mbk */
   0x1aaa, /* VGETEXPPDZrbk */
-/* Table15319 */
+/* Table15321 */
   0x0, /*  */
   0x1ad1, /* VGETEXPSDZrbk */
-/* Table15321 */
+/* Table15323 */
   0x2918, /* VPLZCNTQZ128rmbk */
   0x0, /*  */
-/* Table15323 */
+/* Table15325 */
   0x340c, /* VPSRLVQZ128rmbk */
   0x0, /*  */
-/* Table15325 */
+/* Table15327 */
   0x3326, /* VPSRAVQZ128rmbk */
   0x0, /*  */
-/* Table15327 */
+/* Table15329 */
   0x324e, /* VPSLLVQZ128rmbk */
   0x0, /*  */
-/* Table15329 */
+/* Table15331 */
   0x3735, /* VRCP14PDZ128mbk */
   0x0, /*  */
-/* Table15331 */
+/* Table15333 */
   0x3859, /* VRSQRT14PDZ128mbk */
   0x0, /*  */
-/* Table15333 */
+/* Table15335 */
   0x2e95, /* VPOPCNTQZ128rmbk */
   0x0, /*  */
-/* Table15335 */
+/* Table15337 */
   0x22a8, /* VPBLENDMQZ128rmbk */
   0x0, /*  */
-/* Table15337 */
+/* Table15339 */
   0xca2, /* VBLENDMPDZ128rmbk */
   0x0, /*  */
-/* Table15339 */
+/* Table15341 */
   0x306b, /* VPSHLDVQZ128mbk */
   0x0, /*  */
-/* Table15341 */
+/* Table15343 */
   0x3107, /* VPSHRDVQZ128mbk */
   0x0, /*  */
-/* Table15343 */
+/* Table15345 */
   0x268c, /* VPERMI2Q128rmbk */
   0x0, /*  */
-/* Table15345 */
+/* Table15347 */
   0x2656, /* VPERMI2PD128rmbk */
   0x0, /*  */
-/* Table15347 */
+/* Table15349 */
   0x2808, /* VPERMT2Q128rmbk */
   0x0, /*  */
-/* Table15349 */
+/* Table15351 */
   0x27d2, /* VPERMT2PD128rmbk */
   0x0, /*  */
-/* Table15351 */
+/* Table15353 */
   0x2e2e, /* VPMULTISHIFTQBZ128rmbk */
   0x0, /*  */
-/* Table15353 */
+/* Table15355 */
   0x14a4, /* VFMADDSUB132PDZ128mbk */
   0x14bc, /* VFMADDSUB132PDZrbk */
-/* Table15355 */
+/* Table15357 */
   0x16ac, /* VFMSUBADD132PDZ128mbk */
   0x16c4, /* VFMSUBADD132PDZrbk */
-/* Table15357 */
+/* Table15359 */
   0x1358, /* VFMADD132PDZ128mbk */
   0x1370, /* VFMADD132PDZrbk */
-/* Table15359 */
+/* Table15361 */
   0x0, /*  */
   0x13a2, /* VFMADD132SDZrb_Intk */
-/* Table15361 */
+/* Table15363 */
   0x1580, /* VFMSUB132PDZ128mbk */
   0x1598, /* VFMSUB132PDZrbk */
-/* Table15363 */
+/* Table15365 */
   0x0, /*  */
   0x15ca, /* VFMSUB132SDZrb_Intk */
-/* Table15365 */
+/* Table15367 */
   0x17a8, /* VFNMADD132PDZ128mbk */
   0x17c0, /* VFNMADD132PDZrbk */
-/* Table15367 */
+/* Table15369 */
   0x0, /*  */
   0x17f2, /* VFNMADD132SDZrb_Intk */
-/* Table15369 */
+/* Table15371 */
   0x18f4, /* VFNMSUB132PDZ128mbk */
   0x190c, /* VFNMSUB132PDZrbk */
-/* Table15371 */
+/* Table15373 */
   0x0, /*  */
   0x193e, /* VFNMSUB132SDZrb_Intk */
-/* Table15373 */
+/* Table15375 */
   0x14e8, /* VFMADDSUB213PDZ128mbk */
   0x1500, /* VFMADDSUB213PDZrbk */
-/* Table15375 */
+/* Table15377 */
   0x16f0, /* VFMSUBADD213PDZ128mbk */
   0x1708, /* VFMSUBADD213PDZrbk */
-/* Table15377 */
+/* Table15379 */
   0x13bc, /* VFMADD213PDZ128mbk */
   0x13d4, /* VFMADD213PDZrbk */
-/* Table15379 */
+/* Table15381 */
   0x0, /*  */
   0x1406, /* VFMADD213SDZrb_Intk */
-/* Table15381 */
+/* Table15383 */
   0x15e4, /* VFMSUB213PDZ128mbk */
   0x15fc, /* VFMSUB213PDZrbk */
-/* Table15383 */
+/* Table15385 */
   0x0, /*  */
   0x162e, /* VFMSUB213SDZrb_Intk */
-/* Table15385 */
+/* Table15387 */
   0x180c, /* VFNMADD213PDZ128mbk */
   0x1824, /* VFNMADD213PDZrbk */
-/* Table15387 */
+/* Table15389 */
   0x0, /*  */
   0x1856, /* VFNMADD213SDZrb_Intk */
-/* Table15389 */
+/* Table15391 */
   0x1958, /* VFNMSUB213PDZ128mbk */
   0x1970, /* VFNMSUB213PDZrbk */
-/* Table15391 */
+/* Table15393 */
   0x0, /*  */
   0x19a2, /* VFNMSUB213SDZrb_Intk */
-/* Table15393 */
+/* Table15395 */
   0x2966, /* VPMADD52LUQZ128mbk */
   0x0, /*  */
-/* Table15395 */
+/* Table15397 */
   0x294b, /* VPMADD52HUQZ128mbk */
   0x0, /*  */
-/* Table15397 */
+/* Table15399 */
   0x152c, /* VFMADDSUB231PDZ128mbk */
   0x1544, /* VFMADDSUB231PDZrbk */
-/* Table15399 */
+/* Table15401 */
   0x1734, /* VFMSUBADD231PDZ128mbk */
   0x174c, /* VFMSUBADD231PDZrbk */
-/* Table15401 */
+/* Table15403 */
   0x1420, /* VFMADD231PDZ128mbk */
   0x1438, /* VFMADD231PDZrbk */
-/* Table15403 */
+/* Table15405 */
   0x0, /*  */
   0x146a, /* VFMADD231SDZrb_Intk */
-/* Table15405 */
+/* Table15407 */
   0x1648, /* VFMSUB231PDZ128mbk */
   0x1660, /* VFMSUB231PDZrbk */
-/* Table15407 */
+/* Table15409 */
   0x0, /*  */
   0x1692, /* VFMSUB231SDZrb_Intk */
-/* Table15409 */
+/* Table15411 */
   0x1870, /* VFNMADD231PDZ128mbk */
   0x1888, /* VFNMADD231PDZrbk */
-/* Table15411 */
+/* Table15413 */
   0x0, /*  */
   0x18ba, /* VFNMADD231SDZrb_Intk */
-/* Table15413 */
+/* Table15415 */
   0x19bc, /* VFNMSUB231PDZ128mbk */
   0x19d4, /* VFNMSUB231PDZrbk */
-/* Table15415 */
+/* Table15417 */
   0x0, /*  */
   0x1a06, /* VFNMSUB231SDZrb_Intk */
-/* Table15417 */
+/* Table15419 */
   0x2578, /* VPCONFLICTQZ128rmbk */
   0x0, /*  */
-/* Table15419 */
-  0x0, /*  */
-  0x128e, /* VEXP2PDZrbk */
 /* Table15421 */
   0x0, /*  */
-  0x377d, /* VRCP28PDZrbk */
+  0x128e, /* VEXP2PDZrbk */
 /* Table15423 */
   0x0, /*  */
-  0x3792, /* VRCP28SDZrbk */
+  0x377d, /* VRCP28PDZrbk */
 /* Table15425 */
   0x0, /*  */
-  0x38a1, /* VRSQRT28PDZrbk */
+  0x3792, /* VRCP28SDZrbk */
 /* Table15427 */
   0x0, /*  */
-  0x38b6, /* VRSQRT28SDZrbk */
+  0x38a1, /* VRSQRT28PDZrbk */
 /* Table15429 */
+  0x0, /*  */
+  0x38b6, /* VRSQRT28SDZrbk */
+/* Table15431 */
   0x35ab, /* VPTESTNMDZ256rmbk */
   0x0, /*  */
-/* Table15431 */
+/* Table15433 */
   0x2726, /* VPERMILPSZ256rmbk */
   0x0, /*  */
-/* Table15433 */
+/* Table15435 */
   0x2fab, /* VPRORVDZ256rmbk */
   0x0, /*  */
-/* Table15435 */
+/* Table15437 */
   0x2f3f, /* VPROLVDZ256rmbk */
   0x0, /*  */
-/* Table15437 */
+/* Table15439 */
   0x276d, /* VPERMPSZ256rmbk */
   0x0, /*  */
-/* Table15439 */
+/* Table15441 */
   0x2050, /* VPABSDZ256rmbk */
   0x0, /*  */
-/* Table15441 */
+/* Table15443 */
   0x356f, /* VPTESTMDZ256rmbk */
   0x0, /*  */
-/* Table15443 */
+/* Table15445 */
   0x20d5, /* VPACKUSDWZ256rmbk */
   0x0, /*  */
-/* Table15445 */
+/* Table15447 */
   0x38f4, /* VSCALEFPSZ256rmbk */
   0x3903, /* VSCALEFPSZrrbk */
-/* Table15447 */
+/* Table15449 */
   0x2617, /* VPERMDZ256rmbk */
   0x0, /*  */
-/* Table15449 */
+/* Table15451 */
   0x2aa2, /* VPMINSDZ256rmbk */
   0x0, /*  */
-/* Table15451 */
+/* Table15453 */
   0x2b08, /* VPMINUDZ256rmbk */
   0x0, /*  */
-/* Table15453 */
+/* Table15455 */
   0x29d6, /* VPMAXSDZ256rmbk */
   0x0, /*  */
-/* Table15455 */
+/* Table15457 */
   0x2a3c, /* VPMAXUDZ256rmbk */
   0x0, /*  */
-/* Table15457 */
+/* Table15459 */
   0x2de9, /* VPMULLDZ256rmbk */
   0x0, /*  */
-/* Table15459 */
+/* Table15461 */
   0x1ab9, /* VGETEXPPSZ256mbk */
   0x1ac8, /* VGETEXPPSZrbk */
-/* Table15461 */
+/* Table15463 */
   0x2906, /* VPLZCNTDZ256rmbk */
   0x0, /*  */
-/* Table15463 */
+/* Table15465 */
   0x33f6, /* VPSRLVDZ256rmbk */
   0x0, /*  */
-/* Table15465 */
+/* Table15467 */
   0x3312, /* VPSRAVDZ256rmbk */
   0x0, /*  */
-/* Table15467 */
+/* Table15469 */
   0x3238, /* VPSLLVDZ256rmbk */
   0x0, /*  */
-/* Table15469 */
+/* Table15471 */
   0x3759, /* VRCP14PSZ256mbk */
   0x0, /*  */
-/* Table15471 */
+/* Table15473 */
   0x387d, /* VRSQRT14PSZ256mbk */
   0x0, /*  */
-/* Table15473 */
+/* Table15475 */
   0x25b7, /* VPDPBUSDZ256mbk */
   0x0, /*  */
-/* Table15475 */
+/* Table15477 */
   0x259c, /* VPDPBUSDSZ256mbk */
   0x0, /*  */
-/* Table15477 */
+/* Table15479 */
   0x25ed, /* VPDPWSSDZ256mbk */
   0x0, /*  */
-/* Table15479 */
+/* Table15481 */
   0x25d2, /* VPDPWSSDSZ256mbk */
   0x0, /*  */
-/* Table15481 */
+/* Table15483 */
   0x2e83, /* VPOPCNTDZ256rmbk */
   0x0, /*  */
-/* Table15483 */
+/* Table15485 */
   0x2296, /* VPBLENDMDZ256rmbk */
   0x0, /*  */
-/* Table15485 */
+/* Table15487 */
   0xcc6, /* VBLENDMPSZ256rmbk */
   0x0, /*  */
-/* Table15487 */
+/* Table15489 */
   0x3059, /* VPSHLDVDZ256mbk */
   0x0, /*  */
-/* Table15489 */
+/* Table15491 */
   0x30f5, /* VPSHRDVDZ256mbk */
   0x0, /*  */
-/* Table15491 */
+/* Table15493 */
   0x2644, /* VPERMI2D256rmbk */
   0x0, /*  */
-/* Table15493 */
+/* Table15495 */
   0x267a, /* VPERMI2PS256rmbk */
   0x0, /*  */
-/* Table15495 */
+/* Table15497 */
   0x27c0, /* VPERMT2D256rmbk */
   0x0, /*  */
-/* Table15497 */
+/* Table15499 */
   0x27f6, /* VPERMT2PS256rmbk */
   0x0, /*  */
-/* Table15499 */
+/* Table15501 */
   0x14cf, /* VFMADDSUB132PSZ256mbk */
   0x14de, /* VFMADDSUB132PSZrbk */
-/* Table15501 */
+/* Table15503 */
   0x16d7, /* VFMSUBADD132PSZ256mbk */
   0x16e6, /* VFMSUBADD132PSZrbk */
-/* Table15503 */
+/* Table15505 */
   0x1383, /* VFMADD132PSZ256mbk */
   0x1392, /* VFMADD132PSZrbk */
-/* Table15505 */
+/* Table15507 */
   0x15ab, /* VFMSUB132PSZ256mbk */
   0x15ba, /* VFMSUB132PSZrbk */
-/* Table15507 */
+/* Table15509 */
   0x17d3, /* VFNMADD132PSZ256mbk */
   0x17e2, /* VFNMADD132PSZrbk */
-/* Table15509 */
+/* Table15511 */
   0x191f, /* VFNMSUB132PSZ256mbk */
   0x192e, /* VFNMSUB132PSZrbk */
-/* Table15511 */
+/* Table15513 */
   0x1513, /* VFMADDSUB213PSZ256mbk */
   0x1522, /* VFMADDSUB213PSZrbk */
-/* Table15513 */
+/* Table15515 */
   0x171b, /* VFMSUBADD213PSZ256mbk */
   0x172a, /* VFMSUBADD213PSZrbk */
-/* Table15515 */
+/* Table15517 */
   0x13e7, /* VFMADD213PSZ256mbk */
   0x13f6, /* VFMADD213PSZrbk */
-/* Table15517 */
+/* Table15519 */
   0x160f, /* VFMSUB213PSZ256mbk */
   0x161e, /* VFMSUB213PSZrbk */
-/* Table15519 */
+/* Table15521 */
   0x1837, /* VFNMADD213PSZ256mbk */
   0x1846, /* VFNMADD213PSZrbk */
-/* Table15521 */
+/* Table15523 */
   0x1983, /* VFNMSUB213PSZ256mbk */
   0x1992, /* VFNMSUB213PSZrbk */
-/* Table15523 */
+/* Table15525 */
   0x1557, /* VFMADDSUB231PSZ256mbk */
   0x1566, /* VFMADDSUB231PSZrbk */
-/* Table15525 */
+/* Table15527 */
   0x175f, /* VFMSUBADD231PSZ256mbk */
   0x176e, /* VFMSUBADD231PSZrbk */
-/* Table15527 */
+/* Table15529 */
   0x144b, /* VFMADD231PSZ256mbk */
   0x145a, /* VFMADD231PSZrbk */
-/* Table15529 */
+/* Table15531 */
   0x1673, /* VFMSUB231PSZ256mbk */
   0x1682, /* VFMSUB231PSZrbk */
-/* Table15531 */
+/* Table15533 */
   0x189b, /* VFNMADD231PSZ256mbk */
   0x18aa, /* VFNMADD231PSZrbk */
-/* Table15533 */
+/* Table15535 */
   0x19e7, /* VFNMSUB231PSZ256mbk */
   0x19f6, /* VFNMSUB231PSZrbk */
-/* Table15535 */
+/* Table15537 */
   0x2566, /* VPCONFLICTDZ256rmbk */
   0x0, /*  */
-/* Table15537 */
+/* Table15539 */
   0x35bd, /* VPTESTNMQZ256rmbk */
   0x0, /*  */
-/* Table15539 */
+/* Table15541 */
   0x26e8, /* VPERMILPDZ256rmbk */
   0x0, /*  */
-/* Table15541 */
+/* Table15543 */
   0x2fc6, /* VPRORVQZ256rmbk */
   0x0, /*  */
-/* Table15543 */
+/* Table15545 */
   0x2f5a, /* VPROLVQZ256rmbk */
   0x0, /*  */
-/* Table15545 */
+/* Table15547 */
   0x2750, /* VPERMPDZ256rmbk */
   0x0, /*  */
-/* Table15547 */
+/* Table15549 */
   0x206d, /* VPABSQZ256rmbk */
   0x0, /*  */
-/* Table15549 */
+/* Table15551 */
   0x3581, /* VPTESTMQZ256rmbk */
   0x0, /*  */
-/* Table15551 */
+/* Table15553 */
   0x2d88, /* VPMULDQZ256rmbk */
   0x0, /*  */
-/* Table15553 */
+/* Table15555 */
   0x23db, /* VPCMPEQQZ256rmbk */
   0x0, /*  */
-/* Table15555 */
+/* Table15557 */
   0x38d6, /* VSCALEFPDZ256rmbk */
   0x38e5, /* VSCALEFPDZrrbk */
-/* Table15557 */
+/* Table15559 */
   0x278a, /* VPERMQZ256rmbk */
   0x0, /*  */
-/* Table15559 */
+/* Table15561 */
   0x242b, /* VPCMPGTQZ256rmbk */
   0x0, /*  */
-/* Table15561 */
+/* Table15563 */
   0x2abf, /* VPMINSQZ256rmbk */
   0x0, /*  */
-/* Table15563 */
+/* Table15565 */
   0x2b25, /* VPMINUQZ256rmbk */
   0x0, /*  */
-/* Table15565 */
+/* Table15567 */
   0x29f3, /* VPMAXSQZ256rmbk */
   0x0, /*  */
-/* Table15567 */
+/* Table15569 */
   0x2a59, /* VPMAXUQZ256rmbk */
   0x0, /*  */
-/* Table15569 */
+/* Table15571 */
   0x2e06, /* VPMULLQZ256rmbk */
   0x0, /*  */
-/* Table15571 */
+/* Table15573 */
   0x1a9b, /* VGETEXPPDZ256mbk */
   0x1aaa, /* VGETEXPPDZrbk */
-/* Table15573 */
+/* Table15575 */
   0x2921, /* VPLZCNTQZ256rmbk */
   0x0, /*  */
-/* Table15575 */
+/* Table15577 */
   0x3415, /* VPSRLVQZ256rmbk */
   0x0, /*  */
-/* Table15577 */
+/* Table15579 */
   0x332f, /* VPSRAVQZ256rmbk */
   0x0, /*  */
-/* Table15579 */
+/* Table15581 */
   0x3257, /* VPSLLVQZ256rmbk */
   0x0, /*  */
-/* Table15581 */
+/* Table15583 */
   0x373e, /* VRCP14PDZ256mbk */
   0x0, /*  */
-/* Table15583 */
+/* Table15585 */
   0x3862, /* VRSQRT14PDZ256mbk */
   0x0, /*  */
-/* Table15585 */
+/* Table15587 */
   0x2e9e, /* VPOPCNTQZ256rmbk */
   0x0, /*  */
-/* Table15587 */
+/* Table15589 */
   0x22b1, /* VPBLENDMQZ256rmbk */
   0x0, /*  */
-/* Table15589 */
+/* Table15591 */
   0xcab, /* VBLENDMPDZ256rmbk */
   0x0, /*  */
-/* Table15591 */
+/* Table15593 */
   0x3074, /* VPSHLDVQZ256mbk */
   0x0, /*  */
-/* Table15593 */
+/* Table15595 */
   0x3110, /* VPSHRDVQZ256mbk */
   0x0, /*  */
-/* Table15595 */
+/* Table15597 */
   0x2695, /* VPERMI2Q256rmbk */
   0x0, /*  */
-/* Table15597 */
+/* Table15599 */
   0x265f, /* VPERMI2PD256rmbk */
   0x0, /*  */
-/* Table15599 */
+/* Table15601 */
   0x2811, /* VPERMT2Q256rmbk */
   0x0, /*  */
-/* Table15601 */
+/* Table15603 */
   0x27db, /* VPERMT2PD256rmbk */
   0x0, /*  */
-/* Table15603 */
+/* Table15605 */
   0x2e37, /* VPMULTISHIFTQBZ256rmbk */
   0x0, /*  */
-/* Table15605 */
+/* Table15607 */
   0x14ad, /* VFMADDSUB132PDZ256mbk */
   0x14bc, /* VFMADDSUB132PDZrbk */
-/* Table15607 */
+/* Table15609 */
   0x16b5, /* VFMSUBADD132PDZ256mbk */
   0x16c4, /* VFMSUBADD132PDZrbk */
-/* Table15609 */
+/* Table15611 */
   0x1361, /* VFMADD132PDZ256mbk */
   0x1370, /* VFMADD132PDZrbk */
-/* Table15611 */
+/* Table15613 */
   0x1589, /* VFMSUB132PDZ256mbk */
   0x1598, /* VFMSUB132PDZrbk */
-/* Table15613 */
+/* Table15615 */
   0x17b1, /* VFNMADD132PDZ256mbk */
   0x17c0, /* VFNMADD132PDZrbk */
-/* Table15615 */
+/* Table15617 */
   0x18fd, /* VFNMSUB132PDZ256mbk */
   0x190c, /* VFNMSUB132PDZrbk */
-/* Table15617 */
+/* Table15619 */
   0x14f1, /* VFMADDSUB213PDZ256mbk */
   0x1500, /* VFMADDSUB213PDZrbk */
-/* Table15619 */
+/* Table15621 */
   0x16f9, /* VFMSUBADD213PDZ256mbk */
   0x1708, /* VFMSUBADD213PDZrbk */
-/* Table15621 */
+/* Table15623 */
   0x13c5, /* VFMADD213PDZ256mbk */
   0x13d4, /* VFMADD213PDZrbk */
-/* Table15623 */
+/* Table15625 */
   0x15ed, /* VFMSUB213PDZ256mbk */
   0x15fc, /* VFMSUB213PDZrbk */
-/* Table15625 */
+/* Table15627 */
   0x1815, /* VFNMADD213PDZ256mbk */
   0x1824, /* VFNMADD213PDZrbk */
-/* Table15627 */
+/* Table15629 */
   0x1961, /* VFNMSUB213PDZ256mbk */
   0x1970, /* VFNMSUB213PDZrbk */
-/* Table15629 */
+/* Table15631 */
   0x296f, /* VPMADD52LUQZ256mbk */
   0x0, /*  */
-/* Table15631 */
+/* Table15633 */
   0x2954, /* VPMADD52HUQZ256mbk */
   0x0, /*  */
-/* Table15633 */
+/* Table15635 */
   0x1535, /* VFMADDSUB231PDZ256mbk */
   0x1544, /* VFMADDSUB231PDZrbk */
-/* Table15635 */
+/* Table15637 */
   0x173d, /* VFMSUBADD231PDZ256mbk */
   0x174c, /* VFMSUBADD231PDZrbk */
-/* Table15637 */
+/* Table15639 */
   0x1429, /* VFMADD231PDZ256mbk */
   0x1438, /* VFMADD231PDZrbk */
-/* Table15639 */
+/* Table15641 */
   0x1651, /* VFMSUB231PDZ256mbk */
   0x1660, /* VFMSUB231PDZrbk */
-/* Table15641 */
+/* Table15643 */
   0x1879, /* VFNMADD231PDZ256mbk */
   0x1888, /* VFNMADD231PDZrbk */
-/* Table15643 */
+/* Table15645 */
   0x19c5, /* VFNMSUB231PDZ256mbk */
   0x19d4, /* VFNMSUB231PDZrbk */
-/* Table15645 */
+/* Table15647 */
   0x2581, /* VPCONFLICTQZ256rmbk */
   0x0, /*  */
-/* Table15647 */
+/* Table15649 */
   0x35b1, /* VPTESTNMDZrmbk */
   0x0, /*  */
-/* Table15649 */
+/* Table15651 */
   0x2738, /* VPERMILPSZrmbk */
   0x0, /*  */
-/* Table15651 */
+/* Table15653 */
   0x2fb4, /* VPRORVDZrmbk */
   0x0, /*  */
-/* Table15653 */
+/* Table15655 */
   0x2f48, /* VPROLVDZrmbk */
   0x0, /*  */
-/* Table15655 */
+/* Table15657 */
   0x2776, /* VPERMPSZrmbk */
   0x0, /*  */
-/* Table15657 */
+/* Table15659 */
   0x2059, /* VPABSDZrmbk */
   0x0, /*  */
-/* Table15659 */
+/* Table15661 */
   0x3575, /* VPTESTMDZrmbk */
   0x0, /*  */
-/* Table15661 */
+/* Table15663 */
   0x20de, /* VPACKUSDWZrmbk */
   0x0, /*  */
-/* Table15663 */
+/* Table15665 */
   0x38fd, /* VSCALEFPSZrmbk */
   0x3903, /* VSCALEFPSZrrbk */
-/* Table15665 */
+/* Table15667 */
   0x2620, /* VPERMDZrmbk */
   0x0, /*  */
-/* Table15667 */
+/* Table15669 */
   0x2aab, /* VPMINSDZrmbk */
   0x0, /*  */
-/* Table15669 */
+/* Table15671 */
   0x2b11, /* VPMINUDZrmbk */
   0x0, /*  */
-/* Table15671 */
+/* Table15673 */
   0x29df, /* VPMAXSDZrmbk */
   0x0, /*  */
-/* Table15673 */
+/* Table15675 */
   0x2a45, /* VPMAXUDZrmbk */
   0x0, /*  */
-/* Table15675 */
+/* Table15677 */
   0x2df2, /* VPMULLDZrmbk */
   0x0, /*  */
-/* Table15677 */
+/* Table15679 */
   0x1ac2, /* VGETEXPPSZmbk */
   0x1ac8, /* VGETEXPPSZrbk */
-/* Table15679 */
+/* Table15681 */
   0x290f, /* VPLZCNTDZrmbk */
   0x0, /*  */
-/* Table15681 */
+/* Table15683 */
   0x33ff, /* VPSRLVDZrmbk */
   0x0, /*  */
-/* Table15683 */
+/* Table15685 */
   0x331b, /* VPSRAVDZrmbk */
   0x0, /*  */
-/* Table15685 */
+/* Table15687 */
   0x3241, /* VPSLLVDZrmbk */
   0x0, /*  */
-/* Table15687 */
+/* Table15689 */
   0x3762, /* VRCP14PSZmbk */
   0x0, /*  */
-/* Table15689 */
+/* Table15691 */
   0x3886, /* VRSQRT14PSZmbk */
   0x0, /*  */
-/* Table15691 */
+/* Table15693 */
   0x25c0, /* VPDPBUSDZmbk */
   0x0, /*  */
-/* Table15693 */
+/* Table15695 */
   0x25a5, /* VPDPBUSDSZmbk */
   0x0, /*  */
-/* Table15695 */
+/* Table15697 */
   0x25f6, /* VPDPWSSDZmbk */
   0x0, /*  */
-/* Table15697 */
+/* Table15699 */
   0x25db, /* VPDPWSSDSZmbk */
   0x0, /*  */
-/* Table15699 */
+/* Table15701 */
   0x2e8c, /* VPOPCNTDZrmbk */
   0x0, /*  */
-/* Table15701 */
+/* Table15703 */
   0x229f, /* VPBLENDMDZrmbk */
   0x0, /*  */
-/* Table15703 */
+/* Table15705 */
   0xccf, /* VBLENDMPSZrmbk */
   0x0, /*  */
-/* Table15705 */
+/* Table15707 */
   0x3062, /* VPSHLDVDZmbk */
   0x0, /*  */
-/* Table15707 */
+/* Table15709 */
   0x30fe, /* VPSHRDVDZmbk */
   0x0, /*  */
-/* Table15709 */
+/* Table15711 */
   0x264d, /* VPERMI2Drmbk */
   0x0, /*  */
-/* Table15711 */
+/* Table15713 */
   0x2683, /* VPERMI2PSrmbk */
   0x0, /*  */
-/* Table15713 */
+/* Table15715 */
   0x27c9, /* VPERMT2Drmbk */
   0x0, /*  */
-/* Table15715 */
+/* Table15717 */
   0x27ff, /* VPERMT2PSrmbk */
   0x0, /*  */
-/* Table15717 */
+/* Table15719 */
   0x14d8, /* VFMADDSUB132PSZmbk */
   0x14de, /* VFMADDSUB132PSZrbk */
-/* Table15719 */
+/* Table15721 */
   0x16e0, /* VFMSUBADD132PSZmbk */
   0x16e6, /* VFMSUBADD132PSZrbk */
-/* Table15721 */
+/* Table15723 */
   0x138c, /* VFMADD132PSZmbk */
   0x1392, /* VFMADD132PSZrbk */
-/* Table15723 */
+/* Table15725 */
   0x15b4, /* VFMSUB132PSZmbk */
   0x15ba, /* VFMSUB132PSZrbk */
-/* Table15725 */
+/* Table15727 */
   0x17dc, /* VFNMADD132PSZmbk */
   0x17e2, /* VFNMADD132PSZrbk */
-/* Table15727 */
+/* Table15729 */
   0x1928, /* VFNMSUB132PSZmbk */
   0x192e, /* VFNMSUB132PSZrbk */
-/* Table15729 */
+/* Table15731 */
   0x151c, /* VFMADDSUB213PSZmbk */
   0x1522, /* VFMADDSUB213PSZrbk */
-/* Table15731 */
+/* Table15733 */
   0x1724, /* VFMSUBADD213PSZmbk */
   0x172a, /* VFMSUBADD213PSZrbk */
-/* Table15733 */
+/* Table15735 */
   0x13f0, /* VFMADD213PSZmbk */
   0x13f6, /* VFMADD213PSZrbk */
-/* Table15735 */
+/* Table15737 */
   0x1618, /* VFMSUB213PSZmbk */
   0x161e, /* VFMSUB213PSZrbk */
-/* Table15737 */
+/* Table15739 */
   0x1840, /* VFNMADD213PSZmbk */
   0x1846, /* VFNMADD213PSZrbk */
-/* Table15739 */
+/* Table15741 */
   0x198c, /* VFNMSUB213PSZmbk */
   0x1992, /* VFNMSUB213PSZrbk */
-/* Table15741 */
+/* Table15743 */
   0x1560, /* VFMADDSUB231PSZmbk */
   0x1566, /* VFMADDSUB231PSZrbk */
-/* Table15743 */
+/* Table15745 */
   0x1768, /* VFMSUBADD231PSZmbk */
   0x176e, /* VFMSUBADD231PSZrbk */
-/* Table15745 */
+/* Table15747 */
   0x1454, /* VFMADD231PSZmbk */
   0x145a, /* VFMADD231PSZrbk */
-/* Table15747 */
+/* Table15749 */
   0x167c, /* VFMSUB231PSZmbk */
   0x1682, /* VFMSUB231PSZrbk */
-/* Table15749 */
+/* Table15751 */
   0x18a4, /* VFNMADD231PSZmbk */
   0x18aa, /* VFNMADD231PSZrbk */
-/* Table15751 */
+/* Table15753 */
   0x19f0, /* VFNMSUB231PSZmbk */
   0x19f6, /* VFNMSUB231PSZrbk */
-/* Table15753 */
+/* Table15755 */
   0x256f, /* VPCONFLICTDZrmbk */
   0x0, /*  */
-/* Table15755 */
+/* Table15757 */
   0x1294, /* VEXP2PSZmbk */
   0x129a, /* VEXP2PSZrbk */
-/* Table15757 */
+/* Table15759 */
   0x3783, /* VRCP28PSZmbk */
   0x3789, /* VRCP28PSZrbk */
-/* Table15759 */
+/* Table15761 */
   0x38a7, /* VRSQRT28PSZmbk */
   0x38ad, /* VRSQRT28PSZrbk */
-/* Table15761 */
+/* Table15763 */
   0x35c3, /* VPTESTNMQZrmbk */
   0x0, /*  */
-/* Table15763 */
+/* Table15765 */
   0x26fa, /* VPERMILPDZrmbk */
   0x0, /*  */
-/* Table15765 */
+/* Table15767 */
   0x2fcf, /* VPRORVQZrmbk */
   0x0, /*  */
-/* Table15767 */
+/* Table15769 */
   0x2f63, /* VPROLVQZrmbk */
   0x0, /*  */
-/* Table15769 */
+/* Table15771 */
   0x2762, /* VPERMPDZrmbk */
   0x0, /*  */
-/* Table15771 */
+/* Table15773 */
   0x2076, /* VPABSQZrmbk */
   0x0, /*  */
-/* Table15773 */
+/* Table15775 */
   0x3587, /* VPTESTMQZrmbk */
   0x0, /*  */
-/* Table15775 */
+/* Table15777 */
   0x2d91, /* VPMULDQZrmbk */
   0x0, /*  */
-/* Table15777 */
+/* Table15779 */
   0x23e1, /* VPCMPEQQZrmbk */
   0x0, /*  */
-/* Table15779 */
+/* Table15781 */
   0x38df, /* VSCALEFPDZrmbk */
   0x38e5, /* VSCALEFPDZrrbk */
-/* Table15781 */
+/* Table15783 */
   0x279c, /* VPERMQZrmbk */
   0x0, /*  */
-/* Table15783 */
+/* Table15785 */
   0x2431, /* VPCMPGTQZrmbk */
   0x0, /*  */
-/* Table15785 */
+/* Table15787 */
   0x2ac8, /* VPMINSQZrmbk */
   0x0, /*  */
-/* Table15787 */
+/* Table15789 */
   0x2b2e, /* VPMINUQZrmbk */
   0x0, /*  */
-/* Table15789 */
+/* Table15791 */
   0x29fc, /* VPMAXSQZrmbk */
   0x0, /*  */
-/* Table15791 */
+/* Table15793 */
   0x2a62, /* VPMAXUQZrmbk */
   0x0, /*  */
-/* Table15793 */
+/* Table15795 */
   0x2e0f, /* VPMULLQZrmbk */
   0x0, /*  */
-/* Table15795 */
+/* Table15797 */
   0x1aa4, /* VGETEXPPDZmbk */
   0x1aaa, /* VGETEXPPDZrbk */
-/* Table15797 */
+/* Table15799 */
   0x292a, /* VPLZCNTQZrmbk */
   0x0, /*  */
-/* Table15799 */
+/* Table15801 */
   0x341e, /* VPSRLVQZrmbk */
   0x0, /*  */
-/* Table15801 */
+/* Table15803 */
   0x3338, /* VPSRAVQZrmbk */
   0x0, /*  */
-/* Table15803 */
+/* Table15805 */
   0x3260, /* VPSLLVQZrmbk */
   0x0, /*  */
-/* Table15805 */
+/* Table15807 */
   0x3747, /* VRCP14PDZmbk */
   0x0, /*  */
-/* Table15807 */
+/* Table15809 */
   0x386b, /* VRSQRT14PDZmbk */
   0x0, /*  */
-/* Table15809 */
+/* Table15811 */
   0x2ea7, /* VPOPCNTQZrmbk */
   0x0, /*  */
-/* Table15811 */
+/* Table15813 */
   0x22ba, /* VPBLENDMQZrmbk */
   0x0, /*  */
-/* Table15813 */
+/* Table15815 */
   0xcb4, /* VBLENDMPDZrmbk */
   0x0, /*  */
-/* Table15815 */
+/* Table15817 */
   0x307d, /* VPSHLDVQZmbk */
   0x0, /*  */
-/* Table15817 */
+/* Table15819 */
   0x3119, /* VPSHRDVQZmbk */
   0x0, /*  */
-/* Table15819 */
+/* Table15821 */
   0x269e, /* VPERMI2Qrmbk */
   0x0, /*  */
-/* Table15821 */
+/* Table15823 */
   0x2668, /* VPERMI2PDrmbk */
   0x0, /*  */
-/* Table15823 */
+/* Table15825 */
   0x281a, /* VPERMT2Qrmbk */
   0x0, /*  */
-/* Table15825 */
+/* Table15827 */
   0x27e4, /* VPERMT2PDrmbk */
   0x0, /*  */
-/* Table15827 */
+/* Table15829 */
   0x2e40, /* VPMULTISHIFTQBZrmbk */
   0x0, /*  */
-/* Table15829 */
+/* Table15831 */
   0x14b6, /* VFMADDSUB132PDZmbk */
   0x14bc, /* VFMADDSUB132PDZrbk */
-/* Table15831 */
+/* Table15833 */
   0x16be, /* VFMSUBADD132PDZmbk */
   0x16c4, /* VFMSUBADD132PDZrbk */
-/* Table15833 */
+/* Table15835 */
   0x136a, /* VFMADD132PDZmbk */
   0x1370, /* VFMADD132PDZrbk */
-/* Table15835 */
+/* Table15837 */
   0x1592, /* VFMSUB132PDZmbk */
   0x1598, /* VFMSUB132PDZrbk */
-/* Table15837 */
+/* Table15839 */
   0x17ba, /* VFNMADD132PDZmbk */
   0x17c0, /* VFNMADD132PDZrbk */
-/* Table15839 */
+/* Table15841 */
   0x1906, /* VFNMSUB132PDZmbk */
   0x190c, /* VFNMSUB132PDZrbk */
-/* Table15841 */
+/* Table15843 */
   0x14fa, /* VFMADDSUB213PDZmbk */
   0x1500, /* VFMADDSUB213PDZrbk */
-/* Table15843 */
+/* Table15845 */
   0x1702, /* VFMSUBADD213PDZmbk */
   0x1708, /* VFMSUBADD213PDZrbk */
-/* Table15845 */
+/* Table15847 */
   0x13ce, /* VFMADD213PDZmbk */
   0x13d4, /* VFMADD213PDZrbk */
-/* Table15847 */
+/* Table15849 */
   0x15f6, /* VFMSUB213PDZmbk */
   0x15fc, /* VFMSUB213PDZrbk */
-/* Table15849 */
+/* Table15851 */
   0x181e, /* VFNMADD213PDZmbk */
   0x1824, /* VFNMADD213PDZrbk */
-/* Table15851 */
+/* Table15853 */
   0x196a, /* VFNMSUB213PDZmbk */
   0x1970, /* VFNMSUB213PDZrbk */
-/* Table15853 */
+/* Table15855 */
   0x2978, /* VPMADD52LUQZmbk */
   0x0, /*  */
-/* Table15855 */
+/* Table15857 */
   0x295d, /* VPMADD52HUQZmbk */
   0x0, /*  */
-/* Table15857 */
+/* Table15859 */
   0x153e, /* VFMADDSUB231PDZmbk */
   0x1544, /* VFMADDSUB231PDZrbk */
-/* Table15859 */
+/* Table15861 */
   0x1746, /* VFMSUBADD231PDZmbk */
   0x174c, /* VFMSUBADD231PDZrbk */
-/* Table15861 */
+/* Table15863 */
   0x1432, /* VFMADD231PDZmbk */
   0x1438, /* VFMADD231PDZrbk */
-/* Table15863 */
+/* Table15865 */
   0x165a, /* VFMSUB231PDZmbk */
   0x1660, /* VFMSUB231PDZrbk */
-/* Table15865 */
+/* Table15867 */
   0x1882, /* VFNMADD231PDZmbk */
   0x1888, /* VFNMADD231PDZrbk */
-/* Table15867 */
+/* Table15869 */
   0x19ce, /* VFNMSUB231PDZmbk */
   0x19d4, /* VFNMSUB231PDZrbk */
-/* Table15869 */
+/* Table15871 */
   0x258a, /* VPCONFLICTQZrmbk */
   0x0, /*  */
-/* Table15871 */
+/* Table15873 */
   0x1288, /* VEXP2PDZmbk */
   0x128e, /* VEXP2PDZrbk */
-/* Table15873 */
+/* Table15875 */
   0x3777, /* VRCP28PDZmbk */
   0x377d, /* VRCP28PDZrbk */
-/* Table15875 */
+/* Table15877 */
   0x389b, /* VRSQRT28PDZmbk */
   0x38a1, /* VRSQRT28PDZrbk */
-/* Table15877 */
+/* Table15879 */
   0x2715, /* VPERMILPSZ128rmbkz */
   0x0, /*  */
-/* Table15879 */
+/* Table15881 */
   0x0, /*  */
   0xef9, /* VCVTPH2PSZrrbkz */
-/* Table15881 */
+/* Table15883 */
   0x2fa3, /* VPRORVDZ128rmbkz */
   0x0, /*  */
-/* Table15883 */
+/* Table15885 */
   0x2f37, /* VPROLVDZ128rmbkz */
   0x0, /*  */
-/* Table15885 */
+/* Table15887 */
   0x2048, /* VPABSDZ128rmbkz */
   0x0, /*  */
-/* Table15887 */
+/* Table15889 */
   0x20cd, /* VPACKUSDWZ128rmbkz */
   0x0, /*  */
-/* Table15889 */
+/* Table15891 */
   0x38ec, /* VSCALEFPSZ128rmbkz */
   0x3904, /* VSCALEFPSZrrbkz */
-/* Table15891 */
+/* Table15893 */
   0x0, /*  */
   0x3916, /* VSCALEFSSZrrb_Intkz */
-/* Table15893 */
+/* Table15895 */
   0x2a9a, /* VPMINSDZ128rmbkz */
   0x0, /*  */
-/* Table15895 */
+/* Table15897 */
   0x2b00, /* VPMINUDZ128rmbkz */
   0x0, /*  */
-/* Table15897 */
+/* Table15899 */
   0x29ce, /* VPMAXSDZ128rmbkz */
   0x0, /*  */
-/* Table15899 */
+/* Table15901 */
   0x2a34, /* VPMAXUDZ128rmbkz */
   0x0, /*  */
-/* Table15901 */
+/* Table15903 */
   0x2de1, /* VPMULLDZ128rmbkz */
   0x0, /*  */
-/* Table15903 */
+/* Table15905 */
   0x1ab1, /* VGETEXPPSZ128mbkz */
   0x1ac9, /* VGETEXPPSZrbkz */
-/* Table15905 */
+/* Table15907 */
   0x0, /*  */
   0x1adb, /* VGETEXPSSZrbkz */
-/* Table15907 */
+/* Table15909 */
   0x28fe, /* VPLZCNTDZ128rmbkz */
   0x0, /*  */
-/* Table15909 */
+/* Table15911 */
   0x33ee, /* VPSRLVDZ128rmbkz */
   0x0, /*  */
-/* Table15911 */
+/* Table15913 */
   0x330a, /* VPSRAVDZ128rmbkz */
   0x0, /*  */
-/* Table15913 */
+/* Table15915 */
   0x3230, /* VPSLLVDZ128rmbkz */
   0x0, /*  */
-/* Table15915 */
+/* Table15917 */
   0x3751, /* VRCP14PSZ128mbkz */
   0x0, /*  */
-/* Table15917 */
+/* Table15919 */
   0x3875, /* VRSQRT14PSZ128mbkz */
   0x0, /*  */
-/* Table15919 */
+/* Table15921 */
   0x25af, /* VPDPBUSDZ128mbkz */
   0x0, /*  */
-/* Table15921 */
+/* Table15923 */
   0x2594, /* VPDPBUSDSZ128mbkz */
   0x0, /*  */
-/* Table15923 */
+/* Table15925 */
   0x25e5, /* VPDPWSSDZ128mbkz */
   0x0, /*  */
-/* Table15925 */
+/* Table15927 */
   0x25ca, /* VPDPWSSDSZ128mbkz */
   0x0, /*  */
-/* Table15927 */
+/* Table15929 */
   0x2e7b, /* VPOPCNTDZ128rmbkz */
   0x0, /*  */
-/* Table15929 */
+/* Table15931 */
   0x228e, /* VPBLENDMDZ128rmbkz */
   0x0, /*  */
-/* Table15931 */
+/* Table15933 */
   0xcbe, /* VBLENDMPSZ128rmbkz */
   0x0, /*  */
-/* Table15933 */
+/* Table15935 */
   0x3051, /* VPSHLDVDZ128mbkz */
   0x0, /*  */
-/* Table15935 */
+/* Table15937 */
   0x30ed, /* VPSHRDVDZ128mbkz */
   0x0, /*  */
-/* Table15937 */
+/* Table15939 */
   0x263c, /* VPERMI2D128rmbkz */
   0x0, /*  */
-/* Table15939 */
+/* Table15941 */
   0x2672, /* VPERMI2PS128rmbkz */
   0x0, /*  */
-/* Table15941 */
+/* Table15943 */
   0x27b8, /* VPERMT2D128rmbkz */
   0x0, /*  */
-/* Table15943 */
+/* Table15945 */
   0x27ee, /* VPERMT2PS128rmbkz */
   0x0, /*  */
-/* Table15945 */
+/* Table15947 */
   0x14c7, /* VFMADDSUB132PSZ128mbkz */
   0x14df, /* VFMADDSUB132PSZrbkz */
-/* Table15947 */
+/* Table15949 */
   0x16cf, /* VFMSUBADD132PSZ128mbkz */
   0x16e7, /* VFMSUBADD132PSZrbkz */
-/* Table15949 */
+/* Table15951 */
   0x137b, /* VFMADD132PSZ128mbkz */
   0x1393, /* VFMADD132PSZrbkz */
-/* Table15951 */
+/* Table15953 */
   0x0, /*  */
   0x13b3, /* VFMADD132SSZrb_Intkz */
-/* Table15953 */
+/* Table15955 */
   0x15a3, /* VFMSUB132PSZ128mbkz */
   0x15bb, /* VFMSUB132PSZrbkz */
-/* Table15955 */
+/* Table15957 */
   0x0, /*  */
   0x15db, /* VFMSUB132SSZrb_Intkz */
-/* Table15957 */
+/* Table15959 */
   0x17cb, /* VFNMADD132PSZ128mbkz */
   0x17e3, /* VFNMADD132PSZrbkz */
-/* Table15959 */
+/* Table15961 */
   0x0, /*  */
   0x1803, /* VFNMADD132SSZrb_Intkz */
-/* Table15961 */
+/* Table15963 */
   0x1917, /* VFNMSUB132PSZ128mbkz */
   0x192f, /* VFNMSUB132PSZrbkz */
-/* Table15963 */
+/* Table15965 */
   0x0, /*  */
   0x194f, /* VFNMSUB132SSZrb_Intkz */
-/* Table15965 */
+/* Table15967 */
   0x150b, /* VFMADDSUB213PSZ128mbkz */
   0x1523, /* VFMADDSUB213PSZrbkz */
-/* Table15967 */
+/* Table15969 */
   0x1713, /* VFMSUBADD213PSZ128mbkz */
   0x172b, /* VFMSUBADD213PSZrbkz */
-/* Table15969 */
+/* Table15971 */
   0x13df, /* VFMADD213PSZ128mbkz */
   0x13f7, /* VFMADD213PSZrbkz */
-/* Table15971 */
+/* Table15973 */
   0x0, /*  */
   0x1417, /* VFMADD213SSZrb_Intkz */
-/* Table15973 */
+/* Table15975 */
   0x1607, /* VFMSUB213PSZ128mbkz */
   0x161f, /* VFMSUB213PSZrbkz */
-/* Table15975 */
+/* Table15977 */
   0x0, /*  */
   0x163f, /* VFMSUB213SSZrb_Intkz */
-/* Table15977 */
+/* Table15979 */
   0x182f, /* VFNMADD213PSZ128mbkz */
   0x1847, /* VFNMADD213PSZrbkz */
-/* Table15979 */
+/* Table15981 */
   0x0, /*  */
   0x1867, /* VFNMADD213SSZrb_Intkz */
-/* Table15981 */
+/* Table15983 */
   0x197b, /* VFNMSUB213PSZ128mbkz */
   0x1993, /* VFNMSUB213PSZrbkz */
-/* Table15983 */
+/* Table15985 */
   0x0, /*  */
   0x19b3, /* VFNMSUB213SSZrb_Intkz */
-/* Table15985 */
+/* Table15987 */
   0x154f, /* VFMADDSUB231PSZ128mbkz */
   0x1567, /* VFMADDSUB231PSZrbkz */
-/* Table15987 */
+/* Table15989 */
   0x1757, /* VFMSUBADD231PSZ128mbkz */
   0x176f, /* VFMSUBADD231PSZrbkz */
-/* Table15989 */
+/* Table15991 */
   0x1443, /* VFMADD231PSZ128mbkz */
   0x145b, /* VFMADD231PSZrbkz */
-/* Table15991 */
+/* Table15993 */
   0x0, /*  */
   0x147b, /* VFMADD231SSZrb_Intkz */
-/* Table15993 */
+/* Table15995 */
   0x166b, /* VFMSUB231PSZ128mbkz */
   0x1683, /* VFMSUB231PSZrbkz */
-/* Table15995 */
+/* Table15997 */
   0x0, /*  */
   0x16a3, /* VFMSUB231SSZrb_Intkz */
-/* Table15997 */
+/* Table15999 */
   0x1893, /* VFNMADD231PSZ128mbkz */
   0x18ab, /* VFNMADD231PSZrbkz */
-/* Table15999 */
+/* Table16001 */
   0x0, /*  */
   0x18cb, /* VFNMADD231SSZrb_Intkz */
-/* Table16001 */
+/* Table16003 */
   0x19df, /* VFNMSUB231PSZ128mbkz */
   0x19f7, /* VFNMSUB231PSZrbkz */
-/* Table16003 */
+/* Table16005 */
   0x0, /*  */
   0x1a17, /* VFNMSUB231SSZrb_Intkz */
-/* Table16005 */
+/* Table16007 */
   0x255e, /* VPCONFLICTDZ128rmbkz */
   0x0, /*  */
-/* Table16007 */
-  0x0, /*  */
-  0x129b, /* VEXP2PSZrbkz */
 /* Table16009 */
   0x0, /*  */
-  0x378a, /* VRCP28PSZrbkz */
+  0x129b, /* VEXP2PSZrbkz */
 /* Table16011 */
   0x0, /*  */
-  0x379c, /* VRCP28SSZrbkz */
+  0x378a, /* VRCP28PSZrbkz */
 /* Table16013 */
   0x0, /*  */
-  0x38ae, /* VRSQRT28PSZrbkz */
+  0x379c, /* VRCP28SSZrbkz */
 /* Table16015 */
   0x0, /*  */
-  0x38c0, /* VRSQRT28SSZrbkz */
+  0x38ae, /* VRSQRT28PSZrbkz */
 /* Table16017 */
+  0x0, /*  */
+  0x38c0, /* VRSQRT28SSZrbkz */
+/* Table16019 */
   0x26d7, /* VPERMILPDZ128rmbkz */
   0x0, /*  */
-/* Table16019 */
+/* Table16021 */
   0x2fbe, /* VPRORVQZ128rmbkz */
   0x0, /*  */
-/* Table16021 */
+/* Table16023 */
   0x2f52, /* VPROLVQZ128rmbkz */
   0x0, /*  */
-/* Table16023 */
+/* Table16025 */
   0x2065, /* VPABSQZ128rmbkz */
   0x0, /*  */
-/* Table16025 */
+/* Table16027 */
   0x2d80, /* VPMULDQZ128rmbkz */
   0x0, /*  */
-/* Table16027 */
+/* Table16029 */
   0x38ce, /* VSCALEFPDZ128rmbkz */
   0x38e6, /* VSCALEFPDZrrbkz */
-/* Table16029 */
+/* Table16031 */
   0x0, /*  */
   0x390d, /* VSCALEFSDZrrb_Intkz */
-/* Table16031 */
+/* Table16033 */
   0x2ab7, /* VPMINSQZ128rmbkz */
   0x0, /*  */
-/* Table16033 */
+/* Table16035 */
   0x2b1d, /* VPMINUQZ128rmbkz */
   0x0, /*  */
-/* Table16035 */
+/* Table16037 */
   0x29eb, /* VPMAXSQZ128rmbkz */
   0x0, /*  */
-/* Table16037 */
+/* Table16039 */
   0x2a51, /* VPMAXUQZ128rmbkz */
   0x0, /*  */
-/* Table16039 */
+/* Table16041 */
   0x2dfe, /* VPMULLQZ128rmbkz */
   0x0, /*  */
-/* Table16041 */
+/* Table16043 */
   0x1a93, /* VGETEXPPDZ128mbkz */
   0x1aab, /* VGETEXPPDZrbkz */
-/* Table16043 */
+/* Table16045 */
   0x0, /*  */
   0x1ad2, /* VGETEXPSDZrbkz */
-/* Table16045 */
+/* Table16047 */
   0x2919, /* VPLZCNTQZ128rmbkz */
   0x0, /*  */
-/* Table16047 */
+/* Table16049 */
   0x340d, /* VPSRLVQZ128rmbkz */
   0x0, /*  */
-/* Table16049 */
+/* Table16051 */
   0x3327, /* VPSRAVQZ128rmbkz */
   0x0, /*  */
-/* Table16051 */
+/* Table16053 */
   0x324f, /* VPSLLVQZ128rmbkz */
   0x0, /*  */
-/* Table16053 */
+/* Table16055 */
   0x3736, /* VRCP14PDZ128mbkz */
   0x0, /*  */
-/* Table16055 */
+/* Table16057 */
   0x385a, /* VRSQRT14PDZ128mbkz */
   0x0, /*  */
-/* Table16057 */
+/* Table16059 */
   0x2e96, /* VPOPCNTQZ128rmbkz */
   0x0, /*  */
-/* Table16059 */
+/* Table16061 */
   0x22a9, /* VPBLENDMQZ128rmbkz */
   0x0, /*  */
-/* Table16061 */
+/* Table16063 */
   0xca3, /* VBLENDMPDZ128rmbkz */
   0x0, /*  */
-/* Table16063 */
+/* Table16065 */
   0x306c, /* VPSHLDVQZ128mbkz */
   0x0, /*  */
-/* Table16065 */
+/* Table16067 */
   0x3108, /* VPSHRDVQZ128mbkz */
   0x0, /*  */
-/* Table16067 */
+/* Table16069 */
   0x268d, /* VPERMI2Q128rmbkz */
   0x0, /*  */
-/* Table16069 */
+/* Table16071 */
   0x2657, /* VPERMI2PD128rmbkz */
   0x0, /*  */
-/* Table16071 */
+/* Table16073 */
   0x2809, /* VPERMT2Q128rmbkz */
   0x0, /*  */
-/* Table16073 */
+/* Table16075 */
   0x27d3, /* VPERMT2PD128rmbkz */
   0x0, /*  */
-/* Table16075 */
+/* Table16077 */
   0x2e2f, /* VPMULTISHIFTQBZ128rmbkz */
   0x0, /*  */
-/* Table16077 */
+/* Table16079 */
   0x14a5, /* VFMADDSUB132PDZ128mbkz */
   0x14bd, /* VFMADDSUB132PDZrbkz */
-/* Table16079 */
+/* Table16081 */
   0x16ad, /* VFMSUBADD132PDZ128mbkz */
   0x16c5, /* VFMSUBADD132PDZrbkz */
-/* Table16081 */
+/* Table16083 */
   0x1359, /* VFMADD132PDZ128mbkz */
   0x1371, /* VFMADD132PDZrbkz */
-/* Table16083 */
+/* Table16085 */
   0x0, /*  */
   0x13a3, /* VFMADD132SDZrb_Intkz */
-/* Table16085 */
+/* Table16087 */
   0x1581, /* VFMSUB132PDZ128mbkz */
   0x1599, /* VFMSUB132PDZrbkz */
-/* Table16087 */
+/* Table16089 */
   0x0, /*  */
   0x15cb, /* VFMSUB132SDZrb_Intkz */
-/* Table16089 */
+/* Table16091 */
   0x17a9, /* VFNMADD132PDZ128mbkz */
   0x17c1, /* VFNMADD132PDZrbkz */
-/* Table16091 */
+/* Table16093 */
   0x0, /*  */
   0x17f3, /* VFNMADD132SDZrb_Intkz */
-/* Table16093 */
+/* Table16095 */
   0x18f5, /* VFNMSUB132PDZ128mbkz */
   0x190d, /* VFNMSUB132PDZrbkz */
-/* Table16095 */
+/* Table16097 */
   0x0, /*  */
   0x193f, /* VFNMSUB132SDZrb_Intkz */
-/* Table16097 */
+/* Table16099 */
   0x14e9, /* VFMADDSUB213PDZ128mbkz */
   0x1501, /* VFMADDSUB213PDZrbkz */
-/* Table16099 */
+/* Table16101 */
   0x16f1, /* VFMSUBADD213PDZ128mbkz */
   0x1709, /* VFMSUBADD213PDZrbkz */
-/* Table16101 */
+/* Table16103 */
   0x13bd, /* VFMADD213PDZ128mbkz */
   0x13d5, /* VFMADD213PDZrbkz */
-/* Table16103 */
+/* Table16105 */
   0x0, /*  */
   0x1407, /* VFMADD213SDZrb_Intkz */
-/* Table16105 */
+/* Table16107 */
   0x15e5, /* VFMSUB213PDZ128mbkz */
   0x15fd, /* VFMSUB213PDZrbkz */
-/* Table16107 */
+/* Table16109 */
   0x0, /*  */
   0x162f, /* VFMSUB213SDZrb_Intkz */
-/* Table16109 */
+/* Table16111 */
   0x180d, /* VFNMADD213PDZ128mbkz */
   0x1825, /* VFNMADD213PDZrbkz */
-/* Table16111 */
+/* Table16113 */
   0x0, /*  */
   0x1857, /* VFNMADD213SDZrb_Intkz */
-/* Table16113 */
+/* Table16115 */
   0x1959, /* VFNMSUB213PDZ128mbkz */
   0x1971, /* VFNMSUB213PDZrbkz */
-/* Table16115 */
+/* Table16117 */
   0x0, /*  */
   0x19a3, /* VFNMSUB213SDZrb_Intkz */
-/* Table16117 */
+/* Table16119 */
   0x2967, /* VPMADD52LUQZ128mbkz */
   0x0, /*  */
-/* Table16119 */
+/* Table16121 */
   0x294c, /* VPMADD52HUQZ128mbkz */
   0x0, /*  */
-/* Table16121 */
+/* Table16123 */
   0x152d, /* VFMADDSUB231PDZ128mbkz */
   0x1545, /* VFMADDSUB231PDZrbkz */
-/* Table16123 */
+/* Table16125 */
   0x1735, /* VFMSUBADD231PDZ128mbkz */
   0x174d, /* VFMSUBADD231PDZrbkz */
-/* Table16125 */
+/* Table16127 */
   0x1421, /* VFMADD231PDZ128mbkz */
   0x1439, /* VFMADD231PDZrbkz */
-/* Table16127 */
+/* Table16129 */
   0x0, /*  */
   0x146b, /* VFMADD231SDZrb_Intkz */
-/* Table16129 */
+/* Table16131 */
   0x1649, /* VFMSUB231PDZ128mbkz */
   0x1661, /* VFMSUB231PDZrbkz */
-/* Table16131 */
+/* Table16133 */
   0x0, /*  */
   0x1693, /* VFMSUB231SDZrb_Intkz */
-/* Table16133 */
+/* Table16135 */
   0x1871, /* VFNMADD231PDZ128mbkz */
   0x1889, /* VFNMADD231PDZrbkz */
-/* Table16135 */
+/* Table16137 */
   0x0, /*  */
   0x18bb, /* VFNMADD231SDZrb_Intkz */
-/* Table16137 */
+/* Table16139 */
   0x19bd, /* VFNMSUB231PDZ128mbkz */
   0x19d5, /* VFNMSUB231PDZrbkz */
-/* Table16139 */
+/* Table16141 */
   0x0, /*  */
   0x1a07, /* VFNMSUB231SDZrb_Intkz */
-/* Table16141 */
+/* Table16143 */
   0x2579, /* VPCONFLICTQZ128rmbkz */
   0x0, /*  */
-/* Table16143 */
-  0x0, /*  */
-  0x128f, /* VEXP2PDZrbkz */
 /* Table16145 */
   0x0, /*  */
-  0x377e, /* VRCP28PDZrbkz */
+  0x128f, /* VEXP2PDZrbkz */
 /* Table16147 */
   0x0, /*  */
-  0x3793, /* VRCP28SDZrbkz */
+  0x377e, /* VRCP28PDZrbkz */
 /* Table16149 */
   0x0, /*  */
-  0x38a2, /* VRSQRT28PDZrbkz */
+  0x3793, /* VRCP28SDZrbkz */
 /* Table16151 */
   0x0, /*  */
-  0x38b7, /* VRSQRT28SDZrbkz */
+  0x38a2, /* VRSQRT28PDZrbkz */
 /* Table16153 */
+  0x0, /*  */
+  0x38b7, /* VRSQRT28SDZrbkz */
+/* Table16155 */
   0x2727, /* VPERMILPSZ256rmbkz */
   0x0, /*  */
-/* Table16155 */
+/* Table16157 */
   0x2fac, /* VPRORVDZ256rmbkz */
   0x0, /*  */
-/* Table16157 */
+/* Table16159 */
   0x2f40, /* VPROLVDZ256rmbkz */
   0x0, /*  */
-/* Table16159 */
+/* Table16161 */
   0x276e, /* VPERMPSZ256rmbkz */
   0x0, /*  */
-/* Table16161 */
+/* Table16163 */
   0x2051, /* VPABSDZ256rmbkz */
   0x0, /*  */
-/* Table16163 */
+/* Table16165 */
   0x20d6, /* VPACKUSDWZ256rmbkz */
   0x0, /*  */
-/* Table16165 */
+/* Table16167 */
   0x38f5, /* VSCALEFPSZ256rmbkz */
   0x3904, /* VSCALEFPSZrrbkz */
-/* Table16167 */
+/* Table16169 */
   0x2618, /* VPERMDZ256rmbkz */
   0x0, /*  */
-/* Table16169 */
+/* Table16171 */
   0x2aa3, /* VPMINSDZ256rmbkz */
   0x0, /*  */
-/* Table16171 */
+/* Table16173 */
   0x2b09, /* VPMINUDZ256rmbkz */
   0x0, /*  */
-/* Table16173 */
+/* Table16175 */
   0x29d7, /* VPMAXSDZ256rmbkz */
   0x0, /*  */
-/* Table16175 */
+/* Table16177 */
   0x2a3d, /* VPMAXUDZ256rmbkz */
   0x0, /*  */
-/* Table16177 */
+/* Table16179 */
   0x2dea, /* VPMULLDZ256rmbkz */
   0x0, /*  */
-/* Table16179 */
+/* Table16181 */
   0x1aba, /* VGETEXPPSZ256mbkz */
   0x1ac9, /* VGETEXPPSZrbkz */
-/* Table16181 */
+/* Table16183 */
   0x2907, /* VPLZCNTDZ256rmbkz */
   0x0, /*  */
-/* Table16183 */
+/* Table16185 */
   0x33f7, /* VPSRLVDZ256rmbkz */
   0x0, /*  */
-/* Table16185 */
+/* Table16187 */
   0x3313, /* VPSRAVDZ256rmbkz */
   0x0, /*  */
-/* Table16187 */
+/* Table16189 */
   0x3239, /* VPSLLVDZ256rmbkz */
   0x0, /*  */
-/* Table16189 */
+/* Table16191 */
   0x375a, /* VRCP14PSZ256mbkz */
   0x0, /*  */
-/* Table16191 */
+/* Table16193 */
   0x387e, /* VRSQRT14PSZ256mbkz */
   0x0, /*  */
-/* Table16193 */
+/* Table16195 */
   0x25b8, /* VPDPBUSDZ256mbkz */
   0x0, /*  */
-/* Table16195 */
+/* Table16197 */
   0x259d, /* VPDPBUSDSZ256mbkz */
   0x0, /*  */
-/* Table16197 */
+/* Table16199 */
   0x25ee, /* VPDPWSSDZ256mbkz */
   0x0, /*  */
-/* Table16199 */
+/* Table16201 */
   0x25d3, /* VPDPWSSDSZ256mbkz */
   0x0, /*  */
-/* Table16201 */
+/* Table16203 */
   0x2e84, /* VPOPCNTDZ256rmbkz */
   0x0, /*  */
-/* Table16203 */
+/* Table16205 */
   0x2297, /* VPBLENDMDZ256rmbkz */
   0x0, /*  */
-/* Table16205 */
+/* Table16207 */
   0xcc7, /* VBLENDMPSZ256rmbkz */
   0x0, /*  */
-/* Table16207 */
+/* Table16209 */
   0x305a, /* VPSHLDVDZ256mbkz */
   0x0, /*  */
-/* Table16209 */
+/* Table16211 */
   0x30f6, /* VPSHRDVDZ256mbkz */
   0x0, /*  */
-/* Table16211 */
+/* Table16213 */
   0x2645, /* VPERMI2D256rmbkz */
   0x0, /*  */
-/* Table16213 */
+/* Table16215 */
   0x267b, /* VPERMI2PS256rmbkz */
   0x0, /*  */
-/* Table16215 */
+/* Table16217 */
   0x27c1, /* VPERMT2D256rmbkz */
   0x0, /*  */
-/* Table16217 */
+/* Table16219 */
   0x27f7, /* VPERMT2PS256rmbkz */
   0x0, /*  */
-/* Table16219 */
+/* Table16221 */
   0x14d0, /* VFMADDSUB132PSZ256mbkz */
   0x14df, /* VFMADDSUB132PSZrbkz */
-/* Table16221 */
+/* Table16223 */
   0x16d8, /* VFMSUBADD132PSZ256mbkz */
   0x16e7, /* VFMSUBADD132PSZrbkz */
-/* Table16223 */
+/* Table16225 */
   0x1384, /* VFMADD132PSZ256mbkz */
   0x1393, /* VFMADD132PSZrbkz */
-/* Table16225 */
+/* Table16227 */
   0x15ac, /* VFMSUB132PSZ256mbkz */
   0x15bb, /* VFMSUB132PSZrbkz */
-/* Table16227 */
+/* Table16229 */
   0x17d4, /* VFNMADD132PSZ256mbkz */
   0x17e3, /* VFNMADD132PSZrbkz */
-/* Table16229 */
+/* Table16231 */
   0x1920, /* VFNMSUB132PSZ256mbkz */
   0x192f, /* VFNMSUB132PSZrbkz */
-/* Table16231 */
+/* Table16233 */
   0x1514, /* VFMADDSUB213PSZ256mbkz */
   0x1523, /* VFMADDSUB213PSZrbkz */
-/* Table16233 */
+/* Table16235 */
   0x171c, /* VFMSUBADD213PSZ256mbkz */
   0x172b, /* VFMSUBADD213PSZrbkz */
-/* Table16235 */
+/* Table16237 */
   0x13e8, /* VFMADD213PSZ256mbkz */
   0x13f7, /* VFMADD213PSZrbkz */
-/* Table16237 */
+/* Table16239 */
   0x1610, /* VFMSUB213PSZ256mbkz */
   0x161f, /* VFMSUB213PSZrbkz */
-/* Table16239 */
+/* Table16241 */
   0x1838, /* VFNMADD213PSZ256mbkz */
   0x1847, /* VFNMADD213PSZrbkz */
-/* Table16241 */
+/* Table16243 */
   0x1984, /* VFNMSUB213PSZ256mbkz */
   0x1993, /* VFNMSUB213PSZrbkz */
-/* Table16243 */
+/* Table16245 */
   0x1558, /* VFMADDSUB231PSZ256mbkz */
   0x1567, /* VFMADDSUB231PSZrbkz */
-/* Table16245 */
+/* Table16247 */
   0x1760, /* VFMSUBADD231PSZ256mbkz */
   0x176f, /* VFMSUBADD231PSZrbkz */
-/* Table16247 */
+/* Table16249 */
   0x144c, /* VFMADD231PSZ256mbkz */
   0x145b, /* VFMADD231PSZrbkz */
-/* Table16249 */
+/* Table16251 */
   0x1674, /* VFMSUB231PSZ256mbkz */
   0x1683, /* VFMSUB231PSZrbkz */
-/* Table16251 */
+/* Table16253 */
   0x189c, /* VFNMADD231PSZ256mbkz */
   0x18ab, /* VFNMADD231PSZrbkz */
-/* Table16253 */
+/* Table16255 */
   0x19e8, /* VFNMSUB231PSZ256mbkz */
   0x19f7, /* VFNMSUB231PSZrbkz */
-/* Table16255 */
+/* Table16257 */
   0x2567, /* VPCONFLICTDZ256rmbkz */
   0x0, /*  */
-/* Table16257 */
+/* Table16259 */
   0x26e9, /* VPERMILPDZ256rmbkz */
   0x0, /*  */
-/* Table16259 */
+/* Table16261 */
   0x2fc7, /* VPRORVQZ256rmbkz */
   0x0, /*  */
-/* Table16261 */
+/* Table16263 */
   0x2f5b, /* VPROLVQZ256rmbkz */
   0x0, /*  */
-/* Table16263 */
+/* Table16265 */
   0x2751, /* VPERMPDZ256rmbkz */
   0x0, /*  */
-/* Table16265 */
+/* Table16267 */
   0x206e, /* VPABSQZ256rmbkz */
   0x0, /*  */
-/* Table16267 */
+/* Table16269 */
   0x2d89, /* VPMULDQZ256rmbkz */
   0x0, /*  */
-/* Table16269 */
+/* Table16271 */
   0x38d7, /* VSCALEFPDZ256rmbkz */
   0x38e6, /* VSCALEFPDZrrbkz */
-/* Table16271 */
+/* Table16273 */
   0x278b, /* VPERMQZ256rmbkz */
   0x0, /*  */
-/* Table16273 */
+/* Table16275 */
   0x2ac0, /* VPMINSQZ256rmbkz */
   0x0, /*  */
-/* Table16275 */
+/* Table16277 */
   0x2b26, /* VPMINUQZ256rmbkz */
   0x0, /*  */
-/* Table16277 */
+/* Table16279 */
   0x29f4, /* VPMAXSQZ256rmbkz */
   0x0, /*  */
-/* Table16279 */
+/* Table16281 */
   0x2a5a, /* VPMAXUQZ256rmbkz */
   0x0, /*  */
-/* Table16281 */
+/* Table16283 */
   0x2e07, /* VPMULLQZ256rmbkz */
   0x0, /*  */
-/* Table16283 */
+/* Table16285 */
   0x1a9c, /* VGETEXPPDZ256mbkz */
   0x1aab, /* VGETEXPPDZrbkz */
-/* Table16285 */
+/* Table16287 */
   0x2922, /* VPLZCNTQZ256rmbkz */
   0x0, /*  */
-/* Table16287 */
+/* Table16289 */
   0x3416, /* VPSRLVQZ256rmbkz */
   0x0, /*  */
-/* Table16289 */
+/* Table16291 */
   0x3330, /* VPSRAVQZ256rmbkz */
   0x0, /*  */
-/* Table16291 */
+/* Table16293 */
   0x3258, /* VPSLLVQZ256rmbkz */
   0x0, /*  */
-/* Table16293 */
+/* Table16295 */
   0x373f, /* VRCP14PDZ256mbkz */
   0x0, /*  */
-/* Table16295 */
+/* Table16297 */
   0x3863, /* VRSQRT14PDZ256mbkz */
   0x0, /*  */
-/* Table16297 */
+/* Table16299 */
   0x2e9f, /* VPOPCNTQZ256rmbkz */
   0x0, /*  */
-/* Table16299 */
+/* Table16301 */
   0x22b2, /* VPBLENDMQZ256rmbkz */
   0x0, /*  */
-/* Table16301 */
+/* Table16303 */
   0xcac, /* VBLENDMPDZ256rmbkz */
   0x0, /*  */
-/* Table16303 */
+/* Table16305 */
   0x3075, /* VPSHLDVQZ256mbkz */
   0x0, /*  */
-/* Table16305 */
+/* Table16307 */
   0x3111, /* VPSHRDVQZ256mbkz */
   0x0, /*  */
-/* Table16307 */
+/* Table16309 */
   0x2696, /* VPERMI2Q256rmbkz */
   0x0, /*  */
-/* Table16309 */
+/* Table16311 */
   0x2660, /* VPERMI2PD256rmbkz */
   0x0, /*  */
-/* Table16311 */
+/* Table16313 */
   0x2812, /* VPERMT2Q256rmbkz */
   0x0, /*  */
-/* Table16313 */
+/* Table16315 */
   0x27dc, /* VPERMT2PD256rmbkz */
   0x0, /*  */
-/* Table16315 */
+/* Table16317 */
   0x2e38, /* VPMULTISHIFTQBZ256rmbkz */
   0x0, /*  */
-/* Table16317 */
+/* Table16319 */
   0x14ae, /* VFMADDSUB132PDZ256mbkz */
   0x14bd, /* VFMADDSUB132PDZrbkz */
-/* Table16319 */
+/* Table16321 */
   0x16b6, /* VFMSUBADD132PDZ256mbkz */
   0x16c5, /* VFMSUBADD132PDZrbkz */
-/* Table16321 */
+/* Table16323 */
   0x1362, /* VFMADD132PDZ256mbkz */
   0x1371, /* VFMADD132PDZrbkz */
-/* Table16323 */
+/* Table16325 */
   0x158a, /* VFMSUB132PDZ256mbkz */
   0x1599, /* VFMSUB132PDZrbkz */
-/* Table16325 */
+/* Table16327 */
   0x17b2, /* VFNMADD132PDZ256mbkz */
   0x17c1, /* VFNMADD132PDZrbkz */
-/* Table16327 */
+/* Table16329 */
   0x18fe, /* VFNMSUB132PDZ256mbkz */
   0x190d, /* VFNMSUB132PDZrbkz */
-/* Table16329 */
+/* Table16331 */
   0x14f2, /* VFMADDSUB213PDZ256mbkz */
   0x1501, /* VFMADDSUB213PDZrbkz */
-/* Table16331 */
+/* Table16333 */
   0x16fa, /* VFMSUBADD213PDZ256mbkz */
   0x1709, /* VFMSUBADD213PDZrbkz */
-/* Table16333 */
+/* Table16335 */
   0x13c6, /* VFMADD213PDZ256mbkz */
   0x13d5, /* VFMADD213PDZrbkz */
-/* Table16335 */
+/* Table16337 */
   0x15ee, /* VFMSUB213PDZ256mbkz */
   0x15fd, /* VFMSUB213PDZrbkz */
-/* Table16337 */
+/* Table16339 */
   0x1816, /* VFNMADD213PDZ256mbkz */
   0x1825, /* VFNMADD213PDZrbkz */
-/* Table16339 */
+/* Table16341 */
   0x1962, /* VFNMSUB213PDZ256mbkz */
   0x1971, /* VFNMSUB213PDZrbkz */
-/* Table16341 */
+/* Table16343 */
   0x2970, /* VPMADD52LUQZ256mbkz */
   0x0, /*  */
-/* Table16343 */
+/* Table16345 */
   0x2955, /* VPMADD52HUQZ256mbkz */
   0x0, /*  */
-/* Table16345 */
+/* Table16347 */
   0x1536, /* VFMADDSUB231PDZ256mbkz */
   0x1545, /* VFMADDSUB231PDZrbkz */
-/* Table16347 */
+/* Table16349 */
   0x173e, /* VFMSUBADD231PDZ256mbkz */
   0x174d, /* VFMSUBADD231PDZrbkz */
-/* Table16349 */
+/* Table16351 */
   0x142a, /* VFMADD231PDZ256mbkz */
   0x1439, /* VFMADD231PDZrbkz */
-/* Table16351 */
+/* Table16353 */
   0x1652, /* VFMSUB231PDZ256mbkz */
   0x1661, /* VFMSUB231PDZrbkz */
-/* Table16353 */
+/* Table16355 */
   0x187a, /* VFNMADD231PDZ256mbkz */
   0x1889, /* VFNMADD231PDZrbkz */
-/* Table16355 */
+/* Table16357 */
   0x19c6, /* VFNMSUB231PDZ256mbkz */
   0x19d5, /* VFNMSUB231PDZrbkz */
-/* Table16357 */
+/* Table16359 */
   0x2582, /* VPCONFLICTQZ256rmbkz */
   0x0, /*  */
-/* Table16359 */
+/* Table16361 */
   0x2739, /* VPERMILPSZrmbkz */
   0x0, /*  */
-/* Table16361 */
+/* Table16363 */
   0x2fb5, /* VPRORVDZrmbkz */
   0x0, /*  */
-/* Table16363 */
+/* Table16365 */
   0x2f49, /* VPROLVDZrmbkz */
   0x0, /*  */
-/* Table16365 */
+/* Table16367 */
   0x2777, /* VPERMPSZrmbkz */
   0x0, /*  */
-/* Table16367 */
+/* Table16369 */
   0x205a, /* VPABSDZrmbkz */
   0x0, /*  */
-/* Table16369 */
+/* Table16371 */
   0x20df, /* VPACKUSDWZrmbkz */
   0x0, /*  */
-/* Table16371 */
+/* Table16373 */
   0x38fe, /* VSCALEFPSZrmbkz */
   0x3904, /* VSCALEFPSZrrbkz */
-/* Table16373 */
+/* Table16375 */
   0x2621, /* VPERMDZrmbkz */
   0x0, /*  */
-/* Table16375 */
+/* Table16377 */
   0x2aac, /* VPMINSDZrmbkz */
   0x0, /*  */
-/* Table16377 */
+/* Table16379 */
   0x2b12, /* VPMINUDZrmbkz */
   0x0, /*  */
-/* Table16379 */
+/* Table16381 */
   0x29e0, /* VPMAXSDZrmbkz */
   0x0, /*  */
-/* Table16381 */
+/* Table16383 */
   0x2a46, /* VPMAXUDZrmbkz */
   0x0, /*  */
-/* Table16383 */
+/* Table16385 */
   0x2df3, /* VPMULLDZrmbkz */
   0x0, /*  */
-/* Table16385 */
+/* Table16387 */
   0x1ac3, /* VGETEXPPSZmbkz */
   0x1ac9, /* VGETEXPPSZrbkz */
-/* Table16387 */
+/* Table16389 */
   0x2910, /* VPLZCNTDZrmbkz */
   0x0, /*  */
-/* Table16389 */
+/* Table16391 */
   0x3400, /* VPSRLVDZrmbkz */
   0x0, /*  */
-/* Table16391 */
+/* Table16393 */
   0x331c, /* VPSRAVDZrmbkz */
   0x0, /*  */
-/* Table16393 */
+/* Table16395 */
   0x3242, /* VPSLLVDZrmbkz */
   0x0, /*  */
-/* Table16395 */
+/* Table16397 */
   0x3763, /* VRCP14PSZmbkz */
   0x0, /*  */
-/* Table16397 */
+/* Table16399 */
   0x3887, /* VRSQRT14PSZmbkz */
   0x0, /*  */
-/* Table16399 */
+/* Table16401 */
   0x25c1, /* VPDPBUSDZmbkz */
   0x0, /*  */
-/* Table16401 */
+/* Table16403 */
   0x25a6, /* VPDPBUSDSZmbkz */
   0x0, /*  */
-/* Table16403 */
+/* Table16405 */
   0x25f7, /* VPDPWSSDZmbkz */
   0x0, /*  */
-/* Table16405 */
+/* Table16407 */
   0x25dc, /* VPDPWSSDSZmbkz */
   0x0, /*  */
-/* Table16407 */
+/* Table16409 */
   0x2e8d, /* VPOPCNTDZrmbkz */
   0x0, /*  */
-/* Table16409 */
+/* Table16411 */
   0x22a0, /* VPBLENDMDZrmbkz */
   0x0, /*  */
-/* Table16411 */
+/* Table16413 */
   0xcd0, /* VBLENDMPSZrmbkz */
   0x0, /*  */
-/* Table16413 */
+/* Table16415 */
   0x3063, /* VPSHLDVDZmbkz */
   0x0, /*  */
-/* Table16415 */
+/* Table16417 */
   0x30ff, /* VPSHRDVDZmbkz */
   0x0, /*  */
-/* Table16417 */
+/* Table16419 */
   0x264e, /* VPERMI2Drmbkz */
   0x0, /*  */
-/* Table16419 */
+/* Table16421 */
   0x2684, /* VPERMI2PSrmbkz */
   0x0, /*  */
-/* Table16421 */
+/* Table16423 */
   0x27ca, /* VPERMT2Drmbkz */
   0x0, /*  */
-/* Table16423 */
+/* Table16425 */
   0x2800, /* VPERMT2PSrmbkz */
   0x0, /*  */
-/* Table16425 */
+/* Table16427 */
   0x14d9, /* VFMADDSUB132PSZmbkz */
   0x14df, /* VFMADDSUB132PSZrbkz */
-/* Table16427 */
+/* Table16429 */
   0x16e1, /* VFMSUBADD132PSZmbkz */
   0x16e7, /* VFMSUBADD132PSZrbkz */
-/* Table16429 */
+/* Table16431 */
   0x138d, /* VFMADD132PSZmbkz */
   0x1393, /* VFMADD132PSZrbkz */
-/* Table16431 */
+/* Table16433 */
   0x15b5, /* VFMSUB132PSZmbkz */
   0x15bb, /* VFMSUB132PSZrbkz */
-/* Table16433 */
+/* Table16435 */
   0x17dd, /* VFNMADD132PSZmbkz */
   0x17e3, /* VFNMADD132PSZrbkz */
-/* Table16435 */
+/* Table16437 */
   0x1929, /* VFNMSUB132PSZmbkz */
   0x192f, /* VFNMSUB132PSZrbkz */
-/* Table16437 */
+/* Table16439 */
   0x151d, /* VFMADDSUB213PSZmbkz */
   0x1523, /* VFMADDSUB213PSZrbkz */
-/* Table16439 */
+/* Table16441 */
   0x1725, /* VFMSUBADD213PSZmbkz */
   0x172b, /* VFMSUBADD213PSZrbkz */
-/* Table16441 */
+/* Table16443 */
   0x13f1, /* VFMADD213PSZmbkz */
   0x13f7, /* VFMADD213PSZrbkz */
-/* Table16443 */
+/* Table16445 */
   0x1619, /* VFMSUB213PSZmbkz */
   0x161f, /* VFMSUB213PSZrbkz */
-/* Table16445 */
+/* Table16447 */
   0x1841, /* VFNMADD213PSZmbkz */
   0x1847, /* VFNMADD213PSZrbkz */
-/* Table16447 */
+/* Table16449 */
   0x198d, /* VFNMSUB213PSZmbkz */
   0x1993, /* VFNMSUB213PSZrbkz */
-/* Table16449 */
+/* Table16451 */
   0x1561, /* VFMADDSUB231PSZmbkz */
   0x1567, /* VFMADDSUB231PSZrbkz */
-/* Table16451 */
+/* Table16453 */
   0x1769, /* VFMSUBADD231PSZmbkz */
   0x176f, /* VFMSUBADD231PSZrbkz */
-/* Table16453 */
+/* Table16455 */
   0x1455, /* VFMADD231PSZmbkz */
   0x145b, /* VFMADD231PSZrbkz */
-/* Table16455 */
+/* Table16457 */
   0x167d, /* VFMSUB231PSZmbkz */
   0x1683, /* VFMSUB231PSZrbkz */
-/* Table16457 */
+/* Table16459 */
   0x18a5, /* VFNMADD231PSZmbkz */
   0x18ab, /* VFNMADD231PSZrbkz */
-/* Table16459 */
+/* Table16461 */
   0x19f1, /* VFNMSUB231PSZmbkz */
   0x19f7, /* VFNMSUB231PSZrbkz */
-/* Table16461 */
+/* Table16463 */
   0x2570, /* VPCONFLICTDZrmbkz */
   0x0, /*  */
-/* Table16463 */
+/* Table16465 */
   0x1295, /* VEXP2PSZmbkz */
   0x129b, /* VEXP2PSZrbkz */
-/* Table16465 */
+/* Table16467 */
   0x3784, /* VRCP28PSZmbkz */
   0x378a, /* VRCP28PSZrbkz */
-/* Table16467 */
+/* Table16469 */
   0x38a8, /* VRSQRT28PSZmbkz */
   0x38ae, /* VRSQRT28PSZrbkz */
-/* Table16469 */
+/* Table16471 */
   0x26fb, /* VPERMILPDZrmbkz */
   0x0, /*  */
-/* Table16471 */
+/* Table16473 */
   0x2fd0, /* VPRORVQZrmbkz */
   0x0, /*  */
-/* Table16473 */
+/* Table16475 */
   0x2f64, /* VPROLVQZrmbkz */
   0x0, /*  */
-/* Table16475 */
+/* Table16477 */
   0x2763, /* VPERMPDZrmbkz */
   0x0, /*  */
-/* Table16477 */
+/* Table16479 */
   0x2077, /* VPABSQZrmbkz */
   0x0, /*  */
-/* Table16479 */
+/* Table16481 */
   0x2d92, /* VPMULDQZrmbkz */
   0x0, /*  */
-/* Table16481 */
+/* Table16483 */
   0x38e0, /* VSCALEFPDZrmbkz */
   0x38e6, /* VSCALEFPDZrrbkz */
-/* Table16483 */
+/* Table16485 */
   0x279d, /* VPERMQZrmbkz */
   0x0, /*  */
-/* Table16485 */
+/* Table16487 */
   0x2ac9, /* VPMINSQZrmbkz */
   0x0, /*  */
-/* Table16487 */
+/* Table16489 */
   0x2b2f, /* VPMINUQZrmbkz */
   0x0, /*  */
-/* Table16489 */
+/* Table16491 */
   0x29fd, /* VPMAXSQZrmbkz */
   0x0, /*  */
-/* Table16491 */
+/* Table16493 */
   0x2a63, /* VPMAXUQZrmbkz */
   0x0, /*  */
-/* Table16493 */
+/* Table16495 */
   0x2e10, /* VPMULLQZrmbkz */
   0x0, /*  */
-/* Table16495 */
+/* Table16497 */
   0x1aa5, /* VGETEXPPDZmbkz */
   0x1aab, /* VGETEXPPDZrbkz */
-/* Table16497 */
+/* Table16499 */
   0x292b, /* VPLZCNTQZrmbkz */
   0x0, /*  */
-/* Table16499 */
+/* Table16501 */
   0x341f, /* VPSRLVQZrmbkz */
   0x0, /*  */
-/* Table16501 */
+/* Table16503 */
   0x3339, /* VPSRAVQZrmbkz */
   0x0, /*  */
-/* Table16503 */
+/* Table16505 */
   0x3261, /* VPSLLVQZrmbkz */
   0x0, /*  */
-/* Table16505 */
+/* Table16507 */
   0x3748, /* VRCP14PDZmbkz */
   0x0, /*  */
-/* Table16507 */
+/* Table16509 */
   0x386c, /* VRSQRT14PDZmbkz */
   0x0, /*  */
-/* Table16509 */
+/* Table16511 */
   0x2ea8, /* VPOPCNTQZrmbkz */
   0x0, /*  */
-/* Table16511 */
+/* Table16513 */
   0x22bb, /* VPBLENDMQZrmbkz */
   0x0, /*  */
-/* Table16513 */
+/* Table16515 */
   0xcb5, /* VBLENDMPDZrmbkz */
   0x0, /*  */
-/* Table16515 */
+/* Table16517 */
   0x307e, /* VPSHLDVQZmbkz */
   0x0, /*  */
-/* Table16517 */
+/* Table16519 */
   0x311a, /* VPSHRDVQZmbkz */
   0x0, /*  */
-/* Table16519 */
+/* Table16521 */
   0x269f, /* VPERMI2Qrmbkz */
   0x0, /*  */
-/* Table16521 */
+/* Table16523 */
   0x2669, /* VPERMI2PDrmbkz */
   0x0, /*  */
-/* Table16523 */
+/* Table16525 */
   0x281b, /* VPERMT2Qrmbkz */
   0x0, /*  */
-/* Table16525 */
+/* Table16527 */
   0x27e5, /* VPERMT2PDrmbkz */
   0x0, /*  */
-/* Table16527 */
+/* Table16529 */
   0x2e41, /* VPMULTISHIFTQBZrmbkz */
   0x0, /*  */
-/* Table16529 */
+/* Table16531 */
   0x14b7, /* VFMADDSUB132PDZmbkz */
   0x14bd, /* VFMADDSUB132PDZrbkz */
-/* Table16531 */
+/* Table16533 */
   0x16bf, /* VFMSUBADD132PDZmbkz */
   0x16c5, /* VFMSUBADD132PDZrbkz */
-/* Table16533 */
+/* Table16535 */
   0x136b, /* VFMADD132PDZmbkz */
   0x1371, /* VFMADD132PDZrbkz */
-/* Table16535 */
+/* Table16537 */
   0x1593, /* VFMSUB132PDZmbkz */
   0x1599, /* VFMSUB132PDZrbkz */
-/* Table16537 */
+/* Table16539 */
   0x17bb, /* VFNMADD132PDZmbkz */
   0x17c1, /* VFNMADD132PDZrbkz */
-/* Table16539 */
+/* Table16541 */
   0x1907, /* VFNMSUB132PDZmbkz */
   0x190d, /* VFNMSUB132PDZrbkz */
-/* Table16541 */
+/* Table16543 */
   0x14fb, /* VFMADDSUB213PDZmbkz */
   0x1501, /* VFMADDSUB213PDZrbkz */
-/* Table16543 */
+/* Table16545 */
   0x1703, /* VFMSUBADD213PDZmbkz */
   0x1709, /* VFMSUBADD213PDZrbkz */
-/* Table16545 */
+/* Table16547 */
   0x13cf, /* VFMADD213PDZmbkz */
   0x13d5, /* VFMADD213PDZrbkz */
-/* Table16547 */
+/* Table16549 */
   0x15f7, /* VFMSUB213PDZmbkz */
   0x15fd, /* VFMSUB213PDZrbkz */
-/* Table16549 */
+/* Table16551 */
   0x181f, /* VFNMADD213PDZmbkz */
   0x1825, /* VFNMADD213PDZrbkz */
-/* Table16551 */
+/* Table16553 */
   0x196b, /* VFNMSUB213PDZmbkz */
   0x1971, /* VFNMSUB213PDZrbkz */
-/* Table16553 */
+/* Table16555 */
   0x2979, /* VPMADD52LUQZmbkz */
   0x0, /*  */
-/* Table16555 */
+/* Table16557 */
   0x295e, /* VPMADD52HUQZmbkz */
   0x0, /*  */
-/* Table16557 */
+/* Table16559 */
   0x153f, /* VFMADDSUB231PDZmbkz */
   0x1545, /* VFMADDSUB231PDZrbkz */
-/* Table16559 */
+/* Table16561 */
   0x1747, /* VFMSUBADD231PDZmbkz */
   0x174d, /* VFMSUBADD231PDZrbkz */
-/* Table16561 */
+/* Table16563 */
   0x1433, /* VFMADD231PDZmbkz */
   0x1439, /* VFMADD231PDZrbkz */
-/* Table16563 */
+/* Table16565 */
   0x165b, /* VFMSUB231PDZmbkz */
   0x1661, /* VFMSUB231PDZrbkz */
-/* Table16565 */
+/* Table16567 */
   0x1883, /* VFNMADD231PDZmbkz */
   0x1889, /* VFNMADD231PDZrbkz */
-/* Table16567 */
+/* Table16569 */
   0x19cf, /* VFNMSUB231PDZmbkz */
   0x19d5, /* VFNMSUB231PDZrbkz */
-/* Table16569 */
+/* Table16571 */
   0x258b, /* VPCONFLICTQZrmbkz */
   0x0, /*  */
-/* Table16571 */
+/* Table16573 */
   0x1289, /* VEXP2PDZmbkz */
   0x128f, /* VEXP2PDZrbkz */
-/* Table16573 */
+/* Table16575 */
   0x3778, /* VRCP28PDZmbkz */
   0x377e, /* VRCP28PDZrbkz */
-/* Table16575 */
+/* Table16577 */
   0x389c, /* VRSQRT28PDZmbkz */
   0x38a2, /* VRSQRT28PDZrbkz */
-/* Table16577 */
-  0x0, /*  */
-  0x2cda, /* VPMOVUSWBZ128rrkz */
 /* Table16579 */
   0x0, /*  */
-  0x2c8f, /* VPMOVUSDBZ128rrkz */
+  0x2cda, /* VPMOVUSWBZ128rrkz */
 /* Table16581 */
   0x0, /*  */
-  0x2cad, /* VPMOVUSQBZ128rrkz */
+  0x2c8f, /* VPMOVUSDBZ128rrkz */
 /* Table16583 */
   0x0, /*  */
-  0x2c9e, /* VPMOVUSDWZ128rrkz */
+  0x2cad, /* VPMOVUSQBZ128rrkz */
 /* Table16585 */
   0x0, /*  */
-  0x2ccb, /* VPMOVUSQWZ128rrkz */
+  0x2c9e, /* VPMOVUSDWZ128rrkz */
 /* Table16587 */
   0x0, /*  */
-  0x2cbc, /* VPMOVUSQDZ128rrkz */
+  0x2ccb, /* VPMOVUSQWZ128rrkz */
 /* Table16589 */
   0x0, /*  */
-  0x2bfc, /* VPMOVSWBZ128rrkz */
+  0x2cbc, /* VPMOVUSQDZ128rrkz */
 /* Table16591 */
   0x0, /*  */
-  0x2bb1, /* VPMOVSDBZ128rrkz */
+  0x2bfc, /* VPMOVSWBZ128rrkz */
 /* Table16593 */
   0x0, /*  */
-  0x2bcf, /* VPMOVSQBZ128rrkz */
+  0x2bb1, /* VPMOVSDBZ128rrkz */
 /* Table16595 */
   0x0, /*  */
-  0x2bc0, /* VPMOVSDWZ128rrkz */
+  0x2bcf, /* VPMOVSQBZ128rrkz */
 /* Table16597 */
   0x0, /*  */
-  0x2bed, /* VPMOVSQWZ128rrkz */
+  0x2bc0, /* VPMOVSDWZ128rrkz */
 /* Table16599 */
   0x0, /*  */
-  0x2bde, /* VPMOVSQDZ128rrkz */
+  0x2bed, /* VPMOVSQWZ128rrkz */
 /* Table16601 */
   0x0, /*  */
-  0x2cec, /* VPMOVWBZ128rrkz */
+  0x2bde, /* VPMOVSQDZ128rrkz */
 /* Table16603 */
   0x0, /*  */
-  0x2b55, /* VPMOVDBZ128rrkz */
+  0x2cec, /* VPMOVWBZ128rrkz */
 /* Table16605 */
   0x0, /*  */
-  0x2b84, /* VPMOVQBZ128rrkz */
+  0x2b55, /* VPMOVDBZ128rrkz */
 /* Table16607 */
   0x0, /*  */
-  0x2b64, /* VPMOVDWZ128rrkz */
+  0x2b84, /* VPMOVQBZ128rrkz */
 /* Table16609 */
   0x0, /*  */
-  0x2ba2, /* VPMOVQWZ128rrkz */
+  0x2b64, /* VPMOVDWZ128rrkz */
 /* Table16611 */
   0x0, /*  */
-  0x2b93, /* VPMOVQDZ128rrkz */
+  0x2ba2, /* VPMOVQWZ128rrkz */
 /* Table16613 */
+  0x0, /*  */
+  0x2b93, /* VPMOVQDZ128rrkz */
+/* Table16615 */
   0xb51, /* V4FMADDSSrmkz */
   0x0, /*  */
-/* Table16615 */
+/* Table16617 */
   0xb57, /* V4FNMADDSSrmkz */
   0x0, /*  */
-/* Table16617 */
+/* Table16619 */
   0x3154, /* VPSHUFBZ128rmkz */
   0x3157, /* VPSHUFBZ128rrkz */
-/* Table16619 */
+/* Table16621 */
   0x2983, /* VPMADDUBSWZ128rmkz */
   0x2986, /* VPMADDUBSWZ128rrkz */
-/* Table16621 */
+/* Table16623 */
   0x2d9e, /* VPMULHRSWZ128rmkz */
   0x2da1, /* VPMULHRSWZ128rrkz */
-/* Table16623 */
+/* Table16625 */
   0x2717, /* VPERMILPSZ128rmkz */
   0x271a, /* VPERMILPSZ128rrkz */
-/* Table16625 */
+/* Table16627 */
   0xee9, /* VCVTPH2PSZ128rmkz */
   0xeec, /* VCVTPH2PSZ128rrkz */
-/* Table16627 */
+/* Table16629 */
   0x2fa5, /* VPRORVDZ128rmkz */
   0x2fa8, /* VPRORVDZ128rrkz */
-/* Table16629 */
+/* Table16631 */
   0x2f39, /* VPROLVDZ128rmkz */
   0x2f3c, /* VPROLVDZ128rrkz */
-/* Table16631 */
+/* Table16633 */
   0xd3c, /* VBROADCASTSSZ128mkz */
   0xd3f, /* VBROADCASTSSZ128rkz */
-/* Table16633 */
+/* Table16635 */
   0x2031, /* VPABSBZ128rmkz */
   0x2034, /* VPABSBZ128rrkz */
-/* Table16635 */
+/* Table16637 */
   0x2081, /* VPABSWZ128rmkz */
   0x2084, /* VPABSWZ128rrkz */
-/* Table16637 */
+/* Table16639 */
   0x204a, /* VPABSDZ128rmkz */
   0x204d, /* VPABSDZ128rrkz */
-/* Table16639 */
+/* Table16641 */
   0x2c37, /* VPMOVSXBWZ128rmkz */
   0x2c3a, /* VPMOVSXBWZ128rrkz */
-/* Table16641 */
+/* Table16643 */
   0x2c0b, /* VPMOVSXBDZ128rmkz */
   0x2c0e, /* VPMOVSXBDZ128rrkz */
-/* Table16643 */
+/* Table16645 */
   0x2c21, /* VPMOVSXBQZ128rmkz */
   0x2c24, /* VPMOVSXBQZ128rrkz */
-/* Table16645 */
+/* Table16647 */
   0x2c63, /* VPMOVSXWDZ128rmkz */
   0x2c66, /* VPMOVSXWDZ128rrkz */
-/* Table16647 */
+/* Table16649 */
   0x2c79, /* VPMOVSXWQZ128rmkz */
   0x2c7c, /* VPMOVSXWQZ128rrkz */
-/* Table16649 */
+/* Table16651 */
   0x2c4d, /* VPMOVSXDQZ128rmkz */
   0x2c50, /* VPMOVSXDQZ128rrkz */
-/* Table16651 */
+/* Table16653 */
   0x20cf, /* VPACKUSDWZ128rmkz */
   0x20d2, /* VPACKUSDWZ128rrkz */
-/* Table16653 */
+/* Table16655 */
   0x38ee, /* VSCALEFPSZ128rmkz */
   0x38f1, /* VSCALEFPSZ128rrkz */
-/* Table16655 */
+/* Table16657 */
   0x3912, /* VSCALEFSSZrmkz */
   0x3918, /* VSCALEFSSZrrkz */
-/* Table16657 */
+/* Table16659 */
   0x2d27, /* VPMOVZXBWZ128rmkz */
   0x2d2a, /* VPMOVZXBWZ128rrkz */
-/* Table16659 */
+/* Table16661 */
   0x2cfb, /* VPMOVZXBDZ128rmkz */
   0x2cfe, /* VPMOVZXBDZ128rrkz */
-/* Table16661 */
+/* Table16663 */
   0x2d11, /* VPMOVZXBQZ128rmkz */
   0x2d14, /* VPMOVZXBQZ128rrkz */
-/* Table16663 */
+/* Table16665 */
   0x2d53, /* VPMOVZXWDZ128rmkz */
   0x2d56, /* VPMOVZXWDZ128rrkz */
-/* Table16665 */
+/* Table16667 */
   0x2d69, /* VPMOVZXWQZ128rmkz */
   0x2d6c, /* VPMOVZXWQZ128rrkz */
-/* Table16667 */
+/* Table16669 */
   0x2d3d, /* VPMOVZXDQZ128rmkz */
   0x2d40, /* VPMOVZXDQZ128rrkz */
-/* Table16669 */
+/* Table16671 */
   0x2a83, /* VPMINSBZ128rmkz */
   0x2a86, /* VPMINSBZ128rrkz */
-/* Table16671 */
+/* Table16673 */
   0x2a9c, /* VPMINSDZ128rmkz */
   0x2a9f, /* VPMINSDZ128rrkz */
-/* Table16673 */
+/* Table16675 */
   0x2b39, /* VPMINUWZ128rmkz */
   0x2b3c, /* VPMINUWZ128rrkz */
-/* Table16675 */
+/* Table16677 */
   0x2b02, /* VPMINUDZ128rmkz */
   0x2b05, /* VPMINUDZ128rrkz */
-/* Table16677 */
+/* Table16679 */
   0x29b7, /* VPMAXSBZ128rmkz */
   0x29ba, /* VPMAXSBZ128rrkz */
-/* Table16679 */
+/* Table16681 */
   0x29d0, /* VPMAXSDZ128rmkz */
   0x29d3, /* VPMAXSDZ128rrkz */
-/* Table16681 */
+/* Table16683 */
   0x2a6d, /* VPMAXUWZ128rmkz */
   0x2a70, /* VPMAXUWZ128rrkz */
-/* Table16683 */
+/* Table16685 */
   0x2a36, /* VPMAXUDZ128rmkz */
   0x2a39, /* VPMAXUDZ128rrkz */
-/* Table16685 */
+/* Table16687 */
   0x2de3, /* VPMULLDZ128rmkz */
   0x2de6, /* VPMULLDZ128rrkz */
-/* Table16687 */
+/* Table16689 */
   0x1ab3, /* VGETEXPPSZ128mkz */
   0x1ab6, /* VGETEXPPSZ128rkz */
-/* Table16689 */
+/* Table16691 */
   0x1ad7, /* VGETEXPSSZmkz */
   0x1add, /* VGETEXPSSZrkz */
-/* Table16691 */
+/* Table16693 */
   0x2900, /* VPLZCNTDZ128rmkz */
   0x2903, /* VPLZCNTDZ128rrkz */
-/* Table16693 */
+/* Table16695 */
   0x33f0, /* VPSRLVDZ128rmkz */
   0x33f3, /* VPSRLVDZ128rrkz */
-/* Table16695 */
+/* Table16697 */
   0x330c, /* VPSRAVDZ128rmkz */
   0x330f, /* VPSRAVDZ128rrkz */
-/* Table16697 */
+/* Table16699 */
   0x3232, /* VPSLLVDZ128rmkz */
   0x3235, /* VPSLLVDZ128rrkz */
-/* Table16699 */
+/* Table16701 */
   0x3753, /* VRCP14PSZ128mkz */
   0x3756, /* VRCP14PSZ128rkz */
-/* Table16701 */
+/* Table16703 */
   0x3771, /* VRCP14SSZrmkz */
   0x3774, /* VRCP14SSZrrkz */
-/* Table16703 */
+/* Table16705 */
   0x3877, /* VRSQRT14PSZ128mkz */
   0x387a, /* VRSQRT14PSZ128rkz */
-/* Table16705 */
+/* Table16707 */
   0x3895, /* VRSQRT14SSZrmkz */
   0x3898, /* VRSQRT14SSZrrkz */
-/* Table16707 */
+/* Table16709 */
   0x25b1, /* VPDPBUSDZ128mkz */
   0x25b4, /* VPDPBUSDZ128rkz */
-/* Table16709 */
+/* Table16711 */
   0x2596, /* VPDPBUSDSZ128mkz */
   0x2599, /* VPDPBUSDSZ128rkz */
-/* Table16711 */
+/* Table16713 */
   0x25e7, /* VPDPWSSDZ128mkz */
   0x25ea, /* VPDPWSSDZ128rkz */
-/* Table16713 */
+/* Table16715 */
   0x25cc, /* VPDPWSSDSZ128mkz */
   0x25cf, /* VPDPWSSDSZ128rkz */
-/* Table16715 */
+/* Table16717 */
   0x2e68, /* VPOPCNTBZ128rmkz */
   0x2e6b, /* VPOPCNTBZ128rrkz */
-/* Table16717 */
+/* Table16719 */
   0x2e7d, /* VPOPCNTDZ128rmkz */
   0x2e80, /* VPOPCNTDZ128rrkz */
-/* Table16719 */
+/* Table16721 */
   0x22fe, /* VPBROADCASTDZ128mkz */
   0x2301, /* VPBROADCASTDZ128rkz */
-/* Table16721 */
+/* Table16723 */
   0xd08, /* VBROADCASTI32X2Z128mkz */
   0xd0b, /* VBROADCASTI32X2Z128rkz */
-/* Table16723 */
+/* Table16725 */
   0x2847, /* VPEXPANDBZ128rmkz */
   0x284a, /* VPEXPANDBZ128rrkz */
-/* Table16725 */
+/* Table16727 */
   0x0, /*  */
   0x250b, /* VPCOMPRESSBZ128rrkz */
-/* Table16727 */
+/* Table16729 */
   0x2290, /* VPBLENDMDZ128rmkz */
   0x2293, /* VPBLENDMDZ128rrkz */
-/* Table16729 */
+/* Table16731 */
   0xcc0, /* VBLENDMPSZ128rmkz */
   0xcc3, /* VBLENDMPSZ128rrkz */
-/* Table16731 */
+/* Table16733 */
   0x227b, /* VPBLENDMBZ128rmkz */
   0x227e, /* VPBLENDMBZ128rrkz */
-/* Table16733 */
+/* Table16735 */
   0x3053, /* VPSHLDVDZ128mkz */
   0x3056, /* VPSHLDVDZ128rkz */
-/* Table16735 */
+/* Table16737 */
   0x30ef, /* VPSHRDVDZ128mkz */
   0x30f2, /* VPSHRDVDZ128rkz */
-/* Table16737 */
+/* Table16739 */
   0x2629, /* VPERMI2B128rmkz */
   0x262c, /* VPERMI2B128rrkz */
-/* Table16739 */
+/* Table16741 */
   0x263e, /* VPERMI2D128rmkz */
   0x2641, /* VPERMI2D128rrkz */
-/* Table16741 */
+/* Table16743 */
   0x2674, /* VPERMI2PS128rmkz */
   0x2677, /* VPERMI2PS128rrkz */
-/* Table16743 */
+/* Table16745 */
   0x22df, /* VPBROADCASTBZ128mkz */
   0x22e2, /* VPBROADCASTBZ128rkz */
-/* Table16745 */
+/* Table16747 */
   0x2342, /* VPBROADCASTWZ128mkz */
   0x2345, /* VPBROADCASTWZ128rkz */
-/* Table16747 */
-  0x0, /*  */
-  0x22f1, /* VPBROADCASTBrZ128rkz */
 /* Table16749 */
   0x0, /*  */
-  0x2354, /* VPBROADCASTWrZ128rkz */
+  0x22f1, /* VPBROADCASTBrZ128rkz */
 /* Table16751 */
   0x0, /*  */
-  0x2310, /* VPBROADCASTDrZ128rkz */
+  0x2354, /* VPBROADCASTWrZ128rkz */
 /* Table16753 */
+  0x0, /*  */
+  0x2310, /* VPBROADCASTDrZ128rkz */
+/* Table16755 */
   0x27a5, /* VPERMT2B128rmkz */
   0x27a8, /* VPERMT2B128rrkz */
-/* Table16755 */
+/* Table16757 */
   0x27ba, /* VPERMT2D128rmkz */
   0x27bd, /* VPERMT2D128rrkz */
-/* Table16757 */
+/* Table16759 */
   0x27f0, /* VPERMT2PS128rmkz */
   0x27f3, /* VPERMT2PS128rrkz */
-/* Table16759 */
+/* Table16761 */
   0x12b2, /* VEXPANDPSZ128rmkz */
   0x12b5, /* VEXPANDPSZ128rrkz */
-/* Table16761 */
+/* Table16763 */
   0x2859, /* VPEXPANDDZ128rmkz */
   0x285c, /* VPEXPANDDZ128rrkz */
-/* Table16763 */
-  0x0, /*  */
-  0xdfb, /* VCOMPRESSPSZ128rrkz */
 /* Table16765 */
   0x0, /*  */
-  0x251a, /* VPCOMPRESSDZ128rrkz */
+  0xdfb, /* VCOMPRESSPSZ128rrkz */
 /* Table16767 */
+  0x0, /*  */
+  0x251a, /* VPCOMPRESSDZ128rrkz */
+/* Table16769 */
   0x2603, /* VPERMBZ128rmkz */
   0x2606, /* VPERMBZ128rrkz */
-/* Table16769 */
+/* Table16771 */
   0x14c9, /* VFMADDSUB132PSZ128mkz */
   0x14cc, /* VFMADDSUB132PSZ128rkz */
-/* Table16771 */
+/* Table16773 */
   0x16d1, /* VFMSUBADD132PSZ128mkz */
   0x16d4, /* VFMSUBADD132PSZ128rkz */
-/* Table16773 */
+/* Table16775 */
   0x137d, /* VFMADD132PSZ128mkz */
   0x1380, /* VFMADD132PSZ128rkz */
-/* Table16775 */
+/* Table16777 */
   0x13ab, /* VFMADD132SSZm_Intkz */
   0x13af, /* VFMADD132SSZr_Intkz */
-/* Table16777 */
+/* Table16779 */
   0x15a5, /* VFMSUB132PSZ128mkz */
   0x15a8, /* VFMSUB132PSZ128rkz */
-/* Table16779 */
+/* Table16781 */
   0x15d3, /* VFMSUB132SSZm_Intkz */
   0x15d7, /* VFMSUB132SSZr_Intkz */
-/* Table16781 */
+/* Table16783 */
   0x17cd, /* VFNMADD132PSZ128mkz */
   0x17d0, /* VFNMADD132PSZ128rkz */
-/* Table16783 */
+/* Table16785 */
   0x17fb, /* VFNMADD132SSZm_Intkz */
   0x17ff, /* VFNMADD132SSZr_Intkz */
-/* Table16785 */
+/* Table16787 */
   0x1919, /* VFNMSUB132PSZ128mkz */
   0x191c, /* VFNMSUB132PSZ128rkz */
-/* Table16787 */
+/* Table16789 */
   0x1947, /* VFNMSUB132SSZm_Intkz */
   0x194b, /* VFNMSUB132SSZr_Intkz */
-/* Table16789 */
+/* Table16791 */
   0x150d, /* VFMADDSUB213PSZ128mkz */
   0x1510, /* VFMADDSUB213PSZ128rkz */
-/* Table16791 */
+/* Table16793 */
   0x1715, /* VFMSUBADD213PSZ128mkz */
   0x1718, /* VFMSUBADD213PSZ128rkz */
-/* Table16793 */
+/* Table16795 */
   0x13e1, /* VFMADD213PSZ128mkz */
   0x13e4, /* VFMADD213PSZ128rkz */
-/* Table16795 */
+/* Table16797 */
   0x140f, /* VFMADD213SSZm_Intkz */
   0x1413, /* VFMADD213SSZr_Intkz */
-/* Table16797 */
+/* Table16799 */
   0x1609, /* VFMSUB213PSZ128mkz */
   0x160c, /* VFMSUB213PSZ128rkz */
-/* Table16799 */
+/* Table16801 */
   0x1637, /* VFMSUB213SSZm_Intkz */
   0x163b, /* VFMSUB213SSZr_Intkz */
-/* Table16801 */
+/* Table16803 */
   0x1831, /* VFNMADD213PSZ128mkz */
   0x1834, /* VFNMADD213PSZ128rkz */
-/* Table16803 */
+/* Table16805 */
   0x185f, /* VFNMADD213SSZm_Intkz */
   0x1863, /* VFNMADD213SSZr_Intkz */
-/* Table16805 */
+/* Table16807 */
   0x197d, /* VFNMSUB213PSZ128mkz */
   0x1980, /* VFNMSUB213PSZ128rkz */
-/* Table16807 */
+/* Table16809 */
   0x19ab, /* VFNMSUB213SSZm_Intkz */
   0x19af, /* VFNMSUB213SSZr_Intkz */
-/* Table16809 */
+/* Table16811 */
   0x1551, /* VFMADDSUB231PSZ128mkz */
   0x1554, /* VFMADDSUB231PSZ128rkz */
-/* Table16811 */
+/* Table16813 */
   0x1759, /* VFMSUBADD231PSZ128mkz */
   0x175c, /* VFMSUBADD231PSZ128rkz */
-/* Table16813 */
+/* Table16815 */
   0x1445, /* VFMADD231PSZ128mkz */
   0x1448, /* VFMADD231PSZ128rkz */
-/* Table16815 */
+/* Table16817 */
   0x1473, /* VFMADD231SSZm_Intkz */
   0x1477, /* VFMADD231SSZr_Intkz */
-/* Table16817 */
+/* Table16819 */
   0x166d, /* VFMSUB231PSZ128mkz */
   0x1670, /* VFMSUB231PSZ128rkz */
-/* Table16819 */
+/* Table16821 */
   0x169b, /* VFMSUB231SSZm_Intkz */
   0x169f, /* VFMSUB231SSZr_Intkz */
-/* Table16821 */
+/* Table16823 */
   0x1895, /* VFNMADD231PSZ128mkz */
   0x1898, /* VFNMADD231PSZ128rkz */
-/* Table16823 */
+/* Table16825 */
   0x18c3, /* VFNMADD231SSZm_Intkz */
   0x18c7, /* VFNMADD231SSZr_Intkz */
-/* Table16825 */
+/* Table16827 */
   0x19e1, /* VFNMSUB231PSZ128mkz */
   0x19e4, /* VFNMSUB231PSZ128rkz */
-/* Table16827 */
+/* Table16829 */
   0x1a0f, /* VFNMSUB231SSZm_Intkz */
   0x1a13, /* VFNMSUB231SSZr_Intkz */
-/* Table16829 */
+/* Table16831 */
   0x2560, /* VPCONFLICTDZ128rmkz */
   0x2563, /* VPCONFLICTDZ128rrkz */
-/* Table16831 */
+/* Table16833 */
   0x3798, /* VRCP28SSZmkz */
   0x379e, /* VRCP28SSZrkz */
-/* Table16833 */
+/* Table16835 */
   0x38bc, /* VRSQRT28SSZmkz */
   0x38c2, /* VRSQRT28SSZrkz */
-/* Table16835 */
+/* Table16837 */
   0x1b6e, /* VGF2P8MULBZ128rmkz */
   0x1b71, /* VGF2P8MULBZ128rrkz */
-/* Table16837 */
+/* Table16839 */
   0x26d9, /* VPERMILPDZ128rmkz */
   0x26dc, /* VPERMILPDZ128rrkz */
-/* Table16839 */
+/* Table16841 */
   0x3429, /* VPSRLVWZ128rmkz */
   0x342c, /* VPSRLVWZ128rrkz */
-/* Table16841 */
+/* Table16843 */
   0x3341, /* VPSRAVWZ128rmkz */
   0x3344, /* VPSRAVWZ128rrkz */
-/* Table16843 */
+/* Table16845 */
   0x326b, /* VPSLLVWZ128rmkz */
   0x326e, /* VPSLLVWZ128rrkz */
-/* Table16845 */
+/* Table16847 */
   0x2fc0, /* VPRORVQZ128rmkz */
   0x2fc3, /* VPRORVQZ128rrkz */
-/* Table16847 */
+/* Table16849 */
   0x2f54, /* VPROLVQZ128rmkz */
   0x2f57, /* VPROLVQZ128rrkz */
-/* Table16849 */
+/* Table16851 */
   0x2067, /* VPABSQZ128rmkz */
   0x206a, /* VPABSQZ128rrkz */
-/* Table16851 */
+/* Table16853 */
   0x2d82, /* VPMULDQZ128rmkz */
   0x2d85, /* VPMULDQZ128rrkz */
-/* Table16853 */
+/* Table16855 */
   0x38d0, /* VSCALEFPDZ128rmkz */
   0x38d3, /* VSCALEFPDZ128rrkz */
-/* Table16855 */
+/* Table16857 */
   0x3909, /* VSCALEFSDZrmkz */
   0x390f, /* VSCALEFSDZrrkz */
-/* Table16857 */
+/* Table16859 */
   0x2ab9, /* VPMINSQZ128rmkz */
   0x2abc, /* VPMINSQZ128rrkz */
-/* Table16859 */
+/* Table16861 */
   0x2b1f, /* VPMINUQZ128rmkz */
   0x2b22, /* VPMINUQZ128rrkz */
-/* Table16861 */
+/* Table16863 */
   0x29ed, /* VPMAXSQZ128rmkz */
   0x29f0, /* VPMAXSQZ128rrkz */
-/* Table16863 */
+/* Table16865 */
   0x2a53, /* VPMAXUQZ128rmkz */
   0x2a56, /* VPMAXUQZ128rrkz */
-/* Table16865 */
+/* Table16867 */
   0x2e00, /* VPMULLQZ128rmkz */
   0x2e03, /* VPMULLQZ128rrkz */
-/* Table16867 */
+/* Table16869 */
   0x1a95, /* VGETEXPPDZ128mkz */
   0x1a98, /* VGETEXPPDZ128rkz */
-/* Table16869 */
+/* Table16871 */
   0x1ace, /* VGETEXPSDZmkz */
   0x1ad4, /* VGETEXPSDZrkz */
-/* Table16871 */
+/* Table16873 */
   0x291b, /* VPLZCNTQZ128rmkz */
   0x291e, /* VPLZCNTQZ128rrkz */
-/* Table16873 */
+/* Table16875 */
   0x340f, /* VPSRLVQZ128rmkz */
   0x3412, /* VPSRLVQZ128rrkz */
-/* Table16875 */
+/* Table16877 */
   0x3329, /* VPSRAVQZ128rmkz */
   0x332c, /* VPSRAVQZ128rrkz */
-/* Table16877 */
+/* Table16879 */
   0x3251, /* VPSLLVQZ128rmkz */
   0x3254, /* VPSLLVQZ128rrkz */
-/* Table16879 */
+/* Table16881 */
   0x3738, /* VRCP14PDZ128mkz */
   0x373b, /* VRCP14PDZ128rkz */
-/* Table16881 */
+/* Table16883 */
   0x376b, /* VRCP14SDZrmkz */
   0x376e, /* VRCP14SDZrrkz */
-/* Table16883 */
+/* Table16885 */
   0x385c, /* VRSQRT14PDZ128mkz */
   0x385f, /* VRSQRT14PDZ128rkz */
-/* Table16885 */
+/* Table16887 */
   0x388f, /* VRSQRT14SDZrmkz */
   0x3892, /* VRSQRT14SDZrrkz */
-/* Table16887 */
+/* Table16889 */
   0x2eb0, /* VPOPCNTWZ128rmkz */
   0x2eb3, /* VPOPCNTWZ128rrkz */
-/* Table16889 */
+/* Table16891 */
   0x2e98, /* VPOPCNTQZ128rmkz */
   0x2e9b, /* VPOPCNTQZ128rrkz */
-/* Table16891 */
+/* Table16893 */
   0x2323, /* VPBROADCASTQZ128mkz */
   0x2326, /* VPBROADCASTQZ128rkz */
-/* Table16893 */
+/* Table16895 */
   0x287d, /* VPEXPANDWZ128rmkz */
   0x2880, /* VPEXPANDWZ128rrkz */
-/* Table16895 */
+/* Table16897 */
   0x0, /*  */
   0x2538, /* VPCOMPRESSWZ128rrkz */
-/* Table16897 */
+/* Table16899 */
   0x22ab, /* VPBLENDMQZ128rmkz */
   0x22ae, /* VPBLENDMQZ128rrkz */
-/* Table16899 */
+/* Table16901 */
   0xca5, /* VBLENDMPDZ128rmkz */
   0xca8, /* VBLENDMPDZ128rrkz */
-/* Table16901 */
+/* Table16903 */
   0x22c3, /* VPBLENDMWZ128rmkz */
   0x22c6, /* VPBLENDMWZ128rrkz */
-/* Table16903 */
+/* Table16905 */
   0x3086, /* VPSHLDVWZ128mkz */
   0x3089, /* VPSHLDVWZ128rkz */
-/* Table16905 */
+/* Table16907 */
   0x306e, /* VPSHLDVQZ128mkz */
   0x3071, /* VPSHLDVQZ128rkz */
-/* Table16907 */
+/* Table16909 */
   0x3122, /* VPSHRDVWZ128mkz */
   0x3125, /* VPSHRDVWZ128rkz */
-/* Table16909 */
+/* Table16911 */
   0x310a, /* VPSHRDVQZ128mkz */
   0x310d, /* VPSHRDVQZ128rkz */
-/* Table16911 */
+/* Table16913 */
   0x26a7, /* VPERMI2W128rmkz */
   0x26aa, /* VPERMI2W128rrkz */
-/* Table16913 */
+/* Table16915 */
   0x268f, /* VPERMI2Q128rmkz */
   0x2692, /* VPERMI2Q128rrkz */
-/* Table16915 */
+/* Table16917 */
   0x2659, /* VPERMI2PD128rmkz */
   0x265c, /* VPERMI2PD128rrkz */
-/* Table16917 */
+/* Table16919 */
   0x0, /*  */
   0x2335, /* VPBROADCASTQrZ128rkz */
-/* Table16919 */
+/* Table16921 */
   0x2823, /* VPERMT2W128rmkz */
   0x2826, /* VPERMT2W128rrkz */
-/* Table16921 */
+/* Table16923 */
   0x280b, /* VPERMT2Q128rmkz */
   0x280e, /* VPERMT2Q128rrkz */
-/* Table16923 */
+/* Table16925 */
   0x27d5, /* VPERMT2PD128rmkz */
   0x27d8, /* VPERMT2PD128rrkz */
-/* Table16925 */
+/* Table16927 */
   0x2e31, /* VPMULTISHIFTQBZ128rmkz */
   0x2e34, /* VPMULTISHIFTQBZ128rrkz */
-/* Table16927 */
+/* Table16929 */
   0x12a0, /* VEXPANDPDZ128rmkz */
   0x12a3, /* VEXPANDPDZ128rrkz */
-/* Table16929 */
+/* Table16931 */
   0x286b, /* VPEXPANDQZ128rmkz */
   0x286e, /* VPEXPANDQZ128rrkz */
-/* Table16931 */
-  0x0, /*  */
-  0xdec, /* VCOMPRESSPDZ128rrkz */
 /* Table16933 */
   0x0, /*  */
-  0x2529, /* VPCOMPRESSQZ128rrkz */
+  0xdec, /* VCOMPRESSPDZ128rrkz */
 /* Table16935 */
+  0x0, /*  */
+  0x2529, /* VPCOMPRESSQZ128rrkz */
+/* Table16937 */
   0x2835, /* VPERMWZ128rmkz */
   0x2838, /* VPERMWZ128rrkz */
-/* Table16937 */
+/* Table16939 */
   0x14a7, /* VFMADDSUB132PDZ128mkz */
   0x14aa, /* VFMADDSUB132PDZ128rkz */
-/* Table16939 */
+/* Table16941 */
   0x16af, /* VFMSUBADD132PDZ128mkz */
   0x16b2, /* VFMSUBADD132PDZ128rkz */
-/* Table16941 */
+/* Table16943 */
   0x135b, /* VFMADD132PDZ128mkz */
   0x135e, /* VFMADD132PDZ128rkz */
-/* Table16943 */
+/* Table16945 */
   0x139b, /* VFMADD132SDZm_Intkz */
   0x139f, /* VFMADD132SDZr_Intkz */
-/* Table16945 */
+/* Table16947 */
   0x1583, /* VFMSUB132PDZ128mkz */
   0x1586, /* VFMSUB132PDZ128rkz */
-/* Table16947 */
+/* Table16949 */
   0x15c3, /* VFMSUB132SDZm_Intkz */
   0x15c7, /* VFMSUB132SDZr_Intkz */
-/* Table16949 */
+/* Table16951 */
   0x17ab, /* VFNMADD132PDZ128mkz */
   0x17ae, /* VFNMADD132PDZ128rkz */
-/* Table16951 */
+/* Table16953 */
   0x17eb, /* VFNMADD132SDZm_Intkz */
   0x17ef, /* VFNMADD132SDZr_Intkz */
-/* Table16953 */
+/* Table16955 */
   0x18f7, /* VFNMSUB132PDZ128mkz */
   0x18fa, /* VFNMSUB132PDZ128rkz */
-/* Table16955 */
+/* Table16957 */
   0x1937, /* VFNMSUB132SDZm_Intkz */
   0x193b, /* VFNMSUB132SDZr_Intkz */
-/* Table16957 */
+/* Table16959 */
   0x14eb, /* VFMADDSUB213PDZ128mkz */
   0x14ee, /* VFMADDSUB213PDZ128rkz */
-/* Table16959 */
+/* Table16961 */
   0x16f3, /* VFMSUBADD213PDZ128mkz */
   0x16f6, /* VFMSUBADD213PDZ128rkz */
-/* Table16961 */
+/* Table16963 */
   0x13bf, /* VFMADD213PDZ128mkz */
   0x13c2, /* VFMADD213PDZ128rkz */
-/* Table16963 */
+/* Table16965 */
   0x13ff, /* VFMADD213SDZm_Intkz */
   0x1403, /* VFMADD213SDZr_Intkz */
-/* Table16965 */
+/* Table16967 */
   0x15e7, /* VFMSUB213PDZ128mkz */
   0x15ea, /* VFMSUB213PDZ128rkz */
-/* Table16967 */
+/* Table16969 */
   0x1627, /* VFMSUB213SDZm_Intkz */
   0x162b, /* VFMSUB213SDZr_Intkz */
-/* Table16969 */
+/* Table16971 */
   0x180f, /* VFNMADD213PDZ128mkz */
   0x1812, /* VFNMADD213PDZ128rkz */
-/* Table16971 */
+/* Table16973 */
   0x184f, /* VFNMADD213SDZm_Intkz */
   0x1853, /* VFNMADD213SDZr_Intkz */
-/* Table16973 */
+/* Table16975 */
   0x195b, /* VFNMSUB213PDZ128mkz */
   0x195e, /* VFNMSUB213PDZ128rkz */
-/* Table16975 */
+/* Table16977 */
   0x199b, /* VFNMSUB213SDZm_Intkz */
   0x199f, /* VFNMSUB213SDZr_Intkz */
-/* Table16977 */
+/* Table16979 */
   0x2969, /* VPMADD52LUQZ128mkz */
   0x296c, /* VPMADD52LUQZ128rkz */
-/* Table16979 */
+/* Table16981 */
   0x294e, /* VPMADD52HUQZ128mkz */
   0x2951, /* VPMADD52HUQZ128rkz */
-/* Table16981 */
+/* Table16983 */
   0x152f, /* VFMADDSUB231PDZ128mkz */
   0x1532, /* VFMADDSUB231PDZ128rkz */
-/* Table16983 */
+/* Table16985 */
   0x1737, /* VFMSUBADD231PDZ128mkz */
   0x173a, /* VFMSUBADD231PDZ128rkz */
-/* Table16985 */
+/* Table16987 */
   0x1423, /* VFMADD231PDZ128mkz */
   0x1426, /* VFMADD231PDZ128rkz */
-/* Table16987 */
+/* Table16989 */
   0x1463, /* VFMADD231SDZm_Intkz */
   0x1467, /* VFMADD231SDZr_Intkz */
-/* Table16989 */
+/* Table16991 */
   0x164b, /* VFMSUB231PDZ128mkz */
   0x164e, /* VFMSUB231PDZ128rkz */
-/* Table16991 */
+/* Table16993 */
   0x168b, /* VFMSUB231SDZm_Intkz */
   0x168f, /* VFMSUB231SDZr_Intkz */
-/* Table16993 */
+/* Table16995 */
   0x1873, /* VFNMADD231PDZ128mkz */
   0x1876, /* VFNMADD231PDZ128rkz */
-/* Table16995 */
+/* Table16997 */
   0x18b3, /* VFNMADD231SDZm_Intkz */
   0x18b7, /* VFNMADD231SDZr_Intkz */
-/* Table16997 */
+/* Table16999 */
   0x19bf, /* VFNMSUB231PDZ128mkz */
   0x19c2, /* VFNMSUB231PDZ128rkz */
-/* Table16999 */
+/* Table17001 */
   0x19ff, /* VFNMSUB231SDZm_Intkz */
   0x1a03, /* VFNMSUB231SDZr_Intkz */
-/* Table17001 */
+/* Table17003 */
   0x257b, /* VPCONFLICTQZ128rmkz */
   0x257e, /* VPCONFLICTQZ128rrkz */
-/* Table17003 */
+/* Table17005 */
   0x378f, /* VRCP28SDZmkz */
   0x3795, /* VRCP28SDZrkz */
-/* Table17005 */
+/* Table17007 */
   0x38b3, /* VRSQRT28SDZmkz */
   0x38b9, /* VRSQRT28SDZrkz */
-/* Table17007 */
-  0x0, /*  */
-  0x2cdf, /* VPMOVUSWBZ256rrkz */
 /* Table17009 */
   0x0, /*  */
-  0x2c94, /* VPMOVUSDBZ256rrkz */
+  0x2cdf, /* VPMOVUSWBZ256rrkz */
 /* Table17011 */
   0x0, /*  */
-  0x2cb2, /* VPMOVUSQBZ256rrkz */
+  0x2c94, /* VPMOVUSDBZ256rrkz */
 /* Table17013 */
   0x0, /*  */
-  0x2ca3, /* VPMOVUSDWZ256rrkz */
+  0x2cb2, /* VPMOVUSQBZ256rrkz */
 /* Table17015 */
   0x0, /*  */
-  0x2cd0, /* VPMOVUSQWZ256rrkz */
+  0x2ca3, /* VPMOVUSDWZ256rrkz */
 /* Table17017 */
   0x0, /*  */
-  0x2cc1, /* VPMOVUSQDZ256rrkz */
+  0x2cd0, /* VPMOVUSQWZ256rrkz */
 /* Table17019 */
   0x0, /*  */
-  0x2c01, /* VPMOVSWBZ256rrkz */
+  0x2cc1, /* VPMOVUSQDZ256rrkz */
 /* Table17021 */
   0x0, /*  */
-  0x2bb6, /* VPMOVSDBZ256rrkz */
+  0x2c01, /* VPMOVSWBZ256rrkz */
 /* Table17023 */
   0x0, /*  */
-  0x2bd4, /* VPMOVSQBZ256rrkz */
+  0x2bb6, /* VPMOVSDBZ256rrkz */
 /* Table17025 */
   0x0, /*  */
-  0x2bc5, /* VPMOVSDWZ256rrkz */
+  0x2bd4, /* VPMOVSQBZ256rrkz */
 /* Table17027 */
   0x0, /*  */
-  0x2bf2, /* VPMOVSQWZ256rrkz */
+  0x2bc5, /* VPMOVSDWZ256rrkz */
 /* Table17029 */
   0x0, /*  */
-  0x2be3, /* VPMOVSQDZ256rrkz */
+  0x2bf2, /* VPMOVSQWZ256rrkz */
 /* Table17031 */
   0x0, /*  */
-  0x2cf1, /* VPMOVWBZ256rrkz */
+  0x2be3, /* VPMOVSQDZ256rrkz */
 /* Table17033 */
   0x0, /*  */
-  0x2b5a, /* VPMOVDBZ256rrkz */
+  0x2cf1, /* VPMOVWBZ256rrkz */
 /* Table17035 */
   0x0, /*  */
-  0x2b89, /* VPMOVQBZ256rrkz */
+  0x2b5a, /* VPMOVDBZ256rrkz */
 /* Table17037 */
   0x0, /*  */
-  0x2b69, /* VPMOVDWZ256rrkz */
+  0x2b89, /* VPMOVQBZ256rrkz */
 /* Table17039 */
   0x0, /*  */
-  0x2ba7, /* VPMOVQWZ256rrkz */
+  0x2b69, /* VPMOVDWZ256rrkz */
 /* Table17041 */
   0x0, /*  */
-  0x2b98, /* VPMOVQDZ256rrkz */
+  0x2ba7, /* VPMOVQWZ256rrkz */
 /* Table17043 */
+  0x0, /*  */
+  0x2b98, /* VPMOVQDZ256rrkz */
+/* Table17045 */
   0x315a, /* VPSHUFBZ256rmkz */
   0x315d, /* VPSHUFBZ256rrkz */
-/* Table17045 */
+/* Table17047 */
   0x2989, /* VPMADDUBSWZ256rmkz */
   0x298c, /* VPMADDUBSWZ256rrkz */
-/* Table17047 */
+/* Table17049 */
   0x2da4, /* VPMULHRSWZ256rmkz */
   0x2da7, /* VPMULHRSWZ256rrkz */
-/* Table17049 */
+/* Table17051 */
   0x2729, /* VPERMILPSZ256rmkz */
   0x272c, /* VPERMILPSZ256rrkz */
-/* Table17051 */
+/* Table17053 */
   0xeef, /* VCVTPH2PSZ256rmkz */
   0xef2, /* VCVTPH2PSZ256rrkz */
-/* Table17053 */
+/* Table17055 */
   0x2fae, /* VPRORVDZ256rmkz */
   0x2fb1, /* VPRORVDZ256rrkz */
-/* Table17055 */
+/* Table17057 */
   0x2f42, /* VPROLVDZ256rmkz */
   0x2f45, /* VPROLVDZ256rrkz */
-/* Table17057 */
+/* Table17059 */
   0x2770, /* VPERMPSZ256rmkz */
   0x2773, /* VPERMPSZ256rrkz */
-/* Table17059 */
+/* Table17061 */
   0xd42, /* VBROADCASTSSZ256mkz */
   0xd45, /* VBROADCASTSSZ256rkz */
-/* Table17061 */
+/* Table17063 */
   0xce9, /* VBROADCASTF32X2Z256mkz */
   0xcec, /* VBROADCASTF32X2Z256rkz */
-/* Table17063 */
+/* Table17065 */
   0xcf5, /* VBROADCASTF32X4Z256rmkz */
   0x0, /*  */
-/* Table17065 */
+/* Table17067 */
   0x2037, /* VPABSBZ256rmkz */
   0x203a, /* VPABSBZ256rrkz */
-/* Table17067 */
+/* Table17069 */
   0x2087, /* VPABSWZ256rmkz */
   0x208a, /* VPABSWZ256rrkz */
-/* Table17069 */
+/* Table17071 */
   0x2053, /* VPABSDZ256rmkz */
   0x2056, /* VPABSDZ256rrkz */
-/* Table17071 */
+/* Table17073 */
   0x2c3d, /* VPMOVSXBWZ256rmkz */
   0x2c40, /* VPMOVSXBWZ256rrkz */
-/* Table17073 */
+/* Table17075 */
   0x2c11, /* VPMOVSXBDZ256rmkz */
   0x2c14, /* VPMOVSXBDZ256rrkz */
-/* Table17075 */
+/* Table17077 */
   0x2c27, /* VPMOVSXBQZ256rmkz */
   0x2c2a, /* VPMOVSXBQZ256rrkz */
-/* Table17077 */
+/* Table17079 */
   0x2c69, /* VPMOVSXWDZ256rmkz */
   0x2c6c, /* VPMOVSXWDZ256rrkz */
-/* Table17079 */
+/* Table17081 */
   0x2c7f, /* VPMOVSXWQZ256rmkz */
   0x2c82, /* VPMOVSXWQZ256rrkz */
-/* Table17081 */
+/* Table17083 */
   0x2c53, /* VPMOVSXDQZ256rmkz */
   0x2c56, /* VPMOVSXDQZ256rrkz */
-/* Table17083 */
+/* Table17085 */
   0x20d8, /* VPACKUSDWZ256rmkz */
   0x20db, /* VPACKUSDWZ256rrkz */
-/* Table17085 */
+/* Table17087 */
   0x38f7, /* VSCALEFPSZ256rmkz */
   0x38fa, /* VSCALEFPSZ256rrkz */
-/* Table17087 */
+/* Table17089 */
   0x2d2d, /* VPMOVZXBWZ256rmkz */
   0x2d30, /* VPMOVZXBWZ256rrkz */
-/* Table17089 */
+/* Table17091 */
   0x2d01, /* VPMOVZXBDZ256rmkz */
   0x2d04, /* VPMOVZXBDZ256rrkz */
-/* Table17091 */
+/* Table17093 */
   0x2d17, /* VPMOVZXBQZ256rmkz */
   0x2d1a, /* VPMOVZXBQZ256rrkz */
-/* Table17093 */
+/* Table17095 */
   0x2d59, /* VPMOVZXWDZ256rmkz */
   0x2d5c, /* VPMOVZXWDZ256rrkz */
-/* Table17095 */
+/* Table17097 */
   0x2d6f, /* VPMOVZXWQZ256rmkz */
   0x2d72, /* VPMOVZXWQZ256rrkz */
-/* Table17097 */
+/* Table17099 */
   0x2d43, /* VPMOVZXDQZ256rmkz */
   0x2d46, /* VPMOVZXDQZ256rrkz */
-/* Table17099 */
+/* Table17101 */
   0x261a, /* VPERMDZ256rmkz */
   0x261d, /* VPERMDZ256rrkz */
-/* Table17101 */
+/* Table17103 */
   0x2a89, /* VPMINSBZ256rmkz */
   0x2a8c, /* VPMINSBZ256rrkz */
-/* Table17103 */
+/* Table17105 */
   0x2aa5, /* VPMINSDZ256rmkz */
   0x2aa8, /* VPMINSDZ256rrkz */
-/* Table17105 */
+/* Table17107 */
   0x2b3f, /* VPMINUWZ256rmkz */
   0x2b42, /* VPMINUWZ256rrkz */
-/* Table17107 */
+/* Table17109 */
   0x2b0b, /* VPMINUDZ256rmkz */
   0x2b0e, /* VPMINUDZ256rrkz */
-/* Table17109 */
+/* Table17111 */
   0x29bd, /* VPMAXSBZ256rmkz */
   0x29c0, /* VPMAXSBZ256rrkz */
-/* Table17111 */
+/* Table17113 */
   0x29d9, /* VPMAXSDZ256rmkz */
   0x29dc, /* VPMAXSDZ256rrkz */
-/* Table17113 */
+/* Table17115 */
   0x2a73, /* VPMAXUWZ256rmkz */
   0x2a76, /* VPMAXUWZ256rrkz */
-/* Table17115 */
+/* Table17117 */
   0x2a3f, /* VPMAXUDZ256rmkz */
   0x2a42, /* VPMAXUDZ256rrkz */
-/* Table17117 */
+/* Table17119 */
   0x2dec, /* VPMULLDZ256rmkz */
   0x2def, /* VPMULLDZ256rrkz */
-/* Table17119 */
+/* Table17121 */
   0x1abc, /* VGETEXPPSZ256mkz */
   0x1abf, /* VGETEXPPSZ256rkz */
-/* Table17121 */
+/* Table17123 */
   0x2909, /* VPLZCNTDZ256rmkz */
   0x290c, /* VPLZCNTDZ256rrkz */
-/* Table17123 */
+/* Table17125 */
   0x33f9, /* VPSRLVDZ256rmkz */
   0x33fc, /* VPSRLVDZ256rrkz */
-/* Table17125 */
+/* Table17127 */
   0x3315, /* VPSRAVDZ256rmkz */
   0x3318, /* VPSRAVDZ256rrkz */
-/* Table17127 */
+/* Table17129 */
   0x323b, /* VPSLLVDZ256rmkz */
   0x323e, /* VPSLLVDZ256rrkz */
-/* Table17129 */
+/* Table17131 */
   0x375c, /* VRCP14PSZ256mkz */
   0x375f, /* VRCP14PSZ256rkz */
-/* Table17131 */
+/* Table17133 */
   0x3880, /* VRSQRT14PSZ256mkz */
   0x3883, /* VRSQRT14PSZ256rkz */
-/* Table17133 */
+/* Table17135 */
   0x25ba, /* VPDPBUSDZ256mkz */
   0x25bd, /* VPDPBUSDZ256rkz */
-/* Table17135 */
+/* Table17137 */
   0x259f, /* VPDPBUSDSZ256mkz */
   0x25a2, /* VPDPBUSDSZ256rkz */
-/* Table17137 */
+/* Table17139 */
   0x25f0, /* VPDPWSSDZ256mkz */
   0x25f3, /* VPDPWSSDZ256rkz */
-/* Table17139 */
+/* Table17141 */
   0x25d5, /* VPDPWSSDSZ256mkz */
   0x25d8, /* VPDPWSSDSZ256rkz */
-/* Table17141 */
+/* Table17143 */
   0x2e6e, /* VPOPCNTBZ256rmkz */
   0x2e71, /* VPOPCNTBZ256rrkz */
-/* Table17143 */
+/* Table17145 */
   0x2e86, /* VPOPCNTDZ256rmkz */
   0x2e89, /* VPOPCNTDZ256rrkz */
-/* Table17145 */
+/* Table17147 */
   0x2304, /* VPBROADCASTDZ256mkz */
   0x2307, /* VPBROADCASTDZ256rkz */
-/* Table17147 */
+/* Table17149 */
   0xd0e, /* VBROADCASTI32X2Z256mkz */
   0xd11, /* VBROADCASTI32X2Z256rkz */
-/* Table17149 */
+/* Table17151 */
   0xd1a, /* VBROADCASTI32X4Z256rmkz */
   0x0, /*  */
-/* Table17151 */
+/* Table17153 */
   0x284d, /* VPEXPANDBZ256rmkz */
   0x2850, /* VPEXPANDBZ256rrkz */
-/* Table17153 */
+/* Table17155 */
   0x0, /*  */
   0x2510, /* VPCOMPRESSBZ256rrkz */
-/* Table17155 */
+/* Table17157 */
   0x2299, /* VPBLENDMDZ256rmkz */
   0x229c, /* VPBLENDMDZ256rrkz */
-/* Table17157 */
+/* Table17159 */
   0xcc9, /* VBLENDMPSZ256rmkz */
   0xccc, /* VBLENDMPSZ256rrkz */
-/* Table17159 */
+/* Table17161 */
   0x2281, /* VPBLENDMBZ256rmkz */
   0x2284, /* VPBLENDMBZ256rrkz */
-/* Table17161 */
+/* Table17163 */
   0x305c, /* VPSHLDVDZ256mkz */
   0x305f, /* VPSHLDVDZ256rkz */
-/* Table17163 */
+/* Table17165 */
   0x30f8, /* VPSHRDVDZ256mkz */
   0x30fb, /* VPSHRDVDZ256rkz */
-/* Table17165 */
+/* Table17167 */
   0x262f, /* VPERMI2B256rmkz */
   0x2632, /* VPERMI2B256rrkz */
-/* Table17167 */
+/* Table17169 */
   0x2647, /* VPERMI2D256rmkz */
   0x264a, /* VPERMI2D256rrkz */
-/* Table17169 */
+/* Table17171 */
   0x267d, /* VPERMI2PS256rmkz */
   0x2680, /* VPERMI2PS256rrkz */
-/* Table17171 */
+/* Table17173 */
   0x22e5, /* VPBROADCASTBZ256mkz */
   0x22e8, /* VPBROADCASTBZ256rkz */
-/* Table17173 */
+/* Table17175 */
   0x2348, /* VPBROADCASTWZ256mkz */
   0x234b, /* VPBROADCASTWZ256rkz */
-/* Table17175 */
-  0x0, /*  */
-  0x22f4, /* VPBROADCASTBrZ256rkz */
 /* Table17177 */
   0x0, /*  */
-  0x2357, /* VPBROADCASTWrZ256rkz */
+  0x22f4, /* VPBROADCASTBrZ256rkz */
 /* Table17179 */
   0x0, /*  */
-  0x2313, /* VPBROADCASTDrZ256rkz */
+  0x2357, /* VPBROADCASTWrZ256rkz */
 /* Table17181 */
+  0x0, /*  */
+  0x2313, /* VPBROADCASTDrZ256rkz */
+/* Table17183 */
   0x27ab, /* VPERMT2B256rmkz */
   0x27ae, /* VPERMT2B256rrkz */
-/* Table17183 */
+/* Table17185 */
   0x27c3, /* VPERMT2D256rmkz */
   0x27c6, /* VPERMT2D256rrkz */
-/* Table17185 */
+/* Table17187 */
   0x27f9, /* VPERMT2PS256rmkz */
   0x27fc, /* VPERMT2PS256rrkz */
-/* Table17187 */
+/* Table17189 */
   0x12b8, /* VEXPANDPSZ256rmkz */
   0x12bb, /* VEXPANDPSZ256rrkz */
-/* Table17189 */
+/* Table17191 */
   0x285f, /* VPEXPANDDZ256rmkz */
   0x2862, /* VPEXPANDDZ256rrkz */
-/* Table17191 */
-  0x0, /*  */
-  0xe00, /* VCOMPRESSPSZ256rrkz */
 /* Table17193 */
   0x0, /*  */
-  0x251f, /* VPCOMPRESSDZ256rrkz */
+  0xe00, /* VCOMPRESSPSZ256rrkz */
 /* Table17195 */
+  0x0, /*  */
+  0x251f, /* VPCOMPRESSDZ256rrkz */
+/* Table17197 */
   0x2609, /* VPERMBZ256rmkz */
   0x260c, /* VPERMBZ256rrkz */
-/* Table17197 */
+/* Table17199 */
   0x14d2, /* VFMADDSUB132PSZ256mkz */
   0x14d5, /* VFMADDSUB132PSZ256rkz */
-/* Table17199 */
+/* Table17201 */
   0x16da, /* VFMSUBADD132PSZ256mkz */
   0x16dd, /* VFMSUBADD132PSZ256rkz */
-/* Table17201 */
+/* Table17203 */
   0x1386, /* VFMADD132PSZ256mkz */
   0x1389, /* VFMADD132PSZ256rkz */
-/* Table17203 */
+/* Table17205 */
   0x15ae, /* VFMSUB132PSZ256mkz */
   0x15b1, /* VFMSUB132PSZ256rkz */
-/* Table17205 */
+/* Table17207 */
   0x17d6, /* VFNMADD132PSZ256mkz */
   0x17d9, /* VFNMADD132PSZ256rkz */
-/* Table17207 */
+/* Table17209 */
   0x1922, /* VFNMSUB132PSZ256mkz */
   0x1925, /* VFNMSUB132PSZ256rkz */
-/* Table17209 */
+/* Table17211 */
   0x1516, /* VFMADDSUB213PSZ256mkz */
   0x1519, /* VFMADDSUB213PSZ256rkz */
-/* Table17211 */
+/* Table17213 */
   0x171e, /* VFMSUBADD213PSZ256mkz */
   0x1721, /* VFMSUBADD213PSZ256rkz */
-/* Table17213 */
+/* Table17215 */
   0x13ea, /* VFMADD213PSZ256mkz */
   0x13ed, /* VFMADD213PSZ256rkz */
-/* Table17215 */
+/* Table17217 */
   0x1612, /* VFMSUB213PSZ256mkz */
   0x1615, /* VFMSUB213PSZ256rkz */
-/* Table17217 */
+/* Table17219 */
   0x183a, /* VFNMADD213PSZ256mkz */
   0x183d, /* VFNMADD213PSZ256rkz */
-/* Table17219 */
+/* Table17221 */
   0x1986, /* VFNMSUB213PSZ256mkz */
   0x1989, /* VFNMSUB213PSZ256rkz */
-/* Table17221 */
+/* Table17223 */
   0x155a, /* VFMADDSUB231PSZ256mkz */
   0x155d, /* VFMADDSUB231PSZ256rkz */
-/* Table17223 */
+/* Table17225 */
   0x1762, /* VFMSUBADD231PSZ256mkz */
   0x1765, /* VFMSUBADD231PSZ256rkz */
-/* Table17225 */
+/* Table17227 */
   0x144e, /* VFMADD231PSZ256mkz */
   0x1451, /* VFMADD231PSZ256rkz */
-/* Table17227 */
+/* Table17229 */
   0x1676, /* VFMSUB231PSZ256mkz */
   0x1679, /* VFMSUB231PSZ256rkz */
-/* Table17229 */
+/* Table17231 */
   0x189e, /* VFNMADD231PSZ256mkz */
   0x18a1, /* VFNMADD231PSZ256rkz */
-/* Table17231 */
+/* Table17233 */
   0x19ea, /* VFNMSUB231PSZ256mkz */
   0x19ed, /* VFNMSUB231PSZ256rkz */
-/* Table17233 */
+/* Table17235 */
   0x2569, /* VPCONFLICTDZ256rmkz */
   0x256c, /* VPCONFLICTDZ256rrkz */
-/* Table17235 */
+/* Table17237 */
   0x1b74, /* VGF2P8MULBZ256rmkz */
   0x1b77, /* VGF2P8MULBZ256rrkz */
-/* Table17237 */
+/* Table17239 */
   0x26eb, /* VPERMILPDZ256rmkz */
   0x26ee, /* VPERMILPDZ256rrkz */
-/* Table17239 */
+/* Table17241 */
   0x342f, /* VPSRLVWZ256rmkz */
   0x3432, /* VPSRLVWZ256rrkz */
-/* Table17241 */
+/* Table17243 */
   0x3347, /* VPSRAVWZ256rmkz */
   0x334a, /* VPSRAVWZ256rrkz */
-/* Table17243 */
+/* Table17245 */
   0x3271, /* VPSLLVWZ256rmkz */
   0x3274, /* VPSLLVWZ256rrkz */
-/* Table17245 */
+/* Table17247 */
   0x2fc9, /* VPRORVQZ256rmkz */
   0x2fcc, /* VPRORVQZ256rrkz */
-/* Table17247 */
+/* Table17249 */
   0x2f5d, /* VPROLVQZ256rmkz */
   0x2f60, /* VPROLVQZ256rrkz */
-/* Table17249 */
+/* Table17251 */
   0x2753, /* VPERMPDZ256rmkz */
   0x2756, /* VPERMPDZ256rrkz */
-/* Table17251 */
+/* Table17253 */
   0xd2e, /* VBROADCASTSDZ256mkz */
   0xd31, /* VBROADCASTSDZ256rkz */
-/* Table17253 */
+/* Table17255 */
   0xcfe, /* VBROADCASTF64X2Z128rmkz */
   0x0, /*  */
-/* Table17255 */
+/* Table17257 */
   0x2070, /* VPABSQZ256rmkz */
   0x2073, /* VPABSQZ256rrkz */
-/* Table17257 */
+/* Table17259 */
   0x2d8b, /* VPMULDQZ256rmkz */
   0x2d8e, /* VPMULDQZ256rrkz */
-/* Table17259 */
+/* Table17261 */
   0x38d9, /* VSCALEFPDZ256rmkz */
   0x38dc, /* VSCALEFPDZ256rrkz */
-/* Table17261 */
+/* Table17263 */
   0x278d, /* VPERMQZ256rmkz */
   0x2790, /* VPERMQZ256rrkz */
-/* Table17263 */
+/* Table17265 */
   0x2ac2, /* VPMINSQZ256rmkz */
   0x2ac5, /* VPMINSQZ256rrkz */
-/* Table17265 */
+/* Table17267 */
   0x2b28, /* VPMINUQZ256rmkz */
   0x2b2b, /* VPMINUQZ256rrkz */
-/* Table17267 */
+/* Table17269 */
   0x29f6, /* VPMAXSQZ256rmkz */
   0x29f9, /* VPMAXSQZ256rrkz */
-/* Table17269 */
+/* Table17271 */
   0x2a5c, /* VPMAXUQZ256rmkz */
   0x2a5f, /* VPMAXUQZ256rrkz */
-/* Table17271 */
+/* Table17273 */
   0x2e09, /* VPMULLQZ256rmkz */
   0x2e0c, /* VPMULLQZ256rrkz */
-/* Table17273 */
+/* Table17275 */
   0x1a9e, /* VGETEXPPDZ256mkz */
   0x1aa1, /* VGETEXPPDZ256rkz */
-/* Table17275 */
+/* Table17277 */
   0x2924, /* VPLZCNTQZ256rmkz */
   0x2927, /* VPLZCNTQZ256rrkz */
-/* Table17277 */
+/* Table17279 */
   0x3418, /* VPSRLVQZ256rmkz */
   0x341b, /* VPSRLVQZ256rrkz */
-/* Table17279 */
+/* Table17281 */
   0x3332, /* VPSRAVQZ256rmkz */
   0x3335, /* VPSRAVQZ256rrkz */
-/* Table17281 */
+/* Table17283 */
   0x325a, /* VPSLLVQZ256rmkz */
   0x325d, /* VPSLLVQZ256rrkz */
-/* Table17283 */
+/* Table17285 */
   0x3741, /* VRCP14PDZ256mkz */
   0x3744, /* VRCP14PDZ256rkz */
-/* Table17285 */
+/* Table17287 */
   0x3865, /* VRSQRT14PDZ256mkz */
   0x3868, /* VRSQRT14PDZ256rkz */
-/* Table17287 */
+/* Table17289 */
   0x2eb6, /* VPOPCNTWZ256rmkz */
   0x2eb9, /* VPOPCNTWZ256rrkz */
-/* Table17289 */
+/* Table17291 */
   0x2ea1, /* VPOPCNTQZ256rmkz */
   0x2ea4, /* VPOPCNTQZ256rrkz */
-/* Table17291 */
+/* Table17293 */
   0x2329, /* VPBROADCASTQZ256mkz */
   0x232c, /* VPBROADCASTQZ256rkz */
-/* Table17293 */
+/* Table17295 */
   0xd23, /* VBROADCASTI64X2Z128rmkz */
   0x0, /*  */
-/* Table17295 */
+/* Table17297 */
   0x2883, /* VPEXPANDWZ256rmkz */
   0x2886, /* VPEXPANDWZ256rrkz */
-/* Table17297 */
+/* Table17299 */
   0x0, /*  */
   0x253d, /* VPCOMPRESSWZ256rrkz */
-/* Table17299 */
+/* Table17301 */
   0x22b4, /* VPBLENDMQZ256rmkz */
   0x22b7, /* VPBLENDMQZ256rrkz */
-/* Table17301 */
+/* Table17303 */
   0xcae, /* VBLENDMPDZ256rmkz */
   0xcb1, /* VBLENDMPDZ256rrkz */
-/* Table17303 */
+/* Table17305 */
   0x22c9, /* VPBLENDMWZ256rmkz */
   0x22cc, /* VPBLENDMWZ256rrkz */
-/* Table17305 */
+/* Table17307 */
   0x308c, /* VPSHLDVWZ256mkz */
   0x308f, /* VPSHLDVWZ256rkz */
-/* Table17307 */
+/* Table17309 */
   0x3077, /* VPSHLDVQZ256mkz */
   0x307a, /* VPSHLDVQZ256rkz */
-/* Table17309 */
+/* Table17311 */
   0x3128, /* VPSHRDVWZ256mkz */
   0x312b, /* VPSHRDVWZ256rkz */
-/* Table17311 */
+/* Table17313 */
   0x3113, /* VPSHRDVQZ256mkz */
   0x3116, /* VPSHRDVQZ256rkz */
-/* Table17313 */
+/* Table17315 */
   0x26ad, /* VPERMI2W256rmkz */
   0x26b0, /* VPERMI2W256rrkz */
-/* Table17315 */
+/* Table17317 */
   0x2698, /* VPERMI2Q256rmkz */
   0x269b, /* VPERMI2Q256rrkz */
-/* Table17317 */
+/* Table17319 */
   0x2662, /* VPERMI2PD256rmkz */
   0x2665, /* VPERMI2PD256rrkz */
-/* Table17319 */
+/* Table17321 */
   0x0, /*  */
   0x2338, /* VPBROADCASTQrZ256rkz */
-/* Table17321 */
+/* Table17323 */
   0x2829, /* VPERMT2W256rmkz */
   0x282c, /* VPERMT2W256rrkz */
-/* Table17323 */
+/* Table17325 */
   0x2814, /* VPERMT2Q256rmkz */
   0x2817, /* VPERMT2Q256rrkz */
-/* Table17325 */
+/* Table17327 */
   0x27de, /* VPERMT2PD256rmkz */
   0x27e1, /* VPERMT2PD256rrkz */
-/* Table17327 */
+/* Table17329 */
   0x2e3a, /* VPMULTISHIFTQBZ256rmkz */
   0x2e3d, /* VPMULTISHIFTQBZ256rrkz */
-/* Table17329 */
+/* Table17331 */
   0x12a6, /* VEXPANDPDZ256rmkz */
   0x12a9, /* VEXPANDPDZ256rrkz */
-/* Table17331 */
+/* Table17333 */
   0x2871, /* VPEXPANDQZ256rmkz */
   0x2874, /* VPEXPANDQZ256rrkz */
-/* Table17333 */
-  0x0, /*  */
-  0xdf1, /* VCOMPRESSPDZ256rrkz */
 /* Table17335 */
   0x0, /*  */
-  0x252e, /* VPCOMPRESSQZ256rrkz */
+  0xdf1, /* VCOMPRESSPDZ256rrkz */
 /* Table17337 */
+  0x0, /*  */
+  0x252e, /* VPCOMPRESSQZ256rrkz */
+/* Table17339 */
   0x283b, /* VPERMWZ256rmkz */
   0x283e, /* VPERMWZ256rrkz */
-/* Table17339 */
+/* Table17341 */
   0x14b0, /* VFMADDSUB132PDZ256mkz */
   0x14b3, /* VFMADDSUB132PDZ256rkz */
-/* Table17341 */
+/* Table17343 */
   0x16b8, /* VFMSUBADD132PDZ256mkz */
   0x16bb, /* VFMSUBADD132PDZ256rkz */
-/* Table17343 */
+/* Table17345 */
   0x1364, /* VFMADD132PDZ256mkz */
   0x1367, /* VFMADD132PDZ256rkz */
-/* Table17345 */
+/* Table17347 */
   0x158c, /* VFMSUB132PDZ256mkz */
   0x158f, /* VFMSUB132PDZ256rkz */
-/* Table17347 */
+/* Table17349 */
   0x17b4, /* VFNMADD132PDZ256mkz */
   0x17b7, /* VFNMADD132PDZ256rkz */
-/* Table17349 */
+/* Table17351 */
   0x1900, /* VFNMSUB132PDZ256mkz */
   0x1903, /* VFNMSUB132PDZ256rkz */
-/* Table17351 */
+/* Table17353 */
   0x14f4, /* VFMADDSUB213PDZ256mkz */
   0x14f7, /* VFMADDSUB213PDZ256rkz */
-/* Table17353 */
+/* Table17355 */
   0x16fc, /* VFMSUBADD213PDZ256mkz */
   0x16ff, /* VFMSUBADD213PDZ256rkz */
-/* Table17355 */
+/* Table17357 */
   0x13c8, /* VFMADD213PDZ256mkz */
   0x13cb, /* VFMADD213PDZ256rkz */
-/* Table17357 */
+/* Table17359 */
   0x15f0, /* VFMSUB213PDZ256mkz */
   0x15f3, /* VFMSUB213PDZ256rkz */
-/* Table17359 */
+/* Table17361 */
   0x1818, /* VFNMADD213PDZ256mkz */
   0x181b, /* VFNMADD213PDZ256rkz */
-/* Table17361 */
+/* Table17363 */
   0x1964, /* VFNMSUB213PDZ256mkz */
   0x1967, /* VFNMSUB213PDZ256rkz */
-/* Table17363 */
+/* Table17365 */
   0x2972, /* VPMADD52LUQZ256mkz */
   0x2975, /* VPMADD52LUQZ256rkz */
-/* Table17365 */
+/* Table17367 */
   0x2957, /* VPMADD52HUQZ256mkz */
   0x295a, /* VPMADD52HUQZ256rkz */
-/* Table17367 */
+/* Table17369 */
   0x1538, /* VFMADDSUB231PDZ256mkz */
   0x153b, /* VFMADDSUB231PDZ256rkz */
-/* Table17369 */
+/* Table17371 */
   0x1740, /* VFMSUBADD231PDZ256mkz */
   0x1743, /* VFMSUBADD231PDZ256rkz */
-/* Table17371 */
+/* Table17373 */
   0x142c, /* VFMADD231PDZ256mkz */
   0x142f, /* VFMADD231PDZ256rkz */
-/* Table17373 */
+/* Table17375 */
   0x1654, /* VFMSUB231PDZ256mkz */
   0x1657, /* VFMSUB231PDZ256rkz */
-/* Table17375 */
+/* Table17377 */
   0x187c, /* VFNMADD231PDZ256mkz */
   0x187f, /* VFNMADD231PDZ256rkz */
-/* Table17377 */
+/* Table17379 */
   0x19c8, /* VFNMSUB231PDZ256mkz */
   0x19cb, /* VFNMSUB231PDZ256rkz */
-/* Table17379 */
+/* Table17381 */
   0x2584, /* VPCONFLICTQZ256rmkz */
   0x2587, /* VPCONFLICTQZ256rrkz */
-/* Table17381 */
-  0x0, /*  */
-  0x2ce4, /* VPMOVUSWBZrrkz */
 /* Table17383 */
   0x0, /*  */
-  0x2c99, /* VPMOVUSDBZrrkz */
+  0x2ce4, /* VPMOVUSWBZrrkz */
 /* Table17385 */
   0x0, /*  */
-  0x2cb7, /* VPMOVUSQBZrrkz */
+  0x2c99, /* VPMOVUSDBZrrkz */
 /* Table17387 */
   0x0, /*  */
-  0x2ca8, /* VPMOVUSDWZrrkz */
+  0x2cb7, /* VPMOVUSQBZrrkz */
 /* Table17389 */
   0x0, /*  */
-  0x2cd5, /* VPMOVUSQWZrrkz */
+  0x2ca8, /* VPMOVUSDWZrrkz */
 /* Table17391 */
   0x0, /*  */
-  0x2cc6, /* VPMOVUSQDZrrkz */
+  0x2cd5, /* VPMOVUSQWZrrkz */
 /* Table17393 */
   0x0, /*  */
-  0x2c06, /* VPMOVSWBZrrkz */
+  0x2cc6, /* VPMOVUSQDZrrkz */
 /* Table17395 */
   0x0, /*  */
-  0x2bbb, /* VPMOVSDBZrrkz */
+  0x2c06, /* VPMOVSWBZrrkz */
 /* Table17397 */
   0x0, /*  */
-  0x2bd9, /* VPMOVSQBZrrkz */
+  0x2bbb, /* VPMOVSDBZrrkz */
 /* Table17399 */
   0x0, /*  */
-  0x2bca, /* VPMOVSDWZrrkz */
+  0x2bd9, /* VPMOVSQBZrrkz */
 /* Table17401 */
   0x0, /*  */
-  0x2bf7, /* VPMOVSQWZrrkz */
+  0x2bca, /* VPMOVSDWZrrkz */
 /* Table17403 */
   0x0, /*  */
-  0x2be8, /* VPMOVSQDZrrkz */
+  0x2bf7, /* VPMOVSQWZrrkz */
 /* Table17405 */
   0x0, /*  */
-  0x2cf6, /* VPMOVWBZrrkz */
+  0x2be8, /* VPMOVSQDZrrkz */
 /* Table17407 */
   0x0, /*  */
-  0x2b5f, /* VPMOVDBZrrkz */
+  0x2cf6, /* VPMOVWBZrrkz */
 /* Table17409 */
   0x0, /*  */
-  0x2b8e, /* VPMOVQBZrrkz */
+  0x2b5f, /* VPMOVDBZrrkz */
 /* Table17411 */
   0x0, /*  */
-  0x2b6e, /* VPMOVDWZrrkz */
+  0x2b8e, /* VPMOVQBZrrkz */
 /* Table17413 */
   0x0, /*  */
-  0x2bac, /* VPMOVQWZrrkz */
+  0x2b6e, /* VPMOVDWZrrkz */
 /* Table17415 */
   0x0, /*  */
-  0x2b9d, /* VPMOVQDZrrkz */
+  0x2bac, /* VPMOVQWZrrkz */
 /* Table17417 */
+  0x0, /*  */
+  0x2b9d, /* VPMOVQDZrrkz */
+/* Table17419 */
   0x202c, /* VP4DPWSSDrmkz */
   0x0, /*  */
-/* Table17419 */
+/* Table17421 */
   0x2029, /* VP4DPWSSDSrmkz */
   0x0, /*  */
-/* Table17421 */
+/* Table17423 */
   0xb4e, /* V4FMADDPSrmkz */
   0x0, /*  */
-/* Table17423 */
+/* Table17425 */
   0xb54, /* V4FNMADDPSrmkz */
   0x0, /*  */
-/* Table17425 */
+/* Table17427 */
   0x3160, /* VPSHUFBZrmkz */
   0x3163, /* VPSHUFBZrrkz */
-/* Table17427 */
+/* Table17429 */
   0x298f, /* VPMADDUBSWZrmkz */
   0x2992, /* VPMADDUBSWZrrkz */
-/* Table17429 */
+/* Table17431 */
   0x2daa, /* VPMULHRSWZrmkz */
   0x2dad, /* VPMULHRSWZrrkz */
-/* Table17431 */
+/* Table17433 */
   0x273b, /* VPERMILPSZrmkz */
   0x273e, /* VPERMILPSZrrkz */
-/* Table17433 */
+/* Table17435 */
   0xef5, /* VCVTPH2PSZrmkz */
   0xefb, /* VCVTPH2PSZrrkz */
-/* Table17435 */
+/* Table17437 */
   0x2fb7, /* VPRORVDZrmkz */
   0x2fba, /* VPRORVDZrrkz */
-/* Table17437 */
+/* Table17439 */
   0x2f4b, /* VPROLVDZrmkz */
   0x2f4e, /* VPROLVDZrrkz */
-/* Table17439 */
+/* Table17441 */
   0x2779, /* VPERMPSZrmkz */
   0x277c, /* VPERMPSZrrkz */
-/* Table17441 */
+/* Table17443 */
   0xd48, /* VBROADCASTSSZmkz */
   0xd4b, /* VBROADCASTSSZrkz */
-/* Table17443 */
+/* Table17445 */
   0xcef, /* VBROADCASTF32X2Zmkz */
   0xcf2, /* VBROADCASTF32X2Zrkz */
-/* Table17445 */
+/* Table17447 */
   0xcf8, /* VBROADCASTF32X4rmkz */
   0x0, /*  */
-/* Table17447 */
+/* Table17449 */
   0xcfb, /* VBROADCASTF32X8rmkz */
   0x0, /*  */
-/* Table17449 */
+/* Table17451 */
   0x203d, /* VPABSBZrmkz */
   0x2040, /* VPABSBZrrkz */
-/* Table17451 */
+/* Table17453 */
   0x208d, /* VPABSWZrmkz */
   0x2090, /* VPABSWZrrkz */
-/* Table17453 */
+/* Table17455 */
   0x205c, /* VPABSDZrmkz */
   0x205f, /* VPABSDZrrkz */
-/* Table17455 */
+/* Table17457 */
   0x2c43, /* VPMOVSXBWZrmkz */
   0x2c46, /* VPMOVSXBWZrrkz */
-/* Table17457 */
+/* Table17459 */
   0x2c17, /* VPMOVSXBDZrmkz */
   0x2c1a, /* VPMOVSXBDZrrkz */
-/* Table17459 */
+/* Table17461 */
   0x2c2d, /* VPMOVSXBQZrmkz */
   0x2c30, /* VPMOVSXBQZrrkz */
-/* Table17461 */
+/* Table17463 */
   0x2c6f, /* VPMOVSXWDZrmkz */
   0x2c72, /* VPMOVSXWDZrrkz */
-/* Table17463 */
+/* Table17465 */
   0x2c85, /* VPMOVSXWQZrmkz */
   0x2c88, /* VPMOVSXWQZrrkz */
-/* Table17465 */
+/* Table17467 */
   0x2c59, /* VPMOVSXDQZrmkz */
   0x2c5c, /* VPMOVSXDQZrrkz */
-/* Table17467 */
+/* Table17469 */
   0x20e1, /* VPACKUSDWZrmkz */
   0x20e4, /* VPACKUSDWZrrkz */
-/* Table17469 */
+/* Table17471 */
   0x3900, /* VSCALEFPSZrmkz */
   0x3906, /* VSCALEFPSZrrkz */
-/* Table17471 */
+/* Table17473 */
   0x2d33, /* VPMOVZXBWZrmkz */
   0x2d36, /* VPMOVZXBWZrrkz */
-/* Table17473 */
+/* Table17475 */
   0x2d07, /* VPMOVZXBDZrmkz */
   0x2d0a, /* VPMOVZXBDZrrkz */
-/* Table17475 */
+/* Table17477 */
   0x2d1d, /* VPMOVZXBQZrmkz */
   0x2d20, /* VPMOVZXBQZrrkz */
-/* Table17477 */
+/* Table17479 */
   0x2d5f, /* VPMOVZXWDZrmkz */
   0x2d62, /* VPMOVZXWDZrrkz */
-/* Table17479 */
+/* Table17481 */
   0x2d75, /* VPMOVZXWQZrmkz */
   0x2d78, /* VPMOVZXWQZrrkz */
-/* Table17481 */
+/* Table17483 */
   0x2d49, /* VPMOVZXDQZrmkz */
   0x2d4c, /* VPMOVZXDQZrrkz */
-/* Table17483 */
+/* Table17485 */
   0x2623, /* VPERMDZrmkz */
   0x2626, /* VPERMDZrrkz */
-/* Table17485 */
+/* Table17487 */
   0x2a8f, /* VPMINSBZrmkz */
   0x2a92, /* VPMINSBZrrkz */
-/* Table17487 */
+/* Table17489 */
   0x2aae, /* VPMINSDZrmkz */
   0x2ab1, /* VPMINSDZrrkz */
-/* Table17489 */
+/* Table17491 */
   0x2b45, /* VPMINUWZrmkz */
   0x2b48, /* VPMINUWZrrkz */
-/* Table17491 */
+/* Table17493 */
   0x2b14, /* VPMINUDZrmkz */
   0x2b17, /* VPMINUDZrrkz */
-/* Table17493 */
+/* Table17495 */
   0x29c3, /* VPMAXSBZrmkz */
   0x29c6, /* VPMAXSBZrrkz */
-/* Table17495 */
+/* Table17497 */
   0x29e2, /* VPMAXSDZrmkz */
   0x29e5, /* VPMAXSDZrrkz */
-/* Table17497 */
+/* Table17499 */
   0x2a79, /* VPMAXUWZrmkz */
   0x2a7c, /* VPMAXUWZrrkz */
-/* Table17499 */
+/* Table17501 */
   0x2a48, /* VPMAXUDZrmkz */
   0x2a4b, /* VPMAXUDZrrkz */
-/* Table17501 */
+/* Table17503 */
   0x2df5, /* VPMULLDZrmkz */
   0x2df8, /* VPMULLDZrrkz */
-/* Table17503 */
+/* Table17505 */
   0x1ac5, /* VGETEXPPSZmkz */
   0x1acb, /* VGETEXPPSZrkz */
-/* Table17505 */
+/* Table17507 */
   0x2912, /* VPLZCNTDZrmkz */
   0x2915, /* VPLZCNTDZrrkz */
-/* Table17507 */
+/* Table17509 */
   0x3402, /* VPSRLVDZrmkz */
   0x3405, /* VPSRLVDZrrkz */
-/* Table17509 */
+/* Table17511 */
   0x331e, /* VPSRAVDZrmkz */
   0x3321, /* VPSRAVDZrrkz */
-/* Table17511 */
+/* Table17513 */
   0x3244, /* VPSLLVDZrmkz */
   0x3247, /* VPSLLVDZrrkz */
-/* Table17513 */
+/* Table17515 */
   0x3765, /* VRCP14PSZmkz */
   0x3768, /* VRCP14PSZrkz */
-/* Table17515 */
+/* Table17517 */
   0x3889, /* VRSQRT14PSZmkz */
   0x388c, /* VRSQRT14PSZrkz */
-/* Table17517 */
+/* Table17519 */
   0x25c3, /* VPDPBUSDZmkz */
   0x25c6, /* VPDPBUSDZrkz */
-/* Table17519 */
+/* Table17521 */
   0x25a8, /* VPDPBUSDSZmkz */
   0x25ab, /* VPDPBUSDSZrkz */
-/* Table17521 */
+/* Table17523 */
   0x25f9, /* VPDPWSSDZmkz */
   0x25fc, /* VPDPWSSDZrkz */
-/* Table17523 */
+/* Table17525 */
   0x25de, /* VPDPWSSDSZmkz */
   0x25e1, /* VPDPWSSDSZrkz */
-/* Table17525 */
+/* Table17527 */
   0x2e74, /* VPOPCNTBZrmkz */
   0x2e77, /* VPOPCNTBZrrkz */
-/* Table17527 */
+/* Table17529 */
   0x2e8f, /* VPOPCNTDZrmkz */
   0x2e92, /* VPOPCNTDZrrkz */
-/* Table17529 */
+/* Table17531 */
   0x230a, /* VPBROADCASTDZmkz */
   0x230d, /* VPBROADCASTDZrkz */
-/* Table17531 */
+/* Table17533 */
   0xd14, /* VBROADCASTI32X2Zmkz */
   0xd17, /* VBROADCASTI32X2Zrkz */
-/* Table17533 */
+/* Table17535 */
   0xd1d, /* VBROADCASTI32X4rmkz */
   0x0, /*  */
-/* Table17535 */
+/* Table17537 */
   0xd20, /* VBROADCASTI32X8rmkz */
   0x0, /*  */
-/* Table17537 */
+/* Table17539 */
   0x2853, /* VPEXPANDBZrmkz */
   0x2856, /* VPEXPANDBZrrkz */
-/* Table17539 */
+/* Table17541 */
   0x0, /*  */
   0x2515, /* VPCOMPRESSBZrrkz */
-/* Table17541 */
+/* Table17543 */
   0x22a2, /* VPBLENDMDZrmkz */
   0x22a5, /* VPBLENDMDZrrkz */
-/* Table17543 */
+/* Table17545 */
   0xcd2, /* VBLENDMPSZrmkz */
   0xcd5, /* VBLENDMPSZrrkz */
-/* Table17545 */
+/* Table17547 */
   0x2287, /* VPBLENDMBZrmkz */
   0x228a, /* VPBLENDMBZrrkz */
-/* Table17547 */
+/* Table17549 */
   0x3065, /* VPSHLDVDZmkz */
   0x3068, /* VPSHLDVDZrkz */
-/* Table17549 */
+/* Table17551 */
   0x3101, /* VPSHRDVDZmkz */
   0x3104, /* VPSHRDVDZrkz */
-/* Table17551 */
+/* Table17553 */
   0x2635, /* VPERMI2Brmkz */
   0x2638, /* VPERMI2Brrkz */
-/* Table17553 */
+/* Table17555 */
   0x2650, /* VPERMI2Drmkz */
   0x2653, /* VPERMI2Drrkz */
-/* Table17555 */
+/* Table17557 */
   0x2686, /* VPERMI2PSrmkz */
   0x2689, /* VPERMI2PSrrkz */
-/* Table17557 */
+/* Table17559 */
   0x22eb, /* VPBROADCASTBZmkz */
   0x22ee, /* VPBROADCASTBZrkz */
-/* Table17559 */
+/* Table17561 */
   0x234e, /* VPBROADCASTWZmkz */
   0x2351, /* VPBROADCASTWZrkz */
-/* Table17561 */
-  0x0, /*  */
-  0x22f7, /* VPBROADCASTBrZrkz */
 /* Table17563 */
   0x0, /*  */
-  0x235a, /* VPBROADCASTWrZrkz */
+  0x22f7, /* VPBROADCASTBrZrkz */
 /* Table17565 */
   0x0, /*  */
-  0x2316, /* VPBROADCASTDrZrkz */
+  0x235a, /* VPBROADCASTWrZrkz */
 /* Table17567 */
+  0x0, /*  */
+  0x2316, /* VPBROADCASTDrZrkz */
+/* Table17569 */
   0x27b1, /* VPERMT2Brmkz */
   0x27b4, /* VPERMT2Brrkz */
-/* Table17569 */
+/* Table17571 */
   0x27cc, /* VPERMT2Drmkz */
   0x27cf, /* VPERMT2Drrkz */
-/* Table17571 */
+/* Table17573 */
   0x2802, /* VPERMT2PSrmkz */
   0x2805, /* VPERMT2PSrrkz */
-/* Table17573 */
+/* Table17575 */
   0x12be, /* VEXPANDPSZrmkz */
   0x12c1, /* VEXPANDPSZrrkz */
-/* Table17575 */
+/* Table17577 */
   0x2865, /* VPEXPANDDZrmkz */
   0x2868, /* VPEXPANDDZrrkz */
-/* Table17577 */
-  0x0, /*  */
-  0xe05, /* VCOMPRESSPSZrrkz */
 /* Table17579 */
   0x0, /*  */
-  0x2524, /* VPCOMPRESSDZrrkz */
+  0xe05, /* VCOMPRESSPSZrrkz */
 /* Table17581 */
+  0x0, /*  */
+  0x2524, /* VPCOMPRESSDZrrkz */
+/* Table17583 */
   0x260f, /* VPERMBZrmkz */
   0x2612, /* VPERMBZrrkz */
-/* Table17583 */
+/* Table17585 */
   0x14db, /* VFMADDSUB132PSZmkz */
   0x14e1, /* VFMADDSUB132PSZrkz */
-/* Table17585 */
+/* Table17587 */
   0x16e3, /* VFMSUBADD132PSZmkz */
   0x16e9, /* VFMSUBADD132PSZrkz */
-/* Table17587 */
+/* Table17589 */
   0x138f, /* VFMADD132PSZmkz */
   0x1395, /* VFMADD132PSZrkz */
-/* Table17589 */
+/* Table17591 */
   0x15b7, /* VFMSUB132PSZmkz */
   0x15bd, /* VFMSUB132PSZrkz */
-/* Table17591 */
+/* Table17593 */
   0x17df, /* VFNMADD132PSZmkz */
   0x17e5, /* VFNMADD132PSZrkz */
-/* Table17593 */
+/* Table17595 */
   0x192b, /* VFNMSUB132PSZmkz */
   0x1931, /* VFNMSUB132PSZrkz */
-/* Table17595 */
+/* Table17597 */
   0x151f, /* VFMADDSUB213PSZmkz */
   0x1525, /* VFMADDSUB213PSZrkz */
-/* Table17597 */
+/* Table17599 */
   0x1727, /* VFMSUBADD213PSZmkz */
   0x172d, /* VFMSUBADD213PSZrkz */
-/* Table17599 */
+/* Table17601 */
   0x13f3, /* VFMADD213PSZmkz */
   0x13f9, /* VFMADD213PSZrkz */
-/* Table17601 */
+/* Table17603 */
   0x161b, /* VFMSUB213PSZmkz */
   0x1621, /* VFMSUB213PSZrkz */
-/* Table17603 */
+/* Table17605 */
   0x1843, /* VFNMADD213PSZmkz */
   0x1849, /* VFNMADD213PSZrkz */
-/* Table17605 */
+/* Table17607 */
   0x198f, /* VFNMSUB213PSZmkz */
   0x1995, /* VFNMSUB213PSZrkz */
-/* Table17607 */
+/* Table17609 */
   0x1563, /* VFMADDSUB231PSZmkz */
   0x1569, /* VFMADDSUB231PSZrkz */
-/* Table17609 */
+/* Table17611 */
   0x176b, /* VFMSUBADD231PSZmkz */
   0x1771, /* VFMSUBADD231PSZrkz */
-/* Table17611 */
+/* Table17613 */
   0x1457, /* VFMADD231PSZmkz */
   0x145d, /* VFMADD231PSZrkz */
-/* Table17613 */
+/* Table17615 */
   0x167f, /* VFMSUB231PSZmkz */
   0x1685, /* VFMSUB231PSZrkz */
-/* Table17615 */
+/* Table17617 */
   0x18a7, /* VFNMADD231PSZmkz */
   0x18ad, /* VFNMADD231PSZrkz */
-/* Table17617 */
+/* Table17619 */
   0x19f3, /* VFNMSUB231PSZmkz */
   0x19f9, /* VFNMSUB231PSZrkz */
-/* Table17619 */
+/* Table17621 */
   0x2572, /* VPCONFLICTDZrmkz */
   0x2575, /* VPCONFLICTDZrrkz */
-/* Table17621 */
+/* Table17623 */
   0x1297, /* VEXP2PSZmkz */
   0x129d, /* VEXP2PSZrkz */
-/* Table17623 */
+/* Table17625 */
   0x3786, /* VRCP28PSZmkz */
   0x378c, /* VRCP28PSZrkz */
-/* Table17625 */
+/* Table17627 */
   0x38aa, /* VRSQRT28PSZmkz */
   0x38b0, /* VRSQRT28PSZrkz */
-/* Table17627 */
+/* Table17629 */
   0x1b7a, /* VGF2P8MULBZrmkz */
   0x1b7d, /* VGF2P8MULBZrrkz */
-/* Table17629 */
+/* Table17631 */
   0x26fd, /* VPERMILPDZrmkz */
   0x2700, /* VPERMILPDZrrkz */
-/* Table17631 */
+/* Table17633 */
   0x3435, /* VPSRLVWZrmkz */
   0x3438, /* VPSRLVWZrrkz */
-/* Table17633 */
+/* Table17635 */
   0x334d, /* VPSRAVWZrmkz */
   0x3350, /* VPSRAVWZrrkz */
-/* Table17635 */
+/* Table17637 */
   0x3277, /* VPSLLVWZrmkz */
   0x327a, /* VPSLLVWZrrkz */
-/* Table17637 */
+/* Table17639 */
   0x2fd2, /* VPRORVQZrmkz */
   0x2fd5, /* VPRORVQZrrkz */
-/* Table17639 */
+/* Table17641 */
   0x2f66, /* VPROLVQZrmkz */
   0x2f69, /* VPROLVQZrrkz */
-/* Table17641 */
+/* Table17643 */
   0x2765, /* VPERMPDZrmkz */
   0x2768, /* VPERMPDZrrkz */
-/* Table17643 */
+/* Table17645 */
   0xd34, /* VBROADCASTSDZmkz */
   0xd37, /* VBROADCASTSDZrkz */
-/* Table17645 */
+/* Table17647 */
   0xd01, /* VBROADCASTF64X2rmkz */
   0x0, /*  */
-/* Table17647 */
+/* Table17649 */
   0xd04, /* VBROADCASTF64X4rmkz */
   0x0, /*  */
-/* Table17649 */
+/* Table17651 */
   0x2079, /* VPABSQZrmkz */
   0x207c, /* VPABSQZrrkz */
-/* Table17651 */
+/* Table17653 */
   0x2d94, /* VPMULDQZrmkz */
   0x2d97, /* VPMULDQZrrkz */
-/* Table17653 */
+/* Table17655 */
   0x38e2, /* VSCALEFPDZrmkz */
   0x38e8, /* VSCALEFPDZrrkz */
-/* Table17655 */
+/* Table17657 */
   0x279f, /* VPERMQZrmkz */
   0x27a2, /* VPERMQZrrkz */
-/* Table17657 */
+/* Table17659 */
   0x2acb, /* VPMINSQZrmkz */
   0x2ace, /* VPMINSQZrrkz */
-/* Table17659 */
+/* Table17661 */
   0x2b31, /* VPMINUQZrmkz */
   0x2b34, /* VPMINUQZrrkz */
-/* Table17661 */
+/* Table17663 */
   0x29ff, /* VPMAXSQZrmkz */
   0x2a02, /* VPMAXSQZrrkz */
-/* Table17663 */
+/* Table17665 */
   0x2a65, /* VPMAXUQZrmkz */
   0x2a68, /* VPMAXUQZrrkz */
-/* Table17665 */
+/* Table17667 */
   0x2e12, /* VPMULLQZrmkz */
   0x2e15, /* VPMULLQZrrkz */
-/* Table17667 */
+/* Table17669 */
   0x1aa7, /* VGETEXPPDZmkz */
   0x1aad, /* VGETEXPPDZrkz */
-/* Table17669 */
+/* Table17671 */
   0x292d, /* VPLZCNTQZrmkz */
   0x2930, /* VPLZCNTQZrrkz */
-/* Table17671 */
+/* Table17673 */
   0x3421, /* VPSRLVQZrmkz */
   0x3424, /* VPSRLVQZrrkz */
-/* Table17673 */
+/* Table17675 */
   0x333b, /* VPSRAVQZrmkz */
   0x333e, /* VPSRAVQZrrkz */
-/* Table17675 */
+/* Table17677 */
   0x3263, /* VPSLLVQZrmkz */
   0x3266, /* VPSLLVQZrrkz */
-/* Table17677 */
+/* Table17679 */
   0x374a, /* VRCP14PDZmkz */
   0x374d, /* VRCP14PDZrkz */
-/* Table17679 */
+/* Table17681 */
   0x386e, /* VRSQRT14PDZmkz */
   0x3871, /* VRSQRT14PDZrkz */
-/* Table17681 */
+/* Table17683 */
   0x2ebc, /* VPOPCNTWZrmkz */
   0x2ebf, /* VPOPCNTWZrrkz */
-/* Table17683 */
+/* Table17685 */
   0x2eaa, /* VPOPCNTQZrmkz */
   0x2ead, /* VPOPCNTQZrrkz */
-/* Table17685 */
+/* Table17687 */
   0x232f, /* VPBROADCASTQZmkz */
   0x2332, /* VPBROADCASTQZrkz */
-/* Table17687 */
+/* Table17689 */
   0xd26, /* VBROADCASTI64X2rmkz */
   0x0, /*  */
-/* Table17689 */
+/* Table17691 */
   0xd29, /* VBROADCASTI64X4rmkz */
   0x0, /*  */
-/* Table17691 */
+/* Table17693 */
   0x2889, /* VPEXPANDWZrmkz */
   0x288c, /* VPEXPANDWZrrkz */
-/* Table17693 */
+/* Table17695 */
   0x0, /*  */
   0x2542, /* VPCOMPRESSWZrrkz */
-/* Table17695 */
+/* Table17697 */
   0x22bd, /* VPBLENDMQZrmkz */
   0x22c0, /* VPBLENDMQZrrkz */
-/* Table17697 */
+/* Table17699 */
   0xcb7, /* VBLENDMPDZrmkz */
   0xcba, /* VBLENDMPDZrrkz */
-/* Table17699 */
+/* Table17701 */
   0x22cf, /* VPBLENDMWZrmkz */
   0x22d2, /* VPBLENDMWZrrkz */
-/* Table17701 */
+/* Table17703 */
   0x3092, /* VPSHLDVWZmkz */
   0x3095, /* VPSHLDVWZrkz */
-/* Table17703 */
+/* Table17705 */
   0x3080, /* VPSHLDVQZmkz */
   0x3083, /* VPSHLDVQZrkz */
-/* Table17705 */
+/* Table17707 */
   0x312e, /* VPSHRDVWZmkz */
   0x3131, /* VPSHRDVWZrkz */
-/* Table17707 */
+/* Table17709 */
   0x311c, /* VPSHRDVQZmkz */
   0x311f, /* VPSHRDVQZrkz */
-/* Table17709 */
+/* Table17711 */
   0x26b3, /* VPERMI2Wrmkz */
   0x26b6, /* VPERMI2Wrrkz */
-/* Table17711 */
+/* Table17713 */
   0x26a1, /* VPERMI2Qrmkz */
   0x26a4, /* VPERMI2Qrrkz */
-/* Table17713 */
+/* Table17715 */
   0x266b, /* VPERMI2PDrmkz */
   0x266e, /* VPERMI2PDrrkz */
-/* Table17715 */
+/* Table17717 */
   0x0, /*  */
   0x233b, /* VPBROADCASTQrZrkz */
-/* Table17717 */
+/* Table17719 */
   0x282f, /* VPERMT2Wrmkz */
   0x2832, /* VPERMT2Wrrkz */
-/* Table17719 */
+/* Table17721 */
   0x281d, /* VPERMT2Qrmkz */
   0x2820, /* VPERMT2Qrrkz */
-/* Table17721 */
+/* Table17723 */
   0x27e7, /* VPERMT2PDrmkz */
   0x27ea, /* VPERMT2PDrrkz */
-/* Table17723 */
+/* Table17725 */
   0x2e43, /* VPMULTISHIFTQBZrmkz */
   0x2e46, /* VPMULTISHIFTQBZrrkz */
-/* Table17725 */
+/* Table17727 */
   0x12ac, /* VEXPANDPDZrmkz */
   0x12af, /* VEXPANDPDZrrkz */
-/* Table17727 */
+/* Table17729 */
   0x2877, /* VPEXPANDQZrmkz */
   0x287a, /* VPEXPANDQZrrkz */
-/* Table17729 */
-  0x0, /*  */
-  0xdf6, /* VCOMPRESSPDZrrkz */
 /* Table17731 */
   0x0, /*  */
-  0x2533, /* VPCOMPRESSQZrrkz */
+  0xdf6, /* VCOMPRESSPDZrrkz */
 /* Table17733 */
+  0x0, /*  */
+  0x2533, /* VPCOMPRESSQZrrkz */
+/* Table17735 */
   0x2841, /* VPERMWZrmkz */
   0x2844, /* VPERMWZrrkz */
-/* Table17735 */
+/* Table17737 */
   0x14b9, /* VFMADDSUB132PDZmkz */
   0x14bf, /* VFMADDSUB132PDZrkz */
-/* Table17737 */
+/* Table17739 */
   0x16c1, /* VFMSUBADD132PDZmkz */
   0x16c7, /* VFMSUBADD132PDZrkz */
-/* Table17739 */
+/* Table17741 */
   0x136d, /* VFMADD132PDZmkz */
   0x1373, /* VFMADD132PDZrkz */
-/* Table17741 */
+/* Table17743 */
   0x1595, /* VFMSUB132PDZmkz */
   0x159b, /* VFMSUB132PDZrkz */
-/* Table17743 */
+/* Table17745 */
   0x17bd, /* VFNMADD132PDZmkz */
   0x17c3, /* VFNMADD132PDZrkz */
-/* Table17745 */
+/* Table17747 */
   0x1909, /* VFNMSUB132PDZmkz */
   0x190f, /* VFNMSUB132PDZrkz */
-/* Table17747 */
+/* Table17749 */
   0x14fd, /* VFMADDSUB213PDZmkz */
   0x1503, /* VFMADDSUB213PDZrkz */
-/* Table17749 */
+/* Table17751 */
   0x1705, /* VFMSUBADD213PDZmkz */
   0x170b, /* VFMSUBADD213PDZrkz */
-/* Table17751 */
+/* Table17753 */
   0x13d1, /* VFMADD213PDZmkz */
   0x13d7, /* VFMADD213PDZrkz */
-/* Table17753 */
+/* Table17755 */
   0x15f9, /* VFMSUB213PDZmkz */
   0x15ff, /* VFMSUB213PDZrkz */
-/* Table17755 */
+/* Table17757 */
   0x1821, /* VFNMADD213PDZmkz */
   0x1827, /* VFNMADD213PDZrkz */
-/* Table17757 */
+/* Table17759 */
   0x196d, /* VFNMSUB213PDZmkz */
   0x1973, /* VFNMSUB213PDZrkz */
-/* Table17759 */
+/* Table17761 */
   0x297b, /* VPMADD52LUQZmkz */
   0x297e, /* VPMADD52LUQZrkz */
-/* Table17761 */
+/* Table17763 */
   0x2960, /* VPMADD52HUQZmkz */
   0x2963, /* VPMADD52HUQZrkz */
-/* Table17763 */
+/* Table17765 */
   0x1541, /* VFMADDSUB231PDZmkz */
   0x1547, /* VFMADDSUB231PDZrkz */
-/* Table17765 */
+/* Table17767 */
   0x1749, /* VFMSUBADD231PDZmkz */
   0x174f, /* VFMSUBADD231PDZrkz */
-/* Table17767 */
+/* Table17769 */
   0x1435, /* VFMADD231PDZmkz */
   0x143b, /* VFMADD231PDZrkz */
-/* Table17769 */
+/* Table17771 */
   0x165d, /* VFMSUB231PDZmkz */
   0x1663, /* VFMSUB231PDZrkz */
-/* Table17771 */
+/* Table17773 */
   0x1885, /* VFNMADD231PDZmkz */
   0x188b, /* VFNMADD231PDZrkz */
-/* Table17773 */
+/* Table17775 */
   0x19d1, /* VFNMSUB231PDZmkz */
   0x19d7, /* VFNMSUB231PDZrkz */
-/* Table17775 */
+/* Table17777 */
   0x258d, /* VPCONFLICTQZrmkz */
   0x2590, /* VPCONFLICTQZrrkz */
-/* Table17777 */
+/* Table17779 */
   0x128b, /* VEXP2PDZmkz */
   0x1291, /* VEXP2PDZrkz */
-/* Table17779 */
+/* Table17781 */
   0x377a, /* VRCP28PDZmkz */
   0x3780, /* VRCP28PDZrkz */
-/* Table17781 */
+/* Table17783 */
   0x389e, /* VRSQRT28PDZmkz */
   0x38a4, /* VRSQRT28PDZrkz */
-/* Table17783 */
+/* Table17785 */
   0x588, /* MMX_PALIGNRrmi */
   0x589, /* MMX_PALIGNRrri */
-/* Table17785 */
+/* Table17787 */
   0x9ff, /* SHA1RNDS4rmi */
   0xa00, /* SHA1RNDS4rri */
-/* Table17787 */
+/* Table17789 */
   0x963, /* ROUNDPSm */
   0x964, /* ROUNDPSr */
-/* Table17789 */
+/* Table17791 */
   0x961, /* ROUNDPDm */
   0x962, /* ROUNDPDr */
-/* Table17791 */
+/* Table17793 */
   0x969, /* ROUNDSSm */
   0x96b, /* ROUNDSSr */
-/* Table17793 */
+/* Table17795 */
   0x965, /* ROUNDSDm */
   0x967, /* ROUNDSDr */
-/* Table17795 */
+/* Table17797 */
   0x16b, /* BLENDPSrmi */
   0x16c, /* BLENDPSrri */
-/* Table17797 */
+/* Table17799 */
   0x169, /* BLENDPDrmi */
   0x16a, /* BLENDPDrri */
-/* Table17799 */
+/* Table17801 */
   0x789, /* PBLENDWrmi */
   0x78a, /* PBLENDWrri */
-/* Table17801 */
+/* Table17803 */
   0x77a, /* PALIGNRrmi */
   0x77b, /* PALIGNRrri */
-/* Table17803 */
+/* Table17805 */
   0x7ae, /* PEXTRBmr */
   0x7af, /* PEXTRBrr */
-/* Table17805 */
+/* Table17807 */
   0x7b4, /* PEXTRWmr */
   0x7b6, /* PEXTRWrr_REV */
-/* Table17807 */
+/* Table17809 */
   0x7b0, /* PEXTRDmr */
   0x7b1, /* PEXTRDrr */
-/* Table17809 */
+/* Table17811 */
   0x379, /* EXTRACTPSmr */
   0x37a, /* EXTRACTPSrr */
-/* Table17811 */
+/* Table17813 */
   0x7ef, /* PINSRBrm */
   0x7f0, /* PINSRBrr */
-/* Table17813 */
+/* Table17815 */
   0x40c, /* INSERTPSrm */
   0x40d, /* INSERTPSrr */
-/* Table17815 */
+/* Table17817 */
   0x7f1, /* PINSRDrm */
   0x7f2, /* PINSRDrr */
-/* Table17817 */
+/* Table17819 */
   0x371, /* DPPSrmi */
   0x372, /* DPPSrri */
-/* Table17819 */
+/* Table17821 */
   0x36f, /* DPPDrmi */
   0x370, /* DPPDrri */
-/* Table17821 */
+/* Table17823 */
   0x6cb, /* MPSADBWrmi */
   0x6cc, /* MPSADBWrri */
-/* Table17823 */
+/* Table17825 */
   0x78b, /* PCLMULQDQrm */
   0x78c, /* PCLMULQDQrr */
-/* Table17825 */
+/* Table17827 */
   0x797, /* PCMPESTRMrm */
   0x798, /* PCMPESTRMrr */
-/* Table17827 */
+/* Table17829 */
   0x795, /* PCMPESTRIrm */
   0x796, /* PCMPESTRIrr */
-/* Table17829 */
+/* Table17831 */
   0x7a3, /* PCMPISTRMrm */
   0x7a4, /* PCMPISTRMrr */
-/* Table17831 */
+/* Table17833 */
   0x7a1, /* PCMPISTRIrm */
   0x7a2, /* PCMPISTRIrr */
-/* Table17833 */
+/* Table17835 */
   0x3be, /* GF2P8AFFINEQBrmi */
   0x3bf, /* GF2P8AFFINEQBrri */
-/* Table17835 */
+/* Table17837 */
   0x3bc, /* GF2P8AFFINEINVQBrmi */
   0x3bd, /* GF2P8AFFINEINVQBrri */
-/* Table17837 */
+/* Table17839 */
   0x119, /* AESKEYGENASSIST128rm */
   0x11a, /* AESKEYGENASSIST128rr */
-/* Table17839 */
+/* Table17841 */
   0x7b2, /* PEXTRQmr */
   0x7b3, /* PEXTRQrr */
-/* Table17841 */
+/* Table17843 */
   0x7f3, /* PINSRQrm */
   0x7f4, /* PINSRQrr */
-/* Table17843 */
+/* Table17845 */
   0x95d, /* RORX32mi */
   0x95e, /* RORX32ri */
-/* Table17845 */
+/* Table17847 */
   0x2277, /* VPBLENDDrmi */
   0x2278, /* VPBLENDDrri */
-/* Table17847 */
+/* Table17849 */
   0x273f, /* VPERMILPSmi */
   0x2740, /* VPERMILPSri */
-/* Table17849 */
+/* Table17851 */
   0x2701, /* VPERMILPDmi */
   0x2702, /* VPERMILPDri */
-/* Table17851 */
+/* Table17853 */
   0x384d, /* VROUNDPSm */
   0x384e, /* VROUNDPSr */
-/* Table17853 */
+/* Table17855 */
   0x3849, /* VROUNDPDm */
   0x384a, /* VROUNDPDr */
-/* Table17855 */
+/* Table17857 */
   0x3853, /* VROUNDSSm */
   0x3855, /* VROUNDSSr */
-/* Table17857 */
+/* Table17859 */
   0x384f, /* VROUNDSDm */
   0x3851, /* VROUNDSDr */
-/* Table17859 */
+/* Table17861 */
   0xcdc, /* VBLENDPSrmi */
   0xcdd, /* VBLENDPSrri */
-/* Table17861 */
+/* Table17863 */
   0xcd8, /* VBLENDPDrmi */
   0xcd9, /* VBLENDPDrri */
-/* Table17863 */
+/* Table17865 */
   0x22d9, /* VPBLENDWrmi */
   0x22da, /* VPBLENDWrri */
-/* Table17865 */
+/* Table17867 */
   0x21d3, /* VPALIGNRrmi */
   0x21d4, /* VPALIGNRrri */
-/* Table17867 */
+/* Table17869 */
   0x288f, /* VPEXTRBmr */
   0x2890, /* VPEXTRBrr */
-/* Table17869 */
+/* Table17871 */
   0x289c, /* VPEXTRWmr */
   0x289e, /* VPEXTRWrr_REV */
-/* Table17871 */
+/* Table17873 */
   0x2893, /* VPEXTRDmr */
   0x2894, /* VPEXTRDrr */
-/* Table17873 */
+/* Table17875 */
   0x1304, /* VEXTRACTPSmr */
   0x1305, /* VEXTRACTPSrr */
-/* Table17875 */
+/* Table17877 */
   0xf56, /* VCVTPS2PHmr */
   0xf57, /* VCVTPS2PHrr */
-/* Table17877 */
+/* Table17879 */
   0x28ed, /* VPINSRBrm */
   0x28ee, /* VPINSRBrr */
-/* Table17879 */
+/* Table17881 */
   0x1bde, /* VINSERTPSrm */
   0x1bdf, /* VINSERTPSrr */
-/* Table17881 */
+/* Table17883 */
   0x28f1, /* VPINSRDrm */
   0x28f2, /* VPINSRDrr */
-/* Table17883 */
-  0x0, /*  */
-  0x4af, /* KSHIFTRBri */
 /* Table17885 */
   0x0, /*  */
-  0x4b0, /* KSHIFTRDri */
+  0x4af, /* KSHIFTRBri */
 /* Table17887 */
   0x0, /*  */
-  0x4ab, /* KSHIFTLBri */
+  0x4b0, /* KSHIFTRDri */
 /* Table17889 */
   0x0, /*  */
-  0x4ac, /* KSHIFTLDri */
+  0x4ab, /* KSHIFTLBri */
 /* Table17891 */
+  0x0, /*  */
+  0x4ac, /* KSHIFTLDri */
+/* Table17893 */
   0x1280, /* VDPPSrmi */
   0x1281, /* VDPPSrri */
-/* Table17893 */
+/* Table17895 */
   0x127c, /* VDPPDrmi */
   0x127d, /* VDPPDrri */
-/* Table17895 */
+/* Table17897 */
   0x1f74, /* VMPSADBWrmi */
   0x1f75, /* VMPSADBWrri */
-/* Table17897 */
+/* Table17899 */
   0x2365, /* VPCLMULQDQrm */
   0x2366, /* VPCLMULQDQrr */
-/* Table17899 */
+/* Table17901 */
   0x26c3, /* VPERMIL2PSmr */
   0x26c5, /* VPERMIL2PSrr */
-/* Table17901 */
+/* Table17903 */
   0x26bb, /* VPERMIL2PDmr */
   0x26bd, /* VPERMIL2PDrr */
-/* Table17903 */
+/* Table17905 */
   0xce4, /* VBLENDVPSrm */
   0xce5, /* VBLENDVPSrr */
-/* Table17905 */
+/* Table17907 */
   0xce0, /* VBLENDVPDrm */
   0xce1, /* VBLENDVPDrr */
-/* Table17907 */
+/* Table17909 */
   0x22d5, /* VPBLENDVBrm */
   0x22d6, /* VPBLENDVBrr */
-/* Table17909 */
+/* Table17911 */
   0x1578, /* VFMADDSUBPS4mr */
   0x157b, /* VFMADDSUBPS4rr_REV */
-/* Table17911 */
+/* Table17913 */
   0x1570, /* VFMADDSUBPD4mr */
   0x1573, /* VFMADDSUBPD4rr_REV */
-/* Table17913 */
+/* Table17915 */
   0x1780, /* VFMSUBADDPS4mr */
   0x1783, /* VFMSUBADDPS4rr_REV */
-/* Table17915 */
+/* Table17917 */
   0x1778, /* VFMSUBADDPD4mr */
   0x177b, /* VFMSUBADDPD4rr_REV */
-/* Table17917 */
+/* Table17919 */
   0x23f9, /* VPCMPESTRMrm */
   0x23fa, /* VPCMPESTRMrr */
-/* Table17919 */
+/* Table17921 */
   0x23f7, /* VPCMPESTRIrm */
   0x23f8, /* VPCMPESTRIrr */
-/* Table17921 */
+/* Table17923 */
   0x2449, /* VPCMPISTRMrm */
   0x244a, /* VPCMPISTRMrr */
-/* Table17923 */
+/* Table17925 */
   0x2447, /* VPCMPISTRIrm */
   0x2448, /* VPCMPISTRIrr */
-/* Table17925 */
+/* Table17927 */
   0x148c, /* VFMADDPS4mr */
   0x148f, /* VFMADDPS4rr_REV */
-/* Table17927 */
+/* Table17929 */
   0x1484, /* VFMADDPD4mr */
   0x1487, /* VFMADDPD4rr_REV */
-/* Table17929 */
+/* Table17931 */
   0x1498, /* VFMADDSS4mr */
   0x149f, /* VFMADDSS4rr_REV */
-/* Table17931 */
+/* Table17933 */
   0x1490, /* VFMADDSD4mr */
   0x1497, /* VFMADDSD4rr_REV */
-/* Table17933 */
+/* Table17935 */
   0x1790, /* VFMSUBPS4mr */
   0x1793, /* VFMSUBPS4rr_REV */
-/* Table17935 */
+/* Table17937 */
   0x1788, /* VFMSUBPD4mr */
   0x178b, /* VFMSUBPD4rr_REV */
-/* Table17937 */
+/* Table17939 */
   0x179c, /* VFMSUBSS4mr */
   0x17a3, /* VFMSUBSS4rr_REV */
-/* Table17939 */
+/* Table17941 */
   0x1794, /* VFMSUBSD4mr */
   0x179b, /* VFMSUBSD4rr_REV */
-/* Table17941 */
+/* Table17943 */
   0x18dc, /* VFNMADDPS4mr */
   0x18df, /* VFNMADDPS4rr_REV */
-/* Table17943 */
+/* Table17945 */
   0x18d4, /* VFNMADDPD4mr */
   0x18d7, /* VFNMADDPD4rr_REV */
-/* Table17945 */
+/* Table17947 */
   0x18e8, /* VFNMADDSS4mr */
   0x18ef, /* VFNMADDSS4rr_REV */
-/* Table17947 */
+/* Table17949 */
   0x18e0, /* VFNMADDSD4mr */
   0x18e7, /* VFNMADDSD4rr_REV */
-/* Table17949 */
+/* Table17951 */
   0x1a28, /* VFNMSUBPS4mr */
   0x1a2b, /* VFNMSUBPS4rr_REV */
-/* Table17951 */
+/* Table17953 */
   0x1a20, /* VFNMSUBPD4mr */
   0x1a23, /* VFNMSUBPD4rr_REV */
-/* Table17953 */
+/* Table17955 */
   0x1a34, /* VFNMSUBSS4mr */
   0x1a3b, /* VFNMSUBSS4rr_REV */
-/* Table17955 */
+/* Table17957 */
   0x1a2c, /* VFNMSUBSD4mr */
   0x1a33, /* VFNMSUBSD4rr_REV */
-/* Table17957 */
+/* Table17959 */
   0xbec, /* VAESKEYGENASSIST128rm */
   0xbed, /* VAESKEYGENASSIST128rr */
-/* Table17959 */
+/* Table17961 */
   0x95f, /* RORX64mi */
   0x960, /* RORX64ri */
-/* Table17961 */
+/* Table17963 */
   0x2897, /* VPEXTRQmr */
   0x2898, /* VPEXTRQrr */
-/* Table17963 */
+/* Table17965 */
   0x28f5, /* VPINSRQrm */
   0x28f6, /* VPINSRQrr */
-/* Table17965 */
-  0x0, /*  */
-  0x4b2, /* KSHIFTRWri */
 /* Table17967 */
   0x0, /*  */
-  0x4b1, /* KSHIFTRQri */
+  0x4b2, /* KSHIFTRWri */
 /* Table17969 */
   0x0, /*  */
-  0x4ae, /* KSHIFTLWri */
+  0x4b1, /* KSHIFTRQri */
 /* Table17971 */
   0x0, /*  */
-  0x4ad, /* KSHIFTLQri */
+  0x4ae, /* KSHIFTLWri */
 /* Table17973 */
+  0x0, /*  */
+  0x4ad, /* KSHIFTLQri */
+/* Table17975 */
   0x26c4, /* VPERMIL2PSrm */
   0x26c6, /* VPERMIL2PSrr_REV */
-/* Table17975 */
+/* Table17977 */
   0x26bc, /* VPERMIL2PDrm */
   0x26be, /* VPERMIL2PDrr_REV */
-/* Table17977 */
+/* Table17979 */
   0x1579, /* VFMADDSUBPS4rm */
   0x157a, /* VFMADDSUBPS4rr */
-/* Table17979 */
+/* Table17981 */
   0x1571, /* VFMADDSUBPD4rm */
   0x1572, /* VFMADDSUBPD4rr */
-/* Table17981 */
+/* Table17983 */
   0x1781, /* VFMSUBADDPS4rm */
   0x1782, /* VFMSUBADDPS4rr */
-/* Table17983 */
+/* Table17985 */
   0x1779, /* VFMSUBADDPD4rm */
   0x177a, /* VFMSUBADDPD4rr */
-/* Table17985 */
+/* Table17987 */
   0x148d, /* VFMADDPS4rm */
   0x148e, /* VFMADDPS4rr */
-/* Table17987 */
+/* Table17989 */
   0x1485, /* VFMADDPD4rm */
   0x1486, /* VFMADDPD4rr */
-/* Table17989 */
+/* Table17991 */
   0x149a, /* VFMADDSS4rm */
   0x149c, /* VFMADDSS4rr */
-/* Table17991 */
+/* Table17993 */
   0x1492, /* VFMADDSD4rm */
   0x1494, /* VFMADDSD4rr */
-/* Table17993 */
+/* Table17995 */
   0x1791, /* VFMSUBPS4rm */
   0x1792, /* VFMSUBPS4rr */
-/* Table17995 */
+/* Table17997 */
   0x1789, /* VFMSUBPD4rm */
   0x178a, /* VFMSUBPD4rr */
-/* Table17997 */
+/* Table17999 */
   0x179e, /* VFMSUBSS4rm */
   0x17a0, /* VFMSUBSS4rr */
-/* Table17999 */
+/* Table18001 */
   0x1796, /* VFMSUBSD4rm */
   0x1798, /* VFMSUBSD4rr */
-/* Table18001 */
+/* Table18003 */
   0x18dd, /* VFNMADDPS4rm */
   0x18de, /* VFNMADDPS4rr */
-/* Table18003 */
+/* Table18005 */
   0x18d5, /* VFNMADDPD4rm */
   0x18d6, /* VFNMADDPD4rr */
-/* Table18005 */
+/* Table18007 */
   0x18ea, /* VFNMADDSS4rm */
   0x18ec, /* VFNMADDSS4rr */
-/* Table18007 */
+/* Table18009 */
   0x18e2, /* VFNMADDSD4rm */
   0x18e4, /* VFNMADDSD4rr */
-/* Table18009 */
+/* Table18011 */
   0x1a29, /* VFNMSUBPS4rm */
   0x1a2a, /* VFNMSUBPS4rr */
-/* Table18011 */
+/* Table18013 */
   0x1a21, /* VFNMSUBPD4rm */
   0x1a22, /* VFNMSUBPD4rr */
-/* Table18013 */
+/* Table18015 */
   0x1a36, /* VFNMSUBSS4rm */
   0x1a38, /* VFNMSUBSS4rr */
-/* Table18015 */
+/* Table18017 */
   0x1a2e, /* VFNMSUBSD4rm */
   0x1a30, /* VFNMSUBSD4rr */
-/* Table18017 */
+/* Table18019 */
   0x1b68, /* VGF2P8AFFINEQBrmi */
   0x1b69, /* VGF2P8AFFINEQBrri */
-/* Table18019 */
+/* Table18021 */
   0x1b49, /* VGF2P8AFFINEINVQBrmi */
   0x1b4a, /* VGF2P8AFFINEINVQBrri */
-/* Table18021 */
+/* Table18023 */
   0x2275, /* VPBLENDDYrmi */
   0x2276, /* VPBLENDDYrri */
-/* Table18023 */
+/* Table18025 */
   0x2705, /* VPERMILPSYmi */
   0x2706, /* VPERMILPSYri */
-/* Table18025 */
+/* Table18027 */
   0x26c7, /* VPERMILPDYmi */
   0x26c8, /* VPERMILPDYri */
-/* Table18027 */
+/* Table18029 */
   0x25fd, /* VPERM2F128rm */
   0x25fe, /* VPERM2F128rr */
-/* Table18029 */
+/* Table18031 */
   0x384b, /* VROUNDPSYm */
   0x384c, /* VROUNDPSYr */
-/* Table18031 */
+/* Table18033 */
   0x3847, /* VROUNDPDYm */
   0x3848, /* VROUNDPDYr */
-/* Table18033 */
+/* Table18035 */
   0xcda, /* VBLENDPSYrmi */
   0xcdb, /* VBLENDPSYrri */
-/* Table18035 */
+/* Table18037 */
   0xcd6, /* VBLENDPDYrmi */
   0xcd7, /* VBLENDPDYrri */
-/* Table18037 */
+/* Table18039 */
   0x22d7, /* VPBLENDWYrmi */
   0x22d8, /* VPBLENDWYrri */
-/* Table18039 */
+/* Table18041 */
   0x21bf, /* VPALIGNRYrmi */
   0x21c0, /* VPALIGNRYrri */
-/* Table18041 */
+/* Table18043 */
   0x1b90, /* VINSERTF128rm */
   0x1b91, /* VINSERTF128rr */
-/* Table18043 */
+/* Table18045 */
   0x12c2, /* VEXTRACTF128mr */
   0x12c3, /* VEXTRACTF128rr */
-/* Table18045 */
+/* Table18047 */
   0xf42, /* VCVTPS2PHYmr */
   0xf43, /* VCVTPS2PHYrr */
-/* Table18047 */
+/* Table18049 */
   0x1bb6, /* VINSERTI128rm */
   0x1bb7, /* VINSERTI128rr */
-/* Table18049 */
+/* Table18051 */
   0x12e2, /* VEXTRACTI128mr */
   0x12e3, /* VEXTRACTI128rr */
-/* Table18051 */
+/* Table18053 */
   0x127e, /* VDPPSYrmi */
   0x127f, /* VDPPSYrri */
-/* Table18053 */
+/* Table18055 */
   0x1f72, /* VMPSADBWYrmi */
   0x1f73, /* VMPSADBWYrri */
-/* Table18055 */
+/* Table18057 */
   0x235d, /* VPCLMULQDQYrm */
   0x235e, /* VPCLMULQDQYrr */
-/* Table18057 */
+/* Table18059 */
   0x25ff, /* VPERM2I128rm */
   0x2600, /* VPERM2I128rr */
-/* Table18059 */
+/* Table18061 */
   0x26bf, /* VPERMIL2PSYmr */
   0x26c1, /* VPERMIL2PSYrr */
-/* Table18061 */
+/* Table18063 */
   0x26b7, /* VPERMIL2PDYmr */
   0x26b9, /* VPERMIL2PDYrr */
-/* Table18063 */
+/* Table18065 */
   0xce2, /* VBLENDVPSYrm */
   0xce3, /* VBLENDVPSYrr */
-/* Table18065 */
+/* Table18067 */
   0xcde, /* VBLENDVPDYrm */
   0xcdf, /* VBLENDVPDYrr */
-/* Table18067 */
+/* Table18069 */
   0x22d3, /* VPBLENDVBYrm */
   0x22d4, /* VPBLENDVBYrr */
-/* Table18069 */
+/* Table18071 */
   0x1574, /* VFMADDSUBPS4Ymr */
   0x1577, /* VFMADDSUBPS4Yrr_REV */
-/* Table18071 */
+/* Table18073 */
   0x156c, /* VFMADDSUBPD4Ymr */
   0x156f, /* VFMADDSUBPD4Yrr_REV */
-/* Table18073 */
+/* Table18075 */
   0x177c, /* VFMSUBADDPS4Ymr */
   0x177f, /* VFMSUBADDPS4Yrr_REV */
-/* Table18075 */
+/* Table18077 */
   0x1774, /* VFMSUBADDPD4Ymr */
   0x1777, /* VFMSUBADDPD4Yrr_REV */
-/* Table18077 */
+/* Table18079 */
   0x1488, /* VFMADDPS4Ymr */
   0x148b, /* VFMADDPS4Yrr_REV */
-/* Table18079 */
+/* Table18081 */
   0x1480, /* VFMADDPD4Ymr */
   0x1483, /* VFMADDPD4Yrr_REV */
-/* Table18081 */
+/* Table18083 */
   0x178c, /* VFMSUBPS4Ymr */
   0x178f, /* VFMSUBPS4Yrr_REV */
-/* Table18083 */
+/* Table18085 */
   0x1784, /* VFMSUBPD4Ymr */
   0x1787, /* VFMSUBPD4Yrr_REV */
-/* Table18085 */
+/* Table18087 */
   0x18d8, /* VFNMADDPS4Ymr */
   0x18db, /* VFNMADDPS4Yrr_REV */
-/* Table18087 */
+/* Table18089 */
   0x18d0, /* VFNMADDPD4Ymr */
   0x18d3, /* VFNMADDPD4Yrr_REV */
-/* Table18089 */
+/* Table18091 */
   0x1a24, /* VFNMSUBPS4Ymr */
   0x1a27, /* VFNMSUBPS4Yrr_REV */
-/* Table18091 */
+/* Table18093 */
   0x1a1c, /* VFNMSUBPD4Ymr */
   0x1a1f, /* VFNMSUBPD4Yrr_REV */
-/* Table18093 */
+/* Table18095 */
   0x277d, /* VPERMQYmi */
   0x277e, /* VPERMQYri */
-/* Table18095 */
+/* Table18097 */
   0x2743, /* VPERMPDYmi */
   0x2744, /* VPERMPDYri */
-/* Table18097 */
+/* Table18099 */
   0x26c0, /* VPERMIL2PSYrm */
   0x26c2, /* VPERMIL2PSYrr_REV */
-/* Table18099 */
+/* Table18101 */
   0x26b8, /* VPERMIL2PDYrm */
   0x26ba, /* VPERMIL2PDYrr_REV */
-/* Table18101 */
+/* Table18103 */
   0x1575, /* VFMADDSUBPS4Yrm */
   0x1576, /* VFMADDSUBPS4Yrr */
-/* Table18103 */
+/* Table18105 */
   0x156d, /* VFMADDSUBPD4Yrm */
   0x156e, /* VFMADDSUBPD4Yrr */
-/* Table18105 */
+/* Table18107 */
   0x177d, /* VFMSUBADDPS4Yrm */
   0x177e, /* VFMSUBADDPS4Yrr */
-/* Table18107 */
+/* Table18109 */
   0x1775, /* VFMSUBADDPD4Yrm */
   0x1776, /* VFMSUBADDPD4Yrr */
-/* Table18109 */
+/* Table18111 */
   0x1489, /* VFMADDPS4Yrm */
   0x148a, /* VFMADDPS4Yrr */
-/* Table18111 */
+/* Table18113 */
   0x1481, /* VFMADDPD4Yrm */
   0x1482, /* VFMADDPD4Yrr */
-/* Table18113 */
+/* Table18115 */
   0x178d, /* VFMSUBPS4Yrm */
   0x178e, /* VFMSUBPS4Yrr */
-/* Table18115 */
+/* Table18117 */
   0x1785, /* VFMSUBPD4Yrm */
   0x1786, /* VFMSUBPD4Yrr */
-/* Table18117 */
+/* Table18119 */
   0x18d9, /* VFNMADDPS4Yrm */
   0x18da, /* VFNMADDPS4Yrr */
-/* Table18119 */
+/* Table18121 */
   0x18d1, /* VFNMADDPD4Yrm */
   0x18d2, /* VFNMADDPD4Yrr */
-/* Table18121 */
+/* Table18123 */
   0x1a25, /* VFNMSUBPS4Yrm */
   0x1a26, /* VFNMSUBPS4Yrr */
-/* Table18123 */
+/* Table18125 */
   0x1a1d, /* VFNMSUBPD4Yrm */
   0x1a1e, /* VFNMSUBPD4Yrr */
-/* Table18125 */
+/* Table18127 */
   0x1b4b, /* VGF2P8AFFINEQBYrmi */
   0x1b4c, /* VGF2P8AFFINEQBYrri */
-/* Table18127 */
+/* Table18129 */
   0x1b2c, /* VGF2P8AFFINEINVQBYrmi */
   0x1b2d, /* VGF2P8AFFINEINVQBYrri */
-/* Table18129 */
+/* Table18131 */
   0xbf1, /* VALIGNDZ128rmi */
   0xbf4, /* VALIGNDZ128rri */
-/* Table18131 */
+/* Table18133 */
   0x270c, /* VPERMILPSZ128mi */
   0x270f, /* VPERMILPSZ128ri */
-/* Table18133 */
+/* Table18135 */
   0x3816, /* VRNDSCALEPSZ128rmi */
   0x3819, /* VRNDSCALEPSZ128rri */
-/* Table18135 */
+/* Table18137 */
   0x383d, /* VRNDSCALESSZm_Int */
   0x3841, /* VRNDSCALESSZr_Int */
-/* Table18137 */
+/* Table18139 */
   0x21c1, /* VPALIGNRZ128rmi */
   0x21c4, /* VPALIGNRZ128rri */
-/* Table18139 */
+/* Table18141 */
   0x288d, /* VPEXTRBZmr */
   0x288e, /* VPEXTRBZrr */
-/* Table18141 */
+/* Table18143 */
   0x2899, /* VPEXTRWZmr */
   0x289b, /* VPEXTRWZrr_REV */
-/* Table18143 */
+/* Table18145 */
   0x2891, /* VPEXTRDZmr */
   0x2892, /* VPEXTRDZrr */
-/* Table18145 */
+/* Table18147 */
   0x1302, /* VEXTRACTPSZmr */
   0x1303, /* VEXTRACTPSZrr */
-/* Table18147 */
+/* Table18149 */
   0xf44, /* VCVTPS2PHZ128mr */
   0xf46, /* VCVTPS2PHZ128rr */
-/* Table18149 */
+/* Table18151 */
   0x2487, /* VPCMPUDZ128rmi */
   0x248f, /* VPCMPUDZ128rri */
-/* Table18151 */
+/* Table18153 */
   0x2387, /* VPCMPDZ128rmi */
   0x238f, /* VPCMPDZ128rri */
-/* Table18153 */
+/* Table18155 */
   0x28eb, /* VPINSRBZrm */
   0x28ec, /* VPINSRBZrr */
-/* Table18155 */
+/* Table18157 */
   0x1bdc, /* VINSERTPSZrm */
   0x1bdd, /* VINSERTPSZrr */
-/* Table18157 */
+/* Table18159 */
   0x28ef, /* VPINSRDZrm */
   0x28f0, /* VPINSRDZrr */
-/* Table18159 */
+/* Table18161 */
   0x3528, /* VPTERNLOGDZ128rmi */
   0x352b, /* VPTERNLOGDZ128rri */
-/* Table18161 */
+/* Table18163 */
   0x1aff, /* VGETMANTPSZ128rmi */
   0x1b02, /* VGETMANTPSZ128rri */
-/* Table18163 */
+/* Table18165 */
   0x1b23, /* VGETMANTSSZrmi */
   0x1b26, /* VGETMANTSSZrri */
-/* Table18165 */
+/* Table18167 */
   0x246f, /* VPCMPUBZ128rmi */
   0x2473, /* VPCMPUBZ128rri */
-/* Table18167 */
+/* Table18169 */
   0x236f, /* VPCMPBZ128rmi */
   0x2373, /* VPCMPBZ128rri */
-/* Table18169 */
+/* Table18171 */
   0x1208, /* VDBPSADBWZ128rmi */
   0x120b, /* VDBPSADBWZ128rri */
-/* Table18171 */
+/* Table18173 */
   0x235f, /* VPCLMULQDQZ128rm */
   0x2360, /* VPCLMULQDQZ128rr */
-/* Table18173 */
+/* Table18175 */
   0x3706, /* VRANGEPSZ128rmi */
   0x3709, /* VRANGEPSZ128rri */
-/* Table18175 */
+/* Table18177 */
   0x372a, /* VRANGESSZrmi */
   0x372d, /* VRANGESSZrri */
-/* Table18177 */
+/* Table18179 */
   0x1327, /* VFIXUPIMMPSZ128rmi */
   0x132a, /* VFIXUPIMMPSZ128rri */
-/* Table18179 */
+/* Table18181 */
   0x134b, /* VFIXUPIMMSSZrmi */
   0x134e, /* VFIXUPIMMSSZrri */
-/* Table18181 */
+/* Table18183 */
   0x37c8, /* VREDUCEPSZ128rmi */
   0x37cb, /* VREDUCEPSZ128rri */
-/* Table18183 */
+/* Table18185 */
   0x37ec, /* VREDUCESSZrmi */
   0x37ef, /* VREDUCESSZrri */
-/* Table18185 */
+/* Table18187 */
   0x1a4e, /* VFPCLASSPSZ128rm */
   0x1a52, /* VFPCLASSPSZ128rr */
-/* Table18187 */
+/* Table18189 */
   0x1a64, /* VFPCLASSSSZrm */
   0x1a66, /* VFPCLASSSSZrr */
-/* Table18189 */
+/* Table18191 */
   0x301b, /* VPSHLDDZ128rmi */
   0x301e, /* VPSHLDDZ128rri */
-/* Table18191 */
+/* Table18193 */
   0x30b7, /* VPSHRDDZ128rmi */
   0x30ba, /* VPSHRDDZ128rri */
-/* Table18193 */
+/* Table18195 */
   0xc0c, /* VALIGNQZ128rmi */
   0xc0f, /* VALIGNQZ128rri */
-/* Table18195 */
+/* Table18197 */
   0x26ce, /* VPERMILPDZ128mi */
   0x26d1, /* VPERMILPDZ128ri */
-/* Table18197 */
+/* Table18199 */
   0x37f8, /* VRNDSCALEPDZ128rmi */
   0x37fb, /* VRNDSCALEPDZ128rri */
-/* Table18199 */
+/* Table18201 */
   0x3832, /* VRNDSCALESDZm_Int */
   0x3836, /* VRNDSCALESDZr_Int */
-/* Table18201 */
+/* Table18203 */
   0x2895, /* VPEXTRQZmr */
   0x2896, /* VPEXTRQZrr */
-/* Table18203 */
+/* Table18205 */
   0x24ab, /* VPCMPUQZ128rmi */
   0x24b3, /* VPCMPUQZ128rri */
-/* Table18205 */
+/* Table18207 */
   0x244b, /* VPCMPQZ128rmi */
   0x2453, /* VPCMPQZ128rri */
-/* Table18207 */
+/* Table18209 */
   0x28f3, /* VPINSRQZrm */
   0x28f4, /* VPINSRQZrr */
-/* Table18209 */
+/* Table18211 */
   0x3543, /* VPTERNLOGQZ128rmi */
   0x3546, /* VPTERNLOGQZ128rri */
-/* Table18211 */
+/* Table18213 */
   0x1ae1, /* VGETMANTPDZ128rmi */
   0x1ae4, /* VGETMANTPDZ128rri */
-/* Table18213 */
+/* Table18215 */
   0x1b1a, /* VGETMANTSDZrmi */
   0x1b1d, /* VGETMANTSDZrri */
-/* Table18215 */
+/* Table18217 */
   0x24cf, /* VPCMPUWZ128rmi */
   0x24d3, /* VPCMPUWZ128rri */
-/* Table18217 */
+/* Table18219 */
   0x24e7, /* VPCMPWZ128rmi */
   0x24eb, /* VPCMPWZ128rri */
-/* Table18219 */
+/* Table18221 */
   0x36e8, /* VRANGEPDZ128rmi */
   0x36eb, /* VRANGEPDZ128rri */
-/* Table18221 */
+/* Table18223 */
   0x3721, /* VRANGESDZrmi */
   0x3724, /* VRANGESDZrri */
-/* Table18223 */
+/* Table18225 */
   0x1309, /* VFIXUPIMMPDZ128rmi */
   0x130c, /* VFIXUPIMMPDZ128rri */
-/* Table18225 */
+/* Table18227 */
   0x1342, /* VFIXUPIMMSDZrmi */
   0x1345, /* VFIXUPIMMSDZrri */
-/* Table18227 */
+/* Table18229 */
   0x37aa, /* VREDUCEPDZ128rmi */
   0x37ad, /* VREDUCEPDZ128rri */
-/* Table18229 */
+/* Table18231 */
   0x37e3, /* VREDUCESDZrmi */
   0x37e6, /* VREDUCESDZrri */
-/* Table18231 */
+/* Table18233 */
   0x1a3c, /* VFPCLASSPDZ128rm */
   0x1a40, /* VFPCLASSPDZ128rr */
-/* Table18233 */
+/* Table18235 */
   0x1a60, /* VFPCLASSSDZrm */
   0x1a62, /* VFPCLASSSDZrr */
-/* Table18235 */
+/* Table18237 */
   0x3096, /* VPSHLDWZ128rmi */
   0x3099, /* VPSHLDWZ128rri */
-/* Table18237 */
+/* Table18239 */
   0x3036, /* VPSHLDQZ128rmi */
   0x3039, /* VPSHLDQZ128rri */
-/* Table18239 */
+/* Table18241 */
   0x3132, /* VPSHRDWZ128rmi */
   0x3135, /* VPSHRDWZ128rri */
-/* Table18241 */
+/* Table18243 */
   0x30d2, /* VPSHRDQZ128rmi */
   0x30d5, /* VPSHRDQZ128rri */
-/* Table18243 */
+/* Table18245 */
   0x1b50, /* VGF2P8AFFINEQBZ128rmi */
   0x1b53, /* VGF2P8AFFINEQBZ128rri */
-/* Table18245 */
+/* Table18247 */
   0x1b31, /* VGF2P8AFFINEINVQBZ128rmi */
   0x1b34, /* VGF2P8AFFINEINVQBZ128rri */
-/* Table18247 */
+/* Table18249 */
   0xbfa, /* VALIGNDZ256rmi */
   0xbfd, /* VALIGNDZ256rri */
-/* Table18249 */
+/* Table18251 */
   0x271e, /* VPERMILPSZ256mi */
   0x2721, /* VPERMILPSZ256ri */
-/* Table18251 */
+/* Table18253 */
   0x381f, /* VRNDSCALEPSZ256rmi */
   0x3822, /* VRNDSCALEPSZ256rri */
-/* Table18253 */
+/* Table18255 */
   0x21c7, /* VPALIGNRZ256rmi */
   0x21ca, /* VPALIGNRZ256rri */
-/* Table18255 */
+/* Table18257 */
   0x1b92, /* VINSERTF32x4Z256rm */
   0x1b95, /* VINSERTF32x4Z256rr */
-/* Table18257 */
+/* Table18259 */
   0x12c4, /* VEXTRACTF32x4Z256mr */
   0x12c6, /* VEXTRACTF32x4Z256rr */
-/* Table18259 */
+/* Table18261 */
   0xf49, /* VCVTPS2PHZ256mr */
   0xf4b, /* VCVTPS2PHZ256rr */
-/* Table18261 */
+/* Table18263 */
   0x2493, /* VPCMPUDZ256rmi */
   0x249b, /* VPCMPUDZ256rri */
-/* Table18263 */
+/* Table18265 */
   0x2393, /* VPCMPDZ256rmi */
   0x239b, /* VPCMPDZ256rri */
-/* Table18265 */
+/* Table18267 */
   0x3930, /* VSHUFF32X4Z256rmi */
   0x3933, /* VSHUFF32X4Z256rri */
-/* Table18267 */
+/* Table18269 */
   0x3531, /* VPTERNLOGDZ256rmi */
   0x3534, /* VPTERNLOGDZ256rri */
-/* Table18269 */
+/* Table18271 */
   0x1b08, /* VGETMANTPSZ256rmi */
   0x1b0b, /* VGETMANTPSZ256rri */
-/* Table18271 */
+/* Table18273 */
   0x1bb8, /* VINSERTI32x4Z256rm */
   0x1bbb, /* VINSERTI32x4Z256rr */
-/* Table18273 */
+/* Table18275 */
   0x12e4, /* VEXTRACTI32x4Z256mr */
   0x12e6, /* VEXTRACTI32x4Z256rr */
-/* Table18275 */
+/* Table18277 */
   0x2477, /* VPCMPUBZ256rmi */
   0x247b, /* VPCMPUBZ256rri */
-/* Table18277 */
+/* Table18279 */
   0x2377, /* VPCMPBZ256rmi */
   0x237b, /* VPCMPBZ256rri */
-/* Table18279 */
+/* Table18281 */
   0x120e, /* VDBPSADBWZ256rmi */
   0x1211, /* VDBPSADBWZ256rri */
-/* Table18281 */
+/* Table18283 */
   0x3954, /* VSHUFI32X4Z256rmi */
   0x3957, /* VSHUFI32X4Z256rri */
-/* Table18283 */
+/* Table18285 */
   0x2361, /* VPCLMULQDQZ256rm */
   0x2362, /* VPCLMULQDQZ256rr */
-/* Table18285 */
+/* Table18287 */
   0x370f, /* VRANGEPSZ256rmi */
   0x3712, /* VRANGEPSZ256rri */
-/* Table18287 */
+/* Table18289 */
   0x1330, /* VFIXUPIMMPSZ256rmi */
   0x1333, /* VFIXUPIMMPSZ256rri */
-/* Table18289 */
+/* Table18291 */
   0x37d1, /* VREDUCEPSZ256rmi */
   0x37d4, /* VREDUCEPSZ256rri */
-/* Table18291 */
+/* Table18293 */
   0x1a54, /* VFPCLASSPSZ256rm */
   0x1a58, /* VFPCLASSPSZ256rr */
-/* Table18293 */
+/* Table18295 */
   0x3024, /* VPSHLDDZ256rmi */
   0x3027, /* VPSHLDDZ256rri */
-/* Table18295 */
+/* Table18297 */
   0x30c0, /* VPSHRDDZ256rmi */
   0x30c3, /* VPSHRDDZ256rri */
-/* Table18297 */
+/* Table18299 */
   0x2782, /* VPERMQZ256mi */
   0x2785, /* VPERMQZ256ri */
-/* Table18299 */
+/* Table18301 */
   0x2748, /* VPERMPDZ256mi */
   0x274b, /* VPERMPDZ256ri */
-/* Table18301 */
+/* Table18303 */
   0xc15, /* VALIGNQZ256rmi */
   0xc18, /* VALIGNQZ256rri */
-/* Table18303 */
+/* Table18305 */
   0x26e0, /* VPERMILPDZ256mi */
   0x26e3, /* VPERMILPDZ256ri */
-/* Table18305 */
+/* Table18307 */
   0x3801, /* VRNDSCALEPDZ256rmi */
   0x3804, /* VRNDSCALEPDZ256rri */
-/* Table18307 */
+/* Table18309 */
   0x1ba4, /* VINSERTF64x2Z256rm */
   0x1ba7, /* VINSERTF64x2Z256rr */
-/* Table18309 */
+/* Table18311 */
   0x12d3, /* VEXTRACTF64x2Z256mr */
   0x12d5, /* VEXTRACTF64x2Z256rr */
-/* Table18311 */
+/* Table18313 */
   0x24b7, /* VPCMPUQZ256rmi */
   0x24bf, /* VPCMPUQZ256rri */
-/* Table18313 */
+/* Table18315 */
   0x2457, /* VPCMPQZ256rmi */
   0x245f, /* VPCMPQZ256rri */
-/* Table18315 */
+/* Table18317 */
   0x3942, /* VSHUFF64X2Z256rmi */
   0x3945, /* VSHUFF64X2Z256rri */
-/* Table18317 */
+/* Table18319 */
   0x354c, /* VPTERNLOGQZ256rmi */
   0x354f, /* VPTERNLOGQZ256rri */
-/* Table18319 */
+/* Table18321 */
   0x1aea, /* VGETMANTPDZ256rmi */
   0x1aed, /* VGETMANTPDZ256rri */
-/* Table18321 */
+/* Table18323 */
   0x1bca, /* VINSERTI64x2Z256rm */
   0x1bcd, /* VINSERTI64x2Z256rr */
-/* Table18323 */
+/* Table18325 */
   0x12f3, /* VEXTRACTI64x2Z256mr */
   0x12f5, /* VEXTRACTI64x2Z256rr */
-/* Table18325 */
+/* Table18327 */
   0x24d7, /* VPCMPUWZ256rmi */
   0x24db, /* VPCMPUWZ256rri */
-/* Table18327 */
+/* Table18329 */
   0x24ef, /* VPCMPWZ256rmi */
   0x24f3, /* VPCMPWZ256rri */
-/* Table18329 */
+/* Table18331 */
   0x3966, /* VSHUFI64X2Z256rmi */
   0x3969, /* VSHUFI64X2Z256rri */
-/* Table18331 */
+/* Table18333 */
   0x36f1, /* VRANGEPDZ256rmi */
   0x36f4, /* VRANGEPDZ256rri */
-/* Table18333 */
+/* Table18335 */
   0x1312, /* VFIXUPIMMPDZ256rmi */
   0x1315, /* VFIXUPIMMPDZ256rri */
-/* Table18335 */
+/* Table18337 */
   0x37b3, /* VREDUCEPDZ256rmi */
   0x37b6, /* VREDUCEPDZ256rri */
-/* Table18337 */
+/* Table18339 */
   0x1a42, /* VFPCLASSPDZ256rm */
   0x1a46, /* VFPCLASSPDZ256rr */
-/* Table18339 */
+/* Table18341 */
   0x309c, /* VPSHLDWZ256rmi */
   0x309f, /* VPSHLDWZ256rri */
-/* Table18341 */
+/* Table18343 */
   0x303f, /* VPSHLDQZ256rmi */
   0x3042, /* VPSHLDQZ256rri */
-/* Table18343 */
+/* Table18345 */
   0x3138, /* VPSHRDWZ256rmi */
   0x313b, /* VPSHRDWZ256rri */
-/* Table18345 */
+/* Table18347 */
   0x30db, /* VPSHRDQZ256rmi */
   0x30de, /* VPSHRDQZ256rri */
-/* Table18347 */
+/* Table18349 */
   0x1b59, /* VGF2P8AFFINEQBZ256rmi */
   0x1b5c, /* VGF2P8AFFINEQBZ256rri */
-/* Table18349 */
+/* Table18351 */
   0x1b3a, /* VGF2P8AFFINEINVQBZ256rmi */
   0x1b3d, /* VGF2P8AFFINEINVQBZ256rri */
-/* Table18351 */
+/* Table18353 */
   0xc03, /* VALIGNDZrmi */
   0xc06, /* VALIGNDZrri */
-/* Table18353 */
+/* Table18355 */
   0x2730, /* VPERMILPSZmi */
   0x2733, /* VPERMILPSZri */
-/* Table18355 */
+/* Table18357 */
   0x3828, /* VRNDSCALEPSZrmi */
   0x382b, /* VRNDSCALEPSZrri */
-/* Table18357 */
+/* Table18359 */
   0x21cd, /* VPALIGNRZrmi */
   0x21d0, /* VPALIGNRZrri */
-/* Table18359 */
+/* Table18361 */
   0x1b98, /* VINSERTF32x4Zrm */
   0x1b9b, /* VINSERTF32x4Zrr */
-/* Table18361 */
+/* Table18363 */
   0x12c9, /* VEXTRACTF32x4Zmr */
   0x12cb, /* VEXTRACTF32x4Zrr */
-/* Table18363 */
+/* Table18365 */
   0x1b9e, /* VINSERTF32x8Zrm */
   0x1ba1, /* VINSERTF32x8Zrr */
-/* Table18365 */
+/* Table18367 */
   0x12ce, /* VEXTRACTF32x8Zmr */
   0x12d0, /* VEXTRACTF32x8Zrr */
-/* Table18367 */
+/* Table18369 */
   0xf4e, /* VCVTPS2PHZmr */
   0xf50, /* VCVTPS2PHZrr */
-/* Table18369 */
+/* Table18371 */
   0x249f, /* VPCMPUDZrmi */
   0x24a7, /* VPCMPUDZrri */
-/* Table18371 */
+/* Table18373 */
   0x239f, /* VPCMPDZrmi */
   0x23a7, /* VPCMPDZrri */
-/* Table18373 */
+/* Table18375 */
   0x3939, /* VSHUFF32X4Zrmi */
   0x393c, /* VSHUFF32X4Zrri */
-/* Table18375 */
+/* Table18377 */
   0x353a, /* VPTERNLOGDZrmi */
   0x353d, /* VPTERNLOGDZrri */
-/* Table18377 */
+/* Table18379 */
   0x1b11, /* VGETMANTPSZrmi */
   0x1b14, /* VGETMANTPSZrri */
-/* Table18379 */
+/* Table18381 */
   0x1bbe, /* VINSERTI32x4Zrm */
   0x1bc1, /* VINSERTI32x4Zrr */
-/* Table18381 */
+/* Table18383 */
   0x12e9, /* VEXTRACTI32x4Zmr */
   0x12eb, /* VEXTRACTI32x4Zrr */
-/* Table18383 */
+/* Table18385 */
   0x1bc4, /* VINSERTI32x8Zrm */
   0x1bc7, /* VINSERTI32x8Zrr */
-/* Table18385 */
+/* Table18387 */
   0x12ee, /* VEXTRACTI32x8Zmr */
   0x12f0, /* VEXTRACTI32x8Zrr */
-/* Table18387 */
+/* Table18389 */
   0x247f, /* VPCMPUBZrmi */
   0x2483, /* VPCMPUBZrri */
-/* Table18389 */
+/* Table18391 */
   0x237f, /* VPCMPBZrmi */
   0x2383, /* VPCMPBZrri */
-/* Table18391 */
+/* Table18393 */
   0x1214, /* VDBPSADBWZrmi */
   0x1217, /* VDBPSADBWZrri */
-/* Table18393 */
+/* Table18395 */
   0x395d, /* VSHUFI32X4Zrmi */
   0x3960, /* VSHUFI32X4Zrri */
-/* Table18395 */
+/* Table18397 */
   0x2363, /* VPCLMULQDQZrm */
   0x2364, /* VPCLMULQDQZrr */
-/* Table18397 */
+/* Table18399 */
   0x3718, /* VRANGEPSZrmi */
   0x371b, /* VRANGEPSZrri */
-/* Table18399 */
+/* Table18401 */
   0x1339, /* VFIXUPIMMPSZrmi */
   0x133c, /* VFIXUPIMMPSZrri */
-/* Table18401 */
+/* Table18403 */
   0x37da, /* VREDUCEPSZrmi */
   0x37dd, /* VREDUCEPSZrri */
-/* Table18403 */
+/* Table18405 */
   0x1a5a, /* VFPCLASSPSZrm */
   0x1a5e, /* VFPCLASSPSZrr */
-/* Table18405 */
+/* Table18407 */
   0x302d, /* VPSHLDDZrmi */
   0x3030, /* VPSHLDDZrri */
-/* Table18407 */
+/* Table18409 */
   0x30c9, /* VPSHRDDZrmi */
   0x30cc, /* VPSHRDDZrri */
-/* Table18409 */
+/* Table18411 */
   0x2794, /* VPERMQZmi */
   0x2797, /* VPERMQZri */
-/* Table18411 */
+/* Table18413 */
   0x275a, /* VPERMPDZmi */
   0x275d, /* VPERMPDZri */
-/* Table18413 */
+/* Table18415 */
   0xc1e, /* VALIGNQZrmi */
   0xc21, /* VALIGNQZrri */
-/* Table18415 */
+/* Table18417 */
   0x26f2, /* VPERMILPDZmi */
   0x26f5, /* VPERMILPDZri */
-/* Table18417 */
+/* Table18419 */
   0x380a, /* VRNDSCALEPDZrmi */
   0x380d, /* VRNDSCALEPDZrri */
-/* Table18419 */
+/* Table18421 */
   0x1baa, /* VINSERTF64x2Zrm */
   0x1bad, /* VINSERTF64x2Zrr */
-/* Table18421 */
+/* Table18423 */
   0x12d8, /* VEXTRACTF64x2Zmr */
   0x12da, /* VEXTRACTF64x2Zrr */
-/* Table18423 */
+/* Table18425 */
   0x1bb0, /* VINSERTF64x4Zrm */
   0x1bb3, /* VINSERTF64x4Zrr */
-/* Table18425 */
+/* Table18427 */
   0x12dd, /* VEXTRACTF64x4Zmr */
   0x12df, /* VEXTRACTF64x4Zrr */
-/* Table18427 */
+/* Table18429 */
   0x24c3, /* VPCMPUQZrmi */
   0x24cb, /* VPCMPUQZrri */
-/* Table18429 */
+/* Table18431 */
   0x2463, /* VPCMPQZrmi */
   0x246b, /* VPCMPQZrri */
-/* Table18431 */
+/* Table18433 */
   0x394b, /* VSHUFF64X2Zrmi */
   0x394e, /* VSHUFF64X2Zrri */
-/* Table18433 */
+/* Table18435 */
   0x3555, /* VPTERNLOGQZrmi */
   0x3558, /* VPTERNLOGQZrri */
-/* Table18435 */
+/* Table18437 */
   0x1af3, /* VGETMANTPDZrmi */
   0x1af6, /* VGETMANTPDZrri */
-/* Table18437 */
+/* Table18439 */
   0x1bd0, /* VINSERTI64x2Zrm */
   0x1bd3, /* VINSERTI64x2Zrr */
-/* Table18439 */
+/* Table18441 */
   0x12f8, /* VEXTRACTI64x2Zmr */
   0x12fa, /* VEXTRACTI64x2Zrr */
-/* Table18441 */
+/* Table18443 */
   0x1bd6, /* VINSERTI64x4Zrm */
   0x1bd9, /* VINSERTI64x4Zrr */
-/* Table18443 */
+/* Table18445 */
   0x12fd, /* VEXTRACTI64x4Zmr */
   0x12ff, /* VEXTRACTI64x4Zrr */
-/* Table18445 */
+/* Table18447 */
   0x24df, /* VPCMPUWZrmi */
   0x24e3, /* VPCMPUWZrri */
-/* Table18447 */
+/* Table18449 */
   0x24f7, /* VPCMPWZrmi */
   0x24fb, /* VPCMPWZrri */
-/* Table18449 */
+/* Table18451 */
   0x396f, /* VSHUFI64X2Zrmi */
   0x3972, /* VSHUFI64X2Zrri */
-/* Table18451 */
+/* Table18453 */
   0x36fa, /* VRANGEPDZrmi */
   0x36fd, /* VRANGEPDZrri */
-/* Table18453 */
+/* Table18455 */
   0x131b, /* VFIXUPIMMPDZrmi */
   0x131e, /* VFIXUPIMMPDZrri */
-/* Table18455 */
+/* Table18457 */
   0x37bc, /* VREDUCEPDZrmi */
   0x37bf, /* VREDUCEPDZrri */
-/* Table18457 */
+/* Table18459 */
   0x1a48, /* VFPCLASSPDZrm */
   0x1a4c, /* VFPCLASSPDZrr */
-/* Table18459 */
+/* Table18461 */
   0x30a2, /* VPSHLDWZrmi */
   0x30a5, /* VPSHLDWZrri */
-/* Table18461 */
+/* Table18463 */
   0x3048, /* VPSHLDQZrmi */
   0x304b, /* VPSHLDQZrri */
-/* Table18463 */
+/* Table18465 */
   0x313e, /* VPSHRDWZrmi */
   0x3141, /* VPSHRDWZrri */
-/* Table18465 */
+/* Table18467 */
   0x30e4, /* VPSHRDQZrmi */
   0x30e7, /* VPSHRDQZrri */
-/* Table18467 */
+/* Table18469 */
   0x1b62, /* VGF2P8AFFINEQBZrmi */
   0x1b65, /* VGF2P8AFFINEQBZrri */
-/* Table18469 */
+/* Table18471 */
   0x1b43, /* VGF2P8AFFINEINVQBZrmi */
   0x1b46, /* VGF2P8AFFINEINVQBZrri */
-/* Table18471 */
+/* Table18473 */
   0xbf2, /* VALIGNDZ128rmik */
   0xbf5, /* VALIGNDZ128rrik */
-/* Table18473 */
+/* Table18475 */
   0x270d, /* VPERMILPSZ128mik */
   0x2710, /* VPERMILPSZ128rik */
-/* Table18475 */
+/* Table18477 */
   0x3817, /* VRNDSCALEPSZ128rmik */
   0x381a, /* VRNDSCALEPSZ128rrik */
-/* Table18477 */
+/* Table18479 */
   0x383e, /* VRNDSCALESSZm_Intk */
   0x3842, /* VRNDSCALESSZr_Intk */
-/* Table18479 */
+/* Table18481 */
   0x21c2, /* VPALIGNRZ128rmik */
   0x21c5, /* VPALIGNRZ128rrik */
-/* Table18481 */
+/* Table18483 */
   0xf45, /* VCVTPS2PHZ128mrk */
   0xf47, /* VCVTPS2PHZ128rrk */
-/* Table18483 */
+/* Table18485 */
   0x248d, /* VPCMPUDZ128rmik */
   0x2491, /* VPCMPUDZ128rrik */
-/* Table18485 */
+/* Table18487 */
   0x238d, /* VPCMPDZ128rmik */
   0x2391, /* VPCMPDZ128rrik */
-/* Table18487 */
+/* Table18489 */
   0x3529, /* VPTERNLOGDZ128rmik */
   0x352c, /* VPTERNLOGDZ128rrik */
-/* Table18489 */
+/* Table18491 */
   0x1b00, /* VGETMANTPSZ128rmik */
   0x1b03, /* VGETMANTPSZ128rrik */
-/* Table18491 */
+/* Table18493 */
   0x1b24, /* VGETMANTSSZrmik */
   0x1b2a, /* VGETMANTSSZrrik */
-/* Table18493 */
+/* Table18495 */
   0x2471, /* VPCMPUBZ128rmik */
   0x2475, /* VPCMPUBZ128rrik */
-/* Table18495 */
+/* Table18497 */
   0x2371, /* VPCMPBZ128rmik */
   0x2375, /* VPCMPBZ128rrik */
-/* Table18497 */
+/* Table18499 */
   0x1209, /* VDBPSADBWZ128rmik */
   0x120c, /* VDBPSADBWZ128rrik */
-/* Table18499 */
+/* Table18501 */
   0x3707, /* VRANGEPSZ128rmik */
   0x370a, /* VRANGEPSZ128rrik */
-/* Table18501 */
+/* Table18503 */
   0x372b, /* VRANGESSZrmik */
   0x3731, /* VRANGESSZrrik */
-/* Table18503 */
+/* Table18505 */
   0x1328, /* VFIXUPIMMPSZ128rmik */
   0x132b, /* VFIXUPIMMPSZ128rrik */
-/* Table18505 */
+/* Table18507 */
   0x134c, /* VFIXUPIMMSSZrmik */
   0x1352, /* VFIXUPIMMSSZrrik */
-/* Table18507 */
+/* Table18509 */
   0x37c9, /* VREDUCEPSZ128rmik */
   0x37cc, /* VREDUCEPSZ128rrik */
-/* Table18509 */
+/* Table18511 */
   0x37ed, /* VREDUCESSZrmik */
   0x37f3, /* VREDUCESSZrrik */
-/* Table18511 */
+/* Table18513 */
   0x1a51, /* VFPCLASSPSZ128rmk */
   0x1a53, /* VFPCLASSPSZ128rrk */
-/* Table18513 */
+/* Table18515 */
   0x1a65, /* VFPCLASSSSZrmk */
   0x1a67, /* VFPCLASSSSZrrk */
-/* Table18515 */
+/* Table18517 */
   0x301c, /* VPSHLDDZ128rmik */
   0x301f, /* VPSHLDDZ128rrik */
-/* Table18517 */
+/* Table18519 */
   0x30b8, /* VPSHRDDZ128rmik */
   0x30bb, /* VPSHRDDZ128rrik */
-/* Table18519 */
+/* Table18521 */
   0xc0d, /* VALIGNQZ128rmik */
   0xc10, /* VALIGNQZ128rrik */
-/* Table18521 */
+/* Table18523 */
   0x26cf, /* VPERMILPDZ128mik */
   0x26d2, /* VPERMILPDZ128rik */
-/* Table18523 */
+/* Table18525 */
   0x37f9, /* VRNDSCALEPDZ128rmik */
   0x37fc, /* VRNDSCALEPDZ128rrik */
-/* Table18525 */
+/* Table18527 */
   0x3833, /* VRNDSCALESDZm_Intk */
   0x3837, /* VRNDSCALESDZr_Intk */
-/* Table18527 */
+/* Table18529 */
   0x24b1, /* VPCMPUQZ128rmik */
   0x24b5, /* VPCMPUQZ128rrik */
-/* Table18529 */
+/* Table18531 */
   0x2451, /* VPCMPQZ128rmik */
   0x2455, /* VPCMPQZ128rrik */
-/* Table18531 */
+/* Table18533 */
   0x3544, /* VPTERNLOGQZ128rmik */
   0x3547, /* VPTERNLOGQZ128rrik */
-/* Table18533 */
+/* Table18535 */
   0x1ae2, /* VGETMANTPDZ128rmik */
   0x1ae5, /* VGETMANTPDZ128rrik */
-/* Table18535 */
+/* Table18537 */
   0x1b1b, /* VGETMANTSDZrmik */
   0x1b21, /* VGETMANTSDZrrik */
-/* Table18537 */
+/* Table18539 */
   0x24d1, /* VPCMPUWZ128rmik */
   0x24d5, /* VPCMPUWZ128rrik */
-/* Table18539 */
+/* Table18541 */
   0x24e9, /* VPCMPWZ128rmik */
   0x24ed, /* VPCMPWZ128rrik */
-/* Table18541 */
+/* Table18543 */
   0x36e9, /* VRANGEPDZ128rmik */
   0x36ec, /* VRANGEPDZ128rrik */
-/* Table18543 */
+/* Table18545 */
   0x3722, /* VRANGESDZrmik */
   0x3728, /* VRANGESDZrrik */
-/* Table18545 */
+/* Table18547 */
   0x130a, /* VFIXUPIMMPDZ128rmik */
   0x130d, /* VFIXUPIMMPDZ128rrik */
-/* Table18547 */
+/* Table18549 */
   0x1343, /* VFIXUPIMMSDZrmik */
   0x1349, /* VFIXUPIMMSDZrrik */
-/* Table18549 */
+/* Table18551 */
   0x37ab, /* VREDUCEPDZ128rmik */
   0x37ae, /* VREDUCEPDZ128rrik */
-/* Table18551 */
+/* Table18553 */
   0x37e4, /* VREDUCESDZrmik */
   0x37ea, /* VREDUCESDZrrik */
-/* Table18553 */
+/* Table18555 */
   0x1a3f, /* VFPCLASSPDZ128rmk */
   0x1a41, /* VFPCLASSPDZ128rrk */
-/* Table18555 */
+/* Table18557 */
   0x1a61, /* VFPCLASSSDZrmk */
   0x1a63, /* VFPCLASSSDZrrk */
-/* Table18557 */
+/* Table18559 */
   0x3097, /* VPSHLDWZ128rmik */
   0x309a, /* VPSHLDWZ128rrik */
-/* Table18559 */
+/* Table18561 */
   0x3037, /* VPSHLDQZ128rmik */
   0x303a, /* VPSHLDQZ128rrik */
-/* Table18561 */
+/* Table18563 */
   0x3133, /* VPSHRDWZ128rmik */
   0x3136, /* VPSHRDWZ128rrik */
-/* Table18563 */
+/* Table18565 */
   0x30d3, /* VPSHRDQZ128rmik */
   0x30d6, /* VPSHRDQZ128rrik */
-/* Table18565 */
+/* Table18567 */
   0x1b51, /* VGF2P8AFFINEQBZ128rmik */
   0x1b54, /* VGF2P8AFFINEQBZ128rrik */
-/* Table18567 */
+/* Table18569 */
   0x1b32, /* VGF2P8AFFINEINVQBZ128rmik */
   0x1b35, /* VGF2P8AFFINEINVQBZ128rrik */
-/* Table18569 */
+/* Table18571 */
   0xbfb, /* VALIGNDZ256rmik */
   0xbfe, /* VALIGNDZ256rrik */
-/* Table18571 */
+/* Table18573 */
   0x271f, /* VPERMILPSZ256mik */
   0x2722, /* VPERMILPSZ256rik */
-/* Table18573 */
+/* Table18575 */
   0x3820, /* VRNDSCALEPSZ256rmik */
   0x3823, /* VRNDSCALEPSZ256rrik */
-/* Table18575 */
+/* Table18577 */
   0x21c8, /* VPALIGNRZ256rmik */
   0x21cb, /* VPALIGNRZ256rrik */
-/* Table18577 */
+/* Table18579 */
   0x1b93, /* VINSERTF32x4Z256rmk */
   0x1b96, /* VINSERTF32x4Z256rrk */
-/* Table18579 */
+/* Table18581 */
   0x12c5, /* VEXTRACTF32x4Z256mrk */
   0x12c7, /* VEXTRACTF32x4Z256rrk */
-/* Table18581 */
+/* Table18583 */
   0xf4a, /* VCVTPS2PHZ256mrk */
   0xf4c, /* VCVTPS2PHZ256rrk */
-/* Table18583 */
+/* Table18585 */
   0x2499, /* VPCMPUDZ256rmik */
   0x249d, /* VPCMPUDZ256rrik */
-/* Table18585 */
+/* Table18587 */
   0x2399, /* VPCMPDZ256rmik */
   0x239d, /* VPCMPDZ256rrik */
-/* Table18587 */
+/* Table18589 */
   0x3931, /* VSHUFF32X4Z256rmik */
   0x3934, /* VSHUFF32X4Z256rrik */
-/* Table18589 */
+/* Table18591 */
   0x3532, /* VPTERNLOGDZ256rmik */
   0x3535, /* VPTERNLOGDZ256rrik */
-/* Table18591 */
+/* Table18593 */
   0x1b09, /* VGETMANTPSZ256rmik */
   0x1b0c, /* VGETMANTPSZ256rrik */
-/* Table18593 */
+/* Table18595 */
   0x1bb9, /* VINSERTI32x4Z256rmk */
   0x1bbc, /* VINSERTI32x4Z256rrk */
-/* Table18595 */
+/* Table18597 */
   0x12e5, /* VEXTRACTI32x4Z256mrk */
   0x12e7, /* VEXTRACTI32x4Z256rrk */
-/* Table18597 */
+/* Table18599 */
   0x2479, /* VPCMPUBZ256rmik */
   0x247d, /* VPCMPUBZ256rrik */
-/* Table18599 */
+/* Table18601 */
   0x2379, /* VPCMPBZ256rmik */
   0x237d, /* VPCMPBZ256rrik */
-/* Table18601 */
+/* Table18603 */
   0x120f, /* VDBPSADBWZ256rmik */
   0x1212, /* VDBPSADBWZ256rrik */
-/* Table18603 */
+/* Table18605 */
   0x3955, /* VSHUFI32X4Z256rmik */
   0x3958, /* VSHUFI32X4Z256rrik */
-/* Table18605 */
+/* Table18607 */
   0x3710, /* VRANGEPSZ256rmik */
   0x3713, /* VRANGEPSZ256rrik */
-/* Table18607 */
+/* Table18609 */
   0x1331, /* VFIXUPIMMPSZ256rmik */
   0x1334, /* VFIXUPIMMPSZ256rrik */
-/* Table18609 */
+/* Table18611 */
   0x37d2, /* VREDUCEPSZ256rmik */
   0x37d5, /* VREDUCEPSZ256rrik */
-/* Table18611 */
+/* Table18613 */
   0x1a57, /* VFPCLASSPSZ256rmk */
   0x1a59, /* VFPCLASSPSZ256rrk */
-/* Table18613 */
+/* Table18615 */
   0x3025, /* VPSHLDDZ256rmik */
   0x3028, /* VPSHLDDZ256rrik */
-/* Table18615 */
+/* Table18617 */
   0x30c1, /* VPSHRDDZ256rmik */
   0x30c4, /* VPSHRDDZ256rrik */
-/* Table18617 */
+/* Table18619 */
   0x2783, /* VPERMQZ256mik */
   0x2786, /* VPERMQZ256rik */
-/* Table18619 */
+/* Table18621 */
   0x2749, /* VPERMPDZ256mik */
   0x274c, /* VPERMPDZ256rik */
-/* Table18621 */
+/* Table18623 */
   0xc16, /* VALIGNQZ256rmik */
   0xc19, /* VALIGNQZ256rrik */
-/* Table18623 */
+/* Table18625 */
   0x26e1, /* VPERMILPDZ256mik */
   0x26e4, /* VPERMILPDZ256rik */
-/* Table18625 */
+/* Table18627 */
   0x3802, /* VRNDSCALEPDZ256rmik */
   0x3805, /* VRNDSCALEPDZ256rrik */
-/* Table18627 */
+/* Table18629 */
   0x1ba5, /* VINSERTF64x2Z256rmk */
   0x1ba8, /* VINSERTF64x2Z256rrk */
-/* Table18629 */
+/* Table18631 */
   0x12d4, /* VEXTRACTF64x2Z256mrk */
   0x12d6, /* VEXTRACTF64x2Z256rrk */
-/* Table18631 */
+/* Table18633 */
   0x24bd, /* VPCMPUQZ256rmik */
   0x24c1, /* VPCMPUQZ256rrik */
-/* Table18633 */
+/* Table18635 */
   0x245d, /* VPCMPQZ256rmik */
   0x2461, /* VPCMPQZ256rrik */
-/* Table18635 */
+/* Table18637 */
   0x3943, /* VSHUFF64X2Z256rmik */
   0x3946, /* VSHUFF64X2Z256rrik */
-/* Table18637 */
+/* Table18639 */
   0x354d, /* VPTERNLOGQZ256rmik */
   0x3550, /* VPTERNLOGQZ256rrik */
-/* Table18639 */
+/* Table18641 */
   0x1aeb, /* VGETMANTPDZ256rmik */
   0x1aee, /* VGETMANTPDZ256rrik */
-/* Table18641 */
+/* Table18643 */
   0x1bcb, /* VINSERTI64x2Z256rmk */
   0x1bce, /* VINSERTI64x2Z256rrk */
-/* Table18643 */
+/* Table18645 */
   0x12f4, /* VEXTRACTI64x2Z256mrk */
   0x12f6, /* VEXTRACTI64x2Z256rrk */
-/* Table18645 */
+/* Table18647 */
   0x24d9, /* VPCMPUWZ256rmik */
   0x24dd, /* VPCMPUWZ256rrik */
-/* Table18647 */
+/* Table18649 */
   0x24f1, /* VPCMPWZ256rmik */
   0x24f5, /* VPCMPWZ256rrik */
-/* Table18649 */
+/* Table18651 */
   0x3967, /* VSHUFI64X2Z256rmik */
   0x396a, /* VSHUFI64X2Z256rrik */
-/* Table18651 */
+/* Table18653 */
   0x36f2, /* VRANGEPDZ256rmik */
   0x36f5, /* VRANGEPDZ256rrik */
-/* Table18653 */
+/* Table18655 */
   0x1313, /* VFIXUPIMMPDZ256rmik */
   0x1316, /* VFIXUPIMMPDZ256rrik */
-/* Table18655 */
+/* Table18657 */
   0x37b4, /* VREDUCEPDZ256rmik */
   0x37b7, /* VREDUCEPDZ256rrik */
-/* Table18657 */
+/* Table18659 */
   0x1a45, /* VFPCLASSPDZ256rmk */
   0x1a47, /* VFPCLASSPDZ256rrk */
-/* Table18659 */
+/* Table18661 */
   0x309d, /* VPSHLDWZ256rmik */
   0x30a0, /* VPSHLDWZ256rrik */
-/* Table18661 */
+/* Table18663 */
   0x3040, /* VPSHLDQZ256rmik */
   0x3043, /* VPSHLDQZ256rrik */
-/* Table18663 */
+/* Table18665 */
   0x3139, /* VPSHRDWZ256rmik */
   0x313c, /* VPSHRDWZ256rrik */
-/* Table18665 */
+/* Table18667 */
   0x30dc, /* VPSHRDQZ256rmik */
   0x30df, /* VPSHRDQZ256rrik */
-/* Table18667 */
+/* Table18669 */
   0x1b5a, /* VGF2P8AFFINEQBZ256rmik */
   0x1b5d, /* VGF2P8AFFINEQBZ256rrik */
-/* Table18669 */
+/* Table18671 */
   0x1b3b, /* VGF2P8AFFINEINVQBZ256rmik */
   0x1b3e, /* VGF2P8AFFINEINVQBZ256rrik */
-/* Table18671 */
+/* Table18673 */
   0xc04, /* VALIGNDZrmik */
   0xc07, /* VALIGNDZrrik */
-/* Table18673 */
+/* Table18675 */
   0x2731, /* VPERMILPSZmik */
   0x2734, /* VPERMILPSZrik */
-/* Table18675 */
+/* Table18677 */
   0x3829, /* VRNDSCALEPSZrmik */
   0x382f, /* VRNDSCALEPSZrrik */
-/* Table18677 */
+/* Table18679 */
   0x21ce, /* VPALIGNRZrmik */
   0x21d1, /* VPALIGNRZrrik */
-/* Table18679 */
+/* Table18681 */
   0x1b99, /* VINSERTF32x4Zrmk */
   0x1b9c, /* VINSERTF32x4Zrrk */
-/* Table18681 */
+/* Table18683 */
   0x12ca, /* VEXTRACTF32x4Zmrk */
   0x12cc, /* VEXTRACTF32x4Zrrk */
-/* Table18683 */
+/* Table18685 */
   0x1b9f, /* VINSERTF32x8Zrmk */
   0x1ba2, /* VINSERTF32x8Zrrk */
-/* Table18685 */
+/* Table18687 */
   0x12cf, /* VEXTRACTF32x8Zmrk */
   0x12d1, /* VEXTRACTF32x8Zrrk */
-/* Table18687 */
+/* Table18689 */
   0xf4f, /* VCVTPS2PHZmrk */
   0xf54, /* VCVTPS2PHZrrk */
-/* Table18689 */
+/* Table18691 */
   0x24a5, /* VPCMPUDZrmik */
   0x24a9, /* VPCMPUDZrrik */
-/* Table18691 */
+/* Table18693 */
   0x23a5, /* VPCMPDZrmik */
   0x23a9, /* VPCMPDZrrik */
-/* Table18693 */
+/* Table18695 */
   0x393a, /* VSHUFF32X4Zrmik */
   0x393d, /* VSHUFF32X4Zrrik */
-/* Table18695 */
+/* Table18697 */
   0x353b, /* VPTERNLOGDZrmik */
   0x353e, /* VPTERNLOGDZrrik */
-/* Table18697 */
+/* Table18699 */
   0x1b12, /* VGETMANTPSZrmik */
   0x1b18, /* VGETMANTPSZrrik */
-/* Table18699 */
+/* Table18701 */
   0x1bbf, /* VINSERTI32x4Zrmk */
   0x1bc2, /* VINSERTI32x4Zrrk */
-/* Table18701 */
+/* Table18703 */
   0x12ea, /* VEXTRACTI32x4Zmrk */
   0x12ec, /* VEXTRACTI32x4Zrrk */
-/* Table18703 */
+/* Table18705 */
   0x1bc5, /* VINSERTI32x8Zrmk */
   0x1bc8, /* VINSERTI32x8Zrrk */
-/* Table18705 */
+/* Table18707 */
   0x12ef, /* VEXTRACTI32x8Zmrk */
   0x12f1, /* VEXTRACTI32x8Zrrk */
-/* Table18707 */
+/* Table18709 */
   0x2481, /* VPCMPUBZrmik */
   0x2485, /* VPCMPUBZrrik */
-/* Table18709 */
+/* Table18711 */
   0x2381, /* VPCMPBZrmik */
   0x2385, /* VPCMPBZrrik */
-/* Table18711 */
+/* Table18713 */
   0x1215, /* VDBPSADBWZrmik */
   0x1218, /* VDBPSADBWZrrik */
-/* Table18713 */
+/* Table18715 */
   0x395e, /* VSHUFI32X4Zrmik */
   0x3961, /* VSHUFI32X4Zrrik */
-/* Table18715 */
+/* Table18717 */
   0x3719, /* VRANGEPSZrmik */
   0x371f, /* VRANGEPSZrrik */
-/* Table18717 */
+/* Table18719 */
   0x133a, /* VFIXUPIMMPSZrmik */
   0x1340, /* VFIXUPIMMPSZrrik */
-/* Table18719 */
+/* Table18721 */
   0x37db, /* VREDUCEPSZrmik */
   0x37e1, /* VREDUCEPSZrrik */
-/* Table18721 */
+/* Table18723 */
   0x1a5d, /* VFPCLASSPSZrmk */
   0x1a5f, /* VFPCLASSPSZrrk */
-/* Table18723 */
+/* Table18725 */
   0x302e, /* VPSHLDDZrmik */
   0x3031, /* VPSHLDDZrrik */
-/* Table18725 */
+/* Table18727 */
   0x30ca, /* VPSHRDDZrmik */
   0x30cd, /* VPSHRDDZrrik */
-/* Table18727 */
+/* Table18729 */
   0x2795, /* VPERMQZmik */
   0x2798, /* VPERMQZrik */
-/* Table18729 */
+/* Table18731 */
   0x275b, /* VPERMPDZmik */
   0x275e, /* VPERMPDZrik */
-/* Table18731 */
+/* Table18733 */
   0xc1f, /* VALIGNQZrmik */
   0xc22, /* VALIGNQZrrik */
-/* Table18733 */
+/* Table18735 */
   0x26f3, /* VPERMILPDZmik */
   0x26f6, /* VPERMILPDZrik */
-/* Table18735 */
+/* Table18737 */
   0x380b, /* VRNDSCALEPDZrmik */
   0x3811, /* VRNDSCALEPDZrrik */
-/* Table18737 */
+/* Table18739 */
   0x1bab, /* VINSERTF64x2Zrmk */
   0x1bae, /* VINSERTF64x2Zrrk */
-/* Table18739 */
+/* Table18741 */
   0x12d9, /* VEXTRACTF64x2Zmrk */
   0x12db, /* VEXTRACTF64x2Zrrk */
-/* Table18741 */
+/* Table18743 */
   0x1bb1, /* VINSERTF64x4Zrmk */
   0x1bb4, /* VINSERTF64x4Zrrk */
-/* Table18743 */
+/* Table18745 */
   0x12de, /* VEXTRACTF64x4Zmrk */
   0x12e0, /* VEXTRACTF64x4Zrrk */
-/* Table18745 */
+/* Table18747 */
   0x24c9, /* VPCMPUQZrmik */
   0x24cd, /* VPCMPUQZrrik */
-/* Table18747 */
+/* Table18749 */
   0x2469, /* VPCMPQZrmik */
   0x246d, /* VPCMPQZrrik */
-/* Table18749 */
+/* Table18751 */
   0x394c, /* VSHUFF64X2Zrmik */
   0x394f, /* VSHUFF64X2Zrrik */
-/* Table18751 */
+/* Table18753 */
   0x3556, /* VPTERNLOGQZrmik */
   0x3559, /* VPTERNLOGQZrrik */
-/* Table18753 */
+/* Table18755 */
   0x1af4, /* VGETMANTPDZrmik */
   0x1afa, /* VGETMANTPDZrrik */
-/* Table18755 */
+/* Table18757 */
   0x1bd1, /* VINSERTI64x2Zrmk */
   0x1bd4, /* VINSERTI64x2Zrrk */
-/* Table18757 */
+/* Table18759 */
   0x12f9, /* VEXTRACTI64x2Zmrk */
   0x12fb, /* VEXTRACTI64x2Zrrk */
-/* Table18759 */
+/* Table18761 */
   0x1bd7, /* VINSERTI64x4Zrmk */
   0x1bda, /* VINSERTI64x4Zrrk */
-/* Table18761 */
+/* Table18763 */
   0x12fe, /* VEXTRACTI64x4Zmrk */
   0x1300, /* VEXTRACTI64x4Zrrk */
-/* Table18763 */
+/* Table18765 */
   0x24e1, /* VPCMPUWZrmik */
   0x24e5, /* VPCMPUWZrrik */
-/* Table18765 */
+/* Table18767 */
   0x24f9, /* VPCMPWZrmik */
   0x24fd, /* VPCMPWZrrik */
-/* Table18767 */
+/* Table18769 */
   0x3970, /* VSHUFI64X2Zrmik */
   0x3973, /* VSHUFI64X2Zrrik */
-/* Table18769 */
+/* Table18771 */
   0x36fb, /* VRANGEPDZrmik */
   0x3701, /* VRANGEPDZrrik */
-/* Table18771 */
+/* Table18773 */
   0x131c, /* VFIXUPIMMPDZrmik */
   0x1322, /* VFIXUPIMMPDZrrik */
-/* Table18773 */
+/* Table18775 */
   0x37bd, /* VREDUCEPDZrmik */
   0x37c3, /* VREDUCEPDZrrik */
-/* Table18775 */
+/* Table18777 */
   0x1a4b, /* VFPCLASSPDZrmk */
   0x1a4d, /* VFPCLASSPDZrrk */
-/* Table18777 */
+/* Table18779 */
   0x30a3, /* VPSHLDWZrmik */
   0x30a6, /* VPSHLDWZrrik */
-/* Table18779 */
+/* Table18781 */
   0x3049, /* VPSHLDQZrmik */
   0x304c, /* VPSHLDQZrrik */
-/* Table18781 */
+/* Table18783 */
   0x313f, /* VPSHRDWZrmik */
   0x3142, /* VPSHRDWZrrik */
-/* Table18783 */
+/* Table18785 */
   0x30e5, /* VPSHRDQZrmik */
   0x30e8, /* VPSHRDQZrrik */
-/* Table18785 */
+/* Table18787 */
   0x1b63, /* VGF2P8AFFINEQBZrmik */
   0x1b66, /* VGF2P8AFFINEQBZrrik */
-/* Table18787 */
+/* Table18789 */
   0x1b44, /* VGF2P8AFFINEINVQBZrmik */
   0x1b47, /* VGF2P8AFFINEINVQBZrrik */
-/* Table18789 */
+/* Table18791 */
   0xbee, /* VALIGNDZ128rmbi */
   0x0, /*  */
-/* Table18791 */
+/* Table18793 */
   0x2709, /* VPERMILPSZ128mbi */
   0x0, /*  */
-/* Table18793 */
+/* Table18795 */
   0x3813, /* VRNDSCALEPSZ128rmbi */
   0x382c, /* VRNDSCALEPSZrrib */
-/* Table18795 */
-  0x0, /*  */
-  0x3844, /* VRNDSCALESSZrb_Int */
 /* Table18797 */
   0x0, /*  */
-  0xf51, /* VCVTPS2PHZrrb */
+  0x3844, /* VRNDSCALESSZrb_Int */
 /* Table18799 */
+  0x0, /*  */
+  0xf51, /* VCVTPS2PHZrrb */
+/* Table18801 */
   0x2489, /* VPCMPUDZ128rmib */
   0x0, /*  */
-/* Table18801 */
+/* Table18803 */
   0x2389, /* VPCMPDZ128rmib */
   0x0, /*  */
-/* Table18803 */
+/* Table18805 */
   0x3525, /* VPTERNLOGDZ128rmbi */
   0x0, /*  */
-/* Table18805 */
+/* Table18807 */
   0x1afc, /* VGETMANTPSZ128rmbi */
   0x1b15, /* VGETMANTPSZrrib */
-/* Table18807 */
+/* Table18809 */
   0x0, /*  */
   0x1b27, /* VGETMANTSSZrrib */
-/* Table18809 */
+/* Table18811 */
   0x3703, /* VRANGEPSZ128rmbi */
   0x371c, /* VRANGEPSZrrib */
-/* Table18811 */
+/* Table18813 */
   0x0, /*  */
   0x372e, /* VRANGESSZrrib */
-/* Table18813 */
+/* Table18815 */
   0x1324, /* VFIXUPIMMPSZ128rmbi */
   0x133d, /* VFIXUPIMMPSZrrib */
-/* Table18815 */
+/* Table18817 */
   0x0, /*  */
   0x134f, /* VFIXUPIMMSSZrrib */
-/* Table18817 */
+/* Table18819 */
   0x37c5, /* VREDUCEPSZ128rmbi */
   0x37de, /* VREDUCEPSZrrib */
-/* Table18819 */
+/* Table18821 */
   0x0, /*  */
   0x37f0, /* VREDUCESSZrrib */
-/* Table18821 */
+/* Table18823 */
   0x1a4f, /* VFPCLASSPSZ128rmb */
   0x0, /*  */
-/* Table18823 */
+/* Table18825 */
   0x3018, /* VPSHLDDZ128rmbi */
   0x0, /*  */
-/* Table18825 */
+/* Table18827 */
   0x30b4, /* VPSHRDDZ128rmbi */
   0x0, /*  */
-/* Table18827 */
+/* Table18829 */
   0xc09, /* VALIGNQZ128rmbi */
   0x0, /*  */
-/* Table18829 */
+/* Table18831 */
   0x26cb, /* VPERMILPDZ128mbi */
   0x0, /*  */
-/* Table18831 */
+/* Table18833 */
   0x37f5, /* VRNDSCALEPDZ128rmbi */
   0x380e, /* VRNDSCALEPDZrrib */
-/* Table18833 */
+/* Table18835 */
   0x0, /*  */
   0x3839, /* VRNDSCALESDZrb_Int */
-/* Table18835 */
+/* Table18837 */
   0x24ad, /* VPCMPUQZ128rmib */
   0x0, /*  */
-/* Table18837 */
+/* Table18839 */
   0x244d, /* VPCMPQZ128rmib */
   0x0, /*  */
-/* Table18839 */
+/* Table18841 */
   0x3540, /* VPTERNLOGQZ128rmbi */
   0x0, /*  */
-/* Table18841 */
+/* Table18843 */
   0x1ade, /* VGETMANTPDZ128rmbi */
   0x1af7, /* VGETMANTPDZrrib */
-/* Table18843 */
+/* Table18845 */
   0x0, /*  */
   0x1b1e, /* VGETMANTSDZrrib */
-/* Table18845 */
+/* Table18847 */
   0x36e5, /* VRANGEPDZ128rmbi */
   0x36fe, /* VRANGEPDZrrib */
-/* Table18847 */
+/* Table18849 */
   0x0, /*  */
   0x3725, /* VRANGESDZrrib */
-/* Table18849 */
+/* Table18851 */
   0x1306, /* VFIXUPIMMPDZ128rmbi */
   0x131f, /* VFIXUPIMMPDZrrib */
-/* Table18851 */
+/* Table18853 */
   0x0, /*  */
   0x1346, /* VFIXUPIMMSDZrrib */
-/* Table18853 */
+/* Table18855 */
   0x37a7, /* VREDUCEPDZ128rmbi */
   0x37c0, /* VREDUCEPDZrrib */
-/* Table18855 */
+/* Table18857 */
   0x0, /*  */
   0x37e7, /* VREDUCESDZrrib */
-/* Table18857 */
+/* Table18859 */
   0x1a3d, /* VFPCLASSPDZ128rmb */
   0x0, /*  */
-/* Table18859 */
+/* Table18861 */
   0x3033, /* VPSHLDQZ128rmbi */
   0x0, /*  */
-/* Table18861 */
+/* Table18863 */
   0x30cf, /* VPSHRDQZ128rmbi */
   0x0, /*  */
-/* Table18863 */
+/* Table18865 */
   0x1b4d, /* VGF2P8AFFINEQBZ128rmbi */
   0x0, /*  */
-/* Table18865 */
+/* Table18867 */
   0x1b2e, /* VGF2P8AFFINEINVQBZ128rmbi */
   0x0, /*  */
-/* Table18867 */
+/* Table18869 */
   0xbf7, /* VALIGNDZ256rmbi */
   0x0, /*  */
-/* Table18869 */
+/* Table18871 */
   0x271b, /* VPERMILPSZ256mbi */
   0x0, /*  */
-/* Table18871 */
+/* Table18873 */
   0x381c, /* VRNDSCALEPSZ256rmbi */
   0x382c, /* VRNDSCALEPSZrrib */
-/* Table18873 */
+/* Table18875 */
   0x2495, /* VPCMPUDZ256rmib */
   0x0, /*  */
-/* Table18875 */
+/* Table18877 */
   0x2395, /* VPCMPDZ256rmib */
   0x0, /*  */
-/* Table18877 */
+/* Table18879 */
   0x392d, /* VSHUFF32X4Z256rmbi */
   0x0, /*  */
-/* Table18879 */
+/* Table18881 */
   0x352e, /* VPTERNLOGDZ256rmbi */
   0x0, /*  */
-/* Table18881 */
+/* Table18883 */
   0x1b05, /* VGETMANTPSZ256rmbi */
   0x1b15, /* VGETMANTPSZrrib */
-/* Table18883 */
+/* Table18885 */
   0x3951, /* VSHUFI32X4Z256rmbi */
   0x0, /*  */
-/* Table18885 */
+/* Table18887 */
   0x370c, /* VRANGEPSZ256rmbi */
   0x371c, /* VRANGEPSZrrib */
-/* Table18887 */
+/* Table18889 */
   0x132d, /* VFIXUPIMMPSZ256rmbi */
   0x133d, /* VFIXUPIMMPSZrrib */
-/* Table18889 */
+/* Table18891 */
   0x37ce, /* VREDUCEPSZ256rmbi */
   0x37de, /* VREDUCEPSZrrib */
-/* Table18891 */
+/* Table18893 */
   0x1a55, /* VFPCLASSPSZ256rmb */
   0x0, /*  */
-/* Table18893 */
+/* Table18895 */
   0x3021, /* VPSHLDDZ256rmbi */
   0x0, /*  */
-/* Table18895 */
+/* Table18897 */
   0x30bd, /* VPSHRDDZ256rmbi */
   0x0, /*  */
-/* Table18897 */
+/* Table18899 */
   0x277f, /* VPERMQZ256mbi */
   0x0, /*  */
-/* Table18899 */
+/* Table18901 */
   0x2745, /* VPERMPDZ256mbi */
   0x0, /*  */
-/* Table18901 */
+/* Table18903 */
   0xc12, /* VALIGNQZ256rmbi */
   0x0, /*  */
-/* Table18903 */
+/* Table18905 */
   0x26dd, /* VPERMILPDZ256mbi */
   0x0, /*  */
-/* Table18905 */
+/* Table18907 */
   0x37fe, /* VRNDSCALEPDZ256rmbi */
   0x380e, /* VRNDSCALEPDZrrib */
-/* Table18907 */
+/* Table18909 */
   0x24b9, /* VPCMPUQZ256rmib */
   0x0, /*  */
-/* Table18909 */
+/* Table18911 */
   0x2459, /* VPCMPQZ256rmib */
   0x0, /*  */
-/* Table18911 */
+/* Table18913 */
   0x393f, /* VSHUFF64X2Z256rmbi */
   0x0, /*  */
-/* Table18913 */
+/* Table18915 */
   0x3549, /* VPTERNLOGQZ256rmbi */
   0x0, /*  */
-/* Table18915 */
+/* Table18917 */
   0x1ae7, /* VGETMANTPDZ256rmbi */
   0x1af7, /* VGETMANTPDZrrib */
-/* Table18917 */
+/* Table18919 */
   0x3963, /* VSHUFI64X2Z256rmbi */
   0x0, /*  */
-/* Table18919 */
+/* Table18921 */
   0x36ee, /* VRANGEPDZ256rmbi */
   0x36fe, /* VRANGEPDZrrib */
-/* Table18921 */
+/* Table18923 */
   0x130f, /* VFIXUPIMMPDZ256rmbi */
   0x131f, /* VFIXUPIMMPDZrrib */
-/* Table18923 */
+/* Table18925 */
   0x37b0, /* VREDUCEPDZ256rmbi */
   0x37c0, /* VREDUCEPDZrrib */
-/* Table18925 */
+/* Table18927 */
   0x1a43, /* VFPCLASSPDZ256rmb */
   0x0, /*  */
-/* Table18927 */
+/* Table18929 */
   0x303c, /* VPSHLDQZ256rmbi */
   0x0, /*  */
-/* Table18929 */
+/* Table18931 */
   0x30d8, /* VPSHRDQZ256rmbi */
   0x0, /*  */
-/* Table18931 */
+/* Table18933 */
   0x1b56, /* VGF2P8AFFINEQBZ256rmbi */
   0x0, /*  */
-/* Table18933 */
+/* Table18935 */
   0x1b37, /* VGF2P8AFFINEINVQBZ256rmbi */
   0x0, /*  */
-/* Table18935 */
+/* Table18937 */
   0xc00, /* VALIGNDZrmbi */
   0x0, /*  */
-/* Table18937 */
+/* Table18939 */
   0x272d, /* VPERMILPSZmbi */
   0x0, /*  */
-/* Table18939 */
+/* Table18941 */
   0x3825, /* VRNDSCALEPSZrmbi */
   0x382c, /* VRNDSCALEPSZrrib */
-/* Table18941 */
+/* Table18943 */
   0x24a1, /* VPCMPUDZrmib */
   0x0, /*  */
-/* Table18943 */
+/* Table18945 */
   0x23a1, /* VPCMPDZrmib */
   0x0, /*  */
-/* Table18945 */
+/* Table18947 */
   0x3936, /* VSHUFF32X4Zrmbi */
   0x0, /*  */
-/* Table18947 */
+/* Table18949 */
   0x3537, /* VPTERNLOGDZrmbi */
   0x0, /*  */
-/* Table18949 */
+/* Table18951 */
   0x1b0e, /* VGETMANTPSZrmbi */
   0x1b15, /* VGETMANTPSZrrib */
-/* Table18951 */
+/* Table18953 */
   0x395a, /* VSHUFI32X4Zrmbi */
   0x0, /*  */
-/* Table18953 */
+/* Table18955 */
   0x3715, /* VRANGEPSZrmbi */
   0x371c, /* VRANGEPSZrrib */
-/* Table18955 */
+/* Table18957 */
   0x1336, /* VFIXUPIMMPSZrmbi */
   0x133d, /* VFIXUPIMMPSZrrib */
-/* Table18957 */
+/* Table18959 */
   0x37d7, /* VREDUCEPSZrmbi */
   0x37de, /* VREDUCEPSZrrib */
-/* Table18959 */
+/* Table18961 */
   0x1a5b, /* VFPCLASSPSZrmb */
   0x0, /*  */
-/* Table18961 */
+/* Table18963 */
   0x302a, /* VPSHLDDZrmbi */
   0x0, /*  */
-/* Table18963 */
+/* Table18965 */
   0x30c6, /* VPSHRDDZrmbi */
   0x0, /*  */
-/* Table18965 */
+/* Table18967 */
   0x2791, /* VPERMQZmbi */
   0x0, /*  */
-/* Table18967 */
+/* Table18969 */
   0x2757, /* VPERMPDZmbi */
   0x0, /*  */
-/* Table18969 */
+/* Table18971 */
   0xc1b, /* VALIGNQZrmbi */
   0x0, /*  */
-/* Table18971 */
+/* Table18973 */
   0x26ef, /* VPERMILPDZmbi */
   0x0, /*  */
-/* Table18973 */
+/* Table18975 */
   0x3807, /* VRNDSCALEPDZrmbi */
   0x380e, /* VRNDSCALEPDZrrib */
-/* Table18975 */
+/* Table18977 */
   0x24c5, /* VPCMPUQZrmib */
   0x0, /*  */
-/* Table18977 */
+/* Table18979 */
   0x2465, /* VPCMPQZrmib */
   0x0, /*  */
-/* Table18979 */
+/* Table18981 */
   0x3948, /* VSHUFF64X2Zrmbi */
   0x0, /*  */
-/* Table18981 */
+/* Table18983 */
   0x3552, /* VPTERNLOGQZrmbi */
   0x0, /*  */
-/* Table18983 */
+/* Table18985 */
   0x1af0, /* VGETMANTPDZrmbi */
   0x1af7, /* VGETMANTPDZrrib */
-/* Table18985 */
+/* Table18987 */
   0x396c, /* VSHUFI64X2Zrmbi */
   0x0, /*  */
-/* Table18987 */
+/* Table18989 */
   0x36f7, /* VRANGEPDZrmbi */
   0x36fe, /* VRANGEPDZrrib */
-/* Table18989 */
+/* Table18991 */
   0x1318, /* VFIXUPIMMPDZrmbi */
   0x131f, /* VFIXUPIMMPDZrrib */
-/* Table18991 */
+/* Table18993 */
   0x37b9, /* VREDUCEPDZrmbi */
   0x37c0, /* VREDUCEPDZrrib */
-/* Table18993 */
+/* Table18995 */
   0x1a49, /* VFPCLASSPDZrmb */
   0x0, /*  */
-/* Table18995 */
+/* Table18997 */
   0x3045, /* VPSHLDQZrmbi */
   0x0, /*  */
-/* Table18997 */
+/* Table18999 */
   0x30e1, /* VPSHRDQZrmbi */
   0x0, /*  */
-/* Table18999 */
+/* Table19001 */
   0x1b5f, /* VGF2P8AFFINEQBZrmbi */
   0x0, /*  */
-/* Table19001 */
+/* Table19003 */
   0x1b40, /* VGF2P8AFFINEINVQBZrmbi */
   0x0, /*  */
-/* Table19003 */
+/* Table19005 */
   0xbef, /* VALIGNDZ128rmbik */
   0x0, /*  */
-/* Table19005 */
+/* Table19007 */
   0x270a, /* VPERMILPSZ128mbik */
   0x0, /*  */
-/* Table19007 */
+/* Table19009 */
   0x3814, /* VRNDSCALEPSZ128rmbik */
   0x382d, /* VRNDSCALEPSZrribk */
-/* Table19009 */
-  0x0, /*  */
-  0x3845, /* VRNDSCALESSZrb_Intk */
 /* Table19011 */
   0x0, /*  */
-  0xf52, /* VCVTPS2PHZrrbk */
+  0x3845, /* VRNDSCALESSZrb_Intk */
 /* Table19013 */
+  0x0, /*  */
+  0xf52, /* VCVTPS2PHZrrbk */
+/* Table19015 */
   0x248b, /* VPCMPUDZ128rmibk */
   0x0, /*  */
-/* Table19015 */
+/* Table19017 */
   0x238b, /* VPCMPDZ128rmibk */
   0x0, /*  */
-/* Table19017 */
+/* Table19019 */
   0x3526, /* VPTERNLOGDZ128rmbik */
   0x0, /*  */
-/* Table19019 */
+/* Table19021 */
   0x1afd, /* VGETMANTPSZ128rmbik */
   0x1b16, /* VGETMANTPSZrribk */
-/* Table19021 */
+/* Table19023 */
   0x0, /*  */
   0x1b28, /* VGETMANTSSZrribk */
-/* Table19023 */
+/* Table19025 */
   0x3704, /* VRANGEPSZ128rmbik */
   0x371d, /* VRANGEPSZrribk */
-/* Table19025 */
+/* Table19027 */
   0x0, /*  */
   0x372f, /* VRANGESSZrribk */
-/* Table19027 */
+/* Table19029 */
   0x1325, /* VFIXUPIMMPSZ128rmbik */
   0x133e, /* VFIXUPIMMPSZrribk */
-/* Table19029 */
+/* Table19031 */
   0x0, /*  */
   0x1350, /* VFIXUPIMMSSZrribk */
-/* Table19031 */
+/* Table19033 */
   0x37c6, /* VREDUCEPSZ128rmbik */
   0x37df, /* VREDUCEPSZrribk */
-/* Table19033 */
+/* Table19035 */
   0x0, /*  */
   0x37f1, /* VREDUCESSZrribk */
-/* Table19035 */
+/* Table19037 */
   0x1a50, /* VFPCLASSPSZ128rmbk */
   0x0, /*  */
-/* Table19037 */
+/* Table19039 */
   0x3019, /* VPSHLDDZ128rmbik */
   0x0, /*  */
-/* Table19039 */
+/* Table19041 */
   0x30b5, /* VPSHRDDZ128rmbik */
   0x0, /*  */
-/* Table19041 */
+/* Table19043 */
   0xc0a, /* VALIGNQZ128rmbik */
   0x0, /*  */
-/* Table19043 */
+/* Table19045 */
   0x26cc, /* VPERMILPDZ128mbik */
   0x0, /*  */
-/* Table19045 */
+/* Table19047 */
   0x37f6, /* VRNDSCALEPDZ128rmbik */
   0x380f, /* VRNDSCALEPDZrribk */
-/* Table19047 */
+/* Table19049 */
   0x0, /*  */
   0x383a, /* VRNDSCALESDZrb_Intk */
-/* Table19049 */
+/* Table19051 */
   0x24af, /* VPCMPUQZ128rmibk */
   0x0, /*  */
-/* Table19051 */
+/* Table19053 */
   0x244f, /* VPCMPQZ128rmibk */
   0x0, /*  */
-/* Table19053 */
+/* Table19055 */
   0x3541, /* VPTERNLOGQZ128rmbik */
   0x0, /*  */
-/* Table19055 */
+/* Table19057 */
   0x1adf, /* VGETMANTPDZ128rmbik */
   0x1af8, /* VGETMANTPDZrribk */
-/* Table19057 */
+/* Table19059 */
   0x0, /*  */
   0x1b1f, /* VGETMANTSDZrribk */
-/* Table19059 */
+/* Table19061 */
   0x36e6, /* VRANGEPDZ128rmbik */
   0x36ff, /* VRANGEPDZrribk */
-/* Table19061 */
+/* Table19063 */
   0x0, /*  */
   0x3726, /* VRANGESDZrribk */
-/* Table19063 */
+/* Table19065 */
   0x1307, /* VFIXUPIMMPDZ128rmbik */
   0x1320, /* VFIXUPIMMPDZrribk */
-/* Table19065 */
+/* Table19067 */
   0x0, /*  */
   0x1347, /* VFIXUPIMMSDZrribk */
-/* Table19067 */
+/* Table19069 */
   0x37a8, /* VREDUCEPDZ128rmbik */
   0x37c1, /* VREDUCEPDZrribk */
-/* Table19069 */
+/* Table19071 */
   0x0, /*  */
   0x37e8, /* VREDUCESDZrribk */
-/* Table19071 */
+/* Table19073 */
   0x1a3e, /* VFPCLASSPDZ128rmbk */
   0x0, /*  */
-/* Table19073 */
+/* Table19075 */
   0x3034, /* VPSHLDQZ128rmbik */
   0x0, /*  */
-/* Table19075 */
+/* Table19077 */
   0x30d0, /* VPSHRDQZ128rmbik */
   0x0, /*  */
-/* Table19077 */
+/* Table19079 */
   0x1b4e, /* VGF2P8AFFINEQBZ128rmbik */
   0x0, /*  */
-/* Table19079 */
+/* Table19081 */
   0x1b2f, /* VGF2P8AFFINEINVQBZ128rmbik */
   0x0, /*  */
-/* Table19081 */
+/* Table19083 */
   0xbf8, /* VALIGNDZ256rmbik */
   0x0, /*  */
-/* Table19083 */
+/* Table19085 */
   0x271c, /* VPERMILPSZ256mbik */
   0x0, /*  */
-/* Table19085 */
+/* Table19087 */
   0x381d, /* VRNDSCALEPSZ256rmbik */
   0x382d, /* VRNDSCALEPSZrribk */
-/* Table19087 */
+/* Table19089 */
   0x2497, /* VPCMPUDZ256rmibk */
   0x0, /*  */
-/* Table19089 */
+/* Table19091 */
   0x2397, /* VPCMPDZ256rmibk */
   0x0, /*  */
-/* Table19091 */
+/* Table19093 */
   0x392e, /* VSHUFF32X4Z256rmbik */
   0x0, /*  */
-/* Table19093 */
+/* Table19095 */
   0x352f, /* VPTERNLOGDZ256rmbik */
   0x0, /*  */
-/* Table19095 */
+/* Table19097 */
   0x1b06, /* VGETMANTPSZ256rmbik */
   0x1b16, /* VGETMANTPSZrribk */
-/* Table19097 */
+/* Table19099 */
   0x3952, /* VSHUFI32X4Z256rmbik */
   0x0, /*  */
-/* Table19099 */
+/* Table19101 */
   0x370d, /* VRANGEPSZ256rmbik */
   0x371d, /* VRANGEPSZrribk */
-/* Table19101 */
+/* Table19103 */
   0x132e, /* VFIXUPIMMPSZ256rmbik */
   0x133e, /* VFIXUPIMMPSZrribk */
-/* Table19103 */
+/* Table19105 */
   0x37cf, /* VREDUCEPSZ256rmbik */
   0x37df, /* VREDUCEPSZrribk */
-/* Table19105 */
+/* Table19107 */
   0x1a56, /* VFPCLASSPSZ256rmbk */
   0x0, /*  */
-/* Table19107 */
+/* Table19109 */
   0x3022, /* VPSHLDDZ256rmbik */
   0x0, /*  */
-/* Table19109 */
+/* Table19111 */
   0x30be, /* VPSHRDDZ256rmbik */
   0x0, /*  */
-/* Table19111 */
+/* Table19113 */
   0x2780, /* VPERMQZ256mbik */
   0x0, /*  */
-/* Table19113 */
+/* Table19115 */
   0x2746, /* VPERMPDZ256mbik */
   0x0, /*  */
-/* Table19115 */
+/* Table19117 */
   0xc13, /* VALIGNQZ256rmbik */
   0x0, /*  */
-/* Table19117 */
+/* Table19119 */
   0x26de, /* VPERMILPDZ256mbik */
   0x0, /*  */
-/* Table19119 */
+/* Table19121 */
   0x37ff, /* VRNDSCALEPDZ256rmbik */
   0x380f, /* VRNDSCALEPDZrribk */
-/* Table19121 */
+/* Table19123 */
   0x24bb, /* VPCMPUQZ256rmibk */
   0x0, /*  */
-/* Table19123 */
+/* Table19125 */
   0x245b, /* VPCMPQZ256rmibk */
   0x0, /*  */
-/* Table19125 */
+/* Table19127 */
   0x3940, /* VSHUFF64X2Z256rmbik */
   0x0, /*  */
-/* Table19127 */
+/* Table19129 */
   0x354a, /* VPTERNLOGQZ256rmbik */
   0x0, /*  */
-/* Table19129 */
+/* Table19131 */
   0x1ae8, /* VGETMANTPDZ256rmbik */
   0x1af8, /* VGETMANTPDZrribk */
-/* Table19131 */
+/* Table19133 */
   0x3964, /* VSHUFI64X2Z256rmbik */
   0x0, /*  */
-/* Table19133 */
+/* Table19135 */
   0x36ef, /* VRANGEPDZ256rmbik */
   0x36ff, /* VRANGEPDZrribk */
-/* Table19135 */
+/* Table19137 */
   0x1310, /* VFIXUPIMMPDZ256rmbik */
   0x1320, /* VFIXUPIMMPDZrribk */
-/* Table19137 */
+/* Table19139 */
   0x37b1, /* VREDUCEPDZ256rmbik */
   0x37c1, /* VREDUCEPDZrribk */
-/* Table19139 */
+/* Table19141 */
   0x1a44, /* VFPCLASSPDZ256rmbk */
   0x0, /*  */
-/* Table19141 */
+/* Table19143 */
   0x303d, /* VPSHLDQZ256rmbik */
   0x0, /*  */
-/* Table19143 */
+/* Table19145 */
   0x30d9, /* VPSHRDQZ256rmbik */
   0x0, /*  */
-/* Table19145 */
+/* Table19147 */
   0x1b57, /* VGF2P8AFFINEQBZ256rmbik */
   0x0, /*  */
-/* Table19147 */
+/* Table19149 */
   0x1b38, /* VGF2P8AFFINEINVQBZ256rmbik */
   0x0, /*  */
-/* Table19149 */
+/* Table19151 */
   0xc01, /* VALIGNDZrmbik */
   0x0, /*  */
-/* Table19151 */
+/* Table19153 */
   0x272e, /* VPERMILPSZmbik */
   0x0, /*  */
-/* Table19153 */
+/* Table19155 */
   0x3826, /* VRNDSCALEPSZrmbik */
   0x382d, /* VRNDSCALEPSZrribk */
-/* Table19155 */
+/* Table19157 */
   0x24a3, /* VPCMPUDZrmibk */
   0x0, /*  */
-/* Table19157 */
+/* Table19159 */
   0x23a3, /* VPCMPDZrmibk */
   0x0, /*  */
-/* Table19159 */
+/* Table19161 */
   0x3937, /* VSHUFF32X4Zrmbik */
   0x0, /*  */
-/* Table19161 */
+/* Table19163 */
   0x3538, /* VPTERNLOGDZrmbik */
   0x0, /*  */
-/* Table19163 */
+/* Table19165 */
   0x1b0f, /* VGETMANTPSZrmbik */
   0x1b16, /* VGETMANTPSZrribk */
-/* Table19165 */
+/* Table19167 */
   0x395b, /* VSHUFI32X4Zrmbik */
   0x0, /*  */
-/* Table19167 */
+/* Table19169 */
   0x3716, /* VRANGEPSZrmbik */
   0x371d, /* VRANGEPSZrribk */
-/* Table19169 */
+/* Table19171 */
   0x1337, /* VFIXUPIMMPSZrmbik */
   0x133e, /* VFIXUPIMMPSZrribk */
-/* Table19171 */
+/* Table19173 */
   0x37d8, /* VREDUCEPSZrmbik */
   0x37df, /* VREDUCEPSZrribk */
-/* Table19173 */
+/* Table19175 */
   0x1a5c, /* VFPCLASSPSZrmbk */
   0x0, /*  */
-/* Table19175 */
+/* Table19177 */
   0x302b, /* VPSHLDDZrmbik */
   0x0, /*  */
-/* Table19177 */
+/* Table19179 */
   0x30c7, /* VPSHRDDZrmbik */
   0x0, /*  */
-/* Table19179 */
+/* Table19181 */
   0x2792, /* VPERMQZmbik */
   0x0, /*  */
-/* Table19181 */
+/* Table19183 */
   0x2758, /* VPERMPDZmbik */
   0x0, /*  */
-/* Table19183 */
+/* Table19185 */
   0xc1c, /* VALIGNQZrmbik */
   0x0, /*  */
-/* Table19185 */
+/* Table19187 */
   0x26f0, /* VPERMILPDZmbik */
   0x0, /*  */
-/* Table19187 */
+/* Table19189 */
   0x3808, /* VRNDSCALEPDZrmbik */
   0x380f, /* VRNDSCALEPDZrribk */
-/* Table19189 */
+/* Table19191 */
   0x24c7, /* VPCMPUQZrmibk */
   0x0, /*  */
-/* Table19191 */
+/* Table19193 */
   0x2467, /* VPCMPQZrmibk */
   0x0, /*  */
-/* Table19193 */
+/* Table19195 */
   0x3949, /* VSHUFF64X2Zrmbik */
   0x0, /*  */
-/* Table19195 */
+/* Table19197 */
   0x3553, /* VPTERNLOGQZrmbik */
   0x0, /*  */
-/* Table19197 */
+/* Table19199 */
   0x1af1, /* VGETMANTPDZrmbik */
   0x1af8, /* VGETMANTPDZrribk */
-/* Table19199 */
+/* Table19201 */
   0x396d, /* VSHUFI64X2Zrmbik */
   0x0, /*  */
-/* Table19201 */
+/* Table19203 */
   0x36f8, /* VRANGEPDZrmbik */
   0x36ff, /* VRANGEPDZrribk */
-/* Table19203 */
+/* Table19205 */
   0x1319, /* VFIXUPIMMPDZrmbik */
   0x1320, /* VFIXUPIMMPDZrribk */
-/* Table19205 */
+/* Table19207 */
   0x37ba, /* VREDUCEPDZrmbik */
   0x37c1, /* VREDUCEPDZrribk */
-/* Table19207 */
+/* Table19209 */
   0x1a4a, /* VFPCLASSPDZrmbk */
   0x0, /*  */
-/* Table19209 */
+/* Table19211 */
   0x3046, /* VPSHLDQZrmbik */
   0x0, /*  */
-/* Table19211 */
+/* Table19213 */
   0x30e2, /* VPSHRDQZrmbik */
   0x0, /*  */
-/* Table19213 */
+/* Table19215 */
   0x1b60, /* VGF2P8AFFINEQBZrmbik */
   0x0, /*  */
-/* Table19215 */
+/* Table19217 */
   0x1b41, /* VGF2P8AFFINEINVQBZrmbik */
   0x0, /*  */
-/* Table19217 */
+/* Table19219 */
   0xbf0, /* VALIGNDZ128rmbikz */
   0x0, /*  */
-/* Table19219 */
+/* Table19221 */
   0x270b, /* VPERMILPSZ128mbikz */
   0x0, /*  */
-/* Table19221 */
+/* Table19223 */
   0x3815, /* VRNDSCALEPSZ128rmbikz */
   0x382e, /* VRNDSCALEPSZrribkz */
-/* Table19223 */
-  0x0, /*  */
-  0x3846, /* VRNDSCALESSZrb_Intkz */
 /* Table19225 */
   0x0, /*  */
-  0xf53, /* VCVTPS2PHZrrbkz */
+  0x3846, /* VRNDSCALESSZrb_Intkz */
 /* Table19227 */
+  0x0, /*  */
+  0xf53, /* VCVTPS2PHZrrbkz */
+/* Table19229 */
   0x3527, /* VPTERNLOGDZ128rmbikz */
   0x0, /*  */
-/* Table19229 */
+/* Table19231 */
   0x1afe, /* VGETMANTPSZ128rmbikz */
   0x1b17, /* VGETMANTPSZrribkz */
-/* Table19231 */
+/* Table19233 */
   0x0, /*  */
   0x1b29, /* VGETMANTSSZrribkz */
-/* Table19233 */
+/* Table19235 */
   0x3705, /* VRANGEPSZ128rmbikz */
   0x371e, /* VRANGEPSZrribkz */
-/* Table19235 */
+/* Table19237 */
   0x0, /*  */
   0x3730, /* VRANGESSZrribkz */
-/* Table19237 */
+/* Table19239 */
   0x1326, /* VFIXUPIMMPSZ128rmbikz */
   0x133f, /* VFIXUPIMMPSZrribkz */
-/* Table19239 */
+/* Table19241 */
   0x0, /*  */
   0x1351, /* VFIXUPIMMSSZrribkz */
-/* Table19241 */
+/* Table19243 */
   0x37c7, /* VREDUCEPSZ128rmbikz */
   0x37e0, /* VREDUCEPSZrribkz */
-/* Table19243 */
+/* Table19245 */
   0x0, /*  */
   0x37f2, /* VREDUCESSZrribkz */
-/* Table19245 */
+/* Table19247 */
   0x301a, /* VPSHLDDZ128rmbikz */
   0x0, /*  */
-/* Table19247 */
+/* Table19249 */
   0x30b6, /* VPSHRDDZ128rmbikz */
   0x0, /*  */
-/* Table19249 */
+/* Table19251 */
   0xc0b, /* VALIGNQZ128rmbikz */
   0x0, /*  */
-/* Table19251 */
+/* Table19253 */
   0x26cd, /* VPERMILPDZ128mbikz */
   0x0, /*  */
-/* Table19253 */
+/* Table19255 */
   0x37f7, /* VRNDSCALEPDZ128rmbikz */
   0x3810, /* VRNDSCALEPDZrribkz */
-/* Table19255 */
+/* Table19257 */
   0x0, /*  */
   0x383b, /* VRNDSCALESDZrb_Intkz */
-/* Table19257 */
+/* Table19259 */
   0x3542, /* VPTERNLOGQZ128rmbikz */
   0x0, /*  */
-/* Table19259 */
+/* Table19261 */
   0x1ae0, /* VGETMANTPDZ128rmbikz */
   0x1af9, /* VGETMANTPDZrribkz */
-/* Table19261 */
+/* Table19263 */
   0x0, /*  */
   0x1b20, /* VGETMANTSDZrribkz */
-/* Table19263 */
+/* Table19265 */
   0x36e7, /* VRANGEPDZ128rmbikz */
   0x3700, /* VRANGEPDZrribkz */
-/* Table19265 */
+/* Table19267 */
   0x0, /*  */
   0x3727, /* VRANGESDZrribkz */
-/* Table19267 */
+/* Table19269 */
   0x1308, /* VFIXUPIMMPDZ128rmbikz */
   0x1321, /* VFIXUPIMMPDZrribkz */
-/* Table19269 */
+/* Table19271 */
   0x0, /*  */
   0x1348, /* VFIXUPIMMSDZrribkz */
-/* Table19271 */
+/* Table19273 */
   0x37a9, /* VREDUCEPDZ128rmbikz */
   0x37c2, /* VREDUCEPDZrribkz */
-/* Table19273 */
+/* Table19275 */
   0x0, /*  */
   0x37e9, /* VREDUCESDZrribkz */
-/* Table19275 */
+/* Table19277 */
   0x3035, /* VPSHLDQZ128rmbikz */
   0x0, /*  */
-/* Table19277 */
+/* Table19279 */
   0x30d1, /* VPSHRDQZ128rmbikz */
   0x0, /*  */
-/* Table19279 */
+/* Table19281 */
   0x1b4f, /* VGF2P8AFFINEQBZ128rmbikz */
   0x0, /*  */
-/* Table19281 */
+/* Table19283 */
   0x1b30, /* VGF2P8AFFINEINVQBZ128rmbikz */
   0x0, /*  */
-/* Table19283 */
+/* Table19285 */
   0xbf9, /* VALIGNDZ256rmbikz */
   0x0, /*  */
-/* Table19285 */
+/* Table19287 */
   0x271d, /* VPERMILPSZ256mbikz */
   0x0, /*  */
-/* Table19287 */
+/* Table19289 */
   0x381e, /* VRNDSCALEPSZ256rmbikz */
   0x382e, /* VRNDSCALEPSZrribkz */
-/* Table19289 */
+/* Table19291 */
   0x392f, /* VSHUFF32X4Z256rmbikz */
   0x0, /*  */
-/* Table19291 */
+/* Table19293 */
   0x3530, /* VPTERNLOGDZ256rmbikz */
   0x0, /*  */
-/* Table19293 */
+/* Table19295 */
   0x1b07, /* VGETMANTPSZ256rmbikz */
   0x1b17, /* VGETMANTPSZrribkz */
-/* Table19295 */
+/* Table19297 */
   0x3953, /* VSHUFI32X4Z256rmbikz */
   0x0, /*  */
-/* Table19297 */
+/* Table19299 */
   0x370e, /* VRANGEPSZ256rmbikz */
   0x371e, /* VRANGEPSZrribkz */
-/* Table19299 */
+/* Table19301 */
   0x132f, /* VFIXUPIMMPSZ256rmbikz */
   0x133f, /* VFIXUPIMMPSZrribkz */
-/* Table19301 */
+/* Table19303 */
   0x37d0, /* VREDUCEPSZ256rmbikz */
   0x37e0, /* VREDUCEPSZrribkz */
-/* Table19303 */
+/* Table19305 */
   0x3023, /* VPSHLDDZ256rmbikz */
   0x0, /*  */
-/* Table19305 */
+/* Table19307 */
   0x30bf, /* VPSHRDDZ256rmbikz */
   0x0, /*  */
-/* Table19307 */
+/* Table19309 */
   0x2781, /* VPERMQZ256mbikz */
   0x0, /*  */
-/* Table19309 */
+/* Table19311 */
   0x2747, /* VPERMPDZ256mbikz */
   0x0, /*  */
-/* Table19311 */
+/* Table19313 */
   0xc14, /* VALIGNQZ256rmbikz */
   0x0, /*  */
-/* Table19313 */
+/* Table19315 */
   0x26df, /* VPERMILPDZ256mbikz */
   0x0, /*  */
-/* Table19315 */
+/* Table19317 */
   0x3800, /* VRNDSCALEPDZ256rmbikz */
   0x3810, /* VRNDSCALEPDZrribkz */
-/* Table19317 */
+/* Table19319 */
   0x3941, /* VSHUFF64X2Z256rmbikz */
   0x0, /*  */
-/* Table19319 */
+/* Table19321 */
   0x354b, /* VPTERNLOGQZ256rmbikz */
   0x0, /*  */
-/* Table19321 */
+/* Table19323 */
   0x1ae9, /* VGETMANTPDZ256rmbikz */
   0x1af9, /* VGETMANTPDZrribkz */
-/* Table19323 */
+/* Table19325 */
   0x3965, /* VSHUFI64X2Z256rmbikz */
   0x0, /*  */
-/* Table19325 */
+/* Table19327 */
   0x36f0, /* VRANGEPDZ256rmbikz */
   0x3700, /* VRANGEPDZrribkz */
-/* Table19327 */
+/* Table19329 */
   0x1311, /* VFIXUPIMMPDZ256rmbikz */
   0x1321, /* VFIXUPIMMPDZrribkz */
-/* Table19329 */
+/* Table19331 */
   0x37b2, /* VREDUCEPDZ256rmbikz */
   0x37c2, /* VREDUCEPDZrribkz */
-/* Table19331 */
+/* Table19333 */
   0x303e, /* VPSHLDQZ256rmbikz */
   0x0, /*  */
-/* Table19333 */
+/* Table19335 */
   0x30da, /* VPSHRDQZ256rmbikz */
   0x0, /*  */
-/* Table19335 */
+/* Table19337 */
   0x1b58, /* VGF2P8AFFINEQBZ256rmbikz */
   0x0, /*  */
-/* Table19337 */
+/* Table19339 */
   0x1b39, /* VGF2P8AFFINEINVQBZ256rmbikz */
   0x0, /*  */
-/* Table19339 */
+/* Table19341 */
   0xc02, /* VALIGNDZrmbikz */
   0x0, /*  */
-/* Table19341 */
+/* Table19343 */
   0x272f, /* VPERMILPSZmbikz */
   0x0, /*  */
-/* Table19343 */
+/* Table19345 */
   0x3827, /* VRNDSCALEPSZrmbikz */
   0x382e, /* VRNDSCALEPSZrribkz */
-/* Table19345 */
+/* Table19347 */
   0x3938, /* VSHUFF32X4Zrmbikz */
   0x0, /*  */
-/* Table19347 */
+/* Table19349 */
   0x3539, /* VPTERNLOGDZrmbikz */
   0x0, /*  */
-/* Table19349 */
+/* Table19351 */
   0x1b10, /* VGETMANTPSZrmbikz */
   0x1b17, /* VGETMANTPSZrribkz */
-/* Table19351 */
+/* Table19353 */
   0x395c, /* VSHUFI32X4Zrmbikz */
   0x0, /*  */
-/* Table19353 */
+/* Table19355 */
   0x3717, /* VRANGEPSZrmbikz */
   0x371e, /* VRANGEPSZrribkz */
-/* Table19355 */
+/* Table19357 */
   0x1338, /* VFIXUPIMMPSZrmbikz */
   0x133f, /* VFIXUPIMMPSZrribkz */
-/* Table19357 */
+/* Table19359 */
   0x37d9, /* VREDUCEPSZrmbikz */
   0x37e0, /* VREDUCEPSZrribkz */
-/* Table19359 */
+/* Table19361 */
   0x302c, /* VPSHLDDZrmbikz */
   0x0, /*  */
-/* Table19361 */
+/* Table19363 */
   0x30c8, /* VPSHRDDZrmbikz */
   0x0, /*  */
-/* Table19363 */
+/* Table19365 */
   0x2793, /* VPERMQZmbikz */
   0x0, /*  */
-/* Table19365 */
+/* Table19367 */
   0x2759, /* VPERMPDZmbikz */
   0x0, /*  */
-/* Table19367 */
+/* Table19369 */
   0xc1d, /* VALIGNQZrmbikz */
   0x0, /*  */
-/* Table19369 */
+/* Table19371 */
   0x26f1, /* VPERMILPDZmbikz */
   0x0, /*  */
-/* Table19371 */
+/* Table19373 */
   0x3809, /* VRNDSCALEPDZrmbikz */
   0x3810, /* VRNDSCALEPDZrribkz */
-/* Table19373 */
+/* Table19375 */
   0x394a, /* VSHUFF64X2Zrmbikz */
   0x0, /*  */
-/* Table19375 */
+/* Table19377 */
   0x3554, /* VPTERNLOGQZrmbikz */
   0x0, /*  */
-/* Table19377 */
+/* Table19379 */
   0x1af2, /* VGETMANTPDZrmbikz */
   0x1af9, /* VGETMANTPDZrribkz */
-/* Table19379 */
+/* Table19381 */
   0x396e, /* VSHUFI64X2Zrmbikz */
   0x0, /*  */
-/* Table19381 */
+/* Table19383 */
   0x36f9, /* VRANGEPDZrmbikz */
   0x3700, /* VRANGEPDZrribkz */
-/* Table19383 */
+/* Table19385 */
   0x131a, /* VFIXUPIMMPDZrmbikz */
   0x1321, /* VFIXUPIMMPDZrribkz */
-/* Table19385 */
+/* Table19387 */
   0x37bb, /* VREDUCEPDZrmbikz */
   0x37c2, /* VREDUCEPDZrribkz */
-/* Table19387 */
+/* Table19389 */
   0x3047, /* VPSHLDQZrmbikz */
   0x0, /*  */
-/* Table19389 */
+/* Table19391 */
   0x30e3, /* VPSHRDQZrmbikz */
   0x0, /*  */
-/* Table19391 */
+/* Table19393 */
   0x1b61, /* VGF2P8AFFINEQBZrmbikz */
   0x0, /*  */
-/* Table19393 */
+/* Table19395 */
   0x1b42, /* VGF2P8AFFINEINVQBZrmbikz */
   0x0, /*  */
-/* Table19395 */
+/* Table19397 */
   0xbf3, /* VALIGNDZ128rmikz */
   0xbf6, /* VALIGNDZ128rrikz */
-/* Table19397 */
+/* Table19399 */
   0x270e, /* VPERMILPSZ128mikz */
   0x2711, /* VPERMILPSZ128rikz */
-/* Table19399 */
+/* Table19401 */
   0x3818, /* VRNDSCALEPSZ128rmikz */
   0x381b, /* VRNDSCALEPSZ128rrikz */
-/* Table19401 */
+/* Table19403 */
   0x383f, /* VRNDSCALESSZm_Intkz */
   0x3843, /* VRNDSCALESSZr_Intkz */
-/* Table19403 */
+/* Table19405 */
   0x21c3, /* VPALIGNRZ128rmikz */
   0x21c6, /* VPALIGNRZ128rrikz */
-/* Table19405 */
+/* Table19407 */
   0x0, /*  */
   0xf48, /* VCVTPS2PHZ128rrkz */
-/* Table19407 */
+/* Table19409 */
   0x352a, /* VPTERNLOGDZ128rmikz */
   0x352d, /* VPTERNLOGDZ128rrikz */
-/* Table19409 */
+/* Table19411 */
   0x1b01, /* VGETMANTPSZ128rmikz */
   0x1b04, /* VGETMANTPSZ128rrikz */
-/* Table19411 */
+/* Table19413 */
   0x1b25, /* VGETMANTSSZrmikz */
   0x1b2b, /* VGETMANTSSZrrikz */
-/* Table19413 */
+/* Table19415 */
   0x120a, /* VDBPSADBWZ128rmikz */
   0x120d, /* VDBPSADBWZ128rrikz */
-/* Table19415 */
+/* Table19417 */
   0x3708, /* VRANGEPSZ128rmikz */
   0x370b, /* VRANGEPSZ128rrikz */
-/* Table19417 */
+/* Table19419 */
   0x372c, /* VRANGESSZrmikz */
   0x3732, /* VRANGESSZrrikz */
-/* Table19419 */
+/* Table19421 */
   0x1329, /* VFIXUPIMMPSZ128rmikz */
   0x132c, /* VFIXUPIMMPSZ128rrikz */
-/* Table19421 */
+/* Table19423 */
   0x134d, /* VFIXUPIMMSSZrmikz */
   0x1353, /* VFIXUPIMMSSZrrikz */
-/* Table19423 */
+/* Table19425 */
   0x37ca, /* VREDUCEPSZ128rmikz */
   0x37cd, /* VREDUCEPSZ128rrikz */
-/* Table19425 */
+/* Table19427 */
   0x37ee, /* VREDUCESSZrmikz */
   0x37f4, /* VREDUCESSZrrikz */
-/* Table19427 */
+/* Table19429 */
   0x301d, /* VPSHLDDZ128rmikz */
   0x3020, /* VPSHLDDZ128rrikz */
-/* Table19429 */
+/* Table19431 */
   0x30b9, /* VPSHRDDZ128rmikz */
   0x30bc, /* VPSHRDDZ128rrikz */
-/* Table19431 */
+/* Table19433 */
   0xc0e, /* VALIGNQZ128rmikz */
   0xc11, /* VALIGNQZ128rrikz */
-/* Table19433 */
+/* Table19435 */
   0x26d0, /* VPERMILPDZ128mikz */
   0x26d3, /* VPERMILPDZ128rikz */
-/* Table19435 */
+/* Table19437 */
   0x37fa, /* VRNDSCALEPDZ128rmikz */
   0x37fd, /* VRNDSCALEPDZ128rrikz */
-/* Table19437 */
+/* Table19439 */
   0x3834, /* VRNDSCALESDZm_Intkz */
   0x3838, /* VRNDSCALESDZr_Intkz */
-/* Table19439 */
+/* Table19441 */
   0x3545, /* VPTERNLOGQZ128rmikz */
   0x3548, /* VPTERNLOGQZ128rrikz */
-/* Table19441 */
+/* Table19443 */
   0x1ae3, /* VGETMANTPDZ128rmikz */
   0x1ae6, /* VGETMANTPDZ128rrikz */
-/* Table19443 */
+/* Table19445 */
   0x1b1c, /* VGETMANTSDZrmikz */
   0x1b22, /* VGETMANTSDZrrikz */
-/* Table19445 */
+/* Table19447 */
   0x36ea, /* VRANGEPDZ128rmikz */
   0x36ed, /* VRANGEPDZ128rrikz */
-/* Table19447 */
+/* Table19449 */
   0x3723, /* VRANGESDZrmikz */
   0x3729, /* VRANGESDZrrikz */
-/* Table19449 */
+/* Table19451 */
   0x130b, /* VFIXUPIMMPDZ128rmikz */
   0x130e, /* VFIXUPIMMPDZ128rrikz */
-/* Table19451 */
+/* Table19453 */
   0x1344, /* VFIXUPIMMSDZrmikz */
   0x134a, /* VFIXUPIMMSDZrrikz */
-/* Table19453 */
+/* Table19455 */
   0x37ac, /* VREDUCEPDZ128rmikz */
   0x37af, /* VREDUCEPDZ128rrikz */
-/* Table19455 */
+/* Table19457 */
   0x37e5, /* VREDUCESDZrmikz */
   0x37eb, /* VREDUCESDZrrikz */
-/* Table19457 */
+/* Table19459 */
   0x3098, /* VPSHLDWZ128rmikz */
   0x309b, /* VPSHLDWZ128rrikz */
-/* Table19459 */
+/* Table19461 */
   0x3038, /* VPSHLDQZ128rmikz */
   0x303b, /* VPSHLDQZ128rrikz */
-/* Table19461 */
+/* Table19463 */
   0x3134, /* VPSHRDWZ128rmikz */
   0x3137, /* VPSHRDWZ128rrikz */
-/* Table19463 */
+/* Table19465 */
   0x30d4, /* VPSHRDQZ128rmikz */
   0x30d7, /* VPSHRDQZ128rrikz */
-/* Table19465 */
+/* Table19467 */
   0x1b52, /* VGF2P8AFFINEQBZ128rmikz */
   0x1b55, /* VGF2P8AFFINEQBZ128rrikz */
-/* Table19467 */
+/* Table19469 */
   0x1b33, /* VGF2P8AFFINEINVQBZ128rmikz */
   0x1b36, /* VGF2P8AFFINEINVQBZ128rrikz */
-/* Table19469 */
+/* Table19471 */
   0xbfc, /* VALIGNDZ256rmikz */
   0xbff, /* VALIGNDZ256rrikz */
-/* Table19471 */
+/* Table19473 */
   0x2720, /* VPERMILPSZ256mikz */
   0x2723, /* VPERMILPSZ256rikz */
-/* Table19473 */
+/* Table19475 */
   0x3821, /* VRNDSCALEPSZ256rmikz */
   0x3824, /* VRNDSCALEPSZ256rrikz */
-/* Table19475 */
+/* Table19477 */
   0x21c9, /* VPALIGNRZ256rmikz */
   0x21cc, /* VPALIGNRZ256rrikz */
-/* Table19477 */
+/* Table19479 */
   0x1b94, /* VINSERTF32x4Z256rmkz */
   0x1b97, /* VINSERTF32x4Z256rrkz */
-/* Table19479 */
-  0x0, /*  */
-  0x12c8, /* VEXTRACTF32x4Z256rrkz */
 /* Table19481 */
   0x0, /*  */
-  0xf4d, /* VCVTPS2PHZ256rrkz */
+  0x12c8, /* VEXTRACTF32x4Z256rrkz */
 /* Table19483 */
+  0x0, /*  */
+  0xf4d, /* VCVTPS2PHZ256rrkz */
+/* Table19485 */
   0x3932, /* VSHUFF32X4Z256rmikz */
   0x3935, /* VSHUFF32X4Z256rrikz */
-/* Table19485 */
+/* Table19487 */
   0x3533, /* VPTERNLOGDZ256rmikz */
   0x3536, /* VPTERNLOGDZ256rrikz */
-/* Table19487 */
+/* Table19489 */
   0x1b0a, /* VGETMANTPSZ256rmikz */
   0x1b0d, /* VGETMANTPSZ256rrikz */
-/* Table19489 */
+/* Table19491 */
   0x1bba, /* VINSERTI32x4Z256rmkz */
   0x1bbd, /* VINSERTI32x4Z256rrkz */
-/* Table19491 */
+/* Table19493 */
   0x0, /*  */
   0x12e8, /* VEXTRACTI32x4Z256rrkz */
-/* Table19493 */
+/* Table19495 */
   0x1210, /* VDBPSADBWZ256rmikz */
   0x1213, /* VDBPSADBWZ256rrikz */
-/* Table19495 */
+/* Table19497 */
   0x3956, /* VSHUFI32X4Z256rmikz */
   0x3959, /* VSHUFI32X4Z256rrikz */
-/* Table19497 */
+/* Table19499 */
   0x3711, /* VRANGEPSZ256rmikz */
   0x3714, /* VRANGEPSZ256rrikz */
-/* Table19499 */
+/* Table19501 */
   0x1332, /* VFIXUPIMMPSZ256rmikz */
   0x1335, /* VFIXUPIMMPSZ256rrikz */
-/* Table19501 */
+/* Table19503 */
   0x37d3, /* VREDUCEPSZ256rmikz */
   0x37d6, /* VREDUCEPSZ256rrikz */
-/* Table19503 */
+/* Table19505 */
   0x3026, /* VPSHLDDZ256rmikz */
   0x3029, /* VPSHLDDZ256rrikz */
-/* Table19505 */
+/* Table19507 */
   0x30c2, /* VPSHRDDZ256rmikz */
   0x30c5, /* VPSHRDDZ256rrikz */
-/* Table19507 */
+/* Table19509 */
   0x2784, /* VPERMQZ256mikz */
   0x2787, /* VPERMQZ256rikz */
-/* Table19509 */
+/* Table19511 */
   0x274a, /* VPERMPDZ256mikz */
   0x274d, /* VPERMPDZ256rikz */
-/* Table19511 */
+/* Table19513 */
   0xc17, /* VALIGNQZ256rmikz */
   0xc1a, /* VALIGNQZ256rrikz */
-/* Table19513 */
+/* Table19515 */
   0x26e2, /* VPERMILPDZ256mikz */
   0x26e5, /* VPERMILPDZ256rikz */
-/* Table19515 */
+/* Table19517 */
   0x3803, /* VRNDSCALEPDZ256rmikz */
   0x3806, /* VRNDSCALEPDZ256rrikz */
-/* Table19517 */
+/* Table19519 */
   0x1ba6, /* VINSERTF64x2Z256rmkz */
   0x1ba9, /* VINSERTF64x2Z256rrkz */
-/* Table19519 */
+/* Table19521 */
   0x0, /*  */
   0x12d7, /* VEXTRACTF64x2Z256rrkz */
-/* Table19521 */
+/* Table19523 */
   0x3944, /* VSHUFF64X2Z256rmikz */
   0x3947, /* VSHUFF64X2Z256rrikz */
-/* Table19523 */
+/* Table19525 */
   0x354e, /* VPTERNLOGQZ256rmikz */
   0x3551, /* VPTERNLOGQZ256rrikz */
-/* Table19525 */
+/* Table19527 */
   0x1aec, /* VGETMANTPDZ256rmikz */
   0x1aef, /* VGETMANTPDZ256rrikz */
-/* Table19527 */
+/* Table19529 */
   0x1bcc, /* VINSERTI64x2Z256rmkz */
   0x1bcf, /* VINSERTI64x2Z256rrkz */
-/* Table19529 */
+/* Table19531 */
   0x0, /*  */
   0x12f7, /* VEXTRACTI64x2Z256rrkz */
-/* Table19531 */
+/* Table19533 */
   0x3968, /* VSHUFI64X2Z256rmikz */
   0x396b, /* VSHUFI64X2Z256rrikz */
-/* Table19533 */
+/* Table19535 */
   0x36f3, /* VRANGEPDZ256rmikz */
   0x36f6, /* VRANGEPDZ256rrikz */
-/* Table19535 */
+/* Table19537 */
   0x1314, /* VFIXUPIMMPDZ256rmikz */
   0x1317, /* VFIXUPIMMPDZ256rrikz */
-/* Table19537 */
+/* Table19539 */
   0x37b5, /* VREDUCEPDZ256rmikz */
   0x37b8, /* VREDUCEPDZ256rrikz */
-/* Table19539 */
+/* Table19541 */
   0x309e, /* VPSHLDWZ256rmikz */
   0x30a1, /* VPSHLDWZ256rrikz */
-/* Table19541 */
+/* Table19543 */
   0x3041, /* VPSHLDQZ256rmikz */
   0x3044, /* VPSHLDQZ256rrikz */
-/* Table19543 */
+/* Table19545 */
   0x313a, /* VPSHRDWZ256rmikz */
   0x313d, /* VPSHRDWZ256rrikz */
-/* Table19545 */
+/* Table19547 */
   0x30dd, /* VPSHRDQZ256rmikz */
   0x30e0, /* VPSHRDQZ256rrikz */
-/* Table19547 */
+/* Table19549 */
   0x1b5b, /* VGF2P8AFFINEQBZ256rmikz */
   0x1b5e, /* VGF2P8AFFINEQBZ256rrikz */
-/* Table19549 */
+/* Table19551 */
   0x1b3c, /* VGF2P8AFFINEINVQBZ256rmikz */
   0x1b3f, /* VGF2P8AFFINEINVQBZ256rrikz */
-/* Table19551 */
+/* Table19553 */
   0xc05, /* VALIGNDZrmikz */
   0xc08, /* VALIGNDZrrikz */
-/* Table19553 */
+/* Table19555 */
   0x2732, /* VPERMILPSZmikz */
   0x2735, /* VPERMILPSZrikz */
-/* Table19555 */
+/* Table19557 */
   0x382a, /* VRNDSCALEPSZrmikz */
   0x3830, /* VRNDSCALEPSZrrikz */
-/* Table19557 */
+/* Table19559 */
   0x21cf, /* VPALIGNRZrmikz */
   0x21d2, /* VPALIGNRZrrikz */
-/* Table19559 */
+/* Table19561 */
   0x1b9a, /* VINSERTF32x4Zrmkz */
   0x1b9d, /* VINSERTF32x4Zrrkz */
-/* Table19561 */
+/* Table19563 */
   0x0, /*  */
   0x12cd, /* VEXTRACTF32x4Zrrkz */
-/* Table19563 */
+/* Table19565 */
   0x1ba0, /* VINSERTF32x8Zrmkz */
   0x1ba3, /* VINSERTF32x8Zrrkz */
-/* Table19565 */
-  0x0, /*  */
-  0x12d2, /* VEXTRACTF32x8Zrrkz */
 /* Table19567 */
   0x0, /*  */
-  0xf55, /* VCVTPS2PHZrrkz */
+  0x12d2, /* VEXTRACTF32x8Zrrkz */
 /* Table19569 */
+  0x0, /*  */
+  0xf55, /* VCVTPS2PHZrrkz */
+/* Table19571 */
   0x393b, /* VSHUFF32X4Zrmikz */
   0x393e, /* VSHUFF32X4Zrrikz */
-/* Table19571 */
+/* Table19573 */
   0x353c, /* VPTERNLOGDZrmikz */
   0x353f, /* VPTERNLOGDZrrikz */
-/* Table19573 */
+/* Table19575 */
   0x1b13, /* VGETMANTPSZrmikz */
   0x1b19, /* VGETMANTPSZrrikz */
-/* Table19575 */
+/* Table19577 */
   0x1bc0, /* VINSERTI32x4Zrmkz */
   0x1bc3, /* VINSERTI32x4Zrrkz */
-/* Table19577 */
+/* Table19579 */
   0x0, /*  */
   0x12ed, /* VEXTRACTI32x4Zrrkz */
-/* Table19579 */
+/* Table19581 */
   0x1bc6, /* VINSERTI32x8Zrmkz */
   0x1bc9, /* VINSERTI32x8Zrrkz */
-/* Table19581 */
+/* Table19583 */
   0x0, /*  */
   0x12f2, /* VEXTRACTI32x8Zrrkz */
-/* Table19583 */
+/* Table19585 */
   0x1216, /* VDBPSADBWZrmikz */
   0x1219, /* VDBPSADBWZrrikz */
-/* Table19585 */
+/* Table19587 */
   0x395f, /* VSHUFI32X4Zrmikz */
   0x3962, /* VSHUFI32X4Zrrikz */
-/* Table19587 */
+/* Table19589 */
   0x371a, /* VRANGEPSZrmikz */
   0x3720, /* VRANGEPSZrrikz */
-/* Table19589 */
+/* Table19591 */
   0x133b, /* VFIXUPIMMPSZrmikz */
   0x1341, /* VFIXUPIMMPSZrrikz */
-/* Table19591 */
+/* Table19593 */
   0x37dc, /* VREDUCEPSZrmikz */
   0x37e2, /* VREDUCEPSZrrikz */
-/* Table19593 */
+/* Table19595 */
   0x302f, /* VPSHLDDZrmikz */
   0x3032, /* VPSHLDDZrrikz */
-/* Table19595 */
+/* Table19597 */
   0x30cb, /* VPSHRDDZrmikz */
   0x30ce, /* VPSHRDDZrrikz */
-/* Table19597 */
+/* Table19599 */
   0x2796, /* VPERMQZmikz */
   0x2799, /* VPERMQZrikz */
-/* Table19599 */
+/* Table19601 */
   0x275c, /* VPERMPDZmikz */
   0x275f, /* VPERMPDZrikz */
-/* Table19601 */
+/* Table19603 */
   0xc20, /* VALIGNQZrmikz */
   0xc23, /* VALIGNQZrrikz */
-/* Table19603 */
+/* Table19605 */
   0x26f4, /* VPERMILPDZmikz */
   0x26f7, /* VPERMILPDZrikz */
-/* Table19605 */
+/* Table19607 */
   0x380c, /* VRNDSCALEPDZrmikz */
   0x3812, /* VRNDSCALEPDZrrikz */
-/* Table19607 */
+/* Table19609 */
   0x1bac, /* VINSERTF64x2Zrmkz */
   0x1baf, /* VINSERTF64x2Zrrkz */
-/* Table19609 */
+/* Table19611 */
   0x0, /*  */
   0x12dc, /* VEXTRACTF64x2Zrrkz */
-/* Table19611 */
+/* Table19613 */
   0x1bb2, /* VINSERTF64x4Zrmkz */
   0x1bb5, /* VINSERTF64x4Zrrkz */
-/* Table19613 */
+/* Table19615 */
   0x0, /*  */
   0x12e1, /* VEXTRACTF64x4Zrrkz */
-/* Table19615 */
+/* Table19617 */
   0x394d, /* VSHUFF64X2Zrmikz */
   0x3950, /* VSHUFF64X2Zrrikz */
-/* Table19617 */
+/* Table19619 */
   0x3557, /* VPTERNLOGQZrmikz */
   0x355a, /* VPTERNLOGQZrrikz */
-/* Table19619 */
+/* Table19621 */
   0x1af5, /* VGETMANTPDZrmikz */
   0x1afb, /* VGETMANTPDZrrikz */
-/* Table19621 */
+/* Table19623 */
   0x1bd2, /* VINSERTI64x2Zrmkz */
   0x1bd5, /* VINSERTI64x2Zrrkz */
-/* Table19623 */
+/* Table19625 */
   0x0, /*  */
   0x12fc, /* VEXTRACTI64x2Zrrkz */
-/* Table19625 */
+/* Table19627 */
   0x1bd8, /* VINSERTI64x4Zrmkz */
   0x1bdb, /* VINSERTI64x4Zrrkz */
-/* Table19627 */
+/* Table19629 */
   0x0, /*  */
   0x1301, /* VEXTRACTI64x4Zrrkz */
-/* Table19629 */
+/* Table19631 */
   0x3971, /* VSHUFI64X2Zrmikz */
   0x3974, /* VSHUFI64X2Zrrikz */
-/* Table19631 */
+/* Table19633 */
   0x36fc, /* VRANGEPDZrmikz */
   0x3702, /* VRANGEPDZrrikz */
-/* Table19633 */
+/* Table19635 */
   0x131d, /* VFIXUPIMMPDZrmikz */
   0x1323, /* VFIXUPIMMPDZrrikz */
-/* Table19635 */
+/* Table19637 */
   0x37be, /* VREDUCEPDZrmikz */
   0x37c4, /* VREDUCEPDZrrikz */
-/* Table19637 */
+/* Table19639 */
   0x30a4, /* VPSHLDWZrmikz */
   0x30a7, /* VPSHLDWZrrikz */
-/* Table19639 */
+/* Table19641 */
   0x304a, /* VPSHLDQZrmikz */
   0x304d, /* VPSHLDQZrrikz */
-/* Table19641 */
+/* Table19643 */
   0x3140, /* VPSHRDWZrmikz */
   0x3143, /* VPSHRDWZrrikz */
-/* Table19643 */
+/* Table19645 */
   0x30e6, /* VPSHRDQZrmikz */
   0x30e9, /* VPSHRDQZrrikz */
-/* Table19645 */
+/* Table19647 */
   0x1b64, /* VGF2P8AFFINEQBZrmikz */
   0x1b67, /* VGF2P8AFFINEQBZrrikz */
-/* Table19647 */
+/* Table19649 */
   0x1b45, /* VGF2P8AFFINEINVQBZrmikz */
   0x1b48, /* VGF2P8AFFINEINVQBZrrikz */
-/* Table19649 */
+/* Table19651 */
   0x293f, /* VPMACSSWWrm */
   0x2940, /* VPMACSSWWrr */
-/* Table19651 */
+/* Table19653 */
   0x293d, /* VPMACSSWDrm */
   0x293e, /* VPMACSSWDrr */
-/* Table19653 */
+/* Table19655 */
   0x293b, /* VPMACSSDQLrm */
   0x293c, /* VPMACSSDQLrr */
-/* Table19655 */
+/* Table19657 */
   0x2937, /* VPMACSSDDrm */
   0x2938, /* VPMACSSDDrr */
-/* Table19657 */
+/* Table19659 */
   0x2939, /* VPMACSSDQHrm */
   0x293a, /* VPMACSSDQHrr */
-/* Table19659 */
+/* Table19661 */
   0x2943, /* VPMACSWWrm */
   0x2944, /* VPMACSWWrr */
-/* Table19661 */
+/* Table19663 */
   0x2941, /* VPMACSWDrm */
   0x2942, /* VPMACSWDrr */
-/* Table19663 */
+/* Table19665 */
   0x2935, /* VPMACSDQLrm */
   0x2936, /* VPMACSDQLrr */
-/* Table19665 */
+/* Table19667 */
   0x2931, /* VPMACSDDrm */
   0x2932, /* VPMACSDDrr */
-/* Table19667 */
+/* Table19669 */
   0x2933, /* VPMACSDQHrm */
   0x2934, /* VPMACSDQHrr */
-/* Table19669 */
+/* Table19671 */
   0x236b, /* VPCMOVrmr */
   0x236d, /* VPCMOVrrr */
-/* Table19671 */
+/* Table19673 */
   0x2efa, /* VPPERMrmr */
   0x2efc, /* VPPERMrrr */
-/* Table19673 */
+/* Table19675 */
   0x2945, /* VPMADCSSWDrm */
   0x2946, /* VPMADCSSWDrr */
-/* Table19675 */
+/* Table19677 */
   0x2947, /* VPMADCSWDrm */
   0x2948, /* VPMADCSWDrr */
-/* Table19677 */
+/* Table19679 */
   0x2fd6, /* VPROTBmi */
   0x2fd8, /* VPROTBri */
-/* Table19679 */
+/* Table19681 */
   0x2fe8, /* VPROTWmi */
   0x2fea, /* VPROTWri */
-/* Table19681 */
+/* Table19683 */
   0x2fdc, /* VPROTDmi */
   0x2fde, /* VPROTDri */
-/* Table19683 */
+/* Table19685 */
   0x2fe2, /* VPROTQmi */
   0x2fe4, /* VPROTQri */
-/* Table19685 */
+/* Table19687 */
   0x24ff, /* VPCOMBmi */
   0x2501, /* VPCOMBri */
-/* Table19687 */
+/* Table19689 */
   0x2557, /* VPCOMWmi */
   0x2559, /* VPCOMWri */
-/* Table19689 */
+/* Table19691 */
   0x2503, /* VPCOMDmi */
   0x2505, /* VPCOMDri */
-/* Table19691 */
+/* Table19693 */
   0x2543, /* VPCOMQmi */
   0x2545, /* VPCOMQri */
-/* Table19693 */
+/* Table19695 */
   0x2547, /* VPCOMUBmi */
   0x2549, /* VPCOMUBri */
-/* Table19695 */
+/* Table19697 */
   0x2553, /* VPCOMUWmi */
   0x2555, /* VPCOMUWri */
-/* Table19697 */
+/* Table19699 */
   0x254b, /* VPCOMUDmi */
   0x254d, /* VPCOMUDri */
-/* Table19699 */
+/* Table19701 */
   0x254f, /* VPCOMUQmi */
   0x2551, /* VPCOMUQri */
-/* Table19701 */
+/* Table19703 */
   0x236c, /* VPCMOVrrm */
   0x236e, /* VPCMOVrrr_REV */
-/* Table19703 */
+/* Table19705 */
   0x2efb, /* VPPERMrrm */
   0x2efd, /* VPPERMrrr_REV */
-/* Table19705 */
+/* Table19707 */
   0x2367, /* VPCMOVYrmr */
   0x2369, /* VPCMOVYrrr */
-/* Table19707 */
+/* Table19709 */
   0x2368, /* VPCMOVYrrm */
   0x236a, /* VPCMOVYrrr_REV */
-/* Table19709 */
+/* Table19711 */
   0x0, /*  */
   0x155, /* BLCFILL32rm */
   0x171, /* BLSFILL32rm */
@@ -112624,7 +112626,7 @@ static const InstrUID modRMTable[] = {
   0x15e, /* BLCIC32rr */
   0x17a, /* BLSIC32rr */
   0xafc, /* T1MSKC32rr */
-/* Table19725 */
+/* Table19727 */
   0x0, /*  */
   0x161, /* BLCMSK32rm */
   0x0, /*  */
@@ -112641,7 +112643,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x15a, /* BLCI32rr */
   0x0, /*  */
-/* Table19741 */
+/* Table19743 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -112658,100 +112660,100 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table19757 */
+/* Table19759 */
   0x1a6e, /* VFRCZPSrm */
   0x1a6f, /* VFRCZPSrr */
-/* Table19759 */
+/* Table19761 */
   0x1a6a, /* VFRCZPDrm */
   0x1a6b, /* VFRCZPDrr */
-/* Table19761 */
+/* Table19763 */
   0x1a72, /* VFRCZSSrm */
   0x1a73, /* VFRCZSSrr */
-/* Table19763 */
+/* Table19765 */
   0x1a70, /* VFRCZSDrm */
   0x1a71, /* VFRCZSDrr */
-/* Table19765 */
+/* Table19767 */
   0x2fd7, /* VPROTBmr */
   0x2fda, /* VPROTBrr */
-/* Table19767 */
+/* Table19769 */
   0x2fe9, /* VPROTWmr */
   0x2fec, /* VPROTWrr */
-/* Table19769 */
+/* Table19771 */
   0x2fdd, /* VPROTDmr */
   0x2fe0, /* VPROTDrr */
-/* Table19771 */
+/* Table19773 */
   0x2fe3, /* VPROTQmr */
   0x2fe6, /* VPROTQrr */
-/* Table19773 */
+/* Table19775 */
   0x3014, /* VPSHLBmr */
   0x3016, /* VPSHLBrr */
-/* Table19775 */
+/* Table19777 */
   0x30b0, /* VPSHLWmr */
   0x30b2, /* VPSHLWrr */
-/* Table19777 */
+/* Table19779 */
   0x30a8, /* VPSHLDmr */
   0x30aa, /* VPSHLDrr */
-/* Table19779 */
+/* Table19781 */
   0x30ac, /* VPSHLQmr */
   0x30ae, /* VPSHLQrr */
-/* Table19781 */
+/* Table19783 */
   0x3004, /* VPSHABmr */
   0x3006, /* VPSHABrr */
-/* Table19783 */
+/* Table19785 */
   0x3010, /* VPSHAWmr */
   0x3012, /* VPSHAWrr */
-/* Table19785 */
+/* Table19787 */
   0x3008, /* VPSHADmr */
   0x300a, /* VPSHADrr */
-/* Table19787 */
+/* Table19789 */
   0x300c, /* VPSHAQmr */
   0x300e, /* VPSHAQrr */
-/* Table19789 */
+/* Table19791 */
   0x28b7, /* VPHADDBWrm */
   0x28b8, /* VPHADDBWrr */
-/* Table19791 */
+/* Table19793 */
   0x28b3, /* VPHADDBDrm */
   0x28b4, /* VPHADDBDrr */
-/* Table19793 */
+/* Table19795 */
   0x28b5, /* VPHADDBQrm */
   0x28b6, /* VPHADDBQrr */
-/* Table19795 */
+/* Table19797 */
   0x28cf, /* VPHADDWDrm */
   0x28d0, /* VPHADDWDrr */
-/* Table19797 */
+/* Table19799 */
   0x28d1, /* VPHADDWQrm */
   0x28d2, /* VPHADDWQrr */
-/* Table19799 */
+/* Table19801 */
   0x28b9, /* VPHADDDQrm */
   0x28ba, /* VPHADDDQrr */
-/* Table19801 */
+/* Table19803 */
   0x28c7, /* VPHADDUBWrm */
   0x28c8, /* VPHADDUBWrr */
-/* Table19803 */
+/* Table19805 */
   0x28c3, /* VPHADDUBDrm */
   0x28c4, /* VPHADDUBDrr */
-/* Table19805 */
+/* Table19807 */
   0x28c5, /* VPHADDUBQrm */
   0x28c6, /* VPHADDUBQrr */
-/* Table19807 */
+/* Table19809 */
   0x28cb, /* VPHADDUWDrm */
   0x28cc, /* VPHADDUWDrr */
-/* Table19809 */
+/* Table19811 */
   0x28cd, /* VPHADDUWQrm */
   0x28ce, /* VPHADDUWQrr */
-/* Table19811 */
+/* Table19813 */
   0x28c9, /* VPHADDUDQrm */
   0x28ca, /* VPHADDUDQrr */
-/* Table19813 */
+/* Table19815 */
   0x28d9, /* VPHSUBBWrm */
   0x28da, /* VPHSUBBWrr */
-/* Table19815 */
+/* Table19817 */
   0x28e5, /* VPHSUBWDrm */
   0x28e6, /* VPHSUBWDrr */
-/* Table19817 */
+/* Table19819 */
   0x28db, /* VPHSUBDQrm */
   0x28dc, /* VPHSUBDQrr */
-/* Table19819 */
+/* Table19821 */
   0x0, /*  */
   0x157, /* BLCFILL64rm */
   0x173, /* BLSFILL64rm */
@@ -112768,7 +112770,7 @@ static const InstrUID modRMTable[] = {
   0x160, /* BLCIC64rr */
   0x17c, /* BLSIC64rr */
   0xafe, /* T1MSKC64rr */
-/* Table19835 */
+/* Table19837 */
   0x0, /*  */
   0x163, /* BLCMSK64rm */
   0x0, /*  */
@@ -112785,7 +112787,7 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x15c, /* BLCI64rr */
   0x0, /*  */
-/* Table19851 */
+/* Table19853 */
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
@@ -112802,52 +112804,52 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table19867 */
+/* Table19869 */
   0x2fd9, /* VPROTBrm */
   0x2fdb, /* VPROTBrr_REV */
-/* Table19869 */
+/* Table19871 */
   0x2feb, /* VPROTWrm */
   0x2fed, /* VPROTWrr_REV */
-/* Table19871 */
+/* Table19873 */
   0x2fdf, /* VPROTDrm */
   0x2fe1, /* VPROTDrr_REV */
-/* Table19873 */
+/* Table19875 */
   0x2fe5, /* VPROTQrm */
   0x2fe7, /* VPROTQrr_REV */
-/* Table19875 */
+/* Table19877 */
   0x3015, /* VPSHLBrm */
   0x3017, /* VPSHLBrr_REV */
-/* Table19877 */
+/* Table19879 */
   0x30b1, /* VPSHLWrm */
   0x30b3, /* VPSHLWrr_REV */
-/* Table19879 */
+/* Table19881 */
   0x30a9, /* VPSHLDrm */
   0x30ab, /* VPSHLDrr_REV */
-/* Table19881 */
+/* Table19883 */
   0x30ad, /* VPSHLQrm */
   0x30af, /* VPSHLQrr_REV */
-/* Table19883 */
+/* Table19885 */
   0x3005, /* VPSHABrm */
   0x3007, /* VPSHABrr_REV */
-/* Table19885 */
+/* Table19887 */
   0x3011, /* VPSHAWrm */
   0x3013, /* VPSHAWrr_REV */
-/* Table19887 */
+/* Table19889 */
   0x3009, /* VPSHADrm */
   0x300b, /* VPSHADrr_REV */
-/* Table19889 */
+/* Table19891 */
   0x300d, /* VPSHAQrm */
   0x300f, /* VPSHAQrr_REV */
-/* Table19891 */
+/* Table19893 */
   0x1a6c, /* VFRCZPSYrm */
   0x1a6d, /* VFRCZPSYrr */
-/* Table19893 */
+/* Table19895 */
   0x1a68, /* VFRCZPDYrm */
   0x1a69, /* VFRCZPDYrr */
-/* Table19895 */
+/* Table19897 */
   0x151, /* BEXTRI32mi */
   0x152, /* BEXTRI32ri */
-/* Table19897 */
+/* Table19899 */
   0x513, /* LWPINS32rmi */
   0x517, /* LWPVAL32rmi */
   0x0, /*  */
@@ -112864,10 +112866,10 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table19913 */
+/* Table19915 */
   0x153, /* BEXTRI64mi */
   0x154, /* BEXTRI64ri */
-/* Table19915 */
+/* Table19917 */
   0x515, /* LWPINS64rmi */
   0x519, /* LWPVAL64rmi */
   0x0, /*  */
@@ -112884,76 +112886,76 @@ static const InstrUID modRMTable[] = {
   0x0, /*  */
   0x0, /*  */
   0x0, /*  */
-/* Table19931 */
+/* Table19933 */
   0x7ed, /* PI2FWrm */
   0x7ee, /* PI2FWrr */
-/* Table19933 */
+/* Table19935 */
   0x7eb, /* PI2FDrm */
   0x7ec, /* PI2FDrr */
-/* Table19935 */
+/* Table19937 */
   0x7b9, /* PF2IWrm */
   0x7ba, /* PF2IWrr */
-/* Table19937 */
+/* Table19939 */
   0x7b7, /* PF2IDrm */
   0x7b8, /* PF2IDrr */
-/* Table19939 */
+/* Table19941 */
   0x7cb, /* PFNACCrm */
   0x7cc, /* PFNACCrr */
-/* Table19941 */
+/* Table19943 */
   0x7cd, /* PFPNACCrm */
   0x7ce, /* PFPNACCrr */
-/* Table19943 */
+/* Table19945 */
   0x7c1, /* PFCMPGErm */
   0x7c2, /* PFCMPGErr */
-/* Table19945 */
+/* Table19947 */
   0x7c7, /* PFMINrm */
   0x7c8, /* PFMINrr */
-/* Table19947 */
+/* Table19949 */
   0x7d3, /* PFRCPrm */
   0x7d4, /* PFRCPrr */
-/* Table19949 */
+/* Table19951 */
   0x7d7, /* PFRSQRTrm */
   0x7d8, /* PFRSQRTrr */
-/* Table19951 */
+/* Table19953 */
   0x7db, /* PFSUBrm */
   0x7dc, /* PFSUBrr */
-/* Table19953 */
+/* Table19955 */
   0x7bd, /* PFADDrm */
   0x7be, /* PFADDrr */
-/* Table19955 */
+/* Table19957 */
   0x7c3, /* PFCMPGTrm */
   0x7c4, /* PFCMPGTrr */
-/* Table19957 */
+/* Table19959 */
   0x7c5, /* PFMAXrm */
   0x7c6, /* PFMAXrr */
-/* Table19959 */
+/* Table19961 */
   0x7cf, /* PFRCPIT1rm */
   0x7d0, /* PFRCPIT1rr */
-/* Table19961 */
+/* Table19963 */
   0x7d5, /* PFRSQIT1rm */
   0x7d6, /* PFRSQIT1rr */
-/* Table19963 */
+/* Table19965 */
   0x7d9, /* PFSUBRrm */
   0x7da, /* PFSUBRrr */
-/* Table19965 */
+/* Table19967 */
   0x7bb, /* PFACCrm */
   0x7bc, /* PFACCrr */
-/* Table19967 */
+/* Table19969 */
   0x7bf, /* PFCMPEQrm */
   0x7c0, /* PFCMPEQrr */
-/* Table19969 */
+/* Table19971 */
   0x7c9, /* PFMULrm */
   0x7ca, /* PFMULrr */
-/* Table19971 */
+/* Table19973 */
   0x7d1, /* PFRCPIT2rm */
   0x7d2, /* PFRCPIT2rr */
-/* Table19973 */
+/* Table19975 */
   0x830, /* PMULHRWrm */
   0x831, /* PMULHRWrr */
-/* Table19975 */
+/* Table19977 */
   0x89f, /* PSWAPDrm */
   0x8a0, /* PSWAPDrr */
-/* Table19977 */
+/* Table19979 */
   0x783, /* PAVGUSBrm */
   0x784, /* PAVGUSBrr */
   0x0

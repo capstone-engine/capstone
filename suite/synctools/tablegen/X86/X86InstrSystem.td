@@ -24,8 +24,8 @@ let Defs = [RAX, RCX, RDX] in
 
 let mayLoad = 1, mayStore = 0, hasSideEffects = 1, isTrap = 1 in {
   def UD2    : I<0x0B, RawFrm, (outs), (ins), "ud2", [(trap)]>, TB;
-  def UD1    : I<0xB9, RawFrm, (outs), (ins), "ud1", []>, TB;
-  def UD0    : I<0xFF, RawFrm, (outs), (ins), "ud0", []>, TB;
+  def UD1    : I<0xB9, MRMSrcMem, (outs GR32:$dst), (ins anymem:$src), "ud1\t{$src, $dst}", []>, TB;
+  def UD0    : I<0xFF, MRMSrcMem, (outs GR32:$dst), (ins anymem:$src), "ud0\t{$src, $dst}", []>, TB;
 }
 
 def HLT : I<0xF4, RawFrm, (outs), (ins), "hlt", []>;

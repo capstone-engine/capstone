@@ -18,6 +18,7 @@
 	"addsubps", // X86_INS_ADDSUBPS
 	"fadd", // X86_INS_FADD
 	"fiadd", // X86_INS_FIADD
+	"faddp", // X86_INS_FADDP
 	"adox", // X86_INS_ADOX
 	"aesdeclast", // X86_INS_AESDECLAST
 	"aesdec", // X86_INS_AESDEC
