@@ -652,7 +652,7 @@ static DecodeStatus DecodeMVEVCVTt1fp(MCInst *Inst, unsigned Insn,
 				      MCRegisterInfo *Decoder);
 
 static DecodeStatus DecodeMVEVCMP(MCInst *Inst, unsigned Insn, uint64_t Address,
-				  MCRegisterInfo *Decoder, unsigned scalar);
+				  MCRegisterInfo *Decoder, unsigned scalar, void* omitted);
 
 static DecodeStatus DecodeMveVCTP(MCInst *Inst, unsigned Insn, uint64_t Address,
 				  MCRegisterInfo *Decoder);
@@ -668,8 +668,8 @@ static DecodeStatus DecodeT2AddSubSPImm(MCInst *Inst, unsigned Insn,
 					uint64_t Address,
 					MCRegisterInfo *Decoder);
 
-#define GET_REGINFO_ENUM
 #define GET_INSTRINFO_ENUM
+#define GET_REGINFO_ENUM
 #define MIPS_GET_DISASSEMBLER
 #include "ARMGenDisassemblerTables.inc"
 
@@ -5808,6 +5808,7 @@ static DecodeStatus DecodeLOLoop(MCInst *Inst, unsigned Insn, uint64_t Address,
 				 MCRegisterInfo *Decoder)
 {
   DecodeStatus S = MCDisassembler_Success;
+  unsigned Rn;
 
   if (MCInst_getOpcode(Inst) == ARM_MVE_LCTP)
     return S;
@@ -5843,7 +5844,7 @@ static DecodeStatus DecodeLOLoop(MCInst *Inst, unsigned Insn, uint64_t Address,
   case ARM_MVE_DLSTP_16:
   case ARM_MVE_DLSTP_32:
   case ARM_MVE_DLSTP_64:
-    unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
+      Rn = fieldFromInstruction_4(Insn, 16, 4);
     if (Rn == 0xF) {
       // Enforce all the rest of the instruction bits in LCTP, which
       // won't have been reliably checked based on LCTP's own tablegen
@@ -6435,8 +6436,8 @@ static DecodeStatus DecodeMVEVCVTt1fp(MCInst *Inst, unsigned Insn,
   return S;
 }
 
-static DecodeStatus DecodeMVEVCMP(MCInst *Inst, unsigned Insn, uint64_t Address,
-				  MCRegisterInfo *Decoder, unsigned scalar)
+static DecodeStatus DecodeMVEVCMP(MCInst *Inst, unsigned Insn, uint64_t Address, MCRegisterInfo* Decoder,
+                                   unsigned scalar, void * omitted)
 {
   DecodeStatus S = MCDisassembler_Success;
   MCOperand_CreateReg0(Inst, ARM_VPR);

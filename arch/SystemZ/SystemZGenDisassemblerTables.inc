@@ -6878,77 +6878,77 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits) {
   switch (Idx) {
   default: llvm_unreachable("Invalid index!");
   case 0:
-    return getbool((Bits & 1 << SystemZ_FeatureFPExtension));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureFPExtension, 1));
   case 1:
-    return getbool((Bits & 1 << SystemZ_FeatureProcessorAssist));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureProcessorAssist, 1));
   case 2:
-    return getbool((Bits & 1 << SystemZ_FeatureTransactionalExecution));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureTransactionalExecution, 1));
   case 3:
-    return getbool((Bits & 1 << SystemZ_FeatureExecutionHint));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureExecutionHint, 1));
   case 4:
-    return getbool((Bits & 1 << SystemZ_FeatureMessageSecurityAssist3));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMessageSecurityAssist3, 1));
   case 5:
-    return getbool((Bits & 1 << SystemZ_FeatureMessageSecurityAssist8));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMessageSecurityAssist8, 1));
   case 6:
-    return getbool((Bits & 1 << SystemZ_FeatureMessageSecurityAssist4));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMessageSecurityAssist4, 1));
   case 7:
-    return getbool((Bits & 1 << SystemZ_FeatureEnhancedSort));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureEnhancedSort, 1));
   case 8:
-    return getbool((Bits & 1 << SystemZ_FeatureDeflateConversion));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureDeflateConversion, 1));
   case 9:
-    return getbool((Bits & 1 << SystemZ_FeatureMessageSecurityAssist9));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMessageSecurityAssist9, 1));
   case 10:
-    return getbool((Bits & 1 << SystemZ_FeatureMessageSecurityAssist5));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMessageSecurityAssist5, 1));
   case 11:
-    return getbool((Bits & 1 << SystemZ_FeatureMiscellaneousExtensions3));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMiscellaneousExtensions3, 1));
   case 12:
-    return getbool((Bits & 1 << SystemZ_FeatureEnhancedDAT2));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureEnhancedDAT2, 1));
   case 13:
-    return getbool((Bits & 1 << SystemZ_FeatureInsertReferenceBitsMultiple));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureInsertReferenceBitsMultiple, 1));
   case 14:
-    return getbool((Bits & 1 << SystemZ_FeatureResetReferenceBitsMultiple));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureResetReferenceBitsMultiple, 1));
   case 15:
-    return getbool((Bits & 1 << SystemZ_FeatureHighWord));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureHighWord, 1));
   case 16:
-    return getbool((Bits & 1 << SystemZ_FeatureLoadStoreOnCond2));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureLoadStoreOnCond2, 1));
   case 17:
-    return getbool((Bits & 1 << SystemZ_FeaturePopulationCount));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeaturePopulationCount, 1));
   case 18:
-    return getbool((Bits & 1 << SystemZ_FeatureLoadStoreOnCond));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureLoadStoreOnCond, 1));
   case 19:
-    return getbool((Bits & 1 << SystemZ_FeatureDistinctOps));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureDistinctOps, 1));
   case 20:
-    return getbool((Bits & 1 << SystemZ_FeatureMiscellaneousExtensions2));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMiscellaneousExtensions2, 1));
   case 21:
-    return getbool((Bits & 1 << SystemZ_FeatureInterlockedAccess1));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureInterlockedAccess1, 1));
   case 22:
-    return getbool((Bits & 1 << SystemZ_FeatureLoadAndZeroRightmostByte));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureLoadAndZeroRightmostByte, 1));
   case 23:
-    return getbool((Bits & 1 << SystemZ_FeatureGuardedStorage));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureGuardedStorage, 1));
   case 24:
-    return getbool((Bits & 1 << SystemZ_FeatureLoadAndTrap));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureLoadAndTrap, 1));
   case 25:
-    return getbool((Bits & 1 << SystemZ_FeatureVectorEnhancements2));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureVectorEnhancements2, 1));
   case 26:
-    return getbool((Bits & 1 << SystemZ_FeatureVectorPackedDecimal));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureVectorPackedDecimal, 1));
   case 27:
-    return getbool((Bits & 1 << SystemZ_FeatureVectorPackedDecimalEnhancement));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureVectorPackedDecimalEnhancement, 1));
   case 28:
-    return getbool((Bits & 1 << SystemZ_FeatureVector));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureVector, 1));
   case 29:
-    return getbool((Bits & 1 << SystemZ_FeatureVectorEnhancements1));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureVectorEnhancements1, 1));
   case 30:
-    return getbool((Bits & 1 << SystemZ_FeatureMiscellaneousExtensions));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureMiscellaneousExtensions, 1));
   case 31:
-    return getbool((Bits & 1 << SystemZ_FeatureDFPZonedConversion));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureDFPZonedConversion, 1));
   case 32:
-    return getbool((Bits & 1 << SystemZ_FeatureDFPPackedConversion));
+    return getbool(checkFeatureRequired(Bits, SystemZ_FeatureDFPPackedConversion, 1));
   }
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-                uint64_t Address, void *Decoder) {\
+                uint64_t Address, bool *Decoder) {\
   InsnType tmp;\
   switch (Idx) {\
   default: llvm_unreachable("Invalid index!");\
@@ -10785,7 +10785,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
       /* Check the predicate. */ \
-      if (!(Pred = checkDecoderPredicate(PIdx, MI))) \
+      if (!(Pred = checkDecoderPredicate(PIdx, feature))) \
         Ptr += NumToSkip; \
 		/* printf("55 PIdx = %u, Pred = %u\n", PIdx, Pred); */ \
       (void)Pred; \
@@ -14178,6 +14178,23 @@ DecodeInstruction(decodeInstruction, fieldFromInstruction, decodeToMCInst, uint3
 #define SystemZ_ZAP	 3093
 #endif // GET_INSTRINFO_ENUM
 
+#ifdef GET_REGINFO_EXTRA
+#undef GET_REGINFO_EXTRA
+
+// Subregister indices
+
+enum {
+  NoSubRegister,
+  SystemZ_subreg_h32,	// 1
+    SystemZ_subreg_h64,	// 2
+    SystemZ_subreg_hh32,	// 3
+    SystemZ_subreg_hl32,	// 4
+    SystemZ_subreg_l32,	// 5
+    SystemZ_subreg_l64,	// 6
+  SystemZ_NUM_TARGET_SUBREGS
+};
+#endif // GET_REGINFO_EXTRA
+
 
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
@@ -14442,420 +14459,420 @@ static const char SystemZRegStrings[] = {
 
 static const MCRegisterDesc SystemZRegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
-  { 226, 4, 4, 2, 2945, 173 },
-  { 229, 4, 4, 2, 2945, 185 },
-  { 20, 4, 4, 2, 2945, 187 },
-  { 49, 4, 4, 2, 2945, 3 },
-  { 74, 4, 4, 2, 2945, 183 },
-  { 99, 4, 4, 2, 2945, 173 },
-  { 124, 4, 4, 2, 2945, 96 },
-  { 149, 4, 4, 2, 2945, 98 },
-  { 166, 4, 4, 2, 2945, 87 },
-  { 183, 4, 4, 2, 2945, 129 },
-  { 200, 4, 4, 2, 2945, 69 },
-  { 217, 4, 4, 2, 2945, 83 },
-  { 0, 4, 4, 2, 2945, 73 },
-  { 29, 4, 4, 2, 2945, 105 },
-  { 58, 4, 4, 2, 2945, 127 },
-  { 83, 4, 4, 2, 2945, 67 },
-  { 108, 4, 4, 2, 2945, 71 },
-  { 133, 4, 4, 2, 2945, 119 },
-  { 23, 4, 4, 2, 2945, 241 },
-  { 52, 4, 4, 2, 2945, 3 },
-  { 77, 4, 4, 2, 2945, 195 },
-  { 102, 4, 4, 2, 2945, 3 },
-  { 127, 4, 4, 2, 2945, 165 },
-  { 152, 4, 4, 2, 2945, 119 },
-  { 169, 4, 4, 2, 2945, 222 },
-  { 186, 4, 4, 2, 2945, 131 },
-  { 203, 4, 4, 2, 2945, 3 },
-  { 220, 4, 4, 2, 2945, 3 },
-  { 4, 4, 4, 2, 2945, 203 },
-  { 33, 4, 4, 2, 2945, 119 },
-  { 62, 4, 4, 2, 2945, 3 },
-  { 87, 4, 4, 2, 2945, 34 },
-  { 112, 4, 4, 2, 2945, 3 },
-  { 137, 4, 4, 2, 2945, 3 },
-  { 26, 20, 4, 0, 2945, 249 },
-  { 55, 20, 4, 0, 2945, 28 },
-  { 80, 20, 4, 0, 2945, 3 },
-  { 105, 20, 4, 0, 2945, 65 },
-  { 130, 20, 4, 0, 2945, 119 },
-  { 155, 20, 4, 0, 2945, 3 },
-  { 172, 20, 4, 0, 2945, 165 },
-  { 189, 20, 4, 0, 2945, 231 },
-  { 206, 20, 4, 0, 2945, 28 },
-  { 223, 20, 4, 0, 2945, 111 },
-  { 8, 20, 4, 0, 2945, 224 },
-  { 37, 20, 4, 0, 2945, 154 },
-  { 66, 20, 4, 0, 2945, 165 },
-  { 91, 20, 4, 0, 2945, 109 },
-  { 116, 20, 4, 0, 2945, 179 },
-  { 141, 20, 4, 0, 2945, 251 },
-  { 158, 20, 4, 0, 2945, 205 },
-  { 175, 20, 4, 0, 2945, 119 },
-  { 192, 20, 4, 0, 2945, 165 },
-  { 209, 20, 4, 0, 2945, 233 },
-  { 12, 20, 4, 0, 2945, 40 },
-  { 41, 20, 4, 0, 2945, 226 },
-  { 70, 20, 4, 0, 2945, 119 },
-  { 95, 20, 4, 0, 2945, 165 },
-  { 120, 20, 4, 0, 2945, 158 },
-  { 145, 20, 4, 0, 2945, 3 },
-  { 162, 20, 4, 0, 2945, 3 },
-  { 179, 20, 4, 0, 2945, 119 },
-  { 196, 20, 4, 0, 2945, 46 },
-  { 213, 20, 4, 0, 2945, 3 },
-  { 16, 20, 4, 0, 2945, 3 },
-  { 45, 20, 4, 0, 2945, 38 },
-  { 253, 21, 114, 1, 1969, 156 },
-  { 281, 21, 114, 1, 1969, 3 },
-  { 304, 21, 110, 1, 1969, 165 },
-  { 327, 21, 110, 1, 1969, 3 },
-  { 350, 21, 110, 1, 1969, 142 },
-  { 373, 21, 110, 1, 1969, 36 },
-  { 391, 21, 106, 1, 1969, 119 },
-  { 409, 21, 106, 1, 1969, 119 },
-  { 427, 21, 106, 1, 1969, 165 },
-  { 445, 21, 106, 1, 1969, 193 },
-  { 233, 21, 102, 1, 1969, 46 },
-  { 261, 21, 102, 1, 1969, 211 },
-  { 289, 21, 102, 1, 1969, 48 },
-  { 312, 21, 102, 1, 1969, 138 },
-  { 335, 21, 98, 1, 1969, 119 },
-  { 358, 21, 98, 1, 1969, 3 },
-  { 381, 21, 126, 1, 1969, 220 },
-  { 399, 21, 126, 1, 1969, 177 },
-  { 417, 21, 126, 1, 1969, 3 },
-  { 435, 21, 126, 1, 1969, 119 },
-  { 243, 21, 126, 1, 1969, 3 },
-  { 271, 21, 126, 1, 1969, 3 },
-  { 299, 21, 126, 1, 1969, 165 },
-  { 322, 21, 126, 1, 1969, 165 },
-  { 345, 21, 126, 1, 1969, 243 },
-  { 368, 21, 126, 1, 1969, 209 },
-  { 386, 21, 126, 1, 1969, 207 },
-  { 404, 21, 126, 1, 1969, 3 },
-  { 422, 21, 126, 1, 1969, 119 },
-  { 440, 21, 126, 1, 1969, 3 },
-  { 248, 21, 126, 1, 1969, 133 },
-  { 276, 21, 126, 1, 1969, 3 },
-  { 598, 23, 4, 6, 129, 2 },
-  { 606, 23, 4, 6, 129, 135 },
-  { 634, 28, 4, 6, 177, 2 },
-  { 642, 28, 4, 6, 177, 240 },
-  { 650, 33, 4, 6, 225, 2 },
-  { 658, 33, 4, 6, 225, 167 },
-  { 610, 38, 4, 6, 273, 20 },
-  { 624, 38, 4, 6, 273, 2 },
-  { 677, 4, 113, 2, 1937, 175 },
-  { 696, 4, 113, 2, 1937, 147 },
-  { 710, 4, 109, 2, 1937, 216 },
-  { 724, 4, 109, 2, 1937, 100 },
-  { 738, 4, 109, 2, 1937, 191 },
-  { 752, 4, 109, 2, 1937, 3 },
-  { 766, 4, 105, 2, 1937, 3 },
-  { 780, 4, 105, 2, 1937, 140 },
-  { 794, 4, 105, 2, 1937, 77 },
-  { 808, 4, 105, 2, 1937, 81 },
-  { 662, 4, 101, 2, 1937, 85 },
-  { 681, 4, 101, 2, 1937, 3 },
-  { 700, 4, 101, 2, 1937, 75 },
-  { 714, 4, 101, 2, 1937, 119 },
-  { 728, 4, 97, 2, 1937, 201 },
-  { 742, 4, 97, 2, 1937, 119 },
-  { 756, 4, 125, 2, 1937, 3 },
-  { 770, 4, 125, 2, 1937, 245 },
-  { 784, 4, 125, 2, 1937, 107 },
-  { 798, 4, 125, 2, 1937, 160 },
-  { 667, 4, 125, 2, 1937, 165 },
-  { 686, 4, 125, 2, 1937, 165 },
-  { 705, 4, 125, 2, 1937, 218 },
-  { 719, 4, 125, 2, 1937, 3 },
-  { 733, 4, 125, 2, 1937, 119 },
-  { 747, 4, 125, 2, 1937, 119 },
-  { 761, 4, 125, 2, 1937, 197 },
-  { 775, 4, 125, 2, 1937, 247 },
-  { 789, 4, 125, 2, 1937, 3 },
-  { 803, 4, 125, 2, 1937, 3 },
-  { 672, 4, 125, 2, 1937, 152 },
-  { 691, 4, 125, 2, 1937, 30 },
-  { 257, 132, 92, 3, 82, 149 },
-  { 285, 132, 86, 3, 82, 23 },
-  { 308, 132, 86, 3, 82, 2 },
-  { 331, 132, 80, 3, 82, 213 },
-  { 354, 132, 80, 3, 82, 118 },
-  { 377, 132, 74, 3, 82, 2 },
-  { 395, 132, 74, 3, 82, 144 },
-  { 413, 132, 68, 3, 82, 62 },
-  { 431, 132, 68, 3, 82, 170 },
-  { 449, 132, 62, 3, 82, 2 },
-  { 238, 132, 62, 3, 82, 124 },
-  { 266, 132, 56, 3, 82, 121 },
-  { 294, 132, 56, 3, 82, 115 },
-  { 317, 132, 50, 3, 82, 228 },
-  { 340, 132, 50, 3, 82, 102 },
-  { 363, 132, 21, 3, 82, 93 },
-  { 458, 4, 94, 2, 1906, 32 },
-  { 467, 4, 88, 2, 1906, 181 },
-  { 476, 4, 88, 2, 1906, 89 },
-  { 485, 4, 82, 2, 1906, 79 },
-  { 494, 4, 82, 2, 1906, 94 },
-  { 503, 4, 76, 2, 1906, 189 },
-  { 507, 4, 76, 2, 1906, 119 },
-  { 511, 4, 70, 2, 1906, 113 },
-  { 515, 4, 70, 2, 1906, 28 },
-  { 519, 4, 64, 2, 1906, 91 },
-  { 453, 4, 64, 2, 1906, 3 },
-  { 462, 4, 58, 2, 1906, 3 },
-  { 471, 4, 58, 2, 1906, 91 },
-  { 480, 4, 52, 2, 1906, 55 },
-  { 489, 4, 52, 2, 1906, 44 },
-  { 498, 4, 46, 2, 1906, 44 },
-  { 528, 4, 91, 2, 1874, 3 },
-  { 537, 4, 85, 2, 1874, 3 },
-  { 546, 4, 85, 2, 1874, 44 },
-  { 555, 4, 79, 2, 1874, 50 },
-  { 564, 4, 79, 2, 1874, 55 },
-  { 573, 4, 73, 2, 1874, 55 },
-  { 577, 4, 73, 2, 1874, 26 },
-  { 581, 4, 67, 2, 1874, 55 },
-  { 585, 4, 67, 2, 1874, 199 },
-  { 589, 4, 61, 2, 1874, 55 },
-  { 523, 4, 61, 2, 1874, 55 },
-  { 532, 4, 55, 2, 1874, 44 },
-  { 541, 4, 55, 2, 1874, 26 },
-  { 550, 4, 49, 2, 1874, 42 },
-  { 559, 4, 49, 2, 1874, 44 },
-  { 568, 4, 43, 2, 1874, 55 },
-  { 602, 128, 4, 11, 4, 52 },
-  { 620, 135, 4, 11, 4, 162 },
-  { 638, 142, 4, 11, 4, 10 },
-  { 646, 149, 4, 11, 4, 235 },
-  { 654, 156, 4, 11, 4, 5 },
-  { 593, 163, 4, 11, 4, 57 },
-  { 615, 170, 4, 11, 4, 15 },
-  { 629, 177, 4, 11, 4, 0 },
+  { 226, 4, 4, 2, 2945, 216 },
+  { 229, 4, 4, 2, 2945, 1 },
+  { 20, 4, 4, 2, 2945, 1 },
+  { 49, 4, 4, 2, 2945, 1 },
+  { 74, 4, 4, 2, 2945, 1 },
+  { 99, 4, 4, 2, 2945, 1 },
+  { 124, 4, 4, 2, 2945, 1 },
+  { 149, 4, 4, 2, 2945, 56 },
+  { 166, 4, 4, 2, 2945, 56 },
+  { 183, 4, 4, 2, 2945, 111 },
+  { 200, 4, 4, 2, 2945, 1 },
+  { 217, 4, 4, 2, 2945, 68 },
+  { 0, 4, 4, 2, 2945, 1 },
+  { 29, 4, 4, 2, 2945, 68 },
+  { 58, 4, 4, 2, 2945, 68 },
+  { 83, 4, 4, 2, 2945, 77 },
+  { 108, 4, 4, 2, 2945, 68 },
+  { 133, 4, 4, 2, 2945, 132 },
+  { 23, 4, 4, 2, 2945, 68 },
+  { 52, 4, 4, 2, 2945, 61 },
+  { 77, 4, 4, 2, 2945, 61 },
+  { 102, 4, 4, 2, 2945, 25 },
+  { 127, 4, 4, 2, 2945, 68 },
+  { 152, 4, 4, 2, 2945, 109 },
+  { 169, 4, 4, 2, 2945, 97 },
+  { 186, 4, 4, 2, 2945, 68 },
+  { 203, 4, 4, 2, 2945, 1 },
+  { 220, 4, 4, 2, 2945, 1 },
+  { 4, 4, 4, 2, 2945, 85 },
+  { 33, 4, 4, 2, 2945, 1 },
+  { 62, 4, 4, 2, 2945, 68 },
+  { 87, 4, 4, 2, 2945, 148 },
+  { 112, 4, 4, 2, 2945, 13 },
+  { 137, 4, 4, 2, 2945, 20 },
+  { 26, 20, 4, 0, 2945, 68 },
+  { 55, 20, 4, 0, 2945, 208 },
+  { 80, 20, 4, 0, 2945, 199 },
+  { 105, 20, 4, 0, 2945, 13 },
+  { 130, 20, 4, 0, 2945, 20 },
+  { 155, 20, 4, 0, 2945, 35 },
+  { 172, 20, 4, 0, 2945, 61 },
+  { 189, 20, 4, 0, 2945, 68 },
+  { 206, 20, 4, 0, 2945, 203 },
+  { 223, 20, 4, 0, 2945, 20 },
+  { 8, 20, 4, 0, 2945, 35 },
+  { 37, 20, 4, 0, 2945, 61 },
+  { 66, 20, 4, 0, 2945, 68 },
+  { 91, 20, 4, 0, 2945, 201 },
+  { 116, 20, 4, 0, 2945, 68 },
+  { 141, 20, 4, 0, 2945, 61 },
+  { 158, 20, 4, 0, 2945, 20 },
+  { 175, 20, 4, 0, 2945, 35 },
+  { 192, 20, 4, 0, 2945, 61 },
+  { 209, 20, 4, 0, 2945, 197 },
+  { 12, 20, 4, 0, 2945, 79 },
+  { 41, 20, 4, 0, 2945, 83 },
+  { 70, 20, 4, 0, 2945, 81 },
+  { 95, 20, 4, 0, 2945, 68 },
+  { 120, 20, 4, 0, 2945, 17 },
+  { 145, 20, 4, 0, 2945, 68 },
+  { 162, 20, 4, 0, 2945, 164 },
+  { 179, 20, 4, 0, 2945, 162 },
+  { 196, 20, 4, 0, 2945, 41 },
+  { 213, 20, 4, 0, 2945, 1 },
+  { 16, 20, 4, 0, 2945, 53 },
+  { 45, 20, 4, 0, 2945, 89 },
+  { 253, 21, 114, 1, 1969, 91 },
+  { 281, 21, 114, 1, 1969, 93 },
+  { 304, 21, 110, 1, 1969, 95 },
+  { 327, 21, 110, 1, 1969, 75 },
+  { 350, 21, 110, 1, 1969, 210 },
+  { 373, 21, 110, 1, 1969, 68 },
+  { 391, 21, 106, 1, 1969, 193 },
+  { 409, 21, 106, 1, 1969, 68 },
+  { 427, 21, 106, 1, 1969, 68 },
+  { 445, 21, 106, 1, 1969, 1 },
+  { 233, 21, 102, 1, 1969, 1 },
+  { 261, 21, 102, 1, 1969, 195 },
+  { 289, 21, 102, 1, 1969, 37 },
+  { 312, 21, 102, 1, 1969, 68 },
+  { 335, 21, 98, 1, 1969, 189 },
+  { 358, 21, 98, 1, 1969, 68 },
+  { 381, 21, 126, 1, 1969, 68 },
+  { 399, 21, 126, 1, 1969, 1 },
+  { 417, 21, 126, 1, 1969, 1 },
+  { 435, 21, 126, 1, 1969, 191 },
+  { 243, 21, 126, 1, 1969, 37 },
+  { 271, 21, 126, 1, 1969, 73 },
+  { 299, 21, 126, 1, 1969, 178 },
+  { 322, 21, 126, 1, 1969, 1 },
+  { 345, 21, 126, 1, 1969, 180 },
+  { 368, 21, 126, 1, 1969, 25 },
+  { 386, 21, 126, 1, 1969, 68 },
+  { 404, 21, 126, 1, 1969, 107 },
+  { 422, 21, 126, 1, 1969, 1 },
+  { 440, 21, 126, 1, 1969, 1 },
+  { 248, 21, 126, 1, 1969, 33 },
+  { 276, 21, 126, 1, 1969, 218 },
+  { 598, 23, 4, 6, 129, 145 },
+  { 606, 23, 4, 6, 129, 205 },
+  { 634, 28, 4, 6, 177, 60 },
+  { 642, 28, 4, 6, 177, 134 },
+  { 650, 33, 4, 6, 225, 0 },
+  { 658, 33, 4, 6, 225, 137 },
+  { 610, 38, 4, 6, 273, 67 },
+  { 624, 38, 4, 6, 273, 140 },
+  { 677, 4, 113, 2, 1937, 103 },
+  { 696, 4, 113, 2, 1937, 182 },
+  { 710, 4, 109, 2, 1937, 143 },
+  { 724, 4, 109, 2, 1937, 13 },
+  { 738, 4, 109, 2, 1937, 130 },
+  { 752, 4, 109, 2, 1937, 1 },
+  { 766, 4, 105, 2, 1937, 1 },
+  { 780, 4, 105, 2, 1937, 1 },
+  { 794, 4, 105, 2, 1937, 15 },
+  { 808, 4, 105, 2, 1937, 68 },
+  { 662, 4, 101, 2, 1937, 61 },
+  { 681, 4, 101, 2, 1937, 1 },
+  { 700, 4, 101, 2, 1937, 13 },
+  { 714, 4, 101, 2, 1937, 13 },
+  { 728, 4, 97, 2, 1937, 68 },
+  { 742, 4, 97, 2, 1937, 154 },
+  { 756, 4, 125, 2, 1937, 152 },
+  { 770, 4, 125, 2, 1937, 1 },
+  { 784, 4, 125, 2, 1937, 68 },
+  { 798, 4, 125, 2, 1937, 208 },
+  { 667, 4, 125, 2, 1937, 1 },
+  { 686, 4, 125, 2, 1937, 1 },
+  { 705, 4, 125, 2, 1937, 1 },
+  { 719, 4, 125, 2, 1937, 68 },
+  { 733, 4, 125, 2, 1937, 99 },
+  { 747, 4, 125, 2, 1937, 105 },
+  { 761, 4, 125, 2, 1937, 25 },
+  { 775, 4, 125, 2, 1937, 27 },
+  { 789, 4, 125, 2, 1937, 68 },
+  { 803, 4, 125, 2, 1937, 68 },
+  { 672, 4, 125, 2, 1937, 101 },
+  { 691, 4, 125, 2, 1937, 29 },
+  { 257, 132, 92, 3, 82, 70 },
+  { 285, 132, 86, 3, 82, 70 },
+  { 308, 132, 86, 3, 82, 5 },
+  { 331, 132, 80, 3, 82, 22 },
+  { 354, 132, 80, 3, 82, 22 },
+  { 377, 132, 74, 3, 82, 70 },
+  { 395, 132, 74, 3, 82, 55 },
+  { 413, 132, 68, 3, 82, 0 },
+  { 431, 132, 68, 3, 82, 172 },
+  { 449, 132, 62, 3, 82, 70 },
+  { 238, 132, 62, 3, 82, 55 },
+  { 266, 132, 56, 3, 82, 0 },
+  { 294, 132, 56, 3, 82, 175 },
+  { 317, 132, 50, 3, 82, 70 },
+  { 340, 132, 50, 3, 82, 19 },
+  { 363, 132, 21, 3, 82, 50 },
+  { 458, 4, 94, 2, 1906, 156 },
+  { 467, 4, 88, 2, 1906, 63 },
+  { 476, 4, 88, 2, 1906, 158 },
+  { 485, 4, 82, 2, 1906, 15 },
+  { 494, 4, 82, 2, 1906, 150 },
+  { 503, 4, 76, 2, 1906, 13 },
+  { 507, 4, 76, 2, 1906, 68 },
+  { 511, 4, 70, 2, 1906, 39 },
+  { 515, 4, 70, 2, 1906, 65 },
+  { 519, 4, 64, 2, 1906, 1 },
+  { 453, 4, 64, 2, 1906, 1 },
+  { 462, 4, 58, 2, 1906, 160 },
+  { 471, 4, 58, 2, 1906, 13 },
+  { 480, 4, 52, 2, 1906, 1 },
+  { 489, 4, 52, 2, 1906, 1 },
+  { 498, 4, 46, 2, 1906, 68 },
+  { 528, 4, 91, 2, 1874, 61 },
+  { 537, 4, 85, 2, 1874, 1 },
+  { 546, 4, 85, 2, 1874, 166 },
+  { 555, 4, 79, 2, 1874, 68 },
+  { 564, 4, 79, 2, 1874, 61 },
+  { 573, 4, 73, 2, 1874, 1 },
+  { 577, 4, 73, 2, 1874, 168 },
+  { 581, 4, 67, 2, 1874, 68 },
+  { 585, 4, 67, 2, 1874, 170 },
+  { 589, 4, 61, 2, 1874, 31 },
+  { 523, 4, 61, 2, 1874, 87 },
+  { 532, 4, 55, 2, 1874, 214 },
+  { 541, 4, 55, 2, 1874, 212 },
+  { 550, 4, 49, 2, 1874, 113 },
+  { 559, 4, 49, 2, 1874, 33 },
+  { 568, 4, 43, 2, 1874, 43 },
+  { 602, 128, 4, 11, 4, 115 },
+  { 620, 135, 4, 11, 4, 58 },
+  { 638, 142, 4, 11, 4, 120 },
+  { 646, 149, 4, 11, 4, 45 },
+  { 654, 156, 4, 11, 4, 3 },
+  { 593, 163, 4, 11, 4, 125 },
+  { 615, 170, 4, 11, 4, 8 },
+  { 629, 177, 4, 11, 4, 184 },
 };
 
   // GRX32Bit Register Class...
   static const MCPhysReg GRX32Bit[] = {
-    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15L, SystemZ_R15H, SystemZ_R14L, SystemZ_R14H, SystemZ_R13L, SystemZ_R13H, SystemZ_R12L, SystemZ_R12H, SystemZ_R11L, SystemZ_R11H, SystemZ_R10L, SystemZ_R10H, SystemZ_R9L, SystemZ_R9H, SystemZ_R8L, SystemZ_R8H, SystemZ_R7L, SystemZ_R7H, SystemZ_R6L, SystemZ_R6H,
+    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15L, SystemZ_R15H, SystemZ_R14L, SystemZ_R14H, SystemZ_R13L, SystemZ_R13H, SystemZ_R12L, SystemZ_R12H, SystemZ_R11L, SystemZ_R11H, SystemZ_R10L, SystemZ_R10H, SystemZ_R9L, SystemZ_R9H, SystemZ_R8L, SystemZ_R8H, SystemZ_R7L, SystemZ_R7H, SystemZ_R6L, SystemZ_R6H, 
   };
 
   // GRX32Bit Bit set.
-  const uint8_t GRX32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07,
+  static const uint8_t GRX32BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // VR32Bit Register Class...
   static const MCPhysReg VR32Bit[] = {
-    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F16S, SystemZ_F17S, SystemZ_F18S, SystemZ_F19S, SystemZ_F20S, SystemZ_F21S, SystemZ_F22S, SystemZ_F23S, SystemZ_F24S, SystemZ_F25S, SystemZ_F26S, SystemZ_F27S, SystemZ_F28S, SystemZ_F29S, SystemZ_F30S, SystemZ_F31S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S,
+    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F16S, SystemZ_F17S, SystemZ_F18S, SystemZ_F19S, SystemZ_F20S, SystemZ_F21S, SystemZ_F22S, SystemZ_F23S, SystemZ_F24S, SystemZ_F25S, SystemZ_F26S, SystemZ_F27S, SystemZ_F28S, SystemZ_F29S, SystemZ_F30S, SystemZ_F31S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S, 
   };
 
   // VR32Bit Bit set.
-  const uint8_t VR32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07,
+  static const uint8_t VR32BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // AR32Bit Register Class...
   static const MCPhysReg AR32Bit[] = {
-    SystemZ_A0, SystemZ_A1, SystemZ_A2, SystemZ_A3, SystemZ_A4, SystemZ_A5, SystemZ_A6, SystemZ_A7, SystemZ_A8, SystemZ_A9, SystemZ_A10, SystemZ_A11, SystemZ_A12, SystemZ_A13, SystemZ_A14, SystemZ_A15,
+    SystemZ_A0, SystemZ_A1, SystemZ_A2, SystemZ_A3, SystemZ_A4, SystemZ_A5, SystemZ_A6, SystemZ_A7, SystemZ_A8, SystemZ_A9, SystemZ_A10, SystemZ_A11, SystemZ_A12, SystemZ_A13, SystemZ_A14, SystemZ_A15, 
   };
 
   // AR32Bit Bit set.
-  const uint8_t AR32BitBits[] = {
-    0xf8, 0xff, 0x07,
+  static const uint8_t AR32BitBits[] = {
+    0xf8, 0xff, 0x07, 
   };
 
   // FP32Bit Register Class...
   static const MCPhysReg FP32Bit[] = {
-    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S,
+    SystemZ_F0S, SystemZ_F1S, SystemZ_F2S, SystemZ_F3S, SystemZ_F4S, SystemZ_F5S, SystemZ_F6S, SystemZ_F7S, SystemZ_F8S, SystemZ_F9S, SystemZ_F10S, SystemZ_F11S, SystemZ_F12S, SystemZ_F13S, SystemZ_F14S, SystemZ_F15S, 
   };
 
   // FP32Bit Bit set.
-  const uint8_t FP32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t FP32BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // GR32Bit Register Class...
   static const MCPhysReg GR32Bit[] = {
-    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L,
+    SystemZ_R0L, SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
   };
 
   // GR32Bit Bit set.
-  const uint8_t GR32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t GR32BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // GRH32Bit Register Class...
   static const MCPhysReg GRH32Bit[] = {
-    SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15H, SystemZ_R14H, SystemZ_R13H, SystemZ_R12H, SystemZ_R11H, SystemZ_R10H, SystemZ_R9H, SystemZ_R8H, SystemZ_R7H, SystemZ_R6H,
+    SystemZ_R0H, SystemZ_R1H, SystemZ_R2H, SystemZ_R3H, SystemZ_R4H, SystemZ_R5H, SystemZ_R15H, SystemZ_R14H, SystemZ_R13H, SystemZ_R12H, SystemZ_R11H, SystemZ_R10H, SystemZ_R9H, SystemZ_R8H, SystemZ_R7H, SystemZ_R6H, 
   };
 
   // GRH32Bit Bit set.
-  const uint8_t GRH32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t GRH32BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // ADDR32Bit Register Class...
   static const MCPhysReg ADDR32Bit[] = {
-    SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L,
+    SystemZ_R1L, SystemZ_R2L, SystemZ_R3L, SystemZ_R4L, SystemZ_R5L, SystemZ_R15L, SystemZ_R14L, SystemZ_R13L, SystemZ_R12L, SystemZ_R11L, SystemZ_R10L, SystemZ_R9L, SystemZ_R8L, SystemZ_R7L, SystemZ_R6L, 
   };
 
   // ADDR32Bit Bit set.
-  const uint8_t ADDR32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07,
+  static const uint8_t ADDR32BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07, 
   };
 
   // CCR Register Class...
   static const MCPhysReg CCR[] = {
-    SystemZ_CC,
+    SystemZ_CC, 
   };
 
   // CCR Bit set.
   static const uint8_t CCRBits[] = {
-    0x02,
+    0x02, 
   };
 
   // FPCRegs Register Class...
   static const MCPhysReg FPCRegs[] = {
-    SystemZ_FPC,
+    SystemZ_FPC, 
   };
 
   // FPCRegs Bit set.
-  const uint8_t FPCRegsBits[] = {
-    0x04,
+  static const uint8_t FPCRegsBits[] = {
+    0x04, 
   };
 
   // AnyRegBit Register Class...
   static const MCPhysReg AnyRegBit[] = {
-    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R6D, SystemZ_R7D, SystemZ_R8D, SystemZ_R9D, SystemZ_R10D, SystemZ_R11D, SystemZ_R12D, SystemZ_R13D, SystemZ_R14D, SystemZ_R15D, SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
+    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R6D, SystemZ_R7D, SystemZ_R8D, SystemZ_R9D, SystemZ_R10D, SystemZ_R11D, SystemZ_R12D, SystemZ_R13D, SystemZ_R14D, SystemZ_R15D, SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
   };
 
   // AnyRegBit Bit set.
-  const uint8_t AnyRegBitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 0x00, 0xf8, 0xff, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t AnyRegBitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 0x00, 0xf8, 0xff, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // AnyRegBit_with_subreg_h32_in_FP32Bit Register Class...
   static const MCPhysReg AnyRegBit_with_subreg_h32_in_FP32Bit[] = {
-    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
+    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
   };
 
   // AnyRegBit_with_subreg_h32_in_FP32Bit Bit set.
-  const uint8_t AnyRegBit_with_subreg_h32_in_FP32BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t AnyRegBit_with_subreg_h32_in_FP32BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // VR64Bit Register Class...
   static const MCPhysReg VR64Bit[] = {
-    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F16D, SystemZ_F17D, SystemZ_F18D, SystemZ_F19D, SystemZ_F20D, SystemZ_F21D, SystemZ_F22D, SystemZ_F23D, SystemZ_F24D, SystemZ_F25D, SystemZ_F26D, SystemZ_F27D, SystemZ_F28D, SystemZ_F29D, SystemZ_F30D, SystemZ_F31D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D,
+    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F16D, SystemZ_F17D, SystemZ_F18D, SystemZ_F19D, SystemZ_F20D, SystemZ_F21D, SystemZ_F22D, SystemZ_F23D, SystemZ_F24D, SystemZ_F25D, SystemZ_F26D, SystemZ_F27D, SystemZ_F28D, SystemZ_F29D, SystemZ_F30D, SystemZ_F31D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, 
   };
 
   // VR64Bit Bit set.
-  const uint8_t VR64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07,
+  static const uint8_t VR64BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // AnyRegBit_with_subreg_h64 Register Class...
   static const MCPhysReg AnyRegBit_with_subreg_h64[] = {
-    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
+    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
   };
 
   // AnyRegBit_with_subreg_h64 Bit set.
-  const uint8_t AnyRegBit_with_subreg_h64Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t AnyRegBit_with_subreg_h64Bits[] = {
+    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // CR64Bit Register Class...
   static const MCPhysReg CR64Bit[] = {
-    SystemZ_C0, SystemZ_C1, SystemZ_C2, SystemZ_C3, SystemZ_C4, SystemZ_C5, SystemZ_C6, SystemZ_C7, SystemZ_C8, SystemZ_C9, SystemZ_C10, SystemZ_C11, SystemZ_C12, SystemZ_C13, SystemZ_C14, SystemZ_C15,
+    SystemZ_C0, SystemZ_C1, SystemZ_C2, SystemZ_C3, SystemZ_C4, SystemZ_C5, SystemZ_C6, SystemZ_C7, SystemZ_C8, SystemZ_C9, SystemZ_C10, SystemZ_C11, SystemZ_C12, SystemZ_C13, SystemZ_C14, SystemZ_C15, 
   };
 
   // CR64Bit Bit set.
-  const uint8_t CR64BitBits[] = {
-    0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t CR64BitBits[] = {
+    0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // FP64Bit Register Class...
   static const MCPhysReg FP64Bit[] = {
-    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D,
+    SystemZ_F0D, SystemZ_F1D, SystemZ_F2D, SystemZ_F3D, SystemZ_F4D, SystemZ_F5D, SystemZ_F6D, SystemZ_F7D, SystemZ_F8D, SystemZ_F9D, SystemZ_F10D, SystemZ_F11D, SystemZ_F12D, SystemZ_F13D, SystemZ_F14D, SystemZ_F15D, 
   };
 
   // FP64Bit Bit set.
-  const uint8_t FP64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t FP64BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // GR64Bit Register Class...
   static const MCPhysReg GR64Bit[] = {
-    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D,
+    SystemZ_R0D, SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
   };
 
   // GR64Bit Bit set.
-  const uint8_t GR64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t GR64BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // ADDR64Bit Register Class...
   static const MCPhysReg ADDR64Bit[] = {
-    SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D,
+    SystemZ_R1D, SystemZ_R2D, SystemZ_R3D, SystemZ_R4D, SystemZ_R5D, SystemZ_R15D, SystemZ_R14D, SystemZ_R13D, SystemZ_R12D, SystemZ_R11D, SystemZ_R10D, SystemZ_R9D, SystemZ_R8D, SystemZ_R7D, SystemZ_R6D, 
   };
 
   // ADDR64Bit Bit set.
-  const uint8_t ADDR64BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07,
+  static const uint8_t ADDR64BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07, 
   };
 
   // VR128Bit Register Class...
   static const MCPhysReg VR128Bit[] = {
-    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V16, SystemZ_V17, SystemZ_V18, SystemZ_V19, SystemZ_V20, SystemZ_V21, SystemZ_V22, SystemZ_V23, SystemZ_V24, SystemZ_V25, SystemZ_V26, SystemZ_V27, SystemZ_V28, SystemZ_V29, SystemZ_V30, SystemZ_V31, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
+    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V16, SystemZ_V17, SystemZ_V18, SystemZ_V19, SystemZ_V20, SystemZ_V21, SystemZ_V22, SystemZ_V23, SystemZ_V24, SystemZ_V25, SystemZ_V26, SystemZ_V27, SystemZ_V28, SystemZ_V29, SystemZ_V30, SystemZ_V31, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
   };
 
   // VR128Bit Bit set.
-  const uint8_t VR128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07,
+  static const uint8_t VR128BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0xff, 0xff, 0x07, 
   };
 
   // VF128Bit Register Class...
   static const MCPhysReg VF128Bit[] = {
-    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15,
+    SystemZ_V0, SystemZ_V1, SystemZ_V2, SystemZ_V3, SystemZ_V4, SystemZ_V5, SystemZ_V6, SystemZ_V7, SystemZ_V8, SystemZ_V9, SystemZ_V10, SystemZ_V11, SystemZ_V12, SystemZ_V13, SystemZ_V14, SystemZ_V15, 
   };
 
   // VF128Bit Bit set.
-  const uint8_t VF128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07,
+  static const uint8_t VF128BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x07, 
   };
 
   // FP128Bit Register Class...
   static const MCPhysReg FP128Bit[] = {
-    SystemZ_F0Q, SystemZ_F1Q, SystemZ_F4Q, SystemZ_F5Q, SystemZ_F8Q, SystemZ_F9Q, SystemZ_F12Q, SystemZ_F13Q,
+    SystemZ_F0Q, SystemZ_F1Q, SystemZ_F4Q, SystemZ_F5Q, SystemZ_F8Q, SystemZ_F9Q, SystemZ_F12Q, SystemZ_F13Q, 
   };
 
   // FP128Bit Bit set.
-  const uint8_t FP128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07,
+  static const uint8_t FP128BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07, 
   };
 
   // GR128Bit Register Class...
   static const MCPhysReg GR128Bit[] = {
-    SystemZ_R0Q, SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q,
+    SystemZ_R0Q, SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
   };
 
   // GR128Bit Bit set.
-  const uint8_t GR128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07,
+  static const uint8_t GR128BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07, 
   };
 
   // ADDR128Bit Register Class...
   static const MCPhysReg ADDR128Bit[] = {
-    SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q,
+    SystemZ_R2Q, SystemZ_R4Q, SystemZ_R12Q, SystemZ_R10Q, SystemZ_R8Q, SystemZ_R6Q, SystemZ_R14Q, 
   };
 
   // ADDR128Bit Bit set.
-  const uint8_t ADDR128BitBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07,
+  static const uint8_t ADDR128BitBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07, 
   };
 
 // end of register classes misc
@@ -26597,99 +26614,99 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 1:
     // A, AD, ADB, ADBR, ADR, ADTR, ADTRA, AE, AEB, AEBR, AER, AFI, AG, AGF, ...
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     break;
   case 2:
     // AGSI, ALGSI, ALSI, ASI, CFC, CGHSI, CHHSI, CHSI, CLFHSI, CLGHSI, CLHHS...
-    printBDAddrOperand(MI, 0, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 0, O);
     break;
   case 3:
     // AP, CLC, CP, DP, ED, EDMK, MP, MVC, MVCIN, MVN, MVO, MVZ, NC, OC, PACK...
-    printBDLAddrOperand(MI, 0, O);
+    printBDLAddrOperand/* printBDLAddrOperand (+ ) */(MI, 0, O);
     break;
   case 4:
     // B, BAsmE, BAsmH, BAsmHE, BAsmL, BAsmLE, BAsmLH, BAsmM, BAsmNE, BAsmNH,...
-    printBDXAddrOperand(MI, 0, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 5:
     // BC, BCR, BIC, BRC, BRCL
-    printCond4Operand(MI, 1, O);
+    printCond4Operand/* printCond4Operand (+ ) */(MI, 1, O);
     break;
   case 6:
     // BCAsm, BCRAsm, BICAsm, BPP, BPRP, BRCAsm, BRCLAsm, NIAI, PFD, PFDRL
-    printU4ImmOperand(MI, 0, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
     break;
   case 7:
     // CGIB, CGIJ, CGIT, CGRB, CGRJ, CGRT, CIB, CIJ, CIT, CLFIT, CLGIB, CLGIJ...
-    printCond4Operand(MI, 2, O);
+    printCond4Operand/* printCond4Operand (+ ) */(MI, 2, O);
     SStream_concat0(O, "\t");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
     break;
   case 8:
     // CLGT, CLT
-    printCond4Operand(MI, 3, O);
+    printCond4Operand/* printCond4Operand (+ ) */(MI, 3, O);
     SStream_concat0(O, "\t");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
-    printBDAddrOperand(MI, 1, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 9:
     // InsnE, InsnRR
-    printU16ImmOperand(MI, 0, O);
+    printU16ImmOperand/* printU16ImmOperand (+ ) */(MI, 0, O);
     break;
   case 10:
     // InsnRI, InsnRRE, InsnRRF, InsnRS, InsnRX, InsnS, InsnSI
-    printU32ImmOperand(MI, 0, O);
+    printU32ImmOperand/* printU32ImmOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ",");
     break;
   case 11:
     // InsnRIE, InsnRIL, InsnRILU, InsnRIS, InsnRRS, InsnRSE, InsnRSI, InsnRS...
-    printU48ImmOperand(MI, 0, O);
+    printU48ImmOperand/* printU48ImmOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ",");
     break;
   case 12:
     // J, JAsmE, JAsmH, JAsmHE, JAsmL, JAsmLE, JAsmLH, JAsmM, JAsmNE, JAsmNH,...
-    printPCRelOperand(MI, 0, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 13:
     // KDSA, KIMD, KLMD, KMAC, PFMF, TRTE, TRTEOpt, TRTRE, TRTREOpt
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     break;
   case 14:
     // LOC, LOCFH, LOCG
-    printCond4Operand(MI, 5, O);
+    printCond4Operand/* printCond4Operand (+ ) */(MI, 5, O);
     SStream_concat0(O, "\t");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
-    printBDAddrOperand(MI, 2, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 15:
     // LOCFHR, LOCGHI, LOCGR, LOCHHI, LOCHI, LOCR, SELFHR, SELGR, SELR, STOC,...
-    printCond4Operand(MI, 4, O);
+    printCond4Operand/* printCond4Operand (+ ) */(MI, 4, O);
     SStream_concat0(O, "\t");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
     break;
   case 16:
     // MVCK, MVCP, MVCS
-    printBDRAddrOperand(MI, 0, O);
+    printBDRAddrOperand/* printBDRAddrOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 5, O);
+    printOperand/* printOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 17:
     // SVC
-    printU8ImmOperand(MI, 0, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 0, O);
     return;
     break;
   }
@@ -26708,22 +26725,22 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 2:
     // BCAsm, BICAsm, PFD
-    printBDXAddrOperand(MI, 1, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 3:
     // BCR
     SStream_concat0(O, "r\t");
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 4:
     // BCRAsm, CGRB, CGRJ, CGRT, CLGRB, CLGRJ, CLGRT, CLRB, CLRJ, CLRT, CRB, ...
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     break;
   case 5:
     // BPP, BPRP, BRCAsm, BRCLAsm, PFDRL
-    printPCRelOperand(MI, 1, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 1, O);
     break;
   case 6:
     // BR, BRAsmE, BRAsmH, BRAsmHE, BRAsmL, BRAsmLE, BRAsmLH, BRAsmM, BRAsmNE...
@@ -26731,64 +26748,64 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 7:
     // CGIB, CGIJ, CIB, CIJ
-    printS8ImmOperand(MI, 1, O);
+    printS8ImmOperand/* printS8ImmOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
     break;
   case 8:
     // CGIT, CIT
-    printS16ImmOperand(MI, 1, O);
+    printS16ImmOperand/* printS16ImmOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 9:
     // CLFIT, CLGIT
-    printU16ImmOperand(MI, 1, O);
+    printU16ImmOperand/* printU16ImmOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 10:
     // CLGIB, CLGIJ, CLIB, CLIJ
-    printU8ImmOperand(MI, 1, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
     break;
   case 11:
     // InsnRR
     SStream_concat0(O, ",");
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ",");
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 12:
     // InsnS, InsnSI, InsnSIL, InsnSIY, InsnSSE, InsnSSF, STOC, STOCFH, STOCG
-    printBDAddrOperand(MI, 1, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 1, O);
     break;
   case 13:
     // InsnSS
-    printBDRAddrOperand(MI, 1, O);
+    printBDRAddrOperand/* printBDRAddrOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ",");
-    printBDAddrOperand(MI, 4, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 4, O);
     SStream_concat0(O, ",");
-    printOperand(MI, 6, O);
+    printOperand/* printOperand (+ ) */(MI, 6, O);
     return;
     break;
   case 14:
     // InsnVRS
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ",");
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 15:
     // LOCFHR, LOCGR, LOCR, SELFHR, SELGR, SELR
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   case 16:
     // LOCGHI, LOCHHI, LOCHI
-    printS16ImmOperand(MI, 2, O);
+    printS16ImmOperand/* printS16ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 17:
     // NIAI
-    printU4ImmOperand(MI, 1, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 1, O);
     return;
     break;
   }
@@ -26799,43 +26816,43 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // A, AD, ADB, AE, AEB, AG, AGF, AGH, AH, AHY, AL, ALC, ALCG, ALG, ALGF, ...
-    printBDXAddrOperand(MI, 2, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 2, O);
     break;
   case 1:
     // ADBR, ADR, AEBR, AER, AGFR, AGR, ALCGR, ALCR, ALGFR, ALGR, ALR, AR, AU...
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   case 2:
     // ADTR, ADTRA, AGHIK, AGRK, AHHHR, AHHLR, AHIK, ALGHSIK, ALGRK, ALHHHR, ...
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     break;
   case 3:
     // AFI, AGFI, AIH, ALSIH, ALSIHN, MSFI, MSGFI
-    printS32ImmOperand(MI, 2, O);
+    printS32ImmOperand/* printS32ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 4:
     // AGHI, AHI, CGHSI, CHHSI, CHSI, LOCGHIAsm, LOCGHIAsmE, LOCGHIAsmH, LOCG...
-    printS16ImmOperand(MI, 2, O);
+    printS16ImmOperand/* printS16ImmOperand (+ ) */(MI, 2, O);
     break;
   case 5:
     // AGSI, ALGSI, ALSI, ASI
-    printS8ImmOperand(MI, 2, O);
+    printS8ImmOperand/* printS8ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 6:
     // ALFI, ALGFI, NIHF, NILF, OIHF, OILF, SLFI, SLGFI, XIHF, XILF
-    printU32ImmOperand(MI, 2, O);
+    printU32ImmOperand/* printU32ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 7:
     // AP, CP, DP, MP, MVO, PACK, SP, UNPK, ZAP
-    printBDLAddrOperand(MI, 3, O);
+    printBDLAddrOperand/* printBDLAddrOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 8:
     // BAL, BAS, C, CD, CDB, CE, CEB, CG, CGF, CGH, CH, CHF, CHY, CL, CLG, CL...
-    printBDXAddrOperand(MI, 1, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 1, O);
     break;
   case 9:
     // BCRAsm, BRCAsm, BRCLAsm, CGRT, CLGRT, CLRT, CRT, InsnS, LOCFHR, LOCGR,...
@@ -26847,95 +26864,95 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 11:
     // BRAS, BRASL
-    printPCRelTLSOperand(MI, 1, O);
+    printPCRelTLSOperand/* printPCRelTLSOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 12:
     // BRC, BRCL, BRCT, BRCTG, BRCTH
-    printPCRelOperand(MI, 2, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 13:
     // CDFBRA, CDFTR, CDGBRA, CDGTRA, CDLFBR, CDLFTR, CDLGBR, CDLGTR, CEFBRA,...
-    printU4ImmOperand(MI, 1, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
     break;
   case 14:
     // CDPT, CDZT, CPDT, CPXT, CXPT, CXZT, CZDT, CZXT
-    printBDLAddrOperand(MI, 1, O);
+    printBDLAddrOperand/* printBDLAddrOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
-    printU4ImmOperand(MI, 4, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 15:
     // CFI, CGFI, CIH, LGFI
-    printS32ImmOperand(MI, 1, O);
+    printS32ImmOperand/* printS32ImmOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 16:
     // CGFRL, CGHRL, CGRL, CHRL, CLGFRL, CLGHRL, CLGRL, CLHRL, CLRL, CRL, EXR...
-    printPCRelOperand(MI, 1, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 17:
     // CGHI, CGITAsm, CGITAsmE, CGITAsmH, CGITAsmHE, CGITAsmL, CGITAsmLE, CGI...
-    printS16ImmOperand(MI, 1, O);
+    printS16ImmOperand/* printS16ImmOperand (+ ) */(MI, 1, O);
     break;
   case 18:
     // CGIB, CIB, CLC, CLGIB, CLIB, ED, EDMK, MVC, MVCIN, MVN, MVZ, NC, OC, S...
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     break;
   case 19:
     // CGIBAsm, CGIBAsmE, CGIBAsmH, CGIBAsmHE, CGIBAsmL, CGIBAsmLE, CGIBAsmLH...
-    printS8ImmOperand(MI, 1, O);
+    printS8ImmOperand/* printS8ImmOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
     break;
   case 20:
     // CGIJ, CIJ, CLGIJ, CLIJ
-    printPCRelOperand(MI, 3, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 21:
     // CLFHSI, CLGHSI, CLHHSI, IIHH, IIHL, IILH, IILL, NIHH, NIHL, NILH, NILL...
-    printU16ImmOperand(MI, 2, O);
+    printU16ImmOperand/* printU16ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 22:
     // CLFI, CLGFI, CLIH, IIHF, IILF, LLIHF, LLILF
-    printU32ImmOperand(MI, 1, O);
+    printU32ImmOperand/* printU32ImmOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 23:
     // CLFITAsm, CLFITAsmE, CLFITAsmH, CLFITAsmHE, CLFITAsmL, CLFITAsmLE, CLF...
-    printU16ImmOperand(MI, 1, O);
+    printU16ImmOperand/* printU16ImmOperand (+ ) */(MI, 1, O);
     break;
   case 24:
     // CLGIBAsm, CLGIBAsmE, CLGIBAsmH, CLGIBAsmHE, CLGIBAsmL, CLGIBAsmLE, CLG...
-    printU8ImmOperand(MI, 1, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
     break;
   case 25:
     // CLGTAsm, CLTAsm, TRTE, TRTRE
-    printU4ImmOperand(MI, 3, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 3, O);
     break;
   case 26:
     // CLGTAsmE, CLGTAsmH, CLGTAsmHE, CLGTAsmL, CLGTAsmLE, CLGTAsmLH, CLGTAsm...
-    printBDAddrOperand(MI, 1, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 1, O);
     break;
   case 27:
     // CLI, CLIY, MC, MVI, MVIY, NI, NIY, OI, OIY, STNSM, STOSM, TM, TMY, XI,...
-    printU8ImmOperand(MI, 2, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 28:
     // CSST, ECTG, LASP, LOCAsm, LOCAsmE, LOCAsmH, LOCAsmHE, LOCAsmL, LOCAsmL...
-    printBDAddrOperand(MI, 2, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 2, O);
     break;
   case 29:
     // ICM, ICMH, ICMY
-    printU4ImmOperand(MI, 2, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 30:
@@ -26944,17 +26961,17 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 31:
     // PKA, PKU
-    printBDLAddrOperand(MI, 2, O);
+    printBDLAddrOperand/* printBDLAddrOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 32:
     // VGEF, VGEG
-    printBDVAddrOperand(MI, 2, O);
+    printBDVAddrOperand/* printBDVAddrOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
     break;
   case 33:
     // VSCEF, VSCEG
-    printBDVAddrOperand(MI, 1, O);
+    printBDVAddrOperand/* printBDVAddrOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
     break;
   }
@@ -26973,103 +26990,103 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 2:
     // BPP, InsnRX, InsnRXE, InsnRXY, InsnVRX
-    printBDXAddrOperand(MI, 2, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 2, O);
     break;
   case 3:
     // BPRP, CGIJAsmE, CGIJAsmH, CGIJAsmHE, CGIJAsmL, CGIJAsmLE, CGIJAsmLH, C...
-    printPCRelOperand(MI, 2, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 4:
     // CDFBRA, CDFTR, CDGBRA, CDGTRA, CDLFBR, CDLFTR, CDLGBR, CDLGTR, CEFBRA,...
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   case 5:
     // CGIBAsm, CGIJAsm, CIBAsm, CIJAsm, CLGIBAsm, CLGIJAsm, CLIBAsm, CLIJAsm
-    printU4ImmOperand(MI, 2, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
     break;
   case 6:
     // CGIBAsmE, CGIBAsmH, CGIBAsmHE, CGIBAsmL, CGIBAsmLE, CGIBAsmLH, CGIBAsm...
-    printBDAddrOperand(MI, 2, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 2, O);
     break;
   case 7:
     // CGRB, CLGRB, CLRB, CRB, InsnSSE, InsnSSF
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     break;
   case 8:
     // CGRJ, CLGRJ, CLRJ, CRJ
-    printPCRelOperand(MI, 3, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 9:
     // InsnRI
-    printS16ImmOperand(MI, 2, O);
+    printS16ImmOperand/* printS16ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 10:
     // InsnRILU
-    printU32ImmOperand(MI, 2, O);
+    printU32ImmOperand/* printU32ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 11:
     // InsnRIS
-    printS8ImmOperand(MI, 2, O);
+    printS8ImmOperand/* printS8ImmOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ",");
-    printU4ImmOperand(MI, 3, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ",");
-    printBDAddrOperand(MI, 4, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 12:
     // InsnSI
-    printS8ImmOperand(MI, 3, O);
+    printS8ImmOperand/* printS8ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 13:
     // InsnSIL
-    printU16ImmOperand(MI, 3, O);
+    printU16ImmOperand/* printU16ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 14:
     // InsnSIY
-    printU8ImmOperand(MI, 3, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 15:
     // InsnVRV
-    printBDVAddrOperand(MI, 2, O);
+    printBDVAddrOperand/* printBDVAddrOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ",");
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 16:
     // SELFHR, SELGR, SELR
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 17:
     // VGEF
-    printU2ImmOperand(MI, 5, O);
+    printU2ImmOperand/* printU2ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 18:
     // VGEG
-    printU1ImmOperand(MI, 5, O);
+    printU1ImmOperand/* printU1ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 19:
     // VGM, VGMB, VGMF, VGMG, VGMH
-    printU8ImmOperand(MI, 2, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 2, O);
     break;
   case 20:
     // VSCEF
-    printU2ImmOperand(MI, 4, O);
+    printU2ImmOperand/* printU2ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 21:
     // VSCEG
-    printU1ImmOperand(MI, 4, O);
+    printU1ImmOperand/* printU1ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   }
@@ -27080,11 +27097,11 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // ADTR, ADTRA, AGRK, AHHHR, AHHLR, ALGRK, ALHHHR, ALHHLR, ALRK, ARK, AXT...
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   case 1:
     // AGHIK, AHIK, ALGHSIK, ALHSIK
-    printS16ImmOperand(MI, 2, O);
+    printS16ImmOperand/* printS16ImmOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 2:
@@ -27093,59 +27110,59 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 3:
     // BRXH, BRXHG, BRXLE, BRXLG, CGIJAsm, CIJAsm, CLGIJAsm, CLIJAsm
-    printPCRelOperand(MI, 3, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 4:
     // BXH, BXHG, BXLE, BXLEG, CDS, CDSG, CDSY, CGIBAsm, CIBAsm, CLGIBAsm, CL...
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     break;
   case 5:
     // CDFBRA, CDFTR, CDGBRA, CDGTRA, CDLFBR, CDLFTR, CDLGBR, CDLGTR, CEFBRA,...
     SStream_concat0(O, ", ");
-    printU4ImmOperand(MI, 3, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 6:
     // CGITAsm, CGRBAsm, CGRJAsm, CGRTAsm, CITAsm, CLFITAsm, CLGITAsm, CLGRBA...
-    printU4ImmOperand(MI, 2, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 2, O);
     break;
   case 7:
     // CGRBAsmE, CGRBAsmH, CGRBAsmHE, CGRBAsmL, CGRBAsmLE, CGRBAsmLH, CGRBAsm...
-    printBDAddrOperand(MI, 2, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 2, O);
     break;
   case 8:
     // CGRJAsmE, CGRJAsmH, CGRJAsmHE, CGRJAsmL, CGRJAsmLE, CGRJAsmLH, CGRJAsm...
-    printPCRelOperand(MI, 2, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 9:
     // CLCLE, CLCLU, MVCLE, MVCLU
-    printBDAddrOperand(MI, 4, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 10:
     // CLGTAsm, CLTAsm
-    printBDAddrOperand(MI, 1, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 11:
     // CPSDRdd, CPSDRds, CPSDRsd, CPSDRss, CRDTE, CRDTEOpt, IDTE, IDTEOpt, IE...
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     break;
   case 12:
     // CSST, DFLTCC, ECTG, MVCOS
-    printOperand(MI, 4, O);
+    printOperand/* printOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 13:
     // CU12, CU14, CU21, CU24, CUTFU, CUUTF, LCBB, LOCAsm, LOCFHAsm, LOCGAsm,...
-    printU4ImmOperand(MI, 4, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 14:
     // DIDBR, DIEBR, LPTEA, MADBR, MADR, MAEBR, MAER, MAYHR, MAYLR, MAYR, MSD...
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     break;
   case 15:
     // InsnRIE, InsnRRF, InsnRRS, InsnRS, InsnRSE, InsnRSI, InsnRSY, InsnRXF,...
@@ -27153,84 +27170,84 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 16:
     // LOCFHRAsm, LOCGHIAsm, LOCGRAsm, LOCHHIAsm, LOCHIAsm, LOCRAsm, STOCAsm,...
-    printU4ImmOperand(MI, 3, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 17:
     // MAD, MADB, MAE, MAEB, MAY, MAYH, MAYL, MSD, MSDB, MSE, MSEB
-    printBDXAddrOperand(MI, 3, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 18:
     // MY, MYH, MYL, SLDT, SLXT, SRDT, SRXT
-    printBDXAddrOperand(MI, 2, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 19:
     // RISBG, RISBG32, RISBGN, RISBHG, RISBLG, RNSBG, ROSBG, RXSBG, VLRL, VPK...
-    printU8ImmOperand(MI, 3, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 3, O);
     break;
   case 20:
     // SRP, VLEB
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 21:
     // VCVD, VCVDG, VPSOP, VSRP
-    printU8ImmOperand(MI, 2, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
     break;
   case 22:
     // VFTCI, VFTCIDB, VFTCISB, WFTCIDB, WFTCISB, WFTCIXB
-    printU12ImmOperand(MI, 2, O);
+    printU12ImmOperand/* printU12ImmOperand (+ ) */(MI, 2, O);
     break;
   case 23:
     // VLEBRF, VLEF
-    printU2ImmOperand(MI, 5, O);
+    printU2ImmOperand/* printU2ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 24:
     // VLEBRG, VLEG
-    printU1ImmOperand(MI, 5, O);
+    printU1ImmOperand/* printU1ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 25:
     // VLEBRH, VLEH
-    printU3ImmOperand(MI, 5, O);
+    printU3ImmOperand/* printU3ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 26:
     // VLEIF
-    printU2ImmOperand(MI, 3, O);
+    printU2ImmOperand/* printU2ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 27:
     // VLEIG
-    printU1ImmOperand(MI, 3, O);
+    printU1ImmOperand/* printU1ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 28:
     // VLEIH
-    printU3ImmOperand(MI, 3, O);
+    printU3ImmOperand/* printU3ImmOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 29:
     // VREP, VREPB, VREPF, VREPG, VREPH
-    printU16ImmOperand(MI, 2, O);
+    printU16ImmOperand/* printU16ImmOperand (+ ) */(MI, 2, O);
     break;
   case 30:
     // VSTEBRF, VSTEF
-    printU2ImmOperand(MI, 4, O);
+    printU2ImmOperand/* printU2ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 31:
     // VSTEBRG, VSTEG
-    printU1ImmOperand(MI, 4, O);
+    printU1ImmOperand/* printU1ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 32:
     // VSTEBRH, VSTEH
-    printU3ImmOperand(MI, 4, O);
+    printU3ImmOperand/* printU3ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   }
@@ -27249,58 +27266,58 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 2:
     // InsnRIE, InsnRSI
-    printPCRelOperand(MI, 3, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 3:
     // InsnRRF, InsnVRR
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ",");
-    printU4ImmOperand(MI, 4, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 4, O);
     break;
   case 4:
     // InsnRRS, VCVD, VCVDG
-    printU4ImmOperand(MI, 3, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 3, O);
     break;
   case 5:
     // InsnRS, InsnRSE, InsnRSY
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 6:
     // InsnRXF
-    printBDXAddrOperand(MI, 3, O);
+    printBDXAddrOperand/* printBDXAddrOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 7:
     // InsnSSF
-    printOperand(MI, 5, O);
+    printOperand/* printOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 8:
     // InsnVRI
-    printU12ImmOperand(MI, 3, O);
+    printU12ImmOperand/* printU12ImmOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ",");
-    printU4ImmOperand(MI, 4, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 4, O);
     SStream_concat0(O, ",");
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 9:
     // InsnVRX
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 10:
     // InsnVSI
-    printU8ImmOperand(MI, 4, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 11:
     // VPSOP, VSRP
-    printU8ImmOperand(MI, 3, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ", ");
-    printU4ImmOperand(MI, 4, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   }
@@ -27311,21 +27328,21 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // ADTRA, AXTRA, CRDTE, DDTRA, DXTRA, IDTE, IPTE, MDTRA, MXTRA, SDTRA, SE...
-    printU4ImmOperand(MI, 3, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 3, O);
     break;
   case 1:
     // CGRBAsm, CLGRBAsm, CLRBAsm, CRBAsm
-    printBDAddrOperand(MI, 3, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 2:
     // CGRJAsm, CLGRJAsm, CLRJAsm, CRJAsm
-    printPCRelOperand(MI, 3, O);
+    printPCRelOperand/* printPCRelOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 3:
     // DIDBR, DIEBR, LPTEA, QADTR, QAXTR, RRDTR, RRXTR, VERLL, VESL, VESRA, V...
-    printU4ImmOperand(MI, 4, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 4:
@@ -27338,24 +27355,24 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 6:
     // LMD, PLO
-    printBDAddrOperand(MI, 4, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 7:
     // RISBG, RISBG32, RISBGN, RISBHG, RISBLG, RNSBG, ROSBG, RXSBG, VERIM, VE...
-    printU8ImmOperand(MI, 4, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 4, O);
     break;
   case 8:
     // VAC, VACCC, VACCCQ, VACQ, VFMA, VFMADB, VFMASB, VFMS, VFMSDB, VFMSSB, ...
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     break;
   case 9:
     // VAP, VDP, VMP, VMSP, VRP, VSDP, VSLD, VSLDB, VSP, VSRD
-    printU8ImmOperand(MI, 3, O);
+    printU8ImmOperand/* printU8ImmOperand (+ ) */(MI, 3, O);
     break;
   case 10:
     // VLVG
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   }
@@ -27370,14 +27387,14 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 1:
     // InsnRRS
-    printBDAddrOperand(MI, 4, O);
+    printBDAddrOperand/* printBDAddrOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 2:
     // InsnVRR
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     SStream_concat0(O, ",");
-    printU4ImmOperand(MI, 6, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 6, O);
     return;
     break;
   case 3:
@@ -27392,16 +27409,16 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // RISBG, RISBG32, RISBGN, RISBHG, RISBLG, RNSBG, ROSBG, RXSBG
-    printU6ImmOperand(MI, 5, O);
+    printU6ImmOperand/* printU6ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 1:
     // VAC, VACCC, VAP, VCDG, VCDLG, VCEQ, VCFPL, VCFPS, VCGD, VCH, VCHL, VCL...
-    printU4ImmOperand(MI, 4, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 4, O);
     break;
   case 2:
     // VERIM
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
     break;
   }
@@ -27411,7 +27428,7 @@ static void printInstruction(MCInst *MI, SStream *O) {
   if ((Bits >> 54) & 1) {
     // VFCE, VFCH, VFCHE, VFMA, VFMAX, VFMIN, VFMS, VFNMA, VFNMS, VMSL, VSTRC...
     SStream_concat0(O, ", ");
-    printU4ImmOperand(MI, 5, O);
+    printU4ImmOperand/* printU4ImmOperand (+ ) */(MI, 5, O);
     return;
   } else {
     // VAC, VACCC, VAP, VCDG, VCDLG, VCEQ, VCFPL, VCFPS, VCGD, VCH, VCHL, VCL...
@@ -27530,20 +27547,20 @@ const char *getRegisterName(unsigned RegNo) {
 };
 
   static const uint16_t RegAsmOffset[] = {
-    334, 337, 28, 71, 110, 149, 188, 227, 250, 273, 296, 319, 0, 43,
-    86, 125, 164, 203, 31, 74, 113, 152, 191, 230, 253, 276, 299, 322,
-    4, 47, 90, 129, 168, 207, 40, 83, 122, 161, 200, 239, 262, 285,
-    308, 331, 16, 59, 102, 141, 180, 219, 242, 265, 288, 311, 20, 63,
-    106, 145, 184, 223, 246, 269, 292, 315, 24, 67, 34, 77, 116, 155,
-    194, 233, 256, 279, 302, 325, 8, 51, 94, 133, 172, 211, 242, 265,
-    288, 311, 20, 63, 106, 145, 184, 223, 246, 269, 292, 315, 24, 67,
-    34, 77, 194, 233, 302, 325, 94, 133, 34, 77, 116, 155, 194, 233,
-    256, 279, 302, 325, 8, 51, 94, 133, 172, 211, 242, 265, 288, 311,
-    20, 63, 106, 145, 184, 223, 246, 269, 292, 315, 24, 67, 37, 80,
-    119, 158, 197, 236, 259, 282, 305, 328, 12, 55, 98, 137, 176, 215,
-    37, 80, 119, 158, 197, 236, 259, 282, 305, 328, 12, 55, 98, 137,
-    176, 215, 37, 80, 119, 158, 197, 236, 259, 282, 305, 328, 12, 55,
-    98, 137, 176, 215, 37, 119, 197, 259, 305, 12, 98, 176,
+    334, 337, 28, 71, 110, 149, 188, 227, 250, 273, 296, 319, 0, 43, 
+    86, 125, 164, 203, 31, 74, 113, 152, 191, 230, 253, 276, 299, 322, 
+    4, 47, 90, 129, 168, 207, 40, 83, 122, 161, 200, 239, 262, 285, 
+    308, 331, 16, 59, 102, 141, 180, 219, 242, 265, 288, 311, 20, 63, 
+    106, 145, 184, 223, 246, 269, 292, 315, 24, 67, 34, 77, 116, 155, 
+    194, 233, 256, 279, 302, 325, 8, 51, 94, 133, 172, 211, 242, 265, 
+    288, 311, 20, 63, 106, 145, 184, 223, 246, 269, 292, 315, 24, 67, 
+    34, 77, 194, 233, 302, 325, 94, 133, 34, 77, 116, 155, 194, 233, 
+    256, 279, 302, 325, 8, 51, 94, 133, 172, 211, 242, 265, 288, 311, 
+    20, 63, 106, 145, 184, 223, 246, 269, 292, 315, 24, 67, 37, 80, 
+    119, 158, 197, 236, 259, 282, 305, 328, 12, 55, 98, 137, 176, 215, 
+    37, 80, 119, 158, 197, 236, 259, 282, 305, 328, 12, 55, 98, 137, 
+    176, 215, 37, 80, 119, 158, 197, 236, 259, 282, 305, 328, 12, 55, 
+    98, 137, 176, 215, 37, 119, 197, 259, 305, 12, 98, 176, 
   };
 
   assert (*(AsmStrs+RegAsmOffset[RegNo-1]) &&
@@ -28016,6 +28033,7 @@ void printCustomAliasOperand(
   default:
     llvm_unreachable("Unknown PrintMethod kind");
     break;
+// printU4ImmOperand
   case 0:
     printU4ImmOperand(MI, OpIdx, OS);
     break;

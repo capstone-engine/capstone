@@ -28,6 +28,12 @@
 #include "../../MCDisassembler.h"
 #include "../../MathExtras.h"
 
+// Currently, we have no feature checks upon PPC, but there might be later, so dummy
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) {
+  // extended from original arm module
+  return Require;
+}
+
 #define DecodePointerLikeRegClass0 DecodeGPRCRegisterClass
 #define DecodePointerLikeRegClass1 DecodeGPRC_NOR0RegisterClass
 

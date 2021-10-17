@@ -238,12 +238,15 @@ static void printInlineJT32(MCInst *MI, int OpNum, SStream *O)
 {
 }
 
+#define GET_INSTRINFO_ENUM
 #define PRINT_ALIAS_INSTR
-#include "XCoreGenAsmWriter.inc"
+#define GET_REGINFO_ENUM
+#define GET_ASM_WRITER
+#include "XCoreGenDisassemblerTables.inc"
 
 void XCore_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	printInstruction(MI, O, Info);
+	printInstruction(MI, O);
 	set_mem_access(MI, false, 0);
 }
 

@@ -28,6 +28,11 @@
 #include "../../MCDisassembler.h"
 #include "../../MathExtras.h"
 
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) {
+  // extended from original arm module
+  return Require;
+}
+
 #include "CapstoneSparcModule.h"
 
 static uint64_t getFeatureBits(int mode)

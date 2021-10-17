@@ -34,6 +34,12 @@ static uint64_t getFeatureBits(int mode)
 	return (uint64_t)-1;
 }
 
+// Currently, we have no feature checks upon PPC, but there might be later, so dummy
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) {
+  // extended from original arm module
+  return Require;
+}
+
 #include "CapstoneXCoreModule.h"
 
 static bool readInstruction16(const uint8_t *code, size_t code_len, uint16_t *insn)

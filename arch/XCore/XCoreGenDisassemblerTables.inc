@@ -602,7 +602,7 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits) {
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-                uint64_t Address, void *Decoder) {\
+                uint64_t Address, bool *Decoder) {\
   InsnType tmp;\
   switch (Idx) {\
   default: llvm_unreachable("Invalid index!");\
@@ -820,7 +820,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
       /* Check the predicate. */ \
-      if (!(Pred = checkDecoderPredicate(PIdx, MI))) \
+      if (!(Pred = checkDecoderPredicate(PIdx, feature))) \
         Ptr += NumToSkip; \
 		/* printf("55 PIdx = %u, Pred = %u\n", PIdx, Pred); */ \
       (void)Pred; \
@@ -1383,6 +1383,10 @@ DecodeInstruction(decodeInstruction, fieldFromInstruction, decodeToMCInst, uint3
 #define XCore_ZEXT_rus	 461
 #endif // GET_INSTRINFO_ENUM
 
+#ifdef GET_REGINFO_EXTRA
+#undef GET_REGINFO_EXTRA
+#endif // GET_REGINFO_EXTRA
+
 
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
@@ -1420,41 +1424,41 @@ static const char XCoreRegStrings[] = {
 static const MCRegisterDesc XCoreRegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
   { 38, 1, 1, 0, 1, 10 },
-  { 41, 1, 1, 0, 1, 10 },
+  { 41, 1, 1, 0, 1, 2 },
   { 47, 1, 1, 0, 1, 0 },
-  { 44, 1, 1, 0, 1, 0 },
+  { 44, 1, 1, 0, 1, 2 },
   { 4, 1, 1, 0, 1, 0 },
-  { 11, 1, 1, 0, 1, 4 },
-  { 14, 1, 1, 0, 1, 8 },
-  { 17, 1, 1, 0, 1, 12 },
+  { 11, 1, 1, 0, 1, 0 },
+  { 14, 1, 1, 0, 1, 0 },
+  { 17, 1, 1, 0, 1, 4 },
   { 20, 1, 1, 0, 1, 6 },
-  { 23, 1, 1, 0, 1, 2 },
-  { 26, 1, 1, 0, 1, 0 },
-  { 29, 1, 1, 0, 1, 0 },
+  { 23, 1, 1, 0, 1, 6 },
+  { 26, 1, 1, 0, 1, 6 },
+  { 29, 1, 1, 0, 1, 8 },
   { 32, 1, 1, 0, 1, 0 },
   { 35, 1, 1, 0, 1, 0 },
-  { 0, 1, 1, 0, 1, 0 },
-  { 7, 1, 1, 0, 1, 0 },
+  { 0, 1, 1, 0, 1, 6 },
+  { 7, 1, 1, 0, 1, 12 },
 };
 
   // RRegs Register Class...
   static const MCPhysReg RRegs[] = {
-    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11, XCore_CP, XCore_DP, XCore_SP, XCore_LR,
+    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11, XCore_CP, XCore_DP, XCore_SP, XCore_LR, 
   };
 
   // RRegs Bit set.
-  const uint8_t RRegsBits[] = {
-    0xfe, 0xff, 0x01,
+  static const uint8_t RRegsBits[] = {
+    0xfe, 0xff, 0x01, 
   };
 
   // GRRegs Register Class...
   static const MCPhysReg GRRegs[] = {
-    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11,
+    XCore_R0, XCore_R1, XCore_R2, XCore_R3, XCore_R4, XCore_R5, XCore_R6, XCore_R7, XCore_R8, XCore_R9, XCore_R10, XCore_R11, 
   };
 
   // GRRegs Bit set.
-  const uint8_t GRRegsBits[] = {
-    0xe0, 0xff, 0x01,
+  static const uint8_t GRRegsBits[] = {
+    0xe0, 0xff, 0x01, 
   };
 
 // end of register classes misc
@@ -2144,15 +2148,15 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 1:
     // ADJCALLSTACKDOWN, ADJCALLSTACKUP, EH_RETURN, FRAME_TO_ARGS_OFFSET, LDA...
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     break;
   case 2:
     // BR_JT, BR_JT32, CRC8_l4r, INITCP_2r, INITDP_2r, INITLR_l2r, INITPC_2r,...
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     break;
   case 3:
     // OUTSHR_2r, TSETR_3r
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   }
 
@@ -2188,58 +2192,58 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 6:
     // GETPS_l2r
     SStream_concat0(O, ", ps[");
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, "]");
     return;
     break;
   case 7:
     // INITCP_2r
     SStream_concat0(O, "]:cp, ");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 8:
     // INITDP_2r
     SStream_concat0(O, "]:dp, ");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 9:
     // INITLR_l2r
     SStream_concat0(O, "]:lr, ");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 10:
     // INITPC_2r
     SStream_concat0(O, "]:pc, ");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 11:
     // INITSP_2r
     SStream_concat0(O, "]:sp, ");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 12:
     // LDAWDP_lru6, LDAWDP_ru6, LDWDP_lru6, LDWDP_ru6, STWDP_lru6, STWDP_ru6
     SStream_concat0(O, ", dp[");
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, "]");
     return;
     break;
   case 13:
     // LDAWSP_lru6, LDAWSP_ru6, LDWSP_lru6, LDWSP_ru6, STWSP_lru6, STWSP_ru6
     SStream_concat0(O, ", sp[");
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, "]");
     return;
     break;
   case 14:
     // LDWCP_lru6, LDWCP_ru6
     SStream_concat0(O, ", cp[");
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, "]");
     return;
     break;
@@ -2251,9 +2255,9 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 16:
     // TSETR_3r
     SStream_concat0(O, "]:r");
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     return;
     break;
   }
@@ -2264,25 +2268,25 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // ADJCALLSTACKDOWN, EH_RETURN, LDAWFI, LDWFI, STWFI, ADD_2rus, ADD_3r, A...
-    printOperand(MI, 1, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     break;
   case 1:
     // BR_JT
-    printInlineJT(MI, 0, O);
+    printInlineJT/* printInlineJT (+ ) */(MI, 0, O);
     return;
     break;
   case 2:
     // BR_JT32
-    printInlineJT32(MI, 0, O);
+    printInlineJT32/* printInlineJT32 (+ ) */(MI, 0, O);
     return;
     break;
   case 3:
     // ANDNOT_2r, CRC_l3r, INSHR_2r, SEXT_2r, SEXT_rus, ZEXT_2r, ZEXT_rus
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   case 4:
     // CRC8_l4r, LADD_l5r, LSUB_l5r, OUTPW_l2rus
-    printOperand(MI, 0, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     SStream_concat0(O, ", ");
     break;
   }
@@ -2301,9 +2305,9 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 2:
     // CRC8_l4r
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 4, O);
+    printOperand/* printOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 3:
@@ -2314,24 +2318,24 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 4:
     // INPW_l2rus
     SStream_concat0(O, "], ");
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 5:
     // LADD_l5r, LSUB_l5r, OUTPW_l2rus
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   case 6:
     // LD16S_3r, LD8U_3r, LDA16F_l3r, LDAWF_l2rus, LDAWF_l3r, LDW_2rus, LDW_3...
     SStream_concat0(O, "[");
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, "]");
     return;
     break;
   case 7:
     // LDA16B_l3r, LDAWB_l2rus, LDAWB_l3r
     SStream_concat0(O, "[-");
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, "]");
     return;
     break;
@@ -2343,24 +2347,24 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // ADD_2rus, ADD_3r, AND_3r, ASHR_l2rus, ASHR_l3r, DIVS_l3r, DIVU_l3r, EQ...
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     break;
   case 1:
     // CRC_l3r
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 2:
     // LADD_l5r, LSUB_l5r
     SStream_concat0(O, ", ");
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 4, O);
+    printOperand/* printOperand (+ ) */(MI, 4, O);
     return;
     break;
   case 3:
     // LDIVU_l5r, MACCS_l4r, MACCU_l4r
-    printOperand(MI, 4, O);
+    printOperand/* printOperand (+ ) */(MI, 4, O);
     SStream_concat0(O, ", ");
     break;
   case 4:
@@ -2379,24 +2383,24 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 1:
     // LDIVU_l5r
-    printOperand(MI, 2, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     return;
     break;
   case 2:
     // LMUL_l6r
     SStream_concat0(O, ", ");
-    printOperand(MI, 3, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 4, O);
+    printOperand/* printOperand (+ ) */(MI, 4, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 5, O);
+    printOperand/* printOperand (+ ) */(MI, 5, O);
     return;
     break;
   case 3:
     // MACCS_l4r, MACCU_l4r
-    printOperand(MI, 5, O);
+    printOperand/* printOperand (+ ) */(MI, 5, O);
     return;
     break;
   }
@@ -2431,8 +2435,8 @@ const char *getRegisterName(unsigned RegNo) {
 };
 
   static const uint8_t RegAsmOffset[] = {
-    38, 41, 47, 44, 4, 11, 14, 17, 20, 23, 26, 29, 32, 35,
-    0, 7,
+    38, 41, 47, 44, 4, 11, 14, 17, 20, 23, 26, 29, 32, 35, 
+    0, 7, 
   };
 
   assert (*(AsmStrs+RegAsmOffset[RegNo-1]) &&

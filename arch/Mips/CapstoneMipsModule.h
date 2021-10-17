@@ -1707,10 +1707,10 @@ static DecodeStatus DecodeBranchTarget1SImm16(MCInst *Inst, unsigned Offset,
 static DecodeStatus DecodeJumpTarget(MCInst *Inst, unsigned Insn,
 				     uint64_t Address, MCRegisterInfo *Decoder)
 {
-  printf("jump target decode\n");
+  debugln("jump target decode");
   unsigned JumpOffset = fieldFromInstruction(Insn, 0, 26) << 2;
   MCOperand_CreateImm0(Inst, JumpOffset);
-  printf("with exit\n");
+  debugln("with exit");
   return MCDisassembler_Success;
 }
 
@@ -1843,7 +1843,9 @@ static DecodeStatus DecodeSImmWithOffsetAndScale(MCInst *Inst, unsigned Value,
   unsigned Offset = 0; // we don't have default values in C, so here it goes
   unsigned ScaleBy = 1;
   int32_t Imm = SignExtend32(Value, Bits) * ScaleBy;
-  MCOperand_CreateImm0(Inst, Imm + Offset);
+  debug("after extend %d\n", Imm);
+  MCOperand_CreateImm0(Inst, (int64_t) Imm + Offset);
+    debug("created Imm0 %ld\n", (int64_t) Imm + Offset);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeInsSize(MCInst *Inst, unsigned Insn, uint64_t Address,

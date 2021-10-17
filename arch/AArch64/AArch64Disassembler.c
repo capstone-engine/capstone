@@ -70,6 +70,11 @@ uint64_t AArch64_getFeatureBits(int feature)
 #define Fail MCDisassembler_Fail
 #define SoftFail MCDisassembler_SoftFail
 
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) {
+    // extended from original arm module
+    return Require;
+}
+
 #define GET_SUBTARGETINFO_ENUM
 #include "AArch64GenSubtargetInfo.inc"
 #include "CapstoneAArch64Module.h"

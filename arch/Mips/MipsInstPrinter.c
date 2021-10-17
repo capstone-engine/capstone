@@ -33,6 +33,10 @@
 static void printUnsignedImm(MCInst *MI, int opNum, SStream *O);
 static char *printAliasInstr(MCInst *MI, SStream *O);
 static char *printAlias(MCInst *MI, SStream *OS);
+static void printCustomAliasOperand(
+    const MCInst *MI, unsigned OpIdx,
+    unsigned PrintMethodIdx,
+    SStream *OS);
 
 // These enumeration declarations were originally in MipsInstrInfo.h but
 // had to be moved here to avoid circular dependencies between
@@ -90,6 +94,7 @@ static void printFCCOperand(MCInst *MI, int opNum, SStream *O);
 static void printRegisterList(MCInst *MI, int opNum, SStream *O);
 
 #include "../MCInstPrinter.h"
+#include "../sync/logger.h"
 
 #define GET_INSTRINFO_ENUM
 #define GET_REGINFO_ENUM
@@ -181,13 +186,15 @@ static const char *MipsFCCToString(Mips_CondCode CC)
 
 static void printRegName(SStream *OS, unsigned RegNo)
 {
+    debug("there is a name %s\n", getRegisterName(RegNo));
   SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
 void Mips_printInst(MCInst *MI, SStream *O, void *info)
 {
+    debug("start instr printing\n");
   char *mnem;
-
+  MRI = info;
   switch (MCInst_getOpcode(MI)) {
   default:
     break;
@@ -201,17 +208,21 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
   // Try to print any aliases first.
   mnem = printAliasInstr(MI, O);
   if (!mnem) {
+      debug("no mnem found\n");
     mnem = printAlias(MI, O);
     if (!mnem) {
+        debug("no alias found\n");
       printInstruction(MI, O);
     }
   }
 
   if (mnem) {
+      debug("start instr fix %s\n", mnem);
     // fixup instruction id due to the change in alias instruction
     MCInst_setOpcodePub(MI, Mips_map_insn(mnem));
     cs_mem_free(mnem);
   }
+  debug("end instr printing\n");
 }
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
@@ -224,6 +235,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
   Op = MCInst_getOperand(MI, OpNo);
   if (MCOperand_isReg(Op)) {
     unsigned int reg = MCOperand_getReg(Op);
+    debugln("is reg %d", reg);
     printRegName(O, reg);
     reg = Mips_map_register(reg);
     if (MI->csh->detail) {
@@ -241,8 +253,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MI->flat_insn->detail->mips.op_count++;
       }
     }
+    debug("is reg complete\n");
   } else if (MCOperand_isImm(Op)) {
     int64_t imm = MCOperand_getImm(Op);
+    debug("is imm %ld %d\n", imm, imm > 0);
     if (MI->csh->doing_mem) {
       if (imm) { // only print Imm offset if it is not 0
 	printInt64(O, imm);

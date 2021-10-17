@@ -27,9 +27,15 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MathExtras.h"
+#include "../../MCInstPrinter.h"
 #include "SystemZMapping.h"
 
 static const char *getRegisterName(unsigned RegNo);
+
+static void printCustomAliasOperand(
+    const MCInst *MI, unsigned OpIdx,
+    unsigned PrintMethodIdx,
+    SStream *OS);
 
 void SystemZ_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
@@ -422,12 +428,15 @@ static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
 		MI->flat_insn->detail->sysz.cc = (sysz_cc)Imm;
 }
 
+#define GET_INSTRINFO_ENUM
 #define PRINT_ALIAS_INSTR
-#include "SystemZGenAsmWriter.inc"
+#define GET_REGINFO_ENUM
+#define GET_ASM_WRITER
+#include "SystemZGenDisassemblerTables.inc"
 
 void SystemZ_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	printInstruction(MI, O, Info);
+	printInstruction(MI, O);
 }
 
 #endif

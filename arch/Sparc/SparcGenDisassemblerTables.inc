@@ -1743,21 +1743,21 @@ static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits) {
   switch (Idx) {
   default: llvm_unreachable("Invalid index!");
   case 0:
-    return getbool((Bits & 1 << Sparc_FeatureV9));
+    return getbool(checkFeatureRequired(Bits, Sparc_FeatureV9, 1));
   case 1:
-    return getbool((Bits & 1 << Sparc_FeaturePWRPSR));
+    return getbool(checkFeatureRequired(Bits, Sparc_FeaturePWRPSR, 1));
   case 2:
-    return getbool((Bits & 1 << Sparc_FeatureVIS3));
+    return getbool(checkFeatureRequired(Bits, Sparc_FeatureVIS3, 1));
   case 3:
-    return getbool((Bits & 1 << Sparc_FeatureVIS));
+    return getbool(checkFeatureRequired(Bits, Sparc_FeatureVIS, 1));
   case 4:
-    return getbool((Bits & 1 << Sparc_FeatureVIS2));
+    return getbool(checkFeatureRequired(Bits, Sparc_FeatureVIS2, 1));
   }
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-                uint64_t Address, void *Decoder) {\
+                uint64_t Address, bool *Decoder) {\
   InsnType tmp;\
   switch (Idx) {\
   default: llvm_unreachable("Invalid index!");\
@@ -2402,7 +2402,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
       /* Check the predicate. */ \
-      if (!(Pred = checkDecoderPredicate(PIdx, MI))) \
+      if (!(Pred = checkDecoderPredicate(PIdx, feature))) \
         Ptr += NumToSkip; \
 		/* printf("55 PIdx = %u, Pred = %u\n", PIdx, Pred); */ \
       (void)Pred; \
@@ -3501,6 +3501,23 @@ DecodeInstruction(decodeInstruction, fieldFromInstruction, decodeToMCInst, uint3
 #define SP_XORrr	 767
 #endif // GET_INSTRINFO_ENUM
 
+#ifdef GET_REGINFO_EXTRA
+#undef GET_REGINFO_EXTRA
+
+// Subregister indices
+
+enum {
+  NoSubRegister,
+  SP_sub_even,	// 1
+    SP_sub_even64,	// 2
+    SP_sub_odd,	// 3
+    SP_sub_odd64,	// 4
+    SP_sub_odd64_then_sub_even,	// 5
+    SP_sub_odd64_then_sub_odd,	// 6
+  SP_NUM_TARGET_SUBREGS
+};
+#endif // GET_REGINFO_EXTRA
+
 
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
@@ -3853,371 +3870,371 @@ static const char SparcRegStrings[] = {
 
 static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
-  { 819, 4, 4, 2, 6065, 137 },
-  { 851, 4, 4, 2, 6065, 137 },
-  { 875, 4, 4, 2, 6065, 148 },
-  { 900, 4, 4, 2, 6065, 146 },
-  { 912, 4, 4, 2, 6065, 148 },
-  { 893, 4, 4, 2, 6065, 142 },
-  { 897, 4, 4, 2, 6065, 152 },
-  { 908, 4, 4, 2, 6065, 154 },
-  { 806, 4, 4, 2, 6065, 144 },
-  { 884, 4, 4, 2, 6065, 150 },
-  { 864, 4, 4, 2, 6065, 100 },
-  { 913, 4, 4, 2, 6065, 102 },
-  { 830, 4, 4, 2, 6065, 104 },
-  { 802, 4, 4, 2, 6065, 106 },
-  { 904, 4, 4, 2, 6065, 110 },
-  { 859, 4, 4, 2, 6065, 108 },
-  { 868, 4, 4, 2, 6065, 152 },
+  { 819, 4, 4, 2, 6065, 1 },
+  { 851, 4, 4, 2, 6065, 114 },
+  { 875, 4, 4, 2, 6065, 1 },
+  { 900, 4, 4, 2, 6065, 1 },
+  { 912, 4, 4, 2, 6065, 1 },
+  { 893, 4, 4, 2, 6065, 1 },
+  { 897, 4, 4, 2, 6065, 1 },
+  { 908, 4, 4, 2, 6065, 1 },
+  { 806, 4, 4, 2, 6065, 62 },
+  { 884, 4, 4, 2, 6065, 296 },
+  { 864, 4, 4, 2, 6065, 106 },
+  { 913, 4, 4, 2, 6065, 92 },
+  { 830, 4, 4, 2, 6065, 101 },
+  { 802, 4, 4, 2, 6065, 318 },
+  { 904, 4, 4, 2, 6065, 241 },
+  { 859, 4, 4, 2, 6065, 1 },
+  { 868, 4, 4, 2, 6065, 298 },
   { 810, 4, 4, 2, 6065, 1 },
-  { 815, 4, 4, 2, 6065, 188 },
-  { 837, 4, 4, 2, 6065, 135 },
-  { 917, 4, 4, 2, 6065, 113 },
-  { 871, 4, 4, 2, 6065, 115 },
-  { 844, 4, 4, 2, 6065, 168 },
-  { 920, 4, 4, 2, 6065, 158 },
-  { 198, 4, 4, 2, 6065, 113 },
-  { 269, 4, 4, 2, 6065, 1 },
-  { 366, 4, 4, 2, 6065, 1 },
-  { 435, 4, 4, 2, 6065, 32 },
-  { 527, 4, 4, 2, 6065, 190 },
-  { 592, 4, 4, 2, 6065, 160 },
-  { 680, 4, 4, 2, 6065, 113 },
-  { 733, 4, 4, 2, 6065, 1 },
-  { 797, 4, 4, 2, 6065, 135 },
-  { 16, 4, 4, 2, 6065, 176 },
-  { 104, 4, 4, 2, 6065, 10 },
-  { 219, 4, 4, 2, 6065, 113 },
-  { 294, 4, 4, 2, 6065, 1 },
-  { 387, 4, 4, 2, 6065, 122 },
-  { 460, 4, 4, 2, 6065, 126 },
-  { 544, 4, 4, 2, 6065, 1 },
-  { 613, 4, 4, 2, 6065, 135 },
-  { 697, 4, 4, 2, 6065, 1 },
-  { 754, 4, 4, 2, 6065, 172 },
-  { 34, 4, 4, 2, 6065, 135 },
-  { 126, 4, 4, 2, 6065, 113 },
-  { 237, 4, 4, 2, 6065, 1 },
-  { 316, 4, 4, 2, 6065, 1 },
+  { 815, 4, 4, 2, 6065, 32 },
+  { 837, 4, 4, 2, 6065, 57 },
+  { 917, 4, 4, 2, 6065, 4 },
+  { 871, 4, 4, 2, 6065, 1 },
+  { 844, 4, 4, 2, 6065, 233 },
+  { 920, 4, 4, 2, 6065, 1 },
+  { 198, 4, 4, 2, 6065, 237 },
+  { 269, 4, 4, 2, 6065, 239 },
+  { 366, 4, 4, 2, 6065, 108 },
+  { 435, 4, 4, 2, 6065, 110 },
+  { 527, 4, 4, 2, 6065, 1 },
+  { 592, 4, 4, 2, 6065, 1 },
+  { 680, 4, 4, 2, 6065, 1 },
+  { 733, 4, 4, 2, 6065, 292 },
+  { 797, 4, 4, 2, 6065, 235 },
+  { 16, 4, 4, 2, 6065, 4 },
+  { 104, 4, 4, 2, 6065, 294 },
+  { 219, 4, 4, 2, 6065, 62 },
+  { 294, 4, 4, 2, 6065, 228 },
+  { 387, 4, 4, 2, 6065, 57 },
+  { 460, 4, 4, 2, 6065, 62 },
+  { 544, 4, 4, 2, 6065, 226 },
+  { 613, 4, 4, 2, 6065, 1 },
+  { 697, 4, 4, 2, 6065, 224 },
+  { 754, 4, 4, 2, 6065, 1 },
+  { 34, 4, 4, 2, 6065, 1 },
+  { 126, 4, 4, 2, 6065, 271 },
+  { 237, 4, 4, 2, 6065, 32 },
+  { 316, 4, 4, 2, 6065, 51 },
   { 405, 4, 4, 2, 6065, 1 },
-  { 482, 4, 4, 2, 6065, 178 },
-  { 562, 4, 4, 2, 6065, 53 },
-  { 635, 4, 4, 2, 6065, 62 },
-  { 715, 4, 4, 2, 6065, 174 },
-  { 776, 4, 4, 2, 6065, 128 },
-  { 52, 4, 4, 2, 6065, 43 },
-  { 148, 4, 4, 2, 6065, 113 },
-  { 60, 4, 373, 2, 6065, 59 },
-  { 156, 4, 371, 2, 6065, 192 },
+  { 482, 4, 4, 2, 6065, 316 },
+  { 562, 4, 4, 2, 6065, 273 },
+  { 635, 4, 4, 2, 6065, 283 },
+  { 715, 4, 4, 2, 6065, 32 },
+  { 776, 4, 4, 2, 6065, 51 },
+  { 52, 4, 4, 2, 6065, 222 },
+  { 148, 4, 4, 2, 6065, 62 },
+  { 60, 4, 373, 2, 6065, 55 },
+  { 156, 4, 371, 2, 6065, 285 },
   { 245, 4, 371, 2, 6065, 1 },
-  { 324, 4, 369, 2, 6065, 135 },
-  { 411, 4, 369, 2, 6065, 113 },
+  { 324, 4, 369, 2, 6065, 281 },
+  { 411, 4, 369, 2, 6065, 290 },
   { 491, 4, 367, 2, 6065, 1 },
-  { 568, 4, 367, 2, 6065, 1 },
-  { 644, 4, 365, 2, 6065, 135 },
-  { 721, 4, 365, 2, 6065, 113 },
-  { 785, 4, 363, 2, 6065, 162 },
-  { 0, 4, 363, 2, 6065, 135 },
-  { 88, 4, 361, 2, 6065, 130 },
+  { 568, 4, 367, 2, 6065, 316 },
+  { 644, 4, 365, 2, 6065, 62 },
+  { 721, 4, 365, 2, 6065, 45 },
+  { 785, 4, 363, 2, 6065, 62 },
+  { 0, 4, 363, 2, 6065, 1 },
+  { 88, 4, 361, 2, 6065, 62 },
   { 203, 4, 361, 2, 6065, 1 },
-  { 278, 4, 359, 2, 6065, 113 },
-  { 371, 4, 359, 2, 6065, 190 },
-  { 444, 4, 357, 2, 6065, 135 },
-  { 532, 4, 357, 2, 6065, 166 },
+  { 278, 4, 359, 2, 6065, 62 },
+  { 371, 4, 359, 2, 6065, 245 },
+  { 444, 4, 357, 2, 6065, 243 },
+  { 532, 4, 357, 2, 6065, 32 },
   { 601, 4, 355, 2, 6065, 1 },
-  { 685, 4, 355, 2, 6065, 156 },
-  { 742, 4, 353, 2, 6065, 113 },
-  { 22, 4, 353, 2, 6065, 124 },
-  { 114, 4, 351, 2, 6065, 1 },
-  { 225, 4, 351, 2, 6065, 135 },
-  { 304, 4, 349, 2, 6065, 170 },
-  { 393, 4, 349, 2, 6065, 120 },
-  { 470, 4, 347, 2, 6065, 113 },
-  { 550, 4, 347, 2, 6065, 132 },
-  { 623, 4, 345, 2, 6065, 27 },
-  { 703, 4, 345, 2, 6065, 135 },
-  { 764, 4, 343, 2, 6065, 98 },
-  { 40, 4, 343, 2, 6065, 25 },
-  { 136, 4, 341, 2, 6065, 93 },
-  { 63, 5, 336, 0, 2418, 0 },
-  { 165, 12, 327, 0, 2418, 117 },
-  { 248, 15, 327, 0, 2418, 112 },
-  { 333, 22, 318, 0, 2418, 95 },
-  { 414, 25, 318, 0, 2418, 6 },
-  { 494, 32, 309, 0, 2418, 0 },
-  { 571, 35, 309, 0, 2418, 139 },
-  { 647, 42, 300, 0, 2418, 29 },
-  { 724, 45, 300, 0, 2418, 39 },
-  { 788, 52, 291, 0, 2418, 134 },
-  { 4, 55, 291, 0, 2418, 0 },
-  { 92, 62, 282, 0, 2418, 0 },
-  { 207, 65, 282, 0, 2418, 0 },
-  { 282, 72, 273, 0, 2418, 0 },
-  { 375, 75, 273, 0, 2418, 0 },
+  { 685, 4, 355, 2, 6065, 62 },
+  { 742, 4, 353, 2, 6065, 247 },
+  { 22, 4, 353, 2, 6065, 59 },
+  { 114, 4, 351, 2, 6065, 4 },
+  { 225, 4, 351, 2, 6065, 1 },
+  { 304, 4, 349, 2, 6065, 249 },
+  { 393, 4, 349, 2, 6065, 62 },
+  { 470, 4, 347, 2, 6065, 251 },
+  { 550, 4, 347, 2, 6065, 53 },
+  { 623, 4, 345, 2, 6065, 10 },
+  { 703, 4, 345, 2, 6065, 62 },
+  { 764, 4, 343, 2, 6065, 235 },
+  { 40, 4, 343, 2, 6065, 62 },
+  { 136, 4, 341, 2, 6065, 316 },
+  { 63, 5, 336, 0, 2418, 256 },
+  { 165, 12, 327, 0, 2418, 77 },
+  { 248, 15, 327, 0, 2418, 34 },
+  { 333, 22, 318, 0, 2418, 253 },
+  { 414, 25, 318, 0, 2418, 83 },
+  { 494, 32, 309, 0, 2418, 259 },
+  { 571, 35, 309, 0, 2418, 265 },
+  { 647, 42, 300, 0, 2418, 80 },
+  { 724, 45, 300, 0, 2418, 268 },
+  { 788, 52, 291, 0, 2418, 6 },
+  { 4, 55, 291, 0, 2418, 275 },
+  { 92, 62, 282, 0, 2418, 262 },
+  { 207, 65, 282, 0, 2418, 278 },
+  { 282, 72, 273, 0, 2418, 64 },
+  { 375, 75, 273, 0, 2418, 64 },
   { 448, 82, 267, 0, 2418, 0 },
-  { 536, 4, 267, 2, 3425, 1 },
-  { 605, 4, 264, 2, 3425, 1 },
-  { 689, 4, 264, 2, 3425, 1 },
-  { 746, 4, 262, 2, 3425, 1 },
-  { 26, 4, 262, 2, 3425, 1 },
-  { 118, 4, 260, 2, 3425, 1 },
+  { 536, 4, 267, 2, 3425, 120 },
+  { 605, 4, 264, 2, 3425, 88 },
+  { 689, 4, 264, 2, 3425, 94 },
+  { 746, 4, 262, 2, 3425, 112 },
+  { 26, 4, 262, 2, 3425, 124 },
+  { 118, 4, 260, 2, 3425, 62 },
   { 229, 4, 260, 2, 3425, 1 },
-  { 308, 4, 258, 2, 3425, 1 },
-  { 397, 4, 258, 2, 3425, 1 },
-  { 474, 4, 256, 2, 3425, 1 },
-  { 554, 4, 256, 2, 3425, 1 },
-  { 627, 4, 254, 2, 3425, 1 },
-  { 707, 4, 254, 2, 3425, 1 },
+  { 308, 4, 258, 2, 3425, 62 },
+  { 397, 4, 258, 2, 3425, 126 },
+  { 474, 4, 256, 2, 3425, 62 },
+  { 554, 4, 256, 2, 3425, 10 },
+  { 627, 4, 254, 2, 3425, 62 },
+  { 707, 4, 254, 2, 3425, 131 },
   { 768, 4, 252, 2, 3425, 1 },
-  { 44, 4, 252, 2, 3425, 1 },
+  { 44, 4, 252, 2, 3425, 133 },
   { 140, 4, 250, 2, 3425, 1 },
-  { 66, 4, 338, 2, 6001, 1 },
-  { 168, 4, 335, 2, 6001, 1 },
+  { 66, 4, 338, 2, 6001, 137 },
+  { 168, 4, 335, 2, 6001, 139 },
   { 251, 4, 332, 2, 6001, 1 },
-  { 336, 4, 329, 2, 6001, 1 },
+  { 336, 4, 329, 2, 6001, 62 },
   { 417, 4, 329, 2, 6001, 1 },
-  { 497, 4, 326, 2, 6001, 1 },
+  { 497, 4, 326, 2, 6001, 62 },
   { 574, 4, 323, 2, 6001, 1 },
-  { 650, 4, 320, 2, 6001, 1 },
-  { 727, 4, 320, 2, 6001, 1 },
-  { 791, 4, 317, 2, 6001, 1 },
-  { 8, 4, 314, 2, 6001, 1 },
+  { 650, 4, 320, 2, 6001, 62 },
+  { 727, 4, 320, 2, 6001, 144 },
+  { 791, 4, 317, 2, 6001, 135 },
+  { 8, 4, 314, 2, 6001, 32 },
   { 96, 4, 311, 2, 6001, 1 },
-  { 211, 4, 311, 2, 6001, 1 },
-  { 286, 4, 308, 2, 6001, 1 },
-  { 379, 4, 305, 2, 6001, 1 },
+  { 211, 4, 311, 2, 6001, 51 },
+  { 286, 4, 308, 2, 6001, 146 },
+  { 379, 4, 305, 2, 6001, 4 },
   { 452, 4, 302, 2, 6001, 1 },
-  { 540, 4, 302, 2, 6001, 1 },
+  { 540, 4, 302, 2, 6001, 62 },
   { 609, 4, 299, 2, 6001, 1 },
-  { 693, 4, 296, 2, 6001, 1 },
-  { 750, 4, 293, 2, 6001, 1 },
-  { 30, 4, 293, 2, 6001, 1 },
-  { 122, 4, 290, 2, 6001, 1 },
-  { 233, 4, 287, 2, 6001, 1 },
-  { 312, 4, 284, 2, 6001, 1 },
-  { 401, 4, 284, 2, 6001, 1 },
-  { 478, 4, 281, 2, 6001, 1 },
-  { 558, 4, 278, 2, 6001, 1 },
-  { 631, 4, 275, 2, 6001, 1 },
-  { 711, 4, 275, 2, 6001, 1 },
+  { 693, 4, 296, 2, 6001, 62 },
+  { 750, 4, 293, 2, 6001, 148 },
+  { 30, 4, 293, 2, 6001, 62 },
+  { 122, 4, 290, 2, 6001, 10 },
+  { 233, 4, 287, 2, 6001, 62 },
+  { 312, 4, 284, 2, 6001, 300 },
+  { 401, 4, 284, 2, 6001, 62 },
+  { 478, 4, 281, 2, 6001, 316 },
+  { 558, 4, 278, 2, 6001, 118 },
+  { 631, 4, 275, 2, 6001, 122 },
+  { 711, 4, 275, 2, 6001, 4 },
   { 772, 4, 272, 2, 6001, 1 },
-  { 48, 4, 269, 2, 6001, 1 },
-  { 144, 4, 266, 2, 6001, 1 },
-  { 58, 4, 4, 2, 6033, 1 },
+  { 48, 4, 269, 2, 6001, 150 },
+  { 144, 4, 266, 2, 6001, 116 },
+  { 58, 4, 4, 2, 6033, 316 },
   { 154, 4, 4, 2, 6033, 1 },
-  { 243, 4, 4, 2, 6033, 1 },
+  { 243, 4, 4, 2, 6033, 152 },
   { 322, 4, 4, 2, 6033, 1 },
-  { 69, 4, 248, 2, 6033, 1 },
-  { 174, 4, 246, 2, 6033, 1 },
-  { 254, 4, 246, 2, 6033, 67 },
-  { 342, 4, 244, 2, 6033, 43 },
-  { 420, 4, 244, 2, 6033, 67 },
-  { 503, 4, 242, 2, 6033, 67 },
-  { 577, 4, 242, 2, 6033, 62 },
-  { 656, 4, 240, 2, 6033, 43 },
-  { 72, 4, 240, 2, 6033, 67 },
-  { 180, 4, 238, 2, 6033, 164 },
-  { 257, 4, 238, 2, 6033, 67 },
-  { 348, 4, 236, 2, 6033, 10 },
-  { 423, 4, 236, 2, 6033, 67 },
-  { 509, 4, 234, 2, 6033, 67 },
-  { 580, 4, 234, 2, 6033, 10 },
-  { 662, 4, 232, 2, 6033, 18 },
-  { 75, 4, 232, 2, 6033, 10 },
-  { 186, 4, 230, 2, 6033, 67 },
-  { 260, 4, 230, 2, 6033, 67 },
-  { 354, 4, 228, 2, 6033, 56 },
-  { 426, 4, 228, 2, 6033, 67 },
-  { 515, 4, 226, 2, 6033, 43 },
-  { 583, 4, 226, 2, 6033, 180 },
-  { 668, 4, 224, 2, 6033, 64 },
-  { 78, 4, 224, 2, 6033, 67 },
-  { 192, 4, 222, 2, 6033, 67 },
-  { 263, 4, 222, 2, 6033, 67 },
-  { 360, 4, 220, 2, 6033, 67 },
-  { 429, 4, 220, 2, 6033, 67 },
-  { 521, 4, 218, 2, 6033, 37 },
-  { 586, 4, 218, 2, 6033, 10 },
-  { 674, 4, 216, 2, 6033, 18 },
-  { 81, 8, 4, 6, 4, 77 },
-  { 195, 18, 4, 6, 4, 34 },
-  { 266, 28, 4, 6, 4, 45 },
-  { 363, 38, 4, 6, 4, 15 },
-  { 432, 48, 4, 6, 4, 82 },
-  { 524, 58, 4, 6, 4, 69 },
-  { 589, 68, 4, 6, 4, 20 },
-  { 677, 78, 4, 6, 4, 82 },
-  { 730, 142, 4, 3, 1458, 58 },
-  { 794, 145, 4, 3, 1458, 87 },
-  { 12, 148, 4, 3, 1458, 182 },
-  { 100, 151, 4, 3, 1458, 36 },
-  { 215, 154, 4, 3, 1458, 55 },
-  { 290, 157, 4, 3, 1458, 84 },
-  { 383, 160, 4, 3, 1458, 61 },
-  { 456, 163, 4, 3, 1458, 84 },
-  { 159, 94, 4, 0, 1362, 17 },
-  { 327, 97, 4, 0, 1362, 42 },
-  { 488, 100, 4, 0, 1362, 74 },
-  { 641, 103, 4, 0, 1362, 3 },
-  { 782, 106, 4, 0, 1362, 84 },
-  { 84, 109, 4, 0, 1362, 84 },
-  { 274, 112, 4, 0, 1362, 50 },
-  { 440, 115, 4, 0, 1362, 84 },
-  { 597, 118, 4, 0, 1362, 90 },
-  { 738, 121, 4, 0, 1362, 74 },
-  { 110, 124, 4, 0, 1362, 71 },
-  { 300, 127, 4, 0, 1362, 84 },
-  { 466, 130, 4, 0, 1362, 55 },
-  { 619, 133, 4, 0, 1362, 84 },
-  { 760, 136, 4, 0, 1362, 12 },
+  { 69, 4, 248, 2, 6033, 4 },
+  { 174, 4, 246, 2, 6033, 57 },
+  { 254, 4, 246, 2, 6033, 118 },
+  { 342, 4, 244, 2, 6033, 30 },
+  { 420, 4, 244, 2, 6033, 43 },
+  { 503, 4, 242, 2, 6033, 160 },
+  { 577, 4, 242, 2, 6033, 158 },
+  { 656, 4, 240, 2, 6033, 86 },
+  { 72, 4, 240, 2, 6033, 90 },
+  { 180, 4, 238, 2, 6033, 99 },
+  { 257, 4, 238, 2, 6033, 1 },
+  { 348, 4, 236, 2, 6033, 1 },
+  { 423, 4, 236, 2, 6033, 1 },
+  { 509, 4, 234, 2, 6033, 1 },
+  { 580, 4, 234, 2, 6033, 12 },
+  { 662, 4, 232, 2, 6033, 14 },
+  { 75, 4, 232, 2, 6033, 1 },
+  { 186, 4, 230, 2, 6033, 10 },
+  { 260, 4, 230, 2, 6033, 162 },
+  { 354, 4, 228, 2, 6033, 16 },
+  { 426, 4, 228, 2, 6033, 154 },
+  { 515, 4, 226, 2, 6033, 1 },
+  { 583, 4, 226, 2, 6033, 156 },
+  { 668, 4, 224, 2, 6033, 1 },
+  { 78, 4, 224, 2, 6033, 166 },
+  { 192, 4, 222, 2, 6033, 164 },
+  { 263, 4, 222, 2, 6033, 47 },
+  { 360, 4, 220, 2, 6033, 168 },
+  { 429, 4, 220, 2, 6033, 7 },
+  { 521, 4, 218, 2, 6033, 49 },
+  { 586, 4, 218, 2, 6033, 1 },
+  { 674, 4, 216, 2, 6033, 170 },
+  { 81, 8, 4, 6, 4, 182 },
+  { 195, 18, 4, 6, 4, 172 },
+  { 266, 28, 4, 6, 4, 177 },
+  { 363, 38, 4, 6, 4, 187 },
+  { 432, 48, 4, 6, 4, 21 },
+  { 524, 58, 4, 6, 4, 72 },
+  { 589, 68, 4, 6, 4, 302 },
+  { 677, 78, 4, 6, 4, 67 },
+  { 730, 142, 4, 3, 1458, 287 },
+  { 794, 145, 4, 3, 1458, 310 },
+  { 12, 148, 4, 3, 1458, 128 },
+  { 100, 151, 4, 3, 1458, 192 },
+  { 215, 154, 4, 3, 1458, 195 },
+  { 290, 157, 4, 3, 1458, 198 },
+  { 383, 160, 4, 3, 1458, 23 },
+  { 456, 163, 4, 3, 1458, 0 },
+  { 159, 94, 4, 0, 1362, 201 },
+  { 327, 97, 4, 0, 1362, 204 },
+  { 488, 100, 4, 0, 1362, 0 },
+  { 641, 103, 4, 0, 1362, 26 },
+  { 782, 106, 4, 0, 1362, 207 },
+  { 84, 109, 4, 0, 1362, 103 },
+  { 274, 112, 4, 0, 1362, 18 },
+  { 440, 115, 4, 0, 1362, 9 },
+  { 597, 118, 4, 0, 1362, 64 },
+  { 738, 121, 4, 0, 1362, 64 },
+  { 110, 124, 4, 0, 1362, 96 },
+  { 300, 127, 4, 0, 1362, 230 },
+  { 466, 130, 4, 0, 1362, 141 },
+  { 619, 133, 4, 0, 1362, 3 },
+  { 760, 136, 4, 0, 1362, 0 },
   { 132, 139, 4, 0, 1362, 61 },
-  { 171, 166, 4, 0, 1410, 55 },
-  { 339, 169, 4, 0, 1410, 84 },
-  { 500, 172, 4, 0, 1410, 84 },
-  { 653, 175, 4, 0, 1410, 66 },
-  { 177, 178, 4, 0, 1410, 12 },
-  { 345, 181, 4, 0, 1410, 185 },
-  { 506, 184, 4, 0, 1410, 84 },
-  { 659, 187, 4, 0, 1410, 84 },
-  { 183, 190, 4, 0, 1410, 84 },
-  { 351, 193, 4, 0, 1410, 12 },
-  { 512, 196, 4, 0, 1410, 9 },
-  { 665, 199, 4, 0, 1410, 12 },
-  { 189, 202, 4, 0, 1410, 74 },
-  { 357, 205, 4, 0, 1410, 84 },
-  { 518, 208, 4, 0, 1410, 55 },
-  { 671, 211, 4, 0, 1410, 84 },
+  { 171, 166, 4, 0, 1410, 313 },
+  { 339, 169, 4, 0, 1410, 0 },
+  { 500, 172, 4, 0, 1410, 40 },
+  { 653, 175, 4, 0, 1410, 6 },
+  { 177, 178, 4, 0, 1410, 29 },
+  { 345, 181, 4, 0, 1410, 64 },
+  { 506, 184, 4, 0, 1410, 210 },
+  { 659, 187, 4, 0, 1410, 64 },
+  { 183, 190, 4, 0, 1410, 213 },
+  { 351, 193, 4, 0, 1410, 64 },
+  { 512, 196, 4, 0, 1410, 216 },
+  { 665, 199, 4, 0, 1410, 307 },
+  { 189, 202, 4, 0, 1410, 18 },
+  { 357, 205, 4, 0, 1410, 37 },
+  { 518, 208, 4, 0, 1410, 3 },
+  { 671, 211, 4, 0, 1410, 219 },
 };
 
   // FCCRegs Register Class...
   static const MCPhysReg FCCRegs[] = {
-    SP_FCC0, SP_FCC1, SP_FCC2, SP_FCC3,
+    SP_FCC0, SP_FCC1, SP_FCC2, SP_FCC3, 
   };
 
   // FCCRegs Bit set.
-  const uint8_t FCCRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f,
+  static const uint8_t FCCRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 
   };
 
   // ASRRegs Register Class...
   static const MCPhysReg ASRRegs[] = {
-    SP_Y, SP_ASR1, SP_ASR2, SP_ASR3, SP_ASR4, SP_ASR5, SP_ASR6, SP_ASR7, SP_ASR8, SP_ASR9, SP_ASR10, SP_ASR11, SP_ASR12, SP_ASR13, SP_ASR14, SP_ASR15, SP_ASR16, SP_ASR17, SP_ASR18, SP_ASR19, SP_ASR20, SP_ASR21, SP_ASR22, SP_ASR23, SP_ASR24, SP_ASR25, SP_ASR26, SP_ASR27, SP_ASR28, SP_ASR29, SP_ASR30, SP_ASR31,
+    SP_Y, SP_ASR1, SP_ASR2, SP_ASR3, SP_ASR4, SP_ASR5, SP_ASR6, SP_ASR7, SP_ASR8, SP_ASR9, SP_ASR10, SP_ASR11, SP_ASR12, SP_ASR13, SP_ASR14, SP_ASR15, SP_ASR16, SP_ASR17, SP_ASR18, SP_ASR19, SP_ASR20, SP_ASR21, SP_ASR22, SP_ASR23, SP_ASR24, SP_ASR25, SP_ASR26, SP_ASR27, SP_ASR28, SP_ASR29, SP_ASR30, SP_ASR31, 
   };
 
   // ASRRegs Bit set.
-  const uint8_t ASRRegsBits[] = {
-    0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
+  static const uint8_t ASRRegsBits[] = {
+    0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 
   };
 
   // CoprocRegs Register Class...
   static const MCPhysReg CoprocRegs[] = {
-    SP_C0, SP_C1, SP_C2, SP_C3, SP_C4, SP_C5, SP_C6, SP_C7, SP_C8, SP_C9, SP_C10, SP_C11, SP_C12, SP_C13, SP_C14, SP_C15, SP_C16, SP_C17, SP_C18, SP_C19, SP_C20, SP_C21, SP_C22, SP_C23, SP_C24, SP_C25, SP_C26, SP_C27, SP_C28, SP_C29, SP_C30, SP_C31,
+    SP_C0, SP_C1, SP_C2, SP_C3, SP_C4, SP_C5, SP_C6, SP_C7, SP_C8, SP_C9, SP_C10, SP_C11, SP_C12, SP_C13, SP_C14, SP_C15, SP_C16, SP_C17, SP_C18, SP_C19, SP_C20, SP_C21, SP_C22, SP_C23, SP_C24, SP_C25, SP_C26, SP_C27, SP_C28, SP_C29, SP_C30, SP_C31, 
   };
 
   // CoprocRegs Bit set.
-  const uint8_t CoprocRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
+  static const uint8_t CoprocRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 
   };
 
   // FPRegs Register Class...
   static const MCPhysReg FPRegs[] = {
-    SP_F0, SP_F1, SP_F2, SP_F3, SP_F4, SP_F5, SP_F6, SP_F7, SP_F8, SP_F9, SP_F10, SP_F11, SP_F12, SP_F13, SP_F14, SP_F15, SP_F16, SP_F17, SP_F18, SP_F19, SP_F20, SP_F21, SP_F22, SP_F23, SP_F24, SP_F25, SP_F26, SP_F27, SP_F28, SP_F29, SP_F30, SP_F31,
+    SP_F0, SP_F1, SP_F2, SP_F3, SP_F4, SP_F5, SP_F6, SP_F7, SP_F8, SP_F9, SP_F10, SP_F11, SP_F12, SP_F13, SP_F14, SP_F15, SP_F16, SP_F17, SP_F18, SP_F19, SP_F20, SP_F21, SP_F22, SP_F23, SP_F24, SP_F25, SP_F26, SP_F27, SP_F28, SP_F29, SP_F30, SP_F31, 
   };
 
   // FPRegs Bit set.
-  const uint8_t FPRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
+  static const uint8_t FPRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 
   };
 
   // IntRegs Register Class...
   static const MCPhysReg IntRegs[] = {
-    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7,
+    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7, 
   };
 
   // IntRegs Bit set.
-  const uint8_t IntRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0xff, 0xff, 0x0f,
+  static const uint8_t IntRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0xff, 0xff, 0x0f, 
   };
 
   // DFPRegs Register Class...
   static const MCPhysReg DFPRegs[] = {
-    SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15, SP_D16, SP_D17, SP_D18, SP_D19, SP_D20, SP_D21, SP_D22, SP_D23, SP_D24, SP_D25, SP_D26, SP_D27, SP_D28, SP_D29, SP_D30, SP_D31,
+    SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15, SP_D16, SP_D17, SP_D18, SP_D19, SP_D20, SP_D21, SP_D22, SP_D23, SP_D24, SP_D25, SP_D26, SP_D27, SP_D28, SP_D29, SP_D30, SP_D31, 
   };
 
   // DFPRegs Bit set.
-  const uint8_t DFPRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
+  static const uint8_t DFPRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 
   };
 
   // I64Regs Register Class...
   static const MCPhysReg I64Regs[] = {
-    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7,
+    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7, 
   };
 
   // I64Regs Bit set.
-  const uint8_t I64RegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0xff, 0xff, 0x0f,
+  static const uint8_t I64RegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0xff, 0xff, 0x0f, 
   };
 
   // CoprocPair Register Class...
   static const MCPhysReg CoprocPair[] = {
-    SP_C0_C1, SP_C2_C3, SP_C4_C5, SP_C6_C7, SP_C8_C9, SP_C10_C11, SP_C12_C13, SP_C14_C15, SP_C16_C17, SP_C18_C19, SP_C20_C21, SP_C22_C23, SP_C24_C25, SP_C26_C27, SP_C28_C29, SP_C30_C31,
+    SP_C0_C1, SP_C2_C3, SP_C4_C5, SP_C6_C7, SP_C8_C9, SP_C10_C11, SP_C12_C13, SP_C14_C15, SP_C16_C17, SP_C18_C19, SP_C20_C21, SP_C22_C23, SP_C24_C25, SP_C26_C27, SP_C28_C29, SP_C30_C31, 
   };
 
   // CoprocPair Bit set.
-  const uint8_t CoprocPairBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x0f,
+  static const uint8_t CoprocPairBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x0f, 
   };
 
   // IntPair Register Class...
   static const MCPhysReg IntPair[] = {
-    SP_I0_I1, SP_I2_I3, SP_I4_I5, SP_I6_I7, SP_G0_G1, SP_G2_G3, SP_G4_G5, SP_G6_G7, SP_L0_L1, SP_L2_L3, SP_L4_L5, SP_L6_L7, SP_O0_O1, SP_O2_O3, SP_O4_O5, SP_O6_O7,
+    SP_I0_I1, SP_I2_I3, SP_I4_I5, SP_I6_I7, SP_G0_G1, SP_G2_G3, SP_G4_G5, SP_G6_G7, SP_L0_L1, SP_L2_L3, SP_L4_L5, SP_L6_L7, SP_O0_O1, SP_O2_O3, SP_O4_O5, SP_O6_O7, 
   };
 
   // IntPair Bit set.
-  const uint8_t IntPairBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x0f,
+  static const uint8_t IntPairBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x0f, 
   };
 
   // LowDFPRegs Register Class...
   static const MCPhysReg LowDFPRegs[] = {
-    SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15,
+    SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15, 
   };
 
   // LowDFPRegs Bit set.
-  const uint8_t LowDFPRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff,
+  static const uint8_t LowDFPRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 
   };
 
   // PRRegs Register Class...
   static const MCPhysReg PRRegs[] = {
-    SP_TPC, SP_TNPC, SP_TSTATE, SP_TT, SP_TICK, SP_TBA, SP_PSTATE, SP_TL, SP_PIL, SP_CWP, SP_CANSAVE, SP_CANRESTORE, SP_CLEANWIN, SP_OTHERWIN, SP_WSTATE,
+    SP_TPC, SP_TNPC, SP_TSTATE, SP_TT, SP_TICK, SP_TBA, SP_PSTATE, SP_TL, SP_PIL, SP_CWP, SP_CANSAVE, SP_CANRESTORE, SP_CLEANWIN, SP_OTHERWIN, SP_WSTATE, 
   };
 
   // PRRegs Bit set.
-  const uint8_t PRRegsBits[] = {
-    0x4e, 0x6c, 0xbf,
+  static const uint8_t PRRegsBits[] = {
+    0x4e, 0x6c, 0xbf, 
   };
 
   // QFPRegs Register Class...
   static const MCPhysReg QFPRegs[] = {
-    SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7, SP_Q8, SP_Q9, SP_Q10, SP_Q11, SP_Q12, SP_Q13, SP_Q14, SP_Q15,
+    SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7, SP_Q8, SP_Q9, SP_Q10, SP_Q11, SP_Q12, SP_Q13, SP_Q14, SP_Q15, 
   };
 
   // QFPRegs Bit set.
-  const uint8_t QFPRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x0f,
+  static const uint8_t QFPRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x0f, 
   };
 
   // LowQFPRegs Register Class...
   static const MCPhysReg LowQFPRegs[] = {
-    SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7,
+    SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7, 
   };
 
   // LowQFPRegs Bit set.
-  const uint8_t LowQFPRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f,
+  static const uint8_t LowQFPRegsBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f, 
   };
 
 // end of register classes misc
@@ -5428,64 +5445,64 @@ static void printInstruction(MCInst *MI, SStream *O) {
     break;
   case 1:
     // ADJCALLSTACKDOWN, ADJCALLSTACKUP, BA, BPGEZapn, BPGEZapt, BPGEZnapn, B...
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     break;
   case 2:
     // GETPCX
-    printGetPCX(MI, 0, STI, O);
+    printGetPCX/* printGetPCX (+ ) */(MI, 0, O);
     return;
     break;
   case 3:
     // SET, ADDCCri, ADDCCrr, ADDCri, ADDCrr, ADDEri, ADDErr, ADDXC, ADDXCCC,...
-    printOperand(MI, 1, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     break;
   case 4:
     // BCOND, BCONDA, BPFCC, BPFCCA, BPFCCANT, BPFCCNT, BPICC, BPICCA, BPICCA...
-    printCCOperand(MI, 1, STI, O);
+    printCCOperand/* printCCOperand (+ ) */(MI, 1, O);
     break;
   case 5:
     // BINDri, BINDrr, CALLri, CALLrr, FLUSHri, FLUSHrr, LDCSRri, LDCSRrr, LD...
-    printMemOperand(MI, 0, STI, O);
+    printMemOperand/* printMemOperand (+ ) */(MI, 0, O, "");
     break;
   case 6:
     // FMOVD_FCC, FMOVD_ICC, FMOVD_XCC, FMOVQ_FCC, FMOVQ_ICC, FMOVQ_XCC, FMOV...
-    printCCOperand(MI, 3, STI, O);
+    printCCOperand/* printCCOperand (+ ) */(MI, 3, O);
     break;
   case 7:
     // JMPLri, JMPLrr, LDArr, LDCri, LDCrr, LDDArr, LDDCri, LDDCrr, LDDFArr, ...
-    printMemOperand(MI, 1, STI, O);
+    printMemOperand/* printMemOperand (+ ) */(MI, 1, O, "");
     break;
   case 8:
     // LEAX_ADDri, LEA_ADDri
-    printMemOperand(MI, 1, STI, O, "arith");
+    printMemOperand/* printMemOperand (+ arith) */(MI, 1, O, "arith");
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 9:
     // MEMBARi
-    printMembarTag(MI, 0, STI, O);
+    printMembarTag/* printMembarTag (+ ) */(MI, 0, O);
     return;
     break;
   case 10:
     // STArr, STBArr, STBri, STBrr, STCri, STCrr, STDArr, STDCri, STDCrr, STD...
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", [");
-    printMemOperand(MI, 0, STI, O);
+    printMemOperand/* printMemOperand (+ ) */(MI, 0, O, "");
     break;
   case 11:
     // TICCri, TICCrr, TRAPri, TRAPrr, TXCCri, TXCCrr
-    printCCOperand(MI, 2, STI, O);
+    printCCOperand/* printCCOperand (+ ) */(MI, 2, O);
     break;
   case 12:
     // V9FMOVD_FCC, V9FMOVQ_FCC, V9FMOVS_FCC, V9MOVFCCri, V9MOVFCCrr
-    printCCOperand(MI, 4, STI, O);
+    printCCOperand/* printCCOperand (+ ) */(MI, 4, O);
     SStream_concat0(O, " ");
-    printOperand(MI, 1, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   }
@@ -5513,17 +5530,17 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 4:
     // BPFCCANT
     SStream_concat0(O, ",a,pn ");
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 5:
     // BPFCCNT
     SStream_concat0(O, ",pn ");
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 6:
@@ -5533,19 +5550,19 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 7:
     // BPICCA
     SStream_concat0(O, ",a %icc, ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 8:
     // BPICCANT
     SStream_concat0(O, ",a,pn %icc, ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 9:
     // BPICCNT
     SStream_concat0(O, ",pn %icc, ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 10:
@@ -5555,27 +5572,27 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 11:
     // BPXCCA
     SStream_concat0(O, ",a %xcc, ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 12:
     // BPXCCANT
     SStream_concat0(O, ",a,pn %xcc, ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 13:
     // BPXCCNT
     SStream_concat0(O, ",pn %xcc, ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 14:
     // CASAasi10
     SStream_concat0(O, "] 10, ");
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 15:
@@ -5589,9 +5606,9 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 17:
     // FMOVD_FCC, FMOVQ_FCC, FMOVS_FCC, MOVFCCri, MOVFCCrr
     SStream_concat0(O, " %fcc0, ");
-    printOperand(MI, 1, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 18:
@@ -5617,30 +5634,30 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // ADJCALLSTACKDOWN, BPGEZapn, BPGEZapt, BPGEZnapn, BPGEZnapt, BPGZapn, B...
-    printOperand(MI, 1, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     break;
   case 1:
     // SET, BCOND, BCONDA, BPICC, BPXCC, CBCOND, CBCONDA, FABSD, FABSQ, FABSS...
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     break;
   case 2:
     // ADDCCri, ADDCCrr, ADDCri, ADDCrr, ADDEri, ADDErr, ADDXC, ADDXCCC, ADDX...
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     break;
   case 3:
     // CASArr
-    printOperand(MI, 4, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 4, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 4:
     // LDArr, LDDArr, LDDFArr, LDFArr, LDQFArr, LDSBArr, LDSHArr, LDSTUBArr, ...
-    printOperand(MI, 3, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     break;
   }
 
@@ -5664,7 +5681,7 @@ static void printInstruction(MCInst *MI, SStream *O) {
   case 3:
     // TICCri, TICCrr, TRAPri, TRAPrr, TXCCri, TXCCrr
     SStream_concat0(O, " + ");
-    printOperand(MI, 1, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 1, O);
     return;
     break;
   case 4:
@@ -5685,17 +5702,17 @@ static void printInstruction(MCInst *MI, SStream *O) {
   default: llvm_unreachable("Invalid command number.");
   case 0:
     // FLCMPD, FLCMPS, V9FCMPD, V9FCMPED, V9FCMPEQ, V9FCMPES, V9FCMPQ, V9FCMP...
-    printOperand(MI, 2, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 2, O);
     return;
     break;
   case 1:
     // FMOVD_ICC, FMOVD_XCC, FMOVQ_ICC, FMOVQ_XCC, FMOVS_ICC, FMOVS_XCC, LDAr...
-    printOperand(MI, 0, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 0, O);
     return;
     break;
   case 2:
     // TLS_ADDXrr, TLS_ADDrr, TLS_LDXrr, TLS_LDrr
-    printOperand(MI, 3, STI, O);
+    printOperand/* printOperand (+ ) */(MI, 3, O);
     return;
     break;
   }
@@ -5882,23 +5899,23 @@ const char *getRegisterName(unsigned RegNo) {
 };
 
   static const uint16_t RegAsmOffset[] = {
-    598, 630, 654, 685, 697, 678, 682, 693, 585, 663, 643, 698, 609, 581,
-    689, 638, 647, 589, 594, 616, 702, 650, 623, 705, 136, 205, 258, 321,
-    372, 435, 486, 537, 576, 8, 82, 149, 218, 271, 334, 385, 448, 499,
-    550, 22, 96, 163, 232, 285, 348, 399, 462, 513, 564, 36, 110, 56,
-    118, 187, 240, 303, 354, 417, 468, 531, 570, 0, 74, 141, 210, 263,
-    326, 377, 440, 491, 542, 14, 88, 155, 224, 277, 340, 391, 454, 505,
-    556, 28, 102, 59, 190, 306, 420, 534, 4, 145, 267, 381, 495, 18,
-    159, 281, 395, 509, 32, 169, 291, 405, 519, 42, 173, 295, 409, 523,
-    46, 177, 299, 413, 527, 50, 181, 59, 121, 190, 243, 306, 357, 420,
-    471, 534, 573, 4, 78, 145, 214, 267, 330, 381, 444, 495, 546, 18,
-    92, 159, 228, 281, 344, 395, 458, 509, 560, 32, 106, 54, 116, 185,
-    238, 62, 124, 193, 246, 309, 360, 423, 474, 65, 127, 196, 249, 312,
-    363, 672, 477, 68, 130, 199, 252, 315, 366, 429, 480, 71, 133, 202,
-    255, 318, 369, 675, 483, 59, 306, 534, 145, 381, 18, 281, 509, 169,
-    405, 42, 295, 523, 177, 413, 50, 56, 187, 303, 417, 531, 0, 141,
-    263, 377, 491, 14, 155, 277, 391, 505, 28, 62, 193, 309, 423, 65,
-    196, 312, 426, 68, 199, 315, 429, 71, 202, 318, 432,
+    598, 630, 654, 685, 697, 678, 682, 693, 585, 663, 643, 698, 609, 581, 
+    689, 638, 647, 589, 594, 616, 702, 650, 623, 705, 136, 205, 258, 321, 
+    372, 435, 486, 537, 576, 8, 82, 149, 218, 271, 334, 385, 448, 499, 
+    550, 22, 96, 163, 232, 285, 348, 399, 462, 513, 564, 36, 110, 56, 
+    118, 187, 240, 303, 354, 417, 468, 531, 570, 0, 74, 141, 210, 263, 
+    326, 377, 440, 491, 542, 14, 88, 155, 224, 277, 340, 391, 454, 505, 
+    556, 28, 102, 59, 190, 306, 420, 534, 4, 145, 267, 381, 495, 18, 
+    159, 281, 395, 509, 32, 169, 291, 405, 519, 42, 173, 295, 409, 523, 
+    46, 177, 299, 413, 527, 50, 181, 59, 121, 190, 243, 306, 357, 420, 
+    471, 534, 573, 4, 78, 145, 214, 267, 330, 381, 444, 495, 546, 18, 
+    92, 159, 228, 281, 344, 395, 458, 509, 560, 32, 106, 54, 116, 185, 
+    238, 62, 124, 193, 246, 309, 360, 423, 474, 65, 127, 196, 249, 312, 
+    363, 672, 477, 68, 130, 199, 252, 315, 366, 429, 480, 71, 133, 202, 
+    255, 318, 369, 675, 483, 59, 306, 534, 145, 381, 18, 281, 509, 169, 
+    405, 42, 295, 523, 177, 413, 50, 56, 187, 303, 417, 531, 0, 141, 
+    263, 377, 491, 14, 155, 277, 391, 505, 28, 62, 193, 309, 423, 65, 
+    196, 312, 426, 68, 199, 315, 429, 71, 202, 318, 432, 
   };
 
   assert (*(AsmStrs+RegAsmOffset[RegNo-1]) &&
@@ -6678,162 +6695,162 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
     // (BPFCCANT brtarget:$imm, 8, FCCRegs:$cc) - 64
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 0, FCCRegs:$cc) - 68
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 7, FCCRegs:$cc) - 72
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 6, FCCRegs:$cc) - 76
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 5, FCCRegs:$cc) - 80
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 4, FCCRegs:$cc) - 84
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 3, FCCRegs:$cc) - 88
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 2, FCCRegs:$cc) - 92
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 1, FCCRegs:$cc) - 96
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 9, FCCRegs:$cc) - 100
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 10, FCCRegs:$cc) - 104
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 11, FCCRegs:$cc) - 108
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 12, FCCRegs:$cc) - 112
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 13, FCCRegs:$cc) - 116
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 14, FCCRegs:$cc) - 120
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCANT brtarget:$imm, 15, FCCRegs:$cc) - 124
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 8, FCCRegs:$cc) - 128
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 0, FCCRegs:$cc) - 132
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 7, FCCRegs:$cc) - 136
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 6, FCCRegs:$cc) - 140
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 5, FCCRegs:$cc) - 144
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 4, FCCRegs:$cc) - 148
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 3, FCCRegs:$cc) - 152
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 2, FCCRegs:$cc) - 156
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 1, FCCRegs:$cc) - 160
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 9, FCCRegs:$cc) - 164
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 10, FCCRegs:$cc) - 168
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 11, FCCRegs:$cc) - 172
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 12, FCCRegs:$cc) - 176
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 13, FCCRegs:$cc) - 180
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 14, FCCRegs:$cc) - 184
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPFCCNT brtarget:$imm, 15, FCCRegs:$cc) - 188
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (BPICCANT brtarget:$imm, 8) - 192
     {AliasPatternCond_K_Ignore, 0},
@@ -7060,2385 +7077,2385 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 8) - 352
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 0) - 357
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 9) - 362
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 1) - 367
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 10) - 372
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 2) - 377
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 11) - 382
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 3) - 387
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 12) - 392
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 4) - 397
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 13) - 402
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 5) - 407
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 14) - 412
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 6) - 417
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 15) - 422
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_ICC DFPRegs:$rd, DFPRegs:$rs2, 7) - 427
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 8) - 432
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 0) - 436
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 9) - 440
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 1) - 444
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 10) - 448
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 2) - 452
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 11) - 456
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 3) - 460
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 12) - 464
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 4) - 468
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 13) - 472
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 5) - 476
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 14) - 480
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 6) - 484
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 15) - 488
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (FMOVD_XCC DFPRegs:$rd, DFPRegs:$rs2, 7) - 492
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 8) - 496
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 0) - 501
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 9) - 506
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 1) - 511
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 10) - 516
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 2) - 521
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 11) - 526
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 3) - 531
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 12) - 536
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 4) - 541
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 13) - 546
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 5) - 551
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 14) - 556
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 6) - 561
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 15) - 566
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_ICC QFPRegs:$rd, QFPRegs:$rs2, 7) - 571
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 8) - 576
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 0) - 580
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 9) - 584
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 1) - 588
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 10) - 592
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 2) - 596
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 11) - 600
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 3) - 604
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 12) - 608
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 4) - 612
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 13) - 616
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 5) - 620
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 14) - 624
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 6) - 628
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 15) - 632
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (FMOVQ_XCC QFPRegs:$rd, QFPRegs:$rs2, 7) - 636
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 8) - 640
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 0) - 645
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 9) - 650
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 1) - 655
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 10) - 660
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 2) - 665
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 11) - 670
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 3) - 675
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 12) - 680
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 4) - 685
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 13) - 690
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 5) - 695
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 14) - 700
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 6) - 705
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 15) - 710
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_ICC FPRegs:$rd, FPRegs:$rs2, 7) - 715
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 8) - 720
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 0) - 724
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 9) - 728
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 1) - 732
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 10) - 736
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 2) - 740
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 11) - 744
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 3) - 748
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 12) - 752
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 4) - 756
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 13) - 760
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 5) - 764
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 14) - 768
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 6) - 772
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 15) - 776
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (FMOVS_XCC FPRegs:$rd, FPRegs:$rs2, 7) - 780
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 8) - 784
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 0) - 789
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 9) - 794
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 1) - 799
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 10) - 804
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 2) - 809
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 11) - 814
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 3) - 819
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 12) - 824
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 4) - 829
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 13) - 834
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 5) - 839
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 14) - 844
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 6) - 849
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 15) - 854
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCri IntRegs:$rd, i32imm:$simm11, 7) - 859
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 8) - 864
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 0) - 869
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 9) - 874
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 1) - 879
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 10) - 884
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 2) - 889
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 11) - 894
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 3) - 899
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 12) - 904
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 4) - 909
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 13) - 914
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 5) - 919
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 14) - 924
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 6) - 929
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 15) - 934
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVICCrr IntRegs:$rd, IntRegs:$rs2, 7) - 939
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 8) - 944
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 0) - 948
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 9) - 952
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 1) - 956
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 10) - 960
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 2) - 964
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 11) - 968
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 3) - 972
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 12) - 976
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 4) - 980
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 13) - 984
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 5) - 988
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 14) - 992
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 6) - 996
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 15) - 1000
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (MOVXCCri IntRegs:$rd, i32imm:$simm11, 7) - 1004
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 8) - 1008
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 0) - 1012
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 9) - 1016
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 1) - 1020
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 10) - 1024
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 2) - 1028
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 11) - 1032
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 3) - 1036
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 12) - 1040
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 4) - 1044
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 13) - 1048
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 5) - 1052
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 14) - 1056
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 6) - 1060
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 15) - 1064
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (MOVXCCrr IntRegs:$rd, IntRegs:$rs2, 7) - 1068
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (ORCCrr G0, IntRegs:$rs2, G0) - 1072
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
     // (ORri IntRegs:$rd, G0, i32imm:$simm13) - 1075
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
     // (ORrr IntRegs:$rd, G0, IntRegs:$rs2) - 1077
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     // (RESTORErr G0, G0, G0) - 1080
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     // (RET 8) - 1083
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (RETL 8) - 1084
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (SAVErr G0, G0, G0) - 1085
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     // (TICCri G0, i32imm:$imm, 8) - 1088
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 8) - 1092
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 0) - 1096
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 0) - 1100
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 9) - 1104
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 9) - 1108
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 1) - 1112
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 1) - 1116
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 10) - 1120
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 10) - 1124
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 2) - 1128
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 2) - 1132
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 11) - 1136
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 11) - 1140
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 3) - 1144
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 3) - 1148
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 12) - 1152
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 12) - 1156
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 4) - 1160
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 4) - 1164
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 13) - 1168
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 13) - 1172
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 5) - 1176
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 5) - 1180
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 14) - 1184
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 14) - 1188
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 6) - 1192
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 6) - 1196
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 15) - 1200
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 15) - 1204
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri G0, i32imm:$imm, 7) - 1208
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCri IntRegs:$rs1, i32imm:$imm, 7) - 1212
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 8) - 1216
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 8) - 1220
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 0) - 1224
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 0) - 1228
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 9) - 1232
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 9) - 1236
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 1) - 1240
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 1) - 1244
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 10) - 1248
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 10) - 1252
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 2) - 1256
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 2) - 1260
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 11) - 1264
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 11) - 1268
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 3) - 1272
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 3) - 1276
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 12) - 1280
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 12) - 1284
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 4) - 1288
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 4) - 1292
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 13) - 1296
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 13) - 1300
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 5) - 1304
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 5) - 1308
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 14) - 1312
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 14) - 1316
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 6) - 1320
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 6) - 1324
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 15) - 1328
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 15) - 1332
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr G0, IntRegs:$rs2, 7) - 1336
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TICCrr IntRegs:$rs1, IntRegs:$rs2, 7) - 1340
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TRAPri G0, i32imm:$imm, 8) - 1344
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 8) - 1347
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (TRAPri G0, i32imm:$imm, 0) - 1350
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 0) - 1353
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (TRAPri G0, i32imm:$imm, 9) - 1356
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 9) - 1359
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (TRAPri G0, i32imm:$imm, 1) - 1362
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 1) - 1365
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (TRAPri G0, i32imm:$imm, 10) - 1368
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 10) - 1371
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (TRAPri G0, i32imm:$imm, 2) - 1374
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 2) - 1377
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (TRAPri G0, i32imm:$imm, 11) - 1380
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 11) - 1383
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (TRAPri G0, i32imm:$imm, 3) - 1386
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 3) - 1389
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (TRAPri G0, i32imm:$imm, 12) - 1392
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 12) - 1395
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (TRAPri G0, i32imm:$imm, 4) - 1398
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 4) - 1401
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (TRAPri G0, i32imm:$imm, 13) - 1404
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 13) - 1407
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (TRAPri G0, i32imm:$imm, 5) - 1410
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 5) - 1413
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (TRAPri G0, i32imm:$imm, 14) - 1416
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 14) - 1419
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (TRAPri G0, i32imm:$imm, 6) - 1422
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 6) - 1425
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (TRAPri G0, i32imm:$imm, 15) - 1428
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 15) - 1431
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (TRAPri G0, i32imm:$imm, 7) - 1434
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (TRAPri IntRegs:$rs1, i32imm:$imm, 7) - 1437
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (TRAPrr G0, IntRegs:$rs1, 8) - 1440
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 8) - 1443
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     // (TRAPrr G0, IntRegs:$rs1, 0) - 1446
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 0) - 1449
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     // (TRAPrr G0, IntRegs:$rs1, 9) - 1452
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 9) - 1455
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     // (TRAPrr G0, IntRegs:$rs1, 1) - 1458
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 1) - 1461
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     // (TRAPrr G0, IntRegs:$rs1, 10) - 1464
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 10) - 1467
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     // (TRAPrr G0, IntRegs:$rs1, 2) - 1470
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 2) - 1473
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     // (TRAPrr G0, IntRegs:$rs1, 11) - 1476
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 11) - 1479
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     // (TRAPrr G0, IntRegs:$rs1, 3) - 1482
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 3) - 1485
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     // (TRAPrr G0, IntRegs:$rs1, 12) - 1488
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 12) - 1491
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     // (TRAPrr G0, IntRegs:$rs1, 4) - 1494
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 4) - 1497
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     // (TRAPrr G0, IntRegs:$rs1, 13) - 1500
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 13) - 1503
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     // (TRAPrr G0, IntRegs:$rs1, 5) - 1506
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 5) - 1509
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     // (TRAPrr G0, IntRegs:$rs1, 14) - 1512
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 14) - 1515
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     // (TRAPrr G0, IntRegs:$rs1, 6) - 1518
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 6) - 1521
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     // (TRAPrr G0, IntRegs:$rs1, 15) - 1524
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 15) - 1527
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     // (TRAPrr G0, IntRegs:$rs1, 7) - 1530
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (TRAPrr IntRegs:$rs1, IntRegs:$rs2, 7) - 1533
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     // (TXCCri G0, i32imm:$imm, 8) - 1536
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 8) - 1540
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 0) - 1544
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 0) - 1548
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 9) - 1552
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 9) - 1556
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 1) - 1560
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 1) - 1564
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 10) - 1568
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 10) - 1572
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 2) - 1576
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 2) - 1580
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 11) - 1584
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 11) - 1588
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 3) - 1592
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 3) - 1596
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 12) - 1600
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 12) - 1604
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 4) - 1608
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 4) - 1612
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 13) - 1616
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 13) - 1620
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 5) - 1624
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 5) - 1628
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 14) - 1632
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 14) - 1636
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 6) - 1640
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 6) - 1644
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 15) - 1648
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 15) - 1652
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri G0, i32imm:$imm, 7) - 1656
-    {AliasPatternCond_K_Reg, Sparc_G0},
+    {AliasPatternCond_K_Reg, SP_G0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCri IntRegs:$rs1, i32imm:$imm, 7) - 1660
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 8) - 1664
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 8) - 1668
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 0) - 1672
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 0) - 1676
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 9) - 1680
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 9) - 1684
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 1) - 1688
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 1) - 1692
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 10) - 1696
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 10) - 1700
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 2) - 1704
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 2) - 1708
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 11) - 1712
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 11) - 1716
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 3) - 1720
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 3) - 1724
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 12) - 1728
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 12) - 1732
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 4) - 1736
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 4) - 1740
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 13) - 1744
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 13) - 1748
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 5) - 1752
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 5) - 1756
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 14) - 1760
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 14) - 1764
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 6) - 1768
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 6) - 1772
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 15) - 1776
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 15) - 1780
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr G0, IntRegs:$rs2, 7) - 1784
-    {AliasPatternCond_K_Reg, Sparc_G0},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_G0},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (TXCCrr IntRegs:$rs1, IntRegs:$rs2, 7) - 1788
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FCMPD FCC0, DFPRegs:$rs1, DFPRegs:$rs2) - 1792
-    {AliasPatternCond_K_Reg, Sparc_FCC0},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_FCC0},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     // (V9FCMPED FCC0, DFPRegs:$rs1, DFPRegs:$rs2) - 1795
-    {AliasPatternCond_K_Reg, Sparc_FCC0},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_FCC0},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     // (V9FCMPEQ FCC0, QFPRegs:$rs1, QFPRegs:$rs2) - 1798
-    {AliasPatternCond_K_Reg, Sparc_FCC0},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_FCC0},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     // (V9FCMPES FCC0, FPRegs:$rs1, FPRegs:$rs2) - 1801
-    {AliasPatternCond_K_Reg, Sparc_FCC0},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_FCC0},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     // (V9FCMPQ FCC0, QFPRegs:$rs1, QFPRegs:$rs2) - 1804
-    {AliasPatternCond_K_Reg, Sparc_FCC0},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_FCC0},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     // (V9FCMPS FCC0, FPRegs:$rs1, FPRegs:$rs2) - 1807
-    {AliasPatternCond_K_Reg, Sparc_FCC0},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_Reg, SP_FCC0},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 8) - 1810
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 0) - 1816
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 7) - 1822
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 6) - 1828
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 5) - 1834
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 4) - 1840
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 3) - 1846
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 2) - 1852
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 1) - 1858
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 9) - 1864
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 10) - 1870
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 11) - 1876
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 12) - 1882
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 13) - 1888
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 14) - 1894
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVD_FCC DFPRegs:$rd, FCCRegs:$cc, DFPRegs:$rs2, 15) - 1900
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_DFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 8) - 1906
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 0) - 1912
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 7) - 1918
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 6) - 1924
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 5) - 1930
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 4) - 1936
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 3) - 1942
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 2) - 1948
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 1) - 1954
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 9) - 1960
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 10) - 1966
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 11) - 1972
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 12) - 1978
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 13) - 1984
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 14) - 1990
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVQ_FCC QFPRegs:$rd, FCCRegs:$cc, QFPRegs:$rs2, 15) - 1996
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_QFPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 8) - 2002
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 0) - 2008
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 7) - 2014
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 6) - 2020
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 5) - 2026
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 4) - 2032
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 3) - 2038
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 2) - 2044
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 1) - 2050
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 9) - 2056
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 10) - 2062
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 11) - 2068
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 12) - 2074
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 13) - 2080
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 14) - 2086
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9FMOVS_FCC FPRegs:$rd, FCCRegs:$cc, FPRegs:$rs2, 15) - 2092
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FPRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 8) - 2098
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 0) - 2104
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 7) - 2110
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 6) - 2116
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 5) - 2122
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 4) - 2128
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 3) - 2134
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 2) - 2140
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 1) - 2146
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 9) - 2152
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 10) - 2158
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 11) - 2164
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 12) - 2170
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 13) - 2176
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 14) - 2182
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCri IntRegs:$rd, FCCRegs:$cc, i32imm:$simm11, 15) - 2188
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 8) - 2194
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 0) - 2200
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 7) - 2206
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 6) - 2212
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 5) - 2218
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)5},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 4) - 2224
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 3) - 2230
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 2) - 2236
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 1) - 2242
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)1},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 9) - 2248
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)9},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 10) - 2254
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 11) - 2260
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)11},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 12) - 2266
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 13) - 2272
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)13},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 14) - 2278
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},
     // (V9MOVFCCrr IntRegs:$rd, FCCRegs:$cc, IntRegs:$rs2, 15) - 2284
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_FCCRegsRegClassID},
-    {AliasPatternCond_K_RegClass, Sparc_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_FCCRegsRegClassID},
+    {AliasPatternCond_K_RegClass, SP_IntRegsRegClassID},
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_Feature, Sparc_FeatureV9},

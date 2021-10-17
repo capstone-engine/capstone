@@ -37,8 +37,8 @@
 
 /* When we specify the RISCV64 mode, It means It is RV64IMAFD.
   Similar, RISCV32 means RV32IMAFD.
-*/
-static uint64_t getFeatureBits(int mode) 
+//*/
+static uint64_t getFeatureBits(int mode)
 {
 	uint64_t ret = RISCV_FeatureStdExtM | RISCV_FeatureStdExtA |
 		       RISCV_FeatureStdExtF | RISCV_FeatureStdExtD ;
@@ -51,7 +51,30 @@ static uint64_t getFeatureBits(int mode)
 	return ret;
 }
 
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) ;
+
 #include "CapstoneRISCVModule.h"
+
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) {
+  switch (Feature) {
+  case RISCV_FeatureStdExtM:
+  case RISCV_FeatureStdExtA:
+  case RISCV_FeatureStdExtF:
+  case RISCV_FeatureStdExtD:
+    return Require;
+  case RISCV_Feature64Bit: // In no case should we simplify this branch, since 'bool' here is a dummy macro
+    if(Bits & CS_MODE_RISCV64)
+      return Require;
+    else
+      return !Require;
+  case RISCV_FeatureStdExtC:
+    if(Bits & CS_MODE_RISCVC)
+      return Require;
+    else
+      return !Require;
+  }
+  return Require; // return true for all other conds
+}
 
 static void init_MI_insn_detail(MCInst *MI) 
 {

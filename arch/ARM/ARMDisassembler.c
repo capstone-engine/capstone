@@ -129,7 +129,7 @@ static bool Check(DecodeStatus *Out, DecodeStatus In)
 			return false;
 	}
 }
-
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require);
 #include "CapstoneARMModule.h"
 
 // Hacky: enable all features for disassembler
@@ -169,6 +169,11 @@ bool ARM_getFeatureBits(unsigned int mode, unsigned int feature)
 
 	// we support everything
 	return true;
+}
+
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) {
+    // extended from original arm module
+    return ARM_getFeatureBits(Bits, Feature) == Require;
 }
 
 static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,

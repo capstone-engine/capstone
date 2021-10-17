@@ -1,6 +1,8 @@
 #include "../../MCInst.h"
 #include "../../LEB128.h"
 
+#include "../../sync/logger.h"
+
 
 #define Mips_FeatureAbs2008 0ULL
 #define Mips_FeatureCRC 1ULL
@@ -7459,241 +7461,240 @@ static bool getbool(uint64_t b)
 	return b != 0;
 }
 static bool checkDecoderPredicate(unsigned Idx, uint64_t Bits) {
-  switch (Idx) {
-  default: llvm_unreachable("Invalid index!");
-  case 0:
-    return getbool((Bits & Mips_FeatureMips16));
-  case 1:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureCnMips) && !(Bits & Mips_FeatureMicroMips));
-  case 2:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureCnMips) && !(Bits & Mips_FeatureMicroMips));
-  case 3:
-    return getbool((Bits & Mips_FeatureCnMips));
-  case 4:
-    return getbool((Bits & Mips_FeatureMips64) && (Bits & Mips_FeatureCnMips) && !(Bits & Mips_FeatureMicroMips));
-  case 5:
-    return getbool((Bits & Mips_FeatureCnMipsP));
-  case 6:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureMips32r6));
-  case 7:
-    return getbool((Bits & Mips_FeatureMicroMips));
-  case 8:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureDSP));
-  case 9:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureDSPR2));
-  case 10:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureMips32r5) && (Bits & Mips_FeatureVirt));
-  case 11:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureDSPR3));
-  case 12:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureMips32r6) && (Bits & Mips_FeatureDSP));
-  case 13:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat));
-  case 14:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureNoMadd4));
-  case 15:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat));
-  case 16:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureNoMadd4));
-  case 17:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat));
-  case 18:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureSoftFloat));
-  case 19:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureSoftFloat));
-  case 20:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureSoftFloat));
-  case 21:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureEVA));
-  case 22:
-    return getbool((Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureMips32r6) && (Bits & Mips_FeatureEVA));
-  case 23:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat));
-  case 24:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureMips32r6));
-  case 25:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureMips32r6) && (Bits & Mips_FeatureGINV));
-  case 26:
-    return getbool((Bits & Mips_FeatureMicroMips) && (Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat));
-  case 27:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMicroMips));
-  case 28:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMicroMips));
-  case 29:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips4_32) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 30:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMSA));
-  case 31:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 32:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6));
-  case 33:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureUseIndirectJumpsHazard));
-  case 34:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32));
-  case 35:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips4_32) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 36:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureMicroMips));
-  case 37:
-    return getbool((Bits & Mips_FeatureDSP));
-  case 38:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMSA) && (Bits & Mips_FeatureMips64));
-  case 39:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 40:
-    return getbool((Bits & Mips_FeatureDSP) && !(Bits & Mips_FeatureMicroMips));
-  case 41:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r5) && (Bits & Mips_FeatureVirt) && !(Bits & Mips_FeatureMicroMips));
-  case 42:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMT) && !(Bits & Mips_FeatureMicroMips));
-  case 43:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips3_32) && !(Bits & Mips_FeatureMicroMips));
-  case 44:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r2) && (Bits & Mips_FeatureEVA) && !(Bits & Mips_FeatureMicroMips));
-  case 45:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r5) && !(Bits & Mips_FeatureMicroMips));
-  case 46:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMicroMips));
-  case 47:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 48:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips3) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 49:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 50:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 51:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 52:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 53:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureSoftFloat));
-  case 54:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 55:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 56:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips3_32r2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 57:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 58:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 59:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 60:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 61:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat));
-  case 62:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 63:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips5_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 64:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureNoMadd4));
-  case 65:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureNoMadd4));
-  case 66:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureNoMadd4) && !(Bits & Mips_FeatureMicroMips));
-  case 67:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureNoMadd4) && !(Bits & Mips_FeatureMicroMips));
-  case 68:
-    printf("bits %p\n", ((unsigned)Bits));
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 69:
-    return getbool((Bits & Mips_FeatureDSPR2));
-  case 70:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && (Bits & Mips_FeatureEVA) && !(Bits & Mips_FeatureMicroMips));
-  case 71:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips3_32) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 72:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeaturePTR64Bit) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 73:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeaturePTR64Bit) && !(Bits & Mips_FeatureMicroMips));
-  case 74:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeaturePTR64Bit) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 75:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r6));
-  case 76:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMicroMips));
-  case 77:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 78:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeatureGP64Bit) && (Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMicroMips));
-  case 79:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 80:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r6) && (Bits & Mips_FeatureCRC) && !(Bits & Mips_FeatureMicroMips));
-  case 81:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips64r6) && (Bits & Mips_FeatureCRC) && !(Bits & Mips_FeatureMicroMips));
-  case 82:
-    return getbool(!(Bits & Mips_FeatureMips16) && !(Bits & Mips_FeaturePTR64Bit) && (Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMicroMips));
-  case 83:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips32r6) && (Bits & Mips_FeatureGINV) && !(Bits & Mips_FeatureMicroMips));
-  case 84:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips64r6));
-  case 85:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureGP64Bit) && (Bits & Mips_FeatureMips64r6));
-  case 86:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureGP64Bit) && (Bits & Mips_FeatureMips32r6));
-  case 87:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeaturePTR64Bit) && (Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 88:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips64) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 89:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeaturePTR64Bit));
-  case 90:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips64r2) && !(Bits & Mips_FeatureMicroMips));
-  case 91:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips3) && !(Bits & Mips_FeatureMicroMips));
-  case 92:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips3) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 93:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureGP64Bit) && (Bits & Mips_FeatureMips3));
-  case 94:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips64r5) && (Bits & Mips_FeatureVirt));
-  case 95:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureMips3) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6));
-  case 96:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureGP64Bit) && (Bits & Mips_FeatureMips64) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureMicroMips));
-  case 97:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureDSP));
-  case 98:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 99:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 100:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 101:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 102:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips3_32) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 103:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 104:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 105:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && (Bits & Mips_FeatureMips3D));
-  case 106:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips3_32r2) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 107:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 108:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat));
-  case 109:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips5_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips));
-  case 110:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureMicroMips) && !(Bits & Mips_FeatureNoMadd4));
-  case 111:
-    return getbool(!(Bits & Mips_FeatureMips16) && (Bits & Mips_FeatureFP64Bit) && (Bits & Mips_FeatureMips4_32r2) && !(Bits & Mips_FeatureMips32r6) && !(Bits & Mips_FeatureMips64r6) && !(Bits & Mips_FeatureSoftFloat) && !(Bits & Mips_FeatureNoMadd4) && !(Bits & Mips_FeatureMicroMips));
-  }
+    switch (Idx) {
+        default: llvm_unreachable("Invalid index!");
+        case 0:
+            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 1));
+            case 1:
+                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureCnMips, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                case 2:
+                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureCnMips, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                    case 3:
+                        return getbool(checkFeatureRequired(Bits, Mips_FeatureCnMips, 1));
+                        case 4:
+                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips64, 1) && checkFeatureRequired(Bits, Mips_FeatureCnMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                            case 5:
+                                return getbool(checkFeatureRequired(Bits, Mips_FeatureCnMipsP, 1));
+                                case 6:
+                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0));
+                                    case 7:
+                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1));
+                                        case 8:
+                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureDSP, 1));
+                                            case 9:
+                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureDSPR2, 1));
+                                                case 10:
+                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r5, 1) && checkFeatureRequired(Bits, Mips_FeatureVirt, 1));
+                                                    case 11:
+                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureDSPR3, 1));
+                                                        case 12:
+                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureDSP, 1));
+                                                            case 13:
+                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                case 14:
+                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0));
+                                                                    case 15:
+                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                        case 16:
+                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0));
+                                                                            case 17:
+                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                case 18:
+                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                    case 19:
+                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                        case 20:
+                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                            case 21:
+                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureEVA, 1));
+                                                                                                case 22:
+                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureEVA, 1));
+                                                                                                    case 23:
+                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                                        case 24:
+                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1));
+                                                                                                            case 25:
+                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureGINV, 1));
+                                                                                                                case 26:
+                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMicroMips, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                                                    case 27:
+                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                        case 28:
+                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                            case 29:
+                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                case 30:
+                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMSA, 1));
+                                                                                                                                    case 31:
+                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                        case 32:
+                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0));
+                                                                                                                                            case 33:
+                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0) && checkFeatureRequired(Bits, Mips_FeatureUseIndirectJumpsHazard, 0));
+                                                                                                                                                case 34:
+                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32, 1));
+                                                                                                                                                    case 35:
+                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                        case 36:
+                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                            case 37:
+                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureDSP, 1));
+                                                                                                                                                                case 38:
+                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMSA, 1) && checkFeatureRequired(Bits, Mips_FeatureMips64, 1));
+                                                                                                                                                                    case 39:
+                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                        case 40:
+                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureDSP, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                            case 41:
+                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r5, 1) && checkFeatureRequired(Bits, Mips_FeatureVirt, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                case 42:
+                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMT, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                    case 43:
+                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3_32, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                        case 44:
+                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureEVA, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                            case 45:
+                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r5, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                case 46:
+                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                    case 47:
+                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                        case 48:
+                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                            case 49:
+                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                case 50:
+                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                    case 51:
+                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                        case 52:
+                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                            case 53:
+                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                                                                                                                                                                case 54:
+                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                    case 55:
+                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                        case 56:
+                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                            case 57:
+                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                case 58:
+                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                    case 59:
+                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                        case 60:
+                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                            case 61:
+                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                                                                                                                                                                                                case 62:
+                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                    case 63:
+                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips5_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                        case 64:
+                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0));
+                                                                                                                                                                                                                                                                            case 65:
+                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0));
+                                                                                                                                                                                                                                                                                case 66:
+                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                    case 67:
+                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                        case 68:
+                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                            case 69:
+                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureDSPR2, 1));
+                                                                                                                                                                                                                                                                                                case 70:
+                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureEVA, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                    case 71:
+                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3_32, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                        case 72:
+                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeaturePTR64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                            case 73:
+                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeaturePTR64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                case 74:
+                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeaturePTR64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                    case 75:
+                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1));
+                                                                                                                                                                                                                                                                                                                        case 76:
+                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                            case 77:
+                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                case 78:
+                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureGP64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                    case 79:
+                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                        case 80:
+                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureCRC, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                            case 81:
+                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 1) && checkFeatureRequired(Bits, Mips_FeatureCRC, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                case 82:
+                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeaturePTR64Bit, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                    case 83:
+                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1) && checkFeatureRequired(Bits, Mips_FeatureGINV, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                        case 84:
+                                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 1));
+                                                                                                                                                                                                                                                                                                                                                            case 85:
+                                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureGP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 1));
+                                                                                                                                                                                                                                                                                                                                                                case 86:
+                                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureGP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 1));
+                                                                                                                                                                                                                                                                                                                                                                    case 87:
+                                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeaturePTR64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                        case 88:
+                                                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64, 1) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                            case 89:
+                                                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeaturePTR64Bit, 1));
+                                                                                                                                                                                                                                                                                                                                                                                case 90:
+                                                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                    case 91:
+                                                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3, 1) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                        case 92:
+                                                                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                            case 93:
+                                                                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureGP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips3, 1));
+                                                                                                                                                                                                                                                                                                                                                                                                case 94:
+                                                                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r5, 1) && checkFeatureRequired(Bits, Mips_FeatureVirt, 1));
+                                                                                                                                                                                                                                                                                                                                                                                                    case 95:
+                                                                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                        case 96:
+                                                                                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureGP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips64, 1) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                            case 97:
+                                                                                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureDSP, 1));
+                                                                                                                                                                                                                                                                                                                                                                                                                case 98:
+                                                                                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                    case 99:
+                                                                                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                        case 100:
+                                                                                                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                            case 101:
+                                                                                                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                case 102:
+                                                                                                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips3_32, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                    case 103:
+                                                                                                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips4_32, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                        case 104:
+                                                                                                                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                            case 105:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMips3D, 1));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                case 106:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips3_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    case 107:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        case 108:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            case 109:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips5_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                case 110:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    case 111:
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        return getbool(checkFeatureRequired(Bits, Mips_FeatureMips16, 0) && checkFeatureRequired(Bits, Mips_FeatureFP64Bit, 1) && checkFeatureRequired(Bits, Mips_FeatureMips4_32r2, 1) && checkFeatureRequired(Bits, Mips_FeatureMips32r6, 0) && checkFeatureRequired(Bits, Mips_FeatureMips64r6, 0) && checkFeatureRequired(Bits, Mips_FeatureSoftFloat, 0) && checkFeatureRequired(Bits, Mips_FeatureNoMadd4, 0) && checkFeatureRequired(Bits, Mips_FeatureMicroMips, 0));
+    }
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
                 uint64_t Address, void *Decoder) {\
   InsnType tmp;\
-  printf("idx %d\n", Idx); \
+  debug("idx %d, with insn %d\n", Idx, insn); \
   switch (Idx) {\
   default: llvm_unreachable("Invalid index!");\
   case 0:\
@@ -8907,7 +8908,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S;\
   case 189:\
     if (DecodeJumpTarget(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    printf("with exit0\n");\
+    debug("with exit0\n");\
     return S;\
   case 190:\
     tmp = fieldFromInstruction(insn, 21, 5);\
@@ -10395,7 +10396,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
   uint32_t CurFieldValue = 0; \
   DecodeStatus S = MCDisassembler_Success; \
   while (true) { \
-  printf("test %d %d loc %d\n", *Ptr, CurFieldValue, (unsigned) Ptr - (unsigned) DecodeTable); \
+  debug("test %d %d loc %d\n", *Ptr, CurFieldValue, (unsigned) Ptr - (unsigned) DecodeTable); \
     switch (*Ptr) { \
     default: \
       return MCDisassembler_Fail; \
@@ -10444,9 +10445,10 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
       /* Check the predicate. */ \
-      if (!(Pred = checkDecoderPredicate(PIdx, getFeatureBits(feature)))) \
+      debug("predicate here is %d with feature %d", PIdx, feature);\
+      if (!(Pred = checkDecoderPredicate(PIdx, feature))) \
         Ptr += NumToSkip; \
-		/* printf("55 PIdx = %u, Pred = %u\n", PIdx, Pred); */ \
+		/* debug("55 PIdx = %u, Pred = %u\n", PIdx, Pred); */ \
       (void)Pred; \
       break; \
     } \
@@ -10458,7 +10460,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       Ptr += Len; \
       MCInst_clear(MI); \
       MCInst_setOpcode(MI, Opc); \
-      printf("decoder into %p", decoder); \
+      debug("decoder into %p", decoder); \
       S = decoder(S, DecodeIdx, insn, MI, Address, MRI); \
       /* assert(DecodeComplete); */ \
       return S; \
@@ -15708,8 +15710,9 @@ typedef struct MCMnemonic {
 } MCMnemonic;
 
 static MCMnemonic createMnemonic(const char* first, uint64_t second) {
+    debug("creating mnemonic %s %d\n", first, second);
     MCMnemonic mnemonic;
-    mnemonic.first = first;
+    mnemonic.first = strdup(first);
     mnemonic.second = second;
     return mnemonic;
 }
@@ -22635,6 +22638,7 @@ MCMnemonic Mips_getMnemonic(const MCInst *MI) {
   uint64_t Bits = 0;
   Bits |= (uint64_t)OpInfo0[MCInst_getOpcode(MI)] << 0;
   Bits |= (uint64_t)OpInfo1[MCInst_getOpcode(MI)] << 32;
+
   return createMnemonic(AsmStrs+(Bits & 16383)-1, Bits);
 
 }
@@ -24655,6 +24659,7 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
   };
 
   const char *AsmString = MCInstPrinter_matchAliasPatterns(MI, OpToPatterns, Patterns, Conds, AsmStrings, 194);
+  debug("matching pattern result %s\n", AsmString);
   if (!AsmString) return false;
 
   char* tmpString = cs_strdup(AsmString);
@@ -24667,11 +24672,11 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
   tmpString[I] = 0;
   SStream_concat0(OS, tmpString);
 
-  SStream_concat0(OS, "\t");
-  SStream_concat0(OS, AsmString + I);
+// TODO quote this out  SStream_concat0(OS, "\t");
+//  SStream_concat0(OS, AsmString + I); why would one be interested to concat this??
   if (AsmString[I] != '\0') {
     if (AsmString[I] == ' ' || AsmString[I] == '\t') {
-      SStream_concat0(OS, "\t");
+      SStream_concat0(OS, " "); // TODO and here as blank
       ++I;
     }
     do {
@@ -24685,7 +24690,7 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
         } else
           printOperand(MI, ((unsigned)AsmString[I++]) - 1, OS);
       } else {
-        SStream_concat0(OS, AsmString + (I++));
+          SStream_concat1(OS, AsmString[I++]); // TODO and this to concat1
       }
     } while (AsmString[I] != '\0');
   }

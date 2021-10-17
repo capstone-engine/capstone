@@ -68,6 +68,25 @@ enum RoundingMode {
   	RISCVFPRndMode_Invalid
 };
 
+enum {
+  RISCVVLMUL_LMUL_1 = 0,
+  RISCVVLMUL_LMUL_2,
+  RISCVVLMUL_LMUL_4,
+  RISCVVLMUL_LMUL_8,
+  RISCVVLMUL_LMUL_RESERVED,
+  RISCVVLMUL_LMUL_F8,
+  RISCVVLMUL_LMUL_F4,
+  RISCVVLMUL_LMUL_F2
+};
+
+// Register alternate name indices
+
+enum {
+  RISCV_ABIRegAltName,	// 0
+  RISCV_NoRegAltName,	// 1
+  RISCV_NUM_TARGET_REG_ALT_NAMES = 2
+};
+
 inline static const char *roundingModeToString(enum RoundingMode RndMode) 
 {
   	switch (RndMode) {
@@ -101,6 +120,16 @@ inline static bool RISCVFPRndMode_isValidRoundingMode(unsigned Mode)
   	case RISCVFPRndMode_DYN:
     		return true;
   	}
+}
+
+inline static unsigned getVLMUL(unsigned VType) {
+  unsigned VLMUL = VType & 0x7;
+  return VLMUL;
+}
+
+inline static unsigned getVSEW(unsigned VType) {
+  unsigned VSEW = (VType >> 3) & 0x7;
+  return VSEW;
 }
 
 #endif

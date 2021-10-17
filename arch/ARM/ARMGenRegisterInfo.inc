@@ -412,69 +412,6 @@ enum {
   ARM_QQQQPR_with_dsub_4_in_DPR_8RegClassID = 101,
   ARM_QQQQPR_with_dsub_6_in_DPR_8RegClassID = 102,
 };
-
-// Subregister indices
-enum {
-  ARM_NoSubRegister,
-  ARM_dsub_0,	// 1
-  ARM_dsub_1,	// 2
-  ARM_dsub_2,	// 3
-  ARM_dsub_3,	// 4
-  ARM_dsub_4,	// 5
-  ARM_dsub_5,	// 6
-  ARM_dsub_6,	// 7
-  ARM_dsub_7,	// 8
-  ARM_gsub_0,	// 9
-  ARM_gsub_1,	// 10
-  ARM_qqsub_0,	// 11
-  ARM_qqsub_1,	// 12
-  ARM_qsub_0,	// 13
-  ARM_qsub_1,	// 14
-  ARM_qsub_2,	// 15
-  ARM_qsub_3,	// 16
-  ARM_ssub_0,	// 17
-  ARM_ssub_1,	// 18
-  ARM_ssub_2,	// 19
-  ARM_ssub_3,	// 20
-  ARM_ssub_4,	// 21
-  ARM_ssub_5,	// 22
-  ARM_ssub_6,	// 23
-  ARM_ssub_7,	// 24
-  ARM_ssub_8,	// 25
-  ARM_ssub_9,	// 26
-  ARM_ssub_10,	// 27
-  ARM_ssub_11,	// 28
-  ARM_ssub_12,	// 29
-  ARM_ssub_13,	// 30
-  ARM_dsub_7_then_ssub_0,	// 31
-  ARM_dsub_7_then_ssub_1,	// 32
-  ARM_ssub_0_ssub_1_ssub_4_ssub_5,	// 33
-  ARM_ssub_0_ssub_1_ssub_2_ssub_3_ssub_4_ssub_5,	// 34
-  ARM_ssub_2_ssub_3_ssub_6_ssub_7,	// 35
-  ARM_ssub_2_ssub_3_ssub_4_ssub_5_ssub_6_ssub_7,	// 36
-  ARM_ssub_2_ssub_3_ssub_4_ssub_5,	// 37
-  ARM_ssub_0_ssub_1_ssub_4_ssub_5_ssub_8_ssub_9,	// 38
-  ARM_ssub_0_ssub_1_ssub_4_ssub_5_ssub_8_ssub_9_ssub_12_ssub_13,	// 39
-  ARM_ssub_2_ssub_3_ssub_6_ssub_7_dsub_5,	// 40
-  ARM_ssub_2_ssub_3_ssub_6_ssub_7_dsub_5_dsub_7,	// 41
-  ARM_ssub_2_ssub_3_ssub_4_ssub_5_ssub_6_ssub_7_ssub_8_ssub_9,	// 42
-  ARM_ssub_4_ssub_5_ssub_8_ssub_9,	// 43
-  ARM_ssub_4_ssub_5_ssub_6_ssub_7_ssub_8_ssub_9,	// 44
-  ARM_ssub_4_ssub_5_ssub_8_ssub_9_ssub_12_ssub_13,	// 45
-  ARM_ssub_6_ssub_7_dsub_5,	// 46
-  ARM_ssub_6_ssub_7_ssub_8_ssub_9_dsub_5,	// 47
-  ARM_ssub_6_ssub_7_dsub_5_dsub_7,	// 48
-  ARM_ssub_6_ssub_7_ssub_8_ssub_9,	// 49
-  ARM_ssub_6_ssub_7_ssub_8_ssub_9_dsub_5_ssub_12_ssub_13,	// 50
-  ARM_ssub_8_ssub_9_ssub_12_ssub_13,	// 51
-  ARM_ssub_8_ssub_9_dsub_5_ssub_12_ssub_13,	// 52
-  ARM_dsub_5_dsub_7,	// 53
-  ARM_dsub_5_ssub_12_ssub_13_dsub_7,	// 54
-  ARM_dsub_5_ssub_12_ssub_13,	// 55
-  ARM_ssub_4_ssub_5_ssub_6_ssub_7_qsub_2,	// 56
-  ARM_NUM_TARGET_SUBREGS
-};
-
 #endif // GET_REGINFO_ENUM
 
 #ifdef GET_REGINFO_MC_DESC

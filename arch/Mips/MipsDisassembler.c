@@ -44,62 +44,101 @@
 #define GET_SUBTARGETINFO_ENUM
 //#include "MipsGenSubtargetInfo.inc"
 
+#include "../../sync/logger.h"
+
+#define UNIT ((uint64_t) 1)
+
 static unsigned getReg(const MCRegisterInfo *MRI, unsigned RC, unsigned RegNo);
-static uint64_t getFeatureBits(int mode);
+//static uint64_t getFeatureBits(int mode);
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require);
 #define GET_REGINFO_ENUM
 #define GET_REGINFO_MC_DESC
 #define GET_INSTRINFO_ENUM
 #define MIPS_GET_DISASSEMBLER
 #include "CapstoneMipsModule.h"
 
-// Hacky: enable all features for disassembler
-static uint64_t getFeatureBits(int mode)
-{
-  uint64_t Bits = (uint64_t)-1; // include every features at first
-
-  // By default we do not support Mips1
-  Bits &= ~Mips_FeatureMips1;
-
-  // No MicroMips
-  Bits &= ~Mips_FeatureMicroMips;
-
-  // ref: MipsGenDisassemblerTables.inc::checkDecoderPredicate()
-  // some features are mutually execlusive
-  if (mode & CS_MODE_16) {
-    // Bits &= ~Mips_FeatureMips32r2;
-    // Bits &= ~Mips_FeatureMips32;
-    // Bits &= ~Mips_FeatureFPIdx;
-    // Bits &= ~Mips_FeatureBitCount;
-    // Bits &= ~Mips_FeatureSwap;
-    // Bits &= ~Mips_FeatureSEInReg;
-    // Bits &= ~Mips_FeatureMips64r2;
-    // Bits &= ~Mips_FeatureFP64Bit;
-  } else if (mode & CS_MODE_32) {
-    Bits &= ~Mips_FeatureMips16;
-    Bits &= ~Mips_FeatureFP64Bit;
-    Bits &= ~Mips_FeatureMips64r2;
-    Bits &= ~Mips_FeatureMips32r6;
-    Bits &= ~Mips_FeatureMips64r6;
-  } else if (mode & CS_MODE_64) {
-    Bits &= ~Mips_FeatureMips16;
-    Bits &= ~Mips_FeatureMips64r6;
-    Bits &= ~Mips_FeatureMips32r6;
-  } else if (mode & CS_MODE_MIPS32R6) {
-    Bits |= Mips_FeatureMips32r6;
-    Bits &= ~Mips_FeatureMips16;
-    Bits &= ~Mips_FeatureFP64Bit;
-    Bits &= ~Mips_FeatureMips64r6;
-    Bits &= ~Mips_FeatureMips64r2;
-  }
-
-  if (mode & CS_MODE_MICRO) {
-    Bits |= Mips_FeatureMicroMips;
-    Bits &= ~Mips_FeatureMips4_32r2;
-    Bits &= ~Mips_FeatureMips2;
-  }
-
-  return Bits;
+/// Extract 'not' into Require, Require being '0' or 'false' means returns true when the feature is not available
+/// Also we're not using bits to represent feature anymore (for obvious reason)
+static inline unsigned checkFeatureRequired(unsigned Bits, unsigned Feature, bool Require) {
+    debugln("checking feature %d against %d %d", Feature, Bits, Require);
+//    if(Feature == Mips_FeatureFP64Bit) return true; // enables all fp instructions (32/64)
+    switch (Feature) {
+        default:
+            return true; // For arbitrary checks we always declare it true - enables all checks
+        case Mips_FeatureMips1: // Disabled features
+        case Mips_FeatureMicroMips:
+            return getbool(Bits & CS_MODE_MICRO) == Require;
+        case Mips_FeatureMips4_32r2:
+        case Mips_FeatureMips2:
+            return getbool(Bits & CS_MODE_MICRO) != Require; // these two are disabled
+        case Mips_FeatureSoftFloat: // Soft float represents no instruction
+        return !Require;
+        case Mips_FeatureMips16:
+            return getbool(Bits & CS_MODE_16) == Require;
+        case Mips_FeatureMips32r6:
+            return getbool(Bits & CS_MODE_MIPS32R6) == Require;
+        case Mips_FeatureMips64r6:
+            return getbool(Bits & (CS_MODE_16 | CS_MODE_32 | CS_MODE_MIPS32R6 | CS_MODE_64))  != Require;
+        case Mips_FeatureFP64Bit:
+            return true; // enable this feature if required
+        case Mips_FeatureMips64r2:
+            return getbool(Bits & CS_MODE_64) == Require;
+    }
+    return false; // unreachable
 }
+//
+//// Hacky: enable all features for disassembler
+//static uint64_t getFeatureBits(int mode)
+//{
+//  uint64_t Bits = (uint64_t)-1; // include every features at first
+//
+//  // By default we do not support Mips1
+//  Bits &= ~(UNIT << Mips_FeatureMips1);
+//
+//  // No MicroMips
+//  Bits &= ~(UNIT << Mips_FeatureMicroMips);
+//
+//
+//  // Disable soft float
+//  Bits &= ~(UNIT << Mips_FeatureSoftFloat);
+//
+//  // ref: MipsGenDisassemblerTables.inc::checkDecoderPredicate()
+//  // some features are mutually execlusive
+//  if (mode & CS_MODE_16) {
+//    // Bits &= ~Mips_FeatureMips32r2;
+//    // Bits &= ~Mips_FeatureMips32;
+//    // Bits &= ~Mips_FeatureFPIdx;
+//    // Bits &= ~Mips_FeatureBitCount;
+//    // Bits &= ~Mips_FeatureSwap;
+//    // Bits &= ~Mips_FeatureSEInReg;
+//    // Bits &= ~Mips_FeatureMips64r2;
+//    // Bits &= ~Mips_FeatureFP64Bit;
+//  } else if (mode & CS_MODE_32) {
+//      Bits &= ~(UNIT << Mips_FeatureMips16);
+//      Bits &= ~(UNIT << Mips_FeatureFP64Bit);
+//      Bits &= ~(UNIT << Mips_FeatureMips64r2);
+//      Bits &= ~(UNIT << Mips_FeatureMips32r6);
+//      Bits &= ~(UNIT << Mips_FeatureMips64r6);
+//  } else if (mode & CS_MODE_64) {
+//      Bits &= ~(UNIT << Mips_FeatureMips16);
+//      Bits &= ~(UNIT << Mips_FeatureMips64r6);
+//      Bits &= ~(UNIT << Mips_FeatureMips32r6);
+//  } else if (mode & CS_MODE_MIPS32R6) {
+//      Bits |= (UNIT << Mips_FeatureMips32r6);
+//      Bits &= ~(UNIT << Mips_FeatureMips16);
+//      Bits &= ~(UNIT << Mips_FeatureFP64Bit);
+//      Bits &= ~(UNIT << Mips_FeatureMips64r6);
+//      Bits &= ~(UNIT << Mips_FeatureMips64r2);
+//  }
+//
+//  if (mode & CS_MODE_MICRO) {
+//      Bits |= (UNIT << Mips_FeatureMicroMips);
+//      Bits &= ~(UNIT << Mips_FeatureMips4_32r2);
+//      Bits &= ~(UNIT << Mips_FeatureMips2);
+//  }
+//
+//  return Bits;
+//}
 
 //#define GET_REGINFO_ENUM
 //#include "MipsGenRegisterInfo.inc"
@@ -223,6 +262,7 @@ static DecodeStatus MipsDisassembler_getInstruction(
 
   if ((mode & CS_MODE_MIPS2) && ((mode & CS_MODE_MIPS3) == 0)) {
     // DEBUG(dbgs() << "Trying COP3_ table (32-bit opcodes):\n");
+      debugln("entering mips cop3");
     Result =
 	decodeInstruction(DecoderTableCOP3_32, instr, Insn, Address, MRI, mode);
     if (Result != MCDisassembler_Fail) {
