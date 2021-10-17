@@ -3,9 +3,7 @@
 //
 #include "MCInstPrinter.h"
 #include "MCInst.h"
-
-// TODO we'll need this later
-const MCRegisterInfo *MRI;
+#include "sync/logger.h"
 
 static bool MCInstPrinter_matchAliasCondition(
     const MCInst *MI, unsigned *OpIdx, const PatternsForOpcode *OpToPatterns,
@@ -80,6 +78,7 @@ const char *MCInstPrinter_matchAliasPatterns(
   // opcode.
   PatternsForOpcode *It =
       Binary_Search(OpToPatterns, MCInst_getOpcode(MI), len);
+  debugln("binary search result %p, with opcode %d", It, MCInst_getOpcode(MI));
   if (It == NULL || It->Opcode != MCInst_getOpcode(MI))
     return NULL;
 
@@ -107,8 +106,10 @@ const char *MCInstPrinter_matchAliasPatterns(
     }
   }
 
+    debugln("end matching with offset %d", AsmStrOffset);
   // If no alias matched, don't print an alias.
   if (AsmStrOffset == ~0U)
     return NULL;
-  return (const char *)(AsmStrings + AsmStrOffset);
+  debugln("string with final offset %s", (const char *)((*AsmStrings) + AsmStrOffset));
+  return (const char *)((*AsmStrings) + AsmStrOffset);
 }

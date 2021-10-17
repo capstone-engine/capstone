@@ -814,11 +814,16 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 }
 #endif
 
+#include "sync/logger.h"
+
 // dynamicly allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 CAPSTONE_EXPORT
 size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
 {
+    init_file;
+    debugln("capstone early start.. creating note file");
+    FILE* fp = fopen("/home/phosphorus/Capstone/start", "w+");
 	struct cs_struct *handle;
 	MCInst mci;
 	uint16_t insn_size;
@@ -891,8 +896,9 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		mci.flat_insn->mnemonic[0] = '\0';
 		mci.flat_insn->op_str[0] = '\0';
 #endif
-
+        debugln("trying into dissasm");
 		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
+		debug("disasm success\n");
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
@@ -904,7 +910,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
 			handle->printer(&mci, &ss, handle->printer_info);
+			debug("printer end\n");
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
+			debug("printer fill end\n");
+			debug("finialized %s - %s\n", insn_cache->mnemonic, insn_cache->op_str);
 
 			// adjust for pseudo opcode (X86)
 			if (handle->arch == CS_ARCH_X86)
@@ -1022,6 +1031,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	}
 
 	*insn = total;
+
+	debug("returning to host with %zu...\n", c);
+	if(c>0)
+	    debug("got instruction, name is %s\n", insn[0]->mnemonic);
 
 	return c;
 }

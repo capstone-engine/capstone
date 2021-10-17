@@ -9,6 +9,10 @@
 #include "capstone/platform.h"
 #include "stdlib.h"
 
+// TODO we'll need this later
+const MCRegisterInfo *MRI;
+
+
 typedef enum CondKind {
   AliasPatternCond_K_Feature,	    // Match only if a feature is enabled.
   AliasPatternCond_K_NegFeature,    // Match only if a feature is disabled.
