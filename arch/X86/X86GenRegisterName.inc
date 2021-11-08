@@ -289,4 +289,3 @@ static const char *getRegisterName(unsigned RegNo)
   return NULL;
 #endif
 }
-

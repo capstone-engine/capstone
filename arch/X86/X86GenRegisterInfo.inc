@@ -2,8 +2,9 @@
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*|*                                                                            *|
-|* Target Register Enum Values                                                 *|
+/*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
+|*                                                                            *|
+|* Target Register Enum Values                                                *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
@@ -382,10 +383,11 @@ enum {
   X86_VR512_with_sub_xmm_in_VR128HRegClassID = 84,
   X86_VR512_with_sub_xmm_in_VR128LRegClassID = 85,
 };
+
 #endif // GET_REGINFO_ENUM
 
 #ifdef GET_REGINFO_MC_DESC
-#define GET_REGINFO_MC_DESC
+#undef GET_REGINFO_MC_DESC
 
 
 static const MCPhysReg X86RegDiffLists[] = {

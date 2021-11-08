@@ -7053,6 +7053,11 @@
 	{ 0 }
 },
 
+{	/* X86_TRAP, X86_INS_UD2: ud2 */
+	0,
+	{ 0 }
+},
+
 {	/* X86_TZCNT16rm, X86_INS_TZCNT: tzcnt */
 	X86_EFLAGS_MODIFY_ZF | X86_EFLAGS_MODIFY_CF | X86_EFLAGS_UNDEFINED_OF | X86_EFLAGS_UNDEFINED_SF | X86_EFLAGS_UNDEFINED_PF | X86_EFLAGS_UNDEFINED_AF,
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
@@ -7103,17 +7108,32 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
-{	/* X86_UD0, X86_INS_UD0: ud0 */
+{	/* X86_UD1Lm, X86_INS_UD1: ud1 */
 	0,
 	{ 0 }
 },
 
-{	/* X86_UD1, X86_INS_UD1: ud1 */
+{	/* X86_UD1Lr, X86_INS_UD1: ud1 */
 	0,
 	{ 0 }
 },
 
-{	/* X86_UD2, X86_INS_UD2: ud2 */
+{	/* X86_UD1Qm, X86_INS_UD1: ud1 */
+	0,
+	{ 0 }
+},
+
+{	/* X86_UD1Qr, X86_INS_UD1: ud1 */
+	0,
+	{ 0 }
+},
+
+{	/* X86_UD1Wm, X86_INS_UD1: ud1 */
+	0,
+	{ 0 }
+},
+
+{	/* X86_UD1Wr, X86_INS_UD1: ud1 */
 	0,
 	{ 0 }
 },
