@@ -6,6 +6,14 @@ Capstone Engine
 [![pypi package](https://badge.fury.io/py/capstone.svg)](https://pypi.python.org/pypi/capstone)
 [![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
 
+----
+
+We are going to move development of Capstone to an organization, where we can add more maintainers to the project, and push Capstone forward.
+
+https://github.com/capstone-engine
+
+----
+
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
 
