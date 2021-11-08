@@ -377,7 +377,7 @@ endif
 ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
-	$(call log,LINK,$(@:$(BLDIR)/%=%))
+	$(call log,LINK,$(@:$(BLDIR)/%=%))$(EXT)
 	@$(create-library)
 else
 	$(create-library)
@@ -513,7 +513,7 @@ endif
 
 ifeq ($(CAPSTONE_SHARED),yes)
 define install-library
-	$(INSTALL_LIB) $(LIBRARY) $1
+	$(INSTALL_LIB) $(LIBRARY)$(EXT) $1
 	$(if $(VERSION_EXT),
 		cd $1 && \
 		rm -f lib$(LIBNAME).$(EXT) && \
@@ -532,7 +532,7 @@ endef
 
 
 define create-library
-	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
+	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)$(EXT)
 endef
 
 
