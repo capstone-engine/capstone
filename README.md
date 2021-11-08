@@ -8,7 +8,7 @@ Capstone Engine
 
 ----
 
-We are going to move development of Capstone to an organization, where we can add more maintainers to the project, and push Capstone forward.
+We are moving development of Capstone to an organization, where we can add more maintainers to the project, and push Capstone forward.
 
 https://github.com/capstone-engine
 
