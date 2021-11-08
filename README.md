@@ -8,9 +8,11 @@ Capstone Engine
 
 ----
 
-We are moving development of Capstone to an organization, where we can add more maintainers to the project, and push Capstone forward.
+We moved the original historical repo of Capstone from https://github.com/aquynh/capstone to an organization, where we can add more maintainers to the project, and push Capstone development forward.
 
-https://github.com/capstone-engine
+Our new home is https://github.com/capstone-engine/capstone
+
+Nov 8th, 2021.
 
 ----
 
