@@ -8,9 +8,11 @@ Capstone Engine
 
 ----
 
-We are moving development of Capstone to an organization, where we can add more maintainers to the project, and push Capstone forward.
+We moved the original historical repo of Capstone from https://github.com/aquynh/capstone to an organization, where we can add more maintainers to the project, and push Capstone development forward.
 
-https://github.com/capstone-engine
+Our new home is https://github.com/capstone-engine/capstone
+
+Nov 8th, 2021.
 
 ----
 
@@ -35,7 +37,7 @@ Capstone offers some unparalleled features:
   Ruby, C#, NodeJS, Java, GO, C++, OCaml, Lua, Rust, Delphi, Free Pascal & Vala
   (ready either in main code, or provided externally by the community).
 
-- Native support for all popular platforms: Windows, Mac OSX, iOS, Android,
+- Native support for all popular platforms: Windows, macOS, iOS, Android,
   Linux, \*BSD, Solaris, etc.
 
 - Thread-safe by design.
