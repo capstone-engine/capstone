@@ -517,7 +517,7 @@ define install-library
 	$(if $(VERSION_EXT),
 		cd $1 && \
 		rm -f lib$(LIBNAME).$(EXT) && \
-		ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME))
+		ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT))
 endef
 else
 define install-library
