@@ -382,7 +382,7 @@ ifeq ($(CAPSTONE_SHARED),yes)
 ifeq ($(IS_MINGW),1)
 LIBRARY = $(BLDIR)/$(LIBNAME).$(VERSION_EXT)
 else ifeq ($(IS_CYGWIN),1)
-LIBRARY = $(BLDIR)/$(LIBNAME).$(VERSION_EXT)
+LIBRARY = $(BLDIR)/$(LIBNAME).$(EXT)
 else	# *nix
 LIBRARY = $(BLDIR)/lib$(LIBNAME).$(VERSION_EXT)
 CFLAGS += -fvisibility=hidden
