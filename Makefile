@@ -340,7 +340,7 @@ ifeq ($(CAPSTONE_SHARED),yes)
 ifeq ($(IS_MINGW),1)
 LIBRARY = $(BLDIR)/$(LIBNAME).$(VERSION_EXT)
 else ifeq ($(IS_CYGWIN),1)
-LIBRARY = $(BLDIR)/$(LIBNAME).$(VERSION_EXT)
+LIBRARY = $(BLDIR)/$(LIBNAME).$(EXT)
 else	# *nix
 LIBRARY = $(BLDIR)/lib$(LIBNAME).$(VERSION_EXT)
 CFLAGS += -fvisibility=hidden
@@ -377,7 +377,7 @@ endif
 ifeq ($(CAPSTONE_SHARED),yes)
 $(LIBRARY): $(LIBOBJ)
 ifeq ($(V),0)
-	$(call log,LINK,$(@:$(BLDIR)/%=%))$(EXT)
+	$(call log,LINK,$(@:$(BLDIR)/%=%))
 	@$(create-library)
 else
 	$(create-library)
@@ -513,11 +513,11 @@ endif
 
 ifeq ($(CAPSTONE_SHARED),yes)
 define install-library
-	$(INSTALL_LIB) $(LIBRARY)$(EXT) $1
+	$(INSTALL_LIB) $(LIBRARY) $1
 	$(if $(VERSION_EXT),
 		cd $1 && \
 		rm -f lib$(LIBNAME).$(EXT) && \
-		ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME).$(EXT))
+		ln -s lib$(LIBNAME).$(VERSION_EXT) lib$(LIBNAME))
 endef
 else
 define install-library
@@ -532,7 +532,7 @@ endef
 
 
 define create-library
-	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)$(EXT)
+	$(CC) $(LDFLAGS) $($(LIBNAME)_LDFLAGS) $(LIBOBJ) -o $(LIBRARY)
 endef
 
 
