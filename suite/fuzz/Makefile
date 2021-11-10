@@ -31,8 +31,16 @@ FUZZLDFLAGS =
 
 LIBNAME = capstone
 
+IS_CYGWIN := $(shell $(CC) -dumpmachine 2>/dev/null | grep -i cygwin | wc -l)
+ifeq ($(IS_CYGWIN),1)
+EXT = dll
+AR_EXT = lib
+ARCHIVE = $(LIBDIR)/$(LIBNAME).$(AR_EXT)
+else
 BIN_EXT =
 AR_EXT = a
+ARCHIVE = $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
+endif
 
 
 ARCHIVE = $(LIBDIR)/lib$(LIBNAME).$(AR_EXT)
