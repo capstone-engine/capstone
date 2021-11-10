@@ -112,6 +112,7 @@ insn_list = []
 ##endif
 #},
 def print_entry(arch, insn_id, mnem, mapping, mnem_can_be_wrong):
+    #for debugging:
     #print(arch, insn_id, mnem, mnem_can_be_wrong)
     if not mnem_can_be_wrong:
         insn = "%s_INS_%s" %(arch.upper(), mnem.upper())

@@ -387,7 +387,7 @@ enum {
 #endif // GET_REGINFO_ENUM
 
 #ifdef GET_REGINFO_MC_DESC
-#undef GET_REGINFO_MC_DESC
+#define GET_REGINFO_MC_DESC
 
 
 static const MCPhysReg X86RegDiffLists[] = {
