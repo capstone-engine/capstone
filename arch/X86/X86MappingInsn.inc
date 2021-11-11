@@ -732,7 +732,7 @@
 },
 
 {
-	X86_ADD_FPrST0, X86_INS_FADD, 0,
+	X86_ADD_FPrST0, X86_INS_FADDP, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
@@ -18890,6 +18890,13 @@
 },
 
 {
+	X86_TRAP, X86_INS_UD2, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
 	X86_TST_F, X86_INS_FTST, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { X86_REG_FPSW, 0 }, { X86_GRP_FPU, 0 }, 0, 0
@@ -19121,21 +19128,42 @@
 },
 
 {
-	X86_UD0, X86_INS_UD0, 0,
+	X86_UD1Lm, X86_INS_UD1, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	X86_UD1, X86_INS_UD1, 0,
+	X86_UD1Lr, X86_INS_UD1, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	X86_UD2, X86_INS_UD2, 0,
+	X86_UD1Qm, X86_INS_UD1, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
+	X86_UD1Qr, X86_INS_UD1, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
+	X86_UD1Wm, X86_INS_UD1, 0,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+
+{
+	X86_UD1Wr, X86_INS_UD1, 0,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif

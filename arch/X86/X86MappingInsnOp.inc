@@ -523,7 +523,7 @@
 	{ CS_AC_READ, 0 }
 },
 
-{	/* X86_ADD_FPrST0, X86_INS_FADD: faddp */
+{	/* X86_ADD_FPrST0, X86_INS_FADDP: faddp */
 	X86_FPU_FLAGS_MODIFY_C1 | X86_FPU_FLAGS_UNDEFINED_C0 | X86_FPU_FLAGS_UNDEFINED_C2 | X86_FPU_FLAGS_UNDEFINED_C3,
 	{ CS_AC_READ, 0 }
 },
@@ -13493,6 +13493,11 @@
 	{ 0 }
 },
 
+{	/* X86_TRAP, X86_INS_UD2: ud2 */
+	0,
+	{ 0 }
+},
+
 {	/* X86_TST_F, X86_INS_FTST: ftst */
 	X86_FPU_FLAGS_RESET_C1 | X86_FPU_FLAGS_MODIFY_C0 | X86_FPU_FLAGS_MODIFY_C2 | X86_FPU_FLAGS_MODIFY_C3,
 	{ 0 }
@@ -13658,17 +13663,32 @@
 	{ CS_AC_READ, 0 }
 },
 
-{	/* X86_UD0, X86_INS_UD0: ud0 */
+{	/* X86_UD1Lm, X86_INS_UD1: ud1 */
 	0,
 	{ 0 }
 },
 
-{	/* X86_UD1, X86_INS_UD1: ud1 */
+{	/* X86_UD1Lr, X86_INS_UD1: ud1 */
 	0,
 	{ 0 }
 },
 
-{	/* X86_UD2, X86_INS_UD2: ud2 */
+{	/* X86_UD1Qm, X86_INS_UD1: ud1 */
+	0,
+	{ 0 }
+},
+
+{	/* X86_UD1Qr, X86_INS_UD1: ud1 */
+	0,
+	{ 0 }
+},
+
+{	/* X86_UD1Wm, X86_INS_UD1: ud1 */
+	0,
+	{ 0 }
+},
+
+{	/* X86_UD1Wr, X86_INS_UD1: ud1 */
 	0,
 	{ 0 }
 },

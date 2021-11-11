@@ -286,11 +286,10 @@
 	"t1mskc", // X86_INS_T1MSKC
 	"test", // X86_INS_TEST
 	"tpause", // X86_INS_TPAUSE
+	"ud2", // X86_INS_UD2
 	"tzcnt", // X86_INS_TZCNT
 	"tzmsk", // X86_INS_TZMSK
-	"ud0", // X86_INS_UD0
 	"ud1", // X86_INS_UD1
-	"ud2", // X86_INS_UD2
 	"umonitor", // X86_INS_UMONITOR
 	"umwait", // X86_INS_UMWAIT
 	"verr", // X86_INS_VERR

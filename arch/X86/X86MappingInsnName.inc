@@ -18,6 +18,7 @@
 	"addsubps", // X86_INS_ADDSUBPS
 	"fadd", // X86_INS_FADD
 	"fiadd", // X86_INS_FIADD
+	"faddp", // X86_INS_FADDP
 	"adox", // X86_INS_ADOX
 	"aesdeclast", // X86_INS_AESDECLAST
 	"aesdec", // X86_INS_AESDEC
@@ -737,6 +738,7 @@
 	"t1mskc", // X86_INS_T1MSKC
 	"test", // X86_INS_TEST
 	"tpause", // X86_INS_TPAUSE
+	"ud2", // X86_INS_UD2
 	"ftst", // X86_INS_FTST
 	"tzcnt", // X86_INS_TZCNT
 	"tzmsk", // X86_INS_TZMSK
@@ -747,9 +749,7 @@
 	"fucompp", // X86_INS_FUCOMPP
 	"fucomp", // X86_INS_FUCOMP
 	"fucom", // X86_INS_FUCOM
-	"ud0", // X86_INS_UD0
 	"ud1", // X86_INS_UD1
-	"ud2", // X86_INS_UD2
 	"umonitor", // X86_INS_UMONITOR
 	"umwait", // X86_INS_UMWAIT
 	"unpckhpd", // X86_INS_UNPCKHPD
