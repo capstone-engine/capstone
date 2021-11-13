@@ -6,6 +6,20 @@ Capstone Engine
 [![pypi package](https://badge.fury.io/py/capstone.svg)](https://pypi.python.org/pypi/capstone)
 [![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
 
+Deprecation
+===========
+
+The [`master`](https://github.com/capstone-engine/capstone/tree/master) branch is deprecated.
+All forward development should be based on the [`next`](https://github.com/capstone-engine/capstone/tree/next) branch.
+
+To clone a fresh checkout with the `next` branch:
+
+    git clone -b next https://github.com/capstone-engine/capstone
+
+To change to the `next` branch in an existing checkout:
+
+    git checkout next
+
 ----
 
 We moved the original historical repo of Capstone from https://github.com/aquynh/capstone to an organization, where we can add more maintainers to the project, and push Capstone development forward.
