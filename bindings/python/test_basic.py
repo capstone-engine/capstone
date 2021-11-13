@@ -81,6 +81,22 @@ def test_cs_disasm_quick():
         print()
 
 
+def test_different_data_formats():
+    data = bytes.fromhex('4831C948F7E1043B48BB0A2F62696E2F2F736852530A545F5257545E0F05')
+    mnemonics = ['xor', 'mul', 'add', 'movabs', 'push', 'pop', 'push', 'push', 'push', 'pop', 'syscall']
+    disassembler = Cs(CS_ARCH_X86, CS_MODE_64)
+    for name, code in (
+        ('bytearray', bytearray(data)),
+        ('memoryview of bytearray', memoryview(bytearray(data))),
+        ('memoryview of data', memoryview(data)),
+        ('raw data', data)
+    ):
+        if mnemonics != [op for  _, _, op, _ in disassembler.disasm_lite(code, 0)]:
+            print('failure in disassemble-lite for %s.' % name)
+        if mnemonics != [instruction.mnemonic for instruction in disassembler.disasm(code, 0)]:
+            print('failure in disassemble-full for %s.' % name)
+
+
 # ## Test class Cs
 def test_class():
     for arch, mode, code, comment, syntax in all_tests:
@@ -110,3 +126,4 @@ def test_class():
 # print ("*" * 40)
 if __name__ == '__main__':
     test_class()
+    test_different_data_formats()
