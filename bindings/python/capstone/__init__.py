@@ -1102,6 +1102,8 @@ class Cs(object):
         view = memoryview(code)
         if not view.readonly:
             code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
@@ -1131,6 +1133,8 @@ class Cs(object):
         view = memoryview(code)
         if not view.readonly:
             code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
