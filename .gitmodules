@@ -1,0 +1,3 @@
+[submodule ".\\docs\\Capstone_Engine_Documentation"]
+	path = .\\docs\\Capstone_Engine_Documentation
+	url = https://github.com/kabeor/Capstone-Engine-Documentation.git
