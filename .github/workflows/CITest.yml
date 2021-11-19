@@ -18,4 +18,5 @@ jobs:
         sudo make install
         cp libcapstone.so.* bindings/python/libcapstone.so
         cd tests
+        chmod +x ./test_all.sh
         ./test_all.sh
