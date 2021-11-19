@@ -1,0 +1,21 @@
+name: Run Test
+on: [push, pull_request]
+env:
+  CI: true
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    name: build_test on ubuntu 20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: make
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
+        ./make.sh
+        make check
+        sudo make install
+        cp libcapstone.so.* bindings/python/libcapstone.so
+        cd tests
+        ./test_all.sh
