@@ -1099,8 +1099,11 @@ class Cs(object):
             print(code)'''
         # Pass a bytearray by reference
         size = len(code)
-        if isinstance(code, bytearray):
-            code = ctypes.byref(ctypes.c_char.from_buffer(code))
+        view = memoryview(code)
+        if not view.readonly:
+            code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
@@ -1127,8 +1130,11 @@ class Cs(object):
         all_insn = ctypes.POINTER(_cs_insn)()
         size = len(code)
         # Pass a bytearray by reference
-        if isinstance(code, bytearray):
-            code = ctypes.byref(ctypes.c_char.from_buffer(code))
+        view = memoryview(code)
+        if not view.readonly:
+            code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
