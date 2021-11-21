@@ -9,6 +9,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.6'
+
+    - name: prepare
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
+        export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
+        wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
+        unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
+        git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
+        chmod +x suite/cstest/build_cstest.sh
 
     - name: make
       shell: 'script -q -e -c "bash {0}"'
@@ -16,7 +28,22 @@ jobs:
         ./make.sh
         make check
         sudo make install
+
+    - name: build python binding
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
         cp libcapstone.so.* bindings/python/libcapstone.so
-        cd tests
-        chmod +x ./test_all.sh
-        ./test_all.sh
+        cd bindings/python && make check; cd ../..;
+
+    - name: cstest
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
+        cd suite/cstest && ./build_cstest.sh;
+        python cstest_report.py -D -t build/cstest -d ../MC;
+        python cstest_report.py -D -t build/cstest -f issues.cs;
+        cd ..
+
+    - name: fuzz
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
+        python fuzz.py
