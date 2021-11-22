@@ -88,8 +88,8 @@ typedef enum Mips_CondCode {
 static const char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
-static void printMemOperand(MCInst *MI, int opNum, SStream *O);
-static void printMemOperandEA(MCInst *MI, int opNum, SStream *O);
+static void printMemOperand(MCInst *MI, int opNum, SStream *O, char *);
+static void printMemOperandEA(MCInst *MI, int opNum, SStream *O, char *);
 static void printFCCOperand(MCInst *MI, int opNum, SStream *O);
 static void printRegisterList(MCInst *MI, int opNum, SStream *O);
 
@@ -319,7 +319,7 @@ static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
     printOperand(MI, opNum, O);
 }
 
-static void printMemOperand(MCInst *MI, int opNum, SStream *O)
+static void printMemOperand(MCInst *MI, int opNum, SStream *O, char * ignored)
 {
   // Load/Store memory operands -- imm($reg)
   // If PIC target the target is loaded as the
@@ -347,7 +347,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O)
 }
 
 // TODO???
-static void printMemOperandEA(MCInst *MI, int opNum, SStream *O)
+static void printMemOperandEA(MCInst *MI, int opNum, SStream *O, char * ignored)
 {
   // when using stack locations for not load/store instructions
   // print the same way as all normal 3 operand instructions.
