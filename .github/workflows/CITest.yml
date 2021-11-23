@@ -41,8 +41,3 @@ jobs:
         cd suite/cstest && ./build_cstest.sh;
         python cstest_report.py -D -t build/cstest -d ../MC;
         python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
-        
-    - name: fuzz
-      shell: 'script -q -e -c "bash {0}"'
-      run: |
-        python ./fuzz.py
