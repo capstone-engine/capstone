@@ -7,6 +7,8 @@ from subprocess import Popen, PIPE
 from pprint import pprint as ppr
 import os
 
+_python3 = sys.version_info.major == 3
+
 
 def Usage(s):
 	print('Usage: {} -t <cstest_path> [-f <file_name.cs>] [-d <directory>]'.format(s))
@@ -19,8 +21,11 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 
 #	stdout
 	failed_tests = []
-#	print('---> stdout\n', stdout)
-#	print('---> stderr\n', stderr)
+	if _python3:
+		stdout = bytes.decode(stdout)
+		stderr = bytes.decode(stderr)
+	# print('---> stdout\n', stdout)
+	# print('---> stderr\n', stderr)
 	matches = re.finditer(r'\[\s+RUN\s+\]\s+(.*)\n\[\s+FAILED\s+\]', stdout)
 	for match in matches:
 		failed_tests.append(match.group(1))
@@ -58,7 +63,7 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 				rm_proc = Popen(tmp_cmd2, stdout=PIPE, stderr=PIPE)
 				rm_proc.communicate()
 
-		return 0;
+		return 0
 	return 1
 
 def get_report_folder(toolpath, folderpath, details, cmt_out):
