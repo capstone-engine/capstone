@@ -4,14 +4,21 @@ env:
   CI: true
 jobs:
   tests:
-    runs-on: ubuntu-20.04
-    name: build_test on ubuntu 20.04
+    runs-on: ${{ matrix.os }}
+    name: Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
+        python-version: [2.7, 3.6, 3.9]
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.6'
+        python-version: ${{ matrix.python-version }}
 
     - name: prepare
       shell: 'script -q -e -c "bash {0}"'
