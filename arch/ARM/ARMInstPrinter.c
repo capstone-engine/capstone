@@ -290,16 +290,9 @@ static void printCustomAliasOperand(const MCInst *MI,
 
 static cs_struct *preserved_handle;
 
-unsigned mapRegNo(unsigned RegNo) {
-    if (RegNo >= 72) return RegNo - 6;
-    if (RegNo >= 19) return RegNo - 5;
-    if (RegNo >= 14) return RegNo - 3;
-    return RegNo;
-}
-
 const char *getRegisterNameNoRaw(unsigned RegNo) {
     debugln("request reg num %d", RegNo);
-    unsigned Mapped = mapRegNo(RegNo);
+    unsigned Mapped = RegNo;
     // need a mappings later
     if (preserved_handle && ARM_reg_name(preserved_handle, Mapped))
         return ARM_reg_name(preserved_handle, Mapped);
@@ -370,6 +363,7 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc, unsi
 
 static void printRegName(cs_struct *h, SStream *OS, unsigned RegNo) {
 #ifndef CAPSTONE_DIET
+  if(RegNo == 0) return;
     SStream_concat0(OS, h->get_regname(RegNo));
 #endif
 }

@@ -23,9 +23,11 @@ static const char * const reg_name_maps[] = {
 	"lr",
 	"nzcv",
 	"sp",
+        "vg",
 	"wsp",
 	"wzr",
 	"xzr",
+        "za",
 
 	"b0",
 	"b1",
@@ -343,7 +345,6 @@ const char *AArch64_reg_name(csh handle, unsigned int reg)
 #ifndef CAPSTONE_DIET
 	if (reg >= ARR_SIZE(reg_name_maps))
 		return NULL;
-
 	return reg_name_maps[reg];
 #else
 	return NULL;

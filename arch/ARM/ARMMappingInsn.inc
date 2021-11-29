@@ -8901,55 +8901,6 @@
 },
 
 {
-	ARM_VMAXNMD, ARM_INS_VMAXNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMAXNMH, ARM_INS_VMAXNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMAXNMNDf, ARM_INS_VMAXNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMAXNMNDh, ARM_INS_VMAXNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMAXNMNQf, ARM_INS_VMAXNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMAXNMNQh, ARM_INS_VMAXNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMAXNMS, ARM_INS_VMAXNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
-#endif
-},
-
-{
 	ARM_VMAXfd, ARM_INS_VMAX,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
@@ -9058,55 +9009,6 @@
 	ARM_VMAXuv8i8, ARM_INS_VMAX,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { ARM_GRP_NEON, 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMINNMD, ARM_INS_VMINNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, ARM_GRP_DPVFP, 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMINNMH, ARM_INS_VMINNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMINNMNDf, ARM_INS_VMINNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMINNMNDh, ARM_INS_VMINNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMINNMNQf, ARM_INS_VMINNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMINNMNQh, ARM_INS_VMINNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-},
-
-{
-	ARM_VMINNMS, ARM_INS_VMINNM,
-#ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { ARM_GRP_FPARMV8, 0 }, 0, 0
 #endif
 },
 
