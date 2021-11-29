@@ -103,6 +103,7 @@ const char *MCInstPrinter_matchAliasPatterns(
     }
     if (fallThrough) {
       AsmStrOffset = Pattern.AsmStrOffset;
+      break;
     }
   }
 

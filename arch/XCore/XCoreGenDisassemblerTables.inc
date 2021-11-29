@@ -1435,22 +1435,22 @@ static const char XCoreRegStrings[] = {
 
 static const MCRegisterDesc XCoreRegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
-  { 38, 1, 1, 0, 1, 0 },
-  { 41, 1, 1, 0, 1, 0 },
-  { 47, 1, 1, 0, 1, 0 },
-  { 44, 1, 1, 0, 1, 0 },
-  { 4, 1, 1, 0, 1, 0 },
+  { 38, 1, 1, 0, 1, 2 },
+  { 41, 1, 1, 0, 1, 8 },
+  { 47, 1, 1, 0, 1, 8 },
+  { 44, 1, 1, 0, 1, 8 },
+  { 4, 1, 1, 0, 1, 10 },
   { 11, 1, 1, 0, 1, 0 },
-  { 14, 1, 1, 0, 1, 2 },
-  { 17, 1, 1, 0, 1, 4 },
-  { 20, 1, 1, 0, 1, 6 },
-  { 23, 1, 1, 0, 1, 6 },
-  { 26, 1, 1, 0, 1, 6 },
-  { 29, 1, 1, 0, 1, 8 },
-  { 32, 1, 1, 0, 1, 0 },
-  { 35, 1, 1, 0, 1, 0 },
-  { 0, 1, 1, 0, 1, 6 },
-  { 7, 1, 1, 0, 1, 10 },
+  { 14, 1, 1, 0, 1, 0 },
+  { 17, 1, 1, 0, 1, 8 },
+  { 20, 1, 1, 0, 1, 12 },
+  { 23, 1, 1, 0, 1, 8 },
+  { 26, 1, 1, 0, 1, 0 },
+  { 29, 1, 1, 0, 1, 6 },
+  { 32, 1, 1, 0, 1, 8 },
+  { 35, 1, 1, 0, 1, 8 },
+  { 0, 1, 1, 0, 1, 8 },
+  { 7, 1, 1, 0, 1, 4 },
 };
 
   // RRegs Register Class...
@@ -2496,3 +2496,1073 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
 }
 
 #endif // PRINT_ALIAS_INSTR
+#ifdef GET_INSTRINFO_MC_DESC
+#undef GET_INSTRINFO_MC_DESC
+
+static const MCOperandInfo OperandInfo2[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo3[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo4[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo5[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo6[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo7[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo8[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo9[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo10[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo11[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo12[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo13[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo14[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo15[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo16[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo17[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo18[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo19[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo20[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo21[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo22[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo23[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo24[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo25[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo26[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo27[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo28[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo29[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo30[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo31[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo32[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo33[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo34[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo35[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo36[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo37[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo38[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, };
+static const MCOperandInfo OperandInfo39[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, };
+static const MCOperandInfo OperandInfo40[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo41[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo42[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo43[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo44[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo45[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo46[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo47[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo48[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo49[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo50[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo51[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo52[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo53[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo54[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*1*/ }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo55[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo56[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo57[] = { { XCore_RRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo58[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo59[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*1*/ }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo60[] = { { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo61[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo62[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { XCore_GRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+
+extern const MCInstrDesc XCoreInsts[] = {
+  { 1,	OperandInfo2 },  // Inst #0 = PHI
+  { 0,	NULL },  // Inst #1 = INLINEASM
+  { 0,	NULL },  // Inst #2 = INLINEASM_BR
+  { 1,	OperandInfo3 },  // Inst #3 = CFI_INSTRUCTION
+  { 1,	OperandInfo3 },  // Inst #4 = EH_LABEL
+  { 1,	OperandInfo3 },  // Inst #5 = GC_LABEL
+  { 1,	OperandInfo3 },  // Inst #6 = ANNOTATION_LABEL
+  { 0,	NULL },  // Inst #7 = KILL
+  { 3,	OperandInfo4 },  // Inst #8 = EXTRACT_SUBREG
+  { 4,	OperandInfo5 },  // Inst #9 = INSERT_SUBREG
+  { 1,	OperandInfo2 },  // Inst #10 = IMPLICIT_DEF
+  { 4,	OperandInfo6 },  // Inst #11 = SUBREG_TO_REG
+  { 3,	OperandInfo4 },  // Inst #12 = COPY_TO_REGCLASS
+  { 0,	NULL },  // Inst #13 = DBG_VALUE
+  { 0,	NULL },  // Inst #14 = DBG_VALUE_LIST
+  { 0,	NULL },  // Inst #15 = DBG_INSTR_REF
+  { 0,	NULL },  // Inst #16 = DBG_PHI
+  { 1,	OperandInfo2 },  // Inst #17 = DBG_LABEL
+  { 2,	OperandInfo7 },  // Inst #18 = REG_SEQUENCE
+  { 2,	OperandInfo7 },  // Inst #19 = COPY
+  { 0,	NULL },  // Inst #20 = BUNDLE
+  { 1,	OperandInfo3 },  // Inst #21 = LIFETIME_START
+  { 1,	OperandInfo3 },  // Inst #22 = LIFETIME_END
+  { 4,	OperandInfo8 },  // Inst #23 = PSEUDO_PROBE
+  { 2,	OperandInfo9 },  // Inst #24 = ARITH_FENCE
+  { 2,	OperandInfo10 },  // Inst #25 = STACKMAP
+  { 0,	NULL },  // Inst #26 = FENTRY_CALL
+  { 6,	OperandInfo11 },  // Inst #27 = PATCHPOINT
+  { 1,	OperandInfo12 },  // Inst #28 = LOAD_STACK_GUARD
+  { 1,	OperandInfo3 },  // Inst #29 = PREALLOCATED_SETUP
+  { 3,	OperandInfo13 },  // Inst #30 = PREALLOCATED_ARG
+  { 0,	NULL },  // Inst #31 = STATEPOINT
+  { 2,	OperandInfo14 },  // Inst #32 = LOCAL_ESCAPE
+  { 1,	OperandInfo2 },  // Inst #33 = FAULTING_OP
+  { 0,	NULL },  // Inst #34 = PATCHABLE_OP
+  { 0,	NULL },  // Inst #35 = PATCHABLE_FUNCTION_ENTER
+  { 0,	NULL },  // Inst #36 = PATCHABLE_RET
+  { 0,	NULL },  // Inst #37 = PATCHABLE_FUNCTION_EXIT
+  { 0,	NULL },  // Inst #38 = PATCHABLE_TAIL_CALL
+  { 2,	OperandInfo15 },  // Inst #39 = PATCHABLE_EVENT_CALL
+  { 3,	OperandInfo16 },  // Inst #40 = PATCHABLE_TYPED_EVENT_CALL
+  { 0,	NULL },  // Inst #41 = ICALL_BRANCH_FUNNEL
+  { 3,	OperandInfo17 },  // Inst #42 = G_ASSERT_SEXT
+  { 3,	OperandInfo17 },  // Inst #43 = G_ASSERT_ZEXT
+  { 3,	OperandInfo18 },  // Inst #44 = G_ADD
+  { 3,	OperandInfo18 },  // Inst #45 = G_SUB
+  { 3,	OperandInfo18 },  // Inst #46 = G_MUL
+  { 3,	OperandInfo18 },  // Inst #47 = G_SDIV
+  { 3,	OperandInfo18 },  // Inst #48 = G_UDIV
+  { 3,	OperandInfo18 },  // Inst #49 = G_SREM
+  { 3,	OperandInfo18 },  // Inst #50 = G_UREM
+  { 4,	OperandInfo19 },  // Inst #51 = G_SDIVREM
+  { 4,	OperandInfo19 },  // Inst #52 = G_UDIVREM
+  { 3,	OperandInfo18 },  // Inst #53 = G_AND
+  { 3,	OperandInfo18 },  // Inst #54 = G_OR
+  { 3,	OperandInfo18 },  // Inst #55 = G_XOR
+  { 1,	OperandInfo20 },  // Inst #56 = G_IMPLICIT_DEF
+  { 1,	OperandInfo20 },  // Inst #57 = G_PHI
+  { 2,	OperandInfo21 },  // Inst #58 = G_FRAME_INDEX
+  { 2,	OperandInfo21 },  // Inst #59 = G_GLOBAL_VALUE
+  { 3,	OperandInfo22 },  // Inst #60 = G_EXTRACT
+  { 2,	OperandInfo23 },  // Inst #61 = G_UNMERGE_VALUES
+  { 4,	OperandInfo24 },  // Inst #62 = G_INSERT
+  { 2,	OperandInfo23 },  // Inst #63 = G_MERGE_VALUES
+  { 2,	OperandInfo23 },  // Inst #64 = G_BUILD_VECTOR
+  { 2,	OperandInfo23 },  // Inst #65 = G_BUILD_VECTOR_TRUNC
+  { 2,	OperandInfo23 },  // Inst #66 = G_CONCAT_VECTORS
+  { 2,	OperandInfo23 },  // Inst #67 = G_PTRTOINT
+  { 2,	OperandInfo23 },  // Inst #68 = G_INTTOPTR
+  { 2,	OperandInfo23 },  // Inst #69 = G_BITCAST
+  { 2,	OperandInfo25 },  // Inst #70 = G_FREEZE
+  { 2,	OperandInfo25 },  // Inst #71 = G_INTRINSIC_TRUNC
+  { 2,	OperandInfo25 },  // Inst #72 = G_INTRINSIC_ROUND
+  { 2,	OperandInfo23 },  // Inst #73 = G_INTRINSIC_LRINT
+  { 2,	OperandInfo25 },  // Inst #74 = G_INTRINSIC_ROUNDEVEN
+  { 1,	OperandInfo20 },  // Inst #75 = G_READCYCLECOUNTER
+  { 2,	OperandInfo23 },  // Inst #76 = G_LOAD
+  { 2,	OperandInfo23 },  // Inst #77 = G_SEXTLOAD
+  { 2,	OperandInfo23 },  // Inst #78 = G_ZEXTLOAD
+  { 5,	OperandInfo26 },  // Inst #79 = G_INDEXED_LOAD
+  { 5,	OperandInfo26 },  // Inst #80 = G_INDEXED_SEXTLOAD
+  { 5,	OperandInfo26 },  // Inst #81 = G_INDEXED_ZEXTLOAD
+  { 2,	OperandInfo23 },  // Inst #82 = G_STORE
+  { 5,	OperandInfo27 },  // Inst #83 = G_INDEXED_STORE
+  { 5,	OperandInfo28 },  // Inst #84 = G_ATOMIC_CMPXCHG_WITH_SUCCESS
+  { 4,	OperandInfo29 },  // Inst #85 = G_ATOMIC_CMPXCHG
+  { 3,	OperandInfo30 },  // Inst #86 = G_ATOMICRMW_XCHG
+  { 3,	OperandInfo30 },  // Inst #87 = G_ATOMICRMW_ADD
+  { 3,	OperandInfo30 },  // Inst #88 = G_ATOMICRMW_SUB
+  { 3,	OperandInfo30 },  // Inst #89 = G_ATOMICRMW_AND
+  { 3,	OperandInfo30 },  // Inst #90 = G_ATOMICRMW_NAND
+  { 3,	OperandInfo30 },  // Inst #91 = G_ATOMICRMW_OR
+  { 3,	OperandInfo30 },  // Inst #92 = G_ATOMICRMW_XOR
+  { 3,	OperandInfo30 },  // Inst #93 = G_ATOMICRMW_MAX
+  { 3,	OperandInfo30 },  // Inst #94 = G_ATOMICRMW_MIN
+  { 3,	OperandInfo30 },  // Inst #95 = G_ATOMICRMW_UMAX
+  { 3,	OperandInfo30 },  // Inst #96 = G_ATOMICRMW_UMIN
+  { 3,	OperandInfo30 },  // Inst #97 = G_ATOMICRMW_FADD
+  { 3,	OperandInfo30 },  // Inst #98 = G_ATOMICRMW_FSUB
+  { 2,	OperandInfo10 },  // Inst #99 = G_FENCE
+  { 2,	OperandInfo21 },  // Inst #100 = G_BRCOND
+  { 1,	OperandInfo20 },  // Inst #101 = G_BRINDIRECT
+  { 1,	OperandInfo2 },  // Inst #102 = G_INTRINSIC
+  { 1,	OperandInfo2 },  // Inst #103 = G_INTRINSIC_W_SIDE_EFFECTS
+  { 2,	OperandInfo23 },  // Inst #104 = G_ANYEXT
+  { 2,	OperandInfo23 },  // Inst #105 = G_TRUNC
+  { 2,	OperandInfo21 },  // Inst #106 = G_CONSTANT
+  { 2,	OperandInfo21 },  // Inst #107 = G_FCONSTANT
+  { 1,	OperandInfo20 },  // Inst #108 = G_VASTART
+  { 3,	OperandInfo31 },  // Inst #109 = G_VAARG
+  { 2,	OperandInfo23 },  // Inst #110 = G_SEXT
+  { 3,	OperandInfo17 },  // Inst #111 = G_SEXT_INREG
+  { 2,	OperandInfo23 },  // Inst #112 = G_ZEXT
+  { 3,	OperandInfo32 },  // Inst #113 = G_SHL
+  { 3,	OperandInfo32 },  // Inst #114 = G_LSHR
+  { 3,	OperandInfo32 },  // Inst #115 = G_ASHR
+  { 4,	OperandInfo33 },  // Inst #116 = G_FSHL
+  { 4,	OperandInfo33 },  // Inst #117 = G_FSHR
+  { 3,	OperandInfo32 },  // Inst #118 = G_ROTR
+  { 3,	OperandInfo32 },  // Inst #119 = G_ROTL
+  { 4,	OperandInfo34 },  // Inst #120 = G_ICMP
+  { 4,	OperandInfo34 },  // Inst #121 = G_FCMP
+  { 4,	OperandInfo29 },  // Inst #122 = G_SELECT
+  { 4,	OperandInfo29 },  // Inst #123 = G_UADDO
+  { 5,	OperandInfo35 },  // Inst #124 = G_UADDE
+  { 4,	OperandInfo29 },  // Inst #125 = G_USUBO
+  { 5,	OperandInfo35 },  // Inst #126 = G_USUBE
+  { 4,	OperandInfo29 },  // Inst #127 = G_SADDO
+  { 5,	OperandInfo35 },  // Inst #128 = G_SADDE
+  { 4,	OperandInfo29 },  // Inst #129 = G_SSUBO
+  { 5,	OperandInfo35 },  // Inst #130 = G_SSUBE
+  { 4,	OperandInfo29 },  // Inst #131 = G_UMULO
+  { 4,	OperandInfo29 },  // Inst #132 = G_SMULO
+  { 3,	OperandInfo18 },  // Inst #133 = G_UMULH
+  { 3,	OperandInfo18 },  // Inst #134 = G_SMULH
+  { 3,	OperandInfo18 },  // Inst #135 = G_UADDSAT
+  { 3,	OperandInfo18 },  // Inst #136 = G_SADDSAT
+  { 3,	OperandInfo18 },  // Inst #137 = G_USUBSAT
+  { 3,	OperandInfo18 },  // Inst #138 = G_SSUBSAT
+  { 3,	OperandInfo32 },  // Inst #139 = G_USHLSAT
+  { 3,	OperandInfo32 },  // Inst #140 = G_SSHLSAT
+  { 4,	OperandInfo36 },  // Inst #141 = G_SMULFIX
+  { 4,	OperandInfo36 },  // Inst #142 = G_UMULFIX
+  { 4,	OperandInfo36 },  // Inst #143 = G_SMULFIXSAT
+  { 4,	OperandInfo36 },  // Inst #144 = G_UMULFIXSAT
+  { 4,	OperandInfo36 },  // Inst #145 = G_SDIVFIX
+  { 4,	OperandInfo36 },  // Inst #146 = G_UDIVFIX
+  { 4,	OperandInfo36 },  // Inst #147 = G_SDIVFIXSAT
+  { 4,	OperandInfo36 },  // Inst #148 = G_UDIVFIXSAT
+  { 3,	OperandInfo18 },  // Inst #149 = G_FADD
+  { 3,	OperandInfo18 },  // Inst #150 = G_FSUB
+  { 3,	OperandInfo18 },  // Inst #151 = G_FMUL
+  { 4,	OperandInfo19 },  // Inst #152 = G_FMA
+  { 4,	OperandInfo19 },  // Inst #153 = G_FMAD
+  { 3,	OperandInfo18 },  // Inst #154 = G_FDIV
+  { 3,	OperandInfo18 },  // Inst #155 = G_FREM
+  { 3,	OperandInfo18 },  // Inst #156 = G_FPOW
+  { 3,	OperandInfo32 },  // Inst #157 = G_FPOWI
+  { 2,	OperandInfo25 },  // Inst #158 = G_FEXP
+  { 2,	OperandInfo25 },  // Inst #159 = G_FEXP2
+  { 2,	OperandInfo25 },  // Inst #160 = G_FLOG
+  { 2,	OperandInfo25 },  // Inst #161 = G_FLOG2
+  { 2,	OperandInfo25 },  // Inst #162 = G_FLOG10
+  { 2,	OperandInfo25 },  // Inst #163 = G_FNEG
+  { 2,	OperandInfo23 },  // Inst #164 = G_FPEXT
+  { 2,	OperandInfo23 },  // Inst #165 = G_FPTRUNC
+  { 2,	OperandInfo23 },  // Inst #166 = G_FPTOSI
+  { 2,	OperandInfo23 },  // Inst #167 = G_FPTOUI
+  { 2,	OperandInfo23 },  // Inst #168 = G_SITOFP
+  { 2,	OperandInfo23 },  // Inst #169 = G_UITOFP
+  { 2,	OperandInfo25 },  // Inst #170 = G_FABS
+  { 3,	OperandInfo32 },  // Inst #171 = G_FCOPYSIGN
+  { 2,	OperandInfo25 },  // Inst #172 = G_FCANONICALIZE
+  { 3,	OperandInfo18 },  // Inst #173 = G_FMINNUM
+  { 3,	OperandInfo18 },  // Inst #174 = G_FMAXNUM
+  { 3,	OperandInfo18 },  // Inst #175 = G_FMINNUM_IEEE
+  { 3,	OperandInfo18 },  // Inst #176 = G_FMAXNUM_IEEE
+  { 3,	OperandInfo18 },  // Inst #177 = G_FMINIMUM
+  { 3,	OperandInfo18 },  // Inst #178 = G_FMAXIMUM
+  { 3,	OperandInfo32 },  // Inst #179 = G_PTR_ADD
+  { 3,	OperandInfo32 },  // Inst #180 = G_PTRMASK
+  { 3,	OperandInfo18 },  // Inst #181 = G_SMIN
+  { 3,	OperandInfo18 },  // Inst #182 = G_SMAX
+  { 3,	OperandInfo18 },  // Inst #183 = G_UMIN
+  { 3,	OperandInfo18 },  // Inst #184 = G_UMAX
+  { 2,	OperandInfo25 },  // Inst #185 = G_ABS
+  { 2,	OperandInfo23 },  // Inst #186 = G_LROUND
+  { 2,	OperandInfo23 },  // Inst #187 = G_LLROUND
+  { 1,	OperandInfo2 },  // Inst #188 = G_BR
+  { 3,	OperandInfo37 },  // Inst #189 = G_BRJT
+  { 4,	OperandInfo38 },  // Inst #190 = G_INSERT_VECTOR_ELT
+  { 3,	OperandInfo39 },  // Inst #191 = G_EXTRACT_VECTOR_ELT
+  { 4,	OperandInfo40 },  // Inst #192 = G_SHUFFLE_VECTOR
+  { 2,	OperandInfo23 },  // Inst #193 = G_CTTZ
+  { 2,	OperandInfo23 },  // Inst #194 = G_CTTZ_ZERO_UNDEF
+  { 2,	OperandInfo23 },  // Inst #195 = G_CTLZ
+  { 2,	OperandInfo23 },  // Inst #196 = G_CTLZ_ZERO_UNDEF
+  { 2,	OperandInfo23 },  // Inst #197 = G_CTPOP
+  { 2,	OperandInfo25 },  // Inst #198 = G_BSWAP
+  { 2,	OperandInfo25 },  // Inst #199 = G_BITREVERSE
+  { 2,	OperandInfo25 },  // Inst #200 = G_FCEIL
+  { 2,	OperandInfo25 },  // Inst #201 = G_FCOS
+  { 2,	OperandInfo25 },  // Inst #202 = G_FSIN
+  { 2,	OperandInfo25 },  // Inst #203 = G_FSQRT
+  { 2,	OperandInfo25 },  // Inst #204 = G_FFLOOR
+  { 2,	OperandInfo25 },  // Inst #205 = G_FRINT
+  { 2,	OperandInfo25 },  // Inst #206 = G_FNEARBYINT
+  { 2,	OperandInfo23 },  // Inst #207 = G_ADDRSPACE_CAST
+  { 2,	OperandInfo21 },  // Inst #208 = G_BLOCK_ADDR
+  { 2,	OperandInfo21 },  // Inst #209 = G_JUMP_TABLE
+  { 3,	OperandInfo22 },  // Inst #210 = G_DYN_STACKALLOC
+  { 3,	OperandInfo18 },  // Inst #211 = G_STRICT_FADD
+  { 3,	OperandInfo18 },  // Inst #212 = G_STRICT_FSUB
+  { 3,	OperandInfo18 },  // Inst #213 = G_STRICT_FMUL
+  { 3,	OperandInfo18 },  // Inst #214 = G_STRICT_FDIV
+  { 3,	OperandInfo18 },  // Inst #215 = G_STRICT_FREM
+  { 4,	OperandInfo19 },  // Inst #216 = G_STRICT_FMA
+  { 2,	OperandInfo25 },  // Inst #217 = G_STRICT_FSQRT
+  { 2,	OperandInfo21 },  // Inst #218 = G_READ_REGISTER
+  { 2,	OperandInfo41 },  // Inst #219 = G_WRITE_REGISTER
+  { 4,	OperandInfo42 },  // Inst #220 = G_MEMCPY
+  { 3,	OperandInfo39 },  // Inst #221 = G_MEMCPY_INLINE
+  { 4,	OperandInfo42 },  // Inst #222 = G_MEMMOVE
+  { 4,	OperandInfo42 },  // Inst #223 = G_MEMSET
+  { 3,	OperandInfo22 },  // Inst #224 = G_BZERO
+  { 3,	OperandInfo39 },  // Inst #225 = G_VECREDUCE_SEQ_FADD
+  { 3,	OperandInfo39 },  // Inst #226 = G_VECREDUCE_SEQ_FMUL
+  { 2,	OperandInfo23 },  // Inst #227 = G_VECREDUCE_FADD
+  { 2,	OperandInfo23 },  // Inst #228 = G_VECREDUCE_FMUL
+  { 2,	OperandInfo23 },  // Inst #229 = G_VECREDUCE_FMAX
+  { 2,	OperandInfo23 },  // Inst #230 = G_VECREDUCE_FMIN
+  { 2,	OperandInfo23 },  // Inst #231 = G_VECREDUCE_ADD
+  { 2,	OperandInfo23 },  // Inst #232 = G_VECREDUCE_MUL
+  { 2,	OperandInfo23 },  // Inst #233 = G_VECREDUCE_AND
+  { 2,	OperandInfo23 },  // Inst #234 = G_VECREDUCE_OR
+  { 2,	OperandInfo23 },  // Inst #235 = G_VECREDUCE_XOR
+  { 2,	OperandInfo23 },  // Inst #236 = G_VECREDUCE_SMAX
+  { 2,	OperandInfo23 },  // Inst #237 = G_VECREDUCE_SMIN
+  { 2,	OperandInfo23 },  // Inst #238 = G_VECREDUCE_UMAX
+  { 2,	OperandInfo23 },  // Inst #239 = G_VECREDUCE_UMIN
+  { 4,	OperandInfo43 },  // Inst #240 = G_SBFX
+  { 4,	OperandInfo43 },  // Inst #241 = G_UBFX
+  { 2,	OperandInfo10 },  // Inst #242 = ADJCALLSTACKDOWN
+  { 2,	OperandInfo10 },  // Inst #243 = ADJCALLSTACKUP
+  { 2,	OperandInfo44 },  // Inst #244 = BR_JT
+  { 2,	OperandInfo44 },  // Inst #245 = BR_JT32
+  { 2,	OperandInfo45 },  // Inst #246 = EH_RETURN
+  { 1,	OperandInfo46 },  // Inst #247 = FRAME_TO_ARGS_OFFSET
+  { 0,	NULL },  // Inst #248 = Int_MemBarrier
+  { 3,	OperandInfo47 },  // Inst #249 = LDAWFI
+  { 3,	OperandInfo47 },  // Inst #250 = LDWFI
+  { 4,	OperandInfo48 },  // Inst #251 = SELECT_CC
+  { 3,	OperandInfo47 },  // Inst #252 = STWFI
+  { 3,	OperandInfo49 },  // Inst #253 = ADD_2rus
+  { 3,	OperandInfo50 },  // Inst #254 = ADD_3r
+  { 3,	OperandInfo51 },  // Inst #255 = ANDNOT_2r
+  { 3,	OperandInfo50 },  // Inst #256 = AND_3r
+  { 3,	OperandInfo49 },  // Inst #257 = ASHR_l2rus
+  { 3,	OperandInfo50 },  // Inst #258 = ASHR_l3r
+  { 1,	OperandInfo46 },  // Inst #259 = BAU_1r
+  { 2,	OperandInfo45 },  // Inst #260 = BITREV_l2r
+  { 1,	OperandInfo3 },  // Inst #261 = BLACP_lu10
+  { 1,	OperandInfo3 },  // Inst #262 = BLACP_u10
+  { 1,	OperandInfo3 },  // Inst #263 = BLAT_lu6
+  { 1,	OperandInfo3 },  // Inst #264 = BLAT_u6
+  { 1,	OperandInfo46 },  // Inst #265 = BLA_1r
+  { 1,	OperandInfo2 },  // Inst #266 = BLRB_lu10
+  { 1,	OperandInfo2 },  // Inst #267 = BLRB_u10
+  { 1,	OperandInfo2 },  // Inst #268 = BLRF_lu10
+  { 1,	OperandInfo2 },  // Inst #269 = BLRF_u10
+  { 2,	OperandInfo52 },  // Inst #270 = BRBF_lru6
+  { 2,	OperandInfo52 },  // Inst #271 = BRBF_ru6
+  { 2,	OperandInfo52 },  // Inst #272 = BRBT_lru6
+  { 2,	OperandInfo52 },  // Inst #273 = BRBT_ru6
+  { 1,	OperandInfo2 },  // Inst #274 = BRBU_lu6
+  { 1,	OperandInfo2 },  // Inst #275 = BRBU_u6
+  { 2,	OperandInfo52 },  // Inst #276 = BRFF_lru6
+  { 2,	OperandInfo52 },  // Inst #277 = BRFF_ru6
+  { 2,	OperandInfo52 },  // Inst #278 = BRFT_lru6
+  { 2,	OperandInfo52 },  // Inst #279 = BRFT_ru6
+  { 1,	OperandInfo2 },  // Inst #280 = BRFU_lu6
+  { 1,	OperandInfo2 },  // Inst #281 = BRFU_u6
+  { 1,	OperandInfo46 },  // Inst #282 = BRU_1r
+  { 2,	OperandInfo45 },  // Inst #283 = BYTEREV_l2r
+  { 2,	OperandInfo45 },  // Inst #284 = CHKCT_2r
+  { 2,	OperandInfo53 },  // Inst #285 = CHKCT_rus
+  { 0,	NULL },  // Inst #286 = CLRE_0R
+  { 1,	OperandInfo46 },  // Inst #287 = CLRPT_1R
+  { 1,	OperandInfo3 },  // Inst #288 = CLRSR_branch_lu6
+  { 1,	OperandInfo3 },  // Inst #289 = CLRSR_branch_u6
+  { 1,	OperandInfo3 },  // Inst #290 = CLRSR_lu6
+  { 1,	OperandInfo3 },  // Inst #291 = CLRSR_u6
+  { 2,	OperandInfo45 },  // Inst #292 = CLZ_l2r
+  { 5,	OperandInfo54 },  // Inst #293 = CRC8_l4r
+  { 4,	OperandInfo55 },  // Inst #294 = CRC_l3r
+  { 0,	NULL },  // Inst #295 = DCALL_0R
+  { 0,	NULL },  // Inst #296 = DENTSP_0R
+  { 1,	OperandInfo46 },  // Inst #297 = DGETREG_1r
+  { 3,	OperandInfo50 },  // Inst #298 = DIVS_l3r
+  { 3,	OperandInfo50 },  // Inst #299 = DIVU_l3r
+  { 0,	NULL },  // Inst #300 = DRESTSP_0R
+  { 0,	NULL },  // Inst #301 = DRET_0R
+  { 1,	OperandInfo46 },  // Inst #302 = ECALLF_1r
+  { 1,	OperandInfo46 },  // Inst #303 = ECALLT_1r
+  { 1,	OperandInfo46 },  // Inst #304 = EDU_1r
+  { 2,	OperandInfo45 },  // Inst #305 = EEF_2r
+  { 2,	OperandInfo45 },  // Inst #306 = EET_2r
+  { 1,	OperandInfo46 },  // Inst #307 = EEU_1r
+  { 2,	OperandInfo45 },  // Inst #308 = ENDIN_2r
+  { 1,	OperandInfo3 },  // Inst #309 = ENTSP_lu6
+  { 1,	OperandInfo3 },  // Inst #310 = ENTSP_u6
+  { 3,	OperandInfo49 },  // Inst #311 = EQ_2rus
+  { 3,	OperandInfo50 },  // Inst #312 = EQ_3r
+  { 1,	OperandInfo3 },  // Inst #313 = EXTDP_lu6
+  { 1,	OperandInfo3 },  // Inst #314 = EXTDP_u6
+  { 1,	OperandInfo3 },  // Inst #315 = EXTSP_lu6
+  { 1,	OperandInfo3 },  // Inst #316 = EXTSP_u6
+  { 1,	OperandInfo46 },  // Inst #317 = FREER_1r
+  { 0,	NULL },  // Inst #318 = FREET_0R
+  { 2,	OperandInfo45 },  // Inst #319 = GETD_l2r
+  { 0,	NULL },  // Inst #320 = GETED_0R
+  { 0,	NULL },  // Inst #321 = GETET_0R
+  { 0,	NULL },  // Inst #322 = GETID_0R
+  { 0,	NULL },  // Inst #323 = GETKEP_0R
+  { 0,	NULL },  // Inst #324 = GETKSP_0R
+  { 2,	OperandInfo45 },  // Inst #325 = GETN_l2r
+  { 2,	OperandInfo45 },  // Inst #326 = GETPS_l2r
+  { 2,	OperandInfo53 },  // Inst #327 = GETR_rus
+  { 1,	OperandInfo3 },  // Inst #328 = GETSR_lu6
+  { 1,	OperandInfo3 },  // Inst #329 = GETSR_u6
+  { 2,	OperandInfo45 },  // Inst #330 = GETST_2r
+  { 2,	OperandInfo45 },  // Inst #331 = GETTS_2r
+  { 2,	OperandInfo45 },  // Inst #332 = INCT_2r
+  { 2,	OperandInfo45 },  // Inst #333 = INITCP_2r
+  { 2,	OperandInfo45 },  // Inst #334 = INITDP_2r
+  { 2,	OperandInfo45 },  // Inst #335 = INITLR_l2r
+  { 2,	OperandInfo45 },  // Inst #336 = INITPC_2r
+  { 2,	OperandInfo45 },  // Inst #337 = INITSP_2r
+  { 3,	OperandInfo49 },  // Inst #338 = INPW_l2rus
+  { 3,	OperandInfo51 },  // Inst #339 = INSHR_2r
+  { 2,	OperandInfo45 },  // Inst #340 = INT_2r
+  { 2,	OperandInfo45 },  // Inst #341 = IN_2r
+  { 1,	OperandInfo46 },  // Inst #342 = KCALL_1r
+  { 1,	OperandInfo3 },  // Inst #343 = KCALL_lu6
+  { 1,	OperandInfo3 },  // Inst #344 = KCALL_u6
+  { 1,	OperandInfo3 },  // Inst #345 = KENTSP_lu6
+  { 1,	OperandInfo3 },  // Inst #346 = KENTSP_u6
+  { 1,	OperandInfo3 },  // Inst #347 = KRESTSP_lu6
+  { 1,	OperandInfo3 },  // Inst #348 = KRESTSP_u6
+  { 0,	NULL },  // Inst #349 = KRET_0R
+  { 5,	OperandInfo56 },  // Inst #350 = LADD_l5r
+  { 3,	OperandInfo50 },  // Inst #351 = LD16S_3r
+  { 3,	OperandInfo50 },  // Inst #352 = LD8U_3r
+  { 3,	OperandInfo50 },  // Inst #353 = LDA16B_l3r
+  { 3,	OperandInfo50 },  // Inst #354 = LDA16F_l3r
+  { 1,	OperandInfo2 },  // Inst #355 = LDAPB_lu10
+  { 1,	OperandInfo2 },  // Inst #356 = LDAPB_u10
+  { 1,	OperandInfo2 },  // Inst #357 = LDAPF_lu10
+  { 1,	OperandInfo2 },  // Inst #358 = LDAPF_lu10_ba
+  { 1,	OperandInfo2 },  // Inst #359 = LDAPF_u10
+  { 3,	OperandInfo49 },  // Inst #360 = LDAWB_l2rus
+  { 3,	OperandInfo50 },  // Inst #361 = LDAWB_l3r
+  { 1,	OperandInfo3 },  // Inst #362 = LDAWCP_lu6
+  { 1,	OperandInfo3 },  // Inst #363 = LDAWCP_u6
+  { 2,	OperandInfo57 },  // Inst #364 = LDAWDP_lru6
+  { 2,	OperandInfo57 },  // Inst #365 = LDAWDP_ru6
+  { 3,	OperandInfo49 },  // Inst #366 = LDAWF_l2rus
+  { 3,	OperandInfo50 },  // Inst #367 = LDAWF_l3r
+  { 2,	OperandInfo57 },  // Inst #368 = LDAWSP_lru6
+  { 2,	OperandInfo57 },  // Inst #369 = LDAWSP_ru6
+  { 2,	OperandInfo57 },  // Inst #370 = LDC_lru6
+  { 2,	OperandInfo57 },  // Inst #371 = LDC_ru6
+  { 0,	NULL },  // Inst #372 = LDET_0R
+  { 5,	OperandInfo56 },  // Inst #373 = LDIVU_l5r
+  { 0,	NULL },  // Inst #374 = LDSED_0R
+  { 0,	NULL },  // Inst #375 = LDSPC_0R
+  { 0,	NULL },  // Inst #376 = LDSSR_0R
+  { 2,	OperandInfo57 },  // Inst #377 = LDWCP_lru6
+  { 1,	OperandInfo3 },  // Inst #378 = LDWCP_lu10
+  { 2,	OperandInfo57 },  // Inst #379 = LDWCP_ru6
+  { 1,	OperandInfo3 },  // Inst #380 = LDWCP_u10
+  { 2,	OperandInfo57 },  // Inst #381 = LDWDP_lru6
+  { 2,	OperandInfo57 },  // Inst #382 = LDWDP_ru6
+  { 2,	OperandInfo57 },  // Inst #383 = LDWSP_lru6
+  { 2,	OperandInfo57 },  // Inst #384 = LDWSP_ru6
+  { 3,	OperandInfo49 },  // Inst #385 = LDW_2rus
+  { 3,	OperandInfo50 },  // Inst #386 = LDW_3r
+  { 6,	OperandInfo58 },  // Inst #387 = LMUL_l6r
+  { 3,	OperandInfo50 },  // Inst #388 = LSS_3r
+  { 5,	OperandInfo56 },  // Inst #389 = LSUB_l5r
+  { 3,	OperandInfo50 },  // Inst #390 = LSU_3r
+  { 6,	OperandInfo59 },  // Inst #391 = MACCS_l4r
+  { 6,	OperandInfo59 },  // Inst #392 = MACCU_l4r
+  { 1,	OperandInfo46 },  // Inst #393 = MJOIN_1r
+  { 2,	OperandInfo45 },  // Inst #394 = MKMSK_2r
+  { 2,	OperandInfo53 },  // Inst #395 = MKMSK_rus
+  { 1,	OperandInfo46 },  // Inst #396 = MSYNC_1r
+  { 3,	OperandInfo50 },  // Inst #397 = MUL_l3r
+  { 2,	OperandInfo45 },  // Inst #398 = NEG
+  { 2,	OperandInfo45 },  // Inst #399 = NOT
+  { 3,	OperandInfo50 },  // Inst #400 = OR_3r
+  { 2,	OperandInfo45 },  // Inst #401 = OUTCT_2r
+  { 2,	OperandInfo53 },  // Inst #402 = OUTCT_rus
+  { 3,	OperandInfo49 },  // Inst #403 = OUTPW_l2rus
+  { 3,	OperandInfo51 },  // Inst #404 = OUTSHR_2r
+  { 2,	OperandInfo45 },  // Inst #405 = OUTT_2r
+  { 2,	OperandInfo45 },  // Inst #406 = OUT_2r
+  { 2,	OperandInfo45 },  // Inst #407 = PEEK_2r
+  { 3,	OperandInfo50 },  // Inst #408 = REMS_l3r
+  { 3,	OperandInfo50 },  // Inst #409 = REMU_l3r
+  { 1,	OperandInfo3 },  // Inst #410 = RETSP_lu6
+  { 1,	OperandInfo3 },  // Inst #411 = RETSP_u6
+  { 2,	OperandInfo45 },  // Inst #412 = SETCLK_l2r
+  { 1,	OperandInfo46 },  // Inst #413 = SETCP_1r
+  { 2,	OperandInfo45 },  // Inst #414 = SETC_l2r
+  { 2,	OperandInfo53 },  // Inst #415 = SETC_lru6
+  { 2,	OperandInfo53 },  // Inst #416 = SETC_ru6
+  { 1,	OperandInfo46 },  // Inst #417 = SETDP_1r
+  { 2,	OperandInfo45 },  // Inst #418 = SETD_2r
+  { 1,	OperandInfo46 },  // Inst #419 = SETEV_1r
+  { 0,	NULL },  // Inst #420 = SETKEP_0R
+  { 2,	OperandInfo45 },  // Inst #421 = SETN_l2r
+  { 2,	OperandInfo45 },  // Inst #422 = SETPSC_2r
+  { 2,	OperandInfo45 },  // Inst #423 = SETPS_l2r
+  { 2,	OperandInfo45 },  // Inst #424 = SETPT_2r
+  { 2,	OperandInfo45 },  // Inst #425 = SETRDY_l2r
+  { 1,	OperandInfo46 },  // Inst #426 = SETSP_1r
+  { 1,	OperandInfo3 },  // Inst #427 = SETSR_branch_lu6
+  { 1,	OperandInfo3 },  // Inst #428 = SETSR_branch_u6
+  { 1,	OperandInfo3 },  // Inst #429 = SETSR_lu6
+  { 1,	OperandInfo3 },  // Inst #430 = SETSR_u6
+  { 2,	OperandInfo45 },  // Inst #431 = SETTW_l2r
+  { 1,	OperandInfo46 },  // Inst #432 = SETV_1r
+  { 3,	OperandInfo51 },  // Inst #433 = SEXT_2r
+  { 3,	OperandInfo60 },  // Inst #434 = SEXT_rus
+  { 3,	OperandInfo49 },  // Inst #435 = SHL_2rus
+  { 3,	OperandInfo50 },  // Inst #436 = SHL_3r
+  { 3,	OperandInfo49 },  // Inst #437 = SHR_2rus
+  { 3,	OperandInfo50 },  // Inst #438 = SHR_3r
+  { 0,	NULL },  // Inst #439 = SSYNC_0r
+  { 3,	OperandInfo50 },  // Inst #440 = ST16_l3r
+  { 3,	OperandInfo50 },  // Inst #441 = ST8_l3r
+  { 0,	NULL },  // Inst #442 = STET_0R
+  { 0,	NULL },  // Inst #443 = STSED_0R
+  { 0,	NULL },  // Inst #444 = STSPC_0R
+  { 0,	NULL },  // Inst #445 = STSSR_0R
+  { 2,	OperandInfo57 },  // Inst #446 = STWDP_lru6
+  { 2,	OperandInfo57 },  // Inst #447 = STWDP_ru6
+  { 2,	OperandInfo57 },  // Inst #448 = STWSP_lru6
+  { 2,	OperandInfo57 },  // Inst #449 = STWSP_ru6
+  { 3,	OperandInfo49 },  // Inst #450 = STW_2rus
+  { 3,	OperandInfo50 },  // Inst #451 = STW_l3r
+  { 3,	OperandInfo49 },  // Inst #452 = SUB_2rus
+  { 3,	OperandInfo50 },  // Inst #453 = SUB_3r
+  { 1,	OperandInfo46 },  // Inst #454 = SYNCR_1r
+  { 2,	OperandInfo45 },  // Inst #455 = TESTCT_2r
+  { 2,	OperandInfo45 },  // Inst #456 = TESTLCL_l2r
+  { 2,	OperandInfo45 },  // Inst #457 = TESTWCT_2r
+  { 2,	OperandInfo61 },  // Inst #458 = TSETMR_2r
+  { 3,	OperandInfo62 },  // Inst #459 = TSETR_3r
+  { 1,	OperandInfo46 },  // Inst #460 = TSTART_1R
+  { 1,	OperandInfo46 },  // Inst #461 = WAITEF_1R
+  { 1,	OperandInfo46 },  // Inst #462 = WAITET_1R
+  { 0,	NULL },  // Inst #463 = WAITEU_0R
+  { 3,	OperandInfo50 },  // Inst #464 = XOR_l3r
+  { 3,	OperandInfo51 },  // Inst #465 = ZEXT_2r
+  { 3,	OperandInfo60 },  // Inst #466 = ZEXT_rus
+};
+
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverlength-strings"
+#endif
+extern const char XCoreInstrNameData[] = {
+  /* 0 */ "G_FLOG10\0"
+  /* 9 */ "LDAPB_u10\0"
+  /* 19 */ "BLRB_u10\0"
+  /* 28 */ "LDAPF_u10\0"
+  /* 38 */ "BLRF_u10\0"
+  /* 47 */ "BLACP_u10\0"
+  /* 57 */ "LDWCP_u10\0"
+  /* 67 */ "LDAPB_lu10\0"
+  /* 78 */ "BLRB_lu10\0"
+  /* 88 */ "LDAPF_lu10\0"
+  /* 99 */ "BLRF_lu10\0"
+  /* 109 */ "BLACP_lu10\0"
+  /* 120 */ "LDWCP_lu10\0"
+  /* 131 */ "BR_JT32\0"
+  /* 139 */ "G_FLOG2\0"
+  /* 147 */ "G_FEXP2\0"
+  /* 155 */ "KCALL_u6\0"
+  /* 164 */ "LDAWCP_u6\0"
+  /* 174 */ "EXTDP_u6\0"
+  /* 183 */ "RETSP_u6\0"
+  /* 192 */ "KENTSP_u6\0"
+  /* 202 */ "KRESTSP_u6\0"
+  /* 213 */ "EXTSP_u6\0"
+  /* 222 */ "CLRSR_u6\0"
+  /* 231 */ "GETSR_u6\0"
+  /* 240 */ "SETSR_u6\0"
+  /* 249 */ "BLAT_u6\0"
+  /* 257 */ "BRBU_u6\0"
+  /* 265 */ "BRFU_u6\0"
+  /* 273 */ "CLRSR_branch_u6\0"
+  /* 289 */ "SETSR_branch_u6\0"
+  /* 305 */ "KCALL_lu6\0"
+  /* 315 */ "LDAWCP_lu6\0"
+  /* 326 */ "EXTDP_lu6\0"
+  /* 336 */ "RETSP_lu6\0"
+  /* 346 */ "KENTSP_lu6\0"
+  /* 357 */ "KRESTSP_lu6\0"
+  /* 369 */ "EXTSP_lu6\0"
+  /* 379 */ "CLRSR_lu6\0"
+  /* 389 */ "GETSR_lu6\0"
+  /* 399 */ "SETSR_lu6\0"
+  /* 409 */ "BLAT_lu6\0"
+  /* 418 */ "BRBU_lu6\0"
+  /* 427 */ "BRFU_lu6\0"
+  /* 436 */ "CLRSR_branch_lu6\0"
+  /* 453 */ "SETSR_branch_lu6\0"
+  /* 470 */ "LDC_ru6\0"
+  /* 478 */ "SETC_ru6\0"
+  /* 487 */ "BRBF_ru6\0"
+  /* 496 */ "BRFF_ru6\0"
+  /* 505 */ "LDWCP_ru6\0"
+  /* 515 */ "LDAWDP_ru6\0"
+  /* 526 */ "LDWDP_ru6\0"
+  /* 536 */ "STWDP_ru6\0"
+  /* 546 */ "LDAWSP_ru6\0"
+  /* 557 */ "LDWSP_ru6\0"
+  /* 567 */ "STWSP_ru6\0"
+  /* 577 */ "BRBT_ru6\0"
+  /* 586 */ "BRFT_ru6\0"
+  /* 595 */ "LDC_lru6\0"
+  /* 604 */ "SETC_lru6\0"
+  /* 614 */ "BRBF_lru6\0"
+  /* 624 */ "BRFF_lru6\0"
+  /* 634 */ "LDWCP_lru6\0"
+  /* 645 */ "LDAWDP_lru6\0"
+  /* 657 */ "LDWDP_lru6\0"
+  /* 668 */ "STWDP_lru6\0"
+  /* 679 */ "LDAWSP_lru6\0"
+  /* 691 */ "LDWSP_lru6\0"
+  /* 702 */ "STWSP_lru6\0"
+  /* 713 */ "BRBT_lru6\0"
+  /* 723 */ "BRFT_lru6\0"
+  /* 733 */ "G_FMA\0"
+  /* 739 */ "G_STRICT_FMA\0"
+  /* 752 */ "G_FSUB\0"
+  /* 759 */ "G_STRICT_FSUB\0"
+  /* 773 */ "G_ATOMICRMW_FSUB\0"
+  /* 790 */ "G_SUB\0"
+  /* 796 */ "G_ATOMICRMW_SUB\0"
+  /* 812 */ "SELECT_CC\0"
+  /* 822 */ "G_INTRINSIC\0"
+  /* 834 */ "G_FPTRUNC\0"
+  /* 844 */ "G_INTRINSIC_TRUNC\0"
+  /* 862 */ "G_TRUNC\0"
+  /* 870 */ "G_BUILD_VECTOR_TRUNC\0"
+  /* 891 */ "G_DYN_STACKALLOC\0"
+  /* 908 */ "G_FMAD\0"
+  /* 915 */ "G_INDEXED_SEXTLOAD\0"
+  /* 934 */ "G_SEXTLOAD\0"
+  /* 945 */ "G_INDEXED_ZEXTLOAD\0"
+  /* 964 */ "G_ZEXTLOAD\0"
+  /* 975 */ "G_INDEXED_LOAD\0"
+  /* 990 */ "G_LOAD\0"
+  /* 997 */ "G_VECREDUCE_FADD\0"
+  /* 1014 */ "G_FADD\0"
+  /* 1021 */ "G_VECREDUCE_SEQ_FADD\0"
+  /* 1042 */ "G_STRICT_FADD\0"
+  /* 1056 */ "G_ATOMICRMW_FADD\0"
+  /* 1073 */ "G_VECREDUCE_ADD\0"
+  /* 1089 */ "G_ADD\0"
+  /* 1095 */ "G_PTR_ADD\0"
+  /* 1105 */ "G_ATOMICRMW_ADD\0"
+  /* 1121 */ "G_ATOMICRMW_NAND\0"
+  /* 1138 */ "G_VECREDUCE_AND\0"
+  /* 1154 */ "G_AND\0"
+  /* 1160 */ "G_ATOMICRMW_AND\0"
+  /* 1176 */ "LIFETIME_END\0"
+  /* 1189 */ "G_BRCOND\0"
+  /* 1198 */ "G_LLROUND\0"
+  /* 1208 */ "G_LROUND\0"
+  /* 1217 */ "G_INTRINSIC_ROUND\0"
+  /* 1235 */ "LOAD_STACK_GUARD\0"
+  /* 1252 */ "PSEUDO_PROBE\0"
+  /* 1265 */ "G_SSUBE\0"
+  /* 1273 */ "G_USUBE\0"
+  /* 1281 */ "G_FENCE\0"
+  /* 1289 */ "ARITH_FENCE\0"
+  /* 1301 */ "REG_SEQUENCE\0"
+  /* 1314 */ "G_SADDE\0"
+  /* 1322 */ "G_UADDE\0"
+  /* 1330 */ "G_FMINNUM_IEEE\0"
+  /* 1345 */ "G_FMAXNUM_IEEE\0"
+  /* 1360 */ "G_JUMP_TABLE\0"
+  /* 1373 */ "BUNDLE\0"
+  /* 1380 */ "G_MEMCPY_INLINE\0"
+  /* 1396 */ "LOCAL_ESCAPE\0"
+  /* 1409 */ "G_INDEXED_STORE\0"
+  /* 1425 */ "G_STORE\0"
+  /* 1433 */ "G_BITREVERSE\0"
+  /* 1446 */ "DBG_VALUE\0"
+  /* 1456 */ "G_GLOBAL_VALUE\0"
+  /* 1471 */ "G_MEMMOVE\0"
+  /* 1481 */ "G_FREEZE\0"
+  /* 1490 */ "G_FCANONICALIZE\0"
+  /* 1506 */ "G_CTLZ_ZERO_UNDEF\0"
+  /* 1524 */ "G_CTTZ_ZERO_UNDEF\0"
+  /* 1542 */ "G_IMPLICIT_DEF\0"
+  /* 1557 */ "DBG_INSTR_REF\0"
+  /* 1571 */ "G_FNEG\0"
+  /* 1578 */ "EXTRACT_SUBREG\0"
+  /* 1593 */ "INSERT_SUBREG\0"
+  /* 1607 */ "G_SEXT_INREG\0"
+  /* 1620 */ "SUBREG_TO_REG\0"
+  /* 1634 */ "G_ATOMIC_CMPXCHG\0"
+  /* 1651 */ "G_ATOMICRMW_XCHG\0"
+  /* 1668 */ "G_FLOG\0"
+  /* 1675 */ "G_VAARG\0"
+  /* 1683 */ "PREALLOCATED_ARG\0"
+  /* 1700 */ "G_SMULH\0"
+  /* 1708 */ "G_UMULH\0"
+  /* 1716 */ "LDAWFI\0"
+  /* 1723 */ "LDWFI\0"
+  /* 1729 */ "STWFI\0"
+  /* 1735 */ "DBG_PHI\0"
+  /* 1743 */ "G_FPTOSI\0"
+  /* 1752 */ "G_FPTOUI\0"
+  /* 1761 */ "G_FPOWI\0"
+  /* 1769 */ "G_PTRMASK\0"
+  /* 1779 */ "GC_LABEL\0"
+  /* 1788 */ "DBG_LABEL\0"
+  /* 1798 */ "EH_LABEL\0"
+  /* 1807 */ "ANNOTATION_LABEL\0"
+  /* 1824 */ "ICALL_BRANCH_FUNNEL\0"
+  /* 1844 */ "G_FSHL\0"
+  /* 1851 */ "G_SHL\0"
+  /* 1857 */ "G_FCEIL\0"
+  /* 1865 */ "PATCHABLE_TAIL_CALL\0"
+  /* 1885 */ "PATCHABLE_TYPED_EVENT_CALL\0"
+  /* 1912 */ "PATCHABLE_EVENT_CALL\0"
+  /* 1933 */ "FENTRY_CALL\0"
+  /* 1945 */ "KILL\0"
+  /* 1950 */ "G_ROTL\0"
+  /* 1957 */ "G_VECREDUCE_FMUL\0"
+  /* 1974 */ "G_FMUL\0"
+  /* 1981 */ "G_VECREDUCE_SEQ_FMUL\0"
+  /* 2002 */ "G_STRICT_FMUL\0"
+  /* 2016 */ "G_VECREDUCE_MUL\0"
+  /* 2032 */ "G_MUL\0"
+  /* 2038 */ "G_FREM\0"
+  /* 2045 */ "G_STRICT_FREM\0"
+  /* 2059 */ "G_SREM\0"
+  /* 2066 */ "G_UREM\0"
+  /* 2073 */ "G_SDIVREM\0"
+  /* 2083 */ "G_UDIVREM\0"
+  /* 2093 */ "INLINEASM\0"
+  /* 2103 */ "G_FMINIMUM\0"
+  /* 2114 */ "G_FMAXIMUM\0"
+  /* 2125 */ "G_FMINNUM\0"
+  /* 2135 */ "G_FMAXNUM\0"
+  /* 2145 */ "G_INTRINSIC_ROUNDEVEN\0"
+  /* 2167 */ "G_FCOPYSIGN\0"
+  /* 2179 */ "G_VECREDUCE_FMIN\0"
+  /* 2196 */ "G_VECREDUCE_SMIN\0"
+  /* 2213 */ "G_SMIN\0"
+  /* 2220 */ "G_VECREDUCE_UMIN\0"
+  /* 2237 */ "G_UMIN\0"
+  /* 2244 */ "G_ATOMICRMW_UMIN\0"
+  /* 2261 */ "G_ATOMICRMW_MIN\0"
+  /* 2277 */ "G_FSIN\0"
+  /* 2284 */ "CFI_INSTRUCTION\0"
+  /* 2300 */ "EH_RETURN\0"
+  /* 2310 */ "ADJCALLSTACKDOWN\0"
+  /* 2327 */ "G_SSUBO\0"
+  /* 2335 */ "G_USUBO\0"
+  /* 2343 */ "G_SADDO\0"
+  /* 2351 */ "G_UADDO\0"
+  /* 2359 */ "G_SMULO\0"
+  /* 2367 */ "G_UMULO\0"
+  /* 2375 */ "G_BZERO\0"
+  /* 2383 */ "STACKMAP\0"
+  /* 2392 */ "G_BSWAP\0"
+  /* 2400 */ "G_SITOFP\0"
+  /* 2409 */ "G_UITOFP\0"
+  /* 2418 */ "G_FCMP\0"
+  /* 2425 */ "G_ICMP\0"
+  /* 2432 */ "G_CTPOP\0"
+  /* 2440 */ "PATCHABLE_OP\0"
+  /* 2453 */ "FAULTING_OP\0"
+  /* 2465 */ "ADJCALLSTACKUP\0"
+  /* 2480 */ "PREALLOCATED_SETUP\0"
+  /* 2499 */ "G_FEXP\0"
+  /* 2506 */ "LDSPC_0R\0"
+  /* 2515 */ "STSPC_0R\0"
+  /* 2524 */ "LDSED_0R\0"
+  /* 2533 */ "STSED_0R\0"
+  /* 2542 */ "GETED_0R\0"
+  /* 2551 */ "GETID_0R\0"
+  /* 2560 */ "CLRE_0R\0"
+  /* 2568 */ "DCALL_0R\0"
+  /* 2577 */ "GETKEP_0R\0"
+  /* 2587 */ "SETKEP_0R\0"
+  /* 2597 */ "GETKSP_0R\0"
+  /* 2607 */ "DENTSP_0R\0"
+  /* 2617 */ "DRESTSP_0R\0"
+  /* 2628 */ "LDSSR_0R\0"
+  /* 2637 */ "STSSR_0R\0"
+  /* 2646 */ "LDET_0R\0"
+  /* 2654 */ "FREET_0R\0"
+  /* 2663 */ "DRET_0R\0"
+  /* 2671 */ "KRET_0R\0"
+  /* 2679 */ "GETET_0R\0"
+  /* 2688 */ "STET_0R\0"
+  /* 2696 */ "WAITEU_0R\0"
+  /* 2706 */ "WAITEF_1R\0"
+  /* 2716 */ "WAITET_1R\0"
+  /* 2726 */ "CLRPT_1R\0"
+  /* 2735 */ "TSTART_1R\0"
+  /* 2745 */ "G_BR\0"
+  /* 2750 */ "INLINEASM_BR\0"
+  /* 2763 */ "G_BLOCK_ADDR\0"
+  /* 2776 */ "PATCHABLE_FUNCTION_ENTER\0"
+  /* 2801 */ "G_READCYCLECOUNTER\0"
+  /* 2820 */ "G_READ_REGISTER\0"
+  /* 2836 */ "G_WRITE_REGISTER\0"
+  /* 2853 */ "G_ASHR\0"
+  /* 2860 */ "G_FSHR\0"
+  /* 2867 */ "G_LSHR\0"
+  /* 2874 */ "G_FFLOOR\0"
+  /* 2883 */ "G_BUILD_VECTOR\0"
+  /* 2898 */ "G_SHUFFLE_VECTOR\0"
+  /* 2915 */ "G_VECREDUCE_XOR\0"
+  /* 2931 */ "G_XOR\0"
+  /* 2937 */ "G_ATOMICRMW_XOR\0"
+  /* 2953 */ "G_VECREDUCE_OR\0"
+  /* 2968 */ "G_OR\0"
+  /* 2973 */ "G_ATOMICRMW_OR\0"
+  /* 2988 */ "G_ROTR\0"
+  /* 2995 */ "G_INTTOPTR\0"
+  /* 3006 */ "G_FABS\0"
+  /* 3013 */ "G_ABS\0"
+  /* 3019 */ "G_UNMERGE_VALUES\0"
+  /* 3036 */ "G_MERGE_VALUES\0"
+  /* 3051 */ "G_FCOS\0"
+  /* 3058 */ "G_CONCAT_VECTORS\0"
+  /* 3075 */ "COPY_TO_REGCLASS\0"
+  /* 3092 */ "G_ATOMIC_CMPXCHG_WITH_SUCCESS\0"
+  /* 3122 */ "G_INTRINSIC_W_SIDE_EFFECTS\0"
+  /* 3149 */ "G_SSUBSAT\0"
+  /* 3159 */ "G_USUBSAT\0"
+  /* 3169 */ "G_SADDSAT\0"
+  /* 3179 */ "G_UADDSAT\0"
+  /* 3189 */ "G_SSHLSAT\0"
+  /* 3199 */ "G_USHLSAT\0"
+  /* 3209 */ "G_SMULFIXSAT\0"
+  /* 3222 */ "G_UMULFIXSAT\0"
+  /* 3235 */ "G_SDIVFIXSAT\0"
+  /* 3248 */ "G_UDIVFIXSAT\0"
+  /* 3261 */ "G_EXTRACT\0"
+  /* 3271 */ "G_SELECT\0"
+  /* 3280 */ "G_BRINDIRECT\0"
+  /* 3293 */ "PATCHABLE_RET\0"
+  /* 3307 */ "FRAME_TO_ARGS_OFFSET\0"
+  /* 3328 */ "G_MEMSET\0"
+  /* 3337 */ "PATCHABLE_FUNCTION_EXIT\0"
+  /* 3361 */ "G_BRJT\0"
+  /* 3368 */ "BR_JT\0"
+  /* 3374 */ "G_EXTRACT_VECTOR_ELT\0"
+  /* 3395 */ "G_INSERT_VECTOR_ELT\0"
+  /* 3415 */ "G_FCONSTANT\0"
+  /* 3427 */ "G_CONSTANT\0"
+  /* 3438 */ "STATEPOINT\0"
+  /* 3449 */ "PATCHPOINT\0"
+  /* 3460 */ "G_PTRTOINT\0"
+  /* 3471 */ "G_FRINT\0"
+  /* 3479 */ "G_INTRINSIC_LRINT\0"
+  /* 3497 */ "G_FNEARBYINT\0"
+  /* 3510 */ "NOT\0"
+  /* 3514 */ "G_VASTART\0"
+  /* 3524 */ "LIFETIME_START\0"
+  /* 3539 */ "G_INSERT\0"
+  /* 3548 */ "G_FSQRT\0"
+  /* 3556 */ "G_STRICT_FSQRT\0"
+  /* 3571 */ "G_BITCAST\0"
+  /* 3581 */ "G_ADDRSPACE_CAST\0"
+  /* 3598 */ "DBG_VALUE_LIST\0"
+  /* 3613 */ "G_FPEXT\0"
+  /* 3621 */ "G_SEXT\0"
+  /* 3628 */ "G_ASSERT_SEXT\0"
+  /* 3642 */ "G_ANYEXT\0"
+  /* 3651 */ "G_ZEXT\0"
+  /* 3658 */ "G_ASSERT_ZEXT\0"
+  /* 3672 */ "G_FDIV\0"
+  /* 3679 */ "G_STRICT_FDIV\0"
+  /* 3693 */ "G_SDIV\0"
+  /* 3700 */ "G_UDIV\0"
+  /* 3707 */ "G_FPOW\0"
+  /* 3714 */ "G_VECREDUCE_FMAX\0"
+  /* 3731 */ "G_VECREDUCE_SMAX\0"
+  /* 3748 */ "G_SMAX\0"
+  /* 3755 */ "G_VECREDUCE_UMAX\0"
+  /* 3772 */ "G_UMAX\0"
+  /* 3779 */ "G_ATOMICRMW_UMAX\0"
+  /* 3796 */ "G_ATOMICRMW_MAX\0"
+  /* 3812 */ "G_FRAME_INDEX\0"
+  /* 3826 */ "G_SBFX\0"
+  /* 3833 */ "G_UBFX\0"
+  /* 3840 */ "G_SMULFIX\0"
+  /* 3850 */ "G_UMULFIX\0"
+  /* 3860 */ "G_SDIVFIX\0"
+  /* 3870 */ "G_UDIVFIX\0"
+  /* 3880 */ "G_MEMCPY\0"
+  /* 3889 */ "COPY\0"
+  /* 3894 */ "G_CTLZ\0"
+  /* 3901 */ "G_CTTZ\0"
+  /* 3908 */ "LDAPF_lu10_ba\0"
+  /* 3922 */ "SSYNC_0r\0"
+  /* 3931 */ "BLA_1r\0"
+  /* 3938 */ "MSYNC_1r\0"
+  /* 3947 */ "ECALLF_1r\0"
+  /* 3957 */ "DGETREG_1r\0"
+  /* 3968 */ "KCALL_1r\0"
+  /* 3977 */ "MJOIN_1r\0"
+  /* 3986 */ "SETCP_1r\0"
+  /* 3995 */ "SETDP_1r\0"
+  /* 4004 */ "SETSP_1r\0"
+  /* 4013 */ "SYNCR_1r\0"
+  /* 4022 */ "FREER_1r\0"
+  /* 4031 */ "ECALLT_1r\0"
+  /* 4041 */ "BAU_1r\0"
+  /* 4048 */ "EDU_1r\0"
+  /* 4055 */ "EEU_1r\0"
+  /* 4062 */ "BRU_1r\0"
+  /* 4069 */ "SETEV_1r\0"
+  /* 4078 */ "SETV_1r\0"
+  /* 4086 */ "INITPC_2r\0"
+  /* 4096 */ "SETPSC_2r\0"
+  /* 4106 */ "SETD_2r\0"
+  /* 4114 */ "EEF_2r\0"
+  /* 4121 */ "PEEK_2r\0"
+  /* 4129 */ "MKMSK_2r\0"
+  /* 4138 */ "ENDIN_2r\0"
+  /* 4147 */ "INITCP_2r\0"
+  /* 4157 */ "INITDP_2r\0"
+  /* 4167 */ "INITSP_2r\0"
+  /* 4177 */ "INSHR_2r\0"
+  /* 4186 */ "OUTSHR_2r\0"
+  /* 4196 */ "TSETMR_2r\0"
+  /* 4206 */ "GETTS_2r\0"
+  /* 4215 */ "CHKCT_2r\0"
+  /* 4224 */ "INCT_2r\0"
+  /* 4232 */ "TESTCT_2r\0"
+  /* 4242 */ "OUTCT_2r\0"
+  /* 4251 */ "TESTWCT_2r\0"
+  /* 4262 */ "EET_2r\0"
+  /* 4269 */ "INT_2r\0"
+  /* 4276 */ "ANDNOT_2r\0"
+  /* 4286 */ "SETPT_2r\0"
+  /* 4295 */ "GETST_2r\0"
+  /* 4304 */ "OUTT_2r\0"
+  /* 4312 */ "OUT_2r\0"
+  /* 4319 */ "SEXT_2r\0"
+  /* 4327 */ "ZEXT_2r\0"
+  /* 4335 */ "SETC_l2r\0"
+  /* 4344 */ "GETD_l2r\0"
+  /* 4353 */ "SETCLK_l2r\0"
+  /* 4364 */ "TESTLCL_l2r\0"
+  /* 4376 */ "GETN_l2r\0"
+  /* 4385 */ "SETN_l2r\0"
+  /* 4394 */ "INITLR_l2r\0"
+  /* 4405 */ "GETPS_l2r\0"
+  /* 4415 */ "SETPS_l2r\0"
+  /* 4425 */ "BYTEREV_l2r\0"
+  /* 4437 */ "BITREV_l2r\0"
+  /* 4448 */ "SETTW_l2r\0"
+  /* 4458 */ "SETRDY_l2r\0"
+  /* 4469 */ "CLZ_l2r\0"
+  /* 4477 */ "SUB_3r\0"
+  /* 4484 */ "ADD_3r\0"
+  /* 4491 */ "AND_3r\0"
+  /* 4498 */ "SHL_3r\0"
+  /* 4505 */ "EQ_3r\0"
+  /* 4511 */ "SHR_3r\0"
+  /* 4518 */ "OR_3r\0"
+  /* 4524 */ "TSETR_3r\0"
+  /* 4533 */ "LD16S_3r\0"
+  /* 4542 */ "LSS_3r\0"
+  /* 4549 */ "LD8U_3r\0"
+  /* 4557 */ "LSU_3r\0"
+  /* 4564 */ "LDW_3r\0"
+  /* 4571 */ "ST16_l3r\0"
+  /* 4580 */ "ST8_l3r\0"
+  /* 4588 */ "LDA16B_l3r\0"
+  /* 4599 */ "LDAWB_l3r\0"
+  /* 4609 */ "CRC_l3r\0"
+  /* 4617 */ "LDA16F_l3r\0"
+  /* 4628 */ "LDAWF_l3r\0"
+  /* 4638 */ "MUL_l3r\0"
+  /* 4646 */ "ASHR_l3r\0"
+  /* 4655 */ "XOR_l3r\0"
+  /* 4663 */ "REMS_l3r\0"
+  /* 4672 */ "DIVS_l3r\0"
+  /* 4681 */ "REMU_l3r\0"
+  /* 4690 */ "DIVU_l3r\0"
+  /* 4699 */ "STW_l3r\0"
+  /* 4707 */ "CRC8_l4r\0"
+  /* 4716 */ "MACCS_l4r\0"
+  /* 4726 */ "MACCU_l4r\0"
+  /* 4736 */ "LSUB_l5r\0"
+  /* 4745 */ "LADD_l5r\0"
+  /* 4754 */ "LDIVU_l5r\0"
+  /* 4764 */ "LMUL_l6r\0"
+  /* 4773 */ "Int_MemBarrier\0"
+  /* 4788 */ "SUB_2rus\0"
+  /* 4797 */ "ADD_2rus\0"
+  /* 4806 */ "SHL_2rus\0"
+  /* 4815 */ "EQ_2rus\0"
+  /* 4823 */ "SHR_2rus\0"
+  /* 4832 */ "LDW_2rus\0"
+  /* 4841 */ "STW_2rus\0"
+  /* 4850 */ "LDAWB_l2rus\0"
+  /* 4862 */ "LDAWF_l2rus\0"
+  /* 4874 */ "ASHR_l2rus\0"
+  /* 4885 */ "INPW_l2rus\0"
+  /* 4896 */ "OUTPW_l2rus\0"
+  /* 4908 */ "MKMSK_rus\0"
+  /* 4918 */ "GETR_rus\0"
+  /* 4927 */ "CHKCT_rus\0"
+  /* 4937 */ "OUTCT_rus\0"
+  /* 4947 */ "SEXT_rus\0"
+  /* 4956 */ "ZEXT_rus\0"
+};
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
+extern const unsigned XCoreInstrNameIndices[] = {
+    1739U, 2093U, 2750U, 2284U, 1798U, 1779U, 1807U, 1945U, 
+    1578U, 1593U, 1544U, 1620U, 3075U, 1446U, 3598U, 1557U, 
+    1735U, 1788U, 1301U, 3889U, 1373U, 3524U, 1176U, 1252U, 
+    1289U, 2383U, 1933U, 3449U, 1235U, 2480U, 1683U, 3438U, 
+    1396U, 2453U, 2440U, 2776U, 3293U, 3337U, 1865U, 1912U, 
+    1885U, 1824U, 3628U, 3658U, 1089U, 790U, 2032U, 3693U, 
+    3700U, 2059U, 2066U, 2073U, 2083U, 1154U, 2968U, 2931U, 
+    1542U, 1737U, 3812U, 1456U, 3261U, 3019U, 3539U, 3036U, 
+    2883U, 870U, 3058U, 3460U, 2995U, 3571U, 1481U, 844U, 
+    1217U, 3479U, 2145U, 2801U, 990U, 934U, 964U, 975U, 
+    915U, 945U, 1425U, 1409U, 3092U, 1634U, 1651U, 1105U, 
+    796U, 1160U, 1121U, 2973U, 2937U, 3796U, 2261U, 3779U, 
+    2244U, 1056U, 773U, 1281U, 1189U, 3280U, 822U, 3122U, 
+    3642U, 862U, 3427U, 3415U, 3514U, 1675U, 3621U, 1607U, 
+    3651U, 1851U, 2867U, 2853U, 1844U, 2860U, 2988U, 1950U, 
+    2425U, 2418U, 3271U, 2351U, 1322U, 2335U, 1273U, 2343U, 
+    1314U, 2327U, 1265U, 2367U, 2359U, 1708U, 1700U, 3179U, 
+    3169U, 3159U, 3149U, 3199U, 3189U, 3840U, 3850U, 3209U, 
+    3222U, 3860U, 3870U, 3235U, 3248U, 1014U, 752U, 1974U, 
+    733U, 908U, 3672U, 2038U, 3707U, 1761U, 2499U, 147U, 
+    1668U, 139U, 0U, 1571U, 3613U, 834U, 1743U, 1752U, 
+    2400U, 2409U, 3006U, 2167U, 1490U, 2125U, 2135U, 1330U, 
+    1345U, 2103U, 2114U, 1095U, 1769U, 2213U, 3748U, 2237U, 
+    3772U, 3013U, 1208U, 1198U, 2745U, 3361U, 3395U, 3374U, 
+    2898U, 3901U, 1524U, 3894U, 1506U, 2432U, 2392U, 1433U, 
+    1857U, 3051U, 2277U, 3548U, 2874U, 3471U, 3497U, 3581U, 
+    2763U, 1360U, 891U, 1042U, 759U, 2002U, 3679U, 2045U, 
+    739U, 3556U, 2820U, 2836U, 3880U, 1380U, 1471U, 3328U, 
+    2375U, 1021U, 1981U, 997U, 1957U, 3714U, 2179U, 1073U, 
+    2016U, 1138U, 2953U, 2915U, 3731U, 2196U, 3755U, 2220U, 
+    3826U, 3833U, 2310U, 2465U, 3368U, 131U, 2300U, 3307U, 
+    4773U, 1716U, 1723U, 812U, 1729U, 4797U, 4484U, 4276U, 
+    4491U, 4874U, 4646U, 4041U, 4437U, 109U, 47U, 409U, 
+    249U, 3931U, 78U, 19U, 99U, 38U, 614U, 487U, 
+    713U, 577U, 418U, 257U, 624U, 496U, 723U, 586U, 
+    427U, 265U, 4062U, 4425U, 4215U, 4927U, 2560U, 2726U, 
+    436U, 273U, 379U, 222U, 4469U, 4707U, 4609U, 2568U, 
+    2607U, 3957U, 4672U, 4690U, 2617U, 2663U, 3947U, 4031U, 
+    4048U, 4114U, 4262U, 4055U, 4138U, 347U, 193U, 4815U, 
+    4505U, 326U, 174U, 369U, 213U, 4022U, 2654U, 4344U, 
+    2542U, 2679U, 2551U, 2577U, 2597U, 4376U, 4405U, 4918U, 
+    389U, 231U, 4295U, 4206U, 4224U, 4147U, 4157U, 4394U, 
+    4086U, 4167U, 4885U, 4177U, 4269U, 4141U, 3968U, 305U, 
+    155U, 346U, 192U, 357U, 202U, 2671U, 4745U, 4533U, 
+    4549U, 4588U, 4617U, 67U, 9U, 88U, 3908U, 28U, 
+    4850U, 4599U, 315U, 164U, 645U, 515U, 4862U, 4628U, 
+    679U, 546U, 595U, 470U, 2646U, 4754U, 2524U, 2506U, 
+    2628U, 634U, 120U, 505U, 57U, 657U, 526U, 691U, 
+    557U, 4832U, 4564U, 4764U, 4542U, 4736U, 4557U, 4716U, 
+    4726U, 3977U, 4129U, 4908U, 3938U, 4638U, 1574U, 3510U, 
+    4518U, 4242U, 4937U, 4896U, 4186U, 4304U, 4312U, 4121U, 
+    4663U, 4681U, 336U, 183U, 4353U, 3986U, 4335U, 604U, 
+    478U, 3995U, 4106U, 4069U, 2587U, 4385U, 4096U, 4415U, 
+    4286U, 4458U, 4004U, 453U, 289U, 399U, 240U, 4448U, 
+    4078U, 4319U, 4947U, 4806U, 4498U, 4823U, 4511U, 3922U, 
+    4571U, 4580U, 2688U, 2533U, 2515U, 2637U, 668U, 536U, 
+    702U, 567U, 4841U, 4699U, 4788U, 4477U, 4013U, 4232U, 
+    4364U, 4251U, 4196U, 4524U, 2735U, 2706U, 2716U, 2696U, 
+    4655U, 4327U, 4956U, 
+};
+
+#endif // GET_INSTRINFO_MC_DESC
+

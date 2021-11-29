@@ -31,12 +31,11 @@
 #include "MipsInstPrinter.h"
 
 static void printUnsignedImm(MCInst *MI, int opNum, SStream *O);
+#define printUImm(MI, Op, O, ...) printUnsignedImm(MI, Op, O)
 static char *printAliasInstr(MCInst *MI, SStream *O);
 static char *printAlias(MCInst *MI, SStream *OS);
-static void printCustomAliasOperand(
-    const MCInst *MI, unsigned OpIdx,
-    unsigned PrintMethodIdx,
-    SStream *OS);
+static void printCustomAliasOperand(const MCInst *MI, unsigned OpIdx,
+                                    unsigned PrintMethodIdx, SStream *OS);
 
 // These enumeration declarations were originally in MipsInstrInfo.h but
 // had to be moved here to avoid circular dependencies between
@@ -102,8 +101,7 @@ static void printRegisterList(MCInst *MI, int opNum, SStream *O);
 #define PRINT_ALIAS_INSTR
 #include "MipsGenDisassemblerTables.inc"
 
-static void set_mem_access(MCInst *MI, bool status)
-{
+static void set_mem_access(MCInst *MI, bool status) {
   MI->csh->doing_mem = status;
 
   if (MI->csh->detail != CS_OPT_ON)
@@ -111,25 +109,23 @@ static void set_mem_access(MCInst *MI, bool status)
 
   if (status) {
     MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	.type = MIPS_OP_MEM;
+        .type = MIPS_OP_MEM;
     MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	.mem.base = MIPS_REG_INVALID;
+        .mem.base = MIPS_REG_INVALID;
     MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	.mem.disp = 0;
+        .mem.disp = 0;
   } else {
     // done, create the next operand slot
     MI->flat_insn->detail->mips.op_count++;
   }
 }
 
-static bool isReg(MCInst *MI, unsigned OpNo, unsigned R)
-{
+static bool isReg(MCInst *MI, unsigned OpNo, unsigned R) {
   return (MCOperand_isReg(MCInst_getOperand(MI, OpNo)) &&
-	  MCOperand_getReg(MCInst_getOperand(MI, OpNo)) == R);
+          MCOperand_getReg(MCInst_getOperand(MI, OpNo)) == R);
 }
 
-static const char *MipsFCCToString(Mips_CondCode CC)
-{
+static const char *MipsFCCToString(Mips_CondCode CC) {
   switch (CC) {
   default:
     return 0; // never reach
@@ -184,15 +180,17 @@ static const char *MipsFCCToString(Mips_CondCode CC)
   }
 }
 
-static void printRegName(SStream *OS, unsigned RegNo)
-{
-    debug("there is a name %s\n", getRegisterName(RegNo));
-  SStream_concat(OS, "$%s", getRegisterName(RegNo));
+static void printRegName(SStream *OS, unsigned RegNo) {
+  debug("there is a name %s\n", getRegisterName(RegNo));
+  char *Name = Mips_reg_name(0, RegNo);
+  if (Name)
+    SStream_concat(OS, "$%s", Name);
+  else
+    SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
-void Mips_printInst(MCInst *MI, SStream *O, void *info)
-{
-    debug("start instr printing\n");
+void Mips_printInst(MCInst *MI, SStream *O, void *info) {
+  debug("start instr printing\n");
   char *mnem;
   MRI = info;
   switch (MCInst_getOpcode(MI)) {
@@ -208,16 +206,16 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
   // Try to print any aliases first.
   mnem = printAliasInstr(MI, O);
   if (!mnem) {
-      debug("no mnem found\n");
+    debug("no mnem found\n");
     mnem = printAlias(MI, O);
     if (!mnem) {
-        debug("no alias found\n");
+      debug("no alias found\n");
       printInstruction(MI, O);
     }
   }
 
   if (mnem) {
-      debug("start instr fix %s\n", mnem);
+    debug("start instr fix %s\n", mnem);
     // fixup instruction id due to the change in alias instruction
     MCInst_setOpcodePub(MI, Mips_map_insn(mnem));
     cs_mem_free(mnem);
@@ -225,8 +223,7 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
   debug("end instr printing\n");
 }
 
-static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
-{
+static void printOperand(MCInst *MI, unsigned OpNo, SStream *O) {
   MCOperand *Op;
 
   if (OpNo >= MI->size)
@@ -235,22 +232,21 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
   Op = MCInst_getOperand(MI, OpNo);
   if (MCOperand_isReg(Op)) {
     unsigned int reg = MCOperand_getReg(Op);
-    debugln("is reg %d", reg);
     printRegName(O, reg);
     reg = Mips_map_register(reg);
     if (MI->csh->detail) {
       if (MI->csh->doing_mem) {
-	MI->flat_insn->detail->mips
-	    .operands[MI->flat_insn->detail->mips.op_count]
-	    .mem.base = reg;
+        MI->flat_insn->detail->mips
+            .operands[MI->flat_insn->detail->mips.op_count]
+            .mem.base = reg;
       } else {
-	MI->flat_insn->detail->mips
-	    .operands[MI->flat_insn->detail->mips.op_count]
-	    .type = MIPS_OP_REG;
-	MI->flat_insn->detail->mips
-	    .operands[MI->flat_insn->detail->mips.op_count]
-	    .reg = reg;
-	MI->flat_insn->detail->mips.op_count++;
+        MI->flat_insn->detail->mips
+            .operands[MI->flat_insn->detail->mips.op_count]
+            .type = MIPS_OP_REG;
+        MI->flat_insn->detail->mips
+            .operands[MI->flat_insn->detail->mips.op_count]
+            .reg = reg;
+        MI->flat_insn->detail->mips.op_count++;
       }
     }
     debug("is reg complete\n");
@@ -259,30 +255,29 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
     debug("is imm %ld %d\n", imm, imm > 0);
     if (MI->csh->doing_mem) {
       if (imm) { // only print Imm offset if it is not 0
-	printInt64(O, imm);
+        printInt64(O, imm);
       }
       if (MI->csh->detail)
-	MI->flat_insn->detail->mips
-	    .operands[MI->flat_insn->detail->mips.op_count]
-	    .mem.disp = imm;
+        MI->flat_insn->detail->mips
+            .operands[MI->flat_insn->detail->mips.op_count]
+            .mem.disp = imm;
     } else {
       printInt64(O, imm);
 
       if (MI->csh->detail) {
-	MI->flat_insn->detail->mips
-	    .operands[MI->flat_insn->detail->mips.op_count]
-	    .type = MIPS_OP_IMM;
-	MI->flat_insn->detail->mips
-	    .operands[MI->flat_insn->detail->mips.op_count]
-	    .imm = imm;
-	MI->flat_insn->detail->mips.op_count++;
+        MI->flat_insn->detail->mips
+            .operands[MI->flat_insn->detail->mips.op_count]
+            .type = MIPS_OP_IMM;
+        MI->flat_insn->detail->mips
+            .operands[MI->flat_insn->detail->mips.op_count]
+            .imm = imm;
+        MI->flat_insn->detail->mips.op_count++;
       }
     }
   }
 }
 
-static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
-{
+static void printUnsignedImm(MCInst *MI, int opNum, SStream *O) {
   MCOperand *MO = MCInst_getOperand(MI, opNum);
   if (MCOperand_isImm(MO)) {
     int64_t imm = MCOperand_getImm(MO);
@@ -290,17 +285,16 @@ static void printUnsignedImm(MCInst *MI, int opNum, SStream *O)
 
     if (MI->csh->detail) {
       MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	  .type = MIPS_OP_IMM;
+          .type = MIPS_OP_IMM;
       MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	  .imm = (unsigned short int)imm;
+          .imm = (unsigned short int)imm;
       MI->flat_insn->detail->mips.op_count++;
     }
   } else
     printOperand(MI, opNum, O);
 }
 
-static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
-{
+static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O) {
   MCOperand *MO = MCInst_getOperand(MI, opNum);
   if (MCOperand_isImm(MO)) {
     uint8_t imm = (uint8_t)MCOperand_getImm(MO);
@@ -310,17 +304,16 @@ static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
       SStream_concat(O, "%u", imm);
     if (MI->csh->detail) {
       MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	  .type = MIPS_OP_IMM;
+          .type = MIPS_OP_IMM;
       MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	  .imm = imm;
+          .imm = imm;
       MI->flat_insn->detail->mips.op_count++;
     }
   } else
     printOperand(MI, opNum, O);
 }
 
-static void printMemOperand(MCInst *MI, int opNum, SStream *O, char * ignored)
-{
+static void printMemOperand(MCInst *MI, int opNum, SStream *O, char *ignored) {
   // Load/Store memory operands -- imm($reg)
   // If PIC target the target is loaded as the
   // pattern lw $25,%call16($28)
@@ -347,8 +340,8 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O, char * ignored)
 }
 
 // TODO???
-static void printMemOperandEA(MCInst *MI, int opNum, SStream *O, char * ignored)
-{
+static void printMemOperandEA(MCInst *MI, int opNum, SStream *O,
+                              char *ignored) {
   // when using stack locations for not load/store instructions
   // print the same way as all normal 3 operand instructions.
   printOperand(MI, opNum, O);
@@ -357,28 +350,24 @@ static void printMemOperandEA(MCInst *MI, int opNum, SStream *O, char * ignored)
   return;
 }
 
-static void printFCCOperand(MCInst *MI, int opNum, SStream *O)
-{
+static void printFCCOperand(MCInst *MI, int opNum, SStream *O) {
   MCOperand *MO = MCInst_getOperand(MI, opNum);
   SStream_concat0(O, MipsFCCToString((Mips_CondCode)MCOperand_getImm(MO)));
 }
 
-static void printRegisterPair(MCInst *MI, int opNum, SStream *O)
-{
+static void printRegisterPair(MCInst *MI, int opNum, SStream *O) {
   printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, opNum)));
 }
 
 static char *printAlias1(const char *Str, MCInst *MI, unsigned OpNo,
-			 SStream *OS)
-{
+                         SStream *OS) {
   SStream_concat(OS, "%s\t", Str);
   printOperand(MI, OpNo, OS);
   return cs_strdup(Str);
 }
 
 static char *printAlias2(const char *Str, MCInst *MI, unsigned OpNo0,
-			 unsigned OpNo1, SStream *OS)
-{
+                         unsigned OpNo1, SStream *OS) {
   char *tmp;
 
   tmp = printAlias1(Str, MI, OpNo0, OS);
@@ -391,8 +380,7 @@ static char *printAlias2(const char *Str, MCInst *MI, unsigned OpNo0,
 //#define GET_REGINFO_ENUM
 //#include "MipsGenRegisterInfo.inc"
 
-static char *printAlias(MCInst *MI, SStream *OS)
-{
+static char *printAlias(MCInst *MI, SStream *OS) {
   switch (MCInst_getOpcode(MI)) {
   case Mips_BEQ:
   case Mips_BEQ_MM:
@@ -464,8 +452,7 @@ static char *printAlias(MCInst *MI, SStream *OS)
   }
 }
 
-static void printRegisterList(MCInst *MI, int opNum, SStream *O)
-{
+static void printRegisterList(MCInst *MI, int opNum, SStream *O) {
   int i, e, reg;
 
   // - 2 because register List is always first operand of instruction and it is
@@ -477,9 +464,9 @@ static void printRegisterList(MCInst *MI, int opNum, SStream *O)
     printRegName(O, reg);
     if (MI->csh->detail) {
       MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	  .type = MIPS_OP_REG;
+          .type = MIPS_OP_REG;
       MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count]
-	  .reg = reg;
+          .reg = reg;
       MI->flat_insn->detail->mips.op_count++;
     }
   }

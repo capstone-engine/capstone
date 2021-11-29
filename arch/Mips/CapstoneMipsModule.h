@@ -421,8 +421,8 @@ static DecodeStatus DecodeDAHIDATIMMR6(MCInst *MI, unsigned insn,
 {
   unsigned Rs = fieldFromInstruction(insn, 16, 5);
   unsigned Imm = fieldFromInstruction(insn, 0, 16);
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rs));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rs));
   MCOperand_CreateImm0(MI, Imm);
 
   return MCDisassembler_Success;
@@ -433,8 +433,8 @@ static DecodeStatus DecodeDAHIDATI(MCInst *MI, unsigned insn, uint64_t Address,
 {
   unsigned Rs = fieldFromInstruction(insn, 21, 5);
   unsigned Imm = fieldFromInstruction(insn, 0, 16);
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rs));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rs));
   MCOperand_CreateImm0(MI, Imm);
 
   return MCDisassembler_Success;
@@ -469,9 +469,9 @@ static DecodeStatus DecodeAddiGroupBranch(MCInst *MI, unsigned insn,
     MCInst_setOpcode(MI, Mips_BEQZALC);
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
   MCOperand_CreateImm0(MI, Imm);
 
   return MCDisassembler_Success;
@@ -487,17 +487,17 @@ static DecodeStatus DecodePOP35GroupBranchMMR6(MCInst *MI, unsigned insn,
 
   if (Rs >= Rt) {
     MCInst_setOpcode(MI, Mips_BOVC_MMR6);
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
     Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) * 2 + 4;
   } else if (Rs != 0 && Rs < Rt) {
     MCInst_setOpcode(MI, Mips_BEQC_MMR6);
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
     Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) * 4 + 4;
   } else {
     MCInst_setOpcode(MI, Mips_BEQZALC_MMR6);
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
     Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) * 2 + 4;
   }
 
@@ -535,9 +535,9 @@ static DecodeStatus DecodeDaddiGroupBranch(MCInst *MI, unsigned insn,
     MCInst_setOpcode(MI, Mips_BNEZALC);
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
   MCOperand_CreateImm0(MI, Imm);
 
   return MCDisassembler_Success;
@@ -553,17 +553,17 @@ static DecodeStatus DecodePOP37GroupBranchMMR6(MCInst *MI, unsigned insn,
 
   if (Rs >= Rt) {
     MCInst_setOpcode(MI, Mips_BNVC_MMR6);
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
     Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) * 2 + 4;
   } else if (Rs != 0 && Rs < Rt) {
     MCInst_setOpcode(MI, Mips_BNEC_MMR6);
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
     Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) * 4 + 4;
   } else {
     MCInst_setOpcode(MI, Mips_BNEZALC_MMR6);
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
     Imm = SignExtend64(fieldFromInstruction(insn, 0, 16), 16) * 2 + 4;
   }
 
@@ -600,9 +600,9 @@ static DecodeStatus DecodePOP65GroupBranchMMR6(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 
@@ -637,9 +637,9 @@ static DecodeStatus DecodePOP75GroupBranchMMR6(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 
@@ -678,9 +678,9 @@ static DecodeStatus DecodeBlezlGroupBranch(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 
@@ -720,9 +720,9 @@ static DecodeStatus DecodeBgtzlGroupBranch(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 
@@ -766,10 +766,10 @@ static DecodeStatus DecodeBgtzGroupBranch(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
   if (HasRt)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 
@@ -808,8 +808,8 @@ static DecodeStatus DecodeBlezGroupBranch(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 
@@ -846,8 +846,8 @@ static DecodeStatus DecodeDEXT(MCInst *MI, unsigned Insn, uint64_t Address,
   unsigned Rs = fieldFromInstruction(Insn, 21, 5);
   unsigned Rt = fieldFromInstruction(Insn, 16, 5);
 
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rt));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rs));
   MCOperand_CreateImm0(MI, Pos);
   MCOperand_CreateImm0(MI, Size);
 
@@ -885,8 +885,8 @@ static DecodeStatus DecodeDINS(MCInst *MI, unsigned Insn, uint64_t Address,
   unsigned Rt = fieldFromInstruction(Insn, 16, 5);
 
   MCInst_setOpcode(MI, Mips_DINS);
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rt));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR64RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR64RegClassID, Rs));
   MCOperand_CreateImm0(MI, Pos);
   MCOperand_CreateImm0(MI, Size);
 
@@ -898,9 +898,9 @@ static DecodeStatus DecodeCRC(MCInst *MI, unsigned Insn, uint64_t Address,
 {
   unsigned Rs = fieldFromInstruction(Insn, 21, 5);
   unsigned Rt = fieldFromInstruction(Insn, 16, 5);
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
   return MCDisassembler_Success;
 }
 
@@ -918,7 +918,7 @@ static DecodeStatus DecodeGPR64RegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_GPR64RegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_GPR64RegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -929,7 +929,7 @@ static DecodeStatus DecodeGPRMM16RegisterClass(MCInst *Inst, unsigned RegNo,
 {
   if (RegNo > 7)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, Mips_GPRMM16RegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_GPRMM16RegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -940,7 +940,7 @@ static DecodeStatus DecodeGPRMM16ZeroRegisterClass(MCInst *Inst, unsigned RegNo,
 {
   if (RegNo > 7)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, Mips_GPRMM16ZeroRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_GPRMM16ZeroRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -952,7 +952,7 @@ static DecodeStatus DecodeGPRMM16MovePRegisterClass(MCInst *Inst,
 {
   if (RegNo > 7)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, Mips_GPRMM16MovePRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_GPRMM16MovePRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -963,7 +963,7 @@ static DecodeStatus DecodeGPR32RegisterClass(MCInst *Inst, unsigned RegNo,
 {
   if (RegNo > 31)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, Mips_GPR32RegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -991,7 +991,7 @@ static DecodeStatus DecodeFGR64RegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_FGR64RegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_FGR64RegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1002,8 +1002,8 @@ static DecodeStatus DecodeFGR32RegisterClass(MCInst *Inst, unsigned RegNo,
 {
   if (RegNo > 31)
     return MCDisassembler_Fail;
-
-  unsigned Reg = getReg(Decoder, Mips_FGR32RegClassID, RegNo);
+  
+  unsigned Reg = getReg(Inst->MRI, Mips_FGR32RegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1014,7 +1014,7 @@ static DecodeStatus DecodeCCRRegisterClass(MCInst *Inst, unsigned RegNo,
 {
   if (RegNo > 31)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, Mips_CCRRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_CCRRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1025,7 +1025,7 @@ static DecodeStatus DecodeFCCRegisterClass(MCInst *Inst, unsigned RegNo,
 {
   if (RegNo > 7)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, Mips_FCCRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_FCCRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1037,7 +1037,7 @@ static DecodeStatus DecodeFGRCCRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_FGRCCRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_FGRCCRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1049,8 +1049,8 @@ static DecodeStatus DecodeMem(MCInst *Inst, unsigned Insn, uint64_t Address,
   unsigned Reg = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   if (MCInst_getOpcode(Inst) == Mips_SC || MCInst_getOpcode(Inst) == Mips_SCD)
     MCOperand_CreateReg0(Inst, Reg);
@@ -1068,8 +1068,8 @@ static DecodeStatus DecodeMemEVA(MCInst *Inst, unsigned Insn, uint64_t Address,
   unsigned Reg = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   if (MCInst_getOpcode(Inst) == Mips_SCE)
     MCOperand_CreateReg0(Inst, Reg);
@@ -1087,8 +1087,8 @@ static DecodeStatus DecodeLoadByte15(MCInst *Inst, unsigned Insn,
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
   unsigned Reg = fieldFromInstruction(Insn, 21, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1103,7 +1103,7 @@ static DecodeStatus DecodeCacheOp(MCInst *Inst, unsigned Insn, uint64_t Address,
   unsigned Hint = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Base);
   MCOperand_CreateImm0(Inst, Offset);
@@ -1118,7 +1118,7 @@ static DecodeStatus DecodeCacheOpMM(MCInst *Inst, unsigned Insn,
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
   unsigned Hint = fieldFromInstruction(Insn, 21, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Base);
   MCOperand_CreateImm0(Inst, Offset);
@@ -1133,7 +1133,7 @@ static DecodeStatus DecodePrefeOpMM(MCInst *Inst, unsigned Insn,
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
   unsigned Hint = fieldFromInstruction(Insn, 21, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Base);
   MCOperand_CreateImm0(Inst, Offset);
@@ -1149,7 +1149,7 @@ static DecodeStatus DecodeCacheeOp_CacheOpR6(MCInst *Inst, unsigned Insn,
   unsigned Hint = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Base);
   MCOperand_CreateImm0(Inst, Offset);
@@ -1163,7 +1163,7 @@ static DecodeStatus DecodeSyncI(MCInst *Inst, unsigned Insn, uint64_t Address,
   int Offset = SignExtend32(Insn & 0xffff, 16);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Base);
   MCOperand_CreateImm0(Inst, Offset);
@@ -1176,7 +1176,7 @@ static DecodeStatus DecodeSyncI_MM(MCInst *Inst, unsigned Insn,
   int Offset = SignExtend32(Insn & 0xffff, 16);
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Base);
   MCOperand_CreateImm0(Inst, Offset);
@@ -1189,7 +1189,7 @@ static DecodeStatus DecodeSynciR6(MCInst *Inst, unsigned Insn, uint64_t Address,
   int Immediate = SignExtend32(Insn & 0xffff, 16);
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
 
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Base);
   MCOperand_CreateImm0(Inst, Immediate);
@@ -1203,8 +1203,8 @@ static DecodeStatus DecodeMSA128Mem(MCInst *Inst, unsigned Insn,
   unsigned Reg = fieldFromInstruction(Insn, 6, 5);
   unsigned Base = fieldFromInstruction(Insn, 11, 5);
 
-  Reg = getReg(Decoder, Mips_MSA128BRegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_MSA128BRegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1305,7 +1305,7 @@ static DecodeStatus DecodeMemMMSPImm5Lsl2(MCInst *Inst, unsigned Insn,
   unsigned Offset = Insn & 0x1F;
   unsigned Reg = fieldFromInstruction(Insn, 5, 5);
 
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Mips_SP);
@@ -1321,7 +1321,7 @@ static DecodeStatus DecodeMemMMGPImm7Lsl2(MCInst *Inst, unsigned Insn,
   unsigned Offset = Insn & 0x7F;
   unsigned Reg = fieldFromInstruction(Insn, 7, 3);
 
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Mips_GP);
@@ -1361,8 +1361,8 @@ static DecodeStatus DecodeMemMMImm9(MCInst *Inst, unsigned Insn,
   unsigned Reg = fieldFromInstruction(Insn, 21, 5);
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
 
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   if (MCInst_getOpcode(Inst) == Mips_SCE_MM ||
       MCInst_getOpcode(Inst) == Mips_SC_MMR6)
@@ -1381,8 +1381,8 @@ static DecodeStatus DecodeMemMMImm12(MCInst *Inst, unsigned Insn,
   unsigned Reg = fieldFromInstruction(Insn, 21, 5);
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
 
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   switch (MCInst_getOpcode(Inst)) {
   case Mips_SWM32_MM:
@@ -1415,8 +1415,8 @@ static DecodeStatus DecodeMemMMImm16(MCInst *Inst, unsigned Insn,
   unsigned Reg = fieldFromInstruction(Insn, 21, 5);
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
 
-  Reg = getReg(Decoder, Mips_GPR32RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_GPR32RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1431,8 +1431,8 @@ static DecodeStatus DecodeFMem(MCInst *Inst, unsigned Insn, uint64_t Address,
   unsigned Reg = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Reg = getReg(Decoder, Mips_FGR64RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_FGR64RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1449,8 +1449,8 @@ static DecodeStatus DecodeFMemMMR2(MCInst *Inst, unsigned Insn,
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
   unsigned Reg = fieldFromInstruction(Insn, 21, 5);
 
-  Reg = getReg(Decoder, Mips_FGR64RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_FGR64RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1465,8 +1465,8 @@ static DecodeStatus DecodeFMem2(MCInst *Inst, unsigned Insn, uint64_t Address,
   unsigned Reg = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Reg = getReg(Decoder, Mips_COP2RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_COP2RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1481,8 +1481,8 @@ static DecodeStatus DecodeFMem3(MCInst *Inst, unsigned Insn, uint64_t Address,
   unsigned Reg = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Reg = getReg(Decoder, Mips_COP3RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_COP3RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1497,8 +1497,8 @@ static DecodeStatus DecodeFMemCop2R6(MCInst *Inst, unsigned Insn,
   unsigned Reg = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 11, 5);
 
-  Reg = getReg(Decoder, Mips_COP2RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_COP2RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1514,8 +1514,8 @@ static DecodeStatus DecodeFMemCop2MMR6(MCInst *Inst, unsigned Insn,
   unsigned Reg = fieldFromInstruction(Insn, 21, 5);
   unsigned Base = fieldFromInstruction(Insn, 16, 5);
 
-  Reg = getReg(Decoder, Mips_COP2RegClassID, Reg);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Reg = getReg(Inst->MRI, Mips_COP2RegClassID, Reg);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   MCOperand_CreateReg0(Inst, Reg);
   MCOperand_CreateReg0(Inst, Base);
@@ -1531,8 +1531,8 @@ static DecodeStatus DecodeSpecial3LlSc(MCInst *Inst, unsigned Insn,
   unsigned Rt = fieldFromInstruction(Insn, 16, 5);
   unsigned Base = fieldFromInstruction(Insn, 21, 5);
 
-  Rt = getReg(Decoder, Mips_GPR32RegClassID, Rt);
-  Base = getReg(Decoder, Mips_GPR32RegClassID, Base);
+  Rt = getReg(Inst->MRI, Mips_GPR32RegClassID, Rt);
+  Base = getReg(Inst->MRI, Mips_GPR32RegClassID, Base);
 
   if (MCInst_getOpcode(Inst) == Mips_SC_R6 ||
       MCInst_getOpcode(Inst) == Mips_SCD_R6) {
@@ -1563,7 +1563,7 @@ static DecodeStatus DecodeAFGR64RegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 30 || RegNo % 2)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_AFGR64RegClassID, RegNo / 2);
+  unsigned Reg = getReg(Inst->MRI, Mips_AFGR64RegClassID, RegNo / 2);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1575,7 +1575,7 @@ static DecodeStatus DecodeACC64DSPRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo >= 4)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_ACC64DSPRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_ACC64DSPRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1587,7 +1587,7 @@ static DecodeStatus DecodeHI32DSPRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo >= 4)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_HI32DSPRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_HI32DSPRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1599,7 +1599,7 @@ static DecodeStatus DecodeLO32DSPRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo >= 4)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_LO32DSPRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_LO32DSPRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1611,7 +1611,7 @@ static DecodeStatus DecodeMSA128BRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_MSA128BRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_MSA128BRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1623,7 +1623,7 @@ static DecodeStatus DecodeMSA128HRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_MSA128HRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_MSA128HRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1635,7 +1635,7 @@ static DecodeStatus DecodeMSA128WRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_MSA128WRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_MSA128WRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1647,7 +1647,7 @@ static DecodeStatus DecodeMSA128DRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_MSA128DRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_MSA128DRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1659,7 +1659,7 @@ static DecodeStatus DecodeMSACtrlRegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 7)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_MSACtrlRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_MSACtrlRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1671,7 +1671,7 @@ static DecodeStatus DecodeCOP0RegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_COP0RegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_COP0RegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1683,7 +1683,7 @@ static DecodeStatus DecodeCOP2RegisterClass(MCInst *Inst, unsigned RegNo,
   if (RegNo > 31)
     return MCDisassembler_Fail;
 
-  unsigned Reg = getReg(Decoder, Mips_COP2RegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, Mips_COP2RegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -1693,7 +1693,7 @@ static DecodeStatus DecodeBranchTarget(MCInst *Inst, unsigned Offset,
 				       MCRegisterInfo *Decoder)
 {
   int32_t BranchOffset = (SignExtend32(Offset, 16) * 4) + 4;
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeBranchTarget1SImm16(MCInst *Inst, unsigned Offset,
@@ -1701,7 +1701,7 @@ static DecodeStatus DecodeBranchTarget1SImm16(MCInst *Inst, unsigned Offset,
 					      MCRegisterInfo *Decoder)
 {
   int32_t BranchOffset = (SignExtend32(Offset, 16) * 2);
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeJumpTarget(MCInst *Inst, unsigned Insn,
@@ -1720,7 +1720,7 @@ static DecodeStatus DecodeBranchTarget21(MCInst *Inst, unsigned Offset,
 {
   int32_t BranchOffset = SignExtend32(Offset, 21) * 4 + 4;
 
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeBranchTarget21MM(MCInst *Inst, unsigned Offset,
@@ -1729,7 +1729,7 @@ static DecodeStatus DecodeBranchTarget21MM(MCInst *Inst, unsigned Offset,
 {
   int32_t BranchOffset = SignExtend32(Offset, 21) * 4 + 4;
 
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeBranchTarget26(MCInst *Inst, unsigned Offset,
@@ -1738,7 +1738,7 @@ static DecodeStatus DecodeBranchTarget26(MCInst *Inst, unsigned Offset,
 {
   int32_t BranchOffset = SignExtend32(Offset, 26) * 4 + 4;
 
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeBranchTarget7MM(MCInst *Inst, unsigned Offset,
@@ -1746,7 +1746,7 @@ static DecodeStatus DecodeBranchTarget7MM(MCInst *Inst, unsigned Offset,
 					  MCRegisterInfo *Decoder)
 {
   int32_t BranchOffset = SignExtend32(Offset << 1, 8);
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeBranchTarget10MM(MCInst *Inst, unsigned Offset,
@@ -1754,7 +1754,7 @@ static DecodeStatus DecodeBranchTarget10MM(MCInst *Inst, unsigned Offset,
 					   MCRegisterInfo *Decoder)
 {
   int32_t BranchOffset = SignExtend32(Offset << 1, 11);
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeBranchTargetMM(MCInst *Inst, unsigned Offset,
@@ -1762,7 +1762,7 @@ static DecodeStatus DecodeBranchTargetMM(MCInst *Inst, unsigned Offset,
 					 MCRegisterInfo *Decoder)
 {
   int32_t BranchOffset = SignExtend32(Offset, 16) * 2 + 4;
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeBranchTarget26MM(MCInst *Inst, unsigned Offset,
@@ -1771,7 +1771,7 @@ static DecodeStatus DecodeBranchTarget26MM(MCInst *Inst, unsigned Offset,
 {
   int32_t BranchOffset = SignExtend32(Offset << 1, 27);
 
-  MCOperand_CreateImm0(Inst, BranchOffset);
+  MCOperand_CreateImm0(Inst, BranchOffset + Address);
   return MCDisassembler_Success;
 }
 static DecodeStatus DecodeJumpTargetMM(MCInst *Inst, unsigned Insn,
@@ -2071,10 +2071,10 @@ static DecodeStatus DecodeBgtzGroupBranchMMR6(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
 
   if (HasRt)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 
@@ -2112,8 +2112,8 @@ static DecodeStatus DecodeBlezGroupBranchMMR6(MCInst *MI, unsigned insn,
   }
 
   if (HasRs)
-    MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rs));
-  MCOperand_CreateReg0(MI, getReg(Decoder, Mips_GPR32RegClassID, Rt));
+    MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rs));
+  MCOperand_CreateReg0(MI, getReg(MI->MRI, Mips_GPR32RegClassID, Rt));
 
   MCOperand_CreateImm0(MI, Imm);
 

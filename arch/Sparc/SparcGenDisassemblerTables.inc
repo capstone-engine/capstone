@@ -3903,242 +3903,242 @@ static const char SparcRegStrings[] = {
 
 static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
   { 3, 0, 0, 0, 0, 0 },
-  { 819, 4, 4, 2, 6065, 7 },
-  { 851, 4, 4, 2, 6065, 7 },
-  { 875, 4, 4, 2, 6065, 7 },
-  { 900, 4, 4, 2, 6065, 7 },
-  { 912, 4, 4, 2, 6065, 7 },
-  { 893, 4, 4, 2, 6065, 7 },
-  { 897, 4, 4, 2, 6065, 7 },
-  { 908, 4, 4, 2, 6065, 1 },
-  { 806, 4, 4, 2, 6065, 81 },
-  { 884, 4, 4, 2, 6065, 324 },
-  { 812, 4, 4, 2, 6065, 101 },
-  { 864, 4, 4, 2, 6065, 107 },
-  { 913, 4, 4, 2, 6065, 112 },
-  { 830, 4, 4, 2, 6065, 270 },
-  { 802, 4, 4, 2, 6065, 1 },
-  { 904, 4, 4, 2, 6065, 326 },
-  { 859, 4, 4, 2, 6065, 1 },
-  { 868, 4, 4, 2, 6065, 33 },
-  { 810, 4, 4, 2, 6065, 76 },
-  { 815, 4, 4, 2, 6065, 7 },
-  { 837, 4, 4, 2, 6065, 1 },
-  { 917, 4, 4, 2, 6065, 262 },
-  { 871, 4, 4, 2, 6065, 1 },
-  { 844, 4, 4, 2, 6065, 266 },
-  { 920, 4, 4, 2, 6065, 268 },
-  { 198, 4, 4, 2, 6065, 1 },
-  { 269, 4, 4, 2, 6065, 320 },
-  { 366, 4, 4, 2, 6065, 322 },
-  { 435, 4, 4, 2, 6065, 19 },
-  { 527, 4, 4, 2, 6065, 341 },
-  { 592, 4, 4, 2, 6065, 349 },
-  { 680, 4, 4, 2, 6065, 351 },
-  { 733, 4, 4, 2, 6065, 343 },
-  { 797, 4, 4, 2, 6065, 347 },
-  { 16, 4, 4, 2, 6065, 345 },
-  { 104, 4, 4, 2, 6065, 336 },
-  { 219, 4, 4, 2, 6065, 255 },
-  { 294, 4, 4, 2, 6065, 76 },
-  { 387, 4, 4, 2, 6065, 81 },
-  { 460, 4, 4, 2, 6065, 253 },
-  { 544, 4, 4, 2, 6065, 1 },
-  { 613, 4, 4, 2, 6065, 251 },
-  { 697, 4, 4, 2, 6065, 1 },
-  { 754, 4, 4, 2, 6065, 1 },
-  { 34, 4, 4, 2, 6065, 302 },
-  { 126, 4, 4, 2, 6065, 33 },
-  { 237, 4, 4, 2, 6065, 72 },
-  { 316, 4, 4, 2, 6065, 1 },
-  { 405, 4, 4, 2, 6065, 341 },
-  { 482, 4, 4, 2, 6065, 304 },
-  { 562, 4, 4, 2, 6065, 309 },
-  { 635, 4, 4, 2, 6065, 33 },
-  { 715, 4, 4, 2, 6065, 72 },
-  { 776, 4, 4, 2, 6065, 249 },
-  { 52, 4, 4, 2, 6065, 81 },
-  { 148, 4, 4, 2, 6065, 316 },
-  { 60, 4, 373, 2, 6065, 1 },
-  { 156, 4, 371, 2, 6065, 59 },
-  { 245, 4, 371, 2, 6065, 341 },
-  { 324, 4, 369, 2, 6065, 331 },
-  { 411, 4, 369, 2, 6065, 260 },
-  { 491, 4, 367, 2, 6065, 61 },
-  { 568, 4, 367, 2, 6065, 318 },
-  { 644, 4, 365, 2, 6065, 331 },
-  { 721, 4, 365, 2, 6065, 81 },
-  { 785, 4, 363, 2, 6065, 57 },
-  { 0, 4, 363, 2, 6065, 81 },
-  { 88, 4, 361, 2, 6065, 1 },
-  { 203, 4, 361, 2, 6065, 81 },
-  { 278, 4, 359, 2, 6065, 1 },
-  { 371, 4, 359, 2, 6065, 81 },
-  { 444, 4, 357, 2, 6065, 274 },
-  { 532, 4, 357, 2, 6065, 272 },
-  { 601, 4, 355, 2, 6065, 33 },
-  { 685, 4, 355, 2, 6065, 1 },
-  { 742, 4, 353, 2, 6065, 81 },
-  { 22, 4, 353, 2, 6065, 276 },
-  { 114, 4, 351, 2, 6065, 78 },
-  { 225, 4, 351, 2, 6065, 7 },
-  { 304, 4, 349, 2, 6065, 1 },
-  { 393, 4, 349, 2, 6065, 278 },
-  { 470, 4, 347, 2, 6065, 81 },
-  { 550, 4, 347, 2, 6065, 280 },
-  { 623, 4, 345, 2, 6065, 74 },
-  { 703, 4, 345, 2, 6065, 15 },
-  { 764, 4, 343, 2, 6065, 81 },
-  { 40, 4, 343, 2, 6065, 264 },
-  { 136, 4, 341, 2, 6065, 81 },
-  { 63, 5, 336, 0, 2370, 49 },
-  { 165, 12, 327, 0, 2370, 285 },
-  { 248, 15, 327, 0, 2370, 86 },
-  { 333, 22, 318, 0, 2370, 35 },
-  { 414, 25, 318, 0, 2370, 282 },
-  { 494, 32, 309, 0, 2370, 89 },
-  { 571, 35, 309, 0, 2370, 288 },
-  { 647, 42, 300, 0, 2370, 291 },
-  { 724, 45, 300, 0, 2370, 116 },
-  { 788, 52, 291, 0, 2370, 328 },
-  { 4, 55, 291, 0, 2370, 306 },
-  { 92, 62, 282, 0, 2370, 71 },
-  { 207, 65, 282, 0, 2370, 299 },
-  { 282, 72, 273, 0, 2370, 11 },
-  { 375, 75, 273, 0, 2370, 3 },
-  { 448, 82, 267, 0, 2370, 121 },
-  { 536, 4, 267, 2, 3425, 103 },
-  { 605, 4, 264, 2, 3425, 124 },
-  { 689, 4, 264, 2, 3425, 114 },
-  { 746, 4, 262, 2, 3425, 1 },
-  { 26, 4, 262, 2, 3425, 1 },
-  { 118, 4, 260, 2, 3425, 81 },
-  { 229, 4, 260, 2, 3425, 81 },
-  { 308, 4, 258, 2, 3425, 1 },
-  { 397, 4, 258, 2, 3425, 81 },
-  { 474, 4, 256, 2, 3425, 9 },
-  { 554, 4, 256, 2, 3425, 81 },
-  { 627, 4, 254, 2, 3425, 129 },
-  { 707, 4, 254, 2, 3425, 119 },
-  { 768, 4, 252, 2, 3425, 131 },
-  { 44, 4, 252, 2, 3425, 40 },
-  { 140, 4, 250, 2, 3425, 63 },
-  { 66, 4, 338, 2, 6001, 1 },
-  { 168, 4, 335, 2, 6001, 133 },
-  { 251, 4, 332, 2, 6001, 137 },
-  { 336, 4, 329, 2, 6001, 135 },
-  { 417, 4, 329, 2, 6001, 47 },
-  { 497, 4, 326, 2, 6001, 142 },
-  { 574, 4, 323, 2, 6001, 144 },
-  { 650, 4, 320, 2, 6001, 33 },
-  { 727, 4, 320, 2, 6001, 42 },
-  { 791, 4, 317, 2, 6001, 72 },
-  { 8, 4, 314, 2, 6001, 92 },
-  { 96, 4, 311, 2, 6001, 7 },
-  { 211, 4, 311, 2, 6001, 151 },
-  { 286, 4, 308, 2, 6001, 81 },
-  { 379, 4, 305, 2, 6001, 158 },
-  { 452, 4, 302, 2, 6001, 81 },
-  { 540, 4, 302, 2, 6001, 1 },
-  { 609, 4, 299, 2, 6001, 81 },
-  { 693, 4, 296, 2, 6001, 1 },
-  { 750, 4, 293, 2, 6001, 81 },
-  { 30, 4, 293, 2, 6001, 9 },
-  { 122, 4, 290, 2, 6001, 81 },
-  { 233, 4, 287, 2, 6001, 160 },
-  { 312, 4, 284, 2, 6001, 119 },
-  { 401, 4, 284, 2, 6001, 1 },
-  { 478, 4, 281, 2, 6001, 341 },
-  { 558, 4, 278, 2, 6001, 1 },
-  { 631, 4, 275, 2, 6001, 162 },
-  { 711, 4, 275, 2, 6001, 1 },
-  { 772, 4, 272, 2, 6001, 69 },
-  { 48, 4, 269, 2, 6001, 15 },
-  { 144, 4, 266, 2, 6001, 167 },
-  { 58, 4, 4, 2, 6033, 1 },
-  { 154, 4, 4, 2, 6033, 171 },
-  { 243, 4, 4, 2, 6033, 169 },
-  { 322, 4, 4, 2, 6033, 1 },
-  { 69, 4, 248, 2, 6033, 173 },
-  { 174, 4, 246, 2, 6033, 76 },
-  { 254, 4, 246, 2, 6033, 119 },
-  { 342, 4, 244, 2, 6033, 31 },
-  { 420, 4, 244, 2, 6033, 55 },
-  { 503, 4, 242, 2, 6033, 181 },
-  { 577, 4, 242, 2, 6033, 179 },
-  { 656, 4, 240, 2, 6033, 94 },
-  { 72, 4, 240, 2, 6033, 99 },
-  { 180, 4, 238, 2, 6033, 105 },
-  { 257, 4, 238, 2, 6033, 1 },
-  { 348, 4, 236, 2, 6033, 1 },
-  { 423, 4, 236, 2, 6033, 1 },
-  { 509, 4, 234, 2, 6033, 1 },
-  { 580, 4, 234, 2, 6033, 17 },
-  { 662, 4, 232, 2, 6033, 1 },
-  { 75, 4, 232, 2, 6033, 38 },
-  { 186, 4, 230, 2, 6033, 15 },
-  { 260, 4, 230, 2, 6033, 183 },
-  { 354, 4, 228, 2, 6033, 19 },
-  { 426, 4, 228, 2, 6033, 175 },
-  { 515, 4, 226, 2, 6033, 1 },
-  { 583, 4, 226, 2, 6033, 177 },
-  { 668, 4, 224, 2, 6033, 1 },
-  { 78, 4, 224, 2, 6033, 187 },
-  { 192, 4, 222, 2, 6033, 185 },
-  { 263, 4, 222, 2, 6033, 65 },
-  { 360, 4, 220, 2, 6033, 189 },
-  { 429, 4, 220, 2, 6033, 12 },
-  { 521, 4, 218, 2, 6033, 67 },
-  { 586, 4, 218, 2, 6033, 1 },
-  { 674, 4, 216, 2, 6033, 191 },
-  { 81, 8, 4, 6, 4, 203 },
-  { 195, 18, 4, 6, 4, 193 },
-  { 266, 28, 4, 6, 4, 198 },
-  { 363, 38, 4, 6, 4, 208 },
+  { 819, 4, 4, 2, 6065, 3 },
+  { 851, 4, 4, 2, 6065, 84 },
+  { 875, 4, 4, 2, 6065, 334 },
+  { 900, 4, 4, 2, 6065, 121 },
+  { 912, 4, 4, 2, 6065, 351 },
+  { 893, 4, 4, 2, 6065, 279 },
+  { 897, 4, 4, 2, 6065, 3 },
+  { 908, 4, 4, 2, 6065, 336 },
+  { 806, 4, 4, 2, 6065, 3 },
+  { 884, 4, 4, 2, 6065, 36 },
+  { 812, 4, 4, 2, 6065, 349 },
+  { 864, 4, 4, 2, 6065, 252 },
+  { 913, 4, 4, 2, 6065, 258 },
+  { 830, 4, 4, 2, 6065, 79 },
+  { 802, 4, 4, 2, 6065, 6 },
+  { 904, 4, 4, 2, 6065, 3 },
+  { 859, 4, 4, 2, 6065, 273 },
+  { 868, 4, 4, 2, 6065, 16 },
+  { 810, 4, 4, 2, 6065, 275 },
+  { 815, 4, 4, 2, 6065, 277 },
+  { 837, 4, 4, 2, 6065, 126 },
+  { 917, 4, 4, 2, 6065, 128 },
+  { 871, 4, 4, 2, 6065, 130 },
+  { 844, 4, 4, 2, 6065, 3 },
+  { 920, 4, 4, 2, 6065, 3 },
+  { 198, 4, 4, 2, 6065, 3 },
+  { 269, 4, 4, 2, 6065, 330 },
+  { 366, 4, 4, 2, 6065, 332 },
+  { 435, 4, 4, 2, 6065, 20 },
+  { 527, 4, 4, 2, 6065, 349 },
+  { 592, 4, 4, 2, 6065, 79 },
+  { 680, 4, 4, 2, 6065, 132 },
+  { 733, 4, 4, 2, 6065, 34 },
+  { 797, 4, 4, 2, 6065, 117 },
+  { 16, 4, 4, 2, 6065, 60 },
+  { 104, 4, 4, 2, 6065, 43 },
+  { 219, 4, 4, 2, 6065, 195 },
+  { 294, 4, 4, 2, 6065, 264 },
+  { 387, 4, 4, 2, 6065, 79 },
+  { 460, 4, 4, 2, 6065, 84 },
+  { 544, 4, 4, 2, 6065, 262 },
+  { 613, 4, 4, 2, 6065, 3 },
+  { 697, 4, 4, 2, 6065, 260 },
+  { 754, 4, 4, 2, 6065, 3 },
+  { 34, 4, 4, 2, 6065, 3 },
+  { 126, 4, 4, 2, 6065, 311 },
+  { 237, 4, 4, 2, 6065, 36 },
+  { 316, 4, 4, 2, 6065, 73 },
+  { 405, 4, 4, 2, 6065, 269 },
+  { 482, 4, 4, 2, 6065, 349 },
+  { 562, 4, 4, 2, 6065, 313 },
+  { 635, 4, 4, 2, 6065, 315 },
+  { 715, 4, 4, 2, 6065, 36 },
+  { 776, 4, 4, 2, 6065, 256 },
+  { 52, 4, 4, 2, 6065, 3 },
+  { 148, 4, 4, 2, 6065, 84 },
+  { 60, 4, 373, 2, 6065, 320 },
+  { 156, 4, 371, 2, 6065, 3 },
+  { 245, 4, 371, 2, 6065, 62 },
+  { 324, 4, 369, 2, 6065, 349 },
+  { 411, 4, 369, 2, 6065, 338 },
+  { 491, 4, 367, 2, 6065, 269 },
+  { 568, 4, 367, 2, 6065, 64 },
+  { 644, 4, 365, 2, 6065, 328 },
+  { 721, 4, 365, 2, 6065, 338 },
+  { 785, 4, 363, 2, 6065, 84 },
+  { 0, 4, 363, 2, 6065, 60 },
+  { 88, 4, 361, 2, 6065, 84 },
+  { 203, 4, 361, 2, 6065, 3 },
+  { 278, 4, 359, 2, 6065, 84 },
+  { 371, 4, 359, 2, 6065, 3 },
+  { 444, 4, 357, 2, 6065, 84 },
+  { 532, 4, 357, 2, 6065, 283 },
+  { 601, 4, 355, 2, 6065, 281 },
+  { 685, 4, 355, 2, 6065, 36 },
+  { 742, 4, 353, 2, 6065, 3 },
+  { 22, 4, 353, 2, 6065, 84 },
+  { 114, 4, 351, 2, 6065, 288 },
+  { 225, 4, 351, 2, 6065, 81 },
+  { 304, 4, 349, 2, 6065, 6 },
+  { 393, 4, 349, 2, 6065, 3 },
+  { 470, 4, 347, 2, 6065, 290 },
+  { 550, 4, 347, 2, 6065, 84 },
+  { 623, 4, 345, 2, 6065, 292 },
+  { 703, 4, 345, 2, 6065, 75 },
+  { 764, 4, 343, 2, 6065, 14 },
+  { 40, 4, 343, 2, 6065, 84 },
+  { 136, 4, 341, 2, 6065, 271 },
+  { 63, 5, 336, 0, 2370, 89 },
+  { 165, 12, 327, 0, 2370, 52 },
+  { 248, 15, 327, 0, 2370, 302 },
+  { 333, 22, 318, 0, 2370, 97 },
+  { 414, 25, 318, 0, 2370, 40 },
+  { 494, 32, 309, 0, 2370, 299 },
+  { 571, 35, 309, 0, 2370, 100 },
+  { 647, 42, 300, 0, 2370, 305 },
+  { 724, 45, 300, 0, 2370, 322 },
+  { 788, 52, 291, 0, 2370, 325 },
+  { 4, 55, 291, 0, 2370, 317 },
+  { 92, 62, 282, 0, 2370, 346 },
+  { 207, 65, 282, 0, 2370, 72 },
+  { 282, 72, 273, 0, 2370, 308 },
+  { 375, 75, 273, 0, 2370, 10 },
+  { 448, 82, 267, 0, 2370, 108 },
+  { 536, 4, 267, 2, 3425, 138 },
+  { 605, 4, 264, 2, 3425, 84 },
+  { 689, 4, 264, 2, 3425, 254 },
+  { 746, 4, 262, 2, 3425, 3 },
+  { 26, 4, 262, 2, 3425, 3 },
+  { 118, 4, 260, 2, 3425, 140 },
+  { 229, 4, 260, 2, 3425, 84 },
+  { 308, 4, 258, 2, 3425, 142 },
+  { 397, 4, 258, 2, 3425, 84 },
+  { 474, 4, 256, 2, 3425, 3 },
+  { 554, 4, 256, 2, 3425, 79 },
+  { 627, 4, 254, 2, 3425, 144 },
+  { 707, 4, 254, 2, 3425, 84 },
+  { 768, 4, 252, 2, 3425, 146 },
+  { 44, 4, 252, 2, 3425, 136 },
+  { 140, 4, 250, 2, 3425, 84 },
+  { 66, 4, 338, 2, 6001, 150 },
+  { 168, 4, 335, 2, 6001, 38 },
+  { 251, 4, 332, 2, 6001, 103 },
+  { 336, 4, 329, 2, 6001, 148 },
+  { 417, 4, 329, 2, 6001, 148 },
+  { 497, 4, 326, 2, 6001, 84 },
+  { 574, 4, 323, 2, 6001, 84 },
+  { 650, 4, 320, 2, 6001, 8 },
+  { 727, 4, 320, 2, 6001, 84 },
+  { 791, 4, 317, 2, 6001, 155 },
+  { 8, 4, 314, 2, 6001, 132 },
+  { 96, 4, 311, 2, 6001, 3 },
+  { 211, 4, 311, 2, 6001, 349 },
+  { 286, 4, 308, 2, 6001, 3 },
+  { 379, 4, 305, 2, 6001, 157 },
+  { 452, 4, 302, 2, 6001, 159 },
+  { 540, 4, 302, 2, 6001, 166 },
+  { 609, 4, 299, 2, 6001, 36 },
+  { 693, 4, 296, 2, 6001, 3 },
+  { 750, 4, 293, 2, 6001, 6 },
+  { 30, 4, 293, 2, 6001, 3 },
+  { 122, 4, 290, 2, 6001, 73 },
+  { 233, 4, 287, 2, 6001, 168 },
+  { 312, 4, 284, 2, 6001, 84 },
+  { 401, 4, 284, 2, 6001, 170 },
+  { 478, 4, 281, 2, 6001, 84 },
+  { 558, 4, 278, 2, 6001, 70 },
+  { 631, 4, 275, 2, 6001, 77 },
+  { 711, 4, 275, 2, 6001, 3 },
+  { 772, 4, 272, 2, 6001, 172 },
+  { 48, 4, 269, 2, 6001, 45 },
+  { 144, 4, 266, 2, 6001, 38 },
+  { 58, 4, 4, 2, 6033, 58 },
+  { 154, 4, 4, 2, 6033, 174 },
+  { 243, 4, 4, 2, 6033, 3 },
+  { 322, 4, 4, 2, 6033, 50 },
+  { 69, 4, 248, 2, 6033, 178 },
+  { 174, 4, 246, 2, 6033, 176 },
+  { 254, 4, 246, 2, 6033, 134 },
+  { 342, 4, 244, 2, 6033, 111 },
+  { 420, 4, 244, 2, 6033, 115 },
+  { 503, 4, 242, 2, 6033, 119 },
+  { 577, 4, 242, 2, 6033, 3 },
+  { 656, 4, 240, 2, 6033, 3 },
+  { 72, 4, 240, 2, 6033, 3 },
+  { 180, 4, 238, 2, 6033, 113 },
+  { 257, 4, 238, 2, 6033, 3 },
+  { 348, 4, 236, 2, 6033, 180 },
+  { 423, 4, 236, 2, 6033, 193 },
+  { 509, 4, 234, 2, 6033, 184 },
+  { 580, 4, 234, 2, 6033, 18 },
+  { 662, 4, 232, 2, 6033, 14 },
+  { 75, 4, 232, 2, 6033, 197 },
+  { 186, 4, 230, 2, 6033, 20 },
+  { 260, 4, 230, 2, 6033, 182 },
+  { 354, 4, 228, 2, 6033, 3 },
+  { 426, 4, 228, 2, 6033, 191 },
+  { 515, 4, 226, 2, 6033, 3 },
+  { 583, 4, 226, 2, 6033, 201 },
+  { 668, 4, 224, 2, 6033, 199 },
+  { 78, 4, 224, 2, 6033, 66 },
+  { 192, 4, 222, 2, 6033, 203 },
+  { 263, 4, 222, 2, 6033, 11 },
+  { 360, 4, 220, 2, 6033, 68 },
+  { 429, 4, 220, 2, 6033, 3 },
+  { 521, 4, 218, 2, 6033, 207 },
+  { 586, 4, 218, 2, 6033, 205 },
+  { 674, 4, 216, 2, 6033, 3 },
+  { 81, 8, 4, 6, 4, 209 },
+  { 195, 18, 4, 6, 4, 214 },
+  { 266, 28, 4, 6, 4, 25 },
+  { 363, 38, 4, 6, 4, 0 },
   { 432, 48, 4, 6, 4, 294 },
-  { 524, 58, 4, 6, 4, 153 },
-  { 589, 68, 4, 6, 4, 311 },
-  { 677, 78, 4, 6, 4, 146 },
-  { 730, 142, 4, 3, 1458, 164 },
-  { 794, 145, 4, 3, 1458, 126 },
+  { 524, 58, 4, 6, 4, 161 },
+  { 589, 68, 4, 6, 4, 92 },
+  { 677, 78, 4, 6, 4, 186 },
+  { 730, 142, 4, 3, 1458, 285 },
+  { 794, 145, 4, 3, 1458, 94 },
   { 12, 148, 4, 3, 1458, 219 },
-  { 100, 151, 4, 3, 1458, 213 },
-  { 215, 154, 4, 3, 1458, 216 },
-  { 290, 157, 4, 3, 1458, 222 },
-  { 383, 160, 4, 3, 1458, 24 },
-  { 456, 163, 4, 3, 1458, 0 },
-  { 159, 94, 4, 0, 1362, 225 },
-  { 327, 97, 4, 0, 1362, 228 },
-  { 488, 100, 4, 0, 1362, 0 },
-  { 641, 103, 4, 0, 1362, 27 },
-  { 782, 106, 4, 0, 1362, 231 },
-  { 84, 109, 4, 0, 1362, 109 },
-  { 274, 112, 4, 0, 1362, 21 },
-  { 440, 115, 4, 0, 1362, 14 },
-  { 597, 118, 4, 0, 1362, 83 },
-  { 738, 121, 4, 0, 1362, 96 },
-  { 110, 124, 4, 0, 1362, 257 },
-  { 300, 127, 4, 0, 1362, 139 },
-  { 466, 130, 4, 0, 1362, 234 },
-  { 619, 133, 4, 0, 1362, 6 },
-  { 760, 136, 4, 0, 1362, 0 },
-  { 132, 139, 4, 0, 1362, 80 },
-  { 171, 166, 4, 0, 1410, 338 },
-  { 339, 169, 4, 0, 1410, 0 },
-  { 500, 172, 4, 0, 1410, 52 },
-  { 653, 175, 4, 0, 1410, 11 },
-  { 177, 178, 4, 0, 1410, 30 },
-  { 345, 181, 4, 0, 1410, 83 },
-  { 506, 184, 4, 0, 1410, 237 },
-  { 659, 187, 4, 0, 1410, 83 },
-  { 183, 190, 4, 0, 1410, 240 },
-  { 351, 193, 4, 0, 1410, 83 },
-  { 512, 196, 4, 0, 1410, 243 },
-  { 665, 199, 4, 0, 1410, 333 },
-  { 189, 202, 4, 0, 1410, 21 },
-  { 357, 205, 4, 0, 1410, 44 },
-  { 518, 208, 4, 0, 1410, 6 },
-  { 671, 211, 4, 0, 1410, 246 },
+  { 100, 151, 4, 3, 1458, 222 },
+  { 215, 154, 4, 3, 1458, 27 },
+  { 290, 157, 4, 3, 1458, 2 },
+  { 383, 160, 4, 3, 1458, 225 },
+  { 456, 163, 4, 3, 1458, 228 },
+  { 159, 94, 4, 0, 1362, 2 },
+  { 327, 97, 4, 0, 1362, 30 },
+  { 488, 100, 4, 0, 1362, 231 },
+  { 641, 103, 4, 0, 1362, 123 },
+  { 782, 106, 4, 0, 1362, 22 },
+  { 84, 109, 4, 0, 1362, 13 },
+  { 274, 112, 4, 0, 1362, 89 },
+  { 440, 115, 4, 0, 1362, 89 },
+  { 597, 118, 4, 0, 1362, 234 },
+  { 738, 121, 4, 0, 1362, 105 },
+  { 110, 124, 4, 0, 1362, 266 },
+  { 300, 127, 4, 0, 1362, 152 },
+  { 466, 130, 4, 0, 1362, 2 },
+  { 619, 133, 4, 0, 1362, 86 },
+  { 760, 136, 4, 0, 1362, 343 },
+  { 132, 139, 4, 0, 1362, 2 },
+  { 171, 166, 4, 0, 1410, 55 },
+  { 339, 169, 4, 0, 1410, 10 },
+  { 500, 172, 4, 0, 1410, 33 },
+  { 653, 175, 4, 0, 1410, 89 },
+  { 177, 178, 4, 0, 1410, 237 },
+  { 345, 181, 4, 0, 1410, 89 },
+  { 506, 184, 4, 0, 1410, 240 },
+  { 659, 187, 4, 0, 1410, 89 },
+  { 183, 190, 4, 0, 1410, 243 },
+  { 351, 193, 4, 0, 1410, 340 },
+  { 512, 196, 4, 0, 1410, 22 },
+  { 665, 199, 4, 0, 1410, 47 },
+  { 189, 202, 4, 0, 1410, 5 },
+  { 357, 205, 4, 0, 1410, 246 },
+  { 518, 208, 4, 0, 1410, 83 },
+  { 671, 211, 4, 0, 1410, 249 },
 };
 
   // FCCRegs Register Class...
@@ -9981,7 +9981,6 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
   SStream_concat0(OS, tmpString);
 
   SStream_concat0(OS, "\t");
-  SStream_concat0(OS, AsmString + I);
   if (AsmString[I] != '\0') {
     if (AsmString[I] == ' ' || AsmString[I] == '\t') {
       SStream_concat0(OS, "\t");
@@ -9998,7 +9997,7 @@ static char* printAliasInstr(MCInst *MI, SStream *OS) {
         } else
           printOperand(MI, ((unsigned)AsmString[I++]) - 1, OS);
       } else {
-        SStream_concat0(OS, AsmString + (I++));
+        SStream_concat1(OS, *(tmpString + (I++)));
       }
     } while (AsmString[I] != '\0');
   }
@@ -10014,3 +10013,1799 @@ void printCustomAliasOperand(
 }
 
 #endif // PRINT_ALIAS_INSTR
+#ifdef GET_INSTRINFO_MC_DESC
+#undef GET_INSTRINFO_MC_DESC
+
+static const MCOperandInfo OperandInfo2[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo3[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo4[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo5[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo6[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo7[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo8[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo9[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo10[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo11[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo12[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo13[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo14[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo15[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo16[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo17[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo18[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo19[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo20[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo21[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo22[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo23[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo24[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo25[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo26[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo27[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo28[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo29[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo30[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo31[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo32[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo33[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo34[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo35[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo36[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo37[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo38[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, };
+static const MCOperandInfo OperandInfo39[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, };
+static const MCOperandInfo OperandInfo40[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo41[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, };
+static const MCOperandInfo OperandInfo42[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_2, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo43[] = { { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_0, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, { -1, 0, MCOI_OPERAND_GENERIC_1, 0 }, };
+static const MCOperandInfo OperandInfo44[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo45[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo46[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo47[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo48[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo49[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo50[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo51[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo52[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo53[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo54[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo55[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo56[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo57[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo58[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo59[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo60[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo61[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo62[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo63[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo64[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo65[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo66[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo67[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo68[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo69[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo70[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo71[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo72[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo73[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo74[] = { { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo75[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo76[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo77[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo78[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo79[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo80[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo81[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo82[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo83[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo84[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo85[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo86[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo87[] = { { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo88[] = { { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo89[] = { { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo90[] = { { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo91[] = { { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo92[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo93[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo94[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo95[] = { { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo96[] = { { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo97[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo98[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo99[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo100[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo101[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo102[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo103[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo104[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo105[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo106[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo107[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo108[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo109[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo110[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo111[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo112[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo113[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo114[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo115[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo116[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo117[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo118[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo119[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo120[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo121[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo122[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo123[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo124[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo125[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo126[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo127[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo128[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo129[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo130[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo131[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo132[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo133[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo134[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo135[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo136[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo137[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo138[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo139[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo140[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo141[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo142[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo143[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, };
+static const MCOperandInfo OperandInfo144[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo145[] = { { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo146[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo147[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo148[] = { { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo149[] = { { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo150[] = { { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo151[] = { { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo152[] = { { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo153[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo154[] = { { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, MCOI_TIED_TO/*0*/ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo155[] = { { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo156[] = { { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo157[] = { { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
+static const MCOperandInfo OperandInfo158[] = { { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+
+extern const MCInstrDesc SparcInsts[] = {
+  { 1,	OperandInfo2 },  // Inst #0 = PHI
+  { 0,	NULL },  // Inst #1 = INLINEASM
+  { 0,	NULL },  // Inst #2 = INLINEASM_BR
+  { 1,	OperandInfo3 },  // Inst #3 = CFI_INSTRUCTION
+  { 1,	OperandInfo3 },  // Inst #4 = EH_LABEL
+  { 1,	OperandInfo3 },  // Inst #5 = GC_LABEL
+  { 1,	OperandInfo3 },  // Inst #6 = ANNOTATION_LABEL
+  { 0,	NULL },  // Inst #7 = KILL
+  { 3,	OperandInfo4 },  // Inst #8 = EXTRACT_SUBREG
+  { 4,	OperandInfo5 },  // Inst #9 = INSERT_SUBREG
+  { 1,	OperandInfo2 },  // Inst #10 = IMPLICIT_DEF
+  { 4,	OperandInfo6 },  // Inst #11 = SUBREG_TO_REG
+  { 3,	OperandInfo4 },  // Inst #12 = COPY_TO_REGCLASS
+  { 0,	NULL },  // Inst #13 = DBG_VALUE
+  { 0,	NULL },  // Inst #14 = DBG_VALUE_LIST
+  { 0,	NULL },  // Inst #15 = DBG_INSTR_REF
+  { 0,	NULL },  // Inst #16 = DBG_PHI
+  { 1,	OperandInfo2 },  // Inst #17 = DBG_LABEL
+  { 2,	OperandInfo7 },  // Inst #18 = REG_SEQUENCE
+  { 2,	OperandInfo7 },  // Inst #19 = COPY
+  { 0,	NULL },  // Inst #20 = BUNDLE
+  { 1,	OperandInfo3 },  // Inst #21 = LIFETIME_START
+  { 1,	OperandInfo3 },  // Inst #22 = LIFETIME_END
+  { 4,	OperandInfo8 },  // Inst #23 = PSEUDO_PROBE
+  { 2,	OperandInfo9 },  // Inst #24 = ARITH_FENCE
+  { 2,	OperandInfo10 },  // Inst #25 = STACKMAP
+  { 0,	NULL },  // Inst #26 = FENTRY_CALL
+  { 6,	OperandInfo11 },  // Inst #27 = PATCHPOINT
+  { 1,	OperandInfo12 },  // Inst #28 = LOAD_STACK_GUARD
+  { 1,	OperandInfo3 },  // Inst #29 = PREALLOCATED_SETUP
+  { 3,	OperandInfo13 },  // Inst #30 = PREALLOCATED_ARG
+  { 0,	NULL },  // Inst #31 = STATEPOINT
+  { 2,	OperandInfo14 },  // Inst #32 = LOCAL_ESCAPE
+  { 1,	OperandInfo2 },  // Inst #33 = FAULTING_OP
+  { 0,	NULL },  // Inst #34 = PATCHABLE_OP
+  { 0,	NULL },  // Inst #35 = PATCHABLE_FUNCTION_ENTER
+  { 0,	NULL },  // Inst #36 = PATCHABLE_RET
+  { 0,	NULL },  // Inst #37 = PATCHABLE_FUNCTION_EXIT
+  { 0,	NULL },  // Inst #38 = PATCHABLE_TAIL_CALL
+  { 2,	OperandInfo15 },  // Inst #39 = PATCHABLE_EVENT_CALL
+  { 3,	OperandInfo16 },  // Inst #40 = PATCHABLE_TYPED_EVENT_CALL
+  { 0,	NULL },  // Inst #41 = ICALL_BRANCH_FUNNEL
+  { 3,	OperandInfo17 },  // Inst #42 = G_ASSERT_SEXT
+  { 3,	OperandInfo17 },  // Inst #43 = G_ASSERT_ZEXT
+  { 3,	OperandInfo18 },  // Inst #44 = G_ADD
+  { 3,	OperandInfo18 },  // Inst #45 = G_SUB
+  { 3,	OperandInfo18 },  // Inst #46 = G_MUL
+  { 3,	OperandInfo18 },  // Inst #47 = G_SDIV
+  { 3,	OperandInfo18 },  // Inst #48 = G_UDIV
+  { 3,	OperandInfo18 },  // Inst #49 = G_SREM
+  { 3,	OperandInfo18 },  // Inst #50 = G_UREM
+  { 4,	OperandInfo19 },  // Inst #51 = G_SDIVREM
+  { 4,	OperandInfo19 },  // Inst #52 = G_UDIVREM
+  { 3,	OperandInfo18 },  // Inst #53 = G_AND
+  { 3,	OperandInfo18 },  // Inst #54 = G_OR
+  { 3,	OperandInfo18 },  // Inst #55 = G_XOR
+  { 1,	OperandInfo20 },  // Inst #56 = G_IMPLICIT_DEF
+  { 1,	OperandInfo20 },  // Inst #57 = G_PHI
+  { 2,	OperandInfo21 },  // Inst #58 = G_FRAME_INDEX
+  { 2,	OperandInfo21 },  // Inst #59 = G_GLOBAL_VALUE
+  { 3,	OperandInfo22 },  // Inst #60 = G_EXTRACT
+  { 2,	OperandInfo23 },  // Inst #61 = G_UNMERGE_VALUES
+  { 4,	OperandInfo24 },  // Inst #62 = G_INSERT
+  { 2,	OperandInfo23 },  // Inst #63 = G_MERGE_VALUES
+  { 2,	OperandInfo23 },  // Inst #64 = G_BUILD_VECTOR
+  { 2,	OperandInfo23 },  // Inst #65 = G_BUILD_VECTOR_TRUNC
+  { 2,	OperandInfo23 },  // Inst #66 = G_CONCAT_VECTORS
+  { 2,	OperandInfo23 },  // Inst #67 = G_PTRTOINT
+  { 2,	OperandInfo23 },  // Inst #68 = G_INTTOPTR
+  { 2,	OperandInfo23 },  // Inst #69 = G_BITCAST
+  { 2,	OperandInfo25 },  // Inst #70 = G_FREEZE
+  { 2,	OperandInfo25 },  // Inst #71 = G_INTRINSIC_TRUNC
+  { 2,	OperandInfo25 },  // Inst #72 = G_INTRINSIC_ROUND
+  { 2,	OperandInfo23 },  // Inst #73 = G_INTRINSIC_LRINT
+  { 2,	OperandInfo25 },  // Inst #74 = G_INTRINSIC_ROUNDEVEN
+  { 1,	OperandInfo20 },  // Inst #75 = G_READCYCLECOUNTER
+  { 2,	OperandInfo23 },  // Inst #76 = G_LOAD
+  { 2,	OperandInfo23 },  // Inst #77 = G_SEXTLOAD
+  { 2,	OperandInfo23 },  // Inst #78 = G_ZEXTLOAD
+  { 5,	OperandInfo26 },  // Inst #79 = G_INDEXED_LOAD
+  { 5,	OperandInfo26 },  // Inst #80 = G_INDEXED_SEXTLOAD
+  { 5,	OperandInfo26 },  // Inst #81 = G_INDEXED_ZEXTLOAD
+  { 2,	OperandInfo23 },  // Inst #82 = G_STORE
+  { 5,	OperandInfo27 },  // Inst #83 = G_INDEXED_STORE
+  { 5,	OperandInfo28 },  // Inst #84 = G_ATOMIC_CMPXCHG_WITH_SUCCESS
+  { 4,	OperandInfo29 },  // Inst #85 = G_ATOMIC_CMPXCHG
+  { 3,	OperandInfo30 },  // Inst #86 = G_ATOMICRMW_XCHG
+  { 3,	OperandInfo30 },  // Inst #87 = G_ATOMICRMW_ADD
+  { 3,	OperandInfo30 },  // Inst #88 = G_ATOMICRMW_SUB
+  { 3,	OperandInfo30 },  // Inst #89 = G_ATOMICRMW_AND
+  { 3,	OperandInfo30 },  // Inst #90 = G_ATOMICRMW_NAND
+  { 3,	OperandInfo30 },  // Inst #91 = G_ATOMICRMW_OR
+  { 3,	OperandInfo30 },  // Inst #92 = G_ATOMICRMW_XOR
+  { 3,	OperandInfo30 },  // Inst #93 = G_ATOMICRMW_MAX
+  { 3,	OperandInfo30 },  // Inst #94 = G_ATOMICRMW_MIN
+  { 3,	OperandInfo30 },  // Inst #95 = G_ATOMICRMW_UMAX
+  { 3,	OperandInfo30 },  // Inst #96 = G_ATOMICRMW_UMIN
+  { 3,	OperandInfo30 },  // Inst #97 = G_ATOMICRMW_FADD
+  { 3,	OperandInfo30 },  // Inst #98 = G_ATOMICRMW_FSUB
+  { 2,	OperandInfo10 },  // Inst #99 = G_FENCE
+  { 2,	OperandInfo21 },  // Inst #100 = G_BRCOND
+  { 1,	OperandInfo20 },  // Inst #101 = G_BRINDIRECT
+  { 1,	OperandInfo2 },  // Inst #102 = G_INTRINSIC
+  { 1,	OperandInfo2 },  // Inst #103 = G_INTRINSIC_W_SIDE_EFFECTS
+  { 2,	OperandInfo23 },  // Inst #104 = G_ANYEXT
+  { 2,	OperandInfo23 },  // Inst #105 = G_TRUNC
+  { 2,	OperandInfo21 },  // Inst #106 = G_CONSTANT
+  { 2,	OperandInfo21 },  // Inst #107 = G_FCONSTANT
+  { 1,	OperandInfo20 },  // Inst #108 = G_VASTART
+  { 3,	OperandInfo31 },  // Inst #109 = G_VAARG
+  { 2,	OperandInfo23 },  // Inst #110 = G_SEXT
+  { 3,	OperandInfo17 },  // Inst #111 = G_SEXT_INREG
+  { 2,	OperandInfo23 },  // Inst #112 = G_ZEXT
+  { 3,	OperandInfo32 },  // Inst #113 = G_SHL
+  { 3,	OperandInfo32 },  // Inst #114 = G_LSHR
+  { 3,	OperandInfo32 },  // Inst #115 = G_ASHR
+  { 4,	OperandInfo33 },  // Inst #116 = G_FSHL
+  { 4,	OperandInfo33 },  // Inst #117 = G_FSHR
+  { 3,	OperandInfo32 },  // Inst #118 = G_ROTR
+  { 3,	OperandInfo32 },  // Inst #119 = G_ROTL
+  { 4,	OperandInfo34 },  // Inst #120 = G_ICMP
+  { 4,	OperandInfo34 },  // Inst #121 = G_FCMP
+  { 4,	OperandInfo29 },  // Inst #122 = G_SELECT
+  { 4,	OperandInfo29 },  // Inst #123 = G_UADDO
+  { 5,	OperandInfo35 },  // Inst #124 = G_UADDE
+  { 4,	OperandInfo29 },  // Inst #125 = G_USUBO
+  { 5,	OperandInfo35 },  // Inst #126 = G_USUBE
+  { 4,	OperandInfo29 },  // Inst #127 = G_SADDO
+  { 5,	OperandInfo35 },  // Inst #128 = G_SADDE
+  { 4,	OperandInfo29 },  // Inst #129 = G_SSUBO
+  { 5,	OperandInfo35 },  // Inst #130 = G_SSUBE
+  { 4,	OperandInfo29 },  // Inst #131 = G_UMULO
+  { 4,	OperandInfo29 },  // Inst #132 = G_SMULO
+  { 3,	OperandInfo18 },  // Inst #133 = G_UMULH
+  { 3,	OperandInfo18 },  // Inst #134 = G_SMULH
+  { 3,	OperandInfo18 },  // Inst #135 = G_UADDSAT
+  { 3,	OperandInfo18 },  // Inst #136 = G_SADDSAT
+  { 3,	OperandInfo18 },  // Inst #137 = G_USUBSAT
+  { 3,	OperandInfo18 },  // Inst #138 = G_SSUBSAT
+  { 3,	OperandInfo32 },  // Inst #139 = G_USHLSAT
+  { 3,	OperandInfo32 },  // Inst #140 = G_SSHLSAT
+  { 4,	OperandInfo36 },  // Inst #141 = G_SMULFIX
+  { 4,	OperandInfo36 },  // Inst #142 = G_UMULFIX
+  { 4,	OperandInfo36 },  // Inst #143 = G_SMULFIXSAT
+  { 4,	OperandInfo36 },  // Inst #144 = G_UMULFIXSAT
+  { 4,	OperandInfo36 },  // Inst #145 = G_SDIVFIX
+  { 4,	OperandInfo36 },  // Inst #146 = G_UDIVFIX
+  { 4,	OperandInfo36 },  // Inst #147 = G_SDIVFIXSAT
+  { 4,	OperandInfo36 },  // Inst #148 = G_UDIVFIXSAT
+  { 3,	OperandInfo18 },  // Inst #149 = G_FADD
+  { 3,	OperandInfo18 },  // Inst #150 = G_FSUB
+  { 3,	OperandInfo18 },  // Inst #151 = G_FMUL
+  { 4,	OperandInfo19 },  // Inst #152 = G_FMA
+  { 4,	OperandInfo19 },  // Inst #153 = G_FMAD
+  { 3,	OperandInfo18 },  // Inst #154 = G_FDIV
+  { 3,	OperandInfo18 },  // Inst #155 = G_FREM
+  { 3,	OperandInfo18 },  // Inst #156 = G_FPOW
+  { 3,	OperandInfo32 },  // Inst #157 = G_FPOWI
+  { 2,	OperandInfo25 },  // Inst #158 = G_FEXP
+  { 2,	OperandInfo25 },  // Inst #159 = G_FEXP2
+  { 2,	OperandInfo25 },  // Inst #160 = G_FLOG
+  { 2,	OperandInfo25 },  // Inst #161 = G_FLOG2
+  { 2,	OperandInfo25 },  // Inst #162 = G_FLOG10
+  { 2,	OperandInfo25 },  // Inst #163 = G_FNEG
+  { 2,	OperandInfo23 },  // Inst #164 = G_FPEXT
+  { 2,	OperandInfo23 },  // Inst #165 = G_FPTRUNC
+  { 2,	OperandInfo23 },  // Inst #166 = G_FPTOSI
+  { 2,	OperandInfo23 },  // Inst #167 = G_FPTOUI
+  { 2,	OperandInfo23 },  // Inst #168 = G_SITOFP
+  { 2,	OperandInfo23 },  // Inst #169 = G_UITOFP
+  { 2,	OperandInfo25 },  // Inst #170 = G_FABS
+  { 3,	OperandInfo32 },  // Inst #171 = G_FCOPYSIGN
+  { 2,	OperandInfo25 },  // Inst #172 = G_FCANONICALIZE
+  { 3,	OperandInfo18 },  // Inst #173 = G_FMINNUM
+  { 3,	OperandInfo18 },  // Inst #174 = G_FMAXNUM
+  { 3,	OperandInfo18 },  // Inst #175 = G_FMINNUM_IEEE
+  { 3,	OperandInfo18 },  // Inst #176 = G_FMAXNUM_IEEE
+  { 3,	OperandInfo18 },  // Inst #177 = G_FMINIMUM
+  { 3,	OperandInfo18 },  // Inst #178 = G_FMAXIMUM
+  { 3,	OperandInfo32 },  // Inst #179 = G_PTR_ADD
+  { 3,	OperandInfo32 },  // Inst #180 = G_PTRMASK
+  { 3,	OperandInfo18 },  // Inst #181 = G_SMIN
+  { 3,	OperandInfo18 },  // Inst #182 = G_SMAX
+  { 3,	OperandInfo18 },  // Inst #183 = G_UMIN
+  { 3,	OperandInfo18 },  // Inst #184 = G_UMAX
+  { 2,	OperandInfo25 },  // Inst #185 = G_ABS
+  { 2,	OperandInfo23 },  // Inst #186 = G_LROUND
+  { 2,	OperandInfo23 },  // Inst #187 = G_LLROUND
+  { 1,	OperandInfo2 },  // Inst #188 = G_BR
+  { 3,	OperandInfo37 },  // Inst #189 = G_BRJT
+  { 4,	OperandInfo38 },  // Inst #190 = G_INSERT_VECTOR_ELT
+  { 3,	OperandInfo39 },  // Inst #191 = G_EXTRACT_VECTOR_ELT
+  { 4,	OperandInfo40 },  // Inst #192 = G_SHUFFLE_VECTOR
+  { 2,	OperandInfo23 },  // Inst #193 = G_CTTZ
+  { 2,	OperandInfo23 },  // Inst #194 = G_CTTZ_ZERO_UNDEF
+  { 2,	OperandInfo23 },  // Inst #195 = G_CTLZ
+  { 2,	OperandInfo23 },  // Inst #196 = G_CTLZ_ZERO_UNDEF
+  { 2,	OperandInfo23 },  // Inst #197 = G_CTPOP
+  { 2,	OperandInfo25 },  // Inst #198 = G_BSWAP
+  { 2,	OperandInfo25 },  // Inst #199 = G_BITREVERSE
+  { 2,	OperandInfo25 },  // Inst #200 = G_FCEIL
+  { 2,	OperandInfo25 },  // Inst #201 = G_FCOS
+  { 2,	OperandInfo25 },  // Inst #202 = G_FSIN
+  { 2,	OperandInfo25 },  // Inst #203 = G_FSQRT
+  { 2,	OperandInfo25 },  // Inst #204 = G_FFLOOR
+  { 2,	OperandInfo25 },  // Inst #205 = G_FRINT
+  { 2,	OperandInfo25 },  // Inst #206 = G_FNEARBYINT
+  { 2,	OperandInfo23 },  // Inst #207 = G_ADDRSPACE_CAST
+  { 2,	OperandInfo21 },  // Inst #208 = G_BLOCK_ADDR
+  { 2,	OperandInfo21 },  // Inst #209 = G_JUMP_TABLE
+  { 3,	OperandInfo22 },  // Inst #210 = G_DYN_STACKALLOC
+  { 3,	OperandInfo18 },  // Inst #211 = G_STRICT_FADD
+  { 3,	OperandInfo18 },  // Inst #212 = G_STRICT_FSUB
+  { 3,	OperandInfo18 },  // Inst #213 = G_STRICT_FMUL
+  { 3,	OperandInfo18 },  // Inst #214 = G_STRICT_FDIV
+  { 3,	OperandInfo18 },  // Inst #215 = G_STRICT_FREM
+  { 4,	OperandInfo19 },  // Inst #216 = G_STRICT_FMA
+  { 2,	OperandInfo25 },  // Inst #217 = G_STRICT_FSQRT
+  { 2,	OperandInfo21 },  // Inst #218 = G_READ_REGISTER
+  { 2,	OperandInfo41 },  // Inst #219 = G_WRITE_REGISTER
+  { 4,	OperandInfo42 },  // Inst #220 = G_MEMCPY
+  { 3,	OperandInfo39 },  // Inst #221 = G_MEMCPY_INLINE
+  { 4,	OperandInfo42 },  // Inst #222 = G_MEMMOVE
+  { 4,	OperandInfo42 },  // Inst #223 = G_MEMSET
+  { 3,	OperandInfo22 },  // Inst #224 = G_BZERO
+  { 3,	OperandInfo39 },  // Inst #225 = G_VECREDUCE_SEQ_FADD
+  { 3,	OperandInfo39 },  // Inst #226 = G_VECREDUCE_SEQ_FMUL
+  { 2,	OperandInfo23 },  // Inst #227 = G_VECREDUCE_FADD
+  { 2,	OperandInfo23 },  // Inst #228 = G_VECREDUCE_FMUL
+  { 2,	OperandInfo23 },  // Inst #229 = G_VECREDUCE_FMAX
+  { 2,	OperandInfo23 },  // Inst #230 = G_VECREDUCE_FMIN
+  { 2,	OperandInfo23 },  // Inst #231 = G_VECREDUCE_ADD
+  { 2,	OperandInfo23 },  // Inst #232 = G_VECREDUCE_MUL
+  { 2,	OperandInfo23 },  // Inst #233 = G_VECREDUCE_AND
+  { 2,	OperandInfo23 },  // Inst #234 = G_VECREDUCE_OR
+  { 2,	OperandInfo23 },  // Inst #235 = G_VECREDUCE_XOR
+  { 2,	OperandInfo23 },  // Inst #236 = G_VECREDUCE_SMAX
+  { 2,	OperandInfo23 },  // Inst #237 = G_VECREDUCE_SMIN
+  { 2,	OperandInfo23 },  // Inst #238 = G_VECREDUCE_UMAX
+  { 2,	OperandInfo23 },  // Inst #239 = G_VECREDUCE_UMIN
+  { 4,	OperandInfo43 },  // Inst #240 = G_SBFX
+  { 4,	OperandInfo43 },  // Inst #241 = G_UBFX
+  { 2,	OperandInfo10 },  // Inst #242 = ADJCALLSTACKDOWN
+  { 2,	OperandInfo10 },  // Inst #243 = ADJCALLSTACKUP
+  { 1,	OperandInfo2 },  // Inst #244 = GETPCX
+  { 4,	OperandInfo44 },  // Inst #245 = SELECT_CC_DFP_FCC
+  { 4,	OperandInfo44 },  // Inst #246 = SELECT_CC_DFP_ICC
+  { 4,	OperandInfo45 },  // Inst #247 = SELECT_CC_FP_FCC
+  { 4,	OperandInfo45 },  // Inst #248 = SELECT_CC_FP_ICC
+  { 4,	OperandInfo46 },  // Inst #249 = SELECT_CC_Int_FCC
+  { 4,	OperandInfo46 },  // Inst #250 = SELECT_CC_Int_ICC
+  { 4,	OperandInfo47 },  // Inst #251 = SELECT_CC_QFP_FCC
+  { 4,	OperandInfo47 },  // Inst #252 = SELECT_CC_QFP_ICC
+  { 2,	OperandInfo48 },  // Inst #253 = SET
+  { 3,	OperandInfo49 },  // Inst #254 = ADDCCri
+  { 3,	OperandInfo50 },  // Inst #255 = ADDCCrr
+  { 3,	OperandInfo49 },  // Inst #256 = ADDCri
+  { 3,	OperandInfo50 },  // Inst #257 = ADDCrr
+  { 3,	OperandInfo49 },  // Inst #258 = ADDEri
+  { 3,	OperandInfo50 },  // Inst #259 = ADDErr
+  { 3,	OperandInfo51 },  // Inst #260 = ADDXC
+  { 3,	OperandInfo51 },  // Inst #261 = ADDXCCC
+  { 3,	OperandInfo52 },  // Inst #262 = ADDXri
+  { 3,	OperandInfo51 },  // Inst #263 = ADDXrr
+  { 3,	OperandInfo49 },  // Inst #264 = ADDri
+  { 3,	OperandInfo50 },  // Inst #265 = ADDrr
+  { 3,	OperandInfo51 },  // Inst #266 = ALIGNADDR
+  { 3,	OperandInfo51 },  // Inst #267 = ALIGNADDRL
+  { 3,	OperandInfo49 },  // Inst #268 = ANDCCri
+  { 3,	OperandInfo50 },  // Inst #269 = ANDCCrr
+  { 3,	OperandInfo49 },  // Inst #270 = ANDNCCri
+  { 3,	OperandInfo50 },  // Inst #271 = ANDNCCrr
+  { 3,	OperandInfo49 },  // Inst #272 = ANDNri
+  { 3,	OperandInfo50 },  // Inst #273 = ANDNrr
+  { 3,	OperandInfo51 },  // Inst #274 = ANDXNrr
+  { 3,	OperandInfo52 },  // Inst #275 = ANDXri
+  { 3,	OperandInfo51 },  // Inst #276 = ANDXrr
+  { 3,	OperandInfo49 },  // Inst #277 = ANDri
+  { 3,	OperandInfo50 },  // Inst #278 = ANDrr
+  { 3,	OperandInfo51 },  // Inst #279 = ARRAY16
+  { 3,	OperandInfo51 },  // Inst #280 = ARRAY32
+  { 3,	OperandInfo51 },  // Inst #281 = ARRAY8
+  { 1,	OperandInfo2 },  // Inst #282 = BA
+  { 2,	OperandInfo7 },  // Inst #283 = BCOND
+  { 2,	OperandInfo7 },  // Inst #284 = BCONDA
+  { 2,	OperandInfo15 },  // Inst #285 = BINDri
+  { 2,	OperandInfo53 },  // Inst #286 = BINDrr
+  { 3,	OperandInfo51 },  // Inst #287 = BMASK
+  { 3,	OperandInfo54 },  // Inst #288 = BPFCC
+  { 3,	OperandInfo54 },  // Inst #289 = BPFCCA
+  { 3,	OperandInfo54 },  // Inst #290 = BPFCCANT
+  { 3,	OperandInfo54 },  // Inst #291 = BPFCCNT
+  { 2,	OperandInfo55 },  // Inst #292 = BPGEZapn
+  { 2,	OperandInfo55 },  // Inst #293 = BPGEZapt
+  { 2,	OperandInfo55 },  // Inst #294 = BPGEZnapn
+  { 2,	OperandInfo55 },  // Inst #295 = BPGEZnapt
+  { 2,	OperandInfo55 },  // Inst #296 = BPGZapn
+  { 2,	OperandInfo55 },  // Inst #297 = BPGZapt
+  { 2,	OperandInfo55 },  // Inst #298 = BPGZnapn
+  { 2,	OperandInfo55 },  // Inst #299 = BPGZnapt
+  { 2,	OperandInfo7 },  // Inst #300 = BPICC
+  { 2,	OperandInfo7 },  // Inst #301 = BPICCA
+  { 2,	OperandInfo7 },  // Inst #302 = BPICCANT
+  { 2,	OperandInfo7 },  // Inst #303 = BPICCNT
+  { 2,	OperandInfo55 },  // Inst #304 = BPLEZapn
+  { 2,	OperandInfo55 },  // Inst #305 = BPLEZapt
+  { 2,	OperandInfo55 },  // Inst #306 = BPLEZnapn
+  { 2,	OperandInfo55 },  // Inst #307 = BPLEZnapt
+  { 2,	OperandInfo55 },  // Inst #308 = BPLZapn
+  { 2,	OperandInfo55 },  // Inst #309 = BPLZapt
+  { 2,	OperandInfo55 },  // Inst #310 = BPLZnapn
+  { 2,	OperandInfo55 },  // Inst #311 = BPLZnapt
+  { 2,	OperandInfo55 },  // Inst #312 = BPNZapn
+  { 2,	OperandInfo55 },  // Inst #313 = BPNZapt
+  { 2,	OperandInfo55 },  // Inst #314 = BPNZnapn
+  { 2,	OperandInfo55 },  // Inst #315 = BPNZnapt
+  { 2,	OperandInfo7 },  // Inst #316 = BPXCC
+  { 2,	OperandInfo7 },  // Inst #317 = BPXCCA
+  { 2,	OperandInfo7 },  // Inst #318 = BPXCCANT
+  { 2,	OperandInfo7 },  // Inst #319 = BPXCCNT
+  { 2,	OperandInfo55 },  // Inst #320 = BPZapn
+  { 2,	OperandInfo55 },  // Inst #321 = BPZapt
+  { 2,	OperandInfo55 },  // Inst #322 = BPZnapn
+  { 2,	OperandInfo55 },  // Inst #323 = BPZnapt
+  { 3,	OperandInfo56 },  // Inst #324 = BSHUFFLE
+  { 1,	OperandInfo2 },  // Inst #325 = CALL
+  { 2,	OperandInfo15 },  // Inst #326 = CALLri
+  { 2,	OperandInfo53 },  // Inst #327 = CALLrr
+  { 4,	OperandInfo57 },  // Inst #328 = CASAasi10
+  { 5,	OperandInfo58 },  // Inst #329 = CASArr
+  { 4,	OperandInfo59 },  // Inst #330 = CASXrr
+  { 4,	OperandInfo57 },  // Inst #331 = CASrr
+  { 2,	OperandInfo7 },  // Inst #332 = CBCOND
+  { 2,	OperandInfo7 },  // Inst #333 = CBCONDA
+  { 1,	OperandInfo60 },  // Inst #334 = CMASK16
+  { 1,	OperandInfo60 },  // Inst #335 = CMASK32
+  { 1,	OperandInfo60 },  // Inst #336 = CMASK8
+  { 2,	OperandInfo61 },  // Inst #337 = CMPri
+  { 2,	OperandInfo62 },  // Inst #338 = CMPrr
+  { 3,	OperandInfo51 },  // Inst #339 = EDGE16
+  { 3,	OperandInfo51 },  // Inst #340 = EDGE16L
+  { 3,	OperandInfo51 },  // Inst #341 = EDGE16LN
+  { 3,	OperandInfo51 },  // Inst #342 = EDGE16N
+  { 3,	OperandInfo51 },  // Inst #343 = EDGE32
+  { 3,	OperandInfo51 },  // Inst #344 = EDGE32L
+  { 3,	OperandInfo51 },  // Inst #345 = EDGE32LN
+  { 3,	OperandInfo51 },  // Inst #346 = EDGE32N
+  { 3,	OperandInfo51 },  // Inst #347 = EDGE8
+  { 3,	OperandInfo51 },  // Inst #348 = EDGE8L
+  { 3,	OperandInfo51 },  // Inst #349 = EDGE8LN
+  { 3,	OperandInfo51 },  // Inst #350 = EDGE8N
+  { 2,	OperandInfo63 },  // Inst #351 = FABSD
+  { 2,	OperandInfo64 },  // Inst #352 = FABSQ
+  { 2,	OperandInfo65 },  // Inst #353 = FABSS
+  { 3,	OperandInfo56 },  // Inst #354 = FADDD
+  { 3,	OperandInfo66 },  // Inst #355 = FADDQ
+  { 3,	OperandInfo67 },  // Inst #356 = FADDS
+  { 3,	OperandInfo56 },  // Inst #357 = FALIGNADATA
+  { 3,	OperandInfo56 },  // Inst #358 = FAND
+  { 3,	OperandInfo56 },  // Inst #359 = FANDNOT1
+  { 3,	OperandInfo67 },  // Inst #360 = FANDNOT1S
+  { 3,	OperandInfo56 },  // Inst #361 = FANDNOT2
+  { 3,	OperandInfo67 },  // Inst #362 = FANDNOT2S
+  { 3,	OperandInfo67 },  // Inst #363 = FANDS
+  { 2,	OperandInfo7 },  // Inst #364 = FBCOND
+  { 2,	OperandInfo7 },  // Inst #365 = FBCONDA
+  { 3,	OperandInfo56 },  // Inst #366 = FCHKSM16
+  { 2,	OperandInfo63 },  // Inst #367 = FCMPD
+  { 3,	OperandInfo68 },  // Inst #368 = FCMPEQ16
+  { 3,	OperandInfo68 },  // Inst #369 = FCMPEQ32
+  { 3,	OperandInfo68 },  // Inst #370 = FCMPGT16
+  { 3,	OperandInfo68 },  // Inst #371 = FCMPGT32
+  { 3,	OperandInfo68 },  // Inst #372 = FCMPLE16
+  { 3,	OperandInfo68 },  // Inst #373 = FCMPLE32
+  { 3,	OperandInfo68 },  // Inst #374 = FCMPNE16
+  { 3,	OperandInfo68 },  // Inst #375 = FCMPNE32
+  { 2,	OperandInfo64 },  // Inst #376 = FCMPQ
+  { 2,	OperandInfo65 },  // Inst #377 = FCMPS
+  { 3,	OperandInfo56 },  // Inst #378 = FDIVD
+  { 3,	OperandInfo66 },  // Inst #379 = FDIVQ
+  { 3,	OperandInfo67 },  // Inst #380 = FDIVS
+  { 3,	OperandInfo69 },  // Inst #381 = FDMULQ
+  { 2,	OperandInfo70 },  // Inst #382 = FDTOI
+  { 2,	OperandInfo71 },  // Inst #383 = FDTOQ
+  { 2,	OperandInfo70 },  // Inst #384 = FDTOS
+  { 2,	OperandInfo63 },  // Inst #385 = FDTOX
+  { 2,	OperandInfo63 },  // Inst #386 = FEXPAND
+  { 3,	OperandInfo56 },  // Inst #387 = FHADDD
+  { 3,	OperandInfo56 },  // Inst #388 = FHADDS
+  { 3,	OperandInfo56 },  // Inst #389 = FHSUBD
+  { 3,	OperandInfo56 },  // Inst #390 = FHSUBS
+  { 2,	OperandInfo72 },  // Inst #391 = FITOD
+  { 2,	OperandInfo73 },  // Inst #392 = FITOQ
+  { 2,	OperandInfo65 },  // Inst #393 = FITOS
+  { 3,	OperandInfo74 },  // Inst #394 = FLCMPD
+  { 3,	OperandInfo74 },  // Inst #395 = FLCMPS
+  { 0,	NULL },  // Inst #396 = FLUSH
+  { 0,	NULL },  // Inst #397 = FLUSHW
+  { 2,	OperandInfo15 },  // Inst #398 = FLUSHri
+  { 2,	OperandInfo53 },  // Inst #399 = FLUSHrr
+  { 3,	OperandInfo56 },  // Inst #400 = FMEAN16
+  { 2,	OperandInfo63 },  // Inst #401 = FMOVD
+  { 4,	OperandInfo75 },  // Inst #402 = FMOVD_FCC
+  { 4,	OperandInfo75 },  // Inst #403 = FMOVD_ICC
+  { 4,	OperandInfo75 },  // Inst #404 = FMOVD_XCC
+  { 2,	OperandInfo64 },  // Inst #405 = FMOVQ
+  { 4,	OperandInfo76 },  // Inst #406 = FMOVQ_FCC
+  { 4,	OperandInfo76 },  // Inst #407 = FMOVQ_ICC
+  { 4,	OperandInfo76 },  // Inst #408 = FMOVQ_XCC
+  { 3,	OperandInfo77 },  // Inst #409 = FMOVRGEZD
+  { 3,	OperandInfo77 },  // Inst #410 = FMOVRGEZQ
+  { 3,	OperandInfo77 },  // Inst #411 = FMOVRGEZS
+  { 3,	OperandInfo77 },  // Inst #412 = FMOVRGZD
+  { 3,	OperandInfo77 },  // Inst #413 = FMOVRGZQ
+  { 3,	OperandInfo77 },  // Inst #414 = FMOVRGZS
+  { 3,	OperandInfo77 },  // Inst #415 = FMOVRLEZD
+  { 3,	OperandInfo77 },  // Inst #416 = FMOVRLEZQ
+  { 3,	OperandInfo77 },  // Inst #417 = FMOVRLEZS
+  { 3,	OperandInfo77 },  // Inst #418 = FMOVRLZD
+  { 3,	OperandInfo77 },  // Inst #419 = FMOVRLZQ
+  { 3,	OperandInfo77 },  // Inst #420 = FMOVRLZS
+  { 3,	OperandInfo77 },  // Inst #421 = FMOVRNZD
+  { 3,	OperandInfo77 },  // Inst #422 = FMOVRNZQ
+  { 3,	OperandInfo77 },  // Inst #423 = FMOVRNZS
+  { 3,	OperandInfo77 },  // Inst #424 = FMOVRZD
+  { 3,	OperandInfo77 },  // Inst #425 = FMOVRZQ
+  { 3,	OperandInfo77 },  // Inst #426 = FMOVRZS
+  { 2,	OperandInfo65 },  // Inst #427 = FMOVS
+  { 4,	OperandInfo78 },  // Inst #428 = FMOVS_FCC
+  { 4,	OperandInfo78 },  // Inst #429 = FMOVS_ICC
+  { 4,	OperandInfo78 },  // Inst #430 = FMOVS_XCC
+  { 3,	OperandInfo56 },  // Inst #431 = FMUL8SUX16
+  { 3,	OperandInfo56 },  // Inst #432 = FMUL8ULX16
+  { 3,	OperandInfo56 },  // Inst #433 = FMUL8X16
+  { 3,	OperandInfo56 },  // Inst #434 = FMUL8X16AL
+  { 3,	OperandInfo56 },  // Inst #435 = FMUL8X16AU
+  { 3,	OperandInfo56 },  // Inst #436 = FMULD
+  { 3,	OperandInfo56 },  // Inst #437 = FMULD8SUX16
+  { 3,	OperandInfo56 },  // Inst #438 = FMULD8ULX16
+  { 3,	OperandInfo66 },  // Inst #439 = FMULQ
+  { 3,	OperandInfo67 },  // Inst #440 = FMULS
+  { 3,	OperandInfo56 },  // Inst #441 = FNADDD
+  { 3,	OperandInfo56 },  // Inst #442 = FNADDS
+  { 3,	OperandInfo56 },  // Inst #443 = FNAND
+  { 3,	OperandInfo67 },  // Inst #444 = FNANDS
+  { 2,	OperandInfo63 },  // Inst #445 = FNEGD
+  { 2,	OperandInfo64 },  // Inst #446 = FNEGQ
+  { 2,	OperandInfo65 },  // Inst #447 = FNEGS
+  { 3,	OperandInfo56 },  // Inst #448 = FNHADDD
+  { 3,	OperandInfo56 },  // Inst #449 = FNHADDS
+  { 3,	OperandInfo56 },  // Inst #450 = FNMULD
+  { 3,	OperandInfo56 },  // Inst #451 = FNMULS
+  { 3,	OperandInfo56 },  // Inst #452 = FNOR
+  { 3,	OperandInfo67 },  // Inst #453 = FNORS
+  { 2,	OperandInfo63 },  // Inst #454 = FNOT1
+  { 2,	OperandInfo65 },  // Inst #455 = FNOT1S
+  { 2,	OperandInfo63 },  // Inst #456 = FNOT2
+  { 2,	OperandInfo65 },  // Inst #457 = FNOT2S
+  { 3,	OperandInfo56 },  // Inst #458 = FNSMULD
+  { 2,	OperandInfo79 },  // Inst #459 = FONE
+  { 2,	OperandInfo80 },  // Inst #460 = FONES
+  { 3,	OperandInfo56 },  // Inst #461 = FOR
+  { 3,	OperandInfo56 },  // Inst #462 = FORNOT1
+  { 3,	OperandInfo67 },  // Inst #463 = FORNOT1S
+  { 3,	OperandInfo56 },  // Inst #464 = FORNOT2
+  { 3,	OperandInfo67 },  // Inst #465 = FORNOT2S
+  { 3,	OperandInfo67 },  // Inst #466 = FORS
+  { 2,	OperandInfo63 },  // Inst #467 = FPACK16
+  { 3,	OperandInfo56 },  // Inst #468 = FPACK32
+  { 2,	OperandInfo63 },  // Inst #469 = FPACKFIX
+  { 3,	OperandInfo56 },  // Inst #470 = FPADD16
+  { 3,	OperandInfo56 },  // Inst #471 = FPADD16S
+  { 3,	OperandInfo56 },  // Inst #472 = FPADD32
+  { 3,	OperandInfo56 },  // Inst #473 = FPADD32S
+  { 3,	OperandInfo56 },  // Inst #474 = FPADD64
+  { 3,	OperandInfo56 },  // Inst #475 = FPMERGE
+  { 3,	OperandInfo56 },  // Inst #476 = FPSUB16
+  { 3,	OperandInfo56 },  // Inst #477 = FPSUB16S
+  { 3,	OperandInfo56 },  // Inst #478 = FPSUB32
+  { 3,	OperandInfo56 },  // Inst #479 = FPSUB32S
+  { 2,	OperandInfo81 },  // Inst #480 = FQTOD
+  { 2,	OperandInfo82 },  // Inst #481 = FQTOI
+  { 2,	OperandInfo82 },  // Inst #482 = FQTOS
+  { 2,	OperandInfo81 },  // Inst #483 = FQTOX
+  { 3,	OperandInfo56 },  // Inst #484 = FSLAS16
+  { 3,	OperandInfo56 },  // Inst #485 = FSLAS32
+  { 3,	OperandInfo56 },  // Inst #486 = FSLL16
+  { 3,	OperandInfo56 },  // Inst #487 = FSLL32
+  { 3,	OperandInfo83 },  // Inst #488 = FSMULD
+  { 2,	OperandInfo63 },  // Inst #489 = FSQRTD
+  { 2,	OperandInfo64 },  // Inst #490 = FSQRTQ
+  { 2,	OperandInfo65 },  // Inst #491 = FSQRTS
+  { 3,	OperandInfo56 },  // Inst #492 = FSRA16
+  { 3,	OperandInfo56 },  // Inst #493 = FSRA32
+  { 2,	OperandInfo63 },  // Inst #494 = FSRC1
+  { 2,	OperandInfo65 },  // Inst #495 = FSRC1S
+  { 2,	OperandInfo63 },  // Inst #496 = FSRC2
+  { 2,	OperandInfo65 },  // Inst #497 = FSRC2S
+  { 3,	OperandInfo56 },  // Inst #498 = FSRL16
+  { 3,	OperandInfo56 },  // Inst #499 = FSRL32
+  { 2,	OperandInfo72 },  // Inst #500 = FSTOD
+  { 2,	OperandInfo65 },  // Inst #501 = FSTOI
+  { 2,	OperandInfo73 },  // Inst #502 = FSTOQ
+  { 2,	OperandInfo72 },  // Inst #503 = FSTOX
+  { 3,	OperandInfo56 },  // Inst #504 = FSUBD
+  { 3,	OperandInfo66 },  // Inst #505 = FSUBQ
+  { 3,	OperandInfo67 },  // Inst #506 = FSUBS
+  { 3,	OperandInfo56 },  // Inst #507 = FXNOR
+  { 3,	OperandInfo67 },  // Inst #508 = FXNORS
+  { 3,	OperandInfo56 },  // Inst #509 = FXOR
+  { 3,	OperandInfo67 },  // Inst #510 = FXORS
+  { 2,	OperandInfo63 },  // Inst #511 = FXTOD
+  { 2,	OperandInfo71 },  // Inst #512 = FXTOQ
+  { 2,	OperandInfo70 },  // Inst #513 = FXTOS
+  { 2,	OperandInfo79 },  // Inst #514 = FZERO
+  { 2,	OperandInfo80 },  // Inst #515 = FZEROS
+  { 3,	OperandInfo84 },  // Inst #516 = JMPLri
+  { 3,	OperandInfo85 },  // Inst #517 = JMPLrr
+  { 4,	OperandInfo86 },  // Inst #518 = LDArr
+  { 2,	OperandInfo15 },  // Inst #519 = LDCSRri
+  { 2,	OperandInfo53 },  // Inst #520 = LDCSRrr
+  { 3,	OperandInfo87 },  // Inst #521 = LDCri
+  { 3,	OperandInfo88 },  // Inst #522 = LDCrr
+  { 4,	OperandInfo89 },  // Inst #523 = LDDArr
+  { 3,	OperandInfo90 },  // Inst #524 = LDDCri
+  { 3,	OperandInfo91 },  // Inst #525 = LDDCrr
+  { 4,	OperandInfo92 },  // Inst #526 = LDDFArr
+  { 3,	OperandInfo93 },  // Inst #527 = LDDFri
+  { 3,	OperandInfo94 },  // Inst #528 = LDDFrr
+  { 3,	OperandInfo95 },  // Inst #529 = LDDri
+  { 3,	OperandInfo96 },  // Inst #530 = LDDrr
+  { 4,	OperandInfo97 },  // Inst #531 = LDFArr
+  { 2,	OperandInfo15 },  // Inst #532 = LDFSRri
+  { 2,	OperandInfo53 },  // Inst #533 = LDFSRrr
+  { 3,	OperandInfo98 },  // Inst #534 = LDFri
+  { 3,	OperandInfo99 },  // Inst #535 = LDFrr
+  { 4,	OperandInfo100 },  // Inst #536 = LDQFArr
+  { 3,	OperandInfo101 },  // Inst #537 = LDQFri
+  { 3,	OperandInfo102 },  // Inst #538 = LDQFrr
+  { 4,	OperandInfo86 },  // Inst #539 = LDSBArr
+  { 3,	OperandInfo84 },  // Inst #540 = LDSBri
+  { 3,	OperandInfo85 },  // Inst #541 = LDSBrr
+  { 4,	OperandInfo86 },  // Inst #542 = LDSHArr
+  { 3,	OperandInfo84 },  // Inst #543 = LDSHri
+  { 3,	OperandInfo85 },  // Inst #544 = LDSHrr
+  { 4,	OperandInfo86 },  // Inst #545 = LDSTUBArr
+  { 3,	OperandInfo84 },  // Inst #546 = LDSTUBri
+  { 3,	OperandInfo85 },  // Inst #547 = LDSTUBrr
+  { 3,	OperandInfo103 },  // Inst #548 = LDSWri
+  { 3,	OperandInfo104 },  // Inst #549 = LDSWrr
+  { 4,	OperandInfo86 },  // Inst #550 = LDUBArr
+  { 3,	OperandInfo84 },  // Inst #551 = LDUBri
+  { 3,	OperandInfo85 },  // Inst #552 = LDUBrr
+  { 4,	OperandInfo86 },  // Inst #553 = LDUHArr
+  { 3,	OperandInfo84 },  // Inst #554 = LDUHri
+  { 3,	OperandInfo85 },  // Inst #555 = LDUHrr
+  { 2,	OperandInfo15 },  // Inst #556 = LDXFSRri
+  { 2,	OperandInfo53 },  // Inst #557 = LDXFSRrr
+  { 3,	OperandInfo103 },  // Inst #558 = LDXri
+  { 3,	OperandInfo104 },  // Inst #559 = LDXrr
+  { 3,	OperandInfo84 },  // Inst #560 = LDri
+  { 3,	OperandInfo85 },  // Inst #561 = LDrr
+  { 3,	OperandInfo103 },  // Inst #562 = LEAX_ADDri
+  { 3,	OperandInfo84 },  // Inst #563 = LEA_ADDri
+  { 2,	OperandInfo105 },  // Inst #564 = LZCNT
+  { 1,	OperandInfo2 },  // Inst #565 = MEMBARi
+  { 2,	OperandInfo106 },  // Inst #566 = MOVDTOX
+  { 4,	OperandInfo107 },  // Inst #567 = MOVFCCri
+  { 4,	OperandInfo108 },  // Inst #568 = MOVFCCrr
+  { 4,	OperandInfo107 },  // Inst #569 = MOVICCri
+  { 4,	OperandInfo108 },  // Inst #570 = MOVICCrr
+  { 3,	OperandInfo52 },  // Inst #571 = MOVRGEZri
+  { 3,	OperandInfo109 },  // Inst #572 = MOVRGEZrr
+  { 3,	OperandInfo52 },  // Inst #573 = MOVRGZri
+  { 3,	OperandInfo109 },  // Inst #574 = MOVRGZrr
+  { 3,	OperandInfo52 },  // Inst #575 = MOVRLEZri
+  { 3,	OperandInfo109 },  // Inst #576 = MOVRLEZrr
+  { 3,	OperandInfo52 },  // Inst #577 = MOVRLZri
+  { 3,	OperandInfo109 },  // Inst #578 = MOVRLZrr
+  { 3,	OperandInfo52 },  // Inst #579 = MOVRNZri
+  { 3,	OperandInfo109 },  // Inst #580 = MOVRNZrr
+  { 3,	OperandInfo52 },  // Inst #581 = MOVRRZri
+  { 3,	OperandInfo109 },  // Inst #582 = MOVRRZrr
+  { 2,	OperandInfo106 },  // Inst #583 = MOVSTOSW
+  { 2,	OperandInfo106 },  // Inst #584 = MOVSTOUW
+  { 2,	OperandInfo110 },  // Inst #585 = MOVWTOS
+  { 4,	OperandInfo107 },  // Inst #586 = MOVXCCri
+  { 4,	OperandInfo108 },  // Inst #587 = MOVXCCrr
+  { 2,	OperandInfo110 },  // Inst #588 = MOVXTOD
+  { 3,	OperandInfo49 },  // Inst #589 = MULSCCri
+  { 3,	OperandInfo50 },  // Inst #590 = MULSCCrr
+  { 3,	OperandInfo111 },  // Inst #591 = MULXri
+  { 3,	OperandInfo51 },  // Inst #592 = MULXrr
+  { 0,	NULL },  // Inst #593 = NOP
+  { 3,	OperandInfo49 },  // Inst #594 = ORCCri
+  { 3,	OperandInfo50 },  // Inst #595 = ORCCrr
+  { 3,	OperandInfo49 },  // Inst #596 = ORNCCri
+  { 3,	OperandInfo50 },  // Inst #597 = ORNCCrr
+  { 3,	OperandInfo49 },  // Inst #598 = ORNri
+  { 3,	OperandInfo50 },  // Inst #599 = ORNrr
+  { 3,	OperandInfo51 },  // Inst #600 = ORXNrr
+  { 3,	OperandInfo52 },  // Inst #601 = ORXri
+  { 3,	OperandInfo51 },  // Inst #602 = ORXrr
+  { 3,	OperandInfo49 },  // Inst #603 = ORri
+  { 3,	OperandInfo50 },  // Inst #604 = ORrr
+  { 3,	OperandInfo56 },  // Inst #605 = PDIST
+  { 3,	OperandInfo56 },  // Inst #606 = PDISTN
+  { 2,	OperandInfo62 },  // Inst #607 = POPCrr
+  { 3,	OperandInfo112 },  // Inst #608 = PREFETCHi
+  { 3,	OperandInfo113 },  // Inst #609 = PREFETCHr
+  { 2,	OperandInfo61 },  // Inst #610 = PWRPSRri
+  { 2,	OperandInfo62 },  // Inst #611 = PWRPSRrr
+  { 2,	OperandInfo114 },  // Inst #612 = RDASR
+  { 1,	OperandInfo115 },  // Inst #613 = RDPC
+  { 2,	OperandInfo116 },  // Inst #614 = RDPR
+  { 1,	OperandInfo115 },  // Inst #615 = RDPSR
+  { 1,	OperandInfo115 },  // Inst #616 = RDTBR
+  { 1,	OperandInfo115 },  // Inst #617 = RDWIM
+  { 3,	OperandInfo49 },  // Inst #618 = RESTOREri
+  { 3,	OperandInfo50 },  // Inst #619 = RESTORErr
+  { 1,	OperandInfo3 },  // Inst #620 = RET
+  { 1,	OperandInfo3 },  // Inst #621 = RETL
+  { 2,	OperandInfo15 },  // Inst #622 = RETTri
+  { 2,	OperandInfo53 },  // Inst #623 = RETTrr
+  { 3,	OperandInfo49 },  // Inst #624 = SAVEri
+  { 3,	OperandInfo50 },  // Inst #625 = SAVErr
+  { 3,	OperandInfo49 },  // Inst #626 = SDIVCCri
+  { 3,	OperandInfo50 },  // Inst #627 = SDIVCCrr
+  { 3,	OperandInfo111 },  // Inst #628 = SDIVXri
+  { 3,	OperandInfo51 },  // Inst #629 = SDIVXrr
+  { 3,	OperandInfo49 },  // Inst #630 = SDIVri
+  { 3,	OperandInfo50 },  // Inst #631 = SDIVrr
+  { 2,	OperandInfo48 },  // Inst #632 = SETHIXi
+  { 2,	OperandInfo48 },  // Inst #633 = SETHIi
+  { 0,	NULL },  // Inst #634 = SHUTDOWN
+  { 0,	NULL },  // Inst #635 = SIAM
+  { 1,	OperandInfo2 },  // Inst #636 = SIR
+  { 3,	OperandInfo117 },  // Inst #637 = SLLXri
+  { 3,	OperandInfo109 },  // Inst #638 = SLLXrr
+  { 3,	OperandInfo49 },  // Inst #639 = SLLri
+  { 3,	OperandInfo50 },  // Inst #640 = SLLrr
+  { 4,	OperandInfo118 },  // Inst #641 = SMACri
+  { 4,	OperandInfo119 },  // Inst #642 = SMACrr
+  { 3,	OperandInfo49 },  // Inst #643 = SMULCCri
+  { 3,	OperandInfo50 },  // Inst #644 = SMULCCrr
+  { 3,	OperandInfo49 },  // Inst #645 = SMULri
+  { 3,	OperandInfo50 },  // Inst #646 = SMULrr
+  { 3,	OperandInfo117 },  // Inst #647 = SRAXri
+  { 3,	OperandInfo109 },  // Inst #648 = SRAXrr
+  { 3,	OperandInfo49 },  // Inst #649 = SRAri
+  { 3,	OperandInfo50 },  // Inst #650 = SRArr
+  { 3,	OperandInfo117 },  // Inst #651 = SRLXri
+  { 3,	OperandInfo109 },  // Inst #652 = SRLXrr
+  { 3,	OperandInfo49 },  // Inst #653 = SRLri
+  { 3,	OperandInfo50 },  // Inst #654 = SRLrr
+  { 4,	OperandInfo120 },  // Inst #655 = STArr
+  { 0,	NULL },  // Inst #656 = STBAR
+  { 4,	OperandInfo120 },  // Inst #657 = STBArr
+  { 3,	OperandInfo121 },  // Inst #658 = STBri
+  { 3,	OperandInfo122 },  // Inst #659 = STBrr
+  { 2,	OperandInfo15 },  // Inst #660 = STCSRri
+  { 2,	OperandInfo53 },  // Inst #661 = STCSRrr
+  { 3,	OperandInfo123 },  // Inst #662 = STCri
+  { 3,	OperandInfo124 },  // Inst #663 = STCrr
+  { 4,	OperandInfo125 },  // Inst #664 = STDArr
+  { 2,	OperandInfo15 },  // Inst #665 = STDCQri
+  { 2,	OperandInfo53 },  // Inst #666 = STDCQrr
+  { 3,	OperandInfo126 },  // Inst #667 = STDCri
+  { 3,	OperandInfo127 },  // Inst #668 = STDCrr
+  { 4,	OperandInfo128 },  // Inst #669 = STDFArr
+  { 2,	OperandInfo15 },  // Inst #670 = STDFQri
+  { 2,	OperandInfo53 },  // Inst #671 = STDFQrr
+  { 3,	OperandInfo129 },  // Inst #672 = STDFri
+  { 3,	OperandInfo130 },  // Inst #673 = STDFrr
+  { 3,	OperandInfo131 },  // Inst #674 = STDri
+  { 3,	OperandInfo132 },  // Inst #675 = STDrr
+  { 4,	OperandInfo133 },  // Inst #676 = STFArr
+  { 2,	OperandInfo15 },  // Inst #677 = STFSRri
+  { 2,	OperandInfo53 },  // Inst #678 = STFSRrr
+  { 3,	OperandInfo134 },  // Inst #679 = STFri
+  { 3,	OperandInfo135 },  // Inst #680 = STFrr
+  { 4,	OperandInfo120 },  // Inst #681 = STHArr
+  { 3,	OperandInfo121 },  // Inst #682 = STHri
+  { 3,	OperandInfo122 },  // Inst #683 = STHrr
+  { 4,	OperandInfo136 },  // Inst #684 = STQFArr
+  { 3,	OperandInfo137 },  // Inst #685 = STQFri
+  { 3,	OperandInfo138 },  // Inst #686 = STQFrr
+  { 2,	OperandInfo15 },  // Inst #687 = STXFSRri
+  { 2,	OperandInfo53 },  // Inst #688 = STXFSRrr
+  { 3,	OperandInfo139 },  // Inst #689 = STXri
+  { 3,	OperandInfo140 },  // Inst #690 = STXrr
+  { 3,	OperandInfo121 },  // Inst #691 = STri
+  { 3,	OperandInfo122 },  // Inst #692 = STrr
+  { 3,	OperandInfo49 },  // Inst #693 = SUBCCri
+  { 3,	OperandInfo50 },  // Inst #694 = SUBCCrr
+  { 3,	OperandInfo49 },  // Inst #695 = SUBCri
+  { 3,	OperandInfo50 },  // Inst #696 = SUBCrr
+  { 3,	OperandInfo49 },  // Inst #697 = SUBEri
+  { 3,	OperandInfo50 },  // Inst #698 = SUBErr
+  { 3,	OperandInfo52 },  // Inst #699 = SUBXri
+  { 3,	OperandInfo51 },  // Inst #700 = SUBXrr
+  { 3,	OperandInfo49 },  // Inst #701 = SUBri
+  { 3,	OperandInfo50 },  // Inst #702 = SUBrr
+  { 5,	OperandInfo141 },  // Inst #703 = SWAPArr
+  { 4,	OperandInfo142 },  // Inst #704 = SWAPri
+  { 4,	OperandInfo143 },  // Inst #705 = SWAPrr
+  { 0,	NULL },  // Inst #706 = TA1
+  { 0,	NULL },  // Inst #707 = TA3
+  { 0,	NULL },  // Inst #708 = TA5
+  { 3,	OperandInfo49 },  // Inst #709 = TADDCCTVri
+  { 3,	OperandInfo50 },  // Inst #710 = TADDCCTVrr
+  { 3,	OperandInfo49 },  // Inst #711 = TADDCCri
+  { 3,	OperandInfo50 },  // Inst #712 = TADDCCrr
+  { 3,	OperandInfo144 },  // Inst #713 = TICCri
+  { 3,	OperandInfo49 },  // Inst #714 = TICCrr
+  { 4,	OperandInfo145 },  // Inst #715 = TLS_ADDXrr
+  { 4,	OperandInfo146 },  // Inst #716 = TLS_ADDrr
+  { 2,	OperandInfo7 },  // Inst #717 = TLS_CALL
+  { 4,	OperandInfo147 },  // Inst #718 = TLS_LDXrr
+  { 4,	OperandInfo147 },  // Inst #719 = TLS_LDrr
+  { 3,	OperandInfo144 },  // Inst #720 = TRAPri
+  { 3,	OperandInfo49 },  // Inst #721 = TRAPrr
+  { 3,	OperandInfo49 },  // Inst #722 = TSUBCCTVri
+  { 3,	OperandInfo50 },  // Inst #723 = TSUBCCTVrr
+  { 3,	OperandInfo49 },  // Inst #724 = TSUBCCri
+  { 3,	OperandInfo50 },  // Inst #725 = TSUBCCrr
+  { 3,	OperandInfo144 },  // Inst #726 = TXCCri
+  { 3,	OperandInfo49 },  // Inst #727 = TXCCrr
+  { 3,	OperandInfo49 },  // Inst #728 = UDIVCCri
+  { 3,	OperandInfo50 },  // Inst #729 = UDIVCCrr
+  { 3,	OperandInfo111 },  // Inst #730 = UDIVXri
+  { 3,	OperandInfo51 },  // Inst #731 = UDIVXrr
+  { 3,	OperandInfo49 },  // Inst #732 = UDIVri
+  { 3,	OperandInfo50 },  // Inst #733 = UDIVrr
+  { 4,	OperandInfo118 },  // Inst #734 = UMACri
+  { 4,	OperandInfo119 },  // Inst #735 = UMACrr
+  { 3,	OperandInfo49 },  // Inst #736 = UMULCCri
+  { 3,	OperandInfo50 },  // Inst #737 = UMULCCrr
+  { 3,	OperandInfo51 },  // Inst #738 = UMULXHI
+  { 3,	OperandInfo49 },  // Inst #739 = UMULri
+  { 3,	OperandInfo50 },  // Inst #740 = UMULrr
+  { 1,	OperandInfo3 },  // Inst #741 = UNIMP
+  { 3,	OperandInfo74 },  // Inst #742 = V9FCMPD
+  { 3,	OperandInfo74 },  // Inst #743 = V9FCMPED
+  { 3,	OperandInfo148 },  // Inst #744 = V9FCMPEQ
+  { 3,	OperandInfo149 },  // Inst #745 = V9FCMPES
+  { 3,	OperandInfo148 },  // Inst #746 = V9FCMPQ
+  { 3,	OperandInfo149 },  // Inst #747 = V9FCMPS
+  { 5,	OperandInfo150 },  // Inst #748 = V9FMOVD_FCC
+  { 5,	OperandInfo151 },  // Inst #749 = V9FMOVQ_FCC
+  { 5,	OperandInfo152 },  // Inst #750 = V9FMOVS_FCC
+  { 5,	OperandInfo153 },  // Inst #751 = V9MOVFCCri
+  { 5,	OperandInfo154 },  // Inst #752 = V9MOVFCCrr
+  { 3,	OperandInfo155 },  // Inst #753 = WRASRri
+  { 3,	OperandInfo156 },  // Inst #754 = WRASRrr
+  { 3,	OperandInfo157 },  // Inst #755 = WRPRri
+  { 3,	OperandInfo158 },  // Inst #756 = WRPRrr
+  { 2,	OperandInfo61 },  // Inst #757 = WRPSRri
+  { 2,	OperandInfo62 },  // Inst #758 = WRPSRrr
+  { 2,	OperandInfo61 },  // Inst #759 = WRTBRri
+  { 2,	OperandInfo62 },  // Inst #760 = WRTBRrr
+  { 2,	OperandInfo61 },  // Inst #761 = WRWIMri
+  { 2,	OperandInfo62 },  // Inst #762 = WRWIMrr
+  { 3,	OperandInfo51 },  // Inst #763 = XMULX
+  { 3,	OperandInfo51 },  // Inst #764 = XMULXHI
+  { 3,	OperandInfo49 },  // Inst #765 = XNORCCri
+  { 3,	OperandInfo50 },  // Inst #766 = XNORCCrr
+  { 3,	OperandInfo51 },  // Inst #767 = XNORXrr
+  { 3,	OperandInfo49 },  // Inst #768 = XNORri
+  { 3,	OperandInfo50 },  // Inst #769 = XNORrr
+  { 3,	OperandInfo49 },  // Inst #770 = XORCCri
+  { 3,	OperandInfo50 },  // Inst #771 = XORCCrr
+  { 3,	OperandInfo52 },  // Inst #772 = XORXri
+  { 3,	OperandInfo51 },  // Inst #773 = XORXrr
+  { 3,	OperandInfo49 },  // Inst #774 = XORri
+  { 3,	OperandInfo50 },  // Inst #775 = XORrr
+};
+
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverlength-strings"
+#endif
+extern const char SparcInstrNameData[] = {
+  /* 0 */ "G_FLOG10\0"
+  /* 9 */ "CASAasi10\0"
+  /* 19 */ "TA1\0"
+  /* 23 */ "FSRC1\0"
+  /* 29 */ "FANDNOT1\0"
+  /* 38 */ "FNOT1\0"
+  /* 44 */ "FORNOT1\0"
+  /* 52 */ "FSRA32\0"
+  /* 59 */ "FPSUB32\0"
+  /* 67 */ "FPADD32\0"
+  /* 75 */ "EDGE32\0"
+  /* 82 */ "FCMPLE32\0"
+  /* 91 */ "FCMPNE32\0"
+  /* 100 */ "FPACK32\0"
+  /* 108 */ "CMASK32\0"
+  /* 116 */ "FSLL32\0"
+  /* 123 */ "FSRL32\0"
+  /* 130 */ "FCMPEQ32\0"
+  /* 139 */ "FSLAS32\0"
+  /* 147 */ "FCMPGT32\0"
+  /* 156 */ "ARRAY32\0"
+  /* 164 */ "FSRC2\0"
+  /* 170 */ "G_FLOG2\0"
+  /* 178 */ "G_FEXP2\0"
+  /* 186 */ "FANDNOT2\0"
+  /* 195 */ "FNOT2\0"
+  /* 201 */ "FORNOT2\0"
+  /* 209 */ "TA3\0"
+  /* 213 */ "FPADD64\0"
+  /* 221 */ "TA5\0"
+  /* 225 */ "FSRA16\0"
+  /* 232 */ "FPSUB16\0"
+  /* 240 */ "FPADD16\0"
+  /* 248 */ "EDGE16\0"
+  /* 255 */ "FCMPLE16\0"
+  /* 264 */ "FCMPNE16\0"
+  /* 273 */ "FPACK16\0"
+  /* 281 */ "CMASK16\0"
+  /* 289 */ "FSLL16\0"
+  /* 296 */ "FSRL16\0"
+  /* 303 */ "FCHKSM16\0"
+  /* 312 */ "FMEAN16\0"
+  /* 320 */ "FCMPEQ16\0"
+  /* 329 */ "FSLAS16\0"
+  /* 337 */ "FCMPGT16\0"
+  /* 346 */ "FMUL8X16\0"
+  /* 355 */ "FMULD8ULX16\0"
+  /* 367 */ "FMUL8ULX16\0"
+  /* 378 */ "FMULD8SUX16\0"
+  /* 390 */ "FMUL8SUX16\0"
+  /* 401 */ "ARRAY16\0"
+  /* 409 */ "EDGE8\0"
+  /* 415 */ "CMASK8\0"
+  /* 422 */ "ARRAY8\0"
+  /* 429 */ "BA\0"
+  /* 432 */ "BPFCCA\0"
+  /* 439 */ "BPICCA\0"
+  /* 446 */ "BPXCCA\0"
+  /* 453 */ "CBCONDA\0"
+  /* 461 */ "FBCONDA\0"
+  /* 469 */ "G_FMA\0"
+  /* 475 */ "G_STRICT_FMA\0"
+  /* 488 */ "FALIGNADATA\0"
+  /* 500 */ "G_FSUB\0"
+  /* 507 */ "G_STRICT_FSUB\0"
+  /* 521 */ "G_ATOMICRMW_FSUB\0"
+  /* 538 */ "G_SUB\0"
+  /* 544 */ "G_ATOMICRMW_SUB\0"
+  /* 560 */ "ADDXCCC\0"
+  /* 568 */ "BPFCC\0"
+  /* 574 */ "V9FMOVD_FCC\0"
+  /* 586 */ "SELECT_CC_DFP_FCC\0"
+  /* 604 */ "SELECT_CC_QFP_FCC\0"
+  /* 622 */ "SELECT_CC_FP_FCC\0"
+  /* 639 */ "V9FMOVQ_FCC\0"
+  /* 651 */ "V9FMOVS_FCC\0"
+  /* 663 */ "SELECT_CC_Int_FCC\0"
+  /* 681 */ "BPICC\0"
+  /* 687 */ "FMOVD_ICC\0"
+  /* 697 */ "SELECT_CC_DFP_ICC\0"
+  /* 715 */ "SELECT_CC_QFP_ICC\0"
+  /* 733 */ "SELECT_CC_FP_ICC\0"
+  /* 750 */ "FMOVQ_ICC\0"
+  /* 760 */ "FMOVS_ICC\0"
+  /* 770 */ "SELECT_CC_Int_ICC\0"
+  /* 788 */ "BPXCC\0"
+  /* 794 */ "FMOVD_XCC\0"
+  /* 804 */ "FMOVQ_XCC\0"
+  /* 814 */ "FMOVS_XCC\0"
+  /* 824 */ "G_INTRINSIC\0"
+  /* 836 */ "G_FPTRUNC\0"
+  /* 846 */ "G_INTRINSIC_TRUNC\0"
+  /* 864 */ "G_TRUNC\0"
+  /* 872 */ "G_BUILD_VECTOR_TRUNC\0"
+  /* 893 */ "G_DYN_STACKALLOC\0"
+  /* 910 */ "RDPC\0"
+  /* 915 */ "ADDXC\0"
+  /* 921 */ "G_FMAD\0"
+  /* 928 */ "G_INDEXED_SEXTLOAD\0"
+  /* 947 */ "G_SEXTLOAD\0"
+  /* 958 */ "G_INDEXED_ZEXTLOAD\0"
+  /* 977 */ "G_ZEXTLOAD\0"
+  /* 988 */ "G_INDEXED_LOAD\0"
+  /* 1003 */ "G_LOAD\0"
+  /* 1010 */ "FSUBD\0"
+  /* 1016 */ "FHSUBD\0"
+  /* 1023 */ "G_VECREDUCE_FADD\0"
+  /* 1040 */ "G_FADD\0"
+  /* 1047 */ "G_VECREDUCE_SEQ_FADD\0"
+  /* 1068 */ "G_STRICT_FADD\0"
+  /* 1082 */ "G_ATOMICRMW_FADD\0"
+  /* 1099 */ "G_VECREDUCE_ADD\0"
+  /* 1115 */ "G_ADD\0"
+  /* 1121 */ "G_PTR_ADD\0"
+  /* 1131 */ "G_ATOMICRMW_ADD\0"
+  /* 1147 */ "FADDD\0"
+  /* 1153 */ "FHADDD\0"
+  /* 1160 */ "FNHADDD\0"
+  /* 1168 */ "FNADDD\0"
+  /* 1175 */ "V9FCMPED\0"
+  /* 1184 */ "FNEGD\0"
+  /* 1190 */ "FMULD\0"
+  /* 1196 */ "FNMULD\0"
+  /* 1203 */ "FSMULD\0"
+  /* 1210 */ "FNSMULD\0"
+  /* 1218 */ "FAND\0"
+  /* 1223 */ "FNAND\0"
+  /* 1229 */ "G_ATOMICRMW_NAND\0"
+  /* 1246 */ "FEXPAND\0"
+  /* 1254 */ "G_VECREDUCE_AND\0"
+  /* 1270 */ "G_AND\0"
+  /* 1276 */ "G_ATOMICRMW_AND\0"
+  /* 1292 */ "LIFETIME_END\0"
+  /* 1305 */ "CBCOND\0"
+  /* 1312 */ "FBCOND\0"
+  /* 1319 */ "G_BRCOND\0"
+  /* 1328 */ "G_LLROUND\0"
+  /* 1338 */ "G_LROUND\0"
+  /* 1347 */ "G_INTRINSIC_ROUND\0"
+  /* 1365 */ "FITOD\0"
+  /* 1371 */ "FQTOD\0"
+  /* 1377 */ "FSTOD\0"
+  /* 1383 */ "FXTOD\0"
+  /* 1389 */ "MOVXTOD\0"
+  /* 1397 */ "V9FCMPD\0"
+  /* 1405 */ "FLCMPD\0"
+  /* 1412 */ "LOAD_STACK_GUARD\0"
+  /* 1429 */ "FABSD\0"
+  /* 1435 */ "FSQRTD\0"
+  /* 1442 */ "FDIVD\0"
+  /* 1448 */ "FMOVD\0"
+  /* 1454 */ "FMOVRGEZD\0"
+  /* 1464 */ "FMOVRLEZD\0"
+  /* 1474 */ "FMOVRGZD\0"
+  /* 1483 */ "FMOVRLZD\0"
+  /* 1492 */ "FMOVRNZD\0"
+  /* 1501 */ "FMOVRZD\0"
+  /* 1509 */ "PSEUDO_PROBE\0"
+  /* 1522 */ "G_SSUBE\0"
+  /* 1530 */ "G_USUBE\0"
+  /* 1538 */ "G_FENCE\0"
+  /* 1546 */ "ARITH_FENCE\0"
+  /* 1558 */ "REG_SEQUENCE\0"
+  /* 1571 */ "G_SADDE\0"
+  /* 1579 */ "G_UADDE\0"
+  /* 1587 */ "G_FMINNUM_IEEE\0"
+  /* 1602 */ "G_FMAXNUM_IEEE\0"
+  /* 1617 */ "FPMERGE\0"
+  /* 1625 */ "G_JUMP_TABLE\0"
+  /* 1638 */ "BUNDLE\0"
+  /* 1645 */ "BSHUFFLE\0"
+  /* 1654 */ "G_MEMCPY_INLINE\0"
+  /* 1670 */ "FONE\0"
+  /* 1675 */ "LOCAL_ESCAPE\0"
+  /* 1688 */ "G_INDEXED_STORE\0"
+  /* 1704 */ "G_STORE\0"
+  /* 1712 */ "G_BITREVERSE\0"
+  /* 1725 */ "DBG_VALUE\0"
+  /* 1735 */ "G_GLOBAL_VALUE\0"
+  /* 1750 */ "G_MEMMOVE\0"
+  /* 1760 */ "G_FREEZE\0"
+  /* 1769 */ "G_FCANONICALIZE\0"
+  /* 1785 */ "G_CTLZ_ZERO_UNDEF\0"
+  /* 1803 */ "G_CTTZ_ZERO_UNDEF\0"
+  /* 1821 */ "G_IMPLICIT_DEF\0"
+  /* 1836 */ "DBG_INSTR_REF\0"
+  /* 1850 */ "G_FNEG\0"
+  /* 1857 */ "EXTRACT_SUBREG\0"
+  /* 1872 */ "INSERT_SUBREG\0"
+  /* 1886 */ "G_SEXT_INREG\0"
+  /* 1899 */ "SUBREG_TO_REG\0"
+  /* 1913 */ "G_ATOMIC_CMPXCHG\0"
+  /* 1930 */ "G_ATOMICRMW_XCHG\0"
+  /* 1947 */ "G_FLOG\0"
+  /* 1954 */ "G_VAARG\0"
+  /* 1962 */ "PREALLOCATED_ARG\0"
+  /* 1979 */ "G_SMULH\0"
+  /* 1987 */ "G_UMULH\0"
+  /* 1995 */ "FLUSH\0"
+  /* 2001 */ "DBG_PHI\0"
+  /* 2009 */ "UMULXHI\0"
+  /* 2017 */ "XMULXHI\0"
+  /* 2025 */ "FDTOI\0"
+  /* 2031 */ "FQTOI\0"
+  /* 2037 */ "FSTOI\0"
+  /* 2043 */ "G_FPTOSI\0"
+  /* 2052 */ "G_FPTOUI\0"
+  /* 2061 */ "G_FPOWI\0"
+  /* 2069 */ "BMASK\0"
+  /* 2075 */ "G_PTRMASK\0"
+  /* 2085 */ "EDGE32L\0"
+  /* 2093 */ "EDGE16L\0"
+  /* 2101 */ "EDGE8L\0"
+  /* 2108 */ "FMUL8X16AL\0"
+  /* 2119 */ "GC_LABEL\0"
+  /* 2128 */ "DBG_LABEL\0"
+  /* 2138 */ "EH_LABEL\0"
+  /* 2147 */ "ANNOTATION_LABEL\0"
+  /* 2164 */ "ICALL_BRANCH_FUNNEL\0"
+  /* 2184 */ "G_FSHL\0"
+  /* 2191 */ "G_SHL\0"
+  /* 2197 */ "G_FCEIL\0"
+  /* 2205 */ "PATCHABLE_TAIL_CALL\0"
+  /* 2225 */ "TLS_CALL\0"
+  /* 2234 */ "PATCHABLE_TYPED_EVENT_CALL\0"
+  /* 2261 */ "PATCHABLE_EVENT_CALL\0"
+  /* 2282 */ "FENTRY_CALL\0"
+  /* 2294 */ "KILL\0"
+  /* 2299 */ "ALIGNADDRL\0"
+  /* 2310 */ "RETL\0"
+  /* 2315 */ "G_ROTL\0"
+  /* 2322 */ "G_VECREDUCE_FMUL\0"
+  /* 2339 */ "G_FMUL\0"
+  /* 2346 */ "G_VECREDUCE_SEQ_FMUL\0"
+  /* 2367 */ "G_STRICT_FMUL\0"
+  /* 2381 */ "G_VECREDUCE_MUL\0"
+  /* 2397 */ "G_MUL\0"
+  /* 2403 */ "SIAM\0"
+  /* 2408 */ "G_FREM\0"
+  /* 2415 */ "G_STRICT_FREM\0"
+  /* 2429 */ "G_SREM\0"
+  /* 2436 */ "G_UREM\0"
+  /* 2443 */ "G_SDIVREM\0"
+  /* 2453 */ "G_UDIVREM\0"
+  /* 2463 */ "RDWIM\0"
+  /* 2469 */ "INLINEASM\0"
+  /* 2479 */ "G_FMINIMUM\0"
+  /* 2490 */ "G_FMAXIMUM\0"
+  /* 2501 */ "G_FMINNUM\0"
+  /* 2511 */ "G_FMAXNUM\0"
+  /* 2521 */ "EDGE32N\0"
+  /* 2529 */ "EDGE16N\0"
+  /* 2537 */ "EDGE8N\0"
+  /* 2544 */ "G_INTRINSIC_ROUNDEVEN\0"
+  /* 2566 */ "G_FCOPYSIGN\0"
+  /* 2578 */ "G_VECREDUCE_FMIN\0"
+  /* 2595 */ "G_VECREDUCE_SMIN\0"
+  /* 2612 */ "G_SMIN\0"
+  /* 2619 */ "G_VECREDUCE_UMIN\0"
+  /* 2636 */ "G_UMIN\0"
+  /* 2643 */ "G_ATOMICRMW_UMIN\0"
+  /* 2660 */ "G_ATOMICRMW_MIN\0"
+  /* 2676 */ "G_FSIN\0"
+  /* 2683 */ "EDGE32LN\0"
+  /* 2692 */ "EDGE16LN\0"
+  /* 2701 */ "EDGE8LN\0"
+  /* 2709 */ "CFI_INSTRUCTION\0"
+  /* 2725 */ "PDISTN\0"
+  /* 2732 */ "ADJCALLSTACKDOWN\0"
+  /* 2749 */ "SHUTDOWN\0"
+  /* 2758 */ "G_SSUBO\0"
+  /* 2766 */ "G_USUBO\0"
+  /* 2774 */ "G_SADDO\0"
+  /* 2782 */ "G_UADDO\0"
+  /* 2790 */ "G_SMULO\0"
+  /* 2798 */ "G_UMULO\0"
+  /* 2806 */ "G_BZERO\0"
+  /* 2814 */ "FZERO\0"
+  /* 2820 */ "STACKMAP\0"
+  /* 2829 */ "G_BSWAP\0"
+  /* 2837 */ "G_SITOFP\0"
+  /* 2846 */ "G_UITOFP\0"
+  /* 2855 */ "G_FCMP\0"
+  /* 2862 */ "G_ICMP\0"
+  /* 2869 */ "UNIMP\0"
+  /* 2875 */ "NOP\0"
+  /* 2879 */ "G_CTPOP\0"
+  /* 2887 */ "PATCHABLE_OP\0"
+  /* 2900 */ "FAULTING_OP\0"
+  /* 2912 */ "ADJCALLSTACKUP\0"
+  /* 2927 */ "PREALLOCATED_SETUP\0"
+  /* 2946 */ "G_FEXP\0"
+  /* 2953 */ "FSUBQ\0"
+  /* 2959 */ "FADDQ\0"
+  /* 2965 */ "V9FCMPEQ\0"
+  /* 2974 */ "FNEGQ\0"
+  /* 2980 */ "FDMULQ\0"
+  /* 2987 */ "FMULQ\0"
+  /* 2993 */ "FDTOQ\0"
+  /* 2999 */ "FITOQ\0"
+  /* 3005 */ "FSTOQ\0"
+  /* 3011 */ "FXTOQ\0"
+  /* 3017 */ "V9FCMPQ\0"
+  /* 3025 */ "FABSQ\0"
+  /* 3031 */ "FSQRTQ\0"
+  /* 3038 */ "FDIVQ\0"
+  /* 3044 */ "FMOVQ\0"
+  /* 3050 */ "FMOVRGEZQ\0"
+  /* 3060 */ "FMOVRLEZQ\0"
+  /* 3070 */ "FMOVRGZQ\0"
+  /* 3079 */ "FMOVRLZQ\0"
+  /* 3088 */ "FMOVRNZQ\0"
+  /* 3097 */ "FMOVRZQ\0"
+  /* 3105 */ "STBAR\0"
+  /* 3111 */ "RDTBR\0"
+  /* 3117 */ "G_BR\0"
+  /* 3122 */ "INLINEASM_BR\0"
+  /* 3135 */ "ALIGNADDR\0"
+  /* 3145 */ "G_BLOCK_ADDR\0"
+  /* 3158 */ "PATCHABLE_FUNCTION_ENTER\0"
+  /* 3183 */ "G_READCYCLECOUNTER\0"
+  /* 3202 */ "G_READ_REGISTER\0"
+  /* 3218 */ "G_WRITE_REGISTER\0"
+  /* 3235 */ "G_ASHR\0"
+  /* 3242 */ "G_FSHR\0"
+  /* 3249 */ "G_LSHR\0"
+  /* 3256 */ "SIR\0"
+  /* 3260 */ "FOR\0"
+  /* 3264 */ "FNOR\0"
+  /* 3269 */ "FXNOR\0"
+  /* 3275 */ "G_FFLOOR\0"
+  /* 3284 */ "G_BUILD_VECTOR\0"
+  /* 3299 */ "G_SHUFFLE_VECTOR\0"
+  /* 3316 */ "FXOR\0"
+  /* 3321 */ "G_VECREDUCE_XOR\0"
+  /* 3337 */ "G_XOR\0"
+  /* 3343 */ "G_ATOMICRMW_XOR\0"
+  /* 3359 */ "G_VECREDUCE_OR\0"
+  /* 3374 */ "G_OR\0"
+  /* 3379 */ "G_ATOMICRMW_OR\0"
+  /* 3394 */ "RDPR\0"
+  /* 3399 */ "RDASR\0"
+  /* 3405 */ "RDPSR\0"
+  /* 3411 */ "G_ROTR\0"
+  /* 3418 */ "G_INTTOPTR\0"
+  /* 3429 */ "FSRC1S\0"
+  /* 3436 */ "FANDNOT1S\0"
+  /* 3446 */ "FNOT1S\0"
+  /* 3453 */ "FORNOT1S\0"
+  /* 3462 */ "FPSUB32S\0"
+  /* 3471 */ "FPADD32S\0"
+  /* 3480 */ "FSRC2S\0"
+  /* 3487 */ "FANDNOT2S\0"
+  /* 3497 */ "FNOT2S\0"
+  /* 3504 */ "FORNOT2S\0"
+  /* 3513 */ "FPSUB16S\0"
+  /* 3522 */ "FPADD16S\0"
+  /* 3531 */ "G_FABS\0"
+  /* 3538 */ "G_ABS\0"
+  /* 3544 */ "FSUBS\0"
+  /* 3550 */ "FHSUBS\0"
+  /* 3557 */ "FADDS\0"
+  /* 3563 */ "FHADDS\0"
+  /* 3570 */ "FNHADDS\0"
+  /* 3578 */ "FNADDS\0"
+  /* 3585 */ "FANDS\0"
+  /* 3591 */ "FNANDS\0"
+  /* 3598 */ "FONES\0"
+  /* 3604 */ "V9FCMPES\0"
+  /* 3613 */ "G_UNMERGE_VALUES\0"
+  /* 3630 */ "G_MERGE_VALUES\0"
+  /* 3645 */ "FNEGS\0"
+  /* 3651 */ "FMULS\0"
+  /* 3657 */ "FNMULS\0"
+  /* 3664 */ "G_FCOS\0"
+  /* 3671 */ "FZEROS\0"
+  /* 3678 */ "FDTOS\0"
+  /* 3684 */ "FITOS\0"
+  /* 3690 */ "FQTOS\0"
+  /* 3696 */ "MOVWTOS\0"
+  /* 3704 */ "FXTOS\0"
+  /* 3710 */ "V9FCMPS\0"
+  /* 3718 */ "FLCMPS\0"
+  /* 3725 */ "FORS\0"
+  /* 3730 */ "FNORS\0"
+  /* 3736 */ "FXNORS\0"
+  /* 3743 */ "G_CONCAT_VECTORS\0"
+  /* 3760 */ "FXORS\0"
+  /* 3766 */ "COPY_TO_REGCLASS\0"
+  /* 3783 */ "FABSS\0"
+  /* 3789 */ "G_ATOMIC_CMPXCHG_WITH_SUCCESS\0"
+  /* 3819 */ "G_INTRINSIC_W_SIDE_EFFECTS\0"
+  /* 3846 */ "FSQRTS\0"
+  /* 3853 */ "FDIVS\0"
+  /* 3859 */ "FMOVS\0"
+  /* 3865 */ "FMOVRGEZS\0"
+  /* 3875 */ "FMOVRLEZS\0"
+  /* 3885 */ "FMOVRGZS\0"
+  /* 3894 */ "FMOVRLZS\0"
+  /* 3903 */ "FMOVRNZS\0"
+  /* 3912 */ "FMOVRZS\0"
+  /* 3920 */ "G_SSUBSAT\0"
+  /* 3930 */ "G_USUBSAT\0"
+  /* 3940 */ "G_SADDSAT\0"
+  /* 3950 */ "G_UADDSAT\0"
+  /* 3960 */ "G_SSHLSAT\0"
+  /* 3970 */ "G_USHLSAT\0"
+  /* 3980 */ "G_SMULFIXSAT\0"
+  /* 3993 */ "G_UMULFIXSAT\0"
+  /* 4006 */ "G_SDIVFIXSAT\0"
+  /* 4019 */ "G_UDIVFIXSAT\0"
+  /* 4032 */ "G_EXTRACT\0"
+  /* 4042 */ "G_SELECT\0"
+  /* 4051 */ "G_BRINDIRECT\0"
+  /* 4064 */ "PATCHABLE_RET\0"
+  /* 4078 */ "G_MEMSET\0"
+  /* 4087 */ "PATCHABLE_FUNCTION_EXIT\0"
+  /* 4111 */ "G_BRJT\0"
+  /* 4118 */ "G_EXTRACT_VECTOR_ELT\0"
+  /* 4139 */ "G_INSERT_VECTOR_ELT\0"
+  /* 4159 */ "BPFCCANT\0"
+  /* 4168 */ "BPICCANT\0"
+  /* 4177 */ "BPXCCANT\0"
+  /* 4186 */ "G_FCONSTANT\0"
+  /* 4198 */ "G_CONSTANT\0"
+  /* 4209 */ "BPFCCNT\0"
+  /* 4217 */ "BPICCNT\0"
+  /* 4225 */ "BPXCCNT\0"
+  /* 4233 */ "LZCNT\0"
+  /* 4239 */ "STATEPOINT\0"
+  /* 4250 */ "PATCHPOINT\0"
+  /* 4261 */ "G_PTRTOINT\0"
+  /* 4272 */ "G_FRINT\0"
+  /* 4280 */ "G_INTRINSIC_LRINT\0"
+  /* 4298 */ "G_FNEARBYINT\0"
+  /* 4311 */ "G_VASTART\0"
+  /* 4321 */ "LIFETIME_START\0"
+  /* 4336 */ "G_INSERT\0"
+  /* 4345 */ "G_FSQRT\0"
+  /* 4353 */ "G_STRICT_FSQRT\0"
+  /* 4368 */ "G_BITCAST\0"
+  /* 4378 */ "G_ADDRSPACE_CAST\0"
+  /* 4395 */ "PDIST\0"
+  /* 4401 */ "DBG_VALUE_LIST\0"
+  /* 4416 */ "G_FPEXT\0"
+  /* 4424 */ "G_SEXT\0"
+  /* 4431 */ "G_ASSERT_SEXT\0"
+  /* 4445 */ "G_ANYEXT\0"
+  /* 4454 */ "G_ZEXT\0"
+  /* 4461 */ "G_ASSERT_ZEXT\0"
+  /* 4475 */ "FMUL8X16AU\0"
+  /* 4486 */ "G_FDIV\0"
+  /* 4493 */ "G_STRICT_FDIV\0"
+  /* 4507 */ "G_SDIV\0"
+  /* 4514 */ "G_UDIV\0"
+  /* 4521 */ "FLUSHW\0"
+  /* 4528 */ "G_FPOW\0"
+  /* 4535 */ "MOVSTOSW\0"
+  /* 4544 */ "MOVSTOUW\0"
+  /* 4553 */ "G_VECREDUCE_FMAX\0"
+  /* 4570 */ "G_VECREDUCE_SMAX\0"
+  /* 4587 */ "G_SMAX\0"
+  /* 4594 */ "G_VECREDUCE_UMAX\0"
+  /* 4611 */ "G_UMAX\0"
+  /* 4618 */ "G_ATOMICRMW_UMAX\0"
+  /* 4635 */ "G_ATOMICRMW_MAX\0"
+  /* 4651 */ "GETPCX\0"
+  /* 4658 */ "G_FRAME_INDEX\0"
+  /* 4672 */ "G_SBFX\0"
+  /* 4679 */ "G_UBFX\0"
+  /* 4686 */ "FPACKFIX\0"
+  /* 4695 */ "G_SMULFIX\0"
+  /* 4705 */ "G_UMULFIX\0"
+  /* 4715 */ "G_SDIVFIX\0"
+  /* 4725 */ "G_UDIVFIX\0"
+  /* 4735 */ "XMULX\0"
+  /* 4741 */ "FDTOX\0"
+  /* 4747 */ "MOVDTOX\0"
+  /* 4755 */ "FQTOX\0"
+  /* 4761 */ "FSTOX\0"
+  /* 4767 */ "G_MEMCPY\0"
+  /* 4776 */ "COPY\0"
+  /* 4781 */ "G_CTLZ\0"
+  /* 4788 */ "G_CTTZ\0"
+  /* 4795 */ "PREFETCHi\0"
+  /* 4805 */ "SETHIi\0"
+  /* 4812 */ "MEMBARi\0"
+  /* 4820 */ "SETHIXi\0"
+  /* 4828 */ "SRAri\0"
+  /* 4834 */ "LDSBri\0"
+  /* 4841 */ "STBri\0"
+  /* 4847 */ "LDUBri\0"
+  /* 4854 */ "SUBri\0"
+  /* 4860 */ "LDSTUBri\0"
+  /* 4869 */ "SMACri\0"
+  /* 4876 */ "UMACri\0"
+  /* 4883 */ "SUBCri\0"
+  /* 4890 */ "TSUBCCri\0"
+  /* 4899 */ "TADDCCri\0"
+  /* 4908 */ "ANDCCri\0"
+  /* 4916 */ "V9MOVFCCri\0"
+  /* 4927 */ "TICCri\0"
+  /* 4934 */ "MOVICCri\0"
+  /* 4943 */ "SMULCCri\0"
+  /* 4952 */ "UMULCCri\0"
+  /* 4961 */ "ANDNCCri\0"
+  /* 4970 */ "ORNCCri\0"
+  /* 4978 */ "XNORCCri\0"
+  /* 4987 */ "XORCCri\0"
+  /* 4995 */ "MULSCCri\0"
+  /* 5004 */ "SDIVCCri\0"
+  /* 5013 */ "UDIVCCri\0"
+  /* 5022 */ "TXCCri\0"
+  /* 5029 */ "MOVXCCri\0"
+  /* 5038 */ "ADDCri\0"
+  /* 5045 */ "LDDCri\0"
+  /* 5052 */ "LDCri\0"
+  /* 5058 */ "STDCri\0"
+  /* 5065 */ "STCri\0"
+  /* 5071 */ "LEA_ADDri\0"
+  /* 5081 */ "LEAX_ADDri\0"
+  /* 5092 */ "LDDri\0"
+  /* 5098 */ "LDri\0"
+  /* 5103 */ "ANDri\0"
+  /* 5109 */ "BINDri\0"
+  /* 5116 */ "STDri\0"
+  /* 5122 */ "SUBEri\0"
+  /* 5129 */ "ADDEri\0"
+  /* 5136 */ "RESTOREri\0"
+  /* 5146 */ "SAVEri\0"
+  /* 5153 */ "LDDFri\0"
+  /* 5160 */ "LDFri\0"
+  /* 5166 */ "STDFri\0"
+  /* 5173 */ "LDQFri\0"
+  /* 5180 */ "STQFri\0"
+  /* 5187 */ "STFri\0"
+  /* 5193 */ "LDSHri\0"
+  /* 5200 */ "FLUSHri\0"
+  /* 5208 */ "STHri\0"
+  /* 5214 */ "LDUHri\0"
+  /* 5221 */ "CALLri\0"
+  /* 5228 */ "SLLri\0"
+  /* 5234 */ "JMPLri\0"
+  /* 5241 */ "SRLri\0"
+  /* 5247 */ "SMULri\0"
+  /* 5254 */ "UMULri\0"
+  /* 5261 */ "WRWIMri\0"
+  /* 5269 */ "ANDNri\0"
+  /* 5276 */ "ORNri\0"
+  /* 5282 */ "TRAPri\0"
+  /* 5289 */ "SWAPri\0"
+  /* 5296 */ "CMPri\0"
+  /* 5302 */ "STDCQri\0"
+  /* 5310 */ "STDFQri\0"
+  /* 5318 */ "WRTBRri\0"
+  /* 5326 */ "XNORri\0"
+  /* 5333 */ "XORri\0"
+  /* 5339 */ "WRPRri\0"
+  /* 5346 */ "WRASRri\0"
+  /* 5354 */ "LDCSRri\0"
+  /* 5362 */ "STCSRri\0"
+  /* 5370 */ "LDFSRri\0"
+  /* 5378 */ "STFSRri\0"
+  /* 5386 */ "LDXFSRri\0"
+  /* 5395 */ "STXFSRri\0"
+  /* 5404 */ "PWRPSRri\0"
+  /* 5413 */ "STri\0"
+  /* 5418 */ "RETTri\0"
+  /* 5425 */ "SDIVri\0"
+  /* 5432 */ "UDIVri\0"
+  /* 5439 */ "TSUBCCTVri\0"
+  /* 5450 */ "TADDCCTVri\0"
+  /* 5461 */ "LDSWri\0"
+  /* 5468 */ "SRAXri\0"
+  /* 5475 */ "SUBXri\0"
+  /* 5482 */ "ADDXri\0"
+  /* 5489 */ "LDXri\0"
+  /* 5495 */ "ANDXri\0"
+  /* 5502 */ "SLLXri\0"
+  /* 5509 */ "SRLXri\0"
+  /* 5516 */ "MULXri\0"
+  /* 5523 */ "XORXri\0"
+  /* 5530 */ "STXri\0"
+  /* 5536 */ "SDIVXri\0"
+  /* 5544 */ "UDIVXri\0"
+  /* 5552 */ "MOVRGEZri\0"
+  /* 5562 */ "MOVRLEZri\0"
+  /* 5572 */ "MOVRGZri\0"
+  /* 5581 */ "MOVRLZri\0"
+  /* 5590 */ "MOVRNZri\0"
+  /* 5599 */ "MOVRRZri\0"
+  /* 5608 */ "BPGEZapn\0"
+  /* 5617 */ "BPLEZapn\0"
+  /* 5626 */ "BPGZapn\0"
+  /* 5634 */ "BPLZapn\0"
+  /* 5642 */ "BPNZapn\0"
+  /* 5650 */ "BPZapn\0"
+  /* 5657 */ "BPGEZnapn\0"
+  /* 5667 */ "BPLEZnapn\0"
+  /* 5677 */ "BPGZnapn\0"
+  /* 5686 */ "BPLZnapn\0"
+  /* 5695 */ "BPNZnapn\0"
+  /* 5704 */ "BPZnapn\0"
+  /* 5712 */ "PREFETCHr\0"
+  /* 5722 */ "LDSBArr\0"
+  /* 5730 */ "STBArr\0"
+  /* 5737 */ "LDUBArr\0"
+  /* 5745 */ "LDSTUBArr\0"
+  /* 5755 */ "LDDArr\0"
+  /* 5762 */ "LDArr\0"
+  /* 5768 */ "STDArr\0"
+  /* 5775 */ "LDDFArr\0"
+  /* 5783 */ "LDFArr\0"
+  /* 5790 */ "STDFArr\0"
+  /* 5798 */ "LDQFArr\0"
+  /* 5806 */ "STQFArr\0"
+  /* 5814 */ "STFArr\0"
+  /* 5821 */ "LDSHArr\0"
+  /* 5829 */ "STHArr\0"
+  /* 5836 */ "LDUHArr\0"
+  /* 5844 */ "SWAPArr\0"
+  /* 5852 */ "SRArr\0"
+  /* 5858 */ "CASArr\0"
+  /* 5865 */ "STArr\0"
+  /* 5871 */ "LDSBrr\0"
+  /* 5878 */ "STBrr\0"
+  /* 5884 */ "LDUBrr\0"
+  /* 5891 */ "SUBrr\0"
+  /* 5897 */ "LDSTUBrr\0"
+  /* 5906 */ "SMACrr\0"
+  /* 5913 */ "UMACrr\0"
+  /* 5920 */ "SUBCrr\0"
+  /* 5927 */ "TSUBCCrr\0"
+  /* 5936 */ "TADDCCrr\0"
+  /* 5945 */ "ANDCCrr\0"
+  /* 5953 */ "V9MOVFCCrr\0"
+  /* 5964 */ "TICCrr\0"
+  /* 5971 */ "MOVICCrr\0"
+  /* 5980 */ "SMULCCrr\0"
+  /* 5989 */ "UMULCCrr\0"
+  /* 5998 */ "ANDNCCrr\0"
+  /* 6007 */ "ORNCCrr\0"
+  /* 6015 */ "XNORCCrr\0"
+  /* 6024 */ "XORCCrr\0"
+  /* 6032 */ "MULSCCrr\0"
+  /* 6041 */ "SDIVCCrr\0"
+  /* 6050 */ "UDIVCCrr\0"
+  /* 6059 */ "TXCCrr\0"
+  /* 6066 */ "MOVXCCrr\0"
+  /* 6075 */ "ADDCrr\0"
+  /* 6082 */ "LDDCrr\0"
+  /* 6089 */ "LDCrr\0"
+  /* 6095 */ "STDCrr\0"
+  /* 6102 */ "POPCrr\0"
+  /* 6109 */ "STCrr\0"
+  /* 6115 */ "TLS_ADDrr\0"
+  /* 6125 */ "LDDrr\0"
+  /* 6131 */ "TLS_LDrr\0"
+  /* 6140 */ "ANDrr\0"
+  /* 6146 */ "BINDrr\0"
+  /* 6153 */ "STDrr\0"
+  /* 6159 */ "SUBErr\0"
+  /* 6166 */ "ADDErr\0"
+  /* 6173 */ "RESTORErr\0"
+  /* 6183 */ "SAVErr\0"
+  /* 6190 */ "LDDFrr\0"
+  /* 6197 */ "LDFrr\0"
+  /* 6203 */ "STDFrr\0"
+  /* 6210 */ "LDQFrr\0"
+  /* 6217 */ "STQFrr\0"
+  /* 6224 */ "STFrr\0"
+  /* 6230 */ "LDSHrr\0"
+  /* 6237 */ "FLUSHrr\0"
+  /* 6245 */ "STHrr\0"
+  /* 6251 */ "LDUHrr\0"
+  /* 6258 */ "CALLrr\0"
+  /* 6265 */ "SLLrr\0"
+  /* 6271 */ "JMPLrr\0"
+  /* 6278 */ "SRLrr\0"
+  /* 6284 */ "SMULrr\0"
+  /* 6291 */ "UMULrr\0"
+  /* 6298 */ "WRWIMrr\0"
+  /* 6306 */ "ANDNrr\0"
+  /* 6313 */ "ORNrr\0"
+  /* 6319 */ "ANDXNrr\0"
+  /* 6327 */ "ORXNrr\0"
+  /* 6334 */ "TRAPrr\0"
+  /* 6341 */ "SWAPrr\0"
+  /* 6348 */ "CMPrr\0"
+  /* 6354 */ "STDCQrr\0"
+  /* 6362 */ "STDFQrr\0"
+  /* 6370 */ "WRTBRrr\0"
+  /* 6378 */ "XNORrr\0"
+  /* 6385 */ "XORrr\0"
+  /* 6391 */ "WRPRrr\0"
+  /* 6398 */ "WRASRrr\0"
+  /* 6406 */ "LDCSRrr\0"
+  /* 6414 */ "STCSRrr\0"
+  /* 6422 */ "LDFSRrr\0"
+  /* 6430 */ "STFSRrr\0"
+  /* 6438 */ "LDXFSRrr\0"
+  /* 6447 */ "STXFSRrr\0"
+  /* 6456 */ "PWRPSRrr\0"
+  /* 6465 */ "CASrr\0"
+  /* 6471 */ "STrr\0"
+  /* 6476 */ "RETTrr\0"
+  /* 6483 */ "SDIVrr\0"
+  /* 6490 */ "UDIVrr\0"
+  /* 6497 */ "TSUBCCTVrr\0"
+  /* 6508 */ "TADDCCTVrr\0"
+  /* 6519 */ "LDSWrr\0"
+  /* 6526 */ "SRAXrr\0"
+  /* 6533 */ "SUBXrr\0"
+  /* 6540 */ "TLS_ADDXrr\0"
+  /* 6551 */ "TLS_LDXrr\0"
+  /* 6561 */ "ANDXrr\0"
+  /* 6568 */ "SLLXrr\0"
+  /* 6575 */ "SRLXrr\0"
+  /* 6582 */ "MULXrr\0"
+  /* 6589 */ "XNORXrr\0"
+  /* 6597 */ "XORXrr\0"
+  /* 6604 */ "CASXrr\0"
+  /* 6611 */ "STXrr\0"
+  /* 6617 */ "SDIVXrr\0"
+  /* 6625 */ "UDIVXrr\0"
+  /* 6633 */ "MOVRGEZrr\0"
+  /* 6643 */ "MOVRLEZrr\0"
+  /* 6653 */ "MOVRGZrr\0"
+  /* 6662 */ "MOVRLZrr\0"
+  /* 6671 */ "MOVRNZrr\0"
+  /* 6680 */ "MOVRRZrr\0"
+  /* 6689 */ "BPGEZapt\0"
+  /* 6698 */ "BPLEZapt\0"
+  /* 6707 */ "BPGZapt\0"
+  /* 6715 */ "BPLZapt\0"
+  /* 6723 */ "BPNZapt\0"
+  /* 6731 */ "BPZapt\0"
+  /* 6738 */ "BPGEZnapt\0"
+  /* 6748 */ "BPLEZnapt\0"
+  /* 6758 */ "BPGZnapt\0"
+  /* 6767 */ "BPLZnapt\0"
+  /* 6776 */ "BPNZnapt\0"
+  /* 6785 */ "BPZnapt\0"
+};
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
+extern const unsigned SparcInstrNameIndices[] = {
+    2005U, 2469U, 3122U, 2709U, 2138U, 2119U, 2147U, 2294U, 
+    1857U, 1872U, 1823U, 1899U, 3766U, 1725U, 4401U, 1836U, 
+    2001U, 2128U, 1558U, 4776U, 1638U, 4321U, 1292U, 1509U, 
+    1546U, 2820U, 2282U, 4250U, 1412U, 2927U, 1962U, 4239U, 
+    1675U, 2900U, 2887U, 3158U, 4064U, 4087U, 2205U, 2261U, 
+    2234U, 2164U, 4431U, 4461U, 1115U, 538U, 2397U, 4507U, 
+    4514U, 2429U, 2436U, 2443U, 2453U, 1270U, 3374U, 3337U, 
+    1821U, 2003U, 4658U, 1735U, 4032U, 3613U, 4336U, 3630U, 
+    3284U, 872U, 3743U, 4261U, 3418U, 4368U, 1760U, 846U, 
+    1347U, 4280U, 2544U, 3183U, 1003U, 947U, 977U, 988U, 
+    928U, 958U, 1704U, 1688U, 3789U, 1913U, 1930U, 1131U, 
+    544U, 1276U, 1229U, 3379U, 3343U, 4635U, 2660U, 4618U, 
+    2643U, 1082U, 521U, 1538U, 1319U, 4051U, 824U, 3819U, 
+    4445U, 864U, 4198U, 4186U, 4311U, 1954U, 4424U, 1886U, 
+    4454U, 2191U, 3249U, 3235U, 2184U, 3242U, 3411U, 2315U, 
+    2862U, 2855U, 4042U, 2782U, 1579U, 2766U, 1530U, 2774U, 
+    1571U, 2758U, 1522U, 2798U, 2790U, 1987U, 1979U, 3950U, 
+    3940U, 3930U, 3920U, 3970U, 3960U, 4695U, 4705U, 3980U, 
+    3993U, 4715U, 4725U, 4006U, 4019U, 1040U, 500U, 2339U, 
+    469U, 921U, 4486U, 2408U, 4528U, 2061U, 2946U, 178U, 
+    1947U, 170U, 0U, 1850U, 4416U, 836U, 2043U, 2052U, 
+    2837U, 2846U, 3531U, 2566U, 1769U, 2501U, 2511U, 1587U, 
+    1602U, 2479U, 2490U, 1121U, 2075U, 2612U, 4587U, 2636U, 
+    4611U, 3538U, 1338U, 1328U, 3117U, 4111U, 4139U, 4118U, 
+    3299U, 4788U, 1803U, 4781U, 1785U, 2879U, 2829U, 1712U, 
+    2197U, 3664U, 2676U, 4345U, 3275U, 4272U, 4298U, 4378U, 
+    3145U, 1625U, 893U, 1068U, 507U, 2367U, 4493U, 2415U, 
+    475U, 4353U, 3202U, 3218U, 4767U, 1654U, 1750U, 4078U, 
+    2806U, 1047U, 2346U, 1023U, 2322U, 4553U, 2578U, 1099U, 
+    2381U, 1254U, 3359U, 3321U, 4570U, 2595U, 4594U, 2619U, 
+    4672U, 4679U, 2732U, 2912U, 4651U, 586U, 697U, 622U, 
+    733U, 663U, 770U, 604U, 715U, 4083U, 4900U, 5937U, 
+    5038U, 6075U, 5129U, 6166U, 915U, 560U, 5482U, 6544U, 
+    5075U, 6119U, 3135U, 2299U, 4908U, 5945U, 4961U, 5998U, 
+    5269U, 6306U, 6319U, 5495U, 6561U, 5103U, 6140U, 401U, 
+    156U, 422U, 429U, 1306U, 454U, 5109U, 6146U, 2069U, 
+    568U, 432U, 4159U, 4209U, 5608U, 6689U, 5657U, 6738U, 
+    5626U, 6707U, 5677U, 6758U, 681U, 439U, 4168U, 4217U, 
+    5617U, 6698U, 5667U, 6748U, 5634U, 6715U, 5686U, 6767U, 
+    5642U, 6723U, 5695U, 6776U, 788U, 446U, 4177U, 4225U, 
+    5650U, 6731U, 5704U, 6785U, 1645U, 2220U, 5221U, 6258U, 
+    9U, 5858U, 6604U, 6465U, 1305U, 453U, 281U, 108U, 
+    415U, 5296U, 6348U, 248U, 2093U, 2692U, 2529U, 75U, 
+    2085U, 2683U, 2521U, 409U, 2101U, 2701U, 2537U, 1429U, 
+    3025U, 3783U, 1147U, 2959U, 3557U, 488U, 1218U, 29U, 
+    3436U, 186U, 3487U, 3585U, 1312U, 461U, 303U, 1399U, 
+    320U, 130U, 337U, 147U, 255U, 82U, 264U, 91U, 
+    3019U, 3712U, 1442U, 3038U, 3853U, 2980U, 2025U, 2993U, 
+    3678U, 4741U, 1246U, 1153U, 3563U, 1016U, 3550U, 1365U, 
+    2999U, 3684U, 1405U, 3718U, 1995U, 4521U, 5200U, 6237U, 
+    312U, 1448U, 576U, 687U, 794U, 3044U, 641U, 750U, 
+    804U, 1454U, 3050U, 3865U, 1474U, 3070U, 3885U, 1464U, 
+    3060U, 3875U, 1483U, 3079U, 3894U, 1492U, 3088U, 3903U, 
+    1501U, 3097U, 3912U, 3859U, 653U, 760U, 814U, 390U, 
+    367U, 346U, 2108U, 4475U, 1190U, 378U, 355U, 2987U, 
+    3651U, 1168U, 3578U, 1223U, 3591U, 1184U, 2974U, 3645U, 
+    1160U, 3570U, 1196U, 3657U, 3264U, 3730U, 38U, 3446U, 
+    195U, 3497U, 1210U, 1670U, 3598U, 3260U, 44U, 3453U, 
+    201U, 3504U, 3725U, 273U, 100U, 4686U, 240U, 3522U, 
+    67U, 3471U, 213U, 1617U, 232U, 3513U, 59U, 3462U, 
+    1371U, 2031U, 3690U, 4755U, 329U, 139U, 289U, 116U, 
+    1203U, 1435U, 3031U, 3846U, 225U, 52U, 23U, 3429U, 
+    164U, 3480U, 296U, 123U, 1377U, 2037U, 3005U, 4761U, 
+    1010U, 2953U, 3544U, 3269U, 3736U, 3316U, 3760U, 1383U, 
+    3011U, 3704U, 2814U, 3671U, 5234U, 6271U, 5762U, 5354U, 
+    6406U, 5052U, 6089U, 5755U, 5045U, 6082U, 5775U, 5153U, 
+    6190U, 5092U, 6125U, 5783U, 5370U, 6422U, 5160U, 6197U, 
+    5798U, 5173U, 6210U, 5722U, 4834U, 5871U, 5821U, 5193U, 
+    6230U, 5745U, 4860U, 5897U, 5461U, 6519U, 5737U, 4847U, 
+    5884U, 5836U, 5214U, 6251U, 5386U, 6438U, 5489U, 6555U, 
+    5098U, 6135U, 5081U, 5071U, 4233U, 4812U, 4747U, 4918U, 
+    5955U, 4934U, 5971U, 5552U, 6633U, 5572U, 6653U, 5562U, 
+    6643U, 5581U, 6662U, 5590U, 6671U, 5599U, 6680U, 4535U, 
+    4544U, 3696U, 5029U, 6066U, 1389U, 4995U, 6032U, 5516U, 
+    6582U, 2875U, 4980U, 6017U, 4970U, 6007U, 5276U, 6313U, 
+    6327U, 5524U, 6591U, 5328U, 6380U, 4395U, 2725U, 6102U, 
+    4795U, 5712U, 5404U, 6456U, 3399U, 910U, 3394U, 3405U, 
+    3111U, 2463U, 5136U, 6173U, 4074U, 2310U, 5418U, 6476U, 
+    5146U, 6183U, 5004U, 6041U, 5536U, 6617U, 5425U, 6483U, 
+    4820U, 4805U, 2749U, 2403U, 3256U, 5502U, 6568U, 5228U, 
+    6265U, 4869U, 5906U, 4943U, 5980U, 5247U, 6284U, 5468U, 
+    6526U, 4828U, 5852U, 5509U, 6575U, 5241U, 6278U, 5865U, 
+    3105U, 5730U, 4841U, 5878U, 5362U, 6414U, 5065U, 6109U, 
+    5768U, 5302U, 6354U, 5058U, 6095U, 5790U, 5310U, 6362U, 
+    5166U, 6203U, 5116U, 6153U, 5814U, 5378U, 6430U, 5187U, 
+    6224U, 5829U, 5208U, 6245U, 5806U, 5180U, 6217U, 5395U, 
+    6447U, 5530U, 6611U, 5413U, 6471U, 4891U, 5928U, 4883U, 
+    5920U, 5122U, 6159U, 5475U, 6533U, 4854U, 5891U, 5844U, 
+    5289U, 6341U, 19U, 209U, 221U, 5450U, 6508U, 4899U, 
+    5936U, 4927U, 5964U, 6540U, 6115U, 2225U, 6551U, 6131U, 
+    5282U, 6334U, 5439U, 6497U, 4890U, 5927U, 5022U, 6059U, 
+    5013U, 6050U, 5544U, 6625U, 5432U, 6490U, 4876U, 5913U, 
+    4952U, 5989U, 2009U, 5254U, 6291U, 2869U, 1397U, 1175U, 
+    2965U, 3604U, 3017U, 3710U, 574U, 639U, 651U, 4916U, 
+    5953U, 5346U, 6398U, 5339U, 6391U, 5405U, 6457U, 5318U, 
+    6370U, 5261U, 6298U, 4735U, 2017U, 4978U, 6015U, 6589U, 
+    5326U, 6378U, 4987U, 6024U, 5523U, 6597U, 5333U, 6385U, 
+};
+
+#endif // GET_INSTRINFO_MC_DESC
+

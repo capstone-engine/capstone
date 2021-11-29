@@ -217,6 +217,8 @@ static DecodeStatus MipsDisassembler_getInstruction(
   uint32_t Insn;
   DecodeStatus Result;
 
+  instr->MRI = MRI;
+
   if (instr->flat_insn->detail) {
     memset(instr->flat_insn->detail, 0,
 	   offsetof(cs_detail, mips) + sizeof(cs_mips));

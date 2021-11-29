@@ -69,8 +69,8 @@ command = "{0} --gen-capstone{1} -I{2}/llvm/lib/Target/{3} " \
           "-I{2}/{4}/include " \
           "-I{2}/llvm/include " \
           "-I{2}/llvm/lib/Target " \
-          "{2}/llvm/lib/Target/{3}/{3}.td".format(bin_to_use, use_mapper, options.include_dir, arch,
-                                                  build_dir)
+          "{2}/llvm/lib/Target/{3}/{5}.td".format(bin_to_use, use_mapper, options.include_dir, arch,
+                                                  build_dir, arch if arch != "PowerPC" else "PPC")
 
 result = os.popen(command, "r")
 lines = result.readlines()
