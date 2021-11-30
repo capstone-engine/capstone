@@ -27,143 +27,148 @@ static void assert(int val) {}
 
 static DecodeStatus decodeCondBrTarget(MCInst *Inst, unsigned Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void *Decoder);
 
 static DecodeStatus decodeDirectBrTarget(MCInst *Inst, unsigned Imm,
                                          uint64_t Address,
-                                         MCRegisterInfo *Decoder);
+                                         void *Decoder);
 
 static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
                                         const unsigned *Regs);
 
 static DecodeStatus DecodeCRRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeCRBITRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void *Decoder);
 
 static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeVFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeVRRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeVSRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeVSFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder);
+                                             void *Decoder);
 
 static DecodeStatus DecodeVSSRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder);
+                                             void *Decoder);
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeGPRC_NOR0RegisterClass(MCInst *Inst, uint64_t RegNo,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder);
+                                                 void *Decoder);
 
 static DecodeStatus DecodeG8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeG8pRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder);
+                                             void *Decoder);
 
 static DecodeStatus DecodeG8RC_NOX0RegisterClass(MCInst *Inst, uint64_t RegNo,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder);
+                                                 void *Decoder);
 
 static DecodeStatus DecodeSPERCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder);
+                                             void *Decoder);
 static DecodeStatus DecodeACCRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder);
+                                             void *Decoder);
 
 static DecodeStatus DecodeVSRpRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                               uint64_t Address,
-                                              MCRegisterInfo *Decoder);
+                                              void *Decoder);
 
 static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
-                                      int64_t Address, MCRegisterInfo *Decoder,
+                                      int64_t Address, void *Decoder,
                                       int);
 
 static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm,
-                                      int64_t Address, MCRegisterInfo *Decoder,
+                                      int64_t Address, void *Decoder,
                                       unsigned N);
 
 static DecodeStatus decodeImmZeroOperand(MCInst *Inst, uint64_t Imm,
                                          int64_t Address,
-                                         MCRegisterInfo *Decoder);
+                                         void *Decoder);
 
 static DecodeStatus decodeVSRpEvenOperands(MCInst *Inst, uint64_t RegNo,
                                            uint64_t Address,
-                                           MCRegisterInfo *Decoder);
+                                           void *Decoder);
 
 static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
                                         int64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void *Decoder);
 
 static DecodeStatus decodeMemRIXOperands(MCInst *Inst, uint64_t Imm,
                                          int64_t Address,
-                                         MCRegisterInfo *Decoder);
+                                         void *Decoder);
 
 static DecodeStatus decodeMemRIHashOperands(MCInst *Inst, uint64_t Imm,
                                             int64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus decodeMemRIX16Operands(MCInst *Inst, uint64_t Imm,
                                            int64_t Address,
-                                           MCRegisterInfo *Decoder);
+                                           void *Decoder);
 
 static DecodeStatus decodeMemRI34PCRelOperands(MCInst *Inst, uint64_t Imm,
                                                int64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void *Decoder);
 
 static DecodeStatus decodeMemRI34Operands(MCInst *Inst, uint64_t Imm,
                                           int64_t Address,
-                                          MCRegisterInfo *Decoder);
+                                          void *Decoder);
 
 static DecodeStatus decodeSPE8Operands(MCInst *Inst, uint64_t Imm,
                                        int64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void *Decoder);
 
 static DecodeStatus decodeSPE4Operands(MCInst *Inst, uint64_t Imm,
                                        int64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void *Decoder);
 
 static DecodeStatus decodeSPE2Operands(MCInst *Inst, uint64_t Imm,
                                        int64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void *Decoder);
 
 static DecodeStatus decodeCRBitMOperand(MCInst *Inst, uint64_t Imm,
                                         int64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void *Decoder);
 
 #define GET_REGINFO_ENUM
 #define GET_INSTRINFO_ENUM
 #define MIPS_GET_DISASSEMBLER
 #define GET_REGINFO_MC_DESC
 #include "PPCGenDisassemblerTables.inc"
+
+FieldFromInstruction(fieldFromInstruction4, uint64_t)
+    DecodeToMCInst(decodeToMCInst4, fieldFromInstruction4, uint64_t)
+        DecodeInstruction(decodeInstruction4, fieldFromInstruction4,
+                          decodeToMCInst4, uint64_t)
 
 static const unsigned RRegs[32] = PPC_REGS0_31(PPC_R);
 
@@ -277,14 +282,14 @@ static const unsigned SPERegs[] = {
 
 static DecodeStatus decodeCondBrTarget(MCInst *Inst, unsigned Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   MCOperand_CreateImm0(Inst, SignExtend32(Imm, 14));
   return MCDisassembler_Success;
 }
 
 static DecodeStatus decodeDirectBrTarget(MCInst *Inst, unsigned Imm,
                                          uint64_t Address,
-                                         MCRegisterInfo *Decoder) {
+                                         void *Decoder) {
   int32_t Offset = SignExtend32(Imm, 24);
   MCOperand_CreateImm0(Inst, Offset);
   return MCDisassembler_Success;
@@ -298,108 +303,108 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus DecodeCRRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, CRRegs);
 }
 
 static DecodeStatus DecodeCRBITRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, CRBITRegs);
 }
 
 static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, FRegs);
 }
 
 static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, FRegs);
 }
 
 static DecodeStatus DecodeVFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, VFRegs);
 }
 
 static DecodeStatus DecodeVRRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, VRegs);
 }
 
 static DecodeStatus DecodeVSRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, VSRegs);
 }
 
 static DecodeStatus DecodeVSFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder) {
+                                             void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, VSFRegs);
 }
 
 static DecodeStatus DecodeVSSRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder) {
+                                             void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, VSSRegs);
 }
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, RRegs);
 }
 
 static DecodeStatus DecodeGPRC_NOR0RegisterClass(MCInst *Inst, uint64_t RegNo,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder) {
+                                                 void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, RRegsNoR0);
 }
 
 static DecodeStatus DecodeG8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, XRegs);
 }
 
 static DecodeStatus DecodeG8pRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder) {
+                                             void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, XRegs);
 }
 
 static DecodeStatus DecodeG8RC_NOX0RegisterClass(MCInst *Inst, uint64_t RegNo,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder) {
+                                                 void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, XRegsNoX0);
 }
 
 static DecodeStatus DecodeSPERCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder) {
+                                             void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SPERegs);
 }
 
 static DecodeStatus DecodeACCRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder) {
+                                             void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, ACCRegs);
 }
 
 static DecodeStatus DecodeVSRpRCRegisterClass(MCInst *Inst, uint64_t RegNo,
                                               uint64_t Address,
-                                              MCRegisterInfo *Decoder) {
+                                              void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, VSRpRegs);
 }
 
 static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
-                                      int64_t Address, MCRegisterInfo *Decoder,
+                                      int64_t Address, void *Decoder,
                                       int N) {
   //  assert(isUInt(Imm, N) && "Invalid immediate");
   MCOperand_CreateImm0(Inst, Imm);
@@ -407,7 +412,7 @@ static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm,
 }
 
 static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm,
-                                      int64_t Address, MCRegisterInfo *Decoder,
+                                      int64_t Address, void *Decoder,
                                       unsigned N) {
   //  assert(isUInt(Imm, N) && "Invalid immediate");
   MCOperand_CreateImm0(Inst, SignExtend64(Imm, N));
@@ -416,7 +421,7 @@ static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeImmZeroOperand(MCInst *Inst, uint64_t Imm,
                                          int64_t Address,
-                                         MCRegisterInfo *Decoder) {
+                                         void *Decoder) {
   if (Imm != 0)
     return MCDisassembler_Fail;
   MCOperand_CreateImm0(Inst, Imm);
@@ -425,7 +430,7 @@ static DecodeStatus decodeImmZeroOperand(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeVSRpEvenOperands(MCInst *Inst, uint64_t RegNo,
                                            uint64_t Address,
-                                           MCRegisterInfo *Decoder) {
+                                           void *Decoder) {
   if (RegNo & 1)
     return MCDisassembler_Fail;
   MCOperand_CreateReg0(Inst, VSRpRegs[RegNo >> 1]);
@@ -434,7 +439,7 @@ static DecodeStatus decodeVSRpEvenOperands(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
                                         int64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   // Decode the memri field (imm, reg), which has the low 16-bits as the
   // displacement and the next 5 bits as the register #.
 
@@ -471,7 +476,7 @@ static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeMemRIXOperands(MCInst *Inst, uint64_t Imm,
                                          int64_t Address,
-                                         MCRegisterInfo *Decoder) {
+                                         void *Decoder) {
   // Decode the memrix field (imm, reg), which has the low 14-bits as the
   // displacement and the next 5 bits as the register #.
 
@@ -493,7 +498,7 @@ static DecodeStatus decodeMemRIXOperands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeMemRIHashOperands(MCInst *Inst, uint64_t Imm,
                                             int64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   // Decode the memrix field for a hash store or hash check operation.
   // The field is composed of a register and an immediate value that is 6 bits
   // and covers the range -8 to -512. The immediate is always negative and 2s
@@ -510,7 +515,7 @@ static DecodeStatus decodeMemRIHashOperands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeMemRIX16Operands(MCInst *Inst, uint64_t Imm,
                                            int64_t Address,
-                                           MCRegisterInfo *Decoder) {
+                                           void *Decoder) {
   // Decode the memrix16 field (imm, reg), which has the low 12-bits as the
   // displacement with 16-byte aligned, and the next 5 bits as the register #.
 
@@ -526,7 +531,7 @@ static DecodeStatus decodeMemRIX16Operands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeMemRI34PCRelOperands(MCInst *Inst, uint64_t Imm,
                                                int64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   // Decode the memri34_pcrel field (imm, reg), which has the low 34-bits as the
   // displacement, and the next 5 bits as an immediate 0.
   uint64_t Base = Imm >> 34;
@@ -540,7 +545,7 @@ static DecodeStatus decodeMemRI34PCRelOperands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeMemRI34Operands(MCInst *Inst, uint64_t Imm,
                                           int64_t Address,
-                                          MCRegisterInfo *Decoder) {
+                                          void *Decoder) {
   // Decode the memri34 field (imm, reg), which has the low 34-bits as the
   // displacement, and the next 5 bits as the register #.
   uint64_t Base = Imm >> 34;
@@ -555,7 +560,7 @@ static DecodeStatus decodeMemRI34Operands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeSPE8Operands(MCInst *Inst, uint64_t Imm,
                                        int64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   // Decode the spe8disp field (imm, reg), which has the low 5-bits as the
   // displacement with 8-byte aligned, and the next 5 bits as the register #.
 
@@ -571,7 +576,7 @@ static DecodeStatus decodeSPE8Operands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeSPE4Operands(MCInst *Inst, uint64_t Imm,
                                        int64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   // Decode the spe4disp field (imm, reg), which has the low 5-bits as the
   // displacement with 4-byte aligned, and the next 5 bits as the register #.
 
@@ -587,7 +592,7 @@ static DecodeStatus decodeSPE4Operands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeSPE2Operands(MCInst *Inst, uint64_t Imm,
                                        int64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   // Decode the spe2disp field (imm, reg), which has the low 5-bits as the
   // displacement with 2-byte aligned, and the next 5 bits as the register #.
 
@@ -603,7 +608,7 @@ static DecodeStatus decodeSPE2Operands(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodeCRBitMOperand(MCInst *Inst, uint64_t Imm,
                                         int64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   // The cr bit encoding is 0x80 >> cr_reg_num.
 
   unsigned Zeros = CountTrailingZeros_64(Imm);

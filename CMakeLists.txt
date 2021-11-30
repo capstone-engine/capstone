@@ -102,6 +102,7 @@ set(HEADERS_ENGINE
     MCInst.h
     MCInstrDesc.h
     MCRegisterInfo.h
+    MCInstPrinter.h
     SStream.h
     utils.h
     )

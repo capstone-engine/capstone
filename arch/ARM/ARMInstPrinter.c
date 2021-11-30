@@ -320,14 +320,11 @@ static void printCustomAliasOperand(const MCInst *MI, unsigned OpIdx,
 #include "../../sync/logger.h"
 #include "ARMGenDisassemblerTables.inc"
 
-static cs_struct *preserved_handle;
-
 const char *getRegisterNameNoRaw(unsigned RegNo) {
   debugln("request reg num %d", RegNo);
   unsigned Mapped = RegNo;
-  // need a mappings later
-  if (preserved_handle && ARM_reg_name(preserved_handle, Mapped))
-    return ARM_reg_name(preserved_handle, Mapped);
+  if (ARM_reg_name(0, Mapped))
+    return ARM_reg_name(0, Mapped);
   return getRegisterName(RegNo, ARM_NoRegAltName);
 }
 
@@ -336,7 +333,6 @@ const char *getRegisterNameRaw(unsigned RegNo) {
 }
 
 void ARM_getRegName(cs_struct *handle, int value) {
-  preserved_handle = handle;
   if (value == CS_OPT_SYNTAX_NOREGNAME) {
     //		handle->get_regname = getRegisterName_digit;
     handle->get_regname = getRegisterNameRaw;

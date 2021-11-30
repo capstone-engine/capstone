@@ -7724,576 +7724,576 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
   case 0:\
     return S;\
   case 1:\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 2:\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 3:\
     tmp = 0x0;\
-    tmp |= fieldFromInstruction(insn, 3, 2) << 3;\
-    tmp |= fieldFromInstruction(insn, 5, 3) << 0;\
+    tmp |= fieldname(insn, 3, 2) << 3;\
+    tmp |= fieldname(insn, 5, 3) << 0;\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 4:\
-    tmp = fieldFromInstruction(insn, 0, 4);\
+    tmp = fieldname(insn, 0, 4);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 5:\
-    tmp = fieldFromInstruction(insn, 2, 3);\
+    tmp = fieldname(insn, 2, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 5, 3);\
+    tmp = fieldname(insn, 5, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 6:\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 5, 3);\
+    tmp = fieldname(insn, 5, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 7:\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 5, 3);\
+    tmp = fieldname(insn, 5, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 8:\
     tmp = 0x0;\
-    tmp |= fieldFromInstruction(insn, 0, 5) << 0;\
-    tmp |= fieldFromInstruction(insn, 16, 5) << 11;\
-    tmp |= fieldFromInstruction(insn, 21, 6) << 5;\
+    tmp |= fieldname(insn, 0, 5) << 0;\
+    tmp |= fieldname(insn, 16, 5) << 11;\
+    tmp |= fieldname(insn, 21, 6) << 5;\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 9:\
-    tmp = fieldFromInstruction(insn, 5, 3);\
+    tmp = fieldname(insn, 5, 3);\
     if (DecodeCPU16RegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 10:\
     if (DecodeFMem3(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 11:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 12:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 13:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 14:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 15:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 16:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 10);\
+    tmp = fieldname(insn, 6, 10);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 10) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 17:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 18:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 19:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 20:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 1, 3);\
+    tmp = fieldname(insn, 1, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 4, 3);\
+    tmp = fieldname(insn, 4, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 21:\
     if (DecodeMemMMImm4(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 22:\
-    tmp = fieldFromInstruction(insn, 5, 5);\
+    tmp = fieldname(insn, 5, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 5);\
+    tmp = fieldname(insn, 0, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 23:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 4, 3);\
+    tmp = fieldname(insn, 4, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 1, 3);\
+    tmp = fieldname(insn, 1, 3);\
     if (DecodePOOL16BEncodedField(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 24:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 4, 3);\
+    tmp = fieldname(insn, 4, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 4);\
+    tmp = fieldname(insn, 0, 4);\
     if (DecodeANDI16Imm(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 25:\
-    tmp = fieldFromInstruction(insn, 3, 3);\
+    tmp = fieldname(insn, 3, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 26:\
-    tmp = fieldFromInstruction(insn, 3, 3);\
+    tmp = fieldname(insn, 3, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 3, 3);\
+    tmp = fieldname(insn, 3, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 27:\
     if (DecodeMemMMReglistImm4Lsl2(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 28:\
-    tmp = fieldFromInstruction(insn, 0, 5);\
+    tmp = fieldname(insn, 0, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 29:\
-    tmp = fieldFromInstruction(insn, 0, 4);\
+    tmp = fieldname(insn, 0, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 30:\
-    tmp = fieldFromInstruction(insn, 0, 5);\
+    tmp = fieldname(insn, 0, 5);\
     if (DecodeUImmWithOffsetAndScale(MI, tmp, Address, Decoder, 5, 0, 4) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 31:\
     if (DecodeMemMMSPImm5Lsl2(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 32:\
-    tmp = fieldFromInstruction(insn, 5, 5);\
+    tmp = fieldname(insn, 5, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 5, 5);\
+    tmp = fieldname(insn, 5, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 1, 4);\
+    tmp = fieldname(insn, 1, 4);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 4) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 33:\
-    tmp = fieldFromInstruction(insn, 1, 9);\
+    tmp = fieldname(insn, 1, 9);\
     if (DecodeSimm9SP(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 34:\
     if (DecodeMemMMGPImm7Lsl2(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 35:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 4, 3);\
+    tmp = fieldname(insn, 4, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 1, 3);\
+    tmp = fieldname(insn, 1, 3);\
     if (DecodeAddiur2Simm7(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 36:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 1, 6);\
+    tmp = fieldname(insn, 1, 6);\
     if (DecodeUImmWithOffsetAndScale(MI, tmp, Address, Decoder, 6, 0, 4) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 37:\
     if (DecodeMovePOperands(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 38:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 7);\
+    tmp = fieldname(insn, 0, 7);\
     if (DecodeBranchTarget7MM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 39:\
-    tmp = fieldFromInstruction(insn, 0, 10);\
+    tmp = fieldname(insn, 0, 10);\
     if (DecodeBranchTarget10MM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 40:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 7);\
+    tmp = fieldname(insn, 0, 7);\
     if (DecodeLi16Imm(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 41:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 42:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 43:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 44:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 45:\
-    tmp = fieldFromInstruction(insn, 16, 10);\
+    tmp = fieldname(insn, 16, 10);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 6, 10);\
+    tmp = fieldname(insn, 6, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 46:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeInsSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 47:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 48:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 49:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 50:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 51:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 52:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 53:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 54:\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 6);\
+    tmp = fieldname(insn, 16, 6);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 6) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 55:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeUImmWithOffset(MI, tmp, Address, Decoder, 5, 1) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 56:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 57:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCOP0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 3);\
+    tmp = fieldname(insn, 11, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 58:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCOP0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 3);\
+    tmp = fieldname(insn, 11, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 59:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 12, 4);\
+    tmp = fieldname(insn, 12, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 60:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 12, 4);\
+    tmp = fieldname(insn, 12, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 61:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 62:\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeHI32DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 63:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 13, 3);\
+    tmp = fieldname(insn, 13, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 64:\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeLO32DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 65:\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 66:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 67:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 68:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 69:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 70:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 71:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 72:\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 73:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 74:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeHWRegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 75:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 76:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 77:\
-    tmp = fieldFromInstruction(insn, 16, 10);\
+    tmp = fieldname(insn, 16, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 78:\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 79:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 80:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 81:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 82:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 13, 8);\
+    tmp = fieldname(insn, 13, 8);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 83:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 7);\
+    tmp = fieldname(insn, 14, 7);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 84:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 14, 2);\
+    tmp = fieldname(insn, 14, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 85:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 10);\
+    tmp = fieldname(insn, 16, 10);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 10) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 86:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 16) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 87:\
@@ -8306,238 +8306,238 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeCacheOpMM(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 90:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTargetMM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 91:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 16) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 92:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 93:\
     if (DecodeSyncI_MM(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 94:\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget1SImm16(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 95:\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTargetMM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 96:\
-    tmp = fieldFromInstruction(insn, 18, 3);\
+    tmp = fieldname(insn, 18, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTargetMM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 97:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 98:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 99:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 100:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 101:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 102:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 13, 3);\
+    tmp = fieldname(insn, 13, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 103:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 104:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 13, 3);\
+    tmp = fieldname(insn, 13, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 105:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 106:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 107:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 108:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 109:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 110:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 111:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 112:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 13, 3);\
+    tmp = fieldname(insn, 13, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 113:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 114:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 115:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 116:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCCRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 117:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 118:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 119:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCCRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 120:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 121:\
-    tmp = fieldFromInstruction(insn, 13, 3);\
+    tmp = fieldname(insn, 13, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 122:\
-    tmp = fieldFromInstruction(insn, 13, 3);\
+    tmp = fieldname(insn, 13, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 123:\
@@ -8550,17 +8550,17 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeJumpTargetMM(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 126:\
-    tmp = fieldFromInstruction(insn, 23, 3);\
+    tmp = fieldname(insn, 23, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 23);\
+    tmp = fieldname(insn, 0, 23);\
     if (DecodeSimm23Lsl2(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 127:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTargetMM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 128:\
@@ -8573,115 +8573,115 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeMem(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 131:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 132:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 133:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 134:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 135:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 136:\
-    tmp = fieldFromInstruction(insn, 1, 3);\
+    tmp = fieldname(insn, 1, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 4, 3);\
+    tmp = fieldname(insn, 4, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 137:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 4, 3);\
+    tmp = fieldname(insn, 4, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 138:\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 4, 3);\
+    tmp = fieldname(insn, 4, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 7, 3);\
+    tmp = fieldname(insn, 7, 3);\
     if (DecodeGPRMM16RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 139:\
-    tmp = fieldFromInstruction(insn, 5, 5);\
+    tmp = fieldname(insn, 5, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 140:\
-    tmp = fieldFromInstruction(insn, 5, 5);\
+    tmp = fieldname(insn, 5, 5);\
     if (DecodeUImmWithOffsetAndScale(MI, tmp, Address, Decoder, 5, 0, 4) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 141:\
-    tmp = fieldFromInstruction(insn, 6, 4);\
+    tmp = fieldname(insn, 6, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 142:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeHWRegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 3);\
+    tmp = fieldname(insn, 11, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 143:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 9, 2);\
+    tmp = fieldname(insn, 9, 2);\
     if (DecodeUImmWithOffset(MI, tmp, Address, Decoder, 2, 1) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 144:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 9, 2);\
+    tmp = fieldname(insn, 9, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 145:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 9, 2);\
+    tmp = fieldname(insn, 9, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 146:\
-    tmp = fieldFromInstruction(insn, 6, 16);\
+    tmp = fieldname(insn, 6, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 147:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 148:\
@@ -8691,120 +8691,120 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeFMemCop2MMR6(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 150:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTargetMM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 151:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTargetMM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 152:\
     if (DecodeSynciR6(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 153:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 154:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGRCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 155:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGRCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 156:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 157:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 158:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGRCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 159:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 160:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 161:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 162:\
     if (DecodePOP35GroupBranchMMR6(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 163:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 19);\
+    tmp = fieldname(insn, 0, 19);\
     if (DecodeSimm19Lsl2(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 164:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 16) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 165:\
     if (DecodePOP37GroupBranchMMR6(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 166:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 21);\
+    tmp = fieldname(insn, 0, 21);\
     if (DecodeBranchTarget21MM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 167:\
-    tmp = fieldFromInstruction(insn, 0, 26);\
+    tmp = fieldname(insn, 0, 26);\
     if (DecodeBranchTarget26MM(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 168:\
@@ -8820,111 +8820,111 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodePOP75GroupBranchMMR6(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 172:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 173:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 18, 3);\
+    tmp = fieldname(insn, 18, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 174:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 2);\
+    tmp = fieldname(insn, 6, 2);\
     if (DecodeUImmWithOffset(MI, tmp, Address, Decoder, 2, 1) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 175:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 176:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 177:\
-    tmp = fieldFromInstruction(insn, 6, 20);\
+    tmp = fieldname(insn, 6, 20);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 178:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 179:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 180:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 2);\
+    tmp = fieldname(insn, 21, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 181:\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeHI32DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 182:\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeLO32DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 183:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 2);\
+    tmp = fieldname(insn, 6, 2);\
     if (DecodeUImmWithOffset(MI, tmp, Address, Decoder, 2, 1) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 184:\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 185:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 10);\
+    tmp = fieldname(insn, 6, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 186:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 187:\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 188:\
@@ -8934,1063 +8934,1063 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeJumpTarget(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 190:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 191:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 16) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 192:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 193:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 194:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 195:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 5, 1);\
+    tmp = fieldname(insn, 5, 1);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 4, 1);\
+    tmp = fieldname(insn, 4, 1);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 196:\
-    tmp = fieldFromInstruction(insn, 11, 10);\
+    tmp = fieldname(insn, 11, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 197:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 198:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 199:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCCRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 200:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 201:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 202:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 203:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCCRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 204:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 205:\
-    tmp = fieldFromInstruction(insn, 18, 3);\
+    tmp = fieldname(insn, 18, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 206:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 207:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 208:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 209:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 18, 3);\
+    tmp = fieldname(insn, 18, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 210:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 211:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 212:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 213:\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 214:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 215:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 216:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 217:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 18, 3);\
+    tmp = fieldname(insn, 18, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 218:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 219:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 220:\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 221:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 222:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 223:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 224:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 225:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 226:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 227:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 228:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 229:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 230:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 231:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeAFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 232:\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 233:\
     tmp = 0x0;\
-    tmp |= fieldFromInstruction(insn, 11, 5) << 0;\
-    tmp |= fieldFromInstruction(insn, 16, 5) << 0;\
+    tmp |= fieldname(insn, 11, 5) << 0;\
+    tmp |= fieldname(insn, 16, 5) << 0;\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 234:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 8);\
+    tmp = fieldname(insn, 16, 8);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 235:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 8);\
+    tmp = fieldname(insn, 16, 8);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 236:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 8);\
+    tmp = fieldname(insn, 16, 8);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 237:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 8);\
+    tmp = fieldname(insn, 16, 8);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 238:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 239:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 240:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 241:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 242:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 10);\
+    tmp = fieldname(insn, 11, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 243:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 10);\
+    tmp = fieldname(insn, 11, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 244:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 10);\
+    tmp = fieldname(insn, 11, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 245:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 10);\
+    tmp = fieldname(insn, 11, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 246:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 6);\
+    tmp = fieldname(insn, 16, 6);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 247:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 4);\
+    tmp = fieldname(insn, 16, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 248:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 3);\
+    tmp = fieldname(insn, 16, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 249:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 6);\
+    tmp = fieldname(insn, 16, 6);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 250:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 251:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 4);\
+    tmp = fieldname(insn, 16, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 252:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 3);\
+    tmp = fieldname(insn, 16, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 253:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 254:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 255:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 256:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 257:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 258:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 259:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 260:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 261:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 262:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 263:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 264:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 265:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 266:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 267:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 268:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 269:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 270:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 271:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 272:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 273:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 274:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 275:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 4);\
+    tmp = fieldname(insn, 16, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 276:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 3);\
+    tmp = fieldname(insn, 16, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 277:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 2);\
+    tmp = fieldname(insn, 16, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 278:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 1);\
+    tmp = fieldname(insn, 16, 1);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 279:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSACtrlRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 280:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 4);\
+    tmp = fieldname(insn, 16, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 281:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 3);\
+    tmp = fieldname(insn, 16, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 282:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 2);\
+    tmp = fieldname(insn, 16, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 283:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 1);\
+    tmp = fieldname(insn, 16, 1);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 284:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSACtrlRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 285:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 4);\
+    tmp = fieldname(insn, 16, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 286:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 3);\
+    tmp = fieldname(insn, 16, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 287:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 2);\
+    tmp = fieldname(insn, 16, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 288:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 1);\
+    tmp = fieldname(insn, 16, 1);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 289:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 290:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 4);\
+    tmp = fieldname(insn, 16, 4);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 291:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 3);\
+    tmp = fieldname(insn, 16, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 292:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 2);\
+    tmp = fieldname(insn, 16, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 293:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 1);\
+    tmp = fieldname(insn, 16, 1);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 294:\
     if (DecodeINSVE_DF(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 295:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 296:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 297:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128BRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 298:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 299:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 300:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 301:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 302:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 303:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 304:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128HRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 305:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeMSA128DRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeMSA128WRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 306:\
     if (DecodeMSA128Mem(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 307:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeUImmWithOffset(MI, tmp, Address, Decoder, 5, 1) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 308:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeInsSize(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 309:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 310:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 311:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 312:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 313:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 314:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 315:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 316:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 317:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 318:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 10);\
+    tmp = fieldname(insn, 16, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 319:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 320:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 321:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 322:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 323:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeDSPRRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 324:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 325:\
@@ -10000,65 +10000,65 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeCacheeOp_CacheOpR6(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 327:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     MCOperand_CreateImm0(MI, tmp);\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 328:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 329:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 330:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 10);\
+    tmp = fieldname(insn, 16, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 331:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 10);\
+    tmp = fieldname(insn, 11, 10);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 332:\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 20, 6);\
+    tmp = fieldname(insn, 20, 6);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 6) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 333:\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 2);\
+    tmp = fieldname(insn, 11, 2);\
     if (DecodeACC64DSPRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 334:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeHWRegsRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 3);\
+    tmp = fieldname(insn, 6, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 335:\
@@ -10074,7 +10074,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeDAHIDATI(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 339:\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 340:\
@@ -10087,69 +10087,69 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeAddiGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 343:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 344:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGRCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 345:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 346:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 347:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 348:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGRCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 349:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGRCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 350:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeBranchTarget(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 351:\
@@ -10165,149 +10165,149 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeDaddiGroupBranch(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 355:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 356:\
     if (DecodeCRC(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 357:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 2);\
+    tmp = fieldname(insn, 6, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 358:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 359:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 3);\
+    tmp = fieldname(insn, 6, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 360:\
     if (DecodeSpecial3LlSc(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 361:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 8, 2);\
+    tmp = fieldname(insn, 8, 2);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 362:\
-    tmp = fieldFromInstruction(insn, 0, 26);\
+    tmp = fieldname(insn, 0, 26);\
     if (DecodeBranchTarget26(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 363:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 21);\
+    tmp = fieldname(insn, 0, 21);\
     if (DecodeBranchTarget21(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 364:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 18);\
+    tmp = fieldname(insn, 0, 18);\
     if (DecodeSimm18Lsl3(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 365:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 21);\
+    tmp = fieldname(insn, 0, 21);\
     if (DecodeBranchTarget21(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 366:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 367:\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 368:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 369:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 370:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP0RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 371:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 372:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeCOP2RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 3);\
+    tmp = fieldname(insn, 0, 3);\
     MCOperand_CreateImm0(MI, tmp);\
     return S;\
   case 373:\
-    tmp = fieldFromInstruction(insn, 13, 3);\
+    tmp = fieldname(insn, 13, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 374:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 0, 16);\
+    tmp = fieldname(insn, 0, 16);\
     if (DecodeSImmWithOffsetAndScale(MI, tmp, Address, Decoder, 16) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 375:\
     tmp = 0x0;\
-    tmp |= fieldFromInstruction(insn, 11, 5) << 0;\
-    tmp |= fieldFromInstruction(insn, 16, 5) << 0;\
+    tmp |= fieldname(insn, 11, 5) << 0;\
+    tmp |= fieldname(insn, 16, 5) << 0;\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeGPR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 376:\
@@ -10317,91 +10317,91 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeDINS(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 378:\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 379:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 380:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 381:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 382:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 18, 3);\
+    tmp = fieldname(insn, 18, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 383:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeGPR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 384:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR32RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 385:\
-    tmp = fieldFromInstruction(insn, 8, 3);\
+    tmp = fieldname(insn, 8, 3);\
     if (DecodeFCCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 386:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 387:\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodePtrRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   case 388:\
-    tmp = fieldFromInstruction(insn, 6, 5);\
+    tmp = fieldname(insn, 6, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 21, 5);\
+    tmp = fieldname(insn, 21, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 11, 5);\
+    tmp = fieldname(insn, 11, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
-    tmp = fieldFromInstruction(insn, 16, 5);\
+    tmp = fieldname(insn, 16, 5);\
     if (DecodeFGR64RegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; }\
     return S;\
   }\
@@ -14486,447 +14486,447 @@ static const char MipsRegStrings[] = {
 
 static const MCRegisterDesc MipsRegDesc[] = { // Descriptors
   { 5, 0, 0, 0, 0, 0 },
-  { 2363, 1, 82, 1, 4017, 153 },
-  { 2366, 1, 1, 1, 4017, 84 },
-  { 2458, 1, 1, 1, 4017, 1 },
-  { 2329, 1, 1, 1, 4017, 86 },
-  { 2383, 8, 1, 2, 32, 132 },
-  { 2410, 1, 1, 1, 1089, 29 },
-  { 2427, 1, 1, 1, 1089, 1 },
-  { 2341, 1, 102, 1, 1089, 21 },
-  { 2344, 1, 104, 1, 1089, 43 },
-  { 2417, 1, 1, 1, 1089, 1 },
-  { 2356, 1, 1, 1, 1089, 54 },
-  { 2350, 1, 1, 1, 1089, 1 },
-  { 2394, 1, 1, 1, 1089, 58 },
-  { 2448, 1, 1, 1, 1089, 524 },
-  { 2437, 1, 1, 1, 1089, 221 },
-  { 2375, 1, 1, 1, 1089, 130 },
-  { 2401, 1, 1, 1, 1089, 546 },
-  { 2326, 1, 1, 1, 1089, 130 },
-  { 2323, 1, 106, 1, 1089, 530 },
-  { 2347, 1, 108, 1, 1089, 217 },
-  { 2336, 1, 110, 1, 1089, 130 },
-  { 197, 1, 110, 1, 1089, 306 },
-  { 455, 1, 110, 1, 1089, 61 },
-  { 659, 1, 110, 1, 1089, 340 },
-  { 857, 1, 110, 1, 1089, 103 },
-  { 200, 190, 110, 9, 1042, 407 },
-  { 458, 190, 1, 9, 1042, 97 },
-  { 662, 190, 1, 9, 1042, 0 },
-  { 860, 190, 1, 9, 1042, 410 },
-  { 1457, 237, 1, 0, 0, 105 },
-  { 0, 1, 1, 1, 1153, 552 },
-  { 258, 1, 1, 1, 1153, 565 },
-  { 516, 1, 1, 1, 1153, 569 },
-  { 714, 1, 1, 1, 1153, 569 },
-  { 904, 1, 1, 1, 1153, 561 },
-  { 1499, 1, 1, 1, 1153, 1 },
-  { 1665, 1, 1, 1, 1153, 449 },
-  { 1827, 1, 1, 1, 1153, 75 },
-  { 1989, 1, 1, 1, 1153, 130 },
-  { 2148, 1, 1, 1, 1153, 163 },
-  { 102, 1, 1, 1, 1153, 159 },
-  { 360, 1, 1, 1, 1153, 80 },
-  { 618, 1, 1, 1, 1153, 279 },
-  { 816, 1, 1, 1, 1153, 281 },
-  { 1006, 1, 1, 1, 1153, 130 },
-  { 1601, 1, 1, 1, 1153, 1 },
-  { 1763, 1, 1, 1, 1153, 1 },
-  { 1925, 1, 1, 1, 1153, 125 },
-  { 2087, 1, 1, 1, 1153, 271 },
-  { 2262, 1, 1, 1, 1153, 275 },
-  { 175, 1, 1, 1, 1153, 37 },
-  { 433, 1, 1, 1, 1153, 273 },
-  { 653, 1, 1, 1, 1153, 167 },
-  { 851, 1, 1, 1, 1153, 449 },
-  { 1028, 1, 1, 1, 1153, 261 },
-  { 1623, 1, 1, 1, 1153, 546 },
+  { 2363, 1, 82, 1, 4017, 145 },
+  { 2366, 1, 1, 1, 4017, 429 },
+  { 2458, 1, 1, 1, 4017, 32 },
+  { 2329, 1, 1, 1, 4017, 121 },
+  { 2383, 8, 1, 2, 32, 385 },
+  { 2410, 1, 1, 1, 1089, 381 },
+  { 2427, 1, 1, 1, 1089, 8 },
+  { 2341, 1, 102, 1, 1089, 423 },
+  { 2344, 1, 104, 1, 1089, 26 },
+  { 2417, 1, 1, 1, 1089, 485 },
+  { 2356, 1, 1, 1, 1089, 121 },
+  { 2350, 1, 1, 1, 1089, 415 },
+  { 2394, 1, 1, 1, 1089, 14 },
+  { 2448, 1, 1, 1, 1089, 383 },
+  { 2437, 1, 1, 1, 1089, 45 },
+  { 2375, 1, 1, 1, 1089, 563 },
+  { 2401, 1, 1, 1, 1089, 406 },
+  { 2326, 1, 1, 1, 1089, 421 },
+  { 2323, 1, 106, 1, 1089, 106 },
+  { 2347, 1, 108, 1, 1089, 45 },
+  { 2336, 1, 110, 1, 1089, 431 },
+  { 197, 1, 110, 1, 1089, 72 },
+  { 455, 1, 110, 1, 1089, 45 },
+  { 659, 1, 110, 1, 1089, 121 },
+  { 857, 1, 110, 1, 1089, 121 },
+  { 200, 190, 110, 9, 1042, 108 },
+  { 458, 190, 1, 9, 1042, 126 },
+  { 662, 190, 1, 9, 1042, 558 },
+  { 860, 190, 1, 9, 1042, 478 },
+  { 1457, 237, 1, 0, 0, 64 },
+  { 0, 1, 1, 1, 1153, 417 },
+  { 258, 1, 1, 1, 1153, 413 },
+  { 516, 1, 1, 1, 1153, 197 },
+  { 714, 1, 1, 1, 1153, 1 },
+  { 904, 1, 1, 1, 1153, 37 },
+  { 1499, 1, 1, 1, 1153, 121 },
+  { 1665, 1, 1, 1, 1153, 121 },
+  { 1827, 1, 1, 1, 1153, 118 },
+  { 1989, 1, 1, 1, 1153, 106 },
+  { 2148, 1, 1, 1, 1153, 427 },
+  { 102, 1, 1, 1, 1153, 10 },
+  { 360, 1, 1, 1, 1153, 563 },
+  { 618, 1, 1, 1, 1153, 114 },
+  { 816, 1, 1, 1, 1153, 223 },
+  { 1006, 1, 1, 1, 1153, 76 },
+  { 1601, 1, 1, 1, 1153, 219 },
+  { 1763, 1, 1, 1, 1153, 24 },
+  { 1925, 1, 1, 1, 1153, 1 },
+  { 2087, 1, 1, 1, 1153, 143 },
+  { 2262, 1, 1, 1, 1153, 163 },
+  { 175, 1, 1, 1, 1153, 167 },
+  { 433, 1, 1, 1, 1153, 171 },
+  { 653, 1, 1, 1, 1153, 175 },
+  { 851, 1, 1, 1, 1153, 347 },
+  { 1028, 1, 1, 1, 1153, 183 },
+  { 1623, 1, 1, 1, 1153, 1 },
   { 1785, 1, 1, 1, 1153, 1 },
-  { 1947, 1, 1, 1, 1153, 546 },
-  { 2109, 1, 1, 1, 1153, 269 },
-  { 2284, 1, 1, 1, 1153, 1 },
-  { 6, 1, 1, 1, 1153, 15 },
-  { 264, 1, 1, 1, 1153, 130 },
-  { 522, 1, 1, 1, 1153, 157 },
-  { 720, 1, 1, 1, 1153, 173 },
-  { 910, 1, 1, 1, 1153, 177 },
-  { 1505, 1, 1, 1, 1153, 181 },
-  { 1671, 1, 1, 1, 1153, 185 },
-  { 1833, 1, 1, 1, 1153, 189 },
-  { 1995, 1, 1, 1, 1153, 193 },
-  { 2154, 1, 1, 1, 1153, 197 },
-  { 64, 1, 1, 1, 1153, 548 },
-  { 322, 1, 1, 1, 1153, 115 },
-  { 580, 1, 1, 1, 1153, 550 },
-  { 778, 1, 1, 1, 1153, 130 },
-  { 968, 1, 1, 1, 1153, 130 },
-  { 1563, 1, 1, 1, 1153, 127 },
-  { 1725, 1, 1, 1, 1153, 123 },
-  { 1887, 1, 1, 1, 1153, 292 },
-  { 2049, 1, 1, 1, 1153, 25 },
-  { 2224, 1, 1, 1, 1153, 310 },
-  { 137, 1, 1, 1, 1153, 290 },
-  { 395, 1, 1, 1, 1153, 25 },
-  { 13, 1, 1, 1, 1153, 294 },
-  { 271, 1, 1, 1, 1153, 1 },
-  { 529, 1, 1, 1, 1153, 415 },
-  { 727, 1, 1, 1, 1153, 149 },
-  { 917, 1, 1, 1, 1153, 171 },
-  { 1512, 1, 1, 1, 1153, 175 },
-  { 1678, 1, 1, 1, 1153, 179 },
-  { 1840, 1, 1, 1, 1153, 183 },
-  { 2002, 1, 1, 1, 1153, 187 },
-  { 2161, 1, 1, 1, 1153, 191 },
-  { 71, 1, 1, 1, 1153, 195 },
-  { 329, 1, 1, 1, 1153, 1 },
+  { 1947, 1, 1, 1, 1153, 1 },
+  { 2109, 1, 1, 1, 1153, 1 },
+  { 2284, 1, 1, 1, 1153, 575 },
+  { 6, 1, 1, 1, 1153, 575 },
+  { 264, 1, 1, 1, 1153, 575 },
+  { 522, 1, 1, 1, 1153, 575 },
+  { 720, 1, 1, 1, 1153, 575 },
+  { 910, 1, 1, 1, 1153, 575 },
+  { 1505, 1, 1, 1, 1153, 575 },
+  { 1671, 1, 1, 1, 1153, 575 },
+  { 1833, 1, 1, 1, 1153, 575 },
+  { 1995, 1, 1, 1, 1153, 575 },
+  { 2154, 1, 1, 1, 1153, 575 },
+  { 64, 1, 1, 1, 1153, 575 },
+  { 322, 1, 1, 1, 1153, 149 },
+  { 580, 1, 1, 1, 1153, 165 },
+  { 778, 1, 1, 1, 1153, 169 },
+  { 968, 1, 1, 1, 1153, 173 },
+  { 1563, 1, 1, 1, 1153, 177 },
+  { 1725, 1, 1, 1, 1153, 179 },
+  { 1887, 1, 1, 1, 1153, 181 },
+  { 2049, 1, 1, 1, 1153, 185 },
+  { 2224, 1, 1, 1, 1153, 135 },
+  { 137, 1, 1, 1, 1153, 565 },
+  { 395, 1, 1, 1, 1153, 567 },
+  { 13, 1, 1, 1, 1153, 569 },
+  { 271, 1, 1, 1, 1153, 523 },
+  { 529, 1, 1, 1, 1153, 1 },
+  { 727, 1, 1, 1, 1153, 121 },
+  { 917, 1, 1, 1, 1153, 121 },
+  { 1512, 1, 1, 1, 1153, 1 },
+  { 1678, 1, 1, 1, 1153, 525 },
+  { 1840, 1, 1, 1, 1153, 20 },
+  { 2002, 1, 1, 1, 1153, 527 },
+  { 2161, 1, 1, 1, 1153, 1 },
+  { 71, 1, 1, 1, 1153, 529 },
+  { 329, 1, 1, 1, 1153, 531 },
   { 587, 1, 1, 1, 1153, 1 },
-  { 785, 1, 1, 1, 1153, 1 },
-  { 975, 1, 1, 1, 1153, 1 },
-  { 1570, 1, 1, 1, 1153, 209 },
-  { 1732, 1, 1, 1, 1153, 571 },
-  { 1894, 1, 1, 1, 1153, 205 },
-  { 2056, 1, 1, 1, 1153, 571 },
-  { 2231, 1, 1, 1, 1153, 571 },
-  { 144, 1, 1, 1, 1153, 571 },
-  { 402, 1, 1, 1, 1153, 571 },
-  { 20, 1, 1, 1, 1153, 571 },
-  { 278, 1, 1, 1, 1153, 571 },
-  { 536, 1, 1, 1, 1153, 444 },
-  { 734, 1, 1, 1, 1153, 399 },
-  { 924, 1, 1, 1, 1153, 286 },
-  { 1519, 1, 1, 1, 1153, 401 },
-  { 1685, 1, 1, 1, 1153, 286 },
-  { 1847, 1, 1, 1, 1153, 403 },
-  { 2009, 1, 1, 1, 1153, 405 },
+  { 785, 1, 1, 1, 1153, 533 },
+  { 975, 1, 1, 1, 1153, 121 },
+  { 1570, 1, 1, 1, 1153, 575 },
+  { 1732, 1, 1, 1, 1153, 187 },
+  { 1894, 1, 1, 1, 1153, 193 },
+  { 2056, 1, 1, 1, 1153, 519 },
+  { 2231, 1, 1, 1, 1153, 1 },
+  { 144, 1, 1, 1, 1153, 515 },
+  { 402, 1, 1, 1, 1153, 543 },
+  { 20, 1, 1, 1, 1153, 1 },
+  { 278, 1, 1, 1, 1153, 121 },
+  { 536, 1, 1, 1, 1153, 553 },
+  { 734, 1, 1, 1, 1153, 121 },
+  { 924, 1, 1, 1, 1153, 45 },
+  { 1519, 1, 1, 1, 1153, 537 },
+  { 1685, 1, 1, 1, 1153, 1 },
+  { 1847, 1, 1, 1, 1153, 539 },
+  { 2009, 1, 1, 1, 1153, 563 },
   { 2168, 1, 1, 1, 1153, 1 },
-  { 78, 1, 1, 1, 1153, 397 },
-  { 336, 1, 1, 1, 1153, 494 },
-  { 594, 1, 1, 1, 1153, 1 },
-  { 792, 1, 1, 1, 1153, 130 },
-  { 982, 1, 1, 1, 1153, 130 },
+  { 78, 1, 1, 1, 1153, 121 },
+  { 336, 1, 1, 1, 1153, 1 },
+  { 594, 1, 1, 1, 1153, 543 },
+  { 792, 1, 1, 1, 1153, 483 },
+  { 982, 1, 1, 1, 1153, 1 },
   { 1577, 1, 1, 1, 1153, 1 },
-  { 1739, 1, 1, 1, 1153, 496 },
-  { 1901, 1, 1, 1, 1153, 27 },
-  { 2063, 1, 1, 1, 1153, 498 },
-  { 2238, 1, 1, 1, 1153, 1 },
-  { 151, 1, 1, 1, 1153, 500 },
-  { 409, 1, 1, 1, 1153, 502 },
-  { 209, 14, 1, 9, 994, 0 },
-  { 467, 17, 1, 9, 994, 504 },
-  { 671, 20, 1, 9, 994, 135 },
-  { 869, 23, 1, 9, 994, 480 },
-  { 1468, 26, 1, 9, 994, 477 },
-  { 1634, 29, 1, 9, 994, 0 },
-  { 1796, 32, 1, 9, 994, 135 },
-  { 1958, 35, 1, 9, 994, 135 },
-  { 2120, 38, 1, 9, 994, 117 },
-  { 2295, 41, 1, 9, 994, 483 },
-  { 33, 44, 1, 9, 994, 486 },
-  { 291, 47, 1, 9, 994, 100 },
+  { 1739, 1, 1, 1, 1153, 60 },
+  { 1901, 1, 1, 1, 1153, 541 },
+  { 2063, 1, 1, 1, 1153, 1 },
+  { 2238, 1, 1, 1, 1153, 121 },
+  { 151, 1, 1, 1, 1153, 202 },
+  { 409, 1, 1, 1, 1153, 106 },
+  { 209, 14, 1, 9, 994, 126 },
+  { 467, 17, 1, 9, 994, 3 },
+  { 671, 20, 1, 9, 994, 132 },
+  { 869, 23, 1, 9, 994, 132 },
+  { 1468, 26, 1, 9, 994, 547 },
+  { 1634, 29, 1, 9, 994, 126 },
+  { 1796, 32, 1, 9, 994, 126 },
+  { 1958, 35, 1, 9, 994, 3 },
+  { 2120, 38, 1, 9, 994, 34 },
+  { 2295, 41, 1, 9, 994, 0 },
+  { 33, 44, 1, 9, 994, 42 },
+  { 291, 47, 1, 9, 994, 129 },
   { 549, 50, 1, 9, 994, 0 },
-  { 747, 53, 1, 9, 994, 489 },
-  { 937, 56, 1, 9, 994, 77 },
-  { 1532, 59, 1, 9, 994, 3 },
-  { 124, 1, 148, 1, 2369, 130 },
-  { 382, 1, 146, 1, 2369, 13 },
-  { 640, 1, 144, 1, 2369, 427 },
-  { 838, 1, 142, 1, 2369, 1 },
-  { 212, 1, 161, 1, 3985, 429 },
-  { 470, 1, 165, 1, 3985, 75 },
-  { 674, 1, 165, 1, 3985, 118 },
-  { 872, 1, 169, 1, 3985, 130 },
-  { 1471, 1, 169, 1, 3985, 130 },
-  { 1637, 1, 173, 1, 3985, 118 },
-  { 1799, 1, 173, 1, 3985, 225 },
-  { 1961, 1, 177, 1, 3985, 435 },
-  { 2123, 1, 177, 1, 3985, 90 },
-  { 2298, 1, 181, 1, 3985, 43 },
-  { 37, 1, 181, 1, 3985, 440 },
-  { 295, 1, 185, 1, 3985, 442 },
-  { 553, 1, 185, 1, 3985, 147 },
-  { 751, 1, 189, 1, 3985, 151 },
-  { 941, 1, 189, 1, 3985, 155 },
-  { 1536, 1, 193, 1, 3985, 161 },
-  { 1698, 1, 193, 1, 3985, 165 },
-  { 1860, 1, 197, 1, 3985, 169 },
-  { 2022, 1, 197, 1, 3985, 82 },
-  { 2181, 1, 201, 1, 3985, 288 },
-  { 91, 1, 201, 1, 3985, 118 },
-  { 349, 1, 205, 1, 3985, 302 },
-  { 607, 1, 205, 1, 3985, 43 },
-  { 805, 1, 209, 1, 3985, 304 },
-  { 995, 1, 209, 1, 3985, 1 },
-  { 1590, 1, 213, 1, 3985, 433 },
-  { 1752, 1, 213, 1, 3985, 546 },
-  { 1914, 1, 217, 1, 3985, 1 },
-  { 2076, 1, 217, 1, 3985, 546 },
-  { 2251, 1, 221, 1, 3985, 308 },
-  { 164, 1, 221, 1, 3985, 219 },
-  { 422, 1, 225, 1, 3985, 520 },
-  { 204, 1, 1, 1, 3985, 507 },
+  { 747, 53, 1, 9, 994, 393 },
+  { 937, 56, 1, 9, 994, 396 },
+  { 1532, 59, 1, 9, 994, 399 },
+  { 124, 1, 148, 1, 2369, 408 },
+  { 382, 1, 146, 1, 2369, 139 },
+  { 640, 1, 144, 1, 2369, 141 },
+  { 838, 1, 142, 1, 2369, 147 },
+  { 212, 1, 161, 1, 3985, 153 },
+  { 470, 1, 165, 1, 3985, 159 },
+  { 674, 1, 165, 1, 3985, 161 },
+  { 872, 1, 169, 1, 3985, 402 },
+  { 1471, 1, 169, 1, 3985, 16 },
+  { 1637, 1, 173, 1, 3985, 404 },
+  { 1799, 1, 173, 1, 3985, 121 },
+  { 1961, 1, 177, 1, 3985, 121 },
+  { 2123, 1, 177, 1, 3985, 1 },
+  { 2298, 1, 181, 1, 3985, 345 },
+  { 37, 1, 181, 1, 3985, 18 },
+  { 295, 1, 185, 1, 3985, 375 },
+  { 553, 1, 185, 1, 3985, 137 },
+  { 751, 1, 189, 1, 3985, 157 },
+  { 941, 1, 189, 1, 3985, 116 },
+  { 1536, 1, 193, 1, 3985, 45 },
+  { 1698, 1, 193, 1, 3985, 1 },
+  { 1860, 1, 197, 1, 3985, 89 },
+  { 2022, 1, 197, 1, 3985, 206 },
+  { 2181, 1, 201, 1, 3985, 1 },
+  { 91, 1, 201, 1, 3985, 204 },
+  { 349, 1, 205, 1, 3985, 211 },
+  { 607, 1, 205, 1, 3985, 213 },
+  { 805, 1, 209, 1, 3985, 1 },
+  { 995, 1, 209, 1, 3985, 563 },
+  { 1590, 1, 213, 1, 3985, 116 },
+  { 1752, 1, 213, 1, 3985, 1 },
+  { 1914, 1, 217, 1, 3985, 215 },
+  { 2076, 1, 217, 1, 3985, 1 },
+  { 2251, 1, 221, 1, 3985, 217 },
+  { 164, 1, 221, 1, 3985, 561 },
+  { 422, 1, 225, 1, 3985, 121 },
+  { 204, 1, 1, 1, 3985, 221 },
   { 462, 1, 1, 1, 3985, 1 },
-  { 666, 1, 1, 1, 3985, 509 },
-  { 864, 1, 1, 1, 3985, 546 },
-  { 1463, 1, 1, 1, 3985, 1 },
-  { 1629, 1, 1, 1, 3985, 130 },
-  { 1791, 1, 1, 1, 3985, 130 },
+  { 666, 1, 1, 1, 3985, 487 },
+  { 864, 1, 1, 1, 3985, 563 },
+  { 1463, 1, 1, 1, 3985, 103 },
+  { 1629, 1, 1, 1, 3985, 121 },
+  { 1791, 1, 1, 1, 3985, 121 },
   { 1953, 1, 1, 1, 3985, 1 },
-  { 236, 1, 1, 1, 3985, 513 },
-  { 494, 1, 1, 1, 3985, 35 },
-  { 695, 1, 1, 1, 3985, 515 },
-  { 885, 1, 1, 1, 3985, 72 },
-  { 1480, 1, 1, 1, 3985, 1 },
-  { 1646, 1, 1, 1, 3985, 567 },
-  { 1808, 1, 1, 1, 3985, 209 },
-  { 1970, 1, 1, 1, 3985, 207 },
-  { 2132, 1, 1, 1, 3985, 205 },
-  { 2307, 1, 1, 1, 3985, 203 },
-  { 48, 1, 1, 1, 3985, 199 },
-  { 306, 1, 1, 1, 3985, 201 },
-  { 564, 1, 1, 1, 3985, 130 },
-  { 762, 1, 1, 1, 3985, 130 },
-  { 952, 1, 1, 1, 3985, 130 },
-  { 1547, 1, 1, 1, 3985, 123 },
-  { 1709, 1, 1, 1, 3985, 522 },
-  { 1871, 1, 1, 1, 3985, 56 },
-  { 2033, 1, 1, 1, 3985, 532 },
-  { 2192, 1, 1, 1, 3985, 1 },
-  { 108, 1, 1, 1, 3985, 41 },
-  { 366, 1, 1, 1, 3985, 395 },
-  { 624, 1, 1, 1, 3985, 10 },
-  { 822, 1, 1, 1, 3985, 21 },
-  { 1012, 1, 1, 1, 3985, 29 },
-  { 1607, 1, 1, 1, 3985, 130 },
-  { 1769, 1, 1, 1, 3985, 130 },
-  { 1931, 1, 1, 1, 3985, 29 },
-  { 2093, 1, 1, 1, 3985, 277 },
-  { 2268, 1, 1, 1, 3985, 500 },
-  { 181, 1, 1, 1, 3985, 1 },
-  { 439, 1, 1, 1, 3985, 419 },
-  { 1439, 136, 1, 0, 1184, 1 },
-  { 215, 1, 158, 1, 3953, 421 },
-  { 473, 1, 158, 1, 3953, 1 },
-  { 677, 1, 158, 1, 3953, 130 },
-  { 875, 1, 158, 1, 3953, 125 },
-  { 1474, 1, 158, 1, 3953, 123 },
-  { 1640, 1, 158, 1, 3953, 413 },
-  { 1802, 1, 158, 1, 3953, 19 },
-  { 1964, 1, 158, 1, 3953, 423 },
-  { 2126, 1, 158, 1, 3953, 1 },
-  { 2301, 1, 158, 1, 3953, 425 },
-  { 41, 1, 158, 1, 3953, 111 },
-  { 299, 1, 158, 1, 3953, 118 },
-  { 557, 1, 158, 1, 3953, 130 },
-  { 755, 1, 158, 1, 3953, 125 },
-  { 945, 1, 158, 1, 3953, 123 },
-  { 1540, 1, 158, 1, 3953, 431 },
-  { 1702, 1, 158, 1, 3953, 41 },
-  { 1864, 1, 158, 1, 3953, 417 },
-  { 2026, 1, 158, 1, 3953, 29 },
-  { 2185, 1, 158, 1, 3953, 33 },
-  { 95, 1, 158, 1, 3953, 17 },
-  { 353, 1, 158, 1, 3953, 23 },
-  { 611, 1, 158, 1, 3953, 19 },
-  { 809, 1, 158, 1, 3953, 1 },
-  { 999, 1, 158, 1, 3953, 520 },
-  { 1594, 1, 158, 1, 3953, 118 },
-  { 1756, 1, 158, 1, 3953, 130 },
-  { 1918, 1, 158, 1, 3953, 43 },
-  { 2080, 1, 158, 1, 3953, 88 },
-  { 2255, 1, 158, 1, 3953, 43 },
-  { 168, 1, 158, 1, 3953, 43 },
-  { 426, 1, 158, 1, 3953, 1 },
-  { 1445, 128, 1, 0, 1216, 453 },
-  { 217, 1, 233, 1, 1826, 546 },
-  { 475, 1, 134, 1, 1826, 118 },
-  { 679, 1, 134, 1, 1826, 130 },
-  { 877, 1, 134, 1, 1826, 130 },
-  { 241, 1, 1, 1, 3921, 1 },
-  { 499, 1, 1, 1, 3921, 455 },
-  { 700, 1, 1, 1, 3921, 31 },
-  { 890, 1, 1, 1, 3921, 457 },
-  { 1485, 1, 1, 1, 3921, 1 },
-  { 1651, 1, 1, 1, 3921, 463 },
-  { 1813, 1, 1, 1, 3921, 1 },
-  { 1975, 1, 1, 1, 3921, 43 },
-  { 2137, 1, 1, 1, 3921, 43 },
-  { 2312, 1, 1, 1, 3921, 92 },
-  { 54, 1, 1, 1, 3921, 123 },
-  { 312, 1, 1, 1, 3921, 130 },
-  { 570, 1, 1, 1, 3921, 130 },
-  { 768, 1, 1, 1, 3921, 72 },
-  { 958, 1, 1, 1, 3921, 470 },
-  { 1553, 1, 1, 1, 3921, 107 },
-  { 1715, 1, 1, 1, 3921, 461 },
-  { 1877, 1, 1, 1, 3921, 1 },
-  { 2039, 1, 1, 1, 3921, 459 },
-  { 2198, 1, 1, 1, 3921, 520 },
-  { 114, 1, 1, 1, 3921, 451 },
-  { 372, 1, 1, 1, 3921, 1 },
-  { 630, 1, 1, 1, 3921, 1 },
+  { 236, 1, 1, 1, 3985, 491 },
+  { 494, 1, 1, 1, 3985, 22 },
+  { 695, 1, 1, 1, 3985, 493 },
+  { 885, 1, 1, 1, 3985, 1 },
+  { 1480, 1, 1, 1, 3985, 495 },
+  { 1646, 1, 1, 1, 3985, 91 },
+  { 1808, 1, 1, 1, 3985, 575 },
+  { 1970, 1, 1, 1, 3985, 187 },
+  { 2132, 1, 1, 1, 3985, 575 },
+  { 2307, 1, 1, 1, 3985, 191 },
+  { 48, 1, 1, 1, 3985, 189 },
+  { 306, 1, 1, 1, 3985, 195 },
+  { 564, 1, 1, 1, 3985, 499 },
+  { 762, 1, 1, 1, 3985, 503 },
+  { 952, 1, 1, 1, 3985, 505 },
+  { 1547, 1, 1, 1, 3985, 510 },
+  { 1709, 1, 1, 1, 3985, 87 },
+  { 1871, 1, 1, 1, 3985, 501 },
+  { 2033, 1, 1, 1, 3985, 1 },
+  { 2192, 1, 1, 1, 3985, 497 },
+  { 108, 1, 1, 1, 3985, 543 },
+  { 366, 1, 1, 1, 3985, 1 },
+  { 624, 1, 1, 1, 3985, 121 },
+  { 822, 1, 1, 1, 3985, 517 },
+  { 1012, 1, 1, 1, 3985, 1 },
+  { 1607, 1, 1, 1, 3985, 391 },
+  { 1769, 1, 1, 1, 3985, 419 },
+  { 1931, 1, 1, 1, 3985, 535 },
+  { 2093, 1, 1, 1, 3985, 349 },
+  { 2268, 1, 1, 1, 3985, 545 },
+  { 181, 1, 1, 1, 3985, 74 },
+  { 439, 1, 1, 1, 3985, 45 },
+  { 1439, 136, 1, 0, 1184, 62 },
+  { 215, 1, 158, 1, 3953, 68 },
+  { 473, 1, 158, 1, 3953, 30 },
+  { 677, 1, 158, 1, 3953, 361 },
+  { 875, 1, 158, 1, 3953, 8 },
+  { 1474, 1, 158, 1, 3953, 363 },
+  { 1640, 1, 158, 1, 3953, 1 },
+  { 1802, 1, 158, 1, 3953, 365 },
+  { 1964, 1, 158, 1, 3953, 563 },
+  { 2126, 1, 158, 1, 3953, 367 },
+  { 2301, 1, 158, 1, 3953, 103 },
+  { 41, 1, 158, 1, 3953, 419 },
+  { 299, 1, 158, 1, 3953, 121 },
+  { 557, 1, 158, 1, 3953, 121 },
+  { 755, 1, 158, 1, 3953, 6 },
+  { 945, 1, 158, 1, 3953, 45 },
+  { 1540, 1, 158, 1, 3953, 369 },
+  { 1702, 1, 158, 1, 3953, 98 },
+  { 1864, 1, 158, 1, 3953, 359 },
+  { 2026, 1, 158, 1, 3953, 1 },
+  { 2185, 1, 158, 1, 3953, 357 },
+  { 95, 1, 158, 1, 3953, 425 },
+  { 353, 1, 158, 1, 3953, 1 },
+  { 611, 1, 158, 1, 3953, 114 },
+  { 809, 1, 158, 1, 3953, 121 },
+  { 999, 1, 158, 1, 3953, 121 },
+  { 1594, 1, 158, 1, 3953, 114 },
+  { 1756, 1, 158, 1, 3953, 121 },
+  { 1918, 1, 158, 1, 3953, 371 },
+  { 2080, 1, 158, 1, 3953, 121 },
+  { 2255, 1, 158, 1, 3953, 377 },
+  { 168, 1, 158, 1, 3953, 373 },
+  { 426, 1, 158, 1, 3953, 379 },
+  { 1445, 128, 1, 0, 1216, 121 },
+  { 217, 1, 233, 1, 1826, 155 },
+  { 475, 1, 134, 1, 1826, 151 },
+  { 679, 1, 134, 1, 1826, 55 },
+  { 877, 1, 134, 1, 1826, 229 },
+  { 241, 1, 1, 1, 3921, 231 },
+  { 499, 1, 1, 1, 3921, 121 },
+  { 700, 1, 1, 1, 3921, 314 },
+  { 890, 1, 1, 1, 3921, 1 },
+  { 1485, 1, 1, 1, 3921, 227 },
+  { 1651, 1, 1, 1, 3921, 235 },
+  { 1813, 1, 1, 1, 3921, 233 },
+  { 1975, 1, 1, 1, 3921, 106 },
+  { 2137, 1, 1, 1, 3921, 237 },
+  { 2312, 1, 1, 1, 3921, 239 },
+  { 54, 1, 1, 1, 3921, 241 },
+  { 312, 1, 1, 1, 3921, 243 },
+  { 570, 1, 1, 1, 3921, 121 },
+  { 768, 1, 1, 1, 3921, 8 },
+  { 958, 1, 1, 1, 3921, 1 },
+  { 1553, 1, 1, 1, 3921, 247 },
+  { 1715, 1, 1, 1, 3921, 14 },
+  { 1877, 1, 1, 1, 3921, 249 },
+  { 2039, 1, 1, 1, 3921, 1 },
+  { 2198, 1, 1, 1, 3921, 251 },
+  { 114, 1, 1, 1, 3921, 563 },
+  { 372, 1, 1, 1, 3921, 106 },
+  { 630, 1, 1, 1, 3921, 121 },
   { 828, 1, 1, 1, 3921, 1 },
-  { 1018, 1, 1, 1, 3921, 472 },
-  { 1613, 1, 1, 1, 3921, 1 },
-  { 1775, 1, 1, 1, 3921, 475 },
-  { 1937, 1, 1, 1, 3921, 546 },
-  { 2099, 1, 1, 1, 3921, 118 },
-  { 2274, 1, 1, 1, 3921, 130 },
-  { 187, 1, 1, 1, 3921, 130 },
-  { 445, 1, 1, 1, 3921, 1 },
-  { 221, 1, 100, 1, 3921, 492 },
-  { 479, 1, 100, 1, 3921, 312 },
-  { 229, 1, 229, 1, 1794, 316 },
-  { 487, 1, 126, 1, 1794, 318 },
-  { 688, 1, 126, 1, 1794, 320 },
-  { 881, 1, 126, 1, 1794, 322 },
-  { 224, 1, 1, 1, 3889, 324 },
-  { 482, 1, 1, 1, 3889, 1 },
-  { 683, 1, 1, 1, 3889, 326 },
-  { 2115, 1, 1, 1, 3889, 546 },
-  { 2290, 1, 1, 1, 3889, 123 },
-  { 27, 1, 1, 1, 3889, 130 },
-  { 285, 1, 1, 1, 3889, 334 },
-  { 543, 1, 1, 1, 3889, 72 },
-  { 741, 1, 1, 1, 3889, 130 },
-  { 931, 1, 1, 1, 3889, 10 },
-  { 1526, 1, 1, 1, 3889, 72 },
-  { 1692, 1, 1, 1, 3889, 328 },
-  { 1854, 1, 1, 1, 3889, 109 },
-  { 2016, 1, 1, 1, 3889, 314 },
-  { 2175, 1, 1, 1, 3889, 1 },
-  { 85, 1, 1, 1, 3889, 300 },
-  { 343, 1, 1, 1, 3889, 298 },
-  { 601, 1, 1, 1, 3889, 130 },
-  { 799, 1, 1, 1, 3889, 296 },
-  { 989, 1, 1, 1, 3889, 72 },
-  { 1584, 1, 1, 1, 3889, 43 },
+  { 1018, 1, 1, 1, 3921, 255 },
+  { 1613, 1, 1, 1, 3921, 259 },
+  { 1775, 1, 1, 1, 3921, 257 },
+  { 1937, 1, 1, 1, 3921, 270 },
+  { 2099, 1, 1, 1, 3921, 1 },
+  { 2274, 1, 1, 1, 3921, 253 },
+  { 187, 1, 1, 1, 3921, 481 },
+  { 445, 1, 1, 1, 3921, 121 },
+  { 221, 1, 100, 1, 3921, 121 },
+  { 479, 1, 100, 1, 3921, 103 },
+  { 229, 1, 229, 1, 1794, 45 },
+  { 487, 1, 126, 1, 1794, 266 },
+  { 688, 1, 126, 1, 1794, 96 },
+  { 881, 1, 126, 1, 1794, 261 },
+  { 224, 1, 1, 1, 3889, 1 },
+  { 482, 1, 1, 1, 3889, 225 },
+  { 683, 1, 1, 1, 3889, 268 },
+  { 2115, 1, 1, 1, 3889, 1 },
+  { 2290, 1, 1, 1, 3889, 272 },
+  { 27, 1, 1, 1, 3889, 106 },
+  { 285, 1, 1, 1, 3889, 121 },
+  { 543, 1, 1, 1, 3889, 571 },
+  { 741, 1, 1, 1, 3889, 1 },
+  { 931, 1, 1, 1, 3889, 1 },
+  { 1526, 1, 1, 1, 3889, 481 },
+  { 1692, 1, 1, 1, 3889, 103 },
+  { 1854, 1, 1, 1, 3889, 6 },
+  { 2016, 1, 1, 1, 3889, 563 },
+  { 2175, 1, 1, 1, 3889, 276 },
+  { 85, 1, 1, 1, 3889, 121 },
+  { 343, 1, 1, 1, 3889, 121 },
+  { 601, 1, 1, 1, 3889, 274 },
+  { 799, 1, 1, 1, 3889, 1 },
+  { 989, 1, 1, 1, 3889, 121 },
+  { 1584, 1, 1, 1, 3889, 106 },
   { 1746, 1, 1, 1, 3889, 1 },
-  { 1908, 1, 1, 1, 3889, 43 },
-  { 2070, 1, 1, 1, 3889, 43 },
-  { 2245, 1, 1, 1, 3889, 43 },
-  { 158, 1, 1, 1, 3889, 1 },
-  { 416, 1, 1, 1, 3889, 336 },
-  { 233, 1, 1, 1, 3889, 546 },
-  { 491, 1, 1, 1, 3889, 123 },
-  { 692, 1, 1, 1, 3889, 130 },
-  { 1425, 124, 1, 0, 1248, 13 },
-  { 246, 1, 98, 1, 3857, 130 },
+  { 1908, 1, 1, 1, 3889, 280 },
+  { 2070, 1, 1, 1, 3889, 278 },
+  { 2245, 1, 1, 1, 3889, 563 },
+  { 158, 1, 1, 1, 3889, 282 },
+  { 416, 1, 1, 1, 3889, 40 },
+  { 233, 1, 1, 1, 3889, 284 },
+  { 491, 1, 1, 1, 3889, 286 },
+  { 692, 1, 1, 1, 3889, 18 },
+  { 1425, 124, 1, 0, 1248, 1 },
+  { 246, 1, 98, 1, 3857, 290 },
   { 504, 1, 98, 1, 3857, 1 },
-  { 705, 1, 98, 1, 3857, 338 },
-  { 895, 1, 98, 1, 3857, 72 },
-  { 1490, 1, 98, 1, 3857, 1 },
-  { 1656, 1, 98, 1, 3857, 113 },
-  { 1818, 1, 98, 1, 3857, 332 },
-  { 1980, 1, 98, 1, 3857, 1 },
-  { 1451, 122, 1, 0, 1280, 330 },
+  { 705, 1, 98, 1, 3857, 288 },
+  { 895, 1, 98, 1, 3857, 292 },
+  { 1490, 1, 98, 1, 3857, 47 },
+  { 1656, 1, 98, 1, 3857, 294 },
+  { 1818, 1, 98, 1, 3857, 6 },
+  { 1980, 1, 98, 1, 3857, 296 },
+  { 1451, 122, 1, 0, 1280, 66 },
   { 249, 1, 96, 1, 3825, 298 },
-  { 507, 1, 96, 1, 3825, 130 },
-  { 708, 1, 96, 1, 3825, 130 },
-  { 898, 1, 96, 1, 3825, 10 },
-  { 1493, 1, 96, 1, 3825, 259 },
-  { 1659, 1, 96, 1, 3825, 130 },
-  { 1821, 1, 96, 1, 3825, 39 },
-  { 1983, 1, 96, 1, 3825, 342 },
-  { 2142, 1, 96, 1, 3825, 130 },
-  { 2317, 1, 96, 1, 3825, 344 },
-  { 252, 1, 96, 1, 3825, 346 },
-  { 510, 1, 96, 1, 3825, 348 },
-  { 255, 92, 1, 8, 1425, 350 },
-  { 513, 92, 1, 8, 1425, 353 },
-  { 711, 92, 1, 8, 1425, 63 },
-  { 901, 92, 1, 8, 1425, 537 },
-  { 1496, 92, 1, 8, 1425, 356 },
-  { 1662, 92, 1, 8, 1425, 144 },
-  { 1824, 92, 1, 8, 1425, 359 },
-  { 1986, 92, 1, 8, 1425, 135 },
-  { 2145, 92, 1, 8, 1425, 135 },
-  { 2320, 92, 1, 8, 1425, 9 },
-  { 60, 92, 1, 8, 1425, 60 },
-  { 318, 92, 1, 8, 1425, 364 },
-  { 576, 92, 1, 8, 1425, 69 },
-  { 774, 92, 1, 8, 1425, 540 },
-  { 964, 92, 1, 8, 1425, 367 },
-  { 1559, 92, 1, 8, 1425, 144 },
-  { 1721, 92, 1, 8, 1425, 370 },
-  { 1883, 92, 1, 8, 1425, 138 },
-  { 2045, 92, 1, 8, 1425, 51 },
-  { 2204, 92, 1, 8, 1425, 48 },
-  { 120, 92, 1, 8, 1425, 45 },
-  { 378, 92, 1, 8, 1425, 77 },
-  { 636, 92, 1, 8, 1425, 129 },
-  { 834, 92, 1, 8, 1425, 135 },
-  { 1024, 92, 1, 8, 1425, 120 },
-  { 1619, 92, 1, 8, 1425, 117 },
-  { 1781, 92, 1, 8, 1425, 373 },
-  { 1943, 92, 1, 8, 1425, 376 },
-  { 2105, 92, 1, 8, 1425, 94 },
+  { 507, 1, 96, 1, 3825, 6 },
+  { 708, 1, 96, 1, 3825, 1 },
+  { 898, 1, 96, 1, 3825, 300 },
+  { 1493, 1, 96, 1, 3825, 1 },
+  { 1659, 1, 96, 1, 3825, 306 },
+  { 1821, 1, 96, 1, 3825, 302 },
+  { 1983, 1, 96, 1, 3825, 573 },
+  { 2142, 1, 96, 1, 3825, 1 },
+  { 2317, 1, 96, 1, 3825, 304 },
+  { 252, 1, 96, 1, 3825, 70 },
+  { 510, 1, 96, 1, 3825, 1 },
+  { 255, 92, 1, 8, 1425, 93 },
+  { 513, 92, 1, 8, 1425, 102 },
+  { 711, 92, 1, 8, 1425, 308 },
+  { 901, 92, 1, 8, 1425, 49 },
+  { 1496, 92, 1, 8, 1425, 311 },
+  { 1662, 92, 1, 8, 1425, 316 },
+  { 1824, 92, 1, 8, 1425, 319 },
+  { 1986, 92, 1, 8, 1425, 322 },
+  { 2145, 92, 1, 8, 1425, 327 },
+  { 2320, 92, 1, 8, 1425, 330 },
+  { 60, 92, 1, 8, 1425, 52 },
+  { 318, 92, 1, 8, 1425, 123 },
+  { 576, 92, 1, 8, 1425, 126 },
+  { 774, 92, 1, 8, 1425, 105 },
+  { 964, 92, 1, 8, 1425, 102 },
+  { 1559, 92, 1, 8, 1425, 336 },
+  { 1721, 92, 1, 8, 1425, 339 },
+  { 1883, 92, 1, 8, 1425, 78 },
+  { 2045, 92, 1, 8, 1425, 0 },
+  { 2204, 92, 1, 8, 1425, 342 },
+  { 120, 92, 1, 8, 1425, 52 },
+  { 378, 92, 1, 8, 1425, 123 },
+  { 636, 92, 1, 8, 1425, 126 },
+  { 834, 92, 1, 8, 1425, 436 },
+  { 1024, 92, 1, 8, 1425, 126 },
+  { 1619, 92, 1, 8, 1425, 0 },
+  { 1781, 92, 1, 8, 1425, 441 },
+  { 1943, 92, 1, 8, 1425, 0 },
+  { 2105, 92, 1, 8, 1425, 444 },
   { 2280, 92, 1, 8, 1425, 0 },
-  { 193, 92, 1, 8, 1425, 379 },
-  { 451, 92, 1, 8, 1425, 74 },
-  { 1431, 118, 1, 0, 1921, 382 },
-  { 1055, 118, 1, 0, 1921, 384 },
-  { 1133, 118, 1, 0, 1921, 388 },
-  { 1183, 118, 1, 0, 1921, 390 },
-  { 1221, 118, 1, 0, 1921, 386 },
-  { 1061, 130, 1, 12, 656, 392 },
-  { 1068, 93, 159, 9, 1377, 12 },
-  { 1139, 93, 159, 9, 1377, 517 },
-  { 1189, 93, 159, 9, 1377, 211 },
-  { 1227, 93, 159, 9, 1377, 263 },
-  { 1259, 93, 159, 9, 1377, 446 },
-  { 1291, 93, 159, 9, 1377, 465 },
-  { 1323, 93, 159, 9, 1377, 6 },
-  { 1355, 93, 159, 9, 1377, 437 },
-  { 1387, 93, 159, 9, 1377, 283 },
-  { 1413, 93, 159, 9, 1377, 214 },
-  { 1034, 93, 159, 9, 1377, 543 },
-  { 1112, 93, 159, 9, 1377, 266 },
-  { 1169, 93, 159, 9, 1377, 474 },
-  { 1207, 93, 159, 9, 1377, 135 },
-  { 1245, 93, 159, 9, 1377, 135 },
-  { 1277, 93, 159, 9, 1377, 117 },
-  { 1309, 93, 159, 9, 1377, 554 },
-  { 1341, 93, 159, 9, 1377, 227 },
-  { 1373, 93, 159, 9, 1377, 230 },
-  { 1399, 93, 159, 9, 1377, 233 },
-  { 1041, 93, 159, 9, 1377, 141 },
-  { 1119, 93, 159, 9, 1377, 236 },
-  { 1176, 93, 159, 9, 1377, 135 },
-  { 1214, 93, 159, 9, 1377, 135 },
-  { 1252, 93, 159, 9, 1377, 9 },
-  { 1284, 93, 159, 9, 1377, 60 },
-  { 1316, 93, 159, 9, 1377, 0 },
-  { 1348, 93, 159, 9, 1377, 66 },
-  { 1380, 93, 159, 9, 1377, 534 },
-  { 1406, 93, 159, 9, 1377, 239 },
-  { 1048, 93, 159, 9, 1377, 141 },
-  { 1126, 93, 159, 9, 1377, 250 },
-  { 2208, 1, 116, 1, 1120, 559 },
-  { 1074, 138, 235, 0, 1344, 242 },
-  { 1081, 150, 1, 0, 2241, 244 },
-  { 1145, 150, 1, 0, 2241, 246 },
-  { 1087, 150, 231, 0, 1312, 248 },
-  { 1094, 154, 1, 0, 2433, 253 },
-  { 1151, 154, 1, 0, 2433, 1 },
-  { 1195, 154, 1, 0, 2433, 255 },
-  { 1233, 154, 1, 0, 2433, 546 },
-  { 1265, 154, 1, 0, 2433, 123 },
-  { 1297, 154, 1, 0, 2433, 72 },
-  { 1329, 154, 1, 0, 2433, 1 },
-  { 1361, 154, 1, 0, 2433, 528 },
-  { 1100, 156, 1, 0, 2433, 526 },
-  { 1157, 156, 1, 0, 2433, 511 },
-  { 1201, 156, 1, 0, 2433, 468 },
-  { 1239, 156, 1, 0, 2433, 362 },
-  { 1271, 156, 1, 0, 2433, 1 },
-  { 1303, 156, 1, 0, 2433, 1 },
-  { 1335, 156, 1, 0, 2433, 563 },
-  { 1367, 156, 1, 0, 2433, 223 },
-  { 1393, 156, 1, 0, 2433, 13 },
-  { 1419, 156, 1, 0, 2433, 257 },
-  { 1106, 156, 1, 0, 2433, 1 },
-  { 1163, 156, 1, 0, 2433, 557 },
+  { 193, 92, 1, 8, 1425, 0 },
+  { 451, 92, 1, 8, 1425, 39 },
+  { 1431, 118, 1, 0, 1921, 447 },
+  { 1055, 118, 1, 0, 1921, 1 },
+  { 1133, 118, 1, 0, 1921, 439 },
+  { 1183, 118, 1, 0, 1921, 481 },
+  { 1221, 118, 1, 0, 1921, 121 },
+  { 1061, 130, 1, 12, 656, 126 },
+  { 1068, 93, 159, 9, 1377, 351 },
+  { 1139, 93, 159, 9, 1377, 410 },
+  { 1189, 93, 159, 9, 1377, 263 },
+  { 1227, 93, 159, 9, 1377, 555 },
+  { 1259, 93, 159, 9, 1377, 354 },
+  { 1291, 93, 159, 9, 1377, 512 },
+  { 1323, 93, 159, 9, 1377, 550 },
+  { 1355, 93, 159, 9, 1377, 507 },
+  { 1387, 93, 159, 9, 1377, 208 },
+  { 1413, 93, 159, 9, 1377, 333 },
+  { 1034, 93, 159, 9, 1377, 199 },
+  { 1112, 93, 159, 9, 1377, 433 },
+  { 1169, 93, 159, 9, 1377, 0 },
+  { 1207, 93, 159, 9, 1377, 449 },
+  { 1245, 93, 159, 9, 1377, 0 },
+  { 1277, 93, 159, 9, 1377, 452 },
+  { 1309, 93, 159, 9, 1377, 81 },
+  { 1341, 93, 159, 9, 1377, 0 },
+  { 1373, 93, 159, 9, 1377, 455 },
+  { 1399, 93, 159, 9, 1377, 52 },
+  { 1041, 93, 159, 9, 1377, 120 },
+  { 1119, 93, 159, 9, 1377, 126 },
+  { 1176, 93, 159, 9, 1377, 111 },
+  { 1214, 93, 159, 9, 1377, 102 },
+  { 1252, 93, 159, 9, 1377, 458 },
+  { 1284, 93, 159, 9, 1377, 461 },
+  { 1316, 93, 159, 9, 1377, 84 },
+  { 1348, 93, 159, 9, 1377, 0 },
+  { 1380, 93, 159, 9, 1377, 464 },
+  { 1406, 93, 159, 9, 1377, 57 },
+  { 1048, 93, 159, 9, 1377, 0 },
+  { 1126, 93, 159, 9, 1377, 469 },
+  { 2208, 1, 116, 1, 1120, 16 },
+  { 1074, 138, 235, 0, 1344, 8 },
+  { 1081, 150, 1, 0, 2241, 12 },
+  { 1145, 150, 1, 0, 2241, 100 },
+  { 1087, 150, 231, 0, 1312, 472 },
+  { 1094, 154, 1, 0, 2433, 1 },
+  { 1151, 154, 1, 0, 2433, 467 },
+  { 1195, 154, 1, 0, 2433, 121 },
+  { 1233, 154, 1, 0, 2433, 121 },
+  { 1265, 154, 1, 0, 2433, 121 },
+  { 1297, 154, 1, 0, 2433, 121 },
+  { 1329, 154, 1, 0, 2433, 121 },
+  { 1361, 154, 1, 0, 2433, 411 },
+  { 1100, 156, 1, 0, 2433, 521 },
+  { 1157, 156, 1, 0, 2433, 489 },
+  { 1201, 156, 1, 0, 2433, 245 },
+  { 1239, 156, 1, 0, 2433, 325 },
+  { 1271, 156, 1, 0, 2433, 47 },
+  { 1303, 156, 1, 0, 2433, 6 },
+  { 1335, 156, 1, 0, 2433, 106 },
+  { 1367, 156, 1, 0, 2433, 121 },
+  { 1393, 156, 1, 0, 2433, 1 },
+  { 1419, 156, 1, 0, 2433, 474 },
+  { 1106, 156, 1, 0, 2433, 28 },
+  { 1163, 156, 1, 0, 2433, 476 },
 };
 
   // MSA128F16 Register Class...

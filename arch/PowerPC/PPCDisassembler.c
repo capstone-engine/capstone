@@ -90,7 +90,7 @@ static DecodeStatus getInstruction(MCInst *MI, const uint8_t *code,
     // failed to decode
     MCInst_clear(MI);
   } else if (MI->csh->mode & CS_MODE_SPE) {
-    result = decodeInstruction(DecoderTableSPE32, MI, insn, Address, 0, 0);
+    result = decodeInstruction4(DecoderTableSPE32, MI, insn, Address, 0, 0);
     if (result != MCDisassembler_Fail) {
       *Size = 4;
 
@@ -101,7 +101,7 @@ static DecodeStatus getInstruction(MCInst *MI, const uint8_t *code,
     MCInst_clear(MI);
   }
 
-  result = decodeInstruction(DecoderTable32, MI, insn, Address, 0, 0);
+  result = decodeInstruction4(DecoderTable32, MI, insn, Address, 0, 0);
   if (result != MCDisassembler_Fail) {
     *Size = 4;
 

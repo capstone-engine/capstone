@@ -6,8 +6,6 @@
 
 #include "capstone/capstone.h"
 
-#define ARR_SIZE(a) (sizeof(a) / sizeof(a[0]))
-
 // return name of regiser in friendly string
 const char *AArch64_reg_name(csh handle, unsigned int reg);
 

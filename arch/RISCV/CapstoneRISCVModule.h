@@ -10,46 +10,46 @@ static void assert(int val) {}
 
 static DecodeStatus DecodeVRRegisterClass(MCInst *Inst, uint64_t RegNo,
                                           uint64_t Address,
-                                          MCRegisterInfo *Decoder);
+                                          void *Decoder);
 
 static DecodeStatus DecodeVRM2RegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeVRM4RegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus DecodeVRM8RegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus decodeVMaskReg(MCInst *Inst, uint64_t RegNo,
-                                   uint64_t Address, MCRegisterInfo *Decoder);
+                                   uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeFPR16RegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder);
+                                             void *Decoder);
 
 static DecodeStatus decodeRVCInstrSImm(MCInst *Inst, unsigned Insn,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void *Decoder);
 
 static DecodeStatus decodeRVCInstrRdSImm(MCInst *Inst, unsigned Insn,
                                          uint64_t Address,
-                                         MCRegisterInfo *Decoder);
+                                         void *Decoder);
 
 static DecodeStatus decodeRVCInstrRdRs1UImm(MCInst *Inst, unsigned Insn,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder);
+                                            void *Decoder);
 
 static DecodeStatus decodeRVCInstrRdRs2(MCInst *Inst, unsigned Insn,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void *Decoder);
 
 static DecodeStatus decodeRVCInstrRdRs1Rs2(MCInst *Inst, unsigned Insn,
                                            uint64_t Address,
-                                           MCRegisterInfo *Decoder);
+                                           void *Decoder);
 
 static DecodeStatus DecodeGPRRegisterClass(MCInst *Inst, uint64_t RegNo,
                                            uint64_t Address,
@@ -336,7 +336,7 @@ static DecodeStatus decodeFRMArg(MCInst *Inst, uint64_t Imm, int64_t Address,
 
 static DecodeStatus decodeRVCInstrSImm(MCInst *Inst, unsigned Insn,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   uint64_t SImm6 =
       fieldFromInstruction(Insn, 12, 1) << 5 | fieldFromInstruction(Insn, 2, 5);
   DecodeStatus Result = decodeSImmOperand(Inst, SImm6, Address, Decoder, 6);
@@ -347,7 +347,7 @@ static DecodeStatus decodeRVCInstrSImm(MCInst *Inst, unsigned Insn,
 
 static DecodeStatus decodeRVCInstrRdSImm(MCInst *Inst, unsigned Insn,
                                          uint64_t Address,
-                                         MCRegisterInfo *Decoder) {
+                                         void *Decoder) {
   DecodeGPRRegisterClass(Inst, 0, Address, Decoder);
   uint64_t SImm6 =
       fieldFromInstruction(Insn, 12, 1) << 5 | fieldFromInstruction(Insn, 2, 5);
@@ -359,7 +359,7 @@ static DecodeStatus decodeRVCInstrRdSImm(MCInst *Inst, unsigned Insn,
 
 static DecodeStatus decodeRVCInstrRdRs1UImm(MCInst *Inst, unsigned Insn,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   DecodeGPRRegisterClass(Inst, 0, Address, Decoder);
   MCInst_addOperand2(Inst, MCInst_getOperand(Inst, 0));
   uint64_t UImm6 =
@@ -372,7 +372,7 @@ static DecodeStatus decodeRVCInstrRdRs1UImm(MCInst *Inst, unsigned Insn,
 
 static DecodeStatus decodeRVCInstrRdRs2(MCInst *Inst, unsigned Insn,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   unsigned Rd = fieldFromInstruction(Insn, 7, 5);
   unsigned Rs2 = fieldFromInstruction(Insn, 2, 5);
   DecodeGPRRegisterClass(Inst, Rd, Address, Decoder);
@@ -382,7 +382,7 @@ static DecodeStatus decodeRVCInstrRdRs2(MCInst *Inst, unsigned Insn,
 
 static DecodeStatus decodeRVCInstrRdRs1Rs2(MCInst *Inst, unsigned Insn,
                                            uint64_t Address,
-                                           MCRegisterInfo *Decoder) {
+                                           void *Decoder) {
   unsigned Rd = fieldFromInstruction(Insn, 7, 5);
   unsigned Rs2 = fieldFromInstruction(Insn, 2, 5);
   DecodeGPRRegisterClass(Inst, Rd, Address, Decoder);
@@ -393,7 +393,7 @@ static DecodeStatus decodeRVCInstrRdRs1Rs2(MCInst *Inst, unsigned Insn,
 
 static DecodeStatus DecodeVRRegisterClass(MCInst *Inst, uint64_t RegNo,
                                           uint64_t Address,
-                                          MCRegisterInfo *Decoder) {
+                                          void *Decoder) {
   if (RegNo >= 32)
     return MCDisassembler_Fail;
 
@@ -406,7 +406,7 @@ static DecodeStatus DecodeVRRegisterClass(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus DecodeVRM2RegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   //  if (RegNo >= 32)
   //    return MCDisassembler_Fail;
   //
@@ -426,7 +426,7 @@ static DecodeStatus DecodeVRM2RegisterClass(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus DecodeVRM4RegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   //  if (RegNo >= 32)
   //    return MCDisassembler_Fail;
   //
@@ -446,7 +446,7 @@ static DecodeStatus DecodeVRM4RegisterClass(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus DecodeVRM8RegisterClass(MCInst *Inst, uint64_t RegNo,
                                             uint64_t Address,
-                                            MCRegisterInfo *Decoder) {
+                                            void *Decoder) {
   if (RegNo >= 32)
     return MCDisassembler_Fail;
 
@@ -465,7 +465,7 @@ static DecodeStatus DecodeVRM8RegisterClass(MCInst *Inst, uint64_t RegNo,
 }
 
 static DecodeStatus decodeVMaskReg(MCInst *Inst, uint64_t RegNo,
-                                   uint64_t Address, MCRegisterInfo *Decoder) {
+                                   uint64_t Address, void *Decoder) {
   switch (RegNo) {
   default:
     return MCDisassembler_Fail;
@@ -480,7 +480,7 @@ static DecodeStatus decodeVMaskReg(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus DecodeFPR16RegisterClass(MCInst *Inst, uint64_t RegNo,
                                              uint64_t Address,
-                                             MCRegisterInfo *Decoder) {
+                                             void *Decoder) {
   if (RegNo >= 32)
     return MCDisassembler_Fail;
 
