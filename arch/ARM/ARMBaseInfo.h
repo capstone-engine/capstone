@@ -27,7 +27,7 @@
 //
 #define GET_REGINFO_ENUM
 
-#include "ARMGenRegisterInfo.inc"
+#include "ARMGenDisassemblerTables.inc"
 
 
 typedef enum VPTCodes {

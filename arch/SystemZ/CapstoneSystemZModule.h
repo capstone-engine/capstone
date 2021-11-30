@@ -13,55 +13,55 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus DecodeGR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus DecodeGRH32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus DecodeGR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus DecodeGR128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus DecodeADDR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder);
+                                                 void*);
 
 static DecodeStatus DecodeFP32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus DecodeFP64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus DecodeFP128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus DecodeVR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus DecodeVR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus DecodeVR128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus DecodeAR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus DecodeCR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm, int N);
 
@@ -69,75 +69,75 @@ static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm, int N);
 
 static DecodeStatus decodeU1ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void*);
 
 static DecodeStatus decodeU2ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void*);
 
 static DecodeStatus decodeU3ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void*);
 
 static DecodeStatus decodeU4ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void*);
 
 static DecodeStatus decodeU6ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void*);
 
 static DecodeStatus decodeU8ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void*);
 
 static DecodeStatus decodeU12ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void*);
 
 static DecodeStatus decodeU16ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void*);
 
 static DecodeStatus decodeU32ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void*);
 
 static DecodeStatus decodeS8ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder);
+                                       void*);
 
 static DecodeStatus decodeS16ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void*);
 
 static DecodeStatus decodeS32ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder);
+                                        void*);
 
 static DecodeStatus decodePCDBLOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address, bool isBranch,
-                                       MCRegisterInfo *Decoder, int N);
+                                       void*, int N);
 
 static DecodeStatus decodePC12DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus decodePC16DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus decodePC24DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus decodePC32DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder);
+                                               void*);
 
 static DecodeStatus decodePC32DBLOperand(MCInst *Inst, uint64_t Imm,
                                          uint64_t Address,
-                                         MCRegisterInfo *Decoder);
+                                         void*);
 
 static DecodeStatus decodeBDAddr12Operand(MCInst *Inst, uint64_t Field,
                                           const unsigned *Regs);
@@ -165,51 +165,55 @@ static DecodeStatus decodeBDVAddr12Operand(MCInst *Inst, uint64_t Field,
 
 static DecodeStatus decodeBDAddr32Disp12Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus decodeBDAddr32Disp20Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus decodeBDAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus decodeBDAddr64Disp20Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder);
+                                                void*);
 
 static DecodeStatus decodeBDXAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder);
+                                                 void*);
 
 static DecodeStatus decodeBDXAddr64Disp20Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder);
+                                                 void*);
 
 static DecodeStatus decodeBDLAddr64Disp12Len4Operand(MCInst *Inst,
                                                      uint64_t Field,
                                                      uint64_t Address,
-                                                     MCRegisterInfo *Decoder);
+                                                     void*);
 
 static DecodeStatus decodeBDLAddr64Disp12Len8Operand(MCInst *Inst,
                                                      uint64_t Field,
                                                      uint64_t Address,
-                                                     MCRegisterInfo *Decoder);
+                                                     void*);
 
 static DecodeStatus decodeBDRAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder);
+                                                 void*);
 
 static DecodeStatus decodeBDVAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder);
+                                                 void*);
 
 #define GET_REGINFO_ENUM
 #define GET_INSTRINFO_ENUM
 #define MIPS_GET_DISASSEMBLER
 #define GET_REGINFO_MC_DESC
 #include "SystemZGenDisassemblerTables.inc"
+
+FieldFromInstruction(fieldFromInstruction_4, uint64_t)
+    DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint64_t)
+        DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4, decodeToMCInst_4, uint64_t)
 
 static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
                                         const unsigned *Regs, unsigned Size) {
@@ -223,79 +227,79 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
 
 static DecodeStatus DecodeGR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_GR32Regs, 16);
 }
 
 static DecodeStatus DecodeGRH32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_GRH32Regs, 16);
 }
 
 static DecodeStatus DecodeGR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_GR64Regs, 16);
 }
 
 static DecodeStatus DecodeGR128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_GR128Regs, 16);
 }
 
 static DecodeStatus DecodeADDR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder) {
+                                                 void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_GR64Regs, 16);
 }
 
 static DecodeStatus DecodeFP32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_FP32Regs, 16);
 }
 
 static DecodeStatus DecodeFP64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_FP64Regs, 16);
 }
 
 static DecodeStatus DecodeFP128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_FP128Regs, 16);
 }
 
 static DecodeStatus DecodeVR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_VR32Regs, 32);
 }
 
 static DecodeStatus DecodeVR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_VR64Regs, 32);
 }
 
 static DecodeStatus DecodeVR128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_VR128Regs, 32);
 }
 
 static DecodeStatus DecodeAR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_AR32Regs, 16);
 }
 
 static DecodeStatus DecodeCR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodeRegisterClass(Inst, RegNo, SystemZMC_CR64Regs, 16);
 }
 
@@ -315,79 +319,79 @@ static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm, int N) {
 
 static DecodeStatus decodeU1ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 1);
 }
 
 static DecodeStatus decodeU2ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 2);
 }
 
 static DecodeStatus decodeU3ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 3);
 }
 
 static DecodeStatus decodeU4ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 4);
 }
 
 static DecodeStatus decodeU6ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 6);
 }
 
 static DecodeStatus decodeU8ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 8);
 }
 
 static DecodeStatus decodeU12ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 12);
 }
 
 static DecodeStatus decodeU16ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 16);
 }
 
 static DecodeStatus decodeU32ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 32);
 }
 
 static DecodeStatus decodeS8ImmOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address,
-                                       MCRegisterInfo *Decoder) {
+                                       void *Decoder) {
   return decodeSImmOperand(Inst, Imm, 8);
 }
 
 static DecodeStatus decodeS16ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   return decodeSImmOperand(Inst, Imm, 16);
 }
 
 static DecodeStatus decodeS32ImmOperand(MCInst *Inst, uint64_t Imm,
                                         uint64_t Address,
-                                        MCRegisterInfo *Decoder) {
+                                        void *Decoder) {
   return decodeSImmOperand(Inst, Imm, 32);
 }
 
 static DecodeStatus decodePCDBLOperand(MCInst *Inst, uint64_t Imm,
                                        uint64_t Address, bool isBranch,
-                                       MCRegisterInfo *Decoder, int N) {
+                                       void *Decoder, int N) {
   //  assert(isUInt(Imm, N) && "Invalid PC-relative offset");
   uint64_t Value = SignExtend64(Imm, N) * 2 + Address;
 
@@ -400,31 +404,31 @@ static DecodeStatus decodePCDBLOperand(MCInst *Inst, uint64_t Imm,
 
 static DecodeStatus decodePC12DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodePCDBLOperand(Inst, Imm, Address, true, Decoder, 12);
 }
 
 static DecodeStatus decodePC16DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodePCDBLOperand(Inst, Imm, Address, true, Decoder, 16);
 }
 
 static DecodeStatus decodePC24DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodePCDBLOperand(Inst, Imm, Address, true, Decoder, 24);
 }
 
 static DecodeStatus decodePC32DBLBranchOperand(MCInst *Inst, uint64_t Imm,
                                                uint64_t Address,
-                                               MCRegisterInfo *Decoder) {
+                                               void *Decoder) {
   return decodePCDBLOperand(Inst, Imm, Address, true, Decoder, 32);
 }
 
 static DecodeStatus decodePC32DBLOperand(MCInst *Inst, uint64_t Imm,
                                          uint64_t Address,
-                                         MCRegisterInfo *Decoder) {
+                                         void *Decoder) {
   return decodePCDBLOperand(Inst, Imm, Address, false, Decoder, 32);
 }
 
@@ -523,63 +527,63 @@ static DecodeStatus decodeBDVAddr12Operand(MCInst *Inst, uint64_t Field,
 
 static DecodeStatus decodeBDAddr32Disp12Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeBDAddr12Operand(Inst, Field, SystemZMC_GR32Regs);
 }
 
 static DecodeStatus decodeBDAddr32Disp20Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeBDAddr20Operand(Inst, Field, SystemZMC_GR32Regs);
 }
 
 static DecodeStatus decodeBDAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeBDAddr12Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 
 static DecodeStatus decodeBDAddr64Disp20Operand(MCInst *Inst, uint64_t Field,
                                                 uint64_t Address,
-                                                MCRegisterInfo *Decoder) {
+                                                void *Decoder) {
   return decodeBDAddr20Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 
 static DecodeStatus decodeBDXAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder) {
+                                                 void *Decoder) {
   return decodeBDXAddr12Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 
 static DecodeStatus decodeBDXAddr64Disp20Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder) {
+                                                 void *Decoder) {
   return decodeBDXAddr20Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 
 static DecodeStatus decodeBDLAddr64Disp12Len4Operand(MCInst *Inst,
                                                      uint64_t Field,
                                                      uint64_t Address,
-                                                     MCRegisterInfo *Decoder) {
+                                                     void *Decoder) {
   return decodeBDLAddr12Len4Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 
 static DecodeStatus decodeBDLAddr64Disp12Len8Operand(MCInst *Inst,
                                                      uint64_t Field,
                                                      uint64_t Address,
-                                                     MCRegisterInfo *Decoder) {
+                                                     void *Decoder) {
   return decodeBDLAddr12Len8Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 
 static DecodeStatus decodeBDRAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder) {
+                                                 void *Decoder) {
   return decodeBDRAddr12Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 
 static DecodeStatus decodeBDVAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
                                                  uint64_t Address,
-                                                 MCRegisterInfo *Decoder) {
+                                                 void *Decoder) {
   return decodeBDVAddr12Operand(Inst, Field, SystemZMC_GR64Regs);
 }
 

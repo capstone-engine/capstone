@@ -32,9 +32,7 @@
 #include "ARMMapping.h"
 
 #define GET_SUBTARGETINFO_ENUM
-
-#include "ARMGenSubtargetInfo.inc"
-
+#include "ARMGenDisassemblerTables.inc"
 #include "ARMGenSystemRegister.inc"
 
 static void printRegName(cs_struct *h, SStream *OS, unsigned RegNo);

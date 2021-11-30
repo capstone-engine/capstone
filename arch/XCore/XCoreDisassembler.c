@@ -68,6 +68,7 @@ static bool readInstruction32(const uint8_t *code, size_t code_len, uint32_t *in
 bool XCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *MI,
 		uint16_t *size, uint64_t address, void *info)
 {
+        MI->MRI = info;
 	uint16_t insn16;
 	uint32_t insn32;
 	DecodeStatus Result;

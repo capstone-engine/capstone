@@ -32,8 +32,6 @@
 #include "ARMMapping.h"
 
 #define GET_SUBTARGETINFO_ENUM
-#include "ARMGenSubtargetInfo.inc"
-
 #define GET_REGINFO_ENUM
 #define GET_INSTRINFO_MC_DESC
 #define GET_INSTRINFO_ENUM
@@ -140,9 +138,6 @@ bool ARM_getFeatureBits(unsigned int mode, unsigned int feature)
 			feature == ARM_HasV8_4aOps || feature == ARM_HasV8_3aOps)
 			// HasV8MBaselineOps
 			return false;
-	} else {
-		if (feature == ARM_FeatureVFPOnlySP)
-			return false;
 	}
 
 	if ((mode & CS_MODE_MCLASS) == 0) {
@@ -155,11 +150,11 @@ bool ARM_getFeatureBits(unsigned int mode, unsigned int feature)
 		if (feature == ARM_FeatureThumb2 || feature == ARM_ModeThumb)
 			return false;
 		// FIXME: what mode enables D16?
-		if (feature == ARM_FeatureD16)
+		if (feature == ARM_FeatureVFP3_D16)
 			return false;
 	} else {
 		// Thumb
-		if (feature == ARM_FeatureD16)
+		if (feature == ARM_FeatureVFP3_D16)
 			return false;
 	}
 
@@ -195,7 +190,7 @@ static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,
 }
 
 #define GET_REGINFO_MC_DESC
-#include "ARMGenRegisterInfo.inc"
+#include "ARMGenDisassemblerTables.inc"
 void ARM_init(MCRegisterInfo *MRI)
 {
 	/* 
@@ -271,7 +266,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	// Calling the auto-generated decoder function.
 	result =
-	    decodeInstruction_4(DecoderTableARM32, MI, insn, Address, 0, 0);
+	    decodeInstruction_4(DecoderTableARM32, MI, insn, Address, 0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		result = checkDecodedInstruction(MI, insn, result);
 		if (result != MCDisassembler_Fail)
@@ -284,7 +279,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 	// and Thumb modes.
 	MCInst_clear(MI);
 	result =
-	    decodeInstruction_4(DecoderTableVFP32, MI, insn, Address, 0, 0);
+	    decodeInstruction_4(DecoderTableVFP32, MI, insn, Address, 0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -292,7 +287,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	MCInst_clear(MI);
 	result =
-	    decodeInstruction_4(DecoderTableVFPV832, MI, insn, Address, 0, 0);
+	    decodeInstruction_4(DecoderTableVFPV832, MI, insn, Address, 0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -300,7 +295,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	MCInst_clear(MI);
 	result = decodeInstruction_4(DecoderTableNEONData32, MI, insn, Address,
-				     0, 0);
+				     0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		// Add a fake predicate operand, because we share these instruction
@@ -312,7 +307,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	MCInst_clear(MI);
 	result = decodeInstruction_4(DecoderTableNEONLoadStore32, MI, insn,
-				     Address, 0, 0);
+				     Address, 0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		// Add a fake predicate operand, because we share these instruction
@@ -324,7 +319,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	MCInst_clear(MI);
 	result =
-	    decodeInstruction_4(DecoderTableNEONDup32, MI, insn, Address, 0, 0);
+	    decodeInstruction_4(DecoderTableNEONDup32, MI, insn, Address, 0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		// Add a fake predicate operand, because we share these instruction
@@ -336,7 +331,7 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	MCInst_clear(MI);
 	result =
-	    decodeInstruction_4(DecoderTablev8NEON32, MI, insn, Address, 0, 0);
+	    decodeInstruction_4(DecoderTablev8NEON32, MI, insn, Address, 0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
@@ -344,14 +339,14 @@ static DecodeStatus _ARM_getInstruction(cs_struct *ud, MCInst *MI, const uint8_t
 
 	MCInst_clear(MI);
 	result = decodeInstruction_4(DecoderTablev8Crypto32, MI, insn, Address,
-				     0, 0);
+				     0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
 		return result;
 	}
 
 	result =
-	    decodeInstruction_4(DecoderTableCoProc32, MI, insn, Address, 0, 0);
+	    decodeInstruction_4(DecoderTableCoProc32, MI, insn, Address, 0, ud->mode);
 	if (result != MCDisassembler_Fail) {
 		result = checkDecodedInstruction(MI, insn, result);
 		if (result != MCDisassembler_Fail)

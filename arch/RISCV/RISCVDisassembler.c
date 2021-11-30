@@ -108,6 +108,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
 				 uint16_t *Size, uint64_t Address,
 				 MCRegisterInfo *MRI) 
 {
+  MI->MRI = MRI;
   	// TODO: This will need modification when supporting instruction set
   	// extensions with instructions > 32-bits (up to 176 bits wide).
   	uint32_t Inst = 0;

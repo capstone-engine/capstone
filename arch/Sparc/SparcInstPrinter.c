@@ -230,7 +230,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O) {
   if (MCOperand_isReg(MO)) {
     reg = MCOperand_getReg(MO);
     printRegName(O, reg);
-    reg = Sparc_map_register(reg);
+//    reg = Sparc_map_register(reg);
 
     if (MI->csh->detail) {
       if (MI->csh->doing_mem) {
@@ -424,6 +424,8 @@ static bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O) { return true; }
 void Sparc_printInst(MCInst *MI, SStream *O, void *Info) {
   char *mnem, *p;
   char instr[64]; // Sparc has no instruction this long
+
+  MRI = Info;
 
   mnem = printAliasInstr(MI, O);
   if (mnem) {

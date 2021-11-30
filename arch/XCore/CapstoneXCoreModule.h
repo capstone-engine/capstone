@@ -135,7 +135,7 @@ FieldFromInstruction(fieldFromInstruction_2, uint16_t)
                               MCRegisterInfo *Decoder) {
   if (RegNo > 11)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, XCore_GRRegsRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, XCore_GRRegsRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
@@ -145,7 +145,7 @@ static DecodeStatus DecodeRRegsRegisterClass(MCInst *Inst, unsigned RegNo,
                                              MCRegisterInfo *Decoder) {
   if (RegNo > 15)
     return MCDisassembler_Fail;
-  unsigned Reg = getReg(Decoder, XCore_RRegsRegClassID, RegNo);
+  unsigned Reg = getReg(Inst->MRI, XCore_RRegsRegClassID, RegNo);
   MCOperand_CreateReg0(Inst, Reg);
   return MCDisassembler_Success;
 }
