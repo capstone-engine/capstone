@@ -2877,7 +2877,7 @@ static void printVMOVModImmOperand(MCInst *MI, unsigned OpNum, SStream *O) {
   unsigned EncodedImm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
   unsigned EltBits;
   uint64_t Val = ARM_AM_decodeVMOVModImm(EncodedImm, &EltBits);
-  SStream_concat(O, "#0x%x", Val);
+  SStream_concat(O, "#0x%lx", Val);
 }
 
 static void printMveAddrModeRQOperand(MCInst *MI, unsigned OpNum, SStream *O,

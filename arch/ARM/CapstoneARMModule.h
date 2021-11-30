@@ -757,7 +757,7 @@ static DecodeStatus DecoderGPRRegisterClass(MCInst *Inst, unsigned RegNo,
 
   /* Ignored bit flags */
 
-  if ((RegNo == 13 && !true) || RegNo == 15)
+  if ((RegNo == 13 && !(Inst->csh->mode & CS_MODE_V8)) || RegNo == 15)
     S = MCDisassembler_SoftFail;
 
   Check(&S, DecodeGPRRegisterClass(Inst, RegNo, Address, Decoder));
@@ -1154,15 +1154,15 @@ static DecodeStatus DecodeCopMemInstruction(MCInst *Inst, unsigned Insn,
   case ARM_STC2_POST:
   case ARM_STC2L_POST:
     if (coproc == 0xA || coproc == 0xB ||
-        (true && (coproc == 0x8 || coproc == 0x9 || coproc == 0xA ||
-                  coproc == 0xB || coproc == 0xE || coproc == 0xF)))
+        (coproc == 0x8 || coproc == 0x9 || coproc == 0xA ||
+                  coproc == 0xB || coproc == 0xE || coproc == 0xF))
       return MCDisassembler_Fail;
     break;
   default:
     break;
   }
 
-  if (true && (coproc != 14))
+  if (Inst->csh->mode & CS_MODE_V8 && coproc != 14)
     return MCDisassembler_Fail;
 
   MCOperand_CreateImm0(Inst, coproc);
@@ -1967,9 +1967,6 @@ static DecodeStatus DecodeSETPANInstruction(MCInst *Inst, unsigned Insn,
   unsigned Imm = fieldFromInstruction_4(Insn, 9, 1);
 
   /* Ignored bit flags */
-
-  if (!true || !true)
-    return MCDisassembler_Fail;
 
   // Decoder can be called from DecodeTST, which does not check the full
   // encoding is valid.
@@ -2870,294 +2867,35 @@ static DecodeStatus DecodeVLD3DupInstruction(MCInst *Inst, unsigned Insn,
                                              uint64_t Address, void *Decoder) {
   DecodeStatus S = MCDisassembler_Success;
 
-  unsigned Rd = fieldFromInstruction(Insn, 12, 4);
-  Rd |= fieldFromInstruction(Insn, 22, 1) << 4;
-  unsigned wb = fieldFromInstruction(Insn, 16, 4);
-  unsigned Rn = fieldFromInstruction(Insn, 16, 4);
-  Rn |= fieldFromInstruction(Insn, 4, 2) << 4;
-  unsigned Rm = fieldFromInstruction(Insn, 0, 4);
+    unsigned Rd = fieldFromInstruction(Insn, 12, 4);
+    Rd |= fieldFromInstruction(Insn, 22, 1) << 4;
+    unsigned Rn = fieldFromInstruction(Insn, 16, 4);
+    unsigned Rm = fieldFromInstruction(Insn, 0, 4);
+    unsigned inc = fieldFromInstruction(Insn, 5, 1) + 1;
 
-  // First output register
-  switch (MCInst_getOpcode(Inst)) {
-  case ARM_VLD1q16:
-  case ARM_VLD1q32:
-  case ARM_VLD1q64:
-  case ARM_VLD1q8:
-  case ARM_VLD1q16wb_fixed:
-  case ARM_VLD1q16wb_register:
-  case ARM_VLD1q32wb_fixed:
-  case ARM_VLD1q32wb_register:
-  case ARM_VLD1q64wb_fixed:
-  case ARM_VLD1q64wb_register:
-  case ARM_VLD1q8wb_fixed:
-  case ARM_VLD1q8wb_register:
-  case ARM_VLD2d16:
-  case ARM_VLD2d32:
-  case ARM_VLD2d8:
-  case ARM_VLD2d16wb_fixed:
-  case ARM_VLD2d16wb_register:
-  case ARM_VLD2d32wb_fixed:
-  case ARM_VLD2d32wb_register:
-  case ARM_VLD2d8wb_fixed:
-  case ARM_VLD2d8wb_register:
-    if (!Check(&S, DecodeDPairRegisterClass(Inst, Rd, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  case ARM_VLD2b16:
-  case ARM_VLD2b32:
-  case ARM_VLD2b8:
-  case ARM_VLD2b16wb_fixed:
-  case ARM_VLD2b16wb_register:
-  case ARM_VLD2b32wb_fixed:
-  case ARM_VLD2b32wb_register:
-  case ARM_VLD2b8wb_fixed:
-  case ARM_VLD2b8wb_register:
-    if (!Check(&S, DecodeDPairSpacedRegisterClass(Inst, Rd, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  default:
     if (!Check(&S, DecodeDPRRegisterClass(Inst, Rd, Address, Decoder)))
       return MCDisassembler_Fail;
-  }
-
-  // Second output register
-  switch (MCInst_getOpcode(Inst)) {
-  case ARM_VLD3d8:
-  case ARM_VLD3d16:
-  case ARM_VLD3d32:
-  case ARM_VLD3d8_UPD:
-  case ARM_VLD3d16_UPD:
-  case ARM_VLD3d32_UPD:
-  case ARM_VLD4d8:
-  case ARM_VLD4d16:
-  case ARM_VLD4d32:
-  case ARM_VLD4d8_UPD:
-  case ARM_VLD4d16_UPD:
-  case ARM_VLD4d32_UPD:
-    if (!Check(&S,
-               DecodeDPRRegisterClass(Inst, (Rd + 1) % 32, Address, Decoder)))
+    if (!Check(&S, DecodeDPRRegisterClass(Inst, (Rd+inc)%32, Address, Decoder)))
       return MCDisassembler_Fail;
-    break;
-  case ARM_VLD3q8:
-  case ARM_VLD3q16:
-  case ARM_VLD3q32:
-  case ARM_VLD3q8_UPD:
-  case ARM_VLD3q16_UPD:
-  case ARM_VLD3q32_UPD:
-  case ARM_VLD4q8:
-  case ARM_VLD4q16:
-  case ARM_VLD4q32:
-  case ARM_VLD4q8_UPD:
-  case ARM_VLD4q16_UPD:
-  case ARM_VLD4q32_UPD:
-    if (!Check(&S,
-               DecodeDPRRegisterClass(Inst, (Rd + 2) % 32, Address, Decoder)))
+    if (!Check(&S, DecodeDPRRegisterClass(Inst, (Rd+2*inc)%32, Address, Decoder)))
       return MCDisassembler_Fail;
-    break;
-  default:
-    break;
-  }
-
-  // Third output register
-  switch (MCInst_getOpcode(Inst)) {
-  case ARM_VLD3d8:
-  case ARM_VLD3d16:
-  case ARM_VLD3d32:
-  case ARM_VLD3d8_UPD:
-  case ARM_VLD3d16_UPD:
-  case ARM_VLD3d32_UPD:
-  case ARM_VLD4d8:
-  case ARM_VLD4d16:
-  case ARM_VLD4d32:
-  case ARM_VLD4d8_UPD:
-  case ARM_VLD4d16_UPD:
-  case ARM_VLD4d32_UPD:
-    if (!Check(&S,
-               DecodeDPRRegisterClass(Inst, (Rd + 2) % 32, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  case ARM_VLD3q8:
-  case ARM_VLD3q16:
-  case ARM_VLD3q32:
-  case ARM_VLD3q8_UPD:
-  case ARM_VLD3q16_UPD:
-  case ARM_VLD3q32_UPD:
-  case ARM_VLD4q8:
-  case ARM_VLD4q16:
-  case ARM_VLD4q32:
-  case ARM_VLD4q8_UPD:
-  case ARM_VLD4q16_UPD:
-  case ARM_VLD4q32_UPD:
-    if (!Check(&S,
-               DecodeDPRRegisterClass(Inst, (Rd + 4) % 32, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  default:
-    break;
-  }
-
-  // Fourth output register
-  switch (MCInst_getOpcode(Inst)) {
-  case ARM_VLD4d8:
-  case ARM_VLD4d16:
-  case ARM_VLD4d32:
-  case ARM_VLD4d8_UPD:
-  case ARM_VLD4d16_UPD:
-  case ARM_VLD4d32_UPD:
-    if (!Check(&S,
-               DecodeDPRRegisterClass(Inst, (Rd + 3) % 32, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  case ARM_VLD4q8:
-  case ARM_VLD4q16:
-  case ARM_VLD4q32:
-  case ARM_VLD4q8_UPD:
-  case ARM_VLD4q16_UPD:
-  case ARM_VLD4q32_UPD:
-    if (!Check(&S,
-               DecodeDPRRegisterClass(Inst, (Rd + 6) % 32, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  default:
-    break;
-  }
-
-  // Writeback operand
-  switch (MCInst_getOpcode(Inst)) {
-  case ARM_VLD1d8wb_fixed:
-  case ARM_VLD1d16wb_fixed:
-  case ARM_VLD1d32wb_fixed:
-  case ARM_VLD1d64wb_fixed:
-  case ARM_VLD1d8wb_register:
-  case ARM_VLD1d16wb_register:
-  case ARM_VLD1d32wb_register:
-  case ARM_VLD1d64wb_register:
-  case ARM_VLD1q8wb_fixed:
-  case ARM_VLD1q16wb_fixed:
-  case ARM_VLD1q32wb_fixed:
-  case ARM_VLD1q64wb_fixed:
-  case ARM_VLD1q8wb_register:
-  case ARM_VLD1q16wb_register:
-  case ARM_VLD1q32wb_register:
-  case ARM_VLD1q64wb_register:
-  case ARM_VLD1d8Twb_fixed:
-  case ARM_VLD1d8Twb_register:
-  case ARM_VLD1d16Twb_fixed:
-  case ARM_VLD1d16Twb_register:
-  case ARM_VLD1d32Twb_fixed:
-  case ARM_VLD1d32Twb_register:
-  case ARM_VLD1d64Twb_fixed:
-  case ARM_VLD1d64Twb_register:
-  case ARM_VLD1d8Qwb_fixed:
-  case ARM_VLD1d8Qwb_register:
-  case ARM_VLD1d16Qwb_fixed:
-  case ARM_VLD1d16Qwb_register:
-  case ARM_VLD1d32Qwb_fixed:
-  case ARM_VLD1d32Qwb_register:
-  case ARM_VLD1d64Qwb_fixed:
-  case ARM_VLD1d64Qwb_register:
-  case ARM_VLD2d8wb_fixed:
-  case ARM_VLD2d16wb_fixed:
-  case ARM_VLD2d32wb_fixed:
-  case ARM_VLD2q8wb_fixed:
-  case ARM_VLD2q16wb_fixed:
-  case ARM_VLD2q32wb_fixed:
-  case ARM_VLD2d8wb_register:
-  case ARM_VLD2d16wb_register:
-  case ARM_VLD2d32wb_register:
-  case ARM_VLD2q8wb_register:
-  case ARM_VLD2q16wb_register:
-  case ARM_VLD2q32wb_register:
-  case ARM_VLD2b8wb_fixed:
-  case ARM_VLD2b16wb_fixed:
-  case ARM_VLD2b32wb_fixed:
-  case ARM_VLD2b8wb_register:
-  case ARM_VLD2b16wb_register:
-  case ARM_VLD2b32wb_register:
-    MCOperand_CreateImm0(Inst, 0);
-    break;
-  case ARM_VLD3d8_UPD:
-  case ARM_VLD3d16_UPD:
-  case ARM_VLD3d32_UPD:
-  case ARM_VLD3q8_UPD:
-  case ARM_VLD3q16_UPD:
-  case ARM_VLD3q32_UPD:
-  case ARM_VLD4d8_UPD:
-  case ARM_VLD4d16_UPD:
-  case ARM_VLD4d32_UPD:
-  case ARM_VLD4q8_UPD:
-  case ARM_VLD4q16_UPD:
-  case ARM_VLD4q32_UPD:
-    if (!Check(&S, DecodeGPRRegisterClass(Inst, wb, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  default:
-    break;
-  }
-
-  // AddrMode6 Base (register+alignment)
-  if (!Check(&S, DecodeAddrMode6Operand(Inst, Rn, Address, Decoder)))
-    return MCDisassembler_Fail;
-
-  // AddrMode6 Offset (register)
-  switch (MCInst_getOpcode(Inst)) {
-  default:
-    // The below have been updated to have explicit am6offset split
-    // between fixed and register offset. For those instructions not
-    // yet updated, we need to add an additional reg0 operand for the
-    // fixed variant.
-    //
-    // The fixed offset encodes as Rm == 0xd, so we check for that.
-    if (Rm == 0xd) {
-      MCOperand_CreateReg0(Inst, 0);
-      break;
+    if (Rm != 0xF) {
+      if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
+        return MCDisassembler_Fail;
     }
-    // Fall through to handle the register offset variant.
-    //    LLVM_FALLTHROUGH;
-  case ARM_VLD1d8wb_fixed:
-  case ARM_VLD1d16wb_fixed:
-  case ARM_VLD1d32wb_fixed:
-  case ARM_VLD1d64wb_fixed:
-  case ARM_VLD1d8Twb_fixed:
-  case ARM_VLD1d16Twb_fixed:
-  case ARM_VLD1d32Twb_fixed:
-  case ARM_VLD1d64Twb_fixed:
-  case ARM_VLD1d8Qwb_fixed:
-  case ARM_VLD1d16Qwb_fixed:
-  case ARM_VLD1d32Qwb_fixed:
-  case ARM_VLD1d64Qwb_fixed:
-  case ARM_VLD1d8wb_register:
-  case ARM_VLD1d16wb_register:
-  case ARM_VLD1d32wb_register:
-  case ARM_VLD1d64wb_register:
-  case ARM_VLD1q8wb_fixed:
-  case ARM_VLD1q16wb_fixed:
-  case ARM_VLD1q32wb_fixed:
-  case ARM_VLD1q64wb_fixed:
-  case ARM_VLD1q8wb_register:
-  case ARM_VLD1q16wb_register:
-  case ARM_VLD1q32wb_register:
-  case ARM_VLD1q64wb_register:
-    // The fixed offset post-increment encodes Rm == 0xd. The no-writeback
-    // variant encodes Rm == 0xf. Anything else is a register offset post-
-    // increment and we need to add the register operand to the instruction.
-    if (Rm != 0xD && Rm != 0xF &&
-        !Check(&S, DecodeGPRRegisterClass(Inst, Rm, Address, Decoder)))
-      return MCDisassembler_Fail;
-    break;
-  case ARM_VLD2d8wb_fixed:
-  case ARM_VLD2d16wb_fixed:
-  case ARM_VLD2d32wb_fixed:
-  case ARM_VLD2b8wb_fixed:
-  case ARM_VLD2b16wb_fixed:
-  case ARM_VLD2b32wb_fixed:
-  case ARM_VLD2q8wb_fixed:
-  case ARM_VLD2q16wb_fixed:
-  case ARM_VLD2q32wb_fixed:
-    break;
-  }
 
-  return S;
+    if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
+      return MCDisassembler_Fail;
+    MCOperand_CreateImm0(Inst, 0);
+
+    if (Rm == 0xD)
+      MCOperand_CreateImm0(Inst, 0);
+    else if (Rm != 0xF) {
+      if (!Check(&S, DecodeGPRRegisterClass(Inst, Rm, Address, Decoder)))
+        return MCDisassembler_Fail;
+    }
+
+    return S;
 }
 
 static DecodeStatus DecodeVLD4DupInstruction(MCInst *Inst, unsigned Insn,
@@ -4267,7 +4005,7 @@ static DecodeStatus DecodeThumbTableBranch(MCInst *Inst, unsigned Insn,
   unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
   unsigned Rm = fieldFromInstruction_4(Insn, 0, 4);
 
-  if (Rn == 13 && !true)
+  if (Rn == 13)
     S = MCDisassembler_SoftFail;
   if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
     return MCDisassembler_Fail;
@@ -4404,7 +4142,7 @@ static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val, uint64_t Address,
   DecodeStatus S = MCDisassembler_Success;
   /* Ignored bit flags */
 
-  if (true) {
+  if (Inst->csh->mode & CS_MODE_MCLASS) {
     unsigned ValLow = Val & 0xff;
 
     // Validate the SYSm value first.
@@ -4453,12 +4191,11 @@ static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val, uint64_t Address,
 
     if (MCInst_getOpcode(Inst) == ARM_t2MSR_M) {
       unsigned Mask = fieldFromInstruction_4(Val, 10, 2);
-      if (!(true)) {
         // The ARMv6-M MSR bits {11-10} can be only 0b10, other values are
         // unpredictable.
         if (Mask != 2)
           S = MCDisassembler_SoftFail;
-      } else {
+       else
         // The ARMv7-M architecture stores an additional 2-bit mask value in
         // MSR bits {11-10}. The mask is used only with apsr, iapsr, eapsr and
         // xpsr, it has to be 0b10 in other cases. Bit mask{1} indicates if
@@ -4467,7 +4204,7 @@ static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val, uint64_t Address,
         // only if the processor includes the DSP extension.
         if (Mask == 0 || (Mask != 2 && ValLow > 3) || (!(true) && (Mask & 1)))
           S = MCDisassembler_SoftFail;
-      }
+
     }
   } else {
     // A/R class
@@ -5665,12 +5402,11 @@ static DecodeStatus DecodeForVMRSandVMSR(MCInst *Inst, unsigned Val,
 
   if (MCInst_getOpcode(Inst) != ARM_FMSTAT) {
     unsigned Rt = fieldFromInstruction_4(Val, 12, 4);
-
-    if (true && !true) {
+  if(Inst->csh->mode & CS_MODE_THUMB && ! Inst->csh->mode & CS_MODE_V8) {
       if (Rt == 13 || Rt == 15)
         S = MCDisassembler_SoftFail;
-      Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder));
-    } else
+        Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder));
+      }else
       Check(&S, DecodeGPRnopcRegisterClass(Inst, Rt, Address, Decoder));
   }
 
@@ -5684,7 +5420,7 @@ static DecodeStatus DecodeForVMRSandVMSR(MCInst *Inst, unsigned Val,
     break;
   }
 
-  if (true) {
+  if (Inst->csh->mode & CS_MODE_THUMB) {
     MCOperand_CreateImm0(Inst, ARMCC_AL);
     MCOperand_CreateReg0(Inst, 0);
   } else {
@@ -6074,10 +5810,7 @@ static DecodeStatus DecodeVSTRVLDR_SYSREG(MCInst *Inst, unsigned Val,
   case ARM_VSTR_FPSCR_NZCVQC_post:
   case ARM_VLDR_FPSCR_post:
   case ARM_VLDR_FPSCR_NZCVQC_post:
-    /* Ignored bit flags */
-
-    if (!true && !true)
-      return MCDisassembler_Fail;
+    /* Ignored bit flags */{}
   }
 
   DecodeStatus S = MCDisassembler_Success;

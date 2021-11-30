@@ -133,7 +133,11 @@ void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) {
 
 static void printRegName(SStream *OS, unsigned RegNo) {
   SStream_concat0(OS, "%");
-  SStream_concat0(OS, getRegisterName(RegNo));
+  const char *Name = Sparc_reg_name(0, RegNo);
+  if (Name)
+    SStream_concat0(OS, Name);
+  else
+    SStream_concat0(OS, getRegisterName(RegNo));
 }
 
 static bool printSparcAliasInstr(MCInst *MI, SStream *O) {

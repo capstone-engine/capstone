@@ -108,16 +108,16 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
     insn = ((uint32_t)code[3] << 24) | (code[2] << 16) | (code[1] << 8) |
            (code[0] << 0);
 
-  result = decodeInstruction_4(DecoderTableFallback32, MI, insn, Address, 0, 0);
-  if (result == MCDisassembler_Success) {
+  // Calling the auto-generated decoder function.
+  result = decodeInstruction_4(DecoderTable32, MI, insn, Address, 0, 0);
+  if (result != MCDisassembler_Fail && MI->Opcode) {
     *Size = 4;
 
     return result;
   }
 
-  // Calling the auto-generated decoder function.
-  result = decodeInstruction_4(DecoderTable32, MI, insn, Address, 0, 0);
-  if (result != MCDisassembler_Fail && MI->Opcode) {
+  result = decodeInstruction_4(DecoderTableFallback32, MI, insn, Address, 0, 0);
+  if (result == MCDisassembler_Success) {
     *Size = 4;
 
     return result;

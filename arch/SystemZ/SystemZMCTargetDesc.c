@@ -16,7 +16,7 @@
 #include <capstone/platform.h>
 
 #define GET_REGINFO_ENUM
-#include "SystemZGenRegisterInfo.inc"
+#include "SystemZGenDisassemblerTables.inc"
 
 const unsigned SystemZMC_GR32Regs[16] = {
     SystemZ_R0L,  SystemZ_R1L,  SystemZ_R2L,  SystemZ_R3L,
