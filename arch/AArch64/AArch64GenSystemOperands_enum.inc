@@ -16,4 +16,3 @@ enum ExactFPImmValues {
   AArch64ExactFPImm_one = 2,
   AArch64ExactFPImm_two = 3,
 };
-

@@ -80,7 +80,7 @@ bool SystemZ_getInstruction(csh ud, const uint8_t *code, size_t code_len,
   for (I = 0; I < *size; ++I)
     Inst = (Inst << 8) | code[I];
 
-  if(*size > 4)
+  if (*size > 4)
     return decodeInstruction_4(Table, MI, Inst, address, info, 0);
 
   return decodeInstruction(Table, MI, Inst, address, info, 0);
@@ -101,8 +101,10 @@ void SystemZ_init(MCRegisterInfo *MRI) {
   */
 
   MCRegisterInfo_InitMCRegisterInfo(
-      MRI, SystemZRegDesc, 194, 0, 0, SystemZMCRegisterClasses, 21, 0, 0,
-      SystemZRegDiffLists, 0, SystemZSubRegIdxLists, 7, 0);
+      MRI, SystemZRegDesc, ARR_SIZE(SystemZRegDesc), 0, 0,
+      SystemZMCRegisterClasses, ARR_SIZE(SystemZMCRegisterClasses), 0, 0,
+      SystemZRegDiffLists, 0, SystemZSubRegIdxLists,
+      ARR_SIZE(SystemZSubRegIdxLists), 0);
 }
 
 #endif

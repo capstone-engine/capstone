@@ -233,7 +233,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O) {
   if (MCOperand_isReg(Op)) {
     unsigned int reg = MCOperand_getReg(Op);
     printRegName(O, reg);
-//    reg = Mips_map_register(reg);
+    //    reg = Mips_map_register(reg);
     if (MI->csh->detail) {
       if (MI->csh->doing_mem) {
         MI->flat_insn->detail->mips

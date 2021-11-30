@@ -9,7 +9,6 @@
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
-
 #ifdef GET_SUBTARGETINFO_ENUM
 #undef GET_SUBTARGETINFO_ENUM
 
@@ -46,4 +45,3 @@ enum {
 };
 
 #endif // GET_SUBTARGETINFO_ENUM
-

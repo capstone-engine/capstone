@@ -2,13 +2,13 @@
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*|*                                                                            *|
+/*===- TableGen'erated file -------------------------------------*- C++
+-*-===*|* *|
 |* Subtarget Enumeration Source Fragment                                      *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
-
 
 enum {
   PPC_DeprecatedDST = 0,
@@ -86,4 +86,3 @@ enum {
   PPC_FeatureSlowPOPCNTD = 72,
   PPC_FeatureVSX = 73,
 };
-

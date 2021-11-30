@@ -25,14 +25,14 @@ bool ARM_blx_to_arm_mode(cs_struct *h, unsigned int insn_id);
 
 const uint8_t *ARM_get_op_access(cs_struct *h, unsigned int id);
 
-void ARM_reg_access(const cs_insn *insn,
-		cs_regs regs_read, uint8_t *regs_read_count,
-		cs_regs regs_write, uint8_t *regs_write_count);
+void ARM_reg_access(const cs_insn *insn, cs_regs regs_read,
+                    uint8_t *regs_read_count, cs_regs regs_write,
+                    uint8_t *regs_write_count);
 
 typedef struct BankedReg {
-	const char *Name;
-	arm_sysreg sysreg;
-	uint16_t Encoding;
+  const char *Name;
+  arm_sysreg sysreg;
+  uint16_t Encoding;
 } BankedReg;
 
 const BankedReg *lookupBankedRegByEncoding(uint8_t encoding);

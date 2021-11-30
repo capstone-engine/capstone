@@ -12,21 +12,20 @@
 // TODO we'll need this later
 const MCRegisterInfo *MRI;
 
-
 typedef enum CondKind {
-  AliasPatternCond_K_Feature,	    // Match only if a feature is enabled.
+  AliasPatternCond_K_Feature,       // Match only if a feature is enabled.
   AliasPatternCond_K_NegFeature,    // Match only if a feature is disabled.
-  AliasPatternCond_K_OrFeature,	    // Match only if one of a set of features is
-				    // enabled.
+  AliasPatternCond_K_OrFeature,     // Match only if one of a set of features is
+                                    // enabled.
   AliasPatternCond_K_OrNegFeature,  // Match only if one of a set of features is
-				    // disabled.
+                                    // disabled.
   AliasPatternCond_K_EndOrFeatures, // Note end of list of K_Or(Neg)?Features.
-  AliasPatternCond_K_Ignore,	    // Match any operand.
-  AliasPatternCond_K_Reg,	    // Match a specific register.
-  AliasPatternCond_K_TiedReg,	    // Match another already matched register.
-  AliasPatternCond_K_Imm,	    // Match a specific immediate.
-  AliasPatternCond_K_RegClass,	    // Match registers in a class.
-  AliasPatternCond_K_Custom,	    // Call custom matcher by index.
+  AliasPatternCond_K_Ignore,        // Match any operand.
+  AliasPatternCond_K_Reg,           // Match a specific register.
+  AliasPatternCond_K_TiedReg,       // Match another already matched register.
+  AliasPatternCond_K_Imm,           // Match a specific immediate.
+  AliasPatternCond_K_RegClass,      // Match registers in a class.
+  AliasPatternCond_K_Custom,        // Call custom matcher by index.
 } CondKind;
 
 typedef struct PatternsForOpcode {
@@ -47,18 +46,16 @@ typedef struct AliasPatternCond {
   uint32_t Value;
 } AliasPatternCond;
 
-static int cmp_less(const void *l, const void *r)
-{
+static int cmp_less(const void *l, const void *r) {
   return ((signed)((const PatternsForOpcode *)l)->Opcode) -
-	 ((signed)((const PatternsForOpcode *)r)->Opcode);
+         ((signed)((const PatternsForOpcode *)r)->Opcode);
 }
 
 // Binary Search Implementation - let's use bsearch for now
 static PatternsForOpcode *Binary_Search(const PatternsForOpcode *OpToPatterns,
-					const unsigned opcode, unsigned len)
-{
+                                        const unsigned opcode, unsigned len) {
   return bsearch((void *)&opcode, (void *)OpToPatterns, len,
-		 sizeof(PatternsForOpcode), cmp_less);
+                 sizeof(PatternsForOpcode), cmp_less);
 }
 
 // TODO I'm not sure if this is complete, refer to lib/MC/MCInstPrinter.cpp in

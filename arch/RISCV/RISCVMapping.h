@@ -5,7 +5,7 @@
 #include "../../include/capstone/capstone.h"
 
 // given internal insn id, return public instruction info
-void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id);
+void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *RISCV_insn_name(csh handle, unsigned int id);
 

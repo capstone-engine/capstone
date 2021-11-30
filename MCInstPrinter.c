@@ -8,8 +8,7 @@
 static bool MCInstPrinter_matchAliasCondition(
     const MCInst *MI, unsigned *OpIdx, const PatternsForOpcode *OpToPatterns,
     const AliasPattern *Patterns, const AliasPatternCond *Conds,
-    const AliasPatternCond *Cond, bool *OrPredicateResult)
-{
+    const AliasPatternCond *Cond, bool *OrPredicateResult) {
   // FIXME so here's on problem we ought to detect feature bits here
   if (Cond->Kind == AliasPatternCond_K_Feature ||
       Cond->Kind == AliasPatternCond_K_NegFeature)
@@ -43,14 +42,14 @@ static bool MCInstPrinter_matchAliasCondition(
   case AliasPatternCond_K_TiedReg:
     // Operand must match the register of another operand.
     return MCOperand_isReg(Opnd) &&
-	   MCOperand_getReg(Opnd) ==
-	       MCOperand_getReg(MCInst_getOperand(MI, Cond->Value));
+           MCOperand_getReg(Opnd) ==
+               MCOperand_getReg(MCInst_getOperand(MI, Cond->Value));
   case AliasPatternCond_K_RegClass:
     // Operand must be a register in this class. Value is a register class id.
     return MCOperand_isReg(Opnd) &&
-	   MCRegisterClass_contains(
-	       MCRegisterInfo_getRegClass(MRI, Cond->Value),
-	       MCOperand_getReg(Opnd));
+           MCRegisterClass_contains(
+               MCRegisterInfo_getRegClass(MRI, Cond->Value),
+               MCOperand_getReg(Opnd));
   case AliasPatternCond_K_Custom:
     // Operand must match some custom criteria.
     // TODO might affect something            return M.ValidateMCOperand(Opnd,
@@ -72,8 +71,7 @@ static bool MCInstPrinter_matchAliasCondition(
 const char *MCInstPrinter_matchAliasPatterns(
     const MCInst *MI, const PatternsForOpcode *OpToPatterns,
     const AliasPattern *Patterns, const AliasPatternCond *Conds,
-    const char *AsmStrings[], unsigned len)
-{
+    const char *AsmStrings[], unsigned len) {
   // Binary search by opcode. Return false if there are no aliases for this
   // opcode.
   PatternsForOpcode *It =
@@ -94,12 +92,12 @@ const char *MCInstPrinter_matchAliasPatterns(
     bool OrPredicateResult = false;
     bool fallThrough = true;
     for (unsigned j = Pattern.AliasCondStart;
-	 j < Pattern.AliasCondStart + Pattern.NumConds; j++) {
+         j < Pattern.AliasCondStart + Pattern.NumConds; j++) {
       fallThrough &= MCInstPrinter_matchAliasCondition(
-	  MI, &OpIdx, OpToPatterns, Patterns, Conds, &Conds[j],
-	  &OrPredicateResult);
+          MI, &OpIdx, OpToPatterns, Patterns, Conds, &Conds[j],
+          &OrPredicateResult);
       if (!fallThrough)
-	break;
+        break;
     }
     if (fallThrough) {
       AsmStrOffset = Pattern.AsmStrOffset;
@@ -107,10 +105,11 @@ const char *MCInstPrinter_matchAliasPatterns(
     }
   }
 
-    debugln("end matching with offset %d", AsmStrOffset);
+  debugln("end matching with offset %d", AsmStrOffset);
   // If no alias matched, don't print an alias.
   if (AsmStrOffset == ~0U)
     return NULL;
-  debugln("string with final offset %s", (const char *)((*AsmStrings) + AsmStrOffset));
+  debugln("string with final offset %s",
+          (const char *)((*AsmStrings) + AsmStrOffset));
   return (const char *)((*AsmStrings) + AsmStrOffset);
 }

@@ -2,13 +2,13 @@
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*|*                                                                            *|
+/*===- TableGen'erated file -------------------------------------*- C++
+-*-===*|* *|
 |* Subtarget Enumeration Source Fragment                                      *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
-
 
 enum {
   ARM_ARMv2 = 0,
@@ -159,4 +159,3 @@ enum {
   ARM_ProcSwift = 145,
   ARM_XScale = 146,
 };
-

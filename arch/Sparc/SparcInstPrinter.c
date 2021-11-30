@@ -230,7 +230,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O) {
   if (MCOperand_isReg(MO)) {
     reg = MCOperand_getReg(MO);
     printRegName(O, reg);
-//    reg = Sparc_map_register(reg);
+    //    reg = Sparc_map_register(reg);
 
     if (MI->csh->detail) {
       if (MI->csh->doing_mem) {

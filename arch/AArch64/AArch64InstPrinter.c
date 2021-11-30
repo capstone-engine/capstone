@@ -1227,8 +1227,10 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O) {
 #ifndef CAPSTONE_DIET
         uint8_t access;
 
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), OpNum);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+        access = get_op_access(MI->csh, MCInst_getOpcode(MI), OpNum);
+        MI->flat_insn->detail->arm64
+            .operands[MI->flat_insn->detail->arm64.op_count]
+            .access = access;
 #endif
         MI->flat_insn->detail->arm64
             .operands[MI->flat_insn->detail->arm64.op_count]
@@ -1262,8 +1264,10 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O) {
 #ifndef CAPSTONE_DIET
         uint8_t access;
 
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), OpNum);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+        access = get_op_access(MI->csh, MCInst_getOpcode(MI), OpNum);
+        MI->flat_insn->detail->arm64
+            .operands[MI->flat_insn->detail->arm64.op_count]
+            .access = access;
 #endif
         MI->flat_insn->detail->arm64
             .operands[MI->flat_insn->detail->arm64.op_count]

@@ -11,8 +11,7 @@
 #include "MipsMapping.h"
 
 // Returns mode value with implied bits set
-static cs_mode updated_mode(cs_mode mode)
-{
+static cs_mode updated_mode(cs_mode mode) {
   if (mode & CS_MODE_MIPS32R6) {
     mode |= CS_MODE_32;
   }
@@ -20,8 +19,7 @@ static cs_mode updated_mode(cs_mode mode)
   return mode;
 }
 
-cs_err Mips_global_init(cs_struct *ud)
-{
+cs_err Mips_global_init(cs_struct *ud) {
   MCRegisterInfo *mri;
   mri = cs_mem_malloc(sizeof(*mri));
 
@@ -39,8 +37,7 @@ cs_err Mips_global_init(cs_struct *ud)
   return CS_ERR_OK;
 }
 
-cs_err Mips_option(cs_struct *handle, cs_opt_type type, size_t value)
-{
+cs_err Mips_option(cs_struct *handle, cs_opt_type type, size_t value) {
   if (type == CS_OPT_MODE) {
     handle->mode = updated_mode(value);
     return CS_ERR_OK;

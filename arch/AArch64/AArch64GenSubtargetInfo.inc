@@ -2,13 +2,13 @@
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*|*                                                                            *|
+/*===- TableGen'erated file -------------------------------------*- C++
+-*-===*|* *|
 |* Subtarget Enumeration Source Fragment                                      *|
 |*                                                                            *|
 |* Automatically generated file, do not edit!                                 *|
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
-
 
 enum {
   AArch64_FeatureAES = 0,
@@ -79,4 +79,3 @@ enum {
   AArch64_ProcThunderXT83 = 65,
   AArch64_ProcThunderXT88 = 66,
 };
-

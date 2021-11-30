@@ -31,4 +31,3 @@ sparc_cc Sparc_map_FCC(const char *name);
 sparc_hint Sparc_map_hint(const char *name);
 
 #endif
-

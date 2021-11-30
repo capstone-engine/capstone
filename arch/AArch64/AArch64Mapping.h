@@ -6,7 +6,7 @@
 
 #include "capstone/capstone.h"
 
-#define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
+#define ARR_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
 // return name of regiser in friendly string
 const char *AArch64_reg_name(csh handle, unsigned int reg);
@@ -26,7 +26,7 @@ arm64_reg AArch64_map_vregister(unsigned int r);
 
 void arm64_op_addReg(MCInst *MI, int reg);
 
-void arm64_op_addVectorArrSpecifier(MCInst * MI, int sp);
+void arm64_op_addVectorArrSpecifier(MCInst *MI, int sp);
 
 void arm64_op_addFP(MCInst *MI, float fp);
 
@@ -34,8 +34,8 @@ void arm64_op_addImm(MCInst *MI, int64_t imm);
 
 const uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id);
 
-void AArch64_reg_access(const cs_insn *insn,
-		cs_regs regs_read, uint8_t *regs_read_count,
-		cs_regs regs_write, uint8_t *regs_write_count);
+void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
+                        uint8_t *regs_read_count, cs_regs regs_write,
+                        uint8_t *regs_write_count);
 
 #endif

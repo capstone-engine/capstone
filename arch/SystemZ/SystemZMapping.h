@@ -20,4 +20,3 @@ const char *SystemZ_group_name(csh handle, unsigned int id);
 sysz_reg SystemZ_map_register(unsigned int r);
 
 #endif
-

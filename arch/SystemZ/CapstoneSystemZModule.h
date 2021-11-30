@@ -12,132 +12,102 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
                                         const unsigned *Regs, unsigned Size);
 
 static DecodeStatus DecodeGR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus DecodeGRH32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus DecodeGR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus DecodeGR128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus DecodeADDR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                                 uint64_t Address,
-                                                 void*);
+                                                 uint64_t Address, void *);
 
 static DecodeStatus DecodeFP32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus DecodeFP64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus DecodeFP128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus DecodeVR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus DecodeVR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus DecodeVR128BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus DecodeAR32BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus DecodeCR64BitRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus decodeUImmOperand(MCInst *Inst, uint64_t Imm, int N);
 
 static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm, int N);
 
 static DecodeStatus decodeU1ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void*);
+                                       uint64_t Address, void *);
 
 static DecodeStatus decodeU2ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void*);
+                                       uint64_t Address, void *);
 
 static DecodeStatus decodeU3ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void*);
+                                       uint64_t Address, void *);
 
 static DecodeStatus decodeU4ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void*);
+                                       uint64_t Address, void *);
 
 static DecodeStatus decodeU6ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void*);
+                                       uint64_t Address, void *);
 
 static DecodeStatus decodeU8ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void*);
+                                       uint64_t Address, void *);
 
 static DecodeStatus decodeU12ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void*);
+                                        uint64_t Address, void *);
 
 static DecodeStatus decodeU16ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void*);
+                                        uint64_t Address, void *);
 
 static DecodeStatus decodeU32ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void*);
+                                        uint64_t Address, void *);
 
 static DecodeStatus decodeS8ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void*);
+                                       uint64_t Address, void *);
 
 static DecodeStatus decodeS16ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void*);
+                                        uint64_t Address, void *);
 
 static DecodeStatus decodeS32ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void*);
+                                        uint64_t Address, void *);
 
 static DecodeStatus decodePCDBLOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address, bool isBranch,
-                                       void*, int N);
+                                       uint64_t Address, bool isBranch, void *,
+                                       int N);
 
 static DecodeStatus decodePC12DBLBranchOperand(MCInst *Inst, uint64_t Imm,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus decodePC16DBLBranchOperand(MCInst *Inst, uint64_t Imm,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus decodePC24DBLBranchOperand(MCInst *Inst, uint64_t Imm,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus decodePC32DBLBranchOperand(MCInst *Inst, uint64_t Imm,
-                                               uint64_t Address,
-                                               void*);
+                                               uint64_t Address, void *);
 
 static DecodeStatus decodePC32DBLOperand(MCInst *Inst, uint64_t Imm,
-                                         uint64_t Address,
-                                         void*);
+                                         uint64_t Address, void *);
 
 static DecodeStatus decodeBDAddr12Operand(MCInst *Inst, uint64_t Field,
                                           const unsigned *Regs);
@@ -164,46 +134,36 @@ static DecodeStatus decodeBDVAddr12Operand(MCInst *Inst, uint64_t Field,
                                            const unsigned *Regs);
 
 static DecodeStatus decodeBDAddr32Disp12Operand(MCInst *Inst, uint64_t Field,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus decodeBDAddr32Disp20Operand(MCInst *Inst, uint64_t Field,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus decodeBDAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus decodeBDAddr64Disp20Operand(MCInst *Inst, uint64_t Field,
-                                                uint64_t Address,
-                                                void*);
+                                                uint64_t Address, void *);
 
 static DecodeStatus decodeBDXAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
-                                                 uint64_t Address,
-                                                 void*);
+                                                 uint64_t Address, void *);
 
 static DecodeStatus decodeBDXAddr64Disp20Operand(MCInst *Inst, uint64_t Field,
-                                                 uint64_t Address,
-                                                 void*);
+                                                 uint64_t Address, void *);
 
 static DecodeStatus decodeBDLAddr64Disp12Len4Operand(MCInst *Inst,
                                                      uint64_t Field,
-                                                     uint64_t Address,
-                                                     void*);
+                                                     uint64_t Address, void *);
 
 static DecodeStatus decodeBDLAddr64Disp12Len8Operand(MCInst *Inst,
                                                      uint64_t Field,
-                                                     uint64_t Address,
-                                                     void*);
+                                                     uint64_t Address, void *);
 
 static DecodeStatus decodeBDRAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
-                                                 uint64_t Address,
-                                                 void*);
+                                                 uint64_t Address, void *);
 
 static DecodeStatus decodeBDVAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
-                                                 uint64_t Address,
-                                                 void*);
+                                                 uint64_t Address, void *);
 
 #define GET_REGINFO_ENUM
 #define GET_INSTRINFO_ENUM
@@ -213,10 +173,12 @@ static DecodeStatus decodeBDVAddr64Disp12Operand(MCInst *Inst, uint64_t Field,
 
 FieldFromInstruction(fieldFromInstruction_4, uint64_t)
     DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint64_t)
-        DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4, decodeToMCInst_4, uint64_t)
+        DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4,
+                          decodeToMCInst_4, uint64_t)
 
-static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
-                                        const unsigned *Regs, unsigned Size) {
+            static DecodeStatus
+    decodeRegisterClass(MCInst *Inst, uint64_t RegNo, const unsigned *Regs,
+                        unsigned Size) {
   assert(RegNo < Size && "Invalid register");
   RegNo = Regs[RegNo];
   if (RegNo == 0)
@@ -318,74 +280,62 @@ static DecodeStatus decodeSImmOperand(MCInst *Inst, uint64_t Imm, int N) {
 }
 
 static DecodeStatus decodeU1ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void *Decoder) {
+                                       uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 1);
 }
 
 static DecodeStatus decodeU2ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void *Decoder) {
+                                       uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 2);
 }
 
 static DecodeStatus decodeU3ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void *Decoder) {
+                                       uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 3);
 }
 
 static DecodeStatus decodeU4ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void *Decoder) {
+                                       uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 4);
 }
 
 static DecodeStatus decodeU6ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void *Decoder) {
+                                       uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 6);
 }
 
 static DecodeStatus decodeU8ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void *Decoder) {
+                                       uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 8);
 }
 
 static DecodeStatus decodeU12ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void *Decoder) {
+                                        uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 12);
 }
 
 static DecodeStatus decodeU16ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void *Decoder) {
+                                        uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 16);
 }
 
 static DecodeStatus decodeU32ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void *Decoder) {
+                                        uint64_t Address, void *Decoder) {
   return decodeUImmOperand(Inst, Imm, 32);
 }
 
 static DecodeStatus decodeS8ImmOperand(MCInst *Inst, uint64_t Imm,
-                                       uint64_t Address,
-                                       void *Decoder) {
+                                       uint64_t Address, void *Decoder) {
   return decodeSImmOperand(Inst, Imm, 8);
 }
 
 static DecodeStatus decodeS16ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void *Decoder) {
+                                        uint64_t Address, void *Decoder) {
   return decodeSImmOperand(Inst, Imm, 16);
 }
 
 static DecodeStatus decodeS32ImmOperand(MCInst *Inst, uint64_t Imm,
-                                        uint64_t Address,
-                                        void *Decoder) {
+                                        uint64_t Address, void *Decoder) {
   return decodeSImmOperand(Inst, Imm, 32);
 }
 
@@ -427,8 +377,7 @@ static DecodeStatus decodePC32DBLBranchOperand(MCInst *Inst, uint64_t Imm,
 }
 
 static DecodeStatus decodePC32DBLOperand(MCInst *Inst, uint64_t Imm,
-                                         uint64_t Address,
-                                         void *Decoder) {
+                                         uint64_t Address, void *Decoder) {
   return decodePCDBLOperand(Inst, Imm, Address, false, Decoder, 32);
 }
 
