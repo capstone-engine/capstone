@@ -54,7 +54,7 @@ static bool MCInstPrinter_matchAliasCondition(
     // Operand must match some custom criteria.
     // TODO might affect something            return M.ValidateMCOperand(Opnd,
     // *STI, C.Value);
-    return true;
+    return false;
   case AliasPatternCond_K_Ignore:
     // Operand can be anything.
     return true;

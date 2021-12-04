@@ -1153,9 +1153,7 @@ static DecodeStatus DecodeCopMemInstruction(MCInst *Inst, unsigned Insn,
   case ARM_LDC2L_POST:
   case ARM_STC2_POST:
   case ARM_STC2L_POST:
-    if (coproc == 0xA || coproc == 0xB ||
-        (coproc == 0x8 || coproc == 0x9 || coproc == 0xA ||
-                  coproc == 0xB || coproc == 0xE || coproc == 0xF))
+    if (coproc == 0xA || coproc == 0xB)
       return MCDisassembler_Fail;
     break;
   default:
@@ -2867,35 +2865,37 @@ static DecodeStatus DecodeVLD3DupInstruction(MCInst *Inst, unsigned Insn,
                                              uint64_t Address, void *Decoder) {
   DecodeStatus S = MCDisassembler_Success;
 
-    unsigned Rd = fieldFromInstruction(Insn, 12, 4);
-    Rd |= fieldFromInstruction(Insn, 22, 1) << 4;
-    unsigned Rn = fieldFromInstruction(Insn, 16, 4);
-    unsigned Rm = fieldFromInstruction(Insn, 0, 4);
-    unsigned inc = fieldFromInstruction(Insn, 5, 1) + 1;
+  unsigned Rd = fieldFromInstruction(Insn, 12, 4);
+  Rd |= fieldFromInstruction(Insn, 22, 1) << 4;
+  unsigned Rn = fieldFromInstruction(Insn, 16, 4);
+  unsigned Rm = fieldFromInstruction(Insn, 0, 4);
+  unsigned inc = fieldFromInstruction(Insn, 5, 1) + 1;
 
-    if (!Check(&S, DecodeDPRRegisterClass(Inst, Rd, Address, Decoder)))
-      return MCDisassembler_Fail;
-    if (!Check(&S, DecodeDPRRegisterClass(Inst, (Rd+inc)%32, Address, Decoder)))
-      return MCDisassembler_Fail;
-    if (!Check(&S, DecodeDPRRegisterClass(Inst, (Rd+2*inc)%32, Address, Decoder)))
-      return MCDisassembler_Fail;
-    if (Rm != 0xF) {
-      if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
-        return MCDisassembler_Fail;
-    }
-
+  if (!Check(&S, DecodeDPRRegisterClass(Inst, Rd, Address, Decoder)))
+    return MCDisassembler_Fail;
+  if (!Check(&S,
+             DecodeDPRRegisterClass(Inst, (Rd + inc) % 32, Address, Decoder)))
+    return MCDisassembler_Fail;
+  if (!Check(&S, DecodeDPRRegisterClass(Inst, (Rd + 2 * inc) % 32, Address,
+                                        Decoder)))
+    return MCDisassembler_Fail;
+  if (Rm != 0xF) {
     if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
       return MCDisassembler_Fail;
+  }
+
+  if (!Check(&S, DecodeGPRRegisterClass(Inst, Rn, Address, Decoder)))
+    return MCDisassembler_Fail;
+  MCOperand_CreateImm0(Inst, 0);
+
+  if (Rm == 0xD)
     MCOperand_CreateImm0(Inst, 0);
+  else if (Rm != 0xF) {
+    if (!Check(&S, DecodeGPRRegisterClass(Inst, Rm, Address, Decoder)))
+      return MCDisassembler_Fail;
+  }
 
-    if (Rm == 0xD)
-      MCOperand_CreateImm0(Inst, 0);
-    else if (Rm != 0xF) {
-      if (!Check(&S, DecodeGPRRegisterClass(Inst, Rm, Address, Decoder)))
-        return MCDisassembler_Fail;
-    }
-
-    return S;
+  return S;
 }
 
 static DecodeStatus DecodeVLD4DupInstruction(MCInst *Inst, unsigned Insn,
@@ -4191,20 +4191,19 @@ static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val, uint64_t Address,
 
     if (MCInst_getOpcode(Inst) == ARM_t2MSR_M) {
       unsigned Mask = fieldFromInstruction_4(Val, 10, 2);
-        // The ARMv6-M MSR bits {11-10} can be only 0b10, other values are
-        // unpredictable.
-        if (Mask != 2)
-          S = MCDisassembler_SoftFail;
-       else
-        // The ARMv7-M architecture stores an additional 2-bit mask value in
-        // MSR bits {11-10}. The mask is used only with apsr, iapsr, eapsr and
-        // xpsr, it has to be 0b10 in other cases. Bit mask{1} indicates if
-        // the NZCVQ bits should be moved by the instruction. Bit mask{0}
-        // indicates the move for the GE{3:0} bits, the mask{0} bit can be set
-        // only if the processor includes the DSP extension.
-        if (Mask == 0 || (Mask != 2 && ValLow > 3) || (!(true) && (Mask & 1)))
-          S = MCDisassembler_SoftFail;
-
+      // The ARMv6-M MSR bits {11-10} can be only 0b10, other values are
+      // unpredictable.
+      if (Mask != 2)
+        S = MCDisassembler_SoftFail;
+      else
+          // The ARMv7-M architecture stores an additional 2-bit mask value in
+          // MSR bits {11-10}. The mask is used only with apsr, iapsr, eapsr and
+          // xpsr, it has to be 0b10 in other cases. Bit mask{1} indicates if
+          // the NZCVQ bits should be moved by the instruction. Bit mask{0}
+          // indicates the move for the GE{3:0} bits, the mask{0} bit can be set
+          // only if the processor includes the DSP extension.
+          if (Mask == 0 || (Mask != 2 && ValLow > 3) || (!(true) && (Mask & 1)))
+        S = MCDisassembler_SoftFail;
     }
   } else {
     // A/R class
@@ -5402,11 +5401,11 @@ static DecodeStatus DecodeForVMRSandVMSR(MCInst *Inst, unsigned Val,
 
   if (MCInst_getOpcode(Inst) != ARM_FMSTAT) {
     unsigned Rt = fieldFromInstruction_4(Val, 12, 4);
-  if(Inst->csh->mode & CS_MODE_THUMB && ! Inst->csh->mode & CS_MODE_V8) {
+    if (Inst->csh->mode & CS_MODE_THUMB && !Inst->csh->mode & CS_MODE_V8) {
       if (Rt == 13 || Rt == 15)
         S = MCDisassembler_SoftFail;
-        Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder));
-      }else
+      Check(&S, DecodeGPRRegisterClass(Inst, Rt, Address, Decoder));
+    } else
       Check(&S, DecodeGPRnopcRegisterClass(Inst, Rt, Address, Decoder));
   }
 
@@ -5810,7 +5809,7 @@ static DecodeStatus DecodeVSTRVLDR_SYSREG(MCInst *Inst, unsigned Val,
   case ARM_VSTR_FPSCR_NZCVQC_post:
   case ARM_VLDR_FPSCR_post:
   case ARM_VLDR_FPSCR_NZCVQC_post:
-    /* Ignored bit flags */{}
+    /* Ignored bit flags */ {}
   }
 
   DecodeStatus S = MCDisassembler_Success;

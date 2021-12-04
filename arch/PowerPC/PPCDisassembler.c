@@ -54,7 +54,8 @@ static uint64_t getFeatureBits(int feature)
 
 static DecodeStatus getInstruction(MCInst *MI, const uint8_t *code,
                                    size_t code_len, uint16_t *Size,
-                                   uint64_t Address, MCRegisterInfo *MRI) {
+                                   uint64_t Address, MCRegisterInfo *info) {
+  MI->MRI = info;
   uint32_t insn;
   DecodeStatus result;
 

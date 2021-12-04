@@ -438,6 +438,7 @@ static bool isBOCTRBranch(unsigned int op) {
 }
 
 void PPC_printInst(MCInst *MI, SStream *O, void *Info) {
+  MRI = MI->MRI = Info;
   char *mnem;
   unsigned int opcode = MCInst_getOpcode(MI);
 
@@ -1249,7 +1250,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O) {
   if (MCOperand_isReg(Op)) {
     unsigned reg = MCOperand_getReg(Op);
 #ifndef CAPSTONE_DIET
-    const char *RegName = getRegisterName(reg);
+
+    const char *RegName = PPC_reg_name(0, reg);
+    if (!RegName)
+      RegName = getRegisterName(reg);
 
     // printf("reg = %u (%s)\n", reg, RegName);
 

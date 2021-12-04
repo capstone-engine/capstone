@@ -2294,9 +2294,9 @@ static void printThumbITMask(MCInst *MI, unsigned OpNum, SStream *O) {
   for (Pos = 3, e = NumTZ; Pos > e; --Pos) {
     bool T = ((Mask >> Pos) & 1) == CondBit0;
     if (T)
-      SStream_concat0(O, "t");
-    else
       SStream_concat0(O, "e");
+    else
+      SStream_concat0(O, "t");
     // TODO: detail for this t/e
   }
 }
