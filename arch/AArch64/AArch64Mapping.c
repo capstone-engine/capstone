@@ -11,7 +11,7 @@
 #include "AArch64Mapping.h"
 
 #define GET_INSTRINFO_ENUM
-#include "AArch64GenInstrInfo.inc"
+#include "AArch64GenDisassemblerTables.inc"
 
 #ifndef CAPSTONE_DIET
 // NOTE: this reg_name_maps[] reflects the order of registers in arm64_reg

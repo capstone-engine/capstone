@@ -22,10 +22,10 @@ export $ARCH=Mips
 
 4. Use `llvm-tblgen` binary to generate the disassembler
 ```shell
-llvm-tblgen --gen-capstone -I ./llvm-project/llvm/lib/Target/$ARCH  -I./llvm-project/build/include -I./llvm-project/llvm/include \
-  -I ./llvm-project/llvm/lib/Target -omit-comments --long-string-literals=0 -class=Instruction ./llvm-project/llvm/lib/Target/$ARCH/$ARCH.td \
-  > ./${ARCH}GenDisassemblerTables.inc
+python ./sync/gen-table.py -i ./llvm-project/ -b ./llvm-project/llvm/build/llvm-tblgen ${ARCH} -o ~/Capstone/${ARCH}/${ARCH}GenDisassemblerTables.inc
 ```
+
+Note that the last path varies depending on the location of your Capstone sources.
 
 5. Use the `sync/main.py` script from this repo. to generate a disassembler callback file
 ```shell

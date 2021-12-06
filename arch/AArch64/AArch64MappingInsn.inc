@@ -36068,7 +36068,7 @@
 #endif
     },
 
-    {AArch64_SST1B_D,
+    {AArch64_SST1B_D_REAL,
      ARM64_INS_ST1B,
 #ifndef CAPSTONE_DIET
      {0},
@@ -36145,7 +36145,7 @@
 #endif
     },
 
-    {AArch64_SST1D,
+    {AArch64_SST1D_REAL,
      ARM64_INS_ST1D,
 #ifndef CAPSTONE_DIET
      {0},
@@ -36167,7 +36167,7 @@
 #endif
     },
 
-    {AArch64_SST1D_SCALED,
+    {AArch64_SST1D_SCALED_SCALED_REAL,
      ARM64_INS_ST1D,
 #ifndef CAPSTONE_DIET
      {0},
@@ -36222,7 +36222,7 @@
 #endif
     },
 
-    {AArch64_SST1H_D,
+    {AArch64_SST1H_D_REAL,
      ARM64_INS_ST1H,
 #ifndef CAPSTONE_DIET
      {0},
@@ -36244,7 +36244,7 @@
 #endif
     },
 
-    {AArch64_SST1H_D_SCALED,
+    {AArch64_SST1H_D_SCALED_SCALED_REAL,
      ARM64_INS_ST1H,
 #ifndef CAPSTONE_DIET
      {0},
@@ -36354,7 +36354,7 @@
 #endif
     },
 
-    {AArch64_SST1W_D,
+    {AArch64_SST1W_D_REAL,
      ARM64_INS_ST1W,
 #ifndef CAPSTONE_DIET
      {0},
@@ -36376,7 +36376,7 @@
 #endif
     },
 
-    {AArch64_SST1W_D_SCALED,
+    {AArch64_SST1W_D_SCALED_SCALED_REAL,
      ARM64_INS_ST1W,
 #ifndef CAPSTONE_DIET
      {0},
@@ -47684,7 +47684,7 @@
 #endif
     },
 
-    {AArch64_anonymous_1349,
+    {AArch64_PFIRST_B,
      ARM64_INS_PFIRST,
 #ifndef CAPSTONE_DIET
      {0},
