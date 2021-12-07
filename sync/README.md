@@ -8,7 +8,8 @@ used as a tracking file for sync progress.
 
 0. Get a copy of llvm-project source (or all it's architecture files)
 
-1. Pull the modified llvm-tblgen backend
+1. Pull the [modified llvm-tblgen backend](https://github.com/rizinorg/llvm-capstone) from
+It is recommend that the llvm-project commit matches with the latest mainstream commit from llvm-capstone.
 
 2. Build the modified backend with target `llvm-tblgen`
 ```shell
@@ -26,6 +27,7 @@ python ./sync/gen-table.py -i ./llvm-project/ -b ./llvm-project/llvm/build/llvm-
 ```
 
 Note that the last path varies depending on the location of your Capstone sources.
+More information on the TableGen backend see at the [SYNCING](SYNCING.md) document.
 
 5. Use the `sync/main.py` script from this repo. to generate a disassembler callback file
 ```shell
@@ -37,14 +39,14 @@ python ./sync/main.py ./llvm-project/llvm/lib/Target/$ARCH/Disassembler/${ARCH}D
 
 for more notes on integration see the `Note on Capstone{Arch}Module.h` chapter below
 
-7. trunc the arch's disassembler and instruction printers to make it fit
+7. Truncate the arch's disassembler and instruction printers to make it fit
 
-this is a rather complicated step and highly depends on the original design of arch, the main idea
+This is a rather complicated step and highly depends on the original design of arch, the main idea
 is to make it best fit the table-gened file
 
 ## How to sync with LLVM's update once the adaptation is done
 
-simple, just repeat the step `4` on the previous chapter and replace the `.inc` file with newly generated one
+Simple, just repeat the step `4` on the previous chapter and replace the `.inc` file with newly generated one
 
 ## Note on Capstone{Arch}Module.h
 
