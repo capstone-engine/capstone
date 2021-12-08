@@ -10,7 +10,6 @@
 #include "RISCVMapping.h"
 
 #define GET_INSTRINFO_ENUM
-#include "RISCVGenInstrInfo.inc"
 #define GET_REGINFO_ENUM
 #include "RISCVGenDisassemblerTables.inc"
 

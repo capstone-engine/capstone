@@ -2535,3 +2535,10 @@
      0
 #endif
     },
+    {RISCV_ZEXTH_RV64, RISCV_INS_INVALID,
+    #ifndef CAPSTONE_DIET
+         {0},        {0},
+         {0},        0,
+         0
+    #endif
+        },

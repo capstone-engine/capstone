@@ -47694,3 +47694,14 @@
      0
 #endif
     },
+
+    {AArch64_anonymous_5365,
+         ARM64_INS_INVALID,
+    #ifndef CAPSTONE_DIET
+         {0},
+         {0},
+         {0},
+         0,
+         0
+    #endif
+        },
