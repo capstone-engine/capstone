@@ -698,6 +698,18 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			case AArch64_UMOVvi32:
 				 arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1S);
 				 break;
+			case AArch64_INSvi8lane:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1B;
+				 }
+				 break;
+			case AArch64_INSvi16lane:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1H;
+				 }
+				 break;
 		}
 	} else {
 		printInstruction(MI, O);
