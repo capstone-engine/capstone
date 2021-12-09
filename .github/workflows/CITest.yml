@@ -121,8 +121,9 @@ jobs:
       if: contains(matrix.config.name, 'MSVC 64')
       shell: bash
       run: |
-        choco install cmake
+        # choco install cmake
         cmake --version
         mkdir build
+        cd build
         cmake ..
         cmake --install .. --strip
