@@ -1,19 +1,62 @@
 name: Run Test
-on: [push, pull_request]
+on: 
+  push:
+    paths-ignore:
+      - ".gitignore"
+      - "docs/**"
+      - "ChangeLog"      
+      - "CREDITS.TXT"
+      - "COMPILE.TXT"
+      - "COMPILE_MSVC.TXT"
+      - "COMPILE_CMAKE.TXT"
+      - "HACK.TXT"
+      - "LICENSE.TXT"
+      - "LICENSE_LLVM.TXT"
+      - "README.md"
+      - "RELEASE_NOTES"
+      - "SPONSORS.TXT"
+      - "TODO"
+  pull_request:
+
 env:
   CI: true
+
 jobs:
-  tests:
-    runs-on: ${{ matrix.os }}
-    name: Python ${{ matrix.python-version }} on ${{ matrix.os }}
+  Linux:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
-        python-version: [2.7, 3.6, 3.9]
-        exclude:
-          - os: ubuntu-18.04
-            python-version: 3.9
+        config:
+          - {
+              name: 'ubuntu-18.04 x64 cmake',
+              os: ubuntu-18.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '2.7',
+            }
+          - {
+              name: 'ubuntu-18.04 x64 cmake',
+              os: ubuntu-18.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.6',
+            }
+          - {
+              name: 'ubuntu-20.04 x64 cmake',
+              os: ubuntu-20.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '2.7',
+            }
+          - {
+              name: 'ubuntu-20.04 x64 cmake',
+              os: ubuntu-20.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.9',
+            }            
 
     steps:
     - uses: actions/checkout@v2
@@ -21,7 +64,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.config.python-version }}
 
     - name: prepare
       shell: 'script -q -e -c "bash {0}"'
@@ -51,4 +94,35 @@ jobs:
         cd suite/cstest && ./build_cstest.sh;
         python cstest_report.py -D -t build/cstest -d ../MC;
         python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
-    
+
+  Windows:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+              name: 'windows x64 MSVC 64bit',
+              os: windows-latest,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.9',
+            }
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: '🛠️ Win MSVC 64 setup'
+      if: contains(matrix.config.name, 'MSVC 64')
+      uses: microsoft/setup-msbuild@v1
+
+    - name: '🚧 Win MSVC 64 build'
+      if: contains(matrix.config.name, 'MSVC 64')
+      shell: bash
+      run: |
+        choco install cmake
+        cmake --version
+        mkdir build
+        cmake ..
+        cmake --install .. --strip
