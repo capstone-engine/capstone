@@ -1550,11 +1550,11 @@ static void printGPRSeqPairsClassOperand(MCInst *MI, unsigned OpNum, SStream *O,
 #endif
 
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Even);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Even;
 		MI->flat_insn->detail->arm64.op_count++;
 
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Odd);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Odd;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
