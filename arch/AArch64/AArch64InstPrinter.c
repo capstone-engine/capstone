@@ -2453,6 +2453,8 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 			case AArch64_STRWpre:
 			case AArch64_STRXpost:
 			case AArch64_STRXpre:
+			case AArch64_LDRAAwriteback:
+			case AArch64_LDRABwriteback:
 				flat_insn->detail->arm64.writeback = true;
 				break;
 		}
