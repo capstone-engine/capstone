@@ -102,7 +102,7 @@ static const name_map s_group_names[] = {
 static void printRegName(cs_struct *handle, SStream *OS, unsigned int reg)
 {
 #ifndef CAPSTONE_DIET
-	SStream_concat(OS, handle->reg_name((csh)handle, reg));
+	SStream_concat0(OS, handle->reg_name((csh)handle, reg));
 #endif
 }
 
@@ -110,7 +110,7 @@ static void printInstructionName(cs_struct *handle, SStream *OS,
 	unsigned int insn)
 {
 #ifndef CAPSTONE_DIET
-	SStream_concat(OS, handle->insn_name((csh)handle, insn));
+	SStream_concat0(OS, handle->insn_name((csh)handle, insn));
 #endif
 }
 
@@ -147,7 +147,7 @@ static void printIncDec(bool isPost, SStream *O, m680x_info *info,
 			prePostfix = (char *)s_inc_dec[op->idx.inc_dec + 2];
 		}
 
-		SStream_concat(O, prePostfix);
+		SStream_concat0(O, prePostfix);
 	}
 }
 
@@ -174,7 +174,7 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 
 	case M680X_OP_INDEXED:
 		if (op->idx.flags & M680X_IDX_INDIRECT)
-			SStream_concat(O, "[");
+			SStream_concat0(O, "[");
 
 		if (op->idx.offset_reg != M680X_REG_INVALID)
 			printRegName(MI->csh, O, op->idx.offset_reg);
@@ -229,7 +229,7 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 		break;
 
 	default:
-		SStream_concat(O, "<invalid_operand>");
+		SStream_concat0(O, "<invalid_operand>");
 		break;
 	}
 }
@@ -272,13 +272,13 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 		if (m680x->op_count)
 			SStream_concat(O, "fcb $%02x", m680x->operands[0].imm);
 		else
-			SStream_concat(O, "fcb $<unknown>");
+			SStream_concat0(O, "fcb $<unknown>");
 
 		return;
 	}
 
 	printInstructionName(MI->csh, O, info->insn);
-	SStream_concat(O, " ");
+	SStream_concat0(O, " ");
 
 	if ((m680x->flags & M680X_FIRST_OP_IN_MNEM) != 0)
 		suppress_operands++;
@@ -291,7 +291,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 			printOperand(MI, O, info, &m680x->operands[i]);
 
 			if ((i + 1) != m680x->op_count)
-				SStream_concat(O, delimiter);
+				SStream_concat0(O, delimiter);
 		}
 	}
 }
