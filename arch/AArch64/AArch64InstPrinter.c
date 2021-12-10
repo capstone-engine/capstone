@@ -1479,7 +1479,7 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	// 8 decimal places are enough to perfectly represent permitted floats.
 #if defined(_KERNEL_MODE)
 	// Issue #681: Windows kernel does not support formatting float point
-	SStream_concat(O, "#<float_point_unsupported>");
+	SStream_concat0(O, "#<float_point_unsupported>");
 #else
 	SStream_concat(O, "#%.8f", FPImm);
 #endif

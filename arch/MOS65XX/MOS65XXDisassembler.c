@@ -277,7 +277,7 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 			break;
 
 		case MOS65XX_AM_ACC:
-			SStream_concat(O, " a");
+			SStream_concat0(O, " a");
 			break;
 
 		case MOS65XX_AM_IMM:
