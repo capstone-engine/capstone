@@ -28,20 +28,35 @@ void SStream_Init(SStream *ss)
 	ss->buffer[0] = '\0';
 }
 
+#define SAFE_COPY 0
+
 void SStream_concat0(SStream *ss, const char *s)
 {
 #ifndef CAPSTONE_DIET
-	unsigned int len = (unsigned int) strlen(s);
-
-	memcpy(ss->buffer + ss->index, s, len);
+#if SAFE_COPY
+	size_t len = strlen(s);
+	if (ss->index + len + 1 < sizeof (ss->buffer)) {
+		memcpy(ss->buffer + ss->index, s, len + 1);
+		ss->index += len;
+	} else {
+		abort();
+	}
+#else
+	size_t len = strlen(s);
+	memcpy(ss->buffer + ss->index, s, len + 1);
 	ss->index += len;
-	ss->buffer[ss->index] = '\0';
+#endif
 #endif
 }
 
 void SStream_concat1(SStream *ss, const char c)
 {
 #ifndef CAPSTONE_DIET
+#if SAFE_COPY
+	if (ss->index + 1 >= sizeof (sb->buffer)) {
+		return;
+	}
+#endif
 	ss->buffer[ss->index] = c;
 	ss->index++;
 	ss->buffer[ss->index] = '\0';
@@ -51,13 +66,30 @@ void SStream_concat1(SStream *ss, const char c)
 void SStream_concat(SStream *ss, const char *fmt, ...)
 {
 #ifndef CAPSTONE_DIET
+#if SAFE_COPY
 	va_list ap;
 	int ret;
 
 	va_start(ap, fmt);
-	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
+	size_t left = sizeof (ss->buffer) - ss->index;
+	ret = cs_vsnprintf(ss->buffer + ss->index, left, fmt, ap);
+	if (ret < left) {
+		ss->index += ret;
+		ss->buffer[ss->index - 1] = 0;
+	} else {
+		abort();
+	}
 	va_end(ap);
+#else
+	va_list ap;
+	int ret;
+
+	va_start(ap, fmt);
+	ret = vsprintf(ss->buffer + ss->index, fmt, ap);
 	ss->index += ret;
+	ss->buffer[ss->index - 1] = 0;
+	va_end(ap);
+#endif
 #endif
 }
 
@@ -75,7 +107,8 @@ void printInt64Bang(SStream *O, int64_t val)
 				SStream_concat(O, "#-0x%"PRIx64, (uint64_t)val);
 			else
 				SStream_concat(O, "#-0x%"PRIx64, (uint64_t)-val);
-		} else
+		}
+		else
 			SStream_concat(O, "#-%"PRIu64, -val);
 	}
 }
@@ -102,7 +135,8 @@ void printInt64(SStream *O, int64_t val)
 				SStream_concat(O, "-0x%"PRIx64, (uint64_t)val);
 			else
 				SStream_concat(O, "-0x%"PRIx64, (uint64_t)-val);
-		} else
+		}
+		else
 			SStream_concat(O, "-%"PRIu64, -val);
 	}
 }
@@ -120,12 +154,11 @@ void printInt32BangDec(SStream *O, int32_t val)
 {
 	if (val >= 0)
 		SStream_concat(O, "#%u", val);
-	else {
+	else
 		if (val == INT_MIN)
 			SStream_concat(O, "#-%u", val);
 		else
 			SStream_concat(O, "#-%u", (uint32_t)-val);
-	}
 }
 
 void printInt32Bang(SStream *O, int32_t val)
