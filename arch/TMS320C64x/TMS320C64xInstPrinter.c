@@ -111,7 +111,7 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 			SStream_concat(&ss, "\t%s", p);
 
 		if (tms320c64x->parallel != 0)
-			SStream_concat(&ss, "\t||");
+			SStream_concat0(&ss, "\t||");
 
 		/* insn_asm is a buffer from an SStream, so there should be enough space */
 		strcpy(insn_asm, ss.buffer);
