@@ -10389,6 +10389,7 @@ static void printInstruction(MCInst *MI, SStream *O)
   case 19:
     // FMOVXDHighr, INSvi64gpr, INSvi64lane
     SStream_concat0(O, ".d");
+    arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1D);
     printVectorIndex(MI, 2, O);
     SStream_concat0(O, ", ");
     break;
@@ -11114,6 +11115,7 @@ static void printInstruction(MCInst *MI, SStream *O)
   case 38:
     // CPYi64, DUPv2i64lane, FMOVDXHighr, INSvi64lane, UMOVvi64
     SStream_concat0(O, ".d");
+    arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1D);
     break;
   case 39:
     // CPYi8, DUPv16i8lane, DUPv8i8lane, INSvi8lane, SMOVvi8to32, SMOVvi8to64...
@@ -12141,6 +12143,7 @@ static void printInstruction(MCInst *MI, SStream *O)
   case 28:
     // FMLAv1i64_indexed, FMLAv2i64_indexed, FMLSv1i64_indexed, FMLSv2i64_ind...
     SStream_concat0(O, ".d");
+    arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1D);
     break;
   case 29:
     // FMUL_ZPmI_H

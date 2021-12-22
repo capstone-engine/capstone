@@ -1881,7 +1881,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #if 0
 				if (opcode == X86_MULPDrr) {
 					MCInst_setOpcode(MI, X86_MULSDrr);
-					SStream_concat(O, "mulsd\t");
+					SStream_concat0(O, "mulsd\t");
 					res = true;
 				}
 #endif
@@ -1924,7 +1924,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 				// FIXME: remove this special case?
 				if (opcode == X86_MULPDrr) {
 					MCInst_setOpcode(MI, X86_MULSSrr);
-					SStream_concat(O, "mulss\t");
+					SStream_concat0(O, "mulss\t");
 					res = true;
 				}
 #endif
