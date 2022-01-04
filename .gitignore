@@ -116,6 +116,7 @@ test_arm_regression
 test_arm_regression.o
 fuzz_harness
 test_iter_benchmark
+test_file_benchmark
 fuzz_bindisasm
 fuzz_disasm
 fuzz_decode_platform
@@ -129,6 +130,3 @@ cstool/cstool
 
 # android
 android-ndk-*
-
-# benchmark/
-benchmark/cs-benchmark*
