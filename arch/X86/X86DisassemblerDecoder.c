@@ -1147,13 +1147,13 @@ static int getID(struct InternalInstruction *insn)
 		}
 	}
 
-	if (getIDWithAttrMask(&instructionID, insn, attrMask)) {
-		return -1;
-	}
-
 	/* The following clauses compensate for limitations of the tables. */
 	if (insn->mode != MODE_64BIT &&
 			insn->vectorExtensionType != TYPE_NO_VEX_XOP) {
+		if (getIDWithAttrMask(&instructionID, insn, attrMask)) {
+			return -1;
+		}
+
 		/*
 		 * The tables can't distinquish between cases where the W-bit is used to
 		 * select register size and cases where its a required part of the opcode.
@@ -1217,6 +1217,9 @@ static int getID(struct InternalInstruction *insn)
 		insn->spec = specifierForUID(instructionID);
 
 		return 0;
+	}
+	if (getIDWithAttrMask(&instructionID, insn, attrMask)) {
+		return -1;
 	}
 
 	if ((insn->mode == MODE_16BIT || insn->hasOpSize) &&
@@ -1438,15 +1441,15 @@ static int readModRM(struct InternalInstruction* insn)
 	if (insn->consumedModRM)
 		return 0;
 
-    insn->modRMOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
+	insn->modRMOffset = (uint8_t)(insn->readerCursor - insn->startLocation);
 
 	if (consumeByte(insn, &insn->modRM))
 		return -1;
 
 	insn->consumedModRM = true;
 
-    // save original ModRM for later reference
-    insn->orgModRM = insn->modRM;
+	// save original ModRM for later reference
+	insn->orgModRM = insn->modRM;
 
 	// handle MOVcr, MOVdr, MOVrc, MOVrd by pretending they have MRM.mod = 3
 	if ((insn->firstByte == 0x0f && insn->opcodeType == TWOBYTE) &&
