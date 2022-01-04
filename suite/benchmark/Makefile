@@ -1,12 +1,17 @@
 # Sample Makefile for Capstone Disassembly Engine
 
-LIBNAME = capstone
+LIBNAME = ../../build/libcapstone.a
 
-test_iter_benchmark: test_iter_benchmark.o
-	${CC} $< -O3 -Wall -l$(LIBNAME) -o $@
+all: test_iter_benchmark test_file_benchmark
 
-%.o: %.c
-	${CC} -c -I../../include $< -o $@
+test_iter_benchmark: test_iter_benchmark.c
+	${CC} $< -O3 -Wall -o $@ -I../../include $(LIBNAME)
+
+test_file_benchmark: test_file_benchmark.c
+	${CC} $< -O3 -Wall -o $@ -I../../include $(LIBNAME)
+
+# %.o: %.c
+# 	${CC} -c  $< -o $@
 
 clean:
-	rm -rf *.o test_iter_benchmark
+	rm -rf *.o test_iter_benchmark test_file_benchmark
