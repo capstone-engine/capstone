@@ -554,6 +554,15 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		postprinter((csh)handle, insn, buffer, mci);
 
 #ifndef CAPSTONE_DIET
+	char *tab = strchr (buffer, '\t');
+	if (tab) {
+		*tab = 0;
+	}
+	strncpy (insn->mnemonic, buffer, sizeof (insn->mnemonic) - 1);
+	if (tab) {
+		strcpy (insn->op_str, tab + 1);
+	}
+#if 0
 	// fill in mnemonic & operands
 	// find first space or tab
 	mnem = insn->mnemonic;
@@ -568,6 +577,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	}
 
 	*mnem = '\0';
+#endif
 
 	// we might have customized mnemonic
 	if (handle->mnem_list) {
@@ -588,6 +598,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		}
 	}
 
+#if 0
 	// copy @op_str
 	if (*sp) {
 		// find the next non-space char
@@ -597,6 +608,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
 	} else
 		insn->op_str[0] = '\0';
+#endif
 #endif
 }
 
