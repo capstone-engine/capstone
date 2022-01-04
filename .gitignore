@@ -129,3 +129,6 @@ cstool/cstool
 
 # android
 android-ndk-*
+
+# benchmark/
+benchmark/cs-benchmark*
