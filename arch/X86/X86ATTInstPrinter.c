@@ -18,7 +18,7 @@
 // this code is only relevant when DIET mode is disable
 #if defined(CAPSTONE_HAS_X86) && !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
 
-#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#ifdef _MSC_VER
 #pragma warning(disable:4996)			// disable MSVC's warning on strncpy()
 #pragma warning(disable:28719)		// disable MSVC's warning on strncpy()
 #endif
