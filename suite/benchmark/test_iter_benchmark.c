@@ -89,7 +89,7 @@ static void test()
 	cs_close(&handle);
 	end = clock();
 	timeUsed = (double)(end - start) / CLOCKS_PER_SEC;
-	printf("time used:%f\n", timeUsed);
+	printf("time used: %f s\n", timeUsed);
 }
 
 int main()
