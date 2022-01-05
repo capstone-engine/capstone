@@ -295,6 +295,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI) {
     0U
   };
 
+#ifndef CAPSTONE_DIET
   static const char AsmStrs[] = {
   /* 0 */ 'n', 'o', 'p', 9, 9, 0,
   /* 6 */ 's', 'u', 'b', '2', 9, 0,
@@ -428,6 +429,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI) {
   /* 897 */ 'b', 9, 'n', 'r', 'p', 0,
   /* 903 */ 'l', 'i', 'f', 'e', 't', 'i', 'm', 'e', '_', 's', 't', 'a', 'r', 't', 0,
   };
+#endif
 
   // Emit the opcode for the instruction.
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];

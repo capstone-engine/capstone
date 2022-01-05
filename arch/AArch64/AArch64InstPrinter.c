@@ -54,10 +54,12 @@
 
 #define DEBUG_TYPE "asm-printer"
 
+#ifndef CAPSTONE_DIET
 static void printCustomAliasOperand(
          MCInst *MI, uint64_t Address, unsigned OpIdx,
          unsigned PrintMethodIdx,
          SStream *OS);
+#endif
 
 #define DECLARE_printComplexRotationOp(Angle, Remainder) \
 	static void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \

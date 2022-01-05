@@ -13336,10 +13336,10 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS)
 #endif // CAPSTONE_DIET
 }
 
+#ifndef CAPSTONE_DIET
 void printCustomAliasOperand(MCInst *MI, uint64_t Address, unsigned OpIdx,
 			     unsigned PrintMethodIdx, SStream *OS)
 {
-#ifndef CAPSTONE_DIET
 	switch (PrintMethodIdx) {
 	default:
 		assert(0 && "Unknown PrintMethod kind");
@@ -13354,7 +13354,7 @@ void printCustomAliasOperand(MCInst *MI, uint64_t Address, unsigned OpIdx,
 		printMandatoryInvertedPredicateOperand(MI, OpIdx, OS);
 		break;
 	}
-#endif // CAPSTONE_DIET
 }
+#endif // CAPSTONE_DIET
 
 #endif // PRINT_ALIAS_INSTR
