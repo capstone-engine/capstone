@@ -562,22 +562,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	if (tab) {
 		strcpy (insn->op_str, tab + 1);
 	}
-#if 0
-	// fill in mnemonic & operands
-	// find first space or tab
-	mnem = insn->mnemonic;
-	for (sp = buffer; *sp; sp++) {
-		if (*sp == ' '|| *sp == '\t')
-			break;
-		if (*sp == '|')	// lock|rep prefix for x86
-			*sp = ' ';
-		// copy to @mnemonic
-		*mnem = *sp;
-		mnem++;
-	}
-
-	*mnem = '\0';
-#endif
 
 	// we might have customized mnemonic
 	if (handle->mnem_list) {
@@ -597,18 +581,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 			tmp = tmp->next;
 		}
 	}
-
-#if 0
-	// copy @op_str
-	if (*sp) {
-		// find the next non-space char
-		sp++;
-		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
-		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
-		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
-	} else
-		insn->op_str[0] = '\0';
-#endif
 #endif
 }
 
