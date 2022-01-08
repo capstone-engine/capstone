@@ -52,8 +52,11 @@ static void test()
 
 	err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	if (err) {
-		printf("Failed on cs_open() with error returned: %u\n", err);
-		abort();
+		if (cs_support(CS_ARCH_X86)) {
+			printf("Failed on cs_open() with error returned: %u\n", err);
+			abort();
+		} else
+			return;
 	}
 
 	// 1. Print out the instruction in default setup.
