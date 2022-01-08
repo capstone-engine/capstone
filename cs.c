@@ -552,17 +552,18 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		postprinter((csh)handle, insn, buffer, mci);
 
 #ifndef CAPSTONE_DIET
-	char *prefix = strchr (buffer, '|');
+	char *prefix = strchr(buffer, '|');
 	if (prefix) {
 		*prefix = ' ';
 	}
-	char *tab = strchr (buffer, '\t');
+	char *tab = strchr(buffer, '\t');
 	if (tab) {
 		*tab = 0;
 	}
-	strncpy (insn->mnemonic, buffer, sizeof (insn->mnemonic) - 1);
+	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
 	if (tab) {
-		strcpy (insn->op_str, tab + 1);
+		strncpy(insn->op_str, tab + 1, sizeof(insn->op_str) - 1);
+		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
 	}
 
 	// we might have customized mnemonic
