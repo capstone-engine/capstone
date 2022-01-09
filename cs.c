@@ -535,6 +535,9 @@ static int str_replace(char *result, char *target, const char *str1, char *str2)
 static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
 {
+#ifndef CAPSTONE_DIET
+	char *mnem;
+#endif
 	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
