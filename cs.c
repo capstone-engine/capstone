@@ -552,19 +552,18 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		postprinter((csh)handle, insn, buffer, mci);
 
 #ifndef CAPSTONE_DIET
-	char *prefix = strchr(buffer, '|');
-	if (prefix) {
-		*prefix = ' ';
+	mnem = insn->mnemonic;
+	for (sp = buffer; *sp; sp++) {
+		if (*sp == ' '|| *sp == '\t')
+			break;
+		if (*sp == '|')	// lock|rep prefix for x86
+			*sp = ' ';
+		// copy to @mnemonic
+		*mnem = *sp;
+		mnem++;
 	}
-	char *tab = strchr(buffer, '\t');
-	if (tab) {
-		*tab = 0;
-	}
-	strncpy(insn->mnemonic, buffer, sizeof(insn->mnemonic) - 1);
-	if (tab) {
-		strncpy(insn->op_str, tab + 1, sizeof(insn->op_str) - 1);
-		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
-	}
+
+	*mnem = '\0';
 
 	// we might have customized mnemonic
 	if (handle->mnem_list) {
@@ -584,6 +583,17 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 			tmp = tmp->next;
 		}
 	}
+
+	// copy @op_str
+	if (*sp) {
+		// find the next non-space char
+		sp++;
+		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
+		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
+		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
+	} else
+		insn->op_str[0] = '\0';
+
 #endif
 }
 
