@@ -536,7 +536,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 		PostPrinter_t postprinter, const uint8_t *code)
 {
 #ifndef CAPSTONE_DIET
-	char *mnem;
+	char *sp, *mnem;
 #endif
 	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
