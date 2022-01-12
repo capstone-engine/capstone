@@ -6,11 +6,11 @@ if (POLICY CMP0048)
   # http://www.cmake.org/cmake/help/v3.0/policy/CMP0048.html
   cmake_policy (SET CMP0048 NEW)
 endif()
-project(capstone VERSION 5.0.0)
+project(capstone)
 
-# set(VERSION_MAJOR 5)
-# set(VERSION_MINOR 0)
-# set(VERSION_PATCH 0)
+set(VERSION_MAJOR 5)
+set(VERSION_MINOR 0)
+set(VERSION_PATCH 0)
 
 if(POLICY CMP0042)
   # http://www.cmake.org/cmake/help/v3.0/policy/CMP0042.html
