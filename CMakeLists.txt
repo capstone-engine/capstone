@@ -1,22 +1,22 @@
-cmake_minimum_required(VERSION 2.6)
-project(capstone)
+cmake_minimum_required(VERSION 2.8.12)
+if (POLICY CMP0048)
+  # use old policy to honor version set using VERSION_* variables to preserve backwards
+  # compatibility. change OLD to NEW when minimum cmake version is updated to 3.* and
+  # set VERSION using project(capstone VERSION 4.0.0).
+  # http://www.cmake.org/cmake/help/v3.0/policy/CMP0048.html
+  cmake_policy (SET CMP0048 NEW)
+endif()
+project(capstone VERSION 5.0.0)
 
-set(VERSION_MAJOR 5)
-set(VERSION_MINOR 0)
-set(VERSION_PATCH 0)
+# set(VERSION_MAJOR 5)
+# set(VERSION_MINOR 0)
+# set(VERSION_PATCH 0)
 
 if(POLICY CMP0042)
   # http://www.cmake.org/cmake/help/v3.0/policy/CMP0042.html
   cmake_policy(SET CMP0042 NEW)
 endif(POLICY CMP0042)
 
-if (POLICY CMP0048)
-  # use old policy to honor version set using VERSION_* variables to preserve backwards
-  # compatibility. change OLD to NEW when minimum cmake version is updated to 3.* and
-  # set VERSION using project(capstone VERSION 4.0.0).
-  # http://www.cmake.org/cmake/help/v3.0/policy/CMP0048.html
-  cmake_policy (SET CMP0048 OLD)
-endif()
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
