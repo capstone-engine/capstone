@@ -38385,7 +38385,7 @@
 
 {	/* X86_VMOVDQUmr, X86_INS_VMOVDQU: vmovdqu */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_VMOVDQUrm, X86_INS_VMOVDQU: vmovdqu */
