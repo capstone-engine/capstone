@@ -101,7 +101,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake ..
+        cmake -DCAPSTONE_INSTALL=1 ..
         cmake --build . --config Release
         sudo make install
 
