@@ -30,33 +30,45 @@ jobs:
       matrix:
         config:
           - {
-              name: 'ubuntu-18.04 x64 cmake',
+              name: 'ubuntu-18.04 x64 python2.7 make',
               os: ubuntu-18.04,
               arch: x64,
               python-arch: x64,
               python-version: '2.7',
+              build-system: 'make',
             }
           - {
-              name: 'ubuntu-18.04 x64 cmake',
+              name: 'ubuntu-18.04 x64 python3.6 make',
               os: ubuntu-18.04,
               arch: x64,
               python-arch: x64,
               python-version: '3.6',
+              build-system: 'make',
             }
           - {
-              name: 'ubuntu-20.04 x64 cmake',
+              name: 'ubuntu-20.04 x64 python2.7 make',
               os: ubuntu-20.04,
               arch: x64,
               python-arch: x64,
               python-version: '2.7',
+              build-system: 'make',
             }
           - {
-              name: 'ubuntu-20.04 x64 cmake',
+              name: 'ubuntu-20.04 x64 python3.9 make',
               os: ubuntu-20.04,
               arch: x64,
               python-arch: x64,
               python-version: '3.9',
+              build-system: 'make',
             }            
+          - {
+              name: 'ubuntu-20.04 x64 python3.9 cmake',
+              os: ubuntu-20.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.9',
+              build-system: 'cmake',
+            }
 
     steps:
     - uses: actions/checkout@v2
@@ -76,10 +88,21 @@ jobs:
         chmod +x suite/cstest/build_cstest.sh
 
     - name: make
+      if: startsWith(matrix.config.build-system, 'make')
       shell: 'script -q -e -c "bash {0}"'
       run: |
         ./make.sh
         make check
+        sudo make install
+
+    - name: cmake
+      if: startsWith(matrix.config.build-system, 'cmake')
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
+        mkdir build
+        cd build
+        cmake -DCAPSTONE_INSTALL=1 ..
+        cmake --build . --config Release
         sudo make install
 
     - name: build python binding
