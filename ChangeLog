@@ -1,7 +1,7 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
-Version 5.0.0-rc1: January 19th, 2022
+Version 5.0.0-rc1: January 20th, 2022
 
 New features:
 - Add arch BPF (#1388)
