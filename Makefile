@@ -534,7 +534,11 @@ TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static test_riscv.static
 TESTS += test_mos65xx.static test_wasm.static test_bpf.static
-check: $(TESTS) fuzztest fuzzallcorp
+
+check: $(TESTS)
+
+checkfuzz: fuzztest fuzzallcorp
+
 test_%:
 	./tests/$@ > /dev/null && echo OK || echo FAILED
 
