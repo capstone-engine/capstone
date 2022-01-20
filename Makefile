@@ -408,10 +408,8 @@ ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	@V=$(V) CC=$(CC) $(MAKE) -C cstool
 ifndef BUILDDIR
 	$(MAKE) -C tests
-	$(MAKE) -C suite/fuzz
 else
 	$(MAKE) -C tests BUILDDIR=$(BLDIR)
-	$(MAKE) -C suite/fuzz BUILDDIR=$(BLDIR)
 endif
 	$(call install-library,$(BLDIR)/tests/)
 endif
@@ -536,11 +534,22 @@ TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static test_riscv.static
 TESTS += test_mos65xx.static test_wasm.static test_bpf.static
-check: $(TESTS) fuzztest fuzzallcorp
+
+check: $(TESTS)
+
+checkfuzz: fuzztest fuzzallcorp
+
 test_%:
 	./tests/$@ > /dev/null && echo OK || echo FAILED
 
 FUZZ_INPUTS = $(shell find suite/MC -type f -name '*.cs')
+
+buildfuzz:
+ifndef BUILDDIR
+	$(MAKE) -C suite/fuzz
+else
+	$(MAKE) -C suite/fuzz BUILDDIR=$(BLDIR)
+endif
 
 fuzztest:
 	./suite/fuzz/fuzz_disasm $(FUZZ_INPUTS)
