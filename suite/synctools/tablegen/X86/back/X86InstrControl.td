@@ -250,11 +250,11 @@ let isCall = 1 in
     let Predicates = [Not64BitMode], AsmVariantName = "att" in {
       def FARCALL16i  : Iseg16<0x9A, RawFrmImm16, (outs),
                                (ins i16imm:$off, i16imm:$seg),
-                               "lcall{w}\t$seg, $off", []>,
+                               "lcall{w}\t$seg : $off", []>,
                                OpSize16, Sched<[WriteJump]>;
       def FARCALL32i  : Iseg32<0x9A, RawFrmImm16, (outs),
                                (ins i32imm:$off, i16imm:$seg),
-                               "lcall{l}\t$seg, $off", []>,
+                               "lcall{l}\t$seg : $off", []>,
                                OpSize32, Sched<[WriteJump]>;
     }
 
