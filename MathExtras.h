@@ -439,4 +439,34 @@ static inline unsigned int countLeadingZeros(int x)
 	return count;
 }
 
+/// \brief Count number of 0's from the least significant bit to the most
+///   stopping at the first 1.
+///
+/// Only unsigned integral types are allowed.
+///
+/// \param ZB the behavior on an input of 0. Only ZB_Width and ZB_Undefined are
+///   valid arguments.
+static inline unsigned int countTrailingZeros(int x) {
+    int i;
+    const unsigned bits = sizeof(x) * 8 - 1;
+    unsigned count = 0;
+
+    if (x < 0) {
+        return 0;
+    }
+
+    for (i = bits; --i;) {
+        if (x % 2 == 0)
+			count++;
+        else
+			break;
+    }
+
+    // considering it is signed integer
+    if (count == bits - 1 && x > 0)
+		count++;
+
+    return count;
+}
+
 #endif
