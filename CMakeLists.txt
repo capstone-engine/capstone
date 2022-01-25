@@ -203,20 +203,13 @@ if (CAPSTONE_MIPS_SUPPORT)
         arch/Mips/MipsDisassembler.h
         arch/Mips/MipsGenAsmWriter.inc
         arch/Mips/MipsGenDisassemblerTables.inc
-        arch/Mips/MipsGenInstrInfo.inc
-        arch/Mips/MipsGenRegisterInfo.inc
-        arch/Mips/MipsGenSubtargetInfo.inc
         arch/Mips/MipsInstPrinter.h
         arch/Mips/MipsMapping.h
-        arch/Mips/MipsMappingInsn.inc
         )
     set(HEADERS_MIPS
         arch/Mips/MipsDisassembler.h
         arch/Mips/MipsGenAsmWriter.inc
         arch/Mips/MipsGenDisassemblerTables.inc
-        arch/Mips/MipsGenInstrInfo.inc
-        arch/Mips/MipsGenRegisterInfo.inc
-        arch/Mips/MipsGenSubtargetInfo.inc
         arch/Mips/MipsInstPrinter.h
         arch/Mips/MipsMapping.h
         )

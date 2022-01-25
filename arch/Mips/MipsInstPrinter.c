@@ -31,8 +31,11 @@
 #include "MipsInstPrinter.h"
 
 static void printUnsignedImm(MCInst *MI, int opNum, SStream *O);
-static char *printAliasInstr(MCInst *MI, SStream *O, void *info);
+#define printUImm(MI, Op, O, ...) printUnsignedImm(MI, Op, O)
+static char *printAliasInstr(MCInst *MI, SStream *O);
 static char *printAlias(MCInst *MI, SStream *OS);
+static void printCustomAliasOperand(const MCInst *MI, unsigned OpIdx,
+                                    unsigned PrintMethodIdx, SStream *OS);
 
 // These enumeration declarations were originally in MipsInstrInfo.h but
 // had to be moved here to avoid circular dependencies between
@@ -79,11 +82,24 @@ typedef enum Mips_CondCode {
 	Mips_FCOND_GT
 } Mips_CondCode;
 
-#define GET_INSTRINFO_ENUM
-#include "MipsGenInstrInfo.inc"
 
 static const char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
+static void printInstruction(MCInst *MI, SStream *O);
+static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
+static void printMemOperand(MCInst *MI, int opNum, SStream *O, char *);
+static void printMemOperandEA(MCInst *MI, int opNum, SStream *O, char *);
+static void printFCCOperand(MCInst *MI, int opNum, SStream *O);
+static void printRegisterList(MCInst *MI, int opNum, SStream *O);
+
+#include "../MCInstPrinter.h"
+
+
+#define GET_INSTRINFO_ENUM
+#define GET_REGINFO_ENUM
+#define GET_ASM_WRITER
+#define PRINT_ALIAS_INSTR
+#include "MipsGenDisassemblerTables.inc"
+
 
 static void set_mem_access(MCInst *MI, bool status)
 {
@@ -149,12 +165,19 @@ static const char* MipsFCCToString(Mips_CondCode CC)
 
 static void printRegName(SStream *OS, unsigned RegNo)
 {
+  const char *Name = Mips_reg_name(0, RegNo);
+ 
+  if (Name)
+    SStream_concat(OS, "$%s", Name);
+  else
 	SStream_concat(OS, "$%s", getRegisterName(RegNo));
 }
 
 void Mips_printInst(MCInst *MI, SStream *O, void *info)
 {
 	char *mnem;
+
+	MRI = info;
 
 	switch (MCInst_getOpcode(MI)) {
 		default: break;
@@ -166,11 +189,11 @@ void Mips_printInst(MCInst *MI, SStream *O, void *info)
 	}
 
 	// Try to print any aliases first.
-	mnem = printAliasInstr(MI, O, info);
+	mnem = printAliasInstr(MI, O);
 	if (!mnem) {
 		mnem = printAlias(MI, O);
 		if (!mnem) {
-			printInstruction(MI, O, NULL);
+			printInstruction(MI, O);
 		}
 	}
 
@@ -192,7 +215,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);
-		reg = Mips_map_register(reg);
+//		reg = Mips_map_register(reg);
 		if (MI->csh->detail) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->mips.operands[MI->flat_insn->detail->mips.op_count].mem.base = reg;
@@ -256,7 +279,7 @@ static void printUnsignedImm8(MCInst *MI, int opNum, SStream *O)
 		printOperand(MI, opNum, O);
 }
 
-static void printMemOperand(MCInst *MI, int opNum, SStream *O)
+static void printMemOperand(MCInst *MI, int opNum, SStream *O, char *unused)
 {
 	// Load/Store memory operands -- imm($reg)
 	// If PIC target the target is loaded as the
@@ -284,7 +307,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O)
 }
 
 // TODO???
-static void printMemOperandEA(MCInst *MI, int opNum, SStream *O)
+static void printMemOperandEA(MCInst *MI, int opNum, SStream *O, char *unused)
 {
 	// when using stack locations for not load/store instructions
 	// print the same way as all normal 3 operand instructions.
@@ -323,9 +346,6 @@ static char *printAlias2(const char *Str, MCInst *MI,
 
 	return tmp;
 }
-
-#define GET_REGINFO_ENUM
-#include "MipsGenRegisterInfo.inc"
 
 static char *printAlias(MCInst *MI, SStream *OS)
 {
@@ -417,8 +437,5 @@ static void printRegisterList(MCInst *MI, int opNum, SStream *O)
 		}
 	}
 }
-
-#define PRINT_ALIAS_INSTR
-#include "MipsGenAsmWriter.inc"
 
 #endif
