@@ -88,6 +88,7 @@ set(SOURCES_ENGINE
     cs.c
     MCInst.c
     MCInstrDesc.c
+    MCInstPrinter.c
     MCRegisterInfo.c
     SStream.c
     utils.c
@@ -100,6 +101,7 @@ set(HEADERS_ENGINE
     MCFixedLenDisassembler.h
     MCInst.h
     MCInstrDesc.h
+    MCInstPrinter.h
     MCRegisterInfo.h
     SStream.h
     utils.h
