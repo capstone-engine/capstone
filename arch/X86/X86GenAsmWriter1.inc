@@ -32207,7 +32207,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     break;
   case 1:
     // ADC16mi, ADC16mi8, ADC16mr, ADC16ri, ADC16ri8, ADC16rm, ADC16rr, ADC16...
-    SStream_concat0(O, ", ");
+    SStream_concat0(O, ":");
     break;
   case 2:
     // ADD_FrST0, DIVR_FrST0, DIV_FrST0, FPNCEST0r, MUL_FrST0, SUBR_FrST0, SU...
