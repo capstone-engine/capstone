@@ -1,7 +1,7 @@
 prefix=@CMAKE_INSTALL_PREFIX@
 exec_prefix=${prefix}
 libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/include/capstone
+includedir=${prefix}/include
 
 Name: capstone
 Description: Capstone disassembly engine
@@ -10,3 +10,4 @@ URL: http://www.capstone-engine.org
 archive=${libdir}/libcapstone.a
 Libs: -L${libdir} -lcapstone
 Cflags: -I${includedir}
+archs=@CAPSTONE_ARCHITECTURES@
