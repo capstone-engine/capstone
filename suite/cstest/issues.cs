@@ -1,3 +1,33 @@
+// !# issue 1827 x86-16 lcall 0:0xd
+// !# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+// 0x9a,0x0d,0x00,0x00,0x00 == lcall 0:0xd
+
+!# issue 1708 M68K floating point loads and stores generate the same op_str
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0xf2,0x27,0x74,0x00 == fmove.d fp0, -(a7)
+0xf2,0x1f,0x54,0x80 == fmove.d (a7)+, fp1
+0x4e,0x75 == rts
+
+!# issue 1661 M68K invalid transfer direction in MOVEC instruction
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0x4E,0x7A,0x00,0x02 == movec cacr, d0
+
+!# issue 1653 AArch64 wrong register access read/write flags on cmp instruction
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x3F,0x00,0x02,0xEB == cmp x1, x2 ; operands[0].access: READ
+
+!# issue 1643 M68K incorrect read of 32-bit imm for bsr
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040 , None
+0x61,0xff,0x00,0x00,0x0b,0xea == bsr.l $bec
+
+!# issue 1627 Arm64 LD1 missing immediate operand
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xe0,0x73,0xdf,0x0c == ld1 {v0.8b}, [sp], #8 ; operands[2].type: IMM = 0x8
+
+!# issue 1587 ARM thumb pushed registers write
+!# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
+0x2d,0xe9,0xf0,0x47 == push.w {r4, r5, r6, r7, r8, sb, sl, lr} ; operands[0].access: READ
+
 !# issue 1504 movhps qword ptr
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0f,0x16,0x08 == movhps xmm1, qword ptr [rax] ; Opcode:0x0f 0x16 0x00 0x00
