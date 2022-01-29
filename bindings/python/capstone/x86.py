@@ -80,6 +80,6 @@ def get_arch_info(a):
     return (a.prefix[:], a.opcode[:], a.rex, a.addr_size, \
             a.modrm, a.sib, a.disp, a.sib_index, a.sib_scale, \
             a.sib_base, a.xop_cc, a.sse_cc, a.avx_cc, a.avx_sae, a.avx_rm, a.eflags, \
-            a.encoding.modrm_offset, a.encoding.disp_offset, a.encoding.disp_size, a.encoding.imm_offset, a.encoding.imm_size, \
+            a.encoding, a.encoding.modrm_offset, a.encoding.disp_offset, a.encoding.disp_size, a.encoding.imm_offset, a.encoding.imm_size, \
             copy_ctypes_list(a.operands[:a.op_count]))
 
