@@ -91,10 +91,10 @@ def build_libraries():
         #    - Run this command in an environment setup for MSVC
         if not os.path.exists("build"): os.mkdir("build")
         os.chdir("build")
-        # Do not build tests & static library
-        os.system('cmake -DCMAKE_BUILD_TYPE=RELEASE -DCAPSTONE_BUILD_TESTS=0 -DCAPSTONE_BUILD_STATIC=0 -G "NMake Makefiles" ..')
-        os.system("nmake")
-    else:   # Unix incl. cygwin
+        # Only build capstone.dll
+        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_BUILD_SHARED=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+        os.system("cmake --build .")
+    else:  # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
     shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
