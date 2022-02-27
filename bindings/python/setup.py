@@ -138,7 +138,7 @@ def build_libraries():
         if not os.path.exists("build"): os.mkdir("build")
         os.chdir("build")
         # Only build capstone.dll
-        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_BUILD_SHARED=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
         os.system("cmake --build .")
     else:  # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
