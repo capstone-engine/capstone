@@ -39,10 +39,12 @@ jobs:
         elif [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
              docker run --rm -v `pwd`/:/work dockcross/manylinux1-x86 > ./dockcross
              chmod +x ./dockcross
+             chmod +x bindings/python/build_wheel.sh
              ./dockcross bindings/python/build_wheel.sh
         elif [ ${{ matrix.platform }} == 'x64' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
              docker run --rm -v `pwd`/:/work dockcross/manylinux1-x64 > ./dockcross
              chmod +x ./dockcross
+             chmod +x bindings/python/build_wheel.sh
              ./dockcross bindings/python/build_wheel.sh
         elif [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'macos-latest' ]; then
              cd bindings/python && python setup.py sdist
