@@ -848,6 +848,7 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 				access = get_op_access(MI->csh, MCInst_getOpcode(MI), OpNum);
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
+				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
