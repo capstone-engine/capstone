@@ -1,3 +1,7 @@
+!# issue 1839 AArch64 Incorrect detailed disassembly of ldr
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x41,0x00,0x40,0xf9 == ldr x1, [x2] ; operands[0].access: WRITE ; operands[1].access: READ
+
 // !# issue 1827 x86-16 lcall 0:0xd
 // !# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
 // 0x9a,0x0d,0x00,0x00,0x00 == lcall 0:0xd
