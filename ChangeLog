@@ -1,6 +1,23 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 5.0.0-rc2: February 28th, 2022
+
+New features:
+- None
+
+Improvements:
+- Fix for python publish build (#1844)
+- Modernize CMake and switch to CMake 3.15 (#1841)
+- Fix AArch64 ldapr detailed information (#1840)
+- Fix incorrect MI->ac_idx leading to wrong AArch64 InsnOp access printing (#1845)
+
+Contributors:
+- stevielavern
+- mrexodia
+- kabeor
+
+---------------------------------
 Version 5.0.0-rc1: February 27th, 2022
 
 New features:
