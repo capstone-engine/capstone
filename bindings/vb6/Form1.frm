@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form Form1 
    Caption         =   "VB6 Bindings for Capstone Disassembly Engine - Contributed by FireEye FLARE  Team"
    ClientHeight    =   7290
@@ -141,7 +141,7 @@ Option Explicit
 'Capstone Disassembly Engine bindings for VB6
 'Contributed by FireEye FLARE Team
 'Author:  David Zimmer <david.zimmer@fireeye.com>, <dzzie@yahoo.com>
-'License: Apache
+'License: Apache 2.0
 'Copyright: FireEye 2017
 
 Dim cap As CDisassembler
