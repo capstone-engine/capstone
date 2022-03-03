@@ -2,7 +2,7 @@
 	Capstone Disassembly Engine bindings for VB6
 	Contributed by FireEye FLARE Team
 	Author:  David Zimmer <david.zimmer@fireeye.com>, <dzzie@yahoo.com>
-	License: Apache  
+	License: Apache 2.0
 	Copyright: FireEye 2017
 
 	This dll is a small stdcall shim so VB6 can access the capstone API
