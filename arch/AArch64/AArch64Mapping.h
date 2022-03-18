@@ -24,13 +24,7 @@ arm64_insn AArch64_map_insn(const char *name);
 // map internal vregister to public register
 arm64_reg AArch64_map_vregister(unsigned int r);
 
-arm64_tlbi_op AArch64_map_tlbi_op(const char *name);
-
-arm64_at_op AArch64_map_at_op(const char *name);
-
-arm64_dc_op AArch64_map_dc_op(const char *name);
-
-arm64_ic_op AArch64_map_ic_op(const char *name);
+arm64_sys_op AArch64_map_sys_op(const char *name);
 
 void arm64_op_addReg(MCInst *MI, int reg);
 
