@@ -491,6 +491,160 @@ arm64_reg AArch64_map_vregister(unsigned int r)
 	return 0;
 }
 
+static const name_map tlbi_op_name_map[] = {
+	{ ARM64_TLBI_IPAS2E1IS, "ipas2e1is" },
+	{ ARM64_TLBI_IPAS2LE1IS, "ipas2le1is" },
+	{ ARM64_TLBI_VMALLE1IS, "vmalle1is" },
+	{ ARM64_TLBI_ALLE2IS, "alle2is" },
+	{ ARM64_TLBI_ALLE3IS, "alle3is" },
+	{ ARM64_TLBI_VAE1IS, "vae1is" },
+	{ ARM64_TLBI_VAE2IS, "vae2is" },
+	{ ARM64_TLBI_VAE3IS, "vae3is" },
+	{ ARM64_TLBI_ASIDE1IS, "aside1is" },
+	{ ARM64_TLBI_VAAE1IS, "vaae1is" },
+	{ ARM64_TLBI_ALLE1IS, "alle1is" },
+	{ ARM64_TLBI_VALE1IS, "vale1is" },
+	{ ARM64_TLBI_VALE2IS, "vale2is" },
+	{ ARM64_TLBI_VALE3IS, "vale3is" },
+	{ ARM64_TLBI_VMALLS12E1IS, "vmalls12e1is" },
+	{ ARM64_TLBI_VAALE1IS, "vaale1is" },
+	{ ARM64_TLBI_IPAS2E1, "ipas2e1" },
+	{ ARM64_TLBI_IPAS2LE1, "ipas2le1" },
+	{ ARM64_TLBI_VMALLE1, "vmalle1" },
+	{ ARM64_TLBI_ALLE2, "alle2" },
+	{ ARM64_TLBI_ALLE3, "alle3" },
+	{ ARM64_TLBI_VAE1, "vae1" },
+	{ ARM64_TLBI_VAE2, "vae2" },
+	{ ARM64_TLBI_VAE3, "vae3" },
+	{ ARM64_TLBI_ASIDE1, "aside1" },
+	{ ARM64_TLBI_VAAE1, "vaae1" },
+	{ ARM64_TLBI_ALLE1, "alle1" },
+	{ ARM64_TLBI_VALE1, "vale1" },
+	{ ARM64_TLBI_VALE2, "vale2" },
+	{ ARM64_TLBI_VALE3, "vale3" },
+	{ ARM64_TLBI_VMALLS12E1, "vmalls12e1" },
+	{ ARM64_TLBI_VAALE1, "vaale1" },
+	{ ARM64_TLBI_VMALLE1OS, "vmalle1os" },
+	{ ARM64_TLBI_VAE1OS, "vae1os" },
+	{ ARM64_TLBI_ASIDE1OS, "aside1os" },
+	{ ARM64_TLBI_VAAE1OS, "vaae1os" },
+	{ ARM64_TLBI_VALE1OS, "vale1os" },
+	{ ARM64_TLBI_VAALE1OS, "vaale1os" },
+	{ ARM64_TLBI_IPAS2E1OS, "ipas2e1os" },
+	{ ARM64_TLBI_IPAS2LE1OS, "ipas2le1os" },
+	{ ARM64_TLBI_VAE2OS, "vae2os" },
+	{ ARM64_TLBI_VALE2OS, "vale2os" },
+	{ ARM64_TLBI_VMALLS12E1OS, "vmalls12e1os" },
+	{ ARM64_TLBI_VAE3OS, "vae3os" },
+	{ ARM64_TLBI_VALE3OS, "vale3os" },
+	{ ARM64_TLBI_ALLE2OS, "alle2os" },
+	{ ARM64_TLBI_ALLE1OS, "alle1os" },
+	{ ARM64_TLBI_ALLE3OS, "alle3os" },
+	{ ARM64_TLBI_RVAE1, "rvae1" },
+	{ ARM64_TLBI_RVAAE1, "rvaae1" },
+	{ ARM64_TLBI_RVALE1, "rvale1" },
+	{ ARM64_TLBI_RVAALE1, "rvaale1" },
+	{ ARM64_TLBI_RVAE1IS, "rvae1is" },
+	{ ARM64_TLBI_RVAAE1IS, "rvaae1is" },
+	{ ARM64_TLBI_RVALE1IS, "rvale1is" },
+	{ ARM64_TLBI_RVAALE1IS, "rvaale1is" },
+	{ ARM64_TLBI_RVAE1OS, "rvae1os" },
+	{ ARM64_TLBI_RVAAE1OS, "rvaae1os" },
+	{ ARM64_TLBI_RVALE1OS, "rvale1os" },
+	{ ARM64_TLBI_RVAALE1OS, "rvaale1os" },
+	{ ARM64_TLBI_RIPAS2E1IS, "ripas2e1is" },
+	{ ARM64_TLBI_RIPAS2LE1IS, "ripas2le1is" },
+	{ ARM64_TLBI_RIPAS2E1, "ripas2e1" },
+	{ ARM64_TLBI_RIPAS2LE1, "ripas2le1" },
+	{ ARM64_TLBI_RIPAS2E1OS, "ripas2e1os" },
+	{ ARM64_TLBI_RIPAS2LE1OS, "ripas2le1os" },
+	{ ARM64_TLBI_RVAE2, "rvae2" },
+	{ ARM64_TLBI_RVALE2, "rvale2" },
+	{ ARM64_TLBI_RVAE2IS, "rvae2is" },
+	{ ARM64_TLBI_RVALE2IS, "rvale2is" },
+	{ ARM64_TLBI_RVAE2OS, "rvae2os" },
+	{ ARM64_TLBI_RVALE2OS, "rvale2os" },
+	{ ARM64_TLBI_RVAE3, "rvae3" },
+	{ ARM64_TLBI_RVALE3, "rvale3" },
+	{ ARM64_TLBI_RVAE3IS, "rvae3is" },
+	{ ARM64_TLBI_RVALE3IS, "rvale3is" },
+	{ ARM64_TLBI_RVAE3OS, "rvae3os" },
+	{ ARM64_TLBI_RVALE3OS, "rvale3os" },
+
+};
+
+arm64_tlbi_op AArch64_map_tlbi_op(const char *name)
+{
+	int result = name2id(tlbi_op_name_map, ARR_SIZE(tlbi_op_name_map), name);
+	if (result == -1) {
+		return ARM64_TLBI_INVALID;
+	}
+	return result;
+}
+
+static const name_map at_op_name_map[] = {
+	{ ARM64_AT_S1E1R, "s1e1r" },
+	{ ARM64_AT_S1E2R, "s1e2r" },
+	{ ARM64_AT_S1E3R, "s1e3r" },
+	{ ARM64_AT_S1E1W, "s1e1w" },
+	{ ARM64_AT_S1E2W, "s1e2w" },
+	{ ARM64_AT_S1E3W, "s1e3w" },
+	{ ARM64_AT_S1E0R, "s1e0r" },
+	{ ARM64_AT_S1E0W, "s1e0w" },
+	{ ARM64_AT_S12E1R, "s12e1r" },
+	{ ARM64_AT_S12E1W, "s12e1w" },
+	{ ARM64_AT_S12E0R, "s12e0r" },
+	{ ARM64_AT_S12E0W, "s12e0w" },
+	{ ARM64_AT_S1E1RP, "s1e1rp" },
+	{ ARM64_AT_S1E1WP, "s1e1wp" },
+
+};
+
+arm64_at_op AArch64_map_at_op(const char *name)
+{
+	int result = name2id(at_op_name_map, ARR_SIZE(at_op_name_map), name);
+	if (result == -1) {
+		return ARM64_AT_INVALID;
+	}
+	return result;
+}
+
+static const name_map dc_op_name_map[] = {
+	{ ARM64_DC_ZVA, "zva" },
+	{ ARM64_DC_IVAC, "ivac" },
+	{ ARM64_DC_ISW, "isw" },
+	{ ARM64_DC_CVAC, "cvac" },
+	{ ARM64_DC_CSW, "csw" },
+	{ ARM64_DC_CVAU, "cvau" },
+	{ ARM64_DC_CIVAC, "civac" },
+	{ ARM64_DC_CISW, "cisw" },
+	{ ARM64_DC_CVAP, "cvap" },
+};
+
+arm64_dc_op AArch64_map_dc_op(const char *name)
+{
+	int result = name2id(dc_op_name_map, ARR_SIZE(dc_op_name_map), name);
+	if (result == -1) {
+		return ARM64_DC_INVALID;
+	}
+	return result;
+}
+
+static const name_map ic_op_name_map[] = {
+	{ ARM64_IC_IALLUIS, "ialluis" },
+	{ ARM64_IC_IALLU, "iallu" },
+	{ ARM64_IC_IVAU, "ivau" },
+};
+
+arm64_ic_op AArch64_map_ic_op(const char *name)
+{
+	int result = name2id(ic_op_name_map, ARR_SIZE(ic_op_name_map), name);
+	if (result == -1) {
+		return ARM64_IC_INVALID;
+	}
+	return result;
+}
+
 void arm64_op_addVectorArrSpecifier(MCInst * MI, int sp)
 {
 	if (MI->csh->detail) {

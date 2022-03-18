@@ -734,6 +734,7 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 	unsigned CnVal = (unsigned)MCOperand_getImm(Cn);
 	unsigned CmVal = (unsigned)MCOperand_getImm(Cm);
 	unsigned Op2Val = (unsigned)MCOperand_getImm(Op2);
+	unsigned SysOp;
 
 	Encoding = Op2Val;
 	Encoding |= CmVal << 3;
@@ -755,6 +756,7 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 				NeedsReg = IC->NeedsReg;
 				Ins = "ic";
 				strncpy(Name, IC->Name, sizeof(Name) - 1);
+				SysOp = AArch64_map_ic_op(Name);
 			}
 			break;
 
@@ -768,6 +770,7 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 				NeedsReg = true;
 				Ins = "dc";
 				strncpy(Name, DC->Name, sizeof(Name) - 1);
+				SysOp = AArch64_map_dc_op(Name);
 			}
 			break;
 
@@ -781,6 +784,7 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 				NeedsReg = true;
 				Ins = "at";
 				strncpy(Name, AT->Name, sizeof(Name) - 1);
+				SysOp = AArch64_map_at_op(Name);
 			}
 			break;
 		}
@@ -794,6 +798,7 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 		NeedsReg = TLBI->NeedsReg;
 		Ins = "tlbi";
 		strncpy(Name, TLBI->Name, sizeof(Name) - 1);
+		SysOp = AArch64_map_tlbi_op(Name);
 	} else
 		return false;
 
@@ -814,6 +819,9 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 		MI->ac_idx++;
 #endif
 #endif
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = SysOp;
+		MI->flat_insn->detail->arm64.op_count++;
 
 		if (NeedsReg) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
