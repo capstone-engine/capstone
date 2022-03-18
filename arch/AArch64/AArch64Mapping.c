@@ -491,7 +491,7 @@ arm64_reg AArch64_map_vregister(unsigned int r)
 	return 0;
 }
 
-static const name_map tlbi_op_name_map[] = {
+static const name_map sys_op_name_map[] = {
 	{ ARM64_TLBI_IPAS2E1IS, "ipas2e1is" },
 	{ ARM64_TLBI_IPAS2LE1IS, "ipas2le1is" },
 	{ ARM64_TLBI_VMALLE1IS, "vmalle1is" },
@@ -570,19 +570,6 @@ static const name_map tlbi_op_name_map[] = {
 	{ ARM64_TLBI_RVALE3IS, "rvale3is" },
 	{ ARM64_TLBI_RVAE3OS, "rvae3os" },
 	{ ARM64_TLBI_RVALE3OS, "rvale3os" },
-
-};
-
-arm64_tlbi_op AArch64_map_tlbi_op(const char *name)
-{
-	int result = name2id(tlbi_op_name_map, ARR_SIZE(tlbi_op_name_map), name);
-	if (result == -1) {
-		return ARM64_TLBI_INVALID;
-	}
-	return result;
-}
-
-static const name_map at_op_name_map[] = {
 	{ ARM64_AT_S1E1R, "s1e1r" },
 	{ ARM64_AT_S1E2R, "s1e2r" },
 	{ ARM64_AT_S1E3R, "s1e3r" },
@@ -597,19 +584,6 @@ static const name_map at_op_name_map[] = {
 	{ ARM64_AT_S12E0W, "s12e0w" },
 	{ ARM64_AT_S1E1RP, "s1e1rp" },
 	{ ARM64_AT_S1E1WP, "s1e1wp" },
-
-};
-
-arm64_at_op AArch64_map_at_op(const char *name)
-{
-	int result = name2id(at_op_name_map, ARR_SIZE(at_op_name_map), name);
-	if (result == -1) {
-		return ARM64_AT_INVALID;
-	}
-	return result;
-}
-
-static const name_map dc_op_name_map[] = {
 	{ ARM64_DC_ZVA, "zva" },
 	{ ARM64_DC_IVAC, "ivac" },
 	{ ARM64_DC_ISW, "isw" },
@@ -619,28 +593,16 @@ static const name_map dc_op_name_map[] = {
 	{ ARM64_DC_CIVAC, "civac" },
 	{ ARM64_DC_CISW, "cisw" },
 	{ ARM64_DC_CVAP, "cvap" },
-};
-
-arm64_dc_op AArch64_map_dc_op(const char *name)
-{
-	int result = name2id(dc_op_name_map, ARR_SIZE(dc_op_name_map), name);
-	if (result == -1) {
-		return ARM64_DC_INVALID;
-	}
-	return result;
-}
-
-static const name_map ic_op_name_map[] = {
 	{ ARM64_IC_IALLUIS, "ialluis" },
 	{ ARM64_IC_IALLU, "iallu" },
 	{ ARM64_IC_IVAU, "ivau" },
 };
 
-arm64_ic_op AArch64_map_ic_op(const char *name)
+arm64_sys_op AArch64_map_sys_op(const char *name)
 {
-	int result = name2id(ic_op_name_map, ARR_SIZE(ic_op_name_map), name);
+	int result = name2id(sys_op_name_map, ARR_SIZE(sys_op_name_map), name);
 	if (result == -1) {
-		return ARM64_IC_INVALID;
+		return ARM64_SYS_INVALID;
 	}
 	return result;
 }
