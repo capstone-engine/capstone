@@ -952,6 +952,7 @@ typedef enum arm64_tlbi_op {
 
 /// AT operations
 typedef enum arm64_at_op {
+	ARM64_AT_INVALID = 0,
 	ARM64_AT_S1E1R,
 	ARM64_AT_S1E2R,
 	ARM64_AT_S1E3R,
