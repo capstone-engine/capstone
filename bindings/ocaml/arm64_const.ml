@@ -918,22 +918,19 @@ let _ARM64_AT_S12E0R = 89;;
 let _ARM64_AT_S12E0W = 90;;
 let _ARM64_AT_S1E1RP = 91;;
 let _ARM64_AT_S1E1WP = 92;;
-
-let _ARM64_DC_INVALID = 0;;
-let _ARM64_DC_ZVA = 1;;
-let _ARM64_DC_IVAC = 2;;
-let _ARM64_DC_ISW = 3;;
-let _ARM64_DC_CVAC = 4;;
-let _ARM64_DC_CSW = 5;;
-let _ARM64_DC_CVAU = 6;;
-let _ARM64_DC_CIVAC = 7;;
-let _ARM64_DC_CISW = 8;;
-let _ARM64_DC_CVAP = 9;;
-
-let _ARM64_IC_INVALID = 0;;
-let _ARM64_IC_IALLUIS = 1;;
-let _ARM64_IC_IALLU = 2;;
-let _ARM64_IC_IVAU = 3;;
+let _ARM64_DC_ZVA = 93;;
+let _ARM64_DC_IVAC = 94;;
+let _ARM64_DC_ISW = 95;;
+let _ARM64_DC_CVAC = 96;;
+let _ARM64_DC_CSW = 97;;
+let _ARM64_DC_CVAU = 98;;
+let _ARM64_DC_CIVAC = 99;;
+let _ARM64_DC_CISW = 100;;
+let _ARM64_DC_CVAP = 101;;
+let _ARM64_IC_INVALID = 102;;
+let _ARM64_IC_IALLUIS = 103;;
+let _ARM64_IC_IALLU = 104;;
+let _ARM64_IC_IVAU = 105;;
 
 let _ARM64_PRFM_INVALID = 0;;
 let _ARM64_PRFM_PLDL1KEEP = 0x00+1;;

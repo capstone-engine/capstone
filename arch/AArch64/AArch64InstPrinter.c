@@ -814,6 +814,9 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 		MI->ac_idx++;
 #endif
 #endif
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = AArch64_map_sys_op(Name);
+		MI->flat_insn->detail->arm64.op_count++;
 
 		if (NeedsReg) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
