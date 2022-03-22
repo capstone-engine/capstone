@@ -866,10 +866,11 @@ typedef enum arm64_op_type {
 	ARM64_OP_BARRIER, ///< Memory barrier operand (ISB/DMB/DSB instructions).
 } arm64_op_type;
 
-/// TLBI operations
-typedef enum arm64_tlbi_op {
-	ARM64_TLBI_INVALID = 0,
+/// SYS operands (IC/DC/AC/TLBI)
+typedef enum arm64_sys_op {
+	ARM64_SYS_INVALID = 0,
 
+	/// TLBI operations
 	ARM64_TLBI_IPAS2E1IS,
 	ARM64_TLBI_IPAS2LE1IS,
 	ARM64_TLBI_VMALLE1IS,
@@ -948,10 +949,8 @@ typedef enum arm64_tlbi_op {
 	ARM64_TLBI_RVALE3IS,
 	ARM64_TLBI_RVAE3OS,
 	ARM64_TLBI_RVALE3OS,
-} arm64_tlbi_op;
 
-/// AT operations
-typedef enum arm64_at_op {
+	/// AT operations
 	ARM64_AT_S1E1R,
 	ARM64_AT_S1E2R,
 	ARM64_AT_S1E3R,
@@ -966,11 +965,8 @@ typedef enum arm64_at_op {
 	ARM64_AT_S12E0W,
 	ARM64_AT_S1E1RP,
 	ARM64_AT_S1E1WP,
-} arm64_at_op;
 
-/// DC operations
-typedef enum arm64_dc_op {
-	ARM64_DC_INVALID = 0,
+	/// DC operations
 	ARM64_DC_ZVA,
 	ARM64_DC_IVAC,
 	ARM64_DC_ISW,
@@ -980,15 +976,12 @@ typedef enum arm64_dc_op {
 	ARM64_DC_CIVAC,
 	ARM64_DC_CISW,
 	ARM64_DC_CVAP,
-} arm64_dc_op;
 
-/// IC operations
-typedef enum arm64_ic_op {
-	ARM64_IC_INVALID = 0,
+	/// IC operations
 	ARM64_IC_IALLUIS,
 	ARM64_IC_IALLU,
 	ARM64_IC_IVAU,
-} arm64_ic_op;
+} arm64_sys_op;
 
 /// Prefetch operations (PRFM)
 typedef enum arm64_prefetch_op {
@@ -1360,7 +1353,7 @@ typedef struct cs_arm64_op {
 		double fp;			///< floating point value for FP operand
 		arm64_op_mem mem;		///< base/index/scale/disp value for MEM operand
 		arm64_pstate pstate;		///< PState field of MSR instruction.
-		unsigned int sys;  ///< IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
+		arm64_sys_op sys;  ///< IC/DC/AT/TLBI operation (see arm64_ic_op, arm64_dc_op, arm64_at_op, arm64_tlbi_op)
 		arm64_prefetch_op prefetch;  ///< PRFM operation.
 		arm64_barrier_op barrier;  ///< Memory barrier operation (ISB/DMB/DSB instructions).
 	};

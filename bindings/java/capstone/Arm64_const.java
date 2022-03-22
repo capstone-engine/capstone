@@ -921,22 +921,18 @@ public class Arm64_const {
 	public static final int ARM64_AT_S12E0W = 90;
 	public static final int ARM64_AT_S1E1RP = 91;
 	public static final int ARM64_AT_S1E1WP = 92;
-
-	public static final int ARM64_DC_INVALID = 0;
-	public static final int ARM64_DC_ZVA = 1;
-	public static final int ARM64_DC_IVAC = 2;
-	public static final int ARM64_DC_ISW = 3;
-	public static final int ARM64_DC_CVAC = 4;
-	public static final int ARM64_DC_CSW = 5;
-	public static final int ARM64_DC_CVAU = 6;
-	public static final int ARM64_DC_CIVAC = 7;
-	public static final int ARM64_DC_CISW = 8;
-	public static final int ARM64_DC_CVAP = 9;
-
-	public static final int ARM64_IC_INVALID = 0;
-	public static final int ARM64_IC_IALLUIS = 1;
-	public static final int ARM64_IC_IALLU = 2;
-	public static final int ARM64_IC_IVAU = 3;
+	public static final int ARM64_DC_ZVA = 93;
+	public static final int ARM64_DC_IVAC = 94;
+	public static final int ARM64_DC_ISW = 95;
+	public static final int ARM64_DC_CVAC = 96;
+	public static final int ARM64_DC_CSW = 97;
+	public static final int ARM64_DC_CVAU = 98;
+	public static final int ARM64_DC_CIVAC = 99;
+	public static final int ARM64_DC_CISW = 100;
+	public static final int ARM64_DC_CVAP = 101;
+	public static final int ARM64_IC_IALLUIS = 102;
+	public static final int ARM64_IC_IALLU = 103;
+	public static final int ARM64_IC_IVAU = 104;
 
 	public static final int ARM64_PRFM_INVALID = 0;
 	public static final int ARM64_PRFM_PLDL1KEEP = 0x00+1;
