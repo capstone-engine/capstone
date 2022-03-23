@@ -18,6 +18,22 @@
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
 0x20,0x75,0x0b,0xd5 == ic ivau, x0 ; op_count: 2 ; operands[0].type: SYS = 0x68
 
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+
 !# issue 1839 AArch64 Incorrect detailed disassembly of ldr
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
 0x41,0x00,0x40,0xf9 == ldr x1, [x2] ; operands[0].access: WRITE ; operands[1].access: READ
@@ -229,19 +245,19 @@
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; Vector Arrangement Specifier: 0xb
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; Vector Arrangement Specifier: 0xd
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; Vector Arrangement Specifier: 0x4
+0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; operands[1].vas: 0x4
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; Vector Arrangement Specifier: 0x8
+0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; operands[1].vas: 0x8
 
 !# issue 1211
 !# CS_ARCH_X86, CS_MODE_64, None

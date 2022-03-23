@@ -710,6 +710,20 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1H;
 				 }
 				 break;
+			case AArch64_ORRv16i8:
+			case AArch64_NOTv16i8:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_16B;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_16B;
+				 }
+				 break;
+			case AArch64_ORRv8i8:
+			case AArch64_NOTv8i8:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_8B;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_8B;
+				 }
+				 break;
 		}
 	} else {
 		printInstruction(MI, O);

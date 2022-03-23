@@ -100,7 +100,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 			add_str(&result, " ; Ext: %u", op->ext);
 
 		if (op->vas != ARM64_VAS_INVALID)
-			add_str(&result, " ; Vector Arrangement Specifier: 0x%x", op->vas);
+			add_str(&result, " ; operands[%u].vas: 0x%x", i, op->vas);
 
 		if (op->vector_index != -1)
 			add_str(&result, " ; Vector Index: %u", op->vector_index);
