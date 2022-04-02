@@ -1,0 +1,6 @@
+
+@PACKAGE_INIT@
+
+include(capstone-targets.cmake)
+
+check_required_components(capstone)

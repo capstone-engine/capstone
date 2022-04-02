@@ -507,6 +507,10 @@ set_property(GLOBAL PROPERTY VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION
 ## targets
 if (CAPSTONE_BUILD_STATIC)
     add_library(capstone-static STATIC ${ALL_SOURCES} ${ALL_HEADERS})
+    target_include_directories(capstone-static
+        PUBLIC
+            $<INSTALL_INTERFACE:include>
+    )
     set_property(TARGET capstone-static PROPERTY OUTPUT_NAME capstone)
     set(default-target capstone-static)
 endif ()
@@ -527,6 +531,10 @@ endif ()
 
 if (CAPSTONE_BUILD_SHARED)
     add_library(capstone-shared SHARED ${ALL_SOURCES} ${ALL_HEADERS})
+    target_include_directories(capstone-shared
+        PUBLIC
+            $<INSTALL_INTERFACE:include>
+    )
     set_property(TARGET capstone-shared PROPERTY OUTPUT_NAME capstone)
     set_property(TARGET capstone-shared PROPERTY COMPILE_FLAGS -DCAPSTONE_SHARED)
 
@@ -596,6 +604,7 @@ source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 
 ### test library 64bit routine:
 include("GNUInstallDirs")
+include(CMakePackageConfigHelpers)
 
 ## installation
 if (CAPSTONE_INSTALL)
@@ -603,16 +612,25 @@ if (CAPSTONE_INSTALL)
 endif ()
 configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
 
+configure_package_config_file(capstone-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/capstone-config.cmake
+  INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/capstone-config-version.cmake
+  VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}
+  COMPATIBILITY SameMajorVersion )
+
 if (CAPSTONE_BUILD_STATIC AND CAPSTONE_INSTALL)
     install(TARGETS capstone-static
-            RUNTIME DESTINATION bin
+            EXPORT capstone-targets
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif ()
 
 if (CAPSTONE_BUILD_SHARED AND CAPSTONE_INSTALL)
     install(TARGETS capstone-shared
-            RUNTIME DESTINATION bin
+            EXPORT capstone-targets
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif ()
@@ -623,7 +641,18 @@ add_executable(cstool ${CSTOOL_SRC})
 target_link_libraries(cstool ${default-target})
 
 if (CAPSTONE_INSTALL)
-    install(TARGETS cstool DESTINATION bin)
+    install(TARGETS cstool
+        EXPORT capstone-targets
+        DESTINATION ${CMAKE_INSTALL_BINDIR})
     install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif ()
+endif ()
+
+if (CAPSTONE_INSTALL)
+    install(EXPORT capstone-targets
+        NAMESPACE capstone::
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/capstone-config.cmake
+                  ${CMAKE_CURRENT_BINARY_DIR}/capstone-config-version.cmake
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 endif ()
