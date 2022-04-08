@@ -1,3 +1,86 @@
+!# issue 1856 AArch64 SYS instruction operands: tlbi 1 op
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x1f,0x83,0x08,0xd5 == tlbi vmalle1is ; op_count: 1 ; operands[0].type: SYS = 0x3
+
+!# issue 1856 AArch64 SYS instruction operands: tlbi 2 op
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x22,0x87,0x08,0xd5 == tlbi vae1, x2 ; op_count: 2 ; operands[0].type: SYS = 0x16
+
+!# issue 1856 AArch64 SYS instruction operands: at
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x78,0x0c,0xd5 == at s12e0r, x0 ; op_count: 2 ; operands[0].type: SYS = 0x59
+
+!# issue 1856 AArch64 SYS instruction operands: dc
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x22,0x7b,0x0b,0xd5 == dc cvau, x2 ; op_count: 2 ; operands[0].type: SYS = 0x62
+
+!# issue 1856 AArch64 SYS instruction operands: ic
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x75,0x0b,0xd5 == ic ivau, x0 ; op_count: 2 ; operands[0].type: SYS = 0x68
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+
+!# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+
+!# issue 1839 AArch64 Incorrect detailed disassembly of ldr
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x41,0x00,0x40,0xf9 == ldr x1, [x2] ; operands[0].access: WRITE ; operands[1].access: READ
+
+// !# issue 1827 x86-16 lcall 0:0xd
+// !# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+// 0x9a,0x0d,0x00,0x00,0x00 == lcall 0:0xd
+
+!# issue 1827 x16 lcall seg:off format
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0xb8,0x01,0x00,0x00,0x00 == mov eax, 1
+0xb9,0x00,0x00,0x00,0x00 == mov ecx, 0
+0x80,0xb8,0x01,0x00,0x00,0x00,0xb9 == cmp byte ptr [eax + 1], 0xb9
+0x00,0x00 == add byte ptr [eax], al
+0x01,0x00 == add dword ptr [eax], eax
+
+!# issue 1827 x16 lcall seg:off format
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+0x33,0xc0 == xor ax, ax
+0xba,0x5a,0xff == mov dx, 0xff5a
+
+!# issue 1708 M68K floating point loads and stores generate the same op_str
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0xf2,0x27,0x74,0x00 == fmove.d fp0, -(a7)
+0xf2,0x1f,0x54,0x80 == fmove.d (a7)+, fp1
+0x4e,0x75 == rts
+
+!# issue 1661 M68K invalid transfer direction in MOVEC instruction
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0x4E,0x7A,0x00,0x02 == movec cacr, d0
+
+!# issue 1653 AArch64 wrong register access read/write flags on cmp instruction
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x3F,0x00,0x02,0xEB == cmp x1, x2 ; operands[0].access: READ
+
+!# issue 1643 M68K incorrect read of 32-bit imm for bsr
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040 , None
+0x61,0xff,0x00,0x00,0x0b,0xea == bsr.l $bec
+
+!# issue 1627 Arm64 LD1 missing immediate operand
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xe0,0x73,0xdf,0x0c == ld1 {v0.8b}, [sp], #8 ; operands[2].type: IMM = 0x8
+
+!# issue 1587 ARM thumb pushed registers write
+!# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
+0x2d,0xe9,0xf0,0x47 == push.w {r4, r5, r6, r7, r8, sb, sl, lr} ; operands[0].access: READ
+
 !# issue 1504 movhps qword ptr
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0f,0x16,0x08 == movhps xmm1, qword ptr [rax] ; Opcode:0x0f 0x16 0x00 0x00
@@ -162,19 +245,19 @@
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; Vector Arrangement Specifier: 0xb
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; Vector Arrangement Specifier: 0xd
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; Vector Arrangement Specifier: 0x4
+0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; operands[1].vas: 0x4
 
 !# issue 1452
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; Vector Arrangement Specifier: 0x8
+0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; operands[1].vas: 0x8
 
 !# issue 1211
 !# CS_ARCH_X86, CS_MODE_64, None

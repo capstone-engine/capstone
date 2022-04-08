@@ -679,7 +679,7 @@ class CsInsn(object):
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, self.xop_cc, self.sse_cc, \
                 self.avx_cc, self.avx_sae, self.avx_rm, self.eflags, \
-                self.modrm_offset, self.disp_offset, self.disp_size, self.imm_offset, self.imm_size, \
+                self.encoding, self.modrm_offset, self.disp_offset, self.disp_size, self.imm_offset, self.imm_size, \
                 self.operands) = x86.get_arch_info(self._raw.detail.contents.arch.x86)
         elif arch == CS_ARCH_M68K:
                 (self.operands, self.op_size) = m68k.get_arch_info(self._raw.detail.contents.arch.m68k)
@@ -1099,8 +1099,11 @@ class Cs(object):
             print(code)'''
         # Pass a bytearray by reference
         size = len(code)
-        if isinstance(code, bytearray):
-            code = ctypes.byref(ctypes.c_char.from_buffer(code))
+        view = memoryview(code)
+        if not view.readonly:
+            code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:
@@ -1127,8 +1130,11 @@ class Cs(object):
         all_insn = ctypes.POINTER(_cs_insn)()
         size = len(code)
         # Pass a bytearray by reference
-        if isinstance(code, bytearray):
-            code = ctypes.byref(ctypes.c_char.from_buffer(code))
+        view = memoryview(code)
+        if not view.readonly:
+            code = ctypes.byref(ctypes.c_char.from_buffer(view))
+        elif not isinstance(code, bytes):
+            code = view.tobytes()
         res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
         if res > 0:
             try:

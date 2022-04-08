@@ -17,12 +17,9 @@
 
 void MCInst_Init(MCInst *inst)
 {
-	unsigned int i;
-
-	for (i = 0; i < 48; i++) {
-		inst->Operands[i].Kind = kInvalid;
-		inst->Operands[i].ImmVal = 0;
-	}
+	// unnecessary to initialize in loop . its expensive and inst->size shuold be honored
+	inst->Operands[0].Kind = kInvalid;
+	inst->Operands[0].ImmVal = 0;
 
 	inst->Opcode = 0;
 	inst->OpcodePub = 0;

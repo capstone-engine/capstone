@@ -7,9 +7,11 @@ from subprocess import Popen, PIPE
 from pprint import pprint as ppr
 import os
 
+_python3 = sys.version_info.major == 3
+
 
 def Usage(s):
-	print 'Usage: {} -t <cstest_path> [-f <file_name.cs>] [-d <directory>]'.format(s)
+	print('Usage: {} -t <cstest_path> [-f <file_name.cs>] [-d <directory>]'.format(s))
 	sys.exit(-1)
 
 def get_report_file(toolpath, filepath, getDetails, cmt_out):
@@ -19,8 +21,11 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 
 #	stdout
 	failed_tests = []
-#	print '---> stdout\n', stdout
-#	print '---> stderr\n', stderr
+	if _python3:
+		stdout = bytes.decode(stdout)
+		stderr = bytes.decode(stderr)
+	# print('---> stdout\n', stdout)
+	# print('---> stderr\n', stderr)
 	matches = re.finditer(r'\[\s+RUN\s+\]\s+(.*)\n\[\s+FAILED\s+\]', stdout)
 	for match in matches:
 		failed_tests.append(match.group(1))
@@ -41,12 +46,12 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 			counter += 1
 		else:
 			continue
-	print '\n[-] There are/is {} failed test(s)'.format(len(details))
+	print('\n[-] There are/is {} failed test(s)'.format(len(details)))
 	if len(details) > 0 and getDetails:
-		print '[-] Detailed report for {}:\n'.format(filepath)
+		print('[-] Detailed report for {}:\n'.format(filepath))
 		for c, f, d in details:
-			print '\t[+] {}: {}\n\t\t{}\n'.format(f, c, d)
-		print '\n'
+			print('\t[+] {}: {}\n\t\t{}\n'.format(f, c, d))
+		print('\n')
 		return 0
 	elif len(details) > 0:
 		for c, f, d in details:
@@ -58,7 +63,7 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 				rm_proc = Popen(tmp_cmd2, stdout=PIPE, stderr=PIPE)
 				rm_proc.communicate()
 
-		return 0;
+		return 0
 	return 1
 
 def get_report_folder(toolpath, folderpath, details, cmt_out):
@@ -67,7 +72,7 @@ def get_report_folder(toolpath, folderpath, details, cmt_out):
 		path = root.split(os.sep)
 		for f in files:
 			if f.split('.')[-1] == 'cs':
-				print '[-] Target:', f,
+				print('[-] Target:', f,)
 				result *= get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details, cmt_out)
 	
 	sys.exit(result ^ 1)

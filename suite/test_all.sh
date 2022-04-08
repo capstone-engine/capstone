@@ -5,5 +5,5 @@
 
 # syntax: test_all.sh <name>
 
-./test_archs.py > /tmp/$1_arch
+# ./test_archs.py > /tmp/$1_arch
 ./test_c.sh $1_c

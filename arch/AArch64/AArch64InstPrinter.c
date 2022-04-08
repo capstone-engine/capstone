@@ -698,6 +698,32 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			case AArch64_UMOVvi32:
 				 arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1S);
 				 break;
+			case AArch64_INSvi8lane:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1B;
+				 }
+				 break;
+			case AArch64_INSvi16lane:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1H;
+				 }
+				 break;
+			case AArch64_ORRv16i8:
+			case AArch64_NOTv16i8:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_16B;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_16B;
+				 }
+				 break;
+			case AArch64_ORRv8i8:
+			case AArch64_NOTv8i8:
+				 if (MI->csh->detail) {
+				     MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_8B;
+				     MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_8B;
+				 }
+				 break;
 		}
 	} else {
 		printInstruction(MI, O);
@@ -802,6 +828,9 @@ static bool printSysAlias(MCInst *MI, SStream *O)
 		MI->ac_idx++;
 #endif
 #endif
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = AArch64_map_sys_op(Name);
+		MI->flat_insn->detail->arm64.op_count++;
 
 		if (NeedsReg) {
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
@@ -834,7 +863,7 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 #ifndef CAPSTONE_DIET
 				uint8_t access;
 
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), OpNum);
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
 				MI->ac_idx++;
 #endif
@@ -867,9 +896,8 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 #ifndef CAPSTONE_DIET
 				uint8_t access;
 
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+				access = get_op_access(MI->csh, MCInst_getOpcode(MI), OpNum);
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
 #endif
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
@@ -1481,7 +1509,7 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	// 8 decimal places are enough to perfectly represent permitted floats.
 #if defined(_KERNEL_MODE)
 	// Issue #681: Windows kernel does not support formatting float point
-	SStream_concat(O, "#<float_point_unsupported>");
+	SStream_concat0(O, "#<float_point_unsupported>");
 #else
 	SStream_concat(O, "#%.8f", FPImm);
 #endif
@@ -1540,11 +1568,11 @@ static void printGPRSeqPairsClassOperand(MCInst *MI, unsigned OpNum, SStream *O,
 #endif
 
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Even);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Even;
 		MI->flat_insn->detail->arm64.op_count++;
 
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Odd);
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Odd;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
 }
@@ -2443,6 +2471,8 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 			case AArch64_STRWpre:
 			case AArch64_STRXpost:
 			case AArch64_STRXpre:
+			case AArch64_LDRAAwriteback:
+			case AArch64_LDRABwriteback:
 				flat_insn->detail->arm64.writeback = true;
 				break;
 		}

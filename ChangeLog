@@ -1,6 +1,207 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 5.0.0-rc2: February 28th, 2022
+
+New features:
+- None
+
+Improvements:
+- Fix for python publish build (#1844)
+- Modernize CMake and switch to CMake 3.15 (#1841)
+- Fix AArch64 ldapr detailed information (#1840)
+- Fix incorrect MI->ac_idx leading to wrong AArch64 InsnOp access printing (#1845)
+
+Contributors:
+- stevielavern
+- mrexodia
+- kabeor
+
+---------------------------------
+Version 5.0.0-rc1: February 27th, 2022
+
+New features:
+- Add arch BPF (#1388)
+- Add arch RISCV (#1401)
+- Add arch WASM (#1359)
+- PyPI workflow (#1645)
+- Option to generate install target (#1698 #1700)
+- Swift binding (#1707)
+- Add CI Test support (#1797)
+- Add benchmark (#1811)
+
+Improvements:
+- Add fixups for aarch64 instructions (#1632 #1655)
+- Add fixups for x86 instructions (#1644 #1657 #1689 1751)
+- Add fixups for m68k instructions (#1663 #1709)
+- Add fixups for m680x instructions (#1695)
+- Add fixups for mips instructions (#1674)
+- Add fixups for mos65xx instructions (#1702)
+- Add fixups for systemz instructions (#1679)
+- Add fixups for risc-v instructions (#1682 #1690 #1691)
+- Add fixups for ppc instructions (#1687 #1688)
+- Add cmake config and export targets (#1637)
+- Fix issues in Makefiles (#1639)
+- Fix issues about cmake builds (#1649 #1659)
+- MSVC tooling updates (#1651)
+- Fix crash when using skipdata with NULL mnemonic(#1703)
+- Fix python only use ascii character (#1704)
+- Add support for aarch64 distributions (#1720)
+- Fix registry access for several versions of pop such as POPDS, POPSS, etc. (#1725)
+- Fix registry access on cmov instructions (#1727)
+- Fix -Wstringop-truncation warnings (#1730)
+- Fix always return the same type from regs_read (#1736)
+- Fix inconsistent behavior of Mips_option() (#1744)
+- Fix pythonic bug (#1745)
+- Fixes the (pip) Python Module build on FreeBSD (#1750)
+- Enable detection and build on all BSD systems (#1753)
+- Fix the displacement offset for moffset-encoded operands (#1754)
+- Update cmake_minimum_required to version 2.8.12 (#1756)
+- Fixed typos in compilation steps (#1762)
+- Fix build android (#1765)
+- Support disassembling bytes from memoryview (#1773)
+- Fixed library extension to build properly under CYGWIN (#1791)
+- Add Capstone Engine Documentation (#1794)
+- Fix eflags effects for adc/sbb (#1798)
+- Update x86 operand access information (#1801)
+- CI automatically build release tarball (#1802)
+- Dont format sstreams when there's nothing to format (#1805)
+- Fix warning about Unused variables (#1815)
+- Fix insn initialization when instruction have no operands or have a prefix (#1816)
+- Avoid abort() if x86 not supported (#1818)
+- Fix unterminated string regression (#1819)
+- Fixed incorrect operand access on x86 instruction vmovdqu (#1823)
+
+Contributors:
+- ekilmer
+- mcmtroffaes
+- sh1r4s3
+- emoon
+- chfl4gs
+- heshpdx
+- hmoenck
+- cyanpencil
+- NicolasDerumigny
+- trofi
+- maximumspatium
+- junchao-loongson
+- carenas 
+- notyourusualaccountname
+- rth7680
+- StalkR
+- aeflores
+- TobiasFaller
+- XVilka
+- meme
+- zydeco
+- catenacyber
+- michalsc
+- urbas
+- keenk
+- kazarmy
+- learn-more
+- veritas501
+- trufae
+- cederom
+- Quentin01
+- jranieri-grammatech
+- scribam
+- huettenhain
+- LBJ-the-GOAT
+- wheremyfoodat
+- Jaysonicc
+- huettenhain
+- syscl
+- bezita
+- Smartsmurf 
+- tmfink
+- kazarmy
+- rofl0r
+- bSr43
+- wtdcode
+- dropTableUsers42
+- carenas
+- owlxiao
+- Mxz297
+- SpikeI
+- catenacyber
+- david942j
+- fanfuqiang
+- aquynh
+- kabeor
+
+
+---------------------------------
+Version 4.0.2: May 8th, 2020
+
+[ Core ]
+
+- Windows kernel-mode driver support
+- Fix installation path on FreeBSD and DragonFly
+
+
+[ cstool ]
+
+- Add armv8, ppc32 & thumbv8 modes
+- Print instruction ID
+
+
+[ X86 ]
+
+- Support CS_OPT_UNSIGNED for ATT syntax
+- Fix operand size for some instructions
+- Fix LOCK prefixes
+- Recognize xacquire/xrelease prefix
+- Fix call/jmp access mode of mem operand
+- Add ENDBR32, ENDBR64 to reduce mode
+- Other minor fixes
+
+
+[ ARM64 ]
+
+- Support CS_OPT_UNSIGNED
+- Fix register access flags for memory instructions
+- Fix UMOV vess
+
+
+[ ARM ]
+
+- Update writeback for STR_POST_REG
+
+
+[ M68K ]
+
+- Store correct register value in op.reg_pair
+
+
+[ PowerPC ]
+
+- BDZLA is absolute branch
+
+
+[ SystemZ ]
+
+- Fix truncated 64bit imm operand
+- Fix base/index printing
+
+
+[ Python ]
+
+- Fix skipdata struct being destroyed
+- Add repr for capstone.CsInsn
+
+
+[ Java ]
+
+- Fix Java bindings to use pointers instead of longs
+
+
+[ Ocaml ]
+
+- Fix x86_op record
+
+
+---------------------------------
 Version 4.0.1: January 10th, 2019
 
 
