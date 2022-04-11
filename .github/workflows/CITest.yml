@@ -118,35 +118,37 @@ jobs:
         python cstest_report.py -D -t build/cstest -d ../MC;
         python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
 
-  # Windows:
-  #   runs-on: ${{ matrix.config.os }}
-  #   name: ${{ matrix.config.name }}
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       config:
-  #         - {
-  #             name: 'windows x64 MSVC 64bit',
-  #             os: windows-latest,
-  #             arch: x64,
-  #             python-arch: x64,
-  #             python-version: '3.9',
-  #           }
+  Windows:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: 'windows x64 MSVC 64bit'
+            os: windows-latest
+            arch: x64
+            platform: windows
+            python-arch: x64
+            python-version: '3.9'
 
-  #   steps:
-  #   - uses: actions/checkout@v2
+    steps:
+    - uses: actions/checkout@v3
 
-  #   - name: '🛠️ Win MSVC 64 setup'
-  #     if: contains(matrix.config.name, 'MSVC 64')
-  #     uses: microsoft/setup-msbuild@v1
+    - uses: lukka/get-cmake@latest
+      name: Get CMake
 
-  #   - name: '🚧 Win MSVC 64 build'
-  #     if: contains(matrix.config.name, 'MSVC 64')
-  #     shell: bash
-  #     run: |
-  #       # choco install cmake
-  #       cmake --version
-  #       mkdir build
-  #       cd build
-  #       cmake ..
-  #       cmake --build . --config Release --target install
+    - name: '🛠️ Win MSVC 64 setup'
+      if: contains(matrix.config.name, 'MSVC 64')
+      uses: ilammy/msvc-dev-cmd@v1  
+      with:
+        arch: 'x64'
+
+    - name: '🚧 Win MSVC 64 build'
+      if: contains(matrix.config.name, 'MSVC 64')
+      shell: bash
+      run: |
+        cmake --version
+        cmake --preset=${{ matrix.config.platform }}-x64
+        cmake --build --preset build-${{ matrix.config.platform }}-release
+        cmake --build --preset install-${{ matrix.config.platform }}-release
