@@ -73,6 +73,24 @@
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
     },
     {
+      "name": "build-linux-release",
+      "inherits": "build-linux",
+      "configuration": "Release",
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux"}
+    },
+    {
+      "name": "build-macos-release",
+      "inherits": "build-macos",
+      "configuration": "Release",
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Darwin"}
+    },
+    {
+      "name": "build-windows-release",
+      "inherits": "build-windows",
+      "configuration": "Release",
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
+    },
+    {
       "name": "install-linux",
       "configurePreset": "linux-x64",
       "inherits": "build-linux",
@@ -91,6 +109,24 @@
       "configurePreset": "windows-x64",
       "inherits": "build-windows",
       "targets": [ "install" ],
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
+    },
+    {
+      "name": "install-linux-release",
+      "inherits": "install-linux",
+      "configuration": "Release",
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux"}
+    },
+    {
+      "name": "install-macos-release",
+      "inherits": "install-macos",
+      "configuration": "Release",
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Darwin"}
+    },
+    {
+      "name": "install-windows-release",
+      "inherits": "install-windows",
+      "configuration": "Release",
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
     }
   ]
