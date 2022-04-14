@@ -693,7 +693,7 @@ if(CAPSTONE_BUILD_CSTOOL)
     target_link_libraries(cstool PRIVATE capstone)
 
     if(CAPSTONE_INSTALL)
-        install(TARGETS cstool DESTINATION ${CMAKE_INSTALL_BINDIR})
+        install(TARGETS cstool EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
         install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
     endif()
 endif()
