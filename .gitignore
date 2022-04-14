@@ -105,6 +105,8 @@ build*/
 
 # CMake build directories
 build*/
+/build
+/out
 
 # Xcode
 xcode/Capstone.xcodeproj/xcuserdata
