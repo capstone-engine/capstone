@@ -698,18 +698,83 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 			case AArch64_UMOVvi32:
 				arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1S);
 				break;
+			case AArch64_INSvi8gpr:
+			case AArch64_DUP_ZI_B:
+			case AArch64_CPY_ZPmI_B:
+			case AArch64_CPY_ZPzI_B:
+			case AArch64_CPY_ZPmV_B:
+			case AArch64_CPY_ZPmR_B:
+			case AArch64_DUP_ZR_B:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
+				}
+				break;
+			case AArch64_INSvi16gpr:
+			case AArch64_DUP_ZI_H:
+			case AArch64_CPY_ZPmI_H:
+			case AArch64_CPY_ZPzI_H:
+			case AArch64_CPY_ZPmV_H:
+			case AArch64_CPY_ZPmR_H:
+			case AArch64_DUP_ZR_H:
+			case AArch64_FCPY_ZPmI_H:
+			case AArch64_FDUP_ZI_H:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
+				}
+				break;
+			case AArch64_INSvi32gpr:
+			case AArch64_DUP_ZI_S:
+			case AArch64_CPY_ZPmI_S:
+			case AArch64_CPY_ZPzI_S:
+			case AArch64_CPY_ZPmV_S:
+			case AArch64_CPY_ZPmR_S:
+			case AArch64_DUP_ZR_S:
+			case AArch64_FCPY_ZPmI_S:
+			case AArch64_FDUP_ZI_S:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
+				}
+				break;
+			case AArch64_INSvi64gpr:
+			case AArch64_DUP_ZI_D:
+			case AArch64_CPY_ZPmI_D:
+			case AArch64_CPY_ZPzI_D:
+			case AArch64_CPY_ZPmV_D:
+			case AArch64_CPY_ZPmR_D:
+			case AArch64_DUP_ZR_D:
+			case AArch64_FCPY_ZPmI_D:
+			case AArch64_FDUP_ZI_D:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
+				}
+				break;
 			case AArch64_INSvi8lane:
+			case AArch64_ORR_PPzPP:
+			case AArch64_ORRS_PPzPP:
 				if (MI->csh->detail) {
 					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
 					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1B;
 				}
-				 break;
+				break;
 			case AArch64_INSvi16lane:
 				if (MI->csh->detail) {
 					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
 					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1H;
 				}
 				 break;
+			case AArch64_INSvi32lane:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
+					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1S;
+				}
+				break;
+			case AArch64_INSvi64lane:
+			case AArch64_ORR_ZZZ:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
+					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1D;
+				}
+				break;
 			case AArch64_ORRv16i8:
 			case AArch64_NOTv16i8:
 				if (MI->csh->detail) {
@@ -722,6 +787,85 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				if (MI->csh->detail) {
 					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_8B;
 					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_8B;
+				}
+				break;
+			case AArch64_AND_PPzPP:
+			case AArch64_ANDS_PPzPP:
+			case AArch64_EOR_PPzPP:
+			case AArch64_EORS_PPzPP:
+			case AArch64_SEL_PPPP:
+			case AArch64_SEL_ZPZZ_B:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
+					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1B;
+				}
+				break;
+			case AArch64_SEL_ZPZZ_D:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
+					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1D;
+				}
+				break;
+			case AArch64_SEL_ZPZZ_H:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
+					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1H;
+				}
+				break;
+			case AArch64_SEL_ZPZZ_S:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
+					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1S;
+				}
+				break;
+			case AArch64_DUP_ZZI_B:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
+					if (MI->flat_insn->detail->arm64.op_count == 1) {
+						arm64_op_addReg(MI, ARM64_REG_B0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
+					} else {
+						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1B;
+					}
+				}
+				break;
+			case AArch64_DUP_ZZI_D:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
+					if (MI->flat_insn->detail->arm64.op_count == 1) {
+						arm64_op_addReg(MI, ARM64_REG_D0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
+					} else {
+						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1D;
+					}
+				}
+				break;
+			case AArch64_DUP_ZZI_H:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
+					if (MI->flat_insn->detail->arm64.op_count == 1) {
+						arm64_op_addReg(MI, ARM64_REG_H0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
+					} else {
+						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1H;
+					}
+				}
+				break;
+			case AArch64_DUP_ZZI_Q:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1Q;
+					if (MI->flat_insn->detail->arm64.op_count == 1) {
+						arm64_op_addReg(MI, ARM64_REG_Q0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
+					} else {
+						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1Q;
+					}
+				 }
+				 break;
+			case AArch64_DUP_ZZI_S:
+				if (MI->csh->detail) {
+					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
+					if (MI->flat_insn->detail->arm64.op_count == 1) {
+				 		arm64_op_addReg(MI, ARM64_REG_S0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
+					} else {
+						 MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1S;
+					}
 				}
 				break;
 		}

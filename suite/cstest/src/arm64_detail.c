@@ -103,7 +103,7 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 			add_str(&result, " ; operands[%u].vas: 0x%x", i, op->vas);
 
 		if (op->vector_index != -1)
-			add_str(&result, " ; Vector Index: %u", op->vector_index);
+			add_str(&result, " ; operands[%u].vector_index: %u", i, op->vector_index);
 	}
 
 	if (arm64->update_flags)
