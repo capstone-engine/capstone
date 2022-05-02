@@ -1,3 +1,135 @@
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x04,0x03,0x5e == mov b1, v1.b[1] ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x03,0x4e == mov v0.b[1], w22 ; operands[0].vas: 0x4 ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x06,0x4e == mov v0.h[1], w22 ; operands[0].vas: 0x8 ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x0c,0x4e == mov v0.s[1], w22 ; operands[0].vas: 0xb ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x18,0x4e == mov v0.d[1], x22 ; operands[0].vas: 0xd ; operands[0].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x0c,0x03,0x6e == mov v0.b[1], v1.b[1] ; operands[0].vas: 0x4 ; operands[0].vector_index: 1 ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x14,0x06,0x6e == mov v0.h[1], v1.h[1] ; operands[0].vas: 0x8 ; operands[0].vector_index: 1 ; operands[1].vas: 0x8 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x24,0x0c,0x6e == mov v0.s[1], v1.s[1] ; operands[0].vas: 0xb ; operands[0].vector_index: 1 ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x44,0x18,0x6e == mov v0.d[1], v1.d[1] ; operands[0].vas: 0xd ; operands[0].vector_index: 1 ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0xc0,0x50,0x05 == fmov z0.h, p0/m, #2.00000000 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0xc0,0x79,0x25 == fmov z0.h, #2.00000000 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0xa1,0xca,0xf8,0x25 == mov z1.d, #0x55 ; operands[0].vas: 0xd
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x44,0x81,0x25 == mov p1.b, p1.b ; operands[0].vas: 0x4 ; operands[1].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x40,0x51,0x05 == mov z1.h, p1/m, #1 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x00,0x51,0x05 == mov z1.h, p1/z, #1 ; operands[0].vas: 0x8
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0xc0,0x38,0x25 == mov z0.b, #1 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x71,0x4a,0x01,0x25 == mov p1.b, p2/m, p3.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x61,0x48,0x03,0x25 == mov p1.b, p2/z, p3.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0xa8,0x28,0x05 == mov z1.b, p2/m, w1 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x38,0x20,0x05 == mov z1.b, w1 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x01,0x88,0x20,0x05 == mov z1.b, p2/m, b0 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0x20,0x21,0x05 == mov z0.b, b0 ; operands[0].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0x20,0x23,0x05 == mov z0.b, z0.b[1] ; operands[0].vas: 0x4 ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0xc4,0x20,0x05 == mov z0.b, p1/m, z1.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x30,0x61,0x04 == mov z0.d, z1.d ; operands[0].vas: 0xd ; operands[1].vas: 0xd
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x44,0x42,0x25 == movs p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x44,0xc1,0x25 == movs p0.b, p1.b ; operands[0].vas: 0x4 ; operands[1].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x46,0x01,0x25 == not p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
+!# issue 1873 AArch64 missing VAS specifiers in aliased instructions
+!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x46,0x41,0x25 == nots p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+
 !# issue 1856 AArch64 SYS instruction operands: tlbi 1 op
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
 0x1f,0x83,0x08,0xd5 == tlbi vmalle1is ; op_count: 1 ; operands[0].type: SYS = 0x3

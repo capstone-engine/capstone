@@ -607,6 +607,15 @@ arm64_sys_op AArch64_map_sys_op(const char *name)
 	return result;
 }
 
+void arm64_op_addReg(MCInst *MI, int reg)
+{
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
+		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = reg;
+		MI->flat_insn->detail->arm64.op_count++;
+	}
+}
+
 void arm64_op_addVectorArrSpecifier(MCInst * MI, int sp)
 {
 	if (MI->csh->detail) {
