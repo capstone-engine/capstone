@@ -639,6 +639,7 @@ if(CAPSTONE_INSTALL)
     install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
 
     configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
+    install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
     include(CMakePackageConfigHelpers)
     set(CAPSTONE_CMAKE_CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/capstone")
@@ -693,7 +694,6 @@ if(CAPSTONE_BUILD_CSTOOL)
     target_link_libraries(cstool PRIVATE capstone)
 
     if(CAPSTONE_INSTALL)
-        install(TARGETS cstool DESTINATION ${CMAKE_INSTALL_BINDIR})
-        install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+        install(TARGETS cstool EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
     endif()
 endif()
