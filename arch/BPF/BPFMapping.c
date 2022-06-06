@@ -292,7 +292,7 @@ static void update_regs_access(cs_struct *ud, cs_detail *detail,
 	} while (0)
 	/*
 	 * In eBPF mode, only these instructions have implicit registers access:
-	 * - ld{w,h,b,dw} * // w: r0
+	 * - legacy ld{w,h,b,dw} * // w: r0
 	 * - exit // r: r0
 	 */
 	if (EBPF_MODE(ud)) {
@@ -303,7 +303,9 @@ static void update_regs_access(cs_struct *ud, cs_detail *detail,
 		case BPF_INS_LDH:
 		case BPF_INS_LDB:
 		case BPF_INS_LDDW:
-			PUSH_WRITE(BPF_REG_R0);
+			if (BPF_MODE(opcode) == BPF_MODE_ABS || BPF_MODE(opcode) == BPF_MODE_IND) {
+				PUSH_WRITE(BPF_REG_R0);
+			}
 			break;
 		case BPF_INS_EXIT:
 			PUSH_READ(BPF_REG_R0);
