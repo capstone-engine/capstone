@@ -98,6 +98,7 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_JSGT,	"jsgt" },
 	{ BPF_INS_JSGE,	"jsge" },
 	{ BPF_INS_CALL,	"call" },
+	{ BPF_INS_CALLX, "callx" },
 	{ BPF_INS_EXIT,	"exit" },
 	{ BPF_INS_JLT, "jlt" },
 	{ BPF_INS_JLE, "jle" },
@@ -254,6 +255,10 @@ static bpf_insn op2insn_alu(unsigned opcode)
 
 static bpf_insn op2insn_jmp(unsigned opcode)
 {
+	if (opcode == (BPF_CLASS_JMP | BPF_JUMP_CALL | BPF_SRC_X)) {
+		return BPF_INS_CALLX;
+	}
+
 #define CASE(c) case BPF_JUMP_##c: return BPF_INS_##c
 	switch (BPF_OP(opcode)) {
 	case BPF_JUMP_JA:
@@ -396,7 +401,7 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 	case BPF_CLASS_JMP:
 		grp = BPF_GRP_JUMP;
 		id = op2insn_jmp(opcode);
-		if (id == BPF_INS_CALL)
+		if (id == BPF_INS_CALL || id == BPF_INS_CALLX)
 			grp = BPF_GRP_CALL;
 		else if (id == BPF_INS_EXIT)
 			grp = BPF_GRP_RETURN;

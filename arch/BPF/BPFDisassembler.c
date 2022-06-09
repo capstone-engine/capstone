@@ -341,10 +341,15 @@ static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		if (BPF_OP(bpf->op) == BPF_JUMP_EXIT)
 			return bpf->op == (BPF_CLASS_JMP | BPF_JUMP_EXIT);
 		if (BPF_OP(bpf->op) == BPF_JUMP_CALL) {
-			if (bpf->op != (BPF_CLASS_JMP | BPF_JUMP_CALL))
-				return false;
-			MCOperand_CreateImm0(MI, bpf->k);
-			return true;
+			if (bpf->op == (BPF_CLASS_JMP | BPF_JUMP_CALL)) {
+				MCOperand_CreateImm0(MI, bpf->k);
+				return true;
+			}
+			if (bpf->op == (BPF_CLASS_JMP | BPF_JUMP_CALL | BPF_SRC_X)) {
+				CHECK_READABLE_AND_PUSH(ud, MI, bpf->k);
+				return true;
+			}
+			return false;
 		}
 
 		/* ja is a special case of jumps */
