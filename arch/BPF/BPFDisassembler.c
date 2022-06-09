@@ -70,6 +70,8 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 		return NULL;
 
 	bpf->op = (uint16_t)code[0];
+	bpf->dst = code[1] & 0xf;
+	bpf->src = (code[1] & 0xf0) >> 4;
 
 	// eBPF has one 16-byte instruction: BPF_LD | BPF_DW | BPF_IMM,
 	// in this case imm is combined with the next block's imm.
@@ -82,8 +84,6 @@ static bpf_internal* fetch_ebpf(cs_struct *ud, const uint8_t *code,
 		bpf->insn_size = 16;
 	}
 	else {
-		bpf->dst = code[1] & 0xf;
-		bpf->src = (code[1] & 0xf0) >> 4;
 		bpf->offset = read_u16(ud, code + 2);
 		bpf->k = read_u32(ud, code + 4);
 	}
@@ -178,7 +178,7 @@ static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 
 	/* eBPF mode */
 	/*
-	 * - IMM: lddw imm64
+	 * - IMM: lddw dst, imm64
 	 * - ABS: ld{w,h,b,dw} [k]
 	 * - IND: ld{w,h,b,dw} [src+k]
 	 * - MEM: ldx{w,h,b,dw} dst, [src+off]
@@ -188,6 +188,7 @@ static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		case BPF_MODE_IMM:
 			if (bpf->op != (BPF_CLASS_LD | BPF_SIZE_DW | BPF_MODE_IMM))
 				return false;
+			CHECK_WRITABLE_AND_PUSH(ud, MI, bpf->dst);
 			MCOperand_CreateImm0(MI, bpf->k);
 			return true;
 		case BPF_MODE_ABS:

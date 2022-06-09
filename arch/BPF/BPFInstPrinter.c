@@ -83,7 +83,12 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 	if (BPF_CLASS(opcode) == BPF_CLASS_LD || BPF_CLASS(opcode) == BPF_CLASS_LDX) {
 		switch (BPF_MODE(opcode)) {
 		case BPF_MODE_IMM:
-			push_op_imm(bpf, MCOperand_getImm(MCInst_getOperand(MI, 0)));
+			if (EBPF_MODE(MI->csh)) {
+				push_op_reg(bpf, MCOperand_getReg(MCInst_getOperand(MI, 0)), CS_AC_WRITE);
+				push_op_imm(bpf, MCOperand_getImm(MCInst_getOperand(MI, 1)));
+			} else {
+				push_op_imm(bpf, MCOperand_getImm(MCInst_getOperand(MI, 0)));
+			}
 			break;
 		case BPF_MODE_ABS:
 			op = MCInst_getOperand(MI, 0);
