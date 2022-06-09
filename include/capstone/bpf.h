@@ -164,6 +164,7 @@ typedef enum bpf_insn {
 	BPF_INS_JSGT,	///< eBPF only
 	BPF_INS_JSGE,	///< eBPF only
 	BPF_INS_CALL,	///< eBPF only
+	BPF_INS_CALLX,	///< eBPF only
 	BPF_INS_EXIT,	///< eBPF only
 	BPF_INS_JLT,	///< eBPF only
 	BPF_INS_JLE,	///< eBPF only
