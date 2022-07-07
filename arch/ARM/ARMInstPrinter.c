@@ -192,10 +192,10 @@ void ARM_getRegName(cs_struct *handle, int value)
 {
 	if (value == CS_OPT_SYNTAX_NOREGNAME) {
 		handle->get_regname = getRegisterName_digit;
-		handle->reg_name = ARM_reg_name2;;
+		handle->reg_name = ARM_reg_name2;
 	} else {
 		handle->get_regname = getRegisterName;
-		handle->reg_name = ARM_reg_name;;
+		handle->reg_name = ARM_reg_name;
 	}
 }
 
