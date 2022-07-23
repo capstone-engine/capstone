@@ -80,13 +80,13 @@ void PPC_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 		return;
 
 	// check if this insn has branch hint
-	if (strrchr(insn_asm, '+') != NULL && !strstr(insn_asm, ".+")) {
+	if (strrchr(insn->mnemonic, '+') != NULL && !strstr(insn_asm, ".+")) {
 		insn->detail->ppc.bh = PPC_BH_PLUS;
-	} else if (strrchr(insn_asm, '-') != NULL) {
+	} else if (strrchr(insn->mnemonic, '-') != NULL) {
 		insn->detail->ppc.bh = PPC_BH_MINUS;
 	}
 
-	if (strrchr(insn_asm, '.') != NULL) {
+	if (strrchr(insn->mnemonic, '.') != NULL) {
 		insn->detail->ppc.update_cr0 = true;
 	}
 }
