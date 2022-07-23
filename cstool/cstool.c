@@ -50,6 +50,8 @@ static struct {
 	{ "ppc32be", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN },
 	{ "ppc32qpx", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc32beqpx", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_BIG_ENDIAN },
+	{ "ppc32ps", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_PS | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc32beps", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_PS | CS_MODE_BIG_ENDIAN },
 	{ "ppc64", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc64be", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN },
 	{ "ppc64qpx", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
@@ -207,6 +209,8 @@ static void usage(char *prog)
 		printf("        ppc32be     ppc32 + big endian\n");
 		printf("        ppc32qpx    ppc32 + qpx + little endian\n");
 		printf("        ppc32beqpx  ppc32 + qpx + big endian\n");
+		printf("        ppc32ps     ppc32 + ps + little endian\n");
+		printf("        ppc32beps   ppc32 + ps + big endian\n");
 		printf("        ppc64       ppc64 + little endian\n");
 		printf("        ppc64be     ppc64 + big endian\n");
 		printf("        ppc64qpx    ppc64 + qpx + little endian\n");
