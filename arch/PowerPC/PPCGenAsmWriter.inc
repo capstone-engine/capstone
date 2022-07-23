@@ -1853,7 +1853,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     17446U,	// INSRDIo
     22083U,	// INSRWI
     17557U,	// INSRWIo
-    570444564U,	// LAx
+    33573652U,	// LAx
     15826U,	// LIWAX
     15872U,	// LIWZX
     21688U,	// RLWIMIbm
@@ -2302,27 +2302,27 @@ static void printInstruction(MCInst *MI, SStream *O)
     25109U,	// EVFSTSTEQ
     26588U,	// EVFSTSTGT
     26666U,	// EVFSTSTLT
-    570445610U,	// EVLDD
+    33574698U,	// EVLDD
     604008185U,	// EVLDDX
-    570446505U,	// EVLDH
+    33575593U,	// EVLDH
     604008289U,	// EVLDHX
-    570452860U,	// EVLDW
+    33581948U,	// EVLDW
     604009078U,	// EVLDWX
-    570451763U,	// EVLHHESPLAT
+    33580851U,	// EVLHHESPLAT
     604008790U,	// EVLHHESPLATX
-    570451788U,	// EVLHHOSSPLAT
+    33580876U,	// EVLHHOSSPLAT
     604008817U,	// EVLHHOSSPLATX
-    570451802U,	// EVLHHOUSPLAT
+    33580890U,	// EVLHHOUSPLAT
     604008832U,	// EVLHHOUSPLATX
-    570446079U,	// EVLWHE
+    33575167U,	// EVLWHE
     604008260U,	// EVLWHEX
-    570451445U,	// EVLWHOS
+    33580533U,	// EVLWHOS
     604008762U,	// EVLWHOSX
-    570452271U,	// EVLWHOU
+    33581359U,	// EVLWHOU
     604008966U,	// EVLWHOUX
-    570451776U,	// EVLWHSPLAT
+    33580864U,	// EVLWHSPLAT
     604008804U,	// EVLWHSPLATX
-    570451816U,	// EVLWWSPLAT
+    33580904U,	// EVLWWSPLAT
     604008847U,	// EVLWWSPLATX
     21624U,	// EVMERGEHI
     22989U,	// EVMERGEHILO
@@ -2432,19 +2432,19 @@ static void printInstruction(MCInst *MI, SStream *O)
     26910U,	// EVSRWIU
     26237U,	// EVSRWS
     27003U,	// EVSRWU
-    570445626U,	// EVSTDD
+    33574714U,	// EVSTDD
     604008193U,	// EVSTDDX
-    570446512U,	// EVSTDH
+    33575600U,	// EVSTDH
     604008297U,	// EVSTDHX
-    570452875U,	// EVSTDW
+    33581963U,	// EVSTDW
     604009086U,	// EVSTDWX
-    570446087U,	// EVSTWHE
+    33575175U,	// EVSTWHE
     604008269U,	// EVSTWHEX
-    570448313U,	// EVSTWHO
+    33577401U,	// EVSTWHO
     604008459U,	// EVSTWHOX
-    570446190U,	// EVSTWWE
+    33575278U,	// EVSTWWE
     604008279U,	// EVSTWWEX
-    570448466U,	// EVSTWWO
+    33577554U,	// EVSTWWO
     604008469U,	// EVSTWWOX
     536898154U,	// EVSUBFSMIAAW
     536898286U,	// EVSUBFSSIAAW
@@ -2603,8 +2603,8 @@ static void printInstruction(MCInst *MI, SStream *O)
     604008583U,	// LBARX
     2751492231U,	// LBARXL
     604008479U,	// LBEPX
-    570454770U,	// LBZ
-    570454770U,	// LBZ8
+    33583858U,	// LBZ
+    33583858U,	// LBZ8
     28599U,	// LBZCIX
     201353618U,	// LBZU
     201353618U,	// LBZU8
@@ -2615,7 +2615,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     29368U,	// LBZXTLS
     29368U,	// LBZXTLS_
     29368U,	// LBZXTLS_32
-    570445716U,	// LD
+    33574804U,	// LD
     604008590U,	// LDARX
     2751492238U,	// LDARXL
     26406U,	// LDAT
@@ -2634,19 +2634,19 @@ static void printInstruction(MCInst *MI, SStream *O)
     15786U,	// LDtocCPT
     15460U,	// LDtocJTI
     15480U,	// LDtocL
-    570445642U,	// LFD
+    33574730U,	// LFD
     604008494U,	// LFDEPX
     201353412U,	// LFDU
     218132945U,	// LFDUX
     604008204U,	// LFDX
     604008113U,	// LFIWAX
     604009167U,	// LFIWZX
-    570451258U,	// LFS
+    33580346U,	// LFS
     201353535U,	// LFSU
     218133031U,	// LFSUX
     604008737U,	// LFSX
-    570444365U,	// LHA
-    570444365U,	// LHA8
+    33573453U,	// LHA
+    33573453U,	// LHA8
     604008597U,	// LHARX
     2751492245U,	// LHARXL
     201353400U,	// LHAU
@@ -2658,8 +2658,8 @@ static void printInstruction(MCInst *MI, SStream *O)
     604008626U,	// LHBRX
     604008626U,	// LHBRX8
     604008511U,	// LHEPX
-    570454834U,	// LHZ
-    570454834U,	// LHZ8
+    33583922U,	// LHZ
+    33583922U,	// LHZ8
     28607U,	// LHZCIX
     201353624U,	// LHZU
     201353624U,	// LHZU8
@@ -2674,7 +2674,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     50353299U,	// LI8
     50357701U,	// LIS
     50357701U,	// LIS8
-    570453013U,	// LMW
+    33582101U,	// LMW
     22107U,	// LSWI
     604008136U,	// LVEBX
     604008306U,	// LVEHX
@@ -2683,19 +2683,19 @@ static void printInstruction(MCInst *MI, SStream *O)
     604005259U,	// LVSR
     604009054U,	// LVX
     604002204U,	// LVXL
-    570444596U,	// LWA
+    33573684U,	// LWA
     604008604U,	// LWARX
     2751492252U,	// LWARXL
     26484U,	// LWAT
     218132908U,	// LWAUX
     604008130U,	// LWAX
     604008130U,	// LWAX_32
-    570444596U,	// LWA_32
+    33573684U,	// LWA_32
     604008651U,	// LWBRX
     604008651U,	// LWBRX8
     604008526U,	// LWEPX
-    570454970U,	// LWZ
-    570454970U,	// LWZ8
+    33584058U,	// LWZ
+    33584058U,	// LWZ8
     28615U,	// LWZCIX
     201353630U,	// LWZU
     201353630U,	// LWZU8
@@ -2707,15 +2707,15 @@ static void printInstruction(MCInst *MI, SStream *O)
     29408U,	// LWZXTLS_
     29408U,	// LWZXTLS_32
     15954U,	// LWZtoc
-    570445898U,	// LXSD
+    33574986U,	// LXSD
     604008239U,	// LXSDX
     604009135U,	// LXSIBZX
     604009150U,	// LXSIHZX
     604008121U,	// LXSIWAX
     604009175U,	// LXSIWZX
-    570450249U,	// LXSSP
+    33579337U,	// LXSSP
     604008566U,	// LXSSPX
-    570452477U,	// LXV
+    33581565U,	// LXV
     604008060U,	// LXVB16X
     604008026U,	// LXVD2X
     604008720U,	// LXVDSX
@@ -2855,12 +2855,12 @@ static void printInstruction(MCInst *MI, SStream *O)
     15763U,	// PPC32GOT
     15773U,	// PPC32PICGOT
     536893140U,	// PSC_DCBZL
-    33576653U,	// PSQ_L
-    33581351U,	// PSQ_LU
+    318789325U,	// PSQ_L
+    318794023U,	// PSQ_LU
     29181U,	// PSQ_LUX
     28632U,	// PSQ_LX
-    33581124U,	// PSQ_ST
-    33581408U,	// PSQ_STU
+    318793796U,	// PSQ_ST
+    318794080U,	// PSQ_STU
     29240U,	// PSQ_STUX
     29084U,	// PSQ_STX
     536896422U,	// PS_ABS
@@ -3016,7 +3016,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     25760U,	// QVFXXMADDS
     20215U,	// QVFXXNPMADD
     25735U,	// QVFXXNPMADDS
-    318788600U,	// QVGPCI
+    335565816U,	// QVGPCI
     604008890U,	// QVLFCDUX
     603999133U,	// QVLFCDUXA
     604008166U,	// QVLFCDX
@@ -3165,9 +3165,9 @@ static void printInstruction(MCInst *MI, SStream *O)
     27664U,	// SLW8
     18296U,	// SLW8o
     18296U,	// SLWo
-    570454970U,	// SPELWZ
+    33584058U,	// SPELWZ
     604009184U,	// SPELWZX
-    570453420U,	// SPESTW
+    33582508U,	// SPESTW
     604009129U,	// SPESTWX
     15571U,	// SPILL_CR
     15718U,	// SPILL_CRBIT
@@ -3187,8 +3187,8 @@ static void printInstruction(MCInst *MI, SStream *O)
     27919U,	// SRW8
     18302U,	// SRW8o
     18302U,	// SRWo
-    570445070U,	// STB
-    570445070U,	// STB8
+    33574158U,	// STB
+    33574158U,	// STB8
     28560U,	// STBCIX
     603998161U,	// STBCX
     604008486U,	// STBEPX
@@ -3201,7 +3201,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     28384U,	// STBXTLS
     28384U,	// STBXTLS_
     28384U,	// STBXTLS_32
-    570445942U,	// STD
+    33575030U,	// STD
     26412U,	// STDAT
     604008618U,	// STDBRX
     28575U,	// STDCIX
@@ -3211,18 +3211,18 @@ static void printInstruction(MCInst *MI, SStream *O)
     604008254U,	// STDX
     28478U,	// STDXTLS
     28478U,	// STDXTLS_
-    570445647U,	// STFD
+    33574735U,	// STFD
     604008502U,	// STFDEPX
     201533642U,	// STFDU
     218313178U,	// STFDUX
     604008212U,	// STFDX
     604009112U,	// STFIWX
-    570451270U,	// STFS
+    33580358U,	// STFS
     201533765U,	// STFSU
     218313264U,	// STFSUX
     604008745U,	// STFSX
-    570446696U,	// STH
-    570446696U,	// STH8
+    33575784U,	// STH
+    33575784U,	// STH8
     604008633U,	// STHBRX
     28583U,	// STHCIX
     603998177U,	// STHCX
@@ -3236,7 +3236,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     28554U,	// STHXTLS
     28554U,	// STHXTLS_
     28554U,	// STHXTLS_32
-    570453018U,	// STMW
+    33582106U,	// STMW
     16075U,	// STOP
     22113U,	// STSWI
     604008143U,	// STVEBX
@@ -3244,8 +3244,8 @@ static void printInstruction(MCInst *MI, SStream *O)
     604009102U,	// STVEWX
     604009059U,	// STVX
     604002210U,	// STVXL
-    570453420U,	// STW
-    570453420U,	// STW8
+    33582508U,	// STW
+    33582508U,	// STW8
     26490U,	// STWAT
     604008658U,	// STWBRX
     28591U,	// STWCIX
@@ -3260,16 +3260,16 @@ static void printInstruction(MCInst *MI, SStream *O)
     29353U,	// STWXTLS
     29353U,	// STWXTLS_
     29353U,	// STWXTLS_32
-    570445904U,	// STXSD
+    33574992U,	// STXSD
     604008246U,	// STXSDX
     604008151U,	// STXSIBX
     604008151U,	// STXSIBXv
     604008321U,	// STXSIHX
     604008321U,	// STXSIHXv
     604009120U,	// STXSIWX
-    570450256U,	// STXSSP
+    33579344U,	// STXSSP
     604008574U,	// STXSSPX
-    570452482U,	// STXV
+    33581570U,	// STXV
     604008069U,	// STXVB16X
     604008034U,	// STXVD2X
     604008087U,	// STXVH8X
@@ -3462,9 +3462,9 @@ static void printInstruction(MCInst *MI, SStream *O)
     28660U,	// VEXTUWLX
     28900U,	// VEXTUWRX
     536891035U,	// VGBBD
-    335564036U,	// VINSERTB
+    352341252U,	// VINSERTB
     1207980140U,	// VINSERTD
-    335565662U,	// VINSERTH
+    352342878U,	// VINSERTH
     1207987607U,	// VINSERTW
     536894945U,	// VLOGEFP
     24016U,	// VMADDFP
@@ -3889,7 +3889,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     22308U,	// XXSEL
     22009U,	// XXSLDWI
     22009U,	// XXSLDWIs
-    352341067U,	// XXSPLTIB
+    369118283U,	// XXSPLTIB
     28036U,	// XXSPLTW
     28036U,	// XXSPLTWs
     183757U,	// gBC
@@ -5077,12 +5077,12 @@ static void printInstruction(MCInst *MI, SStream *O)
     0U,	// PPC32GOT
     0U,	// PPC32PICGOT
     0U,	// PSC_DCBZL
-    16U,	// PSQ_L
-    16U,	// PSQ_LU
+    0U,	// PSQ_L
+    0U,	// PSQ_LU
     710U,	// PSQ_LUX
     710U,	// PSQ_LX
-    16U,	// PSQ_ST
-    16U,	// PSQ_STU
+    0U,	// PSQ_ST
+    0U,	// PSQ_STU
     710U,	// PSQ_STUX
     710U,	// PSQ_STX
     0U,	// PS_ABS
@@ -5142,9 +5142,9 @@ static void printInstruction(MCInst *MI, SStream *O)
     262U,	// QVALIGNI
     262U,	// QVALIGNIb
     262U,	// QVALIGNIs
-    18U,	// QVESPLATI
-    18U,	// QVESPLATIb
-    18U,	// QVESPLATIs
+    16U,	// QVESPLATI
+    16U,	// QVESPLATIb
+    16U,	// QVESPLATIs
     0U,	// QVFABS
     0U,	// QVFABSs
     38U,	// QVFADD
@@ -5178,15 +5178,15 @@ static void printInstruction(MCInst *MI, SStream *O)
     326U,	// QVFLOGICAL
     326U,	// QVFLOGICALb
     326U,	// QVFLOGICALs
-    20U,	// QVFMADD
-    20U,	// QVFMADDS
-    20U,	// QVFMADDSs
+    18U,	// QVFMADD
+    18U,	// QVFMADDS
+    18U,	// QVFMADDSs
     0U,	// QVFMR
     0U,	// QVFMRb
     0U,	// QVFMRs
-    20U,	// QVFMSUB
-    20U,	// QVFMSUBS
-    20U,	// QVFMSUBSs
+    18U,	// QVFMSUB
+    18U,	// QVFMSUBS
+    18U,	// QVFMSUBSs
     38U,	// QVFMUL
     38U,	// QVFMULS
     38U,	// QVFMULSs
@@ -5194,12 +5194,12 @@ static void printInstruction(MCInst *MI, SStream *O)
     0U,	// QVFNABSs
     0U,	// QVFNEG
     0U,	// QVFNEGs
-    20U,	// QVFNMADD
-    20U,	// QVFNMADDS
-    20U,	// QVFNMADDSs
-    20U,	// QVFNMSUB
-    20U,	// QVFNMSUBS
-    20U,	// QVFNMSUBSs
+    18U,	// QVFNMADD
+    18U,	// QVFNMADDS
+    18U,	// QVFNMADDSs
+    18U,	// QVFNMSUB
+    18U,	// QVFNMSUBS
+    18U,	// QVFNMSUBSs
     134U,	// QVFPERM
     134U,	// QVFPERMs
     0U,	// QVFRE
@@ -5218,26 +5218,26 @@ static void printInstruction(MCInst *MI, SStream *O)
     0U,	// QVFRSQRTE
     0U,	// QVFRSQRTES
     0U,	// QVFRSQRTESs
-    20U,	// QVFSEL
-    20U,	// QVFSELb
-    20U,	// QVFSELbb
-    20U,	// QVFSELbs
+    18U,	// QVFSEL
+    18U,	// QVFSELb
+    18U,	// QVFSELbb
+    18U,	// QVFSELbs
     38U,	// QVFSUB
     38U,	// QVFSUBS
     38U,	// QVFSUBSs
     38U,	// QVFTSTNAN
     38U,	// QVFTSTNANb
     38U,	// QVFTSTNANbs
-    20U,	// QVFXMADD
-    20U,	// QVFXMADDS
+    18U,	// QVFXMADD
+    18U,	// QVFXMADDS
     38U,	// QVFXMUL
     38U,	// QVFXMULS
-    20U,	// QVFXXCPNMADD
-    20U,	// QVFXXCPNMADDS
-    20U,	// QVFXXMADD
-    20U,	// QVFXXMADDS
-    20U,	// QVFXXNPMADD
-    20U,	// QVFXXNPMADDS
+    18U,	// QVFXXCPNMADD
+    18U,	// QVFXXCPNMADDS
+    18U,	// QVFXXMADD
+    18U,	// QVFXXMADDS
+    18U,	// QVFXXNPMADD
+    18U,	// QVFXXNPMADDS
     0U,	// QVGPCI
     0U,	// QVLFCDUX
     0U,	// QVLFCDUXA
@@ -6088,7 +6088,7 @@ static void printInstruction(MCInst *MI, SStream *O)
     0U,	// XXBRH
     0U,	// XXBRQ
     0U,	// XXBRW
-    22U,	// XXEXTRACTUW
+    20U,	// XXEXTRACTUW
     1U,	// XXINSERTW
     38U,	// XXLAND
     38U,	// XXLANDC
@@ -6112,15 +6112,15 @@ static void printInstruction(MCInst *MI, SStream *O)
     262U,	// XXSLDWI
     462U,	// XXSLDWIs
     0U,	// XXSPLTIB
-    18U,	// XXSPLTW
-    18U,	// XXSPLTWs
-    24U,	// gBC
-    26U,	// gBCA
+    16U,	// XXSPLTW
+    16U,	// XXSPLTWs
+    22U,	// gBC
+    24U,	// gBCA
     0U,	// gBCAat
     38U,	// gBCCTR
     38U,	// gBCCTRL
-    24U,	// gBCL
-    26U,	// gBCLA
+    22U,	// gBCL
+    24U,	// gBCLA
     0U,	// gBCLAat
     38U,	// gBCLR
     38U,	// gBCLRL
@@ -6393,7 +6393,7 @@ static void printInstruction(MCInst *MI, SStream *O)
   }
 
 
-  // Fragment 2 encoded into 5 bits for 22 unique commands.
+  // Fragment 2 encoded into 5 bits for 23 unique commands.
   // printf("Fragment 2: %"PRIu64"\n", ((Bits >> 24) & 31));
   switch ((Bits >> 24) & 31) {
   default: // unreachable
@@ -6408,6 +6408,7 @@ static void printInstruction(MCInst *MI, SStream *O)
   case 2:
     // LAx, EVLDD, EVLDH, EVLDW, EVLHHESPLAT, EVLHHOSSPLAT, EVLHHOUSPLAT, EVL...
     printMemRegImm(MI, 1, O);
+    return;
     break;
   case 3:
     // SUBPCIS, LI, LI8, LIS, LIS8
@@ -6497,18 +6498,27 @@ static void printInstruction(MCInst *MI, SStream *O)
     return;
     break;
   case 19:
+    // PSQ_L, PSQ_LU, PSQ_ST, PSQ_STU
+    printPSMemRegImm(MI, 1, O);
+    SStream_concat0(O, ", ");
+    printU1ImmOperand(MI, 3, O);
+    SStream_concat0(O, ", ");
+    printU3ImmOperand(MI, 4, O);
+    return;
+    break;
+  case 20:
     // QVGPCI
     printU12ImmOperand(MI, 1, O);
     return;
     break;
-  case 20:
+  case 21:
     // VINSERTB, VINSERTH
     printOperand(MI, 3, O);
     SStream_concat0(O, ", ");
     printU4ImmOperand(MI, 2, O);
     return;
     break;
-  case 21:
+  case 22:
     // XXSPLTIB
     printU8ImmOperand(MI, 1, O);
     return;
@@ -6603,7 +6613,7 @@ static void printInstruction(MCInst *MI, SStream *O)
   }
 
 
-  // Fragment 4 encoded into 4 bits for 14 unique commands.
+  // Fragment 4 encoded into 4 bits for 13 unique commands.
   // printf("Fragment 4: %"PRIu64"\n", ((Bits >> 33) & 15));
   switch ((Bits >> 33) & 15) {
   default: // unreachable
@@ -6643,35 +6653,28 @@ static void printInstruction(MCInst *MI, SStream *O)
     printOperand(MI, 1, O);
     break;
   case 8:
-    // PSQ_L, PSQ_LU, PSQ_ST, PSQ_STU
-    printU1ImmOperand(MI, 3, O);
-    SStream_concat0(O, ", ");
-    printU3ImmOperand(MI, 4, O);
-    return;
-    break;
-  case 9:
     // QVESPLATI, QVESPLATIb, QVESPLATIs, XXSPLTW, XXSPLTWs
     printU2ImmOperand(MI, 2, O);
     return;
     break;
-  case 10:
+  case 9:
     // QVFMADD, QVFMADDS, QVFMADDSs, QVFMSUB, QVFMSUBS, QVFMSUBSs, QVFNMADD, ...
     printOperand(MI, 3, O);
     SStream_concat0(O, ", ");
     printOperand(MI, 2, O);
     return;
     break;
-  case 11:
+  case 10:
     // XXEXTRACTUW
     printU4ImmOperand(MI, 2, O);
     return;
     break;
-  case 12:
+  case 11:
     // gBC, gBCL
     printBranchOperand(MI, 2, O);
     return;
     break;
-  case 13:
+  case 12:
     // gBCA, gBCLA
     printAbsBranchOperand(MI, 2, O);
     return;
