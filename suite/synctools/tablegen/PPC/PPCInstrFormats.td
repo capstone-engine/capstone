@@ -1365,6 +1365,106 @@ class DSS_Form<bits<1> T, bits<10> xo, dag OOL, dag IOL, string asmstr,
   let Inst{31}    = 0;
 }
 
+// PSForm_qd - Undocumented paired-singles quantized load/store form direct.
+class PSForm_qd<bits<6> op, dag OOL, dag IOL, string asmstr,
+                InstrItinClass itin>
+    : I<op, OOL, IOL, asmstr, itin> {
+  bits<5> FRT;
+  bit W;
+  bits<3> I;
+  bits<12> d;
+  bits<5> A;
+
+  let Inst{6-10}  = FRT;
+  let Inst{11-15} = A;
+  let Inst{16}    = W;
+  let Inst{17-19} = I;
+  let Inst{20-31} = d;
+}
+
+// PSForm_qi - Undocumented paired-singles quantized load/store form indexed.
+class PSForm_qi<bits<6> psqop, dag OOL, dag IOL, string asmstr,
+                InstrItinClass itin>
+    : I<4, OOL, IOL, asmstr, itin> {
+  bits<5> FRT;
+  bits<5> A;
+  bits<5> B;
+  bit W;
+  bits<3> I;
+
+  let Inst{6-10}  = FRT;
+  let Inst{11-15} = A;
+  let Inst{16-20} = B;
+  let Inst{21}    = W;
+  let Inst{22-24} = I;
+  let Inst{25-30} = psqop;
+  let Inst{31}    = 0;
+}
+
+// PSForm_x - Undocumented paired-singles operation base form, short opcode.
+class PSForm_x<bits<5> psxop, dag OOL, dag IOL, string asmstr,
+               InstrItinClass itin>
+    : I<4, OOL, IOL, asmstr, itin> {
+  bits<5> FRT;
+  bits<5> FRA;
+  bits<5> FRB;
+  bits<5> FRC;
+  bit RC = 0; // set by isDOT
+
+  let Inst{6-10}  = FRT;
+  let Inst{11-15} = FRA;
+  let Inst{16-20} = FRB;
+  let Inst{21-25} = FRC;
+  let Inst{26-30} = psxop;
+  let Inst{31}    = RC;
+}
+
+// PSForm_y - Undocumented paired-singles operation base form, long opcode.
+class PSForm_y<bits<10> psyop, dag OOL, dag IOL, string asmstr,
+               InstrItinClass itin>
+    : I<4, OOL, IOL, asmstr, itin> {
+  bits<5> FRT;
+  bits<5> FRA;
+  bits<5> FRB;
+  bit RC = 0; // set by isDOT
+
+  let Inst{6-10}  = FRT;
+  let Inst{11-15} = FRA;
+  let Inst{16-20} = FRB;
+  let Inst{21-30} = psyop;
+  let Inst{31}    = RC;
+}
+
+// PSForm_c - Undocumented paired-singles compare form.
+class PSForm_c<bits<10> pszop, dag OOL, dag IOL, string asmstr,
+               InstrItinClass itin>
+    : I<4, OOL, IOL, asmstr, itin> {
+  bits<3> BF;
+  bits<5> FRA;
+  bits<5> FRB;
+
+  let Inst{6-8}   = BF;
+  let Inst{9-10}  = 0;
+  let Inst{11-15} = FRA;
+  let Inst{16-20} = FRB;
+  let Inst{21-30} = pszop;
+  let Inst{31}    = 0;
+}
+
+// Undocumented dcbz_l instruction.
+class DCBZL_Form<bits<10> xop, dag OOL, dag IOL, string asmstr,
+                 InstrItinClass itin>
+    : I<4, OOL, IOL, asmstr, itin> {
+  bits<5> A;
+  bits<5> B;
+
+  let Inst{6-10}  = 0;
+  let Inst{11-15} = A;
+  let Inst{16-20} = B;
+  let Inst{21-30} = xop;
+  let Inst{31}    = 0;
+}
+
 // 1.7.7 XL-Form
 class XLForm_1<bits<6> opcode, bits<10> xo, dag OOL, dag IOL, string asmstr,
                InstrItinClass itin, list<dag> pattern>
