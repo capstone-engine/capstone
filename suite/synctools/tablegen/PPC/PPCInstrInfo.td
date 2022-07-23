@@ -850,7 +850,7 @@ def spe2dis : Operand<iPTR> {   // SPE displacement where the imm is 2-aligned.
   let DecoderMethod = "decodeSPE2Operands";
 }
 def memrid12 : Operand<iPTR> {  // Paired Single displacement where imm is 12 bits.
-  let PrintMethod = "printMemRegImm";
+  let PrintMethod = "printPSMemRegImm";
   let MIOperandInfo = (ops dispRID12:$imm, ptr_rc_nor0:$reg);
 }
 
