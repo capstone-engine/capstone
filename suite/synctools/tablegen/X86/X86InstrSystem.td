@@ -23,9 +23,21 @@ let Defs = [RAX, RCX, RDX] in
 // CPU flow control instructions
 
 let mayLoad = 1, mayStore = 0, hasSideEffects = 1, isTrap = 1 in {
-  def UD2    : I<0x0B, RawFrm, (outs), (ins), "ud2", [(trap)]>, TB;
-  def UD1    : I<0xB9, RawFrm, (outs), (ins), "ud1", []>, TB;
-  def UD0    : I<0xFF, RawFrm, (outs), (ins), "ud0", []>, TB;
+  def TRAP    : I<0x0B, RawFrm, (outs), (ins), "ud2", [(trap)]>, TB;
+
+  def UD1Wm   : I<0xB9, MRMSrcMem, (outs), (ins GR16:$src1, i16mem:$src2),
+                  "ud1{w} {$src2, $src1|$src1, $src2}", []>, TB, OpSize16;
+  def UD1Lm   : I<0xB9, MRMSrcMem, (outs), (ins GR32:$src1, i32mem:$src2),
+                  "ud1{l} {$src2, $src1|$src1, $src2}", []>, TB, OpSize32;
+  def UD1Qm   : RI<0xB9, MRMSrcMem, (outs), (ins GR64:$src1, i64mem:$src2),
+                   "ud1{q} {$src2, $src1|$src1, $src2}", []>, TB;
+
+  def UD1Wr   : I<0xB9, MRMSrcReg, (outs), (ins GR16:$src1, GR16:$src2),
+                  "ud1{w} {$src2, $src1|$src1, $src2}", []>, TB, OpSize16;
+  def UD1Lr   : I<0xB9, MRMSrcReg, (outs), (ins GR32:$src1, GR32:$src2),
+                  "ud1{l} {$src2, $src1|$src1, $src2}", []>, TB, OpSize32;
+  def UD1Qr   : RI<0xB9, MRMSrcReg, (outs), (ins GR64:$src1, GR64:$src2),
+                   "ud1{q} {$src2, $src1|$src1, $src2}", []>, TB;
 }
 
 def HLT : I<0xF4, RawFrm, (outs), (ins), "hlt", []>;
