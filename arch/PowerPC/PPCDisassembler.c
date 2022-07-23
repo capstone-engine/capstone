@@ -562,6 +562,16 @@ static DecodeStatus getInstruction(MCInst *MI,
 
 		// failed to decode
 		MCInst_clear(MI);
+	} else if (MI->csh->mode & CS_MODE_PS) {
+		result = decodeInstruction_4(DecoderTablePS32, MI, insn, Address);
+		if (result != MCDisassembler_Fail) {
+			*Size = 4;
+
+			return result;
+		}
+
+		// failed to decode
+		MCInst_clear(MI);
 	}
 
 	result = decodeInstruction_4(DecoderTable32, MI, insn, Address);

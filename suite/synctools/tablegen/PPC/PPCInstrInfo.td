@@ -801,6 +801,13 @@ def PPCDispSPE2Operand : AsmOperandClass {
 def dispSPE2 : Operand<iPTR> {
   let ParserMatchClass = PPCDispSPE2Operand;
 }
+def PPCDispRID12Operand : AsmOperandClass {
+ let Name = "DispRID12"; let PredicateMethod = "isS12Imm";
+ let RenderMethod = "addImmOperands";
+}
+def dispRID12 : Operand<iPTR> {
+  let ParserMatchClass = PPCDispRID12Operand;
+}
 
 def memri : Operand<iPTR> {
   let PrintMethod = "printMemRegImm";
@@ -841,6 +848,10 @@ def spe2dis : Operand<iPTR> {   // SPE displacement where the imm is 2-aligned.
   let MIOperandInfo = (ops dispSPE2:$imm, ptr_rc_nor0:$reg);
   let EncoderMethod = "getSPE2DisEncoding";
   let DecoderMethod = "decodeSPE2Operands";
+}
+def memrid12 : Operand<iPTR> {  // Paired Single displacement where imm is 12 bits.
+  let PrintMethod = "printMemRegImm";
+  let MIOperandInfo = (ops dispRID12:$imm, ptr_rc_nor0:$reg);
 }
 
 // A single-register address. This is used with the SjLj
@@ -3166,6 +3177,7 @@ def : Pat<(fcopysign f32:$frB, f64:$frA),
 }
 
 include "PPCInstrAltivec.td"
+include "PPCInstrPS.td"
 include "PPCInstrSPE.td"
 include "PPCInstr64Bit.td"
 include "PPCInstrVSX.td"

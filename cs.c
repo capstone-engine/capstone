@@ -121,7 +121,7 @@ static const struct {
 		PPC_global_init,
 		PPC_option,
 		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_BIG_ENDIAN
-				| CS_MODE_QPX),
+				| CS_MODE_QPX | CS_MODE_PS),
 	},
 #else
 	{ NULL, NULL, 0 },

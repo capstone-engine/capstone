@@ -372,33 +372,32 @@ enum {
   PPC_F4RCRegClassID = 6,
   PPC_CRRCRegClassID = 7,
   PPC_CARRYRCRegClassID = 8,
-  PPC_CRRC0RegClassID = 9,
-  PPC_CTRRCRegClassID = 10,
-  PPC_VRSAVERCRegClassID = 11,
-  PPC_SPILLTOVSRRCRegClassID = 12,
-  PPC_VSFRCRegClassID = 13,
-  PPC_G8RCRegClassID = 14,
-  PPC_G8RC_NOX0RegClassID = 15,
-  PPC_SPILLTOVSRRC_and_VSFRCRegClassID = 16,
-  PPC_G8RC_and_G8RC_NOX0RegClassID = 17,
-  PPC_F8RCRegClassID = 18,
-  PPC_SPERCRegClassID = 19,
-  PPC_VFRCRegClassID = 20,
-  PPC_SPERC_with_sub_32_in_GPRC_NOR0RegClassID = 21,
-  PPC_SPILLTOVSRRC_and_VFRCRegClassID = 22,
-  PPC_SPILLTOVSRRC_and_F4RCRegClassID = 23,
-  PPC_CTRRC8RegClassID = 24,
-  PPC_VSRCRegClassID = 25,
-  PPC_VSRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 26,
-  PPC_QSRCRegClassID = 27,
-  PPC_VRRCRegClassID = 28,
-  PPC_VSLRCRegClassID = 29,
-  PPC_VRRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 30,
-  PPC_QSRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 31,
-  PPC_VSLRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 32,
-  PPC_QBRCRegClassID = 33,
-  PPC_QFRCRegClassID = 34,
-  PPC_QBRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 35,
+  PPC_CTRRCRegClassID = 9,
+  PPC_VRSAVERCRegClassID = 10,
+  PPC_SPILLTOVSRRCRegClassID = 11,
+  PPC_VSFRCRegClassID = 12,
+  PPC_G8RCRegClassID = 13,
+  PPC_G8RC_NOX0RegClassID = 14,
+  PPC_SPILLTOVSRRC_and_VSFRCRegClassID = 15,
+  PPC_G8RC_and_G8RC_NOX0RegClassID = 16,
+  PPC_F8RCRegClassID = 17,
+  PPC_SPERCRegClassID = 18,
+  PPC_VFRCRegClassID = 19,
+  PPC_SPERC_with_sub_32_in_GPRC_NOR0RegClassID = 20,
+  PPC_SPILLTOVSRRC_and_VFRCRegClassID = 21,
+  PPC_SPILLTOVSRRC_and_F4RCRegClassID = 22,
+  PPC_CTRRC8RegClassID = 23,
+  PPC_VSRCRegClassID = 24,
+  PPC_VSRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 25,
+  PPC_QSRCRegClassID = 26,
+  PPC_VRRCRegClassID = 27,
+  PPC_VSLRCRegClassID = 28,
+  PPC_VRRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 29,
+  PPC_QSRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 30,
+  PPC_VSLRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 31,
+  PPC_QBRCRegClassID = 32,
+  PPC_QFRCRegClassID = 33,
+  PPC_QBRC_with_sub_64_in_SPILLTOVSRRCRegClassID = 34,
 };
 
 #endif // GET_REGINFO_ENUM
@@ -872,14 +871,6 @@ static const MCRegisterDesc PPCRegDesc[] = {
   static const uint8_t CARRYRCBits[] = {
     0x04, 0x02,
   };
-  // CRRC0 Register Class...
-  static const MCPhysReg CRRC0[] = {
-    PPC_CR0,
-  };
-  // CRRC0 Bit set.
-  static const uint8_t CRRC0Bits[] = {
-    0x00, 0x10,
-  };
   // CTRRC Register Class...
   static const MCPhysReg CTRRC[] = {
     PPC_CTR,
@@ -1100,7 +1091,6 @@ static const MCRegisterClass PPCMCRegisterClasses[] = {
   { F4RC, F4RCBits, sizeof(F4RCBits) },
   { CRRC, CRRCBits, sizeof(CRRCBits) },
   { CARRYRC, CARRYRCBits, sizeof(CARRYRCBits) },
-  { CRRC0, CRRC0Bits, sizeof(CRRC0Bits) },
   { CTRRC, CTRRCBits, sizeof(CTRRCBits) },
   { VRSAVERC, VRSAVERCBits, sizeof(VRSAVERCBits) },
   { SPILLTOVSRRC, SPILLTOVSRRCBits, sizeof(SPILLTOVSRRCBits) },
