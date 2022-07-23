@@ -146,6 +146,7 @@ ppc_dict = {
     PPC_GRP_P8ALTIVEC: "p8altivec",
     PPC_GRP_P8VECTOR: "p8vector",
     PPC_GRP_QPX: "qpx",
+    PPC_GRP_PS: "ps",
 }
 
 sparc_dict = {
