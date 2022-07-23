@@ -191,6 +191,9 @@ def FeatureP9Vector  : SubtargetFeature<"power9-vector", "HasP9Vector", "true",
                                         "Enable POWER9 vector instructions",
                                         [FeatureISA3_0, FeatureP8Vector,
                                          FeatureP9Altivec]>;
+def FeaturePS        : SubtargetFeature<"ps","HasPS","false",
+                              "Enable paired-singles instructions",
+                              [FeatureFPU]>;
 
 // Since new processors generally contain a superset of features of those that
 // came before them, the idea is to make implementations of new processors
@@ -335,6 +338,9 @@ def : Processor<"620", G3Itineraries, [Directive620,
 def : Processor<"750", G4Itineraries, [Directive750,
                                        FeatureFRES, FeatureFRSQRTE,
                                        FeatureMFTB]>;
+def : Processor<"750cl", G4Itineraries, [Directive750,
+                                       FeatureFRES, FeatureFRSQRTE,
+                                       FeatureMFTB, FeaturePS]>;
 def : Processor<"g3", G3Itineraries, [Directive750,
                                       FeatureFRES, FeatureFRSQRTE,
                                       FeatureMFTB]>;
