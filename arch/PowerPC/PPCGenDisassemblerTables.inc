@@ -4925,6 +4925,7 @@ static const uint8_t DecoderTableSPE32[] = {
 static bool checkDecoderPredicate(unsigned Idx, MCInst *MI)
 {
   /* llvm_unreachable("Invalid index!");*/ 
+  return false;
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
