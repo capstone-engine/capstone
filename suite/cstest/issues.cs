@@ -1,3 +1,11 @@
+!# issue 1912 PPC register name
+!# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, None
+0x2d,0x03,0x00,0x80 == cmpwi cr2, r3, 0x80
+
+!# issue 1912 PPC no register name
+!# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, CS_OPT_SYNTAX_NOREGNAME
+0x2d,0x03,0x00,0x80 == cmpwi 2, 3, 0x80
+
 !# issue 1902 PPC psq_st negative displacement
 !# CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN | CS_MODE_PS, CS_OPT_DETAIL
 0xf3,0xec,0x0f,0xf8 == psq_st f31, -8(r12), 0, 0 ; op_count: 4 ; operands[0].type: REG = f31 ; operands[1].type: MEM ; operands[1].mem.base: REG = r12 ; operands[1].mem.disp: 0xfffffff8 ; operands[2].type: IMM = 0x0 ; operands[3].type: IMM = 0x0
