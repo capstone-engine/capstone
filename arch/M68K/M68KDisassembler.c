@@ -1803,8 +1803,6 @@ static void d68020_cpbcc_32(m68k_info *info)
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
-
 	// these are all in row with the extension so just doing a add here is fine
 	info->inst->Opcode += (info->ir & 0x2f);
 
