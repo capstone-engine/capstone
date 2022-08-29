@@ -336,6 +336,8 @@ static void test_valids()
 					valid->platform_comment, hex_str, valid_code->start_addr, 
 					valid_code->comment, valid_code->expected_out);
 
+			free(hex_str);
+
 			count = cs_disasm(handle,
 					valid_code->code, valid_code->size, 
 					valid_code->start_addr, 0, &insn
