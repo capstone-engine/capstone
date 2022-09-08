@@ -1150,7 +1150,8 @@ static char *stripRegisterPrefix(const char *RegName)
 				char *name = cs_strdup(RegName + 2);
 
 				// also strip the last 2 letters
-				name[strlen(name) - 2] = '\0';
+				if(strlen(name) > 2)
+					name[strlen(name) - 2] = '\0';
 
 				return name;
 			}
