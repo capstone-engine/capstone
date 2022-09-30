@@ -68,6 +68,7 @@ struct cs_struct {
 	cs_opt_value detail, imm_unsigned;
 	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
+	bool doing_SME_Index; // handling a SME instruction that has index
 	unsigned short *insn_cache;	// index caching for mapping.c
 	GetRegisterName_t get_regname;
 	bool skipdata;	// set this to True if we skip data when disassembling
