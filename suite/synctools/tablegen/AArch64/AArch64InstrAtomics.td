@@ -1,9 +1,8 @@
 //=- AArch64InstrAtomics.td - AArch64 Atomic codegen support -*- tablegen -*-=//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -16,9 +15,9 @@
 //===----------------------------------
 let AddedComplexity = 15, Size = 0 in
 def CompilerBarrier : Pseudo<(outs), (ins i32imm:$ordering),
-                             [(atomic_fence imm:$ordering, 0)]>, Sched<[]>;
-def : Pat<(atomic_fence (i64 4), (imm)), (DMB (i32 0x9))>;
-def : Pat<(atomic_fence (imm), (imm)), (DMB (i32 0xb))>;
+                             [(atomic_fence timm:$ordering, 0)]>, Sched<[]>;
+def : Pat<(atomic_fence (i64 4), (timm)), (DMB (i32 0x9))>;
+def : Pat<(atomic_fence (timm), (timm)), (DMB (i32 0xb))>;
 
 //===----------------------------------
 // Atomic loads
@@ -102,6 +101,34 @@ def : Pat<(relaxed_load<atomic_load_64> (am_indexed64 GPR64sp:$Rn,
 def : Pat<(relaxed_load<atomic_load_64>
                (am_unscaled64 GPR64sp:$Rn, simm9:$offset)),
           (LDURXi GPR64sp:$Rn, simm9:$offset)>;
+
+// FP 32-bit loads
+def : Pat<(f32 (bitconvert (i32 (relaxed_load<atomic_load_32> (ro_Windexed32 GPR64sp:$Rn, GPR32:$Rm,
+                                                       ro_Wextend32:$extend))))),
+          (LDRSroW GPR64sp:$Rn, GPR32:$Rm, ro_Wextend32:$extend)>;
+def : Pat<(f32 (bitconvert (i32 (relaxed_load<atomic_load_32> (ro_Xindexed32 GPR64sp:$Rn, GPR64:$Rm,
+                                                       ro_Xextend32:$extend))))),
+          (LDRSroX GPR64sp:$Rn, GPR64:$Rm, ro_Xextend32:$extend)>;
+def : Pat<(f32 (bitconvert (i32 (relaxed_load<atomic_load_32> (am_indexed32 GPR64sp:$Rn,
+                                                      uimm12s8:$offset))))),
+          (LDRSui GPR64sp:$Rn, uimm12s8:$offset)>;
+def : Pat<(f32 (bitconvert (i32 (relaxed_load<atomic_load_32>
+               (am_unscaled32 GPR64sp:$Rn, simm9:$offset))))),
+          (LDURSi GPR64sp:$Rn, simm9:$offset)>;
+
+// FP 64-bit loads
+def : Pat<(f64 (bitconvert (i64 (relaxed_load<atomic_load_64> (ro_Windexed64 GPR64sp:$Rn, GPR32:$Rm,
+                                                       ro_Wextend64:$extend))))),
+          (LDRDroW GPR64sp:$Rn, GPR32:$Rm, ro_Wextend64:$extend)>;
+def : Pat<(f64 (bitconvert (i64 (relaxed_load<atomic_load_64> (ro_Xindexed64 GPR64sp:$Rn, GPR64:$Rm,
+                                                       ro_Xextend64:$extend))))),
+          (LDRDroX GPR64sp:$Rn, GPR64:$Rm, ro_Xextend64:$extend)>;
+def : Pat<(f64 (bitconvert (i64 (relaxed_load<atomic_load_64> (am_indexed64 GPR64sp:$Rn,
+                                                      uimm12s8:$offset))))),
+          (LDRDui GPR64sp:$Rn, uimm12s8:$offset)>;
+def : Pat<(f64 (bitconvert (i64 (relaxed_load<atomic_load_64>
+               (am_unscaled64 GPR64sp:$Rn, simm9:$offset))))),
+          (LDURDi GPR64sp:$Rn, simm9:$offset)>;
 
 //===----------------------------------
 // Atomic stores
@@ -197,6 +224,38 @@ def : Pat<(relaxed_store<atomic_store_64>
                (am_unscaled64 GPR64sp:$Rn, simm9:$offset), GPR64:$val),
           (STURXi GPR64:$val, GPR64sp:$Rn, simm9:$offset)>;
 
+// FP 32-bit stores
+def : Pat<(relaxed_store<atomic_store_32> (ro_Windexed32 GPR64sp:$Rn, GPR32:$Rm,
+                                                         ro_Wextend32:$extend),
+                                          (i32 (bitconvert (f32 FPR32Op:$val)))),
+          (STRSroW FPR32Op:$val, GPR64sp:$Rn, GPR32:$Rm, ro_Wextend32:$extend)>;
+def : Pat<(relaxed_store<atomic_store_32> (ro_Xindexed32 GPR64sp:$Rn, GPR64:$Rm,
+                                                         ro_Xextend32:$extend),
+                                          (i32 (bitconvert (f32 FPR32Op:$val)))),
+          (STRSroX FPR32Op:$val, GPR64sp:$Rn, GPR64:$Rm, ro_Xextend32:$extend)>;
+def : Pat<(relaxed_store<atomic_store_32>
+              (am_indexed32 GPR64sp:$Rn, uimm12s4:$offset), (i32 (bitconvert (f32 FPR32Op:$val)))),
+          (STRSui FPR32Op:$val, GPR64sp:$Rn, uimm12s4:$offset)>;
+def : Pat<(relaxed_store<atomic_store_32>
+               (am_unscaled32 GPR64sp:$Rn, simm9:$offset), (i32 (bitconvert (f32 FPR32Op:$val)))),
+          (STURSi FPR32Op:$val, GPR64sp:$Rn, simm9:$offset)>;
+
+// FP 64-bit stores
+def : Pat<(relaxed_store<atomic_store_64> (ro_Windexed64 GPR64sp:$Rn, GPR32:$Rm,
+                                                         ro_Wextend64:$extend),
+                                          (i64 (bitconvert (f64 FPR64Op:$val)))),
+          (STRDroW FPR64Op:$val, GPR64sp:$Rn, GPR32:$Rm, ro_Wextend64:$extend)>;
+def : Pat<(relaxed_store<atomic_store_64> (ro_Xindexed64 GPR64sp:$Rn, GPR64:$Rm,
+                                                         ro_Xextend64:$extend),
+                                          (i64 (bitconvert (f64 FPR64Op:$val)))),
+          (STRDroX FPR64Op:$val, GPR64sp:$Rn, GPR64:$Rm, ro_Xextend64:$extend)>;
+def : Pat<(relaxed_store<atomic_store_64>
+              (am_indexed64 GPR64sp:$Rn, uimm12s4:$offset), (i64 (bitconvert (f64 FPR64Op:$val)))),
+          (STRDui FPR64Op:$val, GPR64sp:$Rn, uimm12s4:$offset)>;
+def : Pat<(relaxed_store<atomic_store_64>
+               (am_unscaled64 GPR64sp:$Rn, simm9:$offset), (i64 (bitconvert (f64 FPR64Op:$val)))),
+          (STURDi FPR64Op:$val, GPR64sp:$Rn, simm9:$offset)>;
+
 //===----------------------------------
 // Low-level exclusive operations
 //===----------------------------------
@@ -205,19 +264,27 @@ def : Pat<(relaxed_store<atomic_store_64>
 
 def ldxr_1 : PatFrag<(ops node:$ptr), (int_aarch64_ldxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i8;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 1); }];
+}
 
 def ldxr_2 : PatFrag<(ops node:$ptr), (int_aarch64_ldxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i16;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 2); }];
+}
 
 def ldxr_4 : PatFrag<(ops node:$ptr), (int_aarch64_ldxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i32;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 4); }];
+}
 
 def ldxr_8 : PatFrag<(ops node:$ptr), (int_aarch64_ldxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i64;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 8); }];
+}
 
 def : Pat<(ldxr_1 GPR64sp:$addr),
           (SUBREG_TO_REG (i64 0), (LDXRB GPR64sp:$addr), sub_32)>;
@@ -238,19 +305,27 @@ def : Pat<(and (ldxr_4 GPR64sp:$addr), 0xffffffff),
 
 def ldaxr_1 : PatFrag<(ops node:$ptr), (int_aarch64_ldaxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i8;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 1); }];
+}
 
 def ldaxr_2 : PatFrag<(ops node:$ptr), (int_aarch64_ldaxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i16;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 2); }];
+}
 
 def ldaxr_4 : PatFrag<(ops node:$ptr), (int_aarch64_ldaxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i32;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 4); }];
+}
 
 def ldaxr_8 : PatFrag<(ops node:$ptr), (int_aarch64_ldaxr node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i64;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 8); }];
+}
 
 def : Pat<(ldaxr_1 GPR64sp:$addr),
           (SUBREG_TO_REG (i64 0), (LDAXRB GPR64sp:$addr), sub_32)>;
@@ -272,22 +347,30 @@ def : Pat<(and (ldaxr_4 GPR64sp:$addr), 0xffffffff),
 def stxr_1 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i8;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 1); }];
+}
 
 def stxr_2 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i16;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 2); }];
+}
 
 def stxr_4 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i32;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 4); }];
+}
 
 def stxr_8 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i64;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 8); }];
+}
 
 
 def : Pat<(stxr_1 GPR64:$val, GPR64sp:$addr),
@@ -318,22 +401,30 @@ def : Pat<(stxr_4 (and GPR64:$val, 0xffffffff), GPR64sp:$addr),
 def stlxr_1 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stlxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i8;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 1); }];
+}
 
 def stlxr_2 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stlxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i16;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 2); }];
+}
 
 def stlxr_4 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stlxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i32;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 4); }];
+}
 
 def stlxr_8 : PatFrag<(ops node:$val, node:$ptr),
                      (int_aarch64_stlxr node:$val, node:$ptr), [{
   return cast<MemIntrinsicSDNode>(N)->getMemoryVT() == MVT::i64;
-}]>;
+}]> {
+  let GISelPredicateCode = [{ return isLoadStoreOfNumBytes(MI, 8); }];
+}
 
 
 def : Pat<(stlxr_1 GPR64:$val, GPR64sp:$addr),
@@ -398,11 +489,16 @@ def CMP_SWAP_64 : Pseudo<(outs GPR64:$Rd, GPR32:$scratch),
 }
 
 let Constraints = "@earlyclobber $RdLo,@earlyclobber $RdHi,@earlyclobber $scratch",
-    mayLoad = 1, mayStore = 1 in
-def CMP_SWAP_128 : Pseudo<(outs GPR64:$RdLo, GPR64:$RdHi, GPR32:$scratch),
-                          (ins GPR64:$addr, GPR64:$desiredLo, GPR64:$desiredHi,
-                               GPR64:$newLo, GPR64:$newHi), []>,
-                   Sched<[WriteAtomic]>;
+    mayLoad = 1, mayStore = 1 in {
+class cmp_swap_128 : Pseudo<(outs GPR64:$RdLo, GPR64:$RdHi, GPR32common:$scratch),
+                           (ins GPR64:$addr, GPR64:$desiredLo, GPR64:$desiredHi,
+                                GPR64:$newLo, GPR64:$newHi), []>,
+                     Sched<[WriteAtomic]>;
+def CMP_SWAP_128 : cmp_swap_128;
+def CMP_SWAP_128_RELEASE : cmp_swap_128;
+def CMP_SWAP_128_ACQUIRE : cmp_swap_128;
+def CMP_SWAP_128_MONOTONIC : cmp_swap_128;
+}
 
 // v8.1 Atomic instructions:
 let Predicates = [HasLSE] in {
@@ -423,4 +519,3 @@ let Predicates = [HasLSE] in {
   defm : LDOPregister_patterns_mod<"LDADD", "atomic_load_sub", "SUB">;
   defm : LDOPregister_patterns_mod<"LDCLR", "atomic_load_and", "ORN">;
 }
-
