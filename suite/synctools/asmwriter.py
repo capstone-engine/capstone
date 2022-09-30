@@ -138,6 +138,21 @@ for line in lines:
             print_line("static void printInstruction(MCInst *MI, SStream *O)\n{")
         else:
             print_line("static void printInstruction(MCInst *MI, SStream *O)\n{")
+    elif 'LLVM_NO_PROFILE_INSTRUMENT_FUNCTION' in line:
+        continue
+    elif 'AArch64InstPrinter::getMnemonic' in line:
+        print_line("static uint64_t getMnemonic(MCInst *MI, SStream *O, unsigned int opcode) {")
+    elif 'return {AsmStrs+(Bits' in line:
+        tmp = line.split(',')
+        prntStr = tmp[0].split('{')[1]
+        print_line("\tSStream_concat0(O, " + prntStr + ");")
+        print_line("\treturn Bits;")
+    elif 'MnemonicInfo = getMnemonic(' in line:
+        continue
+    elif 'O << MnemonicInfo' in line:
+        continue
+    elif 'uint64_t Bits = MnemonicInfo' in line:
+        print_line("\tuint64_t Bits = getMnemonic(MI, O, opcode);")
     elif 'const char *AArch64InstPrinter::' in line:
         continue
     elif 'getRegisterName(' in line:
@@ -164,6 +179,14 @@ for line in lines:
             line2 = line.replace('STI.getFeatureBits()[', 'AArch64_getFeatureBits(')
         line2 = line2.replace(']', ')')
         print_line(line2)
+    elif 'lookupBTIByEncoding' in line:
+        line = line.replace('AArch64BTIHint::', '')
+        line = line.replace('MCOp.getImm()', 'MCOperand_getImm(MCOp)')
+        print_line(line)
+    elif 'lookupPSBByEncoding' in line:
+        line = line.replace('AArch64PSBHint::', '')
+        line = line.replace('MCOp.getImm()', 'MCOperand_getImm(MCOp)')
+        print_line(line)
     elif ', STI, ' in line:
         line2 = line.replace(', STI, ', ', ')
 
@@ -222,7 +245,7 @@ for line in lines:
                 line2 = line2.replace('printLogicalImm', 'printLogicalImm32')
             elif '64' in param:
                 line2 = line2.replace('printLogicalImm', 'printLogicalImm64')
-        elif 'printSVERegOp' in line2 or 'printGPRSeqPairsClassOperand' in line2 or 'printTypedVectorList' in line2 or 'printPostIncOperand' in line2 or 'printImmScale' in line2 or 'printRegWithShiftExtend' in line2 or 'printUImm12Offset' in line2 or 'printExactFPImm' in line2 or 'printMemExtend' in line2 or 'printZPRasFPR' in line2:
+        elif 'printSVERegOp' in line2 or 'printGPRSeqPairsClassOperand' in line2 or 'printTypedVectorList' in line2 or 'printPostIncOperand' in line2 or 'printImmScale' in line2 or 'printRegWithShiftExtend' in line2 or 'printUImm12Offset' in line2 or 'printExactFPImm' in line2 or 'printMemExtend' in line2 or 'printZPRasFPR' in line2 or 'printMatrixTileVector' in line2 or 'printMatrix<' in line2 or 'printSImm' in line2:
             param = extract_brackets(line2)
             if param == '':
                 param = '0'
@@ -234,6 +257,8 @@ for line in lines:
             bracket_content = line2[line2.index('<') + 1 : line2.index('>')]
             line2 = line2.replace('<' + bracket_content + '>', '')
             line2 = line2.replace(' O);', ' O, %s);' %bracket_content)
+        elif 'printAlignedLabel' in line2 or 'printAdrpLabel' in line2:
+            line2 = line2.replace('Address, ', '')
 
         print_line(line2)
     elif "static const char AsmStrs[]" in line:
@@ -286,12 +311,21 @@ for line in lines:
 
         elif '", -1"' in line2:
             print_line('    op_addImm(MI, -1);')
+        
 
-        if '[' in line2:
+        if '], [' in line2 or ']!, [' in line2:
+            print_line('    set_mem_access(MI, false);')
+            print_line('    set_mem_access(MI, true);')
+        
+        elif "\"[\"" in line2:
+            # Check for SME_Index specific string of only "["
+            print_line('    set_sme_index(MI, true);')
+
+        elif '[' in line2:
             if not '[]' in line2:
                 print_line('    set_mem_access(MI, true);')
 
-        if ']' in line2:
+        elif ']' in line2:
             if not '[]' in line2:
                 print_line('    set_mem_access(MI, false);')
 
@@ -629,12 +663,100 @@ for line in lines:
     elif 'switch (PredicateIndex) {' in line:
         print_line('  int64_t Val;')
         print_line(line)
-    elif 'unsigned I = 0;' in line and in_printAliasInstr:
+    elif 'uint32_t(' in line and in_printAliasInstr:
+        line = line.replace('uint32_t(', '')
+        line = line.replace(')', '')
+        print_line(line)
+    elif '#ifndef NDEBUG' in line and in_printAliasInstr:
         print_line("""
+  char *AsmString;
+  const size_t OpToSize = sizeof(OpToPatterns) / sizeof(PatternsForOpcode);
+
+  const unsigned opcode = MCInst_getOpcode(MI);
+
+  // Check for alias
+  int OpToIndex = 0;
+  for(int i = 0; i < OpToSize; i++){
+    if(OpToPatterns[i].Opcode == opcode){
+      OpToIndex = i;
+      break;
+    }
+  }
+  // Chech for match
+  if(opcode != OpToPatterns[OpToIndex].Opcode)
+    return NULL;
+
+  const PatternsForOpcode opToPat = OpToPatterns[OpToIndex];
+
+  // Try all patterns for this opcode
+  uint32_t AsmStrOffset = ~0U;
+  int patIdx = opToPat.PatternStart;
+  while(patIdx < (opToPat.PatternStart + opToPat.NumPatterns)){
+    // Check operand count first
+    if(MCInst_getNumOperands(MI) != Patterns[patIdx].NumOperands)
+      return NULL;
+    
+    // Test all conditions for this pattern
+    int condIdx = Patterns[patIdx].AliasCondStart;
+    int opIdx = 0;
+    bool allPass = true;
+    while(condIdx < (Patterns[patIdx].AliasCondStart + Patterns[patIdx].NumConds)){
+      MCOperand *opnd = MCInst_getOperand(MI, opIdx);
+      opIdx++;
+      // Not concerned with any Feature related conditions as STI is disregarded
+      switch (Conds[condIdx].Kind)
+      {
+      case AliasPatternCond_K_Ignore :
+        // Operand can be anything.
+        break;
+      case AliasPatternCond_K_Reg :
+        // Operand must be a specific register.
+        allPass = allPass && (MCOperand_isReg(opnd) && MCOperand_getReg(opnd) == Conds[condIdx].Value);
+        break;
+      case AliasPatternCond_K_TiedReg :
+        // Operand must match the register of another operand.
+        allPass = allPass && (MCOperand_isReg(opnd) && MCOperand_getReg(opnd) == 
+                  MCOperand_getReg(MCInst_getOperand(MI, Conds[condIdx].Value)));
+        break;
+      case AliasPatternCond_K_Imm :
+        // Operand must be a specific immediate.
+        allPass = allPass && (MCOperand_isImm(opnd) && MCOperand_getImm(opnd) == Conds[condIdx].Value);
+        break;
+      case AliasPatternCond_K_RegClass :
+        // Operand must be a register in this class. Value is a register class id.
+        allPass = allPass && (MCOperand_isReg(opnd) && GETREGCLASS_CONTAIN(Conds[condIdx].Value, (opIdx-1)));
+        break;
+      case AliasPatternCond_K_Custom :
+        // Operand must match some custom criteria.
+        allPass = allPass && AArch64InstPrinterValidateMCOperand(opnd, Conds[condIdx].Value);
+        break;
+      case AliasPatternCond_K_Feature :
+      case AliasPatternCond_K_NegFeature :
+      case AliasPatternCond_K_OrFeature :
+      case AliasPatternCond_K_OrNegFeature :
+      case AliasPatternCond_K_EndOrFeatures :
+      default :
+        break;
+      }
+      condIdx++;
+    }
+    if(allPass){
+      AsmStrOffset = Patterns[patIdx].AsmStrOffset;
+      break;
+    }
+    patIdx++;
+  }
+
+  // If no alias matched, don't print an alias.
+  if (AsmStrOffset == ~0U)
+    return NULL;
+
+  AsmString = cs_strdup(&AsmStrings[AsmStrOffset]);
+
   tmpString = cs_strdup(AsmString);
 
   while (AsmString[I] != ' ' && AsmString[I] != '\\t' &&
-         AsmString[I] != '$' && AsmString[I] != '\\0')
+        AsmString[I] != '$' && AsmString[I] != '\\0')
     ++I;
 
   tmpString[I] = 0;
@@ -653,15 +775,20 @@ for line in lines:
           ++I;
           OpIdx = AsmString[I++] - 1;
           PrintMethodIdx = AsmString[I++] - 1;
-          printCustomAliasOperand(MI, OpIdx, PrintMethodIdx, OS);
+          printCustomAliasOperand(MI, 0, OpIdx, PrintMethodIdx, OS);
         } else
-            printOperand(MI, (unsigned)(AsmString[I++]) - 1, OS);
+          printOperand(MI, (unsigned)(AsmString[I++]) - 1, OS);
       } else {
-          SStream_concat1(OS, AsmString[I++]);
+        if (AsmString[I] == '[') {
+          set_mem_access(MI, true);
+        } else if (AsmString[I] == ']') {
+          set_mem_access(MI, false);
+        }
+        SStream_concat1(OS, AsmString[I++]);
       }
     } while (AsmString[I] != '\\0');
   }
-
+  free(AsmString);
   return tmpString;
 }
         """)
