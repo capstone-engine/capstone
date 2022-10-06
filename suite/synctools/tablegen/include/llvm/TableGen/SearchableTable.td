@@ -1,9 +1,8 @@
 //===- SearchableTable.td ----------------------------------*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -68,9 +67,13 @@ class GenericTable {
   // List of the names of fields of collected records that contain the data for
   // table entries, in the order that is used for initialization in C++.
   //
-  // For each field of the table named XXX, TableGen will look for a value
-  // called TypeOf_XXX and use that as a more detailed description of the
-  // type of the field if present. This is required for fields whose type
+  // TableGen needs to know the type of the fields so that it can format
+  // the initializers correctly. It can infer the type of bit, bits, string,
+  // Intrinsic, and Instruction values. 
+  //
+  // For each field of the table named xxx, TableGen will look for a field
+  // named TypeOf_xxx and use that as a more detailed description of the
+  // type of the field. This is required for fields whose type
   // cannot be deduced automatically, such as enum fields. For example:
   //
   //   def MyEnum : GenericEnum {
@@ -86,15 +89,15 @@ class GenericTable {
   //   def MyTable : GenericTable {
   //     let FilterClass = "MyTableEntry";
   //     let Fields = ["V", ...];
-  //     GenericEnum TypeOf_V = MyEnum;
+  //     string TypeOf_V = "MyEnum";
   //   }
   //
-  // Fields of type bit, bits<N>, string, Intrinsic, and Instruction (or
-  // derived classes of those) are supported natively.
+  // If a string field was initialized with a code literal, TableGen will
+  // emit the code verbatim. However, if a string field was initialized
+  // in some other way, but should be interpreted as code, then a TypeOf_xxx
+  // field is necessary, with a value of "code":
   //
-  // Additionally, fields of type `code` can appear, where the value is used
-  // verbatim as an initializer. However, these fields cannot be used as
-  // search keys.
+  //     string TypeOf_Predicate = "code";
   list<string> Fields;
 
   // (Optional) List of fields that make up the primary key.
@@ -104,7 +107,7 @@ class GenericTable {
   string PrimaryKeyName;
 
   // See SearchIndex.EarlyOut
-  bit PrimaryKeyEarlyOut = 0;
+  bit PrimaryKeyEarlyOut = false;
 }
 
 // Define a record derived from this class to generate an additional search
@@ -125,7 +128,7 @@ class SearchIndex {
   // instructions.
   //
   // Can only be used when the first field is an integral (non-string) type.
-  bit EarlyOut = 0;
+  bit EarlyOut = false;
 }
 
 // Legacy table type with integrated enum.

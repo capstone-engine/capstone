@@ -1,9 +1,8 @@
 //==-- AArch64Schedule.td - AArch64 Scheduling Definitions -*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 
@@ -48,18 +47,8 @@ def WriteAdr       : SchedWrite; // Address pre/post increment.
 
 def WriteLDIdx : SchedWrite; // Load from a register index (maybe scaled).
 def WriteSTIdx : SchedWrite; // Store to a register index (maybe scaled).
+def ReadST     : SchedRead;  // Read the stored value.
 def ReadAdrBase : SchedRead; // Read the base resister of a reg-offset LD/ST.
-
-// Predicate for determining when a shiftable register is shifted.
-def RegShiftedPred : SchedPredicate<[{TII->hasShiftedReg(*MI)}]>;
-
-// Predicate for determining when a extendedable register is extended.
-def RegExtendedPred : SchedPredicate<[{TII->hasExtendedReg(*MI)}]>;
-
-// ScaledIdxPred is true if a WriteLDIdx operand will be
-// scaled. Subtargets can use this to dynamically select resources and
-// latency for WriteLDIdx and ReadAdrBase.
-def ScaledIdxPred : SchedPredicate<[{TII->isScaledAddr(*MI)}]>;
 
 // Serialized two-level address load.
 // EXAMPLE: LOADGot
@@ -88,7 +77,8 @@ def WriteFImm    : SchedWrite; // Floating-point immediate.
 def WriteFMul    : SchedWrite; // Floating-point multiply.
 def WriteFDiv    : SchedWrite; // Floating-point division.
 
-def WriteV   : SchedWrite; // Vector ops.
+def WriteVd  : SchedWrite; // 64bit Vector D ops.
+def WriteVq  : SchedWrite; // 128bit Vector Q ops.
 def WriteVLD : SchedWrite; // Vector loads.
 def WriteVST : SchedWrite; // Vector stores.
 
@@ -98,9 +88,9 @@ def WriteAtomic : SchedWrite; // Atomic memory operations (CAS, Swap, LDOP)
 def ReadVLD : SchedRead;
 
 // Sequential vector load and shuffle.
-def WriteVLDShuffle     : WriteSequence<[WriteVLD, WriteV]>;
-def WriteVLDPairShuffle : WriteSequence<[WriteVLD, WriteV, WriteV]>;
+def WriteVLDShuffle     : WriteSequence<[WriteVLD, WriteVq]>;
+def WriteVLDPairShuffle : WriteSequence<[WriteVLD, WriteVq, WriteVq]>;
 
 // Store a shuffled vector.
-def WriteVSTShuffle : WriteSequence<[WriteV, WriteVST]>;
-def WriteVSTPairShuffle : WriteSequence<[WriteV, WriteV, WriteVST]>;
+def WriteVSTShuffle : WriteSequence<[WriteVq, WriteVST]>;
+def WriteVSTPairShuffle : WriteSequence<[WriteVq, WriteVq, WriteVST]>;

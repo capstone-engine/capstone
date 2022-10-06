@@ -12,7 +12,7 @@ ARCH=$3
 echo "Generating ${ARCH}GenAsmWriter.inc"
 ./asmwriter.py $1/${ARCH}GenAsmWriter.inc ${ARCH}GenAsmWriter.inc ${ARCH}GenRegisterName.inc ${ARCH}
 
-echo "Generating ${ARCH}MappingInsnName.inc"
+echo "Generating ${ARCH}MappingInsnName.inc (Copy comments to include/capstone/<arch>.h for complete insn list.)"
 ./mapping_insn_name-arch.py $1/${ARCH}GenAsmMatcher.inc > ${ARCH}MappingInsnName.inc
 #./mapping_insn_name-arch.py tablegen/ARMGenAsmMatcher.inc
 
@@ -47,6 +47,7 @@ case $3 in
   ./systemregister.py $1/${ARCH}GenSystemRegister.inc > ${ARCH}GenSystemRegister.inc
   ;;
   AArch64)
+  make arm64
   echo "Generating ${ARCH}GenSystemOperands.inc"
   ./systemoperand.py tablegen/AArch64GenSystemOperands.inc AArch64GenSystemOperands.inc AArch64GenSystemOperands_enum.inc
   echo "Generating instruction enum in insn_list.txt (for include/capstone/<arch>.h)"
@@ -55,7 +56,6 @@ case $3 in
   ./arm64_gen_vreg > AArch64GenRegisterV.inc
   echo "Generating ${ARCH}MappingInsnOp.inc"
   ./mapping_insn_op-arch.py $1/${ARCH}GenAsmMatcher.inc $1/${ARCH}GenInstrInfo.inc  $2/${ARCH}MappingInsnOp.inc > ${ARCH}MappingInsnOp.inc 
-  make arm64
   ;;
   PowerPC)
   # PowerPC

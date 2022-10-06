@@ -1,9 +1,8 @@
 //===- Target.td - Define GlobalISel rules -----------------*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -39,11 +38,10 @@ class GIComplexOperandMatcher<LLT type, string matcherfn> {
 
   // The function that determines whether the operand matches. It should be of
   // the form:
-  //   bool select(const MatchOperand &Root, MatchOperand &Result1)
-  // and should have the same number of ResultX arguments as the number of
-  // result operands. It must return true on successful match and false
-  // otherwise. If it returns true, then all the ResultX arguments must be
-  // overwritten.
+  //   ComplexRendererFn select(MachineOperand &Root) const;
+  // where Root is the root of the match.  The function should return nullptr
+  // on match failure, or a ComplexRendererFn that renders the operand in case
+  // of a successful match.
   string MatcherFn = matcherfn;
 }
 
@@ -56,6 +54,12 @@ class GIComplexOperandMatcher<LLT type, string matcherfn> {
 class GICustomOperandRenderer<string rendererfn> {
   // The function renders the operand(s) of the matched instruction to
   // the specified instruction. It should be of the form:
-  //   void render(MachineInstrBuilder &MIB, const MachineInstr &MI)
+  //   void render(MachineInstrBuilder &MIB, const MachineInstr &MI,
+  //               int OpIdx = -1)
+  //
+  // If OpIdx is specified (i.e. not invalid/negative), this
+  // references the source operand MI.getOperand(OpIdx). Otherwise,
+  // this is the value defined by MI. This is to support the case
+  // where there is no corresponding instruction to match.
   string RendererFn = rendererfn;
 }

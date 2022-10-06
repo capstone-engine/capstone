@@ -8,6 +8,8 @@ enum PStateValues {
   AArch64PState_PAN = 4,
   AArch64PState_UAO = 3,
   AArch64PState_DIT = 26,
+  AArch64PState_SSBS = 25,
+  AArch64PState_TCO = 28,
 };
 
 enum ExactFPImmValues {
