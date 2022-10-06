@@ -1,9 +1,8 @@
 //===- TargetSchedule.td - Target Independent Scheduling ---*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -53,8 +52,6 @@
 // Include legacy support for instruction itineraries.
 include "llvm/Target/TargetItinerary.td"
 
-class Instruction; // Forward def
-
 class Predicate; // Forward def
 
 // DAG operator that interprets the DAG args as Instruction defs.
@@ -88,7 +85,7 @@ class SchedMachineModel {
   // Per-cycle resources tables.
   ProcessorItineraries Itineraries = NoItineraries;
 
-  bit PostRAScheduler = 0; // Enable Post RegAlloc Scheduler pass.
+  bit PostRAScheduler = false; // Enable Post RegAlloc Scheduler pass.
 
   // Subtargets that define a model for only a subset of instructions
   // that have a scheduling class (itinerary class or SchedRW list)
@@ -97,13 +94,13 @@ class SchedMachineModel {
   // be an error. This should only be set during initial bringup,
   // or there will be no way to catch simple errors in the model
   // resulting from changes to the instruction definitions.
-  bit CompleteModel = 1;
+  bit CompleteModel = true;
 
   // Indicates that we should do full overlap checking for multiple InstrRWs
-  // definining the same instructions within the same SchedMachineModel.
+  // defining the same instructions within the same SchedMachineModel.
   // FIXME: Remove when all in tree targets are clean with the full check
   // enabled.
-  bit FullInstRWOverlapCheck = 1;
+  bit FullInstRWOverlapCheck = true;
 
   // A processor may only implement part of published ISA, due to either new ISA
   // extensions, (e.g. Pentium 4 doesn't have AVX) or implementation
@@ -119,12 +116,12 @@ class SchedMachineModel {
   // field.
   list<Predicate> UnsupportedFeatures = [];
 
-  bit NoModel = 0; // Special tag to indicate missing machine model.
+  bit NoModel = false; // Special tag to indicate missing machine model.
 }
 
 def NoSchedModel : SchedMachineModel {
-  let NoModel = 1;
-  let CompleteModel = 0;
+  let NoModel = true;
+  let CompleteModel = false;
 }
 
 // Define a kind of processor resource that may be common across
@@ -136,7 +133,7 @@ class ProcResourceKind;
 //
 // An optional Super resource may be given to model these resources as
 // a subset of the more general super resources. Using one of these
-// resources implies using one of the super resoruces.
+// resources implies using one of the super resources.
 //
 // ProcResourceUnits normally model a few buffered resources within an
 // out-of-order engine. Buffered resources may be held for multiple
@@ -164,7 +161,7 @@ class ProcResourceKind;
 // differently. Here we refer to stage between decoding into micro-ops
 // and moving them into a reservation station.) Normally NumMicroOps
 // is sufficient to limit dispatch/issue groups. However, some
-// processors can form groups of with only certain combinitions of
+// processors can form groups of with only certain combinations of
 // instruction types. e.g. POWER7.
 //
 // Use BufferSize = 1 for in-order execution units. This is used for
@@ -182,8 +179,7 @@ class ProcResourceKind;
 //
 // SchedModel ties these units to a processor for any stand-alone defs
 // of this class.
-class ProcResourceUnits<ProcResourceKind kind, int num,
-                        list<string> pfmCounters> {
+class ProcResourceUnits<ProcResourceKind kind, int num> {
   ProcResourceKind Kind = kind;
   int NumUnits = num;
   ProcResourceKind Super = ?;
@@ -198,8 +194,8 @@ def EponymousProcResourceKind : ProcResourceKind;
 
 // Subtargets typically define processor resource kind and number of
 // units in one place.
-class ProcResource<int num, list<string> pfmCounters = []> : ProcResourceKind,
-  ProcResourceUnits<EponymousProcResourceKind, num, pfmCounters>;
+class ProcResource<int num> : ProcResourceKind,
+  ProcResourceUnits<EponymousProcResourceKind, num>;
 
 class ProcResGroup<list<ProcResource> resources> : ProcResourceKind {
   list<ProcResource> Resources = resources;
@@ -256,14 +252,18 @@ class ProcWriteResources<list<ProcResourceKind> resources> {
   list<int> ResourceCycles = [];
   int Latency = 1;
   int NumMicroOps = 1;
-  bit BeginGroup = 0;
-  bit EndGroup = 0;
+  bit BeginGroup = false;
+  bit EndGroup = false;
   // Allow a processor to mark some scheduling classes as unsupported
   // for stronger verification.
-  bit Unsupported = 0;
+  bit Unsupported = false;
   // Allow a processor to mark some scheduling classes as single-issue.
   // SingleIssue is an alias for Begin/End Group.
-  bit SingleIssue = 0;
+  bit SingleIssue = false;
+  // An instruction is allowed to retire out-of-order if RetireOOO is
+  // true for at least one of its writes. This field is only used by
+  // MCA for in-order subtargets, and is ignored for other targets.
+  bit RetireOOO = false;
   SchedMachineModel SchedModel = ?;
 }
 
@@ -319,7 +319,7 @@ class ProcReadAdvance<int cycles, list<SchedWrite> writes = []> {
   list<SchedWrite> ValidWrites = writes;
   // Allow a processor to mark some scheduling classes as unsupported
   // for stronger verification.
-  bit Unsupported = 0;
+  bit Unsupported = false;
   SchedMachineModel SchedModel = ?;
 }
 
@@ -374,7 +374,11 @@ class SchedPredicate<code pred> : SchedPredicateBase {
   SchedMachineModel SchedModel = ?;
   code Predicate = pred;
 }
-def NoSchedPred : SchedPredicate<[{true}]>;
+
+// Define a predicate to be typically used as the default case in a
+// SchedVariant.  It the SchedVariant does not use any other predicate based on
+// MCSchedPredicate, this is the default scheduling case used by llvm-mca.
+def NoSchedPred : MCSchedPredicate<TruePred>;
 
 // Associate a predicate with a list of SchedReadWrites. By default,
 // the selected SchedReadWrites are still associated with a single
@@ -393,7 +397,7 @@ class SchedVar<SchedPredicateBase pred, list<SchedReadWrite> selected> {
 // SchedModel silences warnings but is ignored.
 class SchedVariant<list<SchedVar> variants> {
   list<SchedVar> Variants = variants;
-  bit Variadic = 0;
+  bit Variadic = false;
   SchedMachineModel SchedModel = ?;
 }
 
@@ -426,7 +430,7 @@ class InstRW<list<SchedReadWrite> rw, dag instrlist> {
   dag Instrs = instrlist;
   SchedMachineModel SchedModel = ?;
   // Allow a subtarget to mark some instructions as unsupported.
-  bit Unsupported = 0;
+  bit Unsupported = false;
 }
 
 // Map a set of itinerary classes to SchedReadWrite resources. This is
@@ -461,6 +465,10 @@ class SchedAlias<SchedReadWrite match, SchedReadWrite alias> {
 //  - The number of physical registers which can be used for register renaming
 //    purpose.
 //  - The cost of a register rename.
+//  - The set of registers that allow move elimination.
+//  - The maximum number of moves that can be eliminated every cycle.
+//  - Whether move elimination is limited to register moves whose input
+//    is known to be zero.
 //
 // The cost of a rename is the number of physical registers allocated by the
 // register alias table to map the new definition. By default, register can be
@@ -507,11 +515,35 @@ class SchedAlias<SchedReadWrite match, SchedReadWrite alias> {
 // partial write is combined with the previous super-register definition.  We
 // should add support for these cases, and correctly model merge problems with
 // partial register accesses.
+//
+// Field MaxMovesEliminatedPerCycle specifies how many moves can be eliminated
+// every cycle. A default value of zero for that field means: there is no limit
+// to the number of moves that can be eliminated by this register file.
+//
+// An instruction MI is a candidate for move elimination if a call to
+// method TargetSubtargetInfo::isOptimizableRegisterMove(MI) returns true (see
+// llvm/CodeGen/TargetSubtargetInfo.h, and llvm/MC/MCInstrAnalysis.h).
+//
+// Subtargets can instantiate tablegen class IsOptimizableRegisterMove (see
+// llvm/Target/TargetInstrPredicate.td) to customize the set of move elimination
+// candidates. By default, no instruction is a valid move elimination candidate.
+//
+// A register move MI is eliminated only if:
+//  - MI is a move elimination candidate.
+//  - The destination register is from a register class that allows move
+//    elimination (see field `AllowMoveElimination` below).
+//  - Constraints on the move kind, and the maximum number of moves that can be
+//    eliminated per cycle are all met.
+
 class RegisterFile<int numPhysRegs, list<RegisterClass> Classes = [],
-                   list<int> Costs = []> {
+                   list<int> Costs = [], list<bit> AllowMoveElim = [],
+                   int MaxMoveElimPerCy = 0, bit AllowZeroMoveElimOnly = false> {
   list<RegisterClass> RegClasses = Classes;
   list<int> RegCosts = Costs;
+  list<bit> AllowMoveElimination = AllowMoveElim;
   int NumPhysRegs = numPhysRegs;
+  int MaxMovesEliminatedPerCycle = MaxMoveElimPerCy;
+  bit AllowZeroMoveEliminationOnly = AllowZeroMoveElimOnly;
   SchedMachineModel SchedModel = ?;
 }
 
@@ -531,23 +563,12 @@ class RetireControlUnit<int bufferSize, int retirePerCycle> {
   SchedMachineModel SchedModel = ?;
 }
 
-// Allow the definition of hardware counters.
-class PfmCounter {
+// Base class for Load/StoreQueue.  It is used to identify processor resources
+// which describe load/store queues in the LS unit.
+class MemoryQueue<ProcResourceKind PR> {
+  ProcResourceKind QueueDescriptor = PR;
   SchedMachineModel SchedModel = ?;
 }
 
-// Each processor can define how to measure cycles by defining a
-// PfmCycleCounter.
-class PfmCycleCounter<string counter> : PfmCounter {
-  string Counter = counter;
-}
-
-// Each ProcResourceUnits can define how to measure issued uops by defining
-// a PfmIssueCounter.
-class PfmIssueCounter<ProcResourceUnits resource, list<string> counters>
-    : PfmCounter{
-  // The resource units on which uops are issued.
-  ProcResourceUnits Resource = resource;
-  // The list of counters that measure issue events.
-  list<string> Counters = counters;
-}
+class LoadQueue<ProcResourceKind LDQueue> : MemoryQueue<LDQueue>;
+class StoreQueue<ProcResourceKind STQueue> : MemoryQueue<STQueue>;

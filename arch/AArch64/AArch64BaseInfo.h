@@ -32,45 +32,45 @@
 
 inline static unsigned getWRegFromXReg(unsigned Reg)
 {
-	switch (Reg) {
-		default: break;
-		case ARM64_REG_X0: return ARM64_REG_W0;
-		case ARM64_REG_X1: return ARM64_REG_W1;
-		case ARM64_REG_X2: return ARM64_REG_W2;
-		case ARM64_REG_X3: return ARM64_REG_W3;
-		case ARM64_REG_X4: return ARM64_REG_W4;
-		case ARM64_REG_X5: return ARM64_REG_W5;
-		case ARM64_REG_X6: return ARM64_REG_W6;
-		case ARM64_REG_X7: return ARM64_REG_W7;
-		case ARM64_REG_X8: return ARM64_REG_W8;
-		case ARM64_REG_X9: return ARM64_REG_W9;
-		case ARM64_REG_X10: return ARM64_REG_W10;
-		case ARM64_REG_X11: return ARM64_REG_W11;
-		case ARM64_REG_X12: return ARM64_REG_W12;
-		case ARM64_REG_X13: return ARM64_REG_W13;
-		case ARM64_REG_X14: return ARM64_REG_W14;
-		case ARM64_REG_X15: return ARM64_REG_W15;
-		case ARM64_REG_X16: return ARM64_REG_W16;
-		case ARM64_REG_X17: return ARM64_REG_W17;
-		case ARM64_REG_X18: return ARM64_REG_W18;
-		case ARM64_REG_X19: return ARM64_REG_W19;
-		case ARM64_REG_X20: return ARM64_REG_W20;
-		case ARM64_REG_X21: return ARM64_REG_W21;
-		case ARM64_REG_X22: return ARM64_REG_W22;
-		case ARM64_REG_X23: return ARM64_REG_W23;
-		case ARM64_REG_X24: return ARM64_REG_W24;
-		case ARM64_REG_X25: return ARM64_REG_W25;
-		case ARM64_REG_X26: return ARM64_REG_W26;
-		case ARM64_REG_X27: return ARM64_REG_W27;
-		case ARM64_REG_X28: return ARM64_REG_W28;
-		case ARM64_REG_FP: return ARM64_REG_W29;
-		case ARM64_REG_LR: return ARM64_REG_W30;
-		case ARM64_REG_SP: return ARM64_REG_WSP;
-		case ARM64_REG_XZR: return ARM64_REG_WZR;
-	}
+  switch (Reg) {
+    default: break;
+    case ARM64_REG_X0: return ARM64_REG_W0;
+    case ARM64_REG_X1: return ARM64_REG_W1;
+    case ARM64_REG_X2: return ARM64_REG_W2;
+    case ARM64_REG_X3: return ARM64_REG_W3;
+    case ARM64_REG_X4: return ARM64_REG_W4;
+    case ARM64_REG_X5: return ARM64_REG_W5;
+    case ARM64_REG_X6: return ARM64_REG_W6;
+    case ARM64_REG_X7: return ARM64_REG_W7;
+    case ARM64_REG_X8: return ARM64_REG_W8;
+    case ARM64_REG_X9: return ARM64_REG_W9;
+    case ARM64_REG_X10: return ARM64_REG_W10;
+    case ARM64_REG_X11: return ARM64_REG_W11;
+    case ARM64_REG_X12: return ARM64_REG_W12;
+    case ARM64_REG_X13: return ARM64_REG_W13;
+    case ARM64_REG_X14: return ARM64_REG_W14;
+    case ARM64_REG_X15: return ARM64_REG_W15;
+    case ARM64_REG_X16: return ARM64_REG_W16;
+    case ARM64_REG_X17: return ARM64_REG_W17;
+    case ARM64_REG_X18: return ARM64_REG_W18;
+    case ARM64_REG_X19: return ARM64_REG_W19;
+    case ARM64_REG_X20: return ARM64_REG_W20;
+    case ARM64_REG_X21: return ARM64_REG_W21;
+    case ARM64_REG_X22: return ARM64_REG_W22;
+    case ARM64_REG_X23: return ARM64_REG_W23;
+    case ARM64_REG_X24: return ARM64_REG_W24;
+    case ARM64_REG_X25: return ARM64_REG_W25;
+    case ARM64_REG_X26: return ARM64_REG_W26;
+    case ARM64_REG_X27: return ARM64_REG_W27;
+    case ARM64_REG_X28: return ARM64_REG_W28;
+    case ARM64_REG_FP: return ARM64_REG_W29;
+    case ARM64_REG_LR: return ARM64_REG_W30;
+    case ARM64_REG_SP: return ARM64_REG_WSP;
+    case ARM64_REG_XZR: return ARM64_REG_WZR;
+  }
 
-	// For anything else, return it unchanged.
-	return Reg;
+  // For anything else, return it unchanged.
+  return Reg;
 }
 
 inline static unsigned getXRegFromWReg(unsigned Reg)
@@ -111,8 +111,8 @@ inline static unsigned getXRegFromWReg(unsigned Reg)
 		case ARM64_REG_WZR: return ARM64_REG_XZR;
 	}
 
-	// For anything else, return it unchanged.
-	return Reg;
+  // For anything else, return it unchanged.
+  return Reg;
 }
 
 inline static unsigned getBRegFromDReg(unsigned Reg)
@@ -152,8 +152,8 @@ inline static unsigned getBRegFromDReg(unsigned Reg)
 		case ARM64_REG_D31: return ARM64_REG_B31;
 	}
 
-	// For anything else, return it unchanged.
-	return Reg;
+  // For anything else, return it unchanged.
+  return Reg;
 }
 
 inline static unsigned getDRegFromBReg(unsigned Reg)
@@ -193,8 +193,8 @@ inline static unsigned getDRegFromBReg(unsigned Reg)
 		case ARM64_REG_B31: return ARM64_REG_D31;
 	}
 
-	// For anything else, return it unchanged.
-	return Reg;
+  // For anything else, return it unchanged.
+  return Reg;
 }
 
 // // Enums corresponding to AArch64 condition codes
@@ -223,8 +223,8 @@ typedef enum AArch64CC_CondCode { // Meaning (integer)     Meaning (floating-poi
 
 inline static AArch64CC_CondCode getInvertedCondCode(AArch64CC_CondCode Code)
 {
-	// To reverse a condition it's necessary to only invert the low bit:
-	return (AArch64CC_CondCode)((unsigned)Code ^ 0x1);
+  // To reverse a condition it's necessary to only invert the low bit:
+  return (AArch64CC_CondCode)((unsigned)Code ^ 0x1);
 }
 
 inline static const char *getCondCodeName(AArch64CC_CondCode CC)
@@ -289,62 +289,63 @@ inline static unsigned getNZCVToSatisfyCondCode(AArch64CC_CondCode Code)
 /// might even be optimal to just reorder the tables for the common instructions
 /// rather than changing the algorithm.
 typedef struct A64NamedImmMapper_Mapping {
-	const char *Name;
-	uint32_t Value;
+  const char *Name;
+  uint32_t Value;
 } A64NamedImmMapper_Mapping;
 
 typedef struct A64NamedImmMapper {
-	const A64NamedImmMapper_Mapping *Pairs;
-	size_t NumPairs;
-	uint32_t TooBigImm;
+  const A64NamedImmMapper_Mapping *Pairs;
+  size_t NumPairs;
+  uint32_t TooBigImm;
 } A64NamedImmMapper;
 
 typedef struct A64SysRegMapper {
-	const A64NamedImmMapper_Mapping *SysRegPairs;
-	const A64NamedImmMapper_Mapping *InstPairs;
-	size_t NumInstPairs;
+  const A64NamedImmMapper_Mapping *SysRegPairs;
+  const A64NamedImmMapper_Mapping *InstPairs;
+  size_t NumInstPairs;
 } A64SysRegMapper;
 
 typedef enum A64SE_ShiftExtSpecifiers {
-	A64SE_Invalid = -1,
-	A64SE_LSL,
-	A64SE_MSL,
-	A64SE_LSR,
-	A64SE_ASR,
-	A64SE_ROR,
+  A64SE_Invalid = -1,
+  A64SE_LSL,
+  A64SE_MSL,
+  A64SE_LSR,
+  A64SE_ASR,
+  A64SE_ROR,
 
-	A64SE_UXTB,
-	A64SE_UXTH,
-	A64SE_UXTW,
-	A64SE_UXTX,
+  A64SE_UXTB,
+  A64SE_UXTH,
+  A64SE_UXTW,
+  A64SE_UXTX,
 
-	A64SE_SXTB,
-	A64SE_SXTH,
-	A64SE_SXTW,
-	A64SE_SXTX
+  A64SE_SXTB,
+  A64SE_SXTH,
+  A64SE_SXTW,
+  A64SE_SXTX
 } A64SE_ShiftExtSpecifiers;
 
 typedef enum A64Layout_VectorLayout {
-	A64Layout_Invalid = -1,
-	A64Layout_VL_8B,
-	A64Layout_VL_4H,
-	A64Layout_VL_2S,
-	A64Layout_VL_1D,
+  A64Layout_Invalid = -1,
+  A64Layout_VL_8B,
+  A64Layout_VL_4H,
+  A64Layout_VL_2S,
+  A64Layout_VL_1D,
 
-	A64Layout_VL_16B,
-	A64Layout_VL_8H,
-	A64Layout_VL_4S,
-	A64Layout_VL_2D,
+  A64Layout_VL_16B,
+  A64Layout_VL_8H,
+  A64Layout_VL_4S,
+  A64Layout_VL_2D,
 
-	// Bare layout for the 128-bit vector
-	// (only show ".b", ".h", ".s", ".d" without vector number)
-	A64Layout_VL_B,
-	A64Layout_VL_H,
-	A64Layout_VL_S,
-	A64Layout_VL_D
+  // Bare layout for the 128-bit vector
+  // (only show ".b", ".h", ".s", ".d" without vector number)
+  A64Layout_VL_B,
+  A64Layout_VL_H,
+  A64Layout_VL_S,
+  A64Layout_VL_D
 } A64Layout_VectorLayout;
 
-inline static const char *AArch64VectorLayoutToString(A64Layout_VectorLayout Layout)
+inline static const char *
+AArch64VectorLayoutToString(A64Layout_VectorLayout Layout)
 {
 	switch (Layout) {
 		default: return NULL;	// never reach
@@ -363,109 +364,110 @@ inline static const char *AArch64VectorLayoutToString(A64Layout_VectorLayout Lay
 	}
 }
 
-inline static A64Layout_VectorLayout AArch64StringToVectorLayout(char *LayoutStr)
+inline static A64Layout_VectorLayout
+AArch64StringToVectorLayout(char *LayoutStr)
 {
-	if (!strcmp(LayoutStr, ".8b"))
-		return A64Layout_VL_8B;
+  if (!strcmp(LayoutStr, ".8b"))
+    return A64Layout_VL_8B;
 
-	if (!strcmp(LayoutStr, ".4h"))
-		return A64Layout_VL_4H;
+  if (!strcmp(LayoutStr, ".4h"))
+    return A64Layout_VL_4H;
 
-	if (!strcmp(LayoutStr, ".2s"))
-		return A64Layout_VL_2S;
+  if (!strcmp(LayoutStr, ".2s"))
+    return A64Layout_VL_2S;
 
-	if (!strcmp(LayoutStr, ".1d"))
-		return A64Layout_VL_1D;
+  if (!strcmp(LayoutStr, ".1d"))
+    return A64Layout_VL_1D;
 
-	if (!strcmp(LayoutStr, ".16b"))
-		return A64Layout_VL_16B;
+  if (!strcmp(LayoutStr, ".16b"))
+    return A64Layout_VL_16B;
 
-	if (!strcmp(LayoutStr, ".8h"))
-		return A64Layout_VL_8H;
+  if (!strcmp(LayoutStr, ".8h"))
+    return A64Layout_VL_8H;
 
-	if (!strcmp(LayoutStr, ".4s"))
-		return A64Layout_VL_4S;
+  if (!strcmp(LayoutStr, ".4s"))
+    return A64Layout_VL_4S;
 
-	if (!strcmp(LayoutStr, ".2d"))
-		return A64Layout_VL_2D;
+  if (!strcmp(LayoutStr, ".2d"))
+    return A64Layout_VL_2D;
 
-	if (!strcmp(LayoutStr, ".b"))
-		return A64Layout_VL_B;
+  if (!strcmp(LayoutStr, ".b"))
+    return A64Layout_VL_B;
 
-	if (!strcmp(LayoutStr, ".s"))
-		return A64Layout_VL_S;
+  if (!strcmp(LayoutStr, ".s"))
+    return A64Layout_VL_S;
 
-	if (!strcmp(LayoutStr, ".d"))
-		return A64Layout_VL_D;
+  if (!strcmp(LayoutStr, ".d"))
+    return A64Layout_VL_D;
 
-	return A64Layout_Invalid;
+  return A64Layout_Invalid;
 }
 
 /// Target Operand Flag enum.
 enum TOF {
-	//===------------------------------------------------------------------===//
-	// AArch64 Specific MachineOperand flags.
+  //===------------------------------------------------------------------===//
+  // AArch64 Specific MachineOperand flags.
 
-	MO_NO_FLAG,
+  MO_NO_FLAG,
 
-	MO_FRAGMENT = 0xf,
+  MO_FRAGMENT = 0xf,
 
-	/// MO_PAGE - A symbol operand with this flag represents the pc-relative
-	/// offset of the 4K page containing the symbol.  This is used with the
-	/// ADRP instruction.
-	MO_PAGE = 1,
+  /// MO_PAGE - A symbol operand with this flag represents the pc-relative
+  /// offset of the 4K page containing the symbol.  This is used with the
+  /// ADRP instruction.
+  MO_PAGE = 1,
 
-	/// MO_PAGEOFF - A symbol operand with this flag represents the offset of
-	/// that symbol within a 4K page.  This offset is added to the page address
-	/// to produce the complete address.
-	MO_PAGEOFF = 2,
+  /// MO_PAGEOFF - A symbol operand with this flag represents the offset of
+  /// that symbol within a 4K page.  This offset is added to the page address
+  /// to produce the complete address.
+  MO_PAGEOFF = 2,
 
-	/// MO_G3 - A symbol operand with this flag (granule 3) represents the high
-	/// 16-bits of a 64-bit address, used in a MOVZ or MOVK instruction
-	MO_G3 = 3,
+  /// MO_G3 - A symbol operand with this flag (granule 3) represents the high
+  /// 16-bits of a 64-bit address, used in a MOVZ or MOVK instruction
+  MO_G3 = 3,
 
-	/// MO_G2 - A symbol operand with this flag (granule 2) represents the bits
-	/// 32-47 of a 64-bit address, used in a MOVZ or MOVK instruction
-	MO_G2 = 4,
+  /// MO_G2 - A symbol operand with this flag (granule 2) represents the bits
+  /// 32-47 of a 64-bit address, used in a MOVZ or MOVK instruction
+  MO_G2 = 4,
 
-	/// MO_G1 - A symbol operand with this flag (granule 1) represents the bits
-	/// 16-31 of a 64-bit address, used in a MOVZ or MOVK instruction
-	MO_G1 = 5,
+  /// MO_G1 - A symbol operand with this flag (granule 1) represents the bits
+  /// 16-31 of a 64-bit address, used in a MOVZ or MOVK instruction
+  MO_G1 = 5,
 
-	/// MO_G0 - A symbol operand with this flag (granule 0) represents the bits
-	/// 0-15 of a 64-bit address, used in a MOVZ or MOVK instruction
-	MO_G0 = 6,
+  /// MO_G0 - A symbol operand with this flag (granule 0) represents the bits
+  /// 0-15 of a 64-bit address, used in a MOVZ or MOVK instruction
+  MO_G0 = 6,
 
-	/// MO_HI12 - This flag indicates that a symbol operand represents the bits
-	/// 13-24 of a 64-bit address, used in a arithmetic immediate-shifted-left-
-	/// by-12-bits instruction.
-	MO_HI12 = 7,
+  /// MO_HI12 - This flag indicates that a symbol operand represents the bits
+  /// 13-24 of a 64-bit address, used in a arithmetic immediate-shifted-left-
+  /// by-12-bits instruction.
+  MO_HI12 = 7,
 
-	/// MO_GOT - This flag indicates that a symbol operand represents the
-	/// address of the GOT entry for the symbol, rather than the address of
-	/// the symbol itself.
-	MO_GOT = 0x10,
+  /// MO_GOT - This flag indicates that a symbol operand represents the
+  /// address of the GOT entry for the symbol, rather than the address of
+  /// the symbol itself.
+  MO_GOT = 0x10,
 
-	/// MO_NC - Indicates whether the linker is expected to check the symbol
-	/// reference for overflow. For example in an ADRP/ADD pair of relocations
-	/// the ADRP usually does check, but not the ADD.
-	MO_NC = 0x20,
+  /// MO_NC - Indicates whether the linker is expected to check the symbol
+  /// reference for overflow. For example in an ADRP/ADD pair of relocations
+  /// the ADRP usually does check, but not the ADD.
+  MO_NC = 0x20,
 
-	/// MO_TLS - Indicates that the operand being accessed is some kind of
-	/// thread-local symbol. On Darwin, only one type of thread-local access
-	/// exists (pre linker-relaxation), but on ELF the TLSModel used for the
-	/// referee will affect interpretation.
-	MO_TLS = 0x40,
+  /// MO_TLS - Indicates that the operand being accessed is some kind of
+  /// thread-local symbol. On Darwin, only one type of thread-local access
+  /// exists (pre linker-relaxation), but on ELF the TLSModel used for the
+  /// referee will affect interpretation.
+  MO_TLS = 0x40,
 
-	/// MO_DLLIMPORT - On a symbol operand, this represents that the reference
-	/// to the symbol is for an import stub.  This is used for DLL import
-	/// storage class indication on Windows.
-	MO_DLLIMPORT = 0x80,
+  /// MO_DLLIMPORT - On a symbol operand, this represents that the reference
+  /// to the symbol is for an import stub.  This is used for DLL import
+  /// storage class indication on Windows.
+  MO_DLLIMPORT = 0x80,
 };
 
 typedef struct SysAlias {
-	const char *Name;
-	uint16_t Encoding;
+  const char *Name;
+  uint16_t Encoding;
 } SysAlias;
 
 #define AT SysAlias
@@ -478,29 +480,39 @@ typedef struct SysAlias {
 #define TSB SysAlias
 #define PState SysAlias
 #define SVEPREDPAT SysAlias
+#define SVCR SysAlias
+#define BTI SysAlias
 
 typedef struct SysAliasReg {
-	const char *Name;
-	uint16_t Encoding;
-	bool NeedsReg;
+  const char *Name;
+  uint16_t Encoding;
+  bool NeedsReg;
 } SysAliasReg;
 
 #define IC SysAliasReg
 #define TLBI SysAliasReg
 
 typedef struct SysAliasSysReg {
-	const char *Name;
-	uint16_t Encoding;
-	bool Readable;
-	bool Writeable;
+  const char *Name;
+  uint16_t Encoding;
+  bool Readable;
+  bool Writeable;
 } SysAliasSysReg;
 
 #define SysReg SysAliasSysReg
 
+typedef struct SysAliasImm {
+  const char *Name;
+  uint16_t Encoding;
+  uint16_t ImmValue;
+} SysAliasImm;
+
+#define DBnXS SysAliasImm
+
 typedef struct ExactFPImm {
-	const char *Name;
-	int Enum;
-	const char *Repr;
+  const char *Name;
+  int Enum;
+  const char *Repr;
 } ExactFPImm;
 
 const AT *lookupATByEncoding(uint16_t Encoding);
@@ -510,16 +522,63 @@ const IC *lookupICByEncoding(uint16_t Encoding);
 const TLBI *lookupTLBIByEncoding(uint16_t Encoding);
 const SVEPRFM *lookupSVEPRFMByEncoding(uint16_t Encoding);
 const PRFM *lookupPRFMByEncoding(uint16_t Encoding);
-const PSB *AArch64PSBHint_lookupPSBByEncoding(uint16_t Encoding);
+const PSB *lookupPSBByEncoding(uint16_t Encoding);
 const ISB *lookupISBByEncoding(uint16_t Encoding);
 const TSB *lookupTSBByEncoding(uint16_t Encoding);
 const SysReg *lookupSysRegByEncoding(uint16_t Encoding);
 const PState *lookupPStateByEncoding(uint16_t Encoding);
 const SVEPREDPAT *lookupSVEPREDPATByEncoding(uint16_t Encoding);
 const ExactFPImm *lookupExactFPImmByEnum(uint16_t Encoding);
+const SVCR *lookupSVCRByEncoding(uint8_t Encoding);
+const BTI *lookupBTIByEncoding(uint8_t Encoding);
+const DBnXS *lookupDBnXSByEncoding(uint8_t Encoding);
 
 // NOTE: result must be 128 bytes to contain the result
 void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result);
+
+// ---------------------------------------------------------------------------
+// The following Structs and Enum are taken from MCInstPrinter.h in llvm.
+// These are required for the updated printAliasInstr() function in
+// $ARCHGenAsmWriter.inc
+
+/// Map from opcode to pattern list by binary search.
+typedef struct PatternsForOpcode {
+  uint32_t Opcode;
+  uint16_t PatternStart;
+  uint16_t NumPatterns;
+} PatternsForOpcode;
+
+/// Data for each alias pattern. Includes feature bits, string, number of
+/// operands, and a variadic list of conditions to check.
+typedef struct AliasPattern {
+  uint32_t AsmStrOffset;
+  uint32_t AliasCondStart;
+  uint8_t NumOperands;
+  uint8_t NumConds;
+} AliasPattern;
+
+enum CondKind {
+  AliasPatternCond_K_Feature,	      // Match only if a feature is enabled.
+  AliasPatternCond_K_NegFeature,    // Match only if a feature is disabled.
+  AliasPatternCond_K_OrFeature,	    // Match only if one of a set of features is
+				                            // enabled.
+  AliasPatternCond_K_OrNegFeature,  // Match only if one of a set of features is
+				                            // disabled.
+  AliasPatternCond_K_EndOrFeatures, // Note end of list of K_Or(Neg)?Features.
+  AliasPatternCond_K_Ignore,	      // Match any operand.
+  AliasPatternCond_K_Reg,	          // Match a specific register.
+  AliasPatternCond_K_TiedReg,	      // Match another already matched register.
+  AliasPatternCond_K_Imm,	          // Match a specific immediate.
+  AliasPatternCond_K_RegClass,	    // Match registers in a class.
+  AliasPatternCond_K_Custom,	      // Call custom matcher by index.
+};
+
+typedef struct AliasPatternCond {
+  int Kind;
+  uint32_t Value;
+} AliasPatternCond;
+
+// ---------------------------------------------------------------------------
 
 #include "AArch64GenSystemOperands_enum.inc"
 

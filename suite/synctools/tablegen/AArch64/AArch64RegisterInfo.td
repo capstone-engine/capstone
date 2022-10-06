@@ -1,9 +1,8 @@
 //=- AArch64RegisterInfo.td - Describe the AArch64 Registers -*- tablegen -*-=//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -25,11 +24,9 @@ let Namespace = "AArch64" in {
   def bsub : SubRegIndex<8>;
   def hsub : SubRegIndex<16>;
   def ssub : SubRegIndex<32>;
-  def dsub : SubRegIndex<32>;
+  def dsub : SubRegIndex<64>;
   def sube32 : SubRegIndex<32>;
   def subo32 : SubRegIndex<32>;
-  def qhisub : SubRegIndex<64>;
-  def qsub : SubRegIndex<64>;
   def sube64 : SubRegIndex<64>;
   def subo64 : SubRegIndex<64>;
   // SVE
@@ -48,6 +45,16 @@ let Namespace = "AArch64" in {
   def qsub1 : SubRegIndex<128>;
   def qsub2 : SubRegIndex<128>;
   def qsub3 : SubRegIndex<128>;
+  // Note: Code depends on these having consecutive numbers
+  def zasubb  : SubRegIndex<2048>; // (16 x 16)/1 bytes  = 2048 bits
+  def zasubh0 : SubRegIndex<1024>; // (16 x 16)/2 bytes  = 1024 bits
+  def zasubh1 : SubRegIndex<1024>; // (16 x 16)/2 bytes  = 1024 bits
+  def zasubs0 : SubRegIndex<512>;  // (16 x 16)/4 bytes  = 512 bits
+  def zasubs1 : SubRegIndex<512>;  // (16 x 16)/4 bytes  = 512 bits
+  def zasubd0 : SubRegIndex<256>;  // (16 x 16)/8 bytes  = 256 bits
+  def zasubd1 : SubRegIndex<256>;  // (16 x 16)/8 bytes  = 256 bits
+  def zasubq0 : SubRegIndex<128>;  // (16 x 16)/16 bytes = 128 bits
+  def zasubq1 : SubRegIndex<128>;  // (16 x 16)/16 bytes = 128 bits
 }
 
 let Namespace = "AArch64" in {
@@ -134,6 +141,9 @@ def NZCV  : AArch64Reg<0, "nzcv">;
 // First fault status register
 def FFR : AArch64Reg<0, "ffr">, DwarfRegNum<[47]>;
 
+// Purely virtual Vector Granule (VG) Dwarf register
+def VG : AArch64Reg<0, "vg">, DwarfRegNum<[46]>;
+
 // GPR register classes with the intersections of GPR32/GPR32sp and
 // GPR64/GPR64sp for use by the coalescer.
 def GPR32common : RegisterClass<"AArch64", [i32], 32, (sequence "W%u", 0, 30)> {
@@ -188,6 +198,10 @@ def GPR64z : RegisterOperand<GPR64> {
   let GIZeroRegister = XZR;
 }
 
+// GPR argument registers.
+def GPR32arg : RegisterClass<"AArch64", [i32], 32, (sequence "W%u", 0, 7)>;
+def GPR64arg : RegisterClass<"AArch64", [i64], 64, (sequence "X%u", 0, 7)>;
+
 // GPR register classes which include WZR/XZR AND SP/WSP. This is not a
 // constraint used by any instructions, it is used as a common super-class.
 def GPR32all : RegisterClass<"AArch64", [i32], 32, (add GPR32common, WZR, WSP)>;
@@ -199,6 +213,17 @@ def GPR64all : RegisterClass<"AArch64", [i64], 64, (add GPR64common, XZR, SP)>;
 def tcGPR64 : RegisterClass<"AArch64", [i64], 64, (sub GPR64common, X19, X20, X21,
                                                      X22, X23, X24, X25, X26,
                                                      X27, X28, FP, LR)>;
+
+// Restricted set of tail call registers, for use when branch target
+// enforcement is enabled. These are the only registers which can be used to
+// indirectly branch (not call) to the "BTI c" instruction at the start of a
+// BTI-protected function.
+def rtcGPR64 : RegisterClass<"AArch64", [i64], 64, (add X16, X17)>;
+
+// Register set that excludes registers that are reserved for procedure calls.
+// This is used for pseudo-instructions that are actually implemented using a
+// procedure call.
+def GPR64noip : RegisterClass<"AArch64", [i64], 64, (sub GPR64, X16, X17, LR)>;
 
 // GPR register classes for post increment amount of vector load/store that
 // has alternate printing when Rm=31 and prints a constant immediate value
@@ -408,25 +433,35 @@ def Q31   : AArch64Reg<31, "q31", [D31], ["v31", ""]>, DwarfRegAlias<B31>;
 def FPR8  : RegisterClass<"AArch64", [untyped], 8, (sequence "B%u", 0, 31)> {
   let Size = 8;
 }
-def FPR16 : RegisterClass<"AArch64", [f16], 16, (sequence "H%u", 0, 31)> {
+def FPR16 : RegisterClass<"AArch64", [f16, bf16], 16, (sequence "H%u", 0, 31)> {
+  let Size = 16;
+}
+
+def FPR16_lo : RegisterClass<"AArch64", [f16], 16, (trunc FPR16, 16)> {
   let Size = 16;
 }
 def FPR32 : RegisterClass<"AArch64", [f32, i32], 32,(sequence "S%u", 0, 31)>;
 def FPR64 : RegisterClass<"AArch64", [f64, i64, v2f32, v1f64, v8i8, v4i16, v2i32,
-                                    v1i64, v4f16],
-                                    64, (sequence "D%u", 0, 31)>;
+                                      v1i64, v4f16, v4bf16],
+                                     64, (sequence "D%u", 0, 31)>;
+def FPR64_lo : RegisterClass<"AArch64",
+                             [v8i8, v4i16, v2i32, v1i64, v4f16, v4bf16, v2f32,
+                              v1f64],
+                             64, (trunc FPR64, 16)>;
+
 // We don't (yet) have an f128 legal type, so don't use that here. We
 // normalize 128-bit vectors to v2f64 for arg passing and such, so use
 // that here.
 def FPR128 : RegisterClass<"AArch64",
                            [v16i8, v8i16, v4i32, v2i64, v4f32, v2f64, f128,
-                            v8f16],
+                            v8f16, v8bf16],
                            128, (sequence "Q%u", 0, 31)>;
 
 // The lower 16 vector registers.  Some instructions can only take registers
 // in this range.
 def FPR128_lo : RegisterClass<"AArch64",
-                              [v16i8, v8i16, v4i32, v2i64, v4f32, v2f64, v8f16],
+                              [v16i8, v8i16, v4i32, v2i64, v4f32, v2f64, v8f16,
+                               v8bf16],
                               128, (trunc FPR128, 16)>;
 
 // Pairs, triples, and quads of 64-bit vector registers.
@@ -467,7 +502,7 @@ def QQQQ : RegisterClass<"AArch64", [untyped], 128, (add QSeqQuads)> {
 
 
 // Vector operand versions of the FP registers. Alternate name printing and
-// assmebler matching.
+// assembler matching.
 def VectorReg64AsmOperand : AsmOperandClass {
   let Name = "VectorReg64";
   let PredicateMethod = "isNeonVectorReg";
@@ -488,6 +523,9 @@ def V128 : RegisterOperand<FPR128, "printVRegOperand"> {
 def VectorRegLoAsmOperand : AsmOperandClass {
   let Name = "VectorRegLo";
   let PredicateMethod = "isNeonVectorRegLo";
+}
+def V64_lo : RegisterOperand<FPR64_lo, "printVRegOperand"> {
+  let ParserMatchClass = VectorRegLoAsmOperand;
 }
 def V128_lo : RegisterOperand<FPR128_lo, "printVRegOperand"> {
   let ParserMatchClass = VectorRegLoAsmOperand;
@@ -627,6 +665,10 @@ def FPR16Op  : RegisterOperand<FPR16, "printOperand"> {
   let ParserMatchClass = FPRAsmOperand<"FPR16">;
 }
 
+def FPR16Op_lo  : RegisterOperand<FPR16_lo, "printOperand"> {
+  let ParserMatchClass = FPRAsmOperand<"FPR16_lo">;
+}
+
 def FPR32Op  : RegisterOperand<FPR32, "printOperand"> {
   let ParserMatchClass = FPRAsmOperand<"FPR32">;
 }
@@ -643,16 +685,18 @@ def FPR128Op : RegisterOperand<FPR128, "printOperand"> {
 // ARMv8.1a atomic CASP register operands
 
 
-def WSeqPairs : RegisterTuples<[sube32, subo32], 
-                               [(rotl GPR32, 0), (rotl GPR32, 1)]>;
-def XSeqPairs : RegisterTuples<[sube64, subo64], 
-                               [(rotl GPR64, 0), (rotl GPR64, 1)]>;
+def WSeqPairs : RegisterTuples<[sube32, subo32],
+                               [(decimate (rotl GPR32, 0), 2),
+                                (decimate (rotl GPR32, 1), 2)]>;
+def XSeqPairs : RegisterTuples<[sube64, subo64],
+                               [(decimate (rotl GPR64, 0), 2),
+                                (decimate (rotl GPR64, 1), 2)]>;
 
-def WSeqPairsClass   : RegisterClass<"AArch64", [untyped], 32, 
+def WSeqPairsClass   : RegisterClass<"AArch64", [untyped], 32,
                                      (add WSeqPairs)>{
   let Size = 64;
 }
-def XSeqPairsClass   : RegisterClass<"AArch64", [untyped], 64, 
+def XSeqPairsClass   : RegisterClass<"AArch64", [untyped], 64,
                                      (add XSeqPairs)>{
   let Size = 128;
 }
@@ -674,6 +718,34 @@ def XSeqPairClassOperand :
 
 
 //===----- END: v8.1a atomic CASP register operands -----------------------===//
+
+//===----------------------------------------------------------------------===//
+// Armv8.7a accelerator extension register operands: 8 consecutive GPRs
+// starting with an even one
+
+let Namespace = "AArch64" in {
+  foreach i = 0-7 in
+    def "x8sub_"#i : SubRegIndex<64, !mul(64, i)>;
+}
+
+def Tuples8X : RegisterTuples<
+  !foreach(i, [0,1,2,3,4,5,6,7], !cast<SubRegIndex>("x8sub_"#i)),
+  !foreach(i, [0,1,2,3,4,5,6,7], (trunc (decimate (rotl GPR64, i), 2), 12))>;
+
+def GPR64x8Class : RegisterClass<"AArch64", [i64x8], 512, (trunc Tuples8X, 12)> {
+  let Size = 512;
+}
+def GPR64x8AsmOp : AsmOperandClass {
+  let Name = "GPR64x8";
+  let ParserMethod = "tryParseGPR64x8";
+  let RenderMethod = "addRegOperands";
+}
+def GPR64x8 : RegisterOperand<GPR64x8Class, "printGPR64x8"> {
+  let ParserMatchClass = GPR64x8AsmOp;
+  let PrintMethod = "printGPR64x8";
+}
+
+//===----- END: v8.7a accelerator extension register operands -------------===//
 
 // SVE predicate registers
 def P0    : AArch64Reg<0,   "p0">, DwarfRegNum<[48]>;
@@ -764,7 +836,7 @@ def Z30   : AArch64Reg<30, "z30", [Q30, Z30_HI]>, DwarfRegNum<[126]>;
 def Z31   : AArch64Reg<31, "z31", [Q31, Z31_HI]>, DwarfRegNum<[127]>;
 }
 
-// Enum descibing the element size for destructive
+// Enum describing the element size for destructive
 // operations.
 class ElementSizeEnum<bits<3> val> {
   bits<3> Value = val;
@@ -829,48 +901,25 @@ def PPR32  : PPRRegOp<"s", PPRAsmOp32,  ElementSizeS,  PPR>;
 def PPR64  : PPRRegOp<"d", PPRAsmOp64,  ElementSizeD,  PPR>;
 
 def PPRAsmOp3bAny : PPRAsmOperand<"Predicate3bAny", "PPR_3b",  0>;
-def PPRAsmOp3b8   : PPRAsmOperand<"Predicate3bB",   "PPR_3b",  8>;
-def PPRAsmOp3b16  : PPRAsmOperand<"Predicate3bH",   "PPR_3b", 16>;
-def PPRAsmOp3b32  : PPRAsmOperand<"Predicate3bS",   "PPR_3b", 32>;
-def PPRAsmOp3b64  : PPRAsmOperand<"Predicate3bD",   "PPR_3b", 64>;
 
 def PPR3bAny : PPRRegOp<"",  PPRAsmOp3bAny, ElementSizeNone, PPR_3b>;
-def PPR3b8   : PPRRegOp<"b", PPRAsmOp3b8,   ElementSizeB, PPR_3b>;
-def PPR3b16  : PPRRegOp<"h", PPRAsmOp3b16,  ElementSizeH, PPR_3b>;
-def PPR3b32  : PPRRegOp<"s", PPRAsmOp3b32,  ElementSizeS, PPR_3b>;
-def PPR3b64  : PPRRegOp<"d", PPRAsmOp3b64,  ElementSizeD, PPR_3b>;
 
 //******************************************************************************
 
-// SVE vector register class
-def ZPR : RegisterClass<"AArch64",
-                        [nxv16i8, nxv8i16, nxv4i32, nxv2i64,
-                         nxv2f16, nxv4f16, nxv8f16,
-                         nxv1f32, nxv2f32, nxv4f32,
-                         nxv1f64, nxv2f64],
-                        128, (sequence "Z%u", 0, 31)> {
+// SVE vector register classes
+class ZPRClass<int lastreg> : RegisterClass<"AArch64",
+                                            [nxv16i8, nxv8i16, nxv4i32, nxv2i64,
+                                             nxv2f16, nxv4f16, nxv8f16,
+                                             nxv2bf16, nxv4bf16, nxv8bf16,
+                                             nxv2f32, nxv4f32,
+                                             nxv2f64],
+                                            128, (sequence "Z%u", 0, lastreg)> {
   let Size = 128;
 }
 
-// SVE restricted 4 bit scalable vector register class
-def ZPR_4b : RegisterClass<"AArch64",
-                         [nxv16i8, nxv8i16, nxv4i32, nxv2i64,
-                          nxv2f16, nxv4f16, nxv8f16,
-                          nxv1f32, nxv2f32, nxv4f32,
-                          nxv1f64, nxv2f64],
-                         128, (sequence "Z%u", 0, 15)> {
-  let Size = 128;
-}
-
-// SVE restricted 3 bit scalable vector register class
-def ZPR_3b : RegisterClass<"AArch64",
-                         [nxv16i8, nxv8i16, nxv4i32, nxv2i64,
-                          nxv2f16, nxv4f16, nxv8f16,
-                          nxv1f32, nxv2f32, nxv4f32,
-                          nxv1f64, nxv2f64],
-                         128, (sequence "Z%u", 0, 7)> {
-  let Size = 128;
-}
+def ZPR    : ZPRClass<31>;
+def ZPR_4b : ZPRClass<15>; // Restricted 4 bit SVE vector register class.
+def ZPR_3b : ZPRClass<7>;  // Restricted 3 bit SVE vector register class.
 
 class ZPRAsmOperand<string name, int Width, string RegClassSuffix = "">
     : AsmOperandClass {
@@ -1104,10 +1153,235 @@ class GPR64ExtendRegisterOperand<string Name, int Scale, RegisterClass RegClass>
   let PrintMethod = "printRegWithShiftExtend<false, " # Scale # ", 'x', 0>";
 }
 
-foreach Scale = [8, 16, 32, 64] in {
+foreach Scale = [8, 16, 32, 64, 128] in {
   def GPR64shiftedAsmOpnd # Scale : GPR64ShiftExtendAsmOperand<"GPR64shifted", Scale, "GPR64">;
   def GPR64shifted # Scale : GPR64ExtendRegisterOperand<"GPR64shiftedAsmOpnd" # Scale, Scale, GPR64>;
 
   def GPR64NoXZRshiftedAsmOpnd # Scale : GPR64ShiftExtendAsmOperand<"GPR64NoXZRshifted", Scale, "GPR64common">;
   def GPR64NoXZRshifted # Scale : GPR64ExtendRegisterOperand<"GPR64NoXZRshiftedAsmOpnd" # Scale, Scale, GPR64common>;
+}
+
+// Accumulator array tiles.
+def ZAQ0  : AArch64Reg<0,  "za0.q">;
+def ZAQ1  : AArch64Reg<1,  "za1.q">;
+def ZAQ2  : AArch64Reg<2,  "za2.q">;
+def ZAQ3  : AArch64Reg<3,  "za3.q">;
+def ZAQ4  : AArch64Reg<4,  "za4.q">;
+def ZAQ5  : AArch64Reg<5,  "za5.q">;
+def ZAQ6  : AArch64Reg<6,  "za6.q">;
+def ZAQ7  : AArch64Reg<7,  "za7.q">;
+def ZAQ8  : AArch64Reg<8,  "za8.q">;
+def ZAQ9  : AArch64Reg<9,  "za9.q">;
+def ZAQ10 : AArch64Reg<10, "za10.q">;
+def ZAQ11 : AArch64Reg<11, "za11.q">;
+def ZAQ12 : AArch64Reg<12, "za12.q">;
+def ZAQ13 : AArch64Reg<13, "za13.q">;
+def ZAQ14 : AArch64Reg<14, "za14.q">;
+def ZAQ15 : AArch64Reg<15, "za15.q">;
+
+let SubRegIndices = [zasubq0, zasubq1] in {
+  def ZAD0 : AArch64Reg<0, "za0.d", [ZAQ0, ZAQ8]>;
+  def ZAD1 : AArch64Reg<1, "za1.d", [ZAQ1, ZAQ9]>;
+  def ZAD2 : AArch64Reg<2, "za2.d", [ZAQ2, ZAQ10]>;
+  def ZAD3 : AArch64Reg<3, "za3.d", [ZAQ3, ZAQ11]>;
+  def ZAD4 : AArch64Reg<4, "za4.d", [ZAQ4, ZAQ12]>;
+  def ZAD5 : AArch64Reg<5, "za5.d", [ZAQ5, ZAQ13]>;
+  def ZAD6 : AArch64Reg<6, "za6.d", [ZAQ6, ZAQ14]>;
+  def ZAD7 : AArch64Reg<7, "za7.d", [ZAQ7, ZAQ15]>;
+}
+
+let SubRegIndices = [zasubd0, zasubd1] in {
+  def ZAS0 : AArch64Reg<0, "za0.s", [ZAD0, ZAD4]>;
+  def ZAS1 : AArch64Reg<1, "za1.s", [ZAD1, ZAD5]>;
+  def ZAS2 : AArch64Reg<2, "za2.s", [ZAD2, ZAD6]>;
+  def ZAS3 : AArch64Reg<3, "za3.s", [ZAD3, ZAD7]>;
+}
+
+let SubRegIndices = [zasubs0, zasubs1] in {
+  def ZAH0 : AArch64Reg<0, "za0.h", [ZAS0, ZAS2]>;
+  def ZAH1 : AArch64Reg<1, "za1.h", [ZAS1, ZAS3]>;
+}
+
+let SubRegIndices = [zasubh0, zasubh1] in {
+  def ZAB0 : AArch64Reg<0, "za0.b", [ZAH0, ZAH1]>;
+}
+
+let SubRegIndices = [zasubb] in {
+  def ZA : AArch64Reg<0, "za", [ZAB0]>;
+}
+
+// SME Register Classes
+
+// Accumulator array
+def MPR : RegisterClass<"AArch64", [untyped], 2048, (add ZA)> {
+  let Size = 2048;
+}
+
+// Accumulator array as single tiles
+def MPR8    : RegisterClass<"AArch64", [untyped], 2048, (add (sequence "ZAB%u", 0, 0))> {
+  let Size = 2048;
+}
+def MPR16   : RegisterClass<"AArch64", [untyped], 1024, (add (sequence "ZAH%u", 0, 1))> {
+  let Size = 1024;
+}
+def MPR32   : RegisterClass<"AArch64", [untyped],  512, (add (sequence "ZAS%u", 0, 3))> {
+  let Size = 512;
+}
+def MPR64   : RegisterClass<"AArch64", [untyped],  256, (add (sequence "ZAD%u", 0, 7))> {
+  let Size = 256;
+}
+def MPR128  : RegisterClass<"AArch64", [untyped],  128, (add (sequence "ZAQ%u", 0, 15))> {
+  let Size = 128;
+}
+
+// SME Register Operands
+// There are three types of SME matrix register operands:
+// * Tiles:
+//
+//   These tiles make up the larger accumulator matrix. The tile representation
+//   has an element type suffix, e.g. za0.b or za15.q and can be any of the
+//   registers:
+//          ZAQ0..ZAQ15
+//          ZAD0..ZAD7
+//          ZAS0..ZAS3
+//          ZAH0..ZAH1
+//       or ZAB0
+//
+// * Tile vectors:
+//
+//   Their representation is similar to regular tiles, but they have an extra
+//   'h' or 'v' to tell how the vector at [reg+offset] is layed out in the tile,
+//   horizontally or vertically.
+//
+//   e.g. za1h.h or za15v.q, which corresponds to vectors in registers ZAH1 and
+//   ZAQ15, respectively. The horizontal/vertical is more a property of the
+//   instruction, than a property of the asm-operand itself, or its register.
+//   The distinction is required for the parsing/printing of the operand,
+//   as from a compiler's perspective, the whole tile is read/written.
+//
+// * Accumulator matrix:
+//
+//   This is the entire matrix accumulator register ZA (<=> ZAB0), printed as
+//   'za'.
+
+//
+// Tiles
+//
+
+class MatrixTileAsmOperand<string RC, int EltSize> : AsmOperandClass {
+  let Name = "MatrixTile" # EltSize;
+  let DiagnosticType = "Invalid" # Name;
+  let ParserMethod = "tryParseMatrixRegister";
+  let RenderMethod = "addMatrixOperands";
+  let PredicateMethod = "isMatrixRegOperand<"
+                          # "MatrixKind::Tile" # ", "
+                          # EltSize # ", AArch64::" # RC # "RegClassID>";
+}
+
+class MatrixTileOperand<int EltSize, int NumBitsForTile, RegisterClass RC>
+    : RegisterOperand<RC> {
+  let ParserMatchClass = MatrixTileAsmOperand<!cast<string>(RC), EltSize>;
+  let DecoderMethod = "DecodeMatrixTile<" # NumBitsForTile # ">";
+  let PrintMethod = "printMatrixTile";
+}
+
+def TileOp32  : MatrixTileOperand<32, 2, MPR32>;
+def TileOp64  : MatrixTileOperand<64, 3, MPR64>;
+
+//
+// Tile vectors (horizontal and vertical)
+//
+
+class MatrixTileVectorAsmOperand<string RC, int EltSize, int IsVertical>
+    : AsmOperandClass {
+  let Name = "MatrixTileVector" # !if(IsVertical, "V", "H") # EltSize;
+  let DiagnosticType = "Invalid" # Name;
+  let ParserMethod = "tryParseMatrixRegister";
+  let RenderMethod = "addMatrixOperands";
+  let PredicateMethod = "isMatrixRegOperand<"
+                          # "MatrixKind::"
+                          # !if(IsVertical, "Col", "Row") # ", "
+                          # EltSize # ", AArch64::" # RC # "RegClassID>";
+}
+
+class MatrixTileVectorOperand<int EltSize, int NumBitsForTile,
+                              RegisterClass RC, int IsVertical>
+    : RegisterOperand<RC> {
+  let ParserMatchClass = MatrixTileVectorAsmOperand<!cast<string>(RC), EltSize,
+                                                    IsVertical>;
+  let DecoderMethod = "DecodeMatrixTile<" # NumBitsForTile # ">";
+  let PrintMethod = "printMatrixTileVector<" # IsVertical # ">";
+}
+
+def TileVectorOpH8   : MatrixTileVectorOperand<  8, 0, MPR8,   0>;
+def TileVectorOpH16  : MatrixTileVectorOperand< 16, 1, MPR16,  0>;
+def TileVectorOpH32  : MatrixTileVectorOperand< 32, 2, MPR32,  0>;
+def TileVectorOpH64  : MatrixTileVectorOperand< 64, 3, MPR64,  0>;
+def TileVectorOpH128 : MatrixTileVectorOperand<128, 4, MPR128, 0>;
+
+def TileVectorOpV8   : MatrixTileVectorOperand<  8, 0, MPR8,   1>;
+def TileVectorOpV16  : MatrixTileVectorOperand< 16, 1, MPR16,  1>;
+def TileVectorOpV32  : MatrixTileVectorOperand< 32, 2, MPR32,  1>;
+def TileVectorOpV64  : MatrixTileVectorOperand< 64, 3, MPR64,  1>;
+def TileVectorOpV128 : MatrixTileVectorOperand<128, 4, MPR128, 1>;
+
+//
+// Accumulator matrix
+//
+
+class MatrixAsmOperand<string RC, int EltSize> : AsmOperandClass {
+  let Name = "Matrix";
+  let DiagnosticType = "Invalid" # Name;
+  let ParserMethod = "tryParseMatrixRegister";
+  let RenderMethod = "addMatrixOperands";
+  let PredicateMethod = "isMatrixRegOperand<"
+                          # "MatrixKind::Array" # ", "
+                          # EltSize # ", AArch64::" # RC # "RegClassID>";
+}
+
+class MatrixOperand<RegisterClass RC, int EltSize> : RegisterOperand<RC> {
+  let ParserMatchClass = MatrixAsmOperand<!cast<string>(RC), EltSize>;
+  let PrintMethod = "printMatrix<" # EltSize # ">";
+}
+
+def MatrixOp : MatrixOperand<MPR, 0>;
+
+class MatrixTileListAsmOperand : AsmOperandClass {
+  let Name = "MatrixTileList";
+  let ParserMethod = "tryParseMatrixTileList";
+  let RenderMethod = "addMatrixTileListOperands";
+  let PredicateMethod = "isMatrixTileList";
+}
+
+class MatrixTileListOperand : Operand<i8> {
+  let ParserMatchClass = MatrixTileListAsmOperand<>;
+  let DecoderMethod = "DecodeMatrixTileListRegisterClass";
+  let EncoderMethod = "EncodeMatrixTileListRegisterClass";
+  let PrintMethod = "printMatrixTileList";
+}
+
+def MatrixTileList : MatrixTileListOperand<>;
+
+def MatrixIndexGPR32_12_15 : RegisterClass<"AArch64", [i32], 32, (sequence "W%u", 12, 15)> {
+  let DiagnosticType = "InvalidMatrixIndexGPR32_12_15";
+}
+def MatrixIndexGPR32Op12_15 : RegisterOperand<MatrixIndexGPR32_12_15> {
+  let EncoderMethod = "encodeMatrixIndexGPR32";
+}
+
+def SVCROperand : AsmOperandClass {
+  let Name = "SVCR";
+  let ParserMethod = "tryParseSVCR";
+  let DiagnosticType = "Invalid" # Name;
+}
+
+def svcr_op : Operand<i32> {
+  let ParserMatchClass = SVCROperand;
+  let PrintMethod = "printSVCROp";
+  let DecoderMethod = "DecodeSVCROp";
+  let MCOperandPredicate = [{
+    if (!MCOp.isImm())
+      return false;
+    return AArch64SVCR::lookupSVCRByEncoding(MCOp.getImm()) != nullptr;
+  }];
 }

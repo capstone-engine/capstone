@@ -84,7 +84,7 @@ for line in lines:
     elif skip_print and 'static const uint8_t DecoderTable' in line2:
         skip_print = False
 
-    elif 'End llvm namespace' in line2:
+    elif 'end namespace llvm' in line2:
         # done
         break
 
@@ -103,13 +103,13 @@ for line in lines:
             line2 = line2.replace('Bits[', 'AArch64_getFeatureBits(')
             line2 = line2.replace(']', ')')
 
-    elif 'static bool checkDecoderPredicate(unsigned Idx, const FeatureBitset& Bits) {' in line2:
+    elif 'static bool checkDecoderPredicate(unsigned Idx, const FeatureBitset &Bits) {' in line2:
         line2 = 'static bool checkDecoderPredicate(unsigned Idx, MCInst *MI)\n{'
 
     elif 'checkDecoderPredicate(PIdx, ' in line2:
         line2 = line2.replace(', Bits)', ', MI)')
 
-    elif 'template<typename InsnType>' in line2:
+    elif 'template <typename InsnType>' in line2:
         continue
 
     elif 'static DecodeStatus decodeToMCInst' in line2:
@@ -122,6 +122,10 @@ for line in lines:
         line2 = line2.replace('fieldFromInstruction', 'fieldname')
         if 'InsnType FieldValue' in line2:
             line2 = line2.replace('InsnType ', '')
+        if 'insertBits(tmp,' in line2:
+            line2 = line2.replace('insertBits(', '')
+            tmpLn = line2.split(',')
+            line2 = tmpLn[0] + ' |=' + tmpLn[1] + ',' + tmpLn[2] + ',' + tmpLn[3] + ' <<' + tmpLn[4] + ';'
 
     elif 'DecodeComplete = true;' in line2:
         # dead code
@@ -184,8 +188,8 @@ for line in lines:
         line2 = line2.replace('InsnType ', '')
     elif 'InsnType NegativeMask =' in line2:
         line2 = line2.replace('InsnType ', '')
-    elif 'uint32_t ExpectedValue' in line2:
-        line2 = line2.replace('uint32_t ', '')
+    elif 'InsnType ExpectedValue' in line2:
+        line2 = line2.replace('InsnType ', '')
     elif 'ptrdiff_t Loc = ' in line2:
         continue
     elif 'LLVM_DEBUG(' in line2:
@@ -223,6 +227,10 @@ for line in lines:
             param = extract_brackets(line2)
             line2 = del_brackets(line2)
             line2 = line2.replace(', Decoder)', ', Decoder, %s)' %param)
+        elif 'DecodeMatrixTile<' in line2:
+            param = extract_brackets(line2)
+            line2 = del_brackets(line2)
+            line2 = line2.replace(', Decoder)', ', Decoder, %s)' %param)
         if 'DecodeComplete = false; ' in line2:
             line2 = line2.replace('DecodeComplete = false; ', '')
     elif 'decodeUImmOperand<' in line2 or 'decodeSImmOperand<' in line2 :
@@ -235,6 +243,10 @@ for line in lines:
     elif 'MI = TmpMI;' in line2:
         line2 = ''
         #line2 = line2.replace('TmpMI', '&TmpMI')
+    elif 'using TmpType = std::conditional' in line2:
+        continue
+    elif 'TmpType tmp;' in line2:
+        line2 = line2.replace('TmpType', 'InsnType')
 
     line2 = line2.replace('::', '_')
     print_line(line2)
