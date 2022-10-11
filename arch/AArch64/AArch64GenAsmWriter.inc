@@ -26297,7 +26297,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
       }
     } while (AsmString[I] != '\0');
   }
-  free(AsmString);
+  cs_mem_free(AsmString);
   return tmpString;
 }
         
