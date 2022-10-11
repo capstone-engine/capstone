@@ -26277,6 +26277,7 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
       ++I;
     }
 
+    bool isSME = false;
     do {
       if (AsmString[I] == '$') {
         ++I;
@@ -26289,9 +26290,19 @@ static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI)
           printOperand(MI, (unsigned)(AsmString[I++]) - 1, OS);
       } else {
         if (AsmString[I] == '[') {
-          set_mem_access(MI, true);
+          if (AsmString[I-1] != ' '){
+            set_sme_index(MI, true);
+            isSME = true;
+          } else {
+            set_mem_access(MI, true);
+          }
         } else if (AsmString[I] == ']') {
-          set_mem_access(MI, false);
+          if (isSME) {
+            set_sme_index(MI, false);
+            isSME = false;
+          } else {
+            set_mem_access(MI, false);
+          }
         }
         SStream_concat1(OS, AsmString[I++]);
       }
