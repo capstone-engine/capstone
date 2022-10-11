@@ -788,7 +788,7 @@ for line in lines:
       }
     } while (AsmString[I] != '\\0');
   }
-  free(AsmString);
+  cs_mem_free(AsmString);
   return tmpString;
 }
         """)
