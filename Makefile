@@ -45,6 +45,9 @@ else
 CFLAGS ?= -O3
 endif
 
+# C99 has been enforced elsewhere like xcode
+CFLAGS += -std=gnu99
+
 ifneq (,$(findstring yes,$(CAPSTONE_X86_ATT_DISABLE)))
 CFLAGS += -DCAPSTONE_X86_ATT_DISABLE
 endif
