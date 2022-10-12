@@ -522,6 +522,7 @@ if(CAPSTONE_SH_SUPPORT)
         arch/SH/SHModule.h
         arch/SH/SHInsnTable.inc
     )
+    set(TEST_SOURCES ${TEST_SOURCES} test_sh.c)
 endif()
 
 if(CAPSTONE_OSXKERNEL_SUPPORT)
