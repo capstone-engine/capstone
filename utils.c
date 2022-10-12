@@ -91,7 +91,7 @@ unsigned int count_positive8(const unsigned char *list)
 
 char *cs_strdup(const char *str)
 {
-	size_t len = strlen(str)+ 1;
+	size_t len = strlen(str) + 1;
 	void *new = cs_mem_malloc(len);
 
 	if (new == NULL)
