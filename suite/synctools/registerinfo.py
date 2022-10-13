@@ -136,10 +136,10 @@ if arch.upper() == 'AARCH64':
         if len(line.strip()) == 0:
             continue
     
-        if line.strip() == 'enum {':
+        if line.strip() == 'enum {' or 'enum :' in line.strip():
             enum_count += 1
             if enum_count == 4:
-                print(line)
+                print('enum {')
             continue
     
         if enum_count == 4:

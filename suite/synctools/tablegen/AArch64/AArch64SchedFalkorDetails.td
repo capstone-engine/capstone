@@ -1,9 +1,8 @@
 //==- AArch64SchedFalkorDetails.td - Falkor Scheduling Defs -*- tablegen -*-==//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -909,10 +908,10 @@ def : InstRW<[FalkorWr_ADDSUBsx],     (instregex "^SUB(S)?(W|X)r(s|x|x64)$")>;
 // -----------------------------------------------------------------------------
 def : InstRW<[FalkorWr_1GTOV_1cyc],   (instregex "^DUP(v8i8|v4i16|v2i32)(gpr|lane)$")>;
 def : InstRW<[FalkorWr_1VXVY_1cyc],   (instregex "^DUP(v16i8|v8i16)(gpr|lane)$")>;
-def : InstRW<[FalkorWr_1VXVY_1cyc],   (instregex "^CPY(i8|i16|i32|i64)$")>;
+def : InstRW<[FalkorWr_1VXVY_1cyc],   (instregex "^DUP(i8|i16|i32|i64)$")>;
 def : InstRW<[FalkorWr_1GTOV_1cyc],   (instregex "^INSv(i8|i16)(gpr|lane)$")>;
 def : InstRW<[FalkorWr_1VTOG_1cyc],   (instregex "^(S|U)MOVv.*$")>;
-def : InstRW<[FalkorWr_1VXVY_1cyc],   (instregex "^(BIF|BIT|BSL)v8i8$")>;
+def : InstRW<[FalkorWr_1VXVY_1cyc],   (instregex "^(BIF|BIT|BSL|BSP)v8i8$")>;
 def : InstRW<[FalkorWr_1VXVY_1cyc],   (instrs EXTv8i8)>;
 def : InstRW<[FalkorWr_1VXVY_0cyc],   (instregex "(MOVI|MVNI)(D|v8b_ns|v2i32|v4i16|v2s_msl)$")>; // imm fwd
 def : InstRW<[FalkorWr_1VXVY_1cyc],   (instrs TBLv8i8One)>;
@@ -936,7 +935,7 @@ def : InstRW<[FalkorWr_FMUL64_1VXVY_6cyc],
 def : InstRW<[FalkorWr_1GTOV_1VXVY_2cyc],
                                       (instregex "^INSv(i32|i64)(gpr|lane)$")>;
 def : InstRW<[FalkorWr_2GTOV_1cyc],   (instregex "^DUP(v4i32|v2i64)(gpr|lane)$")>;
-def : InstRW<[FalkorWr_2VXVY_1cyc],   (instregex "^(BIF|BIT|BSL)v16i8$")>;
+def : InstRW<[FalkorWr_2VXVY_1cyc],   (instregex "^(BIF|BIT|BSL|BSP)v16i8$")>;
 def : InstRW<[FalkorWr_2VXVY_1cyc],   (instrs EXTv16i8)>;
 def : InstRW<[FalkorWr_2VXVY_0cyc],   (instregex "(MOVI|MVNI)(v2d_ns|v16b_ns|v4i32|v8i16|v4s_msl)$")>; // imm fwd
 def : InstRW<[FalkorWr_2VXVY_1cyc],   (instrs NOTv16i8)>;

@@ -1,3 +1,11 @@
+!# issue 1912 PPC register name
+!# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, None
+0x2d,0x03,0x00,0x80 == cmpwi cr2, r3, 0x80
+
+!# issue 1912 PPC no register name
+!# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, CS_OPT_SYNTAX_NOREGNAME
+0x2d,0x03,0x00,0x80 == cmpwi 2, 3, 0x80
+
 !# issue 1902 PPC psq_st negative displacement
 !# CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN | CS_MODE_PS, CS_OPT_DETAIL
 0xf3,0xec,0x0f,0xf8 == psq_st f31, -8(r12), 0, 0 ; op_count: 4 ; operands[0].type: REG = f31 ; operands[1].type: MEM ; operands[1].mem.base: REG = r12 ; operands[1].mem.disp: 0xfffffff8 ; operands[2].type: IMM = 0x0 ; operands[3].type: IMM = 0x0
@@ -136,23 +144,23 @@
 
 !# issue 1856 AArch64 SYS instruction operands: tlbi 1 op
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x1f,0x83,0x08,0xd5 == tlbi vmalle1is ; op_count: 1 ; operands[0].type: SYS = 0x3
+0x1f,0x83,0x08,0xd5 == tlbi vmalle1is ; op_count: 1 ; operands[0].type: SYS = 0x9a
 
 !# issue 1856 AArch64 SYS instruction operands: tlbi 2 op
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x22,0x87,0x08,0xd5 == tlbi vae1, x2 ; op_count: 2 ; operands[0].type: SYS = 0x16
+0x22,0x87,0x08,0xd5 == tlbi vae1, x2 ; op_count: 2 ; operands[0].type: SYS = 0x75
 
 !# issue 1856 AArch64 SYS instruction operands: at
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0xc0,0x78,0x0c,0xd5 == at s12e0r, x0 ; op_count: 2 ; operands[0].type: SYS = 0x59
+0xc0,0x78,0x0c,0xd5 == at s12e0r, x0 ; op_count: 2 ; operands[0].type: SYS = 0xaf
 
 !# issue 1856 AArch64 SYS instruction operands: dc
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x22,0x7b,0x0b,0xd5 == dc cvau, x2 ; op_count: 2 ; operands[0].type: SYS = 0x62
+0x22,0x7b,0x0b,0xd5 == dc cvau, x2 ; op_count: 2 ; operands[0].type: SYS = 0xc5
 
 !# issue 1856 AArch64 SYS instruction operands: ic
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x75,0x0b,0xd5 == ic ivau, x0 ; op_count: 2 ; operands[0].type: SYS = 0x68
+0x20,0x75,0x0b,0xd5 == ic ivau, x0 ; op_count: 2 ; operands[0].type: SYS = 0xd1
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
 !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
@@ -201,9 +209,9 @@
 !# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
 0x4E,0x7A,0x00,0x02 == movec cacr, d0
 
-!# issue 1653 AArch64 wrong register access read/write flags on cmp instruction
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x3F,0x00,0x02,0xEB == cmp x1, x2 ; operands[0].access: READ
+// !# issue 1653 AArch64 wrong register access read/write flags on cmp instruction
+// !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+// 0x3F,0x00,0x02,0xEB == cmp x1, x2 ; operands[0].access: READ
 
 !# issue 1643 M68K incorrect read of 32-bit imm for bsr
 !# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040 , None

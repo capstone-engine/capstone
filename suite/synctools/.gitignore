@@ -1,4 +1,5 @@
 *.inc
+insn_list.txt
 
 disassemblertables_reduce2
 disassemblertables2

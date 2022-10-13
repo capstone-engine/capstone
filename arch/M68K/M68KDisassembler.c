@@ -1784,6 +1784,13 @@ static void d68020_cpbcc_16(m68k_info *info)
 	cs_m68k* ext;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
+	// FNOP is a special case of FBF
+	if (info->ir == 0xf280 && peek_imm_16(info) == 0) {
+		MCInst_setOpcode(info->inst, M68K_INS_FNOP);
+		info->pc += 2;
+		return;
+	}
+
 	// these are all in row with the extension so just doing a add here is fine
 	info->inst->Opcode += (info->ir & 0x2f);
 
@@ -1800,8 +1807,6 @@ static void d68020_cpbcc_32(m68k_info *info)
 {
 	cs_m68k* ext;
 	cs_m68k_op* op0;
-
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 

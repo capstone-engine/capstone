@@ -582,6 +582,7 @@ add_library(capstone::capstone ALIAS capstone)
 target_include_directories(capstone PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
+set_property(TARGET capstone PROPERTY C_STANDARD 99)
 
 if(BUILD_SHARED_LIBS)
     target_compile_definitions(capstone PUBLIC CAPSTONE_SHARED)

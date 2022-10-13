@@ -1,9 +1,8 @@
 //=- AArch64SchedKryoDetails.td - QC Kryo Scheduling Defs ----*- tablegen -*-=//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -463,13 +462,13 @@ def KryoWrite_1cyc_X_noRSV_74ln :
 	let Latency = 1; let NumMicroOps = 2;
 }
 def : InstRW<[KryoWrite_1cyc_X_noRSV_74ln],
-	(instrs BIFv8i8, BITv8i8, BSLv8i8)>;
+	(instrs BIFv8i8, BITv8i8, BSLv8i8, BSPv8i8)>;
 def KryoWrite_1cyc_X_X_75ln :
 	SchedWriteRes<[KryoUnitX, KryoUnitX]> {
 	let Latency = 1; let NumMicroOps = 2;
 }
 def : InstRW<[KryoWrite_1cyc_X_X_75ln],
-	(instrs BIFv16i8, BITv16i8, BSLv16i8)>;
+	(instrs BIFv16i8, BITv16i8, BSLv16i8, BSPv16i8)>;
 def KryoWrite_0cyc_noRSV_11ln :
 	SchedWriteRes<[]> {
 	let Latency = 0; let NumMicroOps = 1;
