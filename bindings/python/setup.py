@@ -223,7 +223,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
     ],
-    requires=['ctypes'],
     cmdclass=cmdclass,
     zip_safe=True,
     include_package_data=True,

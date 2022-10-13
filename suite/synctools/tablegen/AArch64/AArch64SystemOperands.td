@@ -1,9 +1,8 @@
 //===- AArch64SystemOperands.td ----------------------------*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -13,6 +12,30 @@
 //===----------------------------------------------------------------------===//
 
 include "llvm/TableGen/SearchableTable.td"
+
+//===----------------------------------------------------------------------===//
+// Features that, for the compiler, only enable system operands and PStates
+//===----------------------------------------------------------------------===//
+
+def HasCCPP    : Predicate<"Subtarget->hasCCPP()">,
+                 AssemblerPredicate<(all_of FeatureCCPP), "ccpp">;
+
+def HasPAN     : Predicate<"Subtarget->hasPAN()">,
+                 AssemblerPredicate<(all_of FeaturePAN),
+                 "ARM v8.1  Privileged Access-Never extension">;
+
+def HasPsUAO   : Predicate<"Subtarget->hasPsUAO()">,
+                 AssemblerPredicate<(all_of FeaturePsUAO),
+                 "ARM v8.2 UAO PState extension (psuao)">;
+
+def HasPAN_RWV : Predicate<"Subtarget->hasPAN_RWV()">,
+                 AssemblerPredicate<(all_of FeaturePAN_RWV),
+                 "ARM v8.2 PAN AT S1E1R and AT S1E1W Variation">;
+
+def HasCONTEXTIDREL2
+               : Predicate<"Subtarget->hasCONTEXTIDREL2()">,
+                 AssemblerPredicate<(all_of FeatureCONTEXTIDREL2),
+                 "Target contains CONTEXTIDR_EL2 RW operand">;
 
 //===----------------------------------------------------------------------===//
 // AT (address translate) instruction options.
@@ -45,7 +68,7 @@ def : AT<"S12E1W", 0b100, 0b0111, 0b1000, 0b101>;
 def : AT<"S12E0R", 0b100, 0b0111, 0b1000, 0b110>;
 def : AT<"S12E0W", 0b100, 0b0111, 0b1000, 0b111>;
 
-let Requires = [{ {AArch64::HasV8_2aOps} }] in {
+let Requires = [{ {AArch64::FeaturePAN_RWV} }] in {
 def : AT<"S1E1RP", 0b000, 0b0111, 0b1001, 0b000>;
 def : AT<"S1E1WP", 0b000, 0b0111, 0b1001, 0b001>;
 }
@@ -75,6 +98,21 @@ def : DB<"ld",    0xd>;
 def : DB<"st",    0xe>;
 def : DB<"sy",    0xf>;
 
+class DBnXS<string name, bits<4> encoding, bits<5> immValue> : SearchableTable {
+  let SearchableFields = ["Name", "Encoding", "ImmValue"];
+  let EnumValueField = "Encoding";
+
+  string Name = name;
+  bits<4> Encoding = encoding;
+  bits<5> ImmValue = immValue;
+  code Requires = [{ {AArch64::FeatureXS} }];
+}
+
+def : DBnXS<"oshnxs", 0x3, 0x10>;
+def : DBnXS<"nshnxs", 0x7, 0x14>;
+def : DBnXS<"ishnxs", 0xb, 0x18>;
+def : DBnXS<"synxs",  0xf, 0x1c>;
+
 //===----------------------------------------------------------------------===//
 // DC (data cache maintenance) instruction options.
 //===----------------------------------------------------------------------===//
@@ -102,8 +140,32 @@ def : DC<"CVAU",  0b011, 0b0111, 0b1011, 0b001>;
 def : DC<"CIVAC", 0b011, 0b0111, 0b1110, 0b001>;
 def : DC<"CISW",  0b000, 0b0111, 0b1110, 0b010>;
 
-let Requires = [{ {AArch64::HasV8_2aOps} }] in
+let Requires = [{ {AArch64::FeatureCCPP} }] in
 def : DC<"CVAP",  0b011, 0b0111, 0b1100, 0b001>;
+
+let Requires = [{ {AArch64::FeatureCacheDeepPersist} }] in
+def : DC<"CVADP",  0b011, 0b0111, 0b1101, 0b001>;
+
+let Requires = [{ {AArch64::FeatureMTE} }] in {
+def : DC<"IGVAC",   0b000, 0b0111, 0b0110, 0b011>;
+def : DC<"IGSW",    0b000, 0b0111, 0b0110, 0b100>;
+def : DC<"CGSW",    0b000, 0b0111, 0b1010, 0b100>;
+def : DC<"CIGSW",   0b000, 0b0111, 0b1110, 0b100>;
+def : DC<"CGVAC",   0b011, 0b0111, 0b1010, 0b011>;
+def : DC<"CGVAP",   0b011, 0b0111, 0b1100, 0b011>;
+def : DC<"CGVADP",  0b011, 0b0111, 0b1101, 0b011>;
+def : DC<"CIGVAC",  0b011, 0b0111, 0b1110, 0b011>;
+def : DC<"GVA",     0b011, 0b0111, 0b0100, 0b011>;
+def : DC<"IGDVAC",  0b000, 0b0111, 0b0110, 0b101>;
+def : DC<"IGDSW",   0b000, 0b0111, 0b0110, 0b110>;
+def : DC<"CGDSW",   0b000, 0b0111, 0b1010, 0b110>;
+def : DC<"CIGDSW",  0b000, 0b0111, 0b1110, 0b110>;
+def : DC<"CGDVAC",  0b011, 0b0111, 0b1010, 0b101>;
+def : DC<"CGDVAP",  0b011, 0b0111, 0b1100, 0b101>;
+def : DC<"CGDVADP", 0b011, 0b0111, 0b1101, 0b101>;
+def : DC<"CIGDVAC", 0b011, 0b0111, 0b1110, 0b101>;
+def : DC<"GZVA",    0b011, 0b0111, 0b0100, 0b100>;
+}
 
 //===----------------------------------------------------------------------===//
 // IC (instruction cache maintenance) instruction options.
@@ -154,7 +216,7 @@ class TSB<string name, bits<4> encoding> : SearchableTable{
   bits<4> Encoding;
   let Encoding = encoding;
 
-  code Requires = [{ {AArch64::HasV8_4aOps} }];
+  code Requires = [{ {AArch64::FeatureTRACEV8_4} }];
 }
 
 def : TSB<"csync", 0>;
@@ -290,14 +352,41 @@ def : PState<"SPSel",   0b00101>;
 def : PState<"DAIFSet", 0b11110>;
 def : PState<"DAIFClr", 0b11111>;
 // v8.1a "Privileged Access Never" extension-specific PStates
-let Requires = [{ {AArch64::HasV8_1aOps} }] in
+let Requires = [{ {AArch64::FeaturePAN} }] in
 def : PState<"PAN",     0b00100>;
+
 // v8.2a "User Access Override" extension-specific PStates
-let Requires = [{ {AArch64::HasV8_2aOps} }] in
+let Requires = [{ {AArch64::FeaturePsUAO} }] in
 def : PState<"UAO",     0b00011>;
-// v8.4a timining insensitivity of data processing instructions
-let Requires = [{ {AArch64::HasV8_4aOps} }] in
+// v8.4a timing insensitivity of data processing instructions
+let Requires = [{ {AArch64::FeatureDIT} }] in
 def : PState<"DIT",     0b11010>;
+// v8.5a Spectre Mitigation
+let Requires = [{ {AArch64::FeatureSSBS} }] in
+def : PState<"SSBS",    0b11001>;
+// v8.5a Memory Tagging Extension
+let Requires = [{ {AArch64::FeatureMTE} }] in
+def : PState<"TCO",     0b11100>;
+
+//===----------------------------------------------------------------------===//
+// SVCR instruction options.
+//===----------------------------------------------------------------------===//
+
+class SVCR<string name, bits<3> encoding> : SearchableTable {
+  let SearchableFields = ["Name", "Encoding"];
+  let EnumValueField = "Encoding";
+
+  string Name = name;
+  bits<3> Encoding;
+  let Encoding = encoding;
+  code Requires = [{ {} }];
+}
+
+let Requires = [{ {AArch64::FeatureSME} }] in {
+def : SVCR<"SVCRSM",   0b001>;
+def : SVCR<"SVCRZA",   0b010>;
+def : SVCR<"SVCRSMZA", 0b011>;
+}
 
 //===----------------------------------------------------------------------===//
 // PSB instruction options.
@@ -315,14 +404,28 @@ class PSB<string name, bits<5> encoding> : SearchableTable {
 def : PSB<"csync", 0x11>;
 
 //===----------------------------------------------------------------------===//
-// TLBI (translation lookaside buffer invalidate) instruction options.
+// BTI instruction options.
 //===----------------------------------------------------------------------===//
 
-class TLBI<string name, bits<3> op1, bits<4> crn, bits<4> crm,
-             bits<3> op2, bit needsreg = 1> : SearchableTable {
+class BTI<string name, bits<3> encoding> : SearchableTable {
   let SearchableFields = ["Name", "Encoding"];
   let EnumValueField = "Encoding";
 
+  string Name = name;
+  bits<3> Encoding;
+  let Encoding = encoding;
+}
+
+def : BTI<"c",  0b010>;
+def : BTI<"j",  0b100>;
+def : BTI<"jc", 0b110>;
+
+//===----------------------------------------------------------------------===//
+// TLBI (translation lookaside buffer invalidate) instruction options.
+//===----------------------------------------------------------------------===//
+
+class TLBIEntry<string name, bits<3> op1, bits<4> crn, bits<4> crm,
+             bits<3> op2, bit needsreg> {
   string Name = name;
   bits<14> Encoding;
   let Encoding{13-11} = op1;
@@ -330,94 +433,147 @@ class TLBI<string name, bits<3> op1, bits<4> crn, bits<4> crm,
   let Encoding{6-3} = crm;
   let Encoding{2-0} = op2;
   bit NeedsReg = needsreg;
-  code Requires = [{ {} }];
+  list<string> Requires = [];
+  list<string> ExtraRequires = [];
+  code RequiresStr = [{ { }] # !interleave(Requires # ExtraRequires, [{, }]) # [{ } }];
 }
 
-def : TLBI<"IPAS2E1IS",    0b100, 0b1000, 0b0000, 0b001>;
-def : TLBI<"IPAS2LE1IS",   0b100, 0b1000, 0b0000, 0b101>;
-def : TLBI<"VMALLE1IS",    0b000, 0b1000, 0b0011, 0b000, 0>;
-def : TLBI<"ALLE2IS",      0b100, 0b1000, 0b0011, 0b000, 0>;
-def : TLBI<"ALLE3IS",      0b110, 0b1000, 0b0011, 0b000, 0>;
-def : TLBI<"VAE1IS",       0b000, 0b1000, 0b0011, 0b001>;
-def : TLBI<"VAE2IS",       0b100, 0b1000, 0b0011, 0b001>;
-def : TLBI<"VAE3IS",       0b110, 0b1000, 0b0011, 0b001>;
-def : TLBI<"ASIDE1IS",     0b000, 0b1000, 0b0011, 0b010>;
-def : TLBI<"VAAE1IS",      0b000, 0b1000, 0b0011, 0b011>;
-def : TLBI<"ALLE1IS",      0b100, 0b1000, 0b0011, 0b100, 0>;
-def : TLBI<"VALE1IS",      0b000, 0b1000, 0b0011, 0b101>;
-def : TLBI<"VALE2IS",      0b100, 0b1000, 0b0011, 0b101>;
-def : TLBI<"VALE3IS",      0b110, 0b1000, 0b0011, 0b101>;
-def : TLBI<"VMALLS12E1IS", 0b100, 0b1000, 0b0011, 0b110, 0>;
-def : TLBI<"VAALE1IS",     0b000, 0b1000, 0b0011, 0b111>;
-def : TLBI<"IPAS2E1",      0b100, 0b1000, 0b0100, 0b001>;
-def : TLBI<"IPAS2LE1",     0b100, 0b1000, 0b0100, 0b101>;
-def : TLBI<"VMALLE1",      0b000, 0b1000, 0b0111, 0b000, 0>;
-def : TLBI<"ALLE2",        0b100, 0b1000, 0b0111, 0b000, 0>;
-def : TLBI<"ALLE3",        0b110, 0b1000, 0b0111, 0b000, 0>;
-def : TLBI<"VAE1",         0b000, 0b1000, 0b0111, 0b001>;
-def : TLBI<"VAE2",         0b100, 0b1000, 0b0111, 0b001>;
-def : TLBI<"VAE3",         0b110, 0b1000, 0b0111, 0b001>;
-def : TLBI<"ASIDE1",       0b000, 0b1000, 0b0111, 0b010>;
-def : TLBI<"VAAE1",        0b000, 0b1000, 0b0111, 0b011>;
-def : TLBI<"ALLE1",        0b100, 0b1000, 0b0111, 0b100, 0>;
-def : TLBI<"VALE1",        0b000, 0b1000, 0b0111, 0b101>;
-def : TLBI<"VALE2",        0b100, 0b1000, 0b0111, 0b101>;
-def : TLBI<"VALE3",        0b110, 0b1000, 0b0111, 0b101>;
-def : TLBI<"VMALLS12E1",   0b100, 0b1000, 0b0111, 0b110, 0>;
-def : TLBI<"VAALE1",       0b000, 0b1000, 0b0111, 0b111>;
+def TLBITable : GenericTable {
+  let FilterClass = "TLBIEntry";
+  let CppTypeName = "TLBI";
+  let Fields = ["Name", "Encoding", "NeedsReg", "RequiresStr"];
+}
 
+def lookupTLBIByName : SearchIndex {
+  let Table = TLBITable;
+  let Key = ["Name"];
+}
+
+def lookupTLBIByEncoding : SearchIndex {
+  let Table = TLBITable;
+  let Key = ["Encoding"];
+}
+
+multiclass TLBI<string name, bits<3> op1, bits<4> crn, bits<4> crm,
+             bits<3> op2, bit needsreg = 1> {
+  def : TLBIEntry<name, op1, crn, crm, op2, needsreg>;
+  def : TLBIEntry<!strconcat(name, "nXS"), op1, crn, crm, op2, needsreg> {
+    let Encoding{7} = 1;
+    let ExtraRequires = ["AArch64::FeatureXS"];
+  }
+}
+
+defm : TLBI<"IPAS2E1IS",    0b100, 0b1000, 0b0000, 0b001>;
+defm : TLBI<"IPAS2LE1IS",   0b100, 0b1000, 0b0000, 0b101>;
+defm : TLBI<"VMALLE1IS",    0b000, 0b1000, 0b0011, 0b000, 0>;
+defm : TLBI<"ALLE2IS",      0b100, 0b1000, 0b0011, 0b000, 0>;
+defm : TLBI<"ALLE3IS",      0b110, 0b1000, 0b0011, 0b000, 0>;
+defm : TLBI<"VAE1IS",       0b000, 0b1000, 0b0011, 0b001>;
+defm : TLBI<"VAE2IS",       0b100, 0b1000, 0b0011, 0b001>;
+defm : TLBI<"VAE3IS",       0b110, 0b1000, 0b0011, 0b001>;
+defm : TLBI<"ASIDE1IS",     0b000, 0b1000, 0b0011, 0b010>;
+defm : TLBI<"VAAE1IS",      0b000, 0b1000, 0b0011, 0b011>;
+defm : TLBI<"ALLE1IS",      0b100, 0b1000, 0b0011, 0b100, 0>;
+defm : TLBI<"VALE1IS",      0b000, 0b1000, 0b0011, 0b101>;
+defm : TLBI<"VALE2IS",      0b100, 0b1000, 0b0011, 0b101>;
+defm : TLBI<"VALE3IS",      0b110, 0b1000, 0b0011, 0b101>;
+defm : TLBI<"VMALLS12E1IS", 0b100, 0b1000, 0b0011, 0b110, 0>;
+defm : TLBI<"VAALE1IS",     0b000, 0b1000, 0b0011, 0b111>;
+defm : TLBI<"IPAS2E1",      0b100, 0b1000, 0b0100, 0b001>;
+defm : TLBI<"IPAS2LE1",     0b100, 0b1000, 0b0100, 0b101>;
+defm : TLBI<"VMALLE1",      0b000, 0b1000, 0b0111, 0b000, 0>;
+defm : TLBI<"ALLE2",        0b100, 0b1000, 0b0111, 0b000, 0>;
+defm : TLBI<"ALLE3",        0b110, 0b1000, 0b0111, 0b000, 0>;
+defm : TLBI<"VAE1",         0b000, 0b1000, 0b0111, 0b001>;
+defm : TLBI<"VAE2",         0b100, 0b1000, 0b0111, 0b001>;
+defm : TLBI<"VAE3",         0b110, 0b1000, 0b0111, 0b001>;
+defm : TLBI<"ASIDE1",       0b000, 0b1000, 0b0111, 0b010>;
+defm : TLBI<"VAAE1",        0b000, 0b1000, 0b0111, 0b011>;
+defm : TLBI<"ALLE1",        0b100, 0b1000, 0b0111, 0b100, 0>;
+defm : TLBI<"VALE1",        0b000, 0b1000, 0b0111, 0b101>;
+defm : TLBI<"VALE2",        0b100, 0b1000, 0b0111, 0b101>;
+defm : TLBI<"VALE3",        0b110, 0b1000, 0b0111, 0b101>;
+defm : TLBI<"VMALLS12E1",   0b100, 0b1000, 0b0111, 0b110, 0>;
+defm : TLBI<"VAALE1",       0b000, 0b1000, 0b0111, 0b111>;
+
+// Armv8.4-A Translation Lookaside Buffer Instructions (TLBI)
+let Requires = ["AArch64::FeatureTLB_RMI"] in {
 // Armv8.4-A Outer Sharable TLB Maintenance instructions:
-let Requires = [{ {AArch64::HasV8_4aOps} }] in {
 //                         op1    CRn     CRm     op2
-def : TLBI<"VMALLE1OS",    0b000, 0b1000, 0b0001, 0b000, 0>;
-def : TLBI<"VAE1OS",       0b000, 0b1000, 0b0001, 0b001>;
-def : TLBI<"ASIDE1OS",     0b000, 0b1000, 0b0001, 0b010>;
-def : TLBI<"VAAE1OS",      0b000, 0b1000, 0b0001, 0b011>;
-def : TLBI<"VALE1OS",      0b000, 0b1000, 0b0001, 0b101>;
-def : TLBI<"VAALE1OS",     0b000, 0b1000, 0b0001, 0b111>;
-def : TLBI<"IPAS2E1OS",    0b100, 0b1000, 0b0100, 0b000>;
-def : TLBI<"IPAS2LE1OS",   0b100, 0b1000, 0b0100, 0b100>;
-def : TLBI<"VAE2OS",       0b100, 0b1000, 0b0001, 0b001>;
-def : TLBI<"VALE2OS",      0b100, 0b1000, 0b0001, 0b101>;
-def : TLBI<"VMALLS12E1OS", 0b100, 0b1000, 0b0001, 0b110, 0>;
-def : TLBI<"VAE3OS",       0b110, 0b1000, 0b0001, 0b001>;
-def : TLBI<"VALE3OS",      0b110, 0b1000, 0b0001, 0b101>;
-def : TLBI<"ALLE2OS",      0b100, 0b1000, 0b0001, 0b000, 0>;
-def : TLBI<"ALLE1OS",      0b100, 0b1000, 0b0001, 0b100, 0>;
-def : TLBI<"ALLE3OS",      0b110, 0b1000, 0b0001, 0b000, 0>;
+defm : TLBI<"VMALLE1OS",    0b000, 0b1000, 0b0001, 0b000, 0>;
+defm : TLBI<"VAE1OS",       0b000, 0b1000, 0b0001, 0b001>;
+defm : TLBI<"ASIDE1OS",     0b000, 0b1000, 0b0001, 0b010>;
+defm : TLBI<"VAAE1OS",      0b000, 0b1000, 0b0001, 0b011>;
+defm : TLBI<"VALE1OS",      0b000, 0b1000, 0b0001, 0b101>;
+defm : TLBI<"VAALE1OS",     0b000, 0b1000, 0b0001, 0b111>;
+defm : TLBI<"IPAS2E1OS",    0b100, 0b1000, 0b0100, 0b000>;
+defm : TLBI<"IPAS2LE1OS",   0b100, 0b1000, 0b0100, 0b100>;
+defm : TLBI<"VAE2OS",       0b100, 0b1000, 0b0001, 0b001>;
+defm : TLBI<"VALE2OS",      0b100, 0b1000, 0b0001, 0b101>;
+defm : TLBI<"VMALLS12E1OS", 0b100, 0b1000, 0b0001, 0b110, 0>;
+defm : TLBI<"VAE3OS",       0b110, 0b1000, 0b0001, 0b001>;
+defm : TLBI<"VALE3OS",      0b110, 0b1000, 0b0001, 0b101>;
+defm : TLBI<"ALLE2OS",      0b100, 0b1000, 0b0001, 0b000, 0>;
+defm : TLBI<"ALLE1OS",      0b100, 0b1000, 0b0001, 0b100, 0>;
+defm : TLBI<"ALLE3OS",      0b110, 0b1000, 0b0001, 0b000, 0>;
 
 // Armv8.4-A TLB Range Maintenance instructions:
 //                         op1    CRn     CRm     op2
-def : TLBI<"RVAE1",        0b000, 0b1000, 0b0110, 0b001>;
-def : TLBI<"RVAAE1",       0b000, 0b1000, 0b0110, 0b011>;
-def : TLBI<"RVALE1",       0b000, 0b1000, 0b0110, 0b101>;
-def : TLBI<"RVAALE1",      0b000, 0b1000, 0b0110, 0b111>;
-def : TLBI<"RVAE1IS",      0b000, 0b1000, 0b0010, 0b001>;
-def : TLBI<"RVAAE1IS",     0b000, 0b1000, 0b0010, 0b011>;
-def : TLBI<"RVALE1IS",     0b000, 0b1000, 0b0010, 0b101>;
-def : TLBI<"RVAALE1IS",    0b000, 0b1000, 0b0010, 0b111>;
-def : TLBI<"RVAE1OS",      0b000, 0b1000, 0b0101, 0b001>;
-def : TLBI<"RVAAE1OS",     0b000, 0b1000, 0b0101, 0b011>;
-def : TLBI<"RVALE1OS",     0b000, 0b1000, 0b0101, 0b101>;
-def : TLBI<"RVAALE1OS",    0b000, 0b1000, 0b0101, 0b111>;
-def : TLBI<"RIPAS2E1IS",   0b100, 0b1000, 0b0000, 0b010>;
-def : TLBI<"RIPAS2LE1IS",  0b100, 0b1000, 0b0000, 0b110>;
-def : TLBI<"RIPAS2E1",     0b100, 0b1000, 0b0100, 0b010>;
-def : TLBI<"RIPAS2LE1",    0b100, 0b1000, 0b0100, 0b110>;
-def : TLBI<"RIPAS2E1OS",   0b100, 0b1000, 0b0100, 0b011>;
-def : TLBI<"RIPAS2LE1OS",  0b100, 0b1000, 0b0100, 0b111>;
-def : TLBI<"RVAE2",        0b100, 0b1000, 0b0110, 0b001>;
-def : TLBI<"RVALE2",       0b100, 0b1000, 0b0110, 0b101>;
-def : TLBI<"RVAE2IS",      0b100, 0b1000, 0b0010, 0b001>;
-def : TLBI<"RVALE2IS",     0b100, 0b1000, 0b0010, 0b101>;
-def : TLBI<"RVAE2OS",      0b100, 0b1000, 0b0101, 0b001>;
-def : TLBI<"RVALE2OS",     0b100, 0b1000, 0b0101, 0b101>;
-def : TLBI<"RVAE3",        0b110, 0b1000, 0b0110, 0b001>;
-def : TLBI<"RVALE3",       0b110, 0b1000, 0b0110, 0b101>;
-def : TLBI<"RVAE3IS",      0b110, 0b1000, 0b0010, 0b001>;
-def : TLBI<"RVALE3IS",     0b110, 0b1000, 0b0010, 0b101>;
-def : TLBI<"RVAE3OS",      0b110, 0b1000, 0b0101, 0b001>;
-def : TLBI<"RVALE3OS",     0b110, 0b1000, 0b0101, 0b101>;
+defm : TLBI<"RVAE1",        0b000, 0b1000, 0b0110, 0b001>;
+defm : TLBI<"RVAAE1",       0b000, 0b1000, 0b0110, 0b011>;
+defm : TLBI<"RVALE1",       0b000, 0b1000, 0b0110, 0b101>;
+defm : TLBI<"RVAALE1",      0b000, 0b1000, 0b0110, 0b111>;
+defm : TLBI<"RVAE1IS",      0b000, 0b1000, 0b0010, 0b001>;
+defm : TLBI<"RVAAE1IS",     0b000, 0b1000, 0b0010, 0b011>;
+defm : TLBI<"RVALE1IS",     0b000, 0b1000, 0b0010, 0b101>;
+defm : TLBI<"RVAALE1IS",    0b000, 0b1000, 0b0010, 0b111>;
+defm : TLBI<"RVAE1OS",      0b000, 0b1000, 0b0101, 0b001>;
+defm : TLBI<"RVAAE1OS",     0b000, 0b1000, 0b0101, 0b011>;
+defm : TLBI<"RVALE1OS",     0b000, 0b1000, 0b0101, 0b101>;
+defm : TLBI<"RVAALE1OS",    0b000, 0b1000, 0b0101, 0b111>;
+defm : TLBI<"RIPAS2E1IS",   0b100, 0b1000, 0b0000, 0b010>;
+defm : TLBI<"RIPAS2LE1IS",  0b100, 0b1000, 0b0000, 0b110>;
+defm : TLBI<"RIPAS2E1",     0b100, 0b1000, 0b0100, 0b010>;
+defm : TLBI<"RIPAS2LE1",    0b100, 0b1000, 0b0100, 0b110>;
+defm : TLBI<"RIPAS2E1OS",   0b100, 0b1000, 0b0100, 0b011>;
+defm : TLBI<"RIPAS2LE1OS",  0b100, 0b1000, 0b0100, 0b111>;
+defm : TLBI<"RVAE2",        0b100, 0b1000, 0b0110, 0b001>;
+defm : TLBI<"RVALE2",       0b100, 0b1000, 0b0110, 0b101>;
+defm : TLBI<"RVAE2IS",      0b100, 0b1000, 0b0010, 0b001>;
+defm : TLBI<"RVALE2IS",     0b100, 0b1000, 0b0010, 0b101>;
+defm : TLBI<"RVAE2OS",      0b100, 0b1000, 0b0101, 0b001>;
+defm : TLBI<"RVALE2OS",     0b100, 0b1000, 0b0101, 0b101>;
+defm : TLBI<"RVAE3",        0b110, 0b1000, 0b0110, 0b001>;
+defm : TLBI<"RVALE3",       0b110, 0b1000, 0b0110, 0b101>;
+defm : TLBI<"RVAE3IS",      0b110, 0b1000, 0b0010, 0b001>;
+defm : TLBI<"RVALE3IS",     0b110, 0b1000, 0b0010, 0b101>;
+defm : TLBI<"RVAE3OS",      0b110, 0b1000, 0b0101, 0b001>;
+defm : TLBI<"RVALE3OS",     0b110, 0b1000, 0b0101, 0b101>;
+} //FeatureTLB_RMI
+
+// Armv9-A Realm Management Extention TLBI Instructions
+let Requires = ["AArch64::FeatureRME"] in {
+defm : TLBI<"RPAOS",        0b110, 0b1000, 0b0100, 0b011>;
+defm : TLBI<"RPALOS",       0b110, 0b1000, 0b0100, 0b111>;
+defm : TLBI<"PAALLOS",      0b110, 0b1000, 0b0001, 0b100, 0>;
+defm : TLBI<"PAALL",        0b110, 0b1000, 0b0111, 0b100, 0>;
+}
+
+// Armv8.5-A Prediction Restriction by Context instruction options:
+class PRCTX<string name, bits<4> crm> : SearchableTable {
+  let SearchableFields = ["Name", "Encoding"];
+  let EnumValueField = "Encoding";
+
+  string Name = name;
+  bits<11> Encoding;
+  let Encoding{10-4} = 0b0110111;
+  let Encoding{3-0} = crm;
+  bit NeedsReg = 1;
+  code Requires = [{ {} }];
+}
+
+let Requires = [{ {AArch64::FeaturePredRes} }] in {
+def : PRCTX<"RCTX", 0b0011>;
 }
 
 //===----------------------------------------------------------------------===//
@@ -430,6 +586,7 @@ class SysReg<string name, bits<2> op0, bits<3> op1, bits<4> crn, bits<4> crm,
   let EnumValueField = "Encoding";
 
   string Name = name;
+  string AltName = name;
   bits<16> Encoding;
   let Encoding{15-14} = op0;
   let Encoding{13-11} = op1;
@@ -476,8 +633,10 @@ def : ROSysReg<"PMCEID0_EL0",        0b11, 0b011, 0b1001, 0b1100, 0b110>;
 def : ROSysReg<"PMCEID1_EL0",        0b11, 0b011, 0b1001, 0b1100, 0b111>;
 def : ROSysReg<"MIDR_EL1",           0b11, 0b000, 0b0000, 0b0000, 0b000>;
 def : ROSysReg<"CCSIDR_EL1",         0b11, 0b001, 0b0000, 0b0000, 0b000>;
+
+//v8.3 CCIDX - extending the CCsIDr number of sets
 def : ROSysReg<"CCSIDR2_EL1",        0b11, 0b001, 0b0000, 0b0000, 0b010> {
-  let Requires = [{ {AArch64::HasV8_3aOps} }];
+  let Requires = [{ {AArch64::FeatureCCIDX} }];
 }
 def : ROSysReg<"CLIDR_EL1",          0b11, 0b001, 0b0000, 0b0000, 0b001>;
 def : ROSysReg<"CTR_EL0",            0b11, 0b011, 0b0000, 0b0000, 0b001>;
@@ -487,6 +646,9 @@ def : ROSysReg<"AIDR_EL1",           0b11, 0b001, 0b0000, 0b0000, 0b111>;
 def : ROSysReg<"DCZID_EL0",          0b11, 0b011, 0b0000, 0b0000, 0b111>;
 def : ROSysReg<"ID_PFR0_EL1",        0b11, 0b000, 0b0000, 0b0001, 0b000>;
 def : ROSysReg<"ID_PFR1_EL1",        0b11, 0b000, 0b0000, 0b0001, 0b001>;
+def : ROSysReg<"ID_PFR2_EL1",        0b11, 0b000, 0b0000, 0b0011, 0b100> {
+    let Requires = [{ {AArch64::FeatureSpecRestrict} }];
+}
 def : ROSysReg<"ID_DFR0_EL1",        0b11, 0b000, 0b0000, 0b0001, 0b010>;
 def : ROSysReg<"ID_AFR0_EL1",        0b11, 0b000, 0b0000, 0b0001, 0b011>;
 def : ROSysReg<"ID_MMFR0_EL1",       0b11, 0b000, 0b0000, 0b0001, 0b100>;
@@ -510,11 +672,10 @@ def : ROSysReg<"ID_AA64AFR0_EL1",     0b11, 0b000, 0b0000, 0b0101, 0b100>;
 def : ROSysReg<"ID_AA64AFR1_EL1",     0b11, 0b000, 0b0000, 0b0101, 0b101>;
 def : ROSysReg<"ID_AA64ISAR0_EL1",    0b11, 0b000, 0b0000, 0b0110, 0b000>;
 def : ROSysReg<"ID_AA64ISAR1_EL1",    0b11, 0b000, 0b0000, 0b0110, 0b001>;
+def : ROSysReg<"ID_AA64ISAR2_EL1",    0b11, 0b000, 0b0000, 0b0110, 0b010>;
 def : ROSysReg<"ID_AA64MMFR0_EL1",    0b11, 0b000, 0b0000, 0b0111, 0b000>;
 def : ROSysReg<"ID_AA64MMFR1_EL1",    0b11, 0b000, 0b0000, 0b0111, 0b001>;
-def : ROSysReg<"ID_AA64MMFR2_EL1",    0b11, 0b000, 0b0000, 0b0111, 0b010> {
-  let Requires = [{ {AArch64::HasV8_2aOps} }];
-}
+def : ROSysReg<"ID_AA64MMFR2_EL1",    0b11, 0b000, 0b0000, 0b0111, 0b010>;
 def : ROSysReg<"MVFR0_EL1",          0b11, 0b000, 0b0000, 0b0011, 0b000>;
 def : ROSysReg<"MVFR1_EL1",          0b11, 0b000, 0b0000, 0b0011, 0b001>;
 def : ROSysReg<"MVFR2_EL1",          0b11, 0b000, 0b0000, 0b0011, 0b010>;
@@ -525,6 +686,7 @@ def : ROSysReg<"ISR_EL1",            0b11, 0b000, 0b1100, 0b0001, 0b000>;
 def : ROSysReg<"CNTPCT_EL0",         0b11, 0b011, 0b1110, 0b0000, 0b001>;
 def : ROSysReg<"CNTVCT_EL0",         0b11, 0b011, 0b1110, 0b0000, 0b010>;
 def : ROSysReg<"ID_MMFR4_EL1",       0b11, 0b000, 0b0000, 0b0010, 0b110>;
+def : ROSysReg<"ID_MMFR5_EL1",       0b11, 0b000, 0b0000, 0b0011, 0b110>;
 
 // Trace registers
 //                                 Op0    Op1     CRn     CRm    Op2
@@ -584,7 +746,7 @@ def : ROSysReg<"ID_AA64ZFR0_EL1",    0b11, 0b000, 0b0000, 0b0100, 0b100>;
 
 // v8.1a "Limited Ordering Regions" extension-specific system register
 //                         Op0    Op1     CRn     CRm    Op2
-let Requires = [{ {AArch64::HasV8_1aOps} }] in
+let Requires = [{ {AArch64::FeatureLOR} }] in
 def : ROSysReg<"LORID_EL1",  0b11, 0b000, 0b1010, 0b0100, 0b111>;
 
 // v8.2a "RAS extension" registers
@@ -592,6 +754,35 @@ def : ROSysReg<"LORID_EL1",  0b11, 0b000, 0b1010, 0b0100, 0b111>;
 let Requires = [{ {AArch64::FeatureRAS} }] in {
 def : ROSysReg<"ERRIDR_EL1", 0b11, 0b000, 0b0101, 0b0011, 0b000>;
 def : ROSysReg<"ERXFR_EL1",  0b11, 0b000, 0b0101, 0b0100, 0b000>;
+}
+
+// v8.5a "random number" registers
+//                       Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureRandGen} }] in {
+def : ROSysReg<"RNDR",   0b11, 0b011, 0b0010, 0b0100, 0b000>;
+def : ROSysReg<"RNDRRS", 0b11, 0b011, 0b0010, 0b0100, 0b001>;
+}
+
+// v8.5a Software Context Number registers
+let Requires = [{ {AArch64::FeatureSpecRestrict} }] in {
+def : RWSysReg<"SCXTNUM_EL0", 0b11, 0b011, 0b1101, 0b0000, 0b111>;
+def : RWSysReg<"SCXTNUM_EL1", 0b11, 0b000, 0b1101, 0b0000, 0b111>;
+def : RWSysReg<"SCXTNUM_EL2", 0b11, 0b100, 0b1101, 0b0000, 0b111>;
+def : RWSysReg<"SCXTNUM_EL3", 0b11, 0b110, 0b1101, 0b0000, 0b111>;
+def : RWSysReg<"SCXTNUM_EL12", 0b11, 0b101, 0b1101, 0b0000, 0b111>;
+}
+
+// v9a Realm Management Extension registers
+let Requires = [{ {AArch64::FeatureRME} }] in {
+def : RWSysReg<"MFAR_EL3",  0b11, 0b110, 0b0110, 0b0000, 0b101>;
+def : RWSysReg<"GPCCR_EL3", 0b11, 0b110, 0b0010, 0b0001, 0b110>;
+def : RWSysReg<"GPTBR_EL3", 0b11, 0b110, 0b0010, 0b0001, 0b100>;
+}
+
+// v9-a Scalable Matrix Extension (SME) registers
+//                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureSME} }] in {
+def : ROSysReg<"ID_AA64SMFR0_EL1", 0b11, 0b000, 0b0000, 0b0100, 0b101>;
 }
 
 //===----------------------
@@ -710,6 +901,9 @@ def : RWSysReg<"ACTLR_EL1",          0b11, 0b000, 0b0001, 0b0000, 0b001>;
 def : RWSysReg<"ACTLR_EL2",          0b11, 0b100, 0b0001, 0b0000, 0b001>;
 def : RWSysReg<"ACTLR_EL3",          0b11, 0b110, 0b0001, 0b0000, 0b001>;
 def : RWSysReg<"HCR_EL2",            0b11, 0b100, 0b0001, 0b0001, 0b000>;
+def : RWSysReg<"HCRX_EL2",           0b11, 0b100, 0b0001, 0b0010, 0b010> {
+  let Requires = [{ {AArch64::FeatureHCX} }];
+}
 def : RWSysReg<"SCR_EL3",            0b11, 0b110, 0b0001, 0b0001, 0b000>;
 def : RWSysReg<"MDCR_EL2",           0b11, 0b100, 0b0001, 0b0001, 0b001>;
 def : RWSysReg<"SDER32_EL3",         0b11, 0b110, 0b0001, 0b0001, 0b001>;
@@ -719,13 +913,19 @@ def : RWSysReg<"HSTR_EL2",           0b11, 0b100, 0b0001, 0b0001, 0b011>;
 def : RWSysReg<"HACR_EL2",           0b11, 0b100, 0b0001, 0b0001, 0b111>;
 def : RWSysReg<"MDCR_EL3",           0b11, 0b110, 0b0001, 0b0011, 0b001>;
 def : RWSysReg<"TTBR0_EL1",          0b11, 0b000, 0b0010, 0b0000, 0b000>;
-def : RWSysReg<"TTBR0_EL2",          0b11, 0b100, 0b0010, 0b0000, 0b000>;
 def : RWSysReg<"TTBR0_EL3",          0b11, 0b110, 0b0010, 0b0000, 0b000>;
+
+let Requires = [{ {AArch64::FeatureEL2VMSA} }] in {
+def : RWSysReg<"TTBR0_EL2",          0b11, 0b100, 0b0010, 0b0000, 0b000> {
+  let AltName = "VSCTLR_EL2";
+}
+def : RWSysReg<"VTTBR_EL2",          0b11, 0b100, 0b0010, 0b0001, 0b000>;
+}
+
 def : RWSysReg<"TTBR1_EL1",          0b11, 0b000, 0b0010, 0b0000, 0b001>;
 def : RWSysReg<"TCR_EL1",            0b11, 0b000, 0b0010, 0b0000, 0b010>;
 def : RWSysReg<"TCR_EL2",            0b11, 0b100, 0b0010, 0b0000, 0b010>;
 def : RWSysReg<"TCR_EL3",            0b11, 0b110, 0b0010, 0b0000, 0b010>;
-def : RWSysReg<"VTTBR_EL2",          0b11, 0b100, 0b0010, 0b0001, 0b000>;
 def : RWSysReg<"VTCR_EL2",           0b11, 0b100, 0b0010, 0b0001, 0b010>;
 def : RWSysReg<"DACR32_EL2",         0b11, 0b100, 0b0011, 0b0000, 0b000>;
 def : RWSysReg<"SPSR_EL1",           0b11, 0b000, 0b0100, 0b0000, 0b000>;
@@ -740,7 +940,7 @@ def : RWSysReg<"SP_EL2",             0b11, 0b110, 0b0100, 0b0001, 0b000>;
 def : RWSysReg<"SPSel",              0b11, 0b000, 0b0100, 0b0010, 0b000>;
 def : RWSysReg<"NZCV",               0b11, 0b011, 0b0100, 0b0010, 0b000>;
 def : RWSysReg<"DAIF",               0b11, 0b011, 0b0100, 0b0010, 0b001>;
-def : RWSysReg<"CurrentEL",          0b11, 0b000, 0b0100, 0b0010, 0b010>;
+def : ROSysReg<"CurrentEL",          0b11, 0b000, 0b0100, 0b0010, 0b010>;
 def : RWSysReg<"SPSR_irq",           0b11, 0b100, 0b0100, 0b0011, 0b000>;
 def : RWSysReg<"SPSR_abt",           0b11, 0b100, 0b0100, 0b0011, 0b001>;
 def : RWSysReg<"SPSR_und",           0b11, 0b100, 0b0100, 0b0011, 0b010>;
@@ -777,6 +977,7 @@ def : RWSysReg<"PMUSERENR_EL0",      0b11, 0b011, 0b1001, 0b1110, 0b000>;
 def : RWSysReg<"PMINTENSET_EL1",     0b11, 0b000, 0b1001, 0b1110, 0b001>;
 def : RWSysReg<"PMINTENCLR_EL1",     0b11, 0b000, 0b1001, 0b1110, 0b010>;
 def : RWSysReg<"PMOVSSET_EL0",       0b11, 0b011, 0b1001, 0b1110, 0b011>;
+def : RWSysReg<"PMMIR_EL1",          0b11, 0b000, 0b1001, 0b1110, 0b110>;
 def : RWSysReg<"MAIR_EL1",           0b11, 0b000, 0b1010, 0b0010, 0b000>;
 def : RWSysReg<"MAIR_EL2",           0b11, 0b100, 0b1010, 0b0010, 0b000>;
 def : RWSysReg<"MAIR_EL3",           0b11, 0b110, 0b1010, 0b0010, 0b000>;
@@ -1063,7 +1264,6 @@ def : RWSysReg<"ICC_SRE_EL3",        0b11, 0b110, 0b1100, 0b1100, 0b101>;
 def : RWSysReg<"ICC_IGRPEN0_EL1",    0b11, 0b000, 0b1100, 0b1100, 0b110>;
 def : RWSysReg<"ICC_IGRPEN1_EL1",    0b11, 0b000, 0b1100, 0b1100, 0b111>;
 def : RWSysReg<"ICC_IGRPEN1_EL3",    0b11, 0b110, 0b1100, 0b1100, 0b111>;
-def : RWSysReg<"ICC_SEIEN_EL1",      0b11, 0b000, 0b1100, 0b1101, 0b000>;
 def : RWSysReg<"ICC_AP0R0_EL1",      0b11, 0b000, 0b1100, 0b1000, 0b100>;
 def : RWSysReg<"ICC_AP0R1_EL1",      0b11, 0b000, 0b1100, 0b1000, 0b101>;
 def : RWSysReg<"ICC_AP0R2_EL1",      0b11, 0b000, 0b1100, 0b1000, 0b110>;
@@ -1081,9 +1281,8 @@ def : RWSysReg<"ICH_AP1R1_EL2",      0b11, 0b100, 0b1100, 0b1001, 0b001>;
 def : RWSysReg<"ICH_AP1R2_EL2",      0b11, 0b100, 0b1100, 0b1001, 0b010>;
 def : RWSysReg<"ICH_AP1R3_EL2",      0b11, 0b100, 0b1100, 0b1001, 0b011>;
 def : RWSysReg<"ICH_HCR_EL2",        0b11, 0b100, 0b1100, 0b1011, 0b000>;
-def : RWSysReg<"ICH_MISR_EL2",       0b11, 0b100, 0b1100, 0b1011, 0b010>;
+def : ROSysReg<"ICH_MISR_EL2",       0b11, 0b100, 0b1100, 0b1011, 0b010>;
 def : RWSysReg<"ICH_VMCR_EL2",       0b11, 0b100, 0b1100, 0b1011, 0b111>;
-def : RWSysReg<"ICH_VSEIR_EL2",      0b11, 0b100, 0b1100, 0b1001, 0b100>;
 def : RWSysReg<"ICH_LR0_EL2",        0b11, 0b100, 0b1100, 0b1100, 0b000>;
 def : RWSysReg<"ICH_LR1_EL2",        0b11, 0b100, 0b1100, 0b1100, 0b001>;
 def : RWSysReg<"ICH_LR2_EL2",        0b11, 0b100, 0b1100, 0b1100, 0b010>;
@@ -1101,24 +1300,74 @@ def : RWSysReg<"ICH_LR13_EL2",       0b11, 0b100, 0b1100, 0b1101, 0b101>;
 def : RWSysReg<"ICH_LR14_EL2",       0b11, 0b100, 0b1100, 0b1101, 0b110>;
 def : RWSysReg<"ICH_LR15_EL2",       0b11, 0b100, 0b1100, 0b1101, 0b111>;
 
+// v8r system registers
+let Requires = [{ {AArch64::HasV8_0rOps} }] in {
+//Virtualization System Control Register
+//                                 Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"VSCTLR_EL2",       0b11, 0b100, 0b0010, 0b0000, 0b000> {
+  let AltName = "TTBR0_EL2";
+}
+
+//MPU Type Register
+//                                 Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"MPUIR_EL1",        0b11, 0b000, 0b0000, 0b0000, 0b100>;
+def : RWSysReg<"MPUIR_EL2",        0b11, 0b100, 0b0000, 0b0000, 0b100>;
+
+//Protection Region Enable Register
+//                                 Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"PRENR_EL1",        0b11, 0b000, 0b0110, 0b0001, 0b001>;
+def : RWSysReg<"PRENR_EL2",        0b11, 0b100, 0b0110, 0b0001, 0b001>;
+
+//Protection Region Selection Register
+//                                 Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"PRSELR_EL1",       0b11, 0b000, 0b0110, 0b0010, 0b001>;
+def : RWSysReg<"PRSELR_EL2",       0b11, 0b100, 0b0110, 0b0010, 0b001>;
+
+//Protection Region Base Address Register
+//                                 Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"PRBAR_EL1",        0b11, 0b000, 0b0110, 0b1000, 0b000>;
+def : RWSysReg<"PRBAR_EL2",        0b11, 0b100, 0b0110, 0b1000, 0b000>;
+
+//Protection Region Limit Address Register
+//                                 Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"PRLAR_EL1",        0b11, 0b000, 0b0110, 0b1000, 0b001>;
+def : RWSysReg<"PRLAR_EL2",        0b11, 0b100, 0b0110, 0b1000, 0b001>;
+
+foreach n = 1-15 in {
+foreach x = 1-2 in {
+//Direct acces to Protection Region Base Address Register for n th MPU region
+  def : RWSysReg<!strconcat("PRBAR"#n, "_EL"#x),
+    0b11, 0b000, 0b0110, 0b1000, 0b000>{
+    let Encoding{5-2} = n;
+    let Encoding{13} = !add(x,-1);
+  }
+
+  def : RWSysReg<!strconcat("PRLAR"#n, "_EL"#x),
+    0b11, 0b000, 0b0110, 0b1000, 0b001>{
+    let Encoding{5-2} = n;
+    let Encoding{13} = !add(x,-1);
+  }
+} //foreach x = 1-2 in
+} //foreach n = 1-15 in
+} //let Requires = [{ {AArch64::HasV8_0rOps} }] in
+
 // v8.1a "Privileged Access Never" extension-specific system registers
-let Requires = [{ {AArch64::HasV8_1aOps} }] in
+let Requires = [{ {AArch64::FeaturePAN} }] in
 def : RWSysReg<"PAN", 0b11, 0b000, 0b0100, 0b0010, 0b011>;
 
 // v8.1a "Limited Ordering Regions" extension-specific system registers
 //                         Op0    Op1     CRn     CRm    Op2
-let Requires = [{ {AArch64::HasV8_1aOps} }] in {
+let Requires = [{ {AArch64::FeatureLOR} }] in {
 def : RWSysReg<"LORSA_EL1",  0b11, 0b000, 0b1010, 0b0100, 0b000>;
 def : RWSysReg<"LOREA_EL1",  0b11, 0b000, 0b1010, 0b0100, 0b001>;
 def : RWSysReg<"LORN_EL1",   0b11, 0b000, 0b1010, 0b0100, 0b010>;
 def : RWSysReg<"LORC_EL1",   0b11, 0b000, 0b1010, 0b0100, 0b011>;
 }
 
-// v8.1a "Virtualization hos extensions" system registers
+// v8.1a "Virtualization Host extensions" system registers
 //                              Op0    Op1     CRn     CRm    Op2
-let Requires = [{ {AArch64::HasV8_1aOps} }] in {
+let Requires = [{ {AArch64::FeatureVH} }] in {
 def : RWSysReg<"TTBR1_EL2",       0b11, 0b100, 0b0010, 0b0000, 0b001>;
-def : RWSysReg<"CONTEXTIDR_EL2",  0b11, 0b100, 0b1101, 0b0000, 0b001>;
 def : RWSysReg<"CNTHV_TVAL_EL2",  0b11, 0b100, 0b1110, 0b0011, 0b000>;
 def : RWSysReg<"CNTHV_CVAL_EL2",  0b11, 0b100, 0b1110, 0b0011, 0b010>;
 def : RWSysReg<"CNTHV_CTL_EL2",   0b11, 0b100, 0b1110, 0b0011, 0b001>;
@@ -1144,10 +1393,13 @@ def : RWSysReg<"CNTV_CTL_EL02",   0b11, 0b101, 0b1110, 0b0011, 0b001>;
 def : RWSysReg<"CNTV_CVAL_EL02",  0b11, 0b101, 0b1110, 0b0011, 0b010>;
 def : RWSysReg<"SPSR_EL12",       0b11, 0b101, 0b0100, 0b0000, 0b000>;
 def : RWSysReg<"ELR_EL12",        0b11, 0b101, 0b0100, 0b0000, 0b001>;
+let Requires = [{ {AArch64::FeatureCONTEXTIDREL2} }] in {
+  def : RWSysReg<"CONTEXTIDR_EL2",  0b11, 0b100, 0b1101, 0b0000, 0b001>;
+}
 }
 // v8.2a registers
 //                  Op0    Op1     CRn     CRm    Op2
-let Requires = [{ {AArch64::HasV8_2aOps} }] in
+let Requires = [{ {AArch64::FeaturePsUAO} }] in
 def : RWSysReg<"UAO", 0b11, 0b000, 0b0100, 0b0010, 0b100>;
 
 // v8.2a "Statistical Profiling extension" registers
@@ -1156,7 +1408,7 @@ let Requires = [{ {AArch64::FeatureSPE} }] in {
 def : RWSysReg<"PMBLIMITR_EL1", 0b11, 0b000, 0b1001, 0b1010, 0b000>;
 def : RWSysReg<"PMBPTR_EL1",    0b11, 0b000, 0b1001, 0b1010, 0b001>;
 def : RWSysReg<"PMBSR_EL1",     0b11, 0b000, 0b1001, 0b1010, 0b011>;
-def : RWSysReg<"PMBIDR_EL1",    0b11, 0b000, 0b1001, 0b1010, 0b111>;
+def : ROSysReg<"PMBIDR_EL1",    0b11, 0b000, 0b1001, 0b1010, 0b111>;
 def : RWSysReg<"PMSCR_EL2",     0b11, 0b100, 0b1001, 0b1001, 0b000>;
 def : RWSysReg<"PMSCR_EL12",    0b11, 0b101, 0b1001, 0b1001, 0b000>;
 def : RWSysReg<"PMSCR_EL1",     0b11, 0b000, 0b1001, 0b1001, 0b000>;
@@ -1165,7 +1417,7 @@ def : RWSysReg<"PMSIRR_EL1",    0b11, 0b000, 0b1001, 0b1001, 0b011>;
 def : RWSysReg<"PMSFCR_EL1",    0b11, 0b000, 0b1001, 0b1001, 0b100>;
 def : RWSysReg<"PMSEVFR_EL1",   0b11, 0b000, 0b1001, 0b1001, 0b101>;
 def : RWSysReg<"PMSLATFR_EL1",  0b11, 0b000, 0b1001, 0b1001, 0b110>;
-def : RWSysReg<"PMSIDR_EL1",    0b11, 0b000, 0b1001, 0b1001, 0b111>;
+def : ROSysReg<"PMSIDR_EL1",    0b11, 0b000, 0b1001, 0b1001, 0b111>;
 }
 
 // v8.2a "RAS extension" registers
@@ -1184,7 +1436,7 @@ def : RWSysReg<"VSESR_EL2",     0b11, 0b100, 0b0101, 0b0010, 0b011>;
 
 // v8.3a "Pointer authentication extension" registers
 //                              Op0    Op1     CRn     CRm    Op2
-let Requires = [{ {AArch64::HasV8_3aOps} }] in {
+let Requires = [{ {AArch64::FeaturePAuth} }] in {
 def : RWSysReg<"APIAKeyLo_EL1", 0b11, 0b000, 0b0010, 0b0001, 0b000>;
 def : RWSysReg<"APIAKeyHi_EL1", 0b11, 0b000, 0b0010, 0b0001, 0b001>;
 def : RWSysReg<"APIBKeyLo_EL1", 0b11, 0b000, 0b0010, 0b0001, 0b010>;
@@ -1197,12 +1449,14 @@ def : RWSysReg<"APGAKeyLo_EL1", 0b11, 0b000, 0b0010, 0b0011, 0b000>;
 def : RWSysReg<"APGAKeyHi_EL1", 0b11, 0b000, 0b0010, 0b0011, 0b001>;
 }
 
-let Requires = [{ {AArch64::HasV8_4aOps} }] in {
-
+// v8.4 "Secure Exception Level 2 extension"
+let Requires = [{ {AArch64::FeatureSEL2} }] in {
 // v8.4a "Virtualization secure second stage translation" registers
 //                           Op0   Op1    CRn     CRm     Op2
 def : RWSysReg<"VSTCR_EL2" , 0b11, 0b100, 0b0010, 0b0110, 0b010>;
-def : RWSysReg<"VSTTBR_EL2", 0b11, 0b100, 0b0010, 0b0110, 0b000>;
+def : RWSysReg<"VSTTBR_EL2", 0b11, 0b100, 0b0010, 0b0110, 0b000> {
+  let Requires = [{ {AArch64::HasV8_0aOps} }];
+}
 
 // v8.4a "Virtualization timer" registers
 //                                Op0   Op1    CRn     CRm     Op2
@@ -1216,18 +1470,19 @@ def : RWSysReg<"CNTHPS_CTL_EL2",  0b11, 0b100, 0b1110, 0b0101, 0b001>;
 // v8.4a "Virtualization debug state" registers
 //                           Op0   Op1    CRn     CRm     Op2
 def : RWSysReg<"SDER32_EL2", 0b11, 0b100, 0b0001, 0b0011, 0b001>;
+} // FeatureSEL2
 
 // v8.4a RAS registers
-//                              Op0   Op1    CRn     CRm    Op2
+//                              Op0   Op1    CRn     CRm     Op2
 def : RWSysReg<"ERXPFGCTL_EL1", 0b11, 0b000, 0b0101, 0b0100, 0b101>;
 def : RWSysReg<"ERXPFGCDN_EL1", 0b11, 0b000, 0b0101, 0b0100, 0b110>;
-def : RWSysReg<"ERXTS_EL1",     0b11, 0b000, 0b0101, 0b0101, 0b111>;
 def : RWSysReg<"ERXMISC2_EL1",  0b11, 0b000, 0b0101, 0b0101, 0b010>;
 def : RWSysReg<"ERXMISC3_EL1",  0b11, 0b000, 0b0101, 0b0101, 0b011>;
 def : ROSysReg<"ERXPFGF_EL1",   0b11, 0b000, 0b0101, 0b0100, 0b100>;
 
 // v8.4a MPAM registers
 //                             Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureMPAM} }] in {
 def : RWSysReg<"MPAM0_EL1",    0b11, 0b000, 0b1010, 0b0101, 0b001>;
 def : RWSysReg<"MPAM1_EL1",    0b11, 0b000, 0b1010, 0b0101, 0b000>;
 def : RWSysReg<"MPAM2_EL2",    0b11, 0b100, 0b1010, 0b0101, 0b000>;
@@ -1244,9 +1499,11 @@ def : RWSysReg<"MPAMVPM5_EL2", 0b11, 0b100, 0b1010, 0b0110, 0b101>;
 def : RWSysReg<"MPAMVPM6_EL2", 0b11, 0b100, 0b1010, 0b0110, 0b110>;
 def : RWSysReg<"MPAMVPM7_EL2", 0b11, 0b100, 0b1010, 0b0110, 0b111>;
 def : ROSysReg<"MPAMIDR_EL1",  0b11, 0b000, 0b1010, 0b0100, 0b100>;
+} //FeatureMPAM
 
-// v8.4a Activitiy monitor registers
+// v8.4a Activity Monitor registers
 //                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureAM} }] in {
 def : RWSysReg<"AMCR_EL0",         0b11, 0b011, 0b1101, 0b0010, 0b000>;
 def : ROSysReg<"AMCFGR_EL0",       0b11, 0b011, 0b1101, 0b0010, 0b001>;
 def : ROSysReg<"AMCGCR_EL0",       0b11, 0b011, 0b1101, 0b0010, 0b010>;
@@ -1295,6 +1552,7 @@ def : RWSysReg<"AMEVTYPER112_EL0", 0b11, 0b011, 0b1101, 0b1111, 0b100>;
 def : RWSysReg<"AMEVTYPER113_EL0", 0b11, 0b011, 0b1101, 0b1111, 0b101>;
 def : RWSysReg<"AMEVTYPER114_EL0", 0b11, 0b011, 0b1101, 0b1111, 0b110>;
 def : RWSysReg<"AMEVTYPER115_EL0", 0b11, 0b011, 0b1101, 0b1111, 0b111>;
+} //FeatureAM
 
 // v8.4a Trace Extension registers
 //
@@ -1303,19 +1561,24 @@ def : RWSysReg<"AMEVTYPER115_EL0", 0b11, 0b011, 0b1101, 0b1111, 0b111>;
 // but they are already defined above.
 //
 //                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureTRACEV8_4} }] in {
 def : RWSysReg<"TRFCR_EL1",        0b11, 0b000, 0b0001, 0b0010, 0b001>;
 def : RWSysReg<"TRFCR_EL2",        0b11, 0b100, 0b0001, 0b0010, 0b001>;
 def : RWSysReg<"TRFCR_EL12",       0b11, 0b101, 0b0001, 0b0010, 0b001>;
+} //FeatureTRACEV8_4
 
-// v8.4a Timining insensitivity of data processing instructions
+// v8.4a Timing insensitivity of data processing instructions
+// DIT: Data Independent Timing instructions
 //                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureDIT} }] in {
 def : RWSysReg<"DIT",              0b11, 0b011, 0b0100, 0b0010, 0b101>;
+} //FeatureDIT
 
 // v8.4a Enhanced Support for Nested Virtualization
 //                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureNV} }] in {
 def : RWSysReg<"VNCR_EL2",         0b11, 0b100, 0b0010, 0b0010, 0b000>;
-
-} // HasV8_4aOps
+} //FeatureNV
 
 // SVE control registers
 //                                 Op0   Op1    CRn     CRm     Op2
@@ -1326,7 +1589,131 @@ def : RWSysReg<"ZCR_EL3",          0b11, 0b110, 0b0001, 0b0010, 0b000>;
 def : RWSysReg<"ZCR_EL12",         0b11, 0b101, 0b0001, 0b0010, 0b000>;
 }
 
+// V8.5a Spectre mitigation SSBS register
+//                     Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureSSBS} }] in
+def : RWSysReg<"SSBS", 0b11, 0b011, 0b0100, 0b0010, 0b110>;
+
+// v8.5a Memory Tagging Extension
+//                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureMTE} }] in {
+def : RWSysReg<"TCO",              0b11, 0b011, 0b0100, 0b0010, 0b111>;
+def : RWSysReg<"GCR_EL1",          0b11, 0b000, 0b0001, 0b0000, 0b110>;
+def : RWSysReg<"RGSR_EL1",         0b11, 0b000, 0b0001, 0b0000, 0b101>;
+def : RWSysReg<"TFSR_EL1",         0b11, 0b000, 0b0101, 0b0110, 0b000>;
+def : RWSysReg<"TFSR_EL2",         0b11, 0b100, 0b0101, 0b0110, 0b000>;
+def : RWSysReg<"TFSR_EL3",         0b11, 0b110, 0b0101, 0b0110, 0b000>;
+def : RWSysReg<"TFSR_EL12",        0b11, 0b101, 0b0101, 0b0110, 0b000>;
+def : RWSysReg<"TFSRE0_EL1",       0b11, 0b000, 0b0101, 0b0110, 0b001>;
+def : ROSysReg<"GMID_EL1",         0b11, 0b001, 0b0000, 0b0000, 0b100>;
+} // HasMTE
+
+// Embedded Trace Extension R/W System registers
+let Requires = [{ {AArch64::FeatureETE} }] in {
+//              Name            Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"TRCRSR",        0b10, 0b001, 0b0000, 0b1010, 0b000>;
+//  TRCEXTINSELR0 has the same encoding as ETM TRCEXTINSELR
+def : RWSysReg<"TRCEXTINSELR0", 0b10, 0b001, 0b0000, 0b1000, 0b100>;
+def : RWSysReg<"TRCEXTINSELR1", 0b10, 0b001, 0b0000, 0b1001, 0b100>;
+def : RWSysReg<"TRCEXTINSELR2", 0b10, 0b001, 0b0000, 0b1010, 0b100>;
+def : RWSysReg<"TRCEXTINSELR3", 0b10, 0b001, 0b0000, 0b1011, 0b100>;
+} // FeatureETE
+
+// Trace Buffer Extension System registers
+let Requires = [{ {AArch64::FeatureTRBE} }] in {
+//                   Name       Op0   Op1    CRn     CRm     Op2
+def : RWSysReg<"TRBLIMITR_EL1", 0b11, 0b000, 0b1001, 0b1011, 0b000>;
+def : RWSysReg<"TRBPTR_EL1",    0b11, 0b000, 0b1001, 0b1011, 0b001>;
+def : RWSysReg<"TRBBASER_EL1",  0b11, 0b000, 0b1001, 0b1011, 0b010>;
+def : RWSysReg<"TRBSR_EL1",     0b11, 0b000, 0b1001, 0b1011, 0b011>;
+def : RWSysReg<"TRBMAR_EL1",    0b11, 0b000, 0b1001, 0b1011, 0b100>;
+def : RWSysReg<"TRBTRG_EL1",    0b11, 0b000, 0b1001, 0b1011, 0b110>;
+def : ROSysReg<"TRBIDR_EL1",    0b11, 0b000, 0b1001, 0b1011, 0b111>;
+} // FeatureTRBE
+
+
+// v8.6a Activity Monitors Virtualization Support
+let Requires = [{ {AArch64::FeatureAMVS} }] in {
+foreach n = 0-15 in {
+  foreach x = 0-1 in {
+  def : RWSysReg<"AMEVCNTVOFF"#x#n#"_EL2",
+    0b11, 0b100, 0b1101, 0b1000, 0b000>{
+      let Encoding{4} = x;
+      let Encoding{3-0} = n;
+    }
+  }
+}
+}
+
+// v8.6a Fine Grained Virtualization Traps
+//                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureFineGrainedTraps} }] in {
+def : RWSysReg<"HFGRTR_EL2",       0b11, 0b100, 0b0001, 0b0001, 0b100>;
+def : RWSysReg<"HFGWTR_EL2",       0b11, 0b100, 0b0001, 0b0001, 0b101>;
+def : RWSysReg<"HFGITR_EL2",       0b11, 0b100, 0b0001, 0b0001, 0b110>;
+def : RWSysReg<"HDFGRTR_EL2",      0b11, 0b100, 0b0011, 0b0001, 0b100>;
+def : RWSysReg<"HDFGWTR_EL2",      0b11, 0b100, 0b0011, 0b0001, 0b101>;
+}
+
+// v8.6a Enhanced Counter Virtualization
+//                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureEnhancedCounterVirtualization} }] in {
+def : RWSysReg<"CNTSCALE_EL2",     0b11, 0b100, 0b1110, 0b0000, 0b100>;
+def : RWSysReg<"CNTISCALE_EL2",    0b11, 0b100, 0b1110, 0b0000, 0b101>;
+def : RWSysReg<"CNTPOFF_EL2",      0b11, 0b100, 0b1110, 0b0000, 0b110>;
+def : RWSysReg<"CNTVFRQ_EL2",      0b11, 0b100, 0b1110, 0b0000, 0b111>;
+def : RWSysReg<"CNTPCTSS_EL0",     0b11, 0b011, 0b1110, 0b0000, 0b101>;
+def : RWSysReg<"CNTVCTSS_EL0",     0b11, 0b011, 0b1110, 0b0000, 0b110>;
+}
+
+// v8.7a LD64B/ST64B Accelerator Extension system register
+let Requires = [{ {AArch64::FeatureLS64} }] in
+def : RWSysReg<"ACCDATA_EL1",       0b11, 0b000, 0b1101, 0b0000, 0b101>;
+
+// Branch Record Buffer system registers
+let Requires = [{ {AArch64::FeatureBRBE} }] in {
+def : RWSysReg<"BRBCR_EL1",         0b10, 0b001, 0b1001, 0b0000, 0b000>;
+def : RWSysReg<"BRBCR_EL12",        0b10, 0b101, 0b1001, 0b0000, 0b000>;
+def : RWSysReg<"BRBCR_EL2",         0b10, 0b100, 0b1001, 0b0000, 0b000>;
+def : RWSysReg<"BRBFCR_EL1",        0b10, 0b001, 0b1001, 0b0000, 0b001>;
+def : ROSysReg<"BRBIDR0_EL1",       0b10, 0b001, 0b1001, 0b0010, 0b000>;
+def : RWSysReg<"BRBINFINJ_EL1",     0b10, 0b001, 0b1001, 0b0001, 0b000>;
+def : RWSysReg<"BRBSRCINJ_EL1",     0b10, 0b001, 0b1001, 0b0001, 0b001>;
+def : RWSysReg<"BRBTGTINJ_EL1",     0b10, 0b001, 0b1001, 0b0001, 0b010>;
+def : RWSysReg<"BRBTS_EL1",         0b10, 0b001, 0b1001, 0b0000, 0b010>;
+foreach n = 0-31 in {
+  defvar nb = !cast<bits<5>>(n);
+  def : ROSysReg<"BRBINF"#n#"_EL1", 0b10, 0b001, 0b1000, nb{3-0}, {nb{4},0b00}>;
+  def : ROSysReg<"BRBSRC"#n#"_EL1", 0b10, 0b001, 0b1000, nb{3-0}, {nb{4},0b01}>;
+  def : ROSysReg<"BRBTGT"#n#"_EL1", 0b10, 0b001, 0b1000, nb{3-0}, {nb{4},0b10}>;
+}
+}
+
+// Statistical Profiling Extension system register
+let Requires = [{ {AArch64::FeatureSPE_EEF} }] in
+def : RWSysReg<"PMSNEVFR_EL1",      0b11, 0b000, 0b1001, 0b1001, 0b001>;
+
 // Cyclone specific system registers
 //                                 Op0    Op1     CRn     CRm    Op2
-let Requires = [{ {AArch64::ProcCyclone} }] in
+let Requires = [{ {AArch64::FeatureAppleA7SysReg} }] in
 def : RWSysReg<"CPM_IOACC_CTL_EL3", 0b11, 0b111, 0b1111, 0b0010, 0b000>;
+
+// Scalable Matrix Extension (SME)
+//                                 Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureSME} }] in {
+def : RWSysReg<"SMCR_EL1",         0b11, 0b000, 0b0001, 0b0010, 0b110>;
+def : RWSysReg<"SMCR_EL2",         0b11, 0b100, 0b0001, 0b0010, 0b110>;
+def : RWSysReg<"SMCR_EL3",         0b11, 0b110, 0b0001, 0b0010, 0b110>;
+def : RWSysReg<"SMCR_EL12",        0b11, 0b101, 0b0001, 0b0010, 0b110>;
+def : RWSysReg<"SVCR",             0b11, 0b011, 0b0100, 0b0010, 0b010>;
+def : RWSysReg<"SMPRI_EL1",        0b11, 0b000, 0b0001, 0b0010, 0b100>;
+def : RWSysReg<"SMPRIMAP_EL2",     0b11, 0b100, 0b0001, 0b0010, 0b101>;
+def : ROSysReg<"SMIDR_EL1",        0b11, 0b001, 0b0000, 0b0000, 0b110>;
+def : RWSysReg<"TPIDR2_EL0",       0b11, 0b011, 0b1101, 0b0000, 0b101>;
+} // HasSME
+
+// v8.4a MPAM and SME registers
+//                              Op0   Op1    CRn     CRm     Op2
+let Requires = [{ {AArch64::FeatureMPAM, AArch64::FeatureSME} }] in {
+def : RWSysReg<"MPAMSM_EL1",    0b11, 0b000, 0b1010, 0b0101, 0b011>;
+} // HasMPAM, HasSME

@@ -1,9 +1,8 @@
 //===- Target.td - Target Independent TableGen interface ---*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -18,8 +17,6 @@ include "llvm/IR/Intrinsics.td"
 //===----------------------------------------------------------------------===//
 // Register file description - These classes are used to fill in the target
 // description classes.
-
-class RegisterClass; // Forward def
 
 class HwMode<string FS> {
   // A string representing subtarget features that turn on this HW mode.
@@ -111,9 +108,9 @@ class SubRegIndex<int size, int offset = 0> {
 // ComposedSubRegIndex - A sub-register that is the result of composing A and B.
 // Offset is set to the sum of A and B's Offsets. Size is set to B's Size.
 class ComposedSubRegIndex<SubRegIndex A, SubRegIndex B>
-  : SubRegIndex<B.Size, !if(!eq(A.Offset, -1), -1,
-                        !if(!eq(B.Offset, -1), -1,
-                            !add(A.Offset, B.Offset)))> {
+  : SubRegIndex<B.Size, !cond(!eq(A.Offset, -1): -1,
+                              !eq(B.Offset, -1): -1,
+                              true:              !add(A.Offset, B.Offset))> {
   // See SubRegIndex.
   let ComposedOf = [A, B];
 }
@@ -122,6 +119,10 @@ class ComposedSubRegIndex<SubRegIndex A, SubRegIndex B>
 // this register class when printing.
 class RegAltNameIndex {
   string Namespace = "";
+
+  // A set to be used if the name for a register is not defined in this set.
+  // This allows creating name sets with only a few alternative names.
+  RegAltNameIndex FallbackRegAltNameIndex = ?;
 }
 def NoRegAltName : RegAltNameIndex;
 
@@ -163,20 +164,28 @@ class Register<string n, list<string> altNames = []> {
   // CostPerUse - Additional cost of instructions using this register compared
   // to other registers in its class. The register allocator will try to
   // minimize the number of instructions using a register with a CostPerUse.
-  // This is used by the x86-64 and ARM Thumb targets where some registers
-  // require larger instruction encodings.
-  int CostPerUse = 0;
+  // This is used by the ARC target, by the ARM Thumb and x86-64 targets, where
+  // some registers require larger instruction encodings, by the RISC-V target,
+  // where some registers preclude using some C instructions. By making it a
+  // list, targets can have multiple cost models associated with each register
+  // and can choose one specific cost model per Machine Function by overriding
+  // TargetRegisterInfo::getRegisterCostTableIndex. Every target register will
+  // finally have an equal number of cost values which is the max of costPerUse
+  // values specified. Any mismatch in the cost values for a register will be
+  // filled with zeros. Restricted the cost type to uint8_t in the
+  // generated table. It will considerably reduce the table size.
+  list<int> CostPerUse = [0];
 
   // CoveredBySubRegs - When this bit is set, the value of this register is
   // completely determined by the value of its sub-registers.  For example, the
   // x86 register AX is covered by its sub-registers AL and AH, but EAX is not
   // covered by its sub-register AX.
-  bit CoveredBySubRegs = 0;
+  bit CoveredBySubRegs = false;
 
   // HWEncoding - The target specific hardware encoding for this register.
   bits<16> HWEncoding = 0;
 
-  bit isArtificial = 0;
+  bit isArtificial = false;
 }
 
 // RegisterWithSubRegs - This can be used to define instances of Register which
@@ -220,7 +229,7 @@ class RegisterClass<string namespace, list<ValueType> regTypes, int alignment,
   list<ValueType> RegTypes = regTypes;
 
   // Size - Specify the spill size in bits of the registers.  A default value of
-  // zero lets tablgen pick an appropriate size.
+  // zero lets tablegen pick an appropriate size.
   int Size = 0;
 
   // Alignment - Specify the alignment required of the registers when they are
@@ -248,7 +257,7 @@ class RegisterClass<string namespace, list<ValueType> regTypes, int alignment,
   // isAllocatable - Specify that the register class can be used for virtual
   // registers and register allocation.  Some register classes are only used to
   // model instruction operand constraints, and should have isAllocatable = 0.
-  bit isAllocatable = 1;
+  bit isAllocatable = true;
 
   // AltOrders - List of alternative allocation orders. The default order is
   // MemberList itself, and that is good enough for most targets since the
@@ -272,6 +281,17 @@ class RegisterClass<string namespace, list<ValueType> regTypes, int alignment,
   // constrained classes first. The value has to be in the range [0,63].
   int AllocationPriority = 0;
 
+  // Generate register pressure set for this register class and any class
+  // synthesized from it. Set to 0 to inhibit unneeded pressure sets.
+  bit GeneratePressureSet = true;
+
+  // Weight override for register pressure calculation. This is the value
+  // TargetRegisterClass::getRegClassWeight() will return. The weight is in
+  // units of pressure for this register class. If unset tablegen will
+  // calculate a weight based on a number of register units in this register
+  // class registers. The weight is per register.
+  int Weight = ?;
+
   // The diagnostic type to present when referencing this operand in a match
   // failure error message. If this is empty, the default Match_InvalidOperand
   // diagnostic type will be used. If this is "<name>", a Match_<name> enum
@@ -286,6 +306,9 @@ class RegisterClass<string namespace, list<ValueType> regTypes, int alignment,
   // the assembly matcher will provide a function to map from diagnostic types
   // to message strings.
   string DiagnosticString = "";
+
+  // Target-specific flags. This becomes the TSFlags field in TargetRegisterClass.
+  bits<8> TSFlags = 0;
 }
 
 // The memberList in a RegisterClass is a dag of set operations. TableGen
@@ -348,7 +371,11 @@ def interleave;
 // RegisterTuples instances can be used in other set operations to form
 // register classes and so on. This is the only way of using the generated
 // registers.
-class RegisterTuples<list<SubRegIndex> Indices, list<dag> Regs> {
+//
+// RegNames may be specified to supply asm names for the generated tuples.
+// If used must have the same size as the list of produced registers.
+class RegisterTuples<list<SubRegIndex> Indices, list<dag> Regs,
+                     list<string> RegNames = []> {
   // SubRegs - N lists of registers to be zipped up. Super-registers are
   // synthesized from the first element of each SubRegs list, the second
   // element and so on.
@@ -357,6 +384,9 @@ class RegisterTuples<list<SubRegIndex> Indices, list<dag> Regs> {
   // SubRegIndices - N SubRegIndex instances. This provides the names of the
   // sub-registers in the synthesized super-registers.
   list<SubRegIndex> SubRegIndices = Indices;
+
+  // List of asm names for the generated tuple registers.
+  list<string> RegAsmNames = RegNames;
 }
 
 
@@ -395,133 +425,17 @@ include "llvm/Target/TargetSchedule.td"
 
 class Predicate; // Forward def
 
-//===----------------------------------------------------------------------===//
-// Instruction set description - These classes correspond to the C++ classes in
-// the Target/TargetInstrInfo.h file.
-//
-class Instruction {
-  string Namespace = "";
+class InstructionEncoding {
+  // Size of encoded instruction.
+  int Size;
 
-  dag OutOperandList;       // An dag containing the MI def operand list.
-  dag InOperandList;        // An dag containing the MI use operand list.
-  string AsmString = "";    // The .s format to print the instruction with.
-
-  // Pattern - Set to the DAG pattern for this instruction, if we know of one,
-  // otherwise, uninitialized.
-  list<dag> Pattern;
-
-  // The follow state will eventually be inferred automatically from the
-  // instruction pattern.
-
-  list<Register> Uses = []; // Default to using no non-operand registers
-  list<Register> Defs = []; // Default to modifying no non-operand registers
-
-  // Predicates - List of predicates which will be turned into isel matching
-  // code.
-  list<Predicate> Predicates = [];
-
-  // Size - Size of encoded instruction, or zero if the size cannot be determined
-  // from the opcode.
-  int Size = 0;
-
-  // DecoderNamespace - The "namespace" in which this instruction exists, on
-  // targets like ARM which multiple ISA namespaces exist.
+  // The "namespace" in which this instruction exists, on targets like ARM
+  // which multiple ISA namespaces exist.
   string DecoderNamespace = "";
 
-  // Code size, for instruction selection.
-  // FIXME: What does this actually mean?
-  int CodeSize = 0;
+  // List of predicates which will be turned into isel matching code.
+  list<Predicate> Predicates = [];
 
-  // Added complexity passed onto matching pattern.
-  int AddedComplexity  = 0;
-
-  // These bits capture information about the high-level semantics of the
-  // instruction.
-  bit isReturn     = 0;     // Is this instruction a return instruction?
-  bit isBranch     = 0;     // Is this instruction a branch instruction?
-  bit isIndirectBranch = 0; // Is this instruction an indirect branch?
-  bit isCompare    = 0;     // Is this instruction a comparison instruction?
-  bit isMoveImm    = 0;     // Is this instruction a move immediate instruction?
-  bit isMoveReg    = 0;     // Is this instruction a move register instruction?
-  bit isBitcast    = 0;     // Is this instruction a bitcast instruction?
-  bit isSelect     = 0;     // Is this instruction a select instruction?
-  bit isBarrier    = 0;     // Can control flow fall through this instruction?
-  bit isCall       = 0;     // Is this instruction a call instruction?
-  bit isAdd        = 0;     // Is this instruction an add instruction?
-  bit isTrap       = 0;     // Is this instruction a trap instruction?
-  bit canFoldAsLoad = 0;    // Can this be folded as a simple memory operand?
-  bit mayLoad      = ?;     // Is it possible for this inst to read memory?
-  bit mayStore     = ?;     // Is it possible for this inst to write memory?
-  bit isConvertibleToThreeAddress = 0;  // Can this 2-addr instruction promote?
-  bit isCommutable = 0;     // Is this 3 operand instruction commutable?
-  bit isTerminator = 0;     // Is this part of the terminator for a basic block?
-  bit isReMaterializable = 0; // Is this instruction re-materializable?
-  bit isPredicable = 0;     // Is this instruction predicable?
-  bit hasDelaySlot = 0;     // Does this instruction have an delay slot?
-  bit usesCustomInserter = 0; // Pseudo instr needing special help.
-  bit hasPostISelHook = 0;  // To be *adjusted* after isel by target hook.
-  bit hasCtrlDep   = 0;     // Does this instruction r/w ctrl-flow chains?
-  bit isNotDuplicable = 0;  // Is it unsafe to duplicate this instruction?
-  bit isConvergent = 0;     // Is this instruction convergent?
-  bit isAsCheapAsAMove = 0; // As cheap (or cheaper) than a move instruction.
-  bit hasExtraSrcRegAllocReq = 0; // Sources have special regalloc requirement?
-  bit hasExtraDefRegAllocReq = 0; // Defs have special regalloc requirement?
-  bit isRegSequence = 0;    // Is this instruction a kind of reg sequence?
-                            // If so, make sure to override
-                            // TargetInstrInfo::getRegSequenceLikeInputs.
-  bit isPseudo     = 0;     // Is this instruction a pseudo-instruction?
-                            // If so, won't have encoding information for
-                            // the [MC]CodeEmitter stuff.
-  bit isExtractSubreg = 0;  // Is this instruction a kind of extract subreg?
-                             // If so, make sure to override
-                             // TargetInstrInfo::getExtractSubregLikeInputs.
-  bit isInsertSubreg = 0;   // Is this instruction a kind of insert subreg?
-                            // If so, make sure to override
-                            // TargetInstrInfo::getInsertSubregLikeInputs.
-
-  // Does the instruction have side effects that are not captured by any
-  // operands of the instruction or other flags?
-  bit hasSideEffects = ?;
-
-  // Is this instruction a "real" instruction (with a distinct machine
-  // encoding), or is it a pseudo instruction used for codegen modeling
-  // purposes.
-  // FIXME: For now this is distinct from isPseudo, above, as code-gen-only
-  // instructions can (and often do) still have encoding information
-  // associated with them. Once we've migrated all of them over to true
-  // pseudo-instructions that are lowered to real instructions prior to
-  // the printer/emitter, we can remove this attribute and just use isPseudo.
-  //
-  // The intended use is:
-  // isPseudo: Does not have encoding information and should be expanded,
-  //   at the latest, during lowering to MCInst.
-  //
-  // isCodeGenOnly: Does have encoding information and can go through to the
-  //   CodeEmitter unchanged, but duplicates a canonical instruction
-  //   definition's encoding and should be ignored when constructing the
-  //   assembler match tables.
-  bit isCodeGenOnly = 0;
-
-  // Is this instruction a pseudo instruction for use by the assembler parser.
-  bit isAsmParserOnly = 0;
-
-  // This instruction is not expected to be queried for scheduling latencies
-  // and therefore needs no scheduling information even for a complete
-  // scheduling model.
-  bit hasNoSchedulingInfo = 0;
-
-  InstrItinClass Itinerary = NoItinerary;// Execution steps used for scheduling.
-
-  // Scheduling information from TargetSchedule.td.
-  list<SchedReadWrite> SchedRW;
-
-  string Constraints = "";  // OperandConstraint, e.g. $src = $dst.
-
-  /// DisableEncoding - List of operand names (e.g. "$op1,$op2") that should not
-  /// be encoded into the output machineinstr.
-  string DisableEncoding = "";
-
-  string PostEncoderMethod = "";
   string DecoderMethod = "";
 
   // Is the instruction decoder method able to completely determine if the
@@ -546,7 +460,157 @@ class Instruction {
   // DecodeInstB() is not able to determine if all possible values of ?? are
   // valid or not. If DecodeInstB() returns Fail the decoder will attempt to
   // decode the bitpattern as InstA too.
-  bit hasCompleteDecoder = 1;
+  bit hasCompleteDecoder = true;
+}
+
+// Allows specifying an InstructionEncoding by HwMode. If an Instruction specifies
+// an EncodingByHwMode, its Inst and Size members are ignored and Ts are used
+// to encode and decode based on HwMode.
+class EncodingByHwMode<list<HwMode> Ms = [], list<InstructionEncoding> Ts = []>
+    : HwModeSelect<Ms> {
+  // The length of this list must be the same as the length of Ms.
+  list<InstructionEncoding> Objects = Ts;
+}
+
+//===----------------------------------------------------------------------===//
+// Instruction set description - These classes correspond to the C++ classes in
+// the Target/TargetInstrInfo.h file.
+//
+class Instruction : InstructionEncoding {
+  string Namespace = "";
+
+  dag OutOperandList;       // An dag containing the MI def operand list.
+  dag InOperandList;        // An dag containing the MI use operand list.
+  string AsmString = "";    // The .s format to print the instruction with.
+
+  // Allows specifying a canonical InstructionEncoding by HwMode. If non-empty,
+  // the Inst member of this Instruction is ignored.
+  EncodingByHwMode EncodingInfos;
+
+  // Pattern - Set to the DAG pattern for this instruction, if we know of one,
+  // otherwise, uninitialized.
+  list<dag> Pattern;
+
+  // The follow state will eventually be inferred automatically from the
+  // instruction pattern.
+
+  list<Register> Uses = []; // Default to using no non-operand registers
+  list<Register> Defs = []; // Default to modifying no non-operand registers
+
+  // Predicates - List of predicates which will be turned into isel matching
+  // code.
+  list<Predicate> Predicates = [];
+
+  // Size - Size of encoded instruction, or zero if the size cannot be determined
+  // from the opcode.
+  int Size = 0;
+
+  // Code size, for instruction selection.
+  // FIXME: What does this actually mean?
+  int CodeSize = 0;
+
+  // Added complexity passed onto matching pattern.
+  int AddedComplexity  = 0;
+
+  // Indicates if this is a pre-isel opcode that should be
+  // legalized/regbankselected/selected.
+  bit isPreISelOpcode = false;
+
+  // These bits capture information about the high-level semantics of the
+  // instruction.
+  bit isReturn     = false;     // Is this instruction a return instruction?
+  bit isBranch     = false;     // Is this instruction a branch instruction?
+  bit isEHScopeReturn = false;  // Does this instruction end an EH scope?
+  bit isIndirectBranch = false; // Is this instruction an indirect branch?
+  bit isCompare    = false;     // Is this instruction a comparison instruction?
+  bit isMoveImm    = false;     // Is this instruction a move immediate instruction?
+  bit isMoveReg    = false;     // Is this instruction a move register instruction?
+  bit isBitcast    = false;     // Is this instruction a bitcast instruction?
+  bit isSelect     = false;     // Is this instruction a select instruction?
+  bit isBarrier    = false;     // Can control flow fall through this instruction?
+  bit isCall       = false;     // Is this instruction a call instruction?
+  bit isAdd        = false;     // Is this instruction an add instruction?
+  bit isTrap       = false;     // Is this instruction a trap instruction?
+  bit canFoldAsLoad = false;    // Can this be folded as a simple memory operand?
+  bit mayLoad      = ?;         // Is it possible for this inst to read memory?
+  bit mayStore     = ?;         // Is it possible for this inst to write memory?
+  bit mayRaiseFPException = false; // Can this raise a floating-point exception?
+  bit isConvertibleToThreeAddress = false;  // Can this 2-addr instruction promote?
+  bit isCommutable = false;     // Is this 3 operand instruction commutable?
+  bit isTerminator = false;     // Is this part of the terminator for a basic block?
+  bit isReMaterializable = false; // Is this instruction re-materializable?
+  bit isPredicable = false;     // 1 means this instruction is predicable
+                                // even if it does not have any operand
+                                // tablegen can identify as a predicate
+  bit isUnpredicable = false;   // 1 means this instruction is not predicable
+                                // even if it _does_ have a predicate operand
+  bit hasDelaySlot = false;     // Does this instruction have an delay slot?
+  bit usesCustomInserter = false; // Pseudo instr needing special help.
+  bit hasPostISelHook = false;  // To be *adjusted* after isel by target hook.
+  bit hasCtrlDep   = false;     // Does this instruction r/w ctrl-flow chains?
+  bit isNotDuplicable = false;  // Is it unsafe to duplicate this instruction?
+  bit isConvergent = false;     // Is this instruction convergent?
+  bit isAuthenticated = false;  // Does this instruction authenticate a pointer?
+  bit isAsCheapAsAMove = false; // As cheap (or cheaper) than a move instruction.
+  bit hasExtraSrcRegAllocReq = false; // Sources have special regalloc requirement?
+  bit hasExtraDefRegAllocReq = false; // Defs have special regalloc requirement?
+  bit isRegSequence = false;    // Is this instruction a kind of reg sequence?
+                                // If so, make sure to override
+                                // TargetInstrInfo::getRegSequenceLikeInputs.
+  bit isPseudo     = false;     // Is this instruction a pseudo-instruction?
+                                // If so, won't have encoding information for
+                                // the [MC]CodeEmitter stuff.
+  bit isExtractSubreg = false;  // Is this instruction a kind of extract subreg?
+                                // If so, make sure to override
+                                // TargetInstrInfo::getExtractSubregLikeInputs.
+  bit isInsertSubreg = false;   // Is this instruction a kind of insert subreg?
+                                // If so, make sure to override
+                                // TargetInstrInfo::getInsertSubregLikeInputs.
+  bit variadicOpsAreDefs = false; // Are variadic operands definitions?
+
+  // Does the instruction have side effects that are not captured by any
+  // operands of the instruction or other flags?
+  bit hasSideEffects = ?;
+
+  // Is this instruction a "real" instruction (with a distinct machine
+  // encoding), or is it a pseudo instruction used for codegen modeling
+  // purposes.
+  // FIXME: For now this is distinct from isPseudo, above, as code-gen-only
+  // instructions can (and often do) still have encoding information
+  // associated with them. Once we've migrated all of them over to true
+  // pseudo-instructions that are lowered to real instructions prior to
+  // the printer/emitter, we can remove this attribute and just use isPseudo.
+  //
+  // The intended use is:
+  // isPseudo: Does not have encoding information and should be expanded,
+  //   at the latest, during lowering to MCInst.
+  //
+  // isCodeGenOnly: Does have encoding information and can go through to the
+  //   CodeEmitter unchanged, but duplicates a canonical instruction
+  //   definition's encoding and should be ignored when constructing the
+  //   assembler match tables.
+  bit isCodeGenOnly = false;
+
+  // Is this instruction a pseudo instruction for use by the assembler parser.
+  bit isAsmParserOnly = false;
+
+  // This instruction is not expected to be queried for scheduling latencies
+  // and therefore needs no scheduling information even for a complete
+  // scheduling model.
+  bit hasNoSchedulingInfo = false;
+
+  InstrItinClass Itinerary = NoItinerary;// Execution steps used for scheduling.
+
+  // Scheduling information from TargetSchedule.td.
+  list<SchedReadWrite> SchedRW;
+
+  string Constraints = "";  // OperandConstraint, e.g. $src = $dst.
+
+  /// DisableEncoding - List of operand names (e.g. "$op1,$op2") that should not
+  /// be encoded into the output machineinstr.
+  string DisableEncoding = "";
+
+  string PostEncoderMethod = "";
 
   /// Target-specific flags. This becomes the TSFlags field in TargetInstrDesc.
   bits<64> TSFlags = 0;
@@ -574,13 +638,47 @@ class Instruction {
   /// UseNamedOperandTable - If set, the operand indices of this instruction
   /// can be queried via the getNamedOperandIdx() function which is generated
   /// by TableGen.
-  bit UseNamedOperandTable = 0;
+  bit UseNamedOperandTable = false;
+
+  /// Should generate helper functions that help you to map a logical operand's
+  /// index to the underlying MIOperand's index.
+  /// In most architectures logical operand indicies are equal to
+  /// MIOperand indicies, but for some CISC architectures, a logical operand
+  /// might be consist of multiple MIOperand (e.g. a logical operand that
+  /// uses complex address mode).
+  bit UseLogicalOperandMappings = false;
 
   /// Should FastISel ignore this instruction. For certain ISAs, they have
   /// instructions which map to the same ISD Opcode, value type operands and
   /// instruction selection predicates. FastISel cannot handle such cases, but
   /// SelectionDAG can.
-  bit FastISelShouldIgnore = 0;
+  bit FastISelShouldIgnore = false;
+
+  /// HasPositionOrder: Indicate tablegen to sort the instructions by record
+  /// ID, so that instruction that is defined earlier can be sorted earlier
+  /// in the assembly matching table.
+  bit HasPositionOrder = false;
+}
+
+/// Defines a Pat match between compressed and uncompressed instruction.
+/// The relationship and helper function generation are handled by
+/// CompressInstEmitter backend.
+class CompressPat<dag input, dag output, list<Predicate> predicates = []> {
+  /// Uncompressed instruction description.
+  dag Input = input;
+  /// Compressed instruction description.
+  dag Output = output;
+  /// Predicates that must be true for this to match.
+  list<Predicate> Predicates = predicates;
+  /// Duplicate match when tied operand is just different.
+  bit isCompressOnly = false;
+}
+
+/// Defines an additional encoding that disassembles to the given instruction
+/// Like Instruction, the Inst and SoftFail fields are omitted to allow targets
+// to specify their size.
+class AdditionalEncoding<Instruction I> : InstructionEncoding {
+  Instruction AliasOf = I;
 }
 
 /// PseudoInstExpansion - Expansion information for a pseudo-instruction.
@@ -588,7 +686,7 @@ class Instruction {
 /// pseudo.
 class PseudoInstExpansion<dag Result> {
   dag ResultInst = Result;     // The instruction to generate.
-  bit isPseudo = 1;
+  bit isPseudo = true;
 }
 
 /// Predicates - These are extra conditionals which are turned into instruction
@@ -599,16 +697,23 @@ class Predicate<string cond> {
   /// AssemblerMatcherPredicate - If this feature can be used by the assembler
   /// matcher, this is true.  Targets should set this by inheriting their
   /// feature from the AssemblerPredicate class in addition to Predicate.
-  bit AssemblerMatcherPredicate = 0;
+  bit AssemblerMatcherPredicate = false;
 
-  /// AssemblerCondString - Name of the subtarget feature being tested used
-  /// as alternative condition string used for assembler matcher.
-  /// e.g. "ModeThumb" is translated to "(Bits & ModeThumb) != 0".
-  ///      "!ModeThumb" is translated to "(Bits & ModeThumb) == 0".
-  /// It can also list multiple features separated by ",".
-  /// e.g. "ModeThumb,FeatureThumb2" is translated to
+  /// AssemblerCondDag - Set of subtarget features being tested used
+  /// as alternative condition string used for assembler matcher. Must be used
+  /// with (all_of) to indicate that all features must be present, or (any_of)
+  /// to indicate that at least one must be. The required lack of presence of
+  /// a feature can be tested using a (not) node including the feature.
+  /// e.g. "(all_of ModeThumb)" is translated to "(Bits & ModeThumb) != 0".
+  ///      "(all_of (not ModeThumb))" is translated to
+  ///      "(Bits & ModeThumb) == 0".
+  ///      "(all_of ModeThumb, FeatureThumb2)" is translated to
   ///      "(Bits & ModeThumb) != 0 && (Bits & FeatureThumb2) != 0".
-  string AssemblerCondString = "";
+  ///      "(any_of ModeTumb, FeatureThumb2)" is translated to
+  ///      "(Bits & ModeThumb) != 0 || (Bits & FeatureThumb2) != 0".
+  /// all_of and any_of cannot be combined in a single dag, instead multiple
+  /// predicates can be placed onto Instruction definitions.
+  dag AssemblerCondDag;
 
   /// PredicateName - User-level name to use for the predicate. Mainly for use
   /// in diagnostics such as missing feature errors in the asm matcher.
@@ -618,7 +723,7 @@ class Predicate<string cond> {
   /// every function change. Most predicates can leave this at '0'.
   ///
   /// Ignored by SelectionDAG, it always recomputes the predicate on every use.
-  bit RecomputePerFunction = 0;
+  bit RecomputePerFunction = false;
 }
 
 /// NoHonorSignDependentRounding - This predicate is true if support for
@@ -633,7 +738,7 @@ class Requires<list<Predicate> preds> {
 /// ops definition - This is just a simple marker used to identify the operand
 /// list for an instruction. outs and ins are identical both syntactically and
 /// semantically; they are used to define def operands and use operands to
-/// improve readibility. This should be used like this:
+/// improve readability. This should be used like this:
 ///     (outs R32:$dst), (ins R32:$src1, R32:$src2) or something similar.
 def ops;
 def outs;
@@ -718,7 +823,7 @@ class AsmOperandClass {
   /// marked as IsOptional.
   ///
   /// Optional arguments must be at the end of the operand list.
-  bit IsOptional = 0;
+  bit IsOptional = false;
 
   /// The name of the method on the target specific asm parser that returns the
   /// default operand for this optional operand. This method is only used if
@@ -739,7 +844,7 @@ class Operand<ValueType ty> : DAGOperand {
   ValueType Type = ty;
   string PrintMethod = "printOperand";
   string EncoderMethod = "";
-  bit hasCompleteDecoder = 1;
+  bit hasCompleteDecoder = true;
   string OperandType = "OPERAND_UNKNOWN";
   dag MIOperandInfo = (ops);
 
@@ -807,7 +912,8 @@ def f64imm : Operand<f64>;
 // have the same LLT).
 class TypedOperand<string Ty> : Operand<untyped> {
   let OperandType = Ty;
-  bit IsPointer = 0;
+  bit IsPointer = false;
+  bit IsImmediate = false;
 }
 
 def type0 : TypedOperand<"OPERAND_GENERIC_0">;
@@ -817,7 +923,7 @@ def type3 : TypedOperand<"OPERAND_GENERIC_3">;
 def type4 : TypedOperand<"OPERAND_GENERIC_4">;
 def type5 : TypedOperand<"OPERAND_GENERIC_5">;
 
-let IsPointer = 1 in {
+let IsPointer = true in {
   def ptype0 : TypedOperand<"OPERAND_GENERIC_0">;
   def ptype1 : TypedOperand<"OPERAND_GENERIC_1">;
   def ptype2 : TypedOperand<"OPERAND_GENERIC_2">;
@@ -826,9 +932,19 @@ let IsPointer = 1 in {
   def ptype5 : TypedOperand<"OPERAND_GENERIC_5">;
 }
 
+// untyped_imm is for operands where isImm() will be true. It currently has no
+// special behaviour and is only used for clarity.
+def untyped_imm_0 : TypedOperand<"OPERAND_GENERIC_IMM_0"> {
+  let IsImmediate = true;
+}
+
 /// zero_reg definition - Special node to stand for the zero register.
 ///
 def zero_reg;
+
+/// undef_tied_input - Special node to indicate an input register tied
+/// to an output which defaults to IMPLICIT_DEF.
+def undef_tied_input;
 
 /// All operands which the MC layer classifies as predicates should inherit from
 /// this class in some manner. This is already handled for the most commonly
@@ -871,18 +987,18 @@ class InstrInfo {
   // For instance, while both Sparc and PowerPC are big-endian platforms, the
   // Sparc manual specifies its instructions in the format [31..0] (big), while
   // PowerPC specifies them using the format [0..31] (little).
-  bit isLittleEndianEncoding = 0;
+  bit isLittleEndianEncoding = false;
 
   // The instruction properties mayLoad, mayStore, and hasSideEffects are unset
   // by default, and TableGen will infer their value from the instruction
   // pattern when possible.
   //
-  // Normally, TableGen will issue an error it it can't infer the value of a
+  // Normally, TableGen will issue an error if it can't infer the value of a
   // property that hasn't been set explicitly. When guessInstructionProperties
   // is set, it will guess a safe value instead.
   //
   // This option is a temporary migration help. It will go away.
-  bit guessInstructionProperties = 1;
+  bit guessInstructionProperties = true;
 
   // TableGen's instruction encoder generator has support for matching operands
   // to bit-field variables both by name and by position. While matching by
@@ -894,7 +1010,7 @@ class InstrInfo {
   // This option is temporary; it will go away once the TableGen decoder
   // generator has better support for complex operands and targets have
   // migrated away from using positionally encoded operands.
-  bit decodePositionallyEncodedOperands = 0;
+  bit decodePositionallyEncodedOperands = false;
 
   // When set, this indicates that there will be no overlap between those
   // operands that are matched by ordering (positional operands) and those
@@ -903,185 +1019,238 @@ class InstrInfo {
   // This option is temporary; it will go away once the TableGen decoder
   // generator has better support for complex operands and targets have
   // migrated away from using positionally encoded operands.
-  bit noNamedPositionallyEncodedOperands = 0;
+  bit noNamedPositionallyEncodedOperands = false;
 }
 
 // Standard Pseudo Instructions.
-// This list must match TargetOpcodes.h and CodeGenTarget.cpp.
+// This list must match TargetOpcodes.def.
 // Only these instructions are allowed in the TargetOpcode namespace.
 // Ensure mayLoad and mayStore have a default value, so as not to break
 // targets that set guessInstructionProperties=0. Any local definition of
 // mayLoad/mayStore takes precedence over these default values.
 class StandardPseudoInstruction : Instruction {
-  let mayLoad = 0;
-  let mayStore = 0;
-  let isCodeGenOnly = 1;
-  let isPseudo = 1;
-  let hasNoSchedulingInfo = 1;
+  let mayLoad = false;
+  let mayStore = false;
+  let isCodeGenOnly = true;
+  let isPseudo = true;
+  let hasNoSchedulingInfo = true;
   let Namespace = "TargetOpcode";
 }
 def PHI : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins variable_ops);
   let AsmString = "PHINODE";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
 }
 def INLINEASM : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
   let AsmString = "";
-  let hasSideEffects = 0;  // Note side effect is encoded in an operand.
+  let hasSideEffects = false;  // Note side effect is encoded in an operand.
+}
+def INLINEASM_BR : StandardPseudoInstruction {
+  let OutOperandList = (outs);
+  let InOperandList = (ins variable_ops);
+  let AsmString = "";
+  // Unlike INLINEASM, this is always treated as having side-effects.
+  let hasSideEffects = true;
+  // Despite potentially branching, this instruction is intentionally _not_
+  // marked as a terminator or a branch.
 }
 def CFI_INSTRUCTION : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins i32imm:$id);
   let AsmString = "";
-  let hasCtrlDep = 1;
-  let hasSideEffects = 0;
-  let isNotDuplicable = 1;
+  let hasCtrlDep = true;
+  let hasSideEffects = false;
+  let isNotDuplicable = true;
 }
 def EH_LABEL : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins i32imm:$id);
   let AsmString = "";
-  let hasCtrlDep = 1;
-  let hasSideEffects = 0;
-  let isNotDuplicable = 1;
+  let hasCtrlDep = true;
+  let hasSideEffects = false;
+  let isNotDuplicable = true;
 }
 def GC_LABEL : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins i32imm:$id);
   let AsmString = "";
-  let hasCtrlDep = 1;
-  let hasSideEffects = 0;
-  let isNotDuplicable = 1;
+  let hasCtrlDep = true;
+  let hasSideEffects = false;
+  let isNotDuplicable = true;
 }
 def ANNOTATION_LABEL : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins i32imm:$id);
   let AsmString = "";
-  let hasCtrlDep = 1;
-  let hasSideEffects = 0;
-  let isNotDuplicable = 1;
+  let hasCtrlDep = true;
+  let hasSideEffects = false;
+  let isNotDuplicable = true;
 }
 def KILL : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
   let AsmString = "";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
 }
 def EXTRACT_SUBREG : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins unknown:$supersrc, i32imm:$subidx);
   let AsmString = "";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
 }
 def INSERT_SUBREG : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins unknown:$supersrc, unknown:$subsrc, i32imm:$subidx);
   let AsmString = "";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
   let Constraints = "$supersrc = $dst";
 }
 def IMPLICIT_DEF : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins);
   let AsmString = "";
-  let hasSideEffects = 0;
-  let isReMaterializable = 1;
-  let isAsCheapAsAMove = 1;
+  let hasSideEffects = false;
+  let isReMaterializable = true;
+  let isAsCheapAsAMove = true;
 }
 def SUBREG_TO_REG : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins unknown:$implsrc, unknown:$subsrc, i32imm:$subidx);
   let AsmString = "";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
 }
 def COPY_TO_REGCLASS : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins unknown:$src, i32imm:$regclass);
   let AsmString = "";
-  let hasSideEffects = 0;
-  let isAsCheapAsAMove = 1;
+  let hasSideEffects = false;
+  let isAsCheapAsAMove = true;
 }
 def DBG_VALUE : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
   let AsmString = "DBG_VALUE";
+  let hasSideEffects = false;
+}
+def DBG_VALUE_LIST : StandardPseudoInstruction {
+  let OutOperandList = (outs);
+  let InOperandList = (ins variable_ops);
+  let AsmString = "DBG_VALUE_LIST";
+  let hasSideEffects = 0;
+}
+def DBG_INSTR_REF : StandardPseudoInstruction {
+  let OutOperandList = (outs);
+  let InOperandList = (ins variable_ops);
+  let AsmString = "DBG_INSTR_REF";
+  let hasSideEffects = false;
+}
+def DBG_PHI : StandardPseudoInstruction {
+  let OutOperandList = (outs);
+  let InOperandList = (ins variable_ops);
+  let AsmString = "DBG_PHI";
   let hasSideEffects = 0;
 }
 def DBG_LABEL : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins unknown:$label);
   let AsmString = "DBG_LABEL";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
 }
 def REG_SEQUENCE : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins unknown:$supersrc, variable_ops);
   let AsmString = "";
-  let hasSideEffects = 0;
-  let isAsCheapAsAMove = 1;
+  let hasSideEffects = false;
+  let isAsCheapAsAMove = true;
 }
 def COPY : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins unknown:$src);
   let AsmString = "";
-  let hasSideEffects = 0;
-  let isAsCheapAsAMove = 1;
-  let hasNoSchedulingInfo = 0;
+  let hasSideEffects = false;
+  let isAsCheapAsAMove = true;
+  let hasNoSchedulingInfo = false;
 }
 def BUNDLE : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
   let AsmString = "BUNDLE";
-  let hasSideEffects = 1;
+  let hasSideEffects = false;
 }
 def LIFETIME_START : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins i32imm:$id);
   let AsmString = "LIFETIME_START";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
 }
 def LIFETIME_END : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins i32imm:$id);
   let AsmString = "LIFETIME_END";
-  let hasSideEffects = 0;
+  let hasSideEffects = false;
 }
+def PSEUDO_PROBE : StandardPseudoInstruction {
+  let OutOperandList = (outs);
+  let InOperandList = (ins i64imm:$guid, i64imm:$index, i8imm:$type, i32imm:$attr);
+  let AsmString = "PSEUDO_PROBE";
+  let hasSideEffects = 1;
+}
+def ARITH_FENCE : StandardPseudoInstruction {
+  let OutOperandList = (outs unknown:$dst);
+  let InOperandList = (ins unknown:$src);
+  let AsmString = "";
+  let hasSideEffects = false;
+  let Constraints = "$src = $dst";
+}
+
 def STACKMAP : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins i64imm:$id, i32imm:$nbytes, variable_ops);
-  let hasSideEffects = 1;
-  let isCall = 1;
-  let mayLoad = 1;
-  let usesCustomInserter = 1;
+  let hasSideEffects = true;
+  let isCall = true;
+  let mayLoad = true;
+  let usesCustomInserter = true;
 }
 def PATCHPOINT : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins i64imm:$id, i32imm:$nbytes, unknown:$callee,
                        i32imm:$nargs, i32imm:$cc, variable_ops);
-  let hasSideEffects = 1;
-  let isCall = 1;
-  let mayLoad = 1;
-  let usesCustomInserter = 1;
+  let hasSideEffects = true;
+  let isCall = true;
+  let mayLoad = true;
+  let usesCustomInserter = true;
 }
 def STATEPOINT : StandardPseudoInstruction {
-  let OutOperandList = (outs);
+  let OutOperandList = (outs variable_ops);
   let InOperandList = (ins variable_ops);
-  let usesCustomInserter = 1;
-  let mayLoad = 1;
-  let mayStore = 1;
-  let hasSideEffects = 1;
-  let isCall = 1;
+  let usesCustomInserter = true;
+  let mayLoad = true;
+  let mayStore = true;
+  let hasSideEffects = true;
+  let isCall = true;
 }
 def LOAD_STACK_GUARD : StandardPseudoInstruction {
   let OutOperandList = (outs ptr_rc:$dst);
   let InOperandList = (ins);
-  let mayLoad = 1;
-  bit isReMaterializable = 1;
-  let hasSideEffects = 0;
-  bit isPseudo = 1;
+  let mayLoad = true;
+  bit isReMaterializable = true;
+  let hasSideEffects = false;
+  bit isPseudo = true;
+}
+def PREALLOCATED_SETUP : StandardPseudoInstruction {
+  let OutOperandList = (outs);
+  let InOperandList = (ins i32imm:$a);
+  let usesCustomInserter = true;
+  let hasSideEffects = true;
+}
+def PREALLOCATED_ARG : StandardPseudoInstruction {
+  let OutOperandList = (outs ptr_rc:$loc);
+  let InOperandList = (ins i32imm:$a, i32imm:$b);
+  let usesCustomInserter = true;
+  let hasSideEffects = true;
 }
 def LOCAL_ESCAPE : StandardPseudoInstruction {
   // This instruction is really just a label. It has to be part of the chain so
@@ -1089,93 +1258,94 @@ def LOCAL_ESCAPE : StandardPseudoInstruction {
   // no side effects.
   let OutOperandList = (outs);
   let InOperandList = (ins ptr_rc:$symbol, i32imm:$id);
-  let hasSideEffects = 0;
-  let hasCtrlDep = 1;
+  let hasSideEffects = false;
+  let hasCtrlDep = true;
 }
 def FAULTING_OP : StandardPseudoInstruction {
   let OutOperandList = (outs unknown:$dst);
   let InOperandList = (ins variable_ops);
-  let usesCustomInserter = 1;
-  let hasSideEffects = 1;
-  let mayLoad = 1;
-  let mayStore = 1;
-  let isTerminator = 1;
-  let isBranch = 1;
+  let usesCustomInserter = true;
+  let hasSideEffects = true;
+  let mayLoad = true;
+  let mayStore = true;
+  let isTerminator = true;
+  let isBranch = true;
 }
 def PATCHABLE_OP : StandardPseudoInstruction {
-  let OutOperandList = (outs unknown:$dst);
+  let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
-  let usesCustomInserter = 1;
-  let mayLoad = 1;
-  let mayStore = 1;
-  let hasSideEffects = 1;
+  let usesCustomInserter = true;
+  let mayLoad = true;
+  let mayStore = true;
+  let hasSideEffects = true;
 }
 def PATCHABLE_FUNCTION_ENTER : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins);
   let AsmString = "# XRay Function Enter.";
-  let usesCustomInserter = 1;
-  let hasSideEffects = 0;
+  let usesCustomInserter = true;
+  let hasSideEffects = true;
 }
 def PATCHABLE_RET : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
   let AsmString = "# XRay Function Patchable RET.";
-  let usesCustomInserter = 1;
-  let hasSideEffects = 1;
-  let isTerminator = 1;
-  let isReturn = 1;
+  let usesCustomInserter = true;
+  let hasSideEffects = true;
+  let isTerminator = true;
+  let isReturn = true;
 }
 def PATCHABLE_FUNCTION_EXIT : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins);
   let AsmString = "# XRay Function Exit.";
-  let usesCustomInserter = 1;
-  let hasSideEffects = 0; // FIXME: is this correct?
-  let isReturn = 0; // Original return instruction will follow
+  let usesCustomInserter = true;
+  let hasSideEffects = true;
+  let isReturn = false; // Original return instruction will follow
 }
 def PATCHABLE_TAIL_CALL : StandardPseudoInstruction {
   let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
   let AsmString = "# XRay Tail Call Exit.";
-  let usesCustomInserter = 1;
-  let hasSideEffects = 1;
-  let isReturn = 1;
+  let usesCustomInserter = true;
+  let hasSideEffects = true;
+  let isReturn = true;
 }
 def PATCHABLE_EVENT_CALL : StandardPseudoInstruction {
   let OutOperandList = (outs);
-  let InOperandList = (ins ptr_rc:$event, i8imm:$size);
+  let InOperandList = (ins ptr_rc:$event, unknown:$size);
   let AsmString = "# XRay Custom Event Log.";
-  let usesCustomInserter = 1;
-  let isCall = 1;
-  let mayLoad = 1;
-  let mayStore = 1;
-  let hasSideEffects = 1;
+  let usesCustomInserter = true;
+  let isCall = true;
+  let mayLoad = true;
+  let mayStore = true;
+  let hasSideEffects = true;
 }
 def PATCHABLE_TYPED_EVENT_CALL : StandardPseudoInstruction {
   let OutOperandList = (outs);
-  let InOperandList = (ins i16imm:$type, ptr_rc:$event, i32imm:$size);
+  let InOperandList = (ins unknown:$type, ptr_rc:$event, unknown:$size);
   let AsmString = "# XRay Typed Event Log.";
-  let usesCustomInserter = 1;
-  let isCall = 1;
-  let mayLoad = 1;
-  let mayStore = 1;
-  let hasSideEffects = 1;
+  let usesCustomInserter = true;
+  let isCall = true;
+  let mayLoad = true;
+  let mayStore = true;
+  let hasSideEffects = true;
 }
 def FENTRY_CALL : StandardPseudoInstruction {
-  let OutOperandList = (outs unknown:$dst);
-  let InOperandList = (ins variable_ops);
+  let OutOperandList = (outs);
+  let InOperandList = (ins);
   let AsmString = "# FEntry call";
-  let usesCustomInserter = 1;
-  let mayLoad = 1;
-  let mayStore = 1;
-  let hasSideEffects = 1;
+  let usesCustomInserter = true;
+  let isCall = true;
+  let mayLoad = true;
+  let mayStore = true;
+  let hasSideEffects = true;
 }
 def ICALL_BRANCH_FUNNEL : StandardPseudoInstruction {
-  let OutOperandList = (outs unknown:$dst);
+  let OutOperandList = (outs);
   let InOperandList = (ins variable_ops);
   let AsmString = "";
-  let hasSideEffects = 1;
+  let hasSideEffects = true;
 }
 
 // Generic opcodes used in GlobalISel.
@@ -1201,7 +1371,7 @@ class AsmParser {
 
   // ShouldEmitMatchRegisterName - Set to false if the target needs a hand
   // written register name matcher
-  bit ShouldEmitMatchRegisterName = 1;
+  bit ShouldEmitMatchRegisterName = true;
 
   // Set to true if the target needs a generated 'alternative register name'
   // matcher.
@@ -1209,7 +1379,7 @@ class AsmParser {
   // This generates a function which can be used to lookup registers from
   // their aliases. This function will fail when called on targets where
   // several registers share the same alias (i.e. not a 1:1 mapping).
-  bit ShouldEmitMatchRegisterAltName = 0;
+  bit ShouldEmitMatchRegisterAltName = false;
 
   // Set to true if MatchRegisterName and MatchRegisterAltName functions
   // should be generated even if there are duplicate register names. The
@@ -1217,19 +1387,19 @@ class AsmParser {
   // (e.g. in validateTargetOperandClass), and there are no guarantees about
   // which numeric register identifier will be returned in the case of
   // multiple matches.
-  bit AllowDuplicateRegisterNames = 0;
+  bit AllowDuplicateRegisterNames = false;
 
   // HasMnemonicFirst - Set to false if target instructions don't always
   // start with a mnemonic as the first token.
-  bit HasMnemonicFirst = 1;
+  bit HasMnemonicFirst = true;
 
   // ReportMultipleNearMisses -
   // When 0, the assembly matcher reports an error for one encoding or operand
   // that did not match the parsed instruction.
-  // When 1, the assmebly matcher returns a list of encodings that were close
+  // When 1, the assembly matcher returns a list of encodings that were close
   // to matching the parsed instruction, so to allow more detailed error
   // messages.
-  bit ReportMultipleNearMisses = 0;
+  bit ReportMultipleNearMisses = false;
 }
 def DefaultAsmParser : AsmParser;
 
@@ -1240,7 +1410,7 @@ def DefaultAsmParser : AsmParser;
 //
 class AsmParserVariant {
   // Variant - AsmParsers can be of multiple different variants.  Variants are
-  // used to support targets that need to parser multiple formats for the
+  // used to support targets that need to parse multiple formats for the
   // assembly language.
   int Variant = 0;
 
@@ -1269,11 +1439,15 @@ class AsmParserVariant {
 }
 def DefaultAsmParserVariant : AsmParserVariant;
 
+// Operators for combining SubtargetFeatures in AssemblerPredicates
+def any_of;
+def all_of;
+
 /// AssemblerPredicate - This is a Predicate that can be used when the assembler
 /// matches instructions and aliases.
-class AssemblerPredicate<string cond, string name = ""> {
-  bit AssemblerMatcherPredicate = 1;
-  string AssemblerCondString = cond;
+class AssemblerPredicate<dag cond, string name = ""> {
+  bit AssemblerMatcherPredicate = true;
+  dag AssemblerCondDag = cond;
   string PredicateName = name;
 }
 
@@ -1347,7 +1521,7 @@ class InstAlias<string Asm, dag Result, int Emit = 1, string VariantName = ""> {
   // Setting this to 0 will cause the alias to ignore the Result instruction's
   // defined AsmMatchConverter and instead use the function generated by the
   // dag Result.
-  bit UseInstAsmMatchConverter = 1;
+  bit UseInstAsmMatchConverter = true;
 
   // Assembler variant name to use for this alias. If not specified then
   // assembler variants will be determined based on AsmString
@@ -1452,7 +1626,8 @@ class ComplexDeprecationPredicate<string dep> {
 // by the scheduler.  Each Processor definition requires corresponding
 // instruction itineraries.
 //
-class Processor<string n, ProcessorItineraries pi, list<SubtargetFeature> f> {
+class Processor<string n, ProcessorItineraries pi, list<SubtargetFeature> f,
+                list<SubtargetFeature> tunef = []> {
   // Name - Chip set name.  Used by command line (-mcpu=) to determine the
   // appropriate target chip.
   //
@@ -1468,6 +1643,12 @@ class Processor<string n, ProcessorItineraries pi, list<SubtargetFeature> f> {
 
   // Features - list of
   list<SubtargetFeature> Features = f;
+
+  // TuneFeatures - list of features for tuning for this CPU. If the target
+  // supports -mtune, this should contain the list of features used to make
+  // microarchitectural optimization decisions for a given processor.  While
+  // Features should contain the architectural features for the processor.
+  list<SubtargetFeature> TuneFeatures = tunef;
 }
 
 // ProcessorModel allows subtargets to specify the more general
@@ -1476,8 +1657,9 @@ class Processor<string n, ProcessorItineraries pi, list<SubtargetFeature> f> {
 //
 // Although this class always passes NoItineraries to the Processor
 // class, the SchedMachineModel may still define valid Itineraries.
-class ProcessorModel<string n, SchedMachineModel m, list<SubtargetFeature> f>
-  : Processor<n, NoItineraries, f> {
+class ProcessorModel<string n, SchedMachineModel m, list<SubtargetFeature> f,
+                     list<SubtargetFeature> tunef = []>
+  : Processor<n, NoItineraries, f, tunef> {
   let SchedModel = m;
 }
 
@@ -1554,3 +1736,8 @@ include "llvm/Target/GlobalISel/Target.td"
 // Pull in the common support for the Global ISel DAG-based selector generation.
 //
 include "llvm/Target/GlobalISel/SelectionDAGCompat.td"
+
+//===----------------------------------------------------------------------===//
+// Pull in the common support for Pfm Counters generation.
+//
+include "llvm/Target/TargetPfmCounters.td"

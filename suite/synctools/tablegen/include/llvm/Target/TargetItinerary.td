@@ -1,15 +1,14 @@
-//===- TargetItinerary.td - Target Itinierary Description --*- tablegen -*-===//
+//===- TargetItinerary.td - Target Itinerary Description --*- tablegen -*-====//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
 // This file defines the target-independent scheduling interfaces
 // which should be implemented by each target that uses instruction
-// itineraries for scheduling. Itineraries are details reservation
+// itineraries for scheduling. Itineraries are detailed reservation
 // tables for each instruction class. They are most appropriate for
 // in-order machine with complicated scheduling or bundling constraints.
 //
@@ -128,6 +127,17 @@ class ProcessorItineraries<list<FuncUnit> fu, list<Bypass> bp,
   list<FuncUnit> FU = fu;
   list<Bypass> BP = bp;
   list<InstrItinData> IID = iid;
+  // The packetizer automaton to use for this itinerary. By default all
+  // itineraries for a target are bundled up into the same automaton. This only
+  // works correctly when there are no conflicts in functional unit IDs between
+  // itineraries. For example, given two itineraries A<[SLOT_A]>, B<[SLOT_B]>,
+  // SLOT_A and SLOT_B will be assigned the same functional unit index, and
+  // the generated packetizer will confuse instructions referencing these slots.
+  //
+  // To avoid this, setting PacketizerNamespace to non-"" will cause this
+  // itinerary to be generated in a different automaton. The subtarget will need
+  // to declare a method "create##Namespace##DFAPacketizer()".
+  string PacketizerNamespace = "";
 }
 
 // NoItineraries - A marker that can be used by processors without schedule

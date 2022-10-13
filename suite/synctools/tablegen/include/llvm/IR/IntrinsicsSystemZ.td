@@ -1,9 +1,8 @@
 //===- IntrinsicsSystemZ.td - Defines SystemZ intrinsics ---*- tablegen -*-===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -12,7 +11,7 @@
 //===----------------------------------------------------------------------===//
 
 class SystemZUnaryConv<string name, LLVMType result, LLVMType arg>
-  : GCCBuiltin<"__builtin_s390_" ## name>,
+  : GCCBuiltin<"__builtin_s390_" # name>,
     Intrinsic<[result], [arg], [IntrNoMem]>;
 
 class SystemZUnary<string name, LLVMType type>
@@ -25,67 +24,73 @@ class SystemZUnaryCC<LLVMType type>
   : SystemZUnaryConvCC<type, type>;
 
 class SystemZBinaryConv<string name, LLVMType result, LLVMType arg>
-  : GCCBuiltin<"__builtin_s390_" ## name>,
+  : GCCBuiltin<"__builtin_s390_" # name>,
     Intrinsic<[result], [arg, arg], [IntrNoMem]>;
 
 class SystemZBinary<string name, LLVMType type>
   : SystemZBinaryConv<name, type, type>;
 
 class SystemZBinaryInt<string name, LLVMType type>
-  : GCCBuiltin<"__builtin_s390_" ## name>,
+  : GCCBuiltin<"__builtin_s390_" # name>,
     Intrinsic<[type], [type, llvm_i32_ty], [IntrNoMem]>;
 
 class SystemZBinaryConvCC<LLVMType result, LLVMType arg>
   : Intrinsic<[result, llvm_i32_ty], [arg, arg], [IntrNoMem]>;
 
 class SystemZBinaryConvIntCC<LLVMType result, LLVMType arg>
-  : Intrinsic<[result, llvm_i32_ty], [arg, llvm_i32_ty], [IntrNoMem]>;
+  : Intrinsic<[result, llvm_i32_ty], [arg, llvm_i32_ty],
+              [IntrNoMem, ImmArg<ArgIndex<1>>]>;
 
 class SystemZBinaryCC<LLVMType type>
   : SystemZBinaryConvCC<type, type>;
 
 class SystemZTernaryConv<string name, LLVMType result, LLVMType arg>
-  : GCCBuiltin<"__builtin_s390_" ## name>,
+  : GCCBuiltin<"__builtin_s390_" # name>,
     Intrinsic<[result], [arg, arg, result], [IntrNoMem]>;
+
+class SystemZTernaryConvCC<LLVMType result, LLVMType arg>
+  : Intrinsic<[result, llvm_i32_ty], [arg, arg, result], [IntrNoMem]>;
 
 class SystemZTernary<string name, LLVMType type>
   : SystemZTernaryConv<name, type, type>;
 
 class SystemZTernaryInt<string name, LLVMType type>
-  : GCCBuiltin<"__builtin_s390_" ## name>,
-    Intrinsic<[type], [type, type, llvm_i32_ty], [IntrNoMem]>;
+  : GCCBuiltin<"__builtin_s390_" # name>,
+    Intrinsic<[type], [type, type, llvm_i32_ty], [IntrNoMem, ImmArg<ArgIndex<2>>]>;
 
 class SystemZTernaryIntCC<LLVMType type>
-  : Intrinsic<[type, llvm_i32_ty], [type, type, llvm_i32_ty], [IntrNoMem]>;
+  : Intrinsic<[type, llvm_i32_ty], [type, type, llvm_i32_ty],
+              [IntrNoMem, ImmArg<ArgIndex<2>>]>;
 
 class SystemZQuaternaryInt<string name, LLVMType type>
-  : GCCBuiltin<"__builtin_s390_" ## name>,
-    Intrinsic<[type], [type, type, type, llvm_i32_ty], [IntrNoMem]>;
+  : GCCBuiltin<"__builtin_s390_" # name>,
+    Intrinsic<[type], [type, type, type, llvm_i32_ty],
+    [IntrNoMem, ImmArg<ArgIndex<3>>]>;
 
 class SystemZQuaternaryIntCC<LLVMType type>
   : Intrinsic<[type, llvm_i32_ty], [type, type, type, llvm_i32_ty],
-              [IntrNoMem]>;
+              [IntrNoMem, ImmArg<ArgIndex<3>>]>;
 
 multiclass SystemZUnaryExtBHF<string name> {
-  def b : SystemZUnaryConv<name##"b", llvm_v8i16_ty, llvm_v16i8_ty>;
-  def h : SystemZUnaryConv<name##"h", llvm_v4i32_ty, llvm_v8i16_ty>;
-  def f : SystemZUnaryConv<name##"f", llvm_v2i64_ty, llvm_v4i32_ty>;
+  def b : SystemZUnaryConv<name#"b", llvm_v8i16_ty, llvm_v16i8_ty>;
+  def h : SystemZUnaryConv<name#"h", llvm_v4i32_ty, llvm_v8i16_ty>;
+  def f : SystemZUnaryConv<name#"f", llvm_v2i64_ty, llvm_v4i32_ty>;
 }
 
 multiclass SystemZUnaryExtBHWF<string name> {
-  def b  : SystemZUnaryConv<name##"b",  llvm_v8i16_ty, llvm_v16i8_ty>;
-  def hw : SystemZUnaryConv<name##"hw", llvm_v4i32_ty, llvm_v8i16_ty>;
-  def f  : SystemZUnaryConv<name##"f",  llvm_v2i64_ty, llvm_v4i32_ty>;
+  def b  : SystemZUnaryConv<name#"b",  llvm_v8i16_ty, llvm_v16i8_ty>;
+  def hw : SystemZUnaryConv<name#"hw", llvm_v4i32_ty, llvm_v8i16_ty>;
+  def f  : SystemZUnaryConv<name#"f",  llvm_v2i64_ty, llvm_v4i32_ty>;
 }
 
 multiclass SystemZUnaryBHF<string name> {
-  def b : SystemZUnary<name##"b", llvm_v16i8_ty>;
-  def h : SystemZUnary<name##"h", llvm_v8i16_ty>;
-  def f : SystemZUnary<name##"f", llvm_v4i32_ty>;
+  def b : SystemZUnary<name#"b", llvm_v16i8_ty>;
+  def h : SystemZUnary<name#"h", llvm_v8i16_ty>;
+  def f : SystemZUnary<name#"f", llvm_v4i32_ty>;
 }
 
 multiclass SystemZUnaryBHFG<string name> : SystemZUnaryBHF<name> {
-  def g : SystemZUnary<name##"g", llvm_v2i64_ty>;
+  def g : SystemZUnary<name#"g", llvm_v2i64_ty>;
 }
 
 multiclass SystemZUnaryCCBHF {
@@ -95,9 +100,9 @@ multiclass SystemZUnaryCCBHF {
 }
 
 multiclass SystemZBinaryTruncHFG<string name> {
-  def h : SystemZBinaryConv<name##"h", llvm_v16i8_ty, llvm_v8i16_ty>;
-  def f : SystemZBinaryConv<name##"f", llvm_v8i16_ty, llvm_v4i32_ty>;
-  def g : SystemZBinaryConv<name##"g", llvm_v4i32_ty, llvm_v2i64_ty>;
+  def h : SystemZBinaryConv<name#"h", llvm_v16i8_ty, llvm_v8i16_ty>;
+  def f : SystemZBinaryConv<name#"f", llvm_v8i16_ty, llvm_v4i32_ty>;
+  def g : SystemZBinaryConv<name#"g", llvm_v4i32_ty, llvm_v2i64_ty>;
 }
 
 multiclass SystemZBinaryTruncCCHFG {
@@ -107,30 +112,30 @@ multiclass SystemZBinaryTruncCCHFG {
 }
 
 multiclass SystemZBinaryExtBHF<string name> {
-  def b : SystemZBinaryConv<name##"b", llvm_v8i16_ty, llvm_v16i8_ty>;
-  def h : SystemZBinaryConv<name##"h", llvm_v4i32_ty, llvm_v8i16_ty>;
-  def f : SystemZBinaryConv<name##"f", llvm_v2i64_ty, llvm_v4i32_ty>;
+  def b : SystemZBinaryConv<name#"b", llvm_v8i16_ty, llvm_v16i8_ty>;
+  def h : SystemZBinaryConv<name#"h", llvm_v4i32_ty, llvm_v8i16_ty>;
+  def f : SystemZBinaryConv<name#"f", llvm_v2i64_ty, llvm_v4i32_ty>;
 }
 
 multiclass SystemZBinaryExtBHFG<string name> : SystemZBinaryExtBHF<name> {
-  def g : SystemZBinaryConv<name##"g", llvm_v16i8_ty, llvm_v2i64_ty>;
+  def g : SystemZBinaryConv<name#"g", llvm_v16i8_ty, llvm_v2i64_ty>;
 }
 
 multiclass SystemZBinaryBHF<string name> {
-  def b : SystemZBinary<name##"b", llvm_v16i8_ty>;
-  def h : SystemZBinary<name##"h", llvm_v8i16_ty>;
-  def f : SystemZBinary<name##"f", llvm_v4i32_ty>;
+  def b : SystemZBinary<name#"b", llvm_v16i8_ty>;
+  def h : SystemZBinary<name#"h", llvm_v8i16_ty>;
+  def f : SystemZBinary<name#"f", llvm_v4i32_ty>;
 }
 
 multiclass SystemZBinaryBHFG<string name> : SystemZBinaryBHF<name> {
-  def g : SystemZBinary<name##"g", llvm_v2i64_ty>;
+  def g : SystemZBinary<name#"g", llvm_v2i64_ty>;
 }
 
 multiclass SystemZBinaryIntBHFG<string name> {
-  def b : SystemZBinaryInt<name##"b", llvm_v16i8_ty>;
-  def h : SystemZBinaryInt<name##"h", llvm_v8i16_ty>;
-  def f : SystemZBinaryInt<name##"f", llvm_v4i32_ty>;
-  def g : SystemZBinaryInt<name##"g", llvm_v2i64_ty>;
+  def b : SystemZBinaryInt<name#"b", llvm_v16i8_ty>;
+  def h : SystemZBinaryInt<name#"h", llvm_v8i16_ty>;
+  def f : SystemZBinaryInt<name#"f", llvm_v4i32_ty>;
+  def g : SystemZBinaryInt<name#"g", llvm_v2i64_ty>;
 }
 
 multiclass SystemZBinaryCCBHF {
@@ -139,7 +144,7 @@ multiclass SystemZBinaryCCBHF {
   def fs : SystemZBinaryCC<llvm_v4i32_ty>;
 }
 
-multiclass SystemZCompareBHFG<string name> {
+multiclass SystemZCompareBHFG {
   def bs : SystemZBinaryCC<llvm_v16i8_ty>;
   def hs : SystemZBinaryCC<llvm_v8i16_ty>;
   def fs : SystemZBinaryCC<llvm_v4i32_ty>;
@@ -147,25 +152,25 @@ multiclass SystemZCompareBHFG<string name> {
 }
 
 multiclass SystemZTernaryExtBHF<string name> {
-  def b : SystemZTernaryConv<name##"b", llvm_v8i16_ty, llvm_v16i8_ty>;
-  def h : SystemZTernaryConv<name##"h", llvm_v4i32_ty, llvm_v8i16_ty>;
-  def f : SystemZTernaryConv<name##"f", llvm_v2i64_ty, llvm_v4i32_ty>;
+  def b : SystemZTernaryConv<name#"b", llvm_v8i16_ty, llvm_v16i8_ty>;
+  def h : SystemZTernaryConv<name#"h", llvm_v4i32_ty, llvm_v8i16_ty>;
+  def f : SystemZTernaryConv<name#"f", llvm_v2i64_ty, llvm_v4i32_ty>;
 }
 
 multiclass SystemZTernaryExtBHFG<string name> : SystemZTernaryExtBHF<name> {
-  def g : SystemZTernaryConv<name##"g", llvm_v16i8_ty, llvm_v2i64_ty>;
+  def g : SystemZTernaryConv<name#"g", llvm_v16i8_ty, llvm_v2i64_ty>;
 }
 
 multiclass SystemZTernaryBHF<string name> {
-  def b : SystemZTernary<name##"b", llvm_v16i8_ty>;
-  def h : SystemZTernary<name##"h", llvm_v8i16_ty>;
-  def f : SystemZTernary<name##"f", llvm_v4i32_ty>;
+  def b : SystemZTernary<name#"b", llvm_v16i8_ty>;
+  def h : SystemZTernary<name#"h", llvm_v8i16_ty>;
+  def f : SystemZTernary<name#"f", llvm_v4i32_ty>;
 }
 
 multiclass SystemZTernaryIntBHF<string name> {
-  def b : SystemZTernaryInt<name##"b", llvm_v16i8_ty>;
-  def h : SystemZTernaryInt<name##"h", llvm_v8i16_ty>;
-  def f : SystemZTernaryInt<name##"f", llvm_v4i32_ty>;
+  def b : SystemZTernaryInt<name#"b", llvm_v16i8_ty>;
+  def h : SystemZTernaryInt<name#"h", llvm_v8i16_ty>;
+  def f : SystemZTernaryInt<name#"f", llvm_v4i32_ty>;
 }
 
 multiclass SystemZTernaryIntCCBHF {
@@ -175,13 +180,14 @@ multiclass SystemZTernaryIntCCBHF {
 }
 
 multiclass SystemZQuaternaryIntBHF<string name> {
-  def b : SystemZQuaternaryInt<name##"b", llvm_v16i8_ty>;
-  def h : SystemZQuaternaryInt<name##"h", llvm_v8i16_ty>;
-  def f : SystemZQuaternaryInt<name##"f", llvm_v4i32_ty>;
+  def b : SystemZQuaternaryInt<name#"b", llvm_v16i8_ty>;
+  def h : SystemZQuaternaryInt<name#"h", llvm_v8i16_ty>;
+  def f : SystemZQuaternaryInt<name#"f", llvm_v4i32_ty>;
 }
 
-multiclass SystemZQuaternaryIntBHFG<string name> : SystemZQuaternaryIntBHF<name> {
-  def g : SystemZQuaternaryInt<name##"g", llvm_v2i64_ty>;
+multiclass SystemZQuaternaryIntBHFG<string name> :
+  SystemZQuaternaryIntBHF<name> {
+  def g : SystemZQuaternaryInt<name#"g", llvm_v2i64_ty>;
 }
 
 multiclass SystemZQuaternaryIntCCBHF {
@@ -232,11 +238,11 @@ let TargetPrefix = "s390" in {
 let TargetPrefix = "s390" in {
   def int_s390_lcbb : GCCBuiltin<"__builtin_s390_lcbb">,
                       Intrinsic<[llvm_i32_ty], [llvm_ptr_ty, llvm_i32_ty],
-                                [IntrNoMem]>;
+                                [IntrNoMem, ImmArg<ArgIndex<1>>]>;
 
   def int_s390_vlbb : GCCBuiltin<"__builtin_s390_vlbb">,
                       Intrinsic<[llvm_v16i8_ty], [llvm_ptr_ty, llvm_i32_ty],
-                                [IntrReadMem, IntrArgMemOnly]>;
+                                [IntrReadMem, IntrArgMemOnly, ImmArg<ArgIndex<1>>]>;
 
   def int_s390_vll : GCCBuiltin<"__builtin_s390_vll">,
                      Intrinsic<[llvm_v16i8_ty], [llvm_i32_ty, llvm_ptr_ty],
@@ -245,7 +251,7 @@ let TargetPrefix = "s390" in {
   def int_s390_vpdi : GCCBuiltin<"__builtin_s390_vpdi">,
                       Intrinsic<[llvm_v2i64_ty],
                                 [llvm_v2i64_ty, llvm_v2i64_ty, llvm_i32_ty],
-                                [IntrNoMem]>;
+                                [IntrNoMem, ImmArg<ArgIndex<2>>]>;
 
   def int_s390_vperm : GCCBuiltin<"__builtin_s390_vperm">,
                        Intrinsic<[llvm_v16i8_ty],
@@ -311,7 +317,7 @@ let TargetPrefix = "s390" in {
   def int_s390_vsldb : GCCBuiltin<"__builtin_s390_vsldb">,
                        Intrinsic<[llvm_v16i8_ty],
                                  [llvm_v16i8_ty, llvm_v16i8_ty, llvm_i32_ty],
-                                 [IntrNoMem]>;
+                                 [IntrNoMem, ImmArg<ArgIndex<2>>]>;
 
   defm int_s390_vscbi : SystemZBinaryBHFG<"vscbi">;
 
@@ -335,9 +341,9 @@ let TargetPrefix = "s390" in {
 
   def int_s390_vtm : SystemZBinaryConv<"vtm", llvm_i32_ty, llvm_v16i8_ty>;
 
-  defm int_s390_vceq : SystemZCompareBHFG<"vceq">;
-  defm int_s390_vch  : SystemZCompareBHFG<"vch">;
-  defm int_s390_vchl : SystemZCompareBHFG<"vchl">;
+  defm int_s390_vceq : SystemZCompareBHFG;
+  defm int_s390_vch  : SystemZCompareBHFG;
+  defm int_s390_vchl : SystemZCompareBHFG;
 
   defm int_s390_vfae  : SystemZTernaryIntBHF<"vfae">;
   defm int_s390_vfae  : SystemZTernaryIntCCBHF;
@@ -370,7 +376,7 @@ let TargetPrefix = "s390" in {
 
   def int_s390_vfidb : Intrinsic<[llvm_v2f64_ty],
                                  [llvm_v2f64_ty, llvm_i32_ty, llvm_i32_ty],
-                                 [IntrNoMem]>;
+                                 [IntrNoMem, ImmArg<ArgIndex<1>>, ImmArg<ArgIndex<2>>]>;
 
   // Instructions from the Vector Enhancements Facility 1
   def int_s390_vbperm : SystemZBinaryConv<"vbperm", llvm_v2i64_ty,
@@ -379,20 +385,20 @@ let TargetPrefix = "s390" in {
   def int_s390_vmslg  : GCCBuiltin<"__builtin_s390_vmslg">,
                         Intrinsic<[llvm_v16i8_ty],
                                   [llvm_v2i64_ty, llvm_v2i64_ty, llvm_v16i8_ty,
-                                   llvm_i32_ty], [IntrNoMem]>;
+                                   llvm_i32_ty], [IntrNoMem, ImmArg<ArgIndex<3>>]>;
 
   def int_s390_vfmaxdb : Intrinsic<[llvm_v2f64_ty],
                                    [llvm_v2f64_ty, llvm_v2f64_ty, llvm_i32_ty],
-                                   [IntrNoMem]>;
+                                   [IntrNoMem, ImmArg<ArgIndex<2>>]>;
   def int_s390_vfmindb : Intrinsic<[llvm_v2f64_ty],
                                    [llvm_v2f64_ty, llvm_v2f64_ty, llvm_i32_ty],
-                                   [IntrNoMem]>;
+                                   [IntrNoMem, ImmArg<ArgIndex<2>>]>;
   def int_s390_vfmaxsb : Intrinsic<[llvm_v4f32_ty],
                                    [llvm_v4f32_ty, llvm_v4f32_ty, llvm_i32_ty],
-                                   [IntrNoMem]>;
+                                   [IntrNoMem, ImmArg<ArgIndex<2>>]>;
   def int_s390_vfminsb : Intrinsic<[llvm_v4f32_ty],
                                    [llvm_v4f32_ty, llvm_v4f32_ty, llvm_i32_ty],
-                                   [IntrNoMem]>;
+                                   [IntrNoMem, ImmArg<ArgIndex<2>>]>;
 
   def int_s390_vfcesbs  : SystemZBinaryConvCC<llvm_v4i32_ty, llvm_v4f32_ty>;
   def int_s390_vfchsbs  : SystemZBinaryConvCC<llvm_v4i32_ty, llvm_v4f32_ty>;
@@ -402,7 +408,7 @@ let TargetPrefix = "s390" in {
 
   def int_s390_vfisb : Intrinsic<[llvm_v4f32_ty],
                                  [llvm_v4f32_ty, llvm_i32_ty, llvm_i32_ty],
-                                 [IntrNoMem]>;
+                                 [IntrNoMem, ImmArg<ArgIndex<1>>, ImmArg<ArgIndex<2>>]>;
 
   // Instructions from the Vector Packed Decimal Facility
   def int_s390_vlrl : GCCBuiltin<"__builtin_s390_vlrl">,
@@ -412,6 +418,46 @@ let TargetPrefix = "s390" in {
   def int_s390_vstrl : GCCBuiltin<"__builtin_s390_vstrl">,
                        Intrinsic<[], [llvm_v16i8_ty, llvm_i32_ty, llvm_ptr_ty],
                                  [IntrArgMemOnly, IntrWriteMem]>;
+
+  // Instructions from the Vector Enhancements Facility 2
+  def int_s390_vsld : GCCBuiltin<"__builtin_s390_vsld">,
+                      Intrinsic<[llvm_v16i8_ty],
+                                [llvm_v16i8_ty, llvm_v16i8_ty, llvm_i32_ty],
+                                [IntrNoMem, ImmArg<ArgIndex<2>>]>;
+
+  def int_s390_vsrd : GCCBuiltin<"__builtin_s390_vsrd">,
+                      Intrinsic<[llvm_v16i8_ty],
+                                [llvm_v16i8_ty, llvm_v16i8_ty, llvm_i32_ty],
+                                [IntrNoMem, ImmArg<ArgIndex<2>>]>;
+
+  def int_s390_vstrsb : SystemZTernaryConvCC<llvm_v16i8_ty, llvm_v16i8_ty>;
+  def int_s390_vstrsh : SystemZTernaryConvCC<llvm_v16i8_ty, llvm_v8i16_ty>;
+  def int_s390_vstrsf : SystemZTernaryConvCC<llvm_v16i8_ty, llvm_v4i32_ty>;
+  def int_s390_vstrszb : SystemZTernaryConvCC<llvm_v16i8_ty, llvm_v16i8_ty>;
+  def int_s390_vstrszh : SystemZTernaryConvCC<llvm_v16i8_ty, llvm_v8i16_ty>;
+  def int_s390_vstrszf : SystemZTernaryConvCC<llvm_v16i8_ty, llvm_v4i32_ty>;
+
+  // Instructions from the NNP-assist Facility
+  def int_s390_vclfnhs : GCCBuiltin<"__builtin_s390_vclfnhs">,
+                         Intrinsic<[llvm_v4f32_ty],
+                                   [llvm_v8i16_ty, llvm_i32_ty],
+                                   [IntrNoMem, ImmArg<ArgIndex<1>>]>;
+  def int_s390_vclfnls : GCCBuiltin<"__builtin_s390_vclfnls">,
+                         Intrinsic<[llvm_v4f32_ty],
+                                   [llvm_v8i16_ty, llvm_i32_ty],
+                                   [IntrNoMem, ImmArg<ArgIndex<1>>]>;
+  def int_s390_vcrnfs : GCCBuiltin<"__builtin_s390_vcrnfs">,
+                        Intrinsic<[llvm_v8i16_ty],
+                                  [llvm_v4f32_ty, llvm_v4f32_ty, llvm_i32_ty],
+                                  [IntrNoMem, ImmArg<ArgIndex<2>>]>;
+  def int_s390_vcfn : GCCBuiltin<"__builtin_s390_vcfn">,
+                      Intrinsic<[llvm_v8i16_ty],
+                                [llvm_v8i16_ty, llvm_i32_ty],
+                                [IntrNoMem, ImmArg<ArgIndex<1>>]>;
+  def int_s390_vcnf : GCCBuiltin<"__builtin_s390_vcnf">,
+                      Intrinsic<[llvm_v8i16_ty],
+                                [llvm_v8i16_ty, llvm_i32_ty],
+                                [IntrNoMem, ImmArg<ArgIndex<1>>]>;
 }
 
 //===----------------------------------------------------------------------===//

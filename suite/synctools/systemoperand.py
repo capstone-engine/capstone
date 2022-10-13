@@ -84,7 +84,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const AT ATsList[] = {':
+    if line.strip() == 'constexpr AT ATsList[] = {':
         count += 1
         print_line('static const AT ATsList[] = {')
         continue
@@ -148,7 +148,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const DB DBsList[] = {':
+    if line.strip() == 'constexpr DB DBsList[] = {':
         count += 1
         print_line('static const DB DBsList[] = {')
         continue
@@ -211,7 +211,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const DC DCsList[] = {':
+    if line.strip() == 'constexpr DC DCsList[] = {':
         count += 1
         print_line('static const DC DCsList[] = {')
         continue
@@ -276,7 +276,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const IC ICsList[] = {':
+    if line.strip() == 'constexpr IC ICsList[] = {':
         count += 1
         print_line('static const IC ICsList[] = {')
         continue
@@ -342,7 +342,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const TLBI TLBIsList[] = {':
+    if line.strip() == 'constexpr TLBI TLBITable[] = {':
         count += 1
         print_line('static const TLBI TLBIsList[] = {')
         continue
@@ -407,7 +407,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const SVEPRFM SVEPRFMsList[] = {':
+    if line.strip() == 'constexpr SVEPRFM SVEPRFMsList[] = {':
         count += 1
         print_line('static const SVEPRFM SVEPRFMsList[] = {')
         continue
@@ -473,7 +473,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const PRFM PRFMsList[] = {':
+    if line.strip() == 'constexpr PRFM PRFMsList[] = {':
         count += 1
         print_line('static const PRFM PRFMsList[] = {')
         continue
@@ -539,7 +539,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const PSB PSBsList[] = {':
+    if line.strip() == 'constexpr PSB PSBsList[] = {':
         count += 1
         print_line('static const PSB PSBsList[] = {')
         continue
@@ -570,7 +570,7 @@ for line in lines:
 
     if 'lookupPSBByEncoding' in line and '{' in line:
         count += 1
-        print_line('const PSB *AArch64PSBHint_lookupPSBByEncoding(uint16_t Encoding)\n{')
+        print_line('const PSB *lookupPSBByEncoding(uint16_t Encoding)\n{')
         print_line('  unsigned int i;')
         continue
 
@@ -605,7 +605,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const ISB ISBsList[] = {':
+    if line.strip() == 'constexpr ISB ISBsList[] = {':
         count += 1
         print_line('static const ISB ISBsList[] = {')
         continue
@@ -671,7 +671,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const TSB TSBsList[] = {':
+    if line.strip() == 'constexpr TSB TSBsList[] = {':
         count += 1
         print_line('static const TSB TSBsList[] = {')
         continue
@@ -735,7 +735,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const SysReg SysRegsList[] = {':
+    if line.strip() == 'constexpr SysReg SysRegsList[] = {':
         count += 1
         print_line('static const SysReg SysRegsList[] = {')
         continue
@@ -752,7 +752,7 @@ for line in lines:
             #line = line.replace('{}', '{ 0 }')
             line = line.replace('{}', '')
             tmp = line.split(',')
-            print_line("  %s, %s, %s, %s }, // %u" %(tmp[0].lower(), tmp[1], tmp[2], tmp[3], c))
+            print_line("  %s, %s, %s, %s }, // %u" %(tmp[0].lower(), tmp[2], tmp[3], tmp[4], c))
             #print_line("  %s" %line.lower())
             c += 1
 
@@ -800,7 +800,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const PState PStatesList[] = {':
+    if line.strip() == 'constexpr PState PStatesList[] = {':
         count += 1
         print_line('static const PState PStatesList[] = {')
         continue
@@ -865,7 +865,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const SVEPREDPAT SVEPREDPATsList[] = {':
+    if line.strip() == 'constexpr SVEPREDPAT SVEPREDPATsList[] = {':
         count += 1
         print_line('static const SVEPREDPAT SVEPREDPATsList[] = {')
         continue
@@ -921,6 +921,198 @@ print_line("""
 }
 """)
 
+# extract SVCRsList
+count = 0
+c = 0
+for line in lines:
+    line = line.rstrip()
+
+    if len(line.strip()) == 0:
+        continue
+
+    if line.strip() == 'constexpr SVCR SVCRsList[] = {':
+        count += 1
+        print_line('static const SVCR SVCRsList[] = {')
+        continue
+
+    line = line.strip()
+    if count == 1:
+        if line == '};':
+            # done with first enum
+            print_line('};\n')
+            break
+        else:
+            # skip pseudo instructions
+            line = line.replace('::', '_')
+            #line = line.replace('{}', '{ 0 }')
+            line = line.replace('{}', '')
+            tmp = line.split(',')
+            print_line("  %s, %s }, // %u" %(tmp[0].lower(), tmp[1], c))
+            c += 1
+
+# lookupSVCRByEncoding
+count = 0
+for line in lines:
+    line = line.rstrip()
+
+    if len(line.strip()) == 0:
+        continue
+
+    if 'lookupSVCRByEncoding' in line and '{' in line:
+        count += 1
+        print_line('const SVCR *lookupSVCRByEncoding(uint8_t Encoding)\n{')
+        print_line('  unsigned int i;')
+        continue
+
+    if count == 1 and 'IndexType Index[] = {' in line:
+        count += 1
+
+    if count == 2:
+        if line.strip() == '};':
+            # done with array, or this function?
+            print_line(line)
+            break
+        else:
+            # enum items
+            print_line(line)
+
+print_line("""
+  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+  if (i == -1)
+    return NULL;
+  else
+    return &SVCRsList[Index[i].index];
+}
+""")
+
+# extract BTIsList
+count = 0
+c = 0
+for line in lines:
+    line = line.rstrip()
+
+    if len(line.strip()) == 0:
+        continue
+
+    if line.strip() == 'constexpr BTI BTIsList[] = {':
+        count += 1
+        print_line('static const BTI BTIsList[] = {')
+        continue
+
+    line = line.strip()
+    if count == 1:
+        if line == '};':
+            # done with first enum
+            print_line('};\n')
+            break
+        else:
+            # skip pseudo instructions
+            line = line.replace('::', '_')
+            #line = line.replace('{}', '{ 0 }')
+            line = line.replace('{}', '')
+            tmp = line.split(',')
+            print_line("  %s, %s, // %u" %(tmp[0].lower(), tmp[1], c))
+            c += 1
+
+# lookupBTIByEncoding
+count = 0
+for line in lines:
+    line = line.rstrip()
+
+    if len(line.strip()) == 0:
+        continue
+
+    if 'lookupBTIByEncoding' in line and '{' in line:
+        count += 1
+        print_line('const BTI *lookupBTIByEncoding(uint8_t Encoding)\n{')
+        print_line('  unsigned int i;')
+        continue
+
+    if count == 1 and 'IndexType Index[] = {' in line:
+        count += 1
+
+    if count == 2:
+        if line.strip() == '};':
+            # done with array, or this function?
+            print_line(line)
+            break
+        else:
+            # enum items
+            print_line(line)
+
+print_line("""
+  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+  if (i == -1)
+    return NULL;
+  else
+    return &BTIsList[Index[i].index];
+}
+""")
+
+
+# extract DBnXSsList
+count = 0
+c = 0
+for line in lines:
+    line = line.rstrip()
+
+    if len(line.strip()) == 0:
+        continue
+
+    if line.strip() == 'constexpr DBnXS DBnXSsList[] = {':
+        count += 1
+        print_line('static const DBnXS DBnXSsList[] = {')
+        continue
+
+    line = line.strip()
+    if count == 1:
+        if line == '};':
+            # done with first enum
+            print_line('};\n')
+            break
+        else:
+            # skip pseudo instructions
+            line = line.replace('::', '_')
+            #line = line.replace('{}', '{ 0 }')
+            line = line.replace('{}', '')
+            tmp = line.split(',')
+            print_line("  %s, %s, %s}, // %u" %(tmp[0].lower(), tmp[1], tmp[2], c))
+            c += 1
+
+# lookupDBnXSByEncoding
+count = 0
+for line in lines:
+    line = line.rstrip()
+
+    if len(line.strip()) == 0:
+        continue
+
+    if 'lookupDBnXSByEncoding' in line and '{' in line:
+        count += 1
+        print_line('const DBnXS *lookupDBnXSByEncoding(uint8_t Encoding)\n{')
+        print_line('  unsigned int i;')
+        continue
+
+    if count == 1 and 'IndexType Index[] = {' in line:
+        count += 1
+
+    if count == 2:
+        if line.strip() == '};':
+            # done with array, or this function?
+            print_line(line)
+            break
+        else:
+            # enum items
+            print_line(line)
+
+print_line("""
+  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+  if (i == -1)
+    return NULL;
+  else
+    return &DBnXSsList[Index[i].index];
+}
+""")
 
 # extract ExactFPImmsList
 count = 0
@@ -931,7 +1123,7 @@ for line in lines:
     if len(line.strip()) == 0:
         continue
 
-    if line.strip() == 'const ExactFPImm ExactFPImmsList[] = {':
+    if line.strip() == 'constexpr ExactFPImm ExactFPImmsList[] = {':
         count += 1
         print_line('static const ExactFPImm ExactFPImmsList[] = {')
         continue
