@@ -898,12 +898,10 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				if(MI->csh->detail){
 					MI->flat_insn->detail->arm64.op_count = 2;
 #ifndef CAPSTONE_DIET
-					for (int i = 0; i < 2; i++)
-					{
-						MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = 
-							get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-						MI->ac_idx++;
-					}
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->ac_idx++;
+					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
+					MI->ac_idx++;
 #endif
 					MI->flat_insn->detail->arm64.operands[0].type = ARM64_OP_SVCR;
 					MI->flat_insn->detail->arm64.operands[0].sys = (unsigned)ARM64_SYSREG_SVCR;
@@ -2488,8 +2486,8 @@ static void printMatrixTileVector(MCInst *MI, unsigned OpNum, SStream *O, bool I
 	const size_t strLn = strlen(RegName);
 	// +2 for extra chars, + 1 for null char \0
 	char *RegNameNew = malloc(sizeof(char) * (strLn + 2 + 1));
-	int index = 0;
-	for(int i = 0; i < (strLn + 2); i++){
+	int index = 0, i;
+	for (i = 0; i < (strLn + 2); i++){
 		if(RegName[i] != '.'){
 			RegNameNew[index] = RegName[i];
 			index++;
@@ -2527,18 +2525,18 @@ static void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O){
 	unsigned MaxRegs = 8;
 	unsigned RegMask = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
-	unsigned NumRegs = 0;
-	for (unsigned I = 0; I < MaxRegs; ++I)
+	unsigned NumRegs = 0, I;
+	for (I = 0; I < MaxRegs; ++I)
 		if ((RegMask & (1 << I)) != 0)
 			++NumRegs;
 
 	SStream_concat0(O, "{");
-	unsigned Printed = 0;
-	for (unsigned I = 0; I < MaxRegs; ++I) {
-		unsigned Reg = RegMask & (1 << I);
+	unsigned Printed = 0, J;
+	for (J = 0; J < MaxRegs; ++J) {
+		unsigned Reg = RegMask & (1 << J);
 		if (Reg == 0)
 			continue;
-		SStream_concat0(O, getRegisterName(MatrixZADRegisterTable[I], AArch64_NoRegAltName));
+		SStream_concat0(O, getRegisterName(MatrixZADRegisterTable[J], AArch64_NoRegAltName));
 
 		if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
@@ -2550,7 +2548,7 @@ static void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O){
 #endif
 
 			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MatrixZADRegisterTable[I];
+			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MatrixZADRegisterTable[J];
 			MI->flat_insn->detail->arm64.op_count++;
 		}
 
