@@ -768,6 +768,7 @@ for line in lines:
       ++I;
     }
 
+    bool isSME = false;
     do {
       if (AsmString[I] == '$') {
         ++I;
@@ -780,9 +781,19 @@ for line in lines:
           printOperand(MI, (unsigned)(AsmString[I++]) - 1, OS);
       } else {
         if (AsmString[I] == '[') {
-          set_mem_access(MI, true);
+          if (AsmString[I-1] != ' ') {
+            set_sme_index(MI, true);
+            isSME = true;
+          } else {
+            set_mem_access(MI, true);
+          }
         } else if (AsmString[I] == ']') {
-          set_mem_access(MI, false);
+          if (isSME) {
+            set_sme_index(MI, false);
+            isSME = false;
+          } else {
+            set_mem_access(MI, false);
+          }
         }
         SStream_concat1(OS, AsmString[I++]);
       }
