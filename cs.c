@@ -285,26 +285,27 @@ static const uint32_t all_arch = 0
 #endif
 ;
 
+
 #if defined(CAPSTONE_USE_SYS_DYN_MEM)
 #if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 // default
-thread_local cs_malloc_t cs_mem_malloc = malloc;
-thread_local cs_calloc_t cs_mem_calloc = calloc;
-thread_local cs_realloc_t cs_mem_realloc = realloc;
-thread_local cs_free_t cs_mem_free = free;
+cs_malloc_t cs_mem_malloc = malloc;
+cs_calloc_t cs_mem_calloc = calloc;
+cs_realloc_t cs_mem_realloc = realloc;
+cs_free_t cs_mem_free = free;
 #if defined(_WIN32_WCE)
-thread_local cs_vsnprintf_t cs_vsnprintf = _vsnprintf;
+cs_vsnprintf_t cs_vsnprintf = _vsnprintf;
 #else
-thread_local cs_vsnprintf_t cs_vsnprintf = vsnprintf;
+cs_vsnprintf_t cs_vsnprintf = vsnprintf;
 #endif  // defined(_WIN32_WCE)
 
 #elif defined(_KERNEL_MODE)
 // Windows driver
-thread_local cs_malloc_t cs_mem_malloc = cs_winkernel_malloc;
-thread_local cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
-thread_local cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
-thread_local cs_free_t cs_mem_free = cs_winkernel_free;
-thread_local cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
+cs_malloc_t cs_mem_malloc = cs_winkernel_malloc;
+cs_calloc_t cs_mem_calloc = cs_winkernel_calloc;
+cs_realloc_t cs_mem_realloc = cs_winkernel_realloc;
+cs_free_t cs_mem_free = cs_winkernel_free;
+cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
 #else
 // OSX kernel
 extern void* kern_os_malloc(size_t size);
@@ -316,19 +317,19 @@ static void* cs_kern_os_calloc(size_t num, size_t size)
 	return kern_os_malloc(num * size); // malloc bzeroes the buffer
 }
 
-thread_local cs_malloc_t cs_mem_malloc = kern_os_malloc;
-thread_local cs_calloc_t cs_mem_calloc = cs_kern_os_calloc;
-thread_local cs_realloc_t cs_mem_realloc = kern_os_realloc;
-thread_local cs_free_t cs_mem_free = kern_os_free;
-thread_local cs_vsnprintf_t cs_vsnprintf = vsnprintf;
+cs_malloc_t cs_mem_malloc = kern_os_malloc;
+cs_calloc_t cs_mem_calloc = cs_kern_os_calloc;
+cs_realloc_t cs_mem_realloc = kern_os_realloc;
+cs_free_t cs_mem_free = kern_os_free;
+cs_vsnprintf_t cs_vsnprintf = vsnprintf;
 #endif  // !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 #else
 // User-defined
-thread_local cs_malloc_t cs_mem_malloc = NULL;
-thread_local cs_calloc_t cs_mem_calloc = NULL;
-thread_local cs_realloc_t cs_mem_realloc = NULL;
-thread_local cs_free_t cs_mem_free = NULL;
-thread_local cs_vsnprintf_t cs_vsnprintf = NULL;
+cs_malloc_t cs_mem_malloc = NULL;
+cs_calloc_t cs_mem_calloc = NULL;
+cs_realloc_t cs_mem_realloc = NULL;
+cs_free_t cs_mem_free = NULL;
+cs_vsnprintf_t cs_vsnprintf = NULL;
 
 #endif  // defined(CAPSTONE_USE_SYS_DYN_MEM)
 
