@@ -59,6 +59,20 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].type: PREFETCH = 0x%x" % (c, i.prefetch))
             if i.type == ARM64_OP_BARRIER:
                 print("\t\toperands[%u].type: BARRIER = 0x%x" % (c, i.barrier))
+            if i.type == ARM64_OP_SVCR:
+                print("\t\toperands[%u].type: SYS = 0x%x" % (c, i.sys))
+                if i.svcr == ARM64_SVCR_SVCRSM:
+                	print("\t\t\toperands[%u].svcr: BIT = SM" % (c))
+                if i.svcr == ARM64_SVCR_SVCRZA:
+                	print("\t\t\toperands[%u].svcr: BIT = ZA" % (c))
+                if i.svcr == ARM64_SVCR_SVCRSMZA:
+                	print("\t\t\toperands[%u].svcr: BIT = SM & ZA" % (c))
+            if i.type == ARM64_OP_SME_INDEX:
+                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
+                if i.sme_index.base != ARM64_REG_INVALID:
+                    print("\t\t\toperands[%u].index.base: REG = %s" % (c, insn.reg_name(i.reg)))
+                if i.sme_index.disp != 0 :
+                    print("\t\t\toperands[%u].index.disp: 0x%x" %(c, i.sme_index.disp))
 
             if i.shift.type != ARM64_SFT_INVALID and i.shift.value:
                 print("\t\t\tShift: type = %u, value = %u" % (i.shift.type, i.shift.value))
