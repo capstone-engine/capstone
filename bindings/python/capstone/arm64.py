@@ -12,6 +12,13 @@ class Arm64OpMem(ctypes.Structure):
         ('disp', ctypes.c_int32),
     )
 
+class Arm64OpSmeIndex(ctypes.Structure):
+    _fileds_ = (
+        ('reg', ctypes.c_uint),
+        ('base', ctypes.c_uint),
+        ('disp', ctypes.c_int32),
+    )
+
 class Arm64OpShift(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
@@ -28,6 +35,7 @@ class Arm64OpValue(ctypes.Union):
         ('sys', ctypes.c_uint),
         ('prefetch', ctypes.c_int),
         ('barrier', ctypes.c_int),
+        ('sme_index', Arm64OpSmeIndex),
     )
 
 class Arm64Op(ctypes.Structure):
@@ -37,6 +45,7 @@ class Arm64Op(ctypes.Structure):
         ('shift', Arm64OpShift),
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),
+        ('svcr', ctypes.c_uint),
         ('value', Arm64OpValue),
         ('access', ctypes.c_uint8),
     )
@@ -72,6 +81,10 @@ class Arm64Op(ctypes.Structure):
     @property
     def barrier(self):
         return self.value.barrier
+    
+    @property
+    def sme_index(self):
+        return self.value.sme_index
 
 
 
