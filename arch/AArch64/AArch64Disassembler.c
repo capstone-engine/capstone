@@ -264,8 +264,8 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 
 	// Init new MCOperand to be used in switch below.
 	// Kind RegVal set inside a case when needed.
-	MCOperand *Op;
-	Op = malloc(sizeof(MCOperand));
+	MCOperand op_storage;
+	MCOperand *Op = &op_storage;
 	switch (MCInst_getOpcode(MI)) {
     	default:
     	  break;
@@ -342,7 +342,6 @@ static DecodeStatus _getInstruction(cs_struct *ud, MCInst *MI,
 		  MCInst_addOperand2(MI, Op);
     	  break;
     }
-	free(Op);
 
 	if (result != MCDisassembler_Fail) {
 		*Size = 4;
