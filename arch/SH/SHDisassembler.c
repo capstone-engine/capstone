@@ -6,7 +6,7 @@
 #include "../../cs_priv.h"
 #include "../../MCInst.h"
 #include "../../MCDisassembler.h"
-#include "../../capstone/utils.h"
+#include "../../utils.h"
 #include "SHDisassembler.h"
 
 #define regs_read(_detail, _reg)					\
