@@ -1798,6 +1798,7 @@ typedef struct cs_arm64 {
   arm64_cc cc;	     ///< conditional code for this insn
   bool update_flags; ///< does this insn update flags?
   bool writeback;    ///< does this insn request writeback? 'True' means 'yes'
+  bool post_index;   ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
 
   /// Number of operands of this instruction,
   /// or 0 when instruction has no operand.

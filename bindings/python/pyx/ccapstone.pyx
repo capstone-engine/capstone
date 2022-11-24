@@ -23,10 +23,10 @@ class CsDetail(object):
 
         if arch == capstone.CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, \
-                self.cc, self.update_flags, self.writeback, self.mem_barrier, self.operands) = \
+                self.cc, self.update_flags, self.writeback, self.post_index, self.mem_barrier, self.operands) = \
                 arm.get_arch_info(detail.arch.arm)
         elif arch == capstone.CS_ARCH_ARM64:
-            (self.cc, self.update_flags, self.writeback, self.operands) = \
+            (self.cc, self.update_flags, self.writeback, self.post_index, self.operands) = \
                 arm64.get_arch_info(detail.arch.arm64)
         elif arch == capstone.CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \

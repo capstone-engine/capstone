@@ -2864,48 +2864,18 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 			case AArch64_LD4i32_POST:
 			case AArch64_LD4i64_POST:
 			case AArch64_LD4i8_POST:
-			case AArch64_LDPDpost:
-			case AArch64_LDPDpre:
-			case AArch64_LDPQpost:
-			case AArch64_LDPQpre:
-			case AArch64_LDPSWpost:
-			case AArch64_LDPSWpre:
-			case AArch64_LDPSpost:
-			case AArch64_LDPSpre:
-			case AArch64_LDPWpost:
-			case AArch64_LDPWpre:
-			case AArch64_LDPXpost:
-			case AArch64_LDPXpre:
-			case AArch64_LDRAAwriteback:
-			case AArch64_LDRABwriteback:
 			case AArch64_LDRBBpost:
-			case AArch64_LDRBBpre:
 			case AArch64_LDRBpost:
-			case AArch64_LDRBpre:
 			case AArch64_LDRDpost:
-			case AArch64_LDRDpre:
 			case AArch64_LDRHHpost:
-			case AArch64_LDRHHpre:
 			case AArch64_LDRHpost:
-			case AArch64_LDRHpre:
 			case AArch64_LDRQpost:
-			case AArch64_LDRQpre:
-			case AArch64_LDRSBWpost:
-			case AArch64_LDRSBWpre:
-			case AArch64_LDRSBXpost:
-			case AArch64_LDRSBXpre:
-			case AArch64_LDRSHWpost:
-			case AArch64_LDRSHWpre:
-			case AArch64_LDRSHXpost:
-			case AArch64_LDRSHXpre:
-			case AArch64_LDRSWpost:
-			case AArch64_LDRSWpre:
-			case AArch64_LDRSpost:
-			case AArch64_LDRSpre:
-			case AArch64_LDRWpost:
-			case AArch64_LDRWpre:
-			case AArch64_LDRXpost:
-			case AArch64_LDRXpre:
+			case AArch64_LDPDpost:
+			case AArch64_LDPQpost:
+			case AArch64_LDPSWpost:
+			case AArch64_LDPSpost:
+			case AArch64_LDPWpost:
+			case AArch64_LDPXpost:
 			case AArch64_ST1Fourv16b_POST:
 			case AArch64_ST1Fourv1d_POST:
 			case AArch64_ST1Fourv2d_POST:
@@ -2943,7 +2913,6 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 			case AArch64_ST1i64_POST:
 			case AArch64_ST1i8_POST:
 			case AArch64_ST2GPostIndex:
-			case AArch64_ST2GPreIndex:
 			case AArch64_ST2Twov16b_POST:
 			case AArch64_ST2Twov2d_POST:
 			case AArch64_ST2Twov2s_POST:
@@ -2977,42 +2946,76 @@ void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst
 			case AArch64_ST4i32_POST:
 			case AArch64_ST4i64_POST:
 			case AArch64_ST4i8_POST:
+			case AArch64_STPDpost:
+			case AArch64_STPQpost:
+			case AArch64_STPSpost:
+			case AArch64_STPWpost:
+			case AArch64_STPXpost:
+			case AArch64_STRBBpost:
+			case AArch64_STRBpost:
+			case AArch64_STRDpost:
+			case AArch64_STRHHpost:
+			case AArch64_STRHpost:
+			case AArch64_STRQpost:
+			case AArch64_STRSpost:
+			case AArch64_STRWpost:
+			case AArch64_STRXpost:
+			case AArch64_STZ2GPostIndex:
+			case AArch64_STZGPostIndex:
 			case AArch64_STGPostIndex:
 			case AArch64_STGPpost:
-			case AArch64_STGPpre:
+			case AArch64_LDRSBWpost:
+			case AArch64_LDRSBXpost:
+			case AArch64_LDRSHWpost:
+			case AArch64_LDRSHXpost:
+			case AArch64_LDRSWpost:
+			case AArch64_LDRSpost:
+			case AArch64_LDRWpost:
+			case AArch64_LDRXpost:
+				flat_insn->detail->arm64.writeback = true;
+			    flat_insn->detail->arm64.post_index = true;
+				break;
+			case AArch64_LDRAAwriteback:
+			case AArch64_LDRABwriteback:
+			case AArch64_ST2GPreIndex:
+			case AArch64_LDPDpre:
+			case AArch64_LDPQpre:
+			case AArch64_LDPSWpre:
+			case AArch64_LDPSpre:
+			case AArch64_LDPWpre:
+			case AArch64_LDPXpre:
+			case AArch64_LDRBBpre:
+			case AArch64_LDRBpre:
+			case AArch64_LDRDpre:
+			case AArch64_LDRHHpre:
+			case AArch64_LDRHpre:
+			case AArch64_LDRQpre:
+			case AArch64_LDRSBWpre:
+			case AArch64_LDRSBXpre:
+			case AArch64_LDRSHWpre:
+			case AArch64_LDRSHXpre:
+			case AArch64_LDRSWpre:
+			case AArch64_LDRSpre:
+			case AArch64_LDRWpre:
+			case AArch64_LDRXpre:
 			case AArch64_STGPreIndex:
-			case AArch64_STPDpost:
 			case AArch64_STPDpre:
-			case AArch64_STPQpost:
 			case AArch64_STPQpre:
-			case AArch64_STPSpost:
 			case AArch64_STPSpre:
-			case AArch64_STPWpost:
 			case AArch64_STPWpre:
-			case AArch64_STPXpost:
 			case AArch64_STPXpre:
-			case AArch64_STRBBpost:
 			case AArch64_STRBBpre:
-			case AArch64_STRBpost:
 			case AArch64_STRBpre:
-			case AArch64_STRDpost:
 			case AArch64_STRDpre:
-			case AArch64_STRHHpost:
 			case AArch64_STRHHpre:
-			case AArch64_STRHpost:
 			case AArch64_STRHpre:
-			case AArch64_STRQpost:
 			case AArch64_STRQpre:
-			case AArch64_STRSpost:
 			case AArch64_STRSpre:
-			case AArch64_STRWpost:
 			case AArch64_STRWpre:
-			case AArch64_STRXpost:
 			case AArch64_STRXpre:
-			case AArch64_STZ2GPostIndex:
 			case AArch64_STZ2GPreIndex:
-			case AArch64_STZGPostIndex:
 			case AArch64_STZGPreIndex:
+			case AArch64_STGPpre:
 				flat_insn->detail->arm64.writeback = true;
 				break;
 		}
