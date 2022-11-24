@@ -2485,7 +2485,7 @@ static void printMatrixTileVector(MCInst *MI, unsigned OpNum, SStream *O, bool I
 
 	const size_t strLn = strlen(RegName);
 	// +2 for extra chars, + 1 for null char \0
-	char *RegNameNew = malloc(sizeof(char) * (strLn + 2 + 1));
+	char *RegNameNew = cs_mem_malloc(sizeof(char) * (strLn + 2 + 1));
 	int index = 0, i;
 	for (i = 0; i < (strLn + 2); i++){
 		if(RegName[i] != '.'){
@@ -2513,7 +2513,7 @@ static void printMatrixTileVector(MCInst *MI, unsigned OpNum, SStream *O, bool I
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
-	free(RegNameNew);
+	cs_mem_free(RegNameNew);
 }
 
 static const unsigned MatrixZADRegisterTable[] = {
