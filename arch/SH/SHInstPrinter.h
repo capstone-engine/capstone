@@ -6,7 +6,7 @@
 
 
 #include "capstone/capstone.h"
-#include "../../capstone/utils.h"
+#include "../../utils.h"
 #include "../../MCInst.h"
 #include "../../SStream.h"
 #include "../../cs_priv.h"
