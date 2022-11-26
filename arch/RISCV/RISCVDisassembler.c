@@ -73,7 +73,7 @@ static DecodeStatus DecodeGPRRegisterClass(MCInst *Inst, uint64_t RegNo,
 {
   	unsigned Reg = 0;
 
-  	if (RegNo > sizeof(GPRDecoderTable))
+  	if (RegNo >= ARR_SIZE(GPRDecoderTable))
     		return MCDisassembler_Fail;
 
   	// We must define our own mapping from RegNo to register identifier.
@@ -101,7 +101,7 @@ static DecodeStatus DecodeFPR32RegisterClass(MCInst *Inst, uint64_t RegNo,
 {
   	unsigned Reg = 0;
 
-  	if (RegNo > sizeof(FPR32DecoderTable))
+  	if (RegNo >= ARR_SIZE(FPR32DecoderTable))
     		return MCDisassembler_Fail;
 
   	// We must define our own mapping from RegNo to register identifier.
@@ -141,7 +141,7 @@ static DecodeStatus DecodeFPR64RegisterClass(MCInst *Inst, uint64_t RegNo,
 {
   	unsigned Reg = 0;
 
-  	if (RegNo > sizeof(FPR64DecoderTable))
+  	if (RegNo >= ARR_SIZE(FPR64DecoderTable))
     		return MCDisassembler_Fail;
 
  	// We must define our own mapping from RegNo to register identifier.
