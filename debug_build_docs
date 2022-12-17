@@ -70,9 +70,12 @@ Get CMake for free from http://www.cmake.org.
       cmake ..
       
     This last command is also where you can pass additional CMake configuration flags
-    using `-D<key>=<value>`. Then to build use:
+    using `-D<key>=<value>`.
+    For a debug build add `-DCMAKE_BUILD_TYPE=Debug`.
     
-      cmake --build . --config Release
+    Then to build use:
+    
+      cmake --build . --config [Release/Debug]
       
 
   (*) To build Capstone using Nmake of Windows SDK, do:
