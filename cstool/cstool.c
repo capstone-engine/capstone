@@ -542,9 +542,13 @@ int main(int argc, char **argv)
 					putchar(' ');
 				printf("%02x", insn[i].bytes[j]);
 			}
-			// X86 and s390 instruction sizes are variable.
-			// align assembly instruction after the opcode
-			if (arch == CS_ARCH_X86) {
+			// Align instruction when it varies in size.
+			// ex: x86, s390x or compressed riscv
+			if (arch == CS_ARCH_RISCV) {
+				for (; j < 4; j++) {
+					printf("   ");
+				}
+			} else if (arch == CS_ARCH_X86) {
 				for (; j < 16; j++) {
 					printf("   ");
 				}
