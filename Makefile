@@ -285,8 +285,7 @@ endif
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
-IS_APPLE := $(shell $(CC) -dM -E - < /dev/null 2> /dev/null | grep __apple_build_version__ | wc -l | tr -d " ")
-ifeq ($(IS_APPLE),1)
+ifeq ($(OS),Darwin)
 # on MacOS, do not build in Universal format by default
 MACOS_UNIVERSAL ?= no
 ifeq ($(MACOS_UNIVERSAL),yes)
