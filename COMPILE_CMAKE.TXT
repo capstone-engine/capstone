@@ -72,6 +72,7 @@ Get CMake for free from http://www.cmake.org.
     This last command is also where you can pass additional CMake configuration flags
     using `-D<key>=<value>`.
     For a debug build add `-DCMAKE_BUILD_TYPE=Debug`.
+    To export `compile_commands.json` add `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON`.
     
     Then to build use:
     
