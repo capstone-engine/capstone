@@ -50,7 +50,7 @@ index c5da8d8142f..98ab3240472 100644
    emitSourceFileHeader("Subtarget Enumeration Source Fragment", OS);
  
 +#ifdef CAPSTONE
-+  OS << "/* Capstone Disassembly Engine, http://www.capstone-engine.org */\n"
++  OS << "/* Capstone Disassembly Engine, https://www.capstone-engine.org */\n"
 +        "/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */\n"
 +        "\n";
 +#endif

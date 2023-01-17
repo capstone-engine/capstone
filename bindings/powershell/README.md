@@ -8,7 +8,7 @@ Compile the relevant version (x86/x64) of `capstone.dll` and place it in
 `./Capstone/Lib/Capstone/`.
 
 Alternatively, pre-compiled DLL’s can be obtained from the Capstone homepage
-at http://capstone-engine.org/download
+at https://capstone-engine.org/download
 
 
 Usage

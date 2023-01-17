@@ -1,7 +1,7 @@
 This is the software license for Capstone disassembly framework.
 Capstone has been designed & implemented by Nguyen Anh Quynh <aquynh@gmail.com>
 
-See http://www.capstone-engine.org for further information.
+See https://www.capstone-engine.org for further information.
 
 Copyright (c) 2013, COSEINC.
 All rights reserved.

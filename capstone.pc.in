@@ -6,7 +6,7 @@ includedir=${prefix}/include/capstone
 Name: capstone
 Description: Capstone disassembly engine
 Version: @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_PATCH@
-URL: http://www.capstone-engine.org
+URL: https://www.capstone-engine.org
 archive=${libdir}/libcapstone.a
 Libs: -L${libdir} -lcapstone
 Cflags: -I${includedir}

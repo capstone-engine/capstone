@@ -132,7 +132,7 @@ setup(
     author       = 'Nguyen Anh Quynh',
     author_email = 'aquynh@gmail.com',
     description  = 'Capstone disassembly engine',
-    url          = 'http://www.capstone-engine.org',
+    url          = 'https://www.capstone-engine.org',
     classifiers  = [
                 'License :: OSI Approved :: BSD License',
                 'Programming Language :: Python :: 2',

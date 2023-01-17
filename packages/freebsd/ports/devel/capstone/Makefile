@@ -3,7 +3,7 @@
 PORTNAME=	capstone
 PORTVERSION=	4.0.0
 CATEGORIES=	devel
-MASTER_SITES=	http://capstone-engine.org/download/${PORTVERSION}/
+MASTER_SITES=	https://capstone-engine.org/download/${PORTVERSION}/
 
 MAINTAINER=	oliver.pntr@gmail.com
 COMMENT=	Multi-platform, multi-architecture disassembly framework

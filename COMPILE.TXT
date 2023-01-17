@@ -197,4 +197,4 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
   of corresponding languages.
 
   Community also provide bindings for C#, Go, Ruby, NodeJS, C++ & Vala. Links to
-  these can be found at address http://capstone-engine.org/download.html
+  these can be found at address https://capstone-engine.org/download.html

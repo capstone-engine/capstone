@@ -6,7 +6,7 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
 #include "../../MCInst.h"

@@ -4,8 +4,8 @@ Release:        2
 Summary:        A lightweight multi-platform, multi-architecture disassembly framework
 
 License:        BSD
-URL:            http://www.capstone-engine.org/
-Source0:        http://www.capstone-engine.org/download/%{version}/%{name}-%{version}.tar.gz
+URL:            https://www.capstone-engine.org/
+Source0:        https://www.capstone-engine.org/download/%{version}/%{name}-%{version}.tar.gz
 
 %if 0%{?fedora} > 12
 %global with_python3 1
