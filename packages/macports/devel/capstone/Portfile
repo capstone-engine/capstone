@@ -14,7 +14,7 @@ description         Capstone disassembly engine
 
 long_description    Capstone is a multi-arch, multi-platform disassembly framework with advanced features
 
-homepage            http://www.capstone-engine.org/
+homepage            https://www.capstone-engine.org/
 master_sites        ${homepage}download/${version}/
 extract.suffix      .tgz
 

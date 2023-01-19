@@ -561,7 +561,7 @@ Version 2.1: March 5th, 2014
 
 - API version has been bumped to 2.1.
 - Change prototype of cs_close() to be able to invalidate closed handle.
-  See http://capstone-engine.org/version_2.1_API.html for more information.
+  See https://capstone-engine.org/version_2.1_API.html for more information.
 - Extend cs_support() to handle more query types, not only about supported
   architectures. This change is backward compatible, however, so existent code
   do not need to be modified to support this.
@@ -580,7 +580,7 @@ Version 2.1: March 5th, 2014
   Especially, X86-only binary reduces from 1.9MB to just 720KB.
 - Support "diet" mode, in which engine size is further reduced (by around 40%)
   for embedding purpose. The price to pay is that we have to sacrifice some
-  non-critical data fields. See http://capstone-engine.org/diet.html for more
+  non-critical data fields. See https://capstone-engine.org/diet.html for more
   details.
 
 
