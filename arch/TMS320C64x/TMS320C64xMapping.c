@@ -1898,7 +1898,7 @@ const char *TMS320C64x_group_name(csh handle, unsigned int id)
 #ifndef CAPSTONE_DIET
 	unsigned int i;
 
-	if (id >= TMS320C64X_GRP_ENDING)
+	if (id >= ARR_SIZE(group_name_maps))
 		return NULL;
 
 	for (i = 0; i < ARR_SIZE(group_name_maps); i++) {
