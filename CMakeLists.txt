@@ -37,8 +37,8 @@ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by defau
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -509,6 +509,22 @@ if(CAPSTONE_RISCV_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
 endif()
 
+if(CAPSTONE_SH_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_SH)
+    set(SOURCES_SH
+        arch/SH/SHDisassembler.c
+        arch/SH/SHInstPrinter.c
+        arch/SH/SHModule.c
+    )
+    set(HEADERS_SH
+        arch/SH/SHDisassembler.h
+        arch/SH/SHInstPrinter.h
+        arch/SH/SHModule.h
+        arch/SH/SHInsnTable.inc
+    )
+    set(TEST_SOURCES ${TEST_SOURCES} test_sh.c)
+endif()
+
 if(CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif()
@@ -531,6 +547,7 @@ set(ALL_SOURCES
     ${SOURCES_MOS65XX}
     ${SOURCES_BPF}
     ${SOURCES_RISCV}
+    ${SOURCES_SH}
 )
 
 set(ALL_HEADERS
@@ -552,6 +569,7 @@ set(ALL_HEADERS
     ${HEADERS_MOS65XX}
     ${HEADERS_BPF}
     ${HEADERS_RISCV}
+    ${HEADERS_SH}
 )
 
 ## properties
@@ -613,6 +631,7 @@ source_group("Source\\WASM" FILES ${SOURCES_WASM})
 source_group("Source\\MOS65XX" FILES ${SOURCES_MOS65XX})
 source_group("Source\\BPF" FILES ${SOURCES_BPF})
 source_group("Source\\RISCV" FILES ${SOURCES_RISCV})
+source_group("Source\\SH" FILES ${SOURCES_SH})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -632,6 +651,7 @@ source_group("Include\\WASM" FILES ${HEADERS_WASM})
 source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 source_group("Include\\BPF" FILES ${HEADERS_BPF})
 source_group("Include\\RISCV" FILES ${HEADERS_RISCV})
+source_group("Include\\SH" FILES ${HEADERS_SH})
 
 ## installation
 if(CAPSTONE_INSTALL)
