@@ -68,6 +68,7 @@
 #include "arch/RISCV/RISCVModule.h"
 #include "arch/MOS65XX/MOS65XXModule.h"
 #include "arch/BPF/BPFModule.h"
+#include "arch/SH/SHModule.h"
 
 static const struct {
 	// constructor initialization
@@ -231,6 +232,17 @@ static const struct {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_SH
+	{
+		SH_global_init,
+		SH_option,
+		~(CS_MODE_SH2 | CS_MODE_SH2A | CS_MODE_SH3 |
+		  CS_MODE_SH4 | CS_MODE_SH4A |
+		  CS_MODE_SHFPU | CS_MODE_SHDSP|CS_MODE_BIG_ENDIAN),
+	},
+#else
+	{ NULL, NULL, 0 },
+#endif
 };
 
 // bitmask of enabled architectures
@@ -282,6 +294,9 @@ static const uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_RISCV
 	| (1 << CS_ARCH_RISCV)
+#endif
+#ifdef CAPSTONE_HAS_SH
+	| (1 << CS_ARCH_SH)
 #endif
 ;
 
@@ -354,7 +369,8 @@ bool CAPSTONE_API cs_support(int query)
 				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
 				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    | 
-				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF));
+				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF))       |
+				    (1 << CS_ARCH_SH);
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -656,6 +672,8 @@ static uint8_t skipdata_size(cs_struct *handle)
 			if (handle->mode & CS_MODE_RISCVC)
 				return 2;
 			return 4;
+		case CS_ARCH_SH:
+			return 2;
 	}
 }
 
@@ -1549,6 +1567,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_RISCV:
 			for (i = 0; i < insn->detail->riscv.op_count; i++) {
 				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_SH:
+			for (i = 0; i < insn->detail->sh.op_count; i++) {
+				if (insn->detail->sh.operands[i].type == (sh_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
