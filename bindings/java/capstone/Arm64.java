@@ -74,7 +74,7 @@ public class Arm64 {
       readField("shift");
       readField("vas");
       readField("vector_index");
-      readField("access")
+      readField("access");
     }
 
     @Override
