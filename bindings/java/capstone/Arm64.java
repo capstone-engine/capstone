@@ -57,6 +57,7 @@ public class Arm64 {
     public int ext;
     public int type;
     public OpValue value;
+    public byte access;
 
     public void read() {
       readField("type");
@@ -73,11 +74,12 @@ public class Arm64 {
       readField("shift");
       readField("vas");
       readField("vector_index");
+      readField("access");
     }
 
     @Override
     public List getFieldOrder() {
-      return Arrays.asList("vector_index", "vas", "shift", "ext", "type", "value");
+      return Arrays.asList("vector_index", "vas", "shift", "ext", "type", "value", "access");
     }
   }
 
