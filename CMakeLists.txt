@@ -1,6 +1,8 @@
 # For MSVC_RUNTIME_LIBRARY
 cmake_minimum_required(VERSION 3.15)
 
+add_compile_options(-Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
+
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
     message(FATAL_ERROR "In-tree builds are not supported. Run CMake from a separate directory: cmake -B build")
 endif()
