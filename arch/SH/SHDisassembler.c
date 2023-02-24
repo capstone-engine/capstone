@@ -564,13 +564,6 @@ static bool opMOV_rpd(uint16_t code, uint64_t address, MCInst *MI,
 	return MCDisassembler_Success;
 }
 
-static bool opDIV0U(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
-		    sh_info *info, cs_detail *detail)
-{
-	MCInst_setOpcode(MI, SH_INS_DIV0U);
-	return MCDisassembler_Success;
-}
-
 opRR(ISA_ALL, TST, 0)
 opRR(ISA_ALL, AND, 0)
 opRR(ISA_ALL, XOR, 0)
@@ -1230,21 +1223,6 @@ static bool opMOVA(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 	set_mem(info, SH_OP_MEM_PCR, SH_REG_INVALID, (address & ~3) + 4 + dsp,
 		0, detail);
 	set_reg(info, SH_REG_R0, write, detail);
-	return MCDisassembler_Success;
-}
-
-static bool opc8xx(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
-		   sh_info *info, cs_detail *detail)
-{
-	int imm = (code & 0x00ff);
-	sh_insn insn[] = {SH_INS_TST, SH_INS_AND, SH_INS_XOR, SH_INS_OR};
-	MCInst_setOpcode(MI, insn[(code >> 8) & 3]);
-	set_imm(info, 1, imm);
-	if (code & 0x0400) {
-		set_mem(info, SH_OP_MEM_GBR_R0, SH_REG_INVALID, 0, 8, detail);
-	} else {
-		set_reg(info, SH_REG_R0, write, detail);
-	}
 	return MCDisassembler_Success;
 }
 
