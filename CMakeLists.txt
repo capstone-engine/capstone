@@ -1,7 +1,7 @@
 # For MSVC_RUNTIME_LIBRARY
 cmake_minimum_required(VERSION 3.15)
 
-if (MSVC)
+if (CMAKE_C_COMPILER_ID MATCHES "MSVC")
     add_compile_options(/W1 /w14189 /w16268)
 else()
     add_compile_options(-Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
