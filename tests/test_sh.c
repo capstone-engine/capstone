@@ -37,10 +37,6 @@ static void print_string_hex_short(unsigned char *str, size_t len)
 		printf("%02x", *c & 0xff);
 }
 
-static const char *s_access[] = {
-	"UNCHANGED", "READ", "WRITE", "READ | WRITE",
-};
-
 static void print_read_write_regs(csh handle, cs_detail *detail)
 {
 	int i;
@@ -89,7 +85,6 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 
 	for (i = 0; i < sh->op_count; i++) {
 		cs_sh_op *op = &(sh->operands[i]);
-		const char *comment;
 
 		switch ((int)op->type) {
 		default:

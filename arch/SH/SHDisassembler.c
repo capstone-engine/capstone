@@ -374,7 +374,6 @@ static bool op0xx8(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 		{-1, SH_INS_INVALID, ISA_ALL, none},
 	};
 	
-	int lvl = isalevel(mode);
 	sh_insn insn = lookup_insn(list, insn_code, mode);
 	if (code & 0x0f00)
 		return MCDisassembler_Fail;
@@ -730,8 +729,6 @@ static bool op4xx5(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 		   sh_info *info, cs_detail *detail)
 {
 	int r = (code >> 8) & 0x0f;
-	uint16_t *regs;
-	uint8_t *count;
 	enum direction rw;
 	static const struct ri_list list[] = {
 		{0, SH_INS_ROTR, ISA_ALL, none},
@@ -1130,7 +1127,6 @@ opLDRSE(LDRE)
 static bool op##insn##_i(uint16_t code, uint64_t address, MCInst *MI, \
 			 cs_mode mode, sh_info *info, cs_detail *detail) \
 {									\
-	int dsp = code & 0x00ff;					\
 	MCInst_setOpcode(MI, SH_INS_##insn);				\
 	set_imm(info, 0, code & 0xff);					\
 	set_reg(info, SH_REG_R0, write, detail);			\
@@ -1146,7 +1142,6 @@ opImmR0(OR)
 static bool op##insn##_B(uint16_t code, uint64_t address, MCInst *MI, \
 			 cs_mode mode, sh_info *info, cs_detail *detail) \
 {									\
-	int dsp = code & 0x00ff;					\
 	MCInst_setOpcode(MI, SH_INS_##insn);				\
 	set_imm(info, 0, code & 0xff);					\
 	set_mem(info, SH_OP_MEM_GBR_R0, SH_REG_R0, 0, 8, detail);	\
@@ -1587,7 +1582,6 @@ static bool set_dsp_move_d(sh_info *info, int xy, uint16_t code, cs_mode mode, c
 	int a;
 	int d;
 	int dir;
-	int sz;
 	int op;
 	static const sh_reg base[] = {SH_REG_DSP_A0, SH_REG_DSP_X0};
 	switch (xy) {
@@ -1802,7 +1796,6 @@ static bool dsp_op_cc0_2opr(uint32_t code, sh_info *info, sh_insn insn,
 static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 			   cs_detail *detail)
 {
-	int r;
 	int cc = (code >> 8) & 3;
 	int sx = (code >> 6) & 3;
 	int sy = (code >> 4) & 3;
@@ -2030,8 +2023,6 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 static bool decode_dsp_p(const uint32_t code, MCInst *MI, cs_mode mode,
 			 sh_info *info, cs_detail *detail)
 {
-	bool ret;
-	
 	int dz = code & 0x0f;
 	MCInst_setOpcode(MI, SH_INS_DSP);
 	if (!decode_dsp_d(code >> 16, MI, mode, info, detail))
