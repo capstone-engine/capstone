@@ -550,6 +550,7 @@ if (CAPSTONE_TRICORE_SUPPORT)
             arch/TriCore/TriCoreGenRegisterInfo.inc
             arch/TriCore/TriCoreInstPrinter.h
             arch/TriCore/TriCoreMapping.h
+            arch/TriCore/TriCodeModule.h
             )
     set(TEST_SOURCES ${TEST_SOURCES} test_tricore.c)
 endif ()
