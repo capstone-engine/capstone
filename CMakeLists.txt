@@ -44,7 +44,7 @@ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by defau
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TriCore)
+set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
@@ -550,7 +550,7 @@ if (CAPSTONE_TRICORE_SUPPORT)
             arch/TriCore/TriCoreGenRegisterInfo.inc
             arch/TriCore/TriCoreInstPrinter.h
             arch/TriCore/TriCoreMapping.h
-            arch/TriCore/TriCodeModule.h
+            arch/TriCore/TriCoreModule.h
             )
     set(TEST_SOURCES ${TEST_SOURCES} test_tricore.c)
 endif ()

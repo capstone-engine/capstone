@@ -244,6 +244,15 @@ static const struct {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_TRICORE
+	{
+		TRICORE_global_init,
+		TRICORE_option,
+		~(CS_MODE_TRICORE),
+	},
+#else
+	{ NULL, NULL, 0 },
+#endif
 };
 
 // bitmask of enabled architectures

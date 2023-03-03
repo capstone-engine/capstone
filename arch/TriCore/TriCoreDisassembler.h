@@ -8,7 +8,7 @@
 #include <stdint.h>
 #endif
 
-#include "../../include/capstone.h"
+#include <capstone/capstone.h>
 #include "../../MCRegisterInfo.h"
 #include "../../MCInst.h"
 
