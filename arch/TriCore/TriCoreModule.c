@@ -4,12 +4,11 @@
 #ifdef CAPSTONE_HAS_TRICORE
 
 #include "../../utils.h"
-#include "../../MCRegisterInfo.h"
 #include "TriCoreDisassembler.h"
 #include "TriCoreInstPrinter.h"
 #include "TriCoreMapping.h"
 
-static cs_err init(cs_struct *ud)
+cs_err TRICORE_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 
@@ -30,26 +29,12 @@ static cs_err init(cs_struct *ud)
 	return CS_ERR_OK;
 }
 
-static cs_err option(cs_struct *handle, cs_opt_type type, size_t value)
+cs_err TRICORE_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
 		handle->syntax = (int) value;
 
 	return CS_ERR_OK;
-}
-
-static void destroy(cs_struct *handle)
-{
-}
-
-void TriCore_enable(void)
-{
-	arch_init[CS_ARCH_TRICORE] = init;
-	arch_option[CS_ARCH_TRICORE] = option;
-	arch_destroy[CS_ARCH_TRICORE] = destroy;
-
-	// support this arch
-	all_arch |= (1 << CS_ARCH_TRICORE);
 }
 
 #endif

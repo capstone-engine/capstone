@@ -72,14 +72,6 @@ typedef size_t csh;
 
 /// Architecture type
 typedef enum cs_arch {
-	CS_ARCH_ARM = 0,	// ARM architecture (including Thumb, Thumb-2)
-	CS_ARCH_ARM64,		// ARM-64, also called AArch64
-	CS_ARCH_MIPS,		// Mips architecture
-	CS_ARCH_X86,		// X86 architecture (including x86 & x86-64)
-	CS_ARCH_PPC,		// PowerPC architecture
-	CS_ARCH_SPARC,		// Sparc architecture
-	CS_ARCH_SYSZ,		// SystemZ architecture
-	CS_ARCH_XCORE,		// XCore architecture
 	CS_ARCH_ARM = 0,	///< ARM architecture (including Thumb, Thumb-2)
 	CS_ARCH_ARM64,		///< ARM-64, also called AArch64
 	CS_ARCH_MIPS,		///< Mips architecture
@@ -170,6 +162,7 @@ typedef enum cs_mode {
 	CS_MODE_SH4A = 1 << 5,   ///< SH4A
 	CS_MODE_SHFPU = 1 << 6,  ///< w/ FPU
 	CS_MODE_SHDSP = 1 << 7,  ///< w/ DSP
+	CS_MODE_TRICORE = 1 << 1, ///< Tricore
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);

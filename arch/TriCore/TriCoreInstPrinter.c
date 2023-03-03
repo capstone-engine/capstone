@@ -331,7 +331,7 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 		case TriCore_ST_Dbitrevbo:
 		case TriCore_ST_Qbitrevbo:
 		case TriCore_ST_Abitrevbo: {
-			MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
+			const MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
 
 			unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
 			if (MCRegisterClass_contains(MRC, Reg)) {
@@ -369,7 +369,7 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 		case TriCore_LD_Wbitrevbo:
 		case TriCore_LD_Dbitrevbo:
 		case TriCore_LD_Abitrevbo: {
-			MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
+			const MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
 
 			unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, 1));
 			if (MCRegisterClass_contains(MRC, Reg)) {
@@ -395,7 +395,7 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 		case TriCore_ST_DAcircbo:
 		case TriCore_LD_DAbitrevbo:
 		case TriCore_ST_DAbitrevbo: {
-			MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
+			const MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
 
 			unsigned Reg1 = MCOperand_getReg(MCInst_getOperand(MI, 0));
 			unsigned Reg2 = MCOperand_getReg(MCInst_getOperand(MI, 2));
