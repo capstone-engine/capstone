@@ -672,7 +672,7 @@ class CsInsn(object):
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.update_flags, \
-            self.writeback, self.mem_barrier, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
+            self.writeback, self.post_index, self.mem_barrier, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
         elif arch == CS_ARCH_ARM64:
             (self.cc, self.update_flags, self.writeback, self.post_index, self.operands) = \
                 arm64.get_arch_info(self._raw.detail.contents.arch.arm64)
