@@ -1091,13 +1091,13 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_SXTB, ARM_INS_SXTB: sxtb${p}	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_SXTB16, ARM_INS_SXTB16: sxtb16${p}	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_SXTH, ARM_INS_SXTH: sxth${p}	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_TEQri, ARM_INS_TEQ: teq${p}	$rn, $imm */
 	{ CS_AC_READ, 0 }
@@ -1223,13 +1223,13 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_UXTB, ARM_INS_UXTB: uxtb${p}	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_UXTB16, ARM_INS_UXTB16: uxtb16${p}	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_UXTH, ARM_INS_UXTH: uxth${p}	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_VABALsv2i64, ARM_INS_VABAL: vabal${p}.s32	$vd, $vn, $vm */
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
@@ -6284,7 +6284,7 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2SXTH, ARM_INS_SXTH: sxth${p}.w	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2TBB, ARM_INS_TBB: tbb${p}	$addr */
 	{ CS_AC_READ, 0 }
@@ -6404,13 +6404,13 @@
 	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2UXTB, ARM_INS_UXTB: uxtb${p}.w	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2UXTB16, ARM_INS_UXTB16: uxtb16${p}	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_t2UXTH, ARM_INS_UXTH: uxth${p}.w	$rd, $rm$rot */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 {	/* ARM_tADC, ARM_INS_ADC: adc${s}${p}	$rdn, $rm */
 	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, 0 }
