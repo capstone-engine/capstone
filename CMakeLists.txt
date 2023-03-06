@@ -127,6 +127,7 @@ set(HEADERS_COMMON
     include/capstone/mos65xx.h
     include/capstone/bpf.h
     include/capstone/riscv.h
+    include/capstone/sh.h
     include/capstone/platform.h
 )
 
