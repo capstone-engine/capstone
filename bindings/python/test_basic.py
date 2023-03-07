@@ -82,7 +82,10 @@ def test_cs_disasm_quick():
 
 
 def test_different_data_formats():
-    data = bytes.fromhex('4831C948F7E1043B48BB0A2F62696E2F2F736852530A545F5257545E0F05')
+    if _python3:
+        data = bytes.fromhex('4831C948F7E1043B48BB0A2F62696E2F2F736852530A545F5257545E0F05')
+    else:
+        data = bytes(bytearray.fromhex('4831C948F7E1043B48BB0A2F62696E2F2F736852530A545F5257545E0F05'))
     mnemonics = ['xor', 'mul', 'add', 'movabs', 'push', 'pop', 'push', 'push', 'push', 'pop', 'syscall']
     disassembler = Cs(CS_ARCH_X86, CS_MODE_64)
     for name, code in (
