@@ -324,7 +324,6 @@ endif
 endif
 
 API_MAJOR=$(shell echo `grep -e CS_API_MAJOR include/capstone/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
-API_MINOR=$(shell echo `grep -e CS_API_MINOR include/capstone/capstone.h | grep -v = | awk '{print $$3}'` | awk '{print $$1}')
 VERSION_EXT =
 
 IS_APPLE := $(shell $(CC) -dM -E - < /dev/null 2> /dev/null | grep __apple_build_version__ | wc -l | tr -d " ")
@@ -375,7 +374,7 @@ CFLAGS := $(CFLAGS:-fPIC=)
 else
 # Linux, *BSD
 EXT = so
-VERSION_EXT = $(EXT).$(API_MAJOR).$(API_MINOR)
+VERSION_EXT = $(EXT).$(API_MAJOR)
 AR_EXT = a
 $(LIBNAME)_LDFLAGS += -Wl,-soname,lib$(LIBNAME).$(VERSION_EXT)
 endif
