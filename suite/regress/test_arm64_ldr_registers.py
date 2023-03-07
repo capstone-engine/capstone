@@ -2,6 +2,9 @@ import unittest
 from capstone import *
 from capstone.arm64 import *
 
+_python3 = sys.version_info.major == 3
+
+
 class SubRegTest(unittest.TestCase):
 
     PATTERNS = [
@@ -18,7 +21,10 @@ class SubRegTest(unittest.TestCase):
         self.cs.detail = True
 
         for pattern, asm in self.PATTERNS:
-            l = list(self.cs.disasm(bytes.fromhex(pattern), 0))
+            if _python3:
+                l = list(self.cs.disasm(bytes.fromhex(pattern), 0))
+            else:
+                l = list(self.cs.disasm(bytearray.fromhex(pattern), 0))
             self.assertTrue(len(l) == 1)
 
             _, expected_reg_written, expected_reg_read = asm.split()
