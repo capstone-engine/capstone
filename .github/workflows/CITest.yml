@@ -91,8 +91,9 @@ jobs:
       if: startsWith(matrix.config.build-system, 'make')
       shell: 'script -q -e -c "bash {0}"'
       run: |
-        ./make.sh
-        make check
+        ./make.sh;
+        make check;
+        mkdir build && mv libcapstone.* build/ && cd build;
         # sudo make install
 
     - name: cmake
@@ -107,12 +108,10 @@ jobs:
     - name: build python binding
       shell: 'script -q -e -c "bash {0}"'
       run: |
-        pwd;
-        ls;
-        mkdir -p ~/capstone/bindings/python/capstone/lib && cp libcapstone.so.5.* ~/capstone/bindings/python/capstone/lib/libcapstone.so;
-        cd ~/capstone/bindings/python;
-        pwd;
-        make check; cd ../..;
+        mkdir -p ../bindings/python/capstone/lib && cp libcapstone.so.5.* ../bindings/python/capstone/lib/libcapstone.so;
+        cd ../bindings/python;
+        make && make check ; 
+        cd ../..;
 
     - name: cstest
       shell: 'script -q -e -c "bash {0}"'
