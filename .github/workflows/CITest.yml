@@ -93,7 +93,6 @@ jobs:
       run: |
         ./make.sh;
         make check;
-        mkdir build && mv libcapstone.* build/ && cd build;
         # sudo make install
 
     - name: cmake
@@ -103,14 +102,15 @@ jobs:
         mkdir build && cd build;
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 ..;
         cmake --build . --config Release;
+        cp libcapstone.* ../;
         # sudo make install;
 
     - name: build python binding
       shell: 'script -q -e -c "bash {0}"'
       run: |
         pwd && ls;
-        mkdir -p ../bindings/python/capstone/lib && cp libcapstone.so.5.* ../bindings/python/capstone/lib/libcapstone.so;
-        cd ../bindings/python;
+        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so;
+        cd bindings/python;
         make && make check ; 
         cd ../..;
 
