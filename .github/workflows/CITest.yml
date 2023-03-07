@@ -93,7 +93,7 @@ jobs:
       run: |
         ./make.sh
         make check
-        sudo make install
+        # sudo make install
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
@@ -102,13 +102,16 @@ jobs:
         mkdir build && cd build;
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 ..;
         cmake --build . --config Release;
-        sudo make install;
+        # sudo make install;
 
     - name: build python binding
       shell: 'script -q -e -c "bash {0}"'
       run: |
+        pwd;
+        ls;
         mkdir -p ~/capstone/bindings/python/capstone/lib && cp libcapstone.so.5.* ~/capstone/bindings/python/capstone/lib/libcapstone.so;
         cd ~/capstone/bindings/python;
+        pwd;
         make check; cd ../..;
 
     - name: cstest
