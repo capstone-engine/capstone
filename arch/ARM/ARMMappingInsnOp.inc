@@ -2432,15 +2432,15 @@
 },
 
 {	/* ARM_SXTB, ARM_INS_SXTB: sxtb */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_SXTB16, ARM_INS_SXTB16: sxtb16 */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_SXTH, ARM_INS_SXTH: sxth */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_TEQri, ARM_INS_TEQ: teq */
@@ -2612,15 +2612,15 @@
 },
 
 {	/* ARM_UXTB, ARM_INS_UXTB: uxtb */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_UXTB16, ARM_INS_UXTB16: uxtb16 */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_UXTH, ARM_INS_UXTH: uxth */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_VABALsv2i64, ARM_INS_VABAL: vabal */
@@ -10204,7 +10204,7 @@
 },
 
 {	/* ARM_t2SXTH, ARM_INS_SXTH: sxth */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_t2TBB, ARM_INS_TBB: tbb */
@@ -10384,15 +10384,15 @@
 },
 
 {	/* ARM_t2UXTB, ARM_INS_UXTB: uxtb */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_t2UXTB16, ARM_INS_UXTB16: uxtb16 */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_t2UXTH, ARM_INS_UXTH: uxth */
-	{ CS_AC_WRITE, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* ARM_tADC, ARM_INS_ADC: adc */
