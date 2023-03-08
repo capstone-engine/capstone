@@ -28,7 +28,7 @@ cmake_policy(SET CMP0042 NEW)
 cmake_policy(SET CMP0091 NEW)
 
 project(capstone
-    VERSION 5.0.0
+    VERSION 5.0
 )
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
@@ -133,6 +133,7 @@ set(HEADERS_COMMON
     include/capstone/mos65xx.h
     include/capstone/bpf.h
     include/capstone/riscv.h
+    include/capstone/sh.h
     include/capstone/platform.h
 )
 
