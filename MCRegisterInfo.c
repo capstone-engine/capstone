@@ -140,10 +140,10 @@ bool MCRegisterClass_contains(const MCRegisterClass *c, unsigned Reg)
 	// (for calls to GETREGCLASS_CONTAIN0)
 	if(!c)
 		return false;
-	
+
 	InByte = Reg % 8;
 	Byte = Reg / 8;
-	
+
 	if (Byte >= c->RegSetSize)
 		return false;
 
