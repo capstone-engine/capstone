@@ -248,7 +248,7 @@ static const struct {
 	{
 		TRICORE_global_init,
 		TRICORE_option,
-		~(CS_MODE_TRICORE),
+		~(CS_MODE_BIG_ENDIAN | CS_MODE_TRICORE),
 	},
 #else
 	{ NULL, NULL, 0 },
