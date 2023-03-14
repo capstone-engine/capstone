@@ -1255,22 +1255,22 @@
 
 {	/* AArch64_BRAA, AArch64_INS_BRAA: braa */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_BRAAZ, AArch64_INS_BRAAZ: braaz */
 	0,
-	{ 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* AArch64_BRAB, AArch64_INS_BRAB: brab */
 	0,
-	{ 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_BRABZ, AArch64_INS_BRABZ: brabz */
 	0,
-	{ 0 }
+	{ CS_AC_READ, 0 }
 },
 
 {	/* AArch64_BRB_IALL, AArch64_INS_BRB: brb */
