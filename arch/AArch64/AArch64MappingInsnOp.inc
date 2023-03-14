@@ -13620,12 +13620,12 @@
 
 {	/* AArch64_MOVNWi, AArch64_INS_MOV: mov */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_MOVNXi, AArch64_INS_MOV: mov */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_MOVPRFX_ZPmZ_B, AArch64_INS_MOVPRFX: movprfx */
@@ -13675,12 +13675,12 @@
 
 {	/* AArch64_MOVZWi, AArch64_INS_MOV: mov */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_MOVZXi, AArch64_INS_MOV: mov */
 	0,
-	{ CS_AC_WRITE | CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* AArch64_MRS, AArch64_INS_MRS: mrs */
