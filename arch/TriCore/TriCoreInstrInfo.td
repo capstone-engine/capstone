@@ -299,37 +299,47 @@ let Defs = [PSW] in {
 }
 
 // Arithmetic Instructions
+// - ADD Instructions
+
+def ADDrc : RC<0x8B, 0x00, (outs DataRegs:$d),
+            (ins DataRegs:$s1, i32imm:$const9),
+            "add $d, $s1, $const9",
+            [(set DataRegs:$d, (add DataRegs:$s1, immSExt9:$const9))]>;
+
+let isCommutable = 1 in
+let AddedComplexity = 6 in
+def ADDrr : RR<0x0B, 0x00, (outs DataRegs:$d),
+            (ins DataRegs:$s1, DataRegs:$s2),
+            "add $d, $s1, $s2",
+            [(set i32:$d, (add i32:$s1, i32:$s2))]>;
+
 let Constraints = "$s1 = $d" in
 def ADDsrc : SRC<0xC2, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
               "add $d, $const4",
-              [(set DataRegs:$d, (add DataRegs:$s1, immSExt4:$const4) )]>;
+              [(set DataRegs:$d, (add DataRegs:$s1, immSExt4:$const4))]>;
 
+def ADDsrc_dad15 : SRC<0x92, (outs DataRegs:$d), (ins s4imm:$const4),
+              "add $d, %d15, $const4", []>;
+def ADDsrc_d15da : SRC<0x9A, (outs), (ins DataRegs:$s1, s4imm:$const4),
+              "add %d15, $s1, $const4", []>;
 
-let isCommutable = 1 in {
-  let AddedComplexity = 6 in
-  def ADDrr : RR<0x0B, 0x00, (outs DataRegs:$d),
-              (ins DataRegs:$s1, DataRegs:$s2),
-              "add $d, $s1, $s2",
-              [(set i32:$d, (add i32:$s1, i32:$s2))]>;
-
- def ADD_Arr : RR<0x01, 0x01, (outs AddrRegs:$d),
-                (ins AddrRegs:$s1, AddrRegs:$s2),
-                "add.a $d, $s1, $s2",
-                [(set AddrRegs:$d, (add AddrRegs:$s1, AddrRegs:$s2))]>;
-
-} // let isCommutable = 1
-
-let Constraints="$d = $fksrc",
-  AddedComplexity = 7 in
+let Constraints = "$d = $fksrc",
+    AddedComplexity = 7 in
 def ADDsrr: SRR<0x42, (outs DataRegs:$d),
-  (ins DataRegs:$fksrc, DataRegs:$s2 ),
-  "add $d, $s2",
-  [(set DataRegs:$d, (add DataRegs:$s2, DataRegs:$fksrc))]>;
+            (ins DataRegs:$fksrc, DataRegs:$s2),
+            "add $d, $s2",
+            [(set DataRegs:$d, (add DataRegs:$s2, DataRegs:$fksrc))]>;
 
-def ADDrc : RC<0x8B, 0x00, (outs DataRegs:$d),
-  (ins DataRegs:$s1, i32imm:$const9),
-  "add $d, $s1, $const9",
-  [(set DataRegs:$d, (add DataRegs:$s1, immSExt9:$const9))]>;
+def ADDsrr_dad15: SRR<0x12, (outs DataRegs:$d), (ins DataRegs:$s1),
+            "add $d, %d15, $s1", []>;
+def ADDsrr_d15da: SRR<0x1A, (outs), (ins DataRegs:$s1, DataRegs:$s2),
+            "add %d15, $s1, $s2", []>;
+
+let isCommutable = 1 in
+def ADD_Arr : RR<0x01, 0x01, (outs AddrRegs:$d),
+              (ins AddrRegs:$s1, AddrRegs:$s2),
+              "add.a $d, $s1, $s2",
+              [(set AddrRegs:$d, (add AddrRegs:$s1, AddrRegs:$s2))]>;
 
 def ADDIrlc : RLC<0x1B, (outs DataRegs:$d),
   (ins DataRegs:$s1, i32imm:$const16), "addi $d, $s1, $const16",
