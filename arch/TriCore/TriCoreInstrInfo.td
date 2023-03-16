@@ -42,7 +42,7 @@ def SDT_TriCoreLCmp     : SDTypeProfile<1, 4, [SDTCisSameAs<0, 1>,
 def SDT_TriCoreBrCC     : SDTypeProfile<0, 3, [SDTCisVT<0, OtherVT>,
                            SDTCisVT<1, i32>,
                            SDTCisVT<2, i32>]>;
-def SDT_TriCoreCall : SDTypeProfile<0, -1, [SDTCisPtrTy<0>]>;
+def SDT_TriCoreCall     : SDTypeProfile<0, -1, [SDTCisPtrTy<0>]>;
 def SDT_TriCoreSelectCC : SDTypeProfile<1, 4, [SDTCisSameAs<0, 1>,
                            SDTCisSameAs<1, 2>,
                            SDTCisVT<3, i32>,
@@ -54,21 +54,22 @@ def SDT_TriCoreShift    : SDTypeProfile<1, 2, [SDTCisVT<0, i32>,
                            SDTCisVT<1, i32>,
                            SDTCisVT<2, i32>]>;
 
-def SDT_TriCoreMovei32         : SDTypeProfile<1, 1, [SDTCisSameAs<0, 1>,
+def SDT_TriCoreMovei32  : SDTypeProfile<1, 1, [SDTCisSameAs<0, 1>,
                            SDTCisVT<0, i32>]>;
 
-def SDT_TriCoreMovei64         : SDTypeProfile<1, 1, [SDTCisSameAs<0, 1>,
+def SDT_TriCoreMovei64  : SDTypeProfile<1, 1, [SDTCisSameAs<0, 1>,
                            SDTCisVT<0, i64>]>;
 
 def TriCoreAbs     : SDNode<"TriCoreISD::ABS", SDTIntUnaryOp>;
+def TriCoreAbsDif  : SDNode<"TriCoreISD::ABSDIF", SDTIntBinOp>;
 def TriCoreBrCC    : SDNode<"TriCoreISD::BR_CC",
-              SDT_TriCoreBrCC, [SDNPHasChain, SDNPInGlue]>;
+                      SDT_TriCoreBrCC, [SDNPHasChain, SDNPInGlue]>;
 def TriCoreCall    : SDNode<"TriCoreISD::CALL", SDT_TriCoreCall,
-             [ SDNPHasChain, SDNPOptInGlue, SDNPOutGlue, SDNPVariadic ]>;
+                      [ SDNPHasChain, SDNPOptInGlue, SDNPOutGlue, SDNPVariadic ]>;
 def TriCoreCmp     : SDNode<"TriCoreISD::CMP",
-              SDT_TriCoreCmp, [SDNPOutGlue]>;
+                      SDT_TriCoreCmp, [SDNPOutGlue]>;
 def TriCoreLogicCmp: SDNode<"TriCoreISD::LOGICCMP",
-              SDT_TriCoreLCmp, [SDNPInGlue, SDNPOutGlue]>;
+                      SDT_TriCoreLCmp, [SDNPInGlue, SDNPOutGlue]>;
 def TriCoreWrapper : SDNode<"TriCoreISD::Wrapper", SDT_TriCoreWrapper>;
 def TriCoreImask   : SDNode<"TriCoreISD::IMASK", SDT_TriCoreImask>;
 def TriCoreSh      : SDNode<"TriCoreISD::SH",  SDT_TriCoreShift>;
@@ -103,10 +104,10 @@ def TriCore_LOGIC_AND_EQ : PatLeaf<(i32 0)>;
 def TriCore_LOGIC_AND_NE : PatLeaf<(i32 1)>;
 def TriCore_LOGIC_AND_GE : PatLeaf<(i32 2)>;
 def TriCore_LOGIC_AND_LT : PatLeaf<(i32 3)>;
-def TriCore_LOGIC_OR_EQ :  PatLeaf<(i32 0)>;
-def TriCore_LOGIC_OR_NE :  PatLeaf<(i32 1)>;
-def TriCore_LOGIC_OR_GE :  PatLeaf<(i32 12)>;
-def TriCore_LOGIC_OR_LT :  PatLeaf<(i32 13)>;
+def TriCore_LOGIC_OR_EQ  : PatLeaf<(i32 0)>;
+def TriCore_LOGIC_OR_NE  : PatLeaf<(i32 1)>;
+def TriCore_LOGIC_OR_GE  : PatLeaf<(i32 12)>;
+def TriCore_LOGIC_OR_LT  : PatLeaf<(i32 13)>;
 
 // These are target-independent nodes, but have target-specific formats.
 def SDT_TriCoreCallSeqStart : SDCallSeqStart<[ SDTCisVT<0, i32> ]>;
@@ -238,14 +239,14 @@ def addr : ComplexPattern<iPTR, 2, "SelectAddr", [], []>;
 // Pseudo Instructions
 //===----------------------------------------------------------------------===//
 
-let Defs = [A10], Uses = [A10] in {
-def ADJCALLSTACKDOWN : Pseudo<(outs), (ins i32imm:$amt),
-                                    "# ADJCALLSTACKDOWN $amt",
-                                    [(callseq_start timm:$amt)]>;
-def ADJCALLSTACKUP   : Pseudo<(outs), (ins i32imm:$amt1, i32imm:$amt2),
-                                    "# ADJCALLSTACKUP $amt1",
-                                    [(callseq_end timm:$amt1, timm:$amt2)]>;
-}
+//let Defs = [A10], Uses = [A10] in {
+//def ADJCALLSTACKDOWN : Pseudo<(outs), (ins i32imm:$amt),
+//                                    "# ADJCALLSTACKDOWN $amt",
+//                                    [(callseq_start timm:$amt)]>;
+//def ADJCALLSTACKUP   : Pseudo<(outs), (ins i32imm:$amt1, i32imm:$amt2),
+//                                    "# ADJCALLSTACKUP $amt1",
+//                                    [(callseq_end timm:$amt1, timm:$amt2)]>;
+//}
 
 //===----------------------------------------------------------------------===//
 // Instructions
@@ -253,32 +254,68 @@ def ADJCALLSTACKUP   : Pseudo<(outs), (ins i32imm:$amt1, i32imm:$amt2),
 
 // Absolute Value Instructions
 let Defs = [PSW] in {
-   def ABS : RR<0x0B, 0x1C, (outs DataRegs:$d),
-                  (ins DataRegs:$s2), "abs $d, $s2",
+   def ABSrr : RR<0x0B, 0x1C, (outs DataRegs:$d),
+                              (ins DataRegs:$s2),
+                  "abs $d, $s2",
                   [(set DataRegs:$d, (TriCoreAbs DataRegs:$s2))]>;
-   //def ABSb : RR<0x0B, 0x5C, (outs DataRegs:$d),
-   //               (ins DataRegs:$s2), "abs.b $d, $s2",
-   //               [(set DataRegs:$d, (TriCoreAbs DataRegs:$s2))]>;
+   def ABS_Brr : RR<0x0B, 0x5C, (outs DataRegs:$d),
+                                (ins DataRegs:$s2),
+                                 "abs.b $d, $s2",
+                  [(set DataRegs:$d, (TriCoreAbs DataRegs:$s2))]>;
+   def ABS_Hrr : RR<0x0B, 0x7C, (outs DataRegs:$d),
+                                (ins DataRegs:$s2),
+                                 "abs.h $d, $s2",
+                  [(set DataRegs:$d, (TriCoreAbs DataRegs:$s2))]>;
+
+   def ABSDIFrc : RC<0x8B, 0x0E, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, s9imm:$const9), "absdif $d, $s1, $const9",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, immSExt9:$const9))]>;
+   def ABSDIFrr : RR<0x0B, 0x0E, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "absdif $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+   def ABSDIF_Brr : RR<0x0B, 0x4E, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "absdif.b $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+   def ABSDIF_Hrr : RR<0x0B, 0x6E, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "absdif.h $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+
+   def ABSDIFSrc : RC<0x8B, 0x0F, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "absdifs $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+   def ABSDIFSrr : RR<0x0B, 0x0F, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "absdifs $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+   def ABSDIFS_Hrr : RR<0x0B, 0x6F, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "absdifs.h $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+
+   def ABSSrr : RR<0x0B, 0x1D, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "abss $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+   def ABSS_Hrr : RR<0x0B, 0x7D, (outs DataRegs:$d),
+                  (ins DataRegs:$s1, DataRegs:$s2), "abss.h $d, $s1, $s2",
+                  [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
 }
 
 // Arithmetic Instructions
 let Constraints = "$s1 = $d" in
-  def ADDsrc : SRC<0xC2, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
-  "add $d, $const4",
-  [(set DataRegs:$d, (add DataRegs:$s1, immSExt4:$const4) )]>;
+def ADDsrc : SRC<0xC2, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
+              "add $d, $const4",
+              [(set DataRegs:$d, (add DataRegs:$s1, immSExt4:$const4) )]>;
+
 
 let isCommutable = 1 in {
-
- let AddedComplexity = 6 in
- def ADDrr : RR<0x0B, 0x00, (outs DataRegs:$d),
-   (ins DataRegs:$s1, DataRegs:$s2),
-   "add $d, $s1, $s2",
-   [(set i32:$d, (add i32:$s1, i32:$s2))]>;
+  let AddedComplexity = 6 in
+  def ADDrr : RR<0x0B, 0x00, (outs DataRegs:$d),
+              (ins DataRegs:$s1, DataRegs:$s2),
+              "add $d, $s1, $s2",
+              [(set i32:$d, (add i32:$s1, i32:$s2))]>;
 
  def ADD_Arr : RR<0x01, 0x01, (outs AddrRegs:$d),
-   (ins AddrRegs:$s1, AddrRegs:$s2),
-   "add.a $d, $s1, $s2",
-   [(set AddrRegs:$d, (add AddrRegs:$s1, AddrRegs:$s2))]>;
+                (ins AddrRegs:$s1, AddrRegs:$s2),
+                "add.a $d, $s1, $s2",
+                [(set AddrRegs:$d, (add AddrRegs:$s1, AddrRegs:$s2))]>;
 
 } // let isCommutable = 1
 
@@ -1263,4 +1300,3 @@ def : Pat<(i64 (zextloadi8 addr:$offset)),
   (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
                          (LD_BUbo addr:$offset), subreg_even)),
                          (MOVrlc 0), subreg_odd)>;
-
