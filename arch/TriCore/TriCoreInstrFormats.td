@@ -7,8 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-//include "llvm/Target/Target.td"  // Include for debugging purpose only
-
 //===----------------------------------------------------------------------===//
 //  Describe TriCore instructions format
 //
@@ -18,10 +16,17 @@
 //  op2     - secondary operation code
 //  s1      - source register 1
 //  s2      - source register 2
+//  s3      - source register 3
 //  d       - destination register
-//  n       - multiplication shift value (0b00 or 0b01)
-//  const9  - 9 bits immediate value
-//  disp24  - 24 bits displacement value
+//  b       - bit value
+//  n       -
+//            - multiplication result shift value (0b00 or 0b01)
+//            - address shift value in add scale
+//            - default to zero in all other operations using the RR format
+//            - coprocessor number for coprocessor instructions
+//  const[b=(4|9|16)]  - b bits immediate value
+//  disp[b=(4|8|15|24)]  - b bits displacement value
+//  off[b=(4|10|16)] - b bits offset value
 //
 //===----------------------------------------------------------------------===//
 
@@ -168,7 +173,6 @@ class SLRO<bits<8> op1, dag outs, dag ins, string asmstr, list<dag> pattern>
 class SR<bits<8> op1, bits<4> op2, dag outs, dag ins, string asmstr,
       list<dag> pattern> : T16<outs, ins, asmstr, pattern> {
 
-  bits<4> op2;
   bits<4> s1_d;
 
   let Inst{15-12} = op2;
@@ -226,11 +230,7 @@ class SRR<bits<8> op1, dag outs, dag ins, string asmstr, list<dag> pattern>
 // 16-bit SRRS Instruction Format: <s2|s1/d|n|op1>
 //===----------------------------------------------------------------------===//
 class SRRS<bits<6> op1, dag outs, dag ins, string asmstr, list<dag> pattern>
-    : InstTriCore<outs, ins, asmstr, pattern> {
-
-  field bits<16> Inst;
-  let Size = 2;
-  field bits<16> SoftFail = 0;
+    : T16<outs, ins, asmstr, pattern> {
 
   bits<4> s2;
   bits<4> s1_d;
