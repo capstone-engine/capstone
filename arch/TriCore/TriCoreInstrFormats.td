@@ -759,7 +759,7 @@ class RRRW<bits<8> op1, bits<3> op2 , dag outs, dag ins, string asmstr,
 //===----------------------------------------------------------------------===//
 // 32-bit SYS Instruction Format: <-|op2|-|s1/d|op1>
 //===----------------------------------------------------------------------===//
-class SYS<bits<8> op1, bits<6> op2 , dag outs, dag ins, string asmstr,
+class SYS<bits<8> op1, bits<6> op2, dag outs, dag ins, string asmstr,
                 list<dag> pattern> : T32<outs, ins, asmstr, pattern> {
 
   bits<4> s1_d;
