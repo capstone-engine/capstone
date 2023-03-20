@@ -244,6 +244,10 @@ class ISC<bits<8> op1, string asmstr>
       asmstr # " %d15, $const8",
       []>;
 
+multiclass mISC_s<bits<8> op1, string asmstr> {
+  def _src : ISC<op1, asmstr>;
+}
+
 let Constraints = "$s1 = $d" in {
 class ISRC<bits<8> op1, string asmstr, SDNode node> 
     : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
@@ -278,6 +282,14 @@ class ISRRS<bits<6> op1, string asmstr>
 
 /// 32-Bit Opcode Formats
 
+class IRR<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " $d, $s1, $s2", []>;
+
+class IRC<bits<8> op1, bits<7> op2, string asmstr>
+    : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
+      asmstr # " $d, $s1, $const9", []>;
+
 class IBinRR<bits<8> op1, bits<8> op2, string asmstr, SDNode node>
     : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
       asmstr # " $d, $s1, $s2",
@@ -288,10 +300,16 @@ class IBinRC<bits<8> op1, bits<7> op2, string asmstr, SDNode node>
       asmstr # " $d, $s1, $const9",
       [(set DataRegs:$d, (node DataRegs:$s1, immSExt9:$const9))]>;
 
-multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
+multiclass mIBinRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
                         string asmstr, SDNode node> {
   def _rr : IBinRR<rr1, rr2, asmstr, node>;
   def _rc : IBinRC<rc1, rc2, asmstr, node>;
+}
+
+multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
+                        string asmstr> {
+  def _rr : IRR<rr1, rr2, asmstr>;
+  def _rc : IRC<rc1, rc2, asmstr>;
 }
 
 class IRLC<bits<8> op1, string asmstr, SDNode node>
@@ -327,7 +345,7 @@ multiclass mISRR_a15a<bits<8> op1, bits<8> op2, bits<8> op3,
 }
 
 class IBIT<bits<8> op1, bits<2> op2, string asmstr>
-    : BIT<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+    : BIT<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, u4imm:$pos1, u4imm:$pos2),
       asmstr # " $d, $s1, $pos1, $s2, $pos2",
       []>;
 
@@ -401,7 +419,7 @@ multiclass mIRR_SRC_SRR<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
   def _srr : ISRR<srr1, asmstr, node>;
 }
 
-multiclass mIBrr_Hrr<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
+multiclass mIB_H<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
                         string asmstr, SDNode node> {
   def _B_rr : IBinRR<brr1, brr2, asmstr # ".b", node>;
   def _H_rr : IBinRR<hrr1, hrr2, asmstr # ".h", node>;
@@ -410,13 +428,13 @@ multiclass mIBrr_Hrr<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
 // Arithmetic Instructions
 // - ADD Instructions
 
-defm ADD : mIRR_RC<0x0B, 0x00, 0x8B, 0x00, "add", add>,
+defm ADD : mIBinRR_RC<0x0B, 0x00, 0x8B, 0x00, "add", add>,
            mISRC_a15a<0xC2, 0x92, 0x9A, "add", add>,
            mISRR_a15a<0x42, 0x12, 0x1A, "add", add>,
-           mIBrr_Hrr<0x0B, 0x40, 0x0B, 0x60, "add", add>;
+           mIB_H<0x0B, 0x40, 0x0B, 0x60, "add", add>;
 
 defm ADD_A : mIRR_SRC_SRR<0x01, 0x01, 0xB0, 0x30, "add.a", add>;
-defm ADDC : mIRR_RC<0x0B, 0x05, 0x8B, 0x05, "addc", add>;
+defm ADDC : mIBinRR_RC<0x0B, 0x05, 0x8B, 0x05, "addc", add>;
 
 multiclass mIRLC<bits<8> op1, bits<8> op2, bits<8> op3, string asmstr, SDNode node>{
   def _rlc    : IRLC<op1, asmstr, node>;
@@ -435,7 +453,7 @@ multiclass mIH_HU_U<bits<8> h1, bits<8> h2,
   def _U : IBinRR<u1, u2, asmstr # ".u", node>;
 }
 
-defm ADDS : mIRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds", add>,
+defm ADDS : mIBinRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds", add>,
             mISRR_s<0x22, "adds", add>,
             mIH_HU_U<0x0B, 0x62, 0x0B, 0x63, 0x0B, 0x03, "adds", add>;
 def ADDS_U_rc : IBinRC<0x8B, 0x03, "adds.u", add>;
@@ -443,7 +461,31 @@ def ADDSC_A_rr : IBinRR<0x01, 0x60, "addsc.a", add>;
 def ADDSC_A_srrs : ISRRS<0x10, "addsc.a">;
 def ADDSC_AT_rr : IBinRR<0x01, 0x62, "addsc.at", add>;
 
-defm ADDX : mIRR_RC<0x0B, 0x04, 0x8B, 0x04, "addx", add>;
+defm ADDX : mIBinRR_RC<0x0B, 0x04, 0x8B, 0x04, "addx", add>;
+
+
+/// AND Instructions
+
+defm AND : mIBinRR_RC<0x0F, 0x08, 0x8F, 0x08, "and", and>,
+           mISRR_s<0x26, "and", and>,
+           mISC_s<0x16, "and">;
+
+def AND_AND_T  : IBIT<0x47, 0x00, "and.and.t">;
+def AND_ANDN_T : IBIT<0x47, 0x03, "and.andn.t">;
+def AND_NOR_T  : IBIT<0x47, 0x02, "and.nor.t">;
+def AND_OR_T   : IBIT<0x47, 0x01, "and.or.t">;
+def AND_T      : IBIT<0x87, 0x00, "and.t">;
+def ANDN_T     : IBIT<0x87, 0x03, "andn.t">;
+
+defm AND_EQ   : mIRR_RC<0x0B, 0x20, 0x8B, 0x20, "and.eq">;
+defm AND_GE   : mIRR_RC<0x0B, 0x24, 0x8B, 0x24, "and.ge">;
+defm AND_GE_U : mIRR_RC<0x0B, 0x25, 0x8B, 0x25, "and.ge.u">;
+defm AND_LT   : mIRR_RC<0x0B, 0x22, 0x8B, 0x22, "and.lt">;
+defm AND_LT_U : mIRR_RC<0x0B, 0x23, 0x8B, 0x23, "and.lt.u">;
+defm AND_NE   : mIRR_RC<0x0B, 0x21, 0x8B, 0x21, "and.ne">;
+
+defm ANDN     : mIRR_RC<0x0F, 0x0E, 0x8F, 0x0E, "andn">;
+
 
 let Defs = [PSW], Uses = [PSW] in {
  def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
@@ -605,26 +647,26 @@ multiclass Logical64_Pseudo<SDNode OpNode>
    [(set ExtRegs:$d, (OpNode ExtRegs:$s1, ExtRegs:$s2))]>;
 }
 
-defm AND : Logical64_Pseudo<and>;
-defm OR  : Logical64_Pseudo<or>;
-defm XOR : Logical64_Pseudo<xor>;
+// defm AND : Logical64_Pseudo<and>;
+// defm OR  : Logical64_Pseudo<or>;
+// defm XOR : Logical64_Pseudo<xor>;
 
-defm AND : Logical16<0x16, 0x26, "and", and>;
-defm AND : Logical32_0<0x08, "and", and>;
+// defm AND : Logical16<0x16, 0x26, "and", and>;
+// defm AND : Logical32_0<0x08, "and", and>;
 
-defm NAND : Logical32_1<0x09, "nand", and, not>;
-defm NOR  : Logical32_1<0x0B, "nor", or, not>;
-//defm XNOR : Logical32_1<0x0B, "nxor", xor, not>;
+// defm NAND : Logical32_1<0x09, "nand", and, not>;
+// defm NOR  : Logical32_1<0x0B, "nor", or, not>;
+// defm XNOR : Logical32_1<0x0B, "nxor", xor, not>;
 
-defm OR : Logical32_0<0x0a, "or", or>;
-defm OR : Logical16<0x96, 0xA6, "or", or>;
+// defm OR : Logical32_0<0x0a, "or", or>;
+// defm OR : Logical16<0x96, 0xA6, "or", or>;
 
-defm XOR : Logical32_0<0x0c, "xor", xor>;
+// defm XOR : Logical32_0<0x0c, "xor", xor>;
 
-let Constraints = "$s1 = $d", isCommutable = 1 in
-  def XORsrr : SRR<0xc6, (outs DataRegs:$d),
-  (ins DataRegs:$s1, DataRegs:$s2), "xor $d, $s2",
-  [(set DataRegs:$d, (xor DataRegs:$s1, DataRegs:$s2))]>;
+// let Constraints = "$s1 = $d", isCommutable = 1 in
+//   def XORsrr : SRR<0xc6, (outs DataRegs:$d),
+//   (ins DataRegs:$s1, DataRegs:$s2), "xor $d, $s2",
+//   [(set DataRegs:$d, (xor DataRegs:$s1, DataRegs:$s2))]>;
 
 def imm_from_0_to_neg512 : Operand<i32>, PatLeaf<(imm), [{
  int64_t val = N->getSExtValue();
@@ -637,32 +679,32 @@ class LOGICALN_RC <bits<7> op2, string asmstring, SDNode OpNode>
   !strconcat(asmstring," $d, $s1, $const9"),
   [(set i32:$d, (OpNode i32:$s1, imm_from_0_to_neg512:$const9 ))]>;
 
-def ANDNrc : LOGICALN_RC<0x0e, "andn", and>;
-def ORNrc  : LOGICALN_RC<0x0f, "orn", or>;
-def XNORrc : LOGICALN_RC<0x0d, "xnor", xor>;
+// // def ANDNrc : LOGICALN_RC<0x0e, "andn", and>;
+// def ORNrc  : LOGICALN_RC<0x0f, "orn", or>;
+// def XNORrc : LOGICALN_RC<0x0d, "xnor", xor>;
 
-let Constraints = "$s1 = $d" in {
-def NOTsr : SR<0x46, 0x0, (outs DataRegs: $d), (ins DataRegs:$s1),
-      "not $d", [(set DataRegs:$d, (not DataRegs:$s1))]>;
+// let Constraints = "$s1 = $d" in {
+// def NOTsr : SR<0x46, 0x0, (outs DataRegs: $d), (ins DataRegs:$s1),
+//       "not $d", [(set DataRegs:$d, (not DataRegs:$s1))]>;
 
-def NOTrr64: Pseudo<(outs ExtRegs:$d), (ins ExtRegs:$s1),
-  "##NAME## Pseudo", [(set ExtRegs:$d, (not ExtRegs:$s1))]>;
-} // let Constraints = "$s1 = $d" in
+// def NOTrr64: Pseudo<(outs ExtRegs:$d), (ins ExtRegs:$s1),
+//   "##NAME## Pseudo", [(set ExtRegs:$d, (not ExtRegs:$s1))]>;
+// } // let Constraints = "$s1 = $d" in
 
-def ANDNrc64: Pseudo<(outs ExtRegs:$d),
-  (ins ExtRegs:$s1, imml_neg_32_h_32_const64:$const64),
-  "##NAME## Pseudo",
-  [(set ExtRegs:$d, (and ExtRegs:$s1, imml_neg_32_h_32_const64:$const64))]>;
+// def ANDNrc64: Pseudo<(outs ExtRegs:$d),
+//   (ins ExtRegs:$s1, imml_neg_32_h_32_const64:$const64),
+//   "##NAME## Pseudo",
+//   [(set ExtRegs:$d, (and ExtRegs:$s1, imml_neg_32_h_32_const64:$const64))]>;
 
-def ORNrc64: Pseudo<(outs ExtRegs:$d),
-  (ins ExtRegs:$s1, imml_neg_32_h_32_const64:$const64),
-  "##NAME## Pseudo",
-  [(set ExtRegs:$d, (or ExtRegs:$s1, imml_neg_32_h_32_const64:$const64))]>;
+// def ORNrc64: Pseudo<(outs ExtRegs:$d),
+//   (ins ExtRegs:$s1, imml_neg_32_h_32_const64:$const64),
+//   "##NAME## Pseudo",
+//   [(set ExtRegs:$d, (or ExtRegs:$s1, imml_neg_32_h_32_const64:$const64))]>;
 
-def XORrcneg64: Pseudo<(outs ExtRegs:$d),
-  (ins ExtRegs:$s1, imml_neg_32_h_32_const64:$const64),
-  "##NAME## Pseudo",
-  [(set ExtRegs:$d, (xor ExtRegs:$s1, imml_neg_32_h_32_const64:$const64))]>;
+// def XORrcneg64: Pseudo<(outs ExtRegs:$d),
+//   (ins ExtRegs:$s1, imml_neg_32_h_32_const64:$const64),
+//   "##NAME## Pseudo",
+//   [(set ExtRegs:$d, (xor ExtRegs:$s1, imml_neg_32_h_32_const64:$const64))]>;
 
 // Move Immediate Instructions
 class MOV_RR<bits<8> op1, bits<8> op2, string opstr,
@@ -950,9 +992,9 @@ let Predicates = [isnotPointer] in {
  def : Pat<(truncstorei32 ExtRegs:$d, addr:$memri),
     (ST_Wbo (EXTRACT_SUBREG ExtRegs:$d, subreg_even), addr:$memri)>;
 
- def : Pat<(truncstorei8 ExtRegs:$d, addr:$memri),
-     (ST_Wbo (ANDrc (EXTRACT_SUBREG ExtRegs:$d, subreg_even),
-     (i32 255)), addr:$memri)>;
+//  def : Pat<(truncstorei8 ExtRegs:$d, addr:$memri),
+//      (ST_Wbo (ANDrc (EXTRACT_SUBREG ExtRegs:$d, subreg_even),
+//      (i32 255)), addr:$memri)>;
 } // let Predicates = [isnotPointer]
 
 
@@ -1152,12 +1194,12 @@ multiclass LOGIC_COMPARE_U<bits<8> op_u, string asmstring, PatLeaf PF>
   }
 }
 
-defm AND_EQ    : LOGIC_COMPARE_S<0x20, "and.eq",  TriCore_LOGIC_AND_EQ>;
-defm AND_NE    : LOGIC_COMPARE_S<0x21, "and.ne",  TriCore_LOGIC_AND_NE>;
-defm AND_LT    : LOGIC_COMPARE_S<0x22, "and.lt", TriCore_LOGIC_AND_LT>;
-defm AND_LT_U  : LOGIC_COMPARE_U<0x23, "and.lt.u", TriCore_LOGIC_AND_LT>;
-defm AND_GE    : LOGIC_COMPARE_S<0x24, "and.ge", TriCore_LOGIC_AND_GE>;
-defm AND_GE_U  : LOGIC_COMPARE_U<0x25, "and.ge.u", TriCore_LOGIC_AND_GE>;
+// defm AND_EQ    : LOGIC_COMPARE_S<0x20, "and.eq",  TriCore_LOGIC_AND_EQ>;
+// defm AND_NE    : LOGIC_COMPARE_S<0x21, "and.ne",  TriCore_LOGIC_AND_NE>;
+// defm AND_LT    : LOGIC_COMPARE_S<0x22, "and.lt", TriCore_LOGIC_AND_LT>;
+// defm AND_LT_U  : LOGIC_COMPARE_U<0x23, "and.lt.u", TriCore_LOGIC_AND_LT>;
+// defm AND_GE    : LOGIC_COMPARE_S<0x24, "and.ge", TriCore_LOGIC_AND_GE>;
+// defm AND_GE_U  : LOGIC_COMPARE_U<0x25, "and.ge.u", TriCore_LOGIC_AND_GE>;
 
 defm OR_EQ     : LOGIC_COMPARE_S<0x27, "or.eq",  TriCore_LOGIC_OR_EQ>;
 defm OR_NE     : LOGIC_COMPARE_S<0x28, "or.ne",  TriCore_LOGIC_OR_NE>;
