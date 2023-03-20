@@ -175,6 +175,7 @@ def imm0_31 : PatLeaf<(imm),
 def s4imm      : Operand<i32> { let PrintMethod = "printSExtImm<4>";  }
 def s6imm      : Operand<i32> { let PrintMethod = "printSExtImm<6>";  }
 def s9imm      : Operand<i32> { let PrintMethod = "printSExtImm<9>";  }
+def s10imm     : Operand<i32> { let PrintMethod = "printSExtImm<10>";  }
 def s16imm     : Operand<i32> { let PrintMethod = "printSExtImm<16>"; }
 def s24imm     : Operand<i32> { let PrintMethod = "printSExtImm<24>"; }
 def u8imm      : Operand<i32> { let PrintMethod = "printZExtImm<8>";  }
@@ -225,6 +226,7 @@ def bitrevbo : Operand<i32> {
 def immSExt4  : PatLeaf<(imm), [{ return isInt<4>(N->getSExtValue()); }]>;
 def immSExt6  : PatLeaf<(imm), [{ return isInt<6>(N->getSExtValue()); }]>;
 def immSExt9  : PatLeaf<(imm), [{ return isInt<9>(N->getSExtValue()); }]>;
+def immSExt10  : PatLeaf<(imm), [{ return isInt<10>(N->getSExtValue()); }]>;
 def immSExt16  : PatLeaf<(imm), [{ return isInt<16>(N->getSExtValue()); }]>;
 def immSExt24  : PatLeaf<(imm), [{ return isInt<24>(N->getSExtValue()); }]>;
 
@@ -241,8 +243,11 @@ def addr : ComplexPattern<iPTR, 2, "SelectAddr", [], []>;
 
 class ISC<bits<8> op1, string asmstr> 
     : SC<op1, (outs), (ins u8imm:$const8),
-      asmstr # " %d15, $const8",
-      []>;
+      asmstr # " %d15, $const8", []>;
+
+class IUnarySC<bits<8> op1, string asmstr> 
+    : SC<op1, (outs), (ins u8imm:$const8),
+      asmstr # " $const8", []>;
 
 multiclass mISC_s<bits<8> op1, string asmstr> {
   def _src : ISC<op1, asmstr>;
@@ -282,23 +287,35 @@ class ISRRS<bits<6> op1, string asmstr>
 
 /// 32-Bit Opcode Formats
 
-class IRR<bits<8> op1, bits<8> op2, string asmstr>
-    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-      asmstr # " $d, $s1, $s2", []>;
+/// RC
 
-class IRC<bits<8> op1, bits<7> op2, string asmstr>
+class IUnaryRC<bits<8> op1, bits<7> op2, string asmstr>
+    : RC<op1, op2, (outs), (ins s9imm:$const9),
+      asmstr # " $const9", []>;
+
+class IBinRC<bits<8> op1, bits<7> op2, string asmstr, SDNode node>
+    : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
+      asmstr # " $d, $s1, $const9",
+      [(set DataRegs:$d, (node DataRegs:$s1, immSExt9:$const9))]>;
+
+class IBinRC_<bits<8> op1, bits<7> op2, string asmstr>
     : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
       asmstr # " $d, $s1, $const9", []>;
+
+/// RR
+
+class IUnaryRR_E<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s1),
+      asmstr # " $d, $s1", []>;
 
 class IBinRR<bits<8> op1, bits<8> op2, string asmstr, SDNode node>
     : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
       asmstr # " $d, $s1, $s2",
       [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
 
-class IBinRC<bits<8> op1, bits<7> op2, string asmstr, SDNode node>
-    : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
-      asmstr # " $d, $s1, $const9",
-      [(set DataRegs:$d, (node DataRegs:$s1, immSExt9:$const9))]>;
+class IBinRR_<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " $d, $s1, $s2", []>;
 
 multiclass mIBinRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
                         string asmstr, SDNode node> {
@@ -306,10 +323,10 @@ multiclass mIBinRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
   def _rc : IBinRC<rc1, rc2, asmstr, node>;
 }
 
-multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
+multiclass mIBinRR_RC_<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
                         string asmstr> {
-  def _rr : IRR<rr1, rr2, asmstr>;
-  def _rc : IRC<rc1, rc2, asmstr>;
+  def _rr : IBinRR_<rr1, rr2, asmstr>;
+  def _rc : IBinRC_<rc1, rc2, asmstr>;
 }
 
 class IRLC<bits<8> op1, string asmstr, SDNode node>
@@ -365,6 +382,8 @@ class IBIT<bits<8> op1, bits<2> op2, string asmstr>
 //===----------------------------------------------------------------------===//
 // Instructions
 //===----------------------------------------------------------------------===//
+
+// Arithmetic Instructions
 
 // Absolute Value Instructions
 let Defs = [PSW] in {
@@ -425,7 +444,6 @@ multiclass mIB_H<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
   def _H_rr : IBinRR<hrr1, hrr2, asmstr # ".h", node>;
 }
 
-// Arithmetic Instructions
 // - ADD Instructions
 
 defm ADD : mIBinRR_RC<0x0B, 0x00, 0x8B, 0x00, "add", add>,
@@ -477,15 +495,115 @@ def AND_OR_T   : IBIT<0x47, 0x01, "and.or.t">;
 def AND_T      : IBIT<0x87, 0x00, "and.t">;
 def ANDN_T     : IBIT<0x87, 0x03, "andn.t">;
 
-defm AND_EQ   : mIRR_RC<0x0B, 0x20, 0x8B, 0x20, "and.eq">;
-defm AND_GE   : mIRR_RC<0x0B, 0x24, 0x8B, 0x24, "and.ge">;
-defm AND_GE_U : mIRR_RC<0x0B, 0x25, 0x8B, 0x25, "and.ge.u">;
-defm AND_LT   : mIRR_RC<0x0B, 0x22, 0x8B, 0x22, "and.lt">;
-defm AND_LT_U : mIRR_RC<0x0B, 0x23, 0x8B, 0x23, "and.lt.u">;
-defm AND_NE   : mIRR_RC<0x0B, 0x21, 0x8B, 0x21, "and.ne">;
+defm AND_EQ   : mIBinRR_RC_<0x0B, 0x20, 0x8B, 0x20, "and.eq">;
+defm AND_GE   : mIBinRR_RC_<0x0B, 0x24, 0x8B, 0x24, "and.ge">;
+defm AND_GE_U : mIBinRR_RC_<0x0B, 0x25, 0x8B, 0x25, "and.ge.u">;
+defm AND_LT   : mIBinRR_RC_<0x0B, 0x22, 0x8B, 0x22, "and.lt">;
+defm AND_LT_U : mIBinRR_RC_<0x0B, 0x23, 0x8B, 0x23, "and.lt.u">;
+defm AND_NE   : mIBinRR_RC_<0x0B, 0x21, 0x8B, 0x21, "and.ne">;
 
-defm ANDN     : mIRR_RC<0x0F, 0x0E, 0x8F, 0x0E, "andn">;
+defm ANDN     : mIBinRR_RC_<0x0F, 0x0E, 0x8F, 0x0E, "andn">;
 
+/// BISR
+def BISR_rc : IUnaryRC<0xAD, 0x00, "bisr">;
+def BISR_sc : IUnarySC<0xE0, "bisr">;
+
+/// Multiple Instructions (RR)
+def BMAERGE_rr : IBinRR_<0x4B, 0x01, "bmerge">;
+def BSPLIT_rr  : IUnaryRR_E<0x4B, 0x09, "bsplit">;
+
+/// CACHEA.* Instructions
+
+class IBO_base_short_offset<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10),
+      asmstr # " [$s2]$off10", []>;
+
+class IBO_bit_reverse<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs AddrExtRegs:$b), (ins AddrRegs:$s2),
+      asmstr # " [${b}+r]", []>;
+
+class IBO_circular<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs AddrExtRegs:$b), (ins s10imm:$off10),
+      asmstr # " [${b}+c]", []>;
+
+let Constraints = "$s2 = $d" in {
+class IBO_post_increment<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10),
+      asmstr # " [+$s2]$off10", []>;
+
+class IBO_pre_increment<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10),
+      asmstr # " [${s2}+]$off10", []>;
+}
+
+multiclass mIBO_a<bits<8> op11, bits<6> op12,
+                  bits<8> op21, bits<6> op22,
+                  bits<8> op31, bits<6> op32,
+                  string asmstr> {
+    def _bo_bso  : IBO_base_short_offset<op11, op12, asmstr>;
+    def _bo_post : IBO_post_increment<op21, op22, asmstr>;
+    def _bo_pre  : IBO_pre_increment<op31, op32, asmstr>;
+}
+
+multiclass mIBO_b<bits<8> op11, bits<6> op12,
+                  bits<8> op21, bits<6> op22,
+                  string asmstr> {
+    def _bo_r    : IBO_bit_reverse<op11, op12, asmstr>;
+    def _bo_c    : IBO_circular<op21, op22, asmstr>;
+}
+
+multiclass mIBO_ab<bits<8> op11, bits<6> op12,//_bso
+                  bits<8> op21, bits<6> op22,//_r
+                  bits<8> op31, bits<6> op32,//_c
+                  bits<8> op41, bits<6> op42,//post
+                  bits<8> op51, bits<6> op52,//pre
+                  string asmstr>{
+  defm "" : mIBO_a<op11,op12,
+                op41,op42,
+                op51,op52,
+                asmstr>,
+            mIBO_b<op21,op22,
+                  op31,op32,
+                  asmstr>;
+}
+
+defm CACHE_I : mIBO_ab<0x89, 0x2E,
+                       0xA9, 0x0E,
+                       0xA9, 0x1E,
+                       0x89, 0x0E,
+                       0x89, 0x1E,
+                       "cache.i">;
+
+defm CACHE_W : mIBO_ab<0x89, 0x2C,
+                       0xA9, 0x0C,
+                       0xA9, 0x1C,
+                       0x89, 0x0C,
+                       0x89, 0x1C,
+                       "cache.w">;
+
+defm CACHE_WI : mIBO_ab<0x89, 0x2D,
+                        0xA9, 0x0D,
+                        0xA9, 0x1D,
+                        0x89, 0x0D,
+                        0x89, 0x1D,
+                        "cache.wi">;
+
+defm CACHEI_W : mIBO_ab<0x89, 0x2B,
+                        0xA9, 0x0B,
+                        0xA9, 0x1B,
+                        0x89, 0x0B,
+                        0x89, 0x1B,
+                        "cachei.w">;
+
+defm CACHEI_I : mIBO_a<0x89, 0x2A,
+                       0x89, 0x0A,
+                       0x89, 0x1A,
+                       "cachei.i">;
+
+defm CACHEI_WI : mIBO_a<0x89, 0x2F,
+                        0x89, 0x0F,
+                        0x89, 0x1F,
+                        "cachei.wi">;
 
 let Defs = [PSW], Uses = [PSW] in {
  def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
