@@ -87,26 +87,26 @@ def subreg_odd  : SubRegIndex<32, 32>;
 
 //Extended 64-bit registers
 let SubRegIndices = [subreg_even, subreg_odd] in {
-def E0 : TriCoreRegWithSubregs<0,   "e0",  [D0,D1] >, DwarfRegNum<[32]>;
-def E2 : TriCoreRegWithSubregs<2,   "e2",  [D2,D3] >, DwarfRegNum<[33]>;
-def E4 : TriCoreRegWithSubregs<4,   "e4",  [D4,D5] >, DwarfRegNum<[34]>;
-def E6 : TriCoreRegWithSubregs<6,   "e6",  [D6,D7] >, DwarfRegNum<[35]>;
-def E8 : TriCoreRegWithSubregs<8,   "e8",  [D8,D9] >, DwarfRegNum<[36]>;
+def E0 : TriCoreRegWithSubregs<0,   "e0",  [D0,D1]   >, DwarfRegNum<[32]>;
+def E2 : TriCoreRegWithSubregs<2,   "e2",  [D2,D3]   >, DwarfRegNum<[33]>;
+def E4 : TriCoreRegWithSubregs<4,   "e4",  [D4,D5]   >, DwarfRegNum<[34]>;
+def E6 : TriCoreRegWithSubregs<6,   "e6",  [D6,D7]   >, DwarfRegNum<[35]>;
+def E8 : TriCoreRegWithSubregs<8,   "e8",  [D8,D9]   >, DwarfRegNum<[36]>;
 def E10 : TriCoreRegWithSubregs<10, "e10", [D10,D11] >, DwarfRegNum<[37]>;
 def E12 : TriCoreRegWithSubregs<12, "e12", [D12,D13] >, DwarfRegNum<[38]>;
 def E14 : TriCoreRegWithSubregs<14, "e14", [D14,D15] >, DwarfRegNum<[39]>;
 }
 
-//let SubRegIndices = [subreg_even, subreg_odd] in {
-//def P0 : TriCoreRegWithSubregs<0,   "p0",  [A0,A1] >;
-//def P2 : TriCoreRegWithSubregs<2,   "p2",  [A2,A3] >;
-//def P4 : TriCoreRegWithSubregs<4,   "p4",  [A4,A5] >;
-//def P6 : TriCoreRegWithSubregs<6,   "p6",  [A6,A7] >;
-//def P8 : TriCoreRegWithSubregs<8,   "p8",  [A8,A9] >;
-//def P10 : TriCoreRegWithSubregs<10, "p10", [A10,A11] >;
-//def P12 : TriCoreRegWithSubregs<12, "p12", [A12,A13] >;
-//def P14 : TriCoreRegWithSubregs<14, "p14", [A14,A15] >;
-//}
+let SubRegIndices = [subreg_even, subreg_odd] in {
+def P0 : TriCoreRegWithSubregs<0,   "p0",  [A0,A1]   >, DwarfRegNum<[40]>;
+def P2 : TriCoreRegWithSubregs<2,   "p2",  [A2,A3]   >, DwarfRegNum<[41]>;
+def P4 : TriCoreRegWithSubregs<4,   "p4",  [A4,A5]   >, DwarfRegNum<[42]>;
+def P6 : TriCoreRegWithSubregs<6,   "p6",  [A6,A7]   >, DwarfRegNum<[43]>;
+def P8 : TriCoreRegWithSubregs<8,   "p8",  [A8,A9]   >, DwarfRegNum<[44]>;
+def P10 : TriCoreRegWithSubregs<10, "p10", [A10,A11] >, DwarfRegNum<[45]>;
+def P12 : TriCoreRegWithSubregs<12, "p12", [A12,A13] >, DwarfRegNum<[46]>;
+def P14 : TriCoreRegWithSubregs<14, "p14", [A14,A15] >, DwarfRegNum<[47]>;
+}
 
 //Program Status Information Registers
 def PSW  : TriCorePSReg<0, "psw">, DwarfRegNum<[40]>;
@@ -146,6 +146,11 @@ def ExtRegs : RegisterClass<"TriCore", [i64], 64, (add
     E2, E4,
     E6, E8, E10,
     E12, E14, E0)>;
+
+def AddrExtRegs : RegisterClass<"TriCore", [i64], 64, (add
+    P2, P4,
+    P6, P8, P10,
+    P12, P14, P0)>;
 
 def PSRegs : RegisterClass<"TriCore", [i32], 32, (add
     PSW, PCXI, PC, FCX)>;
