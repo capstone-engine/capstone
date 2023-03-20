@@ -179,6 +179,7 @@ def s16imm     : Operand<i32> { let PrintMethod = "printSExtImm<16>"; }
 def s24imm     : Operand<i32> { let PrintMethod = "printSExtImm<24>"; }
 def u8imm      : Operand<i32> { let PrintMethod = "printZExtImm<8>";  }
 def u4imm      : Operand<i32> { let PrintMethod = "printZExtImm<4>";  }
+def u2imm      : Operand<i32> { let PrintMethod = "printZExtImm<2>";  }
 def u9imm      : Operand<i32> { let PrintMethod = "printZExtImm<9>";  }
 def u16imm     : Operand<i32> { let PrintMethod = "printZExtImm<16>";  }
 def bl_target  : Operand<i32>;
@@ -227,6 +228,7 @@ def immSExt9  : PatLeaf<(imm), [{ return isInt<9>(N->getSExtValue()); }]>;
 def immSExt16  : PatLeaf<(imm), [{ return isInt<16>(N->getSExtValue()); }]>;
 def immSExt24  : PatLeaf<(imm), [{ return isInt<24>(N->getSExtValue()); }]>;
 
+def immZExt2 : ImmLeaf<i32, [{return Imm == (Imm & 0x3);}]>;
 def immZExt4 : ImmLeaf<i32, [{return Imm == (Imm & 0xf);}]>;
 def immZExt8 : ImmLeaf<i32, [{return Imm == (Imm & 0xff);}]>;
 def immZExt9 : ImmLeaf<i32, [{return Imm == (Imm & 0x1ff);}]>;
@@ -234,6 +236,100 @@ def immZExt16 : ImmLeaf<i32, [{return Imm == (Imm & 0xffff);}]>;
 
 // Addressing modes
 def addr : ComplexPattern<iPTR, 2, "SelectAddr", [], []>;
+
+/// 16-Bit Opcode Formats
+
+class ISC<bits<8> op1, string asmstr> 
+    : SC<op1, (outs), (ins u8imm:$const8),
+      asmstr # " %d15, $const8",
+      []>;
+
+let Constraints = "$s1 = $d" in {
+class ISRC<bits<8> op1, string asmstr, SDNode node> 
+    : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
+      asmstr # " $d, $const4",
+      [(set DataRegs:$d, (node DataRegs:$s1, immSExt4:$const4))]>;
+
+class ISRC_a15<bits<8> op1, string asmstr> 
+    : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
+      asmstr # " $d, %d15, $const4",
+      []>;
+
+class ISRC_15a<bits<8> op1, string asmstr> 
+    : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
+      asmstr # " %d15, $d, $const4",
+      []>;
+}
+
+multiclass mISRC_s<bits<8> op1, string asmstr, SDNode node> {
+  def _src : ISRC<op1, asmstr, node>;
+}
+
+multiclass mISRC_a15a<bits<8> op1, bits<8> op2, bits<8> op3,
+                        string asmstr, SDNode node> {
+  def _src : ISRC<op1, asmstr, node>;
+  def _src_a15 : ISRC_a15<op2, asmstr>;
+  def _src_15a : ISRC_15a<op3, asmstr>;
+}
+
+class ISRRS<bits<6> op1, string asmstr>
+    : SRRS<op1, (outs AddrRegs:$d), (ins AddrRegs:$s2, u2imm:$n),
+      asmstr # " $d, $s2, %d15, $n", []>;
+
+/// 32-Bit Opcode Formats
+
+class IBinRR<bits<8> op1, bits<8> op2, string asmstr, SDNode node>
+    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " $d, $s1, $s2",
+      [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
+
+class IBinRC<bits<8> op1, bits<7> op2, string asmstr, SDNode node>
+    : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
+      asmstr # " $d, $s1, $const9",
+      [(set DataRegs:$d, (node DataRegs:$s1, immSExt9:$const9))]>;
+
+multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
+                        string asmstr, SDNode node> {
+  def _rr : IBinRR<rr1, rr2, asmstr, node>;
+  def _rc : IBinRC<rc1, rc2, asmstr, node>;
+}
+
+class IRLC<bits<8> op1, string asmstr, SDNode node>
+    : RLC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s16imm:$const16),
+      asmstr # " $d, $s1, $const16",
+      [(set DataRegs:$d, (node DataRegs:$s1, immSExt16:$const16))]>;
+
+let Constraints = "$s1 = $d" in {
+class ISRR<bits<8> op1, string asmstr, SDNode node>
+    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " $d, $s2",
+      [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
+
+class ISRR_a15<bits<8> op1, string asmstr>
+    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " $d, %d15, $s2",
+      []>;
+
+class ISRR_15a<bits<8> op1, string asmstr>
+    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " %d15, $d, $s2",
+      []>;
+}
+
+multiclass mISRR_s<bits<8> op1, string asmstr, SDNode node>{
+    def _srr : ISRR<op1, asmstr, node>;
+}
+
+multiclass mISRR_a15a<bits<8> op1, bits<8> op2, bits<8> op3,
+                    string asmstr, SDNode node> : mISRR_s<op1,asmstr,node>{
+  def _srr_a15 : ISRR_a15<op2, asmstr>;
+  def _srr_15a : ISRR_15a<op3, asmstr>;
+}
+
+class IBIT<bits<8> op1, bits<2> op2, string asmstr>
+    : BIT<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " $d, $s1, $pos1, $s2, $pos2",
+      []>;
 
 //===----------------------------------------------------------------------===//
 // Pseudo Instructions
@@ -298,84 +394,58 @@ let Defs = [PSW] in {
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
 }
 
-multiclass BI_rr_src_srr<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
+multiclass mIRR_SRC_SRR<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
                         string asmstr, SDNode node> {
-  let isCommutable = 1 in
-  def rr : RR<rr1, rr2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-            asmstr # " $d, $s1, $s2",
-            [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
-  let Constraints = " $s1 = $d" in {  
-    def src : SRC<src1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
-            asmstr # " $d, $const4",
-            [(set DataRegs:$d, (node DataRegs:$s1, immSExt4:$const4))]>;
-    def srr: SRR<srr1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-            asmstr # " $s1, $s2",
-            [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
-  }
+  def _rr : IBinRR<rr1, rr2, asmstr, node>;
+  def _src : ISRC<src1, asmstr, node>;
+  def _srr : ISRR<srr1, asmstr, node>;
 }
 
-multiclass BI_Brr_Hrr<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
+multiclass mIBrr_Hrr<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
                         string asmstr, SDNode node> {
-  def _Brr : RR<brr1, brr2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-              asmstr # ".b $d, $s1, $s2",
-              [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
-  def _Hrr : RR<hrr1, hrr2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-              asmstr # ".h $d, $s1, $s2",
-              [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
+  def _B_rr : IBinRR<brr1, brr2, asmstr # ".b", node>;
+  def _H_rr : IBinRR<hrr1, hrr2, asmstr # ".h", node>;
 }
 
 // Arithmetic Instructions
 // - ADD Instructions
 
-defm ADD : BI_rr_src_srr<0x0B, 0x00, 0xC2, 0x42, "add", add>,
-           BI_Brr_Hrr<0x0B, 0x40, 0x0B, 0x60, "add", add>;
-defm ADD_A : BI_rr_src_srr<0x01, 0x01, 0xB0, 0x30, "add.a", add>;
+defm ADD : mIRR_RC<0x0B, 0x00, 0x8B, 0x00, "add", add>,
+           mISRC_a15a<0xC2, 0x92, 0x9A, "add", add>,
+           mISRR_a15a<0x42, 0x12, 0x1A, "add", add>,
+           mIBrr_Hrr<0x0B, 0x40, 0x0B, 0x60, "add", add>;
 
-def ADDrc : RC<0x8B, 0x00, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const9),
-            "add $d, $s1, $const9",
-            [(set DataRegs:$d, (add DataRegs:$s1, immSExt9:$const9))]>;
+defm ADD_A : mIRR_SRC_SRR<0x01, 0x01, 0xB0, 0x30, "add.a", add>;
+defm ADDC : mIRR_RC<0x0B, 0x05, 0x8B, 0x05, "addc", add>;
 
-def ADDsrc_dad15 : SRC<0x92, (outs DataRegs:$d), (ins s4imm:$const4),
-              "add $d, %d15, $const4", []>;
-def ADDsrc_d15da : SRC<0x9A, (outs), (ins DataRegs:$s1, s4imm:$const4),
-              "add %d15, $s1, $const4", []>;
+multiclass mIRLC<bits<8> op1, bits<8> op2, bits<8> op3, string asmstr, SDNode node>{
+  def _rlc    : IRLC<op1, asmstr, node>;
+  def H_rlc   : IRLC<op2, asmstr # "h", node>;
+  def H_A_rlc : IRLC<op3, asmstr # "h.a", node>;
+}
 
-def ADDsrr_dad15: SRR<0x12, (outs DataRegs:$d), (ins DataRegs:$s1),
-            "add $d, %d15, $s1", []>;
-def ADDsrr_d15da: SRR<0x1A, (outs), (ins DataRegs:$s1, DataRegs:$s2),
-            "add %d15, $s1, $s2", []>;
+defm ADDI : mIRLC<0x1B, 0x9B, 0x11, "addi", add>;
 
-def ADDIrlc : RLC<0x1B, (outs DataRegs:$d),
-  (ins DataRegs:$s1, i32imm:$const16), "addi $d, $s1, $const16",
-  [(set DataRegs:$d, (add DataRegs:$s1, immSExt16:$const16))]>;
+multiclass mIH_HU_U<bits<8> h1, bits<8> h2,
+                    bits<8> hu1, bits<8> hu2,
+                    bits<8> u1, bits<8> u2,
+                    string asmstr, SDNode node>{
+  def _H  : IBinRR<h1, h2, asmstr # ".h", node>;
+  def _HU : IBinRR<hu1,hu2,asmstr # ".hu", node>;
+  def _U : IBinRR<u1, u2, asmstr # ".u", node>;
+}
+
+defm ADDS : mIRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds", add>,
+            mISRR_s<0x22, "adds", add>,
+            mIH_HU_U<0x0B, 0x62, 0x0B, 0x63, 0x0B, 0x03, "adds", add>;
+def ADDS_U_rc : IBinRC<0x8B, 0x03, "adds.u", add>;
+def ADDSC_A_rr : IBinRR<0x01, 0x60, "addsc.a", add>;
+def ADDSC_A_srrs : ISRRS<0x10, "addsc.a">;
+def ADDSC_AT_rr : IBinRR<0x01, 0x62, "addsc.at", add>;
+
+defm ADDX : mIRR_RC<0x0B, 0x04, 0x8B, 0x04, "addx", add>;
 
 let Defs = [PSW], Uses = [PSW] in {
- let isCommutable = 1 in {
-  def ADDCrr : RR<0x0B, 0x05, (outs DataRegs:$d),
-    (ins DataRegs:$s1, DataRegs:$s2),
-    "addc $d, $s1, $s2",
-    [(set DataRegs:$d, (addc DataRegs:$s1, DataRegs:$s2)),
-     (implicit PSW)]>;
-
-  def ADDXrr : RR<0x0B, 0x04, (outs DataRegs:$d),
-    (ins DataRegs:$s1, DataRegs:$s2),
-    "addx $d, $s1, $s2",
-    [(set DataRegs:$d, (adde DataRegs:$s1, DataRegs:$s2)),
-     (implicit PSW)]>;
- } // let isCommutable = 1
-
- def ADDCrc : RC<0x8B, 0x05, (outs DataRegs:$d),
-   (ins DataRegs:$s1, s9imm:$const9),
-   "addc $d, $s1, $const9",
-   [(set DataRegs:$d, (addc DataRegs:$s1, immSExt9:$const9)),
-    (implicit PSW)]>;
-
- def ADDXrc : RC<0x0B, 0x04, (outs DataRegs:$d),
-   (ins DataRegs:$s1, s9imm:$const9),
-   "addx $d, $s1, $const9",
-   [(set DataRegs:$d, (adde DataRegs:$s1, immSExt9:$const9)),
-    (implicit PSW)]>;
-
  def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
    (ins DataRegs:$s1, DataRegs:$s2),
    "subc $d, $s1, $s2",
