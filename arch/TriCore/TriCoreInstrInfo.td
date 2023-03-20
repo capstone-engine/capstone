@@ -512,7 +512,7 @@ def BISR_sc : IUnarySC<0xE0, "bisr">;
 def BMAERGE_rr : IBinRR_<0x4B, 0x01, "bmerge">;
 def BSPLIT_rr  : IUnaryRR_E<0x4B, 0x09, "bsplit">;
 
-/// CACHEA.* Instructions
+/// BO Opcode Formats
 
 class IBO_base_short_offset<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10),
@@ -567,6 +567,8 @@ multiclass mIBO_ab<bits<8> op11, bits<6> op12,//_bso
                   asmstr>;
 }
 
+/// CACHEA.* Instructions
+
 defm CACHE_I : mIBO_ab<0x89, 0x2E,
                        0xA9, 0x0E,
                        0xA9, 0x1E,
@@ -604,6 +606,45 @@ defm CACHEI_WI : mIBO_a<0x89, 0x2F,
                         0x89, 0x0F,
                         0x89, 0x1F,
                         "cachei.wi">;
+
+
+/// RRR Opcodes Formats
+// Dc Dd Da Db
+class IRRR<bits<8>op1, bits<4> op2, string asmstr> 
+    : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, DataRegs:$s3),
+          asmstr # " $d, $s3, $s1, $s2", []>;
+// Dc Dd Da
+class IRRR_cda<bits<8>op1, bits<4> op2, string asmstr> 
+    : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3),
+          asmstr # " $d, $s3, $s1", []>;
+// Ec Ed Db
+class IRRR_EcEdb<bits<8>op1, bits<4> op2, string asmstr> 
+    : RRR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, ExtRegs:$s3),
+          asmstr # " $d, $s3, $s2", []>;
+// Dc Ed Da
+class IRRR_cEda<bits<8>op1, bits<4> op2, string asmstr> 
+    : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, ExtRegs:$s3),
+          asmstr # " $d, $s3, $s2", []>;
+
+/// RCR Opcodes Formats
+/// Dc Dd Da const9
+class IRCR<bits<8>op1, bits<3> op2, string asmstr>
+    : RCR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3, s9imm:$const9),
+          asmstr # " $d, $s3, $s1, $const9", []>;
+/// Ec Ed Da const9
+class IRCR_E<bits<8>op1, bits<3> op2, string asmstr>
+    : RCR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s1, ExtRegs:$s3, s9imm:$const9),
+          asmstr # " $d, $s3, $s1, $const9", []>;
+
+/// CADD Instructions
+def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
+def CADD_rrr : IRRR<0x2B, 0x00, "cadd">;
+def CADD_src : ISRC_a15<0x8A, "cadd">;
+
+def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
+def CADDN_rrr : IRRR<0x2B, 0x01, "caddn">;
+def CADDN_src : ISRC_a15<0xCA, "caddn">;
+
 
 let Defs = [PSW], Uses = [PSW] in {
  def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
