@@ -254,10 +254,10 @@ multiclass mISC_s<bits<8> op1, string asmstr> {
 }
 
 let Constraints = "$s1 = $d" in {
-class ISRC<bits<8> op1, string asmstr, SDNode node> 
+class ISRC<bits<8> op1, string asmstr> 
     : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
       asmstr # " $d, $const4",
-      [(set DataRegs:$d, (node DataRegs:$s1, immSExt4:$const4))]>;
+      []>;
 
 class ISRC_a15<bits<8> op1, string asmstr> 
     : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
@@ -270,13 +270,13 @@ class ISRC_15a<bits<8> op1, string asmstr>
       []>;
 }
 
-multiclass mISRC_s<bits<8> op1, string asmstr, SDNode node> {
-  def _src : ISRC<op1, asmstr, node>;
+multiclass mISRC_s<bits<8> op1, string asmstr> {
+  def _src : ISRC<op1, asmstr>;
 }
 
 multiclass mISRC_a15a<bits<8> op1, bits<8> op2, bits<8> op3,
-                        string asmstr, SDNode node> {
-  def _src : ISRC<op1, asmstr, node>;
+                        string asmstr> {
+  def _src : ISRC<op1, asmstr>;
   def _src_a15 : ISRC_a15<op2, asmstr>;
   def _src_15a : ISRC_15a<op3, asmstr>;
 }
@@ -289,78 +289,71 @@ class ISRRS<bits<6> op1, string asmstr>
 
 /// RC
 
-class IUnaryRC<bits<8> op1, bits<7> op2, string asmstr>
+class IRC<bits<8> op1, bits<7> op2, string asmstr>
     : RC<op1, op2, (outs), (ins s9imm:$const9),
       asmstr # " $const9", []>;
 
-class IBinRC<bits<8> op1, bits<7> op2, string asmstr, SDNode node>
-    : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
-      asmstr # " $d, $s1, $const9",
-      [(set DataRegs:$d, (node DataRegs:$s1, immSExt9:$const9))]>;
-
-class IBinRC_<bits<8> op1, bits<7> op2, string asmstr>
+class IRC_2<bits<8> op1, bits<7> op2, string asmstr>
     : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
       asmstr # " $d, $s1, $const9", []>;
 
 /// RR
+
+/// op A[a]
+class IRR_A<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs), (ins AddrRegs:$s1), asmstr # " $s1", []>;
+
 /// op D[c], D[a]
-class IUnaryRR_a<bits<8> op1, bits<8> op2, string asmstr>
+class IRR_a<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1),
       asmstr # " $d, $s1", []>;
 
 /// op D[c], D[b]
-class IUnaryRR_b<bits<8> op1, bits<8> op2, string asmstr>
+class IRR_b<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s2),
       asmstr # " $d, $s2", []>;
 
-/// op A[a]
-class IUnaryRR_Aa<bits<8> op1, bits<8> op2, string asmstr>
-    : RR<op1, op2, (outs), (ins AddrRegs:$s1),
-      asmstr # " $s1", []>;
-
 /// op E[c], D[a]
-class IUnaryRR_E<bits<8> op1, bits<8> op2, string asmstr>
+class IRR_Ea<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s1),
       asmstr # " $d, $s1", []>;
 
+class IRR_2<bits<8> op1, bits<8> op2,
+               RegisterClass cd, RegisterClass c1, RegisterClass c2,
+               string asmstr>
+    : RR<op1, op2, (outs cd:$d), (ins c1:$s1, c2:$s2), asmstr, []>;
+
 /// op D[c], D[a], D[b]
-class IBinRR<bits<8> op1, bits<8> op2, string asmstr, SDNode node>
-    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-      asmstr # " $d, $s1, $s2",
-      [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
-
+class IRR_ab<bits<8> op1, bits<8> op2, string asmstr>
+    : IRR_2<op1, op2, DataRegs, DataRegs, DataRegs, asmstr # " $d, $s1, $s2">;
 /// op D[c], D[b], D[a]
-class IBinRR_cba<bits<8> op1, bits<8> op2, string asmstr>
-    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-      asmstr # " $d, $s2, $s1",
-      []>;
+class IRR_ba<bits<8> op1, bits<8> op2, string asmstr>
+    : IRR_2<op1, op2, DataRegs, DataRegs, DataRegs, asmstr # " $d, $s2, $s1">;
 
-class IBinRR_<bits<8> op1, bits<8> op2, string asmstr>
-    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
-      asmstr # " $d, $s1, $s2", []>;
+/// op E[c], D[a], D[b]
+class IRR_Eab<bits<8> op1, bits<8> op2, string asmstr>
+    : IRR_2<op1, op2, ExtRegs, DataRegs, DataRegs, asmstr # " $d, $s1, $s2">;
 
-multiclass mIBinRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
-                        string asmstr, SDNode node> {
-  def _rr : IBinRR<rr1, rr2, asmstr, node>;
-  def _rc : IBinRC<rc1, rc2, asmstr, node>;
-}
+/// op D[c], A[a], A[b]
+class IRR_AaAb<bits<8> op1, bits<8> op2, string asmstr>
+    : IRR_2<op1, op2, DataRegs, AddrRegs, AddrRegs, asmstr # " $d, $s1, $s2">;
 
-multiclass mIBinRR_RC_<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
+multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
                         string asmstr> {
-  def _rr : IBinRR_<rr1, rr2, asmstr>;
-  def _rc : IBinRC_<rc1, rc2, asmstr>;
+  def _rr : IRR_ab<rr1, rr2, asmstr>;
+  def _rc : IRC_2<rc1, rc2, asmstr>;
 }
 
-class IRLC<bits<8> op1, string asmstr, SDNode node>
+class IRLC<bits<8> op1, string asmstr>
     : RLC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s16imm:$const16),
       asmstr # " $d, $s1, $const16",
-      [(set DataRegs:$d, (node DataRegs:$s1, immSExt16:$const16))]>;
+      []>;
 
 let Constraints = "$s1 = $d" in {
-class ISRR<bits<8> op1, string asmstr, SDNode node>
+class ISRR<bits<8> op1, string asmstr>
     : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
       asmstr # " $d, $s2",
-      [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
+      []>;
 
 class ISRR_a15<bits<8> op1, string asmstr>
     : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
@@ -373,12 +366,12 @@ class ISRR_15a<bits<8> op1, string asmstr>
       []>;
 }
 
-multiclass mISRR_s<bits<8> op1, string asmstr, SDNode node>{
-    def _srr : ISRR<op1, asmstr, node>;
+multiclass mISRR_s<bits<8> op1, string asmstr>{
+    def _srr : ISRR<op1, asmstr>;
 }
 
 multiclass mISRR_a15a<bits<8> op1, bits<8> op2, bits<8> op3,
-                    string asmstr, SDNode node> : mISRR_s<op1,asmstr,node>{
+                    string asmstr> : mISRR_s<op1,asmstr>{
   def _srr_a15 : ISRR_a15<op2, asmstr>;
   def _srr_15a : ISRR_15a<op3, asmstr>;
 }
@@ -454,60 +447,60 @@ let Defs = [PSW] in {
 }
 
 multiclass mIRR_SRC_SRR<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
-                        string asmstr, SDNode node> {
-  def _rr : IBinRR<rr1, rr2, asmstr, node>;
-  def _src : ISRC<src1, asmstr, node>;
-  def _srr : ISRR<srr1, asmstr, node>;
+                        string asmstr> {
+  def _rr : IRR_ab<rr1, rr2, asmstr>;
+  def _src : ISRC<src1, asmstr>;
+  def _srr : ISRR<srr1, asmstr>;
 }
 
 multiclass mIB_H<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
-                        string asmstr, SDNode node> {
-  def _B_rr : IBinRR<brr1, brr2, asmstr # ".b", node>;
-  def _H_rr : IBinRR<hrr1, hrr2, asmstr # ".h", node>;
+                        string asmstr> {
+  def _B_rr : IRR_ab<brr1, brr2, asmstr # ".b">;
+  def _H_rr : IRR_ab<hrr1, hrr2, asmstr # ".h">;
 }
 
 // - ADD Instructions
 
-defm ADD : mIBinRR_RC<0x0B, 0x00, 0x8B, 0x00, "add", add>,
-           mISRC_a15a<0xC2, 0x92, 0x9A, "add", add>,
-           mISRR_a15a<0x42, 0x12, 0x1A, "add", add>,
-           mIB_H<0x0B, 0x40, 0x0B, 0x60, "add", add>;
+defm ADD : mIRR_RC<0x0B, 0x00, 0x8B, 0x00, "add">,
+           mISRC_a15a<0xC2, 0x92, 0x9A, "add">,
+           mISRR_a15a<0x42, 0x12, 0x1A, "add">,
+           mIB_H<0x0B, 0x40, 0x0B, 0x60, "add">;
 
-defm ADD_A : mIRR_SRC_SRR<0x01, 0x01, 0xB0, 0x30, "add.a", add>;
-defm ADDC : mIBinRR_RC<0x0B, 0x05, 0x8B, 0x05, "addc", add>;
+defm ADD_A : mIRR_SRC_SRR<0x01, 0x01, 0xB0, 0x30, "add.a">;
+defm ADDC : mIRR_RC<0x0B, 0x05, 0x8B, 0x05, "addc">;
 
-multiclass mIRLC<bits<8> op1, bits<8> op2, bits<8> op3, string asmstr, SDNode node>{
-  def _rlc    : IRLC<op1, asmstr, node>;
-  def H_rlc   : IRLC<op2, asmstr # "h", node>;
-  def H_A_rlc : IRLC<op3, asmstr # "h.a", node>;
+multiclass mIRLC<bits<8> op1, bits<8> op2, bits<8> op3, string asmstr>{
+  def _rlc    : IRLC<op1, asmstr>;
+  def H_rlc   : IRLC<op2, asmstr # "h">;
+  def H_A_rlc : IRLC<op3, asmstr # "h.a">;
 }
 
-defm ADDI : mIRLC<0x1B, 0x9B, 0x11, "addi", add>;
+defm ADDI : mIRLC<0x1B, 0x9B, 0x11, "addi">;
 
 multiclass mIH_HU_U<bits<8> h1, bits<8> h2,
                     bits<8> hu1, bits<8> hu2,
                     bits<8> u1, bits<8> u2,
-                    string asmstr, SDNode node>{
-  def _H  : IBinRR<h1, h2, asmstr # ".h", node>;
-  def _HU : IBinRR<hu1,hu2,asmstr # ".hu", node>;
-  def _U : IBinRR<u1, u2, asmstr # ".u", node>;
+                    string asmstr>{
+  def _H  : IRR_ab<h1, h2, asmstr # ".h">;
+  def _HU : IRR_ab<hu1,hu2,asmstr # ".hu">;
+  def _U  : IRR_ab<u1, u2, asmstr # ".u">;
 }
 
-defm ADDS : mIBinRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds", add>,
-            mISRR_s<0x22, "adds", add>,
-            mIH_HU_U<0x0B, 0x62, 0x0B, 0x63, 0x0B, 0x03, "adds", add>;
-def ADDS_U_rc : IBinRC<0x8B, 0x03, "adds.u", add>;
-def ADDSC_A_rr : IBinRR<0x01, 0x60, "addsc.a", add>;
+defm ADDS : mIRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds">,
+            mISRR_s<0x22, "adds">,
+            mIH_HU_U<0x0B, 0x62, 0x0B, 0x63, 0x0B, 0x03, "adds">;
+def ADDS_U_rc : IRC_2<0x8B, 0x03, "adds.u">;
+def ADDSC_A_rr : IRR_ab<0x01, 0x60, "addsc.a">;
 def ADDSC_A_srrs : ISRRS<0x10, "addsc.a">;
-def ADDSC_AT_rr : IBinRR<0x01, 0x62, "addsc.at", add>;
+def ADDSC_AT_rr : IRR_ab<0x01, 0x62, "addsc.at">;
 
-defm ADDX : mIBinRR_RC<0x0B, 0x04, 0x8B, 0x04, "addx", add>;
+defm ADDX : mIRR_RC<0x0B, 0x04, 0x8B, 0x04, "addx">;
 
 
 /// AND Instructions
 
-defm AND : mIBinRR_RC<0x0F, 0x08, 0x8F, 0x08, "and", and>,
-           mISRR_s<0x26, "and", and>,
+defm AND : mIRR_RC<0x0F, 0x08, 0x8F, 0x08, "and">,
+           mISRR_s<0x26, "and">,
            mISC_s<0x16, "and">;
 
 def AND_AND_T  : IBIT<0x47, 0x00, "and.and.t">;
@@ -517,22 +510,22 @@ def AND_OR_T   : IBIT<0x47, 0x01, "and.or.t">;
 def AND_T      : IBIT<0x87, 0x00, "and.t">;
 def ANDN_T     : IBIT<0x87, 0x03, "andn.t">;
 
-defm AND_EQ   : mIBinRR_RC_<0x0B, 0x20, 0x8B, 0x20, "and.eq">;
-defm AND_GE   : mIBinRR_RC_<0x0B, 0x24, 0x8B, 0x24, "and.ge">;
-defm AND_GE_U : mIBinRR_RC_<0x0B, 0x25, 0x8B, 0x25, "and.ge.u">;
-defm AND_LT   : mIBinRR_RC_<0x0B, 0x22, 0x8B, 0x22, "and.lt">;
-defm AND_LT_U : mIBinRR_RC_<0x0B, 0x23, 0x8B, 0x23, "and.lt.u">;
-defm AND_NE   : mIBinRR_RC_<0x0B, 0x21, 0x8B, 0x21, "and.ne">;
+defm AND_EQ   : mIRR_RC<0x0B, 0x20, 0x8B, 0x20, "and.eq">;
+defm AND_GE   : mIRR_RC<0x0B, 0x24, 0x8B, 0x24, "and.ge">;
+defm AND_GE_U : mIRR_RC<0x0B, 0x25, 0x8B, 0x25, "and.ge.u">;
+defm AND_LT   : mIRR_RC<0x0B, 0x22, 0x8B, 0x22, "and.lt">;
+defm AND_LT_U : mIRR_RC<0x0B, 0x23, 0x8B, 0x23, "and.lt.u">;
+defm AND_NE   : mIRR_RC<0x0B, 0x21, 0x8B, 0x21, "and.ne">;
 
-defm ANDN     : mIBinRR_RC_<0x0F, 0x0E, 0x8F, 0x0E, "andn">;
+defm ANDN     : mIRR_RC<0x0F, 0x0E, 0x8F, 0x0E, "andn">;
 
 /// BISR
-def BISR_rc : IUnaryRC<0xAD, 0x00, "bisr">;
+def BISR_rc : IRC<0xAD, 0x00, "bisr">;
 def BISR_sc : IUnarySC<0xE0, "bisr">;
 
 /// Multiple Instructions (RR)
-def BMAERGE_rr : IBinRR_<0x4B, 0x01, "bmerge">;
-def BSPLIT_rr  : IUnaryRR_E<0x4B, 0x09, "bsplit">;
+def BMAERGE_rr : IRR_ab<0x4B, 0x01, "bmerge">;
+def BSPLIT_rr  : IRR_Ea<0x4B, 0x09, "bsplit">;
 
 /// BO Opcode Formats
 
@@ -632,19 +625,19 @@ defm CACHEI_WI : mIBO_a<0x89, 0x2F,
 
 /// RRR Opcodes Formats
 // Dc Dd Da Db
-class IRRR<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_dab<bits<8>op1, bits<4> op2, string asmstr> 
     : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, DataRegs:$s3),
           asmstr # " $d, $s3, $s1, $s2", []>;
 // Dc Dd Da
-class IRRR_cda<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_da<bits<8>op1, bits<4> op2, string asmstr> 
     : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3),
           asmstr # " $d, $s3, $s1", []>;
 // Ec Ed Db
-class IRRR_EcEdb<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_EEdb<bits<8>op1, bits<4> op2, string asmstr> 
     : RRR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, ExtRegs:$s3),
           asmstr # " $d, $s3, $s2", []>;
 // Dc Ed Da
-class IRRR_cEda<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_Eda<bits<8>op1, bits<4> op2, string asmstr> 
     : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, ExtRegs:$s3),
           asmstr # " $d, $s3, $s2", []>;
 
@@ -660,11 +653,11 @@ class IRCR_E<bits<8>op1, bits<3> op2, string asmstr>
 
 /// CADD Instructions
 def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
-def CADD_rrr : IRRR<0x2B, 0x00, "cadd">;
+def CADD_rrr : IRRR_dab<0x2B, 0x00, "cadd">;
 def CADD_src : ISRC_a15<0x8A, "cadd">;
 
 def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
-def CADDN_rrr : IRRR<0x2B, 0x01, "caddn">;
+def CADDN_rrr : IRRR_dab<0x2B, 0x01, "caddn">;
 def CADDN_src : ISRC_a15<0xCA, "caddn">;
 
 // Call Instructions
@@ -683,13 +676,13 @@ let isCall = 1,
     Uses = [A10] in {
   def CALL_b    : IB<0x6D, "call",  TriCoreCall>;
   def CALLA_b   : IB<0xED, "calla", TriCoreCall>;
-  def CALLI_rr  : IUnaryRR_Aa<0x2D, 0x00, "calli">;
+  def CALLI_rr  : IRR_A<0x2D, 0x00, "calli">;
 }
 
 multiclass mI_H<bits<8> op1,bits<8> op2,bits<8> op3,bits<8> op4,
                 string asmstr> {
-  def _rr   : IUnaryRR_a<op1, op2, asmstr>;
-  def _H_rr : IUnaryRR_a<op3, op4, asmstr # ".h">;
+  def _rr   : IRR_a<op1, op2, asmstr>;
+  def _H_rr : IRR_a<op3, op4, asmstr # ".h">;
 }
 
 defm CLO : mI_H<0x0F, 0x1C, 0x0F, 0x7D, "clo">;
@@ -705,13 +698,13 @@ defm CMPSWAP_W : mIBO_ab<0x49, 0x23, 0x69, 0x03,
                          0x69, 0x13, 0x49,0x03,
                          0x49, 0x13, "CMPSWAP.W">;
 
-def CRC32_B_rr  : IBinRR_cba<0x4B, 0x06, "crc32.b">;
-def CRC32B_W_rr : IBinRR_cba<0x4B, 0x03, "crc32b.w">;
-def CRC32L_W_rr : IBinRR_cba<0x4B, 0x07, "crc32l.w">;
-def CRCN_rrr    : IRRR<0x6B, 0x01, "crcn">;
+def CRC32_B_rr  : IRR_ba<0x4B, 0x06, "crc32.b">;
+def CRC32B_W_rr : IRR_ba<0x4B, 0x03, "crc32b.w">;
+def CRC32L_W_rr : IRR_ba<0x4B, 0x07, "crc32l.w">;
+def CRCN_rrr    : IRRR_dab<0x6B, 0x01, "crcn">;
 
-def CSUB_rrr    : IRRR<0x2B, 0x02, "csub">;
-def CSUBN_rrr   : IRRR<0x2B, 0x03, "csub">;
+def CSUB_rrr    : IRRR_dab<0x2B, 0x02, "csub">;
+def CSUBN_rrr   : IRRR_dab<0x2B, 0x03, "csub">;
 
 class ISR_0<bits<8> op1, bits<4> op2, string asmstr>
     : SR<op1, op2, (outs), (ins),
@@ -731,16 +724,91 @@ class ISYS_1<bits<8> op1, bits<6> op2, string asmstr>
 def DEBUG_sr  : ISR_0<0x00, 0x0A, "debug">;
 def DEBUG_sys : ISYS_0<0x0D, 0x04, "debug">;
 
-// class IRRPW<> : RRPW<>;
-// class IRRRR<> : RRRR<>;
+/// RRPW Instruction Formats
+/// op D[c], D[a], pos, width
+class IRRPW_apw<bits<8> op1, bits<2> op2, string asmstr>
+     : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$pos, i32imm:$width),
+            asmstr # " $d, $s1, $pos, $width", []>;
+/// op D[c], D[b], pos, width
+class IRRPW_bpw<bits<8> op1, bits<2> op2, string asmstr>
+     : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s2, i32imm:$pos, i32imm:$width),
+            asmstr # " $d, $s2, $pos, $width", []>;
+/// op D[c], D[a], D[b], pos
+class IRRPW_abp<bits<8> op1, bits<2> op2, string asmstr>
+     : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, i32imm:$pos),
+            asmstr # " $d, $s1, $s2, $pos", []>;
+
+/// RRRR Instruction Formats
+/// op D[c], D[a], D[b], D[d]
+class IRRRR<bits<8> op1, bits<3> op2, string asmstr> 
+    : RRRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, DataRegs:$s3),
+            asmstr # " $d, $s1, $s2, $s3", []>;
+/// op D[c], D[a], D[d]
+class IRRRR_ad<bits<8> op1, bits<3> op2, string asmstr> 
+    : RRRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3),
+            asmstr # " $d, $s1, $s3", []>;
+
 // class IRRRW<> : RRRW<>;
 
 // class IRCPW<> : RRPW<>;
 // class IRCRR<> : RRPW<>;
 // class IRCRW<> : RCRW<>;
 
-// def DEXTR;
+multiclass mIRRPW_RRRR<bits<8> op1, bits<2> op2, bits<8> op3, bits<3> op4, string asmstr>{
+  def _rrpw : IRRPW_abp<op1, op2, asmstr>;
+  def _rrrr : IRRRR<op3, op4, asmstr>;
+}
 
+defm DEXTR : mIRRPW_RRRR<0x77, 0x00, 0x17, 0x04, "dextr">;
+
+def DISABLE_sys   : ISYS_0<0x0D, 0x0D, "disable">;
+def DISABLE_sys_1 : ISYS_1<0x0D, 0x0F, "disable">;
+
+def DSYNC_sys : ISYS_0<0x0D, 0x12, "dsync">;
+
+def DVADJ_rrr : IRRR_EEdb<0x6B, 0x0D, "dvadj">;
+
+multiclass mI_U_RR_Eab<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4,
+                string asmstr> {
+  def _rr   : IRR_Eab<op1, op2, asmstr>;
+  def _U_rr : IRR_Eab<op3, op4, asmstr # ".u">;
+}
+
+defm DIV     : mI_U_RR_Eab<0x4B, 0x20, 0x4B, 0x21, "div">;
+defm DVINIT  : mI_U_RR_Eab<0x4B, 0x1A, 0x4B, 0x0A, "dvinit">;
+
+multiclass mIU_RR_Eab<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4,
+                string asmstr> {
+  def _rr   : IRR_Eab<op1, op2, asmstr>;
+  def U_rr  : IRR_Eab<op3, op4, asmstr # "u">;
+}
+
+defm DVINIT_B  : mIU_RR_Eab<0x4B, 0x5A, 0x4B, 0x4A, "dvinit.b">;
+defm DVINIT_H  : mIU_RR_Eab<0x4B, 0x3A, 0x4B, 0x2A, "dvinit.h">;
+
+multiclass mI_U_RRR_EEdb<bits<8> op1, bits<4> op2, bits<8> op3, bits<4> op4,
+                string asmstr> {
+  def _rrr   : IRRR_EEdb<op1, op2, asmstr>;
+  def _U_rrr : IRRR_EEdb<op3, op4, asmstr # ".u">;
+}
+
+defm DVSTEP : mI_U_RRR_EEdb<0x6B, 0x0F, 0x6B, 0x0E, "dvstep">;
+
+def ENABLE_sys   : ISYS_0<0x0D, 0x0C, "enable">;
+
+multiclass mIB_H_W<bits<8> brr1, bits<8> brr2,
+                   bits<8> hrr1, bits<8> hrr2,
+                   bits<8> wrr1, bits<8> wrr2,
+                   string asmstr>
+        :  mIB_H<brr1, brr2, hrr1, hrr2, asmstr>{
+  def _W_rr : IRR_ab<wrr1, wrr2, asmstr # ".w">;
+}
+
+defm EQ    : mIRR_RC<0x0B, 0x10, 0x8B, 0x10, "eq">
+           , mIB_H_W<0x0B, 0x50, 0x0B, 0x70, 0x0B, 0x90, "eq">;
+def EQ_src : ISRC_15a<0xBA, "eq">;
+def EQ_srr : ISRR_15a<0x3A, "eq">;
+def EQ_A_rr: IRR_AaAb<0x01, 0x40, "eq.a">;
 
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
@@ -1005,16 +1073,16 @@ def IMASKrcpw :  RCPW<0xB7, 0b01, (outs ExtRegs:$d),
   "imask $d, $const4, $pos, $width",
   [(set ExtRegs:$d, (TriCoreImask immZExt4:$const4, imm:$pos, imm:$width))]>;
 
-def DEXTRrrpw :  RRPW<0x77, 0b00, (outs DataRegs:$d),
-  (ins DataRegs:$s1, DataRegs:$s2, i32imm:$pos),
-  "dextr $d, $s1, $s2, $pos",
-  [(set DataRegs:$d, (TriCoreExtr DataRegs:$s1, DataRegs:$s2, immZExt4:$pos))]>;
+// def DEXTRrrpw :  RRPW<0x77, 0b00, (outs DataRegs:$d),
+//   (ins DataRegs:$s1, DataRegs:$s2, i32imm:$pos),
+//   "dextr $d, $s1, $s2, $pos",
+//   [(set DataRegs:$d, (TriCoreExtr DataRegs:$s1, DataRegs:$s2, immZExt4:$pos))]>;
 
-def EXTRrrpw :  RRPW<0x37, 0b10, (outs DataRegs:$d),
-  (ins DataRegs:$s1, i32imm:$pos, i32imm:$width),
-  "extr $d, $s1, $pos, $width",
-  [(set DataRegs:$d, (TriCoreExtr DataRegs:$s1, immZExt4:$pos,
-  immZExt4:$width))]>;
+// def EXTRrrpw :  RRPW<0x37, 0b10, (outs DataRegs:$d),
+//   (ins DataRegs:$s1, i32imm:$pos, i32imm:$width),
+//   "extr $d, $s1, $pos, $width",
+//   [(set DataRegs:$d, (TriCoreExtr DataRegs:$s1, immZExt4:$pos,
+//   immZExt4:$width))]>;
 
 // Load/Store Instructions
 class LoadABS<bits<8> op1, bits<2> op2, string opstr, PatFrag PF,
@@ -1390,10 +1458,10 @@ multiclass COMPARE_32<bits<8> op2, string asmstring, PatLeaf PF> {
        [( set DataRegs:$d, (TriCoreCmp DataRegs:$s1, DataRegs:$s2, PF))]>;
 }
 
-defm EQ : COMPARE_32<0x10, "eq", TriCore_COND_EQ>;
-defm NE : COMPARE_32<0x11, "ne", TriCore_COND_NE>;
-defm LT : COMPARE_32<0x12, "lt", TriCore_COND_LT>;
-defm GE : COMPARE_32<0x14, "ge", TriCore_COND_GE>;
+// defm EQ : COMPARE_32<0x10, "eq", TriCore_COND_EQ>;
+// defm NE : COMPARE_32<0x11, "ne", TriCore_COND_NE>;
+// defm LT : COMPARE_32<0x12, "lt", TriCore_COND_LT>;
+// defm GE : COMPARE_32<0x14, "ge", TriCore_COND_GE>;
 
 
 // 64 bit Compare Instructions
@@ -1528,142 +1596,142 @@ let usesCustomInserter = 1 in {
 //===----------------------------------------------------------------------===//
 
 // TODO: Also write a pattern when we have a zero shift
-def : Pat<(shl ExtRegs:$src, (i32 imm32_64:$amt)),
-          (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                       (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
-                         (SHIFTAMT (imm32_64:$amt))), subreg_odd)),
-                       (MOVrlc (i32 0)), subreg_even)>;
+// def : Pat<(shl ExtRegs:$src, (i32 imm32_64:$amt)),
+//           (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                        (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
+//                          (SHIFTAMT (imm32_64:$amt))), subreg_odd)),
+//                        (MOVrlc (i32 0)), subreg_even)>;
 
-def : Pat<(shl ExtRegs:$src, (i32 imm0_31:$amt)),
-          (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                       (DEXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
-                         (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
-                 (i32 imm0_31:$amt)), subreg_odd)),
-                   (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
-                 ( i32 imm0_31:$amt)), subreg_even)>;
+// def : Pat<(shl ExtRegs:$src, (i32 imm0_31:$amt)),
+//           (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                        (DEXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
+//                          (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
+//                  (i32 imm0_31:$amt)), subreg_odd)),
+//                    (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
+//                  ( i32 imm0_31:$amt)), subreg_even)>;
 
-def : Pat<(srl ExtRegs:$src, (i32 imm0_31:$amt)),
-          (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                       (DEXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
-                         (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
-                 (SHIFTAMT_POS (imm0_31:$amt))), subreg_even)),
-                   (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
-                 (INVERT_VAL imm0_31:$amt)), subreg_odd)>;
+// def : Pat<(srl ExtRegs:$src, (i32 imm0_31:$amt)),
+//           (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                        (DEXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
+//                          (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
+//                  (SHIFTAMT_POS (imm0_31:$amt))), subreg_even)),
+//                    (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
+//                  (INVERT_VAL imm0_31:$amt)), subreg_odd)>;
 
-def : Pat<(srl ExtRegs:$src, (i32 imm32_64:$amt)),
-          (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                       (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
-                         (SHIFTAMT_NEG (imm32_64:$amt))), subreg_even)),
-                       (MOVrlc (i32 0)), subreg_odd)>;
+// def : Pat<(srl ExtRegs:$src, (i32 imm32_64:$amt)),
+//           (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                        (SHrc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
+//                          (SHIFTAMT_NEG (imm32_64:$amt))), subreg_even)),
+//                        (MOVrlc (i32 0)), subreg_odd)>;
 
-def : Pat<(sra ExtRegs:$src, (i32 imm32_64:$amt)),
-          (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-           (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-             (SHArc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
-               (SHIFTAMT_NEG (imm32_64:$amt))), subreg_even), subreg_even),
-                  (i32 -31)), subreg_odd)>;
+// def : Pat<(sra ExtRegs:$src, (i32 imm32_64:$amt)),
+//           (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//            (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//              (SHArc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
+//                (SHIFTAMT_NEG (imm32_64:$amt))), subreg_even), subreg_even),
+//                   (i32 -31)), subreg_odd)>;
 
-def : Pat<(sra ExtRegs:$src, (i32 imm0_31:$amt)),
-          (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                       (DEXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
-                         (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
-                 (SHIFTAMT_POS (imm0_31:$amt))), subreg_even)),
-                   (SHArc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
-                 (INVERT_VAL imm0_31:$amt)), subreg_odd)>;
+// def : Pat<(sra ExtRegs:$src, (i32 imm0_31:$amt)),
+//           (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                        (DEXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
+//                          (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
+//                  (SHIFTAMT_POS (imm0_31:$amt))), subreg_even)),
+//                    (SHArc (EXTRACT_SUBREG ExtRegs:$src, subreg_odd),
+//                  (INVERT_VAL imm0_31:$amt)), subreg_odd)>;
 
-def : Pat<(shl DataRegs:$src, (i32 0)),
-     (MOVrr DataRegs:$src)>;
+// def : Pat<(shl DataRegs:$src, (i32 0)),
+//      (MOVrr DataRegs:$src)>;
 
-// This extracts the even register from an extended register
-def : Pat<(i32 (trunc ExtRegs:$src)),
-     (EXTRACT_SUBREG ExtRegs:$src, subreg_even)>;
+// // This extracts the even register from an extended register
+// def : Pat<(i32 (trunc ExtRegs:$src)),
+//      (EXTRACT_SUBREG ExtRegs:$src, subreg_even)>;
 
-// sext
-def : Pat<(sext DataRegs:$src),
-     (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-        (i32 DataRegs:$src), subreg_even)),
-        (SHArc (i32 DataRegs:$src), (i32 -31)), subreg_odd)>;
+// // sext
+// def : Pat<(sext DataRegs:$src),
+//      (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//         (i32 DataRegs:$src), subreg_even)),
+//         (SHArc (i32 DataRegs:$src), (i32 -31)), subreg_odd)>;
 
-// sext_inreg for i16
-def : Pat<(sext_inreg DataRegs:$src, i16),
-          (MOVrr (i32 DataRegs:$src))>;
+// // sext_inreg for i16
+// def : Pat<(sext_inreg DataRegs:$src, i16),
+//           (MOVrr (i32 DataRegs:$src))>;
 
-// sext_inreg for i8
-def : Pat<(sext_inreg DataRegs:$src, i8),
-          (MOVrr (i32 DataRegs:$src))>;
+// // sext_inreg for i8
+// def : Pat<(sext_inreg DataRegs:$src, i8),
+//           (MOVrr (i32 DataRegs:$src))>;
 
-// sext_inreg from i8 to i64
-def : Pat<(sext_inreg ExtRegs:$src, i8),
-  (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-    (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-      ( EXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
-        (i32 0), (i32 8) ), subreg_even), subreg_even),
-         (i32 -31)), subreg_odd)>;
+// // sext_inreg from i8 to i64
+// def : Pat<(sext_inreg ExtRegs:$src, i8),
+//   (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//     (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//       ( EXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
+//         (i32 0), (i32 8) ), subreg_even), subreg_even),
+//          (i32 -31)), subreg_odd)>;
 
-// sext_inreg from i16 to i64
-def : Pat<(sext_inreg ExtRegs:$src, i16),
-  (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-    (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
-      ( EXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
-        (i32 0), (i32 16) ), subreg_even), subreg_even)
-      , (i32 -31)), subreg_odd)>;
+// // sext_inreg from i16 to i64
+// def : Pat<(sext_inreg ExtRegs:$src, i16),
+//   (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//     (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
+//       ( EXTRrrpw (EXTRACT_SUBREG ExtRegs:$src, subreg_even),
+//         (i32 0), (i32 16) ), subreg_even), subreg_even)
+//       , (i32 -31)), subreg_odd)>;
 
-// anyext
-def : Pat<(anyext DataRegs:$src),
-  (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-    (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
-      (i32 DataRegs:$src), subreg_even), subreg_even)
-      , (i32 -31)), subreg_odd)>;
+// // anyext
+// def : Pat<(anyext DataRegs:$src),
+//   (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//     (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
+//       (i32 DataRegs:$src), subreg_even), subreg_even)
+//       , (i32 -31)), subreg_odd)>;
 
-// zext
-def : Pat<(zext DataRegs:$src),
-  (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-    (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
-      (i32 DataRegs:$src), subreg_even), subreg_even)
-      , (i32 -31)), subreg_odd)>;
+// // zext
+// def : Pat<(zext DataRegs:$src),
+//   (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//     (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
+//       (i32 DataRegs:$src), subreg_even), subreg_even)
+//       , (i32 -31)), subreg_odd)>;
 
-// This extracts the odd register from an extended register
-// odd_reg = (Extended Register >> 32)
-def : Pat<(i32 (trunc (srl ExtRegs:$src, (i32 32)))),
-     (EXTRACT_SUBREG ExtRegs:$src, subreg_odd)>;
+// // This extracts the odd register from an extended register
+// // odd_reg = (Extended Register >> 32)
+// def : Pat<(i32 (trunc (srl ExtRegs:$src, (i32 32)))),
+//      (EXTRACT_SUBREG ExtRegs:$src, subreg_odd)>;
 
-def : Pat<(i64 imm:$src),
-    (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                 (MOVi32( LO32 imm:$src)), subreg_even)),
-                 (MOVi32( HI32 imm:$src)), subreg_odd)>;
+// def : Pat<(i64 imm:$src),
+//     (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                  (MOVi32( LO32 imm:$src)), subreg_even)),
+//                  (MOVi32( HI32 imm:$src)), subreg_odd)>;
 
-def : Pat<(i64 (sextloadi32 addr:$offset)),
-  (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-             (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-               (LD_Wbo addr:$offset), subreg_even), subreg_even),
-               (i32 -31)), subreg_odd)>;
+// def : Pat<(i64 (sextloadi32 addr:$offset)),
+//   (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//              (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                (LD_Wbo addr:$offset), subreg_even), subreg_even),
+//                (i32 -31)), subreg_odd)>;
 
-def : Pat<(i64 (zextloadi32 addr:$offset)),
-  (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                         (LD_Wbo addr:$offset), subreg_even)),
-                         (MOVrlc 0), subreg_odd)>;
+// def : Pat<(i64 (zextloadi32 addr:$offset)),
+//   (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                          (LD_Wbo addr:$offset), subreg_even)),
+//                          (MOVrlc 0), subreg_odd)>;
 
-def : Pat<(i64 (sextloadi16 addr:$offset)),
-  (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-             (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-               ( EXTRrrpw (LD_Hbo addr:$offset),
-                 (i32 0), (i32 16) ), subreg_even), subreg_even)
-             , (i32 -31)), subreg_odd)>;
+// def : Pat<(i64 (sextloadi16 addr:$offset)),
+//   (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//              (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                ( EXTRrrpw (LD_Hbo addr:$offset),
+//                  (i32 0), (i32 16) ), subreg_even), subreg_even)
+//              , (i32 -31)), subreg_odd)>;
 
-def : Pat<(i64 (zextloadi16 addr:$offset)),
-  (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                         (LD_Wbo addr:$offset), subreg_even)),
-                         (MOVrlc 0), subreg_odd)>;
+// def : Pat<(i64 (zextloadi16 addr:$offset)),
+//   (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                          (LD_Wbo addr:$offset), subreg_even)),
+//                          (MOVrlc 0), subreg_odd)>;
 
 
-def : Pat<(i64 (sextloadi8 addr:$offset)),
-  (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-             (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
-               ( EXTRrrpw (LD_Bbo addr:$offset),
-                 (i32 0), (i32 8) ), subreg_even), subreg_even)
-             , (i32 -31)), subreg_odd)>;
+// def : Pat<(i64 (sextloadi8 addr:$offset)),
+//   (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//              (SHArc ( EXTRACT_SUBREG (INSERT_SUBREG (i64 (IMPLICIT_DEF)) ,
+//                ( EXTRrrpw (LD_Bbo addr:$offset),
+//                  (i32 0), (i32 8) ), subreg_even), subreg_even)
+//              , (i32 -31)), subreg_odd)>;
 
-def : Pat<(i64 (zextloadi8 addr:$offset)),
-  (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
-                         (LD_BUbo addr:$offset), subreg_even)),
-                         (MOVrlc 0), subreg_odd)>;
+// def : Pat<(i64 (zextloadi8 addr:$offset)),
+//   (INSERT_SUBREG( i64 (INSERT_SUBREG (i64 (IMPLICIT_DEF)),
+//                          (LD_BUbo addr:$offset), subreg_even)),
+//                          (MOVrlc 0), subreg_odd)>;
