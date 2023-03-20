@@ -303,15 +303,37 @@ class IBinRC_<bits<8> op1, bits<7> op2, string asmstr>
       asmstr # " $d, $s1, $const9", []>;
 
 /// RR
+/// op D[c], D[a]
+class IUnaryRR_a<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1),
+      asmstr # " $d, $s1", []>;
 
+/// op D[c], D[b]
+class IUnaryRR_b<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s2),
+      asmstr # " $d, $s2", []>;
+
+/// op A[a]
+class IUnaryRR_Aa<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs), (ins AddrRegs:$s1),
+      asmstr # " $s1", []>;
+
+/// op E[c], D[a]
 class IUnaryRR_E<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s1),
       asmstr # " $d, $s1", []>;
 
+/// op D[c], D[a], D[b]
 class IBinRR<bits<8> op1, bits<8> op2, string asmstr, SDNode node>
     : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
       asmstr # " $d, $s1, $s2",
       [(set DataRegs:$d, (node DataRegs:$s1, DataRegs:$s2))]>;
+
+/// op D[c], D[b], D[a]
+class IBinRR_cba<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+      asmstr # " $d, $s2, $s1",
+      []>;
 
 class IBinRR_<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
@@ -552,19 +574,19 @@ multiclass mIBO_b<bits<8> op11, bits<6> op12,
     def _bo_c    : IBO_circular<op21, op22, asmstr>;
 }
 
-multiclass mIBO_ab<bits<8> op11, bits<6> op12,//_bso
-                  bits<8> op21, bits<6> op22,//_r
-                  bits<8> op31, bits<6> op32,//_c
-                  bits<8> op41, bits<6> op42,//post
-                  bits<8> op51, bits<6> op52,//pre
-                  string asmstr>{
+multiclass mIBO_ab<bits<8> op11, bits<6> op12, ///_bso
+                   bits<8> op21, bits<6> op22, ///_r
+                   bits<8> op31, bits<6> op32, ///_c
+                   bits<8> op41, bits<6> op42, ///_post
+                   bits<8> op51, bits<6> op52, ///_pre
+                   string asmstr>{
   defm "" : mIBO_a<op11,op12,
-                op41,op42,
-                op51,op52,
-                asmstr>,
+                   op41,op42,
+                   op51,op52,
+                   asmstr>,
             mIBO_b<op21,op22,
-                  op31,op32,
-                  asmstr>;
+                   op31,op32,
+                   asmstr>;
 }
 
 /// CACHEA.* Instructions
@@ -645,19 +667,93 @@ def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
 def CADDN_rrr : IRRR<0x2B, 0x01, "caddn">;
 def CADDN_src : ISRC_a15<0xCA, "caddn">;
 
+// Call Instructions
+
+class IB<bits<8> op1, string asmstr, SDNode node>
+    : B<op1, (outs), (ins i32imm:$disp24),
+        asmstr # " $disp24", [(node imm:$disp24)]>;
+
+// The target of a 24-bit call instruction.
+def call_target : Operand<i32> {
+  let EncoderMethod = "encodeCallTarget";
+}
+
+let isCall = 1,
+    Defs = [A11],
+    Uses = [A10] in {
+  def CALL_b    : IB<0x6D, "call",  TriCoreCall>;
+  def CALLA_b   : IB<0xED, "calla", TriCoreCall>;
+  def CALLI_rr  : IUnaryRR_Aa<0x2D, 0x00, "calli">;
+}
+
+multiclass mI_H<bits<8> op1,bits<8> op2,bits<8> op3,bits<8> op4,
+                string asmstr> {
+  def _rr   : IUnaryRR_a<op1, op2, asmstr>;
+  def _H_rr : IUnaryRR_a<op3, op4, asmstr # ".h">;
+}
+
+defm CLO : mI_H<0x0F, 0x1C, 0x0F, 0x7D, "clo">;
+defm CLS : mI_H<0x0F, 0x1D, 0x0F, 0x7E, "cls">;
+defm CLZ : mI_H<0x0F, 0x1B, 0x0F, 0x7C, "clz">;
+
+def CMOV_src  : ISRC_a15<0xAA, "cmov">;
+def CMOV_srr  : ISRR_a15<0x2A, "cmov">;
+def CMOVN_src : ISRC_a15<0xEA, "cmovn">;
+def CMOVN_srr : ISRR_a15<0x6A, "cmovn">;
+
+defm CMPSWAP_W : mIBO_ab<0x49, 0x23, 0x69, 0x03,
+                         0x69, 0x13, 0x49,0x03,
+                         0x49, 0x13, "CMPSWAP.W">;
+
+def CRC32_B_rr  : IBinRR_cba<0x4B, 0x06, "crc32.b">;
+def CRC32B_W_rr : IBinRR_cba<0x4B, 0x03, "crc32b.w">;
+def CRC32L_W_rr : IBinRR_cba<0x4B, 0x07, "crc32l.w">;
+def CRCN_rrr    : IRRR<0x6B, 0x01, "crcn">;
+
+def CSUB_rrr    : IRRR<0x2B, 0x02, "csub">;
+def CSUBN_rrr   : IRRR<0x2B, 0x03, "csub">;
+
+class ISR_0<bits<8> op1, bits<4> op2, string asmstr>
+    : SR<op1, op2, (outs), (ins),
+        asmstr, []>;
+let Constraints = "$s1 = $d" in
+class ISR_1<bits<8> op1, bits<4> op2, string asmstr>
+    : SR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1),
+        asmstr # " $s1", []>;
+
+class ISYS_0<bits<8> op1, bits<6> op2, string asmstr>
+    : SYS<op1, op2, (outs), (ins),
+        asmstr, []>;
+class ISYS_1<bits<8> op1, bits<6> op2, string asmstr>
+    : SYS<op1, op2, (outs), (ins DataRegs:$s1),
+        asmstr # " $s1", []>;
+
+def DEBUG_sr  : ISR_0<0x00, 0x0A, "debug">;
+def DEBUG_sys : ISYS_0<0x0D, 0x04, "debug">;
+
+// class IRRPW<> : RRPW<>;
+// class IRRRR<> : RRRR<>;
+// class IRRRW<> : RRRW<>;
+
+// class IRCPW<> : RRPW<>;
+// class IRCRR<> : RRPW<>;
+// class IRCRW<> : RCRW<>;
+
+// def DEXTR;
+
 
 let Defs = [PSW], Uses = [PSW] in {
- def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
-   (ins DataRegs:$s1, DataRegs:$s2),
-   "subc $d, $s1, $s2",
-   [(set DataRegs:$d, (subc DataRegs:$s1, DataRegs:$s2)),
-    (implicit PSW)]>;
+def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
+  (ins DataRegs:$s1, DataRegs:$s2),
+  "subc $d, $s1, $s2",
+  [(set DataRegs:$d, (subc DataRegs:$s1, DataRegs:$s2)),
+  (implicit PSW)]>;
 
- def SUBXrr : RR<0x0B, 0x0C, (outs DataRegs:$d),
-   (ins DataRegs:$s1, DataRegs:$s2),
-   "subx $d, $s1, $s2",
-   [(set DataRegs:$d, (sube DataRegs:$s1, DataRegs:$s2)),
-    (implicit PSW)]>;
+def SUBXrr : RR<0x0B, 0x0C, (outs DataRegs:$d),
+  (ins DataRegs:$s1, DataRegs:$s2),
+  "subx $d, $s1, $s2",
+  [(set DataRegs:$d, (sube DataRegs:$s1, DataRegs:$s2)),
+  (implicit PSW)]>;
 
 } // let Defs = [PSW], Uses = [PSW]
 
@@ -1245,24 +1341,10 @@ let isTerminator = 1, isReturn = 1, isBarrier = 1 in
 //  let Inst{15-12} = 0x9;
 // }
 
-// Call Instructions
-
-// The target of a 24-bit call instruction.
-def call_target : Operand<i32>
-{
-  let EncoderMethod = "encodeCallTarget";
-}
-
-
-let isCall = 1, Defs = [A11], Uses = [A10] in
- def CALLb : B<0x6D, (outs), (ins i32imm:$disp24),
- "call $disp24",  [(TriCoreCall imm:$disp24)]>;
-
 def : Pat<(TriCoreCall (i32 tglobaladdr:$dst)),
-     (CALLb tglobaladdr:$dst)>;
+      (CALL_b tglobaladdr:$dst)>;
 def : Pat<(i32 (TriCoreWrapper tglobaladdr:$dst)),
-   (MOVi32 tglobaladdr:$dst)>;
-
+      (MOVi32 tglobaladdr:$dst)>;
 
 // Tentative Call Instructions
 
