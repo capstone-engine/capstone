@@ -407,46 +407,46 @@ class IBIT<bits<8> op1, bits<2> op2, string asmstr>
 
 // Absolute Value Instructions
 let Defs = [PSW] in {
-   def ABSrr : RR<0x0B, 0x1C, (outs DataRegs:$d),
+   def ABS_rr : RR<0x0B, 0x1C, (outs DataRegs:$d),
                               (ins DataRegs:$s2),
                   "abs $d, $s2",
                   [(set DataRegs:$d, (TriCoreAbs DataRegs:$s2))]>;
-   def ABS_Brr : RR<0x0B, 0x5C, (outs DataRegs:$d),
+   def ABS_B_rr : RR<0x0B, 0x5C, (outs DataRegs:$d),
                                 (ins DataRegs:$s2),
                                  "abs.b $d, $s2",
                   [(set DataRegs:$d, (TriCoreAbs DataRegs:$s2))]>;
-   def ABS_Hrr : RR<0x0B, 0x7C, (outs DataRegs:$d),
+   def ABS_H_rr : RR<0x0B, 0x7C, (outs DataRegs:$d),
                                 (ins DataRegs:$s2),
                                  "abs.h $d, $s2",
                   [(set DataRegs:$d, (TriCoreAbs DataRegs:$s2))]>;
 
-   def ABSDIFrc : RC<0x8B, 0x0E, (outs DataRegs:$d),
+   def ABSDIF_rc : RC<0x8B, 0x0E, (outs DataRegs:$d),
                   (ins DataRegs:$s1, s9imm:$const9), "absdif $d, $s1, $const9",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, immSExt9:$const9))]>;
-   def ABSDIFrr : RR<0x0B, 0x0E, (outs DataRegs:$d),
+   def ABSDIF_rr : RR<0x0B, 0x0E, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdif $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
-   def ABSDIF_Brr : RR<0x0B, 0x4E, (outs DataRegs:$d),
+   def ABSDIF_B_rr : RR<0x0B, 0x4E, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdif.b $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
-   def ABSDIF_Hrr : RR<0x0B, 0x6E, (outs DataRegs:$d),
+   def ABSDIF_H_rr : RR<0x0B, 0x6E, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdif.h $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
 
-   def ABSDIFSrc : RC<0x8B, 0x0F, (outs DataRegs:$d),
+   def ABSDIFS_rc : RC<0x8B, 0x0F, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdifs $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
-   def ABSDIFSrr : RR<0x0B, 0x0F, (outs DataRegs:$d),
+   def ABSDIFS_rr : RR<0x0B, 0x0F, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdifs $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
-   def ABSDIFS_Hrr : RR<0x0B, 0x6F, (outs DataRegs:$d),
+   def ABSDIFS_H_rr : RR<0x0B, 0x6F, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdifs.h $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
 
-   def ABSSrr : RR<0x0B, 0x1D, (outs DataRegs:$d),
+   def ABSS_rr : RR<0x0B, 0x1D, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "abss $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
-   def ABSS_Hrr : RR<0x0B, 0x7D, (outs DataRegs:$d),
+   def ABSS_H_rr : RR<0x0B, 0x7D, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "abss.h $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
 }
@@ -667,9 +667,9 @@ def CADDN_src : ISRC_a15<0xCA, "caddn">;
 
 // Call Instructions
 
-class IB<bits<8> op1, string asmstr, SDNode node>
+class IB<bits<8> op1, string asmstr>
     : B<op1, (outs), (ins i32imm:$disp24),
-        asmstr # " $disp24", [(node imm:$disp24)]>;
+        asmstr # " $disp24", []>;
 
 // The target of a 24-bit call instruction.
 def call_target : Operand<i32> {
@@ -679,8 +679,8 @@ def call_target : Operand<i32> {
 let isCall = 1,
     Defs = [A11],
     Uses = [A10] in {
-  def CALL_b    : IB<0x6D, "call",  TriCoreCall>;
-  def CALLA_b   : IB<0xED, "calla", TriCoreCall>;
+  def CALL_b    : IB<0x6D, "call">;
+  def CALLA_b   : IB<0xED, "calla">;
   def CALLI_rr  : IRR_A<0x2D, 0x00, "calli">;
 }
 
@@ -762,38 +762,40 @@ class IRRRR_aEd<bits<8> op1, bits<3> op2, string asmstr>
             asmstr # " $d, $s1, $s3", []>;
 
 /// op D[c], D[a], D[b], D[d], width
-class IRRRW<bits<8> op1, bits<3> op2, string asmstr>
-     : RRRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, DataRegs:$s3, i32imm:$width)
+class IRRRW_abd<bits<8> op1, bits<3> op2, string asmstr>
+     : RRRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, DataRegs:$s3, i32imm:$width),
             asmstr # " $d, $s1, $s2, $s3, $width", []>;
 /// op D[c], D[a], D[d], width
 class IRRRW_ad<bits<8> op1, bits<3> op2, string asmstr>
-     : RRRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3, i32imm:$width)
+     : RRRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3, i32imm:$width),
             asmstr # " $d, $s1, $s3, $width", []>;
 /// op E[c], D[b], D[d], width
 class IRRRW_Ebd<bits<8> op1, bits<3> op2, string asmstr>
-     : RRRW<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, DataRegs:$s3, i32imm:$width)
+     : RRRW<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, DataRegs:$s3, i32imm:$width),
             asmstr # " $d, $s2, $s3, $width", []>;
 
 /// op E[c], const4, pos, width
 class IRCPW_E<bits<8> op1, bits<2> op2, string asmstr>
-     : RCPW<op1, op2, (outs ExtRegs:$d), (ins i32imm:$const4, i32imm:$pos, i32imm:$width)
+     : RCPW<op1, op2, (outs ExtRegs:$d), (ins i32imm:$const4, i32imm:$pos, i32imm:$width),
             asmstr # " $d, $const4, $pos, $width", []>;
 /// op D[c], D[a], const4, pos, width
 class IRCPW_a<bits<8> op1, bits<2> op2, string asmstr>
-     : RCPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, i32imm:$pos, i32imm:$width)
+     : RCPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, i32imm:$pos, i32imm:$width),
             asmstr # " $d, $s1, $const4, $pos, $width", []>;
+
+
 // D[c], D[a], const4, E[d] (RCRR)
-class IRCRR_aEd<bits<8> op1, bits<3> op2>
-     : RCRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, ExtRegs:$s3)
+class IRCRR_aEd<bits<8> op1, bits<3> op2, string asmstr>
+     : RCRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, ExtRegs:$s3),
             asmstr # " $d, $s1, $const4, $s3", []>;
 // E[c], const4, D[d], width (RCRW)
-class IRCRW_Ed<bits<8> op1, bits<3> op2,>
-     : RCRW<op1, op2, (outs ExtRegs:$d), (ins i32imm:$const4, DataRegs:$s3, i32imm:$width)
+class IRCRW_Ed<bits<8> op1, bits<3> op2, string asmstr>
+     : RCRW<op1, op2, (outs ExtRegs:$d), (ins i32imm:$const4, DataRegs:$s3, i32imm:$width),
             asmstr # " $d, $const4, $s3, $width", []>;
 // D[c], D[a], const4, D[d], width (RCRW)
-class IRCRW_ad<bits<8> op1, bits<3> op2,>
-     : RCRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, DataRegs:$s3, i32imm:$width)
-            asmstr # " $d, $s1, $const4, $pos, $width", []>;
+class IRCRW_ad<bits<8> op1, bits<3> op2, string asmstr>
+     : RCRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, DataRegs:$s3, i32imm:$width),
+            asmstr # " $d, $s1, $const4, $s3, $width", []>;
 
 multiclass mIRRPWab_RRRR<bits<8> op1, bits<2> op2, bits<8> op3, bits<3> op4, string asmstr>{
   def _rrpw : IRRPW_ab<op1, op2, asmstr>;
@@ -851,21 +853,21 @@ def EQ_src : ISRC_15a<0xBA, "eq">;
 def EQ_srr : ISRR_15a<0x3A, "eq">;
 def EQ_A_rr: IRR_AaAb<0x01, 0x40, "eq.a">;
 
-defm EQANY.B : mIRR_RC<0x0B, 0x56, 0x8B, 0x56, "eqany.b">;
-defm EQANY.H : mIRR_RC<0x0B, 0x76, 0x8B, 0x76, "eqany.h">;
+defm EQANY_B : mIRR_RC<0x0B, 0x56, 0x8B, 0x56, "eqany.b">;
+defm EQANY_H : mIRR_RC<0x0B, 0x76, 0x8B, 0x76, "eqany.h">;
 
 def EQZ_A_rr : IRR_Aa<0x01, 0x48, "eqz.a">;
 
-def EXTR_rrpw : IRRPW<0x37, 0x02, "extr">;
+def EXTR_rrpw : IRRPW_a<0x37, 0x02, "extr">;
 def EXTR_rrrr : IRRRR_aEd<0x17, 0x02, "extr">;
 def EXTR_rrrw : IRRRW_ad<0x57, 0x02, "extr">;
 
-def EXTR_U_rrpw : IRRPW<0x37 0x03, "extr.u">;
+def EXTR_U_rrpw : IRRPW_a<0x37, 0x03, "extr.u">;
 def EXTR_U_rrrr : IRRRR_aEd<0x17, 0x03, "extr.u">;
 def EXTR_U_rrrw : IRRRW_ad<0x57, 0x03, "extr.u">;
 
-def FCALL_b  : IBB<0x61, "fcall">;
-def FCALLA_b : IBB<0xE1, "fcalla">;
+def FCALL_b  : IB<0x61, "fcall">;
+def FCALLA_b : IB<0xE1, "fcalla">;
 def FCALLA_i : IRR_A<0x2D, 0x01, "fcalli">;
 
 def FRET_sr : ISR_0<0x00, 0x07, "fret">;
@@ -890,7 +892,135 @@ def IMASK_rrrw : IRRRW_Ebd<0x57, 0x01, "imask">;
 def INS_T  : IBIT<0x67, 0x00, "ins.t">;
 def INSN_T : IBIT<0x67, 0x01, "insn.t">;
 
-// def INSERT_rrrr : IRRRR_aEd
+def INSERT_rcpw : IRCPW_a  <0xB7, 0x00, "insert">;
+def INSERT_rcrr : IRCRR_aEd<0x97, 0x00, "insert">;
+def INSERT_rcrw : IRCRW_ad <0xD7, 0x00, "insert">;
+def INSERT_rrpw : IRRPW_ab <0x37, 0x00, "insert">;
+def INSERT_rrrr : IRRRW_abd<0x17, 0x00, "insert">;
+def INSERT_rrrw : IRRRW_abd<0x57, 0x00, "insert">;
+
+def ISYNC_sys : ISYS_0<0x0D, 0x13, "isync">;
+
+defm IXMAX : mI_U_RRR_EEdb<0x6B, 0x0A, 0x6B, 0x0B, "ixmax">;
+defm IXMIN : mI_U_RRR_EEdb<0x6B, 0x08, 0x6B, 0x09, "ixmin">;
+
+class ISB<bits<8> op1, string asmstr>
+    : SB<op1, (outs), (ins i32imm:$disp24), asmstr # " $disp24", []>;
+
+def J_b  : IB<0x1D, "j">;
+def J_sb : ISB<0x3C, "j">;
+def JA_b : IB<0x9D, "ja">;
+
+// disp15
+class IBRR_0<bits<8> op1, bits<1> op2, string asmstr>
+    : BRR<op1, op2, (outs), (ins i32:$disp15), asmstr # " $disp15", []>;
+// A[a], disp15
+class IBRR_Aa<bits<8> op1, bits<1> op2, string asmstr>
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, i32:$disp15), asmstr # " $s1, $disp15", []>;
+// A[b], disp15
+class IBRR_Ab<bits<8> op1, bits<1> op2, string asmstr>
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s2, i32:$disp15), asmstr # " $s2, $disp15", []>;
+// A[a], A[b], disp15
+class IBRR_AaAb<bits<8> op1, bits<1> op2, string asmstr>
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, AddrRegs:$s2, i32imm:$disp15),
+          asmstr # " $s1, $s2, $disp15", []>;
+// D[a], D[b], disp15
+class IBRR<bits<8> op1, bits<1> op2, string asmstr>
+    : BRR<op1, op2, (outs), (ins DataRegs:$s1, DataRegs:$s2, i32imm:$disp15),
+          asmstr # " $s1, $s2, $disp15", []>;
+
+
+class IBRC<bits<8> op1, bits<1> op2, string asmstr>
+    : BRC<op1, op2, (outs), (ins jmptarget:$disp15, DataRegs:$s1, s4imm:$const4),
+      !strconcat(asmstr, " $s1, $const4, $disp15"), []>;
+
+class ISBC<bits<8> op1, string asmstr>
+    : SBC<op1, (outs), (ins s4imm:$const4, jmptarget:$disp4),
+      !strconcat(asmstr, " %d15, $const4, $disp4"), []>;
+
+// D[15], D[b], disp4 (SBR)
+class ISBR_15b<bits<8> op1, string asmstr>
+    : SBR<op1, (outs), (ins DataRegs:$s2, jmptarget:$disp4),
+      !strconcat(asmstr, " %d15, $s2, $disp4"), []>;
+// D[b], disp4 (SBR)
+class ISBR_b<bits<8> op1, string asmstr>
+    : SBR<op1, (outs), (ins DataRegs:$s2, jmptarget:$disp4),
+      !strconcat(asmstr, " $s2, $disp4"), []>;
+// A[b], disp4 (SBR)
+class ISBR_Ab<bits<8> op1, string asmstr>
+    : SBR<op1, (outs), (ins AddrRegs:$s2, jmptarget:$disp4),
+      !strconcat(asmstr, " $s2, $disp4"), []>;
+
+multiclass mIBRC_BRR<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2, string asmstr>{
+  def _brc : IBRC<c1, c2, asmstr>;
+  def _brr : IBRR<r1, r2, asmstr>;
+}
+
+multiclass mIBRC_BRR_2SBC_2SBR<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2,
+                               bits<8> x1, bits<8> x2, bits<8> x3, bits<8> x4,
+                               string asmstr>
+         : mIBRC_BRR<c1, c2, r1, r2, asmstr> {
+  def _sbc1 : ISBC<x1, asmstr>;
+  def _sbc2 : ISBC<x2, asmstr>;
+  def _sbr1 : ISBR_15b<x3, asmstr>;
+  def _sbr2 : ISBR_15b<x4, asmstr>;
+}
+
+defm JEQ : mIBRC_BRR_2SBC_2SBR<0xDF, 0x00, 0x5F, 0x00,
+                               0x1E, 0x9E, 0x3E, 0xBE,
+                               "jeq">; 
+def JEQ_A_brr : IBRR_AaAb<0x7D, 0x00, "jeq.a">;
+
+defm JGE   : mIBRC_BRR<0xFF, 0x00, 0x7F, 0x00, "jge">;
+defm JGE_U : mIBRC_BRR<0xFF, 0x01, 0x7F, 0x01, "jge.u">;
+
+def JGEZ_sbr : ISBR_b<0xCE, "jgez">;
+def JGTZ_sbr : ISBR_b<0x4E, "jgtz">;
+
+def JI_rr : IRR_A<0x2D, 0x03, "ji">;
+def JI_sr : ISR_1<0xDC, 0x00, "ji">;
+
+def JL_b  : IB<0x5D, "jl">;
+def JLA_b : IB<0xDD, "jla">;
+
+def JLEZ_sbr : ISBR_b<0x8E, "jlez">;
+
+def JLI_rr : IRR_A<0x2D, 0x02, "jli">;
+
+defm JLT   : mIBRC_BRR<0xBF, 0x00, 0x3F, 0x00, "jlt">;
+defm JLT_U : mIBRC_BRR<0xBF, 0x01, 0x3F, 0x01, "jlt.u">;
+
+def JLTZ_sbr : ISBR_b<0x0E, "jltz">;
+
+defm JNE : mIBRC_BRR_2SBC_2SBR<0xDF, 0x01, 0x5F, 0x01,
+                               0x5E, 0xDE, 0x7E, 0xFE,
+                               "jne">;
+
+def JNE_A_brr : IBRR_AaAb<0x7D, 0x01, "jne.a">;
+
+defm JNED : mIBRC_BRR<0x9F, 0x01, 0x1F, 0x01, "jned">;
+defm JNEI : mIBRC_BRR<0x9F, 0x00, 0x1F, 0x00, "jnei">;
+
+multiclass mIBRR_SBR<bits<8> brr1, bits<1> brr2, bits<8> sbr, string asmstr> {
+  def _brr : IBRR<brr1, brr2, asmstr>;
+  def _sbr : ISBR_Ab<sbr, asmstr>;
+}
+
+multiclass mISB_SBR_T_BRN_SBRN<bits<8> sb, bits<8> sbr,
+                               bits<8> a1, bits<1> a2, bits<8> a3,
+                               bits<7> brn1, bits<1> brn2, bits<8> sbrn,
+                               string asmstr>{
+  def _sb  : ISB<sb, asmstr>;
+  def _sbr : ISBR_b<sbr, asmstr>;
+  defm _A  : mIBRR_SBR<a1, a2, a3, asmstr # ".a">;
+  def _T_brn : BRN<brn1, brn2, (outs), (ins DataRegs:$s1, i32imm:$n, i32imm:$disp15),
+                   asmstr # ".t $s1, $n, $disp15", []>;
+  def _T_sbrn: SBRN<sbrn, (outs), (ins i32imm:$n, i32imm:$disp4),
+                   asmstr # ".t %d15, $n, $disp4", []>;
+}
+
+defm JNZ : mISB_SBR_T_BRN_SBRN<0xEE, 0xF6, 0xBD, 0x01, 0x7C, 0x6F, 0x01, 0xA3, "jnz">;
+defm JZ  : mISB_SBR_T_BRN_SBRN<0x6E, 0x76, 0xBD, 0x00, 0xBC, 0x6F, 0x00, 0x2E, "jz">;
 
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
@@ -1607,36 +1737,36 @@ defm XOR_GE    : LOGIC_COMPARE_S<0x33, "xor.ge",  TriCore_LOGIC_OR_GE>;
 defm XOR_GE_U  : LOGIC_COMPARE_U<0x34, "xor.ge.u",  TriCore_LOGIC_OR_GE>;
 
 // Branch Instructions
-let Uses = [PC], Defs = [PC] in
-multiclass JUMP_16<bits<8> op1_sb, bits<8> op1_sbr,
-         string asmstring, PatLeaf PF>
-{
-  let Uses = [D15] in
-  def sb: SB<op1_sb, (outs),
-     (ins jmptarget:$disp8),
-     !strconcat(asmstring, " %d15, $disp8"),
-     [(TriCoreBrCC bb:$disp8, D15, PF)]>;
+// let Uses = [PC], Defs = [PC] in
+// multiclass JUMP_16<bits<8> op1_sb, bits<8> op1_sbr,
+//          string asmstring, PatLeaf PF>
+// {
+//   let Uses = [D15] in
+//   def sb: SB<op1_sb, (outs),
+//      (ins jmptarget:$disp8),
+//      !strconcat(asmstring, " %d15, $disp8"),
+//      [(TriCoreBrCC bb:$disp8, D15, PF)]>;
 
-  def sbr: SBR<op1_sbr, (outs),
-     (ins DataRegs:$s1, jmptarget:$disp4),
-     !strconcat(asmstring, " $s1, $disp4"),
-     [(TriCoreBrCC bb:$disp4, DataRegs:$s1, PF)]>;
-}
+//   def sbr: SBR<op1_sbr, (outs),
+//      (ins DataRegs:$s1, jmptarget:$disp4),
+//      !strconcat(asmstring, " $s1, $disp4"),
+//      [(TriCoreBrCC bb:$disp4, DataRegs:$s1, PF)]>;
+// }
 
-let isBranch = 1, isTerminator = 1 in {
-// Direct branch
-let isBarrier = 1 in {
-  def Jb : B<0x1D, (outs), (ins jmptarget:$dst),
-                "j $dst",
-        [(br bb:$dst)]>;
-}
+// let isBranch = 1, isTerminator = 1 in {
+// // Direct branch
+// let isBarrier = 1 in {
+//   def Jb : B<0x1D, (outs), (ins jmptarget:$dst),
+//                 "j $dst",
+//         [(br bb:$dst)]>;
+// }
 
-// Conditional branches
+// // Conditional branches
 
- defm JNZ : JUMP_16<0xEE, 0xF6, "jnz", TriCore_COND_NE>;
- defm JZ : JUMP_16<0x6E, 0x76, "jz", TriCore_COND_EQ>;
+//  defm JNZ : JUMP_16<0xEE, 0xF6, "jnz", TriCore_COND_NE>;
+//  defm JZ : JUMP_16<0x6E, 0x76, "jz", TriCore_COND_EQ>;
 
-} // isBranch, isTerminator
+// } // isBranch, isTerminator
 
 
 //multiclass BRANCH_SIGNED<bits<8> op1_brc, bits<8> op1_brr,
