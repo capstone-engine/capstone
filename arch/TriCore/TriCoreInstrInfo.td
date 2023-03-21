@@ -318,6 +318,11 @@ class IRR_Ea<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s1),
       asmstr # " $d, $s1", []>;
 
+/// op D[c], A[a]
+class IRR_Aa<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs DataRegs:$d), (ins AddrRegs:$s1),
+      asmstr # " $d, $s1", []>;
+
 class IRR_2<bits<8> op1, bits<8> op2,
                RegisterClass cd, RegisterClass c1, RegisterClass c2,
                string asmstr>
@@ -726,15 +731,19 @@ def DEBUG_sys : ISYS_0<0x0D, 0x04, "debug">;
 
 /// RRPW Instruction Formats
 /// op D[c], D[a], pos, width
-class IRRPW_apw<bits<8> op1, bits<2> op2, string asmstr>
+class IRRPW_a<bits<8> op1, bits<2> op2, string asmstr>
      : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$pos, i32imm:$width),
             asmstr # " $d, $s1, $pos, $width", []>;
 /// op D[c], D[b], pos, width
-class IRRPW_bpw<bits<8> op1, bits<2> op2, string asmstr>
+class IRRPW_b<bits<8> op1, bits<2> op2, string asmstr>
      : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s2, i32imm:$pos, i32imm:$width),
             asmstr # " $d, $s2, $pos, $width", []>;
+/// op E[c], D[b], pos, width
+class IRRPW_Eb<bits<8> op1, bits<2> op2, string asmstr>
+     : RRPW<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, i32imm:$pos, i32imm:$width),
+            asmstr # " $d, $s2, $pos, $width", []>;
 /// op D[c], D[a], D[b], pos
-class IRRPW_abp<bits<8> op1, bits<2> op2, string asmstr>
+class IRRPW_ab<bits<8> op1, bits<2> op2, string asmstr>
      : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, i32imm:$pos),
             asmstr # " $d, $s1, $s2, $pos", []>;
 
@@ -747,19 +756,51 @@ class IRRRR<bits<8> op1, bits<3> op2, string asmstr>
 class IRRRR_ad<bits<8> op1, bits<3> op2, string asmstr> 
     : RRRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3),
             asmstr # " $d, $s1, $s3", []>;
+/// op D[c], D[a], E[d]
+class IRRRR_aEd<bits<8> op1, bits<3> op2, string asmstr> 
+    : RRRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, ExtRegs:$s3),
+            asmstr # " $d, $s1, $s3", []>;
 
-// class IRRRW<> : RRRW<>;
+/// op D[c], D[a], D[b], D[d], width
+class IRRRW<bits<8> op1, bits<3> op2, string asmstr>
+     : RRRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, DataRegs:$s3, i32imm:$width)
+            asmstr # " $d, $s1, $s2, $s3, $width", []>;
+/// op D[c], D[a], D[d], width
+class IRRRW_ad<bits<8> op1, bits<3> op2, string asmstr>
+     : RRRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3, i32imm:$width)
+            asmstr # " $d, $s1, $s3, $width", []>;
+/// op E[c], D[b], D[d], width
+class IRRRW_Ebd<bits<8> op1, bits<3> op2, string asmstr>
+     : RRRW<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, DataRegs:$s3, i32imm:$width)
+            asmstr # " $d, $s2, $s3, $width", []>;
 
-// class IRCPW<> : RRPW<>;
-// class IRCRR<> : RRPW<>;
-// class IRCRW<> : RCRW<>;
+/// op E[c], const4, pos, width
+class IRCPW_E<bits<8> op1, bits<2> op2, string asmstr>
+     : RCPW<op1, op2, (outs ExtRegs:$d), (ins i32imm:$const4, i32imm:$pos, i32imm:$width)
+            asmstr # " $d, $const4, $pos, $width", []>;
+/// op D[c], D[a], const4, pos, width
+class IRCPW_a<bits<8> op1, bits<2> op2, string asmstr>
+     : RCPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, i32imm:$pos, i32imm:$width)
+            asmstr # " $d, $s1, $const4, $pos, $width", []>;
+// D[c], D[a], const4, E[d] (RCRR)
+class IRCRR_aEd<bits<8> op1, bits<3> op2>
+     : RCRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, ExtRegs:$s3)
+            asmstr # " $d, $s1, $const4, $s3", []>;
+// E[c], const4, D[d], width (RCRW)
+class IRCRW_Ed<bits<8> op1, bits<3> op2,>
+     : RCRW<op1, op2, (outs ExtRegs:$d), (ins i32imm:$const4, DataRegs:$s3, i32imm:$width)
+            asmstr # " $d, $const4, $s3, $width", []>;
+// D[c], D[a], const4, D[d], width (RCRW)
+class IRCRW_ad<bits<8> op1, bits<3> op2,>
+     : RCRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, DataRegs:$s3, i32imm:$width)
+            asmstr # " $d, $s1, $const4, $pos, $width", []>;
 
-multiclass mIRRPW_RRRR<bits<8> op1, bits<2> op2, bits<8> op3, bits<3> op4, string asmstr>{
-  def _rrpw : IRRPW_abp<op1, op2, asmstr>;
+multiclass mIRRPWab_RRRR<bits<8> op1, bits<2> op2, bits<8> op3, bits<3> op4, string asmstr>{
+  def _rrpw : IRRPW_ab<op1, op2, asmstr>;
   def _rrrr : IRRRR<op3, op4, asmstr>;
 }
 
-defm DEXTR : mIRRPW_RRRR<0x77, 0x00, 0x17, 0x04, "dextr">;
+defm DEXTR : mIRRPWab_RRRR<0x77, 0x00, 0x17, 0x04, "dextr">;
 
 def DISABLE_sys   : ISYS_0<0x0D, 0x0D, "disable">;
 def DISABLE_sys_1 : ISYS_1<0x0D, 0x0F, "disable">;
@@ -809,6 +850,47 @@ defm EQ    : mIRR_RC<0x0B, 0x10, 0x8B, 0x10, "eq">
 def EQ_src : ISRC_15a<0xBA, "eq">;
 def EQ_srr : ISRR_15a<0x3A, "eq">;
 def EQ_A_rr: IRR_AaAb<0x01, 0x40, "eq.a">;
+
+defm EQANY.B : mIRR_RC<0x0B, 0x56, 0x8B, 0x56, "eqany.b">;
+defm EQANY.H : mIRR_RC<0x0B, 0x76, 0x8B, 0x76, "eqany.h">;
+
+def EQZ_A_rr : IRR_Aa<0x01, 0x48, "eqz.a">;
+
+def EXTR_rrpw : IRRPW<0x37, 0x02, "extr">;
+def EXTR_rrrr : IRRRR_aEd<0x17, 0x02, "extr">;
+def EXTR_rrrw : IRRRW_ad<0x57, 0x02, "extr">;
+
+def EXTR_U_rrpw : IRRPW<0x37 0x03, "extr.u">;
+def EXTR_U_rrrr : IRRRR_aEd<0x17, 0x03, "extr.u">;
+def EXTR_U_rrrw : IRRRW_ad<0x57, 0x03, "extr.u">;
+
+def FCALL_b  : IBB<0x61, "fcall">;
+def FCALLA_b : IBB<0xE1, "fcalla">;
+def FCALLA_i : IRR_A<0x2D, 0x01, "fcalli">;
+
+def FRET_sr : ISR_0<0x00, 0x07, "fret">;
+def FRET_sys : ISR_0<0x0D, 0x03, "fret">;
+
+multiclass mI_U_RR_RC<bits<8> op1, bits<8> op2, bits<8> op3, bits<7> op4,
+                      bits<8> uop1, bits<8> uop2, bits<8> uop3, bits<7> uop4,
+                      string asmstr> {
+  defm ""  : mIRR_RC<op1, op2, op3, op4, asmstr>;
+  defm _U  : mIRR_RC<uop1, uop2, uop3, uop4, asmstr # ".u">;
+}
+
+defm GE : mI_U_RR_RC<0x0B, 0x14, 0x8B, 0x14,
+                     0x0B, 0x15, 0x8B, 0x15, "ge">;
+def GE_A_rr : IRR_AaAb<0x01, 0x43, "ge.a">;
+
+def IMASK_rcpw : IRCPW_E<0xB7, 0x01, "imask">;
+def IMASK_rcrw : IRCRW_Ed<0xD7, 0x01, "imask">;
+def IMASK_rrpw : IRRPW_Eb<0x37, 0x01, "imask">;
+def IMASK_rrrw : IRRRW_Ebd<0x57, 0x01, "imask">;
+
+def INS_T  : IBIT<0x67, 0x00, "ins.t">;
+def INSN_T : IBIT<0x67, 0x01, "insn.t">;
+
+// def INSERT_rrrr : IRRRR_aEd
 
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
@@ -1068,10 +1150,10 @@ def MOVHrlc : MOV_CONST<0x7B, "movh", (ins i32imm:$const16), [/* No Pattern*/]>;
 def MOVi32 : Pseudo<(outs DataRegs:$d), (ins i32imm:$const32), "##NAME## Pseudo",
                      [(set DataRegs:$d, (movei32 imm:$const32))]>;
 
-def IMASKrcpw :  RCPW<0xB7, 0b01, (outs ExtRegs:$d),
-  (ins u4imm:$const4, i32imm:$pos, i32imm:$width),
-  "imask $d, $const4, $pos, $width",
-  [(set ExtRegs:$d, (TriCoreImask immZExt4:$const4, imm:$pos, imm:$width))]>;
+// def IMASKrcpw :  RCPW<0xB7, 0b01, (outs ExtRegs:$d),
+//   (ins u4imm:$const4, i32imm:$pos, i32imm:$width),
+//   "imask $d, $const4, $pos, $width",
+//   [(set ExtRegs:$d, (TriCoreImask immZExt4:$const4, imm:$pos, imm:$width))]>;
 
 // def DEXTRrrpw :  RRPW<0x77, 0b00, (outs DataRegs:$d),
 //   (ins DataRegs:$s1, DataRegs:$s2, i32imm:$pos),
