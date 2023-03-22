@@ -1216,7 +1216,7 @@ class IRRR1_label<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc, str
            asmstr # " $d, $s3, $s1, $s2 " # label # ", $n", []>;
 class IRRR1_label2<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc, string label1, string label2>
     : RRR1<op1, op2, (outs rc:$d), (ins DataRegs:$s1, DataRegs:$s2, rc:$s3, u2imm:$n),
-           asmstr # " $d, $s3, $s1" # label1 # ", $s2" # label2 # ", $n", []>;
+           asmstr # " $d, $s3, ${s1}" # label1 # ", ${s2}" # label2 # ", $n", []>;
 class IRRR1<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
     : RRR1<op1, op2, (outs rc:$d), (ins DataRegs:$s1, DataRegs:$s2, rc:$s3, u2imm:$n),
            asmstr # " $d, $s3, $s1, $s2, $n", []>;
@@ -1227,7 +1227,7 @@ class IRRR2<bits<8> op1, bits<8> op2, string asmstr, RegisterClass rc>
 
 multiclass mIRRR2<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4, string asmstr>{
   def _rrr2   : IRRR2<op1, op2, asmstr, DataRegs>;
-  def _rrr2_e : IRRR2<op1, op2, asmstr, ExtRegs>;
+  def _rrr2_e : IRRR2<op3, op4, asmstr, ExtRegs>;
 }
 
 defm MADD : mIRCR<0x13, 0x01, 0x13, 0x03, "madd">
