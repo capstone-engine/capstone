@@ -660,6 +660,11 @@ class IRCR_E<bits<8>op1, bits<3> op2, string asmstr>
     : RCR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s1, ExtRegs:$s3, s9imm:$const9),
           asmstr # " $d, $s3, $s1, $const9", []>;
 
+multiclass mIRCR<bits<8>op1, bits<3> op2, bits<8>op3, bits<3> op4, string asmstr>{
+  def _rcr   : IRCR<op1, op2, asmstr>;
+  def _rcr_e : IRCR_E<op3, op4, asmstr>;
+}
+
 /// CADD Instructions
 def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
 def CADD_rrr : IRRR_dab<0x2B, 0x00, "cadd">;
@@ -1205,6 +1210,100 @@ multiclass mIU__RR_ab<bits<8> op1, bits<8> op2,
 defm LT_B : mIU__RR_ab<0x0B, 0x52, 0x0B, 0x53, "lt.b">;
 defm LT_H : mIU__RR_ab<0x0B, 0x72, 0x0B, 0x73, "lt.h">;
 defm LT_W : mIU__RR_ab<0x0B, 0x92, 0x0B, 0x93, "lt.w">;
+
+class IRRR1_label<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc, string label>
+    : RRR1<op1, op2, (outs rc:$d), (ins DataRegs:$s1, DataRegs:$s2, rc:$s3, u2imm:$n),
+           asmstr # " $d, $s3, $s1, $s2 " # label # ", $n", []>;
+class IRRR1_label2<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc, string label1, string label2>
+    : RRR1<op1, op2, (outs rc:$d), (ins DataRegs:$s1, DataRegs:$s2, rc:$s3, u2imm:$n),
+           asmstr # " $d, $s3, $s1" # label1 # ", $s2" # label2 # ", $n", []>;
+class IRRR1<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
+    : RRR1<op1, op2, (outs rc:$d), (ins DataRegs:$s1, DataRegs:$s2, rc:$s3, u2imm:$n),
+           asmstr # " $d, $s3, $s1, $s2, $n", []>;
+
+class IRRR2<bits<8> op1, bits<8> op2, string asmstr, RegisterClass rc>
+    : RRR2<op1, op2, (outs rc:$d), (ins DataRegs:$s1, DataRegs:$s2, rc:$s3),
+           asmstr # " $d, $s3, $s1, $s2", []>;
+
+multiclass mIRRR2<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4, string asmstr>{
+  def _rrr2   : IRRR2<op1, op2, asmstr, DataRegs>;
+  def _rrr2_e : IRRR2<op1, op2, asmstr, ExtRegs>;
+}
+
+defm MADD : mIRCR<0x13, 0x01, 0x13, 0x03, "madd">
+          , mIRRR2<0x03, 0x0A, 0x03, 0x6A, "madd">;
+
+defm MADDS : mIRCR<0x13, 0x05, 0x13, 0x07, "madds">
+           , mIRRR2<0x03, 0x8A, 0x03, 0xEA, "madds">;
+
+multiclass mIRRR1_LU2<bits<8> ll1, bits<6> ll2, bits<8> lu1, bits<6> lu2,
+                      bits<8> ul1, bits<6> ul2, bits<8> uu1, bits<6> uu2,
+                      string asmstr, RegisterClass rc>{
+  def _rrr1_LL : IRRR1_label<ll1, ll2, asmstr, rc, "LL">;
+  def _rrr1_LU : IRRR1_label<lu1, lu2, asmstr, rc, "LU">;
+  def _rrr1_UL : IRRR1_label<ul1, ul2, asmstr, rc, "UL">;
+  def _rrr1_UU : IRRR1_label<uu1, uu2, asmstr, rc, "UU">;
+}
+multiclass mIRRR1_E_LU2<bits<8> ll1, bits<6> ll2, bits<8> lu1, bits<6> lu2,
+                       bits<8> ul1, bits<6> ul2, bits<8> uu1, bits<6> uu2, string asmstr>{
+  defm "" : mIRRR1_LU2<ll1, ll2, lu1, lu2, ul1, ul2, uu1, uu2, asmstr, ExtRegs>;
+}
+
+defm MADD_H  : mIRRR1_E_LU2<0x83, 0x1A, 0x83, 0x19, 0x83, 0x18, 0x83, 0x1B, "madd.h">;
+defm MADDS_H : mIRRR1_E_LU2<0x83, 0x3A, 0x83, 0x39, 0x83, 0x38, 0x83, 0x3B, "madds.h">;
+
+def MADD_Q_rrr1              : IRRR1<0x43, 0x02, "madd.q", DataRegs>;
+def MADD_Q_rrr1_e            : IRRR1<0x43, 0x1B, "madd.q", ExtRegs>;
+def MADD_Q_rrr1_L      : IRRR1_label<0x43, 0x01, "madd.q", DataRegs, "L">;
+def MADD_Q_rrr1_e_L    : IRRR1_label<0x43, 0x19, "madd.q", ExtRegs,  "L">;
+def MADD_Q_rrr1_U      : IRRR1_label<0x43, 0x00, "madd.q", DataRegs, "U">;
+def MADD_Q_rrr1_e_U    : IRRR1_label<0x43, 0x18, "madd.q", ExtRegs,  "U">;
+def MADD_Q_rrr1_L_L   : IRRR1_label2<0x43, 0x05, "madd.q", DataRegs, "L", "L">;
+def MADD_Q_rrr1_e_L_L : IRRR1_label2<0x43, 0x1D, "madd.q", ExtRegs,  "L", "L">;
+def MADD_Q_rrr1_U_U   : IRRR1_label2<0x43, 0x04, "madd.q", DataRegs, "U", "U">;
+def MADD_Q_rrr1_e_U_U : IRRR1_label2<0x43, 0x1C, "madd.q", ExtRegs,  "U", "U">;
+
+def MADDS_Q_rrr1              : IRRR1<0x43, 0x22, "madds.q", DataRegs>;
+def MADDS_Q_rrr1_e            : IRRR1<0x43, 0x3B, "madds.q", ExtRegs>;
+def MADDS_Q_rrr1_L      : IRRR1_label<0x43, 0x21, "madds.q", DataRegs, "L">;
+def MADDS_Q_rrr1_e_L    : IRRR1_label<0x43, 0x39, "madds.q", ExtRegs,  "L">;
+def MADDS_Q_rrr1_U      : IRRR1_label<0x43, 0x20, "madds.q", DataRegs, "U">;
+def MADDS_Q_rrr1_e_U    : IRRR1_label<0x43, 0x38, "madds.q", ExtRegs,  "U">;
+def MADDS_Q_rrr1_L_L   : IRRR1_label2<0x43, 0x25, "madds.q", DataRegs, "L", "L">;
+def MADDS_Q_rrr1_e_L_L : IRRR1_label2<0x43, 0x3D, "madds.q", ExtRegs,  "L", "L">;
+def MADDS_Q_rrr1_U_U   : IRRR1_label2<0x43, 0x24, "madds.q", DataRegs, "U", "U">;
+def MADDS_Q_rrr1_e_U_U : IRRR1_label2<0x43, 0x3C, "madds.q", ExtRegs,  "U", "U">;
+
+def MADD_U_rcr : IRCR_E<0x13, 0x02, "madd.u">; 
+def MADD_U_rrr2 : IRRR2<0x03, 0x68, "madd.u", ExtRegs>;
+
+defm MADDS_U : mIRCR<0x13, 0x04, 0x13, 0x06, "madds.u">
+            , mIRRR2<0x03, 0x88, 0x03, 0xE8, "madds.u">;
+
+defm MADDM_H  : mIRRR1_E_LU2<0x83, 0x1E, 0x83, 0x1D, 0x83, 0x1C, 0x83, 0x1F, "maddm.h">;
+defm MADDMS_H : mIRRR1_E_LU2<0x83, 0x3E, 0x83, 0x3D, 0x83, 0x3C, 0x83, 0x3F, "maddms.h">;
+
+defm MADDR_H  : mIRRR1_LU2<0x83, 0x0E, 0x83, 0x0D, 0x83, 0x0C, 0x83, 0x0F, "maddr.h", DataRegs>;
+defm MADDRS_H : mIRRR1_LU2<0x83, 0x2E, 0x83, 0x2D, 0x83, 0x2C, 0x83, 0x2F, "maddrs.h", DataRegs>;
+
+def MADDR_H_rrr1_DcEdDaDbUL
+  : RRR1<0x43, 0x1E, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, ExtRegs:$s3, u2imm:$n),
+         "maddr.h $d, $s3, $s1, $s2, UL, $n", []>;
+def MADDRS_H_rrr1_DcEdDaDbUL
+  : RRR1<0x43, 0x3E, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, ExtRegs:$s3, u2imm:$n),
+         "maddrs.h $d, $s3, $s1, $s2, UL, $n", []>;
+
+def MADDR_Q_rrr1_L_L  : IRRR1_label2<0x43, 0x07, "maddr.q", DataRegs, "L", "L">;
+def MADDR_Q_rrr1_U_U  : IRRR1_label2<0x43, 0x06, "maddr.q", DataRegs, "U", "U">;
+def MADDRS_Q_rrr1_L_L : IRRR1_label2<0x43, 0x27, "maddrs.q", DataRegs, "L", "L">;
+def MADDRS_Q_rrr1_U_U : IRRR1_label2<0x43, 0x26, "maddrs.q", DataRegs, "U", "U">;
+
+defm MADDSU_H   : mIRRR1_E_LU2<0xC3, 0x1A, 0xC3, 0x19, 0xC3, 0x18, 0xC3, 0x1B, "maddsu.h">;
+defm MADDSUS_H  : mIRRR1_E_LU2<0xC3, 0x3A, 0xC3, 0x39, 0xC3, 0x38, 0xC3, 0x3B, "maddsus.h">;
+defm MADDSUM_H  : mIRRR1_E_LU2<0xC3, 0x1E, 0xC3, 0x1D, 0xC3, 0x1C, 0xC3, 0x1F, "maddsum.h">;
+defm MADDSUMS_H : mIRRR1_E_LU2<0xC3, 0x3E, 0xC3, 0x3D, 0xC3, 0x3C, 0xC3, 0x3F, "maddsums.h">;
+defm MADDSUR_H    : mIRRR1_LU2<0xC3, 0x0E, 0xC3, 0x0D, 0xC3, 0x0C, 0xC3, 0x0F, "maddsur.h", DataRegs>;
+defm MADDSURS_H   : mIRRR1_LU2<0xC3, 0x2E, 0xC3, 0x2D, 0xC3, 0x2C, 0xC3, 0x2F, "maddsurs.h", DataRegs>;
 
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),

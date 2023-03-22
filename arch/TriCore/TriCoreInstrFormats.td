@@ -674,7 +674,7 @@ class RRR<bits<8> op1, bits<4> op2 , dag outs, dag ins, string asmstr,
 //===----------------------------------------------------------------------===//
 // 32-bit RRR1 Instruction Format: <d|s3|op2|n|s2|s1|op1>
 //===----------------------------------------------------------------------===//
-class RRR1<bits<8> op1, bits<6> op2 , dag outs, dag ins, string asmstr,
+class RRR1<bits<8> op1, bits<6> op2, dag outs, dag ins, string asmstr,
                 list<dag> pattern> : T32<outs, ins, asmstr, pattern> {
 
   bits<4> d;
@@ -696,7 +696,7 @@ class RRR1<bits<8> op1, bits<6> op2 , dag outs, dag ins, string asmstr,
 //===----------------------------------------------------------------------===//
 // 32-bit RRR2 Instruction Format: <d|s3|op2|s2|s1|op1>
 //===----------------------------------------------------------------------===//
-class RRR2<bits<8> op1, bits<8> op2 , dag outs, dag ins, string asmstr,
+class RRR2<bits<8> op1, bits<8> op2, dag outs, dag ins, string asmstr,
                 list<dag> pattern> : T32<outs, ins, asmstr, pattern> {
 
   bits<4> s1;
