@@ -538,24 +538,24 @@ def BSPLIT_rr  : IRR_Ea<0x4B, 0x09, "bsplit">;
 
 /// BO Opcode Formats
 // A[b], off10 (BO) (Base + Short Offset Addressing Mode)
-class IBO_base_short_offset<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_bso<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10),
       asmstr # " [$s2]$off10", []>;
 // P[b] (BO) (Bit Reverse Addressing Mode)
-class IBO_bit_reverse<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_r<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrExtRegs:$b), (ins AddrRegs:$s2),
       asmstr # " [${b}+r]", []>;
 // P[b], off10 (BO) (Circular Addressing Mode)
-class IBO_circular<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_c<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrExtRegs:$b), (ins s10imm:$off10),
       asmstr # " [${b}+c]", []>;
 // A[b], off10 (BO) (Post-increment Addressing Mode)
 let Constraints = "$s2 = $d" in {
-class IBO_post_increment<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_pos<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10),
       asmstr # " [+$s2]$off10", []>;
 // A[b], off10 (BO) (Pre-increment Addressing Mode)
-class IBO_pre_increment<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_pre<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10),
       asmstr # " [${s2}+]$off10", []>;
 }
@@ -564,16 +564,16 @@ multiclass mIBO_a<bits<8> op11, bits<6> op12,
                   bits<8> op21, bits<6> op22,
                   bits<8> op31, bits<6> op32,
                   string asmstr> {
-    def _bo_bso  : IBO_base_short_offset<op11, op12, asmstr>;
-    def _bo_post : IBO_post_increment<op21, op22, asmstr>;
-    def _bo_pre  : IBO_pre_increment<op31, op32, asmstr>;
+    def _bo_bso  : IBO_bso<op11, op12, asmstr>;
+    def _bo_pos : IBO_pos<op21, op22, asmstr>;
+    def _bo_pre  : IBO_pre<op31, op32, asmstr>;
 }
 
 multiclass mIBO_b<bits<8> op11, bits<6> op12,
                   bits<8> op21, bits<6> op22,
                   string asmstr> {
-    def _bo_r    : IBO_bit_reverse<op11, op12, asmstr>;
-    def _bo_c    : IBO_circular<op21, op22, asmstr>;
+    def _bo_r    : IBO_r<op11, op12, asmstr>;
+    def _bo_c    : IBO_c<op21, op22, asmstr>;
 }
 
 multiclass mIBO_ab<bits<8> op11, bits<6> op12, ///_bso
@@ -704,60 +704,42 @@ def CMOVN_src : ISRC_a15<0xEA, "cmovn">;
 def CMOVN_srr : ISRR_a15<0x6A, "cmovn">;
 
 // A[b], off10, E[a] (BO)(Base + Short Offset Addressing Mode)
-class IBO_base_short_offset_Ea<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_bsoEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10, AddrExtRegs:$s1),
       asmstr # " $s1, [$s2]$off10", []>;
 // P[b], E[a] (BO)(Bit-reverse Addressing Mode)
-class IBO_bit_reverse_Ea<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_rEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrExtRegs:$b), (ins AddrRegs:$s2, AddrExtRegs:$s1),
       asmstr # " $s1, [${b}+r]", []>;
 // P[b], off10, E[a] (BO)(Circular Addressing Mode)
-class IBO_circular_Ea<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_cEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrExtRegs:$b), (ins s10imm:$off10, AddrExtRegs:$s1),
       asmstr # " $s1, [${b}+c]", []>;
 // A[b], off10, E[a] (BO)(Post-increment Addressing Mode)
 let Constraints = "$s2 = $d" in {
-class IBO_post_increment_Ea<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_posEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10, AddrExtRegs:$s1),
       asmstr # " $s1, [+$s2]$off10", []>;
 // A[b], off10, E[a] (BO)(Pre-increment Addressing Mode)
-class IBO_pre_increment_Ea<bits<8> op1, bits<6> op2, string asmstr> 
+class IBO_preEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10, AddrExtRegs:$s1),
       asmstr # " $s1, [${s2}+]$off10", []>;
 }
 
-multiclass mIBO_a_Ea<bits<8> op11, bits<6> op12,
-                  bits<8> op21, bits<6> op22,
-                  bits<8> op31, bits<6> op32,
-                  string asmstr> {
-    def _bo_bso  : IBO_base_short_offset_Ea<op11, op12, asmstr>;
-    def _bo_post : IBO_post_increment_Ea<op21, op22, asmstr>;
-    def _bo_pre  : IBO_pre_increment_Ea<op31, op32, asmstr>;
-}
-
-multiclass mIBO_b_Ea<bits<8> op11, bits<6> op12,
-                  bits<8> op21, bits<6> op22,
-                  string asmstr> {
-    def _bo_r    : IBO_bit_reverse_Ea<op11, op12, asmstr>;
-    def _bo_c    : IBO_circular_Ea<op21, op22, asmstr>;
-}
-
-multiclass mIBO_ab_Ea<bits<8> op11, bits<6> op12, ///_bso
-                   bits<8> op21, bits<6> op22, ///_r
-                   bits<8> op31, bits<6> op32, ///_c
-                   bits<8> op41, bits<6> op42, ///_post
-                   bits<8> op51, bits<6> op52, ///_pre
+multiclass mIBO_Ea<bits<8> bso1, bits<6> bso2, ///_bso
+                   bits<8> r1, bits<6> r2, ///_r
+                   bits<8> c1, bits<6> c2, ///_c
+                   bits<8> pos1, bits<6> pos2, ///_post
+                   bits<8> pre1, bits<6> pre2, ///_pre
                    string asmstr>{
-  defm "" : mIBO_a_Ea<op11,op12,
-                   op41,op42,
-                   op51,op52,
-                   asmstr>,
-            mIBO_b_Ea<op21,op22,
-                   op31,op32,
-                   asmstr>;
+  def _bo_bso  : IBO_bsoEa<bso1, bso2, asmstr>;
+  def _bo_pos  : IBO_posEa<pos1, pos2, asmstr>;
+  def _bo_pre  : IBO_preEa<pre1, pre2, asmstr>;
+  def _bo_r    : IBO_rEa<r1, r2, asmstr>;
+  def _bo_c    : IBO_cEa<c1, c2, asmstr>;
 }
 
-defm CMPSWAP_W : mIBO_ab_Ea<0x49, 0x23, 0x69, 0x03,
+defm CMPSWAP_W : mIBO_Ea<0x49, 0x23, 0x69, 0x03,
                          0x69, 0x13, 0x49,0x03,
                          0x49, 0x13, "CMPSWAP.W">;
 
@@ -931,14 +913,14 @@ def FCALLA_i : IRR_A<0x2D, 0x01, "fcalli">;
 def FRET_sr : ISR_0<0x00, 0x07, "fret">;
 def FRET_sys : ISR_0<0x0D, 0x03, "fret">;
 
-multiclass mI_U_RR_RC<bits<8> op1, bits<8> op2, bits<8> op3, bits<7> op4,
+multiclass mI_U__RR_RC<bits<8> op1, bits<8> op2, bits<8> op3, bits<7> op4,
                       bits<8> uop1, bits<8> uop2, bits<8> uop3, bits<7> uop4,
                       string asmstr> {
   defm ""  : mIRR_RC<op1, op2, op3, op4, asmstr>;
   defm _U  : mIRR_RC<uop1, uop2, uop3, uop4, asmstr # ".u">;
 }
 
-defm GE : mI_U_RR_RC<0x0B, 0x14, 0x8B, 0x14,
+defm GE : mI_U__RR_RC<0x0B, 0x14, 0x8B, 0x14,
                      0x0B, 0x15, 0x8B, 0x15, "ge">;
 def GE_A_rr : IRR_AaAb<0x01, 0x43, "ge.a">;
 
@@ -971,13 +953,13 @@ def JA_b : IB<0x9D, "ja">;
 
 // disp15
 class IBRR_0<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins i32:$disp15), asmstr # " $disp15", []>;
+    : BRR<op1, op2, (outs), (ins i32imm:$disp15), asmstr # " $disp15", []>;
 // A[a], disp15
 class IBRR_Aa<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, i32:$disp15), asmstr # " $s1, $disp15", []>;
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, i32imm:$disp15), asmstr # " $s1, $disp15", []>;
 // A[b], disp15
 class IBRR_Ab<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins AddrRegs:$s2, i32:$disp15), asmstr # " $s2, $disp15", []>;
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s2, i32imm:$disp15), asmstr # " $s2, $disp15", []>;
 // A[a], A[b], disp15
 class IBRR_AaAb<bits<8> op1, bits<1> op2, string asmstr>
     : BRR<op1, op2, (outs), (ins AddrRegs:$s1, AddrRegs:$s2, i32imm:$disp15),
@@ -1141,7 +1123,7 @@ multiclass mIABS_BO<bits<8> abs1, bits<2> abs2,   ///_abs
                     string asmstr, RegisterClass rc>{
   def _abs     : IABS_RO<abs1, abs2, asmstr, rc>;
   def _bo_bso  : IBO_RAbso<bso1, bso2, asmstr, rc>;
-  def _bo_post : IBO_RApos<pos1, pos2, asmstr, rc>;
+  def _bo_pos : IBO_RApos<pos1, pos2, asmstr, rc>;
   def _bo_pre  : IBO_RApre<pre1, pre2, asmstr, rc>;
   def _bo_r    : IBO_RPr<r1, r2, asmstr, rc>;
   def _bo_c    : IBO_RPc<c1, c2, asmstr, rc>;
@@ -1187,6 +1169,42 @@ defm LD_W  : mIABS_BO<0x85, 0x00, 0x09, 0x24, 0x29, 0x04, 0x29, 0x14, 0x09, 0x04
 def LD_W_bol : IBOL<0x19, "ld.w", DataRegs>;
 def LD_W_sc  : ISC_A15A10<0x58, "ld.w">;
 
+def LDLCX_abs    : IABS_off18<0x15, 0x02, "ldlcx">;
+def LDLCX_bo_bso : IBO_bso<0x49, 0x24, "ldlcx">;
+
+def LDMST_abs : IABS_OR<0xE5, 0x01, "ldmst", ExtRegs>;
+defm LDMST    : mIBO_Ea<0x49, 0x21, 0x69, 0x01, 0x69, 0x11, 0x49, 0x01, 0x49, 0x11, "ldmst">;
+
+def LDUCX_abs    : IABS_off18<0x15, 0x03, "lducx">;
+def LDUCX_bo_bso : IBO_bso<0x49, 0x25, "lducx">;
+
+def LEA_abs    : IABS_RO<0xC5, 0x00, "lea", AddrRegs>;
+def LEA_bo_bso : IBO_RAbso<0x49, 0x28, "lea", AddrRegs>;
+def LEA_bol    : IBOL<0xD9, "lea", AddrRegs>;
+
+def LHA_abs    : IABS_RO<0xC5, 0x01, "lha", AddrRegs>;
+
+def LOOP_brr : IBRR_Ab<0xFD, 0x00, "loop">;
+def LOOP_sbr : ISBR_Ab<0xFC, "loop">;
+def LOOPU_brr : IBRR_0<0xFD, 0x01, "loopu">;
+
+defm LT : mIRR_RC<0x0B, 0x12, 0x8B, 0x12, "lt">;
+def LT_src : ISRC_15a<0xFA, "lt">;
+def LT_srr : ISRR_15a<0x7A, "lt">;
+
+defm LT_U : mIRR_RC<0x0B, 0x13, 0x8B, 0x13, "lt.u">;
+def LT_A_rr : IRR_AaAb<0x01, 0x42, "lt.a">;
+
+multiclass mIU__RR_ab<bits<8> op1, bits<8> op2,
+                      bits<8> uop1, bits<8> uop2,
+                      string asmstr> {
+  def ""  : IRR_ab<op1, op2, asmstr>;
+  def U  : IRR_ab<uop1, uop2, asmstr # "u">;
+}
+
+defm LT_B : mIU__RR_ab<0x0B, 0x52, 0x0B, 0x53, "lt.b">;
+defm LT_H : mIU__RR_ab<0x0B, 0x72, 0x0B, 0x73, "lt.h">;
+defm LT_W : mIU__RR_ab<0x0B, 0x92, 0x0B, 0x93, "lt.w">;
 
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
