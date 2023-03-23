@@ -320,6 +320,9 @@ class IRC_2<bits<8> op1, bits<7> op2, string asmstr>
 
 /// RR
 
+class IRR_Ra<bits<8> op1, bits<8> op2, string asmstr, RegisterClass rc>
+    : RR<op1, op2, (outs), (ins rc:$s1), asmstr # " $s1", []>;
+
 /// op A[a]
 class IRR_Aa<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs), (ins AddrRegs:$s1), asmstr # " $s1", []>;
@@ -1718,6 +1721,34 @@ defm XOR_GE   : mIRR_RC<0x0B, 0x33, 0x8B, 0x33, "xor.ge">;
 defm XOR_GE_U : mIRR_RC<0x0B, 0x34, 0x8B, 0x34, "xor.ge.u">;
 defm XOR_LT   : mIRR_RC<0x0B, 0x31, 0x8B, 0x31, "xor.lt">;
 defm XOR_LT_U : mIRR_RC<0x0B, 0x32, 0x8B, 0x32, "xor.lt.u">;
+
+
+
+/// FPU Instructions
+
+def MADD_F_rrr : IRRR_DcDdDaDb<0x6B, 0x06, "madd.f">;
+def MSUB_F_rrr : IRRR_DcDdDaDb<0x6B, 0x07, "msub.f">;
+def ADD_F_rrr : IRRR_DcDdDa<0x6B, 0x02, "add.f">;
+def SUB_F_rrr : IRRR_DcDdDa<0x6B, 0x03, "sub.f">;
+def MUL_F_rrr : IRR_DcDaDb<0x4B, 0x04, "msub.f">;
+def DIV_F_rr  : IRR_DcDaDb<0x4B, 0x05, "div.f">;
+
+def CMP_F_rr  : IRR_DcDaDb<0x4B, 0x00, "cmp.f">;
+def FTOI_rr   : IRR_DcDa<0x4B, 0x10, "ftoi">;
+def FTOIZ_rr  : IRR_DcDa<0x4B, 0x13, "ftoiz">;
+def FTOQ31_rr : IRR_DcDaDb<0x4B, 0x11, "ftoq31">;
+def FTOQ31Z_rr: IRR_DcDaDb<0x4B, 0x18, "ftoq31z">;
+def FTOU_rr   : IRR_DcDa<0x4B, 0x12, "ftou">;
+def FTOUZ_rr  : IRR_DcDa<0x4B, 0x17, "ftouz">;
+def FTOHP_rr  : IRR_DcDa<0x4B, 0x25, "ftohp">;
+def HPTOF_rr  : IRR_DcDa<0x4B, 0x24, "hptof">;
+def ITOF_rr   : IRR_DcDa<0x4B, 0x14, "itof">;
+
+def Q31TOF_rr  : IRR_DcDaDb<0x4B, 0x15, "q31tof">;
+def QSEED_F_rr : IRR_DcDa<0x4B, 0x19, "qseed.f">;
+
+def UPDFL_rr   : IRR_Ra<0x4B, 0x0C, "updfl", DataRegs>;
+def UTOF_rr    : IRR_DcDa<0x4B, 0x16, "utof">;
 
 // let Defs = [PSW], Uses = [PSW] in {
 // def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
