@@ -1713,7 +1713,7 @@ def XOR_srr : ISRR<0xC6, "xor">;
 def XOR_T : IBIT<0x07, 0x03, "xor.t">;
 
 defm XOR_EQ   : mIRR_RC<0x0B, 0x2F, 0x8B, 0x2F, "xor.eq">;
-defm XOR_NE   : mIRR_RC<0x0B, 0x30, 0x8B, 0x30, "xor.nq">;
+defm XOR_NE   : mIRR_RC<0x0B, 0x30, 0x8B, 0x30, "xor.ne">;
 defm XOR_GE   : mIRR_RC<0x0B, 0x33, 0x8B, 0x33, "xor.ge">;
 defm XOR_GE_U : mIRR_RC<0x0B, 0x34, 0x8B, 0x34, "xor.ge.u">;
 defm XOR_LT   : mIRR_RC<0x0B, 0x31, 0x8B, 0x31, "xor.lt">;
@@ -2491,14 +2491,14 @@ multiclass LOGIC_COMPARE_U<bits<8> op_u, string asmstring, PatLeaf PF>
 //}// isBranch, isTerminator
 
 
-let usesCustomInserter = 1 in {
-  def Select8  : Pseudo<(outs DataRegs:$dst),
-             (ins DataRegs:$src, DataRegs:$src2, i32imm:$cc, DataRegs:$src1 ),
-             "# Select8 PSEUDO",
-            [(set DataRegs:$dst,
-            (TriCoreSelectCC DataRegs:$src, DataRegs:$src2, imm:$cc,
-            DataRegs:$src1))]>;
-}
+// let usesCustomInserter = 1 in {
+//   def Select8  : Pseudo<(outs DataRegs:$dst),
+//              (ins DataRegs:$src, DataRegs:$src2, i32imm:$cc, DataRegs:$src1 ),
+//              "# Select8 PSEUDO",
+//             [(set DataRegs:$dst,
+//             (TriCoreSelectCC DataRegs:$src, DataRegs:$src2, imm:$cc,
+//             DataRegs:$src1))]>;
+// }
 
 //===----------------------------------------------------------------------===//
 // Non-Instruction Patterns
