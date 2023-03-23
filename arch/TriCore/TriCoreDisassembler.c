@@ -120,6 +120,30 @@ static DecodeStatus DecodeRR2Instruction(MCInst *Inst, unsigned Insn,
 static DecodeStatus DecodeRRPWInstruction(MCInst *Inst, unsigned Insn,
 		uint64_t Address, void *Decoder);
 
+static DecodeStatus DecodeSLRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSLROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSBCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRR2Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeBITInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeBRCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+
 #include "TriCoreGenDisassemblerTables.inc"
 
 #define GET_REGINFO_ENUM
@@ -833,6 +857,99 @@ static DecodeStatus DecodeRRPWInstruction(MCInst *Inst, unsigned Insn,
 	MCOperand_CreateImm0(Inst, width);
 
 	return MCDisassembler_Success;
+}
+
+static DecodeStatus DecodeSLRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSLROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSBCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRRR2Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeBITInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeBRCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
+}
+static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder){
+	// TODO: DecodeBRNInstruction
+	return MCDisassembler_Fail;
 }
 
 #define GET_SUBTARGETINFO_ENUM
