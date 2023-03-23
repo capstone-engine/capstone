@@ -54,7 +54,7 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 			case TRICORE_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != TRICORE_REG_INVALID)
+				if (op->mem.base != TriCore_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
 				if (op->mem.disp != 0)

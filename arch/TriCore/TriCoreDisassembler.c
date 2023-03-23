@@ -273,7 +273,7 @@ static DecodeStatus DecodeSRCInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1/d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_ADDsrc:
+		case TriCore_ADD_src:
 			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			if (status == MCDisassembler_Success)
 				status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
@@ -304,14 +304,14 @@ static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1/d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_MOV_AAsrr:
+		case TriCore_MOV_AA_srr:
 			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
-		case TriCore_ADDsrr:
-		case TriCore_MULsrr:
-		case TriCore_ANDsrr:
-		case TriCore_ORsrr:
-		case TriCore_XORsrr:
+		case TriCore_ADD_srr:
+		case TriCore_MUL_srr:
+		case TriCore_AND_srr:
+		case TriCore_OR_srr:
+		case TriCore_XOR_srr:
 			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			if (status == MCDisassembler_Success)
 				status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
@@ -326,7 +326,7 @@ static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s2.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_MOV_AAsrr:
+		case TriCore_MOV_AA_srr:
 			status = DecodeAddrRegsRegisterClass(Inst, s2, Address, Decoder);
 			break;
 		default:
@@ -359,16 +359,16 @@ static DecodeStatus DecodeABSInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1_d.
 	switch (MCInst_getOpcode(Inst)) {
-		case TriCore_LD_Aabs:
-		case TriCore_ST_Aabs:    
+		case TriCore_LD_A_abs:
+		case TriCore_ST_A_abs:
 			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
-		case TriCore_LD_Dabs:
-		case TriCore_ST_Dabs:    
+		case TriCore_LD_D_abs:
+		case TriCore_ST_D_abs:
 			status = DecodeExtRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
-		case TriCore_LD_DAabs:
-		case TriCore_ST_DAabs:    
+		case TriCore_LD_DA_abs:
+		case TriCore_ST_DA_abs:
 			status = DecodePairAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
 		default:
@@ -420,40 +420,40 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1_d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_LD_Abo:
-		case TriCore_LD_Apreincbo:
-		case TriCore_LD_Apostincbo:
-		case TriCore_LD_Acircbo:
-		case TriCore_LD_Abitrevbo:
-		case TriCore_ST_Abo:
-		case TriCore_ST_Apreincbo:
-		case TriCore_ST_Apostincbo:
-		case TriCore_ST_Acircbo:
-		case TriCore_ST_Abitrevbo:
+		case TriCore_LD_A_bo_bso:
+		case TriCore_LD_A_bo_pre:
+		case TriCore_LD_A_bo_pos:
+		case TriCore_LD_A_bo_c:
+		case TriCore_LD_A_bo_r:
+		case TriCore_ST_A_bo_bso:
+		case TriCore_ST_A_bo_pre:
+		case TriCore_ST_A_bo_pos:
+		case TriCore_ST_A_bo_c:
+		case TriCore_ST_A_bo_r:
 			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
-		case TriCore_LD_Dbo:
-		case TriCore_LD_Dpreincbo:
-		case TriCore_LD_Dpostincbo:
-		case TriCore_LD_Dcircbo:
-		case TriCore_LD_Dbitrevbo:
-		case TriCore_ST_Dbo:
-		case TriCore_ST_Dpreincbo:
-		case TriCore_ST_Dpostincbo:
-		case TriCore_ST_Dcircbo:
-		case TriCore_ST_Dbitrevbo:
+		case TriCore_LD_D_bo_bso:
+		case TriCore_LD_D_bo_pre:
+		case TriCore_LD_D_bo_pos:
+		case TriCore_LD_D_bo_c:
+		case TriCore_LD_D_bo_r:
+		case TriCore_ST_D_bo_bso:
+		case TriCore_ST_D_bo_pre:
+		case TriCore_ST_D_bo_pos:
+		case TriCore_ST_D_bo_c:
+		case TriCore_ST_D_bo_r:
 			status = DecodeExtRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
-		case TriCore_LD_DAbo:
-		case TriCore_LD_DApreincbo:
-		case TriCore_LD_DApostincbo:
-		case TriCore_LD_DAcircbo:
-		case TriCore_LD_DAbitrevbo:
-		case TriCore_ST_DAbo:
-		case TriCore_ST_DApreincbo:
-		case TriCore_ST_DApostincbo:
-		case TriCore_ST_DAcircbo:    
-		case TriCore_ST_DAbitrevbo:
+		case TriCore_LD_DA_bo_bso:
+		case TriCore_LD_DA_bo_pre:
+		case TriCore_LD_DA_bo_pos:
+		case TriCore_LD_DA_bo_c:
+		case TriCore_LD_DA_bo_r:
+		case TriCore_ST_DA_bo_bso:
+		case TriCore_ST_DA_bo_pre:
+		case TriCore_ST_DA_bo_pos:
+		case TriCore_ST_DA_bo_c:
+		case TriCore_ST_DA_bo_r:
 			status = DecodePairAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
 		default:
@@ -465,36 +465,36 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s2.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_LD_Bcircbo:
-		case TriCore_LD_BUcircbo:
-		case TriCore_LD_Hcircbo:
-		case TriCore_LD_HUcircbo:
-		case TriCore_LD_Wcircbo:
-		case TriCore_LD_Dcircbo:
-		case TriCore_LD_Acircbo:
-		case TriCore_LD_DAcircbo:
-		case TriCore_ST_Bcircbo:
-		case TriCore_ST_Hcircbo:
-		case TriCore_ST_Wcircbo:
-		case TriCore_ST_Dcircbo:
-		case TriCore_ST_Qcircbo:
-		case TriCore_ST_Acircbo:
-		case TriCore_ST_DAcircbo:
-		case TriCore_LD_Bbitrevbo:
-		case TriCore_LD_BUbitrevbo:
-		case TriCore_LD_Hbitrevbo:
-		case TriCore_LD_HUbitrevbo:
-		case TriCore_LD_Wbitrevbo:
-		case TriCore_LD_Dbitrevbo:
-		case TriCore_LD_Abitrevbo:
-		case TriCore_LD_DAbitrevbo:
-		case TriCore_ST_Bbitrevbo:
-		case TriCore_ST_Hbitrevbo:
-		case TriCore_ST_Wbitrevbo:
-		case TriCore_ST_Dbitrevbo:
-		case TriCore_ST_Qbitrevbo:
-		case TriCore_ST_Abitrevbo:
-		case TriCore_ST_DAbitrevbo:
+		case TriCore_LD_B_bo_c:
+		case TriCore_LD_BU_bo_c:
+		case TriCore_LD_H_bo_c:
+		case TriCore_LD_HU_bo_c:
+		case TriCore_LD_W_bo_c:
+		case TriCore_LD_D_bo_c:
+		case TriCore_LD_A_bo_c:
+		case TriCore_LD_DA_bo_c:
+		case TriCore_ST_B_bo_c:
+		case TriCore_ST_H_bo_c:
+		case TriCore_ST_W_bo_c:
+		case TriCore_ST_D_bo_c:
+		case TriCore_ST_Q_bo_c:
+		case TriCore_ST_A_bo_c:
+		case TriCore_ST_DA_bo_c:
+		case TriCore_LD_B_bo_r:
+		case TriCore_LD_BU_bo_r:
+		case TriCore_LD_H_bo_r:
+		case TriCore_LD_HU_bo_r:
+		case TriCore_LD_W_bo_r:
+		case TriCore_LD_D_bo_r:
+		case TriCore_LD_A_bo_r:
+		case TriCore_LD_DA_bo_r:
+		case TriCore_ST_B_bo_r:
+		case TriCore_ST_H_bo_r:
+		case TriCore_ST_W_bo_r:
+		case TriCore_ST_D_bo_r:
+		case TriCore_ST_Q_bo_r:
+		case TriCore_ST_A_bo_r:
+		case TriCore_ST_DA_bo_r:
 			status = DecodePairAddrRegsRegisterClass(Inst, s2, Address, Decoder);
 			break;
 		default:
@@ -529,7 +529,7 @@ static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1_d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_LD_Abol:
+		case TriCore_LD_A_bol:
 			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
 		default:
@@ -565,24 +565,24 @@ static DecodeStatus DecodeRCInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_AND_EQrc:
-		case TriCore_AND_NErc:
-		case TriCore_AND_LTrc:
-		case TriCore_AND_LT_Urc:
-		case TriCore_AND_GErc:
-		case TriCore_AND_GE_Urc:
-		case TriCore_OR_EQrc:
-		case TriCore_OR_NErc:
-		case TriCore_OR_LTrc:
-		case TriCore_OR_LT_Urc:
-		case TriCore_OR_GErc:
-		case TriCore_OR_GE_Urc:
-		case TriCore_XOR_EQrc:
-		case TriCore_XOR_NErc:
-		case TriCore_XOR_LTrc:
-		case TriCore_XOR_LT_Urc:
-		case TriCore_XOR_GErc:
-		case TriCore_XOR_GE_Urc:
+		case TriCore_AND_EQ_rc:
+		case TriCore_AND_NE_rc:
+		case TriCore_AND_LT_rc:
+		case TriCore_AND_LT_U_rc:
+		case TriCore_AND_GE_rc:
+		case TriCore_AND_GE_U_rc:
+		case TriCore_OR_EQ_rc:
+		case TriCore_OR_NE_rc:
+		case TriCore_OR_LT_rc:
+		case TriCore_OR_LT_U_rc:
+		case TriCore_OR_GE_rc:
+		case TriCore_OR_GE_U_rc:
+		case TriCore_XOR_EQ_rc:
+		case TriCore_XOR_NE_rc:
+		case TriCore_XOR_LT_rc:
+		case TriCore_XOR_LT_U_rc:
+		case TriCore_XOR_GE_rc:
+		case TriCore_XOR_GE_U_rc:
 			status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
 			if (status == MCDisassembler_Success)
 				status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
@@ -665,9 +665,10 @@ static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
 		default:
 			status = DecodeDataRegsRegisterClass(Inst, s1, Address, Decoder);
 			break;
-		case TriCore_MOVrlc:
-		case TriCore_MOV_Urlc:
-		case TriCore_MOVHrlc:
+		case TriCore_MOV_rlcDc:
+		case TriCore_MOV_rlcEc:
+		case TriCore_MOV_U_rlc:
+		case TriCore_MOV_H_rlc:
 			break;
 	}
 	if (status != MCDisassembler_Success)
@@ -695,30 +696,30 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode d.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_ADD_Arr:
-		case TriCore_SUB_Arr:
-		case TriCore_MOV_Arr:
-		case TriCore_MOV_AArr:
+		case TriCore_ADD_A_rr:
+		case TriCore_SUB_A_rr:
+		case TriCore_MOV_A_rr:
+		case TriCore_MOV_AA_rr:
 			status = DecodeAddrRegsRegisterClass(Inst, d, Address, Decoder);
 			break;
-		case TriCore_AND_EQrr:
-		case TriCore_AND_NErr:
-		case TriCore_AND_LTrr:
-		case TriCore_AND_LT_Urr:
-		case TriCore_AND_GErr:
-		case TriCore_AND_GE_Urr:
-		case TriCore_OR_EQrr:
-		case TriCore_OR_NErr:
-		case TriCore_OR_LTrr:
-		case TriCore_OR_LT_Urr:
-		case TriCore_OR_GErr:
-		case TriCore_OR_GE_Urr:
-		case TriCore_XOR_EQrr:
-		case TriCore_XOR_NErr:
-		case TriCore_XOR_LTrr:
-		case TriCore_XOR_LT_Urr:
-		case TriCore_XOR_GErr:
-		case TriCore_XOR_GE_Urr:
+		case TriCore_AND_EQ_rr:
+		case TriCore_AND_NE_rr:
+		case TriCore_AND_LT_rr:
+		case TriCore_AND_LT_U_rr:
+		case TriCore_AND_GE_rr:
+		case TriCore_AND_GE_U_rr:
+		case TriCore_OR_EQ_rr:
+		case TriCore_OR_NE_rr:
+		case TriCore_OR_LT_rr:
+		case TriCore_OR_LT_U_rr:
+		case TriCore_OR_GE_rr:
+		case TriCore_OR_GE_U_rr:
+		case TriCore_XOR_EQ_rr:
+		case TriCore_XOR_NE_rr:
+		case TriCore_XOR_LT_rr:
+		case TriCore_XOR_LT_U_rr:
+		case TriCore_XOR_GE_rr:
+		case TriCore_XOR_GE_U_rr:
 			status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
 			if (status == MCDisassembler_Success)
 				status = DecodeDataRegsRegisterClass(Inst, d, Address, Decoder);
@@ -732,8 +733,8 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s1.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_ADD_Arr:
-		case TriCore_SUB_Arr:
+		case TriCore_ADD_A_rr:
+		case TriCore_SUB_A_rr:
 			status = DecodeAddrRegsRegisterClass(Inst, s1, Address, Decoder);
 			break;
 		default:
@@ -745,10 +746,10 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 
 	// Decode s2.
 	switch(MCInst_getOpcode(Inst)) {
-		case TriCore_ADD_Arr:
-		case TriCore_SUB_Arr:
-		case TriCore_MOV_Drr:
-		case TriCore_MOV_AArr:
+		case TriCore_ADD_A_rr:
+		case TriCore_SUB_A_rr:
+		case TriCore_MOV_D_rr:
+		case TriCore_MOV_AA_rr:
 			status = DecodeAddrRegsRegisterClass(Inst, s2, Address, Decoder);
 			break;
 		default:
@@ -852,7 +853,7 @@ bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 	}
 
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_2(DecoderTable16, MI, insn16, address, info, 0);
+	Result = decodeInstruction_2(DecoderTable16, MI, insn16, address);
 	if (Result != MCDisassembler_Fail) {
 		*size = 2;
 		return true;
@@ -863,7 +864,7 @@ bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 	}
 
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_4(DecoderTable32, MI, insn32, address, info, 0);
+	Result = decodeInstruction_4(DecoderTable32, MI, insn32, address);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;
