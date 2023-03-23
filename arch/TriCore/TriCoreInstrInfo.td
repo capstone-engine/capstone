@@ -302,6 +302,10 @@ class IRC<bits<8> op1, bits<7> op2, string asmstr>
     : RC<op1, op2, (outs), (ins s9imm:$const9),
       asmstr # " $const9", []>;
 
+class IRC_R<bits<8> op1, bits<7> op2, string asmstr, RegisterClass rcd>
+    : RC<op1, op2, (outs rcd:$d), (ins DataRegs:$s1, s9imm:$const9),
+         asmstr # " $d, $s1, $const9", []>;
+
 class IRC_2<bits<8> op1, bits<7> op2, string asmstr>
     : RC<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
       asmstr # " $d, $s1, $const9", []>;
@@ -1398,6 +1402,93 @@ def MSUBRS_H_rrr1_DcEdDaDbUL
 defm MSUBR_Q  : mIRRR1_label2_LL_UU<0x63, 0x07, 0x06, "msubr.q">;
 defm MSUBRS_Q : mIRRR1_label2_LL_UU<0x63, 0x27, 0x26, "msubrs.q">;
 
+class IRLC_CR<bits<8> op1, string asmstr, RegisterClass rc>
+    : RLC<op1, (outs), (ins s16imm:$const16, rc:$d),
+      asmstr # " $const16, $d", []>;
+
+// TODO: CSFR
+// def MTCR_rlc : IRLC_CR<0xCD, "mtcr", CRRegs>;
+
+
+class IRR2<bits<8> op1, bits<12> op2, string asmstr, RegisterClass rcd, RegisterClass rca, RegisterClass rcb>
+    : RR2<op1, op2, (outs rcd:$d), (ins rca:$s1, rcb:$s2), asmstr # " $d, $s1, $s2", []>;
+
+class IRR2_RcDaDb<bits<8> op1, bits<12> op2, string asmstr, RegisterClass rcd>
+    : IRR2<op1, op2, asmstr, rcd, DataRegs, DataRegs>;
+
+def MUL_rc  : RC<0x53, 0x01, (outs DataRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
+                "mul $d, $s1, $const9", []>;
+def MUL_rc_e : RC<0x53, 0x03, (outs ExtRegs:$d), (ins DataRegs:$s1, s9imm:$const9),
+                "mul $d, $s1, $const9", []>;
+def MUL_rr2 : IRR2_RcDaDb<0x73, 0x0A, "mul", DataRegs>;
+def MUL_rr2_e : IRR2_RcDaDb<0x73, 0x6A, "mul", ExtRegs>;
+def MUL_srr : ISRR<0xE2, "mul">;
+
+multiclass mIRC_RR2_RcDaDb<bits<8> rc1, bits<7> rc2, bits<8> op1, bits<12> op2, string asmstr, RegisterClass rcd>{
+  def _rc  : IRC_R<rc1, rc2, asmstr, rcd>;
+  def _rr2 : IRR2_RcDaDb<op1, op2, asmstr, rcd>;
+}
+
+defm MULS : mIRC_RR2_RcDaDb<0x53, 0x05, 0x73, 0x8A, "muls", DataRegs>;
+
+class IRR1<bits<8> op1, bits<10> op2, string asmstr,
+           RegisterClass rcd, string labela, string labelb>
+    : RR1<op1, op2, (outs rcd:$d), (ins DataRegs:$s1, DataRegs:$s2, u2imm:$n),
+          asmstr # " $d, ${s1}" # labela # ", ${s2}" # labelb # ", $n", []>;
+
+multiclass mIRR1_LU2e<bits<8> op1, bits<10> op2, bits<10> op3, bits<10> op4, bits<10> op5, string asmstr>{
+  def _rr1_LL2e : IRR1<op1, op2, asmstr, ExtRegs, "", "LL">;
+  def _rr1_LU2e : IRR1<op1, op3, asmstr, ExtRegs, "", "LU">;
+  def _rr1_UL2e : IRR1<op1, op4, asmstr, ExtRegs, "", "UL">;
+  def _rr1_UU2e : IRR1<op1, op5, asmstr, ExtRegs, "", "UU">;
+}
+
+defm MUL_H : mIRR1_LU2e<0xB3, 0x1A, 0x19, 0x18, 0x1B, "mul.h">;
+
+multiclass mIRR1_mulq<bits<8> op, bits<10> op1, bits<10> op2, bits<10> op3, bits<10> op4,
+                      bits<10> op5, bits<10> op6, bits<10> op7, bits<10> op8, string asmstr>{
+  def _rr1_2__  : IRR1<op, op1, asmstr, DataRegs, "", "">;
+  def _rr1_2__e : IRR1<op, op2, asmstr, ExtRegs, "", "">;
+
+  def _rr1_2_L  : IRR1<op, op3, asmstr, DataRegs, "", "L">;
+  def _rr1_2_Le : IRR1<op, op4, asmstr, ExtRegs, "", "L">;
+  def _rr1_2_U  : IRR1<op, op5, asmstr, DataRegs, "", "U">;
+  def _rr1_2_Ue : IRR1<op, op6, asmstr, ExtRegs, "", "U">;
+
+  def _rr1_2LL : IRR1<op, op7, asmstr, DataRegs, "L", "L">;
+  def _rr1_2UU : IRR1<op, op8, asmstr, DataRegs, "U", "U">;
+}
+
+defm MUL_Q : mIRR1_mulq<0x93, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x04, "mul.q">;
+
+defm MUL_U : mIRC_RR2_RcDaDb<0x53, 0x02, 0x73, 0x68, "mul.u", ExtRegs>;
+defm MULS_U : mIRC_RR2_RcDaDb<0x53, 0x04, 0x73, 0x88, "muls.u", ExtRegs>;
+
+defm MULM_H : mIRR1_LU2e<0xB3, 0x1E, 0x1D, 0x1C, 0x1F, "mulm.h">;
+defm MULR_H : mIRR1_LU2e<0xB3, 0x0E, 0x0D, 0x0C, 0x0F, "mulr.h">;
+
+def MULR_Q_rr1_2LL : IRR1<0x93, 0x07, "mulr.q", DataRegs, "L", "L">;
+def MULR_Q_rr1_2UU : IRR1<0x93, 0x06, "mulr.q", DataRegs, "U", "U">;
+
+defm NAND : mIRR_RC<0x0F, 0x09, 0x8F, 0x09, "nand">;
+def NAND_T : IBIT<0x07, 0x00, "nand.t">;
+
+defm NE : mIRR_RC<0x0B, 0x11, 0x8B, 0x11, "ne">;
+def NE_A : IRR_DcAaAb<0x01, 0x41, "ne.a">;
+def NEZ_A : IRR_DcAa<0x01, 0x49, "nez.a">;
+
+def NOP_sr : ISR_0<0x00, 0x00, "nop">;
+def NOP_sys : ISYS_0<0x00, 0x0D, "nop">;
+
+defm NOR : mIRR_RC<0x0F, 0x0B, 0x8F, 0x0B, "nor">;
+def NOR_T : IBIT<0x87, 0x02, "nor.t">;
+
+def NOT_sr : ISR_1<0x46, 0x00, "not">;
+
+defm OR : mIRR_RC<0x0F, 0x0A, 0x8F, 0x0A, "or">;
+def OR_sc : ISC<0x96, "or">;
+def OR_srr : ISRR<0xA6, "or">;
+
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
   (ins DataRegs:$s1, DataRegs:$s2),
@@ -1460,21 +1551,21 @@ let Constraints="$d = $s1" in
   def RSUBsr : SR<0x32, 0x05, (outs DataRegs:$d), (ins DataRegs:$s1),
   "rsub $d", [(set DataRegs:$d, (sub (i32 0), DataRegs:$s1)) ]>;
 
-let Defs=[PSW] in {
+// let Defs=[PSW] in {
 
- let Constraints="$d = $fksrc" in
- def MULsrr : SRR<0xE2, (outs DataRegs:$d),
-    (ins DataRegs:$fksrc, DataRegs:$s2), "mul $d, $s2",
-    [(set DataRegs:$d, (mul DataRegs:$fksrc, DataRegs:$s2) )]>;
+//  let Constraints="$d = $fksrc" in
+//  def MULsrr : SRR<0xE2, (outs DataRegs:$d),
+//     (ins DataRegs:$fksrc, DataRegs:$s2), "mul $d, $s2",
+//     [(set DataRegs:$d, (mul DataRegs:$fksrc, DataRegs:$s2) )]>;
 
- def MULrr2 : RR2<0x73, 0x00A, (outs DataRegs:$d),
-   (ins DataRegs:$s1, DataRegs:$s2), "mul $d, $s1, $s2",
-   [(set DataRegs:$d, (mul DataRegs:$s1, DataRegs:$s2) )]>;
+//  def MULrr2 : RR2<0x73, 0x00A, (outs DataRegs:$d),
+//    (ins DataRegs:$s1, DataRegs:$s2), "mul $d, $s1, $s2",
+//    [(set DataRegs:$d, (mul DataRegs:$s1, DataRegs:$s2) )]>;
 
- def MULrc : RC<0x53, 0x001, (outs DataRegs:$d),
-   (ins DataRegs:$s1, s9imm:$const9),  "mul $d, $s1, $const9",
-   [(set DataRegs:$d, (mul DataRegs:$s1, immSExt9:$const9) )]>;
-}
+//  def MULrc : RC<0x53, 0x001, (outs DataRegs:$d),
+//    (ins DataRegs:$s1, s9imm:$const9),  "mul $d, $s1, $const9",
+//    [(set DataRegs:$d, (mul DataRegs:$s1, immSExt9:$const9) )]>;
+// }
 
 // Logical Instructions
 multiclass Logical32_0<bits<8> opcode1, string asmstring,
