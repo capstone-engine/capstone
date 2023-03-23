@@ -5,6 +5,7 @@
 /* Auto generated file. Do not edit. */
 /* Code generator: https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
 
+  "xor.t", // TriCore_INS_XOR.T
   "absdifs.h", // TriCore_INS_ABSDIFS.H
   "absdifs", // TriCore_INS_ABSDIFS
   "absdif.b", // TriCore_INS_ABSDIF.B
@@ -28,6 +29,7 @@
   "addx", // TriCore_INS_ADDX
   "add.a", // TriCore_INS_ADD.A
   "add.b", // TriCore_INS_ADD.B
+  "add.f", // TriCore_INS_ADD.F
   "add.h", // TriCore_INS_ADD.H
   "add", // TriCore_INS_ADD
   "andn.t", // TriCore_INS_ANDN.T
@@ -67,6 +69,7 @@
   "cmovn", // TriCore_INS_CMOVN
   "cmov", // TriCore_INS_CMOV
   "CMPSWAP.W", // TriCore_INS_CMPSWAP.W
+  "cmp.f", // TriCore_INS_CMP.F
   "crc32b.w", // TriCore_INS_CRC32B.W
   "crc32l.w", // TriCore_INS_CRC32L.W
   "crc32.b", // TriCore_INS_CRC32.B
@@ -75,6 +78,7 @@
   "debug", // TriCore_INS_DEBUG
   "dextr", // TriCore_INS_DEXTR
   "disable", // TriCore_INS_DISABLE
+  "div.f", // TriCore_INS_DIV.F
   "div.u", // TriCore_INS_DIV.U
   "div", // TriCore_INS_DIV
   "dsync", // TriCore_INS_DSYNC
@@ -102,14 +106,23 @@
   "fcalli", // TriCore_INS_FCALLI
   "fcall", // TriCore_INS_FCALL
   "fret", // TriCore_INS_FRET
+  "ftohp", // TriCore_INS_FTOHP
+  "ftoiz", // TriCore_INS_FTOIZ
+  "ftoi", // TriCore_INS_FTOI
+  "ftoq31z", // TriCore_INS_FTOQ31Z
+  "ftoq31", // TriCore_INS_FTOQ31
+  "ftouz", // TriCore_INS_FTOUZ
+  "ftou", // TriCore_INS_FTOU
   "ge.a", // TriCore_INS_GE.A
   "ge.u", // TriCore_INS_GE.U
   "ge", // TriCore_INS_GE
+  "hptof", // TriCore_INS_HPTOF
   "imask", // TriCore_INS_IMASK
   "insert", // TriCore_INS_INSERT
   "insn.t", // TriCore_INS_INSN.T
   "ins.t", // TriCore_INS_INS.T
   "isync", // TriCore_INS_ISYNC
+  "itof", // TriCore_INS_ITOF
   "ixmax.u", // TriCore_INS_IXMAX.U
   "ixmax", // TriCore_INS_IXMAX
   "ixmin.u", // TriCore_INS_IXMIN.U
@@ -181,6 +194,7 @@
   "madds.q", // TriCore_INS_MADDS.Q
   "madds.u", // TriCore_INS_MADDS.U
   "madds", // TriCore_INS_MADDS
+  "madd.f", // TriCore_INS_MADD.F
   "madd.h", // TriCore_INS_MADD.H
   "madd.q", // TriCore_INS_MADD.Q
   "madd.u", // TriCore_INS_MADD.U
@@ -220,6 +234,7 @@
   "msubs.h", // TriCore_INS_MSUBS.H
   "msubs.q", // TriCore_INS_MSUBS.Q
   "msubs", // TriCore_INS_MSUBS
+  "msub.f", // TriCore_INS_MSUB.F
   "msub.h", // TriCore_INS_MSUB.H
   "msub.q", // TriCore_INS_MSUB.Q
   "msub", // TriCore_INS_MSUB
@@ -258,6 +273,8 @@
   "pack", // TriCore_INS_PACK
   "parity", // TriCore_INS_PARITY
   "popcnt.w", // TriCore_INS_POPCNT.W
+  "q31tof", // TriCore_INS_Q31TOF
+  "qseed.f", // TriCore_INS_QSEED.F
   "restore", // TriCore_INS_RESTORE
   "ret", // TriCore_INS_RET
   "rfe", // TriCore_INS_RFE
@@ -309,6 +326,7 @@
   "subx", // TriCore_INS_SUBX
   "sub.a", // TriCore_INS_SUB.A
   "sub.b", // TriCore_INS_SUB.B
+  "sub.f", // TriCore_INS_SUB.F
   "sub.h", // TriCore_INS_SUB.H
   "sub", // TriCore_INS_SUB
   "svlcx", // TriCore_INS_SVLCX
@@ -318,6 +336,8 @@
   "trapsv", // TriCore_INS_TRAPSV
   "trapv", // TriCore_INS_TRAPV
   "unpack", // TriCore_INS_UNPACK
+  "updfl", // TriCore_INS_UPDFL
+  "utof", // TriCore_INS_UTOF
   "wait", // TriCore_INS_WAIT
   "xnor.t", // TriCore_INS_XNOR.T
   "xnor", // TriCore_INS_XNOR
@@ -327,5 +347,4 @@
   "xor.lt.u", // TriCore_INS_XOR.LT.U
   "xor.lt", // TriCore_INS_XOR.LT
   "xor.ne", // TriCore_INS_XOR.NE
-  "xor.t", // TriCore_INS_XOR.T
   "xor", // TriCore_INS_XOR

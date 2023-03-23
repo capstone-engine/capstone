@@ -30,11 +30,12 @@
 #include "TriCoreMapping.h"
 
 static const char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI);
+
+static void printInstruction(MCInst *, uint64_t, SStream *);
+
 static void printOperand(MCInst *MI, int OpNum, SStream *O);
 
-void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
-{
+void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) {
 	/*
 	   if (((cs_struct *)ud)->detail != CS_OPT_ON)
 	   return;
@@ -42,13 +43,14 @@ void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 }
 
 #define GET_INSTRINFO_ENUM
+
 #include "TriCoreGenInstrInfo.inc"
 
 #define GET_REGINFO_ENUM
+
 #include "TriCoreGenRegisterInfo.inc"
 
-static void printOperand(MCInst *MI, int OpNum, SStream *O)
-{
+static void printOperand(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *Op;
 	if (OpNum >= MI->size)
 		return;
@@ -61,7 +63,8 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(reg);
+			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t) TriCore_map_register(
+					reg);
 			MI->flat_insn->detail->tricore.op_count++;
 		}
 	} else if (MCOperand_isImm(Op)) {
@@ -88,56 +91,63 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 }
 
 static void printPairAddrRegsOperand(MCInst *MI, unsigned OpNum, SStream *O,
-		MCRegisterInfo *MRI)
-{
+                                     MCRegisterInfo *MRI) {
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 	SStream_concat0(O, "[");
 	SStream_concat(O, "%%%s", getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_even)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_even));
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t) TriCore_map_register(
+				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_even));
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "/");
 	SStream_concat(O, "%%%s", getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_odd)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_odd));
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t) TriCore_map_register(
+				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_odd));
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "]");
 }
 
-static void printSExtImm(MCInst *MI, int OpNum, SStream *O)
-{
+static void printSExtImm(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
 		if (imm >= 0) {
 			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", (unsigned short int)imm);
+				SStream_concat(O, "0x%x", (unsigned short int) imm);
 			else
-				SStream_concat(O, "%u", (unsigned short int)imm);
+				SStream_concat(O, "%u", (unsigned short int) imm);
 		} else {
 			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", (short int)-imm);
+				SStream_concat(O, "-0x%x", (short int) -imm);
 			else
-				SStream_concat(O, "-%u", (short int)-imm);
+				SStream_concat(O, "-%u", (short int) -imm);
 		}
 		if (MI->csh->detail) {
 			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_IMM;
-			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].imm = (unsigned short int)imm;
+			MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].imm = (unsigned short int) imm;
 			MI->flat_insn->detail->tricore.op_count++;
 		}
 	} else
 		printOperand(MI, OpNum, O);
 }
 
-static void printZExtImm(MCInst *MI, int OpNum, SStream *O)
-{
+static void printSExtImm_16(MCInst *MI, int OpNum, SStream *O) {    /*TODO: TriCore*/}
+
+static void printSExtImm_10(MCInst *MI, int OpNum, SStream *O) {    /*TODO: TriCore*/}
+
+static void printSExtImm_9(MCInst *MI, int OpNum, SStream *O) {    /*TODO: TriCore*/}
+
+static void printSExtImm_4(MCInst *MI, int OpNum, SStream *O) {    /*TODO: TriCore*/}
+
+static void printZExtImm(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		unsigned imm = (unsigned)MCOperand_getImm(MO);
+		unsigned imm = (unsigned) MCOperand_getImm(MO);
 		if (imm > HEX_THRESHOLD)
 			SStream_concat(O, "0x%x", imm);
 		else
@@ -151,16 +161,22 @@ static void printZExtImm(MCInst *MI, int OpNum, SStream *O)
 		printOperand(MI, OpNum, O);
 }
 
+static void printZExtImm_8(MCInst *MI, int OpNum, SStream *O) {    /*TODO: TriCore*/}
+
+static void printZExtImm_4(MCInst *MI, int OpNum, SStream *O) {    /*TODO: TriCore*/}
+
+static void printZExtImm_2(MCInst *MI, int OpNum, SStream *O) {    /*TODO: TriCore*/}
+
+
 static void printPCRelImmOperand(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(Op)) {
-		unsigned imm = (unsigned)MCOperand_getImm(Op);
+		unsigned imm = (unsigned) MCOperand_getImm(Op);
 		if (imm > HEX_THRESHOLD)
 			SStream_concat(O, "0x%x", imm);
 		else
 			SStream_concat(O, "%u", imm);
-	}
-	else
+	} else
 		printOperand(MI, OpNum, O);
 }
 
@@ -169,7 +185,7 @@ static void printPCRelImmOperand(MCInst *MI, int OpNum, SStream *O) {
 static void printAddrBO(MCInst *MI, int OpNum, SStream *O) {
 
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	uint64_t Disp = (uint64_t) MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
 
 	SStream_concat(O, "[");
 	SStream_concat(O, "%%%s", getRegisterName(Base));
@@ -182,7 +198,8 @@ static void printAddrBO(MCInst *MI, int OpNum, SStream *O) {
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)TriCore_map_register(Base);
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t) TriCore_map_register(
+				Base);
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = Disp;
 		MI->flat_insn->detail->tricore.op_count++;
 	}
@@ -193,7 +210,7 @@ static void printAddrBO(MCInst *MI, int OpNum, SStream *O) {
 static void printAddrPreIncBO(MCInst *MI, int OpNum, SStream *O) {
 
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	uint64_t Disp = (uint64_t) MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
 
 	SStream_concat(O, "[+");
 	SStream_concat(O, "%%%s", getRegisterName(Base));
@@ -206,7 +223,8 @@ static void printAddrPreIncBO(MCInst *MI, int OpNum, SStream *O) {
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)TriCore_map_register(Base);
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t) TriCore_map_register(
+				Base);
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = Disp;
 		MI->flat_insn->detail->tricore.op_count++;
 	}
@@ -217,7 +235,7 @@ static void printAddrPreIncBO(MCInst *MI, int OpNum, SStream *O) {
 static void printAddrPostIncBO(MCInst *MI, int OpNum, SStream *O) {
 
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	uint64_t Disp = (uint64_t) MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
 
 	SStream_concat(O, "[");
 	SStream_concat(O, "%%%s", getRegisterName(Base));
@@ -230,7 +248,8 @@ static void printAddrPostIncBO(MCInst *MI, int OpNum, SStream *O) {
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)TriCore_map_register(Base);
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t) TriCore_map_register(
+				Base);
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = Disp;
 		MI->flat_insn->detail->tricore.op_count++;
 	}
@@ -239,23 +258,24 @@ static void printAddrPostIncBO(MCInst *MI, int OpNum, SStream *O) {
 // Print a 'circbo' operand which is an addressing mode
 // Circular Base+Offset
 static void printAddrCircBO(MCInst *MI, unsigned OpNum, SStream *O,
-		MCRegisterInfo *MRI)
-{
+                            MCRegisterInfo *MRI) {
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	uint64_t Disp = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
+	uint64_t Disp = (uint64_t) MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
 
 	SStream_concat0(O, "[");
 	SStream_concat(O, "%%%s", getRegisterName(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_even)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_even));
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t) TriCore_map_register(
+				MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_even));
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "/");
 	SStream_concat(O, "%%%s", getRegisterName(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_odd)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_odd));
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t) TriCore_map_register(
+				MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_odd));
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "+c] ");
@@ -267,7 +287,8 @@ static void printAddrCircBO(MCInst *MI, unsigned OpNum, SStream *O,
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_MEM;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t)TriCore_map_register(Base);
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.base = (uint8_t) TriCore_map_register(
+				Base);
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].mem.disp = Disp;
 		MI->flat_insn->detail->tricore.op_count++;
 	}
@@ -276,8 +297,7 @@ static void printAddrCircBO(MCInst *MI, unsigned OpNum, SStream *O,
 // Print a 'bitrevbo' operand which is an addressing mode
 // Bit-Reverse Base+Offset
 static void printAddrBitRevBO(MCInst *MI, unsigned OpNum, SStream *O,
-		MCRegisterInfo *MRI)
-{
+                              MCRegisterInfo *MRI) {
 
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
 
@@ -285,25 +305,37 @@ static void printAddrBitRevBO(MCInst *MI, unsigned OpNum, SStream *O,
 	SStream_concat(O, "%%%s", getRegisterName(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_even)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_even));
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t) TriCore_map_register(
+				MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_even));
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "/");
 	SStream_concat(O, "%%%s", getRegisterName(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_odd)));
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t)TriCore_map_register(MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_odd));
+		MI->flat_insn->detail->tricore.operands[MI->flat_insn->detail->tricore.op_count].reg = (uint8_t) TriCore_map_register(
+				MCRegisterInfo_getSubReg(MRI, Base, TriCore_subreg_odd));
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "+r]");
 }
 
+/// Returned by getMnemonic() of the AsmPrinters.
+typedef struct {
+	const char *first; // Menmonic
+	uint64_t second;     // Bits
+} MnemonicBitsInfo;
+
+void set_mem_access(MCInst *MI, unsigned int access) {
+	// TODO: TriCore
+}
+
 #define PRINT_ALIAS_INSTR
+
 #include "TriCoreGenAsmWriter.inc"
 
-void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
-{
-	MCRegisterInfo *MRI = (MCRegisterInfo *)Info;
+void TriCore_printInst(MCInst *MI, SStream *O, void *Info) {
+	MCRegisterInfo *MRI = (MCRegisterInfo *) Info;
 
 	unsigned Opcode = MCInst_getOpcode(MI), i;
 
@@ -420,7 +452,7 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 //			}
 //		}
 //	}
-	printInstruction(MI, O, Info);
+	printInstruction(MI, Info, O);
 }
 
 #endif
