@@ -653,21 +653,21 @@ defm CACHEI_WI : mIBO_a<0x89, 0x2F,
 
 /// RRR Opcodes Formats
 // Dc Dd Da Db
-class IRRR_dab<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_DcDdDaDb<bits<8>op1, bits<4> op2, string asmstr>
     : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, DataRegs:$s3),
           asmstr # " $d, $s3, $s1, $s2", []>;
 // Dc Dd Da
-class IRRR_da<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_DcDdDa<bits<8>op1, bits<4> op2, string asmstr>
     : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3),
           asmstr # " $d, $s3, $s1", []>;
 // Ec Ed Db
-class IRRR_EEdb<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_EcEdEb<bits<8>op1, bits<4> op2, string asmstr>
     : RRR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, ExtRegs:$s3),
           asmstr # " $d, $s3, $s2", []>;
 // Dc Ed Da
-class IRRR_Eda<bits<8>op1, bits<4> op2, string asmstr> 
+class IRRR_DcEdDa<bits<8>op1, bits<4> op2, string asmstr>
     : RRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, ExtRegs:$s3),
-          asmstr # " $d, $s3, $s2", []>;
+          asmstr # " $d, $s3, $s1", []>;
 
 /// RCR Opcodes Formats
 /// Dc Dd Da const9
@@ -686,11 +686,11 @@ multiclass mIRCR<bits<8>op1, bits<3> op2, bits<8>op3, bits<3> op4, string asmstr
 
 /// CADD Instructions
 def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
-def CADD_rrr : IRRR_dab<0x2B, 0x00, "cadd">;
+def CADD_rrr : IRRR_DcDdDaDb<0x2B, 0x00, "cadd">;
 def CADD_src : ISRC_a15<0x8A, "cadd">;
 
 def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
-def CADDN_rrr : IRRR_dab<0x2B, 0x01, "caddn">;
+def CADDN_rrr : IRRR_DcDdDaDb<0x2B, 0x01, "caddn">;
 def CADDN_src : ISRC_a15<0xCA, "caddn">;
 
 // Call Instructions
@@ -770,10 +770,10 @@ defm CMPSWAP_W : mIBO_Ea<0x49, 0x23, 0x69, 0x03,
 def CRC32_B_rr  : IRR_DcDbDa<0x4B, 0x06, "crc32.b">;
 def CRC32B_W_rr : IRR_DcDbDa<0x4B, 0x03, "crc32b.w">;
 def CRC32L_W_rr : IRR_DcDbDa<0x4B, 0x07, "crc32l.w">;
-def CRCN_rrr    : IRRR_dab<0x6B, 0x01, "crcn">;
+def CRCN_rrr    : IRRR_DcDdDaDb<0x6B, 0x01, "crcn">;
 
-def CSUB_rrr    : IRRR_dab<0x2B, 0x02, "csub">;
-def CSUBN_rrr   : IRRR_dab<0x2B, 0x03, "csub">;
+def CSUB_rrr    : IRRR_DcDdDaDb<0x2B, 0x02, "csub">;
+def CSUBN_rrr   : IRRR_DcDdDaDb<0x2B, 0x03, "csub">;
 
 class ISR_0<bits<8> op1, bits<4> op2, string asmstr>
     : SR<op1, op2, (outs), (ins),
@@ -873,7 +873,7 @@ def DISABLE_sys_1 : ISYS_1<0x0D, 0x0F, "disable">;
 
 def DSYNC_sys : ISYS_0<0x0D, 0x12, "dsync">;
 
-def DVADJ_rrr : IRRR_EEdb<0x6B, 0x0D, "dvadj">;
+def DVADJ_rrr : IRRR_EcEdEb<0x6B, 0x0D, "dvadj">;
 
 multiclass mI_U_RR_Eab<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4,
                 string asmstr> {
@@ -895,8 +895,8 @@ defm DVINIT_H  : mIU_RR_Eab<0x4B, 0x3A, 0x4B, 0x2A, "dvinit.h">;
 
 multiclass mI_U_RRR_EEdb<bits<8> op1, bits<4> op2, bits<8> op3, bits<4> op4,
                 string asmstr> {
-  def _rrr   : IRRR_EEdb<op1, op2, asmstr>;
-  def _U_rrr : IRRR_EEdb<op3, op4, asmstr # ".u">;
+  def _rrr   : IRRR_EcEdEb<op1, op2, asmstr>;
+  def _U_rrr : IRRR_EcEdEb<op3, op4, asmstr # ".u">;
 }
 
 defm DVSTEP : mI_U_RRR_EEdb<0x6B, 0x0F, 0x6B, 0x0E, "dvstep">;
@@ -1488,6 +1488,44 @@ def NOT_sr : ISR_1<0x46, 0x00, "not">;
 defm OR : mIRR_RC<0x0F, 0x0A, 0x8F, 0x0A, "or">;
 def OR_sc : ISC<0x96, "or">;
 def OR_srr : ISRR<0xA6, "or">;
+
+def OR_AND_T  : IBIT<0xC7, 0x00, "or.and.t">;
+def OR_ANDN_T : IBIT<0xC7, 0x03, "or.andn.t">;
+def OR_NOR_T  : IBIT<0xC7, 0x02, "or.nor.t">;
+def OR_OR_T   : IBIT<0xC7, 0x01, "or.or.t">;
+
+defm OR_EQ   : mIRR_RC<0x0B, 0x27, 0x8B, 0x27, "or.eq">;
+defm OR_GE   : mIRR_RC<0x0B, 0x2B, 0x8B, 0x2B, "or.ge">;
+defm OR_GE_U : mIRR_RC<0x0B, 0x2C, 0x8B, 0x2C, "or.ge.u">;
+defm OR_LT   : mIRR_RC<0x0B, 0x29, 0x8B, 0x29, "or.lt">;
+defm OR_LT_U : mIRR_RC<0x0B, 0x2A, 0x8B, 0x2A, "or.lt.u">;
+defm OR_NE   : mIRR_RC<0x0B, 0x28, 0x8B, 0x28, "or.ne">;
+
+def OR_T : IBIT<0x87, 0x01, "or.t">;
+
+defm ORN : mIRR_RC<0x0F, 0x0F, 0x8F, 0x0F, "orn">;
+
+def ORN_T : IBIT<0x07, 0x02, "orn.t">;
+
+def PACK_rrr : IRRR_DcEdDa<0x6B, 0x00, "pack">;
+
+def PARITY_rr : IRR_DcDa<0x4B, 0x02, "parity">;
+
+def POPCNT_W_rr : IRR_DcDa<0x4B, 0x22, "popcnt.w">;
+
+def RESTORE_sys : ISYS_0<0x0D, 0x0E, "restore">;
+
+def RET_sr : ISR_0<0x00, 0x09, "ret">;
+def RET_sys : ISYS_0<0x0D, 0x06, "ret">;
+
+def RFE_sr : ISR_0<0x00, 0x08, "rfe">;
+def RFE_sys : ISYS_0<0x0D, 0x07, "rfe">;
+
+def RFM_sys : ISYS_0<0x0D, 0x05, "rfm">;
+
+def RSLCX_sys : ISYS_0<0x0D, 0x09, "relck">;
+
+def RSTV_sys : ISYS_0<0x2F, 0x00, "restore">;
 
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
