@@ -671,25 +671,25 @@ class IRRR_DcEdDa<bits<8>op1, bits<4> op2, string asmstr>
 
 /// RCR Opcodes Formats
 /// Dc Dd Da const9
-class IRCR<bits<8>op1, bits<3> op2, string asmstr>
+class IRCR_DcDdDa<bits<8>op1, bits<3> op2, string asmstr>
     : RCR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s3, s9imm:$const9),
           asmstr # " $d, $s3, $s1, $const9", []>;
 /// Ec Ed Da const9
-class IRCR_E<bits<8>op1, bits<3> op2, string asmstr>
+class IRCR_EcEdDa<bits<8>op1, bits<3> op2, string asmstr>
     : RCR<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s1, ExtRegs:$s3, s9imm:$const9),
           asmstr # " $d, $s3, $s1, $const9", []>;
 
 multiclass mIRCR<bits<8>op1, bits<3> op2, bits<8>op3, bits<3> op4, string asmstr>{
-  def _rcr   : IRCR<op1, op2, asmstr>;
-  def _rcr_e : IRCR_E<op3, op4, asmstr>;
+  def _rcr   : IRCR_DcDdDa<op1, op2, asmstr>;
+  def _rcr_e : IRCR_EcEdDa<op3, op4, asmstr>;
 }
 
 /// CADD Instructions
-def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
+def CADD_rcr : IRCR_DcDdDa<0xAB, 0x00, "cadd">;
 def CADD_rrr : IRRR_DcDdDaDb<0x2B, 0x00, "cadd">;
 def CADD_src : ISRC_a15<0x8A, "cadd">;
 
-def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
+def CADDN_rcr : IRCR_DcDdDa<0xAB, 0x01, "caddn">;
 def CADDN_rrr : IRRR_DcDdDaDb<0x2B, 0x01, "caddn">;
 def CADDN_src : ISRC_a15<0xCA, "caddn">;
 
@@ -1289,7 +1289,7 @@ multiclass mIRRR1_maddq_msubq<bits<8> prefix, bits<6> op1, bits<6> op2, bits<6> 
 defm MADD_Q  : mIRRR1_maddq_msubq<0x43, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "madd.q">;
 defm MADDS_Q : mIRRR1_maddq_msubq<0x43, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "madds.q">;
 
-def MADD_U_rcr : IRCR_E<0x13, 0x02, "madd.u">; 
+def MADD_U_rcr : IRCR_EcEdDa<0x13, 0x02, "madd.u">; 
 def MADD_U_rrr2 : IRRR2<0x03, 0x68, "madd.u", ExtRegs>;
 
 defm MADDS_U : mIRCR<0x13, 0x04, 0x13, 0x06, "madds.u">
@@ -1376,7 +1376,7 @@ defm MSUBS_H : mIRRR1_E_LU2<0xA3, 0x3A, 0x39, 0x38, 0x3B, "msubs.h">;
 defm MSUB_Q  : mIRRR1_maddq_msubq<0x63, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "msub.q">;
 defm MSUBS_Q : mIRRR1_maddq_msubq<0x63, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "msubs.q">;
 
-def MSUB_U_rcr : IRCR_E<0x33, 0x02, "madd.u">; 
+def MSUB_U_rcr : IRCR_EcEdDa<0x33, 0x02, "madd.u">; 
 def MSUB_U_rrr2 : IRRR2<0x23, 0x68, "madd.u", ExtRegs>;
 defm MSUBS_U : mIRCR<0x33, 0x04, 0x33, 0x06, "madds.u">
             , mIRRR2<0x23, 0x88, 0x23, 0xE8, "madds.u">;
@@ -1527,6 +1527,50 @@ def RSLCX_sys : ISYS_0<0x0D, 0x09, "relck">;
 
 def RSTV_sys : ISYS_0<0x2F, 0x00, "restore">;
 
+def RSUB_rc : IRC_2<0x8B, 0x08, "rsub">;
+def RSUB_sr : ISR_1<0x32, 0x05, "rsub">;
+
+def RSUBS_rc   : IRC_2<0x8B, 0x0A, "rsubs">;
+def RSUBS_U_rc : IRC_2<0x8B, 0x0B, "rsubs.u">;
+
+multiclass mIRR_SR<bits<8> r1, bits<8> r2, bits<8> s1, bits<4> s2, string asmstr>{
+  def _rr : IRR_DcDa<r1, r2, asmstr>;
+  def _sr : ISR_1<s1, s2, asmstr>;
+}
+
+defm SAT_B  : mIRR_SR<0x0B, 0x5E, 0x32, 0x00, "sat.b">;
+defm SAT_BU : mIRR_SR<0x0B, 0x5F, 0x32, 0x01, "sat.bu">;
+defm SAT_H  : mIRR_SR<0x0B, 0x7E, 0x32, 0x02, "sat.h">;
+defm SAT_HU : mIRR_SR<0x0B, 0x7F, 0x32, 0x03, "sat.hu">;
+
+def SEL_rcr : IRCR_DcDdDa<0xAB, 0x04, "sel">;
+def SEL_rrr : IRRR_DcDdDaDb<0x2B, 0x04, "sel">;
+
+def SELN_rcr : IRCR_DcDdDa<0xAB, 0x05, "seln">;
+def SELN_rrr : IRRR_DcDdDaDb<0x2B, 0x05, "seln">;
+
+def SH_src : ISRC_1<0x06, "sh", DataRegs>;
+defm SH : mIRR_RC<0x0F, 0x00, 0x8F, 0x00, "sh">;
+defm SH_H : mIRR_RC<0x0F, 0x40, 0x8F, 0x40, "sh.h">;
+
+defm SH_EQ : mIRR_RC<0x0B, 0x37, 0x8B, 0x37, "sh.eq">;
+defm SH_NE : mIRR_RC<0x0B, 0x38, 0x8B, 0x38, "sh.lt">;
+defm SH_GE : mIRR_RC<0x0B, 0x3B, 0x8B, 0x3B, "sh.ge">;
+defm SH_GE_U : mIRR_RC<0x0B, 0x3C, 0x8B, 0x3C, "sh.ge.u">;
+defm SH_LT : mIRR_RC<0x0B, 0x39, 0x8B, 0x39, "sh.lt">;
+defm SH_LT_U : mIRR_RC<0x0B, 0x3A, 0x8B, 0x3A, "sh.lt.u">;
+
+def SH_AND_T  : IBIT<0x27, 0x00, "sh.and.t">;
+def SH_ANDN_T : IBIT<0x27, 0x03, "sh.andn.t">;
+def SH_NAND_T : IBIT<0xA7, 0x00, "sh.nand.t">;
+def SH_NOR_T  : IBIT<0x27, 0x02, "sh.nor.t">;
+def SH_OR_T   : IBIT<0x27, 0x01, "sh.or.t">;
+def SH_ORN_T  : IBIT<0xA7, 0x01, "sh.orn.t">;
+def SH_XNOR_T : IBIT<0xA7, 0x02, "sh.xnor.t">;
+def SH_XOR_T  : IBIT<0xA7, 0x03, "sh.xor.t">;
+
+
+
 let Defs = [PSW], Uses = [PSW] in {
 def SUBCrr : RR<0x0B, 0x0D, (outs DataRegs:$d),
   (ins DataRegs:$s1, DataRegs:$s2),
@@ -1581,13 +1625,13 @@ def SUB_Arr : RR<0x01, 0x02, (outs AddrRegs:$d),
   (ins AddrRegs:$s1, AddrRegs:$s2), "sub.a $d, $s1, $s2",
   [(set AddrRegs:$d, (sub AddrRegs:$s1, AddrRegs:$s2) )]>;
 
-def RSUBrc : RC<0x8B, 0x08, (outs DataRegs:$d),
-  (ins DataRegs:$s1, s9imm:$const9) ,"rsub $d, $s1, $const9",
-  [(set DataRegs:$d, (sub immSExt9:$const9, DataRegs:$s1)) ]>;
+// def RSUBrc : RC<0x8B, 0x08, (outs DataRegs:$d),
+//   (ins DataRegs:$s1, s9imm:$const9) ,"rsub $d, $s1, $const9",
+//   [(set DataRegs:$d, (sub immSExt9:$const9, DataRegs:$s1)) ]>;
 
-let Constraints="$d = $s1" in
-  def RSUBsr : SR<0x32, 0x05, (outs DataRegs:$d), (ins DataRegs:$s1),
-  "rsub $d", [(set DataRegs:$d, (sub (i32 0), DataRegs:$s1)) ]>;
+// let Constraints="$d = $s1" in
+//   def RSUBsr : SR<0x32, 0x05, (outs DataRegs:$d), (ins DataRegs:$s1),
+//   "rsub $d", [(set DataRegs:$d, (sub (i32 0), DataRegs:$s1)) ]>;
 
 // let Defs=[PSW] in {
 
@@ -2227,19 +2271,19 @@ multiclass LOGIC_COMPARE_U<bits<8> op_u, string asmstring, PatLeaf PF>
 // defm AND_GE    : LOGIC_COMPARE_S<0x24, "and.ge", TriCore_LOGIC_AND_GE>;
 // defm AND_GE_U  : LOGIC_COMPARE_U<0x25, "and.ge.u", TriCore_LOGIC_AND_GE>;
 
-defm OR_EQ     : LOGIC_COMPARE_S<0x27, "or.eq",  TriCore_LOGIC_OR_EQ>;
-defm OR_NE     : LOGIC_COMPARE_S<0x28, "or.ne",  TriCore_LOGIC_OR_NE>;
-defm OR_LT     : LOGIC_COMPARE_S<0x29, "or.lt",  TriCore_LOGIC_OR_LT>;
-defm OR_LT_U   : LOGIC_COMPARE_U<0x2A, "or.lt.u",  TriCore_LOGIC_OR_LT>;
-defm OR_GE     : LOGIC_COMPARE_S<0x2B, "or.ge",  TriCore_LOGIC_OR_GE>;
-defm OR_GE_U   : LOGIC_COMPARE_U<0x2C, "or.ge.u",  TriCore_LOGIC_OR_GE>;
+// defm OR_EQ     : LOGIC_COMPARE_S<0x27, "or.eq",  TriCore_LOGIC_OR_EQ>;
+// defm OR_NE     : LOGIC_COMPARE_S<0x28, "or.ne",  TriCore_LOGIC_OR_NE>;
+// defm OR_LT     : LOGIC_COMPARE_S<0x29, "or.lt",  TriCore_LOGIC_OR_LT>;
+// defm OR_LT_U   : LOGIC_COMPARE_U<0x2A, "or.lt.u",  TriCore_LOGIC_OR_LT>;
+// defm OR_GE     : LOGIC_COMPARE_S<0x2B, "or.ge",  TriCore_LOGIC_OR_GE>;
+// defm OR_GE_U   : LOGIC_COMPARE_U<0x2C, "or.ge.u",  TriCore_LOGIC_OR_GE>;
 
-defm XOR_EQ    : LOGIC_COMPARE_S<0x2F, "xor.eq",  TriCore_LOGIC_OR_EQ>;
-defm XOR_NE    : LOGIC_COMPARE_S<0x30, "xor.ne",  TriCore_LOGIC_OR_NE>;
-defm XOR_LT    : LOGIC_COMPARE_S<0x31, "xor.lt",  TriCore_LOGIC_OR_LT>;
-defm XOR_LT_U  : LOGIC_COMPARE_U<0x32, "xor.lt.u",  TriCore_LOGIC_OR_LT>;
-defm XOR_GE    : LOGIC_COMPARE_S<0x33, "xor.ge",  TriCore_LOGIC_OR_GE>;
-defm XOR_GE_U  : LOGIC_COMPARE_U<0x34, "xor.ge.u",  TriCore_LOGIC_OR_GE>;
+// defm XOR_EQ    : LOGIC_COMPARE_S<0x2F, "xor.eq",  TriCore_LOGIC_OR_EQ>;
+// defm XOR_NE    : LOGIC_COMPARE_S<0x30, "xor.ne",  TriCore_LOGIC_OR_NE>;
+// defm XOR_LT    : LOGIC_COMPARE_S<0x31, "xor.lt",  TriCore_LOGIC_OR_LT>;
+// defm XOR_LT_U  : LOGIC_COMPARE_U<0x32, "xor.lt.u",  TriCore_LOGIC_OR_LT>;
+// defm XOR_GE    : LOGIC_COMPARE_S<0x33, "xor.ge",  TriCore_LOGIC_OR_GE>;
+// defm XOR_GE_U  : LOGIC_COMPARE_U<0x34, "xor.ge.u",  TriCore_LOGIC_OR_GE>;
 
 // Branch Instructions
 // let Uses = [PC], Defs = [PC] in
