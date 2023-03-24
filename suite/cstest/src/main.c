@@ -20,6 +20,7 @@ static single_dict arches[] = {
 	{"CS_ARCH_M68K", CS_ARCH_M68K},
 	{"CS_ARCH_BPF", CS_ARCH_BPF},
 	{"CS_ARCH_RISCV", CS_ARCH_RISCV},
+	{"CS_ARCH_TRICORE", CS_ARCH_TRICORE},
 };
 
  static single_dict modes[] = {
@@ -61,6 +62,7 @@ static single_dict arches[] = {
 	{"CS_MODE_BPF_EXTENDED", CS_MODE_BPF_EXTENDED},
 	{"CS_MODE_RISCV32", CS_MODE_RISCV32},
 	{"CS_MODE_RISCV64", CS_MODE_RISCV64},
+	{"CS_MODE_TRICORE", CS_MODE_TRICORE},
 };
 
  static double_dict options[] = {
@@ -107,6 +109,7 @@ static single_dict arches[] = {
 	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08},
 	{"CS_MODE_RISCV32", CS_OPT_MODE, CS_MODE_RISCV32},
 	{"CS_MODE_RISCV64", CS_OPT_MODE, CS_MODE_RISCV64},
+	{"CS_MODE_TRICORE", CS_OPT_MODE, CS_MODE_TRICORE},
 	{"CS_OPT_UNSIGNED", CS_OPT_UNSIGNED, CS_OPT_ON},
 };
 
