@@ -105,6 +105,7 @@ static struct {
 	{ "sh4abe", CS_ARCH_SH, CS_MODE_BIG_ENDIAN | CS_MODE_SH4A | CS_MODE_SHFPU },
 	{ "sh4al-dsp", CS_ARCH_SH, CS_MODE_LITTLE_ENDIAN | CS_MODE_SH4A | CS_MODE_SHDSP | CS_MODE_SHFPU },
 	{ "sh4al-dspbe", CS_ARCH_SH, CS_MODE_BIG_ENDIAN | CS_MODE_SH4A | CS_MODE_SHDSP | CS_MODE_SHFPU},
+	{"tricore", CS_ARCH_TRICORE, CS_MODE_TRICORE},
 
 	{ NULL }
 };
@@ -126,6 +127,7 @@ void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
 void print_insn_detail_bpf(csh handle, cs_insn *ins);
 void print_insn_detail_sh(csh handle, cs_insn *ins);
+void print_insn_detail_tricore(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
@@ -319,6 +321,10 @@ static void usage(char *prog)
 		printf("        sh4al-dspbe superh SH4AL-DSP big endian\n");
 	}
 
+	if (cs_support(CS_ARCH_TRICORE)) {
+		printf("        tricore     tricore\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -s decode in SKIPDATA mode\n");
@@ -504,6 +510,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_SUPPORT_X86_REDUCE)) {
 					printf("x86_reduce=1 ");
+				}
+
+				if (cs_support(CS_ARCH_TRICORE)) {
+					printf("tricore=1 ");
 				}
 
 				printf("\n");
