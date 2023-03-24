@@ -39,6 +39,7 @@ option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ${BUILD_SHARED_LIBS}
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ${PROJECT_IS_TOP_LEVEL})
+option(CAPSTONE_BUILD_CSTEST "Build cstest" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
@@ -750,5 +751,22 @@ if(CAPSTONE_BUILD_CSTOOL)
 
     if(CAPSTONE_INSTALL)
         install(TARGETS cstool EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
+    endif()
+endif()
+
+if(CAPSTONE_BUILD_CSTEST)
+    find_package(CMOCKA)
+
+    file(GLOB CSTEST_SRC suite/cstest/src/*.c)
+    add_executable(cstest ${CSTEST_SRC})
+    target_link_libraries(cstest PUBLIC capstone ${CMOCKA_LIBRARIES})
+    target_include_directories(cstest PRIVATE
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+            ${PROJECT_SOURCE_DIR}/suite/cstest/include
+            ${CMOCKA_INCLUDE_DIR}
+            )
+
+    if(CAPSTONE_INSTALL)
+        install(TARGETS cstest EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
     endif()
 endif()

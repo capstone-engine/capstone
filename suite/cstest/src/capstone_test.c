@@ -181,6 +181,9 @@ int set_function(int arch)
 		case CS_ARCH_RISCV:
 			function = get_detail_riscv;
 			break;
+		case CS_ARCH_TRICORE:
+			function = get_detail_tricore;
+			break;
 		default:
 			return -1;
 	}
