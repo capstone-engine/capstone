@@ -318,7 +318,7 @@ static const uint8_t DecoderTable16[] = {
 /* 1326 */    MCD_OPC_FilterValue, 3, 4, 0, 0, // Skip to: 1335
 /* 1331 */    MCD_OPC_Decode, 230, 3, 6, // Opcode: JNE_sbr2
 /* 1335 */    MCD_OPC_Fail,
-  0
+              0
 };
 
 static const uint8_t DecoderTable32[] = {
@@ -2658,16 +2658,16 @@ static const uint8_t DecoderTable32[] = {
 /* 11272 */   MCD_OPC_FilterValue, 1, 4, 0, 0, // Skip to: 11281
 /* 11277 */   MCD_OPC_Decode, 204, 3, 32, // Opcode: JGE_U_brc
 /* 11281 */   MCD_OPC_Fail,
-  0
+              0
 };
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
-  /* llvm_unreachable("Invalid index!"); */
+	/* llvm_unreachable("Invalid index!"); */
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-		uint64_t Address, bool *Decoder) \
+        uint64_t Address, void *Decoder) \
 { \
   InsnType tmp; \
   switch (Idx) { \
@@ -2794,96 +2794,82 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
 static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
-                                      InsnType insn, uint64_t Address) { \
+           InsnType insn, uint64_t Address, MCRegisterInfo *MRI, int feature) \
+{ \
+  uint64_t Bits = getFeatureBits(feature); \
   const uint8_t *Ptr = DecodeTable; \
-  uint64_t CurFieldValue = 0; \
+  uint64_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
-  while (true) { \
+  unsigned Start, Len, NumToSkip, PIdx, Opc, DecodeIdx; \
+  InsnType Val, FieldValue, PositiveMask, NegativeMask; \
+  bool Pred, Fail; \
+  for (;;) { \
     switch (*Ptr) { \
     default: \
       return MCDisassembler_Fail; \
     case MCD_OPC_ExtractField: { \
-      unsigned Start = *++Ptr; \
-      unsigned Len = *++Ptr; \
+      Start = *++Ptr; \
+      Len = *++Ptr; \
       ++Ptr; \
       CurFieldValue = fieldname(insn, Start, Len); \
       break; \
     } \
     case MCD_OPC_FilterValue: { \
-      /* Decode the field value. */ \
-      unsigned Len; \
-      uint64_t Val = decodeULEB128(++Ptr, &Len); \
+      Val = decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      /* NumToSkip is a plain 24-bit integer. */ \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
-      /* Perform the filter operation. */ \
       if (Val != CurFieldValue) \
         Ptr += NumToSkip; \
       break; \
     } \
     case MCD_OPC_CheckField: { \
-      unsigned Start = *++Ptr; \
-      unsigned Len = *++Ptr; \
-      uint64_t FieldValue = fieldname(insn, Start, Len); \
-      /* Decode the field value. */ \
-      unsigned PtrLen = 0; \
-      uint64_t ExpectedValue = decodeULEB128(++Ptr, &PtrLen); \
-      Ptr += PtrLen; \
-      /* NumToSkip is a plain 24-bit integer. */ \
-      unsigned NumToSkip = *Ptr++; \
+      Start = *++Ptr; \
+      Len = *++Ptr; \
+      FieldValue = fieldname(insn, Start, Len); \
+      ExpectedValue = decodeULEB128(++Ptr, &Len); \
+      Ptr += Len; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
-      /* If the actual and expected values don't match, skip. */ \
-      if (ExpectedValue != FieldValue) \
+	  if (ExpectedValue != FieldValue) \
         Ptr += NumToSkip; \
       break; \
     } \
     case MCD_OPC_CheckPredicate: { \
-      unsigned Len; \
-      /* Decode the Predicate Index value. */ \
-      unsigned PIdx = decodeULEB128(++Ptr, &Len); \
+      PIdx = decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      /* NumToSkip is a plain 24-bit integer. */ \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
-      NumToSkip |= (*Ptr++) << 16; \
-      /* Check the predicate. */ \
-      bool Pred = checkDecoderPredicate(MI, PIdx); \
+	  NumToSkip |= (*Ptr++) << 16; \
+      Pred = checkDecoderPredicate(MI, PIdx); \
       if (!Pred) \
         Ptr += NumToSkip; \
       break; \
     } \
     case MCD_OPC_Decode: { \
-      unsigned Len; \
-      /* Decode the Opcode value. */ \
-      unsigned Opc = decodeULEB128(++Ptr, &Len); \
+      Opc = decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned DecodeIdx = decodeULEB128(Ptr, &Len); \
+      DecodeIdx = decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       MCInst_clear(MI); \
-      MCInst_setOpcode(MI, Opc); \
-      bool DecodeComplete; \
-      S = decoder(S, DecodeIdx, insn, MI, Address, &DecodeComplete); \
-      return S; \
-    } \
+	  MCInst_setOpcode(MI, Opc); \
+      return decoder(S, DecodeIdx, insn, MI, Address, MRI); \
+    }                                                          \
     case MCD_OPC_TryDecode: { \
-      unsigned Len; \
       /* Decode the Opcode value. */ \
-      unsigned Opc = decodeULEB128(++Ptr, &Len); \
+      Opc = decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      unsigned DecodeIdx = decodeULEB128(Ptr, &Len); \
+      DecodeIdx = decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       /* NumToSkip is a plain 24-bit integer. */ \
-      unsigned NumToSkip = *Ptr++; \
+      NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
       /* Perform the decode operation. */ \
       MCInst_setOpcode(MI, Opc); \
-      bool DecodeComplete; \
-      S = decoder(S, DecodeIdx, insn, MI, Address, &DecodeComplete); \
-      if (DecodeComplete) { \
+      if (decoder(S, DecodeIdx, insn, MI, Address, MRI)) { \
         /* Decoding complete. */ \
         return S; \
       } else { \
@@ -2895,14 +2881,12 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       } \
       break; \
     } \
-    case MCD_OPC_SoftFail: { \
-      /* Decode the mask values. */ \
-      unsigned Len; \
-      uint64_t PositiveMask = decodeULEB128(++Ptr, &Len); \
+	case MCD_OPC_SoftFail: { \
+      PositiveMask = decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
-      uint64_t NegativeMask = decodeULEB128(Ptr, &Len); \
+      NegativeMask = decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
-      bool Fail = (insn & PositiveMask) != 0 || (~insn & NegativeMask) != 0; \
+      Fail = (insn & PositiveMask) || (~insn & NegativeMask); \
       if (Fail) \
         S = MCDisassembler_SoftFail; \
       break; \
@@ -2912,7 +2896,6 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
     } \
     } \
   } \
-  /* Bogisity detected in disassembler state machine! */ \
 }
 
 FieldFromInstruction(fieldFromInstruction_2, uint16_t)
