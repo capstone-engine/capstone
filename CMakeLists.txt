@@ -39,7 +39,7 @@ option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ${BUILD_SHARED_LIBS}
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ${PROJECT_IS_TOP_LEVEL})
-option(CAPSTONE_BUILD_CSTEST "Build cstest" ${PROJECT_IS_TOP_LEVEL})
+option(CAPSTONE_BUILD_CSTEST "Build cstest" OFF)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)

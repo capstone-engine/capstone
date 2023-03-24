@@ -265,27 +265,25 @@ multiclass mISC_D15<bits<8> op1, string asmstr> {
   def _src : ISC_D15<op1, asmstr>;
 }
 
-let Constraints = "$s1 = $d" in {
 class ISRC<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
+    : SRC<op1, (outs DataRegs:$d), (ins s4imm:$const4),
       asmstr # " $d, $const4",
       []>;
 
 class ISRC_Aa<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs AddrRegs:$d), (ins AddrRegs:$s1, s4imm:$const4),
+    : SRC<op1, (outs AddrRegs:$d), (ins s4imm:$const4),
       asmstr # " $d, $const4",
       []>;
 
 class ISRC_a15<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
+    : SRC<op1, (outs DataRegs:$d), (ins s4imm:$const4),
       asmstr # " $d, %d15, $const4",
       []>;
 
 class ISRC_15a<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs DataRegs:$d), (ins DataRegs:$s1, s4imm:$const4),
+    : SRC<op1, (outs DataRegs:$d), (ins s4imm:$const4),
       asmstr # " %d15, $d, $const4",
       []>;
-}
 
 multiclass mISRC_s<bits<8> op1, string asmstr> {
   def _src : ISRC<op1, asmstr>;
@@ -383,27 +381,27 @@ class IRLC<bits<8> op1, string asmstr>
       asmstr # " $d, $s1, $const16",
       []>;
 
-let Constraints = "$s1 = $d" in {
+
 class ISRR<bits<8> op1, string asmstr>
-    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s2),
       asmstr # " $d, $s2",
       []>;
 
 class ISRR_AaAb<bits<8> op1, string asmstr>
-    : SRR<op1, (outs AddrRegs:$d), (ins AddrRegs:$s1, DataRegs:$s2),
+    : SRR<op1, (outs AddrRegs:$d), (ins AddrRegs:$s2),
       asmstr # " $d, $s2",
       []>;
 
 class ISRR_a15<bits<8> op1, string asmstr>
-    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s2),
       asmstr # " $d, %d15, $s2",
       []>;
 
 class ISRR_15a<bits<8> op1, string asmstr>
-    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2),
+    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s2),
       asmstr # " %d15, $d, $s2",
       []>;
-}
+
 
 multiclass mISRR_s<bits<8> op1, string asmstr>{
     def _srr : ISRR<op1, asmstr>;
@@ -574,22 +572,22 @@ class IBO_bso<bits<8> op1, bits<6> op2, string asmstr>
       asmstr # " [$s2]$off10", []>;
 // P[b] (BO) (Bit Reverse Addressing Mode)
 class IBO_r<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrExtRegs:$b), (ins AddrRegs:$s2),
-      asmstr # " [${b}+r]", []>;
+    : BO<op1, op2, (outs), (ins AddrRegs:$s2),
+      asmstr # " [${s2}+r]", []>;
 // P[b], off10 (BO) (Circular Addressing Mode)
 class IBO_c<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrExtRegs:$b), (ins s10imm:$off10),
-      asmstr # " [${b}+c]", []>;
+    : BO<op1, op2, (outs), (ins AddrExtRegs:$s2, s10imm:$off10),
+      asmstr # " [${s2}+c]$off10", []>;
 // A[b], off10 (BO) (Post-increment Addressing Mode)
-let Constraints = "$s2 = $d" in {
+
 class IBO_pos<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10),
+    : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10),
       asmstr # " [+$s2]$off10", []>;
 // A[b], off10 (BO) (Pre-increment Addressing Mode)
 class IBO_pre<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10),
+    : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10),
       asmstr # " [${s2}+]$off10", []>;
-}
+
 
 multiclass mIBO_a<bits<8> op11, bits<6> op12,
                   bits<8> op21, bits<6> op22,
@@ -752,15 +750,14 @@ class IBO_cEa<bits<8> op1, bits<6> op2, string asmstr>
     : BO<op1, op2, (outs AddrExtRegs:$b), (ins s10imm:$off10, AddrExtRegs:$s1),
       asmstr # " $s1, [${b}+c]", []>;
 // A[b], off10, E[a] (BO)(Post-increment Addressing Mode)
-let Constraints = "$s2 = $d" in {
 class IBO_posEa<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10, AddrExtRegs:$s1),
+    : BO<op1, op2, (outs), (ins AddrExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
       asmstr # " $s1, [+$s2]$off10", []>;
 // A[b], off10, E[a] (BO)(Pre-increment Addressing Mode)
 class IBO_preEa<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrRegs:$d), (ins AddrRegs:$s2, s10imm:$off10, AddrExtRegs:$s1),
+    : BO<op1, op2, (outs), (ins AddrExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
       asmstr # " $s1, [${s2}+]$off10", []>;
-}
+
 
 multiclass mIBO_Ea<bits<8> bso1, bits<6> bso2, ///_bso
                    bits<8> r1, bits<6> r2, ///_r
@@ -790,9 +787,9 @@ def CSUBN_rrr   : IRRR_DcDdDaDb<0x2B, 0x03, "csub">;
 class ISR_0<bits<8> op1, bits<4> op2, string asmstr>
     : SR<op1, op2, (outs), (ins),
         asmstr, []>;
-let Constraints = "$s1 = $d" in
+
 class ISR_1<bits<8> op1, bits<4> op2, string asmstr>
-    : SR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1),
+    : SR<op1, op2, (outs), (ins DataRegs:$s1),
         asmstr # " $s1", []>;
 
 class ISYS_0<bits<8> op1, bits<6> op2, string asmstr>
@@ -1143,17 +1140,16 @@ class IBO_RPr<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc>
 // A|D[a], P[b], off10 (BO) (Circular Addressing Mode)
 class IBO_RPc<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc> 
     : BO<op1, op2, (outs dc:$d), (ins AddrExtRegs:$s2, s10imm:$off10),
-      asmstr # " $d, [${s2}+c]", []>;
-// A|D[a], A[b], off10 (BO) (Post-increment Addressing Mode)
-let Constraints = "$s2 = $d" in {
+      asmstr # " $d, [${s2}+c]$off10", []>;
+// A|D[a], A[b], off10 (BO)(Post-increment Addressing Mode)
 class IBO_RApos<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc>
-    : BO<op1, op2, (outs dc:$d), (ins AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $d, [+$s2]$off10", []>;
+    : BO<op1, op2, (outs), (ins dc:$s1, AddrRegs:$s2, s10imm:$off10),
+      asmstr # " $s1, [+$s2]$off10", []>;
 // A|D[a], A[b], off10 (BO) (Pre-increment Addressing Mode)
 class IBO_RApre<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc>
-    : BO<op1, op2, (outs dc:$d), (ins AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $d, [${s2}+]$off10", []>;
-}
+    : BO<op1, op2, (outs), (ins dc:$s1, AddrRegs:$s2, s10imm:$off10),
+      asmstr # " $s1, [${s2}+]$off10", []>;
+
 
 multiclass mIABS_BO<bits<8> abs1, bits<2> abs2,   ///_abs
                     bits<8> prefix1, bits<8> prefix2,
@@ -1602,17 +1598,16 @@ class IBO_r_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
 // P[b], off10, A[a] (BO)(Circular Addressing Mode)
 class IBO_c_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc> 
     : BO<op1, op2, (outs AddrExtRegs:$d), (ins rc:$s1, s10imm:$off10),
-      asmstr # " $d, [${s1}+c]", []>;
+      asmstr # " $d, [${s1}+c]$off10", []>;
 // A[b], off10, A[a] (BO)(Post-increment Addressing Mode)
-let Constraints = "$s1 = $d" in {
 class IBO_pos_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
-    : BO<op1, op2, (outs AddrRegs:$d), (ins rc:$s1, s10imm:$off10),
-      asmstr # " $d, [+$s1]$off10", []>;
+    : BO<op1, op2, (outs), (ins rc:$s1, AddrRegs:$s2, s10imm:$off10),
+      asmstr # " $s2, [+$s1]$off10", []>;
 // A[b], off10, A[a] (BO)(Pre-increment Addressing Mode)
 class IBO_pre_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
-    : BO<op1, op2, (outs AddrRegs:$d), (ins rc:$s1, s10imm:$off10),
-      asmstr # " $d, [${s1}+]$off10", []>;
-}
+    : BO<op1, op2, (outs), (ins rc:$s1, AddrRegs:$s2, s10imm:$off10),
+      asmstr # " $s2, [${s1}+]$off10", []>;
+
 
 multiclass mIBO_st<bits<8> prefix1, bits<8> prefix2,
                        bits<6> bso2, ///_bso

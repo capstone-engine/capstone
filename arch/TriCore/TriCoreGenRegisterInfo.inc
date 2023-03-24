@@ -215,7 +215,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // AddrRegs Register Class...
   static const MCPhysReg AddrRegs[] = {
-    TriCore_A15, TriCore_A2, TriCore_A3, TriCore_A4, TriCore_A5, TriCore_A6, TriCore_A7, TriCore_A12, TriCore_A13, TriCore_A14, TriCore_A10, TriCore_A11, TriCore_A0, TriCore_A1, TriCore_A8, TriCore_A9, 
+    TriCore_A0, TriCore_A1, TriCore_A2, TriCore_A3, TriCore_A4, TriCore_A5, TriCore_A6, TriCore_A7, TriCore_A8, TriCore_A9, TriCore_A10, TriCore_A11, TriCore_A12, TriCore_A13, TriCore_A14, TriCore_A15, 
   };
 
   // AddrRegs Bit set.
@@ -225,7 +225,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // DataRegs Register Class...
   static const MCPhysReg DataRegs[] = {
-    TriCore_D15, TriCore_D2, TriCore_D3, TriCore_D4, TriCore_D5, TriCore_D6, TriCore_D7, TriCore_D8, TriCore_D9, TriCore_D10, TriCore_D11, TriCore_D12, TriCore_D13, TriCore_D14, TriCore_D0, TriCore_D1, 
+    TriCore_D0, TriCore_D1, TriCore_D2, TriCore_D3, TriCore_D4, TriCore_D5, TriCore_D6, TriCore_D7, TriCore_D8, TriCore_D9, TriCore_D10, TriCore_D11, TriCore_D12, TriCore_D13, TriCore_D14, TriCore_D15, 
   };
 
   // DataRegs Bit set.
@@ -245,7 +245,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // AddrExtRegs Register Class...
   static const MCPhysReg AddrExtRegs[] = {
-    TriCore_P2, TriCore_P4, TriCore_P6, TriCore_P8, TriCore_P10, TriCore_P12, TriCore_P14, TriCore_P0, 
+    TriCore_P0, TriCore_P2, TriCore_P4, TriCore_P6, TriCore_P8, TriCore_P10, TriCore_P12, TriCore_P14, 
   };
 
   // AddrExtRegs Bit set.
@@ -255,7 +255,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // ExtRegs Register Class...
   static const MCPhysReg ExtRegs[] = {
-    TriCore_E2, TriCore_E4, TriCore_E6, TriCore_E8, TriCore_E10, TriCore_E12, TriCore_E14, TriCore_E0, 
+    TriCore_E0, TriCore_E2, TriCore_E4, TriCore_E6, TriCore_E8, TriCore_E10, TriCore_E12, TriCore_E14, 
   };
 
   // ExtRegs Bit set.

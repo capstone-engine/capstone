@@ -119,38 +119,26 @@ def FCX  : TriCorePSReg<3, "fcx">, DwarfRegNum<[43]>;
 //===----------------------------------------------------------------------===//
 
 def DataRegs : RegisterClass<"TriCore", [i32], 32, (add
-    // Implict Data
-    D15,
-    // Mostly Used
-    D2, D3,
-    D4, D5, D6, D7,
-    D8, D9, D10, D11,
-    D12, D13, D14,
-    // Others - Compiler Specific
-    D0, D1)>;
+    D0,  D1,  D2,  D3,  D4,
+    D5,  D6,  D7,  D8,  D9,
+    D10, D11, D12, D13, D14,
+    D15)>;
 
 def AddrRegs : RegisterClass<"TriCore", [i32], 32, (add
-    // Implicit Address
-    A15,
-    // Others
-    A2, A3, A4, A5, A6,
-    A7, A12, A13, A14,
-    // Stack Pointer
-    A10,
-    // Return Address
-    A11,
-    // Global Address
-    A0, A1, A8, A9)>;
+    A0,  A1,  A2,  A3,  A4,
+    A5,  A6,  A7,  A8,  A9,
+    A10, A11, A12, A13, A14,
+    A15)>;
 
 def ExtRegs : RegisterClass<"TriCore", [i64], 64, (add
-    E2, E4,
+    E0, E2, E4,
     E6, E8, E10,
-    E12, E14, E0)>;
+    E12, E14)>;
 
 def AddrExtRegs : RegisterClass<"TriCore", [i64], 64, (add
-    P2, P4,
+    P0, P2, P4,
     P6, P8, P10,
-    P12, P14, P0)>;
+    P12, P14)>;
 
 def PSRegs : RegisterClass<"TriCore", [i32], 32, (add
     PSW, PCXI, PC, FCX)>;
