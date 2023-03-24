@@ -223,6 +223,20 @@ static DecodeStatus DecodePairAddrRegsRegisterClass(MCInst *Inst, unsigned RegNo
 	return MCDisassembler_Success;
 }
 
+static DecodeStatus
+DecodeRegisterClass(MCInst *Inst, unsigned RegNo, unsigned RegClass, uint64_t Address, void *Decoder) {
+	unsigned Reg;
+	unsigned RegHalfNo = RegNo / 2;
+
+	if (RegHalfNo > 15)
+		return MCDisassembler_Fail;
+
+	Reg = getReg(Decoder, RegClass, RegHalfNo);
+	MCOperand_CreateReg0(Inst, Reg);
+
+	return MCDisassembler_Success;
+}
+
 #define GET_INSTRINFO_ENUM
 
 #include "TriCoreGenInstrInfo.inc"
@@ -1511,7 +1525,7 @@ bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 	}
 
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_2(DecoderTable16, MI, insn16, address);
+	Result = decodeInstruction_2(DecoderTable16, MI, insn16, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 2;
 		return true;
@@ -1522,7 +1536,7 @@ bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 	}
 
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_4(DecoderTable32, MI, insn32, address);
+	Result = decodeInstruction_4(DecoderTable32, MI, insn32, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;
@@ -1546,9 +1560,9 @@ void TriCore_init(MCRegisterInfo *MRI) {
 	*/
 
 
-	MCRegisterInfo_InitMCRegisterInfo(MRI, TriCoreRegDesc, 53,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, TriCoreRegDesc, ARR_SIZE(TriCoreRegDesc),
 	                                  0, 0,
-	                                  TriCoreMCRegisterClasses, 5,
+	                                  TriCoreMCRegisterClasses, ARR_SIZE(TriCoreMCRegisterClasses),
 	                                  0, 0,
 	                                  TriCoreRegDiffLists,
 	                                  0,
