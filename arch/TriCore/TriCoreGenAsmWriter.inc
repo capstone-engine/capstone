@@ -2730,7 +2730,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 10:
     // MOVH_A_rlc, MOV_H_rlc, MOV_U_rlc, MOV_rlcDc, MOV_rlcEc
-    printSExtImm_16(MI, 1, O);
+    printZExtImm_16(MI, 1, O);
     return;
     break;
   case 11:

@@ -1349,7 +1349,7 @@ defm MIN_B : mIU__RR_ab<0x0B, 0x58, 0x0B, 0x59, "min.b">;
 defm MIN_H : mIU__RR_ab<0x0B, 0x78, 0x0B, 0x79, "min.h">;
 
 class IRLC_1<bits<8> op1, string asmstr, RegisterClass rc>
-    : RLC<op1, (outs rc:$d), (ins s16imm:$const16),
+    : RLC<op1, (outs rc:$d), (ins u16imm:$const16),
       asmstr # " $d, $const16", []>;
 
 class ISRC_1<bits<8> op1, string asmstr, RegisterClass rc> 

@@ -1,2 +1,2 @@
 # CS_ARCH_TRICORE, CS_MODE_TRICORE, None
-0x82,0xf1           = mov	%d1, -1
+0x91,0x00,0x00,0xf8 = movh.a	%a15, 32768

@@ -163,8 +163,8 @@ static void sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
-		bool sign = imm >> (n - 1) & 0x1;
-		for (unsigned i = n + 1; i < 64; ++i) {
+		int64_t sign = imm >> (n - 1) & 0x1;
+		for (unsigned i = n; i < 64; ++i) {
 			imm = (imm & ~(1LL << i)) | (sign << i);
 		}
 		if (imm >= 0) {
@@ -195,7 +195,7 @@ static void zero_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
-		const bool sign = 0;
+		const int64_t sign = 0;
 		for (unsigned i = n + 1; i < 64; ++i) {
 			imm = (imm & ~(1LL << i)) | (sign << i);
 		}
@@ -267,6 +267,8 @@ static inline void printZExtImm(MCInst *MI, int OpNum, SStream *O) {
   {                                                                            \
     zero_ext(MI, OpNum, O, n);                                                \
   }
+
+printZExtImm_(16)
 
 printZExtImm_(8)
 
