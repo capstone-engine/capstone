@@ -38,6 +38,7 @@ __all__ = [
     'CS_ARCH_BPF',
     'CS_ARCH_RISCV',
     'CS_ARCH_MOS65XX',
+    'CS_ARCH_TRICORE',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -88,6 +89,7 @@ __all__ = [
     'CS_MODE_MOS65XX_65816_LONG_M',
     'CS_MODE_MOS65XX_65816_LONG_X',
     'CS_MODE_MOS65XX_65816_LONG_MX',
+    'CS_MODE_TRICORE',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -174,7 +176,9 @@ CS_ARCH_MOS65XX = 12
 CS_ARCH_WASM = 13
 CS_ARCH_BPF = 14
 CS_ARCH_RISCV = 15
-CS_ARCH_MAX = 16
+# CS_ARCH_SH = 16
+CS_ARCH_TRICORE = 17
+CS_ARCH_MAX = 18
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -226,6 +230,7 @@ CS_MODE_MOS65XX_65816 = (1 << 4) # MOS65XXX WDC 65816, 8-bit m/x
 CS_MODE_MOS65XX_65816_LONG_M = (1 << 5) # MOS65XXX WDC 65816, 16-bit m, 8-bit x 
 CS_MODE_MOS65XX_65816_LONG_X = (1 << 6) # MOS65XXX WDC 65816, 8-bit m, 16-bit x
 CS_MODE_MOS65XX_65816_LONG_MX = CS_MODE_MOS65XX_65816_LONG_M | CS_MODE_MOS65XX_65816_LONG_X
+CS_MODE_TRICORE = 1 << 1 # Tricore
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -1173,7 +1178,7 @@ def debug():
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
         "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
-        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV,
+        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
     }
 
     all_archs = ""

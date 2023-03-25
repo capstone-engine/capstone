@@ -382,8 +382,8 @@ bool CAPSTONE_API cs_support(int query)
 				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
 				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    |
-				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF))       |
-				    (1 << CS_ARCH_SH)    | (1 << CS_ARCH_TRICORE);
+				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF)        |
+				    (1 << CS_ARCH_SH)    | (1 << CS_ARCH_TRICORE));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
