@@ -141,14 +141,14 @@ static void printSExtImm(MCInst *MI, int OpNum, SStream *O)
     int64_t imm = MCOperand_getImm(MO);
     if (imm >= 0) {
       if (imm > HEX_THRESHOLD)
-	SStream_concat(O, "0x%x", (unsigned short int)imm);
+	SStream_concat(O, "0x%x", imm);
       else
-	SStream_concat(O, "%u", (unsigned short int)imm);
+	SStream_concat(O, "%u", imm);
     } else {
       if (imm < -HEX_THRESHOLD)
-	SStream_concat(O, "-0x%x", (short int)-imm);
+	SStream_concat(O, "-0x%x", -imm);
       else
-	SStream_concat(O, "-%u", (short int)-imm);
+	SStream_concat(O, "-%u", -imm);
     }
     if (MI->csh->detail) {
       MI->flat_insn->detail->tricore
@@ -163,27 +163,24 @@ static void printSExtImm(MCInst *MI, int OpNum, SStream *O)
     printOperand(MI, OpNum, O);
 }
 
-static void printSExtImm_16(MCInst *MI, int OpNum, SStream *O)
-{ /*TODO: TriCore*/
-}
+#define printSExtImm_(n)                                                       \
+  static void printSExtImm_ ##n(MCInst *MI, int OpNum, SStream *O)              \
+  {                                                                            \
+    printSExtImm(MI, OpNum, O);                                                \
+  }
 
-static void printSExtImm_10(MCInst *MI, int OpNum, SStream *O)
-{ /*TODO: TriCore*/
-}
+printSExtImm_(24)
+printSExtImm_(16)
+printSExtImm_(10)
+printSExtImm_(9)
+printSExtImm_(8)
+printSExtImm_(4)
 
-static void printSExtImm_9(MCInst *MI, int OpNum, SStream *O)
-{ /*TODO: TriCore*/
-}
-
-static void printSExtImm_4(MCInst *MI, int OpNum, SStream *O)
-{ /*TODO: TriCore*/
-}
-
-static void printZExtImm(MCInst *MI, int OpNum, SStream *O)
+static inline void printZExtImm(MCInst *MI, int OpNum, SStream *O)
 {
   MCOperand *MO = MCInst_getOperand(MI, OpNum);
   if (MCOperand_isImm(MO)) {
-    unsigned imm = (unsigned)MCOperand_getImm(MO);
+    uint64_t imm = (unsigned)MCOperand_getImm(MO);
     if (imm > HEX_THRESHOLD)
       SStream_concat(O, "0x%x", imm);
     else
@@ -201,17 +198,16 @@ static void printZExtImm(MCInst *MI, int OpNum, SStream *O)
     printOperand(MI, OpNum, O);
 }
 
-static void printZExtImm_8(MCInst *MI, int OpNum, SStream *O)
-{ /*TODO: TriCore*/
-}
+#define printZExtImm_(n)                                                       \
+  static void printZExtImm_ ##n(MCInst *MI, int OpNum, SStream *O)              \
+  {                                                                            \
+    printZExtImm(MI, OpNum, O);                                                \
+  }
 
-static void printZExtImm_4(MCInst *MI, int OpNum, SStream *O)
-{ /*TODO: TriCore*/
-}
-
-static void printZExtImm_2(MCInst *MI, int OpNum, SStream *O)
-{ /*TODO: TriCore*/
-}
+printZExtImm_(8)
+printZExtImm_(4)
+printZExtImm_(2)
+printZExtImm_(1)
 
 static void printPCRelImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
@@ -438,21 +434,20 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 
   //	switch(Opcode) {
   //		// Combine 2 AddrRegs from disassember into a PairAddrRegs to
-  //match
+  // match
   //		// with instr def. load/store require even/odd AddrReg pair. To
-  //enforce
-  //		// this constraint, a single PairAddrRegs reg operand is used in the
-  //.td
-  //		// file to replace the two AddrRegs. However, when decoding them,
-  //the two
-  //		// AddrRegs cannot be automatically expressed as a PairAddrRegs, so
-  //we
+  // enforce
+  //		// this constraint, a single PairAddrRegs reg operand is used in
+  //the .td
+  //		// file to replace the two AddrRegs. However, when decoding
+  //them, the two
+  //		// AddrRegs cannot be automatically expressed as a PairAddrRegs,
+  //so we
   //		// have to manually merge them.
   //		// FIXME: We would really like to be able to tablegen'erate
-  //this. 		case TriCore_LD_DAabs: 		case TriCore_LD_DAbo: 		case
-  //TriCore_LD_DApreincbo: 		case TriCore_LD_DApostincbo: 		case TriCore_ST_Bcircbo:
-  //		case TriCore_ST_Hcircbo:
-  //		case TriCore_ST_Wcircbo:
+  // this. 		case TriCore_LD_DAabs: 		case TriCore_LD_DAbo:
+  // case TriCore_LD_DApreincbo: 		case TriCore_LD_DApostincbo:
+  // case TriCore_ST_Bcircbo: 		case TriCore_ST_Hcircbo: 		case TriCore_ST_Wcircbo:
   //		case TriCore_ST_Dcircbo:
   //		case TriCore_ST_Qcircbo:
   //		case TriCore_ST_Acircbo:
@@ -462,24 +457,25 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
   //		case TriCore_ST_Dbitrevbo:
   //		case TriCore_ST_Qbitrevbo:
   //		case TriCore_ST_Abitrevbo: {
-  //			const MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI,
-  //TriCore_AddrRegsRegClassID);
+  //			const MCRegisterClass* MRC =
+  //MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
   //
   //			unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI,
-  //0)); 			if (MCRegisterClass_contains(MRC, Reg)) { 				MCInst NewMI;
+  // 0)); 			if (MCRegisterClass_contains(MRC, Reg)) { 				MCInst
+  // NewMI;
   //
   //				MCInst_Init(&NewMI);
   //				MCInst_setOpcode(&NewMI, Opcode);
   //
   //				MCOperand_CreateReg0(&NewMI,
-  //MCRegisterInfo_getMatchingSuperReg(MRI, Reg, TriCore_subreg_even,
+  // MCRegisterInfo_getMatchingSuperReg(MRI, Reg, TriCore_subreg_even,
   //							MCRegisterInfo_getRegClass(MRI,
-  //TriCore_PairAddrRegsRegClassID)));
+  // TriCore_PairAddrRegsRegClassID)));
   //
   //				// Copy the rest operands into NewMI.
   //				for(i = 2; i < MCInst_getNumOperands(MI); ++i)
-  //					MCInst_addOperand2(&NewMI, MCInst_getOperand(MI,
-  //i));
+  //					MCInst_addOperand2(&NewMI,
+  //MCInst_getOperand(MI, i));
   //
   //				printInstruction(&NewMI, O, MRI);
   //				return;
@@ -503,27 +499,28 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
   //		case TriCore_LD_Wbitrevbo:
   //		case TriCore_LD_Dbitrevbo:
   //		case TriCore_LD_Abitrevbo: {
-  //			const MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI,
-  //TriCore_AddrRegsRegClassID);
+  //			const MCRegisterClass* MRC =
+  //MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
   //
   //			unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI,
-  //1)); 			if (MCRegisterClass_contains(MRC, Reg)) { 				MCInst NewMI;
+  // 1)); 			if (MCRegisterClass_contains(MRC, Reg)) { 				MCInst
+  // NewMI;
   //
   //				MCInst_Init(&NewMI);
   //				MCInst_setOpcode(&NewMI, Opcode);
   //
   //				MCInst_addOperand2(&NewMI, MCInst_getOperand(MI,
-  //0));
+  // 0));
   //
   //				MCOperand_CreateReg0(&NewMI,
-  //MCRegisterInfo_getMatchingSuperReg(MRI, Reg, TriCore_subreg_even,
+  // MCRegisterInfo_getMatchingSuperReg(MRI, Reg, TriCore_subreg_even,
   //							MCRegisterInfo_getRegClass(MRI,
-  //TriCore_PairAddrRegsRegClassID)));
+  // TriCore_PairAddrRegsRegClassID)));
   //
   //				// Copy the rest operands into NewMI.
   //				for(i = 3; i < MCInst_getNumOperands(MI); ++i)
-  //					MCInst_addOperand2(&NewMI, MCInst_getOperand(MI,
-  //i));
+  //					MCInst_addOperand2(&NewMI,
+  //MCInst_getOperand(MI, i));
   //
   //				printInstruction(&NewMI, O, MRI);
   //				return;
@@ -533,30 +530,31 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
   //		case TriCore_ST_DAcircbo:
   //		case TriCore_LD_DAbitrevbo:
   //		case TriCore_ST_DAbitrevbo: {
-  //			const MCRegisterClass* MRC = MCRegisterInfo_getRegClass(MRI,
-  //TriCore_AddrRegsRegClassID);
+  //			const MCRegisterClass* MRC =
+  //MCRegisterInfo_getRegClass(MRI, TriCore_AddrRegsRegClassID);
   //
   //			unsigned Reg1 = MCOperand_getReg(MCInst_getOperand(MI,
-  //0)); 			unsigned Reg2 = MCOperand_getReg(MCInst_getOperand(MI, 2)); 			if
-  //(MCRegisterClass_contains(MRC, Reg2)) { 				MCInst NewMI;
+  // 0)); 			unsigned Reg2 = MCOperand_getReg(MCInst_getOperand(MI, 2));
+  // if (MCRegisterClass_contains(MRC, Reg2)) {
+  //MCInst NewMI;
   //
   //				MCInst_Init(&NewMI);
   //				MCInst_setOpcode(&NewMI, Opcode);
   //
   //				MCOperand_CreateReg0(&NewMI,
-  //MCRegisterInfo_getMatchingSuperReg(MRI, Reg1, TriCore_subreg_even,
+  // MCRegisterInfo_getMatchingSuperReg(MRI, Reg1, TriCore_subreg_even,
   //							MCRegisterInfo_getRegClass(MRI,
-  //TriCore_PairAddrRegsRegClassID)));
+  // TriCore_PairAddrRegsRegClassID)));
   //
   //				MCOperand_CreateReg0(&NewMI,
-  //MCRegisterInfo_getMatchingSuperReg(MRI, Reg2, TriCore_subreg_even,
+  // MCRegisterInfo_getMatchingSuperReg(MRI, Reg2, TriCore_subreg_even,
   //							MCRegisterInfo_getRegClass(MRI,
-  //TriCore_PairAddrRegsRegClassID)));
+  // TriCore_PairAddrRegsRegClassID)));
   //
   //				// Copy the rest operands into NewMI.
   //				for(i = 4; i < MCInst_getNumOperands(MI); ++i)
-  //					MCInst_addOperand2(&NewMI, MCInst_getOperand(MI,
-  //i));
+  //					MCInst_addOperand2(&NewMI,
+  //MCInst_getOperand(MI, i));
   //
   //				printInstruction(&NewMI, O, MRI);
   //				return;

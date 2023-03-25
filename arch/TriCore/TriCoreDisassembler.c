@@ -361,8 +361,8 @@ static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
 		case TriCore_OR_srr:
 		case TriCore_XOR_srr:
 			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
-			if (status == MCDisassembler_Success)
-				status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+//			if (status == MCDisassembler_Success)
+//				status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
 			break;
 		default:
 			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
@@ -455,8 +455,8 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	unsigned off10_1 = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned off10 = (off10_0 << 0) | (off10_1 << 6);
 
-	unsigned s2 = fieldFromInstruction_4(Insn, 28, 4);
-	unsigned s1_d = fieldFromInstruction_4(Insn, 22, 4);
+	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
+	unsigned s1_d = fieldFromInstruction_4(Insn, 8, 4);
 
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
 
