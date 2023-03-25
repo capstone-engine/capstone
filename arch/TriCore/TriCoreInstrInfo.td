@@ -174,6 +174,7 @@ def imm0_31 : PatLeaf<(imm),
 //Operands
 def s4imm      : Operand<i32> { let PrintMethod = "printSExtImm<4>";  }
 def s6imm      : Operand<i32> { let PrintMethod = "printSExtImm<6>";  }
+def s8imm      : Operand<i32> { let PrintMethod = "printSExtImm<8>";  }
 def s9imm      : Operand<i32> { let PrintMethod = "printSExtImm<9>";  }
 def s10imm     : Operand<i32> { let PrintMethod = "printSExtImm<10>";  }
 def s16imm     : Operand<i32> { let PrintMethod = "printSExtImm<16>"; }
@@ -706,7 +707,7 @@ def CADDN_src : ISRC_a15<0xCA, "caddn">;
 // Call Instructions
 
 class IB<bits<8> op1, string asmstr>
-    : B<op1, (outs), (ins i32imm:$disp24),
+    : B<op1, (outs), (ins s24imm:$disp24),
         asmstr # " $disp24", []>;
 
 // The target of a 24-bit call instruction.
@@ -978,7 +979,7 @@ defm IXMAX : mI_U_RRR_EEdb<0x6B, 0x0A, 0x6B, 0x0B, "ixmax">;
 defm IXMIN : mI_U_RRR_EEdb<0x6B, 0x08, 0x6B, 0x09, "ixmin">;
 
 class ISB<bits<8> op1, string asmstr>
-    : SB<op1, (outs), (ins i32imm:$disp24), asmstr # " $disp24", []>;
+    : SB<op1, (outs), (ins s8imm:$disp8), asmstr # " $disp8", []>;
 
 def J_b  : IB<0x1D, "j">;
 def J_sb : ISB<0x3C, "j">;
@@ -1590,7 +1591,7 @@ def SHUFFLE_rc : IRC_2<0x8F, 0x07, "shuffle">;
 // A[b], off10, A[a] (BO)(Base + Short Offset Addressing Mode)
 class IBO_bso_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc> 
     : BO<op1, op2, (outs AddrRegs:$d), (ins rc:$s1, s10imm:$off10),
-      asmstr # " $d, [$s1]$off10", []>;
+      asmstr # " [$s1]$off10, $d", []>;
 // P[b], A[a] (BO)(Bit-reverse Addressing Mode)
 class IBO_r_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
     : BO<op1, op2, (outs AddrExtRegs:$d), (ins rc:$s1),
