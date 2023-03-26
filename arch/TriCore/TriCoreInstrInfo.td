@@ -248,15 +248,15 @@ class ISC_D15<bits<8> op1, string asmstr>
 
 class ISC_A10<bits<8> op1, string asmstr> 
     : SC<op1, (outs), (ins u8imm:$const8),
-      asmstr # " %a10, $const8", []>;
+      asmstr # " %sp, $const8", []>;
 
 class ISC_A15A10C<bits<8> op1, string asmstr> 
     : SC<op1, (outs), (ins u8imm:$const8),
-      asmstr # " %a15, %a10, $const8", []>;
+      asmstr # " %a15, %sp, $const8", []>;
 
 class ISC_A10CA15<bits<8> op1, string asmstr> 
     : SC<op1, (outs), (ins u8imm:$const8),
-      asmstr # " %a10, $const8, %a15", []>;
+      asmstr # " %sp, $const8, %a15", []>;
 
 class ISC_0<bits<8> op1, string asmstr> 
     : SC<op1, (outs), (ins u8imm:$const8),
@@ -1119,7 +1119,7 @@ class IABS_off18<bits<8> op1, bits<2> op2, string asmstr>
       asmstr # " $off18", []>;
 class IABS_RO<bits<8> op1, bits<2> op2, string asmstr, RegisterClass dc> 
     : ABS<op1, op2, (outs dc:$d), (ins i32imm:$off18),
-      asmstr # " [$d]$off18", []>;
+      asmstr # " $d, $off18", []>;
 class IABS_OR<bits<8> op1, bits<2> op2, string asmstr, RegisterClass s1c> 
     : ABS<op1, op2, (outs), (ins s1c:$s1, i32imm:$off18),
       asmstr # " $off18, $s1", []>;
@@ -1817,7 +1817,7 @@ def imml_32_h_32 : Operand<i64>, PatLeaf<(imm), [{
 // } //let Defs = [PSW]
 
 // let Defs = [A10], Uses = [A10] in
-// def SUB_Asc : SC<0x20, (outs), (ins u8imm:$const8), "sub.a %a10, $const8",
+// def SUB_Asc : SC<0x20, (outs), (ins u8imm:$const8), "sub.a %sp, $const8",
 //   [(set A10, (sub A10, immZExt8:$const8) )]>;
 
 // def SUB_Arr : RR<0x01, 0x02, (outs AddrRegs:$d),

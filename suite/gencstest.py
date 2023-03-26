@@ -27,7 +27,7 @@ def gen(filename):
             operands = re.sub(r'\s*<.+>\s*', ' ', operands)
             operands = operands.replace(',', ', ')
             # print(hex(addr), hexstr, mnemonic, operands)
-            if any([mnemonic.startswith(pre) for pre in ['j', 'call', 'st', 'ld']]):
+            if any([mnemonic.startswith(pre) for pre in ['j', 'call', 'st', 'ld', 'loop']]):
                 # de relative addressing
                 try:
                     # disp = int(operands, 16) - addr
