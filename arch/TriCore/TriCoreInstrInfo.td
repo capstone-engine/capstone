@@ -596,11 +596,11 @@ class IBO_c<bits<8> op1, bits<6> op2, string asmstr>
 
 class IBO_pos<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10),
-      asmstr # " [+$s2]$off10", []>;
+      asmstr # " [${s2}+]$off10", []>;
 // A[b], off10 (BO) (Pre-increment Addressing Mode)
 class IBO_pre<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10),
-      asmstr # " [${s2}+]$off10", []>;
+      asmstr # " [+${s2}]$off10", []>;
 
 
 multiclass mIBO_a<bits<8> op11, bits<6> op12,
@@ -766,11 +766,11 @@ class IBO_cEa<bits<8> op1, bits<6> op2, string asmstr>
 // A[b], off10, E[a] (BO)(Post-increment Addressing Mode)
 class IBO_posEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins AddrExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s1, [+$s2]$off10", []>;
+      asmstr # " $s1, [${s2}+]$off10", []>;
 // A[b], off10, E[a] (BO)(Pre-increment Addressing Mode)
 class IBO_preEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins AddrExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s1, [${s2}+]$off10", []>;
+      asmstr # " $s1, [+${s2}]$off10", []>;
 
 
 multiclass mIBO_Ea<bits<8> bso1, bits<6> bso2, ///_bso
@@ -1162,11 +1162,11 @@ class IBO_RPc<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc>
 // A|D[a], A[b], off10 (BO)(Post-increment Addressing Mode)
 class IBO_RApos<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc>
     : BO<op1, op2, (outs), (ins dc:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s1, [+$s2]$off10", []>;
+      asmstr # " $s1, [${s2}+]$off10", []>;
 // A|D[a], A[b], off10 (BO) (Pre-increment Addressing Mode)
 class IBO_RApre<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc>
     : BO<op1, op2, (outs), (ins dc:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s1, [${s2}+]$off10", []>;
+      asmstr # " $s1, [+${s2}]$off10", []>;
 
 
 multiclass mIABS_BO<bits<8> abs1, bits<2> abs2,   ///_abs
@@ -1624,11 +1624,11 @@ class IBO_c_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
 // A[b], off10, A[a] (BO)(Post-increment Addressing Mode)
 class IBO_pos_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
     : BO<op1, op2, (outs), (ins rc:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s2, [+$s1]$off10", []>;
+      asmstr # " $s2, [${s1}+]$off10", []>;
 // A[b], off10, A[a] (BO)(Pre-increment Addressing Mode)
 class IBO_pre_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
     : BO<op1, op2, (outs), (ins rc:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s2, [${s1}+]$off10", []>;
+      asmstr # " $s2, [+${s1}]$off10", []>;
 
 
 multiclass mIBO_st<bits<8> prefix1, bits<8> prefix2,

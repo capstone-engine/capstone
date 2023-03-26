@@ -441,18 +441,30 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 
-	// Decode s1_d.
-	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands == 1) {
+		return DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+	}
 
-	// Decode s2.
-	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands == 2) {
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
 
-	// Decode off10.
-	MCOperand_CreateImm0(Inst, off10);
+		MCOperand_CreateImm0(Inst, off10);
+		return MCDisassembler_Success;
+	}
+
+	if (desc->NumOperands > 2) {
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+
+		MCOperand_CreateImm0(Inst, off10);
+	}
 
 	return MCDisassembler_Success;
 }
