@@ -439,89 +439,15 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	if (!is32Bit) // This instruction is 32-bit
 		return MCDisassembler_Fail;
 
+	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
+
 	// Decode s1_d.
-	switch (MCInst_getOpcode(Inst)) {
-		case TriCore_LD_A_bo_bso:
-		case TriCore_LD_A_bo_pre:
-		case TriCore_LD_A_bo_pos:
-		case TriCore_LD_A_bo_c:
-		case TriCore_LD_A_bo_r:
-		case TriCore_ST_A_bo_bso:
-		case TriCore_ST_A_bo_pre:
-		case TriCore_ST_A_bo_pos:
-		case TriCore_ST_A_bo_c:
-		case TriCore_ST_A_bo_r:
-			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
-			break;
-		case TriCore_LD_D_bo_bso:
-		case TriCore_LD_D_bo_pre:
-		case TriCore_LD_D_bo_pos:
-		case TriCore_LD_D_bo_c:
-		case TriCore_LD_D_bo_r:
-		case TriCore_ST_D_bo_bso:
-		case TriCore_ST_D_bo_pre:
-		case TriCore_ST_D_bo_pos:
-		case TriCore_ST_D_bo_c:
-		case TriCore_ST_D_bo_r:
-			status = DecodeExtRegsRegisterClass(Inst, s1_d, Address, Decoder);
-			break;
-		case TriCore_LD_DA_bo_bso:
-		case TriCore_LD_DA_bo_pre:
-		case TriCore_LD_DA_bo_pos:
-		case TriCore_LD_DA_bo_c:
-		case TriCore_LD_DA_bo_r:
-		case TriCore_ST_DA_bo_bso:
-		case TriCore_ST_DA_bo_pre:
-		case TriCore_ST_DA_bo_pos:
-		case TriCore_ST_DA_bo_c:
-		case TriCore_ST_DA_bo_r:
-			status = DecodePairAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
-			break;
-		default:
-			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
-			break;
-	}
+	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
 	// Decode s2.
-	switch (MCInst_getOpcode(Inst)) {
-		case TriCore_LD_B_bo_c:
-		case TriCore_LD_BU_bo_c:
-		case TriCore_LD_H_bo_c:
-		case TriCore_LD_HU_bo_c:
-		case TriCore_LD_W_bo_c:
-		case TriCore_LD_D_bo_c:
-		case TriCore_LD_A_bo_c:
-		case TriCore_LD_DA_bo_c:
-		case TriCore_ST_B_bo_c:
-		case TriCore_ST_H_bo_c:
-		case TriCore_ST_W_bo_c:
-		case TriCore_ST_D_bo_c:
-		case TriCore_ST_Q_bo_c:
-		case TriCore_ST_A_bo_c:
-		case TriCore_ST_DA_bo_c:
-		case TriCore_LD_B_bo_r:
-		case TriCore_LD_BU_bo_r:
-		case TriCore_LD_H_bo_r:
-		case TriCore_LD_HU_bo_r:
-		case TriCore_LD_W_bo_r:
-		case TriCore_LD_D_bo_r:
-		case TriCore_LD_A_bo_r:
-		case TriCore_LD_DA_bo_r:
-		case TriCore_ST_B_bo_r:
-		case TriCore_ST_H_bo_r:
-		case TriCore_ST_W_bo_r:
-		case TriCore_ST_D_bo_r:
-		case TriCore_ST_Q_bo_r:
-		case TriCore_ST_A_bo_r:
-		case TriCore_ST_DA_bo_r:
-			status = DecodePairAddrRegsRegisterClass(Inst, s2, Address, Decoder);
-			break;
-		default:
-			status = DecodeAddrRegsRegisterClass(Inst, s2, Address, Decoder);
-			break;
-	}
+	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -537,30 +463,24 @@ static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
 	unsigned off16_0 = fieldFromInstruction_4(Insn, 16, 6);
 	unsigned off16_1 = fieldFromInstruction_4(Insn, 22, 6);
 	unsigned off16_2 = fieldFromInstruction_4(Insn, 28, 4);
-	unsigned off16 = (off16_0 << 0) | (off16_1 << 6) | (off16_2 << 6);
+	unsigned off16 = (off16_0 << 0) | (off16_1 << 10) | (off16_2 << 6);
 
-	unsigned s2 = fieldFromInstruction_4(Insn, 28, 4);
-	unsigned s1_d = fieldFromInstruction_4(Insn, 22, 4);
+	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
+	unsigned s1_d = fieldFromInstruction_4(Insn, 8, 4);
 
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
-
 	if (!is32Bit) // This instruction is 32-bit
 		return MCDisassembler_Fail;
 
+	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
+
 	// Decode s1_d.
-	switch (MCInst_getOpcode(Inst)) {
-		case TriCore_LD_A_bol:
-			status = DecodeAddrRegsRegisterClass(Inst, s1_d, Address, Decoder);
-			break;
-		default:
-			status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
-			break;
-	}
+	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
 	// Decode s2.
-	status = DecodeAddrRegsRegisterClass(Inst, s2, Address, Decoder);
+	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 

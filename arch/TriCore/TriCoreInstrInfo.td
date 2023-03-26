@@ -1102,18 +1102,18 @@ class IABS_off18<bits<8> op1, bits<2> op2, string asmstr>
       asmstr # " $off18", []>;
 class IABS_RO<bits<8> op1, bits<2> op2, string asmstr, RegisterClass dc> 
     : ABS<op1, op2, (outs dc:$d), (ins i32imm:$off18),
-      asmstr # " $d, $off18", []>;
+      asmstr # " [$d]$off18", []>;
 class IABS_OR<bits<8> op1, bits<2> op2, string asmstr, RegisterClass s1c> 
     : ABS<op1, op2, (outs), (ins s1c:$s1, i32imm:$off18),
       asmstr # " $off18, $s1", []>;
 
 class IBOL_RAaO<bits<8> op1, string asmstr, RegisterClass dc> 
     : BOL<op1, (outs dc:$d), (ins AddrRegs:$s1, i32imm:$off16),
-      asmstr # " $d, $s1, $off16", []>;
+      asmstr # " $d, [$s1]$off16", []>;
 
 class IBOL_AbOR<bits<8> op1, string asmstr, RegisterClass dc> 
     : BOL<op1, (outs AddrRegs:$d), (ins dc:$s1, i32imm:$off16),
-      asmstr # " $d, $off16, $s1", []>;
+      asmstr # " [$d]$off16, $s1", []>;
 
 class ISLR<bits<8> op1, string asmstr, RegisterClass dc>
     : SLR<op1, (outs dc:$d), (ins AddrRegs:$s2),
