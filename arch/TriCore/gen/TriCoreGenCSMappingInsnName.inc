@@ -213,10 +213,10 @@
   "min.u", // TriCore_INS_MIN.U
   "min", // TriCore_INS_MIN
   "movh.a", // TriCore_INS_MOVH.A
+  "movh", // TriCore_INS_MOVH
   "mov.aa", // TriCore_INS_MOV.AA
   "mov.a", // TriCore_INS_MOV.A
   "mov.d", // TriCore_INS_MOV.D
-  "mov.h", // TriCore_INS_MOV.H
   "mov.u", // TriCore_INS_MOV.U
   "mov", // TriCore_INS_MOV
   "msubadms.h", // TriCore_INS_MSUBADMS.H
@@ -243,6 +243,7 @@
   "mulr.q", // TriCore_INS_MULR.Q
   "muls.u", // TriCore_INS_MULS.U
   "muls", // TriCore_INS_MULS
+  "mul.f", // TriCore_INS_MUL.F
   "mul.h", // TriCore_INS_MUL.H
   "mul.q", // TriCore_INS_MUL.Q
   "mul.u", // TriCore_INS_MUL.U

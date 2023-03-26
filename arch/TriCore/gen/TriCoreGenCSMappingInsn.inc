@@ -4302,49 +4302,49 @@
   #endif
 },
 {
-  TriCore_MOV_AA_rr /* 716 */, TriCore_INS_MOV_AA,
+  TriCore_MOVH_rlc /* 716 */, TriCore_INS_MOVH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_MOV_AA_srr /* 717 */, TriCore_INS_MOV_AA,
+  TriCore_MOV_AA_rr /* 717 */, TriCore_INS_MOV_AA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_MOV_A_rr /* 718 */, TriCore_INS_MOV_A,
+  TriCore_MOV_AA_srr /* 718 */, TriCore_INS_MOV_AA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_MOV_A_src /* 719 */, TriCore_INS_MOV_A,
+  TriCore_MOV_A_rr /* 719 */, TriCore_INS_MOV_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_MOV_A_srr /* 720 */, TriCore_INS_MOV_A,
+  TriCore_MOV_A_src /* 720 */, TriCore_INS_MOV_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_MOV_D_rr /* 721 */, TriCore_INS_MOV_D,
+  TriCore_MOV_A_srr /* 721 */, TriCore_INS_MOV_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_MOV_D_srr /* 722 */, TriCore_INS_MOV_D,
+  TriCore_MOV_D_rr /* 722 */, TriCore_INS_MOV_D,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_MOV_H_rlc /* 723 */, TriCore_INS_MOV_H,
+  TriCore_MOV_D_srr /* 723 */, TriCore_INS_MOV_D,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
@@ -5028,7 +5028,7 @@
   #endif
 },
 {
-  TriCore_MUL_F_rrr /* 837 */, TriCore_INS_MSUB_F,
+  TriCore_MUL_F_rrr /* 837 */, TriCore_INS_MUL_F,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
