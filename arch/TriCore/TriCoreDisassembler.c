@@ -235,7 +235,12 @@ DecodeRegisterClass(MCInst *Inst, unsigned RegNo, const MCOperandInfo *MCOI, voi
 	if (RegHalfNo > 15)
 		return MCDisassembler_Fail;
 
-	Reg = getReg(Decoder, MCOI->RegClass, RegNo);
+	if (MCOI->RegClass < 3) {
+		Reg = getReg(Decoder, MCOI->RegClass, RegNo);
+	} else {
+		Reg = getReg(Decoder, MCOI->RegClass, RegHalfNo);
+	}
+
 	MCOperand_CreateReg0(Inst, Reg);
 
 	return MCDisassembler_Success;
@@ -383,13 +388,13 @@ static DecodeStatus DecodeABSInstruction(MCInst *Inst, unsigned Insn,
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 
 	if (desc->NumOperands > 1) {
-		if (desc->OpInfo[0].OperandType==MCOI_OPERAND_REGISTER){
+		if (desc->OpInfo[0].OperandType == MCOI_OPERAND_REGISTER) {
 			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
 			if (status != MCDisassembler_Success)
 				return status;
 
 			MCOperand_CreateImm0(Inst, off18);
-		}else {
+		} else {
 			MCOperand_CreateImm0(Inst, off18);
 			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
 			if (status != MCDisassembler_Success)
