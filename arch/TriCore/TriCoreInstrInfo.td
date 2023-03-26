@@ -388,20 +388,18 @@ class IRLC<bits<8> op1, string asmstr>
       []>;
 
 
+class ISRR_2<bits<8> op1, string asmstr, RegisterClass rc1, RegisterClass rc2>
+    : SRR<op1, (outs rc1:$d), (ins rc2:$s2),
+      asmstr # " $d, $s2", []>;
+
 class ISRR<bits<8> op1, string asmstr>
-    : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s2),
-      asmstr # " $d, $s2",
-      []>;
+    : ISRR_2<op1, asmstr, DataRegs, DataRegs>;
 
 class ISRR_AaAb<bits<8> op1, string asmstr>
-    : SRR<op1, (outs AddrRegs:$d), (ins AddrRegs:$s2),
-      asmstr # " $d, $s2",
-      []>;
+    : ISRR_2<op1, asmstr, AddrRegs, AddrRegs>;
 
 class ISRR_AaDb<bits<8> op1, string asmstr>
-    : SRR<op1, (outs AddrRegs:$d), (ins DataRegs:$s2),
-      asmstr # " $d, $s2",
-      []>;
+    : ISRR_2<op1, asmstr, AddrRegs, DataRegs>;
 
 class ISRR_a15<bits<8> op1, string asmstr>
     : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s2),
@@ -1389,7 +1387,7 @@ def MOV_D_rr : IRR_b<0x01, 0x4C, "mov.d", AddrRegs, AddrRegs>;
 def MOV_D_srr : ISRR_AaAb<0x80, "mov.d">;
 
 def MOV_U_rlc  : IRLC_1<0xBB, "mov.u", DataRegs>;
-def MOV_H_rlc  : IRLC_1<0x7B, "mov.h", DataRegs>;
+def MOVH_rlc   : IRLC_1<0x7B, "movh", DataRegs>;
 def MOVH_A_rlc : IRLC_1<0x91, "movh.a", AddrRegs>;
 
 defm MSUB : mIRCR<0x33, 0x01, 0x33, 0x03, "msub">
@@ -1740,7 +1738,7 @@ def MADD_F_rrr : IRRR_DcDdDaDb<0x6B, 0x06, "madd.f">;
 def MSUB_F_rrr : IRRR_DcDdDaDb<0x6B, 0x07, "msub.f">;
 def ADD_F_rrr : IRRR_DcDdDa<0x6B, 0x02, "add.f">;
 def SUB_F_rrr : IRRR_DcDdDa<0x6B, 0x03, "sub.f">;
-def MUL_F_rrr : IRR_DcDaDb<0x4B, 0x04, "msub.f">;
+def MUL_F_rrr : IRR_DcDaDb<0x4B, 0x04, "mul.f">;
 def DIV_F_rr  : IRR_DcDaDb<0x4B, 0x05, "div.f">;
 
 def CMP_F_rr  : IRR_DcDaDb<0x4B, 0x00, "cmp.f">;

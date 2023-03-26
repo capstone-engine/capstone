@@ -36,9 +36,9 @@ static const uint8_t DecoderTable16[] = {
 /* 55 */      MCD_OPC_FilterValue, 10, 251, 4, 0, // Skip to: 1335
 /* 60 */      MCD_OPC_Decode, 248, 2, 0, // Opcode: DEBUG_sr
 /* 64 */      MCD_OPC_FilterValue, 1, 4, 0, 0, // Skip to: 73
-/* 69 */      MCD_OPC_Decode, 205, 5, 1, // Opcode: MOV_AA_srr
+/* 69 */      MCD_OPC_Decode, 206, 5, 1, // Opcode: MOV_AA_srr
 /* 73 */      MCD_OPC_FilterValue, 2, 233, 4, 0, // Skip to: 1335
-/* 78 */      MCD_OPC_Decode, 210, 5, 1, // Opcode: MOV_D_srr
+/* 78 */      MCD_OPC_Decode, 211, 5, 1, // Opcode: MOV_D_srr
 /* 82 */      MCD_OPC_FilterValue, 2, 39, 0, 0, // Skip to: 126
 /* 87 */      MCD_OPC_ExtractField, 6, 2,  // Inst{7-6} ...
 /* 90 */      MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 99
@@ -173,9 +173,9 @@ static const uint8_t DecoderTable16[] = {
 /* 670 */     MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 679
 /* 675 */     MCD_OPC_Decode, 136, 8, 8, // Opcode: SUB_A_sc
 /* 679 */     MCD_OPC_FilterValue, 1, 4, 0, 0, // Skip to: 688
-/* 684 */     MCD_OPC_Decode, 208, 5, 1, // Opcode: MOV_A_srr
+/* 684 */     MCD_OPC_Decode, 209, 5, 1, // Opcode: MOV_A_srr
 /* 688 */     MCD_OPC_FilterValue, 2, 4, 0, 0, // Skip to: 697
-/* 693 */     MCD_OPC_Decode, 207, 5, 2, // Opcode: MOV_A_src
+/* 693 */     MCD_OPC_Decode, 208, 5, 2, // Opcode: MOV_A_src
 /* 697 */     MCD_OPC_FilterValue, 3, 121, 2, 0, // Skip to: 1335
 /* 702 */     MCD_OPC_Decode, 188, 2, 8, // Opcode: BISR_sc
 /* 706 */     MCD_OPC_FilterValue, 34, 39, 0, 0, // Skip to: 750
@@ -318,7 +318,7 @@ static const uint8_t DecoderTable16[] = {
 /* 1326 */    MCD_OPC_FilterValue, 3, 4, 0, 0, // Skip to: 1335
 /* 1331 */    MCD_OPC_Decode, 230, 3, 6, // Opcode: JNE_sbr2
 /* 1335 */    MCD_OPC_Fail,
-              0
+  0
 };
 
 static const uint8_t DecoderTable32[] = {
@@ -331,7 +331,7 @@ static const uint8_t DecoderTable32[] = {
 /* 32 */      MCD_OPC_ExtractField, 18, 10,  // Inst{27-18} ...
 /* 35 */      MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 51
 /* 40 */      MCD_OPC_CheckField, 7, 1, 0, 226, 43, 0, // Skip to: 11281
-/* 47 */      MCD_OPC_Decode, 204, 5, 15, // Opcode: MOV_AA_rr
+/* 47 */      MCD_OPC_Decode, 205, 5, 15, // Opcode: MOV_AA_rr
 /* 51 */      MCD_OPC_FilterValue, 4, 11, 0, 0, // Skip to: 67
 /* 56 */      MCD_OPC_CheckField, 7, 1, 0, 210, 43, 0, // Skip to: 11281
 /* 63 */      MCD_OPC_Decode, 149, 2, 15, // Opcode: ADD_A_rr
@@ -358,7 +358,7 @@ static const uint8_t DecoderTable32[] = {
 /* 181 */     MCD_OPC_Decode, 220, 6, 15, // Opcode: NEZ_A
 /* 185 */     MCD_OPC_FilterValue, 176, 2, 11, 0, 0, // Skip to: 202
 /* 191 */     MCD_OPC_CheckField, 7, 1, 0, 75, 43, 0, // Skip to: 11281
-/* 198 */     MCD_OPC_Decode, 209, 5, 15, // Opcode: MOV_D_rr
+/* 198 */     MCD_OPC_Decode, 210, 5, 15, // Opcode: MOV_D_rr
 /* 202 */     MCD_OPC_FilterValue, 128, 3, 11, 0, 0, // Skip to: 219
 /* 208 */     MCD_OPC_CheckField, 7, 1, 0, 58, 43, 0, // Skip to: 11281
 /* 215 */     MCD_OPC_Decode, 138, 2, 15, // Opcode: ADDSC_A_rr
@@ -367,7 +367,7 @@ static const uint8_t DecoderTable32[] = {
 /* 232 */     MCD_OPC_Decode, 137, 2, 15, // Opcode: ADDSC_AT_rr
 /* 236 */     MCD_OPC_FilterValue, 140, 3, 31, 43, 0, // Skip to: 11281
 /* 242 */     MCD_OPC_CheckField, 7, 1, 0, 24, 43, 0, // Skip to: 11281
-/* 249 */     MCD_OPC_Decode, 206, 5, 15, // Opcode: MOV_A_rr
+/* 249 */     MCD_OPC_Decode, 207, 5, 15, // Opcode: MOV_A_rr
 /* 253 */     MCD_OPC_FilterValue, 3, 248, 1, 0, // Skip to: 762
 /* 258 */     MCD_OPC_ExtractField, 18, 6,  // Inst{23-18} ...
 /* 261 */     MCD_OPC_FilterValue, 2, 18, 0, 0, // Skip to: 284
@@ -2626,7 +2626,7 @@ static const uint8_t DecoderTable32[] = {
 /* 11135 */   MCD_OPC_FilterValue, 123, 21, 0, 0, // Skip to: 11161
 /* 11140 */   MCD_OPC_ExtractField, 7, 1,  // Inst{7} ...
 /* 11143 */   MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 11152
-/* 11148 */   MCD_OPC_Decode, 211, 5, 23, // Opcode: MOV_H_rlc
+/* 11148 */   MCD_OPC_Decode, 204, 5, 23, // Opcode: MOVH_rlc
 /* 11152 */   MCD_OPC_FilterValue, 1, 124, 0, 0, // Skip to: 11281
 /* 11157 */   MCD_OPC_Decode, 214, 5, 23, // Opcode: MOV_rlcEc
 /* 11161 */   MCD_OPC_FilterValue, 125, 55, 0, 0, // Skip to: 11221
@@ -2658,11 +2658,11 @@ static const uint8_t DecoderTable32[] = {
 /* 11272 */   MCD_OPC_FilterValue, 1, 4, 0, 0, // Skip to: 11281
 /* 11277 */   MCD_OPC_Decode, 204, 3, 32, // Opcode: JGE_U_brc
 /* 11281 */   MCD_OPC_Fail,
-              0
+  0
 };
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
-	/* llvm_unreachable("Invalid index!"); */
+  /* llvm_unreachable("Invalid index!"); */
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
@@ -2833,7 +2833,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
-	  if (ExpectedValue != FieldValue) \
+      if (ExpectedValue != FieldValue) \
         Ptr += NumToSkip; \
       break; \
     } \
@@ -2842,7 +2842,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       Ptr += Len; \
       NumToSkip = *Ptr++; \
       NumToSkip |= (*Ptr++) << 8; \
-	  NumToSkip |= (*Ptr++) << 16; \
+      NumToSkip |= (*Ptr++) << 16; \
       Pred = checkDecoderPredicate(MI, PIdx); \
       if (!Pred) \
         Ptr += NumToSkip; \
@@ -2854,9 +2854,9 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       DecodeIdx = decodeULEB128(Ptr, &Len); \
       Ptr += Len; \
       MCInst_clear(MI); \
-	  MCInst_setOpcode(MI, Opc); \
+      MCInst_setOpcode(MI, Opc); \
       return decoder(S, DecodeIdx, insn, MI, Address, MRI); \
-    }                                                          \
+    } \
     case MCD_OPC_TryDecode: { \
       /* Decode the Opcode value. */ \
       Opc = decodeULEB128(++Ptr, &Len); \
@@ -2881,7 +2881,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       } \
       break; \
     } \
-	case MCD_OPC_SoftFail: { \
+    case MCD_OPC_SoftFail: { \
       PositiveMask = decodeULEB128(++Ptr, &Len); \
       Ptr += Len; \
       NegativeMask = decodeULEB128(Ptr, &Len); \
