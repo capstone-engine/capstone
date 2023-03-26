@@ -651,7 +651,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     536876185U,	// ADDIH_rlc
     536876196U,	// ADDI_rlc
     5863U,	// ADDSC_AT_rr
-    4385U,	// ADDSC_A_rr
+    2953842977U,	// ADDSC_A_rr
     33558817U,	// ADDSC_A_srrs
     5071U,	// ADDS_H
     6183U,	// ADDS_HU
@@ -663,24 +663,24 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     268441827U,	// ADDX_rc
     6371U,	// ADDX_rr
     2991U,	// ADD_A_rr
-    1052970U,	// ADD_A_src
+    2101546U,	// ADD_A_src
     16781610U,	// ADD_A_srr
     4555U,	// ADD_B_rr
-    18879168U,	// ADD_F_rrr
+    806359744U,	// ADD_F_rrr
     4891U,	// ADD_H_rr
     268440149U,	// ADD_rc
     4693U,	// ADD_rr
-    1053269U,	// ADD_src
-    1052842U,	// ADD_src_15a
-    1118805U,	// ADD_src_a15
+    2101845U,	// ADD_src
+    2101418U,	// ADD_src_15a
+    2167381U,	// ADD_src_a15
     16781909U,	// ADD_srr
     16781482U,	// ADD_srr_15a
     16847445U,	// ADD_srr_a15
-    805312077U,	// ANDN_T
+    1073747533U,	// ANDN_T
     268440847U,	// ANDN_rc
     5391U,	// ANDN_rr
-    805312073U,	// AND_ANDN_T
-    805312031U,	// AND_AND_T
+    1073747529U,	// AND_ANDN_T
+    1073747487U,	// AND_AND_T
     268441003U,	// AND_EQ_rc
     5547U,	// AND_EQ_rr
     268441401U,	// AND_GE_U_rc
@@ -693,9 +693,9 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5889U,	// AND_LT_rr
     268440226U,	// AND_NE_rc
     4770U,	// AND_NE_rr
-    805312153U,	// AND_NOR_T
-    805312125U,	// AND_OR_T
-    805312035U,	// AND_T
+    1073747609U,	// AND_NOR_T
+    1073747581U,	// AND_OR_T
+    1073747491U,	// AND_T
     268440167U,	// AND_rc
     4711U,	// AND_rr
     139445U,	// AND_src
@@ -730,14 +730,14 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3348887U,	// CACHE_W_bo_pos
     269144U,	// CACHE_W_bo_pre
     400216U,	// CACHE_W_bo_r
-    1075844360U,	// CADDN_rcr
+    2953843976U,	// CADDN_rcr
     4199688U,	// CADDN_rrr
-    1119496U,	// CADDN_src
-    1075843668U,	// CADD_rcr
+    2168072U,	// CADDN_src
+    2953843284U,	// CADD_rcr
     4198996U,	// CADD_rrr
-    1118804U,	// CADD_src
+    2167380U,	// CADD_src
     16820U,	// CALLA_b
-    136378U,	// CALLI_rr
+    152762U,	// CALLI_rr
     17646U,	// CALL_b
     16782198U,	// CLO_H_rr
     16782638U,	// CLO_rr
@@ -745,19 +745,19 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     16782862U,	// CLS_rr
     16782482U,	// CLZ_H_rr
     16783633U,	// CLZ_rr
-    1119527U,	// CMOVN_src
+    2168103U,	// CMOVN_src
     16848167U,	// CMOVN_srr
-    1120363U,	// CMOV_src
+    2168939U,	// CMOV_src
     16849003U,	// CMOV_srr
-    3363094U,	// CMPSWAP_W_bo_bso
-    5591318U,	// CMPSWAP_W_bo_c
+    3367190U,	// CMPSWAP_W_bo_bso
+    5595414U,	// CMPSWAP_W_bo_c
     1392972054U,	// CMPSWAP_W_bo_pos
     67637526U,	// CMPSWAP_W_bo_pre
-    413974U,	// CMPSWAP_W_bo_r
+    418070U,	// CMPSWAP_W_bo_r
     4816U,	// CMP_F_rr
-    18880625U,	// CRC32B_W_rr
-    18880652U,	// CRC32L_W_rr
-    18878907U,	// CRC32_B_rr
+    806361201U,	// CRC32B_W_rr
+    806361228U,	// CRC32L_W_rr
+    806359483U,	// CRC32_B_rr
     4199682U,	// CRCN_rrr
     4198947U,	// CSUBN_rrr
     4198947U,	// CSUB_rrr
@@ -771,15 +771,15 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     6087U,	// DIV_U_rr
     6246U,	// DIV_rr
     3003U,	// DSYNC_sys
-    18879687U,	// DVADJ_rrr
+    806360263U,	// DVADJ_rrr
     6133U,	// DVINIT_BU_rr
     4605U,	// DVINIT_B_rr
     6200U,	// DVINIT_HU_rr
     5211U,	// DVINIT_H_rr
     6041U,	// DVINIT_U_rr
     5881U,	// DVINIT_rr
-    18880365U,	// DVSTEP_U_rrr
-    18879795U,	// DVSTEP_rrr
+    806360941U,	// DVSTEP_U_rrr
+    806360371U,	// DVSTEP_rrr
     3019U,	// ENABLE_sys
     268440090U,	// EQANY_B_rc
     4634U,	// EQANY_B_rr
@@ -792,7 +792,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     6302U,	// EQ_W_rr
     268441007U,	// EQ_rc
     5551U,	// EQ_rr
-    1052876U,	// EQ_src
+    2101452U,	// EQ_src
     16781516U,	// EQ_srr
     2147489655U,	// EXTR_U_rrpw
     6007U,	// EXTR_U_rrrr
@@ -801,7 +801,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5599U,	// EXTR_rrrr
     2147489247U,	// EXTR_rrrw
     16819U,	// FCALLA_b
-    136377U,	// FCALLA_i
+    152761U,	// FCALLA_i
     17645U,	// FCALL_b
     3076U,	// FRET_sr
     3076U,	// FRET_sys
@@ -828,45 +828,45 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147489570U,	// INSERT_rrpw
     2147489570U,	// INSERT_rrrr
     2147489570U,	// INSERT_rrrw
-    805312117U,	// INSN_T
-    805312205U,	// INS_T
+    1073747573U,	// INSN_T
+    1073747661U,	// INS_T
     3009U,	// ISYNC_sys
     16782062U,	// ITOF_rr
-    18880469U,	// IXMAX_U_rrr
-    18880698U,	// IXMAX_rrr
-    18880356U,	// IXMIN_U_rrr
-    18879765U,	// IXMIN_rrr
+    806361045U,	// IXMAX_U_rrr
+    806361274U,	// IXMAX_rrr
+    806360932U,	// IXMIN_U_rrr
+    806360341U,	// IXMIN_rrr
     16810U,	// JA_b
     4437U,	// JEQ_A_brr
-    6317506U,	// JEQ_brc
+    6313410U,	// JEQ_brc
     5570U,	// JEQ_brr
     28875U,	// JEQ_sbc1
     28875U,	// JEQ_sbc2
     7344331U,	// JEQ_sbr1
     7344331U,	// JEQ_sbr2
     7346426U,	// JGEZ_sbr
-    6317910U,	// JGE_U_brc
+    6313814U,	// JGE_U_brc
     5974U,	// JGE_U_brr
-    6316675U,	// JGE_brc
+    6312579U,	// JGE_brc
     4739U,	// JGE_brr
     7346459U,	// JGTZ_sbr
-    136368U,	// JI_rr
+    152752U,	// JI_rr
     136368U,	// JI_sr
     16814U,	// JLA_b
     7346432U,	// JLEZ_sbr
-    136372U,	// JLI_rr
+    152756U,	// JLI_rr
     7346465U,	// JLTZ_sbr
-    6318016U,	// JLT_U_brc
+    6313920U,	// JLT_U_brc
     6080U,	// JLT_U_brr
-    6317848U,	// JLT_brc
+    6313752U,	// JLT_brc
     5912U,	// JLT_brr
     17641U,	// JL_b
-    6316640U,	// JNED_brc
+    6312544U,	// JNED_brc
     4704U,	// JNED_brr
-    6317226U,	// JNEI_brc
+    6313130U,	// JNEI_brc
     5290U,	// JNEI_brr
     4413U,	// JNE_A_brr
-    6316722U,	// JNE_brc
+    6312626U,	// JNE_brc
     4786U,	// JNE_brr
     28864U,	// JNE_sbc1
     28864U,	// JNE_sbc2
@@ -888,12 +888,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     33995U,	// J_sb
     137415U,	// LDLCX_abs
     3349385U,	// LDLCX_bo_bso
-    25192234U,	// LDMST_abs
-    3364650U,	// LDMST_bo_bso
-    5592874U,	// LDMST_bo_c
+    25188138U,	// LDMST_abs
+    3368746U,	// LDMST_bo_bso
+    5596970U,	// LDMST_bo_c
     1392973610U,	// LDMST_bo_pos
     67639082U,	// LDMST_bo_pre
-    415530U,	// LDMST_bo_r
+    419626U,	// LDMST_bo_r
     137429U,	// LDUCX_abs
     3349401U,	// LDUCX_bo_bso
     16980659U,	// LD_A_abs
@@ -992,7 +992,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     6239U,	// LT_WU
     268441349U,	// LT_rc
     5893U,	// LT_rr
-    1052921U,	// LT_src
+    2101497U,	// LT_src
     16781561U,	// LT_srr
     4199423U,	// MADDMS_H_rrr1_LL
     2151683071U,	// MADDMS_H_rrr1_LU
@@ -1054,12 +1054,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1732253064U,	// MADDS_Q_rrr1_e_L_L
     4199816U,	// MADDS_Q_rrr1_e_U
     1749030280U,	// MADDS_Q_rrr1_e_U_U
-    1075845000U,	// MADDS_U_rcr
-    1075845000U,	// MADDS_U_rcr_e
+    2953844616U,	// MADDS_U_rcr
+    2953844616U,	// MADDS_U_rcr_e
     4200328U,	// MADDS_U_rrr2
     4200328U,	// MADDS_U_rrr2_e
-    1075844606U,	// MADDS_rcr
-    1075844606U,	// MADDS_rcr_e
+    2953844222U,	// MADDS_rcr
+    2953844222U,	// MADDS_rcr_e
     4199934U,	// MADDS_rrr2
     4199934U,	// MADDS_rrr2_e
     4199103U,	// MADD_F_rrr
@@ -1077,10 +1077,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1732253008U,	// MADD_Q_rrr1_e_L_L
     4199760U,	// MADD_Q_rrr1_e_U
     1749030224U,	// MADD_Q_rrr1_e_U_U
-    1075844913U,	// MADD_U_rcr
+    2953844529U,	// MADD_U_rcr
     4200241U,	// MADD_U_rrr2
-    1075843674U,	// MADD_rcr
-    1075843674U,	// MADD_rcr_e
+    2953843290U,	// MADD_rcr
+    2953843290U,	// MADD_rcr_e
     4199002U,	// MADD_rrr2
     4199002U,	// MADD_rrr2_e
     4627U,	// MAX_B
@@ -1101,23 +1101,23 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     268440855U,	// MIN_rc
     5399U,	// MIN_rr
     10490189U,	// MOVH_A_rlc
-    16781706U,	// MOV_AA_rr
+    17830282U,	// MOV_AA_rr
     16781706U,	// MOV_AA_srr
     2997U,	// MOV_A_rr
-    1053032U,	// MOV_A_src
+    2101608U,	// MOV_A_src
     16781672U,	// MOV_A_srr
-    16781901U,	// MOV_D_rr
+    17830477U,	// MOV_D_rr
     16781901U,	// MOV_D_srr
     10491003U,	// MOV_H_rlc
     10491854U,	// MOV_U_rlc
     10492012U,	// MOV_rlcDc
     10492012U,	// MOV_rlcEc
-    16783468U,	// MOV_rrDcDb
+    17832044U,	// MOV_rrDcDb
     6252U,	// MOV_rrEcDaDb
-    16783468U,	// MOV_rrEcDb
+    17832044U,	// MOV_rrEcDb
     139523U,	// MOV_sc
-    1054828U,	// MOV_srcDa
-    1054828U,	// MOV_srcEa
+    2103404U,	// MOV_srcDa
+    2103404U,	// MOV_srcEa
     16783468U,	// MOV_srr
     4199411U,	// MSUBADMS_H_rrr1_LL
     2151683059U,	// MSUBADMS_H_rrr1_LU
@@ -1179,12 +1179,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1732253055U,	// MSUBS_Q_rrr1_e_L_L
     4199807U,	// MSUBS_Q_rrr1_e_U
     1749030271U,	// MSUBS_Q_rrr1_e_U_U
-    1075845000U,	// MSUBS_U_rcr
-    1075845000U,	// MSUBS_U_rcr_e
+    2953844616U,	// MSUBS_U_rcr
+    2953844616U,	// MSUBS_U_rcr_e
     4200328U,	// MSUBS_U_rrr2
     4200328U,	// MSUBS_U_rrr2_e
-    1075844592U,	// MSUBS_rcr
-    1075844592U,	// MSUBS_rcr_e
+    2953844208U,	// MSUBS_rcr
+    2953844208U,	// MSUBS_rcr_e
     4199920U,	// MSUBS_rrr2
     4199920U,	// MSUBS_rrr2_e
     4199095U,	// MSUB_F_rrr
@@ -1202,10 +1202,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1732253000U,	// MSUB_Q_rrr1_e_L_L
     4199752U,	// MSUB_Q_rrr1_e_U
     1749030216U,	// MSUB_Q_rrr1_e_U_U
-    1075844913U,	// MSUB_U_rcr
+    2953844529U,	// MSUB_U_rcr
     4200241U,	// MSUB_U_rrr2
-    1075843625U,	// MSUB_rcr
-    1075843625U,	// MSUB_rcr_e
+    2953843241U,	// MSUB_rcr
+    2953843241U,	// MSUB_rcr_e
     4198953U,	// MSUB_rrr2
     4198953U,	// MSUB_rrr2_e
     2147488604U,	// MULM_H_rr1_LL2e
@@ -1242,7 +1242,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5373U,	// MUL_rr2
     5373U,	// MUL_rr2_e
     16782589U,	// MUL_srr
-    805312065U,	// NAND_T
+    1073747521U,	// NAND_T
     268440166U,	// NAND_rc
     4710U,	// NAND_rr
     16781679U,	// NEZ_A
@@ -1251,15 +1251,15 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4774U,	// NE_rr
     3072U,	// NOP_sr
     3072U,	// NOP_sys
-    805312157U,	// NOR_T
+    1073747613U,	// NOR_T
     268441038U,	// NOR_rc
     5582U,	// NOR_rr
     136989U,	// NOT_sr
-    805312110U,	// ORN_T
+    1073747566U,	// ORN_T
     268440866U,	// ORN_rc
     5410U,	// ORN_rr
-    805312096U,	// OR_ANDN_T
-    805312052U,	// OR_AND_T
+    1073747552U,	// OR_ANDN_T
+    1073747508U,	// OR_AND_T
     268441019U,	// OR_EQ_rc
     5563U,	// OR_EQ_rr
     268441421U,	// OR_GE_U_rc
@@ -1272,14 +1272,14 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5905U,	// OR_LT_rr
     268440235U,	// OR_NE_rc
     4779U,	// OR_NE_rr
-    805312174U,	// OR_NOR_T
-    805312144U,	// OR_OR_T
-    805312129U,	// OR_T
+    1073747630U,	// OR_NOR_T
+    1073747600U,	// OR_OR_T
+    1073747585U,	// OR_T
     268441039U,	// OR_rc
     5583U,	// OR_rr
     139478U,	// OR_sc
     16782799U,	// OR_srr
-    18879696U,	// PACK_rrr
+    806360272U,	// PACK_rrr
     16783593U,	// PARITY_rr
     16783530U,	// POPCNT_W_rr
     4838U,	// Q31TOF_rr
@@ -1304,9 +1304,9 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     137264U,	// SAT_HU_sr
     16782420U,	// SAT_H_rr
     136276U,	// SAT_H_sr
-    1075844380U,	// SELN_rcr
+    2953843996U,	// SELN_rcr
     4199708U,	// SELN_rrr
-    1075844317U,	// SEL_rcr
+    2953843933U,	// SEL_rcr
     4199645U,	// SEL_rrr
     268441061U,	// SHAS_rc
     5605U,	// SHAS_rr
@@ -1314,10 +1314,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4865U,	// SHA_H_rr
     268439973U,	// SHA_rc
     4517U,	// SHA_rr
-    1053093U,	// SHA_src
+    2101669U,	// SHA_src
     268440217U,	// SHUFFLE_rc
-    805312085U,	// SH_ANDN_T
-    805312042U,	// SH_AND_T
+    1073747541U,	// SH_ANDN_T
+    1073747498U,	// SH_AND_T
     268441011U,	// SH_EQ_rc
     5555U,	// SH_EQ_rr
     268441411U,	// SH_GE_U_rc
@@ -1330,81 +1330,81 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     6061U,	// SH_LT_U_rr
     268441353U,	// SH_LT_rc
     5897U,	// SH_LT_rr
-    805312062U,	// SH_NAND_T
+    1073747518U,	// SH_NAND_T
     268441353U,	// SH_NE_rc
     5897U,	// SH_NE_rr
-    805312164U,	// SH_NOR_T
-    805312107U,	// SH_ORN_T
-    805312135U,	// SH_OR_T
-    805312184U,	// SH_XNOR_T
-    805312195U,	// SH_XOR_T
+    1073747620U,	// SH_NOR_T
+    1073747563U,	// SH_ORN_T
+    1073747591U,	// SH_OR_T
+    1073747640U,	// SH_XNOR_T
+    1073747651U,	// SH_XOR_T
     268440736U,	// SH_rc
     5280U,	// SH_rr
-    1053856U,	// SH_src
+    2102432U,	// SH_src
     137422U,	// STLCX_abs
     3349393U,	// STLCX_bo_bso
     137436U,	// STUCX_abs
     3349409U,	// STUCX_bo_bso
-    25190754U,	// ST_A_abs
-    11758266U,	// ST_A_bo_bso
+    25186658U,	// ST_A_abs
+    11754170U,	// ST_A_bo_bso
     84414818U,	// ST_A_bo_c
-    1401381218U,	// ST_A_bo_pos
-    76046690U,	// ST_A_bo_pre
+    1401377122U,	// ST_A_bo_pos
+    76042594U,	// ST_A_bo_pre
     101192034U,	// ST_A_bo_r
-    19077818U,	// ST_A_bol
+    806558394U,	// ST_A_bol
     663602U,	// ST_A_sc
     9441354U,	// ST_A_sro
     16781666U,	// ST_A_ssr
     16980278U,	// ST_A_ssr_pos
     36938U,	// ST_A_ssro
-    25190925U,	// ST_B_abs
-    11758308U,	// ST_B_bo_bso
+    25186829U,	// ST_B_abs
+    11754212U,	// ST_B_bo_bso
     84414989U,	// ST_B_bo_c
-    1401381389U,	// ST_B_bo_pos
-    76046861U,	// ST_B_bo_pre
+    1401377293U,	// ST_B_bo_pos
+    76042765U,	// ST_B_bo_pre
     101192205U,	// ST_B_bo_r
-    19077860U,	// ST_B_bol
+    806558436U,	// ST_B_bol
     9441366U,	// ST_B_sro
     16781837U,	// ST_B_ssr
     16980286U,	// ST_B_ssr_pos
     36950U,	// ST_B_ssro
-    25190809U,	// ST_DA_abs
-    11758281U,	// ST_DA_bo_bso
+    25186713U,	// ST_DA_abs
+    11754185U,	// ST_DA_bo_bso
     84414873U,	// ST_DA_bo_c
-    1401381273U,	// ST_DA_bo_pos
-    76046745U,	// ST_DA_bo_pre
+    1401377177U,	// ST_DA_bo_pos
+    76042649U,	// ST_DA_bo_pre
     101192089U,	// ST_DA_bo_r
-    25190983U,	// ST_D_abs
-    11758322U,	// ST_D_bo_bso
+    25186887U,	// ST_D_abs
+    11754226U,	// ST_D_bo_bso
     84415047U,	// ST_D_bo_c
-    1401381447U,	// ST_D_bo_pos
-    76046919U,	// ST_D_bo_pre
+    1401377351U,	// ST_D_bo_pos
+    76042823U,	// ST_D_bo_pre
     101192263U,	// ST_D_bo_r
-    25191531U,	// ST_H_abs
-    11758336U,	// ST_H_bo_bso
+    25187435U,	// ST_H_abs
+    11754240U,	// ST_H_bo_bso
     84415595U,	// ST_H_bo_c
-    1401381995U,	// ST_H_bo_pos
-    76047467U,	// ST_H_bo_pre
+    1401377899U,	// ST_H_bo_pos
+    76043371U,	// ST_H_bo_pre
     101192811U,	// ST_H_bo_r
-    19077888U,	// ST_H_bol
+    806558464U,	// ST_H_bol
     9441390U,	// ST_H_sro
     16782443U,	// ST_H_ssr
     16980302U,	// ST_H_ssr_pos
     36974U,	// ST_H_ssro
-    25191845U,	// ST_Q_abs
-    11758394U,	// ST_Q_bo_bso
+    25187749U,	// ST_Q_abs
+    11754298U,	// ST_Q_bo_bso
     84415909U,	// ST_Q_bo_c
-    1401382309U,	// ST_Q_bo_pos
-    76047781U,	// ST_Q_bo_pre
+    1401378213U,	// ST_Q_bo_pos
+    76043685U,	// ST_Q_bo_pre
     101193125U,	// ST_Q_bo_r
     5844U,	// ST_T
-    25192628U,	// ST_W_abs
-    11758466U,	// ST_W_bo_bso
+    25188532U,	// ST_W_abs
+    11754370U,	// ST_W_bo_bso
     84416692U,	// ST_W_bo_c
-    1401383092U,	// ST_W_bo_pos
-    76048564U,	// ST_W_bo_pre
+    1401378996U,	// ST_W_bo_pos
+    76044468U,	// ST_W_bo_pre
     101193908U,	// ST_W_bo_r
-    19078018U,	// ST_W_bol
+    806558594U,	// ST_W_bol
     9441427U,	// ST_W_sro
     16783540U,	// ST_W_ssr
     16980398U,	// ST_W_ssr_pos
@@ -1419,32 +1419,32 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2985U,	// SUB_A_rr
     139301U,	// SUB_A_sc
     4548U,	// SUB_B_rr
-    18879160U,	// SUB_F_rrr
+    806359736U,	// SUB_F_rrr
     4873U,	// SUB_H_rr
     4644U,	// SUB_rr
     16781860U,	// SUB_srr
     16781471U,	// SUB_srr_15a
     16847396U,	// SUB_srr_a15
     3099U,	// SVLCX_sys
-    11758445U,	// SWAPMSK_W_bo_bso
+    11754349U,	// SWAPMSK_W_bo_bso
     84416641U,	// SWAPMSK_W_bo_c
-    1401383041U,	// SWAPMSK_W_bo_pos
-    76048513U,	// SWAPMSK_W_bo_pre
+    1401378945U,	// SWAPMSK_W_bo_pos
+    76044417U,	// SWAPMSK_W_bo_pre
     101193857U,	// SWAPMSK_W_bo_r
-    25192598U,	// SWAP_W_abs
-    11758457U,	// SWAP_W_bo_bso
+    25188502U,	// SWAP_W_abs
+    11754361U,	// SWAP_W_bo_bso
     84416662U,	// SWAP_W_bo_c
-    1401383062U,	// SWAP_W_bo_pos
-    76048534U,	// SWAP_W_bo_pre
+    1401378966U,	// SWAP_W_bo_pos
+    76044438U,	// SWAP_W_bo_pre
     101193878U,	// SWAP_W_bo_r
     13556U,	// SYSCALL_rc
     3092U,	// TRAPSV_sys
     3086U,	// TRAPV_sys
     16782542U,	// UNPACK_rr
-    136418U,	// UPDFL_rr
+    152802U,	// UPDFL_rr
     16782075U,	// UTOF_rr
     3081U,	// WAIT_sys
-    805312187U,	// XNOR_T
+    1073747643U,	// XNOR_T
     268441037U,	// XNOR_rc
     5581U,	// XNOR_rr
     268441018U,	// XOR_EQ_rc
@@ -1459,7 +1459,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5904U,	// XOR_LT_rr
     268440234U,	// XOR_NE_rc
     4778U,	// XOR_NE_rr
-    805312198U,	// XOR_T
+    1073747654U,	// XOR_T
     268441043U,	// XOR_rc
     5587U,	// XOR_rr
     16782803U,	// XOR_srr
@@ -1811,10 +1811,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// CACHE_W_bo_pos
     0U,	// CACHE_W_bo_pre
     0U,	// CACHE_W_bo_r
-    0U,	// CADDN_rcr
+    8U,	// CADDN_rcr
     0U,	// CADDN_rrr
     0U,	// CADDN_src
-    0U,	// CADD_rcr
+    8U,	// CADD_rcr
     0U,	// CADD_rrr
     0U,	// CADD_src
     0U,	// CALLA_b
@@ -2125,22 +2125,22 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1U,	// MADDS_H_rrr1_LU
     2U,	// MADDS_H_rrr1_UL
     2U,	// MADDS_H_rrr1_UU
-    8U,	// MADDS_Q_rrr1
+    16U,	// MADDS_Q_rrr1
     3U,	// MADDS_Q_rrr1_L
     0U,	// MADDS_Q_rrr1_L_L
     4U,	// MADDS_Q_rrr1_U
     0U,	// MADDS_Q_rrr1_U_U
-    8U,	// MADDS_Q_rrr1_e
+    16U,	// MADDS_Q_rrr1_e
     3U,	// MADDS_Q_rrr1_e_L
     0U,	// MADDS_Q_rrr1_e_L_L
     4U,	// MADDS_Q_rrr1_e_U
     0U,	// MADDS_Q_rrr1_e_U_U
-    0U,	// MADDS_U_rcr
-    0U,	// MADDS_U_rcr_e
+    8U,	// MADDS_U_rcr
+    8U,	// MADDS_U_rcr_e
     0U,	// MADDS_U_rrr2
     0U,	// MADDS_U_rrr2_e
-    0U,	// MADDS_rcr
-    0U,	// MADDS_rcr_e
+    8U,	// MADDS_rcr
+    8U,	// MADDS_rcr_e
     0U,	// MADDS_rrr2
     0U,	// MADDS_rrr2_e
     0U,	// MADD_F_rrr
@@ -2148,20 +2148,20 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1U,	// MADD_H_rrr1_LU
     2U,	// MADD_H_rrr1_UL
     2U,	// MADD_H_rrr1_UU
-    8U,	// MADD_Q_rrr1
+    16U,	// MADD_Q_rrr1
     3U,	// MADD_Q_rrr1_L
     0U,	// MADD_Q_rrr1_L_L
     4U,	// MADD_Q_rrr1_U
     0U,	// MADD_Q_rrr1_U_U
-    8U,	// MADD_Q_rrr1_e
+    16U,	// MADD_Q_rrr1_e
     3U,	// MADD_Q_rrr1_e_L
     0U,	// MADD_Q_rrr1_e_L_L
     4U,	// MADD_Q_rrr1_e_U
     0U,	// MADD_Q_rrr1_e_U_U
-    0U,	// MADD_U_rcr
+    8U,	// MADD_U_rcr
     0U,	// MADD_U_rrr2
-    0U,	// MADD_rcr
-    0U,	// MADD_rcr_e
+    8U,	// MADD_rcr
+    8U,	// MADD_rcr_e
     0U,	// MADD_rrr2
     0U,	// MADD_rrr2_e
     0U,	// MAX_B
@@ -2250,22 +2250,22 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1U,	// MSUBS_H_rrr1_LU
     2U,	// MSUBS_H_rrr1_UL
     2U,	// MSUBS_H_rrr1_UU
-    8U,	// MSUBS_Q_rrr1
+    16U,	// MSUBS_Q_rrr1
     3U,	// MSUBS_Q_rrr1_L
     0U,	// MSUBS_Q_rrr1_L_L
     4U,	// MSUBS_Q_rrr1_U
     0U,	// MSUBS_Q_rrr1_U_U
-    8U,	// MSUBS_Q_rrr1_e
+    16U,	// MSUBS_Q_rrr1_e
     3U,	// MSUBS_Q_rrr1_e_L
     0U,	// MSUBS_Q_rrr1_e_L_L
     4U,	// MSUBS_Q_rrr1_e_U
     0U,	// MSUBS_Q_rrr1_e_U_U
-    0U,	// MSUBS_U_rcr
-    0U,	// MSUBS_U_rcr_e
+    8U,	// MSUBS_U_rcr
+    8U,	// MSUBS_U_rcr_e
     0U,	// MSUBS_U_rrr2
     0U,	// MSUBS_U_rrr2_e
-    0U,	// MSUBS_rcr
-    0U,	// MSUBS_rcr_e
+    8U,	// MSUBS_rcr
+    8U,	// MSUBS_rcr_e
     0U,	// MSUBS_rrr2
     0U,	// MSUBS_rrr2_e
     0U,	// MSUB_F_rrr
@@ -2273,20 +2273,20 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1U,	// MSUB_H_rrr1_LU
     2U,	// MSUB_H_rrr1_UL
     2U,	// MSUB_H_rrr1_UU
-    8U,	// MSUB_Q_rrr1
+    16U,	// MSUB_Q_rrr1
     3U,	// MSUB_Q_rrr1_L
     0U,	// MSUB_Q_rrr1_L_L
     4U,	// MSUB_Q_rrr1_U
     0U,	// MSUB_Q_rrr1_U_U
-    8U,	// MSUB_Q_rrr1_e
+    16U,	// MSUB_Q_rrr1_e
     3U,	// MSUB_Q_rrr1_e_L
     0U,	// MSUB_Q_rrr1_e_L_L
     4U,	// MSUB_Q_rrr1_e_U
     0U,	// MSUB_Q_rrr1_e_U_U
-    0U,	// MSUB_U_rcr
+    8U,	// MSUB_U_rcr
     0U,	// MSUB_U_rrr2
-    0U,	// MSUB_rcr
-    0U,	// MSUB_rcr_e
+    8U,	// MSUB_rcr
+    8U,	// MSUB_rcr_e
     0U,	// MSUB_rrr2
     0U,	// MSUB_rrr2_e
     4U,	// MULM_H_rr1_LL2e
@@ -2314,8 +2314,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     6U,	// MUL_Q_rr1_2_Le
     7U,	// MUL_Q_rr1_2_U
     7U,	// MUL_Q_rr1_2_Ue
-    16U,	// MUL_Q_rr1_2__
-    16U,	// MUL_Q_rr1_2__e
+    24U,	// MUL_Q_rr1_2__
+    24U,	// MUL_Q_rr1_2__e
     0U,	// MUL_U_rc
     0U,	// MUL_U_rr2
     0U,	// MUL_rc
@@ -2385,9 +2385,9 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// SAT_HU_sr
     0U,	// SAT_H_rr
     0U,	// SAT_H_sr
-    0U,	// SELN_rcr
+    8U,	// SELN_rcr
     0U,	// SELN_rrr
-    0U,	// SEL_rcr
+    8U,	// SEL_rcr
     0U,	// SEL_rrr
     0U,	// SHAS_rc
     0U,	// SHAS_rr
@@ -2591,15 +2591,15 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 5:
+    // CALLI_rr, FCALLA_i, JEQ_brc, JGE_U_brc, JGE_brc, JI_rr, JLI_rr, JLT_U_...
+    printOperand(MI, 1, O);
+    break;
+  case 6:
     // CMPSWAP_W_bo_bso, CMPSWAP_W_bo_c, CMPSWAP_W_bo_r, LDMST_bo_bso, LDMST_...
     printOperand(MI, 2, O);
     SStream_concat0(O, ", [");
     set_mem_access(MI, true);
     printOperand(MI, 0, O);
-    break;
-  case 6:
-    // JEQ_brc, JGE_U_brc, JGE_brc, JLT_U_brc, JLT_brc, JNED_brc, JNEI_brc, J...
-    printOperand(MI, 1, O);
     break;
   case 7:
     // JEQ_sbc1, JEQ_sbc2, JNE_sbc1, JNE_sbc2
@@ -2692,15 +2692,13 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 1, O);
     break;
   case 1:
+    // ADDSC_A_rr, ADD_F_rrr, CADDN_rcr, CADD_rcr, CRC32B_W_rr, CRC32L_W_rr, ...
+    printOperand(MI, 2, O);
+    break;
+  case 2:
     // ADD_A_src, ADD_src, ADD_src_15a, ADD_src_a15, CADDN_src, CADD_src, CMO...
     printSExtImm_4(MI, 1, O);
     return;
-    break;
-  case 2:
-    // ADD_F_rrr, CADDN_rcr, CADD_rcr, CRC32B_W_rr, CRC32L_W_rr, CRC32_B_rr, ...
-    printOperand(MI, 2, O);
-    SStream_concat0(O, ", ");
-    printOperand(MI, 1, O);
     break;
   case 3:
     // CACHEI_I_bo_bso, CACHEI_I_bo_pos, CACHEI_WI_bo_bso, CACHEI_WI_bo_pos, ...
@@ -2761,7 +2759,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", ");
     break;
   case 1:
-    // ABS_B_rr, ABS_H_rr, ABS_rr, ADDS_srr, ADD_A_srr, ADD_F_rrr, ADD_srr, A...
+    // ABS_B_rr, ABS_H_rr, ABS_rr, ADDS_srr, ADD_A_srr, ADD_srr, ADD_srr_15a,...
     return;
     break;
   case 2:
@@ -2827,17 +2825,16 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 3:
+    // ADDSC_A_rr, ADD_F_rrr, CADDN_rcr, CADD_rcr, CRC32B_W_rr, CRC32L_W_rr, ...
+    printOperand(MI, 1, O);
+    break;
+  case 4:
     // ANDN_T, AND_ANDN_T, AND_AND_T, AND_NOR_T, AND_OR_T, AND_T, INSN_T, INS...
     printZExtImm_4(MI, 3, O);
     SStream_concat0(O, ", ");
     printOperand(MI, 2, O);
     SStream_concat0(O, ", ");
     printZExtImm_4(MI, 4, O);
-    return;
-    break;
-  case 4:
-    // CADDN_rcr, CADD_rcr, MADDS_U_rcr, MADDS_U_rcr_e, MADDS_rcr, MADDS_rcr_...
-    printSExtImm_9(MI, 3, O);
     return;
     break;
   case 5:
@@ -2866,7 +2863,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 1:
-    // DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, EXTR_U_rrrw, EXTR_rrpw, EXTR_rrrw...
+    // ADDSC_A_rr, CADDN_rcr, CADD_rcr, DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, ...
     SStream_concat0(O, ", ");
     break;
   case 2:
@@ -2950,19 +2947,24 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   }
 
 
-  // Fragment 6 encoded into 2 bits for 3 unique commands.
+  // Fragment 6 encoded into 2 bits for 4 unique commands.
   switch ((Bits >> 35) & 3) {
   default: assert(0 && "Invalid command number.");
   case 0:
-    // DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, EXTR_U_rrrw, EXTR_rrpw, EXTR_rrrw...
+    // ADDSC_A_rr, DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, EXTR_U_rrrw, EXTR_rrp...
     printOperand(MI, 3, O);
     break;
   case 1:
+    // CADDN_rcr, CADD_rcr, MADDS_U_rcr, MADDS_U_rcr_e, MADDS_rcr, MADDS_rcr_...
+    printSExtImm_9(MI, 3, O);
+    return;
+    break;
+  case 2:
     // MADDS_Q_rrr1, MADDS_Q_rrr1_e, MADD_Q_rrr1, MADD_Q_rrr1_e, MSUBS_Q_rrr1...
     printZExtImm_2(MI, 4, O);
     return;
     break;
-  case 2:
+  case 3:
     // MUL_Q_rr1_2__, MUL_Q_rr1_2__e
     printZExtImm_2(MI, 3, O);
     return;
@@ -2977,7 +2979,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 4, O);
     return;
   } else {
-    // DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, EXTR_U_rrrw, EXTR_rrpw, EXTR_rrrw...
+    // ADDSC_A_rr, DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, EXTR_U_rrrw, EXTR_rrp...
     return;
   }
 

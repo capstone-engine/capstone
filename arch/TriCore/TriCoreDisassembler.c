@@ -617,18 +617,19 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode s1.
-	status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 1) {
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
-	// Decode s2.
-	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 2) {
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
-	// Decode n.
-	MCOperand_CreateImm0(Inst, n);
+	if (desc->NumOperands > 3) { MCOperand_CreateImm0(Inst, n); }
 
 	return MCDisassembler_Success;
 }
