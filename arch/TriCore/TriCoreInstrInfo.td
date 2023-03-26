@@ -320,11 +320,11 @@ class IRC_2<bits<8> op1, bits<7> op2, string asmstr>
 /// RR
 
 class IRR_Ra<bits<8> op1, bits<8> op2, string asmstr, RegisterClass rc>
-    : RR<op1, op2, (outs), (ins rc:$s1), asmstr # " $s1", []>;
+    : RR<op1, op2, (outs rc:$d), (ins rc:$s1), asmstr # " $s1", []>;
 
 /// op A[a]
 class IRR_Aa<bits<8> op1, bits<8> op2, string asmstr>
-    : RR<op1, op2, (outs), (ins AddrRegs:$s1), asmstr # " $s1", []>;
+    : IRR_Ra<op1, op2, asmstr, AddrRegs>;
 
 /// op R[c], R[a]
 class IRR_a<bits<8> op1, bits<8> op2, string asmstr, RegisterClass cd, RegisterClass c1>
@@ -333,7 +333,7 @@ class IRR_a<bits<8> op1, bits<8> op2, string asmstr, RegisterClass cd, RegisterC
 
 /// op R[c], R[b]
 class IRR_b<bits<8> op1, bits<8> op2, string asmstr, RegisterClass cd, RegisterClass c2>
-    : RR<op1, op2, (outs cd:$d), (ins c2:$s2),
+    : RR<op1, op2, (outs cd:$d), (ins c2:$s1, c2:$s2),
       asmstr # " $d, $s2", []>;
 
 /// op D[c], D[a]
@@ -370,6 +370,11 @@ class IRR_EcDaDb<bits<8> op1, bits<8> op2, string asmstr>
 /// op D[c], A[a], A[b]
 class IRR_DcAaAb<bits<8> op1, bits<8> op2, string asmstr>
     : IRR_2<op1, op2, asmstr # " $d, $s1, $s2", DataRegs, AddrRegs, AddrRegs>;
+
+/// op A[c], A[b], D[a], n (RR)
+class IRR_AcAbDaN<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs AddrRegs:$d), (ins DataRegs:$s1, AddrRegs:$s2, i32imm:$n),
+         asmstr # " $d, $s2, $s1, $n", []>;
 
 multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
                         string asmstr> {
@@ -534,7 +539,7 @@ defm ADDS : mIRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds">,
             mISRR_s<0x22, "adds">,
             mIH_HU_U<0x0B, 0x62, 0x0B, 0x63, 0x0B, 0x03, "adds">;
 def ADDS_U_rc : IRC_2<0x8B, 0x03, "adds.u">;
-def ADDSC_A_rr : IRR_DcDaDb<0x01, 0x60, "addsc.a">;
+def ADDSC_A_rr : IRR_AcAbDaN<0x01, 0x60, "addsc.a">;
 def ADDSC_A_srrs : ISRRS<0x10, "addsc.a">;
 def ADDSC_AT_rr : IRR_DcDaDb<0x01, 0x62, "addsc.at">;
 
