@@ -697,30 +697,30 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4745U,	// BMAERGE_rr
     16783102U,	// BSPLIT_rr
     3349230U,	// CACHEI_I_bo_bso
-    3348846U,	// CACHEI_I_bo_pos
-    269038U,	// CACHEI_I_bo_pre
+    269038U,	// CACHEI_I_bo_pos
+    3348846U,	// CACHEI_I_bo_pre
     3349252U,	// CACHEI_WI_bo_bso
-    3348870U,	// CACHEI_WI_bo_pos
-    269060U,	// CACHEI_WI_bo_pre
+    269060U,	// CACHEI_WI_bo_pos
+    3348870U,	// CACHEI_WI_bo_pre
     3349281U,	// CACHEI_W_bo_bso
     3480353U,	// CACHEI_W_bo_c
-    3348911U,	// CACHEI_W_bo_pos
-    269089U,	// CACHEI_W_bo_pre
+    269089U,	// CACHEI_W_bo_pos
+    3348911U,	// CACHEI_W_bo_pre
     400161U,	// CACHEI_W_bo_r
     3349220U,	// CACHE_I_bo_bso
     3480292U,	// CACHE_I_bo_c
-    3348835U,	// CACHE_I_bo_pos
-    269028U,	// CACHE_I_bo_pre
+    269028U,	// CACHE_I_bo_pos
+    3348835U,	// CACHE_I_bo_pre
     400100U,	// CACHE_I_bo_r
     3349241U,	// CACHE_WI_bo_bso
     3480313U,	// CACHE_WI_bo_c
-    3348858U,	// CACHE_WI_bo_pos
-    269049U,	// CACHE_WI_bo_pre
+    269049U,	// CACHE_WI_bo_pos
+    3348858U,	// CACHE_WI_bo_pre
     400121U,	// CACHE_WI_bo_r
     3349271U,	// CACHE_W_bo_bso
     3480343U,	// CACHE_W_bo_c
-    3348900U,	// CACHE_W_bo_pos
-    269079U,	// CACHE_W_bo_pre
+    269079U,	// CACHE_W_bo_pos
+    3348900U,	// CACHE_W_bo_pre
     400151U,	// CACHE_W_bo_r
     2953843983U,	// CADDN_rcr
     4199695U,	// CADDN_rrr
@@ -743,8 +743,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     16849016U,	// CMOV_srr
     3367186U,	// CMPSWAP_W_bo_bso
     5595410U,	// CMPSWAP_W_bo_c
-    1392972050U,	// CMPSWAP_W_bo_pos
-    67637522U,	// CMPSWAP_W_bo_pre
+    50794770U,	// CMPSWAP_W_bo_pos
+    1409814802U,	// CMPSWAP_W_bo_pre
     418066U,	// CMPSWAP_W_bo_r
     4824U,	// CMP_F_rr
     806361214U,	// CRC32B_W_rr
@@ -883,92 +883,92 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     25188151U,	// LDMST_abs
     3368759U,	// LDMST_bo_bso
     5596983U,	// LDMST_bo_c
-    1392973623U,	// LDMST_bo_pos
-    67639095U,	// LDMST_bo_pre
+    50796343U,	// LDMST_bo_pos
+    1409816375U,	// LDMST_bo_pre
     419639U,	// LDMST_bo_r
     137442U,	// LDUCX_abs
     3349336U,	// LDUCX_bo_bso
     16781613U,	// LD_A_abs
-    1393037613U,	// LD_A_bo_bso
-    84414765U,	// LD_A_bo_c
-    1392972077U,	// LD_A_bo_pos
-    67637549U,	// LD_A_bo_pre
-    101191981U,	// LD_A_bo_r
-    50860333U,	// LD_A_bol
+    1409749293U,	// LD_A_bo_bso
+    84349229U,	// LD_A_bo_c
+    50794797U,	// LD_A_bo_pos
+    1409814829U,	// LD_A_bo_pre
+    101126445U,	// LD_A_bo_r
+    67572013U,	// LD_A_bol
     139473U,	// LD_A_sc
     16781613U,	// LD_A_slr
     16980283U,	// LD_A_slr_post
     594221U,	// LD_A_slro
     9441281U,	// LD_A_sro
     16783339U,	// LD_BU_abs
-    1393039339U,	// LD_BU_bo_bso
-    84416491U,	// LD_BU_bo_c
-    1392973803U,	// LD_BU_bo_pos
-    67639275U,	// LD_BU_bo_pre
-    101193707U,	// LD_BU_bo_r
-    50862059U,	// LD_BU_bol
+    1409751019U,	// LD_BU_bo_bso
+    84350955U,	// LD_BU_bo_c
+    50796523U,	// LD_BU_bo_pos
+    1409816555U,	// LD_BU_bo_pre
+    101128171U,	// LD_BU_bo_r
+    67573739U,	// LD_BU_bol
     16783339U,	// LD_BU_slr
     16980371U,	// LD_BU_slr_post
     595947U,	// LD_BU_slro
     9441341U,	// LD_BU_sro
     16781779U,	// LD_B_abs
-    1393037779U,	// LD_B_bo_bso
-    84414931U,	// LD_B_bo_c
-    1392972243U,	// LD_B_bo_pos
-    67637715U,	// LD_B_bo_pre
-    101192147U,	// LD_B_bo_r
-    50860499U,	// LD_B_bol
+    1409749459U,	// LD_B_bo_bso
+    84349395U,	// LD_B_bo_c
+    50794963U,	// LD_B_bo_pos
+    1409814995U,	// LD_B_bo_pre
+    101126611U,	// LD_B_bo_r
+    67572179U,	// LD_B_bol
     16781710U,	// LD_DA_abs
-    1393037710U,	// LD_DA_bo_bso
-    84414862U,	// LD_DA_bo_c
-    1392972174U,	// LD_DA_bo_pos
-    67637646U,	// LD_DA_bo_pre
-    101192078U,	// LD_DA_bo_r
+    1409749390U,	// LD_DA_bo_bso
+    84349326U,	// LD_DA_bo_c
+    50794894U,	// LD_DA_bo_pos
+    1409814926U,	// LD_DA_bo_pre
+    101126542U,	// LD_DA_bo_r
     16781890U,	// LD_D_abs
-    1393037890U,	// LD_D_bo_bso
-    84415042U,	// LD_D_bo_c
-    1392972354U,	// LD_D_bo_pos
-    67637826U,	// LD_D_bo_pre
-    101192258U,	// LD_D_bo_r
+    1409749570U,	// LD_D_bo_bso
+    84349506U,	// LD_D_bo_c
+    50795074U,	// LD_D_bo_pos
+    1409815106U,	// LD_D_bo_pre
+    101126722U,	// LD_D_bo_r
     16783388U,	// LD_HU_abs
-    1393039388U,	// LD_HU_bo_bso
-    84416540U,	// LD_HU_bo_c
-    1392973852U,	// LD_HU_bo_pos
-    67639324U,	// LD_HU_bo_pre
-    101193756U,	// LD_HU_bo_r
-    50862108U,	// LD_HU_bol
+    1409751068U,	// LD_HU_bo_bso
+    84351004U,	// LD_HU_bo_c
+    50796572U,	// LD_HU_bo_pos
+    1409816604U,	// LD_HU_bo_pre
+    101128220U,	// LD_HU_bo_r
+    67573788U,	// LD_HU_bol
     16782122U,	// LD_H_abs
-    1393038122U,	// LD_H_bo_bso
-    84415274U,	// LD_H_bo_c
-    1392972586U,	// LD_H_bo_pos
-    67638058U,	// LD_H_bo_pre
-    101192490U,	// LD_H_bo_r
-    50860842U,	// LD_H_bol
+    1409749802U,	// LD_H_bo_bso
+    84349738U,	// LD_H_bo_c
+    50795306U,	// LD_H_bo_pos
+    1409815338U,	// LD_H_bo_pre
+    101126954U,	// LD_H_bo_r
+    67572522U,	// LD_H_bol
     16782122U,	// LD_H_slr
     16980307U,	// LD_H_slr_post
     594730U,	// LD_H_slro
     9441317U,	// LD_H_sro
     16782687U,	// LD_Q_abs
-    1393038687U,	// LD_Q_bo_bso
-    84415839U,	// LD_Q_bo_c
-    1392973151U,	// LD_Q_bo_pos
-    67638623U,	// LD_Q_bo_pre
-    101193055U,	// LD_Q_bo_r
+    1409750367U,	// LD_Q_bo_bso
+    84350303U,	// LD_Q_bo_c
+    50795871U,	// LD_Q_bo_pos
+    1409815903U,	// LD_Q_bo_pre
+    101127519U,	// LD_Q_bo_r
     16783496U,	// LD_W_abs
-    1393039496U,	// LD_W_bo_bso
-    84416648U,	// LD_W_bo_c
-    1392973960U,	// LD_W_bo_pos
-    67639432U,	// LD_W_bo_pre
-    101193864U,	// LD_W_bo_r
-    50862216U,	// LD_W_bol
+    1409751176U,	// LD_W_bo_bso
+    84351112U,	// LD_W_bo_c
+    50796680U,	// LD_W_bo_pos
+    1409816712U,	// LD_W_bo_pre
+    101128328U,	// LD_W_bo_r
+    67573896U,	// LD_W_bol
     139490U,	// LD_W_sc
     16783496U,	// LD_W_slr
     16980380U,	// LD_W_slr_post
     596104U,	// LD_W_slro
     9441354U,	// LD_W_sro
     16781724U,	// LEA_abs
-    1393037724U,	// LEA_bo_bso
-    50860444U,	// LEA_bol
+    1409749404U,	// LEA_bo_bso
+    67572124U,	// LEA_bol
     16781729U,	// LHA_abs
     137317U,	// LOOPU_brr
     16782665U,	// LOOP_brr
@@ -1340,10 +1340,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3349344U,	// STUCX_bo_bso
     25186654U,	// ST_A_abs
     11754176U,	// ST_A_bo_bso
-    84414814U,	// ST_A_bo_c
-    1401377118U,	// ST_A_bo_pos
-    76042590U,	// ST_A_bo_pre
-    101192030U,	// ST_A_bo_r
+    84349278U,	// ST_A_bo_c
+    59199838U,	// ST_A_bo_pos
+    1418219870U,	// ST_A_bo_pre
+    101126494U,	// ST_A_bo_r
     806558400U,	// ST_A_bol
     663807U,	// ST_A_sc
     9441293U,	// ST_A_sro
@@ -1352,10 +1352,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     40973U,	// ST_A_ssro
     25186830U,	// ST_B_abs
     11754191U,	// ST_B_bo_bso
-    84414990U,	// ST_B_bo_c
-    1401377294U,	// ST_B_bo_pos
-    76042766U,	// ST_B_bo_pre
-    101192206U,	// ST_B_bo_r
+    84349454U,	// ST_B_bo_c
+    59200014U,	// ST_B_bo_pos
+    1418220046U,	// ST_B_bo_pre
+    101126670U,	// ST_B_bo_r
     806558415U,	// ST_B_bol
     9441305U,	// ST_B_sro
     16781838U,	// ST_B_ssr
@@ -1363,22 +1363,22 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     40985U,	// ST_B_ssro
     25186709U,	// ST_DA_abs
     11754183U,	// ST_DA_bo_bso
-    84414869U,	// ST_DA_bo_c
-    1401377173U,	// ST_DA_bo_pos
-    76042645U,	// ST_DA_bo_pre
-    101192085U,	// ST_DA_bo_r
+    84349333U,	// ST_DA_bo_c
+    59199893U,	// ST_DA_bo_pos
+    1418219925U,	// ST_DA_bo_pre
+    101126549U,	// ST_DA_bo_r
     25186888U,	// ST_D_abs
     11754198U,	// ST_D_bo_bso
-    84415048U,	// ST_D_bo_c
-    1401377352U,	// ST_D_bo_pos
-    76042824U,	// ST_D_bo_pre
-    101192264U,	// ST_D_bo_r
+    84349512U,	// ST_D_bo_c
+    59200072U,	// ST_D_bo_pos
+    1418220104U,	// ST_D_bo_pre
+    101126728U,	// ST_D_bo_r
     25187443U,	// ST_H_abs
     11754205U,	// ST_H_bo_bso
-    84415603U,	// ST_H_bo_c
-    1401377907U,	// ST_H_bo_pos
-    76043379U,	// ST_H_bo_pre
-    101192819U,	// ST_H_bo_r
+    84350067U,	// ST_H_bo_c
+    59200627U,	// ST_H_bo_pos
+    1418220659U,	// ST_H_bo_pre
+    101127283U,	// ST_H_bo_r
     806558429U,	// ST_H_bol
     9441329U,	// ST_H_sro
     16782451U,	// ST_H_ssr
@@ -1386,17 +1386,17 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     41009U,	// ST_H_ssro
     25187756U,	// ST_Q_abs
     11754256U,	// ST_Q_bo_bso
-    84415916U,	// ST_Q_bo_c
-    1401378220U,	// ST_Q_bo_pos
-    76043692U,	// ST_Q_bo_pre
-    101193132U,	// ST_Q_bo_r
+    84350380U,	// ST_Q_bo_c
+    59200940U,	// ST_Q_bo_pos
+    1418220972U,	// ST_Q_bo_pre
+    101127596U,	// ST_Q_bo_r
     5857U,	// ST_T
     25188545U,	// ST_W_abs
     11754305U,	// ST_W_bo_bso
-    84416705U,	// ST_W_bo_c
-    1401379009U,	// ST_W_bo_pos
-    76044481U,	// ST_W_bo_pre
-    101193921U,	// ST_W_bo_r
+    84351169U,	// ST_W_bo_c
+    59201729U,	// ST_W_bo_pos
+    1418221761U,	// ST_W_bo_pre
+    101128385U,	// ST_W_bo_r
     806558529U,	// ST_W_bol
     9441366U,	// ST_W_sro
     16783553U,	// ST_W_ssr
@@ -1420,16 +1420,16 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     16847397U,	// SUB_srr_a15
     3034U,	// SVLCX_sys
     11754284U,	// SWAPMSK_W_bo_bso
-    84416654U,	// SWAPMSK_W_bo_c
-    1401378958U,	// SWAPMSK_W_bo_pos
-    76044430U,	// SWAPMSK_W_bo_pre
-    101193870U,	// SWAPMSK_W_bo_r
+    84351118U,	// SWAPMSK_W_bo_c
+    59201678U,	// SWAPMSK_W_bo_pos
+    1418221710U,	// SWAPMSK_W_bo_pre
+    101128334U,	// SWAPMSK_W_bo_r
     25188515U,	// SWAP_W_abs
     11754296U,	// SWAP_W_bo_bso
-    84416675U,	// SWAP_W_bo_c
-    1401378979U,	// SWAP_W_bo_pos
-    76044451U,	// SWAP_W_bo_pre
-    101193891U,	// SWAP_W_bo_r
+    84351139U,	// SWAP_W_bo_c
+    59201699U,	// SWAP_W_bo_pos
+    1418221731U,	// SWAP_W_bo_pre
+    101128355U,	// SWAP_W_bo_r
     13563U,	// SYSCALL_rc
     3027U,	// TRAPSV_sys
     3021U,	// TRAPV_sys
@@ -2640,11 +2640,11 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 3:
-    // CACHEI_I_bo_bso, CACHEI_I_bo_pos, CACHEI_WI_bo_bso, CACHEI_WI_bo_pos, ...
+    // CACHEI_I_bo_bso, CACHEI_I_bo_pre, CACHEI_WI_bo_bso, CACHEI_WI_bo_pre, ...
     SStream_concat1(O, ']');
     break;
   case 4:
-    // CACHEI_I_bo_pre, CACHEI_WI_bo_pre, CACHEI_W_bo_pre, CACHE_I_bo_pre, CA...
+    // CACHEI_I_bo_pos, CACHEI_WI_bo_pos, CACHEI_W_bo_pos, CACHE_I_bo_pos, CA...
     SStream_concat0(O, "+]");
     set_mem_access(MI, false);
     printSExtImm_10(MI, 1, O);
@@ -2662,13 +2662,13 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 7:
-    // CMPSWAP_W_bo_pos, LDMST_bo_pos, LD_A_bo_pos, LD_BU_bo_pos, LD_B_bo_pos...
-    SStream_concat0(O, ", [+");
+    // CMPSWAP_W_bo_pos, LDMST_bo_pos, LD_A_bo_bso, LD_A_bo_c, LD_A_bo_pos, L...
+    SStream_concat0(O, ", [");
     set_mem_access(MI, true);
     break;
   case 8:
-    // CMPSWAP_W_bo_pre, LDMST_bo_pre, LD_A_bo_bso, LD_A_bo_c, LD_A_bo_pre, L...
-    SStream_concat0(O, ", [");
+    // CMPSWAP_W_bo_pre, LDMST_bo_pre, LD_A_bo_pre, LD_BU_bo_pre, LD_B_bo_pre...
+    SStream_concat0(O, ", [+");
     set_mem_access(MI, true);
     break;
   case 9:
@@ -2702,7 +2702,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 3:
-    // CACHEI_I_bo_bso, CACHEI_I_bo_pos, CACHEI_WI_bo_bso, CACHEI_WI_bo_pos, ...
+    // CACHEI_I_bo_bso, CACHEI_I_bo_pre, CACHEI_WI_bo_bso, CACHEI_WI_bo_pre, ...
     printSExtImm_10(MI, 1, O);
     return;
     break;
@@ -2770,15 +2770,15 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 3:
-    // CMPSWAP_W_bo_pos, LDMST_bo_pos, LD_A_bo_bso, LD_A_bo_pos, LD_A_bol, LD...
-    SStream_concat1(O, ']');
-    break;
-  case 4:
-    // CMPSWAP_W_bo_pre, LDMST_bo_pre, LD_A_bo_pre, LD_BU_bo_pre, LD_B_bo_pre...
+    // CMPSWAP_W_bo_pos, LDMST_bo_pos, LD_A_bo_pos, LD_BU_bo_pos, LD_B_bo_pos...
     SStream_concat0(O, "+]");
     set_mem_access(MI, false);
     printSExtImm_10(MI, 2, O);
     return;
+    break;
+  case 4:
+    // CMPSWAP_W_bo_pre, LDMST_bo_pre, LD_A_bo_bso, LD_A_bo_pre, LD_A_bol, LD...
+    SStream_concat1(O, ']');
     break;
   case 5:
     // LD_A_bo_c, LD_BU_bo_c, LD_B_bo_c, LD_DA_bo_c, LD_D_bo_c, LD_HU_bo_c, L...
@@ -2839,7 +2839,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 5:
-    // CMPSWAP_W_bo_pos, LDMST_bo_pos, LD_A_bo_bso, LD_A_bo_pos, LD_BU_bo_bso...
+    // CMPSWAP_W_bo_pre, LDMST_bo_pre, LD_A_bo_bso, LD_A_bo_pre, LD_BU_bo_bso...
     printSExtImm_10(MI, 2, O);
     return;
     break;
