@@ -276,6 +276,11 @@ class ISRC_Aa<bits<8> op1, string asmstr>
       asmstr # " $d, $const4",
       []>;
 
+class ISRC_AaZ<bits<8> op1, string asmstr> 
+    : SRC<op1, (outs AddrRegs:$d), (ins u4imm:$const4),
+      asmstr # " $d, $const4",
+      []>;
+
 class ISRC_a15<bits<8> op1, string asmstr> 
     : SRC<op1, (outs DataRegs:$d), (ins s4imm:$const4),
       asmstr # " $d, %d15, $const4",
@@ -493,13 +498,6 @@ let Defs = [PSW] in {
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
 }
 
-multiclass mIRR_SRC_SRR__A<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
-                        string asmstr> {
-  def _rr : IRR_2<rr1, rr2, asmstr, AddrRegs, AddrRegs, AddrRegs>;
-  def _src : ISRC_Aa<src1, asmstr>;
-  def _srr : ISRR_AaDb<srr1, asmstr>;
-}
-
 multiclass mIB_H<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
                         string asmstr> {
   def _B_rr : IRR_DcDaDb<brr1, brr2, asmstr # ".b">;
@@ -512,6 +510,13 @@ defm ADD : mIRR_RC<0x0B, 0x00, 0x8B, 0x00, "add">,
            mISRC_a15a<0xC2, 0x92, 0x9A, "add">,
            mISRR_a15a<0x42, 0x12, 0x1A, "add">,
            mIB_H<0x0B, 0x40, 0x0B, 0x60, "add">;
+
+multiclass mIRR_SRC_SRR__A<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
+                        string asmstr> {
+  def _rr : IRR_2<rr1, rr2, asmstr, AddrRegs, AddrRegs, AddrRegs>;
+  def _src : ISRC_Aa<src1, asmstr>;
+  def _srr : ISRR_AaAb<srr1, asmstr>;
+}
 
 defm ADD_A : mIRR_SRC_SRR__A<0x01, 0x01, 0xB0, 0x30, "add.a">;
 defm ADDC : mIRR_RC<0x0B, 0x05, 0x8B, 0x05, "addc">;
@@ -1378,13 +1383,20 @@ def MOV_srcDa          : ISRC<0x82, "mov">;
 def MOV_srcEa       : ISRC_1<0xD2, "mov", ExtRegs>;
 def MOV_srr            : ISRR<0x02, "mov">;
 
-defm MOV_A : mIRR_SRC_SRR__A<0x01, 0x63, 0xA0, 0x60, "mov.a">;
+multiclass mIRR_SRCz_SRR__A<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
+                        string asmstr> {
+  def _rr : IRR_2<rr1, rr2, asmstr, AddrRegs, AddrRegs, AddrRegs>;
+  def _src : ISRC_AaZ<src1, asmstr>;
+  def _srr : ISRR_AaDb<srr1, asmstr>;
+}
+
+defm MOV_A : mIRR_SRCz_SRR__A<0x01, 0x63, 0xA0, 0x60, "mov.a">;
 
 def MOV_AA_rr : IRR_b<0x01, 0x00, "mov.aa", AddrRegs, AddrRegs>;
 def MOV_AA_srr : ISRR_AaAb<0x40, "mov.aa">;
 
-def MOV_D_rr : IRR_b<0x01, 0x4C, "mov.d", AddrRegs, AddrRegs>;
-def MOV_D_srr : ISRR_AaAb<0x80, "mov.d">;
+def MOV_D_rr : IRR_b<0x01, 0x4C, "mov.d", DataRegs, AddrRegs>;
+def MOV_D_srr : ISRR_2<0x80, "mov.d", DataRegs, AddrRegs>;
 
 def MOV_U_rlc  : IRLC_1<0xBB, "mov.u", DataRegs>;
 def MOVH_rlc   : IRLC_1<0x7B, "movh", DataRegs>;

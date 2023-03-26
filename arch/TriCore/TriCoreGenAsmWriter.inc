@@ -1106,7 +1106,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     17830282U,	// MOV_AA_rr
     16781706U,	// MOV_AA_srr
     3003U,	// MOV_A_rr
-    2101608U,	// MOV_A_src
+    9441640U,	// MOV_A_src
     16781672U,	// MOV_A_srr
     17830477U,	// MOV_D_rr
     16781901U,	// MOV_D_srr
@@ -2733,7 +2733,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 0, O);
     break;
   case 9:
-    // LD_A_sro, LD_BU_sro, LD_H_sro, LD_W_sro, ST_A_sro, ST_B_sro, ST_H_sro,...
+    // LD_A_sro, LD_BU_sro, LD_H_sro, LD_W_sro, MOV_A_src, ST_A_sro, ST_B_sro...
     printZExtImm_4(MI, 1, O);
     return;
     break;
