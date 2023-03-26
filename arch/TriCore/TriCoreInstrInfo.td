@@ -876,15 +876,15 @@ class IRCPW_a<bits<8> op1, bits<2> op2, string asmstr>
 
 
 // D[c], D[a], const4, E[d] (RCRR)
-class IRCRR_aEd<bits<8> op1, bits<3> op2, string asmstr>
+class IRCRR_DcDaCEd<bits<8> op1, bits<3> op2, string asmstr>
      : RCRR<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, ExtRegs:$s3),
             asmstr # " $d, $s1, $const4, $s3", []>;
 // E[c], const4, D[d], width (RCRW)
-class IRCRW_Ed<bits<8> op1, bits<3> op2, string asmstr>
+class IRCRW_EcCDdW<bits<8> op1, bits<3> op2, string asmstr>
      : RCRW<op1, op2, (outs ExtRegs:$d), (ins i32imm:$const4, DataRegs:$s3, i32imm:$width),
             asmstr # " $d, $const4, $s3, $width", []>;
 // D[c], D[a], const4, D[d], width (RCRW)
-class IRCRW_ad<bits<8> op1, bits<3> op2, string asmstr>
+class IRCRW_DcDaCDdW<bits<8> op1, bits<3> op2, string asmstr>
      : RCRW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$const4, DataRegs:$s3, i32imm:$width),
             asmstr # " $d, $s1, $const4, $s3, $width", []>;
 
@@ -976,7 +976,7 @@ defm GE : mI_U__RR_RC<0x0B, 0x14, 0x8B, 0x14,
 def GE_A_rr : IRR_DcAaAb<0x01, 0x43, "ge.a">;
 
 def IMASK_rcpw : IRCPW_E<0xB7, 0x01, "imask">;
-def IMASK_rcrw : IRCRW_Ed<0xD7, 0x01, "imask">;
+def IMASK_rcrw : IRCRW_EcCDdW<0xD7, 0x01, "imask">;
 def IMASK_rrpw : IRRPW_EcDbPW<0x37, 0x01, "imask">;
 def IMASK_rrrw : IRRRW_Ebd<0x57, 0x01, "imask">;
 
@@ -984,8 +984,8 @@ def INS_T  : IBIT<0x67, 0x00, "ins.t">;
 def INSN_T : IBIT<0x67, 0x01, "insn.t">;
 
 def INSERT_rcpw : IRCPW_a  <0xB7, 0x00, "insert">;
-def INSERT_rcrr : IRCRR_aEd<0x97, 0x00, "insert">;
-def INSERT_rcrw : IRCRW_ad <0xD7, 0x00, "insert">;
+def INSERT_rcrr : IRCRR_DcDaCEd<0x97, 0x00, "insert">;
+def INSERT_rcrw : IRCRW_DcDaCDdW <0xD7, 0x00, "insert">;
 def INSERT_rrpw : IRRPW_DcDaDbPW<0x37, 0x00, "insert">;
 def INSERT_rrrr : IRRRW_abd<0x17, 0x00, "insert">;
 def INSERT_rrrw : IRRRW_abd<0x57, 0x00, "insert">;
