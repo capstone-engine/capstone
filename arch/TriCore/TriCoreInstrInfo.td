@@ -1357,8 +1357,6 @@ defm MAX_U : mIRR_RC<0x0B, 0x1B, 0x8B, 0x1B, "max.u">;
 defm MAX_B : mIU__RR_ab<0x0B, 0x5A, 0x0B, 0x5B, "max.b">;
 defm MAX_H : mIU__RR_ab<0x0B, 0x7A, 0x0B, 0x7B, "max.h">;
 
-def MFCR_rlc : IRLC<0x4D, "mfcr">;
-
 defm MIN   : mIRR_RC<0x0B, 0x18, 0x8B, 0x18, "min">;
 defm MIN_U : mIRR_RC<0x0B, 0x19, 0x8B, 0x19, "min.u">;
 
@@ -1441,9 +1439,8 @@ class IRLC_CR<bits<8> op1, string asmstr, RegisterClass rc>
     : RLC<op1, (outs), (ins s16imm:$const16, rc:$d),
       asmstr # " $const16, $d", []>;
 
-// TODO: CSFR
-// def MTCR_rlc : IRLC_CR<0xCD, "mtcr", CRRegs>;
-
+def MTCR_rlc : IRLC_CR<0xCD, "mtcr", DataRegs>;
+def MFCR_rlc : IRLC_1 <0x4D, "mfcr", DataRegs>;
 
 class IRR2<bits<8> op1, bits<12> op2, string asmstr, RegisterClass rcd, RegisterClass rca, RegisterClass rcb>
     : RR2<op1, op2, (outs rcd:$d), (ins rca:$s1, rcb:$s2), asmstr # " $d, $s1, $s2", []>;
