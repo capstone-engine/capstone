@@ -11,24 +11,24 @@
 //  Declarations that describe the TriCore register file
 //===----------------------------------------------------------------------===//
 
-class TriCoreReg<string n> : Register<n> {
+class TriCoreReg<string n, list<string> altNames = []> : Register<n, altNames> {
   field bits<16> Num;
   let Namespace = "TriCore";
   let HWEncoding = Num;
 }
 
 // General Purpose Data Registers
-class TriCoreDataReg<bits<16> num, string n> : TriCoreReg<n> {
+class TriCoreDataReg<bits<16> num, string n, list<string> altNames = []> : TriCoreReg<n, altNames> {
   let Num = num;
 }
 
 // General Purpose Address Registers
-class TriCoreAddrReg<bits<16> num, string n> : TriCoreReg<n> {
+class TriCoreAddrReg<bits<16> num, string n, list<string> altNames = []> : TriCoreReg<n, altNames> {
   let Num = num;
 }
 
 // Program Status Register
-class TriCorePSReg<bits<16> num, string n> : TriCoreReg<n> {
+class TriCorePSReg<bits<16> num, string n, list<string> altNames = []> : TriCoreReg<n, altNames> {
   let Num = num;
 }
 
@@ -73,7 +73,7 @@ def A6 : TriCoreAddrReg<6, "a6">, DwarfRegNum<[22]>;
 def A7 : TriCoreAddrReg<7, "a7">, DwarfRegNum<[23]>;
 def A8 : TriCoreAddrReg<8, "a8">, DwarfRegNum<[24]>;
 def A9 : TriCoreAddrReg<9, "a9">, DwarfRegNum<[25]>;
-def A10 : TriCoreAddrReg<10, "a10">, DwarfRegNum<[26]>;
+def A10 : TriCoreAddrReg<10, "sp", ["a10"]>, DwarfRegNum<[26]>;
 def A11 : TriCoreAddrReg<11, "a11">, DwarfRegNum<[27]>;
 def A12 : TriCoreAddrReg<12, "a12">, DwarfRegNum<[28]>;
 def A13 : TriCoreAddrReg<13, "a13">, DwarfRegNum<[29]>;
