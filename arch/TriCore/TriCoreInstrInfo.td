@@ -810,21 +810,25 @@ def DEBUG_sys : ISYS_0<0x0D, 0x04, "debug">;
 
 /// RRPW Instruction Formats
 /// op D[c], D[a], pos, width
-class IRRPW_a<bits<8> op1, bits<2> op2, string asmstr>
+class IRRPW_DcDaPW<bits<8> op1, bits<2> op2, string asmstr>
      : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, i32imm:$pos, i32imm:$width),
             asmstr # " $d, $s1, $pos, $width", []>;
 /// op D[c], D[b], pos, width
-class IRRPW_b<bits<8> op1, bits<2> op2, string asmstr>
+class IRRPW_DcDbPW<bits<8> op1, bits<2> op2, string asmstr>
      : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s2, i32imm:$pos, i32imm:$width),
             asmstr # " $d, $s2, $pos, $width", []>;
 /// op E[c], D[b], pos, width
-class IRRPW_Eb<bits<8> op1, bits<2> op2, string asmstr>
+class IRRPW_EcDbPW<bits<8> op1, bits<2> op2, string asmstr>
      : RRPW<op1, op2, (outs ExtRegs:$d), (ins DataRegs:$s2, i32imm:$pos, i32imm:$width),
             asmstr # " $d, $s2, $pos, $width", []>;
 /// op D[c], D[a], D[b], pos
-class IRRPW_ab<bits<8> op1, bits<2> op2, string asmstr>
+class IRRPW_DcDaDbP<bits<8> op1, bits<2> op2, string asmstr>
      : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, i32imm:$pos),
             asmstr # " $d, $s1, $s2, $pos", []>;
+/// op D[c], D[a], D[b], pos, width
+class IRRPW_DcDaDbPW<bits<8> op1, bits<2> op2, string asmstr>
+     : RRPW<op1, op2, (outs DataRegs:$d), (ins DataRegs:$s1, DataRegs:$s2, i32imm:$pos, i32imm:$width),
+            asmstr # " $d, $s1, $s2, $pos, $width", []>;
 
 /// RRRR Instruction Formats
 /// op D[c], D[a], D[b], D[d]
@@ -877,7 +881,7 @@ class IRCRW_ad<bits<8> op1, bits<3> op2, string asmstr>
             asmstr # " $d, $s1, $const4, $s3, $width", []>;
 
 multiclass mIRRPWab_RRRR<bits<8> op1, bits<2> op2, bits<8> op3, bits<3> op4, string asmstr>{
-  def _rrpw : IRRPW_ab<op1, op2, asmstr>;
+  def _rrpw : IRRPW_DcDaDbP<op1, op2, asmstr>;
   def _rrrr : IRRRR<op3, op4, asmstr>;
 }
 
@@ -937,11 +941,11 @@ defm EQANY_H : mIRR_RC<0x0B, 0x76, 0x8B, 0x76, "eqany.h">;
 
 def EQZ_A_rr : IRR_DcAa<0x01, 0x48, "eqz.a">;
 
-def EXTR_rrpw : IRRPW_a<0x37, 0x02, "extr">;
+def EXTR_rrpw : IRRPW_DcDaPW<0x37, 0x02, "extr">;
 def EXTR_rrrr : IRRRR_aEd<0x17, 0x02, "extr">;
 def EXTR_rrrw : IRRRW_ad<0x57, 0x02, "extr">;
 
-def EXTR_U_rrpw : IRRPW_a<0x37, 0x03, "extr.u">;
+def EXTR_U_rrpw : IRRPW_DcDaPW<0x37, 0x03, "extr.u">;
 def EXTR_U_rrrr : IRRRR_aEd<0x17, 0x03, "extr.u">;
 def EXTR_U_rrrw : IRRRW_ad<0x57, 0x03, "extr.u">;
 
@@ -965,7 +969,7 @@ def GE_A_rr : IRR_DcAaAb<0x01, 0x43, "ge.a">;
 
 def IMASK_rcpw : IRCPW_E<0xB7, 0x01, "imask">;
 def IMASK_rcrw : IRCRW_Ed<0xD7, 0x01, "imask">;
-def IMASK_rrpw : IRRPW_Eb<0x37, 0x01, "imask">;
+def IMASK_rrpw : IRRPW_EcDbPW<0x37, 0x01, "imask">;
 def IMASK_rrrw : IRRRW_Ebd<0x57, 0x01, "imask">;
 
 def INS_T  : IBIT<0x67, 0x00, "ins.t">;
@@ -974,7 +978,7 @@ def INSN_T : IBIT<0x67, 0x01, "insn.t">;
 def INSERT_rcpw : IRCPW_a  <0xB7, 0x00, "insert">;
 def INSERT_rcrr : IRCRR_aEd<0x97, 0x00, "insert">;
 def INSERT_rcrw : IRCRW_ad <0xD7, 0x00, "insert">;
-def INSERT_rrpw : IRRPW_ab <0x37, 0x00, "insert">;
+def INSERT_rrpw : IRRPW_DcDaDbPW<0x37, 0x00, "insert">;
 def INSERT_rrrr : IRRRW_abd<0x17, 0x00, "insert">;
 def INSERT_rrrw : IRRRW_abd<0x57, 0x00, "insert">;
 

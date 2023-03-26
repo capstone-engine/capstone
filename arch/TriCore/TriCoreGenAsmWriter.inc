@@ -1906,7 +1906,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     32U,	// INSERT_rcpw
     0U,	// INSERT_rcrr
     32U,	// INSERT_rcrw
-    0U,	// INSERT_rrpw
+    32U,	// INSERT_rrpw
     32U,	// INSERT_rrrr
     32U,	// INSERT_rrrw
     0U,	// INSN_T
@@ -2972,7 +2972,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
   // Fragment 7 encoded into 1 bits for 2 unique commands.
   if ((Bits >> 37) & 1) {
-    // INSERT_rcpw, INSERT_rcrw, INSERT_rrrr, INSERT_rrrw
+    // INSERT_rcpw, INSERT_rcrw, INSERT_rrpw, INSERT_rrrr, INSERT_rrrw
     SStream_concat0(O, ", ");
     printOperand(MI, 4, O);
     return;
