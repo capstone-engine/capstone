@@ -1306,21 +1306,23 @@ static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode s1.
-	status = DecodeDataRegsRegisterClass(Inst, s1, Address, Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 4) {
+		// Decode s1.
+		status = DecodeDataRegsRegisterClass(Inst, s1, Address, Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
 	// Decode const4.
 	MCOperand_CreateImm0(Inst, const4);
-
-	// Decode width.
-	MCOperand_CreateImm0(Inst, width);
 
 	// Decode s3.
 	status = DecodeDataRegsRegisterClass(Inst, s3, Address, Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
+
+	// Decode width.
+	MCOperand_CreateImm0(Inst, width);
 
 	return MCDisassembler_Success;
 }
