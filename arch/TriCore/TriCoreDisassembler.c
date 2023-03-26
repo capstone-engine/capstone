@@ -684,20 +684,31 @@ static DecodeStatus DecodeRRPWInstruction(MCInst *Inst, unsigned Insn,
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode s1.
-	status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	// Decode s1/s2.
+	if (MCInst_getOpcode(Inst) != TriCore_IMASK_rrpw) {
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	} else {
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
-	// Decode s2.
-	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->OpInfo[2].OperandType == MCOI_OPERAND_REGISTER) {
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
 
-	// Decode pos.
+		MCOperand_CreateImm0(Inst, pos);
+		if (desc->NumOperands == 5) {
+			MCOperand_CreateImm0(Inst, width);
+		}
+		return MCDisassembler_Success;
+	}
+
+
 	MCOperand_CreateImm0(Inst, pos);
-
-	// Decode width.
 	MCOperand_CreateImm0(Inst, width);
 
 	return MCDisassembler_Success;
