@@ -842,16 +842,15 @@ static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (is32Bit) // This instruction is 16-bit
 		return MCDisassembler_Fail;
 
-	// Decode n.
-	MCOperand_CreateImm0(Inst, n);
+	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 
 	// Decode s1_d.
-	status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
 	// Decode s2.
-	status = DecodeDataRegsRegisterClass(Inst, s2, Address, Decoder);
+	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
