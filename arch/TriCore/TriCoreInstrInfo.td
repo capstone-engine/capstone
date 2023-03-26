@@ -393,6 +393,11 @@ class ISRR_AaAb<bits<8> op1, string asmstr>
       asmstr # " $d, $s2",
       []>;
 
+class ISRR_AaDb<bits<8> op1, string asmstr>
+    : SRR<op1, (outs AddrRegs:$d), (ins DataRegs:$s2),
+      asmstr # " $d, $s2",
+      []>;
+
 class ISRR_a15<bits<8> op1, string asmstr>
     : SRR<op1, (outs DataRegs:$d), (ins DataRegs:$s2),
       asmstr # " $d, %d15, $s2",
@@ -489,7 +494,7 @@ multiclass mIRR_SRC_SRR__A<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
                         string asmstr> {
   def _rr : IRR_2<rr1, rr2, asmstr, AddrRegs, AddrRegs, AddrRegs>;
   def _src : ISRC_Aa<src1, asmstr>;
-  def _srr : ISRR_AaAb<srr1, asmstr>;
+  def _srr : ISRR_AaDb<srr1, asmstr>;
 }
 
 multiclass mIB_H<bits<8> brr1, bits<8> brr2, bits<8> hrr1, bits<8> hrr2,
