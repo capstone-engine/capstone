@@ -777,14 +777,14 @@ static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	if (is32Bit) // This instruction is 16-bit
 		return MCDisassembler_Fail;
 
-	// Decode off4.
-	MCOperand_CreateImm0(Inst, off4);
-
 	// Decode s2.
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
+	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
+
+	// Decode off4.
+	MCOperand_CreateImm0(Inst, off4);
 
 	return MCDisassembler_Success;
 }
