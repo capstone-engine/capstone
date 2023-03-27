@@ -1135,9 +1135,9 @@ class IBOL_AbOR<bits<8> op1, string asmstr, RegisterClass dc>
 class ISLR<bits<8> op1, string asmstr, RegisterClass dc>
     : SLR<op1, (outs dc:$d), (ins AddrRegs:$s2),
       asmstr # " $d, $s2", []>;
-class ISLR_post_increment<bits<8> op1, string asmstr, RegisterClass dc>
+class ISLR_pos<bits<8> op1, string asmstr, RegisterClass dc>
     : SLR<op1, (outs dc:$d), (ins AddrRegs:$s2),
-      asmstr # " [+$d]$s2", []>;
+      asmstr # " $d, [$s2+]", []>;
 
 class ISLRO<bits<8> op1, string asmstr, RegisterClass dc>
     : SLRO<op1, (outs dc:$d), (ins u4imm:$off4),
@@ -1186,7 +1186,7 @@ multiclass mIABS_BO<bits<8> abs1, bits<2> abs2,   ///_abs
 multiclass mISLR_SLRO_SRO<bits<8> slr, bits<8> slrp, bits<8> slro, bits<8> sro,
                     string asmstr, RegisterClass c>{
   def _slr : ISLR<slr, asmstr, c>;
-  def _slr_post : ISLR_post_increment<slrp, asmstr, c>;
+  def _slr_post : ISLR_pos<slrp, asmstr, c>;
   def _slro : ISLRO<slro, asmstr, c>;
   def _sro  : ISRO<sro, asmstr, c>;
 }
@@ -1611,7 +1611,7 @@ def SHUFFLE_rc : IRC_2<0x8F, 0x07, "shuffle">;
 
 // A[b], off10, A[a] (BO)(Base + Short Offset Addressing Mode)
 class IBO_bso_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc> 
-    : BO<op1, op2, (outs AddrRegs:$d), (ins rc:$s1, s10imm:$off10),
+    : BO<op1, op2, (outs rc:$d), (ins AddrRegs:$s1, s10imm:$off10),
       asmstr # " [$s1]$off10, $d", []>;
 // P[b], A[a] (BO)(Bit-reverse Addressing Mode)
 class IBO_r_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
@@ -1666,7 +1666,7 @@ multiclass mISRO_SSR_SSRO_st<bits<8> sro, bits<8> ssr, bits<8> ssrpos, bits<8> s
   def _ssr     : SSR<ssr, (outs AddrRegs:$d), (ins rc:$s1),
                      asmstr # " $d, $s1", []>;
   def _ssr_pos : SSR<ssrpos, (outs AddrRegs:$d), (ins rc:$s1),
-                     asmstr # " [+$d]$s1", []>;
+                     asmstr # " [$d+], $s1", []>;
   def _ssro    : SSRO<ssro, (outs), (ins rc:$s1, s4imm:$off4),
                       asmstr # " %a15, $off4, $s1", []>;
 }

@@ -455,11 +455,11 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (desc->NumOperands > 2) {
-		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
@@ -866,7 +866,7 @@ static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 		return status;
 
 	// Decode s1.
-	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
+	status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
