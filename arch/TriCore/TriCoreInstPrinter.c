@@ -159,6 +159,18 @@ static void printSExtImm(MCInst *MI, int OpNum, SStream *O) {
 		printOperand(MI, OpNum, O);
 }
 
+static inline void fill_tricore_imm(MCInst *MI, int64_t imm) {
+	if (MI->csh->detail) {
+		MI->flat_insn->detail->tricore
+				.operands[MI->flat_insn->detail->tricore.op_count]
+				.type = TRICORE_OP_IMM;
+		MI->flat_insn->detail->tricore
+				.operands[MI->flat_insn->detail->tricore.op_count]
+				.imm = (int) imm;
+		MI->flat_insn->detail->tricore.op_count++;
+	}
+}
+
 static void sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
@@ -178,15 +190,7 @@ static void sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 			else
 				SStream_concat(O, "-%u", -imm);
 		}
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->tricore
-					.operands[MI->flat_insn->detail->tricore.op_count]
-					.type = TRICORE_OP_IMM;
-			MI->flat_insn->detail->tricore
-					.operands[MI->flat_insn->detail->tricore.op_count]
-					.imm = (unsigned short int) imm;
-			MI->flat_insn->detail->tricore.op_count++;
-		}
+		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
 }
@@ -236,15 +240,7 @@ static void zero_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 			else
 				SStream_concat(O, "-%u", -imm);
 		}
-		if (MI->csh->detail) {
-			MI->flat_insn->detail->tricore
-					.operands[MI->flat_insn->detail->tricore.op_count]
-					.type = TRICORE_OP_IMM;
-			MI->flat_insn->detail->tricore
-					.operands[MI->flat_insn->detail->tricore.op_count]
-					.imm = (unsigned short int) imm;
-			MI->flat_insn->detail->tricore.op_count++;
-		}
+		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
 }
@@ -303,6 +299,17 @@ printZExtImm_(4)
 printZExtImm_(2)
 
 printZExtImm_(1)
+
+static void printOff18Imm(MCInst *MI, int OpNum, SStream *O) {
+	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	if (MCOperand_isImm(MO)) {
+		uint32_t imm = (uint32_t) MCOperand_getImm(MO);
+		imm = ((imm & 0x3C000)<< 14) | (imm & 0x3fff);
+		SStream_concat(O, "0x%x", imm);
+		fill_tricore_imm(MI, imm);
+	} else
+		printOperand(MI, OpNum, O);
+}
 
 static void printPCRelImmOperand(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
