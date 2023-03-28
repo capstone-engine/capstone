@@ -184,6 +184,9 @@ def u4imm      : Operand<i32> { let PrintMethod = "printZExtImm<4>";  }
 def u2imm      : Operand<i32> { let PrintMethod = "printZExtImm<2>";  }
 def u9imm      : Operand<i32> { let PrintMethod = "printZExtImm<9>";  }
 def u16imm     : Operand<i32> { let PrintMethod = "printZExtImm<16>";  }
+
+def off18imm     : Operand<i32> { let PrintMethod = "printOff18Imm";  }
+
 def bl_target  : Operand<i32>;
 def b_target   : Operand<OtherVT>;
 def cc_val     : Operand<i32> { let PrintMethod = "printCondCode";  }
@@ -752,25 +755,25 @@ def CMOVN_src : ISRC_a15<0xEA, "cmovn">;
 def CMOVN_srr : ISRR_a15<0x6A, "cmovn">;
 
 // A[b], off10, E[a] (BO)(Base + Short Offset Addressing Mode)
-class IBO_bsoEa<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs), (ins AddrRegs:$s2, s10imm:$off10, AddrExtRegs:$s1),
-      asmstr # " $s1, [$s2]$off10", []>;
+class IBO_bsoAbOEa<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs), (ins ExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
+      asmstr # " [$s2]$off10, $s1", []>;
 // P[b], E[a] (BO)(Bit-reverse Addressing Mode)
-class IBO_rEa<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrExtRegs:$b), (ins AddrRegs:$s2, AddrExtRegs:$s1),
-      asmstr # " $s1, [${b}+r]", []>;
+class IBO_rPbEa<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs), (ins ExtRegs:$s1, AddrExtRegs:$s2),
+      asmstr # " $s2, $s1", []>;
 // P[b], off10, E[a] (BO)(Circular Addressing Mode)
-class IBO_cEa<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs AddrExtRegs:$b), (ins s10imm:$off10, AddrExtRegs:$s1),
-      asmstr # " $s1, [${b}+c]", []>;
+class IBO_cPbOEa<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs), (ins ExtRegs:$s1, AddrExtRegs:$s2, s10imm:$off10),
+      asmstr # " [$s2]$off10, $s1", []>;
 // A[b], off10, E[a] (BO)(Post-increment Addressing Mode)
-class IBO_posEa<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs), (ins AddrExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s1, [${s2}+]$off10", []>;
+class IBO_posAbOEa<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs), (ins ExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
+      asmstr # " [$s2+]$off10, $s1", []>;
 // A[b], off10, E[a] (BO)(Pre-increment Addressing Mode)
-class IBO_preEa<bits<8> op1, bits<6> op2, string asmstr> 
-    : BO<op1, op2, (outs), (ins AddrExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " $s1, [+${s2}]$off10", []>;
+class IBO_preAbOEa<bits<8> op1, bits<6> op2, string asmstr> 
+    : BO<op1, op2, (outs), (ins ExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
+      asmstr # " [+$s2]$off10, $s1", []>;
 
 
 multiclass mIBO_Ea<bits<8> bso1, bits<6> bso2, ///_bso
@@ -779,11 +782,11 @@ multiclass mIBO_Ea<bits<8> bso1, bits<6> bso2, ///_bso
                    bits<8> pos1, bits<6> pos_r, ///_post
                    bits<8> pre1, bits<6> pre_c, ///_pre
                    string asmstr>{
-  def _bo_bso  : IBO_bsoEa<bso1, bso2, asmstr>;
-  def _bo_pos  : IBO_posEa<pos1, pos_r, asmstr>;
-  def _bo_pre  : IBO_preEa<pre1, pre_c, asmstr>;
-  def _bo_r    : IBO_rEa<r1, r2, asmstr>;
-  def _bo_c    : IBO_cEa<c1, c2, asmstr>;
+  def _bo_bso  : IBO_bsoAbOEa<bso1, bso2, asmstr>;
+  def _bo_pos  : IBO_posAbOEa<pos1, pos_r, asmstr>;
+  def _bo_pre  : IBO_preAbOEa<pre1, pre_c, asmstr>;
+  def _bo_r    : IBO_rPbEa<r1, r2, asmstr>;
+  def _bo_c    : IBO_cPbOEa<c1, c2, asmstr>;
 }
 
 defm CMPSWAP_W : mIBO_Ea<0x49, 0x23, 0x69, 0x03,
@@ -1115,13 +1118,13 @@ defm JZ  : mISB_SBR_T_BRN_SBRN<0x6E, 0x76, 0xBD, 0x00, 0xBC, 0x6F, 0x00, 0x2E, "
 
 
 class IABS_off18<bits<8> op1, bits<2> op2, string asmstr> 
-    : ABS<op1, op2, (outs), (ins i32imm:$off18),
+    : ABS<op1, op2, (outs), (ins off18imm:$off18),
       asmstr # " $off18", []>;
 class IABS_RO<bits<8> op1, bits<2> op2, string asmstr, RegisterClass dc> 
-    : ABS<op1, op2, (outs dc:$d), (ins i32imm:$off18),
+    : ABS<op1, op2, (outs dc:$d), (ins off18imm:$off18),
       asmstr # " $d, $off18", []>;
 class IABS_OR<bits<8> op1, bits<2> op2, string asmstr, RegisterClass s1c> 
-    : ABS<op1, op2, (outs), (ins s1c:$s1, i32imm:$off18),
+    : ABS<op1, op2, (outs), (ins s1c:$s1, off18imm:$off18),
       asmstr # " $off18, $s1", []>;
 
 class IBOL_RAaO<bits<8> op1, string asmstr, RegisterClass rc> 
@@ -1129,7 +1132,7 @@ class IBOL_RAaO<bits<8> op1, string asmstr, RegisterClass rc>
       asmstr # " $s1, [$s2]$off16", []>;
 
 class IBOL_AbOR<bits<8> op1, string asmstr, RegisterClass rc> 
-    : BOL<op1, (outs AddrRegs:$s2), (ins rc:$s1, i32imm:$off16),
+    : BOL<op1, (outs AddrRegs:$s2), (ins rc:$s1, s16imm:$off16),
       asmstr # " [$s2]$off16, $s1", []>;
 
 class ISLR<bits<8> op1, string asmstr, RegisterClass dc>
@@ -1701,7 +1704,7 @@ defm ST_B : mISRO_SSR_SSRO_st<0x2C, 0x34, 0x24, 0x28, "st.b", DataRegs>;
 def ST_H_bol : IBOL_AbOR<0xF9, "st.h", DataRegs>;
 defm ST_H : mISRO_SSR_SSRO_st<0xAC, 0xB4, 0xA4, 0xA8, "st.h", DataRegs>;
 
-def ST_T : ABSB<0xD5, 0x00, (outs), (ins i32imm:$off18, i32imm:$bpos3, i32imm:$b),
+def ST_T : ABSB<0xD5, 0x00, (outs), (ins off18imm:$off18, i32imm:$bpos3, i32imm:$b),
                 "st.t $off18, $bpos3, $b", []>;
 
 defm ST_W : mIABS_BO_st<0xA5, 0x00, 0x89, 0xA9, 0x24, 0x04, 0x14, "st.w", DataRegs>
