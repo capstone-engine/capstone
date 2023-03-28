@@ -1124,13 +1124,13 @@ class IABS_OR<bits<8> op1, bits<2> op2, string asmstr, RegisterClass s1c>
     : ABS<op1, op2, (outs), (ins s1c:$s1, i32imm:$off18),
       asmstr # " $off18, $s1", []>;
 
-class IBOL_RAaO<bits<8> op1, string asmstr, RegisterClass dc> 
-    : BOL<op1, (outs dc:$d), (ins AddrRegs:$s1, i32imm:$off16),
-      asmstr # " $d, [$s1]$off16", []>;
+class IBOL_RAaO<bits<8> op1, string asmstr, RegisterClass rc> 
+    : BOL<op1, (outs rc:$s1), (ins AddrRegs:$s2, i32imm:$off16),
+      asmstr # " $s1, [$s2]$off16", []>;
 
-class IBOL_AbOR<bits<8> op1, string asmstr, RegisterClass dc> 
-    : BOL<op1, (outs AddrRegs:$d), (ins dc:$s1, i32imm:$off16),
-      asmstr # " [$d]$off16, $s1", []>;
+class IBOL_AbOR<bits<8> op1, string asmstr, RegisterClass rc> 
+    : BOL<op1, (outs AddrRegs:$s2), (ins rc:$s1, i32imm:$off16),
+      asmstr # " [$s2]$off16, $s1", []>;
 
 class ISLR<bits<8> op1, string asmstr, RegisterClass dc>
     : SLR<op1, (outs dc:$d), (ins AddrRegs:$s2),
@@ -1147,7 +1147,7 @@ class ISRO_A15RO<bits<8> op1, string asmstr, RegisterClass s2c>
     : SRO<op1, (outs), (ins s2c:$s2, u4imm:$off4),
       asmstr # " %a15, [$s2]$off4", []>;
 
-class ISRO_A15ROst<bits<8> op1, string asmstr, RegisterClass s2c>
+class ISRO_ROA15<bits<8> op1, string asmstr, RegisterClass s2c>
     : SRO<op1, (outs), (ins s2c:$s2, u4imm:$off4),
       asmstr # " [$s2]$off4, %a15", []>;
 
@@ -1155,7 +1155,7 @@ class ISRO_D15RO<bits<8> op1, string asmstr, RegisterClass s2c>
     : SRO<op1, (outs), (ins s2c:$s2, u4imm:$off4),
       asmstr # " %d15, [$s2]$off4", []>;
 
-class ISRO_D15ROst<bits<8> op1, string asmstr, RegisterClass s2c>
+class ISRO_ROD15<bits<8> op1, string asmstr, RegisterClass s2c>
     : SRO<op1, (outs), (ins s2c:$s2, u4imm:$off4),
       asmstr # " [$s2]$off4, %d15", []>;
 
@@ -1200,15 +1200,11 @@ multiclass mISLR_SLRO_SRO<bits<8> slr, bits<8> slrp, bits<8> slro, bits<8> sro,
   def _slr : ISLR<slr, asmstr, c>;
   def _slr_post : ISLR_pos<slrp, asmstr, c>;
   def _slro : ISLRO<slro, asmstr, c>;
-  def _sro  : ISRO_A15RO<sro, asmstr, c>;
-}
-
-multiclass mISLR_SLRO_SROd15<bits<8> slr, bits<8> slrp, bits<8> slro, bits<8> sro,
-                    string asmstr, RegisterClass c>{
-  def _slr : ISLR<slr, asmstr, c>;
-  def _slr_post : ISLR_pos<slrp, asmstr, c>;
-  def _slro : ISLRO<slro, asmstr, c>;
-  def _sro  : ISRO_D15RO<sro, asmstr, c>;
+  if !eq(c,DataRegs) then {
+    def _sro  : ISRO_D15RO<sro, asmstr, AddrRegs>;
+  } else if !eq(c,AddrRegs) then {
+    def _sro  : ISRO_A15RO<sro, asmstr, AddrRegs>;
+  }
 }
 
 defm LD_A  : mIABS_BO<0x85, 0x02, 0x09, 0x29, 0x26, 0x06, 0x16, "ld.a", AddrRegs>
@@ -1220,14 +1216,14 @@ defm LD_B  : mIABS_BO<0x05, 0x00, 0x09, 0x29, 0x20, 0x00, 0x10,"ld.b", DataRegs>
 def LD_B_bol : IBOL_RAaO<0x79, "ld.b", DataRegs>;
 
 defm LD_BU  : mIABS_BO<0x05, 0x01, 0x09, 0x29, 0x21, 0x01, 0x11, "ld.bu", DataRegs>
-            , mISLR_SLRO_SROd15<0x14, 0x04, 0x08, 0x0C, "ld.bu", DataRegs>;
+            , mISLR_SLRO_SRO<0x14, 0x04, 0x08, 0x0C, "ld.bu", DataRegs>;
 def LD_BU_bol : IBOL_RAaO<0x39, "ld.bu", DataRegs>;
 
 defm LD_D  : mIABS_BO<0x85, 0x01, 0x09, 0x29, 0x25, 0x05, 0x15, "ld.d", ExtRegs>;
 defm LD_DA : mIABS_BO<0x85, 0x03, 0x09, 0x29, 0x27, 0x07, 0x17, "ld.da", AddrExtRegs>;
 
 defm LD_H  : mIABS_BO<0x05, 0x02, 0x09, 0x29, 0x22, 0x02, 0x12, "ld.h", DataRegs>
-           , mISLR_SLRO_SROd15<0x94, 0x84, 0x88, 0x8C, "ld.h", DataRegs>;
+           , mISLR_SLRO_SRO<0x94, 0x84, 0x88, 0x8C, "ld.h", DataRegs>;
 def LD_H_bol : IBOL_RAaO<0xC9, "ld.h", DataRegs>;
 
 defm LD_HU  : mIABS_BO<0x05, 0x03, 0x09, 0x29, 0x23, 0x03, 0x13, "ld.hu", DataRegs>;
@@ -1236,7 +1232,7 @@ def LD_HU_bol : IBOL_RAaO<0xB9, "ld.hu", DataRegs>;
 defm LD_Q  : mIABS_BO<0x45, 0x00, 0x09, 0x29, 0x28, 0x08, 0x18, "ld.q", DataRegs>;
 
 defm LD_W  : mIABS_BO<0x85, 0x00, 0x09, 0x29, 0x24, 0x04, 0x14, "ld.w", DataRegs>
-           , mISLR_SLRO_SROd15<0x54, 0x44, 0x48, 0x4C, "ld.w", AddrRegs>;
+           , mISLR_SLRO_SRO<0x54, 0x44, 0x48, 0x4C, "ld.w", DataRegs>;
 def LD_W_bol : IBOL_RAaO<0x19, "ld.w", DataRegs>;
 def LD_W_sc  : ISC_A15A10C<0x58, "ld.w">;
 
@@ -1682,24 +1678,17 @@ defm ST_Q  : mIABS_BO_st<0x65, 0x00, 0x89, 0xA9, 0x28, 0x08, 0x18, "st.q", DataR
 
 multiclass mISRO_SSR_SSRO_st<bits<8> sro, bits<8> ssr, bits<8> ssrpos, bits<8> ssro,
                             string asmstr, RegisterClass rc>{
-  def _sro     : ISRO_A15ROst<sro, asmstr, rc>;
+  if !eq(rc,DataRegs) then {
+    def _sro  : ISRO_ROD15<sro, asmstr, AddrRegs>;
+  } else if !eq(rc,AddrRegs) then {
+    def _sro  : ISRO_ROA15<sro, asmstr, AddrRegs>;
+  }
   def _ssr     : SSR<ssr, (outs AddrRegs:$d), (ins rc:$s1),
                      asmstr # " [$d], $s1", []>;
   def _ssr_pos : SSR<ssrpos, (outs AddrRegs:$d), (ins rc:$s1),
                      asmstr # " [$d+], $s1", []>;
-  def _ssro    : SSRO<ssro, (outs), (ins rc:$s1, s4imm:$off4),
-                      asmstr # " %a15, $off4, $s1", []>;
-}
-
-multiclass mISRO_SSR_SSRO_stD<bits<8> sro, bits<8> ssr, bits<8> ssrpos, bits<8> ssro,
-                            string asmstr, RegisterClass rc>{
-  def _sro     : ISRO_D15ROst<sro, asmstr, AddrRegs>;
-  def _ssr     : SSR<ssr, (outs AddrRegs:$d), (ins rc:$s1),
-                     asmstr # " [$d], $s1", []>;
-  def _ssr_pos : SSR<ssrpos, (outs AddrRegs:$d), (ins rc:$s1),
-                     asmstr # " [$d+], $s1", []>;
-  def _ssro    : SSRO<ssro, (outs), (ins rc:$s1, s4imm:$off4),
-                      asmstr # " %a15, $off4, $s1", []>;
+  def _ssro    : SSRO<ssro, (outs), (ins rc:$s1, u4imm:$off4),
+                      asmstr # " [%a15]$off4, $s1", []>;
 }
 
 def ST_A_bol : IBOL_AbOR<0xB5, "st.a", AddrRegs>;
@@ -1707,17 +1696,17 @@ def ST_A_sc : ISC_A10CA15<0xF8, "st.a">;
 defm ST_A : mISRO_SSR_SSRO_st<0xEC, 0xF4, 0xE4, 0xE8, "st.a", AddrRegs>;
 
 def ST_B_bol : IBOL_AbOR<0xE9, "st.b", DataRegs>;
-defm ST_B : mISRO_SSR_SSRO_stD<0x2C, 0x34, 0x24, 0x28, "st.b", DataRegs>;
+defm ST_B : mISRO_SSR_SSRO_st<0x2C, 0x34, 0x24, 0x28, "st.b", DataRegs>;
 
 def ST_H_bol : IBOL_AbOR<0xF9, "st.h", DataRegs>;
-defm ST_H : mISRO_SSR_SSRO_stD<0xAC, 0xB4, 0xA4, 0xA8, "st.h", DataRegs>;
+defm ST_H : mISRO_SSR_SSRO_st<0xAC, 0xB4, 0xA4, 0xA8, "st.h", DataRegs>;
 
 def ST_T : ABSB<0xD5, 0x00, (outs), (ins i32imm:$off18, i32imm:$bpos3, i32imm:$b),
                 "st.t $off18, $bpos3, $b", []>;
 
-defm ST_W : mIABS_BO_st<0xA5, 0x00, 0x89, 0xA9, 0x24, 0x04, 0x14, "st.w", DataRegs>;
+defm ST_W : mIABS_BO_st<0xA5, 0x00, 0x89, 0xA9, 0x24, 0x04, 0x14, "st.w", DataRegs>
+          , mISRO_SSR_SSRO_st<0x6C, 0x74, 0x64, 0x68, "st.w", DataRegs>;
 def ST_W_bol : IBOL_AbOR<0x59, "st.w", DataRegs>;
-defm ST_W : mISRO_SSR_SSRO_stD<0x6C, 0x74, 0x64, 0x68, "st.w", AddrRegs>;
 
 def STLCX_abs : IABS_off18<0x15, 0x00, "stlcx">; 
 def STLCX_bo_bso : IBO_bso<0x49, 0x26, "stlcx">; 

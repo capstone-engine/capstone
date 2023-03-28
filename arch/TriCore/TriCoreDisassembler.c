@@ -486,15 +486,41 @@ static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 
-	// Decode s1_d.
-	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	switch (MCInst_getOpcode(Inst)) {
+		case TriCore_LD_A_bol:
+		case TriCore_LD_B_bol:
+		case TriCore_LD_BU_bol:
+		case TriCore_LD_H_bol:
+		case TriCore_LD_HU_bol:
+		case TriCore_LD_W_bol: {
+			// Decode s1_d.
+			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
 
-	// Decode s2.
-	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+			// Decode s2.
+			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
+			break;
+		}
+		case TriCore_ST_A_bol:
+		case TriCore_ST_B_bol:
+		case TriCore_ST_H_bol:
+		case TriCore_ST_W_bol: {
+			// Decode s2.
+			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
+
+			// Decode s1_d.
+			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
+			break;
+		}
+		default: return MCDisassembler_Fail;
+	}
 
 	// Decode off16.
 	MCOperand_CreateImm0(Inst, off16);
