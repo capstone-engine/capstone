@@ -185,7 +185,12 @@ def u2imm      : Operand<i32> { let PrintMethod = "printZExtImm<2>";  }
 def u9imm      : Operand<i32> { let PrintMethod = "printZExtImm<9>";  }
 def u16imm     : Operand<i32> { let PrintMethod = "printZExtImm<16>";  }
 
-def off18imm     : Operand<i32> { let PrintMethod = "printOff18Imm";  }
+def off18imm   : Operand<i32> { let PrintMethod = "printOff18Imm";  }
+
+def disp24imm  : Operand<i32> { let PrintMethod = "printDisp24Imm";  }
+def disp15imm   : Operand<i32> { let PrintMethod = "printDisp15Imm";  }
+def disp8imm   : Operand<i32> { let PrintMethod = "printDisp8Imm";  }
+def disp4imm   : Operand<i32> { let PrintMethod = "printDisp4Imm";  }
 
 def bl_target  : Operand<i32>;
 def b_target   : Operand<OtherVT>;
@@ -723,7 +728,7 @@ def CADDN_src : ISRC_a15<0xCA, "caddn">;
 // Call Instructions
 
 class IB<bits<8> op1, string asmstr>
-    : B<op1, (outs), (ins s24imm:$disp24),
+    : B<op1, (outs), (ins disp24imm:$disp24),
         asmstr # " $disp24", []>;
 
 // The target of a 24-bit call instruction.
@@ -999,7 +1004,7 @@ defm IXMAX : mI_U_RRR_EEdb<0x6B, 0x0A, 0x6B, 0x0B, "ixmax">;
 defm IXMIN : mI_U_RRR_EEdb<0x6B, 0x08, 0x6B, 0x09, "ixmin">;
 
 class ISB<bits<8> op1, string asmstr>
-    : SB<op1, (outs), (ins s8imm:$disp8), asmstr # " $disp8", []>;
+    : SB<op1, (outs), (ins disp8imm:$disp8), asmstr # " $disp8", []>;
 
 def J_b  : IB<0x1D, "j">;
 def J_sb : ISB<0x3C, "j">;
@@ -1007,42 +1012,42 @@ def JA_b : IB<0x9D, "ja">;
 
 // disp15
 class IBRR_0<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins i32imm:$disp15), asmstr # " $disp15", []>;
+    : BRR<op1, op2, (outs), (ins disp15imm:$disp15), asmstr # " $disp15", []>;
 // A[a], disp15
 class IBRR_Aa<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, i32imm:$disp15), asmstr # " $s1, $disp15", []>;
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, disp15imm:$disp15), asmstr # " $s1, $disp15", []>;
 // A[b], disp15
 class IBRR_Ab<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins AddrRegs:$s2, i32imm:$disp15), asmstr # " $s2, $disp15", []>;
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s2, disp15imm:$disp15), asmstr # " $s2, $disp15", []>;
 // A[a], A[b], disp15
 class IBRR_AaAb<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, AddrRegs:$s2, i32imm:$disp15),
+    : BRR<op1, op2, (outs), (ins AddrRegs:$s1, AddrRegs:$s2, disp15imm:$disp15),
           asmstr # " $s1, $s2, $disp15", []>;
 // D[a], D[b], disp15
 class IBRR<bits<8> op1, bits<1> op2, string asmstr>
-    : BRR<op1, op2, (outs), (ins DataRegs:$s1, DataRegs:$s2, i32imm:$disp15),
+    : BRR<op1, op2, (outs), (ins DataRegs:$s1, DataRegs:$s2, disp15imm:$disp15),
           asmstr # " $s1, $s2, $disp15", []>;
 
 
 class IBRC<bits<8> op1, bits<1> op2, string asmstr>
-    : BRC<op1, op2, (outs), (ins jmptarget:$disp15, DataRegs:$s1, s4imm:$const4),
+    : BRC<op1, op2, (outs), (ins disp15imm:$disp15, DataRegs:$s1, s4imm:$const4),
       !strconcat(asmstr, " $s1, $const4, $disp15"), []>;
 
 class ISBC<bits<8> op1, string asmstr>
-    : SBC<op1, (outs), (ins s4imm:$const4, jmptarget:$disp4),
+    : SBC<op1, (outs), (ins s4imm:$const4, disp4imm:$disp4),
       !strconcat(asmstr, " %d15, $const4, $disp4"), []>;
 
 // D[15], D[b], disp4 (SBR)
 class ISBR_15b<bits<8> op1, string asmstr>
-    : SBR<op1, (outs), (ins DataRegs:$s2, jmptarget:$disp4),
+    : SBR<op1, (outs), (ins DataRegs:$s2, disp4imm:$disp4),
       !strconcat(asmstr, " %d15, $s2, $disp4"), []>;
 // D[b], disp4 (SBR)
 class ISBR_b<bits<8> op1, string asmstr>
-    : SBR<op1, (outs), (ins DataRegs:$s2, jmptarget:$disp4),
+    : SBR<op1, (outs), (ins DataRegs:$s2, disp4imm:$disp4),
       !strconcat(asmstr, " $s2, $disp4"), []>;
 // A[b], disp4 (SBR)
 class ISBR_Ab<bits<8> op1, string asmstr>
-    : SBR<op1, (outs), (ins AddrRegs:$s2, jmptarget:$disp4),
+    : SBR<op1, (outs), (ins AddrRegs:$s2, disp4imm:$disp4),
       !strconcat(asmstr, " $s2, $disp4"), []>;
 
 multiclass mIBRC_BRR<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2, string asmstr>{
@@ -1107,9 +1112,9 @@ multiclass mISB_SBR_T_BRN_SBRN<bits<8> sb, bits<8> sbr,
   def _sb  : ISB<sb, asmstr>;
   def _sbr : ISBR_b<sbr, asmstr>;
   defm _A  : mIBRR_SBR<a1, a2, a3, asmstr # ".a">;
-  def _T_brn : BRN<brn1, brn2, (outs), (ins DataRegs:$s1, i32imm:$n, i32imm:$disp15),
+  def _T_brn : BRN<brn1, brn2, (outs), (ins DataRegs:$s1, i32imm:$n, disp15imm:$disp15),
                    asmstr # ".t $s1, $n, $disp15", []>;
-  def _T_sbrn: SBRN<sbrn, (outs), (ins i32imm:$n, i32imm:$disp4),
+  def _T_sbrn: SBRN<sbrn, (outs), (ins i32imm:$n, disp4imm:$disp4),
                    asmstr # ".t %d15, $n, $disp4", []>;
 }
 
