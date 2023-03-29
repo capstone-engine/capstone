@@ -23,18 +23,30 @@ def gen(filename):
             mnemonic: str = caps[5]
             operands = caps[6]
 
+            def try_dedisp(x):
+                try:
+                    disp = int(x, 16)
+                    if disp > 0x10000000:
+                        return hex(disp - addr)
+                    return x
+                except ValueError:
+                    pass
+                return x
+
             hexstr = ','.join(f'0x{x}' for x in hexstr if x)
-            operands = re.sub(r'\s*<.+>\s*', ' ', operands)
+            operands = re.sub(r'\s*<.+>\s*', '', operands)
             operands = operands.replace(',', ', ')
             # print(hex(addr), hexstr, mnemonic, operands)
-            if any([mnemonic.startswith(pre) for pre in ['j', 'call', 'st', 'ld', 'loop']]):
+            if any([mnemonic.startswith(pre) for pre in ['st', 'ld']]):
+                print(f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}")
+            elif any([mnemonic.startswith(pre) for pre in ['j', 'call', 'loop']]):
                 # de relative addressing
-                try:
-                    # disp = int(operands, 16) - addr
-                    # operands = hex(disp)
-                    print(f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}")
-                except ValueError:
-                    continue
+                if ',' in operands:
+                    operands = map(try_dedisp, operands.split(', '))
+                    operands = ', '.join(operands)
+                else:
+                    operands = try_dedisp(operands)
+                print(f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}")
             else:
                 print(f"{hexstr.ljust(19)} = {mnemonic}\t{operands}")
 

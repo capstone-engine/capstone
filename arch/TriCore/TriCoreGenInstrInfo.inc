@@ -1674,7 +1674,7 @@ static const MCInstrDesc TriCoreInsts[] = {
   { 3, OperandInfo46 },
   { 2, OperandInfo53 },
   { 2, OperandInfo52 },
-  { 1, OperandInfo64 },
+  { 1, OperandInfo57 },
   { 1, OperandInfo2 },
   { 2, OperandInfo53 },
   { 2, OperandInfo52 },
