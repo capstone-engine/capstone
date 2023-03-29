@@ -3,11 +3,12 @@
 import sys
 import re
 
-
 # 80001c1a <IfxVadc_disableAccess>:
 # 80001c1a:	40 4f       	mov.aa %a15,%a4
 # 80001c1c:	02 48       	mov %d8,%d4
 # 80001c1e:	6d ff 9d ff 	call 80001b58 <IfxScuWdt_getSafetyWatchdogPassword>
+
+unique_set = set()
 
 
 def gen(filename):
@@ -37,8 +38,9 @@ def gen(filename):
             operands = re.sub(r'\s*<.+>\s*', '', operands)
             operands = operands.replace(',', ', ')
             # print(hex(addr), hexstr, mnemonic, operands)
-            if any([mnemonic.startswith(pre) for pre in ['st', 'ld']]):
-                print(f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}")
+            key = None
+            if any([mnemonic.startswith(pre) for pre in ['mtcr', 'mfcr']]):
+                key = f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}"
             elif any([mnemonic.startswith(pre) for pre in ['j', 'call', 'loop']]):
                 # de relative addressing
                 if ',' in operands:
@@ -46,9 +48,13 @@ def gen(filename):
                     operands = ', '.join(operands)
                 else:
                     operands = try_dedisp(operands)
-                print(f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}")
+                key = f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}"
             else:
-                print(f"{hexstr.ljust(19)} = {mnemonic}\t{operands}")
+                key = f"{hexstr.ljust(19)} = {mnemonic}\t{operands}"
+            if key in unique_set:
+                continue
+            unique_set.add(key)
+            print(key)
 
 
 def main():
