@@ -739,6 +739,9 @@ def call_target : Operand<i32> {
 class ISB<bits<8> op1, string asmstr>
     : SB<op1, (outs), (ins disp8imm:$disp8), asmstr # " $disp8", []>;
 
+class ISB_D15D<bits<8> op1, string asmstr>
+    : SB<op1, (outs), (ins disp8imm:$disp8), asmstr # " %d15, $disp8", []>;
+
 let isCall = 1,
     Defs = [A11],
     Uses = [A10] in {
@@ -1031,11 +1034,11 @@ class IBRR<bits<8> op1, bits<1> op2, string asmstr>
 
 
 class IBRC<bits<8> op1, bits<1> op2, string asmstr>
-    : BRC<op1, op2, (outs), (ins DataRegs:$s1, s4imm:$const4, disp15imm:$disp15),
+    : BRC<op1, op2, (outs), (ins DataRegs:$s1, u4imm:$const4, disp15imm:$disp15),
       !strconcat(asmstr, " $s1, $const4, $disp15"), []>;
 
 class ISBC<bits<8> op1, string asmstr>
-    : SBC<op1, (outs), (ins s4imm:$const4, disp4imm:$disp4),
+    : SBC<op1, (outs), (ins disp4imm:$disp4, s4imm:$const4),
       !strconcat(asmstr, " %d15, $const4, $disp4"), []>;
 
 // D[15], D[b], disp4 (SBR)
@@ -1078,7 +1081,8 @@ def JGEZ_sbr : ISBR_b<0xCE, "jgez">;
 def JGTZ_sbr : ISBR_b<0x4E, "jgtz">;
 
 def JI_rr : IRR_Aa<0x2D, 0x03, "ji">;
-def JI_sr : ISR_1<0xDC, 0x00, "ji">;
+def JI_sr : SR<0xDC, 0x00, (outs), (ins AddrRegs:$s1),
+         "ji $s1", []>;
 
 def JL_b  : IB<0x5D, "jl">;
 def JLA_b : IB<0xDD, "jla">;
@@ -1110,7 +1114,7 @@ multiclass mISB_SBR_T_BRN_SBRN<bits<8> sb, bits<8> sbr,
                                bits<8> a1, bits<1> a2, bits<8> a3,
                                bits<7> brn1, bits<1> brn2, bits<8> sbrn,
                                string asmstr>{
-  def _sb  : ISB<sb, asmstr>;
+  def _sb  : ISB_D15D<sb, asmstr>;
   def _sbr : ISBR_b<sbr, asmstr>;
   defm _A  : mIBRR_SBR<a1, a2, a3, asmstr # ".a">;
   def _T_brn : BRN<brn1, brn2, (outs), (ins DataRegs:$s1, i32imm:$n, disp15imm:$disp15),

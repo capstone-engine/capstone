@@ -131,48 +131,51 @@ static void printPairAddrRegsOperand(MCInst *MI, unsigned OpNum, SStream *O,
 	SStream_concat0(O, "]");
 }
 
-static inline void fill_tricore_imm(MCInst *MI, int64_t imm) {
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->tricore
-				.operands[MI->flat_insn->detail->tricore.op_count]
+static inline void fill_tricore_imm(MCInst *MI, int32_t imm) {
+	if (MI->csh->detail == CS_OPT_ON) {
+		cs_tricore *tricore = &MI->flat_insn->detail->tricore;
+		tricore->operands[tricore->op_count]
 				.type = TRICORE_OP_IMM;
-		MI->flat_insn->detail->tricore
-				.operands[MI->flat_insn->detail->tricore.op_count]
-				.imm = (int) imm;
-		MI->flat_insn->detail->tricore.op_count++;
+		tricore->operands[tricore->op_count]
+				.imm = imm;
+		tricore->op_count++;
 	}
 }
 
-static inline int64_t sign_ext(int64_t imm, unsigned n) {
-	int64_t sign = imm >> (n - 1) & 0x1;
-	for (unsigned i = n; i < 64; ++i) {
-		imm = (imm & ~(1LL << i)) | (sign << i);
+static inline int32_t sign_ext(int32_t imm, unsigned n) {
+	int32_t sign = imm >> (n - 1) & 0x1;
+	for (unsigned i = n; i < 32; ++i) {
+		imm = (imm & ~(1 << i)) | (sign << i);
 	}
 	return imm;
+}
+
+static inline void SS_print_sign_hex(SStream *O, int32_t imm) {
+	if (imm >= 0) {
+		if (imm > HEX_THRESHOLD)
+			SStream_concat(O, "0x%x", imm);
+		else
+			SStream_concat(O, "%u", imm);
+	} else {
+		if (imm < -HEX_THRESHOLD)
+			SStream_concat(O, "-0x%x", -imm);
+		else
+			SStream_concat(O, "-%u", -imm);
+	}
 }
 
 static void print_sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		int64_t imm = MCOperand_getImm(MO);
+		int32_t imm = (int32_t) MCOperand_getImm(MO);
 		imm = sign_ext(imm, n);
-		if (imm >= 0) {
-			if (imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%x", imm);
-			else
-				SStream_concat(O, "%u", imm);
-		} else {
-			if (imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%x", -imm);
-			else
-				SStream_concat(O, "-%u", -imm);
-		}
+		SS_print_sign_hex(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
 }
 
-static void off4_fixup(MCInst *MI, int64_t *off4) {
+static void off4_fixup(MCInst *MI, uint64_t *off4) {
 	switch (MCInst_getOpcode(MI)) {
 		case TriCore_LD_A_slro:
 		case TriCore_LD_A_sro:
@@ -198,9 +201,9 @@ static void off4_fixup(MCInst *MI, int64_t *off4) {
 static void print_zero_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		int64_t imm = MCOperand_getImm(MO);
-		for (unsigned i = n + 1; i < 64; ++i) {
-			imm &= ~(1LL << i);
+		uint64_t imm = MCOperand_getImm(MO);
+		for (unsigned i = n + 1; i < 32; ++i) {
+			imm &= ~(1 << i);
 		}
 		if (n == 4) {
 			off4_fixup(MI, &imm);
@@ -236,11 +239,11 @@ static void printOff18Imm(MCInst *MI, int OpNum, SStream *O) {
 static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		uint32_t imm = (uint32_t) MCOperand_getImm(MO);
+		int32_t imm = (int32_t) MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 			case TriCore_CALL_b:
 			case TriCore_FCALL_b:
-				imm = MI->address + sign_ext(imm * 2, 24);
+				imm = (int32_t) MI->address + sign_ext(imm * 2, 24);
 				break;
 			case TriCore_CALLA_b:
 			case TriCore_FCALLA_b:
@@ -251,14 +254,14 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O) {
 				break;
 			case TriCore_J_b:
 			case TriCore_JL_b:
-				imm = MI->address + sign_ext(imm, 24) * 2;
+				imm = (int32_t) MI->address + sign_ext(imm, 24) * 2;
 				break;
 			default:
 				// handle other cases, if any
 				break;
 		}
 
-		SStream_concat(O, "0x%x", imm);
+		SS_print_sign_hex(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -267,7 +270,7 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O) {
 static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		uint32_t imm = (uint32_t) MCOperand_getImm(MO);
+		int32_t imm = (int32_t) MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 			case TriCore_JEQ_brc:
 			case TriCore_JEQ_brr:
@@ -291,18 +294,18 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O) {
 			case TriCore_JNZ_T_brn:
 			case TriCore_JZ_A_brr:
 			case TriCore_JZ_T_brn:
-				imm = MI->address + sign_ext(imm, 15) * 2;
+				imm = (int32_t) MI->address + sign_ext(imm, 15) * 2;
 				break;
 			case TriCore_LOOP_brr:
 			case TriCore_LOOPU_brr:
-				imm = MI->address + sign_ext(imm * 2, 15);
+				imm = (int32_t) MI->address + sign_ext(imm * 2, 15);
 				break;
 			default:
 				// handle other cases, if any
 				break;
 		}
 
-		SStream_concat(O, "0x%x", imm);
+		SS_print_sign_hex(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -311,20 +314,22 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O) {
 static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		uint32_t imm = (uint32_t) MCOperand_getImm(MO);
+		int32_t imm = (int32_t) MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 			case TriCore_CALL_sb:
-				imm = MI->address + sign_ext(2 * imm, 8);
+				imm = (int32_t) MI->address + sign_ext(2 * imm, 8);
+				break;
 			case TriCore_J_sb:
 			case TriCore_JNZ_sb:
 			case TriCore_JZ_sb:
-				imm = MI->address + sign_ext(imm, 8) * 2;
+				imm = (int32_t) MI->address + sign_ext(imm, 8) * 2;
+				break;
 			default:
 				// handle other cases, if any
 				break;
 		}
 
-		SStream_concat(O, "0x%x", imm);
+		SS_print_sign_hex(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -333,7 +338,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O) {
 static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		uint32_t imm = (uint32_t) MCOperand_getImm(MO);
+		int32_t imm = (int32_t) MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 			case TriCore_JEQ_sbc1:
 			case TriCore_JEQ_sbr1:
@@ -349,24 +354,24 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O) {
 			case TriCore_JZ_sbr:
 			case TriCore_JZ_A_sbr:
 			case TriCore_JZ_T_sbrn:
-				imm = MI->address + imm * 2;
+				imm = (int32_t) MI->address + imm * 2;
 				break;
 			case TriCore_JEQ_sbc2:
 			case TriCore_JEQ_sbr2:
 			case TriCore_JNE_sbc2:
 			case TriCore_JNE_sbr2:
-				imm = MI->address + (imm + 16) * 2;
+				imm = (int32_t) MI->address + (imm + 16) * 2;
 				break;
 			case TriCore_LOOP_sbr:
 				// {27b’111111111111111111111111111, disp4, 0};
-				imm = MI->address + ((0b111111111111111111111111111 << 5) & (imm << 1));
+				imm = (int32_t) MI->address + ((0b111111111111111111111111111 << 5) | (imm << 1));
 				break;
 			default:
 				// handle other cases, if any
 				break;
 		}
 
-		SStream_concat(O, "0x%x", imm);
+		SS_print_sign_hex(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);

@@ -321,7 +321,7 @@ static const uint8_t DecoderTable16[] = {
 /* 1336 */    MCD_OPC_FilterValue, 3, 4, 0, 0, // Skip to: 1345
 /* 1341 */    MCD_OPC_Decode, 231, 3, 6, // Opcode: JNE_sbr2
 /* 1345 */    MCD_OPC_Fail,
-              0
+  0
 };
 
 static const uint8_t DecoderTable32[] = {
@@ -2662,11 +2662,11 @@ static const uint8_t DecoderTable32[] = {
 /* 11256 */   MCD_OPC_FilterValue, 1, 4, 0, 0, // Skip to: 11265
 /* 11261 */   MCD_OPC_Decode, 205, 3, 32, // Opcode: JGE_U_brc
 /* 11265 */   MCD_OPC_Fail,
-              0
+  0
 };
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
-	/* llvm_unreachable("Invalid index!"); */
+  /* llvm_unreachable("Invalid index!"); */
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
@@ -2704,19 +2704,19 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeSCInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
   case 9: \
-    if (DecodeSBCInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (DecodeSBInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
   case 10: \
-    if (DecodeSBRNInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (DecodeSBCInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
   case 11: \
-    if (DecodeSSRInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (DecodeSBRNInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
   case 12: \
-    if (DecodeSSROInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (DecodeSSRInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
   case 13: \
-    if (DecodeSBInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    if (DecodeSSROInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
   case 14: \
     if (DecodeSYSInstruction(MI, insn, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
