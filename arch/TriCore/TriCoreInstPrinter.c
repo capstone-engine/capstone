@@ -313,8 +313,8 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O) {
 	if (MCOperand_isImm(MO)) {
 		uint32_t imm = (uint32_t) MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
-//			case TriCore_CALL_sb:
-//				imm = MI->address + sign_ext(2 * imm, 8);
+			case TriCore_CALL_sb:
+				imm = MI->address + sign_ext(2 * imm, 8);
 			case TriCore_J_sb:
 			case TriCore_JNZ_sb:
 			case TriCore_JZ_sb:

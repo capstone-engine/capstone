@@ -736,10 +736,14 @@ def call_target : Operand<i32> {
   let EncoderMethod = "encodeCallTarget";
 }
 
+class ISB<bits<8> op1, string asmstr>
+    : SB<op1, (outs), (ins disp8imm:$disp8), asmstr # " $disp8", []>;
+
 let isCall = 1,
     Defs = [A11],
     Uses = [A10] in {
   def CALL_b    : IB<0x6D, "call">;
+  def CALL_sb   : ISB<0x5C, "call">;
   def CALLA_b   : IB<0xED, "calla">;
   def CALLI_rr  : IRR_Aa<0x2D, 0x00, "calli">;
 }
@@ -1003,9 +1007,6 @@ def ISYNC_sys : ISYS_0<0x0D, 0x13, "isync">;
 defm IXMAX : mI_U_RRR_EEdb<0x6B, 0x0A, 0x6B, 0x0B, "ixmax">;
 defm IXMIN : mI_U_RRR_EEdb<0x6B, 0x08, 0x6B, 0x09, "ixmin">;
 
-class ISB<bits<8> op1, string asmstr>
-    : SB<op1, (outs), (ins disp8imm:$disp8), asmstr # " $disp8", []>;
-
 def J_b  : IB<0x1D, "j">;
 def J_sb : ISB<0x3C, "j">;
 def JA_b : IB<0x9D, "ja">;
@@ -1030,7 +1031,7 @@ class IBRR<bits<8> op1, bits<1> op2, string asmstr>
 
 
 class IBRC<bits<8> op1, bits<1> op2, string asmstr>
-    : BRC<op1, op2, (outs), (ins disp15imm:$disp15, DataRegs:$s1, s4imm:$const4),
+    : BRC<op1, op2, (outs), (ins DataRegs:$s1, s4imm:$const4, disp15imm:$disp15),
       !strconcat(asmstr, " $s1, $const4, $disp15"), []>;
 
 class ISBC<bits<8> op1, string asmstr>
