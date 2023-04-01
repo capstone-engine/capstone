@@ -118,24 +118,24 @@ def FCX  : TriCorePSReg<3, "fcx">, DwarfRegNum<[43]>;
 //@Register Classes
 //===----------------------------------------------------------------------===//
 
-def DataRegs : RegisterClass<"TriCore", [i32], 32, (add
+def RD : RegisterClass<"TriCore", [i32], 32, (add
     D0,  D1,  D2,  D3,  D4,
     D5,  D6,  D7,  D8,  D9,
     D10, D11, D12, D13, D14,
     D15)>;
 
-def AddrRegs : RegisterClass<"TriCore", [i32], 32, (add
+def RA : RegisterClass<"TriCore", [i32], 32, (add
     A0,  A1,  A2,  A3,  A4,
     A5,  A6,  A7,  A8,  A9,
     A10, A11, A12, A13, A14,
     A15)>;
 
-def ExtRegs : RegisterClass<"TriCore", [i64], 64, (add
+def RE : RegisterClass<"TriCore", [i64], 64, (add
     E0, E2, E4,
     E6, E8, E10,
     E12, E14)>;
 
-def AddrExtRegs : RegisterClass<"TriCore", [i64], 64, (add
+def RP : RegisterClass<"TriCore", [i64], 64, (add
     P0, P2, P4,
     P6, P8, P10,
     P12, P14)>;
