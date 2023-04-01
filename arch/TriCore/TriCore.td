@@ -21,11 +21,41 @@ include "llvm/Target/Target.td"
 // Descriptions
 //===----------------------------------------------------------------------===//
 
-include "TriCoreRegisterInfo.td"
-include "TriCoreInstrInfo.td"
-include "TriCoreCallingConv.td"
+// Specify whether target support specific TRICORE ISA variants.
 
-def TriCoreInstrInfo : InstrInfo;
+def HasGenericOps   : SubtargetFeature<"generic", "HasGenericOps", "true",
+                                   "Support TriCore generic instructions",
+                                   []>;
+def HasV110Ops   : SubtargetFeature<"v1.1", "HasV110Ops", "true",
+                                   "Support TriCore v1.1 instructions",
+                                   [HasGenericOps]>;
+def HasV120Ops   : SubtargetFeature<"v1.2", "HasV120Ops", "true",
+                                   "Support TriCore v1.2 instructions",
+                                   [HasGenericOps]>;
+def HasV130Ops   : SubtargetFeature<"v1.3", "HasV130Ops", "true",
+                                   "Support TriCore v1.3 instructions",
+                                   [HasGenericOps]>;
+def HasV131Ops   : SubtargetFeature<"v1.3.1", "HasV131Ops", "true",
+                                   "Support TriCore v1.3.1 instructions",
+                                   [HasGenericOps]>;
+def HasV160Ops   : SubtargetFeature<"v1.6", "HasV160Ops", "true",
+                                   "Support TriCore v1.6 instructions",
+                                   [HasGenericOps]>;
+def HasV161Ops   : SubtargetFeature<"v1.6.1", "HasV161Ops", "true",
+                                   "Support TriCore v1.6.1 instructions",
+                                   [HasGenericOps]>;
+def HasV162Ops   : SubtargetFeature<"v1.6.2", "HasV162Ops", "true",
+                                   "Support TriCore v1.6.2 instructions",
+                                   [HasGenericOps]>;
+
+def HasGeneric  : Predicate<"HasGenericOps()">;
+def HasV110     : Predicate<"HasV110Ops()">;
+def HasV120     : Predicate<"HasV120Ops()">;
+def HasV130     : Predicate<"HasV130Ops()">;
+def HasV131     : Predicate<"HasV131Ops()">;
+def HasV160     : Predicate<"HasV160Ops()">;
+def HasV161     : Predicate<"HasV161Ops()">;
+def HasV162     : Predicate<"HasV162Ops()">;
 
 class Architecture<string fname, string aname, list<SubtargetFeature> features = []>
   : SubtargetFeature<fname, "TriCoreArch", aname,
@@ -35,26 +65,41 @@ class ProcNoItin<string Name, list<SubtargetFeature> Features>
   : Processor<Name, NoItineraries, Features>;
 
 
-def TRICORE_RIDER_A : Architecture<"tricore-v1_1",    "TRICOREv110">;
-def TRICORE_V1_2    : Architecture<"tricore-V1_2",    "TRICOREv120">;
-def TRICORE_V1_3    : Architecture<"tricore-V1_3",    "TRICOREv130">;
-def TRICORE_V1_3_1  : Architecture<"tricore-V1_3_1",  "TRICOREv131">;
-def TRICORE_V1_6    : Architecture<"tricore-V1_6",    "TRICOREv160">;
-def TRICORE_V1_6_1  : Architecture<"tricore-V1_6_1",  "TRICOREv161">;
-def TRICORE_V1_6_2  : Architecture<"tricore-V1_6_2",  "TRICOREv162">;
-def TRICORE_PCP     : Architecture<"tricore-PCP",     "TRICOREvpcp">;
-def TRICORE_PCP2    : Architecture<"tricore-PCP2",    "TRICOREvpcp2">;
+def TRICORE_V1_1    : Architecture<"tricore-v1.1",    "TRICOREv110", [HasV110Ops]>;
+def TRICORE_V1_2    : Architecture<"tricore-V1.2",    "TRICOREv120", [HasV120Ops]>;
+def TRICORE_V1_3    : Architecture<"tricore-V1.3",    "TRICOREv130", [HasV130Ops]>;
+def TRICORE_V1_3_1  : Architecture<"tricore-V1.3.1",  "TRICOREv131", [HasV131Ops]>;
+def TRICORE_V1_6    : Architecture<"tricore-V1.6",    "TRICOREv160", [HasV160Ops]>;
+def TRICORE_V1_6_1  : Architecture<"tricore-V1.6.1",  "TRICOREv161", [HasV161Ops]>;
+def TRICORE_V1_6_2  : Architecture<"tricore-V1.6.2",  "TRICOREv162", [HasV162Ops]>;
+def TRICORE_PCP     : Architecture<"tricore-PCP",     "TRICOREpcp">;
+def TRICORE_PCP2    : Architecture<"tricore-PCP2",    "TRICOREpcp2">;
 
-def : ProcNoItin<"tricore-generic", []>;
+def TRICORE_RIDER_A : Architecture<"tricore-rider-a", "TRICOREv110", [TRICORE_V1_1]>;
 
+
+include "TriCoreRegisterInfo.td"
+include "TriCoreInstrInfo.td"
+include "TriCoreCallingConv.td"
 
 //===----------------------------------------------------------------------===//
 // TriCore processors supported.
 //===----------------------------------------------------------------------===//
 
+def : ProcNoItin<"tc1796",  [TRICORE_V1_3]>;
+def : ProcNoItin<"tc1797",  [TRICORE_V1_3_1]>;
+def : ProcNoItin<"tc27x",   [TRICORE_V1_6_1]>;
+def : ProcNoItin<"tc161",   [TRICORE_V1_6_1]>;
+def : ProcNoItin<"tc162",   [TRICORE_V1_6_2]>;
+def : ProcNoItin<"tc16",    [TRICORE_V1_6]>;
+def : ProcNoItin<"tc131",   [TRICORE_V1_3_1]>;
+def : ProcNoItin<"tc13",    [TRICORE_V1_3]>;
+
 def TriCoreAsmWriter : AsmWriter {
   int PassSubtarget = 1;
 }
+
+def TriCoreInstrInfo : InstrInfo;
 
 //===----------------------------------------------------------------------===//
 // Declare the target which we are implementing
