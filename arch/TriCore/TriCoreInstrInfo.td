@@ -277,9 +277,13 @@ multiclass mISRC_a15a<bits<8> op1, bits<8> op2, bits<8> op3,
   def _src_15a : ISRC_15a<op3, asmstr>;
 }
 
-class ISRRS<bits<6> op1, string asmstr>
+class ISRRS_AcAbD15N<bits<6> op1, string asmstr>
     : SRRS<op1, (outs AddrRegs:$d), (ins AddrRegs:$s2, u2imm:$n),
       asmstr # " $d, $s2, %d15, $n", []>;
+
+class ISRRS_AcDbN<bits<6> op1, string asmstr>
+    : SRRS<op1, (outs AddrRegs:$d), (ins DataRegs:$s2, u2imm:$n),
+      asmstr # " $d, $s2, $n", []>;
 
 /// 32-Bit Opcode Formats
 
@@ -355,6 +359,10 @@ class IRR_DcAaAb<bits<8> op1, bits<8> op2, string asmstr>
 class IRR_AcAbDaN<bits<8> op1, bits<8> op2, string asmstr>
     : RR<op1, op2, (outs AddrRegs:$d), (ins DataRegs:$s1, AddrRegs:$s2, i32imm:$n),
          asmstr # " $d, $s2, $s1, $n", []>;
+
+class IRR_AcAaDbN<bits<8> op1, bits<8> op2, string asmstr>
+    : RR<op1, op2, (outs AddrRegs:$d), (ins DataRegs:$s1, AddrRegs:$s2, i32imm:$n),
+         asmstr # " $d, $s1, $s2, $n", []>;
 
 multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2,
                         string asmstr> {
@@ -461,6 +469,10 @@ let Defs = [PSW] in {
    def ABSDIFS_rr : RR<0x0B, 0x0F, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdifs $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+   def ABSDIFS_B_rr_v110 : RR<0x0B, 0x4F, (outs DataRegs:$d),
+                        (ins DataRegs:$s1, DataRegs:$s2), "absdifs.b $d, $s1, $s2",
+                        [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>
+                    , Requires<[HasV110]>;
    def ABSDIFS_H_rr : RR<0x0B, 0x6F, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "absdifs.h $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
@@ -468,6 +480,10 @@ let Defs = [PSW] in {
    def ABSS_rr : RR<0x0B, 0x1D, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "abss $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
+   def ABSS_B_rr_v110 : RR<0x0B, 0x5D, (outs DataRegs:$d),
+                        (ins DataRegs:$s1, DataRegs:$s2), "abss.b $d, $s1, $s2",
+                        [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>
+                    , Requires<[HasV110]>;
    def ABSS_H_rr : RR<0x0B, 0x7D, (outs DataRegs:$d),
                   (ins DataRegs:$s1, DataRegs:$s2), "abss.h $d, $s1, $s2",
                   [(set DataRegs:$d, (TriCoreAbsDif DataRegs:$s1, DataRegs:$s2))]>;
@@ -517,9 +533,19 @@ defm ADDS : mIRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds">,
             mISRR_s<0x22, "adds">,
             mIH_HU_U<0x0B, 0x62, 0x0B, 0x63, 0x0B, 0x03, "adds">;
 def ADDS_U_rc : IRC_2<0x8B, 0x03, "adds.u">;
-def ADDSC_A_rr : IRR_AcAbDaN<0x01, 0x60, "addsc.a">;
-def ADDSC_A_srrs : ISRRS<0x10, "addsc.a">;
-def ADDSC_AT_rr : IRR_DcDaDb<0x01, 0x62, "addsc.at">;
+def ADDSC_A_srrs_v120u : ISRRS_AcAbD15N<0x10, "addsc.a">, Requires<[HasV120_UP]>;
+def ADDSC_A_rr_v120u : IRR_AcAbDaN<0x01, 0x60, "addsc.a">, Requires<[HasV120_UP]>;
+def ADDSC_AT_rr_v120u : IRR_2<0x01, 0x62, "addsc.at %d, %s2, %s1", AddrRegs, AddrRegs, DataRegs>
+                      , Requires<[HasV120_UP]>;
+
+let DecoderNamespace = "V110" in {
+  def ADDS_B_rr_v110 : IRR_DcDaDb<0x0B, 0x42, "adds.b">, Requires<[HasV110]>;
+  def ADDS_BU_rr_v110 : IRR_DcDaDb<0x0B, 0x43, "adds.bu">, Requires<[HasV110]>;
+  def ADDSC_A_srrs_v110 : ISRRS_AcDbN<0x10, "addsc.a">, Requires<[HasV110]>;
+  def ADDSC_A_rr_v110 : IRR_AcAaDbN<0x01, 0x60, "addsc.a">, Requires<[HasV110]>;
+  def ADDSC_AT_rr_v110 : IRR_2<0x01, 0x62, "addsc.at %d, %s1, %s2", AddrRegs, AddrRegs, DataRegs>
+                       , Requires<[HasV110]>;
+}
 
 defm ADDX : mIRR_RC<0x0B, 0x04, 0x8B, 0x04, "addx">;
 
@@ -748,7 +774,7 @@ class IBO_cPbOEa<bits<8> op1, bits<6> op2, string asmstr>
 // A[b], off10, E[a] (BO)(Post-increment Addressing Mode)
 class IBO_posAbOEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins ExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
-      asmstr # " [$s2+]$off10, $s1", []>;
+      asmstr # " [${s2}+]$off10, $s1", []>;
 // A[b], off10, E[a] (BO)(Pre-increment Addressing Mode)
 class IBO_preAbOEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins ExtRegs:$s1, AddrRegs:$s2, s10imm:$off10),
@@ -1117,7 +1143,7 @@ class ISLR<bits<8> op1, string asmstr, RegisterClass dc>
       asmstr # " $d, [$s2]", []>;
 class ISLR_pos<bits<8> op1, string asmstr, RegisterClass dc>
     : SLR<op1, (outs dc:$d), (ins AddrRegs:$s2),
-      asmstr # " $d, [$s2+]", []>;
+      asmstr # " $d, [${s2}+]", []>;
 
 class ISLRO<bits<8> op1, string asmstr, RegisterClass dc>
     : SLRO<op1, (outs dc:$d), (ins u4imm:$off4),
@@ -1666,7 +1692,7 @@ multiclass mISRO_SSR_SSRO_st<bits<8> sro, bits<8> ssr, bits<8> ssrpos, bits<8> s
   def _ssr     : SSR<ssr, (outs AddrRegs:$d), (ins rc:$s1),
                      asmstr # " [$d], $s1", []>;
   def _ssr_pos : SSR<ssrpos, (outs AddrRegs:$d), (ins rc:$s1),
-                     asmstr # " [$d+], $s1", []>;
+                     asmstr # " [${d}+], $s1", []>;
   def _ssro    : SSRO<ssro, (outs), (ins rc:$s1, u4imm:$off4),
                       asmstr # " [%a15]$off4, $s1", []>;
 }
