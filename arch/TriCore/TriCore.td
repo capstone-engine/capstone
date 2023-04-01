@@ -23,32 +23,28 @@ include "llvm/Target/Target.td"
 
 // Specify whether target support specific TRICORE ISA variants.
 
-def HasGenericOps   : SubtargetFeature<"generic", "HasGenericOps", "true",
-                                   "Support TriCore generic instructions",
-                                   []>;
 def HasV110Ops   : SubtargetFeature<"v1.1", "HasV110Ops", "true",
                                    "Support TriCore v1.1 instructions",
-                                   [HasGenericOps]>;
+                                   []>;
 def HasV120Ops   : SubtargetFeature<"v1.2", "HasV120Ops", "true",
                                    "Support TriCore v1.2 instructions",
-                                   [HasGenericOps]>;
+                                   []>;
 def HasV130Ops   : SubtargetFeature<"v1.3", "HasV130Ops", "true",
                                    "Support TriCore v1.3 instructions",
-                                   [HasGenericOps]>;
+                                   []>;
 def HasV131Ops   : SubtargetFeature<"v1.3.1", "HasV131Ops", "true",
                                    "Support TriCore v1.3.1 instructions",
-                                   [HasGenericOps]>;
+                                   []>;
 def HasV160Ops   : SubtargetFeature<"v1.6", "HasV160Ops", "true",
                                    "Support TriCore v1.6 instructions",
-                                   [HasGenericOps]>;
+                                   []>;
 def HasV161Ops   : SubtargetFeature<"v1.6.1", "HasV161Ops", "true",
                                    "Support TriCore v1.6.1 instructions",
-                                   [HasGenericOps]>;
+                                   []>;
 def HasV162Ops   : SubtargetFeature<"v1.6.2", "HasV162Ops", "true",
                                    "Support TriCore v1.6.2 instructions",
-                                   [HasGenericOps]>;
+                                   []>;
 
-def HasGeneric  : Predicate<"HasGenericOps()">;
 def HasV110     : Predicate<"HasV110Ops()">;
 def HasV120     : Predicate<"HasV120Ops()">;
 def HasV130     : Predicate<"HasV130Ops()">;
@@ -56,6 +52,20 @@ def HasV131     : Predicate<"HasV131Ops()">;
 def HasV160     : Predicate<"HasV160Ops()">;
 def HasV161     : Predicate<"HasV161Ops()">;
 def HasV162     : Predicate<"HasV162Ops()">;
+
+def HasV120_UP  : Predicate<"HasV120Ops() || HasV130Ops() || HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">;
+def HasV130_UP  : Predicate<"HasV130Ops() || HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">;
+def HasV131_UP  : Predicate<"HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">;
+def HasV160_UP  : Predicate<"HasV160Ops() || HasV161Ops() || HasV162Ops()">;
+def HasV161_UP  : Predicate<"HasV161Ops() || HasV162Ops()">;
+def HasV162_UP  : Predicate<"HasV162Ops()">;
+
+def HasV120_DN  : Predicate<"HasV120Ops() || HasV110Ops()">;
+def HasV130_DN  : Predicate<"HasV130Ops() || HasV120Ops() || HasV110Ops()">;
+def HasV131_DN  : Predicate<"HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
+def HasV160_DN  : Predicate<"HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
+def HasV161_DN  : Predicate<"HasV161Ops() || HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
+def HasV162_DN  : Predicate<"HasV162Ops() || HasV161Ops() || HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
 
 class Architecture<string fname, string aname, list<SubtargetFeature> features = []>
   : SubtargetFeature<fname, "TriCoreArch", aname,

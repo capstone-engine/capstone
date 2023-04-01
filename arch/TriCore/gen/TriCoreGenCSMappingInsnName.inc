@@ -6,11 +6,13 @@
 /* Code generator: https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
 
   "xor.t", // TriCore_INS_XOR.T
+  "absdifs.b", // TriCore_INS_ABSDIFS.B
   "absdifs.h", // TriCore_INS_ABSDIFS.H
   "absdifs", // TriCore_INS_ABSDIFS
   "absdif.b", // TriCore_INS_ABSDIF.B
   "absdif.h", // TriCore_INS_ABSDIF.H
   "absdif", // TriCore_INS_ABSDIF
+  "abss.b", // TriCore_INS_ABSS.B
   "abss.h", // TriCore_INS_ABSS.H
   "abss", // TriCore_INS_ABSS
   "abs.b", // TriCore_INS_ABS.B
@@ -22,6 +24,8 @@
   "addi", // TriCore_INS_ADDI
   "addsc.at", // TriCore_INS_ADDSC.AT
   "addsc.a", // TriCore_INS_ADDSC.A
+  "adds.bu", // TriCore_INS_ADDS.BU
+  "adds.b", // TriCore_INS_ADDS.B
   "adds.h", // TriCore_INS_ADDS.H
   "adds.hu", // TriCore_INS_ADDS.HU
   "adds.u", // TriCore_INS_ADDS.U
@@ -238,6 +242,7 @@
   "msub.h", // TriCore_INS_MSUB.H
   "msub.q", // TriCore_INS_MSUB.Q
   "msub", // TriCore_INS_MSUB
+  "mtcr", // TriCore_INS_MTCR
   "mulm.h", // TriCore_INS_MULM.H
   "mulr.h", // TriCore_INS_MULR.H
   "mulr.q", // TriCore_INS_MULR.Q
