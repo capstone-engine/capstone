@@ -1273,37 +1273,37 @@ multiclass mISLR_SLRO_SRO<bits<8> slr, bits<8> slrp, bits<8> slro, bits<8> sro,
 
 defm LD_A: mIABS_BO<0x85, 0x02, 0x09, 0x29, 0x26, 0x06, 0x16, "ld.a", RA>;
 defm LD_A: mISLR_SLRO_SRO<0xB8, 0x64, 0x0C, 0x28, "ld.a", RA, "_v110">, NsRequires<[HasV110]>;
-defm LD_A: mISLR_SLRO_SRO<0xD4, 0xC4, 0xC8, 0xCC, "ld.a", RA>, Requires<[HasV120]>;
+defm LD_A: mISLR_SLRO_SRO<0xD4, 0xC4, 0xC8, 0xCC, "ld.a", RA>, Requires<[HasV120_UP]>;
 def LD_A_bol : IBOL_RAaO<0x99, "ld.a", RA>;
-def LD_A_sc  : ISC_A15A10C<0xD8, "ld.a">, Requires<[HasV120]>;
+def LD_A_sc  : ISC_A15A10C<0xD8, "ld.a">, Requires<[HasV120_UP]>;
 
 defm LD_B: mISLR_SLRO_SRO<0x98, 0x44, 0x34, 0x08, "ld.b", RD, "_v110">, NsRequires<[HasV110]>;
 defm LD_B: mIABS_BO<0x05, 0x00, 0x09, 0x29, 0x20, 0x00, 0x10,"ld.b", RD>;
-def LD_B_bol : IBOL_RAaO<0x79, "ld.b", RD>, Requires<[HasV160]>;
+def LD_B_bol : IBOL_RAaO<0x79, "ld.b", RD>, Requires<[HasV160_UP]>;
 
 defm LD_BU: mIABS_BO<0x05, 0x01, 0x09, 0x29, 0x21, 0x01, 0x11, "ld.bu", RD>;
 defm LD_BU: mISLR_SLRO_SRO<0x58, 0xC4, 0xB4, 0x88, "ld.bu", RD, "_v110">, NsRequires<[HasV110]>;
-defm LD_BU: mISLR_SLRO_SRO<0x14, 0x04, 0x08, 0x0C, "ld.bu", RD>, Requires<[HasV120]>;
-def LD_BU_bol : IBOL_RAaO<0x39, "ld.bu", RD>, Requires<[HasV160]>;
+defm LD_BU: mISLR_SLRO_SRO<0x14, 0x04, 0x08, 0x0C, "ld.bu", RD>, Requires<[HasV120_UP]>;
+def LD_BU_bol : IBOL_RAaO<0x39, "ld.bu", RD>, Requires<[HasV160_UP]>;
 
 defm LD_D  : mIABS_BO<0x85, 0x01, 0x09, 0x29, 0x25, 0x05, 0x15, "ld.d", RE>;
 defm LD_DA : mIABS_BO<0x85, 0x03, 0x09, 0x29, 0x27, 0x07, 0x17, "ld.da", RP>;
 
 defm LD_H  : mIABS_BO<0x05, 0x02, 0x09, 0x29, 0x22, 0x02, 0x12, "ld.h", RD>;
 defm LD_H: mISLR_SLRO_SRO<0xD8, 0x24, 0x74, 0x48, "ld.h", RD, "_v110">, NsRequires<[HasV110]>;
-defm LD_H: mISLR_SLRO_SRO<0x94, 0x84, 0x88, 0x8C, "ld.h", RD>, Requires<[HasV120]>;
-def LD_H_bol : IBOL_RAaO<0xC9, "ld.h", RD>, Requires<[HasV160]>;
+defm LD_H: mISLR_SLRO_SRO<0x94, 0x84, 0x88, 0x8C, "ld.h", RD>, Requires<[HasV120_UP]>;
+def LD_H_bol : IBOL_RAaO<0xC9, "ld.h", RD>, Requires<[HasV160_UP]>;
 
 defm LD_HU  : mIABS_BO<0x05, 0x03, 0x09, 0x29, 0x23, 0x03, 0x13, "ld.hu", RD>;
-def LD_HU_bol : IBOL_RAaO<0xB9, "ld.hu", RD>, Requires<[HasV160]>;
+def LD_HU_bol : IBOL_RAaO<0xB9, "ld.hu", RD>, Requires<[HasV160_UP]>;
 
 defm LD_Q  : mIABS_BO<0x45, 0x00, 0x09, 0x29, 0x28, 0x08, 0x18, "ld.q", RD>;
 
 defm LD_W: mIABS_BO<0x85, 0x00, 0x09, 0x29, 0x24, 0x04, 0x14, "ld.w", RD>;
 defm LD_W: mISLR_SLRO_SRO<0x38, 0xA4, 0xF4, 0xC8, "ld.w", RD, "_v110">, NsRequires<[HasV110]>;
-defm LD_W: mISLR_SLRO_SRO<0x54, 0x44, 0x48, 0x4C, "ld.w", RD>, Requires<[HasV120]>;
+defm LD_W: mISLR_SLRO_SRO<0x54, 0x44, 0x48, 0x4C, "ld.w", RD>, Requires<[HasV120_UP]>;
 def LD_W_bol : IBOL_RAaO<0x19, "ld.w", RD>;
-def LD_W_sc  : ISC_A15A10C<0x58, "ld.w">, Requires<[HasV120]>;
+def LD_W_sc  : ISC_A15A10C<0x58, "ld.w">, Requires<[HasV120_UP]>;
 
 
 def LDLCX_abs    : IABS_off18<0x15, 0x02, "ldlcx">;
