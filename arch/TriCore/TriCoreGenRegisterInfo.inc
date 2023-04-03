@@ -75,12 +75,12 @@ enum {
 // Register classes
 
 enum {
-  TriCore_AddrRegsRegClassID = 0,
-  TriCore_DataRegsRegClassID = 1,
+  TriCore_RARegClassID = 0,
+  TriCore_RDRegClassID = 1,
   TriCore_PSRegsRegClassID = 2,
-  TriCore_AddrExtRegsRegClassID = 3,
-  TriCore_ExtRegsRegClassID = 4,
-  TriCore_PairAddrRegsRegClassID = 5,
+  TriCore_PairAddrRegsRegClassID = 3,
+  TriCore_RERegClassID = 4,
+  TriCore_RPRegClassID = 5,
 
 };
 
@@ -213,23 +213,23 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
   { 126, 30, 2, 0, 2, 2 },
 };
 
-  // AddrRegs Register Class...
-  static const MCPhysReg AddrRegs[] = {
+  // RA Register Class...
+  static const MCPhysReg RA[] = {
     TriCore_A0, TriCore_A1, TriCore_A2, TriCore_A3, TriCore_A4, TriCore_A5, TriCore_A6, TriCore_A7, TriCore_A8, TriCore_A9, TriCore_A10, TriCore_A11, TriCore_A12, TriCore_A13, TriCore_A14, TriCore_A15, 
   };
 
-  // AddrRegs Bit set.
-  static const uint8_t AddrRegsBits[] = {
+  // RA Bit set.
+  static const uint8_t RABits[] = {
     0xe0, 0xff, 0x1f, 
   };
 
-  // DataRegs Register Class...
-  static const MCPhysReg DataRegs[] = {
+  // RD Register Class...
+  static const MCPhysReg RD[] = {
     TriCore_D0, TriCore_D1, TriCore_D2, TriCore_D3, TriCore_D4, TriCore_D5, TriCore_D6, TriCore_D7, TriCore_D8, TriCore_D9, TriCore_D10, TriCore_D11, TriCore_D12, TriCore_D13, TriCore_D14, TriCore_D15, 
   };
 
-  // DataRegs Bit set.
-  static const uint8_t DataRegsBits[] = {
+  // RD Bit set.
+  static const uint8_t RDBits[] = {
     0x00, 0x00, 0xe0, 0xff, 0x1f, 
   };
 
@@ -243,26 +243,6 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
     0x1e, 
   };
 
-  // AddrExtRegs Register Class...
-  static const MCPhysReg AddrExtRegs[] = {
-    TriCore_P0, TriCore_P2, TriCore_P4, TriCore_P6, TriCore_P8, TriCore_P10, TriCore_P12, TriCore_P14, 
-  };
-
-  // AddrExtRegs Bit set.
-  static const uint8_t AddrExtRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
-  };
-
-  // ExtRegs Register Class...
-  static const MCPhysReg ExtRegs[] = {
-    TriCore_E0, TriCore_E2, TriCore_E4, TriCore_E6, TriCore_E8, TriCore_E10, TriCore_E12, TriCore_E14, 
-  };
-
-  // ExtRegs Bit set.
-  static const uint8_t ExtRegsBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
-  };
-
   // PairAddrRegs Register Class...
   static const MCPhysReg PairAddrRegs[] = {
     TriCore_A0_A1, TriCore_A2_A3, TriCore_A4_A5, TriCore_A6_A7, TriCore_A8_A9, TriCore_A10_A11, TriCore_A12_A13, TriCore_A14_A15, 
@@ -273,13 +253,33 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
   };
 
+  // RE Register Class...
+  static const MCPhysReg RE[] = {
+    TriCore_E0, TriCore_E2, TriCore_E4, TriCore_E6, TriCore_E8, TriCore_E10, TriCore_E12, TriCore_E14, 
+  };
+
+  // RE Bit set.
+  static const uint8_t REBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
+  };
+
+  // RP Register Class...
+  static const MCPhysReg RP[] = {
+    TriCore_P0, TriCore_P2, TriCore_P4, TriCore_P6, TriCore_P8, TriCore_P10, TriCore_P12, TriCore_P14, 
+  };
+
+  // RP Bit set.
+  static const uint8_t RPBits[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
+  };
+
 static const MCRegisterClass TriCoreMCRegisterClasses[] = {
-  { AddrRegs, AddrRegsBits, sizeof(AddrRegsBits) },
-  { DataRegs, DataRegsBits, sizeof(DataRegsBits) },
+  { RA, RABits, sizeof(RABits) },
+  { RD, RDBits, sizeof(RDBits) },
   { PSRegs, PSRegsBits, sizeof(PSRegsBits) },
-  { AddrExtRegs, AddrExtRegsBits, sizeof(AddrExtRegsBits) },
-  { ExtRegs, ExtRegsBits, sizeof(ExtRegsBits) },
   { PairAddrRegs, PairAddrRegsBits, sizeof(PairAddrRegsBits) },
+  { RE, REBits, sizeof(REBits) },
+  { RP, RPBits, sizeof(RPBits) },
 };
 
 #endif // GET_REGINFO_MC_DESC
