@@ -90,7 +90,7 @@ static insn_map insns[] = {
      0
 #endif
     },
-#include "./gen/TriCoreGenCSMappingInsn.inc"
+#include "TriCoreGenCSMappingInsn.inc"
 };
 
 // given internal insn id, return public instruction info
@@ -131,7 +131,7 @@ void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 static const char *insn_names[] = {
 		NULL,
-#include "./gen/TriCoreGenCSMappingInsnName.inc"
+#include "TriCoreGenCSMappingInsnName.inc"
 };
 
 // special alias insn

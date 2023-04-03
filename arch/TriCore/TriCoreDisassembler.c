@@ -169,60 +169,6 @@ static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 #include "TriCoreGenRegisterInfo.inc"
 
-static DecodeStatus DecodeDataRegsRegisterClass(MCInst *Inst, unsigned RegNo,
-                                                uint64_t Address, void *Decoder) {
-	unsigned Reg;
-
-	if (RegNo > 15)
-		return MCDisassembler_Fail;
-
-	Reg = getReg(Decoder, TriCore_DataRegsRegClassID, RegNo);
-	MCOperand_CreateReg0(Inst, Reg);
-
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus DecodeAddrRegsRegisterClass(MCInst *Inst, unsigned RegNo,
-                                                uint64_t Address, void *Decoder) {
-	unsigned Reg;
-
-	if (RegNo > 15)
-		return MCDisassembler_Fail;
-
-	Reg = getReg(Decoder, TriCore_AddrRegsRegClassID, RegNo);
-	MCOperand_CreateReg0(Inst, Reg);
-
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus DecodeExtRegsRegisterClass(MCInst *Inst, unsigned RegNo,
-                                               uint64_t Address, void *Decoder) {
-	unsigned Reg;
-	unsigned RegHalfNo = RegNo / 2;
-
-	if (RegHalfNo > 15)
-		return MCDisassembler_Fail;
-
-	Reg = getReg(Decoder, TriCore_ExtRegsRegClassID, RegHalfNo);
-	MCOperand_CreateReg0(Inst, Reg);
-
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus DecodePairAddrRegsRegisterClass(MCInst *Inst, unsigned RegNo,
-                                                    uint64_t Address, void *Decoder) {
-	unsigned Reg;
-	unsigned RegHalfNo = RegNo / 2;
-
-	if (RegHalfNo > 15)
-		return MCDisassembler_Fail;
-
-	Reg = getReg(Decoder, TriCore_PairAddrRegsRegClassID, RegHalfNo);
-	MCOperand_CreateReg0(Inst, Reg);
-
-	return MCDisassembler_Success;
-}
-
 static DecodeStatus
 DecodeRegisterClass(MCInst *Inst, unsigned RegNo, const MCOperandInfo *MCOI, void *Decoder) {
 	unsigned Reg;
@@ -311,9 +257,10 @@ static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
-	if (status == MCDisassembler_Success)
-		status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+	if (status != MCDisassembler_Success)
+		return status;
 
+	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -1335,7 +1282,8 @@ static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 		return MCDisassembler_Fail;
 
 	// Decode s1_d.
-	status = DecodeDataRegsRegisterClass(Inst, s1_d, Address, Decoder);
+	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
+	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -1362,9 +1310,11 @@ static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (status != MCDisassembler_Success)
 		return status;
 
+	unsigned opIdx = 0;
 	if (desc->NumOperands > 4) {
+		opIdx++;
 		// Decode s1.
-		status = DecodeDataRegsRegisterClass(Inst, s1, Address, Decoder);
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
@@ -1373,7 +1323,7 @@ static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	MCOperand_CreateImm0(Inst, const4);
 
 	// Decode s3.
-	status = DecodeDataRegsRegisterClass(Inst, s3, Address, Decoder);
+	status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[opIdx+2], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 
@@ -1397,8 +1347,8 @@ static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	if (!is32Bit) // This instruction is 32-bit
 		return MCDisassembler_Fail;
 
-	// Decode s1.
-	status = DecodeDataRegsRegisterClass(Inst, s1, Address, Decoder);
+	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
+	status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[0], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 

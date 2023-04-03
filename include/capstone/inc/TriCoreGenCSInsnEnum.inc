@@ -1,9 +1,9 @@
-/* Capstone Disassembly Engine, https://www_capstone-engine_org */
-/* By Nguyen Anh Quynh <aquynh@gmail_com>, 2013-2019 */
-/* By Rot127 <unisono@quyllur_org>, 2023 */
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+/* By Rot127 <unisono@quyllur.org>, 2023 */
 
-/* Auto generated file_ Do not edit_ */
-/* Code generator: https://github_com/capstone-engine/capstone/tree/next/suite/auto-sync */
+/* Auto generated file. Do not edit. */
+/* Code generator: https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
 
   TriCore_INS_XOR_T,
   TriCore_INS_ABSDIFS_B,
@@ -53,21 +53,26 @@
   TriCore_INS_BISR,
   TriCore_INS_BMERGE,
   TriCore_INS_BSPLIT,
+  TriCore_INS_CACHEA_I,
+  TriCore_INS_CACHEA_WI,
+  TriCore_INS_CACHEA_W,
   TriCore_INS_CACHEI_I,
   TriCore_INS_CACHEI_WI,
   TriCore_INS_CACHEI_W,
-  TriCore_INS_CACHE_I,
-  TriCore_INS_CACHE_WI,
-  TriCore_INS_CACHE_W,
+  TriCore_INS_CADDN_A,
   TriCore_INS_CADDN,
+  TriCore_INS_CADD_A,
   TriCore_INS_CADD,
   TriCore_INS_CALLA,
   TriCore_INS_CALLI,
   TriCore_INS_CALL,
+  TriCore_INS_CLO_B,
   TriCore_INS_CLO_H,
   TriCore_INS_CLO,
+  TriCore_INS_CLS_B,
   TriCore_INS_CLS_H,
   TriCore_INS_CLS,
+  TriCore_INS_CLZ_B,
   TriCore_INS_CLZ_H,
   TriCore_INS_CLZ,
   TriCore_INS_CMOVN,
@@ -78,9 +83,12 @@
   TriCore_INS_CRC32L_W,
   TriCore_INS_CRC32_B,
   TriCore_INS_CRCN,
+  TriCore_INS_CSUBN_A,
   TriCore_INS_CSUB,
+  TriCore_INS_CSUB_A,
   TriCore_INS_DEBUG,
   TriCore_INS_DEXTR,
+  TriCore_INS_DIFSC_A,
   TriCore_INS_DISABLE,
   TriCore_INS_DIV_F,
   TriCore_INS_DIV_U,

@@ -20,364 +20,373 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
   /* 65 */ "jz.t %d15, \0"
   /* 77 */ "jnz.t %d15, \0"
   /* 90 */ "lt %d15, \0"
-  /* 100 */ "mov %d15, \0"
-  /* 111 */ "jz %d15, \0"
-  /* 121 */ "jnz %d15, \0"
-  /* 132 */ "ld.a %a15, %sp, \0"
-  /* 149 */ "ld.w %a15, %sp, \0"
-  /* 166 */ "sub.a %sp, \0"
-  /* 178 */ "st.a %sp, \0"
-  /* 189 */ "ftoq31 \0"
-  /* 197 */ "CMPSWAP.W \0"
-  /* 208 */ "addsc.a \0"
-  /* 217 */ "add.a \0"
-  /* 224 */ "ld.a \0"
-  /* 230 */ "ge.a \0"
-  /* 236 */ "jne.a \0"
-  /* 243 */ "addih.a \0"
-  /* 252 */ "movh.a \0"
-  /* 260 */ "jeq.a \0"
-  /* 267 */ "lt.a \0"
-  /* 273 */ "st.a \0"
-  /* 279 */ "mov.a \0"
-  /* 286 */ "nez.a \0"
-  /* 293 */ "jz.a \0"
-  /* 299 */ "jnz.a \0"
-  /* 306 */ "eqz.a \0"
-  /* 313 */ "mov.aa \0"
-  /* 321 */ "ld.da \0"
-  /* 328 */ "st.da \0"
-  /* 335 */ "lea \0"
-  /* 340 */ "lha \0"
-  /* 345 */ "sha \0"
-  /* 350 */ "ja \0"
-  /* 354 */ "jla \0"
-  /* 359 */ "fcalla \0"
-  /* 367 */ "crc32.b \0"
-  /* 376 */ "sub.b \0"
-  /* 383 */ "add.b \0"
-  /* 390 */ "ld.b \0"
-  /* 396 */ "absdif.b \0"
-  /* 406 */ "min.b \0"
-  /* 413 */ "eq.b \0"
-  /* 419 */ "abs.b \0"
-  /* 426 */ "adds.b \0"
-  /* 434 */ "absdifs.b \0"
-  /* 445 */ "abss.b \0"
-  /* 453 */ "sat.b \0"
-  /* 460 */ "dvinit.b \0"
-  /* 470 */ "lt.b \0"
-  /* 476 */ "st.b \0"
-  /* 482 */ "max.b \0"
-  /* 489 */ "eqany.b \0"
-  /* 498 */ "csub \0"
-  /* 504 */ "msub \0"
-  /* 510 */ "rsub \0"
-  /* 516 */ "subc \0"
-  /* 522 */ "addc \0"
-  /* 528 */ "ld.d \0"
-  /* 534 */ "st.d \0"
-  /* 540 */ "mov.d \0"
-  /* 547 */ "cadd \0"
-  /* 553 */ "madd \0"
-  /* 559 */ "jned \0"
-  /* 565 */ "nand \0"
-  /* 571 */ "and.ge \0"
-  /* 579 */ "sh.ge \0"
-  /* 586 */ "xor.ge \0"
-  /* 594 */ "jge \0"
-  /* 599 */ "bmerge \0"
-  /* 607 */ "disable \0"
-  /* 616 */ "shuffle \0"
-  /* 625 */ "and.ne \0"
-  /* 633 */ "xor.ne \0"
-  /* 641 */ "jne \0"
-  /* 646 */ "msub.f \0"
-  /* 654 */ "madd.f \0"
-  /* 662 */ "qseed.f \0"
-  /* 671 */ "mul.f \0"
-  /* 678 */ "cmp.f \0"
-  /* 685 */ "div.f \0"
-  /* 692 */ "absdif \0"
-  /* 700 */ "q31tof \0"
-  /* 708 */ "itof \0"
-  /* 714 */ "hptof \0"
-  /* 721 */ "utof \0"
-  /* 727 */ "sha.h \0"
-  /* 734 */ "msub.h \0"
-  /* 742 */ "msubad.h \0"
-  /* 752 */ "madd.h \0"
-  /* 760 */ "ld.h \0"
-  /* 766 */ "absdif.h \0"
-  /* 776 */ "sh.h \0"
-  /* 782 */ "mul.h \0"
-  /* 789 */ "msubm.h \0"
-  /* 798 */ "msubadm.h \0"
-  /* 809 */ "maddm.h \0"
-  /* 818 */ "mulm.h \0"
-  /* 826 */ "maddsum.h \0"
-  /* 837 */ "min.h \0"
-  /* 844 */ "clo.h \0"
-  /* 851 */ "eq.h \0"
-  /* 857 */ "msubr.h \0"
-  /* 866 */ "msubadr.h \0"
-  /* 877 */ "maddr.h \0"
-  /* 886 */ "mulr.h \0"
-  /* 894 */ "maddsur.h \0"
-  /* 905 */ "abs.h \0"
-  /* 912 */ "msubs.h \0"
-  /* 921 */ "msubads.h \0"
-  /* 932 */ "madds.h \0"
-  /* 941 */ "absdifs.h \0"
-  /* 952 */ "cls.h \0"
-  /* 959 */ "msubms.h \0"
-  /* 969 */ "msubadms.h \0"
-  /* 981 */ "maddms.h \0"
-  /* 991 */ "maddsums.h \0"
-  /* 1003 */ "msubrs.h \0"
-  /* 1013 */ "msubadrs.h \0"
-  /* 1025 */ "maddrs.h \0"
-  /* 1035 */ "maddsurs.h \0"
-  /* 1047 */ "abss.h \0"
-  /* 1055 */ "maddsus.h \0"
-  /* 1066 */ "sat.h \0"
-  /* 1073 */ "dvinit.h \0"
-  /* 1083 */ "lt.h \0"
-  /* 1089 */ "st.h \0"
-  /* 1095 */ "maddsu.h \0"
-  /* 1105 */ "max.h \0"
-  /* 1112 */ "eqany.h \0"
-  /* 1121 */ "clz.h \0"
-  /* 1128 */ "addih \0"
-  /* 1135 */ "sh \0"
-  /* 1139 */ "movh \0"
-  /* 1145 */ "addi \0"
-  /* 1151 */ "jnei \0"
-  /* 1157 */ "ji \0"
-  /* 1161 */ "jli \0"
-  /* 1166 */ "fcalli \0"
-  /* 1174 */ "ftoi \0"
-  /* 1180 */ "dvadj \0"
-  /* 1187 */ "unpack \0"
-  /* 1195 */ "imask \0"
-  /* 1202 */ "sel \0"
-  /* 1207 */ "updfl \0"
-  /* 1214 */ "jl \0"
-  /* 1218 */ "fcall \0"
-  /* 1225 */ "syscall \0"
-  /* 1234 */ "mul \0"
-  /* 1239 */ "crcn \0"
-  /* 1245 */ "caddn \0"
-  /* 1252 */ "andn \0"
-  /* 1258 */ "ixmin \0"
-  /* 1265 */ "seln \0"
-  /* 1271 */ "orn \0"
-  /* 1276 */ "cmovn \0"
-  /* 1283 */ "clo \0"
-  /* 1288 */ "dvstep \0"
-  /* 1296 */ "ftohp \0"
-  /* 1303 */ "loop \0"
-  /* 1309 */ "msub.q \0"
-  /* 1317 */ "madd.q \0"
-  /* 1325 */ "ld.q \0"
-  /* 1331 */ "mul.q \0"
-  /* 1338 */ "msubr.q \0"
-  /* 1347 */ "maddr.q \0"
-  /* 1356 */ "mulr.q \0"
-  /* 1364 */ "msubs.q \0"
-  /* 1373 */ "madds.q \0"
-  /* 1382 */ "msubrs.q \0"
-  /* 1392 */ "maddrs.q \0"
-  /* 1402 */ "st.q \0"
-  /* 1408 */ "and.eq \0"
-  /* 1416 */ "sh.eq \0"
-  /* 1423 */ "xor.eq \0"
-  /* 1431 */ "jeq \0"
-  /* 1436 */ "mfcr \0"
-  /* 1442 */ "mtcr \0"
-  /* 1448 */ "xnor \0"
-  /* 1454 */ "xor \0"
-  /* 1459 */ "bisr \0"
-  /* 1465 */ "dextr \0"
-  /* 1472 */ "shas \0"
-  /* 1478 */ "abs \0"
-  /* 1483 */ "msubs \0"
-  /* 1490 */ "rsubs \0"
-  /* 1497 */ "madds \0"
-  /* 1504 */ "absdifs \0"
-  /* 1513 */ "cls \0"
-  /* 1518 */ "muls \0"
-  /* 1524 */ "abss \0"
-  /* 1530 */ "and.and.t \0"
-  /* 1541 */ "sh.and.t \0"
-  /* 1551 */ "or.and.t \0"
-  /* 1561 */ "sh.nand.t \0"
-  /* 1572 */ "and.andn.t \0"
-  /* 1584 */ "sh.andn.t \0"
-  /* 1595 */ "or.andn.t \0"
-  /* 1606 */ "sh.orn.t \0"
-  /* 1616 */ "insn.t \0"
-  /* 1624 */ "and.or.t \0"
-  /* 1634 */ "sh.or.t \0"
-  /* 1643 */ "or.or.t \0"
-  /* 1652 */ "and.nor.t \0"
-  /* 1663 */ "sh.nor.t \0"
-  /* 1673 */ "or.nor.t \0"
-  /* 1683 */ "sh.xnor.t \0"
-  /* 1694 */ "sh.xor.t \0"
-  /* 1704 */ "ins.t \0"
-  /* 1711 */ "st.t \0"
-  /* 1717 */ "jz.t \0"
-  /* 1723 */ "jnz.t \0"
-  /* 1730 */ "bsplit \0"
-  /* 1738 */ "dvinit \0"
-  /* 1746 */ "and.lt \0"
-  /* 1754 */ "sh.lt \0"
-  /* 1761 */ "xor.lt \0"
-  /* 1769 */ "jlt \0"
-  /* 1774 */ "not \0"
-  /* 1779 */ "insert \0"
-  /* 1787 */ "ldmst \0"
-  /* 1794 */ "madd.u \0"
-  /* 1802 */ "and.ge.u \0"
-  /* 1812 */ "sh.ge.u \0"
-  /* 1821 */ "xor.ge.u \0"
-  /* 1831 */ "jge.u \0"
-  /* 1838 */ "mul.u \0"
-  /* 1845 */ "ixmin.u \0"
-  /* 1854 */ "dvstep.u \0"
-  /* 1864 */ "extr.u \0"
-  /* 1872 */ "rsubs.u \0"
-  /* 1881 */ "madds.u \0"
-  /* 1890 */ "muls.u \0"
-  /* 1898 */ "dvinit.u \0"
-  /* 1908 */ "and.lt.u \0"
-  /* 1918 */ "sh.lt.u \0"
-  /* 1927 */ "xor.lt.u \0"
-  /* 1937 */ "jlt.u \0"
-  /* 1944 */ "div.u \0"
-  /* 1951 */ "mov.u \0"
-  /* 1958 */ "ixmax.u \0"
-  /* 1967 */ "ld.bu \0"
-  /* 1974 */ "min.bu \0"
-  /* 1982 */ "adds.bu \0"
-  /* 1991 */ "sat.bu \0"
-  /* 1999 */ "dvinit.bu \0"
-  /* 2010 */ "lt.bu \0"
-  /* 2017 */ "max.bu \0"
-  /* 2025 */ "ld.hu \0"
-  /* 2032 */ "min.hu \0"
-  /* 2040 */ "subs.hu \0"
-  /* 2049 */ "adds.hu \0"
-  /* 2058 */ "sat.hu \0"
-  /* 2066 */ "dvinit.hu \0"
-  /* 2077 */ "lt.hu \0"
-  /* 2084 */ "max.hu \0"
-  /* 2092 */ "ftou \0"
-  /* 2098 */ "loopu \0"
-  /* 2105 */ "lt.wu \0"
-  /* 2112 */ "div \0"
-  /* 2117 */ "cmov \0"
-  /* 2123 */ "crc32b.w \0"
-  /* 2133 */ "ld.w \0"
-  /* 2139 */ "swapmsk.w \0"
-  /* 2150 */ "crc32l.w \0"
-  /* 2160 */ "swap.w \0"
-  /* 2168 */ "eq.w \0"
-  /* 2174 */ "lt.w \0"
-  /* 2180 */ "popcnt.w \0"
-  /* 2190 */ "st.w \0"
-  /* 2196 */ "ixmax \0"
-  /* 2203 */ "subx \0"
-  /* 2209 */ "ldlcx \0"
-  /* 2216 */ "stlcx \0"
-  /* 2223 */ "lducx \0"
-  /* 2230 */ "stucx \0"
-  /* 2237 */ "addx \0"
-  /* 2243 */ "parity \0"
-  /* 2251 */ "ftoq31z \0"
-  /* 2260 */ "jgez \0"
-  /* 2266 */ "jlez \0"
-  /* 2272 */ "ftoiz \0"
-  /* 2279 */ "jz \0"
-  /* 2283 */ "clz \0"
-  /* 2288 */ "jnz \0"
-  /* 2293 */ "jgtz \0"
-  /* 2299 */ "jltz \0"
-  /* 2305 */ "ftouz \0"
-  /* 2312 */ "CMPSWAP.W [+\0"
-  /* 2325 */ "cache.i [+\0"
-  /* 2336 */ "cachei.i [+\0"
-  /* 2348 */ "cache.wi [+\0"
-  /* 2360 */ "cachei.wi [+\0"
-  /* 2373 */ "ldmst [+\0"
-  /* 2382 */ "cache.w [+\0"
-  /* 2393 */ "cachei.w [+\0"
-  /* 2405 */ "# XRay Function Patchable RET.\0"
-  /* 2436 */ "# XRay Typed Event Log.\0"
-  /* 2460 */ "# XRay Custom Event Log.\0"
-  /* 2485 */ "# XRay Function Enter.\0"
-  /* 2508 */ "# XRay Tail Call Exit.\0"
-  /* 2531 */ "# XRay Function Exit.\0"
-  /* 2553 */ "addsc.at %d, %s2, %s1\0"
-  /* 2575 */ "addsc.at %d, %s1, %s2\0"
-  /* 2597 */ "LIFETIME_END\0"
-  /* 2610 */ "PSEUDO_PROBE\0"
-  /* 2623 */ "BUNDLE\0"
-  /* 2630 */ "DBG_VALUE\0"
-  /* 2640 */ "DBG_INSTR_REF\0"
-  /* 2654 */ "DBG_PHI\0"
-  /* 2662 */ "DBG_LABEL\0"
-  /* 2672 */ "LIFETIME_START\0"
-  /* 2687 */ "DBG_VALUE_LIST\0"
-  /* 2702 */ "ld.a %a15, [\0"
-  /* 2715 */ "ld.h %d15, [\0"
-  /* 2728 */ "ld.bu %d15, [\0"
-  /* 2742 */ "ld.w %d15, [\0"
-  /* 2755 */ "CMPSWAP.W [\0"
-  /* 2767 */ "st.a [\0"
-  /* 2774 */ "st.da [\0"
-  /* 2782 */ "st.b [\0"
-  /* 2789 */ "st.d [\0"
-  /* 2796 */ "st.h [\0"
-  /* 2803 */ "cache.i [\0"
-  /* 2813 */ "cachei.i [\0"
-  /* 2824 */ "cache.wi [\0"
-  /* 2835 */ "cachei.wi [\0"
-  /* 2847 */ "st.q [\0"
-  /* 2854 */ "ldmst [\0"
-  /* 2862 */ "cache.w [\0"
-  /* 2872 */ "cachei.w [\0"
-  /* 2883 */ "swapmsk.w [\0"
-  /* 2895 */ "swap.w [\0"
-  /* 2904 */ "st.w [\0"
-  /* 2911 */ "ldlcx [\0"
-  /* 2919 */ "stlcx [\0"
-  /* 2927 */ "lducx [\0"
-  /* 2935 */ "stucx [\0"
-  /* 2943 */ "st.a [%a15]\0"
-  /* 2955 */ "st.b [%a15]\0"
-  /* 2967 */ "st.h [%a15]\0"
-  /* 2979 */ "st.w [%a15]\0"
-  /* 2991 */ "sub.a\0"
-  /* 2997 */ "add.a\0"
-  /* 3003 */ "mov.a\0"
-  /* 3009 */ "dsync\0"
-  /* 3015 */ "isync\0"
-  /* 3021 */ "rfe\0"
-  /* 3025 */ "enable\0"
-  /* 3032 */ "disable\0"
-  /* 3040 */ "restore\0"
-  /* 3048 */ "debug\0"
-  /* 3054 */ "relck\0"
-  /* 3060 */ "# FEntry call\0"
-  /* 3074 */ "rfm\0"
-  /* 3078 */ "nop\0"
-  /* 3082 */ "fret\0"
-  /* 3087 */ "wait\0"
-  /* 3092 */ "trapv\0"
-  /* 3098 */ "trapsv\0"
-  /* 3105 */ "svlcx\0"
+  /* 100 */ "lt.u %d15, \0"
+  /* 112 */ "mov %d15, \0"
+  /* 123 */ "jz %d15, \0"
+  /* 133 */ "jnz %d15, \0"
+  /* 144 */ "ld.a %a15, %sp, \0"
+  /* 161 */ "ld.w %a15, %sp, \0"
+  /* 178 */ "sub.a %sp, \0"
+  /* 190 */ "st.a %sp, \0"
+  /* 201 */ "ftoq31 \0"
+  /* 209 */ "CMPSWAP.W \0"
+  /* 220 */ "csub.a \0"
+  /* 228 */ "addsc.a \0"
+  /* 237 */ "difsc.a \0"
+  /* 246 */ "cadd.a \0"
+  /* 254 */ "ld.a \0"
+  /* 260 */ "ge.a \0"
+  /* 266 */ "jne.a \0"
+  /* 273 */ "addih.a \0"
+  /* 282 */ "movh.a \0"
+  /* 290 */ "csubn.a \0"
+  /* 299 */ "caddn.a \0"
+  /* 308 */ "jeq.a \0"
+  /* 315 */ "lt.a \0"
+  /* 321 */ "st.a \0"
+  /* 327 */ "mov.a \0"
+  /* 334 */ "nez.a \0"
+  /* 341 */ "jz.a \0"
+  /* 347 */ "jnz.a \0"
+  /* 354 */ "eqz.a \0"
+  /* 361 */ "mov.aa \0"
+  /* 369 */ "ld.da \0"
+  /* 376 */ "st.da \0"
+  /* 383 */ "lea \0"
+  /* 388 */ "lha \0"
+  /* 393 */ "sha \0"
+  /* 398 */ "ja \0"
+  /* 402 */ "jla \0"
+  /* 407 */ "fcalla \0"
+  /* 415 */ "crc32.b \0"
+  /* 424 */ "sub.b \0"
+  /* 431 */ "add.b \0"
+  /* 438 */ "ld.b \0"
+  /* 444 */ "absdif.b \0"
+  /* 454 */ "min.b \0"
+  /* 461 */ "clo.b \0"
+  /* 468 */ "eq.b \0"
+  /* 474 */ "abs.b \0"
+  /* 481 */ "adds.b \0"
+  /* 489 */ "absdifs.b \0"
+  /* 500 */ "cls.b \0"
+  /* 507 */ "abss.b \0"
+  /* 515 */ "sat.b \0"
+  /* 522 */ "dvinit.b \0"
+  /* 532 */ "lt.b \0"
+  /* 538 */ "st.b \0"
+  /* 544 */ "max.b \0"
+  /* 551 */ "eqany.b \0"
+  /* 560 */ "clz.b \0"
+  /* 567 */ "csub \0"
+  /* 573 */ "msub \0"
+  /* 579 */ "rsub \0"
+  /* 585 */ "subc \0"
+  /* 591 */ "addc \0"
+  /* 597 */ "ld.d \0"
+  /* 603 */ "st.d \0"
+  /* 609 */ "mov.d \0"
+  /* 616 */ "cadd \0"
+  /* 622 */ "madd \0"
+  /* 628 */ "jned \0"
+  /* 634 */ "nand \0"
+  /* 640 */ "and.ge \0"
+  /* 648 */ "sh.ge \0"
+  /* 655 */ "xor.ge \0"
+  /* 663 */ "jge \0"
+  /* 668 */ "bmerge \0"
+  /* 676 */ "disable \0"
+  /* 685 */ "shuffle \0"
+  /* 694 */ "and.ne \0"
+  /* 702 */ "xor.ne \0"
+  /* 710 */ "jne \0"
+  /* 715 */ "msub.f \0"
+  /* 723 */ "madd.f \0"
+  /* 731 */ "qseed.f \0"
+  /* 740 */ "mul.f \0"
+  /* 747 */ "cmp.f \0"
+  /* 754 */ "div.f \0"
+  /* 761 */ "absdif \0"
+  /* 769 */ "q31tof \0"
+  /* 777 */ "itof \0"
+  /* 783 */ "hptof \0"
+  /* 790 */ "utof \0"
+  /* 796 */ "sha.h \0"
+  /* 803 */ "msub.h \0"
+  /* 811 */ "msubad.h \0"
+  /* 821 */ "madd.h \0"
+  /* 829 */ "ld.h \0"
+  /* 835 */ "absdif.h \0"
+  /* 845 */ "sh.h \0"
+  /* 851 */ "mul.h \0"
+  /* 858 */ "msubm.h \0"
+  /* 867 */ "msubadm.h \0"
+  /* 878 */ "maddm.h \0"
+  /* 887 */ "mulm.h \0"
+  /* 895 */ "maddsum.h \0"
+  /* 906 */ "min.h \0"
+  /* 913 */ "clo.h \0"
+  /* 920 */ "eq.h \0"
+  /* 926 */ "msubr.h \0"
+  /* 935 */ "msubadr.h \0"
+  /* 946 */ "maddr.h \0"
+  /* 955 */ "mulr.h \0"
+  /* 963 */ "maddsur.h \0"
+  /* 974 */ "abs.h \0"
+  /* 981 */ "msubs.h \0"
+  /* 990 */ "msubads.h \0"
+  /* 1001 */ "madds.h \0"
+  /* 1010 */ "absdifs.h \0"
+  /* 1021 */ "cls.h \0"
+  /* 1028 */ "msubms.h \0"
+  /* 1038 */ "msubadms.h \0"
+  /* 1050 */ "maddms.h \0"
+  /* 1060 */ "maddsums.h \0"
+  /* 1072 */ "msubrs.h \0"
+  /* 1082 */ "msubadrs.h \0"
+  /* 1094 */ "maddrs.h \0"
+  /* 1104 */ "maddsurs.h \0"
+  /* 1116 */ "abss.h \0"
+  /* 1124 */ "maddsus.h \0"
+  /* 1135 */ "sat.h \0"
+  /* 1142 */ "dvinit.h \0"
+  /* 1152 */ "lt.h \0"
+  /* 1158 */ "st.h \0"
+  /* 1164 */ "maddsu.h \0"
+  /* 1174 */ "max.h \0"
+  /* 1181 */ "eqany.h \0"
+  /* 1190 */ "clz.h \0"
+  /* 1197 */ "addih \0"
+  /* 1204 */ "sh \0"
+  /* 1208 */ "movh \0"
+  /* 1214 */ "addi \0"
+  /* 1220 */ "jnei \0"
+  /* 1226 */ "ji \0"
+  /* 1230 */ "jli \0"
+  /* 1235 */ "fcalli \0"
+  /* 1243 */ "ftoi \0"
+  /* 1249 */ "dvadj \0"
+  /* 1256 */ "unpack \0"
+  /* 1264 */ "imask \0"
+  /* 1271 */ "sel \0"
+  /* 1276 */ "updfl \0"
+  /* 1283 */ "jl \0"
+  /* 1287 */ "fcall \0"
+  /* 1294 */ "syscall \0"
+  /* 1303 */ "mul \0"
+  /* 1308 */ "crcn \0"
+  /* 1314 */ "caddn \0"
+  /* 1321 */ "andn \0"
+  /* 1327 */ "ixmin \0"
+  /* 1334 */ "seln \0"
+  /* 1340 */ "orn \0"
+  /* 1345 */ "cmovn \0"
+  /* 1352 */ "clo \0"
+  /* 1357 */ "dvstep \0"
+  /* 1365 */ "ftohp \0"
+  /* 1372 */ "loop \0"
+  /* 1378 */ "msub.q \0"
+  /* 1386 */ "madd.q \0"
+  /* 1394 */ "ld.q \0"
+  /* 1400 */ "mul.q \0"
+  /* 1407 */ "msubr.q \0"
+  /* 1416 */ "maddr.q \0"
+  /* 1425 */ "mulr.q \0"
+  /* 1433 */ "msubs.q \0"
+  /* 1442 */ "madds.q \0"
+  /* 1451 */ "msubrs.q \0"
+  /* 1461 */ "maddrs.q \0"
+  /* 1471 */ "st.q \0"
+  /* 1477 */ "and.eq \0"
+  /* 1485 */ "sh.eq \0"
+  /* 1492 */ "xor.eq \0"
+  /* 1500 */ "jeq \0"
+  /* 1505 */ "mfcr \0"
+  /* 1511 */ "mtcr \0"
+  /* 1517 */ "xnor \0"
+  /* 1523 */ "xor \0"
+  /* 1528 */ "bisr \0"
+  /* 1534 */ "dextr \0"
+  /* 1541 */ "shas \0"
+  /* 1547 */ "abs \0"
+  /* 1552 */ "msubs \0"
+  /* 1559 */ "rsubs \0"
+  /* 1566 */ "madds \0"
+  /* 1573 */ "absdifs \0"
+  /* 1582 */ "cls \0"
+  /* 1587 */ "muls \0"
+  /* 1593 */ "abss \0"
+  /* 1599 */ "and.and.t \0"
+  /* 1610 */ "sh.and.t \0"
+  /* 1620 */ "or.and.t \0"
+  /* 1630 */ "sh.nand.t \0"
+  /* 1641 */ "and.andn.t \0"
+  /* 1653 */ "sh.andn.t \0"
+  /* 1664 */ "or.andn.t \0"
+  /* 1675 */ "sh.orn.t \0"
+  /* 1685 */ "insn.t \0"
+  /* 1693 */ "and.or.t \0"
+  /* 1703 */ "sh.or.t \0"
+  /* 1712 */ "or.or.t \0"
+  /* 1721 */ "and.nor.t \0"
+  /* 1732 */ "sh.nor.t \0"
+  /* 1742 */ "or.nor.t \0"
+  /* 1752 */ "sh.xnor.t \0"
+  /* 1763 */ "sh.xor.t \0"
+  /* 1773 */ "ins.t \0"
+  /* 1780 */ "st.t \0"
+  /* 1786 */ "jz.t \0"
+  /* 1792 */ "jnz.t \0"
+  /* 1799 */ "bsplit \0"
+  /* 1807 */ "dvinit \0"
+  /* 1815 */ "and.lt \0"
+  /* 1823 */ "sh.lt \0"
+  /* 1830 */ "xor.lt \0"
+  /* 1838 */ "jlt \0"
+  /* 1843 */ "not \0"
+  /* 1848 */ "insert \0"
+  /* 1856 */ "ldmst \0"
+  /* 1863 */ "madd.u \0"
+  /* 1871 */ "and.ge.u \0"
+  /* 1881 */ "sh.ge.u \0"
+  /* 1890 */ "xor.ge.u \0"
+  /* 1900 */ "jge.u \0"
+  /* 1907 */ "mul.u \0"
+  /* 1914 */ "ixmin.u \0"
+  /* 1923 */ "dvstep.u \0"
+  /* 1933 */ "extr.u \0"
+  /* 1941 */ "rsubs.u \0"
+  /* 1950 */ "madds.u \0"
+  /* 1959 */ "muls.u \0"
+  /* 1967 */ "dvinit.u \0"
+  /* 1977 */ "and.lt.u \0"
+  /* 1987 */ "sh.lt.u \0"
+  /* 1996 */ "xor.lt.u \0"
+  /* 2006 */ "jlt.u \0"
+  /* 2013 */ "div.u \0"
+  /* 2020 */ "mov.u \0"
+  /* 2027 */ "ixmax.u \0"
+  /* 2036 */ "ld.bu \0"
+  /* 2043 */ "min.bu \0"
+  /* 2051 */ "adds.bu \0"
+  /* 2060 */ "sat.bu \0"
+  /* 2068 */ "dvinit.bu \0"
+  /* 2079 */ "lt.bu \0"
+  /* 2086 */ "max.bu \0"
+  /* 2094 */ "ld.hu \0"
+  /* 2101 */ "min.hu \0"
+  /* 2109 */ "subs.hu \0"
+  /* 2118 */ "adds.hu \0"
+  /* 2127 */ "sat.hu \0"
+  /* 2135 */ "dvinit.hu \0"
+  /* 2146 */ "lt.hu \0"
+  /* 2153 */ "max.hu \0"
+  /* 2161 */ "ftou \0"
+  /* 2167 */ "loopu \0"
+  /* 2174 */ "lt.wu \0"
+  /* 2181 */ "div \0"
+  /* 2186 */ "cmov \0"
+  /* 2192 */ "crc32b.w \0"
+  /* 2202 */ "ld.w \0"
+  /* 2208 */ "swapmsk.w \0"
+  /* 2219 */ "crc32l.w \0"
+  /* 2229 */ "swap.w \0"
+  /* 2237 */ "eq.w \0"
+  /* 2243 */ "lt.w \0"
+  /* 2249 */ "popcnt.w \0"
+  /* 2259 */ "st.w \0"
+  /* 2265 */ "ixmax \0"
+  /* 2272 */ "subx \0"
+  /* 2278 */ "ldlcx \0"
+  /* 2285 */ "stlcx \0"
+  /* 2292 */ "lducx \0"
+  /* 2299 */ "stucx \0"
+  /* 2306 */ "addx \0"
+  /* 2312 */ "parity \0"
+  /* 2320 */ "ftoq31z \0"
+  /* 2329 */ "jgez \0"
+  /* 2335 */ "jlez \0"
+  /* 2341 */ "ftoiz \0"
+  /* 2348 */ "jz \0"
+  /* 2352 */ "clz \0"
+  /* 2357 */ "jnz \0"
+  /* 2362 */ "jgtz \0"
+  /* 2368 */ "jltz \0"
+  /* 2374 */ "ftouz \0"
+  /* 2381 */ "CMPSWAP.W [+\0"
+  /* 2394 */ "cachea.i [+\0"
+  /* 2406 */ "cachei.i [+\0"
+  /* 2418 */ "cachea.wi [+\0"
+  /* 2431 */ "cachei.wi [+\0"
+  /* 2444 */ "ldmst [+\0"
+  /* 2453 */ "cachea.w [+\0"
+  /* 2465 */ "cachei.w [+\0"
+  /* 2477 */ "# XRay Function Patchable RET.\0"
+  /* 2508 */ "# XRay Typed Event Log.\0"
+  /* 2532 */ "# XRay Custom Event Log.\0"
+  /* 2557 */ "# XRay Function Enter.\0"
+  /* 2580 */ "# XRay Tail Call Exit.\0"
+  /* 2603 */ "# XRay Function Exit.\0"
+  /* 2625 */ "addsc.at %d, %s2, %s1\0"
+  /* 2647 */ "addsc.at %d, %s1, %s2\0"
+  /* 2669 */ "LIFETIME_END\0"
+  /* 2682 */ "PSEUDO_PROBE\0"
+  /* 2695 */ "BUNDLE\0"
+  /* 2702 */ "DBG_VALUE\0"
+  /* 2712 */ "DBG_INSTR_REF\0"
+  /* 2726 */ "DBG_PHI\0"
+  /* 2734 */ "DBG_LABEL\0"
+  /* 2744 */ "LIFETIME_START\0"
+  /* 2759 */ "DBG_VALUE_LIST\0"
+  /* 2774 */ "ld.a %a15, [\0"
+  /* 2787 */ "ld.b %d15, [\0"
+  /* 2800 */ "ld.h %d15, [\0"
+  /* 2813 */ "ld.bu %d15, [\0"
+  /* 2827 */ "ld.w %d15, [\0"
+  /* 2840 */ "CMPSWAP.W [\0"
+  /* 2852 */ "st.a [\0"
+  /* 2859 */ "st.da [\0"
+  /* 2867 */ "st.b [\0"
+  /* 2874 */ "st.d [\0"
+  /* 2881 */ "st.h [\0"
+  /* 2888 */ "cachea.i [\0"
+  /* 2899 */ "cachei.i [\0"
+  /* 2910 */ "cachea.wi [\0"
+  /* 2922 */ "cachei.wi [\0"
+  /* 2934 */ "st.q [\0"
+  /* 2941 */ "ldmst [\0"
+  /* 2949 */ "cachea.w [\0"
+  /* 2960 */ "cachei.w [\0"
+  /* 2971 */ "swapmsk.w [\0"
+  /* 2983 */ "swap.w [\0"
+  /* 2992 */ "st.w [\0"
+  /* 2999 */ "ldlcx [\0"
+  /* 3007 */ "stlcx [\0"
+  /* 3015 */ "lducx [\0"
+  /* 3023 */ "stucx [\0"
+  /* 3031 */ "st.a [%a15]\0"
+  /* 3043 */ "st.b [%a15]\0"
+  /* 3055 */ "st.h [%a15]\0"
+  /* 3067 */ "st.w [%a15]\0"
+  /* 3079 */ "sub.a\0"
+  /* 3085 */ "add.a\0"
+  /* 3091 */ "mov.a\0"
+  /* 3097 */ "dsync\0"
+  /* 3103 */ "isync\0"
+  /* 3109 */ "rfe\0"
+  /* 3113 */ "enable\0"
+  /* 3120 */ "disable\0"
+  /* 3128 */ "restore\0"
+  /* 3136 */ "debug\0"
+  /* 3142 */ "relck\0"
+  /* 3148 */ "# FEntry call\0"
+  /* 3162 */ "rfm\0"
+  /* 3166 */ "nop\0"
+  /* 3170 */ "fret\0"
+  /* 3175 */ "wait\0"
+  /* 3180 */ "trapv\0"
+  /* 3186 */ "trapsv\0"
+  /* 3193 */ "svlcx\0"
 };
   static const uint32_t OpInfo0[] = {
     0U,	// PHI
@@ -393,20 +402,20 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// IMPLICIT_DEF
     0U,	// SUBREG_TO_REG
     0U,	// COPY_TO_REGCLASS
-    2631U,	// DBG_VALUE
-    2688U,	// DBG_VALUE_LIST
-    2641U,	// DBG_INSTR_REF
-    2655U,	// DBG_PHI
-    2663U,	// DBG_LABEL
+    2703U,	// DBG_VALUE
+    2760U,	// DBG_VALUE_LIST
+    2713U,	// DBG_INSTR_REF
+    2727U,	// DBG_PHI
+    2735U,	// DBG_LABEL
     0U,	// REG_SEQUENCE
     0U,	// COPY
-    2624U,	// BUNDLE
-    2673U,	// LIFETIME_START
-    2598U,	// LIFETIME_END
-    2611U,	// PSEUDO_PROBE
+    2696U,	// BUNDLE
+    2745U,	// LIFETIME_START
+    2670U,	// LIFETIME_END
+    2683U,	// PSEUDO_PROBE
     0U,	// ARITH_FENCE
     0U,	// STACKMAP
-    3061U,	// FENTRY_CALL
+    3149U,	// FENTRY_CALL
     0U,	// PATCHPOINT
     0U,	// LOAD_STACK_GUARD
     0U,	// PREALLOCATED_SETUP
@@ -415,12 +424,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LOCAL_ESCAPE
     0U,	// FAULTING_OP
     0U,	// PATCHABLE_OP
-    2486U,	// PATCHABLE_FUNCTION_ENTER
-    2406U,	// PATCHABLE_RET
-    2532U,	// PATCHABLE_FUNCTION_EXIT
-    2509U,	// PATCHABLE_TAIL_CALL
-    2461U,	// PATCHABLE_EVENT_CALL
-    2437U,	// PATCHABLE_TYPED_EVENT_CALL
+    2558U,	// PATCHABLE_FUNCTION_ENTER
+    2478U,	// PATCHABLE_RET
+    2604U,	// PATCHABLE_FUNCTION_EXIT
+    2581U,	// PATCHABLE_TAIL_CALL
+    2533U,	// PATCHABLE_EVENT_CALL
+    2509U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
     0U,	// G_ASSERT_SEXT
     0U,	// G_ASSERT_ZEXT
@@ -628,845 +637,916 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_VECREDUCE_UMIN
     0U,	// G_SBFX
     0U,	// G_UBFX
-    4531U,	// ABSDIFS_B_rr_v110
-    5038U,	// ABSDIFS_H_rr
-    5601U,	// ABSDIFS_rc
-    5601U,	// ABSDIFS_rr
-    4493U,	// ABSDIF_B_rr
-    4863U,	// ABSDIF_H_rr
-    268440245U,	// ABSDIF_rc
-    4789U,	// ABSDIF_rr
-    4542U,	// ABSS_B_rr_v110
-    5144U,	// ABSS_H_rr
-    5621U,	// ABSS_rr
-    16781732U,	// ABS_B_rr
-    16782218U,	// ABS_H_rr
-    16782791U,	// ABS_rr
-    268440075U,	// ADDC_rc
-    4619U,	// ADDC_rr
-    536875252U,	// ADDIH_A_rlc
-    536876137U,	// ADDIH_rlc
-    536876154U,	// ADDI_rlc
-    2576U,	// ADDSC_AT_rr_v110
-    2554U,	// ADDSC_AT_rr_v120u
-    4305U,	// ADDSC_A_rr_v110
-    806359249U,	// ADDSC_A_rr_v120u
-    1073746129U,	// ADDSC_A_srrs_v110
-    33558737U,	// ADDSC_A_srrs_v120u
-    6079U,	// ADDS_BU_rr_v110
-    4523U,	// ADDS_B_rr_v110
-    5030U,	// ADDS_H
-    6146U,	// ADDS_HU
-    5979U,	// ADDS_U
-    268441435U,	// ADDS_U_rc
-    268441051U,	// ADDS_rc
-    5595U,	// ADDS_rr
-    16782811U,	// ADDS_srr
-    268441790U,	// ADDX_rc
-    6334U,	// ADDX_rr
-    2998U,	// ADD_A_rr
-    2101466U,	// ADD_A_src
-    16781530U,	// ADD_A_srr
-    4480U,	// ADD_B_rr
-    806359696U,	// ADD_F_rrr
-    4850U,	// ADD_H_rr
-    268440101U,	// ADD_rc
-    4645U,	// ADD_rr
-    2101797U,	// ADD_src
+    4586U,	// ABSDIFS_B_rr_v110
+    5107U,	// ABSDIFS_H_rr
+    5670U,	// ABSDIFS_rc
+    5670U,	// ABSDIFS_rr
+    4541U,	// ABSDIF_B_rr
+    4932U,	// ABSDIF_H_rr
+    268440314U,	// ABSDIF_rc
+    4858U,	// ABSDIF_rr
+    4604U,	// ABSS_B_rr_v110
+    5213U,	// ABSS_H_rr
+    5690U,	// ABSS_rr
+    16781787U,	// ABS_B_rr
+    16782287U,	// ABS_H_rr
+    16782860U,	// ABS_rr
+    268440144U,	// ADDC_rc
+    4688U,	// ADDC_rr
+    536875282U,	// ADDIH_A_rlc
+    536876206U,	// ADDIH_rlc
+    536876223U,	// ADDI_rlc
+    2626U,	// ADDSC_AT_rr
+    2648U,	// ADDSC_AT_rr_v110
+    806359269U,	// ADDSC_A_rr
+    4325U,	// ADDSC_A_rr_v110
+    33558757U,	// ADDSC_A_srrs
+    1073746149U,	// ADDSC_A_srrs_v110
+    6148U,	// ADDS_BU_rr_v110
+    4578U,	// ADDS_B_rr_v110
+    5099U,	// ADDS_H
+    6215U,	// ADDS_HU
+    6048U,	// ADDS_U
+    268441504U,	// ADDS_U_rc
+    268441120U,	// ADDS_rc
+    5664U,	// ADDS_rr
+    16782880U,	// ADDS_srr
+    268441859U,	// ADDX_rc
+    6403U,	// ADDX_rr
+    3086U,	// ADD_A_rr
+    2101496U,	// ADD_A_src
+    16781560U,	// ADD_A_srr
+    4528U,	// ADD_B_rr
+    806359765U,	// ADD_F_rrr
+    4919U,	// ADD_H_rr
+    268440170U,	// ADD_rc
+    4714U,	// ADD_rr
+    2101866U,	// ADD_src
     2101260U,	// ADD_src_15a
-    2167333U,	// ADD_src_a15
-    16781861U,	// ADD_srr
+    2167402U,	// ADD_src_a15
+    16781930U,	// ADD_srr
     16781324U,	// ADD_srr_15a
-    16847397U,	// ADD_srr_a15
-    1342182953U,	// ANDN_T
-    268440805U,	// ANDN_rc
-    5349U,	// ANDN_rr
-    1342182949U,	// AND_ANDN_T
-    1342182907U,	// AND_AND_T
-    268440961U,	// AND_EQ_rc
-    5505U,	// AND_EQ_rr
-    268441355U,	// AND_GE_U_rc
-    5899U,	// AND_GE_U_rr
-    268440124U,	// AND_GE_rc
-    4668U,	// AND_GE_rr
-    268441461U,	// AND_LT_U_rc
-    6005U,	// AND_LT_U_rr
-    268441299U,	// AND_LT_rc
-    5843U,	// AND_LT_rr
-    268440178U,	// AND_NE_rc
-    4722U,	// AND_NE_rr
-    1342183029U,	// AND_NOR_T
-    1342183001U,	// AND_OR_T
-    1342182911U,	// AND_T
-    268440119U,	// AND_rc
-    4663U,	// AND_rr
-    139287U,	// AND_src
-    16781879U,	// AND_srr
-    13748U,	// BISR_rc
-    140724U,	// BISR_sc
-    4696U,	// BMAERGE_rr
-    16783043U,	// BSPLIT_rr
-    3349246U,	// CACHEI_I_bo_bso
-    3414782U,	// CACHEI_I_bo_pos
-    3348769U,	// CACHEI_I_bo_pre
-    3349268U,	// CACHEI_WI_bo_bso
-    3414804U,	// CACHEI_WI_bo_pos
-    3348793U,	// CACHEI_WI_bo_pre
-    3349305U,	// CACHEI_W_bo_bso
-    334649U,	// CACHEI_W_bo_c
-    3414841U,	// CACHEI_W_bo_pos
-    3348826U,	// CACHEI_W_bo_pre
-    400185U,	// CACHEI_W_bo_r
-    3349236U,	// CACHE_I_bo_bso
-    334580U,	// CACHE_I_bo_c
-    3414772U,	// CACHE_I_bo_pos
-    3348758U,	// CACHE_I_bo_pre
-    400116U,	// CACHE_I_bo_r
-    3349257U,	// CACHE_WI_bo_bso
-    334601U,	// CACHE_WI_bo_c
-    3414793U,	// CACHE_WI_bo_pos
-    3348781U,	// CACHE_WI_bo_pre
-    400137U,	// CACHE_WI_bo_r
-    3349295U,	// CACHE_W_bo_bso
-    334639U,	// CACHE_W_bo_c
-    3414831U,	// CACHE_W_bo_pos
-    3348815U,	// CACHE_W_bo_pre
-    400175U,	// CACHE_W_bo_r
-    806360286U,	// CADDN_rcr
-    4199646U,	// CADDN_rrr
-    2168030U,	// CADDN_src
-    806359588U,	// CADD_rcr
-    4198948U,	// CADD_rrr
-    2167332U,	// CADD_src
-    16745U,	// CALLA_b
-    152720U,	// CALLI_rr
-    17604U,	// CALL_b
-    25796U,	// CALL_sb
-    16782157U,	// CLO_H_rr
-    16782596U,	// CLO_rr
-    16782265U,	// CLS_H_rr
-    16782826U,	// CLS_rr
-    16782434U,	// CLZ_H_rr
-    16783596U,	// CLZ_rr
-    2168061U,	// CMOVN_src
-    16848125U,	// CMOVN_srr
-    2168902U,	// CMOV_src
-    16848966U,	// CMOV_srr
-    5462724U,	// CMPSWAP_W_bo_bso
-    5462724U,	// CMPSWAP_W_bo_c
-    5528260U,	// CMPSWAP_W_bo_pos
-    5462281U,	// CMPSWAP_W_bo_pre
-    23089350U,	// CMPSWAP_W_bo_r
-    4775U,	// CMP_F_rr
-    806361164U,	// CRC32B_W_rr
-    806361191U,	// CRC32L_W_rr
-    806359408U,	// CRC32_B_rr
-    4199640U,	// CRCN_rrr
-    4198899U,	// CSUBN_rrr
-    4198899U,	// CSUB_rrr
-    3049U,	// DEBUG_sr
-    3049U,	// DEBUG_sys
-    5562U,	// DEXTR_rrpw
-    5562U,	// DEXTR_rrrr
-    3033U,	// DISABLE_sys
-    135776U,	// DISABLE_sys_1
-    4782U,	// DIV_F_rr
-    6041U,	// DIV_U_rr
-    6209U,	// DIV_rr
-    3010U,	// DSYNC_sys
-    806360221U,	// DVADJ_rrr
-    6096U,	// DVINIT_BU_rr
-    4557U,	// DVINIT_B_rr
-    6163U,	// DVINIT_HU_rr
-    5170U,	// DVINIT_H_rr
-    5995U,	// DVINIT_U_rr
-    5835U,	// DVINIT_rr
-    806360895U,	// DVSTEP_U_rrr
-    806360329U,	// DVSTEP_rrr
-    3026U,	// ENABLE_sys
-    268440042U,	// EQANY_B_rc
-    4586U,	// EQANY_B_rr
-    268440665U,	// EQANY_H_rc
-    5209U,	// EQANY_H_rr
-    16781619U,	// EQZ_A_rr
-    4358U,	// EQ_A_rr
-    4510U,	// EQ_B_rr
-    4948U,	// EQ_H_rr
-    6265U,	// EQ_W_rr
-    268440965U,	// EQ_rc
-    5509U,	// EQ_rr
+    16847466U,	// ADD_srr_a15
+    1342183022U,	// ANDN_T
+    268440874U,	// ANDN_rc
+    5418U,	// ANDN_rr
+    1342183018U,	// AND_ANDN_T
+    1342182976U,	// AND_AND_T
+    268441030U,	// AND_EQ_rc
+    5574U,	// AND_EQ_rr
+    268441424U,	// AND_GE_U_rc
+    5968U,	// AND_GE_U_rr
+    268440193U,	// AND_GE_rc
+    4737U,	// AND_GE_rr
+    268441530U,	// AND_LT_U_rc
+    6074U,	// AND_LT_U_rr
+    268441368U,	// AND_LT_rc
+    5912U,	// AND_LT_rr
+    268440247U,	// AND_NE_rc
+    4791U,	// AND_NE_rr
+    1342183098U,	// AND_NOR_T
+    1342183070U,	// AND_OR_T
+    1342182980U,	// AND_T
+    268440188U,	// AND_rc
+    4732U,	// AND_rr
+    139287U,	// AND_sc
+    139287U,	// AND_sc_v110
+    16781948U,	// AND_srr
+    16781948U,	// AND_srr_v110
+    13817U,	// BISR_rc
+    13817U,	// BISR_rc_v161
+    140793U,	// BISR_sc
+    140793U,	// BISR_sc_v110
+    4765U,	// BMERGAE_rr_v110
+    4765U,	// BMERGE_rr
+    16783112U,	// BSPLIT_rr
+    16783112U,	// BSPLIT_rr_v110
+    3349321U,	// CACHEA_I_bo_bso
+    269129U,	// CACHEA_I_bo_c
+    3480393U,	// CACHEA_I_bo_pos
+    3348827U,	// CACHEA_I_bo_pre
+    400201U,	// CACHEA_I_bo_r
+    3349343U,	// CACHEA_WI_bo_bso
+    269151U,	// CACHEA_WI_bo_c
+    3480415U,	// CACHEA_WI_bo_pos
+    3348851U,	// CACHEA_WI_bo_pre
+    400223U,	// CACHEA_WI_bo_r
+    3349382U,	// CACHEA_W_bo_bso
+    269190U,	// CACHEA_W_bo_c
+    3480454U,	// CACHEA_W_bo_pos
+    3348886U,	// CACHEA_W_bo_pre
+    400262U,	// CACHEA_W_bo_r
+    3349332U,	// CACHEI_I_bo_bso
+    3480404U,	// CACHEI_I_bo_pos
+    3348839U,	// CACHEI_I_bo_pre
+    3349355U,	// CACHEI_WI_bo_bso
+    3480427U,	// CACHEI_WI_bo_pos
+    3348864U,	// CACHEI_WI_bo_pre
+    3349393U,	// CACHEI_W_bo_bso
+    269201U,	// CACHEI_W_bo_c
+    3480465U,	// CACHEI_W_bo_pos
+    3348898U,	// CACHEI_W_bo_pre
+    400273U,	// CACHEI_W_bo_r
+    806359340U,	// CADDN_A_rcr_v110
+    463148U,	// CADDN_A_rrr_v110
+    806360355U,	// CADDN_rcr
+    4199715U,	// CADDN_rrr
+    2168099U,	// CADDN_src
+    16848163U,	// CADDN_srr_v110
+    806359287U,	// CADD_A_rcr_v110
+    463095U,	// CADD_A_rrr_v110
+    806359657U,	// CADD_rcr
+    4199017U,	// CADD_rrr
+    2167401U,	// CADD_src
+    16847465U,	// CADD_srr_v110
+    16793U,	// CALLA_b
+    136405U,	// CALLI_rr
+    136405U,	// CALLI_rr_v110
+    17673U,	// CALL_b
+    21769U,	// CALL_sb
+    16781774U,	// CLO_B_rr_v110
+    16782226U,	// CLO_H_rr
+    16782665U,	// CLO_rr
+    16781813U,	// CLS_B_rr_v110
+    16782334U,	// CLS_H_rr
+    16782895U,	// CLS_rr
+    16781873U,	// CLZ_B_rr_v110
+    16782503U,	// CLZ_H_rr
+    16783665U,	// CLZ_rr
+    2168130U,	// CMOVN_src
+    16848194U,	// CMOVN_srr
+    2168971U,	// CMOV_src
+    16849035U,	// CMOV_srr
+    5466905U,	// CMPSWAP_W_bo_bso
+    5466905U,	// CMPSWAP_W_bo_c
+    5597977U,	// CMPSWAP_W_bo_pos
+    5466446U,	// CMPSWAP_W_bo_pre
+    23093458U,	// CMPSWAP_W_bo_r
+    4844U,	// CMP_F_rr
+    806361233U,	// CRC32B_W_rr
+    806361260U,	// CRC32L_W_rr
+    806359456U,	// CRC32_B_rr
+    4199709U,	// CRCN_rrr
+    4198691U,	// CSUBN_A_rrr_v110
+    4198968U,	// CSUBN_rrr
+    4198621U,	// CSUB_A_rrr_v110
+    4198968U,	// CSUB_rrr
+    3137U,	// DEBUG_sr
+    3137U,	// DEBUG_sys
+    5631U,	// DEXTR_rrpw
+    5631U,	// DEXTR_rrrr
+    4334U,	// DIFSC_A_rr_v110
+    3121U,	// DISABLE_sys
+    135845U,	// DISABLE_sys_1
+    4851U,	// DIV_F_rr
+    6110U,	// DIV_U_rr
+    6278U,	// DIV_rr
+    3098U,	// DSYNC_sys
+    806360290U,	// DVADJ_rrr
+    806360290U,	// DVADJ_rrr_v110
+    16782562U,	// DVADJ_srr_v110
+    6165U,	// DVINIT_BU_rr
+    6165U,	// DVINIT_BU_rr_v110
+    4619U,	// DVINIT_B_rr
+    4619U,	// DVINIT_B_rr_v110
+    6232U,	// DVINIT_HU_rr
+    6232U,	// DVINIT_HU_rr_v110
+    5239U,	// DVINIT_H_rr
+    5239U,	// DVINIT_H_rr_v110
+    6064U,	// DVINIT_U_rr
+    6064U,	// DVINIT_U_rr_v110
+    5904U,	// DVINIT_rr
+    5904U,	// DVINIT_rr_v110
+    806360964U,	// DVSTEP_U_rrr
+    806360964U,	// DVSTEP_U_rrrv110
+    16783236U,	// DVSTEP_Uv110
+    806360398U,	// DVSTEP_rrr
+    806360398U,	// DVSTEP_rrrv110
+    16782670U,	// DVSTEPv110
+    3114U,	// ENABLE_sys
+    268440104U,	// EQANY_B_rc
+    4648U,	// EQANY_B_rr
+    268440734U,	// EQANY_H_rc
+    5278U,	// EQANY_H_rr
+    16781667U,	// EQZ_A_rr
+    4406U,	// EQ_A_rr
+    4565U,	// EQ_B_rr
+    5017U,	// EQ_H_rr
+    6334U,	// EQ_W_rr
+    268441034U,	// EQ_rc
+    5578U,	// EQ_rr
     2101294U,	// EQ_src
     16781358U,	// EQ_srr
-    5961U,	// EXTR_U_rrpw
-    5961U,	// EXTR_U_rrrr
-    5961U,	// EXTR_U_rrrw
-    5563U,	// EXTR_rrpw
-    5563U,	// EXTR_rrrr
-    5563U,	// EXTR_rrrw
-    16744U,	// FCALLA_b
-    152719U,	// FCALLA_i
-    17603U,	// FCALL_b
-    3083U,	// FRET_sr
-    3083U,	// FRET_sys
-    16782609U,	// FTOHP_rr
-    16783585U,	// FTOIZ_rr
-    16782487U,	// FTOI_rr
-    6348U,	// FTOQ31Z_rr
-    4286U,	// FTOQ31_rr
-    16783618U,	// FTOUZ_rr
-    16783405U,	// FTOU_rr
-    4327U,	// GE_A_rr
-    268441359U,	// GE_U_rc
-    5903U,	// GE_U_rr
-    268440128U,	// GE_rc
-    4672U,	// GE_rr
-    16782027U,	// HPTOF_rr
-    5292U,	// IMASK_rcpw
-    5292U,	// IMASK_rcrw
-    5292U,	// IMASK_rrpw
-    5292U,	// IMASK_rrrw
-    5876U,	// INSERT_rcpw
-    5876U,	// INSERT_rcrr
-    5876U,	// INSERT_rcrw
-    5876U,	// INSERT_rrpw
-    5876U,	// INSERT_rrrr
-    5876U,	// INSERT_rrrw
-    1342182993U,	// INSN_T
-    1342183081U,	// INS_T
-    3016U,	// ISYNC_sys
-    16782021U,	// ITOF_rr
-    806360999U,	// IXMAX_U_rrr
-    806361237U,	// IXMAX_rrr
-    806360886U,	// IXMIN_U_rrr
-    806360299U,	// IXMIN_rrr
-    16735U,	// JA_b
-    1610617093U,	// JEQ_A_brr
-    1617958296U,	// JEQ_brc
-    1610618264U,	// JEQ_brr
+    6030U,	// EXTR_U_rrpw
+    6030U,	// EXTR_U_rrrr
+    6030U,	// EXTR_U_rrrw
+    5632U,	// EXTR_rrpw
+    5632U,	// EXTR_rrrr
+    5632U,	// EXTR_rrrw
+    16792U,	// FCALLA_b
+    136404U,	// FCALLA_i
+    17672U,	// FCALL_b
+    3171U,	// FRET_sr
+    3171U,	// FRET_sys
+    16782678U,	// FTOHP_rr
+    16783654U,	// FTOIZ_rr
+    16782556U,	// FTOI_rr
+    6417U,	// FTOQ31Z_rr
+    4298U,	// FTOQ31_rr
+    16783687U,	// FTOUZ_rr
+    16783474U,	// FTOU_rr
+    4357U,	// GE_A_rr
+    268441428U,	// GE_U_rc
+    5972U,	// GE_U_rr
+    268440197U,	// GE_rc
+    4741U,	// GE_rr
+    16782096U,	// HPTOF_rr
+    5361U,	// IMASK_rcpw
+    5361U,	// IMASK_rcrw
+    5361U,	// IMASK_rrpw
+    5361U,	// IMASK_rrrw
+    5945U,	// INSERT_rcpw
+    5945U,	// INSERT_rcrr
+    5945U,	// INSERT_rcrw
+    5945U,	// INSERT_rrpw
+    5945U,	// INSERT_rrrr
+    5945U,	// INSERT_rrrw
+    1342183062U,	// INSN_T
+    1342183150U,	// INS_T
+    3104U,	// ISYNC_sys
+    16782090U,	// ITOF_rr
+    806361068U,	// IXMAX_U_rrr
+    806361306U,	// IXMAX_rrr
+    806360955U,	// IXMIN_U_rrr
+    806360368U,	// IXMIN_rrr
+    16783U,	// JA_b
+    1610617141U,	// JEQ_A_brr
+    1617958365U,	// JEQ_brc
+    1610618333U,	// JEQ_brr
     28717U,	// JEQ_sbc1
     28717U,	// JEQ_sbc2
+    28717U,	// JEQ_sbc_v110
     8392749U,	// JEQ_sbr1
     8392749U,	// JEQ_sbr2
-    8394965U,	// JGEZ_sbr
-    1617958696U,	// JGE_U_brc
-    1610618664U,	// JGE_U_brr
-    1617957459U,	// JGE_brc
-    1610617427U,	// JGE_brr
-    8394998U,	// JGTZ_sbr
-    152710U,	// JI_rr
-    136326U,	// JI_sr
-    16739U,	// JLA_b
-    8394971U,	// JLEZ_sbr
-    152714U,	// JLI_rr
-    8395004U,	// JLTZ_sbr
-    1617958802U,	// JLT_U_brc
-    1610618770U,	// JLT_U_brr
-    1617958634U,	// JLT_brc
-    1610618602U,	// JLT_brr
-    17599U,	// JL_b
-    1617957424U,	// JNED_brc
-    1610617392U,	// JNED_brr
-    1617958016U,	// JNEI_brc
-    1610617984U,	// JNEI_brr
-    1610617069U,	// JNE_A_brr
-    1617957506U,	// JNE_brc
-    1610617474U,	// JNE_brr
+    8392749U,	// JEQ_sbr_v110
+    8395034U,	// JGEZ_sbr
+    8395034U,	// JGEZ_sbr_v110
+    1617958765U,	// JGE_U_brc
+    1610618733U,	// JGE_U_brr
+    1617957528U,	// JGE_brc
+    1610617496U,	// JGE_brr
+    8395067U,	// JGTZ_sbr
+    8395067U,	// JGTZ_sbr_v110
+    136395U,	// JI_rr
+    136395U,	// JI_rr_v110
+    8393931U,	// JI_sbr_v110
+    136395U,	// JI_sr
+    16787U,	// JLA_b
+    8395040U,	// JLEZ_sbr
+    8395040U,	// JLEZ_sbr_v110
+    136399U,	// JLI_rr
+    136399U,	// JLI_rr_v110
+    8395073U,	// JLTZ_sbr
+    8395073U,	// JLTZ_sbr_v110
+    1617958871U,	// JLT_U_brc
+    1610618839U,	// JLT_U_brr
+    1617958703U,	// JLT_brc
+    1610618671U,	// JLT_brr
+    17668U,	// JL_b
+    1617957493U,	// JNED_brc
+    1610617461U,	// JNED_brr
+    1617958085U,	// JNEI_brc
+    1610618053U,	// JNEI_brr
+    1610617099U,	// JNE_A_brr
+    1617957575U,	// JNE_brc
+    1610617543U,	// JNE_brr
     28706U,	// JNE_sbc1
     28706U,	// JNE_sbc2
+    28706U,	// JNE_sbc_v110
     8392738U,	// JNE_sbr1
     8392738U,	// JNE_sbr2
-    1610617132U,	// JNZ_A_brr
-    8393004U,	// JNZ_A_sbr
-    1610618556U,	// JNZ_T_brn
+    8392738U,	// JNE_sbr_v110
+    1610617180U,	// JNZ_A_brr
+    8393052U,	// JNZ_A_sbr
+    1610618625U,	// JNZ_T_brn
     8392782U,	// JNZ_T_sbrn
-    24698U,	// JNZ_sb
-    8394993U,	// JNZ_sbr
-    1610617126U,	// JZ_A_brr
-    8392998U,	// JZ_A_sbr
-    1610618550U,	// JZ_T_brn
+    8392782U,	// JNZ_T_sbrn_v110
+    20614U,	// JNZ_sb
+    20614U,	// JNZ_sb_v110
+    8395062U,	// JNZ_sbr
+    8395062U,	// JNZ_sbr_v110
+    1610617174U,	// JZ_A_brr
+    8393046U,	// JZ_A_sbr
+    1610618619U,	// JZ_T_brn
     8392770U,	// JZ_T_sbrn
-    24688U,	// JZ_sb
-    8394984U,	// JZ_sbr
-    17569U,	// J_b
-    25761U,	// J_sb
-    166050U,	// LDLCX_abs
-    3349344U,	// LDLCX_bo_bso
-    38652U,	// LDMST_abs
-    5462823U,	// LDMST_bo_bso
-    5462823U,	// LDMST_bo_c
-    5528359U,	// LDMST_bo_pos
-    5462342U,	// LDMST_bo_pre
-    23090940U,	// LDMST_bo_r
-    166064U,	// LDUCX_abs
-    3349360U,	// LDUCX_bo_bso
-    9441505U,	// LD_A_abs
-    1929842913U,	// LD_A_bo_bso
-    67571937U,	// LD_A_bo_c
-    1963397345U,	// LD_A_bo_pos
-    1929908449U,	// LD_A_bo_pre
-    101126369U,	// LD_A_bo_r
-    50794721U,	// LD_A_bol
-    139397U,	// LD_A_sc
-    2198278369U,	// LD_A_slr
-    2231832801U,	// LD_A_slr_post
-    594145U,	// LD_A_slro
-    24320655U,	// LD_A_sro
-    9443248U,	// LD_BU_abs
-    1929844656U,	// LD_BU_bo_bso
-    67573680U,	// LD_BU_bo_c
-    1963399088U,	// LD_BU_bo_pos
-    1929910192U,	// LD_BU_bo_pre
-    101128112U,	// LD_BU_bo_r
-    50796464U,	// LD_BU_bol
-    2198280112U,	// LD_BU_slr
-    2231834544U,	// LD_BU_slr_post
-    595888U,	// LD_BU_slro
-    24320681U,	// LD_BU_sro
-    9441671U,	// LD_B_abs
-    1929843079U,	// LD_B_bo_bso
-    67572103U,	// LD_B_bo_c
-    1963397511U,	// LD_B_bo_pos
-    1929908615U,	// LD_B_bo_pre
-    101126535U,	// LD_B_bo_r
-    50794887U,	// LD_B_bol
-    9441602U,	// LD_DA_abs
-    1929843010U,	// LD_DA_bo_bso
-    67572034U,	// LD_DA_bo_c
-    1963397442U,	// LD_DA_bo_pos
-    1929908546U,	// LD_DA_bo_pre
-    101126466U,	// LD_DA_bo_r
-    9441809U,	// LD_D_abs
-    1929843217U,	// LD_D_bo_bso
-    67572241U,	// LD_D_bo_c
-    1963397649U,	// LD_D_bo_pos
-    1929908753U,	// LD_D_bo_pre
-    101126673U,	// LD_D_bo_r
-    9443306U,	// LD_HU_abs
-    1929844714U,	// LD_HU_bo_bso
-    67573738U,	// LD_HU_bo_c
-    1963399146U,	// LD_HU_bo_pos
-    1929910250U,	// LD_HU_bo_pre
-    101128170U,	// LD_HU_bo_r
-    50796522U,	// LD_HU_bol
-    9442041U,	// LD_H_abs
-    1929843449U,	// LD_H_bo_bso
-    67572473U,	// LD_H_bo_c
-    1963397881U,	// LD_H_bo_pos
-    1929908985U,	// LD_H_bo_pre
-    101126905U,	// LD_H_bo_r
-    50795257U,	// LD_H_bol
-    2198278905U,	// LD_H_slr
-    2231833337U,	// LD_H_slr_post
-    594681U,	// LD_H_slro
-    24320668U,	// LD_H_sro
-    9442606U,	// LD_Q_abs
-    1929844014U,	// LD_Q_bo_bso
-    67573038U,	// LD_Q_bo_c
-    1963398446U,	// LD_Q_bo_pos
-    1929909550U,	// LD_Q_bo_pre
-    101127470U,	// LD_Q_bo_r
-    9443414U,	// LD_W_abs
-    1929844822U,	// LD_W_bo_bso
-    67573846U,	// LD_W_bo_c
-    1963399254U,	// LD_W_bo_pos
-    1929910358U,	// LD_W_bo_pre
-    101128278U,	// LD_W_bo_r
-    50796630U,	// LD_W_bol
-    139414U,	// LD_W_sc
-    2198280278U,	// LD_W_slr
-    2231834710U,	// LD_W_slr_post
-    596054U,	// LD_W_slro
-    24320695U,	// LD_W_sro
-    9441616U,	// LEA_abs
-    1929843024U,	// LEA_bo_bso
-    50794832U,	// LEA_bol
-    9441621U,	// LHA_abs
-    43059U,	// LOOPU_brr
-    10491160U,	// LOOP_brr
-    8394008U,	// LOOP_sbr
-    4364U,	// LT_A_rr
-    4567U,	// LT_B
-    6107U,	// LT_BU
-    5180U,	// LT_H
-    6174U,	// LT_HU
-    268441465U,	// LT_U_rc
-    6009U,	// LT_U_rr
-    6271U,	// LT_W
-    6202U,	// LT_WU
-    268441303U,	// LT_rc
-    5847U,	// LT_rr
+    8392770U,	// JZ_T_sbrn_v110
+    20604U,	// JZ_sb
+    20604U,	// JZ_sb_v110
+    8395053U,	// JZ_sbr
+    8395053U,	// JZ_sbr_v110
+    17638U,	// J_b
+    21734U,	// J_sb
+    21734U,	// J_sb_v110
+    166119U,	// LDLCX_abs
+    3349432U,	// LDLCX_bo_bso
+    38721U,	// LDMST_abs
+    5467006U,	// LDMST_bo_bso
+    5467006U,	// LDMST_bo_c
+    5598078U,	// LDMST_bo_pos
+    5466509U,	// LDMST_bo_pre
+    23095105U,	// LDMST_bo_r
+    166133U,	// LDUCX_abs
+    3349448U,	// LDUCX_bo_bso
+    9441535U,	// LD_A_abs
+    1929908479U,	// LD_A_bo_bso
+    67637503U,	// LD_A_bo_c
+    1963462911U,	// LD_A_bo_pos
+    1929974015U,	// LD_A_bo_pre
+    101191935U,	// LD_A_bo_r
+    50860287U,	// LD_A_bol
+    139409U,	// LD_A_sc
+    2198343935U,	// LD_A_slr
+    2231898367U,	// LD_A_slr_post
+    2231898367U,	// LD_A_slr_post_v110
+    2198343935U,	// LD_A_slr_v110
+    659711U,	// LD_A_slro
+    659711U,	// LD_A_slro_v110
+    24320727U,	// LD_A_sro
+    24320727U,	// LD_A_sro_v110
+    9443317U,	// LD_BU_abs
+    1929910261U,	// LD_BU_bo_bso
+    67639285U,	// LD_BU_bo_c
+    1963464693U,	// LD_BU_bo_pos
+    1929975797U,	// LD_BU_bo_pre
+    101193717U,	// LD_BU_bo_r
+    50862069U,	// LD_BU_bol
+    2198345717U,	// LD_BU_slr
+    2231900149U,	// LD_BU_slr_post
+    2231900149U,	// LD_BU_slr_post_v110
+    2198345717U,	// LD_BU_slr_v110
+    661493U,	// LD_BU_slro
+    661493U,	// LD_BU_slro_v110
+    24320766U,	// LD_BU_sro
+    24320766U,	// LD_BU_sro_v110
+    9441719U,	// LD_B_abs
+    1929908663U,	// LD_B_bo_bso
+    67637687U,	// LD_B_bo_c
+    1963463095U,	// LD_B_bo_pos
+    1929974199U,	// LD_B_bo_pre
+    101192119U,	// LD_B_bo_r
+    50860471U,	// LD_B_bol
+    2231898551U,	// LD_B_slr_post_v110
+    2198344119U,	// LD_B_slr_v110
+    659895U,	// LD_B_slro_v110
+    24320740U,	// LD_B_sro_v110
+    9441650U,	// LD_DA_abs
+    1929908594U,	// LD_DA_bo_bso
+    67637618U,	// LD_DA_bo_c
+    1963463026U,	// LD_DA_bo_pos
+    1929974130U,	// LD_DA_bo_pre
+    101192050U,	// LD_DA_bo_r
+    9441878U,	// LD_D_abs
+    1929908822U,	// LD_D_bo_bso
+    67637846U,	// LD_D_bo_c
+    1963463254U,	// LD_D_bo_pos
+    1929974358U,	// LD_D_bo_pre
+    101192278U,	// LD_D_bo_r
+    9443375U,	// LD_HU_abs
+    1929910319U,	// LD_HU_bo_bso
+    67639343U,	// LD_HU_bo_c
+    1963464751U,	// LD_HU_bo_pos
+    1929975855U,	// LD_HU_bo_pre
+    101193775U,	// LD_HU_bo_r
+    50862127U,	// LD_HU_bol
+    9442110U,	// LD_H_abs
+    1929909054U,	// LD_H_bo_bso
+    67638078U,	// LD_H_bo_c
+    1963463486U,	// LD_H_bo_pos
+    1929974590U,	// LD_H_bo_pre
+    101192510U,	// LD_H_bo_r
+    50860862U,	// LD_H_bol
+    2198344510U,	// LD_H_slr
+    2231898942U,	// LD_H_slr_post
+    2231898942U,	// LD_H_slr_post_v110
+    2198344510U,	// LD_H_slr_v110
+    660286U,	// LD_H_slro
+    660286U,	// LD_H_slro_v110
+    24320753U,	// LD_H_sro
+    24320753U,	// LD_H_sro_v110
+    9442675U,	// LD_Q_abs
+    1929909619U,	// LD_Q_bo_bso
+    67638643U,	// LD_Q_bo_c
+    1963464051U,	// LD_Q_bo_pos
+    1929975155U,	// LD_Q_bo_pre
+    101193075U,	// LD_Q_bo_r
+    9443483U,	// LD_W_abs
+    1929910427U,	// LD_W_bo_bso
+    67639451U,	// LD_W_bo_c
+    1963464859U,	// LD_W_bo_pos
+    1929975963U,	// LD_W_bo_pre
+    101193883U,	// LD_W_bo_r
+    50862235U,	// LD_W_bol
+    139426U,	// LD_W_sc
+    2198345883U,	// LD_W_slr
+    2231900315U,	// LD_W_slr_post
+    2231900315U,	// LD_W_slr_post_v110
+    2198345883U,	// LD_W_slr_v110
+    661659U,	// LD_W_slro
+    661659U,	// LD_W_slro_v110
+    24320780U,	// LD_W_sro
+    24320780U,	// LD_W_sro_v110
+    9441664U,	// LEA_abs
+    1929908608U,	// LEA_bo_bso
+    50860416U,	// LEA_bol
+    9441669U,	// LHA_abs
+    43128U,	// LOOPU_brr
+    10491229U,	// LOOP_brr
+    8394077U,	// LOOP_sbr
+    4412U,	// LT_A_rr
+    4629U,	// LT_B
+    6176U,	// LT_BU
+    5249U,	// LT_H
+    6243U,	// LT_HU
+    268441534U,	// LT_U_rc
+    6078U,	// LT_U_rr
+    24121445U,	// LT_U_srcv110
+    16781413U,	// LT_U_srrv110
+    6340U,	// LT_W
+    6271U,	// LT_WU
+    268441372U,	// LT_rc
+    5916U,	// LT_rr
     2101339U,	// LT_src
     16781403U,	// LT_srr
-    4199382U,	// MADDMS_H_rrr1_LL
-    4199382U,	// MADDMS_H_rrr1_LU
-    4199382U,	// MADDMS_H_rrr1_UL
-    4199382U,	// MADDMS_H_rrr1_UU
-    4199210U,	// MADDM_H_rrr1_LL
-    4199210U,	// MADDM_H_rrr1_LU
-    4199210U,	// MADDM_H_rrr1_UL
-    4199210U,	// MADDM_H_rrr1_UU
-    4199426U,	// MADDRS_H_rrr1_DcEdDaDbUL
-    4199426U,	// MADDRS_H_rrr1_LL
-    4199426U,	// MADDRS_H_rrr1_LU
-    4199426U,	// MADDRS_H_rrr1_UL
-    4199426U,	// MADDRS_H_rrr1_UU
-    2537559409U,	// MADDRS_Q_rrr1_L_L
-    2554336625U,	// MADDRS_Q_rrr1_U_U
-    4199278U,	// MADDR_H_rrr1_DcEdDaDbUL
-    4199278U,	// MADDR_H_rrr1_LL
-    4199278U,	// MADDR_H_rrr1_LU
-    4199278U,	// MADDR_H_rrr1_UL
-    4199278U,	// MADDR_H_rrr1_UU
-    2537559364U,	// MADDR_Q_rrr1_L_L
-    2554336580U,	// MADDR_Q_rrr1_U_U
-    4199392U,	// MADDSUMS_H_rrr1_LL
-    4199392U,	// MADDSUMS_H_rrr1_LU
-    4199392U,	// MADDSUMS_H_rrr1_UL
-    4199392U,	// MADDSUMS_H_rrr1_UU
-    4199227U,	// MADDSUM_H_rrr1_LL
-    4199227U,	// MADDSUM_H_rrr1_LU
-    4199227U,	// MADDSUM_H_rrr1_UL
-    4199227U,	// MADDSUM_H_rrr1_UU
-    4199436U,	// MADDSURS_H_rrr1_LL
-    4199436U,	// MADDSURS_H_rrr1_LU
-    4199436U,	// MADDSURS_H_rrr1_UL
-    4199436U,	// MADDSURS_H_rrr1_UU
-    4199295U,	// MADDSUR_H_rrr1_LL
-    4199295U,	// MADDSUR_H_rrr1_LU
-    4199295U,	// MADDSUR_H_rrr1_UL
-    4199295U,	// MADDSUR_H_rrr1_UU
-    4199456U,	// MADDSUS_H_rrr1_LL
-    4199456U,	// MADDSUS_H_rrr1_LU
-    4199456U,	// MADDSUS_H_rrr1_UL
-    4199456U,	// MADDSUS_H_rrr1_UU
-    4199496U,	// MADDSU_H_rrr1_LL
-    4199496U,	// MADDSU_H_rrr1_LU
-    4199496U,	// MADDSU_H_rrr1_UL
-    4199496U,	// MADDSU_H_rrr1_UU
-    4199333U,	// MADDS_H_rrr1_LL
-    4199333U,	// MADDS_H_rrr1_LU
-    4199333U,	// MADDS_H_rrr1_UL
-    4199333U,	// MADDS_H_rrr1_UU
-    4199774U,	// MADDS_Q_rrr1
-    4199774U,	// MADDS_Q_rrr1_L
-    2537559390U,	// MADDS_Q_rrr1_L_L
-    4199774U,	// MADDS_Q_rrr1_U
-    2554336606U,	// MADDS_Q_rrr1_U_U
-    4199774U,	// MADDS_Q_rrr1_e
-    4199774U,	// MADDS_Q_rrr1_e_L
-    2537559390U,	// MADDS_Q_rrr1_e_L_L
-    4199774U,	// MADDS_Q_rrr1_e_U
-    2554336606U,	// MADDS_Q_rrr1_e_U_U
-    806360922U,	// MADDS_U_rcr
-    806360922U,	// MADDS_U_rcr_e
-    4200282U,	// MADDS_U_rrr2
-    4200282U,	// MADDS_U_rrr2_e
-    806360538U,	// MADDS_rcr
-    806360538U,	// MADDS_rcr_e
-    4199898U,	// MADDS_rrr2
-    4199898U,	// MADDS_rrr2_e
-    4199055U,	// MADD_F_rrr
-    4199153U,	// MADD_H_rrr1_LL
-    4199153U,	// MADD_H_rrr1_LU
-    4199153U,	// MADD_H_rrr1_UL
-    4199153U,	// MADD_H_rrr1_UU
-    4199718U,	// MADD_Q_rrr1
-    4199718U,	// MADD_Q_rrr1_L
-    2537559334U,	// MADD_Q_rrr1_L_L
-    4199718U,	// MADD_Q_rrr1_U
-    2554336550U,	// MADD_Q_rrr1_U_U
-    4199718U,	// MADD_Q_rrr1_e
-    4199718U,	// MADD_Q_rrr1_e_L
-    2537559334U,	// MADD_Q_rrr1_e_L_L
-    4199718U,	// MADD_Q_rrr1_e_U
-    2554336550U,	// MADD_Q_rrr1_e_U_U
-    806360835U,	// MADD_U_rcr
-    4200195U,	// MADD_U_rrr2
-    806359594U,	// MADD_rcr
-    806359594U,	// MADD_rcr_e
-    4198954U,	// MADD_rrr2
-    4198954U,	// MADD_rrr2_e
-    4579U,	// MAX_B
-    6114U,	// MAX_BU
-    5202U,	// MAX_H
-    6181U,	// MAX_HU
-    268441513U,	// MAX_U_rc
-    6057U,	// MAX_U_rr
-    268441751U,	// MAX_rc
-    6295U,	// MAX_rr
-    11539869U,	// MFCR_rlc
-    4503U,	// MIN_B
-    6071U,	// MIN_BU
-    4934U,	// MIN_H
-    6129U,	// MIN_HU
-    268441400U,	// MIN_U_rc
-    5944U,	// MIN_U_rr
-    268440813U,	// MIN_rc
-    5357U,	// MIN_rr
-    11538685U,	// MOVH_A_rlc
-    11539572U,	// MOVH_rlc
-    17830202U,	// MOV_AA_rr
-    16781626U,	// MOV_AA_srr
-    3004U,	// MOV_A_rr
-    24121624U,	// MOV_A_src
-    16781592U,	// MOV_A_srr
-    17830429U,	// MOV_D_rr
-    16781853U,	// MOV_D_srr
-    11540384U,	// MOV_U_rlc
-    11540551U,	// MOV_rlcDc
-    11540551U,	// MOV_rlcEc
-    17832007U,	// MOV_rrDcDb
-    6215U,	// MOV_rrEcDaDb
-    17832007U,	// MOV_rrEcDb
-    139365U,	// MOV_sc
-    2103367U,	// MOV_srcDa
-    2103367U,	// MOV_srcEa
-    16783431U,	// MOV_srr
-    4199370U,	// MSUBADMS_H_rrr1_LL
-    4199370U,	// MSUBADMS_H_rrr1_LU
-    4199370U,	// MSUBADMS_H_rrr1_UL
-    4199370U,	// MSUBADMS_H_rrr1_UU
-    4199199U,	// MSUBADM_H_rrr1_LL
-    4199199U,	// MSUBADM_H_rrr1_LU
-    4199199U,	// MSUBADM_H_rrr1_UL
-    4199199U,	// MSUBADM_H_rrr1_UU
-    4199414U,	// MSUBADRS_H_rrr1_LL
-    4199414U,	// MSUBADRS_H_rrr1_LU
-    4199414U,	// MSUBADRS_H_rrr1_UL
-    4199414U,	// MSUBADRS_H_rrr1_UU
-    4199267U,	// MSUBADR_H_rrr1_LL
-    4199267U,	// MSUBADR_H_rrr1_LU
-    4199267U,	// MSUBADR_H_rrr1_UL
-    4199267U,	// MSUBADR_H_rrr1_UU
-    4199322U,	// MSUBADS_H_rrr1_LL
-    4199322U,	// MSUBADS_H_rrr1_LU
-    4199322U,	// MSUBADS_H_rrr1_UL
-    4199322U,	// MSUBADS_H_rrr1_UU
-    4199143U,	// MSUBAD_H_rrr1_LL
-    4199143U,	// MSUBAD_H_rrr1_LU
-    4199143U,	// MSUBAD_H_rrr1_UL
-    4199143U,	// MSUBAD_H_rrr1_UU
-    4199360U,	// MSUBMS_H_rrr1_LL
-    4199360U,	// MSUBMS_H_rrr1_LU
-    4199360U,	// MSUBMS_H_rrr1_UL
-    4199360U,	// MSUBMS_H_rrr1_UU
-    4199190U,	// MSUBM_H_rrr1_LL
-    4199190U,	// MSUBM_H_rrr1_LU
-    4199190U,	// MSUBM_H_rrr1_UL
-    4199190U,	// MSUBM_H_rrr1_UU
-    4199404U,	// MSUBRS_H_rrr1_DcEdDaDbUL
-    4199404U,	// MSUBRS_H_rrr1_LL
-    4199404U,	// MSUBRS_H_rrr1_LU
-    4199404U,	// MSUBRS_H_rrr1_UL
-    4199404U,	// MSUBRS_H_rrr1_UU
-    2537559399U,	// MSUBRS_Q_rrr1_L_L
-    2554336615U,	// MSUBRS_Q_rrr1_U_U
-    4199258U,	// MSUBR_H_rrr1_DcEdDaDbUL
-    4199258U,	// MSUBR_H_rrr1_LL
-    4199258U,	// MSUBR_H_rrr1_LU
-    4199258U,	// MSUBR_H_rrr1_UL
-    4199258U,	// MSUBR_H_rrr1_UU
-    2537559355U,	// MSUBR_Q_rrr1_L_L
-    2554336571U,	// MSUBR_Q_rrr1_U_U
-    4199313U,	// MSUBS_H_rrr1_LL
-    4199313U,	// MSUBS_H_rrr1_LU
-    4199313U,	// MSUBS_H_rrr1_UL
-    4199313U,	// MSUBS_H_rrr1_UU
-    4199765U,	// MSUBS_Q_rrr1
-    4199765U,	// MSUBS_Q_rrr1_L
-    2537559381U,	// MSUBS_Q_rrr1_L_L
-    4199765U,	// MSUBS_Q_rrr1_U
-    2554336597U,	// MSUBS_Q_rrr1_U_U
-    4199765U,	// MSUBS_Q_rrr1_e
-    4199765U,	// MSUBS_Q_rrr1_e_L
-    2537559381U,	// MSUBS_Q_rrr1_e_L_L
-    4199765U,	// MSUBS_Q_rrr1_e_U
-    2554336597U,	// MSUBS_Q_rrr1_e_U_U
-    806360922U,	// MSUBS_U_rcr
-    806360922U,	// MSUBS_U_rcr_e
-    4200282U,	// MSUBS_U_rrr2
-    4200282U,	// MSUBS_U_rrr2_e
-    806360524U,	// MSUBS_rcr
-    806360524U,	// MSUBS_rcr_e
-    4199884U,	// MSUBS_rrr2
-    4199884U,	// MSUBS_rrr2_e
-    4199047U,	// MSUB_F_rrr
-    4199135U,	// MSUB_H_rrr1_LL
-    4199135U,	// MSUB_H_rrr1_LU
-    4199135U,	// MSUB_H_rrr1_UL
-    4199135U,	// MSUB_H_rrr1_UU
-    4199710U,	// MSUB_Q_rrr1
-    4199710U,	// MSUB_Q_rrr1_L
-    2537559326U,	// MSUB_Q_rrr1_L_L
-    4199710U,	// MSUB_Q_rrr1_U
-    2554336542U,	// MSUB_Q_rrr1_U_U
-    4199710U,	// MSUB_Q_rrr1_e
-    4199710U,	// MSUB_Q_rrr1_e_L
-    2537559326U,	// MSUB_Q_rrr1_e_L_L
-    4199710U,	// MSUB_Q_rrr1_e_U
-    2554336542U,	// MSUB_Q_rrr1_e_U_U
-    806360835U,	// MSUB_U_rcr
-    4200195U,	// MSUB_U_rrr2
-    806359545U,	// MSUB_rcr
-    806359545U,	// MSUB_rcr_e
-    4198905U,	// MSUB_rrr2
-    4198905U,	// MSUB_rrr2_e
-    46499U,	// MTCR_rlc
-    4915U,	// MULM_H_rr1_LL2e
-    4915U,	// MULM_H_rr1_LU2e
-    4915U,	// MULM_H_rr1_UL2e
-    4915U,	// MULM_H_rr1_UU2e
-    4983U,	// MULR_H_rr1_LL2e
-    4983U,	// MULR_H_rr1_LU2e
-    4983U,	// MULR_H_rr1_UL2e
-    4983U,	// MULR_H_rr1_UU2e
-    2801800525U,	// MULR_Q_rr1_2LL
-    2818577741U,	// MULR_Q_rr1_2UU
-    268441443U,	// MULS_U_rc
-    5987U,	// MULS_U_rr2
-    268441071U,	// MULS_rc
-    5615U,	// MULS_rr2
-    4768U,	// MUL_F_rrr
-    4879U,	// MUL_H_rr1_LL2e
-    4879U,	// MUL_H_rr1_LU2e
-    4879U,	// MUL_H_rr1_UL2e
-    4879U,	// MUL_H_rr1_UU2e
-    2801800500U,	// MUL_Q_rr1_2LL
-    2818577716U,	// MUL_Q_rr1_2UU
-    5428U,	// MUL_Q_rr1_2_L
-    5428U,	// MUL_Q_rr1_2_Le
-    5428U,	// MUL_Q_rr1_2_U
-    5428U,	// MUL_Q_rr1_2_Ue
-    5428U,	// MUL_Q_rr1_2__
-    5428U,	// MUL_Q_rr1_2__e
-    268441391U,	// MUL_U_rc
-    5935U,	// MUL_U_rr2
-    268440787U,	// MUL_rc
-    268440787U,	// MUL_rc_e
-    5331U,	// MUL_rr2
-    5331U,	// MUL_rr2_e
-    16782547U,	// MUL_srr
-    1342182941U,	// NAND_T
-    268440118U,	// NAND_rc
-    4662U,	// NAND_rr
-    16781599U,	// NEZ_A
-    4334U,	// NE_A
-    268440182U,	// NE_rc
-    4726U,	// NE_rr
-    3079U,	// NOP_sr
-    3079U,	// NOP_sys
-    1342183033U,	// NOR_T
-    268441002U,	// NOR_rc
-    5546U,	// NOR_rr
-    136943U,	// NOT_sr
-    1342182986U,	// ORN_T
-    268440824U,	// ORN_rc
-    5368U,	// ORN_rr
-    1342182972U,	// OR_ANDN_T
-    1342182928U,	// OR_AND_T
-    268440977U,	// OR_EQ_rc
-    5521U,	// OR_EQ_rr
-    268441375U,	// OR_GE_U_rc
-    5919U,	// OR_GE_U_rr
-    268440140U,	// OR_GE_rc
-    4684U,	// OR_GE_rr
-    268441481U,	// OR_LT_U_rc
-    6025U,	// OR_LT_U_rr
-    268441315U,	// OR_LT_rc
-    5859U,	// OR_LT_rr
-    268440187U,	// OR_NE_rc
-    4731U,	// OR_NE_rr
-    1342183050U,	// OR_NOR_T
-    1342183020U,	// OR_OR_T
-    1342183005U,	// OR_T
-    268441003U,	// OR_rc
-    5547U,	// OR_rr
+    4199451U,	// MADDMS_H_rrr1_LL
+    4199451U,	// MADDMS_H_rrr1_LU
+    4199451U,	// MADDMS_H_rrr1_UL
+    4199451U,	// MADDMS_H_rrr1_UU
+    4199279U,	// MADDM_H_rrr1_LL
+    4199279U,	// MADDM_H_rrr1_LU
+    4199279U,	// MADDM_H_rrr1_UL
+    4199279U,	// MADDM_H_rrr1_UU
+    4199495U,	// MADDRS_H_rrr1_DcEdDaDbUL
+    4199495U,	// MADDRS_H_rrr1_LL
+    4199495U,	// MADDRS_H_rrr1_LU
+    4199495U,	// MADDRS_H_rrr1_UL
+    4199495U,	// MADDRS_H_rrr1_UU
+    2537559478U,	// MADDRS_Q_rrr1_L_L
+    2554336694U,	// MADDRS_Q_rrr1_U_U
+    4199347U,	// MADDR_H_rrr1_DcEdDaDbUL
+    4199347U,	// MADDR_H_rrr1_LL
+    4199347U,	// MADDR_H_rrr1_LU
+    4199347U,	// MADDR_H_rrr1_UL
+    4199347U,	// MADDR_H_rrr1_UU
+    2537559433U,	// MADDR_Q_rrr1_L_L
+    2554336649U,	// MADDR_Q_rrr1_U_U
+    4199461U,	// MADDSUMS_H_rrr1_LL
+    4199461U,	// MADDSUMS_H_rrr1_LU
+    4199461U,	// MADDSUMS_H_rrr1_UL
+    4199461U,	// MADDSUMS_H_rrr1_UU
+    4199296U,	// MADDSUM_H_rrr1_LL
+    4199296U,	// MADDSUM_H_rrr1_LU
+    4199296U,	// MADDSUM_H_rrr1_UL
+    4199296U,	// MADDSUM_H_rrr1_UU
+    4199505U,	// MADDSURS_H_rrr1_LL
+    4199505U,	// MADDSURS_H_rrr1_LU
+    4199505U,	// MADDSURS_H_rrr1_UL
+    4199505U,	// MADDSURS_H_rrr1_UU
+    4199364U,	// MADDSUR_H_rrr1_LL
+    4199364U,	// MADDSUR_H_rrr1_LU
+    4199364U,	// MADDSUR_H_rrr1_UL
+    4199364U,	// MADDSUR_H_rrr1_UU
+    4199525U,	// MADDSUS_H_rrr1_LL
+    4199525U,	// MADDSUS_H_rrr1_LU
+    4199525U,	// MADDSUS_H_rrr1_UL
+    4199525U,	// MADDSUS_H_rrr1_UU
+    4199565U,	// MADDSU_H_rrr1_LL
+    4199565U,	// MADDSU_H_rrr1_LU
+    4199565U,	// MADDSU_H_rrr1_UL
+    4199565U,	// MADDSU_H_rrr1_UU
+    4199402U,	// MADDS_H_rrr1_LL
+    4199402U,	// MADDS_H_rrr1_LU
+    4199402U,	// MADDS_H_rrr1_UL
+    4199402U,	// MADDS_H_rrr1_UU
+    4199843U,	// MADDS_Q_rrr1
+    4199843U,	// MADDS_Q_rrr1_L
+    2537559459U,	// MADDS_Q_rrr1_L_L
+    4199843U,	// MADDS_Q_rrr1_U
+    2554336675U,	// MADDS_Q_rrr1_U_U
+    4199843U,	// MADDS_Q_rrr1_e
+    4199843U,	// MADDS_Q_rrr1_e_L
+    2537559459U,	// MADDS_Q_rrr1_e_L_L
+    4199843U,	// MADDS_Q_rrr1_e_U
+    2554336675U,	// MADDS_Q_rrr1_e_U_U
+    806360991U,	// MADDS_U_rcr
+    806360991U,	// MADDS_U_rcr_e
+    4200351U,	// MADDS_U_rrr2
+    4200351U,	// MADDS_U_rrr2_e
+    806360607U,	// MADDS_rcr
+    806360607U,	// MADDS_rcr_e
+    4199967U,	// MADDS_rrr2
+    4199967U,	// MADDS_rrr2_e
+    4199124U,	// MADD_F_rrr
+    4199222U,	// MADD_H_rrr1_LL
+    4199222U,	// MADD_H_rrr1_LU
+    4199222U,	// MADD_H_rrr1_UL
+    4199222U,	// MADD_H_rrr1_UU
+    4199787U,	// MADD_Q_rrr1
+    4199787U,	// MADD_Q_rrr1_L
+    2537559403U,	// MADD_Q_rrr1_L_L
+    4199787U,	// MADD_Q_rrr1_U
+    2554336619U,	// MADD_Q_rrr1_U_U
+    4199787U,	// MADD_Q_rrr1_e
+    4199787U,	// MADD_Q_rrr1_e_L
+    2537559403U,	// MADD_Q_rrr1_e_L_L
+    4199787U,	// MADD_Q_rrr1_e_U
+    2554336619U,	// MADD_Q_rrr1_e_U_U
+    806360904U,	// MADD_U_rcr
+    4200264U,	// MADD_U_rrr2
+    806359663U,	// MADD_rcr
+    806359663U,	// MADD_rcr_e
+    4199023U,	// MADD_rrr2
+    4199023U,	// MADD_rrr2_e
+    4641U,	// MAX_B
+    6183U,	// MAX_BU
+    5271U,	// MAX_H
+    6250U,	// MAX_HU
+    268441582U,	// MAX_U_rc
+    6126U,	// MAX_U_rr
+    268441820U,	// MAX_rc
+    6364U,	// MAX_rr
+    11539938U,	// MFCR_rlc
+    4551U,	// MIN_B
+    6140U,	// MIN_BU
+    5003U,	// MIN_H
+    6198U,	// MIN_HU
+    268441469U,	// MIN_U_rc
+    6013U,	// MIN_U_rr
+    268440882U,	// MIN_rc
+    5426U,	// MIN_rr
+    11538715U,	// MOVH_A_rlc
+    11539641U,	// MOVH_rlc
+    17830250U,	// MOV_AA_rr
+    16781674U,	// MOV_AA_srr
+    3092U,	// MOV_A_rr
+    24121672U,	// MOV_A_src
+    16781640U,	// MOV_A_srr
+    17830498U,	// MOV_D_rr
+    16781922U,	// MOV_D_srr
+    11540453U,	// MOV_U_rlc
+    11540620U,	// MOV_rlcDc
+    11540620U,	// MOV_rlcEc
+    17832076U,	// MOV_rrDcDb
+    6284U,	// MOV_rrEcDaDb
+    17832076U,	// MOV_rrEcDb
+    139377U,	// MOV_sc
+    2103436U,	// MOV_srcDa
+    2103436U,	// MOV_srcEa
+    16783500U,	// MOV_srr
+    4199439U,	// MSUBADMS_H_rrr1_LL
+    4199439U,	// MSUBADMS_H_rrr1_LU
+    4199439U,	// MSUBADMS_H_rrr1_UL
+    4199439U,	// MSUBADMS_H_rrr1_UU
+    4199268U,	// MSUBADM_H_rrr1_LL
+    4199268U,	// MSUBADM_H_rrr1_LU
+    4199268U,	// MSUBADM_H_rrr1_UL
+    4199268U,	// MSUBADM_H_rrr1_UU
+    4199483U,	// MSUBADRS_H_rrr1_LL
+    4199483U,	// MSUBADRS_H_rrr1_LU
+    4199483U,	// MSUBADRS_H_rrr1_UL
+    4199483U,	// MSUBADRS_H_rrr1_UU
+    4199336U,	// MSUBADR_H_rrr1_LL
+    4199336U,	// MSUBADR_H_rrr1_LU
+    4199336U,	// MSUBADR_H_rrr1_UL
+    4199336U,	// MSUBADR_H_rrr1_UU
+    4199391U,	// MSUBADS_H_rrr1_LL
+    4199391U,	// MSUBADS_H_rrr1_LU
+    4199391U,	// MSUBADS_H_rrr1_UL
+    4199391U,	// MSUBADS_H_rrr1_UU
+    4199212U,	// MSUBAD_H_rrr1_LL
+    4199212U,	// MSUBAD_H_rrr1_LU
+    4199212U,	// MSUBAD_H_rrr1_UL
+    4199212U,	// MSUBAD_H_rrr1_UU
+    4199429U,	// MSUBMS_H_rrr1_LL
+    4199429U,	// MSUBMS_H_rrr1_LU
+    4199429U,	// MSUBMS_H_rrr1_UL
+    4199429U,	// MSUBMS_H_rrr1_UU
+    4199259U,	// MSUBM_H_rrr1_LL
+    4199259U,	// MSUBM_H_rrr1_LU
+    4199259U,	// MSUBM_H_rrr1_UL
+    4199259U,	// MSUBM_H_rrr1_UU
+    4199473U,	// MSUBRS_H_rrr1_DcEdDaDbUL
+    4199473U,	// MSUBRS_H_rrr1_LL
+    4199473U,	// MSUBRS_H_rrr1_LU
+    4199473U,	// MSUBRS_H_rrr1_UL
+    4199473U,	// MSUBRS_H_rrr1_UU
+    2537559468U,	// MSUBRS_Q_rrr1_L_L
+    2554336684U,	// MSUBRS_Q_rrr1_U_U
+    4199327U,	// MSUBR_H_rrr1_DcEdDaDbUL
+    4199327U,	// MSUBR_H_rrr1_LL
+    4199327U,	// MSUBR_H_rrr1_LU
+    4199327U,	// MSUBR_H_rrr1_UL
+    4199327U,	// MSUBR_H_rrr1_UU
+    2537559424U,	// MSUBR_Q_rrr1_L_L
+    2554336640U,	// MSUBR_Q_rrr1_U_U
+    4199382U,	// MSUBS_H_rrr1_LL
+    4199382U,	// MSUBS_H_rrr1_LU
+    4199382U,	// MSUBS_H_rrr1_UL
+    4199382U,	// MSUBS_H_rrr1_UU
+    4199834U,	// MSUBS_Q_rrr1
+    4199834U,	// MSUBS_Q_rrr1_L
+    2537559450U,	// MSUBS_Q_rrr1_L_L
+    4199834U,	// MSUBS_Q_rrr1_U
+    2554336666U,	// MSUBS_Q_rrr1_U_U
+    4199834U,	// MSUBS_Q_rrr1_e
+    4199834U,	// MSUBS_Q_rrr1_e_L
+    2537559450U,	// MSUBS_Q_rrr1_e_L_L
+    4199834U,	// MSUBS_Q_rrr1_e_U
+    2554336666U,	// MSUBS_Q_rrr1_e_U_U
+    806360991U,	// MSUBS_U_rcr
+    806360991U,	// MSUBS_U_rcr_e
+    4200351U,	// MSUBS_U_rrr2
+    4200351U,	// MSUBS_U_rrr2_e
+    806360593U,	// MSUBS_rcr
+    806360593U,	// MSUBS_rcr_e
+    4199953U,	// MSUBS_rrr2
+    4199953U,	// MSUBS_rrr2_e
+    4199116U,	// MSUB_F_rrr
+    4199204U,	// MSUB_H_rrr1_LL
+    4199204U,	// MSUB_H_rrr1_LU
+    4199204U,	// MSUB_H_rrr1_UL
+    4199204U,	// MSUB_H_rrr1_UU
+    4199779U,	// MSUB_Q_rrr1
+    4199779U,	// MSUB_Q_rrr1_L
+    2537559395U,	// MSUB_Q_rrr1_L_L
+    4199779U,	// MSUB_Q_rrr1_U
+    2554336611U,	// MSUB_Q_rrr1_U_U
+    4199779U,	// MSUB_Q_rrr1_e
+    4199779U,	// MSUB_Q_rrr1_e_L
+    2537559395U,	// MSUB_Q_rrr1_e_L_L
+    4199779U,	// MSUB_Q_rrr1_e_U
+    2554336611U,	// MSUB_Q_rrr1_e_U_U
+    806360904U,	// MSUB_U_rcr
+    4200264U,	// MSUB_U_rrr2
+    806359614U,	// MSUB_rcr
+    806359614U,	// MSUB_rcr_e
+    4198974U,	// MSUB_rrr2
+    4198974U,	// MSUB_rrr2_e
+    46568U,	// MTCR_rlc
+    4984U,	// MULM_H_rr1_LL2e
+    4984U,	// MULM_H_rr1_LU2e
+    4984U,	// MULM_H_rr1_UL2e
+    4984U,	// MULM_H_rr1_UU2e
+    5052U,	// MULR_H_rr1_LL2e
+    5052U,	// MULR_H_rr1_LU2e
+    5052U,	// MULR_H_rr1_UL2e
+    5052U,	// MULR_H_rr1_UU2e
+    2801800594U,	// MULR_Q_rr1_2LL
+    2818577810U,	// MULR_Q_rr1_2UU
+    268441512U,	// MULS_U_rc
+    6056U,	// MULS_U_rr2
+    268441140U,	// MULS_rc
+    5684U,	// MULS_rr2
+    4837U,	// MUL_F_rrr
+    4948U,	// MUL_H_rr1_LL2e
+    4948U,	// MUL_H_rr1_LU2e
+    4948U,	// MUL_H_rr1_UL2e
+    4948U,	// MUL_H_rr1_UU2e
+    2801800569U,	// MUL_Q_rr1_2LL
+    2818577785U,	// MUL_Q_rr1_2UU
+    5497U,	// MUL_Q_rr1_2_L
+    5497U,	// MUL_Q_rr1_2_Le
+    5497U,	// MUL_Q_rr1_2_U
+    5497U,	// MUL_Q_rr1_2_Ue
+    5497U,	// MUL_Q_rr1_2__
+    5497U,	// MUL_Q_rr1_2__e
+    268441460U,	// MUL_U_rc
+    6004U,	// MUL_U_rr2
+    268440856U,	// MUL_rc
+    268440856U,	// MUL_rc_e
+    5400U,	// MUL_rr2
+    5400U,	// MUL_rr2_e
+    16782616U,	// MUL_srr
+    1342183010U,	// NAND_T
+    268440187U,	// NAND_rc
+    4731U,	// NAND_rr
+    16781647U,	// NEZ_A
+    4364U,	// NE_A
+    268440251U,	// NE_rc
+    4795U,	// NE_rr
+    3167U,	// NOP_sr
+    3167U,	// NOP_sys
+    1342183102U,	// NOR_T
+    268441071U,	// NOR_rc
+    5615U,	// NOR_rr
+    137012U,	// NOT_sr
+    1342183055U,	// ORN_T
+    268440893U,	// ORN_rc
+    5437U,	// ORN_rr
+    1342183041U,	// OR_ANDN_T
+    1342182997U,	// OR_AND_T
+    268441046U,	// OR_EQ_rc
+    5590U,	// OR_EQ_rr
+    268441444U,	// OR_GE_U_rc
+    5988U,	// OR_GE_U_rr
+    268440209U,	// OR_GE_rc
+    4753U,	// OR_GE_rr
+    268441550U,	// OR_LT_U_rc
+    6094U,	// OR_LT_U_rr
+    268441384U,	// OR_LT_rc
+    5928U,	// OR_LT_rr
+    268440256U,	// OR_NE_rc
+    4800U,	// OR_NE_rr
+    1342183119U,	// OR_NOR_T
+    1342183089U,	// OR_OR_T
+    1342183074U,	// OR_T
+    268441072U,	// OR_rc
+    5616U,	// OR_rr
     139320U,	// OR_sc
-    16782763U,	// OR_srr
-    806360230U,	// PACK_rrr
-    16783556U,	// PARITY_rr
-    16783493U,	// POPCNT_W_rr
-    4797U,	// Q31TOF_rr
-    16781975U,	// QSEED_F_rr
-    3041U,	// RESTORE_sys
-    3084U,	// RET_sr
-    3084U,	// RET_sys
-    3022U,	// RFE_sr
-    3022U,	// RFE_sys
-    3075U,	// RFM_sys
-    3055U,	// RSLCX_sys
-    3041U,	// RSTV_sys
-    268441425U,	// RSUBS_U_rc
-    268441043U,	// RSUBS_rc
-    268440063U,	// RSUB_rc
-    135679U,	// RSUB_sr
-    16783304U,	// SAT_BU_rr
-    137160U,	// SAT_BU_sr
-    16781766U,	// SAT_B_rr
-    135622U,	// SAT_B_sr
-    16783371U,	// SAT_HU_rr
-    137227U,	// SAT_HU_sr
-    16782379U,	// SAT_H_rr
-    136235U,	// SAT_H_sr
-    806360306U,	// SELN_rcr
-    4199666U,	// SELN_rrr
-    806360243U,	// SEL_rcr
-    4199603U,	// SEL_rrr
-    268441025U,	// SHAS_rc
-    5569U,	// SHAS_rr
-    268440280U,	// SHA_H_rc
-    4824U,	// SHA_H_rr
-    268439898U,	// SHA_rc
-    4442U,	// SHA_rr
-    2101594U,	// SHA_src
-    268440169U,	// SHUFFLE_rc
-    1342182961U,	// SH_ANDN_T
-    1342182918U,	// SH_AND_T
-    268440969U,	// SH_EQ_rc
-    5513U,	// SH_EQ_rr
-    268441365U,	// SH_GE_U_rc
-    5909U,	// SH_GE_U_rr
-    268440132U,	// SH_GE_rc
-    4676U,	// SH_GE_rr
-    268440329U,	// SH_H_rc
-    4873U,	// SH_H_rr
-    268441471U,	// SH_LT_U_rc
-    6015U,	// SH_LT_U_rr
-    268441307U,	// SH_LT_rc
-    5851U,	// SH_LT_rr
-    1342182938U,	// SH_NAND_T
-    268441307U,	// SH_NE_rc
-    5851U,	// SH_NE_rr
-    1342183040U,	// SH_NOR_T
-    1342182983U,	// SH_ORN_T
-    1342183011U,	// SH_OR_T
-    1342183060U,	// SH_XNOR_T
-    1342183071U,	// SH_XOR_T
-    268440688U,	// SH_rc
-    5232U,	// SH_rr
-    2102384U,	// SH_src
-    166057U,	// STLCX_abs
-    3349352U,	// STLCX_bo_bso
-    166071U,	// STUCX_abs
-    3349368U,	// STUCX_bo_bso
-    37138U,	// ST_A_abs
-    5462736U,	// ST_A_bo_bso
-    67571986U,	// ST_A_bo_c
-    1969705234U,	// ST_A_bo_pos
-    1936216338U,	// ST_A_bo_pre
-    101126418U,	// ST_A_bo_r
-    12786384U,	// ST_A_bol
-    663731U,	// ST_A_sc
-    158538448U,	// ST_A_sro
-    727760U,	// ST_A_ssr
-    793296U,	// ST_A_ssr_pos
-    52096U,	// ST_A_ssro
-    37341U,	// ST_B_abs
-    5462751U,	// ST_B_bo_bso
-    67572189U,	// ST_B_bo_c
-    1969705437U,	// ST_B_bo_pos
-    1936216541U,	// ST_B_bo_pre
-    101126621U,	// ST_B_bo_r
-    12786399U,	// ST_B_bol
-    175315679U,	// ST_B_sro
-    727775U,	// ST_B_ssr
-    793311U,	// ST_B_ssr_pos
-    52108U,	// ST_B_ssro
-    37193U,	// ST_DA_abs
-    5462743U,	// ST_DA_bo_bso
-    67572041U,	// ST_DA_bo_c
-    1969705289U,	// ST_DA_bo_pos
-    1936216393U,	// ST_DA_bo_pre
-    101126473U,	// ST_DA_bo_r
-    37399U,	// ST_D_abs
-    5462758U,	// ST_D_bo_bso
-    67572247U,	// ST_D_bo_c
-    1969705495U,	// ST_D_bo_pos
-    1936216599U,	// ST_D_bo_pre
-    101126679U,	// ST_D_bo_r
-    37954U,	// ST_H_abs
-    5462765U,	// ST_H_bo_bso
-    67572802U,	// ST_H_bo_c
-    1969706050U,	// ST_H_bo_pos
-    1936217154U,	// ST_H_bo_pre
-    101127234U,	// ST_H_bo_r
-    12786413U,	// ST_H_bol
-    175315693U,	// ST_H_sro
-    727789U,	// ST_H_ssr
-    793325U,	// ST_H_ssr_pos
-    52120U,	// ST_H_ssro
-    38267U,	// ST_Q_abs
-    5462816U,	// ST_Q_bo_bso
-    67573115U,	// ST_Q_bo_c
-    1969706363U,	// ST_Q_bo_pos
-    1936217467U,	// ST_Q_bo_pre
-    101127547U,	// ST_Q_bo_r
-    34480U,	// ST_T
-    39055U,	// ST_W_abs
-    5462873U,	// ST_W_bo_bso
-    67573903U,	// ST_W_bo_c
-    1969707151U,	// ST_W_bo_pos
-    1936218255U,	// ST_W_bo_pre
-    101128335U,	// ST_W_bo_r
-    12786521U,	// ST_W_bol
-    175315801U,	// ST_W_sro
-    727897U,	// ST_W_ssr
-    793433U,	// ST_W_ssr_pos
-    52132U,	// ST_W_ssro
-    4613U,	// SUBC_rr
-    6137U,	// SUBS_HU_rr
-    5010U,	// SUBS_H_rr
-    5970U,	// SUBS_U_rr
-    5581U,	// SUBS_rr
-    16782797U,	// SUBS_srr
-    6300U,	// SUBX_rr
-    2992U,	// SUB_A_rr
-    139431U,	// SUB_A_sc
-    4473U,	// SUB_B_rr
-    806359688U,	// SUB_F_rrr
-    4832U,	// SUB_H_rr
-    4596U,	// SUB_rr
-    16781812U,	// SUB_srr
+    16782832U,	// OR_srr
+    806360299U,	// PACK_rrr
+    16783625U,	// PARITY_rr
+    16783562U,	// POPCNT_W_rr
+    4866U,	// Q31TOF_rr
+    16782044U,	// QSEED_F_rr
+    3129U,	// RESTORE_sys
+    3172U,	// RET_sr
+    3172U,	// RET_sys
+    3110U,	// RFE_sr
+    3110U,	// RFE_sys
+    3163U,	// RFM_sys
+    3143U,	// RSLCX_sys
+    3129U,	// RSTV_sys
+    268441494U,	// RSUBS_U_rc
+    268441112U,	// RSUBS_rc
+    268440132U,	// RSUB_rc
+    135748U,	// RSUB_sr
+    16783373U,	// SAT_BU_rr
+    137229U,	// SAT_BU_sr
+    16781828U,	// SAT_B_rr
+    135684U,	// SAT_B_sr
+    16783440U,	// SAT_HU_rr
+    137296U,	// SAT_HU_sr
+    16782448U,	// SAT_H_rr
+    136304U,	// SAT_H_sr
+    806360375U,	// SELN_rcr
+    4199735U,	// SELN_rrr
+    806360312U,	// SEL_rcr
+    4199672U,	// SEL_rrr
+    268441094U,	// SHAS_rc
+    5638U,	// SHAS_rr
+    268440349U,	// SHA_H_rc
+    4893U,	// SHA_H_rr
+    268439946U,	// SHA_rc
+    4490U,	// SHA_rr
+    2101642U,	// SHA_src
+    268440238U,	// SHUFFLE_rc
+    1342183030U,	// SH_ANDN_T
+    1342182987U,	// SH_AND_T
+    268441038U,	// SH_EQ_rc
+    5582U,	// SH_EQ_rr
+    268441434U,	// SH_GE_U_rc
+    5978U,	// SH_GE_U_rr
+    268440201U,	// SH_GE_rc
+    4745U,	// SH_GE_rr
+    268440398U,	// SH_H_rc
+    4942U,	// SH_H_rr
+    268441540U,	// SH_LT_U_rc
+    6084U,	// SH_LT_U_rr
+    268441376U,	// SH_LT_rc
+    5920U,	// SH_LT_rr
+    1342183007U,	// SH_NAND_T
+    268441376U,	// SH_NE_rc
+    5920U,	// SH_NE_rr
+    1342183109U,	// SH_NOR_T
+    1342183052U,	// SH_ORN_T
+    1342183080U,	// SH_OR_T
+    1342183129U,	// SH_XNOR_T
+    1342183140U,	// SH_XOR_T
+    268440757U,	// SH_rc
+    5301U,	// SH_rr
+    2102453U,	// SH_src
+    166126U,	// STLCX_abs
+    3349440U,	// STLCX_bo_bso
+    166140U,	// STUCX_abs
+    3349456U,	// STUCX_bo_bso
+    37186U,	// ST_A_abs
+    5466917U,	// ST_A_bo_bso
+    67637570U,	// ST_A_bo_c
+    1969774914U,	// ST_A_bo_pos
+    1936286018U,	// ST_A_bo_pre
+    101192002U,	// ST_A_bo_r
+    12786469U,	// ST_A_bol
+    729279U,	// ST_A_sc
+    158538533U,	// ST_A_sro
+    793381U,	// ST_A_ssr
+    858917U,	// ST_A_ssr_pos
+    52184U,	// ST_A_ssro
+    37403U,	// ST_B_abs
+    5466932U,	// ST_B_bo_bso
+    67637787U,	// ST_B_bo_c
+    1969775131U,	// ST_B_bo_pos
+    1936286235U,	// ST_B_bo_pre
+    101192219U,	// ST_B_bo_r
+    12786484U,	// ST_B_bol
+    175315764U,	// ST_B_sro
+    793396U,	// ST_B_ssr
+    858932U,	// ST_B_ssr_pos
+    52196U,	// ST_B_ssro
+    37241U,	// ST_DA_abs
+    5466924U,	// ST_DA_bo_bso
+    67637625U,	// ST_DA_bo_c
+    1969774969U,	// ST_DA_bo_pos
+    1936286073U,	// ST_DA_bo_pre
+    101192057U,	// ST_DA_bo_r
+    37468U,	// ST_D_abs
+    5466939U,	// ST_D_bo_bso
+    67637852U,	// ST_D_bo_c
+    1969775196U,	// ST_D_bo_pos
+    1936286300U,	// ST_D_bo_pre
+    101192284U,	// ST_D_bo_r
+    38023U,	// ST_H_abs
+    5466946U,	// ST_H_bo_bso
+    67638407U,	// ST_H_bo_c
+    1969775751U,	// ST_H_bo_pos
+    1936286855U,	// ST_H_bo_pre
+    101192839U,	// ST_H_bo_r
+    12786498U,	// ST_H_bol
+    175315778U,	// ST_H_sro
+    793410U,	// ST_H_ssr
+    858946U,	// ST_H_ssr_pos
+    52208U,	// ST_H_ssro
+    38336U,	// ST_Q_abs
+    5466999U,	// ST_Q_bo_bso
+    67638720U,	// ST_Q_bo_c
+    1969776064U,	// ST_Q_bo_pos
+    1936287168U,	// ST_Q_bo_pre
+    101193152U,	// ST_Q_bo_r
+    34549U,	// ST_T
+    39124U,	// ST_W_abs
+    5467057U,	// ST_W_bo_bso
+    67639508U,	// ST_W_bo_c
+    1969776852U,	// ST_W_bo_pos
+    1936287956U,	// ST_W_bo_pre
+    101193940U,	// ST_W_bo_r
+    12786609U,	// ST_W_bol
+    175315889U,	// ST_W_sro
+    793521U,	// ST_W_ssr
+    859057U,	// ST_W_ssr_pos
+    52220U,	// ST_W_ssro
+    4682U,	// SUBC_rr
+    6206U,	// SUBS_HU_rr
+    5079U,	// SUBS_H_rr
+    6039U,	// SUBS_U_rr
+    5650U,	// SUBS_rr
+    16782866U,	// SUBS_srr
+    6369U,	// SUBX_rr
+    3080U,	// SUB_A_rr
+    139443U,	// SUB_A_sc
+    4521U,	// SUB_B_rr
+    806359757U,	// SUB_F_rrr
+    4901U,	// SUB_H_rr
+    4665U,	// SUB_rr
+    16781881U,	// SUB_srr
     16781313U,	// SUB_srr_15a
-    16847348U,	// SUB_srr_a15
-    3106U,	// SVLCX_sys
-    5462852U,	// SWAPMSK_W_bo_bso
-    67573852U,	// SWAPMSK_W_bo_c
-    1969707100U,	// SWAPMSK_W_bo_pos
-    1936218204U,	// SWAPMSK_W_bo_pre
-    101128284U,	// SWAPMSK_W_bo_r
-    39025U,	// SWAP_W_abs
-    5462864U,	// SWAP_W_bo_bso
-    67573873U,	// SWAP_W_bo_c
-    1969707121U,	// SWAP_W_bo_pos
-    1936218225U,	// SWAP_W_bo_pre
-    101128305U,	// SWAP_W_bo_r
-    13514U,	// SYSCALL_rc
-    3099U,	// TRAPSV_sys
-    3093U,	// TRAPV_sys
-    16782500U,	// UNPACK_rr
-    152760U,	// UPDFL_rr
-    16782034U,	// UTOF_rr
-    3088U,	// WAIT_sys
-    1342183063U,	// XNOR_T
-    268441001U,	// XNOR_rc
-    5545U,	// XNOR_rr
-    268440976U,	// XOR_EQ_rc
-    5520U,	// XOR_EQ_rr
-    268441374U,	// XOR_GE_U_rc
-    5918U,	// XOR_GE_U_rr
-    268440139U,	// XOR_GE_rc
-    4683U,	// XOR_GE_rr
-    268441480U,	// XOR_LT_U_rc
-    6024U,	// XOR_LT_U_rr
-    268441314U,	// XOR_LT_rc
-    5858U,	// XOR_LT_rr
-    268440186U,	// XOR_NE_rc
-    4730U,	// XOR_NE_rr
-    1342183074U,	// XOR_T
-    268441007U,	// XOR_rc
-    5551U,	// XOR_rr
-    16782767U,	// XOR_srr
+    16847417U,	// SUB_srr_a15
+    3194U,	// SVLCX_sys
+    5467036U,	// SWAPMSK_W_bo_bso
+    67639457U,	// SWAPMSK_W_bo_c
+    1969776801U,	// SWAPMSK_W_bo_pos
+    1936287905U,	// SWAPMSK_W_bo_pre
+    101193889U,	// SWAPMSK_W_bo_r
+    39094U,	// SWAP_W_abs
+    5467048U,	// SWAP_W_bo_bso
+    67639478U,	// SWAP_W_bo_c
+    1969776822U,	// SWAP_W_bo_pos
+    1936287926U,	// SWAP_W_bo_pre
+    101193910U,	// SWAP_W_bo_r
+    13583U,	// SYSCALL_rc
+    3187U,	// TRAPSV_sys
+    3181U,	// TRAPV_sys
+    16782569U,	// UNPACK_rr
+    136445U,	// UPDFL_rr
+    16782103U,	// UTOF_rr
+    3176U,	// WAIT_sys
+    1342183132U,	// XNOR_T
+    268441070U,	// XNOR_rc
+    5614U,	// XNOR_rr
+    268441045U,	// XOR_EQ_rc
+    5589U,	// XOR_EQ_rr
+    268441443U,	// XOR_GE_U_rc
+    5987U,	// XOR_GE_U_rr
+    268440208U,	// XOR_GE_rc
+    4752U,	// XOR_GE_rr
+    268441549U,	// XOR_LT_U_rc
+    6093U,	// XOR_LT_U_rr
+    268441383U,	// XOR_LT_rc
+    5927U,	// XOR_LT_rr
+    268440255U,	// XOR_NE_rc
+    4799U,	// XOR_NE_rr
+    1342183143U,	// XOR_T
+    268441076U,	// XOR_rc
+    5620U,	// XOR_rr
+    16782836U,	// XOR_srr
   };
 
   static const uint8_t OpInfo1[] = {
@@ -1737,12 +1817,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// ADDIH_A_rlc
     0U,	// ADDIH_rlc
     0U,	// ADDI_rlc
+    0U,	// ADDSC_AT_rr
     0U,	// ADDSC_AT_rr_v110
-    0U,	// ADDSC_AT_rr_v120u
+    1U,	// ADDSC_A_rr
     1U,	// ADDSC_A_rr_v110
-    1U,	// ADDSC_A_rr_v120u
+    0U,	// ADDSC_A_srrs
     0U,	// ADDSC_A_srrs_v110
-    0U,	// ADDSC_A_srrs_v120u
     0U,	// ADDS_BU_rr_v110
     0U,	// ADDS_B_rr_v110
     0U,	// ADDS_H
@@ -1790,12 +1870,33 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// AND_T
     0U,	// AND_rc
     0U,	// AND_rr
-    0U,	// AND_src
+    0U,	// AND_sc
+    0U,	// AND_sc_v110
     0U,	// AND_srr
+    0U,	// AND_srr_v110
     0U,	// BISR_rc
+    0U,	// BISR_rc_v161
     0U,	// BISR_sc
-    0U,	// BMAERGE_rr
+    0U,	// BISR_sc_v110
+    0U,	// BMERGAE_rr_v110
+    0U,	// BMERGE_rr
     0U,	// BSPLIT_rr
+    0U,	// BSPLIT_rr_v110
+    0U,	// CACHEA_I_bo_bso
+    0U,	// CACHEA_I_bo_c
+    0U,	// CACHEA_I_bo_pos
+    0U,	// CACHEA_I_bo_pre
+    0U,	// CACHEA_I_bo_r
+    0U,	// CACHEA_WI_bo_bso
+    0U,	// CACHEA_WI_bo_c
+    0U,	// CACHEA_WI_bo_pos
+    0U,	// CACHEA_WI_bo_pre
+    0U,	// CACHEA_WI_bo_r
+    0U,	// CACHEA_W_bo_bso
+    0U,	// CACHEA_W_bo_c
+    0U,	// CACHEA_W_bo_pos
+    0U,	// CACHEA_W_bo_pre
+    0U,	// CACHEA_W_bo_r
     0U,	// CACHEI_I_bo_bso
     0U,	// CACHEI_I_bo_pos
     0U,	// CACHEI_I_bo_pre
@@ -1807,35 +1908,30 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// CACHEI_W_bo_pos
     0U,	// CACHEI_W_bo_pre
     0U,	// CACHEI_W_bo_r
-    0U,	// CACHE_I_bo_bso
-    0U,	// CACHE_I_bo_c
-    0U,	// CACHE_I_bo_pos
-    0U,	// CACHE_I_bo_pre
-    0U,	// CACHE_I_bo_r
-    0U,	// CACHE_WI_bo_bso
-    0U,	// CACHE_WI_bo_c
-    0U,	// CACHE_WI_bo_pos
-    0U,	// CACHE_WI_bo_pre
-    0U,	// CACHE_WI_bo_r
-    0U,	// CACHE_W_bo_bso
-    0U,	// CACHE_W_bo_c
-    0U,	// CACHE_W_bo_pos
-    0U,	// CACHE_W_bo_pre
-    0U,	// CACHE_W_bo_r
+    17U,	// CADDN_A_rcr_v110
+    0U,	// CADDN_A_rrr_v110
     17U,	// CADDN_rcr
     0U,	// CADDN_rrr
     0U,	// CADDN_src
+    0U,	// CADDN_srr_v110
+    17U,	// CADD_A_rcr_v110
+    0U,	// CADD_A_rrr_v110
     17U,	// CADD_rcr
     0U,	// CADD_rrr
     0U,	// CADD_src
+    0U,	// CADD_srr_v110
     0U,	// CALLA_b
     0U,	// CALLI_rr
+    0U,	// CALLI_rr_v110
     0U,	// CALL_b
     0U,	// CALL_sb
+    0U,	// CLO_B_rr_v110
     0U,	// CLO_H_rr
     0U,	// CLO_rr
+    0U,	// CLS_B_rr_v110
     0U,	// CLS_H_rr
     0U,	// CLS_rr
+    0U,	// CLZ_B_rr_v110
     0U,	// CLZ_H_rr
     0U,	// CLZ_rr
     0U,	// CMOVN_src
@@ -1852,12 +1948,15 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// CRC32L_W_rr
     0U,	// CRC32_B_rr
     0U,	// CRCN_rrr
+    0U,	// CSUBN_A_rrr_v110
     0U,	// CSUBN_rrr
+    0U,	// CSUB_A_rrr_v110
     0U,	// CSUB_rrr
     0U,	// DEBUG_sr
     0U,	// DEBUG_sys
     1U,	// DEXTR_rrpw
     1U,	// DEXTR_rrrr
+    33U,	// DIFSC_A_rr_v110
     0U,	// DISABLE_sys
     0U,	// DISABLE_sys_1
     0U,	// DIV_F_rr
@@ -1865,14 +1964,26 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// DIV_rr
     0U,	// DSYNC_sys
     0U,	// DVADJ_rrr
+    0U,	// DVADJ_rrr_v110
+    0U,	// DVADJ_srr_v110
     0U,	// DVINIT_BU_rr
+    0U,	// DVINIT_BU_rr_v110
     0U,	// DVINIT_B_rr
+    0U,	// DVINIT_B_rr_v110
     0U,	// DVINIT_HU_rr
+    0U,	// DVINIT_HU_rr_v110
     0U,	// DVINIT_H_rr
+    0U,	// DVINIT_H_rr_v110
     0U,	// DVINIT_U_rr
+    0U,	// DVINIT_U_rr_v110
     0U,	// DVINIT_rr
+    0U,	// DVINIT_rr_v110
     0U,	// DVSTEP_U_rrr
+    0U,	// DVSTEP_U_rrrv110
+    0U,	// DVSTEP_Uv110
     0U,	// DVSTEP_rrr
+    0U,	// DVSTEP_rrrv110
+    0U,	// DVSTEPv110
     0U,	// ENABLE_sys
     0U,	// EQANY_B_rc
     0U,	// EQANY_B_rr
@@ -1935,20 +2046,29 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// JEQ_brr
     0U,	// JEQ_sbc1
     0U,	// JEQ_sbc2
+    0U,	// JEQ_sbc_v110
     0U,	// JEQ_sbr1
     0U,	// JEQ_sbr2
+    0U,	// JEQ_sbr_v110
     0U,	// JGEZ_sbr
+    0U,	// JGEZ_sbr_v110
     0U,	// JGE_U_brc
     0U,	// JGE_U_brr
     0U,	// JGE_brc
     0U,	// JGE_brr
     0U,	// JGTZ_sbr
+    0U,	// JGTZ_sbr_v110
     0U,	// JI_rr
+    0U,	// JI_rr_v110
+    0U,	// JI_sbr_v110
     0U,	// JI_sr
     0U,	// JLA_b
     0U,	// JLEZ_sbr
+    0U,	// JLEZ_sbr_v110
     0U,	// JLI_rr
+    0U,	// JLI_rr_v110
     0U,	// JLTZ_sbr
+    0U,	// JLTZ_sbr_v110
     0U,	// JLT_U_brc
     0U,	// JLT_U_brr
     0U,	// JLT_brc
@@ -1963,22 +2083,31 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// JNE_brr
     0U,	// JNE_sbc1
     0U,	// JNE_sbc2
+    0U,	// JNE_sbc_v110
     0U,	// JNE_sbr1
     0U,	// JNE_sbr2
+    0U,	// JNE_sbr_v110
     0U,	// JNZ_A_brr
     0U,	// JNZ_A_sbr
     0U,	// JNZ_T_brn
     0U,	// JNZ_T_sbrn
+    0U,	// JNZ_T_sbrn_v110
     0U,	// JNZ_sb
+    0U,	// JNZ_sb_v110
     0U,	// JNZ_sbr
+    0U,	// JNZ_sbr_v110
     0U,	// JZ_A_brr
     0U,	// JZ_A_sbr
     0U,	// JZ_T_brn
     0U,	// JZ_T_sbrn
+    0U,	// JZ_T_sbrn_v110
     0U,	// JZ_sb
+    0U,	// JZ_sb_v110
     0U,	// JZ_sbr
+    0U,	// JZ_sbr_v110
     0U,	// J_b
     0U,	// J_sb
+    0U,	// J_sb_v110
     0U,	// LDLCX_abs
     0U,	// LDLCX_bo_bso
     0U,	// LDMST_abs
@@ -1999,8 +2128,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LD_A_sc
     0U,	// LD_A_slr
     0U,	// LD_A_slr_post
+    0U,	// LD_A_slr_post_v110
+    0U,	// LD_A_slr_v110
     0U,	// LD_A_slro
+    0U,	// LD_A_slro_v110
     0U,	// LD_A_sro
+    0U,	// LD_A_sro_v110
     0U,	// LD_BU_abs
     0U,	// LD_BU_bo_bso
     0U,	// LD_BU_bo_c
@@ -2010,8 +2143,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LD_BU_bol
     0U,	// LD_BU_slr
     0U,	// LD_BU_slr_post
+    0U,	// LD_BU_slr_post_v110
+    0U,	// LD_BU_slr_v110
     0U,	// LD_BU_slro
+    0U,	// LD_BU_slro_v110
     0U,	// LD_BU_sro
+    0U,	// LD_BU_sro_v110
     0U,	// LD_B_abs
     0U,	// LD_B_bo_bso
     0U,	// LD_B_bo_c
@@ -2019,6 +2156,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LD_B_bo_pre
     0U,	// LD_B_bo_r
     0U,	// LD_B_bol
+    0U,	// LD_B_slr_post_v110
+    0U,	// LD_B_slr_v110
+    0U,	// LD_B_slro_v110
+    0U,	// LD_B_sro_v110
     0U,	// LD_DA_abs
     0U,	// LD_DA_bo_bso
     0U,	// LD_DA_bo_c
@@ -2047,8 +2188,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LD_H_bol
     0U,	// LD_H_slr
     0U,	// LD_H_slr_post
+    0U,	// LD_H_slr_post_v110
+    0U,	// LD_H_slr_v110
     0U,	// LD_H_slro
+    0U,	// LD_H_slro_v110
     0U,	// LD_H_sro
+    0U,	// LD_H_sro_v110
     0U,	// LD_Q_abs
     0U,	// LD_Q_bo_bso
     0U,	// LD_Q_bo_c
@@ -2065,8 +2210,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LD_W_sc
     0U,	// LD_W_slr
     0U,	// LD_W_slr_post
+    0U,	// LD_W_slr_post_v110
+    0U,	// LD_W_slr_v110
     0U,	// LD_W_slro
+    0U,	// LD_W_slro_v110
     0U,	// LD_W_sro
+    0U,	// LD_W_sro_v110
     0U,	// LEA_abs
     0U,	// LEA_bo_bso
     0U,	// LEA_bol
@@ -2081,6 +2230,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LT_HU
     0U,	// LT_U_rc
     0U,	// LT_U_rr
+    0U,	// LT_U_srcv110
+    0U,	// LT_U_srrv110
     0U,	// LT_W
     0U,	// LT_WU
     0U,	// LT_rc
@@ -2137,12 +2288,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3U,	// MADDS_H_rrr1_LU
     4U,	// MADDS_H_rrr1_UL
     5U,	// MADDS_H_rrr1_UU
-    33U,	// MADDS_Q_rrr1
+    49U,	// MADDS_Q_rrr1
     7U,	// MADDS_Q_rrr1_L
     0U,	// MADDS_Q_rrr1_L_L
     8U,	// MADDS_Q_rrr1_U
     0U,	// MADDS_Q_rrr1_U_U
-    33U,	// MADDS_Q_rrr1_e
+    49U,	// MADDS_Q_rrr1_e
     7U,	// MADDS_Q_rrr1_e_L
     0U,	// MADDS_Q_rrr1_e_L_L
     8U,	// MADDS_Q_rrr1_e_U
@@ -2160,12 +2311,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3U,	// MADD_H_rrr1_LU
     4U,	// MADD_H_rrr1_UL
     5U,	// MADD_H_rrr1_UU
-    33U,	// MADD_Q_rrr1
+    49U,	// MADD_Q_rrr1
     7U,	// MADD_Q_rrr1_L
     0U,	// MADD_Q_rrr1_L_L
     8U,	// MADD_Q_rrr1_U
     0U,	// MADD_Q_rrr1_U_U
-    33U,	// MADD_Q_rrr1_e
+    49U,	// MADD_Q_rrr1_e
     7U,	// MADD_Q_rrr1_e_L
     0U,	// MADD_Q_rrr1_e_L_L
     8U,	// MADD_Q_rrr1_e_U
@@ -2262,12 +2413,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3U,	// MSUBS_H_rrr1_LU
     4U,	// MSUBS_H_rrr1_UL
     5U,	// MSUBS_H_rrr1_UU
-    33U,	// MSUBS_Q_rrr1
+    49U,	// MSUBS_Q_rrr1
     7U,	// MSUBS_Q_rrr1_L
     0U,	// MSUBS_Q_rrr1_L_L
     8U,	// MSUBS_Q_rrr1_U
     0U,	// MSUBS_Q_rrr1_U_U
-    33U,	// MSUBS_Q_rrr1_e
+    49U,	// MSUBS_Q_rrr1_e
     7U,	// MSUBS_Q_rrr1_e_L
     0U,	// MSUBS_Q_rrr1_e_L_L
     8U,	// MSUBS_Q_rrr1_e_U
@@ -2285,12 +2436,12 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3U,	// MSUB_H_rrr1_LU
     4U,	// MSUB_H_rrr1_UL
     5U,	// MSUB_H_rrr1_UU
-    33U,	// MSUB_Q_rrr1
+    49U,	// MSUB_Q_rrr1
     7U,	// MSUB_Q_rrr1_L
     0U,	// MSUB_Q_rrr1_L_L
     8U,	// MSUB_Q_rrr1_U
     0U,	// MSUB_Q_rrr1_U_U
-    33U,	// MSUB_Q_rrr1_e
+    49U,	// MSUB_Q_rrr1_e
     7U,	// MSUB_Q_rrr1_e_L
     0U,	// MSUB_Q_rrr1_e_L_L
     8U,	// MSUB_Q_rrr1_e_U
@@ -2327,8 +2478,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     13U,	// MUL_Q_rr1_2_Le
     14U,	// MUL_Q_rr1_2_U
     14U,	// MUL_Q_rr1_2_Ue
-    49U,	// MUL_Q_rr1_2__
-    49U,	// MUL_Q_rr1_2__e
+    33U,	// MUL_Q_rr1_2__
+    33U,	// MUL_Q_rr1_2__e
     0U,	// MUL_U_rc
     0U,	// MUL_U_rr2
     0U,	// MUL_rc
@@ -2590,11 +2741,11 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 0, O);
     break;
   case 2:
-    // AND_src, BISR_sc, LD_A_sc, LD_W_sc, MOV_sc, OR_sc, ST_A_sc, SUB_A_sc
+    // AND_sc, AND_sc_v110, BISR_sc, BISR_sc_v110, LD_A_sc, LD_W_sc, MOV_sc, ...
     printZExtImm_8(MI, 0, O);
     break;
   case 3:
-    // BISR_rc, SYSCALL_rc
+    // BISR_rc, BISR_rc_v161, SYSCALL_rc
     printSExtImm_9(MI, 0, O);
     return;
     break;
@@ -2604,16 +2755,16 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 5:
-    // CALLI_rr, CMPSWAP_W_bo_bso, CMPSWAP_W_bo_c, CMPSWAP_W_bo_pos, CMPSWAP_...
-    printOperand(MI, 1, O);
-    break;
-  case 6:
-    // CALL_sb, JNZ_sb, JZ_sb, J_sb
+    // CALL_sb, JNZ_sb, JNZ_sb_v110, JZ_sb, JZ_sb_v110, J_sb, J_sb_v110
     printDisp8Imm(MI, 0, O);
     return;
     break;
+  case 6:
+    // CMPSWAP_W_bo_bso, CMPSWAP_W_bo_c, CMPSWAP_W_bo_pos, CMPSWAP_W_bo_pre, ...
+    printOperand(MI, 1, O);
+    break;
   case 7:
-    // JEQ_sbc1, JEQ_sbc2, JNE_sbc1, JNE_sbc2
+    // JEQ_sbc1, JEQ_sbc2, JEQ_sbc_v110, JNE_sbc1, JNE_sbc2, JNE_sbc_v110
     printSExtImm_4(MI, 1, O);
     SStream_concat0(O, ", ");
     printDisp4Imm(MI, 0, O);
@@ -2652,7 +2803,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   }
 
 
-  // Fragment 1 encoded into 4 bits for 13 unique commands.
+  // Fragment 1 encoded into 4 bits for 14 unique commands.
   switch ((Bits >> 16) & 15) {
   default: assert(0 && "Invalid command number.");
   case 0:
@@ -2660,65 +2811,75 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", ");
     break;
   case 1:
-    // ADD_src_a15, ADD_srr_a15, CADDN_src, CADD_src, CMOVN_src, CMOVN_srr, C...
+    // ADD_src_a15, ADD_srr_a15, CADDN_src, CADDN_srr_v110, CADD_src, CADD_sr...
     SStream_concat0(O, ", %d15, ");
     break;
   case 2:
-    // AND_src, BISR_sc, CALLI_rr, DISABLE_sys_1, FCALLA_i, JI_rr, JI_sr, JLI...
+    // AND_sc, AND_sc_v110, BISR_sc, BISR_sc_v110, CALLI_rr, CALLI_rr_v110, D...
     return;
     break;
   case 3:
-    // CACHEI_I_bo_bso, CACHEI_I_bo_pre, CACHEI_WI_bo_bso, CACHEI_WI_bo_pre, ...
+    // CACHEA_I_bo_bso, CACHEA_I_bo_pre, CACHEA_WI_bo_bso, CACHEA_WI_bo_pre, ...
     SStream_concat1(O, ']');
     break;
   case 4:
-    // CACHEI_I_bo_pos, CACHEI_WI_bo_pos, CACHEI_W_bo_pos, CACHE_I_bo_pos, CA...
-    SStream_concat0(O, "+]");
-    set_mem_access(MI, false);
-    break;
-  case 5:
-    // CACHEI_W_bo_c, CACHE_I_bo_c, CACHE_WI_bo_c, CACHE_W_bo_c
+    // CACHEA_I_bo_c, CACHEA_WI_bo_c, CACHEA_W_bo_c, CACHEI_W_bo_c
     SStream_concat0(O, "+c]");
     set_mem_access(MI, false);
     printSExtImm_10(MI, 1, O);
     return;
     break;
+  case 5:
+    // CACHEA_I_bo_pos, CACHEA_WI_bo_pos, CACHEA_W_bo_pos, CACHEI_I_bo_pos, C...
+    SStream_concat0(O, "+]");
+    set_mem_access(MI, false);
+    break;
   case 6:
-    // CACHEI_W_bo_r, CACHE_I_bo_r, CACHE_WI_bo_r, CACHE_W_bo_r
+    // CACHEA_I_bo_r, CACHEA_WI_bo_r, CACHEA_W_bo_r, CACHEI_W_bo_r
     SStream_concat0(O, "+r]");
     set_mem_access(MI, false);
     return;
     break;
   case 7:
+    // CADDN_A_rrr_v110, CADD_A_rrr_v110
+    SStream_concat1(O, ' ');
+    printOperand(MI, 3, O);
+    SStream_concat0(O, ", ");
+    printOperand(MI, 1, O);
+    SStream_concat0(O, ", ");
+    printOperand(MI, 2, O);
+    return;
+    break;
+  case 8:
     // LD_A_bo_bso, LD_A_bo_c, LD_A_bo_pos, LD_A_bo_r, LD_A_bol, LD_A_slr, LD...
     SStream_concat0(O, ", [");
     set_mem_access(MI, true);
     break;
-  case 8:
+  case 9:
     // LD_A_bo_pre, LD_BU_bo_pre, LD_B_bo_pre, LD_DA_bo_pre, LD_D_bo_pre, LD_...
     SStream_concat0(O, ", [+");
     set_mem_access(MI, true);
     break;
-  case 9:
-    // LD_A_slro, LD_BU_slro, LD_H_slro, LD_W_slro
+  case 10:
+    // LD_A_slro, LD_A_slro_v110, LD_BU_slro, LD_BU_slro_v110, LD_B_slro_v110...
     SStream_concat0(O, ", [%a15]");
     set_mem_access(MI, true);
     printZExtImm_4(MI, 1, O);
     return;
     break;
-  case 10:
+  case 11:
     // ST_A_sc
     SStream_concat0(O, ", %a15");
     return;
     break;
-  case 11:
+  case 12:
     // ST_A_ssr, ST_B_ssr, ST_H_ssr, ST_W_ssr
     SStream_concat0(O, "], ");
     set_mem_access(MI, false);
     printOperand(MI, 1, O);
     return;
     break;
-  case 12:
+  case 13:
     // ST_A_ssr_pos, ST_B_ssr_pos, ST_H_ssr_pos, ST_W_ssr_pos
     SStream_concat0(O, "+], ");
     set_mem_access(MI, false);
@@ -2736,7 +2897,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 1, O);
     break;
   case 1:
-    // ADDSC_A_rr_v120u, ADD_F_rrr, CADDN_rcr, CADD_rcr, CRC32B_W_rr, CRC32L_...
+    // ADDSC_A_rr, ADD_F_rrr, CADDN_A_rcr_v110, CADDN_rcr, CADD_A_rcr_v110, C...
     printOperand(MI, 2, O);
     break;
   case 2:
@@ -2745,12 +2906,12 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 3:
-    // CACHEI_I_bo_bso, CACHEI_I_bo_pos, CACHEI_I_bo_pre, CACHEI_WI_bo_bso, C...
+    // CACHEA_I_bo_bso, CACHEA_I_bo_pos, CACHEA_I_bo_pre, CACHEA_WI_bo_bso, C...
     printSExtImm_10(MI, 1, O);
     return;
     break;
   case 4:
-    // CADDN_rrr, CADD_rrr, CRCN_rrr, CSUBN_rrr, CSUB_rrr, MADDMS_H_rrr1_LL, ...
+    // CADDN_rrr, CADD_rrr, CRCN_rrr, CSUBN_A_rrr_v110, CSUBN_rrr, CSUB_A_rrr...
     printOperand(MI, 3, O);
     SStream_concat0(O, ", ");
     printOperand(MI, 1, O);
@@ -2771,7 +2932,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printZExtImm_4(MI, 1, O);
     break;
   case 8:
-    // JEQ_sbr1, JEQ_sbr2, JGEZ_sbr, JGTZ_sbr, JLEZ_sbr, JLTZ_sbr, JNE_sbr1, ...
+    // JEQ_sbr1, JEQ_sbr2, JEQ_sbr_v110, JGEZ_sbr, JGEZ_sbr_v110, JGTZ_sbr, J...
     printDisp4Imm(MI, 1, O);
     return;
     break;
@@ -2812,13 +2973,13 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 2:
-    // ADDSC_A_srrs_v120u
+    // ADDSC_A_srrs
     SStream_concat0(O, ", %d15, ");
     printZExtImm_2(MI, 2, O);
     return;
     break;
   case 3:
-    // LD_A_bo_bso, LD_A_bo_pre, LD_A_bol, LD_A_slr, LD_BU_bo_bso, LD_BU_bo_p...
+    // LD_A_bo_bso, LD_A_bo_pre, LD_A_bol, LD_A_slr, LD_A_slr_v110, LD_BU_bo_...
     SStream_concat1(O, ']');
     break;
   case 4:
@@ -2829,7 +2990,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 5:
-    // LD_A_bo_pos, LD_A_slr_post, LD_BU_bo_pos, LD_BU_slr_post, LD_B_bo_pos,...
+    // LD_A_bo_pos, LD_A_slr_post, LD_A_slr_post_v110, LD_BU_bo_pos, LD_BU_sl...
     SStream_concat0(O, "+]");
     set_mem_access(MI, false);
     break;
@@ -2882,7 +3043,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 3:
-    // ADDSC_A_rr_v120u, ADD_F_rrr, CADDN_rcr, CADD_rcr, CRC32B_W_rr, CRC32L_...
+    // ADDSC_A_rr, ADD_F_rrr, CADDN_A_rcr_v110, CADDN_rcr, CADD_A_rcr_v110, C...
     printOperand(MI, 1, O);
     break;
   case 4:
@@ -2910,7 +3071,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 8:
-    // LD_A_slr, LD_A_slr_post, LD_BU_slr, LD_BU_slr_post, LD_H_slr, LD_H_slr...
+    // LD_A_slr, LD_A_slr_post, LD_A_slr_post_v110, LD_A_slr_v110, LD_BU_slr,...
     return;
     break;
   case 9:
@@ -2934,7 +3095,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 1:
-    // ADDSC_A_rr_v110, ADDSC_A_rr_v120u, CADDN_rcr, CADD_rcr, DEXTR_rrpw, DE...
+    // ADDSC_A_rr, ADDSC_A_rr_v110, CADDN_A_rcr_v110, CADDN_rcr, CADD_A_rcr_v...
     SStream_concat0(O, ", ");
     break;
   case 2:
@@ -3022,22 +3183,22 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   switch ((Bits >> 36) & 3) {
   default: assert(0 && "Invalid command number.");
   case 0:
-    // ADDSC_A_rr_v110, ADDSC_A_rr_v120u, DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw...
+    // ADDSC_A_rr, ADDSC_A_rr_v110, DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, EXTR...
     printOperand(MI, 3, O);
     break;
   case 1:
-    // CADDN_rcr, CADD_rcr, MADDS_U_rcr, MADDS_U_rcr_e, MADDS_rcr, MADDS_rcr_...
+    // CADDN_A_rcr_v110, CADDN_rcr, CADD_A_rcr_v110, CADD_rcr, MADDS_U_rcr, M...
     printSExtImm_9(MI, 3, O);
     return;
     break;
   case 2:
-    // MADDS_Q_rrr1, MADDS_Q_rrr1_e, MADD_Q_rrr1, MADD_Q_rrr1_e, MSUBS_Q_rrr1...
-    printZExtImm_2(MI, 4, O);
+    // DIFSC_A_rr_v110, MUL_Q_rr1_2__, MUL_Q_rr1_2__e
+    printZExtImm_2(MI, 3, O);
     return;
     break;
   case 3:
-    // MUL_Q_rr1_2__, MUL_Q_rr1_2__e
-    printZExtImm_2(MI, 3, O);
+    // MADDS_Q_rrr1, MADDS_Q_rrr1_e, MADD_Q_rrr1, MADD_Q_rrr1_e, MSUBS_Q_rrr1...
+    printZExtImm_2(MI, 4, O);
     return;
     break;
   }
@@ -3050,7 +3211,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 4, O);
     return;
   } else {
-    // ADDSC_A_rr_v110, ADDSC_A_rr_v120u, DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw...
+    // ADDSC_A_rr, ADDSC_A_rr_v110, DEXTR_rrpw, DEXTR_rrrr, EXTR_U_rrpw, EXTR...
     return;
   }
 
