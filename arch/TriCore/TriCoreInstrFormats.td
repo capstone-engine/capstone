@@ -489,7 +489,7 @@ class RCPW<bits<8> op1, bits<2> op2 , dag outs, dag ins, string asmstr,
 //===----------------------------------------------------------------------===//
 // 32-bit RCR Instruction Format: <d|s3|op2|const9|s1|op1>
 //===----------------------------------------------------------------------===//
-class RCR<bits<8> op1, bits<3> op2 , dag outs, dag ins, string asmstr,
+class RCR<bits<8> op1, bits<3> op2, dag outs, dag ins, string asmstr,
                 list<dag> pattern> : T32<outs, ins, asmstr, pattern> {
 
   bits<4> d;

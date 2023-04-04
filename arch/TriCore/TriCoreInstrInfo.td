@@ -704,24 +704,20 @@ class IRRR_DcEdDa<bits<8>op1, bits<4> op2, string asmstr>
           asmstr # " $d, $s3, $s1", []>;
 
 /// RCR Opcodes Formats
-/// Dc Dd Da const9
-class IRCR_DcDdDa<bits<8>op1, bits<3> op2, string asmstr>
-    : RCR<op1, op2, (outs RD:$d), (ins RD:$s1, RD:$s3, s9imm:$const9),
-          asmstr # " $d, $s3, $s1, $const9", []>;
-/// Ec Ed Da const9
-class IRCR_EcEdDa<bits<8>op1, bits<3> op2, string asmstr>
-    : RCR<op1, op2, (outs RE:$d), (ins RD:$s1, RE:$s3, s9imm:$const9),
+class IRCR<bits<8> op1, bits<3> op2, string asmstr,
+           RegisterClass RCd=RD, RegisterClass RC1=RD, RegisterClass RC3=RD, Operand TypeC=s9imm>
+    : RCR<op1, op2, (outs RCd:$d), (ins RC1:$s1, RC3:$s3, TypeC:$const9),
           asmstr # " $d, $s3, $s1, $const9", []>;
 
 multiclass mIRCR<bits<8>op1, bits<3> op2, bits<8>op3, bits<3> op4, string asmstr>{
-  def _rcr   : IRCR_DcDdDa<op1, op2, asmstr>;
-  def _rcr_e : IRCR_EcEdDa<op3, op4, asmstr>;
+  def _rcr   : IRCR<op1, op2, asmstr>;
+  def _rcr_e : IRCR<op3, op4, asmstr, RE, RE, RD, s9imm>, Requires<[HasV120_UP]>;
 }
 
 /// CADD Instructions
 def CADD_srr_v110 : ISRR_DdD15Db<0x0A, "cadd">, NsRequires<[HasV110]>;
 
-def CADD_rcr : IRCR_DcDdDa<0xAB, 0x00, "cadd">;
+def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
 def CADD_rrr : IRRR_DcDdDaDb<0x2B, 0x00, "cadd">;
 def CADD_src : ISRC_AdD15S<0x8A, "cadd">;
 
@@ -732,7 +728,7 @@ def CADD_A_rcr_v110 : RCR<0xA1, 0x00, (outs RA:$d), (ins RD:$s1, RA:$s3, s9imm:$
 def CADDN_srr_v110  : ISRR_DdD15Db<0x4A, "caddn">
                     , NsRequires<[HasV110]>;
 
-def CADDN_rcr : IRCR_DcDdDa<0xAB, 0x01, "caddn">;
+def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
 def CADDN_rrr : IRRR_DcDdDaDb<0x2B, 0x01, "caddn">;
 def CADDN_src : ISRC_AdD15S<0xCA, "caddn">;
 
@@ -1367,7 +1363,7 @@ class IRRR2<bits<8> op1, bits<8> op2, string asmstr, RegisterClass rc>
 
 multiclass mIRRR2<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4, string asmstr>{
   def _rrr2   : IRRR2<op1, op2, asmstr, RD>;
-  def _rrr2_e : IRRR2<op3, op4, asmstr, RE>;
+  def _rrr2_e : IRRR2<op3, op4, asmstr, RE>, Requires<[HasV120_UP]>;
 }
 
 defm MADD : mIRCR<0x13, 0x01, 0x13, 0x03, "madd">
@@ -1385,8 +1381,9 @@ multiclass mIRRR1_LU2<bits<8> prefix, bits<6> ll2, bits<6> lu2,
   def _rrr1_UU : IRRR1_label<prefix, uu2, asmstr, rc, "UU">;
 }
 multiclass mIRRR1_E_LU2<bits<8> ll1, bits<6> ll2, bits<6> lu2,
-                       bits<6> ul2, bits<6> uu2, string asmstr>{
-  defm "" : mIRRR1_LU2<ll1, ll2, lu2, ul2, uu2, asmstr, RE>;
+                       bits<6> ul2, bits<6> uu2, string asmstr, bit hasv110=true>{
+  if hasv110 then def _rrr1_v110 : IRRR1<ll1, ul2, asmstr, RE>, NsRequires<[HasV110]>;
+  defm "" : mIRRR1_LU2<ll1, ll2, lu2, ul2, uu2, asmstr, RE>, Requires<[HasV120_UP]>;
 }
 
 defm MADD_H  : mIRRR1_E_LU2<0x83, 0x1A, 0x19, 0x18, 0x1B, "madd.h">;
@@ -1407,17 +1404,38 @@ multiclass mIRRR1_maddq_msubq<bits<8> prefix, bits<6> op1, bits<6> op2, bits<6> 
   def _rrr1_e_U_U : IRRR1_label2<prefix, op10, asmstr, RE,  "U", "U">;
 }
 
-defm MADD_Q  : mIRRR1_maddq_msubq<0x43, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "madd.q">;
-defm MADDS_Q : mIRRR1_maddq_msubq<0x43, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "madds.q">;
+multiclass mI_MADDq_MSUBq_<bits<8> prefix, bits<6> op1, bits<6> op2, bits<6> op3, bits<6> op4,
+                              bits<6> op5, bits<6> op6, bits<6> op7, bits<6> op8, bits<6> op9,
+                              bits<6> op10, string asmstr>{
+  def _rrr1_L_v110: IRRR1<prefix, op9, asmstr, RD>, NsRequires<[HasV110]>;
+  defm "": mIRRR1_maddq_msubq<prefix, op1, op2, op3, op4, op5, op6, op7, op8, op9, op10, asmstr>
+        , Requires<[HasV120_UP]>;
+}
 
-def MADD_U_rcr : IRCR_EcEdDa<0x13, 0x02, "madd.u">; 
-def MADD_U_rrr2 : IRRR2<0x03, 0x68, "madd.u", RE>;
+multiclass mIRCR_RRR2<bits<8> op_rcr1, bits<3> op_rcr2, bits<8> op_rrr21, bits<8> op_rrr22,
+                      string asmstr, string posfix="",
+                      Operand Type3=s9imm, RegisterClass RC1=RE, RegisterClass RC2=RD>{
+  def _rcr#posfix: IRCR<op_rcr1, op_rcr2, asmstr, RC1, RC1, RC2, Type3>;
+  def _rrr2#posfix: IRRR2<op_rrr21, op_rrr22, asmstr, RC1>;
+}
 
-defm MADDS_U : mIRCR<0x13, 0x04, 0x13, 0x06, "madds.u">
-            , mIRRR2<0x03, 0x88, 0x03, 0xE8, "madds.u">;
+defm MADD_Q  : mI_MADDq_MSUBq_<0x43, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "madd.q">;
+defm MADDS_Q : mI_MADDq_MSUBq_<0x43, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "madds.q">;
+
+defm MADD_U: mIRCR_RRR2<0x13, 0x02, 0x03, 0x68, "madd.u", "", u9imm>, Requires<[HasV120_UP]>;
+
+defm MADDS_U: mIRCR<0x13, 0x04, 0x13, 0x06, "madds.u">
+             , mIRRR2<0x03, 0x88, 0x03, 0xE8, "madds.u">;
+
+defm MADDM: mIRCR_RRR2<0x13, 0x03, 0x03, 0x6A, "maddm", "_v110">, NsRequires<[HasV110]>;
+def MADDM_Q_rrr1_v110: IRRR1<0x43, 0x70, "maddm.q", RE>, NsRequires<[HasV110]>;
+defm MADDM_U: mIRCR_RRR2<0x13, 0x02, 0x03, 0x68, "maddm.u", "_v110", u9imm>, NsRequires<[HasV110]>;
 
 defm MADDM_H  : mIRRR1_E_LU2<0x83, 0x1E, 0x1D, 0x1C, 0x1F, "maddm.h">;
-defm MADDMS_H : mIRRR1_E_LU2<0x83, 0x3E, 0x3D, 0x3C, 0x3F, "maddms.h">;
+
+defm MADDMS: mIRCR_RRR2<0x13, 0x07, 0x03, 0xEA, "maddms", "_v110">, NsRequires<[HasV110]>;
+defm MADDMS_U: mIRCR_RRR2<0x13, 0x06, 0x03, 0xE8, "maddms.u", "_v110", u9imm>, NsRequires<[HasV110]>;
+defm MADDMS_H : mIRRR1_E_LU2<0x83, 0x3E, 0x3D, 0x3C, 0x3F, "maddms.h", false>;
 
 defm MADDR_H  : mIRRR1_LU2<0x83, 0x0E, 0x0D, 0x0C, 0x0F, "maddr.h", RD>;
 defm MADDRS_H : mIRRR1_LU2<0x83, 0x2E, 0x2D, 0x2C, 0x2F, "maddrs.h", RD>;
@@ -1502,7 +1520,7 @@ defm MSUBS_H : mIRRR1_E_LU2<0xA3, 0x3A, 0x39, 0x38, 0x3B, "msubs.h">;
 defm MSUB_Q  : mIRRR1_maddq_msubq<0x63, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "msub.q">;
 defm MSUBS_Q : mIRRR1_maddq_msubq<0x63, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "msubs.q">;
 
-def MSUB_U_rcr : IRCR_EcEdDa<0x33, 0x02, "madd.u">; 
+def MSUB_U_rcr : IRCR<0x33, 0x02, "madd.u", RE, RE, RD, u9imm>; 
 def MSUB_U_rrr2 : IRRR2<0x23, 0x68, "madd.u", RE>;
 defm MSUBS_U : mIRCR<0x33, 0x04, 0x33, 0x06, "madds.u">
             , mIRRR2<0x23, 0x88, 0x23, 0xE8, "madds.u">;
@@ -1668,10 +1686,10 @@ defm SAT_BU : mIRR_SR<0x0B, 0x5F, 0x32, 0x01, "sat.bu">;
 defm SAT_H  : mIRR_SR<0x0B, 0x7E, 0x32, 0x02, "sat.h">;
 defm SAT_HU : mIRR_SR<0x0B, 0x7F, 0x32, 0x03, "sat.hu">;
 
-def SEL_rcr : IRCR_DcDdDa<0xAB, 0x04, "sel">;
+def SEL_rcr : IRCR<0xAB, 0x04, "sel">;
 def SEL_rrr : IRRR_DcDdDaDb<0x2B, 0x04, "sel">;
 
-def SELN_rcr : IRCR_DcDdDa<0xAB, 0x05, "seln">;
+def SELN_rcr : IRCR<0xAB, 0x05, "seln">;
 def SELN_rrr : IRRR_DcDdDaDb<0x2B, 0x05, "seln">;
 
 def SH_src : ISRC_1<0x06, "sh", RD>;
@@ -1840,7 +1858,7 @@ defm XOR_LT_U : mIRR_RC<0x0B, 0x32, 0x8B, 0x32, "xor.lt.u">;
 
 /// FPU Instructions
 
-def MADD_F_rrr : IRRR_DcDdDaDb<0x6B, 0x06, "madd.f">;
+def MADD_F_rrr : IRRR_DcDdDaDb<0x6B, 0x06, "madd.f">, Requires<[HasV130_UP]>;
 def MSUB_F_rrr : IRRR_DcDdDaDb<0x6B, 0x07, "msub.f">;
 def ADD_F_rrr : IRRR_DcDdDa<0x6B, 0x02, "add.f">;
 def SUB_F_rrr : IRRR_DcDdDa<0x6B, 0x03, "sub.f">;

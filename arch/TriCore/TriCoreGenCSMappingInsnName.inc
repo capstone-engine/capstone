@@ -191,7 +191,12 @@
   "lt_wu", // TriCore_INS_LT_WU
   "lt", // TriCore_INS_LT
   "maddms_h", // TriCore_INS_MADDMS_H
+  "maddms_u", // TriCore_INS_MADDMS_U
+  "maddms", // TriCore_INS_MADDMS
   "maddm_h", // TriCore_INS_MADDM_H
+  "maddm_q", // TriCore_INS_MADDM_Q
+  "maddm_u", // TriCore_INS_MADDM_U
+  "maddm", // TriCore_INS_MADDM
   "maddrs_h", // TriCore_INS_MADDRS_H
   "maddrs_q", // TriCore_INS_MADDRS_Q
   "maddr_h", // TriCore_INS_MADDR_H
