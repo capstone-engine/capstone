@@ -162,6 +162,18 @@ static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 
 static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
 
+
+#define GET_SUBTARGETINFO_ENUM
+#include "TriCoreGenSubtargetInfo.inc"
+
+
+bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature)
+{
+	//TODO: TriCore_getFeatureBits
+	return true;
+}
+
+
 #include "TriCoreGenDisassemblerTables.inc"
 
 #define GET_REGINFO_ENUM

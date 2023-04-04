@@ -72,6 +72,12 @@ typedef enum tricore_insn_group {
 	TriCore_GRP_ENDING,	///< = mark the end of the list of groups
 } tricore_insn_group;
 
+typedef enum tricore_feature_t {
+	TriCore_FEATURE_INVALID = 0,
+#include "./inc/TriCoreGenCSFeatureEnum.inc"
+	TriCore_FEATURE_ENDING,   // <-- mark the end of the list of features
+} tricore_feature;
+
 #ifdef __cplusplus
 }
 #endif
