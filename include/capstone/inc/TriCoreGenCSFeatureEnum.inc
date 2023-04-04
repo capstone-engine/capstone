@@ -5,3 +5,10 @@
 /* Auto generated file. Do not edit. */
 /* Code generator: https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
 
+TriCore_FEATURE_HasV110 = 128,
+TriCore_FEATURE_HasV120_UP,
+TriCore_FEATURE_HasV161,
+TriCore_FEATURE_HasV160_UP,
+TriCore_FEATURE_HasV131_UP,
+TriCore_FEATURE_HasV130_UP,
+TriCore_FEATURE_HasV162_UP,

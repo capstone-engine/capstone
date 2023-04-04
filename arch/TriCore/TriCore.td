@@ -24,52 +24,65 @@ include "llvm/Target/Target.td"
 // Specify whether target support specific TRICORE ISA variants.
 
 def HasV110Ops   : SubtargetFeature<"v1.1", "HasV110Ops", "true",
-                                   "Support TriCore v1.1 instructions",
-                                   []>;
+								   "Support TriCore v1.1 instructions",
+								   []>;
 def HasV120Ops   : SubtargetFeature<"v1.2", "HasV120Ops", "true",
-                                   "Support TriCore v1.2 instructions",
-                                   []>;
+								   "Support TriCore v1.2 instructions",
+								   []>;
 def HasV130Ops   : SubtargetFeature<"v1.3", "HasV130Ops", "true",
-                                   "Support TriCore v1.3 instructions",
-                                   []>;
+								   "Support TriCore v1.3 instructions",
+								   []>;
 def HasV131Ops   : SubtargetFeature<"v1.3.1", "HasV131Ops", "true",
-                                   "Support TriCore v1.3.1 instructions",
-                                   []>;
+								   "Support TriCore v1.3.1 instructions",
+								   []>;
 def HasV160Ops   : SubtargetFeature<"v1.6", "HasV160Ops", "true",
-                                   "Support TriCore v1.6 instructions",
-                                   []>;
+								   "Support TriCore v1.6 instructions",
+								   []>;
 def HasV161Ops   : SubtargetFeature<"v1.6.1", "HasV161Ops", "true",
-                                   "Support TriCore v1.6.1 instructions",
-                                   []>;
+								   "Support TriCore v1.6.1 instructions",
+								   []>;
 def HasV162Ops   : SubtargetFeature<"v1.6.2", "HasV162Ops", "true",
-                                   "Support TriCore v1.6.2 instructions",
-                                   []>;
+								   "Support TriCore v1.6.2 instructions",
+								   []>;
 
-def HasV110     : Predicate<"HasV110Ops()">;
-def HasV120     : Predicate<"HasV120Ops()">;
-def HasV130     : Predicate<"HasV130Ops()">;
-def HasV131     : Predicate<"HasV131Ops()">;
-def HasV160     : Predicate<"HasV160Ops()">;
-def HasV161     : Predicate<"HasV161Ops()">;
-def HasV162     : Predicate<"HasV162Ops()">;
+def HasV110     : Predicate<"HasV120Ops()">, AssemblerPredicate<(all_of HasV110Ops), "v1.1">;
+def HasV120     : Predicate<"HasV120Ops()">, AssemblerPredicate<(all_of HasV120Ops), "v1.2">;
+def HasV130     : Predicate<"HasV130Ops()">, AssemblerPredicate<(all_of HasV130Ops), "v1.3">;
+def HasV131     : Predicate<"HasV131Ops()">, AssemblerPredicate<(all_of HasV131Ops), "v1.3.1">;
+def HasV160     : Predicate<"HasV160Ops()">, AssemblerPredicate<(all_of HasV160Ops), "v1.6">;
+def HasV161     : Predicate<"HasV161Ops()">, AssemblerPredicate<(all_of HasV161Ops), "v1.6.1">;
+def HasV162     : Predicate<"HasV162Ops()">, AssemblerPredicate<(all_of HasV162Ops), "v1.6.2">;
 
-def HasV120_UP  : Predicate<"HasV120Ops() || HasV130Ops() || HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">;
-def HasV130_UP  : Predicate<"HasV130Ops() || HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">;
-def HasV131_UP  : Predicate<"HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">;
-def HasV160_UP  : Predicate<"HasV160Ops() || HasV161Ops() || HasV162Ops()">;
-def HasV161_UP  : Predicate<"HasV161Ops() || HasV162Ops()">;
-def HasV162_UP  : Predicate<"HasV162Ops()">;
+def HasV120_UP  : Predicate<"HasV120Ops() || HasV130Ops() || HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">
+				, AssemblerPredicate<(any_of HasV120Ops, HasV130Ops, HasV131Ops, HasV160Ops, HasV161Ops, HasV162Ops), "v120up">;
+def HasV130_UP  : Predicate<"HasV130Ops() || HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">
+				, AssemblerPredicate<(any_of HasV130Ops, HasV131Ops, HasV160Ops, HasV161Ops, HasV162Ops), "v130up">;
+def HasV131_UP  : Predicate<"HasV131Ops() || HasV160Ops() || HasV161Ops() || HasV162Ops()">
+				, AssemblerPredicate<(any_of HasV131Ops, HasV160Ops, HasV161Ops, HasV162Ops), "v131up">;
+def HasV160_UP  : Predicate<"HasV160Ops() || HasV161Ops() || HasV162Ops()">
+				, AssemblerPredicate<(any_of HasV160Ops, HasV161Ops, HasV162Ops), "v160up">;
+def HasV161_UP  : Predicate<"HasV161Ops() || HasV162Ops()">
+				, AssemblerPredicate<(any_of HasV161Ops, HasV162Ops), "v161up">;
+def HasV162_UP  : Predicate<"HasV162Ops()">
+				, AssemblerPredicate<(any_of HasV162Ops), "v162up">;
 
-def HasV120_DN  : Predicate<"HasV120Ops() || HasV110Ops()">;
-def HasV130_DN  : Predicate<"HasV130Ops() || HasV120Ops() || HasV110Ops()">;
-def HasV131_DN  : Predicate<"HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
-def HasV160_DN  : Predicate<"HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
-def HasV161_DN  : Predicate<"HasV161Ops() || HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
-def HasV162_DN  : Predicate<"HasV162Ops() || HasV161Ops() || HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">;
+def HasV120_DN : Predicate<"HasV120Ops() || HasV110Ops()">,
+				AssemblerPredicate<(any_of HasV120Ops, HasV110Ops), "v120dn">;
+def HasV130_DN : Predicate<"HasV130Ops() || HasV120Ops() || HasV110Ops()">,
+				AssemblerPredicate<(any_of HasV130Ops, HasV120Ops, HasV110Ops), "v130dn">;
+def HasV131_DN : Predicate<"HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">,
+				AssemblerPredicate<(any_of HasV131Ops, HasV130Ops, HasV120Ops, HasV110Ops), "v131dn">;
+def HasV160_DN : Predicate<"HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">,
+				AssemblerPredicate<(any_of HasV160Ops, HasV131Ops, HasV130Ops, HasV120Ops, HasV110Ops), "v160dn">;
+def HasV161_DN : Predicate<"HasV161Ops() || HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">,
+				AssemblerPredicate<(any_of HasV161Ops, HasV160Ops, HasV131Ops, HasV130Ops, HasV120Ops, HasV110Ops), "v161dn">;
+def HasV162_DN : Predicate<"HasV162Ops() || HasV161Ops() || HasV160Ops() || HasV131Ops() || HasV130Ops() || HasV120Ops() || HasV110Ops()">,
+				AssemblerPredicate<(any_of HasV162Ops, HasV161Ops, HasV160Ops, HasV131Ops, HasV130Ops, HasV120Ops, HasV110Ops), "v162dn">;
+
 
 class Architecture<string fname, string aname, list<SubtargetFeature> features = []>
   : SubtargetFeature<fname, "TriCoreArch", aname,
-                     !strconcat(aname, " architecture"), features>;
+					 !strconcat(aname, " architecture"), features>;
 
 class ProcNoItin<string Name, list<SubtargetFeature> Features>
   : Processor<Name, NoItineraries, Features>;
