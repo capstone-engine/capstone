@@ -1366,6 +1366,13 @@ multiclass mIRRR2<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4, string asm
   def _rrr2_e : IRRR2<op3, op4, asmstr, RE>, Requires<[HasV120_UP]>;
 }
 
+multiclass mIRCR_RRR2<bits<8> op_rcr1, bits<3> op_rcr2, bits<8> op_rrr21, bits<8> op_rrr22,
+                      string asmstr, string posfix="",
+                      Operand Type3=s9imm, RegisterClass RC1=RE, RegisterClass RC2=RD>{
+  def _rcr#posfix: IRCR<op_rcr1, op_rcr2, asmstr, RC1, RC1, RC2, Type3>;
+  def _rrr2#posfix: IRRR2<op_rrr21, op_rrr22, asmstr, RC1>;
+}
+
 defm MADD : mIRCR<0x13, 0x01, 0x13, 0x03, "madd">
           , mIRRR2<0x03, 0x0A, 0x03, 0x6A, "madd">;
 
@@ -1412,12 +1419,7 @@ multiclass mI_MADDq_MSUBq_<bits<8> prefix, bits<6> op1, bits<6> op2, bits<6> op3
         , Requires<[HasV120_UP]>;
 }
 
-multiclass mIRCR_RRR2<bits<8> op_rcr1, bits<3> op_rcr2, bits<8> op_rrr21, bits<8> op_rrr22,
-                      string asmstr, string posfix="",
-                      Operand Type3=s9imm, RegisterClass RC1=RE, RegisterClass RC2=RD>{
-  def _rcr#posfix: IRCR<op_rcr1, op_rcr2, asmstr, RC1, RC1, RC2, Type3>;
-  def _rrr2#posfix: IRRR2<op_rrr21, op_rrr22, asmstr, RC1>;
-}
+
 
 defm MADD_Q  : mI_MADDq_MSUBq_<0x43, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "madd.q">;
 defm MADDS_Q : mI_MADDq_MSUBq_<0x43, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "madds.q">;
@@ -1437,30 +1439,33 @@ defm MADDMS: mIRCR_RRR2<0x13, 0x07, 0x03, 0xEA, "maddms", "_v110">, NsRequires<[
 defm MADDMS_U: mIRCR_RRR2<0x13, 0x06, 0x03, 0xE8, "maddms.u", "_v110", u9imm>, NsRequires<[HasV110]>;
 defm MADDMS_H : mIRRR1_E_LU2<0x83, 0x3E, 0x3D, 0x3C, 0x3F, "maddms.h", false>;
 
-defm MADDR_H  : mIRRR1_LU2<0x83, 0x0E, 0x0D, 0x0C, 0x0F, "maddr.h", RD>;
-defm MADDRS_H : mIRRR1_LU2<0x83, 0x2E, 0x2D, 0x2C, 0x2F, "maddrs.h", RD>;
+defm MADDR_H  : mIRRR1_LU2<0x83, 0x0E, 0x0D, 0x0C, 0x0F, "maddr.h", RD>, Requires<[HasV120_UP]>;
+defm MADDRS_H : mIRRR1_LU2<0x83, 0x2E, 0x2D, 0x2C, 0x2F, "maddrs.h", RD>, Requires<[HasV120_UP]>;
 
+// TODO: fixme
+def MADDR_H_rrr1_v110 : IRRR1<0x43, 0x0E, "maddr.h", RE>, NsRequires<[HasV110]>;
 def MADDR_H_rrr1_DcEdDaDbUL
   : RRR1<0x43, 0x1E, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
-         "maddr.h $d, $s3, $s1, $s2, UL, $n", []>;
+         "maddr.h $d, $s3, $s1, $s2, UL, $n", []>, Requires<[HasV120_UP]>;
 def MADDRS_H_rrr1_DcEdDaDbUL
   : RRR1<0x43, 0x3E, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
-         "maddrs.h $d, $s3, $s1, $s2, UL, $n", []>;
+         "maddrs.h $d, $s3, $s1, $s2, UL, $n", []>, Requires<[HasV120_UP]>;
 
 multiclass mIRRR1_label2_LL_UU<bits<8> prefix, bits<6> op1, bits<6> op2, string asmstr> {
-  def _rrr1_L_L : IRRR1_label2<prefix, op1, asmstr, RD, "L", "L">;
-  def _rrr1_U_U : IRRR1_label2<prefix, op2, asmstr, RD, "U", "U">;
+  def _rrr1_L_L : IRRR1_label2<prefix, op1, asmstr, RD, "L", "L">, Requires<[HasV120_UP]>;
+  def _rrr1_U_U : IRRR1_label2<prefix, op2, asmstr, RD, "U", "U">, Requires<[HasV120_UP]>;
+  def _rrr1: IRRR1<prefix, op2, asmstr, RD>, NsRequires<[HasV110]>;
 }
 
-defm MADDR_Q  : mIRRR1_label2_LL_UU<0x43, 0x07, 0x06, "maddr.q">;
-defm MADDRS_Q : mIRRR1_label2_LL_UU<0x43, 0x27, 0x26, "maddrs.q">;
+defm MADDR_Q : mIRRR1_label2_LL_UU<0x43, 0x07, 0x06, "maddr.q">;
+defm MADDRS_Q: mIRRR1_label2_LL_UU<0x43, 0x27, 0x26, "maddrs.q">;
 
-defm MADDSU_H   : mIRRR1_E_LU2<0xC3, 0x1A, 0x19, 0x18, 0x1B, "maddsu.h">;
-defm MADDSUS_H  : mIRRR1_E_LU2<0xC3, 0x3A, 0x39, 0x38, 0x3B, "maddsus.h">;
-defm MADDSUM_H  : mIRRR1_E_LU2<0xC3, 0x1E, 0x1D, 0x1C, 0x1F, "maddsum.h">;
-defm MADDSUMS_H : mIRRR1_E_LU2<0xC3, 0x3E, 0x3D, 0x3C, 0x3F, "maddsums.h">;
-defm MADDSUR_H    : mIRRR1_LU2<0xC3, 0x0E, 0x0D, 0x0C, 0x0F, "maddsur.h", RD>;
-defm MADDSURS_H   : mIRRR1_LU2<0xC3, 0x2E, 0x2D, 0x2C, 0x2F, "maddsurs.h", RD>;
+defm MADDSU_H   : mIRRR1_E_LU2<0xC3, 0x1A, 0x19, 0x18, 0x1B, "maddsu.h", false>;
+defm MADDSUS_H  : mIRRR1_E_LU2<0xC3, 0x3A, 0x39, 0x38, 0x3B, "maddsus.h", false>;
+defm MADDSUM_H  : mIRRR1_E_LU2<0xC3, 0x1E, 0x1D, 0x1C, 0x1F, "maddsum.h", false>;
+defm MADDSUMS_H : mIRRR1_E_LU2<0xC3, 0x3E, 0x3D, 0x3C, 0x3F, "maddsums.h", false>;
+defm MADDSUR_H    : mIRRR1_LU2<0xC3, 0x0E, 0x0D, 0x0C, 0x0F, "maddsur.h", RD>, Requires<[HasV120_UP]>;
+defm MADDSURS_H   : mIRRR1_LU2<0xC3, 0x2E, 0x2D, 0x2C, 0x2F, "maddsurs.h", RD>, Requires<[HasV120_UP]>;
 
 defm MAX   : mIRR_RC<0x0B, 0x1A, 0x8B, 0x1A, "max">;
 defm MAX_U : mIRR_RC<0x0B, 0x1B, 0x8B, 0x1B, "max.u">;
