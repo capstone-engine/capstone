@@ -1586,14 +1586,22 @@ def NEZ_A : IRR_a<0x01, 0x49, "nez.a", RD, RA>;
 def NOP_sr : ISR_0<0x00, 0x00, "nop">;
 def NOP_sys : ISYS_0<0x00, 0x0D, "nop">;
 
+multiclass mISR_1<bits<8> sr1op1, bits<4> sr1op2, bits<8> sr2op1, bits<4> sr2op2,
+                string asmstr>{
+  def _sr : ISR_1<sr1op1, sr1op2, asmstr>, Requires<[HasV120_UP]>;
+  def _sr_v110 : ISR_1<sr2op1, sr2op2, asmstr>, NsRequires<[HasV110]>;
+}
+
 defm NOR : mIRR_RC<0x0F, 0x0B, 0x8F, 0x0B, "nor">;
+defm NOR : mISR_1<0x46, 0x00, 0x36, 0x00, "nor">;
+
 def NOR_T : IBIT<0x87, 0x02, "nor.t">;
 
-def NOT_sr : ISR_1<0x46, 0x00, "not">;
-
 defm OR : mIRR_RC<0x0F, 0x0A, 0x8F, 0x0A, "or">;
-def OR_sc : ISC_D15C<0x96, "or">;
-def OR_srr : ISRR_db<0xA6, "or">;
+def OR_sc : ISC_D15C<0x96, "or">, Requires<[HasV120_UP]>;
+def OR_srr : ISRR_db<0xA6, "or">, Requires<[HasV120_UP]>;
+def OR_sc_v110 : ISC_D15C<0xD6, "or">, NsRequires<[HasV110]>;
+def OR_srr_v110 : ISRR_db<0x56, "or">, NsRequires<[HasV110]>;
 
 def OR_AND_T  : IBIT<0xC7, 0x00, "or.and.t">;
 def OR_ANDN_T : IBIT<0xC7, 0x03, "or.andn.t">;
@@ -1615,17 +1623,24 @@ def ORN_T : IBIT<0x07, 0x01, "orn.t">;
 
 def PACK_rrr : IRRR_d31<0x6B, 0x00, "pack", RD, RE>;
 
-def PARITY_rr : IRR_a<0x4B, 0x02, "parity">;
+multiclass mISYS_0<bits<8> sys1op1, bits<6> sys1op2, bits<8> sys2op1, bits<6> sys2op2,
+                string asmstr>{
+  def _sys : ISYS_0<sys1op1, sys1op2, asmstr>, Requires<[HasV120_UP]>;
+  def _sys_v110 : ISYS_0<sys2op1, sys2op2, asmstr>, NsRequires<[HasV110]>;
+}
 
-def POPCNT_W_rr : IRR_a<0x4B, 0x22, "popcnt.w">;
+def PARITY_rr : IRR_a<0x4B, 0x02, "parity">, Requires<[HasV120_UP]>;
+def PARITY_rr_v110 : IRR_a<0x4B, 0x08, "parity">, NsRequires<[HasV110]>;
 
-def RESTORE_sys : ISYS_0<0x0D, 0x0E, "restore">;
+def POPCNT_W_rr : IRR_a<0x4B, 0x22, "popcnt.w">, NsRequires<[HasV162]>;
+
+def RESTORE_sys : ISYS_0<0x0D, 0x0E, "restore">, Requires<[HasV160_UP]>;
 
 def RET_sr : ISR_0<0x00, 0x09, "ret">;
-def RET_sys : ISYS_0<0x0D, 0x06, "ret">;
+defm RET : mISYS_0<0x0D, 0x06, 0x0D, 0x05, "ret">;
 
 def RFE_sr : ISR_0<0x00, 0x08, "rfe">;
-def RFE_sys : ISYS_0<0x0D, 0x07, "rfe">;
+defm RFE_sys : mISYS_0<0x0D, 0x07, 0x0D, 0x06, "rfe">;
 
 def RFM_sys : ISYS_0<0x0D, 0x05, "rfm">;
 
@@ -1634,20 +1649,22 @@ def RSLCX_sys : ISYS_0<0x0D, 0x09, "relck">;
 def RSTV_sys : ISYS_0<0x2F, 0x00, "restore">;
 
 def RSUB_rc : IRC<0x8B, 0x08, "rsub">;
-def RSUB_sr : ISR_1<0x32, 0x05, "rsub">;
+defm RSUB_sr : mISR_1<0x32, 0x05, 0xD2, 0x05, "rsub">;
 
 def RSUBS_rc   : IRC<0x8B, 0x0A, "rsubs">;
 def RSUBS_U_rc : IRC<0x8B, 0x0B, "rsubs.u">;
 
-multiclass mIRR_SR<bits<8> r1, bits<8> r2, bits<8> s1, bits<4> s2, string asmstr>{
+multiclass mI_SAT_<bits<8> r1, bits<8> r2, bits<8> s1, bits<4> s2, bits<8> vs1, bits<4> vs2, string asmstr>{
   def _rr : IRR_a<r1, r2, asmstr>;
-  def _sr : ISR_1<s1, s2, asmstr>;
+  defm "" : mISR_1<s1, s2, vs1, vs2, asmstr>;
 }
 
-defm SAT_B  : mIRR_SR<0x0B, 0x5E, 0x32, 0x00, "sat.b">;
-defm SAT_BU : mIRR_SR<0x0B, 0x5F, 0x32, 0x01, "sat.bu">;
-defm SAT_H  : mIRR_SR<0x0B, 0x7E, 0x32, 0x02, "sat.h">;
-defm SAT_HU : mIRR_SR<0x0B, 0x7F, 0x32, 0x03, "sat.hu">;
+defm SAT_B  : mI_SAT_<0x0B, 0x5E, 0x32, 0x00, 0xD2, 0x00, "sat.b">;
+defm SAT_BU : mI_SAT_<0x0B, 0x5F, 0x32, 0x01, 0xD2, 0x01, "sat.bu">;
+defm SAT_H  : mI_SAT_<0x0B, 0x7E, 0x32, 0x02, 0xD2, 0x02, "sat.h">;
+defm SAT_HU : mI_SAT_<0x0B, 0x7F, 0x32, 0x03, 0xD2, 0x03, "sat.hu">;
+
+
 
 def SEL_rcr : IRCR<0xAB, 0x04, "sel">;
 def SEL_rrr : IRRR<0x2B, 0x04, "sel">;
@@ -1839,8 +1856,8 @@ def FTOHP_rr  : IRR_a<0x4B, 0x25, "ftohp">;
 def HPTOF_rr  : IRR_a<0x4B, 0x24, "hptof">;
 def ITOF_rr   : IRR_a<0x4B, 0x14, "itof">;
 
-def Q31TOF_rr  : IRR_dab<0x4B, 0x15, "q31tof">;
-def QSEED_F_rr : IRR_a<0x4B, 0x19, "qseed.f">;
+def Q31TOF_rr  : IRR_dab<0x4B, 0x15, "q31tof">, Requires<[HasV130_UP]>;
+def QSEED_F_rr : IRR_a<0x4B, 0x19, "qseed.f">, Requires<[HasV130_UP]>;
 
 def UPDFL_rr   : IRR_Ra<0x4B, 0x0C, "updfl">;
 def UTOF_rr    : IRR_a<0x4B, 0x16, "utof">;
