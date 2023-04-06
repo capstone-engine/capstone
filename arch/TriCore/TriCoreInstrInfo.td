@@ -1379,18 +1379,27 @@ defm MADD : mIRCR<0x13, 0x01, 0x13, 0x03, "madd">
 defm MADDS : mIRCR<0x13, 0x05, 0x13, 0x07, "madds">
            , mIRRR2<0x03, 0x8A, 0x03, 0xEA, "madds">;
 
-multiclass mIRRR1_LU2<bits<8> prefix, bits<6> ll2, bits<6> lu2,
-                      bits<6> ul2, bits<6> uu2,
+multiclass mIRRR1_LU2<bits<8> prefix, bits<6> ll, bits<6> lu,
+                      bits<6> ul, bits<6> uu,
                       string asmstr, RegisterClass rc>{
-  def _rrr1_LL : IRRR1_label<prefix, ll2, asmstr, rc, "LL">;
-  def _rrr1_LU : IRRR1_label<prefix, lu2, asmstr, rc, "LU">;
-  def _rrr1_UL : IRRR1_label<prefix, ul2, asmstr, rc, "UL">;
-  def _rrr1_UU : IRRR1_label<prefix, uu2, asmstr, rc, "UU">;
+  def _rrr1_LL : IRRR1_label<prefix, ll, asmstr, rc, "LL">;
+  def _rrr1_LU : IRRR1_label<prefix, lu, asmstr, rc, "LU">;
+  def _rrr1_UL : IRRR1_label<prefix, ul, asmstr, rc, "UL">;
+  def _rrr1_UU : IRRR1_label<prefix, uu, asmstr, rc, "UU">;
 }
-multiclass mIRRR1_E_LU2<bits<8> ll1, bits<6> ll2, bits<6> lu2,
-                       bits<6> ul2, bits<6> uu2, string asmstr, bit hasv110=true>{
-  if hasv110 then def _rrr1_v110 : IRRR1<ll1, ul2, asmstr, RE>, NsRequires<[HasV110]>;
-  defm "" : mIRRR1_LU2<ll1, ll2, lu2, ul2, uu2, asmstr, RE>, Requires<[HasV120_UP]>;
+multiclass mIRRR1_E_LU2<bits<8> pre, bits<6> ll, bits<6> lu,
+                       bits<6> ul, bits<6> uu, string asmstr, bit hasv110=true>{
+  if hasv110 then def _rrr1_v110 : IRRR1<pre, ul, asmstr, RE>, NsRequires<[HasV110]>;
+  defm "" : mIRRR1_LU2<pre, ll, lu, ul, uu, asmstr, RE>, Requires<[HasV120_UP]>;
+}
+
+multiclass mI_MADDRsh_<bits<8> pre2, bits<6> ul2, bits<8> pre1, bits<6> ll, bits<6> lu,
+                      bits<6> ul, bits<6> uu, string asmstr>{ 
+  def _rrr1_v110: RRR1<pre2, ul2, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
+                       asmstr # " $d, $s3, $s1, $s2, $n", []>, NsRequires<[HasV110]>;
+  def _rrr1_UL_2: RRR1<pre2, ul2, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
+                       asmstr # " $d, $s3, $s1, $s2 UL, $n", []>, Requires<[HasV120_UP]>;
+  defm "" : mIRRR1_LU2<pre1, ll, lu, ul, uu, asmstr, RD>, Requires<[HasV120_UP]>;
 }
 
 defm MADD_H  : mIRRR1_E_LU2<0x83, 0x1A, 0x19, 0x18, 0x1B, "madd.h">;
@@ -1420,7 +1429,6 @@ multiclass mI_MADDq_MSUBq_<bits<8> prefix, bits<6> op1, bits<6> op2, bits<6> op3
 }
 
 
-
 defm MADD_Q  : mI_MADDq_MSUBq_<0x43, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "madd.q">;
 defm MADDS_Q : mI_MADDq_MSUBq_<0x43, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "madds.q">;
 
@@ -1439,17 +1447,8 @@ defm MADDMS: mIRCR_RRR2<0x13, 0x07, 0x03, 0xEA, "maddms", "_v110">, NsRequires<[
 defm MADDMS_U: mIRCR_RRR2<0x13, 0x06, 0x03, 0xE8, "maddms.u", "_v110", u9imm>, NsRequires<[HasV110]>;
 defm MADDMS_H : mIRRR1_E_LU2<0x83, 0x3E, 0x3D, 0x3C, 0x3F, "maddms.h", false>;
 
-defm MADDR_H  : mIRRR1_LU2<0x83, 0x0E, 0x0D, 0x0C, 0x0F, "maddr.h", RD>, Requires<[HasV120_UP]>;
-defm MADDRS_H : mIRRR1_LU2<0x83, 0x2E, 0x2D, 0x2C, 0x2F, "maddrs.h", RD>, Requires<[HasV120_UP]>;
-
-// TODO: fixme
-def MADDR_H_rrr1_v110 : IRRR1<0x43, 0x0E, "maddr.h", RE>, NsRequires<[HasV110]>;
-def MADDR_H_rrr1_DcEdDaDbUL
-  : RRR1<0x43, 0x1E, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
-         "maddr.h $d, $s3, $s1, $s2, UL, $n", []>, Requires<[HasV120_UP]>;
-def MADDRS_H_rrr1_DcEdDaDbUL
-  : RRR1<0x43, 0x3E, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
-         "maddrs.h $d, $s3, $s1, $s2, UL, $n", []>, Requires<[HasV120_UP]>;
+defm MADDR_H  : mI_MADDRsh_<0x43, 0x1E, 0x83, 0x0E, 0x0D, 0x0C, 0x0F, "maddr.h">;
+defm MADDRS_H : mI_MADDRsh_<0x43, 0x3E, 0x83, 0x2E, 0x2D, 0x2C, 0x2F, "maddrs.h">;
 
 multiclass mIRRR1_label2_LL_UU<bits<8> prefix, bits<6> op1, bits<6> op2, string asmstr> {
   def _rrr1_L_L : IRRR1_label2<prefix, op1, asmstr, RD, "L", "L">, Requires<[HasV120_UP]>;

@@ -1100,30 +1100,32 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4200339U,	// MADDM_U_rrr2_v110
     806360349U,	// MADDM_rcr_v110
     4199709U,	// MADDM_rrr2_v110
-    4199495U,	// MADDRS_H_rrr1_DcEdDaDbUL
     4199495U,	// MADDRS_H_rrr1_LL
     4199495U,	// MADDRS_H_rrr1_LU
     4199495U,	// MADDRS_H_rrr1_UL
+    4199495U,	// MADDRS_H_rrr1_UL_2
     4199495U,	// MADDRS_H_rrr1_UU
+    4199495U,	// MADDRS_H_rrr1_v110
+    4199878U,	// MADDRS_Q_rrr1
     2537559494U,	// MADDRS_Q_rrr1_L_L
     2554336710U,	// MADDRS_Q_rrr1_U_U
-    4199347U,	// MADDR_H_rrr1_DcEdDaDbUL
     4199347U,	// MADDR_H_rrr1_LL
     4199347U,	// MADDR_H_rrr1_LU
     4199347U,	// MADDR_H_rrr1_UL
+    4199347U,	// MADDR_H_rrr1_UL_2
     4199347U,	// MADDR_H_rrr1_UU
+    4199347U,	// MADDR_H_rrr1_v110
+    4199833U,	// MADDR_Q_rrr1
     2537559449U,	// MADDR_Q_rrr1_L_L
     2554336665U,	// MADDR_Q_rrr1_U_U
     4199461U,	// MADDSUMS_H_rrr1_LL
     4199461U,	// MADDSUMS_H_rrr1_LU
     4199461U,	// MADDSUMS_H_rrr1_UL
     4199461U,	// MADDSUMS_H_rrr1_UU
-    4199461U,	// MADDSUMS_H_rrr1_v110
     4199296U,	// MADDSUM_H_rrr1_LL
     4199296U,	// MADDSUM_H_rrr1_LU
     4199296U,	// MADDSUM_H_rrr1_UL
     4199296U,	// MADDSUM_H_rrr1_UU
-    4199296U,	// MADDSUM_H_rrr1_v110
     4199505U,	// MADDSURS_H_rrr1_LL
     4199505U,	// MADDSURS_H_rrr1_LU
     4199505U,	// MADDSURS_H_rrr1_UL
@@ -1136,12 +1138,10 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4199525U,	// MADDSUS_H_rrr1_LU
     4199525U,	// MADDSUS_H_rrr1_UL
     4199525U,	// MADDSUS_H_rrr1_UU
-    4199525U,	// MADDSUS_H_rrr1_v110
     4199565U,	// MADDSU_H_rrr1_LL
     4199565U,	// MADDSU_H_rrr1_LU
     4199565U,	// MADDSU_H_rrr1_UL
     4199565U,	// MADDSU_H_rrr1_UU
-    4199565U,	// MADDSU_H_rrr1_v110
     4199402U,	// MADDS_H_rrr1_LL
     4199402U,	// MADDS_H_rrr1_LU
     4199402U,	// MADDS_H_rrr1_UL
@@ -1268,6 +1268,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4199473U,	// MSUBRS_H_rrr1_LU
     4199473U,	// MSUBRS_H_rrr1_UL
     4199473U,	// MSUBRS_H_rrr1_UU
+    4199868U,	// MSUBRS_Q_rrr1
     2537559484U,	// MSUBRS_Q_rrr1_L_L
     2554336700U,	// MSUBRS_Q_rrr1_U_U
     4199327U,	// MSUBR_H_rrr1_DcEdDaDbUL
@@ -1275,6 +1276,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4199327U,	// MSUBR_H_rrr1_LU
     4199327U,	// MSUBR_H_rrr1_UL
     4199327U,	// MSUBR_H_rrr1_UU
+    4199824U,	// MSUBR_Q_rrr1
     2537559440U,	// MSUBR_Q_rrr1_L_L
     2554336656U,	// MSUBR_Q_rrr1_U_U
     4199382U,	// MSUBS_H_rrr1_LL
@@ -2287,30 +2289,32 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// MADDM_U_rrr2_v110
     17U,	// MADDM_rcr_v110
     0U,	// MADDM_rrr2_v110
-    6U,	// MADDRS_H_rrr1_DcEdDaDbUL
     2U,	// MADDRS_H_rrr1_LL
     3U,	// MADDRS_H_rrr1_LU
     4U,	// MADDRS_H_rrr1_UL
+    4U,	// MADDRS_H_rrr1_UL_2
     5U,	// MADDRS_H_rrr1_UU
+    65U,	// MADDRS_H_rrr1_v110
+    65U,	// MADDRS_Q_rrr1
     0U,	// MADDRS_Q_rrr1_L_L
     0U,	// MADDRS_Q_rrr1_U_U
-    6U,	// MADDR_H_rrr1_DcEdDaDbUL
     2U,	// MADDR_H_rrr1_LL
     3U,	// MADDR_H_rrr1_LU
     4U,	// MADDR_H_rrr1_UL
+    4U,	// MADDR_H_rrr1_UL_2
     5U,	// MADDR_H_rrr1_UU
+    65U,	// MADDR_H_rrr1_v110
+    65U,	// MADDR_Q_rrr1
     0U,	// MADDR_Q_rrr1_L_L
     0U,	// MADDR_Q_rrr1_U_U
     2U,	// MADDSUMS_H_rrr1_LL
     3U,	// MADDSUMS_H_rrr1_LU
     4U,	// MADDSUMS_H_rrr1_UL
     5U,	// MADDSUMS_H_rrr1_UU
-    65U,	// MADDSUMS_H_rrr1_v110
     2U,	// MADDSUM_H_rrr1_LL
     3U,	// MADDSUM_H_rrr1_LU
     4U,	// MADDSUM_H_rrr1_UL
     5U,	// MADDSUM_H_rrr1_UU
-    65U,	// MADDSUM_H_rrr1_v110
     2U,	// MADDSURS_H_rrr1_LL
     3U,	// MADDSURS_H_rrr1_LU
     4U,	// MADDSURS_H_rrr1_UL
@@ -2323,27 +2327,25 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3U,	// MADDSUS_H_rrr1_LU
     4U,	// MADDSUS_H_rrr1_UL
     5U,	// MADDSUS_H_rrr1_UU
-    65U,	// MADDSUS_H_rrr1_v110
     2U,	// MADDSU_H_rrr1_LL
     3U,	// MADDSU_H_rrr1_LU
     4U,	// MADDSU_H_rrr1_UL
     5U,	// MADDSU_H_rrr1_UU
-    65U,	// MADDSU_H_rrr1_v110
     2U,	// MADDS_H_rrr1_LL
     3U,	// MADDS_H_rrr1_LU
     4U,	// MADDS_H_rrr1_UL
     5U,	// MADDS_H_rrr1_UU
     65U,	// MADDS_H_rrr1_v110
     65U,	// MADDS_Q_rrr1
-    7U,	// MADDS_Q_rrr1_L
+    6U,	// MADDS_Q_rrr1_L
     0U,	// MADDS_Q_rrr1_L_L
     65U,	// MADDS_Q_rrr1_L_v110
-    8U,	// MADDS_Q_rrr1_U
+    7U,	// MADDS_Q_rrr1_U
     0U,	// MADDS_Q_rrr1_U_U
     65U,	// MADDS_Q_rrr1_e
-    7U,	// MADDS_Q_rrr1_e_L
+    6U,	// MADDS_Q_rrr1_e_L
     0U,	// MADDS_Q_rrr1_e_L_L
-    8U,	// MADDS_Q_rrr1_e_U
+    7U,	// MADDS_Q_rrr1_e_U
     0U,	// MADDS_Q_rrr1_e_U_U
     17U,	// MADDS_U_rcr
     17U,	// MADDS_U_rcr_e
@@ -2360,15 +2362,15 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5U,	// MADD_H_rrr1_UU
     65U,	// MADD_H_rrr1_v110
     65U,	// MADD_Q_rrr1
-    7U,	// MADD_Q_rrr1_L
+    6U,	// MADD_Q_rrr1_L
     0U,	// MADD_Q_rrr1_L_L
     65U,	// MADD_Q_rrr1_L_v110
-    8U,	// MADD_Q_rrr1_U
+    7U,	// MADD_Q_rrr1_U
     0U,	// MADD_Q_rrr1_U_U
     65U,	// MADD_Q_rrr1_e
-    7U,	// MADD_Q_rrr1_e_L
+    6U,	// MADD_Q_rrr1_e_L
     0U,	// MADD_Q_rrr1_e_L_L
-    8U,	// MADD_Q_rrr1_e_U
+    7U,	// MADD_Q_rrr1_e_U
     0U,	// MADD_Q_rrr1_e_U_U
     49U,	// MADD_U_rcr
     0U,	// MADD_U_rrr2
@@ -2450,18 +2452,20 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4U,	// MSUBM_H_rrr1_UL
     5U,	// MSUBM_H_rrr1_UU
     65U,	// MSUBM_H_rrr1_v110
-    6U,	// MSUBRS_H_rrr1_DcEdDaDbUL
+    8U,	// MSUBRS_H_rrr1_DcEdDaDbUL
     2U,	// MSUBRS_H_rrr1_LL
     3U,	// MSUBRS_H_rrr1_LU
     4U,	// MSUBRS_H_rrr1_UL
     5U,	// MSUBRS_H_rrr1_UU
+    65U,	// MSUBRS_Q_rrr1
     0U,	// MSUBRS_Q_rrr1_L_L
     0U,	// MSUBRS_Q_rrr1_U_U
-    6U,	// MSUBR_H_rrr1_DcEdDaDbUL
+    8U,	// MSUBR_H_rrr1_DcEdDaDbUL
     2U,	// MSUBR_H_rrr1_LL
     3U,	// MSUBR_H_rrr1_LU
     4U,	// MSUBR_H_rrr1_UL
     5U,	// MSUBR_H_rrr1_UU
+    65U,	// MSUBR_Q_rrr1
     0U,	// MSUBR_Q_rrr1_L_L
     0U,	// MSUBR_Q_rrr1_U_U
     2U,	// MSUBS_H_rrr1_LL
@@ -2470,14 +2474,14 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5U,	// MSUBS_H_rrr1_UU
     65U,	// MSUBS_H_rrr1_v110
     65U,	// MSUBS_Q_rrr1
-    7U,	// MSUBS_Q_rrr1_L
+    6U,	// MSUBS_Q_rrr1_L
     0U,	// MSUBS_Q_rrr1_L_L
-    8U,	// MSUBS_Q_rrr1_U
+    7U,	// MSUBS_Q_rrr1_U
     0U,	// MSUBS_Q_rrr1_U_U
     65U,	// MSUBS_Q_rrr1_e
-    7U,	// MSUBS_Q_rrr1_e_L
+    6U,	// MSUBS_Q_rrr1_e_L
     0U,	// MSUBS_Q_rrr1_e_L_L
-    8U,	// MSUBS_Q_rrr1_e_U
+    7U,	// MSUBS_Q_rrr1_e_U
     0U,	// MSUBS_Q_rrr1_e_U_U
     17U,	// MSUBS_U_rcr
     17U,	// MSUBS_U_rcr_e
@@ -2494,14 +2498,14 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5U,	// MSUB_H_rrr1_UU
     65U,	// MSUB_H_rrr1_v110
     65U,	// MSUB_Q_rrr1
-    7U,	// MSUB_Q_rrr1_L
+    6U,	// MSUB_Q_rrr1_L
     0U,	// MSUB_Q_rrr1_L_L
-    8U,	// MSUB_Q_rrr1_U
+    7U,	// MSUB_Q_rrr1_U
     0U,	// MSUB_Q_rrr1_U_U
     65U,	// MSUB_Q_rrr1_e
-    7U,	// MSUB_Q_rrr1_e_L
+    6U,	// MSUB_Q_rrr1_e_L
     0U,	// MSUB_Q_rrr1_e_L_L
-    8U,	// MSUB_Q_rrr1_e_U
+    7U,	// MSUB_Q_rrr1_e_U
     0U,	// MSUB_Q_rrr1_e_U_U
     49U,	// MSUB_U_rcr
     0U,	// MSUB_U_rrr2
@@ -3168,7 +3172,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 4:
-    // MADDMS_H_rrr1_UL, MADDM_H_rrr1_UL, MADDRS_H_rrr1_UL, MADDR_H_rrr1_UL, ...
+    // MADDMS_H_rrr1_UL, MADDM_H_rrr1_UL, MADDRS_H_rrr1_UL, MADDRS_H_rrr1_UL_...
     SStream_concat0(O, " UL, ");
     printZExtImm_2(MI, 4, O);
     return;
@@ -3180,20 +3184,20 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 6:
-    // MADDRS_H_rrr1_DcEdDaDbUL, MADDR_H_rrr1_DcEdDaDbUL, MSUBRS_H_rrr1_DcEdD...
-    SStream_concat0(O, ", UL, ");
-    printZExtImm_2(MI, 4, O);
-    return;
-    break;
-  case 7:
     // MADDS_Q_rrr1_L, MADDS_Q_rrr1_e_L, MADD_Q_rrr1_L, MADD_Q_rrr1_e_L, MSUB...
     SStream_concat0(O, " L, ");
     printZExtImm_2(MI, 4, O);
     return;
     break;
-  case 8:
+  case 7:
     // MADDS_Q_rrr1_U, MADDS_Q_rrr1_e_U, MADD_Q_rrr1_U, MADD_Q_rrr1_e_U, MSUB...
     SStream_concat0(O, " U, ");
+    printZExtImm_2(MI, 4, O);
+    return;
+    break;
+  case 8:
+    // MSUBRS_H_rrr1_DcEdDaDbUL, MSUBR_H_rrr1_DcEdDaDbUL
+    SStream_concat0(O, ", UL, ");
     printZExtImm_2(MI, 4, O);
     return;
     break;
@@ -3259,7 +3263,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 4:
-    // MADDM_H_rrr1_v110, MADDM_Q_rrr1_v110, MADDSUMS_H_rrr1_v110, MADDSUM_H_...
+    // MADDM_H_rrr1_v110, MADDM_Q_rrr1_v110, MADDRS_H_rrr1_v110, MADDRS_Q_rrr...
     printZExtImm_2(MI, 4, O);
     return;
     break;
