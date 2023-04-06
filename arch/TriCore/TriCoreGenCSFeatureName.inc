@@ -12,3 +12,4 @@
 { TriCore_FEATURE_HasV131_UP, "HasV131_UP" },
 { TriCore_FEATURE_HasV130_UP, "HasV130_UP" },
 { TriCore_FEATURE_HasV162_UP, "HasV162_UP" },
+{ TriCore_FEATURE_HasV162, "HasV162" },

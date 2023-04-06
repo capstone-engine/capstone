@@ -1837,14 +1837,14 @@
 { /* TriCore_DVADJ_rrr (413) - TriCore_INS_DVADJ - dvadj $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
 { /* TriCore_DVADJ_rrr_v110 (414) - TriCore_INS_DVADJ - dvadj $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
@@ -1941,14 +1941,14 @@
 { /* TriCore_DVSTEP_U_rrr (428) - TriCore_INS_DVSTEP_U - dvstep.u $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
 { /* TriCore_DVSTEP_U_rrrv110 (429) - TriCore_INS_DVSTEP_U - dvstep.u $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
@@ -1961,14 +1961,14 @@
 { /* TriCore_DVSTEP_rrr (431) - TriCore_INS_DVSTEP - dvstep $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
 { /* TriCore_DVSTEP_rrrv110 (432) - TriCore_INS_DVSTEP - dvstep $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
@@ -2340,28 +2340,28 @@
 { /* TriCore_IXMAX_U_rrr (486) - TriCore_INS_IXMAX_U - ixmax.u $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
 { /* TriCore_IXMAX_rrr (487) - TriCore_INS_IXMAX - ixmax $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
 { /* TriCore_IXMIN_U_rrr (488) - TriCore_INS_IXMIN_U - ixmin.u $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
 { /* TriCore_IXMIN_rrr (489) - TriCore_INS_IXMIN - ixmin $d, $s3, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
@@ -3822,7 +3822,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDRS_Q_rrr1 (712) - TriCore_INS_MADDRS_Q - maddrs.q $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MADDRS_Q_rrr1_L_L (712) - TriCore_INS_MADDRS_Q - maddrs.q $d, $s3, ${s1}L, ${s2}L, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -3831,7 +3831,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDRS_Q_rrr1_L_L (713) - TriCore_INS_MADDRS_Q - maddrs.q $d, $s3, ${s1}L, ${s2}L, $n */
+{ /* TriCore_MADDRS_Q_rrr1_U_U (713) - TriCore_INS_MADDRS_Q - maddrs.q $d, $s3, ${s1}U, ${s2}U, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -3840,7 +3840,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDRS_Q_rrr1_U_U (714) - TriCore_INS_MADDRS_Q - maddrs.q $d, $s3, ${s1}U, ${s2}U, $n */
+{ /* TriCore_MADDRS_Q_rrr1_v110 (714) - TriCore_INS_MADDRS_Q - maddrs.q $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -3903,7 +3903,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDR_Q_rrr1 (721) - TriCore_INS_MADDR_Q - maddr.q $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MADDR_Q_rrr1_L_L (721) - TriCore_INS_MADDR_Q - maddr.q $d, $s3, ${s1}L, ${s2}L, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -3912,7 +3912,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDR_Q_rrr1_L_L (722) - TriCore_INS_MADDR_Q - maddr.q $d, $s3, ${s1}L, ${s2}L, $n */
+{ /* TriCore_MADDR_Q_rrr1_U_U (722) - TriCore_INS_MADDR_Q - maddr.q $d, $s3, ${s1}U, ${s2}U, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -3921,7 +3921,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDR_Q_rrr1_U_U (723) - TriCore_INS_MADDR_Q - maddr.q $d, $s3, ${s1}U, ${s2}U, $n */
+{ /* TriCore_MADDR_Q_rrr1_v110 (723) - TriCore_INS_MADDR_Q - maddr.q $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4218,7 +4218,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDS_Q_rrr1_L_v110 (756) - TriCore_INS_MADDS_Q - madds.q $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MADDS_Q_rrr1_U (756) - TriCore_INS_MADDS_Q - madds.q $d, $s3, $s1, $s2 U, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4227,7 +4227,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADDS_Q_rrr1_U (757) - TriCore_INS_MADDS_Q - madds.q $d, $s3, $s1, $s2 U, $n */
+{ /* TriCore_MADDS_Q_rrr1_UU2_v110 (757) - TriCore_INS_MADDS_Q - madds.q $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4434,7 +4434,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADD_Q_rrr1_L_v110 (781) - TriCore_INS_MADD_Q - madd.q $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MADD_Q_rrr1_U (781) - TriCore_INS_MADD_Q - madd.q $d, $s3, $s1, $s2 U, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4443,7 +4443,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MADD_Q_rrr1_U (782) - TriCore_INS_MADD_Q - madd.q $d, $s3, $s1, $s2 U, $n */
+{ /* TriCore_MADD_Q_rrr1_UU2_v110 (782) - TriCore_INS_MADD_Q - madd.q $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4684,114 +4684,142 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const16 */
   { 0 }
 }},
-{ /* TriCore_MOV_AA_rr (814) - TriCore_INS_MOV_AA - mov.aa $d, $s2 */
+{ /* TriCore_MOVZ_A_sr (814) - TriCore_INS_MOVZ_A - movz.a $s1 */
+{
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_MOV_AA_rr (815) - TriCore_INS_MOV_AA - mov.aa $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_AA_srr (815) - TriCore_INS_MOV_AA - mov.aa $d, $s2 */
+{ /* TriCore_MOV_AA_srr_srr (816) - TriCore_INS_MOV_AA - mov.aa $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_A_rr (816) - TriCore_INS_MOV_A - mov.a */
+{ /* TriCore_MOV_AA_srr_srr_v110 (817) - TriCore_INS_MOV_AA - mov.aa $d, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MOV_A_rr (818) - TriCore_INS_MOV_A - mov.a */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_A_src (817) - TriCore_INS_MOV_A - mov.a $d, $const4 */
+{ /* TriCore_MOV_A_src (819) - TriCore_INS_MOV_A - mov.a $d, $const4 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const4 */
   { 0 }
 }},
-{ /* TriCore_MOV_A_srr (818) - TriCore_INS_MOV_A - mov.a $d, $s2 */
+{ /* TriCore_MOV_A_srr (820) - TriCore_INS_MOV_A - mov.a $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_D_rr (819) - TriCore_INS_MOV_D - mov.d $d, $s2 */
+{ /* TriCore_MOV_A_srr_v110 (821) - TriCore_INS_MOV_A - mov.a $d, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MOV_D_rr (822) - TriCore_INS_MOV_D - mov.d $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_D_srr (820) - TriCore_INS_MOV_D - mov.d $d, $s2 */
+{ /* TriCore_MOV_D_srr_srr (823) - TriCore_INS_MOV_D - mov.d $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_U_rlc (821) - TriCore_INS_MOV_U - mov.u $d, $const16 */
+{ /* TriCore_MOV_D_srr_srr_v110 (824) - TriCore_INS_MOV_D - mov.d $d, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MOV_U_rlc (825) - TriCore_INS_MOV_U - mov.u $d, $const16 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const16 */
   { 0 }
 }},
-{ /* TriCore_MOV_rlcDc (822) - TriCore_INS_MOV - mov $d, $const16 */
+{ /* TriCore_MOV_rlc (826) - TriCore_INS_MOV - mov $d, $const16 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const16 */
   { 0 }
 }},
-{ /* TriCore_MOV_rlcEc (823) - TriCore_INS_MOV - mov $d, $const16 */
+{ /* TriCore_MOV_rlc_e (827) - TriCore_INS_MOV - mov $d, $const16 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const16 */
   { 0 }
 }},
-{ /* TriCore_MOV_rrDcDb (824) - TriCore_INS_MOV - mov $d, $s2 */
+{ /* TriCore_MOV_rr (828) - TriCore_INS_MOV - mov $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_rrEcDaDb (825) - TriCore_INS_MOV - mov $d, $s1, $s2 */
+{ /* TriCore_MOV_rr_e (829) - TriCore_INS_MOV - mov $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_rrEcDb (826) - TriCore_INS_MOV - mov $d, $s2 */
+{ /* TriCore_MOV_rr_eab (830) - TriCore_INS_MOV - mov $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MOV_sc (827) - TriCore_INS_MOV - mov %d15, $const8 */
+{ /* TriCore_MOV_sc (831) - TriCore_INS_MOV - mov %d15, $const8 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const8 */
   { 0 }
 }},
-{ /* TriCore_MOV_srcDa (828) - TriCore_INS_MOV - mov $d, $const4 */
+{ /* TriCore_MOV_sc_v110 (832) - TriCore_INS_MOV - mov %d15, $const8 */
+{
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const8 */
+  { 0 }
+}},
+{ /* TriCore_MOV_src (833) - TriCore_INS_MOV - mov $d, $const4 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const4 */
   { 0 }
 }},
-{ /* TriCore_MOV_srcEa (829) - TriCore_INS_MOV - mov $d, $const4 */
+{ /* TriCore_MOV_src_e (834) - TriCore_INS_MOV - mov $d, $const4 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const4 */
   { 0 }
 }},
-{ /* TriCore_MOV_srr (830) - TriCore_INS_MOV - mov $d, $s2 */
+{ /* TriCore_MOV_srr (835) - TriCore_INS_MOV - mov $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MSUBADMS_H_rrr1_LL (831) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 LL, $n */
+{ /* TriCore_MSUBADMS_H_rrr1_LL (836) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4800,7 +4828,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADMS_H_rrr1_LU (832) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 LU, $n */
+{ /* TriCore_MSUBADMS_H_rrr1_LU (837) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4809,7 +4837,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADMS_H_rrr1_UL (833) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 UL, $n */
+{ /* TriCore_MSUBADMS_H_rrr1_UL (838) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4818,7 +4846,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADMS_H_rrr1_UU (834) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 UU, $n */
+{ /* TriCore_MSUBADMS_H_rrr1_UU (839) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2 UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4827,7 +4855,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADMS_H_rrr1_v110 (835) - TriCore_INS_MSUBADMS_H - msubadms.h $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MSUBADM_H_rrr1_LL (840) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4836,7 +4864,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADM_H_rrr1_LL (836) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 LL, $n */
+{ /* TriCore_MSUBADM_H_rrr1_LU (841) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4845,7 +4873,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADM_H_rrr1_LU (837) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 LU, $n */
+{ /* TriCore_MSUBADM_H_rrr1_UL (842) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4854,7 +4882,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADM_H_rrr1_UL (838) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 UL, $n */
+{ /* TriCore_MSUBADM_H_rrr1_UU (843) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4863,25 +4891,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADM_H_rrr1_UU (839) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2 UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBADM_H_rrr1_v110 (840) - TriCore_INS_MSUBADM_H - msubadm.h $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBADRS_H_rrr1_LL (841) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 LL, $n */
+{ /* TriCore_MSUBADRS_H_rrr1_LL (844) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4890,7 +4900,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADRS_H_rrr1_LU (842) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 LU, $n */
+{ /* TriCore_MSUBADRS_H_rrr1_LU (845) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4899,7 +4909,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADRS_H_rrr1_UL (843) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 UL, $n */
+{ /* TriCore_MSUBADRS_H_rrr1_UL (846) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4908,7 +4918,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADRS_H_rrr1_UU (844) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 UU, $n */
+{ /* TriCore_MSUBADRS_H_rrr1_UU (847) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2 UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4917,7 +4927,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADR_H_rrr1_LL (845) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 LL, $n */
+{ /* TriCore_MSUBADRS_H_rrr1_v110 (848) - TriCore_INS_MSUBADRS_H - msubadrs.h $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4926,7 +4936,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADR_H_rrr1_LU (846) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 LU, $n */
+{ /* TriCore_MSUBADR_H_rrr1_LL (849) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4935,7 +4945,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADR_H_rrr1_UL (847) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 UL, $n */
+{ /* TriCore_MSUBADR_H_rrr1_LU (850) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4944,7 +4954,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADR_H_rrr1_UU (848) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 UU, $n */
+{ /* TriCore_MSUBADR_H_rrr1_UL (851) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -4953,196 +4963,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBADS_H_rrr1_LL (849) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 LL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBADS_H_rrr1_LU (850) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 LU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBADS_H_rrr1_UL (851) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBADS_H_rrr1_UU (852) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBADS_H_rrr1_v110 (853) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBAD_H_rrr1_LL (854) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 LL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBAD_H_rrr1_LU (855) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 LU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBAD_H_rrr1_UL (856) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBAD_H_rrr1_UU (857) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBAD_H_rrr1_v110 (858) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBMS_H_rrr1_LL (859) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 LL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBMS_H_rrr1_LU (860) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 LU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBMS_H_rrr1_UL (861) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBMS_H_rrr1_UU (862) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBMS_H_rrr1_v110 (863) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBM_H_rrr1_LL (864) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 LL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBM_H_rrr1_LU (865) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 LU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBM_H_rrr1_UL (866) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBM_H_rrr1_UU (867) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBM_H_rrr1_v110 (868) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBRS_H_rrr1_DcEdDaDbUL (869) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2, UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBRS_H_rrr1_LL (870) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 LL, $n */
+{ /* TriCore_MSUBADR_H_rrr1_UU (852) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2 UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5151,7 +4972,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBRS_H_rrr1_LU (871) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 LU, $n */
+{ /* TriCore_MSUBADR_H_rrr1_v110 (853) - TriCore_INS_MSUBADR_H - msubadr.h $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5160,124 +4981,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBRS_H_rrr1_UL (872) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBRS_H_rrr1_UU (873) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBRS_Q_rrr1 (874) - TriCore_INS_MSUBRS_Q - msubrs.q $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBRS_Q_rrr1_L_L (875) - TriCore_INS_MSUBRS_Q - msubrs.q $d, $s3, ${s1}L, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBRS_Q_rrr1_U_U (876) - TriCore_INS_MSUBRS_Q - msubrs.q $d, $s3, ${s1}U, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_H_rrr1_DcEdDaDbUL (877) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2, UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_H_rrr1_LL (878) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 LL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_H_rrr1_LU (879) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 LU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_H_rrr1_UL (880) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_H_rrr1_UU (881) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_Q_rrr1 (882) - TriCore_INS_MSUBR_Q - msubr.q $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_Q_rrr1_L_L (883) - TriCore_INS_MSUBR_Q - msubr.q $d, $s3, ${s1}L, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBR_Q_rrr1_U_U (884) - TriCore_INS_MSUBR_Q - msubr.q $d, $s3, ${s1}U, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_H_rrr1_LL (885) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 LL, $n */
+{ /* TriCore_MSUBADS_H_rrr1_LL (854) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5286,7 +4990,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_H_rrr1_LU (886) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 LU, $n */
+{ /* TriCore_MSUBADS_H_rrr1_LU (855) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5295,7 +4999,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_H_rrr1_UL (887) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 UL, $n */
+{ /* TriCore_MSUBADS_H_rrr1_UL (856) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5304,7 +5008,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_H_rrr1_UU (888) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 UU, $n */
+{ /* TriCore_MSUBADS_H_rrr1_UU (857) - TriCore_INS_MSUBADS_H - msubads.h $d, $s3, $s1, $s2 UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5313,7 +5017,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_H_rrr1_v110 (889) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MSUBAD_H_rrr1_LL (858) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5322,52 +5026,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_Q_rrr1 (890) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_Q_rrr1_L (891) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_Q_rrr1_L_L (892) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}L, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_Q_rrr1_U (893) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_Q_rrr1_U_U (894) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}U, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_Q_rrr1_e (895) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MSUBAD_H_rrr1_LU (859) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5376,7 +5035,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_Q_rrr1_e_L (896) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 L, $n */
+{ /* TriCore_MSUBAD_H_rrr1_UL (860) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5385,7 +5044,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_Q_rrr1_e_L_L (897) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}L, ${s2}L, $n */
+{ /* TriCore_MSUBAD_H_rrr1_UU (861) - TriCore_INS_MSUBAD_H - msubad.h $d, $s3, $s1, $s2 UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5394,7 +5053,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_Q_rrr1_e_U (898) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 U, $n */
+{ /* TriCore_MSUBMS_H_rrr1_LL (862) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5403,7 +5062,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_Q_rrr1_e_U_U (899) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}U, ${s2}U, $n */
+{ /* TriCore_MSUBMS_H_rrr1_LU (863) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5412,15 +5071,25 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_U_rcr (900) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $const9 */
+{ /* TriCore_MSUBMS_H_rrr1_UL (864) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 UL, $n */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUBS_U_rcr_e (901) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $const9 */
+{ /* TriCore_MSUBMS_H_rrr1_UU (865) - TriCore_INS_MSUBMS_H - msubms.h $d, $s3, $s1, $s2 UU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBMS_U_rcrv110 (866) - TriCore_INS_MSUBMS_U - msubms.u $d, $s3, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5428,15 +5097,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MSUBS_U_rrr2 (902) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_U_rrr2_e (903) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $s2 */
+{ /* TriCore_MSUBMS_U_rrr2v110 (867) - TriCore_INS_MSUBMS_U - msubms.u $d, $s3, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5444,15 +5105,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_MSUBS_rcr (904) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $const9 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_rcr_e (905) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $const9 */
+{ /* TriCore_MSUBMS_rcrv110 (868) - TriCore_INS_MSUBMS - msubms $d, $s3, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5460,15 +5113,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MSUBS_rrr2 (906) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { 0 }
-}},
-{ /* TriCore_MSUBS_rrr2_e (907) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $s2 */
+{ /* TriCore_MSUBMS_rrr2v110 (869) - TriCore_INS_MSUBMS - msubms $d, $s3, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5476,15 +5121,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_MSUB_F_rrr (908) - TriCore_INS_MSUB_F - msub.f $d, $s3, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { 0 }
-}},
-{ /* TriCore_MSUB_H_rrr1_LL (909) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 LL, $n */
+{ /* TriCore_MSUBM_H_rrr1_LL (870) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5493,7 +5130,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUB_H_rrr1_LU (910) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 LU, $n */
+{ /* TriCore_MSUBM_H_rrr1_LU (871) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5502,7 +5139,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUB_H_rrr1_UL (911) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 UL, $n */
+{ /* TriCore_MSUBM_H_rrr1_UL (872) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5511,7 +5148,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUB_H_rrr1_UU (912) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 UU, $n */
+{ /* TriCore_MSUBM_H_rrr1_UU (873) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2 UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5520,7 +5157,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUB_H_rrr1_v110 (913) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MSUBM_H_rrr1_v110 (874) - TriCore_INS_MSUBM_H - msubm.h $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5529,52 +5166,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUB_Q_rrr1 (914) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_L (915) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_L_L (916) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}L, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_U (917) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_U_U (918) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}U, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_e (919) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2, $n */
+{ /* TriCore_MSUBM_Q_rrr1_v110 (875) - TriCore_INS_MSUBM_Q - msubm.q $d, $s3, $s1, $s2, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5583,43 +5175,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MSUB_Q_rrr1_e_L (920) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_e_L_L (921) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}L, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_e_U (922) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_Q_rrr1_e_U_U (923) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}U, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MSUB_U_rcr (924) - TriCore_INS_MADD_U - madd.u $d, $s3, $s1, $const9 */
+{ /* TriCore_MSUBM_U_rcrv110 (876) - TriCore_INS_MSUBM_U - msubm.u $d, $s3, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5627,7 +5183,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MSUB_U_rrr2 (925) - TriCore_INS_MADD_U - madd.u $d, $s3, $s1, $s2 */
+{ /* TriCore_MSUBM_U_rrr2v110 (877) - TriCore_INS_MSUBM_U - msubm.u $d, $s3, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5635,15 +5191,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_MSUB_rcr (926) - TriCore_INS_MSUB - msub $d, $s3, $s1, $const9 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
-  { 0 }
-}},
-{ /* TriCore_MSUB_rcr_e (927) - TriCore_INS_MSUB - msub $d, $s3, $s1, $const9 */
+{ /* TriCore_MSUBM_rcrv110 (878) - TriCore_INS_MSUBM - msubm $d, $s3, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5651,15 +5199,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MSUB_rrr2 (928) - TriCore_INS_MSUB - msub $d, $s3, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
-  { 0 }
-}},
-{ /* TriCore_MSUB_rrr2_e (929) - TriCore_INS_MSUB - msub $d, $s3, $s1, $s2 */
+{ /* TriCore_MSUBM_rrr2v110 (879) - TriCore_INS_MSUBM - msubm $d, $s3, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5667,13 +5207,583 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_MTCR_rlc (930) - TriCore_INS_MTCR - mtcr $const16, $d */
+{ /* TriCore_MSUBRS_H_rrr1_LL (880) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 LL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_H_rrr1_LU (881) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 LU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_H_rrr1_UL (882) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_H_rrr1_UL_2 (883) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_H_rrr1_UU (884) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2 UU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_H_rrr1_v110 (885) - TriCore_INS_MSUBRS_H - msubrs.h $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_Q_rrr1_L_L (886) - TriCore_INS_MSUBRS_Q - msubrs.q $d, $s3, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_Q_rrr1_U_U (887) - TriCore_INS_MSUBRS_Q - msubrs.q $d, $s3, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBRS_Q_rrr1_v110 (888) - TriCore_INS_MSUBRS_Q - msubrs.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_H_rrr1_LL (889) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 LL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_H_rrr1_LU (890) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 LU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_H_rrr1_UL (891) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_H_rrr1_UL_2 (892) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_H_rrr1_UU (893) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2 UU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_H_rrr1_v110 (894) - TriCore_INS_MSUBR_H - msubr.h $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_Q_rrr1_L_L (895) - TriCore_INS_MSUBR_Q - msubr.q $d, $s3, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_Q_rrr1_U_U (896) - TriCore_INS_MSUBR_Q - msubr.q $d, $s3, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBR_Q_rrr1_v110 (897) - TriCore_INS_MSUBR_Q - msubr.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_H_rrr1_LL (898) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 LL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_H_rrr1_LU (899) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 LU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_H_rrr1_UL (900) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_H_rrr1_UU (901) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2 UU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_H_rrr1_v110 (902) - TriCore_INS_MSUBS_H - msubs.h $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1 (903) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_L (904) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_L_L (905) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_U (906) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_UU2_v110 (907) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_U_U (908) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_e (909) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_e_L (910) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_e_L_L (911) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_e_U (912) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, $s1, $s2 U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_Q_rrr1_e_U_U (913) - TriCore_INS_MSUBS_Q - msubs.q $d, $s3, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_U_rcr (914) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_U_rcr_e (915) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_U_rrr2 (916) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_U_rrr2_e (917) - TriCore_INS_MADDS_U - madds.u $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_rcr (918) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_rcr_e (919) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_rrr2 (920) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MSUBS_rrr2_e (921) - TriCore_INS_MSUBS - msubs $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MSUB_F_rrr (922) - TriCore_INS_MSUB_F - msub.f $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MSUB_H_rrr1_LL (923) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 LL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_H_rrr1_LU (924) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 LU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_H_rrr1_UL (925) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_H_rrr1_UU (926) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2 UU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_H_rrr1_v110 (927) - TriCore_INS_MSUB_H - msub.h $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1 (928) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_L (929) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_L_L (930) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_U (931) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_UU2_v110 (932) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_U_U (933) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_e (934) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_e_L (935) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_e_L_L (936) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_e_U (937) - TriCore_INS_MSUB_Q - msub.q $d, $s3, $s1, $s2 U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_Q_rrr1_e_U_U (938) - TriCore_INS_MSUB_Q - msub.q $d, $s3, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MSUB_U_rcr (939) - TriCore_INS_MADD_U - madd.u $d, $s3, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MSUB_U_rrr2 (940) - TriCore_INS_MADD_U - madd.u $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MSUB_rcr (941) - TriCore_INS_MSUB - msub $d, $s3, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MSUB_rcr_e (942) - TriCore_INS_MSUB - msub $d, $s3, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MSUB_rrr2 (943) - TriCore_INS_MSUB - msub $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MSUB_rrr2_e (944) - TriCore_INS_MSUB - msub $d, $s3, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
+  { 0 }
+}},
+{ /* TriCore_MTCR_rlc (945) - TriCore_INS_MTCR - mtcr $const16, $d */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const16 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { 0 }
 }},
-{ /* TriCore_MULM_H_rr1_LL2e (931) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}LL, $n */
+{ /* TriCore_MULMS_H_rr1_LL2e (946) - TriCore_INS_MULMS_H - mulms.h $d, ${s1}, ${s2}LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5681,7 +5791,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULM_H_rr1_LU2e (932) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}LU, $n */
+{ /* TriCore_MULMS_H_rr1_LU2e (947) - TriCore_INS_MULMS_H - mulms.h $d, ${s1}, ${s2}LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5689,7 +5799,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULM_H_rr1_UL2e (933) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}UL, $n */
+{ /* TriCore_MULMS_H_rr1_UL2e (948) - TriCore_INS_MULMS_H - mulms.h $d, ${s1}, ${s2}UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5697,7 +5807,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULM_H_rr1_UU2e (934) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}UU, $n */
+{ /* TriCore_MULMS_H_rr1_UU2e (949) - TriCore_INS_MULMS_H - mulms.h $d, ${s1}, ${s2}UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5705,7 +5815,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULR_H_rr1_LL2e (935) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}LL, $n */
+{ /* TriCore_MULM_H_rr1_LL2e (950) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}LL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5713,7 +5823,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULR_H_rr1_LU2e (936) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}LU, $n */
+{ /* TriCore_MULM_H_rr1_LU2e (951) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}LU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5721,7 +5831,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULR_H_rr1_UL2e (937) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}UL, $n */
+{ /* TriCore_MULM_H_rr1_UL2e (952) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}UL, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5729,7 +5839,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULR_H_rr1_UU2e (938) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}UU, $n */
+{ /* TriCore_MULM_H_rr1_UU2e (953) - TriCore_INS_MULM_H - mulm.h $d, ${s1}, ${s2}UU, $n */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5737,202 +5847,311 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
   { 0 }
 }},
-{ /* TriCore_MULR_Q_rr1_2LL (939) - TriCore_INS_MULR_Q - mulr.q $d, ${s1}L, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MULR_Q_rr1_2UU (940) - TriCore_INS_MULR_Q - mulr.q $d, ${s1}U, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MULS_U_rc (941) - TriCore_INS_MULS_U - muls.u $d, $s1, $const9 */
+{ /* TriCore_MULM_U_rc (954) - TriCore_INS_MULM_U - mulm.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MULS_U_rr2 (942) - TriCore_INS_MULS_U - muls.u $d, $s1, $s2 */
+{ /* TriCore_MULM_U_rr (955) - TriCore_INS_MULM_U - mulm.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MULS_rc (943) - TriCore_INS_MULS - muls $d, $s1, $const9 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
-  { 0 }
-}},
-{ /* TriCore_MULS_rr2 (944) - TriCore_INS_MULS - muls $d, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { 0 }
-}},
-{ /* TriCore_MUL_F_rrr (945) - TriCore_INS_MUL_F - mul.f $d, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { 0 }
-}},
-{ /* TriCore_MUL_H_rr1_LL2e (946) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}LL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_H_rr1_LU2e (947) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}LU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_H_rr1_UL2e (948) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}UL, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_H_rr1_UU2e (949) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}UU, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2LL (950) - TriCore_INS_MUL_Q - mul.q $d, ${s1}L, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2UU (951) - TriCore_INS_MUL_Q - mul.q $d, ${s1}U, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2_L (952) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2_Le (953) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}L, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2_U (954) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2_Ue (955) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}U, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2__ (956) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_Q_rr1_2__e (957) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}, $n */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
-  { 0 }
-}},
-{ /* TriCore_MUL_U_rc (958) - TriCore_INS_MUL_U - mul.u $d, $s1, $const9 */
+{ /* TriCore_MULM_rc (956) - TriCore_INS_MULM - mulm $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MUL_U_rr2 (959) - TriCore_INS_MUL_U - mul.u $d, $s1, $s2 */
+{ /* TriCore_MULM_rr (957) - TriCore_INS_MULM - mulm $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MUL_rc (960) - TriCore_INS_MUL - mul $d, $s1, $const9 */
+{ /* TriCore_MULR_H_rr (958) - TriCore_INS_MULR_H - mulr.h $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MULR_H_rr1_LL2e (959) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}LL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MULR_H_rr1_LU2e (960) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}LU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MULR_H_rr1_UL2e (961) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MULR_H_rr1_UU2e (962) - TriCore_INS_MULR_H - mulr.h $d, ${s1}, ${s2}UU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MULR_Q_rr (963) - TriCore_INS_MULR_Q - mulr.q $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MULR_Q_rr1_2LL (964) - TriCore_INS_MULR_Q - mulr.q $d, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MULR_Q_rr1_2UU (965) - TriCore_INS_MULR_Q - mulr.q $d, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MULS_U_rc (966) - TriCore_INS_MULS_U - muls.u $d, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MULS_U_rr2 (967) - TriCore_INS_MULS_U - muls.u $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MULS_U_rr_v110 (968) - TriCore_INS_MULS_U - muls.u $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MULS_rc (969) - TriCore_INS_MULS - muls $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MUL_rc_e (961) - TriCore_INS_MUL - mul $d, $s1, $const9 */
+{ /* TriCore_MULS_rr2 (970) - TriCore_INS_MULS - muls $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MULS_rr_v110 (971) - TriCore_INS_MULS - muls $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MUL_F_rrr (972) - TriCore_INS_MUL_F - mul.f $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MUL_H_rr (973) - TriCore_INS_MUL_H - mul.h $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MUL_H_rr1_LL2e (974) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}LL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_H_rr1_LU2e (975) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}LU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_H_rr1_UL2e (976) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}UL, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_H_rr1_UU2e (977) - TriCore_INS_MUL_H - mul.h $d, ${s1}, ${s2}UU, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr (978) - TriCore_INS_MUL_Q - mul.q $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2 (979) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2LL (980) - TriCore_INS_MUL_Q - mul.q $d, ${s1}L, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2UU (981) - TriCore_INS_MUL_Q - mul.q $d, ${s1}U, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2_L (982) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2_Le (983) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}L, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2_U (984) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2_Ue (985) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}U, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_Q_rr1_2__e (986) - TriCore_INS_MUL_Q - mul.q $d, ${s1}, ${s2}, $n */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* n */
+  { 0 }
+}},
+{ /* TriCore_MUL_U_rc (987) - TriCore_INS_MUL_U - mul.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_MUL_rr2 (962) - TriCore_INS_MUL - mul $d, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { 0 }
-}},
-{ /* TriCore_MUL_rr2_e (963) - TriCore_INS_MUL - mul $d, $s1, $s2 */
+{ /* TriCore_MUL_U_rr2 (988) - TriCore_INS_MUL_U - mul.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_MUL_srr (964) - TriCore_INS_MUL - mul $d, $s2 */
+{ /* TriCore_MUL_rc (989) - TriCore_INS_MUL - mul $d, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MUL_rc_e (990) - TriCore_INS_MUL - mul $d, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_MUL_rr2 (991) - TriCore_INS_MUL - mul $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MUL_rr2_e (992) - TriCore_INS_MUL - mul $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MUL_rr_v110 (993) - TriCore_INS_MUL - mul $d, $s1, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_MUL_srr (994) - TriCore_INS_MUL - mul $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_NAND_T (965) - TriCore_INS_NAND_T - nand.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_NAND_T (995) - TriCore_INS_NAND_T - nand.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5941,56 +6160,56 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_NAND_rc (966) - TriCore_INS_NAND - nand $d, $s1, $const9 */
+{ /* TriCore_NAND_rc (996) - TriCore_INS_NAND - nand $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_NAND_rr (967) - TriCore_INS_NAND - nand $d, $s1, $s2 */
+{ /* TriCore_NAND_rr (997) - TriCore_INS_NAND - nand $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_NEZ_A (968) - TriCore_INS_NEZ_A - nez.a $d, $s1 */
+{ /* TriCore_NEZ_A (998) - TriCore_INS_NEZ_A - nez.a $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_NE_A (969) - TriCore_INS_NE_A - ne.a $d, $s1, $s2 */
+{ /* TriCore_NE_A (999) - TriCore_INS_NE_A - ne.a $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_NE_rc (970) - TriCore_INS_NE - ne $d, $s1, $const9 */
+{ /* TriCore_NE_rc (1000) - TriCore_INS_NE - ne $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_NE_rr (971) - TriCore_INS_NE - ne $d, $s1, $s2 */
+{ /* TriCore_NE_rr (1001) - TriCore_INS_NE - ne $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_NOP_sr (972) - TriCore_INS_NOP - nop */
+{ /* TriCore_NOP_sr (1002) - TriCore_INS_NOP - nop */
 {
   { 0 }
 }},
-{ /* TriCore_NOP_sys (973) - TriCore_INS_NOP - nop */
+{ /* TriCore_NOP_sys (1003) - TriCore_INS_NOP - nop */
 {
   { 0 }
 }},
-{ /* TriCore_NOR_T (974) - TriCore_INS_NOR_T - nor.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_NOR_T (1004) - TriCore_INS_NOR_T - nor.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -5999,26 +6218,31 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_NOR_rc (975) - TriCore_INS_NOR - nor $d, $s1, $const9 */
+{ /* TriCore_NOR_rc (1005) - TriCore_INS_NOR - nor $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_NOR_rr (976) - TriCore_INS_NOR - nor $d, $s1, $s2 */
+{ /* TriCore_NOR_rr (1006) - TriCore_INS_NOR - nor $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_NOT_sr (977) - TriCore_INS_NOT - not $s1 */
+{ /* TriCore_NOR_sr (1007) - TriCore_INS_NOR - nor $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ORN_T (978) - TriCore_INS_ORN_T - orn.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_NOR_sr_v110 (1008) - TriCore_INS_NOR - nor $s1 */
+{
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_ORN_T (1009) - TriCore_INS_ORN_T - orn.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6027,21 +6251,21 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_ORN_rc (979) - TriCore_INS_ORN - orn $d, $s1, $const9 */
+{ /* TriCore_ORN_rc (1010) - TriCore_INS_ORN - orn $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_ORN_rr (980) - TriCore_INS_ORN - orn $d, $s1, $s2 */
+{ /* TriCore_ORN_rr (1011) - TriCore_INS_ORN - orn $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_ANDN_T (981) - TriCore_INS_OR_ANDN_T - or.andn.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_OR_ANDN_T (1012) - TriCore_INS_OR_ANDN_T - or.andn.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6050,7 +6274,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_OR_AND_T (982) - TriCore_INS_OR_AND_T - or.and.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_OR_AND_T (1013) - TriCore_INS_OR_AND_T - or.and.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6059,91 +6283,91 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_OR_EQ_rc (983) - TriCore_INS_OR_EQ - or.eq $d, $s1, $const9 */
+{ /* TriCore_OR_EQ_rc (1014) - TriCore_INS_OR_EQ - or.eq $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_OR_EQ_rr (984) - TriCore_INS_OR_EQ - or.eq $d, $s1, $s2 */
+{ /* TriCore_OR_EQ_rr (1015) - TriCore_INS_OR_EQ - or.eq $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_GE_U_rc (985) - TriCore_INS_OR_GE_U - or.ge.u $d, $s1, $const9 */
+{ /* TriCore_OR_GE_U_rc (1016) - TriCore_INS_OR_GE_U - or.ge.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_OR_GE_U_rr (986) - TriCore_INS_OR_GE_U - or.ge.u $d, $s1, $s2 */
+{ /* TriCore_OR_GE_U_rr (1017) - TriCore_INS_OR_GE_U - or.ge.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_GE_rc (987) - TriCore_INS_OR_GE - or.ge $d, $s1, $const9 */
+{ /* TriCore_OR_GE_rc (1018) - TriCore_INS_OR_GE - or.ge $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_OR_GE_rr (988) - TriCore_INS_OR_GE - or.ge $d, $s1, $s2 */
+{ /* TriCore_OR_GE_rr (1019) - TriCore_INS_OR_GE - or.ge $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_LT_U_rc (989) - TriCore_INS_OR_LT_U - or.lt.u $d, $s1, $const9 */
+{ /* TriCore_OR_LT_U_rc (1020) - TriCore_INS_OR_LT_U - or.lt.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_OR_LT_U_rr (990) - TriCore_INS_OR_LT_U - or.lt.u $d, $s1, $s2 */
+{ /* TriCore_OR_LT_U_rr (1021) - TriCore_INS_OR_LT_U - or.lt.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_LT_rc (991) - TriCore_INS_OR_LT - or.lt $d, $s1, $const9 */
+{ /* TriCore_OR_LT_rc (1022) - TriCore_INS_OR_LT - or.lt $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_OR_LT_rr (992) - TriCore_INS_OR_LT - or.lt $d, $s1, $s2 */
+{ /* TriCore_OR_LT_rr (1023) - TriCore_INS_OR_LT - or.lt $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_NE_rc (993) - TriCore_INS_OR_NE - or.ne $d, $s1, $const9 */
+{ /* TriCore_OR_NE_rc (1024) - TriCore_INS_OR_NE - or.ne $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_OR_NE_rr (994) - TriCore_INS_OR_NE - or.ne $d, $s1, $s2 */
+{ /* TriCore_OR_NE_rr (1025) - TriCore_INS_OR_NE - or.ne $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_NOR_T (995) - TriCore_INS_OR_NOR_T - or.nor.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_OR_NOR_T (1026) - TriCore_INS_OR_NOR_T - or.nor.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6152,7 +6376,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_OR_OR_T (996) - TriCore_INS_OR_OR_T - or.or.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_OR_OR_T (1027) - TriCore_INS_OR_OR_T - or.or.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6161,7 +6385,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_OR_T (997) - TriCore_INS_OR_T - or.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_OR_T (1028) - TriCore_INS_OR_T - or.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6170,166 +6394,216 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_OR_rc (998) - TriCore_INS_OR - or $d, $s1, $const9 */
+{ /* TriCore_OR_rc (1029) - TriCore_INS_OR - or $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_OR_rr (999) - TriCore_INS_OR - or $d, $s1, $s2 */
+{ /* TriCore_OR_rr (1030) - TriCore_INS_OR - or $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_OR_sc (1000) - TriCore_INS_OR - or %d15, $const8 */
+{ /* TriCore_OR_sc (1031) - TriCore_INS_OR - or %d15, $const8 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const8 */
   { 0 }
 }},
-{ /* TriCore_OR_srr (1001) - TriCore_INS_OR - or $d, $s2 */
+{ /* TriCore_OR_sc_v110 (1032) - TriCore_INS_OR - or %d15, $const8 */
+{
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const8 */
+  { 0 }
+}},
+{ /* TriCore_OR_srr (1033) - TriCore_INS_OR - or $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_PACK_rrr (1002) - TriCore_INS_PACK - pack $d, $s3, $s1 */
+{ /* TriCore_OR_srr_v110 (1034) - TriCore_INS_OR - or $d, $s2 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_PACK_rrr (1035) - TriCore_INS_PACK - pack $d, $s3, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_PARITY_rr (1003) - TriCore_INS_PARITY - parity $d, $s1 */
+{ /* TriCore_PARITY_rr (1036) - TriCore_INS_PARITY - parity $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_POPCNT_W_rr (1004) - TriCore_INS_POPCNT_W - popcnt.w $d, $s1 */
+{ /* TriCore_PARITY_rr_v110 (1037) - TriCore_INS_PARITY - parity $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_Q31TOF_rr (1005) - TriCore_INS_Q31TOF - q31tof $d, $s1, $s2 */
+{ /* TriCore_POPCNT_W_rr (1038) - TriCore_INS_POPCNT_W - popcnt.w $d, $s1 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_Q31TOF_rr (1039) - TriCore_INS_Q31TOF - q31tof $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_QSEED_F_rr (1006) - TriCore_INS_QSEED_F - qseed.f $d, $s1 */
+{ /* TriCore_QSEED_F_rr (1040) - TriCore_INS_QSEED_F - qseed.f $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_RESTORE_sys (1007) - TriCore_INS_RESTORE - restore */
+{ /* TriCore_RESTORE_sys (1041) - TriCore_INS_RESTORE - restore */
 {
   { 0 }
 }},
-{ /* TriCore_RET_sr (1008) - TriCore_INS_RET - ret */
+{ /* TriCore_RET_sr (1042) - TriCore_INS_RET - ret */
 {
   { 0 }
 }},
-{ /* TriCore_RET_sys (1009) - TriCore_INS_RET - ret */
+{ /* TriCore_RET_sys (1043) - TriCore_INS_RET - ret */
 {
   { 0 }
 }},
-{ /* TriCore_RFE_sr (1010) - TriCore_INS_RFE - rfe */
+{ /* TriCore_RET_sys_v110 (1044) - TriCore_INS_RET - ret */
 {
   { 0 }
 }},
-{ /* TriCore_RFE_sys (1011) - TriCore_INS_RFE - rfe */
+{ /* TriCore_RFE_sr (1045) - TriCore_INS_RFE - rfe */
 {
   { 0 }
 }},
-{ /* TriCore_RFM_sys (1012) - TriCore_INS_RFM - rfm */
+{ /* TriCore_RFE_sys_sys (1046) - TriCore_INS_RFE - rfe */
 {
   { 0 }
 }},
-{ /* TriCore_RSLCX_sys (1013) - TriCore_INS_RELCK - relck */
+{ /* TriCore_RFE_sys_sys_v110 (1047) - TriCore_INS_RFE - rfe */
 {
   { 0 }
 }},
-{ /* TriCore_RSTV_sys (1014) - TriCore_INS_RESTORE - restore */
+{ /* TriCore_RFM_sys (1048) - TriCore_INS_RFM - rfm */
 {
   { 0 }
 }},
-{ /* TriCore_RSUBS_U_rc (1015) - TriCore_INS_RSUBS_U - rsubs.u $d, $s1, $const9 */
+{ /* TriCore_RSLCX_sys (1049) - TriCore_INS_RELCK - relck */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_RSUBS_rc (1016) - TriCore_INS_RSUBS - rsubs $d, $s1, $const9 */
+{ /* TriCore_RSTV_sys (1050) - TriCore_INS_RESTORE - restore */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_RSUB_rc (1017) - TriCore_INS_RSUB - rsub $d, $s1, $const9 */
+{ /* TriCore_RSUBS_U_rc (1051) - TriCore_INS_RSUBS_U - rsubs.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_RSUB_sr (1018) - TriCore_INS_RSUB - rsub $s1 */
+{ /* TriCore_RSUBS_rc (1052) - TriCore_INS_RSUBS - rsubs $d, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_RSUB_rc (1053) - TriCore_INS_RSUB - rsub $d, $s1, $const9 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
+  { 0 }
+}},
+{ /* TriCore_RSUB_sr_sr (1054) - TriCore_INS_RSUB - rsub $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SAT_BU_rr (1019) - TriCore_INS_SAT_BU - sat.bu $d, $s1 */
+{ /* TriCore_RSUB_sr_sr_v110 (1055) - TriCore_INS_RSUB - rsub $s1 */
+{
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_SAT_BU_rr (1056) - TriCore_INS_SAT_BU - sat.bu $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SAT_BU_sr (1020) - TriCore_INS_SAT_BU - sat.bu $s1 */
+{ /* TriCore_SAT_BU_sr (1057) - TriCore_INS_SAT_BU - sat.bu $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SAT_B_rr (1021) - TriCore_INS_SAT_B - sat.b $d, $s1 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { 0 }
-}},
-{ /* TriCore_SAT_B_sr (1022) - TriCore_INS_SAT_B - sat.b $s1 */
+{ /* TriCore_SAT_BU_sr_v110 (1058) - TriCore_INS_SAT_BU - sat.bu $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SAT_HU_rr (1023) - TriCore_INS_SAT_HU - sat.hu $d, $s1 */
+{ /* TriCore_SAT_B_rr (1059) - TriCore_INS_SAT_B - sat.b $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SAT_HU_sr (1024) - TriCore_INS_SAT_HU - sat.hu $s1 */
+{ /* TriCore_SAT_B_sr (1060) - TriCore_INS_SAT_B - sat.b $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SAT_H_rr (1025) - TriCore_INS_SAT_H - sat.h $d, $s1 */
+{ /* TriCore_SAT_B_sr_v110 (1061) - TriCore_INS_SAT_B - sat.b $s1 */
+{
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_SAT_HU_rr (1062) - TriCore_INS_SAT_HU - sat.hu $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SAT_H_sr (1026) - TriCore_INS_SAT_H - sat.h $s1 */
+{ /* TriCore_SAT_HU_sr (1063) - TriCore_INS_SAT_HU - sat.hu $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SELN_rcr (1027) - TriCore_INS_SELN - seln $d, $s3, $s1, $const9 */
+{ /* TriCore_SAT_HU_sr_v110 (1064) - TriCore_INS_SAT_HU - sat.hu $s1 */
+{
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_SAT_H_rr (1065) - TriCore_INS_SAT_H - sat.h $d, $s1 */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_SAT_H_sr (1066) - TriCore_INS_SAT_H - sat.h $s1 */
+{
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_SAT_H_sr_v110 (1067) - TriCore_INS_SAT_H - sat.h $s1 */
+{
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { 0 }
+}},
+{ /* TriCore_SELN_rcr (1068) - TriCore_INS_SELN - seln $d, $s3, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6337,7 +6611,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SELN_rrr (1028) - TriCore_INS_SELN - seln $d, $s3, $s1, $s2 */
+{ /* TriCore_SELN_rrr (1069) - TriCore_INS_SELN - seln $d, $s3, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6345,7 +6619,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_SEL_rcr (1029) - TriCore_INS_SEL - sel $d, $s3, $s1, $const9 */
+{ /* TriCore_SEL_rcr (1070) - TriCore_INS_SEL - sel $d, $s3, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6353,7 +6627,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SEL_rrr (1030) - TriCore_INS_SEL - sel $d, $s3, $s1, $s2 */
+{ /* TriCore_SEL_rrr (1071) - TriCore_INS_SEL - sel $d, $s3, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6361,62 +6635,62 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_SHAS_rc (1031) - TriCore_INS_SHAS - shas $d, $s1, $const9 */
+{ /* TriCore_SHAS_rc (1072) - TriCore_INS_SHAS - shas $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SHAS_rr (1032) - TriCore_INS_SHAS - shas $d, $s1, $s2 */
+{ /* TriCore_SHAS_rr (1073) - TriCore_INS_SHAS - shas $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SHA_H_rc (1033) - TriCore_INS_SHA_H - sha.h $d, $s1, $const9 */
+{ /* TriCore_SHA_H_rc (1074) - TriCore_INS_SHA_H - sha.h $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SHA_H_rr (1034) - TriCore_INS_SHA_H - sha.h $d, $s1, $s2 */
+{ /* TriCore_SHA_H_rr (1075) - TriCore_INS_SHA_H - sha.h $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SHA_rc (1035) - TriCore_INS_SHA - sha $d, $s1, $const9 */
+{ /* TriCore_SHA_rc (1076) - TriCore_INS_SHA - sha $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SHA_rr (1036) - TriCore_INS_SHA - sha $d, $s1, $s2 */
+{ /* TriCore_SHA_rr (1077) - TriCore_INS_SHA - sha $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SHA_src (1037) - TriCore_INS_SHA - sha $d, $const4 */
+{ /* TriCore_SHA_src (1078) - TriCore_INS_SHA - sha $d, $const4 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const4 */
   { 0 }
 }},
-{ /* TriCore_SHUFFLE_rc (1038) - TriCore_INS_SHUFFLE - shuffle $d, $s1, $const9 */
+{ /* TriCore_SHUFFLE_rc (1079) - TriCore_INS_SHUFFLE - shuffle $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_ANDN_T (1039) - TriCore_INS_SH_ANDN_T - sh.andn.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_SH_ANDN_T (1080) - TriCore_INS_SH_ANDN_T - sh.andn.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6425,7 +6699,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_SH_AND_T (1040) - TriCore_INS_SH_AND_T - sh.and.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_SH_AND_T (1081) - TriCore_INS_SH_AND_T - sh.and.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6434,91 +6708,91 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_SH_EQ_rc (1041) - TriCore_INS_SH_EQ - sh.eq $d, $s1, $const9 */
+{ /* TriCore_SH_EQ_rc (1082) - TriCore_INS_SH_EQ - sh.eq $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_EQ_rr (1042) - TriCore_INS_SH_EQ - sh.eq $d, $s1, $s2 */
+{ /* TriCore_SH_EQ_rr (1083) - TriCore_INS_SH_EQ - sh.eq $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_GE_U_rc (1043) - TriCore_INS_SH_GE_U - sh.ge.u $d, $s1, $const9 */
+{ /* TriCore_SH_GE_U_rc (1084) - TriCore_INS_SH_GE_U - sh.ge.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_GE_U_rr (1044) - TriCore_INS_SH_GE_U - sh.ge.u $d, $s1, $s2 */
+{ /* TriCore_SH_GE_U_rr (1085) - TriCore_INS_SH_GE_U - sh.ge.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_GE_rc (1045) - TriCore_INS_SH_GE - sh.ge $d, $s1, $const9 */
+{ /* TriCore_SH_GE_rc (1086) - TriCore_INS_SH_GE - sh.ge $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_GE_rr (1046) - TriCore_INS_SH_GE - sh.ge $d, $s1, $s2 */
+{ /* TriCore_SH_GE_rr (1087) - TriCore_INS_SH_GE - sh.ge $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_H_rc (1047) - TriCore_INS_SH_H - sh.h $d, $s1, $const9 */
+{ /* TriCore_SH_H_rc (1088) - TriCore_INS_SH_H - sh.h $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_H_rr (1048) - TriCore_INS_SH_H - sh.h $d, $s1, $s2 */
+{ /* TriCore_SH_H_rr (1089) - TriCore_INS_SH_H - sh.h $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_LT_U_rc (1049) - TriCore_INS_SH_LT_U - sh.lt.u $d, $s1, $const9 */
+{ /* TriCore_SH_LT_U_rc (1090) - TriCore_INS_SH_LT_U - sh.lt.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_LT_U_rr (1050) - TriCore_INS_SH_LT_U - sh.lt.u $d, $s1, $s2 */
+{ /* TriCore_SH_LT_U_rr (1091) - TriCore_INS_SH_LT_U - sh.lt.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_LT_rc (1051) - TriCore_INS_SH_LT - sh.lt $d, $s1, $const9 */
+{ /* TriCore_SH_LT_rc (1092) - TriCore_INS_SH_LT - sh.lt $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_LT_rr (1052) - TriCore_INS_SH_LT - sh.lt $d, $s1, $s2 */
+{ /* TriCore_SH_LT_rr (1093) - TriCore_INS_SH_LT - sh.lt $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_NAND_T (1053) - TriCore_INS_SH_NAND_T - sh.nand.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_SH_NAND_T (1094) - TriCore_INS_SH_NAND_T - sh.nand.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6527,30 +6801,21 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_SH_NE_rc (1054) - TriCore_INS_SH_LT - sh.lt $d, $s1, $const9 */
+{ /* TriCore_SH_NE_rc (1095) - TriCore_INS_SH_LT - sh.lt $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_NE_rr (1055) - TriCore_INS_SH_LT - sh.lt $d, $s1, $s2 */
+{ /* TriCore_SH_NE_rr (1096) - TriCore_INS_SH_LT - sh.lt $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_NOR_T (1056) - TriCore_INS_SH_NOR_T - sh.nor.t $d, $s1, $pos1, $s2, $pos_r */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos1 */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
-  { 0 }
-}},
-{ /* TriCore_SH_ORN_T (1057) - TriCore_INS_SH_ORN_T - sh.orn.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_SH_NOR_T (1097) - TriCore_INS_SH_NOR_T - sh.nor.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6559,7 +6824,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_SH_OR_T (1058) - TriCore_INS_SH_OR_T - sh.or.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_SH_ORN_T (1098) - TriCore_INS_SH_ORN_T - sh.orn.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6568,7 +6833,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_SH_XNOR_T (1059) - TriCore_INS_SH_XNOR_T - sh.xnor.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_SH_OR_T (1099) - TriCore_INS_SH_OR_T - sh.or.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6577,7 +6842,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_SH_XOR_T (1060) - TriCore_INS_SH_XOR_T - sh.xor.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_SH_XNOR_T (1100) - TriCore_INS_SH_XNOR_T - sh.xnor.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -6586,683 +6851,692 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_SH_rc (1061) - TriCore_INS_SH - sh $d, $s1, $const9 */
+{ /* TriCore_SH_XOR_T (1101) - TriCore_INS_SH_XOR_T - sh.xor.t $d, $s1, $pos1, $s2, $pos_r */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos1 */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
+  { 0 }
+}},
+{ /* TriCore_SH_rc (1102) - TriCore_INS_SH - sh $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_SH_rr (1062) - TriCore_INS_SH - sh $d, $s1, $s2 */
+{ /* TriCore_SH_rr (1103) - TriCore_INS_SH - sh $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SH_src (1063) - TriCore_INS_SH - sh $d, $const4 */
+{ /* TriCore_SH_src (1104) - TriCore_INS_SH - sh $d, $const4 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const4 */
   { 0 }
 }},
-{ /* TriCore_STLCX_abs (1064) - TriCore_INS_STLCX - stlcx $off18 */
+{ /* TriCore_STLCX_abs (1105) - TriCore_INS_STLCX - stlcx $off18 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_STLCX_bo_bso (1065) - TriCore_INS_STLCX - stlcx [$s2]$off10 */
+{ /* TriCore_STLCX_bo_bso (1106) - TriCore_INS_STLCX - stlcx [$s2]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_STUCX_abs (1066) - TriCore_INS_STUCX - stucx $off18 */
+{ /* TriCore_STUCX_abs (1107) - TriCore_INS_STUCX - stucx $off18 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_STUCX_bo_bso (1067) - TriCore_INS_STUCX - stucx [$s2]$off10 */
+{ /* TriCore_STUCX_bo_bso (1108) - TriCore_INS_STUCX - stucx [$s2]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_A_abs (1068) - TriCore_INS_ST_A - st.a $off18, $s1 */
+{ /* TriCore_ST_A_abs (1109) - TriCore_INS_ST_A - st.a $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_ST_A_bo_bso (1069) - TriCore_INS_ST_A - st.a [$s1]$off10, $d */
+{ /* TriCore_ST_A_bo_bso (1110) - TriCore_INS_ST_A - st.a [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_A_bo_c (1070) - TriCore_INS_ST_A - st.a $d, [${s1}+c]$off10 */
+{ /* TriCore_ST_A_bo_c (1111) - TriCore_INS_ST_A - st.a $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_A_bo_pos (1071) - TriCore_INS_ST_A - st.a $s2, [${s1}+]$off10 */
+{ /* TriCore_ST_A_bo_pos (1112) - TriCore_INS_ST_A - st.a $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_A_bo_pre (1072) - TriCore_INS_ST_A - st.a $s2, [+${s1}]$off10 */
+{ /* TriCore_ST_A_bo_pre (1113) - TriCore_INS_ST_A - st.a $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_A_bo_r (1073) - TriCore_INS_ST_A - st.a $d, [${s1}+r] */
+{ /* TriCore_ST_A_bo_r (1114) - TriCore_INS_ST_A - st.a $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_A_bol (1074) - TriCore_INS_ST_A - st.a [$s2]$off16, $s1 */
+{ /* TriCore_ST_A_bol (1115) - TriCore_INS_ST_A - st.a [$s2]$off16, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off16 */
   { 0 }
 }},
-{ /* TriCore_ST_A_sc (1075) - TriCore_INS_ST_A - st.a %sp, $const8, %a15 */
+{ /* TriCore_ST_A_sc (1116) - TriCore_INS_ST_A - st.a %sp, $const8, %a15 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const8 */
   { 0 }
 }},
-{ /* TriCore_ST_A_sro (1076) - TriCore_INS_ST_A - st.a [$s2]$off4, %a15 */
+{ /* TriCore_ST_A_sro (1117) - TriCore_INS_ST_A - st.a [$s2]$off4, %a15 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_ST_A_ssr (1077) - TriCore_INS_ST_A - st.a [$d], $s1 */
+{ /* TriCore_ST_A_ssr (1118) - TriCore_INS_ST_A - st.a [$d], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_A_ssr_pos (1078) - TriCore_INS_ST_A - st.a [${d}+], $s1 */
+{ /* TriCore_ST_A_ssr_pos (1119) - TriCore_INS_ST_A - st.a [${d}+], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_A_ssro (1079) - TriCore_INS_ST_A - st.a [%a15]$off4, $s1 */
+{ /* TriCore_ST_A_ssro (1120) - TriCore_INS_ST_A - st.a [%a15]$off4, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_ST_B_abs (1080) - TriCore_INS_ST_B - st.b $off18, $s1 */
+{ /* TriCore_ST_B_abs (1121) - TriCore_INS_ST_B - st.b $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_ST_B_bo_bso (1081) - TriCore_INS_ST_B - st.b [$s1]$off10, $d */
+{ /* TriCore_ST_B_bo_bso (1122) - TriCore_INS_ST_B - st.b [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_B_bo_c (1082) - TriCore_INS_ST_B - st.b $d, [${s1}+c]$off10 */
+{ /* TriCore_ST_B_bo_c (1123) - TriCore_INS_ST_B - st.b $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_B_bo_pos (1083) - TriCore_INS_ST_B - st.b $s2, [${s1}+]$off10 */
+{ /* TriCore_ST_B_bo_pos (1124) - TriCore_INS_ST_B - st.b $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_B_bo_pre (1084) - TriCore_INS_ST_B - st.b $s2, [+${s1}]$off10 */
+{ /* TriCore_ST_B_bo_pre (1125) - TriCore_INS_ST_B - st.b $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_B_bo_r (1085) - TriCore_INS_ST_B - st.b $d, [${s1}+r] */
+{ /* TriCore_ST_B_bo_r (1126) - TriCore_INS_ST_B - st.b $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_B_bol (1086) - TriCore_INS_ST_B - st.b [$s2]$off16, $s1 */
+{ /* TriCore_ST_B_bol (1127) - TriCore_INS_ST_B - st.b [$s2]$off16, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off16 */
   { 0 }
 }},
-{ /* TriCore_ST_B_sro (1087) - TriCore_INS_ST_B - st.b [$s2]$off4, %d15 */
+{ /* TriCore_ST_B_sro (1128) - TriCore_INS_ST_B - st.b [$s2]$off4, %d15 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_ST_B_ssr (1088) - TriCore_INS_ST_B - st.b [$d], $s1 */
+{ /* TriCore_ST_B_ssr (1129) - TriCore_INS_ST_B - st.b [$d], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_B_ssr_pos (1089) - TriCore_INS_ST_B - st.b [${d}+], $s1 */
+{ /* TriCore_ST_B_ssr_pos (1130) - TriCore_INS_ST_B - st.b [${d}+], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_B_ssro (1090) - TriCore_INS_ST_B - st.b [%a15]$off4, $s1 */
+{ /* TriCore_ST_B_ssro (1131) - TriCore_INS_ST_B - st.b [%a15]$off4, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_ST_DA_abs (1091) - TriCore_INS_ST_DA - st.da $off18, $s1 */
+{ /* TriCore_ST_DA_abs (1132) - TriCore_INS_ST_DA - st.da $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_ST_DA_bo_bso (1092) - TriCore_INS_ST_DA - st.da [$s1]$off10, $d */
+{ /* TriCore_ST_DA_bo_bso (1133) - TriCore_INS_ST_DA - st.da [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_DA_bo_c (1093) - TriCore_INS_ST_DA - st.da $d, [${s1}+c]$off10 */
+{ /* TriCore_ST_DA_bo_c (1134) - TriCore_INS_ST_DA - st.da $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_DA_bo_pos (1094) - TriCore_INS_ST_DA - st.da $s2, [${s1}+]$off10 */
+{ /* TriCore_ST_DA_bo_pos (1135) - TriCore_INS_ST_DA - st.da $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_DA_bo_pre (1095) - TriCore_INS_ST_DA - st.da $s2, [+${s1}]$off10 */
+{ /* TriCore_ST_DA_bo_pre (1136) - TriCore_INS_ST_DA - st.da $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_DA_bo_r (1096) - TriCore_INS_ST_DA - st.da $d, [${s1}+r] */
+{ /* TriCore_ST_DA_bo_r (1137) - TriCore_INS_ST_DA - st.da $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_D_abs (1097) - TriCore_INS_ST_D - st.d $off18, $s1 */
+{ /* TriCore_ST_D_abs (1138) - TriCore_INS_ST_D - st.d $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_ST_D_bo_bso (1098) - TriCore_INS_ST_D - st.d [$s1]$off10, $d */
+{ /* TriCore_ST_D_bo_bso (1139) - TriCore_INS_ST_D - st.d [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_D_bo_c (1099) - TriCore_INS_ST_D - st.d $d, [${s1}+c]$off10 */
+{ /* TriCore_ST_D_bo_c (1140) - TriCore_INS_ST_D - st.d $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_D_bo_pos (1100) - TriCore_INS_ST_D - st.d $s2, [${s1}+]$off10 */
+{ /* TriCore_ST_D_bo_pos (1141) - TriCore_INS_ST_D - st.d $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_D_bo_pre (1101) - TriCore_INS_ST_D - st.d $s2, [+${s1}]$off10 */
+{ /* TriCore_ST_D_bo_pre (1142) - TriCore_INS_ST_D - st.d $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_D_bo_r (1102) - TriCore_INS_ST_D - st.d $d, [${s1}+r] */
+{ /* TriCore_ST_D_bo_r (1143) - TriCore_INS_ST_D - st.d $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_H_abs (1103) - TriCore_INS_ST_H - st.h $off18, $s1 */
+{ /* TriCore_ST_H_abs (1144) - TriCore_INS_ST_H - st.h $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_ST_H_bo_bso (1104) - TriCore_INS_ST_H - st.h [$s1]$off10, $d */
+{ /* TriCore_ST_H_bo_bso (1145) - TriCore_INS_ST_H - st.h [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_H_bo_c (1105) - TriCore_INS_ST_H - st.h $d, [${s1}+c]$off10 */
+{ /* TriCore_ST_H_bo_c (1146) - TriCore_INS_ST_H - st.h $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_H_bo_pos (1106) - TriCore_INS_ST_H - st.h $s2, [${s1}+]$off10 */
+{ /* TriCore_ST_H_bo_pos (1147) - TriCore_INS_ST_H - st.h $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_H_bo_pre (1107) - TriCore_INS_ST_H - st.h $s2, [+${s1}]$off10 */
+{ /* TriCore_ST_H_bo_pre (1148) - TriCore_INS_ST_H - st.h $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_H_bo_r (1108) - TriCore_INS_ST_H - st.h $d, [${s1}+r] */
+{ /* TriCore_ST_H_bo_r (1149) - TriCore_INS_ST_H - st.h $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_H_bol (1109) - TriCore_INS_ST_H - st.h [$s2]$off16, $s1 */
+{ /* TriCore_ST_H_bol (1150) - TriCore_INS_ST_H - st.h [$s2]$off16, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off16 */
   { 0 }
 }},
-{ /* TriCore_ST_H_sro (1110) - TriCore_INS_ST_H - st.h [$s2]$off4, %d15 */
+{ /* TriCore_ST_H_sro (1151) - TriCore_INS_ST_H - st.h [$s2]$off4, %d15 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_ST_H_ssr (1111) - TriCore_INS_ST_H - st.h [$d], $s1 */
+{ /* TriCore_ST_H_ssr (1152) - TriCore_INS_ST_H - st.h [$d], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_H_ssr_pos (1112) - TriCore_INS_ST_H - st.h [${d}+], $s1 */
+{ /* TriCore_ST_H_ssr_pos (1153) - TriCore_INS_ST_H - st.h [${d}+], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_H_ssro (1113) - TriCore_INS_ST_H - st.h [%a15]$off4, $s1 */
+{ /* TriCore_ST_H_ssro (1154) - TriCore_INS_ST_H - st.h [%a15]$off4, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_ST_Q_abs (1114) - TriCore_INS_ST_Q - st.q $off18, $s1 */
+{ /* TriCore_ST_Q_abs (1155) - TriCore_INS_ST_Q - st.q $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_ST_Q_bo_bso (1115) - TriCore_INS_ST_Q - st.q [$s1]$off10, $d */
+{ /* TriCore_ST_Q_bo_bso (1156) - TriCore_INS_ST_Q - st.q [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_Q_bo_c (1116) - TriCore_INS_ST_Q - st.q $d, [${s1}+c]$off10 */
+{ /* TriCore_ST_Q_bo_c (1157) - TriCore_INS_ST_Q - st.q $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_Q_bo_pos (1117) - TriCore_INS_ST_Q - st.q $s2, [${s1}+]$off10 */
+{ /* TriCore_ST_Q_bo_pos (1158) - TriCore_INS_ST_Q - st.q $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_Q_bo_pre (1118) - TriCore_INS_ST_Q - st.q $s2, [+${s1}]$off10 */
+{ /* TriCore_ST_Q_bo_pre (1159) - TriCore_INS_ST_Q - st.q $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_Q_bo_r (1119) - TriCore_INS_ST_Q - st.q $d, [${s1}+r] */
+{ /* TriCore_ST_Q_bo_r (1160) - TriCore_INS_ST_Q - st.q $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_T (1120) - TriCore_INS_ST_T - st.t $off18, $bpos3, $b */
+{ /* TriCore_ST_T (1161) - TriCore_INS_ST_T - st.t $off18, $bpos3, $b */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* bpos3 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* b */
   { 0 }
 }},
-{ /* TriCore_ST_W_abs (1121) - TriCore_INS_ST_W - st.w $off18, $s1 */
+{ /* TriCore_ST_W_abs (1162) - TriCore_INS_ST_W - st.w $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_ST_W_bo_bso (1122) - TriCore_INS_ST_W - st.w [$s1]$off10, $d */
+{ /* TriCore_ST_W_bo_bso (1163) - TriCore_INS_ST_W - st.w [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_W_bo_c (1123) - TriCore_INS_ST_W - st.w $d, [${s1}+c]$off10 */
+{ /* TriCore_ST_W_bo_c (1164) - TriCore_INS_ST_W - st.w $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_W_bo_pos (1124) - TriCore_INS_ST_W - st.w $s2, [${s1}+]$off10 */
+{ /* TriCore_ST_W_bo_pos (1165) - TriCore_INS_ST_W - st.w $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_W_bo_pre (1125) - TriCore_INS_ST_W - st.w $s2, [+${s1}]$off10 */
+{ /* TriCore_ST_W_bo_pre (1166) - TriCore_INS_ST_W - st.w $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_ST_W_bo_r (1126) - TriCore_INS_ST_W - st.w $d, [${s1}+r] */
+{ /* TriCore_ST_W_bo_r (1167) - TriCore_INS_ST_W - st.w $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_W_bol (1127) - TriCore_INS_ST_W - st.w [$s2]$off16, $s1 */
+{ /* TriCore_ST_W_bol (1168) - TriCore_INS_ST_W - st.w [$s2]$off16, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off16 */
   { 0 }
 }},
-{ /* TriCore_ST_W_sro (1128) - TriCore_INS_ST_W - st.w [$s2]$off4, %d15 */
+{ /* TriCore_ST_W_sro (1169) - TriCore_INS_ST_W - st.w [$s2]$off4, %d15 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_ST_W_ssr (1129) - TriCore_INS_ST_W - st.w [$d], $s1 */
+{ /* TriCore_ST_W_ssr (1170) - TriCore_INS_ST_W - st.w [$d], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_W_ssr_pos (1130) - TriCore_INS_ST_W - st.w [${d}+], $s1 */
+{ /* TriCore_ST_W_ssr_pos (1171) - TriCore_INS_ST_W - st.w [${d}+], $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_ST_W_ssro (1131) - TriCore_INS_ST_W - st.w [%a15]$off4, $s1 */
+{ /* TriCore_ST_W_ssro (1172) - TriCore_INS_ST_W - st.w [%a15]$off4, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off4 */
   { 0 }
 }},
-{ /* TriCore_SUBC_rr (1132) - TriCore_INS_SUBC - subc $d, $s1, $s2 */
+{ /* TriCore_SUBC_rr (1173) - TriCore_INS_SUBC - subc $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUBS_HU_rr (1133) - TriCore_INS_SUBS_HU - subs.hu $d, $s1, $s2 */
+{ /* TriCore_SUBS_HU_rr (1174) - TriCore_INS_SUBS_HU - subs.hu $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUBS_H_rr (1134) - TriCore_INS_SUBS_H - subs.h $d, $s1, $s2 */
+{ /* TriCore_SUBS_H_rr (1175) - TriCore_INS_SUBS_H - subs.h $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUBS_U_rr (1135) - TriCore_INS_SUBS_U - subs.u $d, $s1, $s2 */
+{ /* TriCore_SUBS_U_rr (1176) - TriCore_INS_SUBS_U - subs.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUBS_rr (1136) - TriCore_INS_SUBS - subs $d, $s1, $s2 */
+{ /* TriCore_SUBS_rr (1177) - TriCore_INS_SUBS - subs $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUBS_srr (1137) - TriCore_INS_SUBS - subs $d, $s2 */
+{ /* TriCore_SUBS_srr (1178) - TriCore_INS_SUBS - subs $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUBX_rr (1138) - TriCore_INS_SUBX - subx $d, $s1, $s2 */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
-  { 0 }
-}},
-{ /* TriCore_SUB_A_rr (1139) - TriCore_INS_SUB_A - sub.a */
+{ /* TriCore_SUBX_rr (1179) - TriCore_INS_SUBX - subx $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUB_A_sc (1140) - TriCore_INS_SUB_A - sub.a %sp, $const8 */
+{ /* TriCore_SUB_A_rr (1180) - TriCore_INS_SUB_A - sub.a */
+{
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
+  { 0 }
+}},
+{ /* TriCore_SUB_A_sc (1181) - TriCore_INS_SUB_A - sub.a %sp, $const8 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const8 */
   { 0 }
 }},
-{ /* TriCore_SUB_B_rr (1141) - TriCore_INS_SUB_B - sub.b $d, $s1, $s2 */
+{ /* TriCore_SUB_B_rr (1182) - TriCore_INS_SUB_B - sub.b $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUB_F_rrr (1142) - TriCore_INS_SUB_F - sub.f $d, $s3, $s1 */
+{ /* TriCore_SUB_F_rrr (1183) - TriCore_INS_SUB_F - sub.f $d, $s3, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s3 */
   { 0 }
 }},
-{ /* TriCore_SUB_H_rr (1143) - TriCore_INS_SUB_H - sub.h $d, $s1, $s2 */
+{ /* TriCore_SUB_H_rr (1184) - TriCore_INS_SUB_H - sub.h $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUB_rr (1144) - TriCore_INS_SUB - sub $d, $s1, $s2 */
+{ /* TriCore_SUB_rr (1185) - TriCore_INS_SUB - sub $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUB_srr (1145) - TriCore_INS_SUB - sub $d, $s2 */
+{ /* TriCore_SUB_srr (1186) - TriCore_INS_SUB - sub $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUB_srr_15a (1146) - TriCore_INS_SUB - sub %d15, $d, $s2 */
+{ /* TriCore_SUB_srr_15a (1187) - TriCore_INS_SUB - sub %d15, $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SUB_srr_a15 (1147) - TriCore_INS_SUB - sub $d, %d15, $s2 */
+{ /* TriCore_SUB_srr_a15 (1188) - TriCore_INS_SUB - sub $d, %d15, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_SVLCX_sys (1148) - TriCore_INS_SVLCX - svlcx */
+{ /* TriCore_SVLCX_sys (1189) - TriCore_INS_SVLCX - svlcx */
 {
   { 0 }
 }},
-{ /* TriCore_SWAPMSK_W_bo_bso (1149) - TriCore_INS_SWAPMSK_W - swapmsk.w [$s1]$off10, $d */
+{ /* TriCore_SWAPMSK_W_bo_bso (1190) - TriCore_INS_SWAPMSK_W - swapmsk.w [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAPMSK_W_bo_c (1150) - TriCore_INS_SWAPMSK_W - swapmsk.w $d, [${s1}+c]$off10 */
+{ /* TriCore_SWAPMSK_W_bo_c (1191) - TriCore_INS_SWAPMSK_W - swapmsk.w $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAPMSK_W_bo_pos (1151) - TriCore_INS_SWAPMSK_W - swapmsk.w $s2, [${s1}+]$off10 */
+{ /* TriCore_SWAPMSK_W_bo_pos (1192) - TriCore_INS_SWAPMSK_W - swapmsk.w $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAPMSK_W_bo_pre (1152) - TriCore_INS_SWAPMSK_W - swapmsk.w $s2, [+${s1}]$off10 */
+{ /* TriCore_SWAPMSK_W_bo_pre (1193) - TriCore_INS_SWAPMSK_W - swapmsk.w $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAPMSK_W_bo_r (1153) - TriCore_INS_SWAPMSK_W - swapmsk.w $d, [${s1}+r] */
+{ /* TriCore_SWAPMSK_W_bo_r (1194) - TriCore_INS_SWAPMSK_W - swapmsk.w $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SWAP_W_abs (1154) - TriCore_INS_SWAP_W - swap.w $off18, $s1 */
+{ /* TriCore_SWAP_W_abs (1195) - TriCore_INS_SWAP_W - swap.w $off18, $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off18 */
   { 0 }
 }},
-{ /* TriCore_SWAP_W_bo_bso (1155) - TriCore_INS_SWAP_W - swap.w [$s1]$off10, $d */
+{ /* TriCore_SWAP_W_bo_bso (1196) - TriCore_INS_SWAP_W - swap.w [$s1]$off10, $d */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAP_W_bo_c (1156) - TriCore_INS_SWAP_W - swap.w $d, [${s1}+c]$off10 */
+{ /* TriCore_SWAP_W_bo_c (1197) - TriCore_INS_SWAP_W - swap.w $d, [${s1}+c]$off10 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAP_W_bo_pos (1157) - TriCore_INS_SWAP_W - swap.w $s2, [${s1}+]$off10 */
+{ /* TriCore_SWAP_W_bo_pos (1198) - TriCore_INS_SWAP_W - swap.w $s2, [${s1}+]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAP_W_bo_pre (1158) - TriCore_INS_SWAP_W - swap.w $s2, [+${s1}]$off10 */
+{ /* TriCore_SWAP_W_bo_pre (1199) - TriCore_INS_SWAP_W - swap.w $s2, [+${s1}]$off10 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off10 */
   { 0 }
 }},
-{ /* TriCore_SWAP_W_bo_r (1159) - TriCore_INS_SWAP_W - swap.w $d, [${s1}+r] */
+{ /* TriCore_SWAP_W_bo_r (1200) - TriCore_INS_SWAP_W - swap.w $d, [${s1}+r] */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_SYSCALL_rc (1160) - TriCore_INS_SYSCALL - syscall $const9 */
+{ /* TriCore_SYSCALL_rc (1201) - TriCore_INS_SYSCALL - syscall $const9 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_TRAPSV_sys (1161) - TriCore_INS_TRAPSV - trapsv */
+{ /* TriCore_TRAPSV_sys (1202) - TriCore_INS_TRAPSV - trapsv */
 {
   { 0 }
 }},
-{ /* TriCore_TRAPV_sys (1162) - TriCore_INS_TRAPV - trapv */
+{ /* TriCore_TRAPV_sys (1203) - TriCore_INS_TRAPV - trapv */
 {
   { 0 }
 }},
-{ /* TriCore_UNPACK_rr (1163) - TriCore_INS_UNPACK - unpack $d, $s1 */
+{ /* TriCore_UNPACK_rr (1204) - TriCore_INS_UNPACK - unpack $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_UPDFL_rr (1164) - TriCore_INS_UPDFL - updfl $s1 */
+{ /* TriCore_UPDFL_rr (1205) - TriCore_INS_UPDFL - updfl $s1 */
 {
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_UTOF_rr (1165) - TriCore_INS_UTOF - utof $d, $s1 */
+{ /* TriCore_UTOF_rr (1206) - TriCore_INS_UTOF - utof $d, $s1 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { 0 }
 }},
-{ /* TriCore_WAIT_sys (1166) - TriCore_INS_WAIT - wait */
+{ /* TriCore_WAIT_sys (1207) - TriCore_INS_WAIT - wait */
 {
   { 0 }
 }},
-{ /* TriCore_XNOR_T (1167) - TriCore_INS_XNOR_T - xnor.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_XNOR_T (1208) - TriCore_INS_XNOR_T - xnor.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -7271,105 +7545,105 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_XNOR_rc (1168) - TriCore_INS_XNOR - xnor $d, $s1, $const9 */
+{ /* TriCore_XNOR_rc (1209) - TriCore_INS_XNOR - xnor $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XNOR_rr (1169) - TriCore_INS_XNOR - xnor $d, $s1, $s2 */
+{ /* TriCore_XNOR_rr (1210) - TriCore_INS_XNOR - xnor $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_EQ_rc (1170) - TriCore_INS_XOR_EQ - xor.eq $d, $s1, $const9 */
+{ /* TriCore_XOR_EQ_rc (1211) - TriCore_INS_XOR_EQ - xor.eq $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XOR_EQ_rr (1171) - TriCore_INS_XOR_EQ - xor.eq $d, $s1, $s2 */
+{ /* TriCore_XOR_EQ_rr (1212) - TriCore_INS_XOR_EQ - xor.eq $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_GE_U_rc (1172) - TriCore_INS_XOR_GE_U - xor.ge.u $d, $s1, $const9 */
+{ /* TriCore_XOR_GE_U_rc (1213) - TriCore_INS_XOR_GE_U - xor.ge.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XOR_GE_U_rr (1173) - TriCore_INS_XOR_GE_U - xor.ge.u $d, $s1, $s2 */
+{ /* TriCore_XOR_GE_U_rr (1214) - TriCore_INS_XOR_GE_U - xor.ge.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_GE_rc (1174) - TriCore_INS_XOR_GE - xor.ge $d, $s1, $const9 */
+{ /* TriCore_XOR_GE_rc (1215) - TriCore_INS_XOR_GE - xor.ge $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XOR_GE_rr (1175) - TriCore_INS_XOR_GE - xor.ge $d, $s1, $s2 */
+{ /* TriCore_XOR_GE_rr (1216) - TriCore_INS_XOR_GE - xor.ge $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_LT_U_rc (1176) - TriCore_INS_XOR_LT_U - xor.lt.u $d, $s1, $const9 */
+{ /* TriCore_XOR_LT_U_rc (1217) - TriCore_INS_XOR_LT_U - xor.lt.u $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XOR_LT_U_rr (1177) - TriCore_INS_XOR_LT_U - xor.lt.u $d, $s1, $s2 */
+{ /* TriCore_XOR_LT_U_rr (1218) - TriCore_INS_XOR_LT_U - xor.lt.u $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_LT_rc (1178) - TriCore_INS_XOR_LT - xor.lt $d, $s1, $const9 */
+{ /* TriCore_XOR_LT_rc (1219) - TriCore_INS_XOR_LT - xor.lt $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XOR_LT_rr (1179) - TriCore_INS_XOR_LT - xor.lt $d, $s1, $s2 */
+{ /* TriCore_XOR_LT_rr (1220) - TriCore_INS_XOR_LT - xor.lt $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_NE_rc (1180) - TriCore_INS_XOR_NE - xor.ne $d, $s1, $const9 */
+{ /* TriCore_XOR_NE_rc (1221) - TriCore_INS_XOR_NE - xor.ne $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XOR_NE_rr (1181) - TriCore_INS_XOR_NE - xor.ne $d, $s1, $s2 */
+{ /* TriCore_XOR_NE_rr (1222) - TriCore_INS_XOR_NE - xor.ne $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_T (1182) - TriCore_INS_XOR_T - xor.t $d, $s1, $pos1, $s2, $pos_r */
+{ /* TriCore_XOR_T (1223) - TriCore_INS_XOR_T - xor.t $d, $s1, $pos1, $s2, $pos_r */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
@@ -7378,21 +7652,21 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* pos_r */
   { 0 }
 }},
-{ /* TriCore_XOR_rc (1183) - TriCore_INS_XOR - xor $d, $s1, $const9 */
+{ /* TriCore_XOR_rc (1224) - TriCore_INS_XOR - xor $d, $s1, $const9 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const9 */
   { 0 }
 }},
-{ /* TriCore_XOR_rr (1184) - TriCore_INS_XOR - xor $d, $s1, $s2 */
+{ /* TriCore_XOR_rr (1225) - TriCore_INS_XOR - xor $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_XOR_srr (1185) - TriCore_INS_XOR - xor $d, $s2 */
+{ /* TriCore_XOR_srr (1226) - TriCore_INS_XOR - xor $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
