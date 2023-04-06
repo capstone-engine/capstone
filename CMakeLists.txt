@@ -1,12 +1,6 @@
 # For MSVC_RUNTIME_LIBRARY
 cmake_minimum_required(VERSION 3.15)
 
-if (CMAKE_C_COMPILER_ID MATCHES "MSVC")
-    add_compile_options(/W1 /w14189 /w16268)
-else()
-    add_compile_options(-Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
-endif()
-
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
     message(FATAL_ERROR "In-tree builds are not supported. Run CMake from a separate directory: cmake -B build")
 endif()
@@ -30,6 +24,13 @@ cmake_policy(SET CMP0091 NEW)
 project(capstone
     VERSION 5.0
 )
+
+if (MSVC)
+    add_compile_options(/W1 /w14189 /w16268)
+else()
+    add_compile_options(-Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
+endif()
+
 
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
