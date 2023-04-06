@@ -25,6 +25,13 @@ project(capstone
     VERSION 5.0
 )
 
+if (MSVC)
+    add_compile_options(/W1 /w14189 /w16268)
+else()
+    add_compile_options(-Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
+endif()
+
+
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(BUILD_SHARED_LIBS "Build shared library" OFF)

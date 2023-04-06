@@ -351,7 +351,6 @@ void SH_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 {
 #ifndef CAPSTONE_DIET
 	sh_info *info = (sh_info *)PrinterInfo;
-	cs_detail *detail = MI->flat_insn->detail;
 	int i;
 	int imm;
 
