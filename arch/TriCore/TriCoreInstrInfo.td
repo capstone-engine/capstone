@@ -1300,7 +1300,7 @@ class IRRR1_label<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc, str
 class IRRR1_label2<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc, string label1, string label2>
     : RRR1<op1, op2, (outs rc:$d), (ins RD:$s1, RD:$s2, rc:$s3, u2imm:$n),
            asmstr # " $d, $s3, ${s1}" # label1 # ", ${s2}" # label2 # ", $n", []>;
-class IRRR1<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc>
+class IRRR1<bits<8> op1, bits<6> op2, string asmstr, RegisterClass rc=RD>
     : RRR1<op1, op2, (outs rc:$d), (ins RD:$s1, RD:$s2, rc:$s3, u2imm:$n),
            asmstr # " $d, $s3, $s1, $s2, $n", []>;
 
@@ -1328,7 +1328,7 @@ multiclass mIRRR1_LU2<bits<8> prefix, bits<6> ll, bits<6> lu,
   def _rrr1_UL : IRRR1_label<prefix, ul, asmstr, rc, "UL">;
   def _rrr1_UU : IRRR1_label<prefix, uu, asmstr, rc, "UU">;
 }
-multiclass mI_MADDsurmsH_MSUBadmsH_<bits<8> pre, bits<6> ll, bits<6> lu,
+multiclass mI_MADD_H_MSUB_H_<bits<8> pre, bits<6> ll, bits<6> lu,
                        bits<6> ul, bits<6> uu, string asmstr, bit hasv110=true, RegisterClass rc=RE>{
   if hasv110 then
   def _rrr1_v110 : IRRR1<pre, ul, asmstr, rc>, NsRequires<[HasV110]>;
@@ -1365,8 +1365,8 @@ defm MADD : mIRCR<0x13, 0x01, 0x13, 0x03, "madd">
 defm MADDS : mIRCR<0x13, 0x05, 0x13, 0x07, "madds">
            , mIRRR2<0x03, 0x8A, 0x03, 0xEA, "madds">;
 
-defm MADD_H  : mI_MADDsurmsH_MSUBadmsH_<0x83, 0x1A, 0x19, 0x18, 0x1B, "madd.h">;
-defm MADDS_H : mI_MADDsurmsH_MSUBadmsH_<0x83, 0x3A, 0x39, 0x38, 0x3B, "madds.h">;
+defm MADD_H  : mI_MADD_H_MSUB_H_<0x83, 0x1A, 0x19, 0x18, 0x1B, "madd.h">;
+defm MADDS_H : mI_MADD_H_MSUB_H_<0x83, 0x3A, 0x39, 0x38, 0x3B, "madds.h">;
 
 defm MADD_Q  : mI_MADDsQ_MSUBsQ_<0x43, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "madd.q">;
 defm MADDS_Q : mI_MADDsQ_MSUBsQ_<0x43, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "madds.q">;
@@ -1380,11 +1380,11 @@ defm MADDM: mIRCR_RRR2<0x13, 0x03, 0x03, 0x6A, "maddm", "_v110">, NsRequires<[Ha
 def MADDM_Q_rrr1_v110: IRRR1<0x43, 0x70, "maddm.q", RE>, NsRequires<[HasV110]>;
 defm MADDM_U: mIRCR_RRR2<0x13, 0x02, 0x03, 0x68, "maddm.u", "_v110", u9imm>, NsRequires<[HasV110]>;
 
-defm MADDM_H  : mI_MADDsurmsH_MSUBadmsH_<0x83, 0x1E, 0x1D, 0x1C, 0x1F, "maddm.h">;
+defm MADDM_H  : mI_MADD_H_MSUB_H_<0x83, 0x1E, 0x1D, 0x1C, 0x1F, "maddm.h">;
 
 defm MADDMS: mIRCR_RRR2<0x13, 0x07, 0x03, 0xEA, "maddms", "_v110">, NsRequires<[HasV110]>;
 defm MADDMS_U: mIRCR_RRR2<0x13, 0x06, 0x03, 0xE8, "maddms.u", "_v110", u9imm>, NsRequires<[HasV110]>;
-defm MADDMS_H : mI_MADDsurmsH_MSUBadmsH_<0x83, 0x3E, 0x3D, 0x3C, 0x3F, "maddms.h", false>;
+defm MADDMS_H : mI_MADD_H_MSUB_H_<0x83, 0x3E, 0x3D, 0x3C, 0x3F, "maddms.h", false>;
 
 defm MADDR_H  : mI_MADDRsH_MSUBRsH_<0x43, 0x1E, 0x83, 0x0E, 0x0D, 0x0C, 0x0F, "maddr.h">;
 defm MADDRS_H : mI_MADDRsH_MSUBRsH_<0x43, 0x3E, 0x83, 0x2E, 0x2D, 0x2C, 0x2F, "maddrs.h">;
@@ -1398,12 +1398,12 @@ multiclass mI_MADDRsQ_MSUBRsQ_<bits<8> prefix, bits<6> op, bits<6> eop, string a
 defm MADDR_Q : mI_MADDRsQ_MSUBRsQ_<0x43, 0x07, 0x06, "maddr.q">;
 defm MADDRS_Q: mI_MADDRsQ_MSUBRsQ_<0x43, 0x27, 0x26, "maddrs.q">;
 
-defm MADDSU_H   : mI_MADDsurmsH_MSUBadmsH_<0xC3, 0x1A, 0x19, 0x18, 0x1B, "maddsu.h", false>;
-defm MADDSUS_H  : mI_MADDsurmsH_MSUBadmsH_<0xC3, 0x3A, 0x39, 0x38, 0x3B, "maddsus.h", false>;
-defm MADDSUM_H  : mI_MADDsurmsH_MSUBadmsH_<0xC3, 0x1E, 0x1D, 0x1C, 0x1F, "maddsum.h", false>;
-defm MADDSUMS_H : mI_MADDsurmsH_MSUBadmsH_<0xC3, 0x3E, 0x3D, 0x3C, 0x3F, "maddsums.h", false>;
-defm MADDSUR_H  : mI_MADDsurmsH_MSUBadmsH_<0xC3, 0x0E, 0x0D, 0x0C, 0x0F, "maddsur.h", false, RD>;
-defm MADDSURS_H : mI_MADDsurmsH_MSUBadmsH_<0xC3, 0x2E, 0x2D, 0x2C, 0x2F, "maddsurs.h", false, RD>;
+defm MADDSU_H   : mI_MADD_H_MSUB_H_<0xC3, 0x1A, 0x19, 0x18, 0x1B, "maddsu.h", false>;
+defm MADDSUS_H  : mI_MADD_H_MSUB_H_<0xC3, 0x3A, 0x39, 0x38, 0x3B, "maddsus.h", false>;
+defm MADDSUM_H  : mI_MADD_H_MSUB_H_<0xC3, 0x1E, 0x1D, 0x1C, 0x1F, "maddsum.h", false>;
+defm MADDSUMS_H : mI_MADD_H_MSUB_H_<0xC3, 0x3E, 0x3D, 0x3C, 0x3F, "maddsums.h", false>;
+defm MADDSUR_H  : mI_MADD_H_MSUB_H_<0xC3, 0x0E, 0x0D, 0x0C, 0x0F, "maddsur.h", false, RD>;
+defm MADDSURS_H : mI_MADD_H_MSUB_H_<0xC3, 0x2E, 0x2D, 0x2C, 0x2F, "maddsurs.h", false, RD>;
 
 defm MAX   : mIRR_RC<0x0B, 0x1A, 0x8B, 0x1A, "max">;
 defm MAX_U : mIRR_RC<0x0B, 0x1B, 0x8B, 0x1B, "max.u">;
@@ -1469,24 +1469,30 @@ defm MSUB : mIRCR<0x33, 0x01, 0x33, 0x03, "msub">
 defm MSUBS: mIRCR<0x33, 0x05, 0x33, 0x07, "msubs">
           , mIRRR2<0x23, 0x8A, 0x23, 0xEA, "msubs">;
 
-defm MSUB_H  : mI_MADDsurmsH_MSUBadmsH_<0xA3, 0x1A, 0x19, 0x18, 0x1B, "msub.h">;
-defm MSUBS_H : mI_MADDsurmsH_MSUBadmsH_<0xA3, 0x3A, 0x39, 0x38, 0x3B, "msubs.h">;
+defm MSUB_H  : mI_MADD_H_MSUB_H_<0xA3, 0x1A, 0x19, 0x18, 0x1B, "msub.h">;
+defm MSUBS_H : mI_MADD_H_MSUB_H_<0xA3, 0x3A, 0x39, 0x38, 0x3B, "msubs.h">;
 defm MSUB_Q  : mI_MADDsQ_MSUBsQ_<0x63, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x1D, 0x04, 0x1C, "msub.q">;
 defm MSUBS_Q : mI_MADDsQ_MSUBsQ_<0x63, 0x22, 0x3B, 0x21, 0x39, 0x20, 0x38, 0x25, 0x3D, 0x24, 0x3C, "msubs.q">;
 
-def MSUB_U_rcr : IRCR<0x33, 0x02, "madd.u", RE, RE, RD, u9imm>; 
-def MSUB_U_rrr2: IRRR2<0x23, 0x68, "madd.u", RE>;
+defm MSUB_U: mIRCR_RRR2<0x33, 0x02, 0x23, 0x68, "madd.u", "", u9imm>, Requires<[HasV120_UP]>;
 defm MSUBS_U : mIRCR<0x33, 0x04, 0x33, 0x06, "madds.u">
              , mIRRR2<0x23, 0x88, 0x23, 0xE8, "madds.u">;
 
-defm MSUBAD_H   : mI_MADDsurmsH_MSUBadmsH_<0xE3, 0x1A, 0x19, 0x18, 0x1B, "msubad.h">;
-defm MSUBADS_H  : mI_MADDsurmsH_MSUBadmsH_<0xE3, 0x3A, 0x39, 0x38, 0x3B, "msubads.h">;
-defm MSUBADM_H  : mI_MADDsurmsH_MSUBadmsH_<0xE3, 0x1E, 0x1D, 0x1C, 0x1F, "msubadm.h">;
-defm MSUBADMS_H : mI_MADDsurmsH_MSUBadmsH_<0xE3, 0x3E, 0x3D, 0x3C, 0x3F, "msubadms.h">;
-defm MSUBADR_H  : mI_MADDsurmsH_MSUBadmsH_<0xE3, 0x0E, 0x0D, 0x0C, 0x0F, "msubadr.h", false, RD>;
-defm MSUBADRS_H : mI_MADDsurmsH_MSUBadmsH_<0xE3, 0x2E, 0x2D, 0x2C, 0x2F, "msubadrs.h", false, RD>;
-defm MSUBM_H    : mI_MADDsurmsH_MSUBadmsH_<0xA3, 0x1E, 0x1D, 0x1C, 0x1F, "msubm.h">;
-defm MSUBMS_H   : mI_MADDsurmsH_MSUBadmsH_<0xA3, 0x3E, 0x3D, 0x3C, 0x3F, "msubms.h">;
+defm MSUBAD_H   : mI_MADD_H_MSUB_H_<0xE3, 0x1A, 0x19, 0x18, 0x1B, "msubad.h", false>;
+defm MSUBADS_H  : mI_MADD_H_MSUB_H_<0xE3, 0x3A, 0x39, 0x38, 0x3B, "msubads.h", false>;
+defm MSUBADM_H  : mI_MADD_H_MSUB_H_<0xE3, 0x1E, 0x1D, 0x1C, 0x1F, "msubadm.h", false>;
+defm MSUBADMS_H : mI_MADD_H_MSUB_H_<0xE3, 0x3E, 0x3D, 0x3C, 0x3F, "msubadms.h", false>;
+defm MSUBADR_H  : mI_MADD_H_MSUB_H_<0xE3, 0x0E, 0x0D, 0x0C, 0x0F, "msubadr.h", true, RD>;
+defm MSUBADRS_H : mI_MADD_H_MSUB_H_<0xE3, 0x2E, 0x2D, 0x2C, 0x2F, "msubadrs.h", true, RD>;
+
+defm MSUBM: mIRCR_RRR2<0x33, 0x03, 0x23, 0x6A, "msubm", "v110">, NsRequires<[HasV110]>;
+def  MSUBM_Q_rrr1_v110: IRRR1<0x63, 0x1C, "msubm.q", RE>, NsRequires<[HasV110]>;
+defm MSUBM_U: mIRCR_RRR2<0x33, 0x02, 0x23, 0x68, "msubm.u", "v110">, NsRequires<[HasV110]>;
+defm MSUBMS: mIRCR_RRR2<0x33, 0x07, 0x23, 0xEA, "msubms", "v110">, NsRequires<[HasV110]>;
+defm MSUBMS_U: mIRCR_RRR2<0x33, 0x06, 0x23, 0xE8, "msubms.u", "v110">, NsRequires<[HasV110]>;
+
+defm MSUBM_H    : mI_MADD_H_MSUB_H_<0xA3, 0x1E, 0x1D, 0x1C, 0x1F, "msubm.h">;
+defm MSUBMS_H   : mI_MADD_H_MSUB_H_<0xA3, 0x3E, 0x3D, 0x3C, 0x3F, "msubms.h", false>;
 
 defm MSUBR_H : mI_MADDRsH_MSUBRsH_<0x63, 0x1E, 0xA3, 0x0E, 0x0D, 0x0C, 0x0F, "msubr.h">;
 defm MSUBRS_H: mI_MADDRsH_MSUBRsH_<0x63, 0x3E, 0xA3, 0x2E, 0x2D, 0x2C, 0x2F, "msubrs.h">;
@@ -1807,7 +1813,7 @@ defm XOR_LT_U : mIRR_RC<0x0B, 0x32, 0x8B, 0x32, "xor.lt.u">;
 /// FPU Instructions
 
 def MADD_F_rrr : IRRR_DcDdDaDb<0x6B, 0x06, "madd.f">, Requires<[HasV130_UP]>;
-def MSUB_F_rrr : IRRR_DcDdDaDb<0x6B, 0x07, "msub.f">;
+def MSUB_F_rrr : IRRR_DcDdDaDb<0x6B, 0x07, "msub.f">, Requires<[HasV130_UP]>;
 def ADD_F_rrr : IRRR_DcDdDa<0x6B, 0x02, "add.f">;
 def SUB_F_rrr : IRRR_DcDdDa<0x6B, 0x03, "sub.f">;
 def MUL_F_rrr : IRR_dab<0x4B, 0x04, "mul.f">;
