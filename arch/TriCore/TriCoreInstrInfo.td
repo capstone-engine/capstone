@@ -230,30 +230,17 @@ class ISC_C<bits<8> op1, string asmstr>
     : SC<op1, (outs), (ins u8imm:$const8),
       asmstr # " $const8", []>;
 
-class ISRC_DdC<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs RD:$d), (ins s4imm:$const4),
-      asmstr # " $d, $const4",
-      []>;
+class ISRC_dC<bits<8> op1, string asmstr, RegisterClass RCd=RD, Operand TypeC=s4imm> 
+    : SRC<op1, (outs RCd:$d), (ins TypeC:$const4),
+          asmstr # " $d, $const4", []>;
 
-class ISRC_AdS<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs RA:$d), (ins s4imm:$const4),
-      asmstr # " $d, $const4",
-      []>;
+class ISRC_dD15C<bits<8> op1, string asmstr, RegisterClass RCd=RD, Operand TypeC=s4imm> 
+    : SRC<op1, (outs RCd:$d), (ins TypeC:$const4),
+      asmstr # " $d, %d15, $const4", []>;
 
-class ISRC_AdU<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs RA:$d), (ins u4imm:$const4),
-      asmstr # " $d, $const4",
-      []>;
-
-class ISRC_AdD15S<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs RD:$d), (ins s4imm:$const4),
-      asmstr # " $d, %d15, $const4",
-      []>;
-
-class ISRC_D15DdS<bits<8> op1, string asmstr> 
-    : SRC<op1, (outs RD:$d), (ins s4imm:$const4),
-      asmstr # " %d15, $d, $const4",
-      []>;
+class ISRC_D15dC<bits<8> op1, string asmstr, RegisterClass RCd=RD, Operand TypeC=s4imm> 
+    : SRC<op1, (outs RCd:$d), (ins TypeC:$const4),
+      asmstr # " %d15, $d, $const4", []>;
 
 multiclass mISRR_SRC<bits<8> op_srr, bits<8> op_src, string asmstr,
                      RegisterClass RCd=RD, RegisterClass RC2=RD, Operand Oc=u4imm, string posfix="">{
@@ -265,9 +252,9 @@ multiclass mISRR_SRC<bits<8> op_srr, bits<8> op_src, string asmstr,
 
 multiclass mISRC_a15a<bits<8> op1, bits<8> op2, bits<8> op3,
                         string asmstr> {
-  def _src : ISRC_DdC<op1, asmstr>;
-  def _src_a15 : ISRC_AdD15S<op2, asmstr>;
-  def _src_15a : ISRC_D15DdS<op3, asmstr>;
+  def _src : ISRC_dC<op1, asmstr>;
+  def _src_a15 : ISRC_dD15C<op2, asmstr>;
+  def _src_15a : ISRC_D15dC<op3, asmstr>;
 }
 
 class ISRRS_AcAbD15N<bits<6> op1, string asmstr>
@@ -468,7 +455,7 @@ defm ADD : mIRR_RC<0x0B, 0x00, 0x8B, 0x00, "add">,
 multiclass mIRR_SRC_SRR__A<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
                         string asmstr> {
   def _rr : IRR_2<rr1, rr2, asmstr, RA, RA, RA>;
-  def _src : ISRC_AdS<src1, asmstr>;
+  def _src : ISRC_dC<src1, asmstr, RA>;
   def _srr : ISRR_AaAb<srr1, asmstr>;
 }
 
@@ -691,7 +678,7 @@ def CADD_srr_v110 : ISRR_DdD15Db<0x0A, "cadd">, NsRequires<[HasV110]>;
 
 def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
 def CADD_rrr : IRRR_DcDdDaDb<0x2B, 0x00, "cadd">;
-def CADD_src : ISRC_AdD15S<0x8A, "cadd">;
+def CADD_src : ISRC_dD15C<0x8A, "cadd", RA>;
 
 def CADD_A_rrr_v110 : RRR<0x21, 0x00, (outs RA:$d), (ins RD:$s1, RA:$s2, RA:$s3), "cadd.a $d $s3, $s1, $s2", []>
                     , NsRequires<[HasV110]>;
@@ -702,7 +689,7 @@ def CADDN_srr_v110  : ISRR_DdD15Db<0x4A, "caddn">
 
 def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
 def CADDN_rrr : IRRR_DcDdDaDb<0x2B, 0x01, "caddn">;
-def CADDN_src : ISRC_AdD15S<0xCA, "caddn">;
+def CADDN_src : ISRC_dD15C<0xCA, "caddn", RA>;
 
 def CADDN_A_rrr_v110 : RRR<0x21, 0x01, (outs RA:$d), (ins RD:$s1, RA:$s2, RA:$s3), "caddn.a $d $s3, $s1, $s2", []>
                      , NsRequires<[HasV110]>;
@@ -751,9 +738,9 @@ defm CLZ : mI_H<0x0F, 0x1B, 0x0F, 0x7C, "clz">;
 def CLZ_B_rr_v110 : RR<0x0F, 0x3C, (outs RD:$d), (ins RD:$s1), "clz.b $d, $s1", []>
                   , NsRequires<[HasV110]>;
 
-def CMOV_src  : ISRC_AdD15S<0xAA, "cmov">;
+def CMOV_src  : ISRC_dD15C<0xAA, "cmov", RA>;
 def CMOV_srr  : ISRR_DdD15Db<0x2A, "cmov">;
-def CMOVN_src : ISRC_AdD15S<0xEA, "cmovn">;
+def CMOVN_src : ISRC_dD15C<0xEA, "cmovn", RA>;
 def CMOVN_srr : ISRR_DdD15Db<0x6A, "cmovn">;
 
 // A[b], off10, E[a] (BO)(Base + Short Offset Addressing Mode)
@@ -972,7 +959,7 @@ multiclass mIB_H_W<bits<8> brr1, bits<8> brr2,
 
 defm EQ    : mIRR_RC<0x0B, 0x10, 0x8B, 0x10, "eq">
            , mIB_H_W<0x0B, 0x50, 0x0B, 0x70, 0x0B, 0x90, "eq">;
-def EQ_src : ISRC_D15DdS<0xBA, "eq">;
+def EQ_src : ISRC_D15dC<0xBA, "eq">;
 def EQ_srr : ISRR_D15DdDb<0x3A, "eq">;
 def EQ_A_rr: IRR_dab<0x01, 0x40, "eq.a", RD, RA, RA>;
 
@@ -1455,14 +1442,14 @@ def MOV_rr  : IRR_b<0x0B, 0x1F, "mov">;
 def MOV_rr_e: IRR_b<0x0B, 0x80, "mov", RE>;
 def MOV_rr_eab : IRR_dab<0x0B, 0x81, "mov", RE>;
 def MOV_sc : ISC_D15C<0xDA, "mov">;
-def MOV_src: ISRC_DdC<0x82, "mov">;
+def MOV_src: ISRC_dC<0x82, "mov">;
 def MOV_src_e: ISRC_1<0xD2, "mov", RE>;
 def MOV_srr  : ISRR_DaDb<0x02, "mov">;
 
 multiclass mIRR_SRCz_SRR__A<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr1,
                         string asmstr> {
   def _rr : IRR_2<rr1, rr2, asmstr, RA, RA, RA>;
-  def _src: ISRC_AdU<src1, asmstr>;
+  def _src: ISRC_dC<src1, asmstr, RA, u4imm>;
   def _srr: ISRR_AaDb<srr1, asmstr>;
 }
 
