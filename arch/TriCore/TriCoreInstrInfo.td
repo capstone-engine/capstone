@@ -463,27 +463,28 @@ defm ADDS : mIRR_RC<0x0B, 0x02, 0x8B, 0x02, "adds">,
             mISRR_s<0x22, "adds">,
             mIH_HU_U<0x0B, 0x62, 0x0B, 0x63, 0x0B, 0x03, "adds">;
 def ADDS_U_rc : IRC<0x8B, 0x03, "adds.u">;
+
+def ADDSC_A_srrs_v110 : SRRS<0x10, (outs RA:$d), (ins RD:$s2, u2imm:$n),
+                            "addsc.a $d, $s2, $n", []>
+                      , NsRequires<[HasV110]>;
 def ADDSC_A_srrs: SRRS<0x10, (outs RA:$d), (ins RA:$s2, u2imm:$n),
                       "addsc.a $d, $s2, %d15, $n", []>
                 , Requires<[HasV120_UP]>;
-def ADDSC_A_rr : RR<0x01, 0x60, (outs RA:$d), (ins RD:$s1, RA:$s2, i32imm:$n),
-                    "addsc.a $d, $s2, $s1, $n", []>,
-                 Requires<[HasV120_UP]>;
-def ADDSC_AT_rr : IRR_2<0x01, 0x62, "addsc.at %d, %s2, %s1", RA, RA, RD>
-                      , Requires<[HasV120_UP]>;
 
-let DecoderNamespace = "v110" in {
-  def ADDS_B_rr_v110 : IRR_dab<0x0B, 0x42, "adds.b">, Requires<[HasV110]>;
-  def ADDS_BU_rr_v110 : IRR_dab<0x0B, 0x43, "adds.bu">, Requires<[HasV110]>;
-  def ADDSC_A_srrs_v110 : SRRS<0x10, (outs RA:$d), (ins RD:$s2, u2imm:$n),
-                              "addsc.a $d, $s2, $n", []>
-                        , Requires<[HasV110]>;
-  def ADDSC_A_rr_v110 : RR<0x01, 0x60, (outs RA:$d), (ins RD:$s1, RA:$s2, i32imm:$n),
-                           "addsc.a $d, $s1, $s2, $n", []>
-                      , Requires<[HasV110]>;
-  def ADDSC_AT_rr_v110 : IRR_2<0x01, 0x62, "addsc.at %d, %s1, %s2", RA, RA, RD>
-                       , Requires<[HasV110]>;
-}
+def ADDSC_A_rr_v110 : RR<0x01, 0x60, (outs RA:$d), (ins RD:$s1, RA:$s2, i32imm:$n),
+                         "addsc.a $d, $s1, $s2, $n", []>
+                    , NsRequires<[HasV110]>;
+def ADDSC_A_rr  : RR<0x01, 0x60, (outs RA:$d), (ins RD:$s1, RA:$s2, i32imm:$n),
+                     "addsc.a $d, $s2, $s1, $n", []>
+                , Requires<[HasV120_UP]>;
+
+def ADDSC_AT_rr_v110 : IRR_2<0x01, 0x62, "addsc.at %d, %s1, %s2", RA, RA, RD>
+                      , NsRequires<[HasV110]>;
+def ADDSC_AT_rr : IRR_2<0x01, 0x62, "addsc.at %d, %s2, %s1", RA, RA, RD>
+                , Requires<[HasV120_UP]>;
+
+def ADDS_B_rr_v110 : IRR_dab<0x0B, 0x42, "adds.b">, Requires<[HasV110]>;
+def ADDS_BU_rr_v110 : IRR_dab<0x0B, 0x43, "adds.bu">, Requires<[HasV110]>;
 
 defm ADDX : mIRR_RC<0x0B, 0x04, 0x8B, 0x04, "addx">;
 
@@ -515,9 +516,10 @@ defm ANDN     : mIRR_RC<0x0F, 0x0E, 0x8F, 0x0E, "andn">;
 
 /// BISR
 def BISR_rc : IRC_C<0xAD, 0x00, "bisr">;
-def BISR_rc_v161 : IRC_C<0xAD, 0x02, "bisr">, NsRequires<[HasV161]>;
-def BISR_sc : ISC_C<0xE0, "bisr">, Requires<[HasV120_UP]>;
+def BISR_rc_v161 : IRC_C<0xAD, 0x01, "bisr">, NsRequires<[HasV161]>;
+
 def BISR_sc_v110 : ISC_C<0xC0, "bisr">, NsRequires<[HasV110]>;
+def BISR_sc : ISC_C<0xE0, "bisr">, Requires<[HasV120_UP]>;
 
 /// Multiple Instructions (RR)
 def BMERGAE_rr_v110 : IRR_dab<0x4B, 0x00, "bmerge">, NsRequires<[HasV110]>;
@@ -762,12 +764,13 @@ multiclass mIBO_Ea<bits<8> bso1, bits<6> bso2, ///_bso
 
 defm CMPSWAP_W : mIBO_Ea<0x49, 0x23, 0x69, 0x03,
                          0x69, 0x13, 0x49,0x03,
-                         0x49, 0x13, "CMPSWAP.W">;
+                         0x49, 0x13, "CMPSWAP.W">
+               , Requires<[HasV161_UP]>;
 
-def CRC32_B_rr  : IRR_dba<0x4B, 0x06, "crc32.b">;
-def CRC32B_W_rr : IRR_dba<0x4B, 0x03, "crc32b.w">;
-def CRC32L_W_rr : IRR_dba<0x4B, 0x07, "crc32l.w">;
-def CRCN_rrr    : IRRR<0x6B, 0x01, "crcn">;
+def CRC32_B_rr  : IRR_dba<0x4B, 0x06, "crc32.b">, Requires<[HasV162]>;
+def CRC32B_W_rr : IRR_dba<0x4B, 0x03, "crc32b.w">, Requires<[HasV162]>;
+def CRC32L_W_rr : IRR_dba<0x4B, 0x07, "crc32l.w">, Requires<[HasV162]>;
+def CRCN_rrr    : IRRR<0x6B, 0x01, "crcn">, Requires<[HasV162]>;
 
 def CSUB_rrr    : IRRR<0x2B, 0x02, "csub">;
 def CSUBN_rrr   : IRRR<0x2B, 0x03, "csub">;
@@ -884,7 +887,7 @@ def DSYNC_sys : ISYS_0<0x0D, 0x12, "dsync">;
 
 def DVADJ_srr_v110 : ISRR_db<0x72, "dvadj", RE, RD>, NsRequires<[HasV110]>;
 def DVADJ_rrr_v110 : IRRR_d32<0x2B, 0x08, "dvadj", RE, RE, RE>, NsRequires<[HasV110]>;
-def DVADJ_rrr : IRRR_d32<0x6B, 0x0D, "dvadj", RE, RE, RE>, Requires<[HasV160_UP]>;
+def DVADJ_rrr : IRRR_d32<0x6B, 0x0D, "dvadj", RE, RE, RE>, Requires<[HasV120_UP]>;
 
 multiclass mI_U_RR_Eab<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4,
                 string asmstr, string posfix = ""> {
@@ -958,12 +961,12 @@ def EXTR_U_rrpw : IRRPW_DcDaPW<0x37, 0x03, "extr.u">;
 def EXTR_U_rrrr : IRRRR_aEd<0x17, 0x03, "extr.u">;
 def EXTR_U_rrrw : IRRRW_ad<0x57, 0x03, "extr.u">;
 
-def FCALL_b  : IB<0x61, "fcall">;
-def FCALLA_b : IB<0xE1, "fcalla">;
-def FCALLA_i : IRR_A<0x2D, 0x01, "fcalli">;
+def FCALL_b  : IB<0x61, "fcall">, Requires<[HasV160_UP]>;
+def FCALLA_b : IB<0xE1, "fcalla">, Requires<[HasV160_UP]>;
+def FCALLA_i : IRR_A<0x2D, 0x01, "fcalli">, Requires<[HasV160_UP]>;
 
-def FRET_sr : ISR_0<0x00, 0x07, "fret">;
-def FRET_sys : ISR_0<0x0D, 0x03, "fret">;
+def FRET_sr : ISR_0<0x00, 0x07, "fret">, Requires<[HasV160_UP]>;
+def FRET_sys : ISR_0<0x0D, 0x03, "fret">, Requires<[HasV160_UP]>;
 
 multiclass mI_U__RR_RC<bits<8> op1, bits<8> op2, bits<8> op3, bits<7> op4,
                       bits<8> uop1, bits<8> uop2, bits<8> uop3, bits<7> uop4,
@@ -993,8 +996,8 @@ def INSERT_rrrw : IRRRW_abd<0x57, 0x00, "insert">;
 
 def ISYNC_sys : ISYS_0<0x0D, 0x13, "isync">;
 
-defm IXMAX : mI_U_RRR_EEdb<0x6B, 0x0A, 0x6B, 0x0B, "ixmax">;
-defm IXMIN : mI_U_RRR_EEdb<0x6B, 0x08, 0x6B, 0x09, "ixmin">;
+defm IXMAX : mI_U_RRR_EEdb<0x6B, 0x0A, 0x6B, 0x0B, "ixmax">, Requires<[HasV130_UP]>;
+defm IXMIN : mI_U_RRR_EEdb<0x6B, 0x08, 0x6B, 0x09, "ixmin">, Requires<[HasV130_UP]>;
 
 def J_b  : IB<0x1D, "j">;
 def J_sb_v110 : ISB<0x5C, "j">, NsRequires<[HasV110]>;
@@ -1046,7 +1049,7 @@ multiclass mIBRC_BRR<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2, string asms
   def _brr : IBRR<r1, r2, asmstr>;
 }
 
-multiclass mI_JNEQ_<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2,
+multiclass mI_JnEq_<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2,
                     bits<8> x1, bits<8> x2, bits<8> x3, bits<8> x4,
                     bits<8> x5, bits<1> x6, bits<8> v1, bits<8> v2, string asmstr>
          : mIBRC_BRR<c1, c2, r1, r2, asmstr> {
@@ -1063,7 +1066,7 @@ multiclass mI_JNEQ_<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2,
   def _A_brr: IBRR_AaAb<x5, x6, asmstr # ".a">;
 }
 
-defm JEQ : mI_JNEQ_<0xDF, 0x00, 0x5F, 0x00,
+defm JEQ : mI_JnEq_<0xDF, 0x00, 0x5F, 0x00,
                     0x1E, 0x9E, 0x3E, 0xBE,
                     0x7D, 0x00, 0x1E, 0x6E, "jeq">; 
 
@@ -1095,14 +1098,14 @@ defm JLT_U : mIBRC_BRR<0xBF, 0x01, 0x3F, 0x01, "jlt.u">;
 def JLTZ_sbr_v110 : ISBR_b<0x3E, "jltz">, NsRequires<[HasV110]>;
 def JLTZ_sbr : ISBR_b<0x0E, "jltz">, Requires<[HasV120_UP]>;
 
-defm JNE : mI_JNEQ_<0xDF, 0x01, 0x5F, 0x01,
+defm JNE : mI_JnEq_<0xDF, 0x01, 0x5F, 0x01,
                     0x5E, 0xDE, 0x7E, 0xFE,
                     0x7D, 0x01, 0x9E, 0xEE, "jne">;
 
 defm JNED : mIBRC_BRR<0x9F, 0x01, 0x1F, 0x01, "jned">;
 defm JNEI : mIBRC_BRR<0x9F, 0x00, 0x1F, 0x00, "jnei">;
 
-multiclass mI_JNZ_<bits<8> sb, bits<8> sbr,
+multiclass mI_JnZ_<bits<8> sb, bits<8> sbr,
                    bits<8> abrr1, bits<1> abrr2, bits<8> asbr,
                    bits<7> brn1, bits<1> brn2, bits<8> sbrn,
                    bits<8> sbv, bits<8> sbrv, bits<8> sbrnv,
@@ -1121,8 +1124,8 @@ multiclass mI_JNZ_<bits<8> sb, bits<8> sbr,
              , Requires<[HasV120_UP]>;
 }
 
-defm JNZ : mI_JNZ_<0xEE, 0xF6, 0xBD, 0x01, 0x7C, 0x6F, 0x01, 0xA3, 0xAE, 0xDE, 0x4E, "jnz">;
-defm JZ  : mI_JNZ_<0x6E, 0x76, 0xBD, 0x00, 0xBC, 0x6F, 0x00, 0x2E, 0x2E, 0x5E, 0x0E, "jz">;
+defm JNZ : mI_JnZ_<0xEE, 0xF6, 0xBD, 0x01, 0x7C, 0x6F, 0x01, 0xA3, 0xAE, 0xDE, 0x4E, "jnz">;
+defm JZ  : mI_JnZ_<0x6E, 0x76, 0xBD, 0x00, 0xBC, 0x6F, 0x00, 0x2E, 0x2E, 0x5E, 0x0E, "jz">;
 
 
 class IABS_off18<bits<8> op1, bits<2> op2, string asmstr> 
@@ -1192,7 +1195,7 @@ class IBO_RApre<bits<8> op1, bits<6> op2, string asmstr, RegisterClass dc>
       asmstr # " $s1, [+${s2}]$off10", []>;
 
 
-multiclass mIABS_BO<bits<8> abs1, bits<2> abs2,   ///_abs
+multiclass mI_LD_<bits<8> abs1, bits<2> abs2,   ///_abs
                     bits<8> prefix1, bits<8> prefix2,
                     bits<6> bso2, ///_bso
                     bits<6> pos_r, ///_pos|_r
@@ -1206,7 +1209,7 @@ multiclass mIABS_BO<bits<8> abs1, bits<2> abs2,   ///_abs
   def _bo_c    : IBO_RPc<prefix2, pre_c, asmstr, RC>;
 }
 
-multiclass mISLR_SLRO_SRO<bits<8> slr, bits<8> slrp, bits<8> slro, bits<8> sro,
+multiclass mI_LD_2_<bits<8> slr, bits<8> slrp, bits<8> slro, bits<8> sro,
                     string asmstr, RegisterClass RC, string posfix="">{
   def _slr # posfix: ISLR<slr, asmstr, RC>;
   def _slr_post # posfix: ISLR_pos<slrp, asmstr, RC>;
@@ -1215,37 +1218,37 @@ multiclass mISLR_SLRO_SRO<bits<8> slr, bits<8> slrp, bits<8> slro, bits<8> sro,
   if !eq(RC, RA) then def _sro # posfix: ISRO_A15RO<sro, asmstr, RA>;
 }
 
-defm LD_A: mIABS_BO<0x85, 0x02, 0x09, 0x29, 0x26, 0x06, 0x16, "ld.a", RA>;
-defm LD_A: mISLR_SLRO_SRO<0xB8, 0x64, 0x0C, 0x28, "ld.a", RA, "_v110">, NsRequires<[HasV110]>;
-defm LD_A: mISLR_SLRO_SRO<0xD4, 0xC4, 0xC8, 0xCC, "ld.a", RA>, Requires<[HasV120_UP]>;
+defm LD_A: mI_LD_<0x85, 0x02, 0x09, 0x29, 0x26, 0x06, 0x16, "ld.a", RA>;
+defm LD_A: mI_LD_2_<0xB8, 0x64, 0x0C, 0x28, "ld.a", RA, "_v110">, NsRequires<[HasV110]>;
+defm LD_A: mI_LD_2_<0xD4, 0xC4, 0xC8, 0xCC, "ld.a", RA>, Requires<[HasV120_UP]>;
 def LD_A_bol : IBOL_RAaO<0x99, "ld.a", RA>;
 def LD_A_sc  : ISC_A15A10C<0xD8, "ld.a">, Requires<[HasV120_UP]>;
 
-defm LD_B: mISLR_SLRO_SRO<0x98, 0x44, 0x34, 0x08, "ld.b", RD, "_v110">, NsRequires<[HasV110]>;
-defm LD_B: mIABS_BO<0x05, 0x00, 0x09, 0x29, 0x20, 0x00, 0x10,"ld.b", RD>;
+defm LD_B: mI_LD_2_<0x98, 0x44, 0x34, 0x08, "ld.b", RD, "_v110">, NsRequires<[HasV110]>;
+defm LD_B: mI_LD_<0x05, 0x00, 0x09, 0x29, 0x20, 0x00, 0x10,"ld.b", RD>;
 def LD_B_bol : IBOL_RAaO<0x79, "ld.b", RD>, Requires<[HasV160_UP]>;
 
-defm LD_BU: mIABS_BO<0x05, 0x01, 0x09, 0x29, 0x21, 0x01, 0x11, "ld.bu", RD>;
-defm LD_BU: mISLR_SLRO_SRO<0x58, 0xC4, 0xB4, 0x88, "ld.bu", RD, "_v110">, NsRequires<[HasV110]>;
-defm LD_BU: mISLR_SLRO_SRO<0x14, 0x04, 0x08, 0x0C, "ld.bu", RD>, Requires<[HasV120_UP]>;
+defm LD_BU: mI_LD_<0x05, 0x01, 0x09, 0x29, 0x21, 0x01, 0x11, "ld.bu", RD>;
+defm LD_BU: mI_LD_2_<0x58, 0xC4, 0xB4, 0x88, "ld.bu", RD, "_v110">, NsRequires<[HasV110]>;
+defm LD_BU: mI_LD_2_<0x14, 0x04, 0x08, 0x0C, "ld.bu", RD>, Requires<[HasV120_UP]>;
 def LD_BU_bol : IBOL_RAaO<0x39, "ld.bu", RD>, Requires<[HasV160_UP]>;
 
-defm LD_D  : mIABS_BO<0x85, 0x01, 0x09, 0x29, 0x25, 0x05, 0x15, "ld.d", RE>;
-defm LD_DA : mIABS_BO<0x85, 0x03, 0x09, 0x29, 0x27, 0x07, 0x17, "ld.da", RP>;
+defm LD_D  : mI_LD_<0x85, 0x01, 0x09, 0x29, 0x25, 0x05, 0x15, "ld.d", RE>;
+defm LD_DA : mI_LD_<0x85, 0x03, 0x09, 0x29, 0x27, 0x07, 0x17, "ld.da", RP>;
 
-defm LD_H  : mIABS_BO<0x05, 0x02, 0x09, 0x29, 0x22, 0x02, 0x12, "ld.h", RD>;
-defm LD_H: mISLR_SLRO_SRO<0xD8, 0x24, 0x74, 0x48, "ld.h", RD, "_v110">, NsRequires<[HasV110]>;
-defm LD_H: mISLR_SLRO_SRO<0x94, 0x84, 0x88, 0x8C, "ld.h", RD>, Requires<[HasV120_UP]>;
+defm LD_H  : mI_LD_<0x05, 0x02, 0x09, 0x29, 0x22, 0x02, 0x12, "ld.h", RD>;
+defm LD_H: mI_LD_2_<0xD8, 0x24, 0x74, 0x48, "ld.h", RD, "_v110">, NsRequires<[HasV110]>;
+defm LD_H: mI_LD_2_<0x94, 0x84, 0x88, 0x8C, "ld.h", RD>, Requires<[HasV120_UP]>;
 def LD_H_bol : IBOL_RAaO<0xC9, "ld.h", RD>, Requires<[HasV160_UP]>;
 
-defm LD_HU  : mIABS_BO<0x05, 0x03, 0x09, 0x29, 0x23, 0x03, 0x13, "ld.hu", RD>;
+defm LD_HU  : mI_LD_<0x05, 0x03, 0x09, 0x29, 0x23, 0x03, 0x13, "ld.hu", RD>;
 def LD_HU_bol : IBOL_RAaO<0xB9, "ld.hu", RD>, Requires<[HasV160_UP]>;
 
-defm LD_Q  : mIABS_BO<0x45, 0x00, 0x09, 0x29, 0x28, 0x08, 0x18, "ld.q", RD>;
+defm LD_Q  : mI_LD_<0x45, 0x00, 0x09, 0x29, 0x28, 0x08, 0x18, "ld.q", RD>;
 
-defm LD_W: mIABS_BO<0x85, 0x00, 0x09, 0x29, 0x24, 0x04, 0x14, "ld.w", RD>;
-defm LD_W: mISLR_SLRO_SRO<0x38, 0xA4, 0xF4, 0xC8, "ld.w", RD, "_v110">, NsRequires<[HasV110]>;
-defm LD_W: mISLR_SLRO_SRO<0x54, 0x44, 0x48, 0x4C, "ld.w", RD>, Requires<[HasV120_UP]>;
+defm LD_W: mI_LD_<0x85, 0x00, 0x09, 0x29, 0x24, 0x04, 0x14, "ld.w", RD>;
+defm LD_W: mI_LD_2_<0x38, 0xA4, 0xF4, 0xC8, "ld.w", RD, "_v110">, NsRequires<[HasV110]>;
+defm LD_W: mI_LD_2_<0x54, 0x44, 0x48, 0x4C, "ld.w", RD>, Requires<[HasV120_UP]>;
 def LD_W_bol : IBOL_RAaO<0x19, "ld.w", RD>;
 def LD_W_sc  : ISC_A15A10C<0x58, "ld.w">, Requires<[HasV120_UP]>;
 
@@ -1648,7 +1651,7 @@ def RFM_sys : ISYS_0<0x0D, 0x05, "rfm">;
 
 def RSLCX_sys : ISYS_0<0x0D, 0x09, "relck">;
 
-def RSTV_sys : ISYS_0<0x2F, 0x00, "restore">;
+def RSTV_sys : ISYS_0<0x2F, 0x00, "rstv">;
 
 def RSUB_rc : IRC<0x8B, 0x08, "rsub">;
 defm RSUB_sr : mISR_1<0x32, 0x05, 0xD2, 0x05, "rsub">;
@@ -1894,13 +1897,13 @@ multiclass mIRR_a<bits<8> pre, bits<8> op1, bits<8> op2, string asmstr, Register
 
 defm UNPACK_rr : mIRR_a<0x4B, 0x50, 0x08, "unpack", RE>;
 
-def WAIT_sys  : ISYS_0<0x0D, 0x16, "wait">;
+def WAIT_sys  : ISYS_0<0x0D, 0x16, "wait">, Requires<[HasV161_UP]>;
 
 defm XNOR : mIRR_RC<0x0F, 0x0D, 0x8F, 0x0D, "xnor">;
 def XNOR_T : IBIT<0x07, 0x02, "xnor.t">;
 
 defm XOR : mIRR_RC<0x0F, 0x0C, 0x8F, 0x0C, "xor">;
-def XOR_srr : ISRR_db<0xC6, "xor">;
+def XOR_srr : ISRR_db<0xC6, "xor">, Requires<[HasV120_UP]>;
 def XOR_T : IBIT<0x07, 0x03, "xor.t">;
 
 defm XOR_EQ   : mIRR_RC<0x0B, 0x2F, 0x8B, 0x2F, "xor.eq">;
