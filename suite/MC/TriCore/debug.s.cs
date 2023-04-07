@@ -1,2 +1,2 @@
 # CS_ARCH_TRICORE, CS_MODE_TRICORE_162, None
-0x60,0xf2           = mov.a	%a2, %d15
+0xd9,0x33,0xc0,0x4f = lea	%a3, [%a3]-768

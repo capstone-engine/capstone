@@ -1126,7 +1126,7 @@ class IABS_OR<bits<8> op1, bits<2> op2, string asmstr, RegisterClass s1c>
       asmstr # " $off18, $s1", []>;
 
 class IBOL_RAaO<bits<8> op1, string asmstr, RegisterClass RC> 
-    : BOL<op1, (outs RC:$s1), (ins RA:$s2, i32imm:$off16),
+    : BOL<op1, (outs RC:$s1), (ins RA:$s2, s16imm:$off16),
       asmstr # " $s1, [$s2]$off16", []>;
 
 class IBOL_AbOR<bits<8> op1, string asmstr, RegisterClass RC> 
