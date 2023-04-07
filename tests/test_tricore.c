@@ -75,7 +75,7 @@ static void test()
 	struct platform platforms[] = {
 		{
 			CS_ARCH_TRICORE,
-			CS_MODE_BIG_ENDIAN,
+			CS_MODE_BIG_ENDIAN | CS_MODE_TRICORE_162,
 			(unsigned char*)TRICORE_CODE,
 			sizeof(TRICORE_CODE) - 1,
 			"TriCore",
