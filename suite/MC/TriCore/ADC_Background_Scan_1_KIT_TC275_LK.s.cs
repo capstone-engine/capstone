@@ -1,4 +1,4 @@
-# CS_ARCH_TRICORE, CS_MODE_TRICORE, None
+# CS_ARCH_TRICORE, CS_MODE_TRICORE_162, None
 0x40,0x4f           = mov.aa	%a15, %a4
 0x02,0x48           = mov	%d8, %d4
 # 0x6d,0xff,0x9d,0xff = call	-0xc6
