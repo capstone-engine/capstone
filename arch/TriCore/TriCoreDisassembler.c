@@ -169,8 +169,31 @@ static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 
 bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature) {
-	//TODO: TriCore_getFeatureBits
-	return true;
+	switch (mode) {
+		case CS_MODE_TRICORE_110: {
+			return feature == TriCore_HasV110Ops;
+		}
+		case CS_MODE_TRICORE_120: {
+			return feature == TriCore_HasV120Ops;
+		}
+		case CS_MODE_TRICORE_130: {
+			return feature == TriCore_HasV130Ops;
+		}
+		case CS_MODE_TRICORE_131: {
+			return feature == TriCore_HasV131Ops;
+		}
+		case CS_MODE_TRICORE_160: {
+			return feature == TriCore_HasV160Ops;
+		}
+		case CS_MODE_TRICORE_161: {
+			return feature == TriCore_HasV161Ops;
+		}
+		case CS_MODE_TRICORE_162: {
+			return feature == TriCore_HasV162Ops;
+		}
+		default:
+			return false;
+	}
 }
 
 
