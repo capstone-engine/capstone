@@ -1921,19 +1921,24 @@ def SUB_F_rrr : IRRR_d31<0x6B, 0x03, "sub.f">, Requires<[HasV130_UP]>;
 def MUL_F_rrr : IRR_dab<0x4B, 0x04, "mul.f">, Requires<[HasV130_UP]>;
 def DIV_F_rr  : IRR_dab<0x4B, 0x05, "div.f">, Requires<[HasV160_UP]>;
 
-def CMP_F_rr  : IRR_dab<0x4B, 0x00, "cmp.f">;
-def FTOI_rr   : IRR_a<0x4B, 0x10, "ftoi">;
-def FTOIZ_rr  : IRR_a<0x4B, 0x13, "ftoiz">;
-def FTOQ31_rr : IRR_dab<0x4B, 0x11, "ftoq31">;
-def FTOQ31Z_rr: IRR_dab<0x4B, 0x18, "ftoq31z">;
-def FTOU_rr   : IRR_a<0x4B, 0x12, "ftou">;
-def FTOUZ_rr  : IRR_a<0x4B, 0x17, "ftouz">;
-def FTOHP_rr  : IRR_a<0x4B, 0x25, "ftohp">;
-def HPTOF_rr  : IRR_a<0x4B, 0x24, "hptof">;
-def ITOF_rr   : IRR_a<0x4B, 0x14, "itof">;
+def CMP_F_rr  : IRR_dab<0x4B, 0x00, "cmp.f">, Requires<[HasV160_UP]>;
+
+def FTOI_rr   : IRR_a<0x4B, 0x10, "ftoi">, Requires<[HasV130_UP]>;
+def FTOIZ_rr  : IRR_a<0x4B, 0x13, "ftoiz">, Requires<[HasV131_UP]>;
+
+def FTOQ31_rr : IRR_dab<0x4B, 0x11, "ftoq31">, Requires<[HasV130_UP]>;
+def FTOQ31Z_rr: IRR_dab<0x4B, 0x18, "ftoq31z">, Requires<[HasV131_UP]>;
+
+def FTOU_rr   : IRR_a<0x4B, 0x12, "ftou">, Requires<[HasV130_UP]>;
+def FTOUZ_rr  : IRR_a<0x4B, 0x17, "ftouz">, Requires<[HasV131_UP]>;
+
+def FTOHP_rr  : IRR_a<0x4B, 0x25, "ftohp">, Requires<[HasV162_UP]>;
+
+def HPTOF_rr  : IRR_a<0x4B, 0x24, "hptof">, Requires<[HasV162_UP]>;
+def ITOF_rr   : IRR_a<0x4B, 0x14, "itof">, Requires<[HasV130_UP]>;
 
 def Q31TOF_rr  : IRR_dab<0x4B, 0x15, "q31tof">, Requires<[HasV130_UP]>;
 def QSEED_F_rr : IRR_a<0x4B, 0x19, "qseed.f">, Requires<[HasV130_UP]>;
 
-def UPDFL_rr   : IRR_R1<0x4B, 0x0C, "updfl">, Requires<[HasV160_UP]>;
-def UTOF_rr    : IRR_a<0x4B, 0x16, "utof">, Requires<[HasV160_UP]>;
+def UPDFL_rr   : IRR_R1<0x4B, 0x0C, "updfl">, Requires<[HasV130_UP]>;
+def UTOF_rr    : IRR_a<0x4B, 0x16, "utof">, Requires<[HasV130_UP]>;
