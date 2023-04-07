@@ -162,7 +162,13 @@ typedef enum cs_mode {
 	CS_MODE_SH4A = 1 << 5,   ///< SH4A
 	CS_MODE_SHFPU = 1 << 6,  ///< w/ FPU
 	CS_MODE_SHDSP = 1 << 7,  ///< w/ DSP
-	CS_MODE_TRICORE = 1 << 1, ///< Tricore
+	CS_MODE_TRICORE_110 = 1 << 1, ///< Tricore 1.1
+	CS_MODE_TRICORE_120 = 1 << 2, ///< Tricore 1.2
+	CS_MODE_TRICORE_130 = 1 << 3, ///< Tricore 1.3
+	CS_MODE_TRICORE_131 = 1 << 4, ///< Tricore 1.3.1
+	CS_MODE_TRICORE_160 = 1 << 5, ///< Tricore 1.6
+	CS_MODE_TRICORE_161 = 1 << 6, ///< Tricore 1.6.1
+	CS_MODE_TRICORE_162 = 1 << 7, ///< Tricore 1.6.2
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
