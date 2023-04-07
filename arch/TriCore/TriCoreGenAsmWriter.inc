@@ -993,7 +993,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2231898387U,	// LD_A_bo_pos
     2198409491U,	// LD_A_bo_pre
     101191955U,	// LD_A_bo_r
-    50860307U,	// LD_A_bol
+    587731219U,	// LD_A_bol
     139409U,	// LD_A_sc
     2466779411U,	// LD_A_slr
     2500333843U,	// LD_A_slr_post
@@ -1009,7 +1009,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2231900367U,	// LD_BU_bo_pos
     2198411471U,	// LD_BU_bo_pre
     101193935U,	// LD_BU_bo_r
-    50862287U,	// LD_BU_bol
+    587733199U,	// LD_BU_bol
     2466781391U,	// LD_BU_slr
     2500335823U,	// LD_BU_slr_post
     2500335823U,	// LD_BU_slr_post_v110
@@ -1024,7 +1024,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2231898621U,	// LD_B_bo_pos
     2198409725U,	// LD_B_bo_pre
     101192189U,	// LD_B_bo_r
-    50860541U,	// LD_B_bol
+    587731453U,	// LD_B_bol
     2500334077U,	// LD_B_slr_post_v110
     2466779645U,	// LD_B_slr_v110
     659965U,	// LD_B_slro_v110
@@ -1047,14 +1047,14 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2231900434U,	// LD_HU_bo_pos
     2198411538U,	// LD_HU_bo_pre
     101194002U,	// LD_HU_bo_r
-    50862354U,	// LD_HU_bol
+    587733266U,	// LD_HU_bol
     9442194U,	// LD_H_abs
     2198344594U,	// LD_H_bo_bso
     67638162U,	// LD_H_bo_c
     2231899026U,	// LD_H_bo_pos
     2198410130U,	// LD_H_bo_pre
     101192594U,	// LD_H_bo_r
-    50860946U,	// LD_H_bol
+    587731858U,	// LD_H_bol
     2466780050U,	// LD_H_slr
     2500334482U,	// LD_H_slr_post
     2500334482U,	// LD_H_slr_post_v110
@@ -1075,7 +1075,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2231900542U,	// LD_W_bo_pos
     2198411646U,	// LD_W_bo_pre
     101194110U,	// LD_W_bo_r
-    50862462U,	// LD_W_bol
+    587733374U,	// LD_W_bol
     139426U,	// LD_W_sc
     2466781566U,	// LD_W_slr
     2500335998U,	// LD_W_slr_post
@@ -1087,7 +1087,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     24321007U,	// LD_W_sro_v110
     9441727U,	// LEA_abs
     2198344127U,	// LEA_bo_bso
-    50860479U,	// LEA_bol
+    587731391U,	// LEA_bol
     9441732U,	// LHA_abs
     43355U,	// LOOPU_brr
     10491372U,	// LOOP_brr
@@ -3305,7 +3305,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 2:
-    // ADDIH_A_rlc, ADDIH_rlc, ADDI_rlc
+    // ADDIH_A_rlc, ADDIH_rlc, ADDI_rlc, LD_A_bol, LD_BU_bol, LD_B_bol, LD_HU...
     printSExtImm_16(MI, 2, O);
     return;
     break;
