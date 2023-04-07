@@ -307,6 +307,7 @@
   "rfe", // TriCore_INS_RFE
   "rfm", // TriCore_INS_RFM
   "relck", // TriCore_INS_RELCK
+  "rstv", // TriCore_INS_RSTV
   "rsubs_u", // TriCore_INS_RSUBS_U
   "rsubs", // TriCore_INS_RSUBS
   "rsub", // TriCore_INS_RSUB
@@ -314,14 +315,18 @@
   "sat_b", // TriCore_INS_SAT_B
   "sat_hu", // TriCore_INS_SAT_HU
   "sat_h", // TriCore_INS_SAT_H
+  "seln_a", // TriCore_INS_SELN_A
   "seln", // TriCore_INS_SELN
+  "sel_a", // TriCore_INS_SEL_A
   "sel", // TriCore_INS_SEL
   "shas", // TriCore_INS_SHAS
+  "sha_b", // TriCore_INS_SHA_B
   "sha_h", // TriCore_INS_SHA_H
   "sha", // TriCore_INS_SHA
   "shuffle", // TriCore_INS_SHUFFLE
   "sh_andn_t", // TriCore_INS_SH_ANDN_T
   "sh_and_t", // TriCore_INS_SH_AND_T
+  "sh_b", // TriCore_INS_SH_B
   "sh_eq", // TriCore_INS_SH_EQ
   "sh_ge_u", // TriCore_INS_SH_GE_U
   "sh_ge", // TriCore_INS_SH_GE
@@ -346,6 +351,9 @@
   "st_t", // TriCore_INS_ST_T
   "st_w", // TriCore_INS_ST_W
   "subc", // TriCore_INS_SUBC
+  "subsc_a", // TriCore_INS_SUBSC_A
+  "subs_bu", // TriCore_INS_SUBS_BU
+  "subs_b", // TriCore_INS_SUBS_B
   "subs_hu", // TriCore_INS_SUBS_HU
   "subs_h", // TriCore_INS_SUBS_H
   "subs_u", // TriCore_INS_SUBS_U
@@ -358,8 +366,15 @@
   "sub", // TriCore_INS_SUB
   "svlcx", // TriCore_INS_SVLCX
   "swapmsk_w", // TriCore_INS_SWAPMSK_W
+  "swap_a", // TriCore_INS_SWAP_A
   "swap_w", // TriCore_INS_SWAP_W
   "syscall", // TriCore_INS_SYSCALL
+  "tlbdemap", // TriCore_INS_TLBDEMAP
+  "tlbflush_a", // TriCore_INS_TLBFLUSH_A
+  "tlbflush_b", // TriCore_INS_TLBFLUSH_B
+  "tlbmap", // TriCore_INS_TLBMAP
+  "tlbprobe_a", // TriCore_INS_TLBPROBE_A
+  "tlbprobe_i", // TriCore_INS_TLBPROBE_I
   "trapsv", // TriCore_INS_TRAPSV
   "trapv", // TriCore_INS_TRAPV
   "unpack", // TriCore_INS_UNPACK

@@ -420,6 +420,8 @@ printSExtImm_(4)
 
 printZExtImm_(16)
 
+printZExtImm_(9)
+
 printZExtImm_(8)
 
 printZExtImm_(4)

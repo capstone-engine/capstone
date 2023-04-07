@@ -164,11 +164,11 @@ static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 
 #define GET_SUBTARGETINFO_ENUM
+
 #include "TriCoreGenSubtargetInfo.inc"
 
 
-bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature)
-{
+bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature) {
 	//TODO: TriCore_getFeatureBits
 	return true;
 }
@@ -272,9 +272,11 @@ static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
 	if (status != MCDisassembler_Success)
 		return status;
 
-	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 1) {
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
 	return MCDisassembler_Success;
 }
@@ -611,6 +613,22 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
+	/// But even if the instruction is in RR format and has only one operand,
+	/// we cannot be sure whether the operand is s1 or s2
+	if (desc->NumOperands == 1) {
+		if (desc->OpInfo[0].OperandType == MCOI_OPERAND_REGISTER) {
+			switch (MCInst_getOpcode(Inst)) {
+				case TriCore_CALLI_rr_v110: {
+					return DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+				}
+				default: {
+					return DecodeRegisterClass(Inst, s1, &desc->OpInfo[0], Decoder);
+				}
+			}
+		}
+		return MCDisassembler_Fail;
+	}
+
 	// Decode d.
 	status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
 	if (status != MCDisassembler_Success)
@@ -1331,13 +1349,13 @@ static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 			return status;
 	}
 
-	// Decode const4.
-	MCOperand_CreateImm0(Inst, const4);
-
 	// Decode s3.
-	status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[opIdx+2], Decoder);
+	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[opIdx + 1], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
+
+	// Decode const4.
+	MCOperand_CreateImm0(Inst, const4);
 
 	// Decode width.
 	MCOperand_CreateImm0(Inst, width);
