@@ -926,7 +926,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     7346733U,	// JGTZ_sbr_v110
     136500U,	// JI_rr
     136500U,	// JI_rr_v110
-    7345460U,	// JI_sbr_v110
+    136500U,	// JI_sbr_v110
     136500U,	// JI_sr
     16850U,	// JLA_b
     7346706U,	// JLEZ_sbr
