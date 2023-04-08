@@ -146,12 +146,27 @@ static void printPairAddrRegsOperand(MCInst *MI, unsigned OpNum, SStream *O,
 	SStream_concat0(O, "]");
 }
 
-static inline int32_t sign_ext(int32_t imm, unsigned n) {
-	int32_t sign = imm >> (n - 1) & 0x1;
-	for (unsigned i = n; i < 32; ++i) {
-		imm = (imm & ~(1 << i)) | (sign << i);
+static inline unsigned int get_msb(unsigned int value) {
+	unsigned int msb = 0;
+	while (value > 0) {
+		value >>= 1; // Shift bits to the right
+		msb++;       // Increment the position of the MSB
 	}
-	return imm;
+	return msb;
+}
+
+static inline int32_t sign_ext_n(int32_t imm, unsigned n) {
+	n = get_msb(imm) > n ? get_msb(imm) : n;
+	int32_t mask = 1 << (n - 1);
+	int32_t sign_extended = (imm ^ mask) - mask;
+	return sign_extended;
+}
+
+static inline void SS_print_hex(SStream *O, int32_t imm) {
+	if (imm > HEX_THRESHOLD)
+		SStream_concat(O, "0x%x", imm);
+	else
+		SStream_concat(O, "%u", imm);
 }
 
 static inline void SS_print_sign_hex(SStream *O, int32_t imm) {
@@ -172,7 +187,7 @@ static void print_sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n) {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int32_t imm = (int32_t) MCOperand_getImm(MO);
-		imm = sign_ext(imm, n);
+		imm = sign_ext_n(imm, n);
 		SS_print_sign_hex(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
@@ -247,7 +262,6 @@ static inline void fixup_tricore_disp(MCInst *MI, int OpNum, int32_t disp) {
 	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
 	if (tricore->operands[tricore->op_count - 1].type != TRICORE_OP_REG) return;
 
-	MCOperand *baseOp = MCInst_getOperand(MI, OpNum - 1);
 	tricore->operands[tricore->op_count - 1]
 			.type = TRICORE_OP_MEM;
 	tricore->operands[tricore->op_count - 1]
@@ -262,19 +276,20 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O) {
 		int32_t disp = (int32_t) MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 			case TriCore_CALL_b:
-			case TriCore_FCALL_b:
-				disp = (int32_t) MI->address + sign_ext(disp * 2, 24);
+			case TriCore_FCALL_b: {
+				disp = (int32_t) MI->address + sign_ext_n(disp * 2, 24);
 				break;
+			}
 			case TriCore_CALLA_b:
 			case TriCore_FCALLA_b:
 			case TriCore_JA_b:
 			case TriCore_JLA_b:
 				// = {disp24[23:20], 7’b0000000, disp24[19:0], 1’b0};
-				disp = ((disp & 0xf00000) < 8) | ((disp & 0xfffff) << 1);
+				disp = ((disp & 0xf00000) << 28) | ((disp & 0xfffff) << 1);
 				break;
 			case TriCore_J_b:
 			case TriCore_JL_b:
-				disp = (int32_t) MI->address + sign_ext(disp, 24) * 2;
+				disp = (int32_t) MI->address + sign_ext_n(disp, 24) * 2;
 				break;
 		}
 
@@ -311,11 +326,11 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O) {
 			case TriCore_JNZ_T_brn:
 			case TriCore_JZ_A_brr:
 			case TriCore_JZ_T_brn:
-				disp = (int32_t) MI->address + sign_ext(disp, 15) * 2;
+				disp = (int32_t) MI->address + sign_ext_n(disp, 15) * 2;
 				break;
 			case TriCore_LOOP_brr:
 			case TriCore_LOOPU_brr:
-				disp = (int32_t) MI->address + sign_ext(disp * 2, 15);
+				disp = (int32_t) MI->address + sign_ext_n(disp * 2, 15);
 				break;
 			default:
 				// handle other cases, if any
@@ -334,12 +349,12 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O) {
 		int32_t disp = (int32_t) MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 			case TriCore_CALL_sb:
-				disp = (int32_t) MI->address + sign_ext(2 * disp, 8);
+				disp = (int32_t) MI->address + sign_ext_n(2 * disp, 8);
 				break;
 			case TriCore_J_sb:
 			case TriCore_JNZ_sb:
 			case TriCore_JZ_sb:
-				disp = (int32_t) MI->address + sign_ext(disp, 8) * 2;
+				disp = (int32_t) MI->address + sign_ext_n(disp, 8) * 2;
 				break;
 			default:
 				// handle other cases, if any
@@ -400,7 +415,6 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O) {
     print_sign_ext(MI, OpNum, O, n);                                                \
   }
 
-printSExtImm_(24)
 
 printSExtImm_(16)
 
@@ -408,7 +422,6 @@ printSExtImm_(10)
 
 printSExtImm_(9)
 
-printSExtImm_(8)
 
 printSExtImm_(4)
 
@@ -428,7 +441,6 @@ printZExtImm_(4)
 
 printZExtImm_(2)
 
-printZExtImm_(1)
 
 /// Returned by getMnemonic() of the AsmPrinters.
 typedef struct {

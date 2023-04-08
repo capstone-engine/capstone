@@ -1390,7 +1390,7 @@ static const MCOperandInfo OperandInfo99[] = { { TriCore_RARegClassID, 0, MCOI_O
 static const MCOperandInfo OperandInfo100[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
 static const MCOperandInfo OperandInfo101[] = { { TriCore_RERegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
 static const MCOperandInfo OperandInfo102[] = { { TriCore_RERegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
-static const MCOperandInfo OperandInfo103[] = { { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RERegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
+static const MCOperandInfo OperandInfo103[] = { { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RERegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
 static const MCOperandInfo OperandInfo104[] = { { TriCore_RPRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RARegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
 static const MCOperandInfo OperandInfo105[] = { { TriCore_RPRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
 static const MCOperandInfo OperandInfo106[] = { { TriCore_RPRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { TriCore_RDRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
@@ -1763,13 +1763,13 @@ static const MCInstrDesc TriCoreInsts[] = {
   { 4, OperandInfo61 },
   { 4, OperandInfo62 },
   { 4, OperandInfo55 },
-  { 2, OperandInfo53 },
+  { 2, OperandInfo56 },
   { 2, OperandInfo47 },
   { 4, OperandInfo49 },
   { 4, OperandInfo61 },
   { 4, OperandInfo62 },
   { 4, OperandInfo55 },
-  { 2, OperandInfo53 },
+  { 2, OperandInfo56 },
   { 2, OperandInfo47 },
   { 1, OperandInfo2 },
   { 1, OperandInfo60 },
@@ -1787,7 +1787,7 @@ static const MCInstrDesc TriCoreInsts[] = {
   { 2, OperandInfo47 },
   { 2, OperandInfo56 },
   { 2, OperandInfo47 },
-  { 2, OperandInfo53 },
+  { 2, OperandInfo56 },
   { 2, OperandInfo47 },
   { 3, OperandInfo63 },
   { 3, OperandInfo64 },

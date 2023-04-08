@@ -27,8 +27,8 @@ def gen(filename):
             def try_dedisp(x):
                 try:
                     disp = int(x, 16)
-                    if disp > 0x10000000:
-                        return hex(disp - addr)
+                    if disp > 0x80000000:
+                        x = hex(disp - addr)
                     return x
                 except ValueError:
                     pass
@@ -44,11 +44,7 @@ def gen(filename):
             # print(hex(addr), hexstr, mnemonic, operands)
             if any([mnemonic.startswith(pre) for pre in
                     ['mtcr', 'mfcr', 'st.a', 'st.b', 'st.d', 'st.w', 'ld.a', 'ld.b', 'ld.d', 'ld.w']]):
-                key = f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}"
-                if key in unique_set:
-                    continue
-                unique_set.add(key)
-                print(key)
+                unique_set.add(f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}")
                 continue
 
             ops = operands.split(',')
@@ -59,11 +55,10 @@ def gen(filename):
 
             ops = map(lambda x: '0x' + x if is_hex_string(x) and not x.startswith('0x') else x, ops)
             operands = ', '.join(ops)
-            key = f"{hexstr.ljust(19)} = {mnemonic}\t{operands}"
-            if key in unique_set:
-                continue
-            unique_set.add(key)
-            print(key)
+            unique_set.add(f"{hexstr.ljust(19)} = {mnemonic}\t{operands}")
+
+    print('# CS_ARCH_TRICORE, CS_MODE_TRICORE_162, None')
+    print('\n'.join(unique_set))
 
 
 def main():
