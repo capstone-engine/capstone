@@ -224,7 +224,11 @@ class ISC_A15A10C<bits<8> op1, string asmstr, Operand TypeC=u8imm>
 
 class ISC_A10CA15<bits<8> op1, string asmstr, Operand TypeC=u8imm> 
     : SC<op1, (outs), (ins TypeC:$const8),
-      asmstr # " %sp, $const8, %a15", []>;
+      asmstr # " [%sp]$const8, %a15", []>;
+
+class ISC_A10CD15<bits<8> op1, string asmstr, Operand TypeC=u8imm> 
+    : SC<op1, (outs), (ins TypeC:$const8),
+      asmstr # " [%sp]$const8, %d15", []>;
 
 class ISC_C<bits<8> op1, string asmstr, Operand TypeC=u8imm> 
     : SC<op1, (outs), (ins TypeC:$const8),
@@ -1753,7 +1757,7 @@ def ST_T : ABSB<0xD5, 0x00, (outs), (ins off18imm:$off18, i32imm:$bpos3, i32imm:
 defm ST_W : mI_ST_<0xA5, 0x00, 0x89, 0xA9, 0x24, 0x04, 0x14, "st.w", RD>
           , mI_ST_2_<0x6C, 0x74, 0x64, 0x68, 0xE8, 0x04, 0x94, 0xCC, "st.w", RD>;
 def ST_W_bol : IBOL_AbOR<0x59, "st.w", RD>;
-def ST_W_sc : ISC_A10CA15<0x78, "st.w">, Requires<[HasV120_UP]>;
+def ST_W_sc : ISC_A10CD15<0x78, "st.w">, Requires<[HasV120_UP]>;
 
 def STLCX_abs : IABS_off18<0x15, 0x00, "stlcx">; 
 def STLCX_bo_bso : IBO_bso<0x49, 0x26, "stlcx">; 
