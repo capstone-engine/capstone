@@ -220,7 +220,7 @@ class ISC_A10C<bits<8> op1, string asmstr, Operand TypeC=u8imm>
 
 class ISC_A15A10C<bits<8> op1, string asmstr, Operand TypeC=u8imm> 
     : SC<op1, (outs), (ins TypeC:$const8),
-      asmstr # " %a15, %sp, $const8", []>;
+      asmstr # " %a15, [%sp]$const8", []>;
 
 class ISC_A10CA15<bits<8> op1, string asmstr, Operand TypeC=u8imm> 
     : SC<op1, (outs), (ins TypeC:$const8),
@@ -684,11 +684,11 @@ class IBO_bsoAbOEa<bits<8> op1, bits<6> op2, string asmstr>
 // P[b], E[a] (BO)(Bit-reverse Addressing Mode)
 class IBO_rPbEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins RE:$s1, RP:$s2),
-      asmstr # " $s2, $s1", []>;
+      asmstr # " [${s2}+r], $s1", []>;
 // P[b], off10, E[a] (BO)(Circular Addressing Mode)
 class IBO_cPbOEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins RE:$s1, RP:$s2, s10imm:$off10),
-      asmstr # " [$s2]$off10, $s1", []>;
+      asmstr # " [${s2}+c]$off10, $s1", []>;
 // A[b], off10, E[a] (BO)(Post-increment Addressing Mode)
 class IBO_posAbOEa<bits<8> op1, bits<6> op2, string asmstr> 
     : BO<op1, op2, (outs), (ins RE:$s1, RA:$s2, s10imm:$off10),
@@ -714,7 +714,7 @@ multiclass mIBO_Ea<bits<8> bso1, bits<6> bso2, ///_bso
 
 defm CMPSWAP_W : mIBO_Ea<0x49, 0x23, 0x69, 0x03,
                          0x69, 0x13, 0x49,0x03,
-                         0x49, 0x13, "CMPSWAP.W">
+                         0x49, 0x13, "cmpswap.w">
                , Requires<[HasV161_UP]>;
 
 def CRC32_B_rr  : IRR_dba<0x4B, 0x06, "crc32.b">, Requires<[HasV162]>;
@@ -1224,7 +1224,7 @@ defm LT_W : mIU__RR_ab<0x0B, 0x92, 0x0B, 0x93, "lt.w">;
 
 class IRRR1_label<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC, string label>
     : RRR1<op1, op2, (outs RC:$d), (ins RD:$s1, RD:$s2, RC:$s3, u2imm:$n),
-           asmstr # " $d, $s3, $s1, $s2 " # label # ", $n", []>;
+           asmstr # " $d, $s3, $s1, ${s2}" # label # ", $n", []>;
 class IRRR1_label2<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC, string label1, string label2>
     : RRR1<op1, op2, (outs RC:$d), (ins RD:$s1, RD:$s2, RC:$s3, u2imm:$n),
            asmstr # " $d, $s3, ${s1}" # label1 # ", ${s2}" # label2 # ", $n", []>;
@@ -1254,10 +1254,10 @@ multiclass mIRCR_RRR2<bits<8> op_rcr1, bits<3> op_rcr2, bits<8> op_rrr21, bits<8
 multiclass mIRRR1_LU2<bits<8> prefix, bits<6> ll, bits<6> lu,
                       bits<6> ul, bits<6> uu,
                       string asmstr, RegisterClass RC>{
-  def _rrr1_LL : IRRR1_label<prefix, ll, asmstr, RC, "LL">;
-  def _rrr1_LU : IRRR1_label<prefix, lu, asmstr, RC, "LU">;
-  def _rrr1_UL : IRRR1_label<prefix, ul, asmstr, RC, "UL">;
-  def _rrr1_UU : IRRR1_label<prefix, uu, asmstr, RC, "UU">;
+  def _rrr1_LL : IRRR1_label<prefix, ll, asmstr, RC, "ll">;
+  def _rrr1_LU : IRRR1_label<prefix, lu, asmstr, RC, "lu">;
+  def _rrr1_UL : IRRR1_label<prefix, ul, asmstr, RC, "ul">;
+  def _rrr1_UU : IRRR1_label<prefix, uu, asmstr, RC, "uu">;
 }
 multiclass mI_MADD_H_MSUB_H_<bits<8> pre, bits<6> ll, bits<6> lu,
                        bits<6> ul, bits<6> uu, string asmstr, bit hasv110=true, RegisterClass RC=RE>{
@@ -1275,7 +1275,7 @@ multiclass mI_MADDRsH_MSUBRsH_<bits<8> pre2, bits<6> ul2, bits<8> pre1, bits<6> 
   def _rrr1_v110: RRR1<pre2, ul2, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
                        asmstr # " $d, $s3, $s1, $s2, $n", []>, NsRequires<[HasV110]>;
   def _rrr1_UL_2: RRR1<pre2, ul2, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3, u2imm:$n),
-                       asmstr # " $d, $s3, $s1, $s2 UL, $n", []>, Requires<[HasV120_UP]>;
+                       asmstr # " $d, $s3, $s1, ${s2}ul, $n", []>, Requires<[HasV120_UP]>;
   defm "" : mIRRR1_LU2<pre1, ll, lu, ul, uu, asmstr, RD>, Requires<[HasV120_UP]>;
 }
 
@@ -1284,14 +1284,14 @@ multiclass mI_MADDsQ_MSUBsQ_<bits<8> prefix, bits<6> op, bits<6> eop, bits<6> l,
   def _rrr1_UU2_v110: IRRR1_n<prefix, uu, asmstr, RD>, NsRequires<[HasV110]>;
   def _rrr1: IRRR1_n<prefix, op, asmstr, RD>, Requires<[HasV120_UP]>;
   def _rrr1_e: IRRR1_n<prefix, eop, asmstr, RE>, Requires<[HasV120_UP]>;
-  def _rrr1_L: IRRR1_label<prefix, l, asmstr, RD, "L">, Requires<[HasV120_UP]>;
-  def _rrr1_e_L: IRRR1_label<prefix, el, asmstr, RE, "L">, Requires<[HasV120_UP]>;
-  def _rrr1_U: IRRR1_label<prefix, u, asmstr, RD, "U">, Requires<[HasV120_UP]>;
-  def _rrr1_e_U: IRRR1_label<prefix, eu, asmstr, RE, "U">, Requires<[HasV120_UP]>;
-  def _rrr1_L_L: IRRR1_label2<prefix, ll, asmstr, RD, "L", "L">, Requires<[HasV120_UP]>;
-  def _rrr1_e_L_L: IRRR1_label2<prefix, ell, asmstr, RE, "L", "L">, Requires<[HasV120_UP]>;
-  def _rrr1_U_U: IRRR1_label2<prefix, uu, asmstr, RD, "U", "U">, Requires<[HasV120_UP]>;
-  def _rrr1_e_U_U: IRRR1_label2<prefix, euu, asmstr, RE, "U", "U">, Requires<[HasV120_UP]>;
+  def _rrr1_L: IRRR1_label<prefix, l, asmstr, RD, "l">, Requires<[HasV120_UP]>;
+  def _rrr1_e_L: IRRR1_label<prefix, el, asmstr, RE, "l">, Requires<[HasV120_UP]>;
+  def _rrr1_U: IRRR1_label<prefix, u, asmstr, RD, "u">, Requires<[HasV120_UP]>;
+  def _rrr1_e_U: IRRR1_label<prefix, eu, asmstr, RE, "u">, Requires<[HasV120_UP]>;
+  def _rrr1_L_L: IRRR1_label2<prefix, ll, asmstr, RD, "l", "l">, Requires<[HasV120_UP]>;
+  def _rrr1_e_L_L: IRRR1_label2<prefix, ell, asmstr, RE, "l", "l">, Requires<[HasV120_UP]>;
+  def _rrr1_U_U: IRRR1_label2<prefix, uu, asmstr, RD, "u", "u">, Requires<[HasV120_UP]>;
+  def _rrr1_e_U_U: IRRR1_label2<prefix, euu, asmstr, RE, "u", "u">, Requires<[HasV120_UP]>;
 }
 
 defm MADD : mIRCR<0x13, 0x01, 0x13, 0x03, "madd">
@@ -1325,8 +1325,8 @@ defm MADDR_H  : mI_MADDRsH_MSUBRsH_<0x43, 0x1E, 0x83, 0x0E, 0x0D, 0x0C, 0x0F, "m
 defm MADDRS_H : mI_MADDRsH_MSUBRsH_<0x43, 0x3E, 0x83, 0x2E, 0x2D, 0x2C, 0x2F, "maddrs.h">;
 
 multiclass mI_MADDRsQ_MSUBRsQ_<bits<8> prefix, bits<6> op, bits<6> eop, string asmstr> {
-  def _rrr1_L_L : IRRR1_label2<prefix, op, asmstr, RD, "L", "L">, Requires<[HasV120_UP]>;
-  def _rrr1_U_U : IRRR1_label2<prefix, eop, asmstr, RD, "U", "U">, Requires<[HasV120_UP]>;
+  def _rrr1_L_L : IRRR1_label2<prefix, op, asmstr, RD, "l", "l">, Requires<[HasV120_UP]>;
+  def _rrr1_U_U : IRRR1_label2<prefix, eop, asmstr, RD, "u", "u">, Requires<[HasV120_UP]>;
   def _rrr1_v110: IRRR1_n<prefix, eop, asmstr, RD>, NsRequires<[HasV110]>;
 }
 
@@ -1481,10 +1481,10 @@ multiclass mI_MUL_H_<bits<8> pre, bits<10> ll, bits<10> lu, bits<10> ul, bits<10
                    , bit hasv110=false, bits<8> rr=0, RegisterClass RCd=RE>{
   if hasv110 then
     def _rr_v110 : IRR_dabn<pre, rr, asmstr, RCd>, NsRequires<[HasV110]>;
-  def _rr1_LL2e : IRR1<pre, ll, asmstr, RE, "", "LL">, Requires<[HasV120_UP]>;
-  def _rr1_LU2e : IRR1<pre, lu, asmstr, RE, "", "LU">, Requires<[HasV120_UP]>;
-  def _rr1_UL2e : IRR1<pre, ul, asmstr, RE, "", "UL">, Requires<[HasV120_UP]>;
-  def _rr1_UU2e : IRR1<pre, uu, asmstr, RE, "", "UU">, Requires<[HasV120_UP]>;
+  def _rr1_LL2e : IRR1<pre, ll, asmstr, RE, "", "ll">, Requires<[HasV120_UP]>;
+  def _rr1_LU2e : IRR1<pre, lu, asmstr, RE, "", "lu">, Requires<[HasV120_UP]>;
+  def _rr1_UL2e : IRR1<pre, ul, asmstr, RE, "", "ul">, Requires<[HasV120_UP]>;
+  def _rr1_UU2e : IRR1<pre, uu, asmstr, RE, "", "uu">, Requires<[HasV120_UP]>;
 }
 
 defm MUL_H : mI_MUL_H_<0xB3, 0x1A, 0x19, 0x18, 0x1B, "mul.h", true, 0x18>;
@@ -1495,13 +1495,13 @@ multiclass mI_MULQ_<bits<8> pre, bits<8> rr, bits<10> op1, bits<10> op2, bits<10
   def _rr1_2   : IRR1<pre, op1, asmstr, RD, "", "">, Requires<[HasV120_UP]>;
   def _rr1_2__e: IRR1<pre, op2, asmstr, RE, "", "">, Requires<[HasV120_UP]>;
 
-  def _rr1_2_L : IRR1<pre, op3, asmstr, RD, "", "L">, Requires<[HasV120_UP]>;
-  def _rr1_2_Le: IRR1<pre, op4, asmstr, RE, "", "L">, Requires<[HasV120_UP]>;
-  def _rr1_2_U : IRR1<pre, op5, asmstr, RD, "", "U">, Requires<[HasV120_UP]>;
-  def _rr1_2_Ue: IRR1<pre, op6, asmstr, RE, "", "U">, Requires<[HasV120_UP]>;
+  def _rr1_2_L : IRR1<pre, op3, asmstr, RD, "", "l">, Requires<[HasV120_UP]>;
+  def _rr1_2_Le: IRR1<pre, op4, asmstr, RE, "", "l">, Requires<[HasV120_UP]>;
+  def _rr1_2_U : IRR1<pre, op5, asmstr, RD, "", "u">, Requires<[HasV120_UP]>;
+  def _rr1_2_Ue: IRR1<pre, op6, asmstr, RE, "", "u">, Requires<[HasV120_UP]>;
 
-  def _rr1_2LL : IRR1<pre, op7, asmstr, RD, "L", "L">, Requires<[HasV120_UP]>;
-  def _rr1_2UU : IRR1<pre, op8, asmstr, RD, "U", "U">, Requires<[HasV120_UP]>;
+  def _rr1_2LL : IRR1<pre, op7, asmstr, RD, "l", "l">, Requires<[HasV120_UP]>;
+  def _rr1_2UU : IRR1<pre, op8, asmstr, RD, "u", "u">, Requires<[HasV120_UP]>;
 }
 
 defm MUL_Q : mI_MULQ_<0x93, 0x04, 0x02, 0x1B, 0x01, 0x19, 0x00, 0x18, 0x05, 0x04, "mul.q">;
@@ -1517,8 +1517,8 @@ defm MULM_H : mI_MUL_H_<0xB3, 0x1E, 0x1D, 0x1C, 0x1F, "mulm.h">;
 defm MULR_H : mI_MUL_H_<0xB3, 0x0E, 0x0D, 0x0C, 0x0F, "mulr.h", true, 0x0C, RD>;
 
 def MULR_Q_rr_v110 : IRR_dabn<0x93, 0x06, "mulr.q">, NsRequires<[HasV110]>;
-def MULR_Q_rr1_2LL : IRR1<0x93, 0x07, "mulr.q", RD, "L", "L">, Requires<[HasV120_UP]>;
-def MULR_Q_rr1_2UU : IRR1<0x93, 0x06, "mulr.q", RD, "U", "U">, Requires<[HasV120_UP]>;
+def MULR_Q_rr1_2LL : IRR1<0x93, 0x07, "mulr.q", RD, "l", "l">, Requires<[HasV120_UP]>;
+def MULR_Q_rr1_2UU : IRR1<0x93, 0x06, "mulr.q", RD, "u", "u">, Requires<[HasV120_UP]>;
 
 defm NAND : mIRR_RC<0x0F, 0x09, 0x8F, 0x09, "nand">;
 def NAND_T : IBIT<0x07, 0x00, "nand.t">;
