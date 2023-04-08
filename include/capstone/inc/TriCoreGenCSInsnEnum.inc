@@ -283,7 +283,6 @@
   TriCore_INS_NOP,
   TriCore_INS_NOR_T,
   TriCore_INS_NOR,
-  TriCore_INS_NOT,
   TriCore_INS_ORN_T,
   TriCore_INS_ORN,
   TriCore_INS_OR_ANDN_T,

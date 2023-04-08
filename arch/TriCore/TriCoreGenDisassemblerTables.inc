@@ -74,7 +74,7 @@ static const uint8_t DecoderTable16[] = {
 /* 227 */     MCD_OPC_FilterValue, 1, 16, 0, 0, // Skip to: 248
 /* 232 */     MCD_OPC_CheckPredicate, 1, 5, 6, 0, // Skip to: 1778
 /* 237 */     MCD_OPC_CheckField, 12, 4, 0, 254, 5, 0, // Skip to: 1778
-/* 244 */     MCD_OPC_Decode, 239, 7, 0, // Opcode: NOT_sr
+/* 244 */     MCD_OPC_Decode, 239, 7, 0, // Opcode: NOR_sr
 /* 248 */     MCD_OPC_FilterValue, 2, 9, 0, 0, // Skip to: 262
 /* 253 */     MCD_OPC_CheckPredicate, 1, 240, 5, 0, // Skip to: 1778
 /* 258 */     MCD_OPC_Decode, 188, 8, 2, // Opcode: SHA_src
@@ -1527,37 +1527,37 @@ static const uint8_t DecoderTable32[] = {
 /* 5353 */    MCD_OPC_CheckPredicate, 1, 6, 30, 0, // Skip to: 13044
 /* 5358 */    MCD_OPC_CheckField, 24, 4, 0, 255, 29, 0, // Skip to: 13044
 /* 5365 */    MCD_OPC_CheckField, 7, 1, 1, 248, 29, 0, // Skip to: 13044
-/* 5372 */    MCD_OPC_Decode, 216, 7, 23, // Opcode: MUL_Q_rr1_2_U
+/* 5372 */    MCD_OPC_Decode, 215, 7, 23, // Opcode: MUL_Q_rr1_2_U
 /* 5376 */    MCD_OPC_FilterValue, 1, 23, 0, 0, // Skip to: 5404
 /* 5381 */    MCD_OPC_CheckPredicate, 1, 234, 29, 0, // Skip to: 13044
 /* 5386 */    MCD_OPC_CheckField, 24, 4, 0, 227, 29, 0, // Skip to: 13044
 /* 5393 */    MCD_OPC_CheckField, 7, 1, 1, 220, 29, 0, // Skip to: 13044
-/* 5400 */    MCD_OPC_Decode, 214, 7, 23, // Opcode: MUL_Q_rr1_2_L
+/* 5400 */    MCD_OPC_Decode, 213, 7, 23, // Opcode: MUL_Q_rr1_2_L
 /* 5404 */    MCD_OPC_FilterValue, 2, 23, 0, 0, // Skip to: 5432
 /* 5409 */    MCD_OPC_CheckPredicate, 1, 206, 29, 0, // Skip to: 13044
 /* 5414 */    MCD_OPC_CheckField, 24, 4, 0, 199, 29, 0, // Skip to: 13044
 /* 5421 */    MCD_OPC_CheckField, 7, 1, 1, 192, 29, 0, // Skip to: 13044
-/* 5428 */    MCD_OPC_Decode, 211, 7, 23, // Opcode: MUL_Q_rr1_2
+/* 5428 */    MCD_OPC_Decode, 210, 7, 23, // Opcode: MUL_Q_rr1_2
 /* 5432 */    MCD_OPC_FilterValue, 4, 23, 0, 0, // Skip to: 5460
 /* 5437 */    MCD_OPC_CheckPredicate, 1, 178, 29, 0, // Skip to: 13044
 /* 5442 */    MCD_OPC_CheckField, 24, 4, 0, 171, 29, 0, // Skip to: 13044
 /* 5449 */    MCD_OPC_CheckField, 7, 1, 1, 164, 29, 0, // Skip to: 13044
-/* 5456 */    MCD_OPC_Decode, 213, 7, 23, // Opcode: MUL_Q_rr1_2UU
+/* 5456 */    MCD_OPC_Decode, 212, 7, 23, // Opcode: MUL_Q_rr1_2UU
 /* 5460 */    MCD_OPC_FilterValue, 5, 23, 0, 0, // Skip to: 5488
 /* 5465 */    MCD_OPC_CheckPredicate, 1, 150, 29, 0, // Skip to: 13044
 /* 5470 */    MCD_OPC_CheckField, 24, 4, 0, 143, 29, 0, // Skip to: 13044
 /* 5477 */    MCD_OPC_CheckField, 7, 1, 1, 136, 29, 0, // Skip to: 13044
-/* 5484 */    MCD_OPC_Decode, 212, 7, 23, // Opcode: MUL_Q_rr1_2LL
+/* 5484 */    MCD_OPC_Decode, 211, 7, 23, // Opcode: MUL_Q_rr1_2LL
 /* 5488 */    MCD_OPC_FilterValue, 6, 23, 0, 0, // Skip to: 5516
 /* 5493 */    MCD_OPC_CheckPredicate, 1, 122, 29, 0, // Skip to: 13044
 /* 5498 */    MCD_OPC_CheckField, 24, 4, 0, 115, 29, 0, // Skip to: 13044
 /* 5505 */    MCD_OPC_CheckField, 7, 1, 1, 108, 29, 0, // Skip to: 13044
-/* 5512 */    MCD_OPC_Decode, 197, 7, 23, // Opcode: MULR_Q_rr1_2UU
+/* 5512 */    MCD_OPC_Decode, 196, 7, 23, // Opcode: MULR_Q_rr1_2UU
 /* 5516 */    MCD_OPC_FilterValue, 7, 99, 29, 0, // Skip to: 13044
 /* 5521 */    MCD_OPC_CheckPredicate, 1, 94, 29, 0, // Skip to: 13044
 /* 5526 */    MCD_OPC_CheckField, 24, 4, 0, 87, 29, 0, // Skip to: 13044
 /* 5533 */    MCD_OPC_CheckField, 7, 1, 1, 80, 29, 0, // Skip to: 13044
-/* 5540 */    MCD_OPC_Decode, 196, 7, 23, // Opcode: MULR_Q_rr1_2LL
+/* 5540 */    MCD_OPC_Decode, 195, 7, 23, // Opcode: MULR_Q_rr1_2LL
 /* 5544 */    MCD_OPC_FilterValue, 1, 11, 0, 0, // Skip to: 5560
 /* 5549 */    MCD_OPC_CheckField, 7, 1, 0, 64, 29, 0, // Skip to: 13044
 /* 5556 */    MCD_OPC_Decode, 151, 6, 24, // Opcode: MADD_rcr
@@ -1575,15 +1575,15 @@ static const uint8_t DecoderTable32[] = {
 /* 5611 */    MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 5632
 /* 5616 */    MCD_OPC_CheckPredicate, 1, 255, 28, 0, // Skip to: 13044
 /* 5621 */    MCD_OPC_CheckField, 24, 4, 0, 248, 28, 0, // Skip to: 13044
-/* 5628 */    MCD_OPC_Decode, 217, 7, 23, // Opcode: MUL_Q_rr1_2_Ue
+/* 5628 */    MCD_OPC_Decode, 216, 7, 23, // Opcode: MUL_Q_rr1_2_Ue
 /* 5632 */    MCD_OPC_FilterValue, 1, 16, 0, 0, // Skip to: 5653
 /* 5637 */    MCD_OPC_CheckPredicate, 1, 234, 28, 0, // Skip to: 13044
 /* 5642 */    MCD_OPC_CheckField, 24, 4, 0, 227, 28, 0, // Skip to: 13044
-/* 5649 */    MCD_OPC_Decode, 215, 7, 23, // Opcode: MUL_Q_rr1_2_Le
+/* 5649 */    MCD_OPC_Decode, 214, 7, 23, // Opcode: MUL_Q_rr1_2_Le
 /* 5653 */    MCD_OPC_FilterValue, 3, 218, 28, 0, // Skip to: 13044
 /* 5658 */    MCD_OPC_CheckPredicate, 1, 213, 28, 0, // Skip to: 13044
 /* 5663 */    MCD_OPC_CheckField, 24, 4, 0, 206, 28, 0, // Skip to: 13044
-/* 5670 */    MCD_OPC_Decode, 218, 7, 23, // Opcode: MUL_Q_rr1_2__e
+/* 5670 */    MCD_OPC_Decode, 217, 7, 23, // Opcode: MUL_Q_rr1_2__e
 /* 5674 */    MCD_OPC_FilterValue, 4, 11, 0, 0, // Skip to: 5690
 /* 5679 */    MCD_OPC_CheckField, 7, 1, 0, 190, 28, 0, // Skip to: 13044
 /* 5686 */    MCD_OPC_Decode, 252, 5, 24, // Opcode: MADDS_U_rcr
@@ -2047,19 +2047,19 @@ static const uint8_t DecoderTable32[] = {
 /* 7874 */    MCD_OPC_FilterValue, 4, 16, 0, 0, // Skip to: 7895
 /* 7879 */    MCD_OPC_CheckPredicate, 1, 40, 20, 0, // Skip to: 13044
 /* 7884 */    MCD_OPC_CheckField, 24, 4, 0, 33, 20, 0, // Skip to: 13044
-/* 7891 */    MCD_OPC_Decode, 193, 7, 23, // Opcode: MULR_H_rr1_UL2e
+/* 7891 */    MCD_OPC_Decode, 192, 7, 23, // Opcode: MULR_H_rr1_UL2e
 /* 7895 */    MCD_OPC_FilterValue, 5, 16, 0, 0, // Skip to: 7916
 /* 7900 */    MCD_OPC_CheckPredicate, 1, 19, 20, 0, // Skip to: 13044
 /* 7905 */    MCD_OPC_CheckField, 24, 4, 0, 12, 20, 0, // Skip to: 13044
-/* 7912 */    MCD_OPC_Decode, 192, 7, 23, // Opcode: MULR_H_rr1_LU2e
+/* 7912 */    MCD_OPC_Decode, 191, 7, 23, // Opcode: MULR_H_rr1_LU2e
 /* 7916 */    MCD_OPC_FilterValue, 6, 16, 0, 0, // Skip to: 7937
 /* 7921 */    MCD_OPC_CheckPredicate, 1, 254, 19, 0, // Skip to: 13044
 /* 7926 */    MCD_OPC_CheckField, 24, 4, 0, 247, 19, 0, // Skip to: 13044
-/* 7933 */    MCD_OPC_Decode, 191, 7, 23, // Opcode: MULR_H_rr1_LL2e
+/* 7933 */    MCD_OPC_Decode, 190, 7, 23, // Opcode: MULR_H_rr1_LL2e
 /* 7937 */    MCD_OPC_FilterValue, 7, 238, 19, 0, // Skip to: 13044
 /* 7942 */    MCD_OPC_CheckPredicate, 1, 233, 19, 0, // Skip to: 13044
 /* 7947 */    MCD_OPC_CheckField, 24, 4, 0, 226, 19, 0, // Skip to: 13044
-/* 7954 */    MCD_OPC_Decode, 194, 7, 23, // Opcode: MULR_H_rr1_UU2e
+/* 7954 */    MCD_OPC_Decode, 193, 7, 23, // Opcode: MULR_H_rr1_UU2e
 /* 7958 */    MCD_OPC_FilterValue, 2, 16, 0, 0, // Skip to: 7979
 /* 7963 */    MCD_OPC_CheckPredicate, 1, 212, 19, 0, // Skip to: 13044
 /* 7968 */    MCD_OPC_CheckField, 7, 1, 0, 205, 19, 0, // Skip to: 13044
@@ -2074,19 +2074,19 @@ static const uint8_t DecoderTable32[] = {
 /* 8009 */    MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 8030
 /* 8014 */    MCD_OPC_CheckPredicate, 1, 161, 19, 0, // Skip to: 13044
 /* 8019 */    MCD_OPC_CheckField, 24, 4, 0, 154, 19, 0, // Skip to: 13044
-/* 8026 */    MCD_OPC_Decode, 208, 7, 23, // Opcode: MUL_H_rr1_UL2e
+/* 8026 */    MCD_OPC_Decode, 207, 7, 23, // Opcode: MUL_H_rr1_UL2e
 /* 8030 */    MCD_OPC_FilterValue, 1, 16, 0, 0, // Skip to: 8051
 /* 8035 */    MCD_OPC_CheckPredicate, 1, 140, 19, 0, // Skip to: 13044
 /* 8040 */    MCD_OPC_CheckField, 24, 4, 0, 133, 19, 0, // Skip to: 13044
-/* 8047 */    MCD_OPC_Decode, 207, 7, 23, // Opcode: MUL_H_rr1_LU2e
+/* 8047 */    MCD_OPC_Decode, 206, 7, 23, // Opcode: MUL_H_rr1_LU2e
 /* 8051 */    MCD_OPC_FilterValue, 2, 16, 0, 0, // Skip to: 8072
 /* 8056 */    MCD_OPC_CheckPredicate, 1, 119, 19, 0, // Skip to: 13044
 /* 8061 */    MCD_OPC_CheckField, 24, 4, 0, 112, 19, 0, // Skip to: 13044
-/* 8068 */    MCD_OPC_Decode, 206, 7, 23, // Opcode: MUL_H_rr1_LL2e
+/* 8068 */    MCD_OPC_Decode, 205, 7, 23, // Opcode: MUL_H_rr1_LL2e
 /* 8072 */    MCD_OPC_FilterValue, 3, 16, 0, 0, // Skip to: 8093
 /* 8077 */    MCD_OPC_CheckPredicate, 1, 98, 19, 0, // Skip to: 13044
 /* 8082 */    MCD_OPC_CheckField, 24, 4, 0, 91, 19, 0, // Skip to: 13044
-/* 8089 */    MCD_OPC_Decode, 209, 7, 23, // Opcode: MUL_H_rr1_UU2e
+/* 8089 */    MCD_OPC_Decode, 208, 7, 23, // Opcode: MUL_H_rr1_UU2e
 /* 8093 */    MCD_OPC_FilterValue, 4, 16, 0, 0, // Skip to: 8114
 /* 8098 */    MCD_OPC_CheckPredicate, 1, 77, 19, 0, // Skip to: 13044
 /* 8103 */    MCD_OPC_CheckField, 24, 4, 0, 70, 19, 0, // Skip to: 13044
@@ -2441,7 +2441,7 @@ static const uint8_t DecoderTable32[] = {
 /* 9780 */    MCD_OPC_FilterValue, 0, 186, 0, 0, // Skip to: 9971
 /* 9785 */    MCD_OPC_ExtractField, 22, 6,  // Inst{27-22} ...
 /* 9788 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 9797
-/* 9793 */    MCD_OPC_Decode, 214, 9, 20, // Opcode: SWAP_W_bo_r
+/* 9793 */    MCD_OPC_Decode, 212, 9, 20, // Opcode: SWAP_W_bo_pos
 /* 9797 */    MCD_OPC_FilterValue, 1, 4, 0, 0, // Skip to: 9806
 /* 9802 */    MCD_OPC_Decode, 179, 4, 20, // Opcode: LDMST_bo_pos
 /* 9806 */    MCD_OPC_FilterValue, 2, 9, 0, 0, // Skip to: 9820
@@ -2451,7 +2451,7 @@ static const uint8_t DecoderTable32[] = {
 /* 9825 */    MCD_OPC_CheckPredicate, 5, 142, 12, 0, // Skip to: 13044
 /* 9830 */    MCD_OPC_Decode, 134, 3, 20, // Opcode: CMPSWAP_W_bo_pos
 /* 9834 */    MCD_OPC_FilterValue, 16, 4, 0, 0, // Skip to: 9843
-/* 9839 */    MCD_OPC_Decode, 210, 9, 20, // Opcode: SWAP_W_bo_c
+/* 9839 */    MCD_OPC_Decode, 213, 9, 20, // Opcode: SWAP_W_bo_pre
 /* 9843 */    MCD_OPC_FilterValue, 17, 4, 0, 0, // Skip to: 9852
 /* 9848 */    MCD_OPC_Decode, 180, 4, 20, // Opcode: LDMST_bo_pre
 /* 9852 */    MCD_OPC_FilterValue, 18, 9, 0, 0, // Skip to: 9866
@@ -2918,7 +2918,7 @@ static const uint8_t DecoderTable32[] = {
 /* 12123 */   MCD_OPC_FilterValue, 0, 109, 0, 0, // Skip to: 12237
 /* 12128 */   MCD_OPC_ExtractField, 22, 6,  // Inst{27-22} ...
 /* 12131 */   MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 12140
-/* 12136 */   MCD_OPC_Decode, 212, 9, 20, // Opcode: SWAP_W_bo_pos
+/* 12136 */   MCD_OPC_Decode, 214, 9, 20, // Opcode: SWAP_W_bo_r
 /* 12140 */   MCD_OPC_FilterValue, 1, 4, 0, 0, // Skip to: 12149
 /* 12145 */   MCD_OPC_Decode, 181, 4, 20, // Opcode: LDMST_bo_r
 /* 12149 */   MCD_OPC_FilterValue, 2, 9, 0, 0, // Skip to: 12163
@@ -2928,7 +2928,7 @@ static const uint8_t DecoderTable32[] = {
 /* 12168 */   MCD_OPC_CheckPredicate, 5, 103, 3, 0, // Skip to: 13044
 /* 12173 */   MCD_OPC_Decode, 136, 3, 20, // Opcode: CMPSWAP_W_bo_r
 /* 12177 */   MCD_OPC_FilterValue, 16, 4, 0, 0, // Skip to: 12186
-/* 12182 */   MCD_OPC_Decode, 213, 9, 20, // Opcode: SWAP_W_bo_pre
+/* 12182 */   MCD_OPC_Decode, 210, 9, 20, // Opcode: SWAP_W_bo_c
 /* 12186 */   MCD_OPC_FilterValue, 17, 4, 0, 0, // Skip to: 12195
 /* 12191 */   MCD_OPC_Decode, 178, 4, 20, // Opcode: LDMST_bo_c
 /* 12195 */   MCD_OPC_FilterValue, 18, 9, 0, 0, // Skip to: 12209
@@ -3367,7 +3367,7 @@ static const uint8_t DecoderTablev11016[] = {
 /* 1188 */    MCD_OPC_CheckPredicate, 4, 167, 0, 0, // Skip to: 1360
 /* 1193 */    MCD_OPC_CheckField, 12, 4, 0, 160, 0, 0, // Skip to: 1360
 /* 1200 */    MCD_OPC_CheckField, 6, 2, 0, 153, 0, 0, // Skip to: 1360
-/* 1207 */    MCD_OPC_Decode, 240, 7, 0, // Opcode: NOT_sr_v110
+/* 1207 */    MCD_OPC_Decode, 240, 7, 0, // Opcode: NOR_sr_v110
 /* 1211 */    MCD_OPC_FilterValue, 56, 59, 0, 0, // Skip to: 1275
 /* 1216 */    MCD_OPC_ExtractField, 6, 2,  // Inst{7-6} ...
 /* 1219 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 1233
@@ -3581,12 +3581,12 @@ static const uint8_t DecoderTablev11032[] = {
 /* 809 */     MCD_OPC_Decode, 189, 5, 17, // Opcode: MADDM_Q_rrr1_v110
 /* 813 */     MCD_OPC_FilterValue, 73, 45, 0, 0, // Skip to: 863
 /* 818 */     MCD_OPC_ExtractField, 22, 6,  // Inst{27-22} ...
-/* 821 */     MCD_OPC_FilterValue, 18, 9, 0, 0, // Skip to: 835
+/* 821 */     MCD_OPC_FilterValue, 2, 9, 0, 0, // Skip to: 835
 /* 826 */     MCD_OPC_CheckPredicate, 4, 18, 3, 0, // Skip to: 1617
-/* 831 */     MCD_OPC_Decode, 204, 9, 20, // Opcode: SWAP_A_bo_c
-/* 835 */     MCD_OPC_FilterValue, 32, 9, 0, 0, // Skip to: 849
+/* 831 */     MCD_OPC_Decode, 205, 9, 20, // Opcode: SWAP_A_bo_pos
+/* 835 */     MCD_OPC_FilterValue, 18, 9, 0, 0, // Skip to: 849
 /* 840 */     MCD_OPC_CheckPredicate, 4, 4, 3, 0, // Skip to: 1617
-/* 845 */     MCD_OPC_Decode, 207, 9, 20, // Opcode: SWAP_A_bo_r
+/* 845 */     MCD_OPC_Decode, 206, 9, 20, // Opcode: SWAP_A_bo_pre
 /* 849 */     MCD_OPC_FilterValue, 34, 251, 2, 0, // Skip to: 1617
 /* 854 */     MCD_OPC_CheckPredicate, 4, 246, 2, 0, // Skip to: 1617
 /* 859 */     MCD_OPC_Decode, 203, 9, 20, // Opcode: SWAP_A_bo_bso
@@ -3657,12 +3657,12 @@ static const uint8_t DecoderTablev11032[] = {
 /* 1159 */    MCD_OPC_Decode, 245, 6, 17, // Opcode: MSUBRS_H_rrr1_v110
 /* 1163 */    MCD_OPC_FilterValue, 105, 31, 0, 0, // Skip to: 1199
 /* 1168 */    MCD_OPC_ExtractField, 22, 6,  // Inst{27-22} ...
-/* 1171 */    MCD_OPC_FilterValue, 18, 9, 0, 0, // Skip to: 1185
+/* 1171 */    MCD_OPC_FilterValue, 2, 9, 0, 0, // Skip to: 1185
 /* 1176 */    MCD_OPC_CheckPredicate, 4, 180, 1, 0, // Skip to: 1617
-/* 1181 */    MCD_OPC_Decode, 206, 9, 20, // Opcode: SWAP_A_bo_pre
-/* 1185 */    MCD_OPC_FilterValue, 32, 171, 1, 0, // Skip to: 1617
+/* 1181 */    MCD_OPC_Decode, 207, 9, 20, // Opcode: SWAP_A_bo_r
+/* 1185 */    MCD_OPC_FilterValue, 18, 171, 1, 0, // Skip to: 1617
 /* 1190 */    MCD_OPC_CheckPredicate, 4, 166, 1, 0, // Skip to: 1617
-/* 1195 */    MCD_OPC_Decode, 205, 9, 20, // Opcode: SWAP_A_bo_pos
+/* 1195 */    MCD_OPC_Decode, 204, 9, 20, // Opcode: SWAP_A_bo_c
 /* 1199 */    MCD_OPC_FilterValue, 115, 76, 0, 0, // Skip to: 1280
 /* 1204 */    MCD_OPC_ExtractField, 18, 10,  // Inst{27-18} ...
 /* 1207 */    MCD_OPC_FilterValue, 40, 9, 0, 0, // Skip to: 1221
@@ -3703,10 +3703,10 @@ static const uint8_t DecoderTablev11032[] = {
 /* 1374 */    MCD_OPC_ExtractField, 18, 10,  // Inst{27-18} ...
 /* 1377 */    MCD_OPC_FilterValue, 16, 9, 0, 0, // Skip to: 1391
 /* 1382 */    MCD_OPC_CheckPredicate, 4, 230, 0, 0, // Skip to: 1617
-/* 1387 */    MCD_OPC_Decode, 210, 7, 15, // Opcode: MUL_Q_rr
+/* 1387 */    MCD_OPC_Decode, 218, 7, 15, // Opcode: MUL_Q_rr_v110
 /* 1391 */    MCD_OPC_FilterValue, 24, 221, 0, 0, // Skip to: 1617
 /* 1396 */    MCD_OPC_CheckPredicate, 4, 216, 0, 0, // Skip to: 1617
-/* 1401 */    MCD_OPC_Decode, 195, 7, 15, // Opcode: MULR_Q_rr
+/* 1401 */    MCD_OPC_Decode, 197, 7, 15, // Opcode: MULR_Q_rr_v110
 /* 1405 */    MCD_OPC_FilterValue, 161, 1, 59, 0, 0, // Skip to: 1470
 /* 1411 */    MCD_OPC_ExtractField, 21, 3,  // Inst{23-21} ...
 /* 1414 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 1428
@@ -3736,10 +3736,10 @@ static const uint8_t DecoderTablev11032[] = {
 /* 1527 */    MCD_OPC_ExtractField, 18, 10,  // Inst{27-18} ...
 /* 1530 */    MCD_OPC_FilterValue, 48, 9, 0, 0, // Skip to: 1544
 /* 1535 */    MCD_OPC_CheckPredicate, 4, 77, 0, 0, // Skip to: 1617
-/* 1540 */    MCD_OPC_Decode, 190, 7, 15, // Opcode: MULR_H_rr
+/* 1540 */    MCD_OPC_Decode, 194, 7, 15, // Opcode: MULR_H_rr_v110
 /* 1544 */    MCD_OPC_FilterValue, 96, 68, 0, 0, // Skip to: 1617
 /* 1549 */    MCD_OPC_CheckPredicate, 4, 63, 0, 0, // Skip to: 1617
-/* 1554 */    MCD_OPC_Decode, 205, 7, 15, // Opcode: MUL_H_rr
+/* 1554 */    MCD_OPC_Decode, 209, 7, 15, // Opcode: MUL_H_rr_v110
 /* 1558 */    MCD_OPC_FilterValue, 227, 1, 31, 0, 0, // Skip to: 1595
 /* 1564 */    MCD_OPC_ExtractField, 18, 6,  // Inst{23-18} ...
 /* 1567 */    MCD_OPC_FilterValue, 12, 9, 0, 0, // Skip to: 1581
@@ -3922,7 +3922,6 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   } \
 }
-
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
 static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \

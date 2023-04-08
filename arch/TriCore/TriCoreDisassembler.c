@@ -434,7 +434,10 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 		if (status != MCDisassembler_Success)
 			return status;
 
-		MCOperand_CreateImm0(Inst, off10);
+		if (desc->OpInfo[1].OperandType == MCOI_OPERAND_IMMEDIATE)
+			MCOperand_CreateImm0(Inst, off10);
+		else
+			return DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
 		return MCDisassembler_Success;
 	}
 

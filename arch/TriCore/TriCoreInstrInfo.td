@@ -1522,9 +1522,9 @@ class IRR1<bits<8> op1, bits<10> op2, string asmstr,
           asmstr # " $d, ${s1}" # labela # ", ${s2}" # labelb # ", $n", []>;
 
 multiclass mI_MUL_H_<bits<8> pre, bits<10> ll, bits<10> lu, bits<10> ul, bits<10> uu, string asmstr
-                   , bit hasv110=false, bits<8> rr=0>{
+                   , bit hasv110=false, bits<8> rr=0, RegisterClass RCd=RE>{
   if hasv110 then
-    def _rr_v110 : IRR_dabn<pre, rr, asmstr, RE>, NsRequires<[HasV110]>;
+    def _rr_v110 : IRR_dabn<pre, rr, asmstr, RCd>, NsRequires<[HasV110]>;
   def _rr1_LL2e : IRR1<pre, ll, asmstr, RE, "", "LL">, Requires<[HasV120_UP]>;
   def _rr1_LU2e : IRR1<pre, lu, asmstr, RE, "", "LU">, Requires<[HasV120_UP]>;
   def _rr1_UL2e : IRR1<pre, ul, asmstr, RE, "", "UL">, Requires<[HasV120_UP]>;
@@ -1558,7 +1558,7 @@ defm MULM_U: mIRR_RC<0x73, 0x68, 0x53, 0x02, "mulm.u", RE>, NsRequires<[HasV110]
 defm MULMS_H: mI_MUL_H_<0xB3, 0x3E,0x3D, 0x3C, 0x3F, "mulms.h">;
 
 defm MULM_H : mI_MUL_H_<0xB3, 0x1E, 0x1D, 0x1C, 0x1F, "mulm.h">;
-defm MULR_H : mI_MUL_H_<0xB3, 0x0E, 0x0D, 0x0C, 0x0F, "mulr.h", true, 0x0C>;
+defm MULR_H : mI_MUL_H_<0xB3, 0x0E, 0x0D, 0x0C, 0x0F, "mulr.h", true, 0x0C, RD>;
 
 def MULR_Q_rr_v110 : IRR_dabn<0x93, 0x06, "mulr.q">, NsRequires<[HasV110]>;
 def MULR_Q_rr1_2LL : IRR1<0x93, 0x07, "mulr.q", RD, "L", "L">, Requires<[HasV120_UP]>;
@@ -1581,10 +1581,10 @@ multiclass mISR_1<bits<8> sr1op1, bits<4> sr1op2, bits<8> sr2op1, bits<4> sr2op2
 }
 
 defm NOR : mIRR_RC<0x0F, 0x0B, 0x8F, 0x0B, "nor">;
-
-defm NOT : mISR_1<0x46, 0x00, 0x36, 0x00, "not">;
-
 def NOR_T : IBIT<0x87, 0x02, "nor.t">;
+
+defm NOR : mISR_1<0x46, 0x00, 0x36, 0x00, "nor">;
+
 
 defm OR : mIRR_RC<0x0F, 0x0A, 0x8F, 0x0A, "or", RD, RD, u9imm>;
 def OR_sc : ISC_D15C<0x96, "or">, Requires<[HasV120_UP]>;
@@ -1723,10 +1723,10 @@ class IBO_pre_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC>
 
 
 multiclass mIBO_st<bits<8> prefix1, bits<8> prefix2,
-                       bits<6> bso2, ///_bso
-                       bits<6> pos_r, ///_pos|_r
-                       bits<6> pre_c, ///_pre|_c
-                       string asmstr, RegisterClass RC>{
+                  bits<6> bso2, ///_bso
+                  bits<6> pos_r, ///_pos|_r
+                  bits<6> pre_c, ///_pre|_c
+                  string asmstr, RegisterClass RC>{
   def _bo_bso  : IBO_bso_st<prefix1, bso2, asmstr, RC>;
   def _bo_pos  : IBO_pos_st<prefix1, pos_r, asmstr, RC>;
   def _bo_pre  : IBO_pre_st<prefix1, pre_c, asmstr, RC>;
@@ -1834,30 +1834,43 @@ def SUBX_rr : IRR_dab<0x0B, 0x0C, "subx">;
 
 def SVLCX_sys : ISYS_0<0x0D, 0x08, "svlcx">;
 
+// multiclass mIBO_st<bits<8> prefix1, bits<8> prefix2,
+//                   bits<6> bso2, ///_bso
+//                   bits<6> pos_r, ///_pos|_r
+//                   bits<6> pre_c, ///_pre|_c
+//                   string asmstr, RegisterClass RC>{
+//   def _bo_bso  : IBO_bso_st<prefix1, bso2, asmstr, RC>;
+//   def _bo_pos  : IBO_pos_st<prefix1, pos_r, asmstr, RC>;
+//   def _bo_pre  : IBO_pre_st<prefix1, pre_c, asmstr, RC>;
+//   def _bo_r    : IBO_r_st<prefix2, pos_r, asmstr, RC>;
+//   def _bo_c    : IBO_c_st<prefix2, pre_c, asmstr, RC>;
+// }
+
 multiclass mI_SWAP_<bits<8> abs1, bits<2> abs2,   ///_abs
-                    bits<8> prefix_bso_c_r, bits<8> prefix_pos_pre,
+                    bits<8> prefix_bso_pos_pre, bits<8> prefix_prefix_r_c,
                     bits<6> bso, ///_bso
                     bits<6> pos_r, ///_pos|_r
                     bits<6> pre_c, ///_pre|_c
                     string asmstr, RegisterClass RC=RA>{
   def _abs : IABS_OR<abs1, abs2, asmstr, RC>;
 
-  def _bo_bso: BO<prefix_bso_c_r, bso, (outs RC:$d), (ins RA:$s1, s10imm:$off10),
+  def _bo_bso: BO<prefix_bso_pos_pre, bso, (outs RC:$d), (ins RA:$s1, s10imm:$off10),
                   asmstr # " [$s1]$off10, $d", []>;
-  def _bo_r  : BO<prefix_bso_c_r, pos_r, (outs RP:$d), (ins RC:$s1),
-                  asmstr # " $d, [${s1}+r]", []>;
-  def _bo_c  : BO<prefix_bso_c_r, pre_c, (outs RP:$d), (ins RC:$s1, s10imm:$off10),
-                  asmstr # " $d, [${s1}+c]$off10", []>;
-  def _bo_pos: BO<prefix_pos_pre, pos_r, (outs), (ins RC:$s1, RA:$s2, s10imm:$off10),
-                  asmstr # " $s2, [${s1}+]$off10", []>;
-  def _bo_pre: BO<prefix_pos_pre, pre_c, (outs), (ins RC:$s1, RA:$s2, s10imm:$off10),
-                  asmstr # " $s2, [+${s1}]$off10", []>;
+  def _bo_pos: BO<prefix_bso_pos_pre, pos_r, (outs), (ins RC:$s1, RA:$s2, s10imm:$off10),
+                  asmstr # " [${s2}+]$off10, $s1", []>;
+  def _bo_pre: BO<prefix_bso_pos_pre, pre_c, (outs), (ins RC:$s1, RA:$s2, s10imm:$off10),
+                  asmstr # " [+${s2}]$off10, $s1", []>;
+
+  def _bo_r  : BO<prefix_prefix_r_c, pos_r, (outs RP:$d), (ins RC:$s1),
+                  asmstr # " [${d}+r], $s1", []>;
+  def _bo_c  : BO<prefix_prefix_r_c, pre_c, (outs RP:$d), (ins RC:$s1, s10imm:$off10),
+                  asmstr # " [${d}+c]$off10, $s1", []>;
 }
 
-defm SWAP_A    : mI_SWAP_<0xE5, 0x02, 0x49, 0x69, 0x22, 0x20, 0x12, "swap.a">, NsRequires<[HasV110]>;
+defm SWAP_A    : mI_SWAP_<0xE5, 0x02, 0x49, 0x69, 0x22, 0x02, 0x12, "swap.a">, NsRequires<[HasV110]>;
 defm SWAP_W    : mI_SWAP_<0xE5, 0x00, 0x49, 0x69, 0x20, 0x00, 0x10, "swap.w">;
 def SWAP_W_bo_indexed: BO<0x69, 0x20, (outs RD:$d), (ins RA:$s1, s10imm:$off10),
-                          "swap.w [${s1}+$off10], $d", []>, Requires<[HasV160_UP]>;
+                          "swap.w [${s1}+i], $d", []>, Requires<[HasV160_UP]>;
 
 defm SWAPMSK_W : mIBO_st<0x49, 0x69, 0x22, 0x02, 0x12, "swapmsk.w", RE>, Requires<[HasV161_UP]>;
 
