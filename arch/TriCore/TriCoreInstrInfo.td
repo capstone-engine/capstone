@@ -1529,7 +1529,7 @@ def NOP_sys : ISYS_0<0x00, 0x0D, "nop">;
 multiclass mISR_1<bits<8> sr1op1, bits<4> sr1op2, bits<8> sr2op1, bits<4> sr2op2,
                 string asmstr>{
   def _sr : ISR_1<sr1op1, sr1op2, asmstr>
-          , Requires<[HasV120, HasV130, HasV131, HasV160, HasV161]>;
+          , Requires<[HasV120_UP]>;
   def _sr_v110 : ISR_1<sr2op1, sr2op2, asmstr>, NsRequires<[HasV110]>;
 }
 
