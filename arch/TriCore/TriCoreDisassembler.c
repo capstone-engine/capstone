@@ -1415,39 +1415,79 @@ static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 #include "TriCoreGenInstrInfo.inc"
 
-bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *MI,
-                            uint16_t *size, uint64_t address, void *info) {
+static inline bool tryGetInstruction16(const uint8_t *code, size_t code_len, MCInst *MI,
+                                       uint16_t *size, uint64_t address, void *info,
+                                       const uint8_t *decoderTable16) {
 	uint16_t insn16;
-	uint32_t insn32;
 	DecodeStatus Result;
-
 	if (!readInstruction16(code, code_len, &insn16)) {
 		return false;
 	}
-
-	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
-	}
-
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_2(DecoderTable16, MI, insn16, address, info, 0);
+	Result = decodeInstruction_2(decoderTable16, MI, insn16, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 2;
 		return true;
 	}
+	return false;
+}
 
+static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len, MCInst *MI,
+                                       uint16_t *size, uint64_t address, void *info,
+                                       const uint8_t *decoderTable32) {
+	uint32_t insn32;
+	DecodeStatus Result;
 	if (!readInstruction32(code, code_len, &insn32)) {
 		return false;
 	}
-
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_4(DecoderTable32, MI, insn32, address, info, 0);
+	Result = decodeInstruction_4(decoderTable32, MI, insn32, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;
 	}
-
 	return false;
+}
+
+bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *MI,
+                            uint16_t *size, uint64_t address, void *info) {
+
+
+	if (!ud) {
+		return false;
+	}
+
+	struct cs_struct *cs = (struct cs_struct *) ud;
+	if (MI->flat_insn->detail) {
+		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
+	}
+
+	switch (cs->mode) {
+		case CS_MODE_TRICORE_110: {
+			if (tryGetInstruction16(code, code_len, MI, size, address, info, DecoderTablev11016) ||
+			    tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev11032)) {
+				return true;
+			}
+			break;
+		}
+		case CS_MODE_TRICORE_161: {
+			if (tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev16132)) {
+				return true;
+			}
+			break;
+		}
+		case CS_MODE_TRICORE_162: {
+			if (tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev16232)) {
+				return true;
+			}
+			break;
+		}
+		default:
+			break;
+	}
+
+	return tryGetInstruction16(code, code_len, MI, size, address, info, DecoderTable16) ||
+	       tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTable32);
 }
 
 void TriCore_init(MCRegisterInfo *MRI) {
