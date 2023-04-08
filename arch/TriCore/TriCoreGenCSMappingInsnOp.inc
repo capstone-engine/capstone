@@ -805,7 +805,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s2 */
   { 0 }
 }},
-{ /* TriCore_ABSS_B_rr_v110 (256) - TriCore_INS_ABSS_B - abss.b $d, $s1, $s2 */
+{ /* TriCore_ABSS_B_rr_v110 (256) - TriCore_INS_ABSS_B - abss.b $d, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* s1 */

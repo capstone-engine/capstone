@@ -672,7 +672,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5016U,	// ABSDIF_H_rr
     268440398U,	// ABSDIF_rc
     4942U,	// ABSDIF_rr
-    4688U,	// ABSS_B_rr_v110
+    17830480U,	// ABSS_B_rr_v110
     5306U,	// ABSS_H_rr
     17831659U,	// ABSS_rr
     16781863U,	// ABS_B_rr
@@ -3151,7 +3151,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 1, O);
     break;
   case 1:
-    // ABSS_rr, ADDSC_AT_rr, ADDSC_A_rr, CADDN_A_rcr_v110, CADDN_rcr, CADD_A_...
+    // ABSS_B_rr_v110, ABSS_rr, ADDSC_AT_rr, ADDSC_A_rr, CADDN_A_rcr_v110, CA...
     printOperand(MI, 2, O);
     break;
   case 2:
@@ -3226,7 +3226,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", ");
     break;
   case 1:
-    // ABSS_rr, ABS_B_rr, ABS_H_rr, ABS_rr, ADDS_srr, ADD_A_src, ADD_A_srr, A...
+    // ABSS_B_rr_v110, ABSS_rr, ABS_B_rr, ABS_H_rr, ABS_rr, ADDS_srr, ADD_A_s...
     return;
     break;
   case 2:
