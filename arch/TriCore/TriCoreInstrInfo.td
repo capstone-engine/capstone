@@ -417,7 +417,7 @@ let Defs = [PSW] in {
                   (ins RD:$s1, RD:$s2), "abss $d, $s2",
                   [(set RD:$d, (TriCoreAbsDif RD:$s1, RD:$s2))]>;
    def ABSS_B_rr_v110 : RR<0x0B, 0x5D, (outs RD:$d),
-                        (ins RD:$s1, RD:$s2), "abss.b $d, $s1, $s2",
+                        (ins RD:$s1, RD:$s2), "abss.b $d, $s2",
                         [(set RD:$d, (TriCoreAbsDif RD:$s1, RD:$s2))]>
                     , NsRequires<[HasV110]>;
    def ABSS_H_rr : RR<0x0B, 0x7D, (outs RD:$d),
@@ -477,8 +477,8 @@ def ADDSC_A_srrs: SRRS<0x10, (outs RA:$d), (ins RA:$s2, u2imm:$n),
                       "addsc.a $d, $s2, %d15, $n", []>
                 , Requires<[HasV120_UP]>;
 
-def ADDSC_A_rr_v110: IRR_dabn<0x01, 0x60, "addsc.a", RA, RD, RA>, NsRequires<[HasV110]>;
-def ADDSC_A_rr     : IRR_dban<0x01, 0x60, "addsc.a", RA, RD, RA>, Requires<[HasV120_UP]>;
+def ADDSC_A_rr_v110: IRR_dabn<0x01, 0x60, "addsc.a", RA, RA, RD>, NsRequires<[HasV110]>;
+def ADDSC_A_rr     : IRR_dban<0x01, 0x60, "addsc.a", RA, RA, RD>, Requires<[HasV120_UP]>;
 
 def ADDSC_AT_rr_v110 : IRR_dab<0x01, 0x62, "addsc.at", RA, RA>, NsRequires<[HasV110]>;
 def ADDSC_AT_rr : IRR_dba<0x01, 0x62, "addsc.at", RA, RA>, Requires<[HasV120_UP]>;
@@ -664,8 +664,9 @@ def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
 def CADD_rrr : IRRR<0x2B, 0x00, "cadd">;
 def CADD_src : ISRC_dD15C<0x8A, "cadd">;
 
-def CADD_A_rrr_v110 : IRRR<0x21, 0x00, "cadd.a", RA, RD, RA, RA>, NsRequires<[HasV110]>;
-def CADD_A_rcr_v110 : RCR<0xA1, 0x00, (outs RA:$d), (ins RD:$s1, RA:$s3, s9imm:$const9), "cadd.a $d, $s3, $s1, $const9", []>
+def CADD_A_rrr_v110 : IRRR<0x21, 0x00, "cadd.a", RA, RA, RA, RD>, NsRequires<[HasV110]>;
+def CADD_A_rcr_v110 : RCR<0xA1, 0x00, (outs RA:$d), (ins RA:$s1, RD:$s3, s9imm:$const9),
+                         "cadd.a $d, $s3, $s1, $const9", []>
                     , NsRequires<[HasV110]>;
 def CADDN_srr_v110  : ISRR_dD15b<0x4A, "caddn">
                     , NsRequires<[HasV110]>;
@@ -674,9 +675,10 @@ def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
 def CADDN_rrr : IRRR<0x2B, 0x01, "caddn">;
 def CADDN_src : ISRC_dD15C<0xCA, "caddn">;
 
-def CADDN_A_rrr_v110 : IRRR<0x21, 0x01, "caddn.a", RA, RD, RA, RA>
+def CADDN_A_rrr_v110 : IRRR<0x21, 0x01, "caddn.a", RA, RA, RA, RD>
                      , NsRequires<[HasV110]>;
-def CADDN_A_rcr_v110 : RCR<0xA1, 0x02, (outs RA:$d), (ins RD:$s1, RA:$s3, s9imm:$const9), "caddn.a $d, $s3, $s1, $const9", []>
+def CADDN_A_rcr_v110 : RCR<0xA1, 0x02, (outs RA:$d), (ins RA:$s1, RD:$s3, s9imm:$const9),
+                           "caddn.a $d, $s3, $s1, $const9", []>
                      , NsRequires<[HasV110]>;
 
 // Call Instructions
