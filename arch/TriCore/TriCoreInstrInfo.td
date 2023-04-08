@@ -664,10 +664,17 @@ def CADD_rcr : IRCR<0xAB, 0x00, "cadd">;
 def CADD_rrr : IRRR<0x2B, 0x00, "cadd">;
 def CADD_src : ISRC_dD15C<0x8A, "cadd">;
 
-def CADD_A_rrr_v110 : IRRR<0x21, 0x00, "cadd.a", RA, RA, RA, RD>, NsRequires<[HasV110]>;
-def CADD_A_rcr_v110 : RCR<0xA1, 0x00, (outs RA:$d), (ins RA:$s1, RD:$s3, s9imm:$const9),
-                         "cadd.a $d, $s3, $s1, $const9", []>
-                    , NsRequires<[HasV110]>;
+multiclass mI_CADDnA_CSUBnA_v110_<bits<8> rrr1, bits<4> rrr2, bits<8> rcr1, bits<3> rcr2, string asmstr>{
+  def _rrr_v110: IRRR<rrr1, rrr2, asmstr, RA, RA, RA, RD>, NsRequires<[HasV110]>;
+  if !or(!eq(asmstr, "cadd.a"), !eq(asmstr, "caddn.a")) then {
+    def _rcr_v110: RCR<rcr1, rcr2, (outs RA:$d), (ins RA:$s1, RD:$s3, s9imm:$const9),
+                     asmstr#" $d, $s3, $s1, $const9", []>
+               , NsRequires<[HasV110]>;
+  }
+}
+
+defm CADD_A: mI_CADDnA_CSUBnA_v110_<0x21, 0x00, 0xA1, 0x00, "cadd.a">;
+
 def CADDN_srr_v110  : ISRR_dD15b<0x4A, "caddn">
                     , NsRequires<[HasV110]>;
 
@@ -675,11 +682,7 @@ def CADDN_rcr : IRCR<0xAB, 0x01, "caddn">;
 def CADDN_rrr : IRRR<0x2B, 0x01, "caddn">;
 def CADDN_src : ISRC_dD15C<0xCA, "caddn">;
 
-def CADDN_A_rrr_v110 : IRRR<0x21, 0x01, "caddn.a", RA, RA, RA, RD>
-                     , NsRequires<[HasV110]>;
-def CADDN_A_rcr_v110 : RCR<0xA1, 0x02, (outs RA:$d), (ins RA:$s1, RD:$s3, s9imm:$const9),
-                           "caddn.a $d, $s3, $s1, $const9", []>
-                     , NsRequires<[HasV110]>;
+defm CADDN_A: mI_CADDnA_CSUBnA_v110_<0x21, 0x01, 0xA1, 0x01, "caddn.a">;
 
 // Call Instructions
 
@@ -773,8 +776,8 @@ def CRCN_rrr    : IRRR<0x6B, 0x01, "crcn">, Requires<[HasV162]>;
 def CSUB_rrr    : IRRR<0x2B, 0x02, "csub">;
 def CSUBN_rrr   : IRRR<0x2B, 0x03, "csub">;
 
-def CSUB_A_rrr_v110   : IRRR<0x21, 0x02, "csub.a", RA, RD, RA, RA>, NsRequires<[HasV110]>;
-def CSUBN_A_rrr_v110  : IRRR<0x21, 0x03, "csubn.a", RA, RD, RA, RA>, NsRequires<[HasV110]>;
+defm CSUB_A_: mI_CADDnA_CSUBnA_v110_<0x21, 0x02, 0, 0, "csub.a">;
+defm CSUBN_A_: mI_CADDnA_CSUBnA_v110_<0x21, 0x03, 0, 0, "csubn.a">;
 
 class ISR_0<bits<8> op1, bits<4> op2, string asmstr>
     : SR<op1, op2, (outs), (ins),

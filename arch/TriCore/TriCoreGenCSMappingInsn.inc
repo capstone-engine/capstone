@@ -2394,7 +2394,7 @@
   #endif
 },
 {
-  TriCore_CSUBN_A_rrr_v110 /* 398 */, TriCore_INS_CSUBN_A,
+  TriCore_CSUBN_A__rrr_v110 /* 398 */, TriCore_INS_CSUBN_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif
@@ -2406,7 +2406,7 @@
   #endif
 },
 {
-  TriCore_CSUB_A_rrr_v110 /* 400 */, TriCore_INS_CSUB_A,
+  TriCore_CSUB_A__rrr_v110 /* 400 */, TriCore_INS_CSUB_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif

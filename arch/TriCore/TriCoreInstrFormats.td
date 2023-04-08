@@ -651,7 +651,7 @@ class RRPW<bits<8> op1, bits<2> op2, dag outs, dag ins, string asmstr,
 //===----------------------------------------------------------------------===//
 // 32-bit RRR Instruction Format: <d|s3|op2|-|n|s2|s1|op1>
 //===----------------------------------------------------------------------===//
-class RRR<bits<8> op1, bits<4> op2 , dag outs, dag ins, string asmstr,
+class RRR<bits<8> op1, bits<4> op2, dag outs, dag ins, string asmstr,
                 list<dag> pattern> : T32<outs, ins, asmstr, pattern> {
 
   bits<4> d;
