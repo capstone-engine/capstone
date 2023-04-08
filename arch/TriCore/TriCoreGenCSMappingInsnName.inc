@@ -77,7 +77,7 @@
   "clz", // TriCore_INS_CLZ
   "cmovn", // TriCore_INS_CMOVN
   "cmov", // TriCore_INS_CMOV
-  "CMPSWAP_W", // TriCore_INS_CMPSWAP_W
+  "cmpswap_w", // TriCore_INS_CMPSWAP_W
   "cmp_f", // TriCore_INS_CMP_F
   "crc32b_w", // TriCore_INS_CRC32B_W
   "crc32l_w", // TriCore_INS_CRC32L_W
