@@ -478,7 +478,7 @@ def ADDSC_A_srrs: SRRS<0x10, (outs RA:$d), (ins RA:$s2, u2imm:$n),
                 , Requires<[HasV120_UP]>;
 
 def ADDSC_A_rr_v110: IRR_dabn<0x01, 0x60, "addsc.a", RA, RA, RD>, NsRequires<[HasV110]>;
-def ADDSC_A_rr     : IRR_dban<0x01, 0x60, "addsc.a", RA, RA, RD>, Requires<[HasV120_UP]>;
+def ADDSC_A_rr     : IRR_dban<0x01, 0x60, "addsc.a", RA, RD, RA>, Requires<[HasV120_UP]>;
 
 def ADDSC_AT_rr_v110 : IRR_dab<0x01, 0x62, "addsc.at", RA, RA>, NsRequires<[HasV110]>;
 def ADDSC_AT_rr : IRR_dba<0x01, 0x62, "addsc.at", RA, RA>, Requires<[HasV120_UP]>;
@@ -552,82 +552,27 @@ class IBO_pre<bits<8> op1, bits<6> op2, string asmstr>
       asmstr # " [+${s2}]$off10", []>;
 
 
-multiclass mIBO_a<bits<8> op11, bits<6> op12,
-                  bits<8> op21, bits<6> op22,
-                  bits<8> op31, bits<6> op32,
-                  string asmstr> {
-    def _bo_bso  : IBO_bso<op11, op12, asmstr>;
-    def _bo_pos : IBO_pos<op21, op22, asmstr>;
-    def _bo_pre  : IBO_pre<op31, op32, asmstr>;
+multiclass mI_CACHEI_<bits<8> prefix, bits<6> op12, bits<6> op22, bits<6> op32, string asmstr> {
+    def _bo_bso : IBO_bso<prefix, op12, asmstr>;
+    def _bo_pos : IBO_pos<prefix, op22, asmstr>;
+    def _bo_pre : IBO_pre<prefix, op32, asmstr>;
 }
 
-multiclass mIBO_b<bits<8> op11, bits<6> op12,
-                  bits<8> op21, bits<6> op22,
-                  string asmstr> {
-    def _bo_r    : IBO_r<op11, op12, asmstr>;
-    def _bo_c    : IBO_c<op21, op22, asmstr>;
-}
-
-multiclass mIBO_ab<bits<8> op11, bits<6> op12, ///_bso
-                   bits<8> op21, bits<6> op22, ///_r
-                   bits<8> op31, bits<6> op32, ///_c
-                   bits<8> op41, bits<6> op42, ///_post
-                   bits<8> op51, bits<6> op52, ///_pre
-                   string asmstr>{
-  defm "" : mIBO_a<op11,op12,
-                   op41,op42,
-                   op51,op52,
-                   asmstr>,
-            mIBO_b<op21,op22,
-                   op31,op32,
-                   asmstr>;
+multiclass mI_CACHE_<bits<8> prefixi, bits<8> prefix_r_c, bits<6> bso, bits<6> pos_r, bits<6> pre_c, string asmstr>{
+  defm "" : mI_CACHEI_<prefixi, bso, pos_r, pre_c, asmstr>;
+  def _bo_r: IBO_r<prefix_r_c, pos_r, asmstr>;
+  def _bo_c: IBO_c<prefix_r_c, pre_c, asmstr>;
 }
 
 /// CACHEA.* Instructions
 
-defm CACHEA_I : mIBO_ab<0x89, 0x2E,
-                       0xA9, 0x0E,
-                       0xA9, 0x1E,
-                       0x89, 0x0E,
-                       0x89, 0x1E,
-                       "cachea.i">
-               , Requires<[HasV120_UP]>;
+defm CACHEA_I : mI_CACHE_<0x89, 0xA9, 0x2E, 0x0E, 0x1E, "cachea.i">, Requires<[HasV120_UP]>;
+defm CACHEA_W : mI_CACHE_<0x89, 0xA9, 0x2C, 0x0C, 0x1C, "cachea.w">, Requires<[HasV120_UP]>;
+defm CACHEA_WI: mI_CACHE_<0x89, 0xA9, 0x2D, 0x0D, 0x1D, "cachea.wi">, Requires<[HasV120_UP]>;
 
-defm CACHEA_W : mIBO_ab<0x89, 0x2C,
-                       0xA9, 0x0C,
-                       0xA9, 0x1C,
-                       0x89, 0x0C,
-                       0x89, 0x1C,
-                       "cachea.w">
-               , Requires<[HasV120_UP]>;
-
-defm CACHEA_WI : mIBO_ab<0x89, 0x2D,
-                        0xA9, 0x0D,
-                        0xA9, 0x1D,
-                        0x89, 0x0D,
-                        0x89, 0x1D,
-                        "cachea.wi">
-               , Requires<[HasV120_UP]>;
-
-defm CACHEI_W : mIBO_ab<0x89, 0x2B,
-                        0xA9, 0x0B,
-                        0xA9, 0x1B,
-                        0x89, 0x0B,
-                        0x89, 0x1B,
-                        "cachei.w">
-               , Requires<[HasV131_UP]>;
-
-defm CACHEI_I : mIBO_a<0x89, 0x2A,
-                       0x89, 0x0A,
-                       0x89, 0x1A,
-                       "cachei.i">
-              , Requires<[HasV160_UP]>;
-
-defm CACHEI_WI : mIBO_a<0x89, 0x2F,
-                        0x89, 0x0F,
-                        0x89, 0x1F,
-                        "cachei.wi">
-               , Requires<[HasV131_UP]>;
+defm CACHEI_W : mI_CACHEI_<0x89, 0x2B, 0x0B, 0x1B, "cachei.w">, Requires<[HasV131_UP]>;
+defm CACHEI_I : mI_CACHEI_<0x89, 0x2A, 0x0A, 0x1A, "cachei.i">, Requires<[HasV160_UP]>;
+defm CACHEI_WI: mI_CACHEI_<0x89, 0x2F, 0x0F, 0x1F, "cachei.wi">, Requires<[HasV131_UP]>;
 
 
 /// RRR Opcodes Formats
