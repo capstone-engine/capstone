@@ -2394,8 +2394,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5U,	// MADDM_H_rrr1_LU
     6U,	// MADDM_H_rrr1_UL
     7U,	// MADDM_H_rrr1_UU
-    65U,	// MADDM_H_rrr1_v110
-    65U,	// MADDM_Q_rrr1_v110
+    0U,	// MADDM_H_rrr1_v110
+    0U,	// MADDM_Q_rrr1_v110
     49U,	// MADDM_U_rcr_v110
     0U,	// MADDM_U_rrr2_v110
     17U,	// MADDM_rcr_v110
@@ -2568,8 +2568,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5U,	// MSUBM_H_rrr1_LU
     6U,	// MSUBM_H_rrr1_UL
     7U,	// MSUBM_H_rrr1_UU
-    65U,	// MSUBM_H_rrr1_v110
-    65U,	// MSUBM_Q_rrr1_v110
+    0U,	// MSUBM_H_rrr1_v110
+    0U,	// MSUBM_Q_rrr1_v110
     17U,	// MSUBM_U_rcrv110
     0U,	// MSUBM_U_rrr2v110
     17U,	// MSUBM_rcrv110
@@ -3514,7 +3514,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 4:
-    // MADDM_H_rrr1_v110, MADDM_Q_rrr1_v110, MADDRS_H_rrr1_v110, MADDRS_Q_rrr...
+    // MADDRS_H_rrr1_v110, MADDRS_Q_rrr1_v110, MADDR_H_rrr1_v110, MADDR_Q_rrr...
     printZExtImm_2(MI, 4, O);
     return;
     break;
