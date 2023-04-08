@@ -772,10 +772,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4529230U,	// CACHEI_WI_bo_pos
     4397692U,	// CACHEI_WI_bo_pre
     4398196U,	// CACHEI_W_bo_bso
-    4463732U,	// CACHEI_W_bo_c
     4529268U,	// CACHEI_W_bo_pos
     4397726U,	// CACHEI_W_bo_pre
-    400500U,	// CACHEI_W_bo_r
     1074794835U,	// CADDN_A_rcr_v110
     2200965459U,	// CADDN_A_rrr_v110
     1074795936U,	// CADDN_rcr
@@ -2048,10 +2046,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// CACHEI_WI_bo_pos
     0U,	// CACHEI_WI_bo_pre
     0U,	// CACHEI_W_bo_bso
-    0U,	// CACHEI_W_bo_c
     0U,	// CACHEI_W_bo_pos
     0U,	// CACHEI_W_bo_pre
-    0U,	// CACHEI_W_bo_r
     17U,	// CADDN_A_rcr_v110
     0U,	// CADDN_A_rrr_v110
     17U,	// CADDN_rcr
@@ -3082,7 +3078,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat1(O, ']');
     break;
   case 4:
-    // CACHEA_I_bo_c, CACHEA_WI_bo_c, CACHEA_W_bo_c, CACHEI_W_bo_c, SWAP_A_bo...
+    // CACHEA_I_bo_c, CACHEA_WI_bo_c, CACHEA_W_bo_c, SWAP_A_bo_c, SWAP_W_bo_c
     SStream_concat0(O, "+c]");
     set_mem_access(MI, false);
     break;
@@ -3092,7 +3088,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     set_mem_access(MI, false);
     break;
   case 6:
-    // CACHEA_I_bo_r, CACHEA_WI_bo_r, CACHEA_W_bo_r, CACHEI_W_bo_r
+    // CACHEA_I_bo_r, CACHEA_WI_bo_r, CACHEA_W_bo_r
     SStream_concat0(O, "+r]");
     set_mem_access(MI, false);
     return;
