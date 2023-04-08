@@ -783,15 +783,15 @@ class ISR_0<bits<8> op1, bits<4> op2, string asmstr>
     : SR<op1, op2, (outs), (ins),
         asmstr, []>;
 
-class ISR_1<bits<8> op1, bits<4> op2, string asmstr>
-    : SR<op1, op2, (outs), (ins RD:$s1),
+class ISR_1<bits<8> op1, bits<4> op2, string asmstr, RegisterClass RC1=RD>
+    : SR<op1, op2, (outs), (ins RC1:$s1),
         asmstr # " $s1", []>;
 
 class ISYS_0<bits<8> op1, bits<6> op2, string asmstr>
     : SYS<op1, op2, (outs), (ins),
         asmstr, []>;
-class ISYS_1<bits<8> op1, bits<6> op2, string asmstr>
-    : SYS<op1, op2, (outs), (ins RD:$s1),
+class ISYS_1<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC1=RD>
+    : SYS<op1, op2, (outs), (ins RC1:$s1),
         asmstr # " $s1", []>;
 
 def DEBUG_sr  : ISR_0<0x00, 0x0A, "debug">;
@@ -872,8 +872,8 @@ def DISABLE_sys_1 : ISYS_1<0x0D, 0x0F, "disable">, Requires<[HasV160_UP]>;
 def DSYNC_sys : ISYS_0<0x0D, 0x12, "dsync">;
 
 def DVADJ_srr_v110 : ISRR_db<0x72, "dvadj", RE, RD>, NsRequires<[HasV110]>;
-def DVADJ_rrr_v110 : IRRR_d32<0x2B, 0x08, "dvadj", RE, RE, RE>, NsRequires<[HasV110]>;
-def DVADJ_rrr : IRRR_d32<0x6B, 0x0D, "dvadj", RE, RE, RE>, Requires<[HasV120_UP]>;
+def DVADJ_rrr_v110 : IRRR_d32<0x2B, 0x08, "dvadj", RE, RD, RD, RE>, NsRequires<[HasV110]>;
+def DVADJ_rrr : IRRR_d32<0x6B, 0x0D, "dvadj", RE, RD, RD, RE>, Requires<[HasV120_UP]>;
 
 multiclass mI_U_RR_Eab<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4,
                 string asmstr, string posfix = ""> {
@@ -904,8 +904,8 @@ defm DVINIT : mI_DVINIT_<0x4B, 0x1A, 0x0A, 0x5A, 0x4A, 0x3A, 0x2A, "dvinit">, Re
 
 multiclass mI_U_RRR_EEdb<bits<8> op1, bits<4> op2, bits<8> op3, bits<4> op4,
                 string asmstr, string posfix = ""> {
-  def _rrr # posfix  : IRRR_d32<op1, op2, asmstr, RE, RE, RE>;
-  def _U_rrr # posfix: IRRR_d32<op3, op4, asmstr # ".u", RE, RE, RE>;
+  def _rrr # posfix  : IRRR_d32<op1, op2, asmstr, RE, RD, RD, RE>;
+  def _U_rrr # posfix: IRRR_d32<op3, op4, asmstr # ".u", RE, RD, RD, RE>;
 }
 
 multiclass mI_U_SRR_sds2<bits<8> op1, bits<8> op2, string asmstr, 
@@ -1021,6 +1021,11 @@ class ISBR_b<bits<8> op1, string asmstr, RegisterClass RC2=RD>
     : SBR<op1, (outs), (ins RC2:$s2, disp4imm:$disp4),
       !strconcat(asmstr, " $s2, $disp4"), []>;
 
+// D[b](SBR)
+class ISBR<bits<8> op1, string asmstr, RegisterClass RC2=RD>
+    : SBR<op1, (outs), (ins RC2:$s2),
+      !strconcat(asmstr, " $s2"), []>;
+
 multiclass mIBRC_BRR<bits<8> c1, bits<1> c2, bits<8> r1, bits<1> r2, string asmstr, Operand TypeC=u4imm>{
   def _brc : IBRC<c1, c2, asmstr, TypeC>;
   def _brr : IBRR<r1, r2, asmstr>;
@@ -1056,7 +1061,7 @@ def JGEZ_sbr : ISBR_b<0xCE, "jgez">, Requires<[HasV120_UP]>;
 def JGTZ_sbr_v110 : ISBR_b<0x7E, "jgtz">, NsRequires<[HasV110]>;
 def JGTZ_sbr : ISBR_b<0x4E, "jgtz">, Requires<[HasV120_UP]>;
 
-def JI_sbr_v110 : ISBR_b<0x3C, "ji", RA>, NsRequires<[HasV110]>;
+def JI_sbr_v110 : ISBR<0x3C, "ji", RA>, NsRequires<[HasV110]>;
 def JI_rr_v110  : IRR_R1<0x2D, 0x03, "ji", RA>, NsRequires<[HasV110]>;
 def JI_rr : IRR_R1<0x2D, 0x03, "ji", RA>, Requires<[HasV120_UP]>;
 def JI_sr : SR<0xDC, 0x00, (outs), (ins RA:$s1), "ji $s1", []>, Requires<[HasV120_UP]>;
@@ -1436,7 +1441,7 @@ defm MOV_D_srr : mI_MOV_srr<0x20, 0x80, "mov.d", RD, RA>;
 def MOV_U_rlc  : IRLC_1<0xBB, "mov.u">;
 def MOVH_rlc   : IRLC_1<0x7B, "movh", RD, u16imm>;
 def MOVH_A_rlc : IRLC_1<0x91, "movh.a", RA, u16imm>;
-def MOVZ_A_sr: ISR_1<0x00, 0x01, "movz.a">, NsRequires<[HasV110]>;
+def MOVZ_A_sr: ISR_1<0x00, 0x01, "movz.a", RA>, NsRequires<[HasV110]>;
 
 defm MSUB : mIRCR<0x33, 0x01, 0x33, 0x03, "msub">
           , mIRRR2<0x23, 0x0A, 0x23, 0x6A, "msub">;
