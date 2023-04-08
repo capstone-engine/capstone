@@ -1480,7 +1480,8 @@ bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst
 			break;
 		}
 		case CS_MODE_TRICORE_162: {
-			if (tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev16232)) {
+			if (tryGetInstruction16(code, code_len, MI, size, address, info, DecoderTablev16216) ||
+			    tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev16232)) {
 				return true;
 			}
 			break;

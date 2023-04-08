@@ -1576,7 +1576,8 @@ def NOP_sys : ISYS_0<0x00, 0x0D, "nop">;
 
 multiclass mISR_1<bits<8> sr1op1, bits<4> sr1op2, bits<8> sr2op1, bits<4> sr2op2,
                 string asmstr>{
-  def _sr : ISR_1<sr1op1, sr1op2, asmstr>, Requires<[HasV120_UP]>;
+  def _sr : ISR_1<sr1op1, sr1op2, asmstr>
+          , Requires<[HasV120, HasV130, HasV131, HasV160, HasV161]>;
   def _sr_v110 : ISR_1<sr2op1, sr2op2, asmstr>, NsRequires<[HasV110]>;
 }
 
@@ -1584,6 +1585,8 @@ defm NOR : mIRR_RC<0x0F, 0x0B, 0x8F, 0x0B, "nor">;
 def NOR_T : IBIT<0x87, 0x02, "nor.t">;
 
 defm NOR : mISR_1<0x46, 0x00, 0x36, 0x00, "nor">;
+
+def NOT_sr_v162 : ISR_1<0x46, 0x00, "not">, NsRequires<[HasV162]>;
 
 
 defm OR : mIRR_RC<0x0F, 0x0A, 0x8F, 0x0A, "or", RD, RD, u9imm>;
