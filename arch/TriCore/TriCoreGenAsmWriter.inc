@@ -1374,14 +1374,14 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     6216U,	// MULM_U_rr
     268440980U,	// MULM_rc
     5524U,	// MULM_rr
-    5136U,	// MULR_H_rr
     5136U,	// MULR_H_rr1_LL2e
     5136U,	// MULR_H_rr1_LU2e
     5136U,	// MULR_H_rr1_UL2e
     5136U,	// MULR_H_rr1_UU2e
-    5683U,	// MULR_Q_rr
+    5136U,	// MULR_H_rr_v110
     151000627U,	// MULR_Q_rr1_2LL
     167777843U,	// MULR_Q_rr1_2UU
+    5683U,	// MULR_Q_rr_v110
     268441725U,	// MULS_U_rc
     6269U,	// MULS_U_rr2
     6269U,	// MULS_U_rr_v110
@@ -1389,12 +1389,11 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5845U,	// MULS_rr2
     5845U,	// MULS_rr_v110
     4921U,	// MUL_F_rrr
-    5032U,	// MUL_H_rr
     5032U,	// MUL_H_rr1_LL2e
     5032U,	// MUL_H_rr1_LU2e
     5032U,	// MUL_H_rr1_UL2e
     5032U,	// MUL_H_rr1_UU2e
-    5640U,	// MUL_Q_rr
+    5032U,	// MUL_H_rr_v110
     5640U,	// MUL_Q_rr1_2
     151000584U,	// MUL_Q_rr1_2LL
     167777800U,	// MUL_Q_rr1_2UU
@@ -1403,6 +1402,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5640U,	// MUL_Q_rr1_2_U
     5640U,	// MUL_Q_rr1_2_Ue
     5640U,	// MUL_Q_rr1_2__e
+    5640U,	// MUL_Q_rr_v110
     268441647U,	// MUL_U_rc
     6191U,	// MUL_U_rr2
     268440961U,	// MUL_rc
@@ -2649,14 +2649,14 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// MULM_U_rr
     0U,	// MULM_rc
     0U,	// MULM_rr
-    0U,	// MULR_H_rr
     10U,	// MULR_H_rr1_LL2e
     11U,	// MULR_H_rr1_LU2e
     12U,	// MULR_H_rr1_UL2e
     13U,	// MULR_H_rr1_UU2e
-    0U,	// MULR_Q_rr
+    1U,	// MULR_H_rr_v110
     0U,	// MULR_Q_rr1_2LL
     0U,	// MULR_Q_rr1_2UU
+    1U,	// MULR_Q_rr_v110
     0U,	// MULS_U_rc
     0U,	// MULS_U_rr2
     0U,	// MULS_U_rr_v110
@@ -2664,12 +2664,11 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// MULS_rr2
     0U,	// MULS_rr_v110
     0U,	// MUL_F_rrr
-    0U,	// MUL_H_rr
     10U,	// MUL_H_rr1_LL2e
     11U,	// MUL_H_rr1_LU2e
     12U,	// MUL_H_rr1_UL2e
     13U,	// MUL_H_rr1_UU2e
-    0U,	// MUL_Q_rr
+    1U,	// MUL_H_rr_v110
     1U,	// MUL_Q_rr1_2
     0U,	// MUL_Q_rr1_2LL
     0U,	// MUL_Q_rr1_2UU
@@ -2678,6 +2677,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     15U,	// MUL_Q_rr1_2_U
     15U,	// MUL_Q_rr1_2_Ue
     1U,	// MUL_Q_rr1_2__e
+    1U,	// MUL_Q_rr_v110
     0U,	// MUL_U_rc
     0U,	// MUL_U_rr2
     0U,	// MUL_rc
@@ -3485,7 +3485,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   switch ((Bits >> 36) & 7) {
   default: assert(0 && "Invalid command number.");
   case 0:
-    // ADDSC_A_rr, ADDSC_A_rr_v110, DIFSC_A_rr_v110, MUL_Q_rr1_2, MUL_Q_rr1_2...
+    // ADDSC_A_rr, ADDSC_A_rr_v110, DIFSC_A_rr_v110, MULR_H_rr_v110, MULR_Q_r...
     printZExtImm_2(MI, 3, O);
     return;
     break;

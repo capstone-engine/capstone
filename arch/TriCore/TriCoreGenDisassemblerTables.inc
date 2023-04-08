@@ -3497,10 +3497,10 @@ static const uint8_t DecoderTablev11032[] = {
 /* 422 */     MCD_OPC_Decode, 231, 2, 32, // Opcode: CADDN_A_rrr_v110
 /* 426 */     MCD_OPC_FilterValue, 8, 9, 0, 0, // Skip to: 440
 /* 431 */     MCD_OPC_CheckPredicate, 4, 157, 4, 0, // Skip to: 1617
-/* 436 */     MCD_OPC_Decode, 144, 3, 32, // Opcode: CSUB_A_rrr_v110
+/* 436 */     MCD_OPC_Decode, 144, 3, 32, // Opcode: CSUB_A__rrr_v110
 /* 440 */     MCD_OPC_FilterValue, 12, 9, 0, 0, // Skip to: 454
 /* 445 */     MCD_OPC_CheckPredicate, 4, 143, 4, 0, // Skip to: 1617
-/* 450 */     MCD_OPC_Decode, 142, 3, 32, // Opcode: CSUBN_A_rrr_v110
+/* 450 */     MCD_OPC_Decode, 142, 3, 32, // Opcode: CSUBN_A__rrr_v110
 /* 454 */     MCD_OPC_FilterValue, 16, 9, 0, 0, // Skip to: 468
 /* 459 */     MCD_OPC_CheckPredicate, 4, 129, 4, 0, // Skip to: 1617
 /* 464 */     MCD_OPC_Decode, 177, 8, 32, // Opcode: SEL_A_rrr_v110
@@ -3922,6 +3922,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     return S; \
   } \
 }
+
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
 static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
