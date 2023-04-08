@@ -3798,7 +3798,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-		uint64_t Address, bool *Decoder) \
+		uint64_t Address, void *Decoder) \
 { \
   InsnType tmp; \
   switch (Idx) { \
