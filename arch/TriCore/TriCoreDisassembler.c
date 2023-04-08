@@ -938,9 +938,11 @@ static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 0) {
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
 	return MCDisassembler_Success;
 }
@@ -1006,13 +1008,13 @@ static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode n.
-	MCOperand_CreateImm0(Inst, n);
-
 	// Decode s3.
-	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[4], Decoder);
+	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[3], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
+
+	// Decode n.
+	MCOperand_CreateImm0(Inst, n);
 
 	return MCDisassembler_Success;
 }
