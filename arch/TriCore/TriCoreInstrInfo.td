@@ -1295,7 +1295,7 @@ multiclass mIRRR2<bits<8> op1, bits<8> op2, bits<8> op3, bits<8> op4, string asm
 multiclass mIRCR_RRR2<bits<8> op_rcr1, bits<3> op_rcr2, bits<8> op_rrr21, bits<8> op_rrr22,
                       string asmstr, string posfix="",
                       Operand Type3=s9imm, RegisterClass RC1=RE, RegisterClass RC2=RD>{
-  def _rcr#posfix: IRCR<op_rcr1, op_rcr2, asmstr, RC1, RC1, RC2, Type3>;
+  def _rcr#posfix: IRCR<op_rcr1, op_rcr2, asmstr, RC1, RC2, RC1, Type3>;
   def _rrr2#posfix: IRRR2<op_rrr21, op_rrr22, asmstr, RC1>;
 }
 
