@@ -1524,7 +1524,7 @@ class IRR1<bits<8> op1, bits<10> op2, string asmstr,
 multiclass mI_MUL_H_<bits<8> pre, bits<10> ll, bits<10> lu, bits<10> ul, bits<10> uu, string asmstr
                    , bit hasv110=false, bits<8> rr=0>{
   if hasv110 then
-    def _rr : IRR_dab<pre, rr, asmstr, RE>, NsRequires<[HasV110]>;
+    def _rr_v110 : IRR_dabn<pre, rr, asmstr, RE>, NsRequires<[HasV110]>;
   def _rr1_LL2e : IRR1<pre, ll, asmstr, RE, "", "LL">, Requires<[HasV120_UP]>;
   def _rr1_LU2e : IRR1<pre, lu, asmstr, RE, "", "LU">, Requires<[HasV120_UP]>;
   def _rr1_UL2e : IRR1<pre, ul, asmstr, RE, "", "UL">, Requires<[HasV120_UP]>;
@@ -1535,7 +1535,7 @@ defm MUL_H : mI_MUL_H_<0xB3, 0x1A, 0x19, 0x18, 0x1B, "mul.h", true, 0x18>;
 
 multiclass mI_MULQ_<bits<8> pre, bits<8> rr, bits<10> op1, bits<10> op2, bits<10> op3, bits<10> op4,
                       bits<10> op5, bits<10> op6, bits<10> op7, bits<10> op8, string asmstr>{
-  def _rr : IRR_dab<pre, rr, asmstr, RE>, NsRequires<[HasV110]>;
+  def _rr_v110 : IRR_dabn<pre, rr, asmstr, RD>, NsRequires<[HasV110]>;
   def _rr1_2   : IRR1<pre, op1, asmstr, RD, "", "">, Requires<[HasV120_UP]>;
   def _rr1_2__e: IRR1<pre, op2, asmstr, RE, "", "">, Requires<[HasV120_UP]>;
 
@@ -1560,7 +1560,7 @@ defm MULMS_H: mI_MUL_H_<0xB3, 0x3E,0x3D, 0x3C, 0x3F, "mulms.h">;
 defm MULM_H : mI_MUL_H_<0xB3, 0x1E, 0x1D, 0x1C, 0x1F, "mulm.h">;
 defm MULR_H : mI_MUL_H_<0xB3, 0x0E, 0x0D, 0x0C, 0x0F, "mulr.h", true, 0x0C>;
 
-def MULR_Q_rr : IRR_dab<0x93, 0x06, "mulr.q">, NsRequires<[HasV110]>;
+def MULR_Q_rr_v110 : IRR_dabn<0x93, 0x06, "mulr.q">, NsRequires<[HasV110]>;
 def MULR_Q_rr1_2LL : IRR1<0x93, 0x07, "mulr.q", RD, "L", "L">, Requires<[HasV120_UP]>;
 def MULR_Q_rr1_2UU : IRR1<0x93, 0x06, "mulr.q", RD, "U", "U">, Requires<[HasV120_UP]>;
 
@@ -1656,14 +1656,14 @@ defm SAT_HU : mI_SAT_<0x0B, 0x7F, 0x32, 0x03, 0xD2, 0x03, "sat.hu">;
 def SEL_rcr : IRCR<0xAB, 0x04, "sel">;
 def SEL_rrr : IRRR<0x2B, 0x04, "sel">;
 
-def SEL_A_rcr_v110: IRCR<0xA1, 0x04, "sel.a">, NsRequires<[HasV110]>;
-def SEL_A_rrr_v110: IRRR<0x21, 0x04, "sel.a">, NsRequires<[HasV110]>;
+def SEL_A_rcr_v110: IRCR<0xA1, 0x04, "sel.a", RA, RA>, NsRequires<[HasV110]>;
+def SEL_A_rrr_v110: IRRR<0x21, 0x04, "sel.a", RA, RA, RA>, NsRequires<[HasV110]>;
 
 def SELN_rcr : IRCR<0xAB, 0x05, "seln">;
 def SELN_rrr : IRRR<0x2B, 0x05, "seln">;
 
-def SELN_A_rcr_v110: IRCR<0xA1, 0x05, "seln.a">, NsRequires<[HasV110]>;
-def SELN_A_rrr_v110: IRRR<0x21, 0x05, "seln.a">, NsRequires<[HasV110]>;
+def SELN_A_rcr_v110: IRCR<0xA1, 0x05, "seln.a", RA, RA>, NsRequires<[HasV110]>;
+def SELN_A_rrr_v110: IRRR<0x21, 0x05, "seln.a", RA, RA, RA>, NsRequires<[HasV110]>;
 
 multiclass mISRC_1<bits<8> op1, bits<8> op2, string asmstr>{
   def _src: ISRC_1<op1, asmstr>, Requires<[HasV120_UP]>;
