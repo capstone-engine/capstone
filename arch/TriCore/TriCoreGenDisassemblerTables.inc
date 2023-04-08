@@ -3712,7 +3712,7 @@ static const uint8_t DecoderTablev11032[] = {
 /* 1414 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 1428
 /* 1419 */    MCD_OPC_CheckPredicate, 4, 193, 0, 0, // Skip to: 1617
 /* 1424 */    MCD_OPC_Decode, 236, 2, 24, // Opcode: CADD_A_rcr_v110
-/* 1428 */    MCD_OPC_FilterValue, 2, 9, 0, 0, // Skip to: 1442
+/* 1428 */    MCD_OPC_FilterValue, 1, 9, 0, 0, // Skip to: 1442
 /* 1433 */    MCD_OPC_CheckPredicate, 4, 179, 0, 0, // Skip to: 1617
 /* 1438 */    MCD_OPC_Decode, 230, 2, 24, // Opcode: CADDN_A_rcr_v110
 /* 1442 */    MCD_OPC_FilterValue, 4, 9, 0, 0, // Skip to: 1456
@@ -3798,7 +3798,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-		uint64_t Address, void *Decoder) \
+		uint64_t Address, bool *Decoder) \
 { \
   InsnType tmp; \
   switch (Idx) { \

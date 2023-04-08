@@ -814,9 +814,9 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1074796958U,	// CRC32L_W_rr
     1074794975U,	// CRC32_B_rr
     2200966554U,	// CRCN_rrr
-    2200965450U,	// CSUBN_A_rrr_v110
+    2200965450U,	// CSUBN_A__rrr_v110
     2200965772U,	// CSUBN_rrr
-    2200965352U,	// CSUB_A_rrr_v110
+    2200965352U,	// CSUB_A__rrr_v110
     2200965772U,	// CSUB_rrr
     3348U,	// DEBUG_sr
     3348U,	// DEBUG_sys
@@ -2089,9 +2089,9 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// CRC32L_W_rr
     0U,	// CRC32_B_rr
     0U,	// CRCN_rrr
-    0U,	// CSUBN_A_rrr_v110
+    0U,	// CSUBN_A__rrr_v110
     0U,	// CSUBN_rrr
-    0U,	// CSUB_A_rrr_v110
+    0U,	// CSUB_A__rrr_v110
     0U,	// CSUB_rrr
     0U,	// DEBUG_sr
     0U,	// DEBUG_sys
