@@ -6048,13 +6048,13 @@
   #endif
 },
 {
-  TriCore_NOR_sr /* 1007 */, TriCore_INS_NOR,
+  TriCore_NOT_sr /* 1007 */, TriCore_INS_NOT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_NOR_sr_v110 /* 1008 */, TriCore_INS_NOR,
+  TriCore_NOT_sr_v110 /* 1008 */, TriCore_INS_NOT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif

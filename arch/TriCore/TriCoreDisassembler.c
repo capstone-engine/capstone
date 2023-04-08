@@ -1103,13 +1103,13 @@ static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode const9.
-	MCOperand_CreateImm0(Inst, const9);
-
 	// Decode s3.
-	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[3], Decoder);
+	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[2], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
+
+	// Decode const9.
+	MCOperand_CreateImm0(Inst, const9);
 
 	return MCDisassembler_Success;
 }
@@ -1141,13 +1141,13 @@ static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode width.
-	MCOperand_CreateImm0(Inst, width);
-
 	// Decode s3.
 	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[3], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
+
+	// Decode width.
+	MCOperand_CreateImm0(Inst, width);
 
 	return MCDisassembler_Success;
 }
@@ -1308,11 +1308,8 @@ static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	if (status != MCDisassembler_Success)
 		return status;
 
-	// Decode n.
-	MCOperand_CreateImm0(Inst, n);
-
 	// Decode s3.
-	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[4], Decoder);
+	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[3], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
 

@@ -34,23 +34,32 @@ def gen(filename):
                     pass
                 return x
 
+            def is_hex_string(s: str) -> bool:
+                if not s.isalnum():
+                    return False
+                return all(c.isdigit() or c.lower() in 'abcdef' for c in s) and any(c.lower() in 'abcdef' for c in s)
+
             hexstr = ','.join(f'0x{x}' for x in hexstr if x)
-            operands = re.sub(r'\s*<.+>\s*', '', operands)
-            operands = operands.replace(',', ', ')
+            fun = re.match(r'\s*<.+>\s*', operands)
             # print(hex(addr), hexstr, mnemonic, operands)
-            key = None
-            if any([mnemonic.startswith(pre) for pre in ['mtcr', 'mfcr']]):
+            if any([mnemonic.startswith(pre) for pre in
+                    ['mtcr', 'mfcr', 'st.a', 'st.b', 'st.d', 'st.w', 'ld.a', 'ld.b', 'ld.d', 'ld.w']]):
                 key = f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}"
-            elif any([mnemonic.startswith(pre) for pre in ['j', 'call', 'loop']]):
+                if key in unique_set:
+                    continue
+                unique_set.add(key)
+                print(key)
+                continue
+
+            ops = operands.split(',')
+            if any([mnemonic.startswith(pre) for pre in ['j', 'call', 'loop', 'fcall']]) or fun:
+                re.sub(r'\s*<.+>\s*', '', operands)
                 # de relative addressing
-                if ',' in operands:
-                    operands = map(try_dedisp, operands.split(', '))
-                    operands = ', '.join(operands)
-                else:
-                    operands = try_dedisp(operands)
-                key = f"# {hexstr.ljust(19)} = {mnemonic}\t{operands}"
-            else:
-                key = f"{hexstr.ljust(19)} = {mnemonic}\t{operands}"
+                ops = map(try_dedisp, ops)
+
+            ops = map(lambda x: '0x' + x if is_hex_string(x) and not x.startswith('0x') else x, ops)
+            operands = ', '.join(ops)
+            key = f"{hexstr.ljust(19)} = {mnemonic}\t{operands}"
             if key in unique_set:
                 continue
             unique_set.add(key)

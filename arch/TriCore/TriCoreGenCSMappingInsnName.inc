@@ -283,6 +283,7 @@
   "nop", // TriCore_INS_NOP
   "nor_t", // TriCore_INS_NOR_T
   "nor", // TriCore_INS_NOR
+  "not", // TriCore_INS_NOT
   "orn_t", // TriCore_INS_ORN_T
   "orn", // TriCore_INS_ORN
   "or_andn_t", // TriCore_INS_OR_ANDN_T
