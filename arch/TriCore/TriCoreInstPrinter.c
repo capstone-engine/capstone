@@ -422,7 +422,6 @@ printSExtImm_(10)
 
 printSExtImm_(9)
 
-
 printSExtImm_(4)
 
 #define printZExtImm_(n)                                                       \
@@ -440,6 +439,19 @@ printZExtImm_(8)
 printZExtImm_(4)
 
 printZExtImm_(2)
+
+static void printOExtImm_4(MCInst *MI, int OpNum, SStream *O) {
+	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	if (MCOperand_isImm(MO)) {
+		uint32_t imm = MCOperand_getImm(MO);
+// {27b’111111111111111111111111111, disp4, 0};
+		imm = 0b11111111111111111111111111100000 | (imm << 1);
+
+		SS_print_sign_hex(O, imm);
+		fill_tricore_imm(MI, imm);
+	} else
+		printOperand(MI, OpNum, O);
+}
 
 
 /// Returned by getMnemonic() of the AsmPrinters.

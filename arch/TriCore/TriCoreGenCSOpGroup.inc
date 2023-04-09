@@ -16,3 +16,4 @@
   TriCore_OP_GROUP_Disp15Imm = 8,
   TriCore_OP_GROUP_Disp4Imm = 9,
   TriCore_OP_GROUP_Off18Imm = 10,
+  TriCore_OP_GROUP_OExtImm__ = 11,
