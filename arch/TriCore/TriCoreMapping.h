@@ -6,9 +6,6 @@
 
 #include <capstone/capstone.h>
 
-// return name of regiser in friendly string
-const char *TriCore_reg_name(csh handle, unsigned int reg);
-
 // given internal insn id, return public instruction info
 void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
