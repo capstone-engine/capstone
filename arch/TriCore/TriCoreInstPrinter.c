@@ -56,7 +56,7 @@ static inline void fill_tricore_register(MCInst *MI, uint32_t reg) {
 	tricore->operands[tricore->op_count]
 			.type = TRICORE_OP_REG;
 	tricore->operands[tricore->op_count]
-			.reg = TriCore_map_register(reg);
+			.reg = reg;
 	tricore->op_count++;
 }
 
@@ -125,8 +125,8 @@ static void printPairAddrRegsOperand(MCInst *MI, unsigned OpNum, SStream *O,
 				.type = TRICORE_OP_REG;
 		MI->flat_insn->detail->tricore
 				.operands[MI->flat_insn->detail->tricore.op_count]
-				.reg = (uint8_t) TriCore_map_register(
-				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_even));
+				.reg = (uint8_t)
+				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_even);
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "/");
@@ -139,8 +139,8 @@ static void printPairAddrRegsOperand(MCInst *MI, unsigned OpNum, SStream *O,
 				.type = TRICORE_OP_REG;
 		MI->flat_insn->detail->tricore
 				.operands[MI->flat_insn->detail->tricore.op_count]
-				.reg = (uint8_t) TriCore_map_register(
-				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_odd));
+				.reg = (uint8_t)
+				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_odd);
 		MI->flat_insn->detail->tricore.op_count++;
 	}
 	SStream_concat0(O, "]");
@@ -467,6 +467,14 @@ void set_mem_access(MCInst *MI, unsigned int access) {
 #define PRINT_ALIAS_INSTR
 
 #include "TriCoreGenAsmWriter.inc"
+
+const char *TriCore_getRegisterName(csh handle, unsigned int id) {
+#ifndef CAPSTONE_DIET
+	return getRegisterName(id);
+#else
+	return NULL;
+#endif
+}
 
 void TriCore_printInst(MCInst *MI, SStream *O, void *Info) {
 	printInstruction(MI, MI->address, O);

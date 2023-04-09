@@ -21,7 +21,7 @@ cs_err TRICORE_global_init(cs_struct *ud)
 	ud->disasm = TriCore_getInstruction;
 	ud->post_printer = TriCore_post_printer;
 
-	ud->reg_name = TriCore_reg_name;
+	ud->reg_name = TriCore_getRegisterName;
 	ud->insn_id = TriCore_get_insn_id;
 	ud->insn_name = TriCore_insn_name;
 	ud->group_name = TriCore_group_name;
