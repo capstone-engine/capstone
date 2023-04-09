@@ -56,6 +56,14 @@ static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo) {
 	return rc->RegsBegin[RegNo];
 }
 
+#define tryDecodeReg(i, x) \
+    status = DecodeRegisterClass(Inst, (x), &desc->OpInfo[(i)], Decoder); \
+    if (status != MCDisassembler_Success) \
+        return status;
+
+#define decodeImm(x) \
+    MCOperand_CreateImm0(Inst, (x));
+
 static DecodeStatus DecodeDataRegsRegisterClass(MCInst *Inst, unsigned RegNo,
                                                 uint64_t Address, void *Decoder);
 
@@ -730,37 +738,11 @@ static DecodeStatus DecodeRRPWInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	// Decode d.
-	status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
-
-	// Decode s1/s2.
-	if (MCInst_getOpcode(Inst) != TriCore_IMASK_rrpw) {
-		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
-	} else {
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
-	}
-
-	if (desc->OpInfo[2].OperandType == MCOI_OPERAND_REGISTER) {
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
-
-		MCOperand_CreateImm0(Inst, pos);
-		if (desc->NumOperands == 5) {
-			MCOperand_CreateImm0(Inst, width);
-		}
-		return MCDisassembler_Success;
-	}
-
-
-	MCOperand_CreateImm0(Inst, pos);
-	MCOperand_CreateImm0(Inst, width);
+	tryDecodeReg(0, d)
+	tryDecodeReg(1, s1)
+	tryDecodeReg(2, s2)
+	decodeImm(pos)
+	decodeImm(width)
 
 	return MCDisassembler_Success;
 }
@@ -1218,11 +1200,14 @@ static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (status != MCDisassembler_Success)
 		return status;
 
+	if (desc->NumOperands == 3) {
+		return DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
+	}
+
 	// Decode s2.
 	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
 	if (status != MCDisassembler_Success)
 		return status;
-
 	// Decode s3.
 	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[3], Decoder);
 	if (status != MCDisassembler_Success)
@@ -1330,7 +1315,8 @@ static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
 	DecodeStatus status = MCDisassembler_Fail;
-	unsigned s1_d = fieldFromInstruction_4(Insn, 8, 4);
+	unsigned bpos3 = fieldFromInstruction_4(Insn, 8, 3);
+	unsigned b = fieldFromInstruction_4(Insn, 12, 1);
 
 	unsigned off18_0_5 = fieldFromInstruction_4(Insn, 16, 6);
 	unsigned off18_6_9 = fieldFromInstruction_4(Insn, 28, 4);
@@ -1343,14 +1329,9 @@ static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	if (!is32Bit) // This instruction is 32-bit
 		return MCDisassembler_Fail;
 
-	// Decode s1_d.
-	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
-
-	// Decode off18.
-	MCOperand_CreateImm0(Inst, off18);
+	decodeImm(off18)
+	decodeImm(bpos3)
+	decodeImm(b)
 
 	return MCDisassembler_Success;
 }
@@ -1368,29 +1349,11 @@ static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
-
-	unsigned opIdx = 0;
-	if (desc->NumOperands > 4) {
-		opIdx++;
-		// Decode s1.
-		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
-	}
-
-	// Decode s3.
-	status = DecodeRegisterClass(Inst, s3, &desc->OpInfo[opIdx + 1], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
-
-	// Decode const4.
-	MCOperand_CreateImm0(Inst, const4);
-
-	// Decode width.
-	MCOperand_CreateImm0(Inst, width);
+	tryDecodeReg(0, d)
+	tryDecodeReg(1, s1)
+	tryDecodeReg(2, s3)
+	decodeImm(const4)
+	decodeImm(width)
 
 	return MCDisassembler_Success;
 }

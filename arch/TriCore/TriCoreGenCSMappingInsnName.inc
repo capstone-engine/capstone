@@ -84,8 +84,9 @@
   "crc32_b", // TriCore_INS_CRC32_B
   "crcn", // TriCore_INS_CRCN
   "csubn_a", // TriCore_INS_CSUBN_A
-  "csub", // TriCore_INS_CSUB
+  "csubn", // TriCore_INS_CSUBN
   "csub_a", // TriCore_INS_CSUB_A
+  "csub", // TriCore_INS_CSUB
   "debug", // TriCore_INS_DEBUG
   "dextr", // TriCore_INS_DEXTR
   "difsc_a", // TriCore_INS_DIFSC_A
@@ -309,7 +310,7 @@
   "ret", // TriCore_INS_RET
   "rfe", // TriCore_INS_RFE
   "rfm", // TriCore_INS_RFM
-  "relck", // TriCore_INS_RELCK
+  "rslcx", // TriCore_INS_RSLCX
   "rstv", // TriCore_INS_RSTV
   "rsubs_u", // TriCore_INS_RSUBS_U
   "rsubs", // TriCore_INS_RSUBS
@@ -337,6 +338,7 @@
   "sh_lt_u", // TriCore_INS_SH_LT_U
   "sh_lt", // TriCore_INS_SH_LT
   "sh_nand_t", // TriCore_INS_SH_NAND_T
+  "sh_ne", // TriCore_INS_SH_NE
   "sh_nor_t", // TriCore_INS_SH_NOR_T
   "sh_orn_t", // TriCore_INS_SH_ORN_T
   "sh_or_t", // TriCore_INS_SH_OR_T
