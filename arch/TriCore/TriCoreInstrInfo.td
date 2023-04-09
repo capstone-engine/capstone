@@ -185,6 +185,8 @@ def u2imm      : Operand<i32> { let PrintMethod = "printZExtImm<2>";  }
 def u9imm      : Operand<i32> { let PrintMethod = "printZExtImm<9>";  }
 def u16imm     : Operand<i32> { let PrintMethod = "printZExtImm<16>";  }
 
+def oext4imm: Operand<i32> { let PrintMethod = "printOExtImm<4>";  }
+
 def off18imm   : Operand<i32> { let PrintMethod = "printOff18Imm";  }
 
 def disp24imm  : Operand<i32> { let PrintMethod = "printDisp24Imm";  }
@@ -1173,7 +1175,9 @@ def LEA_bol    : IBOL_RAaO<0xD9, "lea", RA>;
 def LHA_abs    : IABS_RO<0xC5, 0x01, "lha", RA>, Requires<[HasV162_UP]>;
 
 def LOOP_brr : IBRR_1<0xFD, 0x00, "loop">;
-def LOOP_sbr : ISBR_b<0xFC, "loop", RA>;
+
+def LOOP_sbr : SBR<0xFC, (outs), (ins RA:$s2, oext4imm:$disp4),
+                   "loop $s2, $disp4", []>;
 def LOOPU_brr : IBRR_0<0xFD, 0x01, "loopu">, Requires<[HasV120_UP]>;
 
 defm LT : mIRR_RC<0x0B, 0x12, 0x8B, 0x12, "lt">;
