@@ -42,6 +42,9 @@ void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) {
 	 */
 }
 
+void TriCore_insn_extract(MCInst *MI, const char *code) {
+}
+
 #define GET_INSTRINFO_ENUM
 
 #include "TriCoreGenInstrInfo.inc"
@@ -51,7 +54,7 @@ void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) {
 #include "TriCoreGenRegisterInfo.inc"
 
 static inline void fill_tricore_register(MCInst *MI, uint32_t reg) {
-	if (MI->csh->detail != CS_OPT_ON) return;
+	if (!(MI->csh->detail == CS_OPT_ON  && MI->flat_insn->detail)) return;
 	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
 	tricore->operands[tricore->op_count]
 			.type = TRICORE_OP_REG;
@@ -61,7 +64,7 @@ static inline void fill_tricore_register(MCInst *MI, uint32_t reg) {
 }
 
 static inline void fill_tricore_imm(MCInst *MI, int32_t imm) {
-	if (MI->csh->detail != CS_OPT_ON) return;
+	if (!(MI->csh->detail == CS_OPT_ON  && MI->flat_insn->detail)) return;
 	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
 	tricore->operands[tricore->op_count]
 			.type = TRICORE_OP_IMM;
@@ -71,7 +74,7 @@ static inline void fill_tricore_imm(MCInst *MI, int32_t imm) {
 }
 
 static inline void fill_tricore_mem(MCInst *MI, uint8_t base, int32_t disp) {
-	if (MI->csh->detail != CS_OPT_ON) return;
+	if (!(MI->csh->detail == CS_OPT_ON  && MI->flat_insn->detail)) return;
 	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
 	tricore->operands[tricore->op_count]
 			.type = TRICORE_OP_MEM;

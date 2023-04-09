@@ -14,7 +14,4 @@ void TriCore_printInst(MCInst *MI, SStream *O, void *Info);
 
 void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci);
 
-// extract details from assembly code @code
-void TriCore_insn_extract(MCInst *MI, const char *code);
-
 #endif
