@@ -905,7 +905,7 @@ def FCALLA_b : IB<0xE1, "fcalla">, Requires<[HasV160_UP]>;
 def FCALLA_i : IRR_R1<0x2D, 0x01, "fcalli", RA>, Requires<[HasV160_UP]>;
 
 def FRET_sr : ISR_0<0x00, 0x07, "fret">, Requires<[HasV160_UP]>;
-def FRET_sys : ISR_0<0x0D, 0x03, "fret">, Requires<[HasV160_UP]>;
+def FRET_sys : ISYS_0<0x0D, 0x03, "fret">, Requires<[HasV160_UP]>;
 
 multiclass mI_U__RR_RC<bits<8> op1, bits<8> op2, bits<8> op3, bits<7> op4,
                       bits<8> uop1, bits<8> uop2, bits<8> uop3, bits<7> uop4,
@@ -1827,10 +1827,12 @@ multiclass mI_SWAP_<bits<8> abs1, bits<2> abs2,   ///_abs
 
 defm SWAP_A    : mI_SWAP_<0xE5, 0x02, 0x49, 0x69, 0x22, 0x02, 0x12, "swap.a">, NsRequires<[HasV110]>;
 defm SWAP_W    : mI_SWAP_<0xE5, 0x00, 0x49, 0x69, 0x20, 0x00, 0x10, "swap.w">;
-def SWAP_W_bo_indexed: BO<0x69, 0x20, (outs RD:$d), (ins RP:$s1, s10imm:$off10),
+def SWAP_W_bo_i: BO<0x69, 0x20, (outs RD:$d), (ins RP:$s1, s10imm:$off10),
                           "swap.w [${s1}+i], $d", []>, Requires<[HasV160_UP]>;
 
 defm SWAPMSK_W : mI_SWAP_1<0x49, 0x69, 0x22, 0x02, 0x12, "swapmsk.w", RE>, Requires<[HasV161_UP]>;
+def SWAPMSK_W_bo_i: BO<0x69, 0x22, (outs RE:$d), (ins RP:$s1, s10imm:$off10),
+                          "swapmsk.w [${s1}+i], $d", []>, Requires<[HasV161_UP]>;
 
 def SYSCALL_rc : IRC_C<0xAD, 0x04, "syscall">;
 
@@ -1876,9 +1878,8 @@ def MSUB_F_rrr : IRRR<0x6B, 0x07, "msub.f">, Requires<[HasV130_UP]>;
 def ADD_F_rrr : IRRR_d31<0x6B, 0x02, "add.f">, Requires<[HasV130_UP]>;
 def SUB_F_rrr : IRRR_d31<0x6B, 0x03, "sub.f">, Requires<[HasV130_UP]>;
 def MUL_F_rrr : IRR_dab<0x4B, 0x04, "mul.f">, Requires<[HasV130_UP]>;
-def DIV_F_rr  : IRR_dab<0x4B, 0x05, "div.f">, Requires<[HasV160_UP]>;
-
-def CMP_F_rr  : IRR_dab<0x4B, 0x00, "cmp.f">, Requires<[HasV160_UP]>;
+def DIV_F_rr  : IRR_dab<0x4B, 0x05, "div.f">, Requires<[HasV130_UP]>;
+def CMP_F_rr  : IRR_dab<0x4B, 0x00, "cmp.f">, Requires<[HasV130_UP]>;
 
 def FTOI_rr   : IRR_a<0x4B, 0x10, "ftoi">, Requires<[HasV130_UP]>;
 def FTOIZ_rr  : IRR_a<0x4B, 0x13, "ftoiz">, Requires<[HasV131_UP]>;

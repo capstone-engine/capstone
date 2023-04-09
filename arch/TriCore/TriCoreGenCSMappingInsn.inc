@@ -2354,7 +2354,7 @@
 {
   TriCore_CMP_F_rr /* 391 */, TriCore_INS_CMP_F,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { TriCore_FEATURE_HasV160_UP, 0 }, 0, 0
+    { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
@@ -2450,7 +2450,7 @@
 {
   TriCore_DIV_F_rr /* 407 */, TriCore_INS_DIV_F,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { TriCore_FEATURE_HasV160_UP, 0 }, 0, 0
+    { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
@@ -7338,295 +7338,301 @@
   #endif
 },
 {
-  TriCore_SWAPMSK_W_bo_pos /* 1222 */, TriCore_INS_SWAPMSK_W,
+  TriCore_SWAPMSK_W_bo_i /* 1222 */, TriCore_INS_SWAPMSK_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV161_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAPMSK_W_bo_pre /* 1223 */, TriCore_INS_SWAPMSK_W,
+  TriCore_SWAPMSK_W_bo_pos /* 1223 */, TriCore_INS_SWAPMSK_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV161_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAPMSK_W_bo_r /* 1224 */, TriCore_INS_SWAPMSK_W,
+  TriCore_SWAPMSK_W_bo_pre /* 1224 */, TriCore_INS_SWAPMSK_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV161_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_A_abs /* 1225 */, TriCore_INS_SWAP_A,
+  TriCore_SWAPMSK_W_bo_r /* 1225 */, TriCore_INS_SWAPMSK_W,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { TriCore_FEATURE_HasV161_UP, 0 }, 0, 0
+  #endif
+},
+{
+  TriCore_SWAP_A_abs /* 1226 */, TriCore_INS_SWAP_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_A_bo_bso /* 1226 */, TriCore_INS_SWAP_A,
+  TriCore_SWAP_A_bo_bso /* 1227 */, TriCore_INS_SWAP_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_A_bo_c /* 1227 */, TriCore_INS_SWAP_A,
+  TriCore_SWAP_A_bo_c /* 1228 */, TriCore_INS_SWAP_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_A_bo_pos /* 1228 */, TriCore_INS_SWAP_A,
+  TriCore_SWAP_A_bo_pos /* 1229 */, TriCore_INS_SWAP_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_A_bo_pre /* 1229 */, TriCore_INS_SWAP_A,
+  TriCore_SWAP_A_bo_pre /* 1230 */, TriCore_INS_SWAP_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_A_bo_r /* 1230 */, TriCore_INS_SWAP_A,
+  TriCore_SWAP_A_bo_r /* 1231 */, TriCore_INS_SWAP_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_W_abs /* 1231 */, TriCore_INS_SWAP_W,
+  TriCore_SWAP_W_abs /* 1232 */, TriCore_INS_SWAP_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_W_bo_bso /* 1232 */, TriCore_INS_SWAP_W,
+  TriCore_SWAP_W_bo_bso /* 1233 */, TriCore_INS_SWAP_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_W_bo_c /* 1233 */, TriCore_INS_SWAP_W,
+  TriCore_SWAP_W_bo_c /* 1234 */, TriCore_INS_SWAP_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_W_bo_indexed /* 1234 */, TriCore_INS_SWAP_W,
+  TriCore_SWAP_W_bo_i /* 1235 */, TriCore_INS_SWAP_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV160_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_W_bo_pos /* 1235 */, TriCore_INS_SWAP_W,
+  TriCore_SWAP_W_bo_pos /* 1236 */, TriCore_INS_SWAP_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_W_bo_pre /* 1236 */, TriCore_INS_SWAP_W,
+  TriCore_SWAP_W_bo_pre /* 1237 */, TriCore_INS_SWAP_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SWAP_W_bo_r /* 1237 */, TriCore_INS_SWAP_W,
+  TriCore_SWAP_W_bo_r /* 1238 */, TriCore_INS_SWAP_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_SYSCALL_rc /* 1238 */, TriCore_INS_SYSCALL,
+  TriCore_SYSCALL_rc /* 1239 */, TriCore_INS_SYSCALL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TLBDEMAP_rr /* 1239 */, TriCore_INS_TLBDEMAP,
+  TriCore_TLBDEMAP_rr /* 1240 */, TriCore_INS_TLBDEMAP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TLBFLUSH_A_rr /* 1240 */, TriCore_INS_TLBFLUSH_A,
+  TriCore_TLBFLUSH_A_rr /* 1241 */, TriCore_INS_TLBFLUSH_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TLBFLUSH_B_rr /* 1241 */, TriCore_INS_TLBFLUSH_B,
+  TriCore_TLBFLUSH_B_rr /* 1242 */, TriCore_INS_TLBFLUSH_B,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TLBMAP_rr /* 1242 */, TriCore_INS_TLBMAP,
+  TriCore_TLBMAP_rr /* 1243 */, TriCore_INS_TLBMAP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TLBPROBE_A_rr /* 1243 */, TriCore_INS_TLBPROBE_A,
+  TriCore_TLBPROBE_A_rr /* 1244 */, TriCore_INS_TLBPROBE_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TLBPROBE_I_rr /* 1244 */, TriCore_INS_TLBPROBE_I,
+  TriCore_TLBPROBE_I_rr /* 1245 */, TriCore_INS_TLBPROBE_I,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TRAPSV_sys /* 1245 */, TriCore_INS_TRAPSV,
+  TriCore_TRAPSV_sys /* 1246 */, TriCore_INS_TRAPSV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_TRAPV_sys /* 1246 */, TriCore_INS_TRAPV,
+  TriCore_TRAPV_sys /* 1247 */, TriCore_INS_TRAPV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_UNPACK_rr_rr /* 1247 */, TriCore_INS_UNPACK,
+  TriCore_UNPACK_rr_rr /* 1248 */, TriCore_INS_UNPACK,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_UNPACK_rr_rr_v110 /* 1248 */, TriCore_INS_UNPACK,
+  TriCore_UNPACK_rr_rr_v110 /* 1249 */, TriCore_INS_UNPACK,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_UPDFL_rr /* 1249 */, TriCore_INS_UPDFL,
+  TriCore_UPDFL_rr /* 1250 */, TriCore_INS_UPDFL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_UTOF_rr /* 1250 */, TriCore_INS_UTOF,
+  TriCore_UTOF_rr /* 1251 */, TriCore_INS_UTOF,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_WAIT_sys /* 1251 */, TriCore_INS_WAIT,
+  TriCore_WAIT_sys /* 1252 */, TriCore_INS_WAIT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV161_UP, 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XNOR_T /* 1252 */, TriCore_INS_XNOR_T,
+  TriCore_XNOR_T /* 1253 */, TriCore_INS_XNOR_T,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XNOR_rc /* 1253 */, TriCore_INS_XNOR,
+  TriCore_XNOR_rc /* 1254 */, TriCore_INS_XNOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XNOR_rr /* 1254 */, TriCore_INS_XNOR,
+  TriCore_XNOR_rr /* 1255 */, TriCore_INS_XNOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_EQ_rc /* 1255 */, TriCore_INS_XOR_EQ,
+  TriCore_XOR_EQ_rc /* 1256 */, TriCore_INS_XOR_EQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_EQ_rr /* 1256 */, TriCore_INS_XOR_EQ,
+  TriCore_XOR_EQ_rr /* 1257 */, TriCore_INS_XOR_EQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_GE_U_rc /* 1257 */, TriCore_INS_XOR_GE_U,
+  TriCore_XOR_GE_U_rc /* 1258 */, TriCore_INS_XOR_GE_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_GE_U_rr /* 1258 */, TriCore_INS_XOR_GE_U,
+  TriCore_XOR_GE_U_rr /* 1259 */, TriCore_INS_XOR_GE_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_GE_rc /* 1259 */, TriCore_INS_XOR_GE,
+  TriCore_XOR_GE_rc /* 1260 */, TriCore_INS_XOR_GE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_GE_rr /* 1260 */, TriCore_INS_XOR_GE,
+  TriCore_XOR_GE_rr /* 1261 */, TriCore_INS_XOR_GE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_LT_U_rc /* 1261 */, TriCore_INS_XOR_LT_U,
+  TriCore_XOR_LT_U_rc /* 1262 */, TriCore_INS_XOR_LT_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_LT_U_rr /* 1262 */, TriCore_INS_XOR_LT_U,
+  TriCore_XOR_LT_U_rr /* 1263 */, TriCore_INS_XOR_LT_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_LT_rc /* 1263 */, TriCore_INS_XOR_LT,
+  TriCore_XOR_LT_rc /* 1264 */, TriCore_INS_XOR_LT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_LT_rr /* 1264 */, TriCore_INS_XOR_LT,
+  TriCore_XOR_LT_rr /* 1265 */, TriCore_INS_XOR_LT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_NE_rc /* 1265 */, TriCore_INS_XOR_NE,
+  TriCore_XOR_NE_rc /* 1266 */, TriCore_INS_XOR_NE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_NE_rr /* 1266 */, TriCore_INS_XOR_NE,
+  TriCore_XOR_NE_rr /* 1267 */, TriCore_INS_XOR_NE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_T /* 1267 */, TriCore_INS_XOR_T,
+  TriCore_XOR_T /* 1268 */, TriCore_INS_XOR_T,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_rc /* 1268 */, TriCore_INS_XOR,
+  TriCore_XOR_rc /* 1269 */, TriCore_INS_XOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_rr /* 1269 */, TriCore_INS_XOR,
+  TriCore_XOR_rr /* 1270 */, TriCore_INS_XOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  TriCore_XOR_srr /* 1270 */, TriCore_INS_XOR,
+  TriCore_XOR_srr /* 1271 */, TriCore_INS_XOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TriCore_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
