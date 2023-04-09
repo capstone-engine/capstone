@@ -256,10 +256,12 @@
   "msubr_q", // TriCore_INS_MSUBR_Q
   "msubs_h", // TriCore_INS_MSUBS_H
   "msubs_q", // TriCore_INS_MSUBS_Q
+  "msubs_u", // TriCore_INS_MSUBS_U
   "msubs", // TriCore_INS_MSUBS
   "msub_f", // TriCore_INS_MSUB_F
   "msub_h", // TriCore_INS_MSUB_H
   "msub_q", // TriCore_INS_MSUB_Q
+  "msub_u", // TriCore_INS_MSUB_U
   "msub", // TriCore_INS_MSUB
   "mtcr", // TriCore_INS_MTCR
   "mulms_h", // TriCore_INS_MULMS_H
