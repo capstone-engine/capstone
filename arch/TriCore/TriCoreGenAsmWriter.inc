@@ -1639,6 +1639,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     3420U,	// SVLCX_sys
     72576066U,	// SWAPMSK_W_bo_bso
     1666456642U,	// SWAPMSK_W_bo_c
+    1010754U,	// SWAPMSK_W_bo_i
     72707138U,	// SWAPMSK_W_bo_pos
     72575593U,	// SWAPMSK_W_bo_pre
     17243202U,	// SWAPMSK_W_bo_r
@@ -1651,7 +1652,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     39284U,	// SWAP_W_abs
     72576081U,	// SWAP_W_bo_bso
     1666456657U,	// SWAP_W_bo_c
-    1010769U,	// SWAP_W_bo_indexed
+    1010769U,	// SWAP_W_bo_i
     72707153U,	// SWAP_W_bo_pos
     72575609U,	// SWAP_W_bo_pre
     17243217U,	// SWAP_W_bo_r
@@ -2913,6 +2914,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// SVLCX_sys
     0U,	// SWAPMSK_W_bo_bso
     0U,	// SWAPMSK_W_bo_c
+    0U,	// SWAPMSK_W_bo_i
     0U,	// SWAPMSK_W_bo_pos
     0U,	// SWAPMSK_W_bo_pre
     0U,	// SWAPMSK_W_bo_r
@@ -2925,7 +2927,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// SWAP_W_abs
     0U,	// SWAP_W_bo_bso
     0U,	// SWAP_W_bo_c
-    0U,	// SWAP_W_bo_indexed
+    0U,	// SWAP_W_bo_i
     0U,	// SWAP_W_bo_pos
     0U,	// SWAP_W_bo_pre
     0U,	// SWAP_W_bo_r
@@ -3139,7 +3141,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 15:
-    // SWAP_W_bo_indexed
+    // SWAPMSK_W_bo_i, SWAP_W_bo_i
     SStream_concat0(O, "+i], ");
     set_mem_access(MI, false);
     printOperand(MI, 0, O);

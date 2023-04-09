@@ -291,9 +291,11 @@ static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 0) {
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
 	if (desc->NumOperands > 1) {
 		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
@@ -531,15 +533,17 @@ static DecodeStatus DecodeRCInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	// Decode d.
-	status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 1) {
+		// Decode d.
+		status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
 
-	// Decode s1.
-	status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+		// Decode s1.
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
 	// Decode const9.
 	MCOperand_CreateImm0(Inst, const9);
@@ -656,10 +660,12 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 	}
 
-	// Decode d.
-	status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
-	if (status != MCDisassembler_Success)
-		return status;
+	if (desc->NumOperands > 0) {
+		// Decode d.
+		status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+	}
 
 	if (desc->NumOperands > 1) {
 		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
