@@ -13,8 +13,5 @@ const char *TriCore_insn_name(csh handle, unsigned int id);
 
 const char *TriCore_group_name(csh handle, unsigned int id);
 
-// map internal raw register to 'public' register
-tricore_reg TriCore_map_register(unsigned int r);
-
 #endif
 
