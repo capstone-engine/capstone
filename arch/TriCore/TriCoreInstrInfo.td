@@ -322,8 +322,8 @@ multiclass mIRR_RC<bits<8> rr1, bits<8> rr2, bits<8> rc1, bits<7> rc2, string as
   def _rc : IRC<rc1, rc2, asmstr, RCd, RC1, TypeC>;
 }
 
-class IRLC<bits<8> op1, string asmstr, Operand TypeC=s16imm>
-    : RLC<op1, (outs RD:$d), (ins RD:$s1, TypeC:$const16),
+class IRLC<bits<8> op1, string asmstr, Operand TypeC=s16imm, RegisterClass RCd=RD, RegisterClass RC1=RD>
+    : RLC<op1, (outs RCd:$d), (ins RC1:$s1, TypeC:$const16),
       asmstr # " $d, $s1, $const16",
       []>;
 
@@ -429,7 +429,7 @@ let Defs = [PSW] in {
                         [(set RD:$d, (TriCoreAbsDif RD:$s1, RD:$s2))]>
                     , NsRequires<[HasV110]>;
    def ABSS_H_rr : RR<0x0B, 0x7D, (outs RD:$d),
-                  (ins RD:$s1, RD:$s2), "abss.h $d, $s1, $s2",
+                  (ins RD:$s1, RD:$s2), "abss.h $d, $s2",
                   [(set RD:$d, (TriCoreAbsDif RD:$s1, RD:$s2))]>;
 }
 
@@ -459,7 +459,7 @@ defm ADDC : mIRR_RC<0x0B, 0x05, 0x8B, 0x05, "addc">;
 multiclass mIRLC<bits<8> op1, bits<8> op2, bits<8> op3, string asmstr>{
   def _rlc    : IRLC<op1, asmstr>;
   def H_rlc   : IRLC<op2, asmstr # "h", u16imm>;
-  def H_A_rlc : IRLC<op3, asmstr # "h.a", u16imm>;
+  def H_A_rlc : IRLC<op3, asmstr # "h.a", u16imm, RA, RA>;
 }
 
 defm ADDI : mIRLC<0x1B, 0x9B, 0x11, "addi">;
@@ -727,7 +727,7 @@ def CRC32L_W_rr : IRR_dba<0x4B, 0x07, "crc32l.w">, Requires<[HasV162]>;
 def CRCN_rrr    : IRRR<0x6B, 0x01, "crcn">, Requires<[HasV162]>;
 
 def CSUB_rrr    : IRRR<0x2B, 0x02, "csub">;
-def CSUBN_rrr   : IRRR<0x2B, 0x03, "csub">;
+def CSUBN_rrr   : IRRR<0x2B, 0x03, "csubn">;
 
 defm CSUB_A_: mI_CADDnA_CSUBnA_v110_<0x21, 0x02, 0, 0, "csub.a">;
 defm CSUBN_A_: mI_CADDnA_CSUBnA_v110_<0x21, 0x03, 0, 0, "csubn.a">;
@@ -749,28 +749,6 @@ class ISYS_1<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC1=RD>
 
 def DEBUG_sr  : ISR_0<0x00, 0x0A, "debug">;
 def DEBUG_sys : ISYS_0<0x0D, 0x04, "debug">;
-
-/// RRPW Instruction Formats
-/// op D[c], D[a], pos, width
-class IRRPW_DcDaPW<bits<8> op1, bits<2> op2, string asmstr>
-     : RRPW<op1, op2, (outs RD:$d), (ins RD:$s1, i32imm:$pos, i32imm:$width),
-            asmstr # " $d, $s1, $pos, $width", []>;
-/// op D[c], D[b], pos, width
-class IRRPW_DcDbPW<bits<8> op1, bits<2> op2, string asmstr>
-     : RRPW<op1, op2, (outs RD:$d), (ins RD:$s2, i32imm:$pos, i32imm:$width),
-            asmstr # " $d, $s2, $pos, $width", []>;
-/// op E[c], D[b], pos, width
-class IRRPW_EcDbPW<bits<8> op1, bits<2> op2, string asmstr>
-     : RRPW<op1, op2, (outs RE:$d), (ins RD:$s2, i32imm:$pos, i32imm:$width),
-            asmstr # " $d, $s2, $pos, $width", []>;
-/// op D[c], D[a], D[b], pos
-class IRRPW_DcDaDbP<bits<8> op1, bits<2> op2, string asmstr>
-     : RRPW<op1, op2, (outs RD:$d), (ins RD:$s1, RD:$s2, i32imm:$pos),
-            asmstr # " $d, $s1, $s2, $pos", []>;
-/// op D[c], D[a], D[b], pos, width
-class IRRPW_DcDaDbPW<bits<8> op1, bits<2> op2, string asmstr>
-     : RRPW<op1, op2, (outs RD:$d), (ins RD:$s1, RD:$s2, i32imm:$pos, i32imm:$width),
-            asmstr # " $d, $s1, $s2, $pos, $width", []>;
 
 /// RRRR Instruction Formats
 /// op D[c], D[a], D[b], D[d]
@@ -795,27 +773,9 @@ class IRRRW_cEbdw<bits<8> op1, bits<3> op2, string asmstr>
      : RRRW<op1, op2, (outs RE:$d), (ins RD:$s1, RD:$s2, RD:$s3, i32imm:$width),
             asmstr # " $d, $s2, $s3, $width", []>;
 
-/// op E[c], const4, pos, width
-class IRCPW_EcCPW<bits<8> op1, bits<2> op2, string asmstr>
-     : RCPW<op1, op2, (outs RE:$d), (ins i32imm:$const4, i32imm:$pos, i32imm:$width),
-            asmstr # " $d, $const4, $pos, $width", []>;
-/// op D[c], D[a], const4, pos, width
-class IRCPW_caCPW<bits<8> op1, bits<2> op2, string asmstr>
-     : RCPW<op1, op2, (outs RD:$d), (ins RD:$s1, i32imm:$const4, i32imm:$pos, i32imm:$width),
-            asmstr # " $d, $s1, $const4, $pos, $width", []>;
-
-
-// D[c], D[a], const4, E[d] (RCRR)
-class IRCRR_caCEd<bits<8> op1, bits<3> op2, string asmstr>
-     : RCRR<op1, op2, (outs RD:$d), (ins RD:$s1, i32imm:$const4, RE:$s3),
-            asmstr # " $d, $s1, $const4, $s3", []>;
-
-multiclass mIRRPWab_RRRR<bits<8> op1, bits<2> op2, bits<8> op3, bits<3> op4, string asmstr>{
-  def _rrpw : IRRPW_DcDaDbP<op1, op2, asmstr>;
-  def _rrrr : IRRRR<op3, op4, asmstr>;
-}
-
-defm DEXTR : mIRRPWab_RRRR<0x77, 0x00, 0x17, 0x04, "dextr">;
+def DEXTR_rrpw : RRPW<0x77, 0x00, (outs RD:$d), (ins RD:$s1, RD:$s2, i32imm:$pos, i32imm:$width),
+                      "dextr $d, $s1, $s2, $pos", []>;
+def DEXTR_rrrr : IRRRR<0x17, 0x04, "dextr">;
 
 def DIFSC_A_rr_v110 : IRR_dabn<0x01, 0x50, "difsc.a", RD, RA, RA>, NsRequires<[HasV110]>;
 
@@ -892,11 +852,13 @@ defm EQANY_H : mIRR_RC<0x0B, 0x76, 0x8B, 0x76, "eqany.h">;
 
 def EQZ_A_rr : IRR_a<0x01, 0x48, "eqz.a", RD, RA>;
 
-def EXTR_rrpw : IRRPW_DcDaPW<0x37, 0x02, "extr">;
+def EXTR_rrpw : RRPW<0x37, 0x02, (outs RD:$d), (ins RD:$s1, RD:$s2, i32imm:$pos, i32imm:$width),
+                    "extr $d, $s1, $pos, $width", []>;
 def EXTR_rrrr : IRRRR_ad<0x17, 0x02, "extr", RE>;
 def EXTR_rrrw : IRRRW_cadw<0x57, 0x02, "extr">;
 
-def EXTR_U_rrpw : IRRPW_DcDaPW<0x37, 0x03, "extr.u">;
+def EXTR_U_rrpw : RRPW<0x37, 0x03, (outs RD:$d), (ins RD:$s1, RD:$s2, i32imm:$pos, i32imm:$width),
+                      "extr.u $d, $s1, $pos, $width", []>;
 def EXTR_U_rrrr : IRRRR_ad<0x17, 0x03, "extr.u", RE>;
 def EXTR_U_rrrw : IRRRW_cadw<0x57, 0x03, "extr.u">;
 
@@ -918,21 +880,27 @@ defm GE : mI_U__RR_RC<0x0B, 0x14, 0x8B, 0x14,
                      0x0B, 0x15, 0x8B, 0x15, "ge">;
 def GE_A_rr : IRR_dab<0x01, 0x43, "ge.a", RD, RA, RA>;
 
-def IMASK_rcpw : IRCPW_EcCPW<0xB7, 0x01, "imask">;
-def IMASK_rcrw : RCRW<0xD7, 0x01, (outs RE:$d), (ins RD:$s3, i32imm:$const4, i32imm:$width),
+def IMASK_rcpw : RCPW<0xB7, 0x01, (outs RE:$d), (ins RD:$s1, i32imm:$const4, i32imm:$pos, i32imm:$width),
+                      "imask $d, $const4, $pos, $width", []>;
+def IMASK_rcrw : RCRW<0xD7, 0x01, (outs RE:$d), (ins RD:$s1, RD:$s3, i32imm:$const4, i32imm:$width),
                       "imask $d, $const4, $s3, $width", []>;
-def IMASK_rrpw : IRRPW_EcDbPW<0x37, 0x01, "imask">;
+def IMASK_rrpw : RRPW<0x37, 0x01, (outs RE:$d), (ins RD:$s1, RD:$s2, i32imm:$pos, i32imm:$width),
+                      "imask $d, $s2, $pos, $width", []>;
 def IMASK_rrrw : IRRRW_cEbdw<0x57, 0x01, "imask">;
 
 def INS_T  : IBIT<0x67, 0x00, "ins.t">;
 def INSN_T : IBIT<0x67, 0x01, "insn.t">;
 
-def INSERT_rcpw : IRCPW_caCPW  <0xB7, 0x00, "insert">;
-def INSERT_rcrr : IRCRR_caCEd<0x97, 0x00, "insert">;
+def INSERT_rcpw : RCPW<0xB7, 0x00,  (outs RD:$d), (ins RD:$s1, i32imm:$const4, i32imm:$pos, i32imm:$width),
+                      "insert $d, $s1, $const4, $pos, $width", []>;
+def INSERT_rcrr : RCRR<0x97, 0x00, (outs RD:$d), (ins RD:$s1, i32imm:$const4, RE:$s3),
+                      "insert $d, $s1, $const4, $s3", []>;
 def INSERT_rcrw : RCRW<0xD7, 0x00, (outs RD:$d), (ins RD:$s1, RD:$s3, i32imm:$const4, i32imm:$width),
                         "insert $d, $s1, $const4, $s3, $width", []>;
-def INSERT_rrpw : IRRPW_DcDaDbPW<0x37, 0x00, "insert">;
-def INSERT_rrrr : IRRRW_cabdw<0x17, 0x00, "insert">;
+def INSERT_rrpw : RRPW<0x37, 0x00, (outs RD:$d), (ins RD:$s1, RD:$s2, i32imm:$pos, i32imm:$width),
+                      "insert $d, $s1, $s2, $pos, $width", []>;
+def INSERT_rrrr : RRRW<0x17, 0x00, (outs RD:$d), (ins RD:$s1, RD:$s2, RE:$s3),
+                      "insert $d, $s1, $s2, $s3", []>;
 def INSERT_rrrw : IRRRW_cabdw<0x57, 0x00, "insert">;
 
 def ISYNC_sys : ISYS_0<0x0D, 0x13, "isync">;
@@ -1385,7 +1353,7 @@ multiclass mI_MOV_srr<bits<8> srr110,bits<8> srr1, string asmstr, RegisterClass 
 }
 
 multiclass mI_MOVA_<bits<8> rr1, bits<8> rr2, bits<8> src1, bits<8> srr110,bits<8> srr1, string asmstr> {
-  def _rr : IRR_dab<rr1, rr2, asmstr, RA, RA, RA>;
+  def _rr : IRR_b<rr1, rr2, asmstr, RA>;
   def _src: ISRC_dC<src1, asmstr, RA, u4imm>, Requires<[HasV120_UP]>;
   defm "" : mI_MOV_srr<srr110, srr1, asmstr>;
 }
@@ -1532,7 +1500,7 @@ def NE_A : IRR_dab<0x01, 0x41, "ne.a", RD, RA, RA>;
 def NEZ_A : IRR_a<0x01, 0x49, "nez.a", RD, RA>;
 
 def NOP_sr : ISR_0<0x00, 0x00, "nop">;
-def NOP_sys : ISYS_0<0x00, 0x0D, "nop">;
+def NOP_sys : ISYS_0<0x0D, 0x00, "nop">;
 
 multiclass mISR_1<bits<8> sr1op1, bits<4> sr1op2, bits<8> sr2op1, bits<4> sr2op2,
                 string asmstr>{
@@ -1595,7 +1563,7 @@ defm RFE_sys : mISYS_0<0x0D, 0x07, 0x0D, 0x06, "rfe">;
 
 def RFM_sys : ISYS_0<0x0D, 0x05, "rfm">;
 
-def RSLCX_sys : ISYS_0<0x0D, 0x09, "relck">;
+def RSLCX_sys : ISYS_0<0x0D, 0x09, "rslcx">;
 
 def RSTV_sys : ISYS_0<0x2F, 0x00, "rstv">;
 
@@ -1638,7 +1606,7 @@ defm SH_B : mIRR_RC<0x0F, 0x20, 0x8F, 0x20, "sh.b">, NsRequires<[HasV110]>;
 defm SH_H : mIRR_RC<0x0F, 0x40, 0x8F, 0x40, "sh.h">;
 
 defm SH_EQ : mIRR_RC<0x0B, 0x37, 0x8B, 0x37, "sh.eq">;
-defm SH_NE : mIRR_RC<0x0B, 0x38, 0x8B, 0x38, "sh.lt">;
+defm SH_NE : mIRR_RC<0x0B, 0x38, 0x8B, 0x38, "sh.ne">;
 defm SH_GE : mIRR_RC<0x0B, 0x3B, 0x8B, 0x3B, "sh.ge">;
 defm SH_GE_U : mIRR_RC<0x0B, 0x3C, 0x8B, 0x3C, "sh.ge.u">;
 defm SH_LT : mIRR_RC<0x0B, 0x39, 0x8B, 0x39, "sh.lt">;
@@ -1669,19 +1637,19 @@ class IBO_bso_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC>
 // P[b], A[a] (BO)(Bit-reverse Addressing Mode)
 class IBO_r_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC>
     : BO<op1, op2, (outs RP:$d), (ins RC:$s1),
-      asmstr # " $d, [${s1}+r]", []>;
+      asmstr # " [${d}+r], $s1", []>;
 // P[b], off10, A[a] (BO)(Circular Addressing Mode)
 class IBO_c_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC> 
     : BO<op1, op2, (outs RP:$d), (ins RC:$s1, s10imm:$off10),
-      asmstr # " $d, [${s1}+c]$off10", []>;
+      asmstr # " [${d}+c]$off10, $s1", []>;
 // A[b], off10, A[a] (BO)(Post-increment Addressing Mode)
 class IBO_pos_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC>
     : BO<op1, op2, (outs), (ins RC:$s1, RA:$s2, s10imm:$off10),
-      asmstr # " $s2, [${s1}+]$off10", []>;
+      asmstr # " [${s2}+]$off10, $s1", []>;
 // A[b], off10, A[a] (BO)(Pre-increment Addressing Mode)
 class IBO_pre_st<bits<8> op1, bits<6> op2, string asmstr, RegisterClass RC>
     : BO<op1, op2, (outs), (ins RC:$s1, RA:$s2, s10imm:$off10),
-      asmstr # " $s2, [+${s1}]$off10", []>;
+      asmstr # " [+${s2}]$off10, $s1", []>;
 
 
 multiclass mIBO_st<bits<8> prefix1, bits<8> prefix2,
@@ -1825,7 +1793,7 @@ multiclass mI_SWAP_<bits<8> abs1, bits<2> abs2,   ///_abs
 }
 
 defm SWAP_A    : mI_SWAP_<0xE5, 0x02, 0x49, 0x69, 0x22, 0x02, 0x12, "swap.a">, NsRequires<[HasV110]>;
-defm SWAP_W    : mI_SWAP_<0xE5, 0x00, 0x49, 0x69, 0x20, 0x00, 0x10, "swap.w">;
+defm SWAP_W    : mI_SWAP_<0xE5, 0x00, 0x49, 0x69, 0x20, 0x00, 0x10, "swap.w", RD>;
 def SWAP_W_bo_i: BO<0x69, 0x20, (outs RD:$d), (ins RP:$s1, s10imm:$off10),
                           "swap.w [${s1}+i], $d", []>, Requires<[HasV160_UP]>;
 
