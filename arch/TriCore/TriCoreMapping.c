@@ -30,6 +30,14 @@ static insn_map insns[] = {
 #include "TriCoreGenCSMappingInsn.inc"
 };
 
+unsigned int TriCore_map_insn_id(cs_struct *h, unsigned int id) {
+	unsigned short i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
+	if (i != 0) {
+		return insns[i].mapid;
+	}
+	return 0;
+}
+
 // given internal insn id, return public instruction info
 void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id) {
 	unsigned short i;

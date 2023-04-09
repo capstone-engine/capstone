@@ -42,9 +42,6 @@ void TriCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci) {
 	 */
 }
 
-void TriCore_insn_extract(MCInst *MI, const char *code) {
-}
-
 #define GET_INSTRINFO_ENUM
 
 #include "TriCoreGenInstrInfo.inc"
@@ -53,8 +50,12 @@ void TriCore_insn_extract(MCInst *MI, const char *code) {
 
 #include "TriCoreGenRegisterInfo.inc"
 
+static inline void fill_mem(cs_tricore *tc, uint8_t base, int32_t disp);
+
+static bool fixup_op_mem(MCInst *pInst, unsigned int reg, int32_t disp);
+
 static inline void fill_tricore_register(MCInst *MI, uint32_t reg) {
-	if (!(MI->csh->detail == CS_OPT_ON  && MI->flat_insn->detail)) return;
+	if (!(MI->csh->detail == CS_OPT_ON && MI->flat_insn->detail)) return;
 	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
 	tricore->operands[tricore->op_count]
 			.type = TRICORE_OP_REG;
@@ -64,8 +65,10 @@ static inline void fill_tricore_register(MCInst *MI, uint32_t reg) {
 }
 
 static inline void fill_tricore_imm(MCInst *MI, int32_t imm) {
-	if (!(MI->csh->detail == CS_OPT_ON  && MI->flat_insn->detail)) return;
+	if (!(MI->csh->detail == CS_OPT_ON && MI->flat_insn->detail)) return;
 	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
+	if (tricore->op_count >= 1 && tricore->operands[tricore->op_count - 1].type == TRICORE_OP_REG &&
+	    fixup_op_mem(MI, tricore->operands[tricore->op_count - 1].reg, imm)) { return; }
 	tricore->operands[tricore->op_count]
 			.type = TRICORE_OP_IMM;
 	tricore->operands[tricore->op_count]
@@ -73,16 +76,81 @@ static inline void fill_tricore_imm(MCInst *MI, int32_t imm) {
 	tricore->op_count++;
 }
 
-static inline void fill_tricore_mem(MCInst *MI, uint8_t base, int32_t disp) {
-	if (!(MI->csh->detail == CS_OPT_ON  && MI->flat_insn->detail)) return;
-	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
-	tricore->operands[tricore->op_count]
-			.type = TRICORE_OP_MEM;
-	tricore->operands[tricore->op_count]
-			.mem.base = base;
-	tricore->operands[tricore->op_count]
-			.mem.disp = disp;
-	tricore->op_count++;
+static bool fixup_op_mem(MCInst *pInst, unsigned int reg, int32_t disp) {
+	switch (TriCore_map_insn_id(pInst->csh, pInst->Opcode)) {
+		case TriCore_INS_LDMST:
+		case TriCore_INS_LDLCX:
+		case TriCore_INS_LD_A:
+		case TriCore_INS_LD_B:
+		case TriCore_INS_LD_BU:
+		case TriCore_INS_LD_H:
+		case TriCore_INS_LD_HU:
+		case TriCore_INS_LD_D:
+		case TriCore_INS_LD_DA:
+		case TriCore_INS_LD_W:
+		case TriCore_INS_LD_Q:
+		case TriCore_INS_STLCX:
+		case TriCore_INS_STUCX:
+		case TriCore_INS_ST_A:
+		case TriCore_INS_ST_B:
+		case TriCore_INS_ST_H:
+		case TriCore_INS_ST_D:
+		case TriCore_INS_ST_DA:
+		case TriCore_INS_ST_W:
+		case TriCore_INS_ST_Q:
+		case TriCore_INS_CACHEI_I:
+		case TriCore_INS_CACHEI_W:
+		case TriCore_INS_CACHEI_WI:
+		case TriCore_INS_CACHEA_I:
+		case TriCore_INS_CACHEA_W:
+		case TriCore_INS_CACHEA_WI:
+		case TriCore_INS_CMPSWAP_W:
+		case TriCore_INS_SWAP_A:
+		case TriCore_INS_SWAP_W:
+		case TriCore_INS_SWAPMSK_W:
+		case TriCore_INS_LEA:
+		case TriCore_INS_LHA: {
+			switch (MCInst_getOpcode(pInst)) {
+				case TriCore_LDMST_abs:
+				case TriCore_LDLCX_abs:
+				case TriCore_LD_A_abs:
+				case TriCore_LD_B_abs:
+				case TriCore_LD_BU_abs:
+				case TriCore_LD_H_abs:
+				case TriCore_LD_HU_abs:
+				case TriCore_LD_D_abs:
+				case TriCore_LD_DA_abs:
+				case TriCore_LD_W_abs:
+				case TriCore_LD_Q_abs:
+				case TriCore_STLCX_abs:
+				case TriCore_STUCX_abs:
+				case TriCore_ST_A_abs:
+				case TriCore_ST_B_abs:
+				case TriCore_ST_H_abs:
+				case TriCore_ST_D_abs:
+				case TriCore_ST_DA_abs:
+				case TriCore_ST_W_abs:
+				case TriCore_ST_Q_abs:
+				case TriCore_SWAP_A_abs:
+				case TriCore_SWAP_W_abs:
+				case TriCore_LEA_abs:
+				case TriCore_LHA_abs: {
+					return false;
+				}
+			}
+			cs_tricore *tc = &pInst->flat_insn->detail->tricore;
+			fill_mem(tc, reg, disp);
+			return true;
+		}
+	}
+	return false;
+}
+
+static inline void fill_mem(cs_tricore *tc, uint8_t base, int32_t disp) {
+	cs_tricore_op *op = &tc->operands[tc->op_count - 1];
+	op->type = TRICORE_OP_MEM;
+	op->mem.base = base;
+	op->mem.disp = disp;
 }
 
 static void printOperand(MCInst *MI, int OpNum, SStream *O) {
@@ -264,13 +332,7 @@ static inline void fixup_tricore_disp(MCInst *MI, int OpNum, int32_t disp) {
 
 	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
 	if (tricore->operands[tricore->op_count - 1].type != TRICORE_OP_REG) return;
-
-	tricore->operands[tricore->op_count - 1]
-			.type = TRICORE_OP_MEM;
-	tricore->operands[tricore->op_count - 1]
-			.mem.base = tricore->operands[tricore->op_count - 1].reg;
-	tricore->operands[tricore->op_count - 1]
-			.mem.disp = disp;
+	fill_mem(tricore, tricore->operands[tricore->op_count - 1].reg, disp);
 }
 
 static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O) {

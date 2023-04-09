@@ -7,6 +7,7 @@
 #include "../../MCInst.h"
 #include "../../MCRegisterInfo.h"
 #include "../../SStream.h"
+#include "./TriCoreMapping.h"
 
 const char *TriCore_getRegisterName(csh handle, unsigned int id);
 
