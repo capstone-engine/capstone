@@ -3,12 +3,22 @@
 import sys
 import os
 from capstone import *
+from pathlib import Path
+import codecs
+
 
 def test_file(fname):
-    print("Test %s" %fname);
-    f = open(fname)
-    lines = f.readlines()
-    f.close()
+    print("Test %s" % fname)
+    fpath = Path(fname) if isinstance(fname, str) else fname
+    if fpath.is_dir():
+        if fpath.exists() is False:
+            return
+        for f in fpath.iterdir():
+            test_file(f)
+        return
+
+    with fpath.open() as f:
+        lines = f.readlines()
 
     if not lines[0].startswith('# '):
         print("ERROR: decoding information is missing")
@@ -16,8 +26,8 @@ def test_file(fname):
 
     # skip '# ' at the front, then split line to get out hexcode
     # Note: option can be '', or 'None'
-    #print lines[0]
-    #print lines[0][2:].split(', ')
+    # print lines[0]
+    # print lines[0][2:].split(', ')
     (arch, mode, option) = lines[0][2:].split(', ')
     mode = mode.replace(' ', '')
     option = option.strip()
@@ -34,7 +44,7 @@ def test_file(fname):
         "CS_ARCH_RISCV": CS_ARCH_RISCV,
         "CS_ARCH_TRICORE": CS_ARCH_TRICORE,
     }
-    
+
     modes = {
         "CS_MODE_16": CS_MODE_16,
         "CS_MODE_32": CS_MODE_32,
@@ -44,21 +54,21 @@ def test_file(fname):
         "0": CS_MODE_ARM,
         "CS_MODE_ARM": CS_MODE_ARM,
         "CS_MODE_THUMB": CS_MODE_THUMB,
-        "CS_MODE_ARM+CS_MODE_V8": CS_MODE_ARM+CS_MODE_V8,
-        "CS_MODE_THUMB+CS_MODE_V8": CS_MODE_THUMB+CS_MODE_V8,
-        "CS_MODE_THUMB+CS_MODE_MCLASS": CS_MODE_THUMB+CS_MODE_MCLASS,
+        "CS_MODE_ARM+CS_MODE_V8": CS_MODE_ARM + CS_MODE_V8,
+        "CS_MODE_THUMB+CS_MODE_V8": CS_MODE_THUMB + CS_MODE_V8,
+        "CS_MODE_THUMB+CS_MODE_MCLASS": CS_MODE_THUMB + CS_MODE_MCLASS,
         "CS_MODE_LITTLE_ENDIAN": CS_MODE_LITTLE_ENDIAN,
         "CS_MODE_BIG_ENDIAN": CS_MODE_BIG_ENDIAN,
-        "CS_MODE_64+CS_MODE_LITTLE_ENDIAN": CS_MODE_64+CS_MODE_LITTLE_ENDIAN,
-        "CS_MODE_64+CS_MODE_BIG_ENDIAN": CS_MODE_64+CS_MODE_BIG_ENDIAN,
-        "CS_MODE_MIPS32+CS_MODE_MICRO": CS_MODE_MIPS32+CS_MODE_MICRO,
-        "CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN,
-        "CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN+CS_MODE_MICRO": CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN,
+        "CS_MODE_64+CS_MODE_LITTLE_ENDIAN": CS_MODE_64 + CS_MODE_LITTLE_ENDIAN,
+        "CS_MODE_64+CS_MODE_BIG_ENDIAN": CS_MODE_64 + CS_MODE_BIG_ENDIAN,
+        "CS_MODE_MIPS32+CS_MODE_MICRO": CS_MODE_MIPS32 + CS_MODE_MICRO,
+        "CS_MODE_MIPS32+CS_MODE_MICRO+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS32 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN,
+        "CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN+CS_MODE_MICRO": CS_MODE_MIPS32 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN,
         "CS_MODE_BIG_ENDIAN+CS_MODE_V9": CS_MODE_BIG_ENDIAN + CS_MODE_V9,
-        "CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN,
-        "CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN,
-        "CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN,
-        "CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN,
+        "CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN,
+        "CS_MODE_MIPS32+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS32 + CS_MODE_LITTLE_ENDIAN,
+        "CS_MODE_MIPS64+CS_MODE_LITTLE_ENDIAN": CS_MODE_MIPS64 + CS_MODE_LITTLE_ENDIAN,
+        "CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS64 + CS_MODE_BIG_ENDIAN,
         "CS_MODE_RISCV32": CS_MODE_RISCV32,
         "CS_MODE_RISCV64": CS_MODE_RISCV64,
         "CS_MODE_TRICORE_110": CS_MODE_TRICORE_110,
@@ -113,7 +123,7 @@ def test_file(fname):
         ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_162"): 53,
     }
 
-    #if not option in ('', 'None'):
+    # if not option in ('', 'None'):
     #    print archs[arch], modes[mode], options[option]
 
     for line in lines[1:]:
@@ -121,25 +131,26 @@ def test_file(fname):
         if line.startswith('#'):
             continue
         if line.startswith('// '):
-            line=line[3:]
-        #print("Check %s" %line)
+            line = line[3:]
+        # print("Check %s" %line)
         code = line.split(' = ')[0]
         if len(code) < 2:
             continue
         if code.find('//') >= 0:
             continue
-        hex_code = code.replace('0x', '')
-        hex_code = hex_code.replace(',', '')
+        hex_code = code.replace('0x', '').replace(',', '').replace(' ', '').strip()
         try:
-            hex_data = hex_code.strip().decode('hex')
-        except:
-            print "skipping", hex_code
-        fout = open("fuzz/corpus/%s_%s" % (os.path.basename(fname), hex_code), 'w')
-        if (arch, mode) not in mc_modes:
-            print "fail", arch, mode
-        fout.write(unichr(mc_modes[(arch, mode)]))
-        fout.write(hex_data)
-        fout.close()
+            hex_data = bytes.fromhex(hex_code)
+            fpath = Path("fuzz/corpus/%s_%s" % (os.path.basename(fname), hex_code))
+            if fpath.parent.exists() is False:
+                fpath.parent.mkdir(parents=True)
+            with fpath.open('wb') as fout:
+                if (arch, mode) not in mc_modes:
+                    print("fail", arch, mode)
+                fout.write(mc_modes[(arch, mode)].to_bytes(1, 'little'))
+                fout.write(hex_data)
+        except Exception as e:
+            print(f"skipping: {hex_code} with: {e}")
 
 
 if __name__ == '__main__':
@@ -148,6 +159,5 @@ if __name__ == '__main__':
         for fname in fnames:
             test_file(fname.strip())
     else:
-        #print("Usage: ./test_mc.py <input-file.s.cs>")
+        # print("Usage: ./test_mc.py <input-file.s.cs>")
         test_file(sys.argv[1])
-

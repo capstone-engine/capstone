@@ -105,8 +105,13 @@ static struct {
 	{ "sh4abe", CS_ARCH_SH, CS_MODE_BIG_ENDIAN | CS_MODE_SH4A | CS_MODE_SHFPU },
 	{ "sh4al-dsp", CS_ARCH_SH, CS_MODE_LITTLE_ENDIAN | CS_MODE_SH4A | CS_MODE_SHDSP | CS_MODE_SHFPU },
 	{ "sh4al-dspbe", CS_ARCH_SH, CS_MODE_BIG_ENDIAN | CS_MODE_SH4A | CS_MODE_SHDSP | CS_MODE_SHFPU },
-	{ "tricore", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
-
+	{ "tc110", CS_ARCH_TRICORE, CS_MODE_TRICORE_110 },
+	{ "tc120", CS_ARCH_TRICORE, CS_MODE_TRICORE_120 },
+	{ "tc130", CS_ARCH_TRICORE, CS_MODE_TRICORE_130 },
+	{ "tc131", CS_ARCH_TRICORE, CS_MODE_TRICORE_131 },
+	{ "tc160", CS_ARCH_TRICORE, CS_MODE_TRICORE_160 },
+	{ "tc161", CS_ARCH_TRICORE, CS_MODE_TRICORE_161 },
+	{ "tc162", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
 	{ NULL }
 };
 
@@ -322,7 +327,13 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_TRICORE)) {
-		printf("        tricore     tricore\n");
+		printf("        tc110       tricore V1.1\n");
+		printf("        tc120       tricore V1.2\n");
+		printf("        tc130       tricore V1.3\n");
+		printf("        tc131       tricore V1.3.1\n");
+		printf("        tc160       tricore V1.6\n");
+		printf("        tc161       tricore V1.6.1\n");
+		printf("        tc162       tricore V1.6.2\n");
 	}
 
 	printf("\nExtra options:\n");
@@ -483,7 +494,7 @@ int main(int argc, char **argv)
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
 				}
-				
+
 				if (cs_support(CS_ARCH_WASM)) {
 					printf("wasm=1 ");
 				}
