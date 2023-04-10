@@ -1292,11 +1292,11 @@
 static const MCOperandInfo OperandInfo2[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
 static const MCOperandInfo OperandInfo3[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
 static const MCOperandInfo OperandInfo4[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
-static const MCOperandInfo OperandInfo5[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
+static const MCOperandInfo OperandInfo5[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO /* = 0 */ }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
 static const MCOperandInfo OperandInfo6[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
 static const MCOperandInfo OperandInfo7[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, };
 static const MCOperandInfo OperandInfo8[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
-static const MCOperandInfo OperandInfo9[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO }, };
+static const MCOperandInfo OperandInfo9[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, MCOI_TIED_TO /* = 0 */ }, };
 static const MCOperandInfo OperandInfo10[] = { { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
 static const MCOperandInfo OperandInfo11[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, };
 static const MCOperandInfo OperandInfo12[] = { { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_UNKNOWN, 0 }, };
@@ -1401,1278 +1401,1278 @@ static const MCOperandInfo OperandInfo110[] = { { -1, 0, MCOI_OPERAND_UNKNOWN, 0
 static const MCOperandInfo OperandInfo111[] = { { TriCore_RERegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, };
 
 static const MCInstrDesc TriCoreInsts[] = {
-  { 1, OperandInfo2 },
-  { 0, 0 },
-  { 0, 0 },
-  { 1, OperandInfo3 },
-  { 1, OperandInfo3 },
-  { 1, OperandInfo3 },
-  { 1, OperandInfo3 },
-  { 0, 0 },
-  { 3, OperandInfo4 },
-  { 4, OperandInfo5 },
-  { 1, OperandInfo2 },
-  { 4, OperandInfo6 },
-  { 3, OperandInfo4 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo7 },
-  { 2, OperandInfo7 },
-  { 0, 0 },
-  { 1, OperandInfo3 },
-  { 1, OperandInfo3 },
-  { 4, OperandInfo8 },
-  { 2, OperandInfo9 },
-  { 2, OperandInfo10 },
-  { 0, 0 },
-  { 6, OperandInfo11 },
-  { 1, OperandInfo12 },
-  { 1, OperandInfo3 },
-  { 3, OperandInfo13 },
-  { 0, 0 },
-  { 2, OperandInfo14 },
-  { 1, OperandInfo2 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 2, OperandInfo15 },
-  { 3, OperandInfo16 },
-  { 0, 0 },
-  { 3, OperandInfo17 },
-  { 3, OperandInfo17 },
-  { 3, OperandInfo17 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 4, OperandInfo19 },
-  { 4, OperandInfo19 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 1, OperandInfo20 },
-  { 1, OperandInfo20 },
-  { 2, OperandInfo21 },
-  { 2, OperandInfo21 },
-  { 3, OperandInfo22 },
-  { 2, OperandInfo23 },
-  { 4, OperandInfo24 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo25 },
-  { 3, OperandInfo26 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo25 },
-  { 1, OperandInfo20 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 5, OperandInfo27 },
-  { 5, OperandInfo27 },
-  { 5, OperandInfo27 },
-  { 2, OperandInfo23 },
-  { 5, OperandInfo28 },
-  { 5, OperandInfo29 },
-  { 4, OperandInfo30 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 3, OperandInfo31 },
-  { 2, OperandInfo10 },
-  { 2, OperandInfo21 },
-  { 1, OperandInfo20 },
-  { 0, 0 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo21 },
-  { 2, OperandInfo21 },
-  { 1, OperandInfo20 },
-  { 3, OperandInfo32 },
-  { 2, OperandInfo23 },
-  { 3, OperandInfo17 },
-  { 2, OperandInfo23 },
-  { 3, OperandInfo33 },
-  { 3, OperandInfo33 },
-  { 3, OperandInfo33 },
-  { 4, OperandInfo34 },
-  { 4, OperandInfo34 },
-  { 3, OperandInfo33 },
-  { 3, OperandInfo33 },
-  { 4, OperandInfo35 },
-  { 4, OperandInfo35 },
-  { 4, OperandInfo30 },
-  { 4, OperandInfo30 },
-  { 5, OperandInfo36 },
-  { 4, OperandInfo30 },
-  { 5, OperandInfo36 },
-  { 4, OperandInfo30 },
-  { 5, OperandInfo36 },
-  { 4, OperandInfo30 },
-  { 5, OperandInfo36 },
-  { 4, OperandInfo30 },
-  { 4, OperandInfo30 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo33 },
-  { 3, OperandInfo33 },
-  { 4, OperandInfo37 },
-  { 4, OperandInfo37 },
-  { 4, OperandInfo37 },
-  { 4, OperandInfo37 },
-  { 4, OperandInfo37 },
-  { 4, OperandInfo37 },
-  { 4, OperandInfo37 },
-  { 4, OperandInfo37 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 4, OperandInfo19 },
-  { 4, OperandInfo19 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo33 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo25 },
-  { 3, OperandInfo33 },
-  { 3, OperandInfo32 },
-  { 2, OperandInfo25 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo33 },
-  { 3, OperandInfo33 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 1, OperandInfo2 },
-  { 3, OperandInfo38 },
-  { 4, OperandInfo39 },
-  { 3, OperandInfo40 },
-  { 4, OperandInfo41 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo21 },
-  { 2, OperandInfo21 },
-  { 3, OperandInfo26 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 3, OperandInfo18 },
-  { 4, OperandInfo19 },
-  { 2, OperandInfo25 },
-  { 2, OperandInfo21 },
-  { 2, OperandInfo42 },
-  { 4, OperandInfo43 },
-  { 3, OperandInfo40 },
-  { 4, OperandInfo43 },
-  { 4, OperandInfo43 },
-  { 3, OperandInfo22 },
-  { 3, OperandInfo40 },
-  { 3, OperandInfo40 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 2, OperandInfo23 },
-  { 4, OperandInfo44 },
-  { 4, OperandInfo44 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo49 },
-  { 3, OperandInfo50 },
-  { 4, OperandInfo51 },
-  { 4, OperandInfo52 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo53 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo54 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo56 },
-  { 3, OperandInfo45 },
-  { 4, OperandInfo57 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo60 },
-  { 2, OperandInfo60 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo61 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 1, OperandInfo62 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo61 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 1, OperandInfo62 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo61 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 1, OperandInfo62 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 4, OperandInfo52 },
-  { 4, OperandInfo63 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo57 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 4, OperandInfo52 },
-  { 4, OperandInfo63 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo57 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo67 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo66 },
-  { 2, OperandInfo68 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo63 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo63 },
-  { 4, OperandInfo57 },
-  { 0, 0 },
-  { 0, 0 },
-  { 5, OperandInfo69 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo70 },
-  { 0, 0 },
-  { 1, OperandInfo71 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 0, 0 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo73 },
-  { 2, OperandInfo60 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo73 },
-  { 2, OperandInfo60 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo73 },
-  { 2, OperandInfo60 },
-  { 0, 0 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo74 },
-  { 3, OperandInfo75 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 5, OperandInfo69 },
-  { 3, OperandInfo76 },
-  { 5, OperandInfo77 },
-  { 5, OperandInfo69 },
-  { 3, OperandInfo76 },
-  { 5, OperandInfo77 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo2 },
-  { 0, 0 },
-  { 0, 0 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo75 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 5, OperandInfo78 },
-  { 5, OperandInfo79 },
-  { 5, OperandInfo79 },
-  { 5, OperandInfo80 },
-  { 5, OperandInfo81 },
-  { 4, OperandInfo82 },
-  { 5, OperandInfo69 },
-  { 5, OperandInfo69 },
-  { 4, OperandInfo83 },
-  { 5, OperandInfo77 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 0, 0 },
-  { 2, OperandInfo47 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo73 },
-  { 1, OperandInfo2 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 2, OperandInfo7 },
-  { 2, OperandInfo7 },
-  { 2, OperandInfo7 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 1, OperandInfo65 },
-  { 1, OperandInfo65 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 1, OperandInfo2 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo84 },
-  { 3, OperandInfo46 },
-  { 2, OperandInfo7 },
-  { 2, OperandInfo7 },
-  { 2, OperandInfo7 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 3, OperandInfo85 },
-  { 2, OperandInfo86 },
-  { 2, OperandInfo86 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 3, OperandInfo85 },
-  { 2, OperandInfo86 },
-  { 2, OperandInfo86 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo87 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo67 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo66 },
-  { 2, OperandInfo68 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo88 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo48 },
-  { 2, OperandInfo89 },
-  { 3, OperandInfo48 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo91 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo92 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo91 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo92 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo61 },
-  { 3, OperandInfo93 },
-  { 3, OperandInfo94 },
-  { 3, OperandInfo93 },
-  { 3, OperandInfo93 },
-  { 2, OperandInfo95 },
-  { 2, OperandInfo87 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo67 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo66 },
-  { 2, OperandInfo68 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo91 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo92 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo91 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo92 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo91 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo92 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo91 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo92 },
-  { 3, OperandInfo90 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo48 },
-  { 2, OperandInfo55 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 3, OperandInfo75 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo47 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo57 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo73 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo58 },
-  { 1, OperandInfo65 },
-  { 3, OperandInfo54 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo56 },
-  { 3, OperandInfo100 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 3, OperandInfo75 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo74 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo87 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo72 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo87 },
-  { 2, OperandInfo47 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo99 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo57 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo98 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 5, OperandInfo96 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo73 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo97 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo73 },
-  { 2, OperandInfo102 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 3, OperandInfo104 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo104 },
-  { 3, OperandInfo72 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo103 },
-  { 4, OperandInfo64 },
-  { 3, OperandInfo104 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo104 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo72 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo74 },
-  { 3, OperandInfo75 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 0, 0 },
-  { 0, 0 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 4, OperandInfo83 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 1, OperandInfo71 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 0, 0 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo46 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 2, OperandInfo47 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 2, OperandInfo47 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 2, OperandInfo47 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 2, OperandInfo47 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 4, OperandInfo52 },
-  { 4, OperandInfo63 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo57 },
-  { 4, OperandInfo52 },
-  { 4, OperandInfo63 },
-  { 4, OperandInfo64 },
-  { 4, OperandInfo57 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo46 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo55 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo93 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo48 },
-  { 2, OperandInfo105 },
-  { 3, OperandInfo48 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo56 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo106 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo107 },
-  { 3, OperandInfo53 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo61 },
-  { 3, OperandInfo93 },
-  { 3, OperandInfo94 },
-  { 3, OperandInfo93 },
-  { 3, OperandInfo93 },
-  { 2, OperandInfo95 },
-  { 2, OperandInfo87 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo108 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo66 },
-  { 2, OperandInfo109 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo106 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo107 },
-  { 3, OperandInfo53 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo106 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo107 },
-  { 3, OperandInfo110 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo106 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo107 },
-  { 3, OperandInfo53 },
-  { 1, OperandInfo2 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo55 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo101 },
-  { 2, OperandInfo58 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo45 },
-  { 4, OperandInfo52 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo54 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo2 },
-  { 3, OperandInfo45 },
-  { 4, OperandInfo57 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 2, OperandInfo47 },
-  { 0, 0 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo108 },
-  { 3, OperandInfo67 },
-  { 3, OperandInfo66 },
-  { 3, OperandInfo66 },
-  { 2, OperandInfo109 },
-  { 2, OperandInfo55 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo93 },
-  { 3, OperandInfo48 },
-  { 3, OperandInfo48 },
-  { 2, OperandInfo105 },
-  { 2, OperandInfo58 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo106 },
-  { 3, OperandInfo91 },
-  { 3, OperandInfo90 },
-  { 3, OperandInfo90 },
-  { 2, OperandInfo107 },
-  { 1, OperandInfo2 },
-  { 1, OperandInfo71 },
-  { 0, 0 },
-  { 0, 0 },
-  { 1, OperandInfo111 },
-  { 1, OperandInfo71 },
-  { 1, OperandInfo71 },
-  { 0, 0 },
-  { 0, 0 },
-  { 2, OperandInfo60 },
-  { 2, OperandInfo60 },
-  { 1, OperandInfo71 },
-  { 2, OperandInfo47 },
-  { 0, 0 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 5, OperandInfo59 },
-  { 3, OperandInfo46 },
-  { 3, OperandInfo45 },
-  { 2, OperandInfo47 },
+  { 1, OperandInfo2 },  // Inst #0 = PHI
+  { 0, 0 },  // Inst #1 = INLINEASM
+  { 0, 0 },  // Inst #2 = INLINEASM_BR
+  { 1, OperandInfo3 },  // Inst #3 = CFI_INSTRUCTION
+  { 1, OperandInfo3 },  // Inst #4 = EH_LABEL
+  { 1, OperandInfo3 },  // Inst #5 = GC_LABEL
+  { 1, OperandInfo3 },  // Inst #6 = ANNOTATION_LABEL
+  { 0, 0 },  // Inst #7 = KILL
+  { 3, OperandInfo4 },  // Inst #8 = EXTRACT_SUBREG
+  { 4, OperandInfo5 },  // Inst #9 = INSERT_SUBREG
+  { 1, OperandInfo2 },  // Inst #10 = IMPLICIT_DEF
+  { 4, OperandInfo6 },  // Inst #11 = SUBREG_TO_REG
+  { 3, OperandInfo4 },  // Inst #12 = COPY_TO_REGCLASS
+  { 0, 0 },  // Inst #13 = DBG_VALUE
+  { 0, 0 },  // Inst #14 = DBG_VALUE_LIST
+  { 0, 0 },  // Inst #15 = DBG_INSTR_REF
+  { 0, 0 },  // Inst #16 = DBG_PHI
+  { 1, OperandInfo2 },  // Inst #17 = DBG_LABEL
+  { 2, OperandInfo7 },  // Inst #18 = REG_SEQUENCE
+  { 2, OperandInfo7 },  // Inst #19 = COPY
+  { 0, 0 },  // Inst #20 = BUNDLE
+  { 1, OperandInfo3 },  // Inst #21 = LIFETIME_START
+  { 1, OperandInfo3 },  // Inst #22 = LIFETIME_END
+  { 4, OperandInfo8 },  // Inst #23 = PSEUDO_PROBE
+  { 2, OperandInfo9 },  // Inst #24 = ARITH_FENCE
+  { 2, OperandInfo10 },  // Inst #25 = STACKMAP
+  { 0, 0 },  // Inst #26 = FENTRY_CALL
+  { 6, OperandInfo11 },  // Inst #27 = PATCHPOINT
+  { 1, OperandInfo12 },  // Inst #28 = LOAD_STACK_GUARD
+  { 1, OperandInfo3 },  // Inst #29 = PREALLOCATED_SETUP
+  { 3, OperandInfo13 },  // Inst #30 = PREALLOCATED_ARG
+  { 0, 0 },  // Inst #31 = STATEPOINT
+  { 2, OperandInfo14 },  // Inst #32 = LOCAL_ESCAPE
+  { 1, OperandInfo2 },  // Inst #33 = FAULTING_OP
+  { 0, 0 },  // Inst #34 = PATCHABLE_OP
+  { 0, 0 },  // Inst #35 = PATCHABLE_FUNCTION_ENTER
+  { 0, 0 },  // Inst #36 = PATCHABLE_RET
+  { 0, 0 },  // Inst #37 = PATCHABLE_FUNCTION_EXIT
+  { 0, 0 },  // Inst #38 = PATCHABLE_TAIL_CALL
+  { 2, OperandInfo15 },  // Inst #39 = PATCHABLE_EVENT_CALL
+  { 3, OperandInfo16 },  // Inst #40 = PATCHABLE_TYPED_EVENT_CALL
+  { 0, 0 },  // Inst #41 = ICALL_BRANCH_FUNNEL
+  { 3, OperandInfo17 },  // Inst #42 = G_ASSERT_SEXT
+  { 3, OperandInfo17 },  // Inst #43 = G_ASSERT_ZEXT
+  { 3, OperandInfo17 },  // Inst #44 = G_ASSERT_ALIGN
+  { 3, OperandInfo18 },  // Inst #45 = G_ADD
+  { 3, OperandInfo18 },  // Inst #46 = G_SUB
+  { 3, OperandInfo18 },  // Inst #47 = G_MUL
+  { 3, OperandInfo18 },  // Inst #48 = G_SDIV
+  { 3, OperandInfo18 },  // Inst #49 = G_UDIV
+  { 3, OperandInfo18 },  // Inst #50 = G_SREM
+  { 3, OperandInfo18 },  // Inst #51 = G_UREM
+  { 4, OperandInfo19 },  // Inst #52 = G_SDIVREM
+  { 4, OperandInfo19 },  // Inst #53 = G_UDIVREM
+  { 3, OperandInfo18 },  // Inst #54 = G_AND
+  { 3, OperandInfo18 },  // Inst #55 = G_OR
+  { 3, OperandInfo18 },  // Inst #56 = G_XOR
+  { 1, OperandInfo20 },  // Inst #57 = G_IMPLICIT_DEF
+  { 1, OperandInfo20 },  // Inst #58 = G_PHI
+  { 2, OperandInfo21 },  // Inst #59 = G_FRAME_INDEX
+  { 2, OperandInfo21 },  // Inst #60 = G_GLOBAL_VALUE
+  { 3, OperandInfo22 },  // Inst #61 = G_EXTRACT
+  { 2, OperandInfo23 },  // Inst #62 = G_UNMERGE_VALUES
+  { 4, OperandInfo24 },  // Inst #63 = G_INSERT
+  { 2, OperandInfo23 },  // Inst #64 = G_MERGE_VALUES
+  { 2, OperandInfo23 },  // Inst #65 = G_BUILD_VECTOR
+  { 2, OperandInfo23 },  // Inst #66 = G_BUILD_VECTOR_TRUNC
+  { 2, OperandInfo23 },  // Inst #67 = G_CONCAT_VECTORS
+  { 2, OperandInfo23 },  // Inst #68 = G_PTRTOINT
+  { 2, OperandInfo23 },  // Inst #69 = G_INTTOPTR
+  { 2, OperandInfo23 },  // Inst #70 = G_BITCAST
+  { 2, OperandInfo25 },  // Inst #71 = G_FREEZE
+  { 3, OperandInfo26 },  // Inst #72 = G_INTRINSIC_FPTRUNC_ROUND
+  { 2, OperandInfo25 },  // Inst #73 = G_INTRINSIC_TRUNC
+  { 2, OperandInfo25 },  // Inst #74 = G_INTRINSIC_ROUND
+  { 2, OperandInfo23 },  // Inst #75 = G_INTRINSIC_LRINT
+  { 2, OperandInfo25 },  // Inst #76 = G_INTRINSIC_ROUNDEVEN
+  { 1, OperandInfo20 },  // Inst #77 = G_READCYCLECOUNTER
+  { 2, OperandInfo23 },  // Inst #78 = G_LOAD
+  { 2, OperandInfo23 },  // Inst #79 = G_SEXTLOAD
+  { 2, OperandInfo23 },  // Inst #80 = G_ZEXTLOAD
+  { 5, OperandInfo27 },  // Inst #81 = G_INDEXED_LOAD
+  { 5, OperandInfo27 },  // Inst #82 = G_INDEXED_SEXTLOAD
+  { 5, OperandInfo27 },  // Inst #83 = G_INDEXED_ZEXTLOAD
+  { 2, OperandInfo23 },  // Inst #84 = G_STORE
+  { 5, OperandInfo28 },  // Inst #85 = G_INDEXED_STORE
+  { 5, OperandInfo29 },  // Inst #86 = G_ATOMIC_CMPXCHG_WITH_SUCCESS
+  { 4, OperandInfo30 },  // Inst #87 = G_ATOMIC_CMPXCHG
+  { 3, OperandInfo31 },  // Inst #88 = G_ATOMICRMW_XCHG
+  { 3, OperandInfo31 },  // Inst #89 = G_ATOMICRMW_ADD
+  { 3, OperandInfo31 },  // Inst #90 = G_ATOMICRMW_SUB
+  { 3, OperandInfo31 },  // Inst #91 = G_ATOMICRMW_AND
+  { 3, OperandInfo31 },  // Inst #92 = G_ATOMICRMW_NAND
+  { 3, OperandInfo31 },  // Inst #93 = G_ATOMICRMW_OR
+  { 3, OperandInfo31 },  // Inst #94 = G_ATOMICRMW_XOR
+  { 3, OperandInfo31 },  // Inst #95 = G_ATOMICRMW_MAX
+  { 3, OperandInfo31 },  // Inst #96 = G_ATOMICRMW_MIN
+  { 3, OperandInfo31 },  // Inst #97 = G_ATOMICRMW_UMAX
+  { 3, OperandInfo31 },  // Inst #98 = G_ATOMICRMW_UMIN
+  { 3, OperandInfo31 },  // Inst #99 = G_ATOMICRMW_FADD
+  { 3, OperandInfo31 },  // Inst #100 = G_ATOMICRMW_FSUB
+  { 3, OperandInfo31 },  // Inst #101 = G_ATOMICRMW_FMAX
+  { 3, OperandInfo31 },  // Inst #102 = G_ATOMICRMW_FMIN
+  { 2, OperandInfo10 },  // Inst #103 = G_FENCE
+  { 2, OperandInfo21 },  // Inst #104 = G_BRCOND
+  { 1, OperandInfo20 },  // Inst #105 = G_BRINDIRECT
+  { 0, 0 },  // Inst #106 = G_INVOKE_REGION_START
+  { 1, OperandInfo2 },  // Inst #107 = G_INTRINSIC
+  { 1, OperandInfo2 },  // Inst #108 = G_INTRINSIC_W_SIDE_EFFECTS
+  { 2, OperandInfo23 },  // Inst #109 = G_ANYEXT
+  { 2, OperandInfo23 },  // Inst #110 = G_TRUNC
+  { 2, OperandInfo21 },  // Inst #111 = G_CONSTANT
+  { 2, OperandInfo21 },  // Inst #112 = G_FCONSTANT
+  { 1, OperandInfo20 },  // Inst #113 = G_VASTART
+  { 3, OperandInfo32 },  // Inst #114 = G_VAARG
+  { 2, OperandInfo23 },  // Inst #115 = G_SEXT
+  { 3, OperandInfo17 },  // Inst #116 = G_SEXT_INREG
+  { 2, OperandInfo23 },  // Inst #117 = G_ZEXT
+  { 3, OperandInfo33 },  // Inst #118 = G_SHL
+  { 3, OperandInfo33 },  // Inst #119 = G_LSHR
+  { 3, OperandInfo33 },  // Inst #120 = G_ASHR
+  { 4, OperandInfo34 },  // Inst #121 = G_FSHL
+  { 4, OperandInfo34 },  // Inst #122 = G_FSHR
+  { 3, OperandInfo33 },  // Inst #123 = G_ROTR
+  { 3, OperandInfo33 },  // Inst #124 = G_ROTL
+  { 4, OperandInfo35 },  // Inst #125 = G_ICMP
+  { 4, OperandInfo35 },  // Inst #126 = G_FCMP
+  { 4, OperandInfo30 },  // Inst #127 = G_SELECT
+  { 4, OperandInfo30 },  // Inst #128 = G_UADDO
+  { 5, OperandInfo36 },  // Inst #129 = G_UADDE
+  { 4, OperandInfo30 },  // Inst #130 = G_USUBO
+  { 5, OperandInfo36 },  // Inst #131 = G_USUBE
+  { 4, OperandInfo30 },  // Inst #132 = G_SADDO
+  { 5, OperandInfo36 },  // Inst #133 = G_SADDE
+  { 4, OperandInfo30 },  // Inst #134 = G_SSUBO
+  { 5, OperandInfo36 },  // Inst #135 = G_SSUBE
+  { 4, OperandInfo30 },  // Inst #136 = G_UMULO
+  { 4, OperandInfo30 },  // Inst #137 = G_SMULO
+  { 3, OperandInfo18 },  // Inst #138 = G_UMULH
+  { 3, OperandInfo18 },  // Inst #139 = G_SMULH
+  { 3, OperandInfo18 },  // Inst #140 = G_UADDSAT
+  { 3, OperandInfo18 },  // Inst #141 = G_SADDSAT
+  { 3, OperandInfo18 },  // Inst #142 = G_USUBSAT
+  { 3, OperandInfo18 },  // Inst #143 = G_SSUBSAT
+  { 3, OperandInfo33 },  // Inst #144 = G_USHLSAT
+  { 3, OperandInfo33 },  // Inst #145 = G_SSHLSAT
+  { 4, OperandInfo37 },  // Inst #146 = G_SMULFIX
+  { 4, OperandInfo37 },  // Inst #147 = G_UMULFIX
+  { 4, OperandInfo37 },  // Inst #148 = G_SMULFIXSAT
+  { 4, OperandInfo37 },  // Inst #149 = G_UMULFIXSAT
+  { 4, OperandInfo37 },  // Inst #150 = G_SDIVFIX
+  { 4, OperandInfo37 },  // Inst #151 = G_UDIVFIX
+  { 4, OperandInfo37 },  // Inst #152 = G_SDIVFIXSAT
+  { 4, OperandInfo37 },  // Inst #153 = G_UDIVFIXSAT
+  { 3, OperandInfo18 },  // Inst #154 = G_FADD
+  { 3, OperandInfo18 },  // Inst #155 = G_FSUB
+  { 3, OperandInfo18 },  // Inst #156 = G_FMUL
+  { 4, OperandInfo19 },  // Inst #157 = G_FMA
+  { 4, OperandInfo19 },  // Inst #158 = G_FMAD
+  { 3, OperandInfo18 },  // Inst #159 = G_FDIV
+  { 3, OperandInfo18 },  // Inst #160 = G_FREM
+  { 3, OperandInfo18 },  // Inst #161 = G_FPOW
+  { 3, OperandInfo33 },  // Inst #162 = G_FPOWI
+  { 2, OperandInfo25 },  // Inst #163 = G_FEXP
+  { 2, OperandInfo25 },  // Inst #164 = G_FEXP2
+  { 2, OperandInfo25 },  // Inst #165 = G_FLOG
+  { 2, OperandInfo25 },  // Inst #166 = G_FLOG2
+  { 2, OperandInfo25 },  // Inst #167 = G_FLOG10
+  { 2, OperandInfo25 },  // Inst #168 = G_FNEG
+  { 2, OperandInfo23 },  // Inst #169 = G_FPEXT
+  { 2, OperandInfo23 },  // Inst #170 = G_FPTRUNC
+  { 2, OperandInfo23 },  // Inst #171 = G_FPTOSI
+  { 2, OperandInfo23 },  // Inst #172 = G_FPTOUI
+  { 2, OperandInfo23 },  // Inst #173 = G_SITOFP
+  { 2, OperandInfo23 },  // Inst #174 = G_UITOFP
+  { 2, OperandInfo25 },  // Inst #175 = G_FABS
+  { 3, OperandInfo33 },  // Inst #176 = G_FCOPYSIGN
+  { 3, OperandInfo32 },  // Inst #177 = G_IS_FPCLASS
+  { 2, OperandInfo25 },  // Inst #178 = G_FCANONICALIZE
+  { 3, OperandInfo18 },  // Inst #179 = G_FMINNUM
+  { 3, OperandInfo18 },  // Inst #180 = G_FMAXNUM
+  { 3, OperandInfo18 },  // Inst #181 = G_FMINNUM_IEEE
+  { 3, OperandInfo18 },  // Inst #182 = G_FMAXNUM_IEEE
+  { 3, OperandInfo18 },  // Inst #183 = G_FMINIMUM
+  { 3, OperandInfo18 },  // Inst #184 = G_FMAXIMUM
+  { 3, OperandInfo33 },  // Inst #185 = G_PTR_ADD
+  { 3, OperandInfo33 },  // Inst #186 = G_PTRMASK
+  { 3, OperandInfo18 },  // Inst #187 = G_SMIN
+  { 3, OperandInfo18 },  // Inst #188 = G_SMAX
+  { 3, OperandInfo18 },  // Inst #189 = G_UMIN
+  { 3, OperandInfo18 },  // Inst #190 = G_UMAX
+  { 2, OperandInfo25 },  // Inst #191 = G_ABS
+  { 2, OperandInfo23 },  // Inst #192 = G_LROUND
+  { 2, OperandInfo23 },  // Inst #193 = G_LLROUND
+  { 1, OperandInfo2 },  // Inst #194 = G_BR
+  { 3, OperandInfo38 },  // Inst #195 = G_BRJT
+  { 4, OperandInfo39 },  // Inst #196 = G_INSERT_VECTOR_ELT
+  { 3, OperandInfo40 },  // Inst #197 = G_EXTRACT_VECTOR_ELT
+  { 4, OperandInfo41 },  // Inst #198 = G_SHUFFLE_VECTOR
+  { 2, OperandInfo23 },  // Inst #199 = G_CTTZ
+  { 2, OperandInfo23 },  // Inst #200 = G_CTTZ_ZERO_UNDEF
+  { 2, OperandInfo23 },  // Inst #201 = G_CTLZ
+  { 2, OperandInfo23 },  // Inst #202 = G_CTLZ_ZERO_UNDEF
+  { 2, OperandInfo23 },  // Inst #203 = G_CTPOP
+  { 2, OperandInfo25 },  // Inst #204 = G_BSWAP
+  { 2, OperandInfo25 },  // Inst #205 = G_BITREVERSE
+  { 2, OperandInfo25 },  // Inst #206 = G_FCEIL
+  { 2, OperandInfo25 },  // Inst #207 = G_FCOS
+  { 2, OperandInfo25 },  // Inst #208 = G_FSIN
+  { 2, OperandInfo25 },  // Inst #209 = G_FSQRT
+  { 2, OperandInfo25 },  // Inst #210 = G_FFLOOR
+  { 2, OperandInfo25 },  // Inst #211 = G_FRINT
+  { 2, OperandInfo25 },  // Inst #212 = G_FNEARBYINT
+  { 2, OperandInfo23 },  // Inst #213 = G_ADDRSPACE_CAST
+  { 2, OperandInfo21 },  // Inst #214 = G_BLOCK_ADDR
+  { 2, OperandInfo21 },  // Inst #215 = G_JUMP_TABLE
+  { 3, OperandInfo26 },  // Inst #216 = G_DYN_STACKALLOC
+  { 3, OperandInfo18 },  // Inst #217 = G_STRICT_FADD
+  { 3, OperandInfo18 },  // Inst #218 = G_STRICT_FSUB
+  { 3, OperandInfo18 },  // Inst #219 = G_STRICT_FMUL
+  { 3, OperandInfo18 },  // Inst #220 = G_STRICT_FDIV
+  { 3, OperandInfo18 },  // Inst #221 = G_STRICT_FREM
+  { 4, OperandInfo19 },  // Inst #222 = G_STRICT_FMA
+  { 2, OperandInfo25 },  // Inst #223 = G_STRICT_FSQRT
+  { 2, OperandInfo21 },  // Inst #224 = G_READ_REGISTER
+  { 2, OperandInfo42 },  // Inst #225 = G_WRITE_REGISTER
+  { 4, OperandInfo43 },  // Inst #226 = G_MEMCPY
+  { 3, OperandInfo40 },  // Inst #227 = G_MEMCPY_INLINE
+  { 4, OperandInfo43 },  // Inst #228 = G_MEMMOVE
+  { 4, OperandInfo43 },  // Inst #229 = G_MEMSET
+  { 3, OperandInfo22 },  // Inst #230 = G_BZERO
+  { 3, OperandInfo40 },  // Inst #231 = G_VECREDUCE_SEQ_FADD
+  { 3, OperandInfo40 },  // Inst #232 = G_VECREDUCE_SEQ_FMUL
+  { 2, OperandInfo23 },  // Inst #233 = G_VECREDUCE_FADD
+  { 2, OperandInfo23 },  // Inst #234 = G_VECREDUCE_FMUL
+  { 2, OperandInfo23 },  // Inst #235 = G_VECREDUCE_FMAX
+  { 2, OperandInfo23 },  // Inst #236 = G_VECREDUCE_FMIN
+  { 2, OperandInfo23 },  // Inst #237 = G_VECREDUCE_ADD
+  { 2, OperandInfo23 },  // Inst #238 = G_VECREDUCE_MUL
+  { 2, OperandInfo23 },  // Inst #239 = G_VECREDUCE_AND
+  { 2, OperandInfo23 },  // Inst #240 = G_VECREDUCE_OR
+  { 2, OperandInfo23 },  // Inst #241 = G_VECREDUCE_XOR
+  { 2, OperandInfo23 },  // Inst #242 = G_VECREDUCE_SMAX
+  { 2, OperandInfo23 },  // Inst #243 = G_VECREDUCE_SMIN
+  { 2, OperandInfo23 },  // Inst #244 = G_VECREDUCE_UMAX
+  { 2, OperandInfo23 },  // Inst #245 = G_VECREDUCE_UMIN
+  { 4, OperandInfo44 },  // Inst #246 = G_SBFX
+  { 4, OperandInfo44 },  // Inst #247 = G_UBFX
+  { 3, OperandInfo45 },  // Inst #248 = ABSDIFS_B_rr_v110
+  { 3, OperandInfo45 },  // Inst #249 = ABSDIFS_H_rr
+  { 3, OperandInfo45 },  // Inst #250 = ABSDIFS_rc
+  { 3, OperandInfo45 },  // Inst #251 = ABSDIFS_rr
+  { 3, OperandInfo45 },  // Inst #252 = ABSDIF_B_rr
+  { 3, OperandInfo45 },  // Inst #253 = ABSDIF_H_rr
+  { 3, OperandInfo46 },  // Inst #254 = ABSDIF_rc
+  { 3, OperandInfo45 },  // Inst #255 = ABSDIF_rr
+  { 3, OperandInfo45 },  // Inst #256 = ABSS_B_rr_v110
+  { 3, OperandInfo45 },  // Inst #257 = ABSS_H_rr
+  { 3, OperandInfo45 },  // Inst #258 = ABSS_rr
+  { 2, OperandInfo47 },  // Inst #259 = ABS_B_rr
+  { 2, OperandInfo47 },  // Inst #260 = ABS_H_rr
+  { 2, OperandInfo47 },  // Inst #261 = ABS_rr
+  { 3, OperandInfo46 },  // Inst #262 = ADDC_rc
+  { 3, OperandInfo45 },  // Inst #263 = ADDC_rr
+  { 3, OperandInfo48 },  // Inst #264 = ADDIH_A_rlc
+  { 3, OperandInfo46 },  // Inst #265 = ADDIH_rlc
+  { 3, OperandInfo46 },  // Inst #266 = ADDI_rlc
+  { 3, OperandInfo49 },  // Inst #267 = ADDSC_AT_rr
+  { 3, OperandInfo50 },  // Inst #268 = ADDSC_AT_rr_v110
+  { 4, OperandInfo51 },  // Inst #269 = ADDSC_A_rr
+  { 4, OperandInfo52 },  // Inst #270 = ADDSC_A_rr_v110
+  { 3, OperandInfo48 },  // Inst #271 = ADDSC_A_srrs
+  { 3, OperandInfo53 },  // Inst #272 = ADDSC_A_srrs_v110
+  { 3, OperandInfo45 },  // Inst #273 = ADDS_BU_rr_v110
+  { 3, OperandInfo45 },  // Inst #274 = ADDS_B_rr
+  { 3, OperandInfo45 },  // Inst #275 = ADDS_H
+  { 3, OperandInfo45 },  // Inst #276 = ADDS_HU
+  { 3, OperandInfo45 },  // Inst #277 = ADDS_U
+  { 3, OperandInfo46 },  // Inst #278 = ADDS_U_rc
+  { 3, OperandInfo46 },  // Inst #279 = ADDS_rc
+  { 3, OperandInfo45 },  // Inst #280 = ADDS_rr
+  { 2, OperandInfo47 },  // Inst #281 = ADDS_srr
+  { 3, OperandInfo46 },  // Inst #282 = ADDX_rc
+  { 3, OperandInfo45 },  // Inst #283 = ADDX_rr
+  { 3, OperandInfo54 },  // Inst #284 = ADD_A_rr
+  { 2, OperandInfo55 },  // Inst #285 = ADD_A_src
+  { 2, OperandInfo56 },  // Inst #286 = ADD_A_srr
+  { 3, OperandInfo45 },  // Inst #287 = ADD_B_rr
+  { 4, OperandInfo57 },  // Inst #288 = ADD_F_rrr
+  { 3, OperandInfo45 },  // Inst #289 = ADD_H_rr
+  { 3, OperandInfo46 },  // Inst #290 = ADD_rc
+  { 3, OperandInfo45 },  // Inst #291 = ADD_rr
+  { 2, OperandInfo58 },  // Inst #292 = ADD_src
+  { 2, OperandInfo58 },  // Inst #293 = ADD_src_15a
+  { 2, OperandInfo58 },  // Inst #294 = ADD_src_a15
+  { 2, OperandInfo47 },  // Inst #295 = ADD_srr
+  { 2, OperandInfo47 },  // Inst #296 = ADD_srr_15a
+  { 2, OperandInfo47 },  // Inst #297 = ADD_srr_a15
+  { 5, OperandInfo59 },  // Inst #298 = ANDN_T
+  { 3, OperandInfo46 },  // Inst #299 = ANDN_rc
+  { 3, OperandInfo45 },  // Inst #300 = ANDN_rr
+  { 5, OperandInfo59 },  // Inst #301 = AND_ANDN_T
+  { 5, OperandInfo59 },  // Inst #302 = AND_AND_T
+  { 3, OperandInfo46 },  // Inst #303 = AND_EQ_rc
+  { 3, OperandInfo45 },  // Inst #304 = AND_EQ_rr
+  { 3, OperandInfo46 },  // Inst #305 = AND_GE_U_rc
+  { 3, OperandInfo45 },  // Inst #306 = AND_GE_U_rr
+  { 3, OperandInfo46 },  // Inst #307 = AND_GE_rc
+  { 3, OperandInfo45 },  // Inst #308 = AND_GE_rr
+  { 3, OperandInfo46 },  // Inst #309 = AND_LT_U_rc
+  { 3, OperandInfo45 },  // Inst #310 = AND_LT_U_rr
+  { 3, OperandInfo46 },  // Inst #311 = AND_LT_rc
+  { 3, OperandInfo45 },  // Inst #312 = AND_LT_rr
+  { 3, OperandInfo46 },  // Inst #313 = AND_NE_rc
+  { 3, OperandInfo45 },  // Inst #314 = AND_NE_rr
+  { 5, OperandInfo59 },  // Inst #315 = AND_NOR_T
+  { 5, OperandInfo59 },  // Inst #316 = AND_OR_T
+  { 5, OperandInfo59 },  // Inst #317 = AND_T
+  { 3, OperandInfo46 },  // Inst #318 = AND_rc
+  { 3, OperandInfo45 },  // Inst #319 = AND_rr
+  { 1, OperandInfo2 },  // Inst #320 = AND_sc
+  { 1, OperandInfo2 },  // Inst #321 = AND_sc_v110
+  { 2, OperandInfo47 },  // Inst #322 = AND_srr
+  { 2, OperandInfo47 },  // Inst #323 = AND_srr_v110
+  { 1, OperandInfo2 },  // Inst #324 = BISR_rc
+  { 1, OperandInfo2 },  // Inst #325 = BISR_rc_v161
+  { 1, OperandInfo2 },  // Inst #326 = BISR_sc
+  { 1, OperandInfo2 },  // Inst #327 = BISR_sc_v110
+  { 3, OperandInfo45 },  // Inst #328 = BMERGAE_rr_v110
+  { 3, OperandInfo45 },  // Inst #329 = BMERGE_rr
+  { 2, OperandInfo60 },  // Inst #330 = BSPLIT_rr
+  { 2, OperandInfo60 },  // Inst #331 = BSPLIT_rr_v110
+  { 2, OperandInfo55 },  // Inst #332 = CACHEA_I_bo_bso
+  { 2, OperandInfo61 },  // Inst #333 = CACHEA_I_bo_c
+  { 2, OperandInfo55 },  // Inst #334 = CACHEA_I_bo_pos
+  { 2, OperandInfo55 },  // Inst #335 = CACHEA_I_bo_pre
+  { 1, OperandInfo62 },  // Inst #336 = CACHEA_I_bo_r
+  { 2, OperandInfo55 },  // Inst #337 = CACHEA_WI_bo_bso
+  { 2, OperandInfo61 },  // Inst #338 = CACHEA_WI_bo_c
+  { 2, OperandInfo55 },  // Inst #339 = CACHEA_WI_bo_pos
+  { 2, OperandInfo55 },  // Inst #340 = CACHEA_WI_bo_pre
+  { 1, OperandInfo62 },  // Inst #341 = CACHEA_WI_bo_r
+  { 2, OperandInfo55 },  // Inst #342 = CACHEA_W_bo_bso
+  { 2, OperandInfo61 },  // Inst #343 = CACHEA_W_bo_c
+  { 2, OperandInfo55 },  // Inst #344 = CACHEA_W_bo_pos
+  { 2, OperandInfo55 },  // Inst #345 = CACHEA_W_bo_pre
+  { 1, OperandInfo62 },  // Inst #346 = CACHEA_W_bo_r
+  { 2, OperandInfo55 },  // Inst #347 = CACHEI_I_bo_bso
+  { 2, OperandInfo55 },  // Inst #348 = CACHEI_I_bo_pos
+  { 2, OperandInfo55 },  // Inst #349 = CACHEI_I_bo_pre
+  { 2, OperandInfo55 },  // Inst #350 = CACHEI_WI_bo_bso
+  { 2, OperandInfo55 },  // Inst #351 = CACHEI_WI_bo_pos
+  { 2, OperandInfo55 },  // Inst #352 = CACHEI_WI_bo_pre
+  { 2, OperandInfo55 },  // Inst #353 = CACHEI_W_bo_bso
+  { 2, OperandInfo55 },  // Inst #354 = CACHEI_W_bo_pos
+  { 2, OperandInfo55 },  // Inst #355 = CACHEI_W_bo_pre
+  { 4, OperandInfo52 },  // Inst #356 = CADDN_A_rcr_v110
+  { 4, OperandInfo63 },  // Inst #357 = CADDN_A_rrr_v110
+  { 4, OperandInfo64 },  // Inst #358 = CADDN_rcr
+  { 4, OperandInfo57 },  // Inst #359 = CADDN_rrr
+  { 2, OperandInfo58 },  // Inst #360 = CADDN_src
+  { 2, OperandInfo47 },  // Inst #361 = CADDN_srr_v110
+  { 4, OperandInfo52 },  // Inst #362 = CADD_A_rcr_v110
+  { 4, OperandInfo63 },  // Inst #363 = CADD_A_rrr_v110
+  { 4, OperandInfo64 },  // Inst #364 = CADD_rcr
+  { 4, OperandInfo57 },  // Inst #365 = CADD_rrr
+  { 2, OperandInfo58 },  // Inst #366 = CADD_src
+  { 2, OperandInfo47 },  // Inst #367 = CADD_srr_v110
+  { 1, OperandInfo2 },  // Inst #368 = CALLA_b
+  { 1, OperandInfo65 },  // Inst #369 = CALLI_rr
+  { 1, OperandInfo65 },  // Inst #370 = CALLI_rr_v110
+  { 1, OperandInfo2 },  // Inst #371 = CALL_b
+  { 1, OperandInfo2 },  // Inst #372 = CALL_sb
+  { 2, OperandInfo47 },  // Inst #373 = CLO_B_rr_v110
+  { 2, OperandInfo47 },  // Inst #374 = CLO_H_rr
+  { 2, OperandInfo47 },  // Inst #375 = CLO_rr
+  { 2, OperandInfo47 },  // Inst #376 = CLS_B_rr_v110
+  { 2, OperandInfo47 },  // Inst #377 = CLS_H_rr
+  { 2, OperandInfo47 },  // Inst #378 = CLS_rr
+  { 2, OperandInfo47 },  // Inst #379 = CLZ_B_rr_v110
+  { 2, OperandInfo47 },  // Inst #380 = CLZ_H_rr
+  { 2, OperandInfo47 },  // Inst #381 = CLZ_rr
+  { 2, OperandInfo58 },  // Inst #382 = CMOVN_src
+  { 2, OperandInfo47 },  // Inst #383 = CMOVN_srr
+  { 2, OperandInfo58 },  // Inst #384 = CMOV_src
+  { 2, OperandInfo47 },  // Inst #385 = CMOV_srr
+  { 3, OperandInfo66 },  // Inst #386 = CMPSWAP_W_bo_bso
+  { 3, OperandInfo67 },  // Inst #387 = CMPSWAP_W_bo_c
+  { 3, OperandInfo66 },  // Inst #388 = CMPSWAP_W_bo_pos
+  { 3, OperandInfo66 },  // Inst #389 = CMPSWAP_W_bo_pre
+  { 2, OperandInfo68 },  // Inst #390 = CMPSWAP_W_bo_r
+  { 3, OperandInfo45 },  // Inst #391 = CMP_F_rr
+  { 3, OperandInfo45 },  // Inst #392 = CRC32B_W_rr
+  { 3, OperandInfo45 },  // Inst #393 = CRC32L_W_rr
+  { 3, OperandInfo45 },  // Inst #394 = CRC32_B_rr
+  { 4, OperandInfo57 },  // Inst #395 = CRCN_rrr
+  { 4, OperandInfo63 },  // Inst #396 = CSUBN_A__rrr_v110
+  { 4, OperandInfo57 },  // Inst #397 = CSUBN_rrr
+  { 4, OperandInfo63 },  // Inst #398 = CSUB_A__rrr_v110
+  { 4, OperandInfo57 },  // Inst #399 = CSUB_rrr
+  { 0, 0 },  // Inst #400 = DEBUG_sr
+  { 0, 0 },  // Inst #401 = DEBUG_sys
+  { 5, OperandInfo69 },  // Inst #402 = DEXTR_rrpw
+  { 4, OperandInfo57 },  // Inst #403 = DEXTR_rrrr
+  { 4, OperandInfo70 },  // Inst #404 = DIFSC_A_rr_v110
+  { 0, 0 },  // Inst #405 = DISABLE_sys
+  { 1, OperandInfo71 },  // Inst #406 = DISABLE_sys_1
+  { 3, OperandInfo45 },  // Inst #407 = DIV_F_rr
+  { 3, OperandInfo72 },  // Inst #408 = DIV_U_rr
+  { 3, OperandInfo72 },  // Inst #409 = DIV_rr
+  { 0, 0 },  // Inst #410 = DSYNC_sys
+  { 4, OperandInfo73 },  // Inst #411 = DVADJ_rrr
+  { 4, OperandInfo73 },  // Inst #412 = DVADJ_rrr_v110
+  { 2, OperandInfo60 },  // Inst #413 = DVADJ_srr_v110
+  { 3, OperandInfo72 },  // Inst #414 = DVINIT_BU_rr
+  { 3, OperandInfo72 },  // Inst #415 = DVINIT_BU_rr_v110
+  { 3, OperandInfo72 },  // Inst #416 = DVINIT_B_rr
+  { 3, OperandInfo72 },  // Inst #417 = DVINIT_B_rr_v110
+  { 3, OperandInfo72 },  // Inst #418 = DVINIT_HU_rr
+  { 3, OperandInfo72 },  // Inst #419 = DVINIT_HU_rr_v110
+  { 3, OperandInfo72 },  // Inst #420 = DVINIT_H_rr
+  { 3, OperandInfo72 },  // Inst #421 = DVINIT_H_rr_v110
+  { 3, OperandInfo72 },  // Inst #422 = DVINIT_U_rr
+  { 3, OperandInfo72 },  // Inst #423 = DVINIT_U_rr_v110
+  { 3, OperandInfo72 },  // Inst #424 = DVINIT_rr
+  { 3, OperandInfo72 },  // Inst #425 = DVINIT_rr_v110
+  { 4, OperandInfo73 },  // Inst #426 = DVSTEP_U_rrr
+  { 4, OperandInfo73 },  // Inst #427 = DVSTEP_U_rrrv110
+  { 2, OperandInfo60 },  // Inst #428 = DVSTEP_Uv110
+  { 4, OperandInfo73 },  // Inst #429 = DVSTEP_rrr
+  { 4, OperandInfo73 },  // Inst #430 = DVSTEP_rrrv110
+  { 2, OperandInfo60 },  // Inst #431 = DVSTEPv110
+  { 0, 0 },  // Inst #432 = ENABLE_sys
+  { 3, OperandInfo46 },  // Inst #433 = EQANY_B_rc
+  { 3, OperandInfo45 },  // Inst #434 = EQANY_B_rr
+  { 3, OperandInfo46 },  // Inst #435 = EQANY_H_rc
+  { 3, OperandInfo45 },  // Inst #436 = EQANY_H_rr
+  { 2, OperandInfo74 },  // Inst #437 = EQZ_A_rr
+  { 3, OperandInfo75 },  // Inst #438 = EQ_A_rr
+  { 3, OperandInfo45 },  // Inst #439 = EQ_B_rr
+  { 3, OperandInfo45 },  // Inst #440 = EQ_H_rr
+  { 3, OperandInfo45 },  // Inst #441 = EQ_W_rr
+  { 3, OperandInfo46 },  // Inst #442 = EQ_rc
+  { 3, OperandInfo45 },  // Inst #443 = EQ_rr
+  { 2, OperandInfo58 },  // Inst #444 = EQ_src
+  { 2, OperandInfo47 },  // Inst #445 = EQ_srr
+  { 5, OperandInfo69 },  // Inst #446 = EXTR_U_rrpw
+  { 3, OperandInfo76 },  // Inst #447 = EXTR_U_rrrr
+  { 5, OperandInfo77 },  // Inst #448 = EXTR_U_rrrw
+  { 5, OperandInfo69 },  // Inst #449 = EXTR_rrpw
+  { 3, OperandInfo76 },  // Inst #450 = EXTR_rrrr
+  { 5, OperandInfo77 },  // Inst #451 = EXTR_rrrw
+  { 1, OperandInfo2 },  // Inst #452 = FCALLA_b
+  { 1, OperandInfo65 },  // Inst #453 = FCALLA_i
+  { 1, OperandInfo2 },  // Inst #454 = FCALL_b
+  { 0, 0 },  // Inst #455 = FRET_sr
+  { 0, 0 },  // Inst #456 = FRET_sys
+  { 2, OperandInfo47 },  // Inst #457 = FTOHP_rr
+  { 2, OperandInfo47 },  // Inst #458 = FTOIZ_rr
+  { 2, OperandInfo47 },  // Inst #459 = FTOI_rr
+  { 3, OperandInfo45 },  // Inst #460 = FTOQ31Z_rr
+  { 3, OperandInfo45 },  // Inst #461 = FTOQ31_rr
+  { 2, OperandInfo47 },  // Inst #462 = FTOUZ_rr
+  { 2, OperandInfo47 },  // Inst #463 = FTOU_rr
+  { 3, OperandInfo75 },  // Inst #464 = GE_A_rr
+  { 3, OperandInfo46 },  // Inst #465 = GE_U_rc
+  { 3, OperandInfo45 },  // Inst #466 = GE_U_rr
+  { 3, OperandInfo46 },  // Inst #467 = GE_rc
+  { 3, OperandInfo45 },  // Inst #468 = GE_rr
+  { 2, OperandInfo47 },  // Inst #469 = HPTOF_rr
+  { 5, OperandInfo78 },  // Inst #470 = IMASK_rcpw
+  { 5, OperandInfo79 },  // Inst #471 = IMASK_rcrw
+  { 5, OperandInfo79 },  // Inst #472 = IMASK_rrpw
+  { 5, OperandInfo80 },  // Inst #473 = IMASK_rrrw
+  { 5, OperandInfo81 },  // Inst #474 = INSERT_rcpw
+  { 4, OperandInfo82 },  // Inst #475 = INSERT_rcrr
+  { 5, OperandInfo69 },  // Inst #476 = INSERT_rcrw
+  { 5, OperandInfo69 },  // Inst #477 = INSERT_rrpw
+  { 4, OperandInfo83 },  // Inst #478 = INSERT_rrrr
+  { 5, OperandInfo77 },  // Inst #479 = INSERT_rrrw
+  { 5, OperandInfo59 },  // Inst #480 = INSN_T
+  { 5, OperandInfo59 },  // Inst #481 = INS_T
+  { 0, 0 },  // Inst #482 = ISYNC_sys
+  { 2, OperandInfo47 },  // Inst #483 = ITOF_rr
+  { 4, OperandInfo73 },  // Inst #484 = IXMAX_U_rrr
+  { 4, OperandInfo73 },  // Inst #485 = IXMAX_rrr
+  { 4, OperandInfo73 },  // Inst #486 = IXMIN_U_rrr
+  { 4, OperandInfo73 },  // Inst #487 = IXMIN_rrr
+  { 1, OperandInfo2 },  // Inst #488 = JA_b
+  { 3, OperandInfo48 },  // Inst #489 = JEQ_A_brr
+  { 3, OperandInfo84 },  // Inst #490 = JEQ_brc
+  { 3, OperandInfo46 },  // Inst #491 = JEQ_brr
+  { 2, OperandInfo7 },  // Inst #492 = JEQ_sbc1
+  { 2, OperandInfo7 },  // Inst #493 = JEQ_sbc2
+  { 2, OperandInfo7 },  // Inst #494 = JEQ_sbc_v110
+  { 2, OperandInfo58 },  // Inst #495 = JEQ_sbr1
+  { 2, OperandInfo58 },  // Inst #496 = JEQ_sbr2
+  { 2, OperandInfo58 },  // Inst #497 = JEQ_sbr_v110
+  { 2, OperandInfo58 },  // Inst #498 = JGEZ_sbr
+  { 2, OperandInfo58 },  // Inst #499 = JGEZ_sbr_v110
+  { 3, OperandInfo84 },  // Inst #500 = JGE_U_brc
+  { 3, OperandInfo46 },  // Inst #501 = JGE_U_brr
+  { 3, OperandInfo84 },  // Inst #502 = JGE_brc
+  { 3, OperandInfo46 },  // Inst #503 = JGE_brr
+  { 2, OperandInfo58 },  // Inst #504 = JGTZ_sbr
+  { 2, OperandInfo58 },  // Inst #505 = JGTZ_sbr_v110
+  { 1, OperandInfo65 },  // Inst #506 = JI_rr
+  { 1, OperandInfo65 },  // Inst #507 = JI_rr_v110
+  { 1, OperandInfo65 },  // Inst #508 = JI_sbr_v110
+  { 1, OperandInfo65 },  // Inst #509 = JI_sr
+  { 1, OperandInfo2 },  // Inst #510 = JLA_b
+  { 2, OperandInfo58 },  // Inst #511 = JLEZ_sbr
+  { 2, OperandInfo58 },  // Inst #512 = JLEZ_sbr_v110
+  { 1, OperandInfo65 },  // Inst #513 = JLI_rr
+  { 1, OperandInfo65 },  // Inst #514 = JLI_rr_v110
+  { 2, OperandInfo58 },  // Inst #515 = JLTZ_sbr
+  { 2, OperandInfo58 },  // Inst #516 = JLTZ_sbr_v110
+  { 3, OperandInfo84 },  // Inst #517 = JLT_U_brc
+  { 3, OperandInfo46 },  // Inst #518 = JLT_U_brr
+  { 3, OperandInfo84 },  // Inst #519 = JLT_brc
+  { 3, OperandInfo46 },  // Inst #520 = JLT_brr
+  { 1, OperandInfo2 },  // Inst #521 = JL_b
+  { 3, OperandInfo84 },  // Inst #522 = JNED_brc
+  { 3, OperandInfo46 },  // Inst #523 = JNED_brr
+  { 3, OperandInfo84 },  // Inst #524 = JNEI_brc
+  { 3, OperandInfo46 },  // Inst #525 = JNEI_brr
+  { 3, OperandInfo48 },  // Inst #526 = JNE_A_brr
+  { 3, OperandInfo84 },  // Inst #527 = JNE_brc
+  { 3, OperandInfo46 },  // Inst #528 = JNE_brr
+  { 2, OperandInfo7 },  // Inst #529 = JNE_sbc1
+  { 2, OperandInfo7 },  // Inst #530 = JNE_sbc2
+  { 2, OperandInfo7 },  // Inst #531 = JNE_sbc_v110
+  { 2, OperandInfo58 },  // Inst #532 = JNE_sbr1
+  { 2, OperandInfo58 },  // Inst #533 = JNE_sbr2
+  { 2, OperandInfo58 },  // Inst #534 = JNE_sbr_v110
+  { 2, OperandInfo55 },  // Inst #535 = JNZ_A_brr
+  { 2, OperandInfo55 },  // Inst #536 = JNZ_A_sbr
+  { 3, OperandInfo85 },  // Inst #537 = JNZ_T_brn
+  { 2, OperandInfo86 },  // Inst #538 = JNZ_T_sbrn
+  { 2, OperandInfo86 },  // Inst #539 = JNZ_T_sbrn_v110
+  { 1, OperandInfo2 },  // Inst #540 = JNZ_sb
+  { 1, OperandInfo2 },  // Inst #541 = JNZ_sb_v110
+  { 2, OperandInfo58 },  // Inst #542 = JNZ_sbr
+  { 2, OperandInfo58 },  // Inst #543 = JNZ_sbr_v110
+  { 2, OperandInfo55 },  // Inst #544 = JZ_A_brr
+  { 2, OperandInfo55 },  // Inst #545 = JZ_A_sbr
+  { 3, OperandInfo85 },  // Inst #546 = JZ_T_brn
+  { 2, OperandInfo86 },  // Inst #547 = JZ_T_sbrn
+  { 2, OperandInfo86 },  // Inst #548 = JZ_T_sbrn_v110
+  { 1, OperandInfo2 },  // Inst #549 = JZ_sb
+  { 1, OperandInfo2 },  // Inst #550 = JZ_sb_v110
+  { 2, OperandInfo58 },  // Inst #551 = JZ_sbr
+  { 2, OperandInfo58 },  // Inst #552 = JZ_sbr_v110
+  { 1, OperandInfo2 },  // Inst #553 = J_b
+  { 1, OperandInfo2 },  // Inst #554 = J_sb
+  { 1, OperandInfo2 },  // Inst #555 = J_sb_v110
+  { 1, OperandInfo2 },  // Inst #556 = LDLCX_abs
+  { 2, OperandInfo55 },  // Inst #557 = LDLCX_bo_bso
+  { 2, OperandInfo87 },  // Inst #558 = LDMST_abs
+  { 3, OperandInfo66 },  // Inst #559 = LDMST_bo_bso
+  { 3, OperandInfo67 },  // Inst #560 = LDMST_bo_c
+  { 3, OperandInfo66 },  // Inst #561 = LDMST_bo_pos
+  { 3, OperandInfo66 },  // Inst #562 = LDMST_bo_pre
+  { 2, OperandInfo68 },  // Inst #563 = LDMST_bo_r
+  { 1, OperandInfo2 },  // Inst #564 = LDUCX_abs
+  { 2, OperandInfo55 },  // Inst #565 = LDUCX_bo_bso
+  { 2, OperandInfo55 },  // Inst #566 = LD_A_abs
+  { 3, OperandInfo48 },  // Inst #567 = LD_A_bo_bso
+  { 3, OperandInfo88 },  // Inst #568 = LD_A_bo_c
+  { 3, OperandInfo48 },  // Inst #569 = LD_A_bo_pos
+  { 3, OperandInfo48 },  // Inst #570 = LD_A_bo_pre
+  { 2, OperandInfo89 },  // Inst #571 = LD_A_bo_r
+  { 3, OperandInfo48 },  // Inst #572 = LD_A_bol
+  { 1, OperandInfo2 },  // Inst #573 = LD_A_sc
+  { 2, OperandInfo56 },  // Inst #574 = LD_A_slr
+  { 2, OperandInfo56 },  // Inst #575 = LD_A_slr_post
+  { 2, OperandInfo56 },  // Inst #576 = LD_A_slr_post_v110
+  { 2, OperandInfo56 },  // Inst #577 = LD_A_slr_v110
+  { 2, OperandInfo55 },  // Inst #578 = LD_A_slro
+  { 2, OperandInfo55 },  // Inst #579 = LD_A_slro_v110
+  { 2, OperandInfo55 },  // Inst #580 = LD_A_sro
+  { 2, OperandInfo55 },  // Inst #581 = LD_A_sro_v110
+  { 2, OperandInfo58 },  // Inst #582 = LD_BU_abs
+  { 3, OperandInfo90 },  // Inst #583 = LD_BU_bo_bso
+  { 3, OperandInfo91 },  // Inst #584 = LD_BU_bo_c
+  { 3, OperandInfo90 },  // Inst #585 = LD_BU_bo_pos
+  { 3, OperandInfo90 },  // Inst #586 = LD_BU_bo_pre
+  { 2, OperandInfo92 },  // Inst #587 = LD_BU_bo_r
+  { 3, OperandInfo90 },  // Inst #588 = LD_BU_bol
+  { 2, OperandInfo74 },  // Inst #589 = LD_BU_slr
+  { 2, OperandInfo74 },  // Inst #590 = LD_BU_slr_post
+  { 2, OperandInfo74 },  // Inst #591 = LD_BU_slr_post_v110
+  { 2, OperandInfo74 },  // Inst #592 = LD_BU_slr_v110
+  { 2, OperandInfo58 },  // Inst #593 = LD_BU_slro
+  { 2, OperandInfo58 },  // Inst #594 = LD_BU_slro_v110
+  { 2, OperandInfo55 },  // Inst #595 = LD_BU_sro
+  { 2, OperandInfo55 },  // Inst #596 = LD_BU_sro_v110
+  { 2, OperandInfo58 },  // Inst #597 = LD_B_abs
+  { 3, OperandInfo90 },  // Inst #598 = LD_B_bo_bso
+  { 3, OperandInfo91 },  // Inst #599 = LD_B_bo_c
+  { 3, OperandInfo90 },  // Inst #600 = LD_B_bo_pos
+  { 3, OperandInfo90 },  // Inst #601 = LD_B_bo_pre
+  { 2, OperandInfo92 },  // Inst #602 = LD_B_bo_r
+  { 3, OperandInfo90 },  // Inst #603 = LD_B_bol
+  { 2, OperandInfo74 },  // Inst #604 = LD_B_slr_post_v110
+  { 2, OperandInfo74 },  // Inst #605 = LD_B_slr_v110
+  { 2, OperandInfo58 },  // Inst #606 = LD_B_slro_v110
+  { 2, OperandInfo55 },  // Inst #607 = LD_B_sro_v110
+  { 2, OperandInfo61 },  // Inst #608 = LD_DA_abs
+  { 3, OperandInfo93 },  // Inst #609 = LD_DA_bo_bso
+  { 3, OperandInfo94 },  // Inst #610 = LD_DA_bo_c
+  { 3, OperandInfo93 },  // Inst #611 = LD_DA_bo_pos
+  { 3, OperandInfo93 },  // Inst #612 = LD_DA_bo_pre
+  { 2, OperandInfo95 },  // Inst #613 = LD_DA_bo_r
+  { 2, OperandInfo87 },  // Inst #614 = LD_D_abs
+  { 3, OperandInfo66 },  // Inst #615 = LD_D_bo_bso
+  { 3, OperandInfo67 },  // Inst #616 = LD_D_bo_c
+  { 3, OperandInfo66 },  // Inst #617 = LD_D_bo_pos
+  { 3, OperandInfo66 },  // Inst #618 = LD_D_bo_pre
+  { 2, OperandInfo68 },  // Inst #619 = LD_D_bo_r
+  { 2, OperandInfo58 },  // Inst #620 = LD_HU_abs
+  { 3, OperandInfo90 },  // Inst #621 = LD_HU_bo_bso
+  { 3, OperandInfo91 },  // Inst #622 = LD_HU_bo_c
+  { 3, OperandInfo90 },  // Inst #623 = LD_HU_bo_pos
+  { 3, OperandInfo90 },  // Inst #624 = LD_HU_bo_pre
+  { 2, OperandInfo92 },  // Inst #625 = LD_HU_bo_r
+  { 3, OperandInfo90 },  // Inst #626 = LD_HU_bol
+  { 2, OperandInfo58 },  // Inst #627 = LD_H_abs
+  { 3, OperandInfo90 },  // Inst #628 = LD_H_bo_bso
+  { 3, OperandInfo91 },  // Inst #629 = LD_H_bo_c
+  { 3, OperandInfo90 },  // Inst #630 = LD_H_bo_pos
+  { 3, OperandInfo90 },  // Inst #631 = LD_H_bo_pre
+  { 2, OperandInfo92 },  // Inst #632 = LD_H_bo_r
+  { 3, OperandInfo90 },  // Inst #633 = LD_H_bol
+  { 2, OperandInfo74 },  // Inst #634 = LD_H_slr
+  { 2, OperandInfo74 },  // Inst #635 = LD_H_slr_post
+  { 2, OperandInfo74 },  // Inst #636 = LD_H_slr_post_v110
+  { 2, OperandInfo74 },  // Inst #637 = LD_H_slr_v110
+  { 2, OperandInfo58 },  // Inst #638 = LD_H_slro
+  { 2, OperandInfo58 },  // Inst #639 = LD_H_slro_v110
+  { 2, OperandInfo55 },  // Inst #640 = LD_H_sro
+  { 2, OperandInfo55 },  // Inst #641 = LD_H_sro_v110
+  { 2, OperandInfo58 },  // Inst #642 = LD_Q_abs
+  { 3, OperandInfo90 },  // Inst #643 = LD_Q_bo_bso
+  { 3, OperandInfo91 },  // Inst #644 = LD_Q_bo_c
+  { 3, OperandInfo90 },  // Inst #645 = LD_Q_bo_pos
+  { 3, OperandInfo90 },  // Inst #646 = LD_Q_bo_pre
+  { 2, OperandInfo92 },  // Inst #647 = LD_Q_bo_r
+  { 2, OperandInfo58 },  // Inst #648 = LD_W_abs
+  { 3, OperandInfo90 },  // Inst #649 = LD_W_bo_bso
+  { 3, OperandInfo91 },  // Inst #650 = LD_W_bo_c
+  { 3, OperandInfo90 },  // Inst #651 = LD_W_bo_pos
+  { 3, OperandInfo90 },  // Inst #652 = LD_W_bo_pre
+  { 2, OperandInfo92 },  // Inst #653 = LD_W_bo_r
+  { 3, OperandInfo90 },  // Inst #654 = LD_W_bol
+  { 1, OperandInfo2 },  // Inst #655 = LD_W_sc
+  { 2, OperandInfo74 },  // Inst #656 = LD_W_slr
+  { 2, OperandInfo74 },  // Inst #657 = LD_W_slr_post
+  { 2, OperandInfo74 },  // Inst #658 = LD_W_slr_post_v110
+  { 2, OperandInfo74 },  // Inst #659 = LD_W_slr_v110
+  { 2, OperandInfo58 },  // Inst #660 = LD_W_slro
+  { 2, OperandInfo58 },  // Inst #661 = LD_W_slro_v110
+  { 2, OperandInfo55 },  // Inst #662 = LD_W_sro
+  { 2, OperandInfo55 },  // Inst #663 = LD_W_sro_v110
+  { 2, OperandInfo55 },  // Inst #664 = LEA_abs
+  { 3, OperandInfo48 },  // Inst #665 = LEA_bo_bso
+  { 3, OperandInfo48 },  // Inst #666 = LEA_bol
+  { 2, OperandInfo55 },  // Inst #667 = LHA_abs
+  { 1, OperandInfo2 },  // Inst #668 = LOOPU_brr
+  { 2, OperandInfo55 },  // Inst #669 = LOOP_brr
+  { 2, OperandInfo55 },  // Inst #670 = LOOP_sbr
+  { 3, OperandInfo75 },  // Inst #671 = LT_A_rr
+  { 3, OperandInfo45 },  // Inst #672 = LT_B
+  { 3, OperandInfo45 },  // Inst #673 = LT_BU
+  { 3, OperandInfo45 },  // Inst #674 = LT_H
+  { 3, OperandInfo45 },  // Inst #675 = LT_HU
+  { 3, OperandInfo46 },  // Inst #676 = LT_U_rc
+  { 3, OperandInfo45 },  // Inst #677 = LT_U_rr
+  { 2, OperandInfo58 },  // Inst #678 = LT_U_srcv110
+  { 2, OperandInfo47 },  // Inst #679 = LT_U_srrv110
+  { 3, OperandInfo45 },  // Inst #680 = LT_W
+  { 3, OperandInfo45 },  // Inst #681 = LT_WU
+  { 3, OperandInfo46 },  // Inst #682 = LT_rc
+  { 3, OperandInfo45 },  // Inst #683 = LT_rr
+  { 2, OperandInfo58 },  // Inst #684 = LT_src
+  { 2, OperandInfo47 },  // Inst #685 = LT_srr
+  { 5, OperandInfo96 },  // Inst #686 = MADDMS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #687 = MADDMS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #688 = MADDMS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #689 = MADDMS_H_rrr1_UU
+  { 4, OperandInfo97 },  // Inst #690 = MADDMS_U_rcr_v110
+  { 4, OperandInfo73 },  // Inst #691 = MADDMS_U_rrr2_v110
+  { 4, OperandInfo97 },  // Inst #692 = MADDMS_rcr_v110
+  { 4, OperandInfo73 },  // Inst #693 = MADDMS_rrr2_v110
+  { 5, OperandInfo96 },  // Inst #694 = MADDM_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #695 = MADDM_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #696 = MADDM_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #697 = MADDM_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #698 = MADDM_H_rrr1_v110
+  { 5, OperandInfo96 },  // Inst #699 = MADDM_Q_rrr1_v110
+  { 4, OperandInfo97 },  // Inst #700 = MADDM_U_rcr_v110
+  { 4, OperandInfo73 },  // Inst #701 = MADDM_U_rrr2_v110
+  { 4, OperandInfo97 },  // Inst #702 = MADDM_rcr_v110
+  { 4, OperandInfo73 },  // Inst #703 = MADDM_rrr2_v110
+  { 5, OperandInfo98 },  // Inst #704 = MADDRS_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #705 = MADDRS_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #706 = MADDRS_H_rrr1_UL
+  { 5, OperandInfo99 },  // Inst #707 = MADDRS_H_rrr1_UL_2
+  { 5, OperandInfo98 },  // Inst #708 = MADDRS_H_rrr1_UU
+  { 5, OperandInfo99 },  // Inst #709 = MADDRS_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #710 = MADDRS_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #711 = MADDRS_Q_rrr1_U_U
+  { 5, OperandInfo98 },  // Inst #712 = MADDRS_Q_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #713 = MADDR_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #714 = MADDR_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #715 = MADDR_H_rrr1_UL
+  { 5, OperandInfo99 },  // Inst #716 = MADDR_H_rrr1_UL_2
+  { 5, OperandInfo98 },  // Inst #717 = MADDR_H_rrr1_UU
+  { 5, OperandInfo99 },  // Inst #718 = MADDR_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #719 = MADDR_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #720 = MADDR_Q_rrr1_U_U
+  { 5, OperandInfo98 },  // Inst #721 = MADDR_Q_rrr1_v110
+  { 5, OperandInfo96 },  // Inst #722 = MADDSUMS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #723 = MADDSUMS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #724 = MADDSUMS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #725 = MADDSUMS_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #726 = MADDSUM_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #727 = MADDSUM_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #728 = MADDSUM_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #729 = MADDSUM_H_rrr1_UU
+  { 5, OperandInfo98 },  // Inst #730 = MADDSURS_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #731 = MADDSURS_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #732 = MADDSURS_H_rrr1_UL
+  { 5, OperandInfo98 },  // Inst #733 = MADDSURS_H_rrr1_UU
+  { 5, OperandInfo98 },  // Inst #734 = MADDSUR_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #735 = MADDSUR_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #736 = MADDSUR_H_rrr1_UL
+  { 5, OperandInfo98 },  // Inst #737 = MADDSUR_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #738 = MADDSUS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #739 = MADDSUS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #740 = MADDSUS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #741 = MADDSUS_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #742 = MADDSU_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #743 = MADDSU_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #744 = MADDSU_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #745 = MADDSU_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #746 = MADDS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #747 = MADDS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #748 = MADDS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #749 = MADDS_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #750 = MADDS_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #751 = MADDS_Q_rrr1
+  { 5, OperandInfo98 },  // Inst #752 = MADDS_Q_rrr1_L
+  { 5, OperandInfo98 },  // Inst #753 = MADDS_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #754 = MADDS_Q_rrr1_U
+  { 5, OperandInfo98 },  // Inst #755 = MADDS_Q_rrr1_UU2_v110
+  { 5, OperandInfo98 },  // Inst #756 = MADDS_Q_rrr1_U_U
+  { 5, OperandInfo96 },  // Inst #757 = MADDS_Q_rrr1_e
+  { 5, OperandInfo96 },  // Inst #758 = MADDS_Q_rrr1_e_L
+  { 5, OperandInfo96 },  // Inst #759 = MADDS_Q_rrr1_e_L_L
+  { 5, OperandInfo96 },  // Inst #760 = MADDS_Q_rrr1_e_U
+  { 5, OperandInfo96 },  // Inst #761 = MADDS_Q_rrr1_e_U_U
+  { 4, OperandInfo64 },  // Inst #762 = MADDS_U_rcr
+  { 4, OperandInfo97 },  // Inst #763 = MADDS_U_rcr_e
+  { 4, OperandInfo57 },  // Inst #764 = MADDS_U_rrr2
+  { 4, OperandInfo73 },  // Inst #765 = MADDS_U_rrr2_e
+  { 4, OperandInfo64 },  // Inst #766 = MADDS_rcr
+  { 4, OperandInfo97 },  // Inst #767 = MADDS_rcr_e
+  { 4, OperandInfo57 },  // Inst #768 = MADDS_rrr2
+  { 4, OperandInfo73 },  // Inst #769 = MADDS_rrr2_e
+  { 4, OperandInfo57 },  // Inst #770 = MADD_F_rrr
+  { 5, OperandInfo96 },  // Inst #771 = MADD_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #772 = MADD_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #773 = MADD_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #774 = MADD_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #775 = MADD_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #776 = MADD_Q_rrr1
+  { 5, OperandInfo98 },  // Inst #777 = MADD_Q_rrr1_L
+  { 5, OperandInfo98 },  // Inst #778 = MADD_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #779 = MADD_Q_rrr1_U
+  { 5, OperandInfo98 },  // Inst #780 = MADD_Q_rrr1_UU2_v110
+  { 5, OperandInfo98 },  // Inst #781 = MADD_Q_rrr1_U_U
+  { 5, OperandInfo96 },  // Inst #782 = MADD_Q_rrr1_e
+  { 5, OperandInfo96 },  // Inst #783 = MADD_Q_rrr1_e_L
+  { 5, OperandInfo96 },  // Inst #784 = MADD_Q_rrr1_e_L_L
+  { 5, OperandInfo96 },  // Inst #785 = MADD_Q_rrr1_e_U
+  { 5, OperandInfo96 },  // Inst #786 = MADD_Q_rrr1_e_U_U
+  { 4, OperandInfo97 },  // Inst #787 = MADD_U_rcr
+  { 4, OperandInfo73 },  // Inst #788 = MADD_U_rrr2
+  { 4, OperandInfo64 },  // Inst #789 = MADD_rcr
+  { 4, OperandInfo97 },  // Inst #790 = MADD_rcr_e
+  { 4, OperandInfo57 },  // Inst #791 = MADD_rrr2
+  { 4, OperandInfo73 },  // Inst #792 = MADD_rrr2_e
+  { 3, OperandInfo45 },  // Inst #793 = MAX_B
+  { 3, OperandInfo45 },  // Inst #794 = MAX_BU
+  { 3, OperandInfo45 },  // Inst #795 = MAX_H
+  { 3, OperandInfo45 },  // Inst #796 = MAX_HU
+  { 3, OperandInfo46 },  // Inst #797 = MAX_U_rc
+  { 3, OperandInfo45 },  // Inst #798 = MAX_U_rr
+  { 3, OperandInfo46 },  // Inst #799 = MAX_rc
+  { 3, OperandInfo45 },  // Inst #800 = MAX_rr
+  { 2, OperandInfo58 },  // Inst #801 = MFCR_rlc
+  { 3, OperandInfo45 },  // Inst #802 = MIN_B
+  { 3, OperandInfo45 },  // Inst #803 = MIN_BU
+  { 3, OperandInfo45 },  // Inst #804 = MIN_H
+  { 3, OperandInfo45 },  // Inst #805 = MIN_HU
+  { 3, OperandInfo46 },  // Inst #806 = MIN_U_rc
+  { 3, OperandInfo45 },  // Inst #807 = MIN_U_rr
+  { 3, OperandInfo46 },  // Inst #808 = MIN_rc
+  { 3, OperandInfo45 },  // Inst #809 = MIN_rr
+  { 2, OperandInfo55 },  // Inst #810 = MOVH_A_rlc
+  { 2, OperandInfo58 },  // Inst #811 = MOVH_rlc
+  { 1, OperandInfo65 },  // Inst #812 = MOVZ_A_sr
+  { 3, OperandInfo54 },  // Inst #813 = MOV_AA_rr
+  { 2, OperandInfo56 },  // Inst #814 = MOV_AA_srr_srr
+  { 2, OperandInfo56 },  // Inst #815 = MOV_AA_srr_srr_v110
+  { 3, OperandInfo100 },  // Inst #816 = MOV_A_rr
+  { 2, OperandInfo55 },  // Inst #817 = MOV_A_src
+  { 2, OperandInfo101 },  // Inst #818 = MOV_A_srr
+  { 2, OperandInfo101 },  // Inst #819 = MOV_A_srr_v110
+  { 3, OperandInfo75 },  // Inst #820 = MOV_D_rr
+  { 2, OperandInfo74 },  // Inst #821 = MOV_D_srr_srr
+  { 2, OperandInfo74 },  // Inst #822 = MOV_D_srr_srr_v110
+  { 2, OperandInfo58 },  // Inst #823 = MOV_U_rlc
+  { 2, OperandInfo58 },  // Inst #824 = MOV_rlc
+  { 2, OperandInfo87 },  // Inst #825 = MOV_rlc_e
+  { 3, OperandInfo45 },  // Inst #826 = MOV_rr
+  { 3, OperandInfo72 },  // Inst #827 = MOV_rr_e
+  { 3, OperandInfo72 },  // Inst #828 = MOV_rr_eab
+  { 1, OperandInfo2 },  // Inst #829 = MOV_sc
+  { 1, OperandInfo2 },  // Inst #830 = MOV_sc_v110
+  { 2, OperandInfo58 },  // Inst #831 = MOV_src
+  { 2, OperandInfo87 },  // Inst #832 = MOV_src_e
+  { 2, OperandInfo47 },  // Inst #833 = MOV_srr
+  { 5, OperandInfo96 },  // Inst #834 = MSUBADMS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #835 = MSUBADMS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #836 = MSUBADMS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #837 = MSUBADMS_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #838 = MSUBADM_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #839 = MSUBADM_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #840 = MSUBADM_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #841 = MSUBADM_H_rrr1_UU
+  { 5, OperandInfo98 },  // Inst #842 = MSUBADRS_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #843 = MSUBADRS_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #844 = MSUBADRS_H_rrr1_UL
+  { 5, OperandInfo98 },  // Inst #845 = MSUBADRS_H_rrr1_UU
+  { 5, OperandInfo98 },  // Inst #846 = MSUBADRS_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #847 = MSUBADR_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #848 = MSUBADR_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #849 = MSUBADR_H_rrr1_UL
+  { 5, OperandInfo98 },  // Inst #850 = MSUBADR_H_rrr1_UU
+  { 5, OperandInfo98 },  // Inst #851 = MSUBADR_H_rrr1_v110
+  { 5, OperandInfo96 },  // Inst #852 = MSUBADS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #853 = MSUBADS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #854 = MSUBADS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #855 = MSUBADS_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #856 = MSUBAD_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #857 = MSUBAD_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #858 = MSUBAD_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #859 = MSUBAD_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #860 = MSUBMS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #861 = MSUBMS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #862 = MSUBMS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #863 = MSUBMS_H_rrr1_UU
+  { 4, OperandInfo97 },  // Inst #864 = MSUBMS_U_rcrv110
+  { 4, OperandInfo73 },  // Inst #865 = MSUBMS_U_rrr2v110
+  { 4, OperandInfo97 },  // Inst #866 = MSUBMS_rcrv110
+  { 4, OperandInfo73 },  // Inst #867 = MSUBMS_rrr2v110
+  { 5, OperandInfo96 },  // Inst #868 = MSUBM_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #869 = MSUBM_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #870 = MSUBM_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #871 = MSUBM_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #872 = MSUBM_H_rrr1_v110
+  { 5, OperandInfo96 },  // Inst #873 = MSUBM_Q_rrr1_v110
+  { 4, OperandInfo97 },  // Inst #874 = MSUBM_U_rcrv110
+  { 4, OperandInfo73 },  // Inst #875 = MSUBM_U_rrr2v110
+  { 4, OperandInfo97 },  // Inst #876 = MSUBM_rcrv110
+  { 4, OperandInfo73 },  // Inst #877 = MSUBM_rrr2v110
+  { 5, OperandInfo98 },  // Inst #878 = MSUBRS_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #879 = MSUBRS_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #880 = MSUBRS_H_rrr1_UL
+  { 5, OperandInfo99 },  // Inst #881 = MSUBRS_H_rrr1_UL_2
+  { 5, OperandInfo98 },  // Inst #882 = MSUBRS_H_rrr1_UU
+  { 5, OperandInfo99 },  // Inst #883 = MSUBRS_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #884 = MSUBRS_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #885 = MSUBRS_Q_rrr1_U_U
+  { 5, OperandInfo98 },  // Inst #886 = MSUBRS_Q_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #887 = MSUBR_H_rrr1_LL
+  { 5, OperandInfo98 },  // Inst #888 = MSUBR_H_rrr1_LU
+  { 5, OperandInfo98 },  // Inst #889 = MSUBR_H_rrr1_UL
+  { 5, OperandInfo99 },  // Inst #890 = MSUBR_H_rrr1_UL_2
+  { 5, OperandInfo98 },  // Inst #891 = MSUBR_H_rrr1_UU
+  { 5, OperandInfo99 },  // Inst #892 = MSUBR_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #893 = MSUBR_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #894 = MSUBR_Q_rrr1_U_U
+  { 5, OperandInfo98 },  // Inst #895 = MSUBR_Q_rrr1_v110
+  { 5, OperandInfo96 },  // Inst #896 = MSUBS_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #897 = MSUBS_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #898 = MSUBS_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #899 = MSUBS_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #900 = MSUBS_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #901 = MSUBS_Q_rrr1
+  { 5, OperandInfo98 },  // Inst #902 = MSUBS_Q_rrr1_L
+  { 5, OperandInfo98 },  // Inst #903 = MSUBS_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #904 = MSUBS_Q_rrr1_U
+  { 5, OperandInfo98 },  // Inst #905 = MSUBS_Q_rrr1_UU2_v110
+  { 5, OperandInfo98 },  // Inst #906 = MSUBS_Q_rrr1_U_U
+  { 5, OperandInfo96 },  // Inst #907 = MSUBS_Q_rrr1_e
+  { 5, OperandInfo96 },  // Inst #908 = MSUBS_Q_rrr1_e_L
+  { 5, OperandInfo96 },  // Inst #909 = MSUBS_Q_rrr1_e_L_L
+  { 5, OperandInfo96 },  // Inst #910 = MSUBS_Q_rrr1_e_U
+  { 5, OperandInfo96 },  // Inst #911 = MSUBS_Q_rrr1_e_U_U
+  { 4, OperandInfo64 },  // Inst #912 = MSUBS_U_rcr
+  { 4, OperandInfo97 },  // Inst #913 = MSUBS_U_rcr_e
+  { 4, OperandInfo57 },  // Inst #914 = MSUBS_U_rrr2
+  { 4, OperandInfo73 },  // Inst #915 = MSUBS_U_rrr2_e
+  { 4, OperandInfo64 },  // Inst #916 = MSUBS_rcr
+  { 4, OperandInfo97 },  // Inst #917 = MSUBS_rcr_e
+  { 4, OperandInfo57 },  // Inst #918 = MSUBS_rrr2
+  { 4, OperandInfo73 },  // Inst #919 = MSUBS_rrr2_e
+  { 4, OperandInfo57 },  // Inst #920 = MSUB_F_rrr
+  { 5, OperandInfo96 },  // Inst #921 = MSUB_H_rrr1_LL
+  { 5, OperandInfo96 },  // Inst #922 = MSUB_H_rrr1_LU
+  { 5, OperandInfo96 },  // Inst #923 = MSUB_H_rrr1_UL
+  { 5, OperandInfo96 },  // Inst #924 = MSUB_H_rrr1_UU
+  { 5, OperandInfo96 },  // Inst #925 = MSUB_H_rrr1_v110
+  { 5, OperandInfo98 },  // Inst #926 = MSUB_Q_rrr1
+  { 5, OperandInfo98 },  // Inst #927 = MSUB_Q_rrr1_L
+  { 5, OperandInfo98 },  // Inst #928 = MSUB_Q_rrr1_L_L
+  { 5, OperandInfo98 },  // Inst #929 = MSUB_Q_rrr1_U
+  { 5, OperandInfo98 },  // Inst #930 = MSUB_Q_rrr1_UU2_v110
+  { 5, OperandInfo98 },  // Inst #931 = MSUB_Q_rrr1_U_U
+  { 5, OperandInfo96 },  // Inst #932 = MSUB_Q_rrr1_e
+  { 5, OperandInfo96 },  // Inst #933 = MSUB_Q_rrr1_e_L
+  { 5, OperandInfo96 },  // Inst #934 = MSUB_Q_rrr1_e_L_L
+  { 5, OperandInfo96 },  // Inst #935 = MSUB_Q_rrr1_e_U
+  { 5, OperandInfo96 },  // Inst #936 = MSUB_Q_rrr1_e_U_U
+  { 4, OperandInfo97 },  // Inst #937 = MSUB_U_rcr
+  { 4, OperandInfo73 },  // Inst #938 = MSUB_U_rrr2
+  { 4, OperandInfo64 },  // Inst #939 = MSUB_rcr
+  { 4, OperandInfo97 },  // Inst #940 = MSUB_rcr_e
+  { 4, OperandInfo57 },  // Inst #941 = MSUB_rrr2
+  { 4, OperandInfo73 },  // Inst #942 = MSUB_rrr2_e
+  { 2, OperandInfo102 },  // Inst #943 = MTCR_rlc
+  { 4, OperandInfo103 },  // Inst #944 = MULMS_H_rr1_LL2e
+  { 4, OperandInfo103 },  // Inst #945 = MULMS_H_rr1_LU2e
+  { 4, OperandInfo103 },  // Inst #946 = MULMS_H_rr1_UL2e
+  { 4, OperandInfo103 },  // Inst #947 = MULMS_H_rr1_UU2e
+  { 4, OperandInfo103 },  // Inst #948 = MULM_H_rr1_LL2e
+  { 4, OperandInfo103 },  // Inst #949 = MULM_H_rr1_LU2e
+  { 4, OperandInfo103 },  // Inst #950 = MULM_H_rr1_UL2e
+  { 4, OperandInfo103 },  // Inst #951 = MULM_H_rr1_UU2e
+  { 3, OperandInfo104 },  // Inst #952 = MULM_U_rc
+  { 3, OperandInfo72 },  // Inst #953 = MULM_U_rr
+  { 3, OperandInfo104 },  // Inst #954 = MULM_rc
+  { 3, OperandInfo72 },  // Inst #955 = MULM_rr
+  { 4, OperandInfo64 },  // Inst #956 = MULR_H_rr1_LL2e
+  { 4, OperandInfo64 },  // Inst #957 = MULR_H_rr1_LU2e
+  { 4, OperandInfo64 },  // Inst #958 = MULR_H_rr1_UL2e
+  { 4, OperandInfo64 },  // Inst #959 = MULR_H_rr1_UU2e
+  { 4, OperandInfo64 },  // Inst #960 = MULR_H_rr_v110
+  { 4, OperandInfo64 },  // Inst #961 = MULR_Q_rr1_2LL
+  { 4, OperandInfo64 },  // Inst #962 = MULR_Q_rr1_2UU
+  { 4, OperandInfo64 },  // Inst #963 = MULR_Q_rr_v110
+  { 3, OperandInfo46 },  // Inst #964 = MULS_U_rc
+  { 3, OperandInfo45 },  // Inst #965 = MULS_U_rr2
+  { 3, OperandInfo45 },  // Inst #966 = MULS_U_rr_v110
+  { 3, OperandInfo46 },  // Inst #967 = MULS_rc
+  { 3, OperandInfo45 },  // Inst #968 = MULS_rr2
+  { 3, OperandInfo45 },  // Inst #969 = MULS_rr_v110
+  { 3, OperandInfo45 },  // Inst #970 = MUL_F_rrr
+  { 4, OperandInfo103 },  // Inst #971 = MUL_H_rr1_LL2e
+  { 4, OperandInfo103 },  // Inst #972 = MUL_H_rr1_LU2e
+  { 4, OperandInfo103 },  // Inst #973 = MUL_H_rr1_UL2e
+  { 4, OperandInfo103 },  // Inst #974 = MUL_H_rr1_UU2e
+  { 4, OperandInfo103 },  // Inst #975 = MUL_H_rr_v110
+  { 4, OperandInfo64 },  // Inst #976 = MUL_Q_rr1_2
+  { 4, OperandInfo64 },  // Inst #977 = MUL_Q_rr1_2LL
+  { 4, OperandInfo64 },  // Inst #978 = MUL_Q_rr1_2UU
+  { 4, OperandInfo64 },  // Inst #979 = MUL_Q_rr1_2_L
+  { 4, OperandInfo103 },  // Inst #980 = MUL_Q_rr1_2_Le
+  { 4, OperandInfo64 },  // Inst #981 = MUL_Q_rr1_2_U
+  { 4, OperandInfo103 },  // Inst #982 = MUL_Q_rr1_2_Ue
+  { 4, OperandInfo103 },  // Inst #983 = MUL_Q_rr1_2__e
+  { 4, OperandInfo64 },  // Inst #984 = MUL_Q_rr_v110
+  { 3, OperandInfo104 },  // Inst #985 = MUL_U_rc
+  { 3, OperandInfo72 },  // Inst #986 = MUL_U_rr2
+  { 3, OperandInfo46 },  // Inst #987 = MUL_rc
+  { 3, OperandInfo104 },  // Inst #988 = MUL_rc_e
+  { 3, OperandInfo45 },  // Inst #989 = MUL_rr2
+  { 3, OperandInfo72 },  // Inst #990 = MUL_rr2_e
+  { 3, OperandInfo45 },  // Inst #991 = MUL_rr_v110
+  { 2, OperandInfo47 },  // Inst #992 = MUL_srr
+  { 5, OperandInfo59 },  // Inst #993 = NAND_T
+  { 3, OperandInfo46 },  // Inst #994 = NAND_rc
+  { 3, OperandInfo45 },  // Inst #995 = NAND_rr
+  { 2, OperandInfo74 },  // Inst #996 = NEZ_A
+  { 3, OperandInfo75 },  // Inst #997 = NE_A
+  { 3, OperandInfo46 },  // Inst #998 = NE_rc
+  { 3, OperandInfo45 },  // Inst #999 = NE_rr
+  { 0, 0 },  // Inst #1000 = NOP_sr
+  { 0, 0 },  // Inst #1001 = NOP_sys
+  { 5, OperandInfo59 },  // Inst #1002 = NOR_T
+  { 3, OperandInfo46 },  // Inst #1003 = NOR_rc
+  { 3, OperandInfo45 },  // Inst #1004 = NOR_rr
+  { 1, OperandInfo71 },  // Inst #1005 = NOR_sr
+  { 1, OperandInfo71 },  // Inst #1006 = NOR_sr_v110
+  { 1, OperandInfo71 },  // Inst #1007 = NOT_sr_v162
+  { 5, OperandInfo59 },  // Inst #1008 = ORN_T
+  { 3, OperandInfo46 },  // Inst #1009 = ORN_rc
+  { 3, OperandInfo45 },  // Inst #1010 = ORN_rr
+  { 5, OperandInfo59 },  // Inst #1011 = OR_ANDN_T
+  { 5, OperandInfo59 },  // Inst #1012 = OR_AND_T
+  { 3, OperandInfo46 },  // Inst #1013 = OR_EQ_rc
+  { 3, OperandInfo45 },  // Inst #1014 = OR_EQ_rr
+  { 3, OperandInfo46 },  // Inst #1015 = OR_GE_U_rc
+  { 3, OperandInfo45 },  // Inst #1016 = OR_GE_U_rr
+  { 3, OperandInfo46 },  // Inst #1017 = OR_GE_rc
+  { 3, OperandInfo45 },  // Inst #1018 = OR_GE_rr
+  { 3, OperandInfo46 },  // Inst #1019 = OR_LT_U_rc
+  { 3, OperandInfo45 },  // Inst #1020 = OR_LT_U_rr
+  { 3, OperandInfo46 },  // Inst #1021 = OR_LT_rc
+  { 3, OperandInfo45 },  // Inst #1022 = OR_LT_rr
+  { 3, OperandInfo46 },  // Inst #1023 = OR_NE_rc
+  { 3, OperandInfo45 },  // Inst #1024 = OR_NE_rr
+  { 5, OperandInfo59 },  // Inst #1025 = OR_NOR_T
+  { 5, OperandInfo59 },  // Inst #1026 = OR_OR_T
+  { 5, OperandInfo59 },  // Inst #1027 = OR_T
+  { 3, OperandInfo46 },  // Inst #1028 = OR_rc
+  { 3, OperandInfo45 },  // Inst #1029 = OR_rr
+  { 1, OperandInfo2 },  // Inst #1030 = OR_sc
+  { 1, OperandInfo2 },  // Inst #1031 = OR_sc_v110
+  { 2, OperandInfo47 },  // Inst #1032 = OR_srr
+  { 2, OperandInfo47 },  // Inst #1033 = OR_srr_v110
+  { 4, OperandInfo83 },  // Inst #1034 = PACK_rrr
+  { 2, OperandInfo47 },  // Inst #1035 = PARITY_rr
+  { 2, OperandInfo47 },  // Inst #1036 = PARITY_rr_v110
+  { 2, OperandInfo47 },  // Inst #1037 = POPCNT_W_rr
+  { 3, OperandInfo45 },  // Inst #1038 = Q31TOF_rr
+  { 2, OperandInfo47 },  // Inst #1039 = QSEED_F_rr
+  { 1, OperandInfo71 },  // Inst #1040 = RESTORE_sys
+  { 0, 0 },  // Inst #1041 = RET_sr
+  { 0, 0 },  // Inst #1042 = RET_sys
+  { 0, 0 },  // Inst #1043 = RET_sys_v110
+  { 0, 0 },  // Inst #1044 = RFE_sr
+  { 0, 0 },  // Inst #1045 = RFE_sys_sys
+  { 0, 0 },  // Inst #1046 = RFE_sys_sys_v110
+  { 0, 0 },  // Inst #1047 = RFM_sys
+  { 0, 0 },  // Inst #1048 = RSLCX_sys
+  { 0, 0 },  // Inst #1049 = RSTV_sys
+  { 3, OperandInfo46 },  // Inst #1050 = RSUBS_U_rc
+  { 3, OperandInfo46 },  // Inst #1051 = RSUBS_rc
+  { 3, OperandInfo46 },  // Inst #1052 = RSUB_rc
+  { 1, OperandInfo71 },  // Inst #1053 = RSUB_sr_sr
+  { 1, OperandInfo71 },  // Inst #1054 = RSUB_sr_sr_v110
+  { 2, OperandInfo47 },  // Inst #1055 = SAT_BU_rr
+  { 1, OperandInfo71 },  // Inst #1056 = SAT_BU_sr
+  { 1, OperandInfo71 },  // Inst #1057 = SAT_BU_sr_v110
+  { 2, OperandInfo47 },  // Inst #1058 = SAT_B_rr
+  { 1, OperandInfo71 },  // Inst #1059 = SAT_B_sr
+  { 1, OperandInfo71 },  // Inst #1060 = SAT_B_sr_v110
+  { 2, OperandInfo47 },  // Inst #1061 = SAT_HU_rr
+  { 1, OperandInfo71 },  // Inst #1062 = SAT_HU_sr
+  { 1, OperandInfo71 },  // Inst #1063 = SAT_HU_sr_v110
+  { 2, OperandInfo47 },  // Inst #1064 = SAT_H_rr
+  { 1, OperandInfo71 },  // Inst #1065 = SAT_H_sr
+  { 1, OperandInfo71 },  // Inst #1066 = SAT_H_sr_v110
+  { 4, OperandInfo52 },  // Inst #1067 = SELN_A_rcr_v110
+  { 4, OperandInfo63 },  // Inst #1068 = SELN_A_rrr_v110
+  { 4, OperandInfo64 },  // Inst #1069 = SELN_rcr
+  { 4, OperandInfo57 },  // Inst #1070 = SELN_rrr
+  { 4, OperandInfo52 },  // Inst #1071 = SEL_A_rcr_v110
+  { 4, OperandInfo63 },  // Inst #1072 = SEL_A_rrr_v110
+  { 4, OperandInfo64 },  // Inst #1073 = SEL_rcr
+  { 4, OperandInfo57 },  // Inst #1074 = SEL_rrr
+  { 3, OperandInfo46 },  // Inst #1075 = SHAS_rc
+  { 3, OperandInfo45 },  // Inst #1076 = SHAS_rr
+  { 3, OperandInfo46 },  // Inst #1077 = SHA_B_rc
+  { 3, OperandInfo45 },  // Inst #1078 = SHA_B_rr
+  { 3, OperandInfo46 },  // Inst #1079 = SHA_H_rc
+  { 3, OperandInfo45 },  // Inst #1080 = SHA_H_rr
+  { 3, OperandInfo46 },  // Inst #1081 = SHA_rc
+  { 3, OperandInfo45 },  // Inst #1082 = SHA_rr
+  { 2, OperandInfo58 },  // Inst #1083 = SHA_src
+  { 2, OperandInfo58 },  // Inst #1084 = SHA_src_v110
+  { 3, OperandInfo46 },  // Inst #1085 = SHUFFLE_rc
+  { 5, OperandInfo59 },  // Inst #1086 = SH_ANDN_T
+  { 5, OperandInfo59 },  // Inst #1087 = SH_AND_T
+  { 3, OperandInfo46 },  // Inst #1088 = SH_B_rc
+  { 3, OperandInfo45 },  // Inst #1089 = SH_B_rr
+  { 3, OperandInfo46 },  // Inst #1090 = SH_EQ_rc
+  { 3, OperandInfo45 },  // Inst #1091 = SH_EQ_rr
+  { 3, OperandInfo46 },  // Inst #1092 = SH_GE_U_rc
+  { 3, OperandInfo45 },  // Inst #1093 = SH_GE_U_rr
+  { 3, OperandInfo46 },  // Inst #1094 = SH_GE_rc
+  { 3, OperandInfo45 },  // Inst #1095 = SH_GE_rr
+  { 3, OperandInfo46 },  // Inst #1096 = SH_H_rc
+  { 3, OperandInfo45 },  // Inst #1097 = SH_H_rr
+  { 3, OperandInfo46 },  // Inst #1098 = SH_LT_U_rc
+  { 3, OperandInfo45 },  // Inst #1099 = SH_LT_U_rr
+  { 3, OperandInfo46 },  // Inst #1100 = SH_LT_rc
+  { 3, OperandInfo45 },  // Inst #1101 = SH_LT_rr
+  { 5, OperandInfo59 },  // Inst #1102 = SH_NAND_T
+  { 3, OperandInfo46 },  // Inst #1103 = SH_NE_rc
+  { 3, OperandInfo45 },  // Inst #1104 = SH_NE_rr
+  { 5, OperandInfo59 },  // Inst #1105 = SH_NOR_T
+  { 5, OperandInfo59 },  // Inst #1106 = SH_ORN_T
+  { 5, OperandInfo59 },  // Inst #1107 = SH_OR_T
+  { 5, OperandInfo59 },  // Inst #1108 = SH_XNOR_T
+  { 5, OperandInfo59 },  // Inst #1109 = SH_XOR_T
+  { 3, OperandInfo46 },  // Inst #1110 = SH_rc
+  { 3, OperandInfo45 },  // Inst #1111 = SH_rr
+  { 2, OperandInfo58 },  // Inst #1112 = SH_src
+  { 2, OperandInfo58 },  // Inst #1113 = SH_src_v110
+  { 1, OperandInfo2 },  // Inst #1114 = STLCX_abs
+  { 2, OperandInfo55 },  // Inst #1115 = STLCX_bo_bso
+  { 1, OperandInfo2 },  // Inst #1116 = STUCX_abs
+  { 2, OperandInfo55 },  // Inst #1117 = STUCX_bo_bso
+  { 2, OperandInfo55 },  // Inst #1118 = ST_A_abs
+  { 3, OperandInfo48 },  // Inst #1119 = ST_A_bo_bso
+  { 3, OperandInfo93 },  // Inst #1120 = ST_A_bo_c
+  { 3, OperandInfo48 },  // Inst #1121 = ST_A_bo_pos
+  { 3, OperandInfo48 },  // Inst #1122 = ST_A_bo_pre
+  { 2, OperandInfo105 },  // Inst #1123 = ST_A_bo_r
+  { 3, OperandInfo48 },  // Inst #1124 = ST_A_bol
+  { 1, OperandInfo2 },  // Inst #1125 = ST_A_sc
+  { 2, OperandInfo55 },  // Inst #1126 = ST_A_sro
+  { 2, OperandInfo55 },  // Inst #1127 = ST_A_sro_v110
+  { 2, OperandInfo56 },  // Inst #1128 = ST_A_ssr
+  { 2, OperandInfo56 },  // Inst #1129 = ST_A_ssr_pos
+  { 2, OperandInfo56 },  // Inst #1130 = ST_A_ssr_pos_v110
+  { 2, OperandInfo56 },  // Inst #1131 = ST_A_ssr_v110
+  { 2, OperandInfo55 },  // Inst #1132 = ST_A_ssro
+  { 2, OperandInfo55 },  // Inst #1133 = ST_A_ssro_v110
+  { 2, OperandInfo58 },  // Inst #1134 = ST_B_abs
+  { 3, OperandInfo90 },  // Inst #1135 = ST_B_bo_bso
+  { 3, OperandInfo106 },  // Inst #1136 = ST_B_bo_c
+  { 3, OperandInfo90 },  // Inst #1137 = ST_B_bo_pos
+  { 3, OperandInfo90 },  // Inst #1138 = ST_B_bo_pre
+  { 2, OperandInfo107 },  // Inst #1139 = ST_B_bo_r
+  { 3, OperandInfo53 },  // Inst #1140 = ST_B_bol
+  { 2, OperandInfo55 },  // Inst #1141 = ST_B_sro
+  { 2, OperandInfo55 },  // Inst #1142 = ST_B_sro_v110
+  { 2, OperandInfo101 },  // Inst #1143 = ST_B_ssr
+  { 2, OperandInfo101 },  // Inst #1144 = ST_B_ssr_pos
+  { 2, OperandInfo101 },  // Inst #1145 = ST_B_ssr_pos_v110
+  { 2, OperandInfo101 },  // Inst #1146 = ST_B_ssr_v110
+  { 2, OperandInfo58 },  // Inst #1147 = ST_B_ssro
+  { 2, OperandInfo58 },  // Inst #1148 = ST_B_ssro_v110
+  { 2, OperandInfo61 },  // Inst #1149 = ST_DA_abs
+  { 3, OperandInfo93 },  // Inst #1150 = ST_DA_bo_bso
+  { 3, OperandInfo94 },  // Inst #1151 = ST_DA_bo_c
+  { 3, OperandInfo93 },  // Inst #1152 = ST_DA_bo_pos
+  { 3, OperandInfo93 },  // Inst #1153 = ST_DA_bo_pre
+  { 2, OperandInfo95 },  // Inst #1154 = ST_DA_bo_r
+  { 2, OperandInfo87 },  // Inst #1155 = ST_D_abs
+  { 3, OperandInfo66 },  // Inst #1156 = ST_D_bo_bso
+  { 3, OperandInfo108 },  // Inst #1157 = ST_D_bo_c
+  { 3, OperandInfo66 },  // Inst #1158 = ST_D_bo_pos
+  { 3, OperandInfo66 },  // Inst #1159 = ST_D_bo_pre
+  { 2, OperandInfo109 },  // Inst #1160 = ST_D_bo_r
+  { 2, OperandInfo58 },  // Inst #1161 = ST_H_abs
+  { 3, OperandInfo90 },  // Inst #1162 = ST_H_bo_bso
+  { 3, OperandInfo106 },  // Inst #1163 = ST_H_bo_c
+  { 3, OperandInfo90 },  // Inst #1164 = ST_H_bo_pos
+  { 3, OperandInfo90 },  // Inst #1165 = ST_H_bo_pre
+  { 2, OperandInfo107 },  // Inst #1166 = ST_H_bo_r
+  { 3, OperandInfo53 },  // Inst #1167 = ST_H_bol
+  { 2, OperandInfo55 },  // Inst #1168 = ST_H_sro
+  { 2, OperandInfo55 },  // Inst #1169 = ST_H_sro_v110
+  { 2, OperandInfo101 },  // Inst #1170 = ST_H_ssr
+  { 2, OperandInfo101 },  // Inst #1171 = ST_H_ssr_pos
+  { 2, OperandInfo101 },  // Inst #1172 = ST_H_ssr_pos_v110
+  { 2, OperandInfo101 },  // Inst #1173 = ST_H_ssr_v110
+  { 2, OperandInfo58 },  // Inst #1174 = ST_H_ssro
+  { 2, OperandInfo58 },  // Inst #1175 = ST_H_ssro_v110
+  { 2, OperandInfo58 },  // Inst #1176 = ST_Q_abs
+  { 3, OperandInfo90 },  // Inst #1177 = ST_Q_bo_bso
+  { 3, OperandInfo106 },  // Inst #1178 = ST_Q_bo_c
+  { 3, OperandInfo90 },  // Inst #1179 = ST_Q_bo_pos
+  { 3, OperandInfo90 },  // Inst #1180 = ST_Q_bo_pre
+  { 2, OperandInfo107 },  // Inst #1181 = ST_Q_bo_r
+  { 3, OperandInfo110 },  // Inst #1182 = ST_T
+  { 2, OperandInfo58 },  // Inst #1183 = ST_W_abs
+  { 3, OperandInfo90 },  // Inst #1184 = ST_W_bo_bso
+  { 3, OperandInfo106 },  // Inst #1185 = ST_W_bo_c
+  { 3, OperandInfo90 },  // Inst #1186 = ST_W_bo_pos
+  { 3, OperandInfo90 },  // Inst #1187 = ST_W_bo_pre
+  { 2, OperandInfo107 },  // Inst #1188 = ST_W_bo_r
+  { 3, OperandInfo53 },  // Inst #1189 = ST_W_bol
+  { 1, OperandInfo2 },  // Inst #1190 = ST_W_sc
+  { 2, OperandInfo55 },  // Inst #1191 = ST_W_sro
+  { 2, OperandInfo55 },  // Inst #1192 = ST_W_sro_v110
+  { 2, OperandInfo101 },  // Inst #1193 = ST_W_ssr
+  { 2, OperandInfo101 },  // Inst #1194 = ST_W_ssr_pos
+  { 2, OperandInfo101 },  // Inst #1195 = ST_W_ssr_pos_v110
+  { 2, OperandInfo101 },  // Inst #1196 = ST_W_ssr_v110
+  { 2, OperandInfo58 },  // Inst #1197 = ST_W_ssro
+  { 2, OperandInfo58 },  // Inst #1198 = ST_W_ssro_v110
+  { 3, OperandInfo45 },  // Inst #1199 = SUBC_rr
+  { 4, OperandInfo52 },  // Inst #1200 = SUBSC_A_rr
+  { 3, OperandInfo45 },  // Inst #1201 = SUBS_BU_rr
+  { 3, OperandInfo45 },  // Inst #1202 = SUBS_B_rr
+  { 3, OperandInfo45 },  // Inst #1203 = SUBS_HU_rr
+  { 3, OperandInfo45 },  // Inst #1204 = SUBS_H_rr
+  { 3, OperandInfo45 },  // Inst #1205 = SUBS_U_rr
+  { 3, OperandInfo45 },  // Inst #1206 = SUBS_rr
+  { 2, OperandInfo47 },  // Inst #1207 = SUBS_srr
+  { 3, OperandInfo45 },  // Inst #1208 = SUBX_rr
+  { 3, OperandInfo54 },  // Inst #1209 = SUB_A_rr
+  { 1, OperandInfo2 },  // Inst #1210 = SUB_A_sc
+  { 1, OperandInfo2 },  // Inst #1211 = SUB_A_sc_v110
+  { 3, OperandInfo45 },  // Inst #1212 = SUB_B_rr
+  { 4, OperandInfo57 },  // Inst #1213 = SUB_F_rrr
+  { 3, OperandInfo45 },  // Inst #1214 = SUB_H_rr
+  { 3, OperandInfo45 },  // Inst #1215 = SUB_rr
+  { 2, OperandInfo47 },  // Inst #1216 = SUB_srr
+  { 2, OperandInfo47 },  // Inst #1217 = SUB_srr_15a
+  { 2, OperandInfo47 },  // Inst #1218 = SUB_srr_a15
+  { 0, 0 },  // Inst #1219 = SVLCX_sys
+  { 3, OperandInfo66 },  // Inst #1220 = SWAPMSK_W_bo_bso
+  { 3, OperandInfo108 },  // Inst #1221 = SWAPMSK_W_bo_c
+  { 3, OperandInfo67 },  // Inst #1222 = SWAPMSK_W_bo_i
+  { 3, OperandInfo66 },  // Inst #1223 = SWAPMSK_W_bo_pos
+  { 3, OperandInfo66 },  // Inst #1224 = SWAPMSK_W_bo_pre
+  { 2, OperandInfo109 },  // Inst #1225 = SWAPMSK_W_bo_r
+  { 2, OperandInfo55 },  // Inst #1226 = SWAP_A_abs
+  { 3, OperandInfo48 },  // Inst #1227 = SWAP_A_bo_bso
+  { 3, OperandInfo93 },  // Inst #1228 = SWAP_A_bo_c
+  { 3, OperandInfo48 },  // Inst #1229 = SWAP_A_bo_pos
+  { 3, OperandInfo48 },  // Inst #1230 = SWAP_A_bo_pre
+  { 2, OperandInfo105 },  // Inst #1231 = SWAP_A_bo_r
+  { 2, OperandInfo58 },  // Inst #1232 = SWAP_W_abs
+  { 3, OperandInfo90 },  // Inst #1233 = SWAP_W_bo_bso
+  { 3, OperandInfo106 },  // Inst #1234 = SWAP_W_bo_c
+  { 3, OperandInfo91 },  // Inst #1235 = SWAP_W_bo_i
+  { 3, OperandInfo90 },  // Inst #1236 = SWAP_W_bo_pos
+  { 3, OperandInfo90 },  // Inst #1237 = SWAP_W_bo_pre
+  { 2, OperandInfo107 },  // Inst #1238 = SWAP_W_bo_r
+  { 1, OperandInfo2 },  // Inst #1239 = SYSCALL_rc
+  { 1, OperandInfo71 },  // Inst #1240 = TLBDEMAP_rr
+  { 0, 0 },  // Inst #1241 = TLBFLUSH_A_rr
+  { 0, 0 },  // Inst #1242 = TLBFLUSH_B_rr
+  { 1, OperandInfo111 },  // Inst #1243 = TLBMAP_rr
+  { 1, OperandInfo71 },  // Inst #1244 = TLBPROBE_A_rr
+  { 1, OperandInfo71 },  // Inst #1245 = TLBPROBE_I_rr
+  { 0, 0 },  // Inst #1246 = TRAPSV_sys
+  { 0, 0 },  // Inst #1247 = TRAPV_sys
+  { 2, OperandInfo60 },  // Inst #1248 = UNPACK_rr_rr
+  { 2, OperandInfo60 },  // Inst #1249 = UNPACK_rr_rr_v110
+  { 1, OperandInfo71 },  // Inst #1250 = UPDFL_rr
+  { 2, OperandInfo47 },  // Inst #1251 = UTOF_rr
+  { 0, 0 },  // Inst #1252 = WAIT_sys
+  { 5, OperandInfo59 },  // Inst #1253 = XNOR_T
+  { 3, OperandInfo46 },  // Inst #1254 = XNOR_rc
+  { 3, OperandInfo45 },  // Inst #1255 = XNOR_rr
+  { 3, OperandInfo46 },  // Inst #1256 = XOR_EQ_rc
+  { 3, OperandInfo45 },  // Inst #1257 = XOR_EQ_rr
+  { 3, OperandInfo46 },  // Inst #1258 = XOR_GE_U_rc
+  { 3, OperandInfo45 },  // Inst #1259 = XOR_GE_U_rr
+  { 3, OperandInfo46 },  // Inst #1260 = XOR_GE_rc
+  { 3, OperandInfo45 },  // Inst #1261 = XOR_GE_rr
+  { 3, OperandInfo46 },  // Inst #1262 = XOR_LT_U_rc
+  { 3, OperandInfo45 },  // Inst #1263 = XOR_LT_U_rr
+  { 3, OperandInfo46 },  // Inst #1264 = XOR_LT_rc
+  { 3, OperandInfo45 },  // Inst #1265 = XOR_LT_rr
+  { 3, OperandInfo46 },  // Inst #1266 = XOR_NE_rc
+  { 3, OperandInfo45 },  // Inst #1267 = XOR_NE_rr
+  { 5, OperandInfo59 },  // Inst #1268 = XOR_T
+  { 3, OperandInfo46 },  // Inst #1269 = XOR_rc
+  { 3, OperandInfo45 },  // Inst #1270 = XOR_rr
+  { 2, OperandInfo47 },  // Inst #1271 = XOR_srr
 };
 
 #endif // GET_INSTRINFO_MC_DESC
