@@ -130,6 +130,7 @@ def test_file(fname):
             continue
         hex_code = code.replace('0x', '')
         hex_code = hex_code.replace(',', '')
+        hex_code = hex_code.replace(' ', '')
         try:
             hex_data = hex_code.strip().decode('hex')
         except:
