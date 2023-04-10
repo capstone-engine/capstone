@@ -5,115 +5,115 @@
 /* Auto generated file. Do not edit. */
 /* Code generator: https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
 
-  "xor_t", // TriCore_INS_XOR_T
-  "absdifs_b", // TriCore_INS_ABSDIFS_B
-  "absdifs_h", // TriCore_INS_ABSDIFS_H
+  "xor.t", // TriCore_INS_XOR_T
+  "absdifs.b", // TriCore_INS_ABSDIFS_B
+  "absdifs.h", // TriCore_INS_ABSDIFS_H
   "absdifs", // TriCore_INS_ABSDIFS
-  "absdif_b", // TriCore_INS_ABSDIF_B
-  "absdif_h", // TriCore_INS_ABSDIF_H
+  "absdif.b", // TriCore_INS_ABSDIF_B
+  "absdif.h", // TriCore_INS_ABSDIF_H
   "absdif", // TriCore_INS_ABSDIF
-  "abss_b", // TriCore_INS_ABSS_B
-  "abss_h", // TriCore_INS_ABSS_H
+  "abss.b", // TriCore_INS_ABSS_B
+  "abss.h", // TriCore_INS_ABSS_H
   "abss", // TriCore_INS_ABSS
-  "abs_b", // TriCore_INS_ABS_B
-  "abs_h", // TriCore_INS_ABS_H
+  "abs.b", // TriCore_INS_ABS_B
+  "abs.h", // TriCore_INS_ABS_H
   "abs", // TriCore_INS_ABS
   "addc", // TriCore_INS_ADDC
-  "addih_a", // TriCore_INS_ADDIH_A
+  "addih.a", // TriCore_INS_ADDIH_A
   "addih", // TriCore_INS_ADDIH
   "addi", // TriCore_INS_ADDI
-  "addsc_at", // TriCore_INS_ADDSC_AT
-  "addsc_a", // TriCore_INS_ADDSC_A
-  "adds_bu", // TriCore_INS_ADDS_BU
-  "adds_b", // TriCore_INS_ADDS_B
-  "adds_h", // TriCore_INS_ADDS_H
-  "adds_hu", // TriCore_INS_ADDS_HU
-  "adds_u", // TriCore_INS_ADDS_U
+  "addsc.at", // TriCore_INS_ADDSC_AT
+  "addsc.a", // TriCore_INS_ADDSC_A
+  "adds.bu", // TriCore_INS_ADDS_BU
+  "adds.b", // TriCore_INS_ADDS_B
+  "adds.h", // TriCore_INS_ADDS_H
+  "adds.hu", // TriCore_INS_ADDS_HU
+  "adds.u", // TriCore_INS_ADDS_U
   "adds", // TriCore_INS_ADDS
   "addx", // TriCore_INS_ADDX
-  "add_a", // TriCore_INS_ADD_A
-  "add_b", // TriCore_INS_ADD_B
-  "add_f", // TriCore_INS_ADD_F
-  "add_h", // TriCore_INS_ADD_H
+  "add.a", // TriCore_INS_ADD_A
+  "add.b", // TriCore_INS_ADD_B
+  "add.f", // TriCore_INS_ADD_F
+  "add.h", // TriCore_INS_ADD_H
   "add", // TriCore_INS_ADD
-  "andn_t", // TriCore_INS_ANDN_T
+  "andn.t", // TriCore_INS_ANDN_T
   "andn", // TriCore_INS_ANDN
-  "and_andn_t", // TriCore_INS_AND_ANDN_T
-  "and_and_t", // TriCore_INS_AND_AND_T
-  "and_eq", // TriCore_INS_AND_EQ
-  "and_ge_u", // TriCore_INS_AND_GE_U
-  "and_ge", // TriCore_INS_AND_GE
-  "and_lt_u", // TriCore_INS_AND_LT_U
-  "and_lt", // TriCore_INS_AND_LT
-  "and_ne", // TriCore_INS_AND_NE
-  "and_nor_t", // TriCore_INS_AND_NOR_T
-  "and_or_t", // TriCore_INS_AND_OR_T
-  "and_t", // TriCore_INS_AND_T
+  "and.andn.t", // TriCore_INS_AND_ANDN_T
+  "and.and.t", // TriCore_INS_AND_AND_T
+  "and.eq", // TriCore_INS_AND_EQ
+  "and.ge.u", // TriCore_INS_AND_GE_U
+  "and.ge", // TriCore_INS_AND_GE
+  "and.lt.u", // TriCore_INS_AND_LT_U
+  "and.lt", // TriCore_INS_AND_LT
+  "and.ne", // TriCore_INS_AND_NE
+  "and.nor.t", // TriCore_INS_AND_NOR_T
+  "and.or.t", // TriCore_INS_AND_OR_T
+  "and.t", // TriCore_INS_AND_T
   "and", // TriCore_INS_AND
   "bisr", // TriCore_INS_BISR
   "bmerge", // TriCore_INS_BMERGE
   "bsplit", // TriCore_INS_BSPLIT
-  "cachea_i", // TriCore_INS_CACHEA_I
-  "cachea_wi", // TriCore_INS_CACHEA_WI
-  "cachea_w", // TriCore_INS_CACHEA_W
-  "cachei_i", // TriCore_INS_CACHEI_I
-  "cachei_wi", // TriCore_INS_CACHEI_WI
-  "cachei_w", // TriCore_INS_CACHEI_W
-  "caddn_a", // TriCore_INS_CADDN_A
+  "cachea.i", // TriCore_INS_CACHEA_I
+  "cachea.wi", // TriCore_INS_CACHEA_WI
+  "cachea.w", // TriCore_INS_CACHEA_W
+  "cachei.i", // TriCore_INS_CACHEI_I
+  "cachei.wi", // TriCore_INS_CACHEI_WI
+  "cachei.w", // TriCore_INS_CACHEI_W
+  "caddn.a", // TriCore_INS_CADDN_A
   "caddn", // TriCore_INS_CADDN
-  "cadd_a", // TriCore_INS_CADD_A
+  "cadd.a", // TriCore_INS_CADD_A
   "cadd", // TriCore_INS_CADD
   "calla", // TriCore_INS_CALLA
   "calli", // TriCore_INS_CALLI
   "call", // TriCore_INS_CALL
-  "clo_b", // TriCore_INS_CLO_B
-  "clo_h", // TriCore_INS_CLO_H
+  "clo.b", // TriCore_INS_CLO_B
+  "clo.h", // TriCore_INS_CLO_H
   "clo", // TriCore_INS_CLO
-  "cls_b", // TriCore_INS_CLS_B
-  "cls_h", // TriCore_INS_CLS_H
+  "cls.b", // TriCore_INS_CLS_B
+  "cls.h", // TriCore_INS_CLS_H
   "cls", // TriCore_INS_CLS
-  "clz_b", // TriCore_INS_CLZ_B
-  "clz_h", // TriCore_INS_CLZ_H
+  "clz.b", // TriCore_INS_CLZ_B
+  "clz.h", // TriCore_INS_CLZ_H
   "clz", // TriCore_INS_CLZ
   "cmovn", // TriCore_INS_CMOVN
   "cmov", // TriCore_INS_CMOV
-  "cmpswap_w", // TriCore_INS_CMPSWAP_W
-  "cmp_f", // TriCore_INS_CMP_F
-  "crc32b_w", // TriCore_INS_CRC32B_W
-  "crc32l_w", // TriCore_INS_CRC32L_W
-  "crc32_b", // TriCore_INS_CRC32_B
+  "cmpswap.w", // TriCore_INS_CMPSWAP_W
+  "cmp.f", // TriCore_INS_CMP_F
+  "crc32b.w", // TriCore_INS_CRC32B_W
+  "crc32l.w", // TriCore_INS_CRC32L_W
+  "crc32.b", // TriCore_INS_CRC32_B
   "crcn", // TriCore_INS_CRCN
-  "csubn_a", // TriCore_INS_CSUBN_A
+  "csubn.a", // TriCore_INS_CSUBN_A
   "csubn", // TriCore_INS_CSUBN
-  "csub_a", // TriCore_INS_CSUB_A
+  "csub.a", // TriCore_INS_CSUB_A
   "csub", // TriCore_INS_CSUB
   "debug", // TriCore_INS_DEBUG
   "dextr", // TriCore_INS_DEXTR
-  "difsc_a", // TriCore_INS_DIFSC_A
+  "difsc.a", // TriCore_INS_DIFSC_A
   "disable", // TriCore_INS_DISABLE
-  "div_f", // TriCore_INS_DIV_F
-  "div_u", // TriCore_INS_DIV_U
+  "div.f", // TriCore_INS_DIV_F
+  "div.u", // TriCore_INS_DIV_U
   "div", // TriCore_INS_DIV
   "dsync", // TriCore_INS_DSYNC
   "dvadj", // TriCore_INS_DVADJ
-  "dvinit_bu", // TriCore_INS_DVINIT_BU
-  "dvinit_b", // TriCore_INS_DVINIT_B
-  "dvinit_hu", // TriCore_INS_DVINIT_HU
-  "dvinit_h", // TriCore_INS_DVINIT_H
-  "dvinit_u", // TriCore_INS_DVINIT_U
+  "dvinit.bu", // TriCore_INS_DVINIT_BU
+  "dvinit.b", // TriCore_INS_DVINIT_B
+  "dvinit.hu", // TriCore_INS_DVINIT_HU
+  "dvinit.h", // TriCore_INS_DVINIT_H
+  "dvinit.u", // TriCore_INS_DVINIT_U
   "dvinit", // TriCore_INS_DVINIT
-  "dvstep_u", // TriCore_INS_DVSTEP_U
+  "dvstep.u", // TriCore_INS_DVSTEP_U
   "dvstep", // TriCore_INS_DVSTEP
   "enable", // TriCore_INS_ENABLE
-  "eqany_b", // TriCore_INS_EQANY_B
-  "eqany_h", // TriCore_INS_EQANY_H
-  "eqz_a", // TriCore_INS_EQZ_A
-  "eq_a", // TriCore_INS_EQ_A
-  "eq_b", // TriCore_INS_EQ_B
-  "eq_h", // TriCore_INS_EQ_H
-  "eq_w", // TriCore_INS_EQ_W
+  "eqany.b", // TriCore_INS_EQANY_B
+  "eqany.h", // TriCore_INS_EQANY_H
+  "eqz.a", // TriCore_INS_EQZ_A
+  "eq.a", // TriCore_INS_EQ_A
+  "eq.b", // TriCore_INS_EQ_B
+  "eq.h", // TriCore_INS_EQ_H
+  "eq.w", // TriCore_INS_EQ_W
   "eq", // TriCore_INS_EQ
-  "extr_u", // TriCore_INS_EXTR_U
+  "extr.u", // TriCore_INS_EXTR_U
   "extr", // TriCore_INS_EXTR
   "fcalla", // TriCore_INS_FCALLA
   "fcalli", // TriCore_INS_FCALLI
@@ -126,25 +126,25 @@
   "ftoq31", // TriCore_INS_FTOQ31
   "ftouz", // TriCore_INS_FTOUZ
   "ftou", // TriCore_INS_FTOU
-  "ge_a", // TriCore_INS_GE_A
-  "ge_u", // TriCore_INS_GE_U
+  "ge.a", // TriCore_INS_GE_A
+  "ge.u", // TriCore_INS_GE_U
   "ge", // TriCore_INS_GE
   "hptof", // TriCore_INS_HPTOF
   "imask", // TriCore_INS_IMASK
   "insert", // TriCore_INS_INSERT
-  "insn_t", // TriCore_INS_INSN_T
-  "ins_t", // TriCore_INS_INS_T
+  "insn.t", // TriCore_INS_INSN_T
+  "ins.t", // TriCore_INS_INS_T
   "isync", // TriCore_INS_ISYNC
   "itof", // TriCore_INS_ITOF
-  "ixmax_u", // TriCore_INS_IXMAX_U
+  "ixmax.u", // TriCore_INS_IXMAX_U
   "ixmax", // TriCore_INS_IXMAX
-  "ixmin_u", // TriCore_INS_IXMIN_U
+  "ixmin.u", // TriCore_INS_IXMIN_U
   "ixmin", // TriCore_INS_IXMIN
   "ja", // TriCore_INS_JA
-  "jeq_a", // TriCore_INS_JEQ_A
+  "jeq.a", // TriCore_INS_JEQ_A
   "jeq", // TriCore_INS_JEQ
   "jgez", // TriCore_INS_JGEZ
-  "jge_u", // TriCore_INS_JGE_U
+  "jge.u", // TriCore_INS_JGE_U
   "jge", // TriCore_INS_JGE
   "jgtz", // TriCore_INS_JGTZ
   "ji", // TriCore_INS_JI
@@ -152,246 +152,246 @@
   "jlez", // TriCore_INS_JLEZ
   "jli", // TriCore_INS_JLI
   "jltz", // TriCore_INS_JLTZ
-  "jlt_u", // TriCore_INS_JLT_U
+  "jlt.u", // TriCore_INS_JLT_U
   "jlt", // TriCore_INS_JLT
   "jl", // TriCore_INS_JL
   "jned", // TriCore_INS_JNED
   "jnei", // TriCore_INS_JNEI
-  "jne_a", // TriCore_INS_JNE_A
+  "jne.a", // TriCore_INS_JNE_A
   "jne", // TriCore_INS_JNE
-  "jnz_a", // TriCore_INS_JNZ_A
-  "jnz_t", // TriCore_INS_JNZ_T
+  "jnz.a", // TriCore_INS_JNZ_A
+  "jnz.t", // TriCore_INS_JNZ_T
   "jnz", // TriCore_INS_JNZ
-  "jz_a", // TriCore_INS_JZ_A
-  "jz_t", // TriCore_INS_JZ_T
+  "jz.a", // TriCore_INS_JZ_A
+  "jz.t", // TriCore_INS_JZ_T
   "jz", // TriCore_INS_JZ
   "j", // TriCore_INS_J
   "ldlcx", // TriCore_INS_LDLCX
   "ldmst", // TriCore_INS_LDMST
   "lducx", // TriCore_INS_LDUCX
-  "ld_a", // TriCore_INS_LD_A
-  "ld_bu", // TriCore_INS_LD_BU
-  "ld_b", // TriCore_INS_LD_B
-  "ld_da", // TriCore_INS_LD_DA
-  "ld_d", // TriCore_INS_LD_D
-  "ld_hu", // TriCore_INS_LD_HU
-  "ld_h", // TriCore_INS_LD_H
-  "ld_q", // TriCore_INS_LD_Q
-  "ld_w", // TriCore_INS_LD_W
+  "ld.a", // TriCore_INS_LD_A
+  "ld.bu", // TriCore_INS_LD_BU
+  "ld.b", // TriCore_INS_LD_B
+  "ld.da", // TriCore_INS_LD_DA
+  "ld.d", // TriCore_INS_LD_D
+  "ld.hu", // TriCore_INS_LD_HU
+  "ld.h", // TriCore_INS_LD_H
+  "ld.q", // TriCore_INS_LD_Q
+  "ld.w", // TriCore_INS_LD_W
   "lea", // TriCore_INS_LEA
   "lha", // TriCore_INS_LHA
   "loopu", // TriCore_INS_LOOPU
   "loop", // TriCore_INS_LOOP
-  "lt_a", // TriCore_INS_LT_A
-  "lt_b", // TriCore_INS_LT_B
-  "lt_bu", // TriCore_INS_LT_BU
-  "lt_h", // TriCore_INS_LT_H
-  "lt_hu", // TriCore_INS_LT_HU
-  "lt_u", // TriCore_INS_LT_U
-  "lt_w", // TriCore_INS_LT_W
-  "lt_wu", // TriCore_INS_LT_WU
+  "lt.a", // TriCore_INS_LT_A
+  "lt.b", // TriCore_INS_LT_B
+  "lt.bu", // TriCore_INS_LT_BU
+  "lt.h", // TriCore_INS_LT_H
+  "lt.hu", // TriCore_INS_LT_HU
+  "lt.u", // TriCore_INS_LT_U
+  "lt.w", // TriCore_INS_LT_W
+  "lt.wu", // TriCore_INS_LT_WU
   "lt", // TriCore_INS_LT
-  "maddms_h", // TriCore_INS_MADDMS_H
-  "maddms_u", // TriCore_INS_MADDMS_U
+  "maddms.h", // TriCore_INS_MADDMS_H
+  "maddms.u", // TriCore_INS_MADDMS_U
   "maddms", // TriCore_INS_MADDMS
-  "maddm_h", // TriCore_INS_MADDM_H
-  "maddm_q", // TriCore_INS_MADDM_Q
-  "maddm_u", // TriCore_INS_MADDM_U
+  "maddm.h", // TriCore_INS_MADDM_H
+  "maddm.q", // TriCore_INS_MADDM_Q
+  "maddm.u", // TriCore_INS_MADDM_U
   "maddm", // TriCore_INS_MADDM
-  "maddrs_h", // TriCore_INS_MADDRS_H
-  "maddrs_q", // TriCore_INS_MADDRS_Q
-  "maddr_h", // TriCore_INS_MADDR_H
-  "maddr_q", // TriCore_INS_MADDR_Q
-  "maddsums_h", // TriCore_INS_MADDSUMS_H
-  "maddsum_h", // TriCore_INS_MADDSUM_H
-  "maddsurs_h", // TriCore_INS_MADDSURS_H
-  "maddsur_h", // TriCore_INS_MADDSUR_H
-  "maddsus_h", // TriCore_INS_MADDSUS_H
-  "maddsu_h", // TriCore_INS_MADDSU_H
-  "madds_h", // TriCore_INS_MADDS_H
-  "madds_q", // TriCore_INS_MADDS_Q
-  "madds_u", // TriCore_INS_MADDS_U
+  "maddrs.h", // TriCore_INS_MADDRS_H
+  "maddrs.q", // TriCore_INS_MADDRS_Q
+  "maddr.h", // TriCore_INS_MADDR_H
+  "maddr.q", // TriCore_INS_MADDR_Q
+  "maddsums.h", // TriCore_INS_MADDSUMS_H
+  "maddsum.h", // TriCore_INS_MADDSUM_H
+  "maddsurs.h", // TriCore_INS_MADDSURS_H
+  "maddsur.h", // TriCore_INS_MADDSUR_H
+  "maddsus.h", // TriCore_INS_MADDSUS_H
+  "maddsu.h", // TriCore_INS_MADDSU_H
+  "madds.h", // TriCore_INS_MADDS_H
+  "madds.q", // TriCore_INS_MADDS_Q
+  "madds.u", // TriCore_INS_MADDS_U
   "madds", // TriCore_INS_MADDS
-  "madd_f", // TriCore_INS_MADD_F
-  "madd_h", // TriCore_INS_MADD_H
-  "madd_q", // TriCore_INS_MADD_Q
-  "madd_u", // TriCore_INS_MADD_U
+  "madd.f", // TriCore_INS_MADD_F
+  "madd.h", // TriCore_INS_MADD_H
+  "madd.q", // TriCore_INS_MADD_Q
+  "madd.u", // TriCore_INS_MADD_U
   "madd", // TriCore_INS_MADD
-  "max_b", // TriCore_INS_MAX_B
-  "max_bu", // TriCore_INS_MAX_BU
-  "max_h", // TriCore_INS_MAX_H
-  "max_hu", // TriCore_INS_MAX_HU
-  "max_u", // TriCore_INS_MAX_U
+  "max.b", // TriCore_INS_MAX_B
+  "max.bu", // TriCore_INS_MAX_BU
+  "max.h", // TriCore_INS_MAX_H
+  "max.hu", // TriCore_INS_MAX_HU
+  "max.u", // TriCore_INS_MAX_U
   "max", // TriCore_INS_MAX
   "mfcr", // TriCore_INS_MFCR
-  "min_b", // TriCore_INS_MIN_B
-  "min_bu", // TriCore_INS_MIN_BU
-  "min_h", // TriCore_INS_MIN_H
-  "min_hu", // TriCore_INS_MIN_HU
-  "min_u", // TriCore_INS_MIN_U
+  "min.b", // TriCore_INS_MIN_B
+  "min.bu", // TriCore_INS_MIN_BU
+  "min.h", // TriCore_INS_MIN_H
+  "min.hu", // TriCore_INS_MIN_HU
+  "min.u", // TriCore_INS_MIN_U
   "min", // TriCore_INS_MIN
-  "movh_a", // TriCore_INS_MOVH_A
+  "movh.a", // TriCore_INS_MOVH_A
   "movh", // TriCore_INS_MOVH
-  "movz_a", // TriCore_INS_MOVZ_A
-  "mov_aa", // TriCore_INS_MOV_AA
-  "mov_a", // TriCore_INS_MOV_A
-  "mov_d", // TriCore_INS_MOV_D
-  "mov_u", // TriCore_INS_MOV_U
+  "movz.a", // TriCore_INS_MOVZ_A
+  "mov.aa", // TriCore_INS_MOV_AA
+  "mov.a", // TriCore_INS_MOV_A
+  "mov.d", // TriCore_INS_MOV_D
+  "mov.u", // TriCore_INS_MOV_U
   "mov", // TriCore_INS_MOV
-  "msubadms_h", // TriCore_INS_MSUBADMS_H
-  "msubadm_h", // TriCore_INS_MSUBADM_H
-  "msubadrs_h", // TriCore_INS_MSUBADRS_H
-  "msubadr_h", // TriCore_INS_MSUBADR_H
-  "msubads_h", // TriCore_INS_MSUBADS_H
-  "msubad_h", // TriCore_INS_MSUBAD_H
-  "msubms_h", // TriCore_INS_MSUBMS_H
-  "msubms_u", // TriCore_INS_MSUBMS_U
+  "msubadms.h", // TriCore_INS_MSUBADMS_H
+  "msubadm.h", // TriCore_INS_MSUBADM_H
+  "msubadrs.h", // TriCore_INS_MSUBADRS_H
+  "msubadr.h", // TriCore_INS_MSUBADR_H
+  "msubads.h", // TriCore_INS_MSUBADS_H
+  "msubad.h", // TriCore_INS_MSUBAD_H
+  "msubms.h", // TriCore_INS_MSUBMS_H
+  "msubms.u", // TriCore_INS_MSUBMS_U
   "msubms", // TriCore_INS_MSUBMS
-  "msubm_h", // TriCore_INS_MSUBM_H
-  "msubm_q", // TriCore_INS_MSUBM_Q
-  "msubm_u", // TriCore_INS_MSUBM_U
+  "msubm.h", // TriCore_INS_MSUBM_H
+  "msubm.q", // TriCore_INS_MSUBM_Q
+  "msubm.u", // TriCore_INS_MSUBM_U
   "msubm", // TriCore_INS_MSUBM
-  "msubrs_h", // TriCore_INS_MSUBRS_H
-  "msubrs_q", // TriCore_INS_MSUBRS_Q
-  "msubr_h", // TriCore_INS_MSUBR_H
-  "msubr_q", // TriCore_INS_MSUBR_Q
-  "msubs_h", // TriCore_INS_MSUBS_H
-  "msubs_q", // TriCore_INS_MSUBS_Q
-  "msubs_u", // TriCore_INS_MSUBS_U
+  "msubrs.h", // TriCore_INS_MSUBRS_H
+  "msubrs.q", // TriCore_INS_MSUBRS_Q
+  "msubr.h", // TriCore_INS_MSUBR_H
+  "msubr.q", // TriCore_INS_MSUBR_Q
+  "msubs.h", // TriCore_INS_MSUBS_H
+  "msubs.q", // TriCore_INS_MSUBS_Q
+  "msubs.u", // TriCore_INS_MSUBS_U
   "msubs", // TriCore_INS_MSUBS
-  "msub_f", // TriCore_INS_MSUB_F
-  "msub_h", // TriCore_INS_MSUB_H
-  "msub_q", // TriCore_INS_MSUB_Q
-  "msub_u", // TriCore_INS_MSUB_U
+  "msub.f", // TriCore_INS_MSUB_F
+  "msub.h", // TriCore_INS_MSUB_H
+  "msub.q", // TriCore_INS_MSUB_Q
+  "msub.u", // TriCore_INS_MSUB_U
   "msub", // TriCore_INS_MSUB
   "mtcr", // TriCore_INS_MTCR
-  "mulms_h", // TriCore_INS_MULMS_H
-  "mulm_h", // TriCore_INS_MULM_H
-  "mulm_u", // TriCore_INS_MULM_U
+  "mulms.h", // TriCore_INS_MULMS_H
+  "mulm.h", // TriCore_INS_MULM_H
+  "mulm.u", // TriCore_INS_MULM_U
   "mulm", // TriCore_INS_MULM
-  "mulr_h", // TriCore_INS_MULR_H
-  "mulr_q", // TriCore_INS_MULR_Q
-  "muls_u", // TriCore_INS_MULS_U
+  "mulr.h", // TriCore_INS_MULR_H
+  "mulr.q", // TriCore_INS_MULR_Q
+  "muls.u", // TriCore_INS_MULS_U
   "muls", // TriCore_INS_MULS
-  "mul_f", // TriCore_INS_MUL_F
-  "mul_h", // TriCore_INS_MUL_H
-  "mul_q", // TriCore_INS_MUL_Q
-  "mul_u", // TriCore_INS_MUL_U
+  "mul.f", // TriCore_INS_MUL_F
+  "mul.h", // TriCore_INS_MUL_H
+  "mul.q", // TriCore_INS_MUL_Q
+  "mul.u", // TriCore_INS_MUL_U
   "mul", // TriCore_INS_MUL
-  "nand_t", // TriCore_INS_NAND_T
+  "nand.t", // TriCore_INS_NAND_T
   "nand", // TriCore_INS_NAND
-  "nez_a", // TriCore_INS_NEZ_A
-  "ne_a", // TriCore_INS_NE_A
+  "nez.a", // TriCore_INS_NEZ_A
+  "ne.a", // TriCore_INS_NE_A
   "ne", // TriCore_INS_NE
   "nop", // TriCore_INS_NOP
-  "nor_t", // TriCore_INS_NOR_T
+  "nor.t", // TriCore_INS_NOR_T
   "nor", // TriCore_INS_NOR
   "not", // TriCore_INS_NOT
-  "orn_t", // TriCore_INS_ORN_T
+  "orn.t", // TriCore_INS_ORN_T
   "orn", // TriCore_INS_ORN
-  "or_andn_t", // TriCore_INS_OR_ANDN_T
-  "or_and_t", // TriCore_INS_OR_AND_T
-  "or_eq", // TriCore_INS_OR_EQ
-  "or_ge_u", // TriCore_INS_OR_GE_U
-  "or_ge", // TriCore_INS_OR_GE
-  "or_lt_u", // TriCore_INS_OR_LT_U
-  "or_lt", // TriCore_INS_OR_LT
-  "or_ne", // TriCore_INS_OR_NE
-  "or_nor_t", // TriCore_INS_OR_NOR_T
-  "or_or_t", // TriCore_INS_OR_OR_T
-  "or_t", // TriCore_INS_OR_T
+  "or.andn.t", // TriCore_INS_OR_ANDN_T
+  "or.and.t", // TriCore_INS_OR_AND_T
+  "or.eq", // TriCore_INS_OR_EQ
+  "or.ge.u", // TriCore_INS_OR_GE_U
+  "or.ge", // TriCore_INS_OR_GE
+  "or.lt.u", // TriCore_INS_OR_LT_U
+  "or.lt", // TriCore_INS_OR_LT
+  "or.ne", // TriCore_INS_OR_NE
+  "or.nor.t", // TriCore_INS_OR_NOR_T
+  "or.or.t", // TriCore_INS_OR_OR_T
+  "or.t", // TriCore_INS_OR_T
   "or", // TriCore_INS_OR
   "pack", // TriCore_INS_PACK
   "parity", // TriCore_INS_PARITY
-  "popcnt_w", // TriCore_INS_POPCNT_W
+  "popcnt.w", // TriCore_INS_POPCNT_W
   "q31tof", // TriCore_INS_Q31TOF
-  "qseed_f", // TriCore_INS_QSEED_F
+  "qseed.f", // TriCore_INS_QSEED_F
   "restore", // TriCore_INS_RESTORE
   "ret", // TriCore_INS_RET
   "rfe", // TriCore_INS_RFE
   "rfm", // TriCore_INS_RFM
   "rslcx", // TriCore_INS_RSLCX
   "rstv", // TriCore_INS_RSTV
-  "rsubs_u", // TriCore_INS_RSUBS_U
+  "rsubs.u", // TriCore_INS_RSUBS_U
   "rsubs", // TriCore_INS_RSUBS
   "rsub", // TriCore_INS_RSUB
-  "sat_bu", // TriCore_INS_SAT_BU
-  "sat_b", // TriCore_INS_SAT_B
-  "sat_hu", // TriCore_INS_SAT_HU
-  "sat_h", // TriCore_INS_SAT_H
-  "seln_a", // TriCore_INS_SELN_A
+  "sat.bu", // TriCore_INS_SAT_BU
+  "sat.b", // TriCore_INS_SAT_B
+  "sat.hu", // TriCore_INS_SAT_HU
+  "sat.h", // TriCore_INS_SAT_H
+  "seln.a", // TriCore_INS_SELN_A
   "seln", // TriCore_INS_SELN
-  "sel_a", // TriCore_INS_SEL_A
+  "sel.a", // TriCore_INS_SEL_A
   "sel", // TriCore_INS_SEL
   "shas", // TriCore_INS_SHAS
-  "sha_b", // TriCore_INS_SHA_B
-  "sha_h", // TriCore_INS_SHA_H
+  "sha.b", // TriCore_INS_SHA_B
+  "sha.h", // TriCore_INS_SHA_H
   "sha", // TriCore_INS_SHA
   "shuffle", // TriCore_INS_SHUFFLE
-  "sh_andn_t", // TriCore_INS_SH_ANDN_T
-  "sh_and_t", // TriCore_INS_SH_AND_T
-  "sh_b", // TriCore_INS_SH_B
-  "sh_eq", // TriCore_INS_SH_EQ
-  "sh_ge_u", // TriCore_INS_SH_GE_U
-  "sh_ge", // TriCore_INS_SH_GE
-  "sh_h", // TriCore_INS_SH_H
-  "sh_lt_u", // TriCore_INS_SH_LT_U
-  "sh_lt", // TriCore_INS_SH_LT
-  "sh_nand_t", // TriCore_INS_SH_NAND_T
-  "sh_ne", // TriCore_INS_SH_NE
-  "sh_nor_t", // TriCore_INS_SH_NOR_T
-  "sh_orn_t", // TriCore_INS_SH_ORN_T
-  "sh_or_t", // TriCore_INS_SH_OR_T
-  "sh_xnor_t", // TriCore_INS_SH_XNOR_T
-  "sh_xor_t", // TriCore_INS_SH_XOR_T
+  "sh.andn.t", // TriCore_INS_SH_ANDN_T
+  "sh.and.t", // TriCore_INS_SH_AND_T
+  "sh.b", // TriCore_INS_SH_B
+  "sh.eq", // TriCore_INS_SH_EQ
+  "sh.ge.u", // TriCore_INS_SH_GE_U
+  "sh.ge", // TriCore_INS_SH_GE
+  "sh.h", // TriCore_INS_SH_H
+  "sh.lt.u", // TriCore_INS_SH_LT_U
+  "sh.lt", // TriCore_INS_SH_LT
+  "sh.nand.t", // TriCore_INS_SH_NAND_T
+  "sh.ne", // TriCore_INS_SH_NE
+  "sh.nor.t", // TriCore_INS_SH_NOR_T
+  "sh.orn.t", // TriCore_INS_SH_ORN_T
+  "sh.or.t", // TriCore_INS_SH_OR_T
+  "sh.xnor.t", // TriCore_INS_SH_XNOR_T
+  "sh.xor.t", // TriCore_INS_SH_XOR_T
   "sh", // TriCore_INS_SH
   "stlcx", // TriCore_INS_STLCX
   "stucx", // TriCore_INS_STUCX
-  "st_a", // TriCore_INS_ST_A
-  "st_b", // TriCore_INS_ST_B
-  "st_da", // TriCore_INS_ST_DA
-  "st_d", // TriCore_INS_ST_D
-  "st_h", // TriCore_INS_ST_H
-  "st_q", // TriCore_INS_ST_Q
-  "st_t", // TriCore_INS_ST_T
-  "st_w", // TriCore_INS_ST_W
+  "st.a", // TriCore_INS_ST_A
+  "st.b", // TriCore_INS_ST_B
+  "st.da", // TriCore_INS_ST_DA
+  "st.d", // TriCore_INS_ST_D
+  "st.h", // TriCore_INS_ST_H
+  "st.q", // TriCore_INS_ST_Q
+  "st.t", // TriCore_INS_ST_T
+  "st.w", // TriCore_INS_ST_W
   "subc", // TriCore_INS_SUBC
-  "subsc_a", // TriCore_INS_SUBSC_A
-  "subs_bu", // TriCore_INS_SUBS_BU
-  "subs_b", // TriCore_INS_SUBS_B
-  "subs_hu", // TriCore_INS_SUBS_HU
-  "subs_h", // TriCore_INS_SUBS_H
-  "subs_u", // TriCore_INS_SUBS_U
+  "subsc.a", // TriCore_INS_SUBSC_A
+  "subs.bu", // TriCore_INS_SUBS_BU
+  "subs.b", // TriCore_INS_SUBS_B
+  "subs.hu", // TriCore_INS_SUBS_HU
+  "subs.h", // TriCore_INS_SUBS_H
+  "subs.u", // TriCore_INS_SUBS_U
   "subs", // TriCore_INS_SUBS
   "subx", // TriCore_INS_SUBX
-  "sub_a", // TriCore_INS_SUB_A
-  "sub_b", // TriCore_INS_SUB_B
-  "sub_f", // TriCore_INS_SUB_F
-  "sub_h", // TriCore_INS_SUB_H
+  "sub.a", // TriCore_INS_SUB_A
+  "sub.b", // TriCore_INS_SUB_B
+  "sub.f", // TriCore_INS_SUB_F
+  "sub.h", // TriCore_INS_SUB_H
   "sub", // TriCore_INS_SUB
   "svlcx", // TriCore_INS_SVLCX
-  "swapmsk_w", // TriCore_INS_SWAPMSK_W
-  "swap_a", // TriCore_INS_SWAP_A
-  "swap_w", // TriCore_INS_SWAP_W
+  "swapmsk.w", // TriCore_INS_SWAPMSK_W
+  "swap.a", // TriCore_INS_SWAP_A
+  "swap.w", // TriCore_INS_SWAP_W
   "syscall", // TriCore_INS_SYSCALL
   "tlbdemap", // TriCore_INS_TLBDEMAP
-  "tlbflush_a", // TriCore_INS_TLBFLUSH_A
-  "tlbflush_b", // TriCore_INS_TLBFLUSH_B
+  "tlbflush.a", // TriCore_INS_TLBFLUSH_A
+  "tlbflush.b", // TriCore_INS_TLBFLUSH_B
   "tlbmap", // TriCore_INS_TLBMAP
-  "tlbprobe_a", // TriCore_INS_TLBPROBE_A
-  "tlbprobe_i", // TriCore_INS_TLBPROBE_I
+  "tlbprobe.a", // TriCore_INS_TLBPROBE_A
+  "tlbprobe.i", // TriCore_INS_TLBPROBE_I
   "trapsv", // TriCore_INS_TRAPSV
   "trapv", // TriCore_INS_TRAPV
   "unpack", // TriCore_INS_UNPACK
   "updfl", // TriCore_INS_UPDFL
   "utof", // TriCore_INS_UTOF
   "wait", // TriCore_INS_WAIT
-  "xnor_t", // TriCore_INS_XNOR_T
+  "xnor.t", // TriCore_INS_XNOR_T
   "xnor", // TriCore_INS_XNOR
-  "xor_eq", // TriCore_INS_XOR_EQ
-  "xor_ge_u", // TriCore_INS_XOR_GE_U
-  "xor_ge", // TriCore_INS_XOR_GE
-  "xor_lt_u", // TriCore_INS_XOR_LT_U
-  "xor_lt", // TriCore_INS_XOR_LT
-  "xor_ne", // TriCore_INS_XOR_NE
+  "xor.eq", // TriCore_INS_XOR_EQ
+  "xor.ge.u", // TriCore_INS_XOR_GE_U
+  "xor.ge", // TriCore_INS_XOR_GE
+  "xor.lt.u", // TriCore_INS_XOR_LT_U
+  "xor.lt", // TriCore_INS_XOR_LT
+  "xor.ne", // TriCore_INS_XOR_NE
   "xor", // TriCore_INS_XOR
