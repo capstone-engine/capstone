@@ -1819,6 +1819,27 @@ static bool valid_repe(cs_struct *h, unsigned int opcode)
 	return false;
 }
 
+// Given MCInst's id, find out if this insn is valid for NOTRACK prefix.
+// NOTRACK prefix is valid for CALL/JMP.
+static bool valid_notrack(cs_struct *h, unsigned int opcode)
+{
+	unsigned int id;
+	unsigned int i = find_insn(opcode);
+	if (i != -1) {
+		id = insns[i].mapid;
+		switch(id) {
+			default:
+				return false;
+			case X86_INS_CALL:
+			case X86_INS_JMP:
+				return true;
+		}
+	}
+
+	// not found
+	return false;
+}
+
 #ifndef CAPSTONE_DIET
 // add *CX register to regs_read[] & regs_write[]
 static void add_cx(MCInst *MI)
@@ -1944,6 +1965,17 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 #endif
 #endif
 #endif
+			break;
+	}
+
+	switch(MI->x86_prefix[1]) {
+		default:
+			break;
+		case 0x3e:
+			opcode = MCInst_getOpcode(MI);
+			if (valid_notrack(MI->csh, opcode)) {
+				SStream_concat(O, "notrack|");
+			}
 			break;
 	}
 
