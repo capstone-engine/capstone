@@ -105,6 +105,7 @@ const char *TriCore_insn_name(csh handle, unsigned int id) {
 #ifndef CAPSTONE_DIET
 static name_map group_name_maps[] = {
 		{TriCore_GRP_INVALID, NULL},
+		{TriCore_GRP_CALL, "call"},
 		{TriCore_GRP_JUMP, "jump"},
 };
 #endif
