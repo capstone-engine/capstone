@@ -7,748 +7,748 @@
 
 { /* TriCore_PHI (0) - TriCore_INS_INVALID - PHINODE */
  0 
-},
-{ /* TriCore_INLINEASM (1) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_INLINEASM (1) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_INLINEASM_BR (2) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_INLINEASM_BR (2) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_CFI_INSTRUCTION (3) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_CFI_INSTRUCTION (3) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_EH_LABEL (4) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_EH_LABEL (4) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_GC_LABEL (5) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_GC_LABEL (5) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_ANNOTATION_LABEL (6) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_ANNOTATION_LABEL (6) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_KILL (7) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_KILL (7) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_EXTRACT_SUBREG (8) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_EXTRACT_SUBREG (8) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_INSERT_SUBREG (9) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_INSERT_SUBREG (9) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_IMPLICIT_DEF (10) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_IMPLICIT_DEF (10) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_SUBREG_TO_REG (11) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_SUBREG_TO_REG (11) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_COPY_TO_REGCLASS (12) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_COPY_TO_REGCLASS (12) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_DBG_VALUE (13) - TriCore_INS_INVALID - DBG_VALUE */
+}}},
+{{{ /* TriCore_DBG_VALUE (13) - TriCore_INS_INVALID - DBG_VALUE */
  0 
-},
-{ /* TriCore_DBG_VALUE_LIST (14) - TriCore_INS_INVALID - DBG_VALUE_LIST */
+}}},
+{{{ /* TriCore_DBG_VALUE_LIST (14) - TriCore_INS_INVALID - DBG_VALUE_LIST */
  0 
-},
-{ /* TriCore_DBG_INSTR_REF (15) - TriCore_INS_INVALID - DBG_INSTR_REF */
+}}},
+{{{ /* TriCore_DBG_INSTR_REF (15) - TriCore_INS_INVALID - DBG_INSTR_REF */
  0 
-},
-{ /* TriCore_DBG_PHI (16) - TriCore_INS_INVALID - DBG_PHI */
+}}},
+{{{ /* TriCore_DBG_PHI (16) - TriCore_INS_INVALID - DBG_PHI */
  0 
-},
-{ /* TriCore_DBG_LABEL (17) - TriCore_INS_INVALID - DBG_LABEL */
+}}},
+{{{ /* TriCore_DBG_LABEL (17) - TriCore_INS_INVALID - DBG_LABEL */
  0 
-},
-{ /* TriCore_REG_SEQUENCE (18) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_REG_SEQUENCE (18) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_COPY (19) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_COPY (19) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_BUNDLE (20) - TriCore_INS_INVALID - BUNDLE */
+}}},
+{{{ /* TriCore_BUNDLE (20) - TriCore_INS_INVALID - BUNDLE */
  0 
-},
-{ /* TriCore_LIFETIME_START (21) - TriCore_INS_INVALID - LIFETIME_START */
+}}},
+{{{ /* TriCore_LIFETIME_START (21) - TriCore_INS_INVALID - LIFETIME_START */
  0 
-},
-{ /* TriCore_LIFETIME_END (22) - TriCore_INS_INVALID - LIFETIME_END */
+}}},
+{{{ /* TriCore_LIFETIME_END (22) - TriCore_INS_INVALID - LIFETIME_END */
  0 
-},
-{ /* TriCore_PSEUDO_PROBE (23) - TriCore_INS_INVALID - PSEUDO_PROBE */
+}}},
+{{{ /* TriCore_PSEUDO_PROBE (23) - TriCore_INS_INVALID - PSEUDO_PROBE */
  0 
-},
-{ /* TriCore_ARITH_FENCE (24) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_ARITH_FENCE (24) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_STACKMAP (25) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_STACKMAP (25) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_FENTRY_CALL (26) - TriCore_INS_INVALID - # FEntry call */
+}}},
+{{{ /* TriCore_FENTRY_CALL (26) - TriCore_INS_INVALID - # FEntry call */
  0 
-},
-{ /* TriCore_PATCHPOINT (27) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_PATCHPOINT (27) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_LOAD_STACK_GUARD (28) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_LOAD_STACK_GUARD (28) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_PREALLOCATED_SETUP (29) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_PREALLOCATED_SETUP (29) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_PREALLOCATED_ARG (30) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_PREALLOCATED_ARG (30) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_STATEPOINT (31) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_STATEPOINT (31) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_LOCAL_ESCAPE (32) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_LOCAL_ESCAPE (32) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_FAULTING_OP (33) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_FAULTING_OP (33) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_PATCHABLE_OP (34) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_PATCHABLE_OP (34) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_PATCHABLE_FUNCTION_ENTER (35) - TriCore_INS_INVALID - # XRay Function Enter. */
+}}},
+{{{ /* TriCore_PATCHABLE_FUNCTION_ENTER (35) - TriCore_INS_INVALID - # XRay Function Enter. */
  0 
-},
-{ /* TriCore_PATCHABLE_RET (36) - TriCore_INS_INVALID - # XRay Function Patchable RET. */
+}}},
+{{{ /* TriCore_PATCHABLE_RET (36) - TriCore_INS_INVALID - # XRay Function Patchable RET. */
  0 
-},
-{ /* TriCore_PATCHABLE_FUNCTION_EXIT (37) - TriCore_INS_INVALID - # XRay Function Exit. */
+}}},
+{{{ /* TriCore_PATCHABLE_FUNCTION_EXIT (37) - TriCore_INS_INVALID - # XRay Function Exit. */
  0 
-},
-{ /* TriCore_PATCHABLE_TAIL_CALL (38) - TriCore_INS_INVALID - # XRay Tail Call Exit. */
+}}},
+{{{ /* TriCore_PATCHABLE_TAIL_CALL (38) - TriCore_INS_INVALID - # XRay Tail Call Exit. */
  0 
-},
-{ /* TriCore_PATCHABLE_EVENT_CALL (39) - TriCore_INS_INVALID - # XRay Custom Event Log. */
+}}},
+{{{ /* TriCore_PATCHABLE_EVENT_CALL (39) - TriCore_INS_INVALID - # XRay Custom Event Log. */
  0 
-},
-{ /* TriCore_PATCHABLE_TYPED_EVENT_CALL (40) - TriCore_INS_INVALID - # XRay Typed Event Log. */
+}}},
+{{{ /* TriCore_PATCHABLE_TYPED_EVENT_CALL (40) - TriCore_INS_INVALID - # XRay Typed Event Log. */
  0 
-},
-{ /* TriCore_ICALL_BRANCH_FUNNEL (41) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_ICALL_BRANCH_FUNNEL (41) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ASSERT_SEXT (42) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ASSERT_SEXT (42) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ASSERT_ZEXT (43) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ASSERT_ZEXT (43) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ASSERT_ALIGN (44) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ASSERT_ALIGN (44) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ADD (45) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ADD (45) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SUB (46) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SUB (46) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_MUL (47) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_MUL (47) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SDIV (48) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SDIV (48) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UDIV (49) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UDIV (49) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SREM (50) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SREM (50) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UREM (51) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UREM (51) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SDIVREM (52) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SDIVREM (52) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UDIVREM (53) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UDIVREM (53) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_AND (54) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_AND (54) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_OR (55) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_OR (55) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_XOR (56) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_XOR (56) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_IMPLICIT_DEF (57) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_IMPLICIT_DEF (57) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_PHI (58) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_PHI (58) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FRAME_INDEX (59) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FRAME_INDEX (59) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_GLOBAL_VALUE (60) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_GLOBAL_VALUE (60) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_EXTRACT (61) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_EXTRACT (61) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UNMERGE_VALUES (62) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UNMERGE_VALUES (62) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INSERT (63) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INSERT (63) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_MERGE_VALUES (64) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_MERGE_VALUES (64) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BUILD_VECTOR (65) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BUILD_VECTOR (65) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BUILD_VECTOR_TRUNC (66) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BUILD_VECTOR_TRUNC (66) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_CONCAT_VECTORS (67) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_CONCAT_VECTORS (67) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_PTRTOINT (68) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_PTRTOINT (68) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTTOPTR (69) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTTOPTR (69) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BITCAST (70) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BITCAST (70) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FREEZE (71) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FREEZE (71) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTRINSIC_FPTRUNC_ROUND (72) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTRINSIC_FPTRUNC_ROUND (72) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTRINSIC_TRUNC (73) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTRINSIC_TRUNC (73) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTRINSIC_ROUND (74) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTRINSIC_ROUND (74) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTRINSIC_LRINT (75) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTRINSIC_LRINT (75) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTRINSIC_ROUNDEVEN (76) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTRINSIC_ROUNDEVEN (76) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_READCYCLECOUNTER (77) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_READCYCLECOUNTER (77) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_LOAD (78) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_LOAD (78) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SEXTLOAD (79) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SEXTLOAD (79) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ZEXTLOAD (80) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ZEXTLOAD (80) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INDEXED_LOAD (81) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INDEXED_LOAD (81) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INDEXED_SEXTLOAD (82) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INDEXED_SEXTLOAD (82) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INDEXED_ZEXTLOAD (83) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INDEXED_ZEXTLOAD (83) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STORE (84) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STORE (84) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INDEXED_STORE (85) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INDEXED_STORE (85) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMIC_CMPXCHG_WITH_SUCCESS (86) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMIC_CMPXCHG_WITH_SUCCESS (86) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMIC_CMPXCHG (87) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMIC_CMPXCHG (87) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_XCHG (88) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_XCHG (88) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_ADD (89) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_ADD (89) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_SUB (90) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_SUB (90) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_AND (91) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_AND (91) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_NAND (92) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_NAND (92) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_OR (93) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_OR (93) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_XOR (94) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_XOR (94) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_MAX (95) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_MAX (95) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_MIN (96) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_MIN (96) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_UMAX (97) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_UMAX (97) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_UMIN (98) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_UMIN (98) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_FADD (99) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_FADD (99) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_FSUB (100) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_FSUB (100) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_FMAX (101) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_FMAX (101) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ATOMICRMW_FMIN (102) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ATOMICRMW_FMIN (102) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FENCE (103) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FENCE (103) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BRCOND (104) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BRCOND (104) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BRINDIRECT (105) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BRINDIRECT (105) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INVOKE_REGION_START (106) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INVOKE_REGION_START (106) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTRINSIC (107) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTRINSIC (107) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INTRINSIC_W_SIDE_EFFECTS (108) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INTRINSIC_W_SIDE_EFFECTS (108) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ANYEXT (109) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ANYEXT (109) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_TRUNC (110) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_TRUNC (110) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_CONSTANT (111) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_CONSTANT (111) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FCONSTANT (112) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FCONSTANT (112) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VASTART (113) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VASTART (113) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VAARG (114) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VAARG (114) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SEXT (115) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SEXT (115) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SEXT_INREG (116) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SEXT_INREG (116) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ZEXT (117) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ZEXT (117) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SHL (118) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SHL (118) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_LSHR (119) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_LSHR (119) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ASHR (120) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ASHR (120) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FSHL (121) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FSHL (121) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FSHR (122) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FSHR (122) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ROTR (123) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ROTR (123) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ROTL (124) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ROTL (124) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ICMP (125) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ICMP (125) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FCMP (126) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FCMP (126) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SELECT (127) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SELECT (127) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UADDO (128) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UADDO (128) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UADDE (129) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UADDE (129) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_USUBO (130) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_USUBO (130) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_USUBE (131) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_USUBE (131) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SADDO (132) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SADDO (132) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SADDE (133) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SADDE (133) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SSUBO (134) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SSUBO (134) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SSUBE (135) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SSUBE (135) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UMULO (136) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UMULO (136) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SMULO (137) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SMULO (137) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UMULH (138) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UMULH (138) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SMULH (139) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SMULH (139) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UADDSAT (140) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UADDSAT (140) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SADDSAT (141) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SADDSAT (141) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_USUBSAT (142) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_USUBSAT (142) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SSUBSAT (143) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SSUBSAT (143) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_USHLSAT (144) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_USHLSAT (144) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SSHLSAT (145) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SSHLSAT (145) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SMULFIX (146) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SMULFIX (146) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UMULFIX (147) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UMULFIX (147) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SMULFIXSAT (148) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SMULFIXSAT (148) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UMULFIXSAT (149) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UMULFIXSAT (149) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SDIVFIX (150) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SDIVFIX (150) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UDIVFIX (151) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UDIVFIX (151) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SDIVFIXSAT (152) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SDIVFIXSAT (152) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UDIVFIXSAT (153) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UDIVFIXSAT (153) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FADD (154) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FADD (154) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FSUB (155) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FSUB (155) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMUL (156) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMUL (156) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMA (157) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMA (157) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMAD (158) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMAD (158) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FDIV (159) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FDIV (159) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FREM (160) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FREM (160) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FPOW (161) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FPOW (161) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FPOWI (162) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FPOWI (162) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FEXP (163) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FEXP (163) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FEXP2 (164) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FEXP2 (164) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FLOG (165) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FLOG (165) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FLOG2 (166) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FLOG2 (166) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FLOG10 (167) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FLOG10 (167) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FNEG (168) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FNEG (168) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FPEXT (169) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FPEXT (169) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FPTRUNC (170) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FPTRUNC (170) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FPTOSI (171) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FPTOSI (171) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FPTOUI (172) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FPTOUI (172) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SITOFP (173) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SITOFP (173) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UITOFP (174) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UITOFP (174) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FABS (175) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FABS (175) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FCOPYSIGN (176) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FCOPYSIGN (176) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_IS_FPCLASS (177) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_IS_FPCLASS (177) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FCANONICALIZE (178) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FCANONICALIZE (178) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMINNUM (179) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMINNUM (179) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMAXNUM (180) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMAXNUM (180) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMINNUM_IEEE (181) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMINNUM_IEEE (181) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMAXNUM_IEEE (182) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMAXNUM_IEEE (182) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMINIMUM (183) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMINIMUM (183) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FMAXIMUM (184) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FMAXIMUM (184) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_PTR_ADD (185) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_PTR_ADD (185) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_PTRMASK (186) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_PTRMASK (186) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SMIN (187) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SMIN (187) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SMAX (188) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SMAX (188) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UMIN (189) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UMIN (189) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UMAX (190) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UMAX (190) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ABS (191) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ABS (191) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_LROUND (192) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_LROUND (192) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_LLROUND (193) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_LLROUND (193) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BR (194) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BR (194) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BRJT (195) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BRJT (195) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_INSERT_VECTOR_ELT (196) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_INSERT_VECTOR_ELT (196) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_EXTRACT_VECTOR_ELT (197) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_EXTRACT_VECTOR_ELT (197) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SHUFFLE_VECTOR (198) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SHUFFLE_VECTOR (198) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_CTTZ (199) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_CTTZ (199) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_CTTZ_ZERO_UNDEF (200) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_CTTZ_ZERO_UNDEF (200) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_CTLZ (201) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_CTLZ (201) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_CTLZ_ZERO_UNDEF (202) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_CTLZ_ZERO_UNDEF (202) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_CTPOP (203) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_CTPOP (203) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BSWAP (204) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BSWAP (204) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BITREVERSE (205) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BITREVERSE (205) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FCEIL (206) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FCEIL (206) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FCOS (207) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FCOS (207) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FSIN (208) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FSIN (208) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FSQRT (209) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FSQRT (209) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FFLOOR (210) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FFLOOR (210) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FRINT (211) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FRINT (211) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_FNEARBYINT (212) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_FNEARBYINT (212) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_ADDRSPACE_CAST (213) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_ADDRSPACE_CAST (213) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BLOCK_ADDR (214) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BLOCK_ADDR (214) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_JUMP_TABLE (215) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_JUMP_TABLE (215) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_DYN_STACKALLOC (216) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_DYN_STACKALLOC (216) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STRICT_FADD (217) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STRICT_FADD (217) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STRICT_FSUB (218) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STRICT_FSUB (218) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STRICT_FMUL (219) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STRICT_FMUL (219) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STRICT_FDIV (220) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STRICT_FDIV (220) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STRICT_FREM (221) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STRICT_FREM (221) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STRICT_FMA (222) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STRICT_FMA (222) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_STRICT_FSQRT (223) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_STRICT_FSQRT (223) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_READ_REGISTER (224) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_READ_REGISTER (224) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_WRITE_REGISTER (225) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_WRITE_REGISTER (225) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_MEMCPY (226) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_MEMCPY (226) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_MEMCPY_INLINE (227) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_MEMCPY_INLINE (227) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_MEMMOVE (228) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_MEMMOVE (228) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_MEMSET (229) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_MEMSET (229) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_BZERO (230) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_BZERO (230) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_SEQ_FADD (231) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_SEQ_FADD (231) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_SEQ_FMUL (232) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_SEQ_FMUL (232) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_FADD (233) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_FADD (233) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_FMUL (234) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_FMUL (234) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_FMAX (235) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_FMAX (235) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_FMIN (236) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_FMIN (236) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_ADD (237) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_ADD (237) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_MUL (238) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_MUL (238) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_AND (239) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_AND (239) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_OR (240) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_OR (240) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_XOR (241) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_XOR (241) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_SMAX (242) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_SMAX (242) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_SMIN (243) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_SMIN (243) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_UMAX (244) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_UMAX (244) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_VECREDUCE_UMIN (245) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_VECREDUCE_UMIN (245) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_SBFX (246) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_SBFX (246) - TriCore_INS_INVALID -  */
  0 
-},
-{ /* TriCore_G_UBFX (247) - TriCore_INS_INVALID -  */
+}}},
+{{{ /* TriCore_G_UBFX (247) - TriCore_INS_INVALID -  */
  0 
-},
+}}},
 { /* TriCore_ABSDIFS_B_rr_v110 (248) - TriCore_INS_ABSDIFS_B - absdifs.b $d, $s1, $s2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* d */
