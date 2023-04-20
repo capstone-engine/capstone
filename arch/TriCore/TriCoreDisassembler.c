@@ -12,7 +12,7 @@
 
 #ifdef CAPSTONE_HAS_TRICORE
 
-#include <stdio.h>    // DEBUG
+#include <stdio.h> // DEBUG
 #include <stdlib.h>
 #include <string.h>
 
@@ -26,7 +26,9 @@
 #include "../../MCDisassembler.h"
 #include "../../MathExtras.h"
 
-static bool readInstruction16(const uint8_t *code, size_t code_len, uint16_t *insn) {
+static bool readInstruction16(const uint8_t *code, size_t code_len,
+			      uint16_t *insn)
+{
 	if (code_len < 2)
 		// insufficient data
 		return false;
@@ -36,157 +38,181 @@ static bool readInstruction16(const uint8_t *code, size_t code_len, uint16_t *in
 	return true;
 }
 
-static bool readInstruction32(const uint8_t *code, size_t code_len, uint32_t *insn) {
+static bool readInstruction32(const uint8_t *code, size_t code_len,
+			      uint32_t *insn)
+{
 	if (code_len < 4)
 		// insufficient data
 		return false;
 
 	// Encoded as a little-endian 32-bit word in the stream.
-	*insn = (code[0] << 0) | (code[1] << 8) | (code[2] << 16) | (code[3] << 24);
+	*insn = (code[0] << 0) | (code[1] << 8) | (code[2] << 16) |
+		(code[3] << 24);
 	return true;
 }
 
-static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo) {
+static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo)
+{
 	const MCRegisterClass *rc = MCRegisterInfo_getRegClass(MRI, RC);
 	return rc->RegsBegin[RegNo];
 }
 
-#define tryDecodeReg(i, x) \
-    status = DecodeRegisterClass(Inst, (x), &desc->OpInfo[(i)], Decoder); \
-    if (status != MCDisassembler_Success) \
-        return status;
+#define tryDecodeReg(i, x)                                                    \
+	status = DecodeRegisterClass(Inst, (x), &desc->OpInfo[(i)], Decoder); \
+	if (status != MCDisassembler_Success)                                 \
+		return status;
 
-#define decodeImm(x) \
-    MCOperand_CreateImm0(Inst, (x));
+#define decodeImm(x) MCOperand_CreateImm0(Inst, (x));
 
 static DecodeStatus DecodeSBInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder);
+					uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeSBRInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder);
+					 uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeSCInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder);
+					uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder);
+					uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeSRCInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder);
+					 uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder);
+					 uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeABSInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder);
+					 uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeBInstruction(MCInst *Inst, unsigned Insn,
-                                       uint64_t Address, void *Decoder);
+				       uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder);
+					uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder);
+					 uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeRCInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder);
+					uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeRCPWInstruction(MCInst *Inst, unsigned Insn,
-                                          uint64_t Address, void *Decoder);
+					  uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder);
+					 uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder);
+					uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeRR2Instruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder);
+					 uint64_t Address, void *Decoder);
 
 static DecodeStatus DecodeRRPWInstruction(MCInst *Inst, unsigned Insn,
-                                          uint64_t Address, void *Decoder);
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSLRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSLRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSLROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSLROInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSBCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSBCInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSBRNInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSSROInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRRR2Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRR2Instruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeBITInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeBITInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRR1Instruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeBRCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeBRCInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
+static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder);
 
-static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder);
-
+static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder);
 
 #define GET_SUBTARGETINFO_ENUM
 
 #include "TriCoreGenSubtargetInfo.inc"
 
-
-bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature) {
+bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature)
+{
 	switch (mode) {
-		case CS_MODE_TRICORE_110: {
-			return feature == TriCore_HasV110Ops;
-		}
-		case CS_MODE_TRICORE_120: {
-			return feature == TriCore_HasV120Ops;
-		}
-		case CS_MODE_TRICORE_130: {
-			return feature == TriCore_HasV130Ops;
-		}
-		case CS_MODE_TRICORE_131: {
-			return feature == TriCore_HasV131Ops;
-		}
-		case CS_MODE_TRICORE_160: {
-			return feature == TriCore_HasV160Ops;
-		}
-		case CS_MODE_TRICORE_161: {
-			return feature == TriCore_HasV161Ops;
-		}
-		case CS_MODE_TRICORE_162: {
-			return feature == TriCore_HasV162Ops;
-		}
-		default:
-			return false;
+	case CS_MODE_TRICORE_110: {
+		return feature == TriCore_HasV110Ops;
+	}
+	case CS_MODE_TRICORE_120: {
+		return feature == TriCore_HasV120Ops;
+	}
+	case CS_MODE_TRICORE_130: {
+		return feature == TriCore_HasV130Ops;
+	}
+	case CS_MODE_TRICORE_131: {
+		return feature == TriCore_HasV131Ops;
+	}
+	case CS_MODE_TRICORE_160: {
+		return feature == TriCore_HasV160Ops;
+	}
+	case CS_MODE_TRICORE_161: {
+		return feature == TriCore_HasV161Ops;
+	}
+	case CS_MODE_TRICORE_162: {
+		return feature == TriCore_HasV162Ops;
+	}
+	default:
+		return false;
 	}
 }
-
 
 #include "TriCoreGenDisassemblerTables.inc"
 
@@ -195,8 +221,10 @@ bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature) {
 
 #include "TriCoreGenRegisterInfo.inc"
 
-static DecodeStatus
-DecodeRegisterClass(MCInst *Inst, unsigned RegNo, const MCOperandInfo *MCOI, void *Decoder) {
+static DecodeStatus DecodeRegisterClass(MCInst *Inst, unsigned RegNo,
+					const MCOperandInfo *MCOI,
+					void *Decoder)
+{
 	unsigned Reg;
 	unsigned RegHalfNo = RegNo / 2;
 
@@ -224,7 +252,8 @@ DecodeRegisterClass(MCInst *Inst, unsigned RegNo, const MCOperandInfo *MCOI, voi
 #include "TriCoreGenInstrInfo.inc"
 
 static DecodeStatus DecodeSBInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder) {
+					uint64_t Address, void *Decoder)
+{
 	unsigned disp8 = fieldFromInstruction_2(Insn, 8, 8);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
 
@@ -238,7 +267,8 @@ static DecodeStatus DecodeSBInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeSBRInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder) {
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned s2 = fieldFromInstruction_2(Insn, 12, 4);
 	unsigned disp4 = fieldFromInstruction_2(Insn, 8, 4);
@@ -259,7 +289,8 @@ static DecodeStatus DecodeSBRInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeSCInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder) {
+					uint64_t Address, void *Decoder)
+{
 	unsigned const8 = fieldFromInstruction_2(Insn, 8, 8);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
 
@@ -273,7 +304,8 @@ static DecodeStatus DecodeSCInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder) {
+					uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned s1_d = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
@@ -283,13 +315,15 @@ static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 	if (desc->NumOperands > 0) {
-		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
 
 	if (desc->NumOperands > 1) {
-		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
@@ -298,7 +332,8 @@ static DecodeStatus DecodeSRInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeSRCInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder) {
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned const4 = fieldFromInstruction_2(Insn, 12, 4);
 	unsigned s1_d = fieldFromInstruction_2(Insn, 8, 4);
@@ -321,7 +356,8 @@ static DecodeStatus DecodeSRCInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder) {
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned s2 = fieldFromInstruction_2(Insn, 12, 4);
 	unsigned s1_d = fieldFromInstruction_2(Insn, 8, 4);
@@ -336,7 +372,6 @@ static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
 	if (status != MCDisassembler_Success)
 		return status;
 
-
 	// Decode s2.
 	status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
 	if (status != MCDisassembler_Success)
@@ -346,15 +381,15 @@ static DecodeStatus DecodeSRRInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeABSInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder) {
-
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned off18_0 = fieldFromInstruction_4(Insn, 16, 6);
 	unsigned off18_1 = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned off18_2 = fieldFromInstruction_4(Insn, 22, 4);
 	unsigned off18_3 = fieldFromInstruction_4(Insn, 12, 4);
-	unsigned off18 = (off18_0 << 0) | (off18_1 << 6) |
-	                 (off18_2 << 10) | (off18_3 << 14);
+	unsigned off18 = (off18_0 << 0) | (off18_1 << 6) | (off18_2 << 10) |
+			 (off18_3 << 14);
 
 	unsigned s1_d = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
@@ -366,14 +401,16 @@ static DecodeStatus DecodeABSInstruction(MCInst *Inst, unsigned Insn,
 
 	if (desc->NumOperands > 1) {
 		if (desc->OpInfo[0].OperandType == MCOI_OPERAND_REGISTER) {
-			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+			status = DecodeRegisterClass(Inst, s1_d,
+						     &desc->OpInfo[0], Decoder);
 			if (status != MCDisassembler_Success)
 				return status;
 
 			MCOperand_CreateImm0(Inst, off18);
 		} else {
 			MCOperand_CreateImm0(Inst, off18);
-			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+			status = DecodeRegisterClass(Inst, s1_d,
+						     &desc->OpInfo[0], Decoder);
 			if (status != MCDisassembler_Success)
 				return status;
 		}
@@ -385,7 +422,8 @@ static DecodeStatus DecodeABSInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeBInstruction(MCInst *Inst, unsigned Insn,
-                                       uint64_t Address, void *Decoder) {
+				       uint64_t Address, void *Decoder)
+{
 	unsigned disp24_0 = fieldFromInstruction_4(Insn, 16, 16);
 	unsigned disp24_1 = fieldFromInstruction_4(Insn, 8, 8);
 	unsigned disp24 = (disp24_0 << 0) | (disp24_1 << 16);
@@ -402,7 +440,8 @@ static DecodeStatus DecodeBInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder) {
+					uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned off10_0 = fieldFromInstruction_4(Insn, 16, 6);
 	unsigned off10_1 = fieldFromInstruction_4(Insn, 28, 4);
@@ -423,12 +462,14 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (desc->NumOperands == 2) {
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
 		if (desc->OpInfo[1].OperandType == MCOI_OPERAND_REGISTER) {
-			return DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
+			return DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1],
+						   Decoder);
 		} else {
 			MCOperand_CreateImm0(Inst, off10);
 		}
@@ -436,11 +477,13 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (desc->NumOperands > 2) {
-		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
@@ -451,7 +494,8 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder) {
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned off16_0 = fieldFromInstruction_4(Insn, 16, 6);
 	unsigned off16_1 = fieldFromInstruction_4(Insn, 22, 6);
@@ -468,41 +512,45 @@ static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 
 	switch (MCInst_getOpcode(Inst)) {
-		case TriCore_LD_A_bol:
-		case TriCore_LD_B_bol:
-		case TriCore_LD_BU_bol:
-		case TriCore_LD_H_bol:
-		case TriCore_LD_HU_bol:
-		case TriCore_LD_W_bol:
-		case TriCore_LEA_bol: {
-			// Decode s1_d.
-			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
-			if (status != MCDisassembler_Success)
-				return status;
+	case TriCore_LD_A_bol:
+	case TriCore_LD_B_bol:
+	case TriCore_LD_BU_bol:
+	case TriCore_LD_H_bol:
+	case TriCore_LD_HU_bol:
+	case TriCore_LD_W_bol:
+	case TriCore_LEA_bol: {
+		// Decode s1_d.
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
+					     Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
 
-			// Decode s2.
-			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
-			if (status != MCDisassembler_Success)
-				return status;
-			break;
-		}
-		case TriCore_ST_A_bol:
-		case TriCore_ST_B_bol:
-		case TriCore_ST_H_bol:
-		case TriCore_ST_W_bol: {
-			// Decode s2.
-			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
-			if (status != MCDisassembler_Success)
-				return status;
+		// Decode s2.
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
+					     Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+		break;
+	}
+	case TriCore_ST_A_bol:
+	case TriCore_ST_B_bol:
+	case TriCore_ST_H_bol:
+	case TriCore_ST_W_bol: {
+		// Decode s2.
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
+					     Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
 
-			// Decode s1_d.
-			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1], Decoder);
-			if (status != MCDisassembler_Success)
-				return status;
-			break;
-		}
-		default:
-			return MCDisassembler_Fail;
+		// Decode s1_d.
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1],
+					     Decoder);
+		if (status != MCDisassembler_Success)
+			return status;
+		break;
+	}
+	default:
+		return MCDisassembler_Fail;
 	}
 
 	// Decode off16.
@@ -512,7 +560,8 @@ static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeRCInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder) {
+					uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned d = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned const9 = fieldFromInstruction_4(Insn, 12, 9);
@@ -526,12 +575,14 @@ static DecodeStatus DecodeRCInstruction(MCInst *Inst, unsigned Insn,
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 	if (desc->NumOperands > 1) {
 		// Decode d.
-		status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
+		status =
+			DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
 		// Decode s1.
-		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
@@ -543,7 +594,8 @@ static DecodeStatus DecodeRCInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeRCPWInstruction(MCInst *Inst, unsigned Insn,
-                                          uint64_t Address, void *Decoder) {
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned d = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned pos = fieldFromInstruction_4(Insn, 23, 5);
@@ -580,7 +632,8 @@ static DecodeStatus DecodeRCPWInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder) {
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned d = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned const16 = fieldFromInstruction_4(Insn, 12, 16);
@@ -593,11 +646,13 @@ static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 	if (desc->NumOperands == 3) {
-		status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
+		status =
+			DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
-		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
@@ -607,14 +662,16 @@ static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (desc->OpInfo[0].OperandType == MCOI_OPERAND_REGISTER) {
-		status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
+		status =
+			DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
 		MCOperand_CreateImm0(Inst, const16);
 	} else {
 		MCOperand_CreateImm0(Inst, const16);
-		status = DecodeRegisterClass(Inst, d, &desc->OpInfo[1], Decoder);
+		status =
+			DecodeRegisterClass(Inst, d, &desc->OpInfo[1], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
@@ -622,7 +679,8 @@ static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
-                                        uint64_t Address, void *Decoder) {
+					uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned d = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned n = fieldFromInstruction_4(Insn, 16, 2);
@@ -640,12 +698,14 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 	if (desc->NumOperands == 1) {
 		if (desc->OpInfo[0].OperandType == MCOI_OPERAND_REGISTER) {
 			switch (MCInst_getOpcode(Inst)) {
-				case TriCore_CALLI_rr_v110: {
-					return DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
-				}
-				default: {
-					return DecodeRegisterClass(Inst, s1, &desc->OpInfo[0], Decoder);
-				}
+			case TriCore_CALLI_rr_v110: {
+				return DecodeRegisterClass(
+					Inst, s2, &desc->OpInfo[0], Decoder);
+			}
+			default: {
+				return DecodeRegisterClass(
+					Inst, s1, &desc->OpInfo[0], Decoder);
+			}
 			}
 		}
 		return MCDisassembler_Fail;
@@ -653,30 +713,36 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 
 	if (desc->NumOperands > 0) {
 		// Decode d.
-		status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
+		status =
+			DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
 
 	if (desc->NumOperands > 1) {
-		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
 
 	if (desc->NumOperands > 2) {
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[2],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
 
-	if (desc->NumOperands > 3) { MCOperand_CreateImm0(Inst, n); }
+	if (desc->NumOperands > 3) {
+		MCOperand_CreateImm0(Inst, n);
+	}
 
 	return MCDisassembler_Success;
 }
 
 static DecodeStatus DecodeRR2Instruction(MCInst *Inst, unsigned Insn,
-                                         uint64_t Address, void *Decoder) {
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned d = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -707,7 +773,8 @@ static DecodeStatus DecodeRR2Instruction(MCInst *Inst, unsigned Insn,
 }
 
 static DecodeStatus DecodeRRPWInstruction(MCInst *Inst, unsigned Insn,
-                                          uint64_t Address, void *Decoder) {
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status;
 	unsigned d = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned pos = fieldFromInstruction_4(Insn, 23, 5);
@@ -721,16 +788,15 @@ static DecodeStatus DecodeRRPWInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	tryDecodeReg(0, d)
-	tryDecodeReg(1, s1)
-	tryDecodeReg(2, s2)
-	decodeImm(pos)
-	decodeImm(width)
+	tryDecodeReg(0, d) tryDecodeReg(1, s1) tryDecodeReg(2, s2)
+		decodeImm(pos) decodeImm(width)
 
-	return MCDisassembler_Success;
+			return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSLRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSLRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned d = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_2(Insn, 12, 4);
@@ -752,7 +818,9 @@ static DecodeStatus DecodeSLRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSLROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSLROInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned d = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned off4 = fieldFromInstruction_2(Insn, 12, 4);
@@ -772,7 +840,9 @@ static DecodeStatus DecodeSLROInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned off4 = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_2(Insn, 12, 4);
@@ -792,7 +862,9 @@ static DecodeStatus DecodeSROInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned n = fieldFromInstruction_2(Insn, 6, 2);
 	unsigned s1_d = fieldFromInstruction_2(Insn, 8, 4);
@@ -819,7 +891,9 @@ static DecodeStatus DecodeSRRSInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSBCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSBCInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	unsigned disp4 = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned const4 = fieldFromInstruction_2(Insn, 12, 4);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
@@ -840,7 +914,9 @@ static DecodeStatus DecodeSBCInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSBRNInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	unsigned disp4 = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned n = fieldFromInstruction_2(Insn, 12, 4);
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
@@ -855,7 +931,9 @@ static DecodeStatus DecodeSBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_2(Insn, 12, 4);
@@ -878,7 +956,9 @@ static DecodeStatus DecodeSSRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeSSROInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSSROInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_2(Insn, 8, 4);
 	unsigned off4 = fieldFromInstruction_2(Insn, 12, 4);
@@ -899,7 +979,9 @@ static DecodeStatus DecodeSSROInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 
 /// 32-bit Opcode Format
 
-static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1_d = fieldFromInstruction_4(Insn, 8, 4);
 
@@ -909,7 +991,8 @@ static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 	if (desc->NumOperands > 0) {
-		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0], Decoder);
+		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 	}
@@ -917,7 +1000,9 @@ static DecodeStatus DecodeSYSInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRRR2Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRRR2Instruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -951,7 +1036,9 @@ static DecodeStatus DecodeRRR2Instruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -989,7 +1076,9 @@ static DecodeStatus DecodeRRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeBITInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeBITInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1025,7 +1114,9 @@ static DecodeStatus DecodeBITInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRR1Instruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1057,7 +1148,9 @@ static DecodeStatus DecodeRR1Instruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned const9 = fieldFromInstruction_4(Insn, 12, 9);
@@ -1089,7 +1182,9 @@ static DecodeStatus DecodeRCRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1127,7 +1222,9 @@ static DecodeStatus DecodeRRRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned const4 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1137,7 +1234,6 @@ static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
 	if (!is32Bit) // This instruction is 32-bit
 		return MCDisassembler_Fail;
-
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 	status = DecodeRegisterClass(Inst, d, &desc->OpInfo[0], Decoder);
@@ -1160,7 +1256,9 @@ static DecodeStatus DecodeRCRRInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1197,7 +1295,9 @@ static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1209,7 +1309,8 @@ static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 	if (MCInst_getOpcode(Inst) == TriCore_LOOP_brr) {
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
+		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
@@ -1218,12 +1319,14 @@ static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	}
 
 	if (desc->NumOperands >= 2) {
-		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[0], Decoder);
+		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[0],
+					     Decoder);
 		if (status != MCDisassembler_Success)
 			return status;
 
 		if (desc->NumOperands >= 3) {
-			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1], Decoder);
+			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
+						     Decoder);
 			if (status != MCDisassembler_Success)
 				return status;
 		}
@@ -1235,7 +1338,9 @@ static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeBRCInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeBRCInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned const4 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1259,11 +1364,13 @@ static DecodeStatus DecodeBRCInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
-//	unsigned n = fieldFromInstruction_4(Insn, 16, 2);
+	//	unsigned n = fieldFromInstruction_4(Insn, 16, 2);
 	unsigned s3 = fieldFromInstruction_4(Insn, 24, 4);
 	unsigned d = fieldFromInstruction_4(Insn, 28, 4);
 
@@ -1294,7 +1401,9 @@ static DecodeStatus DecodeRRRInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	unsigned bpos3 = fieldFromInstruction_4(Insn, 8, 3);
 	unsigned b = fieldFromInstruction_4(Insn, 12, 1);
 
@@ -1303,20 +1412,20 @@ static DecodeStatus DecodeABSBInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 	unsigned off18_10_13 = fieldFromInstruction_4(Insn, 22, 4);
 	unsigned off18_14_17 = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned off18 = (off18_0_5 << 0) | (off18_6_9 << 6) |
-	                 (off18_10_13 << 10) | (off18_14_17 << 14);
+			 (off18_10_13 << 10) | (off18_14_17 << 14);
 
 	unsigned is32Bit = fieldFromInstruction_4(Insn, 0, 1);
 	if (!is32Bit) // This instruction is 32-bit
 		return MCDisassembler_Fail;
 
-	decodeImm(off18)
-	decodeImm(bpos3)
-	decodeImm(b)
+	decodeImm(off18) decodeImm(bpos3) decodeImm(b)
 
-	return MCDisassembler_Success;
+		return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn,
+					  uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned const4 = fieldFromInstruction_4(Insn, 12, 4);
@@ -1329,16 +1438,15 @@ static DecodeStatus DecodeRCRWInstruction(MCInst *Inst, unsigned Insn, uint64_t 
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	tryDecodeReg(0, d)
-	tryDecodeReg(1, s1)
-	tryDecodeReg(2, s3)
-	decodeImm(const4)
-	decodeImm(width)
+	tryDecodeReg(0, d) tryDecodeReg(1, s1) tryDecodeReg(2, s3)
+		decodeImm(const4) decodeImm(width)
 
-	return MCDisassembler_Success;
+			return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t Address, void *Decoder) {
+static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, void *Decoder)
+{
 	DecodeStatus status = MCDisassembler_Fail;
 	unsigned s1 = fieldFromInstruction_4(Insn, 8, 4);
 
@@ -1370,16 +1478,19 @@ static DecodeStatus DecodeBRNInstruction(MCInst *Inst, unsigned Insn, uint64_t A
 
 #include "TriCoreGenInstrInfo.inc"
 
-static inline bool tryGetInstruction16(const uint8_t *code, size_t code_len, MCInst *MI,
-                                       uint16_t *size, uint64_t address, void *info,
-                                       const uint8_t *decoderTable16) {
+static inline bool tryGetInstruction16(const uint8_t *code, size_t code_len,
+				       MCInst *MI, uint16_t *size,
+				       uint64_t address, void *info,
+				       const uint8_t *decoderTable16)
+{
 	uint16_t insn16;
 	DecodeStatus Result;
 	if (!readInstruction16(code, code_len, &insn16)) {
 		return false;
 	}
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_2(decoderTable16, MI, insn16, address, info, 0);
+	Result = decodeInstruction_2(decoderTable16, MI, insn16, address, info,
+				     0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 2;
 		return true;
@@ -1387,16 +1498,19 @@ static inline bool tryGetInstruction16(const uint8_t *code, size_t code_len, MCI
 	return false;
 }
 
-static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len, MCInst *MI,
-                                       uint16_t *size, uint64_t address, void *info,
-                                       const uint8_t *decoderTable32) {
+static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len,
+				       MCInst *MI, uint16_t *size,
+				       uint64_t address, void *info,
+				       const uint8_t *decoderTable32)
+{
 	uint32_t insn32;
 	DecodeStatus Result;
 	if (!readInstruction32(code, code_len, &insn32)) {
 		return false;
 	}
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_4(decoderTable32, MI, insn32, address, info, 0);
+	Result = decodeInstruction_4(decoderTable32, MI, insn32, address, info,
+				     0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;
@@ -1404,49 +1518,57 @@ static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len, MCI
 	return false;
 }
 
-bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *MI,
-                            uint16_t *size, uint64_t address, void *info) {
-
-
+bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len,
+			    MCInst *MI, uint16_t *size, uint64_t address,
+			    void *info)
+{
 	if (!ud) {
 		return false;
 	}
 
-	struct cs_struct *cs = (struct cs_struct *) ud;
+	struct cs_struct *cs = (struct cs_struct *)ud;
 	if (MI->flat_insn->detail) {
 		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
 	}
 
 	switch (cs->mode) {
-		case CS_MODE_TRICORE_110: {
-			if (tryGetInstruction16(code, code_len, MI, size, address, info, DecoderTablev11016) ||
-			    tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev11032)) {
-				return true;
-			}
-			break;
+	case CS_MODE_TRICORE_110: {
+		if (tryGetInstruction16(code, code_len, MI, size, address, info,
+					DecoderTablev11016) ||
+		    tryGetInstruction32(code, code_len, MI, size, address, info,
+					DecoderTablev11032)) {
+			return true;
 		}
-		case CS_MODE_TRICORE_161: {
-			if (tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev16132)) {
-				return true;
-			}
-			break;
+		break;
+	}
+	case CS_MODE_TRICORE_161: {
+		if (tryGetInstruction32(code, code_len, MI, size, address, info,
+					DecoderTablev16132)) {
+			return true;
 		}
-		case CS_MODE_TRICORE_162: {
-			if (tryGetInstruction16(code, code_len, MI, size, address, info, DecoderTablev16216) ||
-			    tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTablev16232)) {
-				return true;
-			}
-			break;
+		break;
+	}
+	case CS_MODE_TRICORE_162: {
+		if (tryGetInstruction16(code, code_len, MI, size, address, info,
+					DecoderTablev16216) ||
+		    tryGetInstruction32(code, code_len, MI, size, address, info,
+					DecoderTablev16232)) {
+			return true;
 		}
-		default:
-			break;
+		break;
+	}
+	default:
+		break;
 	}
 
-	return tryGetInstruction16(code, code_len, MI, size, address, info, DecoderTable16) ||
-	       tryGetInstruction32(code, code_len, MI, size, address, info, DecoderTable32);
+	return tryGetInstruction16(code, code_len, MI, size, address, info,
+				   DecoderTable16) ||
+	       tryGetInstruction32(code, code_len, MI, size, address, info,
+				   DecoderTable32);
 }
 
-void TriCore_init(MCRegisterInfo *MRI) {
+void TriCore_init(MCRegisterInfo *MRI)
+{
 	/*
 	InitMCRegisterInfo(TriCoreRegDesc, 45, RA, PC,
 			TriCoreMCRegisterClasses, 4,
@@ -1460,15 +1582,10 @@ void TriCore_init(MCRegisterInfo *MRI) {
 			TriCoreRegEncodingTable);
 	*/
 
-
-	MCRegisterInfo_InitMCRegisterInfo(MRI, TriCoreRegDesc, ARR_SIZE(TriCoreRegDesc),
-	                                  0, 0,
-	                                  TriCoreMCRegisterClasses, ARR_SIZE(TriCoreMCRegisterClasses),
-	                                  0, 0,
-	                                  TriCoreRegDiffLists,
-	                                  0,
-	                                  TriCoreSubRegIdxLists, 1,
-	                                  0);
+	MCRegisterInfo_InitMCRegisterInfo(
+		MRI, TriCoreRegDesc, ARR_SIZE(TriCoreRegDesc), 0, 0,
+		TriCoreMCRegisterClasses, ARR_SIZE(TriCoreMCRegisterClasses), 0,
+		0, TriCoreRegDiffLists, 0, TriCoreSubRegIdxLists, 1, 0);
 }
 
 #endif
