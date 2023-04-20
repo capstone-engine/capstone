@@ -16,4 +16,3 @@ const char *TriCore_insn_name(csh handle, unsigned int id);
 const char *TriCore_group_name(csh handle, unsigned int id);
 
 #endif
-
