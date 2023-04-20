@@ -165,6 +165,7 @@
     <ClCompile Include="..\..\cstool\cstool_mos65xx.c" />
     <ClCompile Include="..\..\cstool\cstool_ppc.c" />
     <ClCompile Include="..\..\cstool\cstool_riscv.c" />
+    <ClCompile Include="..\..\cstool\cstool_sh.c" />
     <ClCompile Include="..\..\cstool\cstool_sparc.c" />
     <ClCompile Include="..\..\cstool\cstool_systemz.c" />
     <ClCompile Include="..\..\cstool\cstool_tms320c64x.c" />
