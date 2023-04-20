@@ -183,40 +183,6 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O) {
 	}
 }
 
-static void printPairAddrRegsOperand(MCInst *MI, unsigned OpNum, SStream *O,
-                                     MCRegisterInfo *MRI) {
-	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	SStream_concat0(O, "[");
-	SStream_concat(
-			O, "%%%s",
-			getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_even)));
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->tricore
-				.operands[MI->flat_insn->detail->tricore.op_count]
-				.type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore
-				.operands[MI->flat_insn->detail->tricore.op_count]
-				.reg = (uint8_t)
-				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_even);
-		MI->flat_insn->detail->tricore.op_count++;
-	}
-	SStream_concat0(O, "/");
-	SStream_concat(
-			O, "%%%s",
-			getRegisterName(MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_odd)));
-	if (MI->csh->detail) {
-		MI->flat_insn->detail->tricore
-				.operands[MI->flat_insn->detail->tricore.op_count]
-				.type = TRICORE_OP_REG;
-		MI->flat_insn->detail->tricore
-				.operands[MI->flat_insn->detail->tricore.op_count]
-				.reg = (uint8_t)
-				MCRegisterInfo_getSubReg(MRI, Reg, TriCore_subreg_odd);
-		MI->flat_insn->detail->tricore.op_count++;
-	}
-	SStream_concat0(O, "]");
-}
-
 static inline unsigned int get_msb(unsigned int value) {
 	unsigned int msb = 0;
 	while (value > 0) {
@@ -242,10 +208,7 @@ static inline void SS_print_hex(SStream *O, int32_t imm) {
 
 static inline void SS_print_sign_hex(SStream *O, int32_t imm) {
 	if (imm >= 0) {
-		if (imm > HEX_THRESHOLD)
-			SStream_concat(O, "0x%x", imm);
-		else
-			SStream_concat(O, "%u", imm);
+		SS_print_hex(O, imm);
 	} else {
 		if (imm < -HEX_THRESHOLD)
 			SStream_concat(O, "-0x%x", -imm);

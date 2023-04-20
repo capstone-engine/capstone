@@ -3799,9 +3799,8 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-		uint64_t Address, bool *Decoder) \
+		uint64_t Address, void *Decoder) \
 { \
-  InsnType tmp; \
   switch (Idx) { \
   default: /* llvm_unreachable("Invalid index!"); */ \
   case 0: \
@@ -3928,7 +3927,6 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
            InsnType insn, uint64_t Address, MCRegisterInfo *MRI, int feature) \
 { \
-  uint64_t Bits = getFeatureBits(feature); \
   const uint8_t *Ptr = DecodeTable; \
   uint64_t CurFieldValue = 0, ExpectedValue; \
   DecodeStatus S = MCDisassembler_Success; \
