@@ -399,6 +399,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_SH:
 			print_insn_detail_sh(handle, ins);
 			break;
+		case CS_ARCH_TRICORE:
+			print_insn_detail_tricore(handle, ins);
+			break;
 		default: break;
 	}
 
