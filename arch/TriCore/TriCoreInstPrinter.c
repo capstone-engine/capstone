@@ -470,34 +470,28 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 		print_sign_ext(MI, OpNum, O, n);                        \
 	}
 
-printSExtImm_(16)
-
-	printSExtImm_(10)
-
-		printSExtImm_(9)
-
-			printSExtImm_(4)
-
 #define printZExtImm_(n)                                                \
 	static void printZExtImm_##n(MCInst *MI, int OpNum, SStream *O) \
 	{                                                               \
 		print_zero_ext(MI, OpNum, O, n);                        \
 	}
 
-				printZExtImm_(16)
+// clang-format off
 
-					printZExtImm_(9)
+printSExtImm_(16)
+printSExtImm_(10)
+printSExtImm_(9)
+printSExtImm_(4)
 
-						printZExtImm_(8)
+printZExtImm_(16)
+printZExtImm_(9)
+printZExtImm_(8)
+printZExtImm_(4)
+printZExtImm_(2);
 
-							printZExtImm_(4)
+// clang-format on
 
-								printZExtImm_(2)
-
-									static void printOExtImm_4(
-										MCInst *MI,
-										int OpNum,
-										SStream *O)
+static void printOExtImm_4(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
