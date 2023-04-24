@@ -14,13 +14,13 @@ Capstone source is organized as followings.
 │   ├── Mips        <- Mips engine
 │   ├── MOS65XX     <- MOS65XX engine
 │   ├── PowerPC     <- PowerPC engine
-│   ├── RISCV <- RISCV engine
-│   ├── SH <- SH engine
-│   ├── Sparc      <- Sparc engine
-│   ├── SystemZ    <- SystemZ engine
-│   ├── TMS320C64x <- TMS320C64x engine
-│   ├── TriCore <- TriCore engine
-│   ├── WASM  <- WASM engine
+│   ├── RISCV       <- RISCV engine
+│   ├── SH          <- SH engine
+│   ├── Sparc       <- Sparc engine
+│   ├── SystemZ     <- SystemZ engine
+│   ├── TMS320C64x  <- TMS320C64x engine
+│   ├── TriCore     <- TriCore engine
+│   └── WASM        <- WASM engine
 ├── bindings        <- all bindings are under this dir
 │   ├── java        <- Java bindings + test code
 │   ├── ocaml       <- Ocaml bindings + test code
