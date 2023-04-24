@@ -307,18 +307,13 @@ ifneq (,$(findstring bpf,$(CAPSTONE_ARCHS)))
 endif
 
 DEP_TRICORE =
-DEP_TRICORE += arch/TriCore/TriCoreGenAsmWriter.inc
-DEP_TRICORE += arch/TriCore/TriCoreGenInstrInfo.inc
-DEP_TRICORE += arch/TriCore/TriCoreGenDisassemblerTables.inc
-DEP_TRICORE += arch/TriCore/TriCoreGenRegisterInfo.inc
+DEP_TRICORE +=$(wildcard arch/TriCore/TriCore*.inc)
 
 LIBOBJ_TRICORE =
 ifneq (,$(findstring tricore,$(CAPSTONE_ARCHS)))
 	CFLAGS += -DCAPSTONE_HAS_TRICORE
-	LIBOBJ_TRICORE += $(OBJDIR)/arch/TriCore/TriCoreDisassembler.o
-	LIBOBJ_TRICORE += $(OBJDIR)/arch/TriCore/TriCoreInstPrinter.o
-	LIBOBJ_TRICORE += $(OBJDIR)/arch/TriCore/TriCoreMapping.o
-	LIBOBJ_TRICORE += $(OBJDIR)/arch/TriCore/TriCoreModule.o
+	LIBSRC_TRICORE += $(wildcard arch/TriCore/TriCore*.c)
+	LIBOBJ_TRICORE += $(LIBSRC_TRICORE:%.c=$(OBJDIR)/%.o)
 endif
 
 
