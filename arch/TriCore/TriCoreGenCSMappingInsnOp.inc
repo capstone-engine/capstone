@@ -5,7 +5,7 @@
 /* Auto generated file. Do not edit. */
 /* Code generator: https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
 
-{ /* TriCore_PHI (0) - TriCore_INS_INVALID - PHINODE */
+{{{ /* TriCore_PHI (0) - TriCore_INS_INVALID - PHINODE */
  0 
 }}},
 {{{ /* TriCore_INLINEASM (1) - TriCore_INS_INVALID -  */
