@@ -478,37 +478,37 @@
 {
 	RISCV_BEQ, RISCV_INS_BEQ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	RISCV_BGE, RISCV_INS_BGE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	RISCV_BGEU, RISCV_INS_BGEU,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	RISCV_BLT, RISCV_INS_BLT,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	RISCV_BLTU, RISCV_INS_BLTU,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	RISCV_BNE, RISCV_INS_BNE,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -598,13 +598,13 @@
 {
 	RISCV_C_BEQZ, RISCV_INS_C_BEQZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { RISCV_GRP_HASSTDEXTC, 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_HASSTDEXTC, RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
 	RISCV_C_BNEZ, RISCV_INS_C_BNEZ,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { RISCV_GRP_HASSTDEXTC, 0 }, 1, 0
+	{ 0 }, { 0 }, { RISCV_GRP_HASSTDEXTC, RISCV_GRP_BRANCH_RELATIVE, 0 }, 1, 0
 #endif
 },
 {
@@ -670,13 +670,13 @@
 {
 	RISCV_C_JAL, RISCV_INS_C_JAL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { RISCV_REG_X1, 0 }, { RISCV_GRP_HASSTDEXTC, RISCV_GRP_ISRV32, 0 }, 0, 0
+	{ 0 }, { RISCV_REG_X1, 0 }, { RISCV_GRP_HASSTDEXTC, RISCV_GRP_ISRV32, RISCV_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	RISCV_C_JALR, RISCV_INS_C_JALR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { RISCV_REG_X1, 0 }, { RISCV_GRP_HASSTDEXTC, 0 }, 0, 0
+	{ 0 }, { RISCV_REG_X1, 0 }, { RISCV_GRP_HASSTDEXTC, RISCV_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
@@ -838,7 +838,7 @@
 {
 	RISCV_ECALL, RISCV_INS_ECALL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { RISCV_GRP_INT, 0 }, 0, 0
 #endif
 },
 {
@@ -1234,13 +1234,13 @@
 {
 	RISCV_JAL, RISCV_INS_JAL,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { RISCV_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {
 	RISCV_JALR, RISCV_INS_JALR,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { RISCV_GRP_CALL, 0 }, 0, 0
 #endif
 },
 {

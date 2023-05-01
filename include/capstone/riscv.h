@@ -479,9 +479,25 @@ typedef enum riscv_insn {
 
 //> Group of RISCV instructions
 typedef enum riscv_insn_group {
-  	RISCV_GRP_INVALID = 0, // = CS_GRP_INVALID
-  	RISCV_GRP_JUMP,
+  	RISCV_GRP_INVALID = 0, ///< = CS_GRP_INVALID
+
+  	// Generic groups
+  	// all jump instructions (conditional+direct+indirect jumps)
+  	RISCV_GRP_JUMP,	///< = CS_GRP_JUMP
+  	// all call instructions
+  	RISCV_GRP_CALL,	///< = CS_GRP_CALL
+  	// all return instructions
+  	RISCV_GRP_RET,	///< = CS_GRP_RET
+  	// all interrupt instructions (int+syscall)
+  	RISCV_GRP_INT,	///< = CS_GRP_INT
+  	// all interrupt return instructions
+  	RISCV_GRP_IRET,	///< = CS_GRP_IRET
+  	// all privileged instructions
+  	RISCV_GRP_PRIVILEGE,	///< = CS_GRP_PRIVILEGE
+  	// all relative branching instructions
+  	RISCV_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
   
+  	// Architecture-specific groups
   	RISCV_GRP_ISRV32 = 128,
   	RISCV_GRP_ISRV64,
   	RISCV_GRP_HASSTDEXTA,
