@@ -40,7 +40,7 @@ char *get_detail_tricore(csh *p_handle, cs_mode mode, cs_insn *ins)
 			break;
 		case TRICORE_OP_MEM:
 			add_str(&result, "\t\toperands[%u].type: MEM\n", i);
-			if (op->mem.base != TriCore_REG_INVALID)
+			if (op->mem.base != TRICORE_REG_INVALID)
 				add_str(&result,
 					"\t\t\toperands[%u].mem.base: REG = %s\n",
 					i, cs_reg_name(handle, op->mem.base));

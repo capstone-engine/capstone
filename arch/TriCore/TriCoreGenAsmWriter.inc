@@ -1,8 +1,15 @@
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
-/* Automatically generated file by the LLVM TableGen Disassembler Backend. */
+/* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
+
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
+
 /* Do not edit. */
+
+/* Capstone's LLVM TableGen Backends: */
+/* https://github.com/capstone-engine/llvm-capstone */
 
 #include <capstone/platform.h>
 #include <assert.h>
@@ -471,6 +478,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2817U,	// PATCHABLE_EVENT_CALL
     2793U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
+    0U,	// MEMBARRIER
     0U,	// G_ASSERT_SEXT
     0U,	// G_ASSERT_ZEXT
     0U,	// G_ASSERT_ALIGN
@@ -532,6 +540,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_ATOMICRMW_FSUB
     0U,	// G_ATOMICRMW_FMAX
     0U,	// G_ATOMICRMW_FMIN
+    0U,	// G_ATOMICRMW_UINC_WRAP
+    0U,	// G_ATOMICRMW_UDEC_WRAP
     0U,	// G_FENCE
     0U,	// G_BRCOND
     0U,	// G_BRINDIRECT
@@ -1746,6 +1756,7 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// PATCHABLE_EVENT_CALL
     0U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
+    0U,	// MEMBARRIER
     0U,	// G_ASSERT_SEXT
     0U,	// G_ASSERT_ZEXT
     0U,	// G_ASSERT_ALIGN
@@ -1807,6 +1818,8 @@ MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_ATOMICRMW_FSUB
     0U,	// G_ATOMICRMW_FMAX
     0U,	// G_ATOMICRMW_FMIN
+    0U,	// G_ATOMICRMW_UINC_WRAP
+    0U,	// G_ATOMICRMW_UDEC_WRAP
     0U,	// G_FENCE
     0U,	// G_BRCOND
     0U,	// G_BRINDIRECT
