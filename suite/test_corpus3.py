@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # Test tool to compare Capstone output with llvm-mc. By Nguyen Anh Quynh, 2014
 import sys
 import os
