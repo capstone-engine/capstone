@@ -189,25 +189,25 @@ bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature)
 {
 	switch (mode) {
 	case CS_MODE_TRICORE_110: {
-		return feature == TriCore_HasV110Ops;
+		return feature == TRICORE_HasV110Ops;
 	}
 	case CS_MODE_TRICORE_120: {
-		return feature == TriCore_HasV120Ops;
+		return feature == TRICORE_HasV120Ops;
 	}
 	case CS_MODE_TRICORE_130: {
-		return feature == TriCore_HasV130Ops;
+		return feature == TRICORE_HasV130Ops;
 	}
 	case CS_MODE_TRICORE_131: {
-		return feature == TriCore_HasV131Ops;
+		return feature == TRICORE_HasV131Ops;
 	}
 	case CS_MODE_TRICORE_160: {
-		return feature == TriCore_HasV160Ops;
+		return feature == TRICORE_HasV160Ops;
 	}
 	case CS_MODE_TRICORE_161: {
-		return feature == TriCore_HasV161Ops;
+		return feature == TRICORE_HasV161Ops;
 	}
 	case CS_MODE_TRICORE_162: {
-		return feature == TriCore_HasV162Ops;
+		return feature == TRICORE_HasV162Ops;
 	}
 	default:
 		return false;
@@ -512,13 +512,13 @@ static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
 
 	switch (MCInst_getOpcode(Inst)) {
-	case TriCore_LD_A_bol:
-	case TriCore_LD_B_bol:
-	case TriCore_LD_BU_bol:
-	case TriCore_LD_H_bol:
-	case TriCore_LD_HU_bol:
-	case TriCore_LD_W_bol:
-	case TriCore_LEA_bol: {
+	case TRICORE_LD_A_bol:
+	case TRICORE_LD_B_bol:
+	case TRICORE_LD_BU_bol:
+	case TRICORE_LD_H_bol:
+	case TRICORE_LD_HU_bol:
+	case TRICORE_LD_W_bol:
+	case TRICORE_LEA_bol: {
 		// Decode s1_d.
 		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
 					     Decoder);
@@ -532,10 +532,10 @@ static DecodeStatus DecodeBOLInstruction(MCInst *Inst, unsigned Insn,
 			return status;
 		break;
 	}
-	case TriCore_ST_A_bol:
-	case TriCore_ST_B_bol:
-	case TriCore_ST_H_bol:
-	case TriCore_ST_W_bol: {
+	case TRICORE_ST_A_bol:
+	case TRICORE_ST_B_bol:
+	case TRICORE_ST_H_bol:
+	case TRICORE_ST_W_bol: {
 		// Decode s2.
 		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
 					     Decoder);
@@ -698,7 +698,7 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 	if (desc->NumOperands == 1) {
 		if (desc->OpInfo[0].OperandType == MCOI_OPERAND_REGISTER) {
 			switch (MCInst_getOpcode(Inst)) {
-			case TriCore_CALLI_rr_v110: {
+			case TRICORE_CALLI_rr_v110: {
 				return DecodeRegisterClass(
 					Inst, s2, &desc->OpInfo[0], Decoder);
 			}
@@ -1308,7 +1308,7 @@ static DecodeStatus DecodeBRRInstruction(MCInst *Inst, unsigned Insn,
 		return MCDisassembler_Fail;
 
 	const MCInstrDesc *desc = &TriCoreInsts[MCInst_getOpcode(Inst)];
-	if (MCInst_getOpcode(Inst) == TriCore_LOOP_brr) {
+	if (MCInst_getOpcode(Inst) == TRICORE_LOOP_brr) {
 		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
 					     Decoder);
 		if (status != MCDisassembler_Success)

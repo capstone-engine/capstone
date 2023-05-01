@@ -1,74 +1,81 @@
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
-/* Automatically generated file by the LLVM TableGen Disassembler Backend. */
+/* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
+
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
+
 /* Do not edit. */
+
+/* Capstone's LLVM TableGen Backends: */
+/* https://github.com/capstone-engine/llvm-capstone */
 
 #ifdef GET_REGINFO_ENUM
 #undef GET_REGINFO_ENUM
 
 enum {
-  TriCore_NoRegister,
-  TriCore_FCX = 1,
-  TriCore_PC = 2,
-  TriCore_PCXI = 3,
-  TriCore_PSW = 4,
-  TriCore_A0 = 5,
-  TriCore_A1 = 6,
-  TriCore_A2 = 7,
-  TriCore_A3 = 8,
-  TriCore_A4 = 9,
-  TriCore_A5 = 10,
-  TriCore_A6 = 11,
-  TriCore_A7 = 12,
-  TriCore_A8 = 13,
-  TriCore_A9 = 14,
-  TriCore_A10 = 15,
-  TriCore_A11 = 16,
-  TriCore_A12 = 17,
-  TriCore_A13 = 18,
-  TriCore_A14 = 19,
-  TriCore_A15 = 20,
-  TriCore_D0 = 21,
-  TriCore_D1 = 22,
-  TriCore_D2 = 23,
-  TriCore_D3 = 24,
-  TriCore_D4 = 25,
-  TriCore_D5 = 26,
-  TriCore_D6 = 27,
-  TriCore_D7 = 28,
-  TriCore_D8 = 29,
-  TriCore_D9 = 30,
-  TriCore_D10 = 31,
-  TriCore_D11 = 32,
-  TriCore_D12 = 33,
-  TriCore_D13 = 34,
-  TriCore_D14 = 35,
-  TriCore_D15 = 36,
-  TriCore_E0 = 37,
-  TriCore_E2 = 38,
-  TriCore_E4 = 39,
-  TriCore_E6 = 40,
-  TriCore_E8 = 41,
-  TriCore_E10 = 42,
-  TriCore_E12 = 43,
-  TriCore_E14 = 44,
-  TriCore_P0 = 45,
-  TriCore_P2 = 46,
-  TriCore_P4 = 47,
-  TriCore_P6 = 48,
-  TriCore_P8 = 49,
-  TriCore_P10 = 50,
-  TriCore_P12 = 51,
-  TriCore_P14 = 52,
-  TriCore_A0_A1 = 53,
-  TriCore_A2_A3 = 54,
-  TriCore_A4_A5 = 55,
-  TriCore_A6_A7 = 56,
-  TriCore_A8_A9 = 57,
-  TriCore_A10_A11 = 58,
-  TriCore_A12_A13 = 59,
-  TriCore_A14_A15 = 60,
+  TRICORE_NoRegister,
+  TRICORE_FCX = 1,
+  TRICORE_PC = 2,
+  TRICORE_PCXI = 3,
+  TRICORE_PSW = 4,
+  TRICORE_A0 = 5,
+  TRICORE_A1 = 6,
+  TRICORE_A2 = 7,
+  TRICORE_A3 = 8,
+  TRICORE_A4 = 9,
+  TRICORE_A5 = 10,
+  TRICORE_A6 = 11,
+  TRICORE_A7 = 12,
+  TRICORE_A8 = 13,
+  TRICORE_A9 = 14,
+  TRICORE_A10 = 15,
+  TRICORE_A11 = 16,
+  TRICORE_A12 = 17,
+  TRICORE_A13 = 18,
+  TRICORE_A14 = 19,
+  TRICORE_A15 = 20,
+  TRICORE_D0 = 21,
+  TRICORE_D1 = 22,
+  TRICORE_D2 = 23,
+  TRICORE_D3 = 24,
+  TRICORE_D4 = 25,
+  TRICORE_D5 = 26,
+  TRICORE_D6 = 27,
+  TRICORE_D7 = 28,
+  TRICORE_D8 = 29,
+  TRICORE_D9 = 30,
+  TRICORE_D10 = 31,
+  TRICORE_D11 = 32,
+  TRICORE_D12 = 33,
+  TRICORE_D13 = 34,
+  TRICORE_D14 = 35,
+  TRICORE_D15 = 36,
+  TRICORE_E0 = 37,
+  TRICORE_E2 = 38,
+  TRICORE_E4 = 39,
+  TRICORE_E6 = 40,
+  TRICORE_E8 = 41,
+  TRICORE_E10 = 42,
+  TRICORE_E12 = 43,
+  TRICORE_E14 = 44,
+  TRICORE_P0 = 45,
+  TRICORE_P2 = 46,
+  TRICORE_P4 = 47,
+  TRICORE_P6 = 48,
+  TRICORE_P8 = 49,
+  TRICORE_P10 = 50,
+  TRICORE_P12 = 51,
+  TRICORE_P14 = 52,
+  TRICORE_A0_A1 = 53,
+  TRICORE_A2_A3 = 54,
+  TRICORE_A4_A5 = 55,
+  TRICORE_A6_A7 = 56,
+  TRICORE_A8_A9 = 57,
+  TRICORE_A10_A11 = 58,
+  TRICORE_A12_A13 = 59,
+  TRICORE_A14_A15 = 60,
   NUM_TARGET_REGS // 61
 };
 
@@ -215,7 +222,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // RA Register Class...
   static const MCPhysReg RA[] = {
-    TriCore_A0, TriCore_A1, TriCore_A2, TriCore_A3, TriCore_A4, TriCore_A5, TriCore_A6, TriCore_A7, TriCore_A8, TriCore_A9, TriCore_A10, TriCore_A11, TriCore_A12, TriCore_A13, TriCore_A14, TriCore_A15, 
+    TRICORE_A0, TRICORE_A1, TRICORE_A2, TRICORE_A3, TRICORE_A4, TRICORE_A5, TRICORE_A6, TRICORE_A7, TRICORE_A8, TRICORE_A9, TRICORE_A10, TRICORE_A11, TRICORE_A12, TRICORE_A13, TRICORE_A14, TRICORE_A15, 
   };
 
   // RA Bit set.
@@ -225,7 +232,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // RD Register Class...
   static const MCPhysReg RD[] = {
-    TriCore_D0, TriCore_D1, TriCore_D2, TriCore_D3, TriCore_D4, TriCore_D5, TriCore_D6, TriCore_D7, TriCore_D8, TriCore_D9, TriCore_D10, TriCore_D11, TriCore_D12, TriCore_D13, TriCore_D14, TriCore_D15, 
+    TRICORE_D0, TRICORE_D1, TRICORE_D2, TRICORE_D3, TRICORE_D4, TRICORE_D5, TRICORE_D6, TRICORE_D7, TRICORE_D8, TRICORE_D9, TRICORE_D10, TRICORE_D11, TRICORE_D12, TRICORE_D13, TRICORE_D14, TRICORE_D15, 
   };
 
   // RD Bit set.
@@ -235,7 +242,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // PSRegs Register Class...
   static const MCPhysReg PSRegs[] = {
-    TriCore_PSW, TriCore_PCXI, TriCore_PC, TriCore_FCX, 
+    TRICORE_PSW, TRICORE_PCXI, TRICORE_PC, TRICORE_FCX, 
   };
 
   // PSRegs Bit set.
@@ -245,7 +252,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // PairAddrRegs Register Class...
   static const MCPhysReg PairAddrRegs[] = {
-    TriCore_A0_A1, TriCore_A2_A3, TriCore_A4_A5, TriCore_A6_A7, TriCore_A8_A9, TriCore_A10_A11, TriCore_A12_A13, TriCore_A14_A15, 
+    TRICORE_A0_A1, TRICORE_A2_A3, TRICORE_A4_A5, TRICORE_A6_A7, TRICORE_A8_A9, TRICORE_A10_A11, TRICORE_A12_A13, TRICORE_A14_A15, 
   };
 
   // PairAddrRegs Bit set.
@@ -255,7 +262,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // RE Register Class...
   static const MCPhysReg RE[] = {
-    TriCore_E0, TriCore_E2, TriCore_E4, TriCore_E6, TriCore_E8, TriCore_E10, TriCore_E12, TriCore_E14, 
+    TRICORE_E0, TRICORE_E2, TRICORE_E4, TRICORE_E6, TRICORE_E8, TRICORE_E10, TRICORE_E12, TRICORE_E14, 
   };
 
   // RE Bit set.
@@ -265,7 +272,7 @@ static const MCRegisterDesc TriCoreRegDesc[] = { // Descriptors
 
   // RP Register Class...
   static const MCPhysReg RP[] = {
-    TriCore_P0, TriCore_P2, TriCore_P4, TriCore_P6, TriCore_P8, TriCore_P10, TriCore_P12, TriCore_P14, 
+    TRICORE_P0, TRICORE_P2, TRICORE_P4, TRICORE_P6, TRICORE_P8, TRICORE_P10, TRICORE_P12, TRICORE_P14, 
   };
 
   // RP Bit set.
