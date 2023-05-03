@@ -16,7 +16,7 @@ Capstone offers some unparalleled features:
 
 - Support multiple hardware architectures: ARM, ARM64 (ARMv8), BPF, Ethereum VM,
   M68K, M680X, Mips, MOS65XX, PPC, RISC-V(rv32G/rv64G), SH, Sparc, SystemZ,
-  TMS320C64X, Webassembly, XCore and X86 (16, 32, 64).
+  TMS320C64X, TriCore, Webassembly, XCore and X86 (16, 32, 64).
 
 - Having clean/simple/lightweight/intuitive architecture-neutral API.
 

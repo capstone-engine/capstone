@@ -104,8 +104,14 @@ static struct {
 	{ "sh4a", CS_ARCH_SH, CS_MODE_LITTLE_ENDIAN | CS_MODE_SH4A | CS_MODE_SHFPU },
 	{ "sh4abe", CS_ARCH_SH, CS_MODE_BIG_ENDIAN | CS_MODE_SH4A | CS_MODE_SHFPU },
 	{ "sh4al-dsp", CS_ARCH_SH, CS_MODE_LITTLE_ENDIAN | CS_MODE_SH4A | CS_MODE_SHDSP | CS_MODE_SHFPU },
-	{ "sh4al-dspbe", CS_ARCH_SH, CS_MODE_BIG_ENDIAN | CS_MODE_SH4A | CS_MODE_SHDSP | CS_MODE_SHFPU},
-
+	{ "sh4al-dspbe", CS_ARCH_SH, CS_MODE_BIG_ENDIAN | CS_MODE_SH4A | CS_MODE_SHDSP | CS_MODE_SHFPU },
+	{ "tc110", CS_ARCH_TRICORE, CS_MODE_TRICORE_110 },
+	{ "tc120", CS_ARCH_TRICORE, CS_MODE_TRICORE_120 },
+	{ "tc130", CS_ARCH_TRICORE, CS_MODE_TRICORE_130 },
+	{ "tc131", CS_ARCH_TRICORE, CS_MODE_TRICORE_131 },
+	{ "tc160", CS_ARCH_TRICORE, CS_MODE_TRICORE_160 },
+	{ "tc161", CS_ARCH_TRICORE, CS_MODE_TRICORE_161 },
+	{ "tc162", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
 	{ NULL }
 };
 
@@ -126,6 +132,7 @@ void print_insn_detail_wasm(csh handle, cs_insn *ins);
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
 void print_insn_detail_bpf(csh handle, cs_insn *ins);
 void print_insn_detail_sh(csh handle, cs_insn *ins);
+void print_insn_detail_tricore(csh handle, cs_insn *ins);
 
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins);
 
@@ -319,6 +326,16 @@ static void usage(char *prog)
 		printf("        sh4al-dspbe superh SH4AL-DSP big endian\n");
 	}
 
+	if (cs_support(CS_ARCH_TRICORE)) {
+		printf("        tc110       tricore V1.1\n");
+		printf("        tc120       tricore V1.2\n");
+		printf("        tc130       tricore V1.3\n");
+		printf("        tc131       tricore V1.3.1\n");
+		printf("        tc160       tricore V1.6\n");
+		printf("        tc161       tricore V1.6.1\n");
+		printf("        tc162       tricore V1.6.2\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -s decode in SKIPDATA mode\n");
@@ -381,6 +398,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_SH:
 			print_insn_detail_sh(handle, ins);
+			break;
+		case CS_ARCH_TRICORE:
+			print_insn_detail_tricore(handle, ins);
 			break;
 		default: break;
 	}
@@ -477,7 +497,7 @@ int main(int argc, char **argv)
 				if (cs_support(CS_ARCH_EVM)) {
 					printf("evm=1 ");
 				}
-				
+
 				if (cs_support(CS_ARCH_WASM)) {
 					printf("wasm=1 ");
 				}
@@ -504,6 +524,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_SUPPORT_X86_REDUCE)) {
 					printf("x86_reduce=1 ");
+				}
+
+				if (cs_support(CS_ARCH_TRICORE)) {
+					printf("tricore=1 ");
 				}
 
 				printf("\n");

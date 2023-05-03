@@ -38,6 +38,7 @@ __all__ = [
     'CS_ARCH_BPF',
     'CS_ARCH_RISCV',
     'CS_ARCH_MOS65XX',
+    'CS_ARCH_TRICORE',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -88,6 +89,13 @@ __all__ = [
     'CS_MODE_MOS65XX_65816_LONG_M',
     'CS_MODE_MOS65XX_65816_LONG_X',
     'CS_MODE_MOS65XX_65816_LONG_MX',
+    'CS_MODE_TRICORE_110',
+    'CS_MODE_TRICORE_120',
+    'CS_MODE_TRICORE_130',
+    'CS_MODE_TRICORE_131',
+    'CS_MODE_TRICORE_160',
+    'CS_MODE_TRICORE_161',
+    'CS_MODE_TRICORE_162',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -174,7 +182,9 @@ CS_ARCH_MOS65XX = 12
 CS_ARCH_WASM = 13
 CS_ARCH_BPF = 14
 CS_ARCH_RISCV = 15
-CS_ARCH_MAX = 16
+# CS_ARCH_SH = 16
+CS_ARCH_TRICORE = 17
+CS_ARCH_MAX = 18
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -226,6 +236,13 @@ CS_MODE_MOS65XX_65816 = (1 << 4) # MOS65XXX WDC 65816, 8-bit m/x
 CS_MODE_MOS65XX_65816_LONG_M = (1 << 5) # MOS65XXX WDC 65816, 16-bit m, 8-bit x 
 CS_MODE_MOS65XX_65816_LONG_X = (1 << 6) # MOS65XXX WDC 65816, 8-bit m, 16-bit x
 CS_MODE_MOS65XX_65816_LONG_MX = CS_MODE_MOS65XX_65816_LONG_M | CS_MODE_MOS65XX_65816_LONG_X
+CS_MODE_TRICORE_110 = 1 << 1 # Tricore 1.1
+CS_MODE_TRICORE_120 = 1 << 2 # Tricore 1.2
+CS_MODE_TRICORE_130 = 1 << 3 # Tricore 1.3
+CS_MODE_TRICORE_131 = 1 << 4 # Tricore 1.3.1
+CS_MODE_TRICORE_160 = 1 << 5 # Tricore 1.6
+CS_MODE_TRICORE_161 = 1 << 6 # Tricore 1.6.1
+CS_MODE_TRICORE_162 = 1 << 7 # Tricore 1.6.2
 
 # Capstone option type
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
@@ -366,7 +383,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf, riscv
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf, riscv, tricore
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -385,6 +402,7 @@ class _cs_arch(ctypes.Union):
         ('mos65xx', mos65xx.CsMOS65xx),
         ('bpf', bpf.CsBPF),
         ('riscv', riscv.CsRISCV),
+        ('tricore', tricore.CsTriCore),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -708,6 +726,8 @@ class CsInsn(object):
             (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
         elif arch == CS_ARCH_RISCV:
             (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
+        elif arch == CS_ARCH_TRICORE:
+            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.tricore)
 
 
     def __getattr__(self, name):
@@ -1173,7 +1193,7 @@ def debug():
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
         "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
-        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV,
+        'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
     }
 
     all_archs = ""
