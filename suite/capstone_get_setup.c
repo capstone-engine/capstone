@@ -70,6 +70,9 @@ int main()
 	if (cs_support(CS_SUPPORT_X86_REDUCE)) {
 		printf("x86_reduce=1 ");
 	}
+	if (cs_support(CS_ARCH_TRICORE)) {
+		printf("tricore=1 ");
+	}
 	printf("\n");
 
 	return 0;
