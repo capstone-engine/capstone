@@ -514,10 +514,13 @@ typedef struct {
 	uint64_t second; // Bits
 } MnemonicBitsInfo;
 
-void set_mem_access(MCInst *MI, unsigned int access)
+static void set_mem_access(MCInst *MI, unsigned int access)
 {
 	// TODO: TriCore
 }
+
+MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O);
+bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS);
 
 #define PRINT_ALIAS_INSTR
 
