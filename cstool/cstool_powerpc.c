@@ -4,9 +4,7 @@
 #include <stdio.h>
 
 #include <capstone/capstone.h>
-
-void print_insn_detail_ppc(csh handle, cs_insn *ins);
-
+#include "cstool.h"
 
 static const char* get_bc_name(int bc)
 {

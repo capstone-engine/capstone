@@ -6,8 +6,7 @@
 
 #include <stdio.h>
 #include <capstone/capstone.h>
-
-void print_insn_detail_sh(csh handle, cs_insn *ins);
+#include "cstool.h"
 
 static const char* s_addressing_modes[] = {
 	"<invalid mode>",

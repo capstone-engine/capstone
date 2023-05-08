@@ -3,8 +3,7 @@
 
 #include <stdio.h>
 #include <capstone/capstone.h>
-
-void print_insn_detail_riscv(csh handle, cs_insn *ins);
+#include "cstool.h"
 
 void print_insn_detail_riscv(csh handle, cs_insn *ins)
 {
