@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include <capstone/capstone.h>
+#include "cstool.h"
 
 void print_insn_detail_tricore(csh handle, cs_insn *ins)
 {

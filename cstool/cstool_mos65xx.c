@@ -2,9 +2,7 @@
 #include <stdlib.h>
 
 #include <capstone/capstone.h>
-
-void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
-
+#include "cstool.h"
 
 static const char *get_am_name(mos65xx_address_mode mode)
 {
@@ -64,7 +62,6 @@ static const char *get_am_name(mos65xx_address_mode mode)
 			return "stack relative indirect indexed with y";
 	}
 }
-
 
 void print_insn_detail_mos65xx(csh handle, cs_insn *ins)
 {
