@@ -1957,7 +1957,8 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		}
 	case 0x0d:
 		return dsp_op_cc_3opr(code, info,
-								SH_INS_DSP_POR, (sh_dsp_insn_type) SH_INS_DSP_PWAD,
+								SH_INS_DSP_POR,
+								(sh_dsp_insn_type) SH_INS_DSP_PWAD,
 								detail);
 	case 0x0e:
 		if (cc == 0) {
