@@ -209,7 +209,7 @@ static inline int32_t sign_ext_n(int32_t imm, unsigned n)
 	return sign_extended;
 }
 
-static inline void SS_print_hex(SStream *O, int32_t imm)
+static inline void SS_print_hex(SStream *O, uint32_t imm)
 {
 	if (imm > HEX_THRESHOLD)
 		SStream_concat(O, "0x%x", imm);
@@ -325,7 +325,7 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		int32_t disp = (int32_t)MCOperand_getImm(MO);
+		uint32_t disp = MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_b:
 		case TRICORE_FCALL_b: {
@@ -346,7 +346,7 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		SS_print_sign_hex(O, disp);
+		SS_print_hex(O, disp);
 		fixup_tricore_disp(MI, OpNum, disp);
 	} else
 		printOperand(MI, OpNum, O);
