@@ -381,7 +381,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		uint32_t disp = (int32_t)MCOperand_getImm(MO);
+		uint32_t disp = MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_sb:
 			disp = (int32_t)MI->address + sign_ext_n(2 * disp, 8);
