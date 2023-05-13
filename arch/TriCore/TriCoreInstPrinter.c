@@ -209,33 +209,13 @@ static inline int32_t sign_ext_n(int32_t imm, unsigned n)
 	return sign_extended;
 }
 
-static inline void SS_print_hex(SStream *O, int32_t imm)
-{
-	if (imm > HEX_THRESHOLD)
-		SStream_concat(O, "0x%x", imm);
-	else
-		SStream_concat(O, "%u", imm);
-}
-
-static inline void SS_print_sign_hex(SStream *O, int32_t imm)
-{
-	if (imm >= 0) {
-		SS_print_hex(O, imm);
-	} else {
-		if (imm < -HEX_THRESHOLD)
-			SStream_concat(O, "-0x%x", -imm);
-		else
-			SStream_concat(O, "-%u", -imm);
-	}
-}
-
 static void print_sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int32_t imm = (int32_t)MCOperand_getImm(MO);
 		imm = sign_ext_n(imm, n);
-		SS_print_sign_hex(O, imm);
+		printInt32(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -325,7 +305,7 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		int32_t disp = (int32_t)MCOperand_getImm(MO);
+		uint32_t disp = MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_b:
 		case TRICORE_FCALL_b: {
@@ -346,7 +326,7 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		SS_print_sign_hex(O, disp);
+		printUInt32(O, disp);
 		fixup_tricore_disp(MI, OpNum, disp);
 	} else
 		printOperand(MI, OpNum, O);
@@ -356,7 +336,7 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		int32_t disp = (int32_t)MCOperand_getImm(MO);
+		uint32_t disp = MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_JEQ_brc:
 		case TRICORE_JEQ_brr:
@@ -391,7 +371,7 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		SS_print_sign_hex(O, disp);
+		printUInt32(O, disp);
 		fixup_tricore_disp(MI, OpNum, disp);
 	} else
 		printOperand(MI, OpNum, O);
@@ -401,7 +381,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		int32_t disp = (int32_t)MCOperand_getImm(MO);
+		uint32_t disp = MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_sb:
 			disp = (int32_t)MI->address + sign_ext_n(2 * disp, 8);
@@ -416,7 +396,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		SS_print_sign_hex(O, disp);
+		printUInt32(O, disp);
 		fixup_tricore_disp(MI, OpNum, disp);
 	} else
 		printOperand(MI, OpNum, O);
@@ -426,7 +406,7 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
-		int32_t disp = (int32_t)MCOperand_getImm(MO);
+		uint32_t disp = MCOperand_getImm(MO);
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_JEQ_sbc1:
 		case TRICORE_JEQ_sbr1:
@@ -461,7 +441,7 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		SS_print_sign_hex(O, disp);
+		printUInt32(O, disp);
 		fixup_tricore_disp(MI, OpNum, disp);
 	} else
 		printOperand(MI, OpNum, O);
@@ -502,7 +482,7 @@ static void printOExtImm_4(MCInst *MI, int OpNum, SStream *O)
 		// {27b’111111111111111111111111111, disp4, 0};
 		imm = 0b11111111111111111111111111100000 | (imm << 1);
 
-		SS_print_sign_hex(O, imm);
+		printInt32(O, imm);
 		fill_tricore_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
