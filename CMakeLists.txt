@@ -755,15 +755,16 @@ if(CAPSTONE_BUILD_CSTOOL)
 endif()
 
 if(CAPSTONE_BUILD_CSTEST)
-    find_package(CMOCKA)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(CMOCKA REQUIRED IMPORTED_TARGET cmocka)
 
     file(GLOB CSTEST_SRC suite/cstest/src/*.c)
     add_executable(cstest ${CSTEST_SRC})
-    target_link_libraries(cstest PUBLIC capstone ${CMOCKA_LIBRARIES})
+    target_link_libraries(cstest PUBLIC capstone PkgConfig::CMOCKA)
     target_include_directories(cstest PRIVATE
             $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
             ${PROJECT_SOURCE_DIR}/suite/cstest/include
-            ${CMOCKA_INCLUDE_DIR}
+            ${CMOCKA_INCLUDE_DIRS}
             )
 
     if(CAPSTONE_INSTALL)

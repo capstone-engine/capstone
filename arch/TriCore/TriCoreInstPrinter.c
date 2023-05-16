@@ -285,22 +285,6 @@ static void printOff18Imm(MCInst *MI, int OpNum, SStream *O)
 		printOperand(MI, OpNum, O);
 }
 
-static inline void fixup_tricore_disp(MCInst *MI, int OpNum, int32_t disp)
-{
-	if (MI->csh->detail != CS_OPT_ON)
-		return;
-
-	cs_tricore *tricore = &MI->flat_insn->detail->tricore;
-	if (OpNum <= 0) {
-		fill_tricore_imm(MI, disp);
-		return;
-	}
-
-	if (tricore->operands[tricore->op_count - 1].type != TRICORE_OP_REG)
-		return;
-	fill_mem(tricore, tricore->operands[tricore->op_count - 1].reg, disp);
-}
-
 static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
@@ -327,7 +311,7 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 		}
 
 		printUInt32(O, disp);
-		fixup_tricore_disp(MI, OpNum, disp);
+		fill_tricore_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
 }
@@ -372,7 +356,7 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O)
 		}
 
 		printUInt32(O, disp);
-		fixup_tricore_disp(MI, OpNum, disp);
+		fill_tricore_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
 }
@@ -397,7 +381,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 		}
 
 		printUInt32(O, disp);
-		fixup_tricore_disp(MI, OpNum, disp);
+		fill_tricore_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
 }
@@ -442,7 +426,7 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 		}
 
 		printUInt32(O, disp);
-		fixup_tricore_disp(MI, OpNum, disp);
+		fill_tricore_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
 }
