@@ -147,6 +147,8 @@ static void print_dsp_double(SStream *O, sh_info *info, int xy)
 		
 		for (i = 0; i < 2; i++) {
 			switch(info->op.operands[xy].dsp.operand[i]) {
+			default:
+				break;
 			case SH_OP_DSP_REG_IND:
 				SStream_concat(O, "@%s", s_reg_names[info->op.operands[xy].dsp.r[i]]);
 				break;
@@ -219,6 +221,8 @@ static void print_dsp(SStream *O, sh_info *info)
 		}
 		for (i = 0; i < 2; i++) {
 			switch(info->op.operands[0].dsp.operand[i]) {
+			default:
+				break;
 			case SH_OP_DSP_REG_PRE:
 				SStream_concat(O, "@-%s", s_reg_names[info->op.operands[0].dsp.r[i]]);
 				break;
@@ -244,6 +248,8 @@ static void print_dsp(SStream *O, sh_info *info)
 		break;
 	case 3: // Parallel
 		switch(info->op.operands[2].dsp.cc) {
+		default:
+			break;
 		case SH_DSP_CC_DCT:
 			SStream_concat0(O,"dct ");
 			break;
@@ -255,6 +261,8 @@ static void print_dsp(SStream *O, sh_info *info)
 		case SH_INS_DSP_PSUB_PMULS:
 		case SH_INS_DSP_PADD_PMULS:
 			switch(info->op.operands[2].dsp.insn) {
+			default:
+				break;
 			case SH_INS_DSP_PSUB_PMULS:
 				SStream_concat0(O, "psub ");
 				break;

@@ -749,7 +749,7 @@ static bool op4xx5(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 		   sh_info *info, cs_detail *detail)
 {
 	int r = (code >> 8) & 0x0f;
-	enum direction rw;
+	enum direction rw = read;
 	static const struct ri_list list[] = {
 		{0, SH_INS_ROTR, ISA_ALL, none},
 		{1, SH_INS_CMP_PL, ISA_ALL, none},
@@ -904,7 +904,7 @@ static bool op4xxb(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 	int sz = 0;
 	int grp = SH_GRP_INVALID;
 	sh_op_mem_type memop = SH_OP_MEM_INVALID;
-	enum direction rw;
+	enum direction rw = read;
 	static const struct ri_list list[] = {
 		{0, SH_INS_JSR, ISA_ALL, none},
 		{1, SH_INS_TAS, ISA_ALL, none},
