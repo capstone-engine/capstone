@@ -11,7 +11,7 @@
 /* Capstone's LLVM TableGen Backends: */
 /* https://github.com/capstone-engine/llvm-capstone */
 
-  "xor.t", // TRICORE_INS_XOR_T
+  "invalid", // TRICORE_INS_INVALID
   "absdifs.b", // TRICORE_INS_ABSDIFS_B
   "absdifs.h", // TRICORE_INS_ABSDIFS_H
   "absdifs", // TRICORE_INS_ABSDIFS
@@ -400,4 +400,5 @@
   "xor.lt.u", // TRICORE_INS_XOR_LT_U
   "xor.lt", // TRICORE_INS_XOR_LT
   "xor.ne", // TRICORE_INS_XOR_NE
+  "xor.t", // TRICORE_INS_XOR_T
   "xor", // TRICORE_INS_XOR

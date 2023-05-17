@@ -12,757 +12,757 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
 {{{ /* TRICORE_PHI (0) - TRICORE_INS_INVALID - PHINODE */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_INLINEASM (1) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_INLINEASM_BR (2) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_CFI_INSTRUCTION (3) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_EH_LABEL (4) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_GC_LABEL (5) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_ANNOTATION_LABEL (6) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_KILL (7) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_EXTRACT_SUBREG (8) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_INSERT_SUBREG (9) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_IMPLICIT_DEF (10) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_SUBREG_TO_REG (11) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_COPY_TO_REGCLASS (12) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_DBG_VALUE (13) - TRICORE_INS_INVALID - DBG_VALUE */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_DBG_VALUE_LIST (14) - TRICORE_INS_INVALID - DBG_VALUE_LIST */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_DBG_INSTR_REF (15) - TRICORE_INS_INVALID - DBG_INSTR_REF */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_DBG_PHI (16) - TRICORE_INS_INVALID - DBG_PHI */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_DBG_LABEL (17) - TRICORE_INS_INVALID - DBG_LABEL */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_REG_SEQUENCE (18) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_COPY (19) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_BUNDLE (20) - TRICORE_INS_INVALID - BUNDLE */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_LIFETIME_START (21) - TRICORE_INS_INVALID - LIFETIME_START */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_LIFETIME_END (22) - TRICORE_INS_INVALID - LIFETIME_END */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PSEUDO_PROBE (23) - TRICORE_INS_INVALID - PSEUDO_PROBE */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_ARITH_FENCE (24) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_STACKMAP (25) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_FENTRY_CALL (26) - TRICORE_INS_INVALID - # FEntry call */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHPOINT (27) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_LOAD_STACK_GUARD (28) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PREALLOCATED_SETUP (29) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PREALLOCATED_ARG (30) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_STATEPOINT (31) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_LOCAL_ESCAPE (32) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_FAULTING_OP (33) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHABLE_OP (34) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHABLE_FUNCTION_ENTER (35) - TRICORE_INS_INVALID - # XRay Function Enter. */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHABLE_RET (36) - TRICORE_INS_INVALID - # XRay Function Patchable RET. */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHABLE_FUNCTION_EXIT (37) - TRICORE_INS_INVALID - # XRay Function Exit. */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHABLE_TAIL_CALL (38) - TRICORE_INS_INVALID - # XRay Tail Call Exit. */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHABLE_EVENT_CALL (39) - TRICORE_INS_INVALID - # XRay Custom Event Log. */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_PATCHABLE_TYPED_EVENT_CALL (40) - TRICORE_INS_INVALID - # XRay Typed Event Log. */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_ICALL_BRANCH_FUNNEL (41) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_MEMBARRIER (42) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ASSERT_SEXT (43) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ASSERT_ZEXT (44) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ASSERT_ALIGN (45) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ADD (46) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SUB (47) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_MUL (48) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SDIV (49) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UDIV (50) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SREM (51) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UREM (52) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SDIVREM (53) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UDIVREM (54) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_AND (55) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_OR (56) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_XOR (57) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_IMPLICIT_DEF (58) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_PHI (59) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FRAME_INDEX (60) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_GLOBAL_VALUE (61) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_EXTRACT (62) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UNMERGE_VALUES (63) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INSERT (64) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_MERGE_VALUES (65) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BUILD_VECTOR (66) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BUILD_VECTOR_TRUNC (67) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_CONCAT_VECTORS (68) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_PTRTOINT (69) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTTOPTR (70) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BITCAST (71) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FREEZE (72) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTRINSIC_FPTRUNC_ROUND (73) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTRINSIC_TRUNC (74) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTRINSIC_ROUND (75) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTRINSIC_LRINT (76) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTRINSIC_ROUNDEVEN (77) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_READCYCLECOUNTER (78) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_LOAD (79) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SEXTLOAD (80) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ZEXTLOAD (81) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INDEXED_LOAD (82) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INDEXED_SEXTLOAD (83) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INDEXED_ZEXTLOAD (84) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STORE (85) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INDEXED_STORE (86) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMIC_CMPXCHG_WITH_SUCCESS (87) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMIC_CMPXCHG (88) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_XCHG (89) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_ADD (90) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_SUB (91) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_AND (92) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_NAND (93) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_OR (94) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_XOR (95) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_MAX (96) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_MIN (97) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_UMAX (98) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_UMIN (99) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_FADD (100) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_FSUB (101) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_FMAX (102) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_FMIN (103) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_UINC_WRAP (104) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ATOMICRMW_UDEC_WRAP (105) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FENCE (106) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BRCOND (107) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BRINDIRECT (108) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INVOKE_REGION_START (109) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTRINSIC (110) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INTRINSIC_W_SIDE_EFFECTS (111) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ANYEXT (112) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_TRUNC (113) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_CONSTANT (114) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FCONSTANT (115) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VASTART (116) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VAARG (117) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SEXT (118) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SEXT_INREG (119) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ZEXT (120) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SHL (121) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_LSHR (122) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ASHR (123) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FSHL (124) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FSHR (125) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ROTR (126) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ROTL (127) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ICMP (128) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FCMP (129) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SELECT (130) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UADDO (131) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UADDE (132) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_USUBO (133) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_USUBE (134) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SADDO (135) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SADDE (136) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SSUBO (137) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SSUBE (138) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UMULO (139) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SMULO (140) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UMULH (141) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SMULH (142) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UADDSAT (143) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SADDSAT (144) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_USUBSAT (145) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SSUBSAT (146) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_USHLSAT (147) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SSHLSAT (148) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SMULFIX (149) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UMULFIX (150) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SMULFIXSAT (151) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UMULFIXSAT (152) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SDIVFIX (153) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UDIVFIX (154) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SDIVFIXSAT (155) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UDIVFIXSAT (156) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FADD (157) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FSUB (158) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMUL (159) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMA (160) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMAD (161) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FDIV (162) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FREM (163) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FPOW (164) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FPOWI (165) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FEXP (166) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FEXP2 (167) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FLOG (168) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FLOG2 (169) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FLOG10 (170) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FNEG (171) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FPEXT (172) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FPTRUNC (173) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FPTOSI (174) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FPTOUI (175) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SITOFP (176) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UITOFP (177) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FABS (178) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FCOPYSIGN (179) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_IS_FPCLASS (180) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FCANONICALIZE (181) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMINNUM (182) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMAXNUM (183) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMINNUM_IEEE (184) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMAXNUM_IEEE (185) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMINIMUM (186) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FMAXIMUM (187) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_PTR_ADD (188) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_PTRMASK (189) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SMIN (190) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SMAX (191) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UMIN (192) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UMAX (193) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ABS (194) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_LROUND (195) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_LLROUND (196) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BR (197) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BRJT (198) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_INSERT_VECTOR_ELT (199) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_EXTRACT_VECTOR_ELT (200) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SHUFFLE_VECTOR (201) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_CTTZ (202) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_CTTZ_ZERO_UNDEF (203) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_CTLZ (204) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_CTLZ_ZERO_UNDEF (205) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_CTPOP (206) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BSWAP (207) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BITREVERSE (208) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FCEIL (209) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FCOS (210) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FSIN (211) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FSQRT (212) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FFLOOR (213) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FRINT (214) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_FNEARBYINT (215) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_ADDRSPACE_CAST (216) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BLOCK_ADDR (217) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_JUMP_TABLE (218) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_DYN_STACKALLOC (219) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STRICT_FADD (220) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STRICT_FSUB (221) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STRICT_FMUL (222) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STRICT_FDIV (223) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STRICT_FREM (224) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STRICT_FMA (225) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_STRICT_FSQRT (226) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_READ_REGISTER (227) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_WRITE_REGISTER (228) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_MEMCPY (229) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_MEMCPY_INLINE (230) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_MEMMOVE (231) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_MEMSET (232) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_BZERO (233) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_SEQ_FADD (234) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_SEQ_FMUL (235) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_FADD (236) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_FMUL (237) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_FMAX (238) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_FMIN (239) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_ADD (240) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_MUL (241) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_AND (242) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_OR (243) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_XOR (244) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_SMAX (245) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_SMIN (246) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_UMAX (247) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_VECREDUCE_UMIN (248) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_SBFX (249) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 {{{ /* TRICORE_G_UBFX (250) - TRICORE_INS_INVALID -  */
- 0 
+ 0
 }}},
 { /* TRICORE_ABSDIFS_B_rr_v110 (251) - TriCore_INS_ABSDIFS_B - absdifs.b $d, $s1, $s2 */
 {
