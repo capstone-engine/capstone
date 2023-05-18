@@ -483,9 +483,6 @@ static void set_mem_access(MCInst *MI, unsigned int access)
 	// TODO: TriCore
 }
 
-MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O);
-bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS);
-
 #define PRINT_ALIAS_INSTR
 
 #include "TriCoreGenAsmWriter.inc"
