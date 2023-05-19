@@ -10,7 +10,7 @@ V ?= 0
 
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
-LIBARCHS ?= x86_64
+LIBARCHS ?= x86_64 arm64
 PREFIX ?= /usr/local
 endif
 
