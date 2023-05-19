@@ -3,7 +3,7 @@
 
 define compile
 	$(ifeq ($(MACOS_UNIVERSAL),no),
-	@$(CC) -MM -MP -MT $@ -MT $(@:.o=.d) $(CFLAGS) $< > $(@:.o=.d)
+		@$(CC) -MM -MP -MT $@ -MT $(@:.o=.d) $(CFLAGS) $< > $(@:.o=.d)
 	)
 	${CC} ${CFLAGS} -c $< -o $@
 endef
