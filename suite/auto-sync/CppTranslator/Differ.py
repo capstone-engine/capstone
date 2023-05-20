@@ -84,7 +84,7 @@ class Patch:
         self, node_id: str, old: bytes, new: bytes, coord: PatchCoord, apply: ApplyType, edit: bytes = None
     ) -> None:
         if apply == ApplyType.SAVED:
-            raise NotImplemented("Not yet implemented.")
+            raise NotImplementedError("Not yet implemented.")
         self.node_id = node_id
         self.apply = apply
         self.coord = coord
@@ -123,7 +123,7 @@ class Patch:
     def __lt__(self, other):
         try:
             return self.coord < other.coord
-        except IndexError as e:
+        except IndexError:
             raise IndexError(f"Nodes overlap: {self} - {other}")
 
     def __str__(self) -> str:
@@ -183,7 +183,7 @@ class Differ:
                 self.saved_patches = json.load(f)
             except json.decoder.JSONDecodeError as e:
                 log.fatal(f"Persistence file {bold(self.persistence_filepath.name)} corrupt.")
-                log.fatal(f"Delete it or fix it by hand.")
+                log.fatal("Delete it or fix it by hand.")
                 log.fatal(f"JSON Exception: {e}")
                 exit(1)
 
