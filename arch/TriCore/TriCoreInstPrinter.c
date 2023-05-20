@@ -483,8 +483,6 @@ static void set_mem_access(MCInst *MI, unsigned int access)
 	// TODO: TriCore
 }
 
-#define PRINT_ALIAS_INSTR
-
 #include "TriCoreGenAsmWriter.inc"
 
 const char *TriCore_getRegisterName(csh handle, unsigned int id)
