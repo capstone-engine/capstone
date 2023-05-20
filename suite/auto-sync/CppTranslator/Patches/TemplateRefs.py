@@ -31,7 +31,7 @@ class TemplateRefs(Patch):
 
         name = get_text(src, tc.start_byte, tc.end_byte)
         t_params = get_text(src, templ_args.start_byte, templ_args.end_byte)
-        if name == b"static_cast":
+        if name == b"static_cast" or name == b"dyn_cast":
             return t_params.replace(b"<", b"(").replace(b">", b")")
         t_params_list = TemplateCollector.templ_params_to_list(t_params)
         res = TemplateCollector.get_macro_c_call(name, t_params_list)
