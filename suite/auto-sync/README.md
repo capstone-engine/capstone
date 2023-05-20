@@ -113,3 +113,24 @@ For details about the C++ to C translation of the LLVM files refer to `CppTransl
 **Generated .inc files**
 
 Documentation about the `.inc` file generation is in the [llvm-capstone](https://github.com/capstone-engine/llvm-capstone) repository.
+
+- If some features were not generated and are missing in the `.inc` files, make sure they are defined as `AssemblerPredicate` in the `.td` files.
+
+  Correct:
+  ```
+  def In32BitMode  : Predicate<"!Subtarget->isPPC64()">,
+    AssemblerPredicate<(all_of (not Feature64Bit)), "64bit">;
+  ```
+  Incorrect:
+  ```
+  def In32BitMode  : Predicate<"!Subtarget->isPPC64()">;
+  ```
+
+**Formatting**
+
+- If you make changes to the `CppTranslator` please format the files with `black`
+  ```
+  source ./.venv/bin/activate
+  pip3 install black
+  python3 -m black --line-length=120 CppTranslator/*/*.py
+  ```
