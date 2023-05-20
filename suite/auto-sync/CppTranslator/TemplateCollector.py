@@ -244,7 +244,10 @@ class TemplateCollector:
         )
 
     @staticmethod
-    def templ_params_to_list(templ_params: bytes) -> [bytes]:
+    def templ_params_to_list(templ_params: bytes) -> list[bytes]:
+        if not templ_params:
+            return list()
+
         params = templ_params.strip(b"<>").split(b",")
         params = [p.strip() for p in params]
         res = list()

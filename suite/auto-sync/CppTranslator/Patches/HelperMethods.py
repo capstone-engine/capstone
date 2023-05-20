@@ -106,3 +106,45 @@ def namespace_fcn_def(src: bytes, ns_id: bytes, fcn_def: Node) -> bytes:
     fcn_def_text = get_text(src, fcn_def.start_byte, fcn_def.end_byte)
     res = re.sub(fcn_id_text, ns_id + b"_" + fcn_id_text, fcn_def_text)
     return res
+
+
+def parse_function_capture(
+    capture: list[tuple[Node, str]], src: bytes
+) -> tuple[list[bytes], bytes, bytes, bytes, bytes, bytes]:
+    """
+    Parses the capture of a (template) function definition or declaration and returns the byte strings
+    for each node in the following order:
+
+    list[template_args], storage_class_identifiers, return_type_id, function_name, function_params, compound_stmt
+
+    If any of those is not present it returns an empty byte string for this position.
+    """
+    temp_args = b""
+    st_class_ids = b""
+    ret_type = b""
+    func_name = b""
+    func_params = b""
+    comp_stmt = b""
+    for node, node_name in capture:
+        t = get_text(src, node.start_byte, node.end_byte)
+        match node.type:
+            case "template_declaration":
+                continue
+            case "template_parameter_list":
+                temp_args += t if not temp_args else b" " + t
+            case "storage_class_specifier":
+                st_class_ids += t if not st_class_ids else b" " + t
+            case "type_identifier" | "primitive_type":
+                ret_type += t if not ret_type else b" " + t
+            case "identifier":
+                func_name += t if not func_name else b" " + t
+            case "parameter_list":
+                func_params += t if not func_params else b" " + t
+            case "compound_statement":
+                comp_stmt += t if not comp_stmt else b" " + t
+            case _:
+                raise NotImplementedError(f"Node type {node.type} not handled.")
+
+    from TemplateCollector import TemplateCollector
+
+    return TemplateCollector.templ_params_to_list(temp_args), st_class_ids, ret_type, func_name, func_params, comp_stmt

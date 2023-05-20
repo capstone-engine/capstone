@@ -3,7 +3,7 @@ import re
 
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text
+from Patches.HelperMethods import get_text, parse_function_capture
 from Patches.Patch import Patch
 from TemplateCollector import TemplateCollector, TemplateRefInstance
 
@@ -40,30 +40,8 @@ class TemplateDefinition(Patch):
     def get_main_capture_name(self) -> str:
         return "template_def"
 
-    def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
-        has_storage_class_id = any([c[1] == "storage_class_id" for c in captures])
-        templ_params: Node = captures[1][0]
-        if has_storage_class_id:
-            sc_id: Node = captures[2][0]
-            type_id: Node = captures[3][0]
-            fcn_name: Node = captures[4][0]
-            fcn_params: Node = captures[5][0]
-            compound: Node = captures[6][0]
-        else:
-            sc_id = None
-            type_id: Node = captures[2][0]
-            fcn_name: Node = captures[3][0]
-            fcn_params: Node = captures[4][0]
-            compound: Node = captures[5][0]
-
-        t_params: list = TemplateCollector.templ_params_to_list(
-            get_text(src, templ_params.start_byte, templ_params.end_byte)
-        )
-        sc = get_text(src, sc_id.start_byte, sc_id.end_byte) + b" " if has_storage_class_id else b""
-        tid = get_text(src, type_id.start_byte, type_id.end_byte)
-        f_name = get_text(src, fcn_name.start_byte, fcn_name.end_byte)
-        f_params = get_text(src, fcn_params.start_byte, fcn_params.end_byte)
-        f_compound = get_text(src, compound.start_byte, compound.end_byte)
+    def get_patch(self, captures: list[tuple[Node, str]], src: bytes, **kwargs) -> bytes:
+        t_params, sc, tid, f_name, f_params, f_compound = parse_function_capture(captures, src)
         if f_name in self.collector.templates_with_arg_deduction:
             return sc + tid + b" " + f_name + f_params + f_compound
 
