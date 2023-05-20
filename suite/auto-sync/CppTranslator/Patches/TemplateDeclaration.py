@@ -43,7 +43,7 @@ class TemplateDeclaration(Patch):
             return sc + tid + b" " + f_name + f_params + b";"
 
         declaration = b"#define DECLARE_" + f_name + b"(" + b", ".join(t_params) + b")\n"
-        declaration += sc + tid + b" " + TemplateCollector.get_macro_c_call(f_name, t_params, f_params) + b";"
+        declaration += sc + b" " + tid + b" " + TemplateCollector.get_macro_c_call(f_name, t_params, f_params) + b";"
         declaration = declaration.replace(b"\n", b" \\\n") + b"\n"
 
         template_instance: TemplateRefInstance

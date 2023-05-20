@@ -46,7 +46,7 @@ class TemplateDefinition(Patch):
             return sc + tid + b" " + f_name + f_params + f_compound
 
         definition = b"#define DEFINE_" + f_name + b"(" + b", ".join(t_params) + b")\n"
-        definition += sc + tid + b" " + TemplateCollector.get_macro_c_call(f_name, t_params, f_params) + f_compound
+        definition += sc + b" " + tid + b" " + TemplateCollector.get_macro_c_call(f_name, t_params, f_params) + f_compound
         # Remove // comments
         definition = re.sub(b" *//.*", b"", definition)
         definition = definition.replace(b"\n", b" \\\n") + b"\n"
