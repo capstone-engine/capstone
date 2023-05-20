@@ -44,15 +44,16 @@ class Includes(Patch):
 
         # All includes which belong to the source files top.
         res = get_general_inc()
-        if self.arch == "ARM":
-            return res + get_ARM_includes(filename) + get_general_macros()
-        elif self.arch == "PPC":
-            return res + get_PPC_includes(filename) + get_general_macros()
-        elif self.arch == "AArch64":
-            return res + get_AArch64_includes(filename) + get_general_macros()
-        else:
-            log.fatal(f"Includes of {self.arch} not handled.")
-            exit(1)
+        match self.arch:
+            case "ARM":
+                return res + get_ARM_includes(filename) + get_general_macros()
+            case "PPC":
+                return res + get_PPC_includes(filename) + get_general_macros()
+            case "AArch64":
+                return res + get_AArch64_includes(filename) + get_general_macros()
+            case _:
+                log.fatal(f"Includes of {self.arch} not handled.")
+                exit(1)
 
 
 def get_general_inc() -> bytes:
@@ -65,163 +66,166 @@ def get_general_inc() -> bytes:
 
 
 def get_PPC_includes(filename: str) -> bytes:
-    if filename == "PPCDisassembler.cpp":
-        return (
-            b'#include "../../LEB128.h"\n'
-            + b'#include "../../MCDisassembler.h"\n'
-            + b'#include "../../MCFixedLenDisassembler.h"\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstrDesc.h"\n'
-            + b'#include "../../MCInstPrinter.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../SStream.h"\n'
-            + b'#include "../../utils.h"\n'
-            + b'#include "PPCLinkage.h"\n'
-            + b'#include "PPCMapping.h"\n'
-            + b'#include "PPCMCTargetDesc.h"\n'
-            + b'#include "PPCPredicates.h"\n\n'
-        )
-    elif filename == "PPCInstPrinter.cpp":
-        return (
-            b'#include "../../LEB128.h"\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstrDesc.h"\n'
-            + b'#include "../../MCInstPrinter.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "PPCInstrInfo.h"\n'
-            + b'#include "PPCInstPrinter.h"\n'
-            + b'#include "PPCLinkage.h"\n'
-            + b'#include "PPCMCTargetDesc.h"\n'
-            + b'#include "PPCMapping.h"\n'
-            + b'#include "PPCPredicates.h"\n\n'
-            + b'#include "PPCRegisterInfo.h"\n\n'
-        )
-    elif filename == "PPCInstPrinter.h":
-        return (
-            b'#include "../../LEB128.h"\n'
-            + b'#include "../../MCDisassembler.h"\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstrDesc.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../SStream.h"\n'
-            + b'#include "PPCMCTargetDesc.h"\n\n'
-        )
-    elif filename == "PPCMCTargetDesc.h":
-        return (
-            b'#include "../../LEB128.h"\n'
-            + b'#include "../../MathExtras.h"\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstrDesc.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-        )
+    match filename:
+        case "PPCDisassembler.cpp":
+            return (
+                b'#include "../../LEB128.h"\n'
+                + b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../MCFixedLenDisassembler.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrDesc.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../SStream.h"\n'
+                + b'#include "../../utils.h"\n'
+                + b'#include "PPCLinkage.h"\n'
+                + b'#include "PPCMapping.h"\n'
+                + b'#include "PPCMCTargetDesc.h"\n'
+                + b'#include "PPCPredicates.h"\n\n'
+            )
+        case "PPCInstPrinter.cpp":
+            return (
+                b'#include "../../LEB128.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrDesc.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "PPCInstrInfo.h"\n'
+                + b'#include "PPCInstPrinter.h"\n'
+                + b'#include "PPCLinkage.h"\n'
+                + b'#include "PPCMCTargetDesc.h"\n'
+                + b'#include "PPCMapping.h"\n'
+                + b'#include "PPCPredicates.h"\n\n'
+                + b'#include "PPCRegisterInfo.h"\n\n'
+            )
+        case "PPCInstPrinter.h":
+            return (
+                b'#include "../../LEB128.h"\n'
+                + b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrDesc.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../SStream.h"\n'
+                + b'#include "PPCMCTargetDesc.h"\n\n'
+            )
+        case "PPCMCTargetDesc.h":
+            return (
+                b'#include "../../LEB128.h"\n'
+                + b'#include "../../MathExtras.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrDesc.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+            )
     log.fatal(f"No includes given for PPC source file: {filename}")
     exit(1)
 
 
 def get_ARM_includes(filename: str) -> bytes:
-    if filename == "ARMDisassembler.cpp":
-        return (
-            b'#include "../../LEB128.h"\n'
-            + b'#include "../../MCDisassembler.h"\n'
-            + b'#include "../../MCFixedLenDisassembler.h"\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstrDesc.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../MathExtras.h"\n'
-            + b'#include "../../cs_priv.h"\n'
-            + b'#include "../../utils.h"\n'
-            + b'#include "ARMAddressingModes.h"\n'
-            + b'#include "ARMBaseInfo.h"\n'
-            + b'#include "ARMDisassemblerExtension.h"\n'
-            + b'#include "ARMInstPrinter.h"\n'
-            + b'#include "ARMLinkage.h"\n'
-            + b'#include "ARMMapping.h"\n\n'
-            + b"#define GET_INSTRINFO_MC_DESC\n"
-            + b'#include "ARMGenInstrInfo.inc"\n\n'
-        )
-    elif filename == "ARMInstPrinter.cpp":
-        return (
-            b'#include "../../Mapping.h"\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstPrinter.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../SStream.h"\n'
-            + b'#include "../../utils.h"\n'
-            + b'#include "ARMAddressingModes.h"\n'
-            + b'#include "ARMBaseInfo.h"\n'
-            + b'#include "ARMDisassemblerExtension.h"\n'
-            + b'#include "ARMInstPrinter.h"\n'
-            + b'#include "ARMLinkage.h"\n'
-            + b'#include "ARMMapping.h"\n\n'
-            + b'#define GET_BANKEDREG_IMPL\n'
-            + b'#include "ARMGenSystemRegister.inc"\n'
-        )
-    elif filename == "ARMInstPrinter.h":
-        return (
-            b'#include "ARMMapping.h"\n\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../SStream.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../MCInstPrinter.h"\n'
-            + b'#include "../../utils.h"\n\n'
-        )
-    elif filename == "ARMBaseInfo.cpp":
-        return b'#include "ARMBaseInfo.h"\n\n'
-    elif filename == "ARMAddressingModes.h":
-        return b"#include <assert.h>\n" + b'#include "../../MathExtras.h"\n\n'
+    match filename:
+        case "ARMDisassembler.cpp":
+            return (
+                b'#include "../../LEB128.h"\n'
+                + b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../MCFixedLenDisassembler.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrDesc.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../MathExtras.h"\n'
+                + b'#include "../../cs_priv.h"\n'
+                + b'#include "../../utils.h"\n'
+                + b'#include "ARMAddressingModes.h"\n'
+                + b'#include "ARMBaseInfo.h"\n'
+                + b'#include "ARMDisassemblerExtension.h"\n'
+                + b'#include "ARMInstPrinter.h"\n'
+                + b'#include "ARMLinkage.h"\n'
+                + b'#include "ARMMapping.h"\n\n'
+                + b"#define GET_INSTRINFO_MC_DESC\n"
+                + b'#include "ARMGenInstrInfo.inc"\n\n'
+            )
+        case "ARMInstPrinter.cpp":
+            return (
+                b'#include "../../Mapping.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../SStream.h"\n'
+                + b'#include "../../utils.h"\n'
+                + b'#include "ARMAddressingModes.h"\n'
+                + b'#include "ARMBaseInfo.h"\n'
+                + b'#include "ARMDisassemblerExtension.h"\n'
+                + b'#include "ARMInstPrinter.h"\n'
+                + b'#include "ARMLinkage.h"\n'
+                + b'#include "ARMMapping.h"\n\n'
+                + b'#define GET_BANKEDREG_IMPL\n'
+                + b'#include "ARMGenSystemRegister.inc"\n'
+            )
+        case "ARMInstPrinter.h":
+            return (
+                b'#include "ARMMapping.h"\n\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../SStream.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../utils.h"\n\n'
+            )
+        case "ARMBaseInfo.cpp":
+            return b'#include "ARMBaseInfo.h"\n\n'
+        case "ARMAddressingModes.h":
+            return b"#include <assert.h>\n" + b'#include "../../MathExtras.h"\n\n'
     log.fatal(f"No includes given for ARM source file: {filename}")
     exit(1)
 
 
 def get_AArch64_includes(filename: str) -> bytes:
-    if filename == "AArch64Disassembler.cpp":
-        return (
-            b'#include "../../MCFixedLenDisassembler.h"\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstrDesc.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../LEB128.h"\n'
-            + b'#include "../../MCDisassembler.h"\n'
-            + b'#include "../../cs_priv.h"\n'
-            + b'#include "../../utils.h"\n'
-            + b'#include "AArch64AddressingModes.h"\n'
-            + b'#include "AArch64BaseInfo.h"\n'
-            + b'#include "AArch64Linkage.h"\n'
-            + b'#include "AArch64Mapping.h"\n\n'
-            + b"#define GET_INSTRINFO_MC_DESC\n"
-            + b'#include "AArch64GenInstrInfo.inc"\n\n'
-            + b"#define GET_INSTRINFO_ENUM\n"
-            + b'#include "AArch64GenInstrInfo.inc"\n\n'
-        )
-    elif filename == "AArch64InstPrinter.cpp":
-        return (
-            b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCInstPrinter.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../SStream.h"\n'
-            + b'#include "../../utils.h"\n'
-            + b'#include "AArch64AddressingModes.h"\n'
-            + b'#include "AArch64BaseInfo.h"\n'
-            + b'#include "AArch64DisassemblerExtension.h"\n'
-            + b'#include "AArch64InstPrinter.h"\n'
-            + b'#include "AArch64Linkage.h"\n'
-            + b'#include "AArch64Mapping.h"\n\n'
-            + b"#define GET_BANKEDREG_IMPL\n"
-            + b'#include "AArch64GenSystemRegister.inc"\n\n'
-        )
-    elif filename == "AArch64InstPrinter.h":
-        return (
-            b'#include "AArch64Mapping.h"\n\n'
-            + b'#include "../../MCInst.h"\n'
-            + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../MCInstPrinter.h"\n'
-            + b'#include "../../SStream.h"\n'
-            + b'#include "../../utils.h"\n\n'
-        )
-    elif filename == "AArch64BaseInfo.cpp":
-        return b'#include "AArch64BaseInfo.h"\n\n'
-    elif filename == "AArch64AddressingModes.h":
-        return b"#include <assert.h>\n" + b'#include "../../MathExtras.h"\n\n'
+    match filename:
+        case "AArch64Disassembler.cpp":
+            return (
+                b'#include "../../MCFixedLenDisassembler.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrDesc.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../LEB128.h"\n'
+                + b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../cs_priv.h"\n'
+                + b'#include "../../utils.h"\n'
+                + b'#include "AArch64AddressingModes.h"\n'
+                + b'#include "AArch64BaseInfo.h"\n'
+                + b'#include "AArch64Linkage.h"\n'
+                + b'#include "AArch64Mapping.h"\n\n'
+                + b"#define GET_INSTRINFO_MC_DESC\n"
+                + b'#include "AArch64GenInstrInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "AArch64GenInstrInfo.inc"\n\n'
+            )
+        case "AArch64InstPrinter.cpp":
+            return (
+                b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../SStream.h"\n'
+                + b'#include "../../utils.h"\n'
+                + b'#include "AArch64AddressingModes.h"\n'
+                + b'#include "AArch64BaseInfo.h"\n'
+                + b'#include "AArch64DisassemblerExtension.h"\n'
+                + b'#include "AArch64InstPrinter.h"\n'
+                + b'#include "AArch64Linkage.h"\n'
+                + b'#include "AArch64Mapping.h"\n\n'
+                + b"#define GET_BANKEDREG_IMPL\n"
+                + b'#include "AArch64GenSystemRegister.inc"\n\n'
+            )
+        case "AArch64InstPrinter.h":
+            return (
+                b'#include "AArch64Mapping.h"\n\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../SStream.h"\n'
+                + b'#include "../../utils.h"\n\n'
+            )
+        case "AArch64BaseInfo.cpp":
+            return b'#include "AArch64BaseInfo.h"\n\n'
+        case "AArch64AddressingModes.h":
+            return b"#include <assert.h>\n" + b'#include "../../MathExtras.h"\n\n'
     log.fatal(f"No includes given for AArch64 source file: {filename}")
     exit(1)
 
