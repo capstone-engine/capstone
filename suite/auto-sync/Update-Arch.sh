@@ -53,7 +53,7 @@ setup_build_dir() {
 # Main
 #
 
-supported="ARM, PPC"
+supported="ARM, PPC, AArch64"
 
 if [ $# -ne 3 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "$0 <arch> <path-llvm-project> <llvm-release-commit>"
@@ -99,7 +99,7 @@ $tblgen --printerLang=CCS --gen-subtarget -I "$llvm_root/llvm/include/" -I "$llv
 echo "[*] Generate Mapping tables..."
 $tblgen --printerLang=CCS --gen-asm-matcher -I "$llvm_root/llvm/include/" -I "$llvm_root/llvm/lib/Target/$llvm_target_dir/" "$llvm_root/llvm/lib/Target/$llvm_target_dir/$arch.td"
 
-has_sys_reg_tables="ARM"
+has_sys_reg_tables="ARM, AArch64"
 if echo "$has_sys_reg_tables" | grep -q -w "$arch"; then
   echo "[*] Generate System Register tables..."
   $tblgen --printerLang=CCS --gen-searchable-tables -I "$llvm_root/llvm/include/" -I "$llvm_root/llvm/lib/Target/$llvm_target_dir/" "$llvm_root/llvm/lib/Target/$llvm_target_dir/$arch.td"
