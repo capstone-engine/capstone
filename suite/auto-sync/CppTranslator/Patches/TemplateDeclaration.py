@@ -58,7 +58,7 @@ class TemplateDeclaration(Patch):
             exit(1)
 
         for template_instance in self.collector.template_refs[f_name]:
-            d = b"DECLARE_" + f_name + b"(" + b", ".join(template_instance.args_list) + b")\n"
+            d = b"DECLARE_" + f_name + b"(" + b", ".join(template_instance.args_list) + b");\n"
             if d in declared_implementations:
                 continue
             declared_implementations.append(d)
