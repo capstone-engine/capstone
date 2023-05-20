@@ -14,6 +14,7 @@ git submodule update --init --recursive ./vendor/
 Setup Python environment and Tree-sitter
 
 ```
+# Python version must be at least 3.11
 sudo apt install python3-venv
 cd CppTranslator
 python3 -m venv ./.venv
@@ -25,6 +26,7 @@ cd ..
 Install clang-format
 
 ```
+# clang-format version must be at least 16
 sudo apt install clang-format-16
 ```
 
@@ -54,6 +56,7 @@ Build `llvm-tblgen`
 ```
 mkdir build
 cd build
+# You can also build the "Release" version
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
 cmake --build . --target llvm-tblgen --config Debug
 cd ../../
