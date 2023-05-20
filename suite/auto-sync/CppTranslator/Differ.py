@@ -153,7 +153,6 @@ class Differ:
     cur_nid: str = None
 
     def __init__(self, configurator: Configurator, no_auto_apply: bool):
-
         self.configurator = configurator
         self.no_auto_apply = no_auto_apply
         self.arch = self.configurator.get_arch()
@@ -625,7 +624,7 @@ def parse_args() -> argparse.Namespace:
 
 
 if __name__ == "__main__":
-    if not sys.hexversion >= 0x030b00f0:
+    if not sys.hexversion >= 0x030B00F0:
         log.fatal("Python >= v3.11 required.")
         exit(1)
     args = parse_args()

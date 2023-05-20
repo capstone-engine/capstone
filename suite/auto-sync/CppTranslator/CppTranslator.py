@@ -450,7 +450,7 @@ def parse_args() -> argparse.Namespace:
 
 
 if __name__ == "__main__":
-    if not sys.hexversion >= 0x030b00f0:
+    if not sys.hexversion >= 0x030B00F0:
         log.fatal("Python >= v3.11 required.")
         exit(1)
 
