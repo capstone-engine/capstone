@@ -426,7 +426,9 @@ def parse_args() -> argparse.Namespace:
         prog="CppTranslator",
         description="Capstones C++ to C translator for LLVM source files",
     )
-    parser.add_argument("-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC"], required=True)
+    parser.add_argument(
+        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64"], required=True
+    )
     parser.add_argument(
         "-v",
         dest="verbosity",

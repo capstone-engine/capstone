@@ -50,6 +50,7 @@
       "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
       "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp"
     ],
+    "templates_with_arg_deduction": [],
     "manually_edited_files": [
       "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMBaseInfo.h"
     ]
@@ -83,6 +84,36 @@
     "manually_edited_files": [
       "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/PPCInstrInfo.h",
       "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/PPCRegisterInfo.h"
+    ]
+  },
+  "AArch64": {
+    "files_to_translate": [
+      {
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Disassembler/AArch64Disassembler.cpp",
+        "out": "AArch64Disassembler.c"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/MCTargetDesc/AArch64InstPrinter.cpp",
+        "out": "AArch64InstPrinter.c"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/MCTargetDesc/AArch64InstPrinter.h",
+        "out": "AArch64InstPrinter.h"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/MCTargetDesc/AArch64AddressingModes.h",
+        "out": "AArch64AddressingModes.h"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Utils/AArch64BaseInfo.cpp",
+        "out": "AArch64BaseInfo.c"
+      }
+    ],
+    "files_for_template_search": [
+      "{AUTO_SYNC_ROOT}/build/llvm_inc/AArch64GenDisassemblerTables.inc",
+      "{AUTO_SYNC_ROOT}/build/llvm_inc/AArch64GenAsmWriter.inc",
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Disassembler/AArch64Disassembler.cpp",
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/MCTargetDesc/AArch64InstPrinter.cpp"
+    ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": [
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Disassembler/AArch64BaseInfo.h"
     ]
   }
 }
