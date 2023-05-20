@@ -103,6 +103,9 @@
       },{
         "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Utils/AArch64BaseInfo.cpp",
         "out": "AArch64BaseInfo.c"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Utils/AArch64BaseInfo.h",
+        "out": "AArch64BaseInfo.h"
       }
     ],
     "files_for_template_search": [
@@ -111,9 +114,12 @@
       "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Disassembler/AArch64Disassembler.cpp",
       "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/MCTargetDesc/AArch64InstPrinter.cpp"
     ],
-    "templates_with_arg_deduction": [],
-    "manually_edited_files": [
-      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/AArch64/Disassembler/AArch64BaseInfo.h"
-    ]
+    "templates_with_arg_deduction": [
+      "printImmSVE",
+      "printAMIndexedWB",
+      "isSVECpyImm",
+      "isSVEAddSubImm"
+    ],
+    "manually_edited_files": []
   }
 }
