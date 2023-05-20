@@ -180,117 +180,118 @@ class Translator:
         log.debug("Init patches")
         priorities = dict(sorted(self.patch_priorities.items(), key=lambda item: item[1]))
         for ptype, p in priorities.items():
-            if ptype == CheckDecoderStatus.__name__:
-                patch = CheckDecoderStatus(p)
-            elif ptype == ReferencesDecl.__name__:
-                patch = ReferencesDecl(p)
-            elif ptype == FieldFromInstr.__name__:
-                patch = FieldFromInstr(p)
-            elif ptype == FeatureBitsDecl.__name__:
-                patch = FeatureBitsDecl(p)
-            elif ptype == FeatureBits.__name__:
-                patch = FeatureBits(p, bytes(self.arch, "utf8"))
-            elif ptype == STIFeatureBits.__name__:
-                patch = STIFeatureBits(p, bytes(self.arch, "utf8"))
-            elif ptype == QualifiedIdentifier.__name__:
-                patch = QualifiedIdentifier(p)
-            elif ptype == Includes.__name__:
-                patch = Includes(p, self.arch)
-            elif ptype == ClassesDef.__name__:
-                patch = ClassesDef(p)
-            elif ptype == CreateOperand0.__name__:
-                patch = CreateOperand0(p)
-            elif ptype == CreateOperand1.__name__:
-                patch = CreateOperand1(p)
-            elif ptype == GetOpcode.__name__:
-                patch = GetOpcode(p)
-            elif ptype == SetOpcode.__name__:
-                patch = SetOpcode(p)
-            elif ptype == GetOperand.__name__:
-                patch = GetOperand(p)
-            elif ptype == SignExtend.__name__:
-                patch = SignExtend(p)
-            elif ptype == TemplateDeclaration.__name__:
-                patch = TemplateDeclaration(p, self.template_collector)
-            elif ptype == TemplateDefinition.__name__:
-                patch = TemplateDefinition(p, self.template_collector)
-            elif ptype == DecoderParameter.__name__:
-                patch = DecoderParameter(p)
-            elif ptype == TemplateRefs.__name__:
-                patch = TemplateRefs(p)
-            elif ptype == TemplateParamDecl.__name__:
-                patch = TemplateParamDecl(p)
-            elif ptype == MethodTypeQualifier.__name__:
-                patch = MethodTypeQualifier(p)
-            elif ptype == UsingDeclaration.__name__:
-                patch = UsingDeclaration(p)
-            elif ptype == NamespaceLLVM.__name__:
-                patch = NamespaceLLVM(p)
-            elif ptype == DecoderCast.__name__:
-                patch = DecoderCast(p)
-            elif ptype == IsPredicate.__name__:
-                patch = IsPredicate(p)
-            elif ptype == IsOptionalDef.__name__:
-                patch = IsOptionalDef(p)
-            elif ptype == Assert.__name__:
-                patch = Assert(p)
-            elif ptype == LLVMFallThrough.__name__:
-                patch = LLVMFallThrough(p)
-            elif ptype == DeclarationInConditionalClause.__name__:
-                patch = DeclarationInConditionalClause(p)
-            elif ptype == OutStreamParam.__name__:
-                patch = OutStreamParam(p)
-            elif ptype == MethodToFunction.__name__:
-                patch = MethodToFunction(p)
-            elif ptype == GetOperandRegImm.__name__:
-                patch = GetOperandRegImm(p)
-            elif ptype == StreamOperations.__name__:
-                patch = StreamOperations(p)
-            elif ptype == SubtargetInfoParam.__name__:
-                patch = SubtargetInfoParam(p)
-            elif ptype == SizeAssignment.__name__:
-                patch = SizeAssignment(p)
-            elif ptype == NamespaceArch.__name__:
-                patch = NamespaceArch(p)
-            elif ptype == NamespaceAnon.__name__:
-                patch = NamespaceAnon(p)
-            elif ptype == PredicateBlockFunctions.__name__:
-                patch = PredicateBlockFunctions(p)
-            elif ptype == FallThrough.__name__:
-                patch = FallThrough(p)
-            elif ptype == DecodeInstruction.__name__:
-                patch = DecodeInstruction(p)
-            elif ptype == STIArgument.__name__:
-                patch = STIArgument(p)
-            elif ptype == GetNumOperands.__name__:
-                patch = GetNumOperands(p)
-            elif ptype == AddOperand.__name__:
-                patch = AddOperand(p)
-            elif ptype == PrintAnnotation.__name__:
-                patch = PrintAnnotation(p)
-            elif ptype == ConstMCInstParameter.__name__:
-                patch = ConstMCInstParameter(p)
-            elif ptype == LLVMUnreachable.__name__:
-                patch = LLVMUnreachable(p)
-            elif ptype == ClassConstructorDef.__name__:
-                patch = ClassConstructorDef(p)
-            elif ptype == ConstMCOperand.__name__:
-                patch = ConstMCOperand(p)
-            elif ptype == UseMarkup.__name__:
-                patch = UseMarkup(p)
-            elif ptype == GetSubReg.__name__:
-                patch = GetSubReg(p)
-            elif ptype == InlineToStaticInline.__name__:
-                patch = InlineToStaticInline(p)
-            elif ptype == AddCSDetail.__name__:
-                patch = AddCSDetail(p, self.arch)
-            elif ptype == PrintRegImmShift.__name__:
-                patch = PrintRegImmShift(p)
-            elif ptype == IsOperandRegImm.__name__:
-                patch = IsOperandRegImm(p)
-            else:
-                log.fatal(f"Patch type {ptype} not in Patch init routine.")
-                exit(1)
+            match ptype:
+                case CheckDecoderStatus.__name__:
+                    patch = CheckDecoderStatus(p)
+                case ReferencesDecl.__name__:
+                    patch = ReferencesDecl(p)
+                case FieldFromInstr.__name__:
+                    patch = FieldFromInstr(p)
+                case FeatureBitsDecl.__name__:
+                    patch = FeatureBitsDecl(p)
+                case FeatureBits.__name__:
+                    patch = FeatureBits(p, bytes(self.arch, "utf8"))
+                case STIFeatureBits.__name__:
+                    patch = STIFeatureBits(p, bytes(self.arch, "utf8"))
+                case QualifiedIdentifier.__name__:
+                    patch = QualifiedIdentifier(p)
+                case Includes.__name__:
+                    patch = Includes(p, self.arch)
+                case ClassesDef.__name__:
+                    patch = ClassesDef(p)
+                case CreateOperand0.__name__:
+                    patch = CreateOperand0(p)
+                case CreateOperand1.__name__:
+                    patch = CreateOperand1(p)
+                case GetOpcode.__name__:
+                    patch = GetOpcode(p)
+                case SetOpcode.__name__:
+                    patch = SetOpcode(p)
+                case GetOperand.__name__:
+                    patch = GetOperand(p)
+                case SignExtend.__name__:
+                    patch = SignExtend(p)
+                case TemplateDeclaration.__name__:
+                    patch = TemplateDeclaration(p, self.template_collector)
+                case TemplateDefinition.__name__:
+                    patch = TemplateDefinition(p, self.template_collector)
+                case DecoderParameter.__name__:
+                    patch = DecoderParameter(p)
+                case TemplateRefs.__name__:
+                    patch = TemplateRefs(p)
+                case TemplateParamDecl.__name__:
+                    patch = TemplateParamDecl(p)
+                case MethodTypeQualifier.__name__:
+                    patch = MethodTypeQualifier(p)
+                case UsingDeclaration.__name__:
+                    patch = UsingDeclaration(p)
+                case NamespaceLLVM.__name__:
+                    patch = NamespaceLLVM(p)
+                case DecoderCast.__name__:
+                    patch = DecoderCast(p)
+                case IsPredicate.__name__:
+                    patch = IsPredicate(p)
+                case IsOptionalDef.__name__:
+                    patch = IsOptionalDef(p)
+                case Assert.__name__:
+                    patch = Assert(p)
+                case LLVMFallThrough.__name__:
+                    patch = LLVMFallThrough(p)
+                case DeclarationInConditionalClause.__name__:
+                    patch = DeclarationInConditionalClause(p)
+                case OutStreamParam.__name__:
+                    patch = OutStreamParam(p)
+                case MethodToFunction.__name__:
+                    patch = MethodToFunction(p)
+                case GetOperandRegImm.__name__:
+                    patch = GetOperandRegImm(p)
+                case StreamOperations.__name__:
+                    patch = StreamOperations(p)
+                case SubtargetInfoParam.__name__:
+                    patch = SubtargetInfoParam(p)
+                case SizeAssignment.__name__:
+                    patch = SizeAssignment(p)
+                case NamespaceArch.__name__:
+                    patch = NamespaceArch(p)
+                case NamespaceAnon.__name__:
+                    patch = NamespaceAnon(p)
+                case PredicateBlockFunctions.__name__:
+                    patch = PredicateBlockFunctions(p)
+                case FallThrough.__name__:
+                    patch = FallThrough(p)
+                case DecodeInstruction.__name__:
+                    patch = DecodeInstruction(p)
+                case STIArgument.__name__:
+                    patch = STIArgument(p)
+                case GetNumOperands.__name__:
+                    patch = GetNumOperands(p)
+                case AddOperand.__name__:
+                    patch = AddOperand(p)
+                case PrintAnnotation.__name__:
+                    patch = PrintAnnotation(p)
+                case ConstMCInstParameter.__name__:
+                    patch = ConstMCInstParameter(p)
+                case LLVMUnreachable.__name__:
+                    patch = LLVMUnreachable(p)
+                case ClassConstructorDef.__name__:
+                    patch = ClassConstructorDef(p)
+                case ConstMCOperand.__name__:
+                    patch = ConstMCOperand(p)
+                case UseMarkup.__name__:
+                    patch = UseMarkup(p)
+                case GetSubReg.__name__:
+                    patch = GetSubReg(p)
+                case InlineToStaticInline.__name__:
+                    patch = InlineToStaticInline(p)
+                case AddCSDetail.__name__:
+                    patch = AddCSDetail(p, self.arch)
+                case PrintRegImmShift.__name__:
+                    patch = PrintRegImmShift(p)
+                case IsOperandRegImm.__name__:
+                    patch = IsOperandRegImm(p)
+                case _:
+                    log.fatal(f"Patch type {ptype} not in Patch init routine.")
+                    exit(1)
             self.patches.append(patch)
 
     def parse(self, src_path: Path) -> None:
