@@ -193,7 +193,6 @@ if(CAPSTONE_ARM64_SUPPORT)
     set(HEADERS_ARM64
         arch/AArch64/AArch64AddressingModes.h
         arch/AArch64/AArch64BaseInfo.h
-        arch/AArch64/AArch64Disassembler.h
         arch/AArch64/AArch64InstPrinter.h
         arch/AArch64/AArch64Mapping.h
         arch/AArch64/AArch64GenAsmWriter.inc
