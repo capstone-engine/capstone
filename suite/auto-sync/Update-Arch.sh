@@ -103,8 +103,9 @@ has_sys_reg_tables="ARM, AArch64"
 if echo "$has_sys_reg_tables" | grep -q -w "$arch"; then
   echo "[*] Generate System Register tables..."
   $tblgen --printerLang=CCS --gen-searchable-tables -I "$llvm_root/llvm/include/" -I "$llvm_root/llvm/lib/Target/$llvm_target_dir/" "$llvm_root/llvm/lib/Target/$llvm_target_dir/$arch.td"
-  sed -i "s/##ARCH##/$arch/g" __ARCH__GenCSSystemRegisterEnum.inc
-  sed -i "s/##ARCH##/$arch/g" __ARCH__GenSystemRegister.inc
+  enum_arch=$(echo $arch | tr "[:lower:]" "[:upper:]") # To upper case
+  sed -i "s/##ARCH##/$enum_arch/g" __ARCH__GenCSSystemRegisterEnum.inc
+  sed -i "s/##ARCH##/$enum_arch/g" __ARCH__GenSystemRegister.inc
   cp __ARCH__GenCSSystemRegisterEnum.inc $arch"GenCSSystemRegisterEnum.inc"
   cp __ARCH__GenSystemRegister.inc $arch"GenSystemRegister.inc"
 fi
