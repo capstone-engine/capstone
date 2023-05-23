@@ -14,6 +14,7 @@ from Helper import convert_loglevel, print_prominent_warning, get_header, run_cl
 from Patches.AddCSDetail import AddCSDetail
 from Patches.AddOperand import AddOperand
 from Patches.Assert import Assert
+from Patches.BitCastStdArray import BitCastStdArray
 from Patches.CheckDecoderStatus import CheckDecoderStatus
 from Patches.ClassConstructorDef import ClassConstructorDef
 from Patches.ClassesDef import ClassesDef
@@ -90,6 +91,7 @@ class Translator:
     patches: [Patch] = list()
 
     patch_priorities: {str: int} = {
+        BitCastStdArray.__name__: 0,
         PrintRegImmShift.__name__: 0,
         InlineToStaticInline.__name__: 0,
         GetSubReg.__name__: 0,
@@ -181,6 +183,8 @@ class Translator:
         priorities = dict(sorted(self.patch_priorities.items(), key=lambda item: item[1]))
         for ptype, p in priorities.items():
             match ptype:
+                case BitCastStdArray.__name__:
+                    patch = BitCastStdArray(p)
                 case CheckDecoderStatus.__name__:
                     patch = CheckDecoderStatus(p)
                 case ReferencesDecl.__name__:
