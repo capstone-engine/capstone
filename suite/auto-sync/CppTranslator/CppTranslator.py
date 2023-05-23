@@ -20,6 +20,7 @@ from Patches.ClassConstructorDef import ClassConstructorDef
 from Patches.ClassesDef import ClassesDef
 from Patches.ConstMCInstParameter import ConstMCInstParameter
 from Patches.ConstMCOperand import ConstMCOperand
+from Patches.CppInitCast import CppInitCast
 from Patches.CreateOperand0 import CreateOperand0
 from Patches.CreateOperand1 import CreateOperand1
 from Patches.DeclarationInConditionClause import DeclarationInConditionalClause
@@ -91,6 +92,7 @@ class Translator:
     patches: [Patch] = list()
 
     patch_priorities: {str: int} = {
+        CppInitCast.__name__: 0,
         BitCastStdArray.__name__: 0,
         PrintRegImmShift.__name__: 0,
         InlineToStaticInline.__name__: 0,
@@ -183,6 +185,8 @@ class Translator:
         priorities = dict(sorted(self.patch_priorities.items(), key=lambda item: item[1]))
         for ptype, p in priorities.items():
             match ptype:
+                case CppInitCast.__name__:
+                    patch = CppInitCast(p)
                 case BitCastStdArray.__name__:
                     patch = BitCastStdArray(p)
                 case CheckDecoderStatus.__name__:
