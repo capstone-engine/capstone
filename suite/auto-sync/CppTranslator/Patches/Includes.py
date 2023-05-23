@@ -37,6 +37,8 @@ class Includes(Patch):
             return b'#include "' + bytes(self.arch, "utf8") + b'GenDisassemblerTables.inc"\n\n'
         elif b"GenAsmWriter.inc" in include_text:
             return b'#include "' + bytes(self.arch, "utf8") + b'GenAsmWriter.inc"\n\n'
+        elif b"GenSystemOperands.inc" in include_text:
+            return b'#include "' + bytes(self.arch, "utf8") + b'GenSystemOperands.inc"\n\n'
 
         if self.include_count[filename] > 1:
             # Only the first include is replaced with all CS includes.

@@ -395,6 +395,11 @@ class Translator:
                     bytes_patch: bytes = patch.get_patch(cb, self.src, **patch_kwargs)
                     p_list.append((bytes_patch, cb[0][0]))
                 self.patch_src(p_list)
+                if self.tree.root_node.type == "ERROR":
+                    log.fatal(
+                        f"Patch {patch.__class__.__name__} corrupts the tree for {self.current_src_path_in.name}!"
+                    )
+                    exit(1)
             log.info(f"Patched file at '{self.current_src_path_out}'")
             with open(self.current_src_path_out, "w") as f:
                 f.write(get_header())
