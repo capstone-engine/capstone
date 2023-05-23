@@ -946,8 +946,8 @@ AArch64StringToPACKeyID(const char *Name)
 // a <n x M x t> vector is stored in a SVE register by placing index i
 // in index i*P of a <n x (M*P) x t> vector.  The other elements of the
 // <n x (M*P) x t> vector (such as index 1) are undefined.
-static constexpr unsigned SVEBitsPerBlock = 128;
-static constexpr unsigned SVEMaxBitsPerVector = 2048;
+static unsigned SVEBitsPerBlock = 128;
+static unsigned SVEMaxBitsPerVector = 2048;
 // end namespace AArch64
 // end namespace llvm
 
