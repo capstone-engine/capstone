@@ -52,7 +52,7 @@
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": [
-      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMBaseInfo.h"
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Utils/ARMBaseInfo.h"
     ]
   },
    "PPC": {
