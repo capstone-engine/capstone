@@ -1,7 +1,7 @@
 import logging as log
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text, parse_function_capture
+from Patches.HelperMethods import parse_function_capture
 from Patches.Patch import Patch
 from TemplateCollector import TemplateCollector, TemplateRefInstance
 
@@ -58,7 +58,7 @@ class TemplateDeclaration(Patch):
             exit(1)
 
         for template_instance in self.collector.template_refs[f_name]:
-            d = b"DECLARE_" + f_name + b"(" + b", ".join(template_instance.args_list) + b");\n"
+            d = b"DECLARE_" + f_name + b"(" + b", ".join(template_instance.get_args_for_decl()) + b");\n"
             if d in declared_implementations:
                 continue
             declared_implementations.append(d)

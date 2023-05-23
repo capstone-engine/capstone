@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 from tree_sitter import Language, Parser
@@ -52,6 +53,13 @@ class TemplateRefInstance:
 
     def get_c_name(self):
         return b"_".join([self.name] + self.args_list)
+
+    def get_args_for_decl(self) -> list[bytes]:
+        """Returns the list of arguments, but replaces all characters which
+        can not be part of a C identifier with _
+        """
+        args_list = [re.sub(b"'", b"", a) for a in self.args_list]
+        return args_list
 
 
 class TemplateCollector:
