@@ -1,32 +1,117 @@
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
+/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/* Automatically translated source file from LLVM. */
+
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
+
+/* Only small edits allowed. */
+/* For multiple similar edits, please create a Patch for the translator. */
+
+/* Capstone's C++ file translator: */
+/* https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
+
 //===-- AArch64BaseInfo.cpp - AArch64 Base encoding information------------===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
 // This file provides basic encoding and assembly information for AArch64.
 //
 //===----------------------------------------------------------------------===//
-
-/* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
-
-#ifdef CAPSTONE_HAS_ARM64
-
-#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
-#pragma warning(disable:4996)			// disable MSVC's warning on strcpy()
-#pragma warning(disable:28719)		// disable MSVC's warning on strcpy()
-#endif
-
-#include "../../utils.h"
-
+#include <capstone/platform.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "AArch64BaseInfo.h"
+
+#define CONCAT(a, b) CONCAT_(a, b)
+#define CONCAT_(a, b) a##_##b
+
+#define GET_AT_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_DBNXS_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_DB_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_DC_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_IC_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_ISB_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_TSB_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_PRCTX_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_PRFM_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_SVEPRFM_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_RPRFM_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+// namespace AArch64RPRFM
+// namespace llvm
+
+#define GET_SVEPREDPAT_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_SVEVECLENSPECIFIER_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+// namespace AArch64SVEVecLenSpecifier
+// namespace llvm
+
+#define GET_EXACTFPIMM_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_PSTATEIMM0_15_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_PSTATEIMM0_1_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_PSB_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_BTI_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_SYSREG_IMPL
 
 #include "AArch64GenSystemOperands.inc"
 
@@ -74,4 +159,10 @@ void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result)
 	(void)dummy;
 }
 
-#endif
+#define GET_TLBITable_IMPL
+
+#include "AArch64GenSystemOperands.inc"
+
+#define GET_SVCR_IMPL
+
+#include "AArch64GenSystemOperands.inc"

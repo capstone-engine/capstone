@@ -790,7 +790,6 @@ typedef struct SysReg {
 
 const AArch64SysReg *lookupSysRegByName(const char *Name);
 const AArch64SysReg *lookupSysRegByEncoding(uint16_t Encoding);
-uint32_t parseGenericRegister(const char *Name);
 const char *genericRegisterString(uint32_t Bits);
 
 #define TLBI SysAliasReg
