@@ -225,7 +225,14 @@ def get_AArch64_includes(filename: str) -> bytes:
         case "AArch64BaseInfo.cpp":
             return b'#include "AArch64BaseInfo.h"\n\n'
         case "AArch64BaseInfo.h":
-            return b'#include "../../utils.h"\n' + b'#include "capstone/arm.h"\n\n'
+            return (
+                b'#include "../../utils.h"\n'
+                + b'#include "capstone/arm.h"\n\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "AArch64GenRegisterInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "AArch64GenInstrInfo.inc"\n\n'
+            )
         case "AArch64AddressingModes.h":
             return b"#include <assert.h>\n" + b'#include "../../MathExtras.h"\n\n'
     log.fatal(f"No includes given for AArch64 source file: {filename}")
