@@ -108,6 +108,9 @@ if echo "$has_sys_reg_tables" | grep -q -w "$arch"; then
   sed -i "s/##ARCH##/$enum_arch/g" __ARCH__GenSystemRegister.inc
   cp __ARCH__GenCSSystemRegisterEnum.inc $arch"GenCSSystemRegisterEnum.inc"
   cp __ARCH__GenSystemRegister.inc $arch"GenSystemRegister.inc"
+  if [ "$arch" = "AArch64" ]; then
+    mv "AArch64GenSystemRegister.inc" "AArch64GenSystemOperands.inc"
+  fi
 fi
 
 if find -- "../vendor/tree-sitter-cpp/" -prune -type d -empty | grep -q '^'; then
