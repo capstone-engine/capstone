@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Do not edit. */
 
@@ -27398,161 +27398,161 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
   switch (Idx) {
   default: /* llvm_unreachable("Invalid index!"); */
   case 0:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME));
   case 1:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSMEF64F64));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSMEF64F64));
   case 2:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2));
   case 3:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2p1)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSMEF16F16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2p1)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSMEF16F16)));
   case 4:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2p1)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureB16B16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2p1)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureB16B16)));
   case 5:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2p1)));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2p1)));
   case 6:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSMEI16I64));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSMEI16I64));
   case 7:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2p1));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2p1));
   case 8:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSMEI16I64)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSMEI16I64)));
   case 9:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSMEF64F64)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSMEF64F64)));
   case 10:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME)));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME)));
   case 11:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2p1) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2p1)));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2p1) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2p1)));
   case 12:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME)));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME)));
   case 13:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMatMulFP64)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMatMulFP64)));
   case 14:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE));
   case 15:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2p1)));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2p1)));
   case 16:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMatMulInt8)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMatMulInt8)));
   case 17:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2AES));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2AES));
   case 18:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMatMulInt8)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMatMulInt8)));
   case 19:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2));
   case 20:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2BitPerm));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2BitPerm));
   case 21:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2SM4));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2SM4));
   case 22:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2SHA3));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2SHA3));
   case 23:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME2p1) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2p1))) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureB16B16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME2p1) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2p1))) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureB16B16)));
   case 24:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureBF16)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME))));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureBF16)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME))));
   case 25:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureBF16)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureBF16)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE)));
   case 26:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMatMulFP32)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMatMulFP32)));
   case 27:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMatMulFP64)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMatMulFP64)));
   case 28:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSVE2p1));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSVE2p1));
   case 29:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureLSE));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureLSE));
   case 30:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureLOR));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureLOR));
   case 31:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMTE));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMTE));
   case 32:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON));
   case 33:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureRCPC3)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureRCPC3)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON)));
   case 34:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME)));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME)));
   case 35:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFullFP16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFullFP16)));
   case 36:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFRInt3264));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFRInt3264));
   case 37:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFP16FML)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFP16FML)));
   case 38:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAES));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAES));
   case 39:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSHA3));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSHA3));
   case 40:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureRDM)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureRDM)));
   case 41:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureComplxNum)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFullFP16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureComplxNum)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFullFP16)));
   case 42:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureBF16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureBF16)));
   case 43:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSM4));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSM4));
   case 44:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureDotProd));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureDotProd));
   case 45:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMatMulInt8));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMatMulInt8));
   case 46:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureComplxNum)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureComplxNum)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON)));
   case 47:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureCSSC));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureCSSC));
   case 48:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureHBC));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureHBC));
   case 49:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureEL3));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureEL3));
   case 50:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureTME));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureTME));
   case 51:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureWFxT));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureWFxT));
   case 52:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureTRACEV8_4));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureTRACEV8_4));
   case 53:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureXS));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureXS));
   case 54:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSB));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSB));
   case 55:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFlagM));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFlagM));
   case 56:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAltFPCmp));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAltFPCmp));
   case 57:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureBRBE));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureBRBE));
   case 58:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureITE));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureITE));
   case 59:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureD128));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureD128));
   case 60:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeaturePAuth));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeaturePAuth));
   case 61:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureRCPC_IMMO));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureRCPC_IMMO));
   case 62:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMOPS));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMOPS));
   case 63:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureTHE));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureTHE));
   case 64:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureTHE)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureD128)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureTHE)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureD128)));
   case 65:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureLSE128));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureLSE128));
   case 66:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureCRC));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureCRC));
   case 67:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureRCPC));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureRCPC));
   case 68:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureRCPC3));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureRCPC3));
   case 69:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureLS64));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureLS64));
   case 70:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMOPS)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureMTE)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMOPS)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureMTE)));
   case 71:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFPARMv8));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFPARMv8));
   case 72:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureJS)) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFPARMv8)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureJS)) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFPARMv8)));
   case 73:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureBF16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureBF16)));
   case 74:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFullFP16));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFullFP16));
   case 75:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSHA2));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSHA2));
   case 76:
-    return ((AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureNEON) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureFullFP16)));
+    return ((AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureNEON) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureSME))) && (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureFullFP16)));
   case 77:
-    return (AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AARCH64_FeatureRDM));
+    return (AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureAll) || AArch64_getFeatureBits(Inst->csh->mode, AArch64_FeatureRDM));
   }
 }
 

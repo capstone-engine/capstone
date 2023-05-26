@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Do not edit. */
 
@@ -16841,20 +16841,20 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 2:
     // ABS_ZPmZ_B, ADDHNB_ZZZ_B, ADDHNT_ZZZ_B, ADDP_ZPmZ_B, ADD_ZI_B, ADD_ZPm...
-    printSVERegOp_'b'(MI, 0, O);
+    printSVERegOp_b(MI, 0, O);
     break;
   case 3:
     // ABS_ZPmZ_D, ADCLB_ZZZ_D, ADCLT_ZZZ_D, ADDP_ZPmZ_D, ADD_ZI_D, ADD_ZPmZ_...
-    printSVERegOp_'d'(MI, 0, O);
+    printSVERegOp_d(MI, 0, O);
     break;
   case 4:
     // ABS_ZPmZ_H, ADDHNB_ZZZ_H, ADDHNT_ZZZ_H, ADDP_ZPmZ_H, ADD_ZI_H, ADD_ZPm...
-    printSVERegOp_'h'(MI, 0, O);
+    printSVERegOp_h(MI, 0, O);
     SStream_concat0(O, ", ");
     break;
   case 5:
     // ABS_ZPmZ_S, ADCLB_ZZZ_S, ADCLT_ZZZ_S, ADDHNB_ZZZ_S, ADDHNT_ZZZ_S, ADDP...
-    printSVERegOp_'s'(MI, 0, O);
+    printSVERegOp_s(MI, 0, O);
     break;
   case 6:
     // ABSv16i8, ABSv2i32, ABSv2i64, ABSv4i16, ABSv4i32, ABSv8i16, ABSv8i8, A...
@@ -16875,19 +16875,19 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 9:
     // ADD_VG2_2ZZ_B, ADD_VG4_4ZZ_B, LD1B, LD1B_2Z, LD1B_2Z_IMM, LD1B_4Z, LD1...
-    printTypedVectorList_0_'b'(MI, 0, O);
+    printTypedVectorList_0_b(MI, 0, O);
     break;
   case 10:
     // ADD_VG2_2ZZ_D, ADD_VG4_4ZZ_D, FCLAMP_VG2_2Z2Z_D, FCLAMP_VG4_4Z4Z_D, FM...
-    printTypedVectorList_0_'d'(MI, 0, O);
+    printTypedVectorList_0_d(MI, 0, O);
     break;
   case 11:
     // ADD_VG2_2ZZ_H, ADD_VG4_4ZZ_H, BFCLAMP_VG2_2ZZZ_H, BFCLAMP_VG4_4ZZZ_H, ...
-    printTypedVectorList_0_'h'(MI, 0, O);
+    printTypedVectorList_0_h(MI, 0, O);
     break;
   case 12:
     // ADD_VG2_2ZZ_S, ADD_VG4_4ZZ_S, FCLAMP_VG2_2Z2Z_S, FCLAMP_VG4_4Z4Z_S, FC...
-    printTypedVectorList_0_'s'(MI, 0, O);
+    printTypedVectorList_0_s(MI, 0, O);
     break;
   case 13:
     // ADD_VG2_M2Z2Z_D, ADD_VG2_M2ZZ_D, ADD_VG2_M2Z_D, ADD_VG4_M4Z4Z_D, ADD_V...
@@ -16909,7 +16909,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", ");
     printSVERegOp_(MI, 1, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'b'(MI, 2, O);
+    printSVERegOp_b(MI, 2, O);
     return;
     break;
   case 16:
@@ -17004,12 +17004,12 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 29:
     // DUP_ZZI_Q, EXTRACT_ZPMXI_H_Q, EXTRACT_ZPMXI_V_Q, MOVAZ_ZMI_H_Q, MOVAZ_...
-    printSVERegOp_'q'(MI, 0, O);
+    printSVERegOp_q(MI, 0, O);
     SStream_concat0(O, ", ");
     break;
   case 30:
     // GLD1Q, LD1D_Q, LD1D_Q_IMM, LD1W_Q, LD1W_Q_IMM, LD2Q, LD2Q_IMM, LD3Q, L...
-    printTypedVectorList_0_'q'(MI, 0, O);
+    printTypedVectorList_0_q(MI, 0, O);
     SStream_concat0(O, ", ");
     break;
   case 31:
@@ -17029,7 +17029,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 34:
     // LD1Fourv16b, LD1Onev16b, LD1Rv16b, LD1Threev16b, LD1Twov16b, LD2Rv16b,...
-    printTypedVectorList_16_'b'(MI, 0, O);
+    printTypedVectorList_16_b(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17037,14 +17037,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 35:
     // LD1Fourv16b_POST, LD1Onev16b_POST, LD1Rv16b_POST, LD1Threev16b_POST, L...
-    printTypedVectorList_16_'b'(MI, 1, O);
+    printTypedVectorList_16_b(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 36:
     // LD1Fourv1d, LD1Onev1d, LD1Rv1d, LD1Threev1d, LD1Twov1d, LD2Rv1d, LD3Rv...
-    printTypedVectorList_1_'d'(MI, 0, O);
+    printTypedVectorList_1_d(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17052,14 +17052,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 37:
     // LD1Fourv1d_POST, LD1Onev1d_POST, LD1Rv1d_POST, LD1Threev1d_POST, LD1Tw...
-    printTypedVectorList_1_'d'(MI, 1, O);
+    printTypedVectorList_1_d(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 38:
     // LD1Fourv2d, LD1Onev2d, LD1Rv2d, LD1Threev2d, LD1Twov2d, LD2Rv2d, LD2Tw...
-    printTypedVectorList_2_'d'(MI, 0, O);
+    printTypedVectorList_2_d(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17067,14 +17067,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 39:
     // LD1Fourv2d_POST, LD1Onev2d_POST, LD1Rv2d_POST, LD1Threev2d_POST, LD1Tw...
-    printTypedVectorList_2_'d'(MI, 1, O);
+    printTypedVectorList_2_d(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 40:
     // LD1Fourv2s, LD1Onev2s, LD1Rv2s, LD1Threev2s, LD1Twov2s, LD2Rv2s, LD2Tw...
-    printTypedVectorList_2_'s'(MI, 0, O);
+    printTypedVectorList_2_s(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17082,14 +17082,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 41:
     // LD1Fourv2s_POST, LD1Onev2s_POST, LD1Rv2s_POST, LD1Threev2s_POST, LD1Tw...
-    printTypedVectorList_2_'s'(MI, 1, O);
+    printTypedVectorList_2_s(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 42:
     // LD1Fourv4h, LD1Onev4h, LD1Rv4h, LD1Threev4h, LD1Twov4h, LD2Rv4h, LD2Tw...
-    printTypedVectorList_4_'h'(MI, 0, O);
+    printTypedVectorList_4_h(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17097,14 +17097,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 43:
     // LD1Fourv4h_POST, LD1Onev4h_POST, LD1Rv4h_POST, LD1Threev4h_POST, LD1Tw...
-    printTypedVectorList_4_'h'(MI, 1, O);
+    printTypedVectorList_4_h(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 44:
     // LD1Fourv4s, LD1Onev4s, LD1Rv4s, LD1Threev4s, LD1Twov4s, LD2Rv4s, LD2Tw...
-    printTypedVectorList_4_'s'(MI, 0, O);
+    printTypedVectorList_4_s(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17112,14 +17112,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 45:
     // LD1Fourv4s_POST, LD1Onev4s_POST, LD1Rv4s_POST, LD1Threev4s_POST, LD1Tw...
-    printTypedVectorList_4_'s'(MI, 1, O);
+    printTypedVectorList_4_s(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 46:
     // LD1Fourv8b, LD1Onev8b, LD1Rv8b, LD1Threev8b, LD1Twov8b, LD2Rv8b, LD2Tw...
-    printTypedVectorList_8_'b'(MI, 0, O);
+    printTypedVectorList_8_b(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17127,14 +17127,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 47:
     // LD1Fourv8b_POST, LD1Onev8b_POST, LD1Rv8b_POST, LD1Threev8b_POST, LD1Tw...
-    printTypedVectorList_8_'b'(MI, 1, O);
+    printTypedVectorList_8_b(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 48:
     // LD1Fourv8h, LD1Onev8h, LD1Rv8h, LD1Threev8h, LD1Twov8h, LD2Rv8h, LD2Tw...
-    printTypedVectorList_8_'h'(MI, 0, O);
+    printTypedVectorList_8_h(MI, 0, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
@@ -17142,21 +17142,21 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 49:
     // LD1Fourv8h_POST, LD1Onev8h_POST, LD1Rv8h_POST, LD1Threev8h_POST, LD1Tw...
-    printTypedVectorList_8_'h'(MI, 1, O);
+    printTypedVectorList_8_h(MI, 1, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 2, O);
     SStream_concat0(O, "], ");
     break;
   case 50:
     // LD1i16, LD2i16, LD3i16, LD4i16, ST1i16_POST, ST2i16_POST, ST3i16_POST,...
-    printTypedVectorList_0_'h'(MI, 1, O);
+    printTypedVectorList_0_h(MI, 1, O);
     printVectorIndex(MI, 2, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 3, O);
     break;
   case 51:
     // LD1i16_POST, LD2i16_POST, LD3i16_POST, LD4i16_POST
-    printTypedVectorList_0_'h'(MI, 2, O);
+    printTypedVectorList_0_h(MI, 2, O);
     printVectorIndex(MI, 3, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 4, O);
@@ -17164,14 +17164,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 52:
     // LD1i32, LD2i32, LD3i32, LD4i32, ST1i32_POST, ST2i32_POST, ST3i32_POST,...
-    printTypedVectorList_0_'s'(MI, 1, O);
+    printTypedVectorList_0_s(MI, 1, O);
     printVectorIndex(MI, 2, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 3, O);
     break;
   case 53:
     // LD1i32_POST, LD2i32_POST, LD3i32_POST, LD4i32_POST
-    printTypedVectorList_0_'s'(MI, 2, O);
+    printTypedVectorList_0_s(MI, 2, O);
     printVectorIndex(MI, 3, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 4, O);
@@ -17179,14 +17179,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 54:
     // LD1i64, LD2i64, LD3i64, LD4i64, LDAP1, ST1i64_POST, ST2i64_POST, ST3i6...
-    printTypedVectorList_0_'d'(MI, 1, O);
+    printTypedVectorList_0_d(MI, 1, O);
     printVectorIndex(MI, 2, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 3, O);
     break;
   case 55:
     // LD1i64_POST, LD2i64_POST, LD3i64_POST, LD4i64_POST
-    printTypedVectorList_0_'d'(MI, 2, O);
+    printTypedVectorList_0_d(MI, 2, O);
     printVectorIndex(MI, 3, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 4, O);
@@ -17194,14 +17194,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 56:
     // LD1i8, LD2i8, LD3i8, LD4i8, ST1i8_POST, ST2i8_POST, ST3i8_POST, ST4i8_...
-    printTypedVectorList_0_'b'(MI, 1, O);
+    printTypedVectorList_0_b(MI, 1, O);
     printVectorIndex(MI, 2, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 3, O);
     break;
   case 57:
     // LD1i8_POST, LD2i8_POST, LD3i8_POST, LD4i8_POST
-    printTypedVectorList_0_'b'(MI, 2, O);
+    printTypedVectorList_0_b(MI, 2, O);
     printVectorIndex(MI, 3, O);
     SStream_concat0(O, ", [");
     printOperand(MI, 4, O);
@@ -17354,19 +17354,19 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 10:
     // ADDHA_MPPZ_D, ADDVA_MPPZ_D, FMOPA_MPPZZ_D, FMOPS_MPPZZ_D
-    printSVERegOp_'d'(MI, 4, O);
+    printSVERegOp_d(MI, 4, O);
     break;
   case 11:
     // ADDHA_MPPZ_S, ADDVA_MPPZ_S, BMOPA_MPPZZ_S, BMOPS_MPPZZ_S, FMOPA_MPPZZ_...
-    printSVERegOp_'s'(MI, 4, O);
+    printSVERegOp_s(MI, 4, O);
     break;
   case 12:
     // ADDHNB_ZZZ_H, RADDHNB_ZZZ_H, RSHRNB_ZZI_H, RSUBHNB_ZZZ_H, SHRNB_ZZI_H,...
-    printSVERegOp_'s'(MI, 1, O);
+    printSVERegOp_s(MI, 1, O);
     break;
   case 13:
     // ADDHNT_ZZZ_H, ANDV_VPZ_S, EORV_VPZ_S, FADDV_VPZ_S, FMAXNMV_VPZ_S, FMAX...
-    printSVERegOp_'s'(MI, 2, O);
+    printSVERegOp_s(MI, 2, O);
     break;
   case 14:
     // ADDP_ZPmZ_H, ADD_ZPmZ_H, AND_ZPmZ_H, ASRD_ZPmI_H, ASRR_ZPmZ_H, ASR_WID...
@@ -17378,7 +17378,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 16:
     // ADD_ZI_H, ADD_ZZZ_H, ASR_WIDE_ZZZ_H, ASR_ZZI_H, BDEP_ZZZ_H, BEXT_ZZZ_H...
-    printSVERegOp_'h'(MI, 1, O);
+    printSVERegOp_h(MI, 1, O);
     break;
   case 17:
     // ADR_LSL_ZZZ_D_0, ADR_LSL_ZZZ_D_1, ADR_LSL_ZZZ_D_2, ADR_LSL_ZZZ_D_3, AD...
@@ -17386,25 +17386,25 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 18:
     // ANDV_VPZ_D, EORV_VPZ_D, FADDV_VPZ_D, FMAXNMV_VPZ_D, FMAXV_VPZ_D, FMINN...
-    printSVERegOp_'d'(MI, 2, O);
+    printSVERegOp_d(MI, 2, O);
     break;
   case 19:
     // ANDV_VPZ_H, BFCLAMP_ZZZ, BFMLA_ZZZI, BFMLS_ZZZI, CMLA_ZZZI_H, CMLA_ZZZ...
-    printSVERegOp_'h'(MI, 2, O);
+    printSVERegOp_h(MI, 2, O);
     break;
   case 20:
     // BFADD_VG2_M2Z_H, BFMLA_VG2_M2Z2Z, BFMLA_VG2_M2ZZ, BFMLA_VG2_M2ZZI, BFM...
     SStream_concat0(O, ", vgx2], ");
-    printTypedVectorList_0_'h'(MI, 4, O);
+    printTypedVectorList_0_h(MI, 4, O);
     break;
   case 21:
     // BFADD_VG4_M4Z_H, BFMLA_VG4_M4Z4Z, BFMLA_VG4_M4ZZ, BFMLA_VG4_M4ZZI, BFM...
     SStream_concat0(O, ", vgx4], ");
-    printTypedVectorList_0_'h'(MI, 4, O);
+    printTypedVectorList_0_h(MI, 4, O);
     break;
   case 22:
     // BFCVTN_Z2Z_StoH, BFCVT_Z2Z_StoH, FCVTN_Z2Z_StoH, FCVT_Z2Z_StoH, SQCVTN...
-    printTypedVectorList_0_'s'(MI, 1, O);
+    printTypedVectorList_0_s(MI, 1, O);
     break;
   case 23:
     // BFMLAL_MZZI_S, BFMLAL_MZZ_S, BFMLAL_VG2_M2Z2Z_S, BFMLAL_VG2_M2ZZI_S, B...
@@ -17412,9 +17412,9 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 24:
     // BFMOPA_MPPZZ, BFMOPA_MPPZZ_H, BFMOPS_MPPZZ, BFMOPS_MPPZZ_H, FMOPAL_MPP...
-    printSVERegOp_'h'(MI, 4, O);
+    printSVERegOp_h(MI, 4, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'h'(MI, 5, O);
+    printSVERegOp_h(MI, 5, O);
     return;
     break;
   case 25:
@@ -17435,13 +17435,13 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 28:
     // DUP_ZZI_Q, TRN1_ZZZ_Q, TRN2_ZZZ_Q, UZP1_ZZZ_Q, UZP2_ZZZ_Q, UZP_VG2_2ZZ...
-    printSVERegOp_'q'(MI, 1, O);
+    printSVERegOp_q(MI, 1, O);
     break;
   case 29:
     // FADDA_VPZ_D
     printZPRasFPR_64(MI, 2, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'d'(MI, 3, O);
+    printSVERegOp_d(MI, 3, O);
     return;
     break;
   case 30:
@@ -17452,7 +17452,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     // FADDA_VPZ_S
     printZPRasFPR_32(MI, 2, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'s'(MI, 3, O);
+    printSVERegOp_s(MI, 3, O);
     return;
     break;
   case 32:
@@ -17666,13 +17666,13 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 70:
     // PMULLB_ZZZ_H, PMULLT_ZZZ_H, PUNPKHI_PP, PUNPKLO_PP, SABDLB_ZZZ_H, SABD...
-    printSVERegOp_'b'(MI, 1, O);
+    printSVERegOp_b(MI, 1, O);
     break;
   case 71:
     // PMULLB_ZZZ_Q, PMULLT_ZZZ_Q
-    printSVERegOp_'d'(MI, 1, O);
+    printSVERegOp_d(MI, 1, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'d'(MI, 2, O);
+    printSVERegOp_d(MI, 2, O);
     return;
     break;
   case 72:
@@ -17687,7 +17687,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 74:
     // SABALB_ZZZ_H, SABALT_ZZZ_H, SADDV_VPZ_B, SMLALB_ZZZ_H, SMLALT_ZZZ_H, S...
-    printSVERegOp_'b'(MI, 2, O);
+    printSVERegOp_b(MI, 2, O);
     break;
   case 75:
     // SADALPv2i32_v1i64, SADDLPv2i32_v1i64, UADALPv2i32_v1i64, UADDLPv2i32_v...
@@ -17699,14 +17699,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 77:
     // SMOPA_MPPZZ_S, SMOPS_MPPZZ_S, SUMOPA_MPPZZ_S, SUMOPS_MPPZZ_S, UMOPA_MP...
-    printSVERegOp_'b'(MI, 4, O);
+    printSVERegOp_b(MI, 4, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'b'(MI, 5, O);
+    printSVERegOp_b(MI, 5, O);
     return;
     break;
   case 78:
     // SQCVTN_Z4Z_DtoH, SQCVTUN_Z4Z_DtoH, SQCVTU_Z4Z_DtoH, SQCVT_Z4Z_DtoH, SQ...
-    printTypedVectorList_0_'d'(MI, 1, O);
+    printTypedVectorList_0_d(MI, 1, O);
     break;
   case 79:
     // ST1i16, ST1i32, ST1i64, ST1i8, ST2i16, ST2i32, ST2i64, ST2i8, ST3i16, ...
@@ -17722,14 +17722,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 81:
     // TBLQ_ZZZ_H, TBL_ZZZZ_H, TBL_ZZZ_H
-    printTypedVectorList_0_'h'(MI, 1, O);
+    printTypedVectorList_0_h(MI, 1, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'h'(MI, 2, O);
+    printSVERegOp_h(MI, 2, O);
     return;
     break;
   case 82:
     // UZP_VG4_4Z4Z_Q, ZIP_VG4_4Z4Z_Q
-    printTypedVectorList_0_'q'(MI, 1, O);
+    printTypedVectorList_0_q(MI, 1, O);
     return;
     break;
   case 83:
@@ -17754,7 +17754,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 2:
     // ABS_ZPmZ_H, CLS_ZPmZ_H, CLZ_ZPmZ_H, CNOT_ZPmZ_H, CNT_ZPmZ_H, FABS_ZPmZ...
-    printSVERegOp_'h'(MI, 3, O);
+    printSVERegOp_h(MI, 3, O);
     return;
     break;
   case 3:
@@ -17763,11 +17763,11 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 4:
     // ADCLB_ZZZ_D, ADCLT_ZZZ_D, ADDHNT_ZZZ_S, CMLA_ZZZ_D, DECP_ZP_D, EORBT_Z...
-    printSVERegOp_'d'(MI, 2, O);
+    printSVERegOp_d(MI, 2, O);
     break;
   case 5:
     // ADCLB_ZZZ_S, ADCLT_ZZZ_S, CMLA_ZZZI_S, CMLA_ZZZ_S, DECP_ZP_S, EORBT_ZZ...
-    printSVERegOp_'s'(MI, 2, O);
+    printSVERegOp_s(MI, 2, O);
     break;
   case 6:
     // ADDHA_MPPZ_D, ADDHA_MPPZ_S, ADDVA_MPPZ_D, ADDVA_MPPZ_S, ANDV_VPZ_D, AN...
@@ -17775,7 +17775,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 7:
     // ADDHNB_ZZZ_B, DECP_XP_H, FCVTL_2ZZ_H_S, FCVT_2ZZ_H_S, INCP_XP_H, RADDH...
-    printSVERegOp_'h'(MI, 1, O);
+    printSVERegOp_h(MI, 1, O);
     break;
   case 8:
     // ADDHNB_ZZZ_H, ADDHNT_ZZZ_H, ADD_ZI_H, ADD_ZZZ_H, ASR_WIDE_ZZZ_H, ASR_Z...
@@ -17783,11 +17783,11 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 9:
     // ADDHNB_ZZZ_S, ADD_ZI_D, ADD_ZZZ_D, ADR_LSL_ZZZ_D_0, ADR_LSL_ZZZ_D_1, A...
-    printSVERegOp_'d'(MI, 1, O);
+    printSVERegOp_d(MI, 1, O);
     break;
   case 10:
     // ADDHNT_ZZZ_B, BFCLAMP_VG2_2ZZZ_H, BFCLAMP_VG4_4ZZZ_H, BFDOT_ZZI, BFDOT...
-    printSVERegOp_'h'(MI, 2, O);
+    printSVERegOp_h(MI, 2, O);
     break;
   case 11:
     // ADDHNv2i64_v4i32, ADDHNv4i32_v8i16, ADDHNv8i16_v16i8, AESDrr, AESErr, ...
@@ -17803,19 +17803,19 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 14:
     // ADD_VG2_2ZZ_B, ADD_VG4_4ZZ_B, EXT_ZZI_B, SMAX_VG2_2Z2Z_B, SMAX_VG2_2ZZ...
-    printTypedVectorList_0_'b'(MI, 1, O);
+    printTypedVectorList_0_b(MI, 1, O);
     break;
   case 15:
     // ADD_VG2_2ZZ_D, ADD_VG4_4ZZ_D, FMAXNM_VG2_2Z2Z_D, FMAXNM_VG2_2ZZ_D, FMA...
-    printTypedVectorList_0_'d'(MI, 1, O);
+    printTypedVectorList_0_d(MI, 1, O);
     break;
   case 16:
     // ADD_VG2_2ZZ_H, ADD_VG4_4ZZ_H, BFMAXNM_VG2_2Z2Z_H, BFMAXNM_VG2_2ZZ_H, B...
-    printTypedVectorList_0_'h'(MI, 1, O);
+    printTypedVectorList_0_h(MI, 1, O);
     break;
   case 17:
     // ADD_VG2_2ZZ_S, ADD_VG4_4ZZ_S, FCVTZS_2Z2Z_StoS, FCVTZS_4Z4Z_StoS, FCVT...
-    printTypedVectorList_0_'s'(MI, 1, O);
+    printTypedVectorList_0_s(MI, 1, O);
     break;
   case 18:
     // ADD_VG2_M2Z2Z_D, ADD_VG2_M2Z2Z_S, ADD_VG2_M2ZZ_D, ADD_VG2_M2ZZ_S, ADD_...
@@ -17827,11 +17827,11 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 20:
     // ADD_ZI_B, ADD_ZZZ_B, AESD_ZZZ_B, AESE_ZZZ_B, AESIMC_ZZ_B, AESMC_ZZ_B, ...
-    printSVERegOp_'b'(MI, 1, O);
+    printSVERegOp_b(MI, 1, O);
     break;
   case 21:
     // ADD_ZI_S, ADD_ZZZ_S, ADR_LSL_ZZZ_S_0, ADR_LSL_ZZZ_S_1, ADR_LSL_ZZZ_S_2...
-    printSVERegOp_'s'(MI, 1, O);
+    printSVERegOp_s(MI, 1, O);
     break;
   case 22:
     // ADRP, CBNZW, CBNZX, CBZW, CBZX, LDRDl, LDRQl, LDRSWl, LDRSl, LDRWl, LD...
@@ -17844,7 +17844,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 24:
     // BFCVTNT_ZPmZ, BFCVT_ZPmZ, FCVTNT_ZPmZ_StoH, FCVT_ZPmZ_StoH, PMOV_ZIP_S...
-    printSVERegOp_'s'(MI, 3, O);
+    printSVERegOp_s(MI, 3, O);
     return;
     break;
   case 25:
@@ -17859,7 +17859,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 27:
     // CDOT_ZZZI_S, CDOT_ZZZ_S, CMLA_ZZZ_B, EORBT_ZZZ_B, EORTB_ZZZ_B, SABA_ZZ...
-    printSVERegOp_'b'(MI, 2, O);
+    printSVERegOp_b(MI, 2, O);
     SStream_concat0(O, ", ");
     break;
   case 28:
@@ -17966,7 +17966,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 45:
     // FCVT_ZPmZ_DtoH, PMOV_ZIP_D, SCVTF_ZPmZ_DtoH, UCVTF_ZPmZ_DtoH
-    printSVERegOp_'d'(MI, 3, O);
+    printSVERegOp_d(MI, 3, O);
     return;
     break;
   case 46:
@@ -18075,7 +18075,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 65:
     // PMOV_ZIP_B
-    printSVERegOp_'b'(MI, 3, O);
+    printSVERegOp_b(MI, 3, O);
     return;
     break;
   case 66:
@@ -18094,7 +18094,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 68:
     // REVD_ZPmZ
-    printSVERegOp_'q'(MI, 3, O);
+    printSVERegOp_q(MI, 3, O);
     return;
     break;
   case 69:
@@ -18187,13 +18187,13 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 85:
     // TBLv16i8Four, TBLv16i8One, TBLv16i8Three, TBLv16i8Two, TBLv8i8Four, TB...
-    printTypedVectorList_16_'b'(MI, 1, O);
+    printTypedVectorList_16_b(MI, 1, O);
     SStream_concat0(O, ", ");
     printVRegOperand(MI, 2, O);
     break;
   case 86:
     // TBXv16i8Four, TBXv16i8One, TBXv16i8Three, TBXv16i8Two, TBXv8i8Four, TB...
-    printTypedVectorList_16_'b'(MI, 2, O);
+    printTypedVectorList_16_b(MI, 2, O);
     SStream_concat0(O, ", ");
     printVRegOperand(MI, 3, O);
     break;
@@ -18224,16 +18224,16 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 1:
     // ABS_ZPmZ_B, BRKA_PPmP, BRKB_PPmP, CDOT_ZZZI_S, CDOT_ZZZ_S, CLS_ZPmZ_B,...
-    printSVERegOp_'b'(MI, 3, O);
+    printSVERegOp_b(MI, 3, O);
     break;
   case 2:
     // ABS_ZPmZ_D, CLS_ZPmZ_D, CLZ_ZPmZ_D, CNOT_ZPmZ_D, CNT_ZPmZ_D, FABS_ZPmZ...
-    printSVERegOp_'d'(MI, 3, O);
+    printSVERegOp_d(MI, 3, O);
     return;
     break;
   case 3:
     // ABS_ZPmZ_S, ADDHNT_ZZZ_H, CLS_ZPmZ_S, CLZ_ZPmZ_S, CNOT_ZPmZ_S, CNT_ZPm...
-    printSVERegOp_'s'(MI, 3, O);
+    printSVERegOp_s(MI, 3, O);
     return;
     break;
   case 4:
@@ -18277,7 +18277,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 12:
     // ADDHNB_ZZZ_H, RADDHNB_ZZZ_H, RSUBHNB_ZZZ_H, SUBHNB_ZZZ_H
-    printSVERegOp_'s'(MI, 2, O);
+    printSVERegOp_s(MI, 2, O);
     return;
     break;
   case 13:
@@ -18298,7 +18298,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 17:
     // ADDP_ZPmZ_H, ADD_ZPmZ_H, ADD_ZZZ_H, AND_ZPmZ_H, ASRD_ZPmI_H, ASRR_ZPmZ...
-    printSVERegOp_'h'(MI, 2, O);
+    printSVERegOp_h(MI, 2, O);
     break;
   case 18:
     // ADDPv16i8, ADDv16i8, ANDv16i8, BCAX, BICv16i8, BIFv16i8, BITv16i8, BSL...
@@ -18318,11 +18318,11 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 22:
     // ADD_VG2_M2Z2Z_D, ADD_VG2_M2ZZ_D, ADD_VG2_M2Z_D, ADD_VG4_M4Z4Z_D, ADD_V...
-    printTypedVectorList_0_'d'(MI, 4, O);
+    printTypedVectorList_0_d(MI, 4, O);
     break;
   case 23:
     // ADD_VG2_M2Z2Z_S, ADD_VG2_M2ZZ_S, ADD_VG2_M2Z_S, ADD_VG4_M4Z4Z_S, ADD_V...
-    printTypedVectorList_0_'s'(MI, 4, O);
+    printTypedVectorList_0_s(MI, 4, O);
     break;
   case 24:
     // ADD_ZI_H, SQADD_ZI_H, SQSUB_ZI_H, SUBR_ZI_H, SUB_ZI_H, UQADD_ZI_H, UQS...
@@ -18335,7 +18335,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 26:
     // ASR_WIDE_ZZZ_H, GLD1Q, LSL_WIDE_ZZZ_H, LSR_WIDE_ZZZ_H, SST1Q
-    printSVERegOp_'d'(MI, 2, O);
+    printSVERegOp_d(MI, 2, O);
     break;
   case 27:
     // ASR_ZZI_H, INDEX_IR_B, INDEX_RR_H, LD1D_Q, LD1D_Q_IMM, LD1W_Q, LD1W_Q_...
@@ -18343,31 +18343,31 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 28:
     // BFCLAMP_ZZZ, BFMLA_ZPmZZ, BFMLA_ZZZI, BFMLS_ZPmZZ, BFMLS_ZZZI, CMLA_ZZ...
-    printSVERegOp_'h'(MI, 3, O);
+    printSVERegOp_h(MI, 3, O);
     break;
   case 29:
     // BFDOT_VG2_M2Z2Z_HtoS, BFDOT_VG2_M2ZZI_HtoS, BFDOT_VG2_M2ZZ_HtoS, BFDOT...
-    printTypedVectorList_0_'h'(MI, 4, O);
+    printTypedVectorList_0_h(MI, 4, O);
     SStream_concat0(O, ", ");
     break;
   case 30:
     // BFMLAL_MZZI_S, BFMLAL_MZZ_S, BFMLSL_MZZI_S, BFMLSL_MZZ_S, FMLAL_MZZI_S...
-    printSVERegOp_'h'(MI, 4, O);
+    printSVERegOp_h(MI, 4, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'h'(MI, 5, O);
+    printSVERegOp_h(MI, 5, O);
     break;
   case 31:
     // BFMLA_VG2_M2Z2Z, BFMLA_VG4_M4Z4Z, BFMLS_VG2_M2Z2Z, BFMLS_VG4_M4Z4Z, FM...
-    printTypedVectorList_0_'h'(MI, 5, O);
+    printTypedVectorList_0_h(MI, 5, O);
     return;
     break;
   case 32:
     // BFMLA_VG2_M2ZZ, BFMLA_VG2_M2ZZI, BFMLA_VG4_M4ZZ, BFMLA_VG4_M4ZZI, BFML...
-    printSVERegOp_'h'(MI, 5, O);
+    printSVERegOp_h(MI, 5, O);
     break;
   case 33:
     // BMOPA_MPPZZ_S, BMOPS_MPPZZ_S, FMOPA_MPPZZ_S, FMOPS_MPPZZ_S
-    printSVERegOp_'s'(MI, 5, O);
+    printSVERegOp_s(MI, 5, O);
     return;
     break;
   case 34:
@@ -18532,7 +18532,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 65:
     // FMOPA_MPPZZ_D, FMOPS_MPPZZ_D
-    printSVERegOp_'d'(MI, 5, O);
+    printSVERegOp_d(MI, 5, O);
     return;
     break;
   case 66:
@@ -18631,42 +18631,42 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 84:
     // PMULLB_ZZZ_H, PMULLT_ZZZ_H, SABDLB_ZZZ_H, SABDLT_ZZZ_H, SADDLBT_ZZZ_H,...
-    printSVERegOp_'b'(MI, 2, O);
+    printSVERegOp_b(MI, 2, O);
     return;
     break;
   case 85:
     // PRFB_D_SCALED
-    printRegWithShiftExtend_0_8_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_8_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 86:
     // PRFB_D_SXTW_SCALED
-    printRegWithShiftExtend_1_8_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_8_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 87:
     // PRFB_D_UXTW_SCALED
-    printRegWithShiftExtend_0_8_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_8_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 88:
     // PRFB_PRR
-    printRegWithShiftExtend_0_8_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_8_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 89:
     // PRFB_S_SXTW_SCALED
-    printRegWithShiftExtend_1_8_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_1_8_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 90:
     // PRFB_S_UXTW_SCALED
-    printRegWithShiftExtend_0_8_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_0_8_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -18678,37 +18678,37 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 92:
     // PRFD_D_SCALED
-    printRegWithShiftExtend_0_64_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_64_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 93:
     // PRFD_D_SXTW_SCALED
-    printRegWithShiftExtend_1_64_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_64_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 94:
     // PRFD_D_UXTW_SCALED
-    printRegWithShiftExtend_0_64_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_64_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 95:
     // PRFD_PRR
-    printRegWithShiftExtend_0_64_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_64_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 96:
     // PRFD_S_SXTW_SCALED
-    printRegWithShiftExtend_1_64_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_1_64_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 97:
     // PRFD_S_UXTW_SCALED
-    printRegWithShiftExtend_0_64_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_0_64_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -18720,37 +18720,37 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 99:
     // PRFH_D_SCALED
-    printRegWithShiftExtend_0_16_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_16_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 100:
     // PRFH_D_SXTW_SCALED
-    printRegWithShiftExtend_1_16_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_16_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 101:
     // PRFH_D_UXTW_SCALED
-    printRegWithShiftExtend_0_16_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_16_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 102:
     // PRFH_PRR
-    printRegWithShiftExtend_0_16_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_16_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 103:
     // PRFH_S_SXTW_SCALED
-    printRegWithShiftExtend_1_16_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_1_16_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 104:
     // PRFH_S_UXTW_SCALED
-    printRegWithShiftExtend_0_16_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_0_16_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -18762,37 +18762,37 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 106:
     // PRFW_D_SCALED
-    printRegWithShiftExtend_0_32_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_32_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 107:
     // PRFW_D_SXTW_SCALED
-    printRegWithShiftExtend_1_32_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_32_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 108:
     // PRFW_D_UXTW_SCALED
-    printRegWithShiftExtend_0_32_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_32_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 109:
     // PRFW_PRR
-    printRegWithShiftExtend_0_32_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_32_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 110:
     // PRFW_S_SXTW_SCALED
-    printRegWithShiftExtend_1_32_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_1_32_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 111:
     // PRFW_S_UXTW_SCALED
-    printRegWithShiftExtend_0_32_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_0_32_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -18803,7 +18803,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 113:
     // SDOT_VG2_M2Z2Z_BtoS, SDOT_VG2_M2ZZI_BToS, SDOT_VG2_M2ZZ_BtoS, SDOT_VG4...
-    printTypedVectorList_0_'b'(MI, 4, O);
+    printTypedVectorList_0_b(MI, 4, O);
     SStream_concat0(O, ", ");
     break;
   case 114:
@@ -18838,13 +18838,13 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 120:
     // SMLALL_MZZI_BtoS, SMLALL_MZZ_BtoS, SMLSLL_MZZI_BtoS, SMLSLL_MZZ_BtoS, ...
-    printSVERegOp_'b'(MI, 4, O);
+    printSVERegOp_b(MI, 4, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'b'(MI, 5, O);
+    printSVERegOp_b(MI, 5, O);
     break;
   case 121:
     // SPLICE_ZPZZ_H
-    printTypedVectorList_0_'h'(MI, 2, O);
+    printTypedVectorList_0_h(MI, 2, O);
     return;
     break;
   case 122:
@@ -18874,7 +18874,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 127:
     // TRN1_ZZZ_Q, TRN2_ZZZ_Q, UZP1_ZZZ_Q, UZP2_ZZZ_Q, UZP_VG2_2ZZZ_Q, ZIP1_Z...
-    printSVERegOp_'q'(MI, 2, O);
+    printSVERegOp_q(MI, 2, O);
     return;
     break;
   case 128:
@@ -18894,11 +18894,11 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 1:
     // ADCLB_ZZZ_D, ADCLT_ZZZ_D, ADDHNT_ZZZ_S, CMLA_ZZZ_D, EORBT_ZZZ_D, EORTB...
-    printSVERegOp_'d'(MI, 3, O);
+    printSVERegOp_d(MI, 3, O);
     break;
   case 2:
     // ADCLB_ZZZ_S, ADCLT_ZZZ_S, CMLA_ZZZI_S, CMLA_ZZZ_S, EORBT_ZZZ_S, EORTB_...
-    printSVERegOp_'s'(MI, 3, O);
+    printSVERegOp_s(MI, 3, O);
     break;
   case 3:
     // ADCSWr, ADCSXr, ADCWr, ADCXr, ADDPL_XXI, ADDSPL_XXI, ADDSVL_XXI, ADDSX...
@@ -18910,15 +18910,15 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 5:
     // ADDHNB_ZZZ_B, ADDQV_VPZ_H, ADD_VG2_2ZZ_H, ADD_VG4_4ZZ_H, ANDQV_VPZ_H, ...
-    printSVERegOp_'h'(MI, 2, O);
+    printSVERegOp_h(MI, 2, O);
     break;
   case 6:
     // ADDHNB_ZZZ_S, ADDP_ZPmZ_D, ADDQV_VPZ_D, ADD_VG2_2ZZ_D, ADD_VG4_4ZZ_D, ...
-    printSVERegOp_'d'(MI, 2, O);
+    printSVERegOp_d(MI, 2, O);
     break;
   case 7:
     // ADDHNT_ZZZ_B, BFCLAMP_VG2_2ZZZ_H, BFCLAMP_VG4_4ZZZ_H, BFDOT_ZZI, BFDOT...
-    printSVERegOp_'h'(MI, 3, O);
+    printSVERegOp_h(MI, 3, O);
     break;
   case 8:
     // ADDHNv2i64_v2i32, ADDHNv4i32_v4i16, ADDHNv8i16_v8i8, ADDPv16i8, ADDPv2...
@@ -18930,7 +18930,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 10:
     // ADDP_ZPmZ_B, ADDQV_VPZ_B, ADD_VG2_2ZZ_B, ADD_VG4_4ZZ_B, ADD_ZPmZ_B, AD...
-    printSVERegOp_'b'(MI, 2, O);
+    printSVERegOp_b(MI, 2, O);
     break;
   case 11:
     // ADDP_ZPmZ_H, ADD_VG2_M2Z2Z_D, ADD_VG2_M2Z2Z_S, ADD_VG2_M2ZZ_D, ADD_VG2...
@@ -18938,7 +18938,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 12:
     // ADDP_ZPmZ_S, ADDQV_VPZ_S, ADD_VG2_2ZZ_S, ADD_VG4_4ZZ_S, ADD_ZPmZ_S, AD...
-    printSVERegOp_'s'(MI, 2, O);
+    printSVERegOp_s(MI, 2, O);
     break;
   case 13:
     // ADDSWri, ADDSXri, ADDWri, ADDXri, SUBSWri, SUBSXri, SUBWri, SUBXri
@@ -18972,97 +18972,97 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 19:
     // ADR_LSL_ZZZ_D_0
-    printRegWithShiftExtend_0_8_'x'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_8_x_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 20:
     // ADR_LSL_ZZZ_D_1
-    printRegWithShiftExtend_0_16_'x'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_16_x_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 21:
     // ADR_LSL_ZZZ_D_2
-    printRegWithShiftExtend_0_32_'x'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_32_x_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 22:
     // ADR_LSL_ZZZ_D_3
-    printRegWithShiftExtend_0_64_'x'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_64_x_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 23:
     // ADR_LSL_ZZZ_S_0
-    printRegWithShiftExtend_0_8_'x'_'s'(MI, 2, O);
+    printRegWithShiftExtend_0_8_x_s(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 24:
     // ADR_LSL_ZZZ_S_1
-    printRegWithShiftExtend_0_16_'x'_'s'(MI, 2, O);
+    printRegWithShiftExtend_0_16_x_s(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 25:
     // ADR_LSL_ZZZ_S_2
-    printRegWithShiftExtend_0_32_'x'_'s'(MI, 2, O);
+    printRegWithShiftExtend_0_32_x_s(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 26:
     // ADR_LSL_ZZZ_S_3
-    printRegWithShiftExtend_0_64_'x'_'s'(MI, 2, O);
+    printRegWithShiftExtend_0_64_x_s(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 27:
     // ADR_SXTW_ZZZ_D_0
-    printRegWithShiftExtend_1_8_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_1_8_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 28:
     // ADR_SXTW_ZZZ_D_1
-    printRegWithShiftExtend_1_16_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_1_16_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 29:
     // ADR_SXTW_ZZZ_D_2
-    printRegWithShiftExtend_1_32_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_1_32_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 30:
     // ADR_SXTW_ZZZ_D_3
-    printRegWithShiftExtend_1_64_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_1_64_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 31:
     // ADR_UXTW_ZZZ_D_0
-    printRegWithShiftExtend_0_8_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_8_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 32:
     // ADR_UXTW_ZZZ_D_1
-    printRegWithShiftExtend_0_16_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_16_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 33:
     // ADR_UXTW_ZZZ_D_2
-    printRegWithShiftExtend_0_32_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_32_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 34:
     // ADR_UXTW_ZZZ_D_3
-    printRegWithShiftExtend_0_64_'w'_'d'(MI, 2, O);
+    printRegWithShiftExtend_0_64_w_d(MI, 2, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19078,16 +19078,16 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 37:
     // BFDOT_VG2_M2Z2Z_HtoS, BFDOT_VG4_M4Z4Z_HtoS, BFMLAL_VG2_M2Z2Z_S, BFMLAL...
-    printTypedVectorList_0_'h'(MI, 5, O);
+    printTypedVectorList_0_h(MI, 5, O);
     return;
     break;
   case 38:
     // BFDOT_VG2_M2ZZI_HtoS, BFDOT_VG2_M2ZZ_HtoS, BFDOT_VG4_M4ZZI_HtoS, BFDOT...
-    printSVERegOp_'h'(MI, 5, O);
+    printSVERegOp_h(MI, 5, O);
     break;
   case 39:
     // BFMAXNM_VG2_2Z2Z_H, BFMAXNM_VG4_4Z2Z_H, BFMAX_VG2_2Z2Z_H, BFMAX_VG4_4Z...
-    printTypedVectorList_0_'h'(MI, 2, O);
+    printTypedVectorList_0_h(MI, 2, O);
     break;
   case 40:
     // BFMLAL_MZZI_S, BFMLA_VG2_M2ZZI, BFMLA_VG4_M4ZZI, BFMLSL_MZZI_S, BFMLS_...
@@ -19139,11 +19139,11 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 50:
     // FMAXNM_VG2_2Z2Z_D, FMAXNM_VG4_4Z4Z_D, FMAX_VG2_2Z2Z_D, FMAX_VG4_4Z4Z_D...
-    printTypedVectorList_0_'d'(MI, 2, O);
+    printTypedVectorList_0_d(MI, 2, O);
     break;
   case 51:
     // FMAXNM_VG2_2Z2Z_S, FMAXNM_VG4_4Z4Z_S, FMAX_VG2_2Z2Z_S, FMAX_VG4_4Z4Z_S...
-    printTypedVectorList_0_'s'(MI, 2, O);
+    printTypedVectorList_0_s(MI, 2, O);
     break;
   case 52:
     // FMLAL2lanev4f16, FMLALlanev4f16, FMLSL2lanev4f16, FMLSLlanev4f16
@@ -19163,21 +19163,21 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 55:
     // INSERT_MXIPZ_H_B, INSERT_MXIPZ_V_B, SDOT_VG2_M2ZZI_BToS, SDOT_VG2_M2ZZ...
-    printSVERegOp_'b'(MI, 5, O);
+    printSVERegOp_b(MI, 5, O);
     break;
   case 56:
     // INSERT_MXIPZ_H_D, INSERT_MXIPZ_V_D
-    printSVERegOp_'d'(MI, 5, O);
+    printSVERegOp_d(MI, 5, O);
     return;
     break;
   case 57:
     // INSERT_MXIPZ_H_Q, INSERT_MXIPZ_V_Q
-    printSVERegOp_'q'(MI, 5, O);
+    printSVERegOp_q(MI, 5, O);
     return;
     break;
   case 58:
     // INSERT_MXIPZ_H_S, INSERT_MXIPZ_V_S
-    printSVERegOp_'s'(MI, 5, O);
+    printSVERegOp_s(MI, 5, O);
     return;
     break;
   case 59:
@@ -19246,29 +19246,29 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 70:
     // MAD_ZPmZZ_B, MLA_ZPmZZ_B, MLS_ZPmZZ_B, MSB_ZPmZZ_B
-    printSVERegOp_'b'(MI, 3, O);
+    printSVERegOp_b(MI, 3, O);
     SStream_concat0(O, ", ");
-    printSVERegOp_'b'(MI, 4, O);
+    printSVERegOp_b(MI, 4, O);
     return;
     break;
   case 71:
     // MOVA_MXI2Z_H_B, MOVA_MXI2Z_V_B, MOVA_MXI4Z_H_B, MOVA_MXI4Z_V_B
-    printTypedVectorList_0_'b'(MI, 4, O);
+    printTypedVectorList_0_b(MI, 4, O);
     return;
     break;
   case 72:
     // MOVA_MXI2Z_H_D, MOVA_MXI2Z_V_D, MOVA_MXI4Z_H_D, MOVA_MXI4Z_V_D
-    printTypedVectorList_0_'d'(MI, 4, O);
+    printTypedVectorList_0_d(MI, 4, O);
     return;
     break;
   case 73:
     // MOVA_MXI2Z_H_H, MOVA_MXI2Z_V_H, MOVA_MXI4Z_H_H, MOVA_MXI4Z_V_H
-    printTypedVectorList_0_'h'(MI, 4, O);
+    printTypedVectorList_0_h(MI, 4, O);
     return;
     break;
   case 74:
     // MOVA_MXI2Z_H_S, MOVA_MXI2Z_V_S, MOVA_MXI4Z_H_S, MOVA_MXI4Z_V_S
-    printTypedVectorList_0_'s'(MI, 4, O);
+    printTypedVectorList_0_s(MI, 4, O);
     return;
     break;
   case 75:
@@ -19283,12 +19283,12 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 77:
     // SDOT_VG2_M2Z2Z_BtoS, SDOT_VG4_M4Z4Z_BtoS, SMLALL_VG2_M2Z2Z_BtoS, SMLAL...
-    printTypedVectorList_0_'b'(MI, 5, O);
+    printTypedVectorList_0_b(MI, 5, O);
     return;
     break;
   case 78:
     // SEL_VG2_2ZP2Z2Z_B, SEL_VG4_4ZP4Z4Z_B, SMAX_VG2_2Z2Z_B, SMAX_VG4_4Z4Z_B...
-    printTypedVectorList_0_'b'(MI, 2, O);
+    printTypedVectorList_0_b(MI, 2, O);
     break;
   case 79:
     // SQDECP_XPWd_B, SQDECP_XPWd_D, SQDECP_XPWd_H, SQDECP_XPWd_S, SQINCP_XPW...
@@ -19346,7 +19346,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 5:
     // ADDP_ZPmZ_H, ADD_ZPmZ_H, AND_ZPmZ_H, ASRR_ZPmZ_H, ASR_ZPmZ_H, BFADD_ZP...
-    printSVERegOp_'h'(MI, 3, O);
+    printSVERegOp_h(MI, 3, O);
     break;
   case 6:
     // ADDPv16i8, ADDv16i8, ANDv16i8, BICv16i8, BIFv16i8, BITv16i8, BSLv16i8,...
@@ -19375,21 +19375,21 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 11:
     // ADD_VG2_M2Z2Z_D, ADD_VG4_M4Z4Z_D, FMLA_VG2_M2Z2Z_D, FMLA_VG4_M4Z4Z_D, ...
-    printTypedVectorList_0_'d'(MI, 5, O);
+    printTypedVectorList_0_d(MI, 5, O);
     return;
     break;
   case 12:
     // ADD_VG2_M2Z2Z_S, ADD_VG4_M4Z4Z_S, FMLA_VG2_M2Z2Z_S, FMLA_VG4_M4Z4Z_S, ...
-    printTypedVectorList_0_'s'(MI, 5, O);
+    printTypedVectorList_0_s(MI, 5, O);
     return;
     break;
   case 13:
     // ADD_VG2_M2ZZ_D, ADD_VG4_M4ZZ_D, FMLA_VG2_M2ZZI_D, FMLA_VG2_M2ZZ_D, FML...
-    printSVERegOp_'d'(MI, 5, O);
+    printSVERegOp_d(MI, 5, O);
     break;
   case 14:
     // ADD_VG2_M2ZZ_S, ADD_VG4_M4ZZ_S, FMLA_VG2_M2ZZI_S, FMLA_VG2_M2ZZ_S, FML...
-    printSVERegOp_'s'(MI, 5, O);
+    printSVERegOp_s(MI, 5, O);
     break;
   case 15:
     // ASRD_ZPmI_H, ASR_ZPmI_H, CMPEQ_PPzZI_H, CMPGE_PPzZI_H, CMPGT_PPzZI_H, ...
@@ -19397,7 +19397,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 16:
     // ASR_WIDE_ZPmZ_H, CMPEQ_WIDE_PPzZZ_H, CMPGE_WIDE_PPzZZ_H, CMPGT_WIDE_PP...
-    printSVERegOp_'d'(MI, 3, O);
+    printSVERegOp_d(MI, 3, O);
     return;
     break;
   case 17:
@@ -19425,7 +19425,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 22:
     // BFMLA_ZPmZZ, BFMLS_ZPmZZ, FCMLA_ZPmZZ_H, FMAD_ZPmZZ_H, FMLA_ZPmZZ_H, F...
-    printSVERegOp_'h'(MI, 4, O);
+    printSVERegOp_h(MI, 4, O);
     break;
   case 23:
     // CADD_ZZI_H, SQCADD_ZZI_H
@@ -19508,49 +19508,49 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 40:
     // LD1D_Q, ST1D_Q
-    printRegWithShiftExtend_0_64_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_64_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 41:
     // LD1W_Q, ST1W_Q
-    printRegWithShiftExtend_0_32_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_32_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 42:
     // LD1_MXIPXX_H_B, LD1_MXIPXX_V_B, ST1_MXIPXX_H_B, ST1_MXIPXX_V_B
-    printRegWithShiftExtend_0_8_'x'_0(MI, 5, O);
+    printRegWithShiftExtend_0_8_x_0(MI, 5, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 43:
     // LD1_MXIPXX_H_D, LD1_MXIPXX_V_D, ST1_MXIPXX_H_D, ST1_MXIPXX_V_D
-    printRegWithShiftExtend_0_64_'x'_0(MI, 5, O);
+    printRegWithShiftExtend_0_64_x_0(MI, 5, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 44:
     // LD1_MXIPXX_H_H, LD1_MXIPXX_V_H, ST1_MXIPXX_H_H, ST1_MXIPXX_V_H
-    printRegWithShiftExtend_0_16_'x'_0(MI, 5, O);
+    printRegWithShiftExtend_0_16_x_0(MI, 5, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 45:
     // LD1_MXIPXX_H_Q, LD1_MXIPXX_V_Q, ST1_MXIPXX_H_Q, ST1_MXIPXX_V_Q
-    printRegWithShiftExtend_0_128_'x'_0(MI, 5, O);
+    printRegWithShiftExtend_0_128_x_0(MI, 5, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 46:
     // LD1_MXIPXX_H_S, LD1_MXIPXX_V_S, ST1_MXIPXX_H_S, ST1_MXIPXX_V_S
-    printRegWithShiftExtend_0_32_'x'_0(MI, 5, O);
+    printRegWithShiftExtend_0_32_x_0(MI, 5, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 47:
     // LD2Q, LD3Q, LD4Q, ST2Q, ST3Q, ST4Q
-    printRegWithShiftExtend_0_128_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_128_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19658,12 +19658,12 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 1:
     // ADDP_ZPmZ_B, ADD_ZPmZ_B, ANDS_PPzPP, AND_PPzPP, AND_ZPmZ_B, ASRR_ZPmZ_...
-    printSVERegOp_'b'(MI, 3, O);
+    printSVERegOp_b(MI, 3, O);
     return;
     break;
   case 2:
     // ADDP_ZPmZ_D, ADD_ZPmZ_D, AND_ZPmZ_D, ASRR_ZPmZ_D, ASR_WIDE_ZPmZ_B, ASR...
-    printSVERegOp_'d'(MI, 3, O);
+    printSVERegOp_d(MI, 3, O);
     break;
   case 3:
     // ADDP_ZPmZ_H, ADD_VG2_M2ZZ_D, ADD_VG2_M2ZZ_S, ADD_VG4_M4ZZ_D, ADD_VG4_M...
@@ -19671,7 +19671,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 4:
     // ADDP_ZPmZ_S, ADD_ZPmZ_S, AND_ZPmZ_S, ASRR_ZPmZ_S, ASR_ZPmZ_S, BIC_ZPmZ...
-    printSVERegOp_'s'(MI, 3, O);
+    printSVERegOp_s(MI, 3, O);
     break;
   case 5:
     // BCAX, EOR3, SM3SS1
@@ -19712,7 +19712,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 13:
     // CLASTA_RPZ_H, CLASTA_VPZ_H, CLASTB_RPZ_H, CLASTB_VPZ_H
-    printSVERegOp_'h'(MI, 3, O);
+    printSVERegOp_h(MI, 3, O);
     return;
     break;
   case 14:
@@ -19727,11 +19727,11 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 16:
     // FCMLA_ZPmZZ_D, FMAD_ZPmZZ_D, FMLA_ZPmZZ_D, FMLS_ZPmZZ_D, FMSB_ZPmZZ_D,...
-    printSVERegOp_'d'(MI, 4, O);
+    printSVERegOp_d(MI, 4, O);
     break;
   case 17:
     // FCMLA_ZPmZZ_S, FMAD_ZPmZZ_S, FMLA_ZPmZZ_S, FMLS_ZPmZZ_S, FMSB_ZPmZZ_S,...
-    printSVERegOp_'s'(MI, 4, O);
+    printSVERegOp_s(MI, 4, O);
     break;
   case 18:
     // FMAXNM_ZPmI_D, FMAXNM_ZPmI_S, FMAX_ZPmI_D, FMAX_ZPmI_S, FMINNM_ZPmI_D,...
@@ -19755,31 +19755,31 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 22:
     // GLD1B_D_REAL, GLD1D_REAL, GLD1H_D_REAL, GLD1SB_D_REAL, GLD1SH_D_REAL, ...
-    printRegWithShiftExtend_0_8_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_8_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 23:
     // GLD1B_D_SXTW_REAL, GLD1D_SXTW_REAL, GLD1H_D_SXTW_REAL, GLD1SB_D_SXTW_R...
-    printRegWithShiftExtend_1_8_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_8_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 24:
     // GLD1B_D_UXTW_REAL, GLD1D_UXTW_REAL, GLD1H_D_UXTW_REAL, GLD1SB_D_UXTW_R...
-    printRegWithShiftExtend_0_8_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_8_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 25:
     // GLD1B_S_SXTW_REAL, GLD1H_S_SXTW_REAL, GLD1SB_S_SXTW_REAL, GLD1SH_S_SXT...
-    printRegWithShiftExtend_1_8_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_1_8_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 26:
     // GLD1B_S_UXTW_REAL, GLD1H_S_UXTW_REAL, GLD1SB_S_UXTW_REAL, GLD1SH_S_UXT...
-    printRegWithShiftExtend_0_8_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_0_8_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19791,19 +19791,19 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 28:
     // GLD1D_SCALED_REAL, GLDFF1D_SCALED_REAL, SST1D_SCALED
-    printRegWithShiftExtend_0_64_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_64_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 29:
     // GLD1D_SXTW_SCALED_REAL, GLDFF1D_SXTW_SCALED_REAL, SST1D_SXTW_SCALED
-    printRegWithShiftExtend_1_64_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_64_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 30:
     // GLD1D_UXTW_SCALED_REAL, GLDFF1D_UXTW_SCALED_REAL, SST1D_UXTW_SCALED
-    printRegWithShiftExtend_0_64_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_64_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19813,31 +19813,31 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 32:
     // GLD1H_D_SCALED_REAL, GLD1SH_D_SCALED_REAL, GLDFF1H_D_SCALED_REAL, GLDF...
-    printRegWithShiftExtend_0_16_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_16_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 33:
     // GLD1H_D_SXTW_SCALED_REAL, GLD1SH_D_SXTW_SCALED_REAL, GLDFF1H_D_SXTW_SC...
-    printRegWithShiftExtend_1_16_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_16_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 34:
     // GLD1H_D_UXTW_SCALED_REAL, GLD1SH_D_UXTW_SCALED_REAL, GLDFF1H_D_UXTW_SC...
-    printRegWithShiftExtend_0_16_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_16_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 35:
     // GLD1H_S_SXTW_SCALED_REAL, GLD1SH_S_SXTW_SCALED_REAL, GLDFF1H_S_SXTW_SC...
-    printRegWithShiftExtend_1_16_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_1_16_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 36:
     // GLD1H_S_UXTW_SCALED_REAL, GLD1SH_S_UXTW_SCALED_REAL, GLDFF1H_S_UXTW_SC...
-    printRegWithShiftExtend_0_16_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_0_16_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19852,43 +19852,43 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 39:
     // GLD1SW_D_SCALED_REAL, GLD1W_D_SCALED_REAL, GLDFF1SW_D_SCALED_REAL, GLD...
-    printRegWithShiftExtend_0_32_'x'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_32_x_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 40:
     // GLD1SW_D_SXTW_SCALED_REAL, GLD1W_D_SXTW_SCALED_REAL, GLDFF1SW_D_SXTW_S...
-    printRegWithShiftExtend_1_32_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_1_32_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 41:
     // GLD1SW_D_UXTW_SCALED_REAL, GLD1W_D_UXTW_SCALED_REAL, GLDFF1SW_D_UXTW_S...
-    printRegWithShiftExtend_0_32_'w'_'d'(MI, 3, O);
+    printRegWithShiftExtend_0_32_w_d(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 42:
     // GLD1W_SXTW_SCALED_REAL, GLDFF1W_SXTW_SCALED_REAL, SST1W_SXTW_SCALED
-    printRegWithShiftExtend_1_32_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_1_32_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 43:
     // GLD1W_UXTW_SCALED_REAL, GLDFF1W_UXTW_SCALED_REAL, SST1W_UXTW_SCALED
-    printRegWithShiftExtend_0_32_'w'_'s'(MI, 3, O);
+    printRegWithShiftExtend_0_32_w_s(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 44:
     // LD1B, LD1B_2Z, LD1B_4Z, LD1B_D, LD1B_H, LD1B_S, LD1B_VG2_M2ZPXX, LD1B_...
-    printRegWithShiftExtend_0_8_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_8_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 45:
     // LD1D, LD1D_2Z, LD1D_4Z, LD1D_VG2_M2ZPXX, LD1D_VG4_M4ZPXX, LD1RO_D, LD1...
-    printRegWithShiftExtend_0_64_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_64_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19899,7 +19899,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 47:
     // LD1H, LD1H_2Z, LD1H_4Z, LD1H_D, LD1H_S, LD1H_VG2_M2ZPXX, LD1H_VG4_M4ZP...
-    printRegWithShiftExtend_0_16_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_16_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19911,7 +19911,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 49:
     // LD1RO_W, LD1RQ_W, LD1SW_D, LD1W, LD1W_2Z, LD1W_4Z, LD1W_D, LD1W_VG2_M2...
-    printRegWithShiftExtend_0_32_'x'_0(MI, 3, O);
+    printRegWithShiftExtend_0_32_x_0(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
@@ -19941,82 +19941,82 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 55:
     // LDRBBroW, LDRBroW, LDRSBWroW, LDRSBXroW, STRBBroW, STRBroW
-    printMemExtend_'w'_8(MI, 3, O);
+    printMemExtend_w_8(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 56:
     // LDRBBroX, LDRBroX, LDRSBWroX, LDRSBXroX, STRBBroX, STRBroX
-    printMemExtend_'x'_8(MI, 3, O);
+    printMemExtend_x_8(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 57:
     // LDRDroW, LDRXroW, PRFMroW, STRDroW, STRXroW
-    printMemExtend_'w'_64(MI, 3, O);
+    printMemExtend_w_64(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 58:
     // LDRDroX, LDRXroX, PRFMroX, STRDroX, STRXroX
-    printMemExtend_'x'_64(MI, 3, O);
+    printMemExtend_x_64(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 59:
     // LDRHHroW, LDRHroW, LDRSHWroW, LDRSHXroW, STRHHroW, STRHroW
-    printMemExtend_'w'_16(MI, 3, O);
+    printMemExtend_w_16(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 60:
     // LDRHHroX, LDRHroX, LDRSHWroX, LDRSHXroX, STRHHroX, STRHroX
-    printMemExtend_'x'_16(MI, 3, O);
+    printMemExtend_x_16(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 61:
     // LDRQroW, STRQroW
-    printMemExtend_'w'_128(MI, 3, O);
+    printMemExtend_w_128(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 62:
     // LDRQroX, STRQroX
-    printMemExtend_'x'_128(MI, 3, O);
+    printMemExtend_x_128(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 63:
     // LDRSWroW, LDRSroW, LDRWroW, STRSroW, STRWroW
-    printMemExtend_'w'_32(MI, 3, O);
+    printMemExtend_w_32(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 64:
     // LDRSWroX, LDRSroX, LDRWroX, STRSroX, STRWroX
-    printMemExtend_'x'_32(MI, 3, O);
+    printMemExtend_x_32(MI, 3, O);
     SStream_concat1(O, ']');
     return;
     break;
   case 65:
     // SEL_VG2_2ZP2Z2Z_B, SEL_VG4_4ZP4Z4Z_B
-    printTypedVectorList_0_'b'(MI, 3, O);
+    printTypedVectorList_0_b(MI, 3, O);
     return;
     break;
   case 66:
     // SEL_VG2_2ZP2Z2Z_D, SEL_VG4_4ZP4Z4Z_D
-    printTypedVectorList_0_'d'(MI, 3, O);
+    printTypedVectorList_0_d(MI, 3, O);
     return;
     break;
   case 67:
     // SEL_VG2_2ZP2Z2Z_H, SEL_VG4_4ZP4Z4Z_H
-    printTypedVectorList_0_'h'(MI, 3, O);
+    printTypedVectorList_0_h(MI, 3, O);
     return;
     break;
   case 68:
     // SEL_VG2_2ZP2Z2Z_S, SEL_VG4_4ZP4Z4Z_S
-    printTypedVectorList_0_'s'(MI, 3, O);
+    printTypedVectorList_0_s(MI, 3, O);
     return;
     break;
   case 69:
