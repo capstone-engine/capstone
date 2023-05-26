@@ -106,8 +106,8 @@ def namespace_fcn_def(src: bytes, ns_id: bytes, fcn_def: Node) -> bytes:
             fcn_id = c.named_children[0].named_children[0]
             break
     if not fcn_id:
-        log.fatal("Could not find function declarator in one of the first children.")
-        exit(1)
+        # Not a function declaration
+        return get_text(src, fcn_def.start_byte, fcn_def.end_byte)
     fcn_id_text = get_text(src, fcn_id.start_byte, fcn_id.end_byte)
     fcn_def_text = get_text(src, fcn_def.start_byte, fcn_def.end_byte)
     res = re.sub(fcn_id_text, ns_id + b"_" + fcn_id_text, fcn_def_text)

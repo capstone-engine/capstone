@@ -30,12 +30,13 @@ class NamespaceArch(Patch):
         # Because in the generated files they are accessed via NAMESPACE::X which becomes NAMESPACE_X.
         res = b""
         for d in decl_list.named_children:
-            if d.type == "enum_specifier":
-                res += namespace_enum(src, namespace_id, d) + b";\n\n"
-            elif d.type == "function_definition":
-                res += namespace_fcn_def(src, namespace_id, d) + b"\n\n"
-            elif d.type == "struct_specifier":
-                res += namespace_struct(src, namespace_id, d) + b";\n\n"
-            else:
-                res += get_text(src, d.start_byte, d.end_byte) + b"\n"
+            match d.type:
+                case "enum_specifier":
+                    res += namespace_enum(src, namespace_id, d) + b";\n\n"
+                case "declaration" | "function_definition":
+                    res += namespace_fcn_def(src, namespace_id, d) + b"\n\n"
+                case "struct_specifier":
+                    res += namespace_struct(src, namespace_id, d) + b";\n\n"
+                case _:
+                    res += get_text(src, d.start_byte, d.end_byte) + b"\n"
         return res
