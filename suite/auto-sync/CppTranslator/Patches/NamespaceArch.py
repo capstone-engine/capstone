@@ -1,6 +1,6 @@
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text, namespace_enum, namespace_fcn_def
+from Patches.HelperMethods import get_text, namespace_enum, namespace_fcn_def, namespace_struct
 from Patches.Patch import Patch
 
 
@@ -26,7 +26,7 @@ class NamespaceArch(Patch):
         decl_list = captures[1][0]
         namespace_id = get_text(src, namespace.named_children[0].start_byte, namespace.named_children[0].end_byte)
 
-        # We need to prepend the namespace id to all enum members and function declarators.
+        # We need to prepend the namespace id to all enum members, function declarators and struct types.
         # Because in the generated files they are accessed via NAMESPACE::X which becomes NAMESPACE_X.
         res = b""
         for d in decl_list.named_children:
@@ -34,6 +34,8 @@ class NamespaceArch(Patch):
                 res += namespace_enum(src, namespace_id, d) + b";\n\n"
             elif d.type == "function_definition":
                 res += namespace_fcn_def(src, namespace_id, d) + b"\n\n"
+            elif d.type == "struct_specifier":
+                res += namespace_struct(src, namespace_id, d) + b";\n\n"
             else:
                 res += get_text(src, d.start_byte, d.end_byte) + b"\n"
         return res

@@ -114,6 +114,34 @@ def namespace_fcn_def(src: bytes, ns_id: bytes, fcn_def: Node) -> bytes:
     return res
 
 
+def namespace_struct(src: bytes, ns_id: bytes, struct: Node) -> bytes:
+    """
+    Defines a struct as a type.
+    Example: naemspace_id = "ARM"
+             struct id { X } -> typedef struct {  } ARM_id
+    """
+    type_id: Node = None
+    field_list: Node = None
+    for c in struct.named_children:
+        if c.type == "type_identifier":
+            type_id = c
+        elif c.type == "base_class_clause":
+            # Inheritances should be fixed manually.
+            return get_text(src, struct.start_byte, struct.end_byte)
+        elif c.type == "field_declaration_list":
+            field_list = c
+
+    if not (type_id and field_list):
+        log.fatal("Could not find struct type_identifier or field declaration list.")
+        exit(1)
+
+    tid = get_text(src, type_id.start_byte, type_id.end_byte)
+    fields = get_text(src, field_list.start_byte, field_list.end_byte)
+
+    typed_struct = b"typedef struct " + tid + b" " + fields + b"\n " + ns_id + b"_" + tid
+    return typed_struct
+
+
 def parse_function_capture(
     capture: list[tuple[Node, str]], src: bytes
 ) -> tuple[list[bytes], bytes, bytes, bytes, bytes, bytes]:
