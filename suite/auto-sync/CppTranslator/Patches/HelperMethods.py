@@ -75,11 +75,13 @@ def namespace_enum(src: bytes, ns_id: bytes, enum: Node) -> bytes:
     """
     enumerator_list: Node = None
     type_id: Node = None
+    primary_tid_set = False
     for c in enum.named_children:
         if c.type == "enumerator_list":
             enumerator_list = c
-        elif c.type == "type_identifier":
+        elif c.type == "type_identifier" and not primary_tid_set:
             type_id = c
+            primary_tid_set = True
 
     if not (enumerator_list and type_id):
         log.fatal("Could not find enumerator_list or enum type_identifier.")
