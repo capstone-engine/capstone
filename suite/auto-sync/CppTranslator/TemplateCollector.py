@@ -284,3 +284,15 @@ class TemplateCollector:
             res += b"CONCAT(" + x + b", "
         res += fa[-1]
         return res + (b")" * (len(fa) - 1)) + fcn_args
+
+    @staticmethod
+    def log_missing_ref_and_exit(func_ref: bytes) -> None:
+        log.fatal(
+            f"Template collector has no reference for {func_ref}.\n\n"
+            f"The possible reasons are:\n"
+            "\t\t\t- Not all C++ source files which call this function are listed in the config.\n"
+            "\t\t\t- You removed the C++ template syntax from the .td file for this function.\n"
+            "\t\t\t- The function is a template with argument deduction and has no `template<...>` preamble. "
+            "Add it in the config as exception in this case."
+        )
+        exit(1)

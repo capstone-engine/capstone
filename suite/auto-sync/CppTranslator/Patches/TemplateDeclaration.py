@@ -49,13 +49,7 @@ class TemplateDeclaration(Patch):
         template_instance: TemplateRefInstance
         declared_implementations = list()
         if f_name not in self.collector.template_refs:
-            log.fatal(
-                f"Template collector has no reference for {f_name}.\n"
-                "\t\t\tMake sure to add all source files to the config file "
-                "which use this template function.\n"
-                "\t\t\tOr add it as templates with argument deduction."
-            )
-            exit(1)
+            self.collector.log_missing_ref_and_exit(f_name)
 
         for template_instance in self.collector.template_refs[f_name]:
             d = b"DECLARE_" + f_name + b"(" + b", ".join(template_instance.get_args_for_decl()) + b");\n"
