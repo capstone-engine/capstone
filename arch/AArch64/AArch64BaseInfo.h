@@ -458,7 +458,7 @@ static inline bool atomicBarrierDroppedOnZero(unsigned Opcode)
 
 // The CondCodes constants map directly to the 4-bit encoding of the condition
 // field for predicated instructions.
-typedef enum CondCode {			// Meaning (integer)          Meaning (floating-point)
+typedef enum CondCode { // Meaning (integer)          Meaning (floating-point)
 	AArch64CC_EQ = 0x0, // Equal                      Equal
 	AArch64CC_NE = 0x1, // Not equal                  Not equal, or unordered
 	AArch64CC_HS = 0x2, // Unsigned higher or same    >, ==, or unordered
@@ -483,9 +483,9 @@ typedef enum CondCode {			// Meaning (integer)          Meaning (floating-point)
 	AArch64CC_FIRST_ACTIVE = AArch64CC_MI, // ( N)
 	AArch64CC_LAST_ACTIVE = AArch64CC_LO,	 // (!C)
 	AArch64CC_NONE_ACTIVE = AArch64CC_EQ	 // ( Z)
-} AArch64_CondCode;
+} AArch64CC_CondCode;
 
-inline static const char *AArch64CC_getCondCodeName(AArch64_CondCode Code)
+inline static const char *AArch64CC_getCondCodeName(AArch64CC_CondCode Code)
 {
 	switch (Code) {
 	default:
@@ -525,18 +525,18 @@ inline static const char *AArch64CC_getCondCodeName(AArch64_CondCode Code)
 	}
 }
 
-inline static AArch64_CondCode AArch64CC_getInvertedCondCode(AArch64_CondCode Code)
+inline static AArch64CC_CondCode AArch64CC_getInvertedCondCode(AArch64CC_CondCode Code)
 {
 	// To reverse a condition it's necessary to only invert the low bit:
 
-	return (AArch64_CondCode)((unsigned)(Code) ^ 0x1);
+	return (AArch64CC_CondCode)((unsigned)(Code) ^ 0x1);
 }
 
 /// Given a condition code, return NZCV flags that would satisfy that condition.
 /// The flag bits are in the format expected by the ccmp instructions.
 /// Note that many different flag settings can satisfy a given condition code,
 /// this function just returns one of them.
-inline static unsigned AArch64CC_getNZCVToSatisfyCondCode(AArch64_CondCode Code)
+inline static unsigned AArch64CC_getNZCVToSatisfyCondCode(AArch64CC_CondCode Code)
 {
 	// NZCV flags encoded as expected by ccmp instructions, ARMv8 ISA 5.5.7.
 	enum { N = 8, Z = 4, C = 2, V = 1 };
@@ -576,7 +576,7 @@ inline static unsigned AArch64CC_getNZCVToSatisfyCondCode(AArch64_CondCode Code)
 
 /// Return true if Code is a reflexive relationship:
 /// forall x. (CSET Code (CMP x x)) == 1
-inline static bool AArch64CC_isReflexive(AArch64_CondCode Code)
+inline static bool AArch64CC_isReflexive(AArch64CC_CondCode Code)
 {
 	switch (Code) {
 	case AArch64CC_EQ:
@@ -595,7 +595,7 @@ inline static bool AArch64CC_isReflexive(AArch64_CondCode Code)
 
 /// Return true if Code is an irreflexive relationship:
 /// forall x. (CSET Code (CMP x x)) == 0
-inline static bool AArch64CC_isIrreflexive(AArch64_CondCode Code)
+inline static bool AArch64CC_isIrreflexive(AArch64CC_CondCode Code)
 {
 	switch (Code) {
 	case AArch64CC_NE:
@@ -690,29 +690,29 @@ typedef struct SysAliasImm {
 
 // namespace AArch64RPRFM
 
-struct SVEPREDPAT {
+typedef struct SVEPREDPAT {
 	const char *Name;
 	uint16_t Encoding;
-};
+} AArch64SVEPredPattern_SVEPREDPAT;
 
 #define GET_SVEPREDPAT_DECL
 #include "AArch64GenSystemOperands.inc"
 
-struct SVEVECLENSPECIFIER {
+typedef struct SVEVECLENSPECIFIER {
 	const char *Name;
 	uint16_t Encoding;
-};
+} AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER;
 
 #define GET_SVEVECLENSPECIFIER_DECL
 #include "AArch64GenSystemOperands.inc"
 
 // namespace AArch64SVEVecLenSpecifier
 
-struct ExactFPImm {
+typedef struct ExactFPImm {
 	const char *Name;
 	int Enum;
 	const char *Repr;
-};
+} AArch64ExactFPImm_ExactFPImm;
 
 #define GET_EXACTFPIMM_DECL
 #include "AArch64GenSystemOperands.inc"
@@ -737,7 +737,7 @@ struct ExactFPImm {
 #define GET_BTI_DECL
 #include "AArch64GenSystemOperands.inc"
 
-enum ShiftExtSpecifiers {
+typedef enum ShiftExtSpecifiers {
 	AArch64SE_Invalid = -1,
 	AArch64SE_LSL,
 	AArch64SE_MSL,
@@ -754,7 +754,7 @@ enum ShiftExtSpecifiers {
 	AArch64SE_SXTH,
 	AArch64SE_SXTW,
 	AArch64SE_SXTX
-};
+} AArch64SE_ShiftExtSpecifiers;
 
 typedef enum VectorLayout {
 	AArch64Layout_Invalid = -1,
@@ -783,13 +783,13 @@ typedef struct SysReg {
 	bool Readable;
 	bool Writeable;
 	arm64_insn_group FeaturesRequired[3];
-} AArch64SysReg;
+} AArch64SysReg_SysReg;
 
 #define GET_SYSREG_DECL
 #include "AArch64GenSystemOperands.inc"
 
-const AArch64SysReg *lookupSysRegByName(const char *Name);
-const AArch64SysReg *lookupSysRegByEncoding(uint16_t Encoding);
+const AArch64SysReg_SysReg *lookupSysRegByName(const char *Name);
+const AArch64SysReg_SysReg *lookupSysRegByEncoding(uint16_t Encoding);
 const char *genericRegisterString(uint32_t Bits);
 
 #define TLBI SysAliasReg
@@ -803,7 +803,7 @@ const char *genericRegisterString(uint32_t Bits);
 #include "AArch64GenSystemOperands.inc"
 
 /// Target Operand Flag enum.
-enum TOF {
+typedef enum TOF {
 	//===------------------------------------------------------------------===//
 	// AArch64 Specific MachineOperand flags.
 
@@ -890,7 +890,7 @@ enum TOF {
 	/// MO_DLLIMPORTAUX refers to the original address which can be compared
 	/// for equality.
 	AArch64II_MO_DLLIMPORTAUX = 0x800,
-};
+} AArch64II_TOF;
 
 // end namespace AArch64II
 
