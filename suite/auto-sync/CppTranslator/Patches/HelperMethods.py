@@ -69,25 +69,31 @@ def get_text(src: bytes, start_byte: int, end_byte: int) -> bytes:
 def namespace_enum(src: bytes, ns_id: bytes, enum: Node) -> bytes:
     """
     Alters an enum in the way that it prepends the namespace id to every enum member.
+    And defines it as a type.
     Example: naemspace_id = "ARM"
-             enum { X } -> enum { ARM_X }
+             enum { X } -> typedef enum { ARM_X } ARM_enum
     """
     enumerator_list: Node = None
+    type_id: Node = None
     for c in enum.named_children:
         if c.type == "enumerator_list":
             enumerator_list = c
-            break
+        elif c.type == "type_identifier":
+            type_id = c
 
-    if not enumerator_list:
-        log.fatal("Could not find enumerator_list.")
+    if not (enumerator_list and type_id):
+        log.fatal("Could not find enumerator_list or enum type_identifier.")
         exit(1)
 
-    res = get_text(src, enum.start_byte, enum.end_byte)
+    tid = get_text(src, type_id.start_byte, type_id.end_byte)
+    elist = get_text(src, enumerator_list.start_byte, enumerator_list.end_byte)
     for e in enumerator_list.named_children:
         if e.type == "enumerator":
             enum_entry_text = get_text(src, e.start_byte, e.end_byte)
-            res = res.replace(enum_entry_text, ns_id + b"_" + enum_entry_text)
-    return res
+            elist = elist.replace(enum_entry_text, ns_id + b"_" + enum_entry_text)
+
+    new_enum = b"typedef enum " + tid + b" " + elist + b"\n " + ns_id + b"_" + tid
+    return new_enum
 
 
 def namespace_fcn_def(src: bytes, ns_id: bytes, fcn_def: Node) -> bytes:
