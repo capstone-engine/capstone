@@ -192,6 +192,7 @@ def get_AArch64_includes(filename: str) -> bytes:
                 + b'#include "../../utils.h"\n'
                 + b'#include "AArch64AddressingModes.h"\n'
                 + b'#include "AArch64BaseInfo.h"\n'
+                + b'#include "AArch64DisassemblerExtension.h"\n'
                 + b'#include "AArch64Linkage.h"\n'
                 + b'#include "AArch64Mapping.h"\n\n'
                 + b"#define GET_INSTRINFO_MC_DESC\n"
