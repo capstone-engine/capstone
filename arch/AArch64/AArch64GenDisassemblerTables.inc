@@ -27558,7 +27558,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-		uint64_t Address, bool *Decoder) \
+		uint64_t Address, const void *Decoder, bool &DecodeComplete) \
 { \
   InsnType tmp; \
   switch (Idx) { \
@@ -34267,7 +34267,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 
 #define DecodeInstruction(fname, fieldname, decoder, InsnType) \
 static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
-                                      InsnType insn, uint64_t Address) { \
+                                      InsnType insn, uint64_t Address, const void *Decoder) { \
   const uint8_t *Ptr = DecodeTable; \
   uint64_t CurFieldValue = 0; \
   DecodeStatus S = MCDisassembler_Success; \
@@ -34338,7 +34338,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       MCInst_clear(MI); \
       MCInst_setOpcode(MI, Opc); \
       bool DecodeComplete; \
-      S = decoder(S, DecodeIdx, insn, MI, Address, &DecodeComplete); \
+      S = decoder(S, DecodeIdx, insn, MI, Address, Decoder, &DecodeComplete); \
       return S; \
     } \
     case MCD_OPC_TryDecode: { \
@@ -34355,7 +34355,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       /* Perform the decode operation. */ \
       MCInst_setOpcode(MI, Opc); \
       bool DecodeComplete; \
-      S = decoder(S, DecodeIdx, insn, MI, Address, &DecodeComplete); \
+      S = decoder(S, DecodeIdx, insn, MI, Address, Decoder, &DecodeComplete); \
       if (DecodeComplete) { \
         /* Decoding complete. */ \
         return S; \
@@ -34387,10 +34387,6 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
   } \
   /* Bogisity detected in disassembler state machine! */ \
 }
-
-FieldFromInstruction(fieldFromInstruction_2, uint16_t)
-DecodeToMCInst(decodeToMCInst_2, fieldFromInstruction_2, uint16_t)
-DecodeInstruction(decodeInstruction_2, fieldFromInstruction_2, decodeToMCInst_2, uint16_t)
 
 FieldFromInstruction(fieldFromInstruction_4, uint32_t)
 DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint32_t)
