@@ -645,7 +645,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		mnem_len = sizeof(MI->flat_insn->mnemonic) - 1;
 
 	memset(MI->flat_insn->mnemonic, 0, sizeof(MI->flat_insn->mnemonic));
-	strncpy(MI->flat_insn->mnemonic, O->buffer, mnem_len);
+	memcpy(MI->flat_insn->mnemonic, O->buffer, mnem_len);
 }
 
 // FIXME
