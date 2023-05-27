@@ -5,6 +5,7 @@
 #define CS_ARM64_MAP_H
 
 #include "capstone/capstone.h"
+#include "../../MCInst.h"
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
