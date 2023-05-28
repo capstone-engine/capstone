@@ -96,7 +96,7 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 			break;
 
 		case SH_OP_IMM:
-			printf("\t\toperands[%u].type: IMMEDIATE = #%d\n", i,
+			printf("\t\toperands[%u].type: IMMEDIATE = #%lu\n", i,
 				op->imm);
 			break;
 
@@ -137,6 +137,8 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 			case SH_OP_MEM_TBR_DISP:
 				printf("TBR base with displacement DISP %d\n",
 				       op->mem.disp);
+				break;
+			case SH_OP_MEM_INVALID:
 				break;
 			}
 			break;
