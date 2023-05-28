@@ -43,6 +43,9 @@
 #include "../../utils.h"
 #include "capstone/arm.h"
 
+#define GET_SUBTARGETINFO_ENUM
+#include "AArch64GenSubtargetInfo.inc"
+
 #define GET_REGINFO_ENUM
 #include "AArch64GenRegisterInfo.inc"
 
@@ -612,25 +615,27 @@ inline static bool AArch64CC_isIrreflexive(AArch64CC_CondCode Code)
 
 // end namespace AArch64CC
 
-struct SysAlias {
+typedef struct SysAlias {
 	const char *Name;
-	arm64_sysreg sysreg;
+	aarch64_sysalias SysAlias;
 	uint16_t Encoding;
 	arm64_insn_group FeaturesRequired[3];
-};
+} SysAlias;
 
 typedef struct SysAliasReg {
 	const char *Name;
-	arm64_sysreg sysreg;
+	arm64_sysreg SysReg;
 	uint16_t Encoding;
 	bool NeedsReg;
+	arm64_insn_group FeaturesRequired[3];
 } SysAliasReg;
 
 typedef struct SysAliasImm {
 	const char *Name;
-	arm64_sysreg sysreg;
-	uint16_t Encoding;
+	aarch64_sysimm SysImm;
 	uint16_t ImmValue;
+	uint16_t Encoding;
+	arm64_insn_group FeaturesRequired[3];
 } SysAliasImm;
 
 #define SVCR SysAlias
@@ -778,7 +783,9 @@ typedef enum VectorLayout {
 
 typedef struct SysReg {
 	const char *Name;
+	arm64_sysreg SysReg;
 	const char *AltName;
+	arm64_sysreg AliasReg;
 	unsigned Encoding;
 	bool Readable;
 	bool Writeable;

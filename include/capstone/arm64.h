@@ -64,1345 +64,1490 @@ typedef enum arm64_sysreg {
 	// generated content <AArch64GenCSSystemRegisterEnum.inc> begin
 	// clang-format off
 
-	AArch64_SYSREG_S1E1R = 0x3c0, // Group: ATValues
-	AArch64_SYSREG_S1E2R = 0x23c0, // Group: ATValues
-	AArch64_SYSREG_S1E3R = 0x33c0, // Group: ATValues
-	AArch64_SYSREG_S1E1W = 0x3c1, // Group: ATValues
-	AArch64_SYSREG_S1E2W = 0x23c1, // Group: ATValues
-	AArch64_SYSREG_S1E3W = 0x33c1, // Group: ATValues
-	AArch64_SYSREG_S1E0R = 0x3c2, // Group: ATValues
-	AArch64_SYSREG_S1E0W = 0x3c3, // Group: ATValues
-	AArch64_SYSREG_S12E1R = 0x23c4, // Group: ATValues
-	AArch64_SYSREG_S12E1W = 0x23c5, // Group: ATValues
-	AArch64_SYSREG_S12E0R = 0x23c6, // Group: ATValues
-	AArch64_SYSREG_S12E0W = 0x23c7, // Group: ATValues
-	AArch64_SYSREG_S1E1RP = 0x3c8, // Group: ATValues
-	AArch64_SYSREG_S1E1WP = 0x3c9, // Group: ATValues
-	AArch64_SYSREG_C = 0x2, // Group: BTIValues
-	AArch64_SYSREG_J = 0x4, // Group: BTIValues
-	AArch64_SYSREG_JC = 0x6, // Group: BTIValues
-	AArch64_SYSREG_OSHLD = 0x1, // Group: DBValues
-	AArch64_SYSREG_OSHST = 0x2, // Group: DBValues
-	AArch64_SYSREG_OSH = 0x3, // Group: DBValues
-	AArch64_SYSREG_NSHLD = 0x5, // Group: DBValues
-	AArch64_SYSREG_NSHST = 0x6, // Group: DBValues
-	AArch64_SYSREG_NSH = 0x7, // Group: DBValues
-	AArch64_SYSREG_ISHLD = 0x9, // Group: DBValues
-	AArch64_SYSREG_ISHST = 0xa, // Group: DBValues
-	AArch64_SYSREG_ISH = 0xb, // Group: DBValues
-	AArch64_SYSREG_LD = 0xd, // Group: DBValues
-	AArch64_SYSREG_ST = 0xe, // Group: DBValues
-	AArch64_SYSREG_SY = 0xf, // Group: DBValues
-	AArch64_SYSREG_OSHNXS = 0x3, // Group: DBnXSValues
-	AArch64_SYSREG_NSHNXS = 0x7, // Group: DBnXSValues
-	AArch64_SYSREG_ISHNXS = 0xb, // Group: DBnXSValues
-	AArch64_SYSREG_SYNXS = 0xf, // Group: DBnXSValues
-	AArch64_SYSREG_ZVA = 0x1ba1, // Group: DCValues
-	AArch64_SYSREG_IVAC = 0x3b1, // Group: DCValues
-	AArch64_SYSREG_ISW = 0x3b2, // Group: DCValues
-	AArch64_SYSREG_CVAC = 0x1bd1, // Group: DCValues
-	AArch64_SYSREG_CSW = 0x3d2, // Group: DCValues
-	AArch64_SYSREG_CVAU = 0x1bd9, // Group: DCValues
-	AArch64_SYSREG_CIVAC = 0x1bf1, // Group: DCValues
-	AArch64_SYSREG_CISW = 0x3f2, // Group: DCValues
-	AArch64_SYSREG_CVAP = 0x1be1, // Group: DCValues
-	AArch64_SYSREG_CVADP = 0x1be9, // Group: DCValues
-	AArch64_SYSREG_IGVAC = 0x3b3, // Group: DCValues
-	AArch64_SYSREG_IGSW = 0x3b4, // Group: DCValues
-	AArch64_SYSREG_CGSW = 0x3d4, // Group: DCValues
-	AArch64_SYSREG_CIGSW = 0x3f4, // Group: DCValues
-	AArch64_SYSREG_CGVAC = 0x1bd3, // Group: DCValues
-	AArch64_SYSREG_CGVAP = 0x1be3, // Group: DCValues
-	AArch64_SYSREG_CGVADP = 0x1beb, // Group: DCValues
-	AArch64_SYSREG_CIGVAC = 0x1bf3, // Group: DCValues
-	AArch64_SYSREG_GVA = 0x1ba3, // Group: DCValues
-	AArch64_SYSREG_IGDVAC = 0x3b5, // Group: DCValues
-	AArch64_SYSREG_IGDSW = 0x3b6, // Group: DCValues
-	AArch64_SYSREG_CGDSW = 0x3d6, // Group: DCValues
-	AArch64_SYSREG_CIGDSW = 0x3f6, // Group: DCValues
-	AArch64_SYSREG_CGDVAC = 0x1bd5, // Group: DCValues
-	AArch64_SYSREG_CGDVAP = 0x1be5, // Group: DCValues
-	AArch64_SYSREG_CGDVADP = 0x1bed, // Group: DCValues
-	AArch64_SYSREG_CIGDVAC = 0x1bf5, // Group: DCValues
-	AArch64_SYSREG_GZVA = 0x1ba4, // Group: DCValues
-	AArch64_SYSREG_CIPAE = 0x23f0, // Group: DCValues
-	AArch64_SYSREG_CIGDPAE = 0x23f7, // Group: DCValues
-	AArch64_SYSREG_ZERO = 0x0, // Group: ExactFPImmValues
-	AArch64_SYSREG_HALF = 0x1, // Group: ExactFPImmValues
-	AArch64_SYSREG_ONE = 0x2, // Group: ExactFPImmValues
-	AArch64_SYSREG_TWO = 0x3, // Group: ExactFPImmValues
-	AArch64_SYSREG_IALLUIS = 0x388, // Group: ICValues
-	AArch64_SYSREG_IALLU = 0x3a8, // Group: ICValues
-	AArch64_SYSREG_IVAU = 0x1ba9, // Group: ICValues
-	AArch64_SYSREG_SY_ISBValues = 0xf, // Group: ISBValues - also encoded as: AArch64_SYSREG_SY
-	AArch64_SYSREG_PLDL1KEEP = 0x0, // Group: PRFMValues
-	AArch64_SYSREG_PLDL1STRM = 0x1, // Group: PRFMValues
-	AArch64_SYSREG_PLDL2KEEP = 0x2, // Group: PRFMValues
-	AArch64_SYSREG_PLDL2STRM = 0x3, // Group: PRFMValues
-	AArch64_SYSREG_PLDL3KEEP = 0x4, // Group: PRFMValues
-	AArch64_SYSREG_PLDL3STRM = 0x5, // Group: PRFMValues
-	AArch64_SYSREG_PLDSLCKEEP = 0x6, // Group: PRFMValues
-	AArch64_SYSREG_PLDSLCSTRM = 0x7, // Group: PRFMValues
-	AArch64_SYSREG_PLIL1KEEP = 0x8, // Group: PRFMValues
-	AArch64_SYSREG_PLIL1STRM = 0x9, // Group: PRFMValues
-	AArch64_SYSREG_PLIL2KEEP = 0xa, // Group: PRFMValues
-	AArch64_SYSREG_PLIL2STRM = 0xb, // Group: PRFMValues
-	AArch64_SYSREG_PLIL3KEEP = 0xc, // Group: PRFMValues
-	AArch64_SYSREG_PLIL3STRM = 0xd, // Group: PRFMValues
-	AArch64_SYSREG_PLISLCKEEP = 0xe, // Group: PRFMValues
-	AArch64_SYSREG_PLISLCSTRM = 0xf, // Group: PRFMValues
-	AArch64_SYSREG_PSTL1KEEP = 0x10, // Group: PRFMValues
-	AArch64_SYSREG_PSTL1STRM = 0x11, // Group: PRFMValues
-	AArch64_SYSREG_PSTL2KEEP = 0x12, // Group: PRFMValues
-	AArch64_SYSREG_PSTL2STRM = 0x13, // Group: PRFMValues
-	AArch64_SYSREG_PSTL3KEEP = 0x14, // Group: PRFMValues
-	AArch64_SYSREG_PSTL3STRM = 0x15, // Group: PRFMValues
-	AArch64_SYSREG_PSTSLCKEEP = 0x16, // Group: PRFMValues
-	AArch64_SYSREG_PSTSLCSTRM = 0x17, // Group: PRFMValues
-	AArch64_SYSREG_CSYNC = 0x11, // Group: PSBValues
-	AArch64_SYSREG_ALLINT = 0x8, // Group: PStateImm0_1Values
-	AArch64_SYSREG_PM = 0x48, // Group: PStateImm0_1Values
-	AArch64_SYSREG_SPSEL = 0x5, // Group: PStateImm0_15Values
-	AArch64_SYSREG_DAIFSET = 0x1e, // Group: PStateImm0_15Values
-	AArch64_SYSREG_DAIFCLR = 0x1f, // Group: PStateImm0_15Values
-	AArch64_SYSREG_PAN = 0x4, // Group: PStateImm0_15Values
-	AArch64_SYSREG_UAO = 0x3, // Group: PStateImm0_15Values
-	AArch64_SYSREG_DIT = 0x1a, // Group: PStateImm0_15Values
-	AArch64_SYSREG_SSBS = 0x19, // Group: PStateImm0_15Values
-	AArch64_SYSREG_TCO = 0x1c, // Group: PStateImm0_15Values
-	AArch64_SYSREG_PLDKEEP = 0x0, // Group: RPRFMValues
-	AArch64_SYSREG_PSTKEEP = 0x1, // Group: RPRFMValues
-	AArch64_SYSREG_PLDSTRM = 0x4, // Group: RPRFMValues
-	AArch64_SYSREG_PSTSTRM = 0x5, // Group: RPRFMValues
-	AArch64_SYSREG_SVCRSM = 0x1, // Group: SVCRValues
-	AArch64_SYSREG_SVCRZA = 0x2, // Group: SVCRValues
-	AArch64_SYSREG_SVCRSMZA = 0x3, // Group: SVCRValues
-	AArch64_SYSREG_POW2 = 0x0, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL1 = 0x1, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL2 = 0x2, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL3 = 0x3, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL4 = 0x4, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL5 = 0x5, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL6 = 0x6, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL7 = 0x7, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL8 = 0x8, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL16 = 0x9, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL32 = 0xa, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL64 = 0xb, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL128 = 0xc, // Group: SVEPREDPATValues
-	AArch64_SYSREG_VL256 = 0xd, // Group: SVEPREDPATValues
-	AArch64_SYSREG_MUL4 = 0x1d, // Group: SVEPREDPATValues
-	AArch64_SYSREG_MUL3 = 0x1e, // Group: SVEPREDPATValues
-	AArch64_SYSREG_ALL = 0x1f, // Group: SVEPREDPATValues
-	AArch64_SYSREG_PLDL1KEEP_SVEPRFMValues = 0x0, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PLDL1KEEP
-	AArch64_SYSREG_PLDL1STRM_SVEPRFMValues = 0x1, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PLDL1STRM
-	AArch64_SYSREG_PLDL2KEEP_SVEPRFMValues = 0x2, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PLDL2KEEP
-	AArch64_SYSREG_PLDL2STRM_SVEPRFMValues = 0x3, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PLDL2STRM
-	AArch64_SYSREG_PLDL3KEEP_SVEPRFMValues = 0x4, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PLDL3KEEP
-	AArch64_SYSREG_PLDL3STRM_SVEPRFMValues = 0x5, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PLDL3STRM
-	AArch64_SYSREG_PSTL1KEEP_SVEPRFMValues = 0x8, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PSTL1KEEP
-	AArch64_SYSREG_PSTL1STRM_SVEPRFMValues = 0x9, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PSTL1STRM
-	AArch64_SYSREG_PSTL2KEEP_SVEPRFMValues = 0xa, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PSTL2KEEP
-	AArch64_SYSREG_PSTL2STRM_SVEPRFMValues = 0xb, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PSTL2STRM
-	AArch64_SYSREG_PSTL3KEEP_SVEPRFMValues = 0xc, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PSTL3KEEP
-	AArch64_SYSREG_PSTL3STRM_SVEPRFMValues = 0xd, // Group: SVEPRFMValues - also encoded as: AArch64_SYSREG_PSTL3STRM
-	AArch64_SYSREG_VLX2 = 0x0, // Group: SVEVECLENSPECIFIERValues
-	AArch64_SYSREG_VLX4 = 0x1, // Group: SVEVECLENSPECIFIERValues
-	AArch64_SYSREG_MDCCSR_EL0 = 0x9808, // Group: SysRegValues
-	AArch64_SYSREG_DBGDTRRX_EL0 = 0x9828, // Group: SysRegValues
-	AArch64_SYSREG_MDRAR_EL1 = 0x8080, // Group: SysRegValues
-	AArch64_SYSREG_OSLSR_EL1 = 0x808c, // Group: SysRegValues
-	AArch64_SYSREG_DBGAUTHSTATUS_EL1 = 0x83f6, // Group: SysRegValues
-	AArch64_SYSREG_PMCEID0_EL0 = 0xdce6, // Group: SysRegValues
-	AArch64_SYSREG_PMCEID1_EL0 = 0xdce7, // Group: SysRegValues
-	AArch64_SYSREG_PMMIR_EL1 = 0xc4f6, // Group: SysRegValues
-	AArch64_SYSREG_MIDR_EL1 = 0xc000, // Group: SysRegValues
-	AArch64_SYSREG_CCSIDR_EL1 = 0xc800, // Group: SysRegValues
-	AArch64_SYSREG_CCSIDR2_EL1 = 0xc802, // Group: SysRegValues
-	AArch64_SYSREG_CLIDR_EL1 = 0xc801, // Group: SysRegValues
-	AArch64_SYSREG_CTR_EL0 = 0xd801, // Group: SysRegValues
-	AArch64_SYSREG_MPIDR_EL1 = 0xc005, // Group: SysRegValues
-	AArch64_SYSREG_REVIDR_EL1 = 0xc006, // Group: SysRegValues
-	AArch64_SYSREG_AIDR_EL1 = 0xc807, // Group: SysRegValues
-	AArch64_SYSREG_DCZID_EL0 = 0xd807, // Group: SysRegValues
-	AArch64_SYSREG_ID_PFR0_EL1 = 0xc008, // Group: SysRegValues
-	AArch64_SYSREG_ID_PFR1_EL1 = 0xc009, // Group: SysRegValues
-	AArch64_SYSREG_ID_PFR2_EL1 = 0xc01c, // Group: SysRegValues
-	AArch64_SYSREG_ID_DFR0_EL1 = 0xc00a, // Group: SysRegValues
-	AArch64_SYSREG_ID_DFR1_EL1 = 0xc01d, // Group: SysRegValues
-	AArch64_SYSREG_ID_AFR0_EL1 = 0xc00b, // Group: SysRegValues
-	AArch64_SYSREG_ID_MMFR0_EL1 = 0xc00c, // Group: SysRegValues
-	AArch64_SYSREG_ID_MMFR1_EL1 = 0xc00d, // Group: SysRegValues
-	AArch64_SYSREG_ID_MMFR2_EL1 = 0xc00e, // Group: SysRegValues
-	AArch64_SYSREG_ID_MMFR3_EL1 = 0xc00f, // Group: SysRegValues
-	AArch64_SYSREG_ID_ISAR0_EL1 = 0xc010, // Group: SysRegValues
-	AArch64_SYSREG_ID_ISAR1_EL1 = 0xc011, // Group: SysRegValues
-	AArch64_SYSREG_ID_ISAR2_EL1 = 0xc012, // Group: SysRegValues
-	AArch64_SYSREG_ID_ISAR3_EL1 = 0xc013, // Group: SysRegValues
-	AArch64_SYSREG_ID_ISAR4_EL1 = 0xc014, // Group: SysRegValues
-	AArch64_SYSREG_ID_ISAR5_EL1 = 0xc015, // Group: SysRegValues
-	AArch64_SYSREG_ID_ISAR6_EL1 = 0xc017, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64PFR0_EL1 = 0xc020, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64PFR1_EL1 = 0xc021, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64PFR2_EL1 = 0xc022, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64DFR0_EL1 = 0xc028, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64DFR1_EL1 = 0xc029, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64AFR0_EL1 = 0xc02c, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64AFR1_EL1 = 0xc02d, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64ISAR0_EL1 = 0xc030, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64ISAR1_EL1 = 0xc031, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64ISAR2_EL1 = 0xc032, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64MMFR0_EL1 = 0xc038, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64MMFR1_EL1 = 0xc039, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64MMFR2_EL1 = 0xc03a, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64MMFR3_EL1 = 0xc03b, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64MMFR4_EL1 = 0xc03c, // Group: SysRegValues
-	AArch64_SYSREG_MVFR0_EL1 = 0xc018, // Group: SysRegValues
-	AArch64_SYSREG_MVFR1_EL1 = 0xc019, // Group: SysRegValues
-	AArch64_SYSREG_MVFR2_EL1 = 0xc01a, // Group: SysRegValues
-	AArch64_SYSREG_RVBAR_EL1 = 0xc601, // Group: SysRegValues
-	AArch64_SYSREG_RVBAR_EL2 = 0xe601, // Group: SysRegValues
-	AArch64_SYSREG_RVBAR_EL3 = 0xf601, // Group: SysRegValues
-	AArch64_SYSREG_ISR_EL1 = 0xc608, // Group: SysRegValues
-	AArch64_SYSREG_CNTPCT_EL0 = 0xdf01, // Group: SysRegValues
-	AArch64_SYSREG_CNTVCT_EL0 = 0xdf02, // Group: SysRegValues
-	AArch64_SYSREG_ID_MMFR4_EL1 = 0xc016, // Group: SysRegValues
-	AArch64_SYSREG_ID_MMFR5_EL1 = 0xc01e, // Group: SysRegValues
-	AArch64_SYSREG_TRCSTATR = 0x8818, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR8 = 0x8806, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR9 = 0x880e, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR10 = 0x8816, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR11 = 0x881e, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR12 = 0x8826, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR13 = 0x882e, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR0 = 0x8847, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR1 = 0x884f, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR2 = 0x8857, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR3 = 0x885f, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR4 = 0x8867, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR5 = 0x886f, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR6 = 0x8877, // Group: SysRegValues
-	AArch64_SYSREG_TRCIDR7 = 0x887f, // Group: SysRegValues
-	AArch64_SYSREG_TRCOSLSR = 0x888c, // Group: SysRegValues
-	AArch64_SYSREG_TRCPDSR = 0x88ac, // Group: SysRegValues
-	AArch64_SYSREG_TRCDEVAFF0 = 0x8bd6, // Group: SysRegValues
-	AArch64_SYSREG_TRCDEVAFF1 = 0x8bde, // Group: SysRegValues
-	AArch64_SYSREG_TRCLSR = 0x8bee, // Group: SysRegValues
-	AArch64_SYSREG_TRCAUTHSTATUS = 0x8bf6, // Group: SysRegValues
-	AArch64_SYSREG_TRCDEVARCH = 0x8bfe, // Group: SysRegValues
-	AArch64_SYSREG_TRCDEVID = 0x8b97, // Group: SysRegValues
-	AArch64_SYSREG_TRCDEVTYPE = 0x8b9f, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR4 = 0x8ba7, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR5 = 0x8baf, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR6 = 0x8bb7, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR7 = 0x8bbf, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR0 = 0x8bc7, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR1 = 0x8bcf, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR2 = 0x8bd7, // Group: SysRegValues
-	AArch64_SYSREG_TRCPIDR3 = 0x8bdf, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDR0 = 0x8be7, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDR1 = 0x8bef, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDR2 = 0x8bf7, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDR3 = 0x8bff, // Group: SysRegValues
-	AArch64_SYSREG_ICC_IAR1_EL1 = 0xc660, // Group: SysRegValues
-	AArch64_SYSREG_ICC_IAR0_EL1 = 0xc640, // Group: SysRegValues
-	AArch64_SYSREG_ICC_HPPIR1_EL1 = 0xc662, // Group: SysRegValues
-	AArch64_SYSREG_ICC_HPPIR0_EL1 = 0xc642, // Group: SysRegValues
-	AArch64_SYSREG_ICC_RPR_EL1 = 0xc65b, // Group: SysRegValues
-	AArch64_SYSREG_ICH_VTR_EL2 = 0xe659, // Group: SysRegValues
-	AArch64_SYSREG_ICH_EISR_EL2 = 0xe65b, // Group: SysRegValues
-	AArch64_SYSREG_ICH_ELRSR_EL2 = 0xe65d, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64ZFR0_EL1 = 0xc024, // Group: SysRegValues
-	AArch64_SYSREG_LORID_EL1 = 0xc527, // Group: SysRegValues
-	AArch64_SYSREG_ERRIDR_EL1 = 0xc298, // Group: SysRegValues
-	AArch64_SYSREG_ERXFR_EL1 = 0xc2a0, // Group: SysRegValues
-	AArch64_SYSREG_RNDR = 0xd920, // Group: SysRegValues
-	AArch64_SYSREG_RNDRRS = 0xd921, // Group: SysRegValues
-	AArch64_SYSREG_SCXTNUM_EL0 = 0xde87, // Group: SysRegValues
-	AArch64_SYSREG_SCXTNUM_EL1 = 0xc687, // Group: SysRegValues
-	AArch64_SYSREG_SCXTNUM_EL2 = 0xe687, // Group: SysRegValues
-	AArch64_SYSREG_SCXTNUM_EL3 = 0xf687, // Group: SysRegValues
-	AArch64_SYSREG_SCXTNUM_EL12 = 0xee87, // Group: SysRegValues
-	AArch64_SYSREG_GPCCR_EL3 = 0xf10e, // Group: SysRegValues
-	AArch64_SYSREG_GPTBR_EL3 = 0xf10c, // Group: SysRegValues
-	AArch64_SYSREG_MFAR_EL3 = 0xf305, // Group: SysRegValues
-	AArch64_SYSREG_MECIDR_EL2 = 0xe547, // Group: SysRegValues
-	AArch64_SYSREG_MECID_P0_EL2 = 0xe540, // Group: SysRegValues
-	AArch64_SYSREG_MECID_A0_EL2 = 0xe541, // Group: SysRegValues
-	AArch64_SYSREG_MECID_P1_EL2 = 0xe542, // Group: SysRegValues
-	AArch64_SYSREG_MECID_A1_EL2 = 0xe543, // Group: SysRegValues
-	AArch64_SYSREG_VMECID_P_EL2 = 0xe548, // Group: SysRegValues
-	AArch64_SYSREG_VMECID_A_EL2 = 0xe549, // Group: SysRegValues
-	AArch64_SYSREG_MECID_RL_A_EL3 = 0xf551, // Group: SysRegValues
-	AArch64_SYSREG_ID_AA64SMFR0_EL1 = 0xc025, // Group: SysRegValues
-	AArch64_SYSREG_DBGDTRTX_EL0 = 0x9828, // Group: SysRegValues
-	AArch64_SYSREG_OSLAR_EL1 = 0x8084, // Group: SysRegValues
-	AArch64_SYSREG_PMSWINC_EL0 = 0xdce4, // Group: SysRegValues
-	AArch64_SYSREG_TRCOSLAR = 0x8884, // Group: SysRegValues
-	AArch64_SYSREG_TRCLAR = 0x8be6, // Group: SysRegValues
-	AArch64_SYSREG_ICC_EOIR1_EL1 = 0xc661, // Group: SysRegValues
-	AArch64_SYSREG_ICC_EOIR0_EL1 = 0xc641, // Group: SysRegValues
-	AArch64_SYSREG_ICC_DIR_EL1 = 0xc659, // Group: SysRegValues
-	AArch64_SYSREG_ICC_SGI1R_EL1 = 0xc65d, // Group: SysRegValues
-	AArch64_SYSREG_ICC_ASGI1R_EL1 = 0xc65e, // Group: SysRegValues
-	AArch64_SYSREG_ICC_SGI0R_EL1 = 0xc65f, // Group: SysRegValues
-	AArch64_SYSREG_OSDTRRX_EL1 = 0x8002, // Group: SysRegValues
-	AArch64_SYSREG_OSDTRTX_EL1 = 0x801a, // Group: SysRegValues
-	AArch64_SYSREG_TEECR32_EL1 = 0x9000, // Group: SysRegValues
-	AArch64_SYSREG_MDCCINT_EL1 = 0x8010, // Group: SysRegValues
-	AArch64_SYSREG_MDSCR_EL1 = 0x8012, // Group: SysRegValues
-	AArch64_SYSREG_DBGDTR_EL0 = 0x9820, // Group: SysRegValues
-	AArch64_SYSREG_OSECCR_EL1 = 0x8032, // Group: SysRegValues
-	AArch64_SYSREG_DBGVCR32_EL2 = 0xa038, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR0_EL1 = 0x8004, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR0_EL1 = 0x8005, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR0_EL1 = 0x8006, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR0_EL1 = 0x8007, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR1_EL1 = 0x800c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR1_EL1 = 0x800d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR1_EL1 = 0x800e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR1_EL1 = 0x800f, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR2_EL1 = 0x8014, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR2_EL1 = 0x8015, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR2_EL1 = 0x8016, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR2_EL1 = 0x8017, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR3_EL1 = 0x801c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR3_EL1 = 0x801d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR3_EL1 = 0x801e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR3_EL1 = 0x801f, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR4_EL1 = 0x8024, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR4_EL1 = 0x8025, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR4_EL1 = 0x8026, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR4_EL1 = 0x8027, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR5_EL1 = 0x802c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR5_EL1 = 0x802d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR5_EL1 = 0x802e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR5_EL1 = 0x802f, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR6_EL1 = 0x8034, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR6_EL1 = 0x8035, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR6_EL1 = 0x8036, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR6_EL1 = 0x8037, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR7_EL1 = 0x803c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR7_EL1 = 0x803d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR7_EL1 = 0x803e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR7_EL1 = 0x803f, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR8_EL1 = 0x8044, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR8_EL1 = 0x8045, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR8_EL1 = 0x8046, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR8_EL1 = 0x8047, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR9_EL1 = 0x804c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR9_EL1 = 0x804d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR9_EL1 = 0x804e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR9_EL1 = 0x804f, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR10_EL1 = 0x8054, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR10_EL1 = 0x8055, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR10_EL1 = 0x8056, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR10_EL1 = 0x8057, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR11_EL1 = 0x805c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR11_EL1 = 0x805d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR11_EL1 = 0x805e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR11_EL1 = 0x805f, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR12_EL1 = 0x8064, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR12_EL1 = 0x8065, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR12_EL1 = 0x8066, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR12_EL1 = 0x8067, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR13_EL1 = 0x806c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR13_EL1 = 0x806d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR13_EL1 = 0x806e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR13_EL1 = 0x806f, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR14_EL1 = 0x8074, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR14_EL1 = 0x8075, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR14_EL1 = 0x8076, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR14_EL1 = 0x8077, // Group: SysRegValues
-	AArch64_SYSREG_DBGBVR15_EL1 = 0x807c, // Group: SysRegValues
-	AArch64_SYSREG_DBGBCR15_EL1 = 0x807d, // Group: SysRegValues
-	AArch64_SYSREG_DBGWVR15_EL1 = 0x807e, // Group: SysRegValues
-	AArch64_SYSREG_DBGWCR15_EL1 = 0x807f, // Group: SysRegValues
-	AArch64_SYSREG_TEEHBR32_EL1 = 0x9080, // Group: SysRegValues
-	AArch64_SYSREG_OSDLR_EL1 = 0x809c, // Group: SysRegValues
-	AArch64_SYSREG_DBGPRCR_EL1 = 0x80a4, // Group: SysRegValues
-	AArch64_SYSREG_DBGCLAIMSET_EL1 = 0x83c6, // Group: SysRegValues
-	AArch64_SYSREG_DBGCLAIMCLR_EL1 = 0x83ce, // Group: SysRegValues
-	AArch64_SYSREG_CSSELR_EL1 = 0xd000, // Group: SysRegValues
-	AArch64_SYSREG_VPIDR_EL2 = 0xe000, // Group: SysRegValues
-	AArch64_SYSREG_VMPIDR_EL2 = 0xe005, // Group: SysRegValues
-	AArch64_SYSREG_CPACR_EL1 = 0xc082, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR_EL1 = 0xc080, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR_EL2 = 0xe080, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR_EL3 = 0xf080, // Group: SysRegValues
-	AArch64_SYSREG_ACTLR_EL1 = 0xc081, // Group: SysRegValues
-	AArch64_SYSREG_ACTLR_EL2 = 0xe081, // Group: SysRegValues
-	AArch64_SYSREG_ACTLR_EL3 = 0xf081, // Group: SysRegValues
-	AArch64_SYSREG_HCR_EL2 = 0xe088, // Group: SysRegValues
-	AArch64_SYSREG_HCRX_EL2 = 0xe092, // Group: SysRegValues
-	AArch64_SYSREG_SCR_EL3 = 0xf088, // Group: SysRegValues
-	AArch64_SYSREG_MDCR_EL2 = 0xe089, // Group: SysRegValues
-	AArch64_SYSREG_SDER32_EL3 = 0xf089, // Group: SysRegValues
-	AArch64_SYSREG_CPTR_EL2 = 0xe08a, // Group: SysRegValues
-	AArch64_SYSREG_CPTR_EL3 = 0xf08a, // Group: SysRegValues
-	AArch64_SYSREG_HSTR_EL2 = 0xe08b, // Group: SysRegValues
-	AArch64_SYSREG_HACR_EL2 = 0xe08f, // Group: SysRegValues
-	AArch64_SYSREG_MDCR_EL3 = 0xf099, // Group: SysRegValues
-	AArch64_SYSREG_TTBR0_EL1 = 0xc100, // Group: SysRegValues
-	AArch64_SYSREG_TTBR0_EL3 = 0xf100, // Group: SysRegValues
-	AArch64_SYSREG_TTBR0_EL2 = 0xe100, // Group: SysRegValues
-	AArch64_SYSREG_VTTBR_EL2 = 0xe108, // Group: SysRegValues
-	AArch64_SYSREG_TTBR1_EL1 = 0xc101, // Group: SysRegValues
-	AArch64_SYSREG_TCR_EL1 = 0xc102, // Group: SysRegValues
-	AArch64_SYSREG_TCR_EL2 = 0xe102, // Group: SysRegValues
-	AArch64_SYSREG_TCR_EL3 = 0xf102, // Group: SysRegValues
-	AArch64_SYSREG_VTCR_EL2 = 0xe10a, // Group: SysRegValues
-	AArch64_SYSREG_DACR32_EL2 = 0xe180, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_EL1 = 0xc200, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_EL2 = 0xe200, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_EL3 = 0xf200, // Group: SysRegValues
-	AArch64_SYSREG_ELR_EL1 = 0xc201, // Group: SysRegValues
-	AArch64_SYSREG_ELR_EL2 = 0xe201, // Group: SysRegValues
-	AArch64_SYSREG_ELR_EL3 = 0xf201, // Group: SysRegValues
-	AArch64_SYSREG_SP_EL0 = 0xc208, // Group: SysRegValues
-	AArch64_SYSREG_SP_EL1 = 0xe208, // Group: SysRegValues
-	AArch64_SYSREG_SP_EL2 = 0xf208, // Group: SysRegValues
-	AArch64_SYSREG_SPSEL_SysRegValues = 0xc210, // Group: SysRegValues - also encoded as: AArch64_SYSREG_SPSEL
-	AArch64_SYSREG_NZCV = 0xda10, // Group: SysRegValues
-	AArch64_SYSREG_DAIF = 0xda11, // Group: SysRegValues
-	AArch64_SYSREG_CURRENTEL = 0xc212, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_IRQ = 0xe218, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_ABT = 0xe219, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_UND = 0xe21a, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_FIQ = 0xe21b, // Group: SysRegValues
-	AArch64_SYSREG_FPCR = 0xda20, // Group: SysRegValues
-	AArch64_SYSREG_FPSR = 0xda21, // Group: SysRegValues
-	AArch64_SYSREG_DSPSR_EL0 = 0xda28, // Group: SysRegValues
-	AArch64_SYSREG_DLR_EL0 = 0xda29, // Group: SysRegValues
-	AArch64_SYSREG_IFSR32_EL2 = 0xe281, // Group: SysRegValues
-	AArch64_SYSREG_AFSR0_EL1 = 0xc288, // Group: SysRegValues
-	AArch64_SYSREG_AFSR0_EL2 = 0xe288, // Group: SysRegValues
-	AArch64_SYSREG_AFSR0_EL3 = 0xf288, // Group: SysRegValues
-	AArch64_SYSREG_AFSR1_EL1 = 0xc289, // Group: SysRegValues
-	AArch64_SYSREG_AFSR1_EL2 = 0xe289, // Group: SysRegValues
-	AArch64_SYSREG_AFSR1_EL3 = 0xf289, // Group: SysRegValues
-	AArch64_SYSREG_ESR_EL1 = 0xc290, // Group: SysRegValues
-	AArch64_SYSREG_ESR_EL2 = 0xe290, // Group: SysRegValues
-	AArch64_SYSREG_ESR_EL3 = 0xf290, // Group: SysRegValues
-	AArch64_SYSREG_FPEXC32_EL2 = 0xe298, // Group: SysRegValues
-	AArch64_SYSREG_FAR_EL1 = 0xc300, // Group: SysRegValues
-	AArch64_SYSREG_FAR_EL2 = 0xe300, // Group: SysRegValues
-	AArch64_SYSREG_FAR_EL3 = 0xf300, // Group: SysRegValues
-	AArch64_SYSREG_HPFAR_EL2 = 0xe304, // Group: SysRegValues
-	AArch64_SYSREG_PAR_EL1 = 0xc3a0, // Group: SysRegValues
-	AArch64_SYSREG_PMCR_EL0 = 0xdce0, // Group: SysRegValues
-	AArch64_SYSREG_PMCNTENSET_EL0 = 0xdce1, // Group: SysRegValues
-	AArch64_SYSREG_PMCNTENCLR_EL0 = 0xdce2, // Group: SysRegValues
-	AArch64_SYSREG_PMOVSCLR_EL0 = 0xdce3, // Group: SysRegValues
-	AArch64_SYSREG_PMSELR_EL0 = 0xdce5, // Group: SysRegValues
-	AArch64_SYSREG_PMCCNTR_EL0 = 0xdce8, // Group: SysRegValues
-	AArch64_SYSREG_PMXEVTYPER_EL0 = 0xdce9, // Group: SysRegValues
-	AArch64_SYSREG_PMXEVCNTR_EL0 = 0xdcea, // Group: SysRegValues
-	AArch64_SYSREG_PMUSERENR_EL0 = 0xdcf0, // Group: SysRegValues
-	AArch64_SYSREG_PMINTENSET_EL1 = 0xc4f1, // Group: SysRegValues
-	AArch64_SYSREG_PMINTENCLR_EL1 = 0xc4f2, // Group: SysRegValues
-	AArch64_SYSREG_PMOVSSET_EL0 = 0xdcf3, // Group: SysRegValues
-	AArch64_SYSREG_MAIR_EL1 = 0xc510, // Group: SysRegValues
-	AArch64_SYSREG_MAIR_EL2 = 0xe510, // Group: SysRegValues
-	AArch64_SYSREG_MAIR_EL3 = 0xf510, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR_EL1 = 0xc518, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR_EL2 = 0xe518, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR_EL3 = 0xf518, // Group: SysRegValues
-	AArch64_SYSREG_VBAR_EL1 = 0xc600, // Group: SysRegValues
-	AArch64_SYSREG_VBAR_EL2 = 0xe600, // Group: SysRegValues
-	AArch64_SYSREG_VBAR_EL3 = 0xf600, // Group: SysRegValues
-	AArch64_SYSREG_RMR_EL1 = 0xc602, // Group: SysRegValues
-	AArch64_SYSREG_RMR_EL2 = 0xe602, // Group: SysRegValues
-	AArch64_SYSREG_RMR_EL3 = 0xf602, // Group: SysRegValues
-	AArch64_SYSREG_CONTEXTIDR_EL1 = 0xc681, // Group: SysRegValues
-	AArch64_SYSREG_TPIDR_EL0 = 0xde82, // Group: SysRegValues
-	AArch64_SYSREG_TPIDR_EL2 = 0xe682, // Group: SysRegValues
-	AArch64_SYSREG_TPIDR_EL3 = 0xf682, // Group: SysRegValues
-	AArch64_SYSREG_TPIDRRO_EL0 = 0xde83, // Group: SysRegValues
-	AArch64_SYSREG_TPIDR_EL1 = 0xc684, // Group: SysRegValues
-	AArch64_SYSREG_CNTFRQ_EL0 = 0xdf00, // Group: SysRegValues
-	AArch64_SYSREG_CNTVOFF_EL2 = 0xe703, // Group: SysRegValues
-	AArch64_SYSREG_CNTKCTL_EL1 = 0xc708, // Group: SysRegValues
-	AArch64_SYSREG_CNTHCTL_EL2 = 0xe708, // Group: SysRegValues
-	AArch64_SYSREG_CNTP_TVAL_EL0 = 0xdf10, // Group: SysRegValues
-	AArch64_SYSREG_CNTHP_TVAL_EL2 = 0xe710, // Group: SysRegValues
-	AArch64_SYSREG_CNTPS_TVAL_EL1 = 0xff10, // Group: SysRegValues
-	AArch64_SYSREG_CNTP_CTL_EL0 = 0xdf11, // Group: SysRegValues
-	AArch64_SYSREG_CNTHP_CTL_EL2 = 0xe711, // Group: SysRegValues
-	AArch64_SYSREG_CNTPS_CTL_EL1 = 0xff11, // Group: SysRegValues
-	AArch64_SYSREG_CNTP_CVAL_EL0 = 0xdf12, // Group: SysRegValues
-	AArch64_SYSREG_CNTHP_CVAL_EL2 = 0xe712, // Group: SysRegValues
-	AArch64_SYSREG_CNTPS_CVAL_EL1 = 0xff12, // Group: SysRegValues
-	AArch64_SYSREG_CNTV_TVAL_EL0 = 0xdf18, // Group: SysRegValues
-	AArch64_SYSREG_CNTV_CTL_EL0 = 0xdf19, // Group: SysRegValues
-	AArch64_SYSREG_CNTV_CVAL_EL0 = 0xdf1a, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR0_EL0 = 0xdf40, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR1_EL0 = 0xdf41, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR2_EL0 = 0xdf42, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR3_EL0 = 0xdf43, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR4_EL0 = 0xdf44, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR5_EL0 = 0xdf45, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR6_EL0 = 0xdf46, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR7_EL0 = 0xdf47, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR8_EL0 = 0xdf48, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR9_EL0 = 0xdf49, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR10_EL0 = 0xdf4a, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR11_EL0 = 0xdf4b, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR12_EL0 = 0xdf4c, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR13_EL0 = 0xdf4d, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR14_EL0 = 0xdf4e, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR15_EL0 = 0xdf4f, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR16_EL0 = 0xdf50, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR17_EL0 = 0xdf51, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR18_EL0 = 0xdf52, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR19_EL0 = 0xdf53, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR20_EL0 = 0xdf54, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR21_EL0 = 0xdf55, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR22_EL0 = 0xdf56, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR23_EL0 = 0xdf57, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR24_EL0 = 0xdf58, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR25_EL0 = 0xdf59, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR26_EL0 = 0xdf5a, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR27_EL0 = 0xdf5b, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR28_EL0 = 0xdf5c, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR29_EL0 = 0xdf5d, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTR30_EL0 = 0xdf5e, // Group: SysRegValues
-	AArch64_SYSREG_PMCCFILTR_EL0 = 0xdf7f, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER0_EL0 = 0xdf60, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER1_EL0 = 0xdf61, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER2_EL0 = 0xdf62, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER3_EL0 = 0xdf63, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER4_EL0 = 0xdf64, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER5_EL0 = 0xdf65, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER6_EL0 = 0xdf66, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER7_EL0 = 0xdf67, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER8_EL0 = 0xdf68, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER9_EL0 = 0xdf69, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER10_EL0 = 0xdf6a, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER11_EL0 = 0xdf6b, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER12_EL0 = 0xdf6c, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER13_EL0 = 0xdf6d, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER14_EL0 = 0xdf6e, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER15_EL0 = 0xdf6f, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER16_EL0 = 0xdf70, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER17_EL0 = 0xdf71, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER18_EL0 = 0xdf72, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER19_EL0 = 0xdf73, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER20_EL0 = 0xdf74, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER21_EL0 = 0xdf75, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER22_EL0 = 0xdf76, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER23_EL0 = 0xdf77, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER24_EL0 = 0xdf78, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER25_EL0 = 0xdf79, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER26_EL0 = 0xdf7a, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER27_EL0 = 0xdf7b, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER28_EL0 = 0xdf7c, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER29_EL0 = 0xdf7d, // Group: SysRegValues
-	AArch64_SYSREG_PMEVTYPER30_EL0 = 0xdf7e, // Group: SysRegValues
-	AArch64_SYSREG_TRCPRGCTLR = 0x8808, // Group: SysRegValues
-	AArch64_SYSREG_TRCPROCSELR = 0x8810, // Group: SysRegValues
-	AArch64_SYSREG_TRCCONFIGR = 0x8820, // Group: SysRegValues
-	AArch64_SYSREG_TRCAUXCTLR = 0x8830, // Group: SysRegValues
-	AArch64_SYSREG_TRCEVENTCTL0R = 0x8840, // Group: SysRegValues
-	AArch64_SYSREG_TRCEVENTCTL1R = 0x8848, // Group: SysRegValues
-	AArch64_SYSREG_TRCSTALLCTLR = 0x8858, // Group: SysRegValues
-	AArch64_SYSREG_TRCTSCTLR = 0x8860, // Group: SysRegValues
-	AArch64_SYSREG_TRCSYNCPR = 0x8868, // Group: SysRegValues
-	AArch64_SYSREG_TRCCCCTLR = 0x8870, // Group: SysRegValues
-	AArch64_SYSREG_TRCBBCTLR = 0x8878, // Group: SysRegValues
-	AArch64_SYSREG_TRCTRACEIDR = 0x8801, // Group: SysRegValues
-	AArch64_SYSREG_TRCQCTLR = 0x8809, // Group: SysRegValues
-	AArch64_SYSREG_TRCVICTLR = 0x8802, // Group: SysRegValues
-	AArch64_SYSREG_TRCVIIECTLR = 0x880a, // Group: SysRegValues
-	AArch64_SYSREG_TRCVISSCTLR = 0x8812, // Group: SysRegValues
-	AArch64_SYSREG_TRCVIPCSSCTLR = 0x881a, // Group: SysRegValues
-	AArch64_SYSREG_TRCVDCTLR = 0x8842, // Group: SysRegValues
-	AArch64_SYSREG_TRCVDSACCTLR = 0x884a, // Group: SysRegValues
-	AArch64_SYSREG_TRCVDARCCTLR = 0x8852, // Group: SysRegValues
-	AArch64_SYSREG_TRCSEQEVR0 = 0x8804, // Group: SysRegValues
-	AArch64_SYSREG_TRCSEQEVR1 = 0x880c, // Group: SysRegValues
-	AArch64_SYSREG_TRCSEQEVR2 = 0x8814, // Group: SysRegValues
-	AArch64_SYSREG_TRCSEQRSTEVR = 0x8834, // Group: SysRegValues
-	AArch64_SYSREG_TRCSEQSTR = 0x883c, // Group: SysRegValues
-	AArch64_SYSREG_TRCEXTINSELR = 0x8844, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTRLDVR0 = 0x8805, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTRLDVR1 = 0x880d, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTRLDVR2 = 0x8815, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTRLDVR3 = 0x881d, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTCTLR0 = 0x8825, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTCTLR1 = 0x882d, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTCTLR2 = 0x8835, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTCTLR3 = 0x883d, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTVR0 = 0x8845, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTVR1 = 0x884d, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTVR2 = 0x8855, // Group: SysRegValues
-	AArch64_SYSREG_TRCCNTVR3 = 0x885d, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC0 = 0x8807, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC1 = 0x880f, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC2 = 0x8817, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC3 = 0x881f, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC4 = 0x8827, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC5 = 0x882f, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC6 = 0x8837, // Group: SysRegValues
-	AArch64_SYSREG_TRCIMSPEC7 = 0x883f, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR2 = 0x8890, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR3 = 0x8898, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR4 = 0x88a0, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR5 = 0x88a8, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR6 = 0x88b0, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR7 = 0x88b8, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR8 = 0x88c0, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR9 = 0x88c8, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR10 = 0x88d0, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR11 = 0x88d8, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR12 = 0x88e0, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR13 = 0x88e8, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR14 = 0x88f0, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR15 = 0x88f8, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR16 = 0x8881, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR17 = 0x8889, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR18 = 0x8891, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR19 = 0x8899, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR20 = 0x88a1, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR21 = 0x88a9, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR22 = 0x88b1, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR23 = 0x88b9, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR24 = 0x88c1, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR25 = 0x88c9, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR26 = 0x88d1, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR27 = 0x88d9, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR28 = 0x88e1, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR29 = 0x88e9, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR30 = 0x88f1, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSCTLR31 = 0x88f9, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR0 = 0x8882, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR1 = 0x888a, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR2 = 0x8892, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR3 = 0x889a, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR4 = 0x88a2, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR5 = 0x88aa, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR6 = 0x88b2, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCCR7 = 0x88ba, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR0 = 0x88c2, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR1 = 0x88ca, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR2 = 0x88d2, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR3 = 0x88da, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR4 = 0x88e2, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR5 = 0x88ea, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR6 = 0x88f2, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSCSR7 = 0x88fa, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR0 = 0x8883, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR1 = 0x888b, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR2 = 0x8893, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR3 = 0x889b, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR4 = 0x88a3, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR5 = 0x88ab, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR6 = 0x88b3, // Group: SysRegValues
-	AArch64_SYSREG_TRCSSPCICR7 = 0x88bb, // Group: SysRegValues
-	AArch64_SYSREG_TRCPDCR = 0x88a4, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR0 = 0x8900, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR1 = 0x8910, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR2 = 0x8920, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR3 = 0x8930, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR4 = 0x8940, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR5 = 0x8950, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR6 = 0x8960, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR7 = 0x8970, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR8 = 0x8901, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR9 = 0x8911, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR10 = 0x8921, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR11 = 0x8931, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR12 = 0x8941, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR13 = 0x8951, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR14 = 0x8961, // Group: SysRegValues
-	AArch64_SYSREG_TRCACVR15 = 0x8971, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR0 = 0x8902, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR1 = 0x8912, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR2 = 0x8922, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR3 = 0x8932, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR4 = 0x8942, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR5 = 0x8952, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR6 = 0x8962, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR7 = 0x8972, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR8 = 0x8903, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR9 = 0x8913, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR10 = 0x8923, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR11 = 0x8933, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR12 = 0x8943, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR13 = 0x8953, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR14 = 0x8963, // Group: SysRegValues
-	AArch64_SYSREG_TRCACATR15 = 0x8973, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR0 = 0x8904, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR1 = 0x8924, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR2 = 0x8944, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR3 = 0x8964, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR4 = 0x8905, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR5 = 0x8925, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR6 = 0x8945, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCVR7 = 0x8965, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR0 = 0x8906, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR1 = 0x8926, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR2 = 0x8946, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR3 = 0x8966, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR4 = 0x8907, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR5 = 0x8927, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR6 = 0x8947, // Group: SysRegValues
-	AArch64_SYSREG_TRCDVCMR7 = 0x8967, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR0 = 0x8980, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR1 = 0x8990, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR2 = 0x89a0, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR3 = 0x89b0, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR4 = 0x89c0, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR5 = 0x89d0, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR6 = 0x89e0, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCVR7 = 0x89f0, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR0 = 0x8981, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR1 = 0x8991, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR2 = 0x89a1, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR3 = 0x89b1, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR4 = 0x89c1, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR5 = 0x89d1, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR6 = 0x89e1, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCVR7 = 0x89f1, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCCTLR0 = 0x8982, // Group: SysRegValues
-	AArch64_SYSREG_TRCCIDCCTLR1 = 0x898a, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCCTLR0 = 0x8992, // Group: SysRegValues
-	AArch64_SYSREG_TRCVMIDCCTLR1 = 0x899a, // Group: SysRegValues
-	AArch64_SYSREG_TRCITCTRL = 0x8b84, // Group: SysRegValues
-	AArch64_SYSREG_TRCCLAIMSET = 0x8bc6, // Group: SysRegValues
-	AArch64_SYSREG_TRCCLAIMCLR = 0x8bce, // Group: SysRegValues
-	AArch64_SYSREG_ICC_BPR1_EL1 = 0xc663, // Group: SysRegValues
-	AArch64_SYSREG_ICC_BPR0_EL1 = 0xc643, // Group: SysRegValues
-	AArch64_SYSREG_ICC_PMR_EL1 = 0xc230, // Group: SysRegValues
-	AArch64_SYSREG_ICC_CTLR_EL1 = 0xc664, // Group: SysRegValues
-	AArch64_SYSREG_ICC_CTLR_EL3 = 0xf664, // Group: SysRegValues
-	AArch64_SYSREG_ICC_SRE_EL1 = 0xc665, // Group: SysRegValues
-	AArch64_SYSREG_ICC_SRE_EL2 = 0xe64d, // Group: SysRegValues
-	AArch64_SYSREG_ICC_SRE_EL3 = 0xf665, // Group: SysRegValues
-	AArch64_SYSREG_ICC_IGRPEN0_EL1 = 0xc666, // Group: SysRegValues
-	AArch64_SYSREG_ICC_IGRPEN1_EL1 = 0xc667, // Group: SysRegValues
-	AArch64_SYSREG_ICC_IGRPEN1_EL3 = 0xf667, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP0R0_EL1 = 0xc644, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP0R1_EL1 = 0xc645, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP0R2_EL1 = 0xc646, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP0R3_EL1 = 0xc647, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP1R0_EL1 = 0xc648, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP1R1_EL1 = 0xc649, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP1R2_EL1 = 0xc64a, // Group: SysRegValues
-	AArch64_SYSREG_ICC_AP1R3_EL1 = 0xc64b, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP0R0_EL2 = 0xe640, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP0R1_EL2 = 0xe641, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP0R2_EL2 = 0xe642, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP0R3_EL2 = 0xe643, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP1R0_EL2 = 0xe648, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP1R1_EL2 = 0xe649, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP1R2_EL2 = 0xe64a, // Group: SysRegValues
-	AArch64_SYSREG_ICH_AP1R3_EL2 = 0xe64b, // Group: SysRegValues
-	AArch64_SYSREG_ICH_HCR_EL2 = 0xe658, // Group: SysRegValues
-	AArch64_SYSREG_ICH_MISR_EL2 = 0xe65a, // Group: SysRegValues
-	AArch64_SYSREG_ICH_VMCR_EL2 = 0xe65f, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR0_EL2 = 0xe660, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR1_EL2 = 0xe661, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR2_EL2 = 0xe662, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR3_EL2 = 0xe663, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR4_EL2 = 0xe664, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR5_EL2 = 0xe665, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR6_EL2 = 0xe666, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR7_EL2 = 0xe667, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR8_EL2 = 0xe668, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR9_EL2 = 0xe669, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR10_EL2 = 0xe66a, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR11_EL2 = 0xe66b, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR12_EL2 = 0xe66c, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR13_EL2 = 0xe66d, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR14_EL2 = 0xe66e, // Group: SysRegValues
-	AArch64_SYSREG_ICH_LR15_EL2 = 0xe66f, // Group: SysRegValues
-	AArch64_SYSREG_VSCTLR_EL2 = 0xe100, // Group: SysRegValues
-	AArch64_SYSREG_MPUIR_EL1 = 0xc004, // Group: SysRegValues
-	AArch64_SYSREG_MPUIR_EL2 = 0xe004, // Group: SysRegValues
-	AArch64_SYSREG_PRENR_EL1 = 0xc309, // Group: SysRegValues
-	AArch64_SYSREG_PRENR_EL2 = 0xe309, // Group: SysRegValues
-	AArch64_SYSREG_PRSELR_EL1 = 0xc311, // Group: SysRegValues
-	AArch64_SYSREG_PRSELR_EL2 = 0xe311, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR_EL1 = 0xc340, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR_EL2 = 0xe340, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR_EL1 = 0xc341, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR_EL2 = 0xe341, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR1_EL1 = 0xc344, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR1_EL1 = 0xc345, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR1_EL2 = 0xe344, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR1_EL2 = 0xe345, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR2_EL1 = 0xc348, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR2_EL1 = 0xc349, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR2_EL2 = 0xe348, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR2_EL2 = 0xe349, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR3_EL1 = 0xc34c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR3_EL1 = 0xc34d, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR3_EL2 = 0xe34c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR3_EL2 = 0xe34d, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR4_EL1 = 0xc350, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR4_EL1 = 0xc351, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR4_EL2 = 0xe350, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR4_EL2 = 0xe351, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR5_EL1 = 0xc354, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR5_EL1 = 0xc355, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR5_EL2 = 0xe354, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR5_EL2 = 0xe355, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR6_EL1 = 0xc358, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR6_EL1 = 0xc359, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR6_EL2 = 0xe358, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR6_EL2 = 0xe359, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR7_EL1 = 0xc35c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR7_EL1 = 0xc35d, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR7_EL2 = 0xe35c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR7_EL2 = 0xe35d, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR8_EL1 = 0xc360, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR8_EL1 = 0xc361, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR8_EL2 = 0xe360, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR8_EL2 = 0xe361, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR9_EL1 = 0xc364, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR9_EL1 = 0xc365, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR9_EL2 = 0xe364, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR9_EL2 = 0xe365, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR10_EL1 = 0xc368, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR10_EL1 = 0xc369, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR10_EL2 = 0xe368, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR10_EL2 = 0xe369, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR11_EL1 = 0xc36c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR11_EL1 = 0xc36d, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR11_EL2 = 0xe36c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR11_EL2 = 0xe36d, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR12_EL1 = 0xc370, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR12_EL1 = 0xc371, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR12_EL2 = 0xe370, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR12_EL2 = 0xe371, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR13_EL1 = 0xc374, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR13_EL1 = 0xc375, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR13_EL2 = 0xe374, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR13_EL2 = 0xe375, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR14_EL1 = 0xc378, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR14_EL1 = 0xc379, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR14_EL2 = 0xe378, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR14_EL2 = 0xe379, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR15_EL1 = 0xc37c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR15_EL1 = 0xc37d, // Group: SysRegValues
-	AArch64_SYSREG_PRBAR15_EL2 = 0xe37c, // Group: SysRegValues
-	AArch64_SYSREG_PRLAR15_EL2 = 0xe37d, // Group: SysRegValues
-	AArch64_SYSREG_PAN_SysRegValues = 0xc213, // Group: SysRegValues - also encoded as: AArch64_SYSREG_PAN
-	AArch64_SYSREG_LORSA_EL1 = 0xc520, // Group: SysRegValues
-	AArch64_SYSREG_LOREA_EL1 = 0xc521, // Group: SysRegValues
-	AArch64_SYSREG_LORN_EL1 = 0xc522, // Group: SysRegValues
-	AArch64_SYSREG_LORC_EL1 = 0xc523, // Group: SysRegValues
-	AArch64_SYSREG_TTBR1_EL2 = 0xe101, // Group: SysRegValues
-	AArch64_SYSREG_CNTHV_TVAL_EL2 = 0xe718, // Group: SysRegValues
-	AArch64_SYSREG_CNTHV_CVAL_EL2 = 0xe71a, // Group: SysRegValues
-	AArch64_SYSREG_CNTHV_CTL_EL2 = 0xe719, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR_EL12 = 0xe880, // Group: SysRegValues
-	AArch64_SYSREG_CPACR_EL12 = 0xe882, // Group: SysRegValues
-	AArch64_SYSREG_TTBR0_EL12 = 0xe900, // Group: SysRegValues
-	AArch64_SYSREG_TTBR1_EL12 = 0xe901, // Group: SysRegValues
-	AArch64_SYSREG_TCR_EL12 = 0xe902, // Group: SysRegValues
-	AArch64_SYSREG_AFSR0_EL12 = 0xea88, // Group: SysRegValues
-	AArch64_SYSREG_AFSR1_EL12 = 0xea89, // Group: SysRegValues
-	AArch64_SYSREG_ESR_EL12 = 0xea90, // Group: SysRegValues
-	AArch64_SYSREG_FAR_EL12 = 0xeb00, // Group: SysRegValues
-	AArch64_SYSREG_MAIR_EL12 = 0xed10, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR_EL12 = 0xed18, // Group: SysRegValues
-	AArch64_SYSREG_VBAR_EL12 = 0xee00, // Group: SysRegValues
-	AArch64_SYSREG_CONTEXTIDR_EL12 = 0xee81, // Group: SysRegValues
-	AArch64_SYSREG_CNTKCTL_EL12 = 0xef08, // Group: SysRegValues
-	AArch64_SYSREG_CNTP_TVAL_EL02 = 0xef10, // Group: SysRegValues
-	AArch64_SYSREG_CNTP_CTL_EL02 = 0xef11, // Group: SysRegValues
-	AArch64_SYSREG_CNTP_CVAL_EL02 = 0xef12, // Group: SysRegValues
-	AArch64_SYSREG_CNTV_TVAL_EL02 = 0xef18, // Group: SysRegValues
-	AArch64_SYSREG_CNTV_CTL_EL02 = 0xef19, // Group: SysRegValues
-	AArch64_SYSREG_CNTV_CVAL_EL02 = 0xef1a, // Group: SysRegValues
-	AArch64_SYSREG_SPSR_EL12 = 0xea00, // Group: SysRegValues
-	AArch64_SYSREG_ELR_EL12 = 0xea01, // Group: SysRegValues
-	AArch64_SYSREG_CONTEXTIDR_EL2 = 0xe681, // Group: SysRegValues
-	AArch64_SYSREG_UAO_SysRegValues = 0xc214, // Group: SysRegValues - also encoded as: AArch64_SYSREG_UAO
-	AArch64_SYSREG_PMBLIMITR_EL1 = 0xc4d0, // Group: SysRegValues
-	AArch64_SYSREG_PMBPTR_EL1 = 0xc4d1, // Group: SysRegValues
-	AArch64_SYSREG_PMBSR_EL1 = 0xc4d3, // Group: SysRegValues
-	AArch64_SYSREG_PMBIDR_EL1 = 0xc4d7, // Group: SysRegValues
-	AArch64_SYSREG_PMSCR_EL2 = 0xe4c8, // Group: SysRegValues
-	AArch64_SYSREG_PMSCR_EL12 = 0xecc8, // Group: SysRegValues
-	AArch64_SYSREG_PMSCR_EL1 = 0xc4c8, // Group: SysRegValues
-	AArch64_SYSREG_PMSICR_EL1 = 0xc4ca, // Group: SysRegValues
-	AArch64_SYSREG_PMSIRR_EL1 = 0xc4cb, // Group: SysRegValues
-	AArch64_SYSREG_PMSFCR_EL1 = 0xc4cc, // Group: SysRegValues
-	AArch64_SYSREG_PMSEVFR_EL1 = 0xc4cd, // Group: SysRegValues
-	AArch64_SYSREG_PMSLATFR_EL1 = 0xc4ce, // Group: SysRegValues
-	AArch64_SYSREG_PMSIDR_EL1 = 0xc4cf, // Group: SysRegValues
-	AArch64_SYSREG_ERRSELR_EL1 = 0xc299, // Group: SysRegValues
-	AArch64_SYSREG_ERXCTLR_EL1 = 0xc2a1, // Group: SysRegValues
-	AArch64_SYSREG_ERXSTATUS_EL1 = 0xc2a2, // Group: SysRegValues
-	AArch64_SYSREG_ERXADDR_EL1 = 0xc2a3, // Group: SysRegValues
-	AArch64_SYSREG_ERXMISC0_EL1 = 0xc2a8, // Group: SysRegValues
-	AArch64_SYSREG_ERXMISC1_EL1 = 0xc2a9, // Group: SysRegValues
-	AArch64_SYSREG_DISR_EL1 = 0xc609, // Group: SysRegValues
-	AArch64_SYSREG_VDISR_EL2 = 0xe609, // Group: SysRegValues
-	AArch64_SYSREG_VSESR_EL2 = 0xe293, // Group: SysRegValues
-	AArch64_SYSREG_APIAKEYLO_EL1 = 0xc108, // Group: SysRegValues
-	AArch64_SYSREG_APIAKEYHI_EL1 = 0xc109, // Group: SysRegValues
-	AArch64_SYSREG_APIBKEYLO_EL1 = 0xc10a, // Group: SysRegValues
-	AArch64_SYSREG_APIBKEYHI_EL1 = 0xc10b, // Group: SysRegValues
-	AArch64_SYSREG_APDAKEYLO_EL1 = 0xc110, // Group: SysRegValues
-	AArch64_SYSREG_APDAKEYHI_EL1 = 0xc111, // Group: SysRegValues
-	AArch64_SYSREG_APDBKEYLO_EL1 = 0xc112, // Group: SysRegValues
-	AArch64_SYSREG_APDBKEYHI_EL1 = 0xc113, // Group: SysRegValues
-	AArch64_SYSREG_APGAKEYLO_EL1 = 0xc118, // Group: SysRegValues
-	AArch64_SYSREG_APGAKEYHI_EL1 = 0xc119, // Group: SysRegValues
-	AArch64_SYSREG_VSTCR_EL2 = 0xe132, // Group: SysRegValues
-	AArch64_SYSREG_VSTTBR_EL2 = 0xe130, // Group: SysRegValues
-	AArch64_SYSREG_CNTHVS_TVAL_EL2 = 0xe720, // Group: SysRegValues
-	AArch64_SYSREG_CNTHVS_CVAL_EL2 = 0xe722, // Group: SysRegValues
-	AArch64_SYSREG_CNTHVS_CTL_EL2 = 0xe721, // Group: SysRegValues
-	AArch64_SYSREG_CNTHPS_TVAL_EL2 = 0xe728, // Group: SysRegValues
-	AArch64_SYSREG_CNTHPS_CVAL_EL2 = 0xe72a, // Group: SysRegValues
-	AArch64_SYSREG_CNTHPS_CTL_EL2 = 0xe729, // Group: SysRegValues
-	AArch64_SYSREG_SDER32_EL2 = 0xe099, // Group: SysRegValues
-	AArch64_SYSREG_ERXPFGCTL_EL1 = 0xc2a5, // Group: SysRegValues
-	AArch64_SYSREG_ERXPFGCDN_EL1 = 0xc2a6, // Group: SysRegValues
-	AArch64_SYSREG_ERXMISC2_EL1 = 0xc2aa, // Group: SysRegValues
-	AArch64_SYSREG_ERXMISC3_EL1 = 0xc2ab, // Group: SysRegValues
-	AArch64_SYSREG_ERXPFGF_EL1 = 0xc2a4, // Group: SysRegValues
-	AArch64_SYSREG_MPAM0_EL1 = 0xc529, // Group: SysRegValues
-	AArch64_SYSREG_MPAM1_EL1 = 0xc528, // Group: SysRegValues
-	AArch64_SYSREG_MPAM2_EL2 = 0xe528, // Group: SysRegValues
-	AArch64_SYSREG_MPAM3_EL3 = 0xf528, // Group: SysRegValues
-	AArch64_SYSREG_MPAM1_EL12 = 0xed28, // Group: SysRegValues
-	AArch64_SYSREG_MPAMHCR_EL2 = 0xe520, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPMV_EL2 = 0xe521, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM0_EL2 = 0xe530, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM1_EL2 = 0xe531, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM2_EL2 = 0xe532, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM3_EL2 = 0xe533, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM4_EL2 = 0xe534, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM5_EL2 = 0xe535, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM6_EL2 = 0xe536, // Group: SysRegValues
-	AArch64_SYSREG_MPAMVPM7_EL2 = 0xe537, // Group: SysRegValues
-	AArch64_SYSREG_MPAMIDR_EL1 = 0xc524, // Group: SysRegValues
-	AArch64_SYSREG_AMCR_EL0 = 0xde90, // Group: SysRegValues
-	AArch64_SYSREG_AMCFGR_EL0 = 0xde91, // Group: SysRegValues
-	AArch64_SYSREG_AMCGCR_EL0 = 0xde92, // Group: SysRegValues
-	AArch64_SYSREG_AMUSERENR_EL0 = 0xde93, // Group: SysRegValues
-	AArch64_SYSREG_AMCNTENCLR0_EL0 = 0xde94, // Group: SysRegValues
-	AArch64_SYSREG_AMCNTENSET0_EL0 = 0xde95, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR00_EL0 = 0xdea0, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR01_EL0 = 0xdea1, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR02_EL0 = 0xdea2, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR03_EL0 = 0xdea3, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER00_EL0 = 0xdeb0, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER01_EL0 = 0xdeb1, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER02_EL0 = 0xdeb2, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER03_EL0 = 0xdeb3, // Group: SysRegValues
-	AArch64_SYSREG_AMCNTENCLR1_EL0 = 0xde98, // Group: SysRegValues
-	AArch64_SYSREG_AMCNTENSET1_EL0 = 0xde99, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR10_EL0 = 0xdee0, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR11_EL0 = 0xdee1, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR12_EL0 = 0xdee2, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR13_EL0 = 0xdee3, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR14_EL0 = 0xdee4, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR15_EL0 = 0xdee5, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR16_EL0 = 0xdee6, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR17_EL0 = 0xdee7, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR18_EL0 = 0xdee8, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR19_EL0 = 0xdee9, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR110_EL0 = 0xdeea, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR111_EL0 = 0xdeeb, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR112_EL0 = 0xdeec, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR113_EL0 = 0xdeed, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR114_EL0 = 0xdeee, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTR115_EL0 = 0xdeef, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER10_EL0 = 0xdef0, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER11_EL0 = 0xdef1, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER12_EL0 = 0xdef2, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER13_EL0 = 0xdef3, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER14_EL0 = 0xdef4, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER15_EL0 = 0xdef5, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER16_EL0 = 0xdef6, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER17_EL0 = 0xdef7, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER18_EL0 = 0xdef8, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER19_EL0 = 0xdef9, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER110_EL0 = 0xdefa, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER111_EL0 = 0xdefb, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER112_EL0 = 0xdefc, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER113_EL0 = 0xdefd, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER114_EL0 = 0xdefe, // Group: SysRegValues
-	AArch64_SYSREG_AMEVTYPER115_EL0 = 0xdeff, // Group: SysRegValues
-	AArch64_SYSREG_TRFCR_EL1 = 0xc091, // Group: SysRegValues
-	AArch64_SYSREG_TRFCR_EL2 = 0xe091, // Group: SysRegValues
-	AArch64_SYSREG_TRFCR_EL12 = 0xe891, // Group: SysRegValues
-	AArch64_SYSREG_DIT_SysRegValues = 0xda15, // Group: SysRegValues - also encoded as: AArch64_SYSREG_DIT
-	AArch64_SYSREG_VNCR_EL2 = 0xe110, // Group: SysRegValues
-	AArch64_SYSREG_ZCR_EL1 = 0xc090, // Group: SysRegValues
-	AArch64_SYSREG_ZCR_EL2 = 0xe090, // Group: SysRegValues
-	AArch64_SYSREG_ZCR_EL3 = 0xf090, // Group: SysRegValues
-	AArch64_SYSREG_ZCR_EL12 = 0xe890, // Group: SysRegValues
-	AArch64_SYSREG_SSBS_SysRegValues = 0xda16, // Group: SysRegValues - also encoded as: AArch64_SYSREG_SSBS
-	AArch64_SYSREG_TCO_SysRegValues = 0xda17, // Group: SysRegValues - also encoded as: AArch64_SYSREG_TCO
-	AArch64_SYSREG_GCR_EL1 = 0xc086, // Group: SysRegValues
-	AArch64_SYSREG_RGSR_EL1 = 0xc085, // Group: SysRegValues
-	AArch64_SYSREG_TFSR_EL1 = 0xc2b0, // Group: SysRegValues
-	AArch64_SYSREG_TFSR_EL2 = 0xe2b0, // Group: SysRegValues
-	AArch64_SYSREG_TFSR_EL3 = 0xf2b0, // Group: SysRegValues
-	AArch64_SYSREG_TFSR_EL12 = 0xeab0, // Group: SysRegValues
-	AArch64_SYSREG_TFSRE0_EL1 = 0xc2b1, // Group: SysRegValues
-	AArch64_SYSREG_GMID_EL1 = 0xc804, // Group: SysRegValues
-	AArch64_SYSREG_TRCRSR = 0x8850, // Group: SysRegValues
-	AArch64_SYSREG_TRCEXTINSELR0 = 0x8844, // Group: SysRegValues
-	AArch64_SYSREG_TRCEXTINSELR1 = 0x884c, // Group: SysRegValues
-	AArch64_SYSREG_TRCEXTINSELR2 = 0x8854, // Group: SysRegValues
-	AArch64_SYSREG_TRCEXTINSELR3 = 0x885c, // Group: SysRegValues
-	AArch64_SYSREG_TRBLIMITR_EL1 = 0xc4d8, // Group: SysRegValues
-	AArch64_SYSREG_TRBPTR_EL1 = 0xc4d9, // Group: SysRegValues
-	AArch64_SYSREG_TRBBASER_EL1 = 0xc4da, // Group: SysRegValues
-	AArch64_SYSREG_TRBSR_EL1 = 0xc4db, // Group: SysRegValues
-	AArch64_SYSREG_TRBMAR_EL1 = 0xc4dc, // Group: SysRegValues
-	AArch64_SYSREG_TRBTRG_EL1 = 0xc4de, // Group: SysRegValues
-	AArch64_SYSREG_TRBIDR_EL1 = 0xc4df, // Group: SysRegValues
-	AArch64_SYSREG_AMCG1IDR_EL0 = 0xde96, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF00_EL2 = 0xe6c0, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF10_EL2 = 0xe6d0, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF01_EL2 = 0xe6c1, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF11_EL2 = 0xe6d1, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF02_EL2 = 0xe6c2, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF12_EL2 = 0xe6d2, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF03_EL2 = 0xe6c3, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF13_EL2 = 0xe6d3, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF04_EL2 = 0xe6c4, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF14_EL2 = 0xe6d4, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF05_EL2 = 0xe6c5, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF15_EL2 = 0xe6d5, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF06_EL2 = 0xe6c6, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF16_EL2 = 0xe6d6, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF07_EL2 = 0xe6c7, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF17_EL2 = 0xe6d7, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF08_EL2 = 0xe6c8, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF18_EL2 = 0xe6d8, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF09_EL2 = 0xe6c9, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF19_EL2 = 0xe6d9, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF010_EL2 = 0xe6ca, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF110_EL2 = 0xe6da, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF011_EL2 = 0xe6cb, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF111_EL2 = 0xe6db, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF012_EL2 = 0xe6cc, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF112_EL2 = 0xe6dc, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF013_EL2 = 0xe6cd, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF113_EL2 = 0xe6dd, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF014_EL2 = 0xe6ce, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF114_EL2 = 0xe6de, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF015_EL2 = 0xe6cf, // Group: SysRegValues
-	AArch64_SYSREG_AMEVCNTVOFF115_EL2 = 0xe6df, // Group: SysRegValues
-	AArch64_SYSREG_HFGRTR_EL2 = 0xe08c, // Group: SysRegValues
-	AArch64_SYSREG_HFGWTR_EL2 = 0xe08d, // Group: SysRegValues
-	AArch64_SYSREG_HFGITR_EL2 = 0xe08e, // Group: SysRegValues
-	AArch64_SYSREG_HDFGRTR_EL2 = 0xe18c, // Group: SysRegValues
-	AArch64_SYSREG_HDFGWTR_EL2 = 0xe18d, // Group: SysRegValues
-	AArch64_SYSREG_HAFGRTR_EL2 = 0xe18e, // Group: SysRegValues
-	AArch64_SYSREG_HDFGRTR2_EL2 = 0xe188, // Group: SysRegValues
-	AArch64_SYSREG_HDFGWTR2_EL2 = 0xe189, // Group: SysRegValues
-	AArch64_SYSREG_HFGRTR2_EL2 = 0xe18a, // Group: SysRegValues
-	AArch64_SYSREG_HFGWTR2_EL2 = 0xe18b, // Group: SysRegValues
-	AArch64_SYSREG_HFGITR2_EL2 = 0xe18f, // Group: SysRegValues
-	AArch64_SYSREG_CNTSCALE_EL2 = 0xe704, // Group: SysRegValues
-	AArch64_SYSREG_CNTISCALE_EL2 = 0xe705, // Group: SysRegValues
-	AArch64_SYSREG_CNTPOFF_EL2 = 0xe706, // Group: SysRegValues
-	AArch64_SYSREG_CNTVFRQ_EL2 = 0xe707, // Group: SysRegValues
-	AArch64_SYSREG_CNTPCTSS_EL0 = 0xdf05, // Group: SysRegValues
-	AArch64_SYSREG_CNTVCTSS_EL0 = 0xdf06, // Group: SysRegValues
-	AArch64_SYSREG_ACCDATA_EL1 = 0xc685, // Group: SysRegValues
-	AArch64_SYSREG_BRBCR_EL1 = 0x8c80, // Group: SysRegValues
-	AArch64_SYSREG_BRBCR_EL12 = 0xac80, // Group: SysRegValues
-	AArch64_SYSREG_BRBCR_EL2 = 0xa480, // Group: SysRegValues
-	AArch64_SYSREG_BRBFCR_EL1 = 0x8c81, // Group: SysRegValues
-	AArch64_SYSREG_BRBIDR0_EL1 = 0x8c90, // Group: SysRegValues
-	AArch64_SYSREG_BRBINFINJ_EL1 = 0x8c88, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRCINJ_EL1 = 0x8c89, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGTINJ_EL1 = 0x8c8a, // Group: SysRegValues
-	AArch64_SYSREG_BRBTS_EL1 = 0x8c82, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF0_EL1 = 0x8c00, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC0_EL1 = 0x8c01, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT0_EL1 = 0x8c02, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF1_EL1 = 0x8c08, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC1_EL1 = 0x8c09, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT1_EL1 = 0x8c0a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF2_EL1 = 0x8c10, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC2_EL1 = 0x8c11, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT2_EL1 = 0x8c12, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF3_EL1 = 0x8c18, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC3_EL1 = 0x8c19, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT3_EL1 = 0x8c1a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF4_EL1 = 0x8c20, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC4_EL1 = 0x8c21, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT4_EL1 = 0x8c22, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF5_EL1 = 0x8c28, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC5_EL1 = 0x8c29, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT5_EL1 = 0x8c2a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF6_EL1 = 0x8c30, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC6_EL1 = 0x8c31, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT6_EL1 = 0x8c32, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF7_EL1 = 0x8c38, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC7_EL1 = 0x8c39, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT7_EL1 = 0x8c3a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF8_EL1 = 0x8c40, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC8_EL1 = 0x8c41, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT8_EL1 = 0x8c42, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF9_EL1 = 0x8c48, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC9_EL1 = 0x8c49, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT9_EL1 = 0x8c4a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF10_EL1 = 0x8c50, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC10_EL1 = 0x8c51, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT10_EL1 = 0x8c52, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF11_EL1 = 0x8c58, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC11_EL1 = 0x8c59, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT11_EL1 = 0x8c5a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF12_EL1 = 0x8c60, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC12_EL1 = 0x8c61, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT12_EL1 = 0x8c62, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF13_EL1 = 0x8c68, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC13_EL1 = 0x8c69, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT13_EL1 = 0x8c6a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF14_EL1 = 0x8c70, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC14_EL1 = 0x8c71, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT14_EL1 = 0x8c72, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF15_EL1 = 0x8c78, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC15_EL1 = 0x8c79, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT15_EL1 = 0x8c7a, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF16_EL1 = 0x8c04, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC16_EL1 = 0x8c05, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT16_EL1 = 0x8c06, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF17_EL1 = 0x8c0c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC17_EL1 = 0x8c0d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT17_EL1 = 0x8c0e, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF18_EL1 = 0x8c14, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC18_EL1 = 0x8c15, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT18_EL1 = 0x8c16, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF19_EL1 = 0x8c1c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC19_EL1 = 0x8c1d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT19_EL1 = 0x8c1e, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF20_EL1 = 0x8c24, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC20_EL1 = 0x8c25, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT20_EL1 = 0x8c26, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF21_EL1 = 0x8c2c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC21_EL1 = 0x8c2d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT21_EL1 = 0x8c2e, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF22_EL1 = 0x8c34, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC22_EL1 = 0x8c35, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT22_EL1 = 0x8c36, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF23_EL1 = 0x8c3c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC23_EL1 = 0x8c3d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT23_EL1 = 0x8c3e, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF24_EL1 = 0x8c44, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC24_EL1 = 0x8c45, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT24_EL1 = 0x8c46, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF25_EL1 = 0x8c4c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC25_EL1 = 0x8c4d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT25_EL1 = 0x8c4e, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF26_EL1 = 0x8c54, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC26_EL1 = 0x8c55, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT26_EL1 = 0x8c56, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF27_EL1 = 0x8c5c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC27_EL1 = 0x8c5d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT27_EL1 = 0x8c5e, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF28_EL1 = 0x8c64, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC28_EL1 = 0x8c65, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT28_EL1 = 0x8c66, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF29_EL1 = 0x8c6c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC29_EL1 = 0x8c6d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT29_EL1 = 0x8c6e, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF30_EL1 = 0x8c74, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC30_EL1 = 0x8c75, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT30_EL1 = 0x8c76, // Group: SysRegValues
-	AArch64_SYSREG_BRBINF31_EL1 = 0x8c7c, // Group: SysRegValues
-	AArch64_SYSREG_BRBSRC31_EL1 = 0x8c7d, // Group: SysRegValues
-	AArch64_SYSREG_BRBTGT31_EL1 = 0x8c7e, // Group: SysRegValues
-	AArch64_SYSREG_PMSNEVFR_EL1 = 0xc4c9, // Group: SysRegValues
-	AArch64_SYSREG_CPM_IOACC_CTL_EL3 = 0xff90, // Group: SysRegValues
-	AArch64_SYSREG_SMCR_EL1 = 0xc096, // Group: SysRegValues
-	AArch64_SYSREG_SMCR_EL2 = 0xe096, // Group: SysRegValues
-	AArch64_SYSREG_SMCR_EL3 = 0xf096, // Group: SysRegValues
-	AArch64_SYSREG_SMCR_EL12 = 0xe896, // Group: SysRegValues
-	AArch64_SYSREG_SVCR = 0xda12, // Group: SysRegValues
-	AArch64_SYSREG_SMPRI_EL1 = 0xc094, // Group: SysRegValues
-	AArch64_SYSREG_SMPRIMAP_EL2 = 0xe095, // Group: SysRegValues
-	AArch64_SYSREG_SMIDR_EL1 = 0xc806, // Group: SysRegValues
-	AArch64_SYSREG_TPIDR2_EL0 = 0xde85, // Group: SysRegValues
-	AArch64_SYSREG_MPAMSM_EL1 = 0xc52b, // Group: SysRegValues
-	AArch64_SYSREG_ALLINT_SysRegValues = 0xc218, // Group: SysRegValues - also encoded as: AArch64_SYSREG_ALLINT
-	AArch64_SYSREG_ICC_NMIAR1_EL1 = 0xc64d, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR2_EL1 = 0xc519, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR2_EL12 = 0xed19, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR2_EL2 = 0xe519, // Group: SysRegValues
-	AArch64_SYSREG_AMAIR2_EL3 = 0xf519, // Group: SysRegValues
-	AArch64_SYSREG_MAIR2_EL1 = 0xc511, // Group: SysRegValues
-	AArch64_SYSREG_MAIR2_EL12 = 0xed11, // Group: SysRegValues
-	AArch64_SYSREG_MAIR2_EL2 = 0xe509, // Group: SysRegValues
-	AArch64_SYSREG_MAIR2_EL3 = 0xf509, // Group: SysRegValues
-	AArch64_SYSREG_PIRE0_EL1 = 0xc512, // Group: SysRegValues
-	AArch64_SYSREG_PIRE0_EL12 = 0xed12, // Group: SysRegValues
-	AArch64_SYSREG_PIRE0_EL2 = 0xe512, // Group: SysRegValues
-	AArch64_SYSREG_PIR_EL1 = 0xc513, // Group: SysRegValues
-	AArch64_SYSREG_PIR_EL12 = 0xed13, // Group: SysRegValues
-	AArch64_SYSREG_PIR_EL2 = 0xe513, // Group: SysRegValues
-	AArch64_SYSREG_PIR_EL3 = 0xf513, // Group: SysRegValues
-	AArch64_SYSREG_S2PIR_EL2 = 0xe515, // Group: SysRegValues
-	AArch64_SYSREG_POR_EL0 = 0xdd14, // Group: SysRegValues
-	AArch64_SYSREG_POR_EL1 = 0xc514, // Group: SysRegValues
-	AArch64_SYSREG_POR_EL12 = 0xed14, // Group: SysRegValues
-	AArch64_SYSREG_POR_EL2 = 0xe514, // Group: SysRegValues
-	AArch64_SYSREG_POR_EL3 = 0xf514, // Group: SysRegValues
-	AArch64_SYSREG_S2POR_EL1 = 0xc515, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR2_EL1 = 0xc083, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR2_EL12 = 0xe883, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR2_EL2 = 0xe083, // Group: SysRegValues
-	AArch64_SYSREG_SCTLR2_EL3 = 0xf083, // Group: SysRegValues
-	AArch64_SYSREG_TCR2_EL1 = 0xc103, // Group: SysRegValues
-	AArch64_SYSREG_TCR2_EL12 = 0xe903, // Group: SysRegValues
-	AArch64_SYSREG_TCR2_EL2 = 0xe103, // Group: SysRegValues
-	AArch64_SYSREG_RCWMASK_EL1 = 0xc686, // Group: SysRegValues
-	AArch64_SYSREG_RCWSMASK_EL1 = 0xc683, // Group: SysRegValues
-	AArch64_SYSREG_MDSELR_EL1 = 0x8022, // Group: SysRegValues
-	AArch64_SYSREG_PMUACR_EL1 = 0xc4f4, // Group: SysRegValues
-	AArch64_SYSREG_PMCCNTSVR_EL1 = 0x875f, // Group: SysRegValues
-	AArch64_SYSREG_PMICNTSVR_EL1 = 0x8760, // Group: SysRegValues
-	AArch64_SYSREG_PMSSCR_EL1 = 0xc4eb, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR0_EL1 = 0x8740, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR1_EL1 = 0x8741, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR2_EL1 = 0x8742, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR3_EL1 = 0x8743, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR4_EL1 = 0x8744, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR5_EL1 = 0x8745, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR6_EL1 = 0x8746, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR7_EL1 = 0x8747, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR8_EL1 = 0x8748, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR9_EL1 = 0x8749, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR10_EL1 = 0x874a, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR11_EL1 = 0x874b, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR12_EL1 = 0x874c, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR13_EL1 = 0x874d, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR14_EL1 = 0x874e, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR15_EL1 = 0x874f, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR16_EL1 = 0x8750, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR17_EL1 = 0x8751, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR18_EL1 = 0x8752, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR19_EL1 = 0x8753, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR20_EL1 = 0x8754, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR21_EL1 = 0x8755, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR22_EL1 = 0x8756, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR23_EL1 = 0x8757, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR24_EL1 = 0x8758, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR25_EL1 = 0x8759, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR26_EL1 = 0x875a, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR27_EL1 = 0x875b, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR28_EL1 = 0x875c, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR29_EL1 = 0x875d, // Group: SysRegValues
-	AArch64_SYSREG_PMEVCNTSVR30_EL1 = 0x875e, // Group: SysRegValues
-	AArch64_SYSREG_PMICNTR_EL0 = 0xdca0, // Group: SysRegValues
-	AArch64_SYSREG_PMICFILTR_EL0 = 0xdcb0, // Group: SysRegValues
-	AArch64_SYSREG_PMZR_EL0 = 0xdcec, // Group: SysRegValues
-	AArch64_SYSREG_PMECR_EL1 = 0xc4f5, // Group: SysRegValues
-	AArch64_SYSREG_PMIAR_EL1 = 0xc4f7, // Group: SysRegValues
-	AArch64_SYSREG_SPMACCESSR_EL1 = 0x84eb, // Group: SysRegValues
-	AArch64_SYSREG_SPMACCESSR_EL12 = 0xaceb, // Group: SysRegValues
-	AArch64_SYSREG_SPMACCESSR_EL2 = 0xa4eb, // Group: SysRegValues
-	AArch64_SYSREG_SPMACCESSR_EL3 = 0xb4eb, // Group: SysRegValues
-	AArch64_SYSREG_SPMCNTENCLR_EL0 = 0x9ce2, // Group: SysRegValues
-	AArch64_SYSREG_SPMCNTENSET_EL0 = 0x9ce1, // Group: SysRegValues
-	AArch64_SYSREG_SPMCR_EL0 = 0x9ce0, // Group: SysRegValues
-	AArch64_SYSREG_SPMDEVAFF_EL1 = 0x84ee, // Group: SysRegValues
-	AArch64_SYSREG_SPMDEVARCH_EL1 = 0x84ed, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR0_EL0 = 0x9f00, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R0_EL0 = 0x9f30, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR0_EL0 = 0x9f20, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER0_EL0 = 0x9f10, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR1_EL0 = 0x9f01, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R1_EL0 = 0x9f31, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR1_EL0 = 0x9f21, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER1_EL0 = 0x9f11, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR2_EL0 = 0x9f02, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R2_EL0 = 0x9f32, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR2_EL0 = 0x9f22, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER2_EL0 = 0x9f12, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR3_EL0 = 0x9f03, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R3_EL0 = 0x9f33, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR3_EL0 = 0x9f23, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER3_EL0 = 0x9f13, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR4_EL0 = 0x9f04, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R4_EL0 = 0x9f34, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR4_EL0 = 0x9f24, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER4_EL0 = 0x9f14, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR5_EL0 = 0x9f05, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R5_EL0 = 0x9f35, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR5_EL0 = 0x9f25, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER5_EL0 = 0x9f15, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR6_EL0 = 0x9f06, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R6_EL0 = 0x9f36, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR6_EL0 = 0x9f26, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER6_EL0 = 0x9f16, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR7_EL0 = 0x9f07, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R7_EL0 = 0x9f37, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR7_EL0 = 0x9f27, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER7_EL0 = 0x9f17, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR8_EL0 = 0x9f08, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R8_EL0 = 0x9f38, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR8_EL0 = 0x9f28, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER8_EL0 = 0x9f18, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR9_EL0 = 0x9f09, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R9_EL0 = 0x9f39, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR9_EL0 = 0x9f29, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER9_EL0 = 0x9f19, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR10_EL0 = 0x9f0a, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R10_EL0 = 0x9f3a, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR10_EL0 = 0x9f2a, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER10_EL0 = 0x9f1a, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR11_EL0 = 0x9f0b, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R11_EL0 = 0x9f3b, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR11_EL0 = 0x9f2b, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER11_EL0 = 0x9f1b, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR12_EL0 = 0x9f0c, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R12_EL0 = 0x9f3c, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR12_EL0 = 0x9f2c, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER12_EL0 = 0x9f1c, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR13_EL0 = 0x9f0d, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R13_EL0 = 0x9f3d, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR13_EL0 = 0x9f2d, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER13_EL0 = 0x9f1d, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR14_EL0 = 0x9f0e, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R14_EL0 = 0x9f3e, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR14_EL0 = 0x9f2e, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER14_EL0 = 0x9f1e, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVCNTR15_EL0 = 0x9f0f, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILT2R15_EL0 = 0x9f3f, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVFILTR15_EL0 = 0x9f2f, // Group: SysRegValues
-	AArch64_SYSREG_SPMEVTYPER15_EL0 = 0x9f1f, // Group: SysRegValues
-	AArch64_SYSREG_SPMIIDR_EL1 = 0x84ec, // Group: SysRegValues
-	AArch64_SYSREG_SPMINTENCLR_EL1 = 0x84f2, // Group: SysRegValues
-	AArch64_SYSREG_SPMINTENSET_EL1 = 0x84f1, // Group: SysRegValues
-	AArch64_SYSREG_SPMOVSCLR_EL0 = 0x9ce3, // Group: SysRegValues
-	AArch64_SYSREG_SPMOVSSET_EL0 = 0x9cf3, // Group: SysRegValues
-	AArch64_SYSREG_SPMSELR_EL0 = 0x9ce5, // Group: SysRegValues
-	AArch64_SYSREG_SPMCGCR0_EL1 = 0x84e8, // Group: SysRegValues
-	AArch64_SYSREG_SPMCGCR1_EL1 = 0x84e9, // Group: SysRegValues
-	AArch64_SYSREG_SPMCFGR_EL1 = 0x84ef, // Group: SysRegValues
-	AArch64_SYSREG_SPMROOTCR_EL3 = 0xb4f7, // Group: SysRegValues
-	AArch64_SYSREG_SPMSCR_EL1 = 0xbcf7, // Group: SysRegValues
-	AArch64_SYSREG_TRCITEEDCR = 0x8811, // Group: SysRegValues
-	AArch64_SYSREG_TRCITECR_EL1 = 0xc093, // Group: SysRegValues
-	AArch64_SYSREG_TRCITECR_EL12 = 0xe893, // Group: SysRegValues
-	AArch64_SYSREG_TRCITECR_EL2 = 0xe093, // Group: SysRegValues
-	AArch64_SYSREG_PMSDSFR_EL1 = 0xc4d4, // Group: SysRegValues
-	AArch64_SYSREG_ERXGSR_EL1 = 0xc29a, // Group: SysRegValues
-	AArch64_SYSREG_PFAR_EL1 = 0xc305, // Group: SysRegValues
-	AArch64_SYSREG_PFAR_EL12 = 0xeb05, // Group: SysRegValues
-	AArch64_SYSREG_PFAR_EL2 = 0xe305, // Group: SysRegValues
-	AArch64_SYSREG_PM_SysRegValues = 0xc219, // Group: SysRegValues - also encoded as: AArch64_SYSREG_PM
-	AArch64_SYSREG_CSYNC_TSBValues = 0x0, // Group: TSBValues - also encoded as: AArch64_SYSREG_CSYNC
+	AArch64_SYSREG_ALLE1,
+	AArch64_SYSREG_ALLE1IS,
+	AArch64_SYSREG_ALLE1ISNXS,
+	AArch64_SYSREG_ALLE1NXS,
+	AArch64_SYSREG_ALLE1OS,
+	AArch64_SYSREG_ALLE1OSNXS,
+	AArch64_SYSREG_ALLE2,
+	AArch64_SYSREG_ALLE2IS,
+	AArch64_SYSREG_ALLE2ISNXS,
+	AArch64_SYSREG_ALLE2NXS,
+	AArch64_SYSREG_ALLE2OS,
+	AArch64_SYSREG_ALLE2OSNXS,
+	AArch64_SYSREG_ALLE3,
+	AArch64_SYSREG_ALLE3IS,
+	AArch64_SYSREG_ALLE3ISNXS,
+	AArch64_SYSREG_ALLE3NXS,
+	AArch64_SYSREG_ALLE3OS,
+	AArch64_SYSREG_ALLE3OSNXS,
+	AArch64_SYSREG_ASIDE1,
+	AArch64_SYSREG_ASIDE1IS,
+	AArch64_SYSREG_ASIDE1ISNXS,
+	AArch64_SYSREG_ASIDE1NXS,
+	AArch64_SYSREG_ASIDE1OS,
+	AArch64_SYSREG_ASIDE1OSNXS,
+	AArch64_SYSREG_IPAS2E1,
+	AArch64_SYSREG_IPAS2E1IS,
+	AArch64_SYSREG_IPAS2E1ISNXS,
+	AArch64_SYSREG_IPAS2E1NXS,
+	AArch64_SYSREG_IPAS2E1OS,
+	AArch64_SYSREG_IPAS2E1OSNXS,
+	AArch64_SYSREG_IPAS2LE1,
+	AArch64_SYSREG_IPAS2LE1IS,
+	AArch64_SYSREG_IPAS2LE1ISNXS,
+	AArch64_SYSREG_IPAS2LE1NXS,
+	AArch64_SYSREG_IPAS2LE1OS,
+	AArch64_SYSREG_IPAS2LE1OSNXS,
+	AArch64_SYSREG_PAALL,
+	AArch64_SYSREG_PAALLNXS,
+	AArch64_SYSREG_PAALLOS,
+	AArch64_SYSREG_PAALLOSNXS,
+	AArch64_SYSREG_RIPAS2E1,
+	AArch64_SYSREG_RIPAS2E1IS,
+	AArch64_SYSREG_RIPAS2E1ISNXS,
+	AArch64_SYSREG_RIPAS2E1NXS,
+	AArch64_SYSREG_RIPAS2E1OS,
+	AArch64_SYSREG_RIPAS2E1OSNXS,
+	AArch64_SYSREG_RIPAS2LE1,
+	AArch64_SYSREG_RIPAS2LE1IS,
+	AArch64_SYSREG_RIPAS2LE1ISNXS,
+	AArch64_SYSREG_RIPAS2LE1NXS,
+	AArch64_SYSREG_RIPAS2LE1OS,
+	AArch64_SYSREG_RIPAS2LE1OSNXS,
+	AArch64_SYSREG_RPALOS,
+	AArch64_SYSREG_RPALOSNXS,
+	AArch64_SYSREG_RPAOS,
+	AArch64_SYSREG_RPAOSNXS,
+	AArch64_SYSREG_RVAAE1,
+	AArch64_SYSREG_RVAAE1IS,
+	AArch64_SYSREG_RVAAE1ISNXS,
+	AArch64_SYSREG_RVAAE1NXS,
+	AArch64_SYSREG_RVAAE1OS,
+	AArch64_SYSREG_RVAAE1OSNXS,
+	AArch64_SYSREG_RVAALE1,
+	AArch64_SYSREG_RVAALE1IS,
+	AArch64_SYSREG_RVAALE1ISNXS,
+	AArch64_SYSREG_RVAALE1NXS,
+	AArch64_SYSREG_RVAALE1OS,
+	AArch64_SYSREG_RVAALE1OSNXS,
+	AArch64_SYSREG_RVAE1,
+	AArch64_SYSREG_RVAE1IS,
+	AArch64_SYSREG_RVAE1ISNXS,
+	AArch64_SYSREG_RVAE1NXS,
+	AArch64_SYSREG_RVAE1OS,
+	AArch64_SYSREG_RVAE1OSNXS,
+	AArch64_SYSREG_RVAE2,
+	AArch64_SYSREG_RVAE2IS,
+	AArch64_SYSREG_RVAE2ISNXS,
+	AArch64_SYSREG_RVAE2NXS,
+	AArch64_SYSREG_RVAE2OS,
+	AArch64_SYSREG_RVAE2OSNXS,
+	AArch64_SYSREG_RVAE3,
+	AArch64_SYSREG_RVAE3IS,
+	AArch64_SYSREG_RVAE3ISNXS,
+	AArch64_SYSREG_RVAE3NXS,
+	AArch64_SYSREG_RVAE3OS,
+	AArch64_SYSREG_RVAE3OSNXS,
+	AArch64_SYSREG_RVALE1,
+	AArch64_SYSREG_RVALE1IS,
+	AArch64_SYSREG_RVALE1ISNXS,
+	AArch64_SYSREG_RVALE1NXS,
+	AArch64_SYSREG_RVALE1OS,
+	AArch64_SYSREG_RVALE1OSNXS,
+	AArch64_SYSREG_RVALE2,
+	AArch64_SYSREG_RVALE2IS,
+	AArch64_SYSREG_RVALE2ISNXS,
+	AArch64_SYSREG_RVALE2NXS,
+	AArch64_SYSREG_RVALE2OS,
+	AArch64_SYSREG_RVALE2OSNXS,
+	AArch64_SYSREG_RVALE3,
+	AArch64_SYSREG_RVALE3IS,
+	AArch64_SYSREG_RVALE3ISNXS,
+	AArch64_SYSREG_RVALE3NXS,
+	AArch64_SYSREG_RVALE3OS,
+	AArch64_SYSREG_RVALE3OSNXS,
+	AArch64_SYSREG_VAAE1,
+	AArch64_SYSREG_VAAE1IS,
+	AArch64_SYSREG_VAAE1ISNXS,
+	AArch64_SYSREG_VAAE1NXS,
+	AArch64_SYSREG_VAAE1OS,
+	AArch64_SYSREG_VAAE1OSNXS,
+	AArch64_SYSREG_VAALE1,
+	AArch64_SYSREG_VAALE1IS,
+	AArch64_SYSREG_VAALE1ISNXS,
+	AArch64_SYSREG_VAALE1NXS,
+	AArch64_SYSREG_VAALE1OS,
+	AArch64_SYSREG_VAALE1OSNXS,
+	AArch64_SYSREG_VAE1,
+	AArch64_SYSREG_VAE1IS,
+	AArch64_SYSREG_VAE1ISNXS,
+	AArch64_SYSREG_VAE1NXS,
+	AArch64_SYSREG_VAE1OS,
+	AArch64_SYSREG_VAE1OSNXS,
+	AArch64_SYSREG_VAE2,
+	AArch64_SYSREG_VAE2IS,
+	AArch64_SYSREG_VAE2ISNXS,
+	AArch64_SYSREG_VAE2NXS,
+	AArch64_SYSREG_VAE2OS,
+	AArch64_SYSREG_VAE2OSNXS,
+	AArch64_SYSREG_VAE3,
+	AArch64_SYSREG_VAE3IS,
+	AArch64_SYSREG_VAE3ISNXS,
+	AArch64_SYSREG_VAE3NXS,
+	AArch64_SYSREG_VAE3OS,
+	AArch64_SYSREG_VAE3OSNXS,
+	AArch64_SYSREG_VALE1,
+	AArch64_SYSREG_VALE1IS,
+	AArch64_SYSREG_VALE1ISNXS,
+	AArch64_SYSREG_VALE1NXS,
+	AArch64_SYSREG_VALE1OS,
+	AArch64_SYSREG_VALE1OSNXS,
+	AArch64_SYSREG_VALE2,
+	AArch64_SYSREG_VALE2IS,
+	AArch64_SYSREG_VALE2ISNXS,
+	AArch64_SYSREG_VALE2NXS,
+	AArch64_SYSREG_VALE2OS,
+	AArch64_SYSREG_VALE2OSNXS,
+	AArch64_SYSREG_VALE3,
+	AArch64_SYSREG_VALE3IS,
+	AArch64_SYSREG_VALE3ISNXS,
+	AArch64_SYSREG_VALE3NXS,
+	AArch64_SYSREG_VALE3OS,
+	AArch64_SYSREG_VALE3OSNXS,
+	AArch64_SYSREG_VMALLE1,
+	AArch64_SYSREG_VMALLE1IS,
+	AArch64_SYSREG_VMALLE1ISNXS,
+	AArch64_SYSREG_VMALLE1NXS,
+	AArch64_SYSREG_VMALLE1OS,
+	AArch64_SYSREG_VMALLE1OSNXS,
+	AArch64_SYSREG_VMALLS12E1,
+	AArch64_SYSREG_VMALLS12E1IS,
+	AArch64_SYSREG_VMALLS12E1ISNXS,
+	AArch64_SYSREG_VMALLS12E1NXS,
+	AArch64_SYSREG_VMALLS12E1OS,
+	AArch64_SYSREG_VMALLS12E1OSNXS,
+	AArch64_SYSREG_IALLU,
+	AArch64_SYSREG_IALLUIS,
+	AArch64_SYSREG_IVAU,
+	AArch64_SYSREG_ACCDATA_EL1,
+	AArch64_SYSREG_ACTLR_EL1,
+	AArch64_SYSREG_ACTLR_EL2,
+	AArch64_SYSREG_ACTLR_EL3,
+	AArch64_SYSREG_AFSR0_EL1,
+	AArch64_SYSREG_AFSR0_EL12,
+	AArch64_SYSREG_AFSR0_EL2,
+	AArch64_SYSREG_AFSR0_EL3,
+	AArch64_SYSREG_AFSR1_EL1,
+	AArch64_SYSREG_AFSR1_EL12,
+	AArch64_SYSREG_AFSR1_EL2,
+	AArch64_SYSREG_AFSR1_EL3,
+	AArch64_SYSREG_AIDR_EL1,
+	AArch64_SYSREG_ALLINT,
+	AArch64_SYSREG_AMAIR2_EL1,
+	AArch64_SYSREG_AMAIR2_EL12,
+	AArch64_SYSREG_AMAIR2_EL2,
+	AArch64_SYSREG_AMAIR2_EL3,
+	AArch64_SYSREG_AMAIR_EL1,
+	AArch64_SYSREG_AMAIR_EL12,
+	AArch64_SYSREG_AMAIR_EL2,
+	AArch64_SYSREG_AMAIR_EL3,
+	AArch64_SYSREG_AMCFGR_EL0,
+	AArch64_SYSREG_AMCG1IDR_EL0,
+	AArch64_SYSREG_AMCGCR_EL0,
+	AArch64_SYSREG_AMCNTENCLR0_EL0,
+	AArch64_SYSREG_AMCNTENCLR1_EL0,
+	AArch64_SYSREG_AMCNTENSET0_EL0,
+	AArch64_SYSREG_AMCNTENSET1_EL0,
+	AArch64_SYSREG_AMCR_EL0,
+	AArch64_SYSREG_AMEVCNTR00_EL0,
+	AArch64_SYSREG_AMEVCNTR01_EL0,
+	AArch64_SYSREG_AMEVCNTR02_EL0,
+	AArch64_SYSREG_AMEVCNTR03_EL0,
+	AArch64_SYSREG_AMEVCNTR10_EL0,
+	AArch64_SYSREG_AMEVCNTR110_EL0,
+	AArch64_SYSREG_AMEVCNTR111_EL0,
+	AArch64_SYSREG_AMEVCNTR112_EL0,
+	AArch64_SYSREG_AMEVCNTR113_EL0,
+	AArch64_SYSREG_AMEVCNTR114_EL0,
+	AArch64_SYSREG_AMEVCNTR115_EL0,
+	AArch64_SYSREG_AMEVCNTR11_EL0,
+	AArch64_SYSREG_AMEVCNTR12_EL0,
+	AArch64_SYSREG_AMEVCNTR13_EL0,
+	AArch64_SYSREG_AMEVCNTR14_EL0,
+	AArch64_SYSREG_AMEVCNTR15_EL0,
+	AArch64_SYSREG_AMEVCNTR16_EL0,
+	AArch64_SYSREG_AMEVCNTR17_EL0,
+	AArch64_SYSREG_AMEVCNTR18_EL0,
+	AArch64_SYSREG_AMEVCNTR19_EL0,
+	AArch64_SYSREG_AMEVCNTVOFF00_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF010_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF011_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF012_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF013_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF014_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF015_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF01_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF02_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF03_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF04_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF05_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF06_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF07_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF08_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF09_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF10_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF110_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF111_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF112_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF113_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF114_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF115_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF11_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF12_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF13_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF14_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF15_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF16_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF17_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF18_EL2,
+	AArch64_SYSREG_AMEVCNTVOFF19_EL2,
+	AArch64_SYSREG_AMEVTYPER00_EL0,
+	AArch64_SYSREG_AMEVTYPER01_EL0,
+	AArch64_SYSREG_AMEVTYPER02_EL0,
+	AArch64_SYSREG_AMEVTYPER03_EL0,
+	AArch64_SYSREG_AMEVTYPER10_EL0,
+	AArch64_SYSREG_AMEVTYPER110_EL0,
+	AArch64_SYSREG_AMEVTYPER111_EL0,
+	AArch64_SYSREG_AMEVTYPER112_EL0,
+	AArch64_SYSREG_AMEVTYPER113_EL0,
+	AArch64_SYSREG_AMEVTYPER114_EL0,
+	AArch64_SYSREG_AMEVTYPER115_EL0,
+	AArch64_SYSREG_AMEVTYPER11_EL0,
+	AArch64_SYSREG_AMEVTYPER12_EL0,
+	AArch64_SYSREG_AMEVTYPER13_EL0,
+	AArch64_SYSREG_AMEVTYPER14_EL0,
+	AArch64_SYSREG_AMEVTYPER15_EL0,
+	AArch64_SYSREG_AMEVTYPER16_EL0,
+	AArch64_SYSREG_AMEVTYPER17_EL0,
+	AArch64_SYSREG_AMEVTYPER18_EL0,
+	AArch64_SYSREG_AMEVTYPER19_EL0,
+	AArch64_SYSREG_AMUSERENR_EL0,
+	AArch64_SYSREG_APDAKEYHI_EL1,
+	AArch64_SYSREG_APDAKEYLO_EL1,
+	AArch64_SYSREG_APDBKEYHI_EL1,
+	AArch64_SYSREG_APDBKEYLO_EL1,
+	AArch64_SYSREG_APGAKEYHI_EL1,
+	AArch64_SYSREG_APGAKEYLO_EL1,
+	AArch64_SYSREG_APIAKEYHI_EL1,
+	AArch64_SYSREG_APIAKEYLO_EL1,
+	AArch64_SYSREG_APIBKEYHI_EL1,
+	AArch64_SYSREG_APIBKEYLO_EL1,
+	AArch64_SYSREG_BRBCR_EL1,
+	AArch64_SYSREG_BRBCR_EL12,
+	AArch64_SYSREG_BRBCR_EL2,
+	AArch64_SYSREG_BRBFCR_EL1,
+	AArch64_SYSREG_BRBIDR0_EL1,
+	AArch64_SYSREG_BRBINF0_EL1,
+	AArch64_SYSREG_BRBINF10_EL1,
+	AArch64_SYSREG_BRBINF11_EL1,
+	AArch64_SYSREG_BRBINF12_EL1,
+	AArch64_SYSREG_BRBINF13_EL1,
+	AArch64_SYSREG_BRBINF14_EL1,
+	AArch64_SYSREG_BRBINF15_EL1,
+	AArch64_SYSREG_BRBINF16_EL1,
+	AArch64_SYSREG_BRBINF17_EL1,
+	AArch64_SYSREG_BRBINF18_EL1,
+	AArch64_SYSREG_BRBINF19_EL1,
+	AArch64_SYSREG_BRBINF1_EL1,
+	AArch64_SYSREG_BRBINF20_EL1,
+	AArch64_SYSREG_BRBINF21_EL1,
+	AArch64_SYSREG_BRBINF22_EL1,
+	AArch64_SYSREG_BRBINF23_EL1,
+	AArch64_SYSREG_BRBINF24_EL1,
+	AArch64_SYSREG_BRBINF25_EL1,
+	AArch64_SYSREG_BRBINF26_EL1,
+	AArch64_SYSREG_BRBINF27_EL1,
+	AArch64_SYSREG_BRBINF28_EL1,
+	AArch64_SYSREG_BRBINF29_EL1,
+	AArch64_SYSREG_BRBINF2_EL1,
+	AArch64_SYSREG_BRBINF30_EL1,
+	AArch64_SYSREG_BRBINF31_EL1,
+	AArch64_SYSREG_BRBINF3_EL1,
+	AArch64_SYSREG_BRBINF4_EL1,
+	AArch64_SYSREG_BRBINF5_EL1,
+	AArch64_SYSREG_BRBINF6_EL1,
+	AArch64_SYSREG_BRBINF7_EL1,
+	AArch64_SYSREG_BRBINF8_EL1,
+	AArch64_SYSREG_BRBINF9_EL1,
+	AArch64_SYSREG_BRBINFINJ_EL1,
+	AArch64_SYSREG_BRBSRC0_EL1,
+	AArch64_SYSREG_BRBSRC10_EL1,
+	AArch64_SYSREG_BRBSRC11_EL1,
+	AArch64_SYSREG_BRBSRC12_EL1,
+	AArch64_SYSREG_BRBSRC13_EL1,
+	AArch64_SYSREG_BRBSRC14_EL1,
+	AArch64_SYSREG_BRBSRC15_EL1,
+	AArch64_SYSREG_BRBSRC16_EL1,
+	AArch64_SYSREG_BRBSRC17_EL1,
+	AArch64_SYSREG_BRBSRC18_EL1,
+	AArch64_SYSREG_BRBSRC19_EL1,
+	AArch64_SYSREG_BRBSRC1_EL1,
+	AArch64_SYSREG_BRBSRC20_EL1,
+	AArch64_SYSREG_BRBSRC21_EL1,
+	AArch64_SYSREG_BRBSRC22_EL1,
+	AArch64_SYSREG_BRBSRC23_EL1,
+	AArch64_SYSREG_BRBSRC24_EL1,
+	AArch64_SYSREG_BRBSRC25_EL1,
+	AArch64_SYSREG_BRBSRC26_EL1,
+	AArch64_SYSREG_BRBSRC27_EL1,
+	AArch64_SYSREG_BRBSRC28_EL1,
+	AArch64_SYSREG_BRBSRC29_EL1,
+	AArch64_SYSREG_BRBSRC2_EL1,
+	AArch64_SYSREG_BRBSRC30_EL1,
+	AArch64_SYSREG_BRBSRC31_EL1,
+	AArch64_SYSREG_BRBSRC3_EL1,
+	AArch64_SYSREG_BRBSRC4_EL1,
+	AArch64_SYSREG_BRBSRC5_EL1,
+	AArch64_SYSREG_BRBSRC6_EL1,
+	AArch64_SYSREG_BRBSRC7_EL1,
+	AArch64_SYSREG_BRBSRC8_EL1,
+	AArch64_SYSREG_BRBSRC9_EL1,
+	AArch64_SYSREG_BRBSRCINJ_EL1,
+	AArch64_SYSREG_BRBTGT0_EL1,
+	AArch64_SYSREG_BRBTGT10_EL1,
+	AArch64_SYSREG_BRBTGT11_EL1,
+	AArch64_SYSREG_BRBTGT12_EL1,
+	AArch64_SYSREG_BRBTGT13_EL1,
+	AArch64_SYSREG_BRBTGT14_EL1,
+	AArch64_SYSREG_BRBTGT15_EL1,
+	AArch64_SYSREG_BRBTGT16_EL1,
+	AArch64_SYSREG_BRBTGT17_EL1,
+	AArch64_SYSREG_BRBTGT18_EL1,
+	AArch64_SYSREG_BRBTGT19_EL1,
+	AArch64_SYSREG_BRBTGT1_EL1,
+	AArch64_SYSREG_BRBTGT20_EL1,
+	AArch64_SYSREG_BRBTGT21_EL1,
+	AArch64_SYSREG_BRBTGT22_EL1,
+	AArch64_SYSREG_BRBTGT23_EL1,
+	AArch64_SYSREG_BRBTGT24_EL1,
+	AArch64_SYSREG_BRBTGT25_EL1,
+	AArch64_SYSREG_BRBTGT26_EL1,
+	AArch64_SYSREG_BRBTGT27_EL1,
+	AArch64_SYSREG_BRBTGT28_EL1,
+	AArch64_SYSREG_BRBTGT29_EL1,
+	AArch64_SYSREG_BRBTGT2_EL1,
+	AArch64_SYSREG_BRBTGT30_EL1,
+	AArch64_SYSREG_BRBTGT31_EL1,
+	AArch64_SYSREG_BRBTGT3_EL1,
+	AArch64_SYSREG_BRBTGT4_EL1,
+	AArch64_SYSREG_BRBTGT5_EL1,
+	AArch64_SYSREG_BRBTGT6_EL1,
+	AArch64_SYSREG_BRBTGT7_EL1,
+	AArch64_SYSREG_BRBTGT8_EL1,
+	AArch64_SYSREG_BRBTGT9_EL1,
+	AArch64_SYSREG_BRBTGTINJ_EL1,
+	AArch64_SYSREG_BRBTS_EL1,
+	AArch64_SYSREG_CCSIDR2_EL1,
+	AArch64_SYSREG_CCSIDR_EL1,
+	AArch64_SYSREG_CLIDR_EL1,
+	AArch64_SYSREG_CNTFRQ_EL0,
+	AArch64_SYSREG_CNTHCTL_EL2,
+	AArch64_SYSREG_CNTHPS_CTL_EL2,
+	AArch64_SYSREG_CNTHPS_CVAL_EL2,
+	AArch64_SYSREG_CNTHPS_TVAL_EL2,
+	AArch64_SYSREG_CNTHP_CTL_EL2,
+	AArch64_SYSREG_CNTHP_CVAL_EL2,
+	AArch64_SYSREG_CNTHP_TVAL_EL2,
+	AArch64_SYSREG_CNTHVS_CTL_EL2,
+	AArch64_SYSREG_CNTHVS_CVAL_EL2,
+	AArch64_SYSREG_CNTHVS_TVAL_EL2,
+	AArch64_SYSREG_CNTHV_CTL_EL2,
+	AArch64_SYSREG_CNTHV_CVAL_EL2,
+	AArch64_SYSREG_CNTHV_TVAL_EL2,
+	AArch64_SYSREG_CNTISCALE_EL2,
+	AArch64_SYSREG_CNTKCTL_EL1,
+	AArch64_SYSREG_CNTKCTL_EL12,
+	AArch64_SYSREG_CNTPCTSS_EL0,
+	AArch64_SYSREG_CNTPCT_EL0,
+	AArch64_SYSREG_CNTPOFF_EL2,
+	AArch64_SYSREG_CNTPS_CTL_EL1,
+	AArch64_SYSREG_CNTPS_CVAL_EL1,
+	AArch64_SYSREG_CNTPS_TVAL_EL1,
+	AArch64_SYSREG_CNTP_CTL_EL0,
+	AArch64_SYSREG_CNTP_CTL_EL02,
+	AArch64_SYSREG_CNTP_CVAL_EL0,
+	AArch64_SYSREG_CNTP_CVAL_EL02,
+	AArch64_SYSREG_CNTP_TVAL_EL0,
+	AArch64_SYSREG_CNTP_TVAL_EL02,
+	AArch64_SYSREG_CNTSCALE_EL2,
+	AArch64_SYSREG_CNTVCTSS_EL0,
+	AArch64_SYSREG_CNTVCT_EL0,
+	AArch64_SYSREG_CNTVFRQ_EL2,
+	AArch64_SYSREG_CNTVOFF_EL2,
+	AArch64_SYSREG_CNTV_CTL_EL0,
+	AArch64_SYSREG_CNTV_CTL_EL02,
+	AArch64_SYSREG_CNTV_CVAL_EL0,
+	AArch64_SYSREG_CNTV_CVAL_EL02,
+	AArch64_SYSREG_CNTV_TVAL_EL0,
+	AArch64_SYSREG_CNTV_TVAL_EL02,
+	AArch64_SYSREG_CONTEXTIDR_EL1,
+	AArch64_SYSREG_CONTEXTIDR_EL12,
+	AArch64_SYSREG_CONTEXTIDR_EL2,
+	AArch64_SYSREG_CPACR_EL1,
+	AArch64_SYSREG_CPACR_EL12,
+	AArch64_SYSREG_CPM_IOACC_CTL_EL3,
+	AArch64_SYSREG_CPTR_EL2,
+	AArch64_SYSREG_CPTR_EL3,
+	AArch64_SYSREG_CSSELR_EL1,
+	AArch64_SYSREG_CTR_EL0,
+	AArch64_SYSREG_CURRENTEL,
+	AArch64_SYSREG_DACR32_EL2,
+	AArch64_SYSREG_DAIF,
+	AArch64_SYSREG_DBGAUTHSTATUS_EL1,
+	AArch64_SYSREG_DBGBCR0_EL1,
+	AArch64_SYSREG_DBGBCR10_EL1,
+	AArch64_SYSREG_DBGBCR11_EL1,
+	AArch64_SYSREG_DBGBCR12_EL1,
+	AArch64_SYSREG_DBGBCR13_EL1,
+	AArch64_SYSREG_DBGBCR14_EL1,
+	AArch64_SYSREG_DBGBCR15_EL1,
+	AArch64_SYSREG_DBGBCR1_EL1,
+	AArch64_SYSREG_DBGBCR2_EL1,
+	AArch64_SYSREG_DBGBCR3_EL1,
+	AArch64_SYSREG_DBGBCR4_EL1,
+	AArch64_SYSREG_DBGBCR5_EL1,
+	AArch64_SYSREG_DBGBCR6_EL1,
+	AArch64_SYSREG_DBGBCR7_EL1,
+	AArch64_SYSREG_DBGBCR8_EL1,
+	AArch64_SYSREG_DBGBCR9_EL1,
+	AArch64_SYSREG_DBGBVR0_EL1,
+	AArch64_SYSREG_DBGBVR10_EL1,
+	AArch64_SYSREG_DBGBVR11_EL1,
+	AArch64_SYSREG_DBGBVR12_EL1,
+	AArch64_SYSREG_DBGBVR13_EL1,
+	AArch64_SYSREG_DBGBVR14_EL1,
+	AArch64_SYSREG_DBGBVR15_EL1,
+	AArch64_SYSREG_DBGBVR1_EL1,
+	AArch64_SYSREG_DBGBVR2_EL1,
+	AArch64_SYSREG_DBGBVR3_EL1,
+	AArch64_SYSREG_DBGBVR4_EL1,
+	AArch64_SYSREG_DBGBVR5_EL1,
+	AArch64_SYSREG_DBGBVR6_EL1,
+	AArch64_SYSREG_DBGBVR7_EL1,
+	AArch64_SYSREG_DBGBVR8_EL1,
+	AArch64_SYSREG_DBGBVR9_EL1,
+	AArch64_SYSREG_DBGCLAIMCLR_EL1,
+	AArch64_SYSREG_DBGCLAIMSET_EL1,
+	AArch64_SYSREG_DBGDTRRX_EL0,
+	AArch64_SYSREG_DBGDTRTX_EL0,
+	AArch64_SYSREG_DBGDTR_EL0,
+	AArch64_SYSREG_DBGPRCR_EL1,
+	AArch64_SYSREG_DBGVCR32_EL2,
+	AArch64_SYSREG_DBGWCR0_EL1,
+	AArch64_SYSREG_DBGWCR10_EL1,
+	AArch64_SYSREG_DBGWCR11_EL1,
+	AArch64_SYSREG_DBGWCR12_EL1,
+	AArch64_SYSREG_DBGWCR13_EL1,
+	AArch64_SYSREG_DBGWCR14_EL1,
+	AArch64_SYSREG_DBGWCR15_EL1,
+	AArch64_SYSREG_DBGWCR1_EL1,
+	AArch64_SYSREG_DBGWCR2_EL1,
+	AArch64_SYSREG_DBGWCR3_EL1,
+	AArch64_SYSREG_DBGWCR4_EL1,
+	AArch64_SYSREG_DBGWCR5_EL1,
+	AArch64_SYSREG_DBGWCR6_EL1,
+	AArch64_SYSREG_DBGWCR7_EL1,
+	AArch64_SYSREG_DBGWCR8_EL1,
+	AArch64_SYSREG_DBGWCR9_EL1,
+	AArch64_SYSREG_DBGWVR0_EL1,
+	AArch64_SYSREG_DBGWVR10_EL1,
+	AArch64_SYSREG_DBGWVR11_EL1,
+	AArch64_SYSREG_DBGWVR12_EL1,
+	AArch64_SYSREG_DBGWVR13_EL1,
+	AArch64_SYSREG_DBGWVR14_EL1,
+	AArch64_SYSREG_DBGWVR15_EL1,
+	AArch64_SYSREG_DBGWVR1_EL1,
+	AArch64_SYSREG_DBGWVR2_EL1,
+	AArch64_SYSREG_DBGWVR3_EL1,
+	AArch64_SYSREG_DBGWVR4_EL1,
+	AArch64_SYSREG_DBGWVR5_EL1,
+	AArch64_SYSREG_DBGWVR6_EL1,
+	AArch64_SYSREG_DBGWVR7_EL1,
+	AArch64_SYSREG_DBGWVR8_EL1,
+	AArch64_SYSREG_DBGWVR9_EL1,
+	AArch64_SYSREG_DCZID_EL0,
+	AArch64_SYSREG_DISR_EL1,
+	AArch64_SYSREG_DIT,
+	AArch64_SYSREG_DLR_EL0,
+	AArch64_SYSREG_DSPSR_EL0,
+	AArch64_SYSREG_ELR_EL1,
+	AArch64_SYSREG_ELR_EL12,
+	AArch64_SYSREG_ELR_EL2,
+	AArch64_SYSREG_ELR_EL3,
+	AArch64_SYSREG_ERRIDR_EL1,
+	AArch64_SYSREG_ERRSELR_EL1,
+	AArch64_SYSREG_ERXADDR_EL1,
+	AArch64_SYSREG_ERXCTLR_EL1,
+	AArch64_SYSREG_ERXFR_EL1,
+	AArch64_SYSREG_ERXGSR_EL1,
+	AArch64_SYSREG_ERXMISC0_EL1,
+	AArch64_SYSREG_ERXMISC1_EL1,
+	AArch64_SYSREG_ERXMISC2_EL1,
+	AArch64_SYSREG_ERXMISC3_EL1,
+	AArch64_SYSREG_ERXPFGCDN_EL1,
+	AArch64_SYSREG_ERXPFGCTL_EL1,
+	AArch64_SYSREG_ERXPFGF_EL1,
+	AArch64_SYSREG_ERXSTATUS_EL1,
+	AArch64_SYSREG_ESR_EL1,
+	AArch64_SYSREG_ESR_EL12,
+	AArch64_SYSREG_ESR_EL2,
+	AArch64_SYSREG_ESR_EL3,
+	AArch64_SYSREG_FAR_EL1,
+	AArch64_SYSREG_FAR_EL12,
+	AArch64_SYSREG_FAR_EL2,
+	AArch64_SYSREG_FAR_EL3,
+	AArch64_SYSREG_FPCR,
+	AArch64_SYSREG_FPEXC32_EL2,
+	AArch64_SYSREG_FPSR,
+	AArch64_SYSREG_GCR_EL1,
+	AArch64_SYSREG_GMID_EL1,
+	AArch64_SYSREG_GPCCR_EL3,
+	AArch64_SYSREG_GPTBR_EL3,
+	AArch64_SYSREG_HACR_EL2,
+	AArch64_SYSREG_HAFGRTR_EL2,
+	AArch64_SYSREG_HCRX_EL2,
+	AArch64_SYSREG_HCR_EL2,
+	AArch64_SYSREG_HDFGRTR2_EL2,
+	AArch64_SYSREG_HDFGRTR_EL2,
+	AArch64_SYSREG_HDFGWTR2_EL2,
+	AArch64_SYSREG_HDFGWTR_EL2,
+	AArch64_SYSREG_HFGITR2_EL2,
+	AArch64_SYSREG_HFGITR_EL2,
+	AArch64_SYSREG_HFGRTR2_EL2,
+	AArch64_SYSREG_HFGRTR_EL2,
+	AArch64_SYSREG_HFGWTR2_EL2,
+	AArch64_SYSREG_HFGWTR_EL2,
+	AArch64_SYSREG_HPFAR_EL2,
+	AArch64_SYSREG_HSTR_EL2,
+	AArch64_SYSREG_ICC_AP0R0_EL1,
+	AArch64_SYSREG_ICC_AP0R1_EL1,
+	AArch64_SYSREG_ICC_AP0R2_EL1,
+	AArch64_SYSREG_ICC_AP0R3_EL1,
+	AArch64_SYSREG_ICC_AP1R0_EL1,
+	AArch64_SYSREG_ICC_AP1R1_EL1,
+	AArch64_SYSREG_ICC_AP1R2_EL1,
+	AArch64_SYSREG_ICC_AP1R3_EL1,
+	AArch64_SYSREG_ICC_ASGI1R_EL1,
+	AArch64_SYSREG_ICC_BPR0_EL1,
+	AArch64_SYSREG_ICC_BPR1_EL1,
+	AArch64_SYSREG_ICC_CTLR_EL1,
+	AArch64_SYSREG_ICC_CTLR_EL3,
+	AArch64_SYSREG_ICC_DIR_EL1,
+	AArch64_SYSREG_ICC_EOIR0_EL1,
+	AArch64_SYSREG_ICC_EOIR1_EL1,
+	AArch64_SYSREG_ICC_HPPIR0_EL1,
+	AArch64_SYSREG_ICC_HPPIR1_EL1,
+	AArch64_SYSREG_ICC_IAR0_EL1,
+	AArch64_SYSREG_ICC_IAR1_EL1,
+	AArch64_SYSREG_ICC_IGRPEN0_EL1,
+	AArch64_SYSREG_ICC_IGRPEN1_EL1,
+	AArch64_SYSREG_ICC_IGRPEN1_EL3,
+	AArch64_SYSREG_ICC_NMIAR1_EL1,
+	AArch64_SYSREG_ICC_PMR_EL1,
+	AArch64_SYSREG_ICC_RPR_EL1,
+	AArch64_SYSREG_ICC_SGI0R_EL1,
+	AArch64_SYSREG_ICC_SGI1R_EL1,
+	AArch64_SYSREG_ICC_SRE_EL1,
+	AArch64_SYSREG_ICC_SRE_EL2,
+	AArch64_SYSREG_ICC_SRE_EL3,
+	AArch64_SYSREG_ICH_AP0R0_EL2,
+	AArch64_SYSREG_ICH_AP0R1_EL2,
+	AArch64_SYSREG_ICH_AP0R2_EL2,
+	AArch64_SYSREG_ICH_AP0R3_EL2,
+	AArch64_SYSREG_ICH_AP1R0_EL2,
+	AArch64_SYSREG_ICH_AP1R1_EL2,
+	AArch64_SYSREG_ICH_AP1R2_EL2,
+	AArch64_SYSREG_ICH_AP1R3_EL2,
+	AArch64_SYSREG_ICH_EISR_EL2,
+	AArch64_SYSREG_ICH_ELRSR_EL2,
+	AArch64_SYSREG_ICH_HCR_EL2,
+	AArch64_SYSREG_ICH_LR0_EL2,
+	AArch64_SYSREG_ICH_LR10_EL2,
+	AArch64_SYSREG_ICH_LR11_EL2,
+	AArch64_SYSREG_ICH_LR12_EL2,
+	AArch64_SYSREG_ICH_LR13_EL2,
+	AArch64_SYSREG_ICH_LR14_EL2,
+	AArch64_SYSREG_ICH_LR15_EL2,
+	AArch64_SYSREG_ICH_LR1_EL2,
+	AArch64_SYSREG_ICH_LR2_EL2,
+	AArch64_SYSREG_ICH_LR3_EL2,
+	AArch64_SYSREG_ICH_LR4_EL2,
+	AArch64_SYSREG_ICH_LR5_EL2,
+	AArch64_SYSREG_ICH_LR6_EL2,
+	AArch64_SYSREG_ICH_LR7_EL2,
+	AArch64_SYSREG_ICH_LR8_EL2,
+	AArch64_SYSREG_ICH_LR9_EL2,
+	AArch64_SYSREG_ICH_MISR_EL2,
+	AArch64_SYSREG_ICH_VMCR_EL2,
+	AArch64_SYSREG_ICH_VTR_EL2,
+	AArch64_SYSREG_ID_AA64AFR0_EL1,
+	AArch64_SYSREG_ID_AA64AFR1_EL1,
+	AArch64_SYSREG_ID_AA64DFR0_EL1,
+	AArch64_SYSREG_ID_AA64DFR1_EL1,
+	AArch64_SYSREG_ID_AA64ISAR0_EL1,
+	AArch64_SYSREG_ID_AA64ISAR1_EL1,
+	AArch64_SYSREG_ID_AA64ISAR2_EL1,
+	AArch64_SYSREG_ID_AA64MMFR0_EL1,
+	AArch64_SYSREG_ID_AA64MMFR1_EL1,
+	AArch64_SYSREG_ID_AA64MMFR2_EL1,
+	AArch64_SYSREG_ID_AA64MMFR3_EL1,
+	AArch64_SYSREG_ID_AA64MMFR4_EL1,
+	AArch64_SYSREG_ID_AA64PFR0_EL1,
+	AArch64_SYSREG_ID_AA64PFR1_EL1,
+	AArch64_SYSREG_ID_AA64PFR2_EL1,
+	AArch64_SYSREG_ID_AA64SMFR0_EL1,
+	AArch64_SYSREG_ID_AA64ZFR0_EL1,
+	AArch64_SYSREG_ID_AFR0_EL1,
+	AArch64_SYSREG_ID_DFR0_EL1,
+	AArch64_SYSREG_ID_DFR1_EL1,
+	AArch64_SYSREG_ID_ISAR0_EL1,
+	AArch64_SYSREG_ID_ISAR1_EL1,
+	AArch64_SYSREG_ID_ISAR2_EL1,
+	AArch64_SYSREG_ID_ISAR3_EL1,
+	AArch64_SYSREG_ID_ISAR4_EL1,
+	AArch64_SYSREG_ID_ISAR5_EL1,
+	AArch64_SYSREG_ID_ISAR6_EL1,
+	AArch64_SYSREG_ID_MMFR0_EL1,
+	AArch64_SYSREG_ID_MMFR1_EL1,
+	AArch64_SYSREG_ID_MMFR2_EL1,
+	AArch64_SYSREG_ID_MMFR3_EL1,
+	AArch64_SYSREG_ID_MMFR4_EL1,
+	AArch64_SYSREG_ID_MMFR5_EL1,
+	AArch64_SYSREG_ID_PFR0_EL1,
+	AArch64_SYSREG_ID_PFR1_EL1,
+	AArch64_SYSREG_ID_PFR2_EL1,
+	AArch64_SYSREG_IFSR32_EL2,
+	AArch64_SYSREG_ISR_EL1,
+	AArch64_SYSREG_LORC_EL1,
+	AArch64_SYSREG_LOREA_EL1,
+	AArch64_SYSREG_LORID_EL1,
+	AArch64_SYSREG_LORN_EL1,
+	AArch64_SYSREG_LORSA_EL1,
+	AArch64_SYSREG_MAIR2_EL1,
+	AArch64_SYSREG_MAIR2_EL12,
+	AArch64_SYSREG_MAIR2_EL2,
+	AArch64_SYSREG_MAIR2_EL3,
+	AArch64_SYSREG_MAIR_EL1,
+	AArch64_SYSREG_MAIR_EL12,
+	AArch64_SYSREG_MAIR_EL2,
+	AArch64_SYSREG_MAIR_EL3,
+	AArch64_SYSREG_MDCCINT_EL1,
+	AArch64_SYSREG_MDCCSR_EL0,
+	AArch64_SYSREG_MDCR_EL2,
+	AArch64_SYSREG_MDCR_EL3,
+	AArch64_SYSREG_MDRAR_EL1,
+	AArch64_SYSREG_MDSCR_EL1,
+	AArch64_SYSREG_MDSELR_EL1,
+	AArch64_SYSREG_MECIDR_EL2,
+	AArch64_SYSREG_MECID_A0_EL2,
+	AArch64_SYSREG_MECID_A1_EL2,
+	AArch64_SYSREG_MECID_P0_EL2,
+	AArch64_SYSREG_MECID_P1_EL2,
+	AArch64_SYSREG_MECID_RL_A_EL3,
+	AArch64_SYSREG_MFAR_EL3,
+	AArch64_SYSREG_MIDR_EL1,
+	AArch64_SYSREG_MPAM0_EL1,
+	AArch64_SYSREG_MPAM1_EL1,
+	AArch64_SYSREG_MPAM1_EL12,
+	AArch64_SYSREG_MPAM2_EL2,
+	AArch64_SYSREG_MPAM3_EL3,
+	AArch64_SYSREG_MPAMHCR_EL2,
+	AArch64_SYSREG_MPAMIDR_EL1,
+	AArch64_SYSREG_MPAMSM_EL1,
+	AArch64_SYSREG_MPAMVPM0_EL2,
+	AArch64_SYSREG_MPAMVPM1_EL2,
+	AArch64_SYSREG_MPAMVPM2_EL2,
+	AArch64_SYSREG_MPAMVPM3_EL2,
+	AArch64_SYSREG_MPAMVPM4_EL2,
+	AArch64_SYSREG_MPAMVPM5_EL2,
+	AArch64_SYSREG_MPAMVPM6_EL2,
+	AArch64_SYSREG_MPAMVPM7_EL2,
+	AArch64_SYSREG_MPAMVPMV_EL2,
+	AArch64_SYSREG_MPIDR_EL1,
+	AArch64_SYSREG_MPUIR_EL1,
+	AArch64_SYSREG_MPUIR_EL2,
+	AArch64_SYSREG_MVFR0_EL1,
+	AArch64_SYSREG_MVFR1_EL1,
+	AArch64_SYSREG_MVFR2_EL1,
+	AArch64_SYSREG_NZCV,
+	AArch64_SYSREG_OSDLR_EL1,
+	AArch64_SYSREG_OSDTRRX_EL1,
+	AArch64_SYSREG_OSDTRTX_EL1,
+	AArch64_SYSREG_OSECCR_EL1,
+	AArch64_SYSREG_OSLAR_EL1,
+	AArch64_SYSREG_OSLSR_EL1,
+	AArch64_SYSREG_PAN,
+	AArch64_SYSREG_PAR_EL1,
+	AArch64_SYSREG_PFAR_EL1,
+	AArch64_SYSREG_PFAR_EL12,
+	AArch64_SYSREG_PFAR_EL2,
+	AArch64_SYSREG_PIRE0_EL1,
+	AArch64_SYSREG_PIRE0_EL12,
+	AArch64_SYSREG_PIRE0_EL2,
+	AArch64_SYSREG_PIR_EL1,
+	AArch64_SYSREG_PIR_EL12,
+	AArch64_SYSREG_PIR_EL2,
+	AArch64_SYSREG_PIR_EL3,
+	AArch64_SYSREG_PM,
+	AArch64_SYSREG_PMBIDR_EL1,
+	AArch64_SYSREG_PMBLIMITR_EL1,
+	AArch64_SYSREG_PMBPTR_EL1,
+	AArch64_SYSREG_PMBSR_EL1,
+	AArch64_SYSREG_PMCCFILTR_EL0,
+	AArch64_SYSREG_PMCCNTR_EL0,
+	AArch64_SYSREG_PMCCNTSVR_EL1,
+	AArch64_SYSREG_PMCEID0_EL0,
+	AArch64_SYSREG_PMCEID1_EL0,
+	AArch64_SYSREG_PMCNTENCLR_EL0,
+	AArch64_SYSREG_PMCNTENSET_EL0,
+	AArch64_SYSREG_PMCR_EL0,
+	AArch64_SYSREG_PMECR_EL1,
+	AArch64_SYSREG_PMEVCNTR0_EL0,
+	AArch64_SYSREG_PMEVCNTR10_EL0,
+	AArch64_SYSREG_PMEVCNTR11_EL0,
+	AArch64_SYSREG_PMEVCNTR12_EL0,
+	AArch64_SYSREG_PMEVCNTR13_EL0,
+	AArch64_SYSREG_PMEVCNTR14_EL0,
+	AArch64_SYSREG_PMEVCNTR15_EL0,
+	AArch64_SYSREG_PMEVCNTR16_EL0,
+	AArch64_SYSREG_PMEVCNTR17_EL0,
+	AArch64_SYSREG_PMEVCNTR18_EL0,
+	AArch64_SYSREG_PMEVCNTR19_EL0,
+	AArch64_SYSREG_PMEVCNTR1_EL0,
+	AArch64_SYSREG_PMEVCNTR20_EL0,
+	AArch64_SYSREG_PMEVCNTR21_EL0,
+	AArch64_SYSREG_PMEVCNTR22_EL0,
+	AArch64_SYSREG_PMEVCNTR23_EL0,
+	AArch64_SYSREG_PMEVCNTR24_EL0,
+	AArch64_SYSREG_PMEVCNTR25_EL0,
+	AArch64_SYSREG_PMEVCNTR26_EL0,
+	AArch64_SYSREG_PMEVCNTR27_EL0,
+	AArch64_SYSREG_PMEVCNTR28_EL0,
+	AArch64_SYSREG_PMEVCNTR29_EL0,
+	AArch64_SYSREG_PMEVCNTR2_EL0,
+	AArch64_SYSREG_PMEVCNTR30_EL0,
+	AArch64_SYSREG_PMEVCNTR3_EL0,
+	AArch64_SYSREG_PMEVCNTR4_EL0,
+	AArch64_SYSREG_PMEVCNTR5_EL0,
+	AArch64_SYSREG_PMEVCNTR6_EL0,
+	AArch64_SYSREG_PMEVCNTR7_EL0,
+	AArch64_SYSREG_PMEVCNTR8_EL0,
+	AArch64_SYSREG_PMEVCNTR9_EL0,
+	AArch64_SYSREG_PMEVCNTSVR0_EL1,
+	AArch64_SYSREG_PMEVCNTSVR10_EL1,
+	AArch64_SYSREG_PMEVCNTSVR11_EL1,
+	AArch64_SYSREG_PMEVCNTSVR12_EL1,
+	AArch64_SYSREG_PMEVCNTSVR13_EL1,
+	AArch64_SYSREG_PMEVCNTSVR14_EL1,
+	AArch64_SYSREG_PMEVCNTSVR15_EL1,
+	AArch64_SYSREG_PMEVCNTSVR16_EL1,
+	AArch64_SYSREG_PMEVCNTSVR17_EL1,
+	AArch64_SYSREG_PMEVCNTSVR18_EL1,
+	AArch64_SYSREG_PMEVCNTSVR19_EL1,
+	AArch64_SYSREG_PMEVCNTSVR1_EL1,
+	AArch64_SYSREG_PMEVCNTSVR20_EL1,
+	AArch64_SYSREG_PMEVCNTSVR21_EL1,
+	AArch64_SYSREG_PMEVCNTSVR22_EL1,
+	AArch64_SYSREG_PMEVCNTSVR23_EL1,
+	AArch64_SYSREG_PMEVCNTSVR24_EL1,
+	AArch64_SYSREG_PMEVCNTSVR25_EL1,
+	AArch64_SYSREG_PMEVCNTSVR26_EL1,
+	AArch64_SYSREG_PMEVCNTSVR27_EL1,
+	AArch64_SYSREG_PMEVCNTSVR28_EL1,
+	AArch64_SYSREG_PMEVCNTSVR29_EL1,
+	AArch64_SYSREG_PMEVCNTSVR2_EL1,
+	AArch64_SYSREG_PMEVCNTSVR30_EL1,
+	AArch64_SYSREG_PMEVCNTSVR3_EL1,
+	AArch64_SYSREG_PMEVCNTSVR4_EL1,
+	AArch64_SYSREG_PMEVCNTSVR5_EL1,
+	AArch64_SYSREG_PMEVCNTSVR6_EL1,
+	AArch64_SYSREG_PMEVCNTSVR7_EL1,
+	AArch64_SYSREG_PMEVCNTSVR8_EL1,
+	AArch64_SYSREG_PMEVCNTSVR9_EL1,
+	AArch64_SYSREG_PMEVTYPER0_EL0,
+	AArch64_SYSREG_PMEVTYPER10_EL0,
+	AArch64_SYSREG_PMEVTYPER11_EL0,
+	AArch64_SYSREG_PMEVTYPER12_EL0,
+	AArch64_SYSREG_PMEVTYPER13_EL0,
+	AArch64_SYSREG_PMEVTYPER14_EL0,
+	AArch64_SYSREG_PMEVTYPER15_EL0,
+	AArch64_SYSREG_PMEVTYPER16_EL0,
+	AArch64_SYSREG_PMEVTYPER17_EL0,
+	AArch64_SYSREG_PMEVTYPER18_EL0,
+	AArch64_SYSREG_PMEVTYPER19_EL0,
+	AArch64_SYSREG_PMEVTYPER1_EL0,
+	AArch64_SYSREG_PMEVTYPER20_EL0,
+	AArch64_SYSREG_PMEVTYPER21_EL0,
+	AArch64_SYSREG_PMEVTYPER22_EL0,
+	AArch64_SYSREG_PMEVTYPER23_EL0,
+	AArch64_SYSREG_PMEVTYPER24_EL0,
+	AArch64_SYSREG_PMEVTYPER25_EL0,
+	AArch64_SYSREG_PMEVTYPER26_EL0,
+	AArch64_SYSREG_PMEVTYPER27_EL0,
+	AArch64_SYSREG_PMEVTYPER28_EL0,
+	AArch64_SYSREG_PMEVTYPER29_EL0,
+	AArch64_SYSREG_PMEVTYPER2_EL0,
+	AArch64_SYSREG_PMEVTYPER30_EL0,
+	AArch64_SYSREG_PMEVTYPER3_EL0,
+	AArch64_SYSREG_PMEVTYPER4_EL0,
+	AArch64_SYSREG_PMEVTYPER5_EL0,
+	AArch64_SYSREG_PMEVTYPER6_EL0,
+	AArch64_SYSREG_PMEVTYPER7_EL0,
+	AArch64_SYSREG_PMEVTYPER8_EL0,
+	AArch64_SYSREG_PMEVTYPER9_EL0,
+	AArch64_SYSREG_PMIAR_EL1,
+	AArch64_SYSREG_PMICFILTR_EL0,
+	AArch64_SYSREG_PMICNTR_EL0,
+	AArch64_SYSREG_PMICNTSVR_EL1,
+	AArch64_SYSREG_PMINTENCLR_EL1,
+	AArch64_SYSREG_PMINTENSET_EL1,
+	AArch64_SYSREG_PMMIR_EL1,
+	AArch64_SYSREG_PMOVSCLR_EL0,
+	AArch64_SYSREG_PMOVSSET_EL0,
+	AArch64_SYSREG_PMSCR_EL1,
+	AArch64_SYSREG_PMSCR_EL12,
+	AArch64_SYSREG_PMSCR_EL2,
+	AArch64_SYSREG_PMSDSFR_EL1,
+	AArch64_SYSREG_PMSELR_EL0,
+	AArch64_SYSREG_PMSEVFR_EL1,
+	AArch64_SYSREG_PMSFCR_EL1,
+	AArch64_SYSREG_PMSICR_EL1,
+	AArch64_SYSREG_PMSIDR_EL1,
+	AArch64_SYSREG_PMSIRR_EL1,
+	AArch64_SYSREG_PMSLATFR_EL1,
+	AArch64_SYSREG_PMSNEVFR_EL1,
+	AArch64_SYSREG_PMSSCR_EL1,
+	AArch64_SYSREG_PMSWINC_EL0,
+	AArch64_SYSREG_PMUACR_EL1,
+	AArch64_SYSREG_PMUSERENR_EL0,
+	AArch64_SYSREG_PMXEVCNTR_EL0,
+	AArch64_SYSREG_PMXEVTYPER_EL0,
+	AArch64_SYSREG_PMZR_EL0,
+	AArch64_SYSREG_POR_EL0,
+	AArch64_SYSREG_POR_EL1,
+	AArch64_SYSREG_POR_EL12,
+	AArch64_SYSREG_POR_EL2,
+	AArch64_SYSREG_POR_EL3,
+	AArch64_SYSREG_PRBAR10_EL1,
+	AArch64_SYSREG_PRBAR10_EL2,
+	AArch64_SYSREG_PRBAR11_EL1,
+	AArch64_SYSREG_PRBAR11_EL2,
+	AArch64_SYSREG_PRBAR12_EL1,
+	AArch64_SYSREG_PRBAR12_EL2,
+	AArch64_SYSREG_PRBAR13_EL1,
+	AArch64_SYSREG_PRBAR13_EL2,
+	AArch64_SYSREG_PRBAR14_EL1,
+	AArch64_SYSREG_PRBAR14_EL2,
+	AArch64_SYSREG_PRBAR15_EL1,
+	AArch64_SYSREG_PRBAR15_EL2,
+	AArch64_SYSREG_PRBAR1_EL1,
+	AArch64_SYSREG_PRBAR1_EL2,
+	AArch64_SYSREG_PRBAR2_EL1,
+	AArch64_SYSREG_PRBAR2_EL2,
+	AArch64_SYSREG_PRBAR3_EL1,
+	AArch64_SYSREG_PRBAR3_EL2,
+	AArch64_SYSREG_PRBAR4_EL1,
+	AArch64_SYSREG_PRBAR4_EL2,
+	AArch64_SYSREG_PRBAR5_EL1,
+	AArch64_SYSREG_PRBAR5_EL2,
+	AArch64_SYSREG_PRBAR6_EL1,
+	AArch64_SYSREG_PRBAR6_EL2,
+	AArch64_SYSREG_PRBAR7_EL1,
+	AArch64_SYSREG_PRBAR7_EL2,
+	AArch64_SYSREG_PRBAR8_EL1,
+	AArch64_SYSREG_PRBAR8_EL2,
+	AArch64_SYSREG_PRBAR9_EL1,
+	AArch64_SYSREG_PRBAR9_EL2,
+	AArch64_SYSREG_PRBAR_EL1,
+	AArch64_SYSREG_PRBAR_EL2,
+	AArch64_SYSREG_PRENR_EL1,
+	AArch64_SYSREG_PRENR_EL2,
+	AArch64_SYSREG_PRLAR10_EL1,
+	AArch64_SYSREG_PRLAR10_EL2,
+	AArch64_SYSREG_PRLAR11_EL1,
+	AArch64_SYSREG_PRLAR11_EL2,
+	AArch64_SYSREG_PRLAR12_EL1,
+	AArch64_SYSREG_PRLAR12_EL2,
+	AArch64_SYSREG_PRLAR13_EL1,
+	AArch64_SYSREG_PRLAR13_EL2,
+	AArch64_SYSREG_PRLAR14_EL1,
+	AArch64_SYSREG_PRLAR14_EL2,
+	AArch64_SYSREG_PRLAR15_EL1,
+	AArch64_SYSREG_PRLAR15_EL2,
+	AArch64_SYSREG_PRLAR1_EL1,
+	AArch64_SYSREG_PRLAR1_EL2,
+	AArch64_SYSREG_PRLAR2_EL1,
+	AArch64_SYSREG_PRLAR2_EL2,
+	AArch64_SYSREG_PRLAR3_EL1,
+	AArch64_SYSREG_PRLAR3_EL2,
+	AArch64_SYSREG_PRLAR4_EL1,
+	AArch64_SYSREG_PRLAR4_EL2,
+	AArch64_SYSREG_PRLAR5_EL1,
+	AArch64_SYSREG_PRLAR5_EL2,
+	AArch64_SYSREG_PRLAR6_EL1,
+	AArch64_SYSREG_PRLAR6_EL2,
+	AArch64_SYSREG_PRLAR7_EL1,
+	AArch64_SYSREG_PRLAR7_EL2,
+	AArch64_SYSREG_PRLAR8_EL1,
+	AArch64_SYSREG_PRLAR8_EL2,
+	AArch64_SYSREG_PRLAR9_EL1,
+	AArch64_SYSREG_PRLAR9_EL2,
+	AArch64_SYSREG_PRLAR_EL1,
+	AArch64_SYSREG_PRLAR_EL2,
+	AArch64_SYSREG_PRSELR_EL1,
+	AArch64_SYSREG_PRSELR_EL2,
+	AArch64_SYSREG_RCWMASK_EL1,
+	AArch64_SYSREG_RCWSMASK_EL1,
+	AArch64_SYSREG_REVIDR_EL1,
+	AArch64_SYSREG_RGSR_EL1,
+	AArch64_SYSREG_RMR_EL1,
+	AArch64_SYSREG_RMR_EL2,
+	AArch64_SYSREG_RMR_EL3,
+	AArch64_SYSREG_RNDR,
+	AArch64_SYSREG_RNDRRS,
+	AArch64_SYSREG_RVBAR_EL1,
+	AArch64_SYSREG_RVBAR_EL2,
+	AArch64_SYSREG_RVBAR_EL3,
+	AArch64_SYSREG_S2PIR_EL2,
+	AArch64_SYSREG_S2POR_EL1,
+	AArch64_SYSREG_SCR_EL3,
+	AArch64_SYSREG_SCTLR2_EL1,
+	AArch64_SYSREG_SCTLR2_EL12,
+	AArch64_SYSREG_SCTLR2_EL2,
+	AArch64_SYSREG_SCTLR2_EL3,
+	AArch64_SYSREG_SCTLR_EL1,
+	AArch64_SYSREG_SCTLR_EL12,
+	AArch64_SYSREG_SCTLR_EL2,
+	AArch64_SYSREG_SCTLR_EL3,
+	AArch64_SYSREG_SCXTNUM_EL0,
+	AArch64_SYSREG_SCXTNUM_EL1,
+	AArch64_SYSREG_SCXTNUM_EL12,
+	AArch64_SYSREG_SCXTNUM_EL2,
+	AArch64_SYSREG_SCXTNUM_EL3,
+	AArch64_SYSREG_SDER32_EL2,
+	AArch64_SYSREG_SDER32_EL3,
+	AArch64_SYSREG_SMCR_EL1,
+	AArch64_SYSREG_SMCR_EL12,
+	AArch64_SYSREG_SMCR_EL2,
+	AArch64_SYSREG_SMCR_EL3,
+	AArch64_SYSREG_SMIDR_EL1,
+	AArch64_SYSREG_SMPRIMAP_EL2,
+	AArch64_SYSREG_SMPRI_EL1,
+	AArch64_SYSREG_SPMACCESSR_EL1,
+	AArch64_SYSREG_SPMACCESSR_EL12,
+	AArch64_SYSREG_SPMACCESSR_EL2,
+	AArch64_SYSREG_SPMACCESSR_EL3,
+	AArch64_SYSREG_SPMCFGR_EL1,
+	AArch64_SYSREG_SPMCGCR0_EL1,
+	AArch64_SYSREG_SPMCGCR1_EL1,
+	AArch64_SYSREG_SPMCNTENCLR_EL0,
+	AArch64_SYSREG_SPMCNTENSET_EL0,
+	AArch64_SYSREG_SPMCR_EL0,
+	AArch64_SYSREG_SPMDEVAFF_EL1,
+	AArch64_SYSREG_SPMDEVARCH_EL1,
+	AArch64_SYSREG_SPMEVCNTR0_EL0,
+	AArch64_SYSREG_SPMEVCNTR10_EL0,
+	AArch64_SYSREG_SPMEVCNTR11_EL0,
+	AArch64_SYSREG_SPMEVCNTR12_EL0,
+	AArch64_SYSREG_SPMEVCNTR13_EL0,
+	AArch64_SYSREG_SPMEVCNTR14_EL0,
+	AArch64_SYSREG_SPMEVCNTR15_EL0,
+	AArch64_SYSREG_SPMEVCNTR1_EL0,
+	AArch64_SYSREG_SPMEVCNTR2_EL0,
+	AArch64_SYSREG_SPMEVCNTR3_EL0,
+	AArch64_SYSREG_SPMEVCNTR4_EL0,
+	AArch64_SYSREG_SPMEVCNTR5_EL0,
+	AArch64_SYSREG_SPMEVCNTR6_EL0,
+	AArch64_SYSREG_SPMEVCNTR7_EL0,
+	AArch64_SYSREG_SPMEVCNTR8_EL0,
+	AArch64_SYSREG_SPMEVCNTR9_EL0,
+	AArch64_SYSREG_SPMEVFILT2R0_EL0,
+	AArch64_SYSREG_SPMEVFILT2R10_EL0,
+	AArch64_SYSREG_SPMEVFILT2R11_EL0,
+	AArch64_SYSREG_SPMEVFILT2R12_EL0,
+	AArch64_SYSREG_SPMEVFILT2R13_EL0,
+	AArch64_SYSREG_SPMEVFILT2R14_EL0,
+	AArch64_SYSREG_SPMEVFILT2R15_EL0,
+	AArch64_SYSREG_SPMEVFILT2R1_EL0,
+	AArch64_SYSREG_SPMEVFILT2R2_EL0,
+	AArch64_SYSREG_SPMEVFILT2R3_EL0,
+	AArch64_SYSREG_SPMEVFILT2R4_EL0,
+	AArch64_SYSREG_SPMEVFILT2R5_EL0,
+	AArch64_SYSREG_SPMEVFILT2R6_EL0,
+	AArch64_SYSREG_SPMEVFILT2R7_EL0,
+	AArch64_SYSREG_SPMEVFILT2R8_EL0,
+	AArch64_SYSREG_SPMEVFILT2R9_EL0,
+	AArch64_SYSREG_SPMEVFILTR0_EL0,
+	AArch64_SYSREG_SPMEVFILTR10_EL0,
+	AArch64_SYSREG_SPMEVFILTR11_EL0,
+	AArch64_SYSREG_SPMEVFILTR12_EL0,
+	AArch64_SYSREG_SPMEVFILTR13_EL0,
+	AArch64_SYSREG_SPMEVFILTR14_EL0,
+	AArch64_SYSREG_SPMEVFILTR15_EL0,
+	AArch64_SYSREG_SPMEVFILTR1_EL0,
+	AArch64_SYSREG_SPMEVFILTR2_EL0,
+	AArch64_SYSREG_SPMEVFILTR3_EL0,
+	AArch64_SYSREG_SPMEVFILTR4_EL0,
+	AArch64_SYSREG_SPMEVFILTR5_EL0,
+	AArch64_SYSREG_SPMEVFILTR6_EL0,
+	AArch64_SYSREG_SPMEVFILTR7_EL0,
+	AArch64_SYSREG_SPMEVFILTR8_EL0,
+	AArch64_SYSREG_SPMEVFILTR9_EL0,
+	AArch64_SYSREG_SPMEVTYPER0_EL0,
+	AArch64_SYSREG_SPMEVTYPER10_EL0,
+	AArch64_SYSREG_SPMEVTYPER11_EL0,
+	AArch64_SYSREG_SPMEVTYPER12_EL0,
+	AArch64_SYSREG_SPMEVTYPER13_EL0,
+	AArch64_SYSREG_SPMEVTYPER14_EL0,
+	AArch64_SYSREG_SPMEVTYPER15_EL0,
+	AArch64_SYSREG_SPMEVTYPER1_EL0,
+	AArch64_SYSREG_SPMEVTYPER2_EL0,
+	AArch64_SYSREG_SPMEVTYPER3_EL0,
+	AArch64_SYSREG_SPMEVTYPER4_EL0,
+	AArch64_SYSREG_SPMEVTYPER5_EL0,
+	AArch64_SYSREG_SPMEVTYPER6_EL0,
+	AArch64_SYSREG_SPMEVTYPER7_EL0,
+	AArch64_SYSREG_SPMEVTYPER8_EL0,
+	AArch64_SYSREG_SPMEVTYPER9_EL0,
+	AArch64_SYSREG_SPMIIDR_EL1,
+	AArch64_SYSREG_SPMINTENCLR_EL1,
+	AArch64_SYSREG_SPMINTENSET_EL1,
+	AArch64_SYSREG_SPMOVSCLR_EL0,
+	AArch64_SYSREG_SPMOVSSET_EL0,
+	AArch64_SYSREG_SPMROOTCR_EL3,
+	AArch64_SYSREG_SPMSCR_EL1,
+	AArch64_SYSREG_SPMSELR_EL0,
+	AArch64_SYSREG_SPSEL,
+	AArch64_SYSREG_SPSR_ABT,
+	AArch64_SYSREG_SPSR_EL1,
+	AArch64_SYSREG_SPSR_EL12,
+	AArch64_SYSREG_SPSR_EL2,
+	AArch64_SYSREG_SPSR_EL3,
+	AArch64_SYSREG_SPSR_FIQ,
+	AArch64_SYSREG_SPSR_IRQ,
+	AArch64_SYSREG_SPSR_UND,
+	AArch64_SYSREG_SP_EL0,
+	AArch64_SYSREG_SP_EL1,
+	AArch64_SYSREG_SP_EL2,
+	AArch64_SYSREG_SSBS,
+	AArch64_SYSREG_SVCR,
+	AArch64_SYSREG_TCO,
+	AArch64_SYSREG_TCR2_EL1,
+	AArch64_SYSREG_TCR2_EL12,
+	AArch64_SYSREG_TCR2_EL2,
+	AArch64_SYSREG_TCR_EL1,
+	AArch64_SYSREG_TCR_EL12,
+	AArch64_SYSREG_TCR_EL2,
+	AArch64_SYSREG_TCR_EL3,
+	AArch64_SYSREG_TEECR32_EL1,
+	AArch64_SYSREG_TEEHBR32_EL1,
+	AArch64_SYSREG_TFSRE0_EL1,
+	AArch64_SYSREG_TFSR_EL1,
+	AArch64_SYSREG_TFSR_EL12,
+	AArch64_SYSREG_TFSR_EL2,
+	AArch64_SYSREG_TFSR_EL3,
+	AArch64_SYSREG_TPIDR2_EL0,
+	AArch64_SYSREG_TPIDRRO_EL0,
+	AArch64_SYSREG_TPIDR_EL0,
+	AArch64_SYSREG_TPIDR_EL1,
+	AArch64_SYSREG_TPIDR_EL2,
+	AArch64_SYSREG_TPIDR_EL3,
+	AArch64_SYSREG_TRBBASER_EL1,
+	AArch64_SYSREG_TRBIDR_EL1,
+	AArch64_SYSREG_TRBLIMITR_EL1,
+	AArch64_SYSREG_TRBMAR_EL1,
+	AArch64_SYSREG_TRBPTR_EL1,
+	AArch64_SYSREG_TRBSR_EL1,
+	AArch64_SYSREG_TRBTRG_EL1,
+	AArch64_SYSREG_TRCACATR0,
+	AArch64_SYSREG_TRCACATR1,
+	AArch64_SYSREG_TRCACATR10,
+	AArch64_SYSREG_TRCACATR11,
+	AArch64_SYSREG_TRCACATR12,
+	AArch64_SYSREG_TRCACATR13,
+	AArch64_SYSREG_TRCACATR14,
+	AArch64_SYSREG_TRCACATR15,
+	AArch64_SYSREG_TRCACATR2,
+	AArch64_SYSREG_TRCACATR3,
+	AArch64_SYSREG_TRCACATR4,
+	AArch64_SYSREG_TRCACATR5,
+	AArch64_SYSREG_TRCACATR6,
+	AArch64_SYSREG_TRCACATR7,
+	AArch64_SYSREG_TRCACATR8,
+	AArch64_SYSREG_TRCACATR9,
+	AArch64_SYSREG_TRCACVR0,
+	AArch64_SYSREG_TRCACVR1,
+	AArch64_SYSREG_TRCACVR10,
+	AArch64_SYSREG_TRCACVR11,
+	AArch64_SYSREG_TRCACVR12,
+	AArch64_SYSREG_TRCACVR13,
+	AArch64_SYSREG_TRCACVR14,
+	AArch64_SYSREG_TRCACVR15,
+	AArch64_SYSREG_TRCACVR2,
+	AArch64_SYSREG_TRCACVR3,
+	AArch64_SYSREG_TRCACVR4,
+	AArch64_SYSREG_TRCACVR5,
+	AArch64_SYSREG_TRCACVR6,
+	AArch64_SYSREG_TRCACVR7,
+	AArch64_SYSREG_TRCACVR8,
+	AArch64_SYSREG_TRCACVR9,
+	AArch64_SYSREG_TRCAUTHSTATUS,
+	AArch64_SYSREG_TRCAUXCTLR,
+	AArch64_SYSREG_TRCBBCTLR,
+	AArch64_SYSREG_TRCCCCTLR,
+	AArch64_SYSREG_TRCCIDCCTLR0,
+	AArch64_SYSREG_TRCCIDCCTLR1,
+	AArch64_SYSREG_TRCCIDCVR0,
+	AArch64_SYSREG_TRCCIDCVR1,
+	AArch64_SYSREG_TRCCIDCVR2,
+	AArch64_SYSREG_TRCCIDCVR3,
+	AArch64_SYSREG_TRCCIDCVR4,
+	AArch64_SYSREG_TRCCIDCVR5,
+	AArch64_SYSREG_TRCCIDCVR6,
+	AArch64_SYSREG_TRCCIDCVR7,
+	AArch64_SYSREG_TRCCIDR0,
+	AArch64_SYSREG_TRCCIDR1,
+	AArch64_SYSREG_TRCCIDR2,
+	AArch64_SYSREG_TRCCIDR3,
+	AArch64_SYSREG_TRCCLAIMCLR,
+	AArch64_SYSREG_TRCCLAIMSET,
+	AArch64_SYSREG_TRCCNTCTLR0,
+	AArch64_SYSREG_TRCCNTCTLR1,
+	AArch64_SYSREG_TRCCNTCTLR2,
+	AArch64_SYSREG_TRCCNTCTLR3,
+	AArch64_SYSREG_TRCCNTRLDVR0,
+	AArch64_SYSREG_TRCCNTRLDVR1,
+	AArch64_SYSREG_TRCCNTRLDVR2,
+	AArch64_SYSREG_TRCCNTRLDVR3,
+	AArch64_SYSREG_TRCCNTVR0,
+	AArch64_SYSREG_TRCCNTVR1,
+	AArch64_SYSREG_TRCCNTVR2,
+	AArch64_SYSREG_TRCCNTVR3,
+	AArch64_SYSREG_TRCCONFIGR,
+	AArch64_SYSREG_TRCDEVAFF0,
+	AArch64_SYSREG_TRCDEVAFF1,
+	AArch64_SYSREG_TRCDEVARCH,
+	AArch64_SYSREG_TRCDEVID,
+	AArch64_SYSREG_TRCDEVTYPE,
+	AArch64_SYSREG_TRCDVCMR0,
+	AArch64_SYSREG_TRCDVCMR1,
+	AArch64_SYSREG_TRCDVCMR2,
+	AArch64_SYSREG_TRCDVCMR3,
+	AArch64_SYSREG_TRCDVCMR4,
+	AArch64_SYSREG_TRCDVCMR5,
+	AArch64_SYSREG_TRCDVCMR6,
+	AArch64_SYSREG_TRCDVCMR7,
+	AArch64_SYSREG_TRCDVCVR0,
+	AArch64_SYSREG_TRCDVCVR1,
+	AArch64_SYSREG_TRCDVCVR2,
+	AArch64_SYSREG_TRCDVCVR3,
+	AArch64_SYSREG_TRCDVCVR4,
+	AArch64_SYSREG_TRCDVCVR5,
+	AArch64_SYSREG_TRCDVCVR6,
+	AArch64_SYSREG_TRCDVCVR7,
+	AArch64_SYSREG_TRCEVENTCTL0R,
+	AArch64_SYSREG_TRCEVENTCTL1R,
+	AArch64_SYSREG_TRCEXTINSELR,
+	AArch64_SYSREG_TRCEXTINSELR0,
+	AArch64_SYSREG_TRCEXTINSELR1,
+	AArch64_SYSREG_TRCEXTINSELR2,
+	AArch64_SYSREG_TRCEXTINSELR3,
+	AArch64_SYSREG_TRCIDR0,
+	AArch64_SYSREG_TRCIDR1,
+	AArch64_SYSREG_TRCIDR10,
+	AArch64_SYSREG_TRCIDR11,
+	AArch64_SYSREG_TRCIDR12,
+	AArch64_SYSREG_TRCIDR13,
+	AArch64_SYSREG_TRCIDR2,
+	AArch64_SYSREG_TRCIDR3,
+	AArch64_SYSREG_TRCIDR4,
+	AArch64_SYSREG_TRCIDR5,
+	AArch64_SYSREG_TRCIDR6,
+	AArch64_SYSREG_TRCIDR7,
+	AArch64_SYSREG_TRCIDR8,
+	AArch64_SYSREG_TRCIDR9,
+	AArch64_SYSREG_TRCIMSPEC0,
+	AArch64_SYSREG_TRCIMSPEC1,
+	AArch64_SYSREG_TRCIMSPEC2,
+	AArch64_SYSREG_TRCIMSPEC3,
+	AArch64_SYSREG_TRCIMSPEC4,
+	AArch64_SYSREG_TRCIMSPEC5,
+	AArch64_SYSREG_TRCIMSPEC6,
+	AArch64_SYSREG_TRCIMSPEC7,
+	AArch64_SYSREG_TRCITCTRL,
+	AArch64_SYSREG_TRCITECR_EL1,
+	AArch64_SYSREG_TRCITECR_EL12,
+	AArch64_SYSREG_TRCITECR_EL2,
+	AArch64_SYSREG_TRCITEEDCR,
+	AArch64_SYSREG_TRCLAR,
+	AArch64_SYSREG_TRCLSR,
+	AArch64_SYSREG_TRCOSLAR,
+	AArch64_SYSREG_TRCOSLSR,
+	AArch64_SYSREG_TRCPDCR,
+	AArch64_SYSREG_TRCPDSR,
+	AArch64_SYSREG_TRCPIDR0,
+	AArch64_SYSREG_TRCPIDR1,
+	AArch64_SYSREG_TRCPIDR2,
+	AArch64_SYSREG_TRCPIDR3,
+	AArch64_SYSREG_TRCPIDR4,
+	AArch64_SYSREG_TRCPIDR5,
+	AArch64_SYSREG_TRCPIDR6,
+	AArch64_SYSREG_TRCPIDR7,
+	AArch64_SYSREG_TRCPRGCTLR,
+	AArch64_SYSREG_TRCPROCSELR,
+	AArch64_SYSREG_TRCQCTLR,
+	AArch64_SYSREG_TRCRSCTLR10,
+	AArch64_SYSREG_TRCRSCTLR11,
+	AArch64_SYSREG_TRCRSCTLR12,
+	AArch64_SYSREG_TRCRSCTLR13,
+	AArch64_SYSREG_TRCRSCTLR14,
+	AArch64_SYSREG_TRCRSCTLR15,
+	AArch64_SYSREG_TRCRSCTLR16,
+	AArch64_SYSREG_TRCRSCTLR17,
+	AArch64_SYSREG_TRCRSCTLR18,
+	AArch64_SYSREG_TRCRSCTLR19,
+	AArch64_SYSREG_TRCRSCTLR2,
+	AArch64_SYSREG_TRCRSCTLR20,
+	AArch64_SYSREG_TRCRSCTLR21,
+	AArch64_SYSREG_TRCRSCTLR22,
+	AArch64_SYSREG_TRCRSCTLR23,
+	AArch64_SYSREG_TRCRSCTLR24,
+	AArch64_SYSREG_TRCRSCTLR25,
+	AArch64_SYSREG_TRCRSCTLR26,
+	AArch64_SYSREG_TRCRSCTLR27,
+	AArch64_SYSREG_TRCRSCTLR28,
+	AArch64_SYSREG_TRCRSCTLR29,
+	AArch64_SYSREG_TRCRSCTLR3,
+	AArch64_SYSREG_TRCRSCTLR30,
+	AArch64_SYSREG_TRCRSCTLR31,
+	AArch64_SYSREG_TRCRSCTLR4,
+	AArch64_SYSREG_TRCRSCTLR5,
+	AArch64_SYSREG_TRCRSCTLR6,
+	AArch64_SYSREG_TRCRSCTLR7,
+	AArch64_SYSREG_TRCRSCTLR8,
+	AArch64_SYSREG_TRCRSCTLR9,
+	AArch64_SYSREG_TRCRSR,
+	AArch64_SYSREG_TRCSEQEVR0,
+	AArch64_SYSREG_TRCSEQEVR1,
+	AArch64_SYSREG_TRCSEQEVR2,
+	AArch64_SYSREG_TRCSEQRSTEVR,
+	AArch64_SYSREG_TRCSEQSTR,
+	AArch64_SYSREG_TRCSSCCR0,
+	AArch64_SYSREG_TRCSSCCR1,
+	AArch64_SYSREG_TRCSSCCR2,
+	AArch64_SYSREG_TRCSSCCR3,
+	AArch64_SYSREG_TRCSSCCR4,
+	AArch64_SYSREG_TRCSSCCR5,
+	AArch64_SYSREG_TRCSSCCR6,
+	AArch64_SYSREG_TRCSSCCR7,
+	AArch64_SYSREG_TRCSSCSR0,
+	AArch64_SYSREG_TRCSSCSR1,
+	AArch64_SYSREG_TRCSSCSR2,
+	AArch64_SYSREG_TRCSSCSR3,
+	AArch64_SYSREG_TRCSSCSR4,
+	AArch64_SYSREG_TRCSSCSR5,
+	AArch64_SYSREG_TRCSSCSR6,
+	AArch64_SYSREG_TRCSSCSR7,
+	AArch64_SYSREG_TRCSSPCICR0,
+	AArch64_SYSREG_TRCSSPCICR1,
+	AArch64_SYSREG_TRCSSPCICR2,
+	AArch64_SYSREG_TRCSSPCICR3,
+	AArch64_SYSREG_TRCSSPCICR4,
+	AArch64_SYSREG_TRCSSPCICR5,
+	AArch64_SYSREG_TRCSSPCICR6,
+	AArch64_SYSREG_TRCSSPCICR7,
+	AArch64_SYSREG_TRCSTALLCTLR,
+	AArch64_SYSREG_TRCSTATR,
+	AArch64_SYSREG_TRCSYNCPR,
+	AArch64_SYSREG_TRCTRACEIDR,
+	AArch64_SYSREG_TRCTSCTLR,
+	AArch64_SYSREG_TRCVDARCCTLR,
+	AArch64_SYSREG_TRCVDCTLR,
+	AArch64_SYSREG_TRCVDSACCTLR,
+	AArch64_SYSREG_TRCVICTLR,
+	AArch64_SYSREG_TRCVIIECTLR,
+	AArch64_SYSREG_TRCVIPCSSCTLR,
+	AArch64_SYSREG_TRCVISSCTLR,
+	AArch64_SYSREG_TRCVMIDCCTLR0,
+	AArch64_SYSREG_TRCVMIDCCTLR1,
+	AArch64_SYSREG_TRCVMIDCVR0,
+	AArch64_SYSREG_TRCVMIDCVR1,
+	AArch64_SYSREG_TRCVMIDCVR2,
+	AArch64_SYSREG_TRCVMIDCVR3,
+	AArch64_SYSREG_TRCVMIDCVR4,
+	AArch64_SYSREG_TRCVMIDCVR5,
+	AArch64_SYSREG_TRCVMIDCVR6,
+	AArch64_SYSREG_TRCVMIDCVR7,
+	AArch64_SYSREG_TRFCR_EL1,
+	AArch64_SYSREG_TRFCR_EL12,
+	AArch64_SYSREG_TRFCR_EL2,
+	AArch64_SYSREG_TTBR0_EL1,
+	AArch64_SYSREG_TTBR0_EL12,
+	AArch64_SYSREG_TTBR0_EL2,
+	AArch64_SYSREG_VSCTLR_EL2,
+	AArch64_SYSREG_TTBR0_EL3,
+	AArch64_SYSREG_TTBR1_EL1,
+	AArch64_SYSREG_TTBR1_EL12,
+	AArch64_SYSREG_TTBR1_EL2,
+	AArch64_SYSREG_UAO,
+	AArch64_SYSREG_VBAR_EL1,
+	AArch64_SYSREG_VBAR_EL12,
+	AArch64_SYSREG_VBAR_EL2,
+	AArch64_SYSREG_VBAR_EL3,
+	AArch64_SYSREG_VDISR_EL2,
+	AArch64_SYSREG_VMECID_A_EL2,
+	AArch64_SYSREG_VMECID_P_EL2,
+	AArch64_SYSREG_VMPIDR_EL2,
+	AArch64_SYSREG_VNCR_EL2,
+	AArch64_SYSREG_VPIDR_EL2,
+	AArch64_SYSREG_VSESR_EL2,
+	AArch64_SYSREG_VSTCR_EL2,
+	AArch64_SYSREG_VSTTBR_EL2,
+	AArch64_SYSREG_VTCR_EL2,
+	AArch64_SYSREG_VTTBR_EL2,
+	AArch64_SYSREG_ZCR_EL1,
+	AArch64_SYSREG_ZCR_EL12,
+	AArch64_SYSREG_ZCR_EL2,
+	AArch64_SYSREG_ZCR_EL3,
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemRegisterEnum.inc> end
 } arm64_sysreg;
+
+typedef enum {
+	// generated content <AArch64GenCSSystemImmediateEnum.inc> begin
+	// clang-format off
+
+	AArch64_SYSIMM_ISHNXS,
+	AArch64_SYSIMM_NSHNXS,
+	AArch64_SYSIMM_OSHNXS,
+	AArch64_SYSIMM_SYNXS,
+
+	// clang-format on
+	// generated content <AArch64GenCSSystemImmediateEnum.inc> end
+} aarch64_sysimm;
+
+typedef enum {
+	// generated content <AArch64GenCSSystemAliasEnum.inc> begin
+	// clang-format off
+
+	AArch64_SYSALIAS_S12E0R,
+	AArch64_SYSALIAS_S12E0W,
+	AArch64_SYSALIAS_S12E1R,
+	AArch64_SYSALIAS_S12E1W,
+	AArch64_SYSALIAS_S1E0R,
+	AArch64_SYSALIAS_S1E0W,
+	AArch64_SYSALIAS_S1E1R,
+	AArch64_SYSALIAS_S1E1RP,
+	AArch64_SYSALIAS_S1E1W,
+	AArch64_SYSALIAS_S1E1WP,
+	AArch64_SYSALIAS_S1E2R,
+	AArch64_SYSALIAS_S1E2W,
+	AArch64_SYSALIAS_S1E3R,
+	AArch64_SYSALIAS_S1E3W,
+	AArch64_SYSALIAS_C,
+	AArch64_SYSALIAS_J,
+	AArch64_SYSALIAS_JC,
+	AArch64_SYSALIAS_ISH,
+	AArch64_SYSALIAS_ISHLD,
+	AArch64_SYSALIAS_ISHST,
+	AArch64_SYSALIAS_LD,
+	AArch64_SYSALIAS_NSH,
+	AArch64_SYSALIAS_NSHLD,
+	AArch64_SYSALIAS_NSHST,
+	AArch64_SYSALIAS_OSH,
+	AArch64_SYSALIAS_OSHLD,
+	AArch64_SYSALIAS_OSHST,
+	AArch64_SYSALIAS_ST,
+	AArch64_SYSALIAS_SY,
+	AArch64_SYSALIAS_CGDSW,
+	AArch64_SYSALIAS_CGDVAC,
+	AArch64_SYSALIAS_CGDVADP,
+	AArch64_SYSALIAS_CGDVAP,
+	AArch64_SYSALIAS_CGSW,
+	AArch64_SYSALIAS_CGVAC,
+	AArch64_SYSALIAS_CGVADP,
+	AArch64_SYSALIAS_CGVAP,
+	AArch64_SYSALIAS_CIGDPAE,
+	AArch64_SYSALIAS_CIGDSW,
+	AArch64_SYSALIAS_CIGDVAC,
+	AArch64_SYSALIAS_CIGSW,
+	AArch64_SYSALIAS_CIGVAC,
+	AArch64_SYSALIAS_CIPAE,
+	AArch64_SYSALIAS_CISW,
+	AArch64_SYSALIAS_CIVAC,
+	AArch64_SYSALIAS_CSW,
+	AArch64_SYSALIAS_CVAC,
+	AArch64_SYSALIAS_CVADP,
+	AArch64_SYSALIAS_CVAP,
+	AArch64_SYSALIAS_CVAU,
+	AArch64_SYSALIAS_GVA,
+	AArch64_SYSALIAS_GZVA,
+	AArch64_SYSALIAS_IGDSW,
+	AArch64_SYSALIAS_IGDVAC,
+	AArch64_SYSALIAS_IGSW,
+	AArch64_SYSALIAS_IGVAC,
+	AArch64_SYSALIAS_ISW,
+	AArch64_SYSALIAS_IVAC,
+	AArch64_SYSALIAS_ZVA,
+	AArch64_SYSALIAS_PLDL1KEEP,
+	AArch64_SYSALIAS_PLDL1STRM,
+	AArch64_SYSALIAS_PLDL2KEEP,
+	AArch64_SYSALIAS_PLDL2STRM,
+	AArch64_SYSALIAS_PLDL3KEEP,
+	AArch64_SYSALIAS_PLDL3STRM,
+	AArch64_SYSALIAS_PLDSLCKEEP,
+	AArch64_SYSALIAS_PLDSLCSTRM,
+	AArch64_SYSALIAS_PLIL1KEEP,
+	AArch64_SYSALIAS_PLIL1STRM,
+	AArch64_SYSALIAS_PLIL2KEEP,
+	AArch64_SYSALIAS_PLIL2STRM,
+	AArch64_SYSALIAS_PLIL3KEEP,
+	AArch64_SYSALIAS_PLIL3STRM,
+	AArch64_SYSALIAS_PLISLCKEEP,
+	AArch64_SYSALIAS_PLISLCSTRM,
+	AArch64_SYSALIAS_PSTL1KEEP,
+	AArch64_SYSALIAS_PSTL1STRM,
+	AArch64_SYSALIAS_PSTL2KEEP,
+	AArch64_SYSALIAS_PSTL2STRM,
+	AArch64_SYSALIAS_PSTL3KEEP,
+	AArch64_SYSALIAS_PSTL3STRM,
+	AArch64_SYSALIAS_PSTSLCKEEP,
+	AArch64_SYSALIAS_PSTSLCSTRM,
+	AArch64_SYSALIAS_CSYNC,
+	AArch64_SYSALIAS_ALLINT,
+	AArch64_SYSALIAS_PM,
+	AArch64_SYSALIAS_DAIFCLR,
+	AArch64_SYSALIAS_DAIFSET,
+	AArch64_SYSALIAS_DIT,
+	AArch64_SYSALIAS_PAN,
+	AArch64_SYSALIAS_SPSEL,
+	AArch64_SYSALIAS_SSBS,
+	AArch64_SYSALIAS_TCO,
+	AArch64_SYSALIAS_UAO,
+	AArch64_SYSALIAS_PLDKEEP,
+	AArch64_SYSALIAS_PLDSTRM,
+	AArch64_SYSALIAS_PSTKEEP,
+	AArch64_SYSALIAS_PSTSTRM,
+	AArch64_SYSALIAS_SVCRSM,
+	AArch64_SYSALIAS_SVCRSMZA,
+	AArch64_SYSALIAS_SVCRZA,
+
+	// clang-format on
+	// generated content <AArch64GenCSSystemAliasEnum.inc> end
+} aarch64_sysalias;
 
 /// System PState Field (MSR instruction)
 typedef enum arm64_pstate {

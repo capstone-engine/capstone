@@ -111,9 +111,12 @@
 
 #include "AArch64GenSystemOperands.inc"
 
+#define SysReg AArch64SysReg_SysReg
 #define GET_SYSREG_IMPL
 
 #include "AArch64GenSystemOperands.inc"
+
+#undef SysReg
 
 // return a string representing the number X
 // NOTE: result must be big enough to contain the data

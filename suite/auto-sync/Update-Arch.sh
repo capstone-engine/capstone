@@ -103,10 +103,6 @@ has_sys_reg_tables="ARM, AArch64"
 if echo "$has_sys_reg_tables" | grep -q -w "$arch"; then
   echo "[*] Generate System Register tables..."
   $tblgen --printerLang=CCS --gen-searchable-tables -I "$llvm_root/llvm/include/" -I "$llvm_root/llvm/lib/Target/$llvm_target_dir/" "$llvm_root/llvm/lib/Target/$llvm_target_dir/$arch.td"
-  sed -i "s/##ARCH##/$arch/g" __ARCH__GenCSSystemRegisterEnum.inc
-  sed -i "s/##ARCH##/$arch/g" __ARCH__GenSystemRegister.inc
-  cp __ARCH__GenCSSystemRegisterEnum.inc $arch"GenCSSystemRegisterEnum.inc"
-  cp __ARCH__GenSystemRegister.inc $arch"GenSystemRegister.inc"
   if [ "$arch" = "AArch64" ]; then
     mv "AArch64GenSystemRegister.inc" "AArch64GenSystemOperands.inc"
   fi
@@ -141,7 +137,7 @@ cd "$cs_root/suite/auto-sync/build"
 cs_arch_dir="$cs_root/arch/$llvm_target_dir/"
 cs_inc_dir="$cs_root/include/capstone"
 
-into_arch_main_header=$arch"GenCSInsnEnum.inc "$arch"GenCSFeatureEnum.inc "$arch"GenCSRegEnum.inc "$arch"GenCSSystemRegisterEnum.inc "$arch"GenCSInsnFormatsEnum.inc "
+into_arch_main_header=$arch"GenCSInsnEnum.inc "$arch"GenCSFeatureEnum.inc "$arch"GenCSRegEnum.inc "$arch"GenCSSystemRegisterEnum.inc "$arch"GenCSInsnFormatsEnum.inc "$arch"GenCSSystemImmediateEnum.inc "$arch"GenCSSystemAliasEnum.inc "
 header_file=$(echo "$arch" | awk '{print tolower($0)}')
 main_header="$cs_inc_dir/$header_file.h"
 

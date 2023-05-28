@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Do not edit. */
 
@@ -120,8 +120,7 @@ const DC *lookupDCByEncoding(uint16_t Encoding);
 
 #ifdef GET_EXACTFPIMM_DECL
 #undef GET_EXACTFPIMM_DECL
-const ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum);
-const ExactFPImm *lookupExactFPImmByRepr(const char * Repr);
+const AArch64ExactFPImm_ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum);
 #endif
 
 #ifdef GET_IC_DECL
@@ -166,7 +165,7 @@ const SVCR *lookupSVCRByEncoding(uint8_t Encoding);
 
 #ifdef GET_SVEPREDPAT_DECL
 #undef GET_SVEPREDPAT_DECL
-const SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encoding);
+const AArch64SVEPredPattern_SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVEPRFM_DECL
@@ -176,12 +175,12 @@ const SVEPRFM *lookupSVEPRFMByEncoding(uint8_t Encoding);
 
 #ifdef GET_SVEVECLENSPECIFIER_DECL
 #undef GET_SVEVECLENSPECIFIER_DECL
-const SVEVECLENSPECIFIER *lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding);
+const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SYSREG_DECL
 #undef GET_SYSREG_DECL
-const SysReg *lookupSysRegByEncoding(uint16_t Encoding);
+const AArch64SysReg_SysReg *lookupSysRegByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_TSB_DECL
@@ -191,6 +190,173 @@ const TSB *lookupTSBByEncoding(uint8_t Encoding);
 
 #ifdef GET_TLBITable_IMPL
 #undef GET_TLBITable_IMPL
+static const TLBI TLBITable[] = {
+  { "ALLE1", AArch64_SYSREG_ALLE1, 0x243C, false,  {0}  }, // 0
+  { "ALLE1IS", AArch64_SYSREG_ALLE1IS, 0x241C, false,  {0}  }, // 1
+  { "ALLE1ISnXS", AArch64_SYSREG_ALLE1ISNXS, 0x249C, false,  { AArch64_FeatureXS }  }, // 2
+  { "ALLE1nXS", AArch64_SYSREG_ALLE1NXS, 0x24BC, false,  { AArch64_FeatureXS }  }, // 3
+  { "ALLE1OS", AArch64_SYSREG_ALLE1OS, 0x240C, false,  { AArch64_FeatureTLB_RMI }  }, // 4
+  { "ALLE1OSnXS", AArch64_SYSREG_ALLE1OSNXS, 0x248C, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 5
+  { "ALLE2", AArch64_SYSREG_ALLE2, 0x2438, false,  {0}  }, // 6
+  { "ALLE2IS", AArch64_SYSREG_ALLE2IS, 0x2418, false,  {0}  }, // 7
+  { "ALLE2ISnXS", AArch64_SYSREG_ALLE2ISNXS, 0x2498, false,  { AArch64_FeatureXS }  }, // 8
+  { "ALLE2nXS", AArch64_SYSREG_ALLE2NXS, 0x24B8, false,  { AArch64_FeatureXS }  }, // 9
+  { "ALLE2OS", AArch64_SYSREG_ALLE2OS, 0x2408, false,  { AArch64_FeatureTLB_RMI }  }, // 10
+  { "ALLE2OSnXS", AArch64_SYSREG_ALLE2OSNXS, 0x2488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 11
+  { "ALLE3", AArch64_SYSREG_ALLE3, 0x3438, false,  {0}  }, // 12
+  { "ALLE3IS", AArch64_SYSREG_ALLE3IS, 0x3418, false,  {0}  }, // 13
+  { "ALLE3ISnXS", AArch64_SYSREG_ALLE3ISNXS, 0x3498, false,  { AArch64_FeatureXS }  }, // 14
+  { "ALLE3nXS", AArch64_SYSREG_ALLE3NXS, 0x34B8, false,  { AArch64_FeatureXS }  }, // 15
+  { "ALLE3OS", AArch64_SYSREG_ALLE3OS, 0x3408, false,  { AArch64_FeatureTLB_RMI }  }, // 16
+  { "ALLE3OSnXS", AArch64_SYSREG_ALLE3OSNXS, 0x3488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 17
+  { "ASIDE1", AArch64_SYSREG_ASIDE1, 0x43A, true,  {0}  }, // 18
+  { "ASIDE1IS", AArch64_SYSREG_ASIDE1IS, 0x41A, true,  {0}  }, // 19
+  { "ASIDE1ISnXS", AArch64_SYSREG_ASIDE1ISNXS, 0x49A, true,  { AArch64_FeatureXS }  }, // 20
+  { "ASIDE1nXS", AArch64_SYSREG_ASIDE1NXS, 0x4BA, true,  { AArch64_FeatureXS }  }, // 21
+  { "ASIDE1OS", AArch64_SYSREG_ASIDE1OS, 0x40A, true,  { AArch64_FeatureTLB_RMI }  }, // 22
+  { "ASIDE1OSnXS", AArch64_SYSREG_ASIDE1OSNXS, 0x48A, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 23
+  { "IPAS2E1", AArch64_SYSREG_IPAS2E1, 0x2421, true,  {0}  }, // 24
+  { "IPAS2E1IS", AArch64_SYSREG_IPAS2E1IS, 0x2401, true,  {0}  }, // 25
+  { "IPAS2E1ISnXS", AArch64_SYSREG_IPAS2E1ISNXS, 0x2481, true,  { AArch64_FeatureXS }  }, // 26
+  { "IPAS2E1nXS", AArch64_SYSREG_IPAS2E1NXS, 0x24A1, true,  { AArch64_FeatureXS }  }, // 27
+  { "IPAS2E1OS", AArch64_SYSREG_IPAS2E1OS, 0x2420, true,  { AArch64_FeatureTLB_RMI }  }, // 28
+  { "IPAS2E1OSnXS", AArch64_SYSREG_IPAS2E1OSNXS, 0x24A0, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 29
+  { "IPAS2LE1", AArch64_SYSREG_IPAS2LE1, 0x2425, true,  {0}  }, // 30
+  { "IPAS2LE1IS", AArch64_SYSREG_IPAS2LE1IS, 0x2405, true,  {0}  }, // 31
+  { "IPAS2LE1ISnXS", AArch64_SYSREG_IPAS2LE1ISNXS, 0x2485, true,  { AArch64_FeatureXS }  }, // 32
+  { "IPAS2LE1nXS", AArch64_SYSREG_IPAS2LE1NXS, 0x24A5, true,  { AArch64_FeatureXS }  }, // 33
+  { "IPAS2LE1OS", AArch64_SYSREG_IPAS2LE1OS, 0x2424, true,  { AArch64_FeatureTLB_RMI }  }, // 34
+  { "IPAS2LE1OSnXS", AArch64_SYSREG_IPAS2LE1OSNXS, 0x24A4, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 35
+  { "PAALL", AArch64_SYSREG_PAALL, 0x343C, false,  { AArch64_FeatureRME }  }, // 36
+  { "PAALLnXS", AArch64_SYSREG_PAALLNXS, 0x34BC, false,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 37
+  { "PAALLOS", AArch64_SYSREG_PAALLOS, 0x340C, false,  { AArch64_FeatureRME }  }, // 38
+  { "PAALLOSnXS", AArch64_SYSREG_PAALLOSNXS, 0x348C, false,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 39
+  { "RIPAS2E1", AArch64_SYSREG_RIPAS2E1, 0x2422, true,  { AArch64_FeatureTLB_RMI }  }, // 40
+  { "RIPAS2E1IS", AArch64_SYSREG_RIPAS2E1IS, 0x2402, true,  { AArch64_FeatureTLB_RMI }  }, // 41
+  { "RIPAS2E1ISnXS", AArch64_SYSREG_RIPAS2E1ISNXS, 0x2482, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 42
+  { "RIPAS2E1nXS", AArch64_SYSREG_RIPAS2E1NXS, 0x24A2, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 43
+  { "RIPAS2E1OS", AArch64_SYSREG_RIPAS2E1OS, 0x2423, true,  { AArch64_FeatureTLB_RMI }  }, // 44
+  { "RIPAS2E1OSnXS", AArch64_SYSREG_RIPAS2E1OSNXS, 0x24A3, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 45
+  { "RIPAS2LE1", AArch64_SYSREG_RIPAS2LE1, 0x2426, true,  { AArch64_FeatureTLB_RMI }  }, // 46
+  { "RIPAS2LE1IS", AArch64_SYSREG_RIPAS2LE1IS, 0x2406, true,  { AArch64_FeatureTLB_RMI }  }, // 47
+  { "RIPAS2LE1ISnXS", AArch64_SYSREG_RIPAS2LE1ISNXS, 0x2486, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 48
+  { "RIPAS2LE1nXS", AArch64_SYSREG_RIPAS2LE1NXS, 0x24A6, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 49
+  { "RIPAS2LE1OS", AArch64_SYSREG_RIPAS2LE1OS, 0x2427, true,  { AArch64_FeatureTLB_RMI }  }, // 50
+  { "RIPAS2LE1OSnXS", AArch64_SYSREG_RIPAS2LE1OSNXS, 0x24A7, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 51
+  { "RPALOS", AArch64_SYSREG_RPALOS, 0x3427, true,  { AArch64_FeatureRME }  }, // 52
+  { "RPALOSnXS", AArch64_SYSREG_RPALOSNXS, 0x34A7, true,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 53
+  { "RPAOS", AArch64_SYSREG_RPAOS, 0x3423, true,  { AArch64_FeatureRME }  }, // 54
+  { "RPAOSnXS", AArch64_SYSREG_RPAOSNXS, 0x34A3, true,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 55
+  { "RVAAE1", AArch64_SYSREG_RVAAE1, 0x433, true,  { AArch64_FeatureTLB_RMI }  }, // 56
+  { "RVAAE1IS", AArch64_SYSREG_RVAAE1IS, 0x413, true,  { AArch64_FeatureTLB_RMI }  }, // 57
+  { "RVAAE1ISnXS", AArch64_SYSREG_RVAAE1ISNXS, 0x493, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 58
+  { "RVAAE1nXS", AArch64_SYSREG_RVAAE1NXS, 0x4B3, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 59
+  { "RVAAE1OS", AArch64_SYSREG_RVAAE1OS, 0x42B, true,  { AArch64_FeatureTLB_RMI }  }, // 60
+  { "RVAAE1OSnXS", AArch64_SYSREG_RVAAE1OSNXS, 0x4AB, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 61
+  { "RVAALE1", AArch64_SYSREG_RVAALE1, 0x437, true,  { AArch64_FeatureTLB_RMI }  }, // 62
+  { "RVAALE1IS", AArch64_SYSREG_RVAALE1IS, 0x417, true,  { AArch64_FeatureTLB_RMI }  }, // 63
+  { "RVAALE1ISnXS", AArch64_SYSREG_RVAALE1ISNXS, 0x497, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 64
+  { "RVAALE1nXS", AArch64_SYSREG_RVAALE1NXS, 0x4B7, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 65
+  { "RVAALE1OS", AArch64_SYSREG_RVAALE1OS, 0x42F, true,  { AArch64_FeatureTLB_RMI }  }, // 66
+  { "RVAALE1OSnXS", AArch64_SYSREG_RVAALE1OSNXS, 0x4AF, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 67
+  { "RVAE1", AArch64_SYSREG_RVAE1, 0x431, true,  { AArch64_FeatureTLB_RMI }  }, // 68
+  { "RVAE1IS", AArch64_SYSREG_RVAE1IS, 0x411, true,  { AArch64_FeatureTLB_RMI }  }, // 69
+  { "RVAE1ISnXS", AArch64_SYSREG_RVAE1ISNXS, 0x491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 70
+  { "RVAE1nXS", AArch64_SYSREG_RVAE1NXS, 0x4B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 71
+  { "RVAE1OS", AArch64_SYSREG_RVAE1OS, 0x429, true,  { AArch64_FeatureTLB_RMI }  }, // 72
+  { "RVAE1OSnXS", AArch64_SYSREG_RVAE1OSNXS, 0x4A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 73
+  { "RVAE2", AArch64_SYSREG_RVAE2, 0x2431, true,  { AArch64_FeatureTLB_RMI }  }, // 74
+  { "RVAE2IS", AArch64_SYSREG_RVAE2IS, 0x2411, true,  { AArch64_FeatureTLB_RMI }  }, // 75
+  { "RVAE2ISnXS", AArch64_SYSREG_RVAE2ISNXS, 0x2491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 76
+  { "RVAE2nXS", AArch64_SYSREG_RVAE2NXS, 0x24B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 77
+  { "RVAE2OS", AArch64_SYSREG_RVAE2OS, 0x2429, true,  { AArch64_FeatureTLB_RMI }  }, // 78
+  { "RVAE2OSnXS", AArch64_SYSREG_RVAE2OSNXS, 0x24A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 79
+  { "RVAE3", AArch64_SYSREG_RVAE3, 0x3431, true,  { AArch64_FeatureTLB_RMI }  }, // 80
+  { "RVAE3IS", AArch64_SYSREG_RVAE3IS, 0x3411, true,  { AArch64_FeatureTLB_RMI }  }, // 81
+  { "RVAE3ISnXS", AArch64_SYSREG_RVAE3ISNXS, 0x3491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 82
+  { "RVAE3nXS", AArch64_SYSREG_RVAE3NXS, 0x34B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 83
+  { "RVAE3OS", AArch64_SYSREG_RVAE3OS, 0x3429, true,  { AArch64_FeatureTLB_RMI }  }, // 84
+  { "RVAE3OSnXS", AArch64_SYSREG_RVAE3OSNXS, 0x34A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 85
+  { "RVALE1", AArch64_SYSREG_RVALE1, 0x435, true,  { AArch64_FeatureTLB_RMI }  }, // 86
+  { "RVALE1IS", AArch64_SYSREG_RVALE1IS, 0x415, true,  { AArch64_FeatureTLB_RMI }  }, // 87
+  { "RVALE1ISnXS", AArch64_SYSREG_RVALE1ISNXS, 0x495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 88
+  { "RVALE1nXS", AArch64_SYSREG_RVALE1NXS, 0x4B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 89
+  { "RVALE1OS", AArch64_SYSREG_RVALE1OS, 0x42D, true,  { AArch64_FeatureTLB_RMI }  }, // 90
+  { "RVALE1OSnXS", AArch64_SYSREG_RVALE1OSNXS, 0x4AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 91
+  { "RVALE2", AArch64_SYSREG_RVALE2, 0x2435, true,  { AArch64_FeatureTLB_RMI }  }, // 92
+  { "RVALE2IS", AArch64_SYSREG_RVALE2IS, 0x2415, true,  { AArch64_FeatureTLB_RMI }  }, // 93
+  { "RVALE2ISnXS", AArch64_SYSREG_RVALE2ISNXS, 0x2495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 94
+  { "RVALE2nXS", AArch64_SYSREG_RVALE2NXS, 0x24B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 95
+  { "RVALE2OS", AArch64_SYSREG_RVALE2OS, 0x242D, true,  { AArch64_FeatureTLB_RMI }  }, // 96
+  { "RVALE2OSnXS", AArch64_SYSREG_RVALE2OSNXS, 0x24AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 97
+  { "RVALE3", AArch64_SYSREG_RVALE3, 0x3435, true,  { AArch64_FeatureTLB_RMI }  }, // 98
+  { "RVALE3IS", AArch64_SYSREG_RVALE3IS, 0x3415, true,  { AArch64_FeatureTLB_RMI }  }, // 99
+  { "RVALE3ISnXS", AArch64_SYSREG_RVALE3ISNXS, 0x3495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 100
+  { "RVALE3nXS", AArch64_SYSREG_RVALE3NXS, 0x34B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 101
+  { "RVALE3OS", AArch64_SYSREG_RVALE3OS, 0x342D, true,  { AArch64_FeatureTLB_RMI }  }, // 102
+  { "RVALE3OSnXS", AArch64_SYSREG_RVALE3OSNXS, 0x34AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 103
+  { "VAAE1", AArch64_SYSREG_VAAE1, 0x43B, true,  {0}  }, // 104
+  { "VAAE1IS", AArch64_SYSREG_VAAE1IS, 0x41B, true,  {0}  }, // 105
+  { "VAAE1ISnXS", AArch64_SYSREG_VAAE1ISNXS, 0x49B, true,  { AArch64_FeatureXS }  }, // 106
+  { "VAAE1nXS", AArch64_SYSREG_VAAE1NXS, 0x4BB, true,  { AArch64_FeatureXS }  }, // 107
+  { "VAAE1OS", AArch64_SYSREG_VAAE1OS, 0x40B, true,  { AArch64_FeatureTLB_RMI }  }, // 108
+  { "VAAE1OSnXS", AArch64_SYSREG_VAAE1OSNXS, 0x48B, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 109
+  { "VAALE1", AArch64_SYSREG_VAALE1, 0x43F, true,  {0}  }, // 110
+  { "VAALE1IS", AArch64_SYSREG_VAALE1IS, 0x41F, true,  {0}  }, // 111
+  { "VAALE1ISnXS", AArch64_SYSREG_VAALE1ISNXS, 0x49F, true,  { AArch64_FeatureXS }  }, // 112
+  { "VAALE1nXS", AArch64_SYSREG_VAALE1NXS, 0x4BF, true,  { AArch64_FeatureXS }  }, // 113
+  { "VAALE1OS", AArch64_SYSREG_VAALE1OS, 0x40F, true,  { AArch64_FeatureTLB_RMI }  }, // 114
+  { "VAALE1OSnXS", AArch64_SYSREG_VAALE1OSNXS, 0x48F, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 115
+  { "VAE1", AArch64_SYSREG_VAE1, 0x439, true,  {0}  }, // 116
+  { "VAE1IS", AArch64_SYSREG_VAE1IS, 0x419, true,  {0}  }, // 117
+  { "VAE1ISnXS", AArch64_SYSREG_VAE1ISNXS, 0x499, true,  { AArch64_FeatureXS }  }, // 118
+  { "VAE1nXS", AArch64_SYSREG_VAE1NXS, 0x4B9, true,  { AArch64_FeatureXS }  }, // 119
+  { "VAE1OS", AArch64_SYSREG_VAE1OS, 0x409, true,  { AArch64_FeatureTLB_RMI }  }, // 120
+  { "VAE1OSnXS", AArch64_SYSREG_VAE1OSNXS, 0x489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 121
+  { "VAE2", AArch64_SYSREG_VAE2, 0x2439, true,  {0}  }, // 122
+  { "VAE2IS", AArch64_SYSREG_VAE2IS, 0x2419, true,  {0}  }, // 123
+  { "VAE2ISnXS", AArch64_SYSREG_VAE2ISNXS, 0x2499, true,  { AArch64_FeatureXS }  }, // 124
+  { "VAE2nXS", AArch64_SYSREG_VAE2NXS, 0x24B9, true,  { AArch64_FeatureXS }  }, // 125
+  { "VAE2OS", AArch64_SYSREG_VAE2OS, 0x2409, true,  { AArch64_FeatureTLB_RMI }  }, // 126
+  { "VAE2OSnXS", AArch64_SYSREG_VAE2OSNXS, 0x2489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 127
+  { "VAE3", AArch64_SYSREG_VAE3, 0x3439, true,  {0}  }, // 128
+  { "VAE3IS", AArch64_SYSREG_VAE3IS, 0x3419, true,  {0}  }, // 129
+  { "VAE3ISnXS", AArch64_SYSREG_VAE3ISNXS, 0x3499, true,  { AArch64_FeatureXS }  }, // 130
+  { "VAE3nXS", AArch64_SYSREG_VAE3NXS, 0x34B9, true,  { AArch64_FeatureXS }  }, // 131
+  { "VAE3OS", AArch64_SYSREG_VAE3OS, 0x3409, true,  { AArch64_FeatureTLB_RMI }  }, // 132
+  { "VAE3OSnXS", AArch64_SYSREG_VAE3OSNXS, 0x3489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 133
+  { "VALE1", AArch64_SYSREG_VALE1, 0x43D, true,  {0}  }, // 134
+  { "VALE1IS", AArch64_SYSREG_VALE1IS, 0x41D, true,  {0}  }, // 135
+  { "VALE1ISnXS", AArch64_SYSREG_VALE1ISNXS, 0x49D, true,  { AArch64_FeatureXS }  }, // 136
+  { "VALE1nXS", AArch64_SYSREG_VALE1NXS, 0x4BD, true,  { AArch64_FeatureXS }  }, // 137
+  { "VALE1OS", AArch64_SYSREG_VALE1OS, 0x40D, true,  { AArch64_FeatureTLB_RMI }  }, // 138
+  { "VALE1OSnXS", AArch64_SYSREG_VALE1OSNXS, 0x48D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 139
+  { "VALE2", AArch64_SYSREG_VALE2, 0x243D, true,  {0}  }, // 140
+  { "VALE2IS", AArch64_SYSREG_VALE2IS, 0x241D, true,  {0}  }, // 141
+  { "VALE2ISnXS", AArch64_SYSREG_VALE2ISNXS, 0x249D, true,  { AArch64_FeatureXS }  }, // 142
+  { "VALE2nXS", AArch64_SYSREG_VALE2NXS, 0x24BD, true,  { AArch64_FeatureXS }  }, // 143
+  { "VALE2OS", AArch64_SYSREG_VALE2OS, 0x240D, true,  { AArch64_FeatureTLB_RMI }  }, // 144
+  { "VALE2OSnXS", AArch64_SYSREG_VALE2OSNXS, 0x248D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 145
+  { "VALE3", AArch64_SYSREG_VALE3, 0x343D, true,  {0}  }, // 146
+  { "VALE3IS", AArch64_SYSREG_VALE3IS, 0x341D, true,  {0}  }, // 147
+  { "VALE3ISnXS", AArch64_SYSREG_VALE3ISNXS, 0x349D, true,  { AArch64_FeatureXS }  }, // 148
+  { "VALE3nXS", AArch64_SYSREG_VALE3NXS, 0x34BD, true,  { AArch64_FeatureXS }  }, // 149
+  { "VALE3OS", AArch64_SYSREG_VALE3OS, 0x340D, true,  { AArch64_FeatureTLB_RMI }  }, // 150
+  { "VALE3OSnXS", AArch64_SYSREG_VALE3OSNXS, 0x348D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 151
+  { "VMALLE1", AArch64_SYSREG_VMALLE1, 0x438, false,  {0}  }, // 152
+  { "VMALLE1IS", AArch64_SYSREG_VMALLE1IS, 0x418, false,  {0}  }, // 153
+  { "VMALLE1ISnXS", AArch64_SYSREG_VMALLE1ISNXS, 0x498, false,  { AArch64_FeatureXS }  }, // 154
+  { "VMALLE1nXS", AArch64_SYSREG_VMALLE1NXS, 0x4B8, false,  { AArch64_FeatureXS }  }, // 155
+  { "VMALLE1OS", AArch64_SYSREG_VMALLE1OS, 0x408, false,  { AArch64_FeatureTLB_RMI }  }, // 156
+  { "VMALLE1OSnXS", AArch64_SYSREG_VMALLE1OSNXS, 0x488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 157
+  { "VMALLS12E1", AArch64_SYSREG_VMALLS12E1, 0x243E, false,  {0}  }, // 158
+  { "VMALLS12E1IS", AArch64_SYSREG_VMALLS12E1IS, 0x241E, false,  {0}  }, // 159
+  { "VMALLS12E1ISnXS", AArch64_SYSREG_VMALLS12E1ISNXS, 0x249E, false,  { AArch64_FeatureXS }  }, // 160
+  { "VMALLS12E1nXS", AArch64_SYSREG_VMALLS12E1NXS, 0x24BE, false,  { AArch64_FeatureXS }  }, // 161
+  { "VMALLS12E1OS", AArch64_SYSREG_VMALLS12E1OS, 0x240E, false,  { AArch64_FeatureTLB_RMI }  }, // 162
+  { "VMALLS12E1OSnXS", AArch64_SYSREG_VMALLS12E1OSNXS, 0x248E, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 163
+  };
+
 const TLBI *lookupTLBIByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x408, 156 },
@@ -371,20 +537,20 @@ const TLBI *lookupTLBIByEncoding(uint16_t Encoding) {
 #ifdef GET_AT_IMPL
 #undef GET_AT_IMPL
 static const AT ATsList[] = {
-  { "S12E0R", AArch64_SYSREG_S12E0R, 0x23C6,  {0}  }, // 0
-  { "S12E0W", AArch64_SYSREG_S12E0W, 0x23C7,  {0}  }, // 1
-  { "S12E1R", AArch64_SYSREG_S12E1R, 0x23C4,  {0}  }, // 2
-  { "S12E1W", AArch64_SYSREG_S12E1W, 0x23C5,  {0}  }, // 3
-  { "S1E0R", AArch64_SYSREG_S1E0R, 0x3C2,  {0}  }, // 4
-  { "S1E0W", AArch64_SYSREG_S1E0W, 0x3C3,  {0}  }, // 5
-  { "S1E1R", AArch64_SYSREG_S1E1R, 0x3C0,  {0}  }, // 6
-  { "S1E1RP", AArch64_SYSREG_S1E1RP, 0x3C8,  {AArch64_FeaturePAN_RWV}  }, // 7
-  { "S1E1W", AArch64_SYSREG_S1E1W, 0x3C1,  {0}  }, // 8
-  { "S1E1WP", AArch64_SYSREG_S1E1WP, 0x3C9,  {AArch64_FeaturePAN_RWV}  }, // 9
-  { "S1E2R", AArch64_SYSREG_S1E2R, 0x23C0,  {0}  }, // 10
-  { "S1E2W", AArch64_SYSREG_S1E2W, 0x23C1,  {0}  }, // 11
-  { "S1E3R", AArch64_SYSREG_S1E3R, 0x33C0,  {0}  }, // 12
-  { "S1E3W", AArch64_SYSREG_S1E3W, 0x33C1,  {0}  }, // 13
+  { "S12E0R", AArch64_SYSALIAS_S12E0R, 0x23C6,  {0}  }, // 0
+  { "S12E0W", AArch64_SYSALIAS_S12E0W, 0x23C7,  {0}  }, // 1
+  { "S12E1R", AArch64_SYSALIAS_S12E1R, 0x23C4,  {0}  }, // 2
+  { "S12E1W", AArch64_SYSALIAS_S12E1W, 0x23C5,  {0}  }, // 3
+  { "S1E0R", AArch64_SYSALIAS_S1E0R, 0x3C2,  {0}  }, // 4
+  { "S1E0W", AArch64_SYSALIAS_S1E0W, 0x3C3,  {0}  }, // 5
+  { "S1E1R", AArch64_SYSALIAS_S1E1R, 0x3C0,  {0}  }, // 6
+  { "S1E1RP", AArch64_SYSALIAS_S1E1RP, 0x3C8,  {AArch64_FeaturePAN_RWV}  }, // 7
+  { "S1E1W", AArch64_SYSALIAS_S1E1W, 0x3C1,  {0}  }, // 8
+  { "S1E1WP", AArch64_SYSALIAS_S1E1WP, 0x3C9,  {AArch64_FeaturePAN_RWV}  }, // 9
+  { "S1E2R", AArch64_SYSALIAS_S1E2R, 0x23C0,  {0}  }, // 10
+  { "S1E2W", AArch64_SYSALIAS_S1E2W, 0x23C1,  {0}  }, // 11
+  { "S1E3R", AArch64_SYSALIAS_S1E3R, 0x33C0,  {0}  }, // 12
+  { "S1E3W", AArch64_SYSALIAS_S1E3W, 0x33C1,  {0}  }, // 13
   };
 
 const AT *lookupATByEncoding(uint16_t Encoding) {
@@ -417,9 +583,9 @@ const AT *lookupATByEncoding(uint16_t Encoding) {
 #ifdef GET_BTI_IMPL
 #undef GET_BTI_IMPL
 static const BTI BTIsList[] = {
-  { "c", AArch64_SYSREG_C, 0x2 }, // 0
-  { "j", AArch64_SYSREG_J, 0x4 }, // 1
-  { "jc", AArch64_SYSREG_JC, 0x6 }, // 2
+  { "c", AArch64_SYSALIAS_C, 0x2 }, // 0
+  { "j", AArch64_SYSALIAS_J, 0x4 }, // 1
+  { "jc", AArch64_SYSALIAS_JC, 0x6 }, // 2
   };
 
 const BTI *lookupBTIByEncoding(uint8_t Encoding) {
@@ -441,18 +607,18 @@ const BTI *lookupBTIByEncoding(uint8_t Encoding) {
 #ifdef GET_DB_IMPL
 #undef GET_DB_IMPL
 static const DB DBsList[] = {
-  { "ish", AArch64_SYSREG_ISH, 0xB }, // 0
-  { "ishld", AArch64_SYSREG_ISHLD, 0x9 }, // 1
-  { "ishst", AArch64_SYSREG_ISHST, 0xA }, // 2
-  { "ld", AArch64_SYSREG_LD, 0xD }, // 3
-  { "nsh", AArch64_SYSREG_NSH, 0x7 }, // 4
-  { "nshld", AArch64_SYSREG_NSHLD, 0x5 }, // 5
-  { "nshst", AArch64_SYSREG_NSHST, 0x6 }, // 6
-  { "osh", AArch64_SYSREG_OSH, 0x3 }, // 7
-  { "oshld", AArch64_SYSREG_OSHLD, 0x1 }, // 8
-  { "oshst", AArch64_SYSREG_OSHST, 0x2 }, // 9
-  { "st", AArch64_SYSREG_ST, 0xE }, // 10
-  { "sy", AArch64_SYSREG_SY, 0xF }, // 11
+  { "ish", AArch64_SYSALIAS_ISH, 0xB }, // 0
+  { "ishld", AArch64_SYSALIAS_ISHLD, 0x9 }, // 1
+  { "ishst", AArch64_SYSALIAS_ISHST, 0xA }, // 2
+  { "ld", AArch64_SYSALIAS_LD, 0xD }, // 3
+  { "nsh", AArch64_SYSALIAS_NSH, 0x7 }, // 4
+  { "nshld", AArch64_SYSALIAS_NSHLD, 0x5 }, // 5
+  { "nshst", AArch64_SYSALIAS_NSHST, 0x6 }, // 6
+  { "osh", AArch64_SYSALIAS_OSH, 0x3 }, // 7
+  { "oshld", AArch64_SYSALIAS_OSHLD, 0x1 }, // 8
+  { "oshst", AArch64_SYSALIAS_OSHST, 0x2 }, // 9
+  { "st", AArch64_SYSALIAS_ST, 0xE }, // 10
+  { "sy", AArch64_SYSALIAS_SY, 0xF }, // 11
   };
 
 const DB *lookupDBByEncoding(uint8_t Encoding) {
@@ -483,10 +649,10 @@ const DB *lookupDBByEncoding(uint8_t Encoding) {
 #ifdef GET_DBNXS_IMPL
 #undef GET_DBNXS_IMPL
 static const DBnXS DBnXSsList[] = {
-  { "ishnxs", AArch64_SYSREG_ISHNXS, 0xB, 0x18,  {AArch64_FeatureXS}  }, // 0
-  { "nshnxs", AArch64_SYSREG_NSHNXS, 0x7, 0x14,  {AArch64_FeatureXS}  }, // 1
-  { "oshnxs", AArch64_SYSREG_OSHNXS, 0x3, 0x10,  {AArch64_FeatureXS}  }, // 2
-  { "synxs", AArch64_SYSREG_SYNXS, 0xF, 0x1C,  {AArch64_FeatureXS}  }, // 3
+  { "ishnxs", AArch64_SYSIMM_ISHNXS, 0xB, 0x18,  {AArch64_FeatureXS}  }, // 0
+  { "nshnxs", AArch64_SYSIMM_NSHNXS, 0x7, 0x14,  {AArch64_FeatureXS}  }, // 1
+  { "oshnxs", AArch64_SYSIMM_OSHNXS, 0x3, 0x10,  {AArch64_FeatureXS}  }, // 2
+  { "synxs", AArch64_SYSIMM_SYNXS, 0xF, 0x1C,  {AArch64_FeatureXS}  }, // 3
   };
 
 const DBnXS *lookupDBnXSByEncoding(uint8_t Encoding) {
@@ -524,36 +690,36 @@ const DBnXS *lookupDBnXSByImmValue(uint8_t ImmValue) {
 #ifdef GET_DC_IMPL
 #undef GET_DC_IMPL
 static const DC DCsList[] = {
-  { "CGDSW", AArch64_SYSREG_CGDSW, 0x3D6,  {AArch64_FeatureMTE}  }, // 0
-  { "CGDVAC", AArch64_SYSREG_CGDVAC, 0x1BD5,  {AArch64_FeatureMTE}  }, // 1
-  { "CGDVADP", AArch64_SYSREG_CGDVADP, 0x1BED,  {AArch64_FeatureMTE}  }, // 2
-  { "CGDVAP", AArch64_SYSREG_CGDVAP, 0x1BE5,  {AArch64_FeatureMTE}  }, // 3
-  { "CGSW", AArch64_SYSREG_CGSW, 0x3D4,  {AArch64_FeatureMTE}  }, // 4
-  { "CGVAC", AArch64_SYSREG_CGVAC, 0x1BD3,  {AArch64_FeatureMTE}  }, // 5
-  { "CGVADP", AArch64_SYSREG_CGVADP, 0x1BEB,  {AArch64_FeatureMTE}  }, // 6
-  { "CGVAP", AArch64_SYSREG_CGVAP, 0x1BE3,  {AArch64_FeatureMTE}  }, // 7
-  { "CIGDPAE", AArch64_SYSREG_CIGDPAE, 0x23F7,  {AArch64_FeatureMEC}  }, // 8
-  { "CIGDSW", AArch64_SYSREG_CIGDSW, 0x3F6,  {AArch64_FeatureMTE}  }, // 9
-  { "CIGDVAC", AArch64_SYSREG_CIGDVAC, 0x1BF5,  {AArch64_FeatureMTE}  }, // 10
-  { "CIGSW", AArch64_SYSREG_CIGSW, 0x3F4,  {AArch64_FeatureMTE}  }, // 11
-  { "CIGVAC", AArch64_SYSREG_CIGVAC, 0x1BF3,  {AArch64_FeatureMTE}  }, // 12
-  { "CIPAE", AArch64_SYSREG_CIPAE, 0x23F0,  {AArch64_FeatureMEC}  }, // 13
-  { "CISW", AArch64_SYSREG_CISW, 0x3F2,  {0}  }, // 14
-  { "CIVAC", AArch64_SYSREG_CIVAC, 0x1BF1,  {0}  }, // 15
-  { "CSW", AArch64_SYSREG_CSW, 0x3D2,  {0}  }, // 16
-  { "CVAC", AArch64_SYSREG_CVAC, 0x1BD1,  {0}  }, // 17
-  { "CVADP", AArch64_SYSREG_CVADP, 0x1BE9,  {AArch64_FeatureCacheDeepPersist}  }, // 18
-  { "CVAP", AArch64_SYSREG_CVAP, 0x1BE1,  {AArch64_FeatureCCPP}  }, // 19
-  { "CVAU", AArch64_SYSREG_CVAU, 0x1BD9,  {0}  }, // 20
-  { "GVA", AArch64_SYSREG_GVA, 0x1BA3,  {AArch64_FeatureMTE}  }, // 21
-  { "GZVA", AArch64_SYSREG_GZVA, 0x1BA4,  {AArch64_FeatureMTE}  }, // 22
-  { "IGDSW", AArch64_SYSREG_IGDSW, 0x3B6,  {AArch64_FeatureMTE}  }, // 23
-  { "IGDVAC", AArch64_SYSREG_IGDVAC, 0x3B5,  {AArch64_FeatureMTE}  }, // 24
-  { "IGSW", AArch64_SYSREG_IGSW, 0x3B4,  {AArch64_FeatureMTE}  }, // 25
-  { "IGVAC", AArch64_SYSREG_IGVAC, 0x3B3,  {AArch64_FeatureMTE}  }, // 26
-  { "ISW", AArch64_SYSREG_ISW, 0x3B2,  {0}  }, // 27
-  { "IVAC", AArch64_SYSREG_IVAC, 0x3B1,  {0}  }, // 28
-  { "ZVA", AArch64_SYSREG_ZVA, 0x1BA1,  {0}  }, // 29
+  { "CGDSW", AArch64_SYSALIAS_CGDSW, 0x3D6,  {AArch64_FeatureMTE}  }, // 0
+  { "CGDVAC", AArch64_SYSALIAS_CGDVAC, 0x1BD5,  {AArch64_FeatureMTE}  }, // 1
+  { "CGDVADP", AArch64_SYSALIAS_CGDVADP, 0x1BED,  {AArch64_FeatureMTE}  }, // 2
+  { "CGDVAP", AArch64_SYSALIAS_CGDVAP, 0x1BE5,  {AArch64_FeatureMTE}  }, // 3
+  { "CGSW", AArch64_SYSALIAS_CGSW, 0x3D4,  {AArch64_FeatureMTE}  }, // 4
+  { "CGVAC", AArch64_SYSALIAS_CGVAC, 0x1BD3,  {AArch64_FeatureMTE}  }, // 5
+  { "CGVADP", AArch64_SYSALIAS_CGVADP, 0x1BEB,  {AArch64_FeatureMTE}  }, // 6
+  { "CGVAP", AArch64_SYSALIAS_CGVAP, 0x1BE3,  {AArch64_FeatureMTE}  }, // 7
+  { "CIGDPAE", AArch64_SYSALIAS_CIGDPAE, 0x23F7,  {AArch64_FeatureMEC}  }, // 8
+  { "CIGDSW", AArch64_SYSALIAS_CIGDSW, 0x3F6,  {AArch64_FeatureMTE}  }, // 9
+  { "CIGDVAC", AArch64_SYSALIAS_CIGDVAC, 0x1BF5,  {AArch64_FeatureMTE}  }, // 10
+  { "CIGSW", AArch64_SYSALIAS_CIGSW, 0x3F4,  {AArch64_FeatureMTE}  }, // 11
+  { "CIGVAC", AArch64_SYSALIAS_CIGVAC, 0x1BF3,  {AArch64_FeatureMTE}  }, // 12
+  { "CIPAE", AArch64_SYSALIAS_CIPAE, 0x23F0,  {AArch64_FeatureMEC}  }, // 13
+  { "CISW", AArch64_SYSALIAS_CISW, 0x3F2,  {0}  }, // 14
+  { "CIVAC", AArch64_SYSALIAS_CIVAC, 0x1BF1,  {0}  }, // 15
+  { "CSW", AArch64_SYSALIAS_CSW, 0x3D2,  {0}  }, // 16
+  { "CVAC", AArch64_SYSALIAS_CVAC, 0x1BD1,  {0}  }, // 17
+  { "CVADP", AArch64_SYSALIAS_CVADP, 0x1BE9,  {AArch64_FeatureCacheDeepPersist}  }, // 18
+  { "CVAP", AArch64_SYSALIAS_CVAP, 0x1BE1,  {AArch64_FeatureCCPP}  }, // 19
+  { "CVAU", AArch64_SYSALIAS_CVAU, 0x1BD9,  {0}  }, // 20
+  { "GVA", AArch64_SYSALIAS_GVA, 0x1BA3,  {AArch64_FeatureMTE}  }, // 21
+  { "GZVA", AArch64_SYSALIAS_GZVA, 0x1BA4,  {AArch64_FeatureMTE}  }, // 22
+  { "IGDSW", AArch64_SYSALIAS_IGDSW, 0x3B6,  {AArch64_FeatureMTE}  }, // 23
+  { "IGDVAC", AArch64_SYSALIAS_IGDVAC, 0x3B5,  {AArch64_FeatureMTE}  }, // 24
+  { "IGSW", AArch64_SYSALIAS_IGSW, 0x3B4,  {AArch64_FeatureMTE}  }, // 25
+  { "IGVAC", AArch64_SYSALIAS_IGVAC, 0x3B3,  {AArch64_FeatureMTE}  }, // 26
+  { "ISW", AArch64_SYSALIAS_ISW, 0x3B2,  {0}  }, // 27
+  { "IVAC", AArch64_SYSALIAS_IVAC, 0x3B1,  {0}  }, // 28
+  { "ZVA", AArch64_SYSALIAS_ZVA, 0x1BA1,  {0}  }, // 29
   };
 
 const DC *lookupDCByEncoding(uint16_t Encoding) {
@@ -601,14 +767,14 @@ const DC *lookupDCByEncoding(uint16_t Encoding) {
 
 #ifdef GET_EXACTFPIMM_IMPL
 #undef GET_EXACTFPIMM_IMPL
-static const ExactFPImm ExactFPImmsList[] = {
-  { "half", AArch64_SYSREG_HALF, 0x1, "0.5", AArch64_SYSREG_0.5 }, // 0
-  { "one", AArch64_SYSREG_ONE, 0x2, "1.0", AArch64_SYSREG_1.0 }, // 1
-  { "two", AArch64_SYSREG_TWO, 0x3, "2.0", AArch64_SYSREG_2.0 }, // 2
-  { "zero", AArch64_SYSREG_ZERO, 0x0, "0.0", AArch64_SYSREG_0.0 }, // 3
+static const AArch64ExactFPImm_ExactFPImm ExactFPImmsList[] = {
+  { "half", 0x1, "0.5" }, // 0
+  { "one", 0x2, "1.0" }, // 1
+  { "two", 0x3, "2.0" }, // 2
+  { "zero", 0x0, "0.0" }, // 3
   };
 
-const ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum) {
+const AArch64ExactFPImm_ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum) {
   static const struct IndexType Index[] = {
     { 0x0, 3 },
     { 0x1, 0 },
@@ -616,15 +782,7 @@ const ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum) {
     { 0x3, 2 },
   };
 
-const ExactFPImm *lookupExactFPImmByRepr(const char * Repr) {
-  static const struct IndexType Index[] = {
-    { "0.0", 3 },
-    { "0.5", 0 },
-    { "1.0", 1 },
-    { "2.0", 2 },
-  };
-
-   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Repr);
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Enum);
    if (i == -1)
       return NULL;
    else
@@ -660,7 +818,7 @@ const IC *lookupICByEncoding(uint16_t Encoding) {
 #ifdef GET_ISB_IMPL
 #undef GET_ISB_IMPL
 static const ISB ISBsList[] = {
-  { "sy", AArch64_SYSREG_SY, 0xF }, // 0
+  { "sy", AArch64_SYSALIAS_SY, 0xF }, // 0
   };
 
 const ISB *lookupISBByEncoding(uint8_t Encoding) {
@@ -680,30 +838,30 @@ const ISB *lookupISBByEncoding(uint8_t Encoding) {
 #ifdef GET_PRFM_IMPL
 #undef GET_PRFM_IMPL
 static const PRFM PRFMsList[] = {
-  { "pldl1keep", AArch64_SYSREG_PLDL1KEEP, 0x0,  {0}  }, // 0
-  { "pldl1strm", AArch64_SYSREG_PLDL1STRM, 0x1,  {0}  }, // 1
-  { "pldl2keep", AArch64_SYSREG_PLDL2KEEP, 0x2,  {0}  }, // 2
-  { "pldl2strm", AArch64_SYSREG_PLDL2STRM, 0x3,  {0}  }, // 3
-  { "pldl3keep", AArch64_SYSREG_PLDL3KEEP, 0x4,  {0}  }, // 4
-  { "pldl3strm", AArch64_SYSREG_PLDL3STRM, 0x5,  {0}  }, // 5
-  { "pldslckeep", AArch64_SYSREG_PLDSLCKEEP, 0x6,  {AArch64_FeaturePRFM_SLC}  }, // 6
-  { "pldslcstrm", AArch64_SYSREG_PLDSLCSTRM, 0x7,  {AArch64_FeaturePRFM_SLC}  }, // 7
-  { "plil1keep", AArch64_SYSREG_PLIL1KEEP, 0x8,  {0}  }, // 8
-  { "plil1strm", AArch64_SYSREG_PLIL1STRM, 0x9,  {0}  }, // 9
-  { "plil2keep", AArch64_SYSREG_PLIL2KEEP, 0xA,  {0}  }, // 10
-  { "plil2strm", AArch64_SYSREG_PLIL2STRM, 0xB,  {0}  }, // 11
-  { "plil3keep", AArch64_SYSREG_PLIL3KEEP, 0xC,  {0}  }, // 12
-  { "plil3strm", AArch64_SYSREG_PLIL3STRM, 0xD,  {0}  }, // 13
-  { "plislckeep", AArch64_SYSREG_PLISLCKEEP, 0xE,  {AArch64_FeaturePRFM_SLC}  }, // 14
-  { "plislcstrm", AArch64_SYSREG_PLISLCSTRM, 0xF,  {AArch64_FeaturePRFM_SLC}  }, // 15
-  { "pstl1keep", AArch64_SYSREG_PSTL1KEEP, 0x10,  {0}  }, // 16
-  { "pstl1strm", AArch64_SYSREG_PSTL1STRM, 0x11,  {0}  }, // 17
-  { "pstl2keep", AArch64_SYSREG_PSTL2KEEP, 0x12,  {0}  }, // 18
-  { "pstl2strm", AArch64_SYSREG_PSTL2STRM, 0x13,  {0}  }, // 19
-  { "pstl3keep", AArch64_SYSREG_PSTL3KEEP, 0x14,  {0}  }, // 20
-  { "pstl3strm", AArch64_SYSREG_PSTL3STRM, 0x15,  {0}  }, // 21
-  { "pstslckeep", AArch64_SYSREG_PSTSLCKEEP, 0x16,  {AArch64_FeaturePRFM_SLC}  }, // 22
-  { "pstslcstrm", AArch64_SYSREG_PSTSLCSTRM, 0x17,  {AArch64_FeaturePRFM_SLC}  }, // 23
+  { "pldl1keep", AArch64_SYSALIAS_PLDL1KEEP, 0x0,  {0}  }, // 0
+  { "pldl1strm", AArch64_SYSALIAS_PLDL1STRM, 0x1,  {0}  }, // 1
+  { "pldl2keep", AArch64_SYSALIAS_PLDL2KEEP, 0x2,  {0}  }, // 2
+  { "pldl2strm", AArch64_SYSALIAS_PLDL2STRM, 0x3,  {0}  }, // 3
+  { "pldl3keep", AArch64_SYSALIAS_PLDL3KEEP, 0x4,  {0}  }, // 4
+  { "pldl3strm", AArch64_SYSALIAS_PLDL3STRM, 0x5,  {0}  }, // 5
+  { "pldslckeep", AArch64_SYSALIAS_PLDSLCKEEP, 0x6,  {AArch64_FeaturePRFM_SLC}  }, // 6
+  { "pldslcstrm", AArch64_SYSALIAS_PLDSLCSTRM, 0x7,  {AArch64_FeaturePRFM_SLC}  }, // 7
+  { "plil1keep", AArch64_SYSALIAS_PLIL1KEEP, 0x8,  {0}  }, // 8
+  { "plil1strm", AArch64_SYSALIAS_PLIL1STRM, 0x9,  {0}  }, // 9
+  { "plil2keep", AArch64_SYSALIAS_PLIL2KEEP, 0xA,  {0}  }, // 10
+  { "plil2strm", AArch64_SYSALIAS_PLIL2STRM, 0xB,  {0}  }, // 11
+  { "plil3keep", AArch64_SYSALIAS_PLIL3KEEP, 0xC,  {0}  }, // 12
+  { "plil3strm", AArch64_SYSALIAS_PLIL3STRM, 0xD,  {0}  }, // 13
+  { "plislckeep", AArch64_SYSALIAS_PLISLCKEEP, 0xE,  {AArch64_FeaturePRFM_SLC}  }, // 14
+  { "plislcstrm", AArch64_SYSALIAS_PLISLCSTRM, 0xF,  {AArch64_FeaturePRFM_SLC}  }, // 15
+  { "pstl1keep", AArch64_SYSALIAS_PSTL1KEEP, 0x10,  {0}  }, // 16
+  { "pstl1strm", AArch64_SYSALIAS_PSTL1STRM, 0x11,  {0}  }, // 17
+  { "pstl2keep", AArch64_SYSALIAS_PSTL2KEEP, 0x12,  {0}  }, // 18
+  { "pstl2strm", AArch64_SYSALIAS_PSTL2STRM, 0x13,  {0}  }, // 19
+  { "pstl3keep", AArch64_SYSALIAS_PSTL3KEEP, 0x14,  {0}  }, // 20
+  { "pstl3strm", AArch64_SYSALIAS_PSTL3STRM, 0x15,  {0}  }, // 21
+  { "pstslckeep", AArch64_SYSALIAS_PSTSLCKEEP, 0x16,  {AArch64_FeaturePRFM_SLC}  }, // 22
+  { "pstslcstrm", AArch64_SYSALIAS_PSTSLCSTRM, 0x17,  {AArch64_FeaturePRFM_SLC}  }, // 23
   };
 
 const PRFM *lookupPRFMByEncoding(uint8_t Encoding) {
@@ -734,12 +892,19 @@ const PRFM *lookupPRFMByEncoding(uint8_t Encoding) {
     { 0x17, 23 },
   };
 
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+   if (i == -1)
+      return NULL;
+   else
+      return &PRFMsList[Index[i].index];
+}
+
 #endif
 
 #ifdef GET_PSB_IMPL
 #undef GET_PSB_IMPL
 static const PSB PSBsList[] = {
-  { "csync", AArch64_SYSREG_CSYNC, 0x11 }, // 0
+  { "csync", AArch64_SYSALIAS_CSYNC, 0x11 }, // 0
   };
 
 const PSB *lookupPSBByEncoding(uint8_t Encoding) {
@@ -759,8 +924,8 @@ const PSB *lookupPSBByEncoding(uint8_t Encoding) {
 #ifdef GET_PSTATEIMM0_1_IMPL
 #undef GET_PSTATEIMM0_1_IMPL
 static const PStateImm0_1 PStateImm0_1sList[] = {
-  { "ALLINT", AArch64_SYSREG_ALLINT, 0x8,  {AArch64_FeatureNMI}  }, // 0
-  { "PM", AArch64_SYSREG_PM, 0x48,  {0}  }, // 1
+  { "ALLINT", AArch64_SYSALIAS_ALLINT, 0x8,  {AArch64_FeatureNMI}  }, // 0
+  { "PM", AArch64_SYSALIAS_PM, 0x48,  {0}  }, // 1
   };
 
 const PStateImm0_1 *lookupPStateImm0_1ByEncoding(uint16_t Encoding) {
@@ -781,14 +946,14 @@ const PStateImm0_1 *lookupPStateImm0_1ByEncoding(uint16_t Encoding) {
 #ifdef GET_PSTATEIMM0_15_IMPL
 #undef GET_PSTATEIMM0_15_IMPL
 static const PStateImm0_15 PStateImm0_15sList[] = {
-  { "DAIFClr", AArch64_SYSREG_DAIFCLR, 0x1F,  {0}  }, // 0
-  { "DAIFSet", AArch64_SYSREG_DAIFSET, 0x1E,  {0}  }, // 1
-  { "DIT", AArch64_SYSREG_DIT, 0x1A,  {AArch64_FeatureDIT}  }, // 2
-  { "PAN", AArch64_SYSREG_PAN, 0x4,  {AArch64_FeaturePAN}  }, // 3
-  { "SPSel", AArch64_SYSREG_SPSEL, 0x5,  {0}  }, // 4
-  { "SSBS", AArch64_SYSREG_SSBS, 0x19,  {AArch64_FeatureSSBS}  }, // 5
-  { "TCO", AArch64_SYSREG_TCO, 0x1C,  {AArch64_FeatureMTE}  }, // 6
-  { "UAO", AArch64_SYSREG_UAO, 0x3,  {AArch64_FeaturePsUAO}  }, // 7
+  { "DAIFClr", AArch64_SYSALIAS_DAIFCLR, 0x1F,  {0}  }, // 0
+  { "DAIFSet", AArch64_SYSALIAS_DAIFSET, 0x1E,  {0}  }, // 1
+  { "DIT", AArch64_SYSALIAS_DIT, 0x1A,  {AArch64_FeatureDIT}  }, // 2
+  { "PAN", AArch64_SYSALIAS_PAN, 0x4,  {AArch64_FeaturePAN}  }, // 3
+  { "SPSel", AArch64_SYSALIAS_SPSEL, 0x5,  {0}  }, // 4
+  { "SSBS", AArch64_SYSALIAS_SSBS, 0x19,  {AArch64_FeatureSSBS}  }, // 5
+  { "TCO", AArch64_SYSALIAS_TCO, 0x1C,  {AArch64_FeatureMTE}  }, // 6
+  { "UAO", AArch64_SYSALIAS_UAO, 0x3,  {AArch64_FeaturePsUAO}  }, // 7
   };
 
 const PStateImm0_15 *lookupPStateImm0_15ByEncoding(uint8_t Encoding) {
@@ -815,10 +980,10 @@ const PStateImm0_15 *lookupPStateImm0_15ByEncoding(uint8_t Encoding) {
 #ifdef GET_RPRFM_IMPL
 #undef GET_RPRFM_IMPL
 static const RPRFM RPRFMsList[] = {
-  { "pldkeep", AArch64_SYSREG_PLDKEEP, 0x0,  {0}  }, // 0
-  { "pldstrm", AArch64_SYSREG_PLDSTRM, 0x4,  {0}  }, // 1
-  { "pstkeep", AArch64_SYSREG_PSTKEEP, 0x1,  {0}  }, // 2
-  { "pststrm", AArch64_SYSREG_PSTSTRM, 0x5,  {0}  }, // 3
+  { "pldkeep", AArch64_SYSALIAS_PLDKEEP, 0x0,  {0}  }, // 0
+  { "pldstrm", AArch64_SYSALIAS_PLDSTRM, 0x4,  {0}  }, // 1
+  { "pstkeep", AArch64_SYSALIAS_PSTKEEP, 0x1,  {0}  }, // 2
+  { "pststrm", AArch64_SYSALIAS_PSTSTRM, 0x5,  {0}  }, // 3
   };
 
 const RPRFM *lookupRPRFMByEncoding(uint8_t Encoding) {
@@ -841,9 +1006,9 @@ const RPRFM *lookupRPRFMByEncoding(uint8_t Encoding) {
 #ifdef GET_SVCR_IMPL
 #undef GET_SVCR_IMPL
 static const SVCR SVCRsList[] = {
-  { "SVCRSM", AArch64_SYSREG_SVCRSM, 0x1,  {AArch64_FeatureSME}  }, // 0
-  { "SVCRSMZA", AArch64_SYSREG_SVCRSMZA, 0x3,  {AArch64_FeatureSME}  }, // 1
-  { "SVCRZA", AArch64_SYSREG_SVCRZA, 0x2,  {AArch64_FeatureSME}  }, // 2
+  { "SVCRSM", AArch64_SYSALIAS_SVCRSM, 0x1,  {AArch64_FeatureSME}  }, // 0
+  { "SVCRSMZA", AArch64_SYSALIAS_SVCRSMZA, 0x3,  {AArch64_FeatureSME}  }, // 1
+  { "SVCRZA", AArch64_SYSALIAS_SVCRZA, 0x2,  {AArch64_FeatureSME}  }, // 2
   };
 
 const SVCR *lookupSVCRByEncoding(uint8_t Encoding) {
@@ -864,27 +1029,27 @@ const SVCR *lookupSVCRByEncoding(uint8_t Encoding) {
 
 #ifdef GET_SVEPREDPAT_IMPL
 #undef GET_SVEPREDPAT_IMPL
-static const SVEPREDPAT SVEPREDPATsList[] = {
-  { "all", AArch64_SYSREG_ALL, 0x1F }, // 0
-  { "mul3", AArch64_SYSREG_MUL3, 0x1E }, // 1
-  { "mul4", AArch64_SYSREG_MUL4, 0x1D }, // 2
-  { "pow2", AArch64_SYSREG_POW2, 0x0 }, // 3
-  { "vl1", AArch64_SYSREG_VL1, 0x1 }, // 4
-  { "vl128", AArch64_SYSREG_VL128, 0xC }, // 5
-  { "vl16", AArch64_SYSREG_VL16, 0x9 }, // 6
-  { "vl2", AArch64_SYSREG_VL2, 0x2 }, // 7
-  { "vl256", AArch64_SYSREG_VL256, 0xD }, // 8
-  { "vl3", AArch64_SYSREG_VL3, 0x3 }, // 9
-  { "vl32", AArch64_SYSREG_VL32, 0xA }, // 10
-  { "vl4", AArch64_SYSREG_VL4, 0x4 }, // 11
-  { "vl5", AArch64_SYSREG_VL5, 0x5 }, // 12
-  { "vl6", AArch64_SYSREG_VL6, 0x6 }, // 13
-  { "vl64", AArch64_SYSREG_VL64, 0xB }, // 14
-  { "vl7", AArch64_SYSREG_VL7, 0x7 }, // 15
-  { "vl8", AArch64_SYSREG_VL8, 0x8 }, // 16
+static const AArch64SVEPredPattern_SVEPREDPAT SVEPREDPATsList[] = {
+  { "all", 0x1F }, // 0
+  { "mul3", 0x1E }, // 1
+  { "mul4", 0x1D }, // 2
+  { "pow2", 0x0 }, // 3
+  { "vl1", 0x1 }, // 4
+  { "vl128", 0xC }, // 5
+  { "vl16", 0x9 }, // 6
+  { "vl2", 0x2 }, // 7
+  { "vl256", 0xD }, // 8
+  { "vl3", 0x3 }, // 9
+  { "vl32", 0xA }, // 10
+  { "vl4", 0x4 }, // 11
+  { "vl5", 0x5 }, // 12
+  { "vl6", 0x6 }, // 13
+  { "vl64", 0xB }, // 14
+  { "vl7", 0x7 }, // 15
+  { "vl8", 0x8 }, // 16
   };
 
-const SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encoding) {
+const AArch64SVEPredPattern_SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 3 },
     { 0x1, 4 },
@@ -917,18 +1082,18 @@ const SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encoding) {
 #ifdef GET_SVEPRFM_IMPL
 #undef GET_SVEPRFM_IMPL
 static const SVEPRFM SVEPRFMsList[] = {
-  { "pldl1keep", AArch64_SYSREG_PLDL1KEEP, 0x0,  {AArch64_FeatureSVE}  }, // 0
-  { "pldl1strm", AArch64_SYSREG_PLDL1STRM, 0x1,  {AArch64_FeatureSVE}  }, // 1
-  { "pldl2keep", AArch64_SYSREG_PLDL2KEEP, 0x2,  {AArch64_FeatureSVE}  }, // 2
-  { "pldl2strm", AArch64_SYSREG_PLDL2STRM, 0x3,  {AArch64_FeatureSVE}  }, // 3
-  { "pldl3keep", AArch64_SYSREG_PLDL3KEEP, 0x4,  {AArch64_FeatureSVE}  }, // 4
-  { "pldl3strm", AArch64_SYSREG_PLDL3STRM, 0x5,  {AArch64_FeatureSVE}  }, // 5
-  { "pstl1keep", AArch64_SYSREG_PSTL1KEEP, 0x8,  {AArch64_FeatureSVE}  }, // 6
-  { "pstl1strm", AArch64_SYSREG_PSTL1STRM, 0x9,  {AArch64_FeatureSVE}  }, // 7
-  { "pstl2keep", AArch64_SYSREG_PSTL2KEEP, 0xA,  {AArch64_FeatureSVE}  }, // 8
-  { "pstl2strm", AArch64_SYSREG_PSTL2STRM, 0xB,  {AArch64_FeatureSVE}  }, // 9
-  { "pstl3keep", AArch64_SYSREG_PSTL3KEEP, 0xC,  {AArch64_FeatureSVE}  }, // 10
-  { "pstl3strm", AArch64_SYSREG_PSTL3STRM, 0xD,  {AArch64_FeatureSVE}  }, // 11
+  { "pldl1keep", AArch64_SYSALIAS_PLDL1KEEP, 0x0,  {AArch64_FeatureSVE}  }, // 0
+  { "pldl1strm", AArch64_SYSALIAS_PLDL1STRM, 0x1,  {AArch64_FeatureSVE}  }, // 1
+  { "pldl2keep", AArch64_SYSALIAS_PLDL2KEEP, 0x2,  {AArch64_FeatureSVE}  }, // 2
+  { "pldl2strm", AArch64_SYSALIAS_PLDL2STRM, 0x3,  {AArch64_FeatureSVE}  }, // 3
+  { "pldl3keep", AArch64_SYSALIAS_PLDL3KEEP, 0x4,  {AArch64_FeatureSVE}  }, // 4
+  { "pldl3strm", AArch64_SYSALIAS_PLDL3STRM, 0x5,  {AArch64_FeatureSVE}  }, // 5
+  { "pstl1keep", AArch64_SYSALIAS_PSTL1KEEP, 0x8,  {AArch64_FeatureSVE}  }, // 6
+  { "pstl1strm", AArch64_SYSALIAS_PSTL1STRM, 0x9,  {AArch64_FeatureSVE}  }, // 7
+  { "pstl2keep", AArch64_SYSALIAS_PSTL2KEEP, 0xA,  {AArch64_FeatureSVE}  }, // 8
+  { "pstl2strm", AArch64_SYSALIAS_PSTL2STRM, 0xB,  {AArch64_FeatureSVE}  }, // 9
+  { "pstl3keep", AArch64_SYSALIAS_PSTL3KEEP, 0xC,  {AArch64_FeatureSVE}  }, // 10
+  { "pstl3strm", AArch64_SYSALIAS_PSTL3STRM, 0xD,  {AArch64_FeatureSVE}  }, // 11
   };
 
 const SVEPRFM *lookupSVEPRFMByEncoding(uint8_t Encoding) {
@@ -958,22 +1123,29 @@ const SVEPRFM *lookupSVEPRFMByEncoding(uint8_t Encoding) {
 
 #ifdef GET_SVEVECLENSPECIFIER_IMPL
 #undef GET_SVEVECLENSPECIFIER_IMPL
-static const SVEVECLENSPECIFIER SVEVECLENSPECIFIERsList[] = {
-  { "vlx2", AArch64_SYSREG_VLX2, 0x0 }, // 0
-  { "vlx4", AArch64_SYSREG_VLX4, 0x1 }, // 1
+static const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER SVEVECLENSPECIFIERsList[] = {
+  { "vlx2", 0x0 }, // 0
+  { "vlx4", 0x1 }, // 1
   };
 
-const SVEVECLENSPECIFIER *lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding) {
+const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
     { 0x1, 1 },
   };
 
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+   if (i == -1)
+      return NULL;
+   else
+      return &SVEVECLENSPECIFIERsList[Index[i].index];
+}
+
 #endif
 
 #ifdef GET_SYSREG_IMPL
 #undef GET_SYSREG_IMPL
-static const SysReg SysRegsList[] = {
+static const AArch64SysReg_SysReg SysRegsList[] = {
   { "ACCDATA_EL1", AArch64_SYSREG_ACCDATA_EL1, "ACCDATA_EL1", AArch64_SYSREG_ACCDATA_EL1, 0xC685, true, true,  {AArch64_FeatureLS64}  }, // 0
   { "ACTLR_EL1", AArch64_SYSREG_ACTLR_EL1, "ACTLR_EL1", AArch64_SYSREG_ACTLR_EL1, 0xC081, true, true,  {0}  }, // 1
   { "ACTLR_EL2", AArch64_SYSREG_ACTLR_EL2, "ACTLR_EL2", AArch64_SYSREG_ACTLR_EL2, 0xE081, true, true,  {0}  }, // 2
@@ -2166,7 +2338,7 @@ static const SysReg SysRegsList[] = {
   { "ZCR_EL3", AArch64_SYSREG_ZCR_EL3, "ZCR_EL3", AArch64_SYSREG_ZCR_EL3, 0xF090, true, true,  {AArch64_FeatureSVE}  }, // 1189
   };
 
-const SysReg *lookupSysRegByEncoding(uint16_t Encoding) {
+const AArch64SysReg_SysReg *lookupSysRegByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x8002, 552 },
     { 0x8004, 291 },
@@ -3372,13 +3544,20 @@ const SysReg *lookupSysRegByEncoding(uint16_t Encoding) {
 #ifdef GET_TSB_IMPL
 #undef GET_TSB_IMPL
 static const TSB TSBsList[] = {
-  { "csync", AArch64_SYSREG_CSYNC, 0x0,  {AArch64_FeatureTRACEV8_4}  }, // 0
+  { "csync", AArch64_SYSALIAS_CSYNC, 0x0,  {AArch64_FeatureTRACEV8_4}  }, // 0
   };
 
 const TSB *lookupTSBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
   };
+
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+   if (i == -1)
+      return NULL;
+   else
+      return &TSBsList[Index[i].index];
+}
 
 #endif
 
