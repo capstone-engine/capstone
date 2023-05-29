@@ -27558,7 +27558,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
-		uint64_t Address, const void *Decoder, bool &DecodeComplete) \
+		uint64_t Address, const void *Decoder, bool *DecodeComplete) \
 { \
   InsnType tmp; \
   switch (Idx) { \
@@ -32892,7 +32892,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 554: \
-    if (!Check(&S, DecodeSystemPStateImm0_15Instruction(MI, insn, Address, Decoder))) { DecodeComplete = false; return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeSystemPStateImm0_15Instruction(MI, insn, Address, Decoder))) { *DecodeComplete = false; return MCDisassembler_Fail; } \
     return S; \
   case 555: \
     tmp = fieldname(insn, 16, 3); \
@@ -33327,7 +33327,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(&S, DecodeAuthLoadInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 609: \
-    if (!Check(&S, DecodePRFMRegInstruction(MI, insn, Address, Decoder))) { DecodeComplete = false; return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodePRFMRegInstruction(MI, insn, Address, Decoder))) { *DecodeComplete = false; return MCDisassembler_Fail; } \
     return S; \
   case 610: \
     tmp = fieldname(insn, 0, 5); \
@@ -34237,7 +34237,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (!Check(&S, DecodeMemExtend(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 717: \
-    if (!Check(&S, DecodeSystemPStateImm0_1Instruction(MI, insn, Address, Decoder))) { DecodeComplete = false; return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeSystemPStateImm0_1Instruction(MI, insn, Address, Decoder))) { *DecodeComplete = false; return MCDisassembler_Fail; } \
     return S; \
   case 718: \
     tmp = fieldname(insn, 5, 16); \
