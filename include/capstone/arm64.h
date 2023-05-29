@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 #include "platform.h"
+#include "../cs_operand.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4201)
@@ -1598,20 +1599,21 @@ typedef enum arm64_barrier_op {
 
 /// Operand type for instruction's operands
 typedef enum arm64_op_type {
-  ARM64_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-  ARM64_OP_REG,		///< = CS_OP_REG (Register operand).
-  ARM64_OP_IMM,		///< = CS_OP_IMM (Immediate operand).
-  ARM64_OP_MEM,		///< = CS_OP_MEM (Memory operand).
-  ARM64_OP_FP,		///< = CS_OP_FP (Floating-Point operand).
-  ARM64_OP_CIMM = 64,	///< C-Immediate
-  ARM64_OP_REG_MRS,	///< MRS register operand.
-  ARM64_OP_REG_MSR,	///< MSR register operand.
-  ARM64_OP_PSTATE,	///< PState operand.
-  ARM64_OP_SYS,		///< SYS operand for IC/DC/AT/TLBI instructions.
-  ARM64_OP_SVCR,	///< SVCR operand for MSR SVCR instructions.
-  ARM64_OP_PREFETCH,	///< Prefetch operand (PRFM).
-  ARM64_OP_BARRIER,	///< Memory barrier operand (ISB/DMB/DSB instructions).
-  ARM64_OP_SME_INDEX,	///< SME instruction operand with with index.
+  AArch64_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+  AArch64_OP_REG = CS_OP_REG,		///< = CS_OP_REG (Register operand).
+  AArch64_OP_IMM = CS_OP_IMM,		///< = CS_OP_IMM (Immediate operand).
+  AArch64_OP_MEM = CS_OP_MEM,		///< = CS_OP_MEM (Memory operand).
+  AArch64_OP_FP = CS_OP_FP,		///< = CS_OP_FP (Floating-Point operand).
+  AArch64_OP_CIMM = CS_OP_SPECIAL + 0,	///< C-Immediate
+  AArch64_OP_REG_MRS = CS_OP_SPECIAL + 1,	///< MRS register operand.
+  AArch64_OP_REG_MSR = CS_OP_SPECIAL + 2,	///< MSR register operand.
+  AArch64_OP_PSTATE = CS_OP_SPECIAL + 3,	///< PState operand.
+  AArch64_OP_SYS = CS_OP_SPECIAL + 4,		///< SYS operand for IC/DC/AT/TLBI instructions.
+  AArch64_OP_SVCR = CS_OP_SPECIAL + 5,	///< SVCR operand for MSR SVCR instructions.
+  AArch64_OP_PREFETCH = CS_OP_SPECIAL + 6,	///< Prefetch operand (PRFM).
+  AArch64_OP_BARRIER = CS_OP_SPECIAL + 7,	///< Memory barrier operand (ISB/DMB/DSB instructions).
+  AArch64_OP_SME_INDEX = CS_OP_SPECIAL + 8,	///< SME instruction operand with with index.
+  AArch64_OP_IMPLICIT_IMM_0 = CS_OP_SPECIAL + 9, ///< Implicit immediate operand 0
 } arm64_op_type;
 
 /// SYS operands (IC/DC/AC/TLBI)
