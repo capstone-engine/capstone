@@ -47,6 +47,7 @@
 #include "AArch64GenSubtargetInfo.inc"
 
 #define GET_REGINFO_ENUM
+#define GET_REGINFO_MC_DESC
 #include "AArch64GenRegisterInfo.inc"
 
 #define GET_INSTRINFO_ENUM
@@ -638,62 +639,106 @@ typedef struct SysAliasImm {
 	arm64_insn_group FeaturesRequired[3];
 } SysAliasImm;
 
-#define SVCR SysAlias
+// CS namespace begin: AArch64SVCR
+
+#define AArch64SVCR_SVCR SysAlias
 
 #define GET_SVCR_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define AT SysAlias
+// CS namespace end: AArch64SVCR
+
+// CS namespace begin: AArch64AT
+
+#define AArch64AT_AT SysAlias
 
 #define GET_AT_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define DB SysAlias
+// CS namespace end: AArch64AT
+
+// CS namespace begin: AArch64DB
+
+#define AArch64DB_DB SysAlias
 
 #define GET_DB_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define DBnXS SysAliasImm
+// CS namespace end: AArch64DB
+
+// CS namespace begin: AArch64DBnXS
+
+#define AArch64DBnXS_DBnXS SysAliasImm
 
 #define GET_DBNXS_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define DC SysAlias
+// CS namespace end: AArch64DBnXS
+
+// CS namespace begin: AArch64DC
+
+#define AArch64DC_DC SysAlias
 
 #define GET_DC_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define IC SysAliasReg
+// CS namespace end: AArch64DC
+
+// CS namespace begin: AArch64IC
+
+#define AArch64IC_IC SysAliasReg
 
 #define GET_IC_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define ISB SysAlias
+// CS namespace end: AArch64IC
+
+// CS namespace begin: AArch64ISB
+
+#define AArch64ISB_ISB SysAlias
 
 #define GET_ISB_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define TSB SysAlias
+// CS namespace end: AArch64ISB
+
+// CS namespace begin: AArch64TSB
+
+#define AArch64TSB_TSB SysAlias
 
 #define GET_TSB_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define PRFM SysAlias
+// CS namespace end: AArch64TSB
+
+// CS namespace begin: AArch64PRFM
+
+#define AArch64PRFM_PRFM SysAlias
 
 #define GET_PRFM_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define SVEPRFM SysAlias
+// CS namespace end: AArch64PRFM
+
+// CS namespace begin: AArch64SVEPRFM
+
+#define AArch64SVEPRFM_SVEPRFM SysAlias
 
 #define GET_SVEPRFM_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define RPRFM SysAlias
+// CS namespace end: AArch64SVEPRFM
+
+// CS namespace begin: AArch64RPRFM
+
+#define AArch64RPRFM_RPRFM SysAlias
 
 #define GET_RPRFM_DECL
 #include "AArch64GenSystemOperands.inc"
 
-// namespace AArch64RPRFM
+// CS namespace end: AArch64RPRFM
+
+// CS namespace begin: AArch64SVEPredPattern
 
 typedef struct SVEPREDPAT {
 	const char *Name;
@@ -703,6 +748,10 @@ typedef struct SVEPREDPAT {
 #define GET_SVEPREDPAT_DECL
 #include "AArch64GenSystemOperands.inc"
 
+// CS namespace end: AArch64SVEPredPattern
+
+// CS namespace begin: AArch64SVEVecLenSpecifier
+
 typedef struct SVEVECLENSPECIFIER {
 	const char *Name;
 	uint16_t Encoding;
@@ -711,8 +760,9 @@ typedef struct SVEVECLENSPECIFIER {
 #define GET_SVEVECLENSPECIFIER_DECL
 #include "AArch64GenSystemOperands.inc"
 
-// namespace AArch64SVEVecLenSpecifier
+// CS namespace end: AArch64SVEVecLenSpecifier
 
+// CS namespace begin: AArch64ExactFPImm
 typedef struct ExactFPImm {
 	const char *Name;
 	int Enum;
@@ -722,25 +772,41 @@ typedef struct ExactFPImm {
 #define GET_EXACTFPIMM_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define PStateImm0_15 SysAlias
+// CS namespace end: AArch64ExactFPImm
+
+// CS namespace begin: AArch64PState
+
+#define AArch64PState_PStateImm0_15 SysAlias
 
 #define GET_PSTATEIMM0_15_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define PStateImm0_1 SysAlias
+#define AArch64PState_PStateImm0_1 SysAlias
 
 #define GET_PSTATEIMM0_1_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define PSB SysAlias
+// CS namespace end: AArch64PState
+
+// CS namespace begin: AArch64PSBHint
+
+#define AArch64PSBHint_PSB SysAlias
 
 #define GET_PSB_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define BTI SysAlias
+// CS namespace end: AArch64PSBHint
+
+// CS namespace begin: AArch64BTIHint
+
+#define AArch64BTIHint_BTI SysAlias
 
 #define GET_BTI_DECL
 #include "AArch64GenSystemOperands.inc"
+
+// CS namespace end: AArch64BTIHint
+
+// CS namespace begin: AArch64SE
 
 typedef enum ShiftExtSpecifiers {
 	AArch64SE_Invalid = -1,
@@ -760,6 +826,10 @@ typedef enum ShiftExtSpecifiers {
 	AArch64SE_SXTW,
 	AArch64SE_SXTX
 } AArch64SE_ShiftExtSpecifiers;
+
+// CS namespace end: AArch64SE
+
+// CS namespace begin: AArch64Layout
 
 typedef enum VectorLayout {
 	AArch64Layout_Invalid = -1,
@@ -781,6 +851,10 @@ typedef enum VectorLayout {
 	AArch64Layout_VL_D
 } AArch64Layout_VectorLayout;
 
+// CS namespace end: AArch64Layout
+
+// CS namespace begin: AArch64SysReg
+
 typedef struct SysReg {
 	const char *Name;
 	arm64_sysreg SysReg;
@@ -795,19 +869,31 @@ typedef struct SysReg {
 #define GET_SYSREG_DECL
 #include "AArch64GenSystemOperands.inc"
 
-const AArch64SysReg_SysReg *lookupSysRegByName(const char *Name);
-const AArch64SysReg_SysReg *lookupSysRegByEncoding(uint16_t Encoding);
-const char *genericRegisterString(uint32_t Bits);
+const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByName(const char *Name);
+const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
+const char *AArch64SysReg_genericRegisterString(uint32_t Bits);
 
-#define TLBI SysAliasReg
+// CS namespace end: AArch64SysReg
+
+// CS namespace begin: AArch64TLBI
+
+#define AArch64TLBI_TLBI SysAliasReg
 
 #define GET_TLBITable_DECL
 #include "AArch64GenSystemOperands.inc"
 
-#define PRCTX SysAliasReg
+// CS namespace end: AArch64TLBI
+
+// CS namespace begin: AArch64PRCTX
+
+#define AArch64PRCTX_PRCTX SysAliasReg
 
 #define GET_PRCTX_DECL
 #include "AArch64GenSystemOperands.inc"
+
+// CS namespace end: AArch64PRCTX
+
+// CS namespace begin: AArch64II
 
 /// Target Operand Flag enum.
 typedef enum TOF {

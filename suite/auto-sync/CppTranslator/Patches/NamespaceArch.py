@@ -39,4 +39,12 @@ class NamespaceArch(Patch):
                     res += namespace_struct(src, namespace_id, d) + b";\n\n"
                 case _:
                     res += get_text(src, d.start_byte, d.end_byte) + b"\n"
-        return res
+        return (
+            b"// CS namespace begin: "
+            + namespace_id
+            + b"\n\n"
+            + res
+            + b"// CS namespace end: "
+            + namespace_id
+            + b"\n\n"
+        )
