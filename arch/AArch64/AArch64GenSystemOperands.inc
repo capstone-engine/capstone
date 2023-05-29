@@ -12,185 +12,145 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
 #ifdef GET_AT_DECL
-#undef GET_AT_DECL
 #endif
 
 #ifdef GET_BTI_DECL
-#undef GET_BTI_DECL
 #endif
 
 #ifdef GET_DB_DECL
-#undef GET_DB_DECL
 #endif
 
 #ifdef GET_DBNXS_DECL
-#undef GET_DBNXS_DECL
 #endif
 
 #ifdef GET_DC_DECL
-#undef GET_DC_DECL
 #endif
 
 #ifdef GET_EXACTFPIMM_DECL
-#undef GET_EXACTFPIMM_DECL
 #endif
 
 #ifdef GET_IC_DECL
-#undef GET_IC_DECL
 #endif
 
 #ifdef GET_ISB_DECL
-#undef GET_ISB_DECL
 #endif
 
 #ifdef GET_PRFM_DECL
-#undef GET_PRFM_DECL
 #endif
 
 #ifdef GET_PSB_DECL
-#undef GET_PSB_DECL
 #endif
 
 #ifdef GET_PSTATEIMM0_1_DECL
-#undef GET_PSTATEIMM0_1_DECL
 #endif
 
 #ifdef GET_PSTATEIMM0_15_DECL
-#undef GET_PSTATEIMM0_15_DECL
 #endif
 
 #ifdef GET_RPRFM_DECL
-#undef GET_RPRFM_DECL
 #endif
 
 #ifdef GET_SVCR_DECL
-#undef GET_SVCR_DECL
 #endif
 
 #ifdef GET_SVEPREDPAT_DECL
-#undef GET_SVEPREDPAT_DECL
 #endif
 
 #ifdef GET_SVEPRFM_DECL
-#undef GET_SVEPRFM_DECL
 #endif
 
 #ifdef GET_SVEVECLENSPECIFIER_DECL
-#undef GET_SVEVECLENSPECIFIER_DECL
 #endif
 
 #ifdef GET_SYSREG_DECL
-#undef GET_SYSREG_DECL
 #endif
 
 #ifdef GET_TSB_DECL
-#undef GET_TSB_DECL
 #endif
 
 #ifdef GET_TLBITable_DECL
-#undef GET_TLBITable_DECL
-const TLBI *lookupTLBIByEncoding(uint16_t Encoding);
+const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_AT_DECL
-#undef GET_AT_DECL
-const AT *lookupATByEncoding(uint16_t Encoding);
+const AArch64AT_AT *AArch64AT_lookupATByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_BTI_DECL
-#undef GET_BTI_DECL
-const BTI *lookupBTIByEncoding(uint8_t Encoding);
+const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_DB_DECL
-#undef GET_DB_DECL
-const DB *lookupDBByEncoding(uint8_t Encoding);
+const AArch64DB_DB *AArch64DB_lookupDBByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_DBNXS_DECL
-#undef GET_DBNXS_DECL
-const DBnXS *lookupDBnXSByEncoding(uint8_t Encoding);
-const DBnXS *lookupDBnXSByImmValue(uint8_t ImmValue);
+const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByEncoding(uint8_t Encoding);
+const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByImmValue(uint8_t ImmValue);
 #endif
 
 #ifdef GET_DC_DECL
-#undef GET_DC_DECL
-const DC *lookupDCByEncoding(uint16_t Encoding);
+const AArch64DC_DC *AArch64DC_lookupDCByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_EXACTFPIMM_DECL
-#undef GET_EXACTFPIMM_DECL
-const AArch64ExactFPImm_ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum);
+const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByEnum(uint8_t Enum);
 #endif
 
 #ifdef GET_IC_DECL
-#undef GET_IC_DECL
-const IC *lookupICByEncoding(uint16_t Encoding);
+const AArch64IC_IC *AArch64IC_lookupICByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_ISB_DECL
-#undef GET_ISB_DECL
-const ISB *lookupISBByEncoding(uint8_t Encoding);
+const AArch64ISB_ISB *AArch64ISB_lookupISBByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_PRFM_DECL
-#undef GET_PRFM_DECL
-const PRFM *lookupPRFMByEncoding(uint8_t Encoding);
+const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_PSB_DECL
-#undef GET_PSB_DECL
-const PSB *lookupPSBByEncoding(uint8_t Encoding);
+const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_PSTATEIMM0_1_DECL
-#undef GET_PSTATEIMM0_1_DECL
-const PStateImm0_1 *lookupPStateImm0_1ByEncoding(uint16_t Encoding);
+const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_PSTATEIMM0_15_DECL
-#undef GET_PSTATEIMM0_15_DECL
-const PStateImm0_15 *lookupPStateImm0_15ByEncoding(uint8_t Encoding);
+const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_RPRFM_DECL
-#undef GET_RPRFM_DECL
-const RPRFM *lookupRPRFMByEncoding(uint8_t Encoding);
+const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVCR_DECL
-#undef GET_SVCR_DECL
-const SVCR *lookupSVCRByEncoding(uint8_t Encoding);
+const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVEPREDPAT_DECL
-#undef GET_SVEPREDPAT_DECL
-const AArch64SVEPredPattern_SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encoding);
+const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVEPRFM_DECL
-#undef GET_SVEPRFM_DECL
-const SVEPRFM *lookupSVEPRFMByEncoding(uint8_t Encoding);
+const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVEVECLENSPECIFIER_DECL
-#undef GET_SVEVECLENSPECIFIER_DECL
-const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding);
+const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SYSREG_DECL
-#undef GET_SYSREG_DECL
-const AArch64SysReg_SysReg *lookupSysRegByEncoding(uint16_t Encoding);
+const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_TSB_DECL
-#undef GET_TSB_DECL
-const TSB *lookupTSBByEncoding(uint8_t Encoding);
+const AArch64TSB_TSB *AArch64TSB_lookupTSBByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_TLBITable_IMPL
-#undef GET_TLBITable_IMPL
-static const TLBI TLBITable[] = {
+static const AArch64TLBI_TLBI TLBITable[] = {
   { "ALLE1", AArch64_SYSREG_ALLE1, 0x243C, false,  {0}  }, // 0
   { "ALLE1IS", AArch64_SYSREG_ALLE1IS, 0x241C, false,  {0}  }, // 1
   { "ALLE1ISnXS", AArch64_SYSREG_ALLE1ISNXS, 0x249C, false,  { AArch64_FeatureXS }  }, // 2
@@ -357,7 +317,7 @@ static const TLBI TLBITable[] = {
   { "VMALLS12E1OSnXS", AArch64_SYSREG_VMALLS12E1OSNXS, 0x248E, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 163
   };
 
-const TLBI *lookupTLBIByEncoding(uint16_t Encoding) {
+const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x408, 156 },
     { 0x409, 120 },
@@ -535,8 +495,7 @@ const TLBI *lookupTLBIByEncoding(uint16_t Encoding) {
 #endif
 
 #ifdef GET_AT_IMPL
-#undef GET_AT_IMPL
-static const AT ATsList[] = {
+static const AArch64AT_AT ATsList[] = {
   { "S12E0R", AArch64_SYSALIAS_S12E0R, 0x23C6,  {0}  }, // 0
   { "S12E0W", AArch64_SYSALIAS_S12E0W, 0x23C7,  {0}  }, // 1
   { "S12E1R", AArch64_SYSALIAS_S12E1R, 0x23C4,  {0}  }, // 2
@@ -553,7 +512,7 @@ static const AT ATsList[] = {
   { "S1E3W", AArch64_SYSALIAS_S1E3W, 0x33C1,  {0}  }, // 13
   };
 
-const AT *lookupATByEncoding(uint16_t Encoding) {
+const AArch64AT_AT *AArch64AT_lookupATByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x3C0, 6 },
     { 0x3C1, 8 },
@@ -581,14 +540,13 @@ const AT *lookupATByEncoding(uint16_t Encoding) {
 #endif
 
 #ifdef GET_BTI_IMPL
-#undef GET_BTI_IMPL
-static const BTI BTIsList[] = {
+static const AArch64BTIHint_BTI BTIsList[] = {
   { "c", AArch64_SYSALIAS_C, 0x2 }, // 0
   { "j", AArch64_SYSALIAS_J, 0x4 }, // 1
   { "jc", AArch64_SYSALIAS_JC, 0x6 }, // 2
   };
 
-const BTI *lookupBTIByEncoding(uint8_t Encoding) {
+const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x2, 0 },
     { 0x4, 1 },
@@ -605,8 +563,7 @@ const BTI *lookupBTIByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_DB_IMPL
-#undef GET_DB_IMPL
-static const DB DBsList[] = {
+static const AArch64DB_DB DBsList[] = {
   { "ish", AArch64_SYSALIAS_ISH, 0xB }, // 0
   { "ishld", AArch64_SYSALIAS_ISHLD, 0x9 }, // 1
   { "ishst", AArch64_SYSALIAS_ISHST, 0xA }, // 2
@@ -621,7 +578,7 @@ static const DB DBsList[] = {
   { "sy", AArch64_SYSALIAS_SY, 0xF }, // 11
   };
 
-const DB *lookupDBByEncoding(uint8_t Encoding) {
+const AArch64DB_DB *AArch64DB_lookupDBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x1, 8 },
     { 0x2, 9 },
@@ -647,15 +604,14 @@ const DB *lookupDBByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_DBNXS_IMPL
-#undef GET_DBNXS_IMPL
-static const DBnXS DBnXSsList[] = {
+static const AArch64DBnXS_DBnXS DBnXSsList[] = {
   { "ishnxs", AArch64_SYSIMM_ISHNXS, 0xB, 0x18,  {AArch64_FeatureXS}  }, // 0
   { "nshnxs", AArch64_SYSIMM_NSHNXS, 0x7, 0x14,  {AArch64_FeatureXS}  }, // 1
   { "oshnxs", AArch64_SYSIMM_OSHNXS, 0x3, 0x10,  {AArch64_FeatureXS}  }, // 2
   { "synxs", AArch64_SYSIMM_SYNXS, 0xF, 0x1C,  {AArch64_FeatureXS}  }, // 3
   };
 
-const DBnXS *lookupDBnXSByEncoding(uint8_t Encoding) {
+const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x3, 2 },
     { 0x7, 1 },
@@ -670,7 +626,7 @@ const DBnXS *lookupDBnXSByEncoding(uint8_t Encoding) {
       return &DBnXSsList[Index[i].index];
 }
 
-const DBnXS *lookupDBnXSByImmValue(uint8_t ImmValue) {
+const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByImmValue(uint8_t ImmValue) {
   static const struct IndexType Index[] = {
     { 0x10, 2 },
     { 0x14, 1 },
@@ -688,8 +644,7 @@ const DBnXS *lookupDBnXSByImmValue(uint8_t ImmValue) {
 #endif
 
 #ifdef GET_DC_IMPL
-#undef GET_DC_IMPL
-static const DC DCsList[] = {
+static const AArch64DC_DC DCsList[] = {
   { "CGDSW", AArch64_SYSALIAS_CGDSW, 0x3D6,  {AArch64_FeatureMTE}  }, // 0
   { "CGDVAC", AArch64_SYSALIAS_CGDVAC, 0x1BD5,  {AArch64_FeatureMTE}  }, // 1
   { "CGDVADP", AArch64_SYSALIAS_CGDVADP, 0x1BED,  {AArch64_FeatureMTE}  }, // 2
@@ -722,7 +677,7 @@ static const DC DCsList[] = {
   { "ZVA", AArch64_SYSALIAS_ZVA, 0x1BA1,  {0}  }, // 29
   };
 
-const DC *lookupDCByEncoding(uint16_t Encoding) {
+const AArch64DC_DC *AArch64DC_lookupDCByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x3B1, 28 },
     { 0x3B2, 27 },
@@ -766,7 +721,6 @@ const DC *lookupDCByEncoding(uint16_t Encoding) {
 #endif
 
 #ifdef GET_EXACTFPIMM_IMPL
-#undef GET_EXACTFPIMM_IMPL
 static const AArch64ExactFPImm_ExactFPImm ExactFPImmsList[] = {
   { "half", 0x1, "0.5" }, // 0
   { "one", 0x2, "1.0" }, // 1
@@ -774,7 +728,7 @@ static const AArch64ExactFPImm_ExactFPImm ExactFPImmsList[] = {
   { "zero", 0x0, "0.0" }, // 3
   };
 
-const AArch64ExactFPImm_ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum) {
+const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByEnum(uint8_t Enum) {
   static const struct IndexType Index[] = {
     { 0x0, 3 },
     { 0x1, 0 },
@@ -792,14 +746,13 @@ const AArch64ExactFPImm_ExactFPImm *lookupExactFPImmByEnum(uint8_t Enum) {
 #endif
 
 #ifdef GET_IC_IMPL
-#undef GET_IC_IMPL
-static const IC ICsList[] = {
+static const AArch64IC_IC ICsList[] = {
   { "IALLU", AArch64_SYSREG_IALLU, 0x3A8, false }, // 0
   { "IALLUIS", AArch64_SYSREG_IALLUIS, 0x388, false }, // 1
   { "IVAU", AArch64_SYSREG_IVAU, 0x1BA9, true }, // 2
   };
 
-const IC *lookupICByEncoding(uint16_t Encoding) {
+const AArch64IC_IC *AArch64IC_lookupICByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x388, 1 },
     { 0x3A8, 0 },
@@ -816,12 +769,11 @@ const IC *lookupICByEncoding(uint16_t Encoding) {
 #endif
 
 #ifdef GET_ISB_IMPL
-#undef GET_ISB_IMPL
-static const ISB ISBsList[] = {
+static const AArch64ISB_ISB ISBsList[] = {
   { "sy", AArch64_SYSALIAS_SY, 0xF }, // 0
   };
 
-const ISB *lookupISBByEncoding(uint8_t Encoding) {
+const AArch64ISB_ISB *AArch64ISB_lookupISBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0xF, 0 },
   };
@@ -836,8 +788,7 @@ const ISB *lookupISBByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_PRFM_IMPL
-#undef GET_PRFM_IMPL
-static const PRFM PRFMsList[] = {
+static const AArch64PRFM_PRFM PRFMsList[] = {
   { "pldl1keep", AArch64_SYSALIAS_PLDL1KEEP, 0x0,  {0}  }, // 0
   { "pldl1strm", AArch64_SYSALIAS_PLDL1STRM, 0x1,  {0}  }, // 1
   { "pldl2keep", AArch64_SYSALIAS_PLDL2KEEP, 0x2,  {0}  }, // 2
@@ -864,7 +815,7 @@ static const PRFM PRFMsList[] = {
   { "pstslcstrm", AArch64_SYSALIAS_PSTSLCSTRM, 0x17,  {AArch64_FeaturePRFM_SLC}  }, // 23
   };
 
-const PRFM *lookupPRFMByEncoding(uint8_t Encoding) {
+const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
     { 0x1, 1 },
@@ -902,12 +853,11 @@ const PRFM *lookupPRFMByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_PSB_IMPL
-#undef GET_PSB_IMPL
-static const PSB PSBsList[] = {
+static const AArch64PSBHint_PSB PSBsList[] = {
   { "csync", AArch64_SYSALIAS_CSYNC, 0x11 }, // 0
   };
 
-const PSB *lookupPSBByEncoding(uint8_t Encoding) {
+const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x11, 0 },
   };
@@ -922,13 +872,12 @@ const PSB *lookupPSBByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_PSTATEIMM0_1_IMPL
-#undef GET_PSTATEIMM0_1_IMPL
-static const PStateImm0_1 PStateImm0_1sList[] = {
+static const AArch64PState_PStateImm0_1 PStateImm0_1sList[] = {
   { "ALLINT", AArch64_SYSALIAS_ALLINT, 0x8,  {AArch64_FeatureNMI}  }, // 0
   { "PM", AArch64_SYSALIAS_PM, 0x48,  {0}  }, // 1
   };
 
-const PStateImm0_1 *lookupPStateImm0_1ByEncoding(uint16_t Encoding) {
+const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x8, 0 },
     { 0x48, 1 },
@@ -944,8 +893,7 @@ const PStateImm0_1 *lookupPStateImm0_1ByEncoding(uint16_t Encoding) {
 #endif
 
 #ifdef GET_PSTATEIMM0_15_IMPL
-#undef GET_PSTATEIMM0_15_IMPL
-static const PStateImm0_15 PStateImm0_15sList[] = {
+static const AArch64PState_PStateImm0_15 PStateImm0_15sList[] = {
   { "DAIFClr", AArch64_SYSALIAS_DAIFCLR, 0x1F,  {0}  }, // 0
   { "DAIFSet", AArch64_SYSALIAS_DAIFSET, 0x1E,  {0}  }, // 1
   { "DIT", AArch64_SYSALIAS_DIT, 0x1A,  {AArch64_FeatureDIT}  }, // 2
@@ -956,7 +904,7 @@ static const PStateImm0_15 PStateImm0_15sList[] = {
   { "UAO", AArch64_SYSALIAS_UAO, 0x3,  {AArch64_FeaturePsUAO}  }, // 7
   };
 
-const PStateImm0_15 *lookupPStateImm0_15ByEncoding(uint8_t Encoding) {
+const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x3, 7 },
     { 0x4, 3 },
@@ -978,15 +926,14 @@ const PStateImm0_15 *lookupPStateImm0_15ByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_RPRFM_IMPL
-#undef GET_RPRFM_IMPL
-static const RPRFM RPRFMsList[] = {
+static const AArch64RPRFM_RPRFM RPRFMsList[] = {
   { "pldkeep", AArch64_SYSALIAS_PLDKEEP, 0x0,  {0}  }, // 0
   { "pldstrm", AArch64_SYSALIAS_PLDSTRM, 0x4,  {0}  }, // 1
   { "pstkeep", AArch64_SYSALIAS_PSTKEEP, 0x1,  {0}  }, // 2
   { "pststrm", AArch64_SYSALIAS_PSTSTRM, 0x5,  {0}  }, // 3
   };
 
-const RPRFM *lookupRPRFMByEncoding(uint8_t Encoding) {
+const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
     { 0x1, 2 },
@@ -1004,14 +951,13 @@ const RPRFM *lookupRPRFMByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_SVCR_IMPL
-#undef GET_SVCR_IMPL
-static const SVCR SVCRsList[] = {
+static const AArch64SVCR_SVCR SVCRsList[] = {
   { "SVCRSM", AArch64_SYSALIAS_SVCRSM, 0x1,  {AArch64_FeatureSME}  }, // 0
   { "SVCRSMZA", AArch64_SYSALIAS_SVCRSMZA, 0x3,  {AArch64_FeatureSME}  }, // 1
   { "SVCRZA", AArch64_SYSALIAS_SVCRZA, 0x2,  {AArch64_FeatureSME}  }, // 2
   };
 
-const SVCR *lookupSVCRByEncoding(uint8_t Encoding) {
+const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x1, 0 },
     { 0x2, 2 },
@@ -1028,7 +974,6 @@ const SVCR *lookupSVCRByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_SVEPREDPAT_IMPL
-#undef GET_SVEPREDPAT_IMPL
 static const AArch64SVEPredPattern_SVEPREDPAT SVEPREDPATsList[] = {
   { "all", 0x1F }, // 0
   { "mul3", 0x1E }, // 1
@@ -1049,7 +994,7 @@ static const AArch64SVEPredPattern_SVEPREDPAT SVEPREDPATsList[] = {
   { "vl8", 0x8 }, // 16
   };
 
-const AArch64SVEPredPattern_SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encoding) {
+const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 3 },
     { 0x1, 4 },
@@ -1080,8 +1025,7 @@ const AArch64SVEPredPattern_SVEPREDPAT *lookupSVEPREDPATByEncoding(uint8_t Encod
 #endif
 
 #ifdef GET_SVEPRFM_IMPL
-#undef GET_SVEPRFM_IMPL
-static const SVEPRFM SVEPRFMsList[] = {
+static const AArch64SVEPRFM_SVEPRFM SVEPRFMsList[] = {
   { "pldl1keep", AArch64_SYSALIAS_PLDL1KEEP, 0x0,  {AArch64_FeatureSVE}  }, // 0
   { "pldl1strm", AArch64_SYSALIAS_PLDL1STRM, 0x1,  {AArch64_FeatureSVE}  }, // 1
   { "pldl2keep", AArch64_SYSALIAS_PLDL2KEEP, 0x2,  {AArch64_FeatureSVE}  }, // 2
@@ -1096,7 +1040,7 @@ static const SVEPRFM SVEPRFMsList[] = {
   { "pstl3strm", AArch64_SYSALIAS_PSTL3STRM, 0xD,  {AArch64_FeatureSVE}  }, // 11
   };
 
-const SVEPRFM *lookupSVEPRFMByEncoding(uint8_t Encoding) {
+const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
     { 0x1, 1 },
@@ -1122,13 +1066,12 @@ const SVEPRFM *lookupSVEPRFMByEncoding(uint8_t Encoding) {
 #endif
 
 #ifdef GET_SVEVECLENSPECIFIER_IMPL
-#undef GET_SVEVECLENSPECIFIER_IMPL
 static const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER SVEVECLENSPECIFIERsList[] = {
   { "vlx2", 0x0 }, // 0
   { "vlx4", 0x1 }, // 1
   };
 
-const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding) {
+const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
     { 0x1, 1 },
@@ -1144,7 +1087,6 @@ const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *lookupSVEVECLENSPECIFIERByEn
 #endif
 
 #ifdef GET_SYSREG_IMPL
-#undef GET_SYSREG_IMPL
 static const AArch64SysReg_SysReg SysRegsList[] = {
   { "ACCDATA_EL1", AArch64_SYSREG_ACCDATA_EL1, "ACCDATA_EL1", AArch64_SYSREG_ACCDATA_EL1, 0xC685, true, true,  {AArch64_FeatureLS64}  }, // 0
   { "ACTLR_EL1", AArch64_SYSREG_ACTLR_EL1, "ACTLR_EL1", AArch64_SYSREG_ACTLR_EL1, 0xC081, true, true,  {0}  }, // 1
@@ -2338,7 +2280,7 @@ static const AArch64SysReg_SysReg SysRegsList[] = {
   { "ZCR_EL3", AArch64_SYSREG_ZCR_EL3, "ZCR_EL3", AArch64_SYSREG_ZCR_EL3, 0xF090, true, true,  {AArch64_FeatureSVE}  }, // 1189
   };
 
-const AArch64SysReg_SysReg *lookupSysRegByEncoding(uint16_t Encoding) {
+const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x8002, 552 },
     { 0x8004, 291 },
@@ -3542,12 +3484,11 @@ const AArch64SysReg_SysReg *lookupSysRegByEncoding(uint16_t Encoding) {
 #endif
 
 #ifdef GET_TSB_IMPL
-#undef GET_TSB_IMPL
-static const TSB TSBsList[] = {
+static const AArch64TSB_TSB TSBsList[] = {
   { "csync", AArch64_SYSALIAS_CSYNC, 0x0,  {AArch64_FeatureTRACEV8_4}  }, // 0
   };
 
-const TSB *lookupTSBByEncoding(uint8_t Encoding) {
+const AArch64TSB_TSB *AArch64TSB_lookupTSBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
   };
@@ -3561,3 +3502,22 @@ const TSB *lookupTSBByEncoding(uint8_t Encoding) {
 
 #endif
 
+#undef GET_AT_DECL
+#undef GET_BTI_DECL
+#undef GET_DBNXS_DECL
+#undef GET_DB_DECL
+#undef GET_DC_DECL
+#undef GET_EXACTFPIMM_DECL
+#undef GET_IC_DECL
+#undef GET_ISB_DECL
+#undef GET_PRFM_DECL
+#undef GET_PSB_DECL
+#undef GET_PSTATEIMM0_15_DECL
+#undef GET_PSTATEIMM0_1_DECL
+#undef GET_RPRFM_DECL
+#undef GET_SVCR_DECL
+#undef GET_SVEPREDPAT_DECL
+#undef GET_SVEPRFM_DECL
+#undef GET_SVEVECLENSPECIFIER_DECL
+#undef GET_SYSREG_DECL
+#undef GET_TSB_DECL
