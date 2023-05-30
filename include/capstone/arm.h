@@ -425,12 +425,60 @@ typedef enum arm_op_type {
 	ARM_OP_MEM = CS_OP_MEM, ///< Memory operand
 } arm_op_type;
 
+inline static const char* ARMOpTypeToString(arm_op_type type)
+{
+	switch (type)
+	{
+	case ARM_OP_INVALID:
+	return "ARM_OP_INVALID";
+	case ARM_OP_REG:
+	return "ARM_OP_REG";
+	case ARM_OP_IMM:
+	return "ARM_OP_IMM";
+	case ARM_OP_FP:
+	return "ARM_OP_FP";
+	case ARM_OP_PRED:
+	return "ARM_OP_PRED";
+	case ARM_OP_CIMM:
+	return "ARM_OP_CIMM";
+	case ARM_OP_PIMM:
+	return "ARM_OP_PIMM";
+	case ARM_OP_SETEND:
+	return "ARM_OP_SETEND";
+	case ARM_OP_SYSREG:
+	return "ARM_OP_SYSREG";
+	case ARM_OP_VPRED_R:
+	return "ARM_OP_VPRED_R";
+	case ARM_OP_VPRED_N:
+	return "ARM_OP_VPRED_N";
+	case ARM_OP_MEM:
+	return "ARM_OP_MEM";
+	case ARM_OP_MEM | ARM_OP_IMM:
+	return "ARM_OP_MEM | ARM_OP_IMM";
+	case ARM_OP_MEM | ARM_OP_REG:
+	return "ARM_OP_MEM | ARM_OP_REG";
+	default:
+	return "Unknown";
+	}
+}
+
 /// Operand type for SETEND instruction
 typedef enum arm_setend_type {
 	ARM_SETEND_INVALID = 0,	///< Uninitialized.
 	ARM_SETEND_BE,	///< BE operand.
 	ARM_SETEND_LE, ///< LE operand
 } arm_setend_type;
+
+inline static const char* ARMSetEndTypeToString(arm_setend_type se)
+{
+	switch (se)
+	{
+	case ARM_SETEND_INVALID: return "ARM_SETEND_INVALID";
+	case ARM_SETEND_BE: return "ARM_SETEND_BE";
+	case ARM_SETEND_LE: return "ARM_SETEND_LE";
+	default: return "Unknown";
+	}
+}
 
 typedef enum arm_cpsmode_type {
 	ARM_CPSMODE_INVALID = 0,
@@ -869,6 +917,8 @@ typedef struct cs_arm_op {
 
 	/// Neon lane index for NEON instructions (or -1 if irrelevant)
 	int8_t neon_lane;
+
+	cs_operand_encoding encoding; ///< The encoding of the operand.
 } cs_arm_op;
 
 #define MAX_ARM_OPS 36

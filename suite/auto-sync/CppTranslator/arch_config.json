@@ -28,30 +28,30 @@
   "ARM": {
     "files_to_translate": [
       {
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
+        "in": "../vendor/llvm_root/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
         "out": "ARMDisassembler.c"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp",
+        "in": "../vendor/llvm_root/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp",
         "out": "ARMInstPrinter.c"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.h",
+        "in": "../vendor/llvm_root/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.h",
         "out": "ARMInstPrinter.h"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMAddressingModes.h",
+        "in": "../vendor/llvm_root/lib/Target/ARM/MCTargetDesc/ARMAddressingModes.h",
         "out": "ARMAddressingModes.h"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/Utils/ARMBaseInfo.cpp",
+        "in": "../vendor/llvm_root/lib/Target/ARM/Utils/ARMBaseInfo.cpp",
         "out": "ARMBaseInfo.c"
       }
     ],
     "files_for_template_search": [
       "../build/llvm_inc/ARMGenDisassemblerTables.inc",
       "../build/llvm_inc/ARMGenAsmWriter.inc",
-      "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
-      "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp"
+      "../vendor/llvm_root/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
+      "../vendor/llvm_root/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp"
     ],
     "manually_edited_files": [
-      "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMBaseInfo.h"
+      "../vendor/llvm_root/lib/Target/ARM/Disassembler/ARMBaseInfo.h"
     ]
   }
 }
