@@ -9,6 +9,10 @@
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
+typedef enum {
+#include "AArch64GenCSOpGroup.inc"
+} aarch64_op_group;
+
 // return name of regiser in friendly string
 const char *AArch64_reg_name(csh handle, unsigned int reg);
 
@@ -40,5 +44,19 @@ const uint8_t *AArch64_get_op_access(cs_struct *h, unsigned int id);
 void AArch64_reg_access(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count);
+
+void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
+					   va_list args);
+
+static inline void add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
+								 ...)
+{
+	if (!MI->flat_insn->detail)
+		return;
+	va_list args;
+	va_start(args, op_group);
+	AArch64_add_cs_detail(MI, op_group, args);
+	va_end(args);
+}
 
 #endif

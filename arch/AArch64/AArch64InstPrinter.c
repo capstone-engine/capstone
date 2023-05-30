@@ -1,9 +1,22 @@
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
+/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/* Automatically translated source file from LLVM. */
+
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
+
+/* Only small edits allowed. */
+/* For multiple similar edits, please create a Patch for the translator. */
+
+/* Capstone's C++ file translator: */
+/* https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
+
 //==-- AArch64InstPrinter.cpp - Convert AArch64 MCInst to assembly syntax --==//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -11,198 +24,123 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
-
-#ifdef CAPSTONE_HAS_ARM64
-
 #include <capstone/platform.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "AArch64InstPrinter.h"
-#include "AArch64Disassembler.h"
-#include "AArch64BaseInfo.h"
-#include "../../utils.h"
 #include "../../MCInst.h"
-#include "../../SStream.h"
+#include "../../MCInstPrinter.h"
 #include "../../MCRegisterInfo.h"
-#include "../../MathExtras.h"
-
-#include "AArch64Mapping.h"
+#include "../../SStream.h"
+#include "../../utils.h"
 #include "AArch64AddressingModes.h"
+#include "AArch64BaseInfo.h"
+#include "AArch64DisassemblerExtension.h"
+#include "AArch64InstPrinter.h"
+#include "AArch64Linkage.h"
+#include "AArch64Mapping.h"
 
-#define GET_REGINFO_ENUM
-#include "AArch64GenRegisterInfo.inc"
+#define GET_BANKEDREG_IMPL
+#include "AArch64GenSystemOperands.inc"
 
-#define GET_INSTRINFO_ENUM
-#include "AArch64GenInstrInfo.inc"
+#define CONCAT(a, b) CONCAT_(a, b)
+#define CONCAT_(a, b) a##_##b
 
-#include "AArch64GenSubtargetInfo.inc"
+#define DEBUG_TYPE "asm-printer"
 
+#define GET_INSTRUCTION_NAME
+#define PRINT_ALIAS_INSTR
+#include "AArch64GenAsmWriter.inc"
 
-static const char *getRegisterName(unsigned RegNo, unsigned AltIdx);
-static void printOperand(MCInst *MI, unsigned OpNum, SStream *O);
-static bool printSysAlias(MCInst *MI, SStream *O);
-static char *printAliasInstr(MCInst *MI, SStream *OS, MCRegisterInfo *MRI);
-static void printInstruction(MCInst *MI, SStream *O);
-static void printShifter(MCInst *MI, unsigned OpNum, SStream *O);
-static void printCustomAliasOperand(MCInst *MI, uint64_t Address, unsigned OpIdx,
-		unsigned PrintMethodIdx, SStream *OS);
+#define GET_INSTRUCTION_NAME
+#define PRINT_ALIAS_INSTR
 
-
-static cs_ac_type get_op_access(cs_struct *h, unsigned int id, unsigned int index)
+void printRegName(SStream *OS, unsigned Reg)
 {
-#ifndef CAPSTONE_DIET
-	const uint8_t *arr = AArch64_get_op_access(h, id);
-
-	if (arr[index] == CS_AC_IGNORE)
-		return 0;
-
-	return arr[index];
-#else
-	return 0;
-#endif
+	SStream_concat(OS, "%s%s", markup("<reg:"), getRegisterName(Reg, AArch64_NoRegAltName));
+	SStream_concat0(OS, markup(">"));
 }
 
-static void op_addImm(MCInst *MI, int v)
+void printRegNameAlt(SStream *OS, unsigned Reg, unsigned AltIdx)
 {
-	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = v;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+	SStream_concat(OS, "%s%s", markup("<reg:"), getRegisterName(Reg, AltIdx));
+	SStream_concat0(OS, markup(">"));
 }
 
-static void set_sme_index(MCInst *MI, bool status)
-{
-	// Doing SME Index operand
-	MI->csh->doing_SME_Index = status;
+const char *getRegName(unsigned Reg) { return getRegisterName(Reg, AArch64_NoRegAltName); }
 
-	if (MI->csh->detail_opt != CS_OPT_ON)
-		return;
-
-	if (status) {
-		unsigned prevOpNum = MI->flat_insn->detail->arm64.op_count - 1; 
-		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, prevOpNum));
-		// Replace previous SME register operand with an OP_SME_INDEX operand
-		MI->flat_insn->detail->arm64.operands[prevOpNum].type = ARM64_OP_SME_INDEX;
-		MI->flat_insn->detail->arm64.operands[prevOpNum].sme_index.reg = Reg;
-		MI->flat_insn->detail->arm64.operands[prevOpNum].sme_index.base = ARM64_REG_INVALID;
-		MI->flat_insn->detail->arm64.operands[prevOpNum].sme_index.disp = 0;
-	}
-}
-
-static void set_mem_access(MCInst *MI, bool status)
-{
-	// If status == false, check if this is meant for SME_index
-	if(!status && MI->csh->doing_SME_Index) {
-		MI->csh->doing_SME_Index = status;
-		return;
-	}
-
-	// Doing Memory Operation
-	MI->csh->doing_mem = status;
-
-
-	if (MI->csh->detail_opt != CS_OPT_ON)
-		return;
-
-	if (status) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_MEM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base = ARM64_REG_INVALID;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index = ARM64_REG_INVALID;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = 0;
-	} else {
-		// done, create the next operand slot
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
+void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 {
 	// Check for special encodings and print the canonical alias instead.
+
 	unsigned Opcode = MCInst_getOpcode(MI);
-	int LSB, Width;
-	char *mnem;
 
-	// printf(">>> opcode = %u\n", MCInst_getOpcode(MI));
+	if (Opcode == AArch64_SYSxt)
+		if (printSysAlias(MI, O)) {
+			;
+			return;
+		}
 
-	if (Opcode == AArch64_SYSxt && printSysAlias(MI, O))
-		return;
+	if (Opcode == AArch64_SYSPxt || Opcode == AArch64_SYSPxt_XZR)
+		if (printSyspAlias(MI, O)) {
+			;
+			return;
+		}
+
+	// RPRFM overlaps PRFM (reg), so try to print it as RPRFM here.
+	if ((Opcode == AArch64_PRFMroX) || (Opcode == AArch64_PRFMroW)) {
+		if (printRangePrefetchAlias(MI, O, Annot))
+			return;
+	}
 
 	// SBFM/UBFM should print to a nicer aliased form if possible.
 	if (Opcode == AArch64_SBFMXri || Opcode == AArch64_SBFMWri ||
-			Opcode == AArch64_UBFMXri || Opcode == AArch64_UBFMWri) {
-		bool IsSigned = (Opcode == AArch64_SBFMXri || Opcode == AArch64_SBFMWri);
+		Opcode == AArch64_UBFMXri || Opcode == AArch64_UBFMWri) {
+		MCOperand *Op0 = MCInst_getOperand(MI, (0));
+		MCOperand *Op1 = MCInst_getOperand(MI, (1));
+		MCOperand *Op2 = MCInst_getOperand(MI, (2));
+		MCOperand *Op3 = MCInst_getOperand(MI, (3));
+
+		bool IsSigned =
+			(Opcode == AArch64_SBFMXri || Opcode == AArch64_SBFMWri);
 		bool Is64Bit = (Opcode == AArch64_SBFMXri || Opcode == AArch64_UBFMXri);
-
-		MCOperand *Op0 = MCInst_getOperand(MI, 0);
-		MCOperand *Op1 = MCInst_getOperand(MI, 1);
-		MCOperand *Op2 = MCInst_getOperand(MI, 2);
-		MCOperand *Op3 = MCInst_getOperand(MI, 3);
-
-		if (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) == 0 && MCOperand_isImm(Op3)) {
+		if (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) == 0 &&
+			MCOperand_isImm(Op3)) {
 			const char *AsmMnemonic = NULL;
 
 			switch (MCOperand_getImm(Op3)) {
-				default:
-					break;
-
-				case 7:
-					if (IsSigned)
-						AsmMnemonic = "sxtb";
-					else if (!Is64Bit)
-						AsmMnemonic = "uxtb";
-					break;
-
-				case 15:
-					if (IsSigned)
-						AsmMnemonic = "sxth";
-					else if (!Is64Bit)
-						AsmMnemonic = "uxth";
-					break;
-
-				case 31:
-					// *xtw is only valid for signed 64-bit operations.
-					if (Is64Bit && IsSigned)
-						AsmMnemonic = "sxtw";
-					break;
+			default:
+				break;
+			case 7:
+				if (IsSigned)
+					AsmMnemonic = "sxtb";
+				else if (!Is64Bit)
+					AsmMnemonic = "uxtb";
+				break;
+			case 15:
+				if (IsSigned)
+					AsmMnemonic = "sxth";
+				else if (!Is64Bit)
+					AsmMnemonic = "uxth";
+				break;
+			case 31:
+				// *xtw is only valid for signed 64-bit operations.
+				if (Is64Bit && IsSigned)
+					AsmMnemonic = "sxtw";
+				break;
 			}
 
 			if (AsmMnemonic) {
-				SStream_concat(O, "%s\t%s, %s", AsmMnemonic,
-						getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
-						getRegisterName(getWRegFromXReg(MCOperand_getReg(Op1)), AArch64_NoRegAltName));
+				SStream_concat1(O, '\t');
+				SStream_concat(O, "%s", AsmMnemonic);
+				SStream_concat0(O, "\t");
 
-				if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-					uint8_t access;
-					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-					MI->ac_idx++;
-#endif
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
-					MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-					MI->ac_idx++;
-#endif
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = getWRegFromXReg(MCOperand_getReg(Op1));
-					MI->flat_insn->detail->arm64.op_count++;
-				}
-
-				MCInst_setOpcodePub(MI, AArch64_map_insn(AsmMnemonic));
-
+				printRegName(O, MCOperand_getReg(Op0));
+				SStream_concat0(O, ", ");
+				printRegName(O, getWRegFromXReg(MCOperand_getReg(Op1)));
+				;
 				return;
 			}
 		}
@@ -213,14 +151,14 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 		if (MCOperand_isImm(Op2) && MCOperand_isImm(Op3)) {
 			const char *AsmMnemonic = NULL;
 			int shift = 0;
-			int immr = (int)MCOperand_getImm(Op2);
-			int imms = (int)MCOperand_getImm(Op3);
-
-			if (Opcode == AArch64_UBFMWri && imms != 0x1F && ((imms + 1) == immr)) {
+			int64_t immr = MCOperand_getImm(Op2);
+			int64_t imms = MCOperand_getImm(Op3);
+			if (Opcode == AArch64_UBFMWri && imms != 0x1F &&
+				((imms + 1) == immr)) {
 				AsmMnemonic = "lsl";
 				shift = 31 - imms;
 			} else if (Opcode == AArch64_UBFMXri && imms != 0x3f &&
-					((imms + 1 == immr))) {
+					   ((imms + 1 == immr))) {
 				AsmMnemonic = "lsl";
 				shift = 63 - imms;
 			} else if (Opcode == AArch64_UBFMWri && imms == 0x1f) {
@@ -236,1161 +174,1179 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 				AsmMnemonic = "asr";
 				shift = immr;
 			}
-
 			if (AsmMnemonic) {
-				SStream_concat(O, "%s\t%s, %s, ", AsmMnemonic,
-						getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
-						getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
+				SStream_concat1(O, '\t');
+				SStream_concat(O, "%s", AsmMnemonic);
+				SStream_concat0(O, "\t");
 
-				printInt32Bang(O, shift);
-
-				MCInst_setOpcodePub(MI, AArch64_map_insn(AsmMnemonic));
-
-				if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-					uint8_t access;
-					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-					MI->ac_idx++;
-#endif
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
-					MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-					MI->ac_idx++;
-#endif
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
-					MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-					access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-					MI->ac_idx++;
-#endif
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = shift;
-					MI->flat_insn->detail->arm64.op_count++;
-				}
-
+				printRegName(O, MCOperand_getReg(Op0));
+				SStream_concat0(O, ", ");
+				printRegName(O, MCOperand_getReg(Op1));
+				SStream_concat(O, "%s%s%s%s", ", ", markup("<imm:"), "#",
+							   shift);
+				SStream_concat0(O, markup(">"));
+				;
 				return;
 			}
 		}
 
 		// SBFIZ/UBFIZ aliases
 		if (MCOperand_getImm(Op2) > MCOperand_getImm(Op3)) {
-			SStream_concat(O, "%s\t%s, %s, ", (IsSigned ? "sbfiz" : "ubfiz"),
-					getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
-					getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
+			SStream_concat1(O, '\t');
+			SStream_concat(O, "%s", (IsSigned ? "sbfiz" : "ubfiz"));
+			SStream_concat0(O, "\t");
 
-			printInt32Bang(O, (int)((Is64Bit ? 64 : 32) - MCOperand_getImm(Op2)));
-
+			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat0(O, ", ");
-
-			printInt32Bang(O, (int)MCOperand_getImm(Op3) + 1);
-
-			MCInst_setOpcodePub(MI, AArch64_map_insn(IsSigned ? "sbfiz" : "ubfiz"));
-
-			if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
-				MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
-				MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (Is64Bit ? 64 : 32) - (int)MCOperand_getImm(Op2);
-				MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op3) + 1;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-
+			printRegName(O, MCOperand_getReg(Op1));
+			SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
+						   (Is64Bit ? 64 : 32) - MCOperand_getImm(Op2),
+						   markup(">"), ", ", markup("<imm:"), "#",
+						   MCOperand_getImm(Op3) + 1);
+			SStream_concat0(O, markup(">"));
+			;
 			return;
 		}
 
 		// Otherwise SBFX/UBFX is the preferred form
-		SStream_concat(O, "%s\t%s, %s, ", (IsSigned ? "sbfx" : "ubfx"),
-				getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
-				getRegisterName(MCOperand_getReg(Op1), AArch64_NoRegAltName));
+		SStream_concat1(O, '\t');
+		SStream_concat(O, "%s", (IsSigned ? "sbfx" : "ubfx"));
+		SStream_concat0(O, "\t");
 
-		printInt32Bang(O, (int)MCOperand_getImm(Op2));
+		printRegName(O, MCOperand_getReg(Op0));
 		SStream_concat0(O, ", ");
-		printInt32Bang(O, (int)MCOperand_getImm(Op3) - (int)MCOperand_getImm(Op2) + 1);
-
-		MCInst_setOpcodePub(MI, AArch64_map_insn(IsSigned ? "sbfx" : "ubfx"));
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
-			MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op1);
-			MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op2);
-			MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
+		printRegName(O, MCOperand_getReg(Op1));
+		SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
+					   MCOperand_getImm(Op2), markup(">"), ", ",
+					   markup("<imm:"), "#",
+					   MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1);
+		SStream_concat0(O, markup(">"));
+		;
 		return;
 	}
 
 	if (Opcode == AArch64_BFMXri || Opcode == AArch64_BFMWri) {
-		MCOperand *Op0 = MCInst_getOperand(MI, 0); // Op1 == Op0
-		MCOperand *Op2 = MCInst_getOperand(MI, 2);
-		int ImmR = (int)MCOperand_getImm(MCInst_getOperand(MI, 3));
-		int ImmS = (int)MCOperand_getImm(MCInst_getOperand(MI, 4));
+		MCOperand *Op0 = MCInst_getOperand(MI, (0)); // Op1 == Op0
+		MCOperand *Op2 = MCInst_getOperand(MI, (2));
+		int ImmR = MCOperand_getImm(MCInst_getOperand(MI, (3)));
+		int ImmS = MCOperand_getImm(MCInst_getOperand(MI, (4)));
 
-		if ((MCOperand_getReg(Op2) == AArch64_WZR || MCOperand_getReg(Op2) == AArch64_XZR) &&
-				(ImmR == 0 || ImmS < ImmR)) {
-			// BFC takes precedence over its entire range, sligtly differently to BFI.
+		if ((MCOperand_getReg(Op2) == AArch64_WZR ||
+			 MCOperand_getReg(Op2) == AArch64_XZR) &&
+			(ImmR == 0 || ImmS < ImmR) &&
+			AArch64_getFeatureBits(MI->csh->mode, AArch64_HasV8_2aOps)) {
+			// BFC takes precedence over its entire range, sligtly differently
+			// to BFI.
 			int BitWidth = Opcode == AArch64_BFMXri ? 64 : 32;
 			int LSB = (BitWidth - ImmR) % BitWidth;
 			int Width = ImmS + 1;
 
-			SStream_concat(O, "bfc\t%s, ",
-					getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName));
-
-			printInt32Bang(O, LSB);
-			SStream_concat0(O, ", ");
-			printInt32Bang(O, Width);
-			MCInst_setOpcodePub(MI, AArch64_map_insn("bfc"));
-
-			if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
-				MI->flat_insn->detail->arm64.op_count++;
-
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
-				MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-
+			SStream_concat0(O, "\tbfc\t");
+			printRegName(O, MCOperand_getReg(Op0));
+			SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
+						   LSB, markup(">"), ", ", markup("<imm:"), "#", Width);
+			SStream_concat0(O, markup(">"));
+			;
 			return;
 		} else if (ImmS < ImmR) {
 			// BFI alias
 			int BitWidth = Opcode == AArch64_BFMXri ? 64 : 32;
-			LSB = (BitWidth - ImmR) % BitWidth;
-			Width = ImmS + 1;
+			int LSB = (BitWidth - ImmR) % BitWidth;
+			int Width = ImmS + 1;
 
-			SStream_concat(O, "bfi\t%s, %s, ",
-					getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
-					getRegisterName(MCOperand_getReg(Op2), AArch64_NoRegAltName));
-
-			printInt32Bang(O, LSB);
+			SStream_concat0(O, "\tbfi\t");
+			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat0(O, ", ");
-			printInt32Bang(O, Width);
-
-			MCInst_setOpcodePub(MI, AArch64_map_insn("bfi"));
-
-			if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
-				MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
-				MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
-				MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-
+			printRegName(O, MCOperand_getReg(Op2));
+			SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
+						   LSB, markup(">"), ", ", markup("<imm:"), "#", Width);
+			SStream_concat0(O, markup(">"));
+			;
 			return;
 		}
 
-		LSB = ImmR;
-		Width = ImmS - ImmR + 1;
+		int LSB = ImmR;
+		int Width = ImmS - ImmR + 1;
 		// Otherwise BFXIL the preferred form
-		SStream_concat(O, "bfxil\t%s, %s, ",
-				getRegisterName(MCOperand_getReg(Op0), AArch64_NoRegAltName),
-				getRegisterName(MCOperand_getReg(Op2), AArch64_NoRegAltName));
-
-		printInt32Bang(O, LSB);
+		SStream_concat0(O, "\tbfxil\t");
+		printRegName(O, MCOperand_getReg(Op0));
 		SStream_concat0(O, ", ");
-		printInt32Bang(O, Width);
-
-		MCInst_setOpcodePub(MI, AArch64_map_insn("bfxil"));
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op0);
-			MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(Op2);
-			MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = LSB;
-			MI->flat_insn->detail->arm64.op_count++;
-#ifndef CAPSTONE_DIET
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Width;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
+		printRegName(O, MCOperand_getReg(Op2));
+		SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#", LSB,
+					   markup(">"), ", ", markup("<imm:"), "#", Width);
+		SStream_concat0(O, markup(">"));
+		;
 		return;
 	}
 
-	// MOVZ, MOVN and "ORR wzr, #imm" instructions are aliases for MOV, but their
-	// domains overlap so they need to be prioritized. The chain is "MOVZ lsl #0 >
-	// MOVZ lsl #N > MOVN lsl #0 > MOVN lsl #N > ORR". The highest instruction
-	// that can represent the move is the MOV alias, and the rest get printed
-	// normally.
+	// Symbolic operands for MOVZ, MOVN and MOVK already imply a shift
+	// (e.g. :gottprel_g1: is always going to be "lsl #16") so it should not be
+	// printed.
+	if ((Opcode == AArch64_MOVZXi || Opcode == AArch64_MOVZWi ||
+		 Opcode == AArch64_MOVNXi || Opcode == AArch64_MOVNWi) &&
+		MCOperand_isExpr(MCInst_getOperand(MI, (1)))) {
+		assert(0 && "Expressions are not supported.");
+	}
+
+	if ((Opcode == AArch64_MOVKXi || Opcode == AArch64_MOVKWi) &&
+		MCOperand_isExpr(MCInst_getOperand(MI, (2)))) {
+		assert(0 && "Expressions are not supported.");
+	}
+
+	// MOVZ, MOVN and "ORR wzr, #imm" instructions are aliases for MOV, but
+	// their domains overlap so they need to be prioritized. The chain is "MOVZ
+	// lsl #0 > MOVZ lsl #N > MOVN lsl #0 > MOVN lsl #N > ORR". The highest
+	// instruction that can represent the move is the MOV alias, and the rest
+	// get printed normally.
 	if ((Opcode == AArch64_MOVZXi || Opcode == AArch64_MOVZWi) &&
-			MCOperand_isImm(MCInst_getOperand(MI, 1)) && MCOperand_isImm(MCInst_getOperand(MI, 2))) {
+		MCOperand_isImm(MCInst_getOperand(MI, (1))) &&
+		MCOperand_isImm(MCInst_getOperand(MI, (2)))) {
 		int RegWidth = Opcode == AArch64_MOVZXi ? 64 : 32;
-		int Shift = MCOperand_getImm(MCInst_getOperand(MI, 2));
-		uint64_t Value = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, 1)) << Shift;
+		int Shift = MCOperand_getImm(MCInst_getOperand(MI, (2)));
+		uint64_t Value = (uint64_t)MCOperand_getImm(MCInst_getOperand(MI, (1)))
+						 << Shift;
 
-		if (isMOVZMovAlias(Value, Shift,
-					Opcode == AArch64_MOVZXi ? 64 : 32)) {
-			SStream_concat(O, "mov\t%s, ", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, 0)), AArch64_NoRegAltName));
-
+		if (AArch64_AM_isMOVZMovAlias(Value, Shift,
+									  Opcode == AArch64_MOVZXi ? 64 : 32)) {
+			SStream_concat0(O, "\tmov\t");
+			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
+			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
-
-			if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
-				MI->flat_insn->detail->arm64.op_count++;
-
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = SignExtend64(Value, RegWidth);
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-
-			MCInst_setOpcodePub(MI, AArch64_map_insn("mov"));
-
+			SStream_concat0(O, markup(">"));
 			return;
 		}
 	}
 
 	if ((Opcode == AArch64_MOVNXi || Opcode == AArch64_MOVNWi) &&
-			MCOperand_isImm(MCInst_getOperand(MI, 1)) && MCOperand_isImm(MCInst_getOperand(MI, 2))) {
+		MCOperand_isImm(MCInst_getOperand(MI, (1))) &&
+		MCOperand_isImm(MCInst_getOperand(MI, (2)))) {
 		int RegWidth = Opcode == AArch64_MOVNXi ? 64 : 32;
-		int Shift = MCOperand_getImm(MCInst_getOperand(MI, 2));
-		uint64_t Value = ~((uint64_t)MCOperand_getImm(MCInst_getOperand(MI, 1)) << Shift);
-
+		int Shift = MCOperand_getImm(MCInst_getOperand(MI, (2)));
+		uint64_t Value =
+			~((uint64_t)MCOperand_getImm(MCInst_getOperand(MI, (1))) << Shift);
 		if (RegWidth == 32)
 			Value = Value & 0xffffffff;
 
 		if (AArch64_AM_isMOVNMovAlias(Value, Shift, RegWidth)) {
-			SStream_concat(O, "mov\t%s, ", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, 0)), AArch64_NoRegAltName));
-
+			SStream_concat0(O, "\tmov\t");
+			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
+			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
-
-			if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
-				MI->flat_insn->detail->arm64.op_count++;
-
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = SignExtend64(Value, RegWidth);
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-
-			MCInst_setOpcodePub(MI, AArch64_map_insn("mov"));
-
+			SStream_concat0(O, markup(">"));
 			return;
 		}
 	}
 
 	if ((Opcode == AArch64_ORRXri || Opcode == AArch64_ORRWri) &&
-			(MCOperand_getReg(MCInst_getOperand(MI, 1)) == AArch64_XZR ||
-			 MCOperand_getReg(MCInst_getOperand(MI, 1)) == AArch64_WZR) &&
-			MCOperand_isImm(MCInst_getOperand(MI, 2))) {
+		(MCOperand_getReg(MCInst_getOperand(MI, (1))) == AArch64_XZR ||
+		 MCOperand_getReg(MCInst_getOperand(MI, (1))) == AArch64_WZR) &&
+		MCOperand_isImm(MCInst_getOperand(MI, (2)))) {
 		int RegWidth = Opcode == AArch64_ORRXri ? 64 : 32;
 		uint64_t Value = AArch64_AM_decodeLogicalImmediate(
-				MCOperand_getImm(MCInst_getOperand(MI, 2)), RegWidth);
-		SStream_concat(O, "mov\t%s, ", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, 0)), AArch64_NoRegAltName));
-
-		printInt64Bang(O, SignExtend64(Value, RegWidth));
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 0));
-			MI->flat_insn->detail->arm64.op_count++;
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = SignExtend64(Value, RegWidth);
-			MI->flat_insn->detail->arm64.op_count++;
+			MCOperand_getImm(MCInst_getOperand(MI, (2))), RegWidth);
+		if (!AArch64_AM_isAnyMOVWMovAlias(Value, RegWidth)) {
+			SStream_concat0(O, "\tmov\t");
+			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
+			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+			printInt64Bang(O, SignExtend64(Value, RegWidth));
+			SStream_concat0(O, markup(">"));
+			return;
 		}
+	}
 
-		MCInst_setOpcodePub(MI, AArch64_map_insn("mov"));
-
+	if (Opcode == AArch64_SPACE) {
+		SStream_concat1(O, '\t');
+		SStream_concat(O, "%s", " SPACE ");
+		printInt64(O, MCOperand_getImm(MCInst_getOperand(MI, (1))));
+		;
 		return;
 	}
 
 	// Instruction TSB is specified as a one operand instruction, but 'csync' is
 	// not encoded, so for printing it is treated as a special case here:
 	if (Opcode == AArch64_TSB) {
-		SStream_concat0(O, "tsb\tcsync");
-		MCInst_setOpcodePub(MI, AArch64_map_insn("tsb"));
+		SStream_concat0(O, "\ttsb\tcsync");
 		return;
 	}
 
-	MI->MRI = Info;
+	if (!printAliasInstr(MI, Address, O))
+		printInstruction(MI, Address, O);
 
-	mnem = printAliasInstr(MI, O, (MCRegisterInfo *)Info);
-	if (mnem) {
-		MCInst_setOpcodePub(MI, AArch64_map_insn(mnem));
-		cs_mem_free(mnem);
+	;
 
-		switch(MCInst_getOpcode(MI)) {
-			default: break;
-			case AArch64_LD1i8_POST:
-				arm64_op_addImm(MI, 1);
-				break;
-			case AArch64_LD1i16_POST:
-				arm64_op_addImm(MI, 2);
-				break;
-			case AArch64_LD1i32_POST:
-				arm64_op_addImm(MI, 4);
-				break;
-			case AArch64_LD1Onev1d_POST:
-			case AArch64_LD1Onev2s_POST:
-			case AArch64_LD1Onev4h_POST:
-			case AArch64_LD1Onev8b_POST:
-			case AArch64_LD1i64_POST:
-				arm64_op_addImm(MI, 8);
-				break;
-			case AArch64_LD1Onev16b_POST:
-			case AArch64_LD1Onev2d_POST:
-			case AArch64_LD1Onev4s_POST:
-			case AArch64_LD1Onev8h_POST:
-			case AArch64_LD1Twov1d_POST:
-			case AArch64_LD1Twov2s_POST:
-			case AArch64_LD1Twov4h_POST:
-			case AArch64_LD1Twov8b_POST:
-				arm64_op_addImm(MI, 16);
-				break;
-			case AArch64_LD1Threev1d_POST:
-			case AArch64_LD1Threev2s_POST:
-			case AArch64_LD1Threev4h_POST:
-			case AArch64_LD1Threev8b_POST:
-				arm64_op_addImm(MI, 24);
-				break;
-			case AArch64_LD1Fourv1d_POST:
-			case AArch64_LD1Fourv2s_POST:
-			case AArch64_LD1Fourv4h_POST:
-			case AArch64_LD1Fourv8b_POST:
-			case AArch64_LD1Twov16b_POST:
-			case AArch64_LD1Twov2d_POST:
-			case AArch64_LD1Twov4s_POST:
-			case AArch64_LD1Twov8h_POST:
-				arm64_op_addImm(MI, 32);
-				break;
-			case AArch64_LD1Threev16b_POST:
-			case AArch64_LD1Threev2d_POST:
-			case AArch64_LD1Threev4s_POST:
-			case AArch64_LD1Threev8h_POST:
-				 arm64_op_addImm(MI, 48);
-				 break;
-			case AArch64_LD1Fourv16b_POST:
-			case AArch64_LD1Fourv2d_POST:
-			case AArch64_LD1Fourv4s_POST:
-			case AArch64_LD1Fourv8h_POST:
-				arm64_op_addImm(MI, 64);
-				break;
-			case AArch64_UMOVvi64:
-				arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1D);
-				break;
-			case AArch64_UMOVvi32:
-				arm64_op_addVectorArrSpecifier(MI, ARM64_VAS_1S);
-				break;
-			case AArch64_INSvi8gpr:
-			case AArch64_DUP_ZI_B:
-			case AArch64_CPY_ZPmI_B:
-			case AArch64_CPY_ZPzI_B:
-			case AArch64_CPY_ZPmV_B:
-			case AArch64_CPY_ZPmR_B:
-			case AArch64_DUP_ZR_B:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
-				}
-				break;
-			case AArch64_INSvi16gpr:
-			case AArch64_DUP_ZI_H:
-			case AArch64_CPY_ZPmI_H:
-			case AArch64_CPY_ZPzI_H:
-			case AArch64_CPY_ZPmV_H:
-			case AArch64_CPY_ZPmR_H:
-			case AArch64_DUP_ZR_H:
-			case AArch64_FCPY_ZPmI_H:
-			case AArch64_FDUP_ZI_H:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
-				}
-				break;
-			case AArch64_INSvi32gpr:
-			case AArch64_DUP_ZI_S:
-			case AArch64_CPY_ZPmI_S:
-			case AArch64_CPY_ZPzI_S:
-			case AArch64_CPY_ZPmV_S:
-			case AArch64_CPY_ZPmR_S:
-			case AArch64_DUP_ZR_S:
-			case AArch64_FCPY_ZPmI_S:
-			case AArch64_FDUP_ZI_S:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
-				}
-				break;
-			case AArch64_INSvi64gpr:
-			case AArch64_DUP_ZI_D:
-			case AArch64_CPY_ZPmI_D:
-			case AArch64_CPY_ZPzI_D:
-			case AArch64_CPY_ZPmV_D:
-			case AArch64_CPY_ZPmR_D:
-			case AArch64_DUP_ZR_D:
-			case AArch64_FCPY_ZPmI_D:
-			case AArch64_FDUP_ZI_D:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
-				}
-				break;
-			case AArch64_INSvi8lane:
-			case AArch64_ORR_PPzPP:
-			case AArch64_ORRS_PPzPP:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
-					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1B;
-				}
-				break;
-			case AArch64_INSvi16lane:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
-					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1H;
-				}
-				 break;
-			case AArch64_INSvi32lane:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
-					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1S;
-				}
-				break;
-			case AArch64_INSvi64lane:
-			case AArch64_ORR_ZZZ:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
-					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1D;
-				}
-				break;
-			case AArch64_ORRv16i8:
-			case AArch64_NOTv16i8:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_16B;
-					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_16B;
-				}
-				break;
-			case AArch64_ORRv8i8:
-			case AArch64_NOTv8i8:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_8B;
-					MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_8B;
-				}
-				break;
-			case AArch64_AND_PPzPP:
-			case AArch64_ANDS_PPzPP:
-			case AArch64_EOR_PPzPP:
-			case AArch64_EORS_PPzPP:
-			case AArch64_SEL_PPPP:
-			case AArch64_SEL_ZPZZ_B:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
-					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1B;
-				}
-				break;
-			case AArch64_SEL_ZPZZ_D:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
-					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1D;
-				}
-				break;
-			case AArch64_SEL_ZPZZ_H:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
-					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1H;
-				}
-				break;
-			case AArch64_SEL_ZPZZ_S:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
-					MI->flat_insn->detail->arm64.operands[2].vas = ARM64_VAS_1S;
-				}
-				break;
-			case AArch64_DUP_ZZI_B:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1B;
-					if (MI->flat_insn->detail->arm64.op_count == 1) {
-						arm64_op_addReg(MI, ARM64_REG_B0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
-					} else {
-						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1B;
-					}
-				}
-				break;
-			case AArch64_DUP_ZZI_D:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1D;
-					if (MI->flat_insn->detail->arm64.op_count == 1) {
-						arm64_op_addReg(MI, ARM64_REG_D0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
-					} else {
-						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1D;
-					}
-				}
-				break;
-			case AArch64_DUP_ZZI_H:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1H;
-					if (MI->flat_insn->detail->arm64.op_count == 1) {
-						arm64_op_addReg(MI, ARM64_REG_H0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
-					} else {
-						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1H;
-					}
-				}
-				break;
-			case AArch64_DUP_ZZI_Q:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1Q;
-					if (MI->flat_insn->detail->arm64.op_count == 1) {
-						arm64_op_addReg(MI, ARM64_REG_Q0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
-					} else {
-						MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1Q;
-					}
-				 }
-				 break;
-			case AArch64_DUP_ZZI_S:
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[0].vas = ARM64_VAS_1S;
-					if (MI->flat_insn->detail->arm64.op_count == 1) {
-				 		arm64_op_addReg(MI, ARM64_REG_S0 + MCOperand_getReg(MCInst_getOperand(MI, 1)) - ARM64_REG_Z0);
-					} else {
-						 MI->flat_insn->detail->arm64.operands[1].vas = ARM64_VAS_1S;
-					}
-				}
-				break;
-			// Hacky detail filling of SMSTART and SMSTOP alias'
-			case AArch64_MSRpstatesvcrImm1:{
-				if(MI->csh->detail_opt){
-					MI->flat_insn->detail->arm64.op_count = 2;
-#ifndef CAPSTONE_DIET
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-					MI->ac_idx++;
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-					MI->ac_idx++;
-#endif
-					MI->flat_insn->detail->arm64.operands[0].type = ARM64_OP_SVCR;
-					MI->flat_insn->detail->arm64.operands[0].sys = (unsigned)ARM64_SYSREG_SVCR;
-					MI->flat_insn->detail->arm64.operands[0].svcr = lookupSVCRByEncoding(MCOperand_getImm(MCInst_getOperand(MI, 0)))->Encoding;
-					MI->flat_insn->detail->arm64.operands[1].type = ARM64_OP_IMM;
-					MI->flat_insn->detail->arm64.operands[1].imm = MCOperand_getImm(MCInst_getOperand(MI, 1));
-				}
-				break;
-			}
-		}
-	} else {
-		printInstruction(MI, O);
+	if (atomicBarrierDroppedOnZero(Opcode) &&
+		(MCOperand_getReg(MCInst_getOperand(MI, (0))) == AArch64_XZR ||
+		 MCOperand_getReg(MCInst_getOperand(MI, (0))) == AArch64_WZR)) {
+		;
 	}
 }
 
-static bool printSysAlias(MCInst *MI, SStream *O)
+static bool isTblTbxInstruction(unsigned Opcode, const char **Layout, bool *IsTbx)
 {
-	// unsigned Opcode = MCInst_getOpcode(MI);
-	//assert(Opcode == AArch64_SYSxt && "Invalid opcode for SYS alias!");
+	switch (Opcode) {
+	case AArch64_TBXv8i8One:
+	case AArch64_TBXv8i8Two:
+	case AArch64_TBXv8i8Three:
+	case AArch64_TBXv8i8Four:
+		*IsTbx = true;
+		*Layout = ".8b";
+		return true;
+	case AArch64_TBLv8i8One:
+	case AArch64_TBLv8i8Two:
+	case AArch64_TBLv8i8Three:
+	case AArch64_TBLv8i8Four:
+		*IsTbx = false;
+		*Layout = ".8b";
+		return true;
+	case AArch64_TBXv16i8One:
+	case AArch64_TBXv16i8Two:
+	case AArch64_TBXv16i8Three:
+	case AArch64_TBXv16i8Four:
+		*IsTbx = true;
+		*Layout = ".16b";
+		return true;
+	case AArch64_TBLv16i8One:
+	case AArch64_TBLv16i8Two:
+	case AArch64_TBLv16i8Three:
+	case AArch64_TBLv16i8Four:
+		*IsTbx = false;
+		*Layout = ".16b";
+		return true;
+	default:
+		return false;
+	}
+}
 
-	const char *Ins;
-	uint16_t Encoding;
-	bool NeedsReg;
-	char Name[64];
-	MCOperand *Op1 = MCInst_getOperand(MI, 0);
-	MCOperand *Cn = MCInst_getOperand(MI, 1);
-	MCOperand *Cm = MCInst_getOperand(MI, 2);
-	MCOperand *Op2 = MCInst_getOperand(MI, 3);
+typedef struct LdStNInstrDesc {
+	unsigned Opcode;
+	const char *Mnemonic;
+	const char *Layout;
+	int ListOperand;
+	bool HasLane;
+	int NaturalOffset;
+} LdStNInstrDesc;
 
-	unsigned Op1Val = (unsigned)MCOperand_getImm(Op1);
-	unsigned CnVal = (unsigned)MCOperand_getImm(Cn);
-	unsigned CmVal = (unsigned)MCOperand_getImm(Cm);
-	unsigned Op2Val = (unsigned)MCOperand_getImm(Op2);
+static const LdStNInstrDesc LdStNInstInfo[] = {
+	{AArch64_LD1i8, "ld1", ".b", 1, true, 0},
+	{AArch64_LD1i16, "ld1", ".h", 1, true, 0},
+	{AArch64_LD1i32, "ld1", ".s", 1, true, 0},
+	{AArch64_LD1i64, "ld1", ".d", 1, true, 0},
+	{AArch64_LD1i8_POST, "ld1", ".b", 2, true, 1},
+	{AArch64_LD1i16_POST, "ld1", ".h", 2, true, 2},
+	{AArch64_LD1i32_POST, "ld1", ".s", 2, true, 4},
+	{AArch64_LD1i64_POST, "ld1", ".d", 2, true, 8},
+	{AArch64_LD1Rv16b, "ld1r", ".16b", 0, false, 0},
+	{AArch64_LD1Rv8h, "ld1r", ".8h", 0, false, 0},
+	{AArch64_LD1Rv4s, "ld1r", ".4s", 0, false, 0},
+	{AArch64_LD1Rv2d, "ld1r", ".2d", 0, false, 0},
+	{AArch64_LD1Rv8b, "ld1r", ".8b", 0, false, 0},
+	{AArch64_LD1Rv4h, "ld1r", ".4h", 0, false, 0},
+	{AArch64_LD1Rv2s, "ld1r", ".2s", 0, false, 0},
+	{AArch64_LD1Rv1d, "ld1r", ".1d", 0, false, 0},
+	{AArch64_LD1Rv16b_POST, "ld1r", ".16b", 1, false, 1},
+	{AArch64_LD1Rv8h_POST, "ld1r", ".8h", 1, false, 2},
+	{AArch64_LD1Rv4s_POST, "ld1r", ".4s", 1, false, 4},
+	{AArch64_LD1Rv2d_POST, "ld1r", ".2d", 1, false, 8},
+	{AArch64_LD1Rv8b_POST, "ld1r", ".8b", 1, false, 1},
+	{AArch64_LD1Rv4h_POST, "ld1r", ".4h", 1, false, 2},
+	{AArch64_LD1Rv2s_POST, "ld1r", ".2s", 1, false, 4},
+	{AArch64_LD1Rv1d_POST, "ld1r", ".1d", 1, false, 8},
+	{AArch64_LD1Onev16b, "ld1", ".16b", 0, false, 0},
+	{AArch64_LD1Onev8h, "ld1", ".8h", 0, false, 0},
+	{AArch64_LD1Onev4s, "ld1", ".4s", 0, false, 0},
+	{AArch64_LD1Onev2d, "ld1", ".2d", 0, false, 0},
+	{AArch64_LD1Onev8b, "ld1", ".8b", 0, false, 0},
+	{AArch64_LD1Onev4h, "ld1", ".4h", 0, false, 0},
+	{AArch64_LD1Onev2s, "ld1", ".2s", 0, false, 0},
+	{AArch64_LD1Onev1d, "ld1", ".1d", 0, false, 0},
+	{AArch64_LD1Onev16b_POST, "ld1", ".16b", 1, false, 16},
+	{AArch64_LD1Onev8h_POST, "ld1", ".8h", 1, false, 16},
+	{AArch64_LD1Onev4s_POST, "ld1", ".4s", 1, false, 16},
+	{AArch64_LD1Onev2d_POST, "ld1", ".2d", 1, false, 16},
+	{AArch64_LD1Onev8b_POST, "ld1", ".8b", 1, false, 8},
+	{AArch64_LD1Onev4h_POST, "ld1", ".4h", 1, false, 8},
+	{AArch64_LD1Onev2s_POST, "ld1", ".2s", 1, false, 8},
+	{AArch64_LD1Onev1d_POST, "ld1", ".1d", 1, false, 8},
+	{AArch64_LD1Twov16b, "ld1", ".16b", 0, false, 0},
+	{AArch64_LD1Twov8h, "ld1", ".8h", 0, false, 0},
+	{AArch64_LD1Twov4s, "ld1", ".4s", 0, false, 0},
+	{AArch64_LD1Twov2d, "ld1", ".2d", 0, false, 0},
+	{AArch64_LD1Twov8b, "ld1", ".8b", 0, false, 0},
+	{AArch64_LD1Twov4h, "ld1", ".4h", 0, false, 0},
+	{AArch64_LD1Twov2s, "ld1", ".2s", 0, false, 0},
+	{AArch64_LD1Twov1d, "ld1", ".1d", 0, false, 0},
+	{AArch64_LD1Twov16b_POST, "ld1", ".16b", 1, false, 32},
+	{AArch64_LD1Twov8h_POST, "ld1", ".8h", 1, false, 32},
+	{AArch64_LD1Twov4s_POST, "ld1", ".4s", 1, false, 32},
+	{AArch64_LD1Twov2d_POST, "ld1", ".2d", 1, false, 32},
+	{AArch64_LD1Twov8b_POST, "ld1", ".8b", 1, false, 16},
+	{AArch64_LD1Twov4h_POST, "ld1", ".4h", 1, false, 16},
+	{AArch64_LD1Twov2s_POST, "ld1", ".2s", 1, false, 16},
+	{AArch64_LD1Twov1d_POST, "ld1", ".1d", 1, false, 16},
+	{AArch64_LD1Threev16b, "ld1", ".16b", 0, false, 0},
+	{AArch64_LD1Threev8h, "ld1", ".8h", 0, false, 0},
+	{AArch64_LD1Threev4s, "ld1", ".4s", 0, false, 0},
+	{AArch64_LD1Threev2d, "ld1", ".2d", 0, false, 0},
+	{AArch64_LD1Threev8b, "ld1", ".8b", 0, false, 0},
+	{AArch64_LD1Threev4h, "ld1", ".4h", 0, false, 0},
+	{AArch64_LD1Threev2s, "ld1", ".2s", 0, false, 0},
+	{AArch64_LD1Threev1d, "ld1", ".1d", 0, false, 0},
+	{AArch64_LD1Threev16b_POST, "ld1", ".16b", 1, false, 48},
+	{AArch64_LD1Threev8h_POST, "ld1", ".8h", 1, false, 48},
+	{AArch64_LD1Threev4s_POST, "ld1", ".4s", 1, false, 48},
+	{AArch64_LD1Threev2d_POST, "ld1", ".2d", 1, false, 48},
+	{AArch64_LD1Threev8b_POST, "ld1", ".8b", 1, false, 24},
+	{AArch64_LD1Threev4h_POST, "ld1", ".4h", 1, false, 24},
+	{AArch64_LD1Threev2s_POST, "ld1", ".2s", 1, false, 24},
+	{AArch64_LD1Threev1d_POST, "ld1", ".1d", 1, false, 24},
+	{AArch64_LD1Fourv16b, "ld1", ".16b", 0, false, 0},
+	{AArch64_LD1Fourv8h, "ld1", ".8h", 0, false, 0},
+	{AArch64_LD1Fourv4s, "ld1", ".4s", 0, false, 0},
+	{AArch64_LD1Fourv2d, "ld1", ".2d", 0, false, 0},
+	{AArch64_LD1Fourv8b, "ld1", ".8b", 0, false, 0},
+	{AArch64_LD1Fourv4h, "ld1", ".4h", 0, false, 0},
+	{AArch64_LD1Fourv2s, "ld1", ".2s", 0, false, 0},
+	{AArch64_LD1Fourv1d, "ld1", ".1d", 0, false, 0},
+	{AArch64_LD1Fourv16b_POST, "ld1", ".16b", 1, false, 64},
+	{AArch64_LD1Fourv8h_POST, "ld1", ".8h", 1, false, 64},
+	{AArch64_LD1Fourv4s_POST, "ld1", ".4s", 1, false, 64},
+	{AArch64_LD1Fourv2d_POST, "ld1", ".2d", 1, false, 64},
+	{AArch64_LD1Fourv8b_POST, "ld1", ".8b", 1, false, 32},
+	{AArch64_LD1Fourv4h_POST, "ld1", ".4h", 1, false, 32},
+	{AArch64_LD1Fourv2s_POST, "ld1", ".2s", 1, false, 32},
+	{AArch64_LD1Fourv1d_POST, "ld1", ".1d", 1, false, 32},
+	{AArch64_LD2i8, "ld2", ".b", 1, true, 0},
+	{AArch64_LD2i16, "ld2", ".h", 1, true, 0},
+	{AArch64_LD2i32, "ld2", ".s", 1, true, 0},
+	{AArch64_LD2i64, "ld2", ".d", 1, true, 0},
+	{AArch64_LD2i8_POST, "ld2", ".b", 2, true, 2},
+	{AArch64_LD2i16_POST, "ld2", ".h", 2, true, 4},
+	{AArch64_LD2i32_POST, "ld2", ".s", 2, true, 8},
+	{AArch64_LD2i64_POST, "ld2", ".d", 2, true, 16},
+	{AArch64_LD2Rv16b, "ld2r", ".16b", 0, false, 0},
+	{AArch64_LD2Rv8h, "ld2r", ".8h", 0, false, 0},
+	{AArch64_LD2Rv4s, "ld2r", ".4s", 0, false, 0},
+	{AArch64_LD2Rv2d, "ld2r", ".2d", 0, false, 0},
+	{AArch64_LD2Rv8b, "ld2r", ".8b", 0, false, 0},
+	{AArch64_LD2Rv4h, "ld2r", ".4h", 0, false, 0},
+	{AArch64_LD2Rv2s, "ld2r", ".2s", 0, false, 0},
+	{AArch64_LD2Rv1d, "ld2r", ".1d", 0, false, 0},
+	{AArch64_LD2Rv16b_POST, "ld2r", ".16b", 1, false, 2},
+	{AArch64_LD2Rv8h_POST, "ld2r", ".8h", 1, false, 4},
+	{AArch64_LD2Rv4s_POST, "ld2r", ".4s", 1, false, 8},
+	{AArch64_LD2Rv2d_POST, "ld2r", ".2d", 1, false, 16},
+	{AArch64_LD2Rv8b_POST, "ld2r", ".8b", 1, false, 2},
+	{AArch64_LD2Rv4h_POST, "ld2r", ".4h", 1, false, 4},
+	{AArch64_LD2Rv2s_POST, "ld2r", ".2s", 1, false, 8},
+	{AArch64_LD2Rv1d_POST, "ld2r", ".1d", 1, false, 16},
+	{AArch64_LD2Twov16b, "ld2", ".16b", 0, false, 0},
+	{AArch64_LD2Twov8h, "ld2", ".8h", 0, false, 0},
+	{AArch64_LD2Twov4s, "ld2", ".4s", 0, false, 0},
+	{AArch64_LD2Twov2d, "ld2", ".2d", 0, false, 0},
+	{AArch64_LD2Twov8b, "ld2", ".8b", 0, false, 0},
+	{AArch64_LD2Twov4h, "ld2", ".4h", 0, false, 0},
+	{AArch64_LD2Twov2s, "ld2", ".2s", 0, false, 0},
+	{AArch64_LD2Twov16b_POST, "ld2", ".16b", 1, false, 32},
+	{AArch64_LD2Twov8h_POST, "ld2", ".8h", 1, false, 32},
+	{AArch64_LD2Twov4s_POST, "ld2", ".4s", 1, false, 32},
+	{AArch64_LD2Twov2d_POST, "ld2", ".2d", 1, false, 32},
+	{AArch64_LD2Twov8b_POST, "ld2", ".8b", 1, false, 16},
+	{AArch64_LD2Twov4h_POST, "ld2", ".4h", 1, false, 16},
+	{AArch64_LD2Twov2s_POST, "ld2", ".2s", 1, false, 16},
+	{AArch64_LD3i8, "ld3", ".b", 1, true, 0},
+	{AArch64_LD3i16, "ld3", ".h", 1, true, 0},
+	{AArch64_LD3i32, "ld3", ".s", 1, true, 0},
+	{AArch64_LD3i64, "ld3", ".d", 1, true, 0},
+	{AArch64_LD3i8_POST, "ld3", ".b", 2, true, 3},
+	{AArch64_LD3i16_POST, "ld3", ".h", 2, true, 6},
+	{AArch64_LD3i32_POST, "ld3", ".s", 2, true, 12},
+	{AArch64_LD3i64_POST, "ld3", ".d", 2, true, 24},
+	{AArch64_LD3Rv16b, "ld3r", ".16b", 0, false, 0},
+	{AArch64_LD3Rv8h, "ld3r", ".8h", 0, false, 0},
+	{AArch64_LD3Rv4s, "ld3r", ".4s", 0, false, 0},
+	{AArch64_LD3Rv2d, "ld3r", ".2d", 0, false, 0},
+	{AArch64_LD3Rv8b, "ld3r", ".8b", 0, false, 0},
+	{AArch64_LD3Rv4h, "ld3r", ".4h", 0, false, 0},
+	{AArch64_LD3Rv2s, "ld3r", ".2s", 0, false, 0},
+	{AArch64_LD3Rv1d, "ld3r", ".1d", 0, false, 0},
+	{AArch64_LD3Rv16b_POST, "ld3r", ".16b", 1, false, 3},
+	{AArch64_LD3Rv8h_POST, "ld3r", ".8h", 1, false, 6},
+	{AArch64_LD3Rv4s_POST, "ld3r", ".4s", 1, false, 12},
+	{AArch64_LD3Rv2d_POST, "ld3r", ".2d", 1, false, 24},
+	{AArch64_LD3Rv8b_POST, "ld3r", ".8b", 1, false, 3},
+	{AArch64_LD3Rv4h_POST, "ld3r", ".4h", 1, false, 6},
+	{AArch64_LD3Rv2s_POST, "ld3r", ".2s", 1, false, 12},
+	{AArch64_LD3Rv1d_POST, "ld3r", ".1d", 1, false, 24},
+	{AArch64_LD3Threev16b, "ld3", ".16b", 0, false, 0},
+	{AArch64_LD3Threev8h, "ld3", ".8h", 0, false, 0},
+	{AArch64_LD3Threev4s, "ld3", ".4s", 0, false, 0},
+	{AArch64_LD3Threev2d, "ld3", ".2d", 0, false, 0},
+	{AArch64_LD3Threev8b, "ld3", ".8b", 0, false, 0},
+	{AArch64_LD3Threev4h, "ld3", ".4h", 0, false, 0},
+	{AArch64_LD3Threev2s, "ld3", ".2s", 0, false, 0},
+	{AArch64_LD3Threev16b_POST, "ld3", ".16b", 1, false, 48},
+	{AArch64_LD3Threev8h_POST, "ld3", ".8h", 1, false, 48},
+	{AArch64_LD3Threev4s_POST, "ld3", ".4s", 1, false, 48},
+	{AArch64_LD3Threev2d_POST, "ld3", ".2d", 1, false, 48},
+	{AArch64_LD3Threev8b_POST, "ld3", ".8b", 1, false, 24},
+	{AArch64_LD3Threev4h_POST, "ld3", ".4h", 1, false, 24},
+	{AArch64_LD3Threev2s_POST, "ld3", ".2s", 1, false, 24},
+	{AArch64_LD4i8, "ld4", ".b", 1, true, 0},
+	{AArch64_LD4i16, "ld4", ".h", 1, true, 0},
+	{AArch64_LD4i32, "ld4", ".s", 1, true, 0},
+	{AArch64_LD4i64, "ld4", ".d", 1, true, 0},
+	{AArch64_LD4i8_POST, "ld4", ".b", 2, true, 4},
+	{AArch64_LD4i16_POST, "ld4", ".h", 2, true, 8},
+	{AArch64_LD4i32_POST, "ld4", ".s", 2, true, 16},
+	{AArch64_LD4i64_POST, "ld4", ".d", 2, true, 32},
+	{AArch64_LD4Rv16b, "ld4r", ".16b", 0, false, 0},
+	{AArch64_LD4Rv8h, "ld4r", ".8h", 0, false, 0},
+	{AArch64_LD4Rv4s, "ld4r", ".4s", 0, false, 0},
+	{AArch64_LD4Rv2d, "ld4r", ".2d", 0, false, 0},
+	{AArch64_LD4Rv8b, "ld4r", ".8b", 0, false, 0},
+	{AArch64_LD4Rv4h, "ld4r", ".4h", 0, false, 0},
+	{AArch64_LD4Rv2s, "ld4r", ".2s", 0, false, 0},
+	{AArch64_LD4Rv1d, "ld4r", ".1d", 0, false, 0},
+	{AArch64_LD4Rv16b_POST, "ld4r", ".16b", 1, false, 4},
+	{AArch64_LD4Rv8h_POST, "ld4r", ".8h", 1, false, 8},
+	{AArch64_LD4Rv4s_POST, "ld4r", ".4s", 1, false, 16},
+	{AArch64_LD4Rv2d_POST, "ld4r", ".2d", 1, false, 32},
+	{AArch64_LD4Rv8b_POST, "ld4r", ".8b", 1, false, 4},
+	{AArch64_LD4Rv4h_POST, "ld4r", ".4h", 1, false, 8},
+	{AArch64_LD4Rv2s_POST, "ld4r", ".2s", 1, false, 16},
+	{AArch64_LD4Rv1d_POST, "ld4r", ".1d", 1, false, 32},
+	{AArch64_LD4Fourv16b, "ld4", ".16b", 0, false, 0},
+	{AArch64_LD4Fourv8h, "ld4", ".8h", 0, false, 0},
+	{AArch64_LD4Fourv4s, "ld4", ".4s", 0, false, 0},
+	{AArch64_LD4Fourv2d, "ld4", ".2d", 0, false, 0},
+	{AArch64_LD4Fourv8b, "ld4", ".8b", 0, false, 0},
+	{AArch64_LD4Fourv4h, "ld4", ".4h", 0, false, 0},
+	{AArch64_LD4Fourv2s, "ld4", ".2s", 0, false, 0},
+	{AArch64_LD4Fourv16b_POST, "ld4", ".16b", 1, false, 64},
+	{AArch64_LD4Fourv8h_POST, "ld4", ".8h", 1, false, 64},
+	{AArch64_LD4Fourv4s_POST, "ld4", ".4s", 1, false, 64},
+	{AArch64_LD4Fourv2d_POST, "ld4", ".2d", 1, false, 64},
+	{AArch64_LD4Fourv8b_POST, "ld4", ".8b", 1, false, 32},
+	{AArch64_LD4Fourv4h_POST, "ld4", ".4h", 1, false, 32},
+	{AArch64_LD4Fourv2s_POST, "ld4", ".2s", 1, false, 32},
+	{AArch64_ST1i8, "st1", ".b", 0, true, 0},
+	{AArch64_ST1i16, "st1", ".h", 0, true, 0},
+	{AArch64_ST1i32, "st1", ".s", 0, true, 0},
+	{AArch64_ST1i64, "st1", ".d", 0, true, 0},
+	{AArch64_ST1i8_POST, "st1", ".b", 1, true, 1},
+	{AArch64_ST1i16_POST, "st1", ".h", 1, true, 2},
+	{AArch64_ST1i32_POST, "st1", ".s", 1, true, 4},
+	{AArch64_ST1i64_POST, "st1", ".d", 1, true, 8},
+	{AArch64_ST1Onev16b, "st1", ".16b", 0, false, 0},
+	{AArch64_ST1Onev8h, "st1", ".8h", 0, false, 0},
+	{AArch64_ST1Onev4s, "st1", ".4s", 0, false, 0},
+	{AArch64_ST1Onev2d, "st1", ".2d", 0, false, 0},
+	{AArch64_ST1Onev8b, "st1", ".8b", 0, false, 0},
+	{AArch64_ST1Onev4h, "st1", ".4h", 0, false, 0},
+	{AArch64_ST1Onev2s, "st1", ".2s", 0, false, 0},
+	{AArch64_ST1Onev1d, "st1", ".1d", 0, false, 0},
+	{AArch64_ST1Onev16b_POST, "st1", ".16b", 1, false, 16},
+	{AArch64_ST1Onev8h_POST, "st1", ".8h", 1, false, 16},
+	{AArch64_ST1Onev4s_POST, "st1", ".4s", 1, false, 16},
+	{AArch64_ST1Onev2d_POST, "st1", ".2d", 1, false, 16},
+	{AArch64_ST1Onev8b_POST, "st1", ".8b", 1, false, 8},
+	{AArch64_ST1Onev4h_POST, "st1", ".4h", 1, false, 8},
+	{AArch64_ST1Onev2s_POST, "st1", ".2s", 1, false, 8},
+	{AArch64_ST1Onev1d_POST, "st1", ".1d", 1, false, 8},
+	{AArch64_ST1Twov16b, "st1", ".16b", 0, false, 0},
+	{AArch64_ST1Twov8h, "st1", ".8h", 0, false, 0},
+	{AArch64_ST1Twov4s, "st1", ".4s", 0, false, 0},
+	{AArch64_ST1Twov2d, "st1", ".2d", 0, false, 0},
+	{AArch64_ST1Twov8b, "st1", ".8b", 0, false, 0},
+	{AArch64_ST1Twov4h, "st1", ".4h", 0, false, 0},
+	{AArch64_ST1Twov2s, "st1", ".2s", 0, false, 0},
+	{AArch64_ST1Twov1d, "st1", ".1d", 0, false, 0},
+	{AArch64_ST1Twov16b_POST, "st1", ".16b", 1, false, 32},
+	{AArch64_ST1Twov8h_POST, "st1", ".8h", 1, false, 32},
+	{AArch64_ST1Twov4s_POST, "st1", ".4s", 1, false, 32},
+	{AArch64_ST1Twov2d_POST, "st1", ".2d", 1, false, 32},
+	{AArch64_ST1Twov8b_POST, "st1", ".8b", 1, false, 16},
+	{AArch64_ST1Twov4h_POST, "st1", ".4h", 1, false, 16},
+	{AArch64_ST1Twov2s_POST, "st1", ".2s", 1, false, 16},
+	{AArch64_ST1Twov1d_POST, "st1", ".1d", 1, false, 16},
+	{AArch64_ST1Threev16b, "st1", ".16b", 0, false, 0},
+	{AArch64_ST1Threev8h, "st1", ".8h", 0, false, 0},
+	{AArch64_ST1Threev4s, "st1", ".4s", 0, false, 0},
+	{AArch64_ST1Threev2d, "st1", ".2d", 0, false, 0},
+	{AArch64_ST1Threev8b, "st1", ".8b", 0, false, 0},
+	{AArch64_ST1Threev4h, "st1", ".4h", 0, false, 0},
+	{AArch64_ST1Threev2s, "st1", ".2s", 0, false, 0},
+	{AArch64_ST1Threev1d, "st1", ".1d", 0, false, 0},
+	{AArch64_ST1Threev16b_POST, "st1", ".16b", 1, false, 48},
+	{AArch64_ST1Threev8h_POST, "st1", ".8h", 1, false, 48},
+	{AArch64_ST1Threev4s_POST, "st1", ".4s", 1, false, 48},
+	{AArch64_ST1Threev2d_POST, "st1", ".2d", 1, false, 48},
+	{AArch64_ST1Threev8b_POST, "st1", ".8b", 1, false, 24},
+	{AArch64_ST1Threev4h_POST, "st1", ".4h", 1, false, 24},
+	{AArch64_ST1Threev2s_POST, "st1", ".2s", 1, false, 24},
+	{AArch64_ST1Threev1d_POST, "st1", ".1d", 1, false, 24},
+	{AArch64_ST1Fourv16b, "st1", ".16b", 0, false, 0},
+	{AArch64_ST1Fourv8h, "st1", ".8h", 0, false, 0},
+	{AArch64_ST1Fourv4s, "st1", ".4s", 0, false, 0},
+	{AArch64_ST1Fourv2d, "st1", ".2d", 0, false, 0},
+	{AArch64_ST1Fourv8b, "st1", ".8b", 0, false, 0},
+	{AArch64_ST1Fourv4h, "st1", ".4h", 0, false, 0},
+	{AArch64_ST1Fourv2s, "st1", ".2s", 0, false, 0},
+	{AArch64_ST1Fourv1d, "st1", ".1d", 0, false, 0},
+	{AArch64_ST1Fourv16b_POST, "st1", ".16b", 1, false, 64},
+	{AArch64_ST1Fourv8h_POST, "st1", ".8h", 1, false, 64},
+	{AArch64_ST1Fourv4s_POST, "st1", ".4s", 1, false, 64},
+	{AArch64_ST1Fourv2d_POST, "st1", ".2d", 1, false, 64},
+	{AArch64_ST1Fourv8b_POST, "st1", ".8b", 1, false, 32},
+	{AArch64_ST1Fourv4h_POST, "st1", ".4h", 1, false, 32},
+	{AArch64_ST1Fourv2s_POST, "st1", ".2s", 1, false, 32},
+	{AArch64_ST1Fourv1d_POST, "st1", ".1d", 1, false, 32},
+	{AArch64_ST2i8, "st2", ".b", 0, true, 0},
+	{AArch64_ST2i16, "st2", ".h", 0, true, 0},
+	{AArch64_ST2i32, "st2", ".s", 0, true, 0},
+	{AArch64_ST2i64, "st2", ".d", 0, true, 0},
+	{AArch64_ST2i8_POST, "st2", ".b", 1, true, 2},
+	{AArch64_ST2i16_POST, "st2", ".h", 1, true, 4},
+	{AArch64_ST2i32_POST, "st2", ".s", 1, true, 8},
+	{AArch64_ST2i64_POST, "st2", ".d", 1, true, 16},
+	{AArch64_ST2Twov16b, "st2", ".16b", 0, false, 0},
+	{AArch64_ST2Twov8h, "st2", ".8h", 0, false, 0},
+	{AArch64_ST2Twov4s, "st2", ".4s", 0, false, 0},
+	{AArch64_ST2Twov2d, "st2", ".2d", 0, false, 0},
+	{AArch64_ST2Twov8b, "st2", ".8b", 0, false, 0},
+	{AArch64_ST2Twov4h, "st2", ".4h", 0, false, 0},
+	{AArch64_ST2Twov2s, "st2", ".2s", 0, false, 0},
+	{AArch64_ST2Twov16b_POST, "st2", ".16b", 1, false, 32},
+	{AArch64_ST2Twov8h_POST, "st2", ".8h", 1, false, 32},
+	{AArch64_ST2Twov4s_POST, "st2", ".4s", 1, false, 32},
+	{AArch64_ST2Twov2d_POST, "st2", ".2d", 1, false, 32},
+	{AArch64_ST2Twov8b_POST, "st2", ".8b", 1, false, 16},
+	{AArch64_ST2Twov4h_POST, "st2", ".4h", 1, false, 16},
+	{AArch64_ST2Twov2s_POST, "st2", ".2s", 1, false, 16},
+	{AArch64_ST3i8, "st3", ".b", 0, true, 0},
+	{AArch64_ST3i16, "st3", ".h", 0, true, 0},
+	{AArch64_ST3i32, "st3", ".s", 0, true, 0},
+	{AArch64_ST3i64, "st3", ".d", 0, true, 0},
+	{AArch64_ST3i8_POST, "st3", ".b", 1, true, 3},
+	{AArch64_ST3i16_POST, "st3", ".h", 1, true, 6},
+	{AArch64_ST3i32_POST, "st3", ".s", 1, true, 12},
+	{AArch64_ST3i64_POST, "st3", ".d", 1, true, 24},
+	{AArch64_ST3Threev16b, "st3", ".16b", 0, false, 0},
+	{AArch64_ST3Threev8h, "st3", ".8h", 0, false, 0},
+	{AArch64_ST3Threev4s, "st3", ".4s", 0, false, 0},
+	{AArch64_ST3Threev2d, "st3", ".2d", 0, false, 0},
+	{AArch64_ST3Threev8b, "st3", ".8b", 0, false, 0},
+	{AArch64_ST3Threev4h, "st3", ".4h", 0, false, 0},
+	{AArch64_ST3Threev2s, "st3", ".2s", 0, false, 0},
+	{AArch64_ST3Threev16b_POST, "st3", ".16b", 1, false, 48},
+	{AArch64_ST3Threev8h_POST, "st3", ".8h", 1, false, 48},
+	{AArch64_ST3Threev4s_POST, "st3", ".4s", 1, false, 48},
+	{AArch64_ST3Threev2d_POST, "st3", ".2d", 1, false, 48},
+	{AArch64_ST3Threev8b_POST, "st3", ".8b", 1, false, 24},
+	{AArch64_ST3Threev4h_POST, "st3", ".4h", 1, false, 24},
+	{AArch64_ST3Threev2s_POST, "st3", ".2s", 1, false, 24},
+	{AArch64_ST4i8, "st4", ".b", 0, true, 0},
+	{AArch64_ST4i16, "st4", ".h", 0, true, 0},
+	{AArch64_ST4i32, "st4", ".s", 0, true, 0},
+	{AArch64_ST4i64, "st4", ".d", 0, true, 0},
+	{AArch64_ST4i8_POST, "st4", ".b", 1, true, 4},
+	{AArch64_ST4i16_POST, "st4", ".h", 1, true, 8},
+	{AArch64_ST4i32_POST, "st4", ".s", 1, true, 16},
+	{AArch64_ST4i64_POST, "st4", ".d", 1, true, 32},
+	{AArch64_ST4Fourv16b, "st4", ".16b", 0, false, 0},
+	{AArch64_ST4Fourv8h, "st4", ".8h", 0, false, 0},
+	{AArch64_ST4Fourv4s, "st4", ".4s", 0, false, 0},
+	{AArch64_ST4Fourv2d, "st4", ".2d", 0, false, 0},
+	{AArch64_ST4Fourv8b, "st4", ".8b", 0, false, 0},
+	{AArch64_ST4Fourv4h, "st4", ".4h", 0, false, 0},
+	{AArch64_ST4Fourv2s, "st4", ".2s", 0, false, 0},
+	{AArch64_ST4Fourv16b_POST, "st4", ".16b", 1, false, 64},
+	{AArch64_ST4Fourv8h_POST, "st4", ".8h", 1, false, 64},
+	{AArch64_ST4Fourv4s_POST, "st4", ".4s", 1, false, 64},
+	{AArch64_ST4Fourv2d_POST, "st4", ".2d", 1, false, 64},
+	{AArch64_ST4Fourv8b_POST, "st4", ".8b", 1, false, 32},
+	{AArch64_ST4Fourv4h_POST, "st4", ".4h", 1, false, 32},
+	{AArch64_ST4Fourv2s_POST, "st4", ".2s", 1, false, 32},
+};
 
-	Encoding = Op2Val;
+static const LdStNInstrDesc *getLdStNInstrDesc(unsigned Opcode)
+{
+	for (int i = 0; i < (sizeof(LdStNInstInfo)/sizeof(LdStNInstInfo[0])); ++i) {
+		const LdStNInstrDesc *Info = &LdStNInstInfo[i];
+		if (Info->Opcode == Opcode)
+			return Info;
+	}
+
+	return NULL;
+}
+
+void AArch64AppleInstPrinter_printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
+{
+	unsigned Opcode = MCInst_getOpcode(MI);
+	const char *Layout;
+
+	bool IsTbx;
+	if (isTblTbxInstruction(MCInst_getOpcode(MI), &Layout, &IsTbx)) {
+		SStream_concat(O, "%s%s%s", "\t", (IsTbx ? "tbx" : "tbl"), Layout);
+		SStream_concat0(O, "\t");
+
+		printRegNameAlt(O, MCOperand_getReg(MCInst_getOperand(MI, (0))),
+					 AArch64_vreg);
+		SStream_concat0(O, ", ");
+
+		unsigned ListOpNum = IsTbx ? 2 : 1;
+		printVectorList(MI, ListOpNum, O, "");
+
+		SStream_concat0(O, ", ");
+		printRegNameAlt(O,
+					 MCOperand_getReg(MCInst_getOperand(MI, (ListOpNum + 1))),
+					 AArch64_vreg);
+		;
+		return;
+	}
+
+	const LdStNInstrDesc *LdStDesc = getLdStNInstrDesc(Opcode);
+	if (LdStDesc) {
+		SStream_concat(O, "%s%s%s", "\t", LdStDesc->Mnemonic, LdStDesc->Layout);
+		SStream_concat0(O, "\t");
+
+		// Now onto the operands: first a vector list with possible lane
+		// specifier. E.g. { v0 }[2]
+		int OpNum = LdStDesc->ListOperand;
+		printVectorList(MI, OpNum++, O, "");
+
+		if (LdStDesc->HasLane) {
+			SStream_concat1(O, '[');
+			SStream_concat(O, "%s",
+						   MCOperand_getImm(MCInst_getOperand(MI, (OpNum++))));
+			SStream_concat0(O, "]");
+		}
+
+		// Next the address: [xN]
+		unsigned AddrReg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum++)));
+		SStream_concat0(O, ", [");
+		printRegName(O, AddrReg);
+		SStream_concat0(O, "]");
+
+		// Finally, there might be a post-indexed offset.
+		if (LdStDesc->NaturalOffset != 0) {
+			unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum++)));
+			if (Reg != AArch64_XZR) {
+				SStream_concat0(O, ", ");
+				printRegName(O, Reg);
+			} else {
+
+				SStream_concat(O, "%s%s%s%s", ", ", markup("<imm:"), "#",
+							   LdStDesc->NaturalOffset);
+				SStream_concat0(O, markup(">"));
+			}
+		}
+
+		;
+		return;
+	}
+
+	printInst(MI, Address, Annot, O);
+}
+
+bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
+{
+	unsigned Opcode = MCInst_getOpcode(MI);
+
+#ifndef NDEBUG
+
+#endif
+
+	unsigned PRFOp = MCOperand_getImm(MCInst_getOperand(MI, (0)));
+	unsigned Mask = 0x18; // 0b11000
+	if ((PRFOp & Mask) != Mask)
+		return false;	  // Rt != '11xxx', it's a PRFM instruction.
+
+	unsigned Rm = MCOperand_getReg(MCInst_getOperand(MI, (2)));
+
+	// "Rm" must be a 64-bit GPR for RPRFM.
+	if (MCRegisterInfo_getRegClass(MI->MRI, Rm))
+		Rm = MCRegisterInfo_getMatchingSuperReg(MI->MRI, Rm, AArch64_sub_32,
+									 MCRegisterInfo_getRegClass(MI->MRI, Rm));
+
+	unsigned SignExtend =
+		MCOperand_getImm(MCInst_getOperand(MI, (3))); // encoded in "option<2>".
+	unsigned Shift =
+		MCOperand_getImm(MCInst_getOperand(MI, (4))); // encoded in "S".
+
+	unsigned Option0 = (Opcode == AArch64_PRFMroX) ? 1 : 0;
+
+	// encoded in "option<2>:option<0>:S:Rt<2:0>".
+	unsigned RPRFOp =
+		(SignExtend << 5) | (Option0 << 4) | (Shift << 3) | (PRFOp & 0x7);
+
+	SStream_concat0(O, "\trprfm ");
+	const AArch64RPRFM_RPRFM *RPRFM = AArch64RPRFM_lookupRPRFMByEncoding(RPRFOp);
+	if (RPRFM)
+		SStream_concat0(O, RPRFM->Name);
+	SStream_concat0(O, ", [");
+	printOperand(MI, 1, O); // "Rn".
+	SStream_concat0(O, "]");
+
+	;
+
+	return true;
+}
+
+bool printSysAlias(MCInst *MI, SStream *O)
+{
+#ifndef NDEBUG
+	unsigned Opcode = MCInst_getOpcode(MI);
+
+#endif
+
+	MCOperand *Op1 = MCInst_getOperand(MI, (0));
+	MCOperand *Cn = MCInst_getOperand(MI, (1));
+	MCOperand *Cm = MCInst_getOperand(MI, (2));
+	MCOperand *Op2 = MCInst_getOperand(MI, (3));
+
+	unsigned Op1Val = MCOperand_getImm(Op1);
+	unsigned CnVal = MCOperand_getImm(Cn);
+	unsigned CmVal = MCOperand_getImm(Cm);
+	unsigned Op2Val = MCOperand_getImm(Op2);
+
+	uint16_t Encoding = Op2Val;
 	Encoding |= CmVal << 3;
 	Encoding |= CnVal << 7;
 	Encoding |= Op1Val << 11;
 
+	bool NeedsReg;
+	const char *Ins;
+	const char *Name;
+
 	if (CnVal == 7) {
 		switch (CmVal) {
+		default:
+			return false;
+		// Maybe IC, maybe Prediction Restriction
+		case 1:
+			switch (Op1Val) {
 			default:
 				return false;
-
-			// IC aliases
-			case 1: case 5: {
-				const IC *IC = lookupICByEncoding(Encoding);
-				// if (!IC || !IC->haveFeatures(STI.getFeatureBits()))
-				if (!IC)
-					return false;
-
-				NeedsReg = IC->NeedsReg;
-				Ins = "ic";
-				strncpy(Name, IC->Name, sizeof(Name) - 1);
+			case 0:
+				goto Search_IC;
+			case 3:
+				goto Search_PRCTX;
 			}
-			break;
+		// Prediction Restriction aliases
+		case 3: {
+		Search_PRCTX:
+			if (Op1Val != 3 || CnVal != 7 || CmVal != 3)
+				return false;
 
-			// DC aliases
-			case 4: case 6: case 10: case 11: case 12: case 14: {
-				const DC *DC = lookupDCByEncoding(Encoding);
-				// if (!DC || !DC->haveFeatures(STI.getFeatureBits()))
-				if (!DC)
-					return false;
+			arm64_insn_group Requires =
+				Op2Val == 6 ? AArch64_FeatureSPECRES2 : AArch64_FeaturePredRes;
+			if (!(AArch64_getFeatureBits(MI->csh->mode, AArch64_FeatureAll) ||
+				  AArch64_getFeatureBits(MI->csh->mode, Requires)))
+				return false;
 
-				NeedsReg = true;
-				Ins = "dc";
-				strncpy(Name, DC->Name, sizeof(Name) - 1);
+			NeedsReg = true;
+			switch (Op2Val) {
+			default:
+				return false;
+			case 4:
+				Ins = "cfp\t";
+				break;
+			case 5:
+				Ins = "dvp\t";
+				break;
+			case 6:
+				Ins = "cosp\t";
+				break;
+			case 7:
+				Ins = "cpp\t";
+				break;
 			}
-			break;
+			Name = "RCTX";
+		} break;
+		// IC aliases
+		case 5: {
+		Search_IC: {
+      const AArch64IC_IC *IC = AArch64IC_lookupICByEncoding(Encoding);
+      if (!IC || !AArch64_testFeatureList(MI->csh->mode, IC->FeaturesRequired))
+        return false;
 
-			// AT aliases
-			case 8: case 9: {
-				const AT *AT = lookupATByEncoding(Encoding);
-				// if (!AT || !AT->haveFeatures(STI.getFeatureBits()))
-				if (!AT)
-					return false;
-
-				NeedsReg = true;
-				Ins = "at";
-				strncpy(Name, AT->Name, sizeof(Name) - 1);
-			}
-			break;
+			NeedsReg = IC->NeedsReg;
+			Ins = "ic\t";
+			Name = IC->Name;
 		}
-	} else if (CnVal == 8) {
+		} break;
+		// DC aliases
+		case 4:
+		case 6:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+		case 14: {
+			const AArch64DC_DC *DC = AArch64DC_lookupDCByEncoding(Encoding);
+			if (!DC || !AArch64_testFeatureList(MI->csh->mode, DC->FeaturesRequired))
+				return false;
+
+			NeedsReg = true;
+			Ins = "dc\t";
+			Name = DC->Name;
+		} break;
+		// AT aliases
+		case 8:
+		case 9: {
+			const AArch64AT_AT *AT = AArch64AT_lookupATByEncoding(Encoding);
+      if (!AT || !AArch64_testFeatureList(MI->csh->mode, AT->FeaturesRequired))
+				return false;
+
+			NeedsReg = true;
+			Ins = "at\t";
+			Name = AT->Name;
+		} break;
+		}
+	} else if (CnVal == 8 || CnVal == 9) {
 		// TLBI aliases
-		const TLBI *TLBI = lookupTLBIByEncoding(Encoding);
-		// if (!TLBI || !TLBI->haveFeatures(STI.getFeatureBits()))
-		if (!TLBI)
+		const AArch64TLBI_TLBI *TLBI =
+			AArch64TLBI_lookupTLBIByEncoding(Encoding);
+    if (!TLBI || !AArch64_testFeatureList(MI->csh->mode, TLBI->FeaturesRequired))
 			return false;
 
 		NeedsReg = TLBI->NeedsReg;
-		Ins = "tlbi";
-		strncpy(Name, TLBI->Name, sizeof(Name) - 1);
+		Ins = "tlbi\t";
+		Name = TLBI->Name;
 	} else
 		return false;
 
-	SStream_concat(O, "%s\t%s", Ins, Name);
-
-	if (NeedsReg) {
-		SStream_concat(O, ", %s", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, 4)), AArch64_NoRegAltName));
+	#define TMP_STR_LEN 32
+	char Str[TMP_STR_LEN];
+	int i = 0;
+	for (; (i < TMP_STR_LEN) || (i < strlen(Ins)); ++i) {
+		Str[i] = tolower(Ins[i]);
 	}
+	for (; (i < TMP_STR_LEN) || (i < strlen(Name)); ++i) {
+		Str[i] = tolower(Name[i]);
+	}
+	Str[++i] = '\0';
+	#undef TMP_STR_LEN
 
-	MCInst_setOpcodePub(MI, AArch64_map_insn(Ins));
-
-	if (MI->csh->detail_opt) {
-#if 0
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = AArch64_map_sys_op(Name);
-		MI->flat_insn->detail->arm64.op_count++;
-
-		if (NeedsReg) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, 4));
-			MI->flat_insn->detail->arm64.op_count++;
-		}
+	SStream_concat1(O, '\t');
+	SStream_concat0(O, Str);
+	if (NeedsReg) {
+		SStream_concat0(O, ", ");
+		printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (4))));
 	}
 
 	return true;
 }
 
-static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
+bool printSyspAlias(MCInst *MI, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
+#ifndef NDEBUG
+	unsigned Opcode = MCInst_getOpcode(MI);
 
+#endif
+
+	MCOperand *Op1 = MCInst_getOperand(MI, (0));
+	MCOperand *Cn = MCInst_getOperand(MI, (1));
+	MCOperand *Cm = MCInst_getOperand(MI, (2));
+	MCOperand *Op2 = MCInst_getOperand(MI, (3));
+
+	unsigned Op1Val = MCOperand_getImm(Op1);
+	unsigned CnVal = MCOperand_getImm(Cn);
+	unsigned CmVal = MCOperand_getImm(Cm);
+	unsigned Op2Val = MCOperand_getImm(Op2);
+
+	uint16_t Encoding = Op2Val;
+	Encoding |= CmVal << 3;
+	Encoding |= CnVal << 7;
+	Encoding |= Op1Val << 11;
+
+	const char *Ins;
+	const char *Name;
+
+	if (CnVal == 8 || CnVal == 9) {
+		// TLBIP aliases
+
+		if (CnVal == 9) {
+			if (!AArch64_getFeatureBits(MI->csh->mode, AArch64_FeatureXS))
+				return false;
+			Encoding &= ~(1 << 7);
+		}
+
+		const AArch64TLBI_TLBI *TLBI =
+			AArch64TLBI_lookupTLBIByEncoding(Encoding);
+    if (!TLBI || !AArch64_testFeatureList(MI->csh->mode, TLBI->FeaturesRequired))
+			return false;
+
+		Ins = "tlbip\t";
+		Name = TLBI->Name;
+	} else
+		return false;
+
+	#define TMP_STR_LEN 32
+	char Str[TMP_STR_LEN];
+	int i = 0;
+	for (; (i < TMP_STR_LEN) || (i < strlen(Ins)); ++i) {
+		Str[i] = tolower(Ins[i]);
+	}
+	for (; (i < TMP_STR_LEN) || (i < strlen(Name)); ++i) {
+		Str[i] = tolower(Name[i]);
+	}
+	if (CnVal == 9) {
+		Str[++i] = 'n';
+		Str[++i] = 'X';
+		Str[++i] = 'S';
+		Str[++i] = '\0';
+	}
+	#undef TMP_STR_LEN
+
+	SStream_concat1(O, '\t');
+	SStream_concat0(O, Str);
+	SStream_concat0(O, ", ");
+	if (MCOperand_getReg(MCInst_getOperand(MI, (4))) == AArch64_XZR)
+		printSyspXzrPair(MI, 4, O);
+	else
+		CONCAT(printGPRSeqPairsClassOperand, 64)(MI, 4, O);
+
+	return true;
+}
+
+#define DEFINE_printMatrix(EltSize) \
+	void CONCAT(printMatrix, EltSize)(MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_Matrix, EltSize), OpNum, \
+					  EltSize); \
+		MCOperand *RegOp = MCInst_getOperand(MI, (OpNum)); \
+\
+		printRegName(O, MCOperand_getReg(RegOp)); \
+		switch (EltSize) { \
+		case 0: \
+			break; \
+		case 8: \
+			SStream_concat0(O, ".b"); \
+			break; \
+		case 16: \
+			SStream_concat0(O, ".h"); \
+			break; \
+		case 32: \
+			SStream_concat0(O, ".s"); \
+			break; \
+		case 64: \
+			SStream_concat0(O, ".d"); \
+			break; \
+		case 128: \
+			SStream_concat0(O, ".q"); \
+			break; \
+		default: \
+			assert(0 && "Unsupported element size"); \
+		} \
+	}
+DEFINE_printMatrix(64);
+DEFINE_printMatrix(32);
+DEFINE_printMatrix(16);
+DEFINE_printMatrix(0);
+
+#define DEFINE_printMatrixTileVector(IsVertical) \
+	void CONCAT(printMatrixTileVector, IsVertical)(MCInst * MI, \
+												   unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail(MI, \
+					  CONCAT(AArch64_OP_GROUP_MatrixTileVector, IsVertical), \
+					  OpNum, IsVertical); \
+		MCOperand *RegOp = MCInst_getOperand(MI, (OpNum)); \
+\
+		const char *RegName = getRegisterName(MCOperand_getReg(RegOp), AArch64_NoRegAltName); \
+\
+		char *Base = malloc(strlen(RegName) + 1); \
+		strncpy(Base, RegName, strlen(RegName) + 1); \
+		char *Dot = strchr(Base, '.'); \
+		if (!Dot) { \
+			SStream_concat0(O, RegName); \
+			return; \
+		} \
+		*Dot = '\0'; /* Split string */ \
+		char *Suffix = Dot + 1; \
+		SStream_concat(O, "%s%s", Base, (IsVertical ? "v" : "h")); \
+		SStream_concat1(O, '.'); \
+		SStream_concat0(O, Suffix); \
+		free(Base); \
+	}
+DEFINE_printMatrixTileVector(0);
+DEFINE_printMatrixTileVector(1);
+
+void printMatrixTile(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_MatrixTile, OpNum);
+	MCOperand *RegOp = MCInst_getOperand(MI, (OpNum));
+
+	printRegName(O, MCOperand_getReg(RegOp));
+}
+
+void printSVCROp(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_SVCROp, OpNum);
+	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
+
+	unsigned svcrop = MCOperand_getImm(MO);
+	const AArch64SVCR_SVCR *SVCR = AArch64SVCR_lookupSVCRByEncoding(svcrop);
+
+	SStream_concat0(O, SVCR->Name);
+}
+
+void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_Operand, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
-
-		SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-
-		if (MI->csh->detail_opt) {
-			if (MI->csh->doing_mem) {
-				if (MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base == ARM64_REG_INVALID) {
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.base = Reg;
-				}
-				else if (MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index == ARM64_REG_INVALID) {
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.index = Reg;
-				}
-			} else if (MI->csh->doing_SME_Index) {
-				// Access op_count-1 as We want to add info to previous operand, not create a new one
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count-1].sme_index.base = Reg;
-			} else {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-		}
+		printRegName(O, Reg);
 	} else if (MCOperand_isImm(Op)) {
-		int64_t imm = MCOperand_getImm(Op);
-
-		if (MI->Opcode == AArch64_ADR) {
-			imm += MI->address;
-			printUInt64Bang(O, imm);
-		} else {
-			if (MI->csh->doing_mem) {
-				if (MI->csh->imm_unsigned) {
-					printUInt64Bang(O, imm);
-				} else {
-					printInt64Bang(O, imm);
-				}
-			} else
-				printUInt64Bang(O, imm);
-		}
-
-		if (MI->csh->detail_opt) {
-			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)imm;
-			} else if (MI->csh->doing_SME_Index) {
-				// Access op_count-1 as We want to add info to previous operand, not create a new one
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count-1].sme_index.disp = (int32_t)imm; 
-			} else {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-		}
+		printImm(MI, OpNo, O);
+	} else {
+		assert(0 && "Expressions are not supported.");
 	}
 }
 
-static void printImm(MCInst *MI, unsigned OpNum, SStream *O)
+void printImm(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	printUInt64Bang(O, MCOperand_getImm(Op));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+	add_cs_detail(MI, AArch64_OP_GROUP_Imm, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
+	SStream_concat(O, "%s", markup("<imm:"));
+	printInt64Bang(O, MCOperand_getImm(Op));
+	SStream_concat0(O, markup(">"));
 }
 
-static void printImmHex(MCInst *MI, unsigned OpNum, SStream *O)
+void printImmHex(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	printUInt64Bang(O, MCOperand_getImm(Op));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+	add_cs_detail(MI, AArch64_OP_GROUP_ImmHex, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
+	SStream_concat(O, "%s", markup("<imm:"));
+	printInt64Bang(O, MCOperand_getImm(Op));
+	SStream_concat0(O, markup(">"));
 }
 
-static void printSImm(MCInst *MI, unsigned OpNo, SStream *O, int Size) {
-  MCOperand *Op = MCInst_getOperand(MI, OpNo);
-  if (Size == 8)
-	printInt64Bang(O, (signed char) MCOperand_getImm(Op));
-  else if (Size == 16)
-	printInt64Bang(O, (signed short) MCOperand_getImm(Op));
-  else
-    printInt64Bang(O, MCOperand_getImm(Op));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
-		MI->flat_insn->detail->arm64.op_count++;
+#define DEFINE_printSImm(Size) \
+	void CONCAT(printSImm, Size)(MCInst * MI, unsigned OpNo, SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SImm, Size), OpNo, Size); \
+		MCOperand *Op = MCInst_getOperand(MI, (OpNo)); \
+		if (Size == 8) { \
+			SStream_concat(O, "%s", markup("<imm:")); \
+			printInt32Bang(O, MCOperand_getImm(Op)); \
+			SStream_concat0(O, markup(">")); \
+		} else if (Size == 16) { \
+			SStream_concat(O, "%s", markup("<imm:")); \
+			printInt32Bang(O, MCOperand_getImm(Op)); \
+			SStream_concat0(O, markup(">")); \
+		} else { \
+			SStream_concat(O, "%s", markup("<imm:")); \
+			printInt64Bang(O, MCOperand_getImm(Op)); \
+			SStream_concat0(O, markup(">")); \
+		} \
 	}
-}
+DEFINE_printSImm(16);
+DEFINE_printSImm(8);
 
-static void printPostIncOperand(MCInst *MI, unsigned OpNum, SStream *O,
-		unsigned Imm)
+void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-
+	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
 		if (Reg == AArch64_XZR) {
-			printInt32Bang(O, Imm);
-
-			if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Imm;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-		} else {
-			SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-
-			if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-		}
-	}
-	//llvm_unreachable("unknown operand kind in printPostIncOperand64");
+			SStream_concat(O, "%s%s%s", markup("<imm:"), "#", Imm);
+			SStream_concat0(O, markup(">"));
+		} else
+			printRegName(O, Reg);
+	} else
+		assert(0 && "unknown operand kind in printPostIncOperand64");
 }
 
-static void printVRegOperand(MCInst *MI, unsigned OpNum, SStream *O)
+void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	//assert(Op.isReg() && "Non-register vreg operand!");
+	add_cs_detail(MI, AArch64_OP_GROUP_VRegOperand, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
+
 	unsigned Reg = MCOperand_getReg(Op);
-
-	SStream_concat0(O, getRegisterName(Reg, AArch64_vreg));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = AArch64_map_vregister(Reg);
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+	printRegNameAlt(O, Reg, AArch64_vreg);
 }
 
-static void printSysCROperand(MCInst *MI, unsigned OpNum, SStream *O)
+void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	//assert(Op.isImm() && "System instruction C[nm] operands must be immediates!");
-	SStream_concat(O, "c%u", MCOperand_getImm(Op));
+	add_cs_detail(MI, AArch64_OP_GROUP_SysCROperand, OpNo);
+	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_CIMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = MCOperand_getImm(Op);
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+	SStream_concat(O, "%s", "c");
+	printUInt32(O, MCOperand_getImm(Op));
+	SStream_concat1(O, '\0');
 }
 
-static void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
+void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	add_cs_detail(MI, AArch64_OP_GROUP_AddSubImm, OpNum);
+	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
 		unsigned Val = (MCOperand_getImm(MO) & 0xfff);
-		//assert(Val == MO.getImm() && "Add/sub immediate out of range!");
-		unsigned Shift = AArch64_AM_getShiftValue((int)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1)));
 
-		printInt32Bang(O, Val);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
-		if (Shift != 0)
+		unsigned Shift = AArch64_AM_getShiftValue(
+			MCOperand_getImm(MCInst_getOperand(MI, (OpNum + 1))));
+		SStream_concat(O, "%s", markup("<imm:"));
+		printUInt32Bang(O, (Val));
+		SStream_concat0(O, markup(">"));
+		if (Shift != 0) {
 			printShifter(MI, OpNum + 1, O);
+		}
+	} else {
+		printShifter(MI, OpNum + 1, O);
 	}
 }
 
-static void printLogicalImm32(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	int64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-
-	Val = AArch64_AM_decodeLogicalImmediate(Val, 32);
-	printUInt32Bang(O, (int)Val);
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
-		MI->flat_insn->detail->arm64.op_count++;
+#define DEFINE_printLogicalImm(T) \
+	void CONCAT(printLogicalImm, T)(MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_LogicalImm, T), OpNum, sizeof(T)); \
+		uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
+		SStream_concat(O, "%s", markup("<imm:")); \
+		SStream_concat0(O, "#0x"); \
+		printUInt64(O, (AArch64_AM_decodeLogicalImmediate(Val, 8 * sizeof(T)))); \
+		SStream_concat0(O, markup(">")); \
 	}
-}
+DEFINE_printLogicalImm(int64_t);
+DEFINE_printLogicalImm(int32_t);
+DEFINE_printLogicalImm(int8_t);
+DEFINE_printLogicalImm(int16_t);
 
-static void printLogicalImm64(MCInst *MI, unsigned OpNum, SStream *O)
+void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	int64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	Val = AArch64_AM_decodeLogicalImmediate(Val, 64);
-
-	switch(MI->flat_insn->id) {
-		default:
-			printInt64Bang(O, Val);
-			break;
-
-		case ARM64_INS_ORR:
-		case ARM64_INS_AND:
-		case ARM64_INS_EOR:
-		case ARM64_INS_TST:
-			// do not print number in negative form
-			if (Val >= 0 && Val <= HEX_THRESHOLD)
-				SStream_concat(O, "#%u", (int)Val);
-			else
-				SStream_concat(O, "#0x%"PRIx64, Val);
-			break;
-	}
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int64_t)Val;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-
+	add_cs_detail(MI, AArch64_OP_GROUP_Shifter, OpNum);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	// LSL #0 should not be printed.
 	if (AArch64_AM_getShiftType(Val) == AArch64_AM_LSL &&
-			AArch64_AM_getShiftValue(Val) == 0)
+		AArch64_AM_getShiftValue(Val) == 0)
 		return;
-
-	SStream_concat(O, ", %s ", AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)));
-	printInt32BangDec(O, AArch64_AM_getShiftValue(Val));
-
-	if (MI->csh->detail_opt) {
-		arm64_shifter shifter = ARM64_SFT_INVALID;
-
-		switch(AArch64_AM_getShiftType(Val)) {
-			default:	// never reach
-			case AArch64_AM_LSL:
-				shifter = ARM64_SFT_LSL;
-				break;
-
-			case AArch64_AM_LSR:
-				shifter = ARM64_SFT_LSR;
-				break;
-
-			case AArch64_AM_ASR:
-				shifter = ARM64_SFT_ASR;
-				break;
-
-			case AArch64_AM_ROR:
-				shifter = ARM64_SFT_ROR;
-				break;
-
-			case AArch64_AM_MSL:
-				shifter = ARM64_SFT_MSL;
-				break;
-		}
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = shifter;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = AArch64_AM_getShiftValue(Val);
-	}
+	SStream_concat(O, "%s%s%s%s%s%s", ", ",
+				   AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)),
+				   " ", markup("<imm:"), "#", AArch64_AM_getShiftValue(Val));
+	SStream_concat0(O, markup(">"));
 }
 
-static void printShiftedRegister(MCInst *MI, unsigned OpNum, SStream *O)
+void printShiftedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	SStream_concat0(O, getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-
+	add_cs_detail(MI, AArch64_OP_GROUP_ShiftedRegister, OpNum);
+	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
 	printShifter(MI, OpNum + 1, O);
 }
 
-static void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
+void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	add_cs_detail(MI, AArch64_OP_GROUP_ExtendedRegister, OpNum);
+	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
+	printArithExtend(MI, OpNum + 1, O);
+}
+
+void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_ArithExtend, OpNum);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	AArch64_AM_ShiftExtendType ExtType = AArch64_AM_getArithExtendType(Val);
 	unsigned ShiftVal = AArch64_AM_getArithShiftValue(Val);
 
@@ -1398,1164 +1354,628 @@ static void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
 	// UXTW/UXTX as LSL, and if the shift amount is also zero, print nothing at
 	// all.
 	if (ExtType == AArch64_AM_UXTW || ExtType == AArch64_AM_UXTX) {
-		unsigned Dest = MCOperand_getReg(MCInst_getOperand(MI, 0));
-		unsigned Src1 = MCOperand_getReg(MCInst_getOperand(MI, 1));
-
+		unsigned Dest = MCOperand_getReg(MCInst_getOperand(MI, (0)));
+		unsigned Src1 = MCOperand_getReg(MCInst_getOperand(MI, (1)));
 		if (((Dest == AArch64_SP || Src1 == AArch64_SP) &&
-					ExtType == AArch64_AM_UXTX) ||
-				((Dest == AArch64_WSP || Src1 == AArch64_WSP) &&
-				 ExtType == AArch64_AM_UXTW)) {
+			 ExtType == AArch64_AM_UXTX) ||
+			((Dest == AArch64_WSP || Src1 == AArch64_WSP) &&
+			 ExtType == AArch64_AM_UXTW)) {
 			if (ShiftVal != 0) {
-				SStream_concat0(O, ", lsl ");
-				printInt32Bang(O, ShiftVal);
-
-				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-					MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = ShiftVal;
-				}
+				SStream_concat(O, "%s%s%s%s", ", lsl ", markup("<imm:"), "#",
+							   ShiftVal);
+				SStream_concat0(O, markup(">"));
 			}
-
 			return;
 		}
 	}
-
-	SStream_concat(O, ", %s", AArch64_AM_getShiftExtendName(ExtType));
-
-	if (MI->csh->detail_opt) {
-		arm64_extender ext = ARM64_EXT_INVALID;
-		switch(ExtType) {
-			default:	// never reach
-
-			case AArch64_AM_UXTB:
-				ext = ARM64_EXT_UXTB;
-				break;
-
-			case AArch64_AM_UXTH:
-				ext = ARM64_EXT_UXTH;
-				break;
-
-			case AArch64_AM_UXTW:
-				ext = ARM64_EXT_UXTW;
-				break;
-
-			case AArch64_AM_UXTX:
-				ext = ARM64_EXT_UXTX;
-				break;
-
-			case AArch64_AM_SXTB:
-				ext = ARM64_EXT_SXTB;
-				break;
-
-			case AArch64_AM_SXTH:
-				ext = ARM64_EXT_SXTH;
-				break;
-
-			case AArch64_AM_SXTW:
-				ext = ARM64_EXT_SXTW;
-				break;
-
-			case AArch64_AM_SXTX:
-				ext = ARM64_EXT_SXTX;
-				break;
-		}
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].ext = ext;
-	}
-
+	SStream_concat(O, "%s", ", ");
+	SStream_concat0(O, AArch64_AM_getShiftExtendName(ExtType));
 	if (ShiftVal != 0) {
-		SStream_concat0(O, " ");
-		printInt32Bang(O, ShiftVal);
-
-		if (MI->csh->detail_opt) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.type = ARM64_SFT_LSL;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].shift.value = ShiftVal;
-		}
+		SStream_concat(O, "%s%s%s%s", " ", markup("<imm:"), "#", ShiftVal);
+		SStream_concat0(O, markup(">"));
 	}
 }
 
-static void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-
-	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-
-	printArithExtend(MI, OpNum + 1, O);
-}
-
-static void printMemExtendImpl(MCInst *MI, bool SignExtend, bool DoShift, unsigned Width,
-			       char SrcRegKind, SStream *O)
+static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
+							   char SrcRegKind, SStream *O, bool getUseMarkup())
 {
 	// sxtw, sxtx, uxtw or lsl (== uxtx)
 	bool IsLSL = !SignExtend && SrcRegKind == 'x';
-	if (IsLSL) {
+	if (IsLSL)
 		SStream_concat0(O, "lsl");
-
-		if (MI->csh->detail_opt) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.type = ARM64_SFT_LSL;
-		}
-	} else {
-		SStream_concat(O, "%cxt%c", (SignExtend ? 's' : 'u'), SrcRegKind);
-
-		if (MI->csh->detail_opt) {
-			if (!SignExtend) {
-				switch(SrcRegKind) {
-					default: break;
-					case 'b':
-							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTB;
-							 break;
-					case 'h':
-							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTH;
-							 break;
-					case 'w':
-							 MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_UXTW;
-							 break;
-				}
-			} else {
-					switch(SrcRegKind) {
-						default: break;
-						case 'b':
-							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTB;
-							break;
-						case 'h':
-							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTH;
-							break;
-						case 'w':
-							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTW;
-							break;
-						case 'x':
-							MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].ext = ARM64_EXT_SXTX;
-							break;
-					}
-			}
-		}
+	else {
+		SStream_concat(O, "%s%s", (SignExtend ? 's' : 'u'), "xt");
+		SStream_concat0(O, SrcRegKind);
 	}
 
 	if (DoShift || IsLSL) {
-		SStream_concat(O, " #%u", Log2_32(Width / 8));
-
-		if (MI->csh->detail_opt) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.type = ARM64_SFT_LSL;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].shift.value = Log2_32(Width / 8);
-		}
+		SStream_concat0(O, " ");
+		if (getUseMarkup())
+			SStream_concat0(O, "<imm:");
+		SStream_concat(O, "%s", "#");
+		SStream_concat0(O, Log2_32(Width / 8));
+		if (getUseMarkup())
+			SStream_concat0(O, ">");
 	}
 }
 
-static void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind, unsigned Width)
+void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind,
+					unsigned Width)
 {
-	unsigned SignExtend = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	unsigned DoShift = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
-
-	printMemExtendImpl(MI, SignExtend, DoShift, Width, SrcRegKind, O);
+	bool SignExtend = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+	bool DoShift = MCOperand_getImm(MCInst_getOperand(MI, (OpNum + 1)));
+	printMemExtendImpl(SignExtend, DoShift, Width, SrcRegKind, O,
+					   getUseMarkup());
 }
 
-static void printRegWithShiftExtend(MCInst *MI, unsigned OpNum, SStream *O,
-				    bool SignExtend, int ExtWidth,
-				    char SrcRegKind, char Suffix)
-{
-	bool DoShift;
-
-	printOperand(MI, OpNum, O);
-
-	if (Suffix == 's' || Suffix == 'd')
-		SStream_concat(O, ".%c", Suffix);
-
-	DoShift = ExtWidth != 8;
-	if (SignExtend || DoShift || SrcRegKind == 'w') {
-		SStream_concat0(O, ", ");
-		printMemExtendImpl(MI, SignExtend, DoShift, ExtWidth, SrcRegKind, O);
+#define DEFINE_printRegWithShiftExtend(SignExtend, ExtWidth, SrcRegKind, \
+									   Suffix) \
+	void CONCAT( \
+		printRegWithShiftExtend, \
+		CONCAT(SignExtend, CONCAT(ExtWidth, CONCAT(SrcRegKind, Suffix))))( \
+		MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail( \
+			MI, \
+			CONCAT(CONCAT(CONCAT(CONCAT(AArch64_OP_GROUP_RegWithShiftExtend, \
+										SignExtend), \
+								 ExtWidth), \
+						  SrcRegKind), \
+				   Suffix), \
+			OpNum, SignExtend, ExtWidth, CHAR(SrcRegKind), CHAR(Suffix)); \
+		printOperand(MI, OpNum, O); \
+		if (CHAR(Suffix) == 's' || CHAR(Suffix) == 'd') { \
+			SStream_concat1(O, '.'); \
+			SStream_concat1(O, CHAR(Suffix)); \
+			SStream_concat1(O, '\0'); \
+		} else \
+    	assert((CHAR(Suffix) == '0') && "Unsupported suffix size"); \
+		bool DoShift = ExtWidth != 8; \
+		if (SignExtend || DoShift || CHAR(SrcRegKind) == 'w') { \
+			SStream_concat0(O, ", "); \
+			printMemExtendImpl(SignExtend, DoShift, ExtWidth, CHAR(SrcRegKind), O, \
+							   getUseMarkup()); \
+		} \
 	}
-}
+DEFINE_printRegWithShiftExtend(false, 8, x, d);
+DEFINE_printRegWithShiftExtend(true, 8, w, d);
+DEFINE_printRegWithShiftExtend(false, 8, w, d);
+DEFINE_printRegWithShiftExtend(false, 8, x, 0);
+DEFINE_printRegWithShiftExtend(true, 8, w, s);
+DEFINE_printRegWithShiftExtend(false, 8, w, s);
+DEFINE_printRegWithShiftExtend(false, 64, x, d);
+DEFINE_printRegWithShiftExtend(true, 64, w, d);
+DEFINE_printRegWithShiftExtend(false, 64, w, d);
+DEFINE_printRegWithShiftExtend(false, 64, x, 0);
+DEFINE_printRegWithShiftExtend(true, 64, w, s);
+DEFINE_printRegWithShiftExtend(false, 64, w, s);
+DEFINE_printRegWithShiftExtend(false, 16, x, d);
+DEFINE_printRegWithShiftExtend(true, 16, w, d);
+DEFINE_printRegWithShiftExtend(false, 16, w, d);
+DEFINE_printRegWithShiftExtend(false, 16, x, 0);
+DEFINE_printRegWithShiftExtend(true, 16, w, s);
+DEFINE_printRegWithShiftExtend(false, 16, w, s);
+DEFINE_printRegWithShiftExtend(false, 32, x, d);
+DEFINE_printRegWithShiftExtend(true, 32, w, d);
+DEFINE_printRegWithShiftExtend(false, 32, w, d);
+DEFINE_printRegWithShiftExtend(false, 32, x, 0);
+DEFINE_printRegWithShiftExtend(true, 32, w, s);
+DEFINE_printRegWithShiftExtend(false, 32, w, s);
+DEFINE_printRegWithShiftExtend(false, 8, x, s);
+DEFINE_printRegWithShiftExtend(false, 16, x, s);
+DEFINE_printRegWithShiftExtend(false, 32, x, s);
+DEFINE_printRegWithShiftExtend(false, 64, x, s);
+DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 
-static void printCondCode(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	AArch64CC_CondCode CC = (AArch64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	SStream_concat0(O, getCondCodeName(CC));
-
-	if (MI->csh->detail_opt)
-		MI->flat_insn->detail->arm64.cc = (arm64_cc)(CC + 1);
-}
-
-static void printInverseCondCode(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	AArch64CC_CondCode CC = (AArch64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	SStream_concat0(O, getCondCodeName(getInvertedCondCode(CC)));
-
-	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->arm64.cc = (arm64_cc)(getInvertedCondCode(CC) + 1);
+#define DEFINE_printPredicateAsCounter(EltSize) \
+	void CONCAT(printPredicateAsCounter, EltSize)(MCInst * MI, unsigned OpNum, \
+												  SStream *O) \
+	{ \
+		add_cs_detail(MI, \
+					  CONCAT(AArch64_OP_GROUP_PredicateAsCounter, EltSize), \
+					  OpNum, EltSize); \
+		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
+\
+		SStream_concat(O, "%s", "pn"); \
+		SStream_concat0(O, (Reg - AArch64_P0)); \
+		switch (EltSize) { \
+		case 0: \
+			break; \
+		case 8: \
+			SStream_concat0(O, ".b"); \
+			break; \
+		case 16: \
+			SStream_concat0(O, ".h"); \
+			break; \
+		case 32: \
+			SStream_concat0(O, ".s"); \
+			break; \
+		case 64: \
+			SStream_concat0(O, ".d"); \
+			break; \
+		default: \
+			assert(0 && "Unsupported element size"); \
+		} \
 	}
+DEFINE_printPredicateAsCounter(8);
+DEFINE_printPredicateAsCounter(64);
+DEFINE_printPredicateAsCounter(16);
+DEFINE_printPredicateAsCounter(32);
+DEFINE_printPredicateAsCounter(0);
+
+void printCondCode(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_CondCode, OpNum);
+	AArch64CC_CondCode CC =
+		(AArch64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+	SStream_concat0(O, AArch64CC_getCondCodeName(CC));
 }
 
-static void printImmScale(MCInst *MI, unsigned OpNum, SStream *O, int Scale)
+void printInverseCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	int64_t val = Scale * MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-
-	printInt64Bang(O, val);
-
-	if (MI->csh->detail_opt) {
-		if (MI->csh->doing_mem) {
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
-		} else {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
+	add_cs_detail(MI, AArch64_OP_GROUP_InverseCondCode, OpNum);
+	AArch64CC_CondCode CC =
+		(AArch64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+	SStream_concat0(
+		O, AArch64CC_getCondCodeName(AArch64CC_getInvertedCondCode(CC)));
 }
 
-static void printUImm12Offset(MCInst *MI, unsigned OpNum, SStream *O, unsigned Scale)
+void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
+	add_cs_detail(MI, AArch64_OP_GROUP_AMNoIndex, OpNum);
+	SStream_concat0(O, "[");
 
-	if (MCOperand_isImm(MO)) {
-		int64_t val = Scale * MCOperand_getImm(MO);
-		printInt64Bang(O, val);
-
-		if (MI->csh->detail_opt) {
-			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].mem.disp = (int32_t)val;
-			} else {
-#ifndef CAPSTONE_DIET
-				uint8_t access;
-
-				access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-				MI->ac_idx++;
-#endif
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-				MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)val;
-				MI->flat_insn->detail->arm64.op_count++;
-			}
-		}
-	}
-}
-
-#if 0
-static void printAMIndexedWB(MCInst *MI, unsigned OpNum, SStream *O, unsigned int Scale)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum + 1);
-
-	SStream_concat(O, "[%s", getRegisterName(MCOperand_getReg(MCInst_getOperand(MI, OpNum)), AArch64_NoRegAltName));
-
-	if (MCOperand_isImm(MO)) {
-		int64_t val = Scale * MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-		printInt64Bang(O, val);
-	// } else {
-	//   // assert(MO1.isExpr() && "Unexpected operand type!");
-	//   SStream_concat0(O, ", ");
-	//   MO1.getExpr()->print(O, &MAI);
-	}
-
+	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
 	SStream_concat0(O, "]");
 }
-#endif
 
-// IsSVEPrefetch = false
-static void printPrefetchOp(MCInst *MI, unsigned OpNum, SStream *O, bool IsSVEPrefetch)
-{
-	unsigned prfop = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-
-	if (IsSVEPrefetch) {
-		const SVEPRFM *PRFM = lookupSVEPRFMByEncoding(prfop);
-		if (PRFM)
-			SStream_concat0(O, PRFM->Name);
-
-		return;
-	} else {
-		const PRFM *PRFM = lookupPRFMByEncoding(prfop);
-		if (PRFM)
-			SStream_concat0(O, PRFM->Name);
-
-		return;
+#define DEFINE_printImmScale(Scale) \
+	void CONCAT(printImmScale, Scale)(MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_ImmScale, Scale), OpNum, \
+					  Scale); \
+		SStream_concat(O, "%s", markup("<imm:")); \
+		SStream_concat1(O, '#'); \
+		SStream_concat(O, "%s", \
+					   formatImm(Scale *MCOperand_getImm( \
+						   MCInst_getOperand(MI, (OpNum))))); \
+		SStream_concat0(O, markup(">")); \
 	}
+DEFINE_printImmScale(8);
+DEFINE_printImmScale(2);
+DEFINE_printImmScale(4);
+DEFINE_printImmScale(16);
+DEFINE_printImmScale(32);
+DEFINE_printImmScale(3);
 
-	// FIXME: set OpcodePub?
+#define DEFINE_printImmRangeScale(Scale, Offset) \
+	void CONCAT(printImmRangeScale, CONCAT(Scale, Offset))( \
+		MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail( \
+			MI, CONCAT(CONCAT(AArch64_OP_GROUP_ImmRangeScale, Scale), Offset), \
+			OpNum, Scale, Offset); \
+		unsigned FirstImm = \
+			Scale * MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
+		SStream_concat0(O, formatImm(FirstImm)); \
+		SStream_concat(O, "%s", ":"); \
+		SStream_concat0(O, formatImm(FirstImm + Offset)); \
+	}
+DEFINE_printImmRangeScale(2, 1);
+DEFINE_printImmRangeScale(4, 3);
 
-	printInt32Bang(O, prfop);
+void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
+{
+	MCOperand MO = MCInst_getOperand(MI, (OpNum));
+	if (MCOperand_isImm(MO)) {
+		SStream_concat(O, "%s", markup("<imm:"));
+		SStream_concat1(O, '#');
+		SStream_concat(O, "%s", formatImm(MCOperand_getImm(MO) * Scale));
+		SStream_concat0(O, markup(">"));
+	} else {
 
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = prfop;
-		MI->flat_insn->detail->arm64.op_count++;
+		MO.getExpr()->print(O, &MAI);
 	}
 }
 
-static void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O)
+void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-	unsigned int psbhintop = MCOperand_getImm(Op);
+	MCOperand MO1 = MCInst_getOperand(MI, (OpNum + 1));
+	SStream_concat0(O, "[");
 
-	const PSB *PSB = lookupPSBByEncoding(psbhintop);
+	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
+	if (MCOperand_isImm(MO1)) {
+		SStream_concat(O, "%s%s%s%s", ", ", markup("<imm:"), "#",
+					   formatImm(MCOperand_getImm(MO1) * Scale));
+		SStream_concat0(O, markup(">"));
+	} else {
+
+		SStream_concat0(O, ", ");
+		MO1.getExpr()->print(O, &MAI);
+	}
+	SStream_concat0(O, "]");
+}
+
+void printRPRFMOperand(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_RPRFMOperand, OpNum);
+	unsigned prfop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+	auto PRFM = AArch64RPRFM_lookupRPRFMByEncoding(prfop);
+	if (PRFM) {
+		SStream_concat0(O, PRFM->Name);
+		return;
+	}
+
+	SStream_concat1(O, '#');
+	SStream_concat0(O, formatImm(prfop));
+}
+
+#define DEFINE_printPrefetchOp(IsSVEPrefetch) \
+	void CONCAT(printPrefetchOp, IsSVEPrefetch)(MCInst * MI, unsigned OpNum, \
+												SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_PrefetchOp, IsSVEPrefetch), \
+					  OpNum, IsSVEPrefetch); \
+		unsigned prfop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
+		if (IsSVEPrefetch) { \
+			auto PRFM = AArch64SVEPRFM_lookupSVEPRFMByEncoding(prfop); \
+			if (PRFM) { \
+				SStream_concat0(O, PRFM->Name); \
+				return; \
+			} \
+		} else { \
+			auto PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop); \
+			if (PRFM && PRFM->haveFeatures(STI.getFeatureBits())) { \
+				SStream_concat0(O, PRFM->Name); \
+				return; \
+			} \
+		} \
+\
+		SStream_concat(O, "%s", markup("<imm:")); \
+		SStream_concat1(O, '#'); \
+		SStream_concat(O, "%s", formatImm(prfop)); \
+		SStream_concat0(O, markup(">")); \
+	}
+DEFINE_printPrefetchOp(true);
+
+void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_PSBHintOp, OpNum);
+	unsigned psbhintop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+	auto PSB = AArch64PSBHint_lookupPSBByEncoding(psbhintop);
 	if (PSB)
 		SStream_concat0(O, PSB->Name);
-	else
-		printUInt32Bang(O, psbhintop);
+	else {
+		SStream_concat(O, "%s", markup("<imm:"));
+		SStream_concat1(O, '#');
+		SStream_concat(O, "%s", formatImm(psbhintop));
+		SStream_concat0(O, markup(">"));
+	}
 }
 
-static void printBTIHintOp(MCInst *MI, unsigned OpNum, SStream *O) {
-  unsigned btihintop = MCOperand_getImm(MCInst_getOperand(MI, OpNum)) ^ 32;
-
-  const BTI *BTI = lookupBTIByEncoding(btihintop);
-  if (BTI)
-	SStream_concat0(O, BTI->Name);
-  else
-	printUInt32Bang(O, btihintop);
-}
-
-static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
+void printBTIHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-	float FPImm = MCOperand_isFPImm(MO) ? MCOperand_getFPImm(MO) : AArch64_AM_getFPImmFloat((int)MCOperand_getImm(MO));
+	add_cs_detail(MI, AArch64_OP_GROUP_BTIHintOp, OpNum);
+	unsigned btihintop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))) ^ 32;
+	auto BTI = AArch64BTIHint_lookupBTIByEncoding(btihintop);
+	if (BTI)
+		SStream_concat0(O, BTI->Name);
+	else {
+		SStream_concat(O, "%s", markup("<imm:"));
+		SStream_concat1(O, '#');
+		SStream_concat(O, "%s", formatImm(btihintop));
+		SStream_concat0(O, markup(">"));
+	}
+}
+
+void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_FPImmOperand, OpNum);
+	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
+	float FPImm = MO.isDFPImm()
+					  ? CONCAT(bit_cast, double)(MO.getDFPImm())
+					  : AArch64_AM_getFPImmFloat(MCOperand_getImm(MO));
 
 	// 8 decimal places are enough to perfectly represent permitted floats.
-#if defined(_KERNEL_MODE)
-	// Issue #681: Windows kernel does not support formatting float point
-	SStream_concat0(O, "#<float_point_unsupported>");
-#else
-	SStream_concat(O, "#%.8f", FPImm);
-#endif
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = FPImm;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
+	SStream_concat(O, "%s%s", markup("<imm:"), format("#%.8f", FPImm));
+	SStream_concat0(O, markup(">"));
 }
 
-//static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride = 1)
-static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride)
+static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride = 1)
 {
 	while (Stride--) {
-		if (Reg >= AArch64_Q0 && Reg <= AArch64_Q30) // AArch64_Q0 .. AArch64_Q30
-			Reg += 1;
-		else if (Reg == AArch64_Q31) // Vector lists can wrap around.
+		switch (Reg) {
+		default:
+			assert(0 && "Vector register expected!");
+		case AArch64_Q0:
+			Reg = AArch64_Q1;
+			break;
+		case AArch64_Q1:
+			Reg = AArch64_Q2;
+			break;
+		case AArch64_Q2:
+			Reg = AArch64_Q3;
+			break;
+		case AArch64_Q3:
+			Reg = AArch64_Q4;
+			break;
+		case AArch64_Q4:
+			Reg = AArch64_Q5;
+			break;
+		case AArch64_Q5:
+			Reg = AArch64_Q6;
+			break;
+		case AArch64_Q6:
+			Reg = AArch64_Q7;
+			break;
+		case AArch64_Q7:
+			Reg = AArch64_Q8;
+			break;
+		case AArch64_Q8:
+			Reg = AArch64_Q9;
+			break;
+		case AArch64_Q9:
+			Reg = AArch64_Q10;
+			break;
+		case AArch64_Q10:
+			Reg = AArch64_Q11;
+			break;
+		case AArch64_Q11:
+			Reg = AArch64_Q12;
+			break;
+		case AArch64_Q12:
+			Reg = AArch64_Q13;
+			break;
+		case AArch64_Q13:
+			Reg = AArch64_Q14;
+			break;
+		case AArch64_Q14:
+			Reg = AArch64_Q15;
+			break;
+		case AArch64_Q15:
+			Reg = AArch64_Q16;
+			break;
+		case AArch64_Q16:
+			Reg = AArch64_Q17;
+			break;
+		case AArch64_Q17:
+			Reg = AArch64_Q18;
+			break;
+		case AArch64_Q18:
+			Reg = AArch64_Q19;
+			break;
+		case AArch64_Q19:
+			Reg = AArch64_Q20;
+			break;
+		case AArch64_Q20:
+			Reg = AArch64_Q21;
+			break;
+		case AArch64_Q21:
+			Reg = AArch64_Q22;
+			break;
+		case AArch64_Q22:
+			Reg = AArch64_Q23;
+			break;
+		case AArch64_Q23:
+			Reg = AArch64_Q24;
+			break;
+		case AArch64_Q24:
+			Reg = AArch64_Q25;
+			break;
+		case AArch64_Q25:
+			Reg = AArch64_Q26;
+			break;
+		case AArch64_Q26:
+			Reg = AArch64_Q27;
+			break;
+		case AArch64_Q27:
+			Reg = AArch64_Q28;
+			break;
+		case AArch64_Q28:
+			Reg = AArch64_Q29;
+			break;
+		case AArch64_Q29:
+			Reg = AArch64_Q30;
+			break;
+		case AArch64_Q30:
+			Reg = AArch64_Q31;
+			break;
+		// Vector lists can wrap around.
+		case AArch64_Q31:
 			Reg = AArch64_Q0;
-		else if (Reg >= AArch64_Z0 && Reg <= AArch64_Z30) // AArch64_Z0 .. AArch64_Z30
-			Reg += 1;
-		else if (Reg == AArch64_Z31) // Vector lists can wrap around.
+			break;
+		case AArch64_Z0:
+			Reg = AArch64_Z1;
+			break;
+		case AArch64_Z1:
+			Reg = AArch64_Z2;
+			break;
+		case AArch64_Z2:
+			Reg = AArch64_Z3;
+			break;
+		case AArch64_Z3:
+			Reg = AArch64_Z4;
+			break;
+		case AArch64_Z4:
+			Reg = AArch64_Z5;
+			break;
+		case AArch64_Z5:
+			Reg = AArch64_Z6;
+			break;
+		case AArch64_Z6:
+			Reg = AArch64_Z7;
+			break;
+		case AArch64_Z7:
+			Reg = AArch64_Z8;
+			break;
+		case AArch64_Z8:
+			Reg = AArch64_Z9;
+			break;
+		case AArch64_Z9:
+			Reg = AArch64_Z10;
+			break;
+		case AArch64_Z10:
+			Reg = AArch64_Z11;
+			break;
+		case AArch64_Z11:
+			Reg = AArch64_Z12;
+			break;
+		case AArch64_Z12:
+			Reg = AArch64_Z13;
+			break;
+		case AArch64_Z13:
+			Reg = AArch64_Z14;
+			break;
+		case AArch64_Z14:
+			Reg = AArch64_Z15;
+			break;
+		case AArch64_Z15:
+			Reg = AArch64_Z16;
+			break;
+		case AArch64_Z16:
+			Reg = AArch64_Z17;
+			break;
+		case AArch64_Z17:
+			Reg = AArch64_Z18;
+			break;
+		case AArch64_Z18:
+			Reg = AArch64_Z19;
+			break;
+		case AArch64_Z19:
+			Reg = AArch64_Z20;
+			break;
+		case AArch64_Z20:
+			Reg = AArch64_Z21;
+			break;
+		case AArch64_Z21:
+			Reg = AArch64_Z22;
+			break;
+		case AArch64_Z22:
+			Reg = AArch64_Z23;
+			break;
+		case AArch64_Z23:
+			Reg = AArch64_Z24;
+			break;
+		case AArch64_Z24:
+			Reg = AArch64_Z25;
+			break;
+		case AArch64_Z25:
+			Reg = AArch64_Z26;
+			break;
+		case AArch64_Z26:
+			Reg = AArch64_Z27;
+			break;
+		case AArch64_Z27:
+			Reg = AArch64_Z28;
+			break;
+		case AArch64_Z28:
+			Reg = AArch64_Z29;
+			break;
+		case AArch64_Z29:
+			Reg = AArch64_Z30;
+			break;
+		case AArch64_Z30:
+			Reg = AArch64_Z31;
+			break;
+		// Vector lists can wrap around.
+		case AArch64_Z31:
 			Reg = AArch64_Z0;
+			break;
+		case AArch64_P0:
+			Reg = AArch64_P1;
+			break;
+		case AArch64_P1:
+			Reg = AArch64_P2;
+			break;
+		case AArch64_P2:
+			Reg = AArch64_P3;
+			break;
+		case AArch64_P3:
+			Reg = AArch64_P4;
+			break;
+		case AArch64_P4:
+			Reg = AArch64_P5;
+			break;
+		case AArch64_P5:
+			Reg = AArch64_P6;
+			break;
+		case AArch64_P6:
+			Reg = AArch64_P7;
+			break;
+		case AArch64_P7:
+			Reg = AArch64_P8;
+			break;
+		case AArch64_P8:
+			Reg = AArch64_P9;
+			break;
+		case AArch64_P9:
+			Reg = AArch64_P10;
+			break;
+		case AArch64_P10:
+			Reg = AArch64_P11;
+			break;
+		case AArch64_P11:
+			Reg = AArch64_P12;
+			break;
+		case AArch64_P12:
+			Reg = AArch64_P13;
+			break;
+		case AArch64_P13:
+			Reg = AArch64_P14;
+			break;
+		case AArch64_P14:
+			Reg = AArch64_P15;
+			break;
+		// Vector lists can wrap around.
+		case AArch64_P15:
+			Reg = AArch64_P0;
+			break;
+		}
 	}
-
 	return Reg;
 }
 
-static void printGPRSeqPairsClassOperand(MCInst *MI, unsigned OpNum, SStream *O, unsigned int size)
+#define DEFINE_printGPRSeqPairsClassOperand(size) \
+	void CONCAT(printGPRSeqPairsClassOperand, \
+				size)(MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail(MI, \
+					  CONCAT(AArch64_OP_GROUP_GPRSeqPairsClassOperand, size), \
+					  OpNum, size); \
+		static_assert(size == 64 || size == 32, \
+					  "Template parameter must be either 32 or 64"); \
+		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
+\
+		unsigned Sube = (size == 32) ? AArch64_sube32 : AArch64_sube64; \
+		unsigned Subo = (size == 32) ? AArch64_subo32 : AArch64_subo64; \
+\
+		unsigned Even = unsignedInfo_getSubReg(MI->MRI, Reg, Sube); \
+		unsigned Odd = unsignedInfo_getSubReg(MI->MRI, Reg, Subo); \
+		printRegName(O, Even); \
+		SStream_concat0(O, ", "); \
+		printRegName(O, Odd); \
+	}
+DEFINE_printGPRSeqPairsClassOperand(32);
+DEFINE_printGPRSeqPairsClassOperand(64);
+
+void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	// static_assert(size == 64 || size == 32,
-	//		"Template parameter must be either 32 or 64");
-	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	unsigned Sube = (size == 32) ? AArch64_sube32 : AArch64_sube64;
-	unsigned Subo = (size == 32) ? AArch64_subo32 : AArch64_subo64;
-	unsigned Even = MCRegisterInfo_getSubReg(MI->MRI, Reg, Sube);
-	unsigned Odd = MCRegisterInfo_getSubReg(MI->MRI, Reg, Subo);
-
-	SStream_concat(O, "%s, %s", getRegisterName(Even, AArch64_NoRegAltName),
-			getRegisterName(Odd, AArch64_NoRegAltName));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Even;
-		MI->flat_insn->detail->arm64.op_count++;
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Odd;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printVectorList(MCInst *MI, unsigned OpNum, SStream *O,
-		char *LayoutSuffix, MCRegisterInfo *MRI, arm64_vas vas)
-{
-#define GETREGCLASS_CONTAIN0(_class, _reg) MCRegisterClass_contains(MCRegisterInfo_getRegClass(MRI, _class), _reg)
-	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-	unsigned NumRegs = 1, FirstReg, i;
-
-	SStream_concat0(O, "{");
-
-	// Work out how many registers there are in the list (if there is an actual
-	// list).
-	if (GETREGCLASS_CONTAIN0(AArch64_DDRegClassID , Reg) ||
-			GETREGCLASS_CONTAIN0(AArch64_ZPR2RegClassID, Reg) ||
-			GETREGCLASS_CONTAIN0(AArch64_QQRegClassID, Reg))
-		NumRegs = 2;
-	else if (GETREGCLASS_CONTAIN0(AArch64_DDDRegClassID, Reg) ||
-			GETREGCLASS_CONTAIN0(AArch64_ZPR3RegClassID, Reg) ||
-			GETREGCLASS_CONTAIN0(AArch64_QQQRegClassID, Reg))
-		NumRegs = 3;
-	else if (GETREGCLASS_CONTAIN0(AArch64_DDDDRegClassID, Reg) ||
-			GETREGCLASS_CONTAIN0(AArch64_ZPR4RegClassID, Reg) ||
-			GETREGCLASS_CONTAIN0(AArch64_QQQQRegClassID, Reg))
-		NumRegs = 4;
-
-	// Now forget about the list and find out what the first register is.
-	if ((FirstReg = MCRegisterInfo_getSubReg(MRI, Reg, AArch64_dsub0)))
-		Reg = FirstReg;
-	else if ((FirstReg = MCRegisterInfo_getSubReg(MRI, Reg, AArch64_qsub0)))
-		Reg = FirstReg;
-	else if ((FirstReg = MCRegisterInfo_getSubReg(MRI, Reg, AArch64_zsub0)))
-		Reg = FirstReg;
-
-	// If it's a D-reg, we need to promote it to the equivalent Q-reg before
-	// printing (otherwise getRegisterName fails).
-	if (GETREGCLASS_CONTAIN0(AArch64_FPR64RegClassID, Reg)) {
-		const MCRegisterClass *FPR128RC = MCRegisterInfo_getRegClass(MRI, AArch64_FPR128RegClassID);
-		Reg = MCRegisterInfo_getMatchingSuperReg(MRI, Reg, AArch64_dsub, FPR128RC);
-	}
-
-	for (i = 0; i < NumRegs; ++i, Reg = getNextVectorRegister(Reg, 1)) {
-		bool isZReg = GETREGCLASS_CONTAIN0(AArch64_ZPRRegClassID, Reg);
-		if (isZReg)
-			SStream_concat(O, "%s%s", getRegisterName(Reg, AArch64_NoRegAltName), LayoutSuffix);
-		else
-			SStream_concat(O, "%s%s", getRegisterName(Reg, AArch64_vreg), LayoutSuffix);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			unsigned regForDetail = isZReg ? Reg : AArch64_map_vregister(Reg);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = regForDetail;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].vas = vas;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
-		if (i + 1 != NumRegs)
-			SStream_concat0(O, ", ");
-	}
-
-	SStream_concat0(O, "}");
-}
-
-static void printTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O, unsigned NumLanes, char LaneKind)
-{
-	char Suffix[32];
-	arm64_vas vas = 0;
-
-	if (NumLanes) {
-		cs_snprintf(Suffix, sizeof(Suffix), ".%u%c", NumLanes, LaneKind);
-
-		switch(LaneKind) {
-			default: break;
-			case 'b':
-				switch(NumLanes) {
-					default: break;
-					case 1:
-							 vas = ARM64_VAS_1B;
-							 break;
-					case 4:
-							 vas = ARM64_VAS_4B;
-							 break;
-					case 8:
-							 vas = ARM64_VAS_8B;
-							 break;
-					case 16:
-							 vas = ARM64_VAS_16B;
-							 break;
-				}
-				break;
-			case 'h':
-				switch(NumLanes) {
-					default: break;
-					case 1:
-							 vas = ARM64_VAS_1H;
-							 break;
-					case 2:
-							 vas = ARM64_VAS_2H;
-							 break;
-					case 4:
-							 vas = ARM64_VAS_4H;
-							 break;
-					case 8:
-							 vas = ARM64_VAS_8H;
-							 break;
-				}
-				break;
-			case 's':
-				switch(NumLanes) {
-					default: break;
-					case 1:
-							 vas = ARM64_VAS_1S;
-							 break;
-					case 2:
-							 vas = ARM64_VAS_2S;
-							 break;
-					case 4:
-							 vas = ARM64_VAS_4S;
-							 break;
-				}
-				break;
-			case 'd':
-				switch(NumLanes) {
-					default: break;
-					case 1:
-							 vas = ARM64_VAS_1D;
-							 break;
-					case 2:
-							 vas = ARM64_VAS_2D;
-							 break;
-				}
-				break;
-			case 'q':
-				switch(NumLanes) {
-					default: break;
-					case 1:
-							 vas = ARM64_VAS_1Q;
-							 break;
-				}
-				break;
-		}
-	} else {
-		cs_snprintf(Suffix, sizeof(Suffix), ".%c", LaneKind);
-
-		switch(LaneKind) {
-			default: break;
-			case 'b':
-					 vas = ARM64_VAS_1B;
-					 break;
-			case 'h':
-					 vas = ARM64_VAS_1H;
-					 break;
-			case 's':
-					 vas = ARM64_VAS_1S;
-					 break;
-			case 'd':
-					 vas = ARM64_VAS_1D;
-					 break;
-			case 'q':
-					 vas = ARM64_VAS_1Q;
-					 break;
-		}
-	}
-
-	printVectorList(MI, OpNum, O, Suffix, MI->MRI, vas);
-}
-
-static void printVectorIndex(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	SStream_concat0(O, "[");
-	printInt32(O, (int)MCOperand_getImm(MCInst_getOperand(MI, OpNum)));
-	SStream_concat0(O, "]");
-
-	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].vector_index = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	}
-}
-
-static void printAlignedLabel(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-
-	// If the label has already been resolved to an immediate offset (say, when
-	// we're running the disassembler), just print the immediate.
-	if (MCOperand_isImm(Op)) {
-		uint64_t imm = (MCOperand_getImm(Op) * 4) + MI->address;
-		printUInt64Bang(O, imm);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printAdrpLabel(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *Op = MCInst_getOperand(MI, OpNum);
-
-	if (MCOperand_isImm(Op)) {
-		// ADRP sign extends a 21-bit offset, shifts it left by 12
-		// and adds it to the value of the PC with its bottom 12 bits cleared
-		uint64_t imm = (MCOperand_getImm(Op) * 0x1000) + (MI->address & ~0xfff);
-		printUInt64Bang(O, imm);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = imm;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printBarrierOption(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	unsigned Opcode = MCInst_getOpcode(MI);
-	const char *Name = NULL;
-
-	if (Opcode == AArch64_ISB) {
-		const ISB *ISB = lookupISBByEncoding(Val);
-		Name = ISB ? ISB->Name : NULL;
-	} else if (Opcode == AArch64_TSB) {
-		const TSB *TSB = lookupTSBByEncoding(Val);
-		Name = TSB ? TSB->Name : NULL;
-	} else {
-		const DB *DB = lookupDBByEncoding(Val);
-		Name = DB ? DB->Name : NULL;
-	}
-
-	if (Name) {
-		SStream_concat0(O, Name);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_BARRIER;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].barrier = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	} else {
-		printUInt32Bang(O, Val);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printBarriernXSOption(MCInst *MI, unsigned OpNo, SStream *O) {
-	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-	// assert(MI->getOpcode() == AArch64::DSBnXS);
-
-	const char *Name = NULL;
-	const DBnXS *DB = lookupDBnXSByEncoding(Val);
-	Name = DB ? DB->Name : NULL;
-
-	if (Name) {
-		SStream_concat0(O, Name);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_BARRIER;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].barrier = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-	else {
-		printUInt32Bang(O, Val);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printMRSSystemRegister(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	const SysReg *Reg = lookupSysRegByEncoding(Val);
-
-	// Horrible hack for the one register that has identical encodings but
-	// different names in MSR and MRS. Because of this, one of MRS and MSR is
-	// going to get the wrong entry
-	if (Val == ARM64_SYSREG_DBGDTRRX_EL0) {
-		SStream_concat0(O, "dbgdtrrx_el0");
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
-		return;
-	}
-
-	// Another hack for a register which has an alternative name which is not an alias,
-	// and is not in the Armv9-A documentation.
-	if( Val == ARM64_SYSREG_VSCTLR_EL2){
-		SStream_concat0(O, "ttbr0_el2");
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
-		return;
-	}
-
-	// if (Reg && Reg->Readable && Reg->haveFeatures(STI.getFeatureBits()))
-	if (Reg && Reg->Readable) {
-		SStream_concat0(O, Reg->Name);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = Reg->Encoding;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	} else {
-		char result[128];
-
-		AArch64SysReg_genericRegisterString(Val, result);
-		SStream_concat0(O, result);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printMSRSystemRegister(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	const SysReg *Reg = lookupSysRegByEncoding(Val);
-
-	// Horrible hack for the one register that has identical encodings but
-	// different names in MSR and MRS. Because of this, one of MRS and MSR is
-	// going to get the wrong entry
-	if (Val == ARM64_SYSREG_DBGDTRTX_EL0) {
-		SStream_concat0(O, "dbgdtrtx_el0");
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
-		return;
-	}
-
-	// Another hack for a register which has an alternative name which is not an alias,
-	// and is not in the Armv9-A documentation.
-	if( Val == ARM64_SYSREG_VSCTLR_EL2){
-		SStream_concat0(O, "ttbr0_el2");
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
-		return;
-	}
-
-	// if (Reg && Reg->Writeable && Reg->haveFeatures(STI.getFeatureBits()))
-	if (Reg && Reg->Writeable) {
-		SStream_concat0(O, Reg->Name);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SYS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = Reg->Encoding;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	} else {
-		char result[128];
-
-		AArch64SysReg_genericRegisterString(Val, result);
-		SStream_concat0(O, result);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG_MRS;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printSystemPStateField(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned Val = (unsigned)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-
-	const PState *PState = lookupPStateByEncoding(Val);
-
-	if (PState) {
-		SStream_concat0(O, PState->Name);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_PSTATE;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].pstate = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	} else {
-		printUInt32Bang(O, Val);
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			unsigned char access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-	}
-}
-
-static void printSIMDType10Operand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	uint8_t RawVal = (uint8_t)MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
-
-	SStream_concat(O, "#%#016llx", Val);
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		unsigned char access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = Val;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printComplexRotationOp(MCInst *MI, unsigned OpNum, SStream *O, int64_t Angle, int64_t Remainder)
-{
-	unsigned int Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	printInt64Bang(O, (Val * Angle) + Remainder);
-	op_addImm(MI, (Val * Angle) + Remainder);
-}
-
-static void printSVCROp(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *MO = MCInst_getOperand(MI, OpNum);
-  	// assert(MCOperand_isImm(MO) && "Unexpected operand type!");
-  	unsigned svcrop = MCOperand_getImm(MO);
-	const SVCR *svcr = lookupSVCRByEncoding(svcrop);
-  	// assert(svcr && "Unexpected SVCR operand!");
-	SStream_concat0(O, svcr->Name);
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_SVCR;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].sys = (unsigned)ARM64_SYSREG_SVCR;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].svcr = svcr->Encoding;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printMatrix(MCInst *MI, unsigned OpNum, SStream *O, int EltSize)
-{
-	MCOperand *RegOp = MCInst_getOperand(MI, OpNum);
-  	// assert(MCOperand_isReg(RegOp) && "Unexpected operand type!");
-	unsigned Reg = MCOperand_getReg(RegOp);
-
-	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-	const char *sizeStr = "";
-  	switch (EltSize) {
-  	case 0:
-	  sizeStr = "";
-  	  break;
-  	case 8:
-  	  sizeStr = ".b";
-  	  break;
-  	case 16:
-  	  sizeStr = ".h";
-  	  break;
-  	case 32:
-  	  sizeStr = ".s";
-  	  break;
-  	case 64:
-  	  sizeStr = ".d";
-  	  break;
-  	case 128:
-  	  sizeStr = ".q";
-  	  break;
-  	default:
-	  break;
-  	//   llvm_unreachable("Unsupported element size");
-  	}
-	SStream_concat0(O, sizeStr);
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	int64_t imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	printInt64(O, imm);
-
-	if (MI->csh->detail_opt) {
-		if (MI->csh->doing_SME_Index) {
-			// Access op_count-1 as We want to add info to previous operand, not create a new one
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count-1].sme_index.disp = imm;
-		}
-	}
-}
-
-static void printMatrixTile(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	MCOperand *RegOp = MCInst_getOperand(MI, OpNum);
-  	// assert(MCOperand_isReg(RegOp) && "Unexpected operand type!");
-	unsigned Reg = MCOperand_getReg(RegOp);
-  	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-}
-
-static void printMatrixTileVector(MCInst *MI, unsigned OpNum, SStream *O, bool IsVertical)
-{
-	MCOperand *RegOp = MCInst_getOperand(MI, OpNum);
-  	// assert(MCOperand_isReg(RegOp) && "Unexpected operand type!");
-	unsigned Reg = MCOperand_getReg(RegOp);
-#ifndef CAPSTONE_DIET
-	const char *RegName = getRegisterName(Reg, AArch64_NoRegAltName);
-
-	const size_t strLn = strlen(RegName);
-	// +2 for extra chars, + 1 for null char \0
-	char *RegNameNew = cs_mem_malloc(sizeof(char) * (strLn + 2 + 1));
-	int index = 0, i;
-	for (i = 0; i < (strLn + 2); i++){
-		if(RegName[i] != '.'){
-			RegNameNew[index] = RegName[i];
-			index++;
-		}
-		else{
-			RegNameNew[index] = IsVertical ? 'v' : 'h';
-			RegNameNew[index + 1] = '.';
-			index += 2;
-		}
-	}
-	SStream_concat0(O, RegNameNew);
-#endif
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-#ifndef CAPSTONE_DIET
-	cs_mem_free(RegNameNew);
-#endif
-}
-
-static const unsigned MatrixZADRegisterTable[] = {
-  AArch64_ZAD0, AArch64_ZAD1, AArch64_ZAD2, AArch64_ZAD3,
-  AArch64_ZAD4, AArch64_ZAD5, AArch64_ZAD6, AArch64_ZAD7
-};
-
-static void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O){
+	add_cs_detail(MI, AArch64_OP_GROUP_MatrixTileList, OpNum);
 	unsigned MaxRegs = 8;
-	unsigned RegMask = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned RegMask = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 
-	unsigned NumRegs = 0, I;
-	for (I = 0; I < MaxRegs; ++I)
+	unsigned NumRegs = 0;
+	for (unsigned I = 0; I < MaxRegs; ++I)
 		if ((RegMask & (1 << I)) != 0)
 			++NumRegs;
 
 	SStream_concat0(O, "{");
-	unsigned Printed = 0, J;
-	for (J = 0; J < MaxRegs; ++J) {
-		unsigned Reg = RegMask & (1 << J);
+	unsigned Printed = 0;
+	for (unsigned I = 0; I < MaxRegs; ++I) {
+		unsigned Reg = RegMask & (1 << I);
 		if (Reg == 0)
 			continue;
-		SStream_concat0(O, getRegisterName(MatrixZADRegisterTable[J], AArch64_NoRegAltName));
-
-		if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = MatrixZADRegisterTable[J];
-			MI->flat_insn->detail->arm64.op_count++;
-		}
-
+		printRegName(O, AArch64_ZAD0 + I);
 		if (Printed + 1 != NumRegs)
 			SStream_concat0(O, ", ");
 		++Printed;
@@ -2563,467 +1983,574 @@ static void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O){
 	SStream_concat0(O, "}");
 }
 
-static void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
+void printVectorList(MCInst *MI, unsigned OpNum, SStream *O,
+					 const char *LayoutSuffix)
 {
-	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 
-	const SVEPREDPAT *Pat = lookupSVEPREDPATByEncoding(Val);
-	if (Pat)
-		SStream_concat0(O, Pat->Name);
+	SStream_concat0(O, "{ ");
+
+	// Work out how many registers there are in the list (if there is an actual
+	// list).
+	unsigned NumRegs = 1;
+	if (MCOperand_getRegClass(MRI).contains(Reg) ||
+		MCOperand_getRegClass(MRI).contains(Reg) ||
+		MCOperand_getRegClass(MRI).contains(Reg) ||
+		MCOperand_getRegClass(MRI).contains(Reg) ||
+		MCOperand_getRegClass(MRI).contains(Reg))
+		NumRegs = 2;
+	else if (MCOperand_getRegClass(MRI).contains(Reg) ||
+			 MCOperand_getRegClass(MRI).contains(Reg) ||
+			 MCOperand_getRegClass(MRI).contains(Reg))
+		NumRegs = 3;
+	else if (MCOperand_getRegClass(MRI).contains(Reg) ||
+			 MCOperand_getRegClass(MRI).contains(Reg) ||
+			 MCOperand_getRegClass(MRI).contains(Reg) ||
+			 MCOperand_getRegClass(MRI).contains(Reg))
+		NumRegs = 4;
+
+	unsigned Stride = 1;
+	if (MCOperand_getRegClass(MRI).contains(Reg))
+		Stride = 8;
+	else if (MCOperand_getRegClass(MRI).contains(Reg))
+		Stride = 4;
+
+	// Now forget about the list and find out what the first register is.
+	unsigned FirstReg = unsignedInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0);
+	if (unsigned FirstReg =
+			unsignedInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0))
+		FirstReg
+
+			// If it's a D-reg, we need to promote it to the equivalent Q-reg
+			// before printing (otherwise getRegisterName fails).
+			if (MCOperand_getRegClass(MRI).contains(Reg))
+		{
+			const unsignedClass *FPR128RC = MCOperand_getRegClass(MRI);
+			Reg = MRI.getMatchingSuperReg(Reg, AArch64_dsub, &FPR128RC);
+		}
+
+	if ((MCOperand_getRegClass(MRI).contains(Reg) ||
+		 MCOperand_getRegClass(MRI).contains(Reg)) &&
+		NumRegs > 1 && Stride == 1 &&
+		// Do not print the range when the last register is lower than the
+		// first. Because it is a wrap-around register.
+		Reg < getNextVectorRegister(Reg, NumRegs - 1)) {
+		printRegName(O, Reg);
+		SStream_concat0(O, LayoutSuffix);
+		if (NumRegs > 1) {
+			// Set of two sve registers should be separated by ','
+			const char *split_char = NumRegs == 2 ? ", " : " - ";
+			SStream_concat0(O, split_char);
+			printRegName(O, (getNextVectorRegister(Reg, NumRegs - 1)));
+			SStream_concat0(O, LayoutSuffix);
+		}
+	} else {
+		for (unsigned i = 0; i < NumRegs;
+			 ++i, Reg = getNextVectorRegister(Reg, Stride)) {
+			// wrap-around sve register
+			if (MCOperand_getRegClass(MRI).contains(Reg) ||
+				MCOperand_getRegClass(MRI).contains(Reg))
+				printRegName(O, Reg);
+			else
+				printRegNameAlt(O, Reg, AArch64_vreg);
+			SStream_concat0(O, LayoutSuffix);
+			if (i + 1 != NumRegs)
+				SStream_concat0(O, ", ");
+		}
+	}
+	SStream_concat0(O, " }");
+}
+
+void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_ImplicitlyTypedVectorList, OpNum);
+	printVectorList(MI, OpNum, O, "");
+}
+
+#define DEFINE_printTypedVectorList(NumLanes, LaneKind) \
+	void CONCAT(printTypedVectorList, CONCAT(NumLanes, LaneKind))( \
+		MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail( \
+			MI, \
+			CONCAT(CONCAT(AArch64_OP_GROUP_TypedVectorList, NumLanes), \
+				   LaneKind), \
+			OpNum, NumLanes, LaneKind); \
+		std_string Suffix("."); \
+		if (NumLanes) \
+			Suffix += itostr(NumLanes) + LaneKind; \
+		else \
+			Suffix += LaneKind; \
+\
+		printVectorList(MI, OpNum, O, Suffix); \
+	}
+DEFINE_printTypedVectorList(0, b);
+DEFINE_printTypedVectorList(0, d);
+DEFINE_printTypedVectorList(0, h);
+DEFINE_printTypedVectorList(0, s);
+DEFINE_printTypedVectorList(0, q);
+DEFINE_printTypedVectorList(16, b);
+DEFINE_printTypedVectorList(1, d);
+DEFINE_printTypedVectorList(2, d);
+DEFINE_printTypedVectorList(2, s);
+DEFINE_printTypedVectorList(4, h);
+DEFINE_printTypedVectorList(4, s);
+DEFINE_printTypedVectorList(8, b);
+DEFINE_printTypedVectorList(8, h);
+
+#define DEFINE_printVectorIndex(Scale) \
+	void CONCAT(printVectorIndex, Scale)(MCInst * MI, unsigned OpNum, \
+										 SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_VectorIndex, Scale), OpNum, \
+					  Scale); \
+		SStream_concat( \
+			O, "%s%s", "[", \
+			Scale *MCOperand_getImm(MCInst_getOperand(MI, (OpNum)))); \
+		SStream_concat0(O, "]"); \
+	}
+DEFINE_printVectorIndex(8);
+
+void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_MatrixIndex, OpNum);
+	SStream_concat0(O, MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+}
+
+void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
+
+	// If the label has already been resolved to an immediate offset (say, when
+	// we're running the disassembler), just print the immediate.
+	if (MCOperand_isImm(Op)) {
+		SStream_concat0(O, markup("<imm:"));
+		int64_t Offset = MCOperand_getImm(Op) * 4;
+		if (PrintBranchImmAsAddress)
+			SStream_concat0(O, formatHex(Address + Offset));
+		else {
+			SStream_concat(O, "%s", "#");
+			SStream_concat0(O, formatImm(Offset));
+		}
+		SStream_concat0(O, markup(">"));
+		return;
+	}
+
+	// If the branch target is simply an address then print it in hex.
+	const MCConstantExpr *BranchTarget =
+		(MCConstantExpr)(MCInst_getOperand(MI, (OpNum)).getExpr());
+	int64_t TargetAddress;
+	if (BranchTarget && BranchTarget->evaluateAsAbsolute(TargetAddress)) {
+		SStream_concat0(O, formatHex((uint64_t)TargetAddress));
+	} else {
+		// Otherwise, just print the expression.
+		MCInst_getOperand(MI, (OpNum)).getExpr()->print(O, &MAI);
+	}
+}
+
+void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
+{
+	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
+
+	// If the label has already been resolved to an immediate offset (say, when
+	// we're running the disassembler), just print the immediate.
+	if (MCOperand_isImm(Op)) {
+		const int64_t Offset = MCOperand_getImm(Op) * 4096;
+		SStream_concat0(O, markup("<imm:"));
+		if (PrintBranchImmAsAddress)
+			SStream_concat0(O, formatHex((Address & -4096) + Offset));
+		else {
+			SStream_concat(O, "%s", "#");
+			SStream_concat0(O, Offset);
+		}
+		SStream_concat0(O, markup(">"));
+		return;
+	}
+
+	// Otherwise, just print the expression.
+	MCInst_getOperand(MI, (OpNum)).getExpr()->print(O, &MAI);
+}
+
+void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_BarrierOption, OpNo);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
+	unsigned Opcode = MCInst_getOpcode(MI);
+
+	const char *Name;
+	if (Opcode == AArch64_ISB) {
+		auto ISB = AArch64ISB_lookupISBByEncoding(Val);
+		Name = ISB ? ISB->Name : "";
+	} else if (Opcode == AArch64_TSB) {
+		auto TSB = AArch64TSB_lookupTSBByEncoding(Val);
+		Name = TSB ? TSB->Name : "";
+	} else {
+		auto DB = AArch64DB_lookupDBByEncoding(Val);
+		Name = DB ? DB->Name : "";
+	}
+	if (!Name.empty())
+		SStream_concat0(O, Name);
+	else {
+		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", Val);
+		SStream_concat0(O, markup(">"));
+	}
+}
+
+void printBarriernXSOption(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_BarriernXSOption, OpNo);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
+
+	const char *Name;
+	auto DB = AArch64DBnXS_lookupDBnXSByEncoding(Val);
+	Name = DB ? DB->Name : "";
+
+	if (!Name.empty())
+		SStream_concat0(O, Name);
+	else {
+		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", Val);
+		SStream_concat0(O, markup(">"));
+	}
+}
+
+static bool isValidSysReg(const AArch64SysReg_SysReg *Reg, bool Read)
+{
+	return (Reg && (Read ? Reg->Readable : Reg->Writeable) &&
+			Reg->haveFeatures(STI.getFeatureBits()));
+}
+
+// Looks up a system register either by encoding or by name. Some system
+// registers share the same encoding between different architectures,
+// therefore a tablegen lookup by encoding will return an entry regardless
+// of the register's predication on a specific subtarget feature. To work
+// around this problem we keep an alternative name for such registers and
+// look them up by that name if the first lookup was unsuccessful.
+static const AArch64SysReg_SysReg *lookupSysReg(unsigned Val, bool Read)
+{
+	const AArch64SysReg_SysReg *Reg = AArch64SysReg_lookupSysRegByEncoding(Val);
+
+	if (Reg && !isValidSysReg(Reg, Read, STI))
+		Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
+
+	return Reg;
+}
+
+void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_MRSSystemRegister, OpNo);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
+
+	// Horrible hack for the one register that has identical encodings but
+	// different names in MSR and MRS. Because of this, one of MRS and MSR is
+	// going to get the wrong entry
+	if (Val == AArch64SysReg_DBGDTRRX_EL0) {
+		SStream_concat0(O, "DBGDTRRX_EL0");
+		return;
+	}
+
+	// Horrible hack for two different registers having the same encoding.
+	if (Val == AArch64SysReg_TRCEXTINSELR) {
+		SStream_concat0(O, "TRCEXTINSELR");
+		return;
+	}
+
+	const AArch64SysReg_SysReg *Reg = lookupSysReg(Val, true /*Read*/, STI);
+
+	if (isValidSysReg(Reg, true /*Read*/, STI))
+		SStream_concat0(O, Reg->Name);
 	else
-		printUInt32Bang(O, Val);
+		SStream_concat0(O, AArch64SysReg_genericRegisterString(Val));
 }
 
-// default suffix = 0
-static void printSVERegOp(MCInst *MI, unsigned OpNum, SStream *O, char suffix)
+void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	unsigned int Reg;
+	add_cs_detail(MI, AArch64_OP_GROUP_MSRSystemRegister, OpNo);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
-#if 0
-	switch (suffix) {
-		case 0:
-		case 'b':
-		case 'h':
-		case 's':
-		case 'd':
-		case 'q':
-			break;
-		default:
-			// llvm_unreachable("Invalid kind specifier.");
-	}
-#endif
-
-	Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-			uint8_t access;
-
-			access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-			MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-			MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-		MI->flat_insn->detail->arm64.op_count++;
-	}
-
-	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-
-	if (suffix != '\0')
-		SStream_concat(O, ".%c", suffix);
-}
-
-static void printImmSVE16(int16_t Val, SStream *O)
-{
-	printUInt32Bang(O, Val);
-}
-
-static void printImmSVE32(int32_t Val, SStream *O)
-{
-	printUInt32Bang(O, Val);
-}
-
-static void printImmSVE64(int64_t Val, SStream *O)
-{
-	printUInt64Bang(O, Val);
-}
-
-static void printImm8OptLsl32(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned UnscaledVal = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	unsigned Shift = MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
-	uint32_t Val;
-
-	// assert(AArch64_AM::getShiftType(Shift) == AArch64_AM::LSL &&
-	// 	"Unexepected shift type!");
-
-	// #0 lsl #8 is never pretty printed
-	if ((UnscaledVal == 0) && (AArch64_AM_getShiftValue(Shift) != 0)) {
-		printUInt32Bang(O, UnscaledVal);
-		printShifter(MI, OpNum + 1, O);
+	// Horrible hack for the one register that has identical encodings but
+	// different names in MSR and MRS. Because of this, one of MRS and MSR is
+	// going to get the wrong entry
+	if (Val == AArch64SysReg_DBGDTRTX_EL0) {
+		SStream_concat0(O, "DBGDTRTX_EL0");
 		return;
 	}
 
-	Val = UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift));
-	printImmSVE32(Val, O);
-}
-
-static void printImm8OptLsl64(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned UnscaledVal = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	unsigned Shift = MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1));
-	uint64_t Val;
-
-	// assert(AArch64_AM::getShiftType(Shift) == AArch64_AM::LSL &&
-	// 	"Unexepected shift type!");
-
-	// #0 lsl #8 is never pretty printed
-	if ((UnscaledVal == 0) && (AArch64_AM_getShiftValue(Shift) != 0)) {
-		printUInt32Bang(O, UnscaledVal);
-		printShifter(MI, OpNum + 1, O);
+	// Horrible hack for two different registers having the same encoding.
+	if (Val == AArch64SysReg_TRCEXTINSELR) {
+		SStream_concat0(O, "TRCEXTINSELR");
 		return;
 	}
 
-	Val = UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift));
-	printImmSVE64(Val, O);
-}
+	const AArch64SysReg_SysReg *Reg = lookupSysReg(Val, false /*Read*/, STI);
 
-static void printSVELogicalImm16(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	uint64_t PrintVal = AArch64_AM_decodeLogicalImmediate(Val, 64);
-
-	// Prefer the default format for 16bit values, hex otherwise.
-	printImmSVE16(PrintVal, O);
-}
-
-static void printSVELogicalImm32(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	uint64_t PrintVal = AArch64_AM_decodeLogicalImmediate(Val, 64);
-
-	// Prefer the default format for 16bit values, hex otherwise.
-	if ((uint16_t)PrintVal == (uint32_t)PrintVal)
-		printImmSVE16(PrintVal, O);
+	if (isValidSysReg(Reg, false /*Read*/, STI))
+		SStream_concat0(O, Reg->Name);
 	else
-		printUInt64Bang(O, PrintVal);
+		SStream_concat0(O, AArch64SysReg_genericRegisterString(Val));
 }
 
-static void printSVELogicalImm64(MCInst *MI, unsigned OpNum, SStream *O)
+void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-	uint64_t PrintVal = AArch64_AM_decodeLogicalImmediate(Val, 64);
+	add_cs_detail(MI, AArch64_OP_GROUP_SystemPStateField, OpNo);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
-	printImmSVE64(PrintVal, O);
-}
-
-static void printZPRasFPR(MCInst *MI, unsigned OpNum, SStream *O, int Width)
-{
-	unsigned int Base, Reg;
-
-	switch (Width) {
-		default: // llvm_unreachable("Unsupported width");
-		case 8:   Base = AArch64_B0; break;
-		case 16:  Base = AArch64_H0; break;
-		case 32:  Base = AArch64_S0; break;
-		case 64:  Base = AArch64_D0; break;
-		case 128: Base = AArch64_Q0; break;
-	}
-
-	Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum)) - AArch64_Z0 + Base;
-
-	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-
-	if (MI->csh->detail_opt) {
-#ifndef CAPSTONE_DIET
-		uint8_t access;
-
-		access = get_op_access(MI->csh, MCInst_getOpcode(MI), MI->ac_idx);
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].access = access;
-		MI->ac_idx++;
-#endif
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
-		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
-		MI->flat_insn->detail->arm64.op_count++;
+	auto PStateImm15 = AArch64PState_lookupPStateImm0_15ByEncoding(Val);
+	auto PStateImm1 = AArch64PState_lookupPStateImm0_1ByEncoding(Val);
+	if (PStateImm15 && PStateImm15->haveFeatures(STI.getFeatureBits()))
+		SStream_concat0(O, PStateImm15->Name);
+	else if (PStateImm1 && PStateImm1->haveFeatures(STI.getFeatureBits()))
+		SStream_concat0(O, PStateImm1->Name);
+	else {
+		SStream_concat(O, "%s", "#");
+		SStream_concat0(O, formatImm(Val));
 	}
 }
 
-static void printExactFPImm(MCInst *MI, unsigned OpNum, SStream *O, unsigned ImmIs0, unsigned ImmIs1)
+void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	const ExactFPImm *Imm0Desc = lookupExactFPImmByEnum(ImmIs0);
-	const ExactFPImm *Imm1Desc = lookupExactFPImmByEnum(ImmIs1);
-	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
-
-	SStream_concat0(O, Val ? Imm1Desc->Repr : Imm0Desc->Repr);
+	add_cs_detail(MI, AArch64_OP_GROUP_SIMDType10Operand, OpNo);
+	unsigned RawVal = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
+	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
+	SStream_concat(O, "%s%s", markup("<imm:"), format("#%#016llx", Val));
+	SStream_concat0(O, markup(">"));
 }
 
-static void printGPR64as32(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	unsigned int Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+#define DEFINE_printComplexRotationOp(Angle, Remainder) \
+	void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
+		MCInst * MI, unsigned OpNo, SStream *O) \
+	{ \
+		add_cs_detail( \
+			MI, \
+			CONCAT(CONCAT(AArch64_OP_GROUP_ComplexRotationOp, Angle), \
+				   Remainder), \
+			OpNo, Angle, Remainder); \
+		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo))); \
+		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", \
+					   (Val * Angle) + Remainder); \
+		SStream_concat0(O, markup(">")); \
+	}
+DEFINE_printComplexRotationOp(180, 90);
+DEFINE_printComplexRotationOp(90, 0);
 
-	SStream_concat0(O, getRegisterName(getWRegFromXReg(Reg), AArch64_NoRegAltName));
+void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_SVEPattern, OpNum);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+	auto Pat = AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
+	if (auto Pat = AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val))
+		Pat
 }
 
-static void printGPR64x8(MCInst *MI, unsigned OpNum, SStream *O) 
+void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 {
-  	unsigned int Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
-
-  	SStream_concat0(O, getRegisterName(MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_x8sub_0), AArch64_NoRegAltName));
+	add_cs_detail(MI, AArch64_OP_GROUP_SVEVecLenSpecifier, OpNum);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+	// Pattern has only 1 bit
+	if (Val > 1)
+		assert(0 && "Invalid vector length specifier");
+	auto Pat =
+		AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(Val);
+	if (auto Pat =
+			AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(Val))
+		Pat
 }
 
-#define PRINT_ALIAS_INSTR
-#include "AArch64GenAsmWriter.inc"
-#include "AArch64GenRegisterName.inc"
+#define DEFINE_printSVERegOp(suffix) \
+	void CONCAT(printSVERegOp, suffix)(MCInst * MI, unsigned OpNum, \
+									   SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SVERegOp, suffix), OpNum, \
+					  suffix); \
+		switch (suffix) { \
+		case 0: \
+		case 'b': \
+		case 'h': \
+		case 's': \
+		case 'd': \
+		case 'q': \
+			break; \
+		default: \
+			assert(0 && "Invalid kind specifier."); \
+		} \
+\
+		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
+		printRegName(O, Reg); \
+		if (suffix != 0) { \
+			SStream_concat1(O, '.'); \
+			SStream_concat0(O, suffix); \
+		} \
+	}
+DEFINE_printSVERegOp(b);
+DEFINE_printSVERegOp(d);
+DEFINE_printSVERegOp(h);
+DEFINE_printSVERegOp(s);
+DEFINE_printSVERegOp(0);
+DEFINE_printSVERegOp(q);
 
-void AArch64_post_printer(csh handle, cs_insn *flat_insn, char *insn_asm, MCInst *mci)
+void printImmSVE(T Value, SStream *O)
 {
-	if (((cs_struct *)handle)->detail_opt != CS_OPT_ON)
-		return;
+	std_make_unsigned_t<T> HexValue = Value;
 
-	if (mci->csh->detail_opt) {
-		unsigned opcode = MCInst_getOpcode(mci);
+	if (getPrintImmHex()) {
+		SStream_concat(O, "%s", markup("<imm:"));
+		SStream_concat1(O, '#');
+		SStream_concat(O, "%s", formatHex((uint64_t)HexValue));
+		SStream_concat0(O, markup(">"));
+	} else {
+		SStream_concat(O, "%s", markup("<imm:"));
+		SStream_concat1(O, '#');
+		SStream_concat(O, "%s", formatDec(Value));
+		SStream_concat0(O, markup(">"));
+	}
 
-		switch (opcode) {
-			default:
-				break;
-			case AArch64_LD1Fourv16b_POST:
-			case AArch64_LD1Fourv1d_POST:
-			case AArch64_LD1Fourv2d_POST:
-			case AArch64_LD1Fourv2s_POST:
-			case AArch64_LD1Fourv4h_POST:
-			case AArch64_LD1Fourv4s_POST:
-			case AArch64_LD1Fourv8b_POST:
-			case AArch64_LD1Fourv8h_POST:
-			case AArch64_LD1Onev16b_POST:
-			case AArch64_LD1Onev1d_POST:
-			case AArch64_LD1Onev2d_POST:
-			case AArch64_LD1Onev2s_POST:
-			case AArch64_LD1Onev4h_POST:
-			case AArch64_LD1Onev4s_POST:
-			case AArch64_LD1Onev8b_POST:
-			case AArch64_LD1Onev8h_POST:
-			case AArch64_LD1Rv16b_POST:
-			case AArch64_LD1Rv1d_POST:
-			case AArch64_LD1Rv2d_POST:
-			case AArch64_LD1Rv2s_POST:
-			case AArch64_LD1Rv4h_POST:
-			case AArch64_LD1Rv4s_POST:
-			case AArch64_LD1Rv8b_POST:
-			case AArch64_LD1Rv8h_POST:
-			case AArch64_LD1Threev16b_POST:
-			case AArch64_LD1Threev1d_POST:
-			case AArch64_LD1Threev2d_POST:
-			case AArch64_LD1Threev2s_POST:
-			case AArch64_LD1Threev4h_POST:
-			case AArch64_LD1Threev4s_POST:
-			case AArch64_LD1Threev8b_POST:
-			case AArch64_LD1Threev8h_POST:
-			case AArch64_LD1Twov16b_POST:
-			case AArch64_LD1Twov1d_POST:
-			case AArch64_LD1Twov2d_POST:
-			case AArch64_LD1Twov2s_POST:
-			case AArch64_LD1Twov4h_POST:
-			case AArch64_LD1Twov4s_POST:
-			case AArch64_LD1Twov8b_POST:
-			case AArch64_LD1Twov8h_POST:
-			case AArch64_LD1i16_POST:
-			case AArch64_LD1i32_POST:
-			case AArch64_LD1i64_POST:
-			case AArch64_LD1i8_POST:
-			case AArch64_LD2Rv16b_POST:
-			case AArch64_LD2Rv1d_POST:
-			case AArch64_LD2Rv2d_POST:
-			case AArch64_LD2Rv2s_POST:
-			case AArch64_LD2Rv4h_POST:
-			case AArch64_LD2Rv4s_POST:
-			case AArch64_LD2Rv8b_POST:
-			case AArch64_LD2Rv8h_POST:
-			case AArch64_LD2Twov16b_POST:
-			case AArch64_LD2Twov2d_POST:
-			case AArch64_LD2Twov2s_POST:
-			case AArch64_LD2Twov4h_POST:
-			case AArch64_LD2Twov4s_POST:
-			case AArch64_LD2Twov8b_POST:
-			case AArch64_LD2Twov8h_POST:
-			case AArch64_LD2i16_POST:
-			case AArch64_LD2i32_POST:
-			case AArch64_LD2i64_POST:
-			case AArch64_LD2i8_POST:
-			case AArch64_LD3Rv16b_POST:
-			case AArch64_LD3Rv1d_POST:
-			case AArch64_LD3Rv2d_POST:
-			case AArch64_LD3Rv2s_POST:
-			case AArch64_LD3Rv4h_POST:
-			case AArch64_LD3Rv4s_POST:
-			case AArch64_LD3Rv8b_POST:
-			case AArch64_LD3Rv8h_POST:
-			case AArch64_LD3Threev16b_POST:
-			case AArch64_LD3Threev2d_POST:
-			case AArch64_LD3Threev2s_POST:
-			case AArch64_LD3Threev4h_POST:
-			case AArch64_LD3Threev4s_POST:
-			case AArch64_LD3Threev8b_POST:
-			case AArch64_LD3Threev8h_POST:
-			case AArch64_LD3i16_POST:
-			case AArch64_LD3i32_POST:
-			case AArch64_LD3i64_POST:
-			case AArch64_LD3i8_POST:
-			case AArch64_LD4Fourv16b_POST:
-			case AArch64_LD4Fourv2d_POST:
-			case AArch64_LD4Fourv2s_POST:
-			case AArch64_LD4Fourv4h_POST:
-			case AArch64_LD4Fourv4s_POST:
-			case AArch64_LD4Fourv8b_POST:
-			case AArch64_LD4Fourv8h_POST:
-			case AArch64_LD4Rv16b_POST:
-			case AArch64_LD4Rv1d_POST:
-			case AArch64_LD4Rv2d_POST:
-			case AArch64_LD4Rv2s_POST:
-			case AArch64_LD4Rv4h_POST:
-			case AArch64_LD4Rv4s_POST:
-			case AArch64_LD4Rv8b_POST:
-			case AArch64_LD4Rv8h_POST:
-			case AArch64_LD4i16_POST:
-			case AArch64_LD4i32_POST:
-			case AArch64_LD4i64_POST:
-			case AArch64_LD4i8_POST:
-			case AArch64_LDRBBpost:
-			case AArch64_LDRBpost:
-			case AArch64_LDRDpost:
-			case AArch64_LDRHHpost:
-			case AArch64_LDRHpost:
-			case AArch64_LDRQpost:
-			case AArch64_LDPDpost:
-			case AArch64_LDPQpost:
-			case AArch64_LDPSWpost:
-			case AArch64_LDPSpost:
-			case AArch64_LDPWpost:
-			case AArch64_LDPXpost:
-			case AArch64_ST1Fourv16b_POST:
-			case AArch64_ST1Fourv1d_POST:
-			case AArch64_ST1Fourv2d_POST:
-			case AArch64_ST1Fourv2s_POST:
-			case AArch64_ST1Fourv4h_POST:
-			case AArch64_ST1Fourv4s_POST:
-			case AArch64_ST1Fourv8b_POST:
-			case AArch64_ST1Fourv8h_POST:
-			case AArch64_ST1Onev16b_POST:
-			case AArch64_ST1Onev1d_POST:
-			case AArch64_ST1Onev2d_POST:
-			case AArch64_ST1Onev2s_POST:
-			case AArch64_ST1Onev4h_POST:
-			case AArch64_ST1Onev4s_POST:
-			case AArch64_ST1Onev8b_POST:
-			case AArch64_ST1Onev8h_POST:
-			case AArch64_ST1Threev16b_POST:
-			case AArch64_ST1Threev1d_POST:
-			case AArch64_ST1Threev2d_POST:
-			case AArch64_ST1Threev2s_POST:
-			case AArch64_ST1Threev4h_POST:
-			case AArch64_ST1Threev4s_POST:
-			case AArch64_ST1Threev8b_POST:
-			case AArch64_ST1Threev8h_POST:
-			case AArch64_ST1Twov16b_POST:
-			case AArch64_ST1Twov1d_POST:
-			case AArch64_ST1Twov2d_POST:
-			case AArch64_ST1Twov2s_POST:
-			case AArch64_ST1Twov4h_POST:
-			case AArch64_ST1Twov4s_POST:
-			case AArch64_ST1Twov8b_POST:
-			case AArch64_ST1Twov8h_POST:
-			case AArch64_ST1i16_POST:
-			case AArch64_ST1i32_POST:
-			case AArch64_ST1i64_POST:
-			case AArch64_ST1i8_POST:
-			case AArch64_ST2GPostIndex:
-			case AArch64_ST2Twov16b_POST:
-			case AArch64_ST2Twov2d_POST:
-			case AArch64_ST2Twov2s_POST:
-			case AArch64_ST2Twov4h_POST:
-			case AArch64_ST2Twov4s_POST:
-			case AArch64_ST2Twov8b_POST:
-			case AArch64_ST2Twov8h_POST:
-			case AArch64_ST2i16_POST:
-			case AArch64_ST2i32_POST:
-			case AArch64_ST2i64_POST:
-			case AArch64_ST2i8_POST:
-			case AArch64_ST3Threev16b_POST:
-			case AArch64_ST3Threev2d_POST:
-			case AArch64_ST3Threev2s_POST:
-			case AArch64_ST3Threev4h_POST:
-			case AArch64_ST3Threev4s_POST:
-			case AArch64_ST3Threev8b_POST:
-			case AArch64_ST3Threev8h_POST:
-			case AArch64_ST3i16_POST:
-			case AArch64_ST3i32_POST:
-			case AArch64_ST3i64_POST:
-			case AArch64_ST3i8_POST:
-			case AArch64_ST4Fourv16b_POST:
-			case AArch64_ST4Fourv2d_POST:
-			case AArch64_ST4Fourv2s_POST:
-			case AArch64_ST4Fourv4h_POST:
-			case AArch64_ST4Fourv4s_POST:
-			case AArch64_ST4Fourv8b_POST:
-			case AArch64_ST4Fourv8h_POST:
-			case AArch64_ST4i16_POST:
-			case AArch64_ST4i32_POST:
-			case AArch64_ST4i64_POST:
-			case AArch64_ST4i8_POST:
-			case AArch64_STPDpost:
-			case AArch64_STPQpost:
-			case AArch64_STPSpost:
-			case AArch64_STPWpost:
-			case AArch64_STPXpost:
-			case AArch64_STRBBpost:
-			case AArch64_STRBpost:
-			case AArch64_STRDpost:
-			case AArch64_STRHHpost:
-			case AArch64_STRHpost:
-			case AArch64_STRQpost:
-			case AArch64_STRSpost:
-			case AArch64_STRWpost:
-			case AArch64_STRXpost:
-			case AArch64_STZ2GPostIndex:
-			case AArch64_STZGPostIndex:
-			case AArch64_STGPostIndex:
-			case AArch64_STGPpost:
-			case AArch64_LDRSBWpost:
-			case AArch64_LDRSBXpost:
-			case AArch64_LDRSHWpost:
-			case AArch64_LDRSHXpost:
-			case AArch64_LDRSWpost:
-			case AArch64_LDRSpost:
-			case AArch64_LDRWpost:
-			case AArch64_LDRXpost:
-				flat_insn->detail->arm64.writeback = true;
-			    flat_insn->detail->arm64.post_index = true;
-				break;
-			case AArch64_LDRAAwriteback:
-			case AArch64_LDRABwriteback:
-			case AArch64_ST2GPreIndex:
-			case AArch64_LDPDpre:
-			case AArch64_LDPQpre:
-			case AArch64_LDPSWpre:
-			case AArch64_LDPSpre:
-			case AArch64_LDPWpre:
-			case AArch64_LDPXpre:
-			case AArch64_LDRBBpre:
-			case AArch64_LDRBpre:
-			case AArch64_LDRDpre:
-			case AArch64_LDRHHpre:
-			case AArch64_LDRHpre:
-			case AArch64_LDRQpre:
-			case AArch64_LDRSBWpre:
-			case AArch64_LDRSBXpre:
-			case AArch64_LDRSHWpre:
-			case AArch64_LDRSHXpre:
-			case AArch64_LDRSWpre:
-			case AArch64_LDRSpre:
-			case AArch64_LDRWpre:
-			case AArch64_LDRXpre:
-			case AArch64_STGPreIndex:
-			case AArch64_STPDpre:
-			case AArch64_STPQpre:
-			case AArch64_STPSpre:
-			case AArch64_STPWpre:
-			case AArch64_STPXpre:
-			case AArch64_STRBBpre:
-			case AArch64_STRBpre:
-			case AArch64_STRDpre:
-			case AArch64_STRHHpre:
-			case AArch64_STRHpre:
-			case AArch64_STRQpre:
-			case AArch64_STRSpre:
-			case AArch64_STRWpre:
-			case AArch64_STRXpre:
-			case AArch64_STZ2GPreIndex:
-			case AArch64_STZGPreIndex:
-			case AArch64_STGPpre:
-				flat_insn->detail->arm64.writeback = true;
-				break;
+	if (CommentStream) {
+		// Do the opposite to that used for instruction operands.
+		if (getPrintImmHex()) {
+			SStream_concat1(*CommentStream, '=');
+			SStream_concat(*CommentStream, "%s", formatDec(HexValue));
+			SStream_concat0(*CommentStream, "\n");
+		} else {
+			SStream_concat1(*CommentStream, '=');
+			SStream_concat(*CommentStream, "%s", formatHex((uint64_t)Value));
+			SStream_concat0(*CommentStream, "\n");
 		}
 	}
 }
 
-#endif
+#define DEFINE_printImm8OptLsl(T) \
+	void CONCAT(printImm8OptLsl, T)(MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_Imm8OptLsl, T), OpNum, T); \
+		unsigned UnscaledVal = \
+			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
+		unsigned Shift = MCOperand_getImm(MCInst_getOperand(MI, (OpNum + 1))); \
+\
+		if ((UnscaledVal == 0) && (AArch64_AM_getShiftValue(Shift) != 0)) { \
+			SStream_concat(O, "%s", markup("<imm:")); \
+			SStream_concat1(O, '#'); \
+			SStream_concat(O, "%s", formatImm(UnscaledVal)); \
+			SStream_concat0(O, markup(">")); \
+			printShifter(MI, OpNum + 1, O); \
+			return; \
+		} \
+\
+		T Val; \
+		if (CONCAT(std_is_signed, T)()) \
+			Val = \
+				(int8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift)); \
+		else \
+			Val = \
+				(uint8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift)); \
+\
+		printImmSVE(Val, O); \
+	}
+DEFINE_printImm8OptLsl(int16_t);
+DEFINE_printImm8OptLsl(int8_t);
+DEFINE_printImm8OptLsl(int64_t);
+DEFINE_printImm8OptLsl(int32_t);
+DEFINE_printImm8OptLsl(uint16_t);
+DEFINE_printImm8OptLsl(uint8_t);
+DEFINE_printImm8OptLsl(uint64_t);
+DEFINE_printImm8OptLsl(uint32_t);
+
+#define DEFINE_printSVELogicalImm(T) \
+	void CONCAT(printSVELogicalImm, T)(MCInst * MI, unsigned OpNum, \
+									   SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SVELogicalImm, T), OpNum, \
+					  T); \
+		typedef std_make_signed_t<T> SignedT; \
+		typedef std_make_unsigned_t<T> UnsignedT; \
+\
+		uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
+		UnsignedT PrintVal = AArch64_AM_decodeLogicalImmediate(Val, 64); \
+\
+		if ((int16_t)PrintVal == (SignedT)PrintVal) \
+			printImmSVE((T)PrintVal, O); \
+		else if ((uint16_t)PrintVal == PrintVal) \
+			printImmSVE(PrintVal, O); \
+		else { \
+			SStream_concat(O, "%s", markup("<imm:")); \
+			SStream_concat1(O, '#'); \
+			SStream_concat(O, "%s", formatHex((uint64_t)PrintVal)); \
+			SStream_concat0(O, markup(">")); \
+		} \
+	}
+DEFINE_printSVELogicalImm(int16_t);
+DEFINE_printSVELogicalImm(int32_t);
+DEFINE_printSVELogicalImm(int64_t);
+
+#define DEFINE_printZPRasFPR(Width) \
+	void CONCAT(printZPRasFPR, Width)(MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_ZPRasFPR, Width), OpNum, \
+					  Width); \
+		unsigned Base; \
+		switch (Width) { \
+		case 8: \
+			Base = AArch64_B0; \
+			break; \
+		case 16: \
+			Base = AArch64_H0; \
+			break; \
+		case 32: \
+			Base = AArch64_S0; \
+			break; \
+		case 64: \
+			Base = AArch64_D0; \
+			break; \
+		case 128: \
+			Base = AArch64_Q0; \
+			break; \
+		default: \
+			assert(0 && "Unsupported width"); \
+		} \
+		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
+		printRegName(O, Reg - AArch64_Z0 + Base); \
+	}
+DEFINE_printZPRasFPR(8);
+DEFINE_printZPRasFPR(64);
+DEFINE_printZPRasFPR(16);
+DEFINE_printZPRasFPR(32);
+DEFINE_printZPRasFPR(128);
+
+#define DEFINE_printExactFPImm(ImmIs0, ImmIs1) \
+	void CONCAT(printExactFPImm, CONCAT(ImmIs0, ImmIs1))( \
+		MCInst * MI, unsigned OpNum, SStream *O) \
+	{ \
+		add_cs_detail( \
+			MI, CONCAT(CONCAT(AArch64_OP_GROUP_ExactFPImm, ImmIs0), ImmIs1), \
+			OpNum, ImmIs0, ImmIs1); \
+		auto *Imm0Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs0); \
+		auto *Imm1Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs1); \
+		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
+		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", \
+					   (Val ? Imm1Desc->Repr : Imm0Desc->Repr)); \
+		SStream_concat0(O, markup(">")); \
+	}
+DEFINE_printExactFPImm(AArch64ExactFPImm::half, AArch64ExactFPImm::one);
+DEFINE_printExactFPImm(AArch64ExactFPImm::zero, AArch64ExactFPImm::one);
+DEFINE_printExactFPImm(AArch64ExactFPImm::half, AArch64ExactFPImm::two);
+
+void printGPR64as32(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_GPR64as32, OpNum);
+	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
+	printRegName(O, getWRegFromXReg(Reg));
+}
+
+void printGPR64x8(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_GPR64x8, OpNum);
+	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
+	printRegName(O, unsignedInfo_getSubReg(MI->MRI, Reg, AArch64_x8sub_0));
+}
+
+void printSyspXzrPair(MCInst *MI, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_SyspXzrPair, OpNum);
+	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
+
+	SStream_concat(O, "%s%s", getRegisterName(Reg), ", ");
+	SStream_concat0(O, getRegisterName(Reg));
+}
