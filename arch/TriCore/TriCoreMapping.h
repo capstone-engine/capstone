@@ -6,8 +6,6 @@
 
 #include <capstone/capstone.h>
 
-unsigned int TriCore_map_insn_id(cs_struct *h, unsigned int id);
-
 // given internal insn id, return public instruction info
 void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
@@ -15,7 +13,20 @@ const char *TriCore_insn_name(csh handle, unsigned int id);
 
 const char *TriCore_group_name(csh handle, unsigned int id);
 
-cs_err TRICORE_global_init(cs_struct *ud);
-cs_err TRICORE_option(cs_struct *handle, cs_opt_type type, size_t value);
+void TriCore_reg_access(const cs_insn *insn, cs_regs regs_read,
+			uint8_t *regs_read_count, cs_regs regs_write,
+			uint8_t *regs_write_count);
+
+void TriCore_set_access(MCInst *MI);
+
+void TriCore_set_instr_map_data(MCInst *MI);
+
+bool TriCore_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
+			    MCInst *MI, uint16_t *Size, uint64_t Address,
+			    void *Info);
+
+void TriCore_printInst(MCInst *MI, SStream *O, void *Info);
+
+const char *TriCore_getRegisterName(csh handle, unsigned int RegNo);
 
 #endif

@@ -18,40 +18,46 @@ extern "C" {
 #pragma warning(disable : 4201)
 #endif
 
-//> Operand type for instruction's operands
+/// Operand type for instruction's operands
 typedef enum tricore_op_type {
-	TRICORE_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	TRICORE_OP_REG, // = CS_OP_REG (Register operand).
-	TRICORE_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	TRICORE_OP_MEM, // = CS_OP_MEM (Memory operand).
+	TRICORE_OP_INVALID = CS_OP_INVALID, ///< CS_OP_INVALID (Uninitialized).
+	TRICORE_OP_REG = CS_OP_REG,	    ///< CS_OP_REG (Register operand).
+	TRICORE_OP_IMM = CS_OP_IMM,	    ///< CS_OP_IMM (Immediate operand).
+	TRICORE_OP_MEM = CS_OPT_MEM,	    ///< CS_OP_MEM (Memory operand).
 } tricore_op_type;
 
-// Instruction's operand referring to memory
-// This is associated with TRICORE_OP_MEM operand type above
+/// Instruction's operand referring to memory
+/// This is associated with TRICORE_OP_MEM operand type above
 typedef struct tricore_op_mem {
-	uint8_t base; // base register
-	int32_t disp; // displacement/offset value
+	uint8_t base; ///< base register
+	int32_t disp; ///< displacement/offset value
 } tricore_op_mem;
 
-// Instruction operand
+/// Instruction operand
 typedef struct cs_tricore_op {
-	tricore_op_type type; // operand type
+	tricore_op_type type;	    ///< operand type
 	union {
-		unsigned int reg; // register value for REG operand
-		int32_t imm; // immediate value for IMM operand
-		tricore_op_mem mem; // base/disp value for MEM operand
+		unsigned int reg;   ///< register value for REG operand
+		int32_t imm;	    ///< immediate value for IMM operand
+		tricore_op_mem mem; ///< base/disp value for MEM operand
 	};
+	/// This field is combined of cs_ac_type.
+	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	uint8_t access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
 } cs_tricore_op;
 
-// Instruction structure
+#define TRICORE_OP_COUNT 8
+
+/// Instruction structure
 typedef struct cs_tricore {
-	// Number of operands of this instruction,
-	// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_tricore_op operands[8]; // operands for this instruction.
+	uint8_t op_count; ///< number of operands of this instruction.
+	cs_tricore_op
+		operands[TRICORE_OP_COUNT]; ///< operands for this instruction.
+	/// TODO: Mark the modified flags register in td files and regenerate inc files
+	bool update_flags; ///< whether the flags register is updated.
 } cs_tricore;
 
-//> TriCore registers
+/// TriCore registers
 typedef enum tricore_reg {
 	// generate content <TriCoreGenCSRegEnum.inc> begin
 	// clang-format off
@@ -123,7 +129,7 @@ typedef enum tricore_reg {
 	// generate content <TriCoreGenCSRegEnum.inc> end
 } tricore_reg;
 
-//> TriCore instruction
+/// TriCore instruction
 typedef enum tricore_insn {
 	TRICORE_INS_INVALID = 0,
 	// generate content <TriCoreGenCSInsnEnum.inc> begin
@@ -525,13 +531,13 @@ typedef enum tricore_insn {
 	TRICORE_INS_ENDING, // <-- mark the end of the list of instructions
 } tricore_insn;
 
-//> Group of TriCore instructions
+/// Group of TriCore instructions
 typedef enum tricore_insn_group {
 	TRICORE_GRP_INVALID, ///< = CS_GRP_INVALID
-	//> Generic groups
-	TRICORE_GRP_CALL, ///< = CS_GRP_CALL
-	TRICORE_GRP_JUMP, ///< = CS_GRP_JUMP
-	TRICORE_GRP_ENDING, ///< = mark the end of the list of groups
+	/// Generic groups
+	TRICORE_GRP_CALL,   ///< = CS_GRP_CALL
+	TRICORE_GRP_JUMP,   ///< = CS_GRP_JUMP
+	TRICORE_GRP_ENDING, ///< mark the end of the list of groups
 } tricore_insn_group;
 
 typedef enum tricore_feature_t {
@@ -551,7 +557,7 @@ typedef enum tricore_feature_t {
 
 	// clang-format on
 	// generate content <TriCoreGenCSFeatureEnum.inc> end
-	TRICORE_FEATURE_ENDING, // <-- mark the end of the list of features
+	TRICORE_FEATURE_ENDING, ///< mark the end of the list of features
 } tricore_feature;
 
 #ifdef __cplusplus

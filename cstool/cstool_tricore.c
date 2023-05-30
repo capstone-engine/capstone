@@ -34,39 +34,51 @@ void print_insn_detail_tricore(csh handle, cs_insn *ins)
 			       op->imm);
 			break;
 		case TRICORE_OP_MEM:
-			printf("\t\toperands[%u].type: MEM\n", i);
-			if (op->mem.base != TRICORE_REG_INVALID)
-				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-				       i, cs_reg_name(handle, op->mem.base));
-			if (op->mem.disp != 0)
-				printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i,
-				       op->mem.disp);
+			printf("\t\toperands[%u].type: MEM\n"
+			       "\t\t\t.mem.base: REG = %s\n"
+			       "\t\t\t.mem.disp: 0x%x\n",
+			       i, cs_reg_name(handle, op->mem.base),
+			       op->mem.disp);
 			break;
 		}
 
-		// Print out all registers accessed by this instruction (either implicit or
-		// explicit)
-		if (!cs_regs_access(handle, ins, regs_read, &regs_read_count,
-				    regs_write, &regs_write_count)) {
-			if (regs_read_count) {
-				printf("\tRegisters read:");
-				for (i = 0; i < regs_read_count; i++) {
-					printf(" %s",
-					       cs_reg_name(handle,
-							   regs_read[i]));
-				}
-				printf("\n");
-			}
-
-			if (regs_write_count) {
-				printf("\tRegisters modified:");
-				for (i = 0; i < regs_write_count; i++) {
-					printf(" %s",
-					       cs_reg_name(handle,
-							   regs_write[i]));
-				}
-				printf("\n");
-			}
+		switch (op->access) {
+		default:
+			break;
+		case CS_AC_READ:
+			printf("\t\t\t.access: READ\n");
+			break;
+		case CS_AC_WRITE:
+			printf("\t\t\t.access: WRITE\n");
+			break;
+		case CS_AC_READ | CS_AC_WRITE:
+			printf("\t\t\t.access: READ | WRITE\n");
+			break;
 		}
 	}
+	// Print out all registers accessed by this instruction (either implicit or
+	// explicit)
+	if (!cs_regs_access(handle, ins, regs_read, &regs_read_count,
+			    regs_write, &regs_write_count)) {
+		if (regs_read_count) {
+			printf("\tRegisters read:");
+			for (i = 0; i < regs_read_count; i++) {
+				printf(" %s",
+				       cs_reg_name(handle, regs_read[i]));
+			}
+			printf("\n");
+		}
+
+		if (regs_write_count) {
+			printf("\tRegisters modified:");
+			for (i = 0; i < regs_write_count; i++) {
+				printf(" %s",
+				       cs_reg_name(handle, regs_write[i]));
+			}
+			printf("\n");
+		}
+	}
+
+	if (tricore->update_flags)
+		printf("\tUpdate-flags: True\n");
 }

@@ -265,11 +265,11 @@ typedef enum {
 	CS_DATA_TYPE_Glue =
 		189, // This glues nodes together during pre-RA sched
 
-	CS_DATA_TYPE_isVoid = 190,    // This has no value
+	CS_DATA_TYPE_isVoid = 190,  // This has no value
 
-	CS_DATA_TYPE_Untyped = 191,   // This value takes a register, but has
-				      // unspecified type.  The register class
-				      // will be determined by the opcode.
+	CS_DATA_TYPE_Untyped = 191, // This value takes a register, but has
+	// unspecified type.  The register class
+	// will be determined by the opcode.
 
 	CS_DATA_TYPE_funcref = 192,   // WebAssembly's funcref type
 	CS_DATA_TYPE_externref = 193, // WebAssembly's externref type
