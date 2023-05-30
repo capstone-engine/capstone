@@ -18,6 +18,7 @@ class AddCSDetail(Patch):
             }
     """
 
+    # TODO Simply checking for the passed types would be so much nicer.
     # Parameter lists of printOperand() functions we need to add `add_cs_detail()` to.
     # Spaces are removed, so we only need to check the letters.
     valid_param_lists = [
@@ -31,7 +32,10 @@ class AddCSDetail(Patch):
     def __init__(self, priority: int, arch: str):
         super().__init__(priority)
         self.arch = arch
-        self.apply_only_to = {"files": ["ARMInstPrinter.cpp", "PPCInstPrinter.cpp"], "archs": list()}
+        self.apply_only_to = {
+            "files": ["ARMInstPrinter.cpp", "PPCInstPrinter.cpp", "AArch64InstPrinter.cpp"],
+            "archs": list(),
+        }
 
     def get_search_pattern(self) -> str:
         return (
