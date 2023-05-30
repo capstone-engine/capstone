@@ -2,12 +2,11 @@
 
 #include <capstone/capstone.h>
 #include <capstone/platform.h>
+#include "cstool.h"
 
 static const char * ext_name[] = {
 	[BPF_EXT_LEN] = "#len",
 };
-
-void print_insn_detail_bpf(csh handle, cs_insn *ins);
 
 void print_insn_detail_bpf(csh handle, cs_insn *ins)
 {

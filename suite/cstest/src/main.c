@@ -20,6 +20,7 @@ static single_dict arches[] = {
 	{"CS_ARCH_M68K", CS_ARCH_M68K},
 	{"CS_ARCH_BPF", CS_ARCH_BPF},
 	{"CS_ARCH_RISCV", CS_ARCH_RISCV},
+	{"CS_ARCH_TRICORE", CS_ARCH_TRICORE},
 };
 
  static single_dict modes[] = {
@@ -62,6 +63,13 @@ static single_dict arches[] = {
 	{"CS_MODE_RISCV32", CS_MODE_RISCV32},
 	{"CS_MODE_RISCV64", CS_MODE_RISCV64},
 	{"CS_MODE_RISCVC", CS_MODE_RISCVC},
+	{"CS_MODE_TRICORE_110", CS_MODE_TRICORE_110},
+	{"CS_MODE_TRICORE_120", CS_MODE_TRICORE_120},
+	{"CS_MODE_TRICORE_130", CS_MODE_TRICORE_130},
+	{"CS_MODE_TRICORE_131", CS_MODE_TRICORE_131},
+	{"CS_MODE_TRICORE_160", CS_MODE_TRICORE_160},
+	{"CS_MODE_TRICORE_161", CS_MODE_TRICORE_161},
+	{"CS_MODE_TRICORE_162", CS_MODE_TRICORE_162},
 };
 
  static double_dict options[] = {
@@ -108,6 +116,13 @@ static single_dict arches[] = {
 	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08},
 	{"CS_MODE_RISCV32", CS_OPT_MODE, CS_MODE_RISCV32},
 	{"CS_MODE_RISCV64", CS_OPT_MODE, CS_MODE_RISCV64},
+	{"CS_MODE_TRICORE_110", CS_OPT_MODE, CS_MODE_TRICORE_110},
+	{"CS_MODE_TRICORE_120", CS_OPT_MODE, CS_MODE_TRICORE_120},
+	{"CS_MODE_TRICORE_130", CS_OPT_MODE, CS_MODE_TRICORE_130},
+	{"CS_MODE_TRICORE_131", CS_OPT_MODE, CS_MODE_TRICORE_131},
+	{"CS_MODE_TRICORE_160", CS_OPT_MODE, CS_MODE_TRICORE_160},
+	{"CS_MODE_TRICORE_161", CS_OPT_MODE, CS_MODE_TRICORE_161},
+	{"CS_MODE_TRICORE_162", CS_OPT_MODE, CS_MODE_TRICORE_162},
 	{"CS_OPT_UNSIGNED", CS_OPT_UNSIGNED, CS_OPT_ON},
 };
 
@@ -126,7 +141,7 @@ static int setup_MC(void **state)
 	char **list_params;	
 	int size_params;
 	int arch, mode;
-	int i, index, tmp_counter;
+	int i, tmp_counter;
 
 	if (failed_setup) {
 		fprintf(stderr, "[  ERROR   ] --- Invalid file to setup\n");
@@ -227,8 +242,7 @@ static int setup_issue(void **state)
 	char **list_params;	
 	int size_params;
 	int arch, mode;
-	int i, index, result;
-	char *(*function)(csh *, cs_mode, cs_insn*);
+	int i, result;
 
 	getDetail = 0;
 	failed_setup = 0;
@@ -355,11 +369,10 @@ static int teardown_issue(void **state)
 
 static void test_file(const char *filename)
 {
-	int size, i;
-	char **list_str; 
+	int i;
 	char *content, *tmp;
 	struct CMUnitTest *tests;
-	int issue_num, number_of_tests;
+	int number_of_tests;
 
 	printf("[+] TARGET: %s\n", filename);
 	content = readfile(filename);

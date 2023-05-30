@@ -39,6 +39,7 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
   - CAPSTONE_HAS_SYSZ: support SystemZ. Delete this to remove SystemZ support.
   - CAPSTONE_HAS_X86: support X86. Delete this to remove X86 support.
   - CAPSTONE_HAS_XCORE: support XCore. Delete this to remove XCore support.
+  - CAPSTONE_HAS_TRICORE: support TriCore. Delete this to remove TriCore support.
 
   By default, all 9 architectures are compiled in.
 

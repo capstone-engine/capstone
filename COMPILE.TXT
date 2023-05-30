@@ -100,6 +100,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	/usr/include/capstone/wasm.h
 	/usr/include/capstone/x86.h
 	/usr/include/capstone/xcore.h
+	/usr/include/capstone/tricore.h
 	/usr/lib/libcapstone.a
 	/usr/lib/libcapstone.so (for Linux/*nix), or /usr/lib/libcapstone.dylib (OSX)
 

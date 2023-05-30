@@ -410,6 +410,7 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	char *mnem;
 	unsigned int opcode = MCInst_getOpcode(MI);
+	memset(O->buffer, 0, sizeof(O->buffer));
 
 	// printf("opcode = %u\n", opcode);
 
@@ -635,6 +636,16 @@ void PPC_printInst(MCInst *MI, SStream *O, void *Info)
 		cs_mem_free(mnem);
 	} else
 		printInstruction(MI, O);
+
+	const char *mnem_end = strchr(O->buffer, ' ');
+	unsigned mnem_len = 0;
+	if (mnem_end)
+		mnem_len = mnem_end - O->buffer;
+	if (!mnem_end || mnem_len >= sizeof(MI->flat_insn->mnemonic))
+		mnem_len = sizeof(MI->flat_insn->mnemonic) - 1;
+
+	memset(MI->flat_insn->mnemonic, 0, sizeof(MI->flat_insn->mnemonic));
+	memcpy(MI->flat_insn->mnemonic, O->buffer, mnem_len);
 }
 
 // FIXME
