@@ -108,7 +108,7 @@ void add_str(char **src, const char *format, ...)
 void replace_hex(char *src)
 {
 	char *tmp, *result, *found, *origin, *orig_found;
-	int i, valid;
+	int valid;
 	unsigned long long int value;
 	char *tmp_tmp;
 
@@ -155,7 +155,7 @@ void replace_hex(char *src)
 void replace_negative(char *src, int mode)
 {
 	char *tmp, *result, *found, *origin, *orig_found;
-	int i, cnt, valid;
+	int cnt, valid;
 	char *value, *tmp_tmp;
 	unsigned short int tmp_short;
 	unsigned int tmp_int;
