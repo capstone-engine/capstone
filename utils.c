@@ -119,10 +119,10 @@ uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes)
 	uint32_t Insn;
 	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
 		Insn = (Bytes[3] << 0) | (Bytes[2] << 8) | (Bytes[1] << 16) |
-			   ((uint32_t)Bytes[0] << 24);
+		       ((uint32_t)Bytes[0] << 24);
 	else
-		Insn = ((uint32_t)Bytes[3] << 24) | (Bytes[2] << 16) | (Bytes[1] << 8) |
-			   (Bytes[0] << 0);
+		Insn = ((uint32_t)Bytes[3] << 24) | (Bytes[2] << 16) |
+		       (Bytes[1] << 8) | (Bytes[0] << 0);
 	return Insn;
 }
 
