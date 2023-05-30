@@ -137,9 +137,9 @@ class Differ:
 
     ts_cpp_lang: Language = None
     parser: Parser = None
-    translated_files: [Path]
-    diff_dest_files: [Path] = list()
-    old_files: [Path]
+    translated_files: list[Path]
+    diff_dest_files: list[Path] = list()
+    old_files: list[Path]
     conf_arch: dict
     conf_general: dict
     tree: Tree = None

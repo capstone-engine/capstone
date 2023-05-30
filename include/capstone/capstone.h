@@ -352,6 +352,39 @@ typedef struct cs_opt_skipdata {
 	void *user_data;
 } cs_opt_skipdata;
 
+#define MAX_NUM_OP_ENC_ITEMS 8
+#define MAX_NUM_OPC_BITS 64
+
+/// Provides information about an operand's encoding in the instruction
+typedef struct cs_operand_encoding {
+	/// Specifies how many pieces that form the full operand are encoded in the
+	/// instruction separately. For example if count is 2 it means a few bits of
+	/// this operand are in one location and the rest on another. If it's 0 then
+	/// the operand is NOT encoded anywhere in the instruction.
+	uint8_t operand_pieces_count;
+	/// The bit positions of each piece that form the full operand in order. If
+	/// there is only one piece then there is only one index as well. Likewise
+	/// if there are 4 pieces, there are 4 indexes and so on.
+	uint8_t indexes[MAX_NUM_OP_ENC_ITEMS];
+	/// The bit widths of each piece that form the full operand in order. If
+	/// there is only one piece then there is only one size as well. Likewise if
+	/// there are 4 pieces, there are 4 sizes and so on.
+	uint8_t sizes[MAX_NUM_OP_ENC_ITEMS];
+} cs_operand_encoding;
+
+/// Provides information about an operand's opcode in the instruction
+typedef struct cs_opcode_encoding {
+	/// Contains all the bits (in order) that form the full opcode.
+	/// Note that each bit is NOT necessarily next to each other in the
+	/// instruction bytes. (see below)
+	uint64_t bits;
+	/// As mentioned above, since the opcode bits may not be next to each other
+	/// this array comes to the rescue by providing the location of each bit
+	/// individually.
+	uint8_t indexes[MAX_NUM_OPC_BITS];
+	uint8_t
+		bit_count; ///< Specifies the number of bits that form the full opcode.
+} cs_opcode_encoding;
 
 #include "arm.h"
 #include "aarch64.h"
@@ -395,6 +428,8 @@ typedef struct cs_detail {
 	uint8_t groups_count; ///< number of groups this insn belongs to
 
 	bool writeback;	      ///< Instruction has writeback operands.
+
+	cs_opcode_encoding opcode_encoding; ///< The encoding of the opcode. (If bit count is 0 then no info is provided)
 
 	/// Architecture-specific instruction info
 	union {
@@ -474,7 +509,6 @@ typedef struct cs_insn {
 	///     is not NULL, its content is still irrelevant.
 	cs_detail *detail;
 } cs_insn;
-
 
 /// Calculate the offset of a disassembled instruction in its buffer, given its position
 /// in its array of disassembled insn

@@ -68,7 +68,7 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 				 cs_ac_type access);
 void ARM_set_detail_op_reg(MCInst *MI, unsigned OpNum, arm_reg Reg);
-void ARM_set_detail_op_sysop(MCInst *MI, int SysReg, arm_op_type type,
+void ARM_set_detail_op_sysop(MCInst *MI, unsigned OpNum, int SysReg, arm_op_type type,
 			     bool IsOutReg, uint8_t Mask, uint16_t Sysm);
 void ARM_set_detail_op_imm(MCInst *MI, unsigned OpNum, arm_op_type ImmType,
 			   int64_t Imm);
@@ -76,7 +76,7 @@ void ARM_set_detail_op_float(MCInst *MI, unsigned OpNum, uint64_t Imm);
 void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 			   int scale, int lshift, uint64_t Val);
 void ARM_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val,
-				  bool subtracted);
+								  bool subtracted, arm_mem_format Format);
 void ARM_set_detail_op_neon_lane(MCInst *MI, unsigned OpNum);
 
 void ARM_check_updates_flags(MCInst *MI);
