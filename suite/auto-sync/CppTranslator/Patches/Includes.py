@@ -214,7 +214,7 @@ def get_AArch64_includes(filename: str) -> bytes:
                 + b'#include "AArch64Linkage.h"\n'
                 + b'#include "AArch64Mapping.h"\n\n'
                 + b"#define GET_BANKEDREG_IMPL\n"
-                + b'#include "AArch64GenSystemRegister.inc"\n\n'
+                + b'#include "AArch64GenSystemOperands.inc"\n\n'
             )
         case "AArch64InstPrinter.h":
             return (
