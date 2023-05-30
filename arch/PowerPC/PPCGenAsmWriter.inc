@@ -6135,7 +6135,9 @@ static void printInstruction(MCInst *MI, SStream *O)
   uint64_t Bits = 0;
   Bits |= (uint64_t)OpInfo0[opcode] << 0;
   Bits |= (uint64_t)OpInfo1[opcode] << 32;
+#ifndef CAPSTONE_DIET
   SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
+#endif
 
 
   // Fragment 0 encoded into 5 bits for 19 unique commands.
