@@ -61,6 +61,7 @@ static single_dict arches[] = {
 	{"CS_MODE_BPF_EXTENDED", CS_MODE_BPF_EXTENDED},
 	{"CS_MODE_RISCV32", CS_MODE_RISCV32},
 	{"CS_MODE_RISCV64", CS_MODE_RISCV64},
+	{"CS_MODE_RISCVC", CS_MODE_RISCVC},
 };
 
  static double_dict options[] = {
