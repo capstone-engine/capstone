@@ -21686,7 +21686,7 @@ getRegisterName(unsigned RegNo, unsigned AltIdx) {
 #ifdef PRINT_ALIAS_INSTR
 #undef PRINT_ALIAS_INSTR
 
-static bool AArch64InstPrinterValidateMCOperand(const MCOperand &MCOp,
+static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
                   unsigned PredicateIndex);
 static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
 #ifndef CAPSTONE_DIET
@@ -33949,7 +33949,7 @@ static void printCustomAliasOperand(
 #endif // CAPSTONE_DIET
 }
 
-static bool AArch64InstPrinterValidateMCOperand(const MCOperand &MCOp,
+static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
                   unsigned PredicateIndex) {
   switch (PredicateIndex) {
   default:
