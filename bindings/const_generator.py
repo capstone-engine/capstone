@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h' ]
+include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'tricore.h' ]
 
 template = {
     'java': {
@@ -52,6 +52,7 @@ template = {
             'mos65xx.h': 'mos65xx',
             'bpf.h': 'bpf',
             'riscv.h': 'riscv',
+            'tricore.h': ['TRICORE', 'TriCore'],
             'comment_open': '#',
             'comment_close': '',
         },
@@ -199,6 +200,11 @@ def gen(lang):
             print("Warning: No binding found for %s" % target)
             continue
         prefix = templ[target]
+        prefixs = []
+        if isinstance(prefix, list):
+            prefixs = prefix
+            prefix = prefix[0].lower()
+
         outfile = open(templ['out_file'] %(prefix), 'wb')   # open as binary prevents windows newlines
         outfile.write((templ['header'] % (prefix)).encode("utf-8"))
 
@@ -237,7 +243,13 @@ def gen(lang):
                 xline.insert(1, '=')            # insert an = so the expression below can parse it
                 line = ' '.join(xline)
 
-            if not line.startswith(prefix.upper()):
+            def is_with_prefix(x):
+                if prefixs:
+                    return any(x.startswith(pre) for pre in prefixs)
+                else:
+                    return x.startswith(prefix.upper())
+
+            if not is_with_prefix(line):
                 continue
 
             tmp = line.strip().split(',')
@@ -249,91 +261,93 @@ def gen(lang):
                 t = re.sub(r'\((\d+)ULL << (\d+)\)', r'\1 << \2', t)    # (1ULL<<1) to 1 << 1
                 f = re.split('\s+', t)
 
-                if f[0].startswith(prefix.upper()):
-                    if len(f) > 1 and f[1] not in ('//', '///<', '='):
-                        print("Error: Unable to convert %s" % f)
-                        continue
-                    elif len(f) > 1 and f[1] == '=':
-                        rhs = ''.join(f[2:])
-                    else:
-                        rhs = str(count)
-                        count += 1
+                if not is_with_prefix(f[0]):
+                    continue
 
-                    try:
-                        count = int(rhs) + 1
-                        if (count == 1):
-                            outfile.write(("\n").encode("utf-8"))
-                    except ValueError:
-                        if lang == 'ocaml':
-                            # ocaml uses lsl for '<<', lor for '|'
-                            rhs = rhs.replace('<<', ' lsl ')
-                            rhs = rhs.replace('|', ' lor ')
-                            # ocaml variable has _ as prefix
-                            if rhs[0].isalpha():
-                                rhs = '_' + rhs
+                if len(f) > 1 and f[1] not in ('//', '///<', '='):
+                    print("Error: Unable to convert %s" % f)
+                    continue
+                elif len(f) > 1 and f[1] == '=':
+                    rhs = ''.join(f[2:])
+                else:
+                    rhs = str(count)
+                    count += 1
 
-                    if lang == 'swift':
-                        value = eval(rhs, None, values)
-                        exec('%s = %d' %(f[0].strip(), value), None, values)
-                    else:
-                        value = rhs
+                try:
+                    count = int(rhs) + 1
+                    if (count == 1):
+                        outfile.write(("\n").encode("utf-8"))
+                except ValueError:
+                    if lang == 'ocaml':
+                        # ocaml uses lsl for '<<', lor for '|'
+                        rhs = rhs.replace('<<', ' lsl ')
+                        rhs = rhs.replace('|', ' lor ')
+                        # ocaml variable has _ as prefix
+                        if rhs[0].isalpha():
+                            rhs = '_' + rhs
 
-                    name = f[0].strip()
+                if lang == 'swift':
+                    value = eval(rhs, None, values)
+                    exec('%s = %d' %(f[0].strip(), value), None, values)
+                else:
+                    value = rhs
 
-                    if 'rename' in templ:
-                        # constant renaming
-                        for pattern, replacement in templ['rename'].items():
-                            if re.match(pattern, name):
-                                name = re.sub(pattern, replacement, name)
-                                break
+                name = f[0].strip()
+
+                if 'rename' in templ:
+                    # constant renaming
+                    for pattern, replacement in templ['rename'].items():
+                        if re.match(pattern, name):
+                            name = re.sub(pattern, replacement, name)
+                            break
 
 
-                    if 'enum_header' in templ:
-                        # separate constants by enums based on name
-                        enum, name = pascalize_const(name)
-                        if enum not in enums:
-                            if len(enums) > 0:
-                                write_enum_extra_options(outfile, templ, last_enum, enums[last_enum])
-                                outfile.write((templ['enum_footer']).encode("utf-8"))
-                            last_enum = enum
+                if 'enum_header' in templ:
+                    # separate constants by enums based on name
+                    enum, name = pascalize_const(name)
+                    if enum not in enums:
+                        if len(enums) > 0:
+                            write_enum_extra_options(outfile, templ, last_enum, enums[last_enum])
+                            outfile.write((templ['enum_footer']).encode("utf-8"))
+                        last_enum = enum
 
-                            if 'enum_doc' in templ:
-                                for doc_line in doc_lines:
-                                    outfile.write((templ['enum_doc'] %(doc_line)).encode("utf-8"))
-                                doc_lines = []
-
-                            if 'option_sets' in templ and enum in templ['option_sets']:
-                                outfile.write((templ['option_set_header'] %(enum, templ['option_sets'][enum])).encode("utf-8"))
-                            else:
-                                outfile.write((templ['enum_header'] %(enum, enum_type(enum, templ))).encode("utf-8"))
-                            enums[enum] = {}
+                        if 'enum_doc' in templ:
+                            for doc_line in doc_lines:
+                                outfile.write((templ['enum_doc'] %(doc_line)).encode("utf-8"))
+                            doc_lines = []
 
                         if 'option_sets' in templ and enum in templ['option_sets']:
-                            # option set format
-                            line_format = templ['option_format'].format(option='%s',type=enum,value='%s')
-                            if value == 0:
-                                continue # skip empty option
-                            # option set values need not be literals
-                            value = rhs
-                        elif 'dup_line_format' in templ and value in enums[enum].values():
-                            # different format for duplicate values?
-                            line_format = templ['dup_line_format']
+                            outfile.write((templ['option_set_header'] %(enum, templ['option_sets'][enum])).encode("utf-8"))
                         else:
-                            line_format = templ['line_format']
-                        enums[enum][name] = value
+                            outfile.write((templ['enum_header'] %(enum, enum_type(enum, templ))).encode("utf-8"))
+                        enums[enum] = {}
 
-                        # escape reserved words
-                        if 'reserved_words' in templ and name in templ['reserved_words']:
-                            name = templ['reserved_word_format'] %(name)
-
-                        # print documentation?
-                        if 'doc_line_format' in templ and '///<' in line:
-                            doc = line.split('///<')[1].strip()
-                            outfile.write((templ['doc_line_format'] %(doc)).encode("utf-8"))
+                    if 'option_sets' in templ and enum in templ['option_sets']:
+                        # option set format
+                        line_format = templ['option_format'].format(option='%s',type=enum,value='%s')
+                        if value == 0:
+                            continue # skip empty option
+                        # option set values need not be literals
+                        value = rhs
+                    elif 'dup_line_format' in templ and value in enums[enum].values():
+                        # different format for duplicate values?
+                        line_format = templ['dup_line_format']
                     else:
                         line_format = templ['line_format']
+                    enums[enum][name] = value
 
-                    outfile.write((line_format %(name, value)).encode("utf-8"))
+                    # escape reserved words
+                    if 'reserved_words' in templ and name in templ['reserved_words']:
+                        name = templ['reserved_word_format'] %(name)
+
+                    # print documentation?
+                    if 'doc_line_format' in templ and '///<' in line:
+                        doc = line.split('///<')[1].strip()
+                        outfile.write((templ['doc_line_format'] %(doc)).encode("utf-8"))
+                else:
+                    line_format = templ['line_format']
+
+                outfile.write((line_format %(name, value)).encode("utf-8"))
 
         if 'enum_footer' in templ:
             write_enum_extra_options(outfile, templ, enum, enums[enum])

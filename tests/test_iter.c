@@ -75,6 +75,10 @@ static void test()
 #define RISCV_CODE64 "\x13\x04\xa8\x7a"  // aaa80413
 #endif
 
+#ifdef CAPSTONE_HAS_TRICORE
+#define TRICORE_CODE "\x16\x01\x20\x01\x1d\x00\x02\x00\x8f\x70\x00\x11\x40\xae\x89\xee\x04\x09\x42\xf2\xe2\xf2\xc2\x11\x19\xff\xc0\x70\x19\xff\x20\x10"
+#endif
+
 struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
 		{
@@ -248,6 +252,15 @@ struct platform platforms[] = {
 			sizeof(RISCV_CODE64) - 1,
 			"RISCV64"
 		},
+#endif
+#ifdef CAPSTONE_HAS_TRICORE
+	    {
+		CS_ARCH_TRICORE,
+		CS_MODE_BIG_ENDIAN | CS_MODE_TRICORE_162,
+		(unsigned char*)TRICORE_CODE,
+		sizeof(TRICORE_CODE) - 1,
+		"TriCore"
+	    },
 #endif
 	};
 

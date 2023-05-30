@@ -8,6 +8,7 @@
 #include "../../MCDisassembler.h"
 #include "../../utils.h"
 #include "SHDisassembler.h"
+#include "capstone/sh.h"
 
 #define regs_read(_detail, _reg)					\
 	if (_detail)							\
@@ -131,13 +132,13 @@ static int isalevel(cs_mode mode)
 }
 
 enum co_processor {none, shfpu, shdsp};
-union reg_insn {
+typedef union reg_insn {
 	sh_reg reg;
 	sh_insn insn;
-};
+} reg_insn;
 struct ri_list {
 	int no;
-	union reg_insn ri;
+	int /* reg_insn */ri;
 	int level;
 	enum co_processor cp;
 };
@@ -162,12 +163,11 @@ static const struct ri_list ldc_stc_regs[] = {
 		{-1, SH_REG_INVALID, ISA_ALL, none},
 };
 
-enum lookup_type {reg, insn};
-static union reg_insn lookup(enum lookup_type ri, const struct ri_list *list,
+static sh_insn lookup_insn(const struct ri_list *list,
 			     int no, cs_mode mode)
 {
 	int level = isalevel(mode);
-	union reg_insn error = {SH_REG_INVALID};
+	sh_insn error = SH_INS_INVALID;
 	for(; list->no >= 0; list++) {
 		if (no != list->no)
 			continue;
@@ -183,8 +183,28 @@ static union reg_insn lookup(enum lookup_type ri, const struct ri_list *list,
 	return error;
 }
 
-#define lookup_regs(list, no, mode) (lookup(reg, list, no, mode).reg)
-#define lookup_insn(list, no, mode) (lookup(insn, list, no, mode).insn)
+static sh_reg lookup_regs(const struct ri_list *list,
+			     int no, cs_mode mode)
+{
+	int level = isalevel(mode);
+	sh_reg error = SH_REG_INVALID;
+	for(; list->no >= 0; list++) {
+		if (no != list->no)
+			continue;
+		if (((level >= 0) && (level < list->level)) ||
+		    ((level < 0) && (-(level) != list->level)))
+			continue;
+		if ((list->cp == none) ||
+		    ((list->cp == shfpu) && (mode & CS_MODE_SHFPU)) ||
+		    ((list->cp == shdsp) && (mode & CS_MODE_SHDSP))) {
+			return list->ri;
+		}
+	}
+	return error;
+}
+
+// #define lookup_regs(list, no, mode) ((reg_insn)(lookup(reg, list, no, mode).reg))
+// #define lookup_insn(list, no, mode) ((sh_insn)(lookup(insn, list, no, mode).insn))
 
 static sh_reg opSTCsrc(uint16_t code, MCInst *MI, cs_mode mode,
 		       sh_info *info, cs_detail *detail)
@@ -729,7 +749,7 @@ static bool op4xx5(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 		   sh_info *info, cs_detail *detail)
 {
 	int r = (code >> 8) & 0x0f;
-	enum direction rw;
+	enum direction rw = read;
 	static const struct ri_list list[] = {
 		{0, SH_INS_ROTR, ISA_ALL, none},
 		{1, SH_INS_CMP_PL, ISA_ALL, none},
@@ -884,7 +904,7 @@ static bool op4xxb(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 	int sz = 0;
 	int grp = SH_GRP_INVALID;
 	sh_op_mem_type memop = SH_OP_MEM_INVALID;
-	enum direction rw;
+	enum direction rw = read;
 	static const struct ri_list list[] = {
 		{0, SH_INS_JSR, ISA_ALL, none},
 		{1, SH_INS_TAS, ISA_ALL, none},
@@ -1741,15 +1761,15 @@ static void set_reg_dsp_write_z(sh_info *info, int pos, int r,
 	regs_write(detail, regs_dz[r]);
 }	
 
-static bool dsp_op_cc_3opr(uint32_t code, sh_info *info, sh_insn insn,
-			   sh_insn insn2, cs_detail *detail)
+static bool dsp_op_cc_3opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
+			   sh_dsp_insn_type insn2, cs_detail *detail)
 {
 	info->op.operands[2].dsp.cc = (code >> 8) & 3;
 	if (info->op.operands[2].dsp.cc > 0) {
 		info->op.operands[2].dsp.insn = insn;
 	} else {
 		if (insn2 != SH_INS_DSP_INVALID)
-			info->op.operands[2].dsp.insn = insn2;
+			info->op.operands[2].dsp.insn = (sh_dsp_insn) insn2;
 		else
 			return MCDisassembler_Fail;
 	}
@@ -1765,12 +1785,12 @@ static bool dsp_op_cc_3opr(uint32_t code, sh_info *info, sh_insn insn,
 	return MCDisassembler_Success;
 }
 
-static bool dsp_op_cc_2opr(uint32_t code, sh_info *info, sh_insn insn,
+static bool dsp_op_cc_2opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
 			   int xy, int b, cs_detail *detail)
 {
 	if (((code >> 8) & 3) == 0)
 		return MCDisassembler_Fail;
-	info->op.operands[2].dsp.insn = insn;
+	info->op.operands[2].dsp.insn = (sh_dsp_insn) insn;
 	set_reg_dsp_read(info, 0, xy, (code >> b) & 3, detail);
 	set_reg_dsp_write_z(info, 2, code & 0x0f, detail);
 	info->op.operands[2].dsp.cc = (code >> 8) & 3;
@@ -1778,10 +1798,10 @@ static bool dsp_op_cc_2opr(uint32_t code, sh_info *info, sh_insn insn,
 	return MCDisassembler_Success;
 }
 	
-static bool dsp_op_cc0_2opr(uint32_t code, sh_info *info, sh_insn insn,
+static bool dsp_op_cc0_2opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
 			    int xy, int b, cs_detail *detail)
 {
-	info->op.operands[2].dsp.insn = insn;
+	info->op.operands[2].dsp.insn = (sh_dsp_insn) insn;
 	set_reg_dsp_read(info, 0, xy, (code >> b) & 3, detail);
 	set_reg_dsp_write_z(info, 2, code & 0x0f, detail);
 	info->op.operands[2].dsp.cc = (code >> 8) & 3;	
@@ -1894,11 +1914,11 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		}
 	case 0x08:
 		return dsp_op_cc_3opr(code, info,
-				      SH_INS_DSP_PSUB, SH_INS_DSP_PSUBC,
+				      SH_INS_DSP_PSUB, (sh_dsp_insn_type) SH_INS_DSP_PSUBC,
 				      detail);
 	case 0x09:
 		return dsp_op_cc_3opr(code, info,
-				      SH_INS_DSP_PXOR, SH_INS_DSP_PWSB,
+				      SH_INS_DSP_PXOR, (sh_dsp_insn_type) SH_INS_DSP_PWSB,
 				      detail);
 	case 0x0a:
 		switch(sx) {
@@ -1937,13 +1957,14 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		}
 	case 0x0d:
 		return dsp_op_cc_3opr(code, info,
-				      SH_INS_DSP_POR, SH_INS_DSP_PWAD,
-				      detail);
+								SH_INS_DSP_POR,
+								(sh_dsp_insn_type) SH_INS_DSP_PWAD,
+								detail);
 	case 0x0e:
 		if (cc == 0) {
 			if (sx != 0)
 				return MCDisassembler_Fail;
- 			info->op.operands[2].dsp.insn = SH_INS_DSP_PRND;
+			info->op.operands[2].dsp.insn = SH_INS_DSP_PRND;
 			set_reg_dsp_read(info, 0, f_sy, sy, detail);
 			set_reg_dsp_write_z(info, 1, dz, detail);
 			info->op.op_count = 3;

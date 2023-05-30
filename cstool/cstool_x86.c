@@ -4,8 +4,7 @@
 #include <stdlib.h>
 
 #include <capstone/capstone.h>
-
-void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
+#include "cstool.h"
 
 void print_string_hex(const char *comment, unsigned char *str, size_t len);
 

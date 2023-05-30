@@ -32,6 +32,7 @@ def test_file(fname):
         "CS_ARCH_X86": CS_ARCH_X86,
         "CS_ARCH_XCORE": CS_ARCH_XCORE,
         "CS_ARCH_RISCV": CS_ARCH_RISCV,
+        "CS_ARCH_TRICORE": CS_ARCH_TRICORE,
     }
     
     modes = {
@@ -60,6 +61,13 @@ def test_file(fname):
         "CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN": CS_MODE_MIPS64+CS_MODE_BIG_ENDIAN,
         "CS_MODE_RISCV32": CS_MODE_RISCV32,
         "CS_MODE_RISCV64": CS_MODE_RISCV64,
+        "CS_MODE_TRICORE_110": CS_MODE_TRICORE_110,
+        "CS_MODE_TRICORE_120": CS_MODE_TRICORE_120,
+        "CS_MODE_TRICORE_130": CS_MODE_TRICORE_130,
+        "CS_MODE_TRICORE_131": CS_MODE_TRICORE_131,
+        "CS_MODE_TRICORE_160": CS_MODE_TRICORE_160,
+        "CS_MODE_TRICORE_161": CS_MODE_TRICORE_161,
+        "CS_MODE_TRICORE_162": CS_MODE_TRICORE_162,
     }
 
     mc_modes = {
@@ -96,6 +104,13 @@ def test_file(fname):
         ("CS_ARCH_BPF", "CS_MODE_BIG_ENDIAN+CS_MODE_BPF_EXTENDED"): 32,
         ("CS_ARCH_RISCV", "CS_MODE_RISCV32"): 44,
         ("CS_ARCH_RISCV", "CS_MODE_RISCV64"): 45,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_110"): 47,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_120"): 48,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_130"): 49,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_131"): 50,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_160"): 51,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_161"): 52,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_162"): 53,
     }
 
     #if not option in ('', 'None'):
@@ -115,6 +130,7 @@ def test_file(fname):
             continue
         hex_code = code.replace('0x', '')
         hex_code = hex_code.replace(',', '')
+        hex_code = hex_code.replace(' ', '')
         try:
             hex_data = hex_code.strip().decode('hex')
         except:

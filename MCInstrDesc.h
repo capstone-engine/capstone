@@ -25,11 +25,21 @@
 // Machine Operand Flags and Description
 //===----------------------------------------------------------------------===//
 
-// Operand constraints
-enum MCOI_OperandConstraint {
-	MCOI_TIED_TO = 0,    // Must be allocated the same register as.
+/// Operand constraints. These are encoded in 16 bits with one of the
+/// low-order 3 bits specifying that a constraint is present and the
+/// corresponding high-order hex digit specifying the constraint value.
+/// This allows for a maximum of 3 constraints.
+typedef enum {
+	MCOI_TIED_TO = 0,    // Operand tied to another operand.
 	MCOI_EARLY_CLOBBER   // Operand is an early clobber register operand
-};
+} MCOI_OperandConstraint;
+
+// Define a macro to produce each constraint value.
+#define CONSTRAINT_MCOI_TIED_TO(op) \
+  ((1 << MCOI_TIED_TO) | ((op) << (4 + MCOI_TIED_TO * 4)))
+
+#define CONSTRAINT_MCOI_EARLY_CLOBBER \
+  (1 << MCOI_EARLY_CLOBBER)
 
 /// OperandFlags - These are flags set on operands, but should be considered
 /// private, all access should go through the MCOperandInfo accessors.
@@ -57,7 +67,11 @@ enum MCOI_OperandType {
 	MCOI_OPERAND_GENERIC_5 = 11,
 	MCOI_OPERAND_LAST_GENERIC = 11,
 
-	MCOI_OPERAND_FIRST_TARGET = 12,
+	MCOI_OPERAND_FIRST_GENERIC_IMM = 12,
+	MCOI_OPERAND_GENERIC_IMM_0 = 12,
+	MCOI_OPERAND_LAST_GENERIC_IMM = 12,
+
+	MCOI_OPERAND_FIRST_TARGET = 13,
 };
 
 
@@ -143,5 +157,11 @@ typedef struct MCInstrDesc {
 bool MCOperandInfo_isPredicate(const MCOperandInfo *m);
 
 bool MCOperandInfo_isOptionalDef(const MCOperandInfo *m);
+
+bool MCOperandInfo_isTiedToOp(const MCOperandInfo *m);
+
+int MCOperandInfo_getOperandConstraint(const MCInstrDesc *OpInfo,
+				       unsigned OpNum,
+				       MCOI_OperandConstraint Constraint);
 
 #endif
