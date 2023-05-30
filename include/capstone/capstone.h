@@ -201,15 +201,16 @@ typedef struct cs_opt_mnem {
 
 /// Runtime option for the disassembled engine
 typedef enum cs_opt_type {
-	CS_OPT_INVALID = 0,	///< No option specified
-	CS_OPT_SYNTAX,	///< Assembly output syntax
-	CS_OPT_DETAIL,	///< Break down instruction structure into details
-	CS_OPT_MODE,	///< Change engine's mode at run-time
-	CS_OPT_MEM,	///< User-defined dynamic memory related functions
+	CS_OPT_INVALID = 0, ///< No option specified
+	CS_OPT_SYNTAX,	    ///< Assembly output syntax
+	CS_OPT_DETAIL,	    ///< Break down instruction structure into details
+	CS_OPT_MODE,	    ///< Change engine's mode at run-time
+	CS_OPT_MEM,	    ///< User-defined dynamic memory related functions
 	CS_OPT_SKIPDATA, ///< Skip data when disassembling. Then engine is in SKIPDATA mode.
 	CS_OPT_SKIPDATA_SETUP, ///< Setup user-defined function for SKIPDATA option
-	CS_OPT_MNEMONIC, ///< Customize instruction mnemonic
-	CS_OPT_UNSIGNED, ///< print immediate operands in unsigned form
+	CS_OPT_MNEMONIC,       ///< Customize instruction mnemonic
+	CS_OPT_UNSIGNED,       ///< print immediate operands in unsigned form
+	CS_OPT_NO_BRANCH_OFFSET, ///< ARM, prints branch immediates without offset.
 } cs_opt_type;
 
 /// Runtime option value (associated with option type above)
@@ -226,11 +227,12 @@ typedef enum cs_opt_value {
 
 /// Common instruction operand types - to be consistent across all architectures.
 typedef enum cs_op_type {
-	CS_OP_INVALID = 0,  ///< uninitialized/invalid operand.
-	CS_OP_REG,          ///< Register operand.
-	CS_OP_IMM,          ///< Immediate operand.
-	CS_OP_MEM,          ///< Memory operand.
-	CS_OP_FP,           ///< Floating-Point operand.
+	CS_OP_INVALID = 0, ///< uninitialized/invalid operand.
+	CS_OP_REG,	   ///< Register operand.
+	CS_OP_IMM,	   ///< Immediate operand.
+	CS_OP_FP,	   ///< Floating-Point operand.
+	CS_OP_MEM =
+		0x80, ///< Memory operand. Can be ORed with another operand type.
 } cs_op_type;
 
 /// Common instruction operand access types - to be consistent across all architectures.
@@ -324,20 +326,28 @@ typedef struct cs_opt_skipdata {
 #include "sh.h"
 #include "tricore.h"
 
+#define MAX_IMPL_W_REGS 20
+#define MAX_IMPL_R_REGS 20
+#define MAX_NUM_GROUPS 8
+
 /// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 /// Initialized as memset(., 0, offsetof(cs_detail, ARCH)+sizeof(cs_ARCH))
 /// by ARCH_getInstruction in arch/ARCH/ARCHDisassembler.c
 /// if cs_detail changes, in particular if a field is added after the union,
 /// then update arch/ARCH/ARCHDisassembler.c accordingly
 typedef struct cs_detail {
-	uint16_t regs_read[16]; ///< list of implicit registers read by this insn
+	uint16_t regs_read
+		[MAX_IMPL_R_REGS]; ///< list of implicit registers read by this insn
 	uint8_t regs_read_count; ///< number of implicit registers read by this insn
 
-	uint16_t regs_write[20]; ///< list of implicit registers modified by this insn
+	uint16_t regs_write
+		[MAX_IMPL_W_REGS]; ///< list of implicit registers modified by this insn
 	uint8_t regs_write_count; ///< number of implicit registers modified by this insn
 
-	uint8_t groups[8]; ///< list of group this instruction belong to
+	uint8_t groups[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	uint8_t groups_count; ///< number of groups this insn belongs to
+
+	bool writeback;	      ///< Instruction has writeback operands.
 
 	/// Architecture-specific instruction info
 	union {
