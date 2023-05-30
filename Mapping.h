@@ -21,9 +21,9 @@ typedef struct insn_map {
 	unsigned short mapid;		    // The Capstone instruction id
 #ifndef CAPSTONE_DIET
 	uint16_t regs_use[MAX_IMPL_R_REGS]; ///< list of implicit registers used by
-					    ///< this instruction
+		///< this instruction
 	uint16_t regs_mod[MAX_IMPL_W_REGS]; ///< list of implicit registers modified
-					    ///< by this instruction
+		///< by this instruction
 	unsigned char groups
 		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	bool branch;		  // branch instruction?
@@ -47,7 +47,7 @@ typedef struct {
 	uint8_t /* cs_ac_type */ access; ///< The access type (read, write)
 	uint8_t				 /* cs_data_type */
 		dtypes[MAX_NO_DATA_TYPES]; ///< List of op types. Terminated by
-					   ///< CS_DATA_TYPE_LAST
+		///< CS_DATA_TYPE_LAST
 } mapping_op;
 
 #define MAX_NO_INSN_MAP_OPS 16
@@ -72,14 +72,14 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 /// Assumes the istruction operands map is called "insn_operands"
 /// Only usable by `auto-sync` archs!
 #define map_get_op_type(MI, OpNum) \
-	mapping_get_op_type(MI, OpNum, insn_operands, \
+	mapping_get_op_type(MI, OpNum, (const map_insn_ops *)insn_operands, \
 			    sizeof(insn_operands) / sizeof(insn_operands[0]))
 
 /// Macro for easier access of operand access flags from the map.
 /// Assumes the istruction operands map is called "insn_operands"
 /// Only usable by `auto-sync` archs!
 #define map_get_op_access(MI, OpNum) \
-	mapping_get_op_access(MI, OpNum, insn_operands, \
+	mapping_get_op_access(MI, OpNum, (const map_insn_ops *)insn_operands, \
 			      sizeof(insn_operands) / \
 				      sizeof(insn_operands[0]))
 
@@ -112,6 +112,7 @@ void map_cs_id(MCInst *MI, const insn_map *imap, unsigned int imap_size);
 
 DECL_get_detail_op(arm, ARM);
 DECL_get_detail_op(ppc, PPC);
+DECL_get_detail_op(tricore, TriCore);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
@@ -131,6 +132,8 @@ DEFINE_inc_detail_op_count(arm, ARM);
 DEFINE_dec_detail_op_count(arm, ARM);
 DEFINE_inc_detail_op_count(ppc, PPC);
 DEFINE_dec_detail_op_count(ppc, PPC);
+DEFINE_inc_detail_op_count(tricore, TriCore);
+DEFINE_dec_detail_op_count(tricore, TriCore);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)
@@ -154,6 +157,7 @@ static inline void set_doing_mem(const MCInst *MI, bool status)
 
 DEFINE_get_arch_detail(arm, ARM);
 DEFINE_get_arch_detail(ppc, PPC);
+DEFINE_get_arch_detail(tricore, TriCore);
 
 static inline bool detail_is_set(const MCInst *MI)
 {

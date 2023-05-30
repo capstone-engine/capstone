@@ -5,10 +5,13 @@
 
 #include <stdio.h> // debug
 #include <string.h>
+#include <assert.h>
 
 #include "../../utils.h"
+#include "../../cs_simple_types.h"
 
 #include "TriCoreMapping.h"
+#include "TriCoreLinkage.h"
 
 #define GET_INSTRINFO_ENUM
 
@@ -30,52 +33,41 @@ static insn_map insns[] = {
 #include "TriCoreGenCSMappingInsn.inc"
 };
 
-unsigned int TriCore_map_insn_id(cs_struct *h, unsigned int id)
-{
-	unsigned short i =
-		insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	if (i != 0) {
-		return insns[i].mapid;
-	}
-	return 0;
-}
-
-// given internal insn id, return public instruction info
 void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	unsigned short i;
+	// Not used. Information is set after disassembly.
+}
 
-	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	if (i != 0) {
-		insn->id = insns[i].mapid;
-
-		if (h->detail) {
 #ifndef CAPSTONE_DIET
-			memcpy(insn->detail->regs_read, insns[i].regs_use,
-			       sizeof(insns[i].regs_use));
-			insn->detail->regs_read_count =
-				(uint8_t)count_positive(insns[i].regs_use);
+static tricore_reg flag_regs[] = { TRICORE_REG_PSW };
+#endif // CAPSTONE_DIET
 
-			memcpy(insn->detail->regs_write, insns[i].regs_mod,
-			       sizeof(insns[i].regs_mod));
-			insn->detail->regs_write_count =
-				(uint8_t)count_positive(insns[i].regs_mod);
-
-			memcpy(insn->detail->groups, insns[i].groups,
-			       sizeof(insns[i].groups));
-			insn->detail->groups_count =
-				(uint8_t)count_positive8(insns[i].groups);
-
-			if (insns[i].branch || insns[i].indirect_branch) {
-				// this insn also belongs to JUMP group. add JUMP group
-				insn->detail
-					->groups[insn->detail->groups_count] =
-					TRICORE_GRP_JUMP;
-				insn->detail->groups_count++;
+static inline void check_updates_flags(MCInst *MI)
+{
+#ifndef CAPSTONE_DIET
+	if (!MI->flat_insn->detail)
+		return;
+	cs_detail *detail = MI->flat_insn->detail;
+	for (int i = 0; i < detail->regs_write_count; ++i) {
+		if (detail->regs_write[i] == 0)
+			return;
+		for (int j = 0; j < ARR_SIZE(flag_regs); ++j) {
+			if (detail->regs_write[i] == flag_regs[j]) {
+				detail->tricore.update_flags = true;
+				return;
 			}
-#endif
 		}
 	}
+#endif // CAPSTONE_DIET
+}
+
+void TriCore_set_instr_map_data(MCInst *MI)
+{
+	map_cs_id(MI, insns, ARR_SIZE(insns));
+	map_implicit_reads(MI, insns);
+	map_implicit_writes(MI, insns);
+	check_updates_flags(MI);
+	map_groups(MI, insns);
 }
 
 #ifndef CAPSTONE_DIET
@@ -130,4 +122,120 @@ const char *TriCore_group_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+/// A LLVM<->CS Mapping entry of an operand.
+typedef struct insn_op {
+	uint8_t /* cs_op_type */ type;	 ///< Operand type (e.g.: reg, imm, mem)
+	uint8_t /* cs_ac_type */ access; ///< The access type (read, write)
+	uint8_t				 /* cs_data_type */
+		dtypes[10]; ///< List of op types. Terminated by CS_DATA_TYPE_LAST
+} insn_op;
+
+///< Operands of an instruction.
+typedef struct {
+	insn_op ops[16]; ///< NULL terminated array of operands.
+} insn_ops;
+
+const insn_ops insn_operands[] = {
+#include "TriCoreGenCSMappingInsnOp.inc"
+};
 #endif
+
+void TriCore_set_access(MCInst *MI)
+{
+#ifndef CAPSTONE_DIET
+	if (!(MI->csh->detail == CS_OPT_ON && MI->flat_insn->detail))
+		return;
+
+	assert(MI->Opcode < ARR_SIZE(insn_operands));
+
+	cs_detail *detail = MI->flat_insn->detail;
+	cs_tricore *tc = &(detail->tricore);
+	for (int i = 0; i < tc->op_count; ++i) {
+		cs_ac_type ac = map_get_op_access(MI, i);
+		cs_tricore_op *op = &tc->operands[i];
+		op->access = ac;
+		cs_op_type op_type = map_get_op_type(MI, i);
+		if (op_type != CS_OP_REG) {
+			continue;
+		}
+		if (ac & CS_AC_READ) {
+			detail->regs_read[detail->regs_read_count++] = op->reg;
+		}
+		if (ac & CS_AC_WRITE) {
+			detail->regs_write[detail->regs_write_count++] =
+				op->reg;
+		}
+	}
+#endif
+}
+
+void TriCore_reg_access(const cs_insn *insn, cs_regs regs_read,
+			uint8_t *regs_read_count, cs_regs regs_write,
+			uint8_t *regs_write_count)
+{
+#ifndef CAPSTONE_DIET
+	uint8_t read_count, write_count;
+	cs_detail *detail = insn->detail;
+	read_count = detail->regs_read_count;
+	write_count = detail->regs_write_count;
+
+	// implicit registers
+	memcpy(regs_read, detail->regs_read,
+	       read_count * sizeof(detail->regs_read[0]));
+	memcpy(regs_write, detail->regs_write,
+	       write_count * sizeof(detail->regs_write[0]));
+
+	// explicit registers
+	cs_tricore *tc = &detail->tricore;
+	for (uint8_t i = 0; i < tc->op_count; i++) {
+		cs_tricore_op *op = &(tc->operands[i]);
+		switch ((int)op->type) {
+		case TRICORE_OP_REG:
+			if ((op->access & CS_AC_READ) &&
+			    !arr_exist(regs_read, read_count, op->reg)) {
+				regs_read[read_count] = (uint16_t)op->reg;
+				read_count++;
+			}
+			if ((op->access & CS_AC_WRITE) &&
+			    !arr_exist(regs_write, write_count, op->reg)) {
+				regs_write[write_count] = (uint16_t)op->reg;
+				write_count++;
+			}
+			break;
+		case TRICORE_OP_MEM:
+			// registers appeared in memory references always being read
+			if ((op->mem.base != ARM_REG_INVALID) &&
+			    !arr_exist(regs_read, read_count, op->mem.base)) {
+				regs_read[read_count] = (uint16_t)op->mem.base;
+				read_count++;
+			}
+		default:
+			break;
+		}
+	}
+
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
+#endif
+}
+
+bool TriCore_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
+			    MCInst *MI, uint16_t *Size, uint64_t Address,
+			    void *Info)
+{
+	return TriCore_LLVM_getInstruction(handle, Bytes, ByteLen, MI, Size,
+					   Address, Info);
+}
+
+void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
+{
+	TriCore_LLVM_printInst(MI, MI->address, O);
+}
+
+const char *TriCore_getRegisterName(csh handle, unsigned int RegNo)
+{
+	return TriCore_LLVM_getRegisterName(RegNo);
+}
+
+#endif // CAPSTONE_HAS_TRICORE

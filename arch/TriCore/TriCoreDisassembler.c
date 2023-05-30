@@ -27,31 +27,8 @@
 #include "../../MathExtras.h"
 
 #include "TriCoreDisassembler.h"
-
-static bool readInstruction16(const uint8_t *code, size_t code_len,
-			      uint16_t *insn)
-{
-	if (code_len < 2)
-		// insufficient data
-		return false;
-
-	// Encoded as a little-endian 16-bit word in the stream.
-	*insn = (code[0] << 0) | (code[1] << 8);
-	return true;
-}
-
-static bool readInstruction32(const uint8_t *code, size_t code_len,
-			      uint32_t *insn)
-{
-	if (code_len < 4)
-		// insufficient data
-		return false;
-
-	// Encoded as a little-endian 32-bit word in the stream.
-	*insn = (code[0] << 0) | (code[1] << 8) | (code[2] << 16) |
-		(code[3] << 24);
-	return true;
-}
+#include "TriCoreMapping.h"
+#include "TriCoreLinkage.h"
 
 static unsigned getReg(MCRegisterInfo *MRI, unsigned RC, unsigned RegNo)
 {
@@ -1485,14 +1462,12 @@ static inline bool tryGetInstruction16(const uint8_t *code, size_t code_len,
 				       uint64_t address, void *info,
 				       const uint8_t *decoderTable16)
 {
-	uint16_t insn16;
-	DecodeStatus Result;
-	if (!readInstruction16(code, code_len, &insn16)) {
+	if (code_len < 2) {
 		return false;
 	}
-	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_2(decoderTable16, MI, insn16, address, info,
-				     0);
+	uint16_t insn16 = readBytes16(MI, code);
+	DecodeStatus Result = decodeInstruction_2(decoderTable16, MI, insn16,
+						  address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 2;
 		return true;
@@ -1505,14 +1480,12 @@ static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len,
 				       uint64_t address, void *info,
 				       const uint8_t *decoderTable32)
 {
-	uint32_t insn32;
-	DecodeStatus Result;
-	if (!readInstruction32(code, code_len, &insn32)) {
+	if (code_len < 4) {
 		return false;
 	}
-	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_4(decoderTable32, MI, insn32, address, info,
-				     0);
+	uint32_t insn32 = readBytes32(MI, code);
+	DecodeStatus Result = decodeInstruction_4(decoderTable32, MI, insn32,
+						  address, info, 0);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;
@@ -1520,9 +1493,9 @@ static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len,
 	return false;
 }
 
-bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len,
-			    MCInst *MI, uint16_t *size, uint64_t address,
-			    void *info)
+static bool getInstruction(csh ud, const uint8_t *code, size_t code_len,
+			   MCInst *MI, uint16_t *size, uint64_t address,
+			   void *info)
 {
 	if (!ud) {
 		return false;
@@ -1569,7 +1542,19 @@ bool TriCore_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				   DecoderTable32);
 }
 
-void TriCore_init(MCRegisterInfo *MRI)
+bool TriCore_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
+				 size_t ByteLen, MCInst *MI, uint16_t *Size,
+				 uint64_t Address, void *Info)
+{
+	bool Result =
+		getInstruction(handle, Bytes, ByteLen, MI, Size, Address, Info);
+	if (Result) {
+		TriCore_set_instr_map_data(MI);
+	}
+	return Result;
+}
+
+void TriCore_init_mri(MCRegisterInfo *MRI)
 {
 	/*
 	InitMCRegisterInfo(TriCoreRegDesc, 45, RA, PC,
