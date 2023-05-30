@@ -26,9 +26,9 @@ project(capstone
 )
 
 if (MSVC)
-    add_compile_options(/W1 /w14189 /w16268)
+    add_compile_options(/W1 /w14189)
 else()
-    add_compile_options(-Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
+    add_compile_options(-Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
 endif()
 
 
@@ -98,6 +98,7 @@ endif()
 ## sources
 set(SOURCES_ENGINE
     cs.c
+    Mapping.c
     MCInst.c
     MCInstrDesc.c
     MCRegisterInfo.c
@@ -105,8 +106,10 @@ set(SOURCES_ENGINE
     utils.c
 )
 set(HEADERS_ENGINE
+    cs_simple_types.h
     cs_priv.h
     LEB128.h
+    Mapping.h
     MathExtras.h
     MCDisassembler.h
     MCFixedLenDisassembler.h
@@ -549,7 +552,6 @@ if (CAPSTONE_TRICORE_SUPPORT)
             arch/TriCore/TriCoreGenDisassemblerTables.inc
             arch/TriCore/TriCoreGenInstrInfo.inc
             arch/TriCore/TriCoreGenRegisterInfo.inc
-            arch/TriCore/TriCoreInstPrinter.h
             arch/TriCore/TriCoreMapping.h
             arch/TriCore/TriCoreModule.h
             )
