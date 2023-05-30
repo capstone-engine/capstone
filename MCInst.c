@@ -207,7 +207,8 @@ void MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 }
 
 /// Check if any operand of the MCInstrDesc is predicable
-bool MCInst_isPredicable(const MCInstrDesc *MIDesc) {
+bool MCInst_isPredicable(const MCInstrDesc *MIDesc)
+{
 	const MCOperandInfo *OpInfo = MIDesc->OpInfo;
 	unsigned NumOps = MIDesc->NumOperands;
 	for (unsigned i = 0; i < NumOps; ++i) {
@@ -221,7 +222,8 @@ bool MCInst_isPredicable(const MCInstrDesc *MIDesc) {
 /// Checks if tied operands exist in the instruction and sets
 /// - The writeback flag in detail
 /// - Saves the indices of the tied destination operands.
-void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDesc) {
+void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDesc)
+{
 	const MCOperandInfo *OpInfo = InstDesc[MCInst_getOpcode(MI)].OpInfo;
 	unsigned short NumOps = InstDesc[MCInst_getOpcode(MI)].NumOperands;
 
@@ -229,13 +231,15 @@ void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDesc) {
 	for (i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isTiedToOp(&OpInfo[i])) {
 			int idx = MCOperandInfo_getOperandConstraint(
-				&InstDesc[MCInst_getOpcode(MI)], i, MCOI_TIED_TO);
+				&InstDesc[MCInst_getOpcode(MI)], i,
+				MCOI_TIED_TO);
 
 			if (idx == -1)
 				continue;
 
-			if(i >= MAX_MC_OPS) {
-				assert(0 && "Maximum number of MC operands reached.");
+			if (i >= MAX_MC_OPS) {
+				assert(0 &&
+				       "Maximum number of MC operands reached.");
 			}
 			MI->tied_op_idx[i] = idx;
 
@@ -247,7 +251,8 @@ void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDesc) {
 
 /// Check if operand with OpNum is tied by another operand
 /// (operand is tying destination).
-bool MCInst_opIsTied(const MCInst *MI, unsigned OpNum) {
+bool MCInst_opIsTied(const MCInst *MI, unsigned OpNum)
+{
 	assert(OpNum < MAX_MC_OPS && "Maximum number of MC operands exceeded.");
 	for (int i = 0; i < MAX_MC_OPS; ++i) {
 		if (MI->tied_op_idx[i] == OpNum)
@@ -258,8 +263,8 @@ bool MCInst_opIsTied(const MCInst *MI, unsigned OpNum) {
 
 /// Check if operand with OpNum is tying another operand
 /// (operand is tying src).
-bool MCInst_opIsTying(const MCInst *MI, unsigned OpNum) {
+bool MCInst_opIsTying(const MCInst *MI, unsigned OpNum)
+{
 	assert(OpNum < MAX_MC_OPS && "Maximum number of MC operands exceeded.");
 	return MI->tied_op_idx[OpNum] != -1;
 }
-

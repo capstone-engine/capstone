@@ -160,7 +160,8 @@ bool MCOperandInfo_isOptionalDef(const MCOperandInfo *m);
 
 bool MCOperandInfo_isTiedToOp(const MCOperandInfo *m);
 
-int MCOperandInfo_getOperandConstraint(const MCInstrDesc *OpInfo, unsigned OpNum,
-						MCOI_OperandConstraint Constraint);
+int MCOperandInfo_getOperandConstraint(const MCInstrDesc *OpInfo,
+				       unsigned OpNum,
+				       MCOI_OperandConstraint Constraint);
 
 #endif

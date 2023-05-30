@@ -31,13 +31,13 @@ typedef struct MCOperand MCOperand;
 /// This is a simple discriminated union.
 struct MCOperand {
 	enum {
-		kInvalid = 0,                 ///< Uninitialized.
-		kRegister,                ///< Register operand.
-		kImmediate,               ///< Immediate operand.
-		kFPImmediate,             ///< Floating-point immediate operand.
-		kDFPImmediate,            ///< Double-Floating-point immediate operand.
-		kExpr,                    ///< Relocatable immediate operand.
-		kInst                     ///< Sub-instruction operand.
+		kInvalid = 0,  ///< Uninitialized.
+		kRegister,     ///< Register operand.
+		kImmediate,    ///< Immediate operand.
+		kFPImmediate,  ///< Floating-point immediate operand.
+		kDFPImmediate, ///< Double-Floating-point immediate operand.
+		kExpr,	       ///< Relocatable immediate operand.
+		kInst	       ///< Sub-instruction operand.
 
 	} MachineOperandType;
 	unsigned char Kind;
@@ -119,8 +119,9 @@ struct MCInst {
 	// This is copied from cs_x86 struct
 	uint8_t x86_prefix[4];
 	uint8_t imm_size;	// immediate size for X86_OP_IMM operand
-	bool writeback; // writeback for ARM
-	int8_t tied_op_idx[MAX_MC_OPS];	///< Tied operand indices. Index = Src op; Value: Dest op
+	bool writeback;		// writeback for ARM
+	int8_t tied_op_idx
+		[MAX_MC_OPS]; ///< Tied operand indices. Index = Src op; Value: Dest op
 	// operand access index for list of registers sharing the same access right (for ARM)
 	uint8_t ac_idx;
 	uint8_t popcode_adjust;   // Pseudo X86 instruction adjust

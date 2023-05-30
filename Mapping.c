@@ -23,7 +23,7 @@ static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
 // look for @id in @insns, given its size in @max. first time call will update
 // @cache. return 0 if not found
 unsigned short insn_find(const insn_map *insns, unsigned int max,
-						 unsigned int id, unsigned short **cache)
+			 unsigned int id, unsigned short **cache)
 {
 	if (id > insns[max - 1].id)
 		return 0;
@@ -99,9 +99,9 @@ void map_implicit_reads(MCInst *MI, const insn_map *imap)
 	uint16_t reg = imap[Opcode].regs_use[i];
 	while (reg != 0) {
 		if (i >= MAX_IMPL_R_REGS ||
-			detail->regs_read_count >= MAX_IMPL_R_REGS) {
+		    detail->regs_read_count >= MAX_IMPL_R_REGS) {
 			printf("ERROR: Too many implicit read register defined in "
-				   "instruction mapping.\n");
+			       "instruction mapping.\n");
 			return;
 		}
 		detail->regs_read[detail->regs_read_count++] = reg;
@@ -124,9 +124,9 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 	uint16_t reg = imap[Opcode].regs_mod[i];
 	while (reg != 0) {
 		if (i >= MAX_IMPL_W_REGS ||
-			detail->regs_write_count >= MAX_IMPL_W_REGS) {
+		    detail->regs_write_count >= MAX_IMPL_W_REGS) {
 			printf("ERROR: Too many implicit write register defined in "
-				   "instruction mapping.\n");
+			       "instruction mapping.\n");
 			return;
 		}
 		detail->regs_write[detail->regs_write_count++] = reg;
@@ -161,7 +161,7 @@ void map_groups(MCInst *MI, const insn_map *imap)
 // Search for the CS instruction id for the given @MC_Opcode in @imap.
 // return -1 if none is found.
 unsigned int find_cs_id(unsigned MC_Opcode, const insn_map *imap,
-						unsigned imap_size)
+			unsigned imap_size)
 {
 	// binary searching since the IDs are sorted in order
 	unsigned int left, right, m;
@@ -200,7 +200,7 @@ void map_cs_id(MCInst *MI, const insn_map *imap, unsigned int imap_size)
 		return;
 	}
 	printf("ERROR: Could not find CS id for MCInst opcode: %d\n",
-		   MCInst_getOpcode(MI));
+	       MCInst_getOpcode(MI));
 	return;
 }
 
@@ -208,13 +208,13 @@ void map_cs_id(MCInst *MI, const insn_map *imap, unsigned int imap_size)
 /// mapping table for instruction operands.
 /// Only usable by `auto-sync` archs!
 const cs_op_type mapping_get_op_type(MCInst *MI, unsigned OpNum,
-									 const map_insn_ops *insn_ops_map,
-									 size_t map_size)
+				     const map_insn_ops *insn_ops_map,
+				     size_t map_size)
 {
 	assert(MI);
 	assert(MI->Opcode < map_size);
 	assert(OpNum < sizeof(insn_ops_map[MI->Opcode].ops) /
-					   sizeof(insn_ops_map[MI->Opcode].ops[0]));
+			       sizeof(insn_ops_map[MI->Opcode].ops[0]));
 
 	return insn_ops_map[MI->Opcode].ops[OpNum].type;
 }
@@ -223,13 +223,13 @@ const cs_op_type mapping_get_op_type(MCInst *MI, unsigned OpNum,
 /// mapping table for instruction operands.
 /// Only usable by `auto-sync` archs!
 const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
-									   const map_insn_ops *insn_ops_map,
-									   size_t map_size)
+				       const map_insn_ops *insn_ops_map,
+				       size_t map_size)
 {
 	assert(MI);
 	assert(MI->Opcode < map_size);
 	assert(OpNum < sizeof(insn_ops_map[MI->Opcode].ops) /
-					   sizeof(insn_ops_map[MI->Opcode].ops[0]));
+			       sizeof(insn_ops_map[MI->Opcode].ops[0]));
 
 	cs_ac_type access = insn_ops_map[MI->Opcode].ops[OpNum].access;
 	if (MCInst_opIsTied(MI, OpNum) || MCInst_opIsTying(MI, OpNum))
@@ -239,14 +239,14 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 
 /// Returns the operand at detail->arch.operands[op_count + offset]
 /// Or NULL if detail is not set.
-#define DEFINE_get_detail_op(arch, ARCH)                                       \
-	cs_##arch##_op *ARCH##_get_detail_op(MCInst *MI, int offset)               \
-	{                                                                          \
-		if (!MI->flat_insn->detail)                                            \
-			return NULL;                                                       \
-		int OpIdx = MI->flat_insn->detail->arch.op_count + offset;             \
-		assert(OpIdx >= 0 && OpIdx < MAX_MC_OPS);                              \
-		return &MI->flat_insn->detail->arch.operands[OpIdx];                   \
+#define DEFINE_get_detail_op(arch, ARCH) \
+	cs_##arch##_op *ARCH##_get_detail_op(MCInst *MI, int offset) \
+	{ \
+		if (!MI->flat_insn->detail) \
+			return NULL; \
+		int OpIdx = MI->flat_insn->detail->arch.op_count + offset; \
+		assert(OpIdx >= 0 && OpIdx < MAX_MC_OPS); \
+		return &MI->flat_insn->detail->arch.operands[OpIdx]; \
 	}
 
 DEFINE_get_detail_op(arm, ARM);

@@ -35,7 +35,7 @@ static char *hex_string(unsigned char *str, size_t len)
 	if (!hex_out) { goto Exit; }
 
 	for (i = 0; i < len; ++i) {
-		snprintf(hex_out + (i*2), 3, "%02x", str[i]);
+		snprintf(hex_out + (i * 2), 3, "%02x", str[i]);
 	}
 
 	hex_out[len*2] = 0; // trailing null
@@ -284,7 +284,7 @@ static void test_valids()
 		}
 	}};
 
-	struct valid_instructions * valid = NULL;
+	struct valid_instructions *valid = NULL;
 	cs_insn *insn;
 	int i;
 	int j;
