@@ -215,6 +215,8 @@ def get_AArch64_includes(filename: str) -> bytes:
                 + b'#include "AArch64Mapping.h"\n\n'
                 + b"#define GET_BANKEDREG_IMPL\n"
                 + b'#include "AArch64GenSystemOperands.inc"\n\n'
+                + b"#define CONCATs(a, b) CONCATS(a, b)\n"
+                + b"#define CONCATS(a, b) a##b\n\n"
             )
         case "AArch64InstPrinter.h":
             return (
