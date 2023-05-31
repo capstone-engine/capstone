@@ -57,6 +57,7 @@ from Patches.PrintRegImmShift import PrintRegImmShift
 from Patches.QualifiedIdentifier import QualifiedIdentifier
 from Patches.Patch import Patch
 from Patches.ReferencesDecl import ReferencesDecl
+from Patches.RegClassContains import RegClassContains
 from Patches.STIArgument import STIArgument
 from Patches.STIFeatureBits import STIFeatureBits
 from Patches.STParameter import SubtargetInfoParam
@@ -94,6 +95,7 @@ class Translator:
     patches: [Patch] = list()
 
     patch_priorities: {str: int} = {
+        RegClassContains.__name__: 0,
         GetRegClass.__name__: 0,
         AArch64GetRegFromClass.__name__: 0,
         CppInitCast.__name__: 0,
@@ -189,6 +191,8 @@ class Translator:
         priorities = dict(sorted(self.patch_priorities.items(), key=lambda item: item[1]))
         for ptype, p in priorities.items():
             match ptype:
+                case RegClassContains.__name__:
+                    patch = RegClassContains(p)
                 case GetRegClass.__name__:
                     patch = GetRegClass(p)
                 case AArch64GetRegFromClass.__name__:
