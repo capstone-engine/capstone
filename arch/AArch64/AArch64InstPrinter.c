@@ -48,6 +48,9 @@
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
+#define CONCATs(a, b) CONCATS(a, b)
+#define CONCATS(a, b) a##b
+
 #define DEBUG_TYPE "asm-printer"
 
 #define GET_INSTRUCTION_NAME
@@ -895,11 +898,6 @@ bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
 
 bool printSysAlias(MCInst *MI, SStream *O)
 {
-#ifndef NDEBUG
-	unsigned Opcode = MCInst_getOpcode(MI);
-
-#endif
-
 	MCOperand *Op1 = MCInst_getOperand(MI, (0));
 	MCOperand *Cn = MCInst_getOperand(MI, (1));
 	MCOperand *Cm = MCInst_getOperand(MI, (2));
@@ -1041,11 +1039,6 @@ bool printSysAlias(MCInst *MI, SStream *O)
 
 bool printSyspAlias(MCInst *MI, SStream *O)
 {
-#ifndef NDEBUG
-	unsigned Opcode = MCInst_getOpcode(MI);
-
-#endif
-
 	MCOperand *Op1 = MCInst_getOperand(MI, (0));
 	MCOperand *Cn = MCInst_getOperand(MI, (1));
 	MCOperand *Cm = MCInst_getOperand(MI, (2));
@@ -1377,7 +1370,7 @@ void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
 }
 
 static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
-							   char SrcRegKind, SStream *O, bool getUseMarkup())
+							   char SrcRegKind, SStream *O, bool getUseMarkup)
 {
 	// sxtw, sxtx, uxtw or lsl (== uxtx)
 	bool IsLSL = !SignExtend && SrcRegKind == 'x';
@@ -1385,16 +1378,16 @@ static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
 		SStream_concat0(O, "lsl");
 	else {
 		SStream_concat(O, "%s%s", (SignExtend ? 's' : 'u'), "xt");
-		SStream_concat0(O, SrcRegKind);
+		SStream_concat1(O, SrcRegKind);
 	}
 
 	if (DoShift || IsLSL) {
 		SStream_concat0(O, " ");
-		if (getUseMarkup())
+		if (getUseMarkup)
 			SStream_concat0(O, "<imm:");
 		SStream_concat(O, "%s", "#");
-		SStream_concat0(O, Log2_32(Width / 8));
-		if (getUseMarkup())
+		printUInt32(O, Log2_32(Width / 8));
+		if (getUseMarkup)
 			SStream_concat0(O, ">");
 	}
 }
@@ -1477,7 +1470,7 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 \
 		SStream_concat(O, "%s", "pn"); \
-		SStream_concat0(O, (Reg - AArch64_P0)); \
+		printUInt32(O, (Reg - AArch64_P0)); \
 		switch (EltSize) { \
 		case 0: \
 			break; \
@@ -1535,10 +1528,9 @@ void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
 		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_ImmScale, Scale), OpNum, \
 					  Scale); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		SStream_concat1(O, '#'); \
-		SStream_concat(O, "%s", \
-					   formatImm(Scale *MCOperand_getImm( \
-						   MCInst_getOperand(MI, (OpNum))))); \
+		printUInt32Bang(O, \
+					   Scale * MCOperand_getImm( \
+						   MCInst_getOperand(MI, (OpNum)))); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printImmScale(8);
@@ -1557,41 +1549,38 @@ DEFINE_printImmScale(3);
 			OpNum, Scale, Offset); \
 		unsigned FirstImm = \
 			Scale * MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
-		SStream_concat0(O, formatImm(FirstImm)); \
+		printUInt32(O, (FirstImm)); \
 		SStream_concat(O, "%s", ":"); \
-		SStream_concat0(O, formatImm(FirstImm + Offset)); \
+		printUInt32(O, (FirstImm + Offset)); \
+		SStream_concat1(O, '\0'); \
 	}
 DEFINE_printImmRangeScale(2, 1);
 DEFINE_printImmRangeScale(4, 3);
 
 void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 {
-	MCOperand MO = MCInst_getOperand(MI, (OpNum));
+	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
 		SStream_concat(O, "%s", markup("<imm:"));
-		SStream_concat1(O, '#');
-		SStream_concat(O, "%s", formatImm(MCOperand_getImm(MO) * Scale));
+		printUInt32Bang(O, (MCOperand_getImm(MO) * Scale));
 		SStream_concat0(O, markup(">"));
 	} else {
-
-		MO.getExpr()->print(O, &MAI);
+		assert(0 && "Expressions not supported.");
 	}
 }
 
 void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 {
-	MCOperand MO1 = MCInst_getOperand(MI, (OpNum + 1));
+	MCOperand *MO1 = MCInst_getOperand(MI, (OpNum + 1));
 	SStream_concat0(O, "[");
 
 	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
 	if (MCOperand_isImm(MO1)) {
-		SStream_concat(O, "%s%s%s%s", ", ", markup("<imm:"), "#",
-					   formatImm(MCOperand_getImm(MO1) * Scale));
+		SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+		printUInt32Bang(O, MCOperand_getImm(MO1) * Scale);
 		SStream_concat0(O, markup(">"));
 	} else {
-
-		SStream_concat0(O, ", ");
-		MO1.getExpr()->print(O, &MAI);
+		assert(0 && "Expressions not supported.");
 	}
 	SStream_concat0(O, "]");
 }
@@ -1600,14 +1589,14 @@ void printRPRFMOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_RPRFMOperand, OpNum);
 	unsigned prfop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-	auto PRFM = AArch64RPRFM_lookupRPRFMByEncoding(prfop);
+	const AArch64PRFM_PRFM *PRFM = AArch64RPRFM_lookupRPRFMByEncoding(prfop);
 	if (PRFM) {
 		SStream_concat0(O, PRFM->Name);
 		return;
 	}
 
-	SStream_concat1(O, '#');
-	SStream_concat0(O, formatImm(prfop));
+	printUInt32Bang(O, (prfop));
+	SStream_concat1(O, '\0');
 }
 
 #define DEFINE_printPrefetchOp(IsSVEPrefetch) \
@@ -1618,22 +1607,21 @@ void printRPRFMOperand(MCInst *MI, unsigned OpNum, SStream *O)
 					  OpNum, IsSVEPrefetch); \
 		unsigned prfop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		if (IsSVEPrefetch) { \
-			auto PRFM = AArch64SVEPRFM_lookupSVEPRFMByEncoding(prfop); \
+			const AArch64SVEPRFM_SVEPRFM *PRFM = AArch64SVEPRFM_lookupSVEPRFMByEncoding(prfop); \
 			if (PRFM) { \
 				SStream_concat0(O, PRFM->Name); \
 				return; \
 			} \
 		} else { \
-			auto PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop); \
-			if (PRFM && PRFM->haveFeatures(STI.getFeatureBits())) { \
+			const AArch64PRFM_PRFM *PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop); \
+			if (PRFM && AArch64_testFeatureList(MI->csh->mode, PRFM->FeaturesRequired)) { \
 				SStream_concat0(O, PRFM->Name); \
 				return; \
 			} \
 		} \
 \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		SStream_concat1(O, '#'); \
-		SStream_concat(O, "%s", formatImm(prfop)); \
+		printUInt32Bang(O, (prfop)); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printPrefetchOp(true);
@@ -1642,13 +1630,13 @@ void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_PSBHintOp, OpNum);
 	unsigned psbhintop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-	auto PSB = AArch64PSBHint_lookupPSBByEncoding(psbhintop);
+	const AArch64PSBHint_PSB *PSB = AArch64PSBHint_lookupPSBByEncoding(psbhintop);
 	if (PSB)
 		SStream_concat0(O, PSB->Name);
 	else {
 		SStream_concat(O, "%s", markup("<imm:"));
 		SStream_concat1(O, '#');
-		SStream_concat(O, "%s", formatImm(psbhintop));
+		printUInt32Bang(O, (psbhintop));
 		SStream_concat0(O, markup(">"));
 	}
 }
@@ -1657,13 +1645,12 @@ void printBTIHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_BTIHintOp, OpNum);
 	unsigned btihintop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))) ^ 32;
-	auto BTI = AArch64BTIHint_lookupBTIByEncoding(btihintop);
+	const AArch64BTIHint_BTI *BTI = AArch64BTIHint_lookupBTIByEncoding(btihintop);
 	if (BTI)
 		SStream_concat0(O, BTI->Name);
 	else {
 		SStream_concat(O, "%s", markup("<imm:"));
-		SStream_concat1(O, '#');
-		SStream_concat(O, "%s", formatImm(btihintop));
+		printUInt32Bang(O, (btihintop));
 		SStream_concat0(O, markup(">"));
 	}
 }
@@ -1672,16 +1659,17 @@ void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_FPImmOperand, OpNum);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
-	float FPImm = MO.isDFPImm()
-					  ? CONCAT(bit_cast, double)(MO.getDFPImm())
+	float FPImm = MCOperand_isDFPImm(MO)
+					  ? BitsToDouble(MCOperand_getImm(MO))
 					  : AArch64_AM_getFPImmFloat(MCOperand_getImm(MO));
 
 	// 8 decimal places are enough to perfectly represent permitted floats.
-	SStream_concat(O, "%s%s", markup("<imm:"), format("#%.8f", FPImm));
+	SStream_concat(O, "%s%s", markup("<imm:"));
+	SStream_concat(O, "#%.8f", FPImm);
 	SStream_concat0(O, markup(">"));
 }
 
-static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride = 1)
+static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 {
 	while (Stride--) {
 		switch (Reg) {
@@ -1942,15 +1930,15 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride = 1)
 		add_cs_detail(MI, \
 					  CONCAT(AArch64_OP_GROUP_GPRSeqPairsClassOperand, size), \
 					  OpNum, size); \
-		static_assert(size == 64 || size == 32, \
+		assert((size == 64 || size == 32) && \
 					  "Template parameter must be either 32 or 64"); \
 		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 \
 		unsigned Sube = (size == 32) ? AArch64_sube32 : AArch64_sube64; \
 		unsigned Subo = (size == 32) ? AArch64_subo32 : AArch64_subo64; \
 \
-		unsigned Even = unsignedInfo_getSubReg(MI->MRI, Reg, Sube); \
-		unsigned Odd = unsignedInfo_getSubReg(MI->MRI, Reg, Subo); \
+		unsigned Even = MCRegisterInfo_getSubReg(MI->MRI, Reg, Sube); \
+		unsigned Odd = MCRegisterInfo_getSubReg(MI->MRI, Reg, Subo); \
 		printRegName(O, Even); \
 		SStream_concat0(O, ", "); \
 		printRegName(O, Odd); \
@@ -1993,44 +1981,78 @@ void printVectorList(MCInst *MI, unsigned OpNum, SStream *O,
 	// Work out how many registers there are in the list (if there is an actual
 	// list).
 	unsigned NumRegs = 1;
-	if (MCOperand_getRegClass(MRI).contains(Reg) ||
-		MCOperand_getRegClass(MRI).contains(Reg) ||
-		MCOperand_getRegClass(MRI).contains(Reg) ||
-		MCOperand_getRegClass(MRI).contains(Reg) ||
-		MCOperand_getRegClass(MRI).contains(Reg))
+	if (MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_DDRegClassID), Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR2RegClassID),
+			Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_QQRegClassID), Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_PPR2RegClassID),
+			Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR2StridedRegClassID),
+			Reg))
 		NumRegs = 2;
-	else if (MCOperand_getRegClass(MRI).contains(Reg) ||
-			 MCOperand_getRegClass(MRI).contains(Reg) ||
-			 MCOperand_getRegClass(MRI).contains(Reg))
+	else if (MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_DDDRegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR3RegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_QQQRegClassID),
+				 Reg))
 		NumRegs = 3;
-	else if (MCOperand_getRegClass(MRI).contains(Reg) ||
-			 MCOperand_getRegClass(MRI).contains(Reg) ||
-			 MCOperand_getRegClass(MRI).contains(Reg) ||
-			 MCOperand_getRegClass(MRI).contains(Reg))
+	else if (MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_DDDDRegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR4RegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_QQQQRegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI,
+											 AArch64_ZPR4StridedRegClassID),
+				 Reg))
 		NumRegs = 4;
 
 	unsigned Stride = 1;
-	if (MCOperand_getRegClass(MRI).contains(Reg))
+	if (MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR2StridedRegClassID),
+			Reg))
 		Stride = 8;
-	else if (MCOperand_getRegClass(MRI).contains(Reg))
+	else if (MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI,
+											 AArch64_ZPR4StridedRegClassID),
+				 Reg))
 		Stride = 4;
 
 	// Now forget about the list and find out what the first register is.
-	unsigned FirstReg = unsignedInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0);
-	if (unsigned FirstReg =
-			unsignedInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0))
-		FirstReg
+	unsigned FirstReg = MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0);
+	if (FirstReg)
+		Reg = FirstReg;
 
-			// If it's a D-reg, we need to promote it to the equivalent Q-reg
-			// before printing (otherwise getRegisterName fails).
-			if (MCOperand_getRegClass(MRI).contains(Reg))
-		{
-			const unsignedClass *FPR128RC = MCOperand_getRegClass(MRI);
-			Reg = MRI.getMatchingSuperReg(Reg, AArch64_dsub, &FPR128RC);
-		}
+	// If it's a D-reg, we need to promote it to the equivalent Q-reg before
+	// printing (otherwise getRegisterName fails).
+	if (MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_FPR64RegClassID),
+			Reg)) {
+		const MCRegisterClass *FPR128RC =
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_FPR128RegClassID);
+		Reg = MCRegisterInfo_getMatchingSuperReg(MI->MRI, Reg, AArch64_dsub,
+									 FPR128RC);
+	}
 
-	if ((MCOperand_getRegClass(MRI).contains(Reg) ||
-		 MCOperand_getRegClass(MRI).contains(Reg)) &&
+	if ((MCRegisterClass_contains(
+			 MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPRRegClassID),
+			 Reg) ||
+		 MCRegisterClass_contains(
+			 MCRegisterInfo_getRegClass(MI->MRI, AArch64_PPRRegClassID),
+			 Reg)) &&
 		NumRegs > 1 && Stride == 1 &&
 		// Do not print the range when the last register is lower than the
 		// first. Because it is a wrap-around register.
@@ -2048,8 +2070,12 @@ void printVectorList(MCInst *MI, unsigned OpNum, SStream *O,
 		for (unsigned i = 0; i < NumRegs;
 			 ++i, Reg = getNextVectorRegister(Reg, Stride)) {
 			// wrap-around sve register
-			if (MCOperand_getRegClass(MRI).contains(Reg) ||
-				MCOperand_getRegClass(MRI).contains(Reg))
+			if (MCRegisterClass_contains(
+					MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPRRegClassID),
+					Reg) ||
+				MCRegisterClass_contains(
+					MCRegisterInfo_getRegClass(MI->MRI, AArch64_PPRRegClassID),
+					Reg))
 				printRegName(O, Reg);
 			else
 				printRegNameAlt(O, Reg, AArch64_vreg);
@@ -2075,14 +2101,14 @@ void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
 			MI, \
 			CONCAT(CONCAT(AArch64_OP_GROUP_TypedVectorList, NumLanes), \
 				   LaneKind), \
-			OpNum, NumLanes, LaneKind); \
-		std_string Suffix("."); \
+			OpNum, NumLanes, CHAR(LaneKind)); \
+		char Suffix[32]; \
 		if (NumLanes) \
-			Suffix += itostr(NumLanes) + LaneKind; \
+			cs_snprintf(Suffix, sizeof(Suffix), ".%u%c", NumLanes, CHAR(LaneKind)); \
 		else \
-			Suffix += LaneKind; \
+			cs_snprintf(Suffix, sizeof(Suffix), ".%c", CHAR(LaneKind)); \
 \
-		printVectorList(MI, OpNum, O, Suffix); \
+		printVectorList(MI, OpNum, O, ((const char *)&Suffix)); \
 	}
 DEFINE_printTypedVectorList(0, b);
 DEFINE_printTypedVectorList(0, d);
@@ -2114,7 +2140,7 @@ DEFINE_printVectorIndex(8);
 void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_MatrixIndex, OpNum);
-	SStream_concat0(O, MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+	printUInt32(O, MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
 }
 
 void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
@@ -2126,26 +2152,17 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		SStream_concat0(O, markup("<imm:"));
 		int64_t Offset = MCOperand_getImm(Op) * 4;
-		if (PrintBranchImmAsAddress)
-			SStream_concat0(O, formatHex(Address + Offset));
+		if (!MI->csh->PrintBranchImmNotAsAddress)
+			printUInt64(O, (Address + Offset));
 		else {
-			SStream_concat(O, "%s", "#");
-			SStream_concat0(O, formatImm(Offset));
+			printUInt64Bang(O, (Offset));
 		}
 		SStream_concat0(O, markup(">"));
 		return;
 	}
 
 	// If the branch target is simply an address then print it in hex.
-	const MCConstantExpr *BranchTarget =
-		(MCConstantExpr)(MCInst_getOperand(MI, (OpNum)).getExpr());
-	int64_t TargetAddress;
-	if (BranchTarget && BranchTarget->evaluateAsAbsolute(TargetAddress)) {
-		SStream_concat0(O, formatHex((uint64_t)TargetAddress));
-	} else {
-		// Otherwise, just print the expression.
-		MCInst_getOperand(MI, (OpNum)).getExpr()->print(O, &MAI);
-	}
+	assert(0 && "Expressions are not supported.");
 }
 
 void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
@@ -2157,18 +2174,17 @@ void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		const int64_t Offset = MCOperand_getImm(Op) * 4096;
 		SStream_concat0(O, markup("<imm:"));
-		if (PrintBranchImmAsAddress)
-			SStream_concat0(O, formatHex((Address & -4096) + Offset));
+		if (!MI->csh->PrintBranchImmNotAsAddress)
+			printUInt64(O, ((Address & -4096) + Offset));
 		else {
-			SStream_concat(O, "%s", "#");
-			SStream_concat0(O, Offset);
+			printUInt64Bang(O, Offset);
 		}
 		SStream_concat0(O, markup(">"));
 		return;
 	}
 
 	// Otherwise, just print the expression.
-	MCInst_getOperand(MI, (OpNum)).getExpr()->print(O, &MAI);
+	assert(0 && "Expressions are not supported.");
 }
 
 void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
@@ -2179,16 +2195,16 @@ void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 
 	const char *Name;
 	if (Opcode == AArch64_ISB) {
-		auto ISB = AArch64ISB_lookupISBByEncoding(Val);
+		const AArch64ISB_ISB *ISB = AArch64ISB_lookupISBByEncoding(Val);
 		Name = ISB ? ISB->Name : "";
 	} else if (Opcode == AArch64_TSB) {
-		auto TSB = AArch64TSB_lookupTSBByEncoding(Val);
+		const AArch64TSB_TSB *TSB = AArch64TSB_lookupTSBByEncoding(Val);
 		Name = TSB ? TSB->Name : "";
 	} else {
-		auto DB = AArch64DB_lookupDBByEncoding(Val);
+		const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
 		Name = DB ? DB->Name : "";
 	}
-	if (!Name.empty())
+	if (Name[0] != '\0')
 		SStream_concat0(O, Name);
 	else {
 		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", Val);
@@ -2202,10 +2218,10 @@ void printBarriernXSOption(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
 	const char *Name;
-	auto DB = AArch64DBnXS_lookupDBnXSByEncoding(Val);
+	const AArch64DBnXS_DBnXS *DB = AArch64DBnXS_lookupDBnXSByEncoding(Val);
 	Name = DB ? DB->Name : "";
 
-	if (!Name.empty())
+	if (Name[0] != '\0')
 		SStream_concat0(O, Name);
 	else {
 		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", Val);
@@ -2213,10 +2229,10 @@ void printBarriernXSOption(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-static bool isValidSysReg(const AArch64SysReg_SysReg *Reg, bool Read)
+static bool isValidSysReg(const AArch64SysReg_SysReg *Reg, bool Read, unsigned mode)
 {
 	return (Reg && (Read ? Reg->Readable : Reg->Writeable) &&
-			Reg->haveFeatures(STI.getFeatureBits()));
+			AArch64_testFeatureList(mode, Reg->FeaturesRequired));
 }
 
 // Looks up a system register either by encoding or by name. Some system
@@ -2225,11 +2241,11 @@ static bool isValidSysReg(const AArch64SysReg_SysReg *Reg, bool Read)
 // of the register's predication on a specific subtarget feature. To work
 // around this problem we keep an alternative name for such registers and
 // look them up by that name if the first lookup was unsuccessful.
-static const AArch64SysReg_SysReg *lookupSysReg(unsigned Val, bool Read)
+static const AArch64SysReg_SysReg *lookupSysReg(unsigned Val, bool Read, unsigned mode)
 {
 	const AArch64SysReg_SysReg *Reg = AArch64SysReg_lookupSysRegByEncoding(Val);
 
-	if (Reg && !isValidSysReg(Reg, Read, STI))
+	if (Reg && !isValidSysReg(Reg, Read, mode))
 		Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
 
 	return Reg;
@@ -2243,20 +2259,20 @@ void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	// Horrible hack for the one register that has identical encodings but
 	// different names in MSR and MRS. Because of this, one of MRS and MSR is
 	// going to get the wrong entry
-	if (Val == AArch64SysReg_DBGDTRRX_EL0) {
+	if (Val == AArch64_SYSREG_DBGDTRRX_EL0) {
 		SStream_concat0(O, "DBGDTRRX_EL0");
 		return;
 	}
 
 	// Horrible hack for two different registers having the same encoding.
-	if (Val == AArch64SysReg_TRCEXTINSELR) {
+	if (Val == AArch64_SYSREG_TRCEXTINSELR) {
 		SStream_concat0(O, "TRCEXTINSELR");
 		return;
 	}
 
-	const AArch64SysReg_SysReg *Reg = lookupSysReg(Val, true /*Read*/, STI);
+	const AArch64SysReg_SysReg *Reg = lookupSysReg(Val, true /*Read*/, MI->csh->mode);
 
-	if (isValidSysReg(Reg, true /*Read*/, STI))
+	if (isValidSysReg(Reg, true /*Read*/, MI->csh->mode))
 		SStream_concat0(O, Reg->Name);
 	else
 		SStream_concat0(O, AArch64SysReg_genericRegisterString(Val));
@@ -2270,20 +2286,20 @@ void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	// Horrible hack for the one register that has identical encodings but
 	// different names in MSR and MRS. Because of this, one of MRS and MSR is
 	// going to get the wrong entry
-	if (Val == AArch64SysReg_DBGDTRTX_EL0) {
+	if (Val == AArch64_SYSREG_DBGDTRTX_EL0) {
 		SStream_concat0(O, "DBGDTRTX_EL0");
 		return;
 	}
 
 	// Horrible hack for two different registers having the same encoding.
-	if (Val == AArch64SysReg_TRCEXTINSELR) {
+	if (Val == AArch64_SYSREG_TRCEXTINSELR) {
 		SStream_concat0(O, "TRCEXTINSELR");
 		return;
 	}
 
-	const AArch64SysReg_SysReg *Reg = lookupSysReg(Val, false /*Read*/, STI);
+	const AArch64SysReg_SysReg *Reg = lookupSysReg(Val, false /*Read*/, MI->csh->mode);
 
-	if (isValidSysReg(Reg, false /*Read*/, STI))
+	if (isValidSysReg(Reg, false /*Read*/, MI->csh->mode))
 		SStream_concat0(O, Reg->Name);
 	else
 		SStream_concat0(O, AArch64SysReg_genericRegisterString(Val));
@@ -2294,15 +2310,15 @@ void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 	add_cs_detail(MI, AArch64_OP_GROUP_SystemPStateField, OpNo);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
-	auto PStateImm15 = AArch64PState_lookupPStateImm0_15ByEncoding(Val);
-	auto PStateImm1 = AArch64PState_lookupPStateImm0_1ByEncoding(Val);
-	if (PStateImm15 && PStateImm15->haveFeatures(STI.getFeatureBits()))
+	const AArch64PState_PStateImm0_15 *PStateImm15 = AArch64PState_lookupPStateImm0_15ByEncoding(Val);
+	const AArch64PState_PStateImm0_1 *PStateImm1 = AArch64PState_lookupPStateImm0_1ByEncoding(Val);
+	if (PStateImm15 && AArch64_testFeatureList(MI->csh->mode, PStateImm15->FeaturesRequired))
 		SStream_concat0(O, PStateImm15->Name);
-	else if (PStateImm1 && PStateImm1->haveFeatures(STI.getFeatureBits()))
+	else if (PStateImm1 && AArch64_testFeatureList(MI->csh->mode, PStateImm1->FeaturesRequired))
 		SStream_concat0(O, PStateImm1->Name);
 	else {
-		SStream_concat(O, "%s", "#");
-		SStream_concat0(O, formatImm(Val));
+		printUInt32Bang(O, (Val));
+		SStream_concat1(O, '\0');
 	}
 }
 
@@ -2311,7 +2327,7 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	add_cs_detail(MI, AArch64_OP_GROUP_SIMDType10Operand, OpNo);
 	unsigned RawVal = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
-	SStream_concat(O, "%s%s", markup("<imm:"), format("#%#016llx", Val));
+	SStream_concat(O, "%s%s#%#016llx", markup("<imm:"),  Val);
 	SStream_concat0(O, markup(">"));
 }
 
@@ -2336,9 +2352,9 @@ void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_SVEPattern, OpNum);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-	auto Pat = AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
-	if (auto Pat = AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val))
-		Pat
+	const AArch64SVEPredPattern_SVEPREDPAT *Pat = AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
+	if (Pat)
+		SStream_concat0(O, Pat->Name);
 }
 
 void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
@@ -2348,11 +2364,10 @@ void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 	// Pattern has only 1 bit
 	if (Val > 1)
 		assert(0 && "Invalid vector length specifier");
-	auto Pat =
+	const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *Pat =
 		AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(Val);
-	if (auto Pat =
-			AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(Val))
-		Pat
+	if (Pat)
+		SStream_concat0(O, Pat->Name);
 }
 
 #define DEFINE_printSVERegOp(suffix) \
@@ -2360,9 +2375,9 @@ void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 									   SStream *O) \
 	{ \
 		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SVERegOp, suffix), OpNum, \
-					  suffix); \
-		switch (suffix) { \
-		case 0: \
+					  CHAR(suffix)); \
+		switch (CHAR(suffix)) { \
+		case '0': \
 		case 'b': \
 		case 'h': \
 		case 's': \
@@ -2375,9 +2390,9 @@ void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 \
 		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 		printRegName(O, Reg); \
-		if (suffix != 0) { \
+		if (CHAR(suffix) != '0') { \
 			SStream_concat1(O, '.'); \
-			SStream_concat0(O, suffix); \
+			SStream_concat1(O, CHAR(suffix)); \
 		} \
 	}
 DEFINE_printSVERegOp(b);
@@ -2387,40 +2402,51 @@ DEFINE_printSVERegOp(s);
 DEFINE_printSVERegOp(0);
 DEFINE_printSVERegOp(q);
 
-void printImmSVE(T Value, SStream *O)
-{
-	std_make_unsigned_t<T> HexValue = Value;
-
-	if (getPrintImmHex()) {
-		SStream_concat(O, "%s", markup("<imm:"));
-		SStream_concat1(O, '#');
-		SStream_concat(O, "%s", formatHex((uint64_t)HexValue));
-		SStream_concat0(O, markup(">"));
-	} else {
-		SStream_concat(O, "%s", markup("<imm:"));
-		SStream_concat1(O, '#');
-		SStream_concat(O, "%s", formatDec(Value));
-		SStream_concat0(O, markup(">"));
-	}
-
-	if (CommentStream) {
-		// Do the opposite to that used for instruction operands.
-		if (getPrintImmHex()) {
-			SStream_concat1(*CommentStream, '=');
-			SStream_concat(*CommentStream, "%s", formatDec(HexValue));
-			SStream_concat0(*CommentStream, "\n");
-		} else {
-			SStream_concat1(*CommentStream, '=');
-			SStream_concat(*CommentStream, "%s", formatHex((uint64_t)Value));
-			SStream_concat0(*CommentStream, "\n");
-		}
-	}
+#define DECLARE_printImmSVE_S32(T) \
+	void CONCAT(printImmSVE, T)(T Val, SStream *O) { \
+	printInt32Bang(O, Val); \
 }
+DECLARE_printImmSVE_S32(int16_t);
+DECLARE_printImmSVE_S32(int8_t);
+DECLARE_printImmSVE_S32(int32_t);
+
+#define DECLARE_printImmSVE_U32(T) \
+	void CONCAT(printImmSVE, T)(T Val, SStream *O) { \
+	printUInt32Bang(O, Val); \
+}
+DECLARE_printImmSVE_U32(uint16_t);
+DECLARE_printImmSVE_U32(uint8_t);
+DECLARE_printImmSVE_U32(uint32_t);
+
+#define DECLARE_printImmSVE_S64(T) \
+	void CONCAT(printImmSVE, T)(T Val, SStream *O) { \
+	printInt64Bang(O, Val); \
+}
+DECLARE_printImmSVE_S64(uint64_t);
+
+#define DECLARE_printImmSVE_U64(T) \
+	void CONCAT(printImmSVE, T)(T Val, SStream *O) { \
+	printUInt64Bang(O, Val); \
+}
+DECLARE_printImmSVE_U64(int64_t);
+
+#define DEFINE_isSignedType(T) \
+static inline bool CONCAT(isSignedType, T)() {\
+	return CHAR(t) == 'i'; \
+}
+DEFINE_isSignedType(int8_t);
+DEFINE_isSignedType(int16_t);
+DEFINE_isSignedType(int32_t);
+DEFINE_isSignedType(int64_t);
+DEFINE_isSignedType(uint8_t);
+DEFINE_isSignedType(uint16_t);
+DEFINE_isSignedType(uint32_t);
+DEFINE_isSignedType(uint64_t);
 
 #define DEFINE_printImm8OptLsl(T) \
 	void CONCAT(printImm8OptLsl, T)(MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_Imm8OptLsl, T), OpNum, T); \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_Imm8OptLsl, T), OpNum, sizeof(T)); \
 		unsigned UnscaledVal = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		unsigned Shift = MCOperand_getImm(MCInst_getOperand(MI, (OpNum + 1))); \
@@ -2428,21 +2454,21 @@ void printImmSVE(T Value, SStream *O)
 		if ((UnscaledVal == 0) && (AArch64_AM_getShiftValue(Shift) != 0)) { \
 			SStream_concat(O, "%s", markup("<imm:")); \
 			SStream_concat1(O, '#'); \
-			SStream_concat(O, "%s", formatImm(UnscaledVal)); \
+			printUInt64(O, (UnscaledVal)); \
 			SStream_concat0(O, markup(">")); \
 			printShifter(MI, OpNum + 1, O); \
 			return; \
 		} \
 \
 		T Val; \
-		if (CONCAT(std_is_signed, T)()) \
+		if (CONCAT(isSignedType, T)()) \
 			Val = \
 				(int8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift)); \
 		else \
 			Val = \
 				(uint8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift)); \
 \
-		printImmSVE(Val, O); \
+		CONCAT(printImmSVE, T)(Val, O); \
 	}
 DEFINE_printImm8OptLsl(int16_t);
 DEFINE_printImm8OptLsl(int8_t);
@@ -2458,21 +2484,20 @@ DEFINE_printImm8OptLsl(uint32_t);
 									   SStream *O) \
 	{ \
 		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SVELogicalImm, T), OpNum, \
-					  T); \
-		typedef std_make_signed_t<T> SignedT; \
-		typedef std_make_unsigned_t<T> UnsignedT; \
+					  sizeof(T)); \
+		typedef T SignedT; \
+		typedef CONCATS(u, T) UnsignedT; \
 \
 		uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		UnsignedT PrintVal = AArch64_AM_decodeLogicalImmediate(Val, 64); \
 \
 		if ((int16_t)PrintVal == (SignedT)PrintVal) \
-			printImmSVE((T)PrintVal, O); \
+			CONCAT(printImmSVE, T)((T)PrintVal, O); \
 		else if ((uint16_t)PrintVal == PrintVal) \
-			printImmSVE(PrintVal, O); \
+			CONCAT(printImmSVE, T)(PrintVal, O); \
 		else { \
 			SStream_concat(O, "%s", markup("<imm:")); \
-			SStream_concat1(O, '#'); \
-			SStream_concat(O, "%s", formatHex((uint64_t)PrintVal)); \
+			printUInt64Bang(O, ((uint64_t)PrintVal)); \
 			SStream_concat0(O, markup(">")); \
 		} \
 	}
@@ -2521,16 +2546,16 @@ DEFINE_printZPRasFPR(128);
 		add_cs_detail( \
 			MI, CONCAT(CONCAT(AArch64_OP_GROUP_ExactFPImm, ImmIs0), ImmIs1), \
 			OpNum, ImmIs0, ImmIs1); \
-		auto *Imm0Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs0); \
-		auto *Imm1Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs1); \
+		const AArch64ExactFPImm_ExactFPImm *Imm0Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs0); \
+		const AArch64ExactFPImm_ExactFPImm  *Imm1Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs1); \
 		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", \
 					   (Val ? Imm1Desc->Repr : Imm0Desc->Repr)); \
 		SStream_concat0(O, markup(">")); \
 	}
-DEFINE_printExactFPImm(AArch64ExactFPImm::half, AArch64ExactFPImm::one);
-DEFINE_printExactFPImm(AArch64ExactFPImm::zero, AArch64ExactFPImm::one);
-DEFINE_printExactFPImm(AArch64ExactFPImm::half, AArch64ExactFPImm::two);
+DEFINE_printExactFPImm(AArch64ExactFPImm_half, AArch64ExactFPImm_one);
+DEFINE_printExactFPImm(AArch64ExactFPImm_zero, AArch64ExactFPImm_one);
+DEFINE_printExactFPImm(AArch64ExactFPImm_half, AArch64ExactFPImm_two);
 
 void printGPR64as32(MCInst *MI, unsigned OpNum, SStream *O)
 {
@@ -2543,7 +2568,7 @@ void printGPR64x8(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_GPR64x8, OpNum);
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
-	printRegName(O, unsignedInfo_getSubReg(MI->MRI, Reg, AArch64_x8sub_0));
+	printRegName(O, MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_x8sub_0));
 }
 
 void printSyspXzrPair(MCInst *MI, unsigned OpNum, SStream *O)
@@ -2551,6 +2576,6 @@ void printSyspXzrPair(MCInst *MI, unsigned OpNum, SStream *O)
 	add_cs_detail(MI, AArch64_OP_GROUP_SyspXzrPair, OpNum);
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 
-	SStream_concat(O, "%s%s", getRegisterName(Reg), ", ");
-	SStream_concat0(O, getRegisterName(Reg));
+	SStream_concat(O, "%s%s", getRegisterName(Reg, AArch64_NoRegAltName), ", ");
+	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
 }

@@ -722,10 +722,10 @@ const AArch64DC_DC *AArch64DC_lookupDCByEncoding(uint16_t Encoding) {
 
 #ifdef GET_EXACTFPIMM_IMPL
 static const AArch64ExactFPImm_ExactFPImm ExactFPImmsList[] = {
-  { "half", 0x1, "0.5" }, // 0
-  { "one", 0x2, "1.0" }, // 1
-  { "two", 0x3, "2.0" }, // 2
-  { "zero", 0x0, "0.0" }, // 3
+  { "half", AArch64_SYSIMM_HALF, 0x1, "0.5" }, // 0
+  { "one", AArch64_SYSIMM_ONE, 0x2, "1.0" }, // 1
+  { "two", AArch64_SYSIMM_TWO, 0x3, "2.0" }, // 2
+  { "zero", AArch64_SYSIMM_ZERO, 0x0, "0.0" }, // 3
   };
 
 const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByEnum(uint8_t Enum) {

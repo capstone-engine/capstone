@@ -62,7 +62,17 @@ void printImmHex(MCInst *MI, unsigned OpNo, SStream *O);
 DECLARE_printSImm(16);
 DECLARE_printSImm(8);
 
-// void printImmSVE(T Value, SStream *O);
+#define DECLARE_printImmSVE(T) \
+	void CONCAT(printImmSVE, T)(T Val, SStream *O);
+DECLARE_printImmSVE(int16_t);
+DECLARE_printImmSVE(int8_t);
+DECLARE_printImmSVE(int64_t);
+DECLARE_printImmSVE(int32_t);
+DECLARE_printImmSVE(uint16_t);
+DECLARE_printImmSVE(uint8_t);
+DECLARE_printImmSVE(uint64_t);
+DECLARE_printImmSVE(uint32_t);
+
 void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O);
 #define DEFINE_printPostIncOperand(Amount) \
 	void CONCAT(printPostIncOperand, Amount)(MCInst * MI, unsigned OpNo, \
