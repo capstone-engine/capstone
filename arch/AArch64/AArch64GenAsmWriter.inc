@@ -33959,7 +33959,7 @@ static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
 
     if (!MCOperand_isImm(MCOp))
       return false;
-    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp)), 64);
+    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp), 64);
     return AArch64_AM_isSVEMaskOfIdenticalElements_int8_t(Val);
   
     }
@@ -33967,7 +33967,7 @@ static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
 
     if (!MCOperand_isImm(MCOp))
       return false;
-    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp)), 64);
+    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp), 64);
     return AArch64_AM_isSVEMaskOfIdenticalElements_int16_t(Val);
   
     }
@@ -33975,7 +33975,7 @@ static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
 
     if (!MCOperand_isImm(MCOp))
       return false;
-    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp)), 64);
+    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp), 64);
     return AArch64_AM_isSVEMaskOfIdenticalElements_int32_t(Val);
   
     }
@@ -33990,7 +33990,7 @@ static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
 
     if (!MCOperand_isImm(MCOp))
       return false;
-    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp)), 64);
+    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp), 64);
     return AArch64_AM_isSVEMaskOfIdenticalElements_int16_t(Val) &&
            AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate(Val);
   
@@ -33999,7 +33999,7 @@ static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
 
     if (!MCOperand_isImm(MCOp))
       return false;
-    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp)), 64);
+    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp), 64);
     return AArch64_AM_isSVEMaskOfIdenticalElements_int32_t(Val) &&
            AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate(Val);
   
@@ -34008,7 +34008,7 @@ static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
 
     if (!MCOperand_isImm(MCOp))
       return false;
-    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp)), 64);
+    int64_t Val = AArch64_AM_decodeLogicalImmediate(MCOperand_getImm(MCOp), 64);
     return AArch64_AM_isSVEMaskOfIdenticalElements_int64_t(Val) &&
            AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate(Val);
   

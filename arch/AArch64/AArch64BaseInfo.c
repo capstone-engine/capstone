@@ -34,87 +34,87 @@
 #define CONCAT_(a, b) a##_##b
 
 #define GET_AT_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_AT_IMPL
 
 #define GET_DBNXS_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_DBNXS_IMPL
 
 #define GET_DB_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_DB_IMPL
 
 #define GET_DC_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_DC_IMPL
 
 #define GET_IC_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_IC_IMPL
 
 #define GET_ISB_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_ISB_IMPL
 
 #define GET_TSB_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_TSB_IMPL
 
 #define GET_PRCTX_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_PRCTX_IMPL
 
 #define GET_PRFM_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_PRFM_IMPL
 
 #define GET_SVEPRFM_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_SVEPRFM_IMPL
 
 #define GET_RPRFM_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_RPRFM_IMPL
 
 // namespace AArch64RPRFM
 // namespace llvm
 
 #define GET_SVEPREDPAT_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_SVEPREDPAT_IMPL
 
 #define GET_SVEVECLENSPECIFIER_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_SVEVECLENSPECIFIER_IMPL
 
 // namespace AArch64SVEVecLenSpecifier
 // namespace llvm
 
 #define GET_EXACTFPIMM_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_EXACTFPIMM_IMPL
 
 #define GET_PSTATEIMM0_15_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_PSTATEIMM0_15_IMPL
 
 #define GET_PSTATEIMM0_1_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_PSTATEIMM0_1_IMPL
 
 #define GET_PSB_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_PSB_IMPL
 
 #define GET_BTI_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_BTI_IMPL
 
 #define SysReg AArch64SysReg_SysReg
 #define GET_SYSREG_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_SYSREG_IMPL
 
 #undef SysReg
 
@@ -157,15 +157,15 @@ void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result)
 	utostr(CRn, false, CRnStr);
 	utostr(CRm, false, CRmStr);
 
-	dummy = cs_snprintf(result, 128, "s%s_%s_c%s_c%s_%s",
+	dummy = cs_snprintf(result, AARCH64_GRS_LEN, "s%s_%s_c%s_c%s_%s",
 			Op0Str, Op1Str, CRnStr, CRmStr, Op2Str);
 	(void)dummy;
 }
 
 #define GET_TLBITable_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_TLBITable_IMPL
 
 #define GET_SVCR_IMPL
-
 #include "AArch64GenSystemOperands.inc"
+#undef GET_SVCR_IMPL

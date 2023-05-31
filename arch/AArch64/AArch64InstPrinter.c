@@ -2274,8 +2274,11 @@ void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 
 	if (isValidSysReg(Reg, true /*Read*/, MI->csh->mode))
 		SStream_concat0(O, Reg->Name);
-	else
-		SStream_concat0(O, AArch64SysReg_genericRegisterString(Val));
+	else {
+		char result[AARCH64_GRS_LEN + 1] = {0};
+		AArch64SysReg_genericRegisterString(Val, result);
+		SStream_concat0(O, result);
+	}
 }
 
 void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
@@ -2301,8 +2304,11 @@ void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 
 	if (isValidSysReg(Reg, false /*Read*/, MI->csh->mode))
 		SStream_concat0(O, Reg->Name);
-	else
-		SStream_concat0(O, AArch64SysReg_genericRegisterString(Val));
+	else {
+		char result[AARCH64_GRS_LEN + 1] = {0};
+		AArch64SysReg_genericRegisterString(Val, result);
+		SStream_concat0(O, result);
+	}
 }
 
 void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)

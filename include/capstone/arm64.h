@@ -1435,6 +1435,10 @@ typedef enum {
 	AArch64_SYSIMM_NSHNXS,
 	AArch64_SYSIMM_OSHNXS,
 	AArch64_SYSIMM_SYNXS,
+	AArch64_SYSIMM_HALF,
+	AArch64_SYSIMM_ONE,
+	AArch64_SYSIMM_TWO,
+	AArch64_SYSIMM_ZERO,
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemImmediateEnum.inc> end

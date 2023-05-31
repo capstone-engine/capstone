@@ -765,6 +765,7 @@ typedef struct SVEVECLENSPECIFIER {
 // CS namespace begin: AArch64ExactFPImm
 typedef struct ExactFPImm {
 	const char *Name;
+	aarch64_sysimm SysImm;
 	int Enum;
 	const char *Repr;
 } AArch64ExactFPImm_ExactFPImm;
@@ -878,7 +879,8 @@ typedef struct SysReg {
 
 const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByName(const char *Name);
 const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
-const char *AArch64SysReg_genericRegisterString(uint32_t Bits);
+#define AARCH64_GRS_LEN 128
+void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result);
 
 // CS namespace end: AArch64SysReg
 
