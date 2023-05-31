@@ -17,6 +17,7 @@ static uint64_t getMnemonic(MCInst *MI, SStream *O, unsigned int opcode) {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Woverlength-strings"
 #endif
+
 #ifndef CAPSTONE_DIET
   static const char AsmStrs[] = {
   /* 0 */ "sha1su0\t\0"
@@ -1131,6 +1132,8 @@ static uint64_t getMnemonic(MCInst *MI, SStream *O, unsigned int opcode) {
   /* 8739 */ "ld1w\t{\0"
   /* 8746 */ "st1w\t{\0"
 };
+#endif
+
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif
@@ -7480,7 +7483,6 @@ static uint64_t getMnemonic(MCInst *MI, SStream *O, unsigned int opcode) {
     138527510U,	// anonymous_5384
     138527511U,	// anonymous_5385
   };
-#endif
 
   static const uint32_t OpInfo1[] = {
     0U,	// PHI
@@ -13832,7 +13834,9 @@ static uint64_t getMnemonic(MCInst *MI, SStream *O, unsigned int opcode) {
   uint64_t Bits = 0;
   Bits |= (uint64_t)OpInfo0[opcode] << 0;
   Bits |= (uint64_t)OpInfo1[opcode] << 32;
+#ifndef CAPSTONE_DIET
 	SStream_concat0(O, AsmStrs+(Bits & 16383)-1);
+#endif
 	return Bits;
 
 }
