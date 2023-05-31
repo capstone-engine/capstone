@@ -36,6 +36,7 @@ from Patches.GetNumOperands import GetNumOperands
 from Patches.GetOpcode import GetOpcode
 from Patches.GetOperandRegImm import GetOperandRegImm
 from Patches.GetOperand import GetOperand
+from Patches.GetRegClass import GetRegClass
 from Patches.GetSubReg import GetSubReg
 from Patches.Includes import Includes
 from Patches.InlineToStaticInline import InlineToStaticInline
@@ -93,6 +94,7 @@ class Translator:
     patches: [Patch] = list()
 
     patch_priorities: {str: int} = {
+        GetRegClass.__name__: 0,
         AArch64GetRegFromClass.__name__: 0,
         CppInitCast.__name__: 0,
         BitCastStdArray.__name__: 0,
@@ -187,6 +189,8 @@ class Translator:
         priorities = dict(sorted(self.patch_priorities.items(), key=lambda item: item[1]))
         for ptype, p in priorities.items():
             match ptype:
+                case GetRegClass.__name__:
+                    patch = GetRegClass(p)
                 case AArch64GetRegFromClass.__name__:
                     patch = AArch64GetRegFromClass(p)
                 case CppInitCast.__name__:
