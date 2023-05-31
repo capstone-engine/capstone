@@ -168,3 +168,9 @@ def get_path(config_path: str) -> Path:
         log.fatal(f'Path "{p.absolute().name}" in config does not exist.')
         exit(1)
     return p
+
+
+def fail_exit(msg: str) -> None:
+    """Logs a fatal message and exits with error code 1."""
+    log.fatal(msg)
+    exit(1)

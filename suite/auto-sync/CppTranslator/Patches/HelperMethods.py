@@ -3,6 +3,8 @@ import re
 from tree_sitter import Node
 import logging as log
 
+from Helper import fail_exit
+
 
 def get_function_params_of_node(n: Node) -> Node:
     """
@@ -194,3 +196,13 @@ def parse_function_capture(
     from TemplateCollector import TemplateCollector
 
     return TemplateCollector.templ_params_to_list(temp_args), st_class_ids, ret_type, func_name, func_params, comp_stmt
+
+
+def get_capture_node(captures: [(Node, str)], name: str) -> Node:
+    """
+    Returns the captured node with the given name.
+    """
+    for c in captures:
+        if c[1] == name:
+            return c[0]
+    fail_exit(f'Capture "{name}" does is not in captures:\n{captures}')

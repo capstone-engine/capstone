@@ -1,6 +1,6 @@
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text
+from Patches.HelperMethods import get_text, get_capture_node
 from Patches.Patch import Patch
 
 
@@ -32,9 +32,9 @@ class DeclarationInConditionalClause(Patch):
         return "condition_clause"
 
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
-        declaration = captures[1][0]
-        identifier = captures[2][0]
-        if_body = captures[3][0]
+        declaration = get_capture_node(captures, "decl")
+        identifier = get_capture_node(captures, "id")
+        if_body = get_capture_node(captures, "if_body")
         identifier = get_text(src, identifier.start_byte, identifier.end_byte)
         declaration = get_text(src, declaration.start_byte, declaration.end_byte)
         if_body = get_text(src, if_body.start_byte, if_body.end_byte)
