@@ -2481,6 +2481,7 @@ static void printMatrixTileVector(MCInst *MI, unsigned OpNum, SStream *O, bool I
 	MCOperand *RegOp = MCInst_getOperand(MI, OpNum);
   	// assert(MCOperand_isReg(RegOp) && "Unexpected operand type!");
 	unsigned Reg = MCOperand_getReg(RegOp);
+#ifndef CAPSTONE_DIET
 	const char *RegName = getRegisterName(Reg, AArch64_NoRegAltName);
 
 	const size_t strLn = strlen(RegName);
@@ -2499,6 +2500,7 @@ static void printMatrixTileVector(MCInst *MI, unsigned OpNum, SStream *O, bool I
 		}
 	}
 	SStream_concat0(O, RegNameNew);
+#endif
 
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
@@ -2513,7 +2515,9 @@ static void printMatrixTileVector(MCInst *MI, unsigned OpNum, SStream *O, bool I
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = Reg;
 		MI->flat_insn->detail->arm64.op_count++;
 	}
+#ifndef CAPSTONE_DIET
 	cs_mem_free(RegNameNew);
+#endif
 }
 
 static const unsigned MatrixZADRegisterTable[] = {
