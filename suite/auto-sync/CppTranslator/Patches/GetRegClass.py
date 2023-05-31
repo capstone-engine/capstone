@@ -32,5 +32,5 @@ class GetRegClass(Patch):
         arg_list: Node = get_capture_node(captures, "arg_list")
         args = get_text(src, arg_list.start_byte, arg_list.end_byte).strip(b"()")
         mcinst_var = get_MCInst_var_name(src, get_capture_node(captures, "get_reg_class"))
-        res = b"MCRegisterClass_getRegClass(" + mcinst_var + b"->MRI, " + args + b")"
+        res = b"MCRegisterInfo_getRegClass(" + mcinst_var + b"->MRI, " + args + b")"
         return res

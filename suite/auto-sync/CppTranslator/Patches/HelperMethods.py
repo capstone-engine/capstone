@@ -205,4 +205,4 @@ def get_capture_node(captures: [(Node, str)], name: str) -> Node:
     for c in captures:
         if c[1] == name:
             return c[0]
-    fail_exit(f'Capture "{name}" does is not in captures:\n{captures}')
+    fail_exit(f'Capture "{name}" is not in captures:\n{captures}')
