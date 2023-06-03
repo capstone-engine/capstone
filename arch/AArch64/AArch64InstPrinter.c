@@ -53,6 +53,11 @@
 
 #define DEBUG_TYPE "asm-printer"
 
+static void printCustomAliasOperand(
+         MCInst *MI, uint64_t Address, unsigned OpIdx,
+         unsigned PrintMethodIdx,
+         SStream *OS);
+
 #define GET_INSTRUCTION_NAME
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
@@ -1624,6 +1629,7 @@ void printRPRFMOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		printUInt32Bang(O, (prfop)); \
 		SStream_concat0(O, markup(">")); \
 	}
+DEFINE_printPrefetchOp(false);
 DEFINE_printPrefetchOp(true);
 
 void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O)
@@ -2135,6 +2141,7 @@ DEFINE_printTypedVectorList(8, h);
 			Scale *MCOperand_getImm(MCInst_getOperand(MI, (OpNum)))); \
 		SStream_concat0(O, "]"); \
 	}
+DEFINE_printVectorIndex(1);
 DEFINE_printVectorIndex(8);
 
 void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O)

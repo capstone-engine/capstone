@@ -232,6 +232,7 @@ DECLARE_printTypedVectorList(8, h);
 #define DECLARE_printVectorIndex(Scale) \
 	void CONCAT(printVectorIndex, \
 				Scale)(MCInst * MI, unsigned OpNum, SStream *O);
+DECLARE_printVectorIndex(1);
 DECLARE_printVectorIndex(8);
 
 void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O);
