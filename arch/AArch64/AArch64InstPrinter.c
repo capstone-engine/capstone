@@ -62,9 +62,6 @@ static void printCustomAliasOperand(
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
 
-#define GET_INSTRUCTION_NAME
-#define PRINT_ALIAS_INSTR
-
 void printRegName(SStream *OS, unsigned Reg)
 {
 	SStream_concat(OS, "%s%s", markup("<reg:"), getRegisterName(Reg, AArch64_NoRegAltName));
