@@ -618,14 +618,14 @@ inline static bool AArch64CC_isIrreflexive(AArch64CC_CondCode Code)
 
 typedef struct SysAlias {
 	const char *Name;
-	aarch64_sysalias SysAlias;
+	aarch64_sysop_alias SysAlias;
 	uint16_t Encoding;
 	arm64_insn_group FeaturesRequired[3];
 } SysAlias;
 
 typedef struct SysAliasReg {
 	const char *Name;
-	arm64_sysreg SysReg;
+	aarch64_sysop_reg SysReg;
 	uint16_t Encoding;
 	bool NeedsReg;
 	arm64_insn_group FeaturesRequired[3];
@@ -633,7 +633,7 @@ typedef struct SysAliasReg {
 
 typedef struct SysAliasImm {
 	const char *Name;
-	aarch64_sysimm SysImm;
+	aarch64_sysop_imm SysImm;
 	uint16_t ImmValue;
 	uint16_t Encoding;
 	arm64_insn_group FeaturesRequired[3];
@@ -765,7 +765,7 @@ typedef struct SVEVECLENSPECIFIER {
 // CS namespace begin: AArch64ExactFPImm
 typedef struct ExactFPImm {
 	const char *Name;
-	aarch64_sysimm SysImm;
+	aarch64_sysop_imm SysImm;
 	int Enum;
 	const char *Repr;
 } AArch64ExactFPImm_ExactFPImm;
