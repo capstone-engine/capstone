@@ -39,7 +39,7 @@
 #include "AArch64AddressingModes.h"
 #include "AArch64BaseInfo.h"
 #include "AArch64DisassemblerExtension.h"
-//#include "AArch64Linkage.h"
+#include "AArch64Linkage.h"
 #include "AArch64Mapping.h"
 
 #define GET_INSTRINFO_MC_DESC
@@ -49,6 +49,23 @@
 #define CONCAT_(a, b) a##_##b
 
 #define DEBUG_TYPE "aarch64-disassembler"
+
+static bool Check(DecodeStatus *Out, DecodeStatus In)
+{
+	switch (In) {
+	case MCDisassembler_Success:
+		// Out stays the same.
+		return true;
+	case MCDisassembler_SoftFail:
+		*Out = In;
+		return true;
+	case MCDisassembler_Fail:
+		*Out = In;
+		return false;
+	default: // never reached
+		return false;
+	}
+}
 
 // Pull DecodeStatus and its enum values into the global namespace.
 

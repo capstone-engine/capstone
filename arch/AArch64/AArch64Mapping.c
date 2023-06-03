@@ -204,4 +204,7 @@ void AArch64_reg_access(const cs_insn *insn,
 }
 #endif
 
+void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
+					   va_list args) {}
+
 #endif

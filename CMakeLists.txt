@@ -186,6 +186,7 @@ if(CAPSTONE_ARM64_SUPPORT)
     set(SOURCES_ARM64
         arch/AArch64/AArch64BaseInfo.c
         arch/AArch64/AArch64Disassembler.c
+        arch/AArch64/AArch64DisassemblerExtension.c
         arch/AArch64/AArch64InstPrinter.c
         arch/AArch64/AArch64Mapping.c
         arch/AArch64/AArch64Module.c
@@ -193,20 +194,20 @@ if(CAPSTONE_ARM64_SUPPORT)
     set(HEADERS_ARM64
         arch/AArch64/AArch64AddressingModes.h
         arch/AArch64/AArch64BaseInfo.h
+        arch/AArch64/AArch64DisassemblerExtension.h
         arch/AArch64/AArch64InstPrinter.h
+        arch/AArch64/AArch64Linkage.h
         arch/AArch64/AArch64Mapping.h
         arch/AArch64/AArch64GenAsmWriter.inc
         arch/AArch64/AArch64GenDisassemblerTables.inc
         arch/AArch64/AArch64GenInstrInfo.inc
         arch/AArch64/AArch64GenRegisterInfo.inc
         arch/AArch64/AArch64GenRegisterName.inc
-        arch/AArch64/AArch64GenRegisterV.inc
         arch/AArch64/AArch64GenSubtargetInfo.inc
         arch/AArch64/AArch64GenSystemOperands.inc
-        arch/AArch64/AArch64GenSystemOperands_enum.inc
-        arch/AArch64/AArch64MappingInsn.inc
-        arch/AArch64/AArch64MappingInsnName.inc
-        arch/AArch64/AArch64MappingInsnOp.inc
+        arch/AArch64/AArch64GenCSMappingInsn.inc
+        arch/AArch64/AArch64GenCSMappingInsnName.inc
+        arch/AArch64/AArch64GenCSMappingInsnOp.inc
     )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
 endif()

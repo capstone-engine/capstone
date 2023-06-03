@@ -75,7 +75,7 @@ DECLARE_printImmSVE(uint32_t);
 
 void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O);
 #define DEFINE_printPostIncOperand(Amount) \
-	void CONCAT(printPostIncOperand, Amount)(MCInst * MI, unsigned OpNo, \
+	static inline void CONCAT(printPostIncOperand, Amount)(MCInst * MI, unsigned OpNo, \
 											 SStream *O) \
 	{ \
 		printPostIncOperand(MI, OpNo, Amount, O); \
@@ -107,10 +107,13 @@ void printShifter(MCInst *MI, unsigned OpNum, SStream *O);
 void printShiftedRegister(MCInst *MI, unsigned OpNum, SStream *O);
 void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O);
 void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O);
+
+void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind,
+					unsigned Width);
 void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind,
 					unsigned Width);
 #define DEFINE_printMemExtend(SrcRegKind, Width) \
-	void CONCAT(printMemExtend, CONCAT(SrcRegKind, Width))( \
+	static inline void CONCAT(printMemExtend, CONCAT(SrcRegKind, Width))( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
 		printMemExtend(MI, OpNum, O, CHAR(SrcRegKind), Width); \
@@ -169,7 +172,7 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum,
 void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O);
 void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O);
 #define DEFINE_printUImm12Offset(Scale) \
-	void CONCAT(printUImm12Offset, Scale)(MCInst * MI, unsigned OpNum, \
+	static inline void CONCAT(printUImm12Offset, Scale)(MCInst * MI, unsigned OpNum, \
 										  SStream *O) \
 	{ \
 		printUImm12Offset(MI, OpNum, Scale, O); \
@@ -205,7 +208,6 @@ DECLARE_printPrefetchOp(false);
 void printRPRFMOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O);
 void printBTIHintOp(MCInst *MI, unsigned OpNum, SStream *O);
-void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printVectorList(MCInst *MI, unsigned OpNum, SStream *O,
 					 const char *LayoutSuffix);
 void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O);
@@ -251,12 +253,6 @@ DECLARE_printPredicateAsCounter(64);
 DECLARE_printPredicateAsCounter(16);
 DECLARE_printPredicateAsCounter(32);
 DECLARE_printPredicateAsCounter(0);
-
-#define DECLARE_printComplexRotationOp(Angle, Remainder) \
-	void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
-		MCInst * MI, unsigned OpNo, SStream *O);
-DECLARE_printComplexRotationOp(180, 90);
-DECLARE_printComplexRotationOp(90, 0);
 
 #define DECLARE_printGPRSeqPairsClassOperand(size) \
 	void CONCAT(printGPRSeqPairsClassOperand, \

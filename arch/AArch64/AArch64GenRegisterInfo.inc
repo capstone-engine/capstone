@@ -5194,7 +5194,7 @@ static const MCRegisterClass AArch64MCRegisterClasses[] = {
   { MPR8, MPR8Bits, sizeof(MPR8Bits) },
 };
 
-const uint16_t AArch64RegEncodingTable[] = {
+static const uint16_t AArch64RegEncodingTable[] = {
   0,
   0,
   29,

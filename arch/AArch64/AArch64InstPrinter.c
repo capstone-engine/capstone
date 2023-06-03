@@ -58,6 +58,14 @@ static void printCustomAliasOperand(
          unsigned PrintMethodIdx,
          SStream *OS);
 
+#define DECLARE_printComplexRotationOp(Angle, Remainder) \
+	static void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
+		MCInst * MI, unsigned OpNo, SStream *O);
+DECLARE_printComplexRotationOp(180, 90);
+DECLARE_printComplexRotationOp(90, 0);
+
+static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
+
 #define GET_INSTRUCTION_NAME
 #define PRINT_ALIAS_INSTR
 #include "AArch64GenAsmWriter.inc"
@@ -1658,7 +1666,7 @@ void printBTIHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 }
 
-void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_FPImmOperand, OpNum);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
@@ -2250,7 +2258,8 @@ static const AArch64SysReg_SysReg *lookupSysReg(unsigned Val, bool Read, unsigne
 	const AArch64SysReg_SysReg *Reg = AArch64SysReg_lookupSysRegByEncoding(Val);
 
 	if (Reg && !isValidSysReg(Reg, Read, mode))
-		Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
+		assert(0 && "Looking up a system register by name is not yet supported.");
+		// Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
 
 	return Reg;
 }
@@ -2342,7 +2351,7 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 }
 
 #define DEFINE_printComplexRotationOp(Angle, Remainder) \
-	void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
+	static void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
 		MCInst * MI, unsigned OpNo, SStream *O) \
 	{ \
 		add_cs_detail( \
@@ -2588,4 +2597,14 @@ void printSyspXzrPair(MCInst *MI, unsigned OpNum, SStream *O)
 
 	SStream_concat(O, "%s%s", getRegisterName(Reg, AArch64_NoRegAltName), ", ");
 	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
+}
+
+const char *AArch64_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx) {
+	return getRegisterName(RegNo, AltIdx);
+}
+
+void AArch64_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
+	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
+	MI->MRI = MRI;
+	printInst(MI, MI->address, "", O);
 }

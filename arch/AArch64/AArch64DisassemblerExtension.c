@@ -21,21 +21,3 @@ bool AArch64_testFeatureList(unsigned int mode, const arm64_insn_group *features
 	}
 	return true;
 }
-
-
-bool Check(DecodeStatus *Out, DecodeStatus In)
-{
-	switch (In) {
-	case MCDisassembler_Success:
-		// Out stays the same.
-		return true;
-	case MCDisassembler_SoftFail:
-		*Out = In;
-		return true;
-	case MCDisassembler_Fail:
-		*Out = In;
-		return false;
-	default: // never reached
-		return false;
-	}
-}
