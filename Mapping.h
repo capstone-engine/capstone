@@ -42,7 +42,7 @@ unsigned short insn_find(const insn_map *m, unsigned int max, unsigned int id,
 unsigned int find_cs_id(unsigned MC_Opcode, const insn_map *imap,
 			unsigned imap_size);
 
-#define MAX_NO_DATA_TYPES 10
+#define MAX_NO_DATA_TYPES 16
 
 ///< A LLVM<->CS Mapping entry of an MCOperand.
 typedef struct {
