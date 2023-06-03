@@ -4016,7 +4016,7 @@ typedef enum arm64_insn {
 	// clang-format on
 	// generated content <AArch64GenCSInsnEnum.inc> end
 
-  ARM64_INS_ENDING, // <-- mark the end of the list of insn
+  AArch64_INS_ENDING, // <-- mark the end of the list of insn
 } arm64_insn;
 
 /// Group of ARM64 instructions
