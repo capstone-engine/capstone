@@ -4021,16 +4021,16 @@ typedef enum arm64_insn {
 
 /// Group of ARM64 instructions
 typedef enum arm64_insn_group {
-  ARM64_GRP_INVALID = 0, ///< = CS_GRP_INVALID
+  AArch64_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
   // Generic groups
   // all jump instructions (conditional+direct+indirect jumps)
-  ARM64_GRP_JUMP, ///< = CS_GRP_JUMP
-  ARM64_GRP_CALL,
-  ARM64_GRP_RET,
-  ARM64_GRP_INT,
-  ARM64_GRP_PRIVILEGE = 6,   ///< = CS_GRP_PRIVILEGE
-  ARM64_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
+  AArch64_GRP_JUMP, ///< = CS_GRP_JUMP
+  AArch64_GRP_CALL,
+  AArch64_GRP_RET,
+  AArch64_GRP_INT,
+  AArch64_GRP_PRIVILEGE = 6,   ///< = CS_GRP_PRIVILEGE
+  AArch64_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 	// generated content <AArch64GenCSFeatureEnum.inc> begin
 	// clang-format off
 
