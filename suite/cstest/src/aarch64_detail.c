@@ -29,13 +29,13 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 		switch(op->type) {
 			default:
 				break;
-			case ARM64_OP_REG:
+			case AArch64_OP_REG:
 				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
 				break;
-			case ARM64_OP_IMM:
+			case AArch64_OP_IMM:
 				add_str(&result, " ; operands[%u].type: IMM = 0x%" PRIx64, i, op->imm);
 				break;
-			case ARM64_OP_FP:
+			case AArch64_OP_FP:
 #if defined(_KERNEL_MODE)
 				// Issue #681: Windows kernel does not support formatting float point
 				add_str(&result, " ; operands[%u].type: FP = <float_point_unsupported>", i);
@@ -43,51 +43,51 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: FP = %f", i, op->fp);
 #endif
 				break;
-			case ARM64_OP_MEM:
+			case AArch64_OP_MEM:
 				add_str(&result, " ; operands[%u].type: MEM", i);
-				if (op->mem.base != ARM64_REG_INVALID)
+				if (op->mem.base != AArch64_REG_INVALID)
 					add_str(&result, " ; operands[%u].mem.base: REG = %s", i, cs_reg_name(*handle, op->mem.base));
-				if (op->mem.index != ARM64_REG_INVALID)
+				if (op->mem.index != AArch64_REG_INVALID)
 					add_str(&result, " ; operands[%u].mem.index: REG = %s", i, cs_reg_name(*handle, op->mem.index));
 				if (op->mem.disp != 0)
 					add_str(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
 
 				break;
-			case ARM64_OP_CIMM:
+			case AArch64_OP_CIMM:
 				add_str(&result, " ; operands[%u].type: C-IMM = %u", i, (int)op->imm);
 				break;
-			case ARM64_OP_REG_MRS:
+			case AArch64_OP_REG_MRS:
 				add_str(&result, " ; operands[%u].type: REG_MRS = 0x%x", i, op->reg);
 				break;
-			case ARM64_OP_REG_MSR:
+			case AArch64_OP_REG_MSR:
 				add_str(&result, " ; operands[%u].type: REG_MSR = 0x%x", i, op->reg);
 				break;
-			case ARM64_OP_PSTATE:
+			case AArch64_OP_PSTATE:
 				add_str(&result, " ; operands[%u].type: PSTATE = 0x%x", i, op->pstate);
 				break;
-			case ARM64_OP_SYS:
+			case AArch64_OP_SYS:
 				add_str(&result, " ; operands[%u].type: SYS = 0x%x", i, op->sys);
 				break;
-			case ARM64_OP_PREFETCH:
+			case AArch64_OP_PREFETCH:
 				add_str(&result, " ; operands[%u].type: PREFETCH = 0x%x", i, op->prefetch);
 				break;
-			case ARM64_OP_BARRIER:
+			case AArch64_OP_BARRIER:
 				add_str(&result, " ; operands[%u].type: BARRIER = 0x%x", i, op->barrier);
 				break;
-			case ARM64_OP_SME_INDEX:
+			case AArch64_OP_SME_INDEX:
 				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->sme_index.reg));
-				if(op->sme_index.base != ARM64_REG_INVALID)
+				if(op->sme_index.base != AArch64_REG_INVALID)
 					add_str(&result, " ; operands[%u].index.base: REG = %s", i, cs_reg_name(*handle, op->sme_index.base));
 				if(op->sme_index.disp != 0)
 					add_str(&result, " ; operands[%u].index.disp: 0x%x", i, op->sme_index.disp);
 				break;
-			case ARM64_OP_SVCR:
+			case AArch64_OP_SVCR:
 				add_str(&result, " ; operands[%u].type: SYS = 0x%x", i, op->sys);
-				if(op->svcr == ARM64_SVCR_SVCRSM)
+				if(op->svcr == AArch64_SVCR_SVCRSM)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM", i);
-				if(op->svcr == ARM64_SVCR_SVCRZA)
+				if(op->svcr == AArch64_SVCR_SVCRZA)
 					add_str(&result, " ; operands[%u].svcr: BIT = ZA", i);
-				if(op->svcr == ARM64_SVCR_SVCRSMZA)
+				if(op->svcr == AArch64_SVCR_SVCRSMZA)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM & ZA", i);
 				break;
 		}
@@ -107,15 +107,15 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 				break;
 		}
 		
-		if (op->shift.type != ARM64_SFT_INVALID &&
+		if (op->shift.type != AArch64_SFT_INVALID &&
 			op->shift.value)
 			add_str(&result, " ; Shift: type = %u, value = %u",
 				   op->shift.type, op->shift.value);
 
-		if (op->ext != ARM64_EXT_INVALID)
+		if (op->ext != AArch64_EXT_INVALID)
 			add_str(&result, " ; Ext: %u", op->ext);
 
-		if (op->vas != ARM64_VAS_INVALID)
+		if (op->vas != AArch64_VAS_INVALID)
 			add_str(&result, " ; operands[%u].vas: 0x%x", i, op->vas);
 
 		if (op->vector_index != -1)
