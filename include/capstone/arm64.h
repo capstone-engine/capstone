@@ -15,50 +15,79 @@ extern "C" {
 #pragma warning(disable : 4201)
 #endif
 
-/// ARM64 shift type
-typedef enum arm64_shifter {
-  ARM64_SFT_INVALID = 0,
-  ARM64_SFT_LSL = 1,
-  ARM64_SFT_MSL = 2,
-  ARM64_SFT_LSR = 3,
-  ARM64_SFT_ASR = 4,
-  ARM64_SFT_ROR = 5,
-} arm64_shifter;
+/// AArch64 shift type
+typedef enum aarch64_shifter {
+  AArch64_SFT_INVALID = 0,
+  AArch64_SFT_LSL = 1,
+  AArch64_SFT_MSL = 2,
+  AArch64_SFT_LSR = 3,
+  AArch64_SFT_ASR = 4,
+  AArch64_SFT_ROR = 5,
+} aarch64_shifter;
 
-/// ARM64 extender type
-typedef enum arm64_extender {
-  ARM64_EXT_INVALID = 0,
-  ARM64_EXT_UXTB = 1,
-  ARM64_EXT_UXTH = 2,
-  ARM64_EXT_UXTW = 3,
-  ARM64_EXT_UXTX = 4,
-  ARM64_EXT_SXTB = 5,
-  ARM64_EXT_SXTH = 6,
-  ARM64_EXT_SXTW = 7,
-  ARM64_EXT_SXTX = 8,
-} arm64_extender;
+/// AArch64 extender type
+typedef enum aarch64_extender {
+  AArch64_EXT_INVALID = 0,
+  AArch64_EXT_UXTB = 1,
+  AArch64_EXT_UXTH = 2,
+  AArch64_EXT_UXTW = 3,
+  AArch64_EXT_UXTX = 4,
+  AArch64_EXT_SXTB = 5,
+  AArch64_EXT_SXTH = 6,
+  AArch64_EXT_SXTW = 7,
+  AArch64_EXT_SXTX = 8,
+} aarch64_extender;
 
-/// ARM64 condition code
-typedef enum arm64_cc {
-  ARM64_CC_INVALID = 0,
-  ARM64_CC_EQ = 1,  ///< Equal
-  ARM64_CC_NE = 2,  ///< Not equal:                 Not equal, or unordered
-  ARM64_CC_HS = 3,  ///< Unsigned higher or same:   >, ==, or unordered
-  ARM64_CC_LO = 4,  ///< Unsigned lower or same:    Less than
-  ARM64_CC_MI = 5,  ///< Minus, negative:           Less than
-  ARM64_CC_PL = 6,  ///< Plus, positive or zero:    >, ==, or unordered
-  ARM64_CC_VS = 7,  ///< Overflow:                  Unordered
-  ARM64_CC_VC = 8,  ///< No overflow:               Ordered
-  ARM64_CC_HI = 9,  ///< Unsigned higher:           Greater than, or unordered
-  ARM64_CC_LS = 10, ///< Unsigned lower or same:    Less than or equal
-  ARM64_CC_GE = 11, ///< Greater than or equal:     Greater than or equal
-  ARM64_CC_LT = 12, ///< Less than:                 Less than, or unordered
-  ARM64_CC_GT = 13, ///< Signed greater than:       Greater than
-  ARM64_CC_LE = 14, ///< Signed less than or equal: <, ==, or unordered
-  ARM64_CC_AL = 15, ///< Always (unconditional):    Always (unconditional)
-  ARM64_CC_NV = 16, ///< Always (unconditional):   Always (unconditional)
-  //< Note the NV exists purely to disassemble 0b1111. Execution is "always".
-} arm64_cc;
+// Moved from AArch64BaseInfo.h
+typedef enum VectorLayout {
+	AArch64Layout_Invalid = -1,
+	AArch64Layout_VL_8B,
+	AArch64Layout_VL_4H,
+	AArch64Layout_VL_2S,
+	AArch64Layout_VL_1D,
+
+	AArch64Layout_VL_16B,
+	AArch64Layout_VL_8H,
+	AArch64Layout_VL_4S,
+	AArch64Layout_VL_2D,
+
+	// Bare layout for the 128-bit vector
+	// (only show ".b", ".h", ".s", ".d" without vector number)
+	AArch64Layout_VL_B,
+	AArch64Layout_VL_H,
+	AArch64Layout_VL_S,
+	AArch64Layout_VL_D
+} AArch64Layout_VectorLayout;
+
+// Moved from AArch64BaseInfo.h
+// The CondCodes constants map directly to the 4-bit encoding of the condition
+// field for predicated instructions.
+typedef enum CondCode { // Meaning (integer)          Meaning (floating-point)
+	AArch64CC_EQ = 0x0, // Equal                      Equal
+	AArch64CC_NE = 0x1, // Not equal                  Not equal, or unordered
+	AArch64CC_HS = 0x2, // Unsigned higher or same    >, ==, or unordered
+	AArch64CC_LO = 0x3, // Unsigned lower             Less than
+	AArch64CC_MI = 0x4, // Minus, negative            Less than
+	AArch64CC_PL = 0x5, // Plus, positive or zero     >, ==, or unordered
+	AArch64CC_VS = 0x6, // Overflow                   Unordered
+	AArch64CC_VC = 0x7, // No overflow                Not unordered
+	AArch64CC_HI = 0x8, // Unsigned higher            Greater than, or unordered
+	AArch64CC_LS = 0x9, // Unsigned lower or same     Less than or equal
+	AArch64CC_GE = 0xa, // Greater than or equal      Greater than or equal
+	AArch64CC_LT = 0xb, // Less than                  Less than, or unordered
+	AArch64CC_GT = 0xc, // Greater than               Greater than
+	AArch64CC_LE = 0xd, // Less than or equal         <, ==, or unordered
+	AArch64CC_AL = 0xe, // Always (unconditional)     Always (unconditional)
+	AArch64CC_NV = 0xf, // Always (unconditional)     Always (unconditional)
+	// Note the NV exists purely to disassemble 0b1111. Execution is "always".
+	AArch64CC_Invalid,
+
+	// Common aliases used for SVE.
+	AArch64CC_ANY_ACTIVE = AArch64CC_NE,	 // (!Z)
+	AArch64CC_FIRST_ACTIVE = AArch64CC_MI, // ( N)
+	AArch64CC_LAST_ACTIVE = AArch64CC_LO,	 // (!C)
+	AArch64CC_NONE_ACTIVE = AArch64CC_EQ	 // ( Z)
+} AArch64CC_CondCode;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_TLBI> begin
@@ -304,7 +333,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_DBnXS> end
-	AArch64_DBnXS_ENDING,
+	AArch64_DBNXS_ENDING,
 } arm64_dbnxs;
 
 typedef enum {
@@ -358,7 +387,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ExactFPImm> end
-	AArch64_ExactFPImm_ENDING,
+	AArch64_EXACTFPIMM_ENDING,
 } arm64_exactfpimm;
 
 typedef enum {
@@ -439,7 +468,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PStateImm0_1> end
-	AArch64_PStateImm0_1_ENDING,
+	AArch64_PSTATEIMM0_1_ENDING,
 } arm64_pstateimm0_1;
 
 typedef enum {
@@ -457,7 +486,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PStateImm0_15> end
-	AArch64_PStateImm0_15_ENDING,
+	AArch64_PSTATEIMM0_15_ENDING,
 } arm64_pstateimm0_15;
 
 typedef enum {
@@ -1745,7 +1774,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SysReg> end
-	AArch64_SysReg_ENDING,
+	AArch64_SYSREG_ENDING,
 } arm64_sysreg;
 
 typedef enum {
@@ -2564,25 +2593,19 @@ typedef struct arm64_op_sme_index {
 typedef struct cs_arm64_op {
   int vector_index; ///< Vector Index for some vector operands (or -1 if
 		    ///< irrelevant)
-  arm64_vas vas;    ///< Vector Arrangement Specifier
+  AArch64Layout_VectorLayout vas;    ///< Vector Arrangement Specifier
   struct {
-    arm64_shifter type; ///< shifter type of this operand
+    aarch64_shifter type; ///< shifter type of this operand
     unsigned int value; ///< shifter value of this operand
   } shift;
-  arm64_extender ext; ///< extender type of this operand
+  aarch64_extender ext; ///< extender type of this operand
   arm64_op_type type; ///< operand type
-  arm64_svcr_op svcr; ///< MSR/MRS SVCR instruction variant.
   union {
     arm64_reg reg;	 ///< register value for REG operand
     int64_t imm;	 ///< immediate value, or index for C-IMM or IMM operand
     double fp;		 ///< floating point value for FP operand
     arm64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
-    arm64_pstate pstate; ///< PState field of MSR instruction.
-    arm64_sys_op sys;	 ///< IC/DC/AT/TLBI operation (see arm64_ic_op,
-		      ///< arm64_dc_op, arm64_at_op, arm64_tlbi_op)
-    arm64_prefetch_op prefetch; ///< PRFM operation.
-    arm64_barrier_op
-	barrier; ///< Memory barrier operation (ISB/DMB/DSB instructions).
+		aarch64_sysop sysop; ///< System operand
     arm64_op_sme_index sme_index; ///< base/disp value for matrix tile slice
 				  ///< instructions.
   };
@@ -2595,7 +2618,7 @@ typedef struct cs_arm64_op {
 
 /// Instruction structure
 typedef struct cs_arm64 {
-  arm64_cc cc;	     ///< conditional code for this insn
+  AArch64CC_CondCode cc;	     ///< conditional code for this insn
   bool update_flags; ///< does this insn update flags?
   bool writeback;    ///< does this insn request writeback? 'True' means 'yes'
   bool post_index;   ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.

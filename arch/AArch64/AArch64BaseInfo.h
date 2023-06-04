@@ -460,34 +460,7 @@ static inline bool atomicBarrierDroppedOnZero(unsigned Opcode)
 	return false;
 }
 
-// The CondCodes constants map directly to the 4-bit encoding of the condition
-// field for predicated instructions.
-typedef enum CondCode { // Meaning (integer)          Meaning (floating-point)
-	AArch64CC_EQ = 0x0, // Equal                      Equal
-	AArch64CC_NE = 0x1, // Not equal                  Not equal, or unordered
-	AArch64CC_HS = 0x2, // Unsigned higher or same    >, ==, or unordered
-	AArch64CC_LO = 0x3, // Unsigned lower             Less than
-	AArch64CC_MI = 0x4, // Minus, negative            Less than
-	AArch64CC_PL = 0x5, // Plus, positive or zero     >, ==, or unordered
-	AArch64CC_VS = 0x6, // Overflow                   Unordered
-	AArch64CC_VC = 0x7, // No overflow                Not unordered
-	AArch64CC_HI = 0x8, // Unsigned higher            Greater than, or unordered
-	AArch64CC_LS = 0x9, // Unsigned lower or same     Less than or equal
-	AArch64CC_GE = 0xa, // Greater than or equal      Greater than or equal
-	AArch64CC_LT = 0xb, // Less than                  Less than, or unordered
-	AArch64CC_GT = 0xc, // Greater than               Greater than
-	AArch64CC_LE = 0xd, // Less than or equal         <, ==, or unordered
-	AArch64CC_AL = 0xe, // Always (unconditional)     Always (unconditional)
-	AArch64CC_NV = 0xf, // Always (unconditional)     Always (unconditional)
-	// Note the NV exists purely to disassemble 0b1111. Execution is "always".
-	AArch64CC_Invalid,
-
-	// Common aliases used for SVE.
-	AArch64CC_ANY_ACTIVE = AArch64CC_NE,	 // (!Z)
-	AArch64CC_FIRST_ACTIVE = AArch64CC_MI, // ( N)
-	AArch64CC_LAST_ACTIVE = AArch64CC_LO,	 // (!C)
-	AArch64CC_NONE_ACTIVE = AArch64CC_EQ	 // ( Z)
-} AArch64CC_CondCode;
+// AArch64CC move to main header aarch64.h
 
 inline static const char *AArch64CC_getCondCodeName(AArch64CC_CondCode Code)
 {
@@ -839,25 +812,7 @@ typedef enum ShiftExtSpecifiers {
 
 // CS namespace begin: AArch64Layout
 
-typedef enum VectorLayout {
-	AArch64Layout_Invalid = -1,
-	AArch64Layout_VL_8B,
-	AArch64Layout_VL_4H,
-	AArch64Layout_VL_2S,
-	AArch64Layout_VL_1D,
-
-	AArch64Layout_VL_16B,
-	AArch64Layout_VL_8H,
-	AArch64Layout_VL_4S,
-	AArch64Layout_VL_2D,
-
-	// Bare layout for the 128-bit vector
-	// (only show ".b", ".h", ".s", ".d" without vector number)
-	AArch64Layout_VL_B,
-	AArch64Layout_VL_H,
-	AArch64Layout_VL_S,
-	AArch64Layout_VL_D
-} AArch64Layout_VectorLayout;
+// Vector layout move to aarch64.h
 
 // CS namespace end: AArch64Layout
 
