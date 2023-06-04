@@ -151,170 +151,170 @@ const AArch64TSB_TSB *AArch64TSB_lookupTSBByEncoding(uint8_t Encoding);
 
 #ifdef GET_TLBITable_IMPL
 static const AArch64TLBI_TLBI TLBITable[] = {
-  { "ALLE1", AArch64_SYSREG_ALLE1, 0x243C, false,  {0}  }, // 0
-  { "ALLE1IS", AArch64_SYSREG_ALLE1IS, 0x241C, false,  {0}  }, // 1
-  { "ALLE1ISnXS", AArch64_SYSREG_ALLE1ISNXS, 0x249C, false,  { AArch64_FeatureXS }  }, // 2
-  { "ALLE1nXS", AArch64_SYSREG_ALLE1NXS, 0x24BC, false,  { AArch64_FeatureXS }  }, // 3
-  { "ALLE1OS", AArch64_SYSREG_ALLE1OS, 0x240C, false,  { AArch64_FeatureTLB_RMI }  }, // 4
-  { "ALLE1OSnXS", AArch64_SYSREG_ALLE1OSNXS, 0x248C, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 5
-  { "ALLE2", AArch64_SYSREG_ALLE2, 0x2438, false,  {0}  }, // 6
-  { "ALLE2IS", AArch64_SYSREG_ALLE2IS, 0x2418, false,  {0}  }, // 7
-  { "ALLE2ISnXS", AArch64_SYSREG_ALLE2ISNXS, 0x2498, false,  { AArch64_FeatureXS }  }, // 8
-  { "ALLE2nXS", AArch64_SYSREG_ALLE2NXS, 0x24B8, false,  { AArch64_FeatureXS }  }, // 9
-  { "ALLE2OS", AArch64_SYSREG_ALLE2OS, 0x2408, false,  { AArch64_FeatureTLB_RMI }  }, // 10
-  { "ALLE2OSnXS", AArch64_SYSREG_ALLE2OSNXS, 0x2488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 11
-  { "ALLE3", AArch64_SYSREG_ALLE3, 0x3438, false,  {0}  }, // 12
-  { "ALLE3IS", AArch64_SYSREG_ALLE3IS, 0x3418, false,  {0}  }, // 13
-  { "ALLE3ISnXS", AArch64_SYSREG_ALLE3ISNXS, 0x3498, false,  { AArch64_FeatureXS }  }, // 14
-  { "ALLE3nXS", AArch64_SYSREG_ALLE3NXS, 0x34B8, false,  { AArch64_FeatureXS }  }, // 15
-  { "ALLE3OS", AArch64_SYSREG_ALLE3OS, 0x3408, false,  { AArch64_FeatureTLB_RMI }  }, // 16
-  { "ALLE3OSnXS", AArch64_SYSREG_ALLE3OSNXS, 0x3488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 17
-  { "ASIDE1", AArch64_SYSREG_ASIDE1, 0x43A, true,  {0}  }, // 18
-  { "ASIDE1IS", AArch64_SYSREG_ASIDE1IS, 0x41A, true,  {0}  }, // 19
-  { "ASIDE1ISnXS", AArch64_SYSREG_ASIDE1ISNXS, 0x49A, true,  { AArch64_FeatureXS }  }, // 20
-  { "ASIDE1nXS", AArch64_SYSREG_ASIDE1NXS, 0x4BA, true,  { AArch64_FeatureXS }  }, // 21
-  { "ASIDE1OS", AArch64_SYSREG_ASIDE1OS, 0x40A, true,  { AArch64_FeatureTLB_RMI }  }, // 22
-  { "ASIDE1OSnXS", AArch64_SYSREG_ASIDE1OSNXS, 0x48A, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 23
-  { "IPAS2E1", AArch64_SYSREG_IPAS2E1, 0x2421, true,  {0}  }, // 24
-  { "IPAS2E1IS", AArch64_SYSREG_IPAS2E1IS, 0x2401, true,  {0}  }, // 25
-  { "IPAS2E1ISnXS", AArch64_SYSREG_IPAS2E1ISNXS, 0x2481, true,  { AArch64_FeatureXS }  }, // 26
-  { "IPAS2E1nXS", AArch64_SYSREG_IPAS2E1NXS, 0x24A1, true,  { AArch64_FeatureXS }  }, // 27
-  { "IPAS2E1OS", AArch64_SYSREG_IPAS2E1OS, 0x2420, true,  { AArch64_FeatureTLB_RMI }  }, // 28
-  { "IPAS2E1OSnXS", AArch64_SYSREG_IPAS2E1OSNXS, 0x24A0, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 29
-  { "IPAS2LE1", AArch64_SYSREG_IPAS2LE1, 0x2425, true,  {0}  }, // 30
-  { "IPAS2LE1IS", AArch64_SYSREG_IPAS2LE1IS, 0x2405, true,  {0}  }, // 31
-  { "IPAS2LE1ISnXS", AArch64_SYSREG_IPAS2LE1ISNXS, 0x2485, true,  { AArch64_FeatureXS }  }, // 32
-  { "IPAS2LE1nXS", AArch64_SYSREG_IPAS2LE1NXS, 0x24A5, true,  { AArch64_FeatureXS }  }, // 33
-  { "IPAS2LE1OS", AArch64_SYSREG_IPAS2LE1OS, 0x2424, true,  { AArch64_FeatureTLB_RMI }  }, // 34
-  { "IPAS2LE1OSnXS", AArch64_SYSREG_IPAS2LE1OSNXS, 0x24A4, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 35
-  { "PAALL", AArch64_SYSREG_PAALL, 0x343C, false,  { AArch64_FeatureRME }  }, // 36
-  { "PAALLnXS", AArch64_SYSREG_PAALLNXS, 0x34BC, false,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 37
-  { "PAALLOS", AArch64_SYSREG_PAALLOS, 0x340C, false,  { AArch64_FeatureRME }  }, // 38
-  { "PAALLOSnXS", AArch64_SYSREG_PAALLOSNXS, 0x348C, false,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 39
-  { "RIPAS2E1", AArch64_SYSREG_RIPAS2E1, 0x2422, true,  { AArch64_FeatureTLB_RMI }  }, // 40
-  { "RIPAS2E1IS", AArch64_SYSREG_RIPAS2E1IS, 0x2402, true,  { AArch64_FeatureTLB_RMI }  }, // 41
-  { "RIPAS2E1ISnXS", AArch64_SYSREG_RIPAS2E1ISNXS, 0x2482, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 42
-  { "RIPAS2E1nXS", AArch64_SYSREG_RIPAS2E1NXS, 0x24A2, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 43
-  { "RIPAS2E1OS", AArch64_SYSREG_RIPAS2E1OS, 0x2423, true,  { AArch64_FeatureTLB_RMI }  }, // 44
-  { "RIPAS2E1OSnXS", AArch64_SYSREG_RIPAS2E1OSNXS, 0x24A3, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 45
-  { "RIPAS2LE1", AArch64_SYSREG_RIPAS2LE1, 0x2426, true,  { AArch64_FeatureTLB_RMI }  }, // 46
-  { "RIPAS2LE1IS", AArch64_SYSREG_RIPAS2LE1IS, 0x2406, true,  { AArch64_FeatureTLB_RMI }  }, // 47
-  { "RIPAS2LE1ISnXS", AArch64_SYSREG_RIPAS2LE1ISNXS, 0x2486, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 48
-  { "RIPAS2LE1nXS", AArch64_SYSREG_RIPAS2LE1NXS, 0x24A6, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 49
-  { "RIPAS2LE1OS", AArch64_SYSREG_RIPAS2LE1OS, 0x2427, true,  { AArch64_FeatureTLB_RMI }  }, // 50
-  { "RIPAS2LE1OSnXS", AArch64_SYSREG_RIPAS2LE1OSNXS, 0x24A7, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 51
-  { "RPALOS", AArch64_SYSREG_RPALOS, 0x3427, true,  { AArch64_FeatureRME }  }, // 52
-  { "RPALOSnXS", AArch64_SYSREG_RPALOSNXS, 0x34A7, true,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 53
-  { "RPAOS", AArch64_SYSREG_RPAOS, 0x3423, true,  { AArch64_FeatureRME }  }, // 54
-  { "RPAOSnXS", AArch64_SYSREG_RPAOSNXS, 0x34A3, true,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 55
-  { "RVAAE1", AArch64_SYSREG_RVAAE1, 0x433, true,  { AArch64_FeatureTLB_RMI }  }, // 56
-  { "RVAAE1IS", AArch64_SYSREG_RVAAE1IS, 0x413, true,  { AArch64_FeatureTLB_RMI }  }, // 57
-  { "RVAAE1ISnXS", AArch64_SYSREG_RVAAE1ISNXS, 0x493, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 58
-  { "RVAAE1nXS", AArch64_SYSREG_RVAAE1NXS, 0x4B3, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 59
-  { "RVAAE1OS", AArch64_SYSREG_RVAAE1OS, 0x42B, true,  { AArch64_FeatureTLB_RMI }  }, // 60
-  { "RVAAE1OSnXS", AArch64_SYSREG_RVAAE1OSNXS, 0x4AB, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 61
-  { "RVAALE1", AArch64_SYSREG_RVAALE1, 0x437, true,  { AArch64_FeatureTLB_RMI }  }, // 62
-  { "RVAALE1IS", AArch64_SYSREG_RVAALE1IS, 0x417, true,  { AArch64_FeatureTLB_RMI }  }, // 63
-  { "RVAALE1ISnXS", AArch64_SYSREG_RVAALE1ISNXS, 0x497, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 64
-  { "RVAALE1nXS", AArch64_SYSREG_RVAALE1NXS, 0x4B7, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 65
-  { "RVAALE1OS", AArch64_SYSREG_RVAALE1OS, 0x42F, true,  { AArch64_FeatureTLB_RMI }  }, // 66
-  { "RVAALE1OSnXS", AArch64_SYSREG_RVAALE1OSNXS, 0x4AF, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 67
-  { "RVAE1", AArch64_SYSREG_RVAE1, 0x431, true,  { AArch64_FeatureTLB_RMI }  }, // 68
-  { "RVAE1IS", AArch64_SYSREG_RVAE1IS, 0x411, true,  { AArch64_FeatureTLB_RMI }  }, // 69
-  { "RVAE1ISnXS", AArch64_SYSREG_RVAE1ISNXS, 0x491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 70
-  { "RVAE1nXS", AArch64_SYSREG_RVAE1NXS, 0x4B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 71
-  { "RVAE1OS", AArch64_SYSREG_RVAE1OS, 0x429, true,  { AArch64_FeatureTLB_RMI }  }, // 72
-  { "RVAE1OSnXS", AArch64_SYSREG_RVAE1OSNXS, 0x4A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 73
-  { "RVAE2", AArch64_SYSREG_RVAE2, 0x2431, true,  { AArch64_FeatureTLB_RMI }  }, // 74
-  { "RVAE2IS", AArch64_SYSREG_RVAE2IS, 0x2411, true,  { AArch64_FeatureTLB_RMI }  }, // 75
-  { "RVAE2ISnXS", AArch64_SYSREG_RVAE2ISNXS, 0x2491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 76
-  { "RVAE2nXS", AArch64_SYSREG_RVAE2NXS, 0x24B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 77
-  { "RVAE2OS", AArch64_SYSREG_RVAE2OS, 0x2429, true,  { AArch64_FeatureTLB_RMI }  }, // 78
-  { "RVAE2OSnXS", AArch64_SYSREG_RVAE2OSNXS, 0x24A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 79
-  { "RVAE3", AArch64_SYSREG_RVAE3, 0x3431, true,  { AArch64_FeatureTLB_RMI }  }, // 80
-  { "RVAE3IS", AArch64_SYSREG_RVAE3IS, 0x3411, true,  { AArch64_FeatureTLB_RMI }  }, // 81
-  { "RVAE3ISnXS", AArch64_SYSREG_RVAE3ISNXS, 0x3491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 82
-  { "RVAE3nXS", AArch64_SYSREG_RVAE3NXS, 0x34B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 83
-  { "RVAE3OS", AArch64_SYSREG_RVAE3OS, 0x3429, true,  { AArch64_FeatureTLB_RMI }  }, // 84
-  { "RVAE3OSnXS", AArch64_SYSREG_RVAE3OSNXS, 0x34A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 85
-  { "RVALE1", AArch64_SYSREG_RVALE1, 0x435, true,  { AArch64_FeatureTLB_RMI }  }, // 86
-  { "RVALE1IS", AArch64_SYSREG_RVALE1IS, 0x415, true,  { AArch64_FeatureTLB_RMI }  }, // 87
-  { "RVALE1ISnXS", AArch64_SYSREG_RVALE1ISNXS, 0x495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 88
-  { "RVALE1nXS", AArch64_SYSREG_RVALE1NXS, 0x4B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 89
-  { "RVALE1OS", AArch64_SYSREG_RVALE1OS, 0x42D, true,  { AArch64_FeatureTLB_RMI }  }, // 90
-  { "RVALE1OSnXS", AArch64_SYSREG_RVALE1OSNXS, 0x4AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 91
-  { "RVALE2", AArch64_SYSREG_RVALE2, 0x2435, true,  { AArch64_FeatureTLB_RMI }  }, // 92
-  { "RVALE2IS", AArch64_SYSREG_RVALE2IS, 0x2415, true,  { AArch64_FeatureTLB_RMI }  }, // 93
-  { "RVALE2ISnXS", AArch64_SYSREG_RVALE2ISNXS, 0x2495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 94
-  { "RVALE2nXS", AArch64_SYSREG_RVALE2NXS, 0x24B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 95
-  { "RVALE2OS", AArch64_SYSREG_RVALE2OS, 0x242D, true,  { AArch64_FeatureTLB_RMI }  }, // 96
-  { "RVALE2OSnXS", AArch64_SYSREG_RVALE2OSNXS, 0x24AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 97
-  { "RVALE3", AArch64_SYSREG_RVALE3, 0x3435, true,  { AArch64_FeatureTLB_RMI }  }, // 98
-  { "RVALE3IS", AArch64_SYSREG_RVALE3IS, 0x3415, true,  { AArch64_FeatureTLB_RMI }  }, // 99
-  { "RVALE3ISnXS", AArch64_SYSREG_RVALE3ISNXS, 0x3495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 100
-  { "RVALE3nXS", AArch64_SYSREG_RVALE3NXS, 0x34B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 101
-  { "RVALE3OS", AArch64_SYSREG_RVALE3OS, 0x342D, true,  { AArch64_FeatureTLB_RMI }  }, // 102
-  { "RVALE3OSnXS", AArch64_SYSREG_RVALE3OSNXS, 0x34AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 103
-  { "VAAE1", AArch64_SYSREG_VAAE1, 0x43B, true,  {0}  }, // 104
-  { "VAAE1IS", AArch64_SYSREG_VAAE1IS, 0x41B, true,  {0}  }, // 105
-  { "VAAE1ISnXS", AArch64_SYSREG_VAAE1ISNXS, 0x49B, true,  { AArch64_FeatureXS }  }, // 106
-  { "VAAE1nXS", AArch64_SYSREG_VAAE1NXS, 0x4BB, true,  { AArch64_FeatureXS }  }, // 107
-  { "VAAE1OS", AArch64_SYSREG_VAAE1OS, 0x40B, true,  { AArch64_FeatureTLB_RMI }  }, // 108
-  { "VAAE1OSnXS", AArch64_SYSREG_VAAE1OSNXS, 0x48B, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 109
-  { "VAALE1", AArch64_SYSREG_VAALE1, 0x43F, true,  {0}  }, // 110
-  { "VAALE1IS", AArch64_SYSREG_VAALE1IS, 0x41F, true,  {0}  }, // 111
-  { "VAALE1ISnXS", AArch64_SYSREG_VAALE1ISNXS, 0x49F, true,  { AArch64_FeatureXS }  }, // 112
-  { "VAALE1nXS", AArch64_SYSREG_VAALE1NXS, 0x4BF, true,  { AArch64_FeatureXS }  }, // 113
-  { "VAALE1OS", AArch64_SYSREG_VAALE1OS, 0x40F, true,  { AArch64_FeatureTLB_RMI }  }, // 114
-  { "VAALE1OSnXS", AArch64_SYSREG_VAALE1OSNXS, 0x48F, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 115
-  { "VAE1", AArch64_SYSREG_VAE1, 0x439, true,  {0}  }, // 116
-  { "VAE1IS", AArch64_SYSREG_VAE1IS, 0x419, true,  {0}  }, // 117
-  { "VAE1ISnXS", AArch64_SYSREG_VAE1ISNXS, 0x499, true,  { AArch64_FeatureXS }  }, // 118
-  { "VAE1nXS", AArch64_SYSREG_VAE1NXS, 0x4B9, true,  { AArch64_FeatureXS }  }, // 119
-  { "VAE1OS", AArch64_SYSREG_VAE1OS, 0x409, true,  { AArch64_FeatureTLB_RMI }  }, // 120
-  { "VAE1OSnXS", AArch64_SYSREG_VAE1OSNXS, 0x489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 121
-  { "VAE2", AArch64_SYSREG_VAE2, 0x2439, true,  {0}  }, // 122
-  { "VAE2IS", AArch64_SYSREG_VAE2IS, 0x2419, true,  {0}  }, // 123
-  { "VAE2ISnXS", AArch64_SYSREG_VAE2ISNXS, 0x2499, true,  { AArch64_FeatureXS }  }, // 124
-  { "VAE2nXS", AArch64_SYSREG_VAE2NXS, 0x24B9, true,  { AArch64_FeatureXS }  }, // 125
-  { "VAE2OS", AArch64_SYSREG_VAE2OS, 0x2409, true,  { AArch64_FeatureTLB_RMI }  }, // 126
-  { "VAE2OSnXS", AArch64_SYSREG_VAE2OSNXS, 0x2489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 127
-  { "VAE3", AArch64_SYSREG_VAE3, 0x3439, true,  {0}  }, // 128
-  { "VAE3IS", AArch64_SYSREG_VAE3IS, 0x3419, true,  {0}  }, // 129
-  { "VAE3ISnXS", AArch64_SYSREG_VAE3ISNXS, 0x3499, true,  { AArch64_FeatureXS }  }, // 130
-  { "VAE3nXS", AArch64_SYSREG_VAE3NXS, 0x34B9, true,  { AArch64_FeatureXS }  }, // 131
-  { "VAE3OS", AArch64_SYSREG_VAE3OS, 0x3409, true,  { AArch64_FeatureTLB_RMI }  }, // 132
-  { "VAE3OSnXS", AArch64_SYSREG_VAE3OSNXS, 0x3489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 133
-  { "VALE1", AArch64_SYSREG_VALE1, 0x43D, true,  {0}  }, // 134
-  { "VALE1IS", AArch64_SYSREG_VALE1IS, 0x41D, true,  {0}  }, // 135
-  { "VALE1ISnXS", AArch64_SYSREG_VALE1ISNXS, 0x49D, true,  { AArch64_FeatureXS }  }, // 136
-  { "VALE1nXS", AArch64_SYSREG_VALE1NXS, 0x4BD, true,  { AArch64_FeatureXS }  }, // 137
-  { "VALE1OS", AArch64_SYSREG_VALE1OS, 0x40D, true,  { AArch64_FeatureTLB_RMI }  }, // 138
-  { "VALE1OSnXS", AArch64_SYSREG_VALE1OSNXS, 0x48D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 139
-  { "VALE2", AArch64_SYSREG_VALE2, 0x243D, true,  {0}  }, // 140
-  { "VALE2IS", AArch64_SYSREG_VALE2IS, 0x241D, true,  {0}  }, // 141
-  { "VALE2ISnXS", AArch64_SYSREG_VALE2ISNXS, 0x249D, true,  { AArch64_FeatureXS }  }, // 142
-  { "VALE2nXS", AArch64_SYSREG_VALE2NXS, 0x24BD, true,  { AArch64_FeatureXS }  }, // 143
-  { "VALE2OS", AArch64_SYSREG_VALE2OS, 0x240D, true,  { AArch64_FeatureTLB_RMI }  }, // 144
-  { "VALE2OSnXS", AArch64_SYSREG_VALE2OSNXS, 0x248D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 145
-  { "VALE3", AArch64_SYSREG_VALE3, 0x343D, true,  {0}  }, // 146
-  { "VALE3IS", AArch64_SYSREG_VALE3IS, 0x341D, true,  {0}  }, // 147
-  { "VALE3ISnXS", AArch64_SYSREG_VALE3ISNXS, 0x349D, true,  { AArch64_FeatureXS }  }, // 148
-  { "VALE3nXS", AArch64_SYSREG_VALE3NXS, 0x34BD, true,  { AArch64_FeatureXS }  }, // 149
-  { "VALE3OS", AArch64_SYSREG_VALE3OS, 0x340D, true,  { AArch64_FeatureTLB_RMI }  }, // 150
-  { "VALE3OSnXS", AArch64_SYSREG_VALE3OSNXS, 0x348D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 151
-  { "VMALLE1", AArch64_SYSREG_VMALLE1, 0x438, false,  {0}  }, // 152
-  { "VMALLE1IS", AArch64_SYSREG_VMALLE1IS, 0x418, false,  {0}  }, // 153
-  { "VMALLE1ISnXS", AArch64_SYSREG_VMALLE1ISNXS, 0x498, false,  { AArch64_FeatureXS }  }, // 154
-  { "VMALLE1nXS", AArch64_SYSREG_VMALLE1NXS, 0x4B8, false,  { AArch64_FeatureXS }  }, // 155
-  { "VMALLE1OS", AArch64_SYSREG_VMALLE1OS, 0x408, false,  { AArch64_FeatureTLB_RMI }  }, // 156
-  { "VMALLE1OSnXS", AArch64_SYSREG_VMALLE1OSNXS, 0x488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 157
-  { "VMALLS12E1", AArch64_SYSREG_VMALLS12E1, 0x243E, false,  {0}  }, // 158
-  { "VMALLS12E1IS", AArch64_SYSREG_VMALLS12E1IS, 0x241E, false,  {0}  }, // 159
-  { "VMALLS12E1ISnXS", AArch64_SYSREG_VMALLS12E1ISNXS, 0x249E, false,  { AArch64_FeatureXS }  }, // 160
-  { "VMALLS12E1nXS", AArch64_SYSREG_VMALLS12E1NXS, 0x24BE, false,  { AArch64_FeatureXS }  }, // 161
-  { "VMALLS12E1OS", AArch64_SYSREG_VMALLS12E1OS, 0x240E, false,  { AArch64_FeatureTLB_RMI }  }, // 162
-  { "VMALLS12E1OSnXS", AArch64_SYSREG_VMALLS12E1OSNXS, 0x248E, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 163
+  { "ALLE1", { AArch64_TLBI_ALLE1 }, 0x243C, false,  {0}  }, // 0
+  { "ALLE1IS", { AArch64_TLBI_ALLE1IS }, 0x241C, false,  {0}  }, // 1
+  { "ALLE1ISnXS", { AArch64_TLBI_ALLE1ISNXS }, 0x249C, false,  { AArch64_FeatureXS }  }, // 2
+  { "ALLE1nXS", { AArch64_TLBI_ALLE1NXS }, 0x24BC, false,  { AArch64_FeatureXS }  }, // 3
+  { "ALLE1OS", { AArch64_TLBI_ALLE1OS }, 0x240C, false,  { AArch64_FeatureTLB_RMI }  }, // 4
+  { "ALLE1OSnXS", { AArch64_TLBI_ALLE1OSNXS }, 0x248C, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 5
+  { "ALLE2", { AArch64_TLBI_ALLE2 }, 0x2438, false,  {0}  }, // 6
+  { "ALLE2IS", { AArch64_TLBI_ALLE2IS }, 0x2418, false,  {0}  }, // 7
+  { "ALLE2ISnXS", { AArch64_TLBI_ALLE2ISNXS }, 0x2498, false,  { AArch64_FeatureXS }  }, // 8
+  { "ALLE2nXS", { AArch64_TLBI_ALLE2NXS }, 0x24B8, false,  { AArch64_FeatureXS }  }, // 9
+  { "ALLE2OS", { AArch64_TLBI_ALLE2OS }, 0x2408, false,  { AArch64_FeatureTLB_RMI }  }, // 10
+  { "ALLE2OSnXS", { AArch64_TLBI_ALLE2OSNXS }, 0x2488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 11
+  { "ALLE3", { AArch64_TLBI_ALLE3 }, 0x3438, false,  {0}  }, // 12
+  { "ALLE3IS", { AArch64_TLBI_ALLE3IS }, 0x3418, false,  {0}  }, // 13
+  { "ALLE3ISnXS", { AArch64_TLBI_ALLE3ISNXS }, 0x3498, false,  { AArch64_FeatureXS }  }, // 14
+  { "ALLE3nXS", { AArch64_TLBI_ALLE3NXS }, 0x34B8, false,  { AArch64_FeatureXS }  }, // 15
+  { "ALLE3OS", { AArch64_TLBI_ALLE3OS }, 0x3408, false,  { AArch64_FeatureTLB_RMI }  }, // 16
+  { "ALLE3OSnXS", { AArch64_TLBI_ALLE3OSNXS }, 0x3488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 17
+  { "ASIDE1", { AArch64_TLBI_ASIDE1 }, 0x43A, true,  {0}  }, // 18
+  { "ASIDE1IS", { AArch64_TLBI_ASIDE1IS }, 0x41A, true,  {0}  }, // 19
+  { "ASIDE1ISnXS", { AArch64_TLBI_ASIDE1ISNXS }, 0x49A, true,  { AArch64_FeatureXS }  }, // 20
+  { "ASIDE1nXS", { AArch64_TLBI_ASIDE1NXS }, 0x4BA, true,  { AArch64_FeatureXS }  }, // 21
+  { "ASIDE1OS", { AArch64_TLBI_ASIDE1OS }, 0x40A, true,  { AArch64_FeatureTLB_RMI }  }, // 22
+  { "ASIDE1OSnXS", { AArch64_TLBI_ASIDE1OSNXS }, 0x48A, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 23
+  { "IPAS2E1", { AArch64_TLBI_IPAS2E1 }, 0x2421, true,  {0}  }, // 24
+  { "IPAS2E1IS", { AArch64_TLBI_IPAS2E1IS }, 0x2401, true,  {0}  }, // 25
+  { "IPAS2E1ISnXS", { AArch64_TLBI_IPAS2E1ISNXS }, 0x2481, true,  { AArch64_FeatureXS }  }, // 26
+  { "IPAS2E1nXS", { AArch64_TLBI_IPAS2E1NXS }, 0x24A1, true,  { AArch64_FeatureXS }  }, // 27
+  { "IPAS2E1OS", { AArch64_TLBI_IPAS2E1OS }, 0x2420, true,  { AArch64_FeatureTLB_RMI }  }, // 28
+  { "IPAS2E1OSnXS", { AArch64_TLBI_IPAS2E1OSNXS }, 0x24A0, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 29
+  { "IPAS2LE1", { AArch64_TLBI_IPAS2LE1 }, 0x2425, true,  {0}  }, // 30
+  { "IPAS2LE1IS", { AArch64_TLBI_IPAS2LE1IS }, 0x2405, true,  {0}  }, // 31
+  { "IPAS2LE1ISnXS", { AArch64_TLBI_IPAS2LE1ISNXS }, 0x2485, true,  { AArch64_FeatureXS }  }, // 32
+  { "IPAS2LE1nXS", { AArch64_TLBI_IPAS2LE1NXS }, 0x24A5, true,  { AArch64_FeatureXS }  }, // 33
+  { "IPAS2LE1OS", { AArch64_TLBI_IPAS2LE1OS }, 0x2424, true,  { AArch64_FeatureTLB_RMI }  }, // 34
+  { "IPAS2LE1OSnXS", { AArch64_TLBI_IPAS2LE1OSNXS }, 0x24A4, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 35
+  { "PAALL", { AArch64_TLBI_PAALL }, 0x343C, false,  { AArch64_FeatureRME }  }, // 36
+  { "PAALLnXS", { AArch64_TLBI_PAALLNXS }, 0x34BC, false,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 37
+  { "PAALLOS", { AArch64_TLBI_PAALLOS }, 0x340C, false,  { AArch64_FeatureRME }  }, // 38
+  { "PAALLOSnXS", { AArch64_TLBI_PAALLOSNXS }, 0x348C, false,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 39
+  { "RIPAS2E1", { AArch64_TLBI_RIPAS2E1 }, 0x2422, true,  { AArch64_FeatureTLB_RMI }  }, // 40
+  { "RIPAS2E1IS", { AArch64_TLBI_RIPAS2E1IS }, 0x2402, true,  { AArch64_FeatureTLB_RMI }  }, // 41
+  { "RIPAS2E1ISnXS", { AArch64_TLBI_RIPAS2E1ISNXS }, 0x2482, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 42
+  { "RIPAS2E1nXS", { AArch64_TLBI_RIPAS2E1NXS }, 0x24A2, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 43
+  { "RIPAS2E1OS", { AArch64_TLBI_RIPAS2E1OS }, 0x2423, true,  { AArch64_FeatureTLB_RMI }  }, // 44
+  { "RIPAS2E1OSnXS", { AArch64_TLBI_RIPAS2E1OSNXS }, 0x24A3, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 45
+  { "RIPAS2LE1", { AArch64_TLBI_RIPAS2LE1 }, 0x2426, true,  { AArch64_FeatureTLB_RMI }  }, // 46
+  { "RIPAS2LE1IS", { AArch64_TLBI_RIPAS2LE1IS }, 0x2406, true,  { AArch64_FeatureTLB_RMI }  }, // 47
+  { "RIPAS2LE1ISnXS", { AArch64_TLBI_RIPAS2LE1ISNXS }, 0x2486, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 48
+  { "RIPAS2LE1nXS", { AArch64_TLBI_RIPAS2LE1NXS }, 0x24A6, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 49
+  { "RIPAS2LE1OS", { AArch64_TLBI_RIPAS2LE1OS }, 0x2427, true,  { AArch64_FeatureTLB_RMI }  }, // 50
+  { "RIPAS2LE1OSnXS", { AArch64_TLBI_RIPAS2LE1OSNXS }, 0x24A7, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 51
+  { "RPALOS", { AArch64_TLBI_RPALOS }, 0x3427, true,  { AArch64_FeatureRME }  }, // 52
+  { "RPALOSnXS", { AArch64_TLBI_RPALOSNXS }, 0x34A7, true,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 53
+  { "RPAOS", { AArch64_TLBI_RPAOS }, 0x3423, true,  { AArch64_FeatureRME }  }, // 54
+  { "RPAOSnXS", { AArch64_TLBI_RPAOSNXS }, 0x34A3, true,  { AArch64_FeatureRME, AArch64_FeatureXS }  }, // 55
+  { "RVAAE1", { AArch64_TLBI_RVAAE1 }, 0x433, true,  { AArch64_FeatureTLB_RMI }  }, // 56
+  { "RVAAE1IS", { AArch64_TLBI_RVAAE1IS }, 0x413, true,  { AArch64_FeatureTLB_RMI }  }, // 57
+  { "RVAAE1ISnXS", { AArch64_TLBI_RVAAE1ISNXS }, 0x493, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 58
+  { "RVAAE1nXS", { AArch64_TLBI_RVAAE1NXS }, 0x4B3, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 59
+  { "RVAAE1OS", { AArch64_TLBI_RVAAE1OS }, 0x42B, true,  { AArch64_FeatureTLB_RMI }  }, // 60
+  { "RVAAE1OSnXS", { AArch64_TLBI_RVAAE1OSNXS }, 0x4AB, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 61
+  { "RVAALE1", { AArch64_TLBI_RVAALE1 }, 0x437, true,  { AArch64_FeatureTLB_RMI }  }, // 62
+  { "RVAALE1IS", { AArch64_TLBI_RVAALE1IS }, 0x417, true,  { AArch64_FeatureTLB_RMI }  }, // 63
+  { "RVAALE1ISnXS", { AArch64_TLBI_RVAALE1ISNXS }, 0x497, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 64
+  { "RVAALE1nXS", { AArch64_TLBI_RVAALE1NXS }, 0x4B7, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 65
+  { "RVAALE1OS", { AArch64_TLBI_RVAALE1OS }, 0x42F, true,  { AArch64_FeatureTLB_RMI }  }, // 66
+  { "RVAALE1OSnXS", { AArch64_TLBI_RVAALE1OSNXS }, 0x4AF, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 67
+  { "RVAE1", { AArch64_TLBI_RVAE1 }, 0x431, true,  { AArch64_FeatureTLB_RMI }  }, // 68
+  { "RVAE1IS", { AArch64_TLBI_RVAE1IS }, 0x411, true,  { AArch64_FeatureTLB_RMI }  }, // 69
+  { "RVAE1ISnXS", { AArch64_TLBI_RVAE1ISNXS }, 0x491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 70
+  { "RVAE1nXS", { AArch64_TLBI_RVAE1NXS }, 0x4B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 71
+  { "RVAE1OS", { AArch64_TLBI_RVAE1OS }, 0x429, true,  { AArch64_FeatureTLB_RMI }  }, // 72
+  { "RVAE1OSnXS", { AArch64_TLBI_RVAE1OSNXS }, 0x4A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 73
+  { "RVAE2", { AArch64_TLBI_RVAE2 }, 0x2431, true,  { AArch64_FeatureTLB_RMI }  }, // 74
+  { "RVAE2IS", { AArch64_TLBI_RVAE2IS }, 0x2411, true,  { AArch64_FeatureTLB_RMI }  }, // 75
+  { "RVAE2ISnXS", { AArch64_TLBI_RVAE2ISNXS }, 0x2491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 76
+  { "RVAE2nXS", { AArch64_TLBI_RVAE2NXS }, 0x24B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 77
+  { "RVAE2OS", { AArch64_TLBI_RVAE2OS }, 0x2429, true,  { AArch64_FeatureTLB_RMI }  }, // 78
+  { "RVAE2OSnXS", { AArch64_TLBI_RVAE2OSNXS }, 0x24A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 79
+  { "RVAE3", { AArch64_TLBI_RVAE3 }, 0x3431, true,  { AArch64_FeatureTLB_RMI }  }, // 80
+  { "RVAE3IS", { AArch64_TLBI_RVAE3IS }, 0x3411, true,  { AArch64_FeatureTLB_RMI }  }, // 81
+  { "RVAE3ISnXS", { AArch64_TLBI_RVAE3ISNXS }, 0x3491, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 82
+  { "RVAE3nXS", { AArch64_TLBI_RVAE3NXS }, 0x34B1, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 83
+  { "RVAE3OS", { AArch64_TLBI_RVAE3OS }, 0x3429, true,  { AArch64_FeatureTLB_RMI }  }, // 84
+  { "RVAE3OSnXS", { AArch64_TLBI_RVAE3OSNXS }, 0x34A9, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 85
+  { "RVALE1", { AArch64_TLBI_RVALE1 }, 0x435, true,  { AArch64_FeatureTLB_RMI }  }, // 86
+  { "RVALE1IS", { AArch64_TLBI_RVALE1IS }, 0x415, true,  { AArch64_FeatureTLB_RMI }  }, // 87
+  { "RVALE1ISnXS", { AArch64_TLBI_RVALE1ISNXS }, 0x495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 88
+  { "RVALE1nXS", { AArch64_TLBI_RVALE1NXS }, 0x4B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 89
+  { "RVALE1OS", { AArch64_TLBI_RVALE1OS }, 0x42D, true,  { AArch64_FeatureTLB_RMI }  }, // 90
+  { "RVALE1OSnXS", { AArch64_TLBI_RVALE1OSNXS }, 0x4AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 91
+  { "RVALE2", { AArch64_TLBI_RVALE2 }, 0x2435, true,  { AArch64_FeatureTLB_RMI }  }, // 92
+  { "RVALE2IS", { AArch64_TLBI_RVALE2IS }, 0x2415, true,  { AArch64_FeatureTLB_RMI }  }, // 93
+  { "RVALE2ISnXS", { AArch64_TLBI_RVALE2ISNXS }, 0x2495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 94
+  { "RVALE2nXS", { AArch64_TLBI_RVALE2NXS }, 0x24B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 95
+  { "RVALE2OS", { AArch64_TLBI_RVALE2OS }, 0x242D, true,  { AArch64_FeatureTLB_RMI }  }, // 96
+  { "RVALE2OSnXS", { AArch64_TLBI_RVALE2OSNXS }, 0x24AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 97
+  { "RVALE3", { AArch64_TLBI_RVALE3 }, 0x3435, true,  { AArch64_FeatureTLB_RMI }  }, // 98
+  { "RVALE3IS", { AArch64_TLBI_RVALE3IS }, 0x3415, true,  { AArch64_FeatureTLB_RMI }  }, // 99
+  { "RVALE3ISnXS", { AArch64_TLBI_RVALE3ISNXS }, 0x3495, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 100
+  { "RVALE3nXS", { AArch64_TLBI_RVALE3NXS }, 0x34B5, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 101
+  { "RVALE3OS", { AArch64_TLBI_RVALE3OS }, 0x342D, true,  { AArch64_FeatureTLB_RMI }  }, // 102
+  { "RVALE3OSnXS", { AArch64_TLBI_RVALE3OSNXS }, 0x34AD, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 103
+  { "VAAE1", { AArch64_TLBI_VAAE1 }, 0x43B, true,  {0}  }, // 104
+  { "VAAE1IS", { AArch64_TLBI_VAAE1IS }, 0x41B, true,  {0}  }, // 105
+  { "VAAE1ISnXS", { AArch64_TLBI_VAAE1ISNXS }, 0x49B, true,  { AArch64_FeatureXS }  }, // 106
+  { "VAAE1nXS", { AArch64_TLBI_VAAE1NXS }, 0x4BB, true,  { AArch64_FeatureXS }  }, // 107
+  { "VAAE1OS", { AArch64_TLBI_VAAE1OS }, 0x40B, true,  { AArch64_FeatureTLB_RMI }  }, // 108
+  { "VAAE1OSnXS", { AArch64_TLBI_VAAE1OSNXS }, 0x48B, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 109
+  { "VAALE1", { AArch64_TLBI_VAALE1 }, 0x43F, true,  {0}  }, // 110
+  { "VAALE1IS", { AArch64_TLBI_VAALE1IS }, 0x41F, true,  {0}  }, // 111
+  { "VAALE1ISnXS", { AArch64_TLBI_VAALE1ISNXS }, 0x49F, true,  { AArch64_FeatureXS }  }, // 112
+  { "VAALE1nXS", { AArch64_TLBI_VAALE1NXS }, 0x4BF, true,  { AArch64_FeatureXS }  }, // 113
+  { "VAALE1OS", { AArch64_TLBI_VAALE1OS }, 0x40F, true,  { AArch64_FeatureTLB_RMI }  }, // 114
+  { "VAALE1OSnXS", { AArch64_TLBI_VAALE1OSNXS }, 0x48F, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 115
+  { "VAE1", { AArch64_TLBI_VAE1 }, 0x439, true,  {0}  }, // 116
+  { "VAE1IS", { AArch64_TLBI_VAE1IS }, 0x419, true,  {0}  }, // 117
+  { "VAE1ISnXS", { AArch64_TLBI_VAE1ISNXS }, 0x499, true,  { AArch64_FeatureXS }  }, // 118
+  { "VAE1nXS", { AArch64_TLBI_VAE1NXS }, 0x4B9, true,  { AArch64_FeatureXS }  }, // 119
+  { "VAE1OS", { AArch64_TLBI_VAE1OS }, 0x409, true,  { AArch64_FeatureTLB_RMI }  }, // 120
+  { "VAE1OSnXS", { AArch64_TLBI_VAE1OSNXS }, 0x489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 121
+  { "VAE2", { AArch64_TLBI_VAE2 }, 0x2439, true,  {0}  }, // 122
+  { "VAE2IS", { AArch64_TLBI_VAE2IS }, 0x2419, true,  {0}  }, // 123
+  { "VAE2ISnXS", { AArch64_TLBI_VAE2ISNXS }, 0x2499, true,  { AArch64_FeatureXS }  }, // 124
+  { "VAE2nXS", { AArch64_TLBI_VAE2NXS }, 0x24B9, true,  { AArch64_FeatureXS }  }, // 125
+  { "VAE2OS", { AArch64_TLBI_VAE2OS }, 0x2409, true,  { AArch64_FeatureTLB_RMI }  }, // 126
+  { "VAE2OSnXS", { AArch64_TLBI_VAE2OSNXS }, 0x2489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 127
+  { "VAE3", { AArch64_TLBI_VAE3 }, 0x3439, true,  {0}  }, // 128
+  { "VAE3IS", { AArch64_TLBI_VAE3IS }, 0x3419, true,  {0}  }, // 129
+  { "VAE3ISnXS", { AArch64_TLBI_VAE3ISNXS }, 0x3499, true,  { AArch64_FeatureXS }  }, // 130
+  { "VAE3nXS", { AArch64_TLBI_VAE3NXS }, 0x34B9, true,  { AArch64_FeatureXS }  }, // 131
+  { "VAE3OS", { AArch64_TLBI_VAE3OS }, 0x3409, true,  { AArch64_FeatureTLB_RMI }  }, // 132
+  { "VAE3OSnXS", { AArch64_TLBI_VAE3OSNXS }, 0x3489, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 133
+  { "VALE1", { AArch64_TLBI_VALE1 }, 0x43D, true,  {0}  }, // 134
+  { "VALE1IS", { AArch64_TLBI_VALE1IS }, 0x41D, true,  {0}  }, // 135
+  { "VALE1ISnXS", { AArch64_TLBI_VALE1ISNXS }, 0x49D, true,  { AArch64_FeatureXS }  }, // 136
+  { "VALE1nXS", { AArch64_TLBI_VALE1NXS }, 0x4BD, true,  { AArch64_FeatureXS }  }, // 137
+  { "VALE1OS", { AArch64_TLBI_VALE1OS }, 0x40D, true,  { AArch64_FeatureTLB_RMI }  }, // 138
+  { "VALE1OSnXS", { AArch64_TLBI_VALE1OSNXS }, 0x48D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 139
+  { "VALE2", { AArch64_TLBI_VALE2 }, 0x243D, true,  {0}  }, // 140
+  { "VALE2IS", { AArch64_TLBI_VALE2IS }, 0x241D, true,  {0}  }, // 141
+  { "VALE2ISnXS", { AArch64_TLBI_VALE2ISNXS }, 0x249D, true,  { AArch64_FeatureXS }  }, // 142
+  { "VALE2nXS", { AArch64_TLBI_VALE2NXS }, 0x24BD, true,  { AArch64_FeatureXS }  }, // 143
+  { "VALE2OS", { AArch64_TLBI_VALE2OS }, 0x240D, true,  { AArch64_FeatureTLB_RMI }  }, // 144
+  { "VALE2OSnXS", { AArch64_TLBI_VALE2OSNXS }, 0x248D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 145
+  { "VALE3", { AArch64_TLBI_VALE3 }, 0x343D, true,  {0}  }, // 146
+  { "VALE3IS", { AArch64_TLBI_VALE3IS }, 0x341D, true,  {0}  }, // 147
+  { "VALE3ISnXS", { AArch64_TLBI_VALE3ISNXS }, 0x349D, true,  { AArch64_FeatureXS }  }, // 148
+  { "VALE3nXS", { AArch64_TLBI_VALE3NXS }, 0x34BD, true,  { AArch64_FeatureXS }  }, // 149
+  { "VALE3OS", { AArch64_TLBI_VALE3OS }, 0x340D, true,  { AArch64_FeatureTLB_RMI }  }, // 150
+  { "VALE3OSnXS", { AArch64_TLBI_VALE3OSNXS }, 0x348D, true,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 151
+  { "VMALLE1", { AArch64_TLBI_VMALLE1 }, 0x438, false,  {0}  }, // 152
+  { "VMALLE1IS", { AArch64_TLBI_VMALLE1IS }, 0x418, false,  {0}  }, // 153
+  { "VMALLE1ISnXS", { AArch64_TLBI_VMALLE1ISNXS }, 0x498, false,  { AArch64_FeatureXS }  }, // 154
+  { "VMALLE1nXS", { AArch64_TLBI_VMALLE1NXS }, 0x4B8, false,  { AArch64_FeatureXS }  }, // 155
+  { "VMALLE1OS", { AArch64_TLBI_VMALLE1OS }, 0x408, false,  { AArch64_FeatureTLB_RMI }  }, // 156
+  { "VMALLE1OSnXS", { AArch64_TLBI_VMALLE1OSNXS }, 0x488, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 157
+  { "VMALLS12E1", { AArch64_TLBI_VMALLS12E1 }, 0x243E, false,  {0}  }, // 158
+  { "VMALLS12E1IS", { AArch64_TLBI_VMALLS12E1IS }, 0x241E, false,  {0}  }, // 159
+  { "VMALLS12E1ISnXS", { AArch64_TLBI_VMALLS12E1ISNXS }, 0x249E, false,  { AArch64_FeatureXS }  }, // 160
+  { "VMALLS12E1nXS", { AArch64_TLBI_VMALLS12E1NXS }, 0x24BE, false,  { AArch64_FeatureXS }  }, // 161
+  { "VMALLS12E1OS", { AArch64_TLBI_VMALLS12E1OS }, 0x240E, false,  { AArch64_FeatureTLB_RMI }  }, // 162
+  { "VMALLS12E1OSnXS", { AArch64_TLBI_VMALLS12E1OSNXS }, 0x248E, false,  { AArch64_FeatureTLB_RMI, AArch64_FeatureXS }  }, // 163
   };
 
 const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByEncoding(uint16_t Encoding) {
@@ -496,20 +496,20 @@ const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByEncoding(uint16_t Encoding) {
 
 #ifdef GET_AT_IMPL
 static const AArch64AT_AT ATsList[] = {
-  { "S12E0R", AArch64_SYSALIAS_S12E0R, 0x23C6,  {0}  }, // 0
-  { "S12E0W", AArch64_SYSALIAS_S12E0W, 0x23C7,  {0}  }, // 1
-  { "S12E1R", AArch64_SYSALIAS_S12E1R, 0x23C4,  {0}  }, // 2
-  { "S12E1W", AArch64_SYSALIAS_S12E1W, 0x23C5,  {0}  }, // 3
-  { "S1E0R", AArch64_SYSALIAS_S1E0R, 0x3C2,  {0}  }, // 4
-  { "S1E0W", AArch64_SYSALIAS_S1E0W, 0x3C3,  {0}  }, // 5
-  { "S1E1R", AArch64_SYSALIAS_S1E1R, 0x3C0,  {0}  }, // 6
-  { "S1E1RP", AArch64_SYSALIAS_S1E1RP, 0x3C8,  {AArch64_FeaturePAN_RWV}  }, // 7
-  { "S1E1W", AArch64_SYSALIAS_S1E1W, 0x3C1,  {0}  }, // 8
-  { "S1E1WP", AArch64_SYSALIAS_S1E1WP, 0x3C9,  {AArch64_FeaturePAN_RWV}  }, // 9
-  { "S1E2R", AArch64_SYSALIAS_S1E2R, 0x23C0,  {0}  }, // 10
-  { "S1E2W", AArch64_SYSALIAS_S1E2W, 0x23C1,  {0}  }, // 11
-  { "S1E3R", AArch64_SYSALIAS_S1E3R, 0x33C0,  {0}  }, // 12
-  { "S1E3W", AArch64_SYSALIAS_S1E3W, 0x33C1,  {0}  }, // 13
+  { "S12E0R", { AArch64_AT_S12E0R }, 0x23C6,  {0}  }, // 0
+  { "S12E0W", { AArch64_AT_S12E0W }, 0x23C7,  {0}  }, // 1
+  { "S12E1R", { AArch64_AT_S12E1R }, 0x23C4,  {0}  }, // 2
+  { "S12E1W", { AArch64_AT_S12E1W }, 0x23C5,  {0}  }, // 3
+  { "S1E0R", { AArch64_AT_S1E0R }, 0x3C2,  {0}  }, // 4
+  { "S1E0W", { AArch64_AT_S1E0W }, 0x3C3,  {0}  }, // 5
+  { "S1E1R", { AArch64_AT_S1E1R }, 0x3C0,  {0}  }, // 6
+  { "S1E1RP", { AArch64_AT_S1E1RP }, 0x3C8,  {AArch64_FeaturePAN_RWV}  }, // 7
+  { "S1E1W", { AArch64_AT_S1E1W }, 0x3C1,  {0}  }, // 8
+  { "S1E1WP", { AArch64_AT_S1E1WP }, 0x3C9,  {AArch64_FeaturePAN_RWV}  }, // 9
+  { "S1E2R", { AArch64_AT_S1E2R }, 0x23C0,  {0}  }, // 10
+  { "S1E2W", { AArch64_AT_S1E2W }, 0x23C1,  {0}  }, // 11
+  { "S1E3R", { AArch64_AT_S1E3R }, 0x33C0,  {0}  }, // 12
+  { "S1E3W", { AArch64_AT_S1E3W }, 0x33C1,  {0}  }, // 13
   };
 
 const AArch64AT_AT *AArch64AT_lookupATByEncoding(uint16_t Encoding) {
@@ -541,9 +541,9 @@ const AArch64AT_AT *AArch64AT_lookupATByEncoding(uint16_t Encoding) {
 
 #ifdef GET_BTI_IMPL
 static const AArch64BTIHint_BTI BTIsList[] = {
-  { "c", AArch64_SYSALIAS_C, 0x2 }, // 0
-  { "j", AArch64_SYSALIAS_J, 0x4 }, // 1
-  { "jc", AArch64_SYSALIAS_JC, 0x6 }, // 2
+  { "c", { AArch64_BTI_C }, 0x2 }, // 0
+  { "j", { AArch64_BTI_J }, 0x4 }, // 1
+  { "jc", { AArch64_BTI_JC }, 0x6 }, // 2
   };
 
 const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByEncoding(uint8_t Encoding) {
@@ -564,18 +564,18 @@ const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByEncoding(uint8_t Encoding) {
 
 #ifdef GET_DB_IMPL
 static const AArch64DB_DB DBsList[] = {
-  { "ish", AArch64_SYSALIAS_ISH, 0xB }, // 0
-  { "ishld", AArch64_SYSALIAS_ISHLD, 0x9 }, // 1
-  { "ishst", AArch64_SYSALIAS_ISHST, 0xA }, // 2
-  { "ld", AArch64_SYSALIAS_LD, 0xD }, // 3
-  { "nsh", AArch64_SYSALIAS_NSH, 0x7 }, // 4
-  { "nshld", AArch64_SYSALIAS_NSHLD, 0x5 }, // 5
-  { "nshst", AArch64_SYSALIAS_NSHST, 0x6 }, // 6
-  { "osh", AArch64_SYSALIAS_OSH, 0x3 }, // 7
-  { "oshld", AArch64_SYSALIAS_OSHLD, 0x1 }, // 8
-  { "oshst", AArch64_SYSALIAS_OSHST, 0x2 }, // 9
-  { "st", AArch64_SYSALIAS_ST, 0xE }, // 10
-  { "sy", AArch64_SYSALIAS_SY, 0xF }, // 11
+  { "ish", { AArch64_DB_ISH }, 0xB }, // 0
+  { "ishld", { AArch64_DB_ISHLD }, 0x9 }, // 1
+  { "ishst", { AArch64_DB_ISHST }, 0xA }, // 2
+  { "ld", { AArch64_DB_LD }, 0xD }, // 3
+  { "nsh", { AArch64_DB_NSH }, 0x7 }, // 4
+  { "nshld", { AArch64_DB_NSHLD }, 0x5 }, // 5
+  { "nshst", { AArch64_DB_NSHST }, 0x6 }, // 6
+  { "osh", { AArch64_DB_OSH }, 0x3 }, // 7
+  { "oshld", { AArch64_DB_OSHLD }, 0x1 }, // 8
+  { "oshst", { AArch64_DB_OSHST }, 0x2 }, // 9
+  { "st", { AArch64_DB_ST }, 0xE }, // 10
+  { "sy", { AArch64_DB_SY }, 0xF }, // 11
   };
 
 const AArch64DB_DB *AArch64DB_lookupDBByEncoding(uint8_t Encoding) {
@@ -605,10 +605,10 @@ const AArch64DB_DB *AArch64DB_lookupDBByEncoding(uint8_t Encoding) {
 
 #ifdef GET_DBNXS_IMPL
 static const AArch64DBnXS_DBnXS DBnXSsList[] = {
-  { "ishnxs", AArch64_SYSIMM_ISHNXS, 0xB, 0x18,  {AArch64_FeatureXS}  }, // 0
-  { "nshnxs", AArch64_SYSIMM_NSHNXS, 0x7, 0x14,  {AArch64_FeatureXS}  }, // 1
-  { "oshnxs", AArch64_SYSIMM_OSHNXS, 0x3, 0x10,  {AArch64_FeatureXS}  }, // 2
-  { "synxs", AArch64_SYSIMM_SYNXS, 0xF, 0x1C,  {AArch64_FeatureXS}  }, // 3
+  { "ishnxs", { AArch64_DBNXS_ISHNXS }, 0xB, 0x18,  {AArch64_FeatureXS}  }, // 0
+  { "nshnxs", { AArch64_DBNXS_NSHNXS }, 0x7, 0x14,  {AArch64_FeatureXS}  }, // 1
+  { "oshnxs", { AArch64_DBNXS_OSHNXS }, 0x3, 0x10,  {AArch64_FeatureXS}  }, // 2
+  { "synxs", { AArch64_DBNXS_SYNXS }, 0xF, 0x1C,  {AArch64_FeatureXS}  }, // 3
   };
 
 const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByEncoding(uint8_t Encoding) {
@@ -645,36 +645,36 @@ const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByImmValue(uint8_t ImmValue) {
 
 #ifdef GET_DC_IMPL
 static const AArch64DC_DC DCsList[] = {
-  { "CGDSW", AArch64_SYSALIAS_CGDSW, 0x3D6,  {AArch64_FeatureMTE}  }, // 0
-  { "CGDVAC", AArch64_SYSALIAS_CGDVAC, 0x1BD5,  {AArch64_FeatureMTE}  }, // 1
-  { "CGDVADP", AArch64_SYSALIAS_CGDVADP, 0x1BED,  {AArch64_FeatureMTE}  }, // 2
-  { "CGDVAP", AArch64_SYSALIAS_CGDVAP, 0x1BE5,  {AArch64_FeatureMTE}  }, // 3
-  { "CGSW", AArch64_SYSALIAS_CGSW, 0x3D4,  {AArch64_FeatureMTE}  }, // 4
-  { "CGVAC", AArch64_SYSALIAS_CGVAC, 0x1BD3,  {AArch64_FeatureMTE}  }, // 5
-  { "CGVADP", AArch64_SYSALIAS_CGVADP, 0x1BEB,  {AArch64_FeatureMTE}  }, // 6
-  { "CGVAP", AArch64_SYSALIAS_CGVAP, 0x1BE3,  {AArch64_FeatureMTE}  }, // 7
-  { "CIGDPAE", AArch64_SYSALIAS_CIGDPAE, 0x23F7,  {AArch64_FeatureMEC}  }, // 8
-  { "CIGDSW", AArch64_SYSALIAS_CIGDSW, 0x3F6,  {AArch64_FeatureMTE}  }, // 9
-  { "CIGDVAC", AArch64_SYSALIAS_CIGDVAC, 0x1BF5,  {AArch64_FeatureMTE}  }, // 10
-  { "CIGSW", AArch64_SYSALIAS_CIGSW, 0x3F4,  {AArch64_FeatureMTE}  }, // 11
-  { "CIGVAC", AArch64_SYSALIAS_CIGVAC, 0x1BF3,  {AArch64_FeatureMTE}  }, // 12
-  { "CIPAE", AArch64_SYSALIAS_CIPAE, 0x23F0,  {AArch64_FeatureMEC}  }, // 13
-  { "CISW", AArch64_SYSALIAS_CISW, 0x3F2,  {0}  }, // 14
-  { "CIVAC", AArch64_SYSALIAS_CIVAC, 0x1BF1,  {0}  }, // 15
-  { "CSW", AArch64_SYSALIAS_CSW, 0x3D2,  {0}  }, // 16
-  { "CVAC", AArch64_SYSALIAS_CVAC, 0x1BD1,  {0}  }, // 17
-  { "CVADP", AArch64_SYSALIAS_CVADP, 0x1BE9,  {AArch64_FeatureCacheDeepPersist}  }, // 18
-  { "CVAP", AArch64_SYSALIAS_CVAP, 0x1BE1,  {AArch64_FeatureCCPP}  }, // 19
-  { "CVAU", AArch64_SYSALIAS_CVAU, 0x1BD9,  {0}  }, // 20
-  { "GVA", AArch64_SYSALIAS_GVA, 0x1BA3,  {AArch64_FeatureMTE}  }, // 21
-  { "GZVA", AArch64_SYSALIAS_GZVA, 0x1BA4,  {AArch64_FeatureMTE}  }, // 22
-  { "IGDSW", AArch64_SYSALIAS_IGDSW, 0x3B6,  {AArch64_FeatureMTE}  }, // 23
-  { "IGDVAC", AArch64_SYSALIAS_IGDVAC, 0x3B5,  {AArch64_FeatureMTE}  }, // 24
-  { "IGSW", AArch64_SYSALIAS_IGSW, 0x3B4,  {AArch64_FeatureMTE}  }, // 25
-  { "IGVAC", AArch64_SYSALIAS_IGVAC, 0x3B3,  {AArch64_FeatureMTE}  }, // 26
-  { "ISW", AArch64_SYSALIAS_ISW, 0x3B2,  {0}  }, // 27
-  { "IVAC", AArch64_SYSALIAS_IVAC, 0x3B1,  {0}  }, // 28
-  { "ZVA", AArch64_SYSALIAS_ZVA, 0x1BA1,  {0}  }, // 29
+  { "CGDSW", { AArch64_DC_CGDSW }, 0x3D6,  {AArch64_FeatureMTE}  }, // 0
+  { "CGDVAC", { AArch64_DC_CGDVAC }, 0x1BD5,  {AArch64_FeatureMTE}  }, // 1
+  { "CGDVADP", { AArch64_DC_CGDVADP }, 0x1BED,  {AArch64_FeatureMTE}  }, // 2
+  { "CGDVAP", { AArch64_DC_CGDVAP }, 0x1BE5,  {AArch64_FeatureMTE}  }, // 3
+  { "CGSW", { AArch64_DC_CGSW }, 0x3D4,  {AArch64_FeatureMTE}  }, // 4
+  { "CGVAC", { AArch64_DC_CGVAC }, 0x1BD3,  {AArch64_FeatureMTE}  }, // 5
+  { "CGVADP", { AArch64_DC_CGVADP }, 0x1BEB,  {AArch64_FeatureMTE}  }, // 6
+  { "CGVAP", { AArch64_DC_CGVAP }, 0x1BE3,  {AArch64_FeatureMTE}  }, // 7
+  { "CIGDPAE", { AArch64_DC_CIGDPAE }, 0x23F7,  {AArch64_FeatureMEC}  }, // 8
+  { "CIGDSW", { AArch64_DC_CIGDSW }, 0x3F6,  {AArch64_FeatureMTE}  }, // 9
+  { "CIGDVAC", { AArch64_DC_CIGDVAC }, 0x1BF5,  {AArch64_FeatureMTE}  }, // 10
+  { "CIGSW", { AArch64_DC_CIGSW }, 0x3F4,  {AArch64_FeatureMTE}  }, // 11
+  { "CIGVAC", { AArch64_DC_CIGVAC }, 0x1BF3,  {AArch64_FeatureMTE}  }, // 12
+  { "CIPAE", { AArch64_DC_CIPAE }, 0x23F0,  {AArch64_FeatureMEC}  }, // 13
+  { "CISW", { AArch64_DC_CISW }, 0x3F2,  {0}  }, // 14
+  { "CIVAC", { AArch64_DC_CIVAC }, 0x1BF1,  {0}  }, // 15
+  { "CSW", { AArch64_DC_CSW }, 0x3D2,  {0}  }, // 16
+  { "CVAC", { AArch64_DC_CVAC }, 0x1BD1,  {0}  }, // 17
+  { "CVADP", { AArch64_DC_CVADP }, 0x1BE9,  {AArch64_FeatureCacheDeepPersist}  }, // 18
+  { "CVAP", { AArch64_DC_CVAP }, 0x1BE1,  {AArch64_FeatureCCPP}  }, // 19
+  { "CVAU", { AArch64_DC_CVAU }, 0x1BD9,  {0}  }, // 20
+  { "GVA", { AArch64_DC_GVA }, 0x1BA3,  {AArch64_FeatureMTE}  }, // 21
+  { "GZVA", { AArch64_DC_GZVA }, 0x1BA4,  {AArch64_FeatureMTE}  }, // 22
+  { "IGDSW", { AArch64_DC_IGDSW }, 0x3B6,  {AArch64_FeatureMTE}  }, // 23
+  { "IGDVAC", { AArch64_DC_IGDVAC }, 0x3B5,  {AArch64_FeatureMTE}  }, // 24
+  { "IGSW", { AArch64_DC_IGSW }, 0x3B4,  {AArch64_FeatureMTE}  }, // 25
+  { "IGVAC", { AArch64_DC_IGVAC }, 0x3B3,  {AArch64_FeatureMTE}  }, // 26
+  { "ISW", { AArch64_DC_ISW }, 0x3B2,  {0}  }, // 27
+  { "IVAC", { AArch64_DC_IVAC }, 0x3B1,  {0}  }, // 28
+  { "ZVA", { AArch64_DC_ZVA }, 0x1BA1,  {0}  }, // 29
   };
 
 const AArch64DC_DC *AArch64DC_lookupDCByEncoding(uint16_t Encoding) {
@@ -722,10 +722,10 @@ const AArch64DC_DC *AArch64DC_lookupDCByEncoding(uint16_t Encoding) {
 
 #ifdef GET_EXACTFPIMM_IMPL
 static const AArch64ExactFPImm_ExactFPImm ExactFPImmsList[] = {
-  { "half", AArch64_SYSIMM_HALF, 0x1, "0.5" }, // 0
-  { "one", AArch64_SYSIMM_ONE, 0x2, "1.0" }, // 1
-  { "two", AArch64_SYSIMM_TWO, 0x3, "2.0" }, // 2
-  { "zero", AArch64_SYSIMM_ZERO, 0x0, "0.0" }, // 3
+  { "half", { AArch64_EXACTFPIMM_HALF }, 0x1, "0.5" }, // 0
+  { "one", { AArch64_EXACTFPIMM_ONE }, 0x2, "1.0" }, // 1
+  { "two", { AArch64_EXACTFPIMM_TWO }, 0x3, "2.0" }, // 2
+  { "zero", { AArch64_EXACTFPIMM_ZERO }, 0x0, "0.0" }, // 3
   };
 
 const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByEnum(uint8_t Enum) {
@@ -747,9 +747,9 @@ const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByEnum(uin
 
 #ifdef GET_IC_IMPL
 static const AArch64IC_IC ICsList[] = {
-  { "IALLU", AArch64_SYSREG_IALLU, 0x3A8, false }, // 0
-  { "IALLUIS", AArch64_SYSREG_IALLUIS, 0x388, false }, // 1
-  { "IVAU", AArch64_SYSREG_IVAU, 0x1BA9, true }, // 2
+  { "IALLU", { AArch64_IC_IALLU }, 0x3A8, false }, // 0
+  { "IALLUIS", { AArch64_IC_IALLUIS }, 0x388, false }, // 1
+  { "IVAU", { AArch64_IC_IVAU }, 0x1BA9, true }, // 2
   };
 
 const AArch64IC_IC *AArch64IC_lookupICByEncoding(uint16_t Encoding) {
@@ -770,7 +770,7 @@ const AArch64IC_IC *AArch64IC_lookupICByEncoding(uint16_t Encoding) {
 
 #ifdef GET_ISB_IMPL
 static const AArch64ISB_ISB ISBsList[] = {
-  { "sy", AArch64_SYSALIAS_SY, 0xF }, // 0
+  { "sy", { AArch64_ISB_SY }, 0xF }, // 0
   };
 
 const AArch64ISB_ISB *AArch64ISB_lookupISBByEncoding(uint8_t Encoding) {
@@ -789,30 +789,30 @@ const AArch64ISB_ISB *AArch64ISB_lookupISBByEncoding(uint8_t Encoding) {
 
 #ifdef GET_PRFM_IMPL
 static const AArch64PRFM_PRFM PRFMsList[] = {
-  { "pldl1keep", AArch64_SYSALIAS_PLDL1KEEP, 0x0,  {0}  }, // 0
-  { "pldl1strm", AArch64_SYSALIAS_PLDL1STRM, 0x1,  {0}  }, // 1
-  { "pldl2keep", AArch64_SYSALIAS_PLDL2KEEP, 0x2,  {0}  }, // 2
-  { "pldl2strm", AArch64_SYSALIAS_PLDL2STRM, 0x3,  {0}  }, // 3
-  { "pldl3keep", AArch64_SYSALIAS_PLDL3KEEP, 0x4,  {0}  }, // 4
-  { "pldl3strm", AArch64_SYSALIAS_PLDL3STRM, 0x5,  {0}  }, // 5
-  { "pldslckeep", AArch64_SYSALIAS_PLDSLCKEEP, 0x6,  {AArch64_FeaturePRFM_SLC}  }, // 6
-  { "pldslcstrm", AArch64_SYSALIAS_PLDSLCSTRM, 0x7,  {AArch64_FeaturePRFM_SLC}  }, // 7
-  { "plil1keep", AArch64_SYSALIAS_PLIL1KEEP, 0x8,  {0}  }, // 8
-  { "plil1strm", AArch64_SYSALIAS_PLIL1STRM, 0x9,  {0}  }, // 9
-  { "plil2keep", AArch64_SYSALIAS_PLIL2KEEP, 0xA,  {0}  }, // 10
-  { "plil2strm", AArch64_SYSALIAS_PLIL2STRM, 0xB,  {0}  }, // 11
-  { "plil3keep", AArch64_SYSALIAS_PLIL3KEEP, 0xC,  {0}  }, // 12
-  { "plil3strm", AArch64_SYSALIAS_PLIL3STRM, 0xD,  {0}  }, // 13
-  { "plislckeep", AArch64_SYSALIAS_PLISLCKEEP, 0xE,  {AArch64_FeaturePRFM_SLC}  }, // 14
-  { "plislcstrm", AArch64_SYSALIAS_PLISLCSTRM, 0xF,  {AArch64_FeaturePRFM_SLC}  }, // 15
-  { "pstl1keep", AArch64_SYSALIAS_PSTL1KEEP, 0x10,  {0}  }, // 16
-  { "pstl1strm", AArch64_SYSALIAS_PSTL1STRM, 0x11,  {0}  }, // 17
-  { "pstl2keep", AArch64_SYSALIAS_PSTL2KEEP, 0x12,  {0}  }, // 18
-  { "pstl2strm", AArch64_SYSALIAS_PSTL2STRM, 0x13,  {0}  }, // 19
-  { "pstl3keep", AArch64_SYSALIAS_PSTL3KEEP, 0x14,  {0}  }, // 20
-  { "pstl3strm", AArch64_SYSALIAS_PSTL3STRM, 0x15,  {0}  }, // 21
-  { "pstslckeep", AArch64_SYSALIAS_PSTSLCKEEP, 0x16,  {AArch64_FeaturePRFM_SLC}  }, // 22
-  { "pstslcstrm", AArch64_SYSALIAS_PSTSLCSTRM, 0x17,  {AArch64_FeaturePRFM_SLC}  }, // 23
+  { "pldl1keep", { AArch64_PRFM_PLDL1KEEP }, 0x0,  {0}  }, // 0
+  { "pldl1strm", { AArch64_PRFM_PLDL1STRM }, 0x1,  {0}  }, // 1
+  { "pldl2keep", { AArch64_PRFM_PLDL2KEEP }, 0x2,  {0}  }, // 2
+  { "pldl2strm", { AArch64_PRFM_PLDL2STRM }, 0x3,  {0}  }, // 3
+  { "pldl3keep", { AArch64_PRFM_PLDL3KEEP }, 0x4,  {0}  }, // 4
+  { "pldl3strm", { AArch64_PRFM_PLDL3STRM }, 0x5,  {0}  }, // 5
+  { "pldslckeep", { AArch64_PRFM_PLDSLCKEEP }, 0x6,  {AArch64_FeaturePRFM_SLC}  }, // 6
+  { "pldslcstrm", { AArch64_PRFM_PLDSLCSTRM }, 0x7,  {AArch64_FeaturePRFM_SLC}  }, // 7
+  { "plil1keep", { AArch64_PRFM_PLIL1KEEP }, 0x8,  {0}  }, // 8
+  { "plil1strm", { AArch64_PRFM_PLIL1STRM }, 0x9,  {0}  }, // 9
+  { "plil2keep", { AArch64_PRFM_PLIL2KEEP }, 0xA,  {0}  }, // 10
+  { "plil2strm", { AArch64_PRFM_PLIL2STRM }, 0xB,  {0}  }, // 11
+  { "plil3keep", { AArch64_PRFM_PLIL3KEEP }, 0xC,  {0}  }, // 12
+  { "plil3strm", { AArch64_PRFM_PLIL3STRM }, 0xD,  {0}  }, // 13
+  { "plislckeep", { AArch64_PRFM_PLISLCKEEP }, 0xE,  {AArch64_FeaturePRFM_SLC}  }, // 14
+  { "plislcstrm", { AArch64_PRFM_PLISLCSTRM }, 0xF,  {AArch64_FeaturePRFM_SLC}  }, // 15
+  { "pstl1keep", { AArch64_PRFM_PSTL1KEEP }, 0x10,  {0}  }, // 16
+  { "pstl1strm", { AArch64_PRFM_PSTL1STRM }, 0x11,  {0}  }, // 17
+  { "pstl2keep", { AArch64_PRFM_PSTL2KEEP }, 0x12,  {0}  }, // 18
+  { "pstl2strm", { AArch64_PRFM_PSTL2STRM }, 0x13,  {0}  }, // 19
+  { "pstl3keep", { AArch64_PRFM_PSTL3KEEP }, 0x14,  {0}  }, // 20
+  { "pstl3strm", { AArch64_PRFM_PSTL3STRM }, 0x15,  {0}  }, // 21
+  { "pstslckeep", { AArch64_PRFM_PSTSLCKEEP }, 0x16,  {AArch64_FeaturePRFM_SLC}  }, // 22
+  { "pstslcstrm", { AArch64_PRFM_PSTSLCSTRM }, 0x17,  {AArch64_FeaturePRFM_SLC}  }, // 23
   };
 
 const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByEncoding(uint8_t Encoding) {
@@ -854,7 +854,7 @@ const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByEncoding(uint8_t Encoding) {
 
 #ifdef GET_PSB_IMPL
 static const AArch64PSBHint_PSB PSBsList[] = {
-  { "csync", AArch64_SYSALIAS_CSYNC, 0x11 }, // 0
+  { "csync", { AArch64_PSB_CSYNC }, 0x11 }, // 0
   };
 
 const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByEncoding(uint8_t Encoding) {
@@ -873,8 +873,8 @@ const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByEncoding(uint8_t Encoding) {
 
 #ifdef GET_PSTATEIMM0_1_IMPL
 static const AArch64PState_PStateImm0_1 PStateImm0_1sList[] = {
-  { "ALLINT", AArch64_SYSALIAS_ALLINT, 0x8,  {AArch64_FeatureNMI}  }, // 0
-  { "PM", AArch64_SYSALIAS_PM, 0x48,  {0}  }, // 1
+  { "ALLINT", { AArch64_PSTATEIMM0_1_ALLINT }, 0x8,  {AArch64_FeatureNMI}  }, // 0
+  { "PM", { AArch64_PSTATEIMM0_1_PM }, 0x48,  {0}  }, // 1
   };
 
 const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByEncoding(uint16_t Encoding) {
@@ -894,14 +894,14 @@ const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByEncoding(uin
 
 #ifdef GET_PSTATEIMM0_15_IMPL
 static const AArch64PState_PStateImm0_15 PStateImm0_15sList[] = {
-  { "DAIFClr", AArch64_SYSALIAS_DAIFCLR, 0x1F,  {0}  }, // 0
-  { "DAIFSet", AArch64_SYSALIAS_DAIFSET, 0x1E,  {0}  }, // 1
-  { "DIT", AArch64_SYSALIAS_DIT, 0x1A,  {AArch64_FeatureDIT}  }, // 2
-  { "PAN", AArch64_SYSALIAS_PAN, 0x4,  {AArch64_FeaturePAN}  }, // 3
-  { "SPSel", AArch64_SYSALIAS_SPSEL, 0x5,  {0}  }, // 4
-  { "SSBS", AArch64_SYSALIAS_SSBS, 0x19,  {AArch64_FeatureSSBS}  }, // 5
-  { "TCO", AArch64_SYSALIAS_TCO, 0x1C,  {AArch64_FeatureMTE}  }, // 6
-  { "UAO", AArch64_SYSALIAS_UAO, 0x3,  {AArch64_FeaturePsUAO}  }, // 7
+  { "DAIFClr", { AArch64_PSTATEIMM0_15_DAIFCLR }, 0x1F,  {0}  }, // 0
+  { "DAIFSet", { AArch64_PSTATEIMM0_15_DAIFSET }, 0x1E,  {0}  }, // 1
+  { "DIT", { AArch64_PSTATEIMM0_15_DIT }, 0x1A,  {AArch64_FeatureDIT}  }, // 2
+  { "PAN", { AArch64_PSTATEIMM0_15_PAN }, 0x4,  {AArch64_FeaturePAN}  }, // 3
+  { "SPSel", { AArch64_PSTATEIMM0_15_SPSEL }, 0x5,  {0}  }, // 4
+  { "SSBS", { AArch64_PSTATEIMM0_15_SSBS }, 0x19,  {AArch64_FeatureSSBS}  }, // 5
+  { "TCO", { AArch64_PSTATEIMM0_15_TCO }, 0x1C,  {AArch64_FeatureMTE}  }, // 6
+  { "UAO", { AArch64_PSTATEIMM0_15_UAO }, 0x3,  {AArch64_FeaturePsUAO}  }, // 7
   };
 
 const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByEncoding(uint8_t Encoding) {
@@ -927,10 +927,10 @@ const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByEncoding(u
 
 #ifdef GET_RPRFM_IMPL
 static const AArch64RPRFM_RPRFM RPRFMsList[] = {
-  { "pldkeep", AArch64_SYSALIAS_PLDKEEP, 0x0,  {0}  }, // 0
-  { "pldstrm", AArch64_SYSALIAS_PLDSTRM, 0x4,  {0}  }, // 1
-  { "pstkeep", AArch64_SYSALIAS_PSTKEEP, 0x1,  {0}  }, // 2
-  { "pststrm", AArch64_SYSALIAS_PSTSTRM, 0x5,  {0}  }, // 3
+  { "pldkeep", { AArch64_RPRFM_PLDKEEP }, 0x0,  {0}  }, // 0
+  { "pldstrm", { AArch64_RPRFM_PLDSTRM }, 0x4,  {0}  }, // 1
+  { "pstkeep", { AArch64_RPRFM_PSTKEEP }, 0x1,  {0}  }, // 2
+  { "pststrm", { AArch64_RPRFM_PSTSTRM }, 0x5,  {0}  }, // 3
   };
 
 const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByEncoding(uint8_t Encoding) {
@@ -952,9 +952,9 @@ const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByEncoding(uint8_t Encoding) {
 
 #ifdef GET_SVCR_IMPL
 static const AArch64SVCR_SVCR SVCRsList[] = {
-  { "SVCRSM", AArch64_SYSALIAS_SVCRSM, 0x1,  {AArch64_FeatureSME}  }, // 0
-  { "SVCRSMZA", AArch64_SYSALIAS_SVCRSMZA, 0x3,  {AArch64_FeatureSME}  }, // 1
-  { "SVCRZA", AArch64_SYSALIAS_SVCRZA, 0x2,  {AArch64_FeatureSME}  }, // 2
+  { "SVCRSM", { AArch64_SVCR_SVCRSM }, 0x1,  {AArch64_FeatureSME}  }, // 0
+  { "SVCRSMZA", { AArch64_SVCR_SVCRSMZA }, 0x3,  {AArch64_FeatureSME}  }, // 1
+  { "SVCRZA", { AArch64_SVCR_SVCRZA }, 0x2,  {AArch64_FeatureSME}  }, // 2
   };
 
 const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByEncoding(uint8_t Encoding) {
@@ -975,23 +975,23 @@ const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByEncoding(uint8_t Encoding) {
 
 #ifdef GET_SVEPREDPAT_IMPL
 static const AArch64SVEPredPattern_SVEPREDPAT SVEPREDPATsList[] = {
-  { "all", 0x1F }, // 0
-  { "mul3", 0x1E }, // 1
-  { "mul4", 0x1D }, // 2
-  { "pow2", 0x0 }, // 3
-  { "vl1", 0x1 }, // 4
-  { "vl128", 0xC }, // 5
-  { "vl16", 0x9 }, // 6
-  { "vl2", 0x2 }, // 7
-  { "vl256", 0xD }, // 8
-  { "vl3", 0x3 }, // 9
-  { "vl32", 0xA }, // 10
-  { "vl4", 0x4 }, // 11
-  { "vl5", 0x5 }, // 12
-  { "vl6", 0x6 }, // 13
-  { "vl64", 0xB }, // 14
-  { "vl7", 0x7 }, // 15
-  { "vl8", 0x8 }, // 16
+  { "all", { AArch64_SVEPREDPAT_ALL }, 0x1F }, // 0
+  { "mul3", { AArch64_SVEPREDPAT_MUL3 }, 0x1E }, // 1
+  { "mul4", { AArch64_SVEPREDPAT_MUL4 }, 0x1D }, // 2
+  { "pow2", { AArch64_SVEPREDPAT_POW2 }, 0x0 }, // 3
+  { "vl1", { AArch64_SVEPREDPAT_VL1 }, 0x1 }, // 4
+  { "vl128", { AArch64_SVEPREDPAT_VL128 }, 0xC }, // 5
+  { "vl16", { AArch64_SVEPREDPAT_VL16 }, 0x9 }, // 6
+  { "vl2", { AArch64_SVEPREDPAT_VL2 }, 0x2 }, // 7
+  { "vl256", { AArch64_SVEPREDPAT_VL256 }, 0xD }, // 8
+  { "vl3", { AArch64_SVEPREDPAT_VL3 }, 0x3 }, // 9
+  { "vl32", { AArch64_SVEPREDPAT_VL32 }, 0xA }, // 10
+  { "vl4", { AArch64_SVEPREDPAT_VL4 }, 0x4 }, // 11
+  { "vl5", { AArch64_SVEPREDPAT_VL5 }, 0x5 }, // 12
+  { "vl6", { AArch64_SVEPREDPAT_VL6 }, 0x6 }, // 13
+  { "vl64", { AArch64_SVEPREDPAT_VL64 }, 0xB }, // 14
+  { "vl7", { AArch64_SVEPREDPAT_VL7 }, 0x7 }, // 15
+  { "vl8", { AArch64_SVEPREDPAT_VL8 }, 0x8 }, // 16
   };
 
 const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(uint8_t Encoding) {
@@ -1026,18 +1026,18 @@ const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATBy
 
 #ifdef GET_SVEPRFM_IMPL
 static const AArch64SVEPRFM_SVEPRFM SVEPRFMsList[] = {
-  { "pldl1keep", AArch64_SYSALIAS_PLDL1KEEP, 0x0,  {AArch64_FeatureSVE}  }, // 0
-  { "pldl1strm", AArch64_SYSALIAS_PLDL1STRM, 0x1,  {AArch64_FeatureSVE}  }, // 1
-  { "pldl2keep", AArch64_SYSALIAS_PLDL2KEEP, 0x2,  {AArch64_FeatureSVE}  }, // 2
-  { "pldl2strm", AArch64_SYSALIAS_PLDL2STRM, 0x3,  {AArch64_FeatureSVE}  }, // 3
-  { "pldl3keep", AArch64_SYSALIAS_PLDL3KEEP, 0x4,  {AArch64_FeatureSVE}  }, // 4
-  { "pldl3strm", AArch64_SYSALIAS_PLDL3STRM, 0x5,  {AArch64_FeatureSVE}  }, // 5
-  { "pstl1keep", AArch64_SYSALIAS_PSTL1KEEP, 0x8,  {AArch64_FeatureSVE}  }, // 6
-  { "pstl1strm", AArch64_SYSALIAS_PSTL1STRM, 0x9,  {AArch64_FeatureSVE}  }, // 7
-  { "pstl2keep", AArch64_SYSALIAS_PSTL2KEEP, 0xA,  {AArch64_FeatureSVE}  }, // 8
-  { "pstl2strm", AArch64_SYSALIAS_PSTL2STRM, 0xB,  {AArch64_FeatureSVE}  }, // 9
-  { "pstl3keep", AArch64_SYSALIAS_PSTL3KEEP, 0xC,  {AArch64_FeatureSVE}  }, // 10
-  { "pstl3strm", AArch64_SYSALIAS_PSTL3STRM, 0xD,  {AArch64_FeatureSVE}  }, // 11
+  { "pldl1keep", { AArch64_SVEPRFM_PLDL1KEEP }, 0x0,  {AArch64_FeatureSVE}  }, // 0
+  { "pldl1strm", { AArch64_SVEPRFM_PLDL1STRM }, 0x1,  {AArch64_FeatureSVE}  }, // 1
+  { "pldl2keep", { AArch64_SVEPRFM_PLDL2KEEP }, 0x2,  {AArch64_FeatureSVE}  }, // 2
+  { "pldl2strm", { AArch64_SVEPRFM_PLDL2STRM }, 0x3,  {AArch64_FeatureSVE}  }, // 3
+  { "pldl3keep", { AArch64_SVEPRFM_PLDL3KEEP }, 0x4,  {AArch64_FeatureSVE}  }, // 4
+  { "pldl3strm", { AArch64_SVEPRFM_PLDL3STRM }, 0x5,  {AArch64_FeatureSVE}  }, // 5
+  { "pstl1keep", { AArch64_SVEPRFM_PSTL1KEEP }, 0x8,  {AArch64_FeatureSVE}  }, // 6
+  { "pstl1strm", { AArch64_SVEPRFM_PSTL1STRM }, 0x9,  {AArch64_FeatureSVE}  }, // 7
+  { "pstl2keep", { AArch64_SVEPRFM_PSTL2KEEP }, 0xA,  {AArch64_FeatureSVE}  }, // 8
+  { "pstl2strm", { AArch64_SVEPRFM_PSTL2STRM }, 0xB,  {AArch64_FeatureSVE}  }, // 9
+  { "pstl3keep", { AArch64_SVEPRFM_PSTL3KEEP }, 0xC,  {AArch64_FeatureSVE}  }, // 10
+  { "pstl3strm", { AArch64_SVEPRFM_PSTL3STRM }, 0xD,  {AArch64_FeatureSVE}  }, // 11
   };
 
 const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByEncoding(uint8_t Encoding) {
@@ -1067,8 +1067,8 @@ const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByEncoding(uint8_t Enc
 
 #ifdef GET_SVEVECLENSPECIFIER_IMPL
 static const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER SVEVECLENSPECIFIERsList[] = {
-  { "vlx2", 0x0 }, // 0
-  { "vlx4", 0x1 }, // 1
+  { "vlx2", { AArch64_SVEVECLENSPECIFIER_VLX2 }, 0x0 }, // 0
+  { "vlx4", { AArch64_SVEVECLENSPECIFIER_VLX4 }, 0x1 }, // 1
   };
 
 const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding) {
@@ -1088,1196 +1088,1196 @@ const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lo
 
 #ifdef GET_SYSREG_IMPL
 static const AArch64SysReg_SysReg SysRegsList[] = {
-  { "ACCDATA_EL1", AArch64_SYSREG_ACCDATA_EL1, "ACCDATA_EL1", AArch64_SYSREG_ACCDATA_EL1, 0xC685, true, true,  {AArch64_FeatureLS64}  }, // 0
-  { "ACTLR_EL1", AArch64_SYSREG_ACTLR_EL1, "ACTLR_EL1", AArch64_SYSREG_ACTLR_EL1, 0xC081, true, true,  {0}  }, // 1
-  { "ACTLR_EL2", AArch64_SYSREG_ACTLR_EL2, "ACTLR_EL2", AArch64_SYSREG_ACTLR_EL2, 0xE081, true, true,  {0}  }, // 2
-  { "ACTLR_EL3", AArch64_SYSREG_ACTLR_EL3, "ACTLR_EL3", AArch64_SYSREG_ACTLR_EL3, 0xF081, true, true,  {0}  }, // 3
-  { "AFSR0_EL1", AArch64_SYSREG_AFSR0_EL1, "AFSR0_EL1", AArch64_SYSREG_AFSR0_EL1, 0xC288, true, true,  {0}  }, // 4
-  { "AFSR0_EL12", AArch64_SYSREG_AFSR0_EL12, "AFSR0_EL12", AArch64_SYSREG_AFSR0_EL12, 0xEA88, true, true,  {AArch64_FeatureVH}  }, // 5
-  { "AFSR0_EL2", AArch64_SYSREG_AFSR0_EL2, "AFSR0_EL2", AArch64_SYSREG_AFSR0_EL2, 0xE288, true, true,  {0}  }, // 6
-  { "AFSR0_EL3", AArch64_SYSREG_AFSR0_EL3, "AFSR0_EL3", AArch64_SYSREG_AFSR0_EL3, 0xF288, true, true,  {0}  }, // 7
-  { "AFSR1_EL1", AArch64_SYSREG_AFSR1_EL1, "AFSR1_EL1", AArch64_SYSREG_AFSR1_EL1, 0xC289, true, true,  {0}  }, // 8
-  { "AFSR1_EL12", AArch64_SYSREG_AFSR1_EL12, "AFSR1_EL12", AArch64_SYSREG_AFSR1_EL12, 0xEA89, true, true,  {AArch64_FeatureVH}  }, // 9
-  { "AFSR1_EL2", AArch64_SYSREG_AFSR1_EL2, "AFSR1_EL2", AArch64_SYSREG_AFSR1_EL2, 0xE289, true, true,  {0}  }, // 10
-  { "AFSR1_EL3", AArch64_SYSREG_AFSR1_EL3, "AFSR1_EL3", AArch64_SYSREG_AFSR1_EL3, 0xF289, true, true,  {0}  }, // 11
-  { "AIDR_EL1", AArch64_SYSREG_AIDR_EL1, "AIDR_EL1", AArch64_SYSREG_AIDR_EL1, 0xC807, true, false,  {0}  }, // 12
-  { "ALLINT", AArch64_SYSREG_ALLINT, "ALLINT", AArch64_SYSREG_ALLINT, 0xC218, true, true,  {AArch64_FeatureNMI}  }, // 13
-  { "AMAIR2_EL1", AArch64_SYSREG_AMAIR2_EL1, "AMAIR2_EL1", AArch64_SYSREG_AMAIR2_EL1, 0xC519, true, true,  {0}  }, // 14
-  { "AMAIR2_EL12", AArch64_SYSREG_AMAIR2_EL12, "AMAIR2_EL12", AArch64_SYSREG_AMAIR2_EL12, 0xED19, true, true,  {0}  }, // 15
-  { "AMAIR2_EL2", AArch64_SYSREG_AMAIR2_EL2, "AMAIR2_EL2", AArch64_SYSREG_AMAIR2_EL2, 0xE519, true, true,  {0}  }, // 16
-  { "AMAIR2_EL3", AArch64_SYSREG_AMAIR2_EL3, "AMAIR2_EL3", AArch64_SYSREG_AMAIR2_EL3, 0xF519, true, true,  {0}  }, // 17
-  { "AMAIR_EL1", AArch64_SYSREG_AMAIR_EL1, "AMAIR_EL1", AArch64_SYSREG_AMAIR_EL1, 0xC518, true, true,  {0}  }, // 18
-  { "AMAIR_EL12", AArch64_SYSREG_AMAIR_EL12, "AMAIR_EL12", AArch64_SYSREG_AMAIR_EL12, 0xED18, true, true,  {AArch64_FeatureVH}  }, // 19
-  { "AMAIR_EL2", AArch64_SYSREG_AMAIR_EL2, "AMAIR_EL2", AArch64_SYSREG_AMAIR_EL2, 0xE518, true, true,  {0}  }, // 20
-  { "AMAIR_EL3", AArch64_SYSREG_AMAIR_EL3, "AMAIR_EL3", AArch64_SYSREG_AMAIR_EL3, 0xF518, true, true,  {0}  }, // 21
-  { "AMCFGR_EL0", AArch64_SYSREG_AMCFGR_EL0, "AMCFGR_EL0", AArch64_SYSREG_AMCFGR_EL0, 0xDE91, true, false,  {AArch64_FeatureAM}  }, // 22
-  { "AMCG1IDR_EL0", AArch64_SYSREG_AMCG1IDR_EL0, "AMCG1IDR_EL0", AArch64_SYSREG_AMCG1IDR_EL0, 0xDE96, true, false,  {AArch64_FeatureAMVS}  }, // 23
-  { "AMCGCR_EL0", AArch64_SYSREG_AMCGCR_EL0, "AMCGCR_EL0", AArch64_SYSREG_AMCGCR_EL0, 0xDE92, true, false,  {AArch64_FeatureAM}  }, // 24
-  { "AMCNTENCLR0_EL0", AArch64_SYSREG_AMCNTENCLR0_EL0, "AMCNTENCLR0_EL0", AArch64_SYSREG_AMCNTENCLR0_EL0, 0xDE94, true, true,  {AArch64_FeatureAM}  }, // 25
-  { "AMCNTENCLR1_EL0", AArch64_SYSREG_AMCNTENCLR1_EL0, "AMCNTENCLR1_EL0", AArch64_SYSREG_AMCNTENCLR1_EL0, 0xDE98, true, true,  {AArch64_FeatureAM}  }, // 26
-  { "AMCNTENSET0_EL0", AArch64_SYSREG_AMCNTENSET0_EL0, "AMCNTENSET0_EL0", AArch64_SYSREG_AMCNTENSET0_EL0, 0xDE95, true, true,  {AArch64_FeatureAM}  }, // 27
-  { "AMCNTENSET1_EL0", AArch64_SYSREG_AMCNTENSET1_EL0, "AMCNTENSET1_EL0", AArch64_SYSREG_AMCNTENSET1_EL0, 0xDE99, true, true,  {AArch64_FeatureAM}  }, // 28
-  { "AMCR_EL0", AArch64_SYSREG_AMCR_EL0, "AMCR_EL0", AArch64_SYSREG_AMCR_EL0, 0xDE90, true, true,  {AArch64_FeatureAM}  }, // 29
-  { "AMEVCNTR00_EL0", AArch64_SYSREG_AMEVCNTR00_EL0, "AMEVCNTR00_EL0", AArch64_SYSREG_AMEVCNTR00_EL0, 0xDEA0, true, true,  {AArch64_FeatureAM}  }, // 30
-  { "AMEVCNTR01_EL0", AArch64_SYSREG_AMEVCNTR01_EL0, "AMEVCNTR01_EL0", AArch64_SYSREG_AMEVCNTR01_EL0, 0xDEA1, true, true,  {AArch64_FeatureAM}  }, // 31
-  { "AMEVCNTR02_EL0", AArch64_SYSREG_AMEVCNTR02_EL0, "AMEVCNTR02_EL0", AArch64_SYSREG_AMEVCNTR02_EL0, 0xDEA2, true, true,  {AArch64_FeatureAM}  }, // 32
-  { "AMEVCNTR03_EL0", AArch64_SYSREG_AMEVCNTR03_EL0, "AMEVCNTR03_EL0", AArch64_SYSREG_AMEVCNTR03_EL0, 0xDEA3, true, true,  {AArch64_FeatureAM}  }, // 33
-  { "AMEVCNTR10_EL0", AArch64_SYSREG_AMEVCNTR10_EL0, "AMEVCNTR10_EL0", AArch64_SYSREG_AMEVCNTR10_EL0, 0xDEE0, true, true,  {AArch64_FeatureAM}  }, // 34
-  { "AMEVCNTR110_EL0", AArch64_SYSREG_AMEVCNTR110_EL0, "AMEVCNTR110_EL0", AArch64_SYSREG_AMEVCNTR110_EL0, 0xDEEA, true, true,  {AArch64_FeatureAM}  }, // 35
-  { "AMEVCNTR111_EL0", AArch64_SYSREG_AMEVCNTR111_EL0, "AMEVCNTR111_EL0", AArch64_SYSREG_AMEVCNTR111_EL0, 0xDEEB, true, true,  {AArch64_FeatureAM}  }, // 36
-  { "AMEVCNTR112_EL0", AArch64_SYSREG_AMEVCNTR112_EL0, "AMEVCNTR112_EL0", AArch64_SYSREG_AMEVCNTR112_EL0, 0xDEEC, true, true,  {AArch64_FeatureAM}  }, // 37
-  { "AMEVCNTR113_EL0", AArch64_SYSREG_AMEVCNTR113_EL0, "AMEVCNTR113_EL0", AArch64_SYSREG_AMEVCNTR113_EL0, 0xDEED, true, true,  {AArch64_FeatureAM}  }, // 38
-  { "AMEVCNTR114_EL0", AArch64_SYSREG_AMEVCNTR114_EL0, "AMEVCNTR114_EL0", AArch64_SYSREG_AMEVCNTR114_EL0, 0xDEEE, true, true,  {AArch64_FeatureAM}  }, // 39
-  { "AMEVCNTR115_EL0", AArch64_SYSREG_AMEVCNTR115_EL0, "AMEVCNTR115_EL0", AArch64_SYSREG_AMEVCNTR115_EL0, 0xDEEF, true, true,  {AArch64_FeatureAM}  }, // 40
-  { "AMEVCNTR11_EL0", AArch64_SYSREG_AMEVCNTR11_EL0, "AMEVCNTR11_EL0", AArch64_SYSREG_AMEVCNTR11_EL0, 0xDEE1, true, true,  {AArch64_FeatureAM}  }, // 41
-  { "AMEVCNTR12_EL0", AArch64_SYSREG_AMEVCNTR12_EL0, "AMEVCNTR12_EL0", AArch64_SYSREG_AMEVCNTR12_EL0, 0xDEE2, true, true,  {AArch64_FeatureAM}  }, // 42
-  { "AMEVCNTR13_EL0", AArch64_SYSREG_AMEVCNTR13_EL0, "AMEVCNTR13_EL0", AArch64_SYSREG_AMEVCNTR13_EL0, 0xDEE3, true, true,  {AArch64_FeatureAM}  }, // 43
-  { "AMEVCNTR14_EL0", AArch64_SYSREG_AMEVCNTR14_EL0, "AMEVCNTR14_EL0", AArch64_SYSREG_AMEVCNTR14_EL0, 0xDEE4, true, true,  {AArch64_FeatureAM}  }, // 44
-  { "AMEVCNTR15_EL0", AArch64_SYSREG_AMEVCNTR15_EL0, "AMEVCNTR15_EL0", AArch64_SYSREG_AMEVCNTR15_EL0, 0xDEE5, true, true,  {AArch64_FeatureAM}  }, // 45
-  { "AMEVCNTR16_EL0", AArch64_SYSREG_AMEVCNTR16_EL0, "AMEVCNTR16_EL0", AArch64_SYSREG_AMEVCNTR16_EL0, 0xDEE6, true, true,  {AArch64_FeatureAM}  }, // 46
-  { "AMEVCNTR17_EL0", AArch64_SYSREG_AMEVCNTR17_EL0, "AMEVCNTR17_EL0", AArch64_SYSREG_AMEVCNTR17_EL0, 0xDEE7, true, true,  {AArch64_FeatureAM}  }, // 47
-  { "AMEVCNTR18_EL0", AArch64_SYSREG_AMEVCNTR18_EL0, "AMEVCNTR18_EL0", AArch64_SYSREG_AMEVCNTR18_EL0, 0xDEE8, true, true,  {AArch64_FeatureAM}  }, // 48
-  { "AMEVCNTR19_EL0", AArch64_SYSREG_AMEVCNTR19_EL0, "AMEVCNTR19_EL0", AArch64_SYSREG_AMEVCNTR19_EL0, 0xDEE9, true, true,  {AArch64_FeatureAM}  }, // 49
-  { "AMEVCNTVOFF00_EL2", AArch64_SYSREG_AMEVCNTVOFF00_EL2, "AMEVCNTVOFF00_EL2", AArch64_SYSREG_AMEVCNTVOFF00_EL2, 0xE6C0, true, true,  {AArch64_FeatureAMVS}  }, // 50
-  { "AMEVCNTVOFF010_EL2", AArch64_SYSREG_AMEVCNTVOFF010_EL2, "AMEVCNTVOFF010_EL2", AArch64_SYSREG_AMEVCNTVOFF010_EL2, 0xE6CA, true, true,  {AArch64_FeatureAMVS}  }, // 51
-  { "AMEVCNTVOFF011_EL2", AArch64_SYSREG_AMEVCNTVOFF011_EL2, "AMEVCNTVOFF011_EL2", AArch64_SYSREG_AMEVCNTVOFF011_EL2, 0xE6CB, true, true,  {AArch64_FeatureAMVS}  }, // 52
-  { "AMEVCNTVOFF012_EL2", AArch64_SYSREG_AMEVCNTVOFF012_EL2, "AMEVCNTVOFF012_EL2", AArch64_SYSREG_AMEVCNTVOFF012_EL2, 0xE6CC, true, true,  {AArch64_FeatureAMVS}  }, // 53
-  { "AMEVCNTVOFF013_EL2", AArch64_SYSREG_AMEVCNTVOFF013_EL2, "AMEVCNTVOFF013_EL2", AArch64_SYSREG_AMEVCNTVOFF013_EL2, 0xE6CD, true, true,  {AArch64_FeatureAMVS}  }, // 54
-  { "AMEVCNTVOFF014_EL2", AArch64_SYSREG_AMEVCNTVOFF014_EL2, "AMEVCNTVOFF014_EL2", AArch64_SYSREG_AMEVCNTVOFF014_EL2, 0xE6CE, true, true,  {AArch64_FeatureAMVS}  }, // 55
-  { "AMEVCNTVOFF015_EL2", AArch64_SYSREG_AMEVCNTVOFF015_EL2, "AMEVCNTVOFF015_EL2", AArch64_SYSREG_AMEVCNTVOFF015_EL2, 0xE6CF, true, true,  {AArch64_FeatureAMVS}  }, // 56
-  { "AMEVCNTVOFF01_EL2", AArch64_SYSREG_AMEVCNTVOFF01_EL2, "AMEVCNTVOFF01_EL2", AArch64_SYSREG_AMEVCNTVOFF01_EL2, 0xE6C1, true, true,  {AArch64_FeatureAMVS}  }, // 57
-  { "AMEVCNTVOFF02_EL2", AArch64_SYSREG_AMEVCNTVOFF02_EL2, "AMEVCNTVOFF02_EL2", AArch64_SYSREG_AMEVCNTVOFF02_EL2, 0xE6C2, true, true,  {AArch64_FeatureAMVS}  }, // 58
-  { "AMEVCNTVOFF03_EL2", AArch64_SYSREG_AMEVCNTVOFF03_EL2, "AMEVCNTVOFF03_EL2", AArch64_SYSREG_AMEVCNTVOFF03_EL2, 0xE6C3, true, true,  {AArch64_FeatureAMVS}  }, // 59
-  { "AMEVCNTVOFF04_EL2", AArch64_SYSREG_AMEVCNTVOFF04_EL2, "AMEVCNTVOFF04_EL2", AArch64_SYSREG_AMEVCNTVOFF04_EL2, 0xE6C4, true, true,  {AArch64_FeatureAMVS}  }, // 60
-  { "AMEVCNTVOFF05_EL2", AArch64_SYSREG_AMEVCNTVOFF05_EL2, "AMEVCNTVOFF05_EL2", AArch64_SYSREG_AMEVCNTVOFF05_EL2, 0xE6C5, true, true,  {AArch64_FeatureAMVS}  }, // 61
-  { "AMEVCNTVOFF06_EL2", AArch64_SYSREG_AMEVCNTVOFF06_EL2, "AMEVCNTVOFF06_EL2", AArch64_SYSREG_AMEVCNTVOFF06_EL2, 0xE6C6, true, true,  {AArch64_FeatureAMVS}  }, // 62
-  { "AMEVCNTVOFF07_EL2", AArch64_SYSREG_AMEVCNTVOFF07_EL2, "AMEVCNTVOFF07_EL2", AArch64_SYSREG_AMEVCNTVOFF07_EL2, 0xE6C7, true, true,  {AArch64_FeatureAMVS}  }, // 63
-  { "AMEVCNTVOFF08_EL2", AArch64_SYSREG_AMEVCNTVOFF08_EL2, "AMEVCNTVOFF08_EL2", AArch64_SYSREG_AMEVCNTVOFF08_EL2, 0xE6C8, true, true,  {AArch64_FeatureAMVS}  }, // 64
-  { "AMEVCNTVOFF09_EL2", AArch64_SYSREG_AMEVCNTVOFF09_EL2, "AMEVCNTVOFF09_EL2", AArch64_SYSREG_AMEVCNTVOFF09_EL2, 0xE6C9, true, true,  {AArch64_FeatureAMVS}  }, // 65
-  { "AMEVCNTVOFF10_EL2", AArch64_SYSREG_AMEVCNTVOFF10_EL2, "AMEVCNTVOFF10_EL2", AArch64_SYSREG_AMEVCNTVOFF10_EL2, 0xE6D0, true, true,  {AArch64_FeatureAMVS}  }, // 66
-  { "AMEVCNTVOFF110_EL2", AArch64_SYSREG_AMEVCNTVOFF110_EL2, "AMEVCNTVOFF110_EL2", AArch64_SYSREG_AMEVCNTVOFF110_EL2, 0xE6DA, true, true,  {AArch64_FeatureAMVS}  }, // 67
-  { "AMEVCNTVOFF111_EL2", AArch64_SYSREG_AMEVCNTVOFF111_EL2, "AMEVCNTVOFF111_EL2", AArch64_SYSREG_AMEVCNTVOFF111_EL2, 0xE6DB, true, true,  {AArch64_FeatureAMVS}  }, // 68
-  { "AMEVCNTVOFF112_EL2", AArch64_SYSREG_AMEVCNTVOFF112_EL2, "AMEVCNTVOFF112_EL2", AArch64_SYSREG_AMEVCNTVOFF112_EL2, 0xE6DC, true, true,  {AArch64_FeatureAMVS}  }, // 69
-  { "AMEVCNTVOFF113_EL2", AArch64_SYSREG_AMEVCNTVOFF113_EL2, "AMEVCNTVOFF113_EL2", AArch64_SYSREG_AMEVCNTVOFF113_EL2, 0xE6DD, true, true,  {AArch64_FeatureAMVS}  }, // 70
-  { "AMEVCNTVOFF114_EL2", AArch64_SYSREG_AMEVCNTVOFF114_EL2, "AMEVCNTVOFF114_EL2", AArch64_SYSREG_AMEVCNTVOFF114_EL2, 0xE6DE, true, true,  {AArch64_FeatureAMVS}  }, // 71
-  { "AMEVCNTVOFF115_EL2", AArch64_SYSREG_AMEVCNTVOFF115_EL2, "AMEVCNTVOFF115_EL2", AArch64_SYSREG_AMEVCNTVOFF115_EL2, 0xE6DF, true, true,  {AArch64_FeatureAMVS}  }, // 72
-  { "AMEVCNTVOFF11_EL2", AArch64_SYSREG_AMEVCNTVOFF11_EL2, "AMEVCNTVOFF11_EL2", AArch64_SYSREG_AMEVCNTVOFF11_EL2, 0xE6D1, true, true,  {AArch64_FeatureAMVS}  }, // 73
-  { "AMEVCNTVOFF12_EL2", AArch64_SYSREG_AMEVCNTVOFF12_EL2, "AMEVCNTVOFF12_EL2", AArch64_SYSREG_AMEVCNTVOFF12_EL2, 0xE6D2, true, true,  {AArch64_FeatureAMVS}  }, // 74
-  { "AMEVCNTVOFF13_EL2", AArch64_SYSREG_AMEVCNTVOFF13_EL2, "AMEVCNTVOFF13_EL2", AArch64_SYSREG_AMEVCNTVOFF13_EL2, 0xE6D3, true, true,  {AArch64_FeatureAMVS}  }, // 75
-  { "AMEVCNTVOFF14_EL2", AArch64_SYSREG_AMEVCNTVOFF14_EL2, "AMEVCNTVOFF14_EL2", AArch64_SYSREG_AMEVCNTVOFF14_EL2, 0xE6D4, true, true,  {AArch64_FeatureAMVS}  }, // 76
-  { "AMEVCNTVOFF15_EL2", AArch64_SYSREG_AMEVCNTVOFF15_EL2, "AMEVCNTVOFF15_EL2", AArch64_SYSREG_AMEVCNTVOFF15_EL2, 0xE6D5, true, true,  {AArch64_FeatureAMVS}  }, // 77
-  { "AMEVCNTVOFF16_EL2", AArch64_SYSREG_AMEVCNTVOFF16_EL2, "AMEVCNTVOFF16_EL2", AArch64_SYSREG_AMEVCNTVOFF16_EL2, 0xE6D6, true, true,  {AArch64_FeatureAMVS}  }, // 78
-  { "AMEVCNTVOFF17_EL2", AArch64_SYSREG_AMEVCNTVOFF17_EL2, "AMEVCNTVOFF17_EL2", AArch64_SYSREG_AMEVCNTVOFF17_EL2, 0xE6D7, true, true,  {AArch64_FeatureAMVS}  }, // 79
-  { "AMEVCNTVOFF18_EL2", AArch64_SYSREG_AMEVCNTVOFF18_EL2, "AMEVCNTVOFF18_EL2", AArch64_SYSREG_AMEVCNTVOFF18_EL2, 0xE6D8, true, true,  {AArch64_FeatureAMVS}  }, // 80
-  { "AMEVCNTVOFF19_EL2", AArch64_SYSREG_AMEVCNTVOFF19_EL2, "AMEVCNTVOFF19_EL2", AArch64_SYSREG_AMEVCNTVOFF19_EL2, 0xE6D9, true, true,  {AArch64_FeatureAMVS}  }, // 81
-  { "AMEVTYPER00_EL0", AArch64_SYSREG_AMEVTYPER00_EL0, "AMEVTYPER00_EL0", AArch64_SYSREG_AMEVTYPER00_EL0, 0xDEB0, true, false,  {AArch64_FeatureAM}  }, // 82
-  { "AMEVTYPER01_EL0", AArch64_SYSREG_AMEVTYPER01_EL0, "AMEVTYPER01_EL0", AArch64_SYSREG_AMEVTYPER01_EL0, 0xDEB1, true, false,  {AArch64_FeatureAM}  }, // 83
-  { "AMEVTYPER02_EL0", AArch64_SYSREG_AMEVTYPER02_EL0, "AMEVTYPER02_EL0", AArch64_SYSREG_AMEVTYPER02_EL0, 0xDEB2, true, false,  {AArch64_FeatureAM}  }, // 84
-  { "AMEVTYPER03_EL0", AArch64_SYSREG_AMEVTYPER03_EL0, "AMEVTYPER03_EL0", AArch64_SYSREG_AMEVTYPER03_EL0, 0xDEB3, true, false,  {AArch64_FeatureAM}  }, // 85
-  { "AMEVTYPER10_EL0", AArch64_SYSREG_AMEVTYPER10_EL0, "AMEVTYPER10_EL0", AArch64_SYSREG_AMEVTYPER10_EL0, 0xDEF0, true, true,  {AArch64_FeatureAM}  }, // 86
-  { "AMEVTYPER110_EL0", AArch64_SYSREG_AMEVTYPER110_EL0, "AMEVTYPER110_EL0", AArch64_SYSREG_AMEVTYPER110_EL0, 0xDEFA, true, true,  {AArch64_FeatureAM}  }, // 87
-  { "AMEVTYPER111_EL0", AArch64_SYSREG_AMEVTYPER111_EL0, "AMEVTYPER111_EL0", AArch64_SYSREG_AMEVTYPER111_EL0, 0xDEFB, true, true,  {AArch64_FeatureAM}  }, // 88
-  { "AMEVTYPER112_EL0", AArch64_SYSREG_AMEVTYPER112_EL0, "AMEVTYPER112_EL0", AArch64_SYSREG_AMEVTYPER112_EL0, 0xDEFC, true, true,  {AArch64_FeatureAM}  }, // 89
-  { "AMEVTYPER113_EL0", AArch64_SYSREG_AMEVTYPER113_EL0, "AMEVTYPER113_EL0", AArch64_SYSREG_AMEVTYPER113_EL0, 0xDEFD, true, true,  {AArch64_FeatureAM}  }, // 90
-  { "AMEVTYPER114_EL0", AArch64_SYSREG_AMEVTYPER114_EL0, "AMEVTYPER114_EL0", AArch64_SYSREG_AMEVTYPER114_EL0, 0xDEFE, true, true,  {AArch64_FeatureAM}  }, // 91
-  { "AMEVTYPER115_EL0", AArch64_SYSREG_AMEVTYPER115_EL0, "AMEVTYPER115_EL0", AArch64_SYSREG_AMEVTYPER115_EL0, 0xDEFF, true, true,  {AArch64_FeatureAM}  }, // 92
-  { "AMEVTYPER11_EL0", AArch64_SYSREG_AMEVTYPER11_EL0, "AMEVTYPER11_EL0", AArch64_SYSREG_AMEVTYPER11_EL0, 0xDEF1, true, true,  {AArch64_FeatureAM}  }, // 93
-  { "AMEVTYPER12_EL0", AArch64_SYSREG_AMEVTYPER12_EL0, "AMEVTYPER12_EL0", AArch64_SYSREG_AMEVTYPER12_EL0, 0xDEF2, true, true,  {AArch64_FeatureAM}  }, // 94
-  { "AMEVTYPER13_EL0", AArch64_SYSREG_AMEVTYPER13_EL0, "AMEVTYPER13_EL0", AArch64_SYSREG_AMEVTYPER13_EL0, 0xDEF3, true, true,  {AArch64_FeatureAM}  }, // 95
-  { "AMEVTYPER14_EL0", AArch64_SYSREG_AMEVTYPER14_EL0, "AMEVTYPER14_EL0", AArch64_SYSREG_AMEVTYPER14_EL0, 0xDEF4, true, true,  {AArch64_FeatureAM}  }, // 96
-  { "AMEVTYPER15_EL0", AArch64_SYSREG_AMEVTYPER15_EL0, "AMEVTYPER15_EL0", AArch64_SYSREG_AMEVTYPER15_EL0, 0xDEF5, true, true,  {AArch64_FeatureAM}  }, // 97
-  { "AMEVTYPER16_EL0", AArch64_SYSREG_AMEVTYPER16_EL0, "AMEVTYPER16_EL0", AArch64_SYSREG_AMEVTYPER16_EL0, 0xDEF6, true, true,  {AArch64_FeatureAM}  }, // 98
-  { "AMEVTYPER17_EL0", AArch64_SYSREG_AMEVTYPER17_EL0, "AMEVTYPER17_EL0", AArch64_SYSREG_AMEVTYPER17_EL0, 0xDEF7, true, true,  {AArch64_FeatureAM}  }, // 99
-  { "AMEVTYPER18_EL0", AArch64_SYSREG_AMEVTYPER18_EL0, "AMEVTYPER18_EL0", AArch64_SYSREG_AMEVTYPER18_EL0, 0xDEF8, true, true,  {AArch64_FeatureAM}  }, // 100
-  { "AMEVTYPER19_EL0", AArch64_SYSREG_AMEVTYPER19_EL0, "AMEVTYPER19_EL0", AArch64_SYSREG_AMEVTYPER19_EL0, 0xDEF9, true, true,  {AArch64_FeatureAM}  }, // 101
-  { "AMUSERENR_EL0", AArch64_SYSREG_AMUSERENR_EL0, "AMUSERENR_EL0", AArch64_SYSREG_AMUSERENR_EL0, 0xDE93, true, true,  {AArch64_FeatureAM}  }, // 102
-  { "APDAKeyHi_EL1", AArch64_SYSREG_APDAKEYHI_EL1, "APDAKeyHi_EL1", AArch64_SYSREG_APDAKEYHI_EL1, 0xC111, true, true,  {AArch64_FeaturePAuth}  }, // 103
-  { "APDAKeyLo_EL1", AArch64_SYSREG_APDAKEYLO_EL1, "APDAKeyLo_EL1", AArch64_SYSREG_APDAKEYLO_EL1, 0xC110, true, true,  {AArch64_FeaturePAuth}  }, // 104
-  { "APDBKeyHi_EL1", AArch64_SYSREG_APDBKEYHI_EL1, "APDBKeyHi_EL1", AArch64_SYSREG_APDBKEYHI_EL1, 0xC113, true, true,  {AArch64_FeaturePAuth}  }, // 105
-  { "APDBKeyLo_EL1", AArch64_SYSREG_APDBKEYLO_EL1, "APDBKeyLo_EL1", AArch64_SYSREG_APDBKEYLO_EL1, 0xC112, true, true,  {AArch64_FeaturePAuth}  }, // 106
-  { "APGAKeyHi_EL1", AArch64_SYSREG_APGAKEYHI_EL1, "APGAKeyHi_EL1", AArch64_SYSREG_APGAKEYHI_EL1, 0xC119, true, true,  {AArch64_FeaturePAuth}  }, // 107
-  { "APGAKeyLo_EL1", AArch64_SYSREG_APGAKEYLO_EL1, "APGAKeyLo_EL1", AArch64_SYSREG_APGAKEYLO_EL1, 0xC118, true, true,  {AArch64_FeaturePAuth}  }, // 108
-  { "APIAKeyHi_EL1", AArch64_SYSREG_APIAKEYHI_EL1, "APIAKeyHi_EL1", AArch64_SYSREG_APIAKEYHI_EL1, 0xC109, true, true,  {AArch64_FeaturePAuth}  }, // 109
-  { "APIAKeyLo_EL1", AArch64_SYSREG_APIAKEYLO_EL1, "APIAKeyLo_EL1", AArch64_SYSREG_APIAKEYLO_EL1, 0xC108, true, true,  {AArch64_FeaturePAuth}  }, // 110
-  { "APIBKeyHi_EL1", AArch64_SYSREG_APIBKEYHI_EL1, "APIBKeyHi_EL1", AArch64_SYSREG_APIBKEYHI_EL1, 0xC10B, true, true,  {AArch64_FeaturePAuth}  }, // 111
-  { "APIBKeyLo_EL1", AArch64_SYSREG_APIBKEYLO_EL1, "APIBKeyLo_EL1", AArch64_SYSREG_APIBKEYLO_EL1, 0xC10A, true, true,  {AArch64_FeaturePAuth}  }, // 112
-  { "BRBCR_EL1", AArch64_SYSREG_BRBCR_EL1, "BRBCR_EL1", AArch64_SYSREG_BRBCR_EL1, 0x8C80, true, true,  {AArch64_FeatureBRBE}  }, // 113
-  { "BRBCR_EL12", AArch64_SYSREG_BRBCR_EL12, "BRBCR_EL12", AArch64_SYSREG_BRBCR_EL12, 0xAC80, true, true,  {AArch64_FeatureBRBE}  }, // 114
-  { "BRBCR_EL2", AArch64_SYSREG_BRBCR_EL2, "BRBCR_EL2", AArch64_SYSREG_BRBCR_EL2, 0xA480, true, true,  {AArch64_FeatureBRBE}  }, // 115
-  { "BRBFCR_EL1", AArch64_SYSREG_BRBFCR_EL1, "BRBFCR_EL1", AArch64_SYSREG_BRBFCR_EL1, 0x8C81, true, true,  {AArch64_FeatureBRBE}  }, // 116
-  { "BRBIDR0_EL1", AArch64_SYSREG_BRBIDR0_EL1, "BRBIDR0_EL1", AArch64_SYSREG_BRBIDR0_EL1, 0x8C90, true, false,  {AArch64_FeatureBRBE}  }, // 117
-  { "BRBINF0_EL1", AArch64_SYSREG_BRBINF0_EL1, "BRBINF0_EL1", AArch64_SYSREG_BRBINF0_EL1, 0x8C00, true, false,  {AArch64_FeatureBRBE}  }, // 118
-  { "BRBINF10_EL1", AArch64_SYSREG_BRBINF10_EL1, "BRBINF10_EL1", AArch64_SYSREG_BRBINF10_EL1, 0x8C50, true, false,  {AArch64_FeatureBRBE}  }, // 119
-  { "BRBINF11_EL1", AArch64_SYSREG_BRBINF11_EL1, "BRBINF11_EL1", AArch64_SYSREG_BRBINF11_EL1, 0x8C58, true, false,  {AArch64_FeatureBRBE}  }, // 120
-  { "BRBINF12_EL1", AArch64_SYSREG_BRBINF12_EL1, "BRBINF12_EL1", AArch64_SYSREG_BRBINF12_EL1, 0x8C60, true, false,  {AArch64_FeatureBRBE}  }, // 121
-  { "BRBINF13_EL1", AArch64_SYSREG_BRBINF13_EL1, "BRBINF13_EL1", AArch64_SYSREG_BRBINF13_EL1, 0x8C68, true, false,  {AArch64_FeatureBRBE}  }, // 122
-  { "BRBINF14_EL1", AArch64_SYSREG_BRBINF14_EL1, "BRBINF14_EL1", AArch64_SYSREG_BRBINF14_EL1, 0x8C70, true, false,  {AArch64_FeatureBRBE}  }, // 123
-  { "BRBINF15_EL1", AArch64_SYSREG_BRBINF15_EL1, "BRBINF15_EL1", AArch64_SYSREG_BRBINF15_EL1, 0x8C78, true, false,  {AArch64_FeatureBRBE}  }, // 124
-  { "BRBINF16_EL1", AArch64_SYSREG_BRBINF16_EL1, "BRBINF16_EL1", AArch64_SYSREG_BRBINF16_EL1, 0x8C04, true, false,  {AArch64_FeatureBRBE}  }, // 125
-  { "BRBINF17_EL1", AArch64_SYSREG_BRBINF17_EL1, "BRBINF17_EL1", AArch64_SYSREG_BRBINF17_EL1, 0x8C0C, true, false,  {AArch64_FeatureBRBE}  }, // 126
-  { "BRBINF18_EL1", AArch64_SYSREG_BRBINF18_EL1, "BRBINF18_EL1", AArch64_SYSREG_BRBINF18_EL1, 0x8C14, true, false,  {AArch64_FeatureBRBE}  }, // 127
-  { "BRBINF19_EL1", AArch64_SYSREG_BRBINF19_EL1, "BRBINF19_EL1", AArch64_SYSREG_BRBINF19_EL1, 0x8C1C, true, false,  {AArch64_FeatureBRBE}  }, // 128
-  { "BRBINF1_EL1", AArch64_SYSREG_BRBINF1_EL1, "BRBINF1_EL1", AArch64_SYSREG_BRBINF1_EL1, 0x8C08, true, false,  {AArch64_FeatureBRBE}  }, // 129
-  { "BRBINF20_EL1", AArch64_SYSREG_BRBINF20_EL1, "BRBINF20_EL1", AArch64_SYSREG_BRBINF20_EL1, 0x8C24, true, false,  {AArch64_FeatureBRBE}  }, // 130
-  { "BRBINF21_EL1", AArch64_SYSREG_BRBINF21_EL1, "BRBINF21_EL1", AArch64_SYSREG_BRBINF21_EL1, 0x8C2C, true, false,  {AArch64_FeatureBRBE}  }, // 131
-  { "BRBINF22_EL1", AArch64_SYSREG_BRBINF22_EL1, "BRBINF22_EL1", AArch64_SYSREG_BRBINF22_EL1, 0x8C34, true, false,  {AArch64_FeatureBRBE}  }, // 132
-  { "BRBINF23_EL1", AArch64_SYSREG_BRBINF23_EL1, "BRBINF23_EL1", AArch64_SYSREG_BRBINF23_EL1, 0x8C3C, true, false,  {AArch64_FeatureBRBE}  }, // 133
-  { "BRBINF24_EL1", AArch64_SYSREG_BRBINF24_EL1, "BRBINF24_EL1", AArch64_SYSREG_BRBINF24_EL1, 0x8C44, true, false,  {AArch64_FeatureBRBE}  }, // 134
-  { "BRBINF25_EL1", AArch64_SYSREG_BRBINF25_EL1, "BRBINF25_EL1", AArch64_SYSREG_BRBINF25_EL1, 0x8C4C, true, false,  {AArch64_FeatureBRBE}  }, // 135
-  { "BRBINF26_EL1", AArch64_SYSREG_BRBINF26_EL1, "BRBINF26_EL1", AArch64_SYSREG_BRBINF26_EL1, 0x8C54, true, false,  {AArch64_FeatureBRBE}  }, // 136
-  { "BRBINF27_EL1", AArch64_SYSREG_BRBINF27_EL1, "BRBINF27_EL1", AArch64_SYSREG_BRBINF27_EL1, 0x8C5C, true, false,  {AArch64_FeatureBRBE}  }, // 137
-  { "BRBINF28_EL1", AArch64_SYSREG_BRBINF28_EL1, "BRBINF28_EL1", AArch64_SYSREG_BRBINF28_EL1, 0x8C64, true, false,  {AArch64_FeatureBRBE}  }, // 138
-  { "BRBINF29_EL1", AArch64_SYSREG_BRBINF29_EL1, "BRBINF29_EL1", AArch64_SYSREG_BRBINF29_EL1, 0x8C6C, true, false,  {AArch64_FeatureBRBE}  }, // 139
-  { "BRBINF2_EL1", AArch64_SYSREG_BRBINF2_EL1, "BRBINF2_EL1", AArch64_SYSREG_BRBINF2_EL1, 0x8C10, true, false,  {AArch64_FeatureBRBE}  }, // 140
-  { "BRBINF30_EL1", AArch64_SYSREG_BRBINF30_EL1, "BRBINF30_EL1", AArch64_SYSREG_BRBINF30_EL1, 0x8C74, true, false,  {AArch64_FeatureBRBE}  }, // 141
-  { "BRBINF31_EL1", AArch64_SYSREG_BRBINF31_EL1, "BRBINF31_EL1", AArch64_SYSREG_BRBINF31_EL1, 0x8C7C, true, false,  {AArch64_FeatureBRBE}  }, // 142
-  { "BRBINF3_EL1", AArch64_SYSREG_BRBINF3_EL1, "BRBINF3_EL1", AArch64_SYSREG_BRBINF3_EL1, 0x8C18, true, false,  {AArch64_FeatureBRBE}  }, // 143
-  { "BRBINF4_EL1", AArch64_SYSREG_BRBINF4_EL1, "BRBINF4_EL1", AArch64_SYSREG_BRBINF4_EL1, 0x8C20, true, false,  {AArch64_FeatureBRBE}  }, // 144
-  { "BRBINF5_EL1", AArch64_SYSREG_BRBINF5_EL1, "BRBINF5_EL1", AArch64_SYSREG_BRBINF5_EL1, 0x8C28, true, false,  {AArch64_FeatureBRBE}  }, // 145
-  { "BRBINF6_EL1", AArch64_SYSREG_BRBINF6_EL1, "BRBINF6_EL1", AArch64_SYSREG_BRBINF6_EL1, 0x8C30, true, false,  {AArch64_FeatureBRBE}  }, // 146
-  { "BRBINF7_EL1", AArch64_SYSREG_BRBINF7_EL1, "BRBINF7_EL1", AArch64_SYSREG_BRBINF7_EL1, 0x8C38, true, false,  {AArch64_FeatureBRBE}  }, // 147
-  { "BRBINF8_EL1", AArch64_SYSREG_BRBINF8_EL1, "BRBINF8_EL1", AArch64_SYSREG_BRBINF8_EL1, 0x8C40, true, false,  {AArch64_FeatureBRBE}  }, // 148
-  { "BRBINF9_EL1", AArch64_SYSREG_BRBINF9_EL1, "BRBINF9_EL1", AArch64_SYSREG_BRBINF9_EL1, 0x8C48, true, false,  {AArch64_FeatureBRBE}  }, // 149
-  { "BRBINFINJ_EL1", AArch64_SYSREG_BRBINFINJ_EL1, "BRBINFINJ_EL1", AArch64_SYSREG_BRBINFINJ_EL1, 0x8C88, true, true,  {AArch64_FeatureBRBE}  }, // 150
-  { "BRBSRC0_EL1", AArch64_SYSREG_BRBSRC0_EL1, "BRBSRC0_EL1", AArch64_SYSREG_BRBSRC0_EL1, 0x8C01, true, false,  {AArch64_FeatureBRBE}  }, // 151
-  { "BRBSRC10_EL1", AArch64_SYSREG_BRBSRC10_EL1, "BRBSRC10_EL1", AArch64_SYSREG_BRBSRC10_EL1, 0x8C51, true, false,  {AArch64_FeatureBRBE}  }, // 152
-  { "BRBSRC11_EL1", AArch64_SYSREG_BRBSRC11_EL1, "BRBSRC11_EL1", AArch64_SYSREG_BRBSRC11_EL1, 0x8C59, true, false,  {AArch64_FeatureBRBE}  }, // 153
-  { "BRBSRC12_EL1", AArch64_SYSREG_BRBSRC12_EL1, "BRBSRC12_EL1", AArch64_SYSREG_BRBSRC12_EL1, 0x8C61, true, false,  {AArch64_FeatureBRBE}  }, // 154
-  { "BRBSRC13_EL1", AArch64_SYSREG_BRBSRC13_EL1, "BRBSRC13_EL1", AArch64_SYSREG_BRBSRC13_EL1, 0x8C69, true, false,  {AArch64_FeatureBRBE}  }, // 155
-  { "BRBSRC14_EL1", AArch64_SYSREG_BRBSRC14_EL1, "BRBSRC14_EL1", AArch64_SYSREG_BRBSRC14_EL1, 0x8C71, true, false,  {AArch64_FeatureBRBE}  }, // 156
-  { "BRBSRC15_EL1", AArch64_SYSREG_BRBSRC15_EL1, "BRBSRC15_EL1", AArch64_SYSREG_BRBSRC15_EL1, 0x8C79, true, false,  {AArch64_FeatureBRBE}  }, // 157
-  { "BRBSRC16_EL1", AArch64_SYSREG_BRBSRC16_EL1, "BRBSRC16_EL1", AArch64_SYSREG_BRBSRC16_EL1, 0x8C05, true, false,  {AArch64_FeatureBRBE}  }, // 158
-  { "BRBSRC17_EL1", AArch64_SYSREG_BRBSRC17_EL1, "BRBSRC17_EL1", AArch64_SYSREG_BRBSRC17_EL1, 0x8C0D, true, false,  {AArch64_FeatureBRBE}  }, // 159
-  { "BRBSRC18_EL1", AArch64_SYSREG_BRBSRC18_EL1, "BRBSRC18_EL1", AArch64_SYSREG_BRBSRC18_EL1, 0x8C15, true, false,  {AArch64_FeatureBRBE}  }, // 160
-  { "BRBSRC19_EL1", AArch64_SYSREG_BRBSRC19_EL1, "BRBSRC19_EL1", AArch64_SYSREG_BRBSRC19_EL1, 0x8C1D, true, false,  {AArch64_FeatureBRBE}  }, // 161
-  { "BRBSRC1_EL1", AArch64_SYSREG_BRBSRC1_EL1, "BRBSRC1_EL1", AArch64_SYSREG_BRBSRC1_EL1, 0x8C09, true, false,  {AArch64_FeatureBRBE}  }, // 162
-  { "BRBSRC20_EL1", AArch64_SYSREG_BRBSRC20_EL1, "BRBSRC20_EL1", AArch64_SYSREG_BRBSRC20_EL1, 0x8C25, true, false,  {AArch64_FeatureBRBE}  }, // 163
-  { "BRBSRC21_EL1", AArch64_SYSREG_BRBSRC21_EL1, "BRBSRC21_EL1", AArch64_SYSREG_BRBSRC21_EL1, 0x8C2D, true, false,  {AArch64_FeatureBRBE}  }, // 164
-  { "BRBSRC22_EL1", AArch64_SYSREG_BRBSRC22_EL1, "BRBSRC22_EL1", AArch64_SYSREG_BRBSRC22_EL1, 0x8C35, true, false,  {AArch64_FeatureBRBE}  }, // 165
-  { "BRBSRC23_EL1", AArch64_SYSREG_BRBSRC23_EL1, "BRBSRC23_EL1", AArch64_SYSREG_BRBSRC23_EL1, 0x8C3D, true, false,  {AArch64_FeatureBRBE}  }, // 166
-  { "BRBSRC24_EL1", AArch64_SYSREG_BRBSRC24_EL1, "BRBSRC24_EL1", AArch64_SYSREG_BRBSRC24_EL1, 0x8C45, true, false,  {AArch64_FeatureBRBE}  }, // 167
-  { "BRBSRC25_EL1", AArch64_SYSREG_BRBSRC25_EL1, "BRBSRC25_EL1", AArch64_SYSREG_BRBSRC25_EL1, 0x8C4D, true, false,  {AArch64_FeatureBRBE}  }, // 168
-  { "BRBSRC26_EL1", AArch64_SYSREG_BRBSRC26_EL1, "BRBSRC26_EL1", AArch64_SYSREG_BRBSRC26_EL1, 0x8C55, true, false,  {AArch64_FeatureBRBE}  }, // 169
-  { "BRBSRC27_EL1", AArch64_SYSREG_BRBSRC27_EL1, "BRBSRC27_EL1", AArch64_SYSREG_BRBSRC27_EL1, 0x8C5D, true, false,  {AArch64_FeatureBRBE}  }, // 170
-  { "BRBSRC28_EL1", AArch64_SYSREG_BRBSRC28_EL1, "BRBSRC28_EL1", AArch64_SYSREG_BRBSRC28_EL1, 0x8C65, true, false,  {AArch64_FeatureBRBE}  }, // 171
-  { "BRBSRC29_EL1", AArch64_SYSREG_BRBSRC29_EL1, "BRBSRC29_EL1", AArch64_SYSREG_BRBSRC29_EL1, 0x8C6D, true, false,  {AArch64_FeatureBRBE}  }, // 172
-  { "BRBSRC2_EL1", AArch64_SYSREG_BRBSRC2_EL1, "BRBSRC2_EL1", AArch64_SYSREG_BRBSRC2_EL1, 0x8C11, true, false,  {AArch64_FeatureBRBE}  }, // 173
-  { "BRBSRC30_EL1", AArch64_SYSREG_BRBSRC30_EL1, "BRBSRC30_EL1", AArch64_SYSREG_BRBSRC30_EL1, 0x8C75, true, false,  {AArch64_FeatureBRBE}  }, // 174
-  { "BRBSRC31_EL1", AArch64_SYSREG_BRBSRC31_EL1, "BRBSRC31_EL1", AArch64_SYSREG_BRBSRC31_EL1, 0x8C7D, true, false,  {AArch64_FeatureBRBE}  }, // 175
-  { "BRBSRC3_EL1", AArch64_SYSREG_BRBSRC3_EL1, "BRBSRC3_EL1", AArch64_SYSREG_BRBSRC3_EL1, 0x8C19, true, false,  {AArch64_FeatureBRBE}  }, // 176
-  { "BRBSRC4_EL1", AArch64_SYSREG_BRBSRC4_EL1, "BRBSRC4_EL1", AArch64_SYSREG_BRBSRC4_EL1, 0x8C21, true, false,  {AArch64_FeatureBRBE}  }, // 177
-  { "BRBSRC5_EL1", AArch64_SYSREG_BRBSRC5_EL1, "BRBSRC5_EL1", AArch64_SYSREG_BRBSRC5_EL1, 0x8C29, true, false,  {AArch64_FeatureBRBE}  }, // 178
-  { "BRBSRC6_EL1", AArch64_SYSREG_BRBSRC6_EL1, "BRBSRC6_EL1", AArch64_SYSREG_BRBSRC6_EL1, 0x8C31, true, false,  {AArch64_FeatureBRBE}  }, // 179
-  { "BRBSRC7_EL1", AArch64_SYSREG_BRBSRC7_EL1, "BRBSRC7_EL1", AArch64_SYSREG_BRBSRC7_EL1, 0x8C39, true, false,  {AArch64_FeatureBRBE}  }, // 180
-  { "BRBSRC8_EL1", AArch64_SYSREG_BRBSRC8_EL1, "BRBSRC8_EL1", AArch64_SYSREG_BRBSRC8_EL1, 0x8C41, true, false,  {AArch64_FeatureBRBE}  }, // 181
-  { "BRBSRC9_EL1", AArch64_SYSREG_BRBSRC9_EL1, "BRBSRC9_EL1", AArch64_SYSREG_BRBSRC9_EL1, 0x8C49, true, false,  {AArch64_FeatureBRBE}  }, // 182
-  { "BRBSRCINJ_EL1", AArch64_SYSREG_BRBSRCINJ_EL1, "BRBSRCINJ_EL1", AArch64_SYSREG_BRBSRCINJ_EL1, 0x8C89, true, true,  {AArch64_FeatureBRBE}  }, // 183
-  { "BRBTGT0_EL1", AArch64_SYSREG_BRBTGT0_EL1, "BRBTGT0_EL1", AArch64_SYSREG_BRBTGT0_EL1, 0x8C02, true, false,  {AArch64_FeatureBRBE}  }, // 184
-  { "BRBTGT10_EL1", AArch64_SYSREG_BRBTGT10_EL1, "BRBTGT10_EL1", AArch64_SYSREG_BRBTGT10_EL1, 0x8C52, true, false,  {AArch64_FeatureBRBE}  }, // 185
-  { "BRBTGT11_EL1", AArch64_SYSREG_BRBTGT11_EL1, "BRBTGT11_EL1", AArch64_SYSREG_BRBTGT11_EL1, 0x8C5A, true, false,  {AArch64_FeatureBRBE}  }, // 186
-  { "BRBTGT12_EL1", AArch64_SYSREG_BRBTGT12_EL1, "BRBTGT12_EL1", AArch64_SYSREG_BRBTGT12_EL1, 0x8C62, true, false,  {AArch64_FeatureBRBE}  }, // 187
-  { "BRBTGT13_EL1", AArch64_SYSREG_BRBTGT13_EL1, "BRBTGT13_EL1", AArch64_SYSREG_BRBTGT13_EL1, 0x8C6A, true, false,  {AArch64_FeatureBRBE}  }, // 188
-  { "BRBTGT14_EL1", AArch64_SYSREG_BRBTGT14_EL1, "BRBTGT14_EL1", AArch64_SYSREG_BRBTGT14_EL1, 0x8C72, true, false,  {AArch64_FeatureBRBE}  }, // 189
-  { "BRBTGT15_EL1", AArch64_SYSREG_BRBTGT15_EL1, "BRBTGT15_EL1", AArch64_SYSREG_BRBTGT15_EL1, 0x8C7A, true, false,  {AArch64_FeatureBRBE}  }, // 190
-  { "BRBTGT16_EL1", AArch64_SYSREG_BRBTGT16_EL1, "BRBTGT16_EL1", AArch64_SYSREG_BRBTGT16_EL1, 0x8C06, true, false,  {AArch64_FeatureBRBE}  }, // 191
-  { "BRBTGT17_EL1", AArch64_SYSREG_BRBTGT17_EL1, "BRBTGT17_EL1", AArch64_SYSREG_BRBTGT17_EL1, 0x8C0E, true, false,  {AArch64_FeatureBRBE}  }, // 192
-  { "BRBTGT18_EL1", AArch64_SYSREG_BRBTGT18_EL1, "BRBTGT18_EL1", AArch64_SYSREG_BRBTGT18_EL1, 0x8C16, true, false,  {AArch64_FeatureBRBE}  }, // 193
-  { "BRBTGT19_EL1", AArch64_SYSREG_BRBTGT19_EL1, "BRBTGT19_EL1", AArch64_SYSREG_BRBTGT19_EL1, 0x8C1E, true, false,  {AArch64_FeatureBRBE}  }, // 194
-  { "BRBTGT1_EL1", AArch64_SYSREG_BRBTGT1_EL1, "BRBTGT1_EL1", AArch64_SYSREG_BRBTGT1_EL1, 0x8C0A, true, false,  {AArch64_FeatureBRBE}  }, // 195
-  { "BRBTGT20_EL1", AArch64_SYSREG_BRBTGT20_EL1, "BRBTGT20_EL1", AArch64_SYSREG_BRBTGT20_EL1, 0x8C26, true, false,  {AArch64_FeatureBRBE}  }, // 196
-  { "BRBTGT21_EL1", AArch64_SYSREG_BRBTGT21_EL1, "BRBTGT21_EL1", AArch64_SYSREG_BRBTGT21_EL1, 0x8C2E, true, false,  {AArch64_FeatureBRBE}  }, // 197
-  { "BRBTGT22_EL1", AArch64_SYSREG_BRBTGT22_EL1, "BRBTGT22_EL1", AArch64_SYSREG_BRBTGT22_EL1, 0x8C36, true, false,  {AArch64_FeatureBRBE}  }, // 198
-  { "BRBTGT23_EL1", AArch64_SYSREG_BRBTGT23_EL1, "BRBTGT23_EL1", AArch64_SYSREG_BRBTGT23_EL1, 0x8C3E, true, false,  {AArch64_FeatureBRBE}  }, // 199
-  { "BRBTGT24_EL1", AArch64_SYSREG_BRBTGT24_EL1, "BRBTGT24_EL1", AArch64_SYSREG_BRBTGT24_EL1, 0x8C46, true, false,  {AArch64_FeatureBRBE}  }, // 200
-  { "BRBTGT25_EL1", AArch64_SYSREG_BRBTGT25_EL1, "BRBTGT25_EL1", AArch64_SYSREG_BRBTGT25_EL1, 0x8C4E, true, false,  {AArch64_FeatureBRBE}  }, // 201
-  { "BRBTGT26_EL1", AArch64_SYSREG_BRBTGT26_EL1, "BRBTGT26_EL1", AArch64_SYSREG_BRBTGT26_EL1, 0x8C56, true, false,  {AArch64_FeatureBRBE}  }, // 202
-  { "BRBTGT27_EL1", AArch64_SYSREG_BRBTGT27_EL1, "BRBTGT27_EL1", AArch64_SYSREG_BRBTGT27_EL1, 0x8C5E, true, false,  {AArch64_FeatureBRBE}  }, // 203
-  { "BRBTGT28_EL1", AArch64_SYSREG_BRBTGT28_EL1, "BRBTGT28_EL1", AArch64_SYSREG_BRBTGT28_EL1, 0x8C66, true, false,  {AArch64_FeatureBRBE}  }, // 204
-  { "BRBTGT29_EL1", AArch64_SYSREG_BRBTGT29_EL1, "BRBTGT29_EL1", AArch64_SYSREG_BRBTGT29_EL1, 0x8C6E, true, false,  {AArch64_FeatureBRBE}  }, // 205
-  { "BRBTGT2_EL1", AArch64_SYSREG_BRBTGT2_EL1, "BRBTGT2_EL1", AArch64_SYSREG_BRBTGT2_EL1, 0x8C12, true, false,  {AArch64_FeatureBRBE}  }, // 206
-  { "BRBTGT30_EL1", AArch64_SYSREG_BRBTGT30_EL1, "BRBTGT30_EL1", AArch64_SYSREG_BRBTGT30_EL1, 0x8C76, true, false,  {AArch64_FeatureBRBE}  }, // 207
-  { "BRBTGT31_EL1", AArch64_SYSREG_BRBTGT31_EL1, "BRBTGT31_EL1", AArch64_SYSREG_BRBTGT31_EL1, 0x8C7E, true, false,  {AArch64_FeatureBRBE}  }, // 208
-  { "BRBTGT3_EL1", AArch64_SYSREG_BRBTGT3_EL1, "BRBTGT3_EL1", AArch64_SYSREG_BRBTGT3_EL1, 0x8C1A, true, false,  {AArch64_FeatureBRBE}  }, // 209
-  { "BRBTGT4_EL1", AArch64_SYSREG_BRBTGT4_EL1, "BRBTGT4_EL1", AArch64_SYSREG_BRBTGT4_EL1, 0x8C22, true, false,  {AArch64_FeatureBRBE}  }, // 210
-  { "BRBTGT5_EL1", AArch64_SYSREG_BRBTGT5_EL1, "BRBTGT5_EL1", AArch64_SYSREG_BRBTGT5_EL1, 0x8C2A, true, false,  {AArch64_FeatureBRBE}  }, // 211
-  { "BRBTGT6_EL1", AArch64_SYSREG_BRBTGT6_EL1, "BRBTGT6_EL1", AArch64_SYSREG_BRBTGT6_EL1, 0x8C32, true, false,  {AArch64_FeatureBRBE}  }, // 212
-  { "BRBTGT7_EL1", AArch64_SYSREG_BRBTGT7_EL1, "BRBTGT7_EL1", AArch64_SYSREG_BRBTGT7_EL1, 0x8C3A, true, false,  {AArch64_FeatureBRBE}  }, // 213
-  { "BRBTGT8_EL1", AArch64_SYSREG_BRBTGT8_EL1, "BRBTGT8_EL1", AArch64_SYSREG_BRBTGT8_EL1, 0x8C42, true, false,  {AArch64_FeatureBRBE}  }, // 214
-  { "BRBTGT9_EL1", AArch64_SYSREG_BRBTGT9_EL1, "BRBTGT9_EL1", AArch64_SYSREG_BRBTGT9_EL1, 0x8C4A, true, false,  {AArch64_FeatureBRBE}  }, // 215
-  { "BRBTGTINJ_EL1", AArch64_SYSREG_BRBTGTINJ_EL1, "BRBTGTINJ_EL1", AArch64_SYSREG_BRBTGTINJ_EL1, 0x8C8A, true, true,  {AArch64_FeatureBRBE}  }, // 216
-  { "BRBTS_EL1", AArch64_SYSREG_BRBTS_EL1, "BRBTS_EL1", AArch64_SYSREG_BRBTS_EL1, 0x8C82, true, true,  {AArch64_FeatureBRBE}  }, // 217
-  { "CCSIDR2_EL1", AArch64_SYSREG_CCSIDR2_EL1, "CCSIDR2_EL1", AArch64_SYSREG_CCSIDR2_EL1, 0xC802, true, false,  {AArch64_FeatureCCIDX}  }, // 218
-  { "CCSIDR_EL1", AArch64_SYSREG_CCSIDR_EL1, "CCSIDR_EL1", AArch64_SYSREG_CCSIDR_EL1, 0xC800, true, false,  {0}  }, // 219
-  { "CLIDR_EL1", AArch64_SYSREG_CLIDR_EL1, "CLIDR_EL1", AArch64_SYSREG_CLIDR_EL1, 0xC801, true, false,  {0}  }, // 220
-  { "CNTFRQ_EL0", AArch64_SYSREG_CNTFRQ_EL0, "CNTFRQ_EL0", AArch64_SYSREG_CNTFRQ_EL0, 0xDF00, true, true,  {0}  }, // 221
-  { "CNTHCTL_EL2", AArch64_SYSREG_CNTHCTL_EL2, "CNTHCTL_EL2", AArch64_SYSREG_CNTHCTL_EL2, 0xE708, true, true,  {0}  }, // 222
-  { "CNTHPS_CTL_EL2", AArch64_SYSREG_CNTHPS_CTL_EL2, "CNTHPS_CTL_EL2", AArch64_SYSREG_CNTHPS_CTL_EL2, 0xE729, true, true,  {AArch64_FeatureSEL2}  }, // 223
-  { "CNTHPS_CVAL_EL2", AArch64_SYSREG_CNTHPS_CVAL_EL2, "CNTHPS_CVAL_EL2", AArch64_SYSREG_CNTHPS_CVAL_EL2, 0xE72A, true, true,  {AArch64_FeatureSEL2}  }, // 224
-  { "CNTHPS_TVAL_EL2", AArch64_SYSREG_CNTHPS_TVAL_EL2, "CNTHPS_TVAL_EL2", AArch64_SYSREG_CNTHPS_TVAL_EL2, 0xE728, true, true,  {AArch64_FeatureSEL2}  }, // 225
-  { "CNTHP_CTL_EL2", AArch64_SYSREG_CNTHP_CTL_EL2, "CNTHP_CTL_EL2", AArch64_SYSREG_CNTHP_CTL_EL2, 0xE711, true, true,  {0}  }, // 226
-  { "CNTHP_CVAL_EL2", AArch64_SYSREG_CNTHP_CVAL_EL2, "CNTHP_CVAL_EL2", AArch64_SYSREG_CNTHP_CVAL_EL2, 0xE712, true, true,  {0}  }, // 227
-  { "CNTHP_TVAL_EL2", AArch64_SYSREG_CNTHP_TVAL_EL2, "CNTHP_TVAL_EL2", AArch64_SYSREG_CNTHP_TVAL_EL2, 0xE710, true, true,  {0}  }, // 228
-  { "CNTHVS_CTL_EL2", AArch64_SYSREG_CNTHVS_CTL_EL2, "CNTHVS_CTL_EL2", AArch64_SYSREG_CNTHVS_CTL_EL2, 0xE721, true, true,  {AArch64_FeatureSEL2}  }, // 229
-  { "CNTHVS_CVAL_EL2", AArch64_SYSREG_CNTHVS_CVAL_EL2, "CNTHVS_CVAL_EL2", AArch64_SYSREG_CNTHVS_CVAL_EL2, 0xE722, true, true,  {AArch64_FeatureSEL2}  }, // 230
-  { "CNTHVS_TVAL_EL2", AArch64_SYSREG_CNTHVS_TVAL_EL2, "CNTHVS_TVAL_EL2", AArch64_SYSREG_CNTHVS_TVAL_EL2, 0xE720, true, true,  {AArch64_FeatureSEL2}  }, // 231
-  { "CNTHV_CTL_EL2", AArch64_SYSREG_CNTHV_CTL_EL2, "CNTHV_CTL_EL2", AArch64_SYSREG_CNTHV_CTL_EL2, 0xE719, true, true,  {AArch64_FeatureVH}  }, // 232
-  { "CNTHV_CVAL_EL2", AArch64_SYSREG_CNTHV_CVAL_EL2, "CNTHV_CVAL_EL2", AArch64_SYSREG_CNTHV_CVAL_EL2, 0xE71A, true, true,  {AArch64_FeatureVH}  }, // 233
-  { "CNTHV_TVAL_EL2", AArch64_SYSREG_CNTHV_TVAL_EL2, "CNTHV_TVAL_EL2", AArch64_SYSREG_CNTHV_TVAL_EL2, 0xE718, true, true,  {AArch64_FeatureVH}  }, // 234
-  { "CNTISCALE_EL2", AArch64_SYSREG_CNTISCALE_EL2, "CNTISCALE_EL2", AArch64_SYSREG_CNTISCALE_EL2, 0xE705, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 235
-  { "CNTKCTL_EL1", AArch64_SYSREG_CNTKCTL_EL1, "CNTKCTL_EL1", AArch64_SYSREG_CNTKCTL_EL1, 0xC708, true, true,  {0}  }, // 236
-  { "CNTKCTL_EL12", AArch64_SYSREG_CNTKCTL_EL12, "CNTKCTL_EL12", AArch64_SYSREG_CNTKCTL_EL12, 0xEF08, true, true,  {AArch64_FeatureVH}  }, // 237
-  { "CNTPCTSS_EL0", AArch64_SYSREG_CNTPCTSS_EL0, "CNTPCTSS_EL0", AArch64_SYSREG_CNTPCTSS_EL0, 0xDF05, true, false,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 238
-  { "CNTPCT_EL0", AArch64_SYSREG_CNTPCT_EL0, "CNTPCT_EL0", AArch64_SYSREG_CNTPCT_EL0, 0xDF01, true, false,  {0}  }, // 239
-  { "CNTPOFF_EL2", AArch64_SYSREG_CNTPOFF_EL2, "CNTPOFF_EL2", AArch64_SYSREG_CNTPOFF_EL2, 0xE706, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 240
-  { "CNTPS_CTL_EL1", AArch64_SYSREG_CNTPS_CTL_EL1, "CNTPS_CTL_EL1", AArch64_SYSREG_CNTPS_CTL_EL1, 0xFF11, true, true,  {0}  }, // 241
-  { "CNTPS_CVAL_EL1", AArch64_SYSREG_CNTPS_CVAL_EL1, "CNTPS_CVAL_EL1", AArch64_SYSREG_CNTPS_CVAL_EL1, 0xFF12, true, true,  {0}  }, // 242
-  { "CNTPS_TVAL_EL1", AArch64_SYSREG_CNTPS_TVAL_EL1, "CNTPS_TVAL_EL1", AArch64_SYSREG_CNTPS_TVAL_EL1, 0xFF10, true, true,  {0}  }, // 243
-  { "CNTP_CTL_EL0", AArch64_SYSREG_CNTP_CTL_EL0, "CNTP_CTL_EL0", AArch64_SYSREG_CNTP_CTL_EL0, 0xDF11, true, true,  {0}  }, // 244
-  { "CNTP_CTL_EL02", AArch64_SYSREG_CNTP_CTL_EL02, "CNTP_CTL_EL02", AArch64_SYSREG_CNTP_CTL_EL02, 0xEF11, true, true,  {AArch64_FeatureVH}  }, // 245
-  { "CNTP_CVAL_EL0", AArch64_SYSREG_CNTP_CVAL_EL0, "CNTP_CVAL_EL0", AArch64_SYSREG_CNTP_CVAL_EL0, 0xDF12, true, true,  {0}  }, // 246
-  { "CNTP_CVAL_EL02", AArch64_SYSREG_CNTP_CVAL_EL02, "CNTP_CVAL_EL02", AArch64_SYSREG_CNTP_CVAL_EL02, 0xEF12, true, true,  {AArch64_FeatureVH}  }, // 247
-  { "CNTP_TVAL_EL0", AArch64_SYSREG_CNTP_TVAL_EL0, "CNTP_TVAL_EL0", AArch64_SYSREG_CNTP_TVAL_EL0, 0xDF10, true, true,  {0}  }, // 248
-  { "CNTP_TVAL_EL02", AArch64_SYSREG_CNTP_TVAL_EL02, "CNTP_TVAL_EL02", AArch64_SYSREG_CNTP_TVAL_EL02, 0xEF10, true, true,  {AArch64_FeatureVH}  }, // 249
-  { "CNTSCALE_EL2", AArch64_SYSREG_CNTSCALE_EL2, "CNTSCALE_EL2", AArch64_SYSREG_CNTSCALE_EL2, 0xE704, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 250
-  { "CNTVCTSS_EL0", AArch64_SYSREG_CNTVCTSS_EL0, "CNTVCTSS_EL0", AArch64_SYSREG_CNTVCTSS_EL0, 0xDF06, true, false,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 251
-  { "CNTVCT_EL0", AArch64_SYSREG_CNTVCT_EL0, "CNTVCT_EL0", AArch64_SYSREG_CNTVCT_EL0, 0xDF02, true, false,  {0}  }, // 252
-  { "CNTVFRQ_EL2", AArch64_SYSREG_CNTVFRQ_EL2, "CNTVFRQ_EL2", AArch64_SYSREG_CNTVFRQ_EL2, 0xE707, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 253
-  { "CNTVOFF_EL2", AArch64_SYSREG_CNTVOFF_EL2, "CNTVOFF_EL2", AArch64_SYSREG_CNTVOFF_EL2, 0xE703, true, true,  {0}  }, // 254
-  { "CNTV_CTL_EL0", AArch64_SYSREG_CNTV_CTL_EL0, "CNTV_CTL_EL0", AArch64_SYSREG_CNTV_CTL_EL0, 0xDF19, true, true,  {0}  }, // 255
-  { "CNTV_CTL_EL02", AArch64_SYSREG_CNTV_CTL_EL02, "CNTV_CTL_EL02", AArch64_SYSREG_CNTV_CTL_EL02, 0xEF19, true, true,  {AArch64_FeatureVH}  }, // 256
-  { "CNTV_CVAL_EL0", AArch64_SYSREG_CNTV_CVAL_EL0, "CNTV_CVAL_EL0", AArch64_SYSREG_CNTV_CVAL_EL0, 0xDF1A, true, true,  {0}  }, // 257
-  { "CNTV_CVAL_EL02", AArch64_SYSREG_CNTV_CVAL_EL02, "CNTV_CVAL_EL02", AArch64_SYSREG_CNTV_CVAL_EL02, 0xEF1A, true, true,  {AArch64_FeatureVH}  }, // 258
-  { "CNTV_TVAL_EL0", AArch64_SYSREG_CNTV_TVAL_EL0, "CNTV_TVAL_EL0", AArch64_SYSREG_CNTV_TVAL_EL0, 0xDF18, true, true,  {0}  }, // 259
-  { "CNTV_TVAL_EL02", AArch64_SYSREG_CNTV_TVAL_EL02, "CNTV_TVAL_EL02", AArch64_SYSREG_CNTV_TVAL_EL02, 0xEF18, true, true,  {AArch64_FeatureVH}  }, // 260
-  { "CONTEXTIDR_EL1", AArch64_SYSREG_CONTEXTIDR_EL1, "CONTEXTIDR_EL1", AArch64_SYSREG_CONTEXTIDR_EL1, 0xC681, true, true,  {0}  }, // 261
-  { "CONTEXTIDR_EL12", AArch64_SYSREG_CONTEXTIDR_EL12, "CONTEXTIDR_EL12", AArch64_SYSREG_CONTEXTIDR_EL12, 0xEE81, true, true,  {AArch64_FeatureVH}  }, // 262
-  { "CONTEXTIDR_EL2", AArch64_SYSREG_CONTEXTIDR_EL2, "CONTEXTIDR_EL2", AArch64_SYSREG_CONTEXTIDR_EL2, 0xE681, true, true,  {AArch64_FeatureCONTEXTIDREL2}  }, // 263
-  { "CPACR_EL1", AArch64_SYSREG_CPACR_EL1, "CPACR_EL1", AArch64_SYSREG_CPACR_EL1, 0xC082, true, true,  {0}  }, // 264
-  { "CPACR_EL12", AArch64_SYSREG_CPACR_EL12, "CPACR_EL12", AArch64_SYSREG_CPACR_EL12, 0xE882, true, true,  {AArch64_FeatureVH}  }, // 265
-  { "CPM_IOACC_CTL_EL3", AArch64_SYSREG_CPM_IOACC_CTL_EL3, "CPM_IOACC_CTL_EL3", AArch64_SYSREG_CPM_IOACC_CTL_EL3, 0xFF90, true, true,  {AArch64_FeatureAppleA7SysReg}  }, // 266
-  { "CPTR_EL2", AArch64_SYSREG_CPTR_EL2, "CPTR_EL2", AArch64_SYSREG_CPTR_EL2, 0xE08A, true, true,  {0}  }, // 267
-  { "CPTR_EL3", AArch64_SYSREG_CPTR_EL3, "CPTR_EL3", AArch64_SYSREG_CPTR_EL3, 0xF08A, true, true,  {0}  }, // 268
-  { "CSSELR_EL1", AArch64_SYSREG_CSSELR_EL1, "CSSELR_EL1", AArch64_SYSREG_CSSELR_EL1, 0xD000, true, true,  {0}  }, // 269
-  { "CTR_EL0", AArch64_SYSREG_CTR_EL0, "CTR_EL0", AArch64_SYSREG_CTR_EL0, 0xD801, true, false,  {0}  }, // 270
-  { "CurrentEL", AArch64_SYSREG_CURRENTEL, "CurrentEL", AArch64_SYSREG_CURRENTEL, 0xC212, true, false,  {0}  }, // 271
-  { "DACR32_EL2", AArch64_SYSREG_DACR32_EL2, "DACR32_EL2", AArch64_SYSREG_DACR32_EL2, 0xE180, true, true,  {0}  }, // 272
-  { "DAIF", AArch64_SYSREG_DAIF, "DAIF", AArch64_SYSREG_DAIF, 0xDA11, true, true,  {0}  }, // 273
-  { "DBGAUTHSTATUS_EL1", AArch64_SYSREG_DBGAUTHSTATUS_EL1, "DBGAUTHSTATUS_EL1", AArch64_SYSREG_DBGAUTHSTATUS_EL1, 0x83F6, true, false,  {0}  }, // 274
-  { "DBGBCR0_EL1", AArch64_SYSREG_DBGBCR0_EL1, "DBGBCR0_EL1", AArch64_SYSREG_DBGBCR0_EL1, 0x8005, true, true,  {0}  }, // 275
-  { "DBGBCR10_EL1", AArch64_SYSREG_DBGBCR10_EL1, "DBGBCR10_EL1", AArch64_SYSREG_DBGBCR10_EL1, 0x8055, true, true,  {0}  }, // 276
-  { "DBGBCR11_EL1", AArch64_SYSREG_DBGBCR11_EL1, "DBGBCR11_EL1", AArch64_SYSREG_DBGBCR11_EL1, 0x805D, true, true,  {0}  }, // 277
-  { "DBGBCR12_EL1", AArch64_SYSREG_DBGBCR12_EL1, "DBGBCR12_EL1", AArch64_SYSREG_DBGBCR12_EL1, 0x8065, true, true,  {0}  }, // 278
-  { "DBGBCR13_EL1", AArch64_SYSREG_DBGBCR13_EL1, "DBGBCR13_EL1", AArch64_SYSREG_DBGBCR13_EL1, 0x806D, true, true,  {0}  }, // 279
-  { "DBGBCR14_EL1", AArch64_SYSREG_DBGBCR14_EL1, "DBGBCR14_EL1", AArch64_SYSREG_DBGBCR14_EL1, 0x8075, true, true,  {0}  }, // 280
-  { "DBGBCR15_EL1", AArch64_SYSREG_DBGBCR15_EL1, "DBGBCR15_EL1", AArch64_SYSREG_DBGBCR15_EL1, 0x807D, true, true,  {0}  }, // 281
-  { "DBGBCR1_EL1", AArch64_SYSREG_DBGBCR1_EL1, "DBGBCR1_EL1", AArch64_SYSREG_DBGBCR1_EL1, 0x800D, true, true,  {0}  }, // 282
-  { "DBGBCR2_EL1", AArch64_SYSREG_DBGBCR2_EL1, "DBGBCR2_EL1", AArch64_SYSREG_DBGBCR2_EL1, 0x8015, true, true,  {0}  }, // 283
-  { "DBGBCR3_EL1", AArch64_SYSREG_DBGBCR3_EL1, "DBGBCR3_EL1", AArch64_SYSREG_DBGBCR3_EL1, 0x801D, true, true,  {0}  }, // 284
-  { "DBGBCR4_EL1", AArch64_SYSREG_DBGBCR4_EL1, "DBGBCR4_EL1", AArch64_SYSREG_DBGBCR4_EL1, 0x8025, true, true,  {0}  }, // 285
-  { "DBGBCR5_EL1", AArch64_SYSREG_DBGBCR5_EL1, "DBGBCR5_EL1", AArch64_SYSREG_DBGBCR5_EL1, 0x802D, true, true,  {0}  }, // 286
-  { "DBGBCR6_EL1", AArch64_SYSREG_DBGBCR6_EL1, "DBGBCR6_EL1", AArch64_SYSREG_DBGBCR6_EL1, 0x8035, true, true,  {0}  }, // 287
-  { "DBGBCR7_EL1", AArch64_SYSREG_DBGBCR7_EL1, "DBGBCR7_EL1", AArch64_SYSREG_DBGBCR7_EL1, 0x803D, true, true,  {0}  }, // 288
-  { "DBGBCR8_EL1", AArch64_SYSREG_DBGBCR8_EL1, "DBGBCR8_EL1", AArch64_SYSREG_DBGBCR8_EL1, 0x8045, true, true,  {0}  }, // 289
-  { "DBGBCR9_EL1", AArch64_SYSREG_DBGBCR9_EL1, "DBGBCR9_EL1", AArch64_SYSREG_DBGBCR9_EL1, 0x804D, true, true,  {0}  }, // 290
-  { "DBGBVR0_EL1", AArch64_SYSREG_DBGBVR0_EL1, "DBGBVR0_EL1", AArch64_SYSREG_DBGBVR0_EL1, 0x8004, true, true,  {0}  }, // 291
-  { "DBGBVR10_EL1", AArch64_SYSREG_DBGBVR10_EL1, "DBGBVR10_EL1", AArch64_SYSREG_DBGBVR10_EL1, 0x8054, true, true,  {0}  }, // 292
-  { "DBGBVR11_EL1", AArch64_SYSREG_DBGBVR11_EL1, "DBGBVR11_EL1", AArch64_SYSREG_DBGBVR11_EL1, 0x805C, true, true,  {0}  }, // 293
-  { "DBGBVR12_EL1", AArch64_SYSREG_DBGBVR12_EL1, "DBGBVR12_EL1", AArch64_SYSREG_DBGBVR12_EL1, 0x8064, true, true,  {0}  }, // 294
-  { "DBGBVR13_EL1", AArch64_SYSREG_DBGBVR13_EL1, "DBGBVR13_EL1", AArch64_SYSREG_DBGBVR13_EL1, 0x806C, true, true,  {0}  }, // 295
-  { "DBGBVR14_EL1", AArch64_SYSREG_DBGBVR14_EL1, "DBGBVR14_EL1", AArch64_SYSREG_DBGBVR14_EL1, 0x8074, true, true,  {0}  }, // 296
-  { "DBGBVR15_EL1", AArch64_SYSREG_DBGBVR15_EL1, "DBGBVR15_EL1", AArch64_SYSREG_DBGBVR15_EL1, 0x807C, true, true,  {0}  }, // 297
-  { "DBGBVR1_EL1", AArch64_SYSREG_DBGBVR1_EL1, "DBGBVR1_EL1", AArch64_SYSREG_DBGBVR1_EL1, 0x800C, true, true,  {0}  }, // 298
-  { "DBGBVR2_EL1", AArch64_SYSREG_DBGBVR2_EL1, "DBGBVR2_EL1", AArch64_SYSREG_DBGBVR2_EL1, 0x8014, true, true,  {0}  }, // 299
-  { "DBGBVR3_EL1", AArch64_SYSREG_DBGBVR3_EL1, "DBGBVR3_EL1", AArch64_SYSREG_DBGBVR3_EL1, 0x801C, true, true,  {0}  }, // 300
-  { "DBGBVR4_EL1", AArch64_SYSREG_DBGBVR4_EL1, "DBGBVR4_EL1", AArch64_SYSREG_DBGBVR4_EL1, 0x8024, true, true,  {0}  }, // 301
-  { "DBGBVR5_EL1", AArch64_SYSREG_DBGBVR5_EL1, "DBGBVR5_EL1", AArch64_SYSREG_DBGBVR5_EL1, 0x802C, true, true,  {0}  }, // 302
-  { "DBGBVR6_EL1", AArch64_SYSREG_DBGBVR6_EL1, "DBGBVR6_EL1", AArch64_SYSREG_DBGBVR6_EL1, 0x8034, true, true,  {0}  }, // 303
-  { "DBGBVR7_EL1", AArch64_SYSREG_DBGBVR7_EL1, "DBGBVR7_EL1", AArch64_SYSREG_DBGBVR7_EL1, 0x803C, true, true,  {0}  }, // 304
-  { "DBGBVR8_EL1", AArch64_SYSREG_DBGBVR8_EL1, "DBGBVR8_EL1", AArch64_SYSREG_DBGBVR8_EL1, 0x8044, true, true,  {0}  }, // 305
-  { "DBGBVR9_EL1", AArch64_SYSREG_DBGBVR9_EL1, "DBGBVR9_EL1", AArch64_SYSREG_DBGBVR9_EL1, 0x804C, true, true,  {0}  }, // 306
-  { "DBGCLAIMCLR_EL1", AArch64_SYSREG_DBGCLAIMCLR_EL1, "DBGCLAIMCLR_EL1", AArch64_SYSREG_DBGCLAIMCLR_EL1, 0x83CE, true, true,  {0}  }, // 307
-  { "DBGCLAIMSET_EL1", AArch64_SYSREG_DBGCLAIMSET_EL1, "DBGCLAIMSET_EL1", AArch64_SYSREG_DBGCLAIMSET_EL1, 0x83C6, true, true,  {0}  }, // 308
-  { "DBGDTRRX_EL0", AArch64_SYSREG_DBGDTRRX_EL0, "DBGDTRRX_EL0", AArch64_SYSREG_DBGDTRRX_EL0, 0x9828, true, false,  {0}  }, // 309
-  { "DBGDTRTX_EL0", AArch64_SYSREG_DBGDTRTX_EL0, "DBGDTRTX_EL0", AArch64_SYSREG_DBGDTRTX_EL0, 0x9828, false, true,  {0}  }, // 310
-  { "DBGDTR_EL0", AArch64_SYSREG_DBGDTR_EL0, "DBGDTR_EL0", AArch64_SYSREG_DBGDTR_EL0, 0x9820, true, true,  {0}  }, // 311
-  { "DBGPRCR_EL1", AArch64_SYSREG_DBGPRCR_EL1, "DBGPRCR_EL1", AArch64_SYSREG_DBGPRCR_EL1, 0x80A4, true, true,  {0}  }, // 312
-  { "DBGVCR32_EL2", AArch64_SYSREG_DBGVCR32_EL2, "DBGVCR32_EL2", AArch64_SYSREG_DBGVCR32_EL2, 0xA038, true, true,  {0}  }, // 313
-  { "DBGWCR0_EL1", AArch64_SYSREG_DBGWCR0_EL1, "DBGWCR0_EL1", AArch64_SYSREG_DBGWCR0_EL1, 0x8007, true, true,  {0}  }, // 314
-  { "DBGWCR10_EL1", AArch64_SYSREG_DBGWCR10_EL1, "DBGWCR10_EL1", AArch64_SYSREG_DBGWCR10_EL1, 0x8057, true, true,  {0}  }, // 315
-  { "DBGWCR11_EL1", AArch64_SYSREG_DBGWCR11_EL1, "DBGWCR11_EL1", AArch64_SYSREG_DBGWCR11_EL1, 0x805F, true, true,  {0}  }, // 316
-  { "DBGWCR12_EL1", AArch64_SYSREG_DBGWCR12_EL1, "DBGWCR12_EL1", AArch64_SYSREG_DBGWCR12_EL1, 0x8067, true, true,  {0}  }, // 317
-  { "DBGWCR13_EL1", AArch64_SYSREG_DBGWCR13_EL1, "DBGWCR13_EL1", AArch64_SYSREG_DBGWCR13_EL1, 0x806F, true, true,  {0}  }, // 318
-  { "DBGWCR14_EL1", AArch64_SYSREG_DBGWCR14_EL1, "DBGWCR14_EL1", AArch64_SYSREG_DBGWCR14_EL1, 0x8077, true, true,  {0}  }, // 319
-  { "DBGWCR15_EL1", AArch64_SYSREG_DBGWCR15_EL1, "DBGWCR15_EL1", AArch64_SYSREG_DBGWCR15_EL1, 0x807F, true, true,  {0}  }, // 320
-  { "DBGWCR1_EL1", AArch64_SYSREG_DBGWCR1_EL1, "DBGWCR1_EL1", AArch64_SYSREG_DBGWCR1_EL1, 0x800F, true, true,  {0}  }, // 321
-  { "DBGWCR2_EL1", AArch64_SYSREG_DBGWCR2_EL1, "DBGWCR2_EL1", AArch64_SYSREG_DBGWCR2_EL1, 0x8017, true, true,  {0}  }, // 322
-  { "DBGWCR3_EL1", AArch64_SYSREG_DBGWCR3_EL1, "DBGWCR3_EL1", AArch64_SYSREG_DBGWCR3_EL1, 0x801F, true, true,  {0}  }, // 323
-  { "DBGWCR4_EL1", AArch64_SYSREG_DBGWCR4_EL1, "DBGWCR4_EL1", AArch64_SYSREG_DBGWCR4_EL1, 0x8027, true, true,  {0}  }, // 324
-  { "DBGWCR5_EL1", AArch64_SYSREG_DBGWCR5_EL1, "DBGWCR5_EL1", AArch64_SYSREG_DBGWCR5_EL1, 0x802F, true, true,  {0}  }, // 325
-  { "DBGWCR6_EL1", AArch64_SYSREG_DBGWCR6_EL1, "DBGWCR6_EL1", AArch64_SYSREG_DBGWCR6_EL1, 0x8037, true, true,  {0}  }, // 326
-  { "DBGWCR7_EL1", AArch64_SYSREG_DBGWCR7_EL1, "DBGWCR7_EL1", AArch64_SYSREG_DBGWCR7_EL1, 0x803F, true, true,  {0}  }, // 327
-  { "DBGWCR8_EL1", AArch64_SYSREG_DBGWCR8_EL1, "DBGWCR8_EL1", AArch64_SYSREG_DBGWCR8_EL1, 0x8047, true, true,  {0}  }, // 328
-  { "DBGWCR9_EL1", AArch64_SYSREG_DBGWCR9_EL1, "DBGWCR9_EL1", AArch64_SYSREG_DBGWCR9_EL1, 0x804F, true, true,  {0}  }, // 329
-  { "DBGWVR0_EL1", AArch64_SYSREG_DBGWVR0_EL1, "DBGWVR0_EL1", AArch64_SYSREG_DBGWVR0_EL1, 0x8006, true, true,  {0}  }, // 330
-  { "DBGWVR10_EL1", AArch64_SYSREG_DBGWVR10_EL1, "DBGWVR10_EL1", AArch64_SYSREG_DBGWVR10_EL1, 0x8056, true, true,  {0}  }, // 331
-  { "DBGWVR11_EL1", AArch64_SYSREG_DBGWVR11_EL1, "DBGWVR11_EL1", AArch64_SYSREG_DBGWVR11_EL1, 0x805E, true, true,  {0}  }, // 332
-  { "DBGWVR12_EL1", AArch64_SYSREG_DBGWVR12_EL1, "DBGWVR12_EL1", AArch64_SYSREG_DBGWVR12_EL1, 0x8066, true, true,  {0}  }, // 333
-  { "DBGWVR13_EL1", AArch64_SYSREG_DBGWVR13_EL1, "DBGWVR13_EL1", AArch64_SYSREG_DBGWVR13_EL1, 0x806E, true, true,  {0}  }, // 334
-  { "DBGWVR14_EL1", AArch64_SYSREG_DBGWVR14_EL1, "DBGWVR14_EL1", AArch64_SYSREG_DBGWVR14_EL1, 0x8076, true, true,  {0}  }, // 335
-  { "DBGWVR15_EL1", AArch64_SYSREG_DBGWVR15_EL1, "DBGWVR15_EL1", AArch64_SYSREG_DBGWVR15_EL1, 0x807E, true, true,  {0}  }, // 336
-  { "DBGWVR1_EL1", AArch64_SYSREG_DBGWVR1_EL1, "DBGWVR1_EL1", AArch64_SYSREG_DBGWVR1_EL1, 0x800E, true, true,  {0}  }, // 337
-  { "DBGWVR2_EL1", AArch64_SYSREG_DBGWVR2_EL1, "DBGWVR2_EL1", AArch64_SYSREG_DBGWVR2_EL1, 0x8016, true, true,  {0}  }, // 338
-  { "DBGWVR3_EL1", AArch64_SYSREG_DBGWVR3_EL1, "DBGWVR3_EL1", AArch64_SYSREG_DBGWVR3_EL1, 0x801E, true, true,  {0}  }, // 339
-  { "DBGWVR4_EL1", AArch64_SYSREG_DBGWVR4_EL1, "DBGWVR4_EL1", AArch64_SYSREG_DBGWVR4_EL1, 0x8026, true, true,  {0}  }, // 340
-  { "DBGWVR5_EL1", AArch64_SYSREG_DBGWVR5_EL1, "DBGWVR5_EL1", AArch64_SYSREG_DBGWVR5_EL1, 0x802E, true, true,  {0}  }, // 341
-  { "DBGWVR6_EL1", AArch64_SYSREG_DBGWVR6_EL1, "DBGWVR6_EL1", AArch64_SYSREG_DBGWVR6_EL1, 0x8036, true, true,  {0}  }, // 342
-  { "DBGWVR7_EL1", AArch64_SYSREG_DBGWVR7_EL1, "DBGWVR7_EL1", AArch64_SYSREG_DBGWVR7_EL1, 0x803E, true, true,  {0}  }, // 343
-  { "DBGWVR8_EL1", AArch64_SYSREG_DBGWVR8_EL1, "DBGWVR8_EL1", AArch64_SYSREG_DBGWVR8_EL1, 0x8046, true, true,  {0}  }, // 344
-  { "DBGWVR9_EL1", AArch64_SYSREG_DBGWVR9_EL1, "DBGWVR9_EL1", AArch64_SYSREG_DBGWVR9_EL1, 0x804E, true, true,  {0}  }, // 345
-  { "DCZID_EL0", AArch64_SYSREG_DCZID_EL0, "DCZID_EL0", AArch64_SYSREG_DCZID_EL0, 0xD807, true, false,  {0}  }, // 346
-  { "DISR_EL1", AArch64_SYSREG_DISR_EL1, "DISR_EL1", AArch64_SYSREG_DISR_EL1, 0xC609, true, true,  {AArch64_FeatureRAS}  }, // 347
-  { "DIT", AArch64_SYSREG_DIT, "DIT", AArch64_SYSREG_DIT, 0xDA15, true, true,  {AArch64_FeatureDIT}  }, // 348
-  { "DLR_EL0", AArch64_SYSREG_DLR_EL0, "DLR_EL0", AArch64_SYSREG_DLR_EL0, 0xDA29, true, true,  {0}  }, // 349
-  { "DSPSR_EL0", AArch64_SYSREG_DSPSR_EL0, "DSPSR_EL0", AArch64_SYSREG_DSPSR_EL0, 0xDA28, true, true,  {0}  }, // 350
-  { "ELR_EL1", AArch64_SYSREG_ELR_EL1, "ELR_EL1", AArch64_SYSREG_ELR_EL1, 0xC201, true, true,  {0}  }, // 351
-  { "ELR_EL12", AArch64_SYSREG_ELR_EL12, "ELR_EL12", AArch64_SYSREG_ELR_EL12, 0xEA01, true, true,  {AArch64_FeatureVH}  }, // 352
-  { "ELR_EL2", AArch64_SYSREG_ELR_EL2, "ELR_EL2", AArch64_SYSREG_ELR_EL2, 0xE201, true, true,  {0}  }, // 353
-  { "ELR_EL3", AArch64_SYSREG_ELR_EL3, "ELR_EL3", AArch64_SYSREG_ELR_EL3, 0xF201, true, true,  {0}  }, // 354
-  { "ERRIDR_EL1", AArch64_SYSREG_ERRIDR_EL1, "ERRIDR_EL1", AArch64_SYSREG_ERRIDR_EL1, 0xC298, true, false,  {AArch64_FeatureRAS}  }, // 355
-  { "ERRSELR_EL1", AArch64_SYSREG_ERRSELR_EL1, "ERRSELR_EL1", AArch64_SYSREG_ERRSELR_EL1, 0xC299, true, true,  {AArch64_FeatureRAS}  }, // 356
-  { "ERXADDR_EL1", AArch64_SYSREG_ERXADDR_EL1, "ERXADDR_EL1", AArch64_SYSREG_ERXADDR_EL1, 0xC2A3, true, true,  {AArch64_FeatureRAS}  }, // 357
-  { "ERXCTLR_EL1", AArch64_SYSREG_ERXCTLR_EL1, "ERXCTLR_EL1", AArch64_SYSREG_ERXCTLR_EL1, 0xC2A1, true, true,  {AArch64_FeatureRAS}  }, // 358
-  { "ERXFR_EL1", AArch64_SYSREG_ERXFR_EL1, "ERXFR_EL1", AArch64_SYSREG_ERXFR_EL1, 0xC2A0, true, false,  {AArch64_FeatureRAS}  }, // 359
-  { "ERXGSR_EL1", AArch64_SYSREG_ERXGSR_EL1, "ERXGSR_EL1", AArch64_SYSREG_ERXGSR_EL1, 0xC29A, true, false,  {AArch64_FeatureRASv2}  }, // 360
-  { "ERXMISC0_EL1", AArch64_SYSREG_ERXMISC0_EL1, "ERXMISC0_EL1", AArch64_SYSREG_ERXMISC0_EL1, 0xC2A8, true, true,  {AArch64_FeatureRAS}  }, // 361
-  { "ERXMISC1_EL1", AArch64_SYSREG_ERXMISC1_EL1, "ERXMISC1_EL1", AArch64_SYSREG_ERXMISC1_EL1, 0xC2A9, true, true,  {AArch64_FeatureRAS}  }, // 362
-  { "ERXMISC2_EL1", AArch64_SYSREG_ERXMISC2_EL1, "ERXMISC2_EL1", AArch64_SYSREG_ERXMISC2_EL1, 0xC2AA, true, true,  {0}  }, // 363
-  { "ERXMISC3_EL1", AArch64_SYSREG_ERXMISC3_EL1, "ERXMISC3_EL1", AArch64_SYSREG_ERXMISC3_EL1, 0xC2AB, true, true,  {0}  }, // 364
-  { "ERXPFGCDN_EL1", AArch64_SYSREG_ERXPFGCDN_EL1, "ERXPFGCDN_EL1", AArch64_SYSREG_ERXPFGCDN_EL1, 0xC2A6, true, true,  {0}  }, // 365
-  { "ERXPFGCTL_EL1", AArch64_SYSREG_ERXPFGCTL_EL1, "ERXPFGCTL_EL1", AArch64_SYSREG_ERXPFGCTL_EL1, 0xC2A5, true, true,  {0}  }, // 366
-  { "ERXPFGF_EL1", AArch64_SYSREG_ERXPFGF_EL1, "ERXPFGF_EL1", AArch64_SYSREG_ERXPFGF_EL1, 0xC2A4, true, false,  {0}  }, // 367
-  { "ERXSTATUS_EL1", AArch64_SYSREG_ERXSTATUS_EL1, "ERXSTATUS_EL1", AArch64_SYSREG_ERXSTATUS_EL1, 0xC2A2, true, true,  {AArch64_FeatureRAS}  }, // 368
-  { "ESR_EL1", AArch64_SYSREG_ESR_EL1, "ESR_EL1", AArch64_SYSREG_ESR_EL1, 0xC290, true, true,  {0}  }, // 369
-  { "ESR_EL12", AArch64_SYSREG_ESR_EL12, "ESR_EL12", AArch64_SYSREG_ESR_EL12, 0xEA90, true, true,  {AArch64_FeatureVH}  }, // 370
-  { "ESR_EL2", AArch64_SYSREG_ESR_EL2, "ESR_EL2", AArch64_SYSREG_ESR_EL2, 0xE290, true, true,  {0}  }, // 371
-  { "ESR_EL3", AArch64_SYSREG_ESR_EL3, "ESR_EL3", AArch64_SYSREG_ESR_EL3, 0xF290, true, true,  {0}  }, // 372
-  { "FAR_EL1", AArch64_SYSREG_FAR_EL1, "FAR_EL1", AArch64_SYSREG_FAR_EL1, 0xC300, true, true,  {0}  }, // 373
-  { "FAR_EL12", AArch64_SYSREG_FAR_EL12, "FAR_EL12", AArch64_SYSREG_FAR_EL12, 0xEB00, true, true,  {AArch64_FeatureVH}  }, // 374
-  { "FAR_EL2", AArch64_SYSREG_FAR_EL2, "FAR_EL2", AArch64_SYSREG_FAR_EL2, 0xE300, true, true,  {0}  }, // 375
-  { "FAR_EL3", AArch64_SYSREG_FAR_EL3, "FAR_EL3", AArch64_SYSREG_FAR_EL3, 0xF300, true, true,  {0}  }, // 376
-  { "FPCR", AArch64_SYSREG_FPCR, "FPCR", AArch64_SYSREG_FPCR, 0xDA20, true, true,  {0}  }, // 377
-  { "FPEXC32_EL2", AArch64_SYSREG_FPEXC32_EL2, "FPEXC32_EL2", AArch64_SYSREG_FPEXC32_EL2, 0xE298, true, true,  {0}  }, // 378
-  { "FPSR", AArch64_SYSREG_FPSR, "FPSR", AArch64_SYSREG_FPSR, 0xDA21, true, true,  {0}  }, // 379
-  { "GCR_EL1", AArch64_SYSREG_GCR_EL1, "GCR_EL1", AArch64_SYSREG_GCR_EL1, 0xC086, true, true,  {AArch64_FeatureMTE}  }, // 380
-  { "GMID_EL1", AArch64_SYSREG_GMID_EL1, "GMID_EL1", AArch64_SYSREG_GMID_EL1, 0xC804, true, false,  {AArch64_FeatureMTE}  }, // 381
-  { "GPCCR_EL3", AArch64_SYSREG_GPCCR_EL3, "GPCCR_EL3", AArch64_SYSREG_GPCCR_EL3, 0xF10E, true, true,  {AArch64_FeatureRME}  }, // 382
-  { "GPTBR_EL3", AArch64_SYSREG_GPTBR_EL3, "GPTBR_EL3", AArch64_SYSREG_GPTBR_EL3, 0xF10C, true, true,  {AArch64_FeatureRME}  }, // 383
-  { "HACR_EL2", AArch64_SYSREG_HACR_EL2, "HACR_EL2", AArch64_SYSREG_HACR_EL2, 0xE08F, true, true,  {0}  }, // 384
-  { "HAFGRTR_EL2", AArch64_SYSREG_HAFGRTR_EL2, "HAFGRTR_EL2", AArch64_SYSREG_HAFGRTR_EL2, 0xE18E, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 385
-  { "HCRX_EL2", AArch64_SYSREG_HCRX_EL2, "HCRX_EL2", AArch64_SYSREG_HCRX_EL2, 0xE092, true, true,  {AArch64_FeatureHCX}  }, // 386
-  { "HCR_EL2", AArch64_SYSREG_HCR_EL2, "HCR_EL2", AArch64_SYSREG_HCR_EL2, 0xE088, true, true,  {0}  }, // 387
-  { "HDFGRTR2_EL2", AArch64_SYSREG_HDFGRTR2_EL2, "HDFGRTR2_EL2", AArch64_SYSREG_HDFGRTR2_EL2, 0xE188, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 388
-  { "HDFGRTR_EL2", AArch64_SYSREG_HDFGRTR_EL2, "HDFGRTR_EL2", AArch64_SYSREG_HDFGRTR_EL2, 0xE18C, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 389
-  { "HDFGWTR2_EL2", AArch64_SYSREG_HDFGWTR2_EL2, "HDFGWTR2_EL2", AArch64_SYSREG_HDFGWTR2_EL2, 0xE189, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 390
-  { "HDFGWTR_EL2", AArch64_SYSREG_HDFGWTR_EL2, "HDFGWTR_EL2", AArch64_SYSREG_HDFGWTR_EL2, 0xE18D, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 391
-  { "HFGITR2_EL2", AArch64_SYSREG_HFGITR2_EL2, "HFGITR2_EL2", AArch64_SYSREG_HFGITR2_EL2, 0xE18F, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 392
-  { "HFGITR_EL2", AArch64_SYSREG_HFGITR_EL2, "HFGITR_EL2", AArch64_SYSREG_HFGITR_EL2, 0xE08E, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 393
-  { "HFGRTR2_EL2", AArch64_SYSREG_HFGRTR2_EL2, "HFGRTR2_EL2", AArch64_SYSREG_HFGRTR2_EL2, 0xE18A, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 394
-  { "HFGRTR_EL2", AArch64_SYSREG_HFGRTR_EL2, "HFGRTR_EL2", AArch64_SYSREG_HFGRTR_EL2, 0xE08C, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 395
-  { "HFGWTR2_EL2", AArch64_SYSREG_HFGWTR2_EL2, "HFGWTR2_EL2", AArch64_SYSREG_HFGWTR2_EL2, 0xE18B, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 396
-  { "HFGWTR_EL2", AArch64_SYSREG_HFGWTR_EL2, "HFGWTR_EL2", AArch64_SYSREG_HFGWTR_EL2, 0xE08D, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 397
-  { "HPFAR_EL2", AArch64_SYSREG_HPFAR_EL2, "HPFAR_EL2", AArch64_SYSREG_HPFAR_EL2, 0xE304, true, true,  {0}  }, // 398
-  { "HSTR_EL2", AArch64_SYSREG_HSTR_EL2, "HSTR_EL2", AArch64_SYSREG_HSTR_EL2, 0xE08B, true, true,  {0}  }, // 399
-  { "ICC_AP0R0_EL1", AArch64_SYSREG_ICC_AP0R0_EL1, "ICC_AP0R0_EL1", AArch64_SYSREG_ICC_AP0R0_EL1, 0xC644, true, true,  {0}  }, // 400
-  { "ICC_AP0R1_EL1", AArch64_SYSREG_ICC_AP0R1_EL1, "ICC_AP0R1_EL1", AArch64_SYSREG_ICC_AP0R1_EL1, 0xC645, true, true,  {0}  }, // 401
-  { "ICC_AP0R2_EL1", AArch64_SYSREG_ICC_AP0R2_EL1, "ICC_AP0R2_EL1", AArch64_SYSREG_ICC_AP0R2_EL1, 0xC646, true, true,  {0}  }, // 402
-  { "ICC_AP0R3_EL1", AArch64_SYSREG_ICC_AP0R3_EL1, "ICC_AP0R3_EL1", AArch64_SYSREG_ICC_AP0R3_EL1, 0xC647, true, true,  {0}  }, // 403
-  { "ICC_AP1R0_EL1", AArch64_SYSREG_ICC_AP1R0_EL1, "ICC_AP1R0_EL1", AArch64_SYSREG_ICC_AP1R0_EL1, 0xC648, true, true,  {0}  }, // 404
-  { "ICC_AP1R1_EL1", AArch64_SYSREG_ICC_AP1R1_EL1, "ICC_AP1R1_EL1", AArch64_SYSREG_ICC_AP1R1_EL1, 0xC649, true, true,  {0}  }, // 405
-  { "ICC_AP1R2_EL1", AArch64_SYSREG_ICC_AP1R2_EL1, "ICC_AP1R2_EL1", AArch64_SYSREG_ICC_AP1R2_EL1, 0xC64A, true, true,  {0}  }, // 406
-  { "ICC_AP1R3_EL1", AArch64_SYSREG_ICC_AP1R3_EL1, "ICC_AP1R3_EL1", AArch64_SYSREG_ICC_AP1R3_EL1, 0xC64B, true, true,  {0}  }, // 407
-  { "ICC_ASGI1R_EL1", AArch64_SYSREG_ICC_ASGI1R_EL1, "ICC_ASGI1R_EL1", AArch64_SYSREG_ICC_ASGI1R_EL1, 0xC65E, false, true,  {0}  }, // 408
-  { "ICC_BPR0_EL1", AArch64_SYSREG_ICC_BPR0_EL1, "ICC_BPR0_EL1", AArch64_SYSREG_ICC_BPR0_EL1, 0xC643, true, true,  {0}  }, // 409
-  { "ICC_BPR1_EL1", AArch64_SYSREG_ICC_BPR1_EL1, "ICC_BPR1_EL1", AArch64_SYSREG_ICC_BPR1_EL1, 0xC663, true, true,  {0}  }, // 410
-  { "ICC_CTLR_EL1", AArch64_SYSREG_ICC_CTLR_EL1, "ICC_CTLR_EL1", AArch64_SYSREG_ICC_CTLR_EL1, 0xC664, true, true,  {0}  }, // 411
-  { "ICC_CTLR_EL3", AArch64_SYSREG_ICC_CTLR_EL3, "ICC_CTLR_EL3", AArch64_SYSREG_ICC_CTLR_EL3, 0xF664, true, true,  {0}  }, // 412
-  { "ICC_DIR_EL1", AArch64_SYSREG_ICC_DIR_EL1, "ICC_DIR_EL1", AArch64_SYSREG_ICC_DIR_EL1, 0xC659, false, true,  {0}  }, // 413
-  { "ICC_EOIR0_EL1", AArch64_SYSREG_ICC_EOIR0_EL1, "ICC_EOIR0_EL1", AArch64_SYSREG_ICC_EOIR0_EL1, 0xC641, false, true,  {0}  }, // 414
-  { "ICC_EOIR1_EL1", AArch64_SYSREG_ICC_EOIR1_EL1, "ICC_EOIR1_EL1", AArch64_SYSREG_ICC_EOIR1_EL1, 0xC661, false, true,  {0}  }, // 415
-  { "ICC_HPPIR0_EL1", AArch64_SYSREG_ICC_HPPIR0_EL1, "ICC_HPPIR0_EL1", AArch64_SYSREG_ICC_HPPIR0_EL1, 0xC642, true, false,  {0}  }, // 416
-  { "ICC_HPPIR1_EL1", AArch64_SYSREG_ICC_HPPIR1_EL1, "ICC_HPPIR1_EL1", AArch64_SYSREG_ICC_HPPIR1_EL1, 0xC662, true, false,  {0}  }, // 417
-  { "ICC_IAR0_EL1", AArch64_SYSREG_ICC_IAR0_EL1, "ICC_IAR0_EL1", AArch64_SYSREG_ICC_IAR0_EL1, 0xC640, true, false,  {0}  }, // 418
-  { "ICC_IAR1_EL1", AArch64_SYSREG_ICC_IAR1_EL1, "ICC_IAR1_EL1", AArch64_SYSREG_ICC_IAR1_EL1, 0xC660, true, false,  {0}  }, // 419
-  { "ICC_IGRPEN0_EL1", AArch64_SYSREG_ICC_IGRPEN0_EL1, "ICC_IGRPEN0_EL1", AArch64_SYSREG_ICC_IGRPEN0_EL1, 0xC666, true, true,  {0}  }, // 420
-  { "ICC_IGRPEN1_EL1", AArch64_SYSREG_ICC_IGRPEN1_EL1, "ICC_IGRPEN1_EL1", AArch64_SYSREG_ICC_IGRPEN1_EL1, 0xC667, true, true,  {0}  }, // 421
-  { "ICC_IGRPEN1_EL3", AArch64_SYSREG_ICC_IGRPEN1_EL3, "ICC_IGRPEN1_EL3", AArch64_SYSREG_ICC_IGRPEN1_EL3, 0xF667, true, true,  {0}  }, // 422
-  { "ICC_NMIAR1_EL1", AArch64_SYSREG_ICC_NMIAR1_EL1, "ICC_NMIAR1_EL1", AArch64_SYSREG_ICC_NMIAR1_EL1, 0xC64D, true, false,  {AArch64_FeatureNMI}  }, // 423
-  { "ICC_PMR_EL1", AArch64_SYSREG_ICC_PMR_EL1, "ICC_PMR_EL1", AArch64_SYSREG_ICC_PMR_EL1, 0xC230, true, true,  {0}  }, // 424
-  { "ICC_RPR_EL1", AArch64_SYSREG_ICC_RPR_EL1, "ICC_RPR_EL1", AArch64_SYSREG_ICC_RPR_EL1, 0xC65B, true, false,  {0}  }, // 425
-  { "ICC_SGI0R_EL1", AArch64_SYSREG_ICC_SGI0R_EL1, "ICC_SGI0R_EL1", AArch64_SYSREG_ICC_SGI0R_EL1, 0xC65F, false, true,  {0}  }, // 426
-  { "ICC_SGI1R_EL1", AArch64_SYSREG_ICC_SGI1R_EL1, "ICC_SGI1R_EL1", AArch64_SYSREG_ICC_SGI1R_EL1, 0xC65D, false, true,  {0}  }, // 427
-  { "ICC_SRE_EL1", AArch64_SYSREG_ICC_SRE_EL1, "ICC_SRE_EL1", AArch64_SYSREG_ICC_SRE_EL1, 0xC665, true, true,  {0}  }, // 428
-  { "ICC_SRE_EL2", AArch64_SYSREG_ICC_SRE_EL2, "ICC_SRE_EL2", AArch64_SYSREG_ICC_SRE_EL2, 0xE64D, true, true,  {0}  }, // 429
-  { "ICC_SRE_EL3", AArch64_SYSREG_ICC_SRE_EL3, "ICC_SRE_EL3", AArch64_SYSREG_ICC_SRE_EL3, 0xF665, true, true,  {0}  }, // 430
-  { "ICH_AP0R0_EL2", AArch64_SYSREG_ICH_AP0R0_EL2, "ICH_AP0R0_EL2", AArch64_SYSREG_ICH_AP0R0_EL2, 0xE640, true, true,  {0}  }, // 431
-  { "ICH_AP0R1_EL2", AArch64_SYSREG_ICH_AP0R1_EL2, "ICH_AP0R1_EL2", AArch64_SYSREG_ICH_AP0R1_EL2, 0xE641, true, true,  {0}  }, // 432
-  { "ICH_AP0R2_EL2", AArch64_SYSREG_ICH_AP0R2_EL2, "ICH_AP0R2_EL2", AArch64_SYSREG_ICH_AP0R2_EL2, 0xE642, true, true,  {0}  }, // 433
-  { "ICH_AP0R3_EL2", AArch64_SYSREG_ICH_AP0R3_EL2, "ICH_AP0R3_EL2", AArch64_SYSREG_ICH_AP0R3_EL2, 0xE643, true, true,  {0}  }, // 434
-  { "ICH_AP1R0_EL2", AArch64_SYSREG_ICH_AP1R0_EL2, "ICH_AP1R0_EL2", AArch64_SYSREG_ICH_AP1R0_EL2, 0xE648, true, true,  {0}  }, // 435
-  { "ICH_AP1R1_EL2", AArch64_SYSREG_ICH_AP1R1_EL2, "ICH_AP1R1_EL2", AArch64_SYSREG_ICH_AP1R1_EL2, 0xE649, true, true,  {0}  }, // 436
-  { "ICH_AP1R2_EL2", AArch64_SYSREG_ICH_AP1R2_EL2, "ICH_AP1R2_EL2", AArch64_SYSREG_ICH_AP1R2_EL2, 0xE64A, true, true,  {0}  }, // 437
-  { "ICH_AP1R3_EL2", AArch64_SYSREG_ICH_AP1R3_EL2, "ICH_AP1R3_EL2", AArch64_SYSREG_ICH_AP1R3_EL2, 0xE64B, true, true,  {0}  }, // 438
-  { "ICH_EISR_EL2", AArch64_SYSREG_ICH_EISR_EL2, "ICH_EISR_EL2", AArch64_SYSREG_ICH_EISR_EL2, 0xE65B, true, false,  {0}  }, // 439
-  { "ICH_ELRSR_EL2", AArch64_SYSREG_ICH_ELRSR_EL2, "ICH_ELRSR_EL2", AArch64_SYSREG_ICH_ELRSR_EL2, 0xE65D, true, false,  {0}  }, // 440
-  { "ICH_HCR_EL2", AArch64_SYSREG_ICH_HCR_EL2, "ICH_HCR_EL2", AArch64_SYSREG_ICH_HCR_EL2, 0xE658, true, true,  {0}  }, // 441
-  { "ICH_LR0_EL2", AArch64_SYSREG_ICH_LR0_EL2, "ICH_LR0_EL2", AArch64_SYSREG_ICH_LR0_EL2, 0xE660, true, true,  {0}  }, // 442
-  { "ICH_LR10_EL2", AArch64_SYSREG_ICH_LR10_EL2, "ICH_LR10_EL2", AArch64_SYSREG_ICH_LR10_EL2, 0xE66A, true, true,  {0}  }, // 443
-  { "ICH_LR11_EL2", AArch64_SYSREG_ICH_LR11_EL2, "ICH_LR11_EL2", AArch64_SYSREG_ICH_LR11_EL2, 0xE66B, true, true,  {0}  }, // 444
-  { "ICH_LR12_EL2", AArch64_SYSREG_ICH_LR12_EL2, "ICH_LR12_EL2", AArch64_SYSREG_ICH_LR12_EL2, 0xE66C, true, true,  {0}  }, // 445
-  { "ICH_LR13_EL2", AArch64_SYSREG_ICH_LR13_EL2, "ICH_LR13_EL2", AArch64_SYSREG_ICH_LR13_EL2, 0xE66D, true, true,  {0}  }, // 446
-  { "ICH_LR14_EL2", AArch64_SYSREG_ICH_LR14_EL2, "ICH_LR14_EL2", AArch64_SYSREG_ICH_LR14_EL2, 0xE66E, true, true,  {0}  }, // 447
-  { "ICH_LR15_EL2", AArch64_SYSREG_ICH_LR15_EL2, "ICH_LR15_EL2", AArch64_SYSREG_ICH_LR15_EL2, 0xE66F, true, true,  {0}  }, // 448
-  { "ICH_LR1_EL2", AArch64_SYSREG_ICH_LR1_EL2, "ICH_LR1_EL2", AArch64_SYSREG_ICH_LR1_EL2, 0xE661, true, true,  {0}  }, // 449
-  { "ICH_LR2_EL2", AArch64_SYSREG_ICH_LR2_EL2, "ICH_LR2_EL2", AArch64_SYSREG_ICH_LR2_EL2, 0xE662, true, true,  {0}  }, // 450
-  { "ICH_LR3_EL2", AArch64_SYSREG_ICH_LR3_EL2, "ICH_LR3_EL2", AArch64_SYSREG_ICH_LR3_EL2, 0xE663, true, true,  {0}  }, // 451
-  { "ICH_LR4_EL2", AArch64_SYSREG_ICH_LR4_EL2, "ICH_LR4_EL2", AArch64_SYSREG_ICH_LR4_EL2, 0xE664, true, true,  {0}  }, // 452
-  { "ICH_LR5_EL2", AArch64_SYSREG_ICH_LR5_EL2, "ICH_LR5_EL2", AArch64_SYSREG_ICH_LR5_EL2, 0xE665, true, true,  {0}  }, // 453
-  { "ICH_LR6_EL2", AArch64_SYSREG_ICH_LR6_EL2, "ICH_LR6_EL2", AArch64_SYSREG_ICH_LR6_EL2, 0xE666, true, true,  {0}  }, // 454
-  { "ICH_LR7_EL2", AArch64_SYSREG_ICH_LR7_EL2, "ICH_LR7_EL2", AArch64_SYSREG_ICH_LR7_EL2, 0xE667, true, true,  {0}  }, // 455
-  { "ICH_LR8_EL2", AArch64_SYSREG_ICH_LR8_EL2, "ICH_LR8_EL2", AArch64_SYSREG_ICH_LR8_EL2, 0xE668, true, true,  {0}  }, // 456
-  { "ICH_LR9_EL2", AArch64_SYSREG_ICH_LR9_EL2, "ICH_LR9_EL2", AArch64_SYSREG_ICH_LR9_EL2, 0xE669, true, true,  {0}  }, // 457
-  { "ICH_MISR_EL2", AArch64_SYSREG_ICH_MISR_EL2, "ICH_MISR_EL2", AArch64_SYSREG_ICH_MISR_EL2, 0xE65A, true, false,  {0}  }, // 458
-  { "ICH_VMCR_EL2", AArch64_SYSREG_ICH_VMCR_EL2, "ICH_VMCR_EL2", AArch64_SYSREG_ICH_VMCR_EL2, 0xE65F, true, true,  {0}  }, // 459
-  { "ICH_VTR_EL2", AArch64_SYSREG_ICH_VTR_EL2, "ICH_VTR_EL2", AArch64_SYSREG_ICH_VTR_EL2, 0xE659, true, false,  {0}  }, // 460
-  { "ID_AA64AFR0_EL1", AArch64_SYSREG_ID_AA64AFR0_EL1, "ID_AA64AFR0_EL1", AArch64_SYSREG_ID_AA64AFR0_EL1, 0xC02C, true, false,  {0}  }, // 461
-  { "ID_AA64AFR1_EL1", AArch64_SYSREG_ID_AA64AFR1_EL1, "ID_AA64AFR1_EL1", AArch64_SYSREG_ID_AA64AFR1_EL1, 0xC02D, true, false,  {0}  }, // 462
-  { "ID_AA64DFR0_EL1", AArch64_SYSREG_ID_AA64DFR0_EL1, "ID_AA64DFR0_EL1", AArch64_SYSREG_ID_AA64DFR0_EL1, 0xC028, true, false,  {0}  }, // 463
-  { "ID_AA64DFR1_EL1", AArch64_SYSREG_ID_AA64DFR1_EL1, "ID_AA64DFR1_EL1", AArch64_SYSREG_ID_AA64DFR1_EL1, 0xC029, true, false,  {0}  }, // 464
-  { "ID_AA64ISAR0_EL1", AArch64_SYSREG_ID_AA64ISAR0_EL1, "ID_AA64ISAR0_EL1", AArch64_SYSREG_ID_AA64ISAR0_EL1, 0xC030, true, false,  {0}  }, // 465
-  { "ID_AA64ISAR1_EL1", AArch64_SYSREG_ID_AA64ISAR1_EL1, "ID_AA64ISAR1_EL1", AArch64_SYSREG_ID_AA64ISAR1_EL1, 0xC031, true, false,  {0}  }, // 466
-  { "ID_AA64ISAR2_EL1", AArch64_SYSREG_ID_AA64ISAR2_EL1, "ID_AA64ISAR2_EL1", AArch64_SYSREG_ID_AA64ISAR2_EL1, 0xC032, true, false,  {0}  }, // 467
-  { "ID_AA64MMFR0_EL1", AArch64_SYSREG_ID_AA64MMFR0_EL1, "ID_AA64MMFR0_EL1", AArch64_SYSREG_ID_AA64MMFR0_EL1, 0xC038, true, false,  {0}  }, // 468
-  { "ID_AA64MMFR1_EL1", AArch64_SYSREG_ID_AA64MMFR1_EL1, "ID_AA64MMFR1_EL1", AArch64_SYSREG_ID_AA64MMFR1_EL1, 0xC039, true, false,  {0}  }, // 469
-  { "ID_AA64MMFR2_EL1", AArch64_SYSREG_ID_AA64MMFR2_EL1, "ID_AA64MMFR2_EL1", AArch64_SYSREG_ID_AA64MMFR2_EL1, 0xC03A, true, false,  {0}  }, // 470
-  { "ID_AA64MMFR3_EL1", AArch64_SYSREG_ID_AA64MMFR3_EL1, "ID_AA64MMFR3_EL1", AArch64_SYSREG_ID_AA64MMFR3_EL1, 0xC03B, true, false,  {0}  }, // 471
-  { "ID_AA64MMFR4_EL1", AArch64_SYSREG_ID_AA64MMFR4_EL1, "ID_AA64MMFR4_EL1", AArch64_SYSREG_ID_AA64MMFR4_EL1, 0xC03C, true, false,  {0}  }, // 472
-  { "ID_AA64PFR0_EL1", AArch64_SYSREG_ID_AA64PFR0_EL1, "ID_AA64PFR0_EL1", AArch64_SYSREG_ID_AA64PFR0_EL1, 0xC020, true, false,  {0}  }, // 473
-  { "ID_AA64PFR1_EL1", AArch64_SYSREG_ID_AA64PFR1_EL1, "ID_AA64PFR1_EL1", AArch64_SYSREG_ID_AA64PFR1_EL1, 0xC021, true, false,  {0}  }, // 474
-  { "ID_AA64PFR2_EL1", AArch64_SYSREG_ID_AA64PFR2_EL1, "ID_AA64PFR2_EL1", AArch64_SYSREG_ID_AA64PFR2_EL1, 0xC022, true, false,  {0}  }, // 475
-  { "ID_AA64SMFR0_EL1", AArch64_SYSREG_ID_AA64SMFR0_EL1, "ID_AA64SMFR0_EL1", AArch64_SYSREG_ID_AA64SMFR0_EL1, 0xC025, true, false,  {AArch64_FeatureSME}  }, // 476
-  { "ID_AA64ZFR0_EL1", AArch64_SYSREG_ID_AA64ZFR0_EL1, "ID_AA64ZFR0_EL1", AArch64_SYSREG_ID_AA64ZFR0_EL1, 0xC024, true, false,  {AArch64_FeatureSVE}  }, // 477
-  { "ID_AFR0_EL1", AArch64_SYSREG_ID_AFR0_EL1, "ID_AFR0_EL1", AArch64_SYSREG_ID_AFR0_EL1, 0xC00B, true, false,  {0}  }, // 478
-  { "ID_DFR0_EL1", AArch64_SYSREG_ID_DFR0_EL1, "ID_DFR0_EL1", AArch64_SYSREG_ID_DFR0_EL1, 0xC00A, true, false,  {0}  }, // 479
-  { "ID_DFR1_EL1", AArch64_SYSREG_ID_DFR1_EL1, "ID_DFR1_EL1", AArch64_SYSREG_ID_DFR1_EL1, 0xC01D, true, false,  {0}  }, // 480
-  { "ID_ISAR0_EL1", AArch64_SYSREG_ID_ISAR0_EL1, "ID_ISAR0_EL1", AArch64_SYSREG_ID_ISAR0_EL1, 0xC010, true, false,  {0}  }, // 481
-  { "ID_ISAR1_EL1", AArch64_SYSREG_ID_ISAR1_EL1, "ID_ISAR1_EL1", AArch64_SYSREG_ID_ISAR1_EL1, 0xC011, true, false,  {0}  }, // 482
-  { "ID_ISAR2_EL1", AArch64_SYSREG_ID_ISAR2_EL1, "ID_ISAR2_EL1", AArch64_SYSREG_ID_ISAR2_EL1, 0xC012, true, false,  {0}  }, // 483
-  { "ID_ISAR3_EL1", AArch64_SYSREG_ID_ISAR3_EL1, "ID_ISAR3_EL1", AArch64_SYSREG_ID_ISAR3_EL1, 0xC013, true, false,  {0}  }, // 484
-  { "ID_ISAR4_EL1", AArch64_SYSREG_ID_ISAR4_EL1, "ID_ISAR4_EL1", AArch64_SYSREG_ID_ISAR4_EL1, 0xC014, true, false,  {0}  }, // 485
-  { "ID_ISAR5_EL1", AArch64_SYSREG_ID_ISAR5_EL1, "ID_ISAR5_EL1", AArch64_SYSREG_ID_ISAR5_EL1, 0xC015, true, false,  {0}  }, // 486
-  { "ID_ISAR6_EL1", AArch64_SYSREG_ID_ISAR6_EL1, "ID_ISAR6_EL1", AArch64_SYSREG_ID_ISAR6_EL1, 0xC017, true, false,  {AArch64_HasV8_2aOps}  }, // 487
-  { "ID_MMFR0_EL1", AArch64_SYSREG_ID_MMFR0_EL1, "ID_MMFR0_EL1", AArch64_SYSREG_ID_MMFR0_EL1, 0xC00C, true, false,  {0}  }, // 488
-  { "ID_MMFR1_EL1", AArch64_SYSREG_ID_MMFR1_EL1, "ID_MMFR1_EL1", AArch64_SYSREG_ID_MMFR1_EL1, 0xC00D, true, false,  {0}  }, // 489
-  { "ID_MMFR2_EL1", AArch64_SYSREG_ID_MMFR2_EL1, "ID_MMFR2_EL1", AArch64_SYSREG_ID_MMFR2_EL1, 0xC00E, true, false,  {0}  }, // 490
-  { "ID_MMFR3_EL1", AArch64_SYSREG_ID_MMFR3_EL1, "ID_MMFR3_EL1", AArch64_SYSREG_ID_MMFR3_EL1, 0xC00F, true, false,  {0}  }, // 491
-  { "ID_MMFR4_EL1", AArch64_SYSREG_ID_MMFR4_EL1, "ID_MMFR4_EL1", AArch64_SYSREG_ID_MMFR4_EL1, 0xC016, true, false,  {0}  }, // 492
-  { "ID_MMFR5_EL1", AArch64_SYSREG_ID_MMFR5_EL1, "ID_MMFR5_EL1", AArch64_SYSREG_ID_MMFR5_EL1, 0xC01E, true, false,  {0}  }, // 493
-  { "ID_PFR0_EL1", AArch64_SYSREG_ID_PFR0_EL1, "ID_PFR0_EL1", AArch64_SYSREG_ID_PFR0_EL1, 0xC008, true, false,  {0}  }, // 494
-  { "ID_PFR1_EL1", AArch64_SYSREG_ID_PFR1_EL1, "ID_PFR1_EL1", AArch64_SYSREG_ID_PFR1_EL1, 0xC009, true, false,  {0}  }, // 495
-  { "ID_PFR2_EL1", AArch64_SYSREG_ID_PFR2_EL1, "ID_PFR2_EL1", AArch64_SYSREG_ID_PFR2_EL1, 0xC01C, true, false,  {AArch64_FeatureSpecRestrict}  }, // 496
-  { "IFSR32_EL2", AArch64_SYSREG_IFSR32_EL2, "IFSR32_EL2", AArch64_SYSREG_IFSR32_EL2, 0xE281, true, true,  {0}  }, // 497
-  { "ISR_EL1", AArch64_SYSREG_ISR_EL1, "ISR_EL1", AArch64_SYSREG_ISR_EL1, 0xC608, true, false,  {0}  }, // 498
-  { "LORC_EL1", AArch64_SYSREG_LORC_EL1, "LORC_EL1", AArch64_SYSREG_LORC_EL1, 0xC523, true, true,  {AArch64_FeatureLOR}  }, // 499
-  { "LOREA_EL1", AArch64_SYSREG_LOREA_EL1, "LOREA_EL1", AArch64_SYSREG_LOREA_EL1, 0xC521, true, true,  {AArch64_FeatureLOR}  }, // 500
-  { "LORID_EL1", AArch64_SYSREG_LORID_EL1, "LORID_EL1", AArch64_SYSREG_LORID_EL1, 0xC527, true, false,  {AArch64_FeatureLOR}  }, // 501
-  { "LORN_EL1", AArch64_SYSREG_LORN_EL1, "LORN_EL1", AArch64_SYSREG_LORN_EL1, 0xC522, true, true,  {AArch64_FeatureLOR}  }, // 502
-  { "LORSA_EL1", AArch64_SYSREG_LORSA_EL1, "LORSA_EL1", AArch64_SYSREG_LORSA_EL1, 0xC520, true, true,  {AArch64_FeatureLOR}  }, // 503
-  { "MAIR2_EL1", AArch64_SYSREG_MAIR2_EL1, "MAIR2_EL1", AArch64_SYSREG_MAIR2_EL1, 0xC511, true, true,  {0}  }, // 504
-  { "MAIR2_EL12", AArch64_SYSREG_MAIR2_EL12, "MAIR2_EL12", AArch64_SYSREG_MAIR2_EL12, 0xED11, true, true,  {0}  }, // 505
-  { "MAIR2_EL2", AArch64_SYSREG_MAIR2_EL2, "MAIR2_EL2", AArch64_SYSREG_MAIR2_EL2, 0xE509, true, true,  {0}  }, // 506
-  { "MAIR2_EL3", AArch64_SYSREG_MAIR2_EL3, "MAIR2_EL3", AArch64_SYSREG_MAIR2_EL3, 0xF509, true, true,  {0}  }, // 507
-  { "MAIR_EL1", AArch64_SYSREG_MAIR_EL1, "MAIR_EL1", AArch64_SYSREG_MAIR_EL1, 0xC510, true, true,  {0}  }, // 508
-  { "MAIR_EL12", AArch64_SYSREG_MAIR_EL12, "MAIR_EL12", AArch64_SYSREG_MAIR_EL12, 0xED10, true, true,  {AArch64_FeatureVH}  }, // 509
-  { "MAIR_EL2", AArch64_SYSREG_MAIR_EL2, "MAIR_EL2", AArch64_SYSREG_MAIR_EL2, 0xE510, true, true,  {0}  }, // 510
-  { "MAIR_EL3", AArch64_SYSREG_MAIR_EL3, "MAIR_EL3", AArch64_SYSREG_MAIR_EL3, 0xF510, true, true,  {0}  }, // 511
-  { "MDCCINT_EL1", AArch64_SYSREG_MDCCINT_EL1, "MDCCINT_EL1", AArch64_SYSREG_MDCCINT_EL1, 0x8010, true, true,  {0}  }, // 512
-  { "MDCCSR_EL0", AArch64_SYSREG_MDCCSR_EL0, "MDCCSR_EL0", AArch64_SYSREG_MDCCSR_EL0, 0x9808, true, false,  {0}  }, // 513
-  { "MDCR_EL2", AArch64_SYSREG_MDCR_EL2, "MDCR_EL2", AArch64_SYSREG_MDCR_EL2, 0xE089, true, true,  {0}  }, // 514
-  { "MDCR_EL3", AArch64_SYSREG_MDCR_EL3, "MDCR_EL3", AArch64_SYSREG_MDCR_EL3, 0xF099, true, true,  {0}  }, // 515
-  { "MDRAR_EL1", AArch64_SYSREG_MDRAR_EL1, "MDRAR_EL1", AArch64_SYSREG_MDRAR_EL1, 0x8080, true, false,  {0}  }, // 516
-  { "MDSCR_EL1", AArch64_SYSREG_MDSCR_EL1, "MDSCR_EL1", AArch64_SYSREG_MDSCR_EL1, 0x8012, true, true,  {0}  }, // 517
-  { "MDSELR_EL1", AArch64_SYSREG_MDSELR_EL1, "MDSELR_EL1", AArch64_SYSREG_MDSELR_EL1, 0x8022, true, true,  {0}  }, // 518
-  { "MECIDR_EL2", AArch64_SYSREG_MECIDR_EL2, "MECIDR_EL2", AArch64_SYSREG_MECIDR_EL2, 0xE547, true, false,  {AArch64_FeatureMEC}  }, // 519
-  { "MECID_A0_EL2", AArch64_SYSREG_MECID_A0_EL2, "MECID_A0_EL2", AArch64_SYSREG_MECID_A0_EL2, 0xE541, true, true,  {AArch64_FeatureMEC}  }, // 520
-  { "MECID_A1_EL2", AArch64_SYSREG_MECID_A1_EL2, "MECID_A1_EL2", AArch64_SYSREG_MECID_A1_EL2, 0xE543, true, true,  {AArch64_FeatureMEC}  }, // 521
-  { "MECID_P0_EL2", AArch64_SYSREG_MECID_P0_EL2, "MECID_P0_EL2", AArch64_SYSREG_MECID_P0_EL2, 0xE540, true, true,  {AArch64_FeatureMEC}  }, // 522
-  { "MECID_P1_EL2", AArch64_SYSREG_MECID_P1_EL2, "MECID_P1_EL2", AArch64_SYSREG_MECID_P1_EL2, 0xE542, true, true,  {AArch64_FeatureMEC}  }, // 523
-  { "MECID_RL_A_EL3", AArch64_SYSREG_MECID_RL_A_EL3, "MECID_RL_A_EL3", AArch64_SYSREG_MECID_RL_A_EL3, 0xF551, true, true,  {AArch64_FeatureMEC}  }, // 524
-  { "MFAR_EL3", AArch64_SYSREG_MFAR_EL3, "MFAR_EL3", AArch64_SYSREG_MFAR_EL3, 0xF305, true, true,  {0}  }, // 525
-  { "MIDR_EL1", AArch64_SYSREG_MIDR_EL1, "MIDR_EL1", AArch64_SYSREG_MIDR_EL1, 0xC000, true, false,  {0}  }, // 526
-  { "MPAM0_EL1", AArch64_SYSREG_MPAM0_EL1, "MPAM0_EL1", AArch64_SYSREG_MPAM0_EL1, 0xC529, true, true,  {AArch64_FeatureMPAM}  }, // 527
-  { "MPAM1_EL1", AArch64_SYSREG_MPAM1_EL1, "MPAM1_EL1", AArch64_SYSREG_MPAM1_EL1, 0xC528, true, true,  {AArch64_FeatureMPAM}  }, // 528
-  { "MPAM1_EL12", AArch64_SYSREG_MPAM1_EL12, "MPAM1_EL12", AArch64_SYSREG_MPAM1_EL12, 0xED28, true, true,  {AArch64_FeatureMPAM}  }, // 529
-  { "MPAM2_EL2", AArch64_SYSREG_MPAM2_EL2, "MPAM2_EL2", AArch64_SYSREG_MPAM2_EL2, 0xE528, true, true,  {AArch64_FeatureMPAM}  }, // 530
-  { "MPAM3_EL3", AArch64_SYSREG_MPAM3_EL3, "MPAM3_EL3", AArch64_SYSREG_MPAM3_EL3, 0xF528, true, true,  {AArch64_FeatureMPAM}  }, // 531
-  { "MPAMHCR_EL2", AArch64_SYSREG_MPAMHCR_EL2, "MPAMHCR_EL2", AArch64_SYSREG_MPAMHCR_EL2, 0xE520, true, true,  {AArch64_FeatureMPAM}  }, // 532
-  { "MPAMIDR_EL1", AArch64_SYSREG_MPAMIDR_EL1, "MPAMIDR_EL1", AArch64_SYSREG_MPAMIDR_EL1, 0xC524, true, false,  {AArch64_FeatureMPAM}  }, // 533
-  { "MPAMSM_EL1", AArch64_SYSREG_MPAMSM_EL1, "MPAMSM_EL1", AArch64_SYSREG_MPAMSM_EL1, 0xC52B, true, true,  {AArch64_FeatureMPAM, AArch64_FeatureSME}  }, // 534
-  { "MPAMVPM0_EL2", AArch64_SYSREG_MPAMVPM0_EL2, "MPAMVPM0_EL2", AArch64_SYSREG_MPAMVPM0_EL2, 0xE530, true, true,  {AArch64_FeatureMPAM}  }, // 535
-  { "MPAMVPM1_EL2", AArch64_SYSREG_MPAMVPM1_EL2, "MPAMVPM1_EL2", AArch64_SYSREG_MPAMVPM1_EL2, 0xE531, true, true,  {AArch64_FeatureMPAM}  }, // 536
-  { "MPAMVPM2_EL2", AArch64_SYSREG_MPAMVPM2_EL2, "MPAMVPM2_EL2", AArch64_SYSREG_MPAMVPM2_EL2, 0xE532, true, true,  {AArch64_FeatureMPAM}  }, // 537
-  { "MPAMVPM3_EL2", AArch64_SYSREG_MPAMVPM3_EL2, "MPAMVPM3_EL2", AArch64_SYSREG_MPAMVPM3_EL2, 0xE533, true, true,  {AArch64_FeatureMPAM}  }, // 538
-  { "MPAMVPM4_EL2", AArch64_SYSREG_MPAMVPM4_EL2, "MPAMVPM4_EL2", AArch64_SYSREG_MPAMVPM4_EL2, 0xE534, true, true,  {AArch64_FeatureMPAM}  }, // 539
-  { "MPAMVPM5_EL2", AArch64_SYSREG_MPAMVPM5_EL2, "MPAMVPM5_EL2", AArch64_SYSREG_MPAMVPM5_EL2, 0xE535, true, true,  {AArch64_FeatureMPAM}  }, // 540
-  { "MPAMVPM6_EL2", AArch64_SYSREG_MPAMVPM6_EL2, "MPAMVPM6_EL2", AArch64_SYSREG_MPAMVPM6_EL2, 0xE536, true, true,  {AArch64_FeatureMPAM}  }, // 541
-  { "MPAMVPM7_EL2", AArch64_SYSREG_MPAMVPM7_EL2, "MPAMVPM7_EL2", AArch64_SYSREG_MPAMVPM7_EL2, 0xE537, true, true,  {AArch64_FeatureMPAM}  }, // 542
-  { "MPAMVPMV_EL2", AArch64_SYSREG_MPAMVPMV_EL2, "MPAMVPMV_EL2", AArch64_SYSREG_MPAMVPMV_EL2, 0xE521, true, true,  {AArch64_FeatureMPAM}  }, // 543
-  { "MPIDR_EL1", AArch64_SYSREG_MPIDR_EL1, "MPIDR_EL1", AArch64_SYSREG_MPIDR_EL1, 0xC005, true, false,  {0}  }, // 544
-  { "MPUIR_EL1", AArch64_SYSREG_MPUIR_EL1, "MPUIR_EL1", AArch64_SYSREG_MPUIR_EL1, 0xC004, true, true,  {AArch64_HasV8_0rOps}  }, // 545
-  { "MPUIR_EL2", AArch64_SYSREG_MPUIR_EL2, "MPUIR_EL2", AArch64_SYSREG_MPUIR_EL2, 0xE004, true, true,  {AArch64_HasV8_0rOps}  }, // 546
-  { "MVFR0_EL1", AArch64_SYSREG_MVFR0_EL1, "MVFR0_EL1", AArch64_SYSREG_MVFR0_EL1, 0xC018, true, false,  {0}  }, // 547
-  { "MVFR1_EL1", AArch64_SYSREG_MVFR1_EL1, "MVFR1_EL1", AArch64_SYSREG_MVFR1_EL1, 0xC019, true, false,  {0}  }, // 548
-  { "MVFR2_EL1", AArch64_SYSREG_MVFR2_EL1, "MVFR2_EL1", AArch64_SYSREG_MVFR2_EL1, 0xC01A, true, false,  {0}  }, // 549
-  { "NZCV", AArch64_SYSREG_NZCV, "NZCV", AArch64_SYSREG_NZCV, 0xDA10, true, true,  {0}  }, // 550
-  { "OSDLR_EL1", AArch64_SYSREG_OSDLR_EL1, "OSDLR_EL1", AArch64_SYSREG_OSDLR_EL1, 0x809C, true, true,  {0}  }, // 551
-  { "OSDTRRX_EL1", AArch64_SYSREG_OSDTRRX_EL1, "OSDTRRX_EL1", AArch64_SYSREG_OSDTRRX_EL1, 0x8002, true, true,  {0}  }, // 552
-  { "OSDTRTX_EL1", AArch64_SYSREG_OSDTRTX_EL1, "OSDTRTX_EL1", AArch64_SYSREG_OSDTRTX_EL1, 0x801A, true, true,  {0}  }, // 553
-  { "OSECCR_EL1", AArch64_SYSREG_OSECCR_EL1, "OSECCR_EL1", AArch64_SYSREG_OSECCR_EL1, 0x8032, true, true,  {0}  }, // 554
-  { "OSLAR_EL1", AArch64_SYSREG_OSLAR_EL1, "OSLAR_EL1", AArch64_SYSREG_OSLAR_EL1, 0x8084, false, true,  {0}  }, // 555
-  { "OSLSR_EL1", AArch64_SYSREG_OSLSR_EL1, "OSLSR_EL1", AArch64_SYSREG_OSLSR_EL1, 0x808C, true, false,  {0}  }, // 556
-  { "PAN", AArch64_SYSREG_PAN, "PAN", AArch64_SYSREG_PAN, 0xC213, true, true,  {AArch64_FeaturePAN}  }, // 557
-  { "PAR_EL1", AArch64_SYSREG_PAR_EL1, "PAR_EL1", AArch64_SYSREG_PAR_EL1, 0xC3A0, true, true,  {0}  }, // 558
-  { "PFAR_EL1", AArch64_SYSREG_PFAR_EL1, "PFAR_EL1", AArch64_SYSREG_PFAR_EL1, 0xC305, true, true,  {0}  }, // 559
-  { "PFAR_EL12", AArch64_SYSREG_PFAR_EL12, "PFAR_EL12", AArch64_SYSREG_PFAR_EL12, 0xEB05, true, true,  {0}  }, // 560
-  { "PFAR_EL2", AArch64_SYSREG_PFAR_EL2, "PFAR_EL2", AArch64_SYSREG_PFAR_EL2, 0xE305, true, true,  {0}  }, // 561
-  { "PIRE0_EL1", AArch64_SYSREG_PIRE0_EL1, "PIRE0_EL1", AArch64_SYSREG_PIRE0_EL1, 0xC512, true, true,  {0}  }, // 562
-  { "PIRE0_EL12", AArch64_SYSREG_PIRE0_EL12, "PIRE0_EL12", AArch64_SYSREG_PIRE0_EL12, 0xED12, true, true,  {0}  }, // 563
-  { "PIRE0_EL2", AArch64_SYSREG_PIRE0_EL2, "PIRE0_EL2", AArch64_SYSREG_PIRE0_EL2, 0xE512, true, true,  {0}  }, // 564
-  { "PIR_EL1", AArch64_SYSREG_PIR_EL1, "PIR_EL1", AArch64_SYSREG_PIR_EL1, 0xC513, true, true,  {0}  }, // 565
-  { "PIR_EL12", AArch64_SYSREG_PIR_EL12, "PIR_EL12", AArch64_SYSREG_PIR_EL12, 0xED13, true, true,  {0}  }, // 566
-  { "PIR_EL2", AArch64_SYSREG_PIR_EL2, "PIR_EL2", AArch64_SYSREG_PIR_EL2, 0xE513, true, true,  {0}  }, // 567
-  { "PIR_EL3", AArch64_SYSREG_PIR_EL3, "PIR_EL3", AArch64_SYSREG_PIR_EL3, 0xF513, true, true,  {0}  }, // 568
-  { "PM", AArch64_SYSREG_PM, "PM", AArch64_SYSREG_PM, 0xC219, true, true,  {0}  }, // 569
-  { "PMBIDR_EL1", AArch64_SYSREG_PMBIDR_EL1, "PMBIDR_EL1", AArch64_SYSREG_PMBIDR_EL1, 0xC4D7, true, false,  {AArch64_FeatureSPE}  }, // 570
-  { "PMBLIMITR_EL1", AArch64_SYSREG_PMBLIMITR_EL1, "PMBLIMITR_EL1", AArch64_SYSREG_PMBLIMITR_EL1, 0xC4D0, true, true,  {AArch64_FeatureSPE}  }, // 571
-  { "PMBPTR_EL1", AArch64_SYSREG_PMBPTR_EL1, "PMBPTR_EL1", AArch64_SYSREG_PMBPTR_EL1, 0xC4D1, true, true,  {AArch64_FeatureSPE}  }, // 572
-  { "PMBSR_EL1", AArch64_SYSREG_PMBSR_EL1, "PMBSR_EL1", AArch64_SYSREG_PMBSR_EL1, 0xC4D3, true, true,  {AArch64_FeatureSPE}  }, // 573
-  { "PMCCFILTR_EL0", AArch64_SYSREG_PMCCFILTR_EL0, "PMCCFILTR_EL0", AArch64_SYSREG_PMCCFILTR_EL0, 0xDF7F, true, true,  {0}  }, // 574
-  { "PMCCNTR_EL0", AArch64_SYSREG_PMCCNTR_EL0, "PMCCNTR_EL0", AArch64_SYSREG_PMCCNTR_EL0, 0xDCE8, true, true,  {0}  }, // 575
-  { "PMCCNTSVR_EL1", AArch64_SYSREG_PMCCNTSVR_EL1, "PMCCNTSVR_EL1", AArch64_SYSREG_PMCCNTSVR_EL1, 0x875F, true, false,  {0}  }, // 576
-  { "PMCEID0_EL0", AArch64_SYSREG_PMCEID0_EL0, "PMCEID0_EL0", AArch64_SYSREG_PMCEID0_EL0, 0xDCE6, true, false,  {0}  }, // 577
-  { "PMCEID1_EL0", AArch64_SYSREG_PMCEID1_EL0, "PMCEID1_EL0", AArch64_SYSREG_PMCEID1_EL0, 0xDCE7, true, false,  {0}  }, // 578
-  { "PMCNTENCLR_EL0", AArch64_SYSREG_PMCNTENCLR_EL0, "PMCNTENCLR_EL0", AArch64_SYSREG_PMCNTENCLR_EL0, 0xDCE2, true, true,  {0}  }, // 579
-  { "PMCNTENSET_EL0", AArch64_SYSREG_PMCNTENSET_EL0, "PMCNTENSET_EL0", AArch64_SYSREG_PMCNTENSET_EL0, 0xDCE1, true, true,  {0}  }, // 580
-  { "PMCR_EL0", AArch64_SYSREG_PMCR_EL0, "PMCR_EL0", AArch64_SYSREG_PMCR_EL0, 0xDCE0, true, true,  {0}  }, // 581
-  { "PMECR_EL1", AArch64_SYSREG_PMECR_EL1, "PMECR_EL1", AArch64_SYSREG_PMECR_EL1, 0xC4F5, true, true,  {0}  }, // 582
-  { "PMEVCNTR0_EL0", AArch64_SYSREG_PMEVCNTR0_EL0, "PMEVCNTR0_EL0", AArch64_SYSREG_PMEVCNTR0_EL0, 0xDF40, true, true,  {0}  }, // 583
-  { "PMEVCNTR10_EL0", AArch64_SYSREG_PMEVCNTR10_EL0, "PMEVCNTR10_EL0", AArch64_SYSREG_PMEVCNTR10_EL0, 0xDF4A, true, true,  {0}  }, // 584
-  { "PMEVCNTR11_EL0", AArch64_SYSREG_PMEVCNTR11_EL0, "PMEVCNTR11_EL0", AArch64_SYSREG_PMEVCNTR11_EL0, 0xDF4B, true, true,  {0}  }, // 585
-  { "PMEVCNTR12_EL0", AArch64_SYSREG_PMEVCNTR12_EL0, "PMEVCNTR12_EL0", AArch64_SYSREG_PMEVCNTR12_EL0, 0xDF4C, true, true,  {0}  }, // 586
-  { "PMEVCNTR13_EL0", AArch64_SYSREG_PMEVCNTR13_EL0, "PMEVCNTR13_EL0", AArch64_SYSREG_PMEVCNTR13_EL0, 0xDF4D, true, true,  {0}  }, // 587
-  { "PMEVCNTR14_EL0", AArch64_SYSREG_PMEVCNTR14_EL0, "PMEVCNTR14_EL0", AArch64_SYSREG_PMEVCNTR14_EL0, 0xDF4E, true, true,  {0}  }, // 588
-  { "PMEVCNTR15_EL0", AArch64_SYSREG_PMEVCNTR15_EL0, "PMEVCNTR15_EL0", AArch64_SYSREG_PMEVCNTR15_EL0, 0xDF4F, true, true,  {0}  }, // 589
-  { "PMEVCNTR16_EL0", AArch64_SYSREG_PMEVCNTR16_EL0, "PMEVCNTR16_EL0", AArch64_SYSREG_PMEVCNTR16_EL0, 0xDF50, true, true,  {0}  }, // 590
-  { "PMEVCNTR17_EL0", AArch64_SYSREG_PMEVCNTR17_EL0, "PMEVCNTR17_EL0", AArch64_SYSREG_PMEVCNTR17_EL0, 0xDF51, true, true,  {0}  }, // 591
-  { "PMEVCNTR18_EL0", AArch64_SYSREG_PMEVCNTR18_EL0, "PMEVCNTR18_EL0", AArch64_SYSREG_PMEVCNTR18_EL0, 0xDF52, true, true,  {0}  }, // 592
-  { "PMEVCNTR19_EL0", AArch64_SYSREG_PMEVCNTR19_EL0, "PMEVCNTR19_EL0", AArch64_SYSREG_PMEVCNTR19_EL0, 0xDF53, true, true,  {0}  }, // 593
-  { "PMEVCNTR1_EL0", AArch64_SYSREG_PMEVCNTR1_EL0, "PMEVCNTR1_EL0", AArch64_SYSREG_PMEVCNTR1_EL0, 0xDF41, true, true,  {0}  }, // 594
-  { "PMEVCNTR20_EL0", AArch64_SYSREG_PMEVCNTR20_EL0, "PMEVCNTR20_EL0", AArch64_SYSREG_PMEVCNTR20_EL0, 0xDF54, true, true,  {0}  }, // 595
-  { "PMEVCNTR21_EL0", AArch64_SYSREG_PMEVCNTR21_EL0, "PMEVCNTR21_EL0", AArch64_SYSREG_PMEVCNTR21_EL0, 0xDF55, true, true,  {0}  }, // 596
-  { "PMEVCNTR22_EL0", AArch64_SYSREG_PMEVCNTR22_EL0, "PMEVCNTR22_EL0", AArch64_SYSREG_PMEVCNTR22_EL0, 0xDF56, true, true,  {0}  }, // 597
-  { "PMEVCNTR23_EL0", AArch64_SYSREG_PMEVCNTR23_EL0, "PMEVCNTR23_EL0", AArch64_SYSREG_PMEVCNTR23_EL0, 0xDF57, true, true,  {0}  }, // 598
-  { "PMEVCNTR24_EL0", AArch64_SYSREG_PMEVCNTR24_EL0, "PMEVCNTR24_EL0", AArch64_SYSREG_PMEVCNTR24_EL0, 0xDF58, true, true,  {0}  }, // 599
-  { "PMEVCNTR25_EL0", AArch64_SYSREG_PMEVCNTR25_EL0, "PMEVCNTR25_EL0", AArch64_SYSREG_PMEVCNTR25_EL0, 0xDF59, true, true,  {0}  }, // 600
-  { "PMEVCNTR26_EL0", AArch64_SYSREG_PMEVCNTR26_EL0, "PMEVCNTR26_EL0", AArch64_SYSREG_PMEVCNTR26_EL0, 0xDF5A, true, true,  {0}  }, // 601
-  { "PMEVCNTR27_EL0", AArch64_SYSREG_PMEVCNTR27_EL0, "PMEVCNTR27_EL0", AArch64_SYSREG_PMEVCNTR27_EL0, 0xDF5B, true, true,  {0}  }, // 602
-  { "PMEVCNTR28_EL0", AArch64_SYSREG_PMEVCNTR28_EL0, "PMEVCNTR28_EL0", AArch64_SYSREG_PMEVCNTR28_EL0, 0xDF5C, true, true,  {0}  }, // 603
-  { "PMEVCNTR29_EL0", AArch64_SYSREG_PMEVCNTR29_EL0, "PMEVCNTR29_EL0", AArch64_SYSREG_PMEVCNTR29_EL0, 0xDF5D, true, true,  {0}  }, // 604
-  { "PMEVCNTR2_EL0", AArch64_SYSREG_PMEVCNTR2_EL0, "PMEVCNTR2_EL0", AArch64_SYSREG_PMEVCNTR2_EL0, 0xDF42, true, true,  {0}  }, // 605
-  { "PMEVCNTR30_EL0", AArch64_SYSREG_PMEVCNTR30_EL0, "PMEVCNTR30_EL0", AArch64_SYSREG_PMEVCNTR30_EL0, 0xDF5E, true, true,  {0}  }, // 606
-  { "PMEVCNTR3_EL0", AArch64_SYSREG_PMEVCNTR3_EL0, "PMEVCNTR3_EL0", AArch64_SYSREG_PMEVCNTR3_EL0, 0xDF43, true, true,  {0}  }, // 607
-  { "PMEVCNTR4_EL0", AArch64_SYSREG_PMEVCNTR4_EL0, "PMEVCNTR4_EL0", AArch64_SYSREG_PMEVCNTR4_EL0, 0xDF44, true, true,  {0}  }, // 608
-  { "PMEVCNTR5_EL0", AArch64_SYSREG_PMEVCNTR5_EL0, "PMEVCNTR5_EL0", AArch64_SYSREG_PMEVCNTR5_EL0, 0xDF45, true, true,  {0}  }, // 609
-  { "PMEVCNTR6_EL0", AArch64_SYSREG_PMEVCNTR6_EL0, "PMEVCNTR6_EL0", AArch64_SYSREG_PMEVCNTR6_EL0, 0xDF46, true, true,  {0}  }, // 610
-  { "PMEVCNTR7_EL0", AArch64_SYSREG_PMEVCNTR7_EL0, "PMEVCNTR7_EL0", AArch64_SYSREG_PMEVCNTR7_EL0, 0xDF47, true, true,  {0}  }, // 611
-  { "PMEVCNTR8_EL0", AArch64_SYSREG_PMEVCNTR8_EL0, "PMEVCNTR8_EL0", AArch64_SYSREG_PMEVCNTR8_EL0, 0xDF48, true, true,  {0}  }, // 612
-  { "PMEVCNTR9_EL0", AArch64_SYSREG_PMEVCNTR9_EL0, "PMEVCNTR9_EL0", AArch64_SYSREG_PMEVCNTR9_EL0, 0xDF49, true, true,  {0}  }, // 613
-  { "PMEVCNTSVR0_EL1", AArch64_SYSREG_PMEVCNTSVR0_EL1, "PMEVCNTSVR0_EL1", AArch64_SYSREG_PMEVCNTSVR0_EL1, 0x8740, true, false,  {0}  }, // 614
-  { "PMEVCNTSVR10_EL1", AArch64_SYSREG_PMEVCNTSVR10_EL1, "PMEVCNTSVR10_EL1", AArch64_SYSREG_PMEVCNTSVR10_EL1, 0x874A, true, false,  {0}  }, // 615
-  { "PMEVCNTSVR11_EL1", AArch64_SYSREG_PMEVCNTSVR11_EL1, "PMEVCNTSVR11_EL1", AArch64_SYSREG_PMEVCNTSVR11_EL1, 0x874B, true, false,  {0}  }, // 616
-  { "PMEVCNTSVR12_EL1", AArch64_SYSREG_PMEVCNTSVR12_EL1, "PMEVCNTSVR12_EL1", AArch64_SYSREG_PMEVCNTSVR12_EL1, 0x874C, true, false,  {0}  }, // 617
-  { "PMEVCNTSVR13_EL1", AArch64_SYSREG_PMEVCNTSVR13_EL1, "PMEVCNTSVR13_EL1", AArch64_SYSREG_PMEVCNTSVR13_EL1, 0x874D, true, false,  {0}  }, // 618
-  { "PMEVCNTSVR14_EL1", AArch64_SYSREG_PMEVCNTSVR14_EL1, "PMEVCNTSVR14_EL1", AArch64_SYSREG_PMEVCNTSVR14_EL1, 0x874E, true, false,  {0}  }, // 619
-  { "PMEVCNTSVR15_EL1", AArch64_SYSREG_PMEVCNTSVR15_EL1, "PMEVCNTSVR15_EL1", AArch64_SYSREG_PMEVCNTSVR15_EL1, 0x874F, true, false,  {0}  }, // 620
-  { "PMEVCNTSVR16_EL1", AArch64_SYSREG_PMEVCNTSVR16_EL1, "PMEVCNTSVR16_EL1", AArch64_SYSREG_PMEVCNTSVR16_EL1, 0x8750, true, false,  {0}  }, // 621
-  { "PMEVCNTSVR17_EL1", AArch64_SYSREG_PMEVCNTSVR17_EL1, "PMEVCNTSVR17_EL1", AArch64_SYSREG_PMEVCNTSVR17_EL1, 0x8751, true, false,  {0}  }, // 622
-  { "PMEVCNTSVR18_EL1", AArch64_SYSREG_PMEVCNTSVR18_EL1, "PMEVCNTSVR18_EL1", AArch64_SYSREG_PMEVCNTSVR18_EL1, 0x8752, true, false,  {0}  }, // 623
-  { "PMEVCNTSVR19_EL1", AArch64_SYSREG_PMEVCNTSVR19_EL1, "PMEVCNTSVR19_EL1", AArch64_SYSREG_PMEVCNTSVR19_EL1, 0x8753, true, false,  {0}  }, // 624
-  { "PMEVCNTSVR1_EL1", AArch64_SYSREG_PMEVCNTSVR1_EL1, "PMEVCNTSVR1_EL1", AArch64_SYSREG_PMEVCNTSVR1_EL1, 0x8741, true, false,  {0}  }, // 625
-  { "PMEVCNTSVR20_EL1", AArch64_SYSREG_PMEVCNTSVR20_EL1, "PMEVCNTSVR20_EL1", AArch64_SYSREG_PMEVCNTSVR20_EL1, 0x8754, true, false,  {0}  }, // 626
-  { "PMEVCNTSVR21_EL1", AArch64_SYSREG_PMEVCNTSVR21_EL1, "PMEVCNTSVR21_EL1", AArch64_SYSREG_PMEVCNTSVR21_EL1, 0x8755, true, false,  {0}  }, // 627
-  { "PMEVCNTSVR22_EL1", AArch64_SYSREG_PMEVCNTSVR22_EL1, "PMEVCNTSVR22_EL1", AArch64_SYSREG_PMEVCNTSVR22_EL1, 0x8756, true, false,  {0}  }, // 628
-  { "PMEVCNTSVR23_EL1", AArch64_SYSREG_PMEVCNTSVR23_EL1, "PMEVCNTSVR23_EL1", AArch64_SYSREG_PMEVCNTSVR23_EL1, 0x8757, true, false,  {0}  }, // 629
-  { "PMEVCNTSVR24_EL1", AArch64_SYSREG_PMEVCNTSVR24_EL1, "PMEVCNTSVR24_EL1", AArch64_SYSREG_PMEVCNTSVR24_EL1, 0x8758, true, false,  {0}  }, // 630
-  { "PMEVCNTSVR25_EL1", AArch64_SYSREG_PMEVCNTSVR25_EL1, "PMEVCNTSVR25_EL1", AArch64_SYSREG_PMEVCNTSVR25_EL1, 0x8759, true, false,  {0}  }, // 631
-  { "PMEVCNTSVR26_EL1", AArch64_SYSREG_PMEVCNTSVR26_EL1, "PMEVCNTSVR26_EL1", AArch64_SYSREG_PMEVCNTSVR26_EL1, 0x875A, true, false,  {0}  }, // 632
-  { "PMEVCNTSVR27_EL1", AArch64_SYSREG_PMEVCNTSVR27_EL1, "PMEVCNTSVR27_EL1", AArch64_SYSREG_PMEVCNTSVR27_EL1, 0x875B, true, false,  {0}  }, // 633
-  { "PMEVCNTSVR28_EL1", AArch64_SYSREG_PMEVCNTSVR28_EL1, "PMEVCNTSVR28_EL1", AArch64_SYSREG_PMEVCNTSVR28_EL1, 0x875C, true, false,  {0}  }, // 634
-  { "PMEVCNTSVR29_EL1", AArch64_SYSREG_PMEVCNTSVR29_EL1, "PMEVCNTSVR29_EL1", AArch64_SYSREG_PMEVCNTSVR29_EL1, 0x875D, true, false,  {0}  }, // 635
-  { "PMEVCNTSVR2_EL1", AArch64_SYSREG_PMEVCNTSVR2_EL1, "PMEVCNTSVR2_EL1", AArch64_SYSREG_PMEVCNTSVR2_EL1, 0x8742, true, false,  {0}  }, // 636
-  { "PMEVCNTSVR30_EL1", AArch64_SYSREG_PMEVCNTSVR30_EL1, "PMEVCNTSVR30_EL1", AArch64_SYSREG_PMEVCNTSVR30_EL1, 0x875E, true, false,  {0}  }, // 637
-  { "PMEVCNTSVR3_EL1", AArch64_SYSREG_PMEVCNTSVR3_EL1, "PMEVCNTSVR3_EL1", AArch64_SYSREG_PMEVCNTSVR3_EL1, 0x8743, true, false,  {0}  }, // 638
-  { "PMEVCNTSVR4_EL1", AArch64_SYSREG_PMEVCNTSVR4_EL1, "PMEVCNTSVR4_EL1", AArch64_SYSREG_PMEVCNTSVR4_EL1, 0x8744, true, false,  {0}  }, // 639
-  { "PMEVCNTSVR5_EL1", AArch64_SYSREG_PMEVCNTSVR5_EL1, "PMEVCNTSVR5_EL1", AArch64_SYSREG_PMEVCNTSVR5_EL1, 0x8745, true, false,  {0}  }, // 640
-  { "PMEVCNTSVR6_EL1", AArch64_SYSREG_PMEVCNTSVR6_EL1, "PMEVCNTSVR6_EL1", AArch64_SYSREG_PMEVCNTSVR6_EL1, 0x8746, true, false,  {0}  }, // 641
-  { "PMEVCNTSVR7_EL1", AArch64_SYSREG_PMEVCNTSVR7_EL1, "PMEVCNTSVR7_EL1", AArch64_SYSREG_PMEVCNTSVR7_EL1, 0x8747, true, false,  {0}  }, // 642
-  { "PMEVCNTSVR8_EL1", AArch64_SYSREG_PMEVCNTSVR8_EL1, "PMEVCNTSVR8_EL1", AArch64_SYSREG_PMEVCNTSVR8_EL1, 0x8748, true, false,  {0}  }, // 643
-  { "PMEVCNTSVR9_EL1", AArch64_SYSREG_PMEVCNTSVR9_EL1, "PMEVCNTSVR9_EL1", AArch64_SYSREG_PMEVCNTSVR9_EL1, 0x8749, true, false,  {0}  }, // 644
-  { "PMEVTYPER0_EL0", AArch64_SYSREG_PMEVTYPER0_EL0, "PMEVTYPER0_EL0", AArch64_SYSREG_PMEVTYPER0_EL0, 0xDF60, true, true,  {0}  }, // 645
-  { "PMEVTYPER10_EL0", AArch64_SYSREG_PMEVTYPER10_EL0, "PMEVTYPER10_EL0", AArch64_SYSREG_PMEVTYPER10_EL0, 0xDF6A, true, true,  {0}  }, // 646
-  { "PMEVTYPER11_EL0", AArch64_SYSREG_PMEVTYPER11_EL0, "PMEVTYPER11_EL0", AArch64_SYSREG_PMEVTYPER11_EL0, 0xDF6B, true, true,  {0}  }, // 647
-  { "PMEVTYPER12_EL0", AArch64_SYSREG_PMEVTYPER12_EL0, "PMEVTYPER12_EL0", AArch64_SYSREG_PMEVTYPER12_EL0, 0xDF6C, true, true,  {0}  }, // 648
-  { "PMEVTYPER13_EL0", AArch64_SYSREG_PMEVTYPER13_EL0, "PMEVTYPER13_EL0", AArch64_SYSREG_PMEVTYPER13_EL0, 0xDF6D, true, true,  {0}  }, // 649
-  { "PMEVTYPER14_EL0", AArch64_SYSREG_PMEVTYPER14_EL0, "PMEVTYPER14_EL0", AArch64_SYSREG_PMEVTYPER14_EL0, 0xDF6E, true, true,  {0}  }, // 650
-  { "PMEVTYPER15_EL0", AArch64_SYSREG_PMEVTYPER15_EL0, "PMEVTYPER15_EL0", AArch64_SYSREG_PMEVTYPER15_EL0, 0xDF6F, true, true,  {0}  }, // 651
-  { "PMEVTYPER16_EL0", AArch64_SYSREG_PMEVTYPER16_EL0, "PMEVTYPER16_EL0", AArch64_SYSREG_PMEVTYPER16_EL0, 0xDF70, true, true,  {0}  }, // 652
-  { "PMEVTYPER17_EL0", AArch64_SYSREG_PMEVTYPER17_EL0, "PMEVTYPER17_EL0", AArch64_SYSREG_PMEVTYPER17_EL0, 0xDF71, true, true,  {0}  }, // 653
-  { "PMEVTYPER18_EL0", AArch64_SYSREG_PMEVTYPER18_EL0, "PMEVTYPER18_EL0", AArch64_SYSREG_PMEVTYPER18_EL0, 0xDF72, true, true,  {0}  }, // 654
-  { "PMEVTYPER19_EL0", AArch64_SYSREG_PMEVTYPER19_EL0, "PMEVTYPER19_EL0", AArch64_SYSREG_PMEVTYPER19_EL0, 0xDF73, true, true,  {0}  }, // 655
-  { "PMEVTYPER1_EL0", AArch64_SYSREG_PMEVTYPER1_EL0, "PMEVTYPER1_EL0", AArch64_SYSREG_PMEVTYPER1_EL0, 0xDF61, true, true,  {0}  }, // 656
-  { "PMEVTYPER20_EL0", AArch64_SYSREG_PMEVTYPER20_EL0, "PMEVTYPER20_EL0", AArch64_SYSREG_PMEVTYPER20_EL0, 0xDF74, true, true,  {0}  }, // 657
-  { "PMEVTYPER21_EL0", AArch64_SYSREG_PMEVTYPER21_EL0, "PMEVTYPER21_EL0", AArch64_SYSREG_PMEVTYPER21_EL0, 0xDF75, true, true,  {0}  }, // 658
-  { "PMEVTYPER22_EL0", AArch64_SYSREG_PMEVTYPER22_EL0, "PMEVTYPER22_EL0", AArch64_SYSREG_PMEVTYPER22_EL0, 0xDF76, true, true,  {0}  }, // 659
-  { "PMEVTYPER23_EL0", AArch64_SYSREG_PMEVTYPER23_EL0, "PMEVTYPER23_EL0", AArch64_SYSREG_PMEVTYPER23_EL0, 0xDF77, true, true,  {0}  }, // 660
-  { "PMEVTYPER24_EL0", AArch64_SYSREG_PMEVTYPER24_EL0, "PMEVTYPER24_EL0", AArch64_SYSREG_PMEVTYPER24_EL0, 0xDF78, true, true,  {0}  }, // 661
-  { "PMEVTYPER25_EL0", AArch64_SYSREG_PMEVTYPER25_EL0, "PMEVTYPER25_EL0", AArch64_SYSREG_PMEVTYPER25_EL0, 0xDF79, true, true,  {0}  }, // 662
-  { "PMEVTYPER26_EL0", AArch64_SYSREG_PMEVTYPER26_EL0, "PMEVTYPER26_EL0", AArch64_SYSREG_PMEVTYPER26_EL0, 0xDF7A, true, true,  {0}  }, // 663
-  { "PMEVTYPER27_EL0", AArch64_SYSREG_PMEVTYPER27_EL0, "PMEVTYPER27_EL0", AArch64_SYSREG_PMEVTYPER27_EL0, 0xDF7B, true, true,  {0}  }, // 664
-  { "PMEVTYPER28_EL0", AArch64_SYSREG_PMEVTYPER28_EL0, "PMEVTYPER28_EL0", AArch64_SYSREG_PMEVTYPER28_EL0, 0xDF7C, true, true,  {0}  }, // 665
-  { "PMEVTYPER29_EL0", AArch64_SYSREG_PMEVTYPER29_EL0, "PMEVTYPER29_EL0", AArch64_SYSREG_PMEVTYPER29_EL0, 0xDF7D, true, true,  {0}  }, // 666
-  { "PMEVTYPER2_EL0", AArch64_SYSREG_PMEVTYPER2_EL0, "PMEVTYPER2_EL0", AArch64_SYSREG_PMEVTYPER2_EL0, 0xDF62, true, true,  {0}  }, // 667
-  { "PMEVTYPER30_EL0", AArch64_SYSREG_PMEVTYPER30_EL0, "PMEVTYPER30_EL0", AArch64_SYSREG_PMEVTYPER30_EL0, 0xDF7E, true, true,  {0}  }, // 668
-  { "PMEVTYPER3_EL0", AArch64_SYSREG_PMEVTYPER3_EL0, "PMEVTYPER3_EL0", AArch64_SYSREG_PMEVTYPER3_EL0, 0xDF63, true, true,  {0}  }, // 669
-  { "PMEVTYPER4_EL0", AArch64_SYSREG_PMEVTYPER4_EL0, "PMEVTYPER4_EL0", AArch64_SYSREG_PMEVTYPER4_EL0, 0xDF64, true, true,  {0}  }, // 670
-  { "PMEVTYPER5_EL0", AArch64_SYSREG_PMEVTYPER5_EL0, "PMEVTYPER5_EL0", AArch64_SYSREG_PMEVTYPER5_EL0, 0xDF65, true, true,  {0}  }, // 671
-  { "PMEVTYPER6_EL0", AArch64_SYSREG_PMEVTYPER6_EL0, "PMEVTYPER6_EL0", AArch64_SYSREG_PMEVTYPER6_EL0, 0xDF66, true, true,  {0}  }, // 672
-  { "PMEVTYPER7_EL0", AArch64_SYSREG_PMEVTYPER7_EL0, "PMEVTYPER7_EL0", AArch64_SYSREG_PMEVTYPER7_EL0, 0xDF67, true, true,  {0}  }, // 673
-  { "PMEVTYPER8_EL0", AArch64_SYSREG_PMEVTYPER8_EL0, "PMEVTYPER8_EL0", AArch64_SYSREG_PMEVTYPER8_EL0, 0xDF68, true, true,  {0}  }, // 674
-  { "PMEVTYPER9_EL0", AArch64_SYSREG_PMEVTYPER9_EL0, "PMEVTYPER9_EL0", AArch64_SYSREG_PMEVTYPER9_EL0, 0xDF69, true, true,  {0}  }, // 675
-  { "PMIAR_EL1", AArch64_SYSREG_PMIAR_EL1, "PMIAR_EL1", AArch64_SYSREG_PMIAR_EL1, 0xC4F7, true, true,  {0}  }, // 676
-  { "PMICFILTR_EL0", AArch64_SYSREG_PMICFILTR_EL0, "PMICFILTR_EL0", AArch64_SYSREG_PMICFILTR_EL0, 0xDCB0, true, true,  {0}  }, // 677
-  { "PMICNTR_EL0", AArch64_SYSREG_PMICNTR_EL0, "PMICNTR_EL0", AArch64_SYSREG_PMICNTR_EL0, 0xDCA0, true, true,  {0}  }, // 678
-  { "PMICNTSVR_EL1", AArch64_SYSREG_PMICNTSVR_EL1, "PMICNTSVR_EL1", AArch64_SYSREG_PMICNTSVR_EL1, 0x8760, true, false,  {0}  }, // 679
-  { "PMINTENCLR_EL1", AArch64_SYSREG_PMINTENCLR_EL1, "PMINTENCLR_EL1", AArch64_SYSREG_PMINTENCLR_EL1, 0xC4F2, true, true,  {0}  }, // 680
-  { "PMINTENSET_EL1", AArch64_SYSREG_PMINTENSET_EL1, "PMINTENSET_EL1", AArch64_SYSREG_PMINTENSET_EL1, 0xC4F1, true, true,  {0}  }, // 681
-  { "PMMIR_EL1", AArch64_SYSREG_PMMIR_EL1, "PMMIR_EL1", AArch64_SYSREG_PMMIR_EL1, 0xC4F6, true, false,  {0}  }, // 682
-  { "PMOVSCLR_EL0", AArch64_SYSREG_PMOVSCLR_EL0, "PMOVSCLR_EL0", AArch64_SYSREG_PMOVSCLR_EL0, 0xDCE3, true, true,  {0}  }, // 683
-  { "PMOVSSET_EL0", AArch64_SYSREG_PMOVSSET_EL0, "PMOVSSET_EL0", AArch64_SYSREG_PMOVSSET_EL0, 0xDCF3, true, true,  {0}  }, // 684
-  { "PMSCR_EL1", AArch64_SYSREG_PMSCR_EL1, "PMSCR_EL1", AArch64_SYSREG_PMSCR_EL1, 0xC4C8, true, true,  {AArch64_FeatureSPE}  }, // 685
-  { "PMSCR_EL12", AArch64_SYSREG_PMSCR_EL12, "PMSCR_EL12", AArch64_SYSREG_PMSCR_EL12, 0xECC8, true, true,  {AArch64_FeatureSPE}  }, // 686
-  { "PMSCR_EL2", AArch64_SYSREG_PMSCR_EL2, "PMSCR_EL2", AArch64_SYSREG_PMSCR_EL2, 0xE4C8, true, true,  {AArch64_FeatureSPE}  }, // 687
-  { "PMSDSFR_EL1", AArch64_SYSREG_PMSDSFR_EL1, "PMSDSFR_EL1", AArch64_SYSREG_PMSDSFR_EL1, 0xC4D4, true, true,  {0}  }, // 688
-  { "PMSELR_EL0", AArch64_SYSREG_PMSELR_EL0, "PMSELR_EL0", AArch64_SYSREG_PMSELR_EL0, 0xDCE5, true, true,  {0}  }, // 689
-  { "PMSEVFR_EL1", AArch64_SYSREG_PMSEVFR_EL1, "PMSEVFR_EL1", AArch64_SYSREG_PMSEVFR_EL1, 0xC4CD, true, true,  {AArch64_FeatureSPE}  }, // 690
-  { "PMSFCR_EL1", AArch64_SYSREG_PMSFCR_EL1, "PMSFCR_EL1", AArch64_SYSREG_PMSFCR_EL1, 0xC4CC, true, true,  {AArch64_FeatureSPE}  }, // 691
-  { "PMSICR_EL1", AArch64_SYSREG_PMSICR_EL1, "PMSICR_EL1", AArch64_SYSREG_PMSICR_EL1, 0xC4CA, true, true,  {AArch64_FeatureSPE}  }, // 692
-  { "PMSIDR_EL1", AArch64_SYSREG_PMSIDR_EL1, "PMSIDR_EL1", AArch64_SYSREG_PMSIDR_EL1, 0xC4CF, true, false,  {AArch64_FeatureSPE}  }, // 693
-  { "PMSIRR_EL1", AArch64_SYSREG_PMSIRR_EL1, "PMSIRR_EL1", AArch64_SYSREG_PMSIRR_EL1, 0xC4CB, true, true,  {AArch64_FeatureSPE}  }, // 694
-  { "PMSLATFR_EL1", AArch64_SYSREG_PMSLATFR_EL1, "PMSLATFR_EL1", AArch64_SYSREG_PMSLATFR_EL1, 0xC4CE, true, true,  {AArch64_FeatureSPE}  }, // 695
-  { "PMSNEVFR_EL1", AArch64_SYSREG_PMSNEVFR_EL1, "PMSNEVFR_EL1", AArch64_SYSREG_PMSNEVFR_EL1, 0xC4C9, true, true,  {AArch64_FeatureSPE_EEF}  }, // 696
-  { "PMSSCR_EL1", AArch64_SYSREG_PMSSCR_EL1, "PMSSCR_EL1", AArch64_SYSREG_PMSSCR_EL1, 0xC4EB, true, true,  {0}  }, // 697
-  { "PMSWINC_EL0", AArch64_SYSREG_PMSWINC_EL0, "PMSWINC_EL0", AArch64_SYSREG_PMSWINC_EL0, 0xDCE4, false, true,  {0}  }, // 698
-  { "PMUACR_EL1", AArch64_SYSREG_PMUACR_EL1, "PMUACR_EL1", AArch64_SYSREG_PMUACR_EL1, 0xC4F4, true, true,  {0}  }, // 699
-  { "PMUSERENR_EL0", AArch64_SYSREG_PMUSERENR_EL0, "PMUSERENR_EL0", AArch64_SYSREG_PMUSERENR_EL0, 0xDCF0, true, true,  {0}  }, // 700
-  { "PMXEVCNTR_EL0", AArch64_SYSREG_PMXEVCNTR_EL0, "PMXEVCNTR_EL0", AArch64_SYSREG_PMXEVCNTR_EL0, 0xDCEA, true, true,  {0}  }, // 701
-  { "PMXEVTYPER_EL0", AArch64_SYSREG_PMXEVTYPER_EL0, "PMXEVTYPER_EL0", AArch64_SYSREG_PMXEVTYPER_EL0, 0xDCE9, true, true,  {0}  }, // 702
-  { "PMZR_EL0", AArch64_SYSREG_PMZR_EL0, "PMZR_EL0", AArch64_SYSREG_PMZR_EL0, 0xDCEC, false, true,  {0}  }, // 703
-  { "POR_EL0", AArch64_SYSREG_POR_EL0, "POR_EL0", AArch64_SYSREG_POR_EL0, 0xDD14, true, true,  {0}  }, // 704
-  { "POR_EL1", AArch64_SYSREG_POR_EL1, "POR_EL1", AArch64_SYSREG_POR_EL1, 0xC514, true, true,  {0}  }, // 705
-  { "POR_EL12", AArch64_SYSREG_POR_EL12, "POR_EL12", AArch64_SYSREG_POR_EL12, 0xED14, true, true,  {0}  }, // 706
-  { "POR_EL2", AArch64_SYSREG_POR_EL2, "POR_EL2", AArch64_SYSREG_POR_EL2, 0xE514, true, true,  {0}  }, // 707
-  { "POR_EL3", AArch64_SYSREG_POR_EL3, "POR_EL3", AArch64_SYSREG_POR_EL3, 0xF514, true, true,  {0}  }, // 708
-  { "PRBAR10_EL1", AArch64_SYSREG_PRBAR10_EL1, "PRBAR10_EL1", AArch64_SYSREG_PRBAR10_EL1, 0xC368, true, true,  {AArch64_HasV8_0rOps}  }, // 709
-  { "PRBAR10_EL2", AArch64_SYSREG_PRBAR10_EL2, "PRBAR10_EL2", AArch64_SYSREG_PRBAR10_EL2, 0xE368, true, true,  {AArch64_HasV8_0rOps}  }, // 710
-  { "PRBAR11_EL1", AArch64_SYSREG_PRBAR11_EL1, "PRBAR11_EL1", AArch64_SYSREG_PRBAR11_EL1, 0xC36C, true, true,  {AArch64_HasV8_0rOps}  }, // 711
-  { "PRBAR11_EL2", AArch64_SYSREG_PRBAR11_EL2, "PRBAR11_EL2", AArch64_SYSREG_PRBAR11_EL2, 0xE36C, true, true,  {AArch64_HasV8_0rOps}  }, // 712
-  { "PRBAR12_EL1", AArch64_SYSREG_PRBAR12_EL1, "PRBAR12_EL1", AArch64_SYSREG_PRBAR12_EL1, 0xC370, true, true,  {AArch64_HasV8_0rOps}  }, // 713
-  { "PRBAR12_EL2", AArch64_SYSREG_PRBAR12_EL2, "PRBAR12_EL2", AArch64_SYSREG_PRBAR12_EL2, 0xE370, true, true,  {AArch64_HasV8_0rOps}  }, // 714
-  { "PRBAR13_EL1", AArch64_SYSREG_PRBAR13_EL1, "PRBAR13_EL1", AArch64_SYSREG_PRBAR13_EL1, 0xC374, true, true,  {AArch64_HasV8_0rOps}  }, // 715
-  { "PRBAR13_EL2", AArch64_SYSREG_PRBAR13_EL2, "PRBAR13_EL2", AArch64_SYSREG_PRBAR13_EL2, 0xE374, true, true,  {AArch64_HasV8_0rOps}  }, // 716
-  { "PRBAR14_EL1", AArch64_SYSREG_PRBAR14_EL1, "PRBAR14_EL1", AArch64_SYSREG_PRBAR14_EL1, 0xC378, true, true,  {AArch64_HasV8_0rOps}  }, // 717
-  { "PRBAR14_EL2", AArch64_SYSREG_PRBAR14_EL2, "PRBAR14_EL2", AArch64_SYSREG_PRBAR14_EL2, 0xE378, true, true,  {AArch64_HasV8_0rOps}  }, // 718
-  { "PRBAR15_EL1", AArch64_SYSREG_PRBAR15_EL1, "PRBAR15_EL1", AArch64_SYSREG_PRBAR15_EL1, 0xC37C, true, true,  {AArch64_HasV8_0rOps}  }, // 719
-  { "PRBAR15_EL2", AArch64_SYSREG_PRBAR15_EL2, "PRBAR15_EL2", AArch64_SYSREG_PRBAR15_EL2, 0xE37C, true, true,  {AArch64_HasV8_0rOps}  }, // 720
-  { "PRBAR1_EL1", AArch64_SYSREG_PRBAR1_EL1, "PRBAR1_EL1", AArch64_SYSREG_PRBAR1_EL1, 0xC344, true, true,  {AArch64_HasV8_0rOps}  }, // 721
-  { "PRBAR1_EL2", AArch64_SYSREG_PRBAR1_EL2, "PRBAR1_EL2", AArch64_SYSREG_PRBAR1_EL2, 0xE344, true, true,  {AArch64_HasV8_0rOps}  }, // 722
-  { "PRBAR2_EL1", AArch64_SYSREG_PRBAR2_EL1, "PRBAR2_EL1", AArch64_SYSREG_PRBAR2_EL1, 0xC348, true, true,  {AArch64_HasV8_0rOps}  }, // 723
-  { "PRBAR2_EL2", AArch64_SYSREG_PRBAR2_EL2, "PRBAR2_EL2", AArch64_SYSREG_PRBAR2_EL2, 0xE348, true, true,  {AArch64_HasV8_0rOps}  }, // 724
-  { "PRBAR3_EL1", AArch64_SYSREG_PRBAR3_EL1, "PRBAR3_EL1", AArch64_SYSREG_PRBAR3_EL1, 0xC34C, true, true,  {AArch64_HasV8_0rOps}  }, // 725
-  { "PRBAR3_EL2", AArch64_SYSREG_PRBAR3_EL2, "PRBAR3_EL2", AArch64_SYSREG_PRBAR3_EL2, 0xE34C, true, true,  {AArch64_HasV8_0rOps}  }, // 726
-  { "PRBAR4_EL1", AArch64_SYSREG_PRBAR4_EL1, "PRBAR4_EL1", AArch64_SYSREG_PRBAR4_EL1, 0xC350, true, true,  {AArch64_HasV8_0rOps}  }, // 727
-  { "PRBAR4_EL2", AArch64_SYSREG_PRBAR4_EL2, "PRBAR4_EL2", AArch64_SYSREG_PRBAR4_EL2, 0xE350, true, true,  {AArch64_HasV8_0rOps}  }, // 728
-  { "PRBAR5_EL1", AArch64_SYSREG_PRBAR5_EL1, "PRBAR5_EL1", AArch64_SYSREG_PRBAR5_EL1, 0xC354, true, true,  {AArch64_HasV8_0rOps}  }, // 729
-  { "PRBAR5_EL2", AArch64_SYSREG_PRBAR5_EL2, "PRBAR5_EL2", AArch64_SYSREG_PRBAR5_EL2, 0xE354, true, true,  {AArch64_HasV8_0rOps}  }, // 730
-  { "PRBAR6_EL1", AArch64_SYSREG_PRBAR6_EL1, "PRBAR6_EL1", AArch64_SYSREG_PRBAR6_EL1, 0xC358, true, true,  {AArch64_HasV8_0rOps}  }, // 731
-  { "PRBAR6_EL2", AArch64_SYSREG_PRBAR6_EL2, "PRBAR6_EL2", AArch64_SYSREG_PRBAR6_EL2, 0xE358, true, true,  {AArch64_HasV8_0rOps}  }, // 732
-  { "PRBAR7_EL1", AArch64_SYSREG_PRBAR7_EL1, "PRBAR7_EL1", AArch64_SYSREG_PRBAR7_EL1, 0xC35C, true, true,  {AArch64_HasV8_0rOps}  }, // 733
-  { "PRBAR7_EL2", AArch64_SYSREG_PRBAR7_EL2, "PRBAR7_EL2", AArch64_SYSREG_PRBAR7_EL2, 0xE35C, true, true,  {AArch64_HasV8_0rOps}  }, // 734
-  { "PRBAR8_EL1", AArch64_SYSREG_PRBAR8_EL1, "PRBAR8_EL1", AArch64_SYSREG_PRBAR8_EL1, 0xC360, true, true,  {AArch64_HasV8_0rOps}  }, // 735
-  { "PRBAR8_EL2", AArch64_SYSREG_PRBAR8_EL2, "PRBAR8_EL2", AArch64_SYSREG_PRBAR8_EL2, 0xE360, true, true,  {AArch64_HasV8_0rOps}  }, // 736
-  { "PRBAR9_EL1", AArch64_SYSREG_PRBAR9_EL1, "PRBAR9_EL1", AArch64_SYSREG_PRBAR9_EL1, 0xC364, true, true,  {AArch64_HasV8_0rOps}  }, // 737
-  { "PRBAR9_EL2", AArch64_SYSREG_PRBAR9_EL2, "PRBAR9_EL2", AArch64_SYSREG_PRBAR9_EL2, 0xE364, true, true,  {AArch64_HasV8_0rOps}  }, // 738
-  { "PRBAR_EL1", AArch64_SYSREG_PRBAR_EL1, "PRBAR_EL1", AArch64_SYSREG_PRBAR_EL1, 0xC340, true, true,  {AArch64_HasV8_0rOps}  }, // 739
-  { "PRBAR_EL2", AArch64_SYSREG_PRBAR_EL2, "PRBAR_EL2", AArch64_SYSREG_PRBAR_EL2, 0xE340, true, true,  {AArch64_HasV8_0rOps}  }, // 740
-  { "PRENR_EL1", AArch64_SYSREG_PRENR_EL1, "PRENR_EL1", AArch64_SYSREG_PRENR_EL1, 0xC309, true, true,  {AArch64_HasV8_0rOps}  }, // 741
-  { "PRENR_EL2", AArch64_SYSREG_PRENR_EL2, "PRENR_EL2", AArch64_SYSREG_PRENR_EL2, 0xE309, true, true,  {AArch64_HasV8_0rOps}  }, // 742
-  { "PRLAR10_EL1", AArch64_SYSREG_PRLAR10_EL1, "PRLAR10_EL1", AArch64_SYSREG_PRLAR10_EL1, 0xC369, true, true,  {AArch64_HasV8_0rOps}  }, // 743
-  { "PRLAR10_EL2", AArch64_SYSREG_PRLAR10_EL2, "PRLAR10_EL2", AArch64_SYSREG_PRLAR10_EL2, 0xE369, true, true,  {AArch64_HasV8_0rOps}  }, // 744
-  { "PRLAR11_EL1", AArch64_SYSREG_PRLAR11_EL1, "PRLAR11_EL1", AArch64_SYSREG_PRLAR11_EL1, 0xC36D, true, true,  {AArch64_HasV8_0rOps}  }, // 745
-  { "PRLAR11_EL2", AArch64_SYSREG_PRLAR11_EL2, "PRLAR11_EL2", AArch64_SYSREG_PRLAR11_EL2, 0xE36D, true, true,  {AArch64_HasV8_0rOps}  }, // 746
-  { "PRLAR12_EL1", AArch64_SYSREG_PRLAR12_EL1, "PRLAR12_EL1", AArch64_SYSREG_PRLAR12_EL1, 0xC371, true, true,  {AArch64_HasV8_0rOps}  }, // 747
-  { "PRLAR12_EL2", AArch64_SYSREG_PRLAR12_EL2, "PRLAR12_EL2", AArch64_SYSREG_PRLAR12_EL2, 0xE371, true, true,  {AArch64_HasV8_0rOps}  }, // 748
-  { "PRLAR13_EL1", AArch64_SYSREG_PRLAR13_EL1, "PRLAR13_EL1", AArch64_SYSREG_PRLAR13_EL1, 0xC375, true, true,  {AArch64_HasV8_0rOps}  }, // 749
-  { "PRLAR13_EL2", AArch64_SYSREG_PRLAR13_EL2, "PRLAR13_EL2", AArch64_SYSREG_PRLAR13_EL2, 0xE375, true, true,  {AArch64_HasV8_0rOps}  }, // 750
-  { "PRLAR14_EL1", AArch64_SYSREG_PRLAR14_EL1, "PRLAR14_EL1", AArch64_SYSREG_PRLAR14_EL1, 0xC379, true, true,  {AArch64_HasV8_0rOps}  }, // 751
-  { "PRLAR14_EL2", AArch64_SYSREG_PRLAR14_EL2, "PRLAR14_EL2", AArch64_SYSREG_PRLAR14_EL2, 0xE379, true, true,  {AArch64_HasV8_0rOps}  }, // 752
-  { "PRLAR15_EL1", AArch64_SYSREG_PRLAR15_EL1, "PRLAR15_EL1", AArch64_SYSREG_PRLAR15_EL1, 0xC37D, true, true,  {AArch64_HasV8_0rOps}  }, // 753
-  { "PRLAR15_EL2", AArch64_SYSREG_PRLAR15_EL2, "PRLAR15_EL2", AArch64_SYSREG_PRLAR15_EL2, 0xE37D, true, true,  {AArch64_HasV8_0rOps}  }, // 754
-  { "PRLAR1_EL1", AArch64_SYSREG_PRLAR1_EL1, "PRLAR1_EL1", AArch64_SYSREG_PRLAR1_EL1, 0xC345, true, true,  {AArch64_HasV8_0rOps}  }, // 755
-  { "PRLAR1_EL2", AArch64_SYSREG_PRLAR1_EL2, "PRLAR1_EL2", AArch64_SYSREG_PRLAR1_EL2, 0xE345, true, true,  {AArch64_HasV8_0rOps}  }, // 756
-  { "PRLAR2_EL1", AArch64_SYSREG_PRLAR2_EL1, "PRLAR2_EL1", AArch64_SYSREG_PRLAR2_EL1, 0xC349, true, true,  {AArch64_HasV8_0rOps}  }, // 757
-  { "PRLAR2_EL2", AArch64_SYSREG_PRLAR2_EL2, "PRLAR2_EL2", AArch64_SYSREG_PRLAR2_EL2, 0xE349, true, true,  {AArch64_HasV8_0rOps}  }, // 758
-  { "PRLAR3_EL1", AArch64_SYSREG_PRLAR3_EL1, "PRLAR3_EL1", AArch64_SYSREG_PRLAR3_EL1, 0xC34D, true, true,  {AArch64_HasV8_0rOps}  }, // 759
-  { "PRLAR3_EL2", AArch64_SYSREG_PRLAR3_EL2, "PRLAR3_EL2", AArch64_SYSREG_PRLAR3_EL2, 0xE34D, true, true,  {AArch64_HasV8_0rOps}  }, // 760
-  { "PRLAR4_EL1", AArch64_SYSREG_PRLAR4_EL1, "PRLAR4_EL1", AArch64_SYSREG_PRLAR4_EL1, 0xC351, true, true,  {AArch64_HasV8_0rOps}  }, // 761
-  { "PRLAR4_EL2", AArch64_SYSREG_PRLAR4_EL2, "PRLAR4_EL2", AArch64_SYSREG_PRLAR4_EL2, 0xE351, true, true,  {AArch64_HasV8_0rOps}  }, // 762
-  { "PRLAR5_EL1", AArch64_SYSREG_PRLAR5_EL1, "PRLAR5_EL1", AArch64_SYSREG_PRLAR5_EL1, 0xC355, true, true,  {AArch64_HasV8_0rOps}  }, // 763
-  { "PRLAR5_EL2", AArch64_SYSREG_PRLAR5_EL2, "PRLAR5_EL2", AArch64_SYSREG_PRLAR5_EL2, 0xE355, true, true,  {AArch64_HasV8_0rOps}  }, // 764
-  { "PRLAR6_EL1", AArch64_SYSREG_PRLAR6_EL1, "PRLAR6_EL1", AArch64_SYSREG_PRLAR6_EL1, 0xC359, true, true,  {AArch64_HasV8_0rOps}  }, // 765
-  { "PRLAR6_EL2", AArch64_SYSREG_PRLAR6_EL2, "PRLAR6_EL2", AArch64_SYSREG_PRLAR6_EL2, 0xE359, true, true,  {AArch64_HasV8_0rOps}  }, // 766
-  { "PRLAR7_EL1", AArch64_SYSREG_PRLAR7_EL1, "PRLAR7_EL1", AArch64_SYSREG_PRLAR7_EL1, 0xC35D, true, true,  {AArch64_HasV8_0rOps}  }, // 767
-  { "PRLAR7_EL2", AArch64_SYSREG_PRLAR7_EL2, "PRLAR7_EL2", AArch64_SYSREG_PRLAR7_EL2, 0xE35D, true, true,  {AArch64_HasV8_0rOps}  }, // 768
-  { "PRLAR8_EL1", AArch64_SYSREG_PRLAR8_EL1, "PRLAR8_EL1", AArch64_SYSREG_PRLAR8_EL1, 0xC361, true, true,  {AArch64_HasV8_0rOps}  }, // 769
-  { "PRLAR8_EL2", AArch64_SYSREG_PRLAR8_EL2, "PRLAR8_EL2", AArch64_SYSREG_PRLAR8_EL2, 0xE361, true, true,  {AArch64_HasV8_0rOps}  }, // 770
-  { "PRLAR9_EL1", AArch64_SYSREG_PRLAR9_EL1, "PRLAR9_EL1", AArch64_SYSREG_PRLAR9_EL1, 0xC365, true, true,  {AArch64_HasV8_0rOps}  }, // 771
-  { "PRLAR9_EL2", AArch64_SYSREG_PRLAR9_EL2, "PRLAR9_EL2", AArch64_SYSREG_PRLAR9_EL2, 0xE365, true, true,  {AArch64_HasV8_0rOps}  }, // 772
-  { "PRLAR_EL1", AArch64_SYSREG_PRLAR_EL1, "PRLAR_EL1", AArch64_SYSREG_PRLAR_EL1, 0xC341, true, true,  {AArch64_HasV8_0rOps}  }, // 773
-  { "PRLAR_EL2", AArch64_SYSREG_PRLAR_EL2, "PRLAR_EL2", AArch64_SYSREG_PRLAR_EL2, 0xE341, true, true,  {AArch64_HasV8_0rOps}  }, // 774
-  { "PRSELR_EL1", AArch64_SYSREG_PRSELR_EL1, "PRSELR_EL1", AArch64_SYSREG_PRSELR_EL1, 0xC311, true, true,  {AArch64_HasV8_0rOps}  }, // 775
-  { "PRSELR_EL2", AArch64_SYSREG_PRSELR_EL2, "PRSELR_EL2", AArch64_SYSREG_PRSELR_EL2, 0xE311, true, true,  {AArch64_HasV8_0rOps}  }, // 776
-  { "RCWMASK_EL1", AArch64_SYSREG_RCWMASK_EL1, "RCWMASK_EL1", AArch64_SYSREG_RCWMASK_EL1, 0xC686, true, true,  {AArch64_FeatureTHE}  }, // 777
-  { "RCWSMASK_EL1", AArch64_SYSREG_RCWSMASK_EL1, "RCWSMASK_EL1", AArch64_SYSREG_RCWSMASK_EL1, 0xC683, true, true,  {AArch64_FeatureTHE}  }, // 778
-  { "REVIDR_EL1", AArch64_SYSREG_REVIDR_EL1, "REVIDR_EL1", AArch64_SYSREG_REVIDR_EL1, 0xC006, true, false,  {0}  }, // 779
-  { "RGSR_EL1", AArch64_SYSREG_RGSR_EL1, "RGSR_EL1", AArch64_SYSREG_RGSR_EL1, 0xC085, true, true,  {AArch64_FeatureMTE}  }, // 780
-  { "RMR_EL1", AArch64_SYSREG_RMR_EL1, "RMR_EL1", AArch64_SYSREG_RMR_EL1, 0xC602, true, true,  {0}  }, // 781
-  { "RMR_EL2", AArch64_SYSREG_RMR_EL2, "RMR_EL2", AArch64_SYSREG_RMR_EL2, 0xE602, true, true,  {0}  }, // 782
-  { "RMR_EL3", AArch64_SYSREG_RMR_EL3, "RMR_EL3", AArch64_SYSREG_RMR_EL3, 0xF602, true, true,  {0}  }, // 783
-  { "RNDR", AArch64_SYSREG_RNDR, "RNDR", AArch64_SYSREG_RNDR, 0xD920, true, false,  {AArch64_FeatureRandGen}  }, // 784
-  { "RNDRRS", AArch64_SYSREG_RNDRRS, "RNDRRS", AArch64_SYSREG_RNDRRS, 0xD921, true, false,  {AArch64_FeatureRandGen}  }, // 785
-  { "RVBAR_EL1", AArch64_SYSREG_RVBAR_EL1, "RVBAR_EL1", AArch64_SYSREG_RVBAR_EL1, 0xC601, true, false,  {0}  }, // 786
-  { "RVBAR_EL2", AArch64_SYSREG_RVBAR_EL2, "RVBAR_EL2", AArch64_SYSREG_RVBAR_EL2, 0xE601, true, false,  {0}  }, // 787
-  { "RVBAR_EL3", AArch64_SYSREG_RVBAR_EL3, "RVBAR_EL3", AArch64_SYSREG_RVBAR_EL3, 0xF601, true, false,  {0}  }, // 788
-  { "S2PIR_EL2", AArch64_SYSREG_S2PIR_EL2, "S2PIR_EL2", AArch64_SYSREG_S2PIR_EL2, 0xE515, true, true,  {0}  }, // 789
-  { "S2POR_EL1", AArch64_SYSREG_S2POR_EL1, "S2POR_EL1", AArch64_SYSREG_S2POR_EL1, 0xC515, true, true,  {0}  }, // 790
-  { "SCR_EL3", AArch64_SYSREG_SCR_EL3, "SCR_EL3", AArch64_SYSREG_SCR_EL3, 0xF088, true, true,  {0}  }, // 791
-  { "SCTLR2_EL1", AArch64_SYSREG_SCTLR2_EL1, "SCTLR2_EL1", AArch64_SYSREG_SCTLR2_EL1, 0xC083, true, true,  {0}  }, // 792
-  { "SCTLR2_EL12", AArch64_SYSREG_SCTLR2_EL12, "SCTLR2_EL12", AArch64_SYSREG_SCTLR2_EL12, 0xE883, true, true,  {0}  }, // 793
-  { "SCTLR2_EL2", AArch64_SYSREG_SCTLR2_EL2, "SCTLR2_EL2", AArch64_SYSREG_SCTLR2_EL2, 0xE083, true, true,  {0}  }, // 794
-  { "SCTLR2_EL3", AArch64_SYSREG_SCTLR2_EL3, "SCTLR2_EL3", AArch64_SYSREG_SCTLR2_EL3, 0xF083, true, true,  {0}  }, // 795
-  { "SCTLR_EL1", AArch64_SYSREG_SCTLR_EL1, "SCTLR_EL1", AArch64_SYSREG_SCTLR_EL1, 0xC080, true, true,  {0}  }, // 796
-  { "SCTLR_EL12", AArch64_SYSREG_SCTLR_EL12, "SCTLR_EL12", AArch64_SYSREG_SCTLR_EL12, 0xE880, true, true,  {AArch64_FeatureVH}  }, // 797
-  { "SCTLR_EL2", AArch64_SYSREG_SCTLR_EL2, "SCTLR_EL2", AArch64_SYSREG_SCTLR_EL2, 0xE080, true, true,  {0}  }, // 798
-  { "SCTLR_EL3", AArch64_SYSREG_SCTLR_EL3, "SCTLR_EL3", AArch64_SYSREG_SCTLR_EL3, 0xF080, true, true,  {0}  }, // 799
-  { "SCXTNUM_EL0", AArch64_SYSREG_SCXTNUM_EL0, "SCXTNUM_EL0", AArch64_SYSREG_SCXTNUM_EL0, 0xDE87, true, true,  {AArch64_FeatureSpecRestrict}  }, // 800
-  { "SCXTNUM_EL1", AArch64_SYSREG_SCXTNUM_EL1, "SCXTNUM_EL1", AArch64_SYSREG_SCXTNUM_EL1, 0xC687, true, true,  {AArch64_FeatureSpecRestrict}  }, // 801
-  { "SCXTNUM_EL12", AArch64_SYSREG_SCXTNUM_EL12, "SCXTNUM_EL12", AArch64_SYSREG_SCXTNUM_EL12, 0xEE87, true, true,  {AArch64_FeatureSpecRestrict}  }, // 802
-  { "SCXTNUM_EL2", AArch64_SYSREG_SCXTNUM_EL2, "SCXTNUM_EL2", AArch64_SYSREG_SCXTNUM_EL2, 0xE687, true, true,  {AArch64_FeatureSpecRestrict}  }, // 803
-  { "SCXTNUM_EL3", AArch64_SYSREG_SCXTNUM_EL3, "SCXTNUM_EL3", AArch64_SYSREG_SCXTNUM_EL3, 0xF687, true, true,  {AArch64_FeatureSpecRestrict}  }, // 804
-  { "SDER32_EL2", AArch64_SYSREG_SDER32_EL2, "SDER32_EL2", AArch64_SYSREG_SDER32_EL2, 0xE099, true, true,  {AArch64_FeatureSEL2}  }, // 805
-  { "SDER32_EL3", AArch64_SYSREG_SDER32_EL3, "SDER32_EL3", AArch64_SYSREG_SDER32_EL3, 0xF089, true, true,  {0}  }, // 806
-  { "SMCR_EL1", AArch64_SYSREG_SMCR_EL1, "SMCR_EL1", AArch64_SYSREG_SMCR_EL1, 0xC096, true, true,  {AArch64_FeatureSME}  }, // 807
-  { "SMCR_EL12", AArch64_SYSREG_SMCR_EL12, "SMCR_EL12", AArch64_SYSREG_SMCR_EL12, 0xE896, true, true,  {AArch64_FeatureSME}  }, // 808
-  { "SMCR_EL2", AArch64_SYSREG_SMCR_EL2, "SMCR_EL2", AArch64_SYSREG_SMCR_EL2, 0xE096, true, true,  {AArch64_FeatureSME}  }, // 809
-  { "SMCR_EL3", AArch64_SYSREG_SMCR_EL3, "SMCR_EL3", AArch64_SYSREG_SMCR_EL3, 0xF096, true, true,  {AArch64_FeatureSME}  }, // 810
-  { "SMIDR_EL1", AArch64_SYSREG_SMIDR_EL1, "SMIDR_EL1", AArch64_SYSREG_SMIDR_EL1, 0xC806, true, false,  {AArch64_FeatureSME}  }, // 811
-  { "SMPRIMAP_EL2", AArch64_SYSREG_SMPRIMAP_EL2, "SMPRIMAP_EL2", AArch64_SYSREG_SMPRIMAP_EL2, 0xE095, true, true,  {AArch64_FeatureSME}  }, // 812
-  { "SMPRI_EL1", AArch64_SYSREG_SMPRI_EL1, "SMPRI_EL1", AArch64_SYSREG_SMPRI_EL1, 0xC094, true, true,  {AArch64_FeatureSME}  }, // 813
-  { "SPMACCESSR_EL1", AArch64_SYSREG_SPMACCESSR_EL1, "SPMACCESSR_EL1", AArch64_SYSREG_SPMACCESSR_EL1, 0x84EB, true, true,  {0}  }, // 814
-  { "SPMACCESSR_EL12", AArch64_SYSREG_SPMACCESSR_EL12, "SPMACCESSR_EL12", AArch64_SYSREG_SPMACCESSR_EL12, 0xACEB, true, true,  {0}  }, // 815
-  { "SPMACCESSR_EL2", AArch64_SYSREG_SPMACCESSR_EL2, "SPMACCESSR_EL2", AArch64_SYSREG_SPMACCESSR_EL2, 0xA4EB, true, true,  {0}  }, // 816
-  { "SPMACCESSR_EL3", AArch64_SYSREG_SPMACCESSR_EL3, "SPMACCESSR_EL3", AArch64_SYSREG_SPMACCESSR_EL3, 0xB4EB, true, true,  {0}  }, // 817
-  { "SPMCFGR_EL1", AArch64_SYSREG_SPMCFGR_EL1, "SPMCFGR_EL1", AArch64_SYSREG_SPMCFGR_EL1, 0x84EF, true, false,  {0}  }, // 818
-  { "SPMCGCR0_EL1", AArch64_SYSREG_SPMCGCR0_EL1, "SPMCGCR0_EL1", AArch64_SYSREG_SPMCGCR0_EL1, 0x84E8, true, false,  {0}  }, // 819
-  { "SPMCGCR1_EL1", AArch64_SYSREG_SPMCGCR1_EL1, "SPMCGCR1_EL1", AArch64_SYSREG_SPMCGCR1_EL1, 0x84E9, true, false,  {0}  }, // 820
-  { "SPMCNTENCLR_EL0", AArch64_SYSREG_SPMCNTENCLR_EL0, "SPMCNTENCLR_EL0", AArch64_SYSREG_SPMCNTENCLR_EL0, 0x9CE2, true, true,  {0}  }, // 821
-  { "SPMCNTENSET_EL0", AArch64_SYSREG_SPMCNTENSET_EL0, "SPMCNTENSET_EL0", AArch64_SYSREG_SPMCNTENSET_EL0, 0x9CE1, true, true,  {0}  }, // 822
-  { "SPMCR_EL0", AArch64_SYSREG_SPMCR_EL0, "SPMCR_EL0", AArch64_SYSREG_SPMCR_EL0, 0x9CE0, true, true,  {0}  }, // 823
-  { "SPMDEVAFF_EL1", AArch64_SYSREG_SPMDEVAFF_EL1, "SPMDEVAFF_EL1", AArch64_SYSREG_SPMDEVAFF_EL1, 0x84EE, true, false,  {0}  }, // 824
-  { "SPMDEVARCH_EL1", AArch64_SYSREG_SPMDEVARCH_EL1, "SPMDEVARCH_EL1", AArch64_SYSREG_SPMDEVARCH_EL1, 0x84ED, true, false,  {0}  }, // 825
-  { "SPMEVCNTR0_EL0", AArch64_SYSREG_SPMEVCNTR0_EL0, "SPMEVCNTR0_EL0", AArch64_SYSREG_SPMEVCNTR0_EL0, 0x9F00, true, true,  {0}  }, // 826
-  { "SPMEVCNTR10_EL0", AArch64_SYSREG_SPMEVCNTR10_EL0, "SPMEVCNTR10_EL0", AArch64_SYSREG_SPMEVCNTR10_EL0, 0x9F0A, true, true,  {0}  }, // 827
-  { "SPMEVCNTR11_EL0", AArch64_SYSREG_SPMEVCNTR11_EL0, "SPMEVCNTR11_EL0", AArch64_SYSREG_SPMEVCNTR11_EL0, 0x9F0B, true, true,  {0}  }, // 828
-  { "SPMEVCNTR12_EL0", AArch64_SYSREG_SPMEVCNTR12_EL0, "SPMEVCNTR12_EL0", AArch64_SYSREG_SPMEVCNTR12_EL0, 0x9F0C, true, true,  {0}  }, // 829
-  { "SPMEVCNTR13_EL0", AArch64_SYSREG_SPMEVCNTR13_EL0, "SPMEVCNTR13_EL0", AArch64_SYSREG_SPMEVCNTR13_EL0, 0x9F0D, true, true,  {0}  }, // 830
-  { "SPMEVCNTR14_EL0", AArch64_SYSREG_SPMEVCNTR14_EL0, "SPMEVCNTR14_EL0", AArch64_SYSREG_SPMEVCNTR14_EL0, 0x9F0E, true, true,  {0}  }, // 831
-  { "SPMEVCNTR15_EL0", AArch64_SYSREG_SPMEVCNTR15_EL0, "SPMEVCNTR15_EL0", AArch64_SYSREG_SPMEVCNTR15_EL0, 0x9F0F, true, true,  {0}  }, // 832
-  { "SPMEVCNTR1_EL0", AArch64_SYSREG_SPMEVCNTR1_EL0, "SPMEVCNTR1_EL0", AArch64_SYSREG_SPMEVCNTR1_EL0, 0x9F01, true, true,  {0}  }, // 833
-  { "SPMEVCNTR2_EL0", AArch64_SYSREG_SPMEVCNTR2_EL0, "SPMEVCNTR2_EL0", AArch64_SYSREG_SPMEVCNTR2_EL0, 0x9F02, true, true,  {0}  }, // 834
-  { "SPMEVCNTR3_EL0", AArch64_SYSREG_SPMEVCNTR3_EL0, "SPMEVCNTR3_EL0", AArch64_SYSREG_SPMEVCNTR3_EL0, 0x9F03, true, true,  {0}  }, // 835
-  { "SPMEVCNTR4_EL0", AArch64_SYSREG_SPMEVCNTR4_EL0, "SPMEVCNTR4_EL0", AArch64_SYSREG_SPMEVCNTR4_EL0, 0x9F04, true, true,  {0}  }, // 836
-  { "SPMEVCNTR5_EL0", AArch64_SYSREG_SPMEVCNTR5_EL0, "SPMEVCNTR5_EL0", AArch64_SYSREG_SPMEVCNTR5_EL0, 0x9F05, true, true,  {0}  }, // 837
-  { "SPMEVCNTR6_EL0", AArch64_SYSREG_SPMEVCNTR6_EL0, "SPMEVCNTR6_EL0", AArch64_SYSREG_SPMEVCNTR6_EL0, 0x9F06, true, true,  {0}  }, // 838
-  { "SPMEVCNTR7_EL0", AArch64_SYSREG_SPMEVCNTR7_EL0, "SPMEVCNTR7_EL0", AArch64_SYSREG_SPMEVCNTR7_EL0, 0x9F07, true, true,  {0}  }, // 839
-  { "SPMEVCNTR8_EL0", AArch64_SYSREG_SPMEVCNTR8_EL0, "SPMEVCNTR8_EL0", AArch64_SYSREG_SPMEVCNTR8_EL0, 0x9F08, true, true,  {0}  }, // 840
-  { "SPMEVCNTR9_EL0", AArch64_SYSREG_SPMEVCNTR9_EL0, "SPMEVCNTR9_EL0", AArch64_SYSREG_SPMEVCNTR9_EL0, 0x9F09, true, true,  {0}  }, // 841
-  { "SPMEVFILT2R0_EL0", AArch64_SYSREG_SPMEVFILT2R0_EL0, "SPMEVFILT2R0_EL0", AArch64_SYSREG_SPMEVFILT2R0_EL0, 0x9F30, true, true,  {0}  }, // 842
-  { "SPMEVFILT2R10_EL0", AArch64_SYSREG_SPMEVFILT2R10_EL0, "SPMEVFILT2R10_EL0", AArch64_SYSREG_SPMEVFILT2R10_EL0, 0x9F3A, true, true,  {0}  }, // 843
-  { "SPMEVFILT2R11_EL0", AArch64_SYSREG_SPMEVFILT2R11_EL0, "SPMEVFILT2R11_EL0", AArch64_SYSREG_SPMEVFILT2R11_EL0, 0x9F3B, true, true,  {0}  }, // 844
-  { "SPMEVFILT2R12_EL0", AArch64_SYSREG_SPMEVFILT2R12_EL0, "SPMEVFILT2R12_EL0", AArch64_SYSREG_SPMEVFILT2R12_EL0, 0x9F3C, true, true,  {0}  }, // 845
-  { "SPMEVFILT2R13_EL0", AArch64_SYSREG_SPMEVFILT2R13_EL0, "SPMEVFILT2R13_EL0", AArch64_SYSREG_SPMEVFILT2R13_EL0, 0x9F3D, true, true,  {0}  }, // 846
-  { "SPMEVFILT2R14_EL0", AArch64_SYSREG_SPMEVFILT2R14_EL0, "SPMEVFILT2R14_EL0", AArch64_SYSREG_SPMEVFILT2R14_EL0, 0x9F3E, true, true,  {0}  }, // 847
-  { "SPMEVFILT2R15_EL0", AArch64_SYSREG_SPMEVFILT2R15_EL0, "SPMEVFILT2R15_EL0", AArch64_SYSREG_SPMEVFILT2R15_EL0, 0x9F3F, true, true,  {0}  }, // 848
-  { "SPMEVFILT2R1_EL0", AArch64_SYSREG_SPMEVFILT2R1_EL0, "SPMEVFILT2R1_EL0", AArch64_SYSREG_SPMEVFILT2R1_EL0, 0x9F31, true, true,  {0}  }, // 849
-  { "SPMEVFILT2R2_EL0", AArch64_SYSREG_SPMEVFILT2R2_EL0, "SPMEVFILT2R2_EL0", AArch64_SYSREG_SPMEVFILT2R2_EL0, 0x9F32, true, true,  {0}  }, // 850
-  { "SPMEVFILT2R3_EL0", AArch64_SYSREG_SPMEVFILT2R3_EL0, "SPMEVFILT2R3_EL0", AArch64_SYSREG_SPMEVFILT2R3_EL0, 0x9F33, true, true,  {0}  }, // 851
-  { "SPMEVFILT2R4_EL0", AArch64_SYSREG_SPMEVFILT2R4_EL0, "SPMEVFILT2R4_EL0", AArch64_SYSREG_SPMEVFILT2R4_EL0, 0x9F34, true, true,  {0}  }, // 852
-  { "SPMEVFILT2R5_EL0", AArch64_SYSREG_SPMEVFILT2R5_EL0, "SPMEVFILT2R5_EL0", AArch64_SYSREG_SPMEVFILT2R5_EL0, 0x9F35, true, true,  {0}  }, // 853
-  { "SPMEVFILT2R6_EL0", AArch64_SYSREG_SPMEVFILT2R6_EL0, "SPMEVFILT2R6_EL0", AArch64_SYSREG_SPMEVFILT2R6_EL0, 0x9F36, true, true,  {0}  }, // 854
-  { "SPMEVFILT2R7_EL0", AArch64_SYSREG_SPMEVFILT2R7_EL0, "SPMEVFILT2R7_EL0", AArch64_SYSREG_SPMEVFILT2R7_EL0, 0x9F37, true, true,  {0}  }, // 855
-  { "SPMEVFILT2R8_EL0", AArch64_SYSREG_SPMEVFILT2R8_EL0, "SPMEVFILT2R8_EL0", AArch64_SYSREG_SPMEVFILT2R8_EL0, 0x9F38, true, true,  {0}  }, // 856
-  { "SPMEVFILT2R9_EL0", AArch64_SYSREG_SPMEVFILT2R9_EL0, "SPMEVFILT2R9_EL0", AArch64_SYSREG_SPMEVFILT2R9_EL0, 0x9F39, true, true,  {0}  }, // 857
-  { "SPMEVFILTR0_EL0", AArch64_SYSREG_SPMEVFILTR0_EL0, "SPMEVFILTR0_EL0", AArch64_SYSREG_SPMEVFILTR0_EL0, 0x9F20, true, true,  {0}  }, // 858
-  { "SPMEVFILTR10_EL0", AArch64_SYSREG_SPMEVFILTR10_EL0, "SPMEVFILTR10_EL0", AArch64_SYSREG_SPMEVFILTR10_EL0, 0x9F2A, true, true,  {0}  }, // 859
-  { "SPMEVFILTR11_EL0", AArch64_SYSREG_SPMEVFILTR11_EL0, "SPMEVFILTR11_EL0", AArch64_SYSREG_SPMEVFILTR11_EL0, 0x9F2B, true, true,  {0}  }, // 860
-  { "SPMEVFILTR12_EL0", AArch64_SYSREG_SPMEVFILTR12_EL0, "SPMEVFILTR12_EL0", AArch64_SYSREG_SPMEVFILTR12_EL0, 0x9F2C, true, true,  {0}  }, // 861
-  { "SPMEVFILTR13_EL0", AArch64_SYSREG_SPMEVFILTR13_EL0, "SPMEVFILTR13_EL0", AArch64_SYSREG_SPMEVFILTR13_EL0, 0x9F2D, true, true,  {0}  }, // 862
-  { "SPMEVFILTR14_EL0", AArch64_SYSREG_SPMEVFILTR14_EL0, "SPMEVFILTR14_EL0", AArch64_SYSREG_SPMEVFILTR14_EL0, 0x9F2E, true, true,  {0}  }, // 863
-  { "SPMEVFILTR15_EL0", AArch64_SYSREG_SPMEVFILTR15_EL0, "SPMEVFILTR15_EL0", AArch64_SYSREG_SPMEVFILTR15_EL0, 0x9F2F, true, true,  {0}  }, // 864
-  { "SPMEVFILTR1_EL0", AArch64_SYSREG_SPMEVFILTR1_EL0, "SPMEVFILTR1_EL0", AArch64_SYSREG_SPMEVFILTR1_EL0, 0x9F21, true, true,  {0}  }, // 865
-  { "SPMEVFILTR2_EL0", AArch64_SYSREG_SPMEVFILTR2_EL0, "SPMEVFILTR2_EL0", AArch64_SYSREG_SPMEVFILTR2_EL0, 0x9F22, true, true,  {0}  }, // 866
-  { "SPMEVFILTR3_EL0", AArch64_SYSREG_SPMEVFILTR3_EL0, "SPMEVFILTR3_EL0", AArch64_SYSREG_SPMEVFILTR3_EL0, 0x9F23, true, true,  {0}  }, // 867
-  { "SPMEVFILTR4_EL0", AArch64_SYSREG_SPMEVFILTR4_EL0, "SPMEVFILTR4_EL0", AArch64_SYSREG_SPMEVFILTR4_EL0, 0x9F24, true, true,  {0}  }, // 868
-  { "SPMEVFILTR5_EL0", AArch64_SYSREG_SPMEVFILTR5_EL0, "SPMEVFILTR5_EL0", AArch64_SYSREG_SPMEVFILTR5_EL0, 0x9F25, true, true,  {0}  }, // 869
-  { "SPMEVFILTR6_EL0", AArch64_SYSREG_SPMEVFILTR6_EL0, "SPMEVFILTR6_EL0", AArch64_SYSREG_SPMEVFILTR6_EL0, 0x9F26, true, true,  {0}  }, // 870
-  { "SPMEVFILTR7_EL0", AArch64_SYSREG_SPMEVFILTR7_EL0, "SPMEVFILTR7_EL0", AArch64_SYSREG_SPMEVFILTR7_EL0, 0x9F27, true, true,  {0}  }, // 871
-  { "SPMEVFILTR8_EL0", AArch64_SYSREG_SPMEVFILTR8_EL0, "SPMEVFILTR8_EL0", AArch64_SYSREG_SPMEVFILTR8_EL0, 0x9F28, true, true,  {0}  }, // 872
-  { "SPMEVFILTR9_EL0", AArch64_SYSREG_SPMEVFILTR9_EL0, "SPMEVFILTR9_EL0", AArch64_SYSREG_SPMEVFILTR9_EL0, 0x9F29, true, true,  {0}  }, // 873
-  { "SPMEVTYPER0_EL0", AArch64_SYSREG_SPMEVTYPER0_EL0, "SPMEVTYPER0_EL0", AArch64_SYSREG_SPMEVTYPER0_EL0, 0x9F10, true, true,  {0}  }, // 874
-  { "SPMEVTYPER10_EL0", AArch64_SYSREG_SPMEVTYPER10_EL0, "SPMEVTYPER10_EL0", AArch64_SYSREG_SPMEVTYPER10_EL0, 0x9F1A, true, true,  {0}  }, // 875
-  { "SPMEVTYPER11_EL0", AArch64_SYSREG_SPMEVTYPER11_EL0, "SPMEVTYPER11_EL0", AArch64_SYSREG_SPMEVTYPER11_EL0, 0x9F1B, true, true,  {0}  }, // 876
-  { "SPMEVTYPER12_EL0", AArch64_SYSREG_SPMEVTYPER12_EL0, "SPMEVTYPER12_EL0", AArch64_SYSREG_SPMEVTYPER12_EL0, 0x9F1C, true, true,  {0}  }, // 877
-  { "SPMEVTYPER13_EL0", AArch64_SYSREG_SPMEVTYPER13_EL0, "SPMEVTYPER13_EL0", AArch64_SYSREG_SPMEVTYPER13_EL0, 0x9F1D, true, true,  {0}  }, // 878
-  { "SPMEVTYPER14_EL0", AArch64_SYSREG_SPMEVTYPER14_EL0, "SPMEVTYPER14_EL0", AArch64_SYSREG_SPMEVTYPER14_EL0, 0x9F1E, true, true,  {0}  }, // 879
-  { "SPMEVTYPER15_EL0", AArch64_SYSREG_SPMEVTYPER15_EL0, "SPMEVTYPER15_EL0", AArch64_SYSREG_SPMEVTYPER15_EL0, 0x9F1F, true, true,  {0}  }, // 880
-  { "SPMEVTYPER1_EL0", AArch64_SYSREG_SPMEVTYPER1_EL0, "SPMEVTYPER1_EL0", AArch64_SYSREG_SPMEVTYPER1_EL0, 0x9F11, true, true,  {0}  }, // 881
-  { "SPMEVTYPER2_EL0", AArch64_SYSREG_SPMEVTYPER2_EL0, "SPMEVTYPER2_EL0", AArch64_SYSREG_SPMEVTYPER2_EL0, 0x9F12, true, true,  {0}  }, // 882
-  { "SPMEVTYPER3_EL0", AArch64_SYSREG_SPMEVTYPER3_EL0, "SPMEVTYPER3_EL0", AArch64_SYSREG_SPMEVTYPER3_EL0, 0x9F13, true, true,  {0}  }, // 883
-  { "SPMEVTYPER4_EL0", AArch64_SYSREG_SPMEVTYPER4_EL0, "SPMEVTYPER4_EL0", AArch64_SYSREG_SPMEVTYPER4_EL0, 0x9F14, true, true,  {0}  }, // 884
-  { "SPMEVTYPER5_EL0", AArch64_SYSREG_SPMEVTYPER5_EL0, "SPMEVTYPER5_EL0", AArch64_SYSREG_SPMEVTYPER5_EL0, 0x9F15, true, true,  {0}  }, // 885
-  { "SPMEVTYPER6_EL0", AArch64_SYSREG_SPMEVTYPER6_EL0, "SPMEVTYPER6_EL0", AArch64_SYSREG_SPMEVTYPER6_EL0, 0x9F16, true, true,  {0}  }, // 886
-  { "SPMEVTYPER7_EL0", AArch64_SYSREG_SPMEVTYPER7_EL0, "SPMEVTYPER7_EL0", AArch64_SYSREG_SPMEVTYPER7_EL0, 0x9F17, true, true,  {0}  }, // 887
-  { "SPMEVTYPER8_EL0", AArch64_SYSREG_SPMEVTYPER8_EL0, "SPMEVTYPER8_EL0", AArch64_SYSREG_SPMEVTYPER8_EL0, 0x9F18, true, true,  {0}  }, // 888
-  { "SPMEVTYPER9_EL0", AArch64_SYSREG_SPMEVTYPER9_EL0, "SPMEVTYPER9_EL0", AArch64_SYSREG_SPMEVTYPER9_EL0, 0x9F19, true, true,  {0}  }, // 889
-  { "SPMIIDR_EL1", AArch64_SYSREG_SPMIIDR_EL1, "SPMIIDR_EL1", AArch64_SYSREG_SPMIIDR_EL1, 0x84EC, true, false,  {0}  }, // 890
-  { "SPMINTENCLR_EL1", AArch64_SYSREG_SPMINTENCLR_EL1, "SPMINTENCLR_EL1", AArch64_SYSREG_SPMINTENCLR_EL1, 0x84F2, true, true,  {0}  }, // 891
-  { "SPMINTENSET_EL1", AArch64_SYSREG_SPMINTENSET_EL1, "SPMINTENSET_EL1", AArch64_SYSREG_SPMINTENSET_EL1, 0x84F1, true, true,  {0}  }, // 892
-  { "SPMOVSCLR_EL0", AArch64_SYSREG_SPMOVSCLR_EL0, "SPMOVSCLR_EL0", AArch64_SYSREG_SPMOVSCLR_EL0, 0x9CE3, true, true,  {0}  }, // 893
-  { "SPMOVSSET_EL0", AArch64_SYSREG_SPMOVSSET_EL0, "SPMOVSSET_EL0", AArch64_SYSREG_SPMOVSSET_EL0, 0x9CF3, true, true,  {0}  }, // 894
-  { "SPMROOTCR_EL3", AArch64_SYSREG_SPMROOTCR_EL3, "SPMROOTCR_EL3", AArch64_SYSREG_SPMROOTCR_EL3, 0xB4F7, true, true,  {0}  }, // 895
-  { "SPMSCR_EL1", AArch64_SYSREG_SPMSCR_EL1, "SPMSCR_EL1", AArch64_SYSREG_SPMSCR_EL1, 0xBCF7, true, true,  {0}  }, // 896
-  { "SPMSELR_EL0", AArch64_SYSREG_SPMSELR_EL0, "SPMSELR_EL0", AArch64_SYSREG_SPMSELR_EL0, 0x9CE5, true, true,  {0}  }, // 897
-  { "SPSel", AArch64_SYSREG_SPSEL, "SPSel", AArch64_SYSREG_SPSEL, 0xC210, true, true,  {0}  }, // 898
-  { "SPSR_abt", AArch64_SYSREG_SPSR_ABT, "SPSR_abt", AArch64_SYSREG_SPSR_ABT, 0xE219, true, true,  {0}  }, // 899
-  { "SPSR_EL1", AArch64_SYSREG_SPSR_EL1, "SPSR_EL1", AArch64_SYSREG_SPSR_EL1, 0xC200, true, true,  {0}  }, // 900
-  { "SPSR_EL12", AArch64_SYSREG_SPSR_EL12, "SPSR_EL12", AArch64_SYSREG_SPSR_EL12, 0xEA00, true, true,  {AArch64_FeatureVH}  }, // 901
-  { "SPSR_EL2", AArch64_SYSREG_SPSR_EL2, "SPSR_EL2", AArch64_SYSREG_SPSR_EL2, 0xE200, true, true,  {0}  }, // 902
-  { "SPSR_EL3", AArch64_SYSREG_SPSR_EL3, "SPSR_EL3", AArch64_SYSREG_SPSR_EL3, 0xF200, true, true,  {0}  }, // 903
-  { "SPSR_fiq", AArch64_SYSREG_SPSR_FIQ, "SPSR_fiq", AArch64_SYSREG_SPSR_FIQ, 0xE21B, true, true,  {0}  }, // 904
-  { "SPSR_irq", AArch64_SYSREG_SPSR_IRQ, "SPSR_irq", AArch64_SYSREG_SPSR_IRQ, 0xE218, true, true,  {0}  }, // 905
-  { "SPSR_und", AArch64_SYSREG_SPSR_UND, "SPSR_und", AArch64_SYSREG_SPSR_UND, 0xE21A, true, true,  {0}  }, // 906
-  { "SP_EL0", AArch64_SYSREG_SP_EL0, "SP_EL0", AArch64_SYSREG_SP_EL0, 0xC208, true, true,  {0}  }, // 907
-  { "SP_EL1", AArch64_SYSREG_SP_EL1, "SP_EL1", AArch64_SYSREG_SP_EL1, 0xE208, true, true,  {0}  }, // 908
-  { "SP_EL2", AArch64_SYSREG_SP_EL2, "SP_EL2", AArch64_SYSREG_SP_EL2, 0xF208, true, true,  {0}  }, // 909
-  { "SSBS", AArch64_SYSREG_SSBS, "SSBS", AArch64_SYSREG_SSBS, 0xDA16, true, true,  {AArch64_FeatureSSBS}  }, // 910
-  { "SVCR", AArch64_SYSREG_SVCR, "SVCR", AArch64_SYSREG_SVCR, 0xDA12, true, true,  {AArch64_FeatureSME}  }, // 911
-  { "TCO", AArch64_SYSREG_TCO, "TCO", AArch64_SYSREG_TCO, 0xDA17, true, true,  {AArch64_FeatureMTE}  }, // 912
-  { "TCR2_EL1", AArch64_SYSREG_TCR2_EL1, "TCR2_EL1", AArch64_SYSREG_TCR2_EL1, 0xC103, true, true,  {0}  }, // 913
-  { "TCR2_EL12", AArch64_SYSREG_TCR2_EL12, "TCR2_EL12", AArch64_SYSREG_TCR2_EL12, 0xE903, true, true,  {0}  }, // 914
-  { "TCR2_EL2", AArch64_SYSREG_TCR2_EL2, "TCR2_EL2", AArch64_SYSREG_TCR2_EL2, 0xE103, true, true,  {0}  }, // 915
-  { "TCR_EL1", AArch64_SYSREG_TCR_EL1, "TCR_EL1", AArch64_SYSREG_TCR_EL1, 0xC102, true, true,  {0}  }, // 916
-  { "TCR_EL12", AArch64_SYSREG_TCR_EL12, "TCR_EL12", AArch64_SYSREG_TCR_EL12, 0xE902, true, true,  {AArch64_FeatureVH}  }, // 917
-  { "TCR_EL2", AArch64_SYSREG_TCR_EL2, "TCR_EL2", AArch64_SYSREG_TCR_EL2, 0xE102, true, true,  {0}  }, // 918
-  { "TCR_EL3", AArch64_SYSREG_TCR_EL3, "TCR_EL3", AArch64_SYSREG_TCR_EL3, 0xF102, true, true,  {0}  }, // 919
-  { "TEECR32_EL1", AArch64_SYSREG_TEECR32_EL1, "TEECR32_EL1", AArch64_SYSREG_TEECR32_EL1, 0x9000, true, true,  {0}  }, // 920
-  { "TEEHBR32_EL1", AArch64_SYSREG_TEEHBR32_EL1, "TEEHBR32_EL1", AArch64_SYSREG_TEEHBR32_EL1, 0x9080, true, true,  {0}  }, // 921
-  { "TFSRE0_EL1", AArch64_SYSREG_TFSRE0_EL1, "TFSRE0_EL1", AArch64_SYSREG_TFSRE0_EL1, 0xC2B1, true, true,  {AArch64_FeatureMTE}  }, // 922
-  { "TFSR_EL1", AArch64_SYSREG_TFSR_EL1, "TFSR_EL1", AArch64_SYSREG_TFSR_EL1, 0xC2B0, true, true,  {AArch64_FeatureMTE}  }, // 923
-  { "TFSR_EL12", AArch64_SYSREG_TFSR_EL12, "TFSR_EL12", AArch64_SYSREG_TFSR_EL12, 0xEAB0, true, true,  {AArch64_FeatureMTE}  }, // 924
-  { "TFSR_EL2", AArch64_SYSREG_TFSR_EL2, "TFSR_EL2", AArch64_SYSREG_TFSR_EL2, 0xE2B0, true, true,  {AArch64_FeatureMTE}  }, // 925
-  { "TFSR_EL3", AArch64_SYSREG_TFSR_EL3, "TFSR_EL3", AArch64_SYSREG_TFSR_EL3, 0xF2B0, true, true,  {AArch64_FeatureMTE}  }, // 926
-  { "TPIDR2_EL0", AArch64_SYSREG_TPIDR2_EL0, "TPIDR2_EL0", AArch64_SYSREG_TPIDR2_EL0, 0xDE85, true, true,  {AArch64_FeatureSME}  }, // 927
-  { "TPIDRRO_EL0", AArch64_SYSREG_TPIDRRO_EL0, "TPIDRRO_EL0", AArch64_SYSREG_TPIDRRO_EL0, 0xDE83, true, true,  {0}  }, // 928
-  { "TPIDR_EL0", AArch64_SYSREG_TPIDR_EL0, "TPIDR_EL0", AArch64_SYSREG_TPIDR_EL0, 0xDE82, true, true,  {0}  }, // 929
-  { "TPIDR_EL1", AArch64_SYSREG_TPIDR_EL1, "TPIDR_EL1", AArch64_SYSREG_TPIDR_EL1, 0xC684, true, true,  {0}  }, // 930
-  { "TPIDR_EL2", AArch64_SYSREG_TPIDR_EL2, "TPIDR_EL2", AArch64_SYSREG_TPIDR_EL2, 0xE682, true, true,  {0}  }, // 931
-  { "TPIDR_EL3", AArch64_SYSREG_TPIDR_EL3, "TPIDR_EL3", AArch64_SYSREG_TPIDR_EL3, 0xF682, true, true,  {0}  }, // 932
-  { "TRBBASER_EL1", AArch64_SYSREG_TRBBASER_EL1, "TRBBASER_EL1", AArch64_SYSREG_TRBBASER_EL1, 0xC4DA, true, true,  {AArch64_FeatureTRBE}  }, // 933
-  { "TRBIDR_EL1", AArch64_SYSREG_TRBIDR_EL1, "TRBIDR_EL1", AArch64_SYSREG_TRBIDR_EL1, 0xC4DF, true, false,  {AArch64_FeatureTRBE}  }, // 934
-  { "TRBLIMITR_EL1", AArch64_SYSREG_TRBLIMITR_EL1, "TRBLIMITR_EL1", AArch64_SYSREG_TRBLIMITR_EL1, 0xC4D8, true, true,  {AArch64_FeatureTRBE}  }, // 935
-  { "TRBMAR_EL1", AArch64_SYSREG_TRBMAR_EL1, "TRBMAR_EL1", AArch64_SYSREG_TRBMAR_EL1, 0xC4DC, true, true,  {AArch64_FeatureTRBE}  }, // 936
-  { "TRBPTR_EL1", AArch64_SYSREG_TRBPTR_EL1, "TRBPTR_EL1", AArch64_SYSREG_TRBPTR_EL1, 0xC4D9, true, true,  {AArch64_FeatureTRBE}  }, // 937
-  { "TRBSR_EL1", AArch64_SYSREG_TRBSR_EL1, "TRBSR_EL1", AArch64_SYSREG_TRBSR_EL1, 0xC4DB, true, true,  {AArch64_FeatureTRBE}  }, // 938
-  { "TRBTRG_EL1", AArch64_SYSREG_TRBTRG_EL1, "TRBTRG_EL1", AArch64_SYSREG_TRBTRG_EL1, 0xC4DE, true, true,  {AArch64_FeatureTRBE}  }, // 939
-  { "TRCACATR0", AArch64_SYSREG_TRCACATR0, "TRCACATR0", AArch64_SYSREG_TRCACATR0, 0x8902, true, true,  {0}  }, // 940
-  { "TRCACATR1", AArch64_SYSREG_TRCACATR1, "TRCACATR1", AArch64_SYSREG_TRCACATR1, 0x8912, true, true,  {0}  }, // 941
-  { "TRCACATR10", AArch64_SYSREG_TRCACATR10, "TRCACATR10", AArch64_SYSREG_TRCACATR10, 0x8923, true, true,  {0}  }, // 942
-  { "TRCACATR11", AArch64_SYSREG_TRCACATR11, "TRCACATR11", AArch64_SYSREG_TRCACATR11, 0x8933, true, true,  {0}  }, // 943
-  { "TRCACATR12", AArch64_SYSREG_TRCACATR12, "TRCACATR12", AArch64_SYSREG_TRCACATR12, 0x8943, true, true,  {0}  }, // 944
-  { "TRCACATR13", AArch64_SYSREG_TRCACATR13, "TRCACATR13", AArch64_SYSREG_TRCACATR13, 0x8953, true, true,  {0}  }, // 945
-  { "TRCACATR14", AArch64_SYSREG_TRCACATR14, "TRCACATR14", AArch64_SYSREG_TRCACATR14, 0x8963, true, true,  {0}  }, // 946
-  { "TRCACATR15", AArch64_SYSREG_TRCACATR15, "TRCACATR15", AArch64_SYSREG_TRCACATR15, 0x8973, true, true,  {0}  }, // 947
-  { "TRCACATR2", AArch64_SYSREG_TRCACATR2, "TRCACATR2", AArch64_SYSREG_TRCACATR2, 0x8922, true, true,  {0}  }, // 948
-  { "TRCACATR3", AArch64_SYSREG_TRCACATR3, "TRCACATR3", AArch64_SYSREG_TRCACATR3, 0x8932, true, true,  {0}  }, // 949
-  { "TRCACATR4", AArch64_SYSREG_TRCACATR4, "TRCACATR4", AArch64_SYSREG_TRCACATR4, 0x8942, true, true,  {0}  }, // 950
-  { "TRCACATR5", AArch64_SYSREG_TRCACATR5, "TRCACATR5", AArch64_SYSREG_TRCACATR5, 0x8952, true, true,  {0}  }, // 951
-  { "TRCACATR6", AArch64_SYSREG_TRCACATR6, "TRCACATR6", AArch64_SYSREG_TRCACATR6, 0x8962, true, true,  {0}  }, // 952
-  { "TRCACATR7", AArch64_SYSREG_TRCACATR7, "TRCACATR7", AArch64_SYSREG_TRCACATR7, 0x8972, true, true,  {0}  }, // 953
-  { "TRCACATR8", AArch64_SYSREG_TRCACATR8, "TRCACATR8", AArch64_SYSREG_TRCACATR8, 0x8903, true, true,  {0}  }, // 954
-  { "TRCACATR9", AArch64_SYSREG_TRCACATR9, "TRCACATR9", AArch64_SYSREG_TRCACATR9, 0x8913, true, true,  {0}  }, // 955
-  { "TRCACVR0", AArch64_SYSREG_TRCACVR0, "TRCACVR0", AArch64_SYSREG_TRCACVR0, 0x8900, true, true,  {0}  }, // 956
-  { "TRCACVR1", AArch64_SYSREG_TRCACVR1, "TRCACVR1", AArch64_SYSREG_TRCACVR1, 0x8910, true, true,  {0}  }, // 957
-  { "TRCACVR10", AArch64_SYSREG_TRCACVR10, "TRCACVR10", AArch64_SYSREG_TRCACVR10, 0x8921, true, true,  {0}  }, // 958
-  { "TRCACVR11", AArch64_SYSREG_TRCACVR11, "TRCACVR11", AArch64_SYSREG_TRCACVR11, 0x8931, true, true,  {0}  }, // 959
-  { "TRCACVR12", AArch64_SYSREG_TRCACVR12, "TRCACVR12", AArch64_SYSREG_TRCACVR12, 0x8941, true, true,  {0}  }, // 960
-  { "TRCACVR13", AArch64_SYSREG_TRCACVR13, "TRCACVR13", AArch64_SYSREG_TRCACVR13, 0x8951, true, true,  {0}  }, // 961
-  { "TRCACVR14", AArch64_SYSREG_TRCACVR14, "TRCACVR14", AArch64_SYSREG_TRCACVR14, 0x8961, true, true,  {0}  }, // 962
-  { "TRCACVR15", AArch64_SYSREG_TRCACVR15, "TRCACVR15", AArch64_SYSREG_TRCACVR15, 0x8971, true, true,  {0}  }, // 963
-  { "TRCACVR2", AArch64_SYSREG_TRCACVR2, "TRCACVR2", AArch64_SYSREG_TRCACVR2, 0x8920, true, true,  {0}  }, // 964
-  { "TRCACVR3", AArch64_SYSREG_TRCACVR3, "TRCACVR3", AArch64_SYSREG_TRCACVR3, 0x8930, true, true,  {0}  }, // 965
-  { "TRCACVR4", AArch64_SYSREG_TRCACVR4, "TRCACVR4", AArch64_SYSREG_TRCACVR4, 0x8940, true, true,  {0}  }, // 966
-  { "TRCACVR5", AArch64_SYSREG_TRCACVR5, "TRCACVR5", AArch64_SYSREG_TRCACVR5, 0x8950, true, true,  {0}  }, // 967
-  { "TRCACVR6", AArch64_SYSREG_TRCACVR6, "TRCACVR6", AArch64_SYSREG_TRCACVR6, 0x8960, true, true,  {0}  }, // 968
-  { "TRCACVR7", AArch64_SYSREG_TRCACVR7, "TRCACVR7", AArch64_SYSREG_TRCACVR7, 0x8970, true, true,  {0}  }, // 969
-  { "TRCACVR8", AArch64_SYSREG_TRCACVR8, "TRCACVR8", AArch64_SYSREG_TRCACVR8, 0x8901, true, true,  {0}  }, // 970
-  { "TRCACVR9", AArch64_SYSREG_TRCACVR9, "TRCACVR9", AArch64_SYSREG_TRCACVR9, 0x8911, true, true,  {0}  }, // 971
-  { "TRCAUTHSTATUS", AArch64_SYSREG_TRCAUTHSTATUS, "TRCAUTHSTATUS", AArch64_SYSREG_TRCAUTHSTATUS, 0x8BF6, true, false,  {0}  }, // 972
-  { "TRCAUXCTLR", AArch64_SYSREG_TRCAUXCTLR, "TRCAUXCTLR", AArch64_SYSREG_TRCAUXCTLR, 0x8830, true, true,  {0}  }, // 973
-  { "TRCBBCTLR", AArch64_SYSREG_TRCBBCTLR, "TRCBBCTLR", AArch64_SYSREG_TRCBBCTLR, 0x8878, true, true,  {0}  }, // 974
-  { "TRCCCCTLR", AArch64_SYSREG_TRCCCCTLR, "TRCCCCTLR", AArch64_SYSREG_TRCCCCTLR, 0x8870, true, true,  {0}  }, // 975
-  { "TRCCIDCCTLR0", AArch64_SYSREG_TRCCIDCCTLR0, "TRCCIDCCTLR0", AArch64_SYSREG_TRCCIDCCTLR0, 0x8982, true, true,  {0}  }, // 976
-  { "TRCCIDCCTLR1", AArch64_SYSREG_TRCCIDCCTLR1, "TRCCIDCCTLR1", AArch64_SYSREG_TRCCIDCCTLR1, 0x898A, true, true,  {0}  }, // 977
-  { "TRCCIDCVR0", AArch64_SYSREG_TRCCIDCVR0, "TRCCIDCVR0", AArch64_SYSREG_TRCCIDCVR0, 0x8980, true, true,  {0}  }, // 978
-  { "TRCCIDCVR1", AArch64_SYSREG_TRCCIDCVR1, "TRCCIDCVR1", AArch64_SYSREG_TRCCIDCVR1, 0x8990, true, true,  {0}  }, // 979
-  { "TRCCIDCVR2", AArch64_SYSREG_TRCCIDCVR2, "TRCCIDCVR2", AArch64_SYSREG_TRCCIDCVR2, 0x89A0, true, true,  {0}  }, // 980
-  { "TRCCIDCVR3", AArch64_SYSREG_TRCCIDCVR3, "TRCCIDCVR3", AArch64_SYSREG_TRCCIDCVR3, 0x89B0, true, true,  {0}  }, // 981
-  { "TRCCIDCVR4", AArch64_SYSREG_TRCCIDCVR4, "TRCCIDCVR4", AArch64_SYSREG_TRCCIDCVR4, 0x89C0, true, true,  {0}  }, // 982
-  { "TRCCIDCVR5", AArch64_SYSREG_TRCCIDCVR5, "TRCCIDCVR5", AArch64_SYSREG_TRCCIDCVR5, 0x89D0, true, true,  {0}  }, // 983
-  { "TRCCIDCVR6", AArch64_SYSREG_TRCCIDCVR6, "TRCCIDCVR6", AArch64_SYSREG_TRCCIDCVR6, 0x89E0, true, true,  {0}  }, // 984
-  { "TRCCIDCVR7", AArch64_SYSREG_TRCCIDCVR7, "TRCCIDCVR7", AArch64_SYSREG_TRCCIDCVR7, 0x89F0, true, true,  {0}  }, // 985
-  { "TRCCIDR0", AArch64_SYSREG_TRCCIDR0, "TRCCIDR0", AArch64_SYSREG_TRCCIDR0, 0x8BE7, true, false,  {0}  }, // 986
-  { "TRCCIDR1", AArch64_SYSREG_TRCCIDR1, "TRCCIDR1", AArch64_SYSREG_TRCCIDR1, 0x8BEF, true, false,  {0}  }, // 987
-  { "TRCCIDR2", AArch64_SYSREG_TRCCIDR2, "TRCCIDR2", AArch64_SYSREG_TRCCIDR2, 0x8BF7, true, false,  {0}  }, // 988
-  { "TRCCIDR3", AArch64_SYSREG_TRCCIDR3, "TRCCIDR3", AArch64_SYSREG_TRCCIDR3, 0x8BFF, true, false,  {0}  }, // 989
-  { "TRCCLAIMCLR", AArch64_SYSREG_TRCCLAIMCLR, "TRCCLAIMCLR", AArch64_SYSREG_TRCCLAIMCLR, 0x8BCE, true, true,  {0}  }, // 990
-  { "TRCCLAIMSET", AArch64_SYSREG_TRCCLAIMSET, "TRCCLAIMSET", AArch64_SYSREG_TRCCLAIMSET, 0x8BC6, true, true,  {0}  }, // 991
-  { "TRCCNTCTLR0", AArch64_SYSREG_TRCCNTCTLR0, "TRCCNTCTLR0", AArch64_SYSREG_TRCCNTCTLR0, 0x8825, true, true,  {0}  }, // 992
-  { "TRCCNTCTLR1", AArch64_SYSREG_TRCCNTCTLR1, "TRCCNTCTLR1", AArch64_SYSREG_TRCCNTCTLR1, 0x882D, true, true,  {0}  }, // 993
-  { "TRCCNTCTLR2", AArch64_SYSREG_TRCCNTCTLR2, "TRCCNTCTLR2", AArch64_SYSREG_TRCCNTCTLR2, 0x8835, true, true,  {0}  }, // 994
-  { "TRCCNTCTLR3", AArch64_SYSREG_TRCCNTCTLR3, "TRCCNTCTLR3", AArch64_SYSREG_TRCCNTCTLR3, 0x883D, true, true,  {0}  }, // 995
-  { "TRCCNTRLDVR0", AArch64_SYSREG_TRCCNTRLDVR0, "TRCCNTRLDVR0", AArch64_SYSREG_TRCCNTRLDVR0, 0x8805, true, true,  {0}  }, // 996
-  { "TRCCNTRLDVR1", AArch64_SYSREG_TRCCNTRLDVR1, "TRCCNTRLDVR1", AArch64_SYSREG_TRCCNTRLDVR1, 0x880D, true, true,  {0}  }, // 997
-  { "TRCCNTRLDVR2", AArch64_SYSREG_TRCCNTRLDVR2, "TRCCNTRLDVR2", AArch64_SYSREG_TRCCNTRLDVR2, 0x8815, true, true,  {0}  }, // 998
-  { "TRCCNTRLDVR3", AArch64_SYSREG_TRCCNTRLDVR3, "TRCCNTRLDVR3", AArch64_SYSREG_TRCCNTRLDVR3, 0x881D, true, true,  {0}  }, // 999
-  { "TRCCNTVR0", AArch64_SYSREG_TRCCNTVR0, "TRCCNTVR0", AArch64_SYSREG_TRCCNTVR0, 0x8845, true, true,  {0}  }, // 1000
-  { "TRCCNTVR1", AArch64_SYSREG_TRCCNTVR1, "TRCCNTVR1", AArch64_SYSREG_TRCCNTVR1, 0x884D, true, true,  {0}  }, // 1001
-  { "TRCCNTVR2", AArch64_SYSREG_TRCCNTVR2, "TRCCNTVR2", AArch64_SYSREG_TRCCNTVR2, 0x8855, true, true,  {0}  }, // 1002
-  { "TRCCNTVR3", AArch64_SYSREG_TRCCNTVR3, "TRCCNTVR3", AArch64_SYSREG_TRCCNTVR3, 0x885D, true, true,  {0}  }, // 1003
-  { "TRCCONFIGR", AArch64_SYSREG_TRCCONFIGR, "TRCCONFIGR", AArch64_SYSREG_TRCCONFIGR, 0x8820, true, true,  {0}  }, // 1004
-  { "TRCDEVAFF0", AArch64_SYSREG_TRCDEVAFF0, "TRCDEVAFF0", AArch64_SYSREG_TRCDEVAFF0, 0x8BD6, true, false,  {0}  }, // 1005
-  { "TRCDEVAFF1", AArch64_SYSREG_TRCDEVAFF1, "TRCDEVAFF1", AArch64_SYSREG_TRCDEVAFF1, 0x8BDE, true, false,  {0}  }, // 1006
-  { "TRCDEVARCH", AArch64_SYSREG_TRCDEVARCH, "TRCDEVARCH", AArch64_SYSREG_TRCDEVARCH, 0x8BFE, true, false,  {0}  }, // 1007
-  { "TRCDEVID", AArch64_SYSREG_TRCDEVID, "TRCDEVID", AArch64_SYSREG_TRCDEVID, 0x8B97, true, false,  {0}  }, // 1008
-  { "TRCDEVTYPE", AArch64_SYSREG_TRCDEVTYPE, "TRCDEVTYPE", AArch64_SYSREG_TRCDEVTYPE, 0x8B9F, true, false,  {0}  }, // 1009
-  { "TRCDVCMR0", AArch64_SYSREG_TRCDVCMR0, "TRCDVCMR0", AArch64_SYSREG_TRCDVCMR0, 0x8906, true, true,  {0}  }, // 1010
-  { "TRCDVCMR1", AArch64_SYSREG_TRCDVCMR1, "TRCDVCMR1", AArch64_SYSREG_TRCDVCMR1, 0x8926, true, true,  {0}  }, // 1011
-  { "TRCDVCMR2", AArch64_SYSREG_TRCDVCMR2, "TRCDVCMR2", AArch64_SYSREG_TRCDVCMR2, 0x8946, true, true,  {0}  }, // 1012
-  { "TRCDVCMR3", AArch64_SYSREG_TRCDVCMR3, "TRCDVCMR3", AArch64_SYSREG_TRCDVCMR3, 0x8966, true, true,  {0}  }, // 1013
-  { "TRCDVCMR4", AArch64_SYSREG_TRCDVCMR4, "TRCDVCMR4", AArch64_SYSREG_TRCDVCMR4, 0x8907, true, true,  {0}  }, // 1014
-  { "TRCDVCMR5", AArch64_SYSREG_TRCDVCMR5, "TRCDVCMR5", AArch64_SYSREG_TRCDVCMR5, 0x8927, true, true,  {0}  }, // 1015
-  { "TRCDVCMR6", AArch64_SYSREG_TRCDVCMR6, "TRCDVCMR6", AArch64_SYSREG_TRCDVCMR6, 0x8947, true, true,  {0}  }, // 1016
-  { "TRCDVCMR7", AArch64_SYSREG_TRCDVCMR7, "TRCDVCMR7", AArch64_SYSREG_TRCDVCMR7, 0x8967, true, true,  {0}  }, // 1017
-  { "TRCDVCVR0", AArch64_SYSREG_TRCDVCVR0, "TRCDVCVR0", AArch64_SYSREG_TRCDVCVR0, 0x8904, true, true,  {0}  }, // 1018
-  { "TRCDVCVR1", AArch64_SYSREG_TRCDVCVR1, "TRCDVCVR1", AArch64_SYSREG_TRCDVCVR1, 0x8924, true, true,  {0}  }, // 1019
-  { "TRCDVCVR2", AArch64_SYSREG_TRCDVCVR2, "TRCDVCVR2", AArch64_SYSREG_TRCDVCVR2, 0x8944, true, true,  {0}  }, // 1020
-  { "TRCDVCVR3", AArch64_SYSREG_TRCDVCVR3, "TRCDVCVR3", AArch64_SYSREG_TRCDVCVR3, 0x8964, true, true,  {0}  }, // 1021
-  { "TRCDVCVR4", AArch64_SYSREG_TRCDVCVR4, "TRCDVCVR4", AArch64_SYSREG_TRCDVCVR4, 0x8905, true, true,  {0}  }, // 1022
-  { "TRCDVCVR5", AArch64_SYSREG_TRCDVCVR5, "TRCDVCVR5", AArch64_SYSREG_TRCDVCVR5, 0x8925, true, true,  {0}  }, // 1023
-  { "TRCDVCVR6", AArch64_SYSREG_TRCDVCVR6, "TRCDVCVR6", AArch64_SYSREG_TRCDVCVR6, 0x8945, true, true,  {0}  }, // 1024
-  { "TRCDVCVR7", AArch64_SYSREG_TRCDVCVR7, "TRCDVCVR7", AArch64_SYSREG_TRCDVCVR7, 0x8965, true, true,  {0}  }, // 1025
-  { "TRCEVENTCTL0R", AArch64_SYSREG_TRCEVENTCTL0R, "TRCEVENTCTL0R", AArch64_SYSREG_TRCEVENTCTL0R, 0x8840, true, true,  {0}  }, // 1026
-  { "TRCEVENTCTL1R", AArch64_SYSREG_TRCEVENTCTL1R, "TRCEVENTCTL1R", AArch64_SYSREG_TRCEVENTCTL1R, 0x8848, true, true,  {0}  }, // 1027
-  { "TRCEXTINSELR", AArch64_SYSREG_TRCEXTINSELR, "TRCEXTINSELR", AArch64_SYSREG_TRCEXTINSELR, 0x8844, true, true,  {0}  }, // 1028
-  { "TRCEXTINSELR0", AArch64_SYSREG_TRCEXTINSELR0, "TRCEXTINSELR0", AArch64_SYSREG_TRCEXTINSELR0, 0x8844, true, true,  {AArch64_FeatureETE}  }, // 1029
-  { "TRCEXTINSELR1", AArch64_SYSREG_TRCEXTINSELR1, "TRCEXTINSELR1", AArch64_SYSREG_TRCEXTINSELR1, 0x884C, true, true,  {AArch64_FeatureETE}  }, // 1030
-  { "TRCEXTINSELR2", AArch64_SYSREG_TRCEXTINSELR2, "TRCEXTINSELR2", AArch64_SYSREG_TRCEXTINSELR2, 0x8854, true, true,  {AArch64_FeatureETE}  }, // 1031
-  { "TRCEXTINSELR3", AArch64_SYSREG_TRCEXTINSELR3, "TRCEXTINSELR3", AArch64_SYSREG_TRCEXTINSELR3, 0x885C, true, true,  {AArch64_FeatureETE}  }, // 1032
-  { "TRCIDR0", AArch64_SYSREG_TRCIDR0, "TRCIDR0", AArch64_SYSREG_TRCIDR0, 0x8847, true, false,  {0}  }, // 1033
-  { "TRCIDR1", AArch64_SYSREG_TRCIDR1, "TRCIDR1", AArch64_SYSREG_TRCIDR1, 0x884F, true, false,  {0}  }, // 1034
-  { "TRCIDR10", AArch64_SYSREG_TRCIDR10, "TRCIDR10", AArch64_SYSREG_TRCIDR10, 0x8816, true, false,  {0}  }, // 1035
-  { "TRCIDR11", AArch64_SYSREG_TRCIDR11, "TRCIDR11", AArch64_SYSREG_TRCIDR11, 0x881E, true, false,  {0}  }, // 1036
-  { "TRCIDR12", AArch64_SYSREG_TRCIDR12, "TRCIDR12", AArch64_SYSREG_TRCIDR12, 0x8826, true, false,  {0}  }, // 1037
-  { "TRCIDR13", AArch64_SYSREG_TRCIDR13, "TRCIDR13", AArch64_SYSREG_TRCIDR13, 0x882E, true, false,  {0}  }, // 1038
-  { "TRCIDR2", AArch64_SYSREG_TRCIDR2, "TRCIDR2", AArch64_SYSREG_TRCIDR2, 0x8857, true, false,  {0}  }, // 1039
-  { "TRCIDR3", AArch64_SYSREG_TRCIDR3, "TRCIDR3", AArch64_SYSREG_TRCIDR3, 0x885F, true, false,  {0}  }, // 1040
-  { "TRCIDR4", AArch64_SYSREG_TRCIDR4, "TRCIDR4", AArch64_SYSREG_TRCIDR4, 0x8867, true, false,  {0}  }, // 1041
-  { "TRCIDR5", AArch64_SYSREG_TRCIDR5, "TRCIDR5", AArch64_SYSREG_TRCIDR5, 0x886F, true, false,  {0}  }, // 1042
-  { "TRCIDR6", AArch64_SYSREG_TRCIDR6, "TRCIDR6", AArch64_SYSREG_TRCIDR6, 0x8877, true, false,  {0}  }, // 1043
-  { "TRCIDR7", AArch64_SYSREG_TRCIDR7, "TRCIDR7", AArch64_SYSREG_TRCIDR7, 0x887F, true, false,  {0}  }, // 1044
-  { "TRCIDR8", AArch64_SYSREG_TRCIDR8, "TRCIDR8", AArch64_SYSREG_TRCIDR8, 0x8806, true, false,  {0}  }, // 1045
-  { "TRCIDR9", AArch64_SYSREG_TRCIDR9, "TRCIDR9", AArch64_SYSREG_TRCIDR9, 0x880E, true, false,  {0}  }, // 1046
-  { "TRCIMSPEC0", AArch64_SYSREG_TRCIMSPEC0, "TRCIMSPEC0", AArch64_SYSREG_TRCIMSPEC0, 0x8807, true, true,  {0}  }, // 1047
-  { "TRCIMSPEC1", AArch64_SYSREG_TRCIMSPEC1, "TRCIMSPEC1", AArch64_SYSREG_TRCIMSPEC1, 0x880F, true, true,  {0}  }, // 1048
-  { "TRCIMSPEC2", AArch64_SYSREG_TRCIMSPEC2, "TRCIMSPEC2", AArch64_SYSREG_TRCIMSPEC2, 0x8817, true, true,  {0}  }, // 1049
-  { "TRCIMSPEC3", AArch64_SYSREG_TRCIMSPEC3, "TRCIMSPEC3", AArch64_SYSREG_TRCIMSPEC3, 0x881F, true, true,  {0}  }, // 1050
-  { "TRCIMSPEC4", AArch64_SYSREG_TRCIMSPEC4, "TRCIMSPEC4", AArch64_SYSREG_TRCIMSPEC4, 0x8827, true, true,  {0}  }, // 1051
-  { "TRCIMSPEC5", AArch64_SYSREG_TRCIMSPEC5, "TRCIMSPEC5", AArch64_SYSREG_TRCIMSPEC5, 0x882F, true, true,  {0}  }, // 1052
-  { "TRCIMSPEC6", AArch64_SYSREG_TRCIMSPEC6, "TRCIMSPEC6", AArch64_SYSREG_TRCIMSPEC6, 0x8837, true, true,  {0}  }, // 1053
-  { "TRCIMSPEC7", AArch64_SYSREG_TRCIMSPEC7, "TRCIMSPEC7", AArch64_SYSREG_TRCIMSPEC7, 0x883F, true, true,  {0}  }, // 1054
-  { "TRCITCTRL", AArch64_SYSREG_TRCITCTRL, "TRCITCTRL", AArch64_SYSREG_TRCITCTRL, 0x8B84, true, true,  {0}  }, // 1055
-  { "TRCITECR_EL1", AArch64_SYSREG_TRCITECR_EL1, "TRCITECR_EL1", AArch64_SYSREG_TRCITECR_EL1, 0xC093, true, true,  {AArch64_FeatureITE}  }, // 1056
-  { "TRCITECR_EL12", AArch64_SYSREG_TRCITECR_EL12, "TRCITECR_EL12", AArch64_SYSREG_TRCITECR_EL12, 0xE893, true, true,  {AArch64_FeatureITE}  }, // 1057
-  { "TRCITECR_EL2", AArch64_SYSREG_TRCITECR_EL2, "TRCITECR_EL2", AArch64_SYSREG_TRCITECR_EL2, 0xE093, true, true,  {AArch64_FeatureITE}  }, // 1058
-  { "TRCITEEDCR", AArch64_SYSREG_TRCITEEDCR, "TRCITEEDCR", AArch64_SYSREG_TRCITEEDCR, 0x8811, true, true,  {AArch64_FeatureITE}  }, // 1059
-  { "TRCLAR", AArch64_SYSREG_TRCLAR, "TRCLAR", AArch64_SYSREG_TRCLAR, 0x8BE6, false, true,  {0}  }, // 1060
-  { "TRCLSR", AArch64_SYSREG_TRCLSR, "TRCLSR", AArch64_SYSREG_TRCLSR, 0x8BEE, true, false,  {0}  }, // 1061
-  { "TRCOSLAR", AArch64_SYSREG_TRCOSLAR, "TRCOSLAR", AArch64_SYSREG_TRCOSLAR, 0x8884, false, true,  {0}  }, // 1062
-  { "TRCOSLSR", AArch64_SYSREG_TRCOSLSR, "TRCOSLSR", AArch64_SYSREG_TRCOSLSR, 0x888C, true, false,  {0}  }, // 1063
-  { "TRCPDCR", AArch64_SYSREG_TRCPDCR, "TRCPDCR", AArch64_SYSREG_TRCPDCR, 0x88A4, true, true,  {0}  }, // 1064
-  { "TRCPDSR", AArch64_SYSREG_TRCPDSR, "TRCPDSR", AArch64_SYSREG_TRCPDSR, 0x88AC, true, false,  {0}  }, // 1065
-  { "TRCPIDR0", AArch64_SYSREG_TRCPIDR0, "TRCPIDR0", AArch64_SYSREG_TRCPIDR0, 0x8BC7, true, false,  {0}  }, // 1066
-  { "TRCPIDR1", AArch64_SYSREG_TRCPIDR1, "TRCPIDR1", AArch64_SYSREG_TRCPIDR1, 0x8BCF, true, false,  {0}  }, // 1067
-  { "TRCPIDR2", AArch64_SYSREG_TRCPIDR2, "TRCPIDR2", AArch64_SYSREG_TRCPIDR2, 0x8BD7, true, false,  {0}  }, // 1068
-  { "TRCPIDR3", AArch64_SYSREG_TRCPIDR3, "TRCPIDR3", AArch64_SYSREG_TRCPIDR3, 0x8BDF, true, false,  {0}  }, // 1069
-  { "TRCPIDR4", AArch64_SYSREG_TRCPIDR4, "TRCPIDR4", AArch64_SYSREG_TRCPIDR4, 0x8BA7, true, false,  {0}  }, // 1070
-  { "TRCPIDR5", AArch64_SYSREG_TRCPIDR5, "TRCPIDR5", AArch64_SYSREG_TRCPIDR5, 0x8BAF, true, false,  {0}  }, // 1071
-  { "TRCPIDR6", AArch64_SYSREG_TRCPIDR6, "TRCPIDR6", AArch64_SYSREG_TRCPIDR6, 0x8BB7, true, false,  {0}  }, // 1072
-  { "TRCPIDR7", AArch64_SYSREG_TRCPIDR7, "TRCPIDR7", AArch64_SYSREG_TRCPIDR7, 0x8BBF, true, false,  {0}  }, // 1073
-  { "TRCPRGCTLR", AArch64_SYSREG_TRCPRGCTLR, "TRCPRGCTLR", AArch64_SYSREG_TRCPRGCTLR, 0x8808, true, true,  {0}  }, // 1074
-  { "TRCPROCSELR", AArch64_SYSREG_TRCPROCSELR, "TRCPROCSELR", AArch64_SYSREG_TRCPROCSELR, 0x8810, true, true,  {0}  }, // 1075
-  { "TRCQCTLR", AArch64_SYSREG_TRCQCTLR, "TRCQCTLR", AArch64_SYSREG_TRCQCTLR, 0x8809, true, true,  {0}  }, // 1076
-  { "TRCRSCTLR10", AArch64_SYSREG_TRCRSCTLR10, "TRCRSCTLR10", AArch64_SYSREG_TRCRSCTLR10, 0x88D0, true, true,  {0}  }, // 1077
-  { "TRCRSCTLR11", AArch64_SYSREG_TRCRSCTLR11, "TRCRSCTLR11", AArch64_SYSREG_TRCRSCTLR11, 0x88D8, true, true,  {0}  }, // 1078
-  { "TRCRSCTLR12", AArch64_SYSREG_TRCRSCTLR12, "TRCRSCTLR12", AArch64_SYSREG_TRCRSCTLR12, 0x88E0, true, true,  {0}  }, // 1079
-  { "TRCRSCTLR13", AArch64_SYSREG_TRCRSCTLR13, "TRCRSCTLR13", AArch64_SYSREG_TRCRSCTLR13, 0x88E8, true, true,  {0}  }, // 1080
-  { "TRCRSCTLR14", AArch64_SYSREG_TRCRSCTLR14, "TRCRSCTLR14", AArch64_SYSREG_TRCRSCTLR14, 0x88F0, true, true,  {0}  }, // 1081
-  { "TRCRSCTLR15", AArch64_SYSREG_TRCRSCTLR15, "TRCRSCTLR15", AArch64_SYSREG_TRCRSCTLR15, 0x88F8, true, true,  {0}  }, // 1082
-  { "TRCRSCTLR16", AArch64_SYSREG_TRCRSCTLR16, "TRCRSCTLR16", AArch64_SYSREG_TRCRSCTLR16, 0x8881, true, true,  {0}  }, // 1083
-  { "TRCRSCTLR17", AArch64_SYSREG_TRCRSCTLR17, "TRCRSCTLR17", AArch64_SYSREG_TRCRSCTLR17, 0x8889, true, true,  {0}  }, // 1084
-  { "TRCRSCTLR18", AArch64_SYSREG_TRCRSCTLR18, "TRCRSCTLR18", AArch64_SYSREG_TRCRSCTLR18, 0x8891, true, true,  {0}  }, // 1085
-  { "TRCRSCTLR19", AArch64_SYSREG_TRCRSCTLR19, "TRCRSCTLR19", AArch64_SYSREG_TRCRSCTLR19, 0x8899, true, true,  {0}  }, // 1086
-  { "TRCRSCTLR2", AArch64_SYSREG_TRCRSCTLR2, "TRCRSCTLR2", AArch64_SYSREG_TRCRSCTLR2, 0x8890, true, true,  {0}  }, // 1087
-  { "TRCRSCTLR20", AArch64_SYSREG_TRCRSCTLR20, "TRCRSCTLR20", AArch64_SYSREG_TRCRSCTLR20, 0x88A1, true, true,  {0}  }, // 1088
-  { "TRCRSCTLR21", AArch64_SYSREG_TRCRSCTLR21, "TRCRSCTLR21", AArch64_SYSREG_TRCRSCTLR21, 0x88A9, true, true,  {0}  }, // 1089
-  { "TRCRSCTLR22", AArch64_SYSREG_TRCRSCTLR22, "TRCRSCTLR22", AArch64_SYSREG_TRCRSCTLR22, 0x88B1, true, true,  {0}  }, // 1090
-  { "TRCRSCTLR23", AArch64_SYSREG_TRCRSCTLR23, "TRCRSCTLR23", AArch64_SYSREG_TRCRSCTLR23, 0x88B9, true, true,  {0}  }, // 1091
-  { "TRCRSCTLR24", AArch64_SYSREG_TRCRSCTLR24, "TRCRSCTLR24", AArch64_SYSREG_TRCRSCTLR24, 0x88C1, true, true,  {0}  }, // 1092
-  { "TRCRSCTLR25", AArch64_SYSREG_TRCRSCTLR25, "TRCRSCTLR25", AArch64_SYSREG_TRCRSCTLR25, 0x88C9, true, true,  {0}  }, // 1093
-  { "TRCRSCTLR26", AArch64_SYSREG_TRCRSCTLR26, "TRCRSCTLR26", AArch64_SYSREG_TRCRSCTLR26, 0x88D1, true, true,  {0}  }, // 1094
-  { "TRCRSCTLR27", AArch64_SYSREG_TRCRSCTLR27, "TRCRSCTLR27", AArch64_SYSREG_TRCRSCTLR27, 0x88D9, true, true,  {0}  }, // 1095
-  { "TRCRSCTLR28", AArch64_SYSREG_TRCRSCTLR28, "TRCRSCTLR28", AArch64_SYSREG_TRCRSCTLR28, 0x88E1, true, true,  {0}  }, // 1096
-  { "TRCRSCTLR29", AArch64_SYSREG_TRCRSCTLR29, "TRCRSCTLR29", AArch64_SYSREG_TRCRSCTLR29, 0x88E9, true, true,  {0}  }, // 1097
-  { "TRCRSCTLR3", AArch64_SYSREG_TRCRSCTLR3, "TRCRSCTLR3", AArch64_SYSREG_TRCRSCTLR3, 0x8898, true, true,  {0}  }, // 1098
-  { "TRCRSCTLR30", AArch64_SYSREG_TRCRSCTLR30, "TRCRSCTLR30", AArch64_SYSREG_TRCRSCTLR30, 0x88F1, true, true,  {0}  }, // 1099
-  { "TRCRSCTLR31", AArch64_SYSREG_TRCRSCTLR31, "TRCRSCTLR31", AArch64_SYSREG_TRCRSCTLR31, 0x88F9, true, true,  {0}  }, // 1100
-  { "TRCRSCTLR4", AArch64_SYSREG_TRCRSCTLR4, "TRCRSCTLR4", AArch64_SYSREG_TRCRSCTLR4, 0x88A0, true, true,  {0}  }, // 1101
-  { "TRCRSCTLR5", AArch64_SYSREG_TRCRSCTLR5, "TRCRSCTLR5", AArch64_SYSREG_TRCRSCTLR5, 0x88A8, true, true,  {0}  }, // 1102
-  { "TRCRSCTLR6", AArch64_SYSREG_TRCRSCTLR6, "TRCRSCTLR6", AArch64_SYSREG_TRCRSCTLR6, 0x88B0, true, true,  {0}  }, // 1103
-  { "TRCRSCTLR7", AArch64_SYSREG_TRCRSCTLR7, "TRCRSCTLR7", AArch64_SYSREG_TRCRSCTLR7, 0x88B8, true, true,  {0}  }, // 1104
-  { "TRCRSCTLR8", AArch64_SYSREG_TRCRSCTLR8, "TRCRSCTLR8", AArch64_SYSREG_TRCRSCTLR8, 0x88C0, true, true,  {0}  }, // 1105
-  { "TRCRSCTLR9", AArch64_SYSREG_TRCRSCTLR9, "TRCRSCTLR9", AArch64_SYSREG_TRCRSCTLR9, 0x88C8, true, true,  {0}  }, // 1106
-  { "TRCRSR", AArch64_SYSREG_TRCRSR, "TRCRSR", AArch64_SYSREG_TRCRSR, 0x8850, true, true,  {AArch64_FeatureETE}  }, // 1107
-  { "TRCSEQEVR0", AArch64_SYSREG_TRCSEQEVR0, "TRCSEQEVR0", AArch64_SYSREG_TRCSEQEVR0, 0x8804, true, true,  {0}  }, // 1108
-  { "TRCSEQEVR1", AArch64_SYSREG_TRCSEQEVR1, "TRCSEQEVR1", AArch64_SYSREG_TRCSEQEVR1, 0x880C, true, true,  {0}  }, // 1109
-  { "TRCSEQEVR2", AArch64_SYSREG_TRCSEQEVR2, "TRCSEQEVR2", AArch64_SYSREG_TRCSEQEVR2, 0x8814, true, true,  {0}  }, // 1110
-  { "TRCSEQRSTEVR", AArch64_SYSREG_TRCSEQRSTEVR, "TRCSEQRSTEVR", AArch64_SYSREG_TRCSEQRSTEVR, 0x8834, true, true,  {0}  }, // 1111
-  { "TRCSEQSTR", AArch64_SYSREG_TRCSEQSTR, "TRCSEQSTR", AArch64_SYSREG_TRCSEQSTR, 0x883C, true, true,  {0}  }, // 1112
-  { "TRCSSCCR0", AArch64_SYSREG_TRCSSCCR0, "TRCSSCCR0", AArch64_SYSREG_TRCSSCCR0, 0x8882, true, true,  {0}  }, // 1113
-  { "TRCSSCCR1", AArch64_SYSREG_TRCSSCCR1, "TRCSSCCR1", AArch64_SYSREG_TRCSSCCR1, 0x888A, true, true,  {0}  }, // 1114
-  { "TRCSSCCR2", AArch64_SYSREG_TRCSSCCR2, "TRCSSCCR2", AArch64_SYSREG_TRCSSCCR2, 0x8892, true, true,  {0}  }, // 1115
-  { "TRCSSCCR3", AArch64_SYSREG_TRCSSCCR3, "TRCSSCCR3", AArch64_SYSREG_TRCSSCCR3, 0x889A, true, true,  {0}  }, // 1116
-  { "TRCSSCCR4", AArch64_SYSREG_TRCSSCCR4, "TRCSSCCR4", AArch64_SYSREG_TRCSSCCR4, 0x88A2, true, true,  {0}  }, // 1117
-  { "TRCSSCCR5", AArch64_SYSREG_TRCSSCCR5, "TRCSSCCR5", AArch64_SYSREG_TRCSSCCR5, 0x88AA, true, true,  {0}  }, // 1118
-  { "TRCSSCCR6", AArch64_SYSREG_TRCSSCCR6, "TRCSSCCR6", AArch64_SYSREG_TRCSSCCR6, 0x88B2, true, true,  {0}  }, // 1119
-  { "TRCSSCCR7", AArch64_SYSREG_TRCSSCCR7, "TRCSSCCR7", AArch64_SYSREG_TRCSSCCR7, 0x88BA, true, true,  {0}  }, // 1120
-  { "TRCSSCSR0", AArch64_SYSREG_TRCSSCSR0, "TRCSSCSR0", AArch64_SYSREG_TRCSSCSR0, 0x88C2, true, true,  {0}  }, // 1121
-  { "TRCSSCSR1", AArch64_SYSREG_TRCSSCSR1, "TRCSSCSR1", AArch64_SYSREG_TRCSSCSR1, 0x88CA, true, true,  {0}  }, // 1122
-  { "TRCSSCSR2", AArch64_SYSREG_TRCSSCSR2, "TRCSSCSR2", AArch64_SYSREG_TRCSSCSR2, 0x88D2, true, true,  {0}  }, // 1123
-  { "TRCSSCSR3", AArch64_SYSREG_TRCSSCSR3, "TRCSSCSR3", AArch64_SYSREG_TRCSSCSR3, 0x88DA, true, true,  {0}  }, // 1124
-  { "TRCSSCSR4", AArch64_SYSREG_TRCSSCSR4, "TRCSSCSR4", AArch64_SYSREG_TRCSSCSR4, 0x88E2, true, true,  {0}  }, // 1125
-  { "TRCSSCSR5", AArch64_SYSREG_TRCSSCSR5, "TRCSSCSR5", AArch64_SYSREG_TRCSSCSR5, 0x88EA, true, true,  {0}  }, // 1126
-  { "TRCSSCSR6", AArch64_SYSREG_TRCSSCSR6, "TRCSSCSR6", AArch64_SYSREG_TRCSSCSR6, 0x88F2, true, true,  {0}  }, // 1127
-  { "TRCSSCSR7", AArch64_SYSREG_TRCSSCSR7, "TRCSSCSR7", AArch64_SYSREG_TRCSSCSR7, 0x88FA, true, true,  {0}  }, // 1128
-  { "TRCSSPCICR0", AArch64_SYSREG_TRCSSPCICR0, "TRCSSPCICR0", AArch64_SYSREG_TRCSSPCICR0, 0x8883, true, true,  {0}  }, // 1129
-  { "TRCSSPCICR1", AArch64_SYSREG_TRCSSPCICR1, "TRCSSPCICR1", AArch64_SYSREG_TRCSSPCICR1, 0x888B, true, true,  {0}  }, // 1130
-  { "TRCSSPCICR2", AArch64_SYSREG_TRCSSPCICR2, "TRCSSPCICR2", AArch64_SYSREG_TRCSSPCICR2, 0x8893, true, true,  {0}  }, // 1131
-  { "TRCSSPCICR3", AArch64_SYSREG_TRCSSPCICR3, "TRCSSPCICR3", AArch64_SYSREG_TRCSSPCICR3, 0x889B, true, true,  {0}  }, // 1132
-  { "TRCSSPCICR4", AArch64_SYSREG_TRCSSPCICR4, "TRCSSPCICR4", AArch64_SYSREG_TRCSSPCICR4, 0x88A3, true, true,  {0}  }, // 1133
-  { "TRCSSPCICR5", AArch64_SYSREG_TRCSSPCICR5, "TRCSSPCICR5", AArch64_SYSREG_TRCSSPCICR5, 0x88AB, true, true,  {0}  }, // 1134
-  { "TRCSSPCICR6", AArch64_SYSREG_TRCSSPCICR6, "TRCSSPCICR6", AArch64_SYSREG_TRCSSPCICR6, 0x88B3, true, true,  {0}  }, // 1135
-  { "TRCSSPCICR7", AArch64_SYSREG_TRCSSPCICR7, "TRCSSPCICR7", AArch64_SYSREG_TRCSSPCICR7, 0x88BB, true, true,  {0}  }, // 1136
-  { "TRCSTALLCTLR", AArch64_SYSREG_TRCSTALLCTLR, "TRCSTALLCTLR", AArch64_SYSREG_TRCSTALLCTLR, 0x8858, true, true,  {0}  }, // 1137
-  { "TRCSTATR", AArch64_SYSREG_TRCSTATR, "TRCSTATR", AArch64_SYSREG_TRCSTATR, 0x8818, true, false,  {0}  }, // 1138
-  { "TRCSYNCPR", AArch64_SYSREG_TRCSYNCPR, "TRCSYNCPR", AArch64_SYSREG_TRCSYNCPR, 0x8868, true, true,  {0}  }, // 1139
-  { "TRCTRACEIDR", AArch64_SYSREG_TRCTRACEIDR, "TRCTRACEIDR", AArch64_SYSREG_TRCTRACEIDR, 0x8801, true, true,  {0}  }, // 1140
-  { "TRCTSCTLR", AArch64_SYSREG_TRCTSCTLR, "TRCTSCTLR", AArch64_SYSREG_TRCTSCTLR, 0x8860, true, true,  {0}  }, // 1141
-  { "TRCVDARCCTLR", AArch64_SYSREG_TRCVDARCCTLR, "TRCVDARCCTLR", AArch64_SYSREG_TRCVDARCCTLR, 0x8852, true, true,  {0}  }, // 1142
-  { "TRCVDCTLR", AArch64_SYSREG_TRCVDCTLR, "TRCVDCTLR", AArch64_SYSREG_TRCVDCTLR, 0x8842, true, true,  {0}  }, // 1143
-  { "TRCVDSACCTLR", AArch64_SYSREG_TRCVDSACCTLR, "TRCVDSACCTLR", AArch64_SYSREG_TRCVDSACCTLR, 0x884A, true, true,  {0}  }, // 1144
-  { "TRCVICTLR", AArch64_SYSREG_TRCVICTLR, "TRCVICTLR", AArch64_SYSREG_TRCVICTLR, 0x8802, true, true,  {0}  }, // 1145
-  { "TRCVIIECTLR", AArch64_SYSREG_TRCVIIECTLR, "TRCVIIECTLR", AArch64_SYSREG_TRCVIIECTLR, 0x880A, true, true,  {0}  }, // 1146
-  { "TRCVIPCSSCTLR", AArch64_SYSREG_TRCVIPCSSCTLR, "TRCVIPCSSCTLR", AArch64_SYSREG_TRCVIPCSSCTLR, 0x881A, true, true,  {0}  }, // 1147
-  { "TRCVISSCTLR", AArch64_SYSREG_TRCVISSCTLR, "TRCVISSCTLR", AArch64_SYSREG_TRCVISSCTLR, 0x8812, true, true,  {0}  }, // 1148
-  { "TRCVMIDCCTLR0", AArch64_SYSREG_TRCVMIDCCTLR0, "TRCVMIDCCTLR0", AArch64_SYSREG_TRCVMIDCCTLR0, 0x8992, true, true,  {0}  }, // 1149
-  { "TRCVMIDCCTLR1", AArch64_SYSREG_TRCVMIDCCTLR1, "TRCVMIDCCTLR1", AArch64_SYSREG_TRCVMIDCCTLR1, 0x899A, true, true,  {0}  }, // 1150
-  { "TRCVMIDCVR0", AArch64_SYSREG_TRCVMIDCVR0, "TRCVMIDCVR0", AArch64_SYSREG_TRCVMIDCVR0, 0x8981, true, true,  {0}  }, // 1151
-  { "TRCVMIDCVR1", AArch64_SYSREG_TRCVMIDCVR1, "TRCVMIDCVR1", AArch64_SYSREG_TRCVMIDCVR1, 0x8991, true, true,  {0}  }, // 1152
-  { "TRCVMIDCVR2", AArch64_SYSREG_TRCVMIDCVR2, "TRCVMIDCVR2", AArch64_SYSREG_TRCVMIDCVR2, 0x89A1, true, true,  {0}  }, // 1153
-  { "TRCVMIDCVR3", AArch64_SYSREG_TRCVMIDCVR3, "TRCVMIDCVR3", AArch64_SYSREG_TRCVMIDCVR3, 0x89B1, true, true,  {0}  }, // 1154
-  { "TRCVMIDCVR4", AArch64_SYSREG_TRCVMIDCVR4, "TRCVMIDCVR4", AArch64_SYSREG_TRCVMIDCVR4, 0x89C1, true, true,  {0}  }, // 1155
-  { "TRCVMIDCVR5", AArch64_SYSREG_TRCVMIDCVR5, "TRCVMIDCVR5", AArch64_SYSREG_TRCVMIDCVR5, 0x89D1, true, true,  {0}  }, // 1156
-  { "TRCVMIDCVR6", AArch64_SYSREG_TRCVMIDCVR6, "TRCVMIDCVR6", AArch64_SYSREG_TRCVMIDCVR6, 0x89E1, true, true,  {0}  }, // 1157
-  { "TRCVMIDCVR7", AArch64_SYSREG_TRCVMIDCVR7, "TRCVMIDCVR7", AArch64_SYSREG_TRCVMIDCVR7, 0x89F1, true, true,  {0}  }, // 1158
-  { "TRFCR_EL1", AArch64_SYSREG_TRFCR_EL1, "TRFCR_EL1", AArch64_SYSREG_TRFCR_EL1, 0xC091, true, true,  {AArch64_FeatureTRACEV8_4}  }, // 1159
-  { "TRFCR_EL12", AArch64_SYSREG_TRFCR_EL12, "TRFCR_EL12", AArch64_SYSREG_TRFCR_EL12, 0xE891, true, true,  {AArch64_FeatureTRACEV8_4}  }, // 1160
-  { "TRFCR_EL2", AArch64_SYSREG_TRFCR_EL2, "TRFCR_EL2", AArch64_SYSREG_TRFCR_EL2, 0xE091, true, true,  {AArch64_FeatureTRACEV8_4}  }, // 1161
-  { "TTBR0_EL1", AArch64_SYSREG_TTBR0_EL1, "TTBR0_EL1", AArch64_SYSREG_TTBR0_EL1, 0xC100, true, true,  {0}  }, // 1162
-  { "TTBR0_EL12", AArch64_SYSREG_TTBR0_EL12, "TTBR0_EL12", AArch64_SYSREG_TTBR0_EL12, 0xE900, true, true,  {AArch64_FeatureVH}  }, // 1163
-  { "TTBR0_EL2", AArch64_SYSREG_TTBR0_EL2, "VSCTLR_EL2", AArch64_SYSREG_VSCTLR_EL2, 0xE100, true, true,  {AArch64_FeatureEL2VMSA}  }, // 1164
-  { "TTBR0_EL3", AArch64_SYSREG_TTBR0_EL3, "TTBR0_EL3", AArch64_SYSREG_TTBR0_EL3, 0xF100, true, true,  {0}  }, // 1165
-  { "TTBR1_EL1", AArch64_SYSREG_TTBR1_EL1, "TTBR1_EL1", AArch64_SYSREG_TTBR1_EL1, 0xC101, true, true,  {0}  }, // 1166
-  { "TTBR1_EL12", AArch64_SYSREG_TTBR1_EL12, "TTBR1_EL12", AArch64_SYSREG_TTBR1_EL12, 0xE901, true, true,  {AArch64_FeatureVH}  }, // 1167
-  { "TTBR1_EL2", AArch64_SYSREG_TTBR1_EL2, "TTBR1_EL2", AArch64_SYSREG_TTBR1_EL2, 0xE101, true, true,  {AArch64_FeatureVH}  }, // 1168
-  { "UAO", AArch64_SYSREG_UAO, "UAO", AArch64_SYSREG_UAO, 0xC214, true, true,  {AArch64_FeaturePsUAO}  }, // 1169
-  { "VBAR_EL1", AArch64_SYSREG_VBAR_EL1, "VBAR_EL1", AArch64_SYSREG_VBAR_EL1, 0xC600, true, true,  {0}  }, // 1170
-  { "VBAR_EL12", AArch64_SYSREG_VBAR_EL12, "VBAR_EL12", AArch64_SYSREG_VBAR_EL12, 0xEE00, true, true,  {AArch64_FeatureVH}  }, // 1171
-  { "VBAR_EL2", AArch64_SYSREG_VBAR_EL2, "VBAR_EL2", AArch64_SYSREG_VBAR_EL2, 0xE600, true, true,  {0}  }, // 1172
-  { "VBAR_EL3", AArch64_SYSREG_VBAR_EL3, "VBAR_EL3", AArch64_SYSREG_VBAR_EL3, 0xF600, true, true,  {0}  }, // 1173
-  { "VDISR_EL2", AArch64_SYSREG_VDISR_EL2, "VDISR_EL2", AArch64_SYSREG_VDISR_EL2, 0xE609, true, true,  {AArch64_FeatureRAS}  }, // 1174
-  { "VMECID_A_EL2", AArch64_SYSREG_VMECID_A_EL2, "VMECID_A_EL2", AArch64_SYSREG_VMECID_A_EL2, 0xE549, true, true,  {AArch64_FeatureMEC}  }, // 1175
-  { "VMECID_P_EL2", AArch64_SYSREG_VMECID_P_EL2, "VMECID_P_EL2", AArch64_SYSREG_VMECID_P_EL2, 0xE548, true, true,  {AArch64_FeatureMEC}  }, // 1176
-  { "VMPIDR_EL2", AArch64_SYSREG_VMPIDR_EL2, "VMPIDR_EL2", AArch64_SYSREG_VMPIDR_EL2, 0xE005, true, true,  {0}  }, // 1177
-  { "VNCR_EL2", AArch64_SYSREG_VNCR_EL2, "VNCR_EL2", AArch64_SYSREG_VNCR_EL2, 0xE110, true, true,  {AArch64_FeatureNV}  }, // 1178
-  { "VPIDR_EL2", AArch64_SYSREG_VPIDR_EL2, "VPIDR_EL2", AArch64_SYSREG_VPIDR_EL2, 0xE000, true, true,  {0}  }, // 1179
-  { "VSCTLR_EL2", AArch64_SYSREG_VSCTLR_EL2, "TTBR0_EL2", AArch64_SYSREG_TTBR0_EL2, 0xE100, true, true,  {AArch64_HasV8_0rOps}  }, // 1180
-  { "VSESR_EL2", AArch64_SYSREG_VSESR_EL2, "VSESR_EL2", AArch64_SYSREG_VSESR_EL2, 0xE293, true, true,  {AArch64_FeatureRAS}  }, // 1181
-  { "VSTCR_EL2", AArch64_SYSREG_VSTCR_EL2, "VSTCR_EL2", AArch64_SYSREG_VSTCR_EL2, 0xE132, true, true,  {AArch64_FeatureSEL2}  }, // 1182
-  { "VSTTBR_EL2", AArch64_SYSREG_VSTTBR_EL2, "VSTTBR_EL2", AArch64_SYSREG_VSTTBR_EL2, 0xE130, true, true,  {AArch64_HasV8_0aOps}  }, // 1183
-  { "VTCR_EL2", AArch64_SYSREG_VTCR_EL2, "VTCR_EL2", AArch64_SYSREG_VTCR_EL2, 0xE10A, true, true,  {0}  }, // 1184
-  { "VTTBR_EL2", AArch64_SYSREG_VTTBR_EL2, "VTTBR_EL2", AArch64_SYSREG_VTTBR_EL2, 0xE108, true, true,  {AArch64_FeatureEL2VMSA}  }, // 1185
-  { "ZCR_EL1", AArch64_SYSREG_ZCR_EL1, "ZCR_EL1", AArch64_SYSREG_ZCR_EL1, 0xC090, true, true,  {AArch64_FeatureSVE}  }, // 1186
-  { "ZCR_EL12", AArch64_SYSREG_ZCR_EL12, "ZCR_EL12", AArch64_SYSREG_ZCR_EL12, 0xE890, true, true,  {AArch64_FeatureSVE}  }, // 1187
-  { "ZCR_EL2", AArch64_SYSREG_ZCR_EL2, "ZCR_EL2", AArch64_SYSREG_ZCR_EL2, 0xE090, true, true,  {AArch64_FeatureSVE}  }, // 1188
-  { "ZCR_EL3", AArch64_SYSREG_ZCR_EL3, "ZCR_EL3", AArch64_SYSREG_ZCR_EL3, 0xF090, true, true,  {AArch64_FeatureSVE}  }, // 1189
+  { "ACCDATA_EL1", { AArch64_SYSREG_ACCDATA_EL1 }, "ACCDATA_EL1", { AArch64_SYSREG_ACCDATA_EL1 }, 0xC685, true, true,  {AArch64_FeatureLS64}  }, // 0
+  { "ACTLR_EL1", { AArch64_SYSREG_ACTLR_EL1 }, "ACTLR_EL1", { AArch64_SYSREG_ACTLR_EL1 }, 0xC081, true, true,  {0}  }, // 1
+  { "ACTLR_EL2", { AArch64_SYSREG_ACTLR_EL2 }, "ACTLR_EL2", { AArch64_SYSREG_ACTLR_EL2 }, 0xE081, true, true,  {0}  }, // 2
+  { "ACTLR_EL3", { AArch64_SYSREG_ACTLR_EL3 }, "ACTLR_EL3", { AArch64_SYSREG_ACTLR_EL3 }, 0xF081, true, true,  {0}  }, // 3
+  { "AFSR0_EL1", { AArch64_SYSREG_AFSR0_EL1 }, "AFSR0_EL1", { AArch64_SYSREG_AFSR0_EL1 }, 0xC288, true, true,  {0}  }, // 4
+  { "AFSR0_EL12", { AArch64_SYSREG_AFSR0_EL12 }, "AFSR0_EL12", { AArch64_SYSREG_AFSR0_EL12 }, 0xEA88, true, true,  {AArch64_FeatureVH}  }, // 5
+  { "AFSR0_EL2", { AArch64_SYSREG_AFSR0_EL2 }, "AFSR0_EL2", { AArch64_SYSREG_AFSR0_EL2 }, 0xE288, true, true,  {0}  }, // 6
+  { "AFSR0_EL3", { AArch64_SYSREG_AFSR0_EL3 }, "AFSR0_EL3", { AArch64_SYSREG_AFSR0_EL3 }, 0xF288, true, true,  {0}  }, // 7
+  { "AFSR1_EL1", { AArch64_SYSREG_AFSR1_EL1 }, "AFSR1_EL1", { AArch64_SYSREG_AFSR1_EL1 }, 0xC289, true, true,  {0}  }, // 8
+  { "AFSR1_EL12", { AArch64_SYSREG_AFSR1_EL12 }, "AFSR1_EL12", { AArch64_SYSREG_AFSR1_EL12 }, 0xEA89, true, true,  {AArch64_FeatureVH}  }, // 9
+  { "AFSR1_EL2", { AArch64_SYSREG_AFSR1_EL2 }, "AFSR1_EL2", { AArch64_SYSREG_AFSR1_EL2 }, 0xE289, true, true,  {0}  }, // 10
+  { "AFSR1_EL3", { AArch64_SYSREG_AFSR1_EL3 }, "AFSR1_EL3", { AArch64_SYSREG_AFSR1_EL3 }, 0xF289, true, true,  {0}  }, // 11
+  { "AIDR_EL1", { AArch64_SYSREG_AIDR_EL1 }, "AIDR_EL1", { AArch64_SYSREG_AIDR_EL1 }, 0xC807, true, false,  {0}  }, // 12
+  { "ALLINT", { AArch64_SYSREG_ALLINT }, "ALLINT", { AArch64_SYSREG_ALLINT }, 0xC218, true, true,  {AArch64_FeatureNMI}  }, // 13
+  { "AMAIR2_EL1", { AArch64_SYSREG_AMAIR2_EL1 }, "AMAIR2_EL1", { AArch64_SYSREG_AMAIR2_EL1 }, 0xC519, true, true,  {0}  }, // 14
+  { "AMAIR2_EL12", { AArch64_SYSREG_AMAIR2_EL12 }, "AMAIR2_EL12", { AArch64_SYSREG_AMAIR2_EL12 }, 0xED19, true, true,  {0}  }, // 15
+  { "AMAIR2_EL2", { AArch64_SYSREG_AMAIR2_EL2 }, "AMAIR2_EL2", { AArch64_SYSREG_AMAIR2_EL2 }, 0xE519, true, true,  {0}  }, // 16
+  { "AMAIR2_EL3", { AArch64_SYSREG_AMAIR2_EL3 }, "AMAIR2_EL3", { AArch64_SYSREG_AMAIR2_EL3 }, 0xF519, true, true,  {0}  }, // 17
+  { "AMAIR_EL1", { AArch64_SYSREG_AMAIR_EL1 }, "AMAIR_EL1", { AArch64_SYSREG_AMAIR_EL1 }, 0xC518, true, true,  {0}  }, // 18
+  { "AMAIR_EL12", { AArch64_SYSREG_AMAIR_EL12 }, "AMAIR_EL12", { AArch64_SYSREG_AMAIR_EL12 }, 0xED18, true, true,  {AArch64_FeatureVH}  }, // 19
+  { "AMAIR_EL2", { AArch64_SYSREG_AMAIR_EL2 }, "AMAIR_EL2", { AArch64_SYSREG_AMAIR_EL2 }, 0xE518, true, true,  {0}  }, // 20
+  { "AMAIR_EL3", { AArch64_SYSREG_AMAIR_EL3 }, "AMAIR_EL3", { AArch64_SYSREG_AMAIR_EL3 }, 0xF518, true, true,  {0}  }, // 21
+  { "AMCFGR_EL0", { AArch64_SYSREG_AMCFGR_EL0 }, "AMCFGR_EL0", { AArch64_SYSREG_AMCFGR_EL0 }, 0xDE91, true, false,  {AArch64_FeatureAM}  }, // 22
+  { "AMCG1IDR_EL0", { AArch64_SYSREG_AMCG1IDR_EL0 }, "AMCG1IDR_EL0", { AArch64_SYSREG_AMCG1IDR_EL0 }, 0xDE96, true, false,  {AArch64_FeatureAMVS}  }, // 23
+  { "AMCGCR_EL0", { AArch64_SYSREG_AMCGCR_EL0 }, "AMCGCR_EL0", { AArch64_SYSREG_AMCGCR_EL0 }, 0xDE92, true, false,  {AArch64_FeatureAM}  }, // 24
+  { "AMCNTENCLR0_EL0", { AArch64_SYSREG_AMCNTENCLR0_EL0 }, "AMCNTENCLR0_EL0", { AArch64_SYSREG_AMCNTENCLR0_EL0 }, 0xDE94, true, true,  {AArch64_FeatureAM}  }, // 25
+  { "AMCNTENCLR1_EL0", { AArch64_SYSREG_AMCNTENCLR1_EL0 }, "AMCNTENCLR1_EL0", { AArch64_SYSREG_AMCNTENCLR1_EL0 }, 0xDE98, true, true,  {AArch64_FeatureAM}  }, // 26
+  { "AMCNTENSET0_EL0", { AArch64_SYSREG_AMCNTENSET0_EL0 }, "AMCNTENSET0_EL0", { AArch64_SYSREG_AMCNTENSET0_EL0 }, 0xDE95, true, true,  {AArch64_FeatureAM}  }, // 27
+  { "AMCNTENSET1_EL0", { AArch64_SYSREG_AMCNTENSET1_EL0 }, "AMCNTENSET1_EL0", { AArch64_SYSREG_AMCNTENSET1_EL0 }, 0xDE99, true, true,  {AArch64_FeatureAM}  }, // 28
+  { "AMCR_EL0", { AArch64_SYSREG_AMCR_EL0 }, "AMCR_EL0", { AArch64_SYSREG_AMCR_EL0 }, 0xDE90, true, true,  {AArch64_FeatureAM}  }, // 29
+  { "AMEVCNTR00_EL0", { AArch64_SYSREG_AMEVCNTR00_EL0 }, "AMEVCNTR00_EL0", { AArch64_SYSREG_AMEVCNTR00_EL0 }, 0xDEA0, true, true,  {AArch64_FeatureAM}  }, // 30
+  { "AMEVCNTR01_EL0", { AArch64_SYSREG_AMEVCNTR01_EL0 }, "AMEVCNTR01_EL0", { AArch64_SYSREG_AMEVCNTR01_EL0 }, 0xDEA1, true, true,  {AArch64_FeatureAM}  }, // 31
+  { "AMEVCNTR02_EL0", { AArch64_SYSREG_AMEVCNTR02_EL0 }, "AMEVCNTR02_EL0", { AArch64_SYSREG_AMEVCNTR02_EL0 }, 0xDEA2, true, true,  {AArch64_FeatureAM}  }, // 32
+  { "AMEVCNTR03_EL0", { AArch64_SYSREG_AMEVCNTR03_EL0 }, "AMEVCNTR03_EL0", { AArch64_SYSREG_AMEVCNTR03_EL0 }, 0xDEA3, true, true,  {AArch64_FeatureAM}  }, // 33
+  { "AMEVCNTR10_EL0", { AArch64_SYSREG_AMEVCNTR10_EL0 }, "AMEVCNTR10_EL0", { AArch64_SYSREG_AMEVCNTR10_EL0 }, 0xDEE0, true, true,  {AArch64_FeatureAM}  }, // 34
+  { "AMEVCNTR110_EL0", { AArch64_SYSREG_AMEVCNTR110_EL0 }, "AMEVCNTR110_EL0", { AArch64_SYSREG_AMEVCNTR110_EL0 }, 0xDEEA, true, true,  {AArch64_FeatureAM}  }, // 35
+  { "AMEVCNTR111_EL0", { AArch64_SYSREG_AMEVCNTR111_EL0 }, "AMEVCNTR111_EL0", { AArch64_SYSREG_AMEVCNTR111_EL0 }, 0xDEEB, true, true,  {AArch64_FeatureAM}  }, // 36
+  { "AMEVCNTR112_EL0", { AArch64_SYSREG_AMEVCNTR112_EL0 }, "AMEVCNTR112_EL0", { AArch64_SYSREG_AMEVCNTR112_EL0 }, 0xDEEC, true, true,  {AArch64_FeatureAM}  }, // 37
+  { "AMEVCNTR113_EL0", { AArch64_SYSREG_AMEVCNTR113_EL0 }, "AMEVCNTR113_EL0", { AArch64_SYSREG_AMEVCNTR113_EL0 }, 0xDEED, true, true,  {AArch64_FeatureAM}  }, // 38
+  { "AMEVCNTR114_EL0", { AArch64_SYSREG_AMEVCNTR114_EL0 }, "AMEVCNTR114_EL0", { AArch64_SYSREG_AMEVCNTR114_EL0 }, 0xDEEE, true, true,  {AArch64_FeatureAM}  }, // 39
+  { "AMEVCNTR115_EL0", { AArch64_SYSREG_AMEVCNTR115_EL0 }, "AMEVCNTR115_EL0", { AArch64_SYSREG_AMEVCNTR115_EL0 }, 0xDEEF, true, true,  {AArch64_FeatureAM}  }, // 40
+  { "AMEVCNTR11_EL0", { AArch64_SYSREG_AMEVCNTR11_EL0 }, "AMEVCNTR11_EL0", { AArch64_SYSREG_AMEVCNTR11_EL0 }, 0xDEE1, true, true,  {AArch64_FeatureAM}  }, // 41
+  { "AMEVCNTR12_EL0", { AArch64_SYSREG_AMEVCNTR12_EL0 }, "AMEVCNTR12_EL0", { AArch64_SYSREG_AMEVCNTR12_EL0 }, 0xDEE2, true, true,  {AArch64_FeatureAM}  }, // 42
+  { "AMEVCNTR13_EL0", { AArch64_SYSREG_AMEVCNTR13_EL0 }, "AMEVCNTR13_EL0", { AArch64_SYSREG_AMEVCNTR13_EL0 }, 0xDEE3, true, true,  {AArch64_FeatureAM}  }, // 43
+  { "AMEVCNTR14_EL0", { AArch64_SYSREG_AMEVCNTR14_EL0 }, "AMEVCNTR14_EL0", { AArch64_SYSREG_AMEVCNTR14_EL0 }, 0xDEE4, true, true,  {AArch64_FeatureAM}  }, // 44
+  { "AMEVCNTR15_EL0", { AArch64_SYSREG_AMEVCNTR15_EL0 }, "AMEVCNTR15_EL0", { AArch64_SYSREG_AMEVCNTR15_EL0 }, 0xDEE5, true, true,  {AArch64_FeatureAM}  }, // 45
+  { "AMEVCNTR16_EL0", { AArch64_SYSREG_AMEVCNTR16_EL0 }, "AMEVCNTR16_EL0", { AArch64_SYSREG_AMEVCNTR16_EL0 }, 0xDEE6, true, true,  {AArch64_FeatureAM}  }, // 46
+  { "AMEVCNTR17_EL0", { AArch64_SYSREG_AMEVCNTR17_EL0 }, "AMEVCNTR17_EL0", { AArch64_SYSREG_AMEVCNTR17_EL0 }, 0xDEE7, true, true,  {AArch64_FeatureAM}  }, // 47
+  { "AMEVCNTR18_EL0", { AArch64_SYSREG_AMEVCNTR18_EL0 }, "AMEVCNTR18_EL0", { AArch64_SYSREG_AMEVCNTR18_EL0 }, 0xDEE8, true, true,  {AArch64_FeatureAM}  }, // 48
+  { "AMEVCNTR19_EL0", { AArch64_SYSREG_AMEVCNTR19_EL0 }, "AMEVCNTR19_EL0", { AArch64_SYSREG_AMEVCNTR19_EL0 }, 0xDEE9, true, true,  {AArch64_FeatureAM}  }, // 49
+  { "AMEVCNTVOFF00_EL2", { AArch64_SYSREG_AMEVCNTVOFF00_EL2 }, "AMEVCNTVOFF00_EL2", { AArch64_SYSREG_AMEVCNTVOFF00_EL2 }, 0xE6C0, true, true,  {AArch64_FeatureAMVS}  }, // 50
+  { "AMEVCNTVOFF010_EL2", { AArch64_SYSREG_AMEVCNTVOFF010_EL2 }, "AMEVCNTVOFF010_EL2", { AArch64_SYSREG_AMEVCNTVOFF010_EL2 }, 0xE6CA, true, true,  {AArch64_FeatureAMVS}  }, // 51
+  { "AMEVCNTVOFF011_EL2", { AArch64_SYSREG_AMEVCNTVOFF011_EL2 }, "AMEVCNTVOFF011_EL2", { AArch64_SYSREG_AMEVCNTVOFF011_EL2 }, 0xE6CB, true, true,  {AArch64_FeatureAMVS}  }, // 52
+  { "AMEVCNTVOFF012_EL2", { AArch64_SYSREG_AMEVCNTVOFF012_EL2 }, "AMEVCNTVOFF012_EL2", { AArch64_SYSREG_AMEVCNTVOFF012_EL2 }, 0xE6CC, true, true,  {AArch64_FeatureAMVS}  }, // 53
+  { "AMEVCNTVOFF013_EL2", { AArch64_SYSREG_AMEVCNTVOFF013_EL2 }, "AMEVCNTVOFF013_EL2", { AArch64_SYSREG_AMEVCNTVOFF013_EL2 }, 0xE6CD, true, true,  {AArch64_FeatureAMVS}  }, // 54
+  { "AMEVCNTVOFF014_EL2", { AArch64_SYSREG_AMEVCNTVOFF014_EL2 }, "AMEVCNTVOFF014_EL2", { AArch64_SYSREG_AMEVCNTVOFF014_EL2 }, 0xE6CE, true, true,  {AArch64_FeatureAMVS}  }, // 55
+  { "AMEVCNTVOFF015_EL2", { AArch64_SYSREG_AMEVCNTVOFF015_EL2 }, "AMEVCNTVOFF015_EL2", { AArch64_SYSREG_AMEVCNTVOFF015_EL2 }, 0xE6CF, true, true,  {AArch64_FeatureAMVS}  }, // 56
+  { "AMEVCNTVOFF01_EL2", { AArch64_SYSREG_AMEVCNTVOFF01_EL2 }, "AMEVCNTVOFF01_EL2", { AArch64_SYSREG_AMEVCNTVOFF01_EL2 }, 0xE6C1, true, true,  {AArch64_FeatureAMVS}  }, // 57
+  { "AMEVCNTVOFF02_EL2", { AArch64_SYSREG_AMEVCNTVOFF02_EL2 }, "AMEVCNTVOFF02_EL2", { AArch64_SYSREG_AMEVCNTVOFF02_EL2 }, 0xE6C2, true, true,  {AArch64_FeatureAMVS}  }, // 58
+  { "AMEVCNTVOFF03_EL2", { AArch64_SYSREG_AMEVCNTVOFF03_EL2 }, "AMEVCNTVOFF03_EL2", { AArch64_SYSREG_AMEVCNTVOFF03_EL2 }, 0xE6C3, true, true,  {AArch64_FeatureAMVS}  }, // 59
+  { "AMEVCNTVOFF04_EL2", { AArch64_SYSREG_AMEVCNTVOFF04_EL2 }, "AMEVCNTVOFF04_EL2", { AArch64_SYSREG_AMEVCNTVOFF04_EL2 }, 0xE6C4, true, true,  {AArch64_FeatureAMVS}  }, // 60
+  { "AMEVCNTVOFF05_EL2", { AArch64_SYSREG_AMEVCNTVOFF05_EL2 }, "AMEVCNTVOFF05_EL2", { AArch64_SYSREG_AMEVCNTVOFF05_EL2 }, 0xE6C5, true, true,  {AArch64_FeatureAMVS}  }, // 61
+  { "AMEVCNTVOFF06_EL2", { AArch64_SYSREG_AMEVCNTVOFF06_EL2 }, "AMEVCNTVOFF06_EL2", { AArch64_SYSREG_AMEVCNTVOFF06_EL2 }, 0xE6C6, true, true,  {AArch64_FeatureAMVS}  }, // 62
+  { "AMEVCNTVOFF07_EL2", { AArch64_SYSREG_AMEVCNTVOFF07_EL2 }, "AMEVCNTVOFF07_EL2", { AArch64_SYSREG_AMEVCNTVOFF07_EL2 }, 0xE6C7, true, true,  {AArch64_FeatureAMVS}  }, // 63
+  { "AMEVCNTVOFF08_EL2", { AArch64_SYSREG_AMEVCNTVOFF08_EL2 }, "AMEVCNTVOFF08_EL2", { AArch64_SYSREG_AMEVCNTVOFF08_EL2 }, 0xE6C8, true, true,  {AArch64_FeatureAMVS}  }, // 64
+  { "AMEVCNTVOFF09_EL2", { AArch64_SYSREG_AMEVCNTVOFF09_EL2 }, "AMEVCNTVOFF09_EL2", { AArch64_SYSREG_AMEVCNTVOFF09_EL2 }, 0xE6C9, true, true,  {AArch64_FeatureAMVS}  }, // 65
+  { "AMEVCNTVOFF10_EL2", { AArch64_SYSREG_AMEVCNTVOFF10_EL2 }, "AMEVCNTVOFF10_EL2", { AArch64_SYSREG_AMEVCNTVOFF10_EL2 }, 0xE6D0, true, true,  {AArch64_FeatureAMVS}  }, // 66
+  { "AMEVCNTVOFF110_EL2", { AArch64_SYSREG_AMEVCNTVOFF110_EL2 }, "AMEVCNTVOFF110_EL2", { AArch64_SYSREG_AMEVCNTVOFF110_EL2 }, 0xE6DA, true, true,  {AArch64_FeatureAMVS}  }, // 67
+  { "AMEVCNTVOFF111_EL2", { AArch64_SYSREG_AMEVCNTVOFF111_EL2 }, "AMEVCNTVOFF111_EL2", { AArch64_SYSREG_AMEVCNTVOFF111_EL2 }, 0xE6DB, true, true,  {AArch64_FeatureAMVS}  }, // 68
+  { "AMEVCNTVOFF112_EL2", { AArch64_SYSREG_AMEVCNTVOFF112_EL2 }, "AMEVCNTVOFF112_EL2", { AArch64_SYSREG_AMEVCNTVOFF112_EL2 }, 0xE6DC, true, true,  {AArch64_FeatureAMVS}  }, // 69
+  { "AMEVCNTVOFF113_EL2", { AArch64_SYSREG_AMEVCNTVOFF113_EL2 }, "AMEVCNTVOFF113_EL2", { AArch64_SYSREG_AMEVCNTVOFF113_EL2 }, 0xE6DD, true, true,  {AArch64_FeatureAMVS}  }, // 70
+  { "AMEVCNTVOFF114_EL2", { AArch64_SYSREG_AMEVCNTVOFF114_EL2 }, "AMEVCNTVOFF114_EL2", { AArch64_SYSREG_AMEVCNTVOFF114_EL2 }, 0xE6DE, true, true,  {AArch64_FeatureAMVS}  }, // 71
+  { "AMEVCNTVOFF115_EL2", { AArch64_SYSREG_AMEVCNTVOFF115_EL2 }, "AMEVCNTVOFF115_EL2", { AArch64_SYSREG_AMEVCNTVOFF115_EL2 }, 0xE6DF, true, true,  {AArch64_FeatureAMVS}  }, // 72
+  { "AMEVCNTVOFF11_EL2", { AArch64_SYSREG_AMEVCNTVOFF11_EL2 }, "AMEVCNTVOFF11_EL2", { AArch64_SYSREG_AMEVCNTVOFF11_EL2 }, 0xE6D1, true, true,  {AArch64_FeatureAMVS}  }, // 73
+  { "AMEVCNTVOFF12_EL2", { AArch64_SYSREG_AMEVCNTVOFF12_EL2 }, "AMEVCNTVOFF12_EL2", { AArch64_SYSREG_AMEVCNTVOFF12_EL2 }, 0xE6D2, true, true,  {AArch64_FeatureAMVS}  }, // 74
+  { "AMEVCNTVOFF13_EL2", { AArch64_SYSREG_AMEVCNTVOFF13_EL2 }, "AMEVCNTVOFF13_EL2", { AArch64_SYSREG_AMEVCNTVOFF13_EL2 }, 0xE6D3, true, true,  {AArch64_FeatureAMVS}  }, // 75
+  { "AMEVCNTVOFF14_EL2", { AArch64_SYSREG_AMEVCNTVOFF14_EL2 }, "AMEVCNTVOFF14_EL2", { AArch64_SYSREG_AMEVCNTVOFF14_EL2 }, 0xE6D4, true, true,  {AArch64_FeatureAMVS}  }, // 76
+  { "AMEVCNTVOFF15_EL2", { AArch64_SYSREG_AMEVCNTVOFF15_EL2 }, "AMEVCNTVOFF15_EL2", { AArch64_SYSREG_AMEVCNTVOFF15_EL2 }, 0xE6D5, true, true,  {AArch64_FeatureAMVS}  }, // 77
+  { "AMEVCNTVOFF16_EL2", { AArch64_SYSREG_AMEVCNTVOFF16_EL2 }, "AMEVCNTVOFF16_EL2", { AArch64_SYSREG_AMEVCNTVOFF16_EL2 }, 0xE6D6, true, true,  {AArch64_FeatureAMVS}  }, // 78
+  { "AMEVCNTVOFF17_EL2", { AArch64_SYSREG_AMEVCNTVOFF17_EL2 }, "AMEVCNTVOFF17_EL2", { AArch64_SYSREG_AMEVCNTVOFF17_EL2 }, 0xE6D7, true, true,  {AArch64_FeatureAMVS}  }, // 79
+  { "AMEVCNTVOFF18_EL2", { AArch64_SYSREG_AMEVCNTVOFF18_EL2 }, "AMEVCNTVOFF18_EL2", { AArch64_SYSREG_AMEVCNTVOFF18_EL2 }, 0xE6D8, true, true,  {AArch64_FeatureAMVS}  }, // 80
+  { "AMEVCNTVOFF19_EL2", { AArch64_SYSREG_AMEVCNTVOFF19_EL2 }, "AMEVCNTVOFF19_EL2", { AArch64_SYSREG_AMEVCNTVOFF19_EL2 }, 0xE6D9, true, true,  {AArch64_FeatureAMVS}  }, // 81
+  { "AMEVTYPER00_EL0", { AArch64_SYSREG_AMEVTYPER00_EL0 }, "AMEVTYPER00_EL0", { AArch64_SYSREG_AMEVTYPER00_EL0 }, 0xDEB0, true, false,  {AArch64_FeatureAM}  }, // 82
+  { "AMEVTYPER01_EL0", { AArch64_SYSREG_AMEVTYPER01_EL0 }, "AMEVTYPER01_EL0", { AArch64_SYSREG_AMEVTYPER01_EL0 }, 0xDEB1, true, false,  {AArch64_FeatureAM}  }, // 83
+  { "AMEVTYPER02_EL0", { AArch64_SYSREG_AMEVTYPER02_EL0 }, "AMEVTYPER02_EL0", { AArch64_SYSREG_AMEVTYPER02_EL0 }, 0xDEB2, true, false,  {AArch64_FeatureAM}  }, // 84
+  { "AMEVTYPER03_EL0", { AArch64_SYSREG_AMEVTYPER03_EL0 }, "AMEVTYPER03_EL0", { AArch64_SYSREG_AMEVTYPER03_EL0 }, 0xDEB3, true, false,  {AArch64_FeatureAM}  }, // 85
+  { "AMEVTYPER10_EL0", { AArch64_SYSREG_AMEVTYPER10_EL0 }, "AMEVTYPER10_EL0", { AArch64_SYSREG_AMEVTYPER10_EL0 }, 0xDEF0, true, true,  {AArch64_FeatureAM}  }, // 86
+  { "AMEVTYPER110_EL0", { AArch64_SYSREG_AMEVTYPER110_EL0 }, "AMEVTYPER110_EL0", { AArch64_SYSREG_AMEVTYPER110_EL0 }, 0xDEFA, true, true,  {AArch64_FeatureAM}  }, // 87
+  { "AMEVTYPER111_EL0", { AArch64_SYSREG_AMEVTYPER111_EL0 }, "AMEVTYPER111_EL0", { AArch64_SYSREG_AMEVTYPER111_EL0 }, 0xDEFB, true, true,  {AArch64_FeatureAM}  }, // 88
+  { "AMEVTYPER112_EL0", { AArch64_SYSREG_AMEVTYPER112_EL0 }, "AMEVTYPER112_EL0", { AArch64_SYSREG_AMEVTYPER112_EL0 }, 0xDEFC, true, true,  {AArch64_FeatureAM}  }, // 89
+  { "AMEVTYPER113_EL0", { AArch64_SYSREG_AMEVTYPER113_EL0 }, "AMEVTYPER113_EL0", { AArch64_SYSREG_AMEVTYPER113_EL0 }, 0xDEFD, true, true,  {AArch64_FeatureAM}  }, // 90
+  { "AMEVTYPER114_EL0", { AArch64_SYSREG_AMEVTYPER114_EL0 }, "AMEVTYPER114_EL0", { AArch64_SYSREG_AMEVTYPER114_EL0 }, 0xDEFE, true, true,  {AArch64_FeatureAM}  }, // 91
+  { "AMEVTYPER115_EL0", { AArch64_SYSREG_AMEVTYPER115_EL0 }, "AMEVTYPER115_EL0", { AArch64_SYSREG_AMEVTYPER115_EL0 }, 0xDEFF, true, true,  {AArch64_FeatureAM}  }, // 92
+  { "AMEVTYPER11_EL0", { AArch64_SYSREG_AMEVTYPER11_EL0 }, "AMEVTYPER11_EL0", { AArch64_SYSREG_AMEVTYPER11_EL0 }, 0xDEF1, true, true,  {AArch64_FeatureAM}  }, // 93
+  { "AMEVTYPER12_EL0", { AArch64_SYSREG_AMEVTYPER12_EL0 }, "AMEVTYPER12_EL0", { AArch64_SYSREG_AMEVTYPER12_EL0 }, 0xDEF2, true, true,  {AArch64_FeatureAM}  }, // 94
+  { "AMEVTYPER13_EL0", { AArch64_SYSREG_AMEVTYPER13_EL0 }, "AMEVTYPER13_EL0", { AArch64_SYSREG_AMEVTYPER13_EL0 }, 0xDEF3, true, true,  {AArch64_FeatureAM}  }, // 95
+  { "AMEVTYPER14_EL0", { AArch64_SYSREG_AMEVTYPER14_EL0 }, "AMEVTYPER14_EL0", { AArch64_SYSREG_AMEVTYPER14_EL0 }, 0xDEF4, true, true,  {AArch64_FeatureAM}  }, // 96
+  { "AMEVTYPER15_EL0", { AArch64_SYSREG_AMEVTYPER15_EL0 }, "AMEVTYPER15_EL0", { AArch64_SYSREG_AMEVTYPER15_EL0 }, 0xDEF5, true, true,  {AArch64_FeatureAM}  }, // 97
+  { "AMEVTYPER16_EL0", { AArch64_SYSREG_AMEVTYPER16_EL0 }, "AMEVTYPER16_EL0", { AArch64_SYSREG_AMEVTYPER16_EL0 }, 0xDEF6, true, true,  {AArch64_FeatureAM}  }, // 98
+  { "AMEVTYPER17_EL0", { AArch64_SYSREG_AMEVTYPER17_EL0 }, "AMEVTYPER17_EL0", { AArch64_SYSREG_AMEVTYPER17_EL0 }, 0xDEF7, true, true,  {AArch64_FeatureAM}  }, // 99
+  { "AMEVTYPER18_EL0", { AArch64_SYSREG_AMEVTYPER18_EL0 }, "AMEVTYPER18_EL0", { AArch64_SYSREG_AMEVTYPER18_EL0 }, 0xDEF8, true, true,  {AArch64_FeatureAM}  }, // 100
+  { "AMEVTYPER19_EL0", { AArch64_SYSREG_AMEVTYPER19_EL0 }, "AMEVTYPER19_EL0", { AArch64_SYSREG_AMEVTYPER19_EL0 }, 0xDEF9, true, true,  {AArch64_FeatureAM}  }, // 101
+  { "AMUSERENR_EL0", { AArch64_SYSREG_AMUSERENR_EL0 }, "AMUSERENR_EL0", { AArch64_SYSREG_AMUSERENR_EL0 }, 0xDE93, true, true,  {AArch64_FeatureAM}  }, // 102
+  { "APDAKeyHi_EL1", { AArch64_SYSREG_APDAKEYHI_EL1 }, "APDAKeyHi_EL1", { AArch64_SYSREG_APDAKEYHI_EL1 }, 0xC111, true, true,  {AArch64_FeaturePAuth}  }, // 103
+  { "APDAKeyLo_EL1", { AArch64_SYSREG_APDAKEYLO_EL1 }, "APDAKeyLo_EL1", { AArch64_SYSREG_APDAKEYLO_EL1 }, 0xC110, true, true,  {AArch64_FeaturePAuth}  }, // 104
+  { "APDBKeyHi_EL1", { AArch64_SYSREG_APDBKEYHI_EL1 }, "APDBKeyHi_EL1", { AArch64_SYSREG_APDBKEYHI_EL1 }, 0xC113, true, true,  {AArch64_FeaturePAuth}  }, // 105
+  { "APDBKeyLo_EL1", { AArch64_SYSREG_APDBKEYLO_EL1 }, "APDBKeyLo_EL1", { AArch64_SYSREG_APDBKEYLO_EL1 }, 0xC112, true, true,  {AArch64_FeaturePAuth}  }, // 106
+  { "APGAKeyHi_EL1", { AArch64_SYSREG_APGAKEYHI_EL1 }, "APGAKeyHi_EL1", { AArch64_SYSREG_APGAKEYHI_EL1 }, 0xC119, true, true,  {AArch64_FeaturePAuth}  }, // 107
+  { "APGAKeyLo_EL1", { AArch64_SYSREG_APGAKEYLO_EL1 }, "APGAKeyLo_EL1", { AArch64_SYSREG_APGAKEYLO_EL1 }, 0xC118, true, true,  {AArch64_FeaturePAuth}  }, // 108
+  { "APIAKeyHi_EL1", { AArch64_SYSREG_APIAKEYHI_EL1 }, "APIAKeyHi_EL1", { AArch64_SYSREG_APIAKEYHI_EL1 }, 0xC109, true, true,  {AArch64_FeaturePAuth}  }, // 109
+  { "APIAKeyLo_EL1", { AArch64_SYSREG_APIAKEYLO_EL1 }, "APIAKeyLo_EL1", { AArch64_SYSREG_APIAKEYLO_EL1 }, 0xC108, true, true,  {AArch64_FeaturePAuth}  }, // 110
+  { "APIBKeyHi_EL1", { AArch64_SYSREG_APIBKEYHI_EL1 }, "APIBKeyHi_EL1", { AArch64_SYSREG_APIBKEYHI_EL1 }, 0xC10B, true, true,  {AArch64_FeaturePAuth}  }, // 111
+  { "APIBKeyLo_EL1", { AArch64_SYSREG_APIBKEYLO_EL1 }, "APIBKeyLo_EL1", { AArch64_SYSREG_APIBKEYLO_EL1 }, 0xC10A, true, true,  {AArch64_FeaturePAuth}  }, // 112
+  { "BRBCR_EL1", { AArch64_SYSREG_BRBCR_EL1 }, "BRBCR_EL1", { AArch64_SYSREG_BRBCR_EL1 }, 0x8C80, true, true,  {AArch64_FeatureBRBE}  }, // 113
+  { "BRBCR_EL12", { AArch64_SYSREG_BRBCR_EL12 }, "BRBCR_EL12", { AArch64_SYSREG_BRBCR_EL12 }, 0xAC80, true, true,  {AArch64_FeatureBRBE}  }, // 114
+  { "BRBCR_EL2", { AArch64_SYSREG_BRBCR_EL2 }, "BRBCR_EL2", { AArch64_SYSREG_BRBCR_EL2 }, 0xA480, true, true,  {AArch64_FeatureBRBE}  }, // 115
+  { "BRBFCR_EL1", { AArch64_SYSREG_BRBFCR_EL1 }, "BRBFCR_EL1", { AArch64_SYSREG_BRBFCR_EL1 }, 0x8C81, true, true,  {AArch64_FeatureBRBE}  }, // 116
+  { "BRBIDR0_EL1", { AArch64_SYSREG_BRBIDR0_EL1 }, "BRBIDR0_EL1", { AArch64_SYSREG_BRBIDR0_EL1 }, 0x8C90, true, false,  {AArch64_FeatureBRBE}  }, // 117
+  { "BRBINF0_EL1", { AArch64_SYSREG_BRBINF0_EL1 }, "BRBINF0_EL1", { AArch64_SYSREG_BRBINF0_EL1 }, 0x8C00, true, false,  {AArch64_FeatureBRBE}  }, // 118
+  { "BRBINF10_EL1", { AArch64_SYSREG_BRBINF10_EL1 }, "BRBINF10_EL1", { AArch64_SYSREG_BRBINF10_EL1 }, 0x8C50, true, false,  {AArch64_FeatureBRBE}  }, // 119
+  { "BRBINF11_EL1", { AArch64_SYSREG_BRBINF11_EL1 }, "BRBINF11_EL1", { AArch64_SYSREG_BRBINF11_EL1 }, 0x8C58, true, false,  {AArch64_FeatureBRBE}  }, // 120
+  { "BRBINF12_EL1", { AArch64_SYSREG_BRBINF12_EL1 }, "BRBINF12_EL1", { AArch64_SYSREG_BRBINF12_EL1 }, 0x8C60, true, false,  {AArch64_FeatureBRBE}  }, // 121
+  { "BRBINF13_EL1", { AArch64_SYSREG_BRBINF13_EL1 }, "BRBINF13_EL1", { AArch64_SYSREG_BRBINF13_EL1 }, 0x8C68, true, false,  {AArch64_FeatureBRBE}  }, // 122
+  { "BRBINF14_EL1", { AArch64_SYSREG_BRBINF14_EL1 }, "BRBINF14_EL1", { AArch64_SYSREG_BRBINF14_EL1 }, 0x8C70, true, false,  {AArch64_FeatureBRBE}  }, // 123
+  { "BRBINF15_EL1", { AArch64_SYSREG_BRBINF15_EL1 }, "BRBINF15_EL1", { AArch64_SYSREG_BRBINF15_EL1 }, 0x8C78, true, false,  {AArch64_FeatureBRBE}  }, // 124
+  { "BRBINF16_EL1", { AArch64_SYSREG_BRBINF16_EL1 }, "BRBINF16_EL1", { AArch64_SYSREG_BRBINF16_EL1 }, 0x8C04, true, false,  {AArch64_FeatureBRBE}  }, // 125
+  { "BRBINF17_EL1", { AArch64_SYSREG_BRBINF17_EL1 }, "BRBINF17_EL1", { AArch64_SYSREG_BRBINF17_EL1 }, 0x8C0C, true, false,  {AArch64_FeatureBRBE}  }, // 126
+  { "BRBINF18_EL1", { AArch64_SYSREG_BRBINF18_EL1 }, "BRBINF18_EL1", { AArch64_SYSREG_BRBINF18_EL1 }, 0x8C14, true, false,  {AArch64_FeatureBRBE}  }, // 127
+  { "BRBINF19_EL1", { AArch64_SYSREG_BRBINF19_EL1 }, "BRBINF19_EL1", { AArch64_SYSREG_BRBINF19_EL1 }, 0x8C1C, true, false,  {AArch64_FeatureBRBE}  }, // 128
+  { "BRBINF1_EL1", { AArch64_SYSREG_BRBINF1_EL1 }, "BRBINF1_EL1", { AArch64_SYSREG_BRBINF1_EL1 }, 0x8C08, true, false,  {AArch64_FeatureBRBE}  }, // 129
+  { "BRBINF20_EL1", { AArch64_SYSREG_BRBINF20_EL1 }, "BRBINF20_EL1", { AArch64_SYSREG_BRBINF20_EL1 }, 0x8C24, true, false,  {AArch64_FeatureBRBE}  }, // 130
+  { "BRBINF21_EL1", { AArch64_SYSREG_BRBINF21_EL1 }, "BRBINF21_EL1", { AArch64_SYSREG_BRBINF21_EL1 }, 0x8C2C, true, false,  {AArch64_FeatureBRBE}  }, // 131
+  { "BRBINF22_EL1", { AArch64_SYSREG_BRBINF22_EL1 }, "BRBINF22_EL1", { AArch64_SYSREG_BRBINF22_EL1 }, 0x8C34, true, false,  {AArch64_FeatureBRBE}  }, // 132
+  { "BRBINF23_EL1", { AArch64_SYSREG_BRBINF23_EL1 }, "BRBINF23_EL1", { AArch64_SYSREG_BRBINF23_EL1 }, 0x8C3C, true, false,  {AArch64_FeatureBRBE}  }, // 133
+  { "BRBINF24_EL1", { AArch64_SYSREG_BRBINF24_EL1 }, "BRBINF24_EL1", { AArch64_SYSREG_BRBINF24_EL1 }, 0x8C44, true, false,  {AArch64_FeatureBRBE}  }, // 134
+  { "BRBINF25_EL1", { AArch64_SYSREG_BRBINF25_EL1 }, "BRBINF25_EL1", { AArch64_SYSREG_BRBINF25_EL1 }, 0x8C4C, true, false,  {AArch64_FeatureBRBE}  }, // 135
+  { "BRBINF26_EL1", { AArch64_SYSREG_BRBINF26_EL1 }, "BRBINF26_EL1", { AArch64_SYSREG_BRBINF26_EL1 }, 0x8C54, true, false,  {AArch64_FeatureBRBE}  }, // 136
+  { "BRBINF27_EL1", { AArch64_SYSREG_BRBINF27_EL1 }, "BRBINF27_EL1", { AArch64_SYSREG_BRBINF27_EL1 }, 0x8C5C, true, false,  {AArch64_FeatureBRBE}  }, // 137
+  { "BRBINF28_EL1", { AArch64_SYSREG_BRBINF28_EL1 }, "BRBINF28_EL1", { AArch64_SYSREG_BRBINF28_EL1 }, 0x8C64, true, false,  {AArch64_FeatureBRBE}  }, // 138
+  { "BRBINF29_EL1", { AArch64_SYSREG_BRBINF29_EL1 }, "BRBINF29_EL1", { AArch64_SYSREG_BRBINF29_EL1 }, 0x8C6C, true, false,  {AArch64_FeatureBRBE}  }, // 139
+  { "BRBINF2_EL1", { AArch64_SYSREG_BRBINF2_EL1 }, "BRBINF2_EL1", { AArch64_SYSREG_BRBINF2_EL1 }, 0x8C10, true, false,  {AArch64_FeatureBRBE}  }, // 140
+  { "BRBINF30_EL1", { AArch64_SYSREG_BRBINF30_EL1 }, "BRBINF30_EL1", { AArch64_SYSREG_BRBINF30_EL1 }, 0x8C74, true, false,  {AArch64_FeatureBRBE}  }, // 141
+  { "BRBINF31_EL1", { AArch64_SYSREG_BRBINF31_EL1 }, "BRBINF31_EL1", { AArch64_SYSREG_BRBINF31_EL1 }, 0x8C7C, true, false,  {AArch64_FeatureBRBE}  }, // 142
+  { "BRBINF3_EL1", { AArch64_SYSREG_BRBINF3_EL1 }, "BRBINF3_EL1", { AArch64_SYSREG_BRBINF3_EL1 }, 0x8C18, true, false,  {AArch64_FeatureBRBE}  }, // 143
+  { "BRBINF4_EL1", { AArch64_SYSREG_BRBINF4_EL1 }, "BRBINF4_EL1", { AArch64_SYSREG_BRBINF4_EL1 }, 0x8C20, true, false,  {AArch64_FeatureBRBE}  }, // 144
+  { "BRBINF5_EL1", { AArch64_SYSREG_BRBINF5_EL1 }, "BRBINF5_EL1", { AArch64_SYSREG_BRBINF5_EL1 }, 0x8C28, true, false,  {AArch64_FeatureBRBE}  }, // 145
+  { "BRBINF6_EL1", { AArch64_SYSREG_BRBINF6_EL1 }, "BRBINF6_EL1", { AArch64_SYSREG_BRBINF6_EL1 }, 0x8C30, true, false,  {AArch64_FeatureBRBE}  }, // 146
+  { "BRBINF7_EL1", { AArch64_SYSREG_BRBINF7_EL1 }, "BRBINF7_EL1", { AArch64_SYSREG_BRBINF7_EL1 }, 0x8C38, true, false,  {AArch64_FeatureBRBE}  }, // 147
+  { "BRBINF8_EL1", { AArch64_SYSREG_BRBINF8_EL1 }, "BRBINF8_EL1", { AArch64_SYSREG_BRBINF8_EL1 }, 0x8C40, true, false,  {AArch64_FeatureBRBE}  }, // 148
+  { "BRBINF9_EL1", { AArch64_SYSREG_BRBINF9_EL1 }, "BRBINF9_EL1", { AArch64_SYSREG_BRBINF9_EL1 }, 0x8C48, true, false,  {AArch64_FeatureBRBE}  }, // 149
+  { "BRBINFINJ_EL1", { AArch64_SYSREG_BRBINFINJ_EL1 }, "BRBINFINJ_EL1", { AArch64_SYSREG_BRBINFINJ_EL1 }, 0x8C88, true, true,  {AArch64_FeatureBRBE}  }, // 150
+  { "BRBSRC0_EL1", { AArch64_SYSREG_BRBSRC0_EL1 }, "BRBSRC0_EL1", { AArch64_SYSREG_BRBSRC0_EL1 }, 0x8C01, true, false,  {AArch64_FeatureBRBE}  }, // 151
+  { "BRBSRC10_EL1", { AArch64_SYSREG_BRBSRC10_EL1 }, "BRBSRC10_EL1", { AArch64_SYSREG_BRBSRC10_EL1 }, 0x8C51, true, false,  {AArch64_FeatureBRBE}  }, // 152
+  { "BRBSRC11_EL1", { AArch64_SYSREG_BRBSRC11_EL1 }, "BRBSRC11_EL1", { AArch64_SYSREG_BRBSRC11_EL1 }, 0x8C59, true, false,  {AArch64_FeatureBRBE}  }, // 153
+  { "BRBSRC12_EL1", { AArch64_SYSREG_BRBSRC12_EL1 }, "BRBSRC12_EL1", { AArch64_SYSREG_BRBSRC12_EL1 }, 0x8C61, true, false,  {AArch64_FeatureBRBE}  }, // 154
+  { "BRBSRC13_EL1", { AArch64_SYSREG_BRBSRC13_EL1 }, "BRBSRC13_EL1", { AArch64_SYSREG_BRBSRC13_EL1 }, 0x8C69, true, false,  {AArch64_FeatureBRBE}  }, // 155
+  { "BRBSRC14_EL1", { AArch64_SYSREG_BRBSRC14_EL1 }, "BRBSRC14_EL1", { AArch64_SYSREG_BRBSRC14_EL1 }, 0x8C71, true, false,  {AArch64_FeatureBRBE}  }, // 156
+  { "BRBSRC15_EL1", { AArch64_SYSREG_BRBSRC15_EL1 }, "BRBSRC15_EL1", { AArch64_SYSREG_BRBSRC15_EL1 }, 0x8C79, true, false,  {AArch64_FeatureBRBE}  }, // 157
+  { "BRBSRC16_EL1", { AArch64_SYSREG_BRBSRC16_EL1 }, "BRBSRC16_EL1", { AArch64_SYSREG_BRBSRC16_EL1 }, 0x8C05, true, false,  {AArch64_FeatureBRBE}  }, // 158
+  { "BRBSRC17_EL1", { AArch64_SYSREG_BRBSRC17_EL1 }, "BRBSRC17_EL1", { AArch64_SYSREG_BRBSRC17_EL1 }, 0x8C0D, true, false,  {AArch64_FeatureBRBE}  }, // 159
+  { "BRBSRC18_EL1", { AArch64_SYSREG_BRBSRC18_EL1 }, "BRBSRC18_EL1", { AArch64_SYSREG_BRBSRC18_EL1 }, 0x8C15, true, false,  {AArch64_FeatureBRBE}  }, // 160
+  { "BRBSRC19_EL1", { AArch64_SYSREG_BRBSRC19_EL1 }, "BRBSRC19_EL1", { AArch64_SYSREG_BRBSRC19_EL1 }, 0x8C1D, true, false,  {AArch64_FeatureBRBE}  }, // 161
+  { "BRBSRC1_EL1", { AArch64_SYSREG_BRBSRC1_EL1 }, "BRBSRC1_EL1", { AArch64_SYSREG_BRBSRC1_EL1 }, 0x8C09, true, false,  {AArch64_FeatureBRBE}  }, // 162
+  { "BRBSRC20_EL1", { AArch64_SYSREG_BRBSRC20_EL1 }, "BRBSRC20_EL1", { AArch64_SYSREG_BRBSRC20_EL1 }, 0x8C25, true, false,  {AArch64_FeatureBRBE}  }, // 163
+  { "BRBSRC21_EL1", { AArch64_SYSREG_BRBSRC21_EL1 }, "BRBSRC21_EL1", { AArch64_SYSREG_BRBSRC21_EL1 }, 0x8C2D, true, false,  {AArch64_FeatureBRBE}  }, // 164
+  { "BRBSRC22_EL1", { AArch64_SYSREG_BRBSRC22_EL1 }, "BRBSRC22_EL1", { AArch64_SYSREG_BRBSRC22_EL1 }, 0x8C35, true, false,  {AArch64_FeatureBRBE}  }, // 165
+  { "BRBSRC23_EL1", { AArch64_SYSREG_BRBSRC23_EL1 }, "BRBSRC23_EL1", { AArch64_SYSREG_BRBSRC23_EL1 }, 0x8C3D, true, false,  {AArch64_FeatureBRBE}  }, // 166
+  { "BRBSRC24_EL1", { AArch64_SYSREG_BRBSRC24_EL1 }, "BRBSRC24_EL1", { AArch64_SYSREG_BRBSRC24_EL1 }, 0x8C45, true, false,  {AArch64_FeatureBRBE}  }, // 167
+  { "BRBSRC25_EL1", { AArch64_SYSREG_BRBSRC25_EL1 }, "BRBSRC25_EL1", { AArch64_SYSREG_BRBSRC25_EL1 }, 0x8C4D, true, false,  {AArch64_FeatureBRBE}  }, // 168
+  { "BRBSRC26_EL1", { AArch64_SYSREG_BRBSRC26_EL1 }, "BRBSRC26_EL1", { AArch64_SYSREG_BRBSRC26_EL1 }, 0x8C55, true, false,  {AArch64_FeatureBRBE}  }, // 169
+  { "BRBSRC27_EL1", { AArch64_SYSREG_BRBSRC27_EL1 }, "BRBSRC27_EL1", { AArch64_SYSREG_BRBSRC27_EL1 }, 0x8C5D, true, false,  {AArch64_FeatureBRBE}  }, // 170
+  { "BRBSRC28_EL1", { AArch64_SYSREG_BRBSRC28_EL1 }, "BRBSRC28_EL1", { AArch64_SYSREG_BRBSRC28_EL1 }, 0x8C65, true, false,  {AArch64_FeatureBRBE}  }, // 171
+  { "BRBSRC29_EL1", { AArch64_SYSREG_BRBSRC29_EL1 }, "BRBSRC29_EL1", { AArch64_SYSREG_BRBSRC29_EL1 }, 0x8C6D, true, false,  {AArch64_FeatureBRBE}  }, // 172
+  { "BRBSRC2_EL1", { AArch64_SYSREG_BRBSRC2_EL1 }, "BRBSRC2_EL1", { AArch64_SYSREG_BRBSRC2_EL1 }, 0x8C11, true, false,  {AArch64_FeatureBRBE}  }, // 173
+  { "BRBSRC30_EL1", { AArch64_SYSREG_BRBSRC30_EL1 }, "BRBSRC30_EL1", { AArch64_SYSREG_BRBSRC30_EL1 }, 0x8C75, true, false,  {AArch64_FeatureBRBE}  }, // 174
+  { "BRBSRC31_EL1", { AArch64_SYSREG_BRBSRC31_EL1 }, "BRBSRC31_EL1", { AArch64_SYSREG_BRBSRC31_EL1 }, 0x8C7D, true, false,  {AArch64_FeatureBRBE}  }, // 175
+  { "BRBSRC3_EL1", { AArch64_SYSREG_BRBSRC3_EL1 }, "BRBSRC3_EL1", { AArch64_SYSREG_BRBSRC3_EL1 }, 0x8C19, true, false,  {AArch64_FeatureBRBE}  }, // 176
+  { "BRBSRC4_EL1", { AArch64_SYSREG_BRBSRC4_EL1 }, "BRBSRC4_EL1", { AArch64_SYSREG_BRBSRC4_EL1 }, 0x8C21, true, false,  {AArch64_FeatureBRBE}  }, // 177
+  { "BRBSRC5_EL1", { AArch64_SYSREG_BRBSRC5_EL1 }, "BRBSRC5_EL1", { AArch64_SYSREG_BRBSRC5_EL1 }, 0x8C29, true, false,  {AArch64_FeatureBRBE}  }, // 178
+  { "BRBSRC6_EL1", { AArch64_SYSREG_BRBSRC6_EL1 }, "BRBSRC6_EL1", { AArch64_SYSREG_BRBSRC6_EL1 }, 0x8C31, true, false,  {AArch64_FeatureBRBE}  }, // 179
+  { "BRBSRC7_EL1", { AArch64_SYSREG_BRBSRC7_EL1 }, "BRBSRC7_EL1", { AArch64_SYSREG_BRBSRC7_EL1 }, 0x8C39, true, false,  {AArch64_FeatureBRBE}  }, // 180
+  { "BRBSRC8_EL1", { AArch64_SYSREG_BRBSRC8_EL1 }, "BRBSRC8_EL1", { AArch64_SYSREG_BRBSRC8_EL1 }, 0x8C41, true, false,  {AArch64_FeatureBRBE}  }, // 181
+  { "BRBSRC9_EL1", { AArch64_SYSREG_BRBSRC9_EL1 }, "BRBSRC9_EL1", { AArch64_SYSREG_BRBSRC9_EL1 }, 0x8C49, true, false,  {AArch64_FeatureBRBE}  }, // 182
+  { "BRBSRCINJ_EL1", { AArch64_SYSREG_BRBSRCINJ_EL1 }, "BRBSRCINJ_EL1", { AArch64_SYSREG_BRBSRCINJ_EL1 }, 0x8C89, true, true,  {AArch64_FeatureBRBE}  }, // 183
+  { "BRBTGT0_EL1", { AArch64_SYSREG_BRBTGT0_EL1 }, "BRBTGT0_EL1", { AArch64_SYSREG_BRBTGT0_EL1 }, 0x8C02, true, false,  {AArch64_FeatureBRBE}  }, // 184
+  { "BRBTGT10_EL1", { AArch64_SYSREG_BRBTGT10_EL1 }, "BRBTGT10_EL1", { AArch64_SYSREG_BRBTGT10_EL1 }, 0x8C52, true, false,  {AArch64_FeatureBRBE}  }, // 185
+  { "BRBTGT11_EL1", { AArch64_SYSREG_BRBTGT11_EL1 }, "BRBTGT11_EL1", { AArch64_SYSREG_BRBTGT11_EL1 }, 0x8C5A, true, false,  {AArch64_FeatureBRBE}  }, // 186
+  { "BRBTGT12_EL1", { AArch64_SYSREG_BRBTGT12_EL1 }, "BRBTGT12_EL1", { AArch64_SYSREG_BRBTGT12_EL1 }, 0x8C62, true, false,  {AArch64_FeatureBRBE}  }, // 187
+  { "BRBTGT13_EL1", { AArch64_SYSREG_BRBTGT13_EL1 }, "BRBTGT13_EL1", { AArch64_SYSREG_BRBTGT13_EL1 }, 0x8C6A, true, false,  {AArch64_FeatureBRBE}  }, // 188
+  { "BRBTGT14_EL1", { AArch64_SYSREG_BRBTGT14_EL1 }, "BRBTGT14_EL1", { AArch64_SYSREG_BRBTGT14_EL1 }, 0x8C72, true, false,  {AArch64_FeatureBRBE}  }, // 189
+  { "BRBTGT15_EL1", { AArch64_SYSREG_BRBTGT15_EL1 }, "BRBTGT15_EL1", { AArch64_SYSREG_BRBTGT15_EL1 }, 0x8C7A, true, false,  {AArch64_FeatureBRBE}  }, // 190
+  { "BRBTGT16_EL1", { AArch64_SYSREG_BRBTGT16_EL1 }, "BRBTGT16_EL1", { AArch64_SYSREG_BRBTGT16_EL1 }, 0x8C06, true, false,  {AArch64_FeatureBRBE}  }, // 191
+  { "BRBTGT17_EL1", { AArch64_SYSREG_BRBTGT17_EL1 }, "BRBTGT17_EL1", { AArch64_SYSREG_BRBTGT17_EL1 }, 0x8C0E, true, false,  {AArch64_FeatureBRBE}  }, // 192
+  { "BRBTGT18_EL1", { AArch64_SYSREG_BRBTGT18_EL1 }, "BRBTGT18_EL1", { AArch64_SYSREG_BRBTGT18_EL1 }, 0x8C16, true, false,  {AArch64_FeatureBRBE}  }, // 193
+  { "BRBTGT19_EL1", { AArch64_SYSREG_BRBTGT19_EL1 }, "BRBTGT19_EL1", { AArch64_SYSREG_BRBTGT19_EL1 }, 0x8C1E, true, false,  {AArch64_FeatureBRBE}  }, // 194
+  { "BRBTGT1_EL1", { AArch64_SYSREG_BRBTGT1_EL1 }, "BRBTGT1_EL1", { AArch64_SYSREG_BRBTGT1_EL1 }, 0x8C0A, true, false,  {AArch64_FeatureBRBE}  }, // 195
+  { "BRBTGT20_EL1", { AArch64_SYSREG_BRBTGT20_EL1 }, "BRBTGT20_EL1", { AArch64_SYSREG_BRBTGT20_EL1 }, 0x8C26, true, false,  {AArch64_FeatureBRBE}  }, // 196
+  { "BRBTGT21_EL1", { AArch64_SYSREG_BRBTGT21_EL1 }, "BRBTGT21_EL1", { AArch64_SYSREG_BRBTGT21_EL1 }, 0x8C2E, true, false,  {AArch64_FeatureBRBE}  }, // 197
+  { "BRBTGT22_EL1", { AArch64_SYSREG_BRBTGT22_EL1 }, "BRBTGT22_EL1", { AArch64_SYSREG_BRBTGT22_EL1 }, 0x8C36, true, false,  {AArch64_FeatureBRBE}  }, // 198
+  { "BRBTGT23_EL1", { AArch64_SYSREG_BRBTGT23_EL1 }, "BRBTGT23_EL1", { AArch64_SYSREG_BRBTGT23_EL1 }, 0x8C3E, true, false,  {AArch64_FeatureBRBE}  }, // 199
+  { "BRBTGT24_EL1", { AArch64_SYSREG_BRBTGT24_EL1 }, "BRBTGT24_EL1", { AArch64_SYSREG_BRBTGT24_EL1 }, 0x8C46, true, false,  {AArch64_FeatureBRBE}  }, // 200
+  { "BRBTGT25_EL1", { AArch64_SYSREG_BRBTGT25_EL1 }, "BRBTGT25_EL1", { AArch64_SYSREG_BRBTGT25_EL1 }, 0x8C4E, true, false,  {AArch64_FeatureBRBE}  }, // 201
+  { "BRBTGT26_EL1", { AArch64_SYSREG_BRBTGT26_EL1 }, "BRBTGT26_EL1", { AArch64_SYSREG_BRBTGT26_EL1 }, 0x8C56, true, false,  {AArch64_FeatureBRBE}  }, // 202
+  { "BRBTGT27_EL1", { AArch64_SYSREG_BRBTGT27_EL1 }, "BRBTGT27_EL1", { AArch64_SYSREG_BRBTGT27_EL1 }, 0x8C5E, true, false,  {AArch64_FeatureBRBE}  }, // 203
+  { "BRBTGT28_EL1", { AArch64_SYSREG_BRBTGT28_EL1 }, "BRBTGT28_EL1", { AArch64_SYSREG_BRBTGT28_EL1 }, 0x8C66, true, false,  {AArch64_FeatureBRBE}  }, // 204
+  { "BRBTGT29_EL1", { AArch64_SYSREG_BRBTGT29_EL1 }, "BRBTGT29_EL1", { AArch64_SYSREG_BRBTGT29_EL1 }, 0x8C6E, true, false,  {AArch64_FeatureBRBE}  }, // 205
+  { "BRBTGT2_EL1", { AArch64_SYSREG_BRBTGT2_EL1 }, "BRBTGT2_EL1", { AArch64_SYSREG_BRBTGT2_EL1 }, 0x8C12, true, false,  {AArch64_FeatureBRBE}  }, // 206
+  { "BRBTGT30_EL1", { AArch64_SYSREG_BRBTGT30_EL1 }, "BRBTGT30_EL1", { AArch64_SYSREG_BRBTGT30_EL1 }, 0x8C76, true, false,  {AArch64_FeatureBRBE}  }, // 207
+  { "BRBTGT31_EL1", { AArch64_SYSREG_BRBTGT31_EL1 }, "BRBTGT31_EL1", { AArch64_SYSREG_BRBTGT31_EL1 }, 0x8C7E, true, false,  {AArch64_FeatureBRBE}  }, // 208
+  { "BRBTGT3_EL1", { AArch64_SYSREG_BRBTGT3_EL1 }, "BRBTGT3_EL1", { AArch64_SYSREG_BRBTGT3_EL1 }, 0x8C1A, true, false,  {AArch64_FeatureBRBE}  }, // 209
+  { "BRBTGT4_EL1", { AArch64_SYSREG_BRBTGT4_EL1 }, "BRBTGT4_EL1", { AArch64_SYSREG_BRBTGT4_EL1 }, 0x8C22, true, false,  {AArch64_FeatureBRBE}  }, // 210
+  { "BRBTGT5_EL1", { AArch64_SYSREG_BRBTGT5_EL1 }, "BRBTGT5_EL1", { AArch64_SYSREG_BRBTGT5_EL1 }, 0x8C2A, true, false,  {AArch64_FeatureBRBE}  }, // 211
+  { "BRBTGT6_EL1", { AArch64_SYSREG_BRBTGT6_EL1 }, "BRBTGT6_EL1", { AArch64_SYSREG_BRBTGT6_EL1 }, 0x8C32, true, false,  {AArch64_FeatureBRBE}  }, // 212
+  { "BRBTGT7_EL1", { AArch64_SYSREG_BRBTGT7_EL1 }, "BRBTGT7_EL1", { AArch64_SYSREG_BRBTGT7_EL1 }, 0x8C3A, true, false,  {AArch64_FeatureBRBE}  }, // 213
+  { "BRBTGT8_EL1", { AArch64_SYSREG_BRBTGT8_EL1 }, "BRBTGT8_EL1", { AArch64_SYSREG_BRBTGT8_EL1 }, 0x8C42, true, false,  {AArch64_FeatureBRBE}  }, // 214
+  { "BRBTGT9_EL1", { AArch64_SYSREG_BRBTGT9_EL1 }, "BRBTGT9_EL1", { AArch64_SYSREG_BRBTGT9_EL1 }, 0x8C4A, true, false,  {AArch64_FeatureBRBE}  }, // 215
+  { "BRBTGTINJ_EL1", { AArch64_SYSREG_BRBTGTINJ_EL1 }, "BRBTGTINJ_EL1", { AArch64_SYSREG_BRBTGTINJ_EL1 }, 0x8C8A, true, true,  {AArch64_FeatureBRBE}  }, // 216
+  { "BRBTS_EL1", { AArch64_SYSREG_BRBTS_EL1 }, "BRBTS_EL1", { AArch64_SYSREG_BRBTS_EL1 }, 0x8C82, true, true,  {AArch64_FeatureBRBE}  }, // 217
+  { "CCSIDR2_EL1", { AArch64_SYSREG_CCSIDR2_EL1 }, "CCSIDR2_EL1", { AArch64_SYSREG_CCSIDR2_EL1 }, 0xC802, true, false,  {AArch64_FeatureCCIDX}  }, // 218
+  { "CCSIDR_EL1", { AArch64_SYSREG_CCSIDR_EL1 }, "CCSIDR_EL1", { AArch64_SYSREG_CCSIDR_EL1 }, 0xC800, true, false,  {0}  }, // 219
+  { "CLIDR_EL1", { AArch64_SYSREG_CLIDR_EL1 }, "CLIDR_EL1", { AArch64_SYSREG_CLIDR_EL1 }, 0xC801, true, false,  {0}  }, // 220
+  { "CNTFRQ_EL0", { AArch64_SYSREG_CNTFRQ_EL0 }, "CNTFRQ_EL0", { AArch64_SYSREG_CNTFRQ_EL0 }, 0xDF00, true, true,  {0}  }, // 221
+  { "CNTHCTL_EL2", { AArch64_SYSREG_CNTHCTL_EL2 }, "CNTHCTL_EL2", { AArch64_SYSREG_CNTHCTL_EL2 }, 0xE708, true, true,  {0}  }, // 222
+  { "CNTHPS_CTL_EL2", { AArch64_SYSREG_CNTHPS_CTL_EL2 }, "CNTHPS_CTL_EL2", { AArch64_SYSREG_CNTHPS_CTL_EL2 }, 0xE729, true, true,  {AArch64_FeatureSEL2}  }, // 223
+  { "CNTHPS_CVAL_EL2", { AArch64_SYSREG_CNTHPS_CVAL_EL2 }, "CNTHPS_CVAL_EL2", { AArch64_SYSREG_CNTHPS_CVAL_EL2 }, 0xE72A, true, true,  {AArch64_FeatureSEL2}  }, // 224
+  { "CNTHPS_TVAL_EL2", { AArch64_SYSREG_CNTHPS_TVAL_EL2 }, "CNTHPS_TVAL_EL2", { AArch64_SYSREG_CNTHPS_TVAL_EL2 }, 0xE728, true, true,  {AArch64_FeatureSEL2}  }, // 225
+  { "CNTHP_CTL_EL2", { AArch64_SYSREG_CNTHP_CTL_EL2 }, "CNTHP_CTL_EL2", { AArch64_SYSREG_CNTHP_CTL_EL2 }, 0xE711, true, true,  {0}  }, // 226
+  { "CNTHP_CVAL_EL2", { AArch64_SYSREG_CNTHP_CVAL_EL2 }, "CNTHP_CVAL_EL2", { AArch64_SYSREG_CNTHP_CVAL_EL2 }, 0xE712, true, true,  {0}  }, // 227
+  { "CNTHP_TVAL_EL2", { AArch64_SYSREG_CNTHP_TVAL_EL2 }, "CNTHP_TVAL_EL2", { AArch64_SYSREG_CNTHP_TVAL_EL2 }, 0xE710, true, true,  {0}  }, // 228
+  { "CNTHVS_CTL_EL2", { AArch64_SYSREG_CNTHVS_CTL_EL2 }, "CNTHVS_CTL_EL2", { AArch64_SYSREG_CNTHVS_CTL_EL2 }, 0xE721, true, true,  {AArch64_FeatureSEL2}  }, // 229
+  { "CNTHVS_CVAL_EL2", { AArch64_SYSREG_CNTHVS_CVAL_EL2 }, "CNTHVS_CVAL_EL2", { AArch64_SYSREG_CNTHVS_CVAL_EL2 }, 0xE722, true, true,  {AArch64_FeatureSEL2}  }, // 230
+  { "CNTHVS_TVAL_EL2", { AArch64_SYSREG_CNTHVS_TVAL_EL2 }, "CNTHVS_TVAL_EL2", { AArch64_SYSREG_CNTHVS_TVAL_EL2 }, 0xE720, true, true,  {AArch64_FeatureSEL2}  }, // 231
+  { "CNTHV_CTL_EL2", { AArch64_SYSREG_CNTHV_CTL_EL2 }, "CNTHV_CTL_EL2", { AArch64_SYSREG_CNTHV_CTL_EL2 }, 0xE719, true, true,  {AArch64_FeatureVH}  }, // 232
+  { "CNTHV_CVAL_EL2", { AArch64_SYSREG_CNTHV_CVAL_EL2 }, "CNTHV_CVAL_EL2", { AArch64_SYSREG_CNTHV_CVAL_EL2 }, 0xE71A, true, true,  {AArch64_FeatureVH}  }, // 233
+  { "CNTHV_TVAL_EL2", { AArch64_SYSREG_CNTHV_TVAL_EL2 }, "CNTHV_TVAL_EL2", { AArch64_SYSREG_CNTHV_TVAL_EL2 }, 0xE718, true, true,  {AArch64_FeatureVH}  }, // 234
+  { "CNTISCALE_EL2", { AArch64_SYSREG_CNTISCALE_EL2 }, "CNTISCALE_EL2", { AArch64_SYSREG_CNTISCALE_EL2 }, 0xE705, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 235
+  { "CNTKCTL_EL1", { AArch64_SYSREG_CNTKCTL_EL1 }, "CNTKCTL_EL1", { AArch64_SYSREG_CNTKCTL_EL1 }, 0xC708, true, true,  {0}  }, // 236
+  { "CNTKCTL_EL12", { AArch64_SYSREG_CNTKCTL_EL12 }, "CNTKCTL_EL12", { AArch64_SYSREG_CNTKCTL_EL12 }, 0xEF08, true, true,  {AArch64_FeatureVH}  }, // 237
+  { "CNTPCTSS_EL0", { AArch64_SYSREG_CNTPCTSS_EL0 }, "CNTPCTSS_EL0", { AArch64_SYSREG_CNTPCTSS_EL0 }, 0xDF05, true, false,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 238
+  { "CNTPCT_EL0", { AArch64_SYSREG_CNTPCT_EL0 }, "CNTPCT_EL0", { AArch64_SYSREG_CNTPCT_EL0 }, 0xDF01, true, false,  {0}  }, // 239
+  { "CNTPOFF_EL2", { AArch64_SYSREG_CNTPOFF_EL2 }, "CNTPOFF_EL2", { AArch64_SYSREG_CNTPOFF_EL2 }, 0xE706, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 240
+  { "CNTPS_CTL_EL1", { AArch64_SYSREG_CNTPS_CTL_EL1 }, "CNTPS_CTL_EL1", { AArch64_SYSREG_CNTPS_CTL_EL1 }, 0xFF11, true, true,  {0}  }, // 241
+  { "CNTPS_CVAL_EL1", { AArch64_SYSREG_CNTPS_CVAL_EL1 }, "CNTPS_CVAL_EL1", { AArch64_SYSREG_CNTPS_CVAL_EL1 }, 0xFF12, true, true,  {0}  }, // 242
+  { "CNTPS_TVAL_EL1", { AArch64_SYSREG_CNTPS_TVAL_EL1 }, "CNTPS_TVAL_EL1", { AArch64_SYSREG_CNTPS_TVAL_EL1 }, 0xFF10, true, true,  {0}  }, // 243
+  { "CNTP_CTL_EL0", { AArch64_SYSREG_CNTP_CTL_EL0 }, "CNTP_CTL_EL0", { AArch64_SYSREG_CNTP_CTL_EL0 }, 0xDF11, true, true,  {0}  }, // 244
+  { "CNTP_CTL_EL02", { AArch64_SYSREG_CNTP_CTL_EL02 }, "CNTP_CTL_EL02", { AArch64_SYSREG_CNTP_CTL_EL02 }, 0xEF11, true, true,  {AArch64_FeatureVH}  }, // 245
+  { "CNTP_CVAL_EL0", { AArch64_SYSREG_CNTP_CVAL_EL0 }, "CNTP_CVAL_EL0", { AArch64_SYSREG_CNTP_CVAL_EL0 }, 0xDF12, true, true,  {0}  }, // 246
+  { "CNTP_CVAL_EL02", { AArch64_SYSREG_CNTP_CVAL_EL02 }, "CNTP_CVAL_EL02", { AArch64_SYSREG_CNTP_CVAL_EL02 }, 0xEF12, true, true,  {AArch64_FeatureVH}  }, // 247
+  { "CNTP_TVAL_EL0", { AArch64_SYSREG_CNTP_TVAL_EL0 }, "CNTP_TVAL_EL0", { AArch64_SYSREG_CNTP_TVAL_EL0 }, 0xDF10, true, true,  {0}  }, // 248
+  { "CNTP_TVAL_EL02", { AArch64_SYSREG_CNTP_TVAL_EL02 }, "CNTP_TVAL_EL02", { AArch64_SYSREG_CNTP_TVAL_EL02 }, 0xEF10, true, true,  {AArch64_FeatureVH}  }, // 249
+  { "CNTSCALE_EL2", { AArch64_SYSREG_CNTSCALE_EL2 }, "CNTSCALE_EL2", { AArch64_SYSREG_CNTSCALE_EL2 }, 0xE704, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 250
+  { "CNTVCTSS_EL0", { AArch64_SYSREG_CNTVCTSS_EL0 }, "CNTVCTSS_EL0", { AArch64_SYSREG_CNTVCTSS_EL0 }, 0xDF06, true, false,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 251
+  { "CNTVCT_EL0", { AArch64_SYSREG_CNTVCT_EL0 }, "CNTVCT_EL0", { AArch64_SYSREG_CNTVCT_EL0 }, 0xDF02, true, false,  {0}  }, // 252
+  { "CNTVFRQ_EL2", { AArch64_SYSREG_CNTVFRQ_EL2 }, "CNTVFRQ_EL2", { AArch64_SYSREG_CNTVFRQ_EL2 }, 0xE707, true, true,  {AArch64_FeatureEnhancedCounterVirtualization}  }, // 253
+  { "CNTVOFF_EL2", { AArch64_SYSREG_CNTVOFF_EL2 }, "CNTVOFF_EL2", { AArch64_SYSREG_CNTVOFF_EL2 }, 0xE703, true, true,  {0}  }, // 254
+  { "CNTV_CTL_EL0", { AArch64_SYSREG_CNTV_CTL_EL0 }, "CNTV_CTL_EL0", { AArch64_SYSREG_CNTV_CTL_EL0 }, 0xDF19, true, true,  {0}  }, // 255
+  { "CNTV_CTL_EL02", { AArch64_SYSREG_CNTV_CTL_EL02 }, "CNTV_CTL_EL02", { AArch64_SYSREG_CNTV_CTL_EL02 }, 0xEF19, true, true,  {AArch64_FeatureVH}  }, // 256
+  { "CNTV_CVAL_EL0", { AArch64_SYSREG_CNTV_CVAL_EL0 }, "CNTV_CVAL_EL0", { AArch64_SYSREG_CNTV_CVAL_EL0 }, 0xDF1A, true, true,  {0}  }, // 257
+  { "CNTV_CVAL_EL02", { AArch64_SYSREG_CNTV_CVAL_EL02 }, "CNTV_CVAL_EL02", { AArch64_SYSREG_CNTV_CVAL_EL02 }, 0xEF1A, true, true,  {AArch64_FeatureVH}  }, // 258
+  { "CNTV_TVAL_EL0", { AArch64_SYSREG_CNTV_TVAL_EL0 }, "CNTV_TVAL_EL0", { AArch64_SYSREG_CNTV_TVAL_EL0 }, 0xDF18, true, true,  {0}  }, // 259
+  { "CNTV_TVAL_EL02", { AArch64_SYSREG_CNTV_TVAL_EL02 }, "CNTV_TVAL_EL02", { AArch64_SYSREG_CNTV_TVAL_EL02 }, 0xEF18, true, true,  {AArch64_FeatureVH}  }, // 260
+  { "CONTEXTIDR_EL1", { AArch64_SYSREG_CONTEXTIDR_EL1 }, "CONTEXTIDR_EL1", { AArch64_SYSREG_CONTEXTIDR_EL1 }, 0xC681, true, true,  {0}  }, // 261
+  { "CONTEXTIDR_EL12", { AArch64_SYSREG_CONTEXTIDR_EL12 }, "CONTEXTIDR_EL12", { AArch64_SYSREG_CONTEXTIDR_EL12 }, 0xEE81, true, true,  {AArch64_FeatureVH}  }, // 262
+  { "CONTEXTIDR_EL2", { AArch64_SYSREG_CONTEXTIDR_EL2 }, "CONTEXTIDR_EL2", { AArch64_SYSREG_CONTEXTIDR_EL2 }, 0xE681, true, true,  {AArch64_FeatureCONTEXTIDREL2}  }, // 263
+  { "CPACR_EL1", { AArch64_SYSREG_CPACR_EL1 }, "CPACR_EL1", { AArch64_SYSREG_CPACR_EL1 }, 0xC082, true, true,  {0}  }, // 264
+  { "CPACR_EL12", { AArch64_SYSREG_CPACR_EL12 }, "CPACR_EL12", { AArch64_SYSREG_CPACR_EL12 }, 0xE882, true, true,  {AArch64_FeatureVH}  }, // 265
+  { "CPM_IOACC_CTL_EL3", { AArch64_SYSREG_CPM_IOACC_CTL_EL3 }, "CPM_IOACC_CTL_EL3", { AArch64_SYSREG_CPM_IOACC_CTL_EL3 }, 0xFF90, true, true,  {AArch64_FeatureAppleA7SysReg}  }, // 266
+  { "CPTR_EL2", { AArch64_SYSREG_CPTR_EL2 }, "CPTR_EL2", { AArch64_SYSREG_CPTR_EL2 }, 0xE08A, true, true,  {0}  }, // 267
+  { "CPTR_EL3", { AArch64_SYSREG_CPTR_EL3 }, "CPTR_EL3", { AArch64_SYSREG_CPTR_EL3 }, 0xF08A, true, true,  {0}  }, // 268
+  { "CSSELR_EL1", { AArch64_SYSREG_CSSELR_EL1 }, "CSSELR_EL1", { AArch64_SYSREG_CSSELR_EL1 }, 0xD000, true, true,  {0}  }, // 269
+  { "CTR_EL0", { AArch64_SYSREG_CTR_EL0 }, "CTR_EL0", { AArch64_SYSREG_CTR_EL0 }, 0xD801, true, false,  {0}  }, // 270
+  { "CurrentEL", { AArch64_SYSREG_CURRENTEL }, "CurrentEL", { AArch64_SYSREG_CURRENTEL }, 0xC212, true, false,  {0}  }, // 271
+  { "DACR32_EL2", { AArch64_SYSREG_DACR32_EL2 }, "DACR32_EL2", { AArch64_SYSREG_DACR32_EL2 }, 0xE180, true, true,  {0}  }, // 272
+  { "DAIF", { AArch64_SYSREG_DAIF }, "DAIF", { AArch64_SYSREG_DAIF }, 0xDA11, true, true,  {0}  }, // 273
+  { "DBGAUTHSTATUS_EL1", { AArch64_SYSREG_DBGAUTHSTATUS_EL1 }, "DBGAUTHSTATUS_EL1", { AArch64_SYSREG_DBGAUTHSTATUS_EL1 }, 0x83F6, true, false,  {0}  }, // 274
+  { "DBGBCR0_EL1", { AArch64_SYSREG_DBGBCR0_EL1 }, "DBGBCR0_EL1", { AArch64_SYSREG_DBGBCR0_EL1 }, 0x8005, true, true,  {0}  }, // 275
+  { "DBGBCR10_EL1", { AArch64_SYSREG_DBGBCR10_EL1 }, "DBGBCR10_EL1", { AArch64_SYSREG_DBGBCR10_EL1 }, 0x8055, true, true,  {0}  }, // 276
+  { "DBGBCR11_EL1", { AArch64_SYSREG_DBGBCR11_EL1 }, "DBGBCR11_EL1", { AArch64_SYSREG_DBGBCR11_EL1 }, 0x805D, true, true,  {0}  }, // 277
+  { "DBGBCR12_EL1", { AArch64_SYSREG_DBGBCR12_EL1 }, "DBGBCR12_EL1", { AArch64_SYSREG_DBGBCR12_EL1 }, 0x8065, true, true,  {0}  }, // 278
+  { "DBGBCR13_EL1", { AArch64_SYSREG_DBGBCR13_EL1 }, "DBGBCR13_EL1", { AArch64_SYSREG_DBGBCR13_EL1 }, 0x806D, true, true,  {0}  }, // 279
+  { "DBGBCR14_EL1", { AArch64_SYSREG_DBGBCR14_EL1 }, "DBGBCR14_EL1", { AArch64_SYSREG_DBGBCR14_EL1 }, 0x8075, true, true,  {0}  }, // 280
+  { "DBGBCR15_EL1", { AArch64_SYSREG_DBGBCR15_EL1 }, "DBGBCR15_EL1", { AArch64_SYSREG_DBGBCR15_EL1 }, 0x807D, true, true,  {0}  }, // 281
+  { "DBGBCR1_EL1", { AArch64_SYSREG_DBGBCR1_EL1 }, "DBGBCR1_EL1", { AArch64_SYSREG_DBGBCR1_EL1 }, 0x800D, true, true,  {0}  }, // 282
+  { "DBGBCR2_EL1", { AArch64_SYSREG_DBGBCR2_EL1 }, "DBGBCR2_EL1", { AArch64_SYSREG_DBGBCR2_EL1 }, 0x8015, true, true,  {0}  }, // 283
+  { "DBGBCR3_EL1", { AArch64_SYSREG_DBGBCR3_EL1 }, "DBGBCR3_EL1", { AArch64_SYSREG_DBGBCR3_EL1 }, 0x801D, true, true,  {0}  }, // 284
+  { "DBGBCR4_EL1", { AArch64_SYSREG_DBGBCR4_EL1 }, "DBGBCR4_EL1", { AArch64_SYSREG_DBGBCR4_EL1 }, 0x8025, true, true,  {0}  }, // 285
+  { "DBGBCR5_EL1", { AArch64_SYSREG_DBGBCR5_EL1 }, "DBGBCR5_EL1", { AArch64_SYSREG_DBGBCR5_EL1 }, 0x802D, true, true,  {0}  }, // 286
+  { "DBGBCR6_EL1", { AArch64_SYSREG_DBGBCR6_EL1 }, "DBGBCR6_EL1", { AArch64_SYSREG_DBGBCR6_EL1 }, 0x8035, true, true,  {0}  }, // 287
+  { "DBGBCR7_EL1", { AArch64_SYSREG_DBGBCR7_EL1 }, "DBGBCR7_EL1", { AArch64_SYSREG_DBGBCR7_EL1 }, 0x803D, true, true,  {0}  }, // 288
+  { "DBGBCR8_EL1", { AArch64_SYSREG_DBGBCR8_EL1 }, "DBGBCR8_EL1", { AArch64_SYSREG_DBGBCR8_EL1 }, 0x8045, true, true,  {0}  }, // 289
+  { "DBGBCR9_EL1", { AArch64_SYSREG_DBGBCR9_EL1 }, "DBGBCR9_EL1", { AArch64_SYSREG_DBGBCR9_EL1 }, 0x804D, true, true,  {0}  }, // 290
+  { "DBGBVR0_EL1", { AArch64_SYSREG_DBGBVR0_EL1 }, "DBGBVR0_EL1", { AArch64_SYSREG_DBGBVR0_EL1 }, 0x8004, true, true,  {0}  }, // 291
+  { "DBGBVR10_EL1", { AArch64_SYSREG_DBGBVR10_EL1 }, "DBGBVR10_EL1", { AArch64_SYSREG_DBGBVR10_EL1 }, 0x8054, true, true,  {0}  }, // 292
+  { "DBGBVR11_EL1", { AArch64_SYSREG_DBGBVR11_EL1 }, "DBGBVR11_EL1", { AArch64_SYSREG_DBGBVR11_EL1 }, 0x805C, true, true,  {0}  }, // 293
+  { "DBGBVR12_EL1", { AArch64_SYSREG_DBGBVR12_EL1 }, "DBGBVR12_EL1", { AArch64_SYSREG_DBGBVR12_EL1 }, 0x8064, true, true,  {0}  }, // 294
+  { "DBGBVR13_EL1", { AArch64_SYSREG_DBGBVR13_EL1 }, "DBGBVR13_EL1", { AArch64_SYSREG_DBGBVR13_EL1 }, 0x806C, true, true,  {0}  }, // 295
+  { "DBGBVR14_EL1", { AArch64_SYSREG_DBGBVR14_EL1 }, "DBGBVR14_EL1", { AArch64_SYSREG_DBGBVR14_EL1 }, 0x8074, true, true,  {0}  }, // 296
+  { "DBGBVR15_EL1", { AArch64_SYSREG_DBGBVR15_EL1 }, "DBGBVR15_EL1", { AArch64_SYSREG_DBGBVR15_EL1 }, 0x807C, true, true,  {0}  }, // 297
+  { "DBGBVR1_EL1", { AArch64_SYSREG_DBGBVR1_EL1 }, "DBGBVR1_EL1", { AArch64_SYSREG_DBGBVR1_EL1 }, 0x800C, true, true,  {0}  }, // 298
+  { "DBGBVR2_EL1", { AArch64_SYSREG_DBGBVR2_EL1 }, "DBGBVR2_EL1", { AArch64_SYSREG_DBGBVR2_EL1 }, 0x8014, true, true,  {0}  }, // 299
+  { "DBGBVR3_EL1", { AArch64_SYSREG_DBGBVR3_EL1 }, "DBGBVR3_EL1", { AArch64_SYSREG_DBGBVR3_EL1 }, 0x801C, true, true,  {0}  }, // 300
+  { "DBGBVR4_EL1", { AArch64_SYSREG_DBGBVR4_EL1 }, "DBGBVR4_EL1", { AArch64_SYSREG_DBGBVR4_EL1 }, 0x8024, true, true,  {0}  }, // 301
+  { "DBGBVR5_EL1", { AArch64_SYSREG_DBGBVR5_EL1 }, "DBGBVR5_EL1", { AArch64_SYSREG_DBGBVR5_EL1 }, 0x802C, true, true,  {0}  }, // 302
+  { "DBGBVR6_EL1", { AArch64_SYSREG_DBGBVR6_EL1 }, "DBGBVR6_EL1", { AArch64_SYSREG_DBGBVR6_EL1 }, 0x8034, true, true,  {0}  }, // 303
+  { "DBGBVR7_EL1", { AArch64_SYSREG_DBGBVR7_EL1 }, "DBGBVR7_EL1", { AArch64_SYSREG_DBGBVR7_EL1 }, 0x803C, true, true,  {0}  }, // 304
+  { "DBGBVR8_EL1", { AArch64_SYSREG_DBGBVR8_EL1 }, "DBGBVR8_EL1", { AArch64_SYSREG_DBGBVR8_EL1 }, 0x8044, true, true,  {0}  }, // 305
+  { "DBGBVR9_EL1", { AArch64_SYSREG_DBGBVR9_EL1 }, "DBGBVR9_EL1", { AArch64_SYSREG_DBGBVR9_EL1 }, 0x804C, true, true,  {0}  }, // 306
+  { "DBGCLAIMCLR_EL1", { AArch64_SYSREG_DBGCLAIMCLR_EL1 }, "DBGCLAIMCLR_EL1", { AArch64_SYSREG_DBGCLAIMCLR_EL1 }, 0x83CE, true, true,  {0}  }, // 307
+  { "DBGCLAIMSET_EL1", { AArch64_SYSREG_DBGCLAIMSET_EL1 }, "DBGCLAIMSET_EL1", { AArch64_SYSREG_DBGCLAIMSET_EL1 }, 0x83C6, true, true,  {0}  }, // 308
+  { "DBGDTRRX_EL0", { AArch64_SYSREG_DBGDTRRX_EL0 }, "DBGDTRRX_EL0", { AArch64_SYSREG_DBGDTRRX_EL0 }, 0x9828, true, false,  {0}  }, // 309
+  { "DBGDTRTX_EL0", { AArch64_SYSREG_DBGDTRTX_EL0 }, "DBGDTRTX_EL0", { AArch64_SYSREG_DBGDTRTX_EL0 }, 0x9828, false, true,  {0}  }, // 310
+  { "DBGDTR_EL0", { AArch64_SYSREG_DBGDTR_EL0 }, "DBGDTR_EL0", { AArch64_SYSREG_DBGDTR_EL0 }, 0x9820, true, true,  {0}  }, // 311
+  { "DBGPRCR_EL1", { AArch64_SYSREG_DBGPRCR_EL1 }, "DBGPRCR_EL1", { AArch64_SYSREG_DBGPRCR_EL1 }, 0x80A4, true, true,  {0}  }, // 312
+  { "DBGVCR32_EL2", { AArch64_SYSREG_DBGVCR32_EL2 }, "DBGVCR32_EL2", { AArch64_SYSREG_DBGVCR32_EL2 }, 0xA038, true, true,  {0}  }, // 313
+  { "DBGWCR0_EL1", { AArch64_SYSREG_DBGWCR0_EL1 }, "DBGWCR0_EL1", { AArch64_SYSREG_DBGWCR0_EL1 }, 0x8007, true, true,  {0}  }, // 314
+  { "DBGWCR10_EL1", { AArch64_SYSREG_DBGWCR10_EL1 }, "DBGWCR10_EL1", { AArch64_SYSREG_DBGWCR10_EL1 }, 0x8057, true, true,  {0}  }, // 315
+  { "DBGWCR11_EL1", { AArch64_SYSREG_DBGWCR11_EL1 }, "DBGWCR11_EL1", { AArch64_SYSREG_DBGWCR11_EL1 }, 0x805F, true, true,  {0}  }, // 316
+  { "DBGWCR12_EL1", { AArch64_SYSREG_DBGWCR12_EL1 }, "DBGWCR12_EL1", { AArch64_SYSREG_DBGWCR12_EL1 }, 0x8067, true, true,  {0}  }, // 317
+  { "DBGWCR13_EL1", { AArch64_SYSREG_DBGWCR13_EL1 }, "DBGWCR13_EL1", { AArch64_SYSREG_DBGWCR13_EL1 }, 0x806F, true, true,  {0}  }, // 318
+  { "DBGWCR14_EL1", { AArch64_SYSREG_DBGWCR14_EL1 }, "DBGWCR14_EL1", { AArch64_SYSREG_DBGWCR14_EL1 }, 0x8077, true, true,  {0}  }, // 319
+  { "DBGWCR15_EL1", { AArch64_SYSREG_DBGWCR15_EL1 }, "DBGWCR15_EL1", { AArch64_SYSREG_DBGWCR15_EL1 }, 0x807F, true, true,  {0}  }, // 320
+  { "DBGWCR1_EL1", { AArch64_SYSREG_DBGWCR1_EL1 }, "DBGWCR1_EL1", { AArch64_SYSREG_DBGWCR1_EL1 }, 0x800F, true, true,  {0}  }, // 321
+  { "DBGWCR2_EL1", { AArch64_SYSREG_DBGWCR2_EL1 }, "DBGWCR2_EL1", { AArch64_SYSREG_DBGWCR2_EL1 }, 0x8017, true, true,  {0}  }, // 322
+  { "DBGWCR3_EL1", { AArch64_SYSREG_DBGWCR3_EL1 }, "DBGWCR3_EL1", { AArch64_SYSREG_DBGWCR3_EL1 }, 0x801F, true, true,  {0}  }, // 323
+  { "DBGWCR4_EL1", { AArch64_SYSREG_DBGWCR4_EL1 }, "DBGWCR4_EL1", { AArch64_SYSREG_DBGWCR4_EL1 }, 0x8027, true, true,  {0}  }, // 324
+  { "DBGWCR5_EL1", { AArch64_SYSREG_DBGWCR5_EL1 }, "DBGWCR5_EL1", { AArch64_SYSREG_DBGWCR5_EL1 }, 0x802F, true, true,  {0}  }, // 325
+  { "DBGWCR6_EL1", { AArch64_SYSREG_DBGWCR6_EL1 }, "DBGWCR6_EL1", { AArch64_SYSREG_DBGWCR6_EL1 }, 0x8037, true, true,  {0}  }, // 326
+  { "DBGWCR7_EL1", { AArch64_SYSREG_DBGWCR7_EL1 }, "DBGWCR7_EL1", { AArch64_SYSREG_DBGWCR7_EL1 }, 0x803F, true, true,  {0}  }, // 327
+  { "DBGWCR8_EL1", { AArch64_SYSREG_DBGWCR8_EL1 }, "DBGWCR8_EL1", { AArch64_SYSREG_DBGWCR8_EL1 }, 0x8047, true, true,  {0}  }, // 328
+  { "DBGWCR9_EL1", { AArch64_SYSREG_DBGWCR9_EL1 }, "DBGWCR9_EL1", { AArch64_SYSREG_DBGWCR9_EL1 }, 0x804F, true, true,  {0}  }, // 329
+  { "DBGWVR0_EL1", { AArch64_SYSREG_DBGWVR0_EL1 }, "DBGWVR0_EL1", { AArch64_SYSREG_DBGWVR0_EL1 }, 0x8006, true, true,  {0}  }, // 330
+  { "DBGWVR10_EL1", { AArch64_SYSREG_DBGWVR10_EL1 }, "DBGWVR10_EL1", { AArch64_SYSREG_DBGWVR10_EL1 }, 0x8056, true, true,  {0}  }, // 331
+  { "DBGWVR11_EL1", { AArch64_SYSREG_DBGWVR11_EL1 }, "DBGWVR11_EL1", { AArch64_SYSREG_DBGWVR11_EL1 }, 0x805E, true, true,  {0}  }, // 332
+  { "DBGWVR12_EL1", { AArch64_SYSREG_DBGWVR12_EL1 }, "DBGWVR12_EL1", { AArch64_SYSREG_DBGWVR12_EL1 }, 0x8066, true, true,  {0}  }, // 333
+  { "DBGWVR13_EL1", { AArch64_SYSREG_DBGWVR13_EL1 }, "DBGWVR13_EL1", { AArch64_SYSREG_DBGWVR13_EL1 }, 0x806E, true, true,  {0}  }, // 334
+  { "DBGWVR14_EL1", { AArch64_SYSREG_DBGWVR14_EL1 }, "DBGWVR14_EL1", { AArch64_SYSREG_DBGWVR14_EL1 }, 0x8076, true, true,  {0}  }, // 335
+  { "DBGWVR15_EL1", { AArch64_SYSREG_DBGWVR15_EL1 }, "DBGWVR15_EL1", { AArch64_SYSREG_DBGWVR15_EL1 }, 0x807E, true, true,  {0}  }, // 336
+  { "DBGWVR1_EL1", { AArch64_SYSREG_DBGWVR1_EL1 }, "DBGWVR1_EL1", { AArch64_SYSREG_DBGWVR1_EL1 }, 0x800E, true, true,  {0}  }, // 337
+  { "DBGWVR2_EL1", { AArch64_SYSREG_DBGWVR2_EL1 }, "DBGWVR2_EL1", { AArch64_SYSREG_DBGWVR2_EL1 }, 0x8016, true, true,  {0}  }, // 338
+  { "DBGWVR3_EL1", { AArch64_SYSREG_DBGWVR3_EL1 }, "DBGWVR3_EL1", { AArch64_SYSREG_DBGWVR3_EL1 }, 0x801E, true, true,  {0}  }, // 339
+  { "DBGWVR4_EL1", { AArch64_SYSREG_DBGWVR4_EL1 }, "DBGWVR4_EL1", { AArch64_SYSREG_DBGWVR4_EL1 }, 0x8026, true, true,  {0}  }, // 340
+  { "DBGWVR5_EL1", { AArch64_SYSREG_DBGWVR5_EL1 }, "DBGWVR5_EL1", { AArch64_SYSREG_DBGWVR5_EL1 }, 0x802E, true, true,  {0}  }, // 341
+  { "DBGWVR6_EL1", { AArch64_SYSREG_DBGWVR6_EL1 }, "DBGWVR6_EL1", { AArch64_SYSREG_DBGWVR6_EL1 }, 0x8036, true, true,  {0}  }, // 342
+  { "DBGWVR7_EL1", { AArch64_SYSREG_DBGWVR7_EL1 }, "DBGWVR7_EL1", { AArch64_SYSREG_DBGWVR7_EL1 }, 0x803E, true, true,  {0}  }, // 343
+  { "DBGWVR8_EL1", { AArch64_SYSREG_DBGWVR8_EL1 }, "DBGWVR8_EL1", { AArch64_SYSREG_DBGWVR8_EL1 }, 0x8046, true, true,  {0}  }, // 344
+  { "DBGWVR9_EL1", { AArch64_SYSREG_DBGWVR9_EL1 }, "DBGWVR9_EL1", { AArch64_SYSREG_DBGWVR9_EL1 }, 0x804E, true, true,  {0}  }, // 345
+  { "DCZID_EL0", { AArch64_SYSREG_DCZID_EL0 }, "DCZID_EL0", { AArch64_SYSREG_DCZID_EL0 }, 0xD807, true, false,  {0}  }, // 346
+  { "DISR_EL1", { AArch64_SYSREG_DISR_EL1 }, "DISR_EL1", { AArch64_SYSREG_DISR_EL1 }, 0xC609, true, true,  {AArch64_FeatureRAS}  }, // 347
+  { "DIT", { AArch64_SYSREG_DIT }, "DIT", { AArch64_SYSREG_DIT }, 0xDA15, true, true,  {AArch64_FeatureDIT}  }, // 348
+  { "DLR_EL0", { AArch64_SYSREG_DLR_EL0 }, "DLR_EL0", { AArch64_SYSREG_DLR_EL0 }, 0xDA29, true, true,  {0}  }, // 349
+  { "DSPSR_EL0", { AArch64_SYSREG_DSPSR_EL0 }, "DSPSR_EL0", { AArch64_SYSREG_DSPSR_EL0 }, 0xDA28, true, true,  {0}  }, // 350
+  { "ELR_EL1", { AArch64_SYSREG_ELR_EL1 }, "ELR_EL1", { AArch64_SYSREG_ELR_EL1 }, 0xC201, true, true,  {0}  }, // 351
+  { "ELR_EL12", { AArch64_SYSREG_ELR_EL12 }, "ELR_EL12", { AArch64_SYSREG_ELR_EL12 }, 0xEA01, true, true,  {AArch64_FeatureVH}  }, // 352
+  { "ELR_EL2", { AArch64_SYSREG_ELR_EL2 }, "ELR_EL2", { AArch64_SYSREG_ELR_EL2 }, 0xE201, true, true,  {0}  }, // 353
+  { "ELR_EL3", { AArch64_SYSREG_ELR_EL3 }, "ELR_EL3", { AArch64_SYSREG_ELR_EL3 }, 0xF201, true, true,  {0}  }, // 354
+  { "ERRIDR_EL1", { AArch64_SYSREG_ERRIDR_EL1 }, "ERRIDR_EL1", { AArch64_SYSREG_ERRIDR_EL1 }, 0xC298, true, false,  {AArch64_FeatureRAS}  }, // 355
+  { "ERRSELR_EL1", { AArch64_SYSREG_ERRSELR_EL1 }, "ERRSELR_EL1", { AArch64_SYSREG_ERRSELR_EL1 }, 0xC299, true, true,  {AArch64_FeatureRAS}  }, // 356
+  { "ERXADDR_EL1", { AArch64_SYSREG_ERXADDR_EL1 }, "ERXADDR_EL1", { AArch64_SYSREG_ERXADDR_EL1 }, 0xC2A3, true, true,  {AArch64_FeatureRAS}  }, // 357
+  { "ERXCTLR_EL1", { AArch64_SYSREG_ERXCTLR_EL1 }, "ERXCTLR_EL1", { AArch64_SYSREG_ERXCTLR_EL1 }, 0xC2A1, true, true,  {AArch64_FeatureRAS}  }, // 358
+  { "ERXFR_EL1", { AArch64_SYSREG_ERXFR_EL1 }, "ERXFR_EL1", { AArch64_SYSREG_ERXFR_EL1 }, 0xC2A0, true, false,  {AArch64_FeatureRAS}  }, // 359
+  { "ERXGSR_EL1", { AArch64_SYSREG_ERXGSR_EL1 }, "ERXGSR_EL1", { AArch64_SYSREG_ERXGSR_EL1 }, 0xC29A, true, false,  {AArch64_FeatureRASv2}  }, // 360
+  { "ERXMISC0_EL1", { AArch64_SYSREG_ERXMISC0_EL1 }, "ERXMISC0_EL1", { AArch64_SYSREG_ERXMISC0_EL1 }, 0xC2A8, true, true,  {AArch64_FeatureRAS}  }, // 361
+  { "ERXMISC1_EL1", { AArch64_SYSREG_ERXMISC1_EL1 }, "ERXMISC1_EL1", { AArch64_SYSREG_ERXMISC1_EL1 }, 0xC2A9, true, true,  {AArch64_FeatureRAS}  }, // 362
+  { "ERXMISC2_EL1", { AArch64_SYSREG_ERXMISC2_EL1 }, "ERXMISC2_EL1", { AArch64_SYSREG_ERXMISC2_EL1 }, 0xC2AA, true, true,  {0}  }, // 363
+  { "ERXMISC3_EL1", { AArch64_SYSREG_ERXMISC3_EL1 }, "ERXMISC3_EL1", { AArch64_SYSREG_ERXMISC3_EL1 }, 0xC2AB, true, true,  {0}  }, // 364
+  { "ERXPFGCDN_EL1", { AArch64_SYSREG_ERXPFGCDN_EL1 }, "ERXPFGCDN_EL1", { AArch64_SYSREG_ERXPFGCDN_EL1 }, 0xC2A6, true, true,  {0}  }, // 365
+  { "ERXPFGCTL_EL1", { AArch64_SYSREG_ERXPFGCTL_EL1 }, "ERXPFGCTL_EL1", { AArch64_SYSREG_ERXPFGCTL_EL1 }, 0xC2A5, true, true,  {0}  }, // 366
+  { "ERXPFGF_EL1", { AArch64_SYSREG_ERXPFGF_EL1 }, "ERXPFGF_EL1", { AArch64_SYSREG_ERXPFGF_EL1 }, 0xC2A4, true, false,  {0}  }, // 367
+  { "ERXSTATUS_EL1", { AArch64_SYSREG_ERXSTATUS_EL1 }, "ERXSTATUS_EL1", { AArch64_SYSREG_ERXSTATUS_EL1 }, 0xC2A2, true, true,  {AArch64_FeatureRAS}  }, // 368
+  { "ESR_EL1", { AArch64_SYSREG_ESR_EL1 }, "ESR_EL1", { AArch64_SYSREG_ESR_EL1 }, 0xC290, true, true,  {0}  }, // 369
+  { "ESR_EL12", { AArch64_SYSREG_ESR_EL12 }, "ESR_EL12", { AArch64_SYSREG_ESR_EL12 }, 0xEA90, true, true,  {AArch64_FeatureVH}  }, // 370
+  { "ESR_EL2", { AArch64_SYSREG_ESR_EL2 }, "ESR_EL2", { AArch64_SYSREG_ESR_EL2 }, 0xE290, true, true,  {0}  }, // 371
+  { "ESR_EL3", { AArch64_SYSREG_ESR_EL3 }, "ESR_EL3", { AArch64_SYSREG_ESR_EL3 }, 0xF290, true, true,  {0}  }, // 372
+  { "FAR_EL1", { AArch64_SYSREG_FAR_EL1 }, "FAR_EL1", { AArch64_SYSREG_FAR_EL1 }, 0xC300, true, true,  {0}  }, // 373
+  { "FAR_EL12", { AArch64_SYSREG_FAR_EL12 }, "FAR_EL12", { AArch64_SYSREG_FAR_EL12 }, 0xEB00, true, true,  {AArch64_FeatureVH}  }, // 374
+  { "FAR_EL2", { AArch64_SYSREG_FAR_EL2 }, "FAR_EL2", { AArch64_SYSREG_FAR_EL2 }, 0xE300, true, true,  {0}  }, // 375
+  { "FAR_EL3", { AArch64_SYSREG_FAR_EL3 }, "FAR_EL3", { AArch64_SYSREG_FAR_EL3 }, 0xF300, true, true,  {0}  }, // 376
+  { "FPCR", { AArch64_SYSREG_FPCR }, "FPCR", { AArch64_SYSREG_FPCR }, 0xDA20, true, true,  {0}  }, // 377
+  { "FPEXC32_EL2", { AArch64_SYSREG_FPEXC32_EL2 }, "FPEXC32_EL2", { AArch64_SYSREG_FPEXC32_EL2 }, 0xE298, true, true,  {0}  }, // 378
+  { "FPSR", { AArch64_SYSREG_FPSR }, "FPSR", { AArch64_SYSREG_FPSR }, 0xDA21, true, true,  {0}  }, // 379
+  { "GCR_EL1", { AArch64_SYSREG_GCR_EL1 }, "GCR_EL1", { AArch64_SYSREG_GCR_EL1 }, 0xC086, true, true,  {AArch64_FeatureMTE}  }, // 380
+  { "GMID_EL1", { AArch64_SYSREG_GMID_EL1 }, "GMID_EL1", { AArch64_SYSREG_GMID_EL1 }, 0xC804, true, false,  {AArch64_FeatureMTE}  }, // 381
+  { "GPCCR_EL3", { AArch64_SYSREG_GPCCR_EL3 }, "GPCCR_EL3", { AArch64_SYSREG_GPCCR_EL3 }, 0xF10E, true, true,  {AArch64_FeatureRME}  }, // 382
+  { "GPTBR_EL3", { AArch64_SYSREG_GPTBR_EL3 }, "GPTBR_EL3", { AArch64_SYSREG_GPTBR_EL3 }, 0xF10C, true, true,  {AArch64_FeatureRME}  }, // 383
+  { "HACR_EL2", { AArch64_SYSREG_HACR_EL2 }, "HACR_EL2", { AArch64_SYSREG_HACR_EL2 }, 0xE08F, true, true,  {0}  }, // 384
+  { "HAFGRTR_EL2", { AArch64_SYSREG_HAFGRTR_EL2 }, "HAFGRTR_EL2", { AArch64_SYSREG_HAFGRTR_EL2 }, 0xE18E, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 385
+  { "HCRX_EL2", { AArch64_SYSREG_HCRX_EL2 }, "HCRX_EL2", { AArch64_SYSREG_HCRX_EL2 }, 0xE092, true, true,  {AArch64_FeatureHCX}  }, // 386
+  { "HCR_EL2", { AArch64_SYSREG_HCR_EL2 }, "HCR_EL2", { AArch64_SYSREG_HCR_EL2 }, 0xE088, true, true,  {0}  }, // 387
+  { "HDFGRTR2_EL2", { AArch64_SYSREG_HDFGRTR2_EL2 }, "HDFGRTR2_EL2", { AArch64_SYSREG_HDFGRTR2_EL2 }, 0xE188, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 388
+  { "HDFGRTR_EL2", { AArch64_SYSREG_HDFGRTR_EL2 }, "HDFGRTR_EL2", { AArch64_SYSREG_HDFGRTR_EL2 }, 0xE18C, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 389
+  { "HDFGWTR2_EL2", { AArch64_SYSREG_HDFGWTR2_EL2 }, "HDFGWTR2_EL2", { AArch64_SYSREG_HDFGWTR2_EL2 }, 0xE189, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 390
+  { "HDFGWTR_EL2", { AArch64_SYSREG_HDFGWTR_EL2 }, "HDFGWTR_EL2", { AArch64_SYSREG_HDFGWTR_EL2 }, 0xE18D, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 391
+  { "HFGITR2_EL2", { AArch64_SYSREG_HFGITR2_EL2 }, "HFGITR2_EL2", { AArch64_SYSREG_HFGITR2_EL2 }, 0xE18F, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 392
+  { "HFGITR_EL2", { AArch64_SYSREG_HFGITR_EL2 }, "HFGITR_EL2", { AArch64_SYSREG_HFGITR_EL2 }, 0xE08E, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 393
+  { "HFGRTR2_EL2", { AArch64_SYSREG_HFGRTR2_EL2 }, "HFGRTR2_EL2", { AArch64_SYSREG_HFGRTR2_EL2 }, 0xE18A, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 394
+  { "HFGRTR_EL2", { AArch64_SYSREG_HFGRTR_EL2 }, "HFGRTR_EL2", { AArch64_SYSREG_HFGRTR_EL2 }, 0xE08C, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 395
+  { "HFGWTR2_EL2", { AArch64_SYSREG_HFGWTR2_EL2 }, "HFGWTR2_EL2", { AArch64_SYSREG_HFGWTR2_EL2 }, 0xE18B, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 396
+  { "HFGWTR_EL2", { AArch64_SYSREG_HFGWTR_EL2 }, "HFGWTR_EL2", { AArch64_SYSREG_HFGWTR_EL2 }, 0xE08D, true, true,  {AArch64_FeatureFineGrainedTraps}  }, // 397
+  { "HPFAR_EL2", { AArch64_SYSREG_HPFAR_EL2 }, "HPFAR_EL2", { AArch64_SYSREG_HPFAR_EL2 }, 0xE304, true, true,  {0}  }, // 398
+  { "HSTR_EL2", { AArch64_SYSREG_HSTR_EL2 }, "HSTR_EL2", { AArch64_SYSREG_HSTR_EL2 }, 0xE08B, true, true,  {0}  }, // 399
+  { "ICC_AP0R0_EL1", { AArch64_SYSREG_ICC_AP0R0_EL1 }, "ICC_AP0R0_EL1", { AArch64_SYSREG_ICC_AP0R0_EL1 }, 0xC644, true, true,  {0}  }, // 400
+  { "ICC_AP0R1_EL1", { AArch64_SYSREG_ICC_AP0R1_EL1 }, "ICC_AP0R1_EL1", { AArch64_SYSREG_ICC_AP0R1_EL1 }, 0xC645, true, true,  {0}  }, // 401
+  { "ICC_AP0R2_EL1", { AArch64_SYSREG_ICC_AP0R2_EL1 }, "ICC_AP0R2_EL1", { AArch64_SYSREG_ICC_AP0R2_EL1 }, 0xC646, true, true,  {0}  }, // 402
+  { "ICC_AP0R3_EL1", { AArch64_SYSREG_ICC_AP0R3_EL1 }, "ICC_AP0R3_EL1", { AArch64_SYSREG_ICC_AP0R3_EL1 }, 0xC647, true, true,  {0}  }, // 403
+  { "ICC_AP1R0_EL1", { AArch64_SYSREG_ICC_AP1R0_EL1 }, "ICC_AP1R0_EL1", { AArch64_SYSREG_ICC_AP1R0_EL1 }, 0xC648, true, true,  {0}  }, // 404
+  { "ICC_AP1R1_EL1", { AArch64_SYSREG_ICC_AP1R1_EL1 }, "ICC_AP1R1_EL1", { AArch64_SYSREG_ICC_AP1R1_EL1 }, 0xC649, true, true,  {0}  }, // 405
+  { "ICC_AP1R2_EL1", { AArch64_SYSREG_ICC_AP1R2_EL1 }, "ICC_AP1R2_EL1", { AArch64_SYSREG_ICC_AP1R2_EL1 }, 0xC64A, true, true,  {0}  }, // 406
+  { "ICC_AP1R3_EL1", { AArch64_SYSREG_ICC_AP1R3_EL1 }, "ICC_AP1R3_EL1", { AArch64_SYSREG_ICC_AP1R3_EL1 }, 0xC64B, true, true,  {0}  }, // 407
+  { "ICC_ASGI1R_EL1", { AArch64_SYSREG_ICC_ASGI1R_EL1 }, "ICC_ASGI1R_EL1", { AArch64_SYSREG_ICC_ASGI1R_EL1 }, 0xC65E, false, true,  {0}  }, // 408
+  { "ICC_BPR0_EL1", { AArch64_SYSREG_ICC_BPR0_EL1 }, "ICC_BPR0_EL1", { AArch64_SYSREG_ICC_BPR0_EL1 }, 0xC643, true, true,  {0}  }, // 409
+  { "ICC_BPR1_EL1", { AArch64_SYSREG_ICC_BPR1_EL1 }, "ICC_BPR1_EL1", { AArch64_SYSREG_ICC_BPR1_EL1 }, 0xC663, true, true,  {0}  }, // 410
+  { "ICC_CTLR_EL1", { AArch64_SYSREG_ICC_CTLR_EL1 }, "ICC_CTLR_EL1", { AArch64_SYSREG_ICC_CTLR_EL1 }, 0xC664, true, true,  {0}  }, // 411
+  { "ICC_CTLR_EL3", { AArch64_SYSREG_ICC_CTLR_EL3 }, "ICC_CTLR_EL3", { AArch64_SYSREG_ICC_CTLR_EL3 }, 0xF664, true, true,  {0}  }, // 412
+  { "ICC_DIR_EL1", { AArch64_SYSREG_ICC_DIR_EL1 }, "ICC_DIR_EL1", { AArch64_SYSREG_ICC_DIR_EL1 }, 0xC659, false, true,  {0}  }, // 413
+  { "ICC_EOIR0_EL1", { AArch64_SYSREG_ICC_EOIR0_EL1 }, "ICC_EOIR0_EL1", { AArch64_SYSREG_ICC_EOIR0_EL1 }, 0xC641, false, true,  {0}  }, // 414
+  { "ICC_EOIR1_EL1", { AArch64_SYSREG_ICC_EOIR1_EL1 }, "ICC_EOIR1_EL1", { AArch64_SYSREG_ICC_EOIR1_EL1 }, 0xC661, false, true,  {0}  }, // 415
+  { "ICC_HPPIR0_EL1", { AArch64_SYSREG_ICC_HPPIR0_EL1 }, "ICC_HPPIR0_EL1", { AArch64_SYSREG_ICC_HPPIR0_EL1 }, 0xC642, true, false,  {0}  }, // 416
+  { "ICC_HPPIR1_EL1", { AArch64_SYSREG_ICC_HPPIR1_EL1 }, "ICC_HPPIR1_EL1", { AArch64_SYSREG_ICC_HPPIR1_EL1 }, 0xC662, true, false,  {0}  }, // 417
+  { "ICC_IAR0_EL1", { AArch64_SYSREG_ICC_IAR0_EL1 }, "ICC_IAR0_EL1", { AArch64_SYSREG_ICC_IAR0_EL1 }, 0xC640, true, false,  {0}  }, // 418
+  { "ICC_IAR1_EL1", { AArch64_SYSREG_ICC_IAR1_EL1 }, "ICC_IAR1_EL1", { AArch64_SYSREG_ICC_IAR1_EL1 }, 0xC660, true, false,  {0}  }, // 419
+  { "ICC_IGRPEN0_EL1", { AArch64_SYSREG_ICC_IGRPEN0_EL1 }, "ICC_IGRPEN0_EL1", { AArch64_SYSREG_ICC_IGRPEN0_EL1 }, 0xC666, true, true,  {0}  }, // 420
+  { "ICC_IGRPEN1_EL1", { AArch64_SYSREG_ICC_IGRPEN1_EL1 }, "ICC_IGRPEN1_EL1", { AArch64_SYSREG_ICC_IGRPEN1_EL1 }, 0xC667, true, true,  {0}  }, // 421
+  { "ICC_IGRPEN1_EL3", { AArch64_SYSREG_ICC_IGRPEN1_EL3 }, "ICC_IGRPEN1_EL3", { AArch64_SYSREG_ICC_IGRPEN1_EL3 }, 0xF667, true, true,  {0}  }, // 422
+  { "ICC_NMIAR1_EL1", { AArch64_SYSREG_ICC_NMIAR1_EL1 }, "ICC_NMIAR1_EL1", { AArch64_SYSREG_ICC_NMIAR1_EL1 }, 0xC64D, true, false,  {AArch64_FeatureNMI}  }, // 423
+  { "ICC_PMR_EL1", { AArch64_SYSREG_ICC_PMR_EL1 }, "ICC_PMR_EL1", { AArch64_SYSREG_ICC_PMR_EL1 }, 0xC230, true, true,  {0}  }, // 424
+  { "ICC_RPR_EL1", { AArch64_SYSREG_ICC_RPR_EL1 }, "ICC_RPR_EL1", { AArch64_SYSREG_ICC_RPR_EL1 }, 0xC65B, true, false,  {0}  }, // 425
+  { "ICC_SGI0R_EL1", { AArch64_SYSREG_ICC_SGI0R_EL1 }, "ICC_SGI0R_EL1", { AArch64_SYSREG_ICC_SGI0R_EL1 }, 0xC65F, false, true,  {0}  }, // 426
+  { "ICC_SGI1R_EL1", { AArch64_SYSREG_ICC_SGI1R_EL1 }, "ICC_SGI1R_EL1", { AArch64_SYSREG_ICC_SGI1R_EL1 }, 0xC65D, false, true,  {0}  }, // 427
+  { "ICC_SRE_EL1", { AArch64_SYSREG_ICC_SRE_EL1 }, "ICC_SRE_EL1", { AArch64_SYSREG_ICC_SRE_EL1 }, 0xC665, true, true,  {0}  }, // 428
+  { "ICC_SRE_EL2", { AArch64_SYSREG_ICC_SRE_EL2 }, "ICC_SRE_EL2", { AArch64_SYSREG_ICC_SRE_EL2 }, 0xE64D, true, true,  {0}  }, // 429
+  { "ICC_SRE_EL3", { AArch64_SYSREG_ICC_SRE_EL3 }, "ICC_SRE_EL3", { AArch64_SYSREG_ICC_SRE_EL3 }, 0xF665, true, true,  {0}  }, // 430
+  { "ICH_AP0R0_EL2", { AArch64_SYSREG_ICH_AP0R0_EL2 }, "ICH_AP0R0_EL2", { AArch64_SYSREG_ICH_AP0R0_EL2 }, 0xE640, true, true,  {0}  }, // 431
+  { "ICH_AP0R1_EL2", { AArch64_SYSREG_ICH_AP0R1_EL2 }, "ICH_AP0R1_EL2", { AArch64_SYSREG_ICH_AP0R1_EL2 }, 0xE641, true, true,  {0}  }, // 432
+  { "ICH_AP0R2_EL2", { AArch64_SYSREG_ICH_AP0R2_EL2 }, "ICH_AP0R2_EL2", { AArch64_SYSREG_ICH_AP0R2_EL2 }, 0xE642, true, true,  {0}  }, // 433
+  { "ICH_AP0R3_EL2", { AArch64_SYSREG_ICH_AP0R3_EL2 }, "ICH_AP0R3_EL2", { AArch64_SYSREG_ICH_AP0R3_EL2 }, 0xE643, true, true,  {0}  }, // 434
+  { "ICH_AP1R0_EL2", { AArch64_SYSREG_ICH_AP1R0_EL2 }, "ICH_AP1R0_EL2", { AArch64_SYSREG_ICH_AP1R0_EL2 }, 0xE648, true, true,  {0}  }, // 435
+  { "ICH_AP1R1_EL2", { AArch64_SYSREG_ICH_AP1R1_EL2 }, "ICH_AP1R1_EL2", { AArch64_SYSREG_ICH_AP1R1_EL2 }, 0xE649, true, true,  {0}  }, // 436
+  { "ICH_AP1R2_EL2", { AArch64_SYSREG_ICH_AP1R2_EL2 }, "ICH_AP1R2_EL2", { AArch64_SYSREG_ICH_AP1R2_EL2 }, 0xE64A, true, true,  {0}  }, // 437
+  { "ICH_AP1R3_EL2", { AArch64_SYSREG_ICH_AP1R3_EL2 }, "ICH_AP1R3_EL2", { AArch64_SYSREG_ICH_AP1R3_EL2 }, 0xE64B, true, true,  {0}  }, // 438
+  { "ICH_EISR_EL2", { AArch64_SYSREG_ICH_EISR_EL2 }, "ICH_EISR_EL2", { AArch64_SYSREG_ICH_EISR_EL2 }, 0xE65B, true, false,  {0}  }, // 439
+  { "ICH_ELRSR_EL2", { AArch64_SYSREG_ICH_ELRSR_EL2 }, "ICH_ELRSR_EL2", { AArch64_SYSREG_ICH_ELRSR_EL2 }, 0xE65D, true, false,  {0}  }, // 440
+  { "ICH_HCR_EL2", { AArch64_SYSREG_ICH_HCR_EL2 }, "ICH_HCR_EL2", { AArch64_SYSREG_ICH_HCR_EL2 }, 0xE658, true, true,  {0}  }, // 441
+  { "ICH_LR0_EL2", { AArch64_SYSREG_ICH_LR0_EL2 }, "ICH_LR0_EL2", { AArch64_SYSREG_ICH_LR0_EL2 }, 0xE660, true, true,  {0}  }, // 442
+  { "ICH_LR10_EL2", { AArch64_SYSREG_ICH_LR10_EL2 }, "ICH_LR10_EL2", { AArch64_SYSREG_ICH_LR10_EL2 }, 0xE66A, true, true,  {0}  }, // 443
+  { "ICH_LR11_EL2", { AArch64_SYSREG_ICH_LR11_EL2 }, "ICH_LR11_EL2", { AArch64_SYSREG_ICH_LR11_EL2 }, 0xE66B, true, true,  {0}  }, // 444
+  { "ICH_LR12_EL2", { AArch64_SYSREG_ICH_LR12_EL2 }, "ICH_LR12_EL2", { AArch64_SYSREG_ICH_LR12_EL2 }, 0xE66C, true, true,  {0}  }, // 445
+  { "ICH_LR13_EL2", { AArch64_SYSREG_ICH_LR13_EL2 }, "ICH_LR13_EL2", { AArch64_SYSREG_ICH_LR13_EL2 }, 0xE66D, true, true,  {0}  }, // 446
+  { "ICH_LR14_EL2", { AArch64_SYSREG_ICH_LR14_EL2 }, "ICH_LR14_EL2", { AArch64_SYSREG_ICH_LR14_EL2 }, 0xE66E, true, true,  {0}  }, // 447
+  { "ICH_LR15_EL2", { AArch64_SYSREG_ICH_LR15_EL2 }, "ICH_LR15_EL2", { AArch64_SYSREG_ICH_LR15_EL2 }, 0xE66F, true, true,  {0}  }, // 448
+  { "ICH_LR1_EL2", { AArch64_SYSREG_ICH_LR1_EL2 }, "ICH_LR1_EL2", { AArch64_SYSREG_ICH_LR1_EL2 }, 0xE661, true, true,  {0}  }, // 449
+  { "ICH_LR2_EL2", { AArch64_SYSREG_ICH_LR2_EL2 }, "ICH_LR2_EL2", { AArch64_SYSREG_ICH_LR2_EL2 }, 0xE662, true, true,  {0}  }, // 450
+  { "ICH_LR3_EL2", { AArch64_SYSREG_ICH_LR3_EL2 }, "ICH_LR3_EL2", { AArch64_SYSREG_ICH_LR3_EL2 }, 0xE663, true, true,  {0}  }, // 451
+  { "ICH_LR4_EL2", { AArch64_SYSREG_ICH_LR4_EL2 }, "ICH_LR4_EL2", { AArch64_SYSREG_ICH_LR4_EL2 }, 0xE664, true, true,  {0}  }, // 452
+  { "ICH_LR5_EL2", { AArch64_SYSREG_ICH_LR5_EL2 }, "ICH_LR5_EL2", { AArch64_SYSREG_ICH_LR5_EL2 }, 0xE665, true, true,  {0}  }, // 453
+  { "ICH_LR6_EL2", { AArch64_SYSREG_ICH_LR6_EL2 }, "ICH_LR6_EL2", { AArch64_SYSREG_ICH_LR6_EL2 }, 0xE666, true, true,  {0}  }, // 454
+  { "ICH_LR7_EL2", { AArch64_SYSREG_ICH_LR7_EL2 }, "ICH_LR7_EL2", { AArch64_SYSREG_ICH_LR7_EL2 }, 0xE667, true, true,  {0}  }, // 455
+  { "ICH_LR8_EL2", { AArch64_SYSREG_ICH_LR8_EL2 }, "ICH_LR8_EL2", { AArch64_SYSREG_ICH_LR8_EL2 }, 0xE668, true, true,  {0}  }, // 456
+  { "ICH_LR9_EL2", { AArch64_SYSREG_ICH_LR9_EL2 }, "ICH_LR9_EL2", { AArch64_SYSREG_ICH_LR9_EL2 }, 0xE669, true, true,  {0}  }, // 457
+  { "ICH_MISR_EL2", { AArch64_SYSREG_ICH_MISR_EL2 }, "ICH_MISR_EL2", { AArch64_SYSREG_ICH_MISR_EL2 }, 0xE65A, true, false,  {0}  }, // 458
+  { "ICH_VMCR_EL2", { AArch64_SYSREG_ICH_VMCR_EL2 }, "ICH_VMCR_EL2", { AArch64_SYSREG_ICH_VMCR_EL2 }, 0xE65F, true, true,  {0}  }, // 459
+  { "ICH_VTR_EL2", { AArch64_SYSREG_ICH_VTR_EL2 }, "ICH_VTR_EL2", { AArch64_SYSREG_ICH_VTR_EL2 }, 0xE659, true, false,  {0}  }, // 460
+  { "ID_AA64AFR0_EL1", { AArch64_SYSREG_ID_AA64AFR0_EL1 }, "ID_AA64AFR0_EL1", { AArch64_SYSREG_ID_AA64AFR0_EL1 }, 0xC02C, true, false,  {0}  }, // 461
+  { "ID_AA64AFR1_EL1", { AArch64_SYSREG_ID_AA64AFR1_EL1 }, "ID_AA64AFR1_EL1", { AArch64_SYSREG_ID_AA64AFR1_EL1 }, 0xC02D, true, false,  {0}  }, // 462
+  { "ID_AA64DFR0_EL1", { AArch64_SYSREG_ID_AA64DFR0_EL1 }, "ID_AA64DFR0_EL1", { AArch64_SYSREG_ID_AA64DFR0_EL1 }, 0xC028, true, false,  {0}  }, // 463
+  { "ID_AA64DFR1_EL1", { AArch64_SYSREG_ID_AA64DFR1_EL1 }, "ID_AA64DFR1_EL1", { AArch64_SYSREG_ID_AA64DFR1_EL1 }, 0xC029, true, false,  {0}  }, // 464
+  { "ID_AA64ISAR0_EL1", { AArch64_SYSREG_ID_AA64ISAR0_EL1 }, "ID_AA64ISAR0_EL1", { AArch64_SYSREG_ID_AA64ISAR0_EL1 }, 0xC030, true, false,  {0}  }, // 465
+  { "ID_AA64ISAR1_EL1", { AArch64_SYSREG_ID_AA64ISAR1_EL1 }, "ID_AA64ISAR1_EL1", { AArch64_SYSREG_ID_AA64ISAR1_EL1 }, 0xC031, true, false,  {0}  }, // 466
+  { "ID_AA64ISAR2_EL1", { AArch64_SYSREG_ID_AA64ISAR2_EL1 }, "ID_AA64ISAR2_EL1", { AArch64_SYSREG_ID_AA64ISAR2_EL1 }, 0xC032, true, false,  {0}  }, // 467
+  { "ID_AA64MMFR0_EL1", { AArch64_SYSREG_ID_AA64MMFR0_EL1 }, "ID_AA64MMFR0_EL1", { AArch64_SYSREG_ID_AA64MMFR0_EL1 }, 0xC038, true, false,  {0}  }, // 468
+  { "ID_AA64MMFR1_EL1", { AArch64_SYSREG_ID_AA64MMFR1_EL1 }, "ID_AA64MMFR1_EL1", { AArch64_SYSREG_ID_AA64MMFR1_EL1 }, 0xC039, true, false,  {0}  }, // 469
+  { "ID_AA64MMFR2_EL1", { AArch64_SYSREG_ID_AA64MMFR2_EL1 }, "ID_AA64MMFR2_EL1", { AArch64_SYSREG_ID_AA64MMFR2_EL1 }, 0xC03A, true, false,  {0}  }, // 470
+  { "ID_AA64MMFR3_EL1", { AArch64_SYSREG_ID_AA64MMFR3_EL1 }, "ID_AA64MMFR3_EL1", { AArch64_SYSREG_ID_AA64MMFR3_EL1 }, 0xC03B, true, false,  {0}  }, // 471
+  { "ID_AA64MMFR4_EL1", { AArch64_SYSREG_ID_AA64MMFR4_EL1 }, "ID_AA64MMFR4_EL1", { AArch64_SYSREG_ID_AA64MMFR4_EL1 }, 0xC03C, true, false,  {0}  }, // 472
+  { "ID_AA64PFR0_EL1", { AArch64_SYSREG_ID_AA64PFR0_EL1 }, "ID_AA64PFR0_EL1", { AArch64_SYSREG_ID_AA64PFR0_EL1 }, 0xC020, true, false,  {0}  }, // 473
+  { "ID_AA64PFR1_EL1", { AArch64_SYSREG_ID_AA64PFR1_EL1 }, "ID_AA64PFR1_EL1", { AArch64_SYSREG_ID_AA64PFR1_EL1 }, 0xC021, true, false,  {0}  }, // 474
+  { "ID_AA64PFR2_EL1", { AArch64_SYSREG_ID_AA64PFR2_EL1 }, "ID_AA64PFR2_EL1", { AArch64_SYSREG_ID_AA64PFR2_EL1 }, 0xC022, true, false,  {0}  }, // 475
+  { "ID_AA64SMFR0_EL1", { AArch64_SYSREG_ID_AA64SMFR0_EL1 }, "ID_AA64SMFR0_EL1", { AArch64_SYSREG_ID_AA64SMFR0_EL1 }, 0xC025, true, false,  {AArch64_FeatureSME}  }, // 476
+  { "ID_AA64ZFR0_EL1", { AArch64_SYSREG_ID_AA64ZFR0_EL1 }, "ID_AA64ZFR0_EL1", { AArch64_SYSREG_ID_AA64ZFR0_EL1 }, 0xC024, true, false,  {AArch64_FeatureSVE}  }, // 477
+  { "ID_AFR0_EL1", { AArch64_SYSREG_ID_AFR0_EL1 }, "ID_AFR0_EL1", { AArch64_SYSREG_ID_AFR0_EL1 }, 0xC00B, true, false,  {0}  }, // 478
+  { "ID_DFR0_EL1", { AArch64_SYSREG_ID_DFR0_EL1 }, "ID_DFR0_EL1", { AArch64_SYSREG_ID_DFR0_EL1 }, 0xC00A, true, false,  {0}  }, // 479
+  { "ID_DFR1_EL1", { AArch64_SYSREG_ID_DFR1_EL1 }, "ID_DFR1_EL1", { AArch64_SYSREG_ID_DFR1_EL1 }, 0xC01D, true, false,  {0}  }, // 480
+  { "ID_ISAR0_EL1", { AArch64_SYSREG_ID_ISAR0_EL1 }, "ID_ISAR0_EL1", { AArch64_SYSREG_ID_ISAR0_EL1 }, 0xC010, true, false,  {0}  }, // 481
+  { "ID_ISAR1_EL1", { AArch64_SYSREG_ID_ISAR1_EL1 }, "ID_ISAR1_EL1", { AArch64_SYSREG_ID_ISAR1_EL1 }, 0xC011, true, false,  {0}  }, // 482
+  { "ID_ISAR2_EL1", { AArch64_SYSREG_ID_ISAR2_EL1 }, "ID_ISAR2_EL1", { AArch64_SYSREG_ID_ISAR2_EL1 }, 0xC012, true, false,  {0}  }, // 483
+  { "ID_ISAR3_EL1", { AArch64_SYSREG_ID_ISAR3_EL1 }, "ID_ISAR3_EL1", { AArch64_SYSREG_ID_ISAR3_EL1 }, 0xC013, true, false,  {0}  }, // 484
+  { "ID_ISAR4_EL1", { AArch64_SYSREG_ID_ISAR4_EL1 }, "ID_ISAR4_EL1", { AArch64_SYSREG_ID_ISAR4_EL1 }, 0xC014, true, false,  {0}  }, // 485
+  { "ID_ISAR5_EL1", { AArch64_SYSREG_ID_ISAR5_EL1 }, "ID_ISAR5_EL1", { AArch64_SYSREG_ID_ISAR5_EL1 }, 0xC015, true, false,  {0}  }, // 486
+  { "ID_ISAR6_EL1", { AArch64_SYSREG_ID_ISAR6_EL1 }, "ID_ISAR6_EL1", { AArch64_SYSREG_ID_ISAR6_EL1 }, 0xC017, true, false,  {AArch64_HasV8_2aOps}  }, // 487
+  { "ID_MMFR0_EL1", { AArch64_SYSREG_ID_MMFR0_EL1 }, "ID_MMFR0_EL1", { AArch64_SYSREG_ID_MMFR0_EL1 }, 0xC00C, true, false,  {0}  }, // 488
+  { "ID_MMFR1_EL1", { AArch64_SYSREG_ID_MMFR1_EL1 }, "ID_MMFR1_EL1", { AArch64_SYSREG_ID_MMFR1_EL1 }, 0xC00D, true, false,  {0}  }, // 489
+  { "ID_MMFR2_EL1", { AArch64_SYSREG_ID_MMFR2_EL1 }, "ID_MMFR2_EL1", { AArch64_SYSREG_ID_MMFR2_EL1 }, 0xC00E, true, false,  {0}  }, // 490
+  { "ID_MMFR3_EL1", { AArch64_SYSREG_ID_MMFR3_EL1 }, "ID_MMFR3_EL1", { AArch64_SYSREG_ID_MMFR3_EL1 }, 0xC00F, true, false,  {0}  }, // 491
+  { "ID_MMFR4_EL1", { AArch64_SYSREG_ID_MMFR4_EL1 }, "ID_MMFR4_EL1", { AArch64_SYSREG_ID_MMFR4_EL1 }, 0xC016, true, false,  {0}  }, // 492
+  { "ID_MMFR5_EL1", { AArch64_SYSREG_ID_MMFR5_EL1 }, "ID_MMFR5_EL1", { AArch64_SYSREG_ID_MMFR5_EL1 }, 0xC01E, true, false,  {0}  }, // 493
+  { "ID_PFR0_EL1", { AArch64_SYSREG_ID_PFR0_EL1 }, "ID_PFR0_EL1", { AArch64_SYSREG_ID_PFR0_EL1 }, 0xC008, true, false,  {0}  }, // 494
+  { "ID_PFR1_EL1", { AArch64_SYSREG_ID_PFR1_EL1 }, "ID_PFR1_EL1", { AArch64_SYSREG_ID_PFR1_EL1 }, 0xC009, true, false,  {0}  }, // 495
+  { "ID_PFR2_EL1", { AArch64_SYSREG_ID_PFR2_EL1 }, "ID_PFR2_EL1", { AArch64_SYSREG_ID_PFR2_EL1 }, 0xC01C, true, false,  {AArch64_FeatureSpecRestrict}  }, // 496
+  { "IFSR32_EL2", { AArch64_SYSREG_IFSR32_EL2 }, "IFSR32_EL2", { AArch64_SYSREG_IFSR32_EL2 }, 0xE281, true, true,  {0}  }, // 497
+  { "ISR_EL1", { AArch64_SYSREG_ISR_EL1 }, "ISR_EL1", { AArch64_SYSREG_ISR_EL1 }, 0xC608, true, false,  {0}  }, // 498
+  { "LORC_EL1", { AArch64_SYSREG_LORC_EL1 }, "LORC_EL1", { AArch64_SYSREG_LORC_EL1 }, 0xC523, true, true,  {AArch64_FeatureLOR}  }, // 499
+  { "LOREA_EL1", { AArch64_SYSREG_LOREA_EL1 }, "LOREA_EL1", { AArch64_SYSREG_LOREA_EL1 }, 0xC521, true, true,  {AArch64_FeatureLOR}  }, // 500
+  { "LORID_EL1", { AArch64_SYSREG_LORID_EL1 }, "LORID_EL1", { AArch64_SYSREG_LORID_EL1 }, 0xC527, true, false,  {AArch64_FeatureLOR}  }, // 501
+  { "LORN_EL1", { AArch64_SYSREG_LORN_EL1 }, "LORN_EL1", { AArch64_SYSREG_LORN_EL1 }, 0xC522, true, true,  {AArch64_FeatureLOR}  }, // 502
+  { "LORSA_EL1", { AArch64_SYSREG_LORSA_EL1 }, "LORSA_EL1", { AArch64_SYSREG_LORSA_EL1 }, 0xC520, true, true,  {AArch64_FeatureLOR}  }, // 503
+  { "MAIR2_EL1", { AArch64_SYSREG_MAIR2_EL1 }, "MAIR2_EL1", { AArch64_SYSREG_MAIR2_EL1 }, 0xC511, true, true,  {0}  }, // 504
+  { "MAIR2_EL12", { AArch64_SYSREG_MAIR2_EL12 }, "MAIR2_EL12", { AArch64_SYSREG_MAIR2_EL12 }, 0xED11, true, true,  {0}  }, // 505
+  { "MAIR2_EL2", { AArch64_SYSREG_MAIR2_EL2 }, "MAIR2_EL2", { AArch64_SYSREG_MAIR2_EL2 }, 0xE509, true, true,  {0}  }, // 506
+  { "MAIR2_EL3", { AArch64_SYSREG_MAIR2_EL3 }, "MAIR2_EL3", { AArch64_SYSREG_MAIR2_EL3 }, 0xF509, true, true,  {0}  }, // 507
+  { "MAIR_EL1", { AArch64_SYSREG_MAIR_EL1 }, "MAIR_EL1", { AArch64_SYSREG_MAIR_EL1 }, 0xC510, true, true,  {0}  }, // 508
+  { "MAIR_EL12", { AArch64_SYSREG_MAIR_EL12 }, "MAIR_EL12", { AArch64_SYSREG_MAIR_EL12 }, 0xED10, true, true,  {AArch64_FeatureVH}  }, // 509
+  { "MAIR_EL2", { AArch64_SYSREG_MAIR_EL2 }, "MAIR_EL2", { AArch64_SYSREG_MAIR_EL2 }, 0xE510, true, true,  {0}  }, // 510
+  { "MAIR_EL3", { AArch64_SYSREG_MAIR_EL3 }, "MAIR_EL3", { AArch64_SYSREG_MAIR_EL3 }, 0xF510, true, true,  {0}  }, // 511
+  { "MDCCINT_EL1", { AArch64_SYSREG_MDCCINT_EL1 }, "MDCCINT_EL1", { AArch64_SYSREG_MDCCINT_EL1 }, 0x8010, true, true,  {0}  }, // 512
+  { "MDCCSR_EL0", { AArch64_SYSREG_MDCCSR_EL0 }, "MDCCSR_EL0", { AArch64_SYSREG_MDCCSR_EL0 }, 0x9808, true, false,  {0}  }, // 513
+  { "MDCR_EL2", { AArch64_SYSREG_MDCR_EL2 }, "MDCR_EL2", { AArch64_SYSREG_MDCR_EL2 }, 0xE089, true, true,  {0}  }, // 514
+  { "MDCR_EL3", { AArch64_SYSREG_MDCR_EL3 }, "MDCR_EL3", { AArch64_SYSREG_MDCR_EL3 }, 0xF099, true, true,  {0}  }, // 515
+  { "MDRAR_EL1", { AArch64_SYSREG_MDRAR_EL1 }, "MDRAR_EL1", { AArch64_SYSREG_MDRAR_EL1 }, 0x8080, true, false,  {0}  }, // 516
+  { "MDSCR_EL1", { AArch64_SYSREG_MDSCR_EL1 }, "MDSCR_EL1", { AArch64_SYSREG_MDSCR_EL1 }, 0x8012, true, true,  {0}  }, // 517
+  { "MDSELR_EL1", { AArch64_SYSREG_MDSELR_EL1 }, "MDSELR_EL1", { AArch64_SYSREG_MDSELR_EL1 }, 0x8022, true, true,  {0}  }, // 518
+  { "MECIDR_EL2", { AArch64_SYSREG_MECIDR_EL2 }, "MECIDR_EL2", { AArch64_SYSREG_MECIDR_EL2 }, 0xE547, true, false,  {AArch64_FeatureMEC}  }, // 519
+  { "MECID_A0_EL2", { AArch64_SYSREG_MECID_A0_EL2 }, "MECID_A0_EL2", { AArch64_SYSREG_MECID_A0_EL2 }, 0xE541, true, true,  {AArch64_FeatureMEC}  }, // 520
+  { "MECID_A1_EL2", { AArch64_SYSREG_MECID_A1_EL2 }, "MECID_A1_EL2", { AArch64_SYSREG_MECID_A1_EL2 }, 0xE543, true, true,  {AArch64_FeatureMEC}  }, // 521
+  { "MECID_P0_EL2", { AArch64_SYSREG_MECID_P0_EL2 }, "MECID_P0_EL2", { AArch64_SYSREG_MECID_P0_EL2 }, 0xE540, true, true,  {AArch64_FeatureMEC}  }, // 522
+  { "MECID_P1_EL2", { AArch64_SYSREG_MECID_P1_EL2 }, "MECID_P1_EL2", { AArch64_SYSREG_MECID_P1_EL2 }, 0xE542, true, true,  {AArch64_FeatureMEC}  }, // 523
+  { "MECID_RL_A_EL3", { AArch64_SYSREG_MECID_RL_A_EL3 }, "MECID_RL_A_EL3", { AArch64_SYSREG_MECID_RL_A_EL3 }, 0xF551, true, true,  {AArch64_FeatureMEC}  }, // 524
+  { "MFAR_EL3", { AArch64_SYSREG_MFAR_EL3 }, "MFAR_EL3", { AArch64_SYSREG_MFAR_EL3 }, 0xF305, true, true,  {0}  }, // 525
+  { "MIDR_EL1", { AArch64_SYSREG_MIDR_EL1 }, "MIDR_EL1", { AArch64_SYSREG_MIDR_EL1 }, 0xC000, true, false,  {0}  }, // 526
+  { "MPAM0_EL1", { AArch64_SYSREG_MPAM0_EL1 }, "MPAM0_EL1", { AArch64_SYSREG_MPAM0_EL1 }, 0xC529, true, true,  {AArch64_FeatureMPAM}  }, // 527
+  { "MPAM1_EL1", { AArch64_SYSREG_MPAM1_EL1 }, "MPAM1_EL1", { AArch64_SYSREG_MPAM1_EL1 }, 0xC528, true, true,  {AArch64_FeatureMPAM}  }, // 528
+  { "MPAM1_EL12", { AArch64_SYSREG_MPAM1_EL12 }, "MPAM1_EL12", { AArch64_SYSREG_MPAM1_EL12 }, 0xED28, true, true,  {AArch64_FeatureMPAM}  }, // 529
+  { "MPAM2_EL2", { AArch64_SYSREG_MPAM2_EL2 }, "MPAM2_EL2", { AArch64_SYSREG_MPAM2_EL2 }, 0xE528, true, true,  {AArch64_FeatureMPAM}  }, // 530
+  { "MPAM3_EL3", { AArch64_SYSREG_MPAM3_EL3 }, "MPAM3_EL3", { AArch64_SYSREG_MPAM3_EL3 }, 0xF528, true, true,  {AArch64_FeatureMPAM}  }, // 531
+  { "MPAMHCR_EL2", { AArch64_SYSREG_MPAMHCR_EL2 }, "MPAMHCR_EL2", { AArch64_SYSREG_MPAMHCR_EL2 }, 0xE520, true, true,  {AArch64_FeatureMPAM}  }, // 532
+  { "MPAMIDR_EL1", { AArch64_SYSREG_MPAMIDR_EL1 }, "MPAMIDR_EL1", { AArch64_SYSREG_MPAMIDR_EL1 }, 0xC524, true, false,  {AArch64_FeatureMPAM}  }, // 533
+  { "MPAMSM_EL1", { AArch64_SYSREG_MPAMSM_EL1 }, "MPAMSM_EL1", { AArch64_SYSREG_MPAMSM_EL1 }, 0xC52B, true, true,  {AArch64_FeatureMPAM, AArch64_FeatureSME}  }, // 534
+  { "MPAMVPM0_EL2", { AArch64_SYSREG_MPAMVPM0_EL2 }, "MPAMVPM0_EL2", { AArch64_SYSREG_MPAMVPM0_EL2 }, 0xE530, true, true,  {AArch64_FeatureMPAM}  }, // 535
+  { "MPAMVPM1_EL2", { AArch64_SYSREG_MPAMVPM1_EL2 }, "MPAMVPM1_EL2", { AArch64_SYSREG_MPAMVPM1_EL2 }, 0xE531, true, true,  {AArch64_FeatureMPAM}  }, // 536
+  { "MPAMVPM2_EL2", { AArch64_SYSREG_MPAMVPM2_EL2 }, "MPAMVPM2_EL2", { AArch64_SYSREG_MPAMVPM2_EL2 }, 0xE532, true, true,  {AArch64_FeatureMPAM}  }, // 537
+  { "MPAMVPM3_EL2", { AArch64_SYSREG_MPAMVPM3_EL2 }, "MPAMVPM3_EL2", { AArch64_SYSREG_MPAMVPM3_EL2 }, 0xE533, true, true,  {AArch64_FeatureMPAM}  }, // 538
+  { "MPAMVPM4_EL2", { AArch64_SYSREG_MPAMVPM4_EL2 }, "MPAMVPM4_EL2", { AArch64_SYSREG_MPAMVPM4_EL2 }, 0xE534, true, true,  {AArch64_FeatureMPAM}  }, // 539
+  { "MPAMVPM5_EL2", { AArch64_SYSREG_MPAMVPM5_EL2 }, "MPAMVPM5_EL2", { AArch64_SYSREG_MPAMVPM5_EL2 }, 0xE535, true, true,  {AArch64_FeatureMPAM}  }, // 540
+  { "MPAMVPM6_EL2", { AArch64_SYSREG_MPAMVPM6_EL2 }, "MPAMVPM6_EL2", { AArch64_SYSREG_MPAMVPM6_EL2 }, 0xE536, true, true,  {AArch64_FeatureMPAM}  }, // 541
+  { "MPAMVPM7_EL2", { AArch64_SYSREG_MPAMVPM7_EL2 }, "MPAMVPM7_EL2", { AArch64_SYSREG_MPAMVPM7_EL2 }, 0xE537, true, true,  {AArch64_FeatureMPAM}  }, // 542
+  { "MPAMVPMV_EL2", { AArch64_SYSREG_MPAMVPMV_EL2 }, "MPAMVPMV_EL2", { AArch64_SYSREG_MPAMVPMV_EL2 }, 0xE521, true, true,  {AArch64_FeatureMPAM}  }, // 543
+  { "MPIDR_EL1", { AArch64_SYSREG_MPIDR_EL1 }, "MPIDR_EL1", { AArch64_SYSREG_MPIDR_EL1 }, 0xC005, true, false,  {0}  }, // 544
+  { "MPUIR_EL1", { AArch64_SYSREG_MPUIR_EL1 }, "MPUIR_EL1", { AArch64_SYSREG_MPUIR_EL1 }, 0xC004, true, true,  {AArch64_HasV8_0rOps}  }, // 545
+  { "MPUIR_EL2", { AArch64_SYSREG_MPUIR_EL2 }, "MPUIR_EL2", { AArch64_SYSREG_MPUIR_EL2 }, 0xE004, true, true,  {AArch64_HasV8_0rOps}  }, // 546
+  { "MVFR0_EL1", { AArch64_SYSREG_MVFR0_EL1 }, "MVFR0_EL1", { AArch64_SYSREG_MVFR0_EL1 }, 0xC018, true, false,  {0}  }, // 547
+  { "MVFR1_EL1", { AArch64_SYSREG_MVFR1_EL1 }, "MVFR1_EL1", { AArch64_SYSREG_MVFR1_EL1 }, 0xC019, true, false,  {0}  }, // 548
+  { "MVFR2_EL1", { AArch64_SYSREG_MVFR2_EL1 }, "MVFR2_EL1", { AArch64_SYSREG_MVFR2_EL1 }, 0xC01A, true, false,  {0}  }, // 549
+  { "NZCV", { AArch64_SYSREG_NZCV }, "NZCV", { AArch64_SYSREG_NZCV }, 0xDA10, true, true,  {0}  }, // 550
+  { "OSDLR_EL1", { AArch64_SYSREG_OSDLR_EL1 }, "OSDLR_EL1", { AArch64_SYSREG_OSDLR_EL1 }, 0x809C, true, true,  {0}  }, // 551
+  { "OSDTRRX_EL1", { AArch64_SYSREG_OSDTRRX_EL1 }, "OSDTRRX_EL1", { AArch64_SYSREG_OSDTRRX_EL1 }, 0x8002, true, true,  {0}  }, // 552
+  { "OSDTRTX_EL1", { AArch64_SYSREG_OSDTRTX_EL1 }, "OSDTRTX_EL1", { AArch64_SYSREG_OSDTRTX_EL1 }, 0x801A, true, true,  {0}  }, // 553
+  { "OSECCR_EL1", { AArch64_SYSREG_OSECCR_EL1 }, "OSECCR_EL1", { AArch64_SYSREG_OSECCR_EL1 }, 0x8032, true, true,  {0}  }, // 554
+  { "OSLAR_EL1", { AArch64_SYSREG_OSLAR_EL1 }, "OSLAR_EL1", { AArch64_SYSREG_OSLAR_EL1 }, 0x8084, false, true,  {0}  }, // 555
+  { "OSLSR_EL1", { AArch64_SYSREG_OSLSR_EL1 }, "OSLSR_EL1", { AArch64_SYSREG_OSLSR_EL1 }, 0x808C, true, false,  {0}  }, // 556
+  { "PAN", { AArch64_SYSREG_PAN }, "PAN", { AArch64_SYSREG_PAN }, 0xC213, true, true,  {AArch64_FeaturePAN}  }, // 557
+  { "PAR_EL1", { AArch64_SYSREG_PAR_EL1 }, "PAR_EL1", { AArch64_SYSREG_PAR_EL1 }, 0xC3A0, true, true,  {0}  }, // 558
+  { "PFAR_EL1", { AArch64_SYSREG_PFAR_EL1 }, "PFAR_EL1", { AArch64_SYSREG_PFAR_EL1 }, 0xC305, true, true,  {0}  }, // 559
+  { "PFAR_EL12", { AArch64_SYSREG_PFAR_EL12 }, "PFAR_EL12", { AArch64_SYSREG_PFAR_EL12 }, 0xEB05, true, true,  {0}  }, // 560
+  { "PFAR_EL2", { AArch64_SYSREG_PFAR_EL2 }, "PFAR_EL2", { AArch64_SYSREG_PFAR_EL2 }, 0xE305, true, true,  {0}  }, // 561
+  { "PIRE0_EL1", { AArch64_SYSREG_PIRE0_EL1 }, "PIRE0_EL1", { AArch64_SYSREG_PIRE0_EL1 }, 0xC512, true, true,  {0}  }, // 562
+  { "PIRE0_EL12", { AArch64_SYSREG_PIRE0_EL12 }, "PIRE0_EL12", { AArch64_SYSREG_PIRE0_EL12 }, 0xED12, true, true,  {0}  }, // 563
+  { "PIRE0_EL2", { AArch64_SYSREG_PIRE0_EL2 }, "PIRE0_EL2", { AArch64_SYSREG_PIRE0_EL2 }, 0xE512, true, true,  {0}  }, // 564
+  { "PIR_EL1", { AArch64_SYSREG_PIR_EL1 }, "PIR_EL1", { AArch64_SYSREG_PIR_EL1 }, 0xC513, true, true,  {0}  }, // 565
+  { "PIR_EL12", { AArch64_SYSREG_PIR_EL12 }, "PIR_EL12", { AArch64_SYSREG_PIR_EL12 }, 0xED13, true, true,  {0}  }, // 566
+  { "PIR_EL2", { AArch64_SYSREG_PIR_EL2 }, "PIR_EL2", { AArch64_SYSREG_PIR_EL2 }, 0xE513, true, true,  {0}  }, // 567
+  { "PIR_EL3", { AArch64_SYSREG_PIR_EL3 }, "PIR_EL3", { AArch64_SYSREG_PIR_EL3 }, 0xF513, true, true,  {0}  }, // 568
+  { "PM", { AArch64_SYSREG_PM }, "PM", { AArch64_SYSREG_PM }, 0xC219, true, true,  {0}  }, // 569
+  { "PMBIDR_EL1", { AArch64_SYSREG_PMBIDR_EL1 }, "PMBIDR_EL1", { AArch64_SYSREG_PMBIDR_EL1 }, 0xC4D7, true, false,  {AArch64_FeatureSPE}  }, // 570
+  { "PMBLIMITR_EL1", { AArch64_SYSREG_PMBLIMITR_EL1 }, "PMBLIMITR_EL1", { AArch64_SYSREG_PMBLIMITR_EL1 }, 0xC4D0, true, true,  {AArch64_FeatureSPE}  }, // 571
+  { "PMBPTR_EL1", { AArch64_SYSREG_PMBPTR_EL1 }, "PMBPTR_EL1", { AArch64_SYSREG_PMBPTR_EL1 }, 0xC4D1, true, true,  {AArch64_FeatureSPE}  }, // 572
+  { "PMBSR_EL1", { AArch64_SYSREG_PMBSR_EL1 }, "PMBSR_EL1", { AArch64_SYSREG_PMBSR_EL1 }, 0xC4D3, true, true,  {AArch64_FeatureSPE}  }, // 573
+  { "PMCCFILTR_EL0", { AArch64_SYSREG_PMCCFILTR_EL0 }, "PMCCFILTR_EL0", { AArch64_SYSREG_PMCCFILTR_EL0 }, 0xDF7F, true, true,  {0}  }, // 574
+  { "PMCCNTR_EL0", { AArch64_SYSREG_PMCCNTR_EL0 }, "PMCCNTR_EL0", { AArch64_SYSREG_PMCCNTR_EL0 }, 0xDCE8, true, true,  {0}  }, // 575
+  { "PMCCNTSVR_EL1", { AArch64_SYSREG_PMCCNTSVR_EL1 }, "PMCCNTSVR_EL1", { AArch64_SYSREG_PMCCNTSVR_EL1 }, 0x875F, true, false,  {0}  }, // 576
+  { "PMCEID0_EL0", { AArch64_SYSREG_PMCEID0_EL0 }, "PMCEID0_EL0", { AArch64_SYSREG_PMCEID0_EL0 }, 0xDCE6, true, false,  {0}  }, // 577
+  { "PMCEID1_EL0", { AArch64_SYSREG_PMCEID1_EL0 }, "PMCEID1_EL0", { AArch64_SYSREG_PMCEID1_EL0 }, 0xDCE7, true, false,  {0}  }, // 578
+  { "PMCNTENCLR_EL0", { AArch64_SYSREG_PMCNTENCLR_EL0 }, "PMCNTENCLR_EL0", { AArch64_SYSREG_PMCNTENCLR_EL0 }, 0xDCE2, true, true,  {0}  }, // 579
+  { "PMCNTENSET_EL0", { AArch64_SYSREG_PMCNTENSET_EL0 }, "PMCNTENSET_EL0", { AArch64_SYSREG_PMCNTENSET_EL0 }, 0xDCE1, true, true,  {0}  }, // 580
+  { "PMCR_EL0", { AArch64_SYSREG_PMCR_EL0 }, "PMCR_EL0", { AArch64_SYSREG_PMCR_EL0 }, 0xDCE0, true, true,  {0}  }, // 581
+  { "PMECR_EL1", { AArch64_SYSREG_PMECR_EL1 }, "PMECR_EL1", { AArch64_SYSREG_PMECR_EL1 }, 0xC4F5, true, true,  {0}  }, // 582
+  { "PMEVCNTR0_EL0", { AArch64_SYSREG_PMEVCNTR0_EL0 }, "PMEVCNTR0_EL0", { AArch64_SYSREG_PMEVCNTR0_EL0 }, 0xDF40, true, true,  {0}  }, // 583
+  { "PMEVCNTR10_EL0", { AArch64_SYSREG_PMEVCNTR10_EL0 }, "PMEVCNTR10_EL0", { AArch64_SYSREG_PMEVCNTR10_EL0 }, 0xDF4A, true, true,  {0}  }, // 584
+  { "PMEVCNTR11_EL0", { AArch64_SYSREG_PMEVCNTR11_EL0 }, "PMEVCNTR11_EL0", { AArch64_SYSREG_PMEVCNTR11_EL0 }, 0xDF4B, true, true,  {0}  }, // 585
+  { "PMEVCNTR12_EL0", { AArch64_SYSREG_PMEVCNTR12_EL0 }, "PMEVCNTR12_EL0", { AArch64_SYSREG_PMEVCNTR12_EL0 }, 0xDF4C, true, true,  {0}  }, // 586
+  { "PMEVCNTR13_EL0", { AArch64_SYSREG_PMEVCNTR13_EL0 }, "PMEVCNTR13_EL0", { AArch64_SYSREG_PMEVCNTR13_EL0 }, 0xDF4D, true, true,  {0}  }, // 587
+  { "PMEVCNTR14_EL0", { AArch64_SYSREG_PMEVCNTR14_EL0 }, "PMEVCNTR14_EL0", { AArch64_SYSREG_PMEVCNTR14_EL0 }, 0xDF4E, true, true,  {0}  }, // 588
+  { "PMEVCNTR15_EL0", { AArch64_SYSREG_PMEVCNTR15_EL0 }, "PMEVCNTR15_EL0", { AArch64_SYSREG_PMEVCNTR15_EL0 }, 0xDF4F, true, true,  {0}  }, // 589
+  { "PMEVCNTR16_EL0", { AArch64_SYSREG_PMEVCNTR16_EL0 }, "PMEVCNTR16_EL0", { AArch64_SYSREG_PMEVCNTR16_EL0 }, 0xDF50, true, true,  {0}  }, // 590
+  { "PMEVCNTR17_EL0", { AArch64_SYSREG_PMEVCNTR17_EL0 }, "PMEVCNTR17_EL0", { AArch64_SYSREG_PMEVCNTR17_EL0 }, 0xDF51, true, true,  {0}  }, // 591
+  { "PMEVCNTR18_EL0", { AArch64_SYSREG_PMEVCNTR18_EL0 }, "PMEVCNTR18_EL0", { AArch64_SYSREG_PMEVCNTR18_EL0 }, 0xDF52, true, true,  {0}  }, // 592
+  { "PMEVCNTR19_EL0", { AArch64_SYSREG_PMEVCNTR19_EL0 }, "PMEVCNTR19_EL0", { AArch64_SYSREG_PMEVCNTR19_EL0 }, 0xDF53, true, true,  {0}  }, // 593
+  { "PMEVCNTR1_EL0", { AArch64_SYSREG_PMEVCNTR1_EL0 }, "PMEVCNTR1_EL0", { AArch64_SYSREG_PMEVCNTR1_EL0 }, 0xDF41, true, true,  {0}  }, // 594
+  { "PMEVCNTR20_EL0", { AArch64_SYSREG_PMEVCNTR20_EL0 }, "PMEVCNTR20_EL0", { AArch64_SYSREG_PMEVCNTR20_EL0 }, 0xDF54, true, true,  {0}  }, // 595
+  { "PMEVCNTR21_EL0", { AArch64_SYSREG_PMEVCNTR21_EL0 }, "PMEVCNTR21_EL0", { AArch64_SYSREG_PMEVCNTR21_EL0 }, 0xDF55, true, true,  {0}  }, // 596
+  { "PMEVCNTR22_EL0", { AArch64_SYSREG_PMEVCNTR22_EL0 }, "PMEVCNTR22_EL0", { AArch64_SYSREG_PMEVCNTR22_EL0 }, 0xDF56, true, true,  {0}  }, // 597
+  { "PMEVCNTR23_EL0", { AArch64_SYSREG_PMEVCNTR23_EL0 }, "PMEVCNTR23_EL0", { AArch64_SYSREG_PMEVCNTR23_EL0 }, 0xDF57, true, true,  {0}  }, // 598
+  { "PMEVCNTR24_EL0", { AArch64_SYSREG_PMEVCNTR24_EL0 }, "PMEVCNTR24_EL0", { AArch64_SYSREG_PMEVCNTR24_EL0 }, 0xDF58, true, true,  {0}  }, // 599
+  { "PMEVCNTR25_EL0", { AArch64_SYSREG_PMEVCNTR25_EL0 }, "PMEVCNTR25_EL0", { AArch64_SYSREG_PMEVCNTR25_EL0 }, 0xDF59, true, true,  {0}  }, // 600
+  { "PMEVCNTR26_EL0", { AArch64_SYSREG_PMEVCNTR26_EL0 }, "PMEVCNTR26_EL0", { AArch64_SYSREG_PMEVCNTR26_EL0 }, 0xDF5A, true, true,  {0}  }, // 601
+  { "PMEVCNTR27_EL0", { AArch64_SYSREG_PMEVCNTR27_EL0 }, "PMEVCNTR27_EL0", { AArch64_SYSREG_PMEVCNTR27_EL0 }, 0xDF5B, true, true,  {0}  }, // 602
+  { "PMEVCNTR28_EL0", { AArch64_SYSREG_PMEVCNTR28_EL0 }, "PMEVCNTR28_EL0", { AArch64_SYSREG_PMEVCNTR28_EL0 }, 0xDF5C, true, true,  {0}  }, // 603
+  { "PMEVCNTR29_EL0", { AArch64_SYSREG_PMEVCNTR29_EL0 }, "PMEVCNTR29_EL0", { AArch64_SYSREG_PMEVCNTR29_EL0 }, 0xDF5D, true, true,  {0}  }, // 604
+  { "PMEVCNTR2_EL0", { AArch64_SYSREG_PMEVCNTR2_EL0 }, "PMEVCNTR2_EL0", { AArch64_SYSREG_PMEVCNTR2_EL0 }, 0xDF42, true, true,  {0}  }, // 605
+  { "PMEVCNTR30_EL0", { AArch64_SYSREG_PMEVCNTR30_EL0 }, "PMEVCNTR30_EL0", { AArch64_SYSREG_PMEVCNTR30_EL0 }, 0xDF5E, true, true,  {0}  }, // 606
+  { "PMEVCNTR3_EL0", { AArch64_SYSREG_PMEVCNTR3_EL0 }, "PMEVCNTR3_EL0", { AArch64_SYSREG_PMEVCNTR3_EL0 }, 0xDF43, true, true,  {0}  }, // 607
+  { "PMEVCNTR4_EL0", { AArch64_SYSREG_PMEVCNTR4_EL0 }, "PMEVCNTR4_EL0", { AArch64_SYSREG_PMEVCNTR4_EL0 }, 0xDF44, true, true,  {0}  }, // 608
+  { "PMEVCNTR5_EL0", { AArch64_SYSREG_PMEVCNTR5_EL0 }, "PMEVCNTR5_EL0", { AArch64_SYSREG_PMEVCNTR5_EL0 }, 0xDF45, true, true,  {0}  }, // 609
+  { "PMEVCNTR6_EL0", { AArch64_SYSREG_PMEVCNTR6_EL0 }, "PMEVCNTR6_EL0", { AArch64_SYSREG_PMEVCNTR6_EL0 }, 0xDF46, true, true,  {0}  }, // 610
+  { "PMEVCNTR7_EL0", { AArch64_SYSREG_PMEVCNTR7_EL0 }, "PMEVCNTR7_EL0", { AArch64_SYSREG_PMEVCNTR7_EL0 }, 0xDF47, true, true,  {0}  }, // 611
+  { "PMEVCNTR8_EL0", { AArch64_SYSREG_PMEVCNTR8_EL0 }, "PMEVCNTR8_EL0", { AArch64_SYSREG_PMEVCNTR8_EL0 }, 0xDF48, true, true,  {0}  }, // 612
+  { "PMEVCNTR9_EL0", { AArch64_SYSREG_PMEVCNTR9_EL0 }, "PMEVCNTR9_EL0", { AArch64_SYSREG_PMEVCNTR9_EL0 }, 0xDF49, true, true,  {0}  }, // 613
+  { "PMEVCNTSVR0_EL1", { AArch64_SYSREG_PMEVCNTSVR0_EL1 }, "PMEVCNTSVR0_EL1", { AArch64_SYSREG_PMEVCNTSVR0_EL1 }, 0x8740, true, false,  {0}  }, // 614
+  { "PMEVCNTSVR10_EL1", { AArch64_SYSREG_PMEVCNTSVR10_EL1 }, "PMEVCNTSVR10_EL1", { AArch64_SYSREG_PMEVCNTSVR10_EL1 }, 0x874A, true, false,  {0}  }, // 615
+  { "PMEVCNTSVR11_EL1", { AArch64_SYSREG_PMEVCNTSVR11_EL1 }, "PMEVCNTSVR11_EL1", { AArch64_SYSREG_PMEVCNTSVR11_EL1 }, 0x874B, true, false,  {0}  }, // 616
+  { "PMEVCNTSVR12_EL1", { AArch64_SYSREG_PMEVCNTSVR12_EL1 }, "PMEVCNTSVR12_EL1", { AArch64_SYSREG_PMEVCNTSVR12_EL1 }, 0x874C, true, false,  {0}  }, // 617
+  { "PMEVCNTSVR13_EL1", { AArch64_SYSREG_PMEVCNTSVR13_EL1 }, "PMEVCNTSVR13_EL1", { AArch64_SYSREG_PMEVCNTSVR13_EL1 }, 0x874D, true, false,  {0}  }, // 618
+  { "PMEVCNTSVR14_EL1", { AArch64_SYSREG_PMEVCNTSVR14_EL1 }, "PMEVCNTSVR14_EL1", { AArch64_SYSREG_PMEVCNTSVR14_EL1 }, 0x874E, true, false,  {0}  }, // 619
+  { "PMEVCNTSVR15_EL1", { AArch64_SYSREG_PMEVCNTSVR15_EL1 }, "PMEVCNTSVR15_EL1", { AArch64_SYSREG_PMEVCNTSVR15_EL1 }, 0x874F, true, false,  {0}  }, // 620
+  { "PMEVCNTSVR16_EL1", { AArch64_SYSREG_PMEVCNTSVR16_EL1 }, "PMEVCNTSVR16_EL1", { AArch64_SYSREG_PMEVCNTSVR16_EL1 }, 0x8750, true, false,  {0}  }, // 621
+  { "PMEVCNTSVR17_EL1", { AArch64_SYSREG_PMEVCNTSVR17_EL1 }, "PMEVCNTSVR17_EL1", { AArch64_SYSREG_PMEVCNTSVR17_EL1 }, 0x8751, true, false,  {0}  }, // 622
+  { "PMEVCNTSVR18_EL1", { AArch64_SYSREG_PMEVCNTSVR18_EL1 }, "PMEVCNTSVR18_EL1", { AArch64_SYSREG_PMEVCNTSVR18_EL1 }, 0x8752, true, false,  {0}  }, // 623
+  { "PMEVCNTSVR19_EL1", { AArch64_SYSREG_PMEVCNTSVR19_EL1 }, "PMEVCNTSVR19_EL1", { AArch64_SYSREG_PMEVCNTSVR19_EL1 }, 0x8753, true, false,  {0}  }, // 624
+  { "PMEVCNTSVR1_EL1", { AArch64_SYSREG_PMEVCNTSVR1_EL1 }, "PMEVCNTSVR1_EL1", { AArch64_SYSREG_PMEVCNTSVR1_EL1 }, 0x8741, true, false,  {0}  }, // 625
+  { "PMEVCNTSVR20_EL1", { AArch64_SYSREG_PMEVCNTSVR20_EL1 }, "PMEVCNTSVR20_EL1", { AArch64_SYSREG_PMEVCNTSVR20_EL1 }, 0x8754, true, false,  {0}  }, // 626
+  { "PMEVCNTSVR21_EL1", { AArch64_SYSREG_PMEVCNTSVR21_EL1 }, "PMEVCNTSVR21_EL1", { AArch64_SYSREG_PMEVCNTSVR21_EL1 }, 0x8755, true, false,  {0}  }, // 627
+  { "PMEVCNTSVR22_EL1", { AArch64_SYSREG_PMEVCNTSVR22_EL1 }, "PMEVCNTSVR22_EL1", { AArch64_SYSREG_PMEVCNTSVR22_EL1 }, 0x8756, true, false,  {0}  }, // 628
+  { "PMEVCNTSVR23_EL1", { AArch64_SYSREG_PMEVCNTSVR23_EL1 }, "PMEVCNTSVR23_EL1", { AArch64_SYSREG_PMEVCNTSVR23_EL1 }, 0x8757, true, false,  {0}  }, // 629
+  { "PMEVCNTSVR24_EL1", { AArch64_SYSREG_PMEVCNTSVR24_EL1 }, "PMEVCNTSVR24_EL1", { AArch64_SYSREG_PMEVCNTSVR24_EL1 }, 0x8758, true, false,  {0}  }, // 630
+  { "PMEVCNTSVR25_EL1", { AArch64_SYSREG_PMEVCNTSVR25_EL1 }, "PMEVCNTSVR25_EL1", { AArch64_SYSREG_PMEVCNTSVR25_EL1 }, 0x8759, true, false,  {0}  }, // 631
+  { "PMEVCNTSVR26_EL1", { AArch64_SYSREG_PMEVCNTSVR26_EL1 }, "PMEVCNTSVR26_EL1", { AArch64_SYSREG_PMEVCNTSVR26_EL1 }, 0x875A, true, false,  {0}  }, // 632
+  { "PMEVCNTSVR27_EL1", { AArch64_SYSREG_PMEVCNTSVR27_EL1 }, "PMEVCNTSVR27_EL1", { AArch64_SYSREG_PMEVCNTSVR27_EL1 }, 0x875B, true, false,  {0}  }, // 633
+  { "PMEVCNTSVR28_EL1", { AArch64_SYSREG_PMEVCNTSVR28_EL1 }, "PMEVCNTSVR28_EL1", { AArch64_SYSREG_PMEVCNTSVR28_EL1 }, 0x875C, true, false,  {0}  }, // 634
+  { "PMEVCNTSVR29_EL1", { AArch64_SYSREG_PMEVCNTSVR29_EL1 }, "PMEVCNTSVR29_EL1", { AArch64_SYSREG_PMEVCNTSVR29_EL1 }, 0x875D, true, false,  {0}  }, // 635
+  { "PMEVCNTSVR2_EL1", { AArch64_SYSREG_PMEVCNTSVR2_EL1 }, "PMEVCNTSVR2_EL1", { AArch64_SYSREG_PMEVCNTSVR2_EL1 }, 0x8742, true, false,  {0}  }, // 636
+  { "PMEVCNTSVR30_EL1", { AArch64_SYSREG_PMEVCNTSVR30_EL1 }, "PMEVCNTSVR30_EL1", { AArch64_SYSREG_PMEVCNTSVR30_EL1 }, 0x875E, true, false,  {0}  }, // 637
+  { "PMEVCNTSVR3_EL1", { AArch64_SYSREG_PMEVCNTSVR3_EL1 }, "PMEVCNTSVR3_EL1", { AArch64_SYSREG_PMEVCNTSVR3_EL1 }, 0x8743, true, false,  {0}  }, // 638
+  { "PMEVCNTSVR4_EL1", { AArch64_SYSREG_PMEVCNTSVR4_EL1 }, "PMEVCNTSVR4_EL1", { AArch64_SYSREG_PMEVCNTSVR4_EL1 }, 0x8744, true, false,  {0}  }, // 639
+  { "PMEVCNTSVR5_EL1", { AArch64_SYSREG_PMEVCNTSVR5_EL1 }, "PMEVCNTSVR5_EL1", { AArch64_SYSREG_PMEVCNTSVR5_EL1 }, 0x8745, true, false,  {0}  }, // 640
+  { "PMEVCNTSVR6_EL1", { AArch64_SYSREG_PMEVCNTSVR6_EL1 }, "PMEVCNTSVR6_EL1", { AArch64_SYSREG_PMEVCNTSVR6_EL1 }, 0x8746, true, false,  {0}  }, // 641
+  { "PMEVCNTSVR7_EL1", { AArch64_SYSREG_PMEVCNTSVR7_EL1 }, "PMEVCNTSVR7_EL1", { AArch64_SYSREG_PMEVCNTSVR7_EL1 }, 0x8747, true, false,  {0}  }, // 642
+  { "PMEVCNTSVR8_EL1", { AArch64_SYSREG_PMEVCNTSVR8_EL1 }, "PMEVCNTSVR8_EL1", { AArch64_SYSREG_PMEVCNTSVR8_EL1 }, 0x8748, true, false,  {0}  }, // 643
+  { "PMEVCNTSVR9_EL1", { AArch64_SYSREG_PMEVCNTSVR9_EL1 }, "PMEVCNTSVR9_EL1", { AArch64_SYSREG_PMEVCNTSVR9_EL1 }, 0x8749, true, false,  {0}  }, // 644
+  { "PMEVTYPER0_EL0", { AArch64_SYSREG_PMEVTYPER0_EL0 }, "PMEVTYPER0_EL0", { AArch64_SYSREG_PMEVTYPER0_EL0 }, 0xDF60, true, true,  {0}  }, // 645
+  { "PMEVTYPER10_EL0", { AArch64_SYSREG_PMEVTYPER10_EL0 }, "PMEVTYPER10_EL0", { AArch64_SYSREG_PMEVTYPER10_EL0 }, 0xDF6A, true, true,  {0}  }, // 646
+  { "PMEVTYPER11_EL0", { AArch64_SYSREG_PMEVTYPER11_EL0 }, "PMEVTYPER11_EL0", { AArch64_SYSREG_PMEVTYPER11_EL0 }, 0xDF6B, true, true,  {0}  }, // 647
+  { "PMEVTYPER12_EL0", { AArch64_SYSREG_PMEVTYPER12_EL0 }, "PMEVTYPER12_EL0", { AArch64_SYSREG_PMEVTYPER12_EL0 }, 0xDF6C, true, true,  {0}  }, // 648
+  { "PMEVTYPER13_EL0", { AArch64_SYSREG_PMEVTYPER13_EL0 }, "PMEVTYPER13_EL0", { AArch64_SYSREG_PMEVTYPER13_EL0 }, 0xDF6D, true, true,  {0}  }, // 649
+  { "PMEVTYPER14_EL0", { AArch64_SYSREG_PMEVTYPER14_EL0 }, "PMEVTYPER14_EL0", { AArch64_SYSREG_PMEVTYPER14_EL0 }, 0xDF6E, true, true,  {0}  }, // 650
+  { "PMEVTYPER15_EL0", { AArch64_SYSREG_PMEVTYPER15_EL0 }, "PMEVTYPER15_EL0", { AArch64_SYSREG_PMEVTYPER15_EL0 }, 0xDF6F, true, true,  {0}  }, // 651
+  { "PMEVTYPER16_EL0", { AArch64_SYSREG_PMEVTYPER16_EL0 }, "PMEVTYPER16_EL0", { AArch64_SYSREG_PMEVTYPER16_EL0 }, 0xDF70, true, true,  {0}  }, // 652
+  { "PMEVTYPER17_EL0", { AArch64_SYSREG_PMEVTYPER17_EL0 }, "PMEVTYPER17_EL0", { AArch64_SYSREG_PMEVTYPER17_EL0 }, 0xDF71, true, true,  {0}  }, // 653
+  { "PMEVTYPER18_EL0", { AArch64_SYSREG_PMEVTYPER18_EL0 }, "PMEVTYPER18_EL0", { AArch64_SYSREG_PMEVTYPER18_EL0 }, 0xDF72, true, true,  {0}  }, // 654
+  { "PMEVTYPER19_EL0", { AArch64_SYSREG_PMEVTYPER19_EL0 }, "PMEVTYPER19_EL0", { AArch64_SYSREG_PMEVTYPER19_EL0 }, 0xDF73, true, true,  {0}  }, // 655
+  { "PMEVTYPER1_EL0", { AArch64_SYSREG_PMEVTYPER1_EL0 }, "PMEVTYPER1_EL0", { AArch64_SYSREG_PMEVTYPER1_EL0 }, 0xDF61, true, true,  {0}  }, // 656
+  { "PMEVTYPER20_EL0", { AArch64_SYSREG_PMEVTYPER20_EL0 }, "PMEVTYPER20_EL0", { AArch64_SYSREG_PMEVTYPER20_EL0 }, 0xDF74, true, true,  {0}  }, // 657
+  { "PMEVTYPER21_EL0", { AArch64_SYSREG_PMEVTYPER21_EL0 }, "PMEVTYPER21_EL0", { AArch64_SYSREG_PMEVTYPER21_EL0 }, 0xDF75, true, true,  {0}  }, // 658
+  { "PMEVTYPER22_EL0", { AArch64_SYSREG_PMEVTYPER22_EL0 }, "PMEVTYPER22_EL0", { AArch64_SYSREG_PMEVTYPER22_EL0 }, 0xDF76, true, true,  {0}  }, // 659
+  { "PMEVTYPER23_EL0", { AArch64_SYSREG_PMEVTYPER23_EL0 }, "PMEVTYPER23_EL0", { AArch64_SYSREG_PMEVTYPER23_EL0 }, 0xDF77, true, true,  {0}  }, // 660
+  { "PMEVTYPER24_EL0", { AArch64_SYSREG_PMEVTYPER24_EL0 }, "PMEVTYPER24_EL0", { AArch64_SYSREG_PMEVTYPER24_EL0 }, 0xDF78, true, true,  {0}  }, // 661
+  { "PMEVTYPER25_EL0", { AArch64_SYSREG_PMEVTYPER25_EL0 }, "PMEVTYPER25_EL0", { AArch64_SYSREG_PMEVTYPER25_EL0 }, 0xDF79, true, true,  {0}  }, // 662
+  { "PMEVTYPER26_EL0", { AArch64_SYSREG_PMEVTYPER26_EL0 }, "PMEVTYPER26_EL0", { AArch64_SYSREG_PMEVTYPER26_EL0 }, 0xDF7A, true, true,  {0}  }, // 663
+  { "PMEVTYPER27_EL0", { AArch64_SYSREG_PMEVTYPER27_EL0 }, "PMEVTYPER27_EL0", { AArch64_SYSREG_PMEVTYPER27_EL0 }, 0xDF7B, true, true,  {0}  }, // 664
+  { "PMEVTYPER28_EL0", { AArch64_SYSREG_PMEVTYPER28_EL0 }, "PMEVTYPER28_EL0", { AArch64_SYSREG_PMEVTYPER28_EL0 }, 0xDF7C, true, true,  {0}  }, // 665
+  { "PMEVTYPER29_EL0", { AArch64_SYSREG_PMEVTYPER29_EL0 }, "PMEVTYPER29_EL0", { AArch64_SYSREG_PMEVTYPER29_EL0 }, 0xDF7D, true, true,  {0}  }, // 666
+  { "PMEVTYPER2_EL0", { AArch64_SYSREG_PMEVTYPER2_EL0 }, "PMEVTYPER2_EL0", { AArch64_SYSREG_PMEVTYPER2_EL0 }, 0xDF62, true, true,  {0}  }, // 667
+  { "PMEVTYPER30_EL0", { AArch64_SYSREG_PMEVTYPER30_EL0 }, "PMEVTYPER30_EL0", { AArch64_SYSREG_PMEVTYPER30_EL0 }, 0xDF7E, true, true,  {0}  }, // 668
+  { "PMEVTYPER3_EL0", { AArch64_SYSREG_PMEVTYPER3_EL0 }, "PMEVTYPER3_EL0", { AArch64_SYSREG_PMEVTYPER3_EL0 }, 0xDF63, true, true,  {0}  }, // 669
+  { "PMEVTYPER4_EL0", { AArch64_SYSREG_PMEVTYPER4_EL0 }, "PMEVTYPER4_EL0", { AArch64_SYSREG_PMEVTYPER4_EL0 }, 0xDF64, true, true,  {0}  }, // 670
+  { "PMEVTYPER5_EL0", { AArch64_SYSREG_PMEVTYPER5_EL0 }, "PMEVTYPER5_EL0", { AArch64_SYSREG_PMEVTYPER5_EL0 }, 0xDF65, true, true,  {0}  }, // 671
+  { "PMEVTYPER6_EL0", { AArch64_SYSREG_PMEVTYPER6_EL0 }, "PMEVTYPER6_EL0", { AArch64_SYSREG_PMEVTYPER6_EL0 }, 0xDF66, true, true,  {0}  }, // 672
+  { "PMEVTYPER7_EL0", { AArch64_SYSREG_PMEVTYPER7_EL0 }, "PMEVTYPER7_EL0", { AArch64_SYSREG_PMEVTYPER7_EL0 }, 0xDF67, true, true,  {0}  }, // 673
+  { "PMEVTYPER8_EL0", { AArch64_SYSREG_PMEVTYPER8_EL0 }, "PMEVTYPER8_EL0", { AArch64_SYSREG_PMEVTYPER8_EL0 }, 0xDF68, true, true,  {0}  }, // 674
+  { "PMEVTYPER9_EL0", { AArch64_SYSREG_PMEVTYPER9_EL0 }, "PMEVTYPER9_EL0", { AArch64_SYSREG_PMEVTYPER9_EL0 }, 0xDF69, true, true,  {0}  }, // 675
+  { "PMIAR_EL1", { AArch64_SYSREG_PMIAR_EL1 }, "PMIAR_EL1", { AArch64_SYSREG_PMIAR_EL1 }, 0xC4F7, true, true,  {0}  }, // 676
+  { "PMICFILTR_EL0", { AArch64_SYSREG_PMICFILTR_EL0 }, "PMICFILTR_EL0", { AArch64_SYSREG_PMICFILTR_EL0 }, 0xDCB0, true, true,  {0}  }, // 677
+  { "PMICNTR_EL0", { AArch64_SYSREG_PMICNTR_EL0 }, "PMICNTR_EL0", { AArch64_SYSREG_PMICNTR_EL0 }, 0xDCA0, true, true,  {0}  }, // 678
+  { "PMICNTSVR_EL1", { AArch64_SYSREG_PMICNTSVR_EL1 }, "PMICNTSVR_EL1", { AArch64_SYSREG_PMICNTSVR_EL1 }, 0x8760, true, false,  {0}  }, // 679
+  { "PMINTENCLR_EL1", { AArch64_SYSREG_PMINTENCLR_EL1 }, "PMINTENCLR_EL1", { AArch64_SYSREG_PMINTENCLR_EL1 }, 0xC4F2, true, true,  {0}  }, // 680
+  { "PMINTENSET_EL1", { AArch64_SYSREG_PMINTENSET_EL1 }, "PMINTENSET_EL1", { AArch64_SYSREG_PMINTENSET_EL1 }, 0xC4F1, true, true,  {0}  }, // 681
+  { "PMMIR_EL1", { AArch64_SYSREG_PMMIR_EL1 }, "PMMIR_EL1", { AArch64_SYSREG_PMMIR_EL1 }, 0xC4F6, true, false,  {0}  }, // 682
+  { "PMOVSCLR_EL0", { AArch64_SYSREG_PMOVSCLR_EL0 }, "PMOVSCLR_EL0", { AArch64_SYSREG_PMOVSCLR_EL0 }, 0xDCE3, true, true,  {0}  }, // 683
+  { "PMOVSSET_EL0", { AArch64_SYSREG_PMOVSSET_EL0 }, "PMOVSSET_EL0", { AArch64_SYSREG_PMOVSSET_EL0 }, 0xDCF3, true, true,  {0}  }, // 684
+  { "PMSCR_EL1", { AArch64_SYSREG_PMSCR_EL1 }, "PMSCR_EL1", { AArch64_SYSREG_PMSCR_EL1 }, 0xC4C8, true, true,  {AArch64_FeatureSPE}  }, // 685
+  { "PMSCR_EL12", { AArch64_SYSREG_PMSCR_EL12 }, "PMSCR_EL12", { AArch64_SYSREG_PMSCR_EL12 }, 0xECC8, true, true,  {AArch64_FeatureSPE}  }, // 686
+  { "PMSCR_EL2", { AArch64_SYSREG_PMSCR_EL2 }, "PMSCR_EL2", { AArch64_SYSREG_PMSCR_EL2 }, 0xE4C8, true, true,  {AArch64_FeatureSPE}  }, // 687
+  { "PMSDSFR_EL1", { AArch64_SYSREG_PMSDSFR_EL1 }, "PMSDSFR_EL1", { AArch64_SYSREG_PMSDSFR_EL1 }, 0xC4D4, true, true,  {0}  }, // 688
+  { "PMSELR_EL0", { AArch64_SYSREG_PMSELR_EL0 }, "PMSELR_EL0", { AArch64_SYSREG_PMSELR_EL0 }, 0xDCE5, true, true,  {0}  }, // 689
+  { "PMSEVFR_EL1", { AArch64_SYSREG_PMSEVFR_EL1 }, "PMSEVFR_EL1", { AArch64_SYSREG_PMSEVFR_EL1 }, 0xC4CD, true, true,  {AArch64_FeatureSPE}  }, // 690
+  { "PMSFCR_EL1", { AArch64_SYSREG_PMSFCR_EL1 }, "PMSFCR_EL1", { AArch64_SYSREG_PMSFCR_EL1 }, 0xC4CC, true, true,  {AArch64_FeatureSPE}  }, // 691
+  { "PMSICR_EL1", { AArch64_SYSREG_PMSICR_EL1 }, "PMSICR_EL1", { AArch64_SYSREG_PMSICR_EL1 }, 0xC4CA, true, true,  {AArch64_FeatureSPE}  }, // 692
+  { "PMSIDR_EL1", { AArch64_SYSREG_PMSIDR_EL1 }, "PMSIDR_EL1", { AArch64_SYSREG_PMSIDR_EL1 }, 0xC4CF, true, false,  {AArch64_FeatureSPE}  }, // 693
+  { "PMSIRR_EL1", { AArch64_SYSREG_PMSIRR_EL1 }, "PMSIRR_EL1", { AArch64_SYSREG_PMSIRR_EL1 }, 0xC4CB, true, true,  {AArch64_FeatureSPE}  }, // 694
+  { "PMSLATFR_EL1", { AArch64_SYSREG_PMSLATFR_EL1 }, "PMSLATFR_EL1", { AArch64_SYSREG_PMSLATFR_EL1 }, 0xC4CE, true, true,  {AArch64_FeatureSPE}  }, // 695
+  { "PMSNEVFR_EL1", { AArch64_SYSREG_PMSNEVFR_EL1 }, "PMSNEVFR_EL1", { AArch64_SYSREG_PMSNEVFR_EL1 }, 0xC4C9, true, true,  {AArch64_FeatureSPE_EEF}  }, // 696
+  { "PMSSCR_EL1", { AArch64_SYSREG_PMSSCR_EL1 }, "PMSSCR_EL1", { AArch64_SYSREG_PMSSCR_EL1 }, 0xC4EB, true, true,  {0}  }, // 697
+  { "PMSWINC_EL0", { AArch64_SYSREG_PMSWINC_EL0 }, "PMSWINC_EL0", { AArch64_SYSREG_PMSWINC_EL0 }, 0xDCE4, false, true,  {0}  }, // 698
+  { "PMUACR_EL1", { AArch64_SYSREG_PMUACR_EL1 }, "PMUACR_EL1", { AArch64_SYSREG_PMUACR_EL1 }, 0xC4F4, true, true,  {0}  }, // 699
+  { "PMUSERENR_EL0", { AArch64_SYSREG_PMUSERENR_EL0 }, "PMUSERENR_EL0", { AArch64_SYSREG_PMUSERENR_EL0 }, 0xDCF0, true, true,  {0}  }, // 700
+  { "PMXEVCNTR_EL0", { AArch64_SYSREG_PMXEVCNTR_EL0 }, "PMXEVCNTR_EL0", { AArch64_SYSREG_PMXEVCNTR_EL0 }, 0xDCEA, true, true,  {0}  }, // 701
+  { "PMXEVTYPER_EL0", { AArch64_SYSREG_PMXEVTYPER_EL0 }, "PMXEVTYPER_EL0", { AArch64_SYSREG_PMXEVTYPER_EL0 }, 0xDCE9, true, true,  {0}  }, // 702
+  { "PMZR_EL0", { AArch64_SYSREG_PMZR_EL0 }, "PMZR_EL0", { AArch64_SYSREG_PMZR_EL0 }, 0xDCEC, false, true,  {0}  }, // 703
+  { "POR_EL0", { AArch64_SYSREG_POR_EL0 }, "POR_EL0", { AArch64_SYSREG_POR_EL0 }, 0xDD14, true, true,  {0}  }, // 704
+  { "POR_EL1", { AArch64_SYSREG_POR_EL1 }, "POR_EL1", { AArch64_SYSREG_POR_EL1 }, 0xC514, true, true,  {0}  }, // 705
+  { "POR_EL12", { AArch64_SYSREG_POR_EL12 }, "POR_EL12", { AArch64_SYSREG_POR_EL12 }, 0xED14, true, true,  {0}  }, // 706
+  { "POR_EL2", { AArch64_SYSREG_POR_EL2 }, "POR_EL2", { AArch64_SYSREG_POR_EL2 }, 0xE514, true, true,  {0}  }, // 707
+  { "POR_EL3", { AArch64_SYSREG_POR_EL3 }, "POR_EL3", { AArch64_SYSREG_POR_EL3 }, 0xF514, true, true,  {0}  }, // 708
+  { "PRBAR10_EL1", { AArch64_SYSREG_PRBAR10_EL1 }, "PRBAR10_EL1", { AArch64_SYSREG_PRBAR10_EL1 }, 0xC368, true, true,  {AArch64_HasV8_0rOps}  }, // 709
+  { "PRBAR10_EL2", { AArch64_SYSREG_PRBAR10_EL2 }, "PRBAR10_EL2", { AArch64_SYSREG_PRBAR10_EL2 }, 0xE368, true, true,  {AArch64_HasV8_0rOps}  }, // 710
+  { "PRBAR11_EL1", { AArch64_SYSREG_PRBAR11_EL1 }, "PRBAR11_EL1", { AArch64_SYSREG_PRBAR11_EL1 }, 0xC36C, true, true,  {AArch64_HasV8_0rOps}  }, // 711
+  { "PRBAR11_EL2", { AArch64_SYSREG_PRBAR11_EL2 }, "PRBAR11_EL2", { AArch64_SYSREG_PRBAR11_EL2 }, 0xE36C, true, true,  {AArch64_HasV8_0rOps}  }, // 712
+  { "PRBAR12_EL1", { AArch64_SYSREG_PRBAR12_EL1 }, "PRBAR12_EL1", { AArch64_SYSREG_PRBAR12_EL1 }, 0xC370, true, true,  {AArch64_HasV8_0rOps}  }, // 713
+  { "PRBAR12_EL2", { AArch64_SYSREG_PRBAR12_EL2 }, "PRBAR12_EL2", { AArch64_SYSREG_PRBAR12_EL2 }, 0xE370, true, true,  {AArch64_HasV8_0rOps}  }, // 714
+  { "PRBAR13_EL1", { AArch64_SYSREG_PRBAR13_EL1 }, "PRBAR13_EL1", { AArch64_SYSREG_PRBAR13_EL1 }, 0xC374, true, true,  {AArch64_HasV8_0rOps}  }, // 715
+  { "PRBAR13_EL2", { AArch64_SYSREG_PRBAR13_EL2 }, "PRBAR13_EL2", { AArch64_SYSREG_PRBAR13_EL2 }, 0xE374, true, true,  {AArch64_HasV8_0rOps}  }, // 716
+  { "PRBAR14_EL1", { AArch64_SYSREG_PRBAR14_EL1 }, "PRBAR14_EL1", { AArch64_SYSREG_PRBAR14_EL1 }, 0xC378, true, true,  {AArch64_HasV8_0rOps}  }, // 717
+  { "PRBAR14_EL2", { AArch64_SYSREG_PRBAR14_EL2 }, "PRBAR14_EL2", { AArch64_SYSREG_PRBAR14_EL2 }, 0xE378, true, true,  {AArch64_HasV8_0rOps}  }, // 718
+  { "PRBAR15_EL1", { AArch64_SYSREG_PRBAR15_EL1 }, "PRBAR15_EL1", { AArch64_SYSREG_PRBAR15_EL1 }, 0xC37C, true, true,  {AArch64_HasV8_0rOps}  }, // 719
+  { "PRBAR15_EL2", { AArch64_SYSREG_PRBAR15_EL2 }, "PRBAR15_EL2", { AArch64_SYSREG_PRBAR15_EL2 }, 0xE37C, true, true,  {AArch64_HasV8_0rOps}  }, // 720
+  { "PRBAR1_EL1", { AArch64_SYSREG_PRBAR1_EL1 }, "PRBAR1_EL1", { AArch64_SYSREG_PRBAR1_EL1 }, 0xC344, true, true,  {AArch64_HasV8_0rOps}  }, // 721
+  { "PRBAR1_EL2", { AArch64_SYSREG_PRBAR1_EL2 }, "PRBAR1_EL2", { AArch64_SYSREG_PRBAR1_EL2 }, 0xE344, true, true,  {AArch64_HasV8_0rOps}  }, // 722
+  { "PRBAR2_EL1", { AArch64_SYSREG_PRBAR2_EL1 }, "PRBAR2_EL1", { AArch64_SYSREG_PRBAR2_EL1 }, 0xC348, true, true,  {AArch64_HasV8_0rOps}  }, // 723
+  { "PRBAR2_EL2", { AArch64_SYSREG_PRBAR2_EL2 }, "PRBAR2_EL2", { AArch64_SYSREG_PRBAR2_EL2 }, 0xE348, true, true,  {AArch64_HasV8_0rOps}  }, // 724
+  { "PRBAR3_EL1", { AArch64_SYSREG_PRBAR3_EL1 }, "PRBAR3_EL1", { AArch64_SYSREG_PRBAR3_EL1 }, 0xC34C, true, true,  {AArch64_HasV8_0rOps}  }, // 725
+  { "PRBAR3_EL2", { AArch64_SYSREG_PRBAR3_EL2 }, "PRBAR3_EL2", { AArch64_SYSREG_PRBAR3_EL2 }, 0xE34C, true, true,  {AArch64_HasV8_0rOps}  }, // 726
+  { "PRBAR4_EL1", { AArch64_SYSREG_PRBAR4_EL1 }, "PRBAR4_EL1", { AArch64_SYSREG_PRBAR4_EL1 }, 0xC350, true, true,  {AArch64_HasV8_0rOps}  }, // 727
+  { "PRBAR4_EL2", { AArch64_SYSREG_PRBAR4_EL2 }, "PRBAR4_EL2", { AArch64_SYSREG_PRBAR4_EL2 }, 0xE350, true, true,  {AArch64_HasV8_0rOps}  }, // 728
+  { "PRBAR5_EL1", { AArch64_SYSREG_PRBAR5_EL1 }, "PRBAR5_EL1", { AArch64_SYSREG_PRBAR5_EL1 }, 0xC354, true, true,  {AArch64_HasV8_0rOps}  }, // 729
+  { "PRBAR5_EL2", { AArch64_SYSREG_PRBAR5_EL2 }, "PRBAR5_EL2", { AArch64_SYSREG_PRBAR5_EL2 }, 0xE354, true, true,  {AArch64_HasV8_0rOps}  }, // 730
+  { "PRBAR6_EL1", { AArch64_SYSREG_PRBAR6_EL1 }, "PRBAR6_EL1", { AArch64_SYSREG_PRBAR6_EL1 }, 0xC358, true, true,  {AArch64_HasV8_0rOps}  }, // 731
+  { "PRBAR6_EL2", { AArch64_SYSREG_PRBAR6_EL2 }, "PRBAR6_EL2", { AArch64_SYSREG_PRBAR6_EL2 }, 0xE358, true, true,  {AArch64_HasV8_0rOps}  }, // 732
+  { "PRBAR7_EL1", { AArch64_SYSREG_PRBAR7_EL1 }, "PRBAR7_EL1", { AArch64_SYSREG_PRBAR7_EL1 }, 0xC35C, true, true,  {AArch64_HasV8_0rOps}  }, // 733
+  { "PRBAR7_EL2", { AArch64_SYSREG_PRBAR7_EL2 }, "PRBAR7_EL2", { AArch64_SYSREG_PRBAR7_EL2 }, 0xE35C, true, true,  {AArch64_HasV8_0rOps}  }, // 734
+  { "PRBAR8_EL1", { AArch64_SYSREG_PRBAR8_EL1 }, "PRBAR8_EL1", { AArch64_SYSREG_PRBAR8_EL1 }, 0xC360, true, true,  {AArch64_HasV8_0rOps}  }, // 735
+  { "PRBAR8_EL2", { AArch64_SYSREG_PRBAR8_EL2 }, "PRBAR8_EL2", { AArch64_SYSREG_PRBAR8_EL2 }, 0xE360, true, true,  {AArch64_HasV8_0rOps}  }, // 736
+  { "PRBAR9_EL1", { AArch64_SYSREG_PRBAR9_EL1 }, "PRBAR9_EL1", { AArch64_SYSREG_PRBAR9_EL1 }, 0xC364, true, true,  {AArch64_HasV8_0rOps}  }, // 737
+  { "PRBAR9_EL2", { AArch64_SYSREG_PRBAR9_EL2 }, "PRBAR9_EL2", { AArch64_SYSREG_PRBAR9_EL2 }, 0xE364, true, true,  {AArch64_HasV8_0rOps}  }, // 738
+  { "PRBAR_EL1", { AArch64_SYSREG_PRBAR_EL1 }, "PRBAR_EL1", { AArch64_SYSREG_PRBAR_EL1 }, 0xC340, true, true,  {AArch64_HasV8_0rOps}  }, // 739
+  { "PRBAR_EL2", { AArch64_SYSREG_PRBAR_EL2 }, "PRBAR_EL2", { AArch64_SYSREG_PRBAR_EL2 }, 0xE340, true, true,  {AArch64_HasV8_0rOps}  }, // 740
+  { "PRENR_EL1", { AArch64_SYSREG_PRENR_EL1 }, "PRENR_EL1", { AArch64_SYSREG_PRENR_EL1 }, 0xC309, true, true,  {AArch64_HasV8_0rOps}  }, // 741
+  { "PRENR_EL2", { AArch64_SYSREG_PRENR_EL2 }, "PRENR_EL2", { AArch64_SYSREG_PRENR_EL2 }, 0xE309, true, true,  {AArch64_HasV8_0rOps}  }, // 742
+  { "PRLAR10_EL1", { AArch64_SYSREG_PRLAR10_EL1 }, "PRLAR10_EL1", { AArch64_SYSREG_PRLAR10_EL1 }, 0xC369, true, true,  {AArch64_HasV8_0rOps}  }, // 743
+  { "PRLAR10_EL2", { AArch64_SYSREG_PRLAR10_EL2 }, "PRLAR10_EL2", { AArch64_SYSREG_PRLAR10_EL2 }, 0xE369, true, true,  {AArch64_HasV8_0rOps}  }, // 744
+  { "PRLAR11_EL1", { AArch64_SYSREG_PRLAR11_EL1 }, "PRLAR11_EL1", { AArch64_SYSREG_PRLAR11_EL1 }, 0xC36D, true, true,  {AArch64_HasV8_0rOps}  }, // 745
+  { "PRLAR11_EL2", { AArch64_SYSREG_PRLAR11_EL2 }, "PRLAR11_EL2", { AArch64_SYSREG_PRLAR11_EL2 }, 0xE36D, true, true,  {AArch64_HasV8_0rOps}  }, // 746
+  { "PRLAR12_EL1", { AArch64_SYSREG_PRLAR12_EL1 }, "PRLAR12_EL1", { AArch64_SYSREG_PRLAR12_EL1 }, 0xC371, true, true,  {AArch64_HasV8_0rOps}  }, // 747
+  { "PRLAR12_EL2", { AArch64_SYSREG_PRLAR12_EL2 }, "PRLAR12_EL2", { AArch64_SYSREG_PRLAR12_EL2 }, 0xE371, true, true,  {AArch64_HasV8_0rOps}  }, // 748
+  { "PRLAR13_EL1", { AArch64_SYSREG_PRLAR13_EL1 }, "PRLAR13_EL1", { AArch64_SYSREG_PRLAR13_EL1 }, 0xC375, true, true,  {AArch64_HasV8_0rOps}  }, // 749
+  { "PRLAR13_EL2", { AArch64_SYSREG_PRLAR13_EL2 }, "PRLAR13_EL2", { AArch64_SYSREG_PRLAR13_EL2 }, 0xE375, true, true,  {AArch64_HasV8_0rOps}  }, // 750
+  { "PRLAR14_EL1", { AArch64_SYSREG_PRLAR14_EL1 }, "PRLAR14_EL1", { AArch64_SYSREG_PRLAR14_EL1 }, 0xC379, true, true,  {AArch64_HasV8_0rOps}  }, // 751
+  { "PRLAR14_EL2", { AArch64_SYSREG_PRLAR14_EL2 }, "PRLAR14_EL2", { AArch64_SYSREG_PRLAR14_EL2 }, 0xE379, true, true,  {AArch64_HasV8_0rOps}  }, // 752
+  { "PRLAR15_EL1", { AArch64_SYSREG_PRLAR15_EL1 }, "PRLAR15_EL1", { AArch64_SYSREG_PRLAR15_EL1 }, 0xC37D, true, true,  {AArch64_HasV8_0rOps}  }, // 753
+  { "PRLAR15_EL2", { AArch64_SYSREG_PRLAR15_EL2 }, "PRLAR15_EL2", { AArch64_SYSREG_PRLAR15_EL2 }, 0xE37D, true, true,  {AArch64_HasV8_0rOps}  }, // 754
+  { "PRLAR1_EL1", { AArch64_SYSREG_PRLAR1_EL1 }, "PRLAR1_EL1", { AArch64_SYSREG_PRLAR1_EL1 }, 0xC345, true, true,  {AArch64_HasV8_0rOps}  }, // 755
+  { "PRLAR1_EL2", { AArch64_SYSREG_PRLAR1_EL2 }, "PRLAR1_EL2", { AArch64_SYSREG_PRLAR1_EL2 }, 0xE345, true, true,  {AArch64_HasV8_0rOps}  }, // 756
+  { "PRLAR2_EL1", { AArch64_SYSREG_PRLAR2_EL1 }, "PRLAR2_EL1", { AArch64_SYSREG_PRLAR2_EL1 }, 0xC349, true, true,  {AArch64_HasV8_0rOps}  }, // 757
+  { "PRLAR2_EL2", { AArch64_SYSREG_PRLAR2_EL2 }, "PRLAR2_EL2", { AArch64_SYSREG_PRLAR2_EL2 }, 0xE349, true, true,  {AArch64_HasV8_0rOps}  }, // 758
+  { "PRLAR3_EL1", { AArch64_SYSREG_PRLAR3_EL1 }, "PRLAR3_EL1", { AArch64_SYSREG_PRLAR3_EL1 }, 0xC34D, true, true,  {AArch64_HasV8_0rOps}  }, // 759
+  { "PRLAR3_EL2", { AArch64_SYSREG_PRLAR3_EL2 }, "PRLAR3_EL2", { AArch64_SYSREG_PRLAR3_EL2 }, 0xE34D, true, true,  {AArch64_HasV8_0rOps}  }, // 760
+  { "PRLAR4_EL1", { AArch64_SYSREG_PRLAR4_EL1 }, "PRLAR4_EL1", { AArch64_SYSREG_PRLAR4_EL1 }, 0xC351, true, true,  {AArch64_HasV8_0rOps}  }, // 761
+  { "PRLAR4_EL2", { AArch64_SYSREG_PRLAR4_EL2 }, "PRLAR4_EL2", { AArch64_SYSREG_PRLAR4_EL2 }, 0xE351, true, true,  {AArch64_HasV8_0rOps}  }, // 762
+  { "PRLAR5_EL1", { AArch64_SYSREG_PRLAR5_EL1 }, "PRLAR5_EL1", { AArch64_SYSREG_PRLAR5_EL1 }, 0xC355, true, true,  {AArch64_HasV8_0rOps}  }, // 763
+  { "PRLAR5_EL2", { AArch64_SYSREG_PRLAR5_EL2 }, "PRLAR5_EL2", { AArch64_SYSREG_PRLAR5_EL2 }, 0xE355, true, true,  {AArch64_HasV8_0rOps}  }, // 764
+  { "PRLAR6_EL1", { AArch64_SYSREG_PRLAR6_EL1 }, "PRLAR6_EL1", { AArch64_SYSREG_PRLAR6_EL1 }, 0xC359, true, true,  {AArch64_HasV8_0rOps}  }, // 765
+  { "PRLAR6_EL2", { AArch64_SYSREG_PRLAR6_EL2 }, "PRLAR6_EL2", { AArch64_SYSREG_PRLAR6_EL2 }, 0xE359, true, true,  {AArch64_HasV8_0rOps}  }, // 766
+  { "PRLAR7_EL1", { AArch64_SYSREG_PRLAR7_EL1 }, "PRLAR7_EL1", { AArch64_SYSREG_PRLAR7_EL1 }, 0xC35D, true, true,  {AArch64_HasV8_0rOps}  }, // 767
+  { "PRLAR7_EL2", { AArch64_SYSREG_PRLAR7_EL2 }, "PRLAR7_EL2", { AArch64_SYSREG_PRLAR7_EL2 }, 0xE35D, true, true,  {AArch64_HasV8_0rOps}  }, // 768
+  { "PRLAR8_EL1", { AArch64_SYSREG_PRLAR8_EL1 }, "PRLAR8_EL1", { AArch64_SYSREG_PRLAR8_EL1 }, 0xC361, true, true,  {AArch64_HasV8_0rOps}  }, // 769
+  { "PRLAR8_EL2", { AArch64_SYSREG_PRLAR8_EL2 }, "PRLAR8_EL2", { AArch64_SYSREG_PRLAR8_EL2 }, 0xE361, true, true,  {AArch64_HasV8_0rOps}  }, // 770
+  { "PRLAR9_EL1", { AArch64_SYSREG_PRLAR9_EL1 }, "PRLAR9_EL1", { AArch64_SYSREG_PRLAR9_EL1 }, 0xC365, true, true,  {AArch64_HasV8_0rOps}  }, // 771
+  { "PRLAR9_EL2", { AArch64_SYSREG_PRLAR9_EL2 }, "PRLAR9_EL2", { AArch64_SYSREG_PRLAR9_EL2 }, 0xE365, true, true,  {AArch64_HasV8_0rOps}  }, // 772
+  { "PRLAR_EL1", { AArch64_SYSREG_PRLAR_EL1 }, "PRLAR_EL1", { AArch64_SYSREG_PRLAR_EL1 }, 0xC341, true, true,  {AArch64_HasV8_0rOps}  }, // 773
+  { "PRLAR_EL2", { AArch64_SYSREG_PRLAR_EL2 }, "PRLAR_EL2", { AArch64_SYSREG_PRLAR_EL2 }, 0xE341, true, true,  {AArch64_HasV8_0rOps}  }, // 774
+  { "PRSELR_EL1", { AArch64_SYSREG_PRSELR_EL1 }, "PRSELR_EL1", { AArch64_SYSREG_PRSELR_EL1 }, 0xC311, true, true,  {AArch64_HasV8_0rOps}  }, // 775
+  { "PRSELR_EL2", { AArch64_SYSREG_PRSELR_EL2 }, "PRSELR_EL2", { AArch64_SYSREG_PRSELR_EL2 }, 0xE311, true, true,  {AArch64_HasV8_0rOps}  }, // 776
+  { "RCWMASK_EL1", { AArch64_SYSREG_RCWMASK_EL1 }, "RCWMASK_EL1", { AArch64_SYSREG_RCWMASK_EL1 }, 0xC686, true, true,  {AArch64_FeatureTHE}  }, // 777
+  { "RCWSMASK_EL1", { AArch64_SYSREG_RCWSMASK_EL1 }, "RCWSMASK_EL1", { AArch64_SYSREG_RCWSMASK_EL1 }, 0xC683, true, true,  {AArch64_FeatureTHE}  }, // 778
+  { "REVIDR_EL1", { AArch64_SYSREG_REVIDR_EL1 }, "REVIDR_EL1", { AArch64_SYSREG_REVIDR_EL1 }, 0xC006, true, false,  {0}  }, // 779
+  { "RGSR_EL1", { AArch64_SYSREG_RGSR_EL1 }, "RGSR_EL1", { AArch64_SYSREG_RGSR_EL1 }, 0xC085, true, true,  {AArch64_FeatureMTE}  }, // 780
+  { "RMR_EL1", { AArch64_SYSREG_RMR_EL1 }, "RMR_EL1", { AArch64_SYSREG_RMR_EL1 }, 0xC602, true, true,  {0}  }, // 781
+  { "RMR_EL2", { AArch64_SYSREG_RMR_EL2 }, "RMR_EL2", { AArch64_SYSREG_RMR_EL2 }, 0xE602, true, true,  {0}  }, // 782
+  { "RMR_EL3", { AArch64_SYSREG_RMR_EL3 }, "RMR_EL3", { AArch64_SYSREG_RMR_EL3 }, 0xF602, true, true,  {0}  }, // 783
+  { "RNDR", { AArch64_SYSREG_RNDR }, "RNDR", { AArch64_SYSREG_RNDR }, 0xD920, true, false,  {AArch64_FeatureRandGen}  }, // 784
+  { "RNDRRS", { AArch64_SYSREG_RNDRRS }, "RNDRRS", { AArch64_SYSREG_RNDRRS }, 0xD921, true, false,  {AArch64_FeatureRandGen}  }, // 785
+  { "RVBAR_EL1", { AArch64_SYSREG_RVBAR_EL1 }, "RVBAR_EL1", { AArch64_SYSREG_RVBAR_EL1 }, 0xC601, true, false,  {0}  }, // 786
+  { "RVBAR_EL2", { AArch64_SYSREG_RVBAR_EL2 }, "RVBAR_EL2", { AArch64_SYSREG_RVBAR_EL2 }, 0xE601, true, false,  {0}  }, // 787
+  { "RVBAR_EL3", { AArch64_SYSREG_RVBAR_EL3 }, "RVBAR_EL3", { AArch64_SYSREG_RVBAR_EL3 }, 0xF601, true, false,  {0}  }, // 788
+  { "S2PIR_EL2", { AArch64_SYSREG_S2PIR_EL2 }, "S2PIR_EL2", { AArch64_SYSREG_S2PIR_EL2 }, 0xE515, true, true,  {0}  }, // 789
+  { "S2POR_EL1", { AArch64_SYSREG_S2POR_EL1 }, "S2POR_EL1", { AArch64_SYSREG_S2POR_EL1 }, 0xC515, true, true,  {0}  }, // 790
+  { "SCR_EL3", { AArch64_SYSREG_SCR_EL3 }, "SCR_EL3", { AArch64_SYSREG_SCR_EL3 }, 0xF088, true, true,  {0}  }, // 791
+  { "SCTLR2_EL1", { AArch64_SYSREG_SCTLR2_EL1 }, "SCTLR2_EL1", { AArch64_SYSREG_SCTLR2_EL1 }, 0xC083, true, true,  {0}  }, // 792
+  { "SCTLR2_EL12", { AArch64_SYSREG_SCTLR2_EL12 }, "SCTLR2_EL12", { AArch64_SYSREG_SCTLR2_EL12 }, 0xE883, true, true,  {0}  }, // 793
+  { "SCTLR2_EL2", { AArch64_SYSREG_SCTLR2_EL2 }, "SCTLR2_EL2", { AArch64_SYSREG_SCTLR2_EL2 }, 0xE083, true, true,  {0}  }, // 794
+  { "SCTLR2_EL3", { AArch64_SYSREG_SCTLR2_EL3 }, "SCTLR2_EL3", { AArch64_SYSREG_SCTLR2_EL3 }, 0xF083, true, true,  {0}  }, // 795
+  { "SCTLR_EL1", { AArch64_SYSREG_SCTLR_EL1 }, "SCTLR_EL1", { AArch64_SYSREG_SCTLR_EL1 }, 0xC080, true, true,  {0}  }, // 796
+  { "SCTLR_EL12", { AArch64_SYSREG_SCTLR_EL12 }, "SCTLR_EL12", { AArch64_SYSREG_SCTLR_EL12 }, 0xE880, true, true,  {AArch64_FeatureVH}  }, // 797
+  { "SCTLR_EL2", { AArch64_SYSREG_SCTLR_EL2 }, "SCTLR_EL2", { AArch64_SYSREG_SCTLR_EL2 }, 0xE080, true, true,  {0}  }, // 798
+  { "SCTLR_EL3", { AArch64_SYSREG_SCTLR_EL3 }, "SCTLR_EL3", { AArch64_SYSREG_SCTLR_EL3 }, 0xF080, true, true,  {0}  }, // 799
+  { "SCXTNUM_EL0", { AArch64_SYSREG_SCXTNUM_EL0 }, "SCXTNUM_EL0", { AArch64_SYSREG_SCXTNUM_EL0 }, 0xDE87, true, true,  {AArch64_FeatureSpecRestrict}  }, // 800
+  { "SCXTNUM_EL1", { AArch64_SYSREG_SCXTNUM_EL1 }, "SCXTNUM_EL1", { AArch64_SYSREG_SCXTNUM_EL1 }, 0xC687, true, true,  {AArch64_FeatureSpecRestrict}  }, // 801
+  { "SCXTNUM_EL12", { AArch64_SYSREG_SCXTNUM_EL12 }, "SCXTNUM_EL12", { AArch64_SYSREG_SCXTNUM_EL12 }, 0xEE87, true, true,  {AArch64_FeatureSpecRestrict}  }, // 802
+  { "SCXTNUM_EL2", { AArch64_SYSREG_SCXTNUM_EL2 }, "SCXTNUM_EL2", { AArch64_SYSREG_SCXTNUM_EL2 }, 0xE687, true, true,  {AArch64_FeatureSpecRestrict}  }, // 803
+  { "SCXTNUM_EL3", { AArch64_SYSREG_SCXTNUM_EL3 }, "SCXTNUM_EL3", { AArch64_SYSREG_SCXTNUM_EL3 }, 0xF687, true, true,  {AArch64_FeatureSpecRestrict}  }, // 804
+  { "SDER32_EL2", { AArch64_SYSREG_SDER32_EL2 }, "SDER32_EL2", { AArch64_SYSREG_SDER32_EL2 }, 0xE099, true, true,  {AArch64_FeatureSEL2}  }, // 805
+  { "SDER32_EL3", { AArch64_SYSREG_SDER32_EL3 }, "SDER32_EL3", { AArch64_SYSREG_SDER32_EL3 }, 0xF089, true, true,  {0}  }, // 806
+  { "SMCR_EL1", { AArch64_SYSREG_SMCR_EL1 }, "SMCR_EL1", { AArch64_SYSREG_SMCR_EL1 }, 0xC096, true, true,  {AArch64_FeatureSME}  }, // 807
+  { "SMCR_EL12", { AArch64_SYSREG_SMCR_EL12 }, "SMCR_EL12", { AArch64_SYSREG_SMCR_EL12 }, 0xE896, true, true,  {AArch64_FeatureSME}  }, // 808
+  { "SMCR_EL2", { AArch64_SYSREG_SMCR_EL2 }, "SMCR_EL2", { AArch64_SYSREG_SMCR_EL2 }, 0xE096, true, true,  {AArch64_FeatureSME}  }, // 809
+  { "SMCR_EL3", { AArch64_SYSREG_SMCR_EL3 }, "SMCR_EL3", { AArch64_SYSREG_SMCR_EL3 }, 0xF096, true, true,  {AArch64_FeatureSME}  }, // 810
+  { "SMIDR_EL1", { AArch64_SYSREG_SMIDR_EL1 }, "SMIDR_EL1", { AArch64_SYSREG_SMIDR_EL1 }, 0xC806, true, false,  {AArch64_FeatureSME}  }, // 811
+  { "SMPRIMAP_EL2", { AArch64_SYSREG_SMPRIMAP_EL2 }, "SMPRIMAP_EL2", { AArch64_SYSREG_SMPRIMAP_EL2 }, 0xE095, true, true,  {AArch64_FeatureSME}  }, // 812
+  { "SMPRI_EL1", { AArch64_SYSREG_SMPRI_EL1 }, "SMPRI_EL1", { AArch64_SYSREG_SMPRI_EL1 }, 0xC094, true, true,  {AArch64_FeatureSME}  }, // 813
+  { "SPMACCESSR_EL1", { AArch64_SYSREG_SPMACCESSR_EL1 }, "SPMACCESSR_EL1", { AArch64_SYSREG_SPMACCESSR_EL1 }, 0x84EB, true, true,  {0}  }, // 814
+  { "SPMACCESSR_EL12", { AArch64_SYSREG_SPMACCESSR_EL12 }, "SPMACCESSR_EL12", { AArch64_SYSREG_SPMACCESSR_EL12 }, 0xACEB, true, true,  {0}  }, // 815
+  { "SPMACCESSR_EL2", { AArch64_SYSREG_SPMACCESSR_EL2 }, "SPMACCESSR_EL2", { AArch64_SYSREG_SPMACCESSR_EL2 }, 0xA4EB, true, true,  {0}  }, // 816
+  { "SPMACCESSR_EL3", { AArch64_SYSREG_SPMACCESSR_EL3 }, "SPMACCESSR_EL3", { AArch64_SYSREG_SPMACCESSR_EL3 }, 0xB4EB, true, true,  {0}  }, // 817
+  { "SPMCFGR_EL1", { AArch64_SYSREG_SPMCFGR_EL1 }, "SPMCFGR_EL1", { AArch64_SYSREG_SPMCFGR_EL1 }, 0x84EF, true, false,  {0}  }, // 818
+  { "SPMCGCR0_EL1", { AArch64_SYSREG_SPMCGCR0_EL1 }, "SPMCGCR0_EL1", { AArch64_SYSREG_SPMCGCR0_EL1 }, 0x84E8, true, false,  {0}  }, // 819
+  { "SPMCGCR1_EL1", { AArch64_SYSREG_SPMCGCR1_EL1 }, "SPMCGCR1_EL1", { AArch64_SYSREG_SPMCGCR1_EL1 }, 0x84E9, true, false,  {0}  }, // 820
+  { "SPMCNTENCLR_EL0", { AArch64_SYSREG_SPMCNTENCLR_EL0 }, "SPMCNTENCLR_EL0", { AArch64_SYSREG_SPMCNTENCLR_EL0 }, 0x9CE2, true, true,  {0}  }, // 821
+  { "SPMCNTENSET_EL0", { AArch64_SYSREG_SPMCNTENSET_EL0 }, "SPMCNTENSET_EL0", { AArch64_SYSREG_SPMCNTENSET_EL0 }, 0x9CE1, true, true,  {0}  }, // 822
+  { "SPMCR_EL0", { AArch64_SYSREG_SPMCR_EL0 }, "SPMCR_EL0", { AArch64_SYSREG_SPMCR_EL0 }, 0x9CE0, true, true,  {0}  }, // 823
+  { "SPMDEVAFF_EL1", { AArch64_SYSREG_SPMDEVAFF_EL1 }, "SPMDEVAFF_EL1", { AArch64_SYSREG_SPMDEVAFF_EL1 }, 0x84EE, true, false,  {0}  }, // 824
+  { "SPMDEVARCH_EL1", { AArch64_SYSREG_SPMDEVARCH_EL1 }, "SPMDEVARCH_EL1", { AArch64_SYSREG_SPMDEVARCH_EL1 }, 0x84ED, true, false,  {0}  }, // 825
+  { "SPMEVCNTR0_EL0", { AArch64_SYSREG_SPMEVCNTR0_EL0 }, "SPMEVCNTR0_EL0", { AArch64_SYSREG_SPMEVCNTR0_EL0 }, 0x9F00, true, true,  {0}  }, // 826
+  { "SPMEVCNTR10_EL0", { AArch64_SYSREG_SPMEVCNTR10_EL0 }, "SPMEVCNTR10_EL0", { AArch64_SYSREG_SPMEVCNTR10_EL0 }, 0x9F0A, true, true,  {0}  }, // 827
+  { "SPMEVCNTR11_EL0", { AArch64_SYSREG_SPMEVCNTR11_EL0 }, "SPMEVCNTR11_EL0", { AArch64_SYSREG_SPMEVCNTR11_EL0 }, 0x9F0B, true, true,  {0}  }, // 828
+  { "SPMEVCNTR12_EL0", { AArch64_SYSREG_SPMEVCNTR12_EL0 }, "SPMEVCNTR12_EL0", { AArch64_SYSREG_SPMEVCNTR12_EL0 }, 0x9F0C, true, true,  {0}  }, // 829
+  { "SPMEVCNTR13_EL0", { AArch64_SYSREG_SPMEVCNTR13_EL0 }, "SPMEVCNTR13_EL0", { AArch64_SYSREG_SPMEVCNTR13_EL0 }, 0x9F0D, true, true,  {0}  }, // 830
+  { "SPMEVCNTR14_EL0", { AArch64_SYSREG_SPMEVCNTR14_EL0 }, "SPMEVCNTR14_EL0", { AArch64_SYSREG_SPMEVCNTR14_EL0 }, 0x9F0E, true, true,  {0}  }, // 831
+  { "SPMEVCNTR15_EL0", { AArch64_SYSREG_SPMEVCNTR15_EL0 }, "SPMEVCNTR15_EL0", { AArch64_SYSREG_SPMEVCNTR15_EL0 }, 0x9F0F, true, true,  {0}  }, // 832
+  { "SPMEVCNTR1_EL0", { AArch64_SYSREG_SPMEVCNTR1_EL0 }, "SPMEVCNTR1_EL0", { AArch64_SYSREG_SPMEVCNTR1_EL0 }, 0x9F01, true, true,  {0}  }, // 833
+  { "SPMEVCNTR2_EL0", { AArch64_SYSREG_SPMEVCNTR2_EL0 }, "SPMEVCNTR2_EL0", { AArch64_SYSREG_SPMEVCNTR2_EL0 }, 0x9F02, true, true,  {0}  }, // 834
+  { "SPMEVCNTR3_EL0", { AArch64_SYSREG_SPMEVCNTR3_EL0 }, "SPMEVCNTR3_EL0", { AArch64_SYSREG_SPMEVCNTR3_EL0 }, 0x9F03, true, true,  {0}  }, // 835
+  { "SPMEVCNTR4_EL0", { AArch64_SYSREG_SPMEVCNTR4_EL0 }, "SPMEVCNTR4_EL0", { AArch64_SYSREG_SPMEVCNTR4_EL0 }, 0x9F04, true, true,  {0}  }, // 836
+  { "SPMEVCNTR5_EL0", { AArch64_SYSREG_SPMEVCNTR5_EL0 }, "SPMEVCNTR5_EL0", { AArch64_SYSREG_SPMEVCNTR5_EL0 }, 0x9F05, true, true,  {0}  }, // 837
+  { "SPMEVCNTR6_EL0", { AArch64_SYSREG_SPMEVCNTR6_EL0 }, "SPMEVCNTR6_EL0", { AArch64_SYSREG_SPMEVCNTR6_EL0 }, 0x9F06, true, true,  {0}  }, // 838
+  { "SPMEVCNTR7_EL0", { AArch64_SYSREG_SPMEVCNTR7_EL0 }, "SPMEVCNTR7_EL0", { AArch64_SYSREG_SPMEVCNTR7_EL0 }, 0x9F07, true, true,  {0}  }, // 839
+  { "SPMEVCNTR8_EL0", { AArch64_SYSREG_SPMEVCNTR8_EL0 }, "SPMEVCNTR8_EL0", { AArch64_SYSREG_SPMEVCNTR8_EL0 }, 0x9F08, true, true,  {0}  }, // 840
+  { "SPMEVCNTR9_EL0", { AArch64_SYSREG_SPMEVCNTR9_EL0 }, "SPMEVCNTR9_EL0", { AArch64_SYSREG_SPMEVCNTR9_EL0 }, 0x9F09, true, true,  {0}  }, // 841
+  { "SPMEVFILT2R0_EL0", { AArch64_SYSREG_SPMEVFILT2R0_EL0 }, "SPMEVFILT2R0_EL0", { AArch64_SYSREG_SPMEVFILT2R0_EL0 }, 0x9F30, true, true,  {0}  }, // 842
+  { "SPMEVFILT2R10_EL0", { AArch64_SYSREG_SPMEVFILT2R10_EL0 }, "SPMEVFILT2R10_EL0", { AArch64_SYSREG_SPMEVFILT2R10_EL0 }, 0x9F3A, true, true,  {0}  }, // 843
+  { "SPMEVFILT2R11_EL0", { AArch64_SYSREG_SPMEVFILT2R11_EL0 }, "SPMEVFILT2R11_EL0", { AArch64_SYSREG_SPMEVFILT2R11_EL0 }, 0x9F3B, true, true,  {0}  }, // 844
+  { "SPMEVFILT2R12_EL0", { AArch64_SYSREG_SPMEVFILT2R12_EL0 }, "SPMEVFILT2R12_EL0", { AArch64_SYSREG_SPMEVFILT2R12_EL0 }, 0x9F3C, true, true,  {0}  }, // 845
+  { "SPMEVFILT2R13_EL0", { AArch64_SYSREG_SPMEVFILT2R13_EL0 }, "SPMEVFILT2R13_EL0", { AArch64_SYSREG_SPMEVFILT2R13_EL0 }, 0x9F3D, true, true,  {0}  }, // 846
+  { "SPMEVFILT2R14_EL0", { AArch64_SYSREG_SPMEVFILT2R14_EL0 }, "SPMEVFILT2R14_EL0", { AArch64_SYSREG_SPMEVFILT2R14_EL0 }, 0x9F3E, true, true,  {0}  }, // 847
+  { "SPMEVFILT2R15_EL0", { AArch64_SYSREG_SPMEVFILT2R15_EL0 }, "SPMEVFILT2R15_EL0", { AArch64_SYSREG_SPMEVFILT2R15_EL0 }, 0x9F3F, true, true,  {0}  }, // 848
+  { "SPMEVFILT2R1_EL0", { AArch64_SYSREG_SPMEVFILT2R1_EL0 }, "SPMEVFILT2R1_EL0", { AArch64_SYSREG_SPMEVFILT2R1_EL0 }, 0x9F31, true, true,  {0}  }, // 849
+  { "SPMEVFILT2R2_EL0", { AArch64_SYSREG_SPMEVFILT2R2_EL0 }, "SPMEVFILT2R2_EL0", { AArch64_SYSREG_SPMEVFILT2R2_EL0 }, 0x9F32, true, true,  {0}  }, // 850
+  { "SPMEVFILT2R3_EL0", { AArch64_SYSREG_SPMEVFILT2R3_EL0 }, "SPMEVFILT2R3_EL0", { AArch64_SYSREG_SPMEVFILT2R3_EL0 }, 0x9F33, true, true,  {0}  }, // 851
+  { "SPMEVFILT2R4_EL0", { AArch64_SYSREG_SPMEVFILT2R4_EL0 }, "SPMEVFILT2R4_EL0", { AArch64_SYSREG_SPMEVFILT2R4_EL0 }, 0x9F34, true, true,  {0}  }, // 852
+  { "SPMEVFILT2R5_EL0", { AArch64_SYSREG_SPMEVFILT2R5_EL0 }, "SPMEVFILT2R5_EL0", { AArch64_SYSREG_SPMEVFILT2R5_EL0 }, 0x9F35, true, true,  {0}  }, // 853
+  { "SPMEVFILT2R6_EL0", { AArch64_SYSREG_SPMEVFILT2R6_EL0 }, "SPMEVFILT2R6_EL0", { AArch64_SYSREG_SPMEVFILT2R6_EL0 }, 0x9F36, true, true,  {0}  }, // 854
+  { "SPMEVFILT2R7_EL0", { AArch64_SYSREG_SPMEVFILT2R7_EL0 }, "SPMEVFILT2R7_EL0", { AArch64_SYSREG_SPMEVFILT2R7_EL0 }, 0x9F37, true, true,  {0}  }, // 855
+  { "SPMEVFILT2R8_EL0", { AArch64_SYSREG_SPMEVFILT2R8_EL0 }, "SPMEVFILT2R8_EL0", { AArch64_SYSREG_SPMEVFILT2R8_EL0 }, 0x9F38, true, true,  {0}  }, // 856
+  { "SPMEVFILT2R9_EL0", { AArch64_SYSREG_SPMEVFILT2R9_EL0 }, "SPMEVFILT2R9_EL0", { AArch64_SYSREG_SPMEVFILT2R9_EL0 }, 0x9F39, true, true,  {0}  }, // 857
+  { "SPMEVFILTR0_EL0", { AArch64_SYSREG_SPMEVFILTR0_EL0 }, "SPMEVFILTR0_EL0", { AArch64_SYSREG_SPMEVFILTR0_EL0 }, 0x9F20, true, true,  {0}  }, // 858
+  { "SPMEVFILTR10_EL0", { AArch64_SYSREG_SPMEVFILTR10_EL0 }, "SPMEVFILTR10_EL0", { AArch64_SYSREG_SPMEVFILTR10_EL0 }, 0x9F2A, true, true,  {0}  }, // 859
+  { "SPMEVFILTR11_EL0", { AArch64_SYSREG_SPMEVFILTR11_EL0 }, "SPMEVFILTR11_EL0", { AArch64_SYSREG_SPMEVFILTR11_EL0 }, 0x9F2B, true, true,  {0}  }, // 860
+  { "SPMEVFILTR12_EL0", { AArch64_SYSREG_SPMEVFILTR12_EL0 }, "SPMEVFILTR12_EL0", { AArch64_SYSREG_SPMEVFILTR12_EL0 }, 0x9F2C, true, true,  {0}  }, // 861
+  { "SPMEVFILTR13_EL0", { AArch64_SYSREG_SPMEVFILTR13_EL0 }, "SPMEVFILTR13_EL0", { AArch64_SYSREG_SPMEVFILTR13_EL0 }, 0x9F2D, true, true,  {0}  }, // 862
+  { "SPMEVFILTR14_EL0", { AArch64_SYSREG_SPMEVFILTR14_EL0 }, "SPMEVFILTR14_EL0", { AArch64_SYSREG_SPMEVFILTR14_EL0 }, 0x9F2E, true, true,  {0}  }, // 863
+  { "SPMEVFILTR15_EL0", { AArch64_SYSREG_SPMEVFILTR15_EL0 }, "SPMEVFILTR15_EL0", { AArch64_SYSREG_SPMEVFILTR15_EL0 }, 0x9F2F, true, true,  {0}  }, // 864
+  { "SPMEVFILTR1_EL0", { AArch64_SYSREG_SPMEVFILTR1_EL0 }, "SPMEVFILTR1_EL0", { AArch64_SYSREG_SPMEVFILTR1_EL0 }, 0x9F21, true, true,  {0}  }, // 865
+  { "SPMEVFILTR2_EL0", { AArch64_SYSREG_SPMEVFILTR2_EL0 }, "SPMEVFILTR2_EL0", { AArch64_SYSREG_SPMEVFILTR2_EL0 }, 0x9F22, true, true,  {0}  }, // 866
+  { "SPMEVFILTR3_EL0", { AArch64_SYSREG_SPMEVFILTR3_EL0 }, "SPMEVFILTR3_EL0", { AArch64_SYSREG_SPMEVFILTR3_EL0 }, 0x9F23, true, true,  {0}  }, // 867
+  { "SPMEVFILTR4_EL0", { AArch64_SYSREG_SPMEVFILTR4_EL0 }, "SPMEVFILTR4_EL0", { AArch64_SYSREG_SPMEVFILTR4_EL0 }, 0x9F24, true, true,  {0}  }, // 868
+  { "SPMEVFILTR5_EL0", { AArch64_SYSREG_SPMEVFILTR5_EL0 }, "SPMEVFILTR5_EL0", { AArch64_SYSREG_SPMEVFILTR5_EL0 }, 0x9F25, true, true,  {0}  }, // 869
+  { "SPMEVFILTR6_EL0", { AArch64_SYSREG_SPMEVFILTR6_EL0 }, "SPMEVFILTR6_EL0", { AArch64_SYSREG_SPMEVFILTR6_EL0 }, 0x9F26, true, true,  {0}  }, // 870
+  { "SPMEVFILTR7_EL0", { AArch64_SYSREG_SPMEVFILTR7_EL0 }, "SPMEVFILTR7_EL0", { AArch64_SYSREG_SPMEVFILTR7_EL0 }, 0x9F27, true, true,  {0}  }, // 871
+  { "SPMEVFILTR8_EL0", { AArch64_SYSREG_SPMEVFILTR8_EL0 }, "SPMEVFILTR8_EL0", { AArch64_SYSREG_SPMEVFILTR8_EL0 }, 0x9F28, true, true,  {0}  }, // 872
+  { "SPMEVFILTR9_EL0", { AArch64_SYSREG_SPMEVFILTR9_EL0 }, "SPMEVFILTR9_EL0", { AArch64_SYSREG_SPMEVFILTR9_EL0 }, 0x9F29, true, true,  {0}  }, // 873
+  { "SPMEVTYPER0_EL0", { AArch64_SYSREG_SPMEVTYPER0_EL0 }, "SPMEVTYPER0_EL0", { AArch64_SYSREG_SPMEVTYPER0_EL0 }, 0x9F10, true, true,  {0}  }, // 874
+  { "SPMEVTYPER10_EL0", { AArch64_SYSREG_SPMEVTYPER10_EL0 }, "SPMEVTYPER10_EL0", { AArch64_SYSREG_SPMEVTYPER10_EL0 }, 0x9F1A, true, true,  {0}  }, // 875
+  { "SPMEVTYPER11_EL0", { AArch64_SYSREG_SPMEVTYPER11_EL0 }, "SPMEVTYPER11_EL0", { AArch64_SYSREG_SPMEVTYPER11_EL0 }, 0x9F1B, true, true,  {0}  }, // 876
+  { "SPMEVTYPER12_EL0", { AArch64_SYSREG_SPMEVTYPER12_EL0 }, "SPMEVTYPER12_EL0", { AArch64_SYSREG_SPMEVTYPER12_EL0 }, 0x9F1C, true, true,  {0}  }, // 877
+  { "SPMEVTYPER13_EL0", { AArch64_SYSREG_SPMEVTYPER13_EL0 }, "SPMEVTYPER13_EL0", { AArch64_SYSREG_SPMEVTYPER13_EL0 }, 0x9F1D, true, true,  {0}  }, // 878
+  { "SPMEVTYPER14_EL0", { AArch64_SYSREG_SPMEVTYPER14_EL0 }, "SPMEVTYPER14_EL0", { AArch64_SYSREG_SPMEVTYPER14_EL0 }, 0x9F1E, true, true,  {0}  }, // 879
+  { "SPMEVTYPER15_EL0", { AArch64_SYSREG_SPMEVTYPER15_EL0 }, "SPMEVTYPER15_EL0", { AArch64_SYSREG_SPMEVTYPER15_EL0 }, 0x9F1F, true, true,  {0}  }, // 880
+  { "SPMEVTYPER1_EL0", { AArch64_SYSREG_SPMEVTYPER1_EL0 }, "SPMEVTYPER1_EL0", { AArch64_SYSREG_SPMEVTYPER1_EL0 }, 0x9F11, true, true,  {0}  }, // 881
+  { "SPMEVTYPER2_EL0", { AArch64_SYSREG_SPMEVTYPER2_EL0 }, "SPMEVTYPER2_EL0", { AArch64_SYSREG_SPMEVTYPER2_EL0 }, 0x9F12, true, true,  {0}  }, // 882
+  { "SPMEVTYPER3_EL0", { AArch64_SYSREG_SPMEVTYPER3_EL0 }, "SPMEVTYPER3_EL0", { AArch64_SYSREG_SPMEVTYPER3_EL0 }, 0x9F13, true, true,  {0}  }, // 883
+  { "SPMEVTYPER4_EL0", { AArch64_SYSREG_SPMEVTYPER4_EL0 }, "SPMEVTYPER4_EL0", { AArch64_SYSREG_SPMEVTYPER4_EL0 }, 0x9F14, true, true,  {0}  }, // 884
+  { "SPMEVTYPER5_EL0", { AArch64_SYSREG_SPMEVTYPER5_EL0 }, "SPMEVTYPER5_EL0", { AArch64_SYSREG_SPMEVTYPER5_EL0 }, 0x9F15, true, true,  {0}  }, // 885
+  { "SPMEVTYPER6_EL0", { AArch64_SYSREG_SPMEVTYPER6_EL0 }, "SPMEVTYPER6_EL0", { AArch64_SYSREG_SPMEVTYPER6_EL0 }, 0x9F16, true, true,  {0}  }, // 886
+  { "SPMEVTYPER7_EL0", { AArch64_SYSREG_SPMEVTYPER7_EL0 }, "SPMEVTYPER7_EL0", { AArch64_SYSREG_SPMEVTYPER7_EL0 }, 0x9F17, true, true,  {0}  }, // 887
+  { "SPMEVTYPER8_EL0", { AArch64_SYSREG_SPMEVTYPER8_EL0 }, "SPMEVTYPER8_EL0", { AArch64_SYSREG_SPMEVTYPER8_EL0 }, 0x9F18, true, true,  {0}  }, // 888
+  { "SPMEVTYPER9_EL0", { AArch64_SYSREG_SPMEVTYPER9_EL0 }, "SPMEVTYPER9_EL0", { AArch64_SYSREG_SPMEVTYPER9_EL0 }, 0x9F19, true, true,  {0}  }, // 889
+  { "SPMIIDR_EL1", { AArch64_SYSREG_SPMIIDR_EL1 }, "SPMIIDR_EL1", { AArch64_SYSREG_SPMIIDR_EL1 }, 0x84EC, true, false,  {0}  }, // 890
+  { "SPMINTENCLR_EL1", { AArch64_SYSREG_SPMINTENCLR_EL1 }, "SPMINTENCLR_EL1", { AArch64_SYSREG_SPMINTENCLR_EL1 }, 0x84F2, true, true,  {0}  }, // 891
+  { "SPMINTENSET_EL1", { AArch64_SYSREG_SPMINTENSET_EL1 }, "SPMINTENSET_EL1", { AArch64_SYSREG_SPMINTENSET_EL1 }, 0x84F1, true, true,  {0}  }, // 892
+  { "SPMOVSCLR_EL0", { AArch64_SYSREG_SPMOVSCLR_EL0 }, "SPMOVSCLR_EL0", { AArch64_SYSREG_SPMOVSCLR_EL0 }, 0x9CE3, true, true,  {0}  }, // 893
+  { "SPMOVSSET_EL0", { AArch64_SYSREG_SPMOVSSET_EL0 }, "SPMOVSSET_EL0", { AArch64_SYSREG_SPMOVSSET_EL0 }, 0x9CF3, true, true,  {0}  }, // 894
+  { "SPMROOTCR_EL3", { AArch64_SYSREG_SPMROOTCR_EL3 }, "SPMROOTCR_EL3", { AArch64_SYSREG_SPMROOTCR_EL3 }, 0xB4F7, true, true,  {0}  }, // 895
+  { "SPMSCR_EL1", { AArch64_SYSREG_SPMSCR_EL1 }, "SPMSCR_EL1", { AArch64_SYSREG_SPMSCR_EL1 }, 0xBCF7, true, true,  {0}  }, // 896
+  { "SPMSELR_EL0", { AArch64_SYSREG_SPMSELR_EL0 }, "SPMSELR_EL0", { AArch64_SYSREG_SPMSELR_EL0 }, 0x9CE5, true, true,  {0}  }, // 897
+  { "SPSel", { AArch64_SYSREG_SPSEL }, "SPSel", { AArch64_SYSREG_SPSEL }, 0xC210, true, true,  {0}  }, // 898
+  { "SPSR_abt", { AArch64_SYSREG_SPSR_ABT }, "SPSR_abt", { AArch64_SYSREG_SPSR_ABT }, 0xE219, true, true,  {0}  }, // 899
+  { "SPSR_EL1", { AArch64_SYSREG_SPSR_EL1 }, "SPSR_EL1", { AArch64_SYSREG_SPSR_EL1 }, 0xC200, true, true,  {0}  }, // 900
+  { "SPSR_EL12", { AArch64_SYSREG_SPSR_EL12 }, "SPSR_EL12", { AArch64_SYSREG_SPSR_EL12 }, 0xEA00, true, true,  {AArch64_FeatureVH}  }, // 901
+  { "SPSR_EL2", { AArch64_SYSREG_SPSR_EL2 }, "SPSR_EL2", { AArch64_SYSREG_SPSR_EL2 }, 0xE200, true, true,  {0}  }, // 902
+  { "SPSR_EL3", { AArch64_SYSREG_SPSR_EL3 }, "SPSR_EL3", { AArch64_SYSREG_SPSR_EL3 }, 0xF200, true, true,  {0}  }, // 903
+  { "SPSR_fiq", { AArch64_SYSREG_SPSR_FIQ }, "SPSR_fiq", { AArch64_SYSREG_SPSR_FIQ }, 0xE21B, true, true,  {0}  }, // 904
+  { "SPSR_irq", { AArch64_SYSREG_SPSR_IRQ }, "SPSR_irq", { AArch64_SYSREG_SPSR_IRQ }, 0xE218, true, true,  {0}  }, // 905
+  { "SPSR_und", { AArch64_SYSREG_SPSR_UND }, "SPSR_und", { AArch64_SYSREG_SPSR_UND }, 0xE21A, true, true,  {0}  }, // 906
+  { "SP_EL0", { AArch64_SYSREG_SP_EL0 }, "SP_EL0", { AArch64_SYSREG_SP_EL0 }, 0xC208, true, true,  {0}  }, // 907
+  { "SP_EL1", { AArch64_SYSREG_SP_EL1 }, "SP_EL1", { AArch64_SYSREG_SP_EL1 }, 0xE208, true, true,  {0}  }, // 908
+  { "SP_EL2", { AArch64_SYSREG_SP_EL2 }, "SP_EL2", { AArch64_SYSREG_SP_EL2 }, 0xF208, true, true,  {0}  }, // 909
+  { "SSBS", { AArch64_SYSREG_SSBS }, "SSBS", { AArch64_SYSREG_SSBS }, 0xDA16, true, true,  {AArch64_FeatureSSBS}  }, // 910
+  { "SVCR", { AArch64_SYSREG_SVCR }, "SVCR", { AArch64_SYSREG_SVCR }, 0xDA12, true, true,  {AArch64_FeatureSME}  }, // 911
+  { "TCO", { AArch64_SYSREG_TCO }, "TCO", { AArch64_SYSREG_TCO }, 0xDA17, true, true,  {AArch64_FeatureMTE}  }, // 912
+  { "TCR2_EL1", { AArch64_SYSREG_TCR2_EL1 }, "TCR2_EL1", { AArch64_SYSREG_TCR2_EL1 }, 0xC103, true, true,  {0}  }, // 913
+  { "TCR2_EL12", { AArch64_SYSREG_TCR2_EL12 }, "TCR2_EL12", { AArch64_SYSREG_TCR2_EL12 }, 0xE903, true, true,  {0}  }, // 914
+  { "TCR2_EL2", { AArch64_SYSREG_TCR2_EL2 }, "TCR2_EL2", { AArch64_SYSREG_TCR2_EL2 }, 0xE103, true, true,  {0}  }, // 915
+  { "TCR_EL1", { AArch64_SYSREG_TCR_EL1 }, "TCR_EL1", { AArch64_SYSREG_TCR_EL1 }, 0xC102, true, true,  {0}  }, // 916
+  { "TCR_EL12", { AArch64_SYSREG_TCR_EL12 }, "TCR_EL12", { AArch64_SYSREG_TCR_EL12 }, 0xE902, true, true,  {AArch64_FeatureVH}  }, // 917
+  { "TCR_EL2", { AArch64_SYSREG_TCR_EL2 }, "TCR_EL2", { AArch64_SYSREG_TCR_EL2 }, 0xE102, true, true,  {0}  }, // 918
+  { "TCR_EL3", { AArch64_SYSREG_TCR_EL3 }, "TCR_EL3", { AArch64_SYSREG_TCR_EL3 }, 0xF102, true, true,  {0}  }, // 919
+  { "TEECR32_EL1", { AArch64_SYSREG_TEECR32_EL1 }, "TEECR32_EL1", { AArch64_SYSREG_TEECR32_EL1 }, 0x9000, true, true,  {0}  }, // 920
+  { "TEEHBR32_EL1", { AArch64_SYSREG_TEEHBR32_EL1 }, "TEEHBR32_EL1", { AArch64_SYSREG_TEEHBR32_EL1 }, 0x9080, true, true,  {0}  }, // 921
+  { "TFSRE0_EL1", { AArch64_SYSREG_TFSRE0_EL1 }, "TFSRE0_EL1", { AArch64_SYSREG_TFSRE0_EL1 }, 0xC2B1, true, true,  {AArch64_FeatureMTE}  }, // 922
+  { "TFSR_EL1", { AArch64_SYSREG_TFSR_EL1 }, "TFSR_EL1", { AArch64_SYSREG_TFSR_EL1 }, 0xC2B0, true, true,  {AArch64_FeatureMTE}  }, // 923
+  { "TFSR_EL12", { AArch64_SYSREG_TFSR_EL12 }, "TFSR_EL12", { AArch64_SYSREG_TFSR_EL12 }, 0xEAB0, true, true,  {AArch64_FeatureMTE}  }, // 924
+  { "TFSR_EL2", { AArch64_SYSREG_TFSR_EL2 }, "TFSR_EL2", { AArch64_SYSREG_TFSR_EL2 }, 0xE2B0, true, true,  {AArch64_FeatureMTE}  }, // 925
+  { "TFSR_EL3", { AArch64_SYSREG_TFSR_EL3 }, "TFSR_EL3", { AArch64_SYSREG_TFSR_EL3 }, 0xF2B0, true, true,  {AArch64_FeatureMTE}  }, // 926
+  { "TPIDR2_EL0", { AArch64_SYSREG_TPIDR2_EL0 }, "TPIDR2_EL0", { AArch64_SYSREG_TPIDR2_EL0 }, 0xDE85, true, true,  {AArch64_FeatureSME}  }, // 927
+  { "TPIDRRO_EL0", { AArch64_SYSREG_TPIDRRO_EL0 }, "TPIDRRO_EL0", { AArch64_SYSREG_TPIDRRO_EL0 }, 0xDE83, true, true,  {0}  }, // 928
+  { "TPIDR_EL0", { AArch64_SYSREG_TPIDR_EL0 }, "TPIDR_EL0", { AArch64_SYSREG_TPIDR_EL0 }, 0xDE82, true, true,  {0}  }, // 929
+  { "TPIDR_EL1", { AArch64_SYSREG_TPIDR_EL1 }, "TPIDR_EL1", { AArch64_SYSREG_TPIDR_EL1 }, 0xC684, true, true,  {0}  }, // 930
+  { "TPIDR_EL2", { AArch64_SYSREG_TPIDR_EL2 }, "TPIDR_EL2", { AArch64_SYSREG_TPIDR_EL2 }, 0xE682, true, true,  {0}  }, // 931
+  { "TPIDR_EL3", { AArch64_SYSREG_TPIDR_EL3 }, "TPIDR_EL3", { AArch64_SYSREG_TPIDR_EL3 }, 0xF682, true, true,  {0}  }, // 932
+  { "TRBBASER_EL1", { AArch64_SYSREG_TRBBASER_EL1 }, "TRBBASER_EL1", { AArch64_SYSREG_TRBBASER_EL1 }, 0xC4DA, true, true,  {AArch64_FeatureTRBE}  }, // 933
+  { "TRBIDR_EL1", { AArch64_SYSREG_TRBIDR_EL1 }, "TRBIDR_EL1", { AArch64_SYSREG_TRBIDR_EL1 }, 0xC4DF, true, false,  {AArch64_FeatureTRBE}  }, // 934
+  { "TRBLIMITR_EL1", { AArch64_SYSREG_TRBLIMITR_EL1 }, "TRBLIMITR_EL1", { AArch64_SYSREG_TRBLIMITR_EL1 }, 0xC4D8, true, true,  {AArch64_FeatureTRBE}  }, // 935
+  { "TRBMAR_EL1", { AArch64_SYSREG_TRBMAR_EL1 }, "TRBMAR_EL1", { AArch64_SYSREG_TRBMAR_EL1 }, 0xC4DC, true, true,  {AArch64_FeatureTRBE}  }, // 936
+  { "TRBPTR_EL1", { AArch64_SYSREG_TRBPTR_EL1 }, "TRBPTR_EL1", { AArch64_SYSREG_TRBPTR_EL1 }, 0xC4D9, true, true,  {AArch64_FeatureTRBE}  }, // 937
+  { "TRBSR_EL1", { AArch64_SYSREG_TRBSR_EL1 }, "TRBSR_EL1", { AArch64_SYSREG_TRBSR_EL1 }, 0xC4DB, true, true,  {AArch64_FeatureTRBE}  }, // 938
+  { "TRBTRG_EL1", { AArch64_SYSREG_TRBTRG_EL1 }, "TRBTRG_EL1", { AArch64_SYSREG_TRBTRG_EL1 }, 0xC4DE, true, true,  {AArch64_FeatureTRBE}  }, // 939
+  { "TRCACATR0", { AArch64_SYSREG_TRCACATR0 }, "TRCACATR0", { AArch64_SYSREG_TRCACATR0 }, 0x8902, true, true,  {0}  }, // 940
+  { "TRCACATR1", { AArch64_SYSREG_TRCACATR1 }, "TRCACATR1", { AArch64_SYSREG_TRCACATR1 }, 0x8912, true, true,  {0}  }, // 941
+  { "TRCACATR10", { AArch64_SYSREG_TRCACATR10 }, "TRCACATR10", { AArch64_SYSREG_TRCACATR10 }, 0x8923, true, true,  {0}  }, // 942
+  { "TRCACATR11", { AArch64_SYSREG_TRCACATR11 }, "TRCACATR11", { AArch64_SYSREG_TRCACATR11 }, 0x8933, true, true,  {0}  }, // 943
+  { "TRCACATR12", { AArch64_SYSREG_TRCACATR12 }, "TRCACATR12", { AArch64_SYSREG_TRCACATR12 }, 0x8943, true, true,  {0}  }, // 944
+  { "TRCACATR13", { AArch64_SYSREG_TRCACATR13 }, "TRCACATR13", { AArch64_SYSREG_TRCACATR13 }, 0x8953, true, true,  {0}  }, // 945
+  { "TRCACATR14", { AArch64_SYSREG_TRCACATR14 }, "TRCACATR14", { AArch64_SYSREG_TRCACATR14 }, 0x8963, true, true,  {0}  }, // 946
+  { "TRCACATR15", { AArch64_SYSREG_TRCACATR15 }, "TRCACATR15", { AArch64_SYSREG_TRCACATR15 }, 0x8973, true, true,  {0}  }, // 947
+  { "TRCACATR2", { AArch64_SYSREG_TRCACATR2 }, "TRCACATR2", { AArch64_SYSREG_TRCACATR2 }, 0x8922, true, true,  {0}  }, // 948
+  { "TRCACATR3", { AArch64_SYSREG_TRCACATR3 }, "TRCACATR3", { AArch64_SYSREG_TRCACATR3 }, 0x8932, true, true,  {0}  }, // 949
+  { "TRCACATR4", { AArch64_SYSREG_TRCACATR4 }, "TRCACATR4", { AArch64_SYSREG_TRCACATR4 }, 0x8942, true, true,  {0}  }, // 950
+  { "TRCACATR5", { AArch64_SYSREG_TRCACATR5 }, "TRCACATR5", { AArch64_SYSREG_TRCACATR5 }, 0x8952, true, true,  {0}  }, // 951
+  { "TRCACATR6", { AArch64_SYSREG_TRCACATR6 }, "TRCACATR6", { AArch64_SYSREG_TRCACATR6 }, 0x8962, true, true,  {0}  }, // 952
+  { "TRCACATR7", { AArch64_SYSREG_TRCACATR7 }, "TRCACATR7", { AArch64_SYSREG_TRCACATR7 }, 0x8972, true, true,  {0}  }, // 953
+  { "TRCACATR8", { AArch64_SYSREG_TRCACATR8 }, "TRCACATR8", { AArch64_SYSREG_TRCACATR8 }, 0x8903, true, true,  {0}  }, // 954
+  { "TRCACATR9", { AArch64_SYSREG_TRCACATR9 }, "TRCACATR9", { AArch64_SYSREG_TRCACATR9 }, 0x8913, true, true,  {0}  }, // 955
+  { "TRCACVR0", { AArch64_SYSREG_TRCACVR0 }, "TRCACVR0", { AArch64_SYSREG_TRCACVR0 }, 0x8900, true, true,  {0}  }, // 956
+  { "TRCACVR1", { AArch64_SYSREG_TRCACVR1 }, "TRCACVR1", { AArch64_SYSREG_TRCACVR1 }, 0x8910, true, true,  {0}  }, // 957
+  { "TRCACVR10", { AArch64_SYSREG_TRCACVR10 }, "TRCACVR10", { AArch64_SYSREG_TRCACVR10 }, 0x8921, true, true,  {0}  }, // 958
+  { "TRCACVR11", { AArch64_SYSREG_TRCACVR11 }, "TRCACVR11", { AArch64_SYSREG_TRCACVR11 }, 0x8931, true, true,  {0}  }, // 959
+  { "TRCACVR12", { AArch64_SYSREG_TRCACVR12 }, "TRCACVR12", { AArch64_SYSREG_TRCACVR12 }, 0x8941, true, true,  {0}  }, // 960
+  { "TRCACVR13", { AArch64_SYSREG_TRCACVR13 }, "TRCACVR13", { AArch64_SYSREG_TRCACVR13 }, 0x8951, true, true,  {0}  }, // 961
+  { "TRCACVR14", { AArch64_SYSREG_TRCACVR14 }, "TRCACVR14", { AArch64_SYSREG_TRCACVR14 }, 0x8961, true, true,  {0}  }, // 962
+  { "TRCACVR15", { AArch64_SYSREG_TRCACVR15 }, "TRCACVR15", { AArch64_SYSREG_TRCACVR15 }, 0x8971, true, true,  {0}  }, // 963
+  { "TRCACVR2", { AArch64_SYSREG_TRCACVR2 }, "TRCACVR2", { AArch64_SYSREG_TRCACVR2 }, 0x8920, true, true,  {0}  }, // 964
+  { "TRCACVR3", { AArch64_SYSREG_TRCACVR3 }, "TRCACVR3", { AArch64_SYSREG_TRCACVR3 }, 0x8930, true, true,  {0}  }, // 965
+  { "TRCACVR4", { AArch64_SYSREG_TRCACVR4 }, "TRCACVR4", { AArch64_SYSREG_TRCACVR4 }, 0x8940, true, true,  {0}  }, // 966
+  { "TRCACVR5", { AArch64_SYSREG_TRCACVR5 }, "TRCACVR5", { AArch64_SYSREG_TRCACVR5 }, 0x8950, true, true,  {0}  }, // 967
+  { "TRCACVR6", { AArch64_SYSREG_TRCACVR6 }, "TRCACVR6", { AArch64_SYSREG_TRCACVR6 }, 0x8960, true, true,  {0}  }, // 968
+  { "TRCACVR7", { AArch64_SYSREG_TRCACVR7 }, "TRCACVR7", { AArch64_SYSREG_TRCACVR7 }, 0x8970, true, true,  {0}  }, // 969
+  { "TRCACVR8", { AArch64_SYSREG_TRCACVR8 }, "TRCACVR8", { AArch64_SYSREG_TRCACVR8 }, 0x8901, true, true,  {0}  }, // 970
+  { "TRCACVR9", { AArch64_SYSREG_TRCACVR9 }, "TRCACVR9", { AArch64_SYSREG_TRCACVR9 }, 0x8911, true, true,  {0}  }, // 971
+  { "TRCAUTHSTATUS", { AArch64_SYSREG_TRCAUTHSTATUS }, "TRCAUTHSTATUS", { AArch64_SYSREG_TRCAUTHSTATUS }, 0x8BF6, true, false,  {0}  }, // 972
+  { "TRCAUXCTLR", { AArch64_SYSREG_TRCAUXCTLR }, "TRCAUXCTLR", { AArch64_SYSREG_TRCAUXCTLR }, 0x8830, true, true,  {0}  }, // 973
+  { "TRCBBCTLR", { AArch64_SYSREG_TRCBBCTLR }, "TRCBBCTLR", { AArch64_SYSREG_TRCBBCTLR }, 0x8878, true, true,  {0}  }, // 974
+  { "TRCCCCTLR", { AArch64_SYSREG_TRCCCCTLR }, "TRCCCCTLR", { AArch64_SYSREG_TRCCCCTLR }, 0x8870, true, true,  {0}  }, // 975
+  { "TRCCIDCCTLR0", { AArch64_SYSREG_TRCCIDCCTLR0 }, "TRCCIDCCTLR0", { AArch64_SYSREG_TRCCIDCCTLR0 }, 0x8982, true, true,  {0}  }, // 976
+  { "TRCCIDCCTLR1", { AArch64_SYSREG_TRCCIDCCTLR1 }, "TRCCIDCCTLR1", { AArch64_SYSREG_TRCCIDCCTLR1 }, 0x898A, true, true,  {0}  }, // 977
+  { "TRCCIDCVR0", { AArch64_SYSREG_TRCCIDCVR0 }, "TRCCIDCVR0", { AArch64_SYSREG_TRCCIDCVR0 }, 0x8980, true, true,  {0}  }, // 978
+  { "TRCCIDCVR1", { AArch64_SYSREG_TRCCIDCVR1 }, "TRCCIDCVR1", { AArch64_SYSREG_TRCCIDCVR1 }, 0x8990, true, true,  {0}  }, // 979
+  { "TRCCIDCVR2", { AArch64_SYSREG_TRCCIDCVR2 }, "TRCCIDCVR2", { AArch64_SYSREG_TRCCIDCVR2 }, 0x89A0, true, true,  {0}  }, // 980
+  { "TRCCIDCVR3", { AArch64_SYSREG_TRCCIDCVR3 }, "TRCCIDCVR3", { AArch64_SYSREG_TRCCIDCVR3 }, 0x89B0, true, true,  {0}  }, // 981
+  { "TRCCIDCVR4", { AArch64_SYSREG_TRCCIDCVR4 }, "TRCCIDCVR4", { AArch64_SYSREG_TRCCIDCVR4 }, 0x89C0, true, true,  {0}  }, // 982
+  { "TRCCIDCVR5", { AArch64_SYSREG_TRCCIDCVR5 }, "TRCCIDCVR5", { AArch64_SYSREG_TRCCIDCVR5 }, 0x89D0, true, true,  {0}  }, // 983
+  { "TRCCIDCVR6", { AArch64_SYSREG_TRCCIDCVR6 }, "TRCCIDCVR6", { AArch64_SYSREG_TRCCIDCVR6 }, 0x89E0, true, true,  {0}  }, // 984
+  { "TRCCIDCVR7", { AArch64_SYSREG_TRCCIDCVR7 }, "TRCCIDCVR7", { AArch64_SYSREG_TRCCIDCVR7 }, 0x89F0, true, true,  {0}  }, // 985
+  { "TRCCIDR0", { AArch64_SYSREG_TRCCIDR0 }, "TRCCIDR0", { AArch64_SYSREG_TRCCIDR0 }, 0x8BE7, true, false,  {0}  }, // 986
+  { "TRCCIDR1", { AArch64_SYSREG_TRCCIDR1 }, "TRCCIDR1", { AArch64_SYSREG_TRCCIDR1 }, 0x8BEF, true, false,  {0}  }, // 987
+  { "TRCCIDR2", { AArch64_SYSREG_TRCCIDR2 }, "TRCCIDR2", { AArch64_SYSREG_TRCCIDR2 }, 0x8BF7, true, false,  {0}  }, // 988
+  { "TRCCIDR3", { AArch64_SYSREG_TRCCIDR3 }, "TRCCIDR3", { AArch64_SYSREG_TRCCIDR3 }, 0x8BFF, true, false,  {0}  }, // 989
+  { "TRCCLAIMCLR", { AArch64_SYSREG_TRCCLAIMCLR }, "TRCCLAIMCLR", { AArch64_SYSREG_TRCCLAIMCLR }, 0x8BCE, true, true,  {0}  }, // 990
+  { "TRCCLAIMSET", { AArch64_SYSREG_TRCCLAIMSET }, "TRCCLAIMSET", { AArch64_SYSREG_TRCCLAIMSET }, 0x8BC6, true, true,  {0}  }, // 991
+  { "TRCCNTCTLR0", { AArch64_SYSREG_TRCCNTCTLR0 }, "TRCCNTCTLR0", { AArch64_SYSREG_TRCCNTCTLR0 }, 0x8825, true, true,  {0}  }, // 992
+  { "TRCCNTCTLR1", { AArch64_SYSREG_TRCCNTCTLR1 }, "TRCCNTCTLR1", { AArch64_SYSREG_TRCCNTCTLR1 }, 0x882D, true, true,  {0}  }, // 993
+  { "TRCCNTCTLR2", { AArch64_SYSREG_TRCCNTCTLR2 }, "TRCCNTCTLR2", { AArch64_SYSREG_TRCCNTCTLR2 }, 0x8835, true, true,  {0}  }, // 994
+  { "TRCCNTCTLR3", { AArch64_SYSREG_TRCCNTCTLR3 }, "TRCCNTCTLR3", { AArch64_SYSREG_TRCCNTCTLR3 }, 0x883D, true, true,  {0}  }, // 995
+  { "TRCCNTRLDVR0", { AArch64_SYSREG_TRCCNTRLDVR0 }, "TRCCNTRLDVR0", { AArch64_SYSREG_TRCCNTRLDVR0 }, 0x8805, true, true,  {0}  }, // 996
+  { "TRCCNTRLDVR1", { AArch64_SYSREG_TRCCNTRLDVR1 }, "TRCCNTRLDVR1", { AArch64_SYSREG_TRCCNTRLDVR1 }, 0x880D, true, true,  {0}  }, // 997
+  { "TRCCNTRLDVR2", { AArch64_SYSREG_TRCCNTRLDVR2 }, "TRCCNTRLDVR2", { AArch64_SYSREG_TRCCNTRLDVR2 }, 0x8815, true, true,  {0}  }, // 998
+  { "TRCCNTRLDVR3", { AArch64_SYSREG_TRCCNTRLDVR3 }, "TRCCNTRLDVR3", { AArch64_SYSREG_TRCCNTRLDVR3 }, 0x881D, true, true,  {0}  }, // 999
+  { "TRCCNTVR0", { AArch64_SYSREG_TRCCNTVR0 }, "TRCCNTVR0", { AArch64_SYSREG_TRCCNTVR0 }, 0x8845, true, true,  {0}  }, // 1000
+  { "TRCCNTVR1", { AArch64_SYSREG_TRCCNTVR1 }, "TRCCNTVR1", { AArch64_SYSREG_TRCCNTVR1 }, 0x884D, true, true,  {0}  }, // 1001
+  { "TRCCNTVR2", { AArch64_SYSREG_TRCCNTVR2 }, "TRCCNTVR2", { AArch64_SYSREG_TRCCNTVR2 }, 0x8855, true, true,  {0}  }, // 1002
+  { "TRCCNTVR3", { AArch64_SYSREG_TRCCNTVR3 }, "TRCCNTVR3", { AArch64_SYSREG_TRCCNTVR3 }, 0x885D, true, true,  {0}  }, // 1003
+  { "TRCCONFIGR", { AArch64_SYSREG_TRCCONFIGR }, "TRCCONFIGR", { AArch64_SYSREG_TRCCONFIGR }, 0x8820, true, true,  {0}  }, // 1004
+  { "TRCDEVAFF0", { AArch64_SYSREG_TRCDEVAFF0 }, "TRCDEVAFF0", { AArch64_SYSREG_TRCDEVAFF0 }, 0x8BD6, true, false,  {0}  }, // 1005
+  { "TRCDEVAFF1", { AArch64_SYSREG_TRCDEVAFF1 }, "TRCDEVAFF1", { AArch64_SYSREG_TRCDEVAFF1 }, 0x8BDE, true, false,  {0}  }, // 1006
+  { "TRCDEVARCH", { AArch64_SYSREG_TRCDEVARCH }, "TRCDEVARCH", { AArch64_SYSREG_TRCDEVARCH }, 0x8BFE, true, false,  {0}  }, // 1007
+  { "TRCDEVID", { AArch64_SYSREG_TRCDEVID }, "TRCDEVID", { AArch64_SYSREG_TRCDEVID }, 0x8B97, true, false,  {0}  }, // 1008
+  { "TRCDEVTYPE", { AArch64_SYSREG_TRCDEVTYPE }, "TRCDEVTYPE", { AArch64_SYSREG_TRCDEVTYPE }, 0x8B9F, true, false,  {0}  }, // 1009
+  { "TRCDVCMR0", { AArch64_SYSREG_TRCDVCMR0 }, "TRCDVCMR0", { AArch64_SYSREG_TRCDVCMR0 }, 0x8906, true, true,  {0}  }, // 1010
+  { "TRCDVCMR1", { AArch64_SYSREG_TRCDVCMR1 }, "TRCDVCMR1", { AArch64_SYSREG_TRCDVCMR1 }, 0x8926, true, true,  {0}  }, // 1011
+  { "TRCDVCMR2", { AArch64_SYSREG_TRCDVCMR2 }, "TRCDVCMR2", { AArch64_SYSREG_TRCDVCMR2 }, 0x8946, true, true,  {0}  }, // 1012
+  { "TRCDVCMR3", { AArch64_SYSREG_TRCDVCMR3 }, "TRCDVCMR3", { AArch64_SYSREG_TRCDVCMR3 }, 0x8966, true, true,  {0}  }, // 1013
+  { "TRCDVCMR4", { AArch64_SYSREG_TRCDVCMR4 }, "TRCDVCMR4", { AArch64_SYSREG_TRCDVCMR4 }, 0x8907, true, true,  {0}  }, // 1014
+  { "TRCDVCMR5", { AArch64_SYSREG_TRCDVCMR5 }, "TRCDVCMR5", { AArch64_SYSREG_TRCDVCMR5 }, 0x8927, true, true,  {0}  }, // 1015
+  { "TRCDVCMR6", { AArch64_SYSREG_TRCDVCMR6 }, "TRCDVCMR6", { AArch64_SYSREG_TRCDVCMR6 }, 0x8947, true, true,  {0}  }, // 1016
+  { "TRCDVCMR7", { AArch64_SYSREG_TRCDVCMR7 }, "TRCDVCMR7", { AArch64_SYSREG_TRCDVCMR7 }, 0x8967, true, true,  {0}  }, // 1017
+  { "TRCDVCVR0", { AArch64_SYSREG_TRCDVCVR0 }, "TRCDVCVR0", { AArch64_SYSREG_TRCDVCVR0 }, 0x8904, true, true,  {0}  }, // 1018
+  { "TRCDVCVR1", { AArch64_SYSREG_TRCDVCVR1 }, "TRCDVCVR1", { AArch64_SYSREG_TRCDVCVR1 }, 0x8924, true, true,  {0}  }, // 1019
+  { "TRCDVCVR2", { AArch64_SYSREG_TRCDVCVR2 }, "TRCDVCVR2", { AArch64_SYSREG_TRCDVCVR2 }, 0x8944, true, true,  {0}  }, // 1020
+  { "TRCDVCVR3", { AArch64_SYSREG_TRCDVCVR3 }, "TRCDVCVR3", { AArch64_SYSREG_TRCDVCVR3 }, 0x8964, true, true,  {0}  }, // 1021
+  { "TRCDVCVR4", { AArch64_SYSREG_TRCDVCVR4 }, "TRCDVCVR4", { AArch64_SYSREG_TRCDVCVR4 }, 0x8905, true, true,  {0}  }, // 1022
+  { "TRCDVCVR5", { AArch64_SYSREG_TRCDVCVR5 }, "TRCDVCVR5", { AArch64_SYSREG_TRCDVCVR5 }, 0x8925, true, true,  {0}  }, // 1023
+  { "TRCDVCVR6", { AArch64_SYSREG_TRCDVCVR6 }, "TRCDVCVR6", { AArch64_SYSREG_TRCDVCVR6 }, 0x8945, true, true,  {0}  }, // 1024
+  { "TRCDVCVR7", { AArch64_SYSREG_TRCDVCVR7 }, "TRCDVCVR7", { AArch64_SYSREG_TRCDVCVR7 }, 0x8965, true, true,  {0}  }, // 1025
+  { "TRCEVENTCTL0R", { AArch64_SYSREG_TRCEVENTCTL0R }, "TRCEVENTCTL0R", { AArch64_SYSREG_TRCEVENTCTL0R }, 0x8840, true, true,  {0}  }, // 1026
+  { "TRCEVENTCTL1R", { AArch64_SYSREG_TRCEVENTCTL1R }, "TRCEVENTCTL1R", { AArch64_SYSREG_TRCEVENTCTL1R }, 0x8848, true, true,  {0}  }, // 1027
+  { "TRCEXTINSELR", { AArch64_SYSREG_TRCEXTINSELR }, "TRCEXTINSELR", { AArch64_SYSREG_TRCEXTINSELR }, 0x8844, true, true,  {0}  }, // 1028
+  { "TRCEXTINSELR0", { AArch64_SYSREG_TRCEXTINSELR0 }, "TRCEXTINSELR0", { AArch64_SYSREG_TRCEXTINSELR0 }, 0x8844, true, true,  {AArch64_FeatureETE}  }, // 1029
+  { "TRCEXTINSELR1", { AArch64_SYSREG_TRCEXTINSELR1 }, "TRCEXTINSELR1", { AArch64_SYSREG_TRCEXTINSELR1 }, 0x884C, true, true,  {AArch64_FeatureETE}  }, // 1030
+  { "TRCEXTINSELR2", { AArch64_SYSREG_TRCEXTINSELR2 }, "TRCEXTINSELR2", { AArch64_SYSREG_TRCEXTINSELR2 }, 0x8854, true, true,  {AArch64_FeatureETE}  }, // 1031
+  { "TRCEXTINSELR3", { AArch64_SYSREG_TRCEXTINSELR3 }, "TRCEXTINSELR3", { AArch64_SYSREG_TRCEXTINSELR3 }, 0x885C, true, true,  {AArch64_FeatureETE}  }, // 1032
+  { "TRCIDR0", { AArch64_SYSREG_TRCIDR0 }, "TRCIDR0", { AArch64_SYSREG_TRCIDR0 }, 0x8847, true, false,  {0}  }, // 1033
+  { "TRCIDR1", { AArch64_SYSREG_TRCIDR1 }, "TRCIDR1", { AArch64_SYSREG_TRCIDR1 }, 0x884F, true, false,  {0}  }, // 1034
+  { "TRCIDR10", { AArch64_SYSREG_TRCIDR10 }, "TRCIDR10", { AArch64_SYSREG_TRCIDR10 }, 0x8816, true, false,  {0}  }, // 1035
+  { "TRCIDR11", { AArch64_SYSREG_TRCIDR11 }, "TRCIDR11", { AArch64_SYSREG_TRCIDR11 }, 0x881E, true, false,  {0}  }, // 1036
+  { "TRCIDR12", { AArch64_SYSREG_TRCIDR12 }, "TRCIDR12", { AArch64_SYSREG_TRCIDR12 }, 0x8826, true, false,  {0}  }, // 1037
+  { "TRCIDR13", { AArch64_SYSREG_TRCIDR13 }, "TRCIDR13", { AArch64_SYSREG_TRCIDR13 }, 0x882E, true, false,  {0}  }, // 1038
+  { "TRCIDR2", { AArch64_SYSREG_TRCIDR2 }, "TRCIDR2", { AArch64_SYSREG_TRCIDR2 }, 0x8857, true, false,  {0}  }, // 1039
+  { "TRCIDR3", { AArch64_SYSREG_TRCIDR3 }, "TRCIDR3", { AArch64_SYSREG_TRCIDR3 }, 0x885F, true, false,  {0}  }, // 1040
+  { "TRCIDR4", { AArch64_SYSREG_TRCIDR4 }, "TRCIDR4", { AArch64_SYSREG_TRCIDR4 }, 0x8867, true, false,  {0}  }, // 1041
+  { "TRCIDR5", { AArch64_SYSREG_TRCIDR5 }, "TRCIDR5", { AArch64_SYSREG_TRCIDR5 }, 0x886F, true, false,  {0}  }, // 1042
+  { "TRCIDR6", { AArch64_SYSREG_TRCIDR6 }, "TRCIDR6", { AArch64_SYSREG_TRCIDR6 }, 0x8877, true, false,  {0}  }, // 1043
+  { "TRCIDR7", { AArch64_SYSREG_TRCIDR7 }, "TRCIDR7", { AArch64_SYSREG_TRCIDR7 }, 0x887F, true, false,  {0}  }, // 1044
+  { "TRCIDR8", { AArch64_SYSREG_TRCIDR8 }, "TRCIDR8", { AArch64_SYSREG_TRCIDR8 }, 0x8806, true, false,  {0}  }, // 1045
+  { "TRCIDR9", { AArch64_SYSREG_TRCIDR9 }, "TRCIDR9", { AArch64_SYSREG_TRCIDR9 }, 0x880E, true, false,  {0}  }, // 1046
+  { "TRCIMSPEC0", { AArch64_SYSREG_TRCIMSPEC0 }, "TRCIMSPEC0", { AArch64_SYSREG_TRCIMSPEC0 }, 0x8807, true, true,  {0}  }, // 1047
+  { "TRCIMSPEC1", { AArch64_SYSREG_TRCIMSPEC1 }, "TRCIMSPEC1", { AArch64_SYSREG_TRCIMSPEC1 }, 0x880F, true, true,  {0}  }, // 1048
+  { "TRCIMSPEC2", { AArch64_SYSREG_TRCIMSPEC2 }, "TRCIMSPEC2", { AArch64_SYSREG_TRCIMSPEC2 }, 0x8817, true, true,  {0}  }, // 1049
+  { "TRCIMSPEC3", { AArch64_SYSREG_TRCIMSPEC3 }, "TRCIMSPEC3", { AArch64_SYSREG_TRCIMSPEC3 }, 0x881F, true, true,  {0}  }, // 1050
+  { "TRCIMSPEC4", { AArch64_SYSREG_TRCIMSPEC4 }, "TRCIMSPEC4", { AArch64_SYSREG_TRCIMSPEC4 }, 0x8827, true, true,  {0}  }, // 1051
+  { "TRCIMSPEC5", { AArch64_SYSREG_TRCIMSPEC5 }, "TRCIMSPEC5", { AArch64_SYSREG_TRCIMSPEC5 }, 0x882F, true, true,  {0}  }, // 1052
+  { "TRCIMSPEC6", { AArch64_SYSREG_TRCIMSPEC6 }, "TRCIMSPEC6", { AArch64_SYSREG_TRCIMSPEC6 }, 0x8837, true, true,  {0}  }, // 1053
+  { "TRCIMSPEC7", { AArch64_SYSREG_TRCIMSPEC7 }, "TRCIMSPEC7", { AArch64_SYSREG_TRCIMSPEC7 }, 0x883F, true, true,  {0}  }, // 1054
+  { "TRCITCTRL", { AArch64_SYSREG_TRCITCTRL }, "TRCITCTRL", { AArch64_SYSREG_TRCITCTRL }, 0x8B84, true, true,  {0}  }, // 1055
+  { "TRCITECR_EL1", { AArch64_SYSREG_TRCITECR_EL1 }, "TRCITECR_EL1", { AArch64_SYSREG_TRCITECR_EL1 }, 0xC093, true, true,  {AArch64_FeatureITE}  }, // 1056
+  { "TRCITECR_EL12", { AArch64_SYSREG_TRCITECR_EL12 }, "TRCITECR_EL12", { AArch64_SYSREG_TRCITECR_EL12 }, 0xE893, true, true,  {AArch64_FeatureITE}  }, // 1057
+  { "TRCITECR_EL2", { AArch64_SYSREG_TRCITECR_EL2 }, "TRCITECR_EL2", { AArch64_SYSREG_TRCITECR_EL2 }, 0xE093, true, true,  {AArch64_FeatureITE}  }, // 1058
+  { "TRCITEEDCR", { AArch64_SYSREG_TRCITEEDCR }, "TRCITEEDCR", { AArch64_SYSREG_TRCITEEDCR }, 0x8811, true, true,  {AArch64_FeatureITE}  }, // 1059
+  { "TRCLAR", { AArch64_SYSREG_TRCLAR }, "TRCLAR", { AArch64_SYSREG_TRCLAR }, 0x8BE6, false, true,  {0}  }, // 1060
+  { "TRCLSR", { AArch64_SYSREG_TRCLSR }, "TRCLSR", { AArch64_SYSREG_TRCLSR }, 0x8BEE, true, false,  {0}  }, // 1061
+  { "TRCOSLAR", { AArch64_SYSREG_TRCOSLAR }, "TRCOSLAR", { AArch64_SYSREG_TRCOSLAR }, 0x8884, false, true,  {0}  }, // 1062
+  { "TRCOSLSR", { AArch64_SYSREG_TRCOSLSR }, "TRCOSLSR", { AArch64_SYSREG_TRCOSLSR }, 0x888C, true, false,  {0}  }, // 1063
+  { "TRCPDCR", { AArch64_SYSREG_TRCPDCR }, "TRCPDCR", { AArch64_SYSREG_TRCPDCR }, 0x88A4, true, true,  {0}  }, // 1064
+  { "TRCPDSR", { AArch64_SYSREG_TRCPDSR }, "TRCPDSR", { AArch64_SYSREG_TRCPDSR }, 0x88AC, true, false,  {0}  }, // 1065
+  { "TRCPIDR0", { AArch64_SYSREG_TRCPIDR0 }, "TRCPIDR0", { AArch64_SYSREG_TRCPIDR0 }, 0x8BC7, true, false,  {0}  }, // 1066
+  { "TRCPIDR1", { AArch64_SYSREG_TRCPIDR1 }, "TRCPIDR1", { AArch64_SYSREG_TRCPIDR1 }, 0x8BCF, true, false,  {0}  }, // 1067
+  { "TRCPIDR2", { AArch64_SYSREG_TRCPIDR2 }, "TRCPIDR2", { AArch64_SYSREG_TRCPIDR2 }, 0x8BD7, true, false,  {0}  }, // 1068
+  { "TRCPIDR3", { AArch64_SYSREG_TRCPIDR3 }, "TRCPIDR3", { AArch64_SYSREG_TRCPIDR3 }, 0x8BDF, true, false,  {0}  }, // 1069
+  { "TRCPIDR4", { AArch64_SYSREG_TRCPIDR4 }, "TRCPIDR4", { AArch64_SYSREG_TRCPIDR4 }, 0x8BA7, true, false,  {0}  }, // 1070
+  { "TRCPIDR5", { AArch64_SYSREG_TRCPIDR5 }, "TRCPIDR5", { AArch64_SYSREG_TRCPIDR5 }, 0x8BAF, true, false,  {0}  }, // 1071
+  { "TRCPIDR6", { AArch64_SYSREG_TRCPIDR6 }, "TRCPIDR6", { AArch64_SYSREG_TRCPIDR6 }, 0x8BB7, true, false,  {0}  }, // 1072
+  { "TRCPIDR7", { AArch64_SYSREG_TRCPIDR7 }, "TRCPIDR7", { AArch64_SYSREG_TRCPIDR7 }, 0x8BBF, true, false,  {0}  }, // 1073
+  { "TRCPRGCTLR", { AArch64_SYSREG_TRCPRGCTLR }, "TRCPRGCTLR", { AArch64_SYSREG_TRCPRGCTLR }, 0x8808, true, true,  {0}  }, // 1074
+  { "TRCPROCSELR", { AArch64_SYSREG_TRCPROCSELR }, "TRCPROCSELR", { AArch64_SYSREG_TRCPROCSELR }, 0x8810, true, true,  {0}  }, // 1075
+  { "TRCQCTLR", { AArch64_SYSREG_TRCQCTLR }, "TRCQCTLR", { AArch64_SYSREG_TRCQCTLR }, 0x8809, true, true,  {0}  }, // 1076
+  { "TRCRSCTLR10", { AArch64_SYSREG_TRCRSCTLR10 }, "TRCRSCTLR10", { AArch64_SYSREG_TRCRSCTLR10 }, 0x88D0, true, true,  {0}  }, // 1077
+  { "TRCRSCTLR11", { AArch64_SYSREG_TRCRSCTLR11 }, "TRCRSCTLR11", { AArch64_SYSREG_TRCRSCTLR11 }, 0x88D8, true, true,  {0}  }, // 1078
+  { "TRCRSCTLR12", { AArch64_SYSREG_TRCRSCTLR12 }, "TRCRSCTLR12", { AArch64_SYSREG_TRCRSCTLR12 }, 0x88E0, true, true,  {0}  }, // 1079
+  { "TRCRSCTLR13", { AArch64_SYSREG_TRCRSCTLR13 }, "TRCRSCTLR13", { AArch64_SYSREG_TRCRSCTLR13 }, 0x88E8, true, true,  {0}  }, // 1080
+  { "TRCRSCTLR14", { AArch64_SYSREG_TRCRSCTLR14 }, "TRCRSCTLR14", { AArch64_SYSREG_TRCRSCTLR14 }, 0x88F0, true, true,  {0}  }, // 1081
+  { "TRCRSCTLR15", { AArch64_SYSREG_TRCRSCTLR15 }, "TRCRSCTLR15", { AArch64_SYSREG_TRCRSCTLR15 }, 0x88F8, true, true,  {0}  }, // 1082
+  { "TRCRSCTLR16", { AArch64_SYSREG_TRCRSCTLR16 }, "TRCRSCTLR16", { AArch64_SYSREG_TRCRSCTLR16 }, 0x8881, true, true,  {0}  }, // 1083
+  { "TRCRSCTLR17", { AArch64_SYSREG_TRCRSCTLR17 }, "TRCRSCTLR17", { AArch64_SYSREG_TRCRSCTLR17 }, 0x8889, true, true,  {0}  }, // 1084
+  { "TRCRSCTLR18", { AArch64_SYSREG_TRCRSCTLR18 }, "TRCRSCTLR18", { AArch64_SYSREG_TRCRSCTLR18 }, 0x8891, true, true,  {0}  }, // 1085
+  { "TRCRSCTLR19", { AArch64_SYSREG_TRCRSCTLR19 }, "TRCRSCTLR19", { AArch64_SYSREG_TRCRSCTLR19 }, 0x8899, true, true,  {0}  }, // 1086
+  { "TRCRSCTLR2", { AArch64_SYSREG_TRCRSCTLR2 }, "TRCRSCTLR2", { AArch64_SYSREG_TRCRSCTLR2 }, 0x8890, true, true,  {0}  }, // 1087
+  { "TRCRSCTLR20", { AArch64_SYSREG_TRCRSCTLR20 }, "TRCRSCTLR20", { AArch64_SYSREG_TRCRSCTLR20 }, 0x88A1, true, true,  {0}  }, // 1088
+  { "TRCRSCTLR21", { AArch64_SYSREG_TRCRSCTLR21 }, "TRCRSCTLR21", { AArch64_SYSREG_TRCRSCTLR21 }, 0x88A9, true, true,  {0}  }, // 1089
+  { "TRCRSCTLR22", { AArch64_SYSREG_TRCRSCTLR22 }, "TRCRSCTLR22", { AArch64_SYSREG_TRCRSCTLR22 }, 0x88B1, true, true,  {0}  }, // 1090
+  { "TRCRSCTLR23", { AArch64_SYSREG_TRCRSCTLR23 }, "TRCRSCTLR23", { AArch64_SYSREG_TRCRSCTLR23 }, 0x88B9, true, true,  {0}  }, // 1091
+  { "TRCRSCTLR24", { AArch64_SYSREG_TRCRSCTLR24 }, "TRCRSCTLR24", { AArch64_SYSREG_TRCRSCTLR24 }, 0x88C1, true, true,  {0}  }, // 1092
+  { "TRCRSCTLR25", { AArch64_SYSREG_TRCRSCTLR25 }, "TRCRSCTLR25", { AArch64_SYSREG_TRCRSCTLR25 }, 0x88C9, true, true,  {0}  }, // 1093
+  { "TRCRSCTLR26", { AArch64_SYSREG_TRCRSCTLR26 }, "TRCRSCTLR26", { AArch64_SYSREG_TRCRSCTLR26 }, 0x88D1, true, true,  {0}  }, // 1094
+  { "TRCRSCTLR27", { AArch64_SYSREG_TRCRSCTLR27 }, "TRCRSCTLR27", { AArch64_SYSREG_TRCRSCTLR27 }, 0x88D9, true, true,  {0}  }, // 1095
+  { "TRCRSCTLR28", { AArch64_SYSREG_TRCRSCTLR28 }, "TRCRSCTLR28", { AArch64_SYSREG_TRCRSCTLR28 }, 0x88E1, true, true,  {0}  }, // 1096
+  { "TRCRSCTLR29", { AArch64_SYSREG_TRCRSCTLR29 }, "TRCRSCTLR29", { AArch64_SYSREG_TRCRSCTLR29 }, 0x88E9, true, true,  {0}  }, // 1097
+  { "TRCRSCTLR3", { AArch64_SYSREG_TRCRSCTLR3 }, "TRCRSCTLR3", { AArch64_SYSREG_TRCRSCTLR3 }, 0x8898, true, true,  {0}  }, // 1098
+  { "TRCRSCTLR30", { AArch64_SYSREG_TRCRSCTLR30 }, "TRCRSCTLR30", { AArch64_SYSREG_TRCRSCTLR30 }, 0x88F1, true, true,  {0}  }, // 1099
+  { "TRCRSCTLR31", { AArch64_SYSREG_TRCRSCTLR31 }, "TRCRSCTLR31", { AArch64_SYSREG_TRCRSCTLR31 }, 0x88F9, true, true,  {0}  }, // 1100
+  { "TRCRSCTLR4", { AArch64_SYSREG_TRCRSCTLR4 }, "TRCRSCTLR4", { AArch64_SYSREG_TRCRSCTLR4 }, 0x88A0, true, true,  {0}  }, // 1101
+  { "TRCRSCTLR5", { AArch64_SYSREG_TRCRSCTLR5 }, "TRCRSCTLR5", { AArch64_SYSREG_TRCRSCTLR5 }, 0x88A8, true, true,  {0}  }, // 1102
+  { "TRCRSCTLR6", { AArch64_SYSREG_TRCRSCTLR6 }, "TRCRSCTLR6", { AArch64_SYSREG_TRCRSCTLR6 }, 0x88B0, true, true,  {0}  }, // 1103
+  { "TRCRSCTLR7", { AArch64_SYSREG_TRCRSCTLR7 }, "TRCRSCTLR7", { AArch64_SYSREG_TRCRSCTLR7 }, 0x88B8, true, true,  {0}  }, // 1104
+  { "TRCRSCTLR8", { AArch64_SYSREG_TRCRSCTLR8 }, "TRCRSCTLR8", { AArch64_SYSREG_TRCRSCTLR8 }, 0x88C0, true, true,  {0}  }, // 1105
+  { "TRCRSCTLR9", { AArch64_SYSREG_TRCRSCTLR9 }, "TRCRSCTLR9", { AArch64_SYSREG_TRCRSCTLR9 }, 0x88C8, true, true,  {0}  }, // 1106
+  { "TRCRSR", { AArch64_SYSREG_TRCRSR }, "TRCRSR", { AArch64_SYSREG_TRCRSR }, 0x8850, true, true,  {AArch64_FeatureETE}  }, // 1107
+  { "TRCSEQEVR0", { AArch64_SYSREG_TRCSEQEVR0 }, "TRCSEQEVR0", { AArch64_SYSREG_TRCSEQEVR0 }, 0x8804, true, true,  {0}  }, // 1108
+  { "TRCSEQEVR1", { AArch64_SYSREG_TRCSEQEVR1 }, "TRCSEQEVR1", { AArch64_SYSREG_TRCSEQEVR1 }, 0x880C, true, true,  {0}  }, // 1109
+  { "TRCSEQEVR2", { AArch64_SYSREG_TRCSEQEVR2 }, "TRCSEQEVR2", { AArch64_SYSREG_TRCSEQEVR2 }, 0x8814, true, true,  {0}  }, // 1110
+  { "TRCSEQRSTEVR", { AArch64_SYSREG_TRCSEQRSTEVR }, "TRCSEQRSTEVR", { AArch64_SYSREG_TRCSEQRSTEVR }, 0x8834, true, true,  {0}  }, // 1111
+  { "TRCSEQSTR", { AArch64_SYSREG_TRCSEQSTR }, "TRCSEQSTR", { AArch64_SYSREG_TRCSEQSTR }, 0x883C, true, true,  {0}  }, // 1112
+  { "TRCSSCCR0", { AArch64_SYSREG_TRCSSCCR0 }, "TRCSSCCR0", { AArch64_SYSREG_TRCSSCCR0 }, 0x8882, true, true,  {0}  }, // 1113
+  { "TRCSSCCR1", { AArch64_SYSREG_TRCSSCCR1 }, "TRCSSCCR1", { AArch64_SYSREG_TRCSSCCR1 }, 0x888A, true, true,  {0}  }, // 1114
+  { "TRCSSCCR2", { AArch64_SYSREG_TRCSSCCR2 }, "TRCSSCCR2", { AArch64_SYSREG_TRCSSCCR2 }, 0x8892, true, true,  {0}  }, // 1115
+  { "TRCSSCCR3", { AArch64_SYSREG_TRCSSCCR3 }, "TRCSSCCR3", { AArch64_SYSREG_TRCSSCCR3 }, 0x889A, true, true,  {0}  }, // 1116
+  { "TRCSSCCR4", { AArch64_SYSREG_TRCSSCCR4 }, "TRCSSCCR4", { AArch64_SYSREG_TRCSSCCR4 }, 0x88A2, true, true,  {0}  }, // 1117
+  { "TRCSSCCR5", { AArch64_SYSREG_TRCSSCCR5 }, "TRCSSCCR5", { AArch64_SYSREG_TRCSSCCR5 }, 0x88AA, true, true,  {0}  }, // 1118
+  { "TRCSSCCR6", { AArch64_SYSREG_TRCSSCCR6 }, "TRCSSCCR6", { AArch64_SYSREG_TRCSSCCR6 }, 0x88B2, true, true,  {0}  }, // 1119
+  { "TRCSSCCR7", { AArch64_SYSREG_TRCSSCCR7 }, "TRCSSCCR7", { AArch64_SYSREG_TRCSSCCR7 }, 0x88BA, true, true,  {0}  }, // 1120
+  { "TRCSSCSR0", { AArch64_SYSREG_TRCSSCSR0 }, "TRCSSCSR0", { AArch64_SYSREG_TRCSSCSR0 }, 0x88C2, true, true,  {0}  }, // 1121
+  { "TRCSSCSR1", { AArch64_SYSREG_TRCSSCSR1 }, "TRCSSCSR1", { AArch64_SYSREG_TRCSSCSR1 }, 0x88CA, true, true,  {0}  }, // 1122
+  { "TRCSSCSR2", { AArch64_SYSREG_TRCSSCSR2 }, "TRCSSCSR2", { AArch64_SYSREG_TRCSSCSR2 }, 0x88D2, true, true,  {0}  }, // 1123
+  { "TRCSSCSR3", { AArch64_SYSREG_TRCSSCSR3 }, "TRCSSCSR3", { AArch64_SYSREG_TRCSSCSR3 }, 0x88DA, true, true,  {0}  }, // 1124
+  { "TRCSSCSR4", { AArch64_SYSREG_TRCSSCSR4 }, "TRCSSCSR4", { AArch64_SYSREG_TRCSSCSR4 }, 0x88E2, true, true,  {0}  }, // 1125
+  { "TRCSSCSR5", { AArch64_SYSREG_TRCSSCSR5 }, "TRCSSCSR5", { AArch64_SYSREG_TRCSSCSR5 }, 0x88EA, true, true,  {0}  }, // 1126
+  { "TRCSSCSR6", { AArch64_SYSREG_TRCSSCSR6 }, "TRCSSCSR6", { AArch64_SYSREG_TRCSSCSR6 }, 0x88F2, true, true,  {0}  }, // 1127
+  { "TRCSSCSR7", { AArch64_SYSREG_TRCSSCSR7 }, "TRCSSCSR7", { AArch64_SYSREG_TRCSSCSR7 }, 0x88FA, true, true,  {0}  }, // 1128
+  { "TRCSSPCICR0", { AArch64_SYSREG_TRCSSPCICR0 }, "TRCSSPCICR0", { AArch64_SYSREG_TRCSSPCICR0 }, 0x8883, true, true,  {0}  }, // 1129
+  { "TRCSSPCICR1", { AArch64_SYSREG_TRCSSPCICR1 }, "TRCSSPCICR1", { AArch64_SYSREG_TRCSSPCICR1 }, 0x888B, true, true,  {0}  }, // 1130
+  { "TRCSSPCICR2", { AArch64_SYSREG_TRCSSPCICR2 }, "TRCSSPCICR2", { AArch64_SYSREG_TRCSSPCICR2 }, 0x8893, true, true,  {0}  }, // 1131
+  { "TRCSSPCICR3", { AArch64_SYSREG_TRCSSPCICR3 }, "TRCSSPCICR3", { AArch64_SYSREG_TRCSSPCICR3 }, 0x889B, true, true,  {0}  }, // 1132
+  { "TRCSSPCICR4", { AArch64_SYSREG_TRCSSPCICR4 }, "TRCSSPCICR4", { AArch64_SYSREG_TRCSSPCICR4 }, 0x88A3, true, true,  {0}  }, // 1133
+  { "TRCSSPCICR5", { AArch64_SYSREG_TRCSSPCICR5 }, "TRCSSPCICR5", { AArch64_SYSREG_TRCSSPCICR5 }, 0x88AB, true, true,  {0}  }, // 1134
+  { "TRCSSPCICR6", { AArch64_SYSREG_TRCSSPCICR6 }, "TRCSSPCICR6", { AArch64_SYSREG_TRCSSPCICR6 }, 0x88B3, true, true,  {0}  }, // 1135
+  { "TRCSSPCICR7", { AArch64_SYSREG_TRCSSPCICR7 }, "TRCSSPCICR7", { AArch64_SYSREG_TRCSSPCICR7 }, 0x88BB, true, true,  {0}  }, // 1136
+  { "TRCSTALLCTLR", { AArch64_SYSREG_TRCSTALLCTLR }, "TRCSTALLCTLR", { AArch64_SYSREG_TRCSTALLCTLR }, 0x8858, true, true,  {0}  }, // 1137
+  { "TRCSTATR", { AArch64_SYSREG_TRCSTATR }, "TRCSTATR", { AArch64_SYSREG_TRCSTATR }, 0x8818, true, false,  {0}  }, // 1138
+  { "TRCSYNCPR", { AArch64_SYSREG_TRCSYNCPR }, "TRCSYNCPR", { AArch64_SYSREG_TRCSYNCPR }, 0x8868, true, true,  {0}  }, // 1139
+  { "TRCTRACEIDR", { AArch64_SYSREG_TRCTRACEIDR }, "TRCTRACEIDR", { AArch64_SYSREG_TRCTRACEIDR }, 0x8801, true, true,  {0}  }, // 1140
+  { "TRCTSCTLR", { AArch64_SYSREG_TRCTSCTLR }, "TRCTSCTLR", { AArch64_SYSREG_TRCTSCTLR }, 0x8860, true, true,  {0}  }, // 1141
+  { "TRCVDARCCTLR", { AArch64_SYSREG_TRCVDARCCTLR }, "TRCVDARCCTLR", { AArch64_SYSREG_TRCVDARCCTLR }, 0x8852, true, true,  {0}  }, // 1142
+  { "TRCVDCTLR", { AArch64_SYSREG_TRCVDCTLR }, "TRCVDCTLR", { AArch64_SYSREG_TRCVDCTLR }, 0x8842, true, true,  {0}  }, // 1143
+  { "TRCVDSACCTLR", { AArch64_SYSREG_TRCVDSACCTLR }, "TRCVDSACCTLR", { AArch64_SYSREG_TRCVDSACCTLR }, 0x884A, true, true,  {0}  }, // 1144
+  { "TRCVICTLR", { AArch64_SYSREG_TRCVICTLR }, "TRCVICTLR", { AArch64_SYSREG_TRCVICTLR }, 0x8802, true, true,  {0}  }, // 1145
+  { "TRCVIIECTLR", { AArch64_SYSREG_TRCVIIECTLR }, "TRCVIIECTLR", { AArch64_SYSREG_TRCVIIECTLR }, 0x880A, true, true,  {0}  }, // 1146
+  { "TRCVIPCSSCTLR", { AArch64_SYSREG_TRCVIPCSSCTLR }, "TRCVIPCSSCTLR", { AArch64_SYSREG_TRCVIPCSSCTLR }, 0x881A, true, true,  {0}  }, // 1147
+  { "TRCVISSCTLR", { AArch64_SYSREG_TRCVISSCTLR }, "TRCVISSCTLR", { AArch64_SYSREG_TRCVISSCTLR }, 0x8812, true, true,  {0}  }, // 1148
+  { "TRCVMIDCCTLR0", { AArch64_SYSREG_TRCVMIDCCTLR0 }, "TRCVMIDCCTLR0", { AArch64_SYSREG_TRCVMIDCCTLR0 }, 0x8992, true, true,  {0}  }, // 1149
+  { "TRCVMIDCCTLR1", { AArch64_SYSREG_TRCVMIDCCTLR1 }, "TRCVMIDCCTLR1", { AArch64_SYSREG_TRCVMIDCCTLR1 }, 0x899A, true, true,  {0}  }, // 1150
+  { "TRCVMIDCVR0", { AArch64_SYSREG_TRCVMIDCVR0 }, "TRCVMIDCVR0", { AArch64_SYSREG_TRCVMIDCVR0 }, 0x8981, true, true,  {0}  }, // 1151
+  { "TRCVMIDCVR1", { AArch64_SYSREG_TRCVMIDCVR1 }, "TRCVMIDCVR1", { AArch64_SYSREG_TRCVMIDCVR1 }, 0x8991, true, true,  {0}  }, // 1152
+  { "TRCVMIDCVR2", { AArch64_SYSREG_TRCVMIDCVR2 }, "TRCVMIDCVR2", { AArch64_SYSREG_TRCVMIDCVR2 }, 0x89A1, true, true,  {0}  }, // 1153
+  { "TRCVMIDCVR3", { AArch64_SYSREG_TRCVMIDCVR3 }, "TRCVMIDCVR3", { AArch64_SYSREG_TRCVMIDCVR3 }, 0x89B1, true, true,  {0}  }, // 1154
+  { "TRCVMIDCVR4", { AArch64_SYSREG_TRCVMIDCVR4 }, "TRCVMIDCVR4", { AArch64_SYSREG_TRCVMIDCVR4 }, 0x89C1, true, true,  {0}  }, // 1155
+  { "TRCVMIDCVR5", { AArch64_SYSREG_TRCVMIDCVR5 }, "TRCVMIDCVR5", { AArch64_SYSREG_TRCVMIDCVR5 }, 0x89D1, true, true,  {0}  }, // 1156
+  { "TRCVMIDCVR6", { AArch64_SYSREG_TRCVMIDCVR6 }, "TRCVMIDCVR6", { AArch64_SYSREG_TRCVMIDCVR6 }, 0x89E1, true, true,  {0}  }, // 1157
+  { "TRCVMIDCVR7", { AArch64_SYSREG_TRCVMIDCVR7 }, "TRCVMIDCVR7", { AArch64_SYSREG_TRCVMIDCVR7 }, 0x89F1, true, true,  {0}  }, // 1158
+  { "TRFCR_EL1", { AArch64_SYSREG_TRFCR_EL1 }, "TRFCR_EL1", { AArch64_SYSREG_TRFCR_EL1 }, 0xC091, true, true,  {AArch64_FeatureTRACEV8_4}  }, // 1159
+  { "TRFCR_EL12", { AArch64_SYSREG_TRFCR_EL12 }, "TRFCR_EL12", { AArch64_SYSREG_TRFCR_EL12 }, 0xE891, true, true,  {AArch64_FeatureTRACEV8_4}  }, // 1160
+  { "TRFCR_EL2", { AArch64_SYSREG_TRFCR_EL2 }, "TRFCR_EL2", { AArch64_SYSREG_TRFCR_EL2 }, 0xE091, true, true,  {AArch64_FeatureTRACEV8_4}  }, // 1161
+  { "TTBR0_EL1", { AArch64_SYSREG_TTBR0_EL1 }, "TTBR0_EL1", { AArch64_SYSREG_TTBR0_EL1 }, 0xC100, true, true,  {0}  }, // 1162
+  { "TTBR0_EL12", { AArch64_SYSREG_TTBR0_EL12 }, "TTBR0_EL12", { AArch64_SYSREG_TTBR0_EL12 }, 0xE900, true, true,  {AArch64_FeatureVH}  }, // 1163
+  { "TTBR0_EL2", { AArch64_SYSREG_TTBR0_EL2 }, "VSCTLR_EL2", { AArch64_SYSREG_VSCTLR_EL2 }, 0xE100, true, true,  {AArch64_FeatureEL2VMSA}  }, // 1164
+  { "TTBR0_EL3", { AArch64_SYSREG_TTBR0_EL3 }, "TTBR0_EL3", { AArch64_SYSREG_TTBR0_EL3 }, 0xF100, true, true,  {0}  }, // 1165
+  { "TTBR1_EL1", { AArch64_SYSREG_TTBR1_EL1 }, "TTBR1_EL1", { AArch64_SYSREG_TTBR1_EL1 }, 0xC101, true, true,  {0}  }, // 1166
+  { "TTBR1_EL12", { AArch64_SYSREG_TTBR1_EL12 }, "TTBR1_EL12", { AArch64_SYSREG_TTBR1_EL12 }, 0xE901, true, true,  {AArch64_FeatureVH}  }, // 1167
+  { "TTBR1_EL2", { AArch64_SYSREG_TTBR1_EL2 }, "TTBR1_EL2", { AArch64_SYSREG_TTBR1_EL2 }, 0xE101, true, true,  {AArch64_FeatureVH}  }, // 1168
+  { "UAO", { AArch64_SYSREG_UAO }, "UAO", { AArch64_SYSREG_UAO }, 0xC214, true, true,  {AArch64_FeaturePsUAO}  }, // 1169
+  { "VBAR_EL1", { AArch64_SYSREG_VBAR_EL1 }, "VBAR_EL1", { AArch64_SYSREG_VBAR_EL1 }, 0xC600, true, true,  {0}  }, // 1170
+  { "VBAR_EL12", { AArch64_SYSREG_VBAR_EL12 }, "VBAR_EL12", { AArch64_SYSREG_VBAR_EL12 }, 0xEE00, true, true,  {AArch64_FeatureVH}  }, // 1171
+  { "VBAR_EL2", { AArch64_SYSREG_VBAR_EL2 }, "VBAR_EL2", { AArch64_SYSREG_VBAR_EL2 }, 0xE600, true, true,  {0}  }, // 1172
+  { "VBAR_EL3", { AArch64_SYSREG_VBAR_EL3 }, "VBAR_EL3", { AArch64_SYSREG_VBAR_EL3 }, 0xF600, true, true,  {0}  }, // 1173
+  { "VDISR_EL2", { AArch64_SYSREG_VDISR_EL2 }, "VDISR_EL2", { AArch64_SYSREG_VDISR_EL2 }, 0xE609, true, true,  {AArch64_FeatureRAS}  }, // 1174
+  { "VMECID_A_EL2", { AArch64_SYSREG_VMECID_A_EL2 }, "VMECID_A_EL2", { AArch64_SYSREG_VMECID_A_EL2 }, 0xE549, true, true,  {AArch64_FeatureMEC}  }, // 1175
+  { "VMECID_P_EL2", { AArch64_SYSREG_VMECID_P_EL2 }, "VMECID_P_EL2", { AArch64_SYSREG_VMECID_P_EL2 }, 0xE548, true, true,  {AArch64_FeatureMEC}  }, // 1176
+  { "VMPIDR_EL2", { AArch64_SYSREG_VMPIDR_EL2 }, "VMPIDR_EL2", { AArch64_SYSREG_VMPIDR_EL2 }, 0xE005, true, true,  {0}  }, // 1177
+  { "VNCR_EL2", { AArch64_SYSREG_VNCR_EL2 }, "VNCR_EL2", { AArch64_SYSREG_VNCR_EL2 }, 0xE110, true, true,  {AArch64_FeatureNV}  }, // 1178
+  { "VPIDR_EL2", { AArch64_SYSREG_VPIDR_EL2 }, "VPIDR_EL2", { AArch64_SYSREG_VPIDR_EL2 }, 0xE000, true, true,  {0}  }, // 1179
+  { "VSCTLR_EL2", { AArch64_SYSREG_VSCTLR_EL2 }, "TTBR0_EL2", { AArch64_SYSREG_TTBR0_EL2 }, 0xE100, true, true,  {AArch64_HasV8_0rOps}  }, // 1180
+  { "VSESR_EL2", { AArch64_SYSREG_VSESR_EL2 }, "VSESR_EL2", { AArch64_SYSREG_VSESR_EL2 }, 0xE293, true, true,  {AArch64_FeatureRAS}  }, // 1181
+  { "VSTCR_EL2", { AArch64_SYSREG_VSTCR_EL2 }, "VSTCR_EL2", { AArch64_SYSREG_VSTCR_EL2 }, 0xE132, true, true,  {AArch64_FeatureSEL2}  }, // 1182
+  { "VSTTBR_EL2", { AArch64_SYSREG_VSTTBR_EL2 }, "VSTTBR_EL2", { AArch64_SYSREG_VSTTBR_EL2 }, 0xE130, true, true,  {AArch64_HasV8_0aOps}  }, // 1183
+  { "VTCR_EL2", { AArch64_SYSREG_VTCR_EL2 }, "VTCR_EL2", { AArch64_SYSREG_VTCR_EL2 }, 0xE10A, true, true,  {0}  }, // 1184
+  { "VTTBR_EL2", { AArch64_SYSREG_VTTBR_EL2 }, "VTTBR_EL2", { AArch64_SYSREG_VTTBR_EL2 }, 0xE108, true, true,  {AArch64_FeatureEL2VMSA}  }, // 1185
+  { "ZCR_EL1", { AArch64_SYSREG_ZCR_EL1 }, "ZCR_EL1", { AArch64_SYSREG_ZCR_EL1 }, 0xC090, true, true,  {AArch64_FeatureSVE}  }, // 1186
+  { "ZCR_EL12", { AArch64_SYSREG_ZCR_EL12 }, "ZCR_EL12", { AArch64_SYSREG_ZCR_EL12 }, 0xE890, true, true,  {AArch64_FeatureSVE}  }, // 1187
+  { "ZCR_EL2", { AArch64_SYSREG_ZCR_EL2 }, "ZCR_EL2", { AArch64_SYSREG_ZCR_EL2 }, 0xE090, true, true,  {AArch64_FeatureSVE}  }, // 1188
+  { "ZCR_EL3", { AArch64_SYSREG_ZCR_EL3 }, "ZCR_EL3", { AArch64_SYSREG_ZCR_EL3 }, 0xF090, true, true,  {AArch64_FeatureSVE}  }, // 1189
   };
 
 const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding) {
@@ -3485,7 +3485,7 @@ const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encodi
 
 #ifdef GET_TSB_IMPL
 static const AArch64TSB_TSB TSBsList[] = {
-  { "csync", AArch64_SYSALIAS_CSYNC, 0x0,  {AArch64_FeatureTRACEV8_4}  }, // 0
+  { "csync", { AArch64_TSB_CSYNC }, 0x0,  {AArch64_FeatureTRACEV8_4}  }, // 0
   };
 
 const AArch64TSB_TSB *AArch64TSB_lookupTSBByEncoding(uint8_t Encoding) {
