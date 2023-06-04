@@ -1,5 +1,5 @@
-#ifndef CAPSTONE_ARM64_H
-#define CAPSTONE_ARM64_H
+#ifndef CAPSTONE_AARCH64_H
+#define CAPSTONE_AARCH64_H
 
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
@@ -261,7 +261,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_TLBI> end
 	AArch64_TLBI_ENDING,
-} arm64_tlbi;
+} aarch64_tlbi;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_AT> begin
@@ -285,7 +285,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_AT> end
 	AArch64_AT_ENDING,
-} arm64_at;
+} aarch64_at;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_BTI> begin
@@ -298,7 +298,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_BTI> end
 	AArch64_BTI_ENDING,
-} arm64_bti;
+} aarch64_bti;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_DB> begin
@@ -320,7 +320,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_DB> end
 	AArch64_DB_ENDING,
-} arm64_db;
+} aarch64_db;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_DBnXS> begin
@@ -334,7 +334,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_DBnXS> end
 	AArch64_DBNXS_ENDING,
-} arm64_dbnxs;
+} aarch64_dbnxs;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_DC> begin
@@ -374,7 +374,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_DC> end
 	AArch64_DC_ENDING,
-} arm64_dc;
+} aarch64_dc;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ExactFPImm> begin
@@ -388,7 +388,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ExactFPImm> end
 	AArch64_EXACTFPIMM_ENDING,
-} arm64_exactfpimm;
+} aarch64_exactfpimm;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_IC> begin
@@ -401,7 +401,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_IC> end
 	AArch64_IC_ENDING,
-} arm64_ic;
+} aarch64_ic;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ISB> begin
@@ -412,7 +412,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ISB> end
 	AArch64_ISB_ENDING,
-} arm64_isb;
+} aarch64_isb;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PRFM> begin
@@ -446,7 +446,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PRFM> end
 	AArch64_PRFM_ENDING,
-} arm64_prfm;
+} aarch64_prfm;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PSB> begin
@@ -457,7 +457,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PSB> end
 	AArch64_PSB_ENDING,
-} arm64_psb;
+} aarch64_psb;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PStateImm0_1> begin
@@ -469,7 +469,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PStateImm0_1> end
 	AArch64_PSTATEIMM0_1_ENDING,
-} arm64_pstateimm0_1;
+} aarch64_pstateimm0_1;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PStateImm0_15> begin
@@ -487,7 +487,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_PStateImm0_15> end
 	AArch64_PSTATEIMM0_15_ENDING,
-} arm64_pstateimm0_15;
+} aarch64_pstateimm0_15;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_RPRFM> begin
@@ -501,7 +501,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_RPRFM> end
 	AArch64_RPRFM_ENDING,
-} arm64_rprfm;
+} aarch64_rprfm;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVCR> begin
@@ -514,7 +514,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVCR> end
 	AArch64_SVCR_ENDING,
-} arm64_svcr;
+} aarch64_svcr;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVEPREDPAT> begin
@@ -541,7 +541,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVEPREDPAT> end
 	AArch64_SVEPREDPAT_ENDING,
-} arm64_svepredpat;
+} aarch64_svepredpat;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVEPRFM> begin
@@ -563,7 +563,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVEPRFM> end
 	AArch64_SVEPRFM_ENDING,
-} arm64_sveprfm;
+} aarch64_sveprfm;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVEVECLENSPECIFIER> begin
@@ -575,7 +575,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SVEVECLENSPECIFIER> end
 	AArch64_SVEVECLENSPECIFIER_ENDING,
-} arm64_sveveclenspecifier;
+} aarch64_sveveclenspecifier;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SysReg> begin
@@ -1775,7 +1775,7 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SysReg> end
 	AArch64_SYSREG_ENDING,
-} arm64_sysreg;
+} aarch64_sysreg;
 
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_TSB> begin
@@ -1786,33 +1786,33 @@ typedef enum {
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_TSB> end
 	AArch64_TSB_ENDING,
-} arm64_tsb;
+} aarch64_tsb;
 
 typedef union {
-	arm64_sysreg sysreg;
-	arm64_tlbi tlbi;
-	arm64_ic ic;
+	aarch64_sysreg sysreg;
+	aarch64_tlbi tlbi;
+	aarch64_ic ic;
 } aarch64_sysop_reg;
 
 typedef union {
-	arm64_dbnxs dbnxs;
-	arm64_exactfpimm exactfpimm;
+	aarch64_dbnxs dbnxs;
+	aarch64_exactfpimm exactfpimm;
 } aarch64_sysop_imm;
 
 typedef union {
-	arm64_svcr svcr;
-	arm64_at at;
-	arm64_db db;
-	arm64_dc dc;
-	arm64_isb isb;
-	arm64_tsb tsb;
-	arm64_prfm prfm;
-	arm64_sveprfm sveprfm;
-	arm64_rprfm rprfm;
-	arm64_pstateimm0_15 pstateimm0_15;
-	arm64_pstateimm0_1 pstateimm0_1;
-	arm64_psb psb;
-	arm64_bti bti;
+	aarch64_svcr svcr;
+	aarch64_at at;
+	aarch64_db db;
+	aarch64_dc dc;
+	aarch64_isb isb;
+	aarch64_tsb tsb;
+	aarch64_prfm prfm;
+	aarch64_sveprfm sveprfm;
+	aarch64_rprfm rprfm;
+	aarch64_pstateimm0_15 pstateimm0_15;
+	aarch64_pstateimm0_1 pstateimm0_1;
+	aarch64_psb psb;
+	aarch64_bti bti;
 } aarch64_sysop_alias;
 
 typedef union {
@@ -1822,7 +1822,7 @@ typedef union {
 } aarch64_sysop;
 
 /// Operand type for instruction's operands
-typedef enum arm64_op_type {
+typedef enum aarch64_op_type {
   AArch64_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
   AArch64_OP_REG = CS_OP_REG,		///< = CS_OP_REG (Register operand).
   AArch64_OP_IMM = CS_OP_IMM,		///< = CS_OP_IMM (Immediate operand).
@@ -1846,10 +1846,10 @@ typedef enum arm64_op_type {
 	AArch64_OP_PSTATEIMM0_1 = CS_OP_SPECIAL + 14,
 	AArch64_OP_PSB = CS_OP_SPECIAL + 15,
 	AArch64_OP_BTI = CS_OP_SPECIAL + 16,
-} arm64_op_type;
+} aarch64_op_type;
 
-/// ARM64 registers
-typedef enum arm64_reg {
+/// AArch64 registers
+typedef enum aarch64_reg {
 	// generated content <AArch64GenCSRegEnum.inc> begin
 	// clang-format off
 
@@ -2575,30 +2575,28 @@ typedef enum arm64_reg {
 	// generated content <AArch64GenCSRegEnum.inc> end
 
   // alias registers
-  ARM64_REG_IP0 = AArch64_REG_X16,
-  ARM64_REG_IP1 = AArch64_REG_X17,
-  ARM64_REG_X29 = AArch64_REG_FP,
-  ARM64_REG_X30 = AArch64_REG_LR,
-} arm64_reg;
+  AArch64_REG_IP0 = AArch64_REG_X16,
+  AArch64_REG_IP1 = AArch64_REG_X17,
+  AArch64_REG_X29 = AArch64_REG_FP,
+  AArch64_REG_X30 = AArch64_REG_LR,
+} aarch64_reg;
 
 /// Instruction's operand referring to memory
-/// This is associated with ARM64_OP_MEM operand type above
-typedef struct arm64_op_mem {
-  arm64_reg base;  ///< base register
-  arm64_reg index; ///< index register
+typedef struct aarch64_op_mem {
+  aarch64_reg base;  ///< base register
+  aarch64_reg index; ///< index register
   int32_t disp;	   ///< displacement/offset value
-} arm64_op_mem;
+} aarch64_op_mem;
 
 /// SME Instruction's operand has index
-/// This is associated with ARM64_OP_SME_INDEX operand type above
-typedef struct arm64_op_sme_index {
-  arm64_reg reg;  ///< register being indexed
-  arm64_reg base; ///< base register
+typedef struct aarch64_op_sme_index {
+  aarch64_reg reg;  ///< register being indexed
+  aarch64_reg base; ///< base register
   int32_t disp;	  ///< displacement/offset value
-} arm64_op_sme_index;
+} aarch64_op_sme_index;
 
 /// Instruction operand
-typedef struct cs_arm64_op {
+typedef struct cs_aarch64_op {
   int vector_index; ///< Vector Index for some vector operands (or -1 if
 		    ///< irrelevant)
   AArch64Layout_VectorLayout vas;    ///< Vector Arrangement Specifier
@@ -2607,14 +2605,14 @@ typedef struct cs_arm64_op {
     unsigned int value; ///< shifter value of this operand
   } shift;
   aarch64_extender ext; ///< extender type of this operand
-  arm64_op_type type; ///< operand type
+  aarch64_op_type type; ///< operand type
   union {
-    arm64_reg reg;	 ///< register value for REG operand
+    aarch64_reg reg;	 ///< register value for REG operand
     int64_t imm;	 ///< immediate value, or index for C-IMM or IMM operand
     double fp;		 ///< floating point value for FP operand
-    arm64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
+    aarch64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
 		aarch64_sysop sysop; ///< System operand
-    arm64_op_sme_index sme_index; ///< base/disp value for matrix tile slice
+    aarch64_op_sme_index sme_index; ///< base/disp value for matrix tile slice
 				  ///< instructions.
   };
 
@@ -2622,10 +2620,10 @@ typedef struct cs_arm64_op {
   /// This field is combined of cs_ac_type.
   /// NOTE: this field is irrelevant if engine is compiled in DIET mode.
   uint8_t access;
-} cs_arm64_op;
+} cs_aarch64_op;
 
 /// Instruction structure
-typedef struct cs_arm64 {
+typedef struct cs_aarch64 {
   AArch64CC_CondCode cc;	     ///< conditional code for this insn
   bool update_flags; ///< does this insn update flags?
   bool writeback;    ///< does this insn request writeback? 'True' means 'yes'
@@ -2635,11 +2633,11 @@ typedef struct cs_arm64 {
   /// or 0 when instruction has no operand.
   uint8_t op_count;
 
-  cs_arm64_op operands[8]; ///< operands for this instruction.
-} cs_arm64;
+  cs_aarch64_op operands[8]; ///< operands for this instruction.
+} cs_aarch64;
 
-/// ARM64 instruction
-typedef enum arm64_insn {
+/// AArch64 instruction
+typedef enum aarch64_insn {
 	// generated content <AArch64GenCSInsnEnum.inc> begin
 	// clang-format off
 
@@ -3985,10 +3983,10 @@ typedef enum arm64_insn {
 	// generated content <AArch64GenCSInsnEnum.inc> end
 
   AArch64_INS_ENDING, // <-- mark the end of the list of insn
-} arm64_insn;
+} aarch64_insn;
 
-/// Group of ARM64 instructions
-typedef enum arm64_insn_group {
+/// Group of AArch64 instructions
+typedef enum aarch64_insn_group {
   AArch64_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
   // Generic groups
@@ -4111,8 +4109,8 @@ typedef enum arm64_insn_group {
 	// clang-format on
 	// generated content <AArch64GenCSFeatureEnum.inc> end
 
-  ARM64_GRP_ENDING, // <-- mark the end of the list of groups
-} arm64_insn_group;
+  AArch64_GRP_ENDING, // <-- mark the end of the list of groups
+} aarch64_insn_group;
 
 #ifdef __cplusplus
 }
