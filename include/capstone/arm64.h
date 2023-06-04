@@ -1831,13 +1831,21 @@ typedef enum arm64_op_type {
   AArch64_OP_CIMM = CS_OP_SPECIAL + 0,	///< C-Immediate
   AArch64_OP_REG_MRS = CS_OP_SPECIAL + 1,	///< MRS register operand.
   AArch64_OP_REG_MSR = CS_OP_SPECIAL + 2,	///< MSR register operand.
-  AArch64_OP_PSTATE = CS_OP_SPECIAL + 3,	///< PState operand.
-  AArch64_OP_SYS = CS_OP_SPECIAL + 4,		///< SYS operand for IC/DC/AT/TLBI instructions.
-  AArch64_OP_SVCR = CS_OP_SPECIAL + 5,	///< SVCR operand for MSR SVCR instructions.
-  AArch64_OP_PREFETCH = CS_OP_SPECIAL + 6,	///< Prefetch operand (PRFM).
-  AArch64_OP_BARRIER = CS_OP_SPECIAL + 7,	///< Memory barrier operand (ISB/DMB/DSB instructions).
-  AArch64_OP_SME_INDEX = CS_OP_SPECIAL + 8,	///< SME instruction operand with with index.
-  AArch64_OP_IMPLICIT_IMM_0 = CS_OP_SPECIAL + 9, ///< Implicit immediate operand 0
+  AArch64_OP_IMPLICIT_IMM_0 = CS_OP_SPECIAL + 3, ///< Implicit immediate operand 0
+	// Different system operands.
+	AArch64_OP_SVCR = CS_OP_SPECIAL + 4,
+	AArch64_OP_AT = CS_OP_SPECIAL + 5,
+	AArch64_OP_DB = CS_OP_SPECIAL + 6,
+	AArch64_OP_DC = CS_OP_SPECIAL + 7,
+	AArch64_OP_ISB = CS_OP_SPECIAL + 8,
+	AArch64_OP_TSB = CS_OP_SPECIAL + 9,
+	AArch64_OP_PRFM = CS_OP_SPECIAL + 10,
+	AArch64_OP_SVEPRFM = CS_OP_SPECIAL + 11,
+	AArch64_OP_RPRFM = CS_OP_SPECIAL + 12,
+	AArch64_OP_PSTATEIMM0_15 = CS_OP_SPECIAL + 13,
+	AArch64_OP_PSTATEIMM0_1 = CS_OP_SPECIAL + 14,
+	AArch64_OP_PSB = CS_OP_SPECIAL + 15,
+	AArch64_OP_BTI = CS_OP_SPECIAL + 16,
 } arm64_op_type;
 
 /// ARM64 registers
