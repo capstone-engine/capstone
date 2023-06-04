@@ -50,13 +50,13 @@ static void print_insn_detail(cs_insn *ins)
 		switch(op->type) {
 			default:
 				break;
-			case ARM64_OP_REG:
+			case AArch64_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
-			case ARM64_OP_IMM:
+			case AArch64_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
-			case ARM64_OP_FP:
+			case AArch64_OP_FP:
 #if defined(_KERNEL_MODE)
 				// Issue #681: Windows kernel does not support formatting float point
 				printf("\t\toperands[%u].type: FP = <float_point_unsupported>\n", i);
@@ -64,35 +64,35 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
 #endif
 				break;
-			case ARM64_OP_MEM:
+			case AArch64_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != ARM64_REG_INVALID)
+				if (op->mem.base != AArch64_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != ARM64_REG_INVALID)
+				if (op->mem.index != AArch64_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
 				break;
-			case ARM64_OP_CIMM:
+			case AArch64_OP_CIMM:
 				printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
 				break;
-			case ARM64_OP_REG_MRS:
+			case AArch64_OP_REG_MRS:
 				printf("\t\toperands[%u].type: REG_MRS = 0x%x\n", i, op->reg);
 				break;
-			case ARM64_OP_REG_MSR:
+			case AArch64_OP_REG_MSR:
 				printf("\t\toperands[%u].type: REG_MSR = 0x%x\n", i, op->reg);
 				break;
-			case ARM64_OP_PSTATE:
+			case AArch64_OP_PSTATE:
 				printf("\t\toperands[%u].type: PSTATE = 0x%x\n", i, op->pstate);
 				break;
-			case ARM64_OP_SYS:
+			case AArch64_OP_SYS:
 				printf("\t\toperands[%u].type: SYS = 0x%x\n", i, op->sys);
 				break;
-			case ARM64_OP_PREFETCH:
+			case AArch64_OP_PREFETCH:
 				printf("\t\toperands[%u].type: PREFETCH = 0x%x\n", i, op->prefetch);
 				break;
-			case ARM64_OP_BARRIER:
+			case AArch64_OP_BARRIER:
 				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->barrier);
 				break;
 		}
@@ -112,15 +112,15 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 		}
 
-		if (op->shift.type != ARM64_SFT_INVALID &&
+		if (op->shift.type != AArch64_SFT_INVALID &&
 				op->shift.value)
 			printf("\t\t\tShift: type = %u, value = %u\n",
 					op->shift.type, op->shift.value);
 
-		if (op->ext != ARM64_EXT_INVALID)
+		if (op->ext != AArch64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
 
-		if (op->vas != ARM64_VAS_INVALID)
+		if (op->vas != AArch64_VAS_INVALID)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
 
 		if (op->vector_index != -1)
@@ -162,7 +162,7 @@ static void print_insn_detail(cs_insn *ins)
 
 static void test()
 {
-#define ARM64_CODE "\x09\x00\x38\xd5" \
+#define AArch64_CODE "\x09\x00\x38\xd5" \
     "\xbf\x40\x00\xd5" \
     "\x0c\x05\x13\xd5" \
     "\x20\x50\x02\x0e" \
@@ -184,10 +184,10 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			CS_ARCH_ARM64,
+			CS_ARCH_AArch64,
 			CS_MODE_ARM,
-			(unsigned char *)ARM64_CODE,
-			sizeof(ARM64_CODE) - 1,
+			(unsigned char *)AArch64_CODE,
+			sizeof(AArch64_CODE) - 1,
 			"ARM-64"
 		},
 	};

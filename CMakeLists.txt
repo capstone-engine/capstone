@@ -209,7 +209,7 @@ if(CAPSTONE_AARCH64_SUPPORT)
         arch/AArch64/AArch64GenCSMappingInsnName.inc
         arch/AArch64/AArch64GenCSMappingInsnOp.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
+    set(TEST_SOURCES ${TEST_SOURCES} test_aarch64.c)
 endif()
 
 if(CAPSTONE_MIPS_SUPPORT)
