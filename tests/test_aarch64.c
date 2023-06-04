@@ -31,7 +31,7 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 
 static void print_insn_detail(cs_insn *ins)
 {
-	cs_arm64 *arm64;
+	cs_aarch64 *aarch64;
 	int i;
 	cs_regs regs_read, regs_write;
 	unsigned char regs_read_count, regs_write_count;
@@ -41,12 +41,12 @@ static void print_insn_detail(cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	arm64 = &(ins->detail->arm64);
-	if (arm64->op_count)
-		printf("\top_count: %u\n", arm64->op_count);
+	aarch64 = &(ins->detail->aarch64);
+	if (aarch64->op_count)
+		printf("\top_count: %u\n", aarch64->op_count);
 
-	for (i = 0; i < arm64->op_count; i++) {
-		cs_arm64_op *op = &(arm64->operands[i]);
+	for (i = 0; i < aarch64->op_count; i++) {
+		cs_aarch64_op *op = &(aarch64->operands[i]);
 		switch(op->type) {
 			default:
 				break;
@@ -127,14 +127,14 @@ static void print_insn_detail(cs_insn *ins)
 			printf("\t\t\tVector Index: %u\n", op->vector_index);
 	}
 
-	if (arm64->update_flags)
+	if (aarch64->update_flags)
 		printf("\tUpdate-flags: True\n");
 
-	if (arm64->writeback)
-		printf("\tWrite-back: %s\n", arm64->post_index ? "Post" : "Pre");
+	if (aarch64->writeback)
+		printf("\tWrite-back: %s\n", aarch64->post_index ? "Post" : "Pre");
 
-	if (arm64->cc)
-		printf("\tCode-condition: %u\n", arm64->cc);
+	if (aarch64->cc)
+		printf("\tCode-condition: %u\n", aarch64->cc);
 
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(handle, ins,
@@ -184,7 +184,7 @@ static void test()
 
 	struct platform platforms[] = {
 		{
-			CS_ARCH_AArch64,
+			CS_ARCH_AARCH64,
 			CS_MODE_ARM,
 			(unsigned char *)AArch64_CODE,
 			sizeof(AArch64_CODE) - 1,

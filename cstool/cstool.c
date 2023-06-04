@@ -30,8 +30,8 @@ static struct {
 	{ "thumb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB },
 	{ "thumbbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN },
 	{ "thumble", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_LITTLE_ENDIAN },
-	{ "arm64", CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN },
-	{ "arm64be", CS_ARCH_ARM64, CS_MODE_BIG_ENDIAN },
+	{ "aarch64", CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN },
+	{ "aarch64be", CS_ARCH_AARCH64, CS_MODE_BIG_ENDIAN },
 	{ "mips", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_LITTLE_ENDIAN },
 	{ "mipsmicro", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_MICRO },
 	{ "mipsbemicro", CS_ARCH_MIPS, CS_MODE_MIPS32 | CS_MODE_MICRO | CS_MODE_BIG_ENDIAN },
@@ -203,9 +203,9 @@ static void usage(char *prog)
 		printf("        thumbv8be   thumb v8 + big endian\n");
 	}
 
-	if (cs_support(CS_ARCH_ARM64)) {
-		printf("        arm64       aarch64 mode\n");
-		printf("        arm64be     aarch64 + big endian\n");
+	if (cs_support(CS_ARCH_AARCH64)) {
+		printf("        aarch64       aarch64 mode\n");
+		printf("        aarch64be     aarch64 + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_MIPS)) {
@@ -344,8 +344,8 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_ARM:
 			print_insn_detail_arm(handle, ins);
 			break;
-		case CS_ARCH_ARM64:
-			print_insn_detail_arm64(handle, ins);
+		case CS_ARCH_AARCH64:
+			print_insn_detail_aarch64(handle, ins);
 			break;
 		case CS_ARCH_MIPS:
 			print_insn_detail_mips(handle, ins);
@@ -456,8 +456,8 @@ int main(int argc, char **argv)
 					printf("arm=1 ");
 				}
 
-				if (cs_support(CS_ARCH_ARM64)) {
-					printf("arm64=1 ");
+				if (cs_support(CS_ARCH_AARCH64)) {
+					printf("aarch64=1 ");
 				}
 
 				if (cs_support(CS_ARCH_MIPS)) {

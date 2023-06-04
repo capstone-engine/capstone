@@ -25,7 +25,7 @@
 
 // Issue #681: Windows kernel does not support formatting float point
 #if defined(_KERNEL_MODE) && !defined(CAPSTONE_DIET)
-#if defined(CAPSTONE_HAS_ARM) || defined(CAPSTONE_HAS_ARM64) || defined(CAPSTONE_HAS_M68K)
+#if defined(CAPSTONE_HAS_ARM) || defined(CAPSTONE_HAS_AARCH64) || defined(CAPSTONE_HAS_M68K)
 #define CAPSTONE_STR_INTERNAL(x) #x
 #define CAPSTONE_STR(x) CAPSTONE_STR_INTERNAL(x)
 #define CAPSTONE_MSVC_WRANING_PREFIX __FILE__ "("CAPSTONE_STR(__LINE__)") : warning message : "
@@ -90,7 +90,7 @@ static const struct {
 #else
 	{ NULL, NULL, 0 },
 #endif
-#ifdef CAPSTONE_HAS_ARM64
+#ifdef CAPSTONE_HAS_AARCH64
 	{
 		AArch64_global_init,
 		AArch64_option,
@@ -262,8 +262,8 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_ARM
 	| (1 << CS_ARCH_ARM)
 #endif
-#ifdef CAPSTONE_HAS_ARM64
-	| (1 << CS_ARCH_ARM64)
+#ifdef CAPSTONE_HAS_AARCH64
+	| (1 << CS_ARCH_AARCH64)
 #endif
 #ifdef CAPSTONE_HAS_MIPS
 	| (1 << CS_ARCH_MIPS)
@@ -378,7 +378,8 @@ CAPSTONE_EXPORT
 bool CAPSTONE_API cs_support(int query)
 {
 	if (query == CS_ARCH_ALL)
-		return all_arch == ((1 << CS_ARCH_ARM)   | (1 << CS_ARCH_ARM64)      |
+		return all_arch ==
+				    ((1 << CS_ARCH_ARM)  | (1 << CS_ARCH_AARCH64)    |
 				    (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
 				    (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
 				    (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
@@ -646,7 +647,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 				return 2;
 			// otherwise, skip 4 bytes
 			return 4;
-		case CS_ARCH_ARM64:
+		case CS_ARCH_AARCH64:
 		case CS_ARCH_MIPS:
 		case CS_ARCH_PPC:
 		case CS_ARCH_SPARC:
@@ -1354,9 +1355,9 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->arm.operands[i].type == (arm_op_type)op_type)
 					count++;
 			break;
-		case CS_ARCH_ARM64:
-			for (i = 0; i < insn->detail->arm64.op_count; i++)
-				if (insn->detail->arm64.operands[i].type == (arm64_op_type)op_type)
+		case CS_ARCH_AARCH64:
+			for (i = 0; i < insn->detail->aarch64.op_count; i++)
+				if (insn->detail->aarch64.operands[i].type == (aarch64_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_X86:
@@ -1476,9 +1477,9 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
-		case CS_ARCH_ARM64:
-			for (i = 0; i < insn->detail->arm64.op_count; i++) {
-				if (insn->detail->arm64.operands[i].type == (arm64_op_type)op_type)
+		case CS_ARCH_AARCH64:
+			for (i = 0; i < insn->detail->aarch64.op_count; i++) {
+				if (insn->detail->aarch64.operands[i].type == (aarch64_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
