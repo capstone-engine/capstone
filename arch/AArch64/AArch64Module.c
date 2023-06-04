@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
 
-#ifdef CAPSTONE_HAS_ARM64
+#ifdef CAPSTONE_HAS_AARCH64
 
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"

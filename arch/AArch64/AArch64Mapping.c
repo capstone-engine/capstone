@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
-#ifdef CAPSTONE_HAS_ARM64
+#ifdef CAPSTONE_HAS_AARCH64
 
 #include <stdio.h>	// debug
 #include <string.h>
