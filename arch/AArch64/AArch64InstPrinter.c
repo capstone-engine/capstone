@@ -947,7 +947,7 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			if (Op1Val != 3 || CnVal != 7 || CmVal != 3)
 				return false;
 
-			arm64_insn_group Requires =
+			aarch64_insn_group Requires =
 				Op2Val == 6 ? AArch64_FeatureSPECRES2 : AArch64_FeaturePredRes;
 			if (!(AArch64_getFeatureBits(MI->csh->mode, AArch64_FeatureAll) ||
 				  AArch64_getFeatureBits(MI->csh->mode, Requires)))

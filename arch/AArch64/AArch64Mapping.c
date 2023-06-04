@@ -38,7 +38,7 @@ void AArch64_init_cs_detail(MCInst *MI)
 {
 	if (detail_is_set(MI)) {
 		memset(get_detail(MI), 0,
-			   offsetof(cs_detail, arm64) + sizeof(cs_arm64));
+			   offsetof(cs_detail, aarch64) + sizeof(cs_aarch64));
 	}
 }
 
@@ -132,7 +132,7 @@ const char *AArch64_group_name(csh handle, unsigned int id)
 }
 
 // map instruction name to public instruction ID
-arm64_insn AArch64_map_insn(const char *name)
+aarch64_insn AArch64_map_insn(const char *name)
 {
 	unsigned int i;
 
@@ -157,7 +157,7 @@ void AArch64_reg_access(const cs_insn *insn,
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
-	cs_arm64 *arm64 = &(insn->detail->arm64);
+	cs_aarch64 *aarch64 = &(insn->detail->aarch64);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -167,8 +167,8 @@ void AArch64_reg_access(const cs_insn *insn,
 	memcpy(regs_write, insn->detail->regs_write, write_count * sizeof(insn->detail->regs_write[0]));
 
 	// explicit registers
-	for (i = 0; i < arm64->op_count; i++) {
-		cs_arm64_op *op = &(arm64->operands[i]);
+	for (i = 0; i < aarch64->op_count; i++) {
+		cs_aarch64_op *op = &(aarch64->operands[i]);
 		switch((int)op->type) {
 			case AArch64_OP_REG:
 				if ((op->access & CS_AC_READ) && !arr_exist(regs_read, read_count, op->reg)) {
@@ -190,7 +190,7 @@ void AArch64_reg_access(const cs_insn *insn,
 					regs_read[read_count] = (uint16_t)op->mem.index;
 					read_count++;
 				}
-				if ((arm64->writeback) && (op->mem.base != AArch64_REG_INVALID) && !arr_exist(regs_write, write_count, op->mem.base)) {
+				if ((aarch64->writeback) && (op->mem.base != AArch64_REG_INVALID) && !arr_exist(regs_write, write_count, op->mem.base)) {
 					regs_write[write_count] = (uint16_t)op->mem.base;
 					write_count++;
 				}

@@ -41,7 +41,7 @@
 #include "AArch64Mapping.h"
 
 #include "../../utils.h"
-#include "capstone/arm64.h"
+#include "capstone/aarch64.h"
 
 #define GET_SUBTARGETINFO_ENUM
 #include "AArch64GenSubtargetInfo.inc"
@@ -593,7 +593,7 @@ typedef struct SysAlias {
 	const char *Name;
 	aarch64_sysop_alias SysAlias;
 	uint16_t Encoding;
-	arm64_insn_group FeaturesRequired[3];
+	aarch64_insn_group FeaturesRequired[3];
 } SysAlias;
 
 typedef struct SysAliasReg {
@@ -601,7 +601,7 @@ typedef struct SysAliasReg {
 	aarch64_sysop_reg SysReg;
 	uint16_t Encoding;
 	bool NeedsReg;
-	arm64_insn_group FeaturesRequired[3];
+	aarch64_insn_group FeaturesRequired[3];
 } SysAliasReg;
 
 typedef struct SysAliasImm {
@@ -609,7 +609,7 @@ typedef struct SysAliasImm {
 	aarch64_sysop_imm SysImm;
 	uint16_t ImmValue;
 	uint16_t Encoding;
-	arm64_insn_group FeaturesRequired[3];
+	aarch64_insn_group FeaturesRequired[3];
 } SysAliasImm;
 
 // CS namespace begin: AArch64SVCR
@@ -820,13 +820,13 @@ typedef enum ShiftExtSpecifiers {
 
 typedef struct SysReg {
 	const char *Name;
-	arm64_sysreg SysReg;
+	aarch64_sysreg SysReg;
 	const char *AltName;
-	arm64_sysreg AliasReg;
+	aarch64_sysreg AliasReg;
 	unsigned Encoding;
 	bool Readable;
 	bool Writeable;
-	arm64_insn_group FeaturesRequired[3];
+	aarch64_insn_group FeaturesRequired[3];
 } AArch64SysReg_SysReg;
 
 #define GET_SYSREG_DECL
