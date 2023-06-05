@@ -33706,6 +33706,7 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
     Patterns,
     Conds,
     AsmStrings,
+    AArch64InstPrinterValidateMCOperand,
   };
   const char *AsmString = matchAliasPatterns(MI, &M);
   if (!AsmString) return false;
