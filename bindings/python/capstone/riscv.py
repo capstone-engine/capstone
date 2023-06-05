@@ -7,7 +7,7 @@ from .riscv_const import *
 # define the API
 class RISCVOpMem(ctypes.Structure):
     _fields_ = (
-        ('base', ctypes.c_uint8),
+        ('base', ctypes.c_uint),
         ('disp', ctypes.c_int64),
     )
 
@@ -39,11 +39,11 @@ class RISCVOp(ctypes.Structure):
 
 class CsRISCV(ctypes.Structure):
     _fields_ = (
-	('need_effective_addr', ctypes.c_bool),
+        ('need_effective_addr', ctypes.c_bool),
         ('op_count',            ctypes.c_uint8),
         ('operands',            RISCVOp * 8),
     )
 
 def get_arch_info(a):
-    return (copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.need_effective_addr, copy_ctypes_list(a.operands[:a.op_count]))
 
