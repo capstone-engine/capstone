@@ -52,10 +52,10 @@ struct platform platforms[] = {
 		},
 		{
 				// item 7
-				CS_ARCH_ARM64,
+				CS_ARCH_AARCH64,
 				(cs_mode) 0,
-				"ARM-64",
-				"arm64"
+				"AARCH64",
+				"aarch64"
 		},
 		{
 				// item 8

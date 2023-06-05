@@ -61,34 +61,32 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 			case AArch64_OP_REG_MSR:
 				printf("\t\toperands[%u].type: REG_MSR = 0x%x\n", i, op->reg);
 				break;
-			case AArch64_OP_PSTATE:
-				printf("\t\toperands[%u].type: PSTATE = 0x%x\n", i, op->pstate);
+			case AArch64_OP_PSTATEIMM0_1:
+				printf("\t\toperands[%u].type: PSTATE 0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
 				break;
-			case AArch64_OP_SYS:
-				printf("\t\toperands[%u].type: SYS = 0x%x\n", i, op->sys);
+			case AArch64_OP_PSTATEIMM0_15:
+				printf("\t\toperands[%u].type: PSTATE 0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
 				break;
-			case AArch64_OP_PREFETCH:
-				printf("\t\toperands[%u].type: PREFETCH = 0x%x\n", i, op->prefetch);
+			case AArch64_OP_AT:
+				printf("\t\toperands[%u].type: AT = 0x%x\n", i, op->sysop.alias.at);
 				break;
-			case AArch64_OP_BARRIER:
-				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->barrier);
+			case AArch64_OP_PRFM:
+				printf("\t\toperands[%u].type: PREFETCH = 0x%x\n", i, op->sysop.alias.prfm);
 				break;
+			case AArch64_OP_DB:
+				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->sysop.alias.db);
+				break;
+			// TODO Add the others.
 			case AArch64_OP_SVCR:
-				printf("\t\toperands[%u].type: SYS = 0x%x\n", i, op->sys);
-				if(op->svcr == AArch64_SVCR_SVCRSM)
+				if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSM)
 					printf("\t\t\toperands[%u].svcr: BIT = SM\n", i);
-				if(op->svcr == AArch64_SVCR_SVCRZA)
+				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRZA)
 					printf("\t\t\toperands[%u].svcr: BIT = ZA\n", i);
-				if(op->svcr == AArch64_SVCR_SVCRSMZA)
+				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSMZA)
 					printf("\t\t\toperands[%u].svcr: BIT = SM & ZA\n", i);
 				break;
-			case AArch64_OP_SME_INDEX:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->sme_index.reg));
-				if (op->sme_index.base != AArch64_REG_INVALID)
-					printf("\t\t\toperands[%u].index.base: REG = %s\n", i, cs_reg_name(handle, op->sme_index.base));
-				if (op->sme_index.disp != 0)
-					printf("\t\t\toperands[%u].index.disp: 0x%x\n", i, op->sme_index.disp);
-				break;
+			// TODO Wait for https://github.com/capstone-engine/capstone/pull/2026#issuecomment-1575635261
+			// Add SME
 		}
 		
 		access = op->access;
@@ -114,7 +112,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 		if (op->ext != AArch64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
 
-		if (op->vas != AArch64_VAS_INVALID)
+		if (op->vas != AArch64Layout_Invalid)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
 
 		if (op->vector_index != -1)
