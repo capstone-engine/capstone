@@ -1,6 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
+#include "capstone/aarch64.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -83,18 +84,22 @@ static void print_insn_detail(cs_insn *ins)
 			case AArch64_OP_REG_MSR:
 				printf("\t\toperands[%u].type: REG_MSR = 0x%x\n", i, op->reg);
 				break;
-			case AArch64_OP_PSTATE:
-				printf("\t\toperands[%u].type: PSTATE = 0x%x\n", i, op->pstate);
+			case AArch64_OP_PSTATEIMM0_1:
+				printf("\t\toperands[%u].type: PSTATE = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
 				break;
-			case AArch64_OP_SYS:
-				printf("\t\toperands[%u].type: SYS = 0x%x\n", i, op->sys);
+			case AArch64_OP_PSTATEIMM0_15:
+				printf("\t\toperands[%u].type: PSTATE = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
 				break;
-			case AArch64_OP_PREFETCH:
-				printf("\t\toperands[%u].type: PREFETCH = 0x%x\n", i, op->prefetch);
+			case AArch64_OP_AT:
+				printf("\t\toperands[%u].type: AT = 0x%x\n", i, op->sysop.alias.at);
 				break;
-			case AArch64_OP_BARRIER:
-				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->barrier);
+			case AArch64_OP_PRFM:
+				printf("\t\toperands[%u].type: PREFETCH = 0x%x\n", i, op->sysop.alias.prfm);
 				break;
+			case AArch64_OP_DB:
+				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->sysop.alias.db);
+				break;
+			// TODO Add the others.
 		}
 
 		access = op->access;
@@ -120,7 +125,7 @@ static void print_insn_detail(cs_insn *ins)
 		if (op->ext != AArch64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
 
-		if (op->vas != AArch64_VAS_INVALID)
+		if (op->vas != AArch64Layout_Invalid)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
 
 		if (op->vector_index != -1)
