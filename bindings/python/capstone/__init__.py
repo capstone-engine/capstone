@@ -726,7 +726,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_BPF:
             (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
         elif arch == CS_ARCH_RISCV:
-            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
+            (self.need_effective_addr, self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
         elif arch == CS_ARCH_TRICORE:
             (self.update_flags, self.operands) = tricore.get_arch_info(self._raw.detail.contents.arch.tricore)
 
