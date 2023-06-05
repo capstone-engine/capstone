@@ -70,82 +70,102 @@
 
 #ifdef GET_TLBITable_DECL
 const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByEncoding(uint16_t Encoding);
+const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByName(const char * Name);
 #endif
 
 #ifdef GET_AT_DECL
+const AArch64AT_AT *AArch64AT_lookupATByName(const char * Name);
 const AArch64AT_AT *AArch64AT_lookupATByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_BTI_DECL
+const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByName(const char * Name);
 const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_DB_DECL
+const AArch64DB_DB *AArch64DB_lookupDBByName(const char * Name);
 const AArch64DB_DB *AArch64DB_lookupDBByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_DBNXS_DECL
+const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByName(const char * Name);
 const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByEncoding(uint8_t Encoding);
 const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByImmValue(uint8_t ImmValue);
 #endif
 
 #ifdef GET_DC_DECL
+const AArch64DC_DC *AArch64DC_lookupDCByName(const char * Name);
 const AArch64DC_DC *AArch64DC_lookupDCByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_EXACTFPIMM_DECL
 const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByEnum(uint8_t Enum);
+const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByRepr(const char * Repr);
 #endif
 
 #ifdef GET_IC_DECL
+const AArch64IC_IC *AArch64IC_lookupICByName(const char * Name);
 const AArch64IC_IC *AArch64IC_lookupICByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_ISB_DECL
+const AArch64ISB_ISB *AArch64ISB_lookupISBByName(const char * Name);
 const AArch64ISB_ISB *AArch64ISB_lookupISBByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_PRFM_DECL
+const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByName(const char * Name);
 const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_PSB_DECL
+const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByName(const char * Name);
 const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_PSTATEIMM0_1_DECL
+const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByName(const char * Name);
 const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_PSTATEIMM0_15_DECL
+const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByName(const char * Name);
 const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_RPRFM_DECL
+const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByName(const char * Name);
 const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVCR_DECL
+const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByName(const char * Name);
 const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVEPREDPAT_DECL
+const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATByName(const char * Name);
 const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVEPRFM_DECL
+const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByName(const char * Name);
 const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SVEVECLENSPECIFIER_DECL
+const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByName(const char * Name);
 const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding);
 #endif
 
 #ifdef GET_SYSREG_DECL
+const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByName(const char * Name);
 const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
 #endif
 
 #ifdef GET_TSB_DECL
+const AArch64TSB_TSB *AArch64TSB_lookupTSBByName(const char * Name);
 const AArch64TSB_TSB *AArch64TSB_lookupTSBByEncoding(uint8_t Encoding);
 #endif
 
@@ -492,6 +512,181 @@ const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByEncoding(uint16_t Encoding) {
       return &TLBITable[Index[i].index];
 }
 
+const AArch64TLBI_TLBI *AArch64TLBI_lookupTLBIByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "ALLE1", 0 },
+    { "ALLE1IS", 1 },
+    { "ALLE1ISNXS", 2 },
+    { "ALLE1NXS", 3 },
+    { "ALLE1OS", 4 },
+    { "ALLE1OSNXS", 5 },
+    { "ALLE2", 6 },
+    { "ALLE2IS", 7 },
+    { "ALLE2ISNXS", 8 },
+    { "ALLE2NXS", 9 },
+    { "ALLE2OS", 10 },
+    { "ALLE2OSNXS", 11 },
+    { "ALLE3", 12 },
+    { "ALLE3IS", 13 },
+    { "ALLE3ISNXS", 14 },
+    { "ALLE3NXS", 15 },
+    { "ALLE3OS", 16 },
+    { "ALLE3OSNXS", 17 },
+    { "ASIDE1", 18 },
+    { "ASIDE1IS", 19 },
+    { "ASIDE1ISNXS", 20 },
+    { "ASIDE1NXS", 21 },
+    { "ASIDE1OS", 22 },
+    { "ASIDE1OSNXS", 23 },
+    { "IPAS2E1", 24 },
+    { "IPAS2E1IS", 25 },
+    { "IPAS2E1ISNXS", 26 },
+    { "IPAS2E1NXS", 27 },
+    { "IPAS2E1OS", 28 },
+    { "IPAS2E1OSNXS", 29 },
+    { "IPAS2LE1", 30 },
+    { "IPAS2LE1IS", 31 },
+    { "IPAS2LE1ISNXS", 32 },
+    { "IPAS2LE1NXS", 33 },
+    { "IPAS2LE1OS", 34 },
+    { "IPAS2LE1OSNXS", 35 },
+    { "PAALL", 36 },
+    { "PAALLNXS", 37 },
+    { "PAALLOS", 38 },
+    { "PAALLOSNXS", 39 },
+    { "RIPAS2E1", 40 },
+    { "RIPAS2E1IS", 41 },
+    { "RIPAS2E1ISNXS", 42 },
+    { "RIPAS2E1NXS", 43 },
+    { "RIPAS2E1OS", 44 },
+    { "RIPAS2E1OSNXS", 45 },
+    { "RIPAS2LE1", 46 },
+    { "RIPAS2LE1IS", 47 },
+    { "RIPAS2LE1ISNXS", 48 },
+    { "RIPAS2LE1NXS", 49 },
+    { "RIPAS2LE1OS", 50 },
+    { "RIPAS2LE1OSNXS", 51 },
+    { "RPALOS", 52 },
+    { "RPALOSNXS", 53 },
+    { "RPAOS", 54 },
+    { "RPAOSNXS", 55 },
+    { "RVAAE1", 56 },
+    { "RVAAE1IS", 57 },
+    { "RVAAE1ISNXS", 58 },
+    { "RVAAE1NXS", 59 },
+    { "RVAAE1OS", 60 },
+    { "RVAAE1OSNXS", 61 },
+    { "RVAALE1", 62 },
+    { "RVAALE1IS", 63 },
+    { "RVAALE1ISNXS", 64 },
+    { "RVAALE1NXS", 65 },
+    { "RVAALE1OS", 66 },
+    { "RVAALE1OSNXS", 67 },
+    { "RVAE1", 68 },
+    { "RVAE1IS", 69 },
+    { "RVAE1ISNXS", 70 },
+    { "RVAE1NXS", 71 },
+    { "RVAE1OS", 72 },
+    { "RVAE1OSNXS", 73 },
+    { "RVAE2", 74 },
+    { "RVAE2IS", 75 },
+    { "RVAE2ISNXS", 76 },
+    { "RVAE2NXS", 77 },
+    { "RVAE2OS", 78 },
+    { "RVAE2OSNXS", 79 },
+    { "RVAE3", 80 },
+    { "RVAE3IS", 81 },
+    { "RVAE3ISNXS", 82 },
+    { "RVAE3NXS", 83 },
+    { "RVAE3OS", 84 },
+    { "RVAE3OSNXS", 85 },
+    { "RVALE1", 86 },
+    { "RVALE1IS", 87 },
+    { "RVALE1ISNXS", 88 },
+    { "RVALE1NXS", 89 },
+    { "RVALE1OS", 90 },
+    { "RVALE1OSNXS", 91 },
+    { "RVALE2", 92 },
+    { "RVALE2IS", 93 },
+    { "RVALE2ISNXS", 94 },
+    { "RVALE2NXS", 95 },
+    { "RVALE2OS", 96 },
+    { "RVALE2OSNXS", 97 },
+    { "RVALE3", 98 },
+    { "RVALE3IS", 99 },
+    { "RVALE3ISNXS", 100 },
+    { "RVALE3NXS", 101 },
+    { "RVALE3OS", 102 },
+    { "RVALE3OSNXS", 103 },
+    { "VAAE1", 104 },
+    { "VAAE1IS", 105 },
+    { "VAAE1ISNXS", 106 },
+    { "VAAE1NXS", 107 },
+    { "VAAE1OS", 108 },
+    { "VAAE1OSNXS", 109 },
+    { "VAALE1", 110 },
+    { "VAALE1IS", 111 },
+    { "VAALE1ISNXS", 112 },
+    { "VAALE1NXS", 113 },
+    { "VAALE1OS", 114 },
+    { "VAALE1OSNXS", 115 },
+    { "VAE1", 116 },
+    { "VAE1IS", 117 },
+    { "VAE1ISNXS", 118 },
+    { "VAE1NXS", 119 },
+    { "VAE1OS", 120 },
+    { "VAE1OSNXS", 121 },
+    { "VAE2", 122 },
+    { "VAE2IS", 123 },
+    { "VAE2ISNXS", 124 },
+    { "VAE2NXS", 125 },
+    { "VAE2OS", 126 },
+    { "VAE2OSNXS", 127 },
+    { "VAE3", 128 },
+    { "VAE3IS", 129 },
+    { "VAE3ISNXS", 130 },
+    { "VAE3NXS", 131 },
+    { "VAE3OS", 132 },
+    { "VAE3OSNXS", 133 },
+    { "VALE1", 134 },
+    { "VALE1IS", 135 },
+    { "VALE1ISNXS", 136 },
+    { "VALE1NXS", 137 },
+    { "VALE1OS", 138 },
+    { "VALE1OSNXS", 139 },
+    { "VALE2", 140 },
+    { "VALE2IS", 141 },
+    { "VALE2ISNXS", 142 },
+    { "VALE2NXS", 143 },
+    { "VALE2OS", 144 },
+    { "VALE2OSNXS", 145 },
+    { "VALE3", 146 },
+    { "VALE3IS", 147 },
+    { "VALE3ISNXS", 148 },
+    { "VALE3NXS", 149 },
+    { "VALE3OS", 150 },
+    { "VALE3OSNXS", 151 },
+    { "VMALLE1", 152 },
+    { "VMALLE1IS", 153 },
+    { "VMALLE1ISNXS", 154 },
+    { "VMALLE1NXS", 155 },
+    { "VMALLE1OS", 156 },
+    { "VMALLE1OSNXS", 157 },
+    { "VMALLS12E1", 158 },
+    { "VMALLS12E1IS", 159 },
+    { "VMALLS12E1ISNXS", 160 },
+    { "VMALLS12E1NXS", 161 },
+    { "VMALLS12E1OS", 162 },
+    { "VMALLS12E1OSNXS", 163 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &TLBITable[Index[i].index];
+}
+
 #endif
 
 #ifdef GET_AT_IMPL
@@ -511,6 +706,31 @@ static const AArch64AT_AT ATsList[] = {
   { "S1E3R", { AArch64_AT_S1E3R }, 0x33C0,  {0}  }, // 12
   { "S1E3W", { AArch64_AT_S1E3W }, 0x33C1,  {0}  }, // 13
   };
+
+const AArch64AT_AT *AArch64AT_lookupATByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "S12E0R", 0 },
+    { "S12E0W", 1 },
+    { "S12E1R", 2 },
+    { "S12E1W", 3 },
+    { "S1E0R", 4 },
+    { "S1E0W", 5 },
+    { "S1E1R", 6 },
+    { "S1E1RP", 7 },
+    { "S1E1W", 8 },
+    { "S1E1WP", 9 },
+    { "S1E2R", 10 },
+    { "S1E2W", 11 },
+    { "S1E3R", 12 },
+    { "S1E3W", 13 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &ATsList[Index[i].index];
+}
 
 const AArch64AT_AT *AArch64AT_lookupATByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
@@ -546,6 +766,20 @@ static const AArch64BTIHint_BTI BTIsList[] = {
   { "jc", { AArch64_BTI_JC }, 0x6 }, // 2
   };
 
+const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "C", 0 },
+    { "J", 1 },
+    { "JC", 2 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &BTIsList[Index[i].index];
+}
+
 const AArch64BTIHint_BTI *AArch64BTIHint_lookupBTIByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x2, 0 },
@@ -577,6 +811,29 @@ static const AArch64DB_DB DBsList[] = {
   { "st", { AArch64_DB_ST }, 0xE }, // 10
   { "sy", { AArch64_DB_SY }, 0xF }, // 11
   };
+
+const AArch64DB_DB *AArch64DB_lookupDBByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "ISH", 0 },
+    { "ISHLD", 1 },
+    { "ISHST", 2 },
+    { "LD", 3 },
+    { "NSH", 4 },
+    { "NSHLD", 5 },
+    { "NSHST", 6 },
+    { "OSH", 7 },
+    { "OSHLD", 8 },
+    { "OSHST", 9 },
+    { "ST", 10 },
+    { "SY", 11 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &DBsList[Index[i].index];
+}
 
 const AArch64DB_DB *AArch64DB_lookupDBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
@@ -610,6 +867,21 @@ static const AArch64DBnXS_DBnXS DBnXSsList[] = {
   { "oshnxs", { AArch64_DBNXS_OSHNXS }, 0x3, 0x10,  {AArch64_FeatureXS}  }, // 2
   { "synxs", { AArch64_DBNXS_SYNXS }, 0xF, 0x1C,  {AArch64_FeatureXS}  }, // 3
   };
+
+const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "ISHNXS", 0 },
+    { "NSHNXS", 1 },
+    { "OSHNXS", 2 },
+    { "SYNXS", 3 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &DBnXSsList[Index[i].index];
+}
 
 const AArch64DBnXS_DBnXS *AArch64DBnXS_lookupDBnXSByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
@@ -677,6 +949,47 @@ static const AArch64DC_DC DCsList[] = {
   { "ZVA", { AArch64_DC_ZVA }, 0x1BA1,  {0}  }, // 29
   };
 
+const AArch64DC_DC *AArch64DC_lookupDCByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "CGDSW", 0 },
+    { "CGDVAC", 1 },
+    { "CGDVADP", 2 },
+    { "CGDVAP", 3 },
+    { "CGSW", 4 },
+    { "CGVAC", 5 },
+    { "CGVADP", 6 },
+    { "CGVAP", 7 },
+    { "CIGDPAE", 8 },
+    { "CIGDSW", 9 },
+    { "CIGDVAC", 10 },
+    { "CIGSW", 11 },
+    { "CIGVAC", 12 },
+    { "CIPAE", 13 },
+    { "CISW", 14 },
+    { "CIVAC", 15 },
+    { "CSW", 16 },
+    { "CVAC", 17 },
+    { "CVADP", 18 },
+    { "CVAP", 19 },
+    { "CVAU", 20 },
+    { "GVA", 21 },
+    { "GZVA", 22 },
+    { "IGDSW", 23 },
+    { "IGDVAC", 24 },
+    { "IGSW", 25 },
+    { "IGVAC", 26 },
+    { "ISW", 27 },
+    { "IVAC", 28 },
+    { "ZVA", 29 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &DCsList[Index[i].index];
+}
+
 const AArch64DC_DC *AArch64DC_lookupDCByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x3B1, 28 },
@@ -743,6 +1056,21 @@ const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByEnum(uin
       return &ExactFPImmsList[Index[i].index];
 }
 
+const AArch64ExactFPImm_ExactFPImm *AArch64ExactFPImm_lookupExactFPImmByRepr(const char * Repr) {
+  static const struct IndexTypeStr Index[] = {
+    { "0.0", 3 },
+    { "0.5", 0 },
+    { "1.0", 1 },
+    { "2.0", 2 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Repr);
+   if (i == -1)
+      return NULL;
+   else
+      return &ExactFPImmsList[Index[i].index];
+}
+
 #endif
 
 #ifdef GET_IC_IMPL
@@ -751,6 +1079,20 @@ static const AArch64IC_IC ICsList[] = {
   { "IALLUIS", { AArch64_IC_IALLUIS }, 0x388, false }, // 1
   { "IVAU", { AArch64_IC_IVAU }, 0x1BA9, true }, // 2
   };
+
+const AArch64IC_IC *AArch64IC_lookupICByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "IALLU", 0 },
+    { "IALLUIS", 1 },
+    { "IVAU", 2 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &ICsList[Index[i].index];
+}
 
 const AArch64IC_IC *AArch64IC_lookupICByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
@@ -772,6 +1114,18 @@ const AArch64IC_IC *AArch64IC_lookupICByEncoding(uint16_t Encoding) {
 static const AArch64ISB_ISB ISBsList[] = {
   { "sy", { AArch64_ISB_SY }, 0xF }, // 0
   };
+
+const AArch64ISB_ISB *AArch64ISB_lookupISBByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "SY", 0 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &ISBsList[Index[i].index];
+}
 
 const AArch64ISB_ISB *AArch64ISB_lookupISBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
@@ -815,6 +1169,41 @@ static const AArch64PRFM_PRFM PRFMsList[] = {
   { "pstslcstrm", { AArch64_PRFM_PSTSLCSTRM }, 0x17,  {AArch64_FeaturePRFM_SLC}  }, // 23
   };
 
+const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "PLDL1KEEP", 0 },
+    { "PLDL1STRM", 1 },
+    { "PLDL2KEEP", 2 },
+    { "PLDL2STRM", 3 },
+    { "PLDL3KEEP", 4 },
+    { "PLDL3STRM", 5 },
+    { "PLDSLCKEEP", 6 },
+    { "PLDSLCSTRM", 7 },
+    { "PLIL1KEEP", 8 },
+    { "PLIL1STRM", 9 },
+    { "PLIL2KEEP", 10 },
+    { "PLIL2STRM", 11 },
+    { "PLIL3KEEP", 12 },
+    { "PLIL3STRM", 13 },
+    { "PLISLCKEEP", 14 },
+    { "PLISLCSTRM", 15 },
+    { "PSTL1KEEP", 16 },
+    { "PSTL1STRM", 17 },
+    { "PSTL2KEEP", 18 },
+    { "PSTL2STRM", 19 },
+    { "PSTL3KEEP", 20 },
+    { "PSTL3STRM", 21 },
+    { "PSTSLCKEEP", 22 },
+    { "PSTSLCSTRM", 23 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &PRFMsList[Index[i].index];
+}
+
 const AArch64PRFM_PRFM *AArch64PRFM_lookupPRFMByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
@@ -857,6 +1246,18 @@ static const AArch64PSBHint_PSB PSBsList[] = {
   { "csync", { AArch64_PSB_CSYNC }, 0x11 }, // 0
   };
 
+const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "CSYNC", 0 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &PSBsList[Index[i].index];
+}
+
 const AArch64PSBHint_PSB *AArch64PSBHint_lookupPSBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x11, 0 },
@@ -876,6 +1277,19 @@ static const AArch64PState_PStateImm0_1 PStateImm0_1sList[] = {
   { "ALLINT", { AArch64_PSTATEIMM0_1_ALLINT }, 0x8,  {AArch64_FeatureNMI}  }, // 0
   { "PM", { AArch64_PSTATEIMM0_1_PM }, 0x48,  {0}  }, // 1
   };
+
+const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "ALLINT", 0 },
+    { "PM", 1 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &PStateImm0_1sList[Index[i].index];
+}
 
 const AArch64PState_PStateImm0_1 *AArch64PState_lookupPStateImm0_1ByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
@@ -903,6 +1317,25 @@ static const AArch64PState_PStateImm0_15 PStateImm0_15sList[] = {
   { "TCO", { AArch64_PSTATEIMM0_15_TCO }, 0x1C,  {AArch64_FeatureMTE}  }, // 6
   { "UAO", { AArch64_PSTATEIMM0_15_UAO }, 0x3,  {AArch64_FeaturePsUAO}  }, // 7
   };
+
+const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "DAIFCLR", 0 },
+    { "DAIFSET", 1 },
+    { "DIT", 2 },
+    { "PAN", 3 },
+    { "SPSEL", 4 },
+    { "SSBS", 5 },
+    { "TCO", 6 },
+    { "UAO", 7 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &PStateImm0_15sList[Index[i].index];
+}
 
 const AArch64PState_PStateImm0_15 *AArch64PState_lookupPStateImm0_15ByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
@@ -933,6 +1366,21 @@ static const AArch64RPRFM_RPRFM RPRFMsList[] = {
   { "pststrm", { AArch64_RPRFM_PSTSTRM }, 0x5,  {0}  }, // 3
   };
 
+const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "PLDKEEP", 0 },
+    { "PLDSTRM", 1 },
+    { "PSTKEEP", 2 },
+    { "PSTSTRM", 3 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &RPRFMsList[Index[i].index];
+}
+
 const AArch64RPRFM_RPRFM *AArch64RPRFM_lookupRPRFMByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
@@ -956,6 +1404,20 @@ static const AArch64SVCR_SVCR SVCRsList[] = {
   { "SVCRSMZA", { AArch64_SVCR_SVCRSMZA }, 0x3,  {AArch64_FeatureSME}  }, // 1
   { "SVCRZA", { AArch64_SVCR_SVCRZA }, 0x2,  {AArch64_FeatureSME}  }, // 2
   };
+
+const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "SVCRSM", 0 },
+    { "SVCRSMZA", 1 },
+    { "SVCRZA", 2 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &SVCRsList[Index[i].index];
+}
 
 const AArch64SVCR_SVCR *AArch64SVCR_lookupSVCRByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
@@ -993,6 +1455,34 @@ static const AArch64SVEPredPattern_SVEPREDPAT SVEPREDPATsList[] = {
   { "vl7", { AArch64_SVEPREDPAT_VL7 }, 0x7 }, // 15
   { "vl8", { AArch64_SVEPREDPAT_VL8 }, 0x8 }, // 16
   };
+
+const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "ALL", 0 },
+    { "MUL3", 1 },
+    { "MUL4", 2 },
+    { "POW2", 3 },
+    { "VL1", 4 },
+    { "VL128", 5 },
+    { "VL16", 6 },
+    { "VL2", 7 },
+    { "VL256", 8 },
+    { "VL3", 9 },
+    { "VL32", 10 },
+    { "VL4", 11 },
+    { "VL5", 12 },
+    { "VL6", 13 },
+    { "VL64", 14 },
+    { "VL7", 15 },
+    { "VL8", 16 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &SVEPREDPATsList[Index[i].index];
+}
 
 const AArch64SVEPredPattern_SVEPREDPAT *AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
@@ -1040,6 +1530,29 @@ static const AArch64SVEPRFM_SVEPRFM SVEPRFMsList[] = {
   { "pstl3strm", { AArch64_SVEPRFM_PSTL3STRM }, 0xD,  {AArch64_FeatureSVE}  }, // 11
   };
 
+const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "PLDL1KEEP", 0 },
+    { "PLDL1STRM", 1 },
+    { "PLDL2KEEP", 2 },
+    { "PLDL2STRM", 3 },
+    { "PLDL3KEEP", 4 },
+    { "PLDL3STRM", 5 },
+    { "PSTL1KEEP", 6 },
+    { "PSTL1STRM", 7 },
+    { "PSTL2KEEP", 8 },
+    { "PSTL2STRM", 9 },
+    { "PSTL3KEEP", 10 },
+    { "PSTL3STRM", 11 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &SVEPRFMsList[Index[i].index];
+}
+
 const AArch64SVEPRFM_SVEPRFM *AArch64SVEPRFM_lookupSVEPRFMByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x0, 0 },
@@ -1070,6 +1583,19 @@ static const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER SVEVECLENSPECIFIERsLis
   { "vlx2", { AArch64_SVEVECLENSPECIFIER_VLX2 }, 0x0 }, // 0
   { "vlx4", { AArch64_SVEVECLENSPECIFIER_VLX4 }, 0x1 }, // 1
   };
+
+const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "VLX2", 0 },
+    { "VLX4", 1 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &SVEVECLENSPECIFIERsList[Index[i].index];
+}
 
 const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
@@ -2280,6 +2806,1207 @@ static const AArch64SysReg_SysReg SysRegsList[] = {
   { "ZCR_EL3", { AArch64_SYSREG_ZCR_EL3 }, "ZCR_EL3", { AArch64_SYSREG_ZCR_EL3 }, 0xF090, true, true,  {AArch64_FeatureSVE}  }, // 1189
   };
 
+const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "ACCDATA_EL1", 0 },
+    { "ACTLR_EL1", 1 },
+    { "ACTLR_EL2", 2 },
+    { "ACTLR_EL3", 3 },
+    { "AFSR0_EL1", 4 },
+    { "AFSR0_EL12", 5 },
+    { "AFSR0_EL2", 6 },
+    { "AFSR0_EL3", 7 },
+    { "AFSR1_EL1", 8 },
+    { "AFSR1_EL12", 9 },
+    { "AFSR1_EL2", 10 },
+    { "AFSR1_EL3", 11 },
+    { "AIDR_EL1", 12 },
+    { "ALLINT", 13 },
+    { "AMAIR2_EL1", 14 },
+    { "AMAIR2_EL12", 15 },
+    { "AMAIR2_EL2", 16 },
+    { "AMAIR2_EL3", 17 },
+    { "AMAIR_EL1", 18 },
+    { "AMAIR_EL12", 19 },
+    { "AMAIR_EL2", 20 },
+    { "AMAIR_EL3", 21 },
+    { "AMCFGR_EL0", 22 },
+    { "AMCG1IDR_EL0", 23 },
+    { "AMCGCR_EL0", 24 },
+    { "AMCNTENCLR0_EL0", 25 },
+    { "AMCNTENCLR1_EL0", 26 },
+    { "AMCNTENSET0_EL0", 27 },
+    { "AMCNTENSET1_EL0", 28 },
+    { "AMCR_EL0", 29 },
+    { "AMEVCNTR00_EL0", 30 },
+    { "AMEVCNTR01_EL0", 31 },
+    { "AMEVCNTR02_EL0", 32 },
+    { "AMEVCNTR03_EL0", 33 },
+    { "AMEVCNTR10_EL0", 34 },
+    { "AMEVCNTR110_EL0", 35 },
+    { "AMEVCNTR111_EL0", 36 },
+    { "AMEVCNTR112_EL0", 37 },
+    { "AMEVCNTR113_EL0", 38 },
+    { "AMEVCNTR114_EL0", 39 },
+    { "AMEVCNTR115_EL0", 40 },
+    { "AMEVCNTR11_EL0", 41 },
+    { "AMEVCNTR12_EL0", 42 },
+    { "AMEVCNTR13_EL0", 43 },
+    { "AMEVCNTR14_EL0", 44 },
+    { "AMEVCNTR15_EL0", 45 },
+    { "AMEVCNTR16_EL0", 46 },
+    { "AMEVCNTR17_EL0", 47 },
+    { "AMEVCNTR18_EL0", 48 },
+    { "AMEVCNTR19_EL0", 49 },
+    { "AMEVCNTVOFF00_EL2", 50 },
+    { "AMEVCNTVOFF010_EL2", 51 },
+    { "AMEVCNTVOFF011_EL2", 52 },
+    { "AMEVCNTVOFF012_EL2", 53 },
+    { "AMEVCNTVOFF013_EL2", 54 },
+    { "AMEVCNTVOFF014_EL2", 55 },
+    { "AMEVCNTVOFF015_EL2", 56 },
+    { "AMEVCNTVOFF01_EL2", 57 },
+    { "AMEVCNTVOFF02_EL2", 58 },
+    { "AMEVCNTVOFF03_EL2", 59 },
+    { "AMEVCNTVOFF04_EL2", 60 },
+    { "AMEVCNTVOFF05_EL2", 61 },
+    { "AMEVCNTVOFF06_EL2", 62 },
+    { "AMEVCNTVOFF07_EL2", 63 },
+    { "AMEVCNTVOFF08_EL2", 64 },
+    { "AMEVCNTVOFF09_EL2", 65 },
+    { "AMEVCNTVOFF10_EL2", 66 },
+    { "AMEVCNTVOFF110_EL2", 67 },
+    { "AMEVCNTVOFF111_EL2", 68 },
+    { "AMEVCNTVOFF112_EL2", 69 },
+    { "AMEVCNTVOFF113_EL2", 70 },
+    { "AMEVCNTVOFF114_EL2", 71 },
+    { "AMEVCNTVOFF115_EL2", 72 },
+    { "AMEVCNTVOFF11_EL2", 73 },
+    { "AMEVCNTVOFF12_EL2", 74 },
+    { "AMEVCNTVOFF13_EL2", 75 },
+    { "AMEVCNTVOFF14_EL2", 76 },
+    { "AMEVCNTVOFF15_EL2", 77 },
+    { "AMEVCNTVOFF16_EL2", 78 },
+    { "AMEVCNTVOFF17_EL2", 79 },
+    { "AMEVCNTVOFF18_EL2", 80 },
+    { "AMEVCNTVOFF19_EL2", 81 },
+    { "AMEVTYPER00_EL0", 82 },
+    { "AMEVTYPER01_EL0", 83 },
+    { "AMEVTYPER02_EL0", 84 },
+    { "AMEVTYPER03_EL0", 85 },
+    { "AMEVTYPER10_EL0", 86 },
+    { "AMEVTYPER110_EL0", 87 },
+    { "AMEVTYPER111_EL0", 88 },
+    { "AMEVTYPER112_EL0", 89 },
+    { "AMEVTYPER113_EL0", 90 },
+    { "AMEVTYPER114_EL0", 91 },
+    { "AMEVTYPER115_EL0", 92 },
+    { "AMEVTYPER11_EL0", 93 },
+    { "AMEVTYPER12_EL0", 94 },
+    { "AMEVTYPER13_EL0", 95 },
+    { "AMEVTYPER14_EL0", 96 },
+    { "AMEVTYPER15_EL0", 97 },
+    { "AMEVTYPER16_EL0", 98 },
+    { "AMEVTYPER17_EL0", 99 },
+    { "AMEVTYPER18_EL0", 100 },
+    { "AMEVTYPER19_EL0", 101 },
+    { "AMUSERENR_EL0", 102 },
+    { "APDAKEYHI_EL1", 103 },
+    { "APDAKEYLO_EL1", 104 },
+    { "APDBKEYHI_EL1", 105 },
+    { "APDBKEYLO_EL1", 106 },
+    { "APGAKEYHI_EL1", 107 },
+    { "APGAKEYLO_EL1", 108 },
+    { "APIAKEYHI_EL1", 109 },
+    { "APIAKEYLO_EL1", 110 },
+    { "APIBKEYHI_EL1", 111 },
+    { "APIBKEYLO_EL1", 112 },
+    { "BRBCR_EL1", 113 },
+    { "BRBCR_EL12", 114 },
+    { "BRBCR_EL2", 115 },
+    { "BRBFCR_EL1", 116 },
+    { "BRBIDR0_EL1", 117 },
+    { "BRBINF0_EL1", 118 },
+    { "BRBINF10_EL1", 119 },
+    { "BRBINF11_EL1", 120 },
+    { "BRBINF12_EL1", 121 },
+    { "BRBINF13_EL1", 122 },
+    { "BRBINF14_EL1", 123 },
+    { "BRBINF15_EL1", 124 },
+    { "BRBINF16_EL1", 125 },
+    { "BRBINF17_EL1", 126 },
+    { "BRBINF18_EL1", 127 },
+    { "BRBINF19_EL1", 128 },
+    { "BRBINF1_EL1", 129 },
+    { "BRBINF20_EL1", 130 },
+    { "BRBINF21_EL1", 131 },
+    { "BRBINF22_EL1", 132 },
+    { "BRBINF23_EL1", 133 },
+    { "BRBINF24_EL1", 134 },
+    { "BRBINF25_EL1", 135 },
+    { "BRBINF26_EL1", 136 },
+    { "BRBINF27_EL1", 137 },
+    { "BRBINF28_EL1", 138 },
+    { "BRBINF29_EL1", 139 },
+    { "BRBINF2_EL1", 140 },
+    { "BRBINF30_EL1", 141 },
+    { "BRBINF31_EL1", 142 },
+    { "BRBINF3_EL1", 143 },
+    { "BRBINF4_EL1", 144 },
+    { "BRBINF5_EL1", 145 },
+    { "BRBINF6_EL1", 146 },
+    { "BRBINF7_EL1", 147 },
+    { "BRBINF8_EL1", 148 },
+    { "BRBINF9_EL1", 149 },
+    { "BRBINFINJ_EL1", 150 },
+    { "BRBSRC0_EL1", 151 },
+    { "BRBSRC10_EL1", 152 },
+    { "BRBSRC11_EL1", 153 },
+    { "BRBSRC12_EL1", 154 },
+    { "BRBSRC13_EL1", 155 },
+    { "BRBSRC14_EL1", 156 },
+    { "BRBSRC15_EL1", 157 },
+    { "BRBSRC16_EL1", 158 },
+    { "BRBSRC17_EL1", 159 },
+    { "BRBSRC18_EL1", 160 },
+    { "BRBSRC19_EL1", 161 },
+    { "BRBSRC1_EL1", 162 },
+    { "BRBSRC20_EL1", 163 },
+    { "BRBSRC21_EL1", 164 },
+    { "BRBSRC22_EL1", 165 },
+    { "BRBSRC23_EL1", 166 },
+    { "BRBSRC24_EL1", 167 },
+    { "BRBSRC25_EL1", 168 },
+    { "BRBSRC26_EL1", 169 },
+    { "BRBSRC27_EL1", 170 },
+    { "BRBSRC28_EL1", 171 },
+    { "BRBSRC29_EL1", 172 },
+    { "BRBSRC2_EL1", 173 },
+    { "BRBSRC30_EL1", 174 },
+    { "BRBSRC31_EL1", 175 },
+    { "BRBSRC3_EL1", 176 },
+    { "BRBSRC4_EL1", 177 },
+    { "BRBSRC5_EL1", 178 },
+    { "BRBSRC6_EL1", 179 },
+    { "BRBSRC7_EL1", 180 },
+    { "BRBSRC8_EL1", 181 },
+    { "BRBSRC9_EL1", 182 },
+    { "BRBSRCINJ_EL1", 183 },
+    { "BRBTGT0_EL1", 184 },
+    { "BRBTGT10_EL1", 185 },
+    { "BRBTGT11_EL1", 186 },
+    { "BRBTGT12_EL1", 187 },
+    { "BRBTGT13_EL1", 188 },
+    { "BRBTGT14_EL1", 189 },
+    { "BRBTGT15_EL1", 190 },
+    { "BRBTGT16_EL1", 191 },
+    { "BRBTGT17_EL1", 192 },
+    { "BRBTGT18_EL1", 193 },
+    { "BRBTGT19_EL1", 194 },
+    { "BRBTGT1_EL1", 195 },
+    { "BRBTGT20_EL1", 196 },
+    { "BRBTGT21_EL1", 197 },
+    { "BRBTGT22_EL1", 198 },
+    { "BRBTGT23_EL1", 199 },
+    { "BRBTGT24_EL1", 200 },
+    { "BRBTGT25_EL1", 201 },
+    { "BRBTGT26_EL1", 202 },
+    { "BRBTGT27_EL1", 203 },
+    { "BRBTGT28_EL1", 204 },
+    { "BRBTGT29_EL1", 205 },
+    { "BRBTGT2_EL1", 206 },
+    { "BRBTGT30_EL1", 207 },
+    { "BRBTGT31_EL1", 208 },
+    { "BRBTGT3_EL1", 209 },
+    { "BRBTGT4_EL1", 210 },
+    { "BRBTGT5_EL1", 211 },
+    { "BRBTGT6_EL1", 212 },
+    { "BRBTGT7_EL1", 213 },
+    { "BRBTGT8_EL1", 214 },
+    { "BRBTGT9_EL1", 215 },
+    { "BRBTGTINJ_EL1", 216 },
+    { "BRBTS_EL1", 217 },
+    { "CCSIDR2_EL1", 218 },
+    { "CCSIDR_EL1", 219 },
+    { "CLIDR_EL1", 220 },
+    { "CNTFRQ_EL0", 221 },
+    { "CNTHCTL_EL2", 222 },
+    { "CNTHPS_CTL_EL2", 223 },
+    { "CNTHPS_CVAL_EL2", 224 },
+    { "CNTHPS_TVAL_EL2", 225 },
+    { "CNTHP_CTL_EL2", 226 },
+    { "CNTHP_CVAL_EL2", 227 },
+    { "CNTHP_TVAL_EL2", 228 },
+    { "CNTHVS_CTL_EL2", 229 },
+    { "CNTHVS_CVAL_EL2", 230 },
+    { "CNTHVS_TVAL_EL2", 231 },
+    { "CNTHV_CTL_EL2", 232 },
+    { "CNTHV_CVAL_EL2", 233 },
+    { "CNTHV_TVAL_EL2", 234 },
+    { "CNTISCALE_EL2", 235 },
+    { "CNTKCTL_EL1", 236 },
+    { "CNTKCTL_EL12", 237 },
+    { "CNTPCTSS_EL0", 238 },
+    { "CNTPCT_EL0", 239 },
+    { "CNTPOFF_EL2", 240 },
+    { "CNTPS_CTL_EL1", 241 },
+    { "CNTPS_CVAL_EL1", 242 },
+    { "CNTPS_TVAL_EL1", 243 },
+    { "CNTP_CTL_EL0", 244 },
+    { "CNTP_CTL_EL02", 245 },
+    { "CNTP_CVAL_EL0", 246 },
+    { "CNTP_CVAL_EL02", 247 },
+    { "CNTP_TVAL_EL0", 248 },
+    { "CNTP_TVAL_EL02", 249 },
+    { "CNTSCALE_EL2", 250 },
+    { "CNTVCTSS_EL0", 251 },
+    { "CNTVCT_EL0", 252 },
+    { "CNTVFRQ_EL2", 253 },
+    { "CNTVOFF_EL2", 254 },
+    { "CNTV_CTL_EL0", 255 },
+    { "CNTV_CTL_EL02", 256 },
+    { "CNTV_CVAL_EL0", 257 },
+    { "CNTV_CVAL_EL02", 258 },
+    { "CNTV_TVAL_EL0", 259 },
+    { "CNTV_TVAL_EL02", 260 },
+    { "CONTEXTIDR_EL1", 261 },
+    { "CONTEXTIDR_EL12", 262 },
+    { "CONTEXTIDR_EL2", 263 },
+    { "CPACR_EL1", 264 },
+    { "CPACR_EL12", 265 },
+    { "CPM_IOACC_CTL_EL3", 266 },
+    { "CPTR_EL2", 267 },
+    { "CPTR_EL3", 268 },
+    { "CSSELR_EL1", 269 },
+    { "CTR_EL0", 270 },
+    { "CURRENTEL", 271 },
+    { "DACR32_EL2", 272 },
+    { "DAIF", 273 },
+    { "DBGAUTHSTATUS_EL1", 274 },
+    { "DBGBCR0_EL1", 275 },
+    { "DBGBCR10_EL1", 276 },
+    { "DBGBCR11_EL1", 277 },
+    { "DBGBCR12_EL1", 278 },
+    { "DBGBCR13_EL1", 279 },
+    { "DBGBCR14_EL1", 280 },
+    { "DBGBCR15_EL1", 281 },
+    { "DBGBCR1_EL1", 282 },
+    { "DBGBCR2_EL1", 283 },
+    { "DBGBCR3_EL1", 284 },
+    { "DBGBCR4_EL1", 285 },
+    { "DBGBCR5_EL1", 286 },
+    { "DBGBCR6_EL1", 287 },
+    { "DBGBCR7_EL1", 288 },
+    { "DBGBCR8_EL1", 289 },
+    { "DBGBCR9_EL1", 290 },
+    { "DBGBVR0_EL1", 291 },
+    { "DBGBVR10_EL1", 292 },
+    { "DBGBVR11_EL1", 293 },
+    { "DBGBVR12_EL1", 294 },
+    { "DBGBVR13_EL1", 295 },
+    { "DBGBVR14_EL1", 296 },
+    { "DBGBVR15_EL1", 297 },
+    { "DBGBVR1_EL1", 298 },
+    { "DBGBVR2_EL1", 299 },
+    { "DBGBVR3_EL1", 300 },
+    { "DBGBVR4_EL1", 301 },
+    { "DBGBVR5_EL1", 302 },
+    { "DBGBVR6_EL1", 303 },
+    { "DBGBVR7_EL1", 304 },
+    { "DBGBVR8_EL1", 305 },
+    { "DBGBVR9_EL1", 306 },
+    { "DBGCLAIMCLR_EL1", 307 },
+    { "DBGCLAIMSET_EL1", 308 },
+    { "DBGDTRRX_EL0", 309 },
+    { "DBGDTRTX_EL0", 310 },
+    { "DBGDTR_EL0", 311 },
+    { "DBGPRCR_EL1", 312 },
+    { "DBGVCR32_EL2", 313 },
+    { "DBGWCR0_EL1", 314 },
+    { "DBGWCR10_EL1", 315 },
+    { "DBGWCR11_EL1", 316 },
+    { "DBGWCR12_EL1", 317 },
+    { "DBGWCR13_EL1", 318 },
+    { "DBGWCR14_EL1", 319 },
+    { "DBGWCR15_EL1", 320 },
+    { "DBGWCR1_EL1", 321 },
+    { "DBGWCR2_EL1", 322 },
+    { "DBGWCR3_EL1", 323 },
+    { "DBGWCR4_EL1", 324 },
+    { "DBGWCR5_EL1", 325 },
+    { "DBGWCR6_EL1", 326 },
+    { "DBGWCR7_EL1", 327 },
+    { "DBGWCR8_EL1", 328 },
+    { "DBGWCR9_EL1", 329 },
+    { "DBGWVR0_EL1", 330 },
+    { "DBGWVR10_EL1", 331 },
+    { "DBGWVR11_EL1", 332 },
+    { "DBGWVR12_EL1", 333 },
+    { "DBGWVR13_EL1", 334 },
+    { "DBGWVR14_EL1", 335 },
+    { "DBGWVR15_EL1", 336 },
+    { "DBGWVR1_EL1", 337 },
+    { "DBGWVR2_EL1", 338 },
+    { "DBGWVR3_EL1", 339 },
+    { "DBGWVR4_EL1", 340 },
+    { "DBGWVR5_EL1", 341 },
+    { "DBGWVR6_EL1", 342 },
+    { "DBGWVR7_EL1", 343 },
+    { "DBGWVR8_EL1", 344 },
+    { "DBGWVR9_EL1", 345 },
+    { "DCZID_EL0", 346 },
+    { "DISR_EL1", 347 },
+    { "DIT", 348 },
+    { "DLR_EL0", 349 },
+    { "DSPSR_EL0", 350 },
+    { "ELR_EL1", 351 },
+    { "ELR_EL12", 352 },
+    { "ELR_EL2", 353 },
+    { "ELR_EL3", 354 },
+    { "ERRIDR_EL1", 355 },
+    { "ERRSELR_EL1", 356 },
+    { "ERXADDR_EL1", 357 },
+    { "ERXCTLR_EL1", 358 },
+    { "ERXFR_EL1", 359 },
+    { "ERXGSR_EL1", 360 },
+    { "ERXMISC0_EL1", 361 },
+    { "ERXMISC1_EL1", 362 },
+    { "ERXMISC2_EL1", 363 },
+    { "ERXMISC3_EL1", 364 },
+    { "ERXPFGCDN_EL1", 365 },
+    { "ERXPFGCTL_EL1", 366 },
+    { "ERXPFGF_EL1", 367 },
+    { "ERXSTATUS_EL1", 368 },
+    { "ESR_EL1", 369 },
+    { "ESR_EL12", 370 },
+    { "ESR_EL2", 371 },
+    { "ESR_EL3", 372 },
+    { "FAR_EL1", 373 },
+    { "FAR_EL12", 374 },
+    { "FAR_EL2", 375 },
+    { "FAR_EL3", 376 },
+    { "FPCR", 377 },
+    { "FPEXC32_EL2", 378 },
+    { "FPSR", 379 },
+    { "GCR_EL1", 380 },
+    { "GMID_EL1", 381 },
+    { "GPCCR_EL3", 382 },
+    { "GPTBR_EL3", 383 },
+    { "HACR_EL2", 384 },
+    { "HAFGRTR_EL2", 385 },
+    { "HCRX_EL2", 386 },
+    { "HCR_EL2", 387 },
+    { "HDFGRTR2_EL2", 388 },
+    { "HDFGRTR_EL2", 389 },
+    { "HDFGWTR2_EL2", 390 },
+    { "HDFGWTR_EL2", 391 },
+    { "HFGITR2_EL2", 392 },
+    { "HFGITR_EL2", 393 },
+    { "HFGRTR2_EL2", 394 },
+    { "HFGRTR_EL2", 395 },
+    { "HFGWTR2_EL2", 396 },
+    { "HFGWTR_EL2", 397 },
+    { "HPFAR_EL2", 398 },
+    { "HSTR_EL2", 399 },
+    { "ICC_AP0R0_EL1", 400 },
+    { "ICC_AP0R1_EL1", 401 },
+    { "ICC_AP0R2_EL1", 402 },
+    { "ICC_AP0R3_EL1", 403 },
+    { "ICC_AP1R0_EL1", 404 },
+    { "ICC_AP1R1_EL1", 405 },
+    { "ICC_AP1R2_EL1", 406 },
+    { "ICC_AP1R3_EL1", 407 },
+    { "ICC_ASGI1R_EL1", 408 },
+    { "ICC_BPR0_EL1", 409 },
+    { "ICC_BPR1_EL1", 410 },
+    { "ICC_CTLR_EL1", 411 },
+    { "ICC_CTLR_EL3", 412 },
+    { "ICC_DIR_EL1", 413 },
+    { "ICC_EOIR0_EL1", 414 },
+    { "ICC_EOIR1_EL1", 415 },
+    { "ICC_HPPIR0_EL1", 416 },
+    { "ICC_HPPIR1_EL1", 417 },
+    { "ICC_IAR0_EL1", 418 },
+    { "ICC_IAR1_EL1", 419 },
+    { "ICC_IGRPEN0_EL1", 420 },
+    { "ICC_IGRPEN1_EL1", 421 },
+    { "ICC_IGRPEN1_EL3", 422 },
+    { "ICC_NMIAR1_EL1", 423 },
+    { "ICC_PMR_EL1", 424 },
+    { "ICC_RPR_EL1", 425 },
+    { "ICC_SGI0R_EL1", 426 },
+    { "ICC_SGI1R_EL1", 427 },
+    { "ICC_SRE_EL1", 428 },
+    { "ICC_SRE_EL2", 429 },
+    { "ICC_SRE_EL3", 430 },
+    { "ICH_AP0R0_EL2", 431 },
+    { "ICH_AP0R1_EL2", 432 },
+    { "ICH_AP0R2_EL2", 433 },
+    { "ICH_AP0R3_EL2", 434 },
+    { "ICH_AP1R0_EL2", 435 },
+    { "ICH_AP1R1_EL2", 436 },
+    { "ICH_AP1R2_EL2", 437 },
+    { "ICH_AP1R3_EL2", 438 },
+    { "ICH_EISR_EL2", 439 },
+    { "ICH_ELRSR_EL2", 440 },
+    { "ICH_HCR_EL2", 441 },
+    { "ICH_LR0_EL2", 442 },
+    { "ICH_LR10_EL2", 443 },
+    { "ICH_LR11_EL2", 444 },
+    { "ICH_LR12_EL2", 445 },
+    { "ICH_LR13_EL2", 446 },
+    { "ICH_LR14_EL2", 447 },
+    { "ICH_LR15_EL2", 448 },
+    { "ICH_LR1_EL2", 449 },
+    { "ICH_LR2_EL2", 450 },
+    { "ICH_LR3_EL2", 451 },
+    { "ICH_LR4_EL2", 452 },
+    { "ICH_LR5_EL2", 453 },
+    { "ICH_LR6_EL2", 454 },
+    { "ICH_LR7_EL2", 455 },
+    { "ICH_LR8_EL2", 456 },
+    { "ICH_LR9_EL2", 457 },
+    { "ICH_MISR_EL2", 458 },
+    { "ICH_VMCR_EL2", 459 },
+    { "ICH_VTR_EL2", 460 },
+    { "ID_AA64AFR0_EL1", 461 },
+    { "ID_AA64AFR1_EL1", 462 },
+    { "ID_AA64DFR0_EL1", 463 },
+    { "ID_AA64DFR1_EL1", 464 },
+    { "ID_AA64ISAR0_EL1", 465 },
+    { "ID_AA64ISAR1_EL1", 466 },
+    { "ID_AA64ISAR2_EL1", 467 },
+    { "ID_AA64MMFR0_EL1", 468 },
+    { "ID_AA64MMFR1_EL1", 469 },
+    { "ID_AA64MMFR2_EL1", 470 },
+    { "ID_AA64MMFR3_EL1", 471 },
+    { "ID_AA64MMFR4_EL1", 472 },
+    { "ID_AA64PFR0_EL1", 473 },
+    { "ID_AA64PFR1_EL1", 474 },
+    { "ID_AA64PFR2_EL1", 475 },
+    { "ID_AA64SMFR0_EL1", 476 },
+    { "ID_AA64ZFR0_EL1", 477 },
+    { "ID_AFR0_EL1", 478 },
+    { "ID_DFR0_EL1", 479 },
+    { "ID_DFR1_EL1", 480 },
+    { "ID_ISAR0_EL1", 481 },
+    { "ID_ISAR1_EL1", 482 },
+    { "ID_ISAR2_EL1", 483 },
+    { "ID_ISAR3_EL1", 484 },
+    { "ID_ISAR4_EL1", 485 },
+    { "ID_ISAR5_EL1", 486 },
+    { "ID_ISAR6_EL1", 487 },
+    { "ID_MMFR0_EL1", 488 },
+    { "ID_MMFR1_EL1", 489 },
+    { "ID_MMFR2_EL1", 490 },
+    { "ID_MMFR3_EL1", 491 },
+    { "ID_MMFR4_EL1", 492 },
+    { "ID_MMFR5_EL1", 493 },
+    { "ID_PFR0_EL1", 494 },
+    { "ID_PFR1_EL1", 495 },
+    { "ID_PFR2_EL1", 496 },
+    { "IFSR32_EL2", 497 },
+    { "ISR_EL1", 498 },
+    { "LORC_EL1", 499 },
+    { "LOREA_EL1", 500 },
+    { "LORID_EL1", 501 },
+    { "LORN_EL1", 502 },
+    { "LORSA_EL1", 503 },
+    { "MAIR2_EL1", 504 },
+    { "MAIR2_EL12", 505 },
+    { "MAIR2_EL2", 506 },
+    { "MAIR2_EL3", 507 },
+    { "MAIR_EL1", 508 },
+    { "MAIR_EL12", 509 },
+    { "MAIR_EL2", 510 },
+    { "MAIR_EL3", 511 },
+    { "MDCCINT_EL1", 512 },
+    { "MDCCSR_EL0", 513 },
+    { "MDCR_EL2", 514 },
+    { "MDCR_EL3", 515 },
+    { "MDRAR_EL1", 516 },
+    { "MDSCR_EL1", 517 },
+    { "MDSELR_EL1", 518 },
+    { "MECIDR_EL2", 519 },
+    { "MECID_A0_EL2", 520 },
+    { "MECID_A1_EL2", 521 },
+    { "MECID_P0_EL2", 522 },
+    { "MECID_P1_EL2", 523 },
+    { "MECID_RL_A_EL3", 524 },
+    { "MFAR_EL3", 525 },
+    { "MIDR_EL1", 526 },
+    { "MPAM0_EL1", 527 },
+    { "MPAM1_EL1", 528 },
+    { "MPAM1_EL12", 529 },
+    { "MPAM2_EL2", 530 },
+    { "MPAM3_EL3", 531 },
+    { "MPAMHCR_EL2", 532 },
+    { "MPAMIDR_EL1", 533 },
+    { "MPAMSM_EL1", 534 },
+    { "MPAMVPM0_EL2", 535 },
+    { "MPAMVPM1_EL2", 536 },
+    { "MPAMVPM2_EL2", 537 },
+    { "MPAMVPM3_EL2", 538 },
+    { "MPAMVPM4_EL2", 539 },
+    { "MPAMVPM5_EL2", 540 },
+    { "MPAMVPM6_EL2", 541 },
+    { "MPAMVPM7_EL2", 542 },
+    { "MPAMVPMV_EL2", 543 },
+    { "MPIDR_EL1", 544 },
+    { "MPUIR_EL1", 545 },
+    { "MPUIR_EL2", 546 },
+    { "MVFR0_EL1", 547 },
+    { "MVFR1_EL1", 548 },
+    { "MVFR2_EL1", 549 },
+    { "NZCV", 550 },
+    { "OSDLR_EL1", 551 },
+    { "OSDTRRX_EL1", 552 },
+    { "OSDTRTX_EL1", 553 },
+    { "OSECCR_EL1", 554 },
+    { "OSLAR_EL1", 555 },
+    { "OSLSR_EL1", 556 },
+    { "PAN", 557 },
+    { "PAR_EL1", 558 },
+    { "PFAR_EL1", 559 },
+    { "PFAR_EL12", 560 },
+    { "PFAR_EL2", 561 },
+    { "PIRE0_EL1", 562 },
+    { "PIRE0_EL12", 563 },
+    { "PIRE0_EL2", 564 },
+    { "PIR_EL1", 565 },
+    { "PIR_EL12", 566 },
+    { "PIR_EL2", 567 },
+    { "PIR_EL3", 568 },
+    { "PM", 569 },
+    { "PMBIDR_EL1", 570 },
+    { "PMBLIMITR_EL1", 571 },
+    { "PMBPTR_EL1", 572 },
+    { "PMBSR_EL1", 573 },
+    { "PMCCFILTR_EL0", 574 },
+    { "PMCCNTR_EL0", 575 },
+    { "PMCCNTSVR_EL1", 576 },
+    { "PMCEID0_EL0", 577 },
+    { "PMCEID1_EL0", 578 },
+    { "PMCNTENCLR_EL0", 579 },
+    { "PMCNTENSET_EL0", 580 },
+    { "PMCR_EL0", 581 },
+    { "PMECR_EL1", 582 },
+    { "PMEVCNTR0_EL0", 583 },
+    { "PMEVCNTR10_EL0", 584 },
+    { "PMEVCNTR11_EL0", 585 },
+    { "PMEVCNTR12_EL0", 586 },
+    { "PMEVCNTR13_EL0", 587 },
+    { "PMEVCNTR14_EL0", 588 },
+    { "PMEVCNTR15_EL0", 589 },
+    { "PMEVCNTR16_EL0", 590 },
+    { "PMEVCNTR17_EL0", 591 },
+    { "PMEVCNTR18_EL0", 592 },
+    { "PMEVCNTR19_EL0", 593 },
+    { "PMEVCNTR1_EL0", 594 },
+    { "PMEVCNTR20_EL0", 595 },
+    { "PMEVCNTR21_EL0", 596 },
+    { "PMEVCNTR22_EL0", 597 },
+    { "PMEVCNTR23_EL0", 598 },
+    { "PMEVCNTR24_EL0", 599 },
+    { "PMEVCNTR25_EL0", 600 },
+    { "PMEVCNTR26_EL0", 601 },
+    { "PMEVCNTR27_EL0", 602 },
+    { "PMEVCNTR28_EL0", 603 },
+    { "PMEVCNTR29_EL0", 604 },
+    { "PMEVCNTR2_EL0", 605 },
+    { "PMEVCNTR30_EL0", 606 },
+    { "PMEVCNTR3_EL0", 607 },
+    { "PMEVCNTR4_EL0", 608 },
+    { "PMEVCNTR5_EL0", 609 },
+    { "PMEVCNTR6_EL0", 610 },
+    { "PMEVCNTR7_EL0", 611 },
+    { "PMEVCNTR8_EL0", 612 },
+    { "PMEVCNTR9_EL0", 613 },
+    { "PMEVCNTSVR0_EL1", 614 },
+    { "PMEVCNTSVR10_EL1", 615 },
+    { "PMEVCNTSVR11_EL1", 616 },
+    { "PMEVCNTSVR12_EL1", 617 },
+    { "PMEVCNTSVR13_EL1", 618 },
+    { "PMEVCNTSVR14_EL1", 619 },
+    { "PMEVCNTSVR15_EL1", 620 },
+    { "PMEVCNTSVR16_EL1", 621 },
+    { "PMEVCNTSVR17_EL1", 622 },
+    { "PMEVCNTSVR18_EL1", 623 },
+    { "PMEVCNTSVR19_EL1", 624 },
+    { "PMEVCNTSVR1_EL1", 625 },
+    { "PMEVCNTSVR20_EL1", 626 },
+    { "PMEVCNTSVR21_EL1", 627 },
+    { "PMEVCNTSVR22_EL1", 628 },
+    { "PMEVCNTSVR23_EL1", 629 },
+    { "PMEVCNTSVR24_EL1", 630 },
+    { "PMEVCNTSVR25_EL1", 631 },
+    { "PMEVCNTSVR26_EL1", 632 },
+    { "PMEVCNTSVR27_EL1", 633 },
+    { "PMEVCNTSVR28_EL1", 634 },
+    { "PMEVCNTSVR29_EL1", 635 },
+    { "PMEVCNTSVR2_EL1", 636 },
+    { "PMEVCNTSVR30_EL1", 637 },
+    { "PMEVCNTSVR3_EL1", 638 },
+    { "PMEVCNTSVR4_EL1", 639 },
+    { "PMEVCNTSVR5_EL1", 640 },
+    { "PMEVCNTSVR6_EL1", 641 },
+    { "PMEVCNTSVR7_EL1", 642 },
+    { "PMEVCNTSVR8_EL1", 643 },
+    { "PMEVCNTSVR9_EL1", 644 },
+    { "PMEVTYPER0_EL0", 645 },
+    { "PMEVTYPER10_EL0", 646 },
+    { "PMEVTYPER11_EL0", 647 },
+    { "PMEVTYPER12_EL0", 648 },
+    { "PMEVTYPER13_EL0", 649 },
+    { "PMEVTYPER14_EL0", 650 },
+    { "PMEVTYPER15_EL0", 651 },
+    { "PMEVTYPER16_EL0", 652 },
+    { "PMEVTYPER17_EL0", 653 },
+    { "PMEVTYPER18_EL0", 654 },
+    { "PMEVTYPER19_EL0", 655 },
+    { "PMEVTYPER1_EL0", 656 },
+    { "PMEVTYPER20_EL0", 657 },
+    { "PMEVTYPER21_EL0", 658 },
+    { "PMEVTYPER22_EL0", 659 },
+    { "PMEVTYPER23_EL0", 660 },
+    { "PMEVTYPER24_EL0", 661 },
+    { "PMEVTYPER25_EL0", 662 },
+    { "PMEVTYPER26_EL0", 663 },
+    { "PMEVTYPER27_EL0", 664 },
+    { "PMEVTYPER28_EL0", 665 },
+    { "PMEVTYPER29_EL0", 666 },
+    { "PMEVTYPER2_EL0", 667 },
+    { "PMEVTYPER30_EL0", 668 },
+    { "PMEVTYPER3_EL0", 669 },
+    { "PMEVTYPER4_EL0", 670 },
+    { "PMEVTYPER5_EL0", 671 },
+    { "PMEVTYPER6_EL0", 672 },
+    { "PMEVTYPER7_EL0", 673 },
+    { "PMEVTYPER8_EL0", 674 },
+    { "PMEVTYPER9_EL0", 675 },
+    { "PMIAR_EL1", 676 },
+    { "PMICFILTR_EL0", 677 },
+    { "PMICNTR_EL0", 678 },
+    { "PMICNTSVR_EL1", 679 },
+    { "PMINTENCLR_EL1", 680 },
+    { "PMINTENSET_EL1", 681 },
+    { "PMMIR_EL1", 682 },
+    { "PMOVSCLR_EL0", 683 },
+    { "PMOVSSET_EL0", 684 },
+    { "PMSCR_EL1", 685 },
+    { "PMSCR_EL12", 686 },
+    { "PMSCR_EL2", 687 },
+    { "PMSDSFR_EL1", 688 },
+    { "PMSELR_EL0", 689 },
+    { "PMSEVFR_EL1", 690 },
+    { "PMSFCR_EL1", 691 },
+    { "PMSICR_EL1", 692 },
+    { "PMSIDR_EL1", 693 },
+    { "PMSIRR_EL1", 694 },
+    { "PMSLATFR_EL1", 695 },
+    { "PMSNEVFR_EL1", 696 },
+    { "PMSSCR_EL1", 697 },
+    { "PMSWINC_EL0", 698 },
+    { "PMUACR_EL1", 699 },
+    { "PMUSERENR_EL0", 700 },
+    { "PMXEVCNTR_EL0", 701 },
+    { "PMXEVTYPER_EL0", 702 },
+    { "PMZR_EL0", 703 },
+    { "POR_EL0", 704 },
+    { "POR_EL1", 705 },
+    { "POR_EL12", 706 },
+    { "POR_EL2", 707 },
+    { "POR_EL3", 708 },
+    { "PRBAR10_EL1", 709 },
+    { "PRBAR10_EL2", 710 },
+    { "PRBAR11_EL1", 711 },
+    { "PRBAR11_EL2", 712 },
+    { "PRBAR12_EL1", 713 },
+    { "PRBAR12_EL2", 714 },
+    { "PRBAR13_EL1", 715 },
+    { "PRBAR13_EL2", 716 },
+    { "PRBAR14_EL1", 717 },
+    { "PRBAR14_EL2", 718 },
+    { "PRBAR15_EL1", 719 },
+    { "PRBAR15_EL2", 720 },
+    { "PRBAR1_EL1", 721 },
+    { "PRBAR1_EL2", 722 },
+    { "PRBAR2_EL1", 723 },
+    { "PRBAR2_EL2", 724 },
+    { "PRBAR3_EL1", 725 },
+    { "PRBAR3_EL2", 726 },
+    { "PRBAR4_EL1", 727 },
+    { "PRBAR4_EL2", 728 },
+    { "PRBAR5_EL1", 729 },
+    { "PRBAR5_EL2", 730 },
+    { "PRBAR6_EL1", 731 },
+    { "PRBAR6_EL2", 732 },
+    { "PRBAR7_EL1", 733 },
+    { "PRBAR7_EL2", 734 },
+    { "PRBAR8_EL1", 735 },
+    { "PRBAR8_EL2", 736 },
+    { "PRBAR9_EL1", 737 },
+    { "PRBAR9_EL2", 738 },
+    { "PRBAR_EL1", 739 },
+    { "PRBAR_EL2", 740 },
+    { "PRENR_EL1", 741 },
+    { "PRENR_EL2", 742 },
+    { "PRLAR10_EL1", 743 },
+    { "PRLAR10_EL2", 744 },
+    { "PRLAR11_EL1", 745 },
+    { "PRLAR11_EL2", 746 },
+    { "PRLAR12_EL1", 747 },
+    { "PRLAR12_EL2", 748 },
+    { "PRLAR13_EL1", 749 },
+    { "PRLAR13_EL2", 750 },
+    { "PRLAR14_EL1", 751 },
+    { "PRLAR14_EL2", 752 },
+    { "PRLAR15_EL1", 753 },
+    { "PRLAR15_EL2", 754 },
+    { "PRLAR1_EL1", 755 },
+    { "PRLAR1_EL2", 756 },
+    { "PRLAR2_EL1", 757 },
+    { "PRLAR2_EL2", 758 },
+    { "PRLAR3_EL1", 759 },
+    { "PRLAR3_EL2", 760 },
+    { "PRLAR4_EL1", 761 },
+    { "PRLAR4_EL2", 762 },
+    { "PRLAR5_EL1", 763 },
+    { "PRLAR5_EL2", 764 },
+    { "PRLAR6_EL1", 765 },
+    { "PRLAR6_EL2", 766 },
+    { "PRLAR7_EL1", 767 },
+    { "PRLAR7_EL2", 768 },
+    { "PRLAR8_EL1", 769 },
+    { "PRLAR8_EL2", 770 },
+    { "PRLAR9_EL1", 771 },
+    { "PRLAR9_EL2", 772 },
+    { "PRLAR_EL1", 773 },
+    { "PRLAR_EL2", 774 },
+    { "PRSELR_EL1", 775 },
+    { "PRSELR_EL2", 776 },
+    { "RCWMASK_EL1", 777 },
+    { "RCWSMASK_EL1", 778 },
+    { "REVIDR_EL1", 779 },
+    { "RGSR_EL1", 780 },
+    { "RMR_EL1", 781 },
+    { "RMR_EL2", 782 },
+    { "RMR_EL3", 783 },
+    { "RNDR", 784 },
+    { "RNDRRS", 785 },
+    { "RVBAR_EL1", 786 },
+    { "RVBAR_EL2", 787 },
+    { "RVBAR_EL3", 788 },
+    { "S2PIR_EL2", 789 },
+    { "S2POR_EL1", 790 },
+    { "SCR_EL3", 791 },
+    { "SCTLR2_EL1", 792 },
+    { "SCTLR2_EL12", 793 },
+    { "SCTLR2_EL2", 794 },
+    { "SCTLR2_EL3", 795 },
+    { "SCTLR_EL1", 796 },
+    { "SCTLR_EL12", 797 },
+    { "SCTLR_EL2", 798 },
+    { "SCTLR_EL3", 799 },
+    { "SCXTNUM_EL0", 800 },
+    { "SCXTNUM_EL1", 801 },
+    { "SCXTNUM_EL12", 802 },
+    { "SCXTNUM_EL2", 803 },
+    { "SCXTNUM_EL3", 804 },
+    { "SDER32_EL2", 805 },
+    { "SDER32_EL3", 806 },
+    { "SMCR_EL1", 807 },
+    { "SMCR_EL12", 808 },
+    { "SMCR_EL2", 809 },
+    { "SMCR_EL3", 810 },
+    { "SMIDR_EL1", 811 },
+    { "SMPRIMAP_EL2", 812 },
+    { "SMPRI_EL1", 813 },
+    { "SPMACCESSR_EL1", 814 },
+    { "SPMACCESSR_EL12", 815 },
+    { "SPMACCESSR_EL2", 816 },
+    { "SPMACCESSR_EL3", 817 },
+    { "SPMCFGR_EL1", 818 },
+    { "SPMCGCR0_EL1", 819 },
+    { "SPMCGCR1_EL1", 820 },
+    { "SPMCNTENCLR_EL0", 821 },
+    { "SPMCNTENSET_EL0", 822 },
+    { "SPMCR_EL0", 823 },
+    { "SPMDEVAFF_EL1", 824 },
+    { "SPMDEVARCH_EL1", 825 },
+    { "SPMEVCNTR0_EL0", 826 },
+    { "SPMEVCNTR10_EL0", 827 },
+    { "SPMEVCNTR11_EL0", 828 },
+    { "SPMEVCNTR12_EL0", 829 },
+    { "SPMEVCNTR13_EL0", 830 },
+    { "SPMEVCNTR14_EL0", 831 },
+    { "SPMEVCNTR15_EL0", 832 },
+    { "SPMEVCNTR1_EL0", 833 },
+    { "SPMEVCNTR2_EL0", 834 },
+    { "SPMEVCNTR3_EL0", 835 },
+    { "SPMEVCNTR4_EL0", 836 },
+    { "SPMEVCNTR5_EL0", 837 },
+    { "SPMEVCNTR6_EL0", 838 },
+    { "SPMEVCNTR7_EL0", 839 },
+    { "SPMEVCNTR8_EL0", 840 },
+    { "SPMEVCNTR9_EL0", 841 },
+    { "SPMEVFILT2R0_EL0", 842 },
+    { "SPMEVFILT2R10_EL0", 843 },
+    { "SPMEVFILT2R11_EL0", 844 },
+    { "SPMEVFILT2R12_EL0", 845 },
+    { "SPMEVFILT2R13_EL0", 846 },
+    { "SPMEVFILT2R14_EL0", 847 },
+    { "SPMEVFILT2R15_EL0", 848 },
+    { "SPMEVFILT2R1_EL0", 849 },
+    { "SPMEVFILT2R2_EL0", 850 },
+    { "SPMEVFILT2R3_EL0", 851 },
+    { "SPMEVFILT2R4_EL0", 852 },
+    { "SPMEVFILT2R5_EL0", 853 },
+    { "SPMEVFILT2R6_EL0", 854 },
+    { "SPMEVFILT2R7_EL0", 855 },
+    { "SPMEVFILT2R8_EL0", 856 },
+    { "SPMEVFILT2R9_EL0", 857 },
+    { "SPMEVFILTR0_EL0", 858 },
+    { "SPMEVFILTR10_EL0", 859 },
+    { "SPMEVFILTR11_EL0", 860 },
+    { "SPMEVFILTR12_EL0", 861 },
+    { "SPMEVFILTR13_EL0", 862 },
+    { "SPMEVFILTR14_EL0", 863 },
+    { "SPMEVFILTR15_EL0", 864 },
+    { "SPMEVFILTR1_EL0", 865 },
+    { "SPMEVFILTR2_EL0", 866 },
+    { "SPMEVFILTR3_EL0", 867 },
+    { "SPMEVFILTR4_EL0", 868 },
+    { "SPMEVFILTR5_EL0", 869 },
+    { "SPMEVFILTR6_EL0", 870 },
+    { "SPMEVFILTR7_EL0", 871 },
+    { "SPMEVFILTR8_EL0", 872 },
+    { "SPMEVFILTR9_EL0", 873 },
+    { "SPMEVTYPER0_EL0", 874 },
+    { "SPMEVTYPER10_EL0", 875 },
+    { "SPMEVTYPER11_EL0", 876 },
+    { "SPMEVTYPER12_EL0", 877 },
+    { "SPMEVTYPER13_EL0", 878 },
+    { "SPMEVTYPER14_EL0", 879 },
+    { "SPMEVTYPER15_EL0", 880 },
+    { "SPMEVTYPER1_EL0", 881 },
+    { "SPMEVTYPER2_EL0", 882 },
+    { "SPMEVTYPER3_EL0", 883 },
+    { "SPMEVTYPER4_EL0", 884 },
+    { "SPMEVTYPER5_EL0", 885 },
+    { "SPMEVTYPER6_EL0", 886 },
+    { "SPMEVTYPER7_EL0", 887 },
+    { "SPMEVTYPER8_EL0", 888 },
+    { "SPMEVTYPER9_EL0", 889 },
+    { "SPMIIDR_EL1", 890 },
+    { "SPMINTENCLR_EL1", 891 },
+    { "SPMINTENSET_EL1", 892 },
+    { "SPMOVSCLR_EL0", 893 },
+    { "SPMOVSSET_EL0", 894 },
+    { "SPMROOTCR_EL3", 895 },
+    { "SPMSCR_EL1", 896 },
+    { "SPMSELR_EL0", 897 },
+    { "SPSEL", 898 },
+    { "SPSR_ABT", 899 },
+    { "SPSR_EL1", 900 },
+    { "SPSR_EL12", 901 },
+    { "SPSR_EL2", 902 },
+    { "SPSR_EL3", 903 },
+    { "SPSR_FIQ", 904 },
+    { "SPSR_IRQ", 905 },
+    { "SPSR_UND", 906 },
+    { "SP_EL0", 907 },
+    { "SP_EL1", 908 },
+    { "SP_EL2", 909 },
+    { "SSBS", 910 },
+    { "SVCR", 911 },
+    { "TCO", 912 },
+    { "TCR2_EL1", 913 },
+    { "TCR2_EL12", 914 },
+    { "TCR2_EL2", 915 },
+    { "TCR_EL1", 916 },
+    { "TCR_EL12", 917 },
+    { "TCR_EL2", 918 },
+    { "TCR_EL3", 919 },
+    { "TEECR32_EL1", 920 },
+    { "TEEHBR32_EL1", 921 },
+    { "TFSRE0_EL1", 922 },
+    { "TFSR_EL1", 923 },
+    { "TFSR_EL12", 924 },
+    { "TFSR_EL2", 925 },
+    { "TFSR_EL3", 926 },
+    { "TPIDR2_EL0", 927 },
+    { "TPIDRRO_EL0", 928 },
+    { "TPIDR_EL0", 929 },
+    { "TPIDR_EL1", 930 },
+    { "TPIDR_EL2", 931 },
+    { "TPIDR_EL3", 932 },
+    { "TRBBASER_EL1", 933 },
+    { "TRBIDR_EL1", 934 },
+    { "TRBLIMITR_EL1", 935 },
+    { "TRBMAR_EL1", 936 },
+    { "TRBPTR_EL1", 937 },
+    { "TRBSR_EL1", 938 },
+    { "TRBTRG_EL1", 939 },
+    { "TRCACATR0", 940 },
+    { "TRCACATR1", 941 },
+    { "TRCACATR10", 942 },
+    { "TRCACATR11", 943 },
+    { "TRCACATR12", 944 },
+    { "TRCACATR13", 945 },
+    { "TRCACATR14", 946 },
+    { "TRCACATR15", 947 },
+    { "TRCACATR2", 948 },
+    { "TRCACATR3", 949 },
+    { "TRCACATR4", 950 },
+    { "TRCACATR5", 951 },
+    { "TRCACATR6", 952 },
+    { "TRCACATR7", 953 },
+    { "TRCACATR8", 954 },
+    { "TRCACATR9", 955 },
+    { "TRCACVR0", 956 },
+    { "TRCACVR1", 957 },
+    { "TRCACVR10", 958 },
+    { "TRCACVR11", 959 },
+    { "TRCACVR12", 960 },
+    { "TRCACVR13", 961 },
+    { "TRCACVR14", 962 },
+    { "TRCACVR15", 963 },
+    { "TRCACVR2", 964 },
+    { "TRCACVR3", 965 },
+    { "TRCACVR4", 966 },
+    { "TRCACVR5", 967 },
+    { "TRCACVR6", 968 },
+    { "TRCACVR7", 969 },
+    { "TRCACVR8", 970 },
+    { "TRCACVR9", 971 },
+    { "TRCAUTHSTATUS", 972 },
+    { "TRCAUXCTLR", 973 },
+    { "TRCBBCTLR", 974 },
+    { "TRCCCCTLR", 975 },
+    { "TRCCIDCCTLR0", 976 },
+    { "TRCCIDCCTLR1", 977 },
+    { "TRCCIDCVR0", 978 },
+    { "TRCCIDCVR1", 979 },
+    { "TRCCIDCVR2", 980 },
+    { "TRCCIDCVR3", 981 },
+    { "TRCCIDCVR4", 982 },
+    { "TRCCIDCVR5", 983 },
+    { "TRCCIDCVR6", 984 },
+    { "TRCCIDCVR7", 985 },
+    { "TRCCIDR0", 986 },
+    { "TRCCIDR1", 987 },
+    { "TRCCIDR2", 988 },
+    { "TRCCIDR3", 989 },
+    { "TRCCLAIMCLR", 990 },
+    { "TRCCLAIMSET", 991 },
+    { "TRCCNTCTLR0", 992 },
+    { "TRCCNTCTLR1", 993 },
+    { "TRCCNTCTLR2", 994 },
+    { "TRCCNTCTLR3", 995 },
+    { "TRCCNTRLDVR0", 996 },
+    { "TRCCNTRLDVR1", 997 },
+    { "TRCCNTRLDVR2", 998 },
+    { "TRCCNTRLDVR3", 999 },
+    { "TRCCNTVR0", 1000 },
+    { "TRCCNTVR1", 1001 },
+    { "TRCCNTVR2", 1002 },
+    { "TRCCNTVR3", 1003 },
+    { "TRCCONFIGR", 1004 },
+    { "TRCDEVAFF0", 1005 },
+    { "TRCDEVAFF1", 1006 },
+    { "TRCDEVARCH", 1007 },
+    { "TRCDEVID", 1008 },
+    { "TRCDEVTYPE", 1009 },
+    { "TRCDVCMR0", 1010 },
+    { "TRCDVCMR1", 1011 },
+    { "TRCDVCMR2", 1012 },
+    { "TRCDVCMR3", 1013 },
+    { "TRCDVCMR4", 1014 },
+    { "TRCDVCMR5", 1015 },
+    { "TRCDVCMR6", 1016 },
+    { "TRCDVCMR7", 1017 },
+    { "TRCDVCVR0", 1018 },
+    { "TRCDVCVR1", 1019 },
+    { "TRCDVCVR2", 1020 },
+    { "TRCDVCVR3", 1021 },
+    { "TRCDVCVR4", 1022 },
+    { "TRCDVCVR5", 1023 },
+    { "TRCDVCVR6", 1024 },
+    { "TRCDVCVR7", 1025 },
+    { "TRCEVENTCTL0R", 1026 },
+    { "TRCEVENTCTL1R", 1027 },
+    { "TRCEXTINSELR", 1028 },
+    { "TRCEXTINSELR0", 1029 },
+    { "TRCEXTINSELR1", 1030 },
+    { "TRCEXTINSELR2", 1031 },
+    { "TRCEXTINSELR3", 1032 },
+    { "TRCIDR0", 1033 },
+    { "TRCIDR1", 1034 },
+    { "TRCIDR10", 1035 },
+    { "TRCIDR11", 1036 },
+    { "TRCIDR12", 1037 },
+    { "TRCIDR13", 1038 },
+    { "TRCIDR2", 1039 },
+    { "TRCIDR3", 1040 },
+    { "TRCIDR4", 1041 },
+    { "TRCIDR5", 1042 },
+    { "TRCIDR6", 1043 },
+    { "TRCIDR7", 1044 },
+    { "TRCIDR8", 1045 },
+    { "TRCIDR9", 1046 },
+    { "TRCIMSPEC0", 1047 },
+    { "TRCIMSPEC1", 1048 },
+    { "TRCIMSPEC2", 1049 },
+    { "TRCIMSPEC3", 1050 },
+    { "TRCIMSPEC4", 1051 },
+    { "TRCIMSPEC5", 1052 },
+    { "TRCIMSPEC6", 1053 },
+    { "TRCIMSPEC7", 1054 },
+    { "TRCITCTRL", 1055 },
+    { "TRCITECR_EL1", 1056 },
+    { "TRCITECR_EL12", 1057 },
+    { "TRCITECR_EL2", 1058 },
+    { "TRCITEEDCR", 1059 },
+    { "TRCLAR", 1060 },
+    { "TRCLSR", 1061 },
+    { "TRCOSLAR", 1062 },
+    { "TRCOSLSR", 1063 },
+    { "TRCPDCR", 1064 },
+    { "TRCPDSR", 1065 },
+    { "TRCPIDR0", 1066 },
+    { "TRCPIDR1", 1067 },
+    { "TRCPIDR2", 1068 },
+    { "TRCPIDR3", 1069 },
+    { "TRCPIDR4", 1070 },
+    { "TRCPIDR5", 1071 },
+    { "TRCPIDR6", 1072 },
+    { "TRCPIDR7", 1073 },
+    { "TRCPRGCTLR", 1074 },
+    { "TRCPROCSELR", 1075 },
+    { "TRCQCTLR", 1076 },
+    { "TRCRSCTLR10", 1077 },
+    { "TRCRSCTLR11", 1078 },
+    { "TRCRSCTLR12", 1079 },
+    { "TRCRSCTLR13", 1080 },
+    { "TRCRSCTLR14", 1081 },
+    { "TRCRSCTLR15", 1082 },
+    { "TRCRSCTLR16", 1083 },
+    { "TRCRSCTLR17", 1084 },
+    { "TRCRSCTLR18", 1085 },
+    { "TRCRSCTLR19", 1086 },
+    { "TRCRSCTLR2", 1087 },
+    { "TRCRSCTLR20", 1088 },
+    { "TRCRSCTLR21", 1089 },
+    { "TRCRSCTLR22", 1090 },
+    { "TRCRSCTLR23", 1091 },
+    { "TRCRSCTLR24", 1092 },
+    { "TRCRSCTLR25", 1093 },
+    { "TRCRSCTLR26", 1094 },
+    { "TRCRSCTLR27", 1095 },
+    { "TRCRSCTLR28", 1096 },
+    { "TRCRSCTLR29", 1097 },
+    { "TRCRSCTLR3", 1098 },
+    { "TRCRSCTLR30", 1099 },
+    { "TRCRSCTLR31", 1100 },
+    { "TRCRSCTLR4", 1101 },
+    { "TRCRSCTLR5", 1102 },
+    { "TRCRSCTLR6", 1103 },
+    { "TRCRSCTLR7", 1104 },
+    { "TRCRSCTLR8", 1105 },
+    { "TRCRSCTLR9", 1106 },
+    { "TRCRSR", 1107 },
+    { "TRCSEQEVR0", 1108 },
+    { "TRCSEQEVR1", 1109 },
+    { "TRCSEQEVR2", 1110 },
+    { "TRCSEQRSTEVR", 1111 },
+    { "TRCSEQSTR", 1112 },
+    { "TRCSSCCR0", 1113 },
+    { "TRCSSCCR1", 1114 },
+    { "TRCSSCCR2", 1115 },
+    { "TRCSSCCR3", 1116 },
+    { "TRCSSCCR4", 1117 },
+    { "TRCSSCCR5", 1118 },
+    { "TRCSSCCR6", 1119 },
+    { "TRCSSCCR7", 1120 },
+    { "TRCSSCSR0", 1121 },
+    { "TRCSSCSR1", 1122 },
+    { "TRCSSCSR2", 1123 },
+    { "TRCSSCSR3", 1124 },
+    { "TRCSSCSR4", 1125 },
+    { "TRCSSCSR5", 1126 },
+    { "TRCSSCSR6", 1127 },
+    { "TRCSSCSR7", 1128 },
+    { "TRCSSPCICR0", 1129 },
+    { "TRCSSPCICR1", 1130 },
+    { "TRCSSPCICR2", 1131 },
+    { "TRCSSPCICR3", 1132 },
+    { "TRCSSPCICR4", 1133 },
+    { "TRCSSPCICR5", 1134 },
+    { "TRCSSPCICR6", 1135 },
+    { "TRCSSPCICR7", 1136 },
+    { "TRCSTALLCTLR", 1137 },
+    { "TRCSTATR", 1138 },
+    { "TRCSYNCPR", 1139 },
+    { "TRCTRACEIDR", 1140 },
+    { "TRCTSCTLR", 1141 },
+    { "TRCVDARCCTLR", 1142 },
+    { "TRCVDCTLR", 1143 },
+    { "TRCVDSACCTLR", 1144 },
+    { "TRCVICTLR", 1145 },
+    { "TRCVIIECTLR", 1146 },
+    { "TRCVIPCSSCTLR", 1147 },
+    { "TRCVISSCTLR", 1148 },
+    { "TRCVMIDCCTLR0", 1149 },
+    { "TRCVMIDCCTLR1", 1150 },
+    { "TRCVMIDCVR0", 1151 },
+    { "TRCVMIDCVR1", 1152 },
+    { "TRCVMIDCVR2", 1153 },
+    { "TRCVMIDCVR3", 1154 },
+    { "TRCVMIDCVR4", 1155 },
+    { "TRCVMIDCVR5", 1156 },
+    { "TRCVMIDCVR6", 1157 },
+    { "TRCVMIDCVR7", 1158 },
+    { "TRFCR_EL1", 1159 },
+    { "TRFCR_EL12", 1160 },
+    { "TRFCR_EL2", 1161 },
+    { "TTBR0_EL1", 1162 },
+    { "TTBR0_EL12", 1163 },
+    { "TTBR0_EL2", 1164 },
+    { "TTBR0_EL3", 1165 },
+    { "TTBR1_EL1", 1166 },
+    { "TTBR1_EL12", 1167 },
+    { "TTBR1_EL2", 1168 },
+    { "UAO", 1169 },
+    { "VBAR_EL1", 1170 },
+    { "VBAR_EL12", 1171 },
+    { "VBAR_EL2", 1172 },
+    { "VBAR_EL3", 1173 },
+    { "VDISR_EL2", 1174 },
+    { "VMECID_A_EL2", 1175 },
+    { "VMECID_P_EL2", 1176 },
+    { "VMPIDR_EL2", 1177 },
+    { "VNCR_EL2", 1178 },
+    { "VPIDR_EL2", 1179 },
+    { "VSCTLR_EL2", 1180 },
+    { "VSESR_EL2", 1181 },
+    { "VSTCR_EL2", 1182 },
+    { "VSTTBR_EL2", 1183 },
+    { "VTCR_EL2", 1184 },
+    { "VTTBR_EL2", 1185 },
+    { "ZCR_EL1", 1186 },
+    { "ZCR_EL12", 1187 },
+    { "ZCR_EL2", 1188 },
+    { "ZCR_EL3", 1189 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &SysRegsList[Index[i].index];
+}
+
 const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding) {
   static const struct IndexType Index[] = {
     { 0x8002, 552 },
@@ -3487,6 +5214,18 @@ const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encodi
 static const AArch64TSB_TSB TSBsList[] = {
   { "csync", { AArch64_TSB_CSYNC }, 0x0,  {AArch64_FeatureTRACEV8_4}  }, // 0
   };
+
+const AArch64TSB_TSB *AArch64TSB_lookupTSBByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "CSYNC", 0 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &TSBsList[Index[i].index];
+}
 
 const AArch64TSB_TSB *AArch64TSB_lookupTSBByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {

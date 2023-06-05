@@ -38,7 +38,6 @@
 #include <string.h>
 
 #include "../../MCInstPrinter.h"
-#include "AArch64Mapping.h"
 
 #include "../../utils.h"
 #include "capstone/aarch64.h"

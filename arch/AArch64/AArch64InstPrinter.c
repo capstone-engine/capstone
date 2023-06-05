@@ -2258,8 +2258,7 @@ static const AArch64SysReg_SysReg *lookupSysReg(unsigned Val, bool Read, unsigne
 	const AArch64SysReg_SysReg *Reg = AArch64SysReg_lookupSysRegByEncoding(Val);
 
 	if (Reg && !isValidSysReg(Reg, Read, mode))
-		assert(0 && "Looking up a system register by name is not yet supported.");
-		// Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
+		Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
 
 	return Reg;
 }
