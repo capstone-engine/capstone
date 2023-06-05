@@ -1,10 +1,10 @@
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text
+from Patches.HelperMethods import get_text, get_capture_node
 from Patches.Patch import Patch
 
 
-class AArch64GetRegFromClass(Patch):
+class GetRegFromClass(Patch):
     """
     Patch   <ARCH>MCRegisterClasses[<ARCH>::FPR128RegClassID].getRegister(RegNo);
     to      <ARCH>MCRegisterClasses[<ARCH>::FPR128RegClassID].RegsBegin[RegNo];
@@ -21,18 +21,18 @@ class AArch64GetRegFromClass(Patch):
             '        ((field_identifier) @field_id (#eq? @field_id "getRegister"))'
             "    )"
             "    (argument_list) @arg_list"
-            ") @get_reg"
+            ") @get_reg_from_class"
         )
         return q
 
     def get_main_capture_name(self) -> str:
-        return "get_reg"
+        return "get_reg_from_class"
 
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         # Table
-        table: Node = captures[1][0]
+        table: Node = get_capture_node(captures, "operand")
         # args
-        getter_args = captures[3][0]
+        getter_args = get_capture_node(captures, "arg_list")
 
         tbl = get_text(src, table.start_byte, table.end_byte)
         args = get_text(src, getter_args.start_byte, getter_args.end_byte)

@@ -11,7 +11,7 @@ from tree_sitter.binding import Query
 
 from Configurator import Configurator
 from Helper import convert_loglevel, print_prominent_warning, get_header, run_clang_format, get_path
-from Patches.AArch64GetRegFromClass import AArch64GetRegFromClass
+from Patches.GetRegFromClass import GetRegFromClass
 from Patches.AddCSDetail import AddCSDetail
 from Patches.AddOperand import AddOperand
 from Patches.Assert import Assert
@@ -97,7 +97,7 @@ class Translator:
     patch_priorities: {str: int} = {
         RegClassContains.__name__: 0,
         GetRegClass.__name__: 0,
-        AArch64GetRegFromClass.__name__: 0,
+        GetRegFromClass.__name__: 0,
         CppInitCast.__name__: 0,
         BitCastStdArray.__name__: 0,
         PrintRegImmShift.__name__: 0,
@@ -195,8 +195,8 @@ class Translator:
                     patch = RegClassContains(p)
                 case GetRegClass.__name__:
                     patch = GetRegClass(p)
-                case AArch64GetRegFromClass.__name__:
-                    patch = AArch64GetRegFromClass(p)
+                case GetRegFromClass.__name__:
+                    patch = GetRegFromClass(p)
                 case CppInitCast.__name__:
                     patch = CppInitCast(p)
                 case BitCastStdArray.__name__:
