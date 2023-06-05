@@ -7,6 +7,7 @@
 
 extern bool ARM_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
+extern bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature);
 
 static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 {
@@ -18,6 +19,8 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 		return ARM_getFeatureBits(MI->csh->mode, Value);
 	case CS_ARCH_PPC:
 		return PPC_getFeatureBits(MI->csh->mode, Value);
+	case CS_ARCH_AARCH64:
+		return AArch64_getFeatureBits(MI->csh->mode, Value);
 	}
 }
 
