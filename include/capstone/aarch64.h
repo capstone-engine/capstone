@@ -1813,6 +1813,7 @@ typedef union {
 	aarch64_pstateimm0_1 pstateimm0_1;
 	aarch64_psb psb;
 	aarch64_bti bti;
+	aarch64_sveveclenspecifier sveveclenspecifier;
 } aarch64_sysop_alias;
 
 typedef union {
