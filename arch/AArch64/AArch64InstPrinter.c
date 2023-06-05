@@ -2044,9 +2044,14 @@ void printVectorList(MCInst *MI, unsigned OpNum, SStream *O,
 		Stride = 4;
 
 	// Now forget about the list and find out what the first register is.
-	unsigned FirstReg = MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0);
-	if (FirstReg)
-		Reg = FirstReg;
+	if (MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_dsub0);
+	else if (MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_qsub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_qsub0);
+	else if (MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_zsub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_zsub0);
+	else if (MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_psub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_psub0);
 
 	// If it's a D-reg, we need to promote it to the equivalent Q-reg before
 	// printing (otherwise getRegisterName fails).

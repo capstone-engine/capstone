@@ -32,6 +32,11 @@ class DeclarationInConditionalClause(Patch):
         return "condition_clause"
 
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
+        cond = get_capture_node(captures, "condition_clause")
+        for nc in cond.named_children:
+            if nc.type == "if_statement":
+                # Skip if statements with else if
+                return get_text(src, cond.start_byte, cond.end_byte)
         declaration = get_capture_node(captures, "decl")
         identifier = get_capture_node(captures, "id")
         if_body = get_capture_node(captures, "if_body")
