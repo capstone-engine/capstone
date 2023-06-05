@@ -1262,7 +1262,8 @@ void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
 		if (Reg == AArch64_XZR) {
-			SStream_concat(O, "%s%s%s", markup("<imm:"), "#", Imm);
+			SStream_concat(O, "%s%s%s", markup("<imm:"));
+			printUInt64Bang(O, Imm);
 			SStream_concat0(O, markup(">"));
 		} else
 			printRegName(O, Reg);
@@ -2357,7 +2358,7 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	add_cs_detail(MI, AArch64_OP_GROUP_SIMDType10Operand, OpNo);
 	unsigned RawVal = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
-	SStream_concat(O, "%s%s#%#016llx", markup("<imm:"),  Val);
+	SStream_concat(O, "%s#%#016llx", markup("<imm:"),  Val);
 	SStream_concat0(O, markup(">"));
 }
 

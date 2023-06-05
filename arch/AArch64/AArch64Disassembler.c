@@ -1954,7 +1954,7 @@ static DecodeStatus DecodeGPRSeqPairsClassRegisterClass(MCInst *Inst,
 	if (RegNo & 0x1)
 		return Fail;
 
-	unsigned Reg = AArch64MCRegisterClasses[RegClassID].RegsBegin[RegNo];
+	unsigned Reg = AArch64MCRegisterClasses[RegClassID].RegsBegin[RegNo / 2];
 	MCOperand_CreateReg0(Inst, (Reg));
 	return Success;
 }
