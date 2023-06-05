@@ -728,7 +728,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_RISCV:
             (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
         elif arch == CS_ARCH_TRICORE:
-            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.tricore)
+            (self.update_flags, self.operands) = tricore.get_arch_info(self._raw.detail.contents.arch.tricore)
 
 
     def __getattr__(self, name):

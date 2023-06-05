@@ -1,6 +1,7 @@
 # Capstone Python bindings, by billow <billow.fun@gmail.com>
 
-import ctypes, copy
+import ctypes
+from . import copy_ctypes_list
 from .tricore_const import *
 
 class TriCoreOpMem(ctypes.Structure):
@@ -22,6 +23,7 @@ class TriCoreOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', TriCoreOpValue),
+        ('access', ctypes.c_uint8)
     )
 
     @property
@@ -42,4 +44,8 @@ class CsTriCore(ctypes.Structure):
     _fields_ = (
         ('op_count', ctypes.c_uint8),
         ('operands', TriCoreOp * 8),
+        ('update_flags', ctypes.c_bool),
     )
+
+def get_arch_info(a):
+    return (a.update_flags, copy_ctypes_list(a.operands[:a.op_count]))
