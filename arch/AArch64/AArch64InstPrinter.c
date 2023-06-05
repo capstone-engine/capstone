@@ -1364,8 +1364,8 @@ void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
 			((Dest == AArch64_WSP || Src1 == AArch64_WSP) &&
 			 ExtType == AArch64_AM_UXTW)) {
 			if (ShiftVal != 0) {
-				SStream_concat(O, "%s%s%s%s", ", lsl ", markup("<imm:"), "#",
-							   ShiftVal);
+				SStream_concat(O, "%s%s", ", lsl ", markup("<imm:"));
+				printUInt32Bang(O, ShiftVal);
 				SStream_concat0(O, markup(">"));
 			}
 			return;
@@ -1374,7 +1374,8 @@ void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat(O, "%s", ", ");
 	SStream_concat0(O, AArch64_AM_getShiftExtendName(ExtType));
 	if (ShiftVal != 0) {
-		SStream_concat(O, "%s%s%s%s", " ", markup("<imm:"), "#", ShiftVal);
+		SStream_concat(O, "%s%s", " ", markup("<imm:"));
+		printUInt32Bang(O, ShiftVal);
 		SStream_concat0(O, markup(">"));
 	}
 }
