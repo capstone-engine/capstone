@@ -2141,9 +2141,8 @@ DEFINE_printTypedVectorList(8, h);
 	{ \
 		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_VectorIndex, Scale), OpNum, \
 					  Scale); \
-		SStream_concat( \
-			O, "%s%s", "[", \
-			Scale *MCOperand_getImm(MCInst_getOperand(MI, (OpNum)))); \
+		SStream_concat(O, "%s", "["); \
+		printUInt64(O, Scale * MCOperand_getImm(MCInst_getOperand(MI, (OpNum)))); \
 		SStream_concat0(O, "]"); \
 	}
 DEFINE_printVectorIndex(1);
