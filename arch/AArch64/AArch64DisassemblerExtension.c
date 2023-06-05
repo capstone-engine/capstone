@@ -18,6 +18,7 @@ bool AArch64_testFeatureList(unsigned int mode, const aarch64_insn_group *featur
 	while (features[i]) {
 		if (!AArch64_getFeatureBits(mode, features[i]))
 			return false;
+		++i;
 	}
 	return true;
 }
