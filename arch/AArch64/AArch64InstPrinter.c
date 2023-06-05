@@ -195,8 +195,8 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				printRegName(O, MCOperand_getReg(Op0));
 				SStream_concat0(O, ", ");
 				printRegName(O, MCOperand_getReg(Op1));
-				SStream_concat(O, "%s%s%s%s", ", ", markup("<imm:"), "#",
-							   shift);
+				SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+				printUInt32(O, shift);
 				SStream_concat0(O, markup(">"));
 				;
 				return;
@@ -212,10 +212,10 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat0(O, ", ");
 			printRegName(O, MCOperand_getReg(Op1));
-			SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
-						   (Is64Bit ? 64 : 32) - MCOperand_getImm(Op2),
-						   markup(">"), ", ", markup("<imm:"), "#",
-						   MCOperand_getImm(Op3) + 1);
+			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+			printUInt32Bang(O, (Is64Bit ? 64 : 32) - MCOperand_getImm(Op2));
+			SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
+			printInt64Bang(O, MCOperand_getImm(Op3) + 1);
 			SStream_concat0(O, markup(">"));
 			;
 			return;
@@ -229,10 +229,10 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		printRegName(O, MCOperand_getReg(Op0));
 		SStream_concat0(O, ", ");
 		printRegName(O, MCOperand_getReg(Op1));
-		SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
-					   MCOperand_getImm(Op2), markup(">"), ", ",
-					   markup("<imm:"), "#",
-					   MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1);
+		SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+		printInt64Bang(O, MCOperand_getImm(Op2));
+		SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
+		printInt64Bang(O, MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1);
 		SStream_concat0(O, markup(">"));
 		;
 		return;
@@ -256,8 +256,10 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 
 			SStream_concat0(O, "\tbfc\t");
 			printRegName(O, MCOperand_getReg(Op0));
-			SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
-						   LSB, markup(">"), ", ", markup("<imm:"), "#", Width);
+			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+			printInt32Bang(O, LSB);
+			SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
+			printInt32Bang(O, Width);
 			SStream_concat0(O, markup(">"));
 			;
 			return;
@@ -271,8 +273,10 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat0(O, ", ");
 			printRegName(O, MCOperand_getReg(Op2));
-			SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#",
-						   LSB, markup(">"), ", ", markup("<imm:"), "#", Width);
+			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+			printInt32Bang(O, LSB);
+			SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
+			printInt32Bang(O, Width);
 			SStream_concat0(O, markup(">"));
 			;
 			return;
@@ -285,8 +289,10 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		printRegName(O, MCOperand_getReg(Op0));
 		SStream_concat0(O, ", ");
 		printRegName(O, MCOperand_getReg(Op2));
-		SStream_concat(O, "%s%s%s%s%s%s%s%s%s", ", ", markup("<imm:"), "#", LSB,
-					   markup(">"), ", ", markup("<imm:"), "#", Width);
+		SStream_concat(O, "%s%s", ", ", markup("<imm:"));
+		printInt32Bang(O, LSB);
+		SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
+		printInt32Bang(O, Width);
 		SStream_concat0(O, markup(">"));
 		;
 		return;
@@ -1326,9 +1332,10 @@ void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 	if (AArch64_AM_getShiftType(Val) == AArch64_AM_LSL &&
 		AArch64_AM_getShiftValue(Val) == 0)
 		return;
-	SStream_concat(O, "%s%s%s%s%s%s", ", ",
+	SStream_concat(O, "%s%s%s%s", ", ",
 				   AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)),
-				   " ", markup("<imm:"), "#", AArch64_AM_getShiftValue(Val));
+				   " ", markup("<imm:"));
+	printUInt32Bang(O, AArch64_AM_getShiftValue(Val));
 	SStream_concat0(O, markup(">"));
 }
 
@@ -1388,7 +1395,7 @@ static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
 	if (IsLSL)
 		SStream_concat0(O, "lsl");
 	else {
-		SStream_concat(O, "%s%s", (SignExtend ? 's' : 'u'), "xt");
+		SStream_concat(O, "%c%s", (SignExtend ? 's' : 'u'), "xt");
 		SStream_concat1(O, SrcRegKind);
 	}
 
@@ -1676,7 +1683,7 @@ static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 					  : AArch64_AM_getFPImmFloat(MCOperand_getImm(MO));
 
 	// 8 decimal places are enough to perfectly represent permitted floats.
-	SStream_concat(O, "%s%s", markup("<imm:"));
+	SStream_concat(O, "%s", markup("<imm:"));
 	SStream_concat(O, "#%.8f", FPImm);
 	SStream_concat0(O, markup(">"));
 }
@@ -2364,8 +2371,8 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 				   Remainder), \
 			OpNo, Angle, Remainder); \
 		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo))); \
-		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", \
-					   (Val * Angle) + Remainder); \
+		SStream_concat(O, "%s", markup("<imm:")); \
+		SStream_concat(O, "#%d", (Val * Angle) + Remainder); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printComplexRotationOp(180, 90);
