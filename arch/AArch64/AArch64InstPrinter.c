@@ -2232,7 +2232,8 @@ void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 	if (Name[0] != '\0')
 		SStream_concat0(O, Name);
 	else {
-		SStream_concat(O, "%s%s%s", markup("<imm:"), "#", Val);
+		SStream_concat(O, "%s", markup("<imm:"));
+		printUInt32Bang(O, Val);
 		SStream_concat0(O, markup(">"));
 	}
 }
