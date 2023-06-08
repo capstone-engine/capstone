@@ -68,18 +68,6 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	AArch64_LLVM_printInstruction(MI, O, info);
 }
 
-static const insn_map insns[] = {
-	// dummy item
-	{
-		0, 0,
-#ifndef CAPSTONE_DIET
-		{ 0 }, { 0 }, { 0 }, 0, 0
-#endif
-	},
-
-#include "AArch64GenCSMappingInsn.inc"
-};
-
 // given internal insn id, return public instruction info
 void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
