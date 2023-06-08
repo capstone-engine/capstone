@@ -63,6 +63,8 @@ bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 }
 
 void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
+	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
+	MI->MRI = MRI;
 	AArch64_LLVM_printInstruction(MI, O, info);
 }
 

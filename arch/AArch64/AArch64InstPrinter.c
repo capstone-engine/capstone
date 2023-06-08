@@ -2617,7 +2617,5 @@ const char *AArch64_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx) {
 }
 
 void AArch64_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
-	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
-	MI->MRI = MRI;
 	printInst(MI, MI->address, "", O);
 }
