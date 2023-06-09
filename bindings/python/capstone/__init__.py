@@ -407,12 +407,13 @@ class _cs_arch(ctypes.Union):
 
 class _cs_detail(ctypes.Structure):
     _fields_ = (
-        ('regs_read', ctypes.c_uint16 * 16),
+        ('regs_read', ctypes.c_uint16 * 20),
         ('regs_read_count', ctypes.c_ubyte),
         ('regs_write', ctypes.c_uint16 * 20),
         ('regs_write_count', ctypes.c_ubyte),
         ('groups', ctypes.c_ubyte * 8),
         ('groups_count', ctypes.c_ubyte),
+        ('writeback', ctypes.c_bool),
         ('arch', _cs_arch),
     )
 
@@ -725,9 +726,9 @@ class CsInsn(object):
         elif arch == CS_ARCH_BPF:
             (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
         elif arch == CS_ARCH_RISCV:
-            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
+            (self.need_effective_addr, self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
         elif arch == CS_ARCH_TRICORE:
-            (self.operands) = riscv.get_arch_info(self._raw.detail.contents.arch.tricore)
+            (self.update_flags, self.operands) = tricore.get_arch_info(self._raw.detail.contents.arch.tricore)
 
 
     def __getattr__(self, name):
