@@ -190,8 +190,15 @@ const char *RISCV_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
+  	// generic groups
   	{ RISCV_GRP_INVALID,    NULL },
   	{ RISCV_GRP_JUMP,       "jump" },
+  	{ RISCV_GRP_CALL,       "call" },
+  	{ RISCV_GRP_RET,        "ret" },
+  	{ RISCV_GRP_INT,        "int" },
+  	{ RISCV_GRP_IRET,       "iret" },
+  	{ RISCV_GRP_PRIVILEGE,  "privileged" },
+  	{ RISCV_GRP_BRANCH_RELATIVE, "branch_relative" },
   
   	// architecture specific
   	{ RISCV_GRP_ISRV32,     "isrv32" },
@@ -226,7 +233,7 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 #ifndef CAPSTONE_DIET
 	// verify group id
 	if (id >= RISCV_GRP_ENDING || 
-            (id > RISCV_GRP_JUMP && id < RISCV_GRP_ISRV32))
+            (id > RISCV_GRP_BRANCH_RELATIVE && id < RISCV_GRP_ISRV32))
 		return NULL;
 	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else

@@ -228,6 +228,12 @@ xcore_dict = {
 
 riscv32_dict = {
     RISCV_GRP_JUMP       : "jump",
+    RISCV_GRP_CALL       : "call",
+    RISCV_GRP_RET        : "ret",
+    RISCV_GRP_INT        : "int",
+    RISCV_GRP_IRET       : "iret",
+    RISCV_GRP_PRIVILEGE  : "privileged",
+    RISCV_GRP_BRANCH_RELATIVE: "branch_relative",
     RISCV_GRP_ISRV32     : "isrv32",
     RISCV_GRP_HASSTDEXTA : "hasstdexta",
     RISCV_GRP_HASSTDEXTC : "hasstdextc",
@@ -238,6 +244,12 @@ riscv32_dict = {
 
 riscv64_dict = {    
     RISCV_GRP_JUMP       : "jump",
+    RISCV_GRP_CALL       : "call",
+    RISCV_GRP_RET        : "ret",
+    RISCV_GRP_INT        : "int",
+    RISCV_GRP_IRET       : "iret",
+    RISCV_GRP_PRIVILEGE  : "privileged",
+    RISCV_GRP_BRANCH_RELATIVE: "branch_relative",
     RISCV_GRP_ISRV64     : "isrv64",
     RISCV_GRP_HASSTDEXTA : "hasstdexta",
     RISCV_GRP_HASSTDEXTC : "hasstdextc",
