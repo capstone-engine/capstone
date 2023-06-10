@@ -24,15 +24,15 @@ const char *AArch64_insn_name(csh handle, unsigned int id);
 
 const char *AArch64_group_name(csh handle, unsigned int id);
 
-void AArch64_reg_access(const cs_insn *insn,
-		cs_regs regs_read, uint8_t *regs_read_count,
-		cs_regs regs_write, uint8_t *regs_write_count);
+void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
+						uint8_t *regs_read_count, cs_regs regs_write,
+						uint8_t *regs_write_count);
 
 void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
-					   va_list args);
+						   va_list args);
 
-static inline void add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
-								 ...)
+static inline void add_cs_detail(MCInst *MI,
+								 int /* aarch64_op_group */ op_group, ...)
 {
 	if (!MI->flat_insn->detail)
 		return;
@@ -49,9 +49,16 @@ void AArch64_init_cs_detail(MCInst *MI);
 void AArch64_set_instr_map_data(MCInst *MI);
 
 bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-						MCInst *instr, uint16_t *size, uint64_t address,
-						void *info);
+							MCInst *instr, uint16_t *size, uint64_t address,
+							void *info);
 
 void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info);
+
+void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg);
+void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum, aarch64_op_type ImmType,
+							   int64_t Imm);
+void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
+							   uint64_t Val);
+void AArch64_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val);
 
 #endif

@@ -195,6 +195,104 @@ void AArch64_reg_access(const cs_insn *insn,
 #endif
 
 void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
-					   va_list args) {}
+					   va_list args) {
+}
+
+/// Adds a register AArch64 operand at position OpNum and increases the op_count by
+/// one.
+void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
+{
+	if (!detail_is_set(MI))
+		return;
+	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
+	assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
+
+	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_REG;
+	AArch64_get_detail_op(MI, 0)->reg = Reg;
+	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+	AArch64_inc_op_count(MI);
+}
+
+/// Adds an immediate AArch64 operand at position OpNum and increases the op_count
+/// by one.
+void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum, aarch64_op_type ImmType,
+						   int64_t Imm)
+{
+	if (!detail_is_set(MI))
+		return;
+	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
+	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
+	assert(ImmType == AArch64_OP_IMM || ImmType == AArch64_OP_CIMM);
+
+	AArch64_get_detail_op(MI, 0)->type = ImmType;
+	AArch64_get_detail_op(MI, 0)->imm = Imm;
+	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+	AArch64_inc_op_count(MI);
+}
+
+/// Adds the operand to the previously added memory operand.
+void AArch64_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val)
+{
+	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
+
+	if (!doing_mem(MI)) {
+		assert((AArch64_get_detail_op(MI, -1) != NULL) &&
+			   (AArch64_get_detail_op(MI, -1)->type == AArch64_OP_MEM));
+		AArch64_dec_op_count(MI);
+	}
+
+	if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM)
+		AArch64_set_detail_op_mem(MI, OpNum, false, Val);
+	else if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG)
+		AArch64_set_detail_op_mem(MI, OpNum, true, Val);
+	else
+		assert(0 && "Memory type incorrect.");
+
+	if (!doing_mem(MI))
+		AArch64_inc_op_count(MI);
+}
+
+/// Adds a memory AArch64 operand at position OpNum. op_count is *not* increased by
+/// one. This is done by set_mem_access().
+void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
+						   uint64_t Val)
+{
+	if (!detail_is_set(MI))
+		return;
+	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
+	cs_op_type secondary_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
+	switch (secondary_type) {
+	default:
+		assert(0 && "Secondary type not supported yet.");
+	case CS_OP_REG: {
+		assert(secondary_type == CS_OP_REG);
+		if (is_index_reg)
+			AArch64_get_detail_op(MI, 0)->mem.index = Val;
+		else {
+			AArch64_get_detail_op(MI, 0)->mem.base = Val;
+		}
+
+		if (MCInst_opIsTying(MI, OpNum)) {
+			// Especially base registers can be writeback registers.
+			// For this they tie an MC operand which has write
+			// access. But this one is never processed in the printer
+			// (because it is never emitted). Therefor it is never
+			// added to the modified list.
+			// Here we check for this case and add the memory register
+			// to the modified list.
+			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+		}
+		break;
+	}
+	case CS_OP_IMM: {
+		assert(secondary_type == CS_OP_IMM);
+		AArch64_get_detail_op(MI, 0)->mem.disp = Val;
+		break;
+	}
+	}
+
+	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_MEM;
+	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+}
 
 #endif
