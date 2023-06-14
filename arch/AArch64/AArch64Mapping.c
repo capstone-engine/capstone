@@ -8,6 +8,7 @@
 
 #include "../../cs_simple_types.h"
 #include "../../Mapping.h"
+#include "../../MathExtras.h"
 #include "../../utils.h"
 
 #include "AArch64BaseInfo.h"
@@ -422,11 +423,45 @@ static void add_cs_detail_template_4(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_RegWithShiftExtend_1_64_w_s:
 	case AArch64_OP_GROUP_RegWithShiftExtend_1_8_w_d:
 	case AArch64_OP_GROUP_RegWithShiftExtend_1_8_w_s: {
-		bool SignExtend ;
-		int ExtWidth;
-		char SrcRegKind;
-		char Suffix;
+		// signed (s) and unsigned (u) extend
+		bool SignExtend = (bool) temp_arg_0;
+		// Extend width
+		int ExtWidth = (int) temp_arg_1;
+		// w = word, x = doubleword
+		char SrcRegKind = (char) temp_arg_2;
+		// Vector register element/arrangement specifier:
+		// B = 8bit, H = 16bit, S = 32bit, D = 64bit, Q = 128bit
+		// No suffix = complete register
+		// According to: ARM Reference manual supplement, doc number: DDI 0584
+		char Suffix = (char) temp_arg_3;
 
+		// Register will be added in printOperand() afterwards. Here we only handle
+		// shift and extend.
+
+		switch (Suffix) {
+		default:
+			printf("ERROR: Vector register suffix %c not handled.\n", Suffix);
+			assert(0);
+		case 'b':
+			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_B;
+			break;
+		case 'h':
+			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_H;
+			break;
+		case 's':
+			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_S;
+			break;
+		case 'd':
+			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_D;
+			break;
+		}
+
+		bool DoShift = ExtWidth != 8;
+		if (!(SignExtend || DoShift || SrcRegKind == 'w'))
+			return;
+
+		AArch64_set_detail_shift_ext(MI, OpNum, SignExtend, DoShift, ExtWidth,
+									 SrcRegKind);
 		break;
 	}
 	}
@@ -722,6 +757,37 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 
 	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_MEM;
 	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+}
+
+/// Adds the shift and sign extend info of the currently edited operand.
+/// op_count is *not* incremented by one.
+void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
+								  bool DoShift, unsigned ExtWidth, char SrcRegKind) {
+	bool IsLSL = !SignExtend && SrcRegKind == 'x';
+	if (IsLSL)
+		AArch64_get_detail_op(MI, 0)->shift.type = AArch64_SFT_LSL;
+	else {
+		aarch64_extender ext = SignExtend ? AArch64_EXT_SXTB : AArch64_EXT_UXTB;
+		switch (SrcRegKind) {
+			default:
+				assert(0 && "Extender not handled\n");
+			case 'b':
+				ext += 0;
+				break;
+			case 'h':
+				ext += 1;
+				break;
+			case 'w':
+				ext += 2;
+				break;
+			case 'x':
+				ext += 3;
+				break;
+		}
+		AArch64_get_detail_op(MI, 0)->ext = ext;
+	}
+	if (DoShift || IsLSL)
+		AArch64_get_detail_op(MI, 0)->shift.value = Log2_32(ExtWidth / 8);
 }
 
 #endif

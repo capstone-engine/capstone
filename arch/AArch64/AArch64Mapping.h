@@ -60,5 +60,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum, aarch64_op_type ImmTy
 void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 							   uint64_t Val);
 void AArch64_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val);
+void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
+								  bool DoShift, unsigned ExtWidth, char SrcRegKind);
 
 #endif
