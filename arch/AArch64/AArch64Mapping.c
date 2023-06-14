@@ -195,6 +195,113 @@ void AArch64_reg_access(const cs_insn *insn,
 }
 #endif
 
+static unsigned get_vec_list_num_regs(MCInst *MI, unsigned Reg) {
+	// Work out how many registers there are in the list (if there is an actual
+	// list).
+	unsigned NumRegs = 1;
+	if (MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_DDRegClassID), Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR2RegClassID),
+			Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_QQRegClassID), Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_PPR2RegClassID),
+			Reg) ||
+		MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR2StridedRegClassID),
+			Reg))
+		NumRegs = 2;
+	else if (MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_DDDRegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR3RegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_QQQRegClassID),
+				 Reg))
+		NumRegs = 3;
+	else if (MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_DDDDRegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR4RegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_QQQQRegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI,
+											 AArch64_ZPR4StridedRegClassID),
+				 Reg))
+		NumRegs = 4;
+	return NumRegs;
+}
+
+static unsigned get_vec_list_stride(MCInst *MI, unsigned Reg) {
+	unsigned Stride = 1;
+	if (MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPR2StridedRegClassID),
+			Reg))
+		Stride = 8;
+	else if (MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI,
+											 AArch64_ZPR4StridedRegClassID),
+				 Reg))
+		Stride = 4;
+	return Stride;
+}
+
+static unsigned get_vec_list_first_reg(MCInst *MI, unsigned RegL) {
+	unsigned Reg = RegL;
+	// Now forget about the list and find out what the first register is.
+	if (MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_dsub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_dsub0);
+	else if (MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_qsub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_qsub0);
+	else if (MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_zsub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_zsub0);
+	else if (MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_psub0))
+		Reg = MCRegisterInfo_getSubReg(MI->MRI, RegL, AArch64_psub0);
+
+	// If it's a D-reg, we need to promote it to the equivalent Q-reg before
+	// printing (otherwise getRegisterName fails).
+	if (MCRegisterClass_contains(
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_FPR64RegClassID),
+			Reg)) {
+		const MCRegisterClass *FPR128RC =
+			MCRegisterInfo_getRegClass(MI->MRI, AArch64_FPR128RegClassID);
+		Reg = MCRegisterInfo_getMatchingSuperReg(MI->MRI, RegL, AArch64_dsub,
+									 FPR128RC);
+	}
+	return Reg;
+}
+
+static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
+{
+	while (Stride--) {
+		if (Reg < AArch64_Q0 && Reg > AArch64_Q31 &&
+				Reg < AArch64_Z0 && Reg > AArch64_Z31 &&
+				Reg < AArch64_P0 && Reg > AArch64_P15)
+			assert(0 && "Vector register expected!");
+		// Vector lists can wrap around.
+		else if (Reg == AArch64_Q31)
+			Reg = AArch64_Q0;
+		// Vector lists can wrap around.
+		else if (Reg == AArch64_Z31)
+			Reg = AArch64_Z0;
+		// Vector lists can wrap around.
+		else if (Reg == AArch64_P15)
+			Reg = AArch64_P0;
+		else
+			// Assume ordered registers
+			++Reg;
+	}
+	return Reg;
+}
+
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which's original printer function has no
 /// specialities.
@@ -363,6 +470,8 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_MemExtend_x_32:
 	case AArch64_OP_GROUP_MemExtend_x_64:
 	case AArch64_OP_GROUP_MemExtend_x_8:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
 	case AArch64_OP_GROUP_TypedVectorList_0_b:
 	case AArch64_OP_GROUP_TypedVectorList_0_d:
 	case AArch64_OP_GROUP_TypedVectorList_0_h:
@@ -375,9 +484,82 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_TypedVectorList_4_h:
 	case AArch64_OP_GROUP_TypedVectorList_4_s:
 	case AArch64_OP_GROUP_TypedVectorList_8_b:
-	case AArch64_OP_GROUP_TypedVectorList_8_h:
-		printf("Operand group %d not implemented\n", op_group);
-		break;
+	case AArch64_OP_GROUP_TypedVectorList_8_h: {
+		uint8_t NumLanes = (uint8_t) temp_arg_0;
+		char LaneKind = (char) temp_arg_1;
+		uint16_t Pair = ((NumLanes << 8) | LaneKind);
+
+		AArch64Layout_VectorLayout vas = AArch64Layout_Invalid;
+		switch (Pair) {
+		default:
+			printf("Typed vector list with NumLanes = %d and LaneKind = %c not handled.\n",
+						NumLanes, LaneKind);
+			assert(0);
+		case ((8 << 8) | 'b'):
+			vas = AArch64Layout_VL_8B;
+			break;
+		case ((4 << 8) | 'h'):
+			vas = AArch64Layout_VL_4H;
+			break;
+		case ((2 << 8) | 's'):
+			vas = AArch64Layout_VL_2S;
+			break;
+		case ((1 << 8) | 'd'):
+			vas = AArch64Layout_VL_1D;
+			break;
+		case ((16 << 8) | 'b'):
+			vas = AArch64Layout_VL_16B;
+			break;
+		case ((8 << 8) | 'h'):
+			vas = AArch64Layout_VL_8H;
+			break;
+		case ((4 << 8) | 's'):
+			vas = AArch64Layout_VL_4S;
+			break;
+		case ((2 << 8) | 'd'):
+			vas = AArch64Layout_VL_2D;
+			break;
+		case 'b':
+			vas = AArch64Layout_VL_B;
+			break;
+		case 'h':
+			vas = AArch64Layout_VL_H;
+			break;
+		case 's':
+			vas = AArch64Layout_VL_S;
+			break;
+		case 'd':
+			vas = AArch64Layout_VL_D;
+			break;
+		}
+
+		unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, OpNum));
+		unsigned NumRegs = get_vec_list_num_regs(MI, Reg);
+		unsigned Stride = get_vec_list_stride(MI, Reg);
+		Reg = get_vec_list_first_reg(MI, Reg);
+
+		if ((MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_ZPRRegClassID),
+				 Reg) ||
+			 MCRegisterClass_contains(
+				 MCRegisterInfo_getRegClass(MI->MRI, AArch64_PPRRegClassID),
+				 Reg)) &&
+			NumRegs > 1 && Stride == 1 &&
+			Reg < getNextVectorRegister(Reg, NumRegs - 1)) {
+				AArch64_get_detail_op(MI, 0)->vas = vas;
+				AArch64_set_detail_op_reg(MI, OpNum, Reg);
+				if (NumRegs > 1) {
+					AArch64_get_detail_op(MI, 0)->vas = vas;
+					AArch64_set_detail_op_reg(MI, OpNum, getNextVectorRegister(Reg, NumRegs - 1));
+				}
+		} else {
+			for (unsigned i = 0; i < NumRegs;
+				 ++i, Reg = getNextVectorRegister(Reg, Stride)) {
+				AArch64_get_detail_op(MI, 0)->vas = vas;
+				AArch64_set_detail_op_reg(MI, OpNum, Reg);
+			}
+		}
+	}
 	}
 }
 
