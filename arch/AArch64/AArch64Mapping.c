@@ -426,7 +426,11 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ImmScale_3:
 	case AArch64_OP_GROUP_ImmScale_32:
 	case AArch64_OP_GROUP_ImmScale_4:
-	case AArch64_OP_GROUP_ImmScale_8:
+	case AArch64_OP_GROUP_ImmScale_8: {
+		unsigned Scale = temp_arg_0;
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Scale * MCInst_getOpVal(MI, OpNum));
+		break;
+	}
 	case AArch64_OP_GROUP_LogicalImm_int16_t:
 	case AArch64_OP_GROUP_LogicalImm_int32_t:
 	case AArch64_OP_GROUP_LogicalImm_int64_t:
