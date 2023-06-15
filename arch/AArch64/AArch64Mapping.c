@@ -434,7 +434,12 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_LogicalImm_int16_t:
 	case AArch64_OP_GROUP_LogicalImm_int32_t:
 	case AArch64_OP_GROUP_LogicalImm_int64_t:
-	case AArch64_OP_GROUP_LogicalImm_int8_t:
+	case AArch64_OP_GROUP_LogicalImm_int8_t: {
+		unsigned TypeSize = temp_arg_0;
+		uint64_t Val = AArch64_AM_decodeLogicalImmediate(MCInst_getOpVal(MI, OpNum), 8 * TypeSize);
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Val);
+		break;
+	}
 	case AArch64_OP_GROUP_Matrix_0:
 	case AArch64_OP_GROUP_Matrix_16:
 	case AArch64_OP_GROUP_Matrix_32:
