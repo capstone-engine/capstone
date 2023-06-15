@@ -11,6 +11,7 @@
 #include "../../MathExtras.h"
 #include "../../utils.h"
 
+#include "AArch64AddressingModes.h"
 #include "AArch64BaseInfo.h"
 #include "AArch64Linkage.h"
 #include "AArch64Mapping.h"
@@ -389,7 +390,37 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_Imm8OptLsl_uint16_t:
 	case AArch64_OP_GROUP_Imm8OptLsl_uint32_t:
 	case AArch64_OP_GROUP_Imm8OptLsl_uint64_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_uint8_t:
+	case AArch64_OP_GROUP_Imm8OptLsl_uint8_t: {
+		unsigned UnscaledVal = MCInst_getOpVal(MI, (OpNum));
+		unsigned Shift = MCInst_getOpVal(MI, (OpNum + 1));
+
+		if ((UnscaledVal == 0) && (AArch64_AM_getShiftValue(Shift) != 0)) {
+			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, UnscaledVal);
+			// Shift is handled in printShifter()
+			break;
+		}
+		switch (op_group) {
+		default:
+			assert(0 && "Operand group for Imm8OptLsl not handled.");
+		case AArch64_OP_GROUP_Imm8OptLsl_int16_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_int32_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_int64_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_int8_t: {
+			int8_t Val =
+				(int8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift));
+			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Val);
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_uint16_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_uint32_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_uint64_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_uint8_t: {
+			uint8_t Val =
+					(uint8_t)UnscaledVal * (1 << AArch64_AM_getShiftValue(Shift));
+			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Val);
+		}
+		}
+		break;
+	}
 	case AArch64_OP_GROUP_ImmScale_16:
 	case AArch64_OP_GROUP_ImmScale_2:
 	case AArch64_OP_GROUP_ImmScale_3:
