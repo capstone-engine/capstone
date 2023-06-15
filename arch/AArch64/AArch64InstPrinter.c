@@ -1262,7 +1262,7 @@ void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
 		if (Reg == AArch64_XZR) {
-			SStream_concat(O, "%s%s%s", markup("<imm:"));
+			SStream_concat(O, "%s", markup("<imm:"));
 			printUInt64Bang(O, Imm);
 			SStream_concat0(O, markup(">"));
 		} else
