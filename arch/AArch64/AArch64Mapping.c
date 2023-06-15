@@ -559,7 +559,15 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_PostIncOperand_48:
 	case AArch64_OP_GROUP_PostIncOperand_6:
 	case AArch64_OP_GROUP_PostIncOperand_64:
-	case AArch64_OP_GROUP_PostIncOperand_8:
+	case AArch64_OP_GROUP_PostIncOperand_8: {
+		uint64_t Imm = temp_arg_0;
+		aarch64_reg Reg = MCInst_getOpVal(MI, OpNum);
+		if (Reg == AArch64_XZR)
+			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Imm);
+		else
+			AArch64_set_detail_op_reg(MI, OpNum, Reg);
+		break;
+	}
 	case AArch64_OP_GROUP_PredicateAsCounter_0:
 	case AArch64_OP_GROUP_PredicateAsCounter_16:
 	case AArch64_OP_GROUP_PredicateAsCounter_32:
