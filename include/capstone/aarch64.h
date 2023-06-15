@@ -42,6 +42,14 @@ typedef enum aarch64_extender {
 // With extension of Q
 typedef enum VectorLayout {
 	AArch64Layout_Invalid = -1,
+	// Bare layout for the 128-bit vector
+	// (only show ".b", ".h", ".s", ".d" without vector number)
+	AArch64Layout_VL_B = 8,
+	AArch64Layout_VL_H = 16,
+	AArch64Layout_VL_S = 32,
+	AArch64Layout_VL_D = 64,
+	AArch64Layout_VL_Q = 128,
+
 	AArch64Layout_VL_8B,
 	AArch64Layout_VL_4H,
 	AArch64Layout_VL_2S,
@@ -52,14 +60,6 @@ typedef enum VectorLayout {
 	AArch64Layout_VL_4S,
 	AArch64Layout_VL_2D,
 	AArch64Layout_VL_1Q,
-
-	// Bare layout for the 128-bit vector
-	// (only show ".b", ".h", ".s", ".d" without vector number)
-	AArch64Layout_VL_B = 8,
-	AArch64Layout_VL_H = 16,
-	AArch64Layout_VL_S = 32,
-	AArch64Layout_VL_D = 64,
-	AArch64Layout_VL_Q = 128
 } AArch64Layout_VectorLayout;
 
 // Moved from AArch64BaseInfo.h
