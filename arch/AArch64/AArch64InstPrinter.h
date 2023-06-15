@@ -116,6 +116,11 @@ void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind,
 	static inline void CONCAT(printMemExtend, CONCAT(SrcRegKind, Width))( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
+		add_cs_detail(MI, \
+			CONCAT(CONCAT(AArch64_OP_GROUP_MemExtend, \
+								 SrcRegKind), \
+						  Width), \
+			OpNum, CHAR(SrcRegKind), Width); \
 		printMemExtend(MI, OpNum, O, CHAR(SrcRegKind), Width); \
 	}
 DEFINE_printMemExtend(w, 8);

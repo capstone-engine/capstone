@@ -466,6 +466,8 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_zero_AArch64ExactFPImm_one:
 	case AArch64_OP_GROUP_ImmRangeScale_2_1:
 	case AArch64_OP_GROUP_ImmRangeScale_4_3:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
 	case AArch64_OP_GROUP_MemExtend_w_128:
 	case AArch64_OP_GROUP_MemExtend_w_16:
 	case AArch64_OP_GROUP_MemExtend_w_32:
@@ -475,9 +477,15 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_MemExtend_x_16:
 	case AArch64_OP_GROUP_MemExtend_x_32:
 	case AArch64_OP_GROUP_MemExtend_x_64:
-	case AArch64_OP_GROUP_MemExtend_x_8:
-		printf("Operand group %d not implemented\n", op_group);
+	case AArch64_OP_GROUP_MemExtend_x_8: {
+		char SrcRegKind = (char) temp_arg_0;
+		unsigned ExtWidth = temp_arg_1;
+		bool SignExtend = MCInst_getOpVal(MI, OpNum);
+		bool DoShift = MCInst_getOpVal(MI, OpNum + 1);
+		AArch64_set_detail_shift_ext(MI, OpNum, SignExtend, DoShift, ExtWidth,
+									 SrcRegKind);
 		break;
+	}
 	case AArch64_OP_GROUP_TypedVectorList_0_b:
 	case AArch64_OP_GROUP_TypedVectorList_0_d:
 	case AArch64_OP_GROUP_TypedVectorList_0_h:
