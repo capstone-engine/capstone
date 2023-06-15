@@ -196,6 +196,25 @@ void AArch64_reg_access(const cs_insn *insn,
 }
 #endif
 
+/// Initializes or closes a SME operand. If @init = true it sets up the operand.
+/// If @init = false it closes it and increments op_count by one.
+static void set_sme_operand(MCInst *MI, bool init) {
+	if (!init) {
+		assert(AArch64_get_detail_op(MI, 0)->sme.type != AArch64_SME_OP_INVALID &&
+					 AArch64_get_detail_op(MI, 0)->sme.tile != AArch64_REG_INVALID);
+		AArch64_get_detail(MI)->is_doing_sme = false;
+		AArch64_inc_op_count(MI);
+		return;
+	}
+	assert(AArch64_get_detail_op(MI, 0)->sme.type != AArch64_SME_OP_INVALID);
+
+	AArch64_get_detail(MI)->is_doing_sme = true;
+	AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_INVALID;
+	AArch64_get_detail_op(MI, 0)->sme.tile = AArch64_REG_INVALID;
+	AArch64_get_detail_op(MI, 0)->sme.slice_reg = AArch64_REG_INVALID;
+	AArch64_get_detail_op(MI, 0)->sme.slice_offset = -1;
+}
+
 static unsigned get_vec_list_num_regs(MCInst *MI, unsigned Reg) {
 	// Work out how many registers there are in the list (if there is an actual
 	// list).
@@ -334,9 +353,61 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ImmHex:
 	case AArch64_OP_GROUP_ImplicitlyTypedVectorList:
 	case AArch64_OP_GROUP_InverseCondCode:
-	case AArch64_OP_GROUP_MatrixIndex:
-	case AArch64_OP_GROUP_MatrixTile:
-	case AArch64_OP_GROUP_MatrixTileList:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
+	case AArch64_OP_GROUP_MatrixIndex: {
+		assert(AArch64_get_detail(MI)->is_doing_sme);
+		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE_VEC;
+		AArch64_get_detail_op(MI, 0)->sme.slice_offset = MCInst_getOpVal(MI, OpNum);
+		set_sme_operand(MI, false);
+		break;
+	}
+	case AArch64_OP_GROUP_MatrixTile: {
+		set_sme_operand(MI, true);
+		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE;
+		AArch64_get_detail_op(MI, 0)->sme.tile = MCInst_getOpVal(MI, OpNum);
+		const char *RegName = AArch64_LLVM_getRegisterName(MCInst_getOpVal(MI, OpNum), AArch64_NoRegAltName);
+		const char *Dot = strstr(RegName, ".");
+		if (!Dot) {
+			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_Invalid;
+			break;
+		}
+		switch (Dot[1]) {
+			case 'b':
+			case 'B':
+				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_B;
+				break;
+			case 'h':
+			case 'H':
+				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_H;
+				break;
+			case 's':
+			case 'S':
+				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_S;
+				break;
+			case 'd':
+			case 'D':
+				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_D;
+				break;
+			case 'q':
+			case 'Q':
+				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_Q;
+				break;
+		}
+		break;
+	}
+	case AArch64_OP_GROUP_MatrixTileList: {
+		unsigned MaxRegs = 8;
+		unsigned RegMask = MCInst_getOpVal(MI, (OpNum));
+
+		for (unsigned I = 0; I < MaxRegs; ++I) {
+			unsigned Reg = RegMask & (1 << I);
+			if (Reg == 0)
+				continue;
+			AArch64_set_detail_op_reg(MI, OpNum, AArch64_REG_ZAD0 + I);
+		}
+		AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_D;
+	}
 	case AArch64_OP_GROUP_MRSSystemRegister:
 	case AArch64_OP_GROUP_MSRSystemRegister:
 	case AArch64_OP_GROUP_Operand:
@@ -444,13 +515,21 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_Matrix_16:
 	case AArch64_OP_GROUP_Matrix_32:
 	case AArch64_OP_GROUP_Matrix_64: {
-		AArch64_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
+		set_sme_operand(MI, true);
 		unsigned EltSize = temp_arg_0;
-		AArch64_get_detail_op(MI, -1)->vas = (AArch64Layout_VectorLayout) EltSize;
+		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE;
+		AArch64_get_detail_op(MI, 0)->sme.tile = MCInst_getOpVal(MI, OpNum);
+		AArch64_get_detail_op(MI, 0)->vas = (AArch64Layout_VectorLayout) EltSize;
 		break;
 	}
 	case AArch64_OP_GROUP_MatrixTileVector_0:
-	case AArch64_OP_GROUP_MatrixTileVector_1:
+	case AArch64_OP_GROUP_MatrixTileVector_1: {
+		bool isVertical = temp_arg_0;
+		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE_VEC;
+		AArch64_get_detail_op(MI, 0)->sme.tile = MCInst_getOpVal(MI, OpNum);
+		AArch64_get_detail_op(MI, 0)->sme.is_vertical = isVertical;
+		break;
+	}
 	case AArch64_OP_GROUP_PostIncOperand_1:
 	case AArch64_OP_GROUP_PostIncOperand_12:
 	case AArch64_OP_GROUP_PostIncOperand_16:

@@ -2592,12 +2592,20 @@ typedef struct aarch64_op_mem {
   int32_t disp;	   ///< displacement/offset value
 } aarch64_op_mem;
 
+typedef enum {
+	AArch64_SME_OP_INVALID,
+	AArch64_SME_OP_TILE, ///< SME operand is a single tile.
+	AArch64_SME_OP_TILE_VEC, ///< SME operand is a tile indexed by a register and/or immediate
+} aarch64_sme_op_type;
+
 /// SME Instruction's operand has index
-typedef struct aarch64_op_sme_index {
-  aarch64_reg reg;  ///< register being indexed
-  aarch64_reg base; ///< base register
-  int32_t disp;	  ///< displacement/offset value
-} aarch64_op_sme_index;
+typedef struct aarch64_op_sme {
+  aarch64_sme_op_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC, AArch64_SME_OP_ACC_MATRIX
+  aarch64_reg tile; ///< Matrix tile register
+  aarch64_reg slice_reg; ///< slice index reg
+  int8_t slice_offset; ///< slice index offset
+  bool is_vertical;	///< Flag if slice is vertical or horizontal
+} aarch64_op_sme;
 
 /// Instruction operand
 typedef struct cs_aarch64_op {
@@ -2616,8 +2624,7 @@ typedef struct cs_aarch64_op {
     double fp;		 ///< floating point value for FP operand
     aarch64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
 		aarch64_sysop sysop; ///< System operand
-    aarch64_op_sme_index sme_index; ///< base/disp value for matrix tile slice
-				  ///< instructions.
+    aarch64_op_sme sme; ///< SME matrix operand
   };
 
   /// How is this operand accessed? (READ, WRITE or READ|WRITE)
@@ -2632,6 +2639,7 @@ typedef struct cs_aarch64 {
   bool update_flags; ///< does this insn update flags?
   bool writeback;    ///< does this insn request writeback? 'True' means 'yes'
   bool post_index;   ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
+  bool is_doing_sme; ///< True if a SME operand is currently edited.
 
   /// Number of operands of this instruction,
   /// or 0 when instruction has no operand.
