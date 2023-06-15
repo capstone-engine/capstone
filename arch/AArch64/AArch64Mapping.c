@@ -369,7 +369,19 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		printf("ERROR: Operand group %d not handled!\n", op_group);
 		assert(0);
 	case AArch64_OP_GROUP_GPRSeqPairsClassOperand_32:
-	case AArch64_OP_GROUP_GPRSeqPairsClassOperand_64:
+	case AArch64_OP_GROUP_GPRSeqPairsClassOperand_64: {
+		unsigned size = temp_arg_0;
+		unsigned Reg = MCInst_getOpVal(MI, (OpNum));
+
+		unsigned Sube = (size == 32) ? AArch64_sube32 : AArch64_sube64;
+		unsigned Subo = (size == 32) ? AArch64_subo32 : AArch64_subo64;
+
+		unsigned Even = MCRegisterInfo_getSubReg(MI->MRI, Reg, Sube);
+		unsigned Odd = MCRegisterInfo_getSubReg(MI->MRI, Reg, Subo);
+		AArch64_set_detail_op_reg(MI, OpNum, Even);
+		AArch64_set_detail_op_reg(MI, OpNum, Odd);
+		break;
+	}
 	case AArch64_OP_GROUP_Imm8OptLsl_int16_t:
 	case AArch64_OP_GROUP_Imm8OptLsl_int32_t:
 	case AArch64_OP_GROUP_Imm8OptLsl_int64_t:
