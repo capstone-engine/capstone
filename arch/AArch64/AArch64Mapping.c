@@ -572,7 +572,13 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_PredicateAsCounter_16:
 	case AArch64_OP_GROUP_PredicateAsCounter_32:
 	case AArch64_OP_GROUP_PredicateAsCounter_64:
-	case AArch64_OP_GROUP_PredicateAsCounter_8:
+	case AArch64_OP_GROUP_PredicateAsCounter_8: {
+		unsigned EltSize = temp_arg_0;
+		AArch64_get_detail_op(MI, 0)->vas = EltSize;
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
+				MCInst_getOpVal(MI, OpNum) - AArch64_P0);
+		break;
+	}
 	case AArch64_OP_GROUP_PrefetchOp_0:
 	case AArch64_OP_GROUP_PrefetchOp_1:
 	case AArch64_OP_GROUP_SImm_16:
