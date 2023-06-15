@@ -443,7 +443,12 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_Matrix_0:
 	case AArch64_OP_GROUP_Matrix_16:
 	case AArch64_OP_GROUP_Matrix_32:
-	case AArch64_OP_GROUP_Matrix_64:
+	case AArch64_OP_GROUP_Matrix_64: {
+		AArch64_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
+		unsigned EltSize = temp_arg_0;
+		AArch64_get_detail_op(MI, -1)->vas = (AArch64Layout_VectorLayout) EltSize;
+		break;
+	}
 	case AArch64_OP_GROUP_MatrixTileVector_0:
 	case AArch64_OP_GROUP_MatrixTileVector_1:
 	case AArch64_OP_GROUP_PostIncOperand_1:
