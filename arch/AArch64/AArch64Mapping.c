@@ -454,7 +454,13 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		printf("ERROR: Operand group %d not handled!\n", op_group);
 		assert(0);
 	case AArch64_OP_GROUP_ComplexRotationOp_180_90:
-	case AArch64_OP_GROUP_ComplexRotationOp_90_0:
+	case AArch64_OP_GROUP_ComplexRotationOp_90_0: {
+		unsigned Angle = temp_arg_0;
+		unsigned Remainder = temp_arg_1;
+		unsigned Imm = (MCInst_getOpVal(MI, OpNum) * Angle) + Remainder;
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Imm);
+		break;
+	}
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_half_AArch64ExactFPImm_one:
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_half_AArch64ExactFPImm_two:
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_zero_AArch64ExactFPImm_one:
