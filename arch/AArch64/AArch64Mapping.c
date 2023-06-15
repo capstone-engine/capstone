@@ -464,10 +464,17 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_half_AArch64ExactFPImm_one:
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_half_AArch64ExactFPImm_two:
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_zero_AArch64ExactFPImm_one:
-	case AArch64_OP_GROUP_ImmRangeScale_2_1:
-	case AArch64_OP_GROUP_ImmRangeScale_4_3:
 		printf("Operand group %d not implemented\n", op_group);
 		break;
+	case AArch64_OP_GROUP_ImmRangeScale_2_1:
+	case AArch64_OP_GROUP_ImmRangeScale_4_3: {
+		uint64_t Scale = temp_arg_0;
+		uint64_t Offset = temp_arg_1;
+		unsigned FirstImm = Scale * MCInst_getOpVal(MI, (OpNum));
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, FirstImm);
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, FirstImm + Offset);
+		break;
+	}
 	case AArch64_OP_GROUP_MemExtend_w_128:
 	case AArch64_OP_GROUP_MemExtend_w_16:
 	case AArch64_OP_GROUP_MemExtend_w_32:
