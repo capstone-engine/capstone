@@ -584,10 +584,14 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	}
 	case AArch64_OP_GROUP_PrefetchOp_0:
 	case AArch64_OP_GROUP_PrefetchOp_1:
-	case AArch64_OP_GROUP_SImm_16:
-	case AArch64_OP_GROUP_SImm_8:
 		printf("Operand group %d not implemented\n", op_group);
 		break;
+	case AArch64_OP_GROUP_SImm_16:
+	case AArch64_OP_GROUP_SImm_8: {
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
+				MCInst_getOpVal(MI, OpNum));
+		break;
+	}
 	case AArch64_OP_GROUP_SVELogicalImm_int16_t:
 	case AArch64_OP_GROUP_SVELogicalImm_int32_t:
 	case AArch64_OP_GROUP_SVELogicalImm_int64_t: {
