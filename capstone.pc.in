@@ -6,7 +6,7 @@ includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 Name: capstone
 Description: Capstone disassembly engine
 Version: @PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
-URL: http://www.capstone-engine.org
+URL: https://www.capstone-engine.org/
 archive=${libdir}/libcapstone.a
 Libs: -L${libdir} -lcapstone
 Cflags: -I${includedir}/capstone
