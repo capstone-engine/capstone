@@ -6,6 +6,8 @@
 #include <stdio.h>	// debug
 #include <string.h>
 
+#include "capstone/aarch64.h"
+
 #include "../../cs_simple_types.h"
 #include "../../Mapping.h"
 #include "../../MathExtras.h"
@@ -195,6 +197,28 @@ void AArch64_reg_access(const cs_insn *insn,
 	*regs_write_count = write_count;
 }
 #endif
+
+static AArch64Layout_VectorLayout get_vl_by_suffix(const char suffix) {
+	switch (suffix) {
+	default:
+		assert(0 && "Unknown suffix");
+	case 'b':
+	case 'B':
+		return AArch64Layout_VL_B;
+	case 'h':
+	case 'H':
+		return AArch64Layout_VL_H;
+	case 's':
+	case 'S':
+		return AArch64Layout_VL_S;
+	case 'd':
+	case 'D':
+		return AArch64Layout_VL_D;
+	case 'q':
+	case 'Q':
+		return AArch64Layout_VL_Q;
+	}
+}
 
 /// Initializes or closes a SME operand. If @init = true it sets up the operand.
 /// If @init = false it closes it and increments op_count by one.
@@ -391,28 +415,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_Invalid;
 			break;
 		}
-		switch (Dot[1]) {
-			case 'b':
-			case 'B':
-				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_B;
-				break;
-			case 'h':
-			case 'H':
-				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_H;
-				break;
-			case 's':
-			case 'S':
-				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_S;
-				break;
-			case 'd':
-			case 'D':
-				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_D;
-				break;
-			case 'q':
-			case 'Q':
-				AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_Q;
-				break;
-		}
+		AArch64_get_detail_op(MI, 0)->vas = get_vl_by_suffix(Dot[1]);
 		break;
 	}
 	case AArch64_OP_GROUP_MatrixTileList: {
@@ -862,24 +865,7 @@ static void add_cs_detail_template_4(MCInst *MI, aarch64_op_group op_group,
 
 		// Register will be added in printOperand() afterwards. Here we only handle
 		// shift and extend.
-
-		switch (Suffix) {
-		default:
-			printf("ERROR: Vector register suffix %c not handled.\n", Suffix);
-			assert(0);
-		case 'b':
-			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_B;
-			break;
-		case 'h':
-			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_H;
-			break;
-		case 's':
-			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_S;
-			break;
-		case 'd':
-			AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_D;
-			break;
-		}
+		AArch64_get_detail_op(MI, 0)->vas = get_vl_by_suffix(Suffix);
 
 		bool DoShift = ExtWidth != 8;
 		if (!(SignExtend || DoShift || SrcRegKind == 'w'))
