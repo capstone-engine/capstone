@@ -201,7 +201,7 @@ void AArch64_reg_access(const cs_insn *insn,
 static AArch64Layout_VectorLayout get_vl_by_suffix(const char suffix) {
 	switch (suffix) {
 	default:
-		assert(0 && "Unknown suffix");
+		return AArch64Layout_Invalid;
 	case 'b':
 	case 'B':
 		return AArch64Layout_VL_B;
@@ -589,14 +589,19 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_SVELogicalImm_int16_t:
 	case AArch64_OP_GROUP_SVELogicalImm_int32_t:
 	case AArch64_OP_GROUP_SVELogicalImm_int64_t:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
 	case AArch64_OP_GROUP_SVERegOp_0:
 	case AArch64_OP_GROUP_SVERegOp_b:
 	case AArch64_OP_GROUP_SVERegOp_d:
 	case AArch64_OP_GROUP_SVERegOp_h:
 	case AArch64_OP_GROUP_SVERegOp_q:
-	case AArch64_OP_GROUP_SVERegOp_s:
-		printf("Operand group %d not implemented\n", op_group);
+	case AArch64_OP_GROUP_SVERegOp_s: {
+		char Suffix = (char) temp_arg_0;
+		AArch64_get_detail_op(MI, 0)->vas = get_vl_by_suffix(Suffix);
+		AArch64_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
 		break;
+	}
 	case AArch64_OP_GROUP_UImm12Offset_1:
 	case AArch64_OP_GROUP_UImm12Offset_16:
 	case AArch64_OP_GROUP_UImm12Offset_2:
