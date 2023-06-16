@@ -15,6 +15,7 @@
 
 #include "AArch64AddressingModes.h"
 #include "AArch64BaseInfo.h"
+#include "AArch64DisassemblerExtension.h"
 #include "AArch64Linkage.h"
 #include "AArch64Mapping.h"
 
@@ -583,9 +584,28 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_PrefetchOp_0:
-	case AArch64_OP_GROUP_PrefetchOp_1:
-		printf("Operand group %d not implemented\n", op_group);
+	case AArch64_OP_GROUP_PrefetchOp_1: {
+		bool IsSVEPrefetch = (bool) temp_arg_0;
+		unsigned prfop = MCInst_getOpVal(MI, (OpNum));
+		aarch64_sysop sysop;
+		if (IsSVEPrefetch) {
+			const AArch64SVEPRFM_SVEPRFM *PRFM = AArch64SVEPRFM_lookupSVEPRFMByEncoding(prfop);
+			if (PRFM) {
+				sysop.alias = PRFM->SysAlias;
+				AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVEPRFM);
+				break;
+			}
+		} else {
+			const AArch64PRFM_PRFM *PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop);
+			if (PRFM && AArch64_testFeatureList(MI->csh->mode, PRFM->FeaturesRequired)) {
+				sysop.alias = PRFM->SysAlias;
+				AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PRFM);
+				break;
+			}
+		}
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, prfop);
 		break;
+	}
 	case AArch64_OP_GROUP_SImm_16:
 	case AArch64_OP_GROUP_SImm_8: {
 		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
@@ -1225,6 +1245,18 @@ void AArch64_set_detail_op_float(MCInst *MI, unsigned OpNum, float Val)
 		return;
 	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_FP;
 	AArch64_get_detail_op(MI, 0)->fp = Val;
+	AArch64_inc_op_count(MI);
+}
+
+/// Adds a the system operand and increases the op_count by
+/// one.
+void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum,
+	aarch64_sysop sys_op, aarch64_op_type type)
+{
+	if (!detail_is_set(MI))
+		return;
+	AArch64_get_detail_op(MI, 0)->type = type;
+	AArch64_get_detail_op(MI, 0)->sysop = sys_op;
 	AArch64_inc_op_count(MI);
 }
 
