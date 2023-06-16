@@ -599,13 +599,38 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_UImm12Offset_8:
 	case AArch64_OP_GROUP_VectorIndex_1:
 	case AArch64_OP_GROUP_VectorIndex_8:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
 	case AArch64_OP_GROUP_ZPRasFPR_128:
 	case AArch64_OP_GROUP_ZPRasFPR_16:
 	case AArch64_OP_GROUP_ZPRasFPR_32:
 	case AArch64_OP_GROUP_ZPRasFPR_64:
-	case AArch64_OP_GROUP_ZPRasFPR_8:
-		printf("Operand group %d not implemented\n", op_group);
+	case AArch64_OP_GROUP_ZPRasFPR_8: {
+		unsigned Base;
+		unsigned Width = temp_arg_0;
+		switch (Width) {
+		case 8:
+			Base = AArch64_B0;
+			break;
+		case 16:
+			Base = AArch64_H0;
+			break;
+		case 32:
+			Base = AArch64_S0;
+			break;
+		case 64:
+			Base = AArch64_D0;
+			break;
+		case 128:
+			Base = AArch64_Q0;
+			break;
+		default:
+			assert(0 && "Unsupported width");
+		}
+		unsigned Reg = MCInst_getOpVal(MI, (OpNum));
+		AArch64_set_detail_op_reg(MI, OpNum, Reg - AArch64_Z0 + Base);
 		break;
+	}
 	}
 }
 
