@@ -586,11 +586,18 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_PrefetchOp_1:
 	case AArch64_OP_GROUP_SImm_16:
 	case AArch64_OP_GROUP_SImm_8:
-	case AArch64_OP_GROUP_SVELogicalImm_int16_t:
-	case AArch64_OP_GROUP_SVELogicalImm_int32_t:
-	case AArch64_OP_GROUP_SVELogicalImm_int64_t:
 		printf("Operand group %d not implemented\n", op_group);
 		break;
+	case AArch64_OP_GROUP_SVELogicalImm_int16_t:
+	case AArch64_OP_GROUP_SVELogicalImm_int32_t:
+	case AArch64_OP_GROUP_SVELogicalImm_int64_t: {
+		// General issue here that we do not save the operand type
+		// for each operand. So we choose the largest type.
+		uint64_t Val = MCInst_getOpVal(MI, OpNum);
+		uint64_t DecodedVal = AArch64_AM_decodeLogicalImmediate(Val, 64);
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, DecodedVal);
+		break;
+	}
 	case AArch64_OP_GROUP_SVERegOp_0:
 	case AArch64_OP_GROUP_SVERegOp_b:
 	case AArch64_OP_GROUP_SVERegOp_d:
