@@ -393,8 +393,12 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_FPImmOperand:
 	case AArch64_OP_GROUP_GPR64as32:
 	case AArch64_OP_GROUP_GPR64x8:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
 	case AArch64_OP_GROUP_Imm:
 	case AArch64_OP_GROUP_ImmHex:
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, MCInst_getOpVal(MI, OpNum));
+		break;
 	case AArch64_OP_GROUP_ImplicitlyTypedVectorList:
 	case AArch64_OP_GROUP_InverseCondCode:
 		printf("Operand group %d not implemented\n", op_group);
