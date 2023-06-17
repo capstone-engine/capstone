@@ -404,8 +404,18 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_AddSubImm:
-	case AArch64_OP_GROUP_AdrpLabel:
-	case AArch64_OP_GROUP_AlignedLabel:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
+	case AArch64_OP_GROUP_AdrpLabel: {
+		int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4096;
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, (MI->address & -4096) + Offset);
+		break;
+	}
+	case AArch64_OP_GROUP_AlignedLabel: {
+		int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4;
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, MI->address + Offset);
+		break;
+	}
 	case AArch64_OP_GROUP_AMNoIndex:
 		printf("Operand group %d not implemented\n", op_group);
 		break;
