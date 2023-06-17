@@ -388,7 +388,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_BarriernXSOption:
 	case AArch64_OP_GROUP_BarrierOption:
 	case AArch64_OP_GROUP_BTIHintOp:
-	case AArch64_OP_GROUP_CondCode:
+	case AArch64_OP_GROUP_CondCode: {
+		AArch64_get_detail(MI)->cc = MCInst_getOpVal(MI, OpNum);
+		break;
+	}
 	case AArch64_OP_GROUP_ExtendedRegister: {
 		AArch64_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
 		break;
