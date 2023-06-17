@@ -385,7 +385,14 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_AlignedLabel:
 	case AArch64_OP_GROUP_AMNoIndex:
 	case AArch64_OP_GROUP_ArithExtend:
-	case AArch64_OP_GROUP_BarriernXSOption:
+	case AArch64_OP_GROUP_BarriernXSOption: {
+		unsigned Val = MCInst_getOpVal(MI, OpNum);
+		aarch64_sysop sysop;
+		const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
+		sysop.alias = DB->SysAlias;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_DB);
+		break;
+	}
 	case AArch64_OP_GROUP_BarrierOption: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		unsigned Opcode = MCInst_getOpcode(MI);
