@@ -390,7 +390,14 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_BTIHintOp:
 	case AArch64_OP_GROUP_CondCode:
 	case AArch64_OP_GROUP_ExtendedRegister:
-	case AArch64_OP_GROUP_FPImmOperand:
+	case AArch64_OP_GROUP_FPImmOperand: {
+		MCOperand *MO = MCInst_getOperand(MI, (OpNum));
+		float FPImm = MCOperand_isDFPImm(MO)
+						  ? BitsToDouble(MCOperand_getImm(MO))
+						  : AArch64_AM_getFPImmFloat(MCOperand_getImm(MO));
+		AArch64_set_detail_op_float(MI, OpNum, FPImm);
+		break;
+	}
 	case AArch64_OP_GROUP_GPR64as32: {
 		unsigned Reg = MCInst_getOpVal(MI, OpNum);
 		AArch64_set_detail_op_reg(MI, OpNum, getWRegFromXReg(Reg));
