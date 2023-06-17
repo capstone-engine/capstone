@@ -441,6 +441,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_set_detail_op_reg(MI, OpNum, AArch64_REG_ZAD0 + I);
 		}
 		AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_D;
+		break;
 	}
 	case AArch64_OP_GROUP_MRSSystemRegister:
 	case AArch64_OP_GROUP_MSRSystemRegister:
