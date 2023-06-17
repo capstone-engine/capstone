@@ -387,7 +387,14 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ArithExtend:
 	case AArch64_OP_GROUP_BarriernXSOption:
 	case AArch64_OP_GROUP_BarrierOption:
-	case AArch64_OP_GROUP_BTIHintOp:
+	case AArch64_OP_GROUP_BTIHintOp: {
+		aarch64_sysop sysop;
+		unsigned btihintop = MCInst_getOpVal(MI, OpNum) ^ 32;
+		const AArch64BTIHint_BTI *BTI = AArch64BTIHint_lookupBTIByEncoding(btihintop);
+		sysop.alias = BTI->SysAlias;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_BTI);
+		break;
+	}
 	case AArch64_OP_GROUP_CondCode: {
 		AArch64_get_detail(MI)->cc = MCInst_getOpVal(MI, OpNum);
 		break;
