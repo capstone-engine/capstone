@@ -583,7 +583,27 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_MRSSystemRegister:
-	case AArch64_OP_GROUP_MSRSystemRegister:
+	case AArch64_OP_GROUP_MSRSystemRegister: {
+		unsigned Val = MCInst_getOpVal(MI, OpNum);
+		const AArch64SysReg_SysReg *Reg = AArch64SysReg_lookupSysRegByEncoding(Val);
+		bool Read = (op_group == AArch64_OP_GROUP_MRSSystemRegister)
+								   ? true
+								   : false;
+
+		bool isValidSysReg = (Reg && (Read ? Reg->Readable : Reg->Writeable) &&
+			AArch64_testFeatureList(MI->csh->mode, Reg->FeaturesRequired));
+
+		if (Reg && !isValidSysReg)
+			Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
+
+		aarch64_sysop sysop;
+		sysop.reg = Reg->SysReg;
+		aarch64_op_type type = (op_group == AArch64_OP_GROUP_MRSSystemRegister)
+								   ? AArch64_OP_REG_MRS
+								   : AArch64_OP_REG_MSR;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, type);
+		break;
+	}
 	case AArch64_OP_GROUP_PSBHintOp:
 	case AArch64_OP_GROUP_RPRFMOperand:
 	case AArch64_OP_GROUP_ShiftedRegister:
