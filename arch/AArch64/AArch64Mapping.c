@@ -386,7 +386,26 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_AMNoIndex:
 	case AArch64_OP_GROUP_ArithExtend:
 	case AArch64_OP_GROUP_BarriernXSOption:
-	case AArch64_OP_GROUP_BarrierOption:
+	case AArch64_OP_GROUP_BarrierOption: {
+		unsigned Val = MCInst_getOpVal(MI, OpNum);
+		unsigned Opcode = MCInst_getOpcode(MI);
+		aarch64_sysop sysop;
+
+		if (Opcode == AArch64_ISB) {
+			const AArch64ISB_ISB *ISB = AArch64ISB_lookupISBByEncoding(Val);
+			sysop.alias = ISB->SysAlias;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_ISB);
+		} else if (Opcode == AArch64_TSB) {
+			const AArch64TSB_TSB *TSB = AArch64TSB_lookupTSBByEncoding(Val);
+			sysop.alias = TSB->SysAlias;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_TSB);
+		} else {
+			const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
+			sysop.alias = DB->SysAlias;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_DB);
+		}
+		break;
+	}
 	case AArch64_OP_GROUP_BTIHintOp: {
 		aarch64_sysop sysop;
 		unsigned btihintop = MCInst_getOpVal(MI, OpNum) ^ 32;
