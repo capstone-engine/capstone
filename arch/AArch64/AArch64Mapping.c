@@ -347,6 +347,29 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 	return Reg;
 }
 
+static aarch64_extender llvm_to_cs_ext(AArch64_AM_ShiftExtendType ExtType) {
+	switch(ExtType) {
+	default:
+		assert(0 && "Unknown Extender type.");
+	case AArch64_AM_UXTB:
+		return AArch64_EXT_UXTB;
+	case AArch64_AM_UXTH:
+		return AArch64_EXT_UXTH;
+	case AArch64_AM_UXTW:
+		return AArch64_EXT_UXTW;
+	case AArch64_AM_UXTX:
+		return AArch64_EXT_UXTX;
+	case AArch64_AM_SXTB:
+		return AArch64_EXT_SXTB;
+	case AArch64_AM_SXTH:
+		return AArch64_EXT_SXTH;
+	case AArch64_AM_SXTW:
+		return AArch64_EXT_SXTW;
+	case AArch64_AM_SXTX:
+		return AArch64_EXT_SXTX;
+	}
+}
+
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which's original printer function has no
 /// specialities.
@@ -384,9 +407,35 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_AdrpLabel:
 	case AArch64_OP_GROUP_AlignedLabel:
 	case AArch64_OP_GROUP_AMNoIndex:
-	case AArch64_OP_GROUP_ArithExtend:
 		printf("Operand group %d not implemented\n", op_group);
 		break;
+	case AArch64_OP_GROUP_ArithExtend: {
+		unsigned Val = MCInst_getOpVal(MI, OpNum);
+		AArch64_AM_ShiftExtendType ExtType = AArch64_AM_getArithExtendType(Val);
+		unsigned ShiftVal = AArch64_AM_getArithShiftValue(Val);
+		
+		if (ExtType == AArch64_AM_UXTW || ExtType == AArch64_AM_UXTX) {
+		unsigned Dest = MCInst_getOpVal(MI, (0));
+		unsigned Src1 = MCInst_getOpVal(MI, (1));
+		if (((Dest == AArch64_SP || Src1 == AArch64_SP) &&
+			 ExtType == AArch64_AM_UXTX) ||
+			((Dest == AArch64_WSP || Src1 == AArch64_WSP) &&
+			 ExtType == AArch64_AM_UXTW)) {
+				if (ShiftVal != 0) {
+					AArch64_get_detail_op(MI, -1)->shift.value = ShiftVal;
+					AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
+				}
+			}
+			break;
+		}
+
+		AArch64_get_detail_op(MI, -1)->ext = llvm_to_cs_ext(ExtType);
+		if (ShiftVal != 0) {
+			AArch64_get_detail_op(MI, -1)->shift.value = ShiftVal;
+			AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
+		}
+		break;
+	}
 	case AArch64_OP_GROUP_BarriernXSOption: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		aarch64_sysop sysop;
