@@ -604,8 +604,22 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, type);
 		break;
 	}
-	case AArch64_OP_GROUP_PSBHintOp:
-	case AArch64_OP_GROUP_RPRFMOperand:
+	case AArch64_OP_GROUP_PSBHintOp: {
+		unsigned psbhintop = MCInst_getOpVal(MI, OpNum);
+		const AArch64PSBHint_PSB *PSB = AArch64PSBHint_lookupPSBByEncoding(psbhintop);
+		aarch64_sysop sysop;
+		sysop.alias = PSB->SysAlias;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PSB);
+		break;
+	}
+	case AArch64_OP_GROUP_RPRFMOperand: {
+		unsigned prfop = MCInst_getOpVal(MI, OpNum);
+		const AArch64PRFM_PRFM *PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop);
+		aarch64_sysop sysop;
+		sysop.alias = PRFM->SysAlias;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PRFM);
+		break;
+	}
 	case AArch64_OP_GROUP_ShiftedRegister:
 	case AArch64_OP_GROUP_Shifter:
 	case AArch64_OP_GROUP_SIMDType10Operand:
