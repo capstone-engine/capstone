@@ -1,6 +1,103 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 5.0.0-rc3: June 17th, 2023
+
+What's Changed:
+- update pkgconfig version by @kabeor in #1847
+- vb6 bindings: clarify license as Apache v2.0 by @dzzie in #1850
+- AArch64 SYS instruction operands by @adamjseitz in #1859
+- AArch64: fix missing VAS specifiers in aliased instructions by @adamjseitz in #1860
+- Add cstool in CMake Package Config + CMake Github Workflow by @theblackunknown in #1867
+- Fix pkgconfig not installed when CAPSTONE_BUILD_CSTOOL is false by @theblackunknown in #1870
+- AArch64 comprehensively add vas specifiers to aliased instructions by @adamjseitz in #1877
+- Fix pkg-config template by @hamarituc in #1878
+- Fix eBPF lddw opcode by @terorie in #1885
+- Add eBPF callx instruction by @terorie in #1886
+- Mark cs_* as thread local to avoid race condition in multithreads by @wtdcode in #1891
+- One semicolon is enough in C by @trufae in #1892
+- Add PowerPC paired-singles support by @terorie in #1898
+- Update the table for UD0 and UD1 with the latest llvm table by @junghee in #1863
+- Sync eBPF and PowerPC bindings by @terorie in #1900
+- Fix PPC insn names and psq displacement by @terorie in #1902
+- Fix -Werror build by @trufae in #1906
+- Remove outdated ctypes requirement by @jbott in #1910
+- Fix memory leak in testsuite by @hamarituc in #1919
+- PPC: fix out of bound memory access by @hamarituc in #1913
+- AArch64 armv9.2 update by @FinnWilkinson in #1907
+- m68k: Add support for the FNOP instruction by @huth in #1921
+- arm64: fix invalid free introduced in 662bb3f by @trufae in #1926
+- Fixed SME index alias printing issue. by @FinnWilkinson in #1925
+- Updated Arm64 python bindings after Armv9.2-a support. by @FinnWilkinson in #1932
+- ARM/AArch64: Add post-index to instruction info by @ZehMatt in #1937
+- Fix regressions in custom memory allocator support by @oleavr in #1934
+- cstool: support riscv compressed instruction disassemble by @rrwhx in #1940
+- Mention debug build option for cmake. by @Rot127 in #1942
+- cstool: avoid misaligned instructions in compressed riscv by @carenas in #1943
+- arm64: fix missing post_index by @HyperSine in #1944
+- Add CMAKE_EXPORT_COMPILE_COMMANDS to cmake build doc by @Rot127 in #1948
+- Fix potential array out of bounds by @mjunix in #1938
+- Add Renesas SuperH instructions support by @ysat0 in #1927
+- fix missing access field in arm64 java binding by @sunxingxing in #1959
+- Update python bindings to fix ARM in detail mode. by @wideglide in #1961
+- sh: add missing include for CMake install step by @SweetVishnya in #1964
+- Fix CITest && python binding issues by @kabeor in #1965
+- correct register accesses for ARM's sxtb/uxtb and similar instructions by @covanam in #1968
+- In x86: Fixed backward compatibility with C90 by @hasherezade in #1969
+- Fix for missing register usages on ARM64 authenticated branches (issue #1975) by - @stevielavern in #1976
+- AArch64: fixes register access flags for moves by @thomasdangl in #1974
+- [SH] Fix build warnings by @Rot127 in #1960
+- update CI ubuntu version by @kabeor in #1986
+- fix cstest Makefile by @imbillow in #1989
+- fix: compile error missing file cstool msvc/visual studio by @raigorx in #2000
+- Fix missing NOTRACK prefix by @junghee in #2002
+- Fix make builds with SH support by @trufae in #2006
+- Add missing architectures in the readme and sort them by @trufae in #2008
+- Add TriCore Architecture by @imbillow in #1973
+- Fix compilation warnings related to TriCore. by @imbillow in #2012
+- Fix SH build warnings. by @Rot127 in #2016
+- Tricore fix the negative call and jump by @imbillow in #2018
+- [SH] Fix warnings about unhandled switch cases by adding defaults. by @Rot127 in #2017
+- Tricore fix disp fill and ctest build by @imbillow in #2019
+- Fix disassemble of xor by @imbillow in #2023
+- Fix register accesses & operands of multiple ARMv8.3 PAC instructions by @stevielavern in - #2022
+- Add missing arm64 to Darwin LIBARCHS and remove dependencies tracking… by @gdbinit in #2024
+- Fix tricore compile warning by @imbillow in #2027
+- [PPC] Fix random branch hint and update_cr0 set up. by @Rot127 in #2028
+- Fix #2032 by @Rot127 in #2033
+- Add operands access support for TriCore by @imbillow in #2034
+- Hotfix for -DCAPSTONE_DIET build. by @Rot127 in #2038
+- Fix Python bindings after changes to cs_detail by @peace-maker in #2041
+- RISCV: Add call, int and branch_relative instruction groups by @peace-maker in #2007
+- Re-fix pkgconfig includedir/Cflags by @orlitzky in #2046
+
+New Contributors:
+- @adamjseitz made their first contribution in #1859
+- @theblackunknown made their first contribution in #1867
+- @hamarituc made their first contribution in #1878
+- @terorie made their first contribution in #1885
+- @junghee made their first contribution in #1863
+- @jbott made their first contribution in #1910
+- @FinnWilkinson made their first contribution in #1907
+- @huth made their first contribution in #1921
+- @ZehMatt made their first contribution in #1937
+- @rrwhx made their first contribution in #1940
+- @Rot127 made their first contribution in #1942
+- @HyperSine made their first contribution in #1944
+- @mjunix made their first contribution in #1938
+- @ysat0 made their first contribution in #1927
+- @sunxingxing made their first contribution in #1959
+- @wideglide made their first contribution in #1961
+- @SweetVishnya made their first contribution in #1964
+- @covanam made their first contribution in #1968
+- @thomasdangl made their first contribution in #1974
+- @imbillow made their first contribution in #1989
+- @raigorx made their first contribution in #2000
+- @peace-maker made their first contribution in #2041
+- @orlitzky made their first contribution in #2046
+
+
+---------------------------------
 Version 5.0.0-rc2: February 28th, 2022
 
 New features:
