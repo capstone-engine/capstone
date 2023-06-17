@@ -370,6 +370,32 @@ static aarch64_extender llvm_to_cs_ext(AArch64_AM_ShiftExtendType ExtType) {
 	}
 }
 
+/// Initializes or finishes a memory operand of Capstone (depending on \p
+/// status). A memory operand in Capstone can be assembled by two LLVM operands.
+/// E.g. the base register and the immediate disponent.
+void AArch64_set_mem_access(MCInst *MI, bool status)
+{
+	if (!detail_is_set(MI))
+		return;
+	set_doing_mem(MI, status);
+	if (status) {
+		AArch64_get_detail_op(MI, 0)->type = AArch64_OP_MEM;
+		AArch64_get_detail_op(MI, 0)->mem.base = AArch64_REG_INVALID;
+		AArch64_get_detail_op(MI, 0)->mem.index = AArch64_REG_INVALID;
+		AArch64_get_detail_op(MI, 0)->mem.disp = 0;
+
+#ifndef CAPSTONE_DIET
+		uint8_t access =
+			map_get_op_access(MI, AArch64_get_detail(MI)->op_count);
+		AArch64_get_detail_op(MI, 0)->access = access;
+#endif
+	} else {
+		// done, select the next operand slot
+		AArch64_inc_op_count(MI);
+	}
+}
+
+
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which's original printer function has no
 /// specialities.
@@ -416,9 +442,12 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, MI->address + Offset);
 		break;
 	}
-	case AArch64_OP_GROUP_AMNoIndex:
-		printf("Operand group %d not implemented\n", op_group);
+	case AArch64_OP_GROUP_AMNoIndex: {
+		AArch64_set_mem_access(MI, true);
+		AArch64_set_detail_op_mem(MI, OpNum, false, MCInst_getOpVal(MI, OpNum));
+		AArch64_set_mem_access(MI, false);
 		break;
+	}
 	case AArch64_OP_GROUP_ArithExtend: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		AArch64_AM_ShiftExtendType ExtType = AArch64_AM_getArithExtendType(Val);
