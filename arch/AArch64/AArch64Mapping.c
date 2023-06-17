@@ -385,6 +385,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_AlignedLabel:
 	case AArch64_OP_GROUP_AMNoIndex:
 	case AArch64_OP_GROUP_ArithExtend:
+		printf("Operand group %d not implemented\n", op_group);
+		break;
 	case AArch64_OP_GROUP_BarriernXSOption: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		aarch64_sysop sysop;
