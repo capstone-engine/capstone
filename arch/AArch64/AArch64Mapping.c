@@ -694,7 +694,11 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVEVECLENSPECIFIER);
 		break;
 	}
-	case AArch64_OP_GROUP_SysCROperand:
+	case AArch64_OP_GROUP_SysCROperand: {
+		uint64_t cimm = MCInst_getOpVal(MI, OpNum);
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_CIMM, cimm);
+		break;
+	}
 	case AArch64_OP_GROUP_SyspXzrPair:
 	case AArch64_OP_GROUP_SystemPStateField:
 	case AArch64_OP_GROUP_VRegOperand:
