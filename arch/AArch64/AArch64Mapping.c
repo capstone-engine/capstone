@@ -670,7 +670,16 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVCR);
 		break;
 	}
-	case AArch64_OP_GROUP_SVEPattern:
+	case AArch64_OP_GROUP_SVEPattern: {
+		unsigned Val = MCInst_getOpVal(MI, OpNum);
+		const AArch64SVEPredPattern_SVEPREDPAT *Pat = AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
+		if (!Pat)
+			break;
+		aarch64_sysop sysop;
+		sysop.alias = Pat->SysAlias;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVEPREDPAT);
+		break;
+	}
 	case AArch64_OP_GROUP_SVEVecLenSpecifier:
 	case AArch64_OP_GROUP_SysCROperand:
 	case AArch64_OP_GROUP_SyspXzrPair:

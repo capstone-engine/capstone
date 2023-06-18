@@ -1816,6 +1816,7 @@ typedef union {
 	aarch64_pstateimm0_1 pstateimm0_1;
 	aarch64_psb psb;
 	aarch64_bti bti;
+	aarch64_svepredpat svepredpat;
 	aarch64_sveveclenspecifier sveveclenspecifier;
 } aarch64_sysop_alias;
 
@@ -1850,6 +1851,7 @@ typedef enum aarch64_op_type {
 	AArch64_OP_PSTATEIMM0_1 = CS_OP_SPECIAL + 14,
 	AArch64_OP_PSB = CS_OP_SPECIAL + 15,
 	AArch64_OP_BTI = CS_OP_SPECIAL + 16,
+	AArch64_OP_SVEPREDPAT = CS_OP_SPECIAL + 17,
 } aarch64_op_type;
 
 /// AArch64 registers
