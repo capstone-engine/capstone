@@ -215,7 +215,9 @@ setup(
     author='Nguyen Anh Quynh',
     author_email='aquynh@gmail.com',
     description='Capstone disassembly engine',
-    url='http://www.capstone-engine.org',
+    url='https://www.capstone-engine.org',
+    long_description=open('README.txt').read(),
+    long_description_content_type='text/markdown',
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     classifiers=[
         'License :: OSI Approved :: BSD License',
