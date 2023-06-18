@@ -705,7 +705,25 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_reg(MI, OpNum, Reg);
 		break;
 	}
-	case AArch64_OP_GROUP_SystemPStateField:
+	case AArch64_OP_GROUP_SystemPStateField: {
+		unsigned Val = MCInst_getOpVal(MI, OpNum);
+
+		aarch64_sysop sysop;
+		const AArch64PState_PStateImm0_15 *PStateImm15 = AArch64PState_lookupPStateImm0_15ByEncoding(Val);
+		const AArch64PState_PStateImm0_1 *PStateImm1 = AArch64PState_lookupPStateImm0_1ByEncoding(Val);
+		if (PStateImm15 && AArch64_testFeatureList(MI->csh->mode, PStateImm15->FeaturesRequired)) {
+			sysop.alias = PStateImm15->SysAlias;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PSTATEIMM0_15);
+		}
+		else if (PStateImm1 && AArch64_testFeatureList(MI->csh->mode, PStateImm1->FeaturesRequired)) {
+			sysop.alias = PStateImm1->SysAlias;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PSTATEIMM0_1);
+		}
+		else {
+			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Val);
+		}
+		break;
+	}
 	case AArch64_OP_GROUP_VRegOperand:
 		printf("Operand group %d not implemented\n", op_group);
 		break;
