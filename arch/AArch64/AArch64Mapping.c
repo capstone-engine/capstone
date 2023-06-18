@@ -350,7 +350,7 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 static aarch64_extender llvm_to_cs_ext(AArch64_AM_ShiftExtendType ExtType) {
 	switch(ExtType) {
 	default:
-		assert(0 && "Unknown Extender type.");
+		return AArch64_EXT_INVALID;
 	case AArch64_AM_UXTB:
 		return AArch64_EXT_UXTB;
 	case AArch64_AM_UXTH:
@@ -367,6 +367,23 @@ static aarch64_extender llvm_to_cs_ext(AArch64_AM_ShiftExtendType ExtType) {
 		return AArch64_EXT_SXTW;
 	case AArch64_AM_SXTX:
 		return AArch64_EXT_SXTX;
+	}
+}
+
+static aarch64_shifter llvm_to_cs_shift(AArch64_AM_ShiftExtendType ShiftExtType) {
+	switch(ShiftExtType) {
+	default:
+		return AArch64_SFT_INVALID;
+	case AArch64_AM_LSL:
+		return AArch64_SFT_LSL;
+	case AArch64_AM_LSR:
+		return AArch64_SFT_LSR;
+	case AArch64_AM_ASR:
+		return AArch64_SFT_ASR;
+	case AArch64_AM_ROR:
+		return AArch64_SFT_ROR;
+	case AArch64_AM_MSL:
+		return AArch64_SFT_MSL;
 	}
 }
 
@@ -631,7 +648,14 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		// Shift part is handled in printShifter()
 		break;
 	}
-	case AArch64_OP_GROUP_Shifter:
+	case AArch64_OP_GROUP_Shifter: {
+		unsigned Val = MCInst_getOpVal(MI, OpNum);
+		AArch64_AM_ShiftExtendType ShExtType = AArch64_AM_getShiftType(Val);
+		AArch64_get_detail_op(MI, -1)->ext = llvm_to_cs_ext(ShExtType);
+		AArch64_get_detail_op(MI, -1)->shift.type = llvm_to_cs_shift(ShExtType);
+		AArch64_get_detail_op(MI, -1)->shift.value = Val;
+		break;
+	}
 	case AArch64_OP_GROUP_SIMDType10Operand:
 	case AArch64_OP_GROUP_SVCROp:
 	case AArch64_OP_GROUP_SVEPattern:
