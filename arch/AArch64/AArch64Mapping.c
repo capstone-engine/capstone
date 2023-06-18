@@ -724,9 +724,11 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		}
 		break;
 	}
-	case AArch64_OP_GROUP_VRegOperand:
-		printf("Operand group %d not implemented\n", op_group);
+	case AArch64_OP_GROUP_VRegOperand: {
+		unsigned Reg = MCInst_getOpVal(MI, OpNum);
+		AArch64_set_detail_op_reg(MI, OpNum, Reg);
 		break;
+	}
 	}
 }
 
