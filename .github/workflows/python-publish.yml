@@ -2,7 +2,6 @@ name: PyPI 📦 Distribution
 
 on: 
   push:
-  workflow_dispatch:
 
 jobs:
   build:
@@ -60,7 +59,7 @@ jobs:
   publish:
     needs: [build]
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags') || github.event_name == 'workflow_dispatch'
+    if: startsWith(github.ref, 'refs/tags')
     permissions:
       id-token: write
     steps:
