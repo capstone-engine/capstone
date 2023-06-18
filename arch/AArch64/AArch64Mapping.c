@@ -546,9 +546,14 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, MCInst_getOpVal(MI, OpNum));
 		break;
 	case AArch64_OP_GROUP_ImplicitlyTypedVectorList:
-	case AArch64_OP_GROUP_InverseCondCode:
 		printf("Operand group %d not implemented\n", op_group);
 		break;
+	case AArch64_OP_GROUP_InverseCondCode: {
+		AArch64CC_CondCode CC =
+			(AArch64CC_CondCode)MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+		AArch64_get_detail(MI)->cc = AArch64CC_getInvertedCondCode(CC);
+		break;
+	}
 	case AArch64_OP_GROUP_MatrixIndex: {
 		assert(AArch64_get_detail(MI)->is_doing_sme);
 		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE_VEC;
