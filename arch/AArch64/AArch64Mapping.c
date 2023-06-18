@@ -662,7 +662,14 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Val);
 		break;
 	}
-	case AArch64_OP_GROUP_SVCROp:
+	case AArch64_OP_GROUP_SVCROp: {
+		unsigned svcrop = MCInst_getOpVal(MI, OpNum);
+		const AArch64SVCR_SVCR *SVCR = AArch64SVCR_lookupSVCRByEncoding(svcrop);
+		aarch64_sysop sysop;
+		sysop.alias = SVCR->SysAlias;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVCR);
+		break;
+	}
 	case AArch64_OP_GROUP_SVEPattern:
 	case AArch64_OP_GROUP_SVEVecLenSpecifier:
 	case AArch64_OP_GROUP_SysCROperand:
