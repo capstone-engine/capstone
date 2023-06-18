@@ -1852,6 +1852,7 @@ typedef enum aarch64_op_type {
 	AArch64_OP_PSB = CS_OP_SPECIAL + 15,
 	AArch64_OP_BTI = CS_OP_SPECIAL + 16,
 	AArch64_OP_SVEPREDPAT = CS_OP_SPECIAL + 17,
+	AArch64_OP_SVEVECLENSPECIFIER = CS_OP_SPECIAL + 18,
 } aarch64_op_type;
 
 /// AArch64 registers
