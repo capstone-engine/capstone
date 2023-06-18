@@ -546,7 +546,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, MCInst_getOpVal(MI, OpNum));
 		break;
 	case AArch64_OP_GROUP_ImplicitlyTypedVectorList:
-		printf("Operand group %d not implemented\n", op_group);
+		// The TypedVectorList implements the logic of implicitly typed operand.
+		add_cs_detail(MI, AArch64_OP_GROUP_TypedVectorList_0_b, OpNum, 0, 0);
 		break;
 	case AArch64_OP_GROUP_InverseCondCode: {
 		AArch64CC_CondCode CC =
@@ -1002,6 +1003,9 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 			break;
 		case 'd':
 			vas = AArch64Layout_VL_D;
+			break;
+		case '\0':
+			// Implicitly Typed register
 			break;
 		}
 
