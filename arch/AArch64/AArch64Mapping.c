@@ -656,7 +656,12 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_get_detail_op(MI, -1)->shift.value = Val;
 		break;
 	}
-	case AArch64_OP_GROUP_SIMDType10Operand:
+	case AArch64_OP_GROUP_SIMDType10Operand: {
+		unsigned RawVal = MCInst_getOpVal(MI, OpNum);
+		uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Val);
+		break;
+	}
 	case AArch64_OP_GROUP_SVCROp:
 	case AArch64_OP_GROUP_SVEPattern:
 	case AArch64_OP_GROUP_SVEVecLenSpecifier:
