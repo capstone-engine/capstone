@@ -1,6 +1,8 @@
 name: PyPI 📦 Distribution
 
-on: [push]
+on: 
+  push:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -58,23 +60,20 @@ jobs:
   publish:
     needs: [build]
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags')
+    if: startsWith(github.ref, 'refs/tags') || github.event_name == 'workflow_dispatch'
+    permissions:
+      id-token: write
     steps:
       - uses: actions/download-artifact@v2
         with:
           name: artifact
           path: dist
 
-      # - name: Publish distribution 📦 to test PyPI
-      #   uses: pypa/gh-action-pypi-publish@master
-      #   with:
-      #     user: __token__
-      #     password: ${{ secrets.testpypi_pass }}
-      #     repository_url: https://test.pypi.org/legacy/
-
-      - name: Publish distribution 📦 to PyPI
-        if: ${{ success() }}
-        uses: pypa/gh-action-pypi-publish@master
+      - name: Publish distribution 📦 to test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
-          password: ${{ secrets.pypi_pass }}
+          repository_url: https://test.pypi.org/legacy/
+
+      # - name: Publish distribution 📦 to PyPI
+      #   if: ${{ success() }}
+      #   uses: pypa/gh-action-pypi-publish@release/v1
