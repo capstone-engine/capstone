@@ -996,15 +996,6 @@ AArch64StringToPACKeyID(const char *Name)
 	assert(0 && "Invalid PAC key");
 }
 
-// The number of bits in a SVE register is architecturally defined
-// to be a multiple of this value.  If <M x t> has this number of bits,
-// a <n x M x t> vector can be stored in a SVE register without any
-// redundant bits.  If <M x t> has this number of bits divided by P,
-// a <n x M x t> vector is stored in a SVE register by placing index i
-// in index i*P of a <n x (M*P) x t> vector.  The other elements of the
-// <n x (M*P) x t> vector (such as index 1) are undefined.
-static unsigned SVEBitsPerBlock = 128;
-static unsigned SVEMaxBitsPerVector = 2048;
 // end namespace AArch64
 // end namespace llvm
 
