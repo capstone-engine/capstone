@@ -40,7 +40,7 @@ Capstone offers some unparalleled features:
 
 - Distributed under the open source BSD license.
 
-Further information is available at http://www.capstone-engine.org
+Further information is available at https://www.capstone-engine.org
 
 
 Compile
