@@ -626,7 +626,11 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PRFM);
 		break;
 	}
-	case AArch64_OP_GROUP_ShiftedRegister:
+	case AArch64_OP_GROUP_ShiftedRegister: {
+		AArch64_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
+		// Shift part is handled in printShifter()
+		break;
+	}
 	case AArch64_OP_GROUP_Shifter:
 	case AArch64_OP_GROUP_SIMDType10Operand:
 	case AArch64_OP_GROUP_SVCROp:
