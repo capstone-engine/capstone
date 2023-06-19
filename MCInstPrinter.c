@@ -150,7 +150,7 @@ const char *matchAliasPatterns(MCInst *MI, const AliasMatchingData *M)
 }
 
 // TODO Add functionality to toggle the flag.
-bool getUseMarkup() { return false; }
+bool getUseMarkup(void) { return false; }
 
 /// Utility functions to make adding mark ups simpler.
 const char *markup(const char *s)

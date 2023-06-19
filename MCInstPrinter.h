@@ -63,7 +63,7 @@ typedef struct {
 } AliasMatchingData;
 
 const char *matchAliasPatterns(MCInst *MI, const AliasMatchingData *M);
-bool getUseMarkup();
+bool getUseMarkup(void);
 const char *markup(const char *s);
 
 struct IndexType {

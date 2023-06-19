@@ -39,6 +39,7 @@
 #include "ARMBaseInfo.h"
 #include "ARMDisassemblerExtension.h"
 #include "ARMInstPrinter.h"
+#include "ARMLinkage.h"
 #include "ARMMapping.h"
 
 #define GET_BANKEDREG_IMPL

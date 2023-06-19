@@ -34,6 +34,7 @@
 #include "../../MathExtras.h"
 #include "../../cs_priv.h"
 #include "../../utils.h"
+#include "ARMLinkage.h"
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
 #include "ARMDisassemblerExtension.h"

@@ -64,37 +64,40 @@ def get_general_inc() -> bytes:
 def get_ARM_includes(filename: str) -> bytes:
     if filename == "ARMDisassembler.cpp":
         return (
-            b'#include "ARMAddressingModes.h"\n'
-            + b'#include "ARMBaseInfo.h"\n'
+            b'#include "../../LEB128.h"\n'
+            + b'#include "../../MCDisassembler.h"\n'
             + b'#include "../../MCFixedLenDisassembler.h"\n'
             + b'#include "../../MCInst.h"\n'
             + b'#include "../../MCInstrDesc.h"\n'
             + b'#include "../../MCRegisterInfo.h"\n'
-            + b'#include "../../LEB128.h"\n'
-            + b'#include "../../MCDisassembler.h"\n'
+            + b'#include "../../MathExtras.h"\n'
             + b'#include "../../cs_priv.h"\n'
             + b'#include "../../utils.h"\n'
-            + b'#include "ARMDisassembler.h"\n'
+            + b'#include "ARMAddressingModes.h"\n'
+            + b'#include "ARMBaseInfo.h"\n'
+            + b'#include "ARMDisassemblerExtension.h"\n'
+            + b'#include "ARMInstPrinter.h"\n'
+            + b'#include "ARMLinkage.h"\n'
             + b'#include "ARMMapping.h"\n\n'
             + b"#define GET_INSTRINFO_MC_DESC\n"
-            + b'#include "ARMGenInstrInfo.inc"\n\n'
-            + b"#define GET_INSTRINFO_ENUM\n"
             + b'#include "ARMGenInstrInfo.inc"\n\n'
         )
     elif filename == "ARMInstPrinter.cpp":
         return (
-            b'#include "../../MCInst.h"\n'
+            b'#include "../../Mapping.h"\n'
+            + b'#include "../../MCInst.h"\n'
             + b'#include "../../MCInstPrinter.h"\n'
             + b'#include "../../MCRegisterInfo.h"\n'
             + b'#include "../../SStream.h"\n'
             + b'#include "../../utils.h"\n'
-            + b'#include "ARMInstPrinter.h"\n'
             + b'#include "ARMAddressingModes.h"\n'
             + b'#include "ARMBaseInfo.h"\n'
             + b'#include "ARMDisassemblerExtension.h"\n'
+            + b'#include "ARMInstPrinter.h"\n'
+            + b'#include "ARMLinkage.h"\n'
             + b'#include "ARMMapping.h"\n\n'
-            + b"#define GET_BANKEDREG_IMPL\n"
-            + b'#include "ARMGenSystemRegister.inc"\n\n'
+            + b'#define GET_BANKEDREG_IMPL\n'
+            + b'#include "ARMGenSystemRegister.inc"\n'
         )
     elif filename == "ARMInstPrinter.h":
         return (
