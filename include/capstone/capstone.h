@@ -522,6 +522,44 @@ typedef enum cs_err {
 CAPSTONE_EXPORT
 unsigned int CAPSTONE_API cs_version(int *major, int *minor);
 
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_arm(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_aarch64(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_mips(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_x86(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_powerpc(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_sparc(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_sysz(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_xcore(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_m68k(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_tms320c64x(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_m680x(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_evm(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_mos65xx(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_wasm(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_bpf(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_riscv(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_sh(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_tricore(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_alpha(void);
 
 /**
  This API can be used to either ask for archs supported by this library,

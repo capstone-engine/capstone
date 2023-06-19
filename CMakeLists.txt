@@ -54,6 +54,7 @@ option(CAPSTONE_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTEST "Build cstest" OFF)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
+option(CAPSTONE_USE_ARCH_REGISTRATION "Use explicit architecture registration" OFF)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
@@ -94,6 +95,10 @@ endif()
 
 if(CAPSTONE_USE_DEFAULT_ALLOC)
     add_definitions(-DCAPSTONE_USE_SYS_DYN_MEM)
+endif()
+
+if(CAPSTONE_USE_ARCH_REGISTRATION)
+    add_definitions(-DCAPSTONE_USE_ARCH_REGISTRATION)
 endif()
 
 if(CAPSTONE_X86_REDUCE)
