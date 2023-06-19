@@ -203,6 +203,18 @@ static inline unsigned CountTrailingZeros_32(uint32_t Value) {
 #endif
 }
 
+// Count trailing zeros as in:
+// https://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightParallel
+static inline unsigned CountTrailingZeros_8(uint8_t Value) {
+	uint8_t c = 8;
+	Value &= -((int8_t)Value);
+	if (Value) c--;
+	if (Value & 0x0F) c -= 4;
+	if (Value & 0x33) c -= 2;
+	if (Value & 0x55) c -= 1;
+	return c;
+}
+
 /// CountTrailingOnes_32 - this function performs the operation of
 /// counting the number of ones from the least significant bit to the first zero
 /// bit.  Ex. CountTrailingOnes_32(0x00FF00FF) == 8.

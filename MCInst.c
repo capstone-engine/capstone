@@ -27,7 +27,6 @@ void MCInst_Init(MCInst *inst)
 	inst->size = 0;
 	inst->has_imm = false;
 	inst->op1_size = 0;
-	inst->writeback = false;
 	inst->ac_idx = 0;
 	inst->popcode_adjust = 0;
 	inst->assembly[0] = '\0';
@@ -267,4 +266,17 @@ bool MCInst_opIsTying(const MCInst *MI, unsigned OpNum)
 {
 	assert(OpNum < MAX_MC_OPS && "Maximum number of MC operands exceeded.");
 	return MI->tied_op_idx[OpNum] != -1;
+}
+
+/// Returns the value of the @MCInst operand at index @OpNum.
+uint64_t MCInst_getOpVal(MCInst *MI, unsigned OpNum)
+{
+	assert(OpNum < MAX_MC_OPS);
+	MCOperand *op = MCInst_getOperand(MI, OpNum);
+	if (MCOperand_isReg(op))
+		return MCOperand_getReg(op);
+	else if (MCOperand_isImm(op))
+		return MCOperand_getImm(op);
+	else
+		assert(0 && "Operand type not handled in this getter.");
 }
