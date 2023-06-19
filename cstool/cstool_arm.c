@@ -31,6 +31,9 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 			case ARM_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
 				break;
+			case ARM_OP_PRED:
+				printf("\t\toperands[%u].type: PRED = %d\n", i, op->pred);
+				break;
 			case ARM_OP_FP:
 #if defined(_KERNEL_MODE)
 				// Issue #681: Windows kernel does not support formatting float point
@@ -105,13 +108,16 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 			printf("\t\tSubtracted: True\n");
 	}
 
-	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
+	if (arm->cc != ARMCC_AL && arm->cc != ARMCC_UNDEF)
 		printf("\tCode condition: %u\n", arm->cc);
+
+	if (arm->vcc != ARMVCC_None)
+		printf("\tVector code condition: %u\n", arm->vcc);
 
 	if (arm->update_flags)
 		printf("\tUpdate-flags: True\n");
 
-	if (arm->writeback)
+	if (ins->detail->writeback)
 		printf("\tWrite-back: True\n");
 
 	if (arm->cps_mode)
@@ -131,6 +137,9 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 
 	if (arm->mem_barrier)
 		printf("\tMemory-barrier: %u\n", arm->mem_barrier);
+
+	if (arm->pred_mask)
+		printf("\tPredicate Mask: 0x%x\n", arm->pred_mask);
 
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(handle, ins,

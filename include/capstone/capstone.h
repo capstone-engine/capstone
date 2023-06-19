@@ -17,6 +17,7 @@ extern "C" {
 #include <stdio.h>
 #endif
 
+#include "../../cs_operand.h"
 #include "platform.h"
 
 #ifdef _MSC_VER
@@ -224,24 +225,6 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_MASM, ///< X86 Intel Masm syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_MOTOROLA, ///< MOS65XX use $ as hex prefix
 } cs_opt_value;
-
-/// Common instruction operand types - to be consistent across all architectures.
-typedef enum cs_op_type {
-	CS_OP_INVALID = 0, ///< uninitialized/invalid operand.
-	CS_OP_REG,	   ///< Register operand.
-	CS_OP_IMM,	   ///< Immediate operand.
-	CS_OP_FP,	   ///< Floating-Point operand.
-	CS_OP_MEM =
-		0x80, ///< Memory operand. Can be ORed with another operand type.
-} cs_op_type;
-
-/// Common instruction operand access types - to be consistent across all architectures.
-/// It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE
-typedef enum cs_ac_type {
-	CS_AC_INVALID = 0,        ///< Uninitialized/invalid access type.
-	CS_AC_READ    = 1 << 0,   ///< Operand read from memory or register.
-	CS_AC_WRITE   = 1 << 1,   ///< Operand write to memory or register.
-} cs_ac_type;
 
 /// Common instruction groups - to be consistent across all architectures.
 typedef enum cs_group_type {

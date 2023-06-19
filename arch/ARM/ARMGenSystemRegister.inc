@@ -1,270 +1,475 @@
-
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
+/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*|*                                                                            *|
-|* GenSystemRegister Source Fragment                                          *|
-|*                                                                            *|
-|* Automatically generated file, do not edit!                                 *|
-|*                                                                            *|
-\*===----------------------------------------------------------------------===*/
+/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
+/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
 
+/* Do not edit. */
 
-enum BankedRegValues {
-	elr_hyp = 0,
-	lr_abt = 1,
-	lr_fiq = 2,
-	lr_irq = 3,
-	lr_mon = 4,
-	lr_svc = 5,
-	lr_und = 6,
-	lr_usr = 7,
-	r10_fiq = 8,
-	r10_usr = 9,
-	r11_fiq = 10,
-	r11_usr = 11,
-	r12_fiq = 12,
-	r12_usr = 13,
-	r8_fiq = 14,
-	r8_usr = 15,
-	r9_fiq = 16,
-	r9_usr = 17,
-	sp_abt = 18,
-	sp_fiq = 19,
-	sp_hyp = 20,
-	sp_irq = 21,
-	sp_mon = 22,
-	sp_svc = 23,
-	sp_und = 24,
-	sp_usr = 25,
-	spsr_abt = 26,
-	spsr_fiq = 27,
-	spsr_hyp = 28,
-	spsr_irq = 29,
-	spsr_mon = 30,
-	spsr_svc = 31,
-	spsr_und = 32,
-};
+/* Capstone's LLVM TableGen Backends: */
+/* https://github.com/capstone-engine/llvm-capstone */
 
-static const MClassSysReg MClassSysRegsList[] = {
-  { "apsr_g", ARM_SYSREG_APSR_G, 0x400, 0x0, 0x400,  {ARM_FeatureDSP}  }, // 0
-  { "apsr_nzcvqg", ARM_SYSREG_APSR_NZCVQG, 0xC00, 0x300, 0xC00,  {ARM_FeatureDSP}  }, // 1
-  { "iapsr_g", ARM_SYSREG_IAPSR_G, 0x401, 0x1, 0x401,  {ARM_FeatureDSP}  }, // 2
-  { "iapsr_nzcvqg", ARM_SYSREG_IAPSR_NZCVQG, 0xC01, 0x301, 0xC01,  {ARM_FeatureDSP}  }, // 3
-  { "eapsr_g", ARM_SYSREG_EAPSR_G, 0x402, 0x2, 0x402,  {ARM_FeatureDSP}  }, // 4
-  { "eapsr_nzcvqg", ARM_SYSREG_EAPSR_NZCVQG, 0xC02, 0x302, 0xC02,  {ARM_FeatureDSP}  }, // 5
-  { "xpsr_g", ARM_SYSREG_XPSR_G, 0x403, 0x3, 0x403,  {ARM_FeatureDSP}  }, // 6
-  { "xpsr_nzcvqg", ARM_SYSREG_XPSR_NZCVQG, 0xC03, 0x303, 0xC03,  {ARM_FeatureDSP}  }, // 7
-  { "apsr", ARM_SYSREG_APSR, 0x800, 0x100, 0x800,  { 0 }  }, // 8
-  { "apsr_nzcvq", ARM_SYSREG_APSR_NZCVQ, 0x1800, 0x200, 0x800,  { 0 }  }, // 9
-  { "iapsr", ARM_SYSREG_IAPSR, 0x801, 0x101, 0x801,  { 0 }  }, // 10
-  { "iapsr_nzcvq", ARM_SYSREG_IAPSR_NZCVQ, 0x1801, 0x201, 0x801,  { 0 }  }, // 11
-  { "eapsr", ARM_SYSREG_EAPSR, 0x802, 0x102, 0x802,  { 0 }  }, // 12
-  { "eapsr_nzcvq", ARM_SYSREG_EAPSR_NZCVQ, 0x1802, 0x202, 0x802,  { 0 }  }, // 13
-  { "xpsr", ARM_SYSREG_XPSR, 0x803, 0x103, 0x803,  { 0 }  }, // 14
-  { "xpsr_nzcvq", ARM_SYSREG_XPSR_NZCVQ, 0x1803, 0x203, 0x803,  { 0 }  }, // 15
-  { "ipsr", ARM_SYSREG_IPSR, 0x805, 0x105, 0x805,  { 0 }  }, // 16
-  { "epsr", ARM_SYSREG_EPSR, 0x806, 0x106, 0x806,  { 0 }  }, // 17
-  { "iepsr", ARM_SYSREG_IEPSR, 0x807, 0x107, 0x807,  { 0 }  }, // 18
-  { "msp", ARM_SYSREG_MSP, 0x808, 0x108, 0x808,  { 0 }  }, // 19
-  { "psp", ARM_SYSREG_PSP, 0x809, 0x109, 0x809,  { 0 }  }, // 20
-  { "msplim", ARM_SYSREG_MSPLIM, 0x80A, 0x10A, 0x80A,  {ARM_HasV8MBaselineOps}  }, // 21
-  { "psplim", ARM_SYSREG_PSPLIM, 0x80B, 0x10B, 0x80B,  {ARM_HasV8MBaselineOps}  }, // 22
-  { "primask", ARM_SYSREG_PRIMASK, 0x810, 0x110, 0x810,  { 0 }  }, // 23
-  { "basepri", ARM_SYSREG_BASEPRI, 0x811, 0x111, 0x811,  {ARM_HasV7Ops}  }, // 24
-  { "basepri_max", ARM_SYSREG_BASEPRI_MAX, 0x812, 0x112, 0x812,  {ARM_HasV7Ops}  }, // 25
-  { "faultmask", ARM_SYSREG_FAULTMASK, 0x813, 0x113, 0x813,  {ARM_HasV7Ops}  }, // 26
-  { "control", ARM_SYSREG_CONTROL, 0x814, 0x114, 0x814,  { 0 }  }, // 27
-  { "msp_ns", ARM_SYSREG_MSP_NS, 0x888, 0x188, 0x888,  {ARM_Feature8MSecExt}  }, // 28
-  { "psp_ns", ARM_SYSREG_PSP_NS, 0x889, 0x189, 0x889,  {ARM_Feature8MSecExt}  }, // 29
-  { "msplim_ns", ARM_SYSREG_MSPLIM_NS, 0x88A, 0x18A, 0x88A,  {ARM_Feature8MSecExt, ARM_HasV8MBaselineOps}  }, // 30
-  { "psplim_ns", ARM_SYSREG_PSPLIM_NS, 0x88B, 0x18B, 0x88B,  {ARM_Feature8MSecExt, ARM_HasV8MBaselineOps}  }, // 31
-  { "primask_ns", ARM_SYSREG_PRIMASK_NS, 0x890, 0x190, 0x890,  { 0 }  }, // 32
-  { "basepri_ns", ARM_SYSREG_BASEPRI_NS, 0x891, 0x191, 0x891,  {ARM_Feature8MSecExt, ARM_HasV7Ops}  }, // 33
-  { "faultmask_ns", ARM_SYSREG_FAULTMASK_NS, 0x893, 0x193, 0x893,  {ARM_Feature8MSecExt, ARM_HasV7Ops}  }, // 34
-  { "control_ns", ARM_SYSREG_CONTROL_NS, 0x894, 0x194, 0x894,  {ARM_Feature8MSecExt}  }, // 35
-  { "sp_ns", ARM_SYSREG_SP_NS, 0x898, 0x198, 0x898,  {ARM_Feature8MSecExt}  }, // 36
-};
+#ifdef GET_BANKEDREG_DECL
+#endif
 
-static const BankedReg BankedRegsList[] = {
-  { "r8_usr", ARM_SYSREG_R8_USR, 0x0 }, // 0
-  { "r9_usr", ARM_SYSREG_R9_USR, 0x1 }, // 1
-  { "r10_usr", ARM_SYSREG_R10_USR, 0x2 }, // 2
-  { "r11_usr", ARM_SYSREG_R11_USR, 0x3 }, // 3
-  { "r12_usr", ARM_SYSREG_R12_USR, 0x4 }, // 4
-  { "sp_usr", ARM_SYSREG_SP_USR, 0x5 }, // 5
-  { "lr_usr", ARM_SYSREG_LR_USR, 0x6 }, // 6
-  { "r8_fiq", ARM_SYSREG_R8_FIQ, 0x8 }, // 7
-  { "r9_fiq", ARM_SYSREG_R9_FIQ, 0x9 }, // 8
-  { "r10_fiq", ARM_SYSREG_R10_FIQ, 0xA }, // 9
-  { "r11_fiq", ARM_SYSREG_R11_FIQ, 0xB }, // 10
-  { "r12_fiq", ARM_SYSREG_R12_FIQ, 0xC }, // 11
-  { "sp_fiq", ARM_SYSREG_SP_FIQ, 0xD }, // 12
-  { "lr_fiq", ARM_SYSREG_LR_FIQ, 0xE }, // 13
-  { "lr_irq", ARM_SYSREG_LR_IRQ, 0x10 }, // 14
-  { "sp_irq", ARM_SYSREG_SP_IRQ, 0x11 }, // 15
-  { "lr_svc", ARM_SYSREG_LR_SVC, 0x12 }, // 16
-  { "sp_svc", ARM_SYSREG_SP_SVC, 0x13 }, // 17
-  { "lr_abt", ARM_SYSREG_LR_ABT, 0x14 }, // 18
-  { "sp_abt", ARM_SYSREG_SP_ABT, 0x15 }, // 19
-  { "lr_und", ARM_SYSREG_LR_UND, 0x16 }, // 20
-  { "sp_und", ARM_SYSREG_SP_UND, 0x17 }, // 21
-  { "lr_mon", ARM_SYSREG_LR_MON, 0x1C }, // 22
-  { "sp_mon", ARM_SYSREG_SP_MON, 0x1D }, // 23
-  { "elr_hyp", ARM_SYSREG_ELR_HYP, 0x1E }, // 24
-  { "sp_hyp", ARM_SYSREG_SP_HYP, 0x1F }, // 25
-  { "spsr_fiq", ARM_SYSREG_SPSR_FIQ, 0x2E }, // 26
-  { "spsr_irq", ARM_SYSREG_SPSR_IRQ, 0x30 }, // 27
-  { "spsr_svc", ARM_SYSREG_SPSR_SVC, 0x32 }, // 28
-  { "spsr_abt", ARM_SYSREG_SPSR_ABT, 0x34 }, // 29
-  { "spsr_und", ARM_SYSREG_SPSR_UND, 0x36 }, // 30
-  { "spsr_mon", ARM_SYSREG_SPSR_MON, 0x3C }, // 31
-  { "spsr_hyp", ARM_SYSREG_SPSR_HYP, 0x3E }, // 32
-};
+#ifdef GET_MCLASSSYSREG_DECL
+#endif
 
-const MClassSysReg *lookupMClassSysRegByM2M3Encoding8(uint16_t encoding)
-{
-  unsigned int i;
-  static const struct IndexType Index[] = {
-    { 0x0, 0 },
-    { 0x1, 2 },
-    { 0x2, 4 },
-    { 0x3, 6 },
-    { 0x100, 8 },
-    { 0x101, 10 },
-    { 0x102, 12 },
-    { 0x103, 14 },
-    { 0x105, 16 },
-    { 0x106, 17 },
-    { 0x107, 18 },
-    { 0x108, 19 },
-    { 0x109, 20 },
-    { 0x10A, 21 },
-    { 0x10B, 22 },
-    { 0x110, 23 },
-    { 0x111, 24 },
-    { 0x112, 25 },
-    { 0x113, 26 },
-    { 0x114, 27 },
-    { 0x188, 28 },
-    { 0x189, 29 },
-    { 0x18A, 30 },
-    { 0x18B, 31 },
-    { 0x190, 32 },
-    { 0x191, 33 },
-    { 0x193, 34 },
-    { 0x194, 35 },
-    { 0x198, 36 },
-    { 0x200, 9 },
-    { 0x201, 11 },
-    { 0x202, 13 },
-    { 0x203, 15 },
-    { 0x300, 1 },
-    { 0x301, 3 },
-    { 0x302, 5 },
-    { 0x303, 7 },
+#ifdef GET_BANKEDREG_DECL
+const ARMBankedReg_BankedReg *ARMBankedReg_lookupBankedRegByName(const char * Name);
+const ARMBankedReg_BankedReg *ARMBankedReg_lookupBankedRegByEncoding(uint8_t Encoding);
+#endif
+
+#ifdef GET_MCLASSSYSREG_DECL
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByName(const char * Name);
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByM1Encoding12(uint16_t M1Encoding12);
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByM2M3Encoding8(uint16_t M2M3Encoding8);
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByEncoding(uint16_t Encoding);
+#endif
+
+#ifdef GET_BANKEDREG_IMPL
+static const ARMBankedReg_BankedReg BankedRegsList[] = {
+  { "elr_hyp", { ARM_BANKEDREG_ELR_HYP }, 0x1E }, // 0
+  { "lr_abt", { ARM_BANKEDREG_LR_ABT }, 0x14 }, // 1
+  { "lr_fiq", { ARM_BANKEDREG_LR_FIQ }, 0xE }, // 2
+  { "lr_irq", { ARM_BANKEDREG_LR_IRQ }, 0x10 }, // 3
+  { "lr_mon", { ARM_BANKEDREG_LR_MON }, 0x1C }, // 4
+  { "lr_svc", { ARM_BANKEDREG_LR_SVC }, 0x12 }, // 5
+  { "lr_und", { ARM_BANKEDREG_LR_UND }, 0x16 }, // 6
+  { "lr_usr", { ARM_BANKEDREG_LR_USR }, 0x6 }, // 7
+  { "r10_fiq", { ARM_BANKEDREG_R10_FIQ }, 0xA }, // 8
+  { "r10_usr", { ARM_BANKEDREG_R10_USR }, 0x2 }, // 9
+  { "r11_fiq", { ARM_BANKEDREG_R11_FIQ }, 0xB }, // 10
+  { "r11_usr", { ARM_BANKEDREG_R11_USR }, 0x3 }, // 11
+  { "r12_fiq", { ARM_BANKEDREG_R12_FIQ }, 0xC }, // 12
+  { "r12_usr", { ARM_BANKEDREG_R12_USR }, 0x4 }, // 13
+  { "r8_fiq", { ARM_BANKEDREG_R8_FIQ }, 0x8 }, // 14
+  { "r8_usr", { ARM_BANKEDREG_R8_USR }, 0x0 }, // 15
+  { "r9_fiq", { ARM_BANKEDREG_R9_FIQ }, 0x9 }, // 16
+  { "r9_usr", { ARM_BANKEDREG_R9_USR }, 0x1 }, // 17
+  { "spsr_abt", { ARM_BANKEDREG_SPSR_ABT }, 0x34 }, // 18
+  { "spsr_fiq", { ARM_BANKEDREG_SPSR_FIQ }, 0x2E }, // 19
+  { "spsr_hyp", { ARM_BANKEDREG_SPSR_HYP }, 0x3E }, // 20
+  { "spsr_irq", { ARM_BANKEDREG_SPSR_IRQ }, 0x30 }, // 21
+  { "spsr_mon", { ARM_BANKEDREG_SPSR_MON }, 0x3C }, // 22
+  { "spsr_svc", { ARM_BANKEDREG_SPSR_SVC }, 0x32 }, // 23
+  { "spsr_und", { ARM_BANKEDREG_SPSR_UND }, 0x36 }, // 24
+  { "sp_abt", { ARM_BANKEDREG_SP_ABT }, 0x15 }, // 25
+  { "sp_fiq", { ARM_BANKEDREG_SP_FIQ }, 0xD }, // 26
+  { "sp_hyp", { ARM_BANKEDREG_SP_HYP }, 0x1F }, // 27
+  { "sp_irq", { ARM_BANKEDREG_SP_IRQ }, 0x11 }, // 28
+  { "sp_mon", { ARM_BANKEDREG_SP_MON }, 0x1D }, // 29
+  { "sp_svc", { ARM_BANKEDREG_SP_SVC }, 0x13 }, // 30
+  { "sp_und", { ARM_BANKEDREG_SP_UND }, 0x17 }, // 31
+  { "sp_usr", { ARM_BANKEDREG_SP_USR }, 0x5 }, // 32
   };
 
-  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), encoding);
-  if (i == -1)
-    return NULL;
-  else
-    return &MClassSysRegsList[Index[i].index];
-}
-
-const MClassSysReg *lookupMClassSysRegByM1Encoding12(uint16_t encoding)
-{
-  unsigned int i;
-  static const struct IndexType Index[] = {
-    { 0x400, 0 },
-    { 0x401, 2 },
-    { 0x402, 4 },
-    { 0x403, 6 },
-    { 0x800, 8 },
-    { 0x801, 10 },
-    { 0x802, 12 },
-    { 0x803, 14 },
-    { 0x805, 16 },
-    { 0x806, 17 },
-    { 0x807, 18 },
-    { 0x808, 19 },
-    { 0x809, 20 },
-    { 0x80A, 21 },
-    { 0x80B, 22 },
-    { 0x810, 23 },
-    { 0x811, 24 },
-    { 0x812, 25 },
-    { 0x813, 26 },
-    { 0x814, 27 },
-    { 0x888, 28 },
-    { 0x889, 29 },
-    { 0x88A, 30 },
-    { 0x88B, 31 },
-    { 0x890, 32 },
-    { 0x891, 33 },
-    { 0x893, 34 },
-    { 0x894, 35 },
-    { 0x898, 36 },
-    { 0xC00, 1 },
-    { 0xC01, 3 },
-    { 0xC02, 5 },
-    { 0xC03, 7 },
-    { 0x1800, 9 },
-    { 0x1801, 11 },
-    { 0x1802, 13 },
-    { 0x1803, 15 },
+const ARMBankedReg_BankedReg *ARMBankedReg_lookupBankedRegByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "ELR_HYP", 0 },
+    { "LR_ABT", 1 },
+    { "LR_FIQ", 2 },
+    { "LR_IRQ", 3 },
+    { "LR_MON", 4 },
+    { "LR_SVC", 5 },
+    { "LR_UND", 6 },
+    { "LR_USR", 7 },
+    { "R10_FIQ", 8 },
+    { "R10_USR", 9 },
+    { "R11_FIQ", 10 },
+    { "R11_USR", 11 },
+    { "R12_FIQ", 12 },
+    { "R12_USR", 13 },
+    { "R8_FIQ", 14 },
+    { "R8_USR", 15 },
+    { "R9_FIQ", 16 },
+    { "R9_USR", 17 },
+    { "SPSR_ABT", 18 },
+    { "SPSR_FIQ", 19 },
+    { "SPSR_HYP", 20 },
+    { "SPSR_IRQ", 21 },
+    { "SPSR_MON", 22 },
+    { "SPSR_SVC", 23 },
+    { "SPSR_UND", 24 },
+    { "SP_ABT", 25 },
+    { "SP_FIQ", 26 },
+    { "SP_HYP", 27 },
+    { "SP_IRQ", 28 },
+    { "SP_MON", 29 },
+    { "SP_SVC", 30 },
+    { "SP_UND", 31 },
+    { "SP_USR", 32 },
   };
 
-  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), encoding);
-  if (i == -1)
-    return NULL;
-  else
-    return &MClassSysRegsList[Index[i].index];
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &BankedRegsList[Index[i].index];
 }
 
-const BankedReg *lookupBankedRegByEncoding(uint8_t encoding)
-{
-  unsigned int i;
+const ARMBankedReg_BankedReg *ARMBankedReg_lookupBankedRegByEncoding(uint8_t Encoding) {
   static const struct IndexType Index[] = {
-    { 0x0, 0 },
-    { 0x1, 1 },
-    { 0x2, 2 },
-    { 0x3, 3 },
-    { 0x4, 4 },
-    { 0x5, 5 },
-    { 0x6, 6 },
-    { 0x8, 7 },
-    { 0x9, 8 },
-    { 0xA, 9 },
+    { 0x0, 15 },
+    { 0x1, 17 },
+    { 0x2, 9 },
+    { 0x3, 11 },
+    { 0x4, 13 },
+    { 0x5, 32 },
+    { 0x6, 7 },
+    { 0x8, 14 },
+    { 0x9, 16 },
+    { 0xA, 8 },
     { 0xB, 10 },
-    { 0xC, 11 },
-    { 0xD, 12 },
-    { 0xE, 13 },
-    { 0x10, 14 },
-    { 0x11, 15 },
-    { 0x12, 16 },
-    { 0x13, 17 },
-    { 0x14, 18 },
-    { 0x15, 19 },
-    { 0x16, 20 },
-    { 0x17, 21 },
-    { 0x1C, 22 },
-    { 0x1D, 23 },
-    { 0x1E, 24 },
-    { 0x1F, 25 },
-    { 0x2E, 26 },
-    { 0x30, 27 },
-    { 0x32, 28 },
-    { 0x34, 29 },
-    { 0x36, 30 },
-    { 0x3C, 31 },
-    { 0x3E, 32 },
+    { 0xC, 12 },
+    { 0xD, 26 },
+    { 0xE, 2 },
+    { 0x10, 3 },
+    { 0x11, 28 },
+    { 0x12, 5 },
+    { 0x13, 30 },
+    { 0x14, 1 },
+    { 0x15, 25 },
+    { 0x16, 6 },
+    { 0x17, 31 },
+    { 0x1C, 4 },
+    { 0x1D, 29 },
+    { 0x1E, 0 },
+    { 0x1F, 27 },
+    { 0x2E, 19 },
+    { 0x30, 21 },
+    { 0x32, 23 },
+    { 0x34, 18 },
+    { 0x36, 24 },
+    { 0x3C, 22 },
+    { 0x3E, 20 },
   };
 
-  i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), encoding);
-  if (i == -1)
-    return NULL;
-  else
-    return &BankedRegsList[Index[i].index];
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+   if (i == -1)
+      return NULL;
+   else
+      return &BankedRegsList[Index[i].index];
 }
 
+#endif
+
+#ifdef GET_MCLASSSYSREG_IMPL
+static const ARMSysReg_MClassSysReg MClassSysRegsList[] = {
+  { "apsr", { ARM_MCLASSSYSREG_APSR }, 0x800, 0x100, 0x800,  {0}  }, // 0
+  { "apsr_g", { ARM_MCLASSSYSREG_APSR_G }, 0x400, 0x0, 0x400,  {ARM_FeatureDSP}  }, // 1
+  { "apsr_nzcvq", { ARM_MCLASSSYSREG_APSR_NZCVQ }, 0x1800, 0x200, 0x800,  {0}  }, // 2
+  { "apsr_nzcvqg", { ARM_MCLASSSYSREG_APSR_NZCVQG }, 0xC00, 0x300, 0xC00,  {ARM_FeatureDSP}  }, // 3
+  { "basepri", { ARM_MCLASSSYSREG_BASEPRI }, 0x811, 0x111, 0x811,  {ARM_HasV7Ops}  }, // 4
+  { "basepri_max", { ARM_MCLASSSYSREG_BASEPRI_MAX }, 0x812, 0x112, 0x812,  {ARM_HasV7Ops}  }, // 5
+  { "basepri_ns", { ARM_MCLASSSYSREG_BASEPRI_NS }, 0x891, 0x191, 0x891,  {ARM_Feature8MSecExt, ARM_HasV7Ops}  }, // 6
+  { "control", { ARM_MCLASSSYSREG_CONTROL }, 0x814, 0x114, 0x814,  {0}  }, // 7
+  { "control_ns", { ARM_MCLASSSYSREG_CONTROL_NS }, 0x894, 0x194, 0x894,  {ARM_Feature8MSecExt}  }, // 8
+  { "eapsr", { ARM_MCLASSSYSREG_EAPSR }, 0x802, 0x102, 0x802,  {0}  }, // 9
+  { "eapsr_g", { ARM_MCLASSSYSREG_EAPSR_G }, 0x402, 0x2, 0x402,  {ARM_FeatureDSP}  }, // 10
+  { "eapsr_nzcvq", { ARM_MCLASSSYSREG_EAPSR_NZCVQ }, 0x1802, 0x202, 0x802,  {0}  }, // 11
+  { "eapsr_nzcvqg", { ARM_MCLASSSYSREG_EAPSR_NZCVQG }, 0xC02, 0x302, 0xC02,  {ARM_FeatureDSP}  }, // 12
+  { "epsr", { ARM_MCLASSSYSREG_EPSR }, 0x806, 0x106, 0x806,  {0}  }, // 13
+  { "faultmask", { ARM_MCLASSSYSREG_FAULTMASK }, 0x813, 0x113, 0x813,  {ARM_HasV7Ops}  }, // 14
+  { "faultmask_ns", { ARM_MCLASSSYSREG_FAULTMASK_NS }, 0x893, 0x193, 0x893,  {ARM_Feature8MSecExt, ARM_HasV7Ops}  }, // 15
+  { "iapsr", { ARM_MCLASSSYSREG_IAPSR }, 0x801, 0x101, 0x801,  {0}  }, // 16
+  { "iapsr_g", { ARM_MCLASSSYSREG_IAPSR_G }, 0x401, 0x1, 0x401,  {ARM_FeatureDSP}  }, // 17
+  { "iapsr_nzcvq", { ARM_MCLASSSYSREG_IAPSR_NZCVQ }, 0x1801, 0x201, 0x801,  {0}  }, // 18
+  { "iapsr_nzcvqg", { ARM_MCLASSSYSREG_IAPSR_NZCVQG }, 0xC01, 0x301, 0xC01,  {ARM_FeatureDSP}  }, // 19
+  { "iepsr", { ARM_MCLASSSYSREG_IEPSR }, 0x807, 0x107, 0x807,  {0}  }, // 20
+  { "ipsr", { ARM_MCLASSSYSREG_IPSR }, 0x805, 0x105, 0x805,  {0}  }, // 21
+  { "msp", { ARM_MCLASSSYSREG_MSP }, 0x808, 0x108, 0x808,  {0}  }, // 22
+  { "msplim", { ARM_MCLASSSYSREG_MSPLIM }, 0x80A, 0x10A, 0x80A,  {ARM_HasV8MBaselineOps}  }, // 23
+  { "msplim_ns", { ARM_MCLASSSYSREG_MSPLIM_NS }, 0x88A, 0x18A, 0x88A,  {ARM_Feature8MSecExt, ARM_HasV8MBaselineOps}  }, // 24
+  { "msp_ns", { ARM_MCLASSSYSREG_MSP_NS }, 0x888, 0x188, 0x888,  {ARM_Feature8MSecExt}  }, // 25
+  { "pac_key_p_0", { ARM_MCLASSSYSREG_PAC_KEY_P_0 }, 0x820, 0x120, 0x820,  {ARM_FeaturePACBTI}  }, // 26
+  { "pac_key_p_0_ns", { ARM_MCLASSSYSREG_PAC_KEY_P_0_NS }, 0x8A0, 0x1A0, 0x8A0,  {ARM_FeaturePACBTI}  }, // 27
+  { "pac_key_p_1", { ARM_MCLASSSYSREG_PAC_KEY_P_1 }, 0x821, 0x121, 0x821,  {ARM_FeaturePACBTI}  }, // 28
+  { "pac_key_p_1_ns", { ARM_MCLASSSYSREG_PAC_KEY_P_1_NS }, 0x8A1, 0x1A1, 0x8A1,  {ARM_FeaturePACBTI}  }, // 29
+  { "pac_key_p_2", { ARM_MCLASSSYSREG_PAC_KEY_P_2 }, 0x822, 0x122, 0x822,  {ARM_FeaturePACBTI}  }, // 30
+  { "pac_key_p_2_ns", { ARM_MCLASSSYSREG_PAC_KEY_P_2_NS }, 0x8A2, 0x1A2, 0x8A2,  {ARM_FeaturePACBTI}  }, // 31
+  { "pac_key_p_3", { ARM_MCLASSSYSREG_PAC_KEY_P_3 }, 0x823, 0x123, 0x823,  {ARM_FeaturePACBTI}  }, // 32
+  { "pac_key_p_3_ns", { ARM_MCLASSSYSREG_PAC_KEY_P_3_NS }, 0x8A3, 0x1A3, 0x8A3,  {ARM_FeaturePACBTI}  }, // 33
+  { "pac_key_u_0", { ARM_MCLASSSYSREG_PAC_KEY_U_0 }, 0x824, 0x124, 0x824,  {ARM_FeaturePACBTI}  }, // 34
+  { "pac_key_u_0_ns", { ARM_MCLASSSYSREG_PAC_KEY_U_0_NS }, 0x8A4, 0x1A4, 0x8A4,  {ARM_FeaturePACBTI}  }, // 35
+  { "pac_key_u_1", { ARM_MCLASSSYSREG_PAC_KEY_U_1 }, 0x825, 0x125, 0x825,  {ARM_FeaturePACBTI}  }, // 36
+  { "pac_key_u_1_ns", { ARM_MCLASSSYSREG_PAC_KEY_U_1_NS }, 0x8A5, 0x1A5, 0x8A5,  {ARM_FeaturePACBTI}  }, // 37
+  { "pac_key_u_2", { ARM_MCLASSSYSREG_PAC_KEY_U_2 }, 0x826, 0x126, 0x826,  {ARM_FeaturePACBTI}  }, // 38
+  { "pac_key_u_2_ns", { ARM_MCLASSSYSREG_PAC_KEY_U_2_NS }, 0x8A6, 0x1A6, 0x8A6,  {ARM_FeaturePACBTI}  }, // 39
+  { "pac_key_u_3", { ARM_MCLASSSYSREG_PAC_KEY_U_3 }, 0x827, 0x127, 0x827,  {ARM_FeaturePACBTI}  }, // 40
+  { "pac_key_u_3_ns", { ARM_MCLASSSYSREG_PAC_KEY_U_3_NS }, 0x8A7, 0x1A7, 0x8A7,  {ARM_FeaturePACBTI}  }, // 41
+  { "primask", { ARM_MCLASSSYSREG_PRIMASK }, 0x810, 0x110, 0x810,  {0}  }, // 42
+  { "primask_ns", { ARM_MCLASSSYSREG_PRIMASK_NS }, 0x890, 0x190, 0x890,  {0}  }, // 43
+  { "psp", { ARM_MCLASSSYSREG_PSP }, 0x809, 0x109, 0x809,  {0}  }, // 44
+  { "psplim", { ARM_MCLASSSYSREG_PSPLIM }, 0x80B, 0x10B, 0x80B,  {ARM_HasV8MBaselineOps}  }, // 45
+  { "psplim_ns", { ARM_MCLASSSYSREG_PSPLIM_NS }, 0x88B, 0x18B, 0x88B,  {ARM_Feature8MSecExt, ARM_HasV8MBaselineOps}  }, // 46
+  { "psp_ns", { ARM_MCLASSSYSREG_PSP_NS }, 0x889, 0x189, 0x889,  {ARM_Feature8MSecExt}  }, // 47
+  { "sp_ns", { ARM_MCLASSSYSREG_SP_NS }, 0x898, 0x198, 0x898,  {ARM_Feature8MSecExt}  }, // 48
+  { "xpsr", { ARM_MCLASSSYSREG_XPSR }, 0x803, 0x103, 0x803,  {0}  }, // 49
+  { "xpsr_g", { ARM_MCLASSSYSREG_XPSR_G }, 0x403, 0x3, 0x403,  {ARM_FeatureDSP}  }, // 50
+  { "xpsr_nzcvq", { ARM_MCLASSSYSREG_XPSR_NZCVQ }, 0x1803, 0x203, 0x803,  {0}  }, // 51
+  { "xpsr_nzcvqg", { ARM_MCLASSSYSREG_XPSR_NZCVQG }, 0xC03, 0x303, 0xC03,  {ARM_FeatureDSP}  }, // 52
+  };
+
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByName(const char * Name) {
+  static const struct IndexTypeStr Index[] = {
+    { "APSR", 0 },
+    { "APSR_G", 1 },
+    { "APSR_NZCVQ", 2 },
+    { "APSR_NZCVQG", 3 },
+    { "BASEPRI", 4 },
+    { "BASEPRI_MAX", 5 },
+    { "BASEPRI_NS", 6 },
+    { "CONTROL", 7 },
+    { "CONTROL_NS", 8 },
+    { "EAPSR", 9 },
+    { "EAPSR_G", 10 },
+    { "EAPSR_NZCVQ", 11 },
+    { "EAPSR_NZCVQG", 12 },
+    { "EPSR", 13 },
+    { "FAULTMASK", 14 },
+    { "FAULTMASK_NS", 15 },
+    { "IAPSR", 16 },
+    { "IAPSR_G", 17 },
+    { "IAPSR_NZCVQ", 18 },
+    { "IAPSR_NZCVQG", 19 },
+    { "IEPSR", 20 },
+    { "IPSR", 21 },
+    { "MSP", 22 },
+    { "MSPLIM", 23 },
+    { "MSPLIM_NS", 24 },
+    { "MSP_NS", 25 },
+    { "PAC_KEY_P_0", 26 },
+    { "PAC_KEY_P_0_NS", 27 },
+    { "PAC_KEY_P_1", 28 },
+    { "PAC_KEY_P_1_NS", 29 },
+    { "PAC_KEY_P_2", 30 },
+    { "PAC_KEY_P_2_NS", 31 },
+    { "PAC_KEY_P_3", 32 },
+    { "PAC_KEY_P_3_NS", 33 },
+    { "PAC_KEY_U_0", 34 },
+    { "PAC_KEY_U_0_NS", 35 },
+    { "PAC_KEY_U_1", 36 },
+    { "PAC_KEY_U_1_NS", 37 },
+    { "PAC_KEY_U_2", 38 },
+    { "PAC_KEY_U_2_NS", 39 },
+    { "PAC_KEY_U_3", 40 },
+    { "PAC_KEY_U_3_NS", 41 },
+    { "PRIMASK", 42 },
+    { "PRIMASK_NS", 43 },
+    { "PSP", 44 },
+    { "PSPLIM", 45 },
+    { "PSPLIM_NS", 46 },
+    { "PSP_NS", 47 },
+    { "SP_NS", 48 },
+    { "XPSR", 49 },
+    { "XPSR_G", 50 },
+    { "XPSR_NZCVQ", 51 },
+    { "XPSR_NZCVQG", 52 },
+  };
+
+   unsigned i = binsearch_IndexTypeStrEncoding(Index, ARR_SIZE(Index), Name);
+   if (i == -1)
+      return NULL;
+   else
+      return &MClassSysRegsList[Index[i].index];
+}
+
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByM1Encoding12(uint16_t M1Encoding12) {
+  static const struct IndexType Index[] = {
+    { 0x400, 1 },
+    { 0x401, 17 },
+    { 0x402, 10 },
+    { 0x403, 50 },
+    { 0x800, 0 },
+    { 0x801, 16 },
+    { 0x802, 9 },
+    { 0x803, 49 },
+    { 0x805, 21 },
+    { 0x806, 13 },
+    { 0x807, 20 },
+    { 0x808, 22 },
+    { 0x809, 44 },
+    { 0x80A, 23 },
+    { 0x80B, 45 },
+    { 0x810, 42 },
+    { 0x811, 4 },
+    { 0x812, 5 },
+    { 0x813, 14 },
+    { 0x814, 7 },
+    { 0x820, 26 },
+    { 0x821, 28 },
+    { 0x822, 30 },
+    { 0x823, 32 },
+    { 0x824, 34 },
+    { 0x825, 36 },
+    { 0x826, 38 },
+    { 0x827, 40 },
+    { 0x888, 25 },
+    { 0x889, 47 },
+    { 0x88A, 24 },
+    { 0x88B, 46 },
+    { 0x890, 43 },
+    { 0x891, 6 },
+    { 0x893, 15 },
+    { 0x894, 8 },
+    { 0x898, 48 },
+    { 0x8A0, 27 },
+    { 0x8A1, 29 },
+    { 0x8A2, 31 },
+    { 0x8A3, 33 },
+    { 0x8A4, 35 },
+    { 0x8A5, 37 },
+    { 0x8A6, 39 },
+    { 0x8A7, 41 },
+    { 0xC00, 3 },
+    { 0xC01, 19 },
+    { 0xC02, 12 },
+    { 0xC03, 52 },
+    { 0x1800, 2 },
+    { 0x1801, 18 },
+    { 0x1802, 11 },
+    { 0x1803, 51 },
+  };
+
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), M1Encoding12);
+   if (i == -1)
+      return NULL;
+   else
+      return &MClassSysRegsList[Index[i].index];
+}
+
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByM2M3Encoding8(uint16_t M2M3Encoding8) {
+  static const struct IndexType Index[] = {
+    { 0x0, 1 },
+    { 0x1, 17 },
+    { 0x2, 10 },
+    { 0x3, 50 },
+    { 0x100, 0 },
+    { 0x101, 16 },
+    { 0x102, 9 },
+    { 0x103, 49 },
+    { 0x105, 21 },
+    { 0x106, 13 },
+    { 0x107, 20 },
+    { 0x108, 22 },
+    { 0x109, 44 },
+    { 0x10A, 23 },
+    { 0x10B, 45 },
+    { 0x110, 42 },
+    { 0x111, 4 },
+    { 0x112, 5 },
+    { 0x113, 14 },
+    { 0x114, 7 },
+    { 0x120, 26 },
+    { 0x121, 28 },
+    { 0x122, 30 },
+    { 0x123, 32 },
+    { 0x124, 34 },
+    { 0x125, 36 },
+    { 0x126, 38 },
+    { 0x127, 40 },
+    { 0x188, 25 },
+    { 0x189, 47 },
+    { 0x18A, 24 },
+    { 0x18B, 46 },
+    { 0x190, 43 },
+    { 0x191, 6 },
+    { 0x193, 15 },
+    { 0x194, 8 },
+    { 0x198, 48 },
+    { 0x1A0, 27 },
+    { 0x1A1, 29 },
+    { 0x1A2, 31 },
+    { 0x1A3, 33 },
+    { 0x1A4, 35 },
+    { 0x1A5, 37 },
+    { 0x1A6, 39 },
+    { 0x1A7, 41 },
+    { 0x200, 2 },
+    { 0x201, 18 },
+    { 0x202, 11 },
+    { 0x203, 51 },
+    { 0x300, 3 },
+    { 0x301, 19 },
+    { 0x302, 12 },
+    { 0x303, 52 },
+  };
+
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), M2M3Encoding8);
+   if (i == -1)
+      return NULL;
+   else
+      return &MClassSysRegsList[Index[i].index];
+}
+
+const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByEncoding(uint16_t Encoding) {
+  static const struct IndexType Index[] = {
+    { 0x400, 1 },
+    { 0x401, 17 },
+    { 0x402, 10 },
+    { 0x403, 50 },
+    { 0x800, 0 },
+    { 0x800, 2 },
+    { 0x801, 16 },
+    { 0x801, 18 },
+    { 0x802, 9 },
+    { 0x802, 11 },
+    { 0x803, 49 },
+    { 0x803, 51 },
+    { 0x805, 21 },
+    { 0x806, 13 },
+    { 0x807, 20 },
+    { 0x808, 22 },
+    { 0x809, 44 },
+    { 0x80A, 23 },
+    { 0x80B, 45 },
+    { 0x810, 42 },
+    { 0x811, 4 },
+    { 0x812, 5 },
+    { 0x813, 14 },
+    { 0x814, 7 },
+    { 0x820, 26 },
+    { 0x821, 28 },
+    { 0x822, 30 },
+    { 0x823, 32 },
+    { 0x824, 34 },
+    { 0x825, 36 },
+    { 0x826, 38 },
+    { 0x827, 40 },
+    { 0x888, 25 },
+    { 0x889, 47 },
+    { 0x88A, 24 },
+    { 0x88B, 46 },
+    { 0x890, 43 },
+    { 0x891, 6 },
+    { 0x893, 15 },
+    { 0x894, 8 },
+    { 0x898, 48 },
+    { 0x8A0, 27 },
+    { 0x8A1, 29 },
+    { 0x8A2, 31 },
+    { 0x8A3, 33 },
+    { 0x8A4, 35 },
+    { 0x8A5, 37 },
+    { 0x8A6, 39 },
+    { 0x8A7, 41 },
+    { 0xC00, 3 },
+    { 0xC01, 19 },
+    { 0xC02, 12 },
+    { 0xC03, 52 },
+  };
+
+   unsigned i = binsearch_IndexTypeEncoding(Index, ARR_SIZE(Index), Encoding);
+   if (i == -1)
+      return NULL;
+   else
+      return &MClassSysRegsList[Index[i].index];
+}
+
+#endif
+
+#undef GET_BANKEDREG_DECL
+#undef GET_MCLASSSYSREG_DECL
