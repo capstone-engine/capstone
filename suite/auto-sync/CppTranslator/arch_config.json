@@ -1,0 +1,57 @@
+{
+  "General": {
+    "clang_format_file": "../../../.clang-format",
+    "patch_persistence_file": "./saved_patches.json",
+    "cs_arch_src": "../../../arch/",
+    "translation_out_dir": "../build/trans_out/",
+    "diff_out_dir": "../build/diff_out/",
+    "diff_color_new": "green",
+    "diff_color_old": "light_blue",
+    "diff_color_saved": "yellow",
+    "diff_color_edited": "light_magenta",
+    "nodes_to_diff": [
+      {
+        "node_type": "function_definition",
+        "identifier_node_type": ["function_declarator/identifier"]
+      },{
+        "node_type": "preproc_function_def",
+        "identifier_node_type": ["identifier"]
+      },{
+        "node_type": "preproc_include",
+        "identifier_node_type": ["string_literal", "system_lib_string"]
+      },{
+        "node_type": "preproc_define",
+        "identifier_node_type": ["identifier"]
+      }
+    ]
+  },
+  "ARM": {
+    "files_to_translate": [
+      {
+        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
+        "out": "ARMDisassembler.c"
+      },{
+        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp",
+        "out": "ARMInstPrinter.c"
+      },{
+        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.h",
+        "out": "ARMInstPrinter.h"
+      },{
+        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMAddressingModes.h",
+        "out": "ARMAddressingModes.h"
+      },{
+        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/Utils/ARMBaseInfo.cpp",
+        "out": "ARMBaseInfo.c"
+      }
+    ],
+    "files_for_template_search": [
+      "../build/llvm_inc/ARMGenDisassemblerTables.inc",
+      "../build/llvm_inc/ARMGenAsmWriter.inc",
+      "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
+      "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp"
+    ],
+    "manually_edited_files": [
+      "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMBaseInfo.h"
+    ]
+  }
+}
