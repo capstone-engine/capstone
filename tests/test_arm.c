@@ -131,13 +131,13 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 			printf("\t\tSubtracted: True\n");
 	}
 
-	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
+	if (arm->cc != ARMCC_AL && arm->cc != ARMCC_UNDEF)
 		printf("\tCode condition: %u\n", arm->cc);
 
 	if (arm->update_flags)
 		printf("\tUpdate-flags: True\n");
 
-	if (arm->writeback)
+	if (ins->detail->writeback)
 		printf("\tWrite-back: True\n");
 
 	if (arm->cps_mode)
@@ -157,6 +157,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 	if (arm->mem_barrier)
 		printf("\tMemory-barrier: %u\n", arm->mem_barrier);
+	
+	if (arm->pred_mask)
+		printf("\tPredicate Mask: 0x%x\n", arm->pred_mask);
 
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(cs_handle, ins,
