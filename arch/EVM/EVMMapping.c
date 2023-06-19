@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "../../cs_priv.h"
+#include "../../Mapping.h"
 #include "../../utils.h"
 
 #include "EVMMapping.h"
