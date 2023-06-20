@@ -89,8 +89,7 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 		SStream_concat0(O, " ");
 		if (getUseMarkup())
 			SStream_concat0(O, "<imm:");
-		SStream_concat(O, "%s", "#");
-		printUInt32(O, translateShiftImm(ShImm));
+		SStream_concat(O, "%s%d", "#", translateShiftImm(ShImm));
 		if (getUseMarkup())
 			SStream_concat0(O, ">");
 	}
@@ -155,9 +154,8 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			return;
 		}
 
-		SStream_concat(O, "%s%s%s", ", ", markup("<imm:"), "#");
-		printUInt32(
-			O, translateShiftImm(ARM_AM_getSORegOffset(MCOperand_getImm(MO2))));
+		SStream_concat(O, "%s%s%s%d", ", ", markup("<imm:"), "#",
+				translateShiftImm(ARM_AM_getSORegOffset(MCOperand_getImm(MO2))));
 		SStream_concat0(O, markup(">"));
 		;
 		return;
