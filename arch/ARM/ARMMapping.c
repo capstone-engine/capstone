@@ -77,48 +77,48 @@ static void patch_cs_reg_alias(char *asm_str) {
 		r10[0] = 's';
 		r10[1] = 'l';
 		memmove(r10+2, r10+3, strlen(r10+3));
-		r10 = strstr(asm_str, "r10");
 		asm_str[strlen(asm_str) - 1] = '\0';
+		r10 = strstr(asm_str, "r10");
 	}
 	char *r11 = strstr(asm_str, "r11");
 	while (r11) {
 		r11[0] = 'f';
 		r11[1] = 'p';
 		memmove(r11+2, r11+3, strlen(r11+3));
-		r11 = strstr(asm_str, "r11");
 		asm_str[strlen(asm_str) - 1] = '\0';
+		r11 = strstr(asm_str, "r11");
 	}
 	char *r12 = strstr(asm_str, "r12");
 	while (r12) {
 		r12[0] = 'i';
 		r12[1] = 'p';
 		memmove(r12+2, r12+3, strlen(r12+3));
-		r12 = strstr(asm_str, "r12");
 		asm_str[strlen(asm_str) - 1] = '\0';
+		r12 = strstr(asm_str, "r12");
 	}
 	char *r13 = strstr(asm_str, "r13");
 	while (r13) {
 		r13[0] = 's';
 		r13[1] = 'p';
 		memmove(r13+2, r13+3, strlen(r13+3));
-		r13 = strstr(asm_str, "r13");
 		asm_str[strlen(asm_str) - 1] = '\0';
+		r13 = strstr(asm_str, "r13");
 	}
 	char *r14 = strstr(asm_str, "r14");
 	while (r14) {
 		r14[0] = 'l';
 		r14[1] = 'r';
 		memmove(r14+2, r14+3, strlen(r14+3));
-		r14 = strstr(asm_str, "r14");
 		asm_str[strlen(asm_str) - 1] = '\0';
+		r14 = strstr(asm_str, "r14");
 	}
 	char *r15 = strstr(asm_str, "r15");
 	while (r15) {
 		r15[0] = 'p';
 		r15[1] = 'c';
 		memmove(r15+2, r15+3, strlen(r15+3));
-		r15 = strstr(asm_str, "r15");
 		asm_str[strlen(asm_str) - 1] = '\0';
+		r15 = strstr(asm_str, "r15");
 	}
 }
 
