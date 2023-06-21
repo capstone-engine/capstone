@@ -2,6 +2,7 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 /*    Rot127 <unisono@quyllur.org>, 2022-2023 */
 
+#include "capstone/capstone.h"
 #ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>
@@ -19,9 +20,34 @@
 #include "ARMInstPrinter.h"
 #include "ARMMapping.h"
 
+static const char *get_custom_reg_alias(unsigned reg) {
+	switch(reg) {
+	case ARM_REG_R9:
+		return "sb";
+	case ARM_REG_R10:
+		return "sl";
+	case ARM_REG_R11:
+		return "fp";
+	case ARM_REG_R12:
+		return "ip";
+	case ARM_REG_R13:
+		return "sp";
+	case ARM_REG_R14:
+		return "lr";
+	case ARM_REG_R15:
+		return "pc";
+	}
+	return NULL;
+}
+
 const char *ARM_reg_name(csh handle, unsigned int reg)
 {
-	if (((cs_struct *)(uintptr_t)handle)->syntax & CS_OPT_SYNTAX_NOREGNAME) {
+	int syntax_opt = ((cs_struct *)(uintptr_t)handle)->syntax;
+	const char *alias = get_custom_reg_alias(reg);
+	if ((syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS) && alias)
+		return alias;
+
+	if (syntax_opt & CS_OPT_SYNTAX_NOREGNAME) {
 		return ARM_LLVM_getRegisterName(reg, ARM_NoRegAltName);
 	}
 	return ARM_LLVM_getRegisterName(reg, ARM_RegNamesRaw);
@@ -36,10 +62,67 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	// Not used by ARM. Information is set after disassembly.
 }
 
+/// Patches the register names with Capstone specific alias.
+/// Those are common alias for registers (e.g. r15 = pc)
+/// which are not set in LLVM.
+static void patch_cs_reg_alias(char *asm_str) {
+	char *r9 = strstr(asm_str, "r9");
+	if (r9) {
+		r9[0] = 's';
+		r9[1] = 'b';
+	}
+	char *r10 = strstr(asm_str, "r10");
+	if (r10) {
+		r10[0] = 's';
+		r10[1] = 'l';
+		memmove(r10+2, r10+3, strlen(r10+3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+	}
+	char *r11 = strstr(asm_str, "r11");
+	if (r11) {
+		r11[0] = 'f';
+		r11[1] = 'p';
+		memmove(r11+2, r11+3, strlen(r11+3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+	}
+	char *r12 = strstr(asm_str, "r12");
+	if (r12) {
+		r12[0] = 'i';
+		r12[1] = 'p';
+		memmove(r12+2, r12+3, strlen(r12+3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+	}
+	char *r13 = strstr(asm_str, "r13");
+	if (r13) {
+		r13[0] = 's';
+		r13[1] = 'p';
+		memmove(r13+2, r13+3, strlen(r13+3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+	}
+	char *r14 = strstr(asm_str, "r14");
+	if (r14) {
+		r14[0] = 'l';
+		r14[1] = 'r';
+		memmove(r14+2, r14+3, strlen(r14+3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+	}
+	char *r15 = strstr(asm_str, "r15");
+	if (r15) {
+		r15[0] = 'p';
+		r15[1] = 'c';
+		memmove(r15+2, r15+3, strlen(r15+3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+	}
+}
+
 /// Decodes the asm string for a given instruction
 /// and fills the detail information about the instruction and its operands.
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 	ARM_LLVM_printInstruction(MI, O, info);
+	int syntax_opt = MI->csh->syntax;
+	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
+		patch_cs_reg_alias(O->buffer);
+
 }
 
 #ifndef CAPSTONE_DIET

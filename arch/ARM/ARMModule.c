@@ -1,6 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dang Hoang Vu <danghvu@gmail.com> 2013 */
 
+#include "capstone/capstone.h"
 #ifdef CAPSTONE_HAS_ARM
 
 #include "ARMModule.h"
@@ -39,7 +40,7 @@ cs_err ARM_option(cs_struct *handle, cs_opt_type type, size_t value)
 		handle->mode = (cs_mode)value;
 		break;
 	case CS_OPT_SYNTAX:
-		handle->syntax = (int)value;
+		handle->syntax |= (int)value;
 		break;
 	default:
 		break;

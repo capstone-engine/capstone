@@ -417,10 +417,14 @@ int main(int argc, char **argv)
 	bool detail_flag = false;
 	bool unsigned_flag = false;
 	bool skipdata = false;
+	bool custom_reg_alias = false;
 	int args_left;
 
-	while ((c = getopt (argc, argv, "sudhv")) != -1) {
+	while ((c = getopt (argc, argv, "asudhv")) != -1) {
 		switch (c) {
+			case 'a':
+				custom_reg_alias = true;
+				break;
 			case 's':
 				skipdata = true;
 				break;
@@ -583,6 +587,10 @@ int main(int argc, char **argv)
 
 	if (unsigned_flag) {
 		cs_option(handle, CS_OPT_UNSIGNED, CS_OPT_ON);
+	}
+
+	if (custom_reg_alias) {
+		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_CS_REG_ALIAS);
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
