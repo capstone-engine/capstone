@@ -791,7 +791,7 @@ DEFINE_printAddrMode5Operand(false) DEFINE_printAddrMode5Operand(true)
 	printRegName(O, MCOperand_getReg(MO1));
 	if (MCOperand_getImm(MO2)) {
 		SStream_concat(O, "%s", ":");
-		printInt64(O, (MCOperand_getImm(MO2) << 3));
+		printInt64(O, ((int32_t)MCOperand_getImm(MO2)) << 3);
 	}
 	SStream_concat(O, "%s", "]");
 	SStream_concat0(O, markup(">"));
@@ -1355,7 +1355,7 @@ DEFINE_printAddrModeImm12Operand(false) DEFINE_printAddrModeImm12Operand(true)
 			OffImm = 0;                                                        \
 		if (isSub) {                                                           \
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));                  \
-			printUInt32Bang(O, OffImm);                                        \
+			printInt32Bang(O, OffImm);                                        \
 			SStream_concat0(O, markup(">"));                                   \
 		} else if (AlwaysPrintImm0 || OffImm > 0) {                            \
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));                  \
@@ -1420,7 +1420,7 @@ DEFINE_printAddrModeImm12Operand(false) DEFINE_printAddrModeImm12Operand(true)
 	printRegName(O, MCOperand_getReg(MO1));
 	if (MCOperand_getImm(MO2)) {
 		SStream_concat(O, "%s%s", ", ", markup("<imm:"));
-		printInt64Bang(O, MCOperand_getImm(MO2) * 4);
+		printInt64Bang(O, (int32_t)(MCOperand_getImm(MO2) * 4));
 		SStream_concat0(O, markup(">"));
 	}
 	SStream_concat(O, "%s", "]");
@@ -1594,7 +1594,7 @@ void printVectorIndex(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_VectorIndex, OpNum);
 	SStream_concat(O, "%s", "[");
-	printInt64(O, MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+	printInt64(O, (int32_t) MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
 	SStream_concat0(O, "]");
 }
 
