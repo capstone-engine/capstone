@@ -52,6 +52,19 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
 				break;
+			case AArch64_OP_SME_MATRIX:
+				printf("\t\toperands[%u].type: SME_MATRIX\n", i);
+				printf("\t\toperands[%u].sme.type: %d\n", i, op->sme.type);
+
+				if (op->sme.tile != AArch64_REG_INVALID)
+					printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->sme.tile));
+				if (op->sme.slice_reg != AArch64_REG_INVALID)
+					printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.slice_reg));
+				if (op->sme.slice_offset != -1)
+					printf("\t\toperands[%u].sme.slice_offset: %d\n", i, op->sme.slice_offset);
+				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset != -1)
+					printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
+				break;
 			case AArch64_OP_CIMM:
 				printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
 				break;

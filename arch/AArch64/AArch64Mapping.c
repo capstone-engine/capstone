@@ -234,6 +234,7 @@ static void set_sme_operand(MCInst *MI, bool init) {
 	assert(AArch64_get_detail_op(MI, 0)->sme.type != AArch64_SME_OP_INVALID);
 
 	AArch64_get_detail(MI)->is_doing_sme = true;
+	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SME_MATRIX;
 	AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_INVALID;
 	AArch64_get_detail_op(MI, 0)->sme.tile = AArch64_REG_INVALID;
 	AArch64_get_detail_op(MI, 0)->sme.slice_reg = AArch64_REG_INVALID;
