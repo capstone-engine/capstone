@@ -1523,8 +1523,7 @@ void printRotImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	if (Imm == 0)
 		return;
 
-	SStream_concat(O, "%s%s%s", ", ror ", markup("<imm:"), "#");
-	printUInt32(O, 8 * Imm);
+	SStream_concat(O, "%s%s%s%d", ", ror ", markup("<imm:"), "#", 8 * Imm);
 	SStream_concat0(O, markup(">"));
 }
 
