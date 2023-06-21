@@ -1558,9 +1558,9 @@ void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "%s", "#");
 		SStream_concat0(O, markup("<imm:"));
 		if (PrintUnsigned)
-			printUInt32(O, (uint32_t)(Rotated));
+			SStream_concat(O, "%d", (uint32_t)(Rotated));
 		else
-			printInt32(O, Rotated);
+			SStream_concat(O, "%d", Rotated);
 		SStream_concat0(O, markup(">"));
 		return;
 	}
@@ -1577,7 +1577,7 @@ void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_FBits16, OpNum);
 	SStream_concat(O, "%s%s", markup("<imm:"), "#");
-	printInt64(O, 16 - MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+	SStream_concat(O, "%d", 16 - MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
 	SStream_concat0(O, markup(">"));
 }
 
