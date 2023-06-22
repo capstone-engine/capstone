@@ -16829,7 +16829,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   assert(Bits != 0 && "Cannot print this instruction.");
 
   // Fragment 0 encoded into 7 bits for 78 unique commands.
-  switch ((Bits >> 14) & 127) {
+  switch ((uint32_t)((Bits >> 14) & 127)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_VALUE_LIST, DBG_INSTR_REF, DBG_PHI, DBG_LABEL, BUNDLE, ...
@@ -17339,7 +17339,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 1 encoded into 7 bits for 89 unique commands.
-  switch ((Bits >> 21) & 127) {
+  switch ((uint32_t)((Bits >> 21) & 127)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // TLSDESCCALL, AUTDZA, AUTDZB, AUTIZA, AUTIZB, BLR, BLRAAZ, BLRABZ, BR, ...
@@ -17790,7 +17790,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 2 encoded into 7 bits for 89 unique commands.
-  switch ((Bits >> 28) & 127) {
+  switch ((uint32_t)((Bits >> 28) & 127)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABSWr, ABSXr, ABSv1i64, ADCSWr, ADCSXr, ADCWr, ADCXr, ADDG, ADDPL_XXI,...
@@ -18267,7 +18267,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 3 encoded into 7 bits for 128 unique commands.
-  switch ((Bits >> 35) & 127) {
+  switch ((uint32_t)((Bits >> 35) & 127)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABSWr, ABSXr, ABSv1i64, AESIMC_ZZ_B, AESMC_ZZ_B, AUTDA, AUTDB, AUTIA, ...
@@ -18927,7 +18927,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 4 encoded into 7 bits for 88 unique commands.
-  switch ((Bits >> 42) & 127) {
+  switch ((uint32_t)((Bits >> 42) & 127)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABS_ZPmZ_B, ADDHNB_ZZZ_H, ADD_VG2_2ZZ_D, ADD_VG2_2ZZ_H, ADD_VG2_2ZZ_S,...
@@ -19395,7 +19395,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 5 encoded into 7 bits for 88 unique commands.
-  switch ((Bits >> 49) & 127) {
+  switch ((uint32_t)((Bits >> 49) & 127)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADCLB_ZZZ_D, ADCLB_ZZZ_S, ADCLT_ZZZ_D, ADCLT_ZZZ_S, ADCSWr, ADCSXr, AD...
@@ -19862,7 +19862,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 6 encoded into 6 bits for 44 unique commands.
-  switch ((Bits >> 56) & 63) {
+  switch ((uint32_t)((Bits >> 56) & 63)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADDG, ASRD_ZPmI_B, ASRD_ZPmI_D, ASRD_ZPmI_S, ASR_ZPmI_B, ASR_ZPmI_D, A...

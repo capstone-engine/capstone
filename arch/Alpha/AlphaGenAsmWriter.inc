@@ -1221,7 +1221,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   assert(Bits != 0 && "Cannot print this instruction.");
 
   // Fragment 0 encoded into 3 bits for 5 unique commands.
-  switch ((Bits >> 11) & 7) {
+  switch ((uint32_t)((Bits >> 11) & 7)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_VALUE_LIST, DBG_INSTR_REF, DBG_PHI, DBG_LABEL, BUNDLE, ...
@@ -1252,7 +1252,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 1 encoded into 4 bits for 13 unique commands.
-  switch ((Bits >> 14) & 15) {
+  switch ((uint32_t)((Bits >> 14) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADJUSTSTACKDOWN, ADJUSTSTACKUP, BR, RC, RPCC, RS
@@ -1343,7 +1343,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 2 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 18) & 3) {
+  switch ((uint32_t)((Bits >> 18) & 3)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADDLi, ADDLr, ADDQi, ADDQr, ADDS, ADDT, ANDi, ANDr, BICi, BICr, BISi, ...
@@ -1369,7 +1369,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 3 encoded into 3 bits for 6 unique commands.
-  switch ((Bits >> 20) & 7) {
+  switch ((uint32_t)((Bits >> 20) & 7)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADDLi, ADDLr, ADDQi, ADDQr, ADDS, ADDT, ANDi, ANDr, BICi, BICr, BISi, ...

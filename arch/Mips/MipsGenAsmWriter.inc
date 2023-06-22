@@ -4703,7 +4703,7 @@ static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI)
 
   // Fragment 0 encoded into 4 bits for 11 unique commands.
   //printf("Frag-0: %"PRIu64"\n", (Bits >> 14) & 15);
-  switch ((Bits >> 14) & 15) {
+  switch ((uint32_t)((Bits >> 14) & 15)) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // DBG_VALUE, BUNDLE, LIFETIME_START, LIFETIME_END, Break16, CONSTPOOL_EN...
@@ -4765,7 +4765,7 @@ static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI)
 
   // Fragment 1 encoded into 5 bits for 17 unique commands.
   //printf("Frag-1: %"PRIu64"\n", (Bits >> 18) & 31);
-  switch ((Bits >> 18) & 31) {
+  switch ((uint32_t)((Bits >> 18) & 31)) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // ABSQ_S_PH, ABSQ_S_QB, ABSQ_S_W, ADD, ADDIUPC, ADDIUPC_MM, ADDIUR1SP_MM...
@@ -4865,7 +4865,7 @@ static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI)
 
   // Fragment 2 encoded into 4 bits for 12 unique commands.
   //printf("Frag-2: %"PRIu64"\n", (Bits >> 23) & 15);
-  switch ((Bits >> 23) & 15) {
+  switch ((uint32_t)((Bits >> 23) & 15)) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // ABSQ_S_PH, ABSQ_S_QB, ABSQ_S_W, ADD, ADDIUPC, ADDIUPC_MM, ADDIUR1SP_MM...
@@ -4938,7 +4938,7 @@ static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI)
 
   // Fragment 3 encoded into 4 bits for 15 unique commands.
   //printf("Frag-3: %"PRIu64"\n", (Bits >> 27) & 15);
-  switch ((Bits >> 27) & 15) {
+  switch ((uint32_t)((Bits >> 27) & 15)) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // ABSQ_S_PH, ABSQ_S_QB, ABSQ_S_W, ADDIUPC, ADDIUPC_MM, ADDIUR1SP_MM, ALU...
@@ -5033,7 +5033,7 @@ static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI)
 
   // Fragment 4 encoded into 3 bits for 5 unique commands.
   //printf("Frag-4: %"PRIu64"\n", (Bits >> 31) & 7);
-  switch ((Bits >> 31) & 7) {
+  switch ((uint32_t)((Bits >> 31) & 7)) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // ADD, ADDIUR2_MM, ADDQH_PH, ADDQH_R_PH, ADDQH_R_W, ADDQH_W, ADDQ_PH, AD...
@@ -5060,7 +5060,7 @@ static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI)
 
   // Fragment 5 encoded into 2 bits for 3 unique commands.
   //printf("Frag-5: %"PRIu64"\n", (Bits >> 34) & 3);
-  switch ((Bits >> 34) & 3) {
+  switch ((uint32_t)((Bits >> 34) & 3)) {
   default: // llvm_unreachable("Invalid command number.");
   case 0:
     // ADD, ADDIUR2_MM, ADDQH_PH, ADDQH_R_PH, ADDQH_R_W, ADDQH_W, ADDQ_PH, AD...

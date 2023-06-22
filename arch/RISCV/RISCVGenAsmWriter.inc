@@ -1197,7 +1197,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 0 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 12) & 3) {
+  switch ((uint32_t)((Bits >> 12) & 3)) {
   default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_LABEL, BUNDLE, LIFETIME_START, LIFETIME_END, FENTRY_CAL...
@@ -1225,7 +1225,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 1 encoded into 2 bits for 3 unique commands.
-  switch ((Bits >> 14) & 3) {
+  switch ((uint32_t)((Bits >> 14) & 3)) {
   default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // PseudoCALL, PseudoTAIL, C_J, C_JAL, C_JALR, C_JR
@@ -1246,7 +1246,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 2 encoded into 2 bits for 3 unique commands.
-  switch ((Bits >> 16) & 3) {
+  switch ((uint32_t)((Bits >> 16) & 3)) {
   default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // PseudoLA, PseudoLI, PseudoLLA, ADD, ADDI, ADDIW, ADDW, AND, ANDI, AUIP...
@@ -1267,7 +1267,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
 
   // Fragment 3 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 18) & 3) {
+  switch ((uint32_t)((Bits >> 18) & 3)) {
   default: CS_ASSERT(0 && "Invalid command number.");
   case 0:
     // PseudoLA, PseudoLI, PseudoLLA, AUIPC, C_BEQZ, C_BNEZ, C_LI, C_LUI, C_M...
