@@ -1,3 +1,4 @@
+from .__init__ import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OPT_MEM
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [tricore_const.py]
 TRICORE_OP_INVALID = CS_OP_INVALID
 TRICORE_OP_REG = CS_OP_REG

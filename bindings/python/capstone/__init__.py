@@ -110,6 +110,8 @@ __all__ = [
     'CS_OPT_ON',
     'CS_OPT_OFF',
 
+    'CS_OPT_MEM',
+
     'CS_ERR_OK',
     'CS_ERR_MEM',
     'CS_ERR_ARCH',
