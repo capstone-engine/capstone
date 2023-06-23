@@ -1,3 +1,4 @@
+from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_MEM
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [evm_const.py]
 
 EVM_INS_STOP = 0
