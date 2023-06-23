@@ -194,7 +194,6 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 {
 	char **list_part, **list_byte, **list_part_issue_result;
 	int size_part, size_byte, size_part_issue_result;
-	char *tmptmp;
 	int i, count, j;
 	unsigned char *code;
 	cs_insn *insn;
@@ -255,9 +254,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 
 	for (i = 0; i < size_part_issue_result; ++i) {
 		trim_str(list_part_issue_result[i]);
-		memset(tmptmp, 0, MAXMEM);
-
-		tmptmp = (char *)malloc(sizeof(char));
+		char *tmptmp = (char *)malloc(sizeof(char));
 		tmptmp[0] = '\0';
 		add_str(&tmptmp, "%s", list_part_issue_result[i]);
 		add_str(&tmptmp, " ;");
@@ -270,9 +267,9 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 			free(cs_result);
 			//	free_strs(list_part_cs_result, size_part_cs_result);
 			free_strs(list_part_issue_result, size_part_issue_result);
-			free(tmptmp);
 			_fail(__FILE__, __LINE__);
 		}
+		free(tmptmp);
 	}
 
 	cs_free(insn, count);
