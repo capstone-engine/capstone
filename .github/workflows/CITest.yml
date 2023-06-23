@@ -30,14 +30,6 @@ jobs:
       matrix:
         config:
           - {
-              name: 'ubuntu-20.04 x64 python2.7 cmake',
-              os: ubuntu-20.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '2.7',
-              build-system: 'cmake',
-            }
-          - {
               name: 'ubuntu-20.04 x64 python3.6 cmake',
               os: ubuntu-20.04,
               arch: x64,
@@ -46,27 +38,27 @@ jobs:
               build-system: 'cmake',
             }
           - {
-              name: 'ubuntu-22.04 x64 python2.7 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '2.7',
-              build-system: 'cmake',
-            }
-          - {
               name: 'ubuntu-22.04 x64 python3.9 make',
               os: ubuntu-22.04,
               arch: x64,
               python-arch: x64,
               python-version: '3.9',
-              build-system: 'make',
-            }            
+              build-system: 'cmake',
+            }          
           - {
-              name: 'ubuntu-22.04 x64 python3.9 cmake',
+              name: 'ubuntu-22.04 x64 python3.11 make',
               os: ubuntu-22.04,
               arch: x64,
               python-arch: x64,
-              python-version: '3.9',
+              python-version: '3.11',
+              build-system: 'make',
+            }            
+          - {
+              name: 'ubuntu-22.04 x64 python3.11 cmake',
+              os: ubuntu-22.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.11',
               build-system: 'cmake',
             }
 
