@@ -23,7 +23,7 @@ typedef enum tricore_op_type {
 	TRICORE_OP_INVALID = CS_OP_INVALID, ///< CS_OP_INVALID (Uninitialized).
 	TRICORE_OP_REG = CS_OP_REG,	    ///< CS_OP_REG (Register operand).
 	TRICORE_OP_IMM = CS_OP_IMM,	    ///< CS_OP_IMM (Immediate operand).
-	TRICORE_OP_MEM = CS_OPT_MEM,	    ///< CS_OP_MEM (Memory operand).
+	TRICORE_OP_MEM = CS_OP_MEM,	    ///< CS_OP_MEM (Memory operand).
 } tricore_op_type;
 
 /// Instruction's operand referring to memory
