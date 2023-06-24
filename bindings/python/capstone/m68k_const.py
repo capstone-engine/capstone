@@ -1,3 +1,4 @@
+from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_MEM
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [m68k_const.py]
 M68K_OPERAND_COUNT = 4
 
