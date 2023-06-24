@@ -1781,6 +1781,24 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 	return false;
 }
 
+// given MCInst's id, find if this is a "repz ret" instruction
+// gcc generates "repz ret" (f3 c3) instructions in some cases as an
+// optimization for AMD platforms, see:
+// https://gcc.gnu.org/legacy-ml/gcc-patches/2003-05/msg02117.html
+static bool valid_ret_repz(cs_struct *h, unsigned int opcode)
+{
+	unsigned int id;
+	unsigned int i = find_insn(opcode);
+
+	if (i != -1) {
+		id = insns[i].mapid;
+		return id == X86_INS_RET;
+	}
+
+	// not found
+	return false;
+}
+
 // given MCInst's id, find out if this insn is valid for REPE prefix
 static bool valid_repe(cs_struct *h, unsigned int opcode)
 {
@@ -1935,6 +1953,8 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 			} else if (valid_repe(MI->csh, opcode)) {
 				SStream_concat(O, "repe|");
 				add_cx(MI);
+			} else if (valid_ret_repz(MI->csh, opcode)) {
+				SStream_concat(O, "repz|");
 			} else {
 				// invalid prefix
 				MI->x86_prefix[0] = 0;
