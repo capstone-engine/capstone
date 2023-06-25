@@ -1,3 +1,7 @@
+!# issue 2062 repz Prefix
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0xf3,0xc3 == repz ret ; Prefix:0xf3 0x00 0x00 0x00
+
 !# issue 2007 RISCV64 instruction groups
 !# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
 0x63,0x04,0x03,0x00 == beqz t1, 8 ; op_count: 2 ; operands[0].type: REG = t1 ; operands[1].type: IMM = 0x8 ; Groups: branch_relative jump
