@@ -1558,18 +1558,16 @@ void printModImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat(O, "%s", "#");
 		SStream_concat0(O, markup("<imm:"));
 		if (PrintUnsigned)
-			SStream_concat(O, "%d", (uint32_t)(Rotated));
+			printUInt32(O, (uint32_t)(Rotated));
 		else
-			SStream_concat(O, "%d", Rotated);
+			printInt32(O, Rotated);
 		SStream_concat0(O, markup(">"));
 		return;
 	}
 
 	// Explicit #bits, #rot implied
-	SStream_concat(O, "%s%s", "#", markup("<imm:"));
-	printUInt32(O, Bits);
-	SStream_concat(O, "%s%s%s", markup(">"), ", #", markup("<imm:"));
-	printUInt32(O, Rot);
+	SStream_concat(O, "%s%s%u", "#", markup("<imm:"), Bits);
+	SStream_concat(O, "%s%s%s%u", markup(">"), ", #", markup("<imm:"), Rot);
 	SStream_concat0(O, markup(">"));
 }
 
