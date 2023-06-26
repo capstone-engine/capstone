@@ -586,6 +586,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 #ifndef CAPSTONE_DIET
 	mnem = insn->mnemonic;
+	// memset(mnem, 0, CS_MNEMONIC_SIZE);
 	for (sp = buffer; *sp; sp++) {
 		if (*sp == ' '|| *sp == '\t')
 			break;
@@ -896,7 +897,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	size_org = size;
 
 	total_size = sizeof(cs_insn) * cache_size;
-	total = cs_mem_malloc(total_size);
+	total = cs_mem_calloc(sizeof(cs_insn), cache_size);
 	if (total == NULL) {
 		// insufficient memory
 		handle->errnum = CS_ERR_MEM;
