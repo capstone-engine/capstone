@@ -1,6 +1,32 @@
 This file details the changelog of Capstone.
 
 ---------------------------------
+Version 5.0.0: June 27th, 2023
+
+## What's Changed
+* [workflows] Remove deprecated image versions by @kabeor in https://github.com/capstone-engine/capstone/pull/2057
+* Fix capstone_test.c #2059 by @imbillow in https://github.com/capstone-engine/capstone/pull/2060
+* Support repz prefix on X86 ret instructions by @adamjseitz in https://github.com/capstone-engine/capstone/pull/2063
+* fix for msvc static lib, dll build error and warnings by @arkup in https://github.com/capstone-engine/capstone/pull/2061
+* use calloc for cs_insn instead of malloc by @ConnorRigby in https://github.com/capstone-engine/capstone/pull/1972
+* Fix access bug for TEST op by @melynx in https://github.com/capstone-engine/capstone/pull/1511
+
+## New Contributors
+* @arkup made their first contribution in https://github.com/capstone-engine/capstone/pull/2061
+* @ConnorRigby made their first contribution in https://github.com/capstone-engine/capstone/pull/1972
+* @melynx made their first contribution in https://github.com/capstone-engine/capstone/pull/1511
+
+
+---------------------------------
+Version 5.0.0-rc4: June 18th, 2023
+
+## What's Changed
+* Fix TriCore test by @hamarituc in https://github.com/capstone-engine/capstone/pull/2049
+* [workflows] Fix python-publish issue by @kabeor in https://github.com/capstone-engine/capstone/pull/2050
+* Update version tag by @kabeor in https://github.com/capstone-engine/capstone/pull/2052
+* Release 5.0-rc4 by @kabeor in https://github.com/capstone-engine/capstone/pull/2051
+
+---------------------------------
 Version 5.0.0-rc3: June 17th, 2023
 
 What's Changed:
