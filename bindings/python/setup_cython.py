@@ -10,6 +10,7 @@ from Cython.Distutils import build_ext
 
 SYSTEM = sys.platform
 VERSION = '5.0.0'
+VERSION_PARTS = VERSION.split(".")
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
@@ -25,7 +26,7 @@ PYPACKAGE_DIR = os.path.join(ROOT_DIR, 'capstone')
 CYPACKAGE_DIR = os.path.join(ROOT_DIR, 'pyx')
 
 if SYSTEM == 'darwin':
-    VERSIONED_LIBRARY_FILE = "libcapstone.4.dylib"
+    VERSIONED_LIBRARY_FILE = "libcapstone.{}.dylib".format(VERSION_PARTS[0])
     LIBRARY_FILE = "libcapstone.dylib"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
@@ -33,7 +34,7 @@ elif SYSTEM in ('win32', 'cygwin'):
     LIBRARY_FILE = "capstone.dll"
     STATIC_LIBRARY_FILE = None
 else:
-    VERSIONED_LIBRARY_FILE = "libcapstone.so.4"
+    VERSIONED_LIBRARY_FILE = "libcapstone.so.{}".format(VERSION_PARTS[0])
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
