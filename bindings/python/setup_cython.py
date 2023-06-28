@@ -41,7 +41,7 @@ else:
 compile_args = ['-O3', '-fomit-frame-pointer', '-I' + HEADERS_DIR]
 link_args = ['-L' + LIBS_DIR]
 
-ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'm68k', 'm68k_const', 'm680x', 'm680x_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const', 'tms320c64x', 'tms320c64x_const', 'evm', 'evm_const' ]
+ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'm68k', 'm68k_const', 'm680x', 'm680x_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const', 'tms320c64x', 'tms320c64x_const', 'evm', 'evm_const', 'mos65xx', 'mos65xx_const', 'bpf', 'bpf_const', 'riscv', 'riscv_const', 'tricore', 'tricore_const' ]
 
 ext_modules = [Extension("capstone.ccapstone",
                          ["pyx/ccapstone.pyx"],
@@ -53,6 +53,10 @@ ext_modules += [Extension("capstone.%s" % name,
                           extra_compile_args=compile_args,
                           extra_link_args=link_args)
                 for name in ext_module_names]
+
+for e in ext_modules:
+    e.cython_directives = {"language_level": str(sys.version_info[0])}
+
 
 def clean_bins():
     shutil.rmtree(LIBS_DIR, ignore_errors=True)
@@ -137,6 +141,8 @@ setup(
     classifiers  = [
                 'License :: OSI Approved :: BSD License',
                 'Programming Language :: Python :: 2',
+                'Programming Language :: Python :: 2.7',
+                'Programming Language :: Python :: 3',
                 ],
     include_package_data=True,
     package_data={
