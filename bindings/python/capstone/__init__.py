@@ -342,10 +342,10 @@ def _load_lib(path):
     if os.path.exists(lib_file):
         return ctypes.cdll.LoadLibrary(lib_file)
     else:
-        # if we're on linux, try again with .so.4 extension
+        # if we're on linux, try again with .so.5 extension
         if lib_file.endswith('.so'):
-            if os.path.exists(lib_file + '.4'):
-                return ctypes.cdll.LoadLibrary(lib_file + '.4')
+            if os.path.exists(lib_file + '.{}'.format(CS_VERSION_MAJOR)):
+                return ctypes.cdll.LoadLibrary(lib_file + '.{}'.format(CS_VERSION_MAJOR))
     return None
 
 _cs = None
