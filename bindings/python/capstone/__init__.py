@@ -144,6 +144,7 @@ __all__ = [
     'CS_GRP_INT',
     'CS_GRP_IRET',
     'CS_GRP_PRIVILEGE',
+    'CS_GRP_BRANCH_RELATIVE',
 
     'CS_AC_INVALID',
     'CS_AC_READ',
@@ -275,6 +276,7 @@ CS_GRP_RET     = 3  # all return instructions
 CS_GRP_INT     = 4  # all interrupt instructions (int+syscall)
 CS_GRP_IRET    = 5  # all interrupt return instructions
 CS_GRP_PRIVILEGE = 6  # all privileged instructions
+CS_GRP_BRANCH_RELATIVE = 7 # all relative branching instructions
 
 # Access types for instruction operands.
 CS_AC_INVALID  = 0        # Invalid/unitialized access type.
@@ -342,10 +344,10 @@ def _load_lib(path):
     if os.path.exists(lib_file):
         return ctypes.cdll.LoadLibrary(lib_file)
     else:
-        # if we're on linux, try again with .so.4 extension
+        # if we're on linux, try again with .so.5 extension
         if lib_file.endswith('.so'):
-            if os.path.exists(lib_file + '.4'):
-                return ctypes.cdll.LoadLibrary(lib_file + '.4')
+            if os.path.exists(lib_file + '.{}'.format(CS_VERSION_MAJOR)):
+                return ctypes.cdll.LoadLibrary(lib_file + '.{}'.format(CS_VERSION_MAJOR))
     return None
 
 _cs = None
@@ -883,7 +885,7 @@ class Cs(object):
             raise CsError(status)
 
         try:
-            import ccapstone
+            from . import ccapstone
             # rewire disasm to use the faster version
             self.disasm = ccapstone.Cs(self).disasm
         except:
