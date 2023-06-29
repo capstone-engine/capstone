@@ -10,6 +10,7 @@ from Cython.Distutils import build_ext
 
 SYSTEM = sys.platform
 VERSION = '5.0.0'
+VERSION_PARTS = VERSION.split(".")
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
@@ -25,7 +26,7 @@ PYPACKAGE_DIR = os.path.join(ROOT_DIR, 'capstone')
 CYPACKAGE_DIR = os.path.join(ROOT_DIR, 'pyx')
 
 if SYSTEM == 'darwin':
-    VERSIONED_LIBRARY_FILE = "libcapstone.4.dylib"
+    VERSIONED_LIBRARY_FILE = "libcapstone.{}.dylib".format(VERSION_PARTS[0])
     LIBRARY_FILE = "libcapstone.dylib"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
@@ -33,14 +34,14 @@ elif SYSTEM in ('win32', 'cygwin'):
     LIBRARY_FILE = "capstone.dll"
     STATIC_LIBRARY_FILE = None
 else:
-    VERSIONED_LIBRARY_FILE = "libcapstone.so.4"
+    VERSIONED_LIBRARY_FILE = "libcapstone.so.{}".format(VERSION_PARTS[0])
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
 compile_args = ['-O3', '-fomit-frame-pointer', '-I' + HEADERS_DIR]
 link_args = ['-L' + LIBS_DIR]
 
-ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'm68k', 'm68k_const', 'm680x', 'm680x_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const', 'tms320c64x', 'tms320c64x_const', 'evm', 'evm_const' ]
+ext_module_names = ['arm', 'arm_const', 'arm64', 'arm64_const', 'm68k', 'm68k_const', 'm680x', 'm680x_const', 'mips', 'mips_const', 'ppc', 'ppc_const', 'x86', 'x86_const', 'sparc', 'sparc_const', 'systemz', 'sysz_const', 'xcore', 'xcore_const', 'tms320c64x', 'tms320c64x_const', 'evm', 'evm_const', 'mos65xx', 'mos65xx_const', 'bpf', 'bpf_const', 'riscv', 'riscv_const', 'tricore', 'tricore_const' ]
 
 ext_modules = [Extension("capstone.ccapstone",
                          ["pyx/ccapstone.pyx"],
@@ -52,6 +53,10 @@ ext_modules += [Extension("capstone.%s" % name,
                           extra_compile_args=compile_args,
                           extra_link_args=link_args)
                 for name in ext_module_names]
+
+for e in ext_modules:
+    e.cython_directives = {"language_level": str(sys.version_info[0])}
+
 
 def clean_bins():
     shutil.rmtree(LIBS_DIR, ignore_errors=True)
@@ -136,6 +141,8 @@ setup(
     classifiers  = [
                 'License :: OSI Approved :: BSD License',
                 'Programming Language :: Python :: 2',
+                'Programming Language :: Python :: 2.7',
+                'Programming Language :: Python :: 3',
                 ],
     include_package_data=True,
     package_data={

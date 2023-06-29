@@ -56,7 +56,7 @@ if 'PKG_MAJOR' not in VERSION_DATA or \
     raise Exception("Malformed pkgconfig.mk")
 
 if 'PKG_TAG' in VERSION_DATA:
-    VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}.{PKG_TAG}'.format(**VERSION_DATA)
+    VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}{PKG_TAG}'.format(**VERSION_DATA)
 else:
     VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}'.format(**VERSION_DATA)
 
