@@ -85,6 +85,30 @@ void map_add_implicit_write(MCInst *MI, uint32_t Reg)
 	}
 }
 
+/// Removes a register from the implicit write register list.
+void map_remove_implicit_write(MCInst *MI, uint32_t Reg)
+{
+	if (!MI->flat_insn->detail)
+		return;
+
+	uint16_t *regs_write = MI->flat_insn->detail->regs_write;
+	bool shorten_list = false;
+	for (int i = 0; i < MAX_IMPL_W_REGS; ++i) {
+		if (shorten_list) {
+			regs_write[i - 1] = regs_write[i];
+		}
+		if (i >= MI->flat_insn->detail->regs_write_count)
+			return;
+
+		if (regs_write[i] == Reg) {
+			MI->flat_insn->detail->regs_write_count--;
+			// The register should exist only once in the list.
+			assert(!shorten_list);
+			shorten_list = true;
+		}
+	}
+}
+
 /// Copies the implicit read registers of @imap to @MI->flat_insn.
 /// Already present registers will be preserved.
 void map_implicit_reads(MCInst *MI, const insn_map *imap)

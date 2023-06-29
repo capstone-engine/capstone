@@ -544,12 +544,20 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0, MCInst_getOpVal(MI, OpNum));
 		ARM_set_mem_access(MI, false);
 		break;
-	case ARM_OP_GROUP_SBitModifierOperand:
-		// The tablegen files often define CPSR as in-register.
-		// and not list them in implicit writes.
+	case ARM_OP_GROUP_SBitModifierOperand: {
+		unsigned SBit = MCInst_getOpVal(MI, OpNum);
+
+		if (SBit == 0) {
+			// Does not edit set flags.
+			map_remove_implicit_write(MI, ARM_CPSR);
+			ARM_get_detail(MI)->update_flags = false;
+			break;
+		}
+		// Add the implicit write again. Some instruction miss it.
 		map_add_implicit_write(MI, ARM_CPSR);
 		ARM_get_detail(MI)->update_flags = true;
 		break;
+	}
 	case ARM_OP_GROUP_VectorListOne:
 	case ARM_OP_GROUP_VectorListOneAllLanes:
 		ARM_set_detail_op_reg(MI, OpNum, t_qpr_to_dpr_list(MI, OpNum, 0));

@@ -98,6 +98,7 @@ int name2id(const name_map *map, int max, const char *name);
 const char *id2name(const name_map *map, int max, const unsigned int id);
 
 void map_add_implicit_write(MCInst *MI, uint32_t Reg);
+void map_remove_implicit_write(MCInst *MI, uint32_t Reg);
 
 void map_implicit_reads(MCInst *MI, const insn_map *imap);
 
