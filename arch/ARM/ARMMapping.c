@@ -531,6 +531,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 							  MCInst_getOpVal(MI, OpNum));
 		break;
 	case ARM_OP_GROUP_AddrMode6Operand:
+		if(!doing_mem(MI))
+			ARM_set_mem_access(MI, true);
 		ARM_set_detail_op_mem(MI, OpNum, true, 0, 0, MCInst_getOpVal(MI, OpNum));
 		ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0,
 							  MCInst_getOpVal(MI, OpNum + 1) << 3);
@@ -544,6 +546,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		break;
 	}
 	case ARM_OP_GROUP_AddrMode7Operand:
+		if(!doing_mem(MI))
+			ARM_set_mem_access(MI, true);
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0, MCInst_getOpVal(MI, OpNum));
 		ARM_set_mem_access(MI, false);
 		break;
@@ -954,6 +958,9 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		break;
 	}
 	case ARM_OP_GROUP_T2AddrModeSoRegOperand: {
+		if(!doing_mem(MI))
+			ARM_set_mem_access(MI, true);
+
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 							  MCInst_getOpVal(MI, OpNum));
 		ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
@@ -963,6 +970,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			ARM_get_detail_op(MI, 2)->shift.type = ARM_SFT_LSL;
 			ARM_get_detail_op(MI, 2)->shift.value = ShAmt;
 		}
+		ARM_set_mem_access(MI, false);
 		break;
 	}
 	case ARM_OP_GROUP_T2AddrModeImm0_1020s4Operand:
