@@ -442,6 +442,9 @@ static void ARM_set_mem_access(MCInst *MI, bool status)
 static void add_cs_detail_RegImmShift(MCInst *MI, ARM_AM_ShiftOpc ShOpc,
 									  unsigned ShImm)
 {
+	if (ShOpc == ARM_AM_no_shift || (ShOpc == ARM_AM_lsl && !ShImm))
+		return;
+
 	if (!MI->csh->detail)
 		return;
 
