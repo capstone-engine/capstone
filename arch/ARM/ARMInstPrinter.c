@@ -150,10 +150,13 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		printOperand(MI, 1, O);
 
 		if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
-			;
+			ARM_get_detail_op(MI, -1)->shift.type = ARM_SFT_RRX;
+			ARM_get_detail_op(MI, -1)->shift.value = translateShiftImm(ARM_AM_getSORegOffset(MCOperand_getImm(MO2)));
 			return;
 		}
 
+		ARM_get_detail_op(MI, -1)->shift.type = (arm_shifter) ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
+		ARM_get_detail_op(MI, -1)->shift.value = MCInst_getOpVal(MI, 2);
 		SStream_concat(O, "%s%s%s%d", ", ", markup("<imm:"), "#",
 				translateShiftImm(ARM_AM_getSORegOffset(MCOperand_getImm(MO2))));
 		SStream_concat0(O, markup(">"));
