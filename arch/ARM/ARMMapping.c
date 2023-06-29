@@ -747,7 +747,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_SORegRegOperand: {
 		int64_t imm = MCOperand_getImm(MCInst_getOperand(MI, OpNum + 2));
 		ARM_get_detail_op(MI, 0)->shift.type = (imm & 7) + ARM_SFT_ASR_REG - 1;
-		if (ARM_AM_getSORegShOp(imm) == ARM_AM_rrx)
+		if (ARM_AM_getSORegShOp(imm) != ARM_AM_rrx)
 			ARM_get_detail_op(MI, 0)->shift.value =
 				MCInst_getOpVal(MI, OpNum + 1);
 
