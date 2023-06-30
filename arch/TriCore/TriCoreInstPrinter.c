@@ -161,7 +161,7 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
-		SStream_concat(O, "%%%s", getRegisterName(reg));
+		SStream_concat(O, "%s", getRegisterName(reg));
 		fill_reg(MI, reg);
 	} else if (MCOperand_isImm(Op)) {
 		int64_t Imm = MCOperand_getImm(Op);
