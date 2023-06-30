@@ -19,20 +19,20 @@
 static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
 #ifndef CAPSTONE_DIET
   static const char AsmStrs[] = {
-  /* 0 */ "sub %d15, \0"
-  /* 11 */ "add %d15, \0"
-  /* 22 */ "and %d15, \0"
-  /* 33 */ "jne %d15, \0"
-  /* 44 */ "jeq %d15, \0"
-  /* 55 */ "or %d15, \0"
-  /* 65 */ "jz.t %d15, \0"
-  /* 77 */ "jnz.t %d15, \0"
-  /* 90 */ "lt %d15, \0"
-  /* 100 */ "lt.u %d15, \0"
-  /* 112 */ "mov %d15, \0"
-  /* 123 */ "jz %d15, \0"
-  /* 133 */ "jnz %d15, \0"
-  /* 144 */ "sub.a %sp, \0"
+  /* 0 */ "sub d15, \0"
+  /* 11 */ "add d15, \0"
+  /* 22 */ "and d15, \0"
+  /* 33 */ "jne d15, \0"
+  /* 44 */ "jeq d15, \0"
+  /* 55 */ "or d15, \0"
+  /* 65 */ "jz.t d15, \0"
+  /* 77 */ "jnz.t d15, \0"
+  /* 90 */ "lt d15, \0"
+  /* 100 */ "lt.u d15, \0"
+  /* 112 */ "mov d15, \0"
+  /* 123 */ "jz d15, \0"
+  /* 133 */ "jnz d15, \0"
+  /* 144 */ "sub.a sp, \0"
   /* 156 */ "ftoq31 \0"
   /* 164 */ "csub.a \0"
   /* 172 */ "subsc.a \0"
@@ -380,11 +380,11 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
   /* 2974 */ "DBG_LABEL\0"
   /* 2984 */ "LIFETIME_START\0"
   /* 2999 */ "DBG_VALUE_LIST\0"
-  /* 3014 */ "ld.a %a15, [\0"
-  /* 3027 */ "ld.b %d15, [\0"
-  /* 3040 */ "ld.h %d15, [\0"
-  /* 3053 */ "ld.bu %d15, [\0"
-  /* 3067 */ "ld.w %d15, [\0"
+  /* 3014 */ "ld.a a15, [\0"
+  /* 3027 */ "ld.b d15, [\0"
+  /* 3040 */ "ld.h d15, [\0"
+  /* 3053 */ "ld.bu d15, [\0"
+  /* 3067 */ "ld.w d15, [\0"
   /* 3080 */ "swap.a [\0"
   /* 3089 */ "st.a [\0"
   /* 3096 */ "st.da [\0"
@@ -406,14 +406,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
   /* 3247 */ "stlcx [\0"
   /* 3255 */ "lducx [\0"
   /* 3263 */ "stucx [\0"
-  /* 3271 */ "st.a [%a15]\0"
-  /* 3283 */ "st.b [%a15]\0"
-  /* 3295 */ "st.h [%a15]\0"
-  /* 3307 */ "st.w [%a15]\0"
-  /* 3319 */ "ld.a %a15, [%sp]\0"
-  /* 3336 */ "ld.w %d15, [%sp]\0"
-  /* 3353 */ "st.a [%sp]\0"
-  /* 3364 */ "st.w [%sp]\0"
+  /* 3271 */ "st.a [a15]\0"
+  /* 3283 */ "st.b [a15]\0"
+  /* 3295 */ "st.h [a15]\0"
+  /* 3307 */ "st.w [a15]\0"
+  /* 3319 */ "ld.a a15, [sp]\0"
+  /* 3336 */ "ld.w d15, [sp]\0"
+  /* 3353 */ "st.a [sp]\0"
+  /* 3364 */ "st.w [sp]\0"
   /* 3375 */ "tlbflush.a\0"
   /* 3386 */ "tlbflush.b\0"
   /* 3397 */ "dsync\0"
@@ -3100,7 +3100,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 1:
     // ADD_src_a15, ADD_srr_a15, CADDN_src, CADDN_srr_v110, CADD_src, CADD_sr...
-    SStream_concat0(O, ", %d15, ");
+    SStream_concat0(O, ", d15, ");
     break;
   case 2:
     // AND_sc, AND_sc_v110, BISR_sc, BISR_sc_v110, CALLI_rr, CALLI_rr_v110, D...
@@ -3148,14 +3148,14 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 10:
     // LD_A_slro, LD_A_slro_v110, LD_BU_slro, LD_BU_slro_v110, LD_B_slro_v110...
-    SStream_concat0(O, ", [%a15]");
+    SStream_concat0(O, ", [a15]");
     set_mem_access(MI, true);
     printZExtImm_4(MI, 1, O);
     return;
     break;
   case 11:
     // ST_A_sc
-    SStream_concat0(O, ", %a15");
+    SStream_concat0(O, ", a15");
     return;
     break;
   case 12:
@@ -3174,7 +3174,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 14:
     // ST_W_sc
-    SStream_concat0(O, ", %d15");
+    SStream_concat0(O, ", d15");
     return;
     break;
   case 15:
@@ -3301,7 +3301,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 2:
     // ADDSC_A_srrs
-    SStream_concat0(O, ", %d15, ");
+    SStream_concat0(O, ", d15, ");
     printZExtImm_2(MI, 2, O);
     return;
     break;
@@ -3346,12 +3346,12 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 10:
     // ST_A_sro, ST_A_sro_v110
-    SStream_concat0(O, ", %a15");
+    SStream_concat0(O, ", a15");
     return;
     break;
   case 11:
     // ST_B_sro, ST_B_sro_v110, ST_H_sro, ST_H_sro_v110, ST_W_sro, ST_W_sro_v...
-    SStream_concat0(O, ", %d15");
+    SStream_concat0(O, ", d15");
     return;
     break;
   }
