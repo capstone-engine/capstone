@@ -44,6 +44,7 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 				break;
 			case ARM_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
+				printf("\t\t\toperands[%u].mem.post_idx: %s\n", i, op->mem.post_idx ? "true" : "false");
 				if (op->mem.base != ARM_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.base));
