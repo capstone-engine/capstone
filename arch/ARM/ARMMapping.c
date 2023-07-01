@@ -122,10 +122,40 @@ static void patch_cs_reg_alias(char *asm_str) {
 	}
 }
 
+/// Rarely an instruction has its operand not defined but
+/// hardcoded as string.
+/// Here we add those oeprands to detail.
+static void ARM_add_not_defined_ops(MCInst *MI) {
+	unsigned Opcode = MCInst_getOpcode(MI);
+	switch (Opcode) {
+	default:
+		return;
+	case ARM_BX_RET: {
+		ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
+		ARM_get_detail_op(MI, 0)->reg = ARM_REG_LR;
+		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
+		ARM_inc_op_count(MI);
+		break;
+	}
+	case ARM_MOVPCLR: {
+		ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
+		ARM_get_detail_op(MI, 0)->reg = ARM_REG_PC;
+		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
+		ARM_inc_op_count(MI);
+		ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
+		ARM_get_detail_op(MI, 0)->reg = ARM_REG_LR;
+		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
+		ARM_inc_op_count(MI);
+		break;
+	}
+	}
+}
+
 /// Decodes the asm string for a given instruction
 /// and fills the detail information about the instruction and its operands.
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 	ARM_LLVM_printInstruction(MI, O, info);
+	ARM_add_not_defined_ops(MI);
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
 		patch_cs_reg_alias(O->buffer);
