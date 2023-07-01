@@ -835,7 +835,6 @@ typedef struct arm_op_mem {
 	/// left-shift on index register, or 0 if irrelevant
 	/// NOTE: this value can also be fetched via operand.shift.value
 	int lshift;
-	bool post_idx; ///< True if this is a post-index memory operand.
 } arm_op_mem;
 
 /// Instruction operand

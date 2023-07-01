@@ -841,21 +841,21 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_PostIdxRegOperand: {
 		bool sub = MCInst_getOpVal(MI, OpNum + 1) ? false : true;
 		ARM_set_detail_op_mem_offset(MI, OpNum, MCInst_getOpVal(MI, OpNum), sub);
-		ARM_get_detail_op(MI, 0)->mem.post_idx = true;
+		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
 	case ARM_OP_GROUP_PostIdxImm8Operand: {
 		unsigned Imm = MCInst_getOpVal(MI, OpNum);
 		bool sub = !(Imm & 256);
 		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm & 0xff), sub);
-		ARM_get_detail_op(MI, 0)->mem.post_idx = true;
+		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
 	case ARM_OP_GROUP_PostIdxImm8s4Operand: {
 		unsigned Imm = MCInst_getOpVal(MI, OpNum);
 		bool sub = !(Imm & 256);
 		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm & 0xff) << 2, sub);
-		ARM_get_detail_op(MI, 0)->mem.post_idx = true;
+		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
 	case ARM_OP_GROUP_AddrModeTBB:
@@ -906,12 +906,12 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			ARM_set_detail_op_mem_offset(MI, OpNum + 1,
 										 ARM_AM_getAM2Offset(imm2),
 										 subtracted == ARM_AM_sub);
-			ARM_get_detail_op(MI, -1)->mem.post_idx = true;
+			ARM_get_detail(MI)->post_index = true;
 			return;
 		}
 		ARM_set_detail_op_mem_offset(MI, OpNum, MCInst_getOpVal(MI, OpNum),
 									 subtracted == ARM_AM_sub);
-		ARM_get_detail_op(MI, -1)->mem.post_idx = true;
+		ARM_get_detail(MI)->post_index = true;
 		add_cs_detail_RegImmShift(MI, ARM_AM_getAM2ShiftOpc(imm2),
 								  ARM_AM_getAM2Offset(imm2));
 		break;
@@ -990,7 +990,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			OffImm = OffImm < 0 ? OffImm * -1 : OffImm;
 			ARM_set_detail_op_mem_offset(MI, OpNum, OffImm, sub);
 		}
-		ARM_get_detail_op(MI, 0)->mem.post_idx = true;
+		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
 	case ARM_OP_GROUP_T2AddrModeSoRegOperand: {
