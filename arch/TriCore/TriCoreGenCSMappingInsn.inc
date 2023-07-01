@@ -4618,7 +4618,7 @@
   #endif
 },
 {
-  /* ld.w nd15, [sp]$const8 */
+  /* ld.w d15, [sp]$const8 */
   TRICORE_LD_W_sc /* 658 */, TRICORE_INS_LD_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
