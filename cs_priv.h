@@ -84,22 +84,11 @@ struct cs_struct {
 // Returns a bool (0 or 1) whether big endian is enabled for a mode
 #define MODE_IS_BIG_ENDIAN(mode) (((mode) & CS_MODE_BIG_ENDIAN) != 0)
 
-
-#ifndef thread_local
-#if defined (__GNUC__) || defined (__clang__)
-#define thread_local __thread // prior to C11
-#elif _MSC_VER
-#define thread_local __declspec( thread ) // early msvc
-#else
-#define thread_local // failsafe
-#endif
-#endif
-
-extern thread_local cs_malloc_t cs_mem_malloc;
-extern thread_local cs_calloc_t cs_mem_calloc;
-extern thread_local cs_realloc_t cs_mem_realloc;
-extern thread_local cs_free_t cs_mem_free;
-extern thread_local cs_vsnprintf_t cs_vsnprintf;
+extern cs_malloc_t cs_mem_malloc;
+extern cs_calloc_t cs_mem_calloc;
+extern cs_realloc_t cs_mem_realloc;
+extern cs_free_t cs_mem_free;
+extern cs_vsnprintf_t cs_vsnprintf;
 
 // By defining CAPSTONE_DEBUG assertions can be used.
 // For any release build CAPSTONE_DEBUG has to be undefined.
