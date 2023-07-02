@@ -149,6 +149,10 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		SStream_concat0(O, ", ");
 		printOperand(MI, 1, O);
 
+		if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
+			return;
+		}
+
 		SStream_concat(O, "%s%s%s%d", ", ", markup("<imm:"), "#",
 				translateShiftImm(ARM_AM_getSORegOffset(MCOperand_getImm(MO2))));
 		SStream_concat0(O, markup(">"));
