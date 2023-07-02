@@ -127,6 +127,9 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		SStream_concat0(O, ", ");
 		printOperand(MI, 1, O);
 
+		ARM_get_detail_op(MI, -1)->shift.type = (arm_shifter) ARM_AM_getSORegShOp(MCOperand_getImm(MO3)) + ARM_SFT_ASR_REG - 1;
+		ARM_get_detail_op(MI, -1)->shift.value = MCInst_getOpVal(MI, 2);
+
 		SStream_concat0(O, ", ");
 		printOperand(MI, 2, O);
 
