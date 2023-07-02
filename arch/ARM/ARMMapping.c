@@ -144,80 +144,80 @@ static void ARM_add_not_defined_ops(MCInst *MI) {
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_APSR_NZCV, CS_AC_WRITE);
 		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR, CS_AC_READ);
 		break;
-  case ARM_VLDR_FPCXTNS_off:
-  case ARM_VLDR_FPCXTNS_post:
-  case ARM_VLDR_FPCXTNS_pre:
+	case ARM_VLDR_FPCXTNS_off:
+	case ARM_VLDR_FPCXTNS_post:
+	case ARM_VLDR_FPCXTNS_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTNS, CS_AC_WRITE);
 		break;
-  case ARM_VSTR_FPCXTNS_off:
-  case ARM_VSTR_FPCXTNS_post:
-  case ARM_VSTR_FPCXTNS_pre:
+	case ARM_VSTR_FPCXTNS_off:
+	case ARM_VSTR_FPCXTNS_post:
+	case ARM_VSTR_FPCXTNS_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTNS, CS_AC_READ);
 		break;
-  case ARM_VLDR_FPCXTS_off:
-  case ARM_VLDR_FPCXTS_post:
-  case ARM_VLDR_FPCXTS_pre:
+	case ARM_VLDR_FPCXTS_off:
+	case ARM_VLDR_FPCXTS_post:
+	case ARM_VLDR_FPCXTS_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTS, CS_AC_WRITE);
 		break;
-  case ARM_VSTR_FPCXTS_off:
-  case ARM_VSTR_FPCXTS_post:
-  case ARM_VSTR_FPCXTS_pre:
+	case ARM_VSTR_FPCXTS_off:
+	case ARM_VSTR_FPCXTS_post:
+	case ARM_VSTR_FPCXTS_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTS, CS_AC_READ);
 		break;
-  case ARM_VLDR_FPSCR_NZCVQC_off:
-  case ARM_VLDR_FPSCR_NZCVQC_post:
-  case ARM_VLDR_FPSCR_NZCVQC_pre:
+	case ARM_VLDR_FPSCR_NZCVQC_off:
+	case ARM_VLDR_FPSCR_NZCVQC_post:
+	case ARM_VLDR_FPSCR_NZCVQC_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR_NZCVQC, CS_AC_WRITE);
 		break;
-  case ARM_VSTR_FPSCR_NZCVQC_off:
-  case ARM_VSTR_FPSCR_NZCVQC_post:
-  case ARM_VSTR_FPSCR_NZCVQC_pre:
+	case ARM_VSTR_FPSCR_NZCVQC_off:
+	case ARM_VSTR_FPSCR_NZCVQC_post:
+	case ARM_VSTR_FPSCR_NZCVQC_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR_NZCVQC, CS_AC_READ);
 		break;
 	case ARM_VMSR:
-  case ARM_VLDR_FPSCR_off:
-  case ARM_VLDR_FPSCR_post:
-  case ARM_VLDR_FPSCR_pre:
+	case ARM_VLDR_FPSCR_off:
+	case ARM_VLDR_FPSCR_post:
+	case ARM_VLDR_FPSCR_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR, CS_AC_WRITE);
 		break;
-  case ARM_VSTR_FPSCR_off:
-  case ARM_VSTR_FPSCR_post:
-  case ARM_VSTR_FPSCR_pre:
+	case ARM_VSTR_FPSCR_off:
+	case ARM_VSTR_FPSCR_post:
+	case ARM_VSTR_FPSCR_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR, CS_AC_READ);
 		break;
-  case ARM_VLDR_P0_off:
-  case ARM_VLDR_P0_post:
-  case ARM_VLDR_P0_pre:
+	case ARM_VLDR_P0_off:
+	case ARM_VLDR_P0_post:
+	case ARM_VLDR_P0_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_P0, CS_AC_WRITE);
 		break;
-  case ARM_VSTR_P0_off:
-  case ARM_VSTR_P0_post:
-  case ARM_VSTR_P0_pre:
+	case ARM_VSTR_P0_off:
+	case ARM_VSTR_P0_post:
+	case ARM_VSTR_P0_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_P0, CS_AC_READ);
 		break;
-  case ARM_VLDR_VPR_off:
-  case ARM_VLDR_VPR_post:
-  case ARM_VLDR_VPR_pre:
+	case ARM_VLDR_VPR_off:
+	case ARM_VLDR_VPR_post:
+	case ARM_VLDR_VPR_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_VPR, CS_AC_WRITE);
 		break;
-  case ARM_VSTR_VPR_off:
-  case ARM_VSTR_VPR_post:
-  case ARM_VSTR_VPR_pre:
+	case ARM_VSTR_VPR_off:
+	case ARM_VSTR_VPR_post:
+	case ARM_VSTR_VPR_pre:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_VPR, CS_AC_READ);
 		break;
-  case ARM_VMSR_FPEXC:
+	case ARM_VMSR_FPEXC:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPEXC, CS_AC_WRITE);
 		break;
-  case ARM_VMSR_FPINST:
+	case ARM_VMSR_FPINST:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPINST, CS_AC_WRITE);
 		break;
-  case ARM_VMSR_FPINST2:
+	case ARM_VMSR_FPINST2:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPINST2, CS_AC_WRITE);
 		break;
-  case ARM_VMSR_FPSID:
+	case ARM_VMSR_FPSID:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSID, CS_AC_WRITE);
 		break;
-  case ARM_t2SRSDB:
+	case ARM_t2SRSDB:
 	case ARM_t2SRSIA:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_SP, CS_AC_WRITE);
 		break;
@@ -234,43 +234,43 @@ static void ARM_add_not_defined_ops(MCInst *MI) {
 		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_APSR, CS_AC_READ);
 		break;
 	case ARM_VMRS:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR, CS_AC_READ);
 		break;
 	case ARM_VMRS_FPCXTNS:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPCXTNS, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPCXTNS, CS_AC_READ);
 		break;
 	case ARM_VMRS_FPCXTS:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPCXTS, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPCXTS, CS_AC_READ);
 		break;
 	case ARM_VMRS_FPEXC:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPEXC, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPEXC, CS_AC_READ);
 		break;
 	case ARM_VMRS_FPINST:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPINST, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPINST, CS_AC_READ);
 		break;
 	case ARM_VMRS_FPINST2:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPINST2, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPINST2, CS_AC_READ);
 		break;
 	case ARM_VMRS_FPSCR_NZCVQC:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR_NZCVQC, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR_NZCVQC, CS_AC_READ);
 		break;
 	case ARM_VMRS_FPSID:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSID, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSID, CS_AC_READ);
 		break;
 	case ARM_VMRS_MVFR0:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR0, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR0, CS_AC_READ);
 		break;
 	case ARM_VMRS_MVFR1:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR1, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR1, CS_AC_READ);
 		break;
 	case ARM_VMRS_MVFR2:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR2, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR2, CS_AC_READ);
 		break;
 	case ARM_VMRS_P0:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_P0, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_P0, CS_AC_READ);
 		break;
 	case ARM_VMRS_VPR:
-    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_VPR, CS_AC_READ);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_VPR, CS_AC_READ);
 		break;
 	case ARM_MOVsr:
 		// Add shift information
