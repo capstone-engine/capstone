@@ -178,7 +178,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			;
+			MI->flat_insn->id = ARM_INS_PUSH;
 			return;
 		} else
 			break;
@@ -192,7 +192,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " {");
 			printOperand(MI, 1, O);
 			SStream_concat0(O, "}");
-			;
+			MI->flat_insn->id = ARM_INS_PUSH;
 			return;
 		} else
 			break;
@@ -211,7 +211,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			;
+			MI->flat_insn->id = ARM_INS_POP;
 			return;
 		} else
 			break;
@@ -224,7 +224,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " {");
 			printOperand(MI, 0, O);
 			SStream_concat0(O, "}");
-			;
+			MI->flat_insn->id = ARM_INS_POP;
 			return;
 		} else
 			break;
@@ -238,7 +238,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			;
+			MI->flat_insn->id = ARM_INS_VPUSH;
 			return;
 		} else
 			break;
@@ -253,7 +253,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			;
+			MI->flat_insn->id = ARM_INS_VPOP;
 			return;
 		} else
 			break;
@@ -281,7 +281,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		}
 		SStream_concat0(O, ", ");
 		printRegisterList(MI, 3, O);
-		;
+		MI->flat_insn->id = ARM_INS_VPOP;
 		return;
 	}
 

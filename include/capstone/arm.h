@@ -1540,6 +1540,11 @@ typedef enum arm_insn {
 	// clang-format on
 	// generated content <ARMGenCSInsnEnum.inc> end
 
+	// Hard coded alias in LLVM, not defined as alias or instruction.
+	// We give them a unique ID for convenience.
+	ARM_INS_VPOP,
+	ARM_INS_VPUSH,
+
 	ARM_INS_ENDING,	// <-- mark the end of the list of instructions
 
   // Alias
