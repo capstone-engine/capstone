@@ -2,11 +2,13 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 /*    Rot127 <unisono@quyllur.org>, 2022-2023 */
 
-#include "capstone/capstone.h"
 #ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>
 #include <string.h>
+
+#include "capstone/arm.h"
+#include "capstone/capstone.h"
 
 #include "../../Mapping.h"
 #include "../../MCDisassembler.h"
@@ -122,32 +124,154 @@ static void patch_cs_reg_alias(char *asm_str) {
 	}
 }
 
-/// Rarely an instruction has its operand not defined but
+/// Some instructions have their operands not defined but
 /// hardcoded as string.
-/// Here we add those oeprands to detail.
+/// Here we add those oprands to detail.
 static void ARM_add_not_defined_ops(MCInst *MI) {
 	unsigned Opcode = MCInst_getOpcode(MI);
 	switch (Opcode) {
 	default:
 		return;
-	case ARM_BX_RET: {
-		ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
-		ARM_get_detail_op(MI, 0)->reg = ARM_REG_LR;
-		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
-		ARM_inc_op_count(MI);
+	case ARM_BX_RET:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_LR, CS_AC_READ);
 		break;
-	}
-	case ARM_MOVPCLR: {
-		ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
-		ARM_get_detail_op(MI, 0)->reg = ARM_REG_PC;
-		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
-		ARM_inc_op_count(MI);
-		ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
-		ARM_get_detail_op(MI, 0)->reg = ARM_REG_LR;
-		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
-		ARM_inc_op_count(MI);
+	case ARM_MOVPCLR:
+	case ARM_t2SUBS_PC_LR:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_PC, CS_AC_WRITE);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_LR, CS_AC_READ);
 		break;
-	}
+	case ARM_FMSTAT:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_APSR_NZCV, CS_AC_WRITE);
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR, CS_AC_READ);
+		break;
+  case ARM_VLDR_FPCXTNS_off:
+  case ARM_VLDR_FPCXTNS_post:
+  case ARM_VLDR_FPCXTNS_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTNS, CS_AC_WRITE);
+		break;
+  case ARM_VSTR_FPCXTNS_off:
+  case ARM_VSTR_FPCXTNS_post:
+  case ARM_VSTR_FPCXTNS_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTNS, CS_AC_READ);
+		break;
+  case ARM_VLDR_FPCXTS_off:
+  case ARM_VLDR_FPCXTS_post:
+  case ARM_VLDR_FPCXTS_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTS, CS_AC_WRITE);
+		break;
+  case ARM_VSTR_FPCXTS_off:
+  case ARM_VSTR_FPCXTS_post:
+  case ARM_VSTR_FPCXTS_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPCXTS, CS_AC_READ);
+		break;
+  case ARM_VLDR_FPSCR_NZCVQC_off:
+  case ARM_VLDR_FPSCR_NZCVQC_post:
+  case ARM_VLDR_FPSCR_NZCVQC_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR_NZCVQC, CS_AC_WRITE);
+		break;
+  case ARM_VSTR_FPSCR_NZCVQC_off:
+  case ARM_VSTR_FPSCR_NZCVQC_post:
+  case ARM_VSTR_FPSCR_NZCVQC_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR_NZCVQC, CS_AC_READ);
+		break;
+	case ARM_VMSR:
+  case ARM_VLDR_FPSCR_off:
+  case ARM_VLDR_FPSCR_post:
+  case ARM_VLDR_FPSCR_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR, CS_AC_WRITE);
+		break;
+  case ARM_VSTR_FPSCR_off:
+  case ARM_VSTR_FPSCR_post:
+  case ARM_VSTR_FPSCR_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSCR, CS_AC_READ);
+		break;
+  case ARM_VLDR_P0_off:
+  case ARM_VLDR_P0_post:
+  case ARM_VLDR_P0_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_P0, CS_AC_WRITE);
+		break;
+  case ARM_VSTR_P0_off:
+  case ARM_VSTR_P0_post:
+  case ARM_VSTR_P0_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_P0, CS_AC_READ);
+		break;
+  case ARM_VLDR_VPR_off:
+  case ARM_VLDR_VPR_post:
+  case ARM_VLDR_VPR_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_VPR, CS_AC_WRITE);
+		break;
+  case ARM_VSTR_VPR_off:
+  case ARM_VSTR_VPR_post:
+  case ARM_VSTR_VPR_pre:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_VPR, CS_AC_READ);
+		break;
+  case ARM_VMSR_FPEXC:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPEXC, CS_AC_WRITE);
+		break;
+  case ARM_VMSR_FPINST:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPINST, CS_AC_WRITE);
+		break;
+  case ARM_VMSR_FPINST2:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPINST2, CS_AC_WRITE);
+		break;
+  case ARM_VMSR_FPSID:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_FPSID, CS_AC_WRITE);
+		break;
+  case ARM_t2SRSDB:
+	case ARM_t2SRSIA:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_SP, CS_AC_WRITE);
+		break;
+	case ARM_t2SRSDB_UPD:
+	case ARM_t2SRSIA_UPD:
+		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_SP, CS_AC_READ | CS_AC_WRITE);
+		break;
+	case ARM_MRSsys:
+	case ARM_t2MRSsys_AR:
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_SPSR, CS_AC_READ);
+		break;
+	case ARM_MRS:
+	case ARM_t2MRS_AR:
+		ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_APSR, CS_AC_READ);
+		break;
+	case ARM_VMRS:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR, CS_AC_READ);
+		break;
+	case ARM_VMRS_FPCXTNS:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPCXTNS, CS_AC_READ);
+		break;
+	case ARM_VMRS_FPCXTS:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPCXTS, CS_AC_READ);
+		break;
+	case ARM_VMRS_FPEXC:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPEXC, CS_AC_READ);
+		break;
+	case ARM_VMRS_FPINST:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPINST, CS_AC_READ);
+		break;
+	case ARM_VMRS_FPINST2:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPINST2, CS_AC_READ);
+		break;
+	case ARM_VMRS_FPSCR_NZCVQC:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSCR_NZCVQC, CS_AC_READ);
+		break;
+	case ARM_VMRS_FPSID:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_FPSID, CS_AC_READ);
+		break;
+	case ARM_VMRS_MVFR0:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR0, CS_AC_READ);
+		break;
+	case ARM_VMRS_MVFR1:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR1, CS_AC_READ);
+		break;
+	case ARM_VMRS_MVFR2:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_MVFR2, CS_AC_READ);
+		break;
+	case ARM_VMRS_P0:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_P0, CS_AC_READ);
+		break;
+	case ARM_VMRS_VPR:
+    ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_VPR, CS_AC_READ);
+		break;
 	}
 }
 
@@ -364,6 +488,14 @@ void ARM_reg_access(const cs_insn *insn, cs_regs regs_read,
 }
 #endif
 
+void ARM_setup_op(cs_arm_op *op) {
+	memset(op, 0, sizeof(cs_arm_op));
+	op->type = ARM_OP_INVALID;
+	op->vector_index = -1;
+	op->neon_lane = -1;
+}
+
+
 void ARM_init_cs_detail(MCInst *MI)
 {
 	if (detail_is_set(MI)) {
@@ -372,10 +504,8 @@ void ARM_init_cs_detail(MCInst *MI)
 		memset(get_detail(MI), 0,
 			   offsetof(cs_detail, arm) + sizeof(cs_arm));
 
-		for (i = 0; i < ARR_SIZE(ARM_get_detail(MI)->operands); i++) {
-			ARM_get_detail(MI)->operands[i].vector_index = -1;
-			ARM_get_detail(MI)->operands[i].neon_lane = -1;
-		}
+		for (i = 0; i < ARR_SIZE(ARM_get_detail(MI)->operands); i++)
+			ARM_setup_op(&ARM_get_detail(MI)->operands[i]);
 		ARM_get_detail(MI)->cc = ARMCC_UNDEF;
 		ARM_get_detail(MI)->vcc = ARMVCC_None;
 	}
@@ -1357,6 +1487,32 @@ void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
 	}
 	unsigned op_num = va_arg(args, unsigned);
 	add_cs_detail_general(MI, op_group, op_num);
+}
+
+/// Inserts a register to the detail operands at @index.
+/// Already present operands are moved.
+void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg, cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	assert(ARM_get_detail(MI)->op_count < MAX_ARM_OPS);
+
+	cs_arm_op op;
+	ARM_setup_op(&op);
+	op.type = ARM_OP_REG;
+	op.reg = Reg;
+	op.access = access;
+
+	cs_arm_op *ops = ARM_get_detail(MI)->operands;
+	int i = ARM_get_detail(MI)->op_count - 1;
+	for (; i >= 0; --i) {
+		ops[i + 1] = ops[i];
+		if (i == index)
+			break;
+	}
+	ops[index] = op ;
+	ARM_inc_op_count(MI);
 }
 
 /// Adds a register ARM operand at position OpNum and increases the op_count by
