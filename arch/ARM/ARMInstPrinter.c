@@ -127,10 +127,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		SStream_concat0(O, ", ");
 		printOperand(MI, 1, O);
 
-		// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-		ARM_get_detail_op(MI, -1)->shift.type = (arm_shifter) ARM_AM_getSORegShOp(MCOperand_getImm(MO3)) + ARM_SFT_ASR_REG - 1;
-		ARM_get_detail_op(MI, -1)->shift.value = MCInst_getOpVal(MI, 2);
-
 		SStream_concat0(O, ", ");
 		printOperand(MI, 2, O);
 
@@ -153,15 +149,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		SStream_concat0(O, ", ");
 		printOperand(MI, 1, O);
 
-		// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-		if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
-			ARM_get_detail_op(MI, -1)->shift.type = ARM_SFT_RRX;
-			ARM_get_detail_op(MI, -1)->shift.value = translateShiftImm(ARM_AM_getSORegOffset(MCOperand_getImm(MO2)));
-			return;
-		}
-
-		ARM_get_detail_op(MI, -1)->shift.type = (arm_shifter) ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
-		ARM_get_detail_op(MI, -1)->shift.value = MCInst_getOpVal(MI, 2);
 		SStream_concat(O, "%s%s%s%d", ", ", markup("<imm:"), "#",
 				translateShiftImm(ARM_AM_getSORegOffset(MCOperand_getImm(MO2))));
 		SStream_concat0(O, markup(">"));
@@ -183,8 +170,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-			MI->flat_insn->id = ARM_INS_PUSH;
 			return;
 		} else
 			break;
@@ -198,8 +183,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " {");
 			printOperand(MI, 1, O);
 			SStream_concat0(O, "}");
-			// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-			MI->flat_insn->id = ARM_INS_PUSH;
 			return;
 		} else
 			break;
@@ -218,8 +201,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-			MI->flat_insn->id = ARM_INS_POP;
 			return;
 		} else
 			break;
@@ -232,8 +213,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " {");
 			printOperand(MI, 0, O);
 			SStream_concat0(O, "}");
-			// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-			MI->flat_insn->id = ARM_INS_POP;
 			return;
 		} else
 			break;
@@ -247,8 +226,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-			MI->flat_insn->id = ARM_INS_VPUSH;
 			return;
 		} else
 			break;
@@ -263,8 +240,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-			MI->flat_insn->id = ARM_INS_VPOP;
 			return;
 		} else
 			break;

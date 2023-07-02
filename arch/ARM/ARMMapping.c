@@ -272,6 +272,65 @@ static void ARM_add_not_defined_ops(MCInst *MI) {
 	case ARM_VMRS_VPR:
     ARM_insert_detail_op_reg_at(MI, 1, ARM_REG_VPR, CS_AC_READ);
 		break;
+	case ARM_MOVsr:
+		// Add shift information
+		ARM_get_detail(MI)->operands[1].shift.type = (arm_shifter) ARM_AM_getSORegShOp(MCInst_getOpVal(MI, 3)) + ARM_SFT_ASR_REG - 1;
+		ARM_get_detail(MI)->operands[1].shift.value = MCInst_getOpVal(MI, 2);
+		break;
+	case ARM_MOVsi:
+		if (ARM_AM_getSORegShOp(MCInst_getOpVal(MI, 2)) == ARM_AM_rrx) {
+			ARM_get_detail_op(MI, -1)->shift.type = ARM_SFT_RRX;
+			ARM_get_detail_op(MI, -1)->shift.value = translateShiftImm(ARM_AM_getSORegOffset(MCInst_getOpVal(MI, 2)));
+			return;
+		}
+
+		ARM_get_detail_op(MI, -1)->shift.type = (arm_shifter) ARM_AM_getSORegShOp(MCInst_getOpVal(MI, 2));
+		ARM_get_detail_op(MI, -1)->shift.value = MCInst_getOpVal(MI, 2);
+		break;
+	case ARM_STMDB_UPD:
+	case ARM_t2STMDB_UPD:
+		if (MCInst_getOpVal(MI, 0) == ARM_SP &&
+			MCInst_getNumOperands(MI) > 5)
+			MI->flat_insn->id = ARM_INS_PUSH;
+		break;
+	case ARM_STR_PRE_IMM:
+		if (MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP &&
+			MCOperand_getImm(MCInst_getOperand(MI, (3))) == -4)
+			MI->flat_insn->id = ARM_INS_PUSH;
+		break;
+	case ARM_LDMIA_UPD:
+	case ARM_t2LDMIA_UPD:
+		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP &&
+			MCInst_getNumOperands(MI) > 5)
+			MI->flat_insn->id = ARM_INS_POP;
+		break;
+	case ARM_LDR_POST_IMM:
+		if (MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP &&
+			MCOperand_getImm(MCInst_getOperand(MI, (4))) == 4)
+			MI->flat_insn->id = ARM_INS_POP;
+		break;
+	case ARM_VSTMSDB_UPD:
+	case ARM_VSTMDDB_UPD:
+		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP)
+			MI->flat_insn->id = ARM_INS_VPUSH;
+		break;
+	case ARM_VLDMSIA_UPD:
+	case ARM_VLDMDIA_UPD:
+		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP)
+			MI->flat_insn->id = ARM_INS_VPOP;
+		break;
+	case ARM_tLDMIA: {
+		bool Writeback = true;
+		unsigned BaseReg = MCInst_getOpVal(MI, 0);
+		for (unsigned i = 3; i < MCInst_getNumOperands(MI); ++i) {
+			if (MCInst_getOpVal(MI, i) == BaseReg)
+				Writeback = false;
+		}
+		if (Writeback && detail_is_set(MI)) {
+			ARM_get_detail(MI)->operands[0].access |= CS_AC_WRITE;
+			MI->flat_insn->detail->writeback = true;
+		}
+	}
 	}
 }
 
