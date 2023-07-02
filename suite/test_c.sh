@@ -24,3 +24,4 @@
 ../tests/test_winkernel > /tmp/$1
 ../tests/test_x86 > /tmp/$1
 ../tests/test_xcore > /tmp/$1
+../tests/test_alpha > /tmp/$1

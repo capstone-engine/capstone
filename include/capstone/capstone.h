@@ -144,6 +144,7 @@ typedef enum cs_arch {
 	CS_ARCH_RISCV,          ///< RISCV architecture
 	CS_ARCH_SH,             ///< SH architecture
 	CS_ARCH_TRICORE,	///< TriCore architecture
+	CS_ARCH_ALPHA, 		///< Alpha architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -364,6 +365,7 @@ typedef struct cs_opt_skipdata {
 #include "bpf.h"
 #include "sh.h"
 #include "tricore.h"
+#include "alpha.h"
 
 #define MAX_IMPL_W_REGS 20
 #define MAX_IMPL_R_REGS 20
@@ -408,6 +410,7 @@ typedef struct cs_detail {
 		cs_riscv riscv; ///< RISCV architecture
 		cs_sh sh;        ///< SH architecture
 		cs_tricore tricore; ///< TriCore architecture
+		cs_alpha alpha; ///< Alpha architecture
 	};
 } cs_detail;
 

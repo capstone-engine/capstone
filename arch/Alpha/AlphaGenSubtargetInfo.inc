@@ -1,0 +1,24 @@
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
+/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
+
+/* LLVM-commit: 92734d6f460a01145443e48418af3a8635ca1afa */
+/* LLVM-tag:  */
+
+/* Do not edit. */
+
+/* Capstone's LLVM TableGen Backends: */
+/* https://github.com/capstone-engine/llvm-capstone */
+
+#ifdef GET_SUBTARGETINFO_ENUM
+#undef GET_SUBTARGETINFO_ENUM
+
+enum {
+  Alpha_FeatureCIX = 0,
+  Alpha_NumSubtargetFeatures = 1
+};
+#endif // GET_SUBTARGETINFO_ENUM
+
+
+

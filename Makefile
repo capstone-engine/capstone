@@ -325,6 +325,15 @@ ifneq (,$(findstring tricore,$(CAPSTONE_ARCHS)))
 	LIBOBJ_TRICORE += $(LIBSRC_TRICORE:%.c=$(OBJDIR)/%.o)
 endif
 
+DEP_ALPHA =
+DEP_ALPHA +=$(wildcard arch/Alpha/Alpha*.inc)
+
+LIBOBJ_ALPHA =
+ifneq (,$(findstring alpha,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_ALPHA
+	LIBSRC_ALPHA += $(wildcard arch/Alpha/Alpha*.c)
+	LIBOBJ_ALPHA += $(LIBSRC_ALPHA:%.c=$(OBJDIR)/%.o)
+endif
 
 LIBOBJ =
 LIBOBJ += $(OBJDIR)/cs.o $(OBJDIR)/utils.o $(OBJDIR)/SStream.o $(OBJDIR)/MCInstrDesc.o $(OBJDIR)/MCRegisterInfo.o $(OBJDIR)/MCInst.o $(OBJDIR)/MCInstPrinter.o $(OBJDIR)/Mapping.o
@@ -466,6 +475,7 @@ $(LIBOBJ_WASM): $(DEP_WASM)
 $(LIBOBJ_MOS65XX): $(DEP_MOS65XX)
 $(LIBOBJ_BPF): $(DEP_BPF)
 $(LIBOBJ_TRICORE): $(DEP_TRICORE)
+$(LIBOBJ_ALPHA): $(DEP_ALPHA)
 
 ifeq ($(CAPSTONE_STATIC),yes)
 $(ARCHIVE): $(LIBOBJ)

@@ -53,6 +53,7 @@ template = {
             'riscv.h': 'riscv',
             'sh.h': 'sh',
             'tricore.h': ['TRICORE', 'TriCore'],
+            'alpha.h': ['ALPHA', 'Alpha'],
             'comment_open': '#',
             'comment_close': '',
         },

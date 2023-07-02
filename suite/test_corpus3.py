@@ -43,6 +43,7 @@ def test_file(fname):
         "CS_ARCH_XCORE": CS_ARCH_XCORE,
         "CS_ARCH_RISCV": CS_ARCH_RISCV,
         "CS_ARCH_TRICORE": CS_ARCH_TRICORE,
+        "CS_ARCH_ALPHA": CS_ARCH_ALPHA,
     }
 
     modes = {

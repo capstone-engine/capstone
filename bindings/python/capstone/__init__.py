@@ -41,6 +41,7 @@ __all__ = [
     'CS_ARCH_RISCV',
     'CS_ARCH_SH',
     'CS_ARCH_TRICORE',
+    'CS_ARCH_ALPHA',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -217,7 +218,8 @@ CS_ARCH_BPF = 14
 CS_ARCH_RISCV = 15
 CS_ARCH_SH = 16
 CS_ARCH_TRICORE = 17
-CS_ARCH_MAX = 18
+CS_ARCH_ALPHA = 18
+CS_ARCH_MAX = 19
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -463,6 +465,7 @@ class _cs_arch(ctypes.Union):
         ('riscv', riscv.CsRISCV),
         ('sh', sh.CsSH),
         ('tricore', tricore.CsTriCore),
+        ('alpha', alpha.CsAlpha),
     )
 
 class _cs_detail(ctypes.Structure):

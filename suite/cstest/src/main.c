@@ -21,6 +21,7 @@ static single_dict arches[] = {
 	{"CS_ARCH_BPF", CS_ARCH_BPF},
 	{"CS_ARCH_RISCV", CS_ARCH_RISCV},
 	{"CS_ARCH_TRICORE", CS_ARCH_TRICORE},
+	{"CS_ARCH_ALPHA", CS_ARCH_ALPHA},
 };
 
  static single_dict modes[] = {
