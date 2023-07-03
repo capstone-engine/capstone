@@ -10,6 +10,10 @@ Version 5.0.0: June 27th, 2023
 * fix for msvc static lib, dll build error and warnings by @arkup in https://github.com/capstone-engine/capstone/pull/2061
 * use calloc for cs_insn instead of malloc by @ConnorRigby in https://github.com/capstone-engine/capstone/pull/1972
 * Fix access bug for TEST op by @melynx in https://github.com/capstone-engine/capstone/pull/1511
+* Update Cython bindings by @peace-maker in https://github.com/capstone-engine/capstone/pull/2068
+* Use Intel register syntax for Tricore by @XVilka in https://github.com/capstone-engine/capstone/pull/2067
+* Add `#` prefix to tricore imm operand by @imbillow in https://github.com/capstone-engine/capstone/pull/2070
+* Revert "Mark cs_* as thread local to avoid race condition in multithreads" by @oleavr in https://github.com/capstone-engine/capstone/pull/1933
 
 ## New Contributors
 * @arkup made their first contribution in https://github.com/capstone-engine/capstone/pull/2061
