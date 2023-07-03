@@ -285,7 +285,7 @@ static void ARM_add_not_defined_ops(MCInst *MI) {
 		}
 
 		ARM_get_detail_op(MI, -1)->shift.type = (arm_shifter) ARM_AM_getSORegShOp(MCInst_getOpVal(MI, 2));
-		ARM_get_detail_op(MI, -1)->shift.value = MCInst_getOpVal(MI, 2);
+		ARM_get_detail_op(MI, -1)->shift.value = translateShiftImm(ARM_AM_getSORegOffset(MCInst_getOpVal(MI, 2)));
 		break;
 	case ARM_STMDB_UPD:
 	case ARM_t2STMDB_UPD:
