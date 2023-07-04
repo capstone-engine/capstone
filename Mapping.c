@@ -159,6 +159,21 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 #endif // CAPSTONE_DIET
 }
 
+/// Adds a given group to @MI->flat_insn.
+void add_group(MCInst *MI, unsigned /* arch_group */ group) {
+#ifndef CAPSTONE_DIET
+	if (!MI->flat_insn->detail)
+		return;
+
+	cs_detail *detail = MI->flat_insn->detail;
+	if (detail->groups_count >= MAX_NUM_GROUPS) {
+		printf("ERROR: Too many groups defined.\n");
+		return;
+	}
+	detail->groups[detail->groups_count++] = group;
+#endif // CAPSTONE_DIET
+}
+
 /// Copies the groups from @imap to @MI->flat_insn.
 /// Already present groups will be preserved.
 void map_groups(MCInst *MI, const insn_map *imap)

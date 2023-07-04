@@ -124,6 +124,29 @@ static void patch_cs_reg_alias(char *asm_str) {
 	}
 }
 
+/// Adds group to the instruction which are not defined in LLVM.
+static void ARM_add_cs_groups(MCInst *MI) {
+	unsigned Opcode = MI->flat_insn->id;
+	switch (Opcode) {
+	default:
+		return;
+	case ARM_INS_SVC:
+		add_group(MI, ARM_GRP_INT);
+		break;
+	case ARM_INS_CDP:
+	case ARM_INS_CDP2:
+	case ARM_INS_MCR:
+	case ARM_INS_MCR2:
+	case ARM_INS_MCRR:
+	case ARM_INS_MCRR2:
+	case ARM_INS_MRC:
+	case ARM_INS_MRC2:
+	case ARM_INS_SMC:
+		add_group(MI, ARM_GRP_PRIVILEGE);
+		break;
+	}
+}
+
 /// Some instructions have their operands not defined but
 /// hardcoded as string.
 /// Here we add those oprands to detail.
@@ -339,6 +362,7 @@ static void ARM_add_not_defined_ops(MCInst *MI) {
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 	ARM_LLVM_printInstruction(MI, O, info);
 	ARM_add_not_defined_ops(MI);
+	ARM_add_cs_groups(MI);
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
 		patch_cs_reg_alias(O->buffer);

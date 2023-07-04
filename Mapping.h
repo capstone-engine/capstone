@@ -104,6 +104,8 @@ void map_implicit_reads(MCInst *MI, const insn_map *imap);
 
 void map_implicit_writes(MCInst *MI, const insn_map *imap);
 
+void add_group(MCInst *MI, unsigned /* arch_group */ group);
+
 void map_groups(MCInst *MI, const insn_map *imap);
 
 void map_cs_id(MCInst *MI, const insn_map *imap, unsigned int imap_size);
