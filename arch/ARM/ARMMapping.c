@@ -347,7 +347,6 @@ void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 
 #ifndef CAPSTONE_DIET
 static const char *const insn_name_maps[] = {
-	NULL, // ARM_INS_INVALID
 #include "ARMGenCSMappingInsnName.inc"
 };
 #endif
