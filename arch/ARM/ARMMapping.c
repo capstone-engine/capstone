@@ -372,6 +372,10 @@ void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 #ifndef CAPSTONE_DIET
 static const char *const insn_name_maps[] = {
 #include "ARMGenCSMappingInsnName.inc"
+	// Hard coded alias in LLVM, not defined as alias or instruction.
+	// We give them a unique ID for convenience.
+	"vpop",
+	"vpush",
 };
 #endif
 
