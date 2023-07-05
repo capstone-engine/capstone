@@ -1,7 +1,7 @@
 This file details the changelog of Capstone.
 
----------------------------------
-Version 5.0.0: June 27th, 2023
+-----------------------------
+Version 5.0.0: July 5th, 2023
 
 ## What's Changed
 * [workflows] Remove deprecated image versions by @kabeor in https://github.com/capstone-engine/capstone/pull/2057
