@@ -211,7 +211,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 
 	case ARM_LDR_POST_IMM:
 		if (MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP &&
-			MCOperand_getImm(MCInst_getOperand(MI, (4))) == 4) {
+			ARM_AM_getAM2Offset(MCOperand_getImm(MCInst_getOperand(MI, (4)))) == 4) {
 			SStream_concat0(O, "pop");
 			printPredicateOperand(MI, 5, O);
 			SStream_concat0(O, " {");
