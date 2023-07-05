@@ -1139,11 +1139,13 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		if (MCOperand_getReg(MO1)) {
 			ARM_set_detail_op_mem_offset(MI, OpNum, MCInst_getOpVal(MI, OpNum),
 										 subtracted == ARM_AM_sub);
+			ARM_get_detail(MI)->post_index = true;
 			return;
 		}
 		ARM_set_detail_op_mem_offset(
 			MI, OpNum + 1, ARM_AM_getAM3Offset(MCInst_getOpVal(MI, OpNum + 1)),
 			subtracted == ARM_AM_sub);
+		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
 	case ARM_OP_GROUP_ThumbAddrModeSPOperand:
