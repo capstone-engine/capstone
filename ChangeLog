@@ -14,6 +14,8 @@ Version 5.0.0: July 5th, 2023
 * Use Intel register syntax for Tricore by @XVilka in https://github.com/capstone-engine/capstone/pull/2067
 * Add `#` prefix to tricore imm operand by @imbillow in https://github.com/capstone-engine/capstone/pull/2070
 * Revert "Mark cs_* as thread local to avoid race condition in multithreads" by @oleavr in https://github.com/capstone-engine/capstone/pull/1933
+* Replace strncpy with memcpy to fix compiler warning. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2075
+* Remove outdated and irrelevant TODO by @XVilka in https://github.com/capstone-engine/capstone/pull/2074
 
 ## New Contributors
 * @arkup made their first contribution in https://github.com/capstone-engine/capstone/pull/2061
