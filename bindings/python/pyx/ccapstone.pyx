@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, m68k, m680x, evm, mos65xx, bpf, riscv, tricore, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -20,6 +20,7 @@ class CsDetail(object):
         self.regs_write_count = detail.regs_write_count
         self.groups = detail.groups
         self.groups_count = detail.groups_count
+        self.writeback = detail.writeback
 
         if arch == capstone.CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, \
@@ -33,9 +34,12 @@ class CsDetail(object):
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, \
                 self.xop_cc, self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
-                self.eflags, self.operands) = x86.get_arch_info(detail.arch.x86)
+                self.eflags, self.encoding, self.modrm_offset, self.disp_offset, \
+                self.disp_size, self.imm_offset, self.imm_size, self.operands) = x86.get_arch_info(detail.arch.x86)
+        elif arch == capstone.CS_ARCH_M68K:
+            (self.operands, self.op_size) = m68k.get_arch_info(detail.arch.m68k)
         elif arch == capstone.CS_ARCH_MIPS:
-                self.operands = mips.get_arch_info(detail.arch.mips)
+            self.operands = mips.get_arch_info(detail.arch.mips)
         elif arch == capstone.CS_ARCH_PPC:
             (self.bc, self.bh, self.update_cr0, self.operands) = \
                 ppc.get_arch_info(detail.arch.ppc)
@@ -44,9 +48,21 @@ class CsDetail(object):
         elif arch == capstone.CS_ARCH_SYSZ:
             (self.cc, self.operands) = systemz.get_arch_info(detail.arch.sysz)
         elif arch == capstone.CS_ARCH_XCORE:
-                self.operands = xcore.get_arch_info(detail.arch.xcore)
+            self.operands = xcore.get_arch_info(detail.arch.xcore)
         elif arch == capstone.CS_ARCH_TMS320C64X:
-                (self.condition, self.funit, self.parallel, self.operands) = tms320c64x.get_arch_info(self._detail.arch.tms320c64x)
+            (self.condition, self.funit, self.parallel, self.operands) = tms320c64x.get_arch_info(self._detail.arch.tms320c64x)
+        elif arch == capstone.CS_ARCH_M680X:
+            (self.flags, self.operands) = m680x.get_arch_info(detail.arch.m680x)
+        elif arch == capstone.CS_ARCH_EVM:
+            (self.pop, self.push, self.fee) = evm.get_arch_info(detail.arch.evm)
+        elif arch == capstone.CS_ARCH_MOS65XX:
+            (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(detail.arch.mos65xx)
+        elif arch == capstone.CS_ARCH_BPF:
+            (self.operands) = bpf.get_arch_info(detail.arch.bpf)
+        elif arch == capstone.CS_ARCH_RISCV:
+            (self.need_effective_addr, self.operands) = riscv.get_arch_info(detail.arch.riscv)
+        elif arch == capstone.CS_ARCH_TRICORE:
+            (self.update_flags, self.operands) = tricore.get_arch_info(detail.arch.tricore)
 
 
 cdef class CsInsn(object):
@@ -249,7 +265,8 @@ cdef class CsInsn(object):
         if self._raw.id == 0:
             raise CsError(capstone.CS_ERR_SKIPDATA)
 
-        cdef cc.uint16_t regs_read[64], regs_write[64]
+        cdef cc.uint16_t regs_read[64]
+        cdef cc.uint16_t regs_write[64]
         cdef cc.uint8_t read_count, write_count
 
         status = cc.cs_regs_access(self._cs.csh, &self._raw, regs_read, &read_count, regs_write, &write_count)
@@ -339,12 +356,16 @@ def debug():
         diet = "standard"
 
     archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
-        "mips": capstone.CS_ARCH_MIPS, "ppc": capstone.CS_ARCH_PPC, \
-        "sparc": capstone.CS_ARCH_SPARC, "sysz": capstone.CS_ARCH_SYSZ, \
-		"xcore": capstone.CS_ARCH_XCORE, "tms320c64x": capstone.CS_ARCH_TMS320C64X }
+        "m68k": capstone.CS_ARCH_M68K, "mips": capstone.CS_ARCH_MIPS, \
+        "ppc": capstone.CS_ARCH_PPC, "sparc": capstone.CS_ARCH_SPARC, \
+        "sysz": capstone.CS_ARCH_SYSZ, "xcore": capstone.CS_ARCH_XCORE, \
+        "tms320c64x": capstone.CS_ARCH_TMS320C64X, "m680x": capstone.CS_ARCH_M680X, \
+        "evm": capstone.CS_ARCH_EVM, "mos65xx": capstone.CS_ARCH_MOS65XX, \
+        "bpf": capstone.CS_ARCH_BPF, "riscv": capstone.CS_ARCH_RISCV, \
+        "tricore": capstone.CS_ARCH_TRICORE }
 
     all_archs = ""
-    keys = archs.keys()
+    keys = list(archs.keys())
     keys.sort()
     for k in keys:
         if cc.cs_support(archs[k]):

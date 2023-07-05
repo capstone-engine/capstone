@@ -8,5 +8,5 @@ PKG_MINOR = 0
 # version bugfix level. Example: PKG_EXTRA = 1
 PKG_EXTRA = 0
 
-# version tag. Examples: rc1, b2, post1
-PKG_TAG = rc4
+# version tag. Examples: rc1, b2, post1 - or just comment out for no tag
+#PKG_TAG = rc4

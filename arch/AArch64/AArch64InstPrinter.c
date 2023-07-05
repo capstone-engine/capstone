@@ -2400,7 +2400,7 @@ static void printMatrix(MCInst *MI, unsigned OpNum, SStream *O, int EltSize)
 	unsigned Reg = MCOperand_getReg(RegOp);
 
 	SStream_concat0(O, getRegisterName(Reg, AArch64_NoRegAltName));
-	const char *sizeStr;
+	const char *sizeStr = "";
   	switch (EltSize) {
   	case 0:
 	  sizeStr = "";

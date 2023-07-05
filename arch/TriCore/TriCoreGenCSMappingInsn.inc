@@ -1930,7 +1930,7 @@
   #endif
 },
 {
-  /* addsc.a $d, $s2, %d15, $n */
+  /* addsc.a $d, $s2, d15, $n */
   TRICORE_ADDSC_A_srrs /* 274 */, TRICORE_INS_ADDSC_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
@@ -2084,14 +2084,14 @@
   #endif
 },
 {
-  /* add %d15, $d, $const4 */
+  /* add d15, $d, $const4 */
   TRICORE_ADD_src_15a /* 296 */, TRICORE_INS_ADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* add $d, %d15, $const4 */
+  /* add $d, d15, $const4 */
   TRICORE_ADD_src_a15 /* 297 */, TRICORE_INS_ADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
@@ -2105,14 +2105,14 @@
   #endif
 },
 {
-  /* add %d15, $d, $s2 */
+  /* add d15, $d, $s2 */
   TRICORE_ADD_srr_15a /* 299 */, TRICORE_INS_ADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* add $d, %d15, $s2 */
+  /* add $d, d15, $s2 */
   TRICORE_ADD_srr_a15 /* 300 */, TRICORE_INS_ADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
@@ -2273,14 +2273,14 @@
   #endif
 },
 {
-  /* and %d15, $const8 */
+  /* and d15, $const8 */
   TRICORE_AND_sc /* 323 */, TRICORE_INS_AND,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* and %d15, $const8 */
+  /* and d15, $const8 */
   TRICORE_AND_sc_v110 /* 324 */, TRICORE_INS_AND,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -2553,14 +2553,14 @@
   #endif
 },
 {
-  /* caddn $d, %d15, $const4 */
+  /* caddn $d, d15, $const4 */
   TRICORE_CADDN_src /* 363 */, TRICORE_INS_CADDN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* caddn $d, %d15, $s2 */
+  /* caddn $d, d15, $s2 */
   TRICORE_CADDN_srr_v110 /* 364 */, TRICORE_INS_CADDN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -2595,14 +2595,14 @@
   #endif
 },
 {
-  /* cadd $d, %d15, $const4 */
+  /* cadd $d, d15, $const4 */
   TRICORE_CADD_src /* 369 */, TRICORE_INS_CADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* cadd $d, %d15, $s2 */
+  /* cadd $d, d15, $s2 */
   TRICORE_CADD_srr_v110 /* 370 */, TRICORE_INS_CADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -2707,28 +2707,28 @@
   #endif
 },
 {
-  /* cmovn $d, %d15, $const4 */
+  /* cmovn $d, d15, $const4 */
   TRICORE_CMOVN_src /* 385 */, TRICORE_INS_CMOVN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* cmovn $d, %d15, $s2 */
+  /* cmovn $d, d15, $s2 */
   TRICORE_CMOVN_srr /* 386 */, TRICORE_INS_CMOVN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* cmov $d, %d15, $const4 */
+  /* cmov $d, d15, $const4 */
   TRICORE_CMOV_src /* 387 */, TRICORE_INS_CMOV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* cmov $d, %d15, $s2 */
+  /* cmov $d, d15, $s2 */
   TRICORE_CMOV_srr /* 388 */, TRICORE_INS_CMOV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
@@ -3141,14 +3141,14 @@
   #endif
 },
 {
-  /* eq %d15, $d, $const4 */
+  /* eq d15, $d, $const4 */
   TRICORE_EQ_src /* 447 */, TRICORE_INS_EQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* eq %d15, $d, $s2 */
+  /* eq d15, $d, $s2 */
   TRICORE_EQ_srr /* 448 */, TRICORE_INS_EQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
@@ -3477,42 +3477,42 @@
   #endif
 },
 {
-  /* jeq %d15, $const4, $disp4 */
+  /* jeq d15, $const4, $disp4 */
   TRICORE_JEQ_sbc1 /* 495 */, TRICORE_INS_JEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jeq %d15, $const4, $disp4 */
+  /* jeq d15, $const4, $disp4 */
   TRICORE_JEQ_sbc2 /* 496 */, TRICORE_INS_JEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV160_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jeq %d15, $const4, $disp4 */
+  /* jeq d15, $const4, $disp4 */
   TRICORE_JEQ_sbc_v110 /* 497 */, TRICORE_INS_JEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* jeq %d15, $s2, $disp4 */
+  /* jeq d15, $s2, $disp4 */
   TRICORE_JEQ_sbr1 /* 498 */, TRICORE_INS_JEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV130_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jeq %d15, $s2, $disp4 */
+  /* jeq d15, $s2, $disp4 */
   TRICORE_JEQ_sbr2 /* 499 */, TRICORE_INS_JEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV160_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jeq %d15, $s2, $disp4 */
+  /* jeq d15, $s2, $disp4 */
   TRICORE_JEQ_sbr_v110 /* 500 */, TRICORE_INS_JEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -3736,42 +3736,42 @@
   #endif
 },
 {
-  /* jne %d15, $const4, $disp4 */
+  /* jne d15, $const4, $disp4 */
   TRICORE_JNE_sbc1 /* 532 */, TRICORE_INS_JNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jne %d15, $const4, $disp4 */
+  /* jne d15, $const4, $disp4 */
   TRICORE_JNE_sbc2 /* 533 */, TRICORE_INS_JNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV160_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jne %d15, $const4, $disp4 */
+  /* jne d15, $const4, $disp4 */
   TRICORE_JNE_sbc_v110 /* 534 */, TRICORE_INS_JNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* jne %d15, $s2, $disp4 */
+  /* jne d15, $s2, $disp4 */
   TRICORE_JNE_sbr1 /* 535 */, TRICORE_INS_JNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jne %d15, $s2, $disp4 */
+  /* jne d15, $s2, $disp4 */
   TRICORE_JNE_sbr2 /* 536 */, TRICORE_INS_JNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV160_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jne %d15, $s2, $disp4 */
+  /* jne d15, $s2, $disp4 */
   TRICORE_JNE_sbr_v110 /* 537 */, TRICORE_INS_JNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -3799,28 +3799,28 @@
   #endif
 },
 {
-  /* jnz.t %d15, $n, $disp4 */
+  /* jnz.t d15, $n, $disp4 */
   TRICORE_JNZ_T_sbrn /* 541 */, TRICORE_INS_JNZ_T,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jnz.t %d15, $n, $disp4 */
+  /* jnz.t d15, $n, $disp4 */
   TRICORE_JNZ_T_sbrn_v110 /* 542 */, TRICORE_INS_JNZ_T,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* jnz %d15, $disp8 */
+  /* jnz d15, $disp8 */
   TRICORE_JNZ_sb /* 543 */, TRICORE_INS_JNZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jnz %d15, $disp8 */
+  /* jnz d15, $disp8 */
   TRICORE_JNZ_sb_v110 /* 544 */, TRICORE_INS_JNZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -3862,28 +3862,28 @@
   #endif
 },
 {
-  /* jz.t %d15, $n, $disp4 */
+  /* jz.t d15, $n, $disp4 */
   TRICORE_JZ_T_sbrn /* 550 */, TRICORE_INS_JZ_T,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jz.t %d15, $n, $disp4 */
+  /* jz.t d15, $n, $disp4 */
   TRICORE_JZ_T_sbrn_v110 /* 551 */, TRICORE_INS_JZ_T,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* jz %d15, $disp8 */
+  /* jz d15, $disp8 */
   TRICORE_JZ_sb /* 552 */, TRICORE_INS_JZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* jz %d15, $disp8 */
+  /* jz d15, $disp8 */
   TRICORE_JZ_sb_v110 /* 553 */, TRICORE_INS_JZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -4044,7 +4044,7 @@
   #endif
 },
 {
-  /* ld.a %a15, [%sp]$const8 */
+  /* ld.a a15, [sp]$const8 */
   TRICORE_LD_A_sc /* 576 */, TRICORE_INS_LD_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
@@ -4079,28 +4079,28 @@
   #endif
 },
 {
-  /* ld.a $d, [%a15]$off4 */
+  /* ld.a $d, [a15]$off4 */
   TRICORE_LD_A_slro /* 581 */, TRICORE_INS_LD_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.a $d, [%a15]$off4 */
+  /* ld.a $d, [a15]$off4 */
   TRICORE_LD_A_slro_v110 /* 582 */, TRICORE_INS_LD_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.a %a15, [$s2]$off4 */
+  /* ld.a a15, [$s2]$off4 */
   TRICORE_LD_A_sro /* 583 */, TRICORE_INS_LD_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.a %a15, [$s2]$off4 */
+  /* ld.a a15, [$s2]$off4 */
   TRICORE_LD_A_sro_v110 /* 584 */, TRICORE_INS_LD_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -4184,28 +4184,28 @@
   #endif
 },
 {
-  /* ld.bu $d, [%a15]$off4 */
+  /* ld.bu $d, [a15]$off4 */
   TRICORE_LD_BU_slro /* 596 */, TRICORE_INS_LD_BU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.bu $d, [%a15]$off4 */
+  /* ld.bu $d, [a15]$off4 */
   TRICORE_LD_BU_slro_v110 /* 597 */, TRICORE_INS_LD_BU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.bu %d15, [$s2]$off4 */
+  /* ld.bu d15, [$s2]$off4 */
   TRICORE_LD_BU_sro /* 598 */, TRICORE_INS_LD_BU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.bu %d15, [$s2]$off4 */
+  /* ld.bu d15, [$s2]$off4 */
   TRICORE_LD_BU_sro_v110 /* 599 */, TRICORE_INS_LD_BU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -4275,14 +4275,14 @@
   #endif
 },
 {
-  /* ld.b $d, [%a15]$off4 */
+  /* ld.b $d, [a15]$off4 */
   TRICORE_LD_B_slro_v110 /* 609 */, TRICORE_INS_LD_B,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.b %d15, [$s2]$off4 */
+  /* ld.b d15, [$s2]$off4 */
   TRICORE_LD_B_sro_v110 /* 610 */, TRICORE_INS_LD_B,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -4499,28 +4499,28 @@
   #endif
 },
 {
-  /* ld.h $d, [%a15]$off4 */
+  /* ld.h $d, [a15]$off4 */
   TRICORE_LD_H_slro /* 641 */, TRICORE_INS_LD_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.h $d, [%a15]$off4 */
+  /* ld.h $d, [a15]$off4 */
   TRICORE_LD_H_slro_v110 /* 642 */, TRICORE_INS_LD_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.h %d15, [$s2]$off4 */
+  /* ld.h d15, [$s2]$off4 */
   TRICORE_LD_H_sro /* 643 */, TRICORE_INS_LD_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.h %d15, [$s2]$off4 */
+  /* ld.h d15, [$s2]$off4 */
   TRICORE_LD_H_sro_v110 /* 644 */, TRICORE_INS_LD_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -4618,7 +4618,7 @@
   #endif
 },
 {
-  /* ld.w %d15, [%sp]$const8 */
+  /* ld.w d15, [sp]$const8 */
   TRICORE_LD_W_sc /* 658 */, TRICORE_INS_LD_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
@@ -4653,28 +4653,28 @@
   #endif
 },
 {
-  /* ld.w $d, [%a15]$off4 */
+  /* ld.w $d, [a15]$off4 */
   TRICORE_LD_W_slro /* 663 */, TRICORE_INS_LD_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.w $d, [%a15]$off4 */
+  /* ld.w $d, [a15]$off4 */
   TRICORE_LD_W_slro_v110 /* 664 */, TRICORE_INS_LD_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.w %d15, [$s2]$off4 */
+  /* ld.w d15, [$s2]$off4 */
   TRICORE_LD_W_sro /* 665 */, TRICORE_INS_LD_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* ld.w %d15, [$s2]$off4 */
+  /* ld.w d15, [$s2]$off4 */
   TRICORE_LD_W_sro_v110 /* 666 */, TRICORE_INS_LD_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -4779,14 +4779,14 @@
   #endif
 },
 {
-  /* lt.u %d15, $d, $const4 */
+  /* lt.u d15, $d, $const4 */
   TRICORE_LT_U_srcv110 /* 681 */, TRICORE_INS_LT_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
   #endif
 },
 {
-  /* lt.u %d15, $d, $s2 */
+  /* lt.u d15, $d, $s2 */
   TRICORE_LT_U_srrv110 /* 682 */, TRICORE_INS_LT_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -4821,14 +4821,14 @@
   #endif
 },
 {
-  /* lt %d15, $d, $const4 */
+  /* lt d15, $d, $const4 */
   TRICORE_LT_src /* 687 */, TRICORE_INS_LT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* lt %d15, $d, $s2 */
+  /* lt d15, $d, $s2 */
   TRICORE_LT_srr /* 688 */, TRICORE_INS_LT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
@@ -5836,14 +5836,14 @@
   #endif
 },
 {
-  /* mov %d15, $const8 */
+  /* mov d15, $const8 */
   TRICORE_MOV_sc /* 832 */, TRICORE_INS_MOV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* mov %d15, $const8 */
+  /* mov d15, $const8 */
   TRICORE_MOV_sc_v110 /* 833 */, TRICORE_INS_MOV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -7243,14 +7243,14 @@
   #endif
 },
 {
-  /* or %d15, $const8 */
+  /* or d15, $const8 */
   TRICORE_OR_sc /* 1033 */, TRICORE_INS_OR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* or %d15, $const8 */
+  /* or d15, $const8 */
   TRICORE_OR_sc_v110 /* 1034 */, TRICORE_INS_OR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -7908,21 +7908,21 @@
   #endif
 },
 {
-  /* st.a [%sp]$const8, %a15 */
+  /* st.a [sp]$const8, a15 */
   TRICORE_ST_A_sc /* 1128 */, TRICORE_INS_ST_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.a [$s2]$off4, %a15 */
+  /* st.a [$s2]$off4, a15 */
   TRICORE_ST_A_sro /* 1129 */, TRICORE_INS_ST_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.a [$s2]$off4, %a15 */
+  /* st.a [$s2]$off4, a15 */
   TRICORE_ST_A_sro_v110 /* 1130 */, TRICORE_INS_ST_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -7957,14 +7957,14 @@
   #endif
 },
 {
-  /* st.a [%a15]$off4, $s1 */
+  /* st.a [a15]$off4, $s1 */
   TRICORE_ST_A_ssro /* 1135 */, TRICORE_INS_ST_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.a [%a15]$off4, $s1 */
+  /* st.a [a15]$off4, $s1 */
   TRICORE_ST_A_ssro_v110 /* 1136 */, TRICORE_INS_ST_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8020,14 +8020,14 @@
   #endif
 },
 {
-  /* st.b [$s2]$off4, %d15 */
+  /* st.b [$s2]$off4, d15 */
   TRICORE_ST_B_sro /* 1144 */, TRICORE_INS_ST_B,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.b [$s2]$off4, %d15 */
+  /* st.b [$s2]$off4, d15 */
   TRICORE_ST_B_sro_v110 /* 1145 */, TRICORE_INS_ST_B,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8062,14 +8062,14 @@
   #endif
 },
 {
-  /* st.b [%a15]$off4, $s1 */
+  /* st.b [a15]$off4, $s1 */
   TRICORE_ST_B_ssro /* 1150 */, TRICORE_INS_ST_B,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.b [%a15]$off4, $s1 */
+  /* st.b [a15]$off4, $s1 */
   TRICORE_ST_B_ssro_v110 /* 1151 */, TRICORE_INS_ST_B,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8209,14 +8209,14 @@
   #endif
 },
 {
-  /* st.h [$s2]$off4, %d15 */
+  /* st.h [$s2]$off4, d15 */
   TRICORE_ST_H_sro /* 1171 */, TRICORE_INS_ST_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.h [$s2]$off4, %d15 */
+  /* st.h [$s2]$off4, d15 */
   TRICORE_ST_H_sro_v110 /* 1172 */, TRICORE_INS_ST_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8251,14 +8251,14 @@
   #endif
 },
 {
-  /* st.h [%a15]$off4, $s1 */
+  /* st.h [a15]$off4, $s1 */
   TRICORE_ST_H_ssro /* 1177 */, TRICORE_INS_ST_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.h [%a15]$off4, $s1 */
+  /* st.h [a15]$off4, $s1 */
   TRICORE_ST_H_ssro_v110 /* 1178 */, TRICORE_INS_ST_H,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8363,21 +8363,21 @@
   #endif
 },
 {
-  /* st.w [%sp]$const8, %d15 */
+  /* st.w [sp]$const8, d15 */
   TRICORE_ST_W_sc /* 1193 */, TRICORE_INS_ST_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.w [$s2]$off4, %d15 */
+  /* st.w [$s2]$off4, d15 */
   TRICORE_ST_W_sro /* 1194 */, TRICORE_INS_ST_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.w [$s2]$off4, %d15 */
+  /* st.w [$s2]$off4, d15 */
   TRICORE_ST_W_sro_v110 /* 1195 */, TRICORE_INS_ST_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8412,14 +8412,14 @@
   #endif
 },
 {
-  /* st.w [%a15]$off4, $s1 */
+  /* st.w [a15]$off4, $s1 */
   TRICORE_ST_W_ssro /* 1200 */, TRICORE_INS_ST_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* st.w [%a15]$off4, $s1 */
+  /* st.w [a15]$off4, $s1 */
   TRICORE_ST_W_ssro_v110 /* 1201 */, TRICORE_INS_ST_W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8503,14 +8503,14 @@
   #endif
 },
 {
-  /* sub.a %sp, $const8 */
+  /* sub.a sp, $const8 */
   TRICORE_SUB_A_sc /* 1213 */, TRICORE_INS_SUB_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0
   #endif
 },
 {
-  /* sub.a %sp, $const8 */
+  /* sub.a sp, $const8 */
   TRICORE_SUB_A_sc_v110 /* 1214 */, TRICORE_INS_SUB_A,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV110, 0 }, 0, 0
@@ -8552,14 +8552,14 @@
   #endif
 },
 {
-  /* sub %d15, $d, $s2 */
+  /* sub d15, $d, $s2 */
   TRICORE_SUB_srr_15a /* 1220 */, TRICORE_INS_SUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0
   #endif
 },
 {
-  /* sub $d, %d15, $s2 */
+  /* sub $d, d15, $s2 */
   TRICORE_SUB_srr_a15 /* 1221 */, TRICORE_INS_SUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { TRICORE_FEATURE_HasV120_UP, 0 }, 0, 0

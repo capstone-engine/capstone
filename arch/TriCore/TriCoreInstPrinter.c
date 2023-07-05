@@ -161,11 +161,11 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
-		SStream_concat(O, "%%%s", getRegisterName(reg));
+		SStream_concat0(O, getRegisterName(reg));
 		fill_reg(MI, reg);
 	} else if (MCOperand_isImm(Op)) {
 		int64_t Imm = MCOperand_getImm(Op);
-		printInt64(O, Imm);
+		printInt64Bang(O, Imm);
 		fill_imm(MI, (int32_t)Imm);
 	}
 }
@@ -175,7 +175,7 @@ static inline unsigned int get_msb(unsigned int value)
 	unsigned int msb = 0;
 	while (value > 0) {
 		value >>= 1; // Shift bits to the right
-		msb++; // Increment the position of the MSB
+		msb++;	     // Increment the position of the MSB
 	}
 	return msb;
 }
@@ -194,7 +194,7 @@ static void print_sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n)
 	if (MCOperand_isImm(MO)) {
 		int32_t imm = (int32_t)MCOperand_getImm(MO);
 		imm = sign_ext_n(imm, n);
-		printInt32(O, imm);
+		printInt32Bang(O, imm);
 		fill_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -236,7 +236,7 @@ static void print_zero_ext(MCInst *MI, int OpNum, SStream *O, unsigned n)
 			off4_fixup(MI, &imm);
 		}
 
-		printInt64(O, imm);
+		printInt64Bang(O, imm);
 		fill_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -248,7 +248,7 @@ static void printOff18Imm(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MO)) {
 		uint32_t imm = (uint32_t)MCOperand_getImm(MO);
 		imm = ((imm & 0x3C000) << 14) | (imm & 0x3fff);
-		SStream_concat(O, "0x%x", imm);
+		printUInt32Bang(O, imm);
 		fill_imm(MI, (int32_t)imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -279,7 +279,7 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		printUInt32(O, disp);
+		printUInt32Bang(O, disp);
 		fill_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
@@ -324,7 +324,7 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		printUInt32(O, disp);
+		printUInt32Bang(O, disp);
 		fill_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
@@ -349,7 +349,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		printUInt32(O, disp);
+		printUInt32Bang(O, disp);
 		fill_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
@@ -394,22 +394,22 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		}
 
-		printUInt32(O, disp);
+		printUInt32Bang(O, disp);
 		fill_imm(MI, disp);
 	} else
 		printOperand(MI, OpNum, O);
 }
 
-#define printSExtImm_(n)                                                \
+#define printSExtImm_(n) \
 	static void printSExtImm_##n(MCInst *MI, int OpNum, SStream *O) \
-	{                                                               \
-		print_sign_ext(MI, OpNum, O, n);                        \
+	{ \
+		print_sign_ext(MI, OpNum, O, n); \
 	}
 
-#define printZExtImm_(n)                                                \
+#define printZExtImm_(n) \
 	static void printZExtImm_##n(MCInst *MI, int OpNum, SStream *O) \
-	{                                                               \
-		print_zero_ext(MI, OpNum, O, n);                        \
+	{ \
+		print_zero_ext(MI, OpNum, O, n); \
 	}
 
 // clang-format off
@@ -435,7 +435,7 @@ static void printOExtImm_4(MCInst *MI, int OpNum, SStream *O)
 		// {27b’111111111111111111111111111, disp4, 0};
 		imm = 0b11111111111111111111111111100000 | (imm << 1);
 
-		printInt32(O, imm);
+		printInt32Bang(O, imm);
 		fill_imm(MI, imm);
 	} else
 		printOperand(MI, OpNum, O);
@@ -444,7 +444,7 @@ static void printOExtImm_4(MCInst *MI, int OpNum, SStream *O)
 /// Returned by getMnemonic() of the AsmPrinters.
 typedef struct {
 	const char *first; // Menmonic
-	uint64_t second; // Bits
+	uint64_t second;   // Bits
 } MnemonicBitsInfo;
 
 static void set_mem_access(MCInst *MI, unsigned int access)
