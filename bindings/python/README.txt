@@ -19,8 +19,7 @@ specific version of libcapstone you would like to use.
 If you don't want to build your own copy of Capstone, you can use a precompiled
 binary distribution from PyPI. Saying `pip install capstone` should
 automatically obtain an appropriate copy for your system. If it does not, please
-open an issue at https://github.com/aquynh/capstone and tag @rhelmot - she
-will fix this, probably!
+open an issue at https://github.com/capstone-engine/capstone.
 
 --------------------------------------------------------------------------------
 
