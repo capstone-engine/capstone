@@ -1416,16 +1416,19 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 		MCOperand *MO2 = MCInst_getOperand(MI, OpNum + 1);
 		ARM_AM_AddrOpc Sign = ARM_AM_getAM3Op(MCInst_getOpVal(MI, OpNum + 2));
 
-		if (MCOperand_isReg(MO2)) {
+		if (MCOperand_getReg(MO2)) {
 			ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
 								  MCInst_getOpVal(MI, OpNum + 1));
 			ARM_get_detail_op(MI, 0)->subtracted = Sign == ARM_AM_sub;
 			ARM_set_mem_access(MI, false);
 			break;
 		}
-		if (AlwaysPrintImm0 || Sign == ARM_AM_sub) {
-			ARM_get_detail_op(MI, 0)->mem.scale = -1;
-			ARM_get_detail_op(MI, 0)->subtracted = true;
+		unsigned ImmOffs = ARM_AM_getAM3Offset(MCOperand_getImm(MCInst_getOperand(MI, OpNum + 2)));
+
+		if (AlwaysPrintImm0 || ImmOffs || Sign == ARM_AM_sub) {
+			ARM_set_detail_op_mem(MI, OpNum + 2, false, 0, 0,
+						MCInst_getOpVal(MI, OpNum + 2));
+			ARM_get_detail_op(MI, 0)->subtracted = Sign == ARM_AM_sub;
 		}
 		ARM_set_mem_access(MI, false);
 		break;
