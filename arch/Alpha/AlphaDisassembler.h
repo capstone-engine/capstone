@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2023 */
+
 #ifndef CS_ALPHADISASSEMBLER_H
 #define CS_ALPHADISASSEMBLER_H
 

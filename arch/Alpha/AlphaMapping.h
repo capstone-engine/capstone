@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2023 */
+
 #ifndef CS_ALPHA_MAP_H
 #define CS_ALPHA_MAP_H
 
@@ -11,5 +14,8 @@ void Alpha_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 const char *Alpha_insn_name(csh handle, unsigned int id);
 
 const char *Alpha_group_name(csh handle, unsigned int id);
+
+void Alpha_printInst(MCInst *MI, SStream *O, void *Info);
+const char *Alpha_getRegisterName(csh handle, unsigned int id);
 
 #endif

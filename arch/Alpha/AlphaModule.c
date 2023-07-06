@@ -1,8 +1,10 @@
+/* Capstone Disassembly Engine */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2023 */
+
 #ifdef CAPSTONE_HAS_ALPHA
 
 #include "../../utils.h"
 #include "AlphaDisassembler.h"
-#include "AlphaInstPrinter.h"
 #include "AlphaMapping.h"
 
 cs_err ALPHA_global_init(cs_struct *ud)
@@ -16,7 +18,7 @@ cs_err ALPHA_global_init(cs_struct *ud)
 	ud->printer_info = mri;
 	ud->getinsn_info = mri;
 	ud->disasm = Alpha_getInstruction;
-	ud->post_printer = Alpha_post_printer;
+	ud->post_printer = NULL;
 
 	ud->reg_name = Alpha_getRegisterName;
 	ud->insn_id = Alpha_get_insn_id;

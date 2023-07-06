@@ -367,7 +367,7 @@ typedef struct cs_opt_skipdata {
 #include "tricore.h"
 #include "alpha.h"
 
-#define MAX_IMPL_W_REGS 20
+#define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20
 #define MAX_NUM_GROUPS 8
 

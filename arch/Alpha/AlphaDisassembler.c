@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
+
 #ifdef CAPSTONE_HAS_ALPHA
 
 #include <stdio.h> // DEBUG
@@ -9,19 +12,8 @@
 #include "../../MCFixedLenDisassembler.h"
 #include "../../MCDisassembler.h"
 
-static bool readInstruction32(const uint8_t *code, size_t code_len,
-			      uint32_t *insn)
-{
-	if (code_len < 4)
-		// insufficient data
-		return false;
-
-	// Encoded as a little-endian 32-bit word in the stream.
-	*insn = (code[0] << 0) | (code[1] << 8) | (code[2] << 16) |
-		(code[3] << 24);
-
-	return true;
-}
+#include "AlphaDisassembler.h"
+#include "AlphaLinkage.h"
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
 										    uint64_t Address,
@@ -87,13 +79,11 @@ static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len,
 				       uint64_t address, void *info,
 				       const uint8_t *decoderTable32)
 {
-	uint32_t insn32;
+	uint32_t insn = readBytes32(MI, code);
 	DecodeStatus Result;
-	if (!readInstruction32(code, code_len, &insn32)) {
-		return false;
-	}
+
 	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_4(decoderTable32, MI, insn32, address, NULL);
+	Result = decodeInstruction_4(decoderTable32, MI, insn, address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;

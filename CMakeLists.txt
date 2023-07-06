@@ -584,7 +584,7 @@ if (CAPSTONE_ALPHA_SUPPORT)
             arch/Alpha/AlphaGenDisassemblerTables.inc
             arch/Alpha/AlphaGenInstrInfo.inc
             arch/Alpha/AlphaGenRegisterInfo.inc
-            arch/Alpha/AlphaInstPrinter.h
+            arch/Alpha/AlphaLinkage.h
             arch/Alpha/AlphaMapping.h
             arch/Alpha/AlphaModule.h
             )

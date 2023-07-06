@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2023 */
+
 #ifdef CAPSTONE_HAS_ALPHA
 
 #include <platform.h>
@@ -6,9 +9,10 @@
 #include <string.h>
 
 #include "../../utils.h"
-#include "AlphaInstPrinter.h"
-#include "AlphaMapping.h"
 #include "../../MCInstPrinter.h"
+
+#include "AlphaLinkage.h"
+#include "AlphaMapping.h"
 
 static const char *getRegisterName(unsigned RegNo);
 
@@ -16,13 +20,6 @@ static void printInstruction(MCInst *, uint64_t, SStream *);
 
 static void printOperand(MCInst *MI, int OpNum, SStream *O);
 
-void Alpha_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
-{
-	/*
-	   if (((cs_struct *)ud)->detail != CS_OPT_ON)
-	   return;
-	 */
-}
 
 #define GET_INSTRINFO_ENUM
 
@@ -85,7 +82,7 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 
 #include "AlphaGenAsmWriter.inc"
 
-const char *Alpha_getRegisterName(csh handle, unsigned int id)
+const char *Alpha_LLVM_getRegisterName(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	return getRegisterName(id);
@@ -94,8 +91,9 @@ const char *Alpha_getRegisterName(csh handle, unsigned int id)
 #endif
 }
 
-void Alpha_printInst(MCInst *MI, SStream *O, void *Info)
+void Alpha_LLVM_printInst(MCInst *MI, SStream *O, void *Info)
 {
+	printAliasInstr(MI, MI->address, O);
 	printInstruction(MI, MI->address, O);
 }
 
