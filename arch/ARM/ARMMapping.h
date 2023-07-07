@@ -12,6 +12,9 @@ typedef enum {
 #include "ARMGenCSOpGroup.inc"
 } arm_op_group;
 
+extern const ARMBankedReg_BankedReg *ARMBankedReg_lookupBankedRegByEncoding(uint8_t Encoding);
+extern const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByEncoding(uint16_t Encoding);
+
 // return name of regiser in friendly string
 const char *ARM_reg_name(csh handle, unsigned int reg);
 

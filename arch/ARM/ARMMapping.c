@@ -49,6 +49,16 @@ const char *ARM_reg_name(csh handle, unsigned int reg)
 	if ((syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS) && alias)
 		return alias;
 
+	if (reg == ARM_REG_INVALID || reg >= ARM_REG_ENDING) {
+		// This might be a system register encoding.
+		const ARMBankedReg_BankedReg *banked_reg = ARMBankedReg_lookupBankedRegByEncoding(reg);
+		if (banked_reg)
+			return banked_reg->Name;
+		const ARMSysReg_MClassSysReg *sys_reg = ARMSysReg_lookupMClassSysRegByEncoding(reg);
+		if (sys_reg)
+			return sys_reg->Name;
+	}
+
 	if (syntax_opt & CS_OPT_SYNTAX_NOREGNAME) {
 		return ARM_LLVM_getRegisterName(reg, ARM_NoRegAltName);
 	}
