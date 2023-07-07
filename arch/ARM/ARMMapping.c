@@ -1699,11 +1699,9 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 	}
 	case CS_OP_IMM: {
 		assert(secondary_type == CS_OP_IMM);
-		if (((int32_t) Val) < 0) {
-			ARM_get_detail_op(MI, 0)->mem.disp = -Val;
+		if (((int32_t) Val) < 0)
 			ARM_get_detail_op(MI, 0)->subtracted = true;
-		} else
-			ARM_get_detail_op(MI, 0)->mem.disp = Val;
+		ARM_get_detail_op(MI, 0)->mem.disp = ((int64_t) Val < 0) ? -Val : Val;
 		break;
 	}
 	}
