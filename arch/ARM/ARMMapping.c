@@ -1447,11 +1447,6 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode5Operand_1:
 	case ARM_OP_GROUP_AddrMode5FP16Operand_0: {
 		bool AlwaysPrintImm0 = temp_arg_0;
-		MCOperand *MO1 = MCInst_getOperand(MI, OpNum);
-
-		if (!MCOperand_isReg(MO1))
-			// Handled in printOperand
-			break;
 
 		if (AlwaysPrintImm0)
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
@@ -1469,16 +1464,11 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 
 		if (AlwaysPrintImm0 || ImmOffs || SubFlag == ARM_AM_sub) {
 			if (op_group == ARM_OP_GROUP_AddrMode5FP16Operand_0) {
-				if (SubFlag)
-					Op->mem.disp = ImmOffs * 2;
-				else
-					Op->mem.disp = -(int)ImmOffs * 2;
+				Op->mem.disp = ImmOffs * 2;
 			} else {
-				if (SubFlag)
-					Op->mem.disp = ImmOffs;
-				else
-					Op->mem.disp = -(int)ImmOffs * 4;
+				Op->mem.disp = ImmOffs * 4;
 			}
+			Op->subtracted = SubFlag == ARM_AM_sub;
 		}
 		ARM_inc_op_count(MI);
 		break;

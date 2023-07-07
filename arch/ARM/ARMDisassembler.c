@@ -1751,12 +1751,17 @@ static DecodeStatus DecodeCopMemInstruction(MCInst *Inst, unsigned Insn,
 {
 	DecodeStatus S = MCDisassembler_Success;
 
+	unsigned P = fieldFromInstruction_4(Insn, 24, 1);
+	unsigned W = fieldFromInstruction_4(Insn, 21, 1);
 	unsigned pred = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned CRd = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned coproc = fieldFromInstruction_4(Insn, 8, 4);
 	unsigned imm = fieldFromInstruction_4(Insn, 0, 8);
 	unsigned Rn = fieldFromInstruction_4(Insn, 16, 4);
 	unsigned U = fieldFromInstruction_4(Insn, 23, 1);
+
+	// Pre-Indexed implies writeback to Rn
+	bool IsPreIndexed = (P == 1) && (W == 1);
 
 	switch (MCInst_getOpcode(Inst)) {
 	case ARM_LDC_OFFSET:
@@ -1829,6 +1834,10 @@ static DecodeStatus DecodeCopMemInstruction(MCInst *Inst, unsigned Insn,
 
 	if (ARM_getFeatureBits(Inst->csh->mode, ARM_HasV8Ops) && (coproc != 14))
 		return MCDisassembler_Fail;
+
+	if (IsPreIndexed)
+		// Dummy operand for Rn_wb.
+		MCOperand_CreateImm0(Inst, (0));
 
 	MCOperand_CreateImm0(Inst, (coproc));
 	MCOperand_CreateImm0(Inst, (CRd));

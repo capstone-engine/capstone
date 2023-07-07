@@ -720,11 +720,6 @@ DEFINE_printMveAddrModeRQOperand(0) DEFINE_printMveAddrModeRQOperand(3)
 		MCOperand *MO1 = MCInst_getOperand(MI, (OpNum));                       \
 		MCOperand *MO2 = MCInst_getOperand(MI, (OpNum + 1));                   \
                                                                                \
-		if (!MCOperand_isReg(MO1)) {                                           \
-			printOperand(MI, OpNum, O);                                        \
-			return;                                                            \
-		}                                                                      \
-                                                                               \
 		SStream_concat(O, "%s", markup("<mem:"));                              \
 		SStream_concat0(O, "[");                                               \
 		printRegName(O, MCOperand_getReg(MO1));                                \
