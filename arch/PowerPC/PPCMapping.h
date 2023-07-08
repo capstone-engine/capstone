@@ -30,11 +30,10 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 const char *PPC_insn_name(csh handle, unsigned int id);
 const char *PPC_group_name(csh handle, unsigned int id);
 
-struct ppc_alias {
+typedef struct {
 	unsigned int id;	// instruction id
-	int cc;	// code condition
 	const char *mnem;
-};
+} ppc_alias_id;
 
 void PPC_set_mem_access(MCInst *MI, bool status);
 static inline void set_mem_access(MCInst *MI, bool status)
@@ -44,9 +43,6 @@ static inline void set_mem_access(MCInst *MI, bool status)
 
 // map internal raw register to 'public' register
 ppc_reg PPC_map_register(unsigned int r);
-
-// given alias mnemonic, return instruction ID & CC
-bool PPC_alias_insn(const char *name, struct ppc_alias *alias);
 
 bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
 
