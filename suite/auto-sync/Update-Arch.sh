@@ -53,7 +53,7 @@ setup_build_dir() {
 # Main
 #
 
-supported="ARM"
+supported="ARM, PPC"
 
 if [ $# -ne 3 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "$0 <arch> <path-llvm-project> <llvm-release-commit>"
@@ -99,12 +99,15 @@ $tblgen --printerLang=CCS --gen-subtarget -I "$llvm_root/llvm/include/" -I "$llv
 echo "[*] Generate Mapping tables..."
 $tblgen --printerLang=CCS --gen-asm-matcher -I "$llvm_root/llvm/include/" -I "$llvm_root/llvm/lib/Target/$llvm_target_dir/" "$llvm_root/llvm/lib/Target/$llvm_target_dir/$arch.td"
 
-echo "[*] Generate System Register tables..."
-$tblgen --printerLang=CCS --gen-searchable-tables -I "$llvm_root/llvm/include/" -I "$llvm_root/llvm/lib/Target/$llvm_target_dir/" "$llvm_root/llvm/lib/Target/$llvm_target_dir/$arch.td"
-sed -i "s/##ARCH##/$arch/g" __ARCH__GenCSSystemRegisterEnum.inc
-sed -i "s/##ARCH##/$arch/g" __ARCH__GenSystemRegister.inc
-cp __ARCH__GenCSSystemRegisterEnum.inc $arch"GenCSSystemRegisterEnum.inc"
-cp __ARCH__GenSystemRegister.inc $arch"GenSystemRegister.inc"
+has_sys_reg_tables="ARM"
+if echo "$has_sys_reg_tables" | grep -q -w "$arch"; then
+  echo "[*] Generate System Register tables..."
+  $tblgen --printerLang=CCS --gen-searchable-tables -I "$llvm_root/llvm/include/" -I "$llvm_root/llvm/lib/Target/$llvm_target_dir/" "$llvm_root/llvm/lib/Target/$llvm_target_dir/$arch.td"
+  sed -i "s/##ARCH##/$arch/g" __ARCH__GenCSSystemRegisterEnum.inc
+  sed -i "s/##ARCH##/$arch/g" __ARCH__GenSystemRegister.inc
+  cp __ARCH__GenCSSystemRegisterEnum.inc $arch"GenCSSystemRegisterEnum.inc"
+  cp __ARCH__GenSystemRegister.inc $arch"GenSystemRegister.inc"
+fi
 
 if find -- "../vendor/tree-sitter-cpp/" -prune -type d -empty | grep -q '^'; then
   echo "[*] Clone tree-sitter-cpp..."
@@ -132,10 +135,10 @@ cd $llvm_root
 llvm_release_tag=$(git describe --tag $llvm_release_commit)
 cd "$cs_root/suite/auto-sync/build"
 
-cs_arch_dir="$cs_root/arch/$arch/"
+cs_arch_dir="$cs_root/arch/$llvm_target_dir/"
 cs_inc_dir="$cs_root/include/capstone"
 
-into_arch_main_header=$arch"GenCSInsnEnum.inc "$arch"GenCSFeatureEnum.inc "$arch"GenCSRegEnum.inc "$arch"GenCSSystemRegisterEnum.inc"
+into_arch_main_header=$arch"GenCSInsnEnum.inc "$arch"GenCSFeatureEnum.inc "$arch"GenCSRegEnum.inc "$arch"GenCSSystemRegisterEnum.inc "$arch"GenCSInsnFormatsEnum.inc "
 header_file=$(echo "$arch" | awk '{print tolower($0)}')
 main_header="$cs_inc_dir/$header_file.h"
 
@@ -143,7 +146,7 @@ for f in $into_arch_main_header; do
   ../PatchMainHeader.py --header "$main_header" --inc "$f"
 done
 
-for f in $(ls | grep "\.inc"); do
+for f in $(ls | grep "$arch.*\.inc"); do
   if ! echo $into_arch_main_header | grep -q -w $f ; then
     sed -i "s/LLVM-commit: <commit>/LLVM-commit: $llvm_release_commit/g" $f
     sed -i "s/LLVM-tag: <tag>/LLVM-tag: $llvm_release_tag/g" $f
@@ -168,7 +171,7 @@ done
 echo "[*] Apply patches to inc files"
 
 cd $cs_root
-p_dir="$cs_root/suite/auto-sync/inc_patches"
+p_dir="$cs_root/suite/auto-sync/inc_patches/$arch"
 for f in $(ls $p_dir); do
   echo "[*] Apply $f"
   git apply "$p_dir/$f"

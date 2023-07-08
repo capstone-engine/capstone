@@ -4,10 +4,10 @@ from Patches.HelperMethods import get_text
 from Patches.Patch import Patch
 
 
-class GetOperandRegImm(Patch):
+class IsOperandRegImm(Patch):
     """
-    Patch   OPERAND.getReg()
-    to      MCOperand_getReg(OPERAND)
+    Patch   OPERAND.isReg()
+    to      MCOperand_isReg(OPERAND)
 
     Same for isImm()
     """
@@ -20,20 +20,20 @@ class GetOperandRegImm(Patch):
             "(call_expression"
             "    (field_expression"
             "        ((_) @operand)"
-            '        ((field_identifier) @field_id (#match? @field_id "get(Reg|Imm)"))'
+            '        ((field_identifier) @field_id (#match? @field_id "is(Reg|Imm)"))'
             "    )"
             "    (argument_list)"
-            ") @get_operand"
+            ") @is_operand"
         )
         return q
 
     def get_main_capture_name(self) -> str:
-        return "get_operand"
+        return "is_operand"
 
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         # The operand
         operand: Node = captures[1][0]
-        # 'getReg()/getImm()'
+        # 'isReg()/isImm()'
         get_reg_imm = captures[2][0]
 
         fcn = get_text(src, get_reg_imm.start_byte, get_reg_imm.end_byte)

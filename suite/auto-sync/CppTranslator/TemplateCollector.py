@@ -1,4 +1,3 @@
-from copy import deepcopy
 from pathlib import Path
 
 from tree_sitter import Language, Parser
@@ -68,10 +67,11 @@ class TemplateCollector:
     incomplete_template_refs: {bytes: [TemplateRefInstance]} = dict()
     sources: [{str: bytes}] = list()
 
-    def __init__(self, ts_parser: Parser, ts_cpp: Language, searchable_files: [Path]):
+    def __init__(self, ts_parser: Parser, ts_cpp: Language, searchable_files: [Path], temp_arg_deduction: [bytes]):
         self.parser = ts_parser
         self.lang_cpp = ts_cpp
         self.searchable_files = searchable_files
+        self.templates_with_arg_deduction = temp_arg_deduction
 
     def collect(self):
         self.read_files()

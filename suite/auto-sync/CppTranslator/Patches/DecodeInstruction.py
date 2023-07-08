@@ -1,5 +1,3 @@
-import logging as log
-
 from tree_sitter import Node
 
 from Patches.HelperMethods import get_text

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import subprocess
 from pathlib import Path
 
 import termcolor
@@ -11,7 +10,7 @@ import sys
 from tree_sitter.binding import Query
 
 from Configurator import Configurator
-from Helper import convert_loglevel, print_prominent_warning, get_header, run_clang_format
+from Helper import convert_loglevel, print_prominent_warning, get_header, run_clang_format, get_path
 from Patches.AddCSDetail import AddCSDetail
 from Patches.AddOperand import AddOperand
 from Patches.Assert import Assert
@@ -37,6 +36,7 @@ from Patches.GetOperand import GetOperand
 from Patches.GetSubReg import GetSubReg
 from Patches.Includes import Includes
 from Patches.InlineToStaticInline import InlineToStaticInline
+from Patches.IsRegImm import IsOperandRegImm
 from Patches.IsOptionalDef import IsOptionalDef
 from Patches.IsPredicate import IsPredicate
 from Patches.LLVMFallThrough import LLVMFallThrough
@@ -57,7 +57,7 @@ from Patches.STIArgument import STIArgument
 from Patches.STIFeatureBits import STIFeatureBits
 from Patches.STParameter import SubtargetInfoParam
 from Patches.SetOpcode import SetOpcode
-from Patches.SignExtend32 import SignExtend32
+from Patches.SignExtend import SignExtend
 from Patches.SizeAssignments import SizeAssignment
 from Patches.StreamOperation import StreamOperations
 from Patches.TemplateDeclaration import TemplateDeclaration
@@ -115,7 +115,8 @@ class Translator:
         SetOpcode.__name__: 0,
         GetOperand.__name__: 0,
         GetOperandRegImm.__name__: 0,
-        SignExtend32.__name__: 0,
+        IsOperandRegImm.__name__: 0,
+        SignExtend.__name__: 0,
         DecoderParameter.__name__: 0,
         UsingDeclaration.__name__: 0,
         DecoderCast.__name__: 0,
@@ -159,9 +160,9 @@ class Translator:
         self.ts_cpp_lang = self.configurator.get_cpp_lang()
         self.parser = self.configurator.get_parser()
 
-        self.src_paths: [Path] = [Path(sp["in"]) for sp in self.conf["files_to_translate"]]
-        t_out_dir = self.conf_general["translation_out_dir"]
-        self.out_paths: [Path] = [Path(t_out_dir + sp["out"]) for sp in self.conf["files_to_translate"]]
+        self.src_paths: [Path] = [get_path(sp["in"]) for sp in self.conf["files_to_translate"]]
+        t_out_dir: Path = get_path(self.conf_general["translation_out_dir"])
+        self.out_paths: [Path] = [t_out_dir.joinpath(sp["out"]) for sp in self.conf["files_to_translate"]]
 
         self.collect_template_instances()
         self.init_patches()
@@ -207,8 +208,8 @@ class Translator:
                 patch = SetOpcode(p)
             elif ptype == GetOperand.__name__:
                 patch = GetOperand(p)
-            elif ptype == SignExtend32.__name__:
-                patch = SignExtend32(p)
+            elif ptype == SignExtend.__name__:
+                patch = SignExtend(p)
             elif ptype == TemplateDeclaration.__name__:
                 patch = TemplateDeclaration(p, self.template_collector)
             elif ptype == TemplateDefinition.__name__:
@@ -285,6 +286,8 @@ class Translator:
                 patch = AddCSDetail(p, self.arch)
             elif ptype == PrintRegImmShift.__name__:
                 patch = PrintRegImmShift(p)
+            elif ptype == IsOperandRegImm.__name__:
+                patch = IsOperandRegImm(p)
             else:
                 log.fatal(f"Patch type {ptype} not in Patch init routine.")
                 exit(1)
@@ -387,11 +390,12 @@ class Translator:
             with open(self.current_src_path_out, "w") as f:
                 f.write(get_header())
                 f.write(self.src.decode("utf8"))
-        run_clang_format(self.out_paths, Path(self.conf_general["clang_format_file"]))
+        run_clang_format(self.out_paths, get_path(self.conf_general["clang_format_file"]))
 
     def collect_template_instances(self):
-        search_paths = [Path(p) for p in self.conf["files_for_template_search"]]
-        self.template_collector = TemplateCollector(self.parser, self.ts_cpp_lang, search_paths)
+        search_paths = [get_path(p) for p in self.conf["files_for_template_search"]]
+        temp_arg_deduction = [p.encode("utf8") for p in self.conf["templates_with_arg_deduction"]]
+        self.template_collector = TemplateCollector(self.parser, self.ts_cpp_lang, search_paths, temp_arg_deduction)
         self.template_collector.collect()
 
     def get_patch_kwargs(self, patch):
@@ -409,8 +413,10 @@ class Translator:
                 )
                 + "\n"
             )
+        else:
+            return
         for f in manual_edited:
-            msg += f
+            msg += get_path(f).name + "\n"
         print_prominent_warning(msg)
 
 
@@ -419,7 +425,7 @@ def parse_args() -> argparse.Namespace:
         prog="CppTranslator",
         description="Capstones C++ to C translator for LLVM source files",
     )
-    parser.add_argument("-a", dest="arch", help="Name of target architecture.", choices=["ARM"], required=True)
+    parser.add_argument("-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC"], required=True)
     parser.add_argument(
         "-v",
         dest="verbosity",

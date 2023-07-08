@@ -1,3 +1,4 @@
+import logging as log
 import re
 
 from tree_sitter import Node
@@ -63,6 +64,8 @@ class TemplateDefinition(Patch):
         f_name = get_text(src, fcn_name.start_byte, fcn_name.end_byte)
         f_params = get_text(src, fcn_params.start_byte, fcn_params.end_byte)
         f_compound = get_text(src, compound.start_byte, compound.end_byte)
+        if f_name in self.collector.templates_with_arg_deduction:
+            return sc + tid + b" " + f_name + f_params + f_compound
 
         definition = b"#define DEFINE_" + f_name + b"(" + b", ".join(t_params) + b")\n"
         definition += sc + tid + b" " + TemplateCollector.get_macro_c_call(f_name, t_params, f_params) + f_compound
@@ -72,6 +75,13 @@ class TemplateDefinition(Patch):
 
         template_instance: TemplateRefInstance
         declared_implementations = list()
+        if f_name not in self.collector.template_refs:
+            log.fatal(
+                f"Template collector has no reference for {f_name}. "
+                f"Make sure to add all source files to the config file "
+                f"which use this template function."
+            )
+            exit(1)
         for template_instance in self.collector.template_refs[f_name]:
             d = b"DEFINE_" + f_name + b"(" + b", ".join(template_instance.args_list) + b")\n"
             if d in declared_implementations:

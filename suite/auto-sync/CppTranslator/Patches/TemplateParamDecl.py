@@ -1,5 +1,4 @@
 import logging as log
-import re
 
 from tree_sitter import Node
 
