@@ -113,7 +113,6 @@ static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes, size_t B
 		return;
 
 	uint32_t Inst = readBytes32(MI, Bytes);
-	printf("0x%x\n", Inst);
 
 	uint8_t bi = 0;
 	if (b_form)
