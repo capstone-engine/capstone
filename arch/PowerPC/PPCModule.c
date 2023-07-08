@@ -5,7 +5,6 @@
 
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
-#include "PPCDisassembler.h"
 #include "PPCInstPrinter.h"
 #include "PPCMapping.h"
 #include "PPCModule.h"
@@ -15,12 +14,12 @@ cs_err PPC_global_init(cs_struct *ud)
 	MCRegisterInfo *mri;
 	mri = (MCRegisterInfo *) cs_mem_malloc(sizeof(*mri));
 
-	PPC_init(mri);
-	ud->printer = PPC_printInst;
+	PPC_init_mri(mri);
+	ud->printer = PPC_printer;
 	ud->printer_info = mri;
 	ud->getinsn_info = mri;
 	ud->disasm = PPC_getInstruction;
-	ud->post_printer = PPC_post_printer;
+	ud->post_printer = NULL;
 
 	ud->reg_name = PPC_reg_name;
 	ud->insn_id = PPC_get_insn_id;
