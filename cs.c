@@ -931,7 +931,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		mci.flat_insn->mnemonic[0] = '\0';
 		mci.flat_insn->op_str[0] = '\0';
 #endif
-		uint64_t count = 1;
+		uint64_t c = 1;
 		setlocale(LC_NUMERIC, "en_US.UTF-8");
 		char bstr[100];
 		while (offset == 1) {
@@ -941,7 +941,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			getrandom(bytes, BSIZE, 0);
 			for (int i = 0; i < BSIZE; ++i)
 				sprintf(bstr + (i * 2), "%02x", bytes[i]);
-			printf("\r[%'lu] 0x%s      ", count, bstr);
+			printf("\r[%'lu] 0x%s      ", c, bstr);
 			fflush(NULL);
 			r = handle->disasm(ud, bytes, BSIZE/4, &mci, &insn_size, offset, handle->getinsn_info);
 			if (r) {
@@ -951,7 +951,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 				handle->insn_id(handle, insn_cache, mci.Opcode);
 				handle->printer(&mci, &ss, handle->printer_info);
 			}
-			count += 4;
+			c += 4;
 		}
 
 		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
