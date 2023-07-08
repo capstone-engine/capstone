@@ -1,7 +1,5 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
-#include <locale.h>
-#include <sys/random.h>
 #if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
 #pragma warning(disable:4996)			// disable MSVC's warning on strcpy()
 #pragma warning(disable:28719)		// disable MSVC's warning on strcpy()
@@ -931,28 +929,6 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		mci.flat_insn->mnemonic[0] = '\0';
 		mci.flat_insn->op_str[0] = '\0';
 #endif
-		uint64_t c = 1;
-		setlocale(LC_NUMERIC, "en_US.UTF-8");
-		char bstr[100];
-		while (offset == 1) {
-			fflush(NULL);
-			#define BSIZE 16
-			uint8_t bytes[BSIZE];
-			getrandom(bytes, BSIZE, 0);
-			for (int i = 0; i < BSIZE; ++i)
-				sprintf(bstr + (i * 2), "%02x", bytes[i]);
-			printf("\r[%'lu] 0x%s      ", c, bstr);
-			fflush(NULL);
-			r = handle->disasm(ud, bytes, BSIZE/4, &mci, &insn_size, offset, handle->getinsn_info);
-			if (r) {
-				SStream ss;
-				SStream_Init(&ss);
-				mci.flat_insn->size = insn_size;
-				handle->insn_id(handle, insn_cache, mci.Opcode);
-				handle->printer(&mci, &ss, handle->printer_info);
-			}
-			c += 4;
-		}
 
 		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
 		if (r) {
