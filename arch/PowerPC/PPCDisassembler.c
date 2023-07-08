@@ -457,6 +457,8 @@ static DecodeStatus decodeCRBitMOperand(MCInst *Inst, uint64_t Imm,
 	// The cr bit encoding is 0x80 >> cr_reg_num.
 
 	unsigned Zeros = CountTrailingZeros_32(Imm);
+	if (Zeros >= 8)
+		return MCDisassembler_Fail;
 
 	MCOperand_CreateReg0(Inst, (CRRegs[7 - Zeros]));
 	return MCDisassembler_Success;
