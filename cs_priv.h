@@ -69,6 +69,9 @@ struct cs_struct {
 	ARM_ITBlock ITBlock;	// for Arm only
 	ARM_VPTBlock VPTBlock;  // for ARM only
 	bool PrintBranchImmNotAsAddress;
+	bool FullRegNamesWithPercent;
+	bool notFullRegNames;
+	bool ShowVSRNumsAsVR;
 	cs_opt_value detail, imm_unsigned;
 	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
@@ -86,6 +89,13 @@ struct cs_struct {
 
 // Returns a bool (0 or 1) whether big endian is enabled for a mode
 #define MODE_IS_BIG_ENDIAN(mode) (((mode) & CS_MODE_BIG_ENDIAN) != 0)
+
+/// Returns true of the 16bit flag is set.
+#define IS_16BIT(mode) ((mode & CS_MODE_16) != 0)
+/// Returns true of the 32bit flag is set.
+#define IS_32BIT(mode) ((mode & CS_MODE_32) != 0)
+/// Returns true of the 64bit flag is set.
+#define IS_64BIT(mode) ((mode & CS_MODE_64) != 0)
 
 extern cs_malloc_t cs_mem_malloc;
 extern cs_calloc_t cs_mem_calloc;

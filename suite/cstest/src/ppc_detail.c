@@ -8,27 +8,25 @@ static const char* get_bc_name(int bc)
 {
 	switch(bc) {
 		default:
-		case PPC_BC_INVALID:
-			return ("invalid");
-		case PPC_BC_LT:
+		case PPC_PRED_LT:
 			return ("lt");
-		case PPC_BC_LE:
+		case PPC_PRED_LE:
 			return ("le");
-		case PPC_BC_EQ:
+		case PPC_PRED_EQ:
 			return ("eq");
-		case PPC_BC_GE:
+		case PPC_PRED_GE:
 			return ("ge");
-		case PPC_BC_GT:
+		case PPC_PRED_GT:
 			return ("gt");
-		case PPC_BC_NE:
+		case PPC_PRED_NE:
 			return ("ne");
-		case PPC_BC_UN:
+		case PPC_PRED_UN:
 			return ("un");
-		case PPC_BC_NU:
+		case PPC_PRED_NU:
 			return ("nu");
-		case PPC_BC_SO:
+		case PPC_PRED_SO:
 			return ("so");
-		case PPC_BC_NS:
+		case PPC_PRED_NS:
 			return ("ns");
 	}
 }
@@ -77,11 +75,10 @@ char *get_detail_ppc(csh *handle, cs_mode mode, cs_insn *ins)
 		}
 	}
 
-	if (ppc->bc != 0)
-		add_str(&result, " ; Branch code: %u", ppc->bc);
+	add_str(&result, " ; Branch code: %u", ppc->bc.pred);
 
-	if (ppc->bh != 0)
-		add_str(&result, " ; Branch hint: %u", ppc->bh);
+	if (ppc->bc.hint != PPC_BR_NOT_GIVEN)
+		add_str(&result, " ; Branch hint: %u", ppc->bc.hint);
 
 	if (ppc->update_cr0)
 		add_str(&result, " ; Update-CR0: True");

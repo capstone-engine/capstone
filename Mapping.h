@@ -28,6 +28,9 @@ typedef struct insn_map {
 		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	bool branch;		  // branch instruction?
 	bool indirect_branch;	  // indirect branch instruction?
+	union {
+		ppc_suppl_info ppc;
+	} suppl_info; // Supplementary information for each instruction.
 #endif
 } insn_map;
 
