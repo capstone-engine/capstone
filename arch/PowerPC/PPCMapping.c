@@ -38,7 +38,6 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 static const char * const insn_name_maps[] = {
-    NULL, // PPC_INS_BCT
 #include "PPCGenCSMappingInsnName.inc"
 };
 
