@@ -223,10 +223,14 @@ static const map_insn_ops insn_operands[] = {
 /// @param MI The MCInst.
 /// @param OpNum The operand index.
 static void handle_memory_operand(MCInst *MI, unsigned OpNum) {
-	cs_op_type op_type = map_get_op_type(MI, OpNum);
-	bool is_disp_offset = op_type == CS_OP_IMM ||
-		(PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID);
-	PPC_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum), is_disp_offset);
+	cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
+
+	// If this is called from printOperand() we do not know if a
+	// register is a base or an offset reg (imm is always disponent).
+	// So we assume the base register is always added before the offset register
+	// and set the flag appropriately.
+	bool is_off_reg = ((op_type == CS_OP_REG) && PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID);
+	PPC_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum), is_off_reg);
 }
 
 static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
@@ -240,10 +244,13 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		return;
 	case PPC_OP_GROUP_Operand: {
 		cs_op_type op_type = map_get_op_type(MI, OpNum);
-		if (doing_mem(MI)) {
+		if (doing_mem(MI) || (op_type & CS_OP_MEM)) {
 			// The memory operands use printOperand() to
 			// emit their register and immediates.
+			if (!doing_mem(MI))
+				set_mem_access(MI, true);
 			handle_memory_operand(MI, OpNum);
+			set_mem_access(MI, false);
 			return;
 		}
 
@@ -446,6 +453,7 @@ void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val, bool is_off
 
 	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
 	cs_op_type secondary_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
+
 	switch (secondary_type) {
 	default:
 		assert(0 && "Secondary type not supported yet.");
