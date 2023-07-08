@@ -101,6 +101,8 @@ void PPC_check_updates_cr0(MCInst *MI)
 
 /// Parses and adds the branch predicate information and the BH field.
 static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes, size_t BytesLen) {
+	if (!detail_is_set(MI))
+		return;
 #ifndef CAPSTONE_DIET
 	assert(MI && Bytes);
 	if (BytesLen < 4)
