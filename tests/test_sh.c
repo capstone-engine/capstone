@@ -96,7 +96,7 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 			break;
 
 		case SH_OP_IMM:
-			printf("\t\toperands[%u].type: IMMEDIATE = #%lu\n", i,
+			printf("\t\toperands[%u].type: IMMEDIATE = #%llu\n", i,
 			       op->imm);
 			break;
 
