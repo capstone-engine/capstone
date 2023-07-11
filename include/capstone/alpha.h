@@ -124,7 +124,7 @@ typedef enum alpha_reg {
 
 //> Alpha instruction
 typedef enum alpha_insn {
-	// generated content <AlphaGenCSInsnEnum.inc> begin
+	// generated content <AlphaGenCSInsnEnum.inc:GET_INSTR_ENUM> begin
 	// clang-format off
 
 	Alpha_INS_INVALID,
@@ -177,9 +177,15 @@ typedef enum alpha_insn {
 	Alpha_INS_CVTTSsSUI,
 	Alpha_INS_DIVSsSU,
 	Alpha_INS_DIVTsSU,
+	Alpha_INS_ECB,
 	Alpha_INS_EQV,
+	Alpha_INS_EXCB,
 	Alpha_INS_EXTBL,
+	Alpha_INS_EXTLH,
 	Alpha_INS_EXTLL,
+	Alpha_INS_EXTQH,
+	Alpha_INS_EXTQL,
+	Alpha_INS_EXTWH,
 	Alpha_INS_EXTWL,
 	Alpha_INS_FBEQ,
 	Alpha_INS_FBGE,
@@ -193,8 +199,17 @@ typedef enum alpha_insn {
 	Alpha_INS_FCMOVLE,
 	Alpha_INS_FCMOVLT,
 	Alpha_INS_FCMOVNE,
+	Alpha_INS_FETCH,
+	Alpha_INS_FETCH_M,
 	Alpha_INS_FTOIS,
 	Alpha_INS_FTOIT,
+	Alpha_INS_INSBL,
+	Alpha_INS_INSLH,
+	Alpha_INS_INSLL,
+	Alpha_INS_INSQH,
+	Alpha_INS_INSQL,
+	Alpha_INS_INSWH,
+	Alpha_INS_INSWL,
 	Alpha_INS_ITOFS,
 	Alpha_INS_ITOFT,
 	Alpha_INS_JMP,
@@ -207,17 +222,27 @@ typedef enum alpha_insn {
 	Alpha_INS_LDLsL,
 	Alpha_INS_LDQ,
 	Alpha_INS_LDQsL,
+	Alpha_INS_LDQ_U,
 	Alpha_INS_LDS,
 	Alpha_INS_LDT,
 	Alpha_INS_LDWU,
 	Alpha_INS_MB,
+	Alpha_INS_MSKBL,
+	Alpha_INS_MSKLH,
+	Alpha_INS_MSKLL,
+	Alpha_INS_MSKQH,
+	Alpha_INS_MSKQL,
+	Alpha_INS_MSKWH,
+	Alpha_INS_MSKWL,
 	Alpha_INS_MULL,
 	Alpha_INS_MULQ,
 	Alpha_INS_MULSsSU,
 	Alpha_INS_MULTsSU,
 	Alpha_INS_ORNOT,
+	Alpha_INS_RC,
 	Alpha_INS_RET,
 	Alpha_INS_RPCC,
+	Alpha_INS_RS,
 	Alpha_INS_S4ADDL,
 	Alpha_INS_S4ADDQ,
 	Alpha_INS_S4SUBL,
@@ -238,6 +263,7 @@ typedef enum alpha_insn {
 	Alpha_INS_STLsL,
 	Alpha_INS_STQ,
 	Alpha_INS_STQsL,
+	Alpha_INS_STQ_U,
 	Alpha_INS_STS,
 	Alpha_INS_STT,
 	Alpha_INS_STW,
@@ -245,13 +271,16 @@ typedef enum alpha_insn {
 	Alpha_INS_SUBQ,
 	Alpha_INS_SUBSsSU,
 	Alpha_INS_SUBTsSU,
+	Alpha_INS_TRAPB,
 	Alpha_INS_UMULH,
+	Alpha_INS_WH64,
+	Alpha_INS_WH64EN,
 	Alpha_INS_WMB,
 	Alpha_INS_XOR,
 	Alpha_INS_ZAPNOT,
 
 	// clang-format on
-	// generated content <AlphaGenCSInsnEnum.inc> end
+	// generated content <AlphaGenCSInsnEnum.inc:GET_INSTR_ENUM> end
     ALPHA_INS_ENDING, // <-- mark the end of the list of instructions
 } alpha_insn;
 
