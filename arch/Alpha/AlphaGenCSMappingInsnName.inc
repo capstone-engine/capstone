@@ -61,9 +61,15 @@
   "cvtts/sui", // Alpha_INS_CVTTSsSUI
   "divs/su", // Alpha_INS_DIVSsSU
   "divt/su", // Alpha_INS_DIVTsSU
+  "ecb", // Alpha_INS_ECB
   "eqv", // Alpha_INS_EQV
+  "excb", // Alpha_INS_EXCB
   "EXTBL", // Alpha_INS_EXTBL
+  "EXTLH", // Alpha_INS_EXTLH
   "EXTLL", // Alpha_INS_EXTLL
+  "EXTQH", // Alpha_INS_EXTQH
+  "EXTQL", // Alpha_INS_EXTQL
+  "EXTWH", // Alpha_INS_EXTWH
   "EXTWL", // Alpha_INS_EXTWL
   "fbeq", // Alpha_INS_FBEQ
   "fbge", // Alpha_INS_FBGE
@@ -77,8 +83,17 @@
   "fcmovle", // Alpha_INS_FCMOVLE
   "fcmovlt", // Alpha_INS_FCMOVLT
   "fcmovne", // Alpha_INS_FCMOVNE
+  "fetch", // Alpha_INS_FETCH
+  "fetch_m", // Alpha_INS_FETCH_M
   "ftois", // Alpha_INS_FTOIS
   "ftoit", // Alpha_INS_FTOIT
+  "INSBL", // Alpha_INS_INSBL
+  "INSLH", // Alpha_INS_INSLH
+  "INSLL", // Alpha_INS_INSLL
+  "INSQH", // Alpha_INS_INSQH
+  "INSQL", // Alpha_INS_INSQL
+  "INSWH", // Alpha_INS_INSWH
+  "INSWL", // Alpha_INS_INSWL
   "itofs", // Alpha_INS_ITOFS
   "itoft", // Alpha_INS_ITOFT
   "jmp", // Alpha_INS_JMP
@@ -91,17 +106,27 @@
   "ldl/l", // Alpha_INS_LDLsL
   "ldq", // Alpha_INS_LDQ
   "ldq/l", // Alpha_INS_LDQsL
+  "ldq_u", // Alpha_INS_LDQ_U
   "lds", // Alpha_INS_LDS
   "ldt", // Alpha_INS_LDT
   "ldwu", // Alpha_INS_LDWU
   "mb", // Alpha_INS_MB
+  "MSKBL", // Alpha_INS_MSKBL
+  "MSKLH", // Alpha_INS_MSKLH
+  "MSKLL", // Alpha_INS_MSKLL
+  "MSKQH", // Alpha_INS_MSKQH
+  "MSKQL", // Alpha_INS_MSKQL
+  "MSKWH", // Alpha_INS_MSKWH
+  "MSKWL", // Alpha_INS_MSKWL
   "mull", // Alpha_INS_MULL
   "mulq", // Alpha_INS_MULQ
   "muls/su", // Alpha_INS_MULSsSU
   "mult/su", // Alpha_INS_MULTsSU
   "ornot", // Alpha_INS_ORNOT
+  "rc", // Alpha_INS_RC
   "ret", // Alpha_INS_RET
   "rpcc", // Alpha_INS_RPCC
+  "rs", // Alpha_INS_RS
   "s4addl", // Alpha_INS_S4ADDL
   "s4addq", // Alpha_INS_S4ADDQ
   "s4subl", // Alpha_INS_S4SUBL
@@ -122,6 +147,7 @@
   "stl/l", // Alpha_INS_STLsL
   "stq", // Alpha_INS_STQ
   "stq/l", // Alpha_INS_STQsL
+  "stq_u", // Alpha_INS_STQ_U
   "sts", // Alpha_INS_STS
   "stt", // Alpha_INS_STT
   "stw", // Alpha_INS_STW
@@ -129,7 +155,10 @@
   "subq", // Alpha_INS_SUBQ
   "subs/su", // Alpha_INS_SUBSsSU
   "subt/su", // Alpha_INS_SUBTsSU
+  "trapb", // Alpha_INS_TRAPB
   "umulh", // Alpha_INS_UMULH
+  "wh64", // Alpha_INS_WH64
+  "wh64en", // Alpha_INS_WH64EN
   "wmb", // Alpha_INS_WMB
   "xor", // Alpha_INS_XOR
   "zapnot", // Alpha_INS_ZAPNOT

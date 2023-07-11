@@ -2394,813 +2394,1163 @@
   #endif
 },
 {
+  /* ecb ($RB) */
+  Alpha_ECB /* 340 */, Alpha_INS_ECB,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
   /* eqv $RA,$L,$RC */
-  Alpha_EQVi /* 340 */, Alpha_INS_EQV,
+  Alpha_EQVi /* 341 */, Alpha_INS_EQV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* eqv $RA,$RB,$RC */
-  Alpha_EQVr /* 341 */, Alpha_INS_EQV,
+  Alpha_EQVr /* 342 */, Alpha_INS_EQV,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* excb */
+  Alpha_EXCB /* 343 */, Alpha_INS_EXCB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* EXTBL $RA,$RB,$RC */
-  Alpha_EXTBL /* 342 */, Alpha_INS_EXTBL,
+  Alpha_EXTBL /* 344 */, Alpha_INS_EXTBL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTBL $RA,$L,$RC */
+  Alpha_EXTBLi /* 345 */, Alpha_INS_EXTBL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTLH $RA,$RB,$RC */
+  Alpha_EXTLH /* 346 */, Alpha_INS_EXTLH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTLH $RA,$L,$RC */
+  Alpha_EXTLHi /* 347 */, Alpha_INS_EXTLH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* EXTLL $RA,$RB,$RC */
-  Alpha_EXTLL /* 343 */, Alpha_INS_EXTLL,
+  Alpha_EXTLL /* 348 */, Alpha_INS_EXTLL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTLL $RA,$L,$RC */
+  Alpha_EXTLLi /* 349 */, Alpha_INS_EXTLL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTQH $RA,$RB,$RC */
+  Alpha_EXTQH /* 350 */, Alpha_INS_EXTQH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTQH $RA,$L,$RC */
+  Alpha_EXTQHi /* 351 */, Alpha_INS_EXTQH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTQL $RA,$RB,$RC */
+  Alpha_EXTQL /* 352 */, Alpha_INS_EXTQL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTQL $RA,$L,$RC */
+  Alpha_EXTQLi /* 353 */, Alpha_INS_EXTQL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTWH $RA,$RB,$RC */
+  Alpha_EXTWH /* 354 */, Alpha_INS_EXTWH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTWH $RA,$L,$RC */
+  Alpha_EXTWHi /* 355 */, Alpha_INS_EXTWH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* EXTWL $RA,$RB,$RC */
-  Alpha_EXTWL /* 344 */, Alpha_INS_EXTWL,
+  Alpha_EXTWL /* 356 */, Alpha_INS_EXTWL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* EXTWL $RA,$L,$RC */
+  Alpha_EXTWLi /* 357 */, Alpha_INS_EXTWL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fbeq $R,$dst */
-  Alpha_FBEQ /* 345 */, Alpha_INS_FBEQ,
+  Alpha_FBEQ /* 358 */, Alpha_INS_FBEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, 0 }, 1, 0, {{ 0 }}
   #endif
 },
 {
   /* fbge $R,$dst */
-  Alpha_FBGE /* 346 */, Alpha_INS_FBGE,
+  Alpha_FBGE /* 359 */, Alpha_INS_FBGE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, 0 }, 1, 0, {{ 0 }}
   #endif
 },
 {
   /* fbgt $R,$dst */
-  Alpha_FBGT /* 347 */, Alpha_INS_FBGT,
+  Alpha_FBGT /* 360 */, Alpha_INS_FBGT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, 0 }, 1, 0, {{ 0 }}
   #endif
 },
 {
   /* fble $R,$dst */
-  Alpha_FBLE /* 348 */, Alpha_INS_FBLE,
+  Alpha_FBLE /* 361 */, Alpha_INS_FBLE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, 0 }, 1, 0, {{ 0 }}
   #endif
 },
 {
   /* fblt $R,$dst */
-  Alpha_FBLT /* 349 */, Alpha_INS_FBLT,
+  Alpha_FBLT /* 362 */, Alpha_INS_FBLT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, 0 }, 1, 0, {{ 0 }}
   #endif
 },
 {
   /* fbne $R,$dst */
-  Alpha_FBNE /* 350 */, Alpha_INS_FBNE,
+  Alpha_FBNE /* 363 */, Alpha_INS_FBNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, 0 }, 1, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmoveq $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVEQS /* 351 */, Alpha_INS_FCMOVEQ,
+  Alpha_FCMOVEQS /* 364 */, Alpha_INS_FCMOVEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmoveq $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVEQT /* 352 */, Alpha_INS_FCMOVEQ,
+  Alpha_FCMOVEQT /* 365 */, Alpha_INS_FCMOVEQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovge $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVGES /* 353 */, Alpha_INS_FCMOVGE,
+  Alpha_FCMOVGES /* 366 */, Alpha_INS_FCMOVGE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovge $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVGET /* 354 */, Alpha_INS_FCMOVGE,
+  Alpha_FCMOVGET /* 367 */, Alpha_INS_FCMOVGE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovgt $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVGTS /* 355 */, Alpha_INS_FCMOVGT,
+  Alpha_FCMOVGTS /* 368 */, Alpha_INS_FCMOVGT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovgt $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVGTT /* 356 */, Alpha_INS_FCMOVGT,
+  Alpha_FCMOVGTT /* 369 */, Alpha_INS_FCMOVGT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovle $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVLES /* 357 */, Alpha_INS_FCMOVLE,
+  Alpha_FCMOVLES /* 370 */, Alpha_INS_FCMOVLE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovle $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVLET /* 358 */, Alpha_INS_FCMOVLE,
+  Alpha_FCMOVLET /* 371 */, Alpha_INS_FCMOVLE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovlt $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVLTS /* 359 */, Alpha_INS_FCMOVLT,
+  Alpha_FCMOVLTS /* 372 */, Alpha_INS_FCMOVLT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovlt $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVLTT /* 360 */, Alpha_INS_FCMOVLT,
+  Alpha_FCMOVLTT /* 373 */, Alpha_INS_FCMOVLT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovne $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVNES /* 361 */, Alpha_INS_FCMOVNE,
+  Alpha_FCMOVNES /* 374 */, Alpha_INS_FCMOVNE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* fcmovne $RCOND,$RTRUE,$RDEST */
-  Alpha_FCMOVNET /* 362 */, Alpha_INS_FCMOVNE,
+  Alpha_FCMOVNET /* 375 */, Alpha_INS_FCMOVNE,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* fetch ($RB) */
+  Alpha_FETCH /* 376 */, Alpha_INS_FETCH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* fetch_m ($RB) */
+  Alpha_FETCH_M /* 377 */, Alpha_INS_FETCH_M,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ftois $RA,$RC */
-  Alpha_FTOIS /* 363 */, Alpha_INS_FTOIS,
+  Alpha_FTOIS /* 378 */, Alpha_INS_FTOIS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ftoit $RA,$RC */
-  Alpha_FTOIT /* 364 */, Alpha_INS_FTOIT,
+  Alpha_FTOIT /* 379 */, Alpha_INS_FTOIT,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSBL $RA,$RB,$RC */
+  Alpha_INSBL /* 380 */, Alpha_INS_INSBL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSBL $RA,$L,$RC */
+  Alpha_INSBLi /* 381 */, Alpha_INS_INSBL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSLH $RA,$RB,$RC */
+  Alpha_INSLH /* 382 */, Alpha_INS_INSLH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSLH $RA,$L,$RC */
+  Alpha_INSLHi /* 383 */, Alpha_INS_INSLH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSLL $RA,$RB,$RC */
+  Alpha_INSLL /* 384 */, Alpha_INS_INSLL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSLL $RA,$L,$RC */
+  Alpha_INSLLi /* 385 */, Alpha_INS_INSLL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSQH $RA,$RB,$RC */
+  Alpha_INSQH /* 386 */, Alpha_INS_INSQH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSQH $RA,$L,$RC */
+  Alpha_INSQHi /* 387 */, Alpha_INS_INSQH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSQL $RA,$RB,$RC */
+  Alpha_INSQL /* 388 */, Alpha_INS_INSQL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSQL $RA,$L,$RC */
+  Alpha_INSQLi /* 389 */, Alpha_INS_INSQL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSWH $RA,$RB,$RC */
+  Alpha_INSWH /* 390 */, Alpha_INS_INSWH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSWH $RA,$L,$RC */
+  Alpha_INSWHi /* 391 */, Alpha_INS_INSWH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSWL $RA,$RB,$RC */
+  Alpha_INSWL /* 392 */, Alpha_INS_INSWL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* INSWL $RA,$L,$RC */
+  Alpha_INSWLi /* 393 */, Alpha_INS_INSWL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* itofs $RA,$RC */
-  Alpha_ITOFS /* 365 */, Alpha_INS_ITOFS,
+  Alpha_ITOFS /* 394 */, Alpha_INS_ITOFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* itoft $RA,$RC */
-  Alpha_ITOFT /* 366 */, Alpha_INS_ITOFT,
+  Alpha_ITOFT /* 395 */, Alpha_INS_ITOFT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* jmp $$31,{$RS},0 */
-  Alpha_JMP /* 367 */, Alpha_INS_JMP,
+  Alpha_JMP /* 396 */, Alpha_INS_JMP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, 0 }, 1, 1, {{ 0 }}
   #endif
 },
 {
   /* jsr $$26,($$27),0 */
-  Alpha_JSR /* 368 */, Alpha_INS_JSR,
+  Alpha_JSR /* 397 */, Alpha_INS_JSR,
   #ifndef CAPSTONE_DIET
     { Alpha_REG_R27, Alpha_REG_R29, 0 }, { Alpha_REG_R0, Alpha_REG_R1, Alpha_REG_R2, Alpha_REG_R3, Alpha_REG_R4, Alpha_REG_R5, Alpha_REG_R6, Alpha_REG_R7, Alpha_REG_R8, Alpha_REG_R16, Alpha_REG_R17, Alpha_REG_R18, Alpha_REG_R19, Alpha_REG_R20, Alpha_REG_R21, Alpha_REG_R22, Alpha_REG_R23, Alpha_REG_R24, Alpha_REG_R25, Alpha_REG_R26, Alpha_REG_R27, Alpha_REG_R28, Alpha_REG_R29, Alpha_REG_F0, Alpha_REG_F1, Alpha_REG_F10, Alpha_REG_F11, Alpha_REG_F12, Alpha_REG_F13, Alpha_REG_F14, Alpha_REG_F15, Alpha_REG_F16, Alpha_REG_F17, Alpha_REG_F18, Alpha_REG_F19, Alpha_REG_F20, Alpha_REG_F21, Alpha_REG_F22, Alpha_REG_F23, Alpha_REG_F24, Alpha_REG_F25, Alpha_REG_F26, Alpha_REG_F27, Alpha_REG_F28, Alpha_REG_F29, Alpha_REG_F30, 0 }, { Alpha_GRP_CALL, 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* jsr_coroutine $RD,( $RS ),$DISP */
-  Alpha_JSR_COROUTINE /* 369 */, Alpha_INS_JSR_COROUTINE,
+  Alpha_JSR_COROUTINE /* 398 */, Alpha_INS_JSR_COROUTINE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* jsr $$23,($$27),0 */
-  Alpha_JSRs /* 370 */, Alpha_INS_JSR,
+  Alpha_JSRs /* 399 */, Alpha_INS_JSR,
   #ifndef CAPSTONE_DIET
     { Alpha_REG_R24, Alpha_REG_R25, Alpha_REG_R27, 0 }, { Alpha_REG_R23, Alpha_REG_R24, Alpha_REG_R25, Alpha_REG_R27, Alpha_REG_R28, 0 }, { Alpha_GRP_CALL, 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* lda $RA,$DISP($RB) */
-  Alpha_LDA /* 371 */, Alpha_INS_LDA,
+  Alpha_LDA /* 400 */, Alpha_INS_LDA,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldah $RA,$DISP($RB) */
-  Alpha_LDAH /* 372 */, Alpha_INS_LDAH,
+  Alpha_LDAH /* 401 */, Alpha_INS_LDAH,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldah $RA,0($RB)		!gpdisp!$NUM */
-  Alpha_LDAHg /* 373 */, Alpha_INS_LDAH,
+  Alpha_LDAHg /* 402 */, Alpha_INS_LDAH,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldah $RA,$DISP($RB)		!gprelhigh */
-  Alpha_LDAHr /* 374 */, Alpha_INS_LDAH,
+  Alpha_LDAHr /* 403 */, Alpha_INS_LDAH,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* lda $RA,0($RB)		!gpdisp!$NUM */
-  Alpha_LDAg /* 375 */, Alpha_INS_LDA,
+  Alpha_LDAg /* 404 */, Alpha_INS_LDA,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* lda $RA,$DISP($RB)		!gprellow */
-  Alpha_LDAr /* 376 */, Alpha_INS_LDA,
+  Alpha_LDAr /* 405 */, Alpha_INS_LDA,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldbu $RA,$DISP($RB) */
-  Alpha_LDBU /* 377 */, Alpha_INS_LDBU,
+  Alpha_LDBU /* 406 */, Alpha_INS_LDBU,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldbu $RA,$DISP($RB)		!gprellow */
-  Alpha_LDBUr /* 378 */, Alpha_INS_LDBU,
+  Alpha_LDBUr /* 407 */, Alpha_INS_LDBU,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldl $RA,$DISP($RB) */
-  Alpha_LDL /* 379 */, Alpha_INS_LDL,
+  Alpha_LDL /* 408 */, Alpha_INS_LDL,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldl/l $RA,$DISP($RB) */
-  Alpha_LDL_L /* 380 */, Alpha_INS_LDLsL,
+  Alpha_LDL_L /* 409 */, Alpha_INS_LDLsL,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldl $RA,$DISP($RB)		!gprellow */
-  Alpha_LDLr /* 381 */, Alpha_INS_LDL,
+  Alpha_LDLr /* 410 */, Alpha_INS_LDL,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldq $RA,$DISP($RB) */
-  Alpha_LDQ /* 382 */, Alpha_INS_LDQ,
+  Alpha_LDQ /* 411 */, Alpha_INS_LDQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldq/l $RA,$DISP($RB) */
-  Alpha_LDQ_L /* 383 */, Alpha_INS_LDQsL,
+  Alpha_LDQ_L /* 412 */, Alpha_INS_LDQsL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* ldq_u $RA,$DISP($RB) */
+  Alpha_LDQ_U /* 413 */, Alpha_INS_LDQ_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldq $RA,$DISP($RB)		!literal */
-  Alpha_LDQl /* 384 */, Alpha_INS_LDQ,
+  Alpha_LDQl /* 414 */, Alpha_INS_LDQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldq $RA,$DISP($RB)		!gprellow */
-  Alpha_LDQr /* 385 */, Alpha_INS_LDQ,
+  Alpha_LDQr /* 415 */, Alpha_INS_LDQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* lds $RA,$DISP($RB) */
-  Alpha_LDS /* 386 */, Alpha_INS_LDS,
+  Alpha_LDS /* 416 */, Alpha_INS_LDS,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* lds $RA,$DISP($RB)		!gprellow */
-  Alpha_LDSr /* 387 */, Alpha_INS_LDS,
+  Alpha_LDSr /* 417 */, Alpha_INS_LDS,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldt $RA,$DISP($RB) */
-  Alpha_LDT /* 388 */, Alpha_INS_LDT,
+  Alpha_LDT /* 418 */, Alpha_INS_LDT,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldt $RA,$DISP($RB)		!gprellow */
-  Alpha_LDTr /* 389 */, Alpha_INS_LDT,
+  Alpha_LDTr /* 419 */, Alpha_INS_LDT,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldwu $RA,$DISP($RB) */
-  Alpha_LDWU /* 390 */, Alpha_INS_LDWU,
+  Alpha_LDWU /* 420 */, Alpha_INS_LDWU,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ldwu $RA,$DISP($RB)		!gprellow */
-  Alpha_LDWUr /* 391 */, Alpha_INS_LDWU,
+  Alpha_LDWUr /* 421 */, Alpha_INS_LDWU,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mb */
-  Alpha_MB /* 392 */, Alpha_INS_MB,
+  Alpha_MB /* 422 */, Alpha_INS_MB,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKBL $RA,$RB,$RC */
+  Alpha_MSKBL /* 423 */, Alpha_INS_MSKBL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKBL $RA,$L,$RC */
+  Alpha_MSKBLi /* 424 */, Alpha_INS_MSKBL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKLH $RA,$RB,$RC */
+  Alpha_MSKLH /* 425 */, Alpha_INS_MSKLH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKLH $RA,$L,$RC */
+  Alpha_MSKLHi /* 426 */, Alpha_INS_MSKLH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKLL $RA,$RB,$RC */
+  Alpha_MSKLL /* 427 */, Alpha_INS_MSKLL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKLL $RA,$L,$RC */
+  Alpha_MSKLLi /* 428 */, Alpha_INS_MSKLL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKQH $RA,$RB,$RC */
+  Alpha_MSKQH /* 429 */, Alpha_INS_MSKQH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKQH $RA,$L,$RC */
+  Alpha_MSKQHi /* 430 */, Alpha_INS_MSKQH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKQL $RA,$RB,$RC */
+  Alpha_MSKQL /* 431 */, Alpha_INS_MSKQL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKQL $RA,$L,$RC */
+  Alpha_MSKQLi /* 432 */, Alpha_INS_MSKQL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKWH $RA,$RB,$RC */
+  Alpha_MSKWH /* 433 */, Alpha_INS_MSKWH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKWH $RA,$L,$RC */
+  Alpha_MSKWHi /* 434 */, Alpha_INS_MSKWH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKWL $RA,$RB,$RC */
+  Alpha_MSKWL /* 435 */, Alpha_INS_MSKWL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* MSKWL $RA,$L,$RC */
+  Alpha_MSKWLi /* 436 */, Alpha_INS_MSKWL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mull $RA,$L,$RC */
-  Alpha_MULLi /* 393 */, Alpha_INS_MULL,
+  Alpha_MULLi /* 437 */, Alpha_INS_MULL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mull $RA,$RB,$RC */
-  Alpha_MULLr /* 394 */, Alpha_INS_MULL,
+  Alpha_MULLr /* 438 */, Alpha_INS_MULL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mulq $RA,$L,$RC */
-  Alpha_MULQi /* 395 */, Alpha_INS_MULQ,
+  Alpha_MULQi /* 439 */, Alpha_INS_MULQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mulq $RA,$RB,$RC */
-  Alpha_MULQr /* 396 */, Alpha_INS_MULQ,
+  Alpha_MULQr /* 440 */, Alpha_INS_MULQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* muls/su $RA,$RB,$RC */
-  Alpha_MULS /* 397 */, Alpha_INS_MULSsSU,
+  Alpha_MULS /* 441 */, Alpha_INS_MULSsSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mult/su $RA,$RB,$RC */
-  Alpha_MULT /* 398 */, Alpha_INS_MULTsSU,
+  Alpha_MULT /* 442 */, Alpha_INS_MULTsSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ornot $RA,$L,$RC */
-  Alpha_ORNOTi /* 399 */, Alpha_INS_ORNOT,
+  Alpha_ORNOTi /* 443 */, Alpha_INS_ORNOT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ornot $RA,$RB,$RC */
-  Alpha_ORNOTr /* 400 */, Alpha_INS_ORNOT,
+  Alpha_ORNOTr /* 444 */, Alpha_INS_ORNOT,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* rc $RA */
+  Alpha_RC /* 445 */, Alpha_INS_RC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ret $$31,($$26),1 */
-  Alpha_RETDAG /* 401 */, Alpha_INS_RET,
+  Alpha_RETDAG /* 446 */, Alpha_INS_RET,
   #ifndef CAPSTONE_DIET
     { Alpha_REG_R26, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ret $$31,($$26),1 */
-  Alpha_RETDAGp /* 402 */, Alpha_INS_RET,
+  Alpha_RETDAGp /* 447 */, Alpha_INS_RET,
   #ifndef CAPSTONE_DIET
     { Alpha_REG_R26, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rpcc $RA */
-  Alpha_RPCC /* 403 */, Alpha_INS_RPCC,
+  Alpha_RPCC /* 448 */, Alpha_INS_RPCC,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* rs $RA */
+  Alpha_RS /* 449 */, Alpha_INS_RS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4addl $RA,$L,$RC */
-  Alpha_S4ADDLi /* 404 */, Alpha_INS_S4ADDL,
+  Alpha_S4ADDLi /* 450 */, Alpha_INS_S4ADDL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4addl $RA,$RB,$RC */
-  Alpha_S4ADDLr /* 405 */, Alpha_INS_S4ADDL,
+  Alpha_S4ADDLr /* 451 */, Alpha_INS_S4ADDL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4addq $RA,$L,$RC */
-  Alpha_S4ADDQi /* 406 */, Alpha_INS_S4ADDQ,
+  Alpha_S4ADDQi /* 452 */, Alpha_INS_S4ADDQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4addq $RA,$RB,$RC */
-  Alpha_S4ADDQr /* 407 */, Alpha_INS_S4ADDQ,
+  Alpha_S4ADDQr /* 453 */, Alpha_INS_S4ADDQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4subl $RA,$L,$RC */
-  Alpha_S4SUBLi /* 408 */, Alpha_INS_S4SUBL,
+  Alpha_S4SUBLi /* 454 */, Alpha_INS_S4SUBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4subl $RA,$RB,$RC */
-  Alpha_S4SUBLr /* 409 */, Alpha_INS_S4SUBL,
+  Alpha_S4SUBLr /* 455 */, Alpha_INS_S4SUBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4subq $RA,$L,$RC */
-  Alpha_S4SUBQi /* 410 */, Alpha_INS_S4SUBQ,
+  Alpha_S4SUBQi /* 456 */, Alpha_INS_S4SUBQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s4subq $RA,$RB,$RC */
-  Alpha_S4SUBQr /* 411 */, Alpha_INS_S4SUBQ,
+  Alpha_S4SUBQr /* 457 */, Alpha_INS_S4SUBQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8addl $RA,$L,$RC */
-  Alpha_S8ADDLi /* 412 */, Alpha_INS_S8ADDL,
+  Alpha_S8ADDLi /* 458 */, Alpha_INS_S8ADDL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8addl $RA,$RB,$RC */
-  Alpha_S8ADDLr /* 413 */, Alpha_INS_S8ADDL,
+  Alpha_S8ADDLr /* 459 */, Alpha_INS_S8ADDL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8addq $RA,$L,$RC */
-  Alpha_S8ADDQi /* 414 */, Alpha_INS_S8ADDQ,
+  Alpha_S8ADDQi /* 460 */, Alpha_INS_S8ADDQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8addq $RA,$RB,$RC */
-  Alpha_S8ADDQr /* 415 */, Alpha_INS_S8ADDQ,
+  Alpha_S8ADDQr /* 461 */, Alpha_INS_S8ADDQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8subl $RA,$L,$RC */
-  Alpha_S8SUBLi /* 416 */, Alpha_INS_S8SUBL,
+  Alpha_S8SUBLi /* 462 */, Alpha_INS_S8SUBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8subl $RA,$RB,$RC */
-  Alpha_S8SUBLr /* 417 */, Alpha_INS_S8SUBL,
+  Alpha_S8SUBLr /* 463 */, Alpha_INS_S8SUBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8subq $RA,$L,$RC */
-  Alpha_S8SUBQi /* 418 */, Alpha_INS_S8SUBQ,
+  Alpha_S8SUBQi /* 464 */, Alpha_INS_S8SUBQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* s8subq $RA,$RB,$RC */
-  Alpha_S8SUBQr /* 419 */, Alpha_INS_S8SUBQ,
+  Alpha_S8SUBQr /* 465 */, Alpha_INS_S8SUBQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sextb $RB,$RC */
-  Alpha_SEXTB /* 420 */, Alpha_INS_SEXTB,
+  Alpha_SEXTB /* 466 */, Alpha_INS_SEXTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sextw $RB,$RC */
-  Alpha_SEXTW /* 421 */, Alpha_INS_SEXTW,
+  Alpha_SEXTW /* 467 */, Alpha_INS_SEXTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sll $RA,$L,$RC */
-  Alpha_SLi /* 422 */, Alpha_INS_SLL,
+  Alpha_SLi /* 468 */, Alpha_INS_SLL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sll $RA,$RB,$RC */
-  Alpha_SLr /* 423 */, Alpha_INS_SLL,
+  Alpha_SLr /* 469 */, Alpha_INS_SLL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sqrts/su $RB,$RC */
-  Alpha_SQRTS /* 424 */, Alpha_INS_SQRTSsSU,
+  Alpha_SQRTS /* 470 */, Alpha_INS_SQRTSsSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sqrtt/su $RB,$RC */
-  Alpha_SQRTT /* 425 */, Alpha_INS_SQRTTsSU,
+  Alpha_SQRTT /* 471 */, Alpha_INS_SQRTTsSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sra $RA,$L,$RC */
-  Alpha_SRAi /* 426 */, Alpha_INS_SRA,
+  Alpha_SRAi /* 472 */, Alpha_INS_SRA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sra $RA,$RB,$RC */
-  Alpha_SRAr /* 427 */, Alpha_INS_SRA,
+  Alpha_SRAr /* 473 */, Alpha_INS_SRA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* srl $RA,$L,$RC */
-  Alpha_SRLi /* 428 */, Alpha_INS_SRL,
+  Alpha_SRLi /* 474 */, Alpha_INS_SRL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* srl $RA,$RB,$RC */
-  Alpha_SRLr /* 429 */, Alpha_INS_SRL,
+  Alpha_SRLr /* 475 */, Alpha_INS_SRL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stb $RA, $DISP($RB) */
-  Alpha_STB /* 430 */, Alpha_INS_STB,
+  Alpha_STB /* 476 */, Alpha_INS_STB,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stb $RA,$DISP($RB)		!gprellow */
-  Alpha_STBr /* 431 */, Alpha_INS_STB,
+  Alpha_STBr /* 477 */, Alpha_INS_STB,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stl $RA,$DISP($RB) */
-  Alpha_STL /* 432 */, Alpha_INS_STL,
+  Alpha_STL /* 478 */, Alpha_INS_STL,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stl/l $RA,$DISP($RB) */
-  Alpha_STL_C /* 433 */, Alpha_INS_STLsL,
+  Alpha_STL_C /* 479 */, Alpha_INS_STLsL,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stl $RA,$DISP($RB)		!gprellow */
-  Alpha_STLr /* 434 */, Alpha_INS_STL,
+  Alpha_STLr /* 480 */, Alpha_INS_STL,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stq $RA,$DISP($RB) */
-  Alpha_STQ /* 435 */, Alpha_INS_STQ,
+  Alpha_STQ /* 481 */, Alpha_INS_STQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stq/l $RA,$DISP($RB) */
-  Alpha_STQ_C /* 436 */, Alpha_INS_STQsL,
+  Alpha_STQ_C /* 482 */, Alpha_INS_STQsL,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* stq_u $RA, $DISP($RB) */
+  Alpha_STQ_U /* 483 */, Alpha_INS_STQ_U,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stq $RA,$DISP($RB)		!gprellow */
-  Alpha_STQr /* 437 */, Alpha_INS_STQ,
+  Alpha_STQr /* 484 */, Alpha_INS_STQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sts $RA,$DISP($RB) */
-  Alpha_STS /* 438 */, Alpha_INS_STS,
+  Alpha_STS /* 485 */, Alpha_INS_STS,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sts $RA,$DISP($RB)		!gprellow */
-  Alpha_STSr /* 439 */, Alpha_INS_STS,
+  Alpha_STSr /* 486 */, Alpha_INS_STS,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stt $RA,$DISP($RB) */
-  Alpha_STT /* 440 */, Alpha_INS_STT,
+  Alpha_STT /* 487 */, Alpha_INS_STT,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stt $RA,$DISP($RB)		!gprellow */
-  Alpha_STTr /* 441 */, Alpha_INS_STT,
+  Alpha_STTr /* 488 */, Alpha_INS_STT,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stw $RA,$DISP($RB) */
-  Alpha_STW /* 442 */, Alpha_INS_STW,
+  Alpha_STW /* 489 */, Alpha_INS_STW,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stw $RA,$DISP($RB)		!gprellow */
-  Alpha_STWr /* 443 */, Alpha_INS_STW,
+  Alpha_STWr /* 490 */, Alpha_INS_STW,
   #ifndef CAPSTONE_DIET
     { 0 }, { Alpha_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subl $RA,$L,$RC */
-  Alpha_SUBLi /* 444 */, Alpha_INS_SUBL,
+  Alpha_SUBLi /* 491 */, Alpha_INS_SUBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subl $RA,$RB,$RC */
-  Alpha_SUBLr /* 445 */, Alpha_INS_SUBL,
+  Alpha_SUBLr /* 492 */, Alpha_INS_SUBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subq $RA,$L,$RC */
-  Alpha_SUBQi /* 446 */, Alpha_INS_SUBQ,
+  Alpha_SUBQi /* 493 */, Alpha_INS_SUBQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subq $RA,$RB,$RC */
-  Alpha_SUBQr /* 447 */, Alpha_INS_SUBQ,
+  Alpha_SUBQr /* 494 */, Alpha_INS_SUBQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subs/su $RA,$RB,$RC */
-  Alpha_SUBS /* 448 */, Alpha_INS_SUBSsSU,
+  Alpha_SUBS /* 495 */, Alpha_INS_SUBSsSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subt/su $RA,$RB,$RC */
-  Alpha_SUBT /* 449 */, Alpha_INS_SUBTsSU,
+  Alpha_SUBT /* 496 */, Alpha_INS_SUBTsSU,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* trapb */
+  Alpha_TRAPB /* 497 */, Alpha_INS_TRAPB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* umulh $RA,$L,$RC */
-  Alpha_UMULHi /* 450 */, Alpha_INS_UMULH,
+  Alpha_UMULHi /* 498 */, Alpha_INS_UMULH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* umulh $RA,$RB,$RC */
-  Alpha_UMULHr /* 451 */, Alpha_INS_UMULH,
+  Alpha_UMULHr /* 499 */, Alpha_INS_UMULH,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* wh64 ($RB) */
+  Alpha_WH64 /* 500 */, Alpha_INS_WH64,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+  #endif
+},
+{
+  /* wh64en ($RB) */
+  Alpha_WH64EN /* 501 */, Alpha_INS_WH64EN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* wmb */
-  Alpha_WMB /* 452 */, Alpha_INS_WMB,
+  Alpha_WMB /* 502 */, Alpha_INS_WMB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xor $RA,$L,$RC */
-  Alpha_XORi /* 453 */, Alpha_INS_XOR,
+  Alpha_XORi /* 503 */, Alpha_INS_XOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xor $RA,$RB,$RC */
-  Alpha_XORr /* 454 */, Alpha_INS_XOR,
+  Alpha_XORr /* 504 */, Alpha_INS_XOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* zapnot $RA,$L,$RC */
-  Alpha_ZAPNOTi /* 455 */, Alpha_INS_ZAPNOT,
+  Alpha_ZAPNOTi /* 505 */, Alpha_INS_ZAPNOT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
