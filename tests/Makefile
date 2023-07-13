@@ -132,6 +132,10 @@ endif
 ifneq (,$(findstring tricore,$(CAPSTONE_ARCHS)))
 SOURCES += test_tricore.c
 endif
+ifneq (,$(findstring sh,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_SH
+SOURCES += test_sh.c
+endif
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))
