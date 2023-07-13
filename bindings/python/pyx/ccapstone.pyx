@@ -34,7 +34,7 @@ class CsDetail(object):
                 self.modrm, self.sib, self.disp, \
                 self.sib_index, self.sib_scale, self.sib_base, \
                 self.xop_cc, self.sse_cc, self.avx_cc, self.avx_sae, self.avx_rm, \
-                self.eflags, self.encoding, self.modrm_offset, self.disp_offset, \
+                self.eflags, self.fpu_flags, self.encoding, self.modrm_offset, self.disp_offset, \
                 self.disp_size, self.imm_offset, self.imm_size, self.operands) = x86.get_arch_info(detail.arch.x86)
         elif arch == capstone.CS_ARCH_M68K:
             (self.operands, self.op_size) = m68k.get_arch_info(detail.arch.m68k)
