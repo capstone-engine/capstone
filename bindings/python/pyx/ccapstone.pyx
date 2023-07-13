@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, m68k, m680x, evm, mos65xx, wasm, bpf, riscv, tricore, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, m68k, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -63,6 +63,8 @@ class CsDetail(object):
             (self.operands) = bpf.get_arch_info(detail.arch.bpf)
         elif arch == capstone.CS_ARCH_RISCV:
             (self.need_effective_addr, self.operands) = riscv.get_arch_info(detail.arch.riscv)
+        elif arch == capstone.CS_ARCH_SH:
+            (self.sh_insn, self.sh_size, self.operands) = sh.get_arch_info(detail.arch.sh)
         elif arch == capstone.CS_ARCH_TRICORE:
             (self.update_flags, self.operands) = tricore.get_arch_info(detail.arch.tricore)
 
@@ -365,7 +367,7 @@ def debug():
         "evm": capstone.CS_ARCH_EVM, "mos65xx": capstone.CS_ARCH_MOS65XX, \
         "wasm": capstone.CS_ARCH_WASM, \
         "bpf": capstone.CS_ARCH_BPF, "riscv": capstone.CS_ARCH_RISCV, \
-        "tricore": capstone.CS_ARCH_TRICORE }
+        "sh": capstone.CS_ARCH_SH, "tricore": capstone.CS_ARCH_TRICORE }
 
     all_archs = ""
     keys = list(archs.keys())
