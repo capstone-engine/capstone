@@ -4,7 +4,7 @@
 from __future__ import print_function
 from capstone import *
 from capstone.ppc import *
-from xprint import to_hex, to_x_32
+from xprint import to_hex, to_x, to_x_32
 
 PPC_CODE = b"\x43\x20\x0c\x07\x41\x56\xff\x17\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21\x40\x82\x00\x14"
 PPC_CODE2 = b"\x10\x60\x2a\x10\x10\x64\x28\x88\x7c\x4a\x5d\x0f"
@@ -30,41 +30,41 @@ def print_insn_detail(insn):
         c = 0
         for i in insn.operands:
             if i.type == PPC_OP_REG:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.value.reg)))
+                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == PPC_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.value.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
             if i.type == PPC_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
-                if i.value.mem.base != 0:
+                if i.mem.base != PPC_REG_INVALID:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
-                        % (c, insn.reg_name(i.value.mem.base)))
-                if i.value.mem.offset != 0:
-                    print("\t\t\toperands[%u].mem.offset: REG = %s\n" \
-                        % (c, insn.reg_name(i.value.mem.offset)))
-                if i.value.mem.disp != 0:
+                        % (c, insn.reg_name(i.mem.base)))
+                if i.mem.offset != 0:
+                    print("\t\t\toperands[%u].mem.offset: REG = %s" \
+                        % (c, insn.reg_name(i.mem.offset)))
+                if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x_32(i.value.mem.disp)))
+                        % (c, to_x_32(i.mem.disp)))
             if i.access == CS_AC_READ:
-                print("\t\toperands[%u].access: READ\n" % (c))
+                print("\t\toperands[%u].access: READ" % (c))
             elif i.access == CS_AC_WRITE:
-                print("\t\toperands[%u].access: WRITE\n" % (c))
+                print("\t\toperands[%u].access: WRITE" % (c))
             elif i.access == CS_AC_READ | CS_AC_WRITE:
-                print("\t\toperands[%u].access: READ | WRITE\n" % (c))
+                print("\t\toperands[%u].access: READ | WRITE" % (c))
             c += 1
-        if insn.bc.pred_cr != PPC_PRED_INVALID or \
-            insn.bc.pred_ctr != PPC_PRED_INVALID:
-            print("\tBranch:\n")
-            print("\t\tbi: %u\n" % insn.bc.bi)
-            print("\t\tbo: %u\n" % insn.bc.bo)
-            if insn.bc.bh != PPC_BH_INVALID:
-                print("\t\tbh: %u\n" %insn.bc.bh)
-            if insn.bc.pred_cr != PPC_PRED_INVALID:
-                print("\t\tcrX: %s\n" % insn.reg_name(insn.bc.crX))
-                print("\t\tpred CR-bit: %u\n" % insn.bc.pred_cr)
-            if insn.bc.pred_ctr != PPC_PRED_INVALID:
-                print("\t\tpred CTR: %u\n" % insn.bc.pred_ctr)
-            if insn.bc.hint != PPC_BH_INVALID:
-                print("\t\thint: %u\n" % insn.bc.hint)
+    if insn.bc.pred_cr != PPC_PRED_INVALID or \
+        insn.bc.pred_ctr != PPC_PRED_INVALID:
+        print("\tBranch:")
+        print("\t\tbi: %u" % insn.bc.bi)
+        print("\t\tbo: %u" % insn.bc.bo)
+        if insn.bc.bh != PPC_BH_INVALID:
+            print("\t\tbh: %u" %insn.bc.bh)
+        if insn.bc.pred_cr != PPC_PRED_INVALID:
+            print("\t\tcrX: %s" % insn.reg_name(insn.bc.crX))
+            print("\t\tpred CR-bit: %u" % insn.bc.pred_cr)
+        if insn.bc.pred_ctr != PPC_PRED_INVALID:
+            print("\t\tpred CTR: %u" % insn.bc.pred_ctr)
+        if insn.bc.hint != PPC_BR_NOT_GIVEN:
+            print("\t\thint: %u" % insn.bc.hint)
 
     if insn.update_cr0:
         print("\tUpdate-CR0: True")

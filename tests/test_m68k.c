@@ -57,6 +57,7 @@ const char* s_addressing_modes[] = {
 	"Absolute Data Addressing  - Short",
 	"Absolute Data Addressing  - Long",
 	"Immediate value",
+	"Branch Displacement",
 };
 
 static void print_read_write_regs(cs_detail* detail)
@@ -142,6 +143,10 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\toperands[%u].type: REG_PAIR = (%s, %s)\n", i,
 					cs_reg_name(handle, op->reg_pair.reg_0),
 					cs_reg_name(handle, op->reg_pair.reg_1));
+				break;
+			case M68K_OP_BR_DISP:
+				printf("\t\toperands[%u].br_disp.disp: 0x%x", i, op->br_disp.disp);
+				printf("\t\toperands[%u].br_disp.disp_size: %d", i, op->br_disp.disp_size);
 				break;
 		}
 	}

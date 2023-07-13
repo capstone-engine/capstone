@@ -93,6 +93,8 @@ jobs:
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr ..
         sudo cmake --build . --config Release --target install
         cp libcapstone.* ../
+        cp libcapstone.* ../tests/;
+        cp test_* ../tests/;
 
     - name: cstest
       run: |
@@ -106,6 +108,22 @@ jobs:
         cd bindings/python
         make && make check
         cd ../..
+
+    - name: run python binding test
+      run: |
+        cd bindings/python
+        make install3
+        cd ..
+        BUILD_TESTS=no make tests
+
+    - name: run cython binding test
+      run: |
+        pip install cython
+        cd bindings/python
+        make install3_cython
+        cd ..
+        python -c "import capstone;print(capstone.debug())" | grep Cython
+        BUILD_TESTS=no make tests
 
   Windows:
     runs-on: ${{ matrix.config.os }}

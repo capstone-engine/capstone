@@ -5,10 +5,10 @@
 from __future__ import print_function
 from capstone import *
 from capstone.arm64 import *
-from xprint import to_hex, to_x
+from xprint import to_hex, to_x, to_x_32
 
 
-ARM64_CODE = b"\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c"
+ARM64_CODE = b"\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c\xfd\x7b\xba\xa9\xfd\xc7\x43\xf8"
 
 all_tests = (
         (CS_ARCH_ARM64, CS_MODE_ARM, ARM64_CODE, "ARM-64"),
@@ -46,7 +46,7 @@ def print_insn_detail(insn):
                         % (c, insn.reg_name(i.mem.index)))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x(i.mem.disp)))
+                        % (c, to_x_32(i.mem.disp)))
             if i.type == ARM64_OP_REG_MRS:
                 print("\t\toperands[%u].type: REG_MRS = 0x%x" % (c, i.reg))
             if i.type == ARM64_OP_REG_MSR:
@@ -74,6 +74,13 @@ def print_insn_detail(insn):
                 if i.sme_index.disp != 0 :
                     print("\t\t\toperands[%u].index.disp: 0x%x" %(c, i.sme_index.disp))
 
+            if i.access == CS_AC_READ:
+                print("\t\toperands[%u].access: READ" % (c))
+            elif i.access == CS_AC_WRITE:
+                print("\t\toperands[%u].access: WRITE" % (c))
+            elif i.access == CS_AC_READ | CS_AC_WRITE:
+                print("\t\toperands[%u].access: READ | WRITE" % (c))
+
             if i.shift.type != ARM64_SFT_INVALID and i.shift.value:
                 print("\t\t\tShift: type = %u, value = %u" % (i.shift.type, i.shift.value))
 
@@ -85,13 +92,6 @@ def print_insn_detail(insn):
 
             if i.vector_index != -1:
                 print("\t\t\tVector Index: %u" % i.vector_index)
-
-            if i.access == CS_AC_READ:
-                print("\t\toperands[%u].access: READ\n" % (c))
-            elif i.access == CS_AC_WRITE:
-                print("\t\toperands[%u].access: WRITE\n" % (c))
-            elif i.access == CS_AC_READ | CS_AC_WRITE:
-                print("\t\toperands[%u].access: READ | WRITE\n" % (c))
 
 
     if insn.writeback:

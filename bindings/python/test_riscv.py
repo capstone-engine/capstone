@@ -41,6 +41,9 @@ def print_insn_detail(insn):
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x(i.mem.disp)))
             c += 1
+    
+    if len(insn.groups) > 0:
+        print('\tgroups: ' + ' '.join(map(lambda g: insn.group_name(g), insn.groups)))
 
 
 # ## Test class Cs
