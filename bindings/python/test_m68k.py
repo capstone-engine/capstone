@@ -4,9 +4,9 @@
 from __future__ import print_function
 from capstone import *
 from capstone.m68k import *
-from xprint import to_hex, to_x
+from xprint import to_hex
 
-M68K_CODE = b"\x4c\x00\x54\x04\x48\xe7\xe0\x30\x4c\xdf\x0c\x07\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4e\xb9\x00\x00\x00\x12\x4e\x75"
+M68K_CODE = b"\xf0\x10\xf0\x00\x48\xaf\xff\xff\x7f\xff\x11\xb0\x01\x37\x7f\xff\xff\xff\x12\x34\x56\x78\x01\x33\x10\x10\x10\x10\x32\x32\x32\x32\x4C\x00\x54\x04\x48\xe7\xe0\x30\x4C\xDF\x0C\x07\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
 
 all_tests = (
         (CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, M68K_CODE, "M68K"),
@@ -54,9 +54,9 @@ def print_read_write_regs(insn):
 def print_insn_detail(insn):
     if len(insn.operands) > 0:
         print("\top_count: %u" % (len(insn.operands)))
-        print("\tgroups_count: %u" % len(insn.groups))
 
     print_read_write_regs(insn)
+    print("\tgroups_count: %u" % len(insn.groups))
 
     for i, op in enumerate(insn.operands):
         if op.type == M68K_OP_REG:
@@ -80,10 +80,14 @@ def print_insn_detail(insn):
             print("\t\taddress mode: %s" % (s_addressing_modes[op.address_mode]))
         elif op.type == M68K_OP_FP_SINGLE:
             print("\t\toperands[%u].type: FP_SINGLE" % i)
-            print("\t\toperands[%u].simm: %f", i, op.simm)
+            print("\t\toperands[%u].simm: %f" % (i, op.simm))
         elif op.type == M68K_OP_FP_DOUBLE:
             print("\t\toperands[%u].type: FP_DOUBLE" % i)
-            print("\t\toperands[%u].dimm: %lf", i, op.dimm)
+            print("\t\toperands[%u].dimm: %lf" % (i, op.dimm))
+        elif op.type == M68K_OP_REG_BITS:
+            print("\t\toperands[%u].type: REG_BITS = $%x" % (i, op.register_bits))
+        elif op.type == M68K_OP_REG_PAIR:
+            print("\t\toperands[%u].type: REG_PAIR = (%s, %s)" % (i, insn.reg_name(op.reg_pair.reg_0), insn.reg_name(op.reg_pair.reg_1)))
         elif op.type == M68K_OP_BR_DISP:
             print("\t\toperands[%u].br_disp.disp: 0x%x" % (i, op.br_disp.disp))
             print("\t\toperands[%u].br_disp.disp_size: %d" % (i, op.br_disp.disp_size))

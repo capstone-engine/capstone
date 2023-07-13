@@ -128,7 +128,7 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 		}
 
 		if (op->subtracted)
-			printf("\t\tSubtracted: True\n");
+			printf("\t\toperands[%u].subtracted = True\n", i);
 	}
 
 	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
@@ -137,8 +137,12 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 	if (arm->update_flags)
 		printf("\tUpdate-flags: True\n");
 
-	if (arm->writeback)
-		printf("\tWrite-back: True\n");
+	if (arm->writeback) {
+		if (arm->post_index)
+			printf("\tWrite-back: Post\n");
+		else
+			printf("\tWrite-back: Pre\n");
+	}
 
 	if (arm->cps_mode)
 		printf("\tCPSI-mode: %u\n", arm->cps_mode);

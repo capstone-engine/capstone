@@ -8,9 +8,9 @@ from capstone.arm import *
 from xprint import to_hex, to_x_32
 
 
-ARM_CODE = b"\x86\x48\x60\xf4\xED\xFF\xFF\xEB\x04\xe0\x2d\xe5\x00\x00\x00\x00\xe0\x83\x22\xe5\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3\x00\x02\x01\xf1\x05\x40\xd0\xe8\xf4\x80\x00\x00"
+ARM_CODE = b"\x86\x48\x60\xf4\x4d\x0f\xe2\xf4\xED\xFF\xFF\xEB\x04\xe0\x2d\xe5\x00\x00\x00\x00\xe0\x83\x22\xe5\xf1\x02\x03\x0e\x00\x00\xa0\xe3\x02\x30\xc1\xe7\x00\x00\x53\xe3\x00\x02\x01\xf1\x05\x40\xd0\xe8\xf4\x80\x00\x00"
 ARM_CODE2 = b"\xd1\xe8\x00\xf0\xf0\x24\x04\x07\x1f\x3c\xf2\xc0\x00\x00\x4f\xf0\x00\x01\x46\x6c"
-THUMB_CODE = b"\x70\x47\x00\xf0\x10\xe8\xeb\x46\x83\xb0\xc9\x68\x1f\xb1\x30\xbf\xaf\xf3\x20\x84\x52\xf8\x23\xf0"
+THUMB_CODE = b"\x60\xf9\x1f\x04\xe0\xf9\x4f\x07\x70\x47\x00\xf0\x10\xe8\xeb\x46\x83\xb0\xc9\x68\x1f\xb1\x30\xbf\xaf\xf3\x20\x84\x52\xf8\x23\xf0"
 THUMB_CODE2 = b"\x4f\xf0\x00\x01\xbd\xe8\x00\x88\xd1\xe8\x00\xf0\x18\xbf\xad\xbf\xf3\xff\x0b\x0c\x86\xf3\x00\x89\x80\xf3\x00\x8c\x4f\xfa\x99\xf6\xd0\xff\xa2\x01"
 THUMB_MCLASS = b"\xef\xf3\x02\x80"
 ARMV8 = b"\xe0\x3b\xb2\xee\x42\x00\x01\xe1\x51\xf0\x7f\xf5"
@@ -76,11 +76,11 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].neon_lane = %u" % (c, i.neon_lane))
 
             if i.access == CS_AC_READ:
-                print("\t\toperands[%u].access: READ\n" % (c))
+                print("\t\toperands[%u].access: READ" % (c))
             elif i.access == CS_AC_WRITE:
-                print("\t\toperands[%u].access: WRITE\n" % (c))
+                print("\t\toperands[%u].access: WRITE" % (c))
             elif i.access == CS_AC_READ | CS_AC_WRITE:
-                print("\t\toperands[%u].access: READ | WRITE\n" % (c))
+                print("\t\toperands[%u].access: READ | WRITE" % (c))
 
             if i.shift.type != ARM_SFT_INVALID and i.shift.value:
                 print("\t\t\tShift: %u = %u" \
@@ -92,6 +92,8 @@ def print_insn_detail(insn):
 
             c += 1
 
+    if not insn.cc in [ARM_CC_AL, ARM_CC_INVALID]:
+        print("\tCode condition: %u" % insn.cc)
     if insn.update_flags:
         print("\tUpdate-flags: True")
     if insn.writeback:
@@ -99,8 +101,6 @@ def print_insn_detail(insn):
             print("\tWrite-back: Post")
         else:
             print("\tWrite-back: Pre")
-    if not insn.cc in [ARM_CC_AL, ARM_CC_INVALID]:
-        print("\tCode condition: %u" % insn.cc)
     if insn.cps_mode:
         print("\tCPSI-mode: %u" %(insn.cps_mode))
     if insn.cps_flag:
@@ -146,6 +146,7 @@ def test_class():
             for insn in md.disasm(code, 0x80001000):
                 print_insn_detail(insn)
                 print ()
+            print("0x%x:\n" % (insn.address + insn.size))
         except CsError as e:
             print("ERROR: %s" % e)
 

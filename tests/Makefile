@@ -130,6 +130,7 @@ CFLAGS += -DCAPSTONE_HAS_BPF
 SOURCES += test_bpf.c
 endif
 ifneq (,$(findstring tricore,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_TRICORE
 SOURCES += test_tricore.c
 endif
 ifneq (,$(findstring sh,$(CAPSTONE_ARCHS)))

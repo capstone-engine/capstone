@@ -4,7 +4,7 @@ PYTHON3 ?= python3
 .PHONY: gen_const install install3 install_cython sdist sdist3 bdist bdist3 clean check
 
 gen_const:
-	cd .. && $(PYTHON2) const_generator.py python
+	cd .. && $(PYTHON3) const_generator.py python
 
 install:
 	rm -rf src/
@@ -71,7 +71,8 @@ clean:
 TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_m68k.py test_mips.py
 TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py test_tms320c64x.py
 TESTS += test_m680x.py test_skipdata.py test_mos65xx.py test_bpf.py test_riscv.py
-TESTS += test_evm.py
+TESTS += test_evm.py test_tricore.py test_lite.py test_customized_mnem.py
+TESTS += test_wasm.py test_sh.py
 
 check:
 	@for t in $(TESTS); do \

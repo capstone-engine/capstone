@@ -86,7 +86,7 @@ jobs:
         ./make.sh;
         make check;
         cp libcapstone.so.5 libcapstone.so.5.0
-        # sudo make install
+        sudo make install
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
@@ -96,7 +96,9 @@ jobs:
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 ..;
         cmake --build . --config Release;
         cp libcapstone.* ../;
-        # sudo make install;
+        cp libcapstone.* ../tests/;
+        cp test_* ../tests/;
+        sudo make install;
 
     - name: build python binding
       shell: 'script -q -e -c "bash {0}"'
@@ -105,6 +107,22 @@ jobs:
         cd bindings/python;
         make && make check ; 
         cd ../..;
+
+    - name: run python binding test
+      run: |
+        cd bindings/python
+        make install3
+        cd ..
+        BUILD_TESTS=no make tests
+
+    - name: run cython binding test
+      run: |
+        pip install cython
+        cd bindings/python
+        make install3_cython
+        cd ..
+        python -c "import capstone;print(capstone.debug())" | grep Cython
+        BUILD_TESTS=no make tests
 
     - name: cstest
       shell: 'script -q -e -c "bash {0}"'
