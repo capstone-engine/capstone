@@ -119,7 +119,13 @@ __all__ = [
     'CS_OPT_ON',
     'CS_OPT_OFF',
 
+    'CS_OPT_INVALID',
     'CS_OPT_MEM',
+    'CS_OPT_SKIPDATA',
+    'CS_OPT_SKIPDATA_SETUP',
+    'CS_OPT_MNEMONIC',
+    'CS_OPT_UNSIGNED',
+    'CS_OPT_NO_BRANCH_OFFSET',
 
     'CS_ERR_OK',
     'CS_ERR_MEM',
@@ -135,6 +141,7 @@ __all__ = [
     'CS_ERR_SKIPDATA',
     'CS_ERR_X86_ATT',
     'CS_ERR_X86_INTEL',
+    'CS_ERR_X86_MASM',
 
     'CS_SUPPORT_DIET',
     'CS_SUPPORT_X86_REDUCE',
@@ -143,8 +150,8 @@ __all__ = [
     'CS_OP_INVALID',
     'CS_OP_REG',
     'CS_OP_IMM',
-    'CS_OP_MEM',
     'CS_OP_FP',
+    'CS_OP_MEM',
 
     'CS_GRP_INVALID',
     'CS_GRP_JUMP',
@@ -264,6 +271,7 @@ CS_MODE_TRICORE_161 = 1 << 6 # Tricore 1.6.1
 CS_MODE_TRICORE_162 = 1 << 7 # Tricore 1.6.2
 
 # Capstone option type
+CS_OPT_INVALID = 0   # No option specified
 CS_OPT_SYNTAX = 1    # Intel X86 asm syntax (CS_ARCH_X86 arch)
 CS_OPT_DETAIL = 2    # Break down instruction structure into details
 CS_OPT_MODE = 3      # Change engine's mode at run-time
@@ -272,17 +280,18 @@ CS_OPT_SKIPDATA = 5  # Skip data when disassembling
 CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
 CS_OPT_MNEMONIC = 7  # Customize instruction mnemonic
 CS_OPT_UNSIGNED = 8  # Print immediate in unsigned form
+CS_OPT_NO_BRANCH_OFFSET = 9  # ARM, prints branch immediates without offset.
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
 CS_OPT_ON = 3              # Turn ON an option (CS_OPT_DETAIL)
 
 # Common instruction operand types - to be consistent across all architectures.
-CS_OP_INVALID = 0
-CS_OP_REG = 1
-CS_OP_IMM = 2
-CS_OP_MEM = 3
-CS_OP_FP  = 4
+CS_OP_INVALID = 0  # uninitialized/invalid operand.
+CS_OP_REG = 1  # Register operand.
+CS_OP_IMM = 2  # Immediate operand.
+CS_OP_FP  = 3  # Floating-Point operand.
+CS_OP_MEM = 0x80  # Memory operand. Can be ORed with another operand type.
 
 # Common instruction groups - to be consistent across all architectures.
 CS_GRP_INVALID = 0  # uninitialized/invalid group.
