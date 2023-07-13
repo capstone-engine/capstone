@@ -44,70 +44,47 @@ typedef enum CondCodes {
 
 inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC)
 {
-  switch (CC) {
-  default:
-    // llvm_unreachable("Unknown condition code");
-    assert(0);
-  case ARMCC_EQ:
-    return ARMCC_NE;
-  case ARMCC_NE:
-    return ARMCC_EQ;
-  case ARMCC_HS:
-    return ARMCC_LO;
-  case ARMCC_LO:
-    return ARMCC_HS;
-  case ARMCC_MI:
-    return ARMCC_PL;
-  case ARMCC_PL:
-    return ARMCC_MI;
-  case ARMCC_VS:
-    return ARMCC_VC;
-  case ARMCC_VC:
-    return ARMCC_VS;
-  case ARMCC_HI:
-    return ARMCC_LS;
-  case ARMCC_LS:
-    return ARMCC_HI;
-  case ARMCC_GE:
-    return ARMCC_LT;
-  case ARMCC_LT:
-    return ARMCC_GE;
-  case ARMCC_GT:
-    return ARMCC_LE;
-  case ARMCC_LE:
-    return ARMCC_GT;
-  }
+	// clang-format off
+	switch (CC) {
+	default:	assert(0);
+	case ARMCC_EQ:	return ARMCC_NE;
+	case ARMCC_NE:	return ARMCC_EQ;
+	case ARMCC_HS:	return ARMCC_LO;
+	case ARMCC_LO:	return ARMCC_HS;
+	case ARMCC_MI:	return ARMCC_PL;
+	case ARMCC_PL:	return ARMCC_MI;
+	case ARMCC_VS:	return ARMCC_VC;
+	case ARMCC_VC:	return ARMCC_VS;
+	case ARMCC_HI:	return ARMCC_LS;
+	case ARMCC_LS:	return ARMCC_HI;
+	case ARMCC_GE:	return ARMCC_LT;
+	case ARMCC_LT:	return ARMCC_GE;
+	case ARMCC_GT:	return ARMCC_LE;
+	case ARMCC_LE:	return ARMCC_GT;
+	}
+	// clang-format on
 }
 
-/// getSwappedCondition - assume the flags are set by MI(a,b), return
+/// get_swapped_condition - assume the flags are set by MI(a,b), return
 /// the condition code if we modify the instructions such that flags are
 /// set by MI(b,a).
 inline static ARMCC_CondCodes ARMCC_getSwappedCondition(ARMCC_CondCodes CC)
 {
-  switch (CC) {
-  default:
-    return ARMCC_AL;
-  case ARMCC_EQ:
-    return ARMCC_EQ;
-  case ARMCC_NE:
-    return ARMCC_NE;
-  case ARMCC_HS:
-    return ARMCC_LS;
-  case ARMCC_LO:
-    return ARMCC_HI;
-  case ARMCC_HI:
-    return ARMCC_LO;
-  case ARMCC_LS:
-    return ARMCC_HS;
-  case ARMCC_GE:
-    return ARMCC_LE;
-  case ARMCC_LT:
-    return ARMCC_GT;
-  case ARMCC_GT:
-    return ARMCC_LT;
-  case ARMCC_LE:
-    return ARMCC_GE;
-  }
+	// clang-format off
+	switch (CC) {
+	default:	return ARMCC_AL;
+	case ARMCC_EQ:	return ARMCC_EQ;
+	case ARMCC_NE:	return ARMCC_NE;
+	case ARMCC_HS:	return ARMCC_LS;
+	case ARMCC_LO:	return ARMCC_HI;
+	case ARMCC_HI:	return ARMCC_LO;
+	case ARMCC_LS:	return ARMCC_HS;
+	case ARMCC_GE:	return ARMCC_LE;
+	case ARMCC_LT:	return ARMCC_GT;
+	case ARMCC_GT:	return ARMCC_LT;
+	case ARMCC_LE:	return ARMCC_GE;
+	}
+	// clang-format on
 }
 
 typedef enum VPTCodes {
@@ -147,104 +124,74 @@ typedef enum PredBlockMask {
 // and so on.
 inline static const char *ARMVPTPredToString(ARMVCC_VPTCodes CC)
 {
-  switch (CC) {
-  case ARMVCC_None:
-    return "none";
-  case ARMVCC_Then:
-    return "t";
-  case ARMVCC_Else:
-    return "e";
-  }
-  assert(0 && "Unknown VPT code");
+	// clang-format off
+	switch (CC) {
+	default:		assert(0 && "Unknown VPT code");
+	case ARMVCC_None:	return "none";
+	case ARMVCC_Then:	return "t";
+	case ARMVCC_Else:	return "e";
+	}
+	// clang-format on
 }
 
-inline static unsigned ARMVectorCondCodeFromString(const char CC)
+inline static ARMVCC_VPTCodes ARMVectorCondCodeFromString(const char CC)
 {
-  switch (CC) {
-  default:
-    return ~0U;
-  case 't':
-    return ARMVCC_Then;
-  case 'e':
-    return ARMVCC_Else;
-  }
+	switch (CC) {
+	default:
+		return (ARMVCC_VPTCodes)~0U;
+	case 't':
+		return ARMVCC_Then;
+	case 'e':
+		return ARMVCC_Else;
+	}
 }
 
 inline static const char *ARMCondCodeToString(ARMCC_CondCodes CC)
 {
-  switch (CC) {
-  default:
-    assert(0 && "Unknown condition code");
-  case ARMCC_EQ:
-    return "eq";
-  case ARMCC_NE:
-    return "ne";
-  case ARMCC_HS:
-    return "hs";
-  case ARMCC_LO:
-    return "lo";
-  case ARMCC_MI:
-    return "mi";
-  case ARMCC_PL:
-    return "pl";
-  case ARMCC_VS:
-    return "vs";
-  case ARMCC_VC:
-    return "vc";
-  case ARMCC_HI:
-    return "hi";
-  case ARMCC_LS:
-    return "ls";
-  case ARMCC_GE:
-    return "ge";
-  case ARMCC_LT:
-    return "lt";
-  case ARMCC_GT:
-    return "gt";
-  case ARMCC_LE:
-    return "le";
-  case ARMCC_AL:
-    return "al";
-  }
+	// clang-format off
+	switch (CC) {
+	default:	assert(0 && "Unknown condition code");
+	case ARMCC_EQ:	return "eq";
+	case ARMCC_NE:	return "ne";
+	case ARMCC_HS:	return "hs";
+	case ARMCC_LO:	return "lo";
+	case ARMCC_MI:	return "mi";
+	case ARMCC_PL:	return "pl";
+	case ARMCC_VS:	return "vs";
+	case ARMCC_VC:	return "vc";
+	case ARMCC_HI:	return "hi";
+	case ARMCC_LS:	return "ls";
+	case ARMCC_GE:	return "ge";
+	case ARMCC_LT:	return "lt";
+	case ARMCC_GT:	return "gt";
+	case ARMCC_LE:	return "le";
+	case ARMCC_AL:	return "al";
+	}
+	// clang-format on
 }
 
-inline static unsigned ARMCondCodeFromString(const char *CC)
+inline static ARMCC_CondCodes ARMCondCodeFromString(const char *CC)
 {
-  if (strcmp("eq", CC) == 0)
-    return ARMCC_EQ;
-  else if (strcmp("ne", CC) == 0)
-    return ARMCC_NE;
-  else if (strcmp("hs", CC) == 0)
-    return ARMCC_HS;
-  else if (strcmp("cs", CC) == 0)
-    return ARMCC_HS;
-  else if (strcmp("lo", CC) == 0)
-    return ARMCC_LO;
-  else if (strcmp("cc", CC) == 0)
-    return ARMCC_LO;
-  else if (strcmp("mi", CC) == 0)
-    return ARMCC_MI;
-  else if (strcmp("pl", CC) == 0)
-    return ARMCC_PL;
-  else if (strcmp("vs", CC) == 0)
-    return ARMCC_VS;
-  else if (strcmp("vc", CC) == 0)
-    return ARMCC_VC;
-  else if (strcmp("hi", CC) == 0)
-    return ARMCC_HI;
-  else if (strcmp("ls", CC) == 0)
-    return ARMCC_LS;
-  else if (strcmp("ge", CC) == 0)
-    return ARMCC_GE;
-  else if (strcmp("lt", CC) == 0)
-    return ARMCC_LT;
-  else if (strcmp("gt", CC) == 0)
-    return ARMCC_GT;
-  else if (strcmp("le", CC) == 0)
-    return ARMCC_LE;
-  else if (strcmp("al", CC) == 0)
-    return ARMCC_AL;
-  return (~0U);
+	// clang-format off
+	if (!strcmp("eq", CC))	return ARMCC_EQ;
+	if (!strcmp("ne", CC))	return ARMCC_NE;
+	if (!strcmp("hs", CC))	return ARMCC_HS;
+	if (!strcmp("cs", CC))	return ARMCC_HS;
+	if (!strcmp("lo", CC))	return ARMCC_LO;
+	if (!strcmp("cc", CC))	return ARMCC_LO;
+	if (!strcmp("mi", CC))	return ARMCC_MI;
+	if (!strcmp("pl", CC))	return ARMCC_PL;
+	if (!strcmp("vs", CC))	return ARMCC_VS;
+	if (!strcmp("vc", CC))	return ARMCC_VC;
+	if (!strcmp("hi", CC))	return ARMCC_HI;
+	if (!strcmp("ls", CC))	return ARMCC_LS;
+	if (!strcmp("ge", CC))	return ARMCC_GE;
+	if (!strcmp("lt", CC))	return ARMCC_LT;
+	if (!strcmp("gt", CC))	return ARMCC_GT;
+	if (!strcmp("le", CC))	return ARMCC_LE;
+	if (!strcmp("al", CC))	return ARMCC_AL;
+	// clang-format on
+	return (ARMCC_CondCodes)(~0U);
 }
 
 /// ARM shift type
@@ -425,41 +372,44 @@ typedef enum arm_op_type {
 	ARM_OP_MEM = CS_OP_MEM, ///< Memory operand
 } arm_op_type;
 
-inline static const char* ARMOpTypeToString(arm_op_type type)
+inline static const char *ARMOpTypeToString(arm_op_type type)
 {
-	switch (type)
-	{
-	case ARM_OP_INVALID:
-	return "ARM_OP_INVALID";
-	case ARM_OP_REG:
-	return "ARM_OP_REG";
-	case ARM_OP_IMM:
-	return "ARM_OP_IMM";
-	case ARM_OP_FP:
-	return "ARM_OP_FP";
-	case ARM_OP_PRED:
-	return "ARM_OP_PRED";
-	case ARM_OP_CIMM:
-	return "ARM_OP_CIMM";
-	case ARM_OP_PIMM:
-	return "ARM_OP_PIMM";
-	case ARM_OP_SETEND:
-	return "ARM_OP_SETEND";
-	case ARM_OP_SYSREG:
-	return "ARM_OP_SYSREG";
-	case ARM_OP_VPRED_R:
-	return "ARM_OP_VPRED_R";
-	case ARM_OP_VPRED_N:
-	return "ARM_OP_VPRED_N";
-	case ARM_OP_MEM:
-	return "ARM_OP_MEM";
-	case ARM_OP_MEM | ARM_OP_IMM:
-	return "ARM_OP_MEM | ARM_OP_IMM";
-	case ARM_OP_MEM | ARM_OP_REG:
-	return "ARM_OP_MEM | ARM_OP_REG";
-	default:
-	return "Unknown";
+	// clang-format off
+	switch (type) {
+	default:		assert(0 && "Unknown operand type");
+	case ARM_OP_INVALID:	return "ARM_OP_INVALID";
+	case ARM_OP_REG:	return "ARM_OP_REG";
+	case ARM_OP_IMM:	return "ARM_OP_IMM";
+	case ARM_OP_FP:		return "ARM_OP_FP";
+	case ARM_OP_PRED:	return "ARM_OP_PRED";
+	case ARM_OP_CIMM:	return "ARM_OP_CIMM";
+	case ARM_OP_PIMM:	return "ARM_OP_PIMM";
+	case ARM_OP_SETEND:	return "ARM_OP_SETEND";
+	case ARM_OP_SYSREG:	return "ARM_OP_SYSREG";
+	case ARM_OP_VPRED_R:	return "ARM_OP_VPRED_R";
+	case ARM_OP_VPRED_N:	return "ARM_OP_VPRED_N";
+	case ARM_OP_MEM:	return "ARM_OP_MEM";
 	}
+	// clang-format on
+}
+
+inline static arm_op_type ARMOpTypeFromString(const char *type)
+{
+	// clang-format off
+	if (!strcmp("ARM_OP_INVALID", type))	return ARM_OP_INVALID;
+	if (!strcmp("ARM_OP_REG", type))	return ARM_OP_REG;
+	if (!strcmp("ARM_OP_IMM", type))	return ARM_OP_IMM;
+	if (!strcmp("ARM_OP_FP", type))		return ARM_OP_FP;
+	if (!strcmp("ARM_OP_PRED", type))	return ARM_OP_PRED;
+	if (!strcmp("ARM_OP_CIMM", type))	return ARM_OP_CIMM;
+	if (!strcmp("ARM_OP_PIMM", type))	return ARM_OP_PIMM;
+	if (!strcmp("ARM_OP_SETEND", type))	return ARM_OP_SETEND;
+	if (!strcmp("ARM_OP_SYSREG", type))	return ARM_OP_SYSREG;
+	if (!strcmp("ARM_OP_VPRED_R", type))	return ARM_OP_VPRED_R;
+	if (!strcmp("ARM_OP_VPRED_N", type))	return ARM_OP_VPRED_N;
+	if (!strcmp("ARM_OP_MEM", type))	return ARM_OP_MEM;
+	// clang-format on
+	return (arm_op_type)(~0U);
 }
 
 /// Operand type for SETEND instruction
@@ -469,15 +419,27 @@ typedef enum arm_setend_type {
 	ARM_SETEND_LE, ///< LE operand
 } arm_setend_type;
 
-inline static const char* ARMSetEndTypeToString(arm_setend_type se)
+inline static const char *ARMSetEndTypeToString(arm_setend_type se)
 {
-	switch (se)
-	{
-	case ARM_SETEND_INVALID: return "ARM_SETEND_INVALID";
-	case ARM_SETEND_BE: return "ARM_SETEND_BE";
-	case ARM_SETEND_LE: return "ARM_SETEND_LE";
-	default: return "Unknown";
+	// clang-format off
+	switch (se) {
+	default:			assert(0 && "Unknown setend type");
+	case ARM_SETEND_INVALID:	return "ARM_SETEND_INVALID";
+	case ARM_SETEND_BE:		return "ARM_SETEND_BE";
+	case ARM_SETEND_LE:		return "ARM_SETEND_LE";
 	}
+	// clang-format on
+}
+
+inline static arm_setend_type ARMSetEndTypeFromString(const char *se) 
+{
+	// clang-format off
+	if (!strcmp("ARM_SETEND_INVALID", se))	return ARM_SETEND_INVALID;
+	if (!strcmp("ARM_SETEND_BE", se))	return ARM_SETEND_BE;
+	if (!strcmp("ARM_SETEND_LE", se))	return ARM_SETEND_LE;
+	// clang-format on
+	assert(0 && "Unknown setend type string");
+	return (arm_setend_type)(~0U);
 }
 
 typedef enum arm_cpsmode_type {
@@ -873,6 +835,68 @@ typedef enum arm_reg {
 	ARM_REG_IP = ARM_REG_R12,
 } arm_reg;
 
+/// The format a memory operand follows
+typedef enum arm_mem_format {
+	ARM_MEM_NONE,
+	ARM_MEM_U_REG_IMM, ///< U flag, base register, immediate
+	ARM_MEM_U_REG_REG, ///< U flag, base register, index (or offset) register
+	ARM_MEM_U_REG_IMM2, ///< U flag, base register, two immediate offsets (that form the full immediate)
+	ARM_MEM_REG_U_IMM, ///< base register, U flag, immediate offset
+	ARM_MEM_IMM_REG, ///< immediate offset first then base register
+	ARM_MEM_REG_IMM, ///< base register, immediate offset
+	ARM_MEM_IREG_BREG, ///< index register, base register (in this order)
+	ARM_MEM_REG_ALIGN_REG, ///< base register, alignment, offset register
+	ARM_MEM_U_REG_SHIFT_REG, ///< U flag, base register, shift value (5 bits) with shift type (2 bits), index register
+	ARM_MEM_REG_SHIFT_REG, ///< base register, shift, index register
+	ARM_MEM_REG_REG, ///< base register, index register
+	ARM_MEM_REG, ///< only base register (no offset)
+	ARM_MEM_IMM, ///< only immediate offset (implies that the base register is not encoded)
+} arm_mem_format;
+
+inline static const char *ARMMemFormatToString(arm_mem_format format) 
+{
+	// clang-format off
+	switch (format) {
+	default:			assert(0 && "Unknown memory operand format");
+	case ARM_MEM_NONE:		return "ARM_MEM_NONE";
+	case ARM_MEM_U_REG_IMM:		return "ARM_MEM_U_REG_IMM";
+	case ARM_MEM_U_REG_REG:		return "ARM_MEM_U_REG_REG";
+	case ARM_MEM_U_REG_IMM2:	return "ARM_MEM_U_REG_IMM2";
+	case ARM_MEM_REG_U_IMM:		return "ARM_MEM_REG_U_IMM";
+	case ARM_MEM_IMM_REG:		return "ARM_MEM_IMM_REG";
+	case ARM_MEM_REG_IMM:		return "ARM_MEM_REG_IMM";
+	case ARM_MEM_IREG_BREG:		return "ARM_MEM_IREG_BREG";
+	case ARM_MEM_REG_ALIGN_REG:	return "ARM_MEM_REG_ALIGN_REG";
+	case ARM_MEM_U_REG_SHIFT_REG:	return "ARM_MEM_U_REG_SHIFT_REG";
+	case ARM_MEM_REG_SHIFT_REG:	return "ARM_MEM_REG_SHIFT_REG";
+	case ARM_MEM_REG_REG:		return "ARM_MEM_REG_REG";
+	case ARM_MEM_REG:		return "ARM_MEM_REG";
+	case ARM_MEM_IMM:		return "ARM_MEM_IMM";
+	}
+	// clang-format on
+}
+
+inline static arm_mem_format ARMMemFormatFromString(const char *format) 
+{
+	// clang-format off
+	if (!strcmp("ARM_MEM_NONE", format))			return ARM_MEM_NONE;
+	if (!strcmp("ARM_MEM_U_REG_IMM", format))		return ARM_MEM_U_REG_IMM;
+	if (!strcmp("ARM_MEM_U_REG_REG", format))		return ARM_MEM_U_REG_REG;
+	if (!strcmp("ARM_MEM_U_REG_IMM2", format))		return ARM_MEM_U_REG_IMM2;
+	if (!strcmp("ARM_MEM_REG_U_IMM", format))		return ARM_MEM_REG_U_IMM;
+	if (!strcmp("ARM_MEM_IMM_REG", format))			return ARM_MEM_IMM_REG;
+	if (!strcmp("ARM_MEM_REG_IMM", format))			return ARM_MEM_REG_IMM;
+	if (!strcmp("ARM_MEM_IREG_BREG", format))		return ARM_MEM_IREG_BREG;
+	if (!strcmp("ARM_MEM_REG_ALIGN_REG", format))		return ARM_MEM_REG_ALIGN_REG;
+	if (!strcmp("ARM_MEM_U_REG_SHIFT_REG", format))		return ARM_MEM_U_REG_SHIFT_REG;
+	if (!strcmp("ARM_MEM_REG_SHIFT_REG", format))		return ARM_MEM_REG_SHIFT_REG;
+	if (!strcmp("ARM_MEM_REG_REG", format))			return ARM_MEM_REG_REG;
+	if (!strcmp("ARM_MEM_REG", format))			return ARM_MEM_REG;
+	if (!strcmp("ARM_MEM_IMM", format))			return ARM_MEM_IMM;
+	// clang-format on
+	return (arm_mem_format)(~0U);
+}
+
 /// Instruction's operand referring to memory
 /// This is associated with ARM_OP_MEM operand type above
 typedef struct arm_op_mem {
@@ -883,6 +907,7 @@ typedef struct arm_op_mem {
 	/// left-shift on index register, or 0 if irrelevant
 	/// NOTE: this value can also be fetched via operand.shift.value
 	int lshift;
+	arm_mem_format format; ///< The format of the memory operand
 } arm_op_mem;
 
 /// Instruction operand
