@@ -8,8 +8,8 @@ from .mos65xx_const import *
 class MOS65xxOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_uint8),
-        ('mem', ctypes.c_uint16),
+        ('imm', ctypes.c_uint16),
+        ('mem', ctypes.c_uint32),
     )
 
 class MOS65xxOp(ctypes.Structure):
