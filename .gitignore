@@ -72,6 +72,7 @@ tests/test_evm
 tests/test_wasm
 tests/test_mos65xx
 tests/test_bpf
+tests/test_sh
 tests/test_riscv
 
 # regress binaries
