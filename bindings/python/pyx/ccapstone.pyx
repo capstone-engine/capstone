@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, m68k, m680x, evm, mos65xx, bpf, riscv, tricore, CsError
+from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, m68k, m680x, evm, mos65xx, wasm, bpf, riscv, tricore, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -57,6 +57,8 @@ class CsDetail(object):
             (self.pop, self.push, self.fee) = evm.get_arch_info(detail.arch.evm)
         elif arch == capstone.CS_ARCH_MOS65XX:
             (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(detail.arch.mos65xx)
+        elif arch == capstone.CS_ARCH_WASM:
+            (self.operands) = wasm.get_arch_info(detail.arch.wasm)
         elif arch == capstone.CS_ARCH_BPF:
             (self.operands) = bpf.get_arch_info(detail.arch.bpf)
         elif arch == capstone.CS_ARCH_RISCV:
@@ -361,6 +363,7 @@ def debug():
         "sysz": capstone.CS_ARCH_SYSZ, "xcore": capstone.CS_ARCH_XCORE, \
         "tms320c64x": capstone.CS_ARCH_TMS320C64X, "m680x": capstone.CS_ARCH_M680X, \
         "evm": capstone.CS_ARCH_EVM, "mos65xx": capstone.CS_ARCH_MOS65XX, \
+        "wasm": capstone.CS_ARCH_WASM, \
         "bpf": capstone.CS_ARCH_BPF, "riscv": capstone.CS_ARCH_RISCV, \
         "tricore": capstone.CS_ARCH_TRICORE }
 
