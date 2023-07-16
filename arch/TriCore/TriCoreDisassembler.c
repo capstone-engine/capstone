@@ -655,8 +655,13 @@ static DecodeStatus DecodeRLCInstruction(MCInst *Inst, unsigned Insn,
 		MCOperand_CreateImm0(Inst, const16);
 	} else {
 		MCOperand_CreateImm0(Inst, const16);
-		status =
-			DecodeRegisterClass(Inst, d, &desc->OpInfo[1], Decoder);
+		if (MCInst_getOpcode(Inst) == TRICORE_MTCR_rlc) {
+			status =
+				DecodeRegisterClass(Inst, s1, &desc->OpInfo[1], Decoder);
+		} else {
+			status =
+				DecodeRegisterClass(Inst, d, &desc->OpInfo[1], Decoder);
+		}
 		if (status != MCDisassembler_Success)
 			return status;
 	}
