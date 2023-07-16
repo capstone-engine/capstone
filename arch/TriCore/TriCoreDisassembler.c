@@ -1279,7 +1279,13 @@ static DecodeStatus DecodeRRRRInstruction(MCInst *Inst, unsigned Insn,
 		return status;
 
 	if (desc->NumOperands == 3) {
-		return DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
+		switch (MCInst_getOpcode(Inst)) {
+		case TRICORE_EXTR_rrrr:
+		case TRICORE_EXTR_U_rrrr:
+			return DecodeRegisterClass(Inst, s3, &desc->OpInfo[2], Decoder);
+		default:
+			return DecodeRegisterClass(Inst, s2, &desc->OpInfo[2], Decoder);
+		}
 	}
 
 	// Decode s2.
