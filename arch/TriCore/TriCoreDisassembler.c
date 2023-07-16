@@ -425,6 +425,7 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	unsigned off10_0 = fieldFromInstruction_4(Insn, 16, 6);
 	unsigned off10_1 = fieldFromInstruction_4(Insn, 28, 4);
 	unsigned off10 = (off10_0 << 0) | (off10_1 << 6);
+	bool is_store = false;
 
 	unsigned s2 = fieldFromInstruction_4(Insn, 12, 4);
 	unsigned s1_d = fieldFromInstruction_4(Insn, 8, 4);
@@ -440,15 +441,48 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 		return DecodeRegisterClass(Inst, s2, &desc->OpInfo[0], Decoder);
 	}
 
+	switch (MCInst_getOpcode(Inst)) {
+	case TRICORE_ST_A_bo_r:
+	case TRICORE_ST_A_bo_c:
+	case TRICORE_ST_B_bo_r:
+	case TRICORE_ST_B_bo_c:
+	case TRICORE_ST_D_bo_r:
+	case TRICORE_ST_D_bo_c:
+	case TRICORE_ST_DA_bo_r:
+	case TRICORE_ST_DA_bo_c:
+	case TRICORE_ST_H_bo_r:
+	case TRICORE_ST_H_bo_c:
+	case TRICORE_ST_Q_bo_r:
+	case TRICORE_ST_Q_bo_c:
+	case TRICORE_ST_W_bo_r:
+	case TRICORE_ST_W_bo_c:
+	case TRICORE_SWAP_W_bo_r:
+	case TRICORE_SWAP_W_bo_c:
+	case TRICORE_SWAPMSK_W_bo_c:
+	case TRICORE_SWAPMSK_W_bo_r: {
+		is_store = true;
+		break;
+	}
+	}
+
 	if (desc->NumOperands == 2) {
 		if (desc->OpInfo[1].OperandType == MCOI_OPERAND_REGISTER) {
 			// we have [reg+r] instruction
-			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
-						     Decoder);
-			if (status != MCDisassembler_Success)
-				return status;
-			return DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
-						   Decoder);
+			if (is_store) {
+				status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
+							     Decoder);
+				if (status != MCDisassembler_Success)
+					return status;
+				return DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1],
+							   Decoder);
+			} else {
+				status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
+							     Decoder);
+				if (status != MCDisassembler_Success)
+					return status;
+				return DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
+							   Decoder);
+			}
 		} else {
 			// we have one of the CACHE instructions without destination reg
 			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
@@ -462,16 +496,28 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (desc->NumOperands > 2) {
-		status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
-					     Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
+		if (is_store) {
+			// we have [reg+c] instruction
+			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
+						     Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
 
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
-					     Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
+			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1],
+						     Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
+		} else {
+			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
+						     Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
 
+			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
+						     Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
+		}
 		MCOperand_CreateImm0(Inst, off10);
 	}
 
