@@ -705,10 +705,24 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (desc->NumOperands > 1) {
-		status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1],
-					     Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
+		if (desc->OpInfo[0].OperandType == MCOI_OPERAND_REGISTER) {
+			switch (MCInst_getOpcode(Inst)) {
+			case TRICORE_ABSS_rr:
+			case TRICORE_ABSS_H_rr:
+			case TRICORE_ABS_H_rr:
+			case TRICORE_ABS_B_rr:
+			case TRICORE_ABS_rr: {
+				status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
+							     Decoder);
+				break;
+			default:
+				status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1],
+							     Decoder);
+			}
+			if (status != MCDisassembler_Success)
+				return status;
+			}
+		}
 	}
 
 	if (desc->NumOperands > 2) {
