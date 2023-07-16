@@ -441,15 +441,21 @@ static DecodeStatus DecodeBOInstruction(MCInst *Inst, unsigned Insn,
 	}
 
 	if (desc->NumOperands == 2) {
-		status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
-					     Decoder);
-		if (status != MCDisassembler_Success)
-			return status;
-
 		if (desc->OpInfo[1].OperandType == MCOI_OPERAND_REGISTER) {
-			return DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[1],
+			// we have [reg+r] instruction
+			status = DecodeRegisterClass(Inst, s1_d, &desc->OpInfo[0],
+						     Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
+			return DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
 						   Decoder);
 		} else {
+			// we have one of the CACHE instructions without destination reg
+			status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[0],
+						     Decoder);
+			if (status != MCDisassembler_Success)
+				return status;
+
 			MCOperand_CreateImm0(Inst, off10);
 		}
 		return MCDisassembler_Success;
