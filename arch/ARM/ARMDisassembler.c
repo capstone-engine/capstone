@@ -392,10 +392,9 @@ bool ARM_getFeatureBits(unsigned int mode, unsigned int feature)
 			feature == ARM_HasV8_4aOps || feature == ARM_HasV8_3aOps)
 			// HasV8MBaselineOps
 			return false;
-	} else {
-		if (feature == ARM_FeatureVFPOnlySP)
-			return false;
 	}
+	if (feature == ARM_FeatureVFPOnlySP)
+		return false;
 
 	if ((mode & CS_MODE_MCLASS) == 0) {
 		if (feature == ARM_FeatureMClass)
