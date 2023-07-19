@@ -265,3 +265,28 @@ void trim_str(char *str)
 
 	return;
 }
+
+void replace_tabs(char *str)
+{
+	char tmp[MAXMEM];
+	bool space_char = false;
+
+	int j = 0;
+	for (int i = 0; i <= strlen(str); ++i) {
+		if (str[i] == ' ' || str[i] == '\t') {
+			space_char = true;
+			continue;
+		}
+		if (space_char) {
+			space_char = false;
+			tmp[j++] = ' ';
+		}
+
+		tmp[j++] = str[i];
+	}
+
+	tmp[j] = '\0';
+	strcpy(str, tmp);
+
+	return;
+}

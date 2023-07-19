@@ -103,13 +103,19 @@ char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
 			add_str(&result, " ; Subtracted: True");
 	}
 
-	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID)
+	if (arm->cc != ARMCC_AL && arm->cc != ARMCC_UNDEF)
 		add_str(&result, " ; Code condition: %u", arm->cc);
+
+	if (arm->pred_mask)
+		add_str(&result, " ; Predicate Mask: 0x%x", arm->pred_mask);
+
+	if (arm->vcc != ARMVCC_None)
+		add_str(&result, " ; Vector code condition: %u", arm->vcc);
 
 	if (arm->update_flags)
 		add_str(&result, " ; Update-flags: True");
 
-	if (arm->writeback)
+	if (ins->detail->writeback)
 		add_str(&result, " ; Write-back: True");
 
 	if (arm->cps_mode)

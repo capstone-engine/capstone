@@ -1,0 +1,2 @@
+# CS_ARCH_ARM, CS_MODE_THUMB, None
+0xc2,0xf3,0x00,0x8f = bxj r2

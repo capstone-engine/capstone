@@ -8,6 +8,7 @@
 #include "../../cs_priv.h"
 #include "../../utils.h"
 
+#include "../../Mapping.h"
 #include "WASMMapping.h"
 
 // fill in details

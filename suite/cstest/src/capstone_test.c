@@ -2,6 +2,7 @@
 /* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
 
 
+#include "../../../cs_priv.h"
 #include "capstone_test.h"
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
@@ -34,6 +35,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
 	}
 
+	((struct cs_struct *)(uintptr_t)*handle)->PrintBranchImmNotAsAddress = true;
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 	if (count == 0) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Failed to disassemble given code!\n", list_part[0]);
@@ -59,6 +61,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	strcpy(tmp_mc, list_part[1]);
 	replace_hex(tmp_mc);
 	replace_negative(tmp_mc, mc_mode);
+	replace_tabs(tmp_mc);
 
 	strcpy(tmp, insn[0].mnemonic);
 	if (strlen(insn[0].op_str) > 0) {
@@ -70,9 +73,16 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	strcpy(origin, tmp);
 	replace_hex(tmp);
 	replace_negative(tmp, mc_mode);
+	replace_tabs(tmp);
+	for (p = tmp; *p; ++p) *p = tolower(*p);
 
-	if (cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK) {
+	// Skip ARM because the duplicate disassembly messes with the IT/VPT states
+	// and laeds to wrong results.
+	cs_arch arch = ((struct cs_struct *)(uintptr_t)*handle)->arch;
+	if ((arch != CS_ARCH_ARM) &&
+			(cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK)) {
 		cs_disasm(*handle, code, size_byte, offset, 0, &insn);
+
 		strcpy(tmp_noreg, insn[0].mnemonic);
 		if (strlen(insn[0].op_str) > 0) {
 			tmp_noreg[strlen(insn[0].mnemonic)] = ' ';

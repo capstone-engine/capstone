@@ -24,19 +24,21 @@ typedef const char *(*GetName_t)(csh handle, unsigned int id);
 
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
-// return register name, given register ID
-typedef const char *(*GetRegisterName_t)(unsigned RegNo);
-
 // return registers accessed by instruction
 typedef void (*GetRegisterAccess_t)(const cs_insn *insn,
 		cs_regs regs_read, uint8_t *regs_read_count,
 		cs_regs regs_write, uint8_t *regs_write_count);
 
 // for ARM only
-typedef struct ARM_ITStatus {
+typedef struct ARM_ITBlock {
 	unsigned char ITStates[8];
 	unsigned int size;
-} ARM_ITStatus;
+} ARM_ITBlock;
+
+typedef struct ARM_VPTBlock {
+	unsigned char VPTStates[8];
+	unsigned int size;
+} ARM_VPTBlock;
 
 // Customize mnemonic for instructions with alternative name.
 struct customized_mnem {
@@ -64,13 +66,14 @@ struct cs_struct {
 	GetID_t insn_id;
 	PostPrinter_t post_printer;
 	cs_err errnum;
-	ARM_ITStatus ITBlock;	// for Arm only
+	ARM_ITBlock ITBlock;	// for Arm only
+	ARM_VPTBlock VPTBlock;  // for ARM only
+	bool PrintBranchImmNotAsAddress;
 	cs_opt_value detail, imm_unsigned;
 	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
 	bool doing_SME_Index; // handling a SME instruction that has index
 	unsigned short *insn_cache;	// index caching for mapping.c
-	GetRegisterName_t get_regname;
 	bool skipdata;	// set this to True if we skip data when disassembling
 	uint8_t skipdata_size;	// how many bytes to skip
 	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup

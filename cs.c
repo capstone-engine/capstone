@@ -815,6 +815,10 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 				return CS_ERR_OPTION;
 			}
 			break;
+		case CS_OPT_NO_BRANCH_OFFSET:
+			if (handle->PrintBranchImmNotAsAddress)
+				return CS_ERR_OK;
+			break;
 	}
 
 	return arch_configs[handle->arch].arch_option(handle, type, value);
@@ -882,10 +886,6 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	}
 
 	handle->errnum = CS_ERR_OK;
-
-	// reset IT block of ARM structure
-	if (handle->arch == CS_ARCH_ARM)
-		handle->ITBlock.size = 0;
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
 	if (count > 0 && count <= INSN_CACHE_SIZE)

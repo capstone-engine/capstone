@@ -26,6 +26,7 @@ static struct {
 	{ "armv8be", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
 	{ "thumbv8be", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
 	{ "cortexm", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS },
+	{ "cortexv8m", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS | CS_MODE_V8 },
 	{ "thumb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB },
 	{ "thumbbe", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN },
 	{ "thumble", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_LITTLE_ENDIAN },
@@ -195,6 +196,7 @@ static void usage(char *prog)
 		printf("        thumb       thumb mode\n");
 		printf("        thumbbe     thumb + big endian\n");
 		printf("        cortexm     thumb + cortex-m extensions\n");
+		printf("        cortexv8m   thumb + cortex-m extensions + v8\n");
 		printf("        armv8       arm v8\n");
 		printf("        thumbv8     thumb v8\n");
 		printf("        armv8be     arm v8 + big endian\n");
@@ -387,7 +389,7 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		default: break;
 	}
 
-	if (ins->detail->groups_count) {
+	if (ins->detail && ins->detail->groups_count) {
 		int j;
 
 		printf("\tGroups: ");
@@ -415,10 +417,14 @@ int main(int argc, char **argv)
 	bool detail_flag = false;
 	bool unsigned_flag = false;
 	bool skipdata = false;
+	bool custom_reg_alias = false;
 	int args_left;
 
-	while ((c = getopt (argc, argv, "sudhv")) != -1) {
+	while ((c = getopt (argc, argv, "asudhv")) != -1) {
 		switch (c) {
+			case 'a':
+				custom_reg_alias = true;
+				break;
 			case 's':
 				skipdata = true;
 				break;
@@ -581,6 +587,10 @@ int main(int argc, char **argv)
 
 	if (unsigned_flag) {
 		cs_option(handle, CS_OPT_UNSIGNED, CS_OPT_ON);
+	}
+
+	if (custom_reg_alias) {
+		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_CS_REG_ALIAS);
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
