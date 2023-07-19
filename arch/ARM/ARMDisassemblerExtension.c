@@ -24,7 +24,10 @@ bool ITBlock_instrInITBlock(ARM_ITBlock *it)
 }
 
 // Returns true if current instruction is the last instruction in an IT block
-bool ITBlock_instrLastInITBlock(ARM_ITBlock *it) { return (it->size == 1); }
+bool ITBlock_instrLastInITBlock(ARM_ITBlock *it)
+{
+	return (it->size == 1);
+}
 
 // Returns the condition code for instruction in IT block
 unsigned ITBlock_getITCC(ARM_ITBlock *it)
@@ -72,7 +75,10 @@ bool VPTBlock_push_back(ARM_VPTBlock *it, char v)
 	return true;
 }
 
-bool VPTBlock_instrInVPTBlock(ARM_VPTBlock *VPT) { return VPT->size > 0; }
+bool VPTBlock_instrInVPTBlock(ARM_VPTBlock *VPT)
+{
+	return VPT->size > 0;
+}
 
 unsigned VPTBlock_getVPTPred(ARM_VPTBlock *VPT)
 {
@@ -82,7 +88,10 @@ unsigned VPTBlock_getVPTPred(ARM_VPTBlock *VPT)
 	return Pred;
 }
 
-void VPTBlock_advanceVPTState(ARM_VPTBlock *VPT) { VPT->size--; }
+void VPTBlock_advanceVPTState(ARM_VPTBlock *VPT)
+{
+	VPT->size--;
+}
 
 void VPTBlock_setVPTState(ARM_VPTBlock *VPT, char Mask)
 {
@@ -132,13 +141,14 @@ bool isValidCoprocessorNumber(MCInst *Inst, unsigned Num)
 	// know the new VFP/NEON mnemonics.
 
 	// Armv8-A disallows everything *other* than 111x (CP14 and CP15).
-	if (ARM_getFeatureBits(Inst->csh->mode, ARM_HasV8Ops) && (Num & 0xE) != 0xE)
+	if (ARM_getFeatureBits(Inst->csh->mode, ARM_HasV8Ops) &&
+	    (Num & 0xE) != 0xE)
 		return false;
 
 	// Armv8.1-M disallows 100x (CP8,CP9) and 111x (CP14,CP15)
 	// which clash with MVE.
 	if (ARM_getFeatureBits(Inst->csh->mode, ARM_HasV8_1MMainlineOps) &&
-		((Num & 0xE) == 0x8 || (Num & 0xE) == 0xE))
+	    ((Num & 0xE) == 0x8 || (Num & 0xE) == 0xE))
 		return false;
 
 	return true;
@@ -158,17 +168,17 @@ bool ARM_isVpred(arm_op_type op)
 bool isVPTOpcode(int Opc)
 {
 	return Opc == ARM_MVE_VPTv16i8 || Opc == ARM_MVE_VPTv16u8 ||
-		   Opc == ARM_MVE_VPTv16s8 || Opc == ARM_MVE_VPTv8i16 ||
-		   Opc == ARM_MVE_VPTv8u16 || Opc == ARM_MVE_VPTv8s16 ||
-		   Opc == ARM_MVE_VPTv4i32 || Opc == ARM_MVE_VPTv4u32 ||
-		   Opc == ARM_MVE_VPTv4s32 || Opc == ARM_MVE_VPTv4f32 ||
-		   Opc == ARM_MVE_VPTv8f16 || Opc == ARM_MVE_VPTv16i8r ||
-		   Opc == ARM_MVE_VPTv16u8r || Opc == ARM_MVE_VPTv16s8r ||
-		   Opc == ARM_MVE_VPTv8i16r || Opc == ARM_MVE_VPTv8u16r ||
-		   Opc == ARM_MVE_VPTv8s16r || Opc == ARM_MVE_VPTv4i32r ||
-		   Opc == ARM_MVE_VPTv4u32r || Opc == ARM_MVE_VPTv4s32r ||
-		   Opc == ARM_MVE_VPTv4f32r || Opc == ARM_MVE_VPTv8f16r ||
-		   Opc == ARM_MVE_VPST;
+	       Opc == ARM_MVE_VPTv16s8 || Opc == ARM_MVE_VPTv8i16 ||
+	       Opc == ARM_MVE_VPTv8u16 || Opc == ARM_MVE_VPTv8s16 ||
+	       Opc == ARM_MVE_VPTv4i32 || Opc == ARM_MVE_VPTv4u32 ||
+	       Opc == ARM_MVE_VPTv4s32 || Opc == ARM_MVE_VPTv4f32 ||
+	       Opc == ARM_MVE_VPTv8f16 || Opc == ARM_MVE_VPTv16i8r ||
+	       Opc == ARM_MVE_VPTv16u8r || Opc == ARM_MVE_VPTv16s8r ||
+	       Opc == ARM_MVE_VPTv8i16r || Opc == ARM_MVE_VPTv8u16r ||
+	       Opc == ARM_MVE_VPTv8s16r || Opc == ARM_MVE_VPTv4i32r ||
+	       Opc == ARM_MVE_VPTv4u32r || Opc == ARM_MVE_VPTv4s32r ||
+	       Opc == ARM_MVE_VPTv4f32r || Opc == ARM_MVE_VPTv8f16r ||
+	       Opc == ARM_MVE_VPST;
 }
 
 // Imported from ARMMCTargetDesc.cpp
@@ -179,13 +189,13 @@ bool ARM_isCDECoproc(size_t Coproc, const MCInst *MI)
 	if (Coproc >= 8)
 		return false;
 
-	return ARM_getFeatureBits(MI->csh->mode, ARM_FeatureCoprocCDE0 + Coproc);
+	return ARM_getFeatureBits(MI->csh->mode,
+				  ARM_FeatureCoprocCDE0 + Coproc);
 }
 
 // Hacky: enable all features for disassembler
 bool ARM_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-
 	if (feature == ARM_ModeThumb) {
 		if (mode & CS_MODE_THUMB)
 			return true;
@@ -202,22 +212,23 @@ bool ARM_getFeatureBits(unsigned int mode, unsigned int feature)
 		return false;
 
 	if ((feature == ARM_HasMVEIntegerOps || feature == ARM_HasMVEFloatOps ||
-		 feature == ARM_FeatureMVEVectorCostFactor1 ||
-		 feature == ARM_FeatureMVEVectorCostFactor2 ||
-		 feature == ARM_FeatureMVEVectorCostFactor4) &&
-		(mode & CS_MODE_MCLASS) == 0)
+	     feature == ARM_FeatureMVEVectorCostFactor1 ||
+	     feature == ARM_FeatureMVEVectorCostFactor2 ||
+	     feature == ARM_FeatureMVEVectorCostFactor4) &&
+	    (mode & CS_MODE_MCLASS) == 0)
 		return false;
 
 	if ((feature == ARM_HasV8Ops || feature == ARM_HasV8_1MMainlineOps ||
-		 feature == ARM_HasV8_1aOps || feature == ARM_HasV8_2aOps ||
-		 feature == ARM_HasV8_3aOps || feature == ARM_HasV8_4aOps ||
-		 feature == ARM_HasV8_5aOps || feature == ARM_HasV8_6aOps ||
-		 feature == ARM_HasV8_7aOps || feature == ARM_HasV8_8aOps ||
-		 feature == ARM_HasV8_9aOps) &&
-		(mode & CS_MODE_V8) == 0)
+	     feature == ARM_HasV8_1aOps || feature == ARM_HasV8_2aOps ||
+	     feature == ARM_HasV8_3aOps || feature == ARM_HasV8_4aOps ||
+	     feature == ARM_HasV8_5aOps || feature == ARM_HasV8_6aOps ||
+	     feature == ARM_HasV8_7aOps || feature == ARM_HasV8_8aOps ||
+	     feature == ARM_HasV8_9aOps) &&
+	    (mode & CS_MODE_V8) == 0)
 		return false;
 
-	if (feature >= ARM_FeatureCoprocCDE0 && feature <= ARM_FeatureCoprocCDE7)
+	if (feature >= ARM_FeatureCoprocCDE0 &&
+	    feature <= ARM_FeatureCoprocCDE7)
 		// We currently have no way to detect CDE (Custom-Datapath-Extension)
 		// coprocessors.
 		return false;

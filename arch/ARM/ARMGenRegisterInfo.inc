@@ -15,516 +15,523 @@
 #undef GET_REGINFO_ENUM
 
 enum {
-  ARM_NoRegister,
-  ARM_APSR = 1,
-  ARM_APSR_NZCV = 2,
-  ARM_CPSR = 3,
-  ARM_FPCXTNS = 4,
-  ARM_FPCXTS = 5,
-  ARM_FPEXC = 6,
-  ARM_FPINST = 7,
-  ARM_FPSCR = 8,
-  ARM_FPSCR_NZCV = 9,
-  ARM_FPSCR_NZCVQC = 10,
-  ARM_FPSID = 11,
-  ARM_ITSTATE = 12,
-  ARM_LR = 13,
-  ARM_PC = 14,
-  ARM_RA_AUTH_CODE = 15,
-  ARM_SP = 16,
-  ARM_SPSR = 17,
-  ARM_VPR = 18,
-  ARM_ZR = 19,
-  ARM_D0 = 20,
-  ARM_D1 = 21,
-  ARM_D2 = 22,
-  ARM_D3 = 23,
-  ARM_D4 = 24,
-  ARM_D5 = 25,
-  ARM_D6 = 26,
-  ARM_D7 = 27,
-  ARM_D8 = 28,
-  ARM_D9 = 29,
-  ARM_D10 = 30,
-  ARM_D11 = 31,
-  ARM_D12 = 32,
-  ARM_D13 = 33,
-  ARM_D14 = 34,
-  ARM_D15 = 35,
-  ARM_D16 = 36,
-  ARM_D17 = 37,
-  ARM_D18 = 38,
-  ARM_D19 = 39,
-  ARM_D20 = 40,
-  ARM_D21 = 41,
-  ARM_D22 = 42,
-  ARM_D23 = 43,
-  ARM_D24 = 44,
-  ARM_D25 = 45,
-  ARM_D26 = 46,
-  ARM_D27 = 47,
-  ARM_D28 = 48,
-  ARM_D29 = 49,
-  ARM_D30 = 50,
-  ARM_D31 = 51,
-  ARM_FPINST2 = 52,
-  ARM_MVFR0 = 53,
-  ARM_MVFR1 = 54,
-  ARM_MVFR2 = 55,
-  ARM_P0 = 56,
-  ARM_Q0 = 57,
-  ARM_Q1 = 58,
-  ARM_Q2 = 59,
-  ARM_Q3 = 60,
-  ARM_Q4 = 61,
-  ARM_Q5 = 62,
-  ARM_Q6 = 63,
-  ARM_Q7 = 64,
-  ARM_Q8 = 65,
-  ARM_Q9 = 66,
-  ARM_Q10 = 67,
-  ARM_Q11 = 68,
-  ARM_Q12 = 69,
-  ARM_Q13 = 70,
-  ARM_Q14 = 71,
-  ARM_Q15 = 72,
-  ARM_R0 = 73,
-  ARM_R1 = 74,
-  ARM_R2 = 75,
-  ARM_R3 = 76,
-  ARM_R4 = 77,
-  ARM_R5 = 78,
-  ARM_R6 = 79,
-  ARM_R7 = 80,
-  ARM_R8 = 81,
-  ARM_R9 = 82,
-  ARM_R10 = 83,
-  ARM_R11 = 84,
-  ARM_R12 = 85,
-  ARM_S0 = 86,
-  ARM_S1 = 87,
-  ARM_S2 = 88,
-  ARM_S3 = 89,
-  ARM_S4 = 90,
-  ARM_S5 = 91,
-  ARM_S6 = 92,
-  ARM_S7 = 93,
-  ARM_S8 = 94,
-  ARM_S9 = 95,
-  ARM_S10 = 96,
-  ARM_S11 = 97,
-  ARM_S12 = 98,
-  ARM_S13 = 99,
-  ARM_S14 = 100,
-  ARM_S15 = 101,
-  ARM_S16 = 102,
-  ARM_S17 = 103,
-  ARM_S18 = 104,
-  ARM_S19 = 105,
-  ARM_S20 = 106,
-  ARM_S21 = 107,
-  ARM_S22 = 108,
-  ARM_S23 = 109,
-  ARM_S24 = 110,
-  ARM_S25 = 111,
-  ARM_S26 = 112,
-  ARM_S27 = 113,
-  ARM_S28 = 114,
-  ARM_S29 = 115,
-  ARM_S30 = 116,
-  ARM_S31 = 117,
-  ARM_D0_D2 = 118,
-  ARM_D1_D3 = 119,
-  ARM_D2_D4 = 120,
-  ARM_D3_D5 = 121,
-  ARM_D4_D6 = 122,
-  ARM_D5_D7 = 123,
-  ARM_D6_D8 = 124,
-  ARM_D7_D9 = 125,
-  ARM_D8_D10 = 126,
-  ARM_D9_D11 = 127,
-  ARM_D10_D12 = 128,
-  ARM_D11_D13 = 129,
-  ARM_D12_D14 = 130,
-  ARM_D13_D15 = 131,
-  ARM_D14_D16 = 132,
-  ARM_D15_D17 = 133,
-  ARM_D16_D18 = 134,
-  ARM_D17_D19 = 135,
-  ARM_D18_D20 = 136,
-  ARM_D19_D21 = 137,
-  ARM_D20_D22 = 138,
-  ARM_D21_D23 = 139,
-  ARM_D22_D24 = 140,
-  ARM_D23_D25 = 141,
-  ARM_D24_D26 = 142,
-  ARM_D25_D27 = 143,
-  ARM_D26_D28 = 144,
-  ARM_D27_D29 = 145,
-  ARM_D28_D30 = 146,
-  ARM_D29_D31 = 147,
-  ARM_Q0_Q1 = 148,
-  ARM_Q1_Q2 = 149,
-  ARM_Q2_Q3 = 150,
-  ARM_Q3_Q4 = 151,
-  ARM_Q4_Q5 = 152,
-  ARM_Q5_Q6 = 153,
-  ARM_Q6_Q7 = 154,
-  ARM_Q7_Q8 = 155,
-  ARM_Q8_Q9 = 156,
-  ARM_Q9_Q10 = 157,
-  ARM_Q10_Q11 = 158,
-  ARM_Q11_Q12 = 159,
-  ARM_Q12_Q13 = 160,
-  ARM_Q13_Q14 = 161,
-  ARM_Q14_Q15 = 162,
-  ARM_Q0_Q1_Q2_Q3 = 163,
-  ARM_Q1_Q2_Q3_Q4 = 164,
-  ARM_Q2_Q3_Q4_Q5 = 165,
-  ARM_Q3_Q4_Q5_Q6 = 166,
-  ARM_Q4_Q5_Q6_Q7 = 167,
-  ARM_Q5_Q6_Q7_Q8 = 168,
-  ARM_Q6_Q7_Q8_Q9 = 169,
-  ARM_Q7_Q8_Q9_Q10 = 170,
-  ARM_Q8_Q9_Q10_Q11 = 171,
-  ARM_Q9_Q10_Q11_Q12 = 172,
-  ARM_Q10_Q11_Q12_Q13 = 173,
-  ARM_Q11_Q12_Q13_Q14 = 174,
-  ARM_Q12_Q13_Q14_Q15 = 175,
-  ARM_R0_R1 = 176,
-  ARM_R2_R3 = 177,
-  ARM_R4_R5 = 178,
-  ARM_R6_R7 = 179,
-  ARM_R8_R9 = 180,
-  ARM_R10_R11 = 181,
-  ARM_R12_SP = 182,
-  ARM_D0_D1_D2 = 183,
-  ARM_D1_D2_D3 = 184,
-  ARM_D2_D3_D4 = 185,
-  ARM_D3_D4_D5 = 186,
-  ARM_D4_D5_D6 = 187,
-  ARM_D5_D6_D7 = 188,
-  ARM_D6_D7_D8 = 189,
-  ARM_D7_D8_D9 = 190,
-  ARM_D8_D9_D10 = 191,
-  ARM_D9_D10_D11 = 192,
-  ARM_D10_D11_D12 = 193,
-  ARM_D11_D12_D13 = 194,
-  ARM_D12_D13_D14 = 195,
-  ARM_D13_D14_D15 = 196,
-  ARM_D14_D15_D16 = 197,
-  ARM_D15_D16_D17 = 198,
-  ARM_D16_D17_D18 = 199,
-  ARM_D17_D18_D19 = 200,
-  ARM_D18_D19_D20 = 201,
-  ARM_D19_D20_D21 = 202,
-  ARM_D20_D21_D22 = 203,
-  ARM_D21_D22_D23 = 204,
-  ARM_D22_D23_D24 = 205,
-  ARM_D23_D24_D25 = 206,
-  ARM_D24_D25_D26 = 207,
-  ARM_D25_D26_D27 = 208,
-  ARM_D26_D27_D28 = 209,
-  ARM_D27_D28_D29 = 210,
-  ARM_D28_D29_D30 = 211,
-  ARM_D29_D30_D31 = 212,
-  ARM_D0_D2_D4 = 213,
-  ARM_D1_D3_D5 = 214,
-  ARM_D2_D4_D6 = 215,
-  ARM_D3_D5_D7 = 216,
-  ARM_D4_D6_D8 = 217,
-  ARM_D5_D7_D9 = 218,
-  ARM_D6_D8_D10 = 219,
-  ARM_D7_D9_D11 = 220,
-  ARM_D8_D10_D12 = 221,
-  ARM_D9_D11_D13 = 222,
-  ARM_D10_D12_D14 = 223,
-  ARM_D11_D13_D15 = 224,
-  ARM_D12_D14_D16 = 225,
-  ARM_D13_D15_D17 = 226,
-  ARM_D14_D16_D18 = 227,
-  ARM_D15_D17_D19 = 228,
-  ARM_D16_D18_D20 = 229,
-  ARM_D17_D19_D21 = 230,
-  ARM_D18_D20_D22 = 231,
-  ARM_D19_D21_D23 = 232,
-  ARM_D20_D22_D24 = 233,
-  ARM_D21_D23_D25 = 234,
-  ARM_D22_D24_D26 = 235,
-  ARM_D23_D25_D27 = 236,
-  ARM_D24_D26_D28 = 237,
-  ARM_D25_D27_D29 = 238,
-  ARM_D26_D28_D30 = 239,
-  ARM_D27_D29_D31 = 240,
-  ARM_D0_D2_D4_D6 = 241,
-  ARM_D1_D3_D5_D7 = 242,
-  ARM_D2_D4_D6_D8 = 243,
-  ARM_D3_D5_D7_D9 = 244,
-  ARM_D4_D6_D8_D10 = 245,
-  ARM_D5_D7_D9_D11 = 246,
-  ARM_D6_D8_D10_D12 = 247,
-  ARM_D7_D9_D11_D13 = 248,
-  ARM_D8_D10_D12_D14 = 249,
-  ARM_D9_D11_D13_D15 = 250,
-  ARM_D10_D12_D14_D16 = 251,
-  ARM_D11_D13_D15_D17 = 252,
-  ARM_D12_D14_D16_D18 = 253,
-  ARM_D13_D15_D17_D19 = 254,
-  ARM_D14_D16_D18_D20 = 255,
-  ARM_D15_D17_D19_D21 = 256,
-  ARM_D16_D18_D20_D22 = 257,
-  ARM_D17_D19_D21_D23 = 258,
-  ARM_D18_D20_D22_D24 = 259,
-  ARM_D19_D21_D23_D25 = 260,
-  ARM_D20_D22_D24_D26 = 261,
-  ARM_D21_D23_D25_D27 = 262,
-  ARM_D22_D24_D26_D28 = 263,
-  ARM_D23_D25_D27_D29 = 264,
-  ARM_D24_D26_D28_D30 = 265,
-  ARM_D25_D27_D29_D31 = 266,
-  ARM_D1_D2 = 267,
-  ARM_D3_D4 = 268,
-  ARM_D5_D6 = 269,
-  ARM_D7_D8 = 270,
-  ARM_D9_D10 = 271,
-  ARM_D11_D12 = 272,
-  ARM_D13_D14 = 273,
-  ARM_D15_D16 = 274,
-  ARM_D17_D18 = 275,
-  ARM_D19_D20 = 276,
-  ARM_D21_D22 = 277,
-  ARM_D23_D24 = 278,
-  ARM_D25_D26 = 279,
-  ARM_D27_D28 = 280,
-  ARM_D29_D30 = 281,
-  ARM_D1_D2_D3_D4 = 282,
-  ARM_D3_D4_D5_D6 = 283,
-  ARM_D5_D6_D7_D8 = 284,
-  ARM_D7_D8_D9_D10 = 285,
-  ARM_D9_D10_D11_D12 = 286,
-  ARM_D11_D12_D13_D14 = 287,
-  ARM_D13_D14_D15_D16 = 288,
-  ARM_D15_D16_D17_D18 = 289,
-  ARM_D17_D18_D19_D20 = 290,
-  ARM_D19_D20_D21_D22 = 291,
-  ARM_D21_D22_D23_D24 = 292,
-  ARM_D23_D24_D25_D26 = 293,
-  ARM_D25_D26_D27_D28 = 294,
-  ARM_D27_D28_D29_D30 = 295,
-  NUM_TARGET_REGS // 296
+	ARM_NoRegister,
+	ARM_APSR = 1,
+	ARM_APSR_NZCV = 2,
+	ARM_CPSR = 3,
+	ARM_FPCXTNS = 4,
+	ARM_FPCXTS = 5,
+	ARM_FPEXC = 6,
+	ARM_FPINST = 7,
+	ARM_FPSCR = 8,
+	ARM_FPSCR_NZCV = 9,
+	ARM_FPSCR_NZCVQC = 10,
+	ARM_FPSID = 11,
+	ARM_ITSTATE = 12,
+	ARM_LR = 13,
+	ARM_PC = 14,
+	ARM_RA_AUTH_CODE = 15,
+	ARM_SP = 16,
+	ARM_SPSR = 17,
+	ARM_VPR = 18,
+	ARM_ZR = 19,
+	ARM_D0 = 20,
+	ARM_D1 = 21,
+	ARM_D2 = 22,
+	ARM_D3 = 23,
+	ARM_D4 = 24,
+	ARM_D5 = 25,
+	ARM_D6 = 26,
+	ARM_D7 = 27,
+	ARM_D8 = 28,
+	ARM_D9 = 29,
+	ARM_D10 = 30,
+	ARM_D11 = 31,
+	ARM_D12 = 32,
+	ARM_D13 = 33,
+	ARM_D14 = 34,
+	ARM_D15 = 35,
+	ARM_D16 = 36,
+	ARM_D17 = 37,
+	ARM_D18 = 38,
+	ARM_D19 = 39,
+	ARM_D20 = 40,
+	ARM_D21 = 41,
+	ARM_D22 = 42,
+	ARM_D23 = 43,
+	ARM_D24 = 44,
+	ARM_D25 = 45,
+	ARM_D26 = 46,
+	ARM_D27 = 47,
+	ARM_D28 = 48,
+	ARM_D29 = 49,
+	ARM_D30 = 50,
+	ARM_D31 = 51,
+	ARM_FPINST2 = 52,
+	ARM_MVFR0 = 53,
+	ARM_MVFR1 = 54,
+	ARM_MVFR2 = 55,
+	ARM_P0 = 56,
+	ARM_Q0 = 57,
+	ARM_Q1 = 58,
+	ARM_Q2 = 59,
+	ARM_Q3 = 60,
+	ARM_Q4 = 61,
+	ARM_Q5 = 62,
+	ARM_Q6 = 63,
+	ARM_Q7 = 64,
+	ARM_Q8 = 65,
+	ARM_Q9 = 66,
+	ARM_Q10 = 67,
+	ARM_Q11 = 68,
+	ARM_Q12 = 69,
+	ARM_Q13 = 70,
+	ARM_Q14 = 71,
+	ARM_Q15 = 72,
+	ARM_R0 = 73,
+	ARM_R1 = 74,
+	ARM_R2 = 75,
+	ARM_R3 = 76,
+	ARM_R4 = 77,
+	ARM_R5 = 78,
+	ARM_R6 = 79,
+	ARM_R7 = 80,
+	ARM_R8 = 81,
+	ARM_R9 = 82,
+	ARM_R10 = 83,
+	ARM_R11 = 84,
+	ARM_R12 = 85,
+	ARM_S0 = 86,
+	ARM_S1 = 87,
+	ARM_S2 = 88,
+	ARM_S3 = 89,
+	ARM_S4 = 90,
+	ARM_S5 = 91,
+	ARM_S6 = 92,
+	ARM_S7 = 93,
+	ARM_S8 = 94,
+	ARM_S9 = 95,
+	ARM_S10 = 96,
+	ARM_S11 = 97,
+	ARM_S12 = 98,
+	ARM_S13 = 99,
+	ARM_S14 = 100,
+	ARM_S15 = 101,
+	ARM_S16 = 102,
+	ARM_S17 = 103,
+	ARM_S18 = 104,
+	ARM_S19 = 105,
+	ARM_S20 = 106,
+	ARM_S21 = 107,
+	ARM_S22 = 108,
+	ARM_S23 = 109,
+	ARM_S24 = 110,
+	ARM_S25 = 111,
+	ARM_S26 = 112,
+	ARM_S27 = 113,
+	ARM_S28 = 114,
+	ARM_S29 = 115,
+	ARM_S30 = 116,
+	ARM_S31 = 117,
+	ARM_D0_D2 = 118,
+	ARM_D1_D3 = 119,
+	ARM_D2_D4 = 120,
+	ARM_D3_D5 = 121,
+	ARM_D4_D6 = 122,
+	ARM_D5_D7 = 123,
+	ARM_D6_D8 = 124,
+	ARM_D7_D9 = 125,
+	ARM_D8_D10 = 126,
+	ARM_D9_D11 = 127,
+	ARM_D10_D12 = 128,
+	ARM_D11_D13 = 129,
+	ARM_D12_D14 = 130,
+	ARM_D13_D15 = 131,
+	ARM_D14_D16 = 132,
+	ARM_D15_D17 = 133,
+	ARM_D16_D18 = 134,
+	ARM_D17_D19 = 135,
+	ARM_D18_D20 = 136,
+	ARM_D19_D21 = 137,
+	ARM_D20_D22 = 138,
+	ARM_D21_D23 = 139,
+	ARM_D22_D24 = 140,
+	ARM_D23_D25 = 141,
+	ARM_D24_D26 = 142,
+	ARM_D25_D27 = 143,
+	ARM_D26_D28 = 144,
+	ARM_D27_D29 = 145,
+	ARM_D28_D30 = 146,
+	ARM_D29_D31 = 147,
+	ARM_Q0_Q1 = 148,
+	ARM_Q1_Q2 = 149,
+	ARM_Q2_Q3 = 150,
+	ARM_Q3_Q4 = 151,
+	ARM_Q4_Q5 = 152,
+	ARM_Q5_Q6 = 153,
+	ARM_Q6_Q7 = 154,
+	ARM_Q7_Q8 = 155,
+	ARM_Q8_Q9 = 156,
+	ARM_Q9_Q10 = 157,
+	ARM_Q10_Q11 = 158,
+	ARM_Q11_Q12 = 159,
+	ARM_Q12_Q13 = 160,
+	ARM_Q13_Q14 = 161,
+	ARM_Q14_Q15 = 162,
+	ARM_Q0_Q1_Q2_Q3 = 163,
+	ARM_Q1_Q2_Q3_Q4 = 164,
+	ARM_Q2_Q3_Q4_Q5 = 165,
+	ARM_Q3_Q4_Q5_Q6 = 166,
+	ARM_Q4_Q5_Q6_Q7 = 167,
+	ARM_Q5_Q6_Q7_Q8 = 168,
+	ARM_Q6_Q7_Q8_Q9 = 169,
+	ARM_Q7_Q8_Q9_Q10 = 170,
+	ARM_Q8_Q9_Q10_Q11 = 171,
+	ARM_Q9_Q10_Q11_Q12 = 172,
+	ARM_Q10_Q11_Q12_Q13 = 173,
+	ARM_Q11_Q12_Q13_Q14 = 174,
+	ARM_Q12_Q13_Q14_Q15 = 175,
+	ARM_R0_R1 = 176,
+	ARM_R2_R3 = 177,
+	ARM_R4_R5 = 178,
+	ARM_R6_R7 = 179,
+	ARM_R8_R9 = 180,
+	ARM_R10_R11 = 181,
+	ARM_R12_SP = 182,
+	ARM_D0_D1_D2 = 183,
+	ARM_D1_D2_D3 = 184,
+	ARM_D2_D3_D4 = 185,
+	ARM_D3_D4_D5 = 186,
+	ARM_D4_D5_D6 = 187,
+	ARM_D5_D6_D7 = 188,
+	ARM_D6_D7_D8 = 189,
+	ARM_D7_D8_D9 = 190,
+	ARM_D8_D9_D10 = 191,
+	ARM_D9_D10_D11 = 192,
+	ARM_D10_D11_D12 = 193,
+	ARM_D11_D12_D13 = 194,
+	ARM_D12_D13_D14 = 195,
+	ARM_D13_D14_D15 = 196,
+	ARM_D14_D15_D16 = 197,
+	ARM_D15_D16_D17 = 198,
+	ARM_D16_D17_D18 = 199,
+	ARM_D17_D18_D19 = 200,
+	ARM_D18_D19_D20 = 201,
+	ARM_D19_D20_D21 = 202,
+	ARM_D20_D21_D22 = 203,
+	ARM_D21_D22_D23 = 204,
+	ARM_D22_D23_D24 = 205,
+	ARM_D23_D24_D25 = 206,
+	ARM_D24_D25_D26 = 207,
+	ARM_D25_D26_D27 = 208,
+	ARM_D26_D27_D28 = 209,
+	ARM_D27_D28_D29 = 210,
+	ARM_D28_D29_D30 = 211,
+	ARM_D29_D30_D31 = 212,
+	ARM_D0_D2_D4 = 213,
+	ARM_D1_D3_D5 = 214,
+	ARM_D2_D4_D6 = 215,
+	ARM_D3_D5_D7 = 216,
+	ARM_D4_D6_D8 = 217,
+	ARM_D5_D7_D9 = 218,
+	ARM_D6_D8_D10 = 219,
+	ARM_D7_D9_D11 = 220,
+	ARM_D8_D10_D12 = 221,
+	ARM_D9_D11_D13 = 222,
+	ARM_D10_D12_D14 = 223,
+	ARM_D11_D13_D15 = 224,
+	ARM_D12_D14_D16 = 225,
+	ARM_D13_D15_D17 = 226,
+	ARM_D14_D16_D18 = 227,
+	ARM_D15_D17_D19 = 228,
+	ARM_D16_D18_D20 = 229,
+	ARM_D17_D19_D21 = 230,
+	ARM_D18_D20_D22 = 231,
+	ARM_D19_D21_D23 = 232,
+	ARM_D20_D22_D24 = 233,
+	ARM_D21_D23_D25 = 234,
+	ARM_D22_D24_D26 = 235,
+	ARM_D23_D25_D27 = 236,
+	ARM_D24_D26_D28 = 237,
+	ARM_D25_D27_D29 = 238,
+	ARM_D26_D28_D30 = 239,
+	ARM_D27_D29_D31 = 240,
+	ARM_D0_D2_D4_D6 = 241,
+	ARM_D1_D3_D5_D7 = 242,
+	ARM_D2_D4_D6_D8 = 243,
+	ARM_D3_D5_D7_D9 = 244,
+	ARM_D4_D6_D8_D10 = 245,
+	ARM_D5_D7_D9_D11 = 246,
+	ARM_D6_D8_D10_D12 = 247,
+	ARM_D7_D9_D11_D13 = 248,
+	ARM_D8_D10_D12_D14 = 249,
+	ARM_D9_D11_D13_D15 = 250,
+	ARM_D10_D12_D14_D16 = 251,
+	ARM_D11_D13_D15_D17 = 252,
+	ARM_D12_D14_D16_D18 = 253,
+	ARM_D13_D15_D17_D19 = 254,
+	ARM_D14_D16_D18_D20 = 255,
+	ARM_D15_D17_D19_D21 = 256,
+	ARM_D16_D18_D20_D22 = 257,
+	ARM_D17_D19_D21_D23 = 258,
+	ARM_D18_D20_D22_D24 = 259,
+	ARM_D19_D21_D23_D25 = 260,
+	ARM_D20_D22_D24_D26 = 261,
+	ARM_D21_D23_D25_D27 = 262,
+	ARM_D22_D24_D26_D28 = 263,
+	ARM_D23_D25_D27_D29 = 264,
+	ARM_D24_D26_D28_D30 = 265,
+	ARM_D25_D27_D29_D31 = 266,
+	ARM_D1_D2 = 267,
+	ARM_D3_D4 = 268,
+	ARM_D5_D6 = 269,
+	ARM_D7_D8 = 270,
+	ARM_D9_D10 = 271,
+	ARM_D11_D12 = 272,
+	ARM_D13_D14 = 273,
+	ARM_D15_D16 = 274,
+	ARM_D17_D18 = 275,
+	ARM_D19_D20 = 276,
+	ARM_D21_D22 = 277,
+	ARM_D23_D24 = 278,
+	ARM_D25_D26 = 279,
+	ARM_D27_D28 = 280,
+	ARM_D29_D30 = 281,
+	ARM_D1_D2_D3_D4 = 282,
+	ARM_D3_D4_D5_D6 = 283,
+	ARM_D5_D6_D7_D8 = 284,
+	ARM_D7_D8_D9_D10 = 285,
+	ARM_D9_D10_D11_D12 = 286,
+	ARM_D11_D12_D13_D14 = 287,
+	ARM_D13_D14_D15_D16 = 288,
+	ARM_D15_D16_D17_D18 = 289,
+	ARM_D17_D18_D19_D20 = 290,
+	ARM_D19_D20_D21_D22 = 291,
+	ARM_D21_D22_D23_D24 = 292,
+	ARM_D23_D24_D25_D26 = 293,
+	ARM_D25_D26_D27_D28 = 294,
+	ARM_D27_D28_D29_D30 = 295,
+	NUM_TARGET_REGS // 296
 };
 
 // Register classes
 
 enum {
-  ARM_HPRRegClassID = 0,
-  ARM_FPWithVPRRegClassID = 1,
-  ARM_SPRRegClassID = 2,
-  ARM_FPWithVPR_with_ssub_0RegClassID = 3,
-  ARM_GPRRegClassID = 4,
-  ARM_GPRwithAPSRRegClassID = 5,
-  ARM_GPRwithZRRegClassID = 6,
-  ARM_SPR_8RegClassID = 7,
-  ARM_GPRnopcRegClassID = 8,
-  ARM_GPRnospRegClassID = 9,
-  ARM_GPRwithAPSR_NZCVnospRegClassID = 10,
-  ARM_GPRwithAPSRnospRegClassID = 11,
-  ARM_GPRwithZRnospRegClassID = 12,
-  ARM_GPRnoipRegClassID = 13,
-  ARM_rGPRRegClassID = 14,
-  ARM_GPRnoip_and_GPRnopcRegClassID = 15,
-  ARM_GPRnoip_and_GPRnospRegClassID = 16,
-  ARM_GPRnoip_and_GPRwithAPSR_NZCVnospRegClassID = 17,
-  ARM_tGPRwithpcRegClassID = 18,
-  ARM_FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8RegClassID = 19,
-  ARM_hGPRRegClassID = 20,
-  ARM_tGPRRegClassID = 21,
-  ARM_tGPREvenRegClassID = 22,
-  ARM_GPRnopc_and_hGPRRegClassID = 23,
-  ARM_GPRnosp_and_hGPRRegClassID = 24,
-  ARM_GPRnoip_and_hGPRRegClassID = 25,
-  ARM_GPRnoip_and_tGPREvenRegClassID = 26,
-  ARM_GPRnosp_and_GPRnopc_and_hGPRRegClassID = 27,
-  ARM_tGPROddRegClassID = 28,
-  ARM_GPRnopc_and_GPRnoip_and_hGPRRegClassID = 29,
-  ARM_GPRnosp_and_GPRnoip_and_hGPRRegClassID = 30,
-  ARM_tcGPRRegClassID = 31,
-  ARM_GPRnoip_and_tcGPRRegClassID = 32,
-  ARM_GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRRegClassID = 33,
-  ARM_hGPR_and_tGPREvenRegClassID = 34,
-  ARM_tGPR_and_tGPREvenRegClassID = 35,
-  ARM_tGPR_and_tGPROddRegClassID = 36,
-  ARM_tGPREven_and_tcGPRRegClassID = 37,
-  ARM_hGPR_and_GPRnoip_and_tGPREvenRegClassID = 38,
-  ARM_hGPR_and_tGPROddRegClassID = 39,
-  ARM_tGPREven_and_GPRnoip_and_tcGPRRegClassID = 40,
-  ARM_tGPROdd_and_tcGPRRegClassID = 41,
-  ARM_CCRRegClassID = 42,
-  ARM_FPCXTRegsRegClassID = 43,
-  ARM_GPRlrRegClassID = 44,
-  ARM_GPRspRegClassID = 45,
-  ARM_VCCRRegClassID = 46,
-  ARM_cl_FPSCR_NZCVRegClassID = 47,
-  ARM_hGPR_and_tGPRwithpcRegClassID = 48,
-  ARM_hGPR_and_tcGPRRegClassID = 49,
-  ARM_DPRRegClassID = 50,
-  ARM_DPR_VFP2RegClassID = 51,
-  ARM_DPR_8RegClassID = 52,
-  ARM_GPRPairRegClassID = 53,
-  ARM_GPRPairnospRegClassID = 54,
-  ARM_GPRPair_with_gsub_0_in_tGPRRegClassID = 55,
-  ARM_GPRPair_with_gsub_0_in_hGPRRegClassID = 56,
-  ARM_GPRPair_with_gsub_0_in_tcGPRRegClassID = 57,
-  ARM_GPRPair_with_gsub_1_in_tcGPRRegClassID = 58,
-  ARM_GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRRegClassID = 59,
-  ARM_GPRPair_with_gsub_1_in_GPRspRegClassID = 60,
-  ARM_DPairSpcRegClassID = 61,
-  ARM_DPairSpc_with_ssub_0RegClassID = 62,
-  ARM_DPairSpc_with_ssub_4RegClassID = 63,
-  ARM_DPairSpc_with_dsub_0_in_DPR_8RegClassID = 64,
-  ARM_DPairSpc_with_dsub_2_in_DPR_8RegClassID = 65,
-  ARM_DPairRegClassID = 66,
-  ARM_DPair_with_ssub_0RegClassID = 67,
-  ARM_QPRRegClassID = 68,
-  ARM_DPair_with_ssub_2RegClassID = 69,
-  ARM_DPair_with_dsub_0_in_DPR_8RegClassID = 70,
-  ARM_MQPRRegClassID = 71,
-  ARM_QPR_VFP2RegClassID = 72,
-  ARM_DPair_with_dsub_1_in_DPR_8RegClassID = 73,
-  ARM_QPR_8RegClassID = 74,
-  ARM_DTripleRegClassID = 75,
-  ARM_DTripleSpcRegClassID = 76,
-  ARM_DTripleSpc_with_ssub_0RegClassID = 77,
-  ARM_DTriple_with_ssub_0RegClassID = 78,
-  ARM_DTriple_with_qsub_0_in_QPRRegClassID = 79,
-  ARM_DTriple_with_ssub_2RegClassID = 80,
-  ARM_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID = 81,
-  ARM_DTripleSpc_with_ssub_4RegClassID = 82,
-  ARM_DTriple_with_ssub_4RegClassID = 83,
-  ARM_DTripleSpc_with_ssub_8RegClassID = 84,
-  ARM_DTripleSpc_with_dsub_0_in_DPR_8RegClassID = 85,
-  ARM_DTriple_with_dsub_0_in_DPR_8RegClassID = 86,
-  ARM_DTriple_with_qsub_0_in_MQPRRegClassID = 87,
-  ARM_DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID = 88,
-  ARM_DTriple_with_dsub_1_in_DPR_8RegClassID = 89,
-  ARM_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 90,
-  ARM_DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRRegClassID = 91,
-  ARM_DTripleSpc_with_dsub_2_in_DPR_8RegClassID = 92,
-  ARM_DTriple_with_dsub_2_in_DPR_8RegClassID = 93,
-  ARM_DTripleSpc_with_dsub_4_in_DPR_8RegClassID = 94,
-  ARM_DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 95,
-  ARM_DTriple_with_qsub_0_in_QPR_8RegClassID = 96,
-  ARM_DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRRegClassID = 97,
-  ARM_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8RegClassID = 98,
-  ARM_DQuadSpcRegClassID = 99,
-  ARM_DQuadSpc_with_ssub_0RegClassID = 100,
-  ARM_DQuadSpc_with_ssub_4RegClassID = 101,
-  ARM_DQuadSpc_with_ssub_8RegClassID = 102,
-  ARM_DQuadSpc_with_dsub_0_in_DPR_8RegClassID = 103,
-  ARM_DQuadSpc_with_dsub_2_in_DPR_8RegClassID = 104,
-  ARM_DQuadSpc_with_dsub_4_in_DPR_8RegClassID = 105,
-  ARM_DQuadRegClassID = 106,
-  ARM_DQuad_with_ssub_0RegClassID = 107,
-  ARM_DQuad_with_ssub_2RegClassID = 108,
-  ARM_QQPRRegClassID = 109,
-  ARM_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID = 110,
-  ARM_DQuad_with_ssub_4RegClassID = 111,
-  ARM_DQuad_with_ssub_6RegClassID = 112,
-  ARM_DQuad_with_dsub_0_in_DPR_8RegClassID = 113,
-  ARM_DQuad_with_qsub_0_in_MQPRRegClassID = 114,
-  ARM_DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID = 115,
-  ARM_DQuad_with_dsub_1_in_DPR_8RegClassID = 116,
-  ARM_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 117,
-  ARM_MQQPRRegClassID = 118,
-  ARM_DQuad_with_dsub_2_in_DPR_8RegClassID = 119,
-  ARM_DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 120,
-  ARM_DQuad_with_dsub_3_in_DPR_8RegClassID = 121,
-  ARM_DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 122,
-  ARM_DQuad_with_qsub_0_in_QPR_8RegClassID = 123,
-  ARM_DQuad_with_qsub_1_in_QPR_8RegClassID = 124,
-  ARM_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8RegClassID = 125,
-  ARM_DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 126,
-  ARM_QQQQPRRegClassID = 127,
-  ARM_QQQQPR_with_ssub_0RegClassID = 128,
-  ARM_QQQQPR_with_ssub_4RegClassID = 129,
-  ARM_QQQQPR_with_ssub_8RegClassID = 130,
-  ARM_MQQQQPRRegClassID = 131,
-  ARM_MQQQQPR_with_dsub_0_in_DPR_8RegClassID = 132,
-  ARM_MQQQQPR_with_dsub_2_in_DPR_8RegClassID = 133,
-  ARM_MQQQQPR_with_dsub_4_in_DPR_8RegClassID = 134,
-  ARM_MQQQQPR_with_dsub_6_in_DPR_8RegClassID = 135,
+	ARM_HPRRegClassID = 0,
+	ARM_FPWithVPRRegClassID = 1,
+	ARM_SPRRegClassID = 2,
+	ARM_FPWithVPR_with_ssub_0RegClassID = 3,
+	ARM_GPRRegClassID = 4,
+	ARM_GPRwithAPSRRegClassID = 5,
+	ARM_GPRwithZRRegClassID = 6,
+	ARM_SPR_8RegClassID = 7,
+	ARM_GPRnopcRegClassID = 8,
+	ARM_GPRnospRegClassID = 9,
+	ARM_GPRwithAPSR_NZCVnospRegClassID = 10,
+	ARM_GPRwithAPSRnospRegClassID = 11,
+	ARM_GPRwithZRnospRegClassID = 12,
+	ARM_GPRnoipRegClassID = 13,
+	ARM_rGPRRegClassID = 14,
+	ARM_GPRnoip_and_GPRnopcRegClassID = 15,
+	ARM_GPRnoip_and_GPRnospRegClassID = 16,
+	ARM_GPRnoip_and_GPRwithAPSR_NZCVnospRegClassID = 17,
+	ARM_tGPRwithpcRegClassID = 18,
+	ARM_FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8RegClassID = 19,
+	ARM_hGPRRegClassID = 20,
+	ARM_tGPRRegClassID = 21,
+	ARM_tGPREvenRegClassID = 22,
+	ARM_GPRnopc_and_hGPRRegClassID = 23,
+	ARM_GPRnosp_and_hGPRRegClassID = 24,
+	ARM_GPRnoip_and_hGPRRegClassID = 25,
+	ARM_GPRnoip_and_tGPREvenRegClassID = 26,
+	ARM_GPRnosp_and_GPRnopc_and_hGPRRegClassID = 27,
+	ARM_tGPROddRegClassID = 28,
+	ARM_GPRnopc_and_GPRnoip_and_hGPRRegClassID = 29,
+	ARM_GPRnosp_and_GPRnoip_and_hGPRRegClassID = 30,
+	ARM_tcGPRRegClassID = 31,
+	ARM_GPRnoip_and_tcGPRRegClassID = 32,
+	ARM_GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRRegClassID = 33,
+	ARM_hGPR_and_tGPREvenRegClassID = 34,
+	ARM_tGPR_and_tGPREvenRegClassID = 35,
+	ARM_tGPR_and_tGPROddRegClassID = 36,
+	ARM_tGPREven_and_tcGPRRegClassID = 37,
+	ARM_hGPR_and_GPRnoip_and_tGPREvenRegClassID = 38,
+	ARM_hGPR_and_tGPROddRegClassID = 39,
+	ARM_tGPREven_and_GPRnoip_and_tcGPRRegClassID = 40,
+	ARM_tGPROdd_and_tcGPRRegClassID = 41,
+	ARM_CCRRegClassID = 42,
+	ARM_FPCXTRegsRegClassID = 43,
+	ARM_GPRlrRegClassID = 44,
+	ARM_GPRspRegClassID = 45,
+	ARM_VCCRRegClassID = 46,
+	ARM_cl_FPSCR_NZCVRegClassID = 47,
+	ARM_hGPR_and_tGPRwithpcRegClassID = 48,
+	ARM_hGPR_and_tcGPRRegClassID = 49,
+	ARM_DPRRegClassID = 50,
+	ARM_DPR_VFP2RegClassID = 51,
+	ARM_DPR_8RegClassID = 52,
+	ARM_GPRPairRegClassID = 53,
+	ARM_GPRPairnospRegClassID = 54,
+	ARM_GPRPair_with_gsub_0_in_tGPRRegClassID = 55,
+	ARM_GPRPair_with_gsub_0_in_hGPRRegClassID = 56,
+	ARM_GPRPair_with_gsub_0_in_tcGPRRegClassID = 57,
+	ARM_GPRPair_with_gsub_1_in_tcGPRRegClassID = 58,
+	ARM_GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRRegClassID = 59,
+	ARM_GPRPair_with_gsub_1_in_GPRspRegClassID = 60,
+	ARM_DPairSpcRegClassID = 61,
+	ARM_DPairSpc_with_ssub_0RegClassID = 62,
+	ARM_DPairSpc_with_ssub_4RegClassID = 63,
+	ARM_DPairSpc_with_dsub_0_in_DPR_8RegClassID = 64,
+	ARM_DPairSpc_with_dsub_2_in_DPR_8RegClassID = 65,
+	ARM_DPairRegClassID = 66,
+	ARM_DPair_with_ssub_0RegClassID = 67,
+	ARM_QPRRegClassID = 68,
+	ARM_DPair_with_ssub_2RegClassID = 69,
+	ARM_DPair_with_dsub_0_in_DPR_8RegClassID = 70,
+	ARM_MQPRRegClassID = 71,
+	ARM_QPR_VFP2RegClassID = 72,
+	ARM_DPair_with_dsub_1_in_DPR_8RegClassID = 73,
+	ARM_QPR_8RegClassID = 74,
+	ARM_DTripleRegClassID = 75,
+	ARM_DTripleSpcRegClassID = 76,
+	ARM_DTripleSpc_with_ssub_0RegClassID = 77,
+	ARM_DTriple_with_ssub_0RegClassID = 78,
+	ARM_DTriple_with_qsub_0_in_QPRRegClassID = 79,
+	ARM_DTriple_with_ssub_2RegClassID = 80,
+	ARM_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID = 81,
+	ARM_DTripleSpc_with_ssub_4RegClassID = 82,
+	ARM_DTriple_with_ssub_4RegClassID = 83,
+	ARM_DTripleSpc_with_ssub_8RegClassID = 84,
+	ARM_DTripleSpc_with_dsub_0_in_DPR_8RegClassID = 85,
+	ARM_DTriple_with_dsub_0_in_DPR_8RegClassID = 86,
+	ARM_DTriple_with_qsub_0_in_MQPRRegClassID = 87,
+	ARM_DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID =
+		88,
+	ARM_DTriple_with_dsub_1_in_DPR_8RegClassID = 89,
+	ARM_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 90,
+	ARM_DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRRegClassID = 91,
+	ARM_DTripleSpc_with_dsub_2_in_DPR_8RegClassID = 92,
+	ARM_DTriple_with_dsub_2_in_DPR_8RegClassID = 93,
+	ARM_DTripleSpc_with_dsub_4_in_DPR_8RegClassID = 94,
+	ARM_DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID =
+		95,
+	ARM_DTriple_with_qsub_0_in_QPR_8RegClassID = 96,
+	ARM_DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRRegClassID =
+		97,
+	ARM_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8RegClassID = 98,
+	ARM_DQuadSpcRegClassID = 99,
+	ARM_DQuadSpc_with_ssub_0RegClassID = 100,
+	ARM_DQuadSpc_with_ssub_4RegClassID = 101,
+	ARM_DQuadSpc_with_ssub_8RegClassID = 102,
+	ARM_DQuadSpc_with_dsub_0_in_DPR_8RegClassID = 103,
+	ARM_DQuadSpc_with_dsub_2_in_DPR_8RegClassID = 104,
+	ARM_DQuadSpc_with_dsub_4_in_DPR_8RegClassID = 105,
+	ARM_DQuadRegClassID = 106,
+	ARM_DQuad_with_ssub_0RegClassID = 107,
+	ARM_DQuad_with_ssub_2RegClassID = 108,
+	ARM_QQPRRegClassID = 109,
+	ARM_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID = 110,
+	ARM_DQuad_with_ssub_4RegClassID = 111,
+	ARM_DQuad_with_ssub_6RegClassID = 112,
+	ARM_DQuad_with_dsub_0_in_DPR_8RegClassID = 113,
+	ARM_DQuad_with_qsub_0_in_MQPRRegClassID = 114,
+	ARM_DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRRegClassID =
+		115,
+	ARM_DQuad_with_dsub_1_in_DPR_8RegClassID = 116,
+	ARM_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID = 117,
+	ARM_MQQPRRegClassID = 118,
+	ARM_DQuad_with_dsub_2_in_DPR_8RegClassID = 119,
+	ARM_DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID =
+		120,
+	ARM_DQuad_with_dsub_3_in_DPR_8RegClassID = 121,
+	ARM_DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID =
+		122,
+	ARM_DQuad_with_qsub_0_in_QPR_8RegClassID = 123,
+	ARM_DQuad_with_qsub_1_in_QPR_8RegClassID = 124,
+	ARM_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8RegClassID = 125,
+	ARM_DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRRegClassID =
+		126,
+	ARM_QQQQPRRegClassID = 127,
+	ARM_QQQQPR_with_ssub_0RegClassID = 128,
+	ARM_QQQQPR_with_ssub_4RegClassID = 129,
+	ARM_QQQQPR_with_ssub_8RegClassID = 130,
+	ARM_MQQQQPRRegClassID = 131,
+	ARM_MQQQQPR_with_dsub_0_in_DPR_8RegClassID = 132,
+	ARM_MQQQQPR_with_dsub_2_in_DPR_8RegClassID = 133,
+	ARM_MQQQQPR_with_dsub_4_in_DPR_8RegClassID = 134,
+	ARM_MQQQQPR_with_dsub_6_in_DPR_8RegClassID = 135,
 
 };
 
 // Register alternate name indices
 
 enum {
-  ARM_NoRegAltName,	// 0
-  ARM_RegNamesRaw,	// 1
-  NUM_TARGET_REG_ALT_NAMES = 2
+	ARM_NoRegAltName, // 0
+	ARM_RegNamesRaw,  // 1
+	NUM_TARGET_REG_ALT_NAMES = 2
 };
 
 // Subregister indices
 
 enum {
-  ARM_NoSubRegister,
-  ARM_dsub_0,	// 1
-  ARM_dsub_1,	// 2
-  ARM_dsub_2,	// 3
-  ARM_dsub_3,	// 4
-  ARM_dsub_4,	// 5
-  ARM_dsub_5,	// 6
-  ARM_dsub_6,	// 7
-  ARM_dsub_7,	// 8
-  ARM_gsub_0,	// 9
-  ARM_gsub_1,	// 10
-  ARM_qqsub_0,	// 11
-  ARM_qqsub_1,	// 12
-  ARM_qsub_0,	// 13
-  ARM_qsub_1,	// 14
-  ARM_qsub_2,	// 15
-  ARM_qsub_3,	// 16
-  ARM_ssub_0,	// 17
-  ARM_ssub_1,	// 18
-  ARM_ssub_2,	// 19
-  ARM_ssub_3,	// 20
-  ARM_ssub_4,	// 21
-  ARM_ssub_5,	// 22
-  ARM_ssub_6,	// 23
-  ARM_ssub_7,	// 24
-  ARM_ssub_8,	// 25
-  ARM_ssub_9,	// 26
-  ARM_ssub_10,	// 27
-  ARM_ssub_11,	// 28
-  ARM_ssub_12,	// 29
-  ARM_ssub_13,	// 30
-  ARM_ssub_14,	// 31
-  ARM_ssub_15,	// 32
-  ARM_ssub_0_ssub_1_ssub_4_ssub_5,	// 33
-  ARM_ssub_0_ssub_1_ssub_2_ssub_3_ssub_4_ssub_5,	// 34
-  ARM_ssub_2_ssub_3_ssub_6_ssub_7,	// 35
-  ARM_ssub_2_ssub_3_ssub_4_ssub_5_ssub_6_ssub_7,	// 36
-  ARM_ssub_2_ssub_3_ssub_4_ssub_5,	// 37
-  ARM_ssub_0_ssub_1_ssub_4_ssub_5_ssub_8_ssub_9,	// 38
-  ARM_ssub_0_ssub_1_ssub_4_ssub_5_ssub_8_ssub_9_ssub_12_ssub_13,	// 39
-  ARM_ssub_2_ssub_3_ssub_6_ssub_7_dsub_5,	// 40
-  ARM_ssub_2_ssub_3_ssub_6_ssub_7_dsub_5_dsub_7,	// 41
-  ARM_ssub_2_ssub_3_ssub_4_ssub_5_ssub_6_ssub_7_ssub_8_ssub_9,	// 42
-  ARM_ssub_4_ssub_5_ssub_8_ssub_9,	// 43
-  ARM_ssub_4_ssub_5_ssub_6_ssub_7_ssub_8_ssub_9,	// 44
-  ARM_ssub_4_ssub_5_ssub_8_ssub_9_ssub_12_ssub_13,	// 45
-  ARM_ssub_6_ssub_7_dsub_5,	// 46
-  ARM_ssub_6_ssub_7_ssub_8_ssub_9_dsub_5,	// 47
-  ARM_ssub_6_ssub_7_dsub_5_dsub_7,	// 48
-  ARM_ssub_6_ssub_7_ssub_8_ssub_9,	// 49
-  ARM_ssub_6_ssub_7_ssub_8_ssub_9_dsub_5_ssub_12_ssub_13,	// 50
-  ARM_ssub_8_ssub_9_ssub_12_ssub_13,	// 51
-  ARM_ssub_8_ssub_9_dsub_5_ssub_12_ssub_13,	// 52
-  ARM_dsub_5_dsub_7,	// 53
-  ARM_dsub_5_ssub_12_ssub_13_dsub_7,	// 54
-  ARM_dsub_5_ssub_12_ssub_13,	// 55
-  ARM_ssub_4_ssub_5_ssub_6_ssub_7_qsub_2,	// 56
-  ARM_NUM_TARGET_SUBREGS
+	ARM_NoSubRegister,
+	ARM_dsub_0,						       // 1
+	ARM_dsub_1,						       // 2
+	ARM_dsub_2,						       // 3
+	ARM_dsub_3,						       // 4
+	ARM_dsub_4,						       // 5
+	ARM_dsub_5,						       // 6
+	ARM_dsub_6,						       // 7
+	ARM_dsub_7,						       // 8
+	ARM_gsub_0,						       // 9
+	ARM_gsub_1,						       // 10
+	ARM_qqsub_0,						       // 11
+	ARM_qqsub_1,						       // 12
+	ARM_qsub_0,						       // 13
+	ARM_qsub_1,						       // 14
+	ARM_qsub_2,						       // 15
+	ARM_qsub_3,						       // 16
+	ARM_ssub_0,						       // 17
+	ARM_ssub_1,						       // 18
+	ARM_ssub_2,						       // 19
+	ARM_ssub_3,						       // 20
+	ARM_ssub_4,						       // 21
+	ARM_ssub_5,						       // 22
+	ARM_ssub_6,						       // 23
+	ARM_ssub_7,						       // 24
+	ARM_ssub_8,						       // 25
+	ARM_ssub_9,						       // 26
+	ARM_ssub_10,						       // 27
+	ARM_ssub_11,						       // 28
+	ARM_ssub_12,						       // 29
+	ARM_ssub_13,						       // 30
+	ARM_ssub_14,						       // 31
+	ARM_ssub_15,						       // 32
+	ARM_ssub_0_ssub_1_ssub_4_ssub_5,			       // 33
+	ARM_ssub_0_ssub_1_ssub_2_ssub_3_ssub_4_ssub_5,		       // 34
+	ARM_ssub_2_ssub_3_ssub_6_ssub_7,			       // 35
+	ARM_ssub_2_ssub_3_ssub_4_ssub_5_ssub_6_ssub_7,		       // 36
+	ARM_ssub_2_ssub_3_ssub_4_ssub_5,			       // 37
+	ARM_ssub_0_ssub_1_ssub_4_ssub_5_ssub_8_ssub_9,		       // 38
+	ARM_ssub_0_ssub_1_ssub_4_ssub_5_ssub_8_ssub_9_ssub_12_ssub_13, // 39
+	ARM_ssub_2_ssub_3_ssub_6_ssub_7_dsub_5,			       // 40
+	ARM_ssub_2_ssub_3_ssub_6_ssub_7_dsub_5_dsub_7,		       // 41
+	ARM_ssub_2_ssub_3_ssub_4_ssub_5_ssub_6_ssub_7_ssub_8_ssub_9,   // 42
+	ARM_ssub_4_ssub_5_ssub_8_ssub_9,			       // 43
+	ARM_ssub_4_ssub_5_ssub_6_ssub_7_ssub_8_ssub_9,		       // 44
+	ARM_ssub_4_ssub_5_ssub_8_ssub_9_ssub_12_ssub_13,	       // 45
+	ARM_ssub_6_ssub_7_dsub_5,				       // 46
+	ARM_ssub_6_ssub_7_ssub_8_ssub_9_dsub_5,			       // 47
+	ARM_ssub_6_ssub_7_dsub_5_dsub_7,			       // 48
+	ARM_ssub_6_ssub_7_ssub_8_ssub_9,			       // 49
+	ARM_ssub_6_ssub_7_ssub_8_ssub_9_dsub_5_ssub_12_ssub_13,	       // 50
+	ARM_ssub_8_ssub_9_ssub_12_ssub_13,			       // 51
+	ARM_ssub_8_ssub_9_dsub_5_ssub_12_ssub_13,		       // 52
+	ARM_dsub_5_dsub_7,					       // 53
+	ARM_dsub_5_ssub_12_ssub_13_dsub_7,			       // 54
+	ARM_dsub_5_ssub_12_ssub_13,				       // 55
+	ARM_ssub_4_ssub_5_ssub_6_ssub_7_qsub_2,			       // 56
+	ARM_NUM_TARGET_SUBREGS
 };
 #endif // GET_REGINFO_ENUM
 
@@ -532,2196 +539,7034 @@ enum {
 #undef GET_REGINFO_MC_DESC
 
 static const MCPhysReg ARMRegDiffLists[] = {
-  /* 0 */ 64902, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  /* 17 */ 38, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  /* 32 */ 42, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  /* 45 */ 46, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  /* 56 */ 64428, 1, 1, 1, 1, 1, 1, 1, 0,
-  /* 65 */ 64962, 1, 1, 1, 1, 1, 1, 1, 0,
-  /* 74 */ 65244, 1, 1, 1, 1, 1, 1, 1, 0,
-  /* 83 */ 44, 1, 1, 1, 1, 1, 1, 0,
-  /* 91 */ 46, 1, 1, 1, 1, 1, 0,
-  /* 98 */ 65188, 1, 1, 1, 1, 1, 0,
-  /* 105 */ 46, 1, 1, 1, 1, 0,
-  /* 111 */ 48, 1, 1, 1, 1, 0,
-  /* 117 */ 48, 1, 1, 1, 0,
-  /* 122 */ 64488, 1, 1, 1, 0,
-  /* 127 */ 65007, 1, 1, 1, 0,
-  /* 132 */ 65274, 1, 1, 1, 0,
-  /* 137 */ 65326, 1, 1, 1, 0,
-  /* 142 */ 13, 1, 1, 0,
-  /* 146 */ 48, 1, 1, 0,
-  /* 150 */ 65387, 1, 1, 0,
-  /* 154 */ 137, 65489, 48, 65489, 12, 121, 65416, 1, 1, 0,
-  /* 164 */ 136, 65490, 47, 65490, 12, 121, 65416, 1, 1, 0,
-  /* 174 */ 135, 65491, 46, 65491, 12, 121, 65416, 1, 1, 0,
-  /* 184 */ 134, 65492, 45, 65492, 12, 121, 65416, 1, 1, 0,
-  /* 194 */ 133, 65493, 44, 65493, 12, 121, 65416, 1, 1, 0,
-  /* 204 */ 132, 65494, 43, 65494, 12, 121, 65416, 1, 1, 0,
-  /* 214 */ 131, 65495, 42, 65495, 12, 121, 65416, 1, 1, 0,
-  /* 224 */ 130, 65496, 41, 65496, 12, 121, 65416, 1, 1, 0,
-  /* 234 */ 129, 65497, 40, 65497, 12, 121, 65416, 1, 1, 0,
-  /* 244 */ 128, 65498, 39, 65498, 12, 121, 65416, 1, 1, 0,
-  /* 254 */ 65489, 133, 65416, 1, 1, 0,
-  /* 260 */ 65490, 133, 65416, 1, 1, 0,
-  /* 266 */ 65491, 133, 65416, 1, 1, 0,
-  /* 272 */ 65492, 133, 65416, 1, 1, 0,
-  /* 278 */ 65493, 133, 65416, 1, 1, 0,
-  /* 284 */ 65494, 133, 65416, 1, 1, 0,
-  /* 290 */ 65495, 133, 65416, 1, 1, 0,
-  /* 296 */ 65496, 133, 65416, 1, 1, 0,
-  /* 302 */ 65497, 133, 65416, 1, 1, 0,
-  /* 308 */ 65498, 133, 65416, 1, 1, 0,
-  /* 314 */ 127, 65499, 38, 65499, 133, 65416, 1, 1, 0,
-  /* 323 */ 65072, 1, 3, 1, 3, 1, 3, 1, 0,
-  /* 332 */ 65128, 1, 3, 1, 3, 1, 0,
-  /* 339 */ 65318, 1, 3, 1, 0,
-  /* 344 */ 13, 1, 0,
-  /* 347 */ 14, 1, 0,
-  /* 350 */ 66, 1, 0,
-  /* 353 */ 65499, 66, 1, 65470, 67, 1, 0,
-  /* 360 */ 65290, 67, 1, 65469, 68, 1, 0,
-  /* 367 */ 65438, 66, 1, 65471, 68, 1, 0,
-  /* 374 */ 65500, 68, 1, 65468, 69, 1, 0,
-  /* 381 */ 65438, 67, 1, 65470, 69, 1, 0,
-  /* 388 */ 65291, 69, 1, 65467, 70, 1, 0,
-  /* 395 */ 65438, 68, 1, 65469, 70, 1, 0,
-  /* 402 */ 65501, 70, 1, 65466, 71, 1, 0,
-  /* 409 */ 65438, 69, 1, 65468, 71, 1, 0,
-  /* 416 */ 65292, 71, 1, 65465, 72, 1, 0,
-  /* 423 */ 65438, 70, 1, 65467, 72, 1, 0,
-  /* 430 */ 65502, 72, 1, 65464, 73, 1, 0,
-  /* 437 */ 65438, 71, 1, 65466, 73, 1, 0,
-  /* 444 */ 65293, 73, 1, 65463, 74, 1, 0,
-  /* 451 */ 65438, 72, 1, 65465, 74, 1, 0,
-  /* 458 */ 65503, 74, 1, 65462, 75, 1, 0,
-  /* 465 */ 65438, 73, 1, 65464, 75, 1, 0,
-  /* 472 */ 65294, 75, 1, 65461, 76, 1, 0,
-  /* 479 */ 65438, 74, 1, 65463, 76, 1, 0,
-  /* 486 */ 65504, 76, 1, 65460, 77, 1, 0,
-  /* 493 */ 65438, 75, 1, 65462, 77, 1, 0,
-  /* 500 */ 65295, 77, 1, 65459, 78, 1, 0,
-  /* 507 */ 65438, 76, 1, 65461, 78, 1, 0,
-  /* 514 */ 65505, 78, 1, 65458, 79, 1, 0,
-  /* 521 */ 65438, 77, 1, 65460, 79, 1, 0,
-  /* 528 */ 65296, 79, 1, 65457, 80, 1, 0,
-  /* 535 */ 65438, 78, 1, 65459, 80, 1, 0,
-  /* 542 */ 65506, 80, 1, 65456, 81, 1, 0,
-  /* 549 */ 65438, 79, 1, 65458, 81, 1, 0,
-  /* 556 */ 65037, 1, 0,
-  /* 559 */ 65255, 1, 0,
-  /* 562 */ 65298, 1, 0,
-  /* 565 */ 65299, 1, 0,
-  /* 568 */ 65300, 1, 0,
-  /* 571 */ 65301, 1, 0,
-  /* 574 */ 65302, 1, 0,
-  /* 577 */ 65303, 1, 0,
-  /* 580 */ 65304, 1, 0,
-  /* 583 */ 65453, 1, 65499, 133, 1, 65416, 1, 0,
-  /* 591 */ 138, 65488, 49, 65488, 12, 121, 65416, 1, 0,
-  /* 600 */ 65488, 13, 121, 65416, 1, 0,
-  /* 606 */ 65489, 13, 121, 65416, 1, 0,
-  /* 612 */ 65490, 13, 121, 65416, 1, 0,
-  /* 618 */ 65491, 13, 121, 65416, 1, 0,
-  /* 624 */ 65492, 13, 121, 65416, 1, 0,
-  /* 630 */ 65493, 13, 121, 65416, 1, 0,
-  /* 636 */ 65494, 13, 121, 65416, 1, 0,
-  /* 642 */ 65495, 13, 121, 65416, 1, 0,
-  /* 648 */ 65496, 13, 121, 65416, 1, 0,
-  /* 654 */ 65497, 13, 121, 65416, 1, 0,
-  /* 660 */ 65498, 13, 121, 65416, 1, 0,
-  /* 666 */ 65464, 1, 65488, 133, 65416, 121, 65416, 1, 0,
-  /* 675 */ 65463, 1, 65489, 133, 65416, 121, 65416, 1, 0,
-  /* 684 */ 65462, 1, 65490, 133, 65416, 121, 65416, 1, 0,
-  /* 693 */ 65461, 1, 65491, 133, 65416, 121, 65416, 1, 0,
-  /* 702 */ 65460, 1, 65492, 133, 65416, 121, 65416, 1, 0,
-  /* 711 */ 65459, 1, 65493, 133, 65416, 121, 65416, 1, 0,
-  /* 720 */ 65458, 1, 65494, 133, 65416, 121, 65416, 1, 0,
-  /* 729 */ 65457, 1, 65495, 133, 65416, 121, 65416, 1, 0,
-  /* 738 */ 65456, 1, 65496, 133, 65416, 121, 65416, 1, 0,
-  /* 747 */ 65455, 1, 65497, 133, 65416, 121, 65416, 1, 0,
-  /* 756 */ 65454, 1, 65498, 133, 65416, 121, 65416, 1, 0,
-  /* 765 */ 65488, 133, 65416, 1, 0,
-  /* 770 */ 65499, 134, 65416, 1, 0,
-  /* 775 */ 126, 65500, 37, 65500, 133, 65417, 1, 0,
-  /* 783 */ 65433, 1, 0,
-  /* 786 */ 65434, 1, 0,
-  /* 789 */ 65435, 1, 0,
-  /* 792 */ 65436, 1, 0,
-  /* 795 */ 65437, 1, 0,
-  /* 798 */ 65438, 1, 0,
-  /* 801 */ 65456, 1, 0,
-  /* 804 */ 65507, 1, 0,
-  /* 807 */ 65508, 1, 0,
-  /* 810 */ 65509, 1, 0,
-  /* 813 */ 65510, 1, 0,
-  /* 816 */ 65511, 1, 0,
-  /* 819 */ 65512, 1, 0,
-  /* 822 */ 65513, 1, 0,
-  /* 825 */ 65514, 1, 0,
-  /* 828 */ 65072, 1, 3, 1, 3, 1, 2, 0,
-  /* 836 */ 65128, 1, 3, 1, 2, 0,
-  /* 842 */ 65318, 1, 2, 0,
-  /* 846 */ 65072, 1, 3, 1, 2, 2, 0,
-  /* 853 */ 65128, 1, 2, 2, 0,
-  /* 858 */ 65072, 1, 2, 2, 2, 0,
-  /* 864 */ 65329, 2, 2, 2, 0,
-  /* 869 */ 65072, 1, 3, 2, 2, 0,
-  /* 875 */ 65357, 2, 2, 0,
-  /* 879 */ 65072, 1, 3, 1, 3, 2, 0,
-  /* 886 */ 65128, 1, 3, 2, 0,
-  /* 891 */ 65343, 77, 1, 65460, 79, 1, 65458, 81, 1, 12, 2, 0,
-  /* 903 */ 65343, 76, 1, 65461, 78, 1, 65459, 80, 1, 13, 2, 0,
-  /* 915 */ 65343, 75, 1, 65462, 77, 1, 65460, 79, 1, 14, 2, 0,
-  /* 927 */ 65343, 74, 1, 65463, 76, 1, 65461, 78, 1, 15, 2, 0,
-  /* 939 */ 65343, 73, 1, 65464, 75, 1, 65462, 77, 1, 16, 2, 0,
-  /* 951 */ 65343, 72, 1, 65465, 74, 1, 65463, 76, 1, 17, 2, 0,
-  /* 963 */ 65343, 71, 1, 65466, 73, 1, 65464, 75, 1, 18, 2, 0,
-  /* 975 */ 65343, 70, 1, 65467, 72, 1, 65465, 74, 1, 19, 2, 0,
-  /* 987 */ 65343, 69, 1, 65468, 71, 1, 65466, 73, 1, 20, 2, 0,
-  /* 999 */ 65343, 68, 1, 65469, 70, 1, 65467, 72, 1, 21, 2, 0,
-  /* 1011 */ 65343, 67, 1, 65470, 69, 1, 65468, 71, 1, 22, 2, 0,
-  /* 1023 */ 65343, 66, 1, 65471, 68, 1, 65469, 70, 1, 23, 2, 0,
-  /* 1035 */ 65343, 2, 2, 94, 2, 0,
-  /* 1041 */ 65343, 81, 1, 65456, 2, 94, 2, 0,
-  /* 1049 */ 65343, 80, 1, 65457, 2, 94, 2, 0,
-  /* 1057 */ 65343, 79, 1, 65458, 81, 1, 65456, 94, 2, 0,
-  /* 1067 */ 65343, 78, 1, 65459, 80, 1, 65457, 94, 2, 0,
-  /* 1077 */ 65438, 2, 0,
-  /* 1080 */ 65452, 2, 0,
-  /* 1083 */ 65072, 1, 3, 1, 3, 1, 3, 0,
-  /* 1091 */ 65128, 1, 3, 1, 3, 0,
-  /* 1097 */ 65318, 1, 3, 0,
-  /* 1101 */ 7, 0,
-  /* 1103 */ 140, 65486, 13, 0,
-  /* 1107 */ 14, 0,
-  /* 1109 */ 126, 65501, 15, 0,
-  /* 1113 */ 14, 69, 0,
-  /* 1116 */ 65445, 65513, 1, 23, 65514, 1, 95, 65, 65472, 65, 69, 0,
-  /* 1128 */ 65445, 65512, 1, 24, 65513, 1, 95, 65, 65472, 65, 70, 0,
-  /* 1140 */ 65445, 65511, 1, 25, 65512, 1, 95, 65, 65472, 65, 71, 0,
-  /* 1152 */ 65445, 65510, 1, 26, 65511, 1, 95, 65, 65472, 65, 72, 0,
-  /* 1164 */ 65445, 65509, 1, 27, 65510, 1, 95, 65, 65472, 65, 73, 0,
-  /* 1176 */ 65445, 65508, 1, 28, 65509, 1, 95, 65, 65472, 65, 74, 0,
-  /* 1188 */ 65445, 65507, 1, 29, 65508, 1, 95, 65, 65472, 65, 75, 0,
-  /* 1200 */ 65445, 65506, 80, 1, 65456, 81, 1, 65484, 65507, 1, 95, 65, 65472, 65, 76, 0,
-  /* 1216 */ 65445, 65505, 78, 1, 65458, 79, 1, 65487, 65506, 80, 1, 65456, 81, 1, 13, 65, 65472, 65, 77, 0,
-  /* 1236 */ 65445, 65504, 76, 1, 65460, 77, 1, 65490, 65505, 78, 1, 65458, 79, 1, 15, 65, 65472, 65, 78, 0,
-  /* 1256 */ 65445, 65503, 74, 1, 65462, 75, 1, 65493, 65504, 76, 1, 65460, 77, 1, 17, 65, 65472, 65, 79, 0,
-  /* 1276 */ 65445, 65502, 72, 1, 65464, 73, 1, 65496, 65503, 74, 1, 65462, 75, 1, 19, 65, 65472, 65, 80, 0,
-  /* 1296 */ 65445, 65501, 70, 1, 65466, 71, 1, 65499, 65502, 72, 1, 65464, 73, 1, 21, 65, 65472, 65, 81, 0,
-  /* 1316 */ 65445, 65500, 68, 1, 65468, 69, 1, 65502, 65501, 70, 1, 65466, 71, 1, 23, 65, 65472, 65, 82, 0,
-  /* 1336 */ 65445, 65499, 66, 1, 65470, 67, 1, 65505, 65500, 68, 1, 65468, 69, 1, 25, 65, 65472, 65, 83, 0,
-  /* 1356 */ 97, 0,
-  /* 1358 */ 98, 0,
-  /* 1360 */ 99, 0,
-  /* 1362 */ 100, 0,
-  /* 1364 */ 101, 0,
-  /* 1366 */ 102, 0,
-  /* 1368 */ 103, 0,
-  /* 1370 */ 65373, 1, 1, 21, 75, 135, 0,
-  /* 1377 */ 65373, 1, 1, 22, 74, 136, 0,
-  /* 1384 */ 65373, 1, 1, 23, 73, 137, 0,
-  /* 1391 */ 65373, 1, 1, 24, 72, 138, 0,
-  /* 1398 */ 65373, 1, 1, 25, 71, 139, 0,
-  /* 1405 */ 65373, 1, 1, 26, 70, 140, 0,
-  /* 1412 */ 65373, 1, 1, 27, 69, 141, 0,
-  /* 1419 */ 65373, 80, 1, 65456, 81, 1, 65455, 28, 68, 142, 0,
-  /* 1430 */ 65373, 78, 1, 65458, 79, 1, 65457, 80, 1, 65484, 67, 143, 0,
-  /* 1443 */ 65373, 76, 1, 65460, 77, 1, 65459, 78, 1, 65487, 66, 144, 0,
-  /* 1456 */ 65373, 74, 1, 65462, 75, 1, 65461, 76, 1, 65490, 65, 145, 0,
-  /* 1469 */ 65373, 72, 1, 65464, 73, 1, 65463, 74, 1, 65493, 64, 146, 0,
-  /* 1482 */ 65373, 70, 1, 65466, 71, 1, 65465, 72, 1, 65496, 63, 147, 0,
-  /* 1495 */ 65373, 68, 1, 65468, 69, 1, 65467, 70, 1, 65499, 62, 148, 0,
-  /* 1508 */ 65373, 66, 1, 65470, 67, 1, 65469, 68, 1, 65502, 61, 149, 0,
-  /* 1521 */ 166, 0,
-  /* 1523 */ 65288, 1, 1, 1, 230, 1, 65400, 65, 65472, 65, 65396, 0,
-  /* 1535 */ 65287, 1, 1, 1, 231, 1, 65399, 65, 65472, 65, 65397, 0,
-  /* 1547 */ 65286, 1, 1, 1, 232, 1, 65398, 65, 65472, 65, 65398, 0,
-  /* 1559 */ 65285, 1, 1, 1, 233, 1, 65397, 65, 65472, 65, 65399, 0,
-  /* 1571 */ 65284, 1, 1, 1, 234, 1, 65396, 65, 65472, 65, 65400, 0,
-  /* 1583 */ 65283, 1, 1, 1, 235, 1, 65395, 65, 65472, 65, 65401, 0,
-  /* 1595 */ 65521, 65445, 65511, 1, 25, 65512, 1, 95, 65, 65472, 65, 71, 65419, 65445, 65513, 1, 23, 65514, 1, 95, 65, 65472, 65, 69, 65492, 28, 65509, 28, 28, 65386, 65, 30, 65442, 65, 30, 40, 15, 65402, 0,
-  /* 1634 */ 65521, 65445, 65510, 1, 26, 65511, 1, 95, 65, 65472, 65, 72, 65419, 65445, 65512, 1, 24, 65513, 1, 95, 65, 65472, 65, 70, 65491, 28, 65509, 28, 29, 65385, 65, 30, 65442, 65, 30, 41, 15, 65402, 0,
-  /* 1673 */ 65521, 65445, 65509, 1, 27, 65510, 1, 95, 65, 65472, 65, 73, 65419, 65445, 65511, 1, 25, 65512, 1, 95, 65, 65472, 65, 71, 65490, 28, 65509, 28, 30, 65384, 65, 30, 65442, 65, 30, 42, 15, 65402, 0,
-  /* 1712 */ 65521, 65445, 65508, 1, 28, 65509, 1, 95, 65, 65472, 65, 74, 65419, 65445, 65510, 1, 26, 65511, 1, 95, 65, 65472, 65, 72, 65489, 28, 65509, 28, 31, 65383, 65, 30, 65442, 65, 30, 43, 15, 65402, 0,
-  /* 1751 */ 65521, 65445, 65507, 1, 29, 65508, 1, 95, 65, 65472, 65, 75, 65419, 65445, 65509, 1, 27, 65510, 1, 95, 65, 65472, 65, 73, 65488, 28, 65509, 28, 32, 65382, 65, 30, 65442, 65, 30, 44, 15, 65402, 0,
-  /* 1790 */ 65521, 65445, 65506, 80, 1, 65456, 81, 1, 65484, 65507, 1, 95, 65, 65472, 65, 76, 65419, 65445, 65508, 1, 28, 65509, 1, 95, 65, 65472, 65, 74, 65487, 28, 65509, 28, 33, 65381, 65, 30, 65442, 65, 30, 45, 15, 65402, 0,
-  /* 1833 */ 65521, 65445, 65505, 78, 1, 65458, 79, 1, 65487, 65506, 80, 1, 65456, 81, 1, 13, 65, 65472, 65, 77, 65419, 65445, 65507, 1, 29, 65508, 1, 95, 65, 65472, 65, 75, 65486, 28, 65509, 28, 34, 65380, 65, 30, 65442, 65, 30, 46, 15, 65402, 0,
-  /* 1880 */ 65521, 65445, 65504, 76, 1, 65460, 77, 1, 65490, 65505, 78, 1, 65458, 79, 1, 15, 65, 65472, 65, 78, 65419, 65445, 65506, 80, 1, 65456, 81, 1, 65484, 65507, 1, 95, 65, 65472, 65, 76, 65485, 28, 65509, 28, 35, 65379, 65, 30, 65442, 65, 30, 47, 15, 65402, 0,
-  /* 1931 */ 65521, 65445, 65503, 74, 1, 65462, 75, 1, 65493, 65504, 76, 1, 65460, 77, 1, 17, 65, 65472, 65, 79, 65419, 65445, 65505, 78, 1, 65458, 79, 1, 65487, 65506, 80, 1, 65456, 81, 1, 13, 65, 65472, 65, 77, 65484, 28, 65509, 28, 36, 65378, 65, 30, 65442, 65, 30, 48, 15, 65402, 0,
-  /* 1986 */ 65521, 65445, 65502, 72, 1, 65464, 73, 1, 65496, 65503, 74, 1, 65462, 75, 1, 19, 65, 65472, 65, 80, 65419, 65445, 65504, 76, 1, 65460, 77, 1, 65490, 65505, 78, 1, 65458, 79, 1, 15, 65, 65472, 65, 78, 65483, 28, 65509, 28, 37, 65377, 65, 30, 65442, 65, 30, 49, 15, 65402, 0,
-  /* 2041 */ 65521, 65445, 65501, 70, 1, 65466, 71, 1, 65499, 65502, 72, 1, 65464, 73, 1, 21, 65, 65472, 65, 81, 65419, 65445, 65503, 74, 1, 65462, 75, 1, 65493, 65504, 76, 1, 65460, 77, 1, 17, 65, 65472, 65, 79, 65482, 28, 65509, 28, 38, 65376, 65, 30, 65442, 65, 30, 50, 15, 65402, 0,
-  /* 2096 */ 65521, 65445, 65500, 68, 1, 65468, 69, 1, 65502, 65501, 70, 1, 65466, 71, 1, 23, 65, 65472, 65, 82, 65419, 65445, 65502, 72, 1, 65464, 73, 1, 65496, 65503, 74, 1, 65462, 75, 1, 19, 65, 65472, 65, 80, 65481, 28, 65509, 28, 39, 65375, 65, 30, 65442, 65, 30, 51, 15, 65402, 0,
-  /* 2151 */ 65521, 65445, 65499, 66, 1, 65470, 67, 1, 65505, 65500, 68, 1, 65468, 69, 1, 25, 65, 65472, 65, 83, 65419, 65445, 65501, 70, 1, 65466, 71, 1, 65499, 65502, 72, 1, 65464, 73, 1, 21, 65, 65472, 65, 81, 65480, 28, 65509, 28, 40, 65374, 65, 30, 65442, 65, 30, 52, 15, 65402, 0,
-  /* 2206 */ 65282, 81, 1, 65455, 1, 1, 236, 1, 65394, 65, 65472, 65, 65402, 0,
-  /* 2220 */ 65281, 79, 1, 65457, 80, 1, 65456, 81, 1, 65455, 237, 1, 65393, 65, 65472, 65, 65403, 0,
-  /* 2238 */ 65280, 77, 1, 65459, 78, 1, 65458, 79, 1, 65457, 80, 1, 157, 1, 65392, 65, 65472, 65, 65404, 0,
-  /* 2258 */ 65279, 75, 1, 65461, 76, 1, 65460, 77, 1, 65459, 78, 1, 160, 1, 65391, 65, 65472, 65, 65405, 0,
-  /* 2278 */ 65278, 73, 1, 65463, 74, 1, 65462, 75, 1, 65461, 76, 1, 163, 1, 65390, 65, 65472, 65, 65406, 0,
-  /* 2298 */ 65277, 71, 1, 65465, 72, 1, 65464, 73, 1, 65463, 74, 1, 166, 1, 65389, 65, 65472, 65, 65407, 0,
-  /* 2318 */ 65276, 69, 1, 65467, 70, 1, 65466, 71, 1, 65465, 72, 1, 169, 1, 65388, 65, 65472, 65, 65408, 0,
-  /* 2338 */ 65275, 67, 1, 65469, 68, 1, 65468, 69, 1, 65467, 70, 1, 172, 1, 65387, 65, 65472, 65, 65409, 0,
-  /* 2358 */ 23, 73, 2, 63, 65488, 120, 65465, 1, 65487, 75, 26, 65447, 65, 26, 30, 65416, 66, 26, 29, 65416, 0,
-  /* 2379 */ 22, 74, 2, 63, 65487, 120, 65466, 1, 65486, 76, 26, 65446, 66, 26, 29, 65416, 0,
-  /* 2396 */ 65, 65487, 77, 26, 65446, 66, 26, 29, 65416, 0,
-  /* 2406 */ 23, 73, 2, 134, 65465, 1, 65487, 50, 65487, 75, 26, 31, 65416, 65, 26, 30, 65416, 0,
-  /* 2424 */ 22, 74, 135, 65466, 1, 65486, 77, 26, 30, 65416, 0,
-  /* 2435 */ 65, 65487, 77, 26, 30, 65416, 0,
-  /* 2442 */ 139, 65487, 50, 65487, 12, 121, 65416, 0,
-  /* 2450 */ 65487, 13, 121, 65416, 0,
-  /* 2455 */ 65465, 1, 65487, 133, 65416, 121, 65416, 0,
-  /* 2463 */ 65466, 1, 65486, 133, 65416, 0,
-  /* 2469 */ 65487, 133, 65416, 0,
-  /* 2473 */ 65468, 36, 62, 148, 65452, 1, 65500, 66, 28, 40, 65417, 0,
-  /* 2485 */ 65469, 36, 62, 148, 65452, 1, 65500, 66, 28, 40, 65417, 0,
-  /* 2497 */ 65, 65500, 66, 28, 40, 65417, 0,
-  /* 2504 */ 65452, 1, 65500, 134, 65417, 0,
-  /* 2510 */ 65315, 75, 1, 65462, 77, 1, 65460, 79, 1, 65458, 81, 1, 10, 95, 65443, 95, 65443, 0,
-  /* 2528 */ 65315, 74, 1, 65463, 76, 1, 65461, 78, 1, 65459, 80, 1, 11, 95, 65443, 95, 65443, 0,
-  /* 2546 */ 65315, 73, 1, 65464, 75, 1, 65462, 77, 1, 65460, 79, 1, 12, 95, 65443, 95, 65443, 0,
-  /* 2564 */ 65315, 72, 1, 65465, 74, 1, 65463, 76, 1, 65461, 78, 1, 13, 95, 65443, 95, 65443, 0,
-  /* 2582 */ 65315, 71, 1, 65466, 73, 1, 65464, 75, 1, 65462, 77, 1, 14, 95, 65443, 95, 65443, 0,
-  /* 2600 */ 65315, 70, 1, 65467, 72, 1, 65465, 74, 1, 65463, 76, 1, 15, 95, 65443, 95, 65443, 0,
-  /* 2618 */ 65315, 69, 1, 65468, 71, 1, 65466, 73, 1, 65464, 75, 1, 16, 95, 65443, 95, 65443, 0,
-  /* 2636 */ 65315, 68, 1, 65469, 70, 1, 65467, 72, 1, 65465, 74, 1, 17, 95, 65443, 95, 65443, 0,
-  /* 2654 */ 65315, 67, 1, 65470, 69, 1, 65468, 71, 1, 65466, 73, 1, 18, 95, 65443, 95, 65443, 0,
-  /* 2672 */ 65315, 66, 1, 65471, 68, 1, 65469, 70, 1, 65467, 72, 1, 19, 95, 65443, 95, 65443, 0,
-  /* 2690 */ 65315, 2, 2, 2, 92, 95, 65443, 95, 65443, 0,
-  /* 2700 */ 65315, 81, 1, 65456, 2, 2, 92, 95, 65443, 95, 65443, 0,
-  /* 2712 */ 65315, 80, 1, 65457, 2, 2, 92, 95, 65443, 95, 65443, 0,
-  /* 2724 */ 65315, 79, 1, 65458, 81, 1, 65456, 2, 92, 95, 65443, 95, 65443, 0,
-  /* 2738 */ 65315, 78, 1, 65459, 80, 1, 65457, 2, 92, 95, 65443, 95, 65443, 0,
-  /* 2752 */ 65315, 77, 1, 65460, 79, 1, 65458, 81, 1, 65456, 92, 95, 65443, 95, 65443, 0,
-  /* 2768 */ 65315, 76, 1, 65461, 78, 1, 65459, 80, 1, 65457, 92, 95, 65443, 95, 65443, 0,
-  /* 2784 */ 21, 75, 65, 65486, 78, 26, 65445, 0,
-  /* 2792 */ 24, 72, 2, 63, 65489, 120, 65464, 1, 65488, 74, 26, 65448, 64, 26, 31, 65416, 65, 26, 30, 65416, 92, 65445, 0,
-  /* 2815 */ 65, 65488, 76, 26, 65447, 65, 26, 30, 65416, 92, 65445, 0,
-  /* 2827 */ 26, 65446, 92, 65445, 0,
-  /* 2832 */ 24, 72, 2, 135, 65464, 1, 65488, 49, 65488, 74, 26, 32, 65416, 64, 26, 31, 65416, 65, 26, 65446, 0,
-  /* 2853 */ 65, 65488, 76, 26, 31, 65416, 65, 26, 65446, 0,
-  /* 2863 */ 25, 71, 2, 63, 65490, 120, 65463, 1, 65489, 73, 26, 65449, 63, 26, 32, 65416, 64, 26, 31, 65416, 91, 65446, 0,
-  /* 2886 */ 65, 65489, 75, 26, 65448, 64, 26, 31, 65416, 91, 65446, 0,
-  /* 2898 */ 25, 71, 2, 136, 65463, 1, 65489, 48, 65489, 73, 26, 33, 65416, 63, 26, 32, 65416, 64, 26, 65447, 91, 65446, 0,
-  /* 2921 */ 65, 65489, 75, 26, 32, 65416, 64, 26, 65447, 91, 65446, 0,
-  /* 2933 */ 26, 70, 2, 63, 65491, 120, 65462, 1, 65490, 72, 26, 65450, 62, 26, 33, 65416, 63, 26, 32, 65416, 90, 65447, 0,
-  /* 2956 */ 65, 65490, 74, 26, 65449, 63, 26, 32, 65416, 90, 65447, 0,
-  /* 2968 */ 26, 70, 2, 137, 65462, 1, 65490, 47, 65490, 72, 26, 34, 65416, 62, 26, 33, 65416, 63, 26, 65448, 90, 65447, 0,
-  /* 2991 */ 65, 65490, 74, 26, 33, 65416, 63, 26, 65448, 90, 65447, 0,
-  /* 3003 */ 27, 69, 2, 63, 65492, 120, 65461, 1, 65491, 71, 26, 65451, 61, 26, 34, 65416, 62, 26, 33, 65416, 89, 65448, 0,
-  /* 3026 */ 65, 65491, 73, 26, 65450, 62, 26, 33, 65416, 89, 65448, 0,
-  /* 3038 */ 27, 69, 2, 138, 65461, 1, 65491, 46, 65491, 71, 26, 35, 65416, 61, 26, 34, 65416, 62, 26, 65449, 89, 65448, 0,
-  /* 3061 */ 65, 65491, 73, 26, 34, 65416, 62, 26, 65449, 89, 65448, 0,
-  /* 3073 */ 28, 68, 2, 63, 65493, 120, 65460, 1, 65492, 70, 26, 65452, 60, 26, 35, 65416, 61, 26, 34, 65416, 88, 65449, 0,
-  /* 3096 */ 65, 65492, 72, 26, 65451, 61, 26, 34, 65416, 88, 65449, 0,
-  /* 3108 */ 28, 68, 2, 139, 65460, 1, 65492, 45, 65492, 70, 26, 36, 65416, 60, 26, 35, 65416, 61, 26, 65450, 88, 65449, 0,
-  /* 3131 */ 65, 65492, 72, 26, 35, 65416, 61, 26, 65450, 88, 65449, 0,
-  /* 3143 */ 65454, 29, 67, 2, 63, 65494, 120, 65459, 1, 65493, 69, 26, 65453, 59, 26, 36, 65416, 60, 26, 35, 65416, 87, 65450, 0,
-  /* 3167 */ 65455, 29, 67, 2, 63, 65494, 120, 65459, 1, 65493, 69, 26, 65453, 59, 26, 36, 65416, 60, 26, 35, 65416, 87, 65450, 0,
-  /* 3191 */ 65, 65493, 71, 26, 65452, 60, 26, 35, 65416, 87, 65450, 0,
-  /* 3203 */ 29, 67, 2, 140, 65459, 1, 65493, 44, 65493, 69, 26, 37, 65416, 59, 26, 36, 65416, 60, 26, 65451, 87, 65450, 0,
-  /* 3226 */ 65, 65493, 71, 26, 36, 65416, 60, 26, 65451, 87, 65450, 0,
-  /* 3238 */ 65456, 30, 66, 2, 63, 65495, 120, 65458, 1, 65494, 68, 26, 65454, 58, 26, 37, 65416, 59, 26, 36, 65416, 86, 65451, 0,
-  /* 3262 */ 65457, 30, 66, 2, 63, 65495, 120, 65458, 1, 65494, 68, 26, 65454, 58, 26, 37, 65416, 59, 26, 36, 65416, 86, 65451, 0,
-  /* 3286 */ 65, 65494, 70, 26, 65453, 59, 26, 36, 65416, 86, 65451, 0,
-  /* 3298 */ 65455, 30, 66, 2, 141, 65458, 1, 65494, 43, 65494, 68, 26, 38, 65416, 58, 26, 37, 65416, 59, 26, 65452, 86, 65451, 0,
-  /* 3322 */ 65456, 30, 66, 2, 141, 65458, 1, 65494, 43, 65494, 68, 26, 38, 65416, 58, 26, 37, 65416, 59, 26, 65452, 86, 65451, 0,
-  /* 3346 */ 65, 65494, 70, 26, 37, 65416, 59, 26, 65452, 86, 65451, 0,
-  /* 3358 */ 65458, 31, 65, 2, 63, 65496, 120, 65457, 1, 65495, 67, 26, 65455, 57, 26, 38, 65416, 58, 26, 37, 65416, 85, 65452, 0,
-  /* 3382 */ 65459, 31, 65, 2, 63, 65496, 120, 65457, 1, 65495, 67, 26, 65455, 57, 26, 38, 65416, 58, 26, 37, 65416, 85, 65452, 0,
-  /* 3406 */ 65, 65495, 69, 26, 65454, 58, 26, 37, 65416, 85, 65452, 0,
-  /* 3418 */ 65457, 31, 65, 2, 142, 65457, 1, 65495, 42, 65495, 67, 26, 39, 65416, 57, 26, 38, 65416, 58, 26, 65453, 85, 65452, 0,
-  /* 3442 */ 65458, 31, 65, 2, 142, 65457, 1, 65495, 42, 65495, 67, 26, 39, 65416, 57, 26, 38, 65416, 58, 26, 65453, 85, 65452, 0,
-  /* 3466 */ 65, 65495, 69, 26, 38, 65416, 58, 26, 65453, 85, 65452, 0,
-  /* 3478 */ 65460, 32, 64, 2, 63, 65497, 120, 65456, 1, 65496, 66, 26, 65456, 56, 26, 39, 65416, 57, 26, 38, 65416, 84, 65453, 0,
-  /* 3502 */ 65461, 32, 64, 2, 63, 65497, 120, 65456, 1, 65496, 66, 26, 65456, 56, 26, 39, 65416, 57, 26, 38, 65416, 84, 65453, 0,
-  /* 3526 */ 65, 65496, 68, 26, 65455, 57, 26, 38, 65416, 84, 65453, 0,
-  /* 3538 */ 65459, 32, 64, 2, 143, 65456, 1, 65496, 41, 65496, 66, 26, 40, 65416, 56, 26, 39, 65416, 57, 26, 65454, 84, 65453, 0,
-  /* 3562 */ 65460, 32, 64, 2, 143, 65456, 1, 65496, 41, 65496, 66, 26, 40, 65416, 56, 26, 39, 65416, 57, 26, 65454, 84, 65453, 0,
-  /* 3586 */ 65, 65496, 68, 26, 39, 65416, 57, 26, 65454, 84, 65453, 0,
-  /* 3598 */ 65462, 33, 63, 2, 63, 65498, 120, 65455, 1, 65497, 65, 26, 65457, 55, 26, 40, 65416, 56, 26, 39, 65416, 83, 65454, 0,
-  /* 3622 */ 65463, 33, 63, 2, 63, 65498, 120, 65455, 1, 65497, 65, 26, 65457, 55, 26, 40, 65416, 56, 26, 39, 65416, 83, 65454, 0,
-  /* 3646 */ 65, 65497, 67, 26, 65456, 56, 26, 39, 65416, 83, 65454, 0,
-  /* 3658 */ 65461, 33, 63, 2, 144, 65455, 1, 65497, 40, 65497, 65, 26, 41, 65416, 55, 26, 40, 65416, 56, 26, 65455, 83, 65454, 0,
-  /* 3682 */ 65462, 33, 63, 2, 144, 65455, 1, 65497, 40, 65497, 65, 26, 41, 65416, 55, 26, 40, 65416, 56, 26, 65455, 83, 65454, 0,
-  /* 3706 */ 65, 65497, 67, 26, 40, 65416, 56, 26, 65455, 83, 65454, 0,
-  /* 3718 */ 65297, 81, 1, 65455, 0,
-  /* 3723 */ 65464, 34, 62, 2, 63, 65499, 120, 65454, 1, 65498, 64, 2, 26, 41, 65416, 55, 26, 40, 65416, 82, 65455, 0,
-  /* 3745 */ 65465, 34, 62, 2, 63, 65499, 120, 65454, 1, 65498, 64, 2, 26, 41, 65416, 55, 26, 40, 65416, 82, 65455, 0,
-  /* 3767 */ 65, 65498, 66, 26, 65457, 55, 26, 40, 65416, 82, 65455, 0,
-  /* 3779 */ 65463, 34, 62, 2, 145, 65454, 1, 65498, 39, 65498, 64, 26, 42, 65416, 54, 26, 41, 65416, 55, 26, 65456, 82, 65455, 0,
-  /* 3803 */ 65464, 34, 62, 2, 145, 65454, 1, 65498, 39, 65498, 64, 26, 42, 65416, 54, 26, 41, 65416, 55, 26, 65456, 82, 65455, 0,
-  /* 3827 */ 65, 65498, 66, 26, 41, 65416, 55, 26, 65456, 82, 65455, 0,
-  /* 3839 */ 65438, 81, 1, 65456, 0,
-  /* 3844 */ 65466, 35, 61, 2, 63, 65500, 120, 65453, 1, 65499, 65, 2, 26, 40, 1, 65416, 81, 65456, 0,
-  /* 3863 */ 65467, 35, 61, 2, 63, 65500, 120, 65453, 1, 65499, 65, 2, 26, 40, 1, 65416, 81, 65456, 0,
-  /* 3882 */ 65, 65499, 65, 2, 26, 41, 65416, 81, 65456, 0,
-  /* 3892 */ 65465, 35, 61, 2, 146, 65453, 1, 65499, 38, 65499, 63, 2, 26, 41, 1, 65416, 54, 26, 65457, 81, 65456, 0,
-  /* 3914 */ 65466, 35, 61, 2, 146, 65453, 1, 65499, 38, 65499, 63, 2, 26, 41, 1, 65416, 54, 26, 65457, 81, 65456, 0,
-  /* 3936 */ 65, 65499, 65, 26, 42, 65416, 54, 26, 65457, 81, 65456, 0,
-  /* 3948 */ 65438, 80, 1, 65457, 0,
-  /* 3953 */ 28, 65457, 0,
-  /* 3956 */ 65467, 36, 60, 2, 147, 65452, 1, 65500, 37, 65500, 64, 2, 26, 41, 65417, 80, 65457, 0,
-  /* 3974 */ 65468, 36, 60, 2, 147, 65452, 1, 65500, 37, 65500, 64, 2, 26, 41, 65417, 80, 65457, 0,
-  /* 3992 */ 65, 65500, 64, 2, 26, 41, 65417, 80, 65457, 0,
-  /* 4002 */ 26, 65458, 80, 65457, 0,
-  /* 4007 */ 65469, 37, 61, 65, 65501, 65, 28, 65458, 0,
-  /* 4016 */ 65470, 37, 61, 65, 65501, 65, 28, 65458, 0,
-  /* 4025 */ 65373, 1, 1, 230, 65402, 65461, 0,
-  /* 4032 */ 65373, 1, 1, 231, 65401, 65462, 0,
-  /* 4039 */ 65373, 1, 1, 232, 65400, 65463, 0,
-  /* 4046 */ 65373, 1, 1, 233, 65399, 65464, 0,
-  /* 4053 */ 65373, 1, 1, 234, 65398, 65465, 0,
-  /* 4060 */ 65373, 1, 1, 235, 65397, 65466, 0,
-  /* 4067 */ 65373, 1, 1, 236, 65396, 65467, 0,
-  /* 4074 */ 65439, 65467, 0,
-  /* 4077 */ 65373, 81, 1, 65455, 1, 237, 65395, 65468, 0,
-  /* 4086 */ 65373, 79, 1, 65457, 80, 1, 65456, 81, 1, 156, 65394, 65469, 0,
-  /* 4099 */ 65373, 77, 1, 65459, 78, 1, 65458, 79, 1, 159, 65393, 65470, 0,
-  /* 4112 */ 65373, 75, 1, 65461, 76, 1, 65460, 77, 1, 162, 65392, 65471, 0,
-  /* 4125 */ 65373, 73, 1, 65463, 74, 1, 65462, 75, 1, 165, 65391, 65472, 0,
-  /* 4138 */ 65373, 71, 1, 65465, 72, 1, 65464, 73, 1, 168, 65390, 65473, 0,
-  /* 4151 */ 65373, 69, 1, 65467, 70, 1, 65466, 71, 1, 171, 65389, 65474, 0,
-  /* 4164 */ 65373, 67, 1, 65469, 68, 1, 65468, 69, 1, 174, 65388, 65475, 0,
-  /* 4177 */ 65534, 0,
-  /* 4179 */ 65535, 0,
+	/* 0 */ 64902,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 17 */ 38,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 32 */ 42,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 45 */ 46,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 56 */ 64428,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 65 */ 64962,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 74 */ 65244,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 83 */ 44,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 91 */ 46,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 98 */ 65188,
+	1,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 105 */ 46,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 111 */ 48,
+	1,
+	1,
+	1,
+	1,
+	0,
+	/* 117 */ 48,
+	1,
+	1,
+	1,
+	0,
+	/* 122 */ 64488,
+	1,
+	1,
+	1,
+	0,
+	/* 127 */ 65007,
+	1,
+	1,
+	1,
+	0,
+	/* 132 */ 65274,
+	1,
+	1,
+	1,
+	0,
+	/* 137 */ 65326,
+	1,
+	1,
+	1,
+	0,
+	/* 142 */ 13,
+	1,
+	1,
+	0,
+	/* 146 */ 48,
+	1,
+	1,
+	0,
+	/* 150 */ 65387,
+	1,
+	1,
+	0,
+	/* 154 */ 137,
+	65489,
+	48,
+	65489,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 164 */ 136,
+	65490,
+	47,
+	65490,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 174 */ 135,
+	65491,
+	46,
+	65491,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 184 */ 134,
+	65492,
+	45,
+	65492,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 194 */ 133,
+	65493,
+	44,
+	65493,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 204 */ 132,
+	65494,
+	43,
+	65494,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 214 */ 131,
+	65495,
+	42,
+	65495,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 224 */ 130,
+	65496,
+	41,
+	65496,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 234 */ 129,
+	65497,
+	40,
+	65497,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 244 */ 128,
+	65498,
+	39,
+	65498,
+	12,
+	121,
+	65416,
+	1,
+	1,
+	0,
+	/* 254 */ 65489,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 260 */ 65490,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 266 */ 65491,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 272 */ 65492,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 278 */ 65493,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 284 */ 65494,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 290 */ 65495,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 296 */ 65496,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 302 */ 65497,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 308 */ 65498,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 314 */ 127,
+	65499,
+	38,
+	65499,
+	133,
+	65416,
+	1,
+	1,
+	0,
+	/* 323 */ 65072,
+	1,
+	3,
+	1,
+	3,
+	1,
+	3,
+	1,
+	0,
+	/* 332 */ 65128,
+	1,
+	3,
+	1,
+	3,
+	1,
+	0,
+	/* 339 */ 65318,
+	1,
+	3,
+	1,
+	0,
+	/* 344 */ 13,
+	1,
+	0,
+	/* 347 */ 14,
+	1,
+	0,
+	/* 350 */ 66,
+	1,
+	0,
+	/* 353 */ 65499,
+	66,
+	1,
+	65470,
+	67,
+	1,
+	0,
+	/* 360 */ 65290,
+	67,
+	1,
+	65469,
+	68,
+	1,
+	0,
+	/* 367 */ 65438,
+	66,
+	1,
+	65471,
+	68,
+	1,
+	0,
+	/* 374 */ 65500,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	0,
+	/* 381 */ 65438,
+	67,
+	1,
+	65470,
+	69,
+	1,
+	0,
+	/* 388 */ 65291,
+	69,
+	1,
+	65467,
+	70,
+	1,
+	0,
+	/* 395 */ 65438,
+	68,
+	1,
+	65469,
+	70,
+	1,
+	0,
+	/* 402 */ 65501,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	0,
+	/* 409 */ 65438,
+	69,
+	1,
+	65468,
+	71,
+	1,
+	0,
+	/* 416 */ 65292,
+	71,
+	1,
+	65465,
+	72,
+	1,
+	0,
+	/* 423 */ 65438,
+	70,
+	1,
+	65467,
+	72,
+	1,
+	0,
+	/* 430 */ 65502,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	0,
+	/* 437 */ 65438,
+	71,
+	1,
+	65466,
+	73,
+	1,
+	0,
+	/* 444 */ 65293,
+	73,
+	1,
+	65463,
+	74,
+	1,
+	0,
+	/* 451 */ 65438,
+	72,
+	1,
+	65465,
+	74,
+	1,
+	0,
+	/* 458 */ 65503,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	0,
+	/* 465 */ 65438,
+	73,
+	1,
+	65464,
+	75,
+	1,
+	0,
+	/* 472 */ 65294,
+	75,
+	1,
+	65461,
+	76,
+	1,
+	0,
+	/* 479 */ 65438,
+	74,
+	1,
+	65463,
+	76,
+	1,
+	0,
+	/* 486 */ 65504,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	0,
+	/* 493 */ 65438,
+	75,
+	1,
+	65462,
+	77,
+	1,
+	0,
+	/* 500 */ 65295,
+	77,
+	1,
+	65459,
+	78,
+	1,
+	0,
+	/* 507 */ 65438,
+	76,
+	1,
+	65461,
+	78,
+	1,
+	0,
+	/* 514 */ 65505,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	0,
+	/* 521 */ 65438,
+	77,
+	1,
+	65460,
+	79,
+	1,
+	0,
+	/* 528 */ 65296,
+	79,
+	1,
+	65457,
+	80,
+	1,
+	0,
+	/* 535 */ 65438,
+	78,
+	1,
+	65459,
+	80,
+	1,
+	0,
+	/* 542 */ 65506,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	0,
+	/* 549 */ 65438,
+	79,
+	1,
+	65458,
+	81,
+	1,
+	0,
+	/* 556 */ 65037,
+	1,
+	0,
+	/* 559 */ 65255,
+	1,
+	0,
+	/* 562 */ 65298,
+	1,
+	0,
+	/* 565 */ 65299,
+	1,
+	0,
+	/* 568 */ 65300,
+	1,
+	0,
+	/* 571 */ 65301,
+	1,
+	0,
+	/* 574 */ 65302,
+	1,
+	0,
+	/* 577 */ 65303,
+	1,
+	0,
+	/* 580 */ 65304,
+	1,
+	0,
+	/* 583 */ 65453,
+	1,
+	65499,
+	133,
+	1,
+	65416,
+	1,
+	0,
+	/* 591 */ 138,
+	65488,
+	49,
+	65488,
+	12,
+	121,
+	65416,
+	1,
+	0,
+	/* 600 */ 65488,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 606 */ 65489,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 612 */ 65490,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 618 */ 65491,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 624 */ 65492,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 630 */ 65493,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 636 */ 65494,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 642 */ 65495,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 648 */ 65496,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 654 */ 65497,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 660 */ 65498,
+	13,
+	121,
+	65416,
+	1,
+	0,
+	/* 666 */ 65464,
+	1,
+	65488,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 675 */ 65463,
+	1,
+	65489,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 684 */ 65462,
+	1,
+	65490,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 693 */ 65461,
+	1,
+	65491,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 702 */ 65460,
+	1,
+	65492,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 711 */ 65459,
+	1,
+	65493,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 720 */ 65458,
+	1,
+	65494,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 729 */ 65457,
+	1,
+	65495,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 738 */ 65456,
+	1,
+	65496,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 747 */ 65455,
+	1,
+	65497,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 756 */ 65454,
+	1,
+	65498,
+	133,
+	65416,
+	121,
+	65416,
+	1,
+	0,
+	/* 765 */ 65488,
+	133,
+	65416,
+	1,
+	0,
+	/* 770 */ 65499,
+	134,
+	65416,
+	1,
+	0,
+	/* 775 */ 126,
+	65500,
+	37,
+	65500,
+	133,
+	65417,
+	1,
+	0,
+	/* 783 */ 65433,
+	1,
+	0,
+	/* 786 */ 65434,
+	1,
+	0,
+	/* 789 */ 65435,
+	1,
+	0,
+	/* 792 */ 65436,
+	1,
+	0,
+	/* 795 */ 65437,
+	1,
+	0,
+	/* 798 */ 65438,
+	1,
+	0,
+	/* 801 */ 65456,
+	1,
+	0,
+	/* 804 */ 65507,
+	1,
+	0,
+	/* 807 */ 65508,
+	1,
+	0,
+	/* 810 */ 65509,
+	1,
+	0,
+	/* 813 */ 65510,
+	1,
+	0,
+	/* 816 */ 65511,
+	1,
+	0,
+	/* 819 */ 65512,
+	1,
+	0,
+	/* 822 */ 65513,
+	1,
+	0,
+	/* 825 */ 65514,
+	1,
+	0,
+	/* 828 */ 65072,
+	1,
+	3,
+	1,
+	3,
+	1,
+	2,
+	0,
+	/* 836 */ 65128,
+	1,
+	3,
+	1,
+	2,
+	0,
+	/* 842 */ 65318,
+	1,
+	2,
+	0,
+	/* 846 */ 65072,
+	1,
+	3,
+	1,
+	2,
+	2,
+	0,
+	/* 853 */ 65128,
+	1,
+	2,
+	2,
+	0,
+	/* 858 */ 65072,
+	1,
+	2,
+	2,
+	2,
+	0,
+	/* 864 */ 65329,
+	2,
+	2,
+	2,
+	0,
+	/* 869 */ 65072,
+	1,
+	3,
+	2,
+	2,
+	0,
+	/* 875 */ 65357,
+	2,
+	2,
+	0,
+	/* 879 */ 65072,
+	1,
+	3,
+	1,
+	3,
+	2,
+	0,
+	/* 886 */ 65128,
+	1,
+	3,
+	2,
+	0,
+	/* 891 */ 65343,
+	77,
+	1,
+	65460,
+	79,
+	1,
+	65458,
+	81,
+	1,
+	12,
+	2,
+	0,
+	/* 903 */ 65343,
+	76,
+	1,
+	65461,
+	78,
+	1,
+	65459,
+	80,
+	1,
+	13,
+	2,
+	0,
+	/* 915 */ 65343,
+	75,
+	1,
+	65462,
+	77,
+	1,
+	65460,
+	79,
+	1,
+	14,
+	2,
+	0,
+	/* 927 */ 65343,
+	74,
+	1,
+	65463,
+	76,
+	1,
+	65461,
+	78,
+	1,
+	15,
+	2,
+	0,
+	/* 939 */ 65343,
+	73,
+	1,
+	65464,
+	75,
+	1,
+	65462,
+	77,
+	1,
+	16,
+	2,
+	0,
+	/* 951 */ 65343,
+	72,
+	1,
+	65465,
+	74,
+	1,
+	65463,
+	76,
+	1,
+	17,
+	2,
+	0,
+	/* 963 */ 65343,
+	71,
+	1,
+	65466,
+	73,
+	1,
+	65464,
+	75,
+	1,
+	18,
+	2,
+	0,
+	/* 975 */ 65343,
+	70,
+	1,
+	65467,
+	72,
+	1,
+	65465,
+	74,
+	1,
+	19,
+	2,
+	0,
+	/* 987 */ 65343,
+	69,
+	1,
+	65468,
+	71,
+	1,
+	65466,
+	73,
+	1,
+	20,
+	2,
+	0,
+	/* 999 */ 65343,
+	68,
+	1,
+	65469,
+	70,
+	1,
+	65467,
+	72,
+	1,
+	21,
+	2,
+	0,
+	/* 1011 */ 65343,
+	67,
+	1,
+	65470,
+	69,
+	1,
+	65468,
+	71,
+	1,
+	22,
+	2,
+	0,
+	/* 1023 */ 65343,
+	66,
+	1,
+	65471,
+	68,
+	1,
+	65469,
+	70,
+	1,
+	23,
+	2,
+	0,
+	/* 1035 */ 65343,
+	2,
+	2,
+	94,
+	2,
+	0,
+	/* 1041 */ 65343,
+	81,
+	1,
+	65456,
+	2,
+	94,
+	2,
+	0,
+	/* 1049 */ 65343,
+	80,
+	1,
+	65457,
+	2,
+	94,
+	2,
+	0,
+	/* 1057 */ 65343,
+	79,
+	1,
+	65458,
+	81,
+	1,
+	65456,
+	94,
+	2,
+	0,
+	/* 1067 */ 65343,
+	78,
+	1,
+	65459,
+	80,
+	1,
+	65457,
+	94,
+	2,
+	0,
+	/* 1077 */ 65438,
+	2,
+	0,
+	/* 1080 */ 65452,
+	2,
+	0,
+	/* 1083 */ 65072,
+	1,
+	3,
+	1,
+	3,
+	1,
+	3,
+	0,
+	/* 1091 */ 65128,
+	1,
+	3,
+	1,
+	3,
+	0,
+	/* 1097 */ 65318,
+	1,
+	3,
+	0,
+	/* 1101 */ 7,
+	0,
+	/* 1103 */ 140,
+	65486,
+	13,
+	0,
+	/* 1107 */ 14,
+	0,
+	/* 1109 */ 126,
+	65501,
+	15,
+	0,
+	/* 1113 */ 14,
+	69,
+	0,
+	/* 1116 */ 65445,
+	65513,
+	1,
+	23,
+	65514,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	69,
+	0,
+	/* 1128 */ 65445,
+	65512,
+	1,
+	24,
+	65513,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	70,
+	0,
+	/* 1140 */ 65445,
+	65511,
+	1,
+	25,
+	65512,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	71,
+	0,
+	/* 1152 */ 65445,
+	65510,
+	1,
+	26,
+	65511,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	72,
+	0,
+	/* 1164 */ 65445,
+	65509,
+	1,
+	27,
+	65510,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	73,
+	0,
+	/* 1176 */ 65445,
+	65508,
+	1,
+	28,
+	65509,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	74,
+	0,
+	/* 1188 */ 65445,
+	65507,
+	1,
+	29,
+	65508,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	75,
+	0,
+	/* 1200 */ 65445,
+	65506,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	65484,
+	65507,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	76,
+	0,
+	/* 1216 */ 65445,
+	65505,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	65487,
+	65506,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	13,
+	65,
+	65472,
+	65,
+	77,
+	0,
+	/* 1236 */ 65445,
+	65504,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	65490,
+	65505,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	15,
+	65,
+	65472,
+	65,
+	78,
+	0,
+	/* 1256 */ 65445,
+	65503,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	65493,
+	65504,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	17,
+	65,
+	65472,
+	65,
+	79,
+	0,
+	/* 1276 */ 65445,
+	65502,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	65496,
+	65503,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	19,
+	65,
+	65472,
+	65,
+	80,
+	0,
+	/* 1296 */ 65445,
+	65501,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	65499,
+	65502,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	21,
+	65,
+	65472,
+	65,
+	81,
+	0,
+	/* 1316 */ 65445,
+	65500,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	65502,
+	65501,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	23,
+	65,
+	65472,
+	65,
+	82,
+	0,
+	/* 1336 */ 65445,
+	65499,
+	66,
+	1,
+	65470,
+	67,
+	1,
+	65505,
+	65500,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	25,
+	65,
+	65472,
+	65,
+	83,
+	0,
+	/* 1356 */ 97,
+	0,
+	/* 1358 */ 98,
+	0,
+	/* 1360 */ 99,
+	0,
+	/* 1362 */ 100,
+	0,
+	/* 1364 */ 101,
+	0,
+	/* 1366 */ 102,
+	0,
+	/* 1368 */ 103,
+	0,
+	/* 1370 */ 65373,
+	1,
+	1,
+	21,
+	75,
+	135,
+	0,
+	/* 1377 */ 65373,
+	1,
+	1,
+	22,
+	74,
+	136,
+	0,
+	/* 1384 */ 65373,
+	1,
+	1,
+	23,
+	73,
+	137,
+	0,
+	/* 1391 */ 65373,
+	1,
+	1,
+	24,
+	72,
+	138,
+	0,
+	/* 1398 */ 65373,
+	1,
+	1,
+	25,
+	71,
+	139,
+	0,
+	/* 1405 */ 65373,
+	1,
+	1,
+	26,
+	70,
+	140,
+	0,
+	/* 1412 */ 65373,
+	1,
+	1,
+	27,
+	69,
+	141,
+	0,
+	/* 1419 */ 65373,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	65455,
+	28,
+	68,
+	142,
+	0,
+	/* 1430 */ 65373,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	65457,
+	80,
+	1,
+	65484,
+	67,
+	143,
+	0,
+	/* 1443 */ 65373,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	65459,
+	78,
+	1,
+	65487,
+	66,
+	144,
+	0,
+	/* 1456 */ 65373,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	65461,
+	76,
+	1,
+	65490,
+	65,
+	145,
+	0,
+	/* 1469 */ 65373,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	65463,
+	74,
+	1,
+	65493,
+	64,
+	146,
+	0,
+	/* 1482 */ 65373,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	65465,
+	72,
+	1,
+	65496,
+	63,
+	147,
+	0,
+	/* 1495 */ 65373,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	65467,
+	70,
+	1,
+	65499,
+	62,
+	148,
+	0,
+	/* 1508 */ 65373,
+	66,
+	1,
+	65470,
+	67,
+	1,
+	65469,
+	68,
+	1,
+	65502,
+	61,
+	149,
+	0,
+	/* 1521 */ 166,
+	0,
+	/* 1523 */ 65288,
+	1,
+	1,
+	1,
+	230,
+	1,
+	65400,
+	65,
+	65472,
+	65,
+	65396,
+	0,
+	/* 1535 */ 65287,
+	1,
+	1,
+	1,
+	231,
+	1,
+	65399,
+	65,
+	65472,
+	65,
+	65397,
+	0,
+	/* 1547 */ 65286,
+	1,
+	1,
+	1,
+	232,
+	1,
+	65398,
+	65,
+	65472,
+	65,
+	65398,
+	0,
+	/* 1559 */ 65285,
+	1,
+	1,
+	1,
+	233,
+	1,
+	65397,
+	65,
+	65472,
+	65,
+	65399,
+	0,
+	/* 1571 */ 65284,
+	1,
+	1,
+	1,
+	234,
+	1,
+	65396,
+	65,
+	65472,
+	65,
+	65400,
+	0,
+	/* 1583 */ 65283,
+	1,
+	1,
+	1,
+	235,
+	1,
+	65395,
+	65,
+	65472,
+	65,
+	65401,
+	0,
+	/* 1595 */ 65521,
+	65445,
+	65511,
+	1,
+	25,
+	65512,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	71,
+	65419,
+	65445,
+	65513,
+	1,
+	23,
+	65514,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	69,
+	65492,
+	28,
+	65509,
+	28,
+	28,
+	65386,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	40,
+	15,
+	65402,
+	0,
+	/* 1634 */ 65521,
+	65445,
+	65510,
+	1,
+	26,
+	65511,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	72,
+	65419,
+	65445,
+	65512,
+	1,
+	24,
+	65513,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	70,
+	65491,
+	28,
+	65509,
+	28,
+	29,
+	65385,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	41,
+	15,
+	65402,
+	0,
+	/* 1673 */ 65521,
+	65445,
+	65509,
+	1,
+	27,
+	65510,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	73,
+	65419,
+	65445,
+	65511,
+	1,
+	25,
+	65512,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	71,
+	65490,
+	28,
+	65509,
+	28,
+	30,
+	65384,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	42,
+	15,
+	65402,
+	0,
+	/* 1712 */ 65521,
+	65445,
+	65508,
+	1,
+	28,
+	65509,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	74,
+	65419,
+	65445,
+	65510,
+	1,
+	26,
+	65511,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	72,
+	65489,
+	28,
+	65509,
+	28,
+	31,
+	65383,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	43,
+	15,
+	65402,
+	0,
+	/* 1751 */ 65521,
+	65445,
+	65507,
+	1,
+	29,
+	65508,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	75,
+	65419,
+	65445,
+	65509,
+	1,
+	27,
+	65510,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	73,
+	65488,
+	28,
+	65509,
+	28,
+	32,
+	65382,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	44,
+	15,
+	65402,
+	0,
+	/* 1790 */ 65521,
+	65445,
+	65506,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	65484,
+	65507,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	76,
+	65419,
+	65445,
+	65508,
+	1,
+	28,
+	65509,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	74,
+	65487,
+	28,
+	65509,
+	28,
+	33,
+	65381,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	45,
+	15,
+	65402,
+	0,
+	/* 1833 */ 65521,
+	65445,
+	65505,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	65487,
+	65506,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	13,
+	65,
+	65472,
+	65,
+	77,
+	65419,
+	65445,
+	65507,
+	1,
+	29,
+	65508,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	75,
+	65486,
+	28,
+	65509,
+	28,
+	34,
+	65380,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	46,
+	15,
+	65402,
+	0,
+	/* 1880 */ 65521,
+	65445,
+	65504,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	65490,
+	65505,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	15,
+	65,
+	65472,
+	65,
+	78,
+	65419,
+	65445,
+	65506,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	65484,
+	65507,
+	1,
+	95,
+	65,
+	65472,
+	65,
+	76,
+	65485,
+	28,
+	65509,
+	28,
+	35,
+	65379,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	47,
+	15,
+	65402,
+	0,
+	/* 1931 */ 65521,
+	65445,
+	65503,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	65493,
+	65504,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	17,
+	65,
+	65472,
+	65,
+	79,
+	65419,
+	65445,
+	65505,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	65487,
+	65506,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	13,
+	65,
+	65472,
+	65,
+	77,
+	65484,
+	28,
+	65509,
+	28,
+	36,
+	65378,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	48,
+	15,
+	65402,
+	0,
+	/* 1986 */ 65521,
+	65445,
+	65502,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	65496,
+	65503,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	19,
+	65,
+	65472,
+	65,
+	80,
+	65419,
+	65445,
+	65504,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	65490,
+	65505,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	15,
+	65,
+	65472,
+	65,
+	78,
+	65483,
+	28,
+	65509,
+	28,
+	37,
+	65377,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	49,
+	15,
+	65402,
+	0,
+	/* 2041 */ 65521,
+	65445,
+	65501,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	65499,
+	65502,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	21,
+	65,
+	65472,
+	65,
+	81,
+	65419,
+	65445,
+	65503,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	65493,
+	65504,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	17,
+	65,
+	65472,
+	65,
+	79,
+	65482,
+	28,
+	65509,
+	28,
+	38,
+	65376,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	50,
+	15,
+	65402,
+	0,
+	/* 2096 */ 65521,
+	65445,
+	65500,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	65502,
+	65501,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	23,
+	65,
+	65472,
+	65,
+	82,
+	65419,
+	65445,
+	65502,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	65496,
+	65503,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	19,
+	65,
+	65472,
+	65,
+	80,
+	65481,
+	28,
+	65509,
+	28,
+	39,
+	65375,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	51,
+	15,
+	65402,
+	0,
+	/* 2151 */ 65521,
+	65445,
+	65499,
+	66,
+	1,
+	65470,
+	67,
+	1,
+	65505,
+	65500,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	25,
+	65,
+	65472,
+	65,
+	83,
+	65419,
+	65445,
+	65501,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	65499,
+	65502,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	21,
+	65,
+	65472,
+	65,
+	81,
+	65480,
+	28,
+	65509,
+	28,
+	40,
+	65374,
+	65,
+	30,
+	65442,
+	65,
+	30,
+	52,
+	15,
+	65402,
+	0,
+	/* 2206 */ 65282,
+	81,
+	1,
+	65455,
+	1,
+	1,
+	236,
+	1,
+	65394,
+	65,
+	65472,
+	65,
+	65402,
+	0,
+	/* 2220 */ 65281,
+	79,
+	1,
+	65457,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	65455,
+	237,
+	1,
+	65393,
+	65,
+	65472,
+	65,
+	65403,
+	0,
+	/* 2238 */ 65280,
+	77,
+	1,
+	65459,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	65457,
+	80,
+	1,
+	157,
+	1,
+	65392,
+	65,
+	65472,
+	65,
+	65404,
+	0,
+	/* 2258 */ 65279,
+	75,
+	1,
+	65461,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	65459,
+	78,
+	1,
+	160,
+	1,
+	65391,
+	65,
+	65472,
+	65,
+	65405,
+	0,
+	/* 2278 */ 65278,
+	73,
+	1,
+	65463,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	65461,
+	76,
+	1,
+	163,
+	1,
+	65390,
+	65,
+	65472,
+	65,
+	65406,
+	0,
+	/* 2298 */ 65277,
+	71,
+	1,
+	65465,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	65463,
+	74,
+	1,
+	166,
+	1,
+	65389,
+	65,
+	65472,
+	65,
+	65407,
+	0,
+	/* 2318 */ 65276,
+	69,
+	1,
+	65467,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	65465,
+	72,
+	1,
+	169,
+	1,
+	65388,
+	65,
+	65472,
+	65,
+	65408,
+	0,
+	/* 2338 */ 65275,
+	67,
+	1,
+	65469,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	65467,
+	70,
+	1,
+	172,
+	1,
+	65387,
+	65,
+	65472,
+	65,
+	65409,
+	0,
+	/* 2358 */ 23,
+	73,
+	2,
+	63,
+	65488,
+	120,
+	65465,
+	1,
+	65487,
+	75,
+	26,
+	65447,
+	65,
+	26,
+	30,
+	65416,
+	66,
+	26,
+	29,
+	65416,
+	0,
+	/* 2379 */ 22,
+	74,
+	2,
+	63,
+	65487,
+	120,
+	65466,
+	1,
+	65486,
+	76,
+	26,
+	65446,
+	66,
+	26,
+	29,
+	65416,
+	0,
+	/* 2396 */ 65,
+	65487,
+	77,
+	26,
+	65446,
+	66,
+	26,
+	29,
+	65416,
+	0,
+	/* 2406 */ 23,
+	73,
+	2,
+	134,
+	65465,
+	1,
+	65487,
+	50,
+	65487,
+	75,
+	26,
+	31,
+	65416,
+	65,
+	26,
+	30,
+	65416,
+	0,
+	/* 2424 */ 22,
+	74,
+	135,
+	65466,
+	1,
+	65486,
+	77,
+	26,
+	30,
+	65416,
+	0,
+	/* 2435 */ 65,
+	65487,
+	77,
+	26,
+	30,
+	65416,
+	0,
+	/* 2442 */ 139,
+	65487,
+	50,
+	65487,
+	12,
+	121,
+	65416,
+	0,
+	/* 2450 */ 65487,
+	13,
+	121,
+	65416,
+	0,
+	/* 2455 */ 65465,
+	1,
+	65487,
+	133,
+	65416,
+	121,
+	65416,
+	0,
+	/* 2463 */ 65466,
+	1,
+	65486,
+	133,
+	65416,
+	0,
+	/* 2469 */ 65487,
+	133,
+	65416,
+	0,
+	/* 2473 */ 65468,
+	36,
+	62,
+	148,
+	65452,
+	1,
+	65500,
+	66,
+	28,
+	40,
+	65417,
+	0,
+	/* 2485 */ 65469,
+	36,
+	62,
+	148,
+	65452,
+	1,
+	65500,
+	66,
+	28,
+	40,
+	65417,
+	0,
+	/* 2497 */ 65,
+	65500,
+	66,
+	28,
+	40,
+	65417,
+	0,
+	/* 2504 */ 65452,
+	1,
+	65500,
+	134,
+	65417,
+	0,
+	/* 2510 */ 65315,
+	75,
+	1,
+	65462,
+	77,
+	1,
+	65460,
+	79,
+	1,
+	65458,
+	81,
+	1,
+	10,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2528 */ 65315,
+	74,
+	1,
+	65463,
+	76,
+	1,
+	65461,
+	78,
+	1,
+	65459,
+	80,
+	1,
+	11,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2546 */ 65315,
+	73,
+	1,
+	65464,
+	75,
+	1,
+	65462,
+	77,
+	1,
+	65460,
+	79,
+	1,
+	12,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2564 */ 65315,
+	72,
+	1,
+	65465,
+	74,
+	1,
+	65463,
+	76,
+	1,
+	65461,
+	78,
+	1,
+	13,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2582 */ 65315,
+	71,
+	1,
+	65466,
+	73,
+	1,
+	65464,
+	75,
+	1,
+	65462,
+	77,
+	1,
+	14,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2600 */ 65315,
+	70,
+	1,
+	65467,
+	72,
+	1,
+	65465,
+	74,
+	1,
+	65463,
+	76,
+	1,
+	15,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2618 */ 65315,
+	69,
+	1,
+	65468,
+	71,
+	1,
+	65466,
+	73,
+	1,
+	65464,
+	75,
+	1,
+	16,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2636 */ 65315,
+	68,
+	1,
+	65469,
+	70,
+	1,
+	65467,
+	72,
+	1,
+	65465,
+	74,
+	1,
+	17,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2654 */ 65315,
+	67,
+	1,
+	65470,
+	69,
+	1,
+	65468,
+	71,
+	1,
+	65466,
+	73,
+	1,
+	18,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2672 */ 65315,
+	66,
+	1,
+	65471,
+	68,
+	1,
+	65469,
+	70,
+	1,
+	65467,
+	72,
+	1,
+	19,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2690 */ 65315,
+	2,
+	2,
+	2,
+	92,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2700 */ 65315,
+	81,
+	1,
+	65456,
+	2,
+	2,
+	92,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2712 */ 65315,
+	80,
+	1,
+	65457,
+	2,
+	2,
+	92,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2724 */ 65315,
+	79,
+	1,
+	65458,
+	81,
+	1,
+	65456,
+	2,
+	92,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2738 */ 65315,
+	78,
+	1,
+	65459,
+	80,
+	1,
+	65457,
+	2,
+	92,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2752 */ 65315,
+	77,
+	1,
+	65460,
+	79,
+	1,
+	65458,
+	81,
+	1,
+	65456,
+	92,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2768 */ 65315,
+	76,
+	1,
+	65461,
+	78,
+	1,
+	65459,
+	80,
+	1,
+	65457,
+	92,
+	95,
+	65443,
+	95,
+	65443,
+	0,
+	/* 2784 */ 21,
+	75,
+	65,
+	65486,
+	78,
+	26,
+	65445,
+	0,
+	/* 2792 */ 24,
+	72,
+	2,
+	63,
+	65489,
+	120,
+	65464,
+	1,
+	65488,
+	74,
+	26,
+	65448,
+	64,
+	26,
+	31,
+	65416,
+	65,
+	26,
+	30,
+	65416,
+	92,
+	65445,
+	0,
+	/* 2815 */ 65,
+	65488,
+	76,
+	26,
+	65447,
+	65,
+	26,
+	30,
+	65416,
+	92,
+	65445,
+	0,
+	/* 2827 */ 26,
+	65446,
+	92,
+	65445,
+	0,
+	/* 2832 */ 24,
+	72,
+	2,
+	135,
+	65464,
+	1,
+	65488,
+	49,
+	65488,
+	74,
+	26,
+	32,
+	65416,
+	64,
+	26,
+	31,
+	65416,
+	65,
+	26,
+	65446,
+	0,
+	/* 2853 */ 65,
+	65488,
+	76,
+	26,
+	31,
+	65416,
+	65,
+	26,
+	65446,
+	0,
+	/* 2863 */ 25,
+	71,
+	2,
+	63,
+	65490,
+	120,
+	65463,
+	1,
+	65489,
+	73,
+	26,
+	65449,
+	63,
+	26,
+	32,
+	65416,
+	64,
+	26,
+	31,
+	65416,
+	91,
+	65446,
+	0,
+	/* 2886 */ 65,
+	65489,
+	75,
+	26,
+	65448,
+	64,
+	26,
+	31,
+	65416,
+	91,
+	65446,
+	0,
+	/* 2898 */ 25,
+	71,
+	2,
+	136,
+	65463,
+	1,
+	65489,
+	48,
+	65489,
+	73,
+	26,
+	33,
+	65416,
+	63,
+	26,
+	32,
+	65416,
+	64,
+	26,
+	65447,
+	91,
+	65446,
+	0,
+	/* 2921 */ 65,
+	65489,
+	75,
+	26,
+	32,
+	65416,
+	64,
+	26,
+	65447,
+	91,
+	65446,
+	0,
+	/* 2933 */ 26,
+	70,
+	2,
+	63,
+	65491,
+	120,
+	65462,
+	1,
+	65490,
+	72,
+	26,
+	65450,
+	62,
+	26,
+	33,
+	65416,
+	63,
+	26,
+	32,
+	65416,
+	90,
+	65447,
+	0,
+	/* 2956 */ 65,
+	65490,
+	74,
+	26,
+	65449,
+	63,
+	26,
+	32,
+	65416,
+	90,
+	65447,
+	0,
+	/* 2968 */ 26,
+	70,
+	2,
+	137,
+	65462,
+	1,
+	65490,
+	47,
+	65490,
+	72,
+	26,
+	34,
+	65416,
+	62,
+	26,
+	33,
+	65416,
+	63,
+	26,
+	65448,
+	90,
+	65447,
+	0,
+	/* 2991 */ 65,
+	65490,
+	74,
+	26,
+	33,
+	65416,
+	63,
+	26,
+	65448,
+	90,
+	65447,
+	0,
+	/* 3003 */ 27,
+	69,
+	2,
+	63,
+	65492,
+	120,
+	65461,
+	1,
+	65491,
+	71,
+	26,
+	65451,
+	61,
+	26,
+	34,
+	65416,
+	62,
+	26,
+	33,
+	65416,
+	89,
+	65448,
+	0,
+	/* 3026 */ 65,
+	65491,
+	73,
+	26,
+	65450,
+	62,
+	26,
+	33,
+	65416,
+	89,
+	65448,
+	0,
+	/* 3038 */ 27,
+	69,
+	2,
+	138,
+	65461,
+	1,
+	65491,
+	46,
+	65491,
+	71,
+	26,
+	35,
+	65416,
+	61,
+	26,
+	34,
+	65416,
+	62,
+	26,
+	65449,
+	89,
+	65448,
+	0,
+	/* 3061 */ 65,
+	65491,
+	73,
+	26,
+	34,
+	65416,
+	62,
+	26,
+	65449,
+	89,
+	65448,
+	0,
+	/* 3073 */ 28,
+	68,
+	2,
+	63,
+	65493,
+	120,
+	65460,
+	1,
+	65492,
+	70,
+	26,
+	65452,
+	60,
+	26,
+	35,
+	65416,
+	61,
+	26,
+	34,
+	65416,
+	88,
+	65449,
+	0,
+	/* 3096 */ 65,
+	65492,
+	72,
+	26,
+	65451,
+	61,
+	26,
+	34,
+	65416,
+	88,
+	65449,
+	0,
+	/* 3108 */ 28,
+	68,
+	2,
+	139,
+	65460,
+	1,
+	65492,
+	45,
+	65492,
+	70,
+	26,
+	36,
+	65416,
+	60,
+	26,
+	35,
+	65416,
+	61,
+	26,
+	65450,
+	88,
+	65449,
+	0,
+	/* 3131 */ 65,
+	65492,
+	72,
+	26,
+	35,
+	65416,
+	61,
+	26,
+	65450,
+	88,
+	65449,
+	0,
+	/* 3143 */ 65454,
+	29,
+	67,
+	2,
+	63,
+	65494,
+	120,
+	65459,
+	1,
+	65493,
+	69,
+	26,
+	65453,
+	59,
+	26,
+	36,
+	65416,
+	60,
+	26,
+	35,
+	65416,
+	87,
+	65450,
+	0,
+	/* 3167 */ 65455,
+	29,
+	67,
+	2,
+	63,
+	65494,
+	120,
+	65459,
+	1,
+	65493,
+	69,
+	26,
+	65453,
+	59,
+	26,
+	36,
+	65416,
+	60,
+	26,
+	35,
+	65416,
+	87,
+	65450,
+	0,
+	/* 3191 */ 65,
+	65493,
+	71,
+	26,
+	65452,
+	60,
+	26,
+	35,
+	65416,
+	87,
+	65450,
+	0,
+	/* 3203 */ 29,
+	67,
+	2,
+	140,
+	65459,
+	1,
+	65493,
+	44,
+	65493,
+	69,
+	26,
+	37,
+	65416,
+	59,
+	26,
+	36,
+	65416,
+	60,
+	26,
+	65451,
+	87,
+	65450,
+	0,
+	/* 3226 */ 65,
+	65493,
+	71,
+	26,
+	36,
+	65416,
+	60,
+	26,
+	65451,
+	87,
+	65450,
+	0,
+	/* 3238 */ 65456,
+	30,
+	66,
+	2,
+	63,
+	65495,
+	120,
+	65458,
+	1,
+	65494,
+	68,
+	26,
+	65454,
+	58,
+	26,
+	37,
+	65416,
+	59,
+	26,
+	36,
+	65416,
+	86,
+	65451,
+	0,
+	/* 3262 */ 65457,
+	30,
+	66,
+	2,
+	63,
+	65495,
+	120,
+	65458,
+	1,
+	65494,
+	68,
+	26,
+	65454,
+	58,
+	26,
+	37,
+	65416,
+	59,
+	26,
+	36,
+	65416,
+	86,
+	65451,
+	0,
+	/* 3286 */ 65,
+	65494,
+	70,
+	26,
+	65453,
+	59,
+	26,
+	36,
+	65416,
+	86,
+	65451,
+	0,
+	/* 3298 */ 65455,
+	30,
+	66,
+	2,
+	141,
+	65458,
+	1,
+	65494,
+	43,
+	65494,
+	68,
+	26,
+	38,
+	65416,
+	58,
+	26,
+	37,
+	65416,
+	59,
+	26,
+	65452,
+	86,
+	65451,
+	0,
+	/* 3322 */ 65456,
+	30,
+	66,
+	2,
+	141,
+	65458,
+	1,
+	65494,
+	43,
+	65494,
+	68,
+	26,
+	38,
+	65416,
+	58,
+	26,
+	37,
+	65416,
+	59,
+	26,
+	65452,
+	86,
+	65451,
+	0,
+	/* 3346 */ 65,
+	65494,
+	70,
+	26,
+	37,
+	65416,
+	59,
+	26,
+	65452,
+	86,
+	65451,
+	0,
+	/* 3358 */ 65458,
+	31,
+	65,
+	2,
+	63,
+	65496,
+	120,
+	65457,
+	1,
+	65495,
+	67,
+	26,
+	65455,
+	57,
+	26,
+	38,
+	65416,
+	58,
+	26,
+	37,
+	65416,
+	85,
+	65452,
+	0,
+	/* 3382 */ 65459,
+	31,
+	65,
+	2,
+	63,
+	65496,
+	120,
+	65457,
+	1,
+	65495,
+	67,
+	26,
+	65455,
+	57,
+	26,
+	38,
+	65416,
+	58,
+	26,
+	37,
+	65416,
+	85,
+	65452,
+	0,
+	/* 3406 */ 65,
+	65495,
+	69,
+	26,
+	65454,
+	58,
+	26,
+	37,
+	65416,
+	85,
+	65452,
+	0,
+	/* 3418 */ 65457,
+	31,
+	65,
+	2,
+	142,
+	65457,
+	1,
+	65495,
+	42,
+	65495,
+	67,
+	26,
+	39,
+	65416,
+	57,
+	26,
+	38,
+	65416,
+	58,
+	26,
+	65453,
+	85,
+	65452,
+	0,
+	/* 3442 */ 65458,
+	31,
+	65,
+	2,
+	142,
+	65457,
+	1,
+	65495,
+	42,
+	65495,
+	67,
+	26,
+	39,
+	65416,
+	57,
+	26,
+	38,
+	65416,
+	58,
+	26,
+	65453,
+	85,
+	65452,
+	0,
+	/* 3466 */ 65,
+	65495,
+	69,
+	26,
+	38,
+	65416,
+	58,
+	26,
+	65453,
+	85,
+	65452,
+	0,
+	/* 3478 */ 65460,
+	32,
+	64,
+	2,
+	63,
+	65497,
+	120,
+	65456,
+	1,
+	65496,
+	66,
+	26,
+	65456,
+	56,
+	26,
+	39,
+	65416,
+	57,
+	26,
+	38,
+	65416,
+	84,
+	65453,
+	0,
+	/* 3502 */ 65461,
+	32,
+	64,
+	2,
+	63,
+	65497,
+	120,
+	65456,
+	1,
+	65496,
+	66,
+	26,
+	65456,
+	56,
+	26,
+	39,
+	65416,
+	57,
+	26,
+	38,
+	65416,
+	84,
+	65453,
+	0,
+	/* 3526 */ 65,
+	65496,
+	68,
+	26,
+	65455,
+	57,
+	26,
+	38,
+	65416,
+	84,
+	65453,
+	0,
+	/* 3538 */ 65459,
+	32,
+	64,
+	2,
+	143,
+	65456,
+	1,
+	65496,
+	41,
+	65496,
+	66,
+	26,
+	40,
+	65416,
+	56,
+	26,
+	39,
+	65416,
+	57,
+	26,
+	65454,
+	84,
+	65453,
+	0,
+	/* 3562 */ 65460,
+	32,
+	64,
+	2,
+	143,
+	65456,
+	1,
+	65496,
+	41,
+	65496,
+	66,
+	26,
+	40,
+	65416,
+	56,
+	26,
+	39,
+	65416,
+	57,
+	26,
+	65454,
+	84,
+	65453,
+	0,
+	/* 3586 */ 65,
+	65496,
+	68,
+	26,
+	39,
+	65416,
+	57,
+	26,
+	65454,
+	84,
+	65453,
+	0,
+	/* 3598 */ 65462,
+	33,
+	63,
+	2,
+	63,
+	65498,
+	120,
+	65455,
+	1,
+	65497,
+	65,
+	26,
+	65457,
+	55,
+	26,
+	40,
+	65416,
+	56,
+	26,
+	39,
+	65416,
+	83,
+	65454,
+	0,
+	/* 3622 */ 65463,
+	33,
+	63,
+	2,
+	63,
+	65498,
+	120,
+	65455,
+	1,
+	65497,
+	65,
+	26,
+	65457,
+	55,
+	26,
+	40,
+	65416,
+	56,
+	26,
+	39,
+	65416,
+	83,
+	65454,
+	0,
+	/* 3646 */ 65,
+	65497,
+	67,
+	26,
+	65456,
+	56,
+	26,
+	39,
+	65416,
+	83,
+	65454,
+	0,
+	/* 3658 */ 65461,
+	33,
+	63,
+	2,
+	144,
+	65455,
+	1,
+	65497,
+	40,
+	65497,
+	65,
+	26,
+	41,
+	65416,
+	55,
+	26,
+	40,
+	65416,
+	56,
+	26,
+	65455,
+	83,
+	65454,
+	0,
+	/* 3682 */ 65462,
+	33,
+	63,
+	2,
+	144,
+	65455,
+	1,
+	65497,
+	40,
+	65497,
+	65,
+	26,
+	41,
+	65416,
+	55,
+	26,
+	40,
+	65416,
+	56,
+	26,
+	65455,
+	83,
+	65454,
+	0,
+	/* 3706 */ 65,
+	65497,
+	67,
+	26,
+	40,
+	65416,
+	56,
+	26,
+	65455,
+	83,
+	65454,
+	0,
+	/* 3718 */ 65297,
+	81,
+	1,
+	65455,
+	0,
+	/* 3723 */ 65464,
+	34,
+	62,
+	2,
+	63,
+	65499,
+	120,
+	65454,
+	1,
+	65498,
+	64,
+	2,
+	26,
+	41,
+	65416,
+	55,
+	26,
+	40,
+	65416,
+	82,
+	65455,
+	0,
+	/* 3745 */ 65465,
+	34,
+	62,
+	2,
+	63,
+	65499,
+	120,
+	65454,
+	1,
+	65498,
+	64,
+	2,
+	26,
+	41,
+	65416,
+	55,
+	26,
+	40,
+	65416,
+	82,
+	65455,
+	0,
+	/* 3767 */ 65,
+	65498,
+	66,
+	26,
+	65457,
+	55,
+	26,
+	40,
+	65416,
+	82,
+	65455,
+	0,
+	/* 3779 */ 65463,
+	34,
+	62,
+	2,
+	145,
+	65454,
+	1,
+	65498,
+	39,
+	65498,
+	64,
+	26,
+	42,
+	65416,
+	54,
+	26,
+	41,
+	65416,
+	55,
+	26,
+	65456,
+	82,
+	65455,
+	0,
+	/* 3803 */ 65464,
+	34,
+	62,
+	2,
+	145,
+	65454,
+	1,
+	65498,
+	39,
+	65498,
+	64,
+	26,
+	42,
+	65416,
+	54,
+	26,
+	41,
+	65416,
+	55,
+	26,
+	65456,
+	82,
+	65455,
+	0,
+	/* 3827 */ 65,
+	65498,
+	66,
+	26,
+	41,
+	65416,
+	55,
+	26,
+	65456,
+	82,
+	65455,
+	0,
+	/* 3839 */ 65438,
+	81,
+	1,
+	65456,
+	0,
+	/* 3844 */ 65466,
+	35,
+	61,
+	2,
+	63,
+	65500,
+	120,
+	65453,
+	1,
+	65499,
+	65,
+	2,
+	26,
+	40,
+	1,
+	65416,
+	81,
+	65456,
+	0,
+	/* 3863 */ 65467,
+	35,
+	61,
+	2,
+	63,
+	65500,
+	120,
+	65453,
+	1,
+	65499,
+	65,
+	2,
+	26,
+	40,
+	1,
+	65416,
+	81,
+	65456,
+	0,
+	/* 3882 */ 65,
+	65499,
+	65,
+	2,
+	26,
+	41,
+	65416,
+	81,
+	65456,
+	0,
+	/* 3892 */ 65465,
+	35,
+	61,
+	2,
+	146,
+	65453,
+	1,
+	65499,
+	38,
+	65499,
+	63,
+	2,
+	26,
+	41,
+	1,
+	65416,
+	54,
+	26,
+	65457,
+	81,
+	65456,
+	0,
+	/* 3914 */ 65466,
+	35,
+	61,
+	2,
+	146,
+	65453,
+	1,
+	65499,
+	38,
+	65499,
+	63,
+	2,
+	26,
+	41,
+	1,
+	65416,
+	54,
+	26,
+	65457,
+	81,
+	65456,
+	0,
+	/* 3936 */ 65,
+	65499,
+	65,
+	26,
+	42,
+	65416,
+	54,
+	26,
+	65457,
+	81,
+	65456,
+	0,
+	/* 3948 */ 65438,
+	80,
+	1,
+	65457,
+	0,
+	/* 3953 */ 28,
+	65457,
+	0,
+	/* 3956 */ 65467,
+	36,
+	60,
+	2,
+	147,
+	65452,
+	1,
+	65500,
+	37,
+	65500,
+	64,
+	2,
+	26,
+	41,
+	65417,
+	80,
+	65457,
+	0,
+	/* 3974 */ 65468,
+	36,
+	60,
+	2,
+	147,
+	65452,
+	1,
+	65500,
+	37,
+	65500,
+	64,
+	2,
+	26,
+	41,
+	65417,
+	80,
+	65457,
+	0,
+	/* 3992 */ 65,
+	65500,
+	64,
+	2,
+	26,
+	41,
+	65417,
+	80,
+	65457,
+	0,
+	/* 4002 */ 26,
+	65458,
+	80,
+	65457,
+	0,
+	/* 4007 */ 65469,
+	37,
+	61,
+	65,
+	65501,
+	65,
+	28,
+	65458,
+	0,
+	/* 4016 */ 65470,
+	37,
+	61,
+	65,
+	65501,
+	65,
+	28,
+	65458,
+	0,
+	/* 4025 */ 65373,
+	1,
+	1,
+	230,
+	65402,
+	65461,
+	0,
+	/* 4032 */ 65373,
+	1,
+	1,
+	231,
+	65401,
+	65462,
+	0,
+	/* 4039 */ 65373,
+	1,
+	1,
+	232,
+	65400,
+	65463,
+	0,
+	/* 4046 */ 65373,
+	1,
+	1,
+	233,
+	65399,
+	65464,
+	0,
+	/* 4053 */ 65373,
+	1,
+	1,
+	234,
+	65398,
+	65465,
+	0,
+	/* 4060 */ 65373,
+	1,
+	1,
+	235,
+	65397,
+	65466,
+	0,
+	/* 4067 */ 65373,
+	1,
+	1,
+	236,
+	65396,
+	65467,
+	0,
+	/* 4074 */ 65439,
+	65467,
+	0,
+	/* 4077 */ 65373,
+	81,
+	1,
+	65455,
+	1,
+	237,
+	65395,
+	65468,
+	0,
+	/* 4086 */ 65373,
+	79,
+	1,
+	65457,
+	80,
+	1,
+	65456,
+	81,
+	1,
+	156,
+	65394,
+	65469,
+	0,
+	/* 4099 */ 65373,
+	77,
+	1,
+	65459,
+	78,
+	1,
+	65458,
+	79,
+	1,
+	159,
+	65393,
+	65470,
+	0,
+	/* 4112 */ 65373,
+	75,
+	1,
+	65461,
+	76,
+	1,
+	65460,
+	77,
+	1,
+	162,
+	65392,
+	65471,
+	0,
+	/* 4125 */ 65373,
+	73,
+	1,
+	65463,
+	74,
+	1,
+	65462,
+	75,
+	1,
+	165,
+	65391,
+	65472,
+	0,
+	/* 4138 */ 65373,
+	71,
+	1,
+	65465,
+	72,
+	1,
+	65464,
+	73,
+	1,
+	168,
+	65390,
+	65473,
+	0,
+	/* 4151 */ 65373,
+	69,
+	1,
+	65467,
+	70,
+	1,
+	65466,
+	71,
+	1,
+	171,
+	65389,
+	65474,
+	0,
+	/* 4164 */ 65373,
+	67,
+	1,
+	65469,
+	68,
+	1,
+	65468,
+	69,
+	1,
+	174,
+	65388,
+	65475,
+	0,
+	/* 4177 */ 65534,
+	0,
+	/* 4179 */ 65535,
+	0,
 };
 
 static const uint16_t ARMSubRegIdxLists[] = {
-  /* 0 */ 1, 2, 0,
-  /* 3 */ 1, 17, 18, 2, 0,
-  /* 8 */ 1, 3, 0,
-  /* 11 */ 1, 17, 18, 3, 0,
-  /* 16 */ 9, 10, 0,
-  /* 19 */ 17, 18, 0,
-  /* 22 */ 1, 17, 18, 2, 19, 20, 0,
-  /* 29 */ 1, 17, 18, 3, 21, 22, 0,
-  /* 36 */ 1, 2, 3, 13, 33, 37, 0,
-  /* 43 */ 1, 17, 18, 2, 3, 13, 33, 37, 0,
-  /* 52 */ 1, 17, 18, 2, 19, 20, 3, 13, 33, 37, 0,
-  /* 63 */ 1, 17, 18, 2, 19, 20, 3, 21, 22, 13, 33, 37, 0,
-  /* 76 */ 13, 1, 2, 14, 3, 4, 33, 34, 35, 36, 37, 0,
-  /* 88 */ 13, 1, 17, 18, 2, 19, 20, 14, 3, 4, 33, 34, 35, 36, 37, 0,
-  /* 104 */ 1, 2, 3, 4, 13, 14, 33, 34, 35, 36, 37, 0,
-  /* 116 */ 1, 17, 18, 2, 3, 4, 13, 14, 33, 34, 35, 36, 37, 0,
-  /* 130 */ 1, 17, 18, 2, 19, 20, 3, 21, 22, 4, 13, 14, 33, 34, 35, 36, 37, 0,
-  /* 148 */ 1, 17, 18, 2, 19, 20, 3, 21, 22, 4, 23, 24, 13, 14, 33, 34, 35, 36, 37, 0,
-  /* 168 */ 13, 1, 17, 18, 2, 19, 20, 14, 3, 21, 22, 4, 23, 24, 33, 34, 35, 36, 37, 0,
-  /* 188 */ 1, 3, 5, 33, 43, 0,
-  /* 194 */ 1, 17, 18, 3, 5, 33, 43, 0,
-  /* 202 */ 1, 17, 18, 3, 21, 22, 5, 33, 43, 0,
-  /* 212 */ 1, 17, 18, 3, 21, 22, 5, 25, 26, 33, 43, 0,
-  /* 224 */ 1, 3, 5, 7, 33, 38, 43, 45, 51, 0,
-  /* 234 */ 1, 17, 18, 3, 5, 7, 33, 38, 43, 45, 51, 0,
-  /* 246 */ 1, 17, 18, 3, 21, 22, 5, 7, 33, 38, 43, 45, 51, 0,
-  /* 260 */ 1, 17, 18, 3, 21, 22, 5, 25, 26, 7, 33, 38, 43, 45, 51, 0,
-  /* 276 */ 1, 17, 18, 3, 21, 22, 5, 25, 26, 7, 29, 30, 33, 38, 43, 45, 51, 0,
-  /* 294 */ 11, 13, 1, 2, 14, 3, 4, 33, 34, 35, 36, 37, 12, 15, 5, 6, 16, 7, 8, 51, 52, 53, 54, 55, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 0,
-  /* 333 */ 11, 13, 1, 17, 18, 2, 19, 20, 14, 3, 4, 33, 34, 35, 36, 37, 12, 15, 5, 6, 16, 7, 8, 51, 52, 53, 54, 55, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 0,
-  /* 376 */ 11, 13, 1, 17, 18, 2, 19, 20, 14, 3, 21, 22, 4, 23, 24, 33, 34, 35, 36, 37, 12, 15, 5, 6, 16, 7, 8, 51, 52, 53, 54, 55, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 0,
-  /* 423 */ 11, 13, 1, 17, 18, 2, 19, 20, 14, 3, 21, 22, 4, 23, 24, 33, 34, 35, 36, 37, 12, 15, 5, 25, 26, 6, 27, 28, 16, 7, 8, 51, 52, 53, 54, 55, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 0,
-  /* 474 */ 11, 13, 1, 17, 18, 2, 19, 20, 14, 3, 21, 22, 4, 23, 24, 33, 34, 35, 36, 37, 12, 15, 5, 25, 26, 6, 27, 28, 16, 7, 29, 30, 8, 31, 32, 51, 52, 53, 54, 55, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 56, 0,
+	/* 0 */ 1,
+	2,
+	0,
+	/* 3 */ 1,
+	17,
+	18,
+	2,
+	0,
+	/* 8 */ 1,
+	3,
+	0,
+	/* 11 */ 1,
+	17,
+	18,
+	3,
+	0,
+	/* 16 */ 9,
+	10,
+	0,
+	/* 19 */ 17,
+	18,
+	0,
+	/* 22 */ 1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	0,
+	/* 29 */ 1,
+	17,
+	18,
+	3,
+	21,
+	22,
+	0,
+	/* 36 */ 1,
+	2,
+	3,
+	13,
+	33,
+	37,
+	0,
+	/* 43 */ 1,
+	17,
+	18,
+	2,
+	3,
+	13,
+	33,
+	37,
+	0,
+	/* 52 */ 1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	3,
+	13,
+	33,
+	37,
+	0,
+	/* 63 */ 1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	3,
+	21,
+	22,
+	13,
+	33,
+	37,
+	0,
+	/* 76 */ 13,
+	1,
+	2,
+	14,
+	3,
+	4,
+	33,
+	34,
+	35,
+	36,
+	37,
+	0,
+	/* 88 */ 13,
+	1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	14,
+	3,
+	4,
+	33,
+	34,
+	35,
+	36,
+	37,
+	0,
+	/* 104 */ 1,
+	2,
+	3,
+	4,
+	13,
+	14,
+	33,
+	34,
+	35,
+	36,
+	37,
+	0,
+	/* 116 */ 1,
+	17,
+	18,
+	2,
+	3,
+	4,
+	13,
+	14,
+	33,
+	34,
+	35,
+	36,
+	37,
+	0,
+	/* 130 */ 1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	3,
+	21,
+	22,
+	4,
+	13,
+	14,
+	33,
+	34,
+	35,
+	36,
+	37,
+	0,
+	/* 148 */ 1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	3,
+	21,
+	22,
+	4,
+	23,
+	24,
+	13,
+	14,
+	33,
+	34,
+	35,
+	36,
+	37,
+	0,
+	/* 168 */ 13,
+	1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	14,
+	3,
+	21,
+	22,
+	4,
+	23,
+	24,
+	33,
+	34,
+	35,
+	36,
+	37,
+	0,
+	/* 188 */ 1,
+	3,
+	5,
+	33,
+	43,
+	0,
+	/* 194 */ 1,
+	17,
+	18,
+	3,
+	5,
+	33,
+	43,
+	0,
+	/* 202 */ 1,
+	17,
+	18,
+	3,
+	21,
+	22,
+	5,
+	33,
+	43,
+	0,
+	/* 212 */ 1,
+	17,
+	18,
+	3,
+	21,
+	22,
+	5,
+	25,
+	26,
+	33,
+	43,
+	0,
+	/* 224 */ 1,
+	3,
+	5,
+	7,
+	33,
+	38,
+	43,
+	45,
+	51,
+	0,
+	/* 234 */ 1,
+	17,
+	18,
+	3,
+	5,
+	7,
+	33,
+	38,
+	43,
+	45,
+	51,
+	0,
+	/* 246 */ 1,
+	17,
+	18,
+	3,
+	21,
+	22,
+	5,
+	7,
+	33,
+	38,
+	43,
+	45,
+	51,
+	0,
+	/* 260 */ 1,
+	17,
+	18,
+	3,
+	21,
+	22,
+	5,
+	25,
+	26,
+	7,
+	33,
+	38,
+	43,
+	45,
+	51,
+	0,
+	/* 276 */ 1,
+	17,
+	18,
+	3,
+	21,
+	22,
+	5,
+	25,
+	26,
+	7,
+	29,
+	30,
+	33,
+	38,
+	43,
+	45,
+	51,
+	0,
+	/* 294 */ 11,
+	13,
+	1,
+	2,
+	14,
+	3,
+	4,
+	33,
+	34,
+	35,
+	36,
+	37,
+	12,
+	15,
+	5,
+	6,
+	16,
+	7,
+	8,
+	51,
+	52,
+	53,
+	54,
+	55,
+	38,
+	39,
+	40,
+	41,
+	42,
+	43,
+	44,
+	45,
+	46,
+	47,
+	48,
+	49,
+	50,
+	56,
+	0,
+	/* 333 */ 11,
+	13,
+	1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	14,
+	3,
+	4,
+	33,
+	34,
+	35,
+	36,
+	37,
+	12,
+	15,
+	5,
+	6,
+	16,
+	7,
+	8,
+	51,
+	52,
+	53,
+	54,
+	55,
+	38,
+	39,
+	40,
+	41,
+	42,
+	43,
+	44,
+	45,
+	46,
+	47,
+	48,
+	49,
+	50,
+	56,
+	0,
+	/* 376 */ 11,
+	13,
+	1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	14,
+	3,
+	21,
+	22,
+	4,
+	23,
+	24,
+	33,
+	34,
+	35,
+	36,
+	37,
+	12,
+	15,
+	5,
+	6,
+	16,
+	7,
+	8,
+	51,
+	52,
+	53,
+	54,
+	55,
+	38,
+	39,
+	40,
+	41,
+	42,
+	43,
+	44,
+	45,
+	46,
+	47,
+	48,
+	49,
+	50,
+	56,
+	0,
+	/* 423 */ 11,
+	13,
+	1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	14,
+	3,
+	21,
+	22,
+	4,
+	23,
+	24,
+	33,
+	34,
+	35,
+	36,
+	37,
+	12,
+	15,
+	5,
+	25,
+	26,
+	6,
+	27,
+	28,
+	16,
+	7,
+	8,
+	51,
+	52,
+	53,
+	54,
+	55,
+	38,
+	39,
+	40,
+	41,
+	42,
+	43,
+	44,
+	45,
+	46,
+	47,
+	48,
+	49,
+	50,
+	56,
+	0,
+	/* 474 */ 11,
+	13,
+	1,
+	17,
+	18,
+	2,
+	19,
+	20,
+	14,
+	3,
+	21,
+	22,
+	4,
+	23,
+	24,
+	33,
+	34,
+	35,
+	36,
+	37,
+	12,
+	15,
+	5,
+	25,
+	26,
+	6,
+	27,
+	28,
+	16,
+	7,
+	29,
+	30,
+	8,
+	31,
+	32,
+	51,
+	52,
+	53,
+	54,
+	55,
+	38,
+	39,
+	40,
+	41,
+	42,
+	43,
+	44,
+	45,
+	46,
+	47,
+	48,
+	49,
+	50,
+	56,
+	0,
 };
 
-static const MCRegisterDesc ARMRegDesc[] = { // Descriptors
-  { 12, 0, 0, 0, 0, 0 },
-  { 1268, 16, 16, 2, 66865, 0 },
-  { 1319, 16, 16, 2, 66865, 0 },
-  { 1273, 16, 16, 2, 66865, 0 },
-  { 1286, 16, 16, 2, 66865, 0 },
-  { 1294, 16, 16, 2, 66865, 0 },
-  { 1215, 16, 16, 2, 66865, 0 },
-  { 1301, 16, 16, 2, 66865, 0 },
-  { 1255, 16, 16, 2, 17616, 0 },
-  { 1308, 16, 16, 2, 17616, 0 },
-  { 1202, 16, 16, 2, 66833, 0 },
-  { 1221, 16, 16, 2, 66833, 0 },
-  { 1240, 16, 16, 2, 66833, 0 },
-  { 1261, 16, 16, 2, 66833, 0 },
-  { 1199, 16, 16, 2, 66833, 0 },
-  { 1227, 16, 16, 2, 66833, 0 },
-  { 1252, 16, 1521, 2, 66833, 0 },
-  { 1278, 16, 16, 2, 66833, 0 },
-  { 1264, 16, 16, 2, 66833, 0 },
-  { 1283, 16, 16, 2, 66833, 0 },
-  { 119, 350, 4008, 19, 13202, 8 },
-  { 251, 357, 2474, 19, 13202, 8 },
-  { 366, 364, 3957, 19, 13202, 8 },
-  { 482, 378, 3845, 19, 13202, 8 },
-  { 608, 392, 3893, 19, 13202, 8 },
-  { 726, 406, 3724, 19, 13202, 8 },
-  { 840, 420, 3780, 19, 13202, 8 },
-  { 946, 434, 3599, 19, 13202, 8 },
-  { 1060, 448, 3659, 19, 13202, 8 },
-  { 1166, 462, 3479, 19, 13202, 8 },
-  { 9, 476, 3539, 19, 13202, 8 },
-  { 144, 490, 3359, 19, 13202, 8 },
-  { 285, 504, 3419, 19, 13202, 8 },
-  { 411, 518, 3239, 19, 13202, 8 },
-  { 526, 532, 3299, 19, 13202, 8 },
-  { 652, 546, 3144, 19, 13202, 8 },
-  { 771, 16, 3203, 2, 17713, 0 },
-  { 885, 16, 3073, 2, 17713, 0 },
-  { 991, 16, 3108, 2, 17713, 0 },
-  { 1105, 16, 3003, 2, 17713, 0 },
-  { 59, 16, 3038, 2, 17713, 0 },
-  { 195, 16, 2933, 2, 17713, 0 },
-  { 339, 16, 2968, 2, 17713, 0 },
-  { 459, 16, 2863, 2, 17713, 0 },
-  { 578, 16, 2898, 2, 17713, 0 },
-  { 700, 16, 2792, 2, 17713, 0 },
-  { 807, 16, 2832, 2, 17713, 0 },
-  { 917, 16, 2358, 2, 17713, 0 },
-  { 1027, 16, 2406, 2, 17713, 0 },
-  { 1137, 16, 2379, 2, 17713, 0 },
-  { 95, 16, 2424, 2, 17713, 0 },
-  { 227, 16, 2784, 2, 17713, 0 },
-  { 393, 16, 16, 2, 17713, 0 },
-  { 128, 16, 16, 2, 17713, 0 },
-  { 260, 16, 16, 2, 17713, 0 },
-  { 384, 16, 16, 2, 17713, 0 },
-  { 122, 16, 16, 2, 17713, 0 },
-  { 125, 353, 1109, 22, 2196, 11 },
-  { 257, 374, 775, 22, 2196, 11 },
-  { 381, 402, 314, 22, 2196, 11 },
-  { 503, 430, 244, 22, 2196, 11 },
-  { 632, 458, 234, 22, 2196, 11 },
-  { 747, 486, 224, 22, 2196, 11 },
-  { 864, 514, 214, 22, 2196, 11 },
-  { 967, 542, 204, 22, 2196, 11 },
-  { 1084, 804, 194, 0, 12818, 20 },
-  { 1187, 807, 184, 0, 12818, 20 },
-  { 35, 810, 174, 0, 12818, 20 },
-  { 171, 813, 164, 0, 12818, 20 },
-  { 315, 816, 154, 0, 12818, 20 },
-  { 439, 819, 591, 0, 12818, 20 },
-  { 558, 822, 2442, 0, 12818, 20 },
-  { 680, 825, 1103, 0, 12818, 20 },
-  { 131, 16, 1368, 2, 66833, 0 },
-  { 263, 16, 1366, 2, 66833, 0 },
-  { 387, 16, 1366, 2, 66833, 0 },
-  { 509, 16, 1364, 2, 66833, 0 },
-  { 635, 16, 1364, 2, 66833, 0 },
-  { 753, 16, 1362, 2, 66833, 0 },
-  { 867, 16, 1362, 2, 66833, 0 },
-  { 973, 16, 1360, 2, 66833, 0 },
-  { 1087, 16, 1360, 2, 66833, 0 },
-  { 1193, 16, 1358, 2, 66833, 0 },
-  { 39, 16, 1358, 2, 66833, 0 },
-  { 179, 16, 1356, 2, 66833, 0 },
-  { 319, 16, 1356, 2, 66833, 0 },
-  { 134, 16, 4016, 2, 65345, 0 },
-  { 272, 16, 4007, 2, 65345, 0 },
-  { 390, 16, 2485, 2, 65345, 0 },
-  { 512, 16, 2473, 2, 65345, 0 },
-  { 638, 16, 3974, 2, 65345, 0 },
-  { 756, 16, 3956, 2, 65345, 0 },
-  { 870, 16, 3863, 2, 65345, 0 },
-  { 976, 16, 3844, 2, 65345, 0 },
-  { 1090, 16, 3914, 2, 65345, 0 },
-  { 1196, 16, 3892, 2, 65345, 0 },
-  { 43, 16, 3745, 2, 65345, 0 },
-  { 183, 16, 3723, 2, 65345, 0 },
-  { 323, 16, 3803, 2, 65345, 0 },
-  { 443, 16, 3779, 2, 65345, 0 },
-  { 562, 16, 3622, 2, 65345, 0 },
-  { 684, 16, 3598, 2, 65345, 0 },
-  { 791, 16, 3682, 2, 65345, 0 },
-  { 901, 16, 3658, 2, 65345, 0 },
-  { 1011, 16, 3502, 2, 65345, 0 },
-  { 1121, 16, 3478, 2, 65345, 0 },
-  { 79, 16, 3562, 2, 65345, 0 },
-  { 215, 16, 3538, 2, 65345, 0 },
-  { 359, 16, 3382, 2, 65345, 0 },
-  { 475, 16, 3358, 2, 65345, 0 },
-  { 598, 16, 3442, 2, 65345, 0 },
-  { 716, 16, 3418, 2, 65345, 0 },
-  { 827, 16, 3262, 2, 65345, 0 },
-  { 933, 16, 3238, 2, 65345, 0 },
-  { 1047, 16, 3322, 2, 65345, 0 },
-  { 1153, 16, 3298, 2, 65345, 0 },
-  { 115, 16, 3167, 2, 65345, 0 },
-  { 247, 16, 3143, 2, 65345, 0 },
-  { 363, 367, 4010, 29, 5426, 23 },
-  { 479, 381, 2497, 29, 5426, 23 },
-  { 605, 395, 3992, 29, 5426, 23 },
-  { 723, 409, 3882, 29, 5426, 23 },
-  { 837, 423, 3936, 29, 5426, 23 },
-  { 943, 437, 3767, 29, 5426, 23 },
-  { 1057, 451, 3827, 29, 5426, 23 },
-  { 1163, 465, 3646, 29, 5426, 23 },
-  { 6, 479, 3706, 29, 5426, 23 },
-  { 154, 493, 3526, 29, 5426, 23 },
-  { 281, 507, 3586, 29, 5426, 23 },
-  { 407, 521, 3406, 29, 5426, 23 },
-  { 522, 535, 3466, 29, 5426, 23 },
-  { 648, 549, 3286, 29, 5426, 23 },
-  { 767, 3948, 3346, 11, 17554, 35 },
-  { 881, 3839, 3191, 11, 13474, 35 },
-  { 987, 1077, 3226, 8, 17281, 39 },
-  { 1101, 1077, 3096, 8, 17281, 39 },
-  { 55, 1077, 3131, 8, 17281, 39 },
-  { 207, 1077, 3026, 8, 17281, 39 },
-  { 335, 1077, 3061, 8, 17281, 39 },
-  { 455, 1077, 2956, 8, 17281, 39 },
-  { 574, 1077, 2991, 8, 17281, 39 },
-  { 696, 1077, 2886, 8, 17281, 39 },
-  { 803, 1077, 2921, 8, 17281, 39 },
-  { 913, 1077, 2815, 8, 17281, 39 },
-  { 1023, 1077, 2853, 8, 17281, 39 },
-  { 1133, 1077, 2396, 8, 17281, 39 },
-  { 91, 1077, 2435, 8, 17281, 39 },
-  { 239, 1077, 2786, 8, 17281, 39 },
-  { 254, 1336, 1111, 168, 1044, 57 },
-  { 378, 1316, 347, 168, 1044, 57 },
-  { 500, 1296, 142, 168, 1044, 57 },
-  { 629, 1276, 142, 168, 1044, 57 },
-  { 744, 1256, 142, 168, 1044, 57 },
-  { 861, 1236, 142, 168, 1044, 57 },
-  { 964, 1216, 142, 168, 1044, 57 },
-  { 1081, 1200, 142, 88, 1456, 74 },
-  { 1184, 1188, 142, 76, 2114, 87 },
-  { 32, 1176, 142, 76, 2114, 87 },
-  { 167, 1164, 142, 76, 2114, 87 },
-  { 311, 1152, 142, 76, 2114, 87 },
-  { 435, 1140, 142, 76, 2114, 87 },
-  { 554, 1128, 344, 76, 2114, 87 },
-  { 676, 1116, 1105, 76, 2114, 87 },
-  { 494, 2151, 16, 474, 4, 149 },
-  { 623, 2096, 16, 474, 4, 149 },
-  { 738, 2041, 16, 474, 4, 149 },
-  { 855, 1986, 16, 474, 4, 149 },
-  { 958, 1931, 16, 474, 4, 149 },
-  { 1075, 1880, 16, 423, 272, 166 },
-  { 1178, 1833, 16, 376, 512, 181 },
-  { 26, 1790, 16, 333, 720, 194 },
-  { 161, 1751, 16, 294, 1186, 205 },
-  { 304, 1712, 16, 294, 1186, 205 },
-  { 427, 1673, 16, 294, 1186, 205 },
-  { 546, 1634, 16, 294, 1186, 205 },
-  { 668, 1595, 16, 294, 1186, 205 },
-  { 266, 783, 16, 16, 8946, 5 },
-  { 506, 786, 16, 16, 8946, 5 },
-  { 750, 789, 16, 16, 8946, 5 },
-  { 970, 792, 16, 16, 8946, 5 },
-  { 1190, 795, 16, 16, 8946, 5 },
-  { 175, 798, 16, 16, 8946, 5 },
-  { 1248, 4074, 16, 16, 17808, 2 },
-  { 369, 1508, 1110, 63, 1570, 28 },
-  { 485, 4164, 2506, 63, 1570, 28 },
-  { 614, 1495, 778, 63, 1570, 28 },
-  { 729, 4151, 770, 63, 1570, 28 },
-  { 846, 1482, 317, 63, 1570, 28 },
-  { 949, 4138, 660, 63, 1570, 28 },
-  { 1066, 1469, 308, 63, 1570, 28 },
-  { 1169, 4125, 654, 63, 1570, 28 },
-  { 16, 1456, 302, 63, 1570, 28 },
-  { 137, 4112, 648, 63, 1570, 28 },
-  { 292, 1443, 296, 63, 1570, 28 },
-  { 415, 4099, 642, 63, 1570, 28 },
-  { 534, 1430, 290, 63, 1570, 28 },
-  { 656, 4086, 636, 63, 1570, 28 },
-  { 779, 1419, 284, 52, 1680, 42 },
-  { 889, 4077, 630, 43, 1872, 48 },
-  { 999, 1412, 278, 36, 2401, 53 },
-  { 1109, 4067, 624, 36, 2401, 53 },
-  { 67, 1405, 272, 36, 2401, 53 },
-  { 187, 4060, 618, 36, 2401, 53 },
-  { 347, 1398, 266, 36, 2401, 53 },
-  { 463, 4053, 612, 36, 2401, 53 },
-  { 586, 1391, 260, 36, 2401, 53 },
-  { 704, 4046, 606, 36, 2401, 53 },
-  { 815, 1384, 254, 36, 2401, 53 },
-  { 921, 4039, 600, 36, 2401, 53 },
-  { 1035, 1377, 765, 36, 2401, 53 },
-  { 1141, 4032, 2450, 36, 2401, 53 },
-  { 103, 1370, 2469, 36, 2401, 53 },
-  { 219, 4025, 1104, 36, 2401, 53 },
-  { 602, 1023, 4013, 212, 5314, 92 },
-  { 720, 1011, 3953, 212, 5314, 92 },
-  { 834, 999, 4002, 212, 5314, 92 },
-  { 940, 987, 3909, 212, 5314, 92 },
-  { 1054, 975, 3909, 212, 5314, 92 },
-  { 1160, 963, 3798, 212, 5314, 92 },
-  { 3, 951, 3798, 212, 5314, 92 },
-  { 151, 939, 3677, 212, 5314, 92 },
-  { 278, 927, 3677, 212, 5314, 92 },
-  { 404, 915, 3557, 212, 5314, 92 },
-  { 518, 903, 3557, 212, 5314, 92 },
-  { 644, 891, 3437, 212, 5314, 92 },
-  { 763, 1067, 3437, 202, 17458, 99 },
-  { 877, 1057, 3317, 202, 13378, 99 },
-  { 983, 1049, 3317, 194, 14178, 105 },
-  { 1097, 1041, 3221, 194, 13650, 105 },
-  { 51, 1035, 3221, 188, 14001, 110 },
-  { 203, 1035, 3126, 188, 14001, 110 },
-  { 331, 1035, 3126, 188, 14001, 110 },
-  { 451, 1035, 3056, 188, 14001, 110 },
-  { 570, 1035, 3056, 188, 14001, 110 },
-  { 692, 1035, 2986, 188, 14001, 110 },
-  { 799, 1035, 2986, 188, 14001, 110 },
-  { 909, 1035, 2916, 188, 14001, 110 },
-  { 1019, 1035, 2916, 188, 14001, 110 },
-  { 1129, 1035, 2827, 188, 14001, 110 },
-  { 87, 1035, 2850, 188, 14001, 110 },
-  { 235, 1035, 2789, 188, 14001, 110 },
-  { 831, 2672, 4014, 276, 5170, 114 },
-  { 937, 2654, 3951, 276, 5170, 114 },
-  { 1051, 2636, 3951, 276, 5170, 114 },
-  { 1157, 2618, 3842, 276, 5170, 114 },
-  { 0, 2600, 3842, 276, 5170, 114 },
-  { 148, 2582, 3721, 276, 5170, 114 },
-  { 275, 2564, 3721, 276, 5170, 114 },
-  { 401, 2546, 3620, 276, 5170, 114 },
-  { 515, 2528, 3620, 276, 5170, 114 },
-  { 641, 2510, 3500, 276, 5170, 114 },
-  { 759, 2768, 3500, 260, 17330, 123 },
-  { 873, 2752, 3380, 260, 13250, 123 },
-  { 979, 2738, 3380, 246, 14066, 131 },
-  { 1093, 2724, 3260, 246, 13538, 131 },
-  { 47, 2712, 3260, 234, 13906, 138 },
-  { 199, 2700, 3165, 234, 13730, 138 },
-  { 327, 2690, 3165, 224, 13825, 144 },
-  { 447, 2690, 3094, 224, 13825, 144 },
-  { 566, 2690, 3094, 224, 13825, 144 },
-  { 688, 2690, 3024, 224, 13825, 144 },
-  { 795, 2690, 3024, 224, 13825, 144 },
-  { 905, 2690, 2954, 224, 13825, 144 },
-  { 1015, 2690, 2954, 224, 13825, 144 },
-  { 1125, 2690, 2851, 224, 13825, 144 },
-  { 83, 2690, 2851, 224, 13825, 144 },
-  { 231, 2690, 2790, 224, 13825, 144 },
-  { 372, 360, 2504, 22, 1956, 11 },
-  { 617, 388, 583, 22, 1956, 11 },
-  { 849, 416, 756, 22, 1956, 11 },
-  { 1069, 444, 747, 22, 1956, 11 },
-  { 19, 472, 738, 22, 1956, 11 },
-  { 296, 500, 729, 22, 1956, 11 },
-  { 538, 528, 720, 22, 1956, 11 },
-  { 783, 3718, 711, 3, 2336, 16 },
-  { 1003, 562, 702, 0, 8898, 20 },
-  { 71, 565, 693, 0, 8898, 20 },
-  { 351, 568, 684, 0, 8898, 20 },
-  { 590, 571, 675, 0, 8898, 20 },
-  { 819, 574, 666, 0, 8898, 20 },
-  { 1039, 577, 2455, 0, 8898, 20 },
-  { 107, 580, 2463, 0, 8898, 20 },
-  { 611, 2338, 2483, 148, 900, 57 },
-  { 843, 2318, 588, 148, 900, 57 },
-  { 1063, 2298, 588, 148, 900, 57 },
-  { 13, 2278, 588, 148, 900, 57 },
-  { 289, 2258, 588, 148, 900, 57 },
-  { 530, 2238, 588, 148, 900, 57 },
-  { 775, 2220, 588, 130, 1328, 66 },
-  { 995, 2206, 588, 116, 1776, 81 },
-  { 63, 1583, 588, 104, 2034, 87 },
-  { 343, 1571, 588, 104, 2034, 87 },
-  { 582, 1559, 588, 104, 2034, 87 },
-  { 811, 1547, 588, 104, 2034, 87 },
-  { 1031, 1535, 588, 104, 2034, 87 },
-  { 99, 1523, 2377, 104, 2034, 87 },
+static const MCRegisterDesc ARMRegDesc[] = {
+	// Descriptors
+	{ 12, 0, 0, 0, 0, 0 },
+	{ 1268, 16, 16, 2, 66865, 0 },
+	{ 1319, 16, 16, 2, 66865, 0 },
+	{ 1273, 16, 16, 2, 66865, 0 },
+	{ 1286, 16, 16, 2, 66865, 0 },
+	{ 1294, 16, 16, 2, 66865, 0 },
+	{ 1215, 16, 16, 2, 66865, 0 },
+	{ 1301, 16, 16, 2, 66865, 0 },
+	{ 1255, 16, 16, 2, 17616, 0 },
+	{ 1308, 16, 16, 2, 17616, 0 },
+	{ 1202, 16, 16, 2, 66833, 0 },
+	{ 1221, 16, 16, 2, 66833, 0 },
+	{ 1240, 16, 16, 2, 66833, 0 },
+	{ 1261, 16, 16, 2, 66833, 0 },
+	{ 1199, 16, 16, 2, 66833, 0 },
+	{ 1227, 16, 16, 2, 66833, 0 },
+	{ 1252, 16, 1521, 2, 66833, 0 },
+	{ 1278, 16, 16, 2, 66833, 0 },
+	{ 1264, 16, 16, 2, 66833, 0 },
+	{ 1283, 16, 16, 2, 66833, 0 },
+	{ 119, 350, 4008, 19, 13202, 8 },
+	{ 251, 357, 2474, 19, 13202, 8 },
+	{ 366, 364, 3957, 19, 13202, 8 },
+	{ 482, 378, 3845, 19, 13202, 8 },
+	{ 608, 392, 3893, 19, 13202, 8 },
+	{ 726, 406, 3724, 19, 13202, 8 },
+	{ 840, 420, 3780, 19, 13202, 8 },
+	{ 946, 434, 3599, 19, 13202, 8 },
+	{ 1060, 448, 3659, 19, 13202, 8 },
+	{ 1166, 462, 3479, 19, 13202, 8 },
+	{ 9, 476, 3539, 19, 13202, 8 },
+	{ 144, 490, 3359, 19, 13202, 8 },
+	{ 285, 504, 3419, 19, 13202, 8 },
+	{ 411, 518, 3239, 19, 13202, 8 },
+	{ 526, 532, 3299, 19, 13202, 8 },
+	{ 652, 546, 3144, 19, 13202, 8 },
+	{ 771, 16, 3203, 2, 17713, 0 },
+	{ 885, 16, 3073, 2, 17713, 0 },
+	{ 991, 16, 3108, 2, 17713, 0 },
+	{ 1105, 16, 3003, 2, 17713, 0 },
+	{ 59, 16, 3038, 2, 17713, 0 },
+	{ 195, 16, 2933, 2, 17713, 0 },
+	{ 339, 16, 2968, 2, 17713, 0 },
+	{ 459, 16, 2863, 2, 17713, 0 },
+	{ 578, 16, 2898, 2, 17713, 0 },
+	{ 700, 16, 2792, 2, 17713, 0 },
+	{ 807, 16, 2832, 2, 17713, 0 },
+	{ 917, 16, 2358, 2, 17713, 0 },
+	{ 1027, 16, 2406, 2, 17713, 0 },
+	{ 1137, 16, 2379, 2, 17713, 0 },
+	{ 95, 16, 2424, 2, 17713, 0 },
+	{ 227, 16, 2784, 2, 17713, 0 },
+	{ 393, 16, 16, 2, 17713, 0 },
+	{ 128, 16, 16, 2, 17713, 0 },
+	{ 260, 16, 16, 2, 17713, 0 },
+	{ 384, 16, 16, 2, 17713, 0 },
+	{ 122, 16, 16, 2, 17713, 0 },
+	{ 125, 353, 1109, 22, 2196, 11 },
+	{ 257, 374, 775, 22, 2196, 11 },
+	{ 381, 402, 314, 22, 2196, 11 },
+	{ 503, 430, 244, 22, 2196, 11 },
+	{ 632, 458, 234, 22, 2196, 11 },
+	{ 747, 486, 224, 22, 2196, 11 },
+	{ 864, 514, 214, 22, 2196, 11 },
+	{ 967, 542, 204, 22, 2196, 11 },
+	{ 1084, 804, 194, 0, 12818, 20 },
+	{ 1187, 807, 184, 0, 12818, 20 },
+	{ 35, 810, 174, 0, 12818, 20 },
+	{ 171, 813, 164, 0, 12818, 20 },
+	{ 315, 816, 154, 0, 12818, 20 },
+	{ 439, 819, 591, 0, 12818, 20 },
+	{ 558, 822, 2442, 0, 12818, 20 },
+	{ 680, 825, 1103, 0, 12818, 20 },
+	{ 131, 16, 1368, 2, 66833, 0 },
+	{ 263, 16, 1366, 2, 66833, 0 },
+	{ 387, 16, 1366, 2, 66833, 0 },
+	{ 509, 16, 1364, 2, 66833, 0 },
+	{ 635, 16, 1364, 2, 66833, 0 },
+	{ 753, 16, 1362, 2, 66833, 0 },
+	{ 867, 16, 1362, 2, 66833, 0 },
+	{ 973, 16, 1360, 2, 66833, 0 },
+	{ 1087, 16, 1360, 2, 66833, 0 },
+	{ 1193, 16, 1358, 2, 66833, 0 },
+	{ 39, 16, 1358, 2, 66833, 0 },
+	{ 179, 16, 1356, 2, 66833, 0 },
+	{ 319, 16, 1356, 2, 66833, 0 },
+	{ 134, 16, 4016, 2, 65345, 0 },
+	{ 272, 16, 4007, 2, 65345, 0 },
+	{ 390, 16, 2485, 2, 65345, 0 },
+	{ 512, 16, 2473, 2, 65345, 0 },
+	{ 638, 16, 3974, 2, 65345, 0 },
+	{ 756, 16, 3956, 2, 65345, 0 },
+	{ 870, 16, 3863, 2, 65345, 0 },
+	{ 976, 16, 3844, 2, 65345, 0 },
+	{ 1090, 16, 3914, 2, 65345, 0 },
+	{ 1196, 16, 3892, 2, 65345, 0 },
+	{ 43, 16, 3745, 2, 65345, 0 },
+	{ 183, 16, 3723, 2, 65345, 0 },
+	{ 323, 16, 3803, 2, 65345, 0 },
+	{ 443, 16, 3779, 2, 65345, 0 },
+	{ 562, 16, 3622, 2, 65345, 0 },
+	{ 684, 16, 3598, 2, 65345, 0 },
+	{ 791, 16, 3682, 2, 65345, 0 },
+	{ 901, 16, 3658, 2, 65345, 0 },
+	{ 1011, 16, 3502, 2, 65345, 0 },
+	{ 1121, 16, 3478, 2, 65345, 0 },
+	{ 79, 16, 3562, 2, 65345, 0 },
+	{ 215, 16, 3538, 2, 65345, 0 },
+	{ 359, 16, 3382, 2, 65345, 0 },
+	{ 475, 16, 3358, 2, 65345, 0 },
+	{ 598, 16, 3442, 2, 65345, 0 },
+	{ 716, 16, 3418, 2, 65345, 0 },
+	{ 827, 16, 3262, 2, 65345, 0 },
+	{ 933, 16, 3238, 2, 65345, 0 },
+	{ 1047, 16, 3322, 2, 65345, 0 },
+	{ 1153, 16, 3298, 2, 65345, 0 },
+	{ 115, 16, 3167, 2, 65345, 0 },
+	{ 247, 16, 3143, 2, 65345, 0 },
+	{ 363, 367, 4010, 29, 5426, 23 },
+	{ 479, 381, 2497, 29, 5426, 23 },
+	{ 605, 395, 3992, 29, 5426, 23 },
+	{ 723, 409, 3882, 29, 5426, 23 },
+	{ 837, 423, 3936, 29, 5426, 23 },
+	{ 943, 437, 3767, 29, 5426, 23 },
+	{ 1057, 451, 3827, 29, 5426, 23 },
+	{ 1163, 465, 3646, 29, 5426, 23 },
+	{ 6, 479, 3706, 29, 5426, 23 },
+	{ 154, 493, 3526, 29, 5426, 23 },
+	{ 281, 507, 3586, 29, 5426, 23 },
+	{ 407, 521, 3406, 29, 5426, 23 },
+	{ 522, 535, 3466, 29, 5426, 23 },
+	{ 648, 549, 3286, 29, 5426, 23 },
+	{ 767, 3948, 3346, 11, 17554, 35 },
+	{ 881, 3839, 3191, 11, 13474, 35 },
+	{ 987, 1077, 3226, 8, 17281, 39 },
+	{ 1101, 1077, 3096, 8, 17281, 39 },
+	{ 55, 1077, 3131, 8, 17281, 39 },
+	{ 207, 1077, 3026, 8, 17281, 39 },
+	{ 335, 1077, 3061, 8, 17281, 39 },
+	{ 455, 1077, 2956, 8, 17281, 39 },
+	{ 574, 1077, 2991, 8, 17281, 39 },
+	{ 696, 1077, 2886, 8, 17281, 39 },
+	{ 803, 1077, 2921, 8, 17281, 39 },
+	{ 913, 1077, 2815, 8, 17281, 39 },
+	{ 1023, 1077, 2853, 8, 17281, 39 },
+	{ 1133, 1077, 2396, 8, 17281, 39 },
+	{ 91, 1077, 2435, 8, 17281, 39 },
+	{ 239, 1077, 2786, 8, 17281, 39 },
+	{ 254, 1336, 1111, 168, 1044, 57 },
+	{ 378, 1316, 347, 168, 1044, 57 },
+	{ 500, 1296, 142, 168, 1044, 57 },
+	{ 629, 1276, 142, 168, 1044, 57 },
+	{ 744, 1256, 142, 168, 1044, 57 },
+	{ 861, 1236, 142, 168, 1044, 57 },
+	{ 964, 1216, 142, 168, 1044, 57 },
+	{ 1081, 1200, 142, 88, 1456, 74 },
+	{ 1184, 1188, 142, 76, 2114, 87 },
+	{ 32, 1176, 142, 76, 2114, 87 },
+	{ 167, 1164, 142, 76, 2114, 87 },
+	{ 311, 1152, 142, 76, 2114, 87 },
+	{ 435, 1140, 142, 76, 2114, 87 },
+	{ 554, 1128, 344, 76, 2114, 87 },
+	{ 676, 1116, 1105, 76, 2114, 87 },
+	{ 494, 2151, 16, 474, 4, 149 },
+	{ 623, 2096, 16, 474, 4, 149 },
+	{ 738, 2041, 16, 474, 4, 149 },
+	{ 855, 1986, 16, 474, 4, 149 },
+	{ 958, 1931, 16, 474, 4, 149 },
+	{ 1075, 1880, 16, 423, 272, 166 },
+	{ 1178, 1833, 16, 376, 512, 181 },
+	{ 26, 1790, 16, 333, 720, 194 },
+	{ 161, 1751, 16, 294, 1186, 205 },
+	{ 304, 1712, 16, 294, 1186, 205 },
+	{ 427, 1673, 16, 294, 1186, 205 },
+	{ 546, 1634, 16, 294, 1186, 205 },
+	{ 668, 1595, 16, 294, 1186, 205 },
+	{ 266, 783, 16, 16, 8946, 5 },
+	{ 506, 786, 16, 16, 8946, 5 },
+	{ 750, 789, 16, 16, 8946, 5 },
+	{ 970, 792, 16, 16, 8946, 5 },
+	{ 1190, 795, 16, 16, 8946, 5 },
+	{ 175, 798, 16, 16, 8946, 5 },
+	{ 1248, 4074, 16, 16, 17808, 2 },
+	{ 369, 1508, 1110, 63, 1570, 28 },
+	{ 485, 4164, 2506, 63, 1570, 28 },
+	{ 614, 1495, 778, 63, 1570, 28 },
+	{ 729, 4151, 770, 63, 1570, 28 },
+	{ 846, 1482, 317, 63, 1570, 28 },
+	{ 949, 4138, 660, 63, 1570, 28 },
+	{ 1066, 1469, 308, 63, 1570, 28 },
+	{ 1169, 4125, 654, 63, 1570, 28 },
+	{ 16, 1456, 302, 63, 1570, 28 },
+	{ 137, 4112, 648, 63, 1570, 28 },
+	{ 292, 1443, 296, 63, 1570, 28 },
+	{ 415, 4099, 642, 63, 1570, 28 },
+	{ 534, 1430, 290, 63, 1570, 28 },
+	{ 656, 4086, 636, 63, 1570, 28 },
+	{ 779, 1419, 284, 52, 1680, 42 },
+	{ 889, 4077, 630, 43, 1872, 48 },
+	{ 999, 1412, 278, 36, 2401, 53 },
+	{ 1109, 4067, 624, 36, 2401, 53 },
+	{ 67, 1405, 272, 36, 2401, 53 },
+	{ 187, 4060, 618, 36, 2401, 53 },
+	{ 347, 1398, 266, 36, 2401, 53 },
+	{ 463, 4053, 612, 36, 2401, 53 },
+	{ 586, 1391, 260, 36, 2401, 53 },
+	{ 704, 4046, 606, 36, 2401, 53 },
+	{ 815, 1384, 254, 36, 2401, 53 },
+	{ 921, 4039, 600, 36, 2401, 53 },
+	{ 1035, 1377, 765, 36, 2401, 53 },
+	{ 1141, 4032, 2450, 36, 2401, 53 },
+	{ 103, 1370, 2469, 36, 2401, 53 },
+	{ 219, 4025, 1104, 36, 2401, 53 },
+	{ 602, 1023, 4013, 212, 5314, 92 },
+	{ 720, 1011, 3953, 212, 5314, 92 },
+	{ 834, 999, 4002, 212, 5314, 92 },
+	{ 940, 987, 3909, 212, 5314, 92 },
+	{ 1054, 975, 3909, 212, 5314, 92 },
+	{ 1160, 963, 3798, 212, 5314, 92 },
+	{ 3, 951, 3798, 212, 5314, 92 },
+	{ 151, 939, 3677, 212, 5314, 92 },
+	{ 278, 927, 3677, 212, 5314, 92 },
+	{ 404, 915, 3557, 212, 5314, 92 },
+	{ 518, 903, 3557, 212, 5314, 92 },
+	{ 644, 891, 3437, 212, 5314, 92 },
+	{ 763, 1067, 3437, 202, 17458, 99 },
+	{ 877, 1057, 3317, 202, 13378, 99 },
+	{ 983, 1049, 3317, 194, 14178, 105 },
+	{ 1097, 1041, 3221, 194, 13650, 105 },
+	{ 51, 1035, 3221, 188, 14001, 110 },
+	{ 203, 1035, 3126, 188, 14001, 110 },
+	{ 331, 1035, 3126, 188, 14001, 110 },
+	{ 451, 1035, 3056, 188, 14001, 110 },
+	{ 570, 1035, 3056, 188, 14001, 110 },
+	{ 692, 1035, 2986, 188, 14001, 110 },
+	{ 799, 1035, 2986, 188, 14001, 110 },
+	{ 909, 1035, 2916, 188, 14001, 110 },
+	{ 1019, 1035, 2916, 188, 14001, 110 },
+	{ 1129, 1035, 2827, 188, 14001, 110 },
+	{ 87, 1035, 2850, 188, 14001, 110 },
+	{ 235, 1035, 2789, 188, 14001, 110 },
+	{ 831, 2672, 4014, 276, 5170, 114 },
+	{ 937, 2654, 3951, 276, 5170, 114 },
+	{ 1051, 2636, 3951, 276, 5170, 114 },
+	{ 1157, 2618, 3842, 276, 5170, 114 },
+	{ 0, 2600, 3842, 276, 5170, 114 },
+	{ 148, 2582, 3721, 276, 5170, 114 },
+	{ 275, 2564, 3721, 276, 5170, 114 },
+	{ 401, 2546, 3620, 276, 5170, 114 },
+	{ 515, 2528, 3620, 276, 5170, 114 },
+	{ 641, 2510, 3500, 276, 5170, 114 },
+	{ 759, 2768, 3500, 260, 17330, 123 },
+	{ 873, 2752, 3380, 260, 13250, 123 },
+	{ 979, 2738, 3380, 246, 14066, 131 },
+	{ 1093, 2724, 3260, 246, 13538, 131 },
+	{ 47, 2712, 3260, 234, 13906, 138 },
+	{ 199, 2700, 3165, 234, 13730, 138 },
+	{ 327, 2690, 3165, 224, 13825, 144 },
+	{ 447, 2690, 3094, 224, 13825, 144 },
+	{ 566, 2690, 3094, 224, 13825, 144 },
+	{ 688, 2690, 3024, 224, 13825, 144 },
+	{ 795, 2690, 3024, 224, 13825, 144 },
+	{ 905, 2690, 2954, 224, 13825, 144 },
+	{ 1015, 2690, 2954, 224, 13825, 144 },
+	{ 1125, 2690, 2851, 224, 13825, 144 },
+	{ 83, 2690, 2851, 224, 13825, 144 },
+	{ 231, 2690, 2790, 224, 13825, 144 },
+	{ 372, 360, 2504, 22, 1956, 11 },
+	{ 617, 388, 583, 22, 1956, 11 },
+	{ 849, 416, 756, 22, 1956, 11 },
+	{ 1069, 444, 747, 22, 1956, 11 },
+	{ 19, 472, 738, 22, 1956, 11 },
+	{ 296, 500, 729, 22, 1956, 11 },
+	{ 538, 528, 720, 22, 1956, 11 },
+	{ 783, 3718, 711, 3, 2336, 16 },
+	{ 1003, 562, 702, 0, 8898, 20 },
+	{ 71, 565, 693, 0, 8898, 20 },
+	{ 351, 568, 684, 0, 8898, 20 },
+	{ 590, 571, 675, 0, 8898, 20 },
+	{ 819, 574, 666, 0, 8898, 20 },
+	{ 1039, 577, 2455, 0, 8898, 20 },
+	{ 107, 580, 2463, 0, 8898, 20 },
+	{ 611, 2338, 2483, 148, 900, 57 },
+	{ 843, 2318, 588, 148, 900, 57 },
+	{ 1063, 2298, 588, 148, 900, 57 },
+	{ 13, 2278, 588, 148, 900, 57 },
+	{ 289, 2258, 588, 148, 900, 57 },
+	{ 530, 2238, 588, 148, 900, 57 },
+	{ 775, 2220, 588, 130, 1328, 66 },
+	{ 995, 2206, 588, 116, 1776, 81 },
+	{ 63, 1583, 588, 104, 2034, 87 },
+	{ 343, 1571, 588, 104, 2034, 87 },
+	{ 582, 1559, 588, 104, 2034, 87 },
+	{ 811, 1547, 588, 104, 2034, 87 },
+	{ 1031, 1535, 588, 104, 2034, 87 },
+	{ 99, 1523, 2377, 104, 2034, 87 },
 };
 
-  // HPR Register Class...
-  static const MCPhysReg HPR[] = {
-    ARM_S0, ARM_S1, ARM_S2, ARM_S3, ARM_S4, ARM_S5, ARM_S6, ARM_S7, ARM_S8, ARM_S9, ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15, ARM_S16, ARM_S17, ARM_S18, ARM_S19, ARM_S20, ARM_S21, ARM_S22, ARM_S23, ARM_S24, ARM_S25, ARM_S26, ARM_S27, ARM_S28, ARM_S29, ARM_S30, ARM_S31, 
-  };
-
-  // HPR Bit set.
-  static const uint8_t HPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f, 
-  };
-
-  // FPWithVPR Register Class...
-  static const MCPhysReg FPWithVPR[] = {
-    ARM_S0, ARM_S1, ARM_S2, ARM_S3, ARM_S4, ARM_S5, ARM_S6, ARM_S7, ARM_S8, ARM_S9, ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15, ARM_S16, ARM_S17, ARM_S18, ARM_S19, ARM_S20, ARM_S21, ARM_S22, ARM_S23, ARM_S24, ARM_S25, ARM_S26, ARM_S27, ARM_S28, ARM_S29, ARM_S30, ARM_S31, ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, ARM_D16, ARM_D17, ARM_D18, ARM_D19, ARM_D20, ARM_D21, ARM_D22, ARM_D23, ARM_D24, ARM_D25, ARM_D26, ARM_D27, ARM_D28, ARM_D29, ARM_D30, ARM_D31, ARM_VPR, 
-  };
-
-  // FPWithVPR Bit set.
-  static const uint8_t FPWithVPRBits[] = {
-    0x00, 0x00, 0xf4, 0xff, 0xff, 0xff, 0x0f, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f, 
-  };
-
-  // SPR Register Class...
-  static const MCPhysReg SPR[] = {
-    ARM_S0, ARM_S1, ARM_S2, ARM_S3, ARM_S4, ARM_S5, ARM_S6, ARM_S7, ARM_S8, ARM_S9, ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15, ARM_S16, ARM_S17, ARM_S18, ARM_S19, ARM_S20, ARM_S21, ARM_S22, ARM_S23, ARM_S24, ARM_S25, ARM_S26, ARM_S27, ARM_S28, ARM_S29, ARM_S30, ARM_S31, 
-  };
-
-  // SPR Bit set.
-  static const uint8_t SPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f, 
-  };
-
-  // FPWithVPR_with_ssub_0 Register Class...
-  static const MCPhysReg FPWithVPR_with_ssub_0[] = {
-    ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, 
-  };
-
-  // FPWithVPR_with_ssub_0 Bit set.
-  static const uint8_t FPWithVPR_with_ssub_0Bits[] = {
-    0x00, 0x00, 0xf0, 0xff, 0x0f, 
-  };
-
-  // GPR Register Class...
-  static const MCPhysReg GPR[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC, 
-  };
-
-  // GPR Bit set.
-  static const uint8_t GPRBits[] = {
-    0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRwithAPSR Register Class...
-  static const MCPhysReg GPRwithAPSR[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_APSR_NZCV, 
-  };
-
-  // GPRwithAPSR Bit set.
-  static const uint8_t GPRwithAPSRBits[] = {
-    0x04, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRwithZR Register Class...
-  static const MCPhysReg GPRwithZR[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_ZR, 
-  };
-
-  // GPRwithZR Bit set.
-  static const uint8_t GPRwithZRBits[] = {
-    0x00, 0x20, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // SPR_8 Register Class...
-  static const MCPhysReg SPR_8[] = {
-    ARM_S0, ARM_S1, ARM_S2, ARM_S3, ARM_S4, ARM_S5, ARM_S6, ARM_S7, ARM_S8, ARM_S9, ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15, 
-  };
-
-  // SPR_8 Bit set.
-  static const uint8_t SPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x3f, 
-  };
-
-  // GPRnopc Register Class...
-  static const MCPhysReg GPRnopc[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, 
-  };
-
-  // GPRnopc Bit set.
-  static const uint8_t GPRnopcBits[] = {
-    0x00, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRnosp Register Class...
-  static const MCPhysReg GPRnosp[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_PC, 
-  };
-
-  // GPRnosp Bit set.
-  static const uint8_t GPRnospBits[] = {
-    0x00, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRwithAPSR_NZCVnosp Register Class...
-  static const MCPhysReg GPRwithAPSR_NZCVnosp[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_APSR_NZCV, 
-  };
-
-  // GPRwithAPSR_NZCVnosp Bit set.
-  static const uint8_t GPRwithAPSR_NZCVnospBits[] = {
-    0x04, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRwithAPSRnosp Register Class...
-  static const MCPhysReg GPRwithAPSRnosp[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_APSR, 
-  };
-
-  // GPRwithAPSRnosp Bit set.
-  static const uint8_t GPRwithAPSRnospBits[] = {
-    0x02, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRwithZRnosp Register Class...
-  static const MCPhysReg GPRwithZRnosp[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_ZR, 
-  };
-
-  // GPRwithZRnosp Bit set.
-  static const uint8_t GPRwithZRnospBits[] = {
-    0x00, 0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRnoip Register Class...
-  static const MCPhysReg GPRnoip[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP, ARM_PC, 
-  };
-
-  // GPRnoip Bit set.
-  static const uint8_t GPRnoipBits[] = {
-    0x00, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f, 
-  };
-
-  // rGPR Register Class...
-  static const MCPhysReg rGPR[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, 
-  };
-
-  // rGPR Bit set.
-  static const uint8_t rGPRBits[] = {
-    0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f, 
-  };
-
-  // GPRnoip_and_GPRnopc Register Class...
-  static const MCPhysReg GPRnoip_and_GPRnopc[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP, 
-  };
-
-  // GPRnoip_and_GPRnopc Bit set.
-  static const uint8_t GPRnoip_and_GPRnopcBits[] = {
-    0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f, 
-  };
-
-  // GPRnoip_and_GPRnosp Register Class...
-  static const MCPhysReg GPRnoip_and_GPRnosp[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_PC, 
-  };
-
-  // GPRnoip_and_GPRnosp Bit set.
-  static const uint8_t GPRnoip_and_GPRnospBits[] = {
-    0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f, 
-  };
-
-  // GPRnoip_and_GPRwithAPSR_NZCVnosp Register Class...
-  static const MCPhysReg GPRnoip_and_GPRwithAPSR_NZCVnosp[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, 
-  };
-
-  // GPRnoip_and_GPRwithAPSR_NZCVnosp Bit set.
-  static const uint8_t GPRnoip_and_GPRwithAPSR_NZCVnospBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f, 
-  };
-
-  // tGPRwithpc Register Class...
-  static const MCPhysReg tGPRwithpc[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_PC, 
-  };
-
-  // tGPRwithpc Bit set.
-  static const uint8_t tGPRwithpcBits[] = {
-    0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 
-  };
-
-  // FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8 Register Class...
-  static const MCPhysReg FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8[] = {
-    ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, 
-  };
-
-  // FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8 Bit set.
-  static const uint8_t FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8Bits[] = {
-    0x00, 0x00, 0xf0, 0x0f, 
-  };
-
-  // hGPR Register Class...
-  static const MCPhysReg hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC, 
-  };
-
-  // hGPR Bit set.
-  static const uint8_t hGPRBits[] = {
-    0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e, 
-  };
-
-  // tGPR Register Class...
-  static const MCPhysReg tGPR[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, 
-  };
-
-  // tGPR Bit set.
-  static const uint8_t tGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 
-  };
-
-  // tGPREven Register Class...
-  static const MCPhysReg tGPREven[] = {
-    ARM_R0, ARM_R2, ARM_R4, ARM_R6, ARM_R8, ARM_R10, ARM_R12, ARM_LR, 
-  };
-
-  // tGPREven Bit set.
-  static const uint8_t tGPREvenBits[] = {
-    0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 0x2a, 
-  };
-
-  // GPRnopc_and_hGPR Register Class...
-  static const MCPhysReg GPRnopc_and_hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, 
-  };
-
-  // GPRnopc_and_hGPR Bit set.
-  static const uint8_t GPRnopc_and_hGPRBits[] = {
-    0x00, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e, 
-  };
-
-  // GPRnosp_and_hGPR Register Class...
-  static const MCPhysReg GPRnosp_and_hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_PC, 
-  };
-
-  // GPRnosp_and_hGPR Bit set.
-  static const uint8_t GPRnosp_and_hGPRBits[] = {
-    0x00, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e, 
-  };
-
-  // GPRnoip_and_hGPR Register Class...
-  static const MCPhysReg GPRnoip_and_hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP, ARM_PC, 
-  };
-
-  // GPRnoip_and_hGPR Bit set.
-  static const uint8_t GPRnoip_and_hGPRBits[] = {
-    0x00, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 
-  };
-
-  // GPRnoip_and_tGPREven Register Class...
-  static const MCPhysReg GPRnoip_and_tGPREven[] = {
-    ARM_R0, ARM_R2, ARM_R4, ARM_R6, ARM_R8, ARM_R10, 
-  };
-
-  // GPRnoip_and_tGPREven Bit set.
-  static const uint8_t GPRnoip_and_tGPREvenBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 0x0a, 
-  };
-
-  // GPRnosp_and_GPRnopc_and_hGPR Register Class...
-  static const MCPhysReg GPRnosp_and_GPRnopc_and_hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, 
-  };
-
-  // GPRnosp_and_GPRnopc_and_hGPR Bit set.
-  static const uint8_t GPRnosp_and_GPRnopc_and_hGPRBits[] = {
-    0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e, 
-  };
-
-  // tGPROdd Register Class...
-  static const MCPhysReg tGPROdd[] = {
-    ARM_R1, ARM_R3, ARM_R5, ARM_R7, ARM_R9, ARM_R11, 
-  };
-
-  // tGPROdd Bit set.
-  static const uint8_t tGPROddBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x15, 
-  };
-
-  // GPRnopc_and_GPRnoip_and_hGPR Register Class...
-  static const MCPhysReg GPRnopc_and_GPRnoip_and_hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP, 
-  };
-
-  // GPRnopc_and_GPRnoip_and_hGPR Bit set.
-  static const uint8_t GPRnopc_and_GPRnoip_and_hGPRBits[] = {
-    0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 
-  };
-
-  // GPRnosp_and_GPRnoip_and_hGPR Register Class...
-  static const MCPhysReg GPRnosp_and_GPRnoip_and_hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_PC, 
-  };
-
-  // GPRnosp_and_GPRnoip_and_hGPR Bit set.
-  static const uint8_t GPRnosp_and_GPRnoip_and_hGPRBits[] = {
-    0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 
-  };
-
-  // tcGPR Register Class...
-  static const MCPhysReg tcGPR[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R12, 
-  };
-
-  // tcGPR Bit set.
-  static const uint8_t tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 0x20, 
-  };
-
-  // GPRnoip_and_tcGPR Register Class...
-  static const MCPhysReg GPRnoip_and_tcGPR[] = {
-    ARM_R0, ARM_R1, ARM_R2, ARM_R3, 
-  };
-
-  // GPRnoip_and_tcGPR Bit set.
-  static const uint8_t GPRnoip_and_tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 
-  };
-
-  // GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR Register Class...
-  static const MCPhysReg GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR[] = {
-    ARM_R8, ARM_R9, ARM_R10, ARM_R11, 
-  };
-
-  // GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR Bit set.
-  static const uint8_t GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 
-  };
-
-  // hGPR_and_tGPREven Register Class...
-  static const MCPhysReg hGPR_and_tGPREven[] = {
-    ARM_R8, ARM_R10, ARM_R12, ARM_LR, 
-  };
-
-  // hGPR_and_tGPREven Bit set.
-  static const uint8_t hGPR_and_tGPREvenBits[] = {
-    0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2a, 
-  };
-
-  // tGPR_and_tGPREven Register Class...
-  static const MCPhysReg tGPR_and_tGPREven[] = {
-    ARM_R0, ARM_R2, ARM_R4, ARM_R6, 
-  };
-
-  // tGPR_and_tGPREven Bit set.
-  static const uint8_t tGPR_and_tGPREvenBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 
-  };
-
-  // tGPR_and_tGPROdd Register Class...
-  static const MCPhysReg tGPR_and_tGPROdd[] = {
-    ARM_R1, ARM_R3, ARM_R5, ARM_R7, 
-  };
-
-  // tGPR_and_tGPROdd Bit set.
-  static const uint8_t tGPR_and_tGPROddBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x01, 
-  };
-
-  // tGPREven_and_tcGPR Register Class...
-  static const MCPhysReg tGPREven_and_tcGPR[] = {
-    ARM_R0, ARM_R2, ARM_R12, 
-  };
-
-  // tGPREven_and_tcGPR Bit set.
-  static const uint8_t tGPREven_and_tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0x20, 
-  };
-
-  // hGPR_and_GPRnoip_and_tGPREven Register Class...
-  static const MCPhysReg hGPR_and_GPRnoip_and_tGPREven[] = {
-    ARM_R8, ARM_R10, 
-  };
-
-  // hGPR_and_GPRnoip_and_tGPREven Bit set.
-  static const uint8_t hGPR_and_GPRnoip_and_tGPREvenBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 
-  };
-
-  // hGPR_and_tGPROdd Register Class...
-  static const MCPhysReg hGPR_and_tGPROdd[] = {
-    ARM_R9, ARM_R11, 
-  };
-
-  // hGPR_and_tGPROdd Bit set.
-  static const uint8_t hGPR_and_tGPROddBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14, 
-  };
-
-  // tGPREven_and_GPRnoip_and_tcGPR Register Class...
-  static const MCPhysReg tGPREven_and_GPRnoip_and_tcGPR[] = {
-    ARM_R0, ARM_R2, 
-  };
-
-  // tGPREven_and_GPRnoip_and_tcGPR Bit set.
-  static const uint8_t tGPREven_and_GPRnoip_and_tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 
-  };
-
-  // tGPROdd_and_tcGPR Register Class...
-  static const MCPhysReg tGPROdd_and_tcGPR[] = {
-    ARM_R1, ARM_R3, 
-  };
-
-  // tGPROdd_and_tcGPR Bit set.
-  static const uint8_t tGPROdd_and_tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14, 
-  };
-
-  // CCR Register Class...
-  static const MCPhysReg CCR[] = {
-    ARM_CPSR, 
-  };
-
-  // CCR Bit set.
-  static const uint8_t CCRBits[] = {
-    0x08, 
-  };
-
-  // FPCXTRegs Register Class...
-  static const MCPhysReg FPCXTRegs[] = {
-    ARM_FPCXTNS, 
-  };
-
-  // FPCXTRegs Bit set.
-  static const uint8_t FPCXTRegsBits[] = {
-    0x10, 
-  };
-
-  // GPRlr Register Class...
-  static const MCPhysReg GPRlr[] = {
-    ARM_LR, 
-  };
-
-  // GPRlr Bit set.
-  static const uint8_t GPRlrBits[] = {
-    0x00, 0x20, 
-  };
-
-  // GPRsp Register Class...
-  static const MCPhysReg GPRsp[] = {
-    ARM_SP, 
-  };
-
-  // GPRsp Bit set.
-  static const uint8_t GPRspBits[] = {
-    0x00, 0x00, 0x01, 
-  };
-
-  // VCCR Register Class...
-  static const MCPhysReg VCCR[] = {
-    ARM_VPR, 
-  };
-
-  // VCCR Bit set.
-  static const uint8_t VCCRBits[] = {
-    0x00, 0x00, 0x04, 
-  };
-
-  // cl_FPSCR_NZCV Register Class...
-  static const MCPhysReg cl_FPSCR_NZCV[] = {
-    ARM_FPSCR_NZCV, 
-  };
-
-  // cl_FPSCR_NZCV Bit set.
-  static const uint8_t cl_FPSCR_NZCVBits[] = {
-    0x00, 0x02, 
-  };
-
-  // hGPR_and_tGPRwithpc Register Class...
-  static const MCPhysReg hGPR_and_tGPRwithpc[] = {
-    ARM_PC, 
-  };
-
-  // hGPR_and_tGPRwithpc Bit set.
-  static const uint8_t hGPR_and_tGPRwithpcBits[] = {
-    0x00, 0x40, 
-  };
-
-  // hGPR_and_tcGPR Register Class...
-  static const MCPhysReg hGPR_and_tcGPR[] = {
-    ARM_R12, 
-  };
-
-  // hGPR_and_tcGPR Bit set.
-  static const uint8_t hGPR_and_tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 
-  };
-
-  // DPR Register Class...
-  static const MCPhysReg DPR[] = {
-    ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, ARM_D16, ARM_D17, ARM_D18, ARM_D19, ARM_D20, ARM_D21, ARM_D22, ARM_D23, ARM_D24, ARM_D25, ARM_D26, ARM_D27, ARM_D28, ARM_D29, ARM_D30, ARM_D31, 
-  };
-
-  // DPR Bit set.
-  static const uint8_t DPRBits[] = {
-    0x00, 0x00, 0xf0, 0xff, 0xff, 0xff, 0x0f, 
-  };
-
-  // DPR_VFP2 Register Class...
-  static const MCPhysReg DPR_VFP2[] = {
-    ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15, 
-  };
-
-  // DPR_VFP2 Bit set.
-  static const uint8_t DPR_VFP2Bits[] = {
-    0x00, 0x00, 0xf0, 0xff, 0x0f, 
-  };
-
-  // DPR_8 Register Class...
-  static const MCPhysReg DPR_8[] = {
-    ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7, 
-  };
-
-  // DPR_8 Bit set.
-  static const uint8_t DPR_8Bits[] = {
-    0x00, 0x00, 0xf0, 0x0f, 
-  };
-
-  // GPRPair Register Class...
-  static const MCPhysReg GPRPair[] = {
-    ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, ARM_R8_R9, ARM_R10_R11, ARM_R12_SP, 
-  };
-
-  // GPRPair Bit set.
-  static const uint8_t GPRPairBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f, 
-  };
-
-  // GPRPairnosp Register Class...
-  static const MCPhysReg GPRPairnosp[] = {
-    ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, ARM_R8_R9, ARM_R10_R11, 
-  };
-
-  // GPRPairnosp Bit set.
-  static const uint8_t GPRPairnospBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f, 
-  };
-
-  // GPRPair_with_gsub_0_in_tGPR Register Class...
-  static const MCPhysReg GPRPair_with_gsub_0_in_tGPR[] = {
-    ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, 
-  };
-
-  // GPRPair_with_gsub_0_in_tGPR Bit set.
-  static const uint8_t GPRPair_with_gsub_0_in_tGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 
-  };
-
-  // GPRPair_with_gsub_0_in_hGPR Register Class...
-  static const MCPhysReg GPRPair_with_gsub_0_in_hGPR[] = {
-    ARM_R8_R9, ARM_R10_R11, ARM_R12_SP, 
-  };
-
-  // GPRPair_with_gsub_0_in_hGPR Bit set.
-  static const uint8_t GPRPair_with_gsub_0_in_hGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 
-  };
-
-  // GPRPair_with_gsub_0_in_tcGPR Register Class...
-  static const MCPhysReg GPRPair_with_gsub_0_in_tcGPR[] = {
-    ARM_R0_R1, ARM_R2_R3, ARM_R12_SP, 
-  };
-
-  // GPRPair_with_gsub_0_in_tcGPR Bit set.
-  static const uint8_t GPRPair_with_gsub_0_in_tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 
-  };
-
-  // GPRPair_with_gsub_1_in_tcGPR Register Class...
-  static const MCPhysReg GPRPair_with_gsub_1_in_tcGPR[] = {
-    ARM_R0_R1, ARM_R2_R3, 
-  };
-
-  // GPRPair_with_gsub_1_in_tcGPR Bit set.
-  static const uint8_t GPRPair_with_gsub_1_in_tcGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 
-  };
-
-  // GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR Register Class...
-  static const MCPhysReg GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR[] = {
-    ARM_R8_R9, ARM_R10_R11, 
-  };
-
-  // GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR Bit set.
-  static const uint8_t GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30, 
-  };
-
-  // GPRPair_with_gsub_1_in_GPRsp Register Class...
-  static const MCPhysReg GPRPair_with_gsub_1_in_GPRsp[] = {
-    ARM_R12_SP, 
-  };
-
-  // GPRPair_with_gsub_1_in_GPRsp Bit set.
-  static const uint8_t GPRPair_with_gsub_1_in_GPRspBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 
-  };
-
-  // DPairSpc Register Class...
-  static const MCPhysReg DPairSpc[] = {
-    ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, ARM_D14_D16, ARM_D15_D17, ARM_D16_D18, ARM_D17_D19, ARM_D18_D20, ARM_D19_D21, ARM_D20_D22, ARM_D21_D23, ARM_D22_D24, ARM_D23_D25, ARM_D24_D26, ARM_D25_D27, ARM_D26_D28, ARM_D27_D29, ARM_D28_D30, ARM_D29_D31, 
-  };
-
-  // DPairSpc Bit set.
-  static const uint8_t DPairSpcBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x0f, 
-  };
-
-  // DPairSpc_with_ssub_0 Register Class...
-  static const MCPhysReg DPairSpc_with_ssub_0[] = {
-    ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, ARM_D14_D16, ARM_D15_D17, 
-  };
-
-  // DPairSpc_with_ssub_0 Bit set.
-  static const uint8_t DPairSpc_with_ssub_0Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x3f, 
-  };
-
-  // DPairSpc_with_ssub_4 Register Class...
-  static const MCPhysReg DPairSpc_with_ssub_4[] = {
-    ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, ARM_D8_D10, ARM_D9_D11, ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, 
-  };
-
-  // DPairSpc_with_ssub_4 Bit set.
-  static const uint8_t DPairSpc_with_ssub_4Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x0f, 
-  };
-
-  // DPairSpc_with_dsub_0_in_DPR_8 Register Class...
-  static const MCPhysReg DPairSpc_with_dsub_0_in_DPR_8[] = {
-    ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9, 
-  };
-
-  // DPairSpc_with_dsub_0_in_DPR_8 Bit set.
-  static const uint8_t DPairSpc_with_dsub_0_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x3f, 
-  };
-
-  // DPairSpc_with_dsub_2_in_DPR_8 Register Class...
-  static const MCPhysReg DPairSpc_with_dsub_2_in_DPR_8[] = {
-    ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7, 
-  };
-
-  // DPairSpc_with_dsub_2_in_DPR_8 Bit set.
-  static const uint8_t DPairSpc_with_dsub_2_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x0f, 
-  };
-
-  // DPair Register Class...
-  static const MCPhysReg DPair[] = {
-    ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, ARM_D15_D16, ARM_Q8, ARM_D17_D18, ARM_Q9, ARM_D19_D20, ARM_Q10, ARM_D21_D22, ARM_Q11, ARM_D23_D24, ARM_Q12, ARM_D25_D26, ARM_Q13, ARM_D27_D28, ARM_Q14, ARM_D29_D30, ARM_Q15, 
-  };
-
-  // DPair Bit set.
-  static const uint8_t DPairBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0xff, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03, 
-  };
-
-  // DPair_with_ssub_0 Register Class...
-  static const MCPhysReg DPair_with_ssub_0[] = {
-    ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, ARM_D15_D16, 
-  };
-
-  // DPair_with_ssub_0 Bit set.
-  static const uint8_t DPair_with_ssub_0Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07, 
-  };
-
-  // QPR Register Class...
-  static const MCPhysReg QPR[] = {
-    ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7, ARM_Q8, ARM_Q9, ARM_Q10, ARM_Q11, ARM_Q12, ARM_Q13, ARM_Q14, ARM_Q15, 
-  };
-
-  // QPR Bit set.
-  static const uint8_t QPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0xff, 0x01, 
-  };
-
-  // DPair_with_ssub_2 Register Class...
-  static const MCPhysReg DPair_with_ssub_2[] = {
-    ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, ARM_Q4, ARM_D9_D10, ARM_Q5, ARM_D11_D12, ARM_Q6, ARM_D13_D14, ARM_Q7, 
-  };
-
-  // DPair_with_ssub_2 Bit set.
-  static const uint8_t DPair_with_ssub_2Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
-  };
-
-  // DPair_with_dsub_0_in_DPR_8 Register Class...
-  static const MCPhysReg DPair_with_dsub_0_in_DPR_8[] = {
-    ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8, 
-  };
-
-  // DPair_with_dsub_0_in_DPR_8 Bit set.
-  static const uint8_t DPair_with_dsub_0_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78, 
-  };
-
-  // MQPR Register Class...
-  static const MCPhysReg MQPR[] = {
-    ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7, 
-  };
-
-  // MQPR Bit set.
-  static const uint8_t MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 
-  };
-
-  // QPR_VFP2 Register Class...
-  static const MCPhysReg QPR_VFP2[] = {
-    ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7, 
-  };
-
-  // QPR_VFP2 Bit set.
-  static const uint8_t QPR_VFP2Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 
-  };
-
-  // DPair_with_dsub_1_in_DPR_8 Register Class...
-  static const MCPhysReg DPair_with_dsub_1_in_DPR_8[] = {
-    ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3, 
-  };
-
-  // DPair_with_dsub_1_in_DPR_8 Bit set.
-  static const uint8_t DPair_with_dsub_1_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 
-  };
-
-  // QPR_8 Register Class...
-  static const MCPhysReg QPR_8[] = {
-    ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, 
-  };
-
-  // QPR_8 Bit set.
-  static const uint8_t QPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 
-  };
-
-  // DTriple Register Class...
-  static const MCPhysReg DTriple[] = {
-    ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17, ARM_D16_D17_D18, ARM_D17_D18_D19, ARM_D18_D19_D20, ARM_D19_D20_D21, ARM_D20_D21_D22, ARM_D21_D22_D23, ARM_D22_D23_D24, ARM_D23_D24_D25, ARM_D24_D25_D26, ARM_D25_D26_D27, ARM_D26_D27_D28, ARM_D27_D28_D29, ARM_D28_D29_D30, ARM_D29_D30_D31, 
-  };
-
-  // DTriple Bit set.
-  static const uint8_t DTripleBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0xff, 0xff, 0x1f, 
-  };
-
-  // DTripleSpc Register Class...
-  static const MCPhysReg DTripleSpc[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23, ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27, ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31, 
-  };
-
-  // DTripleSpc Bit set.
-  static const uint8_t DTripleSpcBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x01, 
-  };
-
-  // DTripleSpc_with_ssub_0 Register Class...
-  static const MCPhysReg DTripleSpc_with_ssub_0[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, 
-  };
-
-  // DTripleSpc_with_ssub_0 Bit set.
-  static const uint8_t DTripleSpc_with_ssub_0Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x1f, 
-  };
-
-  // DTriple_with_ssub_0 Register Class...
-  static const MCPhysReg DTriple_with_ssub_0[] = {
-    ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17, 
-  };
-
-  // DTriple_with_ssub_0 Bit set.
-  static const uint8_t DTriple_with_ssub_0Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x7f, 
-  };
-
-  // DTriple_with_qsub_0_in_QPR Register Class...
-  static const MCPhysReg DTriple_with_qsub_0_in_QPR[] = {
-    ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16, ARM_D16_D17_D18, ARM_D18_D19_D20, ARM_D20_D21_D22, ARM_D22_D23_D24, ARM_D24_D25_D26, ARM_D26_D27_D28, ARM_D28_D29_D30, 
-  };
-
-  // DTriple_with_qsub_0_in_QPR Bit set.
-  static const uint8_t DTriple_with_qsub_0_in_QPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xaa, 0xaa, 0xaa, 0x0a, 
-  };
-
-  // DTriple_with_ssub_2 Register Class...
-  static const MCPhysReg DTriple_with_ssub_2[] = {
-    ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, 
-  };
-
-  // DTriple_with_ssub_2 Bit set.
-  static const uint8_t DTriple_with_ssub_2Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x3f, 
-  };
-
-  // DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
-  static const MCPhysReg DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR[] = {
-    ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, ARM_D15_D16_D17, ARM_D17_D18_D19, ARM_D19_D20_D21, ARM_D21_D22_D23, ARM_D23_D24_D25, ARM_D25_D26_D27, ARM_D27_D28_D29, ARM_D29_D30_D31, 
-  };
-
-  // DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
-  static const uint8_t DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 0x55, 0x15, 
-  };
-
-  // DTripleSpc_with_ssub_4 Register Class...
-  static const MCPhysReg DTripleSpc_with_ssub_4[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, 
-  };
-
-  // DTripleSpc_with_ssub_4 Bit set.
-  static const uint8_t DTripleSpc_with_ssub_4Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x07, 
-  };
-
-  // DTriple_with_ssub_4 Register Class...
-  static const MCPhysReg DTriple_with_ssub_4[] = {
-    ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, ARM_D8_D9_D10, ARM_D9_D10_D11, ARM_D10_D11_D12, ARM_D11_D12_D13, ARM_D12_D13_D14, ARM_D13_D14_D15, 
-  };
-
-  // DTriple_with_ssub_4 Bit set.
-  static const uint8_t DTriple_with_ssub_4Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x1f, 
-  };
-
-  // DTripleSpc_with_ssub_8 Register Class...
-  static const MCPhysReg DTripleSpc_with_ssub_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, 
-  };
-
-  // DTripleSpc_with_ssub_8 Bit set.
-  static const uint8_t DTripleSpc_with_ssub_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x01, 
-  };
-
-  // DTripleSpc_with_dsub_0_in_DPR_8 Register Class...
-  static const MCPhysReg DTripleSpc_with_dsub_0_in_DPR_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, 
-  };
-
-  // DTripleSpc_with_dsub_0_in_DPR_8 Bit set.
-  static const uint8_t DTripleSpc_with_dsub_0_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
-  };
-
-  // DTriple_with_dsub_0_in_DPR_8 Register Class...
-  static const MCPhysReg DTriple_with_dsub_0_in_DPR_8[] = {
-    ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9, 
-  };
-
-  // DTriple_with_dsub_0_in_DPR_8 Bit set.
-  static const uint8_t DTriple_with_dsub_0_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x7f, 
-  };
-
-  // DTriple_with_qsub_0_in_MQPR Register Class...
-  static const MCPhysReg DTriple_with_qsub_0_in_MQPR[] = {
-    ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16, 
-  };
-
-  // DTriple_with_qsub_0_in_MQPR Bit set.
-  static const uint8_t DTriple_with_qsub_0_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xaa, 0x2a, 
-  };
-
-  // DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
-  static const MCPhysReg DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR[] = {
-    ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, ARM_D15_D16_D17, 
-  };
-
-  // DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
-  static const uint8_t DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 
-  };
-
-  // DTriple_with_dsub_1_in_DPR_8 Register Class...
-  static const MCPhysReg DTriple_with_dsub_1_in_DPR_8[] = {
-    ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, 
-  };
-
-  // DTriple_with_dsub_1_in_DPR_8 Bit set.
-  static const uint8_t DTriple_with_dsub_1_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x3f, 
-  };
-
-  // DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
-  static const MCPhysReg DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
-    ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15, 
-  };
-
-  // DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
-  static const uint8_t DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x15, 
-  };
-
-  // DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR Register Class...
-  static const MCPhysReg DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR[] = {
-    ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, 
-  };
-
-  // DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR Bit set.
-  static const uint8_t DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xaa, 0x0a, 
-  };
-
-  // DTripleSpc_with_dsub_2_in_DPR_8 Register Class...
-  static const MCPhysReg DTripleSpc_with_dsub_2_in_DPR_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, 
-  };
-
-  // DTripleSpc_with_dsub_2_in_DPR_8 Bit set.
-  static const uint8_t DTripleSpc_with_dsub_2_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x07, 
-  };
-
-  // DTriple_with_dsub_2_in_DPR_8 Register Class...
-  static const MCPhysReg DTriple_with_dsub_2_in_DPR_8[] = {
-    ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7, 
-  };
-
-  // DTriple_with_dsub_2_in_DPR_8 Bit set.
-  static const uint8_t DTriple_with_dsub_2_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x1f, 
-  };
-
-  // DTripleSpc_with_dsub_4_in_DPR_8 Register Class...
-  static const MCPhysReg DTripleSpc_with_dsub_4_in_DPR_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, 
-  };
-
-  // DTripleSpc_with_dsub_4_in_DPR_8 Bit set.
-  static const uint8_t DTripleSpc_with_dsub_4_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01, 
-  };
-
-  // DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
-  static const MCPhysReg DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
-    ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, ARM_D7_D8_D9, 
-  };
-
-  // DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
-  static const uint8_t DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 
-  };
-
-  // DTriple_with_qsub_0_in_QPR_8 Register Class...
-  static const MCPhysReg DTriple_with_qsub_0_in_QPR_8[] = {
-    ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, ARM_D6_D7_D8, 
-  };
-
-  // DTriple_with_qsub_0_in_QPR_8 Bit set.
-  static const uint8_t DTriple_with_qsub_0_in_QPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x2a, 
-  };
-
-  // DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR Register Class...
-  static const MCPhysReg DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR[] = {
-    ARM_D0_D1_D2, ARM_D2_D3_D4, ARM_D4_D5_D6, 
-  };
-
-  // DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR Bit set.
-  static const uint8_t DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x0a, 
-  };
-
-  // DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Register Class...
-  static const MCPhysReg DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8[] = {
-    ARM_D1_D2_D3, ARM_D3_D4_D5, ARM_D5_D6_D7, 
-  };
-
-  // DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Bit set.
-  static const uint8_t DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x15, 
-  };
-
-  // DQuadSpc Register Class...
-  static const MCPhysReg DQuadSpc[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23, ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27, ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31, 
-  };
-
-  // DQuadSpc Bit set.
-  static const uint8_t DQuadSpcBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x01, 
-  };
-
-  // DQuadSpc_with_ssub_0 Register Class...
-  static const MCPhysReg DQuadSpc_with_ssub_0[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19, 
-  };
-
-  // DQuadSpc_with_ssub_0 Bit set.
-  static const uint8_t DQuadSpc_with_ssub_0Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x1f, 
-  };
-
-  // DQuadSpc_with_ssub_4 Register Class...
-  static const MCPhysReg DQuadSpc_with_ssub_4[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, ARM_D12_D14_D16, ARM_D13_D15_D17, 
-  };
-
-  // DQuadSpc_with_ssub_4 Bit set.
-  static const uint8_t DQuadSpc_with_ssub_4Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x07, 
-  };
-
-  // DQuadSpc_with_ssub_8 Register Class...
-  static const MCPhysReg DQuadSpc_with_ssub_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15, 
-  };
-
-  // DQuadSpc_with_ssub_8 Bit set.
-  static const uint8_t DQuadSpc_with_ssub_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x01, 
-  };
-
-  // DQuadSpc_with_dsub_0_in_DPR_8 Register Class...
-  static const MCPhysReg DQuadSpc_with_dsub_0_in_DPR_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11, 
-  };
-
-  // DQuadSpc_with_dsub_0_in_DPR_8 Bit set.
-  static const uint8_t DQuadSpc_with_dsub_0_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f, 
-  };
-
-  // DQuadSpc_with_dsub_2_in_DPR_8 Register Class...
-  static const MCPhysReg DQuadSpc_with_dsub_2_in_DPR_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9, 
-  };
-
-  // DQuadSpc_with_dsub_2_in_DPR_8 Bit set.
-  static const uint8_t DQuadSpc_with_dsub_2_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x07, 
-  };
-
-  // DQuadSpc_with_dsub_4_in_DPR_8 Register Class...
-  static const MCPhysReg DQuadSpc_with_dsub_4_in_DPR_8[] = {
-    ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6, ARM_D3_D5_D7, 
-  };
-
-  // DQuadSpc_with_dsub_4_in_DPR_8 Bit set.
-  static const uint8_t DQuadSpc_with_dsub_4_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01, 
-  };
-
-  // DQuad Register Class...
-  static const MCPhysReg DQuad[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, ARM_D15_D16_D17_D18, ARM_Q8_Q9, ARM_D17_D18_D19_D20, ARM_Q9_Q10, ARM_D19_D20_D21_D22, ARM_Q10_Q11, ARM_D21_D22_D23_D24, ARM_Q11_Q12, ARM_D23_D24_D25_D26, ARM_Q12_Q13, ARM_D25_D26_D27_D28, ARM_Q13_Q14, ARM_D27_D28_D29_D30, ARM_Q14_Q15, 
-  };
-
-  // DQuad Bit set.
-  static const uint8_t DQuadBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 
-  };
-
-  // DQuad_with_ssub_0 Register Class...
-  static const MCPhysReg DQuad_with_ssub_0[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, ARM_D15_D16_D17_D18, 
-  };
-
-  // DQuad_with_ssub_0 Bit set.
-  static const uint8_t DQuad_with_ssub_0Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
-  };
-
-  // DQuad_with_ssub_2 Register Class...
-  static const MCPhysReg DQuad_with_ssub_2[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, 
-  };
-
-  // DQuad_with_ssub_2 Bit set.
-  static const uint8_t DQuad_with_ssub_2Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01, 
-  };
-
-  // QQPR Register Class...
-  static const MCPhysReg QQPR[] = {
-    ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, ARM_Q7_Q8, ARM_Q8_Q9, ARM_Q9_Q10, ARM_Q10_Q11, ARM_Q11_Q12, ARM_Q12_Q13, ARM_Q13_Q14, ARM_Q14_Q15, 
-  };
-
-  // QQPR Bit set.
-  static const uint8_t QQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07, 
-  };
-
-  // DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
-  static const MCPhysReg DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR[] = {
-    ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18, ARM_D17_D18_D19_D20, ARM_D19_D20_D21_D22, ARM_D21_D22_D23_D24, ARM_D23_D24_D25_D26, ARM_D25_D26_D27_D28, ARM_D27_D28_D29_D30, 
-  };
-
-  // DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
-  static const uint8_t DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 
-  };
-
-  // DQuad_with_ssub_4 Register Class...
-  static const MCPhysReg DQuad_with_ssub_4[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, ARM_D13_D14_D15_D16, 
-  };
-
-  // DQuad_with_ssub_4 Bit set.
-  static const uint8_t DQuad_with_ssub_4Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01, 
-  };
-
-  // DQuad_with_ssub_6 Register Class...
-  static const MCPhysReg DQuad_with_ssub_6[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14, ARM_Q6_Q7, 
-  };
-
-  // DQuad_with_ssub_6 Bit set.
-  static const uint8_t DQuad_with_ssub_6Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 
-  };
-
-  // DQuad_with_dsub_0_in_DPR_8 Register Class...
-  static const MCPhysReg DQuad_with_dsub_0_in_DPR_8[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10, 
-  };
-
-  // DQuad_with_dsub_0_in_DPR_8 Bit set.
-  static const uint8_t DQuad_with_dsub_0_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 
-  };
-
-  // DQuad_with_qsub_0_in_MQPR Register Class...
-  static const MCPhysReg DQuad_with_qsub_0_in_MQPR[] = {
-    ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, ARM_Q7_Q8, 
-  };
-
-  // DQuad_with_qsub_0_in_MQPR Bit set.
-  static const uint8_t DQuad_with_qsub_0_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f, 
-  };
-
-  // DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
-  static const MCPhysReg DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR[] = {
-    ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18, 
-  };
-
-  // DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
-  static const uint8_t DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03, 
-  };
-
-  // DQuad_with_dsub_1_in_DPR_8 Register Class...
-  static const MCPhysReg DQuad_with_dsub_1_in_DPR_8[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, 
-  };
-
-  // DQuad_with_dsub_1_in_DPR_8 Bit set.
-  static const uint8_t DQuad_with_dsub_1_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c, 
-  };
-
-  // DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
-  static const MCPhysReg DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
-    ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, ARM_D13_D14_D15_D16, 
-  };
-
-  // DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
-  static const uint8_t DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01, 
-  };
-
-  // MQQPR Register Class...
-  static const MCPhysReg MQQPR[] = {
-    ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, 
-  };
-
-  // MQQPR Bit set.
-  static const uint8_t MQQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07, 
-  };
-
-  // DQuad_with_dsub_2_in_DPR_8 Register Class...
-  static const MCPhysReg DQuad_with_dsub_2_in_DPR_8[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, ARM_D5_D6_D7_D8, 
-  };
-
-  // DQuad_with_dsub_2_in_DPR_8 Bit set.
-  static const uint8_t DQuad_with_dsub_2_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c, 
-  };
-
-  // DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
-  static const MCPhysReg DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
-    ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14, 
-  };
-
-  // DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
-  static const uint8_t DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 
-  };
-
-  // DQuad_with_dsub_3_in_DPR_8 Register Class...
-  static const MCPhysReg DQuad_with_dsub_3_in_DPR_8[] = {
-    ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3, 
-  };
-
-  // DQuad_with_dsub_3_in_DPR_8 Bit set.
-  static const uint8_t DQuad_with_dsub_3_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0c, 
-  };
-
-  // DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
-  static const MCPhysReg DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
-    ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, ARM_D7_D8_D9_D10, 
-  };
-
-  // DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
-  static const uint8_t DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c, 
-  };
-
-  // DQuad_with_qsub_0_in_QPR_8 Register Class...
-  static const MCPhysReg DQuad_with_qsub_0_in_QPR_8[] = {
-    ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4, 
-  };
-
-  // DQuad_with_qsub_0_in_QPR_8 Bit set.
-  static const uint8_t DQuad_with_qsub_0_in_QPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 
-  };
-
-  // DQuad_with_qsub_1_in_QPR_8 Register Class...
-  static const MCPhysReg DQuad_with_qsub_1_in_QPR_8[] = {
-    ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, 
-  };
-
-  // DQuad_with_qsub_1_in_QPR_8 Bit set.
-  static const uint8_t DQuad_with_qsub_1_in_QPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 
-  };
-
-  // DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Register Class...
-  static const MCPhysReg DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8[] = {
-    ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, ARM_D5_D6_D7_D8, 
-  };
-
-  // DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Bit set.
-  static const uint8_t DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c, 
-  };
-
-  // DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
-  static const MCPhysReg DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
-    ARM_D1_D2_D3_D4, ARM_D3_D4_D5_D6, 
-  };
-
-  // DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
-  static const uint8_t DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0c, 
-  };
-
-  // QQQQPR Register Class...
-  static const MCPhysReg QQQQPR[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, ARM_Q7_Q8_Q9_Q10, ARM_Q8_Q9_Q10_Q11, ARM_Q9_Q10_Q11_Q12, ARM_Q10_Q11_Q12_Q13, ARM_Q11_Q12_Q13_Q14, ARM_Q12_Q13_Q14_Q15, 
-  };
-
-  // QQQQPR Bit set.
-  static const uint8_t QQQQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 
-  };
-
-  // QQQQPR_with_ssub_0 Register Class...
-  static const MCPhysReg QQQQPR_with_ssub_0[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, ARM_Q7_Q8_Q9_Q10, 
-  };
-
-  // QQQQPR_with_ssub_0 Bit set.
-  static const uint8_t QQQQPR_with_ssub_0Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07, 
-  };
-
-  // QQQQPR_with_ssub_4 Register Class...
-  static const MCPhysReg QQQQPR_with_ssub_4[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, 
-  };
-
-  // QQQQPR_with_ssub_4 Bit set.
-  static const uint8_t QQQQPR_with_ssub_4Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03, 
-  };
-
-  // QQQQPR_with_ssub_8 Register Class...
-  static const MCPhysReg QQQQPR_with_ssub_8[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, 
-  };
-
-  // QQQQPR_with_ssub_8 Bit set.
-  static const uint8_t QQQQPR_with_ssub_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x01, 
-  };
-
-  // MQQQQPR Register Class...
-  static const MCPhysReg MQQQQPR[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, 
-  };
-
-  // MQQQQPR Bit set.
-  static const uint8_t MQQQQPRBits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 
-  };
-
-  // MQQQQPR_with_dsub_0_in_DPR_8 Register Class...
-  static const MCPhysReg MQQQQPR_with_dsub_0_in_DPR_8[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6, 
-  };
-
-  // MQQQQPR_with_dsub_0_in_DPR_8 Bit set.
-  static const uint8_t MQQQQPR_with_dsub_0_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78, 
-  };
-
-  // MQQQQPR_with_dsub_2_in_DPR_8 Register Class...
-  static const MCPhysReg MQQQQPR_with_dsub_2_in_DPR_8[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, 
-  };
-
-  // MQQQQPR_with_dsub_2_in_DPR_8 Bit set.
-  static const uint8_t MQQQQPR_with_dsub_2_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 
-  };
-
-  // MQQQQPR_with_dsub_4_in_DPR_8 Register Class...
-  static const MCPhysReg MQQQQPR_with_dsub_4_in_DPR_8[] = {
-    ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, 
-  };
-
-  // MQQQQPR_with_dsub_4_in_DPR_8 Bit set.
-  static const uint8_t MQQQQPR_with_dsub_4_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18, 
-  };
-
-  // MQQQQPR_with_dsub_6_in_DPR_8 Register Class...
-  static const MCPhysReg MQQQQPR_with_dsub_6_in_DPR_8[] = {
-    ARM_Q0_Q1_Q2_Q3, 
-  };
-
-  // MQQQQPR_with_dsub_6_in_DPR_8 Bit set.
-  static const uint8_t MQQQQPR_with_dsub_6_in_DPR_8Bits[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 
-  };
+// HPR Register Class...
+static const MCPhysReg HPR[] = {
+	ARM_S0,	 ARM_S1,  ARM_S2,  ARM_S3,  ARM_S4,  ARM_S5,  ARM_S6,  ARM_S7,
+	ARM_S8,	 ARM_S9,  ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15,
+	ARM_S16, ARM_S17, ARM_S18, ARM_S19, ARM_S20, ARM_S21, ARM_S22, ARM_S23,
+	ARM_S24, ARM_S25, ARM_S26, ARM_S27, ARM_S28, ARM_S29, ARM_S30, ARM_S31,
+};
+
+// HPR Bit set.
+static const uint8_t HPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f,
+};
+
+// FPWithVPR Register Class...
+static const MCPhysReg FPWithVPR[] = {
+	ARM_S0,	 ARM_S1,  ARM_S2,  ARM_S3,  ARM_S4,  ARM_S5,  ARM_S6,  ARM_S7,
+	ARM_S8,	 ARM_S9,  ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15,
+	ARM_S16, ARM_S17, ARM_S18, ARM_S19, ARM_S20, ARM_S21, ARM_S22, ARM_S23,
+	ARM_S24, ARM_S25, ARM_S26, ARM_S27, ARM_S28, ARM_S29, ARM_S30, ARM_S31,
+	ARM_D0,	 ARM_D1,  ARM_D2,  ARM_D3,  ARM_D4,  ARM_D5,  ARM_D6,  ARM_D7,
+	ARM_D8,	 ARM_D9,  ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15,
+	ARM_D16, ARM_D17, ARM_D18, ARM_D19, ARM_D20, ARM_D21, ARM_D22, ARM_D23,
+	ARM_D24, ARM_D25, ARM_D26, ARM_D27, ARM_D28, ARM_D29, ARM_D30, ARM_D31,
+	ARM_VPR,
+};
+
+// FPWithVPR Bit set.
+static const uint8_t FPWithVPRBits[] = {
+	0x00, 0x00, 0xf4, 0xff, 0xff, 0xff, 0x0f, 0x00,
+	0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f,
+};
+
+// SPR Register Class...
+static const MCPhysReg SPR[] = {
+	ARM_S0,	 ARM_S1,  ARM_S2,  ARM_S3,  ARM_S4,  ARM_S5,  ARM_S6,  ARM_S7,
+	ARM_S8,	 ARM_S9,  ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15,
+	ARM_S16, ARM_S17, ARM_S18, ARM_S19, ARM_S20, ARM_S21, ARM_S22, ARM_S23,
+	ARM_S24, ARM_S25, ARM_S26, ARM_S27, ARM_S28, ARM_S29, ARM_S30, ARM_S31,
+};
+
+// SPR Bit set.
+static const uint8_t SPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x3f,
+};
+
+// FPWithVPR_with_ssub_0 Register Class...
+static const MCPhysReg FPWithVPR_with_ssub_0[] = {
+	ARM_D0, ARM_D1, ARM_D2,	 ARM_D3,  ARM_D4,  ARM_D5,  ARM_D6,  ARM_D7,
+	ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15,
+};
+
+// FPWithVPR_with_ssub_0 Bit set.
+static const uint8_t FPWithVPR_with_ssub_0Bits[] = {
+	0x00, 0x00, 0xf0, 0xff, 0x0f,
+};
+
+// GPR Register Class...
+static const MCPhysReg GPR[] = {
+	ARM_R0, ARM_R1, ARM_R2,	 ARM_R3,  ARM_R4,  ARM_R5, ARM_R6, ARM_R7,
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC,
+};
+
+// GPR Bit set.
+static const uint8_t GPRBits[] = {
+	0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRwithAPSR Register Class...
+static const MCPhysReg GPRwithAPSR[] = {
+	ARM_R0,	 ARM_R1, ARM_R2, ARM_R3,	ARM_R4,	 ARM_R5,
+	ARM_R6,	 ARM_R7, ARM_R8, ARM_R9,	ARM_R10, ARM_R11,
+	ARM_R12, ARM_SP, ARM_LR, ARM_APSR_NZCV,
+};
+
+// GPRwithAPSR Bit set.
+static const uint8_t GPRwithAPSRBits[] = {
+	0x04, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRwithZR Register Class...
+static const MCPhysReg GPRwithZR[] = {
+	ARM_R0, ARM_R1, ARM_R2,	 ARM_R3,  ARM_R4,  ARM_R5, ARM_R6, ARM_R7,
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_ZR,
+};
+
+// GPRwithZR Bit set.
+static const uint8_t GPRwithZRBits[] = {
+	0x00, 0x20, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// SPR_8 Register Class...
+static const MCPhysReg SPR_8[] = {
+	ARM_S0, ARM_S1, ARM_S2,	 ARM_S3,  ARM_S4,  ARM_S5,  ARM_S6,  ARM_S7,
+	ARM_S8, ARM_S9, ARM_S10, ARM_S11, ARM_S12, ARM_S13, ARM_S14, ARM_S15,
+};
+
+// SPR_8 Bit set.
+static const uint8_t SPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0xc0, 0xff, 0x3f,
+};
+
+// GPRnopc Register Class...
+static const MCPhysReg GPRnopc[] = {
+	ARM_R0, ARM_R1, ARM_R2,	 ARM_R3,  ARM_R4,  ARM_R5, ARM_R6, ARM_R7,
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR,
+};
+
+// GPRnopc Bit set.
+static const uint8_t GPRnopcBits[] = {
+	0x00, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRnosp Register Class...
+static const MCPhysReg GPRnosp[] = {
+	ARM_R0, ARM_R1, ARM_R2,	 ARM_R3,  ARM_R4,  ARM_R5, ARM_R6, ARM_R7,
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_PC,
+};
+
+// GPRnosp Bit set.
+static const uint8_t GPRnospBits[] = {
+	0x00, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRwithAPSR_NZCVnosp Register Class...
+static const MCPhysReg GPRwithAPSR_NZCVnosp[] = {
+	ARM_R0,	 ARM_R1,  ARM_R2,  ARM_R3, ARM_R4,
+	ARM_R5,	 ARM_R6,  ARM_R7,  ARM_R8, ARM_R9,
+	ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_APSR_NZCV,
+};
+
+// GPRwithAPSR_NZCVnosp Bit set.
+static const uint8_t GPRwithAPSR_NZCVnospBits[] = {
+	0x04, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRwithAPSRnosp Register Class...
+static const MCPhysReg GPRwithAPSRnosp[] = {
+	ARM_R0, ARM_R1, ARM_R2,	 ARM_R3,  ARM_R4,  ARM_R5, ARM_R6,   ARM_R7,
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_APSR,
+};
+
+// GPRwithAPSRnosp Bit set.
+static const uint8_t GPRwithAPSRnospBits[] = {
+	0x02, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRwithZRnosp Register Class...
+static const MCPhysReg GPRwithZRnosp[] = {
+	ARM_R0, ARM_R1, ARM_R2,	 ARM_R3,  ARM_R4,  ARM_R5, ARM_R6, ARM_R7,
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_ZR,
+};
+
+// GPRwithZRnosp Bit set.
+static const uint8_t GPRwithZRnospBits[] = {
+	0x00, 0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRnoip Register Class...
+static const MCPhysReg GPRnoip[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3,	 ARM_R4,  ARM_R5, ARM_R6,
+	ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP, ARM_PC,
+};
+
+// GPRnoip Bit set.
+static const uint8_t GPRnoipBits[] = {
+	0x00, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f,
+};
+
+// rGPR Register Class...
+static const MCPhysReg rGPR[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3,	 ARM_R4,  ARM_R5,  ARM_R6,
+	ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR,
+};
+
+// rGPR Bit set.
+static const uint8_t rGPRBits[] = {
+	0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x3f,
+};
+
+// GPRnoip_and_GPRnopc Register Class...
+static const MCPhysReg GPRnoip_and_GPRnopc[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3,	 ARM_R4,  ARM_R5, ARM_R6,
+	ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP,
+};
+
+// GPRnoip_and_GPRnopc Bit set.
+static const uint8_t GPRnoip_and_GPRnopcBits[] = {
+	0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f,
+};
+
+// GPRnoip_and_GPRnosp Register Class...
+static const MCPhysReg GPRnoip_and_GPRnosp[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3,	 ARM_R4,  ARM_R5, ARM_R6,
+	ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_PC,
+};
+
+// GPRnoip_and_GPRnosp Bit set.
+static const uint8_t GPRnoip_and_GPRnospBits[] = {
+	0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f,
+};
+
+// GPRnoip_and_GPRwithAPSR_NZCVnosp Register Class...
+static const MCPhysReg GPRnoip_and_GPRwithAPSR_NZCVnosp[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4,	 ARM_R5,
+	ARM_R6, ARM_R7, ARM_R8, ARM_R9, ARM_R10, ARM_R11,
+};
+
+// GPRnoip_and_GPRwithAPSR_NZCVnosp Bit set.
+static const uint8_t GPRnoip_and_GPRwithAPSR_NZCVnospBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x1f,
+};
+
+// tGPRwithpc Register Class...
+static const MCPhysReg tGPRwithpc[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7, ARM_PC,
+};
+
+// tGPRwithpc Bit set.
+static const uint8_t tGPRwithpcBits[] = {
+	0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01,
+};
+
+// FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8 Register Class...
+static const MCPhysReg FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8[] = {
+	ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7,
+};
+
+// FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8 Bit set.
+static const uint8_t FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8Bits[] = {
+	0x00,
+	0x00,
+	0xf0,
+	0x0f,
+};
+
+// hGPR Register Class...
+static const MCPhysReg hGPR[] = {
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR, ARM_PC,
+};
+
+// hGPR Bit set.
+static const uint8_t hGPRBits[] = {
+	0x00, 0x60, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e,
+};
+
+// tGPR Register Class...
+static const MCPhysReg tGPR[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R4, ARM_R5, ARM_R6, ARM_R7,
+};
+
+// tGPR Bit set.
+static const uint8_t tGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01,
+};
+
+// tGPREven Register Class...
+static const MCPhysReg tGPREven[] = {
+	ARM_R0, ARM_R2, ARM_R4, ARM_R6, ARM_R8, ARM_R10, ARM_R12, ARM_LR,
+};
+
+// tGPREven Bit set.
+static const uint8_t tGPREvenBits[] = {
+	0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 0x2a,
+};
+
+// GPRnopc_and_hGPR Register Class...
+static const MCPhysReg GPRnopc_and_hGPR[] = {
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_SP, ARM_LR,
+};
+
+// GPRnopc_and_hGPR Bit set.
+static const uint8_t GPRnopc_and_hGPRBits[] = {
+	0x00, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e,
+};
+
+// GPRnosp_and_hGPR Register Class...
+static const MCPhysReg GPRnosp_and_hGPR[] = {
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR, ARM_PC,
+};
+
+// GPRnosp_and_hGPR Bit set.
+static const uint8_t GPRnosp_and_hGPRBits[] = {
+	0x00, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e,
+};
+
+// GPRnoip_and_hGPR Register Class...
+static const MCPhysReg GPRnoip_and_hGPR[] = {
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP, ARM_PC,
+};
+
+// GPRnoip_and_hGPR Bit set.
+static const uint8_t GPRnoip_and_hGPRBits[] = {
+	0x00, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e,
+};
+
+// GPRnoip_and_tGPREven Register Class...
+static const MCPhysReg GPRnoip_and_tGPREven[] = {
+	ARM_R0, ARM_R2, ARM_R4, ARM_R6, ARM_R8, ARM_R10,
+};
+
+// GPRnoip_and_tGPREven Bit set.
+static const uint8_t GPRnoip_and_tGPREvenBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa, 0x0a,
+};
+
+// GPRnosp_and_GPRnopc_and_hGPR Register Class...
+static const MCPhysReg GPRnosp_and_GPRnopc_and_hGPR[] = {
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_R12, ARM_LR,
+};
+
+// GPRnosp_and_GPRnopc_and_hGPR Bit set.
+static const uint8_t GPRnosp_and_GPRnopc_and_hGPRBits[] = {
+	0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3e,
+};
+
+// tGPROdd Register Class...
+static const MCPhysReg tGPROdd[] = {
+	ARM_R1, ARM_R3, ARM_R5, ARM_R7, ARM_R9, ARM_R11,
+};
+
+// tGPROdd Bit set.
+static const uint8_t tGPROddBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x15,
+};
+
+// GPRnopc_and_GPRnoip_and_hGPR Register Class...
+static const MCPhysReg GPRnopc_and_GPRnoip_and_hGPR[] = {
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_SP,
+};
+
+// GPRnopc_and_GPRnoip_and_hGPR Bit set.
+static const uint8_t GPRnopc_and_GPRnoip_and_hGPRBits[] = {
+	0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e,
+};
+
+// GPRnosp_and_GPRnoip_and_hGPR Register Class...
+static const MCPhysReg GPRnosp_and_GPRnoip_and_hGPR[] = {
+	ARM_R8, ARM_R9, ARM_R10, ARM_R11, ARM_PC,
+};
+
+// GPRnosp_and_GPRnoip_and_hGPR Bit set.
+static const uint8_t GPRnosp_and_GPRnoip_and_hGPRBits[] = {
+	0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e,
+};
+
+// tcGPR Register Class...
+static const MCPhysReg tcGPR[] = {
+	ARM_R0, ARM_R1, ARM_R2, ARM_R3, ARM_R12,
+};
+
+// tcGPR Bit set.
+static const uint8_t tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 0x20,
+};
+
+// GPRnoip_and_tcGPR Register Class...
+static const MCPhysReg GPRnoip_and_tcGPR[] = {
+	ARM_R0,
+	ARM_R1,
+	ARM_R2,
+	ARM_R3,
+};
+
+// GPRnoip_and_tcGPR Bit set.
+static const uint8_t GPRnoip_and_tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e,
+};
+
+// GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR Register Class...
+static const MCPhysReg GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR[] = {
+	ARM_R8,
+	ARM_R9,
+	ARM_R10,
+	ARM_R11,
+};
+
+// GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR Bit set.
+static const uint8_t GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e,
+};
+
+// hGPR_and_tGPREven Register Class...
+static const MCPhysReg hGPR_and_tGPREven[] = {
+	ARM_R8,
+	ARM_R10,
+	ARM_R12,
+	ARM_LR,
+};
+
+// hGPR_and_tGPREven Bit set.
+static const uint8_t hGPR_and_tGPREvenBits[] = {
+	0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2a,
+};
+
+// tGPR_and_tGPREven Register Class...
+static const MCPhysReg tGPR_and_tGPREven[] = {
+	ARM_R0,
+	ARM_R2,
+	ARM_R4,
+	ARM_R6,
+};
+
+// tGPR_and_tGPREven Bit set.
+static const uint8_t tGPR_and_tGPREvenBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xaa,
+};
+
+// tGPR_and_tGPROdd Register Class...
+static const MCPhysReg tGPR_and_tGPROdd[] = {
+	ARM_R1,
+	ARM_R3,
+	ARM_R5,
+	ARM_R7,
+};
+
+// tGPR_and_tGPROdd Bit set.
+static const uint8_t tGPR_and_tGPROddBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x54, 0x01,
+};
+
+// tGPREven_and_tcGPR Register Class...
+static const MCPhysReg tGPREven_and_tcGPR[] = {
+	ARM_R0,
+	ARM_R2,
+	ARM_R12,
+};
+
+// tGPREven_and_tcGPR Bit set.
+static const uint8_t tGPREven_and_tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0x20,
+};
+
+// hGPR_and_GPRnoip_and_tGPREven Register Class...
+static const MCPhysReg hGPR_and_GPRnoip_and_tGPREven[] = {
+	ARM_R8,
+	ARM_R10,
+};
+
+// hGPR_and_GPRnoip_and_tGPREven Bit set.
+static const uint8_t hGPR_and_GPRnoip_and_tGPREvenBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
+};
+
+// hGPR_and_tGPROdd Register Class...
+static const MCPhysReg hGPR_and_tGPROdd[] = {
+	ARM_R9,
+	ARM_R11,
+};
+
+// hGPR_and_tGPROdd Bit set.
+static const uint8_t hGPR_and_tGPROddBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14,
+};
+
+// tGPREven_and_GPRnoip_and_tcGPR Register Class...
+static const MCPhysReg tGPREven_and_GPRnoip_and_tcGPR[] = {
+	ARM_R0,
+	ARM_R2,
+};
+
+// tGPREven_and_GPRnoip_and_tcGPR Bit set.
+static const uint8_t tGPREven_and_GPRnoip_and_tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
+};
+
+// tGPROdd_and_tcGPR Register Class...
+static const MCPhysReg tGPROdd_and_tcGPR[] = {
+	ARM_R1,
+	ARM_R3,
+};
+
+// tGPROdd_and_tcGPR Bit set.
+static const uint8_t tGPROdd_and_tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14,
+};
+
+// CCR Register Class...
+static const MCPhysReg CCR[] = {
+	ARM_CPSR,
+};
+
+// CCR Bit set.
+static const uint8_t CCRBits[] = {
+	0x08,
+};
+
+// FPCXTRegs Register Class...
+static const MCPhysReg FPCXTRegs[] = {
+	ARM_FPCXTNS,
+};
+
+// FPCXTRegs Bit set.
+static const uint8_t FPCXTRegsBits[] = {
+	0x10,
+};
+
+// GPRlr Register Class...
+static const MCPhysReg GPRlr[] = {
+	ARM_LR,
+};
+
+// GPRlr Bit set.
+static const uint8_t GPRlrBits[] = {
+	0x00,
+	0x20,
+};
+
+// GPRsp Register Class...
+static const MCPhysReg GPRsp[] = {
+	ARM_SP,
+};
+
+// GPRsp Bit set.
+static const uint8_t GPRspBits[] = {
+	0x00,
+	0x00,
+	0x01,
+};
+
+// VCCR Register Class...
+static const MCPhysReg VCCR[] = {
+	ARM_VPR,
+};
+
+// VCCR Bit set.
+static const uint8_t VCCRBits[] = {
+	0x00,
+	0x00,
+	0x04,
+};
+
+// cl_FPSCR_NZCV Register Class...
+static const MCPhysReg cl_FPSCR_NZCV[] = {
+	ARM_FPSCR_NZCV,
+};
+
+// cl_FPSCR_NZCV Bit set.
+static const uint8_t cl_FPSCR_NZCVBits[] = {
+	0x00,
+	0x02,
+};
+
+// hGPR_and_tGPRwithpc Register Class...
+static const MCPhysReg hGPR_and_tGPRwithpc[] = {
+	ARM_PC,
+};
+
+// hGPR_and_tGPRwithpc Bit set.
+static const uint8_t hGPR_and_tGPRwithpcBits[] = {
+	0x00,
+	0x40,
+};
+
+// hGPR_and_tcGPR Register Class...
+static const MCPhysReg hGPR_and_tcGPR[] = {
+	ARM_R12,
+};
+
+// hGPR_and_tcGPR Bit set.
+static const uint8_t hGPR_and_tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20,
+};
+
+// DPR Register Class...
+static const MCPhysReg DPR[] = {
+	ARM_D0,	 ARM_D1,  ARM_D2,  ARM_D3,  ARM_D4,  ARM_D5,  ARM_D6,  ARM_D7,
+	ARM_D8,	 ARM_D9,  ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15,
+	ARM_D16, ARM_D17, ARM_D18, ARM_D19, ARM_D20, ARM_D21, ARM_D22, ARM_D23,
+	ARM_D24, ARM_D25, ARM_D26, ARM_D27, ARM_D28, ARM_D29, ARM_D30, ARM_D31,
+};
+
+// DPR Bit set.
+static const uint8_t DPRBits[] = {
+	0x00, 0x00, 0xf0, 0xff, 0xff, 0xff, 0x0f,
+};
+
+// DPR_VFP2 Register Class...
+static const MCPhysReg DPR_VFP2[] = {
+	ARM_D0, ARM_D1, ARM_D2,	 ARM_D3,  ARM_D4,  ARM_D5,  ARM_D6,  ARM_D7,
+	ARM_D8, ARM_D9, ARM_D10, ARM_D11, ARM_D12, ARM_D13, ARM_D14, ARM_D15,
+};
+
+// DPR_VFP2 Bit set.
+static const uint8_t DPR_VFP2Bits[] = {
+	0x00, 0x00, 0xf0, 0xff, 0x0f,
+};
+
+// DPR_8 Register Class...
+static const MCPhysReg DPR_8[] = {
+	ARM_D0, ARM_D1, ARM_D2, ARM_D3, ARM_D4, ARM_D5, ARM_D6, ARM_D7,
+};
+
+// DPR_8 Bit set.
+static const uint8_t DPR_8Bits[] = {
+	0x00,
+	0x00,
+	0xf0,
+	0x0f,
+};
+
+// GPRPair Register Class...
+static const MCPhysReg GPRPair[] = {
+	ARM_R0_R1, ARM_R2_R3,	ARM_R4_R5,  ARM_R6_R7,
+	ARM_R8_R9, ARM_R10_R11, ARM_R12_SP,
+};
+
+// GPRPair Bit set.
+static const uint8_t GPRPairBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f,
+};
+
+// GPRPairnosp Register Class...
+static const MCPhysReg GPRPairnosp[] = {
+	ARM_R0_R1, ARM_R2_R3, ARM_R4_R5, ARM_R6_R7, ARM_R8_R9, ARM_R10_R11,
+};
+
+// GPRPairnosp Bit set.
+static const uint8_t GPRPairnospBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f,
+};
+
+// GPRPair_with_gsub_0_in_tGPR Register Class...
+static const MCPhysReg GPRPair_with_gsub_0_in_tGPR[] = {
+	ARM_R0_R1,
+	ARM_R2_R3,
+	ARM_R4_R5,
+	ARM_R6_R7,
+};
+
+// GPRPair_with_gsub_0_in_tGPR Bit set.
+static const uint8_t GPRPair_with_gsub_0_in_tGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f,
+};
+
+// GPRPair_with_gsub_0_in_hGPR Register Class...
+static const MCPhysReg GPRPair_with_gsub_0_in_hGPR[] = {
+	ARM_R8_R9,
+	ARM_R10_R11,
+	ARM_R12_SP,
+};
+
+// GPRPair_with_gsub_0_in_hGPR Bit set.
+static const uint8_t GPRPair_with_gsub_0_in_hGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70,
+};
+
+// GPRPair_with_gsub_0_in_tcGPR Register Class...
+static const MCPhysReg GPRPair_with_gsub_0_in_tcGPR[] = {
+	ARM_R0_R1,
+	ARM_R2_R3,
+	ARM_R12_SP,
+};
+
+// GPRPair_with_gsub_0_in_tcGPR Bit set.
+static const uint8_t GPRPair_with_gsub_0_in_tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43,
+};
+
+// GPRPair_with_gsub_1_in_tcGPR Register Class...
+static const MCPhysReg GPRPair_with_gsub_1_in_tcGPR[] = {
+	ARM_R0_R1,
+	ARM_R2_R3,
+};
+
+// GPRPair_with_gsub_1_in_tcGPR Bit set.
+static const uint8_t GPRPair_with_gsub_1_in_tcGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03,
+};
+
+// GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR Register Class...
+static const MCPhysReg GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR[] = {
+	ARM_R8_R9,
+	ARM_R10_R11,
+};
+
+// GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR Bit set.
+static const uint8_t GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x30,
+};
+
+// GPRPair_with_gsub_1_in_GPRsp Register Class...
+static const MCPhysReg GPRPair_with_gsub_1_in_GPRsp[] = {
+	ARM_R12_SP,
+};
+
+// GPRPair_with_gsub_1_in_GPRsp Bit set.
+static const uint8_t GPRPair_with_gsub_1_in_GPRspBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40,
+};
+
+// DPairSpc Register Class...
+static const MCPhysReg DPairSpc[] = {
+	ARM_D0_D2,   ARM_D1_D3,	  ARM_D2_D4,   ARM_D3_D5,   ARM_D4_D6,
+	ARM_D5_D7,   ARM_D6_D8,	  ARM_D7_D9,   ARM_D8_D10,  ARM_D9_D11,
+	ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15, ARM_D14_D16,
+	ARM_D15_D17, ARM_D16_D18, ARM_D17_D19, ARM_D18_D20, ARM_D19_D21,
+	ARM_D20_D22, ARM_D21_D23, ARM_D22_D24, ARM_D23_D25, ARM_D24_D26,
+	ARM_D25_D27, ARM_D26_D28, ARM_D27_D29, ARM_D28_D30, ARM_D29_D31,
+};
+
+// DPairSpc Bit set.
+static const uint8_t DPairSpcBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0xff, 0xff, 0x0f,
+};
+
+// DPairSpc_with_ssub_0 Register Class...
+static const MCPhysReg DPairSpc_with_ssub_0[] = {
+	ARM_D0_D2,   ARM_D1_D3,	  ARM_D2_D4,   ARM_D3_D5,
+	ARM_D4_D6,   ARM_D5_D7,	  ARM_D6_D8,   ARM_D7_D9,
+	ARM_D8_D10,  ARM_D9_D11,  ARM_D10_D12, ARM_D11_D13,
+	ARM_D12_D14, ARM_D13_D15, ARM_D14_D16, ARM_D15_D17,
+};
+
+// DPairSpc_with_ssub_0 Bit set.
+static const uint8_t DPairSpc_with_ssub_0Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x3f,
+};
+
+// DPairSpc_with_ssub_4 Register Class...
+static const MCPhysReg DPairSpc_with_ssub_4[] = {
+	ARM_D0_D2,   ARM_D1_D3,	  ARM_D2_D4,   ARM_D3_D5,   ARM_D4_D6,
+	ARM_D5_D7,   ARM_D6_D8,	  ARM_D7_D9,   ARM_D8_D10,  ARM_D9_D11,
+	ARM_D10_D12, ARM_D11_D13, ARM_D12_D14, ARM_D13_D15,
+};
+
+// DPairSpc_with_ssub_4 Bit set.
+static const uint8_t DPairSpc_with_ssub_4Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xff, 0x0f,
+};
+
+// DPairSpc_with_dsub_0_in_DPR_8 Register Class...
+static const MCPhysReg DPairSpc_with_dsub_0_in_DPR_8[] = {
+	ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5,
+	ARM_D4_D6, ARM_D5_D7, ARM_D6_D8, ARM_D7_D9,
+};
+
+// DPairSpc_with_dsub_0_in_DPR_8 Bit set.
+static const uint8_t DPairSpc_with_dsub_0_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x3f,
+};
+
+// DPairSpc_with_dsub_2_in_DPR_8 Register Class...
+static const MCPhysReg DPairSpc_with_dsub_2_in_DPR_8[] = {
+	ARM_D0_D2, ARM_D1_D3, ARM_D2_D4, ARM_D3_D5, ARM_D4_D6, ARM_D5_D7,
+};
+
+// DPairSpc_with_dsub_2_in_DPR_8 Bit set.
+static const uint8_t DPairSpc_with_dsub_2_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0x0f,
+};
+
+// DPair Register Class...
+static const MCPhysReg DPair[] = {
+	ARM_Q0,	 ARM_D1_D2,   ARM_Q1,  ARM_D3_D4,   ARM_Q2,  ARM_D5_D6,
+	ARM_Q3,	 ARM_D7_D8,   ARM_Q4,  ARM_D9_D10,  ARM_Q5,  ARM_D11_D12,
+	ARM_Q6,	 ARM_D13_D14, ARM_Q7,  ARM_D15_D16, ARM_Q8,  ARM_D17_D18,
+	ARM_Q9,	 ARM_D19_D20, ARM_Q10, ARM_D21_D22, ARM_Q11, ARM_D23_D24,
+	ARM_Q12, ARM_D25_D26, ARM_Q13, ARM_D27_D28, ARM_Q14, ARM_D29_D30,
+	ARM_Q15,
+};
+
+// DPair Bit set.
+static const uint8_t DPairBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0xff, 0x01, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff, 0x03,
+};
+
+// DPair_with_ssub_0 Register Class...
+static const MCPhysReg DPair_with_ssub_0[] = {
+	ARM_Q0, ARM_D1_D2,   ARM_Q1, ARM_D3_D4,	  ARM_Q2, ARM_D5_D6,
+	ARM_Q3, ARM_D7_D8,   ARM_Q4, ARM_D9_D10,  ARM_Q5, ARM_D11_D12,
+	ARM_Q6, ARM_D13_D14, ARM_Q7, ARM_D15_D16,
+};
+
+// DPair_with_ssub_0 Bit set.
+static const uint8_t DPair_with_ssub_0Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07,
+};
+
+// QPR Register Class...
+static const MCPhysReg QPR[] = {
+	ARM_Q0, ARM_Q1, ARM_Q2,	 ARM_Q3,  ARM_Q4,  ARM_Q5,  ARM_Q6,  ARM_Q7,
+	ARM_Q8, ARM_Q9, ARM_Q10, ARM_Q11, ARM_Q12, ARM_Q13, ARM_Q14, ARM_Q15,
+};
+
+// QPR Bit set.
+static const uint8_t QPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0xff, 0x01,
+};
+
+// DPair_with_ssub_2 Register Class...
+static const MCPhysReg DPair_with_ssub_2[] = {
+	ARM_Q0,	   ARM_D1_D2,	ARM_Q1,	   ARM_D3_D4,	ARM_Q2,
+	ARM_D5_D6, ARM_Q3,	ARM_D7_D8, ARM_Q4,	ARM_D9_D10,
+	ARM_Q5,	   ARM_D11_D12, ARM_Q6,	   ARM_D13_D14, ARM_Q7,
+};
+
+// DPair_with_ssub_2 Bit set.
+static const uint8_t DPair_with_ssub_2Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03,
+};
+
+// DPair_with_dsub_0_in_DPR_8 Register Class...
+static const MCPhysReg DPair_with_dsub_0_in_DPR_8[] = {
+	ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4,
+	ARM_Q2, ARM_D5_D6, ARM_Q3, ARM_D7_D8,
+};
+
+// DPair_with_dsub_0_in_DPR_8 Bit set.
+static const uint8_t DPair_with_dsub_0_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78,
+};
+
+// MQPR Register Class...
+static const MCPhysReg MQPR[] = {
+	ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7,
+};
+
+// MQPR Bit set.
+static const uint8_t MQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01,
+};
+
+// QPR_VFP2 Register Class...
+static const MCPhysReg QPR_VFP2[] = {
+	ARM_Q0, ARM_Q1, ARM_Q2, ARM_Q3, ARM_Q4, ARM_Q5, ARM_Q6, ARM_Q7,
+};
+
+// QPR_VFP2 Bit set.
+static const uint8_t QPR_VFP2Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfe, 0x01,
+};
+
+// DPair_with_dsub_1_in_DPR_8 Register Class...
+static const MCPhysReg DPair_with_dsub_1_in_DPR_8[] = {
+	ARM_Q0, ARM_D1_D2, ARM_Q1, ARM_D3_D4, ARM_Q2, ARM_D5_D6, ARM_Q3,
+};
+
+// DPair_with_dsub_1_in_DPR_8 Bit set.
+static const uint8_t DPair_with_dsub_1_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38,
+};
+
+// QPR_8 Register Class...
+static const MCPhysReg QPR_8[] = {
+	ARM_Q0,
+	ARM_Q1,
+	ARM_Q2,
+	ARM_Q3,
+};
+
+// QPR_8 Bit set.
+static const uint8_t QPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1e,
+};
+
+// DTriple Register Class...
+static const MCPhysReg DTriple[] = {
+	ARM_D0_D1_D2,	 ARM_D1_D2_D3,	  ARM_D2_D3_D4,	   ARM_D3_D4_D5,
+	ARM_D4_D5_D6,	 ARM_D5_D6_D7,	  ARM_D6_D7_D8,	   ARM_D7_D8_D9,
+	ARM_D8_D9_D10,	 ARM_D9_D10_D11,  ARM_D10_D11_D12, ARM_D11_D12_D13,
+	ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17,
+	ARM_D16_D17_D18, ARM_D17_D18_D19, ARM_D18_D19_D20, ARM_D19_D20_D21,
+	ARM_D20_D21_D22, ARM_D21_D22_D23, ARM_D22_D23_D24, ARM_D23_D24_D25,
+	ARM_D24_D25_D26, ARM_D25_D26_D27, ARM_D26_D27_D28, ARM_D27_D28_D29,
+	ARM_D28_D29_D30, ARM_D29_D30_D31,
+};
+
+// DTriple Bit set.
+static const uint8_t DTripleBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0xff, 0xff, 0x1f,
+};
+
+// DTripleSpc Register Class...
+static const MCPhysReg DTripleSpc[] = {
+	ARM_D0_D2_D4,	 ARM_D1_D3_D5,	  ARM_D2_D4_D6,	   ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	 ARM_D5_D7_D9,	  ARM_D6_D8_D10,   ARM_D7_D9_D11,
+	ARM_D8_D10_D12,	 ARM_D9_D11_D13,  ARM_D10_D12_D14, ARM_D11_D13_D15,
+	ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19,
+	ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23,
+	ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27,
+	ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31,
+};
+
+// DTripleSpc Bit set.
+static const uint8_t DTripleSpcBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x01,
+};
+
+// DTripleSpc_with_ssub_0 Register Class...
+static const MCPhysReg DTripleSpc_with_ssub_0[] = {
+	ARM_D0_D2_D4,	 ARM_D1_D3_D5,	  ARM_D2_D4_D6,	   ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	 ARM_D5_D7_D9,	  ARM_D6_D8_D10,   ARM_D7_D9_D11,
+	ARM_D8_D10_D12,	 ARM_D9_D11_D13,  ARM_D10_D12_D14, ARM_D11_D13_D15,
+	ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19,
+};
+
+// DTripleSpc_with_ssub_0 Bit set.
+static const uint8_t DTripleSpc_with_ssub_0Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x1f,
+};
+
+// DTriple_with_ssub_0 Register Class...
+static const MCPhysReg DTriple_with_ssub_0[] = {
+	ARM_D0_D1_D2,	 ARM_D1_D2_D3,	  ARM_D2_D3_D4,	   ARM_D3_D4_D5,
+	ARM_D4_D5_D6,	 ARM_D5_D6_D7,	  ARM_D6_D7_D8,	   ARM_D7_D8_D9,
+	ARM_D8_D9_D10,	 ARM_D9_D10_D11,  ARM_D10_D11_D12, ARM_D11_D12_D13,
+	ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16, ARM_D15_D16_D17,
+};
+
+// DTriple_with_ssub_0 Bit set.
+static const uint8_t DTriple_with_ssub_0Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x7f,
+};
+
+// DTriple_with_qsub_0_in_QPR Register Class...
+static const MCPhysReg DTriple_with_qsub_0_in_QPR[] = {
+	ARM_D0_D1_D2,	 ARM_D2_D3_D4,	  ARM_D4_D5_D6,	   ARM_D6_D7_D8,
+	ARM_D8_D9_D10,	 ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16,
+	ARM_D16_D17_D18, ARM_D18_D19_D20, ARM_D20_D21_D22, ARM_D22_D23_D24,
+	ARM_D24_D25_D26, ARM_D26_D27_D28, ARM_D28_D29_D30,
+};
+
+// DTriple_with_qsub_0_in_QPR Bit set.
+static const uint8_t DTriple_with_qsub_0_in_QPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x80, 0xaa, 0xaa, 0xaa, 0x0a,
+};
+
+// DTriple_with_ssub_2 Register Class...
+static const MCPhysReg DTriple_with_ssub_2[] = {
+	ARM_D0_D1_D2,	 ARM_D1_D2_D3,	  ARM_D2_D3_D4,	   ARM_D3_D4_D5,
+	ARM_D4_D5_D6,	 ARM_D5_D6_D7,	  ARM_D6_D7_D8,	   ARM_D7_D8_D9,
+	ARM_D8_D9_D10,	 ARM_D9_D10_D11,  ARM_D10_D11_D12, ARM_D11_D12_D13,
+	ARM_D12_D13_D14, ARM_D13_D14_D15, ARM_D14_D15_D16,
+};
+
+// DTriple_with_ssub_2 Bit set.
+static const uint8_t DTriple_with_ssub_2Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x3f,
+};
+
+// DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
+static const MCPhysReg DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR[] = {
+	ARM_D1_D2_D3,	 ARM_D3_D4_D5,	  ARM_D5_D6_D7,	   ARM_D7_D8_D9,
+	ARM_D9_D10_D11,	 ARM_D11_D12_D13, ARM_D13_D14_D15, ARM_D15_D16_D17,
+	ARM_D17_D18_D19, ARM_D19_D20_D21, ARM_D21_D22_D23, ARM_D23_D24_D25,
+	ARM_D25_D26_D27, ARM_D27_D28_D29, ARM_D29_D30_D31,
+};
+
+// DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
+static const uint8_t DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55, 0x55, 0x15,
+};
+
+// DTripleSpc_with_ssub_4 Register Class...
+static const MCPhysReg DTripleSpc_with_ssub_4[] = {
+	ARM_D0_D2_D4,	 ARM_D1_D3_D5,	  ARM_D2_D4_D6,	   ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	 ARM_D5_D7_D9,	  ARM_D6_D8_D10,   ARM_D7_D9_D11,
+	ARM_D8_D10_D12,	 ARM_D9_D11_D13,  ARM_D10_D12_D14, ARM_D11_D13_D15,
+	ARM_D12_D14_D16, ARM_D13_D15_D17,
+};
+
+// DTripleSpc_with_ssub_4 Bit set.
+static const uint8_t DTripleSpc_with_ssub_4Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x07,
+};
+
+// DTriple_with_ssub_4 Register Class...
+static const MCPhysReg DTriple_with_ssub_4[] = {
+	ARM_D0_D1_D2,	 ARM_D1_D2_D3,	  ARM_D2_D3_D4,	   ARM_D3_D4_D5,
+	ARM_D4_D5_D6,	 ARM_D5_D6_D7,	  ARM_D6_D7_D8,	   ARM_D7_D8_D9,
+	ARM_D8_D9_D10,	 ARM_D9_D10_D11,  ARM_D10_D11_D12, ARM_D11_D12_D13,
+	ARM_D12_D13_D14, ARM_D13_D14_D15,
+};
+
+// DTriple_with_ssub_4 Bit set.
+static const uint8_t DTriple_with_ssub_4Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x80, 0xff, 0x1f,
+};
+
+// DTripleSpc_with_ssub_8 Register Class...
+static const MCPhysReg DTripleSpc_with_ssub_8[] = {
+	ARM_D0_D2_D4,	ARM_D1_D3_D5,	ARM_D2_D4_D6,	 ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	ARM_D5_D7_D9,	ARM_D6_D8_D10,	 ARM_D7_D9_D11,
+	ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15,
+};
+
+// DTripleSpc_with_ssub_8 Bit set.
+static const uint8_t DTripleSpc_with_ssub_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x01,
+};
+
+// DTripleSpc_with_dsub_0_in_DPR_8 Register Class...
+static const MCPhysReg DTripleSpc_with_dsub_0_in_DPR_8[] = {
+	ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6,  ARM_D3_D5_D7,
+	ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11,
+};
+
+// DTripleSpc_with_dsub_0_in_DPR_8 Bit set.
+static const uint8_t DTripleSpc_with_dsub_0_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f,
+};
+
+// DTriple_with_dsub_0_in_DPR_8 Register Class...
+static const MCPhysReg DTriple_with_dsub_0_in_DPR_8[] = {
+	ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5,
+	ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8, ARM_D7_D8_D9,
+};
+
+// DTriple_with_dsub_0_in_DPR_8 Bit set.
+static const uint8_t DTriple_with_dsub_0_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x7f,
+};
+
+// DTriple_with_qsub_0_in_MQPR Register Class...
+static const MCPhysReg DTriple_with_qsub_0_in_MQPR[] = {
+	ARM_D0_D1_D2,  ARM_D2_D3_D4,	ARM_D4_D5_D6,	 ARM_D6_D7_D8,
+	ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14, ARM_D14_D15_D16,
+};
+
+// DTriple_with_qsub_0_in_MQPR Bit set.
+static const uint8_t DTriple_with_qsub_0_in_MQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x80, 0xaa, 0x2a,
+};
+
+// DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
+static const MCPhysReg
+	DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR
+		[] = {
+			ARM_D1_D2_D3,	 ARM_D3_D4_D5,	  ARM_D5_D6_D7,
+			ARM_D7_D8_D9,	 ARM_D9_D10_D11,  ARM_D11_D12_D13,
+			ARM_D13_D14_D15, ARM_D15_D16_D17,
+		};
+
+// DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
+static const uint8_t
+	DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits
+		[] = {
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x55,
+		};
+
+// DTriple_with_dsub_1_in_DPR_8 Register Class...
+static const MCPhysReg DTriple_with_dsub_1_in_DPR_8[] = {
+	ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4, ARM_D3_D4_D5,
+	ARM_D4_D5_D6, ARM_D5_D6_D7, ARM_D6_D7_D8,
+};
+
+// DTriple_with_dsub_1_in_DPR_8 Bit set.
+static const uint8_t DTriple_with_dsub_1_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x3f,
+};
+
+// DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
+static const MCPhysReg DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
+	ARM_D1_D2_D3,	ARM_D3_D4_D5,	 ARM_D5_D6_D7,	  ARM_D7_D8_D9,
+	ARM_D9_D10_D11, ARM_D11_D12_D13, ARM_D13_D14_D15,
+};
+
+// DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
+static const uint8_t DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x55, 0x15,
+};
+
+// DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR Register Class...
+static const MCPhysReg DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR[] = {
+	ARM_D0_D1_D2,  ARM_D2_D3_D4,	ARM_D4_D5_D6,	 ARM_D6_D7_D8,
+	ARM_D8_D9_D10, ARM_D10_D11_D12, ARM_D12_D13_D14,
+};
+
+// DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR Bit set.
+static const uint8_t DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x80, 0xaa, 0x0a,
+};
+
+// DTripleSpc_with_dsub_2_in_DPR_8 Register Class...
+static const MCPhysReg DTripleSpc_with_dsub_2_in_DPR_8[] = {
+	ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6,
+	ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9,
+};
+
+// DTripleSpc_with_dsub_2_in_DPR_8 Bit set.
+static const uint8_t DTripleSpc_with_dsub_2_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x07,
+};
+
+// DTriple_with_dsub_2_in_DPR_8 Register Class...
+static const MCPhysReg DTriple_with_dsub_2_in_DPR_8[] = {
+	ARM_D0_D1_D2, ARM_D1_D2_D3, ARM_D2_D3_D4,
+	ARM_D3_D4_D5, ARM_D4_D5_D6, ARM_D5_D6_D7,
+};
+
+// DTriple_with_dsub_2_in_DPR_8 Bit set.
+static const uint8_t DTriple_with_dsub_2_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x1f,
+};
+
+// DTripleSpc_with_dsub_4_in_DPR_8 Register Class...
+static const MCPhysReg DTripleSpc_with_dsub_4_in_DPR_8[] = {
+	ARM_D0_D2_D4,
+	ARM_D1_D3_D5,
+	ARM_D2_D4_D6,
+	ARM_D3_D5_D7,
+};
+
+// DTripleSpc_with_dsub_4_in_DPR_8 Bit set.
+static const uint8_t DTripleSpc_with_dsub_4_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01,
+};
+
+// DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
+static const MCPhysReg
+	DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR
+		[] = {
+			ARM_D1_D2_D3,
+			ARM_D3_D4_D5,
+			ARM_D5_D6_D7,
+			ARM_D7_D8_D9,
+		};
+
+// DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
+static const uint8_t
+	DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits
+		[] = {
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x55,
+		};
+
+// DTriple_with_qsub_0_in_QPR_8 Register Class...
+static const MCPhysReg DTriple_with_qsub_0_in_QPR_8[] = {
+	ARM_D0_D1_D2,
+	ARM_D2_D3_D4,
+	ARM_D4_D5_D6,
+	ARM_D6_D7_D8,
+};
+
+// DTriple_with_qsub_0_in_QPR_8 Bit set.
+static const uint8_t DTriple_with_qsub_0_in_QPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x2a,
+};
+
+// DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR Register Class...
+static const MCPhysReg
+	DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR[] = {
+		ARM_D0_D1_D2,
+		ARM_D2_D3_D4,
+		ARM_D4_D5_D6,
+	};
+
+// DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR Bit set.
+static const uint8_t
+	DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRBits[] = {
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x0a,
+	};
+
+// DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Register Class...
+static const MCPhysReg DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8[] = {
+	ARM_D1_D2_D3,
+	ARM_D3_D4_D5,
+	ARM_D5_D6_D7,
+};
+
+// DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Bit set.
+static const uint8_t DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x15,
+};
+
+// DQuadSpc Register Class...
+static const MCPhysReg DQuadSpc[] = {
+	ARM_D0_D2_D4,	 ARM_D1_D3_D5,	  ARM_D2_D4_D6,	   ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	 ARM_D5_D7_D9,	  ARM_D6_D8_D10,   ARM_D7_D9_D11,
+	ARM_D8_D10_D12,	 ARM_D9_D11_D13,  ARM_D10_D12_D14, ARM_D11_D13_D15,
+	ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19,
+	ARM_D16_D18_D20, ARM_D17_D19_D21, ARM_D18_D20_D22, ARM_D19_D21_D23,
+	ARM_D20_D22_D24, ARM_D21_D23_D25, ARM_D22_D24_D26, ARM_D23_D25_D27,
+	ARM_D24_D26_D28, ARM_D25_D27_D29, ARM_D26_D28_D30, ARM_D27_D29_D31,
+};
+
+// DQuadSpc Bit set.
+static const uint8_t DQuadSpcBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0xff, 0xff, 0x01,
+};
+
+// DQuadSpc_with_ssub_0 Register Class...
+static const MCPhysReg DQuadSpc_with_ssub_0[] = {
+	ARM_D0_D2_D4,	 ARM_D1_D3_D5,	  ARM_D2_D4_D6,	   ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	 ARM_D5_D7_D9,	  ARM_D6_D8_D10,   ARM_D7_D9_D11,
+	ARM_D8_D10_D12,	 ARM_D9_D11_D13,  ARM_D10_D12_D14, ARM_D11_D13_D15,
+	ARM_D12_D14_D16, ARM_D13_D15_D17, ARM_D14_D16_D18, ARM_D15_D17_D19,
+};
+
+// DQuadSpc_with_ssub_0 Bit set.
+static const uint8_t DQuadSpc_with_ssub_0Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x1f,
+};
+
+// DQuadSpc_with_ssub_4 Register Class...
+static const MCPhysReg DQuadSpc_with_ssub_4[] = {
+	ARM_D0_D2_D4,	 ARM_D1_D3_D5,	  ARM_D2_D4_D6,	   ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	 ARM_D5_D7_D9,	  ARM_D6_D8_D10,   ARM_D7_D9_D11,
+	ARM_D8_D10_D12,	 ARM_D9_D11_D13,  ARM_D10_D12_D14, ARM_D11_D13_D15,
+	ARM_D12_D14_D16, ARM_D13_D15_D17,
+};
+
+// DQuadSpc_with_ssub_4 Bit set.
+static const uint8_t DQuadSpc_with_ssub_4Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x07,
+};
+
+// DQuadSpc_with_ssub_8 Register Class...
+static const MCPhysReg DQuadSpc_with_ssub_8[] = {
+	ARM_D0_D2_D4,	ARM_D1_D3_D5,	ARM_D2_D4_D6,	 ARM_D3_D5_D7,
+	ARM_D4_D6_D8,	ARM_D5_D7_D9,	ARM_D6_D8_D10,	 ARM_D7_D9_D11,
+	ARM_D8_D10_D12, ARM_D9_D11_D13, ARM_D10_D12_D14, ARM_D11_D13_D15,
+};
+
+// DQuadSpc_with_ssub_8 Bit set.
+static const uint8_t DQuadSpc_with_ssub_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0xff, 0x01,
+};
+
+// DQuadSpc_with_dsub_0_in_DPR_8 Register Class...
+static const MCPhysReg DQuadSpc_with_dsub_0_in_DPR_8[] = {
+	ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6,  ARM_D3_D5_D7,
+	ARM_D4_D6_D8, ARM_D5_D7_D9, ARM_D6_D8_D10, ARM_D7_D9_D11,
+};
+
+// DQuadSpc_with_dsub_0_in_DPR_8 Bit set.
+static const uint8_t DQuadSpc_with_dsub_0_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x1f,
+};
+
+// DQuadSpc_with_dsub_2_in_DPR_8 Register Class...
+static const MCPhysReg DQuadSpc_with_dsub_2_in_DPR_8[] = {
+	ARM_D0_D2_D4, ARM_D1_D3_D5, ARM_D2_D4_D6,
+	ARM_D3_D5_D7, ARM_D4_D6_D8, ARM_D5_D7_D9,
+};
+
+// DQuadSpc_with_dsub_2_in_DPR_8 Bit set.
+static const uint8_t DQuadSpc_with_dsub_2_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x07,
+};
+
+// DQuadSpc_with_dsub_4_in_DPR_8 Register Class...
+static const MCPhysReg DQuadSpc_with_dsub_4_in_DPR_8[] = {
+	ARM_D0_D2_D4,
+	ARM_D1_D3_D5,
+	ARM_D2_D4_D6,
+	ARM_D3_D5_D7,
+};
+
+// DQuadSpc_with_dsub_4_in_DPR_8 Bit set.
+static const uint8_t DQuadSpc_with_dsub_4_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x01,
+};
+
+// DQuad Register Class...
+static const MCPhysReg DQuad[] = {
+	ARM_Q0_Q1,   ARM_D1_D2_D3_D4,	  ARM_Q1_Q2,   ARM_D3_D4_D5_D6,
+	ARM_Q2_Q3,   ARM_D5_D6_D7_D8,	  ARM_Q3_Q4,   ARM_D7_D8_D9_D10,
+	ARM_Q4_Q5,   ARM_D9_D10_D11_D12,  ARM_Q5_Q6,   ARM_D11_D12_D13_D14,
+	ARM_Q6_Q7,   ARM_D13_D14_D15_D16, ARM_Q7_Q8,   ARM_D15_D16_D17_D18,
+	ARM_Q8_Q9,   ARM_D17_D18_D19_D20, ARM_Q9_Q10,  ARM_D19_D20_D21_D22,
+	ARM_Q10_Q11, ARM_D21_D22_D23_D24, ARM_Q11_Q12, ARM_D23_D24_D25_D26,
+	ARM_Q12_Q13, ARM_D25_D26_D27_D28, ARM_Q13_Q14, ARM_D27_D28_D29_D30,
+	ARM_Q14_Q15,
+};
+
+// DQuad Bit set.
+static const uint8_t DQuadBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff,
+	0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff,
+};
+
+// DQuad_with_ssub_0 Register Class...
+static const MCPhysReg DQuad_with_ssub_0[] = {
+	ARM_Q0_Q1, ARM_D1_D2_D3_D4,	ARM_Q1_Q2, ARM_D3_D4_D5_D6,
+	ARM_Q2_Q3, ARM_D5_D6_D7_D8,	ARM_Q3_Q4, ARM_D7_D8_D9_D10,
+	ARM_Q4_Q5, ARM_D9_D10_D11_D12,	ARM_Q5_Q6, ARM_D11_D12_D13_D14,
+	ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8, ARM_D15_D16_D17_D18,
+};
+
+// DQuad_with_ssub_0 Bit set.
+static const uint8_t DQuad_with_ssub_0Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x03,
+};
+
+// DQuad_with_ssub_2 Register Class...
+static const MCPhysReg DQuad_with_ssub_2[] = {
+	ARM_Q0_Q1, ARM_D1_D2_D3_D4,	ARM_Q1_Q2, ARM_D3_D4_D5_D6,
+	ARM_Q2_Q3, ARM_D5_D6_D7_D8,	ARM_Q3_Q4, ARM_D7_D8_D9_D10,
+	ARM_Q4_Q5, ARM_D9_D10_D11_D12,	ARM_Q5_Q6, ARM_D11_D12_D13_D14,
+	ARM_Q6_Q7, ARM_D13_D14_D15_D16, ARM_Q7_Q8,
+};
+
+// DQuad_with_ssub_2 Bit set.
+static const uint8_t DQuad_with_ssub_2Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01,
+};
+
+// QQPR Register Class...
+static const MCPhysReg QQPR[] = {
+	ARM_Q0_Q1,   ARM_Q1_Q2,	  ARM_Q2_Q3,   ARM_Q3_Q4,   ARM_Q4_Q5,
+	ARM_Q5_Q6,   ARM_Q6_Q7,	  ARM_Q7_Q8,   ARM_Q8_Q9,   ARM_Q9_Q10,
+	ARM_Q10_Q11, ARM_Q11_Q12, ARM_Q12_Q13, ARM_Q13_Q14, ARM_Q14_Q15,
+};
+
+// QQPR Bit set.
+static const uint8_t QQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff, 0x07,
+};
+
+// DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
+static const MCPhysReg DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR[] = {
+	ARM_D1_D2_D3_D4,     ARM_D3_D4_D5_D6,	  ARM_D5_D6_D7_D8,
+	ARM_D7_D8_D9_D10,    ARM_D9_D10_D11_D12,  ARM_D11_D12_D13_D14,
+	ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18, ARM_D17_D18_D19_D20,
+	ARM_D19_D20_D21_D22, ARM_D21_D22_D23_D24, ARM_D23_D24_D25_D26,
+	ARM_D25_D26_D27_D28, ARM_D27_D28_D29_D30,
+};
+
+// DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
+static const uint8_t DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff,
+};
+
+// DQuad_with_ssub_4 Register Class...
+static const MCPhysReg DQuad_with_ssub_4[] = {
+	ARM_Q0_Q1, ARM_D1_D2_D3_D4,	ARM_Q1_Q2, ARM_D3_D4_D5_D6,
+	ARM_Q2_Q3, ARM_D5_D6_D7_D8,	ARM_Q3_Q4, ARM_D7_D8_D9_D10,
+	ARM_Q4_Q5, ARM_D9_D10_D11_D12,	ARM_Q5_Q6, ARM_D11_D12_D13_D14,
+	ARM_Q6_Q7, ARM_D13_D14_D15_D16,
+};
+
+// DQuad_with_ssub_4 Bit set.
+static const uint8_t DQuad_with_ssub_4Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01,
+};
+
+// DQuad_with_ssub_6 Register Class...
+static const MCPhysReg DQuad_with_ssub_6[] = {
+	ARM_Q0_Q1, ARM_D1_D2_D3_D4,    ARM_Q1_Q2, ARM_D3_D4_D5_D6,
+	ARM_Q2_Q3, ARM_D5_D6_D7_D8,    ARM_Q3_Q4, ARM_D7_D8_D9_D10,
+	ARM_Q4_Q5, ARM_D9_D10_D11_D12, ARM_Q5_Q6, ARM_D11_D12_D13_D14,
+	ARM_Q6_Q7,
+};
+
+// DQuad_with_ssub_6 Bit set.
+static const uint8_t DQuad_with_ssub_6Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc,
+};
+
+// DQuad_with_dsub_0_in_DPR_8 Register Class...
+static const MCPhysReg DQuad_with_dsub_0_in_DPR_8[] = {
+	ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6,
+	ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4, ARM_D7_D8_D9_D10,
+};
+
+// DQuad_with_dsub_0_in_DPR_8 Bit set.
+static const uint8_t DQuad_with_dsub_0_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c,
+};
+
+// DQuad_with_qsub_0_in_MQPR Register Class...
+static const MCPhysReg DQuad_with_qsub_0_in_MQPR[] = {
+	ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4,
+	ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7, ARM_Q7_Q8,
+};
+
+// DQuad_with_qsub_0_in_MQPR Bit set.
+static const uint8_t DQuad_with_qsub_0_in_MQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x0f,
+};
+
+// DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Register Class...
+static const MCPhysReg
+	DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR[] = {
+		ARM_D1_D2_D3_D4,     ARM_D3_D4_D5_D6,	  ARM_D5_D6_D7_D8,
+		ARM_D7_D8_D9_D10,    ARM_D9_D10_D11_D12,  ARM_D11_D12_D13_D14,
+		ARM_D13_D14_D15_D16, ARM_D15_D16_D17_D18,
+	};
+
+// DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR Bit set.
+static const uint8_t
+	DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits
+		[] = {
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0xfc, 0x03,
+		};
+
+// DQuad_with_dsub_1_in_DPR_8 Register Class...
+static const MCPhysReg DQuad_with_dsub_1_in_DPR_8[] = {
+	ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6,
+	ARM_Q2_Q3, ARM_D5_D6_D7_D8, ARM_Q3_Q4,
+};
+
+// DQuad_with_dsub_1_in_DPR_8 Bit set.
+static const uint8_t DQuad_with_dsub_1_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c,
+};
+
+// DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
+static const MCPhysReg DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
+	ARM_D1_D2_D3_D4,     ARM_D3_D4_D5_D6,	 ARM_D5_D6_D7_D8,
+	ARM_D7_D8_D9_D10,    ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14,
+	ARM_D13_D14_D15_D16,
+};
+
+// DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
+static const uint8_t DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0x01,
+};
+
+// MQQPR Register Class...
+static const MCPhysReg MQQPR[] = {
+	ARM_Q0_Q1, ARM_Q1_Q2, ARM_Q2_Q3, ARM_Q3_Q4,
+	ARM_Q4_Q5, ARM_Q5_Q6, ARM_Q6_Q7,
+};
+
+// MQQPR Bit set.
+static const uint8_t MQQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x07,
+};
+
+// DQuad_with_dsub_2_in_DPR_8 Register Class...
+static const MCPhysReg DQuad_with_dsub_2_in_DPR_8[] = {
+	ARM_Q0_Q1,	 ARM_D1_D2_D3_D4, ARM_Q1_Q2,
+	ARM_D3_D4_D5_D6, ARM_Q2_Q3,	  ARM_D5_D6_D7_D8,
+};
+
+// DQuad_with_dsub_2_in_DPR_8 Bit set.
+static const uint8_t DQuad_with_dsub_2_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c,
+};
+
+// DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
+static const MCPhysReg
+	DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR[] = {
+		ARM_D1_D2_D3_D4,  ARM_D3_D4_D5_D6,    ARM_D5_D6_D7_D8,
+		ARM_D7_D8_D9_D10, ARM_D9_D10_D11_D12, ARM_D11_D12_D13_D14,
+	};
+
+// DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
+static const uint8_t
+	DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits
+		[] = {
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc,
+		};
+
+// DQuad_with_dsub_3_in_DPR_8 Register Class...
+static const MCPhysReg DQuad_with_dsub_3_in_DPR_8[] = {
+	ARM_Q0_Q1, ARM_D1_D2_D3_D4, ARM_Q1_Q2, ARM_D3_D4_D5_D6, ARM_Q2_Q3,
+};
+
+// DQuad_with_dsub_3_in_DPR_8 Bit set.
+static const uint8_t DQuad_with_dsub_3_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0c,
+};
+
+// DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
+static const MCPhysReg
+	DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR
+		[] = {
+			ARM_D1_D2_D3_D4,
+			ARM_D3_D4_D5_D6,
+			ARM_D5_D6_D7_D8,
+			ARM_D7_D8_D9_D10,
+		};
+
+// DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
+static const uint8_t
+	DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits
+		[] = {
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3c,
+		};
+
+// DQuad_with_qsub_0_in_QPR_8 Register Class...
+static const MCPhysReg DQuad_with_qsub_0_in_QPR_8[] = {
+	ARM_Q0_Q1,
+	ARM_Q1_Q2,
+	ARM_Q2_Q3,
+	ARM_Q3_Q4,
+};
+
+// DQuad_with_qsub_0_in_QPR_8 Bit set.
+static const uint8_t DQuad_with_qsub_0_in_QPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0,
+};
+
+// DQuad_with_qsub_1_in_QPR_8 Register Class...
+static const MCPhysReg DQuad_with_qsub_1_in_QPR_8[] = {
+	ARM_Q0_Q1,
+	ARM_Q1_Q2,
+	ARM_Q2_Q3,
+};
+
+// DQuad_with_qsub_1_in_QPR_8 Bit set.
+static const uint8_t DQuad_with_qsub_1_in_QPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x70,
+};
+
+// DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Register Class...
+static const MCPhysReg DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8[] = {
+	ARM_D1_D2_D3_D4,
+	ARM_D3_D4_D5_D6,
+	ARM_D5_D6_D7_D8,
+};
+
+// DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8 Bit set.
+static const uint8_t DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1c,
+};
+
+// DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Register Class...
+static const MCPhysReg
+	DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR
+		[] = {
+			ARM_D1_D2_D3_D4,
+			ARM_D3_D4_D5_D6,
+		};
+
+// DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR Bit set.
+static const uint8_t
+	DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits
+		[] = {
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0c,
+		};
+
+// QQQQPR Register Class...
+static const MCPhysReg QQQQPR[] = {
+	ARM_Q0_Q1_Q2_Q3,     ARM_Q1_Q2_Q3_Q4,	  ARM_Q2_Q3_Q4_Q5,
+	ARM_Q3_Q4_Q5_Q6,     ARM_Q4_Q5_Q6_Q7,	  ARM_Q5_Q6_Q7_Q8,
+	ARM_Q6_Q7_Q8_Q9,     ARM_Q7_Q8_Q9_Q10,	  ARM_Q8_Q9_Q10_Q11,
+	ARM_Q9_Q10_Q11_Q12,  ARM_Q10_Q11_Q12_Q13, ARM_Q11_Q12_Q13_Q14,
+	ARM_Q12_Q13_Q14_Q15,
+};
+
+// QQQQPR Bit set.
+static const uint8_t QQQQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xff,
+};
+
+// QQQQPR_with_ssub_0 Register Class...
+static const MCPhysReg QQQQPR_with_ssub_0[] = {
+	ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6,
+	ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9, ARM_Q7_Q8_Q9_Q10,
+};
+
+// QQQQPR_with_ssub_0 Bit set.
+static const uint8_t QQQQPR_with_ssub_0Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x07,
+};
+
+// QQQQPR_with_ssub_4 Register Class...
+static const MCPhysReg QQQQPR_with_ssub_4[] = {
+	ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5, ARM_Q3_Q4_Q5_Q6,
+	ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8, ARM_Q6_Q7_Q8_Q9,
+};
+
+// QQQQPR_with_ssub_4 Bit set.
+static const uint8_t QQQQPR_with_ssub_4Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x03,
+};
+
+// QQQQPR_with_ssub_8 Register Class...
+static const MCPhysReg QQQQPR_with_ssub_8[] = {
+	ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5,
+	ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7, ARM_Q5_Q6_Q7_Q8,
+};
+
+// QQQQPR_with_ssub_8 Bit set.
+static const uint8_t QQQQPR_with_ssub_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x01,
+};
+
+// MQQQQPR Register Class...
+static const MCPhysReg MQQQQPR[] = {
+	ARM_Q0_Q1_Q2_Q3, ARM_Q1_Q2_Q3_Q4, ARM_Q2_Q3_Q4_Q5,
+	ARM_Q3_Q4_Q5_Q6, ARM_Q4_Q5_Q6_Q7,
+};
+
+// MQQQQPR Bit set.
+static const uint8_t MQQQQPRBits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8,
+};
+
+// MQQQQPR_with_dsub_0_in_DPR_8 Register Class...
+static const MCPhysReg MQQQQPR_with_dsub_0_in_DPR_8[] = {
+	ARM_Q0_Q1_Q2_Q3,
+	ARM_Q1_Q2_Q3_Q4,
+	ARM_Q2_Q3_Q4_Q5,
+	ARM_Q3_Q4_Q5_Q6,
+};
+
+// MQQQQPR_with_dsub_0_in_DPR_8 Bit set.
+static const uint8_t MQQQQPR_with_dsub_0_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78,
+};
+
+// MQQQQPR_with_dsub_2_in_DPR_8 Register Class...
+static const MCPhysReg MQQQQPR_with_dsub_2_in_DPR_8[] = {
+	ARM_Q0_Q1_Q2_Q3,
+	ARM_Q1_Q2_Q3_Q4,
+	ARM_Q2_Q3_Q4_Q5,
+};
+
+// MQQQQPR_with_dsub_2_in_DPR_8 Bit set.
+static const uint8_t MQQQQPR_with_dsub_2_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38,
+};
+
+// MQQQQPR_with_dsub_4_in_DPR_8 Register Class...
+static const MCPhysReg MQQQQPR_with_dsub_4_in_DPR_8[] = {
+	ARM_Q0_Q1_Q2_Q3,
+	ARM_Q1_Q2_Q3_Q4,
+};
+
+// MQQQQPR_with_dsub_4_in_DPR_8 Bit set.
+static const uint8_t MQQQQPR_with_dsub_4_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18,
+};
+
+// MQQQQPR_with_dsub_6_in_DPR_8 Register Class...
+static const MCPhysReg MQQQQPR_with_dsub_6_in_DPR_8[] = {
+	ARM_Q0_Q1_Q2_Q3,
+};
+
+// MQQQQPR_with_dsub_6_in_DPR_8 Bit set.
+static const uint8_t MQQQQPR_with_dsub_6_in_DPR_8Bits[] = {
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08,
+};
 
 static const MCRegisterClass ARMMCRegisterClasses[] = {
-  { HPR, HPRBits, sizeof(HPRBits) },
-  { FPWithVPR, FPWithVPRBits, sizeof(FPWithVPRBits) },
-  { SPR, SPRBits, sizeof(SPRBits) },
-  { FPWithVPR_with_ssub_0, FPWithVPR_with_ssub_0Bits, sizeof(FPWithVPR_with_ssub_0Bits) },
-  { GPR, GPRBits, sizeof(GPRBits) },
-  { GPRwithAPSR, GPRwithAPSRBits, sizeof(GPRwithAPSRBits) },
-  { GPRwithZR, GPRwithZRBits, sizeof(GPRwithZRBits) },
-  { SPR_8, SPR_8Bits, sizeof(SPR_8Bits) },
-  { GPRnopc, GPRnopcBits, sizeof(GPRnopcBits) },
-  { GPRnosp, GPRnospBits, sizeof(GPRnospBits) },
-  { GPRwithAPSR_NZCVnosp, GPRwithAPSR_NZCVnospBits, sizeof(GPRwithAPSR_NZCVnospBits) },
-  { GPRwithAPSRnosp, GPRwithAPSRnospBits, sizeof(GPRwithAPSRnospBits) },
-  { GPRwithZRnosp, GPRwithZRnospBits, sizeof(GPRwithZRnospBits) },
-  { GPRnoip, GPRnoipBits, sizeof(GPRnoipBits) },
-  { rGPR, rGPRBits, sizeof(rGPRBits) },
-  { GPRnoip_and_GPRnopc, GPRnoip_and_GPRnopcBits, sizeof(GPRnoip_and_GPRnopcBits) },
-  { GPRnoip_and_GPRnosp, GPRnoip_and_GPRnospBits, sizeof(GPRnoip_and_GPRnospBits) },
-  { GPRnoip_and_GPRwithAPSR_NZCVnosp, GPRnoip_and_GPRwithAPSR_NZCVnospBits, sizeof(GPRnoip_and_GPRwithAPSR_NZCVnospBits) },
-  { tGPRwithpc, tGPRwithpcBits, sizeof(tGPRwithpcBits) },
-  { FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8, FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8Bits, sizeof(FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8Bits) },
-  { hGPR, hGPRBits, sizeof(hGPRBits) },
-  { tGPR, tGPRBits, sizeof(tGPRBits) },
-  { tGPREven, tGPREvenBits, sizeof(tGPREvenBits) },
-  { GPRnopc_and_hGPR, GPRnopc_and_hGPRBits, sizeof(GPRnopc_and_hGPRBits) },
-  { GPRnosp_and_hGPR, GPRnosp_and_hGPRBits, sizeof(GPRnosp_and_hGPRBits) },
-  { GPRnoip_and_hGPR, GPRnoip_and_hGPRBits, sizeof(GPRnoip_and_hGPRBits) },
-  { GPRnoip_and_tGPREven, GPRnoip_and_tGPREvenBits, sizeof(GPRnoip_and_tGPREvenBits) },
-  { GPRnosp_and_GPRnopc_and_hGPR, GPRnosp_and_GPRnopc_and_hGPRBits, sizeof(GPRnosp_and_GPRnopc_and_hGPRBits) },
-  { tGPROdd, tGPROddBits, sizeof(tGPROddBits) },
-  { GPRnopc_and_GPRnoip_and_hGPR, GPRnopc_and_GPRnoip_and_hGPRBits, sizeof(GPRnopc_and_GPRnoip_and_hGPRBits) },
-  { GPRnosp_and_GPRnoip_and_hGPR, GPRnosp_and_GPRnoip_and_hGPRBits, sizeof(GPRnosp_and_GPRnoip_and_hGPRBits) },
-  { tcGPR, tcGPRBits, sizeof(tcGPRBits) },
-  { GPRnoip_and_tcGPR, GPRnoip_and_tcGPRBits, sizeof(GPRnoip_and_tcGPRBits) },
-  { GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR, GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRBits, sizeof(GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRBits) },
-  { hGPR_and_tGPREven, hGPR_and_tGPREvenBits, sizeof(hGPR_and_tGPREvenBits) },
-  { tGPR_and_tGPREven, tGPR_and_tGPREvenBits, sizeof(tGPR_and_tGPREvenBits) },
-  { tGPR_and_tGPROdd, tGPR_and_tGPROddBits, sizeof(tGPR_and_tGPROddBits) },
-  { tGPREven_and_tcGPR, tGPREven_and_tcGPRBits, sizeof(tGPREven_and_tcGPRBits) },
-  { hGPR_and_GPRnoip_and_tGPREven, hGPR_and_GPRnoip_and_tGPREvenBits, sizeof(hGPR_and_GPRnoip_and_tGPREvenBits) },
-  { hGPR_and_tGPROdd, hGPR_and_tGPROddBits, sizeof(hGPR_and_tGPROddBits) },
-  { tGPREven_and_GPRnoip_and_tcGPR, tGPREven_and_GPRnoip_and_tcGPRBits, sizeof(tGPREven_and_GPRnoip_and_tcGPRBits) },
-  { tGPROdd_and_tcGPR, tGPROdd_and_tcGPRBits, sizeof(tGPROdd_and_tcGPRBits) },
-  { CCR, CCRBits, sizeof(CCRBits) },
-  { FPCXTRegs, FPCXTRegsBits, sizeof(FPCXTRegsBits) },
-  { GPRlr, GPRlrBits, sizeof(GPRlrBits) },
-  { GPRsp, GPRspBits, sizeof(GPRspBits) },
-  { VCCR, VCCRBits, sizeof(VCCRBits) },
-  { cl_FPSCR_NZCV, cl_FPSCR_NZCVBits, sizeof(cl_FPSCR_NZCVBits) },
-  { hGPR_and_tGPRwithpc, hGPR_and_tGPRwithpcBits, sizeof(hGPR_and_tGPRwithpcBits) },
-  { hGPR_and_tcGPR, hGPR_and_tcGPRBits, sizeof(hGPR_and_tcGPRBits) },
-  { DPR, DPRBits, sizeof(DPRBits) },
-  { DPR_VFP2, DPR_VFP2Bits, sizeof(DPR_VFP2Bits) },
-  { DPR_8, DPR_8Bits, sizeof(DPR_8Bits) },
-  { GPRPair, GPRPairBits, sizeof(GPRPairBits) },
-  { GPRPairnosp, GPRPairnospBits, sizeof(GPRPairnospBits) },
-  { GPRPair_with_gsub_0_in_tGPR, GPRPair_with_gsub_0_in_tGPRBits, sizeof(GPRPair_with_gsub_0_in_tGPRBits) },
-  { GPRPair_with_gsub_0_in_hGPR, GPRPair_with_gsub_0_in_hGPRBits, sizeof(GPRPair_with_gsub_0_in_hGPRBits) },
-  { GPRPair_with_gsub_0_in_tcGPR, GPRPair_with_gsub_0_in_tcGPRBits, sizeof(GPRPair_with_gsub_0_in_tcGPRBits) },
-  { GPRPair_with_gsub_1_in_tcGPR, GPRPair_with_gsub_1_in_tcGPRBits, sizeof(GPRPair_with_gsub_1_in_tcGPRBits) },
-  { GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR, GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRBits, sizeof(GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRBits) },
-  { GPRPair_with_gsub_1_in_GPRsp, GPRPair_with_gsub_1_in_GPRspBits, sizeof(GPRPair_with_gsub_1_in_GPRspBits) },
-  { DPairSpc, DPairSpcBits, sizeof(DPairSpcBits) },
-  { DPairSpc_with_ssub_0, DPairSpc_with_ssub_0Bits, sizeof(DPairSpc_with_ssub_0Bits) },
-  { DPairSpc_with_ssub_4, DPairSpc_with_ssub_4Bits, sizeof(DPairSpc_with_ssub_4Bits) },
-  { DPairSpc_with_dsub_0_in_DPR_8, DPairSpc_with_dsub_0_in_DPR_8Bits, sizeof(DPairSpc_with_dsub_0_in_DPR_8Bits) },
-  { DPairSpc_with_dsub_2_in_DPR_8, DPairSpc_with_dsub_2_in_DPR_8Bits, sizeof(DPairSpc_with_dsub_2_in_DPR_8Bits) },
-  { DPair, DPairBits, sizeof(DPairBits) },
-  { DPair_with_ssub_0, DPair_with_ssub_0Bits, sizeof(DPair_with_ssub_0Bits) },
-  { QPR, QPRBits, sizeof(QPRBits) },
-  { DPair_with_ssub_2, DPair_with_ssub_2Bits, sizeof(DPair_with_ssub_2Bits) },
-  { DPair_with_dsub_0_in_DPR_8, DPair_with_dsub_0_in_DPR_8Bits, sizeof(DPair_with_dsub_0_in_DPR_8Bits) },
-  { MQPR, MQPRBits, sizeof(MQPRBits) },
-  { QPR_VFP2, QPR_VFP2Bits, sizeof(QPR_VFP2Bits) },
-  { DPair_with_dsub_1_in_DPR_8, DPair_with_dsub_1_in_DPR_8Bits, sizeof(DPair_with_dsub_1_in_DPR_8Bits) },
-  { QPR_8, QPR_8Bits, sizeof(QPR_8Bits) },
-  { DTriple, DTripleBits, sizeof(DTripleBits) },
-  { DTripleSpc, DTripleSpcBits, sizeof(DTripleSpcBits) },
-  { DTripleSpc_with_ssub_0, DTripleSpc_with_ssub_0Bits, sizeof(DTripleSpc_with_ssub_0Bits) },
-  { DTriple_with_ssub_0, DTriple_with_ssub_0Bits, sizeof(DTriple_with_ssub_0Bits) },
-  { DTriple_with_qsub_0_in_QPR, DTriple_with_qsub_0_in_QPRBits, sizeof(DTriple_with_qsub_0_in_QPRBits) },
-  { DTriple_with_ssub_2, DTriple_with_ssub_2Bits, sizeof(DTriple_with_ssub_2Bits) },
-  { DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR, DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits, sizeof(DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
-  { DTripleSpc_with_ssub_4, DTripleSpc_with_ssub_4Bits, sizeof(DTripleSpc_with_ssub_4Bits) },
-  { DTriple_with_ssub_4, DTriple_with_ssub_4Bits, sizeof(DTriple_with_ssub_4Bits) },
-  { DTripleSpc_with_ssub_8, DTripleSpc_with_ssub_8Bits, sizeof(DTripleSpc_with_ssub_8Bits) },
-  { DTripleSpc_with_dsub_0_in_DPR_8, DTripleSpc_with_dsub_0_in_DPR_8Bits, sizeof(DTripleSpc_with_dsub_0_in_DPR_8Bits) },
-  { DTriple_with_dsub_0_in_DPR_8, DTriple_with_dsub_0_in_DPR_8Bits, sizeof(DTriple_with_dsub_0_in_DPR_8Bits) },
-  { DTriple_with_qsub_0_in_MQPR, DTriple_with_qsub_0_in_MQPRBits, sizeof(DTriple_with_qsub_0_in_MQPRBits) },
-  { DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR, DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits, sizeof(DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
-  { DTriple_with_dsub_1_in_DPR_8, DTriple_with_dsub_1_in_DPR_8Bits, sizeof(DTriple_with_dsub_1_in_DPR_8Bits) },
-  { DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR, DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits, sizeof(DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
-  { DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR, DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRBits, sizeof(DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRBits) },
-  { DTripleSpc_with_dsub_2_in_DPR_8, DTripleSpc_with_dsub_2_in_DPR_8Bits, sizeof(DTripleSpc_with_dsub_2_in_DPR_8Bits) },
-  { DTriple_with_dsub_2_in_DPR_8, DTriple_with_dsub_2_in_DPR_8Bits, sizeof(DTriple_with_dsub_2_in_DPR_8Bits) },
-  { DTripleSpc_with_dsub_4_in_DPR_8, DTripleSpc_with_dsub_4_in_DPR_8Bits, sizeof(DTripleSpc_with_dsub_4_in_DPR_8Bits) },
-  { DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR, DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits, sizeof(DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
-  { DTriple_with_qsub_0_in_QPR_8, DTriple_with_qsub_0_in_QPR_8Bits, sizeof(DTriple_with_qsub_0_in_QPR_8Bits) },
-  { DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR, DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRBits, sizeof(DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRBits) },
-  { DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8, DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits, sizeof(DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits) },
-  { DQuadSpc, DQuadSpcBits, sizeof(DQuadSpcBits) },
-  { DQuadSpc_with_ssub_0, DQuadSpc_with_ssub_0Bits, sizeof(DQuadSpc_with_ssub_0Bits) },
-  { DQuadSpc_with_ssub_4, DQuadSpc_with_ssub_4Bits, sizeof(DQuadSpc_with_ssub_4Bits) },
-  { DQuadSpc_with_ssub_8, DQuadSpc_with_ssub_8Bits, sizeof(DQuadSpc_with_ssub_8Bits) },
-  { DQuadSpc_with_dsub_0_in_DPR_8, DQuadSpc_with_dsub_0_in_DPR_8Bits, sizeof(DQuadSpc_with_dsub_0_in_DPR_8Bits) },
-  { DQuadSpc_with_dsub_2_in_DPR_8, DQuadSpc_with_dsub_2_in_DPR_8Bits, sizeof(DQuadSpc_with_dsub_2_in_DPR_8Bits) },
-  { DQuadSpc_with_dsub_4_in_DPR_8, DQuadSpc_with_dsub_4_in_DPR_8Bits, sizeof(DQuadSpc_with_dsub_4_in_DPR_8Bits) },
-  { DQuad, DQuadBits, sizeof(DQuadBits) },
-  { DQuad_with_ssub_0, DQuad_with_ssub_0Bits, sizeof(DQuad_with_ssub_0Bits) },
-  { DQuad_with_ssub_2, DQuad_with_ssub_2Bits, sizeof(DQuad_with_ssub_2Bits) },
-  { QQPR, QQPRBits, sizeof(QQPRBits) },
-  { DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR, DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits, sizeof(DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
-  { DQuad_with_ssub_4, DQuad_with_ssub_4Bits, sizeof(DQuad_with_ssub_4Bits) },
-  { DQuad_with_ssub_6, DQuad_with_ssub_6Bits, sizeof(DQuad_with_ssub_6Bits) },
-  { DQuad_with_dsub_0_in_DPR_8, DQuad_with_dsub_0_in_DPR_8Bits, sizeof(DQuad_with_dsub_0_in_DPR_8Bits) },
-  { DQuad_with_qsub_0_in_MQPR, DQuad_with_qsub_0_in_MQPRBits, sizeof(DQuad_with_qsub_0_in_MQPRBits) },
-  { DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR, DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits, sizeof(DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
-  { DQuad_with_dsub_1_in_DPR_8, DQuad_with_dsub_1_in_DPR_8Bits, sizeof(DQuad_with_dsub_1_in_DPR_8Bits) },
-  { DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR, DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits, sizeof(DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
-  { MQQPR, MQQPRBits, sizeof(MQQPRBits) },
-  { DQuad_with_dsub_2_in_DPR_8, DQuad_with_dsub_2_in_DPR_8Bits, sizeof(DQuad_with_dsub_2_in_DPR_8Bits) },
-  { DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR, DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits, sizeof(DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
-  { DQuad_with_dsub_3_in_DPR_8, DQuad_with_dsub_3_in_DPR_8Bits, sizeof(DQuad_with_dsub_3_in_DPR_8Bits) },
-  { DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR, DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits, sizeof(DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
-  { DQuad_with_qsub_0_in_QPR_8, DQuad_with_qsub_0_in_QPR_8Bits, sizeof(DQuad_with_qsub_0_in_QPR_8Bits) },
-  { DQuad_with_qsub_1_in_QPR_8, DQuad_with_qsub_1_in_QPR_8Bits, sizeof(DQuad_with_qsub_1_in_QPR_8Bits) },
-  { DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8, DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits, sizeof(DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits) },
-  { DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR, DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits, sizeof(DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
-  { QQQQPR, QQQQPRBits, sizeof(QQQQPRBits) },
-  { QQQQPR_with_ssub_0, QQQQPR_with_ssub_0Bits, sizeof(QQQQPR_with_ssub_0Bits) },
-  { QQQQPR_with_ssub_4, QQQQPR_with_ssub_4Bits, sizeof(QQQQPR_with_ssub_4Bits) },
-  { QQQQPR_with_ssub_8, QQQQPR_with_ssub_8Bits, sizeof(QQQQPR_with_ssub_8Bits) },
-  { MQQQQPR, MQQQQPRBits, sizeof(MQQQQPRBits) },
-  { MQQQQPR_with_dsub_0_in_DPR_8, MQQQQPR_with_dsub_0_in_DPR_8Bits, sizeof(MQQQQPR_with_dsub_0_in_DPR_8Bits) },
-  { MQQQQPR_with_dsub_2_in_DPR_8, MQQQQPR_with_dsub_2_in_DPR_8Bits, sizeof(MQQQQPR_with_dsub_2_in_DPR_8Bits) },
-  { MQQQQPR_with_dsub_4_in_DPR_8, MQQQQPR_with_dsub_4_in_DPR_8Bits, sizeof(MQQQQPR_with_dsub_4_in_DPR_8Bits) },
-  { MQQQQPR_with_dsub_6_in_DPR_8, MQQQQPR_with_dsub_6_in_DPR_8Bits, sizeof(MQQQQPR_with_dsub_6_in_DPR_8Bits) },
+	{ HPR, HPRBits, sizeof(HPRBits) },
+	{ FPWithVPR, FPWithVPRBits, sizeof(FPWithVPRBits) },
+	{ SPR, SPRBits, sizeof(SPRBits) },
+	{ FPWithVPR_with_ssub_0, FPWithVPR_with_ssub_0Bits,
+	  sizeof(FPWithVPR_with_ssub_0Bits) },
+	{ GPR, GPRBits, sizeof(GPRBits) },
+	{ GPRwithAPSR, GPRwithAPSRBits, sizeof(GPRwithAPSRBits) },
+	{ GPRwithZR, GPRwithZRBits, sizeof(GPRwithZRBits) },
+	{ SPR_8, SPR_8Bits, sizeof(SPR_8Bits) },
+	{ GPRnopc, GPRnopcBits, sizeof(GPRnopcBits) },
+	{ GPRnosp, GPRnospBits, sizeof(GPRnospBits) },
+	{ GPRwithAPSR_NZCVnosp, GPRwithAPSR_NZCVnospBits,
+	  sizeof(GPRwithAPSR_NZCVnospBits) },
+	{ GPRwithAPSRnosp, GPRwithAPSRnospBits, sizeof(GPRwithAPSRnospBits) },
+	{ GPRwithZRnosp, GPRwithZRnospBits, sizeof(GPRwithZRnospBits) },
+	{ GPRnoip, GPRnoipBits, sizeof(GPRnoipBits) },
+	{ rGPR, rGPRBits, sizeof(rGPRBits) },
+	{ GPRnoip_and_GPRnopc, GPRnoip_and_GPRnopcBits,
+	  sizeof(GPRnoip_and_GPRnopcBits) },
+	{ GPRnoip_and_GPRnosp, GPRnoip_and_GPRnospBits,
+	  sizeof(GPRnoip_and_GPRnospBits) },
+	{ GPRnoip_and_GPRwithAPSR_NZCVnosp,
+	  GPRnoip_and_GPRwithAPSR_NZCVnospBits,
+	  sizeof(GPRnoip_and_GPRwithAPSR_NZCVnospBits) },
+	{ tGPRwithpc, tGPRwithpcBits, sizeof(tGPRwithpcBits) },
+	{ FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8,
+	  FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8Bits,
+	  sizeof(FPWithVPR_with_ssub_0_with_ssub_0_in_SPR_8Bits) },
+	{ hGPR, hGPRBits, sizeof(hGPRBits) },
+	{ tGPR, tGPRBits, sizeof(tGPRBits) },
+	{ tGPREven, tGPREvenBits, sizeof(tGPREvenBits) },
+	{ GPRnopc_and_hGPR, GPRnopc_and_hGPRBits,
+	  sizeof(GPRnopc_and_hGPRBits) },
+	{ GPRnosp_and_hGPR, GPRnosp_and_hGPRBits,
+	  sizeof(GPRnosp_and_hGPRBits) },
+	{ GPRnoip_and_hGPR, GPRnoip_and_hGPRBits,
+	  sizeof(GPRnoip_and_hGPRBits) },
+	{ GPRnoip_and_tGPREven, GPRnoip_and_tGPREvenBits,
+	  sizeof(GPRnoip_and_tGPREvenBits) },
+	{ GPRnosp_and_GPRnopc_and_hGPR, GPRnosp_and_GPRnopc_and_hGPRBits,
+	  sizeof(GPRnosp_and_GPRnopc_and_hGPRBits) },
+	{ tGPROdd, tGPROddBits, sizeof(tGPROddBits) },
+	{ GPRnopc_and_GPRnoip_and_hGPR, GPRnopc_and_GPRnoip_and_hGPRBits,
+	  sizeof(GPRnopc_and_GPRnoip_and_hGPRBits) },
+	{ GPRnosp_and_GPRnoip_and_hGPR, GPRnosp_and_GPRnoip_and_hGPRBits,
+	  sizeof(GPRnosp_and_GPRnoip_and_hGPRBits) },
+	{ tcGPR, tcGPRBits, sizeof(tcGPRBits) },
+	{ GPRnoip_and_tcGPR, GPRnoip_and_tcGPRBits,
+	  sizeof(GPRnoip_and_tcGPRBits) },
+	{ GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPR,
+	  GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRBits,
+	  sizeof(GPRnosp_and_GPRnopc_and_GPRnoip_and_hGPRBits) },
+	{ hGPR_and_tGPREven, hGPR_and_tGPREvenBits,
+	  sizeof(hGPR_and_tGPREvenBits) },
+	{ tGPR_and_tGPREven, tGPR_and_tGPREvenBits,
+	  sizeof(tGPR_and_tGPREvenBits) },
+	{ tGPR_and_tGPROdd, tGPR_and_tGPROddBits,
+	  sizeof(tGPR_and_tGPROddBits) },
+	{ tGPREven_and_tcGPR, tGPREven_and_tcGPRBits,
+	  sizeof(tGPREven_and_tcGPRBits) },
+	{ hGPR_and_GPRnoip_and_tGPREven, hGPR_and_GPRnoip_and_tGPREvenBits,
+	  sizeof(hGPR_and_GPRnoip_and_tGPREvenBits) },
+	{ hGPR_and_tGPROdd, hGPR_and_tGPROddBits,
+	  sizeof(hGPR_and_tGPROddBits) },
+	{ tGPREven_and_GPRnoip_and_tcGPR, tGPREven_and_GPRnoip_and_tcGPRBits,
+	  sizeof(tGPREven_and_GPRnoip_and_tcGPRBits) },
+	{ tGPROdd_and_tcGPR, tGPROdd_and_tcGPRBits,
+	  sizeof(tGPROdd_and_tcGPRBits) },
+	{ CCR, CCRBits, sizeof(CCRBits) },
+	{ FPCXTRegs, FPCXTRegsBits, sizeof(FPCXTRegsBits) },
+	{ GPRlr, GPRlrBits, sizeof(GPRlrBits) },
+	{ GPRsp, GPRspBits, sizeof(GPRspBits) },
+	{ VCCR, VCCRBits, sizeof(VCCRBits) },
+	{ cl_FPSCR_NZCV, cl_FPSCR_NZCVBits, sizeof(cl_FPSCR_NZCVBits) },
+	{ hGPR_and_tGPRwithpc, hGPR_and_tGPRwithpcBits,
+	  sizeof(hGPR_and_tGPRwithpcBits) },
+	{ hGPR_and_tcGPR, hGPR_and_tcGPRBits, sizeof(hGPR_and_tcGPRBits) },
+	{ DPR, DPRBits, sizeof(DPRBits) },
+	{ DPR_VFP2, DPR_VFP2Bits, sizeof(DPR_VFP2Bits) },
+	{ DPR_8, DPR_8Bits, sizeof(DPR_8Bits) },
+	{ GPRPair, GPRPairBits, sizeof(GPRPairBits) },
+	{ GPRPairnosp, GPRPairnospBits, sizeof(GPRPairnospBits) },
+	{ GPRPair_with_gsub_0_in_tGPR, GPRPair_with_gsub_0_in_tGPRBits,
+	  sizeof(GPRPair_with_gsub_0_in_tGPRBits) },
+	{ GPRPair_with_gsub_0_in_hGPR, GPRPair_with_gsub_0_in_hGPRBits,
+	  sizeof(GPRPair_with_gsub_0_in_hGPRBits) },
+	{ GPRPair_with_gsub_0_in_tcGPR, GPRPair_with_gsub_0_in_tcGPRBits,
+	  sizeof(GPRPair_with_gsub_0_in_tcGPRBits) },
+	{ GPRPair_with_gsub_1_in_tcGPR, GPRPair_with_gsub_1_in_tcGPRBits,
+	  sizeof(GPRPair_with_gsub_1_in_tcGPRBits) },
+	{ GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPR,
+	  GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRBits,
+	  sizeof(GPRPairnosp_and_GPRPair_with_gsub_0_in_hGPRBits) },
+	{ GPRPair_with_gsub_1_in_GPRsp, GPRPair_with_gsub_1_in_GPRspBits,
+	  sizeof(GPRPair_with_gsub_1_in_GPRspBits) },
+	{ DPairSpc, DPairSpcBits, sizeof(DPairSpcBits) },
+	{ DPairSpc_with_ssub_0, DPairSpc_with_ssub_0Bits,
+	  sizeof(DPairSpc_with_ssub_0Bits) },
+	{ DPairSpc_with_ssub_4, DPairSpc_with_ssub_4Bits,
+	  sizeof(DPairSpc_with_ssub_4Bits) },
+	{ DPairSpc_with_dsub_0_in_DPR_8, DPairSpc_with_dsub_0_in_DPR_8Bits,
+	  sizeof(DPairSpc_with_dsub_0_in_DPR_8Bits) },
+	{ DPairSpc_with_dsub_2_in_DPR_8, DPairSpc_with_dsub_2_in_DPR_8Bits,
+	  sizeof(DPairSpc_with_dsub_2_in_DPR_8Bits) },
+	{ DPair, DPairBits, sizeof(DPairBits) },
+	{ DPair_with_ssub_0, DPair_with_ssub_0Bits,
+	  sizeof(DPair_with_ssub_0Bits) },
+	{ QPR, QPRBits, sizeof(QPRBits) },
+	{ DPair_with_ssub_2, DPair_with_ssub_2Bits,
+	  sizeof(DPair_with_ssub_2Bits) },
+	{ DPair_with_dsub_0_in_DPR_8, DPair_with_dsub_0_in_DPR_8Bits,
+	  sizeof(DPair_with_dsub_0_in_DPR_8Bits) },
+	{ MQPR, MQPRBits, sizeof(MQPRBits) },
+	{ QPR_VFP2, QPR_VFP2Bits, sizeof(QPR_VFP2Bits) },
+	{ DPair_with_dsub_1_in_DPR_8, DPair_with_dsub_1_in_DPR_8Bits,
+	  sizeof(DPair_with_dsub_1_in_DPR_8Bits) },
+	{ QPR_8, QPR_8Bits, sizeof(QPR_8Bits) },
+	{ DTriple, DTripleBits, sizeof(DTripleBits) },
+	{ DTripleSpc, DTripleSpcBits, sizeof(DTripleSpcBits) },
+	{ DTripleSpc_with_ssub_0, DTripleSpc_with_ssub_0Bits,
+	  sizeof(DTripleSpc_with_ssub_0Bits) },
+	{ DTriple_with_ssub_0, DTriple_with_ssub_0Bits,
+	  sizeof(DTriple_with_ssub_0Bits) },
+	{ DTriple_with_qsub_0_in_QPR, DTriple_with_qsub_0_in_QPRBits,
+	  sizeof(DTriple_with_qsub_0_in_QPRBits) },
+	{ DTriple_with_ssub_2, DTriple_with_ssub_2Bits,
+	  sizeof(DTriple_with_ssub_2Bits) },
+	{ DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR,
+	  DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits,
+	  sizeof(DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
+	{ DTripleSpc_with_ssub_4, DTripleSpc_with_ssub_4Bits,
+	  sizeof(DTripleSpc_with_ssub_4Bits) },
+	{ DTriple_with_ssub_4, DTriple_with_ssub_4Bits,
+	  sizeof(DTriple_with_ssub_4Bits) },
+	{ DTripleSpc_with_ssub_8, DTripleSpc_with_ssub_8Bits,
+	  sizeof(DTripleSpc_with_ssub_8Bits) },
+	{ DTripleSpc_with_dsub_0_in_DPR_8, DTripleSpc_with_dsub_0_in_DPR_8Bits,
+	  sizeof(DTripleSpc_with_dsub_0_in_DPR_8Bits) },
+	{ DTriple_with_dsub_0_in_DPR_8, DTriple_with_dsub_0_in_DPR_8Bits,
+	  sizeof(DTriple_with_dsub_0_in_DPR_8Bits) },
+	{ DTriple_with_qsub_0_in_MQPR, DTriple_with_qsub_0_in_MQPRBits,
+	  sizeof(DTriple_with_qsub_0_in_MQPRBits) },
+	{ DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR,
+	  DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits,
+	  sizeof(DTriple_with_ssub_0_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
+	{ DTriple_with_dsub_1_in_DPR_8, DTriple_with_dsub_1_in_DPR_8Bits,
+	  sizeof(DTriple_with_dsub_1_in_DPR_8Bits) },
+	{ DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR,
+	  DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits,
+	  sizeof(DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
+	{ DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPR,
+	  DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRBits,
+	  sizeof(DTriple_with_ssub_4_and_DTriple_with_qsub_0_in_MQPRBits) },
+	{ DTripleSpc_with_dsub_2_in_DPR_8, DTripleSpc_with_dsub_2_in_DPR_8Bits,
+	  sizeof(DTripleSpc_with_dsub_2_in_DPR_8Bits) },
+	{ DTriple_with_dsub_2_in_DPR_8, DTriple_with_dsub_2_in_DPR_8Bits,
+	  sizeof(DTriple_with_dsub_2_in_DPR_8Bits) },
+	{ DTripleSpc_with_dsub_4_in_DPR_8, DTripleSpc_with_dsub_4_in_DPR_8Bits,
+	  sizeof(DTripleSpc_with_dsub_4_in_DPR_8Bits) },
+	{ DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR,
+	  DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits,
+	  sizeof(DTriple_with_dsub_0_in_DPR_8_and_DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
+	{ DTriple_with_qsub_0_in_QPR_8, DTriple_with_qsub_0_in_QPR_8Bits,
+	  sizeof(DTriple_with_qsub_0_in_QPR_8Bits) },
+	{ DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPR,
+	  DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRBits,
+	  sizeof(DTriple_with_dsub_2_in_DPR_8_and_DTriple_with_qsub_0_in_MQPRBits) },
+	{ DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8,
+	  DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits,
+	  sizeof(DTriple_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits) },
+	{ DQuadSpc, DQuadSpcBits, sizeof(DQuadSpcBits) },
+	{ DQuadSpc_with_ssub_0, DQuadSpc_with_ssub_0Bits,
+	  sizeof(DQuadSpc_with_ssub_0Bits) },
+	{ DQuadSpc_with_ssub_4, DQuadSpc_with_ssub_4Bits,
+	  sizeof(DQuadSpc_with_ssub_4Bits) },
+	{ DQuadSpc_with_ssub_8, DQuadSpc_with_ssub_8Bits,
+	  sizeof(DQuadSpc_with_ssub_8Bits) },
+	{ DQuadSpc_with_dsub_0_in_DPR_8, DQuadSpc_with_dsub_0_in_DPR_8Bits,
+	  sizeof(DQuadSpc_with_dsub_0_in_DPR_8Bits) },
+	{ DQuadSpc_with_dsub_2_in_DPR_8, DQuadSpc_with_dsub_2_in_DPR_8Bits,
+	  sizeof(DQuadSpc_with_dsub_2_in_DPR_8Bits) },
+	{ DQuadSpc_with_dsub_4_in_DPR_8, DQuadSpc_with_dsub_4_in_DPR_8Bits,
+	  sizeof(DQuadSpc_with_dsub_4_in_DPR_8Bits) },
+	{ DQuad, DQuadBits, sizeof(DQuadBits) },
+	{ DQuad_with_ssub_0, DQuad_with_ssub_0Bits,
+	  sizeof(DQuad_with_ssub_0Bits) },
+	{ DQuad_with_ssub_2, DQuad_with_ssub_2Bits,
+	  sizeof(DQuad_with_ssub_2Bits) },
+	{ QQPR, QQPRBits, sizeof(QQPRBits) },
+	{ DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR,
+	  DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits,
+	  sizeof(DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
+	{ DQuad_with_ssub_4, DQuad_with_ssub_4Bits,
+	  sizeof(DQuad_with_ssub_4Bits) },
+	{ DQuad_with_ssub_6, DQuad_with_ssub_6Bits,
+	  sizeof(DQuad_with_ssub_6Bits) },
+	{ DQuad_with_dsub_0_in_DPR_8, DQuad_with_dsub_0_in_DPR_8Bits,
+	  sizeof(DQuad_with_dsub_0_in_DPR_8Bits) },
+	{ DQuad_with_qsub_0_in_MQPR, DQuad_with_qsub_0_in_MQPRBits,
+	  sizeof(DQuad_with_qsub_0_in_MQPRBits) },
+	{ DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR,
+	  DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits,
+	  sizeof(DQuad_with_ssub_0_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPRBits) },
+	{ DQuad_with_dsub_1_in_DPR_8, DQuad_with_dsub_1_in_DPR_8Bits,
+	  sizeof(DQuad_with_dsub_1_in_DPR_8Bits) },
+	{ DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR,
+	  DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits,
+	  sizeof(DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
+	{ MQQPR, MQQPRBits, sizeof(MQQPRBits) },
+	{ DQuad_with_dsub_2_in_DPR_8, DQuad_with_dsub_2_in_DPR_8Bits,
+	  sizeof(DQuad_with_dsub_2_in_DPR_8Bits) },
+	{ DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR,
+	  DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits,
+	  sizeof(DQuad_with_ssub_6_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
+	{ DQuad_with_dsub_3_in_DPR_8, DQuad_with_dsub_3_in_DPR_8Bits,
+	  sizeof(DQuad_with_dsub_3_in_DPR_8Bits) },
+	{ DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR,
+	  DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits,
+	  sizeof(DQuad_with_dsub_0_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
+	{ DQuad_with_qsub_0_in_QPR_8, DQuad_with_qsub_0_in_QPR_8Bits,
+	  sizeof(DQuad_with_qsub_0_in_QPR_8Bits) },
+	{ DQuad_with_qsub_1_in_QPR_8, DQuad_with_qsub_1_in_QPR_8Bits,
+	  sizeof(DQuad_with_qsub_1_in_QPR_8Bits) },
+	{ DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8,
+	  DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits,
+	  sizeof(DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_QPR_8Bits) },
+	{ DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPR,
+	  DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits,
+	  sizeof(DQuad_with_dsub_3_in_DPR_8_and_DQuad_with_ssub_2_ssub_3_ssub_4_ssub_5_in_MQPRBits) },
+	{ QQQQPR, QQQQPRBits, sizeof(QQQQPRBits) },
+	{ QQQQPR_with_ssub_0, QQQQPR_with_ssub_0Bits,
+	  sizeof(QQQQPR_with_ssub_0Bits) },
+	{ QQQQPR_with_ssub_4, QQQQPR_with_ssub_4Bits,
+	  sizeof(QQQQPR_with_ssub_4Bits) },
+	{ QQQQPR_with_ssub_8, QQQQPR_with_ssub_8Bits,
+	  sizeof(QQQQPR_with_ssub_8Bits) },
+	{ MQQQQPR, MQQQQPRBits, sizeof(MQQQQPRBits) },
+	{ MQQQQPR_with_dsub_0_in_DPR_8, MQQQQPR_with_dsub_0_in_DPR_8Bits,
+	  sizeof(MQQQQPR_with_dsub_0_in_DPR_8Bits) },
+	{ MQQQQPR_with_dsub_2_in_DPR_8, MQQQQPR_with_dsub_2_in_DPR_8Bits,
+	  sizeof(MQQQQPR_with_dsub_2_in_DPR_8Bits) },
+	{ MQQQQPR_with_dsub_4_in_DPR_8, MQQQQPR_with_dsub_4_in_DPR_8Bits,
+	  sizeof(MQQQQPR_with_dsub_4_in_DPR_8Bits) },
+	{ MQQQQPR_with_dsub_6_in_DPR_8, MQQQQPR_with_dsub_6_in_DPR_8Bits,
+	  sizeof(MQQQQPR_with_dsub_6_in_DPR_8Bits) },
 };
 
 #endif // GET_REGINFO_MC_DESC
-
-
-

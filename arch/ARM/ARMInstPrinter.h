@@ -51,29 +51,31 @@ void printAddrMode2Operand(MCInst *MI, unsigned OpNum, SStream *O);
 void printAM2PostIndexOp(MCInst *MI, unsigned OpNum, SStream *O);
 void printAM2PreOrOffsetIndexOp(MCInst *MI, unsigned OpNum, SStream *O);
 void printAddrMode2OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O);
-#define DECLARE_printAddrMode3Operand(AlwaysPrintImm0)                         \
-	void CONCAT(printAddrMode3Operand,                                         \
-				AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
+#define DECLARE_printAddrMode3Operand(AlwaysPrintImm0) \
+	void CONCAT(printAddrMode3Operand, \
+		    AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
 DECLARE_printAddrMode3Operand(false) DECLARE_printAddrMode3Operand(true)
 
-	void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O);
+	void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum,
+					 SStream *O);
 void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op, SStream *O,
-								bool AlwaysPrintImm0);
+				bool AlwaysPrintImm0);
 void printPostIdxImm8Operand(MCInst *MI, unsigned OpNum, SStream *O);
 void printPostIdxRegOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printPostIdxImm8s4Operand(MCInst *MI, unsigned OpNum, SStream *O);
 void printLdStmModeOperand(MCInst *MI, unsigned OpNum, SStream *O);
-#define DECLARE_printAddrMode5Operand(AlwaysPrintImm0)                         \
-	void CONCAT(printAddrMode5Operand,                                         \
-				AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
+#define DECLARE_printAddrMode5Operand(AlwaysPrintImm0) \
+	void CONCAT(printAddrMode5Operand, \
+		    AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
 DECLARE_printAddrMode5Operand(false) DECLARE_printAddrMode5Operand(true)
 
-#define DECLARE_printAddrMode5FP16Operand(AlwaysPrintImm0)                     \
-	void CONCAT(printAddrMode5FP16Operand,                                     \
-				AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
+#define DECLARE_printAddrMode5FP16Operand(AlwaysPrintImm0) \
+	void CONCAT(printAddrMode5FP16Operand, \
+		    AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
 	DECLARE_printAddrMode5FP16Operand(false)
 
-		void printAddrMode6Operand(MCInst *MI, unsigned OpNum, SStream *O);
+		void printAddrMode6Operand(MCInst *MI, unsigned OpNum,
+					   SStream *O);
 void printAddrMode7Operand(MCInst *MI, unsigned OpNum, SStream *O);
 void printAddrMode6OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printBitfieldInvMaskImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
@@ -83,50 +85,51 @@ void printTraceSyncBOption(MCInst *MI, unsigned OpNum, SStream *O);
 void printShiftImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printPKHLSLShiftImm(MCInst *MI, unsigned OpNum, SStream *O);
 void printPKHASRShiftImm(MCInst *MI, unsigned OpNum, SStream *O);
-#define DECLARE_printAdrLabelOperand(scale)                                    \
-	void CONCAT(printAdrLabelOperand, scale)(MCInst * MI, unsigned OpNum,      \
-											 SStream *O);
+#define DECLARE_printAdrLabelOperand(scale) \
+	void CONCAT(printAdrLabelOperand, scale)(MCInst * MI, unsigned OpNum, \
+						 SStream *O);
 DECLARE_printAdrLabelOperand(0) DECLARE_printAdrLabelOperand(2)
 
-#define DEFINE_printAdrLabelOperandAddr(scale)                                 \
-	static inline void CONCAT(printAdrLabelOperandAddr, scale)(                \
-		MCInst * MI, uint64_t Address, unsigned OpNum, SStream *O)             \
-	{                                                                          \
-		CONCAT(printAdrLabelOperand, scale)(MI, OpNum, O);                     \
+#define DEFINE_printAdrLabelOperandAddr(scale) \
+	static inline void CONCAT(printAdrLabelOperandAddr, scale)( \
+		MCInst * MI, uint64_t Address, unsigned OpNum, SStream *O) \
+	{ \
+		CONCAT(printAdrLabelOperand, scale)(MI, OpNum, O); \
 	}
 	DEFINE_printAdrLabelOperandAddr(0) DEFINE_printAdrLabelOperandAddr(2)
 
-		void printThumbS4ImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
+		void printThumbS4ImmOperand(MCInst *MI, unsigned OpNum,
+					    SStream *O);
 void printThumbSRImm(MCInst *MI, unsigned OpNum, SStream *O);
 void printThumbITMask(MCInst *MI, unsigned OpNum, SStream *O);
 void printThumbAddrModeRROperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printThumbAddrModeImm5SOperand(MCInst *MI, unsigned OpNum, SStream *O,
-									unsigned Scale);
+				    unsigned Scale);
 void printThumbAddrModeImm5S1Operand(MCInst *MI, unsigned OpNum, SStream *O);
 void printThumbAddrModeImm5S2Operand(MCInst *MI, unsigned OpNum, SStream *O);
 void printThumbAddrModeImm5S4Operand(MCInst *MI, unsigned OpNum, SStream *O);
 void printThumbAddrModeSPOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printT2SOOperand(MCInst *MI, unsigned OpNum, SStream *O);
-#define DECLARE_printAddrModeImm12Operand(AlwaysPrintImm0)                     \
-	void CONCAT(printAddrModeImm12Operand,                                     \
-				AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
+#define DECLARE_printAddrModeImm12Operand(AlwaysPrintImm0) \
+	void CONCAT(printAddrModeImm12Operand, \
+		    AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
 DECLARE_printAddrModeImm12Operand(false) DECLARE_printAddrModeImm12Operand(true)
 
-#define DECLARE_printT2AddrModeImm8Operand(AlwaysPrintImm0)                    \
-	void CONCAT(printT2AddrModeImm8Operand,                                    \
-				AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
+#define DECLARE_printT2AddrModeImm8Operand(AlwaysPrintImm0) \
+	void CONCAT(printT2AddrModeImm8Operand, \
+		    AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
 	DECLARE_printT2AddrModeImm8Operand(true)
 		DECLARE_printT2AddrModeImm8Operand(false)
 
-#define DECLARE_printT2AddrModeImm8s4Operand(AlwaysPrintImm0)                  \
-	void CONCAT(printT2AddrModeImm8s4Operand,                                  \
-				AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
+#define DECLARE_printT2AddrModeImm8s4Operand(AlwaysPrintImm0) \
+	void CONCAT(printT2AddrModeImm8s4Operand, \
+		    AlwaysPrintImm0)(MCInst * MI, unsigned OpNum, SStream *O);
 			DECLARE_printT2AddrModeImm8s4Operand(false)
 				DECLARE_printT2AddrModeImm8s4Operand(true)
 
-					void printT2AddrModeImm0_1020s4Operand(MCInst *MI,
-														   unsigned OpNum,
-														   SStream *O);
+					void printT2AddrModeImm0_1020s4Operand(
+						MCInst *MI, unsigned OpNum,
+						SStream *O);
 void printT2AddrModeImm8OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printT2AddrModeImm8s4OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printT2AddrModeSoRegOperand(MCInst *MI, unsigned OpNum, SStream *O);
@@ -137,9 +140,9 @@ void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printBankedRegOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printMandatoryPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printMandatoryRestrictedPredicateOperand(MCInst *MI, unsigned OpNum,
-											  SStream *O);
+					      SStream *O);
 void printMandatoryInvertedPredicateOperand(MCInst *MI, unsigned OpNum,
-											SStream *O);
+					    SStream *O);
 void printSBitModifierOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printRegisterList(MCInst *MI, unsigned OpNum, SStream *O);
 void printNoHashImmediate(MCInst *MI, unsigned OpNum, SStream *O);
@@ -171,13 +174,13 @@ void printVectorListThreeSpacedAllLanes(MCInst *MI, unsigned OpNum, SStream *O);
 void printVectorListFourSpacedAllLanes(MCInst *MI, unsigned OpNum, SStream *O);
 void printVectorListThreeSpaced(MCInst *MI, unsigned OpNum, SStream *O);
 void printVectorListFourSpaced(MCInst *MI, unsigned OpNum, SStream *O);
-#define DECLARE_printMVEVectorList(NumRegs)                                    \
-	void CONCAT(printMVEVectorList, NumRegs)(MCInst * MI, unsigned OpNum,      \
-											 SStream *O);
+#define DECLARE_printMVEVectorList(NumRegs) \
+	void CONCAT(printMVEVectorList, NumRegs)(MCInst * MI, unsigned OpNum, \
+						 SStream *O);
 DECLARE_printMVEVectorList(2) DECLARE_printMVEVectorList(4)
 
-#define DECLARE_printComplexRotationOp(Angle, Remainder)                       \
-	void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))(             \
+#define DECLARE_printComplexRotationOp(Angle, Remainder) \
+	void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
 		MCInst * MI, unsigned OpNum, SStream *O);
 	DECLARE_printComplexRotationOp(90, 0)
 		DECLARE_printComplexRotationOp(180, 90)
@@ -185,13 +188,15 @@ DECLARE_printMVEVectorList(2) DECLARE_printMVEVectorList(4)
 	// MVE
 	void printVPTPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O);
 void printVPTMask(MCInst *MI, unsigned OpNum, SStream *O);
-#define DECLARE_printMveAddrModeRQOperand(shift)                               \
-	void CONCAT(printMveAddrModeRQOperand, shift)(MCInst * MI, unsigned OpNum, \
-												  SStream *O);
+#define DECLARE_printMveAddrModeRQOperand(shift) \
+	void CONCAT(printMveAddrModeRQOperand, \
+		    shift)(MCInst * MI, unsigned OpNum, SStream *O);
 DECLARE_printMveAddrModeRQOperand(0) DECLARE_printMveAddrModeRQOperand(3)
-	DECLARE_printMveAddrModeRQOperand(1) DECLARE_printMveAddrModeRQOperand(2)
+	DECLARE_printMveAddrModeRQOperand(1)
+		DECLARE_printMveAddrModeRQOperand(2)
 
-		void printMveSaturateOp(MCInst *MI, unsigned OpNum, SStream *O);
+			void printMveSaturateOp(MCInst *MI, unsigned OpNum,
+						SStream *O);
 
 unsigned translateShiftImm(unsigned imm);
 
