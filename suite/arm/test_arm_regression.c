@@ -114,7 +114,7 @@ static void snprint_insn_detail(char * buf, size_t * cur, size_t * left, cs_insn
 		}
 	}
 
-	if (arm->cc != ARM_CC_AL && arm->cc != ARM_CC_INVALID) {
+	if (arm->cc != ARMCC_AL && arm->cc != ARMCC_UNDEF) {
 		_this_printf("\tCode condition: %u\n", arm->cc);
 	}
 
@@ -122,7 +122,7 @@ static void snprint_insn_detail(char * buf, size_t * cur, size_t * left, cs_insn
 		_this_printf("\tUpdate-flags: True\n");
 	}
 
-	if (arm->writeback) {
+	if (ins->detail->writeback) {
 		_this_printf("\tWrite-back: True\n");
 	}
 
@@ -285,6 +285,7 @@ static void test_valids()
 	}};
 
 	struct valid_instructions *valid = NULL;
+
 	cs_insn *insn;
 	int i;
 	int j;

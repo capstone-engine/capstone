@@ -81,37 +81,6 @@ bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
 	return false;
 }
 
-// binary search for encoding in IndexType array
-// return -1 if not found, or index if found
-unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t size, uint16_t encoding)
-{
-	// binary searching since the index is sorted in encoding order
-	size_t left, right, m;
-
-	right = size - 1;
-
-	if (encoding < index[0].encoding || encoding > index[right].encoding)
-		// not found
-		return -1;
-
-	left = 0;
-
-	while(left <= right) {
-		m = (left + right) / 2;
-		if (encoding == index[m].encoding) {
-			return m;
-		}
-
-		if (encoding < index[m].encoding)
-			right = m - 1;
-		else
-			left = m + 1;
-	}
-
-	// not found
-	return -1;
-}
-
 /// Reads 4 bytes in the endian order specified in MI->cs->mode.
 uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes)
 {

@@ -17,6 +17,7 @@ extern "C" {
 #include <stdio.h>
 #endif
 
+#include "../../cs_operand.h"
 #include "platform.h"
 
 #ifdef _MSC_VER
@@ -216,32 +217,15 @@ typedef enum cs_opt_type {
 /// Runtime option value (associated with option type above)
 typedef enum cs_opt_value {
 	CS_OPT_OFF = 0,  ///< Turn OFF an option - default for CS_OPT_DETAIL, CS_OPT_SKIPDATA, CS_OPT_UNSIGNED.
-	CS_OPT_ON = 3, ///< Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA).
-	CS_OPT_SYNTAX_DEFAULT = 0, ///< Default asm syntax (CS_OPT_SYNTAX).
-	CS_OPT_SYNTAX_INTEL, ///< X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX).
-	CS_OPT_SYNTAX_ATT,   ///< X86 ATT asm syntax (CS_OPT_SYNTAX).
-	CS_OPT_SYNTAX_NOREGNAME, ///< Prints register name with only number (CS_OPT_SYNTAX)
-	CS_OPT_SYNTAX_MASM, ///< X86 Intel Masm syntax (CS_OPT_SYNTAX).
-	CS_OPT_SYNTAX_MOTOROLA, ///< MOS65XX use $ as hex prefix
+	CS_OPT_ON = 1 << 0, ///< Turn ON an option (CS_OPT_DETAIL, CS_OPT_SKIPDATA).
+	CS_OPT_SYNTAX_DEFAULT = 1 << 1, ///< Default asm syntax (CS_OPT_SYNTAX).
+	CS_OPT_SYNTAX_INTEL = 1 << 2, ///< X86 Intel asm syntax - default on X86 (CS_OPT_SYNTAX).
+	CS_OPT_SYNTAX_ATT = 1 << 3,   ///< X86 ATT asm syntax (CS_OPT_SYNTAX).
+	CS_OPT_SYNTAX_NOREGNAME = 1 << 4, ///< Prints register name with only number (CS_OPT_SYNTAX)
+	CS_OPT_SYNTAX_MASM = 1 << 5, ///< X86 Intel Masm syntax (CS_OPT_SYNTAX).
+	CS_OPT_SYNTAX_MOTOROLA = 1 << 6, ///< MOS65XX use $ as hex prefix
+	CS_OPT_SYNTAX_CS_REG_ALIAS = 1 << 7, ///< Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
 } cs_opt_value;
-
-/// Common instruction operand types - to be consistent across all architectures.
-typedef enum cs_op_type {
-	CS_OP_INVALID = 0, ///< uninitialized/invalid operand.
-	CS_OP_REG,	   ///< Register operand.
-	CS_OP_IMM,	   ///< Immediate operand.
-	CS_OP_FP,	   ///< Floating-Point operand.
-	CS_OP_MEM =
-		0x80, ///< Memory operand. Can be ORed with another operand type.
-} cs_op_type;
-
-/// Common instruction operand access types - to be consistent across all architectures.
-/// It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE
-typedef enum cs_ac_type {
-	CS_AC_INVALID = 0,        ///< Uninitialized/invalid access type.
-	CS_AC_READ    = 1 << 0,   ///< Operand read from memory or register.
-	CS_AC_WRITE   = 1 << 1,   ///< Operand write to memory or register.
-} cs_ac_type;
 
 /// Common instruction groups - to be consistent across all architectures.
 typedef enum cs_group_type {

@@ -1,0 +1,39 @@
+import logging as log
+import re
+
+from tree_sitter import Node
+
+from Patches.HelperMethods import get_text
+from Patches.Patch import Patch
+
+
+class DecoderCast(Patch):
+    """
+    Patch   Removes casts like `const MCDisassembler *Dis = static_cast<const MCDisassembler*>(Decoder);`
+    """
+
+    def __init__(self, priority: int):
+        super().__init__(priority)
+
+    def get_search_pattern(self) -> str:
+        return (
+            "(declaration"
+            "   (type_qualifier)*"
+            '   ((type_identifier) @tid (#eq? @tid "MCDisassembler"))'
+            "   (init_declarator"
+            "       (pointer_declarator)"
+            "       (call_expression"
+            "           (template_function)"  # static_cast<const MCDisassembler>
+            "           (argument_list"
+            '               ((identifier) @id (#eq? @id "Decoder"))'
+            "           )"
+            "       )"
+            "   )"
+            ") @decoder_cast"
+        )
+
+    def get_main_capture_name(self) -> str:
+        return "decoder_cast"
+
+    def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
+        return b""

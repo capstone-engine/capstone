@@ -101,6 +101,7 @@ set(SOURCES_ENGINE
     Mapping.c
     MCInst.c
     MCInstrDesc.c
+    MCInstPrinter.c
     MCRegisterInfo.c
     SStream.c
     utils.c
@@ -115,6 +116,7 @@ set(HEADERS_ENGINE
     MCFixedLenDisassembler.h
     MCInst.h
     MCInstrDesc.h
+    MCInstPrinter.h
     MCRegisterInfo.h
     SStream.h
     utils.h
@@ -141,6 +143,7 @@ set(HEADERS_COMMON
     include/capstone/sh.h
     include/capstone/tricore.h
     include/capstone/platform.h
+    include/capstone/sh.h
 )
 
 set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
@@ -149,7 +152,9 @@ set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
 if(CAPSTONE_ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
     set(SOURCES_ARM
+        arch/ARM/ARMBaseInfo.c
         arch/ARM/ARMDisassembler.c
+        arch/ARM/ARMDisassemblerExtension.c
         arch/ARM/ARMInstPrinter.c
         arch/ARM/ARMMapping.c
         arch/ARM/ARMModule.c
@@ -157,20 +162,20 @@ if(CAPSTONE_ARM_SUPPORT)
     set(HEADERS_ARM
         arch/ARM/ARMAddressingModes.h
         arch/ARM/ARMBaseInfo.h
-        arch/ARM/ARMDisassembler.h
+        arch/ARM/ARMDisassemblerExtension.h
         arch/ARM/ARMInstPrinter.h
+        arch/ARM/ARMLinkage.h
         arch/ARM/ARMMapping.h
         arch/ARM/ARMGenAsmWriter.inc
         arch/ARM/ARMGenDisassemblerTables.inc
         arch/ARM/ARMGenInstrInfo.inc
         arch/ARM/ARMGenRegisterInfo.inc
         arch/ARM/ARMGenSubtargetInfo.inc
-        arch/ARM/ARMMappingInsn.inc
-        arch/ARM/ARMMappingInsnOp.inc
-        arch/ARM/ARMGenRegisterName.inc
-        arch/ARM/ARMGenRegisterName_digit.inc
+        arch/ARM/ARMGenCSFeatureName.inc
+        arch/ARM/ARMGenCSMappingInsn.inc
+        arch/ARM/ARMGenCSMappingInsnOp.inc
+        arch/ARM/ARMGenCSMappingInsnName.inc
         arch/ARM/ARMGenSystemRegister.inc
-        arch/ARM/ARMMappingInsnName.inc
     )
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif()
@@ -696,6 +701,7 @@ if(CAPSTONE_INSTALL)
     include("GNUInstallDirs")
 
     install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
+    install(FILES ${HEADERS_INC} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone/inc)
 
     configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
     install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)

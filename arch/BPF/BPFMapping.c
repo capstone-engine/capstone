@@ -5,6 +5,7 @@
 
 #include "BPFConstants.h"
 #include "BPFMapping.h"
+#include "../../Mapping.h"
 #include "../../utils.h"
 
 #ifndef CAPSTONE_DIET

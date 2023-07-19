@@ -4,6 +4,7 @@
 #include <stdio.h>		// debug
 #include <string.h>
 
+#include "../../Mapping.h"
 #include "../../utils.h"
 
 #include "RISCVMapping.h"

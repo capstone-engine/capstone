@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #endif
 
+#include "../../Mapping.h"
+#include "../../MCInstPrinter.h"
 #include "X86Mapping.h"
 #include "X86DisassemblerDecoder.h"
 

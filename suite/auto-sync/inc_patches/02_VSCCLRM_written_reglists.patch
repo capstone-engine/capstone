@@ -1,0 +1,27 @@
+# Sets the correct access attributes for register lists of VSCCLRM instrucions.
+# See issue: https://github.com/llvm/llvm-project/issues/62455
+
+diff --git a/arch/ARM/ARMGenCSMappingInsnOp.inc b/arch/ARM/ARMGenCSMappingInsnOp.inc
+index 1e3b9570b..524f339b7 100644
+--- a/arch/ARM/ARMGenCSMappingInsnOp.inc
++++ b/arch/ARM/ARMGenCSMappingInsnOp.inc
+@@ -28304,17 +28304,17 @@
+ }},
+ { /* ARM_VSCCLRMD (3410) - ARM_INS_VSCCLRM - vscclrm{$p}	$regs */
+ {
+   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* p - i32imm */
+   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* p - i32imm */
+-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* regs */
++  { CS_OP_IMM, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* regs */
+   { CS_OP_INVALID, CS_AC_READ, { CS_DATA_TYPE_LAST } }, /*  */
+   { 0 }
+ }},
+ { /* ARM_VSCCLRMS (3411) - ARM_INS_VSCCLRM - vscclrm{$p}	$regs */
+ {
+   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* p - i32imm */
+   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* p - i32imm */
+-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* regs */
++  { CS_OP_IMM, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* regs */
+   { CS_OP_INVALID, CS_AC_READ, { CS_DATA_TYPE_LAST } }, /*  */
+   { 0 }
+ }},

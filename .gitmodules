@@ -1,0 +1,3 @@
+[submodule "suite/auto-sync/vendor/tree-sitter-cpp"]
+	path = suite/auto-sync/vendor/tree-sitter-cpp
+	url = https://github.com/tree-sitter/tree-sitter-cpp.git

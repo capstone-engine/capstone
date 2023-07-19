@@ -28,9 +28,14 @@ void SStream_Init(SStream *ss)
 	ss->buffer[0] = '\0';
 }
 
+/**
+ * Copy the string \p s to the buffer of \p ss and terminate it with a '\\0' byte.
+ */
 void SStream_concat0(SStream *ss, const char *s)
 {
 #ifndef CAPSTONE_DIET
+	if (s[0] == '\0')
+		return;
 	unsigned int len = (unsigned int) strlen(s);
 
 	memcpy(ss->buffer + ss->index, s, len);
@@ -39,15 +44,23 @@ void SStream_concat0(SStream *ss, const char *s)
 #endif
 }
 
+/**
+ * Copy the single char \p c to the buffer of \p ss.
+ */
 void SStream_concat1(SStream *ss, const char c)
 {
 #ifndef CAPSTONE_DIET
+	if (c == '\0')
+		return;
 	ss->buffer[ss->index] = c;
 	ss->index++;
 	ss->buffer[ss->index] = '\0';
 #endif
 }
 
+/**
+ * Copy all strings given to the buffer of \p ss according to formatting \p fmt.
+ */
 void SStream_concat(SStream *ss, const char *fmt, ...)
 {
 #ifndef CAPSTONE_DIET
@@ -178,4 +191,14 @@ void printUInt32(SStream *O, uint32_t val)
 		SStream_concat(O, "0x%x", val);
 	else
 		SStream_concat(O, "%u", val);
+}
+
+void printFloat(SStream *O, float val)
+{
+	SStream_concat(O, "%e", val);
+}
+
+void printFloatBang(SStream *O, float val)
+{
+	SStream_concat(O, "#%e", val);
 }

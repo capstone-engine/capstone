@@ -16,6 +16,12 @@ You can find this in travis configuration `.travis.yml`
 
 Another way is to use oss-fuzz, see https://github.com/google/oss-fuzz/blob/master/projects/capstone/build.sh
 
+Troubleshooting
+------
+
+If you get `cc: error: unrecognized argument to ‘-fsanitize=’ option: ‘fuzzer’` check if you have a workable
+version of `libfuzz` installed. Also try to build with `CC=clang make`
+
 Fuzz drivers
 ------
 

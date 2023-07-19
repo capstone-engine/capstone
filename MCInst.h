@@ -38,7 +38,6 @@ struct MCOperand {
 		kDFPImmediate, ///< Double-Floating-point immediate operand.
 		kExpr,	       ///< Relocatable immediate operand.
 		kInst	       ///< Sub-instruction operand.
-
 	} MachineOperandType;
 	unsigned char Kind;
 
@@ -161,5 +160,7 @@ void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDesc);
 bool MCInst_opIsTied(const MCInst *MI, unsigned OpNum);
 
 bool MCInst_opIsTying(const MCInst *MI, unsigned OpNum);
+
+uint64_t MCInst_getOpVal(MCInst *MI, unsigned OpNum);
 
 #endif
