@@ -104,6 +104,7 @@ __all__ = [
     'CS_OPT_SYNTAX_NOREGNAME',
     'CS_OPT_SYNTAX_MASM',
     'CS_OPT_SYNTAX_MOTOROLA',
+    'CS_OPT_SYNTAX_CS_REG_ALIAS',
 
     'CS_OPT_DETAIL',
     'CS_OPT_MODE',
@@ -142,6 +143,19 @@ __all__ = [
     'CS_OP_REG',
     'CS_OP_IMM',
     'CS_OP_FP',
+    'CS_OP_PRED',
+    'CS_OP_RESERVED_5',
+    'CS_OP_RESERVED_6',
+    'CS_OP_RESERVED_7',
+    'CS_OP_RESERVED_8',
+    'CS_OP_RESERVED_9',
+    'CS_OP_RESERVED_10',
+    'CS_OP_RESERVED_11',
+    'CS_OP_RESERVED_12',
+    'CS_OP_RESERVED_13',
+    'CS_OP_RESERVED_14',
+    'CS_OP_RESERVED_15',
+    'CS_OP_SPECIAL',
     'CS_OP_MEM',
 
     'CS_GRP_INVALID',
@@ -268,13 +282,26 @@ CS_OPT_NO_BRANCH_OFFSET = 9  # ARM, prints branch immediates without offset.
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL
-CS_OPT_ON = 3              # Turn ON an option (CS_OPT_DETAIL)
+CS_OPT_ON = 1 << 0              # Turn ON an option (CS_OPT_DETAIL)
 
 # Common instruction operand types - to be consistent across all architectures.
 CS_OP_INVALID = 0  # uninitialized/invalid operand.
 CS_OP_REG = 1  # Register operand.
 CS_OP_IMM = 2  # Immediate operand.
 CS_OP_FP  = 3  # Floating-Point operand.
+CS_OP_PRED = 4  # Predicate operand.
+CS_OP_RESERVED_5 = 5
+CS_OP_RESERVED_6 = 6
+CS_OP_RESERVED_7 = 7
+CS_OP_RESERVED_8 = 8
+CS_OP_RESERVED_9 = 9
+CS_OP_RESERVED_10 = 10
+CS_OP_RESERVED_11 = 11
+CS_OP_RESERVED_12 = 12
+CS_OP_RESERVED_13 = 13
+CS_OP_RESERVED_14 = 14
+CS_OP_RESERVED_15 = 15
+CS_OP_SPECIAL = 0x10  # Special operands from archs
 CS_OP_MEM = 0x80  # Memory operand. Can be ORed with another operand type.
 
 # Common instruction groups - to be consistent across all architectures.
@@ -293,12 +320,13 @@ CS_AC_READ     = (1 << 0) # Operand that is read from.
 CS_AC_WRITE    = (1 << 1) # Operand that is written to.
 
 # Capstone syntax value
-CS_OPT_SYNTAX_DEFAULT = 0    # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
-CS_OPT_SYNTAX_INTEL = 1    # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_ATT = 2      # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_NOREGNAME = 3   # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
-CS_OPT_SYNTAX_MASM = 4      # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_MOTOROLA = 5 # MOS65XX use $ as hex prefix
+CS_OPT_SYNTAX_DEFAULT = 1 << 1  # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
+CS_OPT_SYNTAX_INTEL = 1 << 2  # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_ATT = 1 << 3  # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_NOREGNAME = 1 << 4  # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
+CS_OPT_SYNTAX_MASM = 1 << 5  # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_MOTOROLA = 1 << 6  # MOS65XX use $ as hex prefix
+CS_OPT_SYNTAX_CS_REG_ALIAS = 1 << 7  # Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
