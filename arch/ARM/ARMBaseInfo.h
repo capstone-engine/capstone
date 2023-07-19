@@ -39,18 +39,20 @@ typedef struct MClassSysReg {
 } ARMSysReg_MClassSysReg;
 
 // return true if FeaturesRequired are all present in ActiveFeatures
-static inline bool hasRequiredFeatures(const ARMSysReg_MClassSysReg *TheReg, int ActiveFeatures)
+static inline bool hasRequiredFeatures(const ARMSysReg_MClassSysReg *TheReg,
+				       int ActiveFeatures)
 {
 	return (TheReg->FeaturesRequired[0] == ActiveFeatures ||
-			TheReg->FeaturesRequired[1] == ActiveFeatures);
+		TheReg->FeaturesRequired[1] == ActiveFeatures);
 }
 
 // returns true if TestFeatures are all present in FeaturesRequired
-static inline bool MClassSysReg_isInRequiredFeatures(const ARMSysReg_MClassSysReg *TheReg,
-													 int TestFeatures)
+static inline bool
+MClassSysReg_isInRequiredFeatures(const ARMSysReg_MClassSysReg *TheReg,
+				  int TestFeatures)
 {
 	return (TheReg->FeaturesRequired[0] == TestFeatures ||
-			TheReg->FeaturesRequired[1] == TestFeatures);
+		TheReg->FeaturesRequired[1] == TestFeatures);
 }
 
 #define GET_SUBTARGETINFO_ENUM
@@ -58,12 +60,15 @@ static inline bool MClassSysReg_isInRequiredFeatures(const ARMSysReg_MClassSysRe
 
 // lookup system register using 12-bit SYSm value.
 // Note: the search is uniqued using M1 mask
-const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegBy12bitSYSmValue(unsigned SYSm);
+const ARMSysReg_MClassSysReg *
+ARMSysReg_lookupMClassSysRegBy12bitSYSmValue(unsigned SYSm);
 // returns APSR with _<bits> qualifier.
 // Note: ARMv7-M deprecates using MSR APSR without a _<bits> qualifier
-const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegAPSRNonDeprecated(unsigned SYSm);
+const ARMSysReg_MClassSysReg *
+ARMSysReg_lookupMClassSysRegAPSRNonDeprecated(unsigned SYSm);
 // lookup system registers using 8-bit SYSm value
-const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegBy8bitSYSmValue(unsigned SYSm);
+const ARMSysReg_MClassSysReg *
+ARMSysReg_lookupMClassSysRegBy8bitSYSmValue(unsigned SYSm);
 // end namespace ARMSysReg
 
 // Banked Registers
@@ -233,7 +238,6 @@ inline static const char *ARM_ISB_InstSyncBOptToString(unsigned val)
 ///
 static inline bool isARMLowRegister(unsigned Reg)
 {
-
 	switch (Reg) {
 	case ARM_R0:
 	case ARM_R1:
@@ -272,20 +276,20 @@ typedef enum AddrMode {
 	ARMII_AddrModeT1_1 = 7,
 	ARMII_AddrModeT1_2 = 8,
 	ARMII_AddrModeT1_4 = 9,
-	ARMII_AddrModeT1_s = 10, // i8 * 4 for pc and sp relative data
+	ARMII_AddrModeT1_s = 10,     // i8 * 4 for pc and sp relative data
 	ARMII_AddrModeT2_i12 = 11,
-	ARMII_AddrModeT2_i8 = 12,	 // +/- i8
+	ARMII_AddrModeT2_i8 = 12,    // +/- i8
 	ARMII_AddrModeT2_i8pos = 13, // + i8
 	ARMII_AddrModeT2_i8neg = 14, // - i8
 	ARMII_AddrModeT2_so = 15,
-	ARMII_AddrModeT2_pc = 16,	// +/- i12 for pc relative data
-	ARMII_AddrModeT2_i8s4 = 17, // i8 * 4
+	ARMII_AddrModeT2_pc = 16,    // +/- i12 for pc relative data
+	ARMII_AddrModeT2_i8s4 = 17,  // i8 * 4
 	ARMII_AddrMode_i12 = 18,
-	ARMII_AddrMode5FP16 = 19,	 // i8 * 2
+	ARMII_AddrMode5FP16 = 19,    // i8 * 2
 	ARMII_AddrModeT2_ldrex = 20, // i8 * 4, with unscaled offset in MCInst
-	ARMII_AddrModeT2_i7s4 = 21,	 // i7 * 4
-	ARMII_AddrModeT2_i7s2 = 22,	 // i7 * 2
-	ARMII_AddrModeT2_i7 = 23,	 // i7 * 1
+	ARMII_AddrModeT2_i7s4 = 21,  // i7 * 4
+	ARMII_AddrModeT2_i7s2 = 22,  // i7 * 2
+	ARMII_AddrModeT2_i7 = 23,    // i7 * 1
 } ARMII_AddrMode;
 
 inline static const char *ARMII_AddrModeToString(ARMII_AddrMode addrmode)

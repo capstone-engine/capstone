@@ -120,7 +120,6 @@ static inline const char *ARM_AM_getAMSubModeStr(ARM_AM_SubMode Mode)
 ///
 static inline unsigned ARM_AM_rotr32(unsigned Val, unsigned Amt)
 {
-
 	return (Val >> Amt) | (Val << ((32 - Amt) & 31));
 }
 
@@ -128,7 +127,6 @@ static inline unsigned ARM_AM_rotr32(unsigned Val, unsigned Amt)
 ///
 static inline unsigned ARM_AM_rotl32(unsigned Val, unsigned Amt)
 {
-
 	return (Val << Amt) | (Val >> ((32 - Amt) & 31));
 }
 
@@ -151,7 +149,10 @@ static inline unsigned ARM_AM_getSORegOpc(ARM_AM_ShiftOpc ShOp, unsigned Imm)
 	return ShOp | (Imm << 3);
 }
 
-static inline unsigned ARM_AM_getSORegOffset(unsigned Op) { return Op >> 3; }
+static inline unsigned ARM_AM_getSORegOffset(unsigned Op)
+{
+	return Op >> 3;
+}
 
 static inline ARM_AM_ShiftOpc ARM_AM_getSORegShOp(unsigned Op)
 {
@@ -200,7 +201,8 @@ static inline unsigned ARM_AM_getSOImmValRotate(unsigned Imm)
 		unsigned TZ2 = CountTrailingZeros_32(Imm & ~63U);
 		unsigned RotAmt2 = TZ2 & ~1;
 		if ((ARM_AM_rotr32(Imm, RotAmt2) & ~255U) == 0)
-			return (32 - RotAmt2) & 31; // HW rotates right, not left.
+			return (32 - RotAmt2) &
+			       31; // HW rotates right, not left.
 	}
 
 	// Otherwise, we have no way to cover this span of bits with a single
@@ -374,7 +376,8 @@ static inline int ARM_AM_getT2SOImmValRotateVal(unsigned V)
 
 	// If 'Arg' can be handled with a single shifter_op return the value.
 	if ((ARM_AM_rotr32(0xff000000U, RotAmt) & V) == V)
-		return (ARM_AM_rotr32(V, 24 - RotAmt) & 0x7f) | ((RotAmt + 8) << 7);
+		return (ARM_AM_rotr32(V, 24 - RotAmt) & 0x7f) |
+		       ((RotAmt + 8) << 7);
 
 	return -1;
 }
@@ -439,7 +442,6 @@ static inline bool ARM_AM_isT2SOImmTwoPartVal(unsigned Imm)
 
 static inline unsigned ARM_AM_getT2SOImmTwoPartFirst(unsigned Imm)
 {
-
 	// Try a shifter operand as one part
 	unsigned V = ARM_AM_rotr32(~255, ARM_AM_getT2SOImmValRotate(Imm)) & Imm;
 	// If the rest is encodable as an immediate, then return it.
@@ -483,9 +485,8 @@ static inline unsigned ARM_AM_getT2SOImmTwoPartSecond(unsigned Imm)
 // with no shift amount for the frame offset.
 //
 static inline unsigned ARM_AM_getAM2Opc(ARM_AM_AddrOpc Opc, unsigned Imm12,
-										ARM_AM_ShiftOpc SO, unsigned IdxMode)
+					ARM_AM_ShiftOpc SO, unsigned IdxMode)
 {
-
 	bool isSub = Opc == ARM_AM_sub;
 	return Imm12 | ((int)isSub << 12) | (SO << 13) | (IdxMode << 16);
 }
@@ -525,7 +526,7 @@ static inline unsigned ARM_AM_getAM2IdxMode(unsigned AM2Opc)
 // index mode.
 /// getAM3Opc - This function encodes the addrmode3 opc field.
 static inline unsigned ARM_AM_getAM3Opc(ARM_AM_AddrOpc Opc,
-										unsigned char Offset, unsigned IdxMode)
+					unsigned char Offset, unsigned IdxMode)
 {
 	bool isSub = Opc == ARM_AM_sub;
 	return ((int)isSub << 8) | Offset | (IdxMode << 9);
@@ -582,7 +583,7 @@ static inline unsigned ARM_AM_getAM4ModeImm(ARM_AM_SubMode SubMode)
 // operation (add or subtract) in bit 8 and the immediate in bits 0-7.
 /// getAM5Opc - This function encodes the addrmode5 opc field.
 static inline unsigned ARM_AM_getAM5Opc(ARM_AM_AddrOpc Opc,
-										unsigned char Offset)
+					unsigned char Offset)
 {
 	bool isSub = Opc == ARM_AM_sub;
 	return ((int)isSub << 8) | Offset;
@@ -610,7 +611,7 @@ static inline ARM_AM_AddrOpc ARM_AM_getAM5Op(unsigned AM5Opc)
 // operation (add or subtract) in bit 8 and the immediate in bits 0-7.
 /// getAM5FP16Opc - This function encodes the addrmode5fp16 opc field.
 static inline unsigned ARM_AM_getAM5FP16Opc(ARM_AM_AddrOpc Opc,
-											unsigned char Offset)
+					    unsigned char Offset)
 {
 	bool isSub = Opc == ARM_AM_sub;
 	return ((int)isSub << 8) | Offset;
@@ -668,7 +669,7 @@ static inline unsigned ARM_AM_getVMOVModImmVal(unsigned ModImm)
 /// element value and the element size in bits.  (If the element size is
 /// smaller than the vector, it is splatted into all the elements.)
 static inline uint64_t ARM_AM_decodeVMOVModImm(unsigned ModImm,
-											   unsigned *EltBits)
+					       unsigned *EltBits)
 {
 	unsigned OpCmode = ARM_AM_getVMOVModImmOpCmode(ModImm);
 	unsigned Imm8 = ARM_AM_getVMOVModImmVal(ModImm);
@@ -709,7 +710,6 @@ static inline uint64_t ARM_AM_decodeVMOVModImm(unsigned ModImm,
 // Generic validation for single-byte immediate (0X00, 00X0, etc).
 static inline bool ARM_AM_isNEONBytesplat(unsigned Value, unsigned Size)
 {
-
 	unsigned count = 0;
 	for (unsigned i = 0; i < Size; ++i) {
 		if (Value & 0xff)
@@ -731,7 +731,6 @@ static inline bool ARM_AM_isNEONi16splat(unsigned Value)
 // Encode NEON 16 bits Splat immediate for instructions like VBIC/VORR
 static inline unsigned ARM_AM_encodeNEONi16splat(unsigned Value)
 {
-
 	if (Value >= 0x100)
 		Value = (Value >> 8) | 0xa00;
 	else
@@ -749,7 +748,6 @@ static inline bool ARM_AM_isNEONi32splat(unsigned Value)
 /// Encode NEON 32 bits Splat immediate for instructions like VBIC/VORR.
 static inline unsigned ARM_AM_encodeNEONi32splat(unsigned Value)
 {
-
 	if (Value >= 0x100 && Value <= 0xff00)
 		Value = (Value >> 8) | 0x200;
 	else if (Value > 0xffff && Value <= 0xff0000)

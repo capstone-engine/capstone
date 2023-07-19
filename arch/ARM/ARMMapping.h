@@ -12,13 +12,15 @@ typedef enum {
 #include "ARMGenCSOpGroup.inc"
 } arm_op_group;
 
-extern const ARMBankedReg_BankedReg *ARMBankedReg_lookupBankedRegByEncoding(uint8_t Encoding);
-extern const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegByEncoding(uint16_t Encoding);
+extern const ARMBankedReg_BankedReg *
+ARMBankedReg_lookupBankedRegByEncoding(uint8_t Encoding);
+extern const ARMSysReg_MClassSysReg *
+ARMSysReg_lookupMClassSysRegByEncoding(uint16_t Encoding);
 
 // return name of regiser in friendly string
 const char *ARM_reg_name(csh handle, unsigned int reg);
 
-void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */info);
+void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info);
 
 // given internal insn id, return public instruction ID
 void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
@@ -33,14 +35,15 @@ bool ARM_rel_branch(cs_struct *h, unsigned int insn_id);
 bool ARM_blx_to_arm_mode(cs_struct *h, unsigned int insn_id);
 
 void ARM_reg_access(const cs_insn *insn, cs_regs regs_read,
-					uint8_t *regs_read_count, cs_regs regs_write,
-					uint8_t *regs_write_count);
+		    uint8_t *regs_read_count, cs_regs regs_write,
+		    uint8_t *regs_write_count);
 
-const ARMBankedReg_BankedReg *ARMBankedReg_lookupBankedRegByEncoding(uint8_t encoding);
+const ARMBankedReg_BankedReg *
+ARMBankedReg_lookupBankedRegByEncoding(uint8_t encoding);
 
 bool ARM_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-						MCInst *instr, uint16_t *size, uint64_t address,
-						void *info);
+			MCInst *instr, uint16_t *size, uint64_t address,
+			void *info);
 void ARM_set_instr_map_data(MCInst *MI);
 
 void ARM_init_mri(MCRegisterInfo *MRI);
@@ -48,9 +51,9 @@ void ARM_init_mri(MCRegisterInfo *MRI);
 // cs_detail related functions
 void ARM_init_cs_detail(MCInst *MI);
 void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
-					   va_list args);
+		       va_list args);
 static inline void add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
-								 ...)
+				 ...)
 {
 	if (!MI->flat_insn->detail)
 		return;
@@ -60,16 +63,17 @@ static inline void add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
 	va_end(args);
 }
 
-void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg, cs_ac_type access);
+void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
+				 cs_ac_type access);
 void ARM_set_detail_op_reg(MCInst *MI, unsigned OpNum, arm_reg Reg);
 void ARM_set_detail_op_sysreg(MCInst *MI, int SysReg, bool IsOutReg);
 void ARM_set_detail_op_imm(MCInst *MI, unsigned OpNum, arm_op_type ImmType,
-						   int64_t Imm);
+			   int64_t Imm);
 void ARM_set_detail_op_float(MCInst *MI, unsigned OpNum, uint64_t Imm);
 void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
-						   int scale, int lshift, uint64_t Val);
+			   int scale, int lshift, uint64_t Val);
 void ARM_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val,
-								  bool subtracted);
+				  bool subtracted);
 void ARM_set_detail_op_neon_lane(MCInst *MI, unsigned OpNum);
 
 void ARM_check_updates_flags(MCInst *MI);
