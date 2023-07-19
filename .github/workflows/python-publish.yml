@@ -16,6 +16,8 @@ jobs:
 
     - name: Set up Python
       uses: actions/setup-python@v4
+      # Python is included in manylinux
+      if: matrix.os != 'ubuntu-latest'
       with:
         python-version: '3.x'
 
@@ -31,19 +33,21 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install setuptools wheel
+        if [ ${{ matrix.os }} != 'ubuntu-latest' ]; then
+          pip install setuptools wheel
+        fi
     - name: Build distribution 📦
       shell: bash 
       run: |
         if [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'windows-latest' ]; then
              cd bindings/python && python setup.py build -p win32 bdist_wheel -p win32
         elif [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
-             docker run --rm -v `pwd`/:/work dockcross/manylinux1-x86 > ./dockcross
+             docker run --rm -v `pwd`/:/work dockcross/manylinux2014-x86 > ./dockcross
              chmod +x ./dockcross
              chmod +x bindings/python/build_wheel.sh
              ./dockcross bindings/python/build_wheel.sh
         elif [ ${{ matrix.platform }} == 'x64' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
-             docker run --rm -v `pwd`/:/work dockcross/manylinux1-x64 > ./dockcross
+             docker run --rm -v `pwd`/:/work dockcross/manylinux_2_28-x64 > ./dockcross
              chmod +x ./dockcross
              chmod +x bindings/python/build_wheel.sh
              ./dockcross bindings/python/build_wheel.sh
