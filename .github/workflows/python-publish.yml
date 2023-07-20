@@ -31,17 +31,20 @@ jobs:
       if: matrix.os == 'windows-latest' && matrix.platform == 'x64'
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Install dependencies
+    - name: Install Python dependencies
+      if: matrix.os != 'ubuntu-latest'
+      run: pip install setuptools wheel
+
+    - name: Build distribution 📦 (Windows)
+      if: matrix.os == 'windows-latest'
+      shell: pwsh
       run: |
-        if [ ${{ matrix.os }} != 'ubuntu-latest' ]; then
-          pip install setuptools wheel
-        fi
+        cd bindings/python && python setup.py build -p win32 bdist_wheel -p win32
+
     - name: Build distribution 📦
       shell: bash 
       run: |
-        if [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'windows-latest' ]; then
-             cd bindings/python && python setup.py build -p win32 bdist_wheel -p win32
-        elif [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
+        if [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
              docker run --rm -v `pwd`/:/work dockcross/manylinux2014-x86 > ./dockcross
              chmod +x ./dockcross
              chmod +x bindings/python/build_wheel.sh
