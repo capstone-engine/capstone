@@ -10652,7 +10652,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 4:
     // B, BCLalways, BDNZ, BDNZ8, BDNZL, BDNZLm, BDNZLp, BDNZm, BDNZp, BDZ, B...
-    (MI, Address, 0, O);
+    printBranchOperand(MI, Address, 0, O);
     break;
   case 5:
     // BA, BDNZA, BDNZAm, BDNZAp, BDNZLA, BDNZLAm, BDNZLAp, BDZA, BDZAm, BDZA...
@@ -10780,7 +10780,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat1(O, ' ');
     printPredicateOperand(MI, 0, O, "reg");
     SStream_concat0(O, ", ");
-    (MI, Address, 2, O);
+    printBranchOperand(MI, Address, 2, O);
     return;
     break;
   case 4:
@@ -10816,7 +10816,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat1(O, ' ');
     printPredicateOperand(MI, 0, O, "reg");
     SStream_concat0(O, ", ");
-    (MI, Address, 2, O);
+    printBranchOperand(MI, Address, 2, O);
     return;
     break;
   case 8:
@@ -10907,7 +10907,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 23:
     // gBCLat, gBCat
-    (MI, Address, 3, O);
+    printBranchOperand(MI, Address, 3, O);
     return;
     break;
   }
@@ -10939,7 +10939,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 5:
     // BC, BCL, BCLn, BCn
-    (MI, Address, 1, O);
+    printBranchOperand(MI, Address, 1, O);
     return;
     break;
   case 6:
@@ -11230,7 +11230,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 22:
     // gBC, gBCL
-    (MI, Address, 2, O);
+    printBranchOperand(MI, Address, 2, O);
     return;
     break;
   case 23:
