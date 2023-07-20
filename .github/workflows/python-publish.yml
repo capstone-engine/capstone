@@ -1,90 +1,66 @@
-name: PyPI 📦 Distribution
+name: Build Python Wheels
 
-on: 
-  push:
+on: [push, pull_request]
 
 jobs:
-  build:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        platform: [x32, x64]
+        # Keep these old enough for compatibility
+        os: [ubuntu-20.04, windows-2019, macos-11]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.14.1
+        env:
+          CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
+          CIBW_ARCHS_LINUX: "auto i686 aarch64 ppc64le s390x"
+          CIBW_ARCHS_WINDOWS: "AMD64 x86 ARM64"
+        with:
+          package-dir: bindings/python
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
+
+  make_sdist:
+    name: Make SDist
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      # Python is included in manylinux
-      if: matrix.os != 'ubuntu-latest'
       with:
-        python-version: '3.x'
+        fetch-depth: 0  # Optional, use if you use setuptools_scm
+        submodules: true  # Optional, use if you have submodules
 
-    - name: Set up MSVC x86
-      if: matrix.os == 'windows-latest' && matrix.platform == 'x32'
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: x86
+    - name: Build SDist
+      run: pipx run build --sdist
 
-    - name: Set up MSVC x64
-      if: matrix.os == 'windows-latest' && matrix.platform == 'x64'
-      uses: ilammy/msvc-dev-cmd@v1
-
-    - name: Install Python dependencies
-      if: matrix.os != 'ubuntu-latest'
-      run: pip install setuptools wheel
-
-    - name: Build distribution 📦 (Windows)
-      if: matrix.os == 'windows-latest'
-      shell: pwsh
-      run: |
-        cd bindings/python && python setup.py build -p win32 bdist_wheel -p win32
-
-    - name: Build distribution 📦
-      shell: bash 
-      run: |
-        if [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
-             docker run --rm -v `pwd`/:/work dockcross/manylinux2014-x86 > ./dockcross
-             chmod +x ./dockcross
-             chmod +x bindings/python/build_wheel.sh
-             ./dockcross bindings/python/build_wheel.sh
-        elif [ ${{ matrix.platform }} == 'x64' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
-             docker run --rm -v `pwd`/:/work dockcross/manylinux_2_28-x64 > ./dockcross
-             chmod +x ./dockcross
-             chmod +x bindings/python/build_wheel.sh
-             ./dockcross bindings/python/build_wheel.sh
-        elif [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'macos-latest' ]; then
-             cd bindings/python && python setup.py sdist
-        else
-             cd bindings/python && python setup.py bdist_wheel
-        fi
     - uses: actions/upload-artifact@v3
       with:
-         path: ${{ github.workspace }}/bindings/python/dist/*
+        path: dist/*.tar.gz
 
-  publish:
-    needs: [build]
-    runs-on: ubuntu-latest
+  upload_all:
+    needs: [build_wheels, make_sdist]
+    environment: pypi
     if: startsWith(github.ref, 'refs/tags')
     permissions:
       id-token: write
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
     steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: artifact
-          path: dist
+    - uses: actions/download-artifact@v3
+      with:
+        name: artifact
+        path: dist
 
-      # - name: Publish distribution 📦 to test PyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     user: __token__
-      #     password: ${{ secrets.test_pypi_pass }}
-      #     repository_url: https://test.pypi.org/legacy/
+    - name: Publish distribution 📦 to PyPI
+      if: ${{ success() }}
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.pypi_pass }}
 
-      - name: Publish distribution 📦 to PyPI
-        if: ${{ success() }}
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.pypi_pass }}
