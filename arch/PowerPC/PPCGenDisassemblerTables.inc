@@ -9961,10 +9961,6 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
   /* Bogisity detected in disassembler state machine! */ \
 }
 
-FieldFromInstruction(fieldFromInstruction_2, uint16_t)
-DecodeToMCInst(decodeToMCInst_2, fieldFromInstruction_2, uint16_t)
-DecodeInstruction(decodeInstruction_2, fieldFromInstruction_2, decodeToMCInst_2, uint16_t)
-
-FieldFromInstruction(fieldFromInstruction_4, uint32_t)
-DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint32_t)
+FieldFromInstruction(fieldFromInstruction_4, uint64_t)
+DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint64_t)
 DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4, decodeToMCInst_4, uint32_t)
