@@ -35,6 +35,7 @@ __all__ = [
     'CS_ARCH_TMS320C64X',
     'CS_ARCH_M680X',
     'CS_ARCH_EVM',
+    'CS_ARCH_WASM',
     'CS_ARCH_BPF',
     'CS_ARCH_RISCV',
     'CS_ARCH_MOS65XX',
@@ -387,7 +388,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, bpf, riscv, tricore
+from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, tricore
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -404,6 +405,7 @@ class _cs_arch(ctypes.Union):
         ('m680x', m680x.CsM680x),
         ('evm', evm.CsEvm),
         ('mos65xx', mos65xx.CsMOS65xx),
+        ('wasm', wasm.CsWasm),
         ('bpf', bpf.CsBPF),
         ('riscv', riscv.CsRISCV),
         ('tricore', tricore.CsTriCore),
@@ -727,6 +729,8 @@ class CsInsn(object):
             (self.pop, self.push, self.fee) = evm.get_arch_info(self._raw.detail.contents.arch.evm)
         elif arch == CS_ARCH_MOS65XX:
             (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(self._raw.detail.contents.arch.mos65xx)
+        elif arch == CS_ARCH_WASM:
+            (self.operands) = wasm.get_arch_info(self._raw.detail.contents.arch.wasm)
         elif arch == CS_ARCH_BPF:
             (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
         elif arch == CS_ARCH_RISCV:
@@ -1199,6 +1203,7 @@ def debug():
         "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
+        'wasm': CS_ARCH_WASM,
     }
 
     all_archs = ""
