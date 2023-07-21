@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "capstone/arm.h"
 #include "capstone/capstone.h"
+#include "capstone/arm.h"
 
 #include "../../Mapping.h"
 #include "../../MCDisassembler.h"
