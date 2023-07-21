@@ -203,7 +203,7 @@ if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
     name = get_platform()
     pyversion = platform.python_version()
     major_version, minor_version = map(int, pyversion.split('.')[:2])
-    sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_') + "_" + major_version + minor_version)
+    sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_') + "_" + str(major_version) + str(minor_version))
 
 setup(
     provides=['capstone'],
