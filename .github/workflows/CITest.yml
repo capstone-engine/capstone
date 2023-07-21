@@ -85,7 +85,7 @@ jobs:
       run: |
         ./make.sh;
         make check;
-        cp libcapstone.so.5 libcapstone.so.5.0
+        cp libcapstone.so.6 libcapstone.so.6.0
         # sudo make install
 
     - name: cmake
@@ -101,7 +101,7 @@ jobs:
     - name: build python binding
       shell: 'script -q -e -c "bash {0}"'
       run: |
-        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so;
+        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.6.* bindings/python/capstone/lib/libcapstone.so;
         cd bindings/python;
         make && make check ; 
         cd ../..;
