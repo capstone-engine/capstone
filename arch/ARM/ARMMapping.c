@@ -167,6 +167,8 @@ static void ARM_add_cs_groups(MCInst *MI)
 /// Here we add those oprands to detail.
 static void ARM_add_not_defined_ops(MCInst *MI)
 {
+	if (!detail_is_set(MI))
+		return;
 	unsigned Opcode = MCInst_getOpcode(MI);
 	switch (Opcode) {
 	default:
