@@ -126,6 +126,7 @@ set(HEADERS_COMMON
     include/capstone/arm64.h
     include/capstone/arm.h
     include/capstone/capstone.h
+    include/capstone/cs_operand.h
     include/capstone/evm.h
     include/capstone/wasm.h
     include/capstone/mips.h
