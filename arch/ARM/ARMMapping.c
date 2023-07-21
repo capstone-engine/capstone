@@ -401,7 +401,9 @@ static void ARM_add_reglist_reg_encoding(MCInst *MI, arm_reg reg)
 	unsigned Opcode = MCInst_getOpcode(MI);
 	// if it's r0-r13 we subtract 73 to get the respective bit num (for example r1 == 1)
 	// otherwise if it's lr or pc we add 1 for the same reason as above
-	unsigned RegBitNum = reg >= 73 ? reg - 73 : reg + 1;
+	unsigned RegBitNum = reg == ARM_REG_SP ? 13 :
+			     reg >= 73	       ? reg - 73 :
+						 reg + 1;
 
 	switch (Opcode) {
 	case ARM_tLDMIA:
