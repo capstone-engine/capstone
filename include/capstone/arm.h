@@ -12,7 +12,7 @@ extern "C" {
 #include <assert.h>
 #include <string.h>
 
-#include "../../cs_operand.h"
+#include "cs_operand.h"
 #include "platform.h"
 
 #ifdef _MSC_VER
