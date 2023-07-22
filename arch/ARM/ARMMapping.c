@@ -365,6 +365,12 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 			    MCOperand_getImm(MCInst_getOperand(MI, (4)))) == 4)
 			MI->flat_insn->id = ARM_INS_POP;
 		break;
+	case ARM_t2LDR_POST:
+		if ((MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP) &&
+		    (Opcode == ARM_t2LDR_POST &&
+		     (MCOperand_getImm(MCInst_getOperand(MI, (3))) == 4)))
+			MI->flat_insn->id = ARM_INS_POP;
+		break;
 	case ARM_VSTMSDB_UPD:
 	case ARM_VSTMDDB_UPD:
 		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP)
