@@ -62,9 +62,7 @@ cd ../../
 Run the updater
 
 ```
-mkdir build
-cd build
-../Update-Arch.sh <ARCH> ./llvm-capstone
+../Update-Arch.sh <ARCH> <TBLGEN_PATH> <LLVM_HASH>
 ```
 
 ## Post-processing steps
