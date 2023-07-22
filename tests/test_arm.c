@@ -55,7 +55,10 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(cs_handle, op->reg));
 				break;
 			case ARM_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				if (op->imm < 0)
+					printf("\t\toperands[%u].type: IMM = -0x%" PRIx64 "\n", i, -(op->imm));
+				else
+					printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
 			case ARM_OP_FP:
 #if defined(_KERNEL_MODE)
@@ -82,10 +85,10 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 				break;
 			case ARM_OP_PIMM:
-				printf("\t\toperands[%u].type: P-IMM = %u\n", i, op->imm);
+				printf("\t\toperands[%u].type: P-IMM = %" PRIu64 "\n", i, op->imm);
 				break;
 			case ARM_OP_CIMM:
-				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
+				printf("\t\toperands[%u].type: C-IMM = %" PRIu64 "\n", i, op->imm);
 				break;
 			case ARM_OP_SETEND:
 				printf("\t\toperands[%u].type: SETEND = %s\n", i, op->setend == ARM_SETEND_BE? "be" : "le");
