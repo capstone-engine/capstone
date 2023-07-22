@@ -399,11 +399,12 @@ static void ARM_add_reglist_reg_encoding(MCInst *MI, arm_reg reg)
 	encoding->operand_pieces_count = 1;
 	encoding->sizes[0] = 1;
 	unsigned Opcode = MCInst_getOpcode(MI);
-	// if it's r0-r13 we subtract 73 to get the respective bit num (for example r1 == 1)
-	// otherwise if it's lr or pc we add 1 for the same reason as above
-	unsigned RegBitNum = reg == ARM_REG_SP ? 13 :
-			     reg >= 73	       ? reg - 73 :
-						 reg + 1;
+	// Since r0-r12 are placed next to each other on the arm_reg enum we subtract
+	// value of r0 to get the respective bit num of the register.
+	// lr, pc and sp are exceptions
+	unsigned RegBitNum = reg == ARM_REG_R13 ? 13 :
+			     reg >= ARM_REG_R0	? reg - ARM_REG_R0 :
+						  reg + 1;
 
 	switch (Opcode) {
 	case ARM_tLDMIA:
