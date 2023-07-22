@@ -788,6 +788,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			return;
 		}
 		ARM_get_detail(MI)->cc = CC;
+		map_add_implicit_read(MI, ARM_REG_CPSR);
 		break;
 	}
 	case ARM_OP_GROUP_VPTPredicateOperand: {
