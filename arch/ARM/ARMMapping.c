@@ -1322,10 +1322,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				      MCInst_getOpVal(MI, OpNum));
 		ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
 				      MCInst_getOpVal(MI, OpNum + 1));
-		unsigned ShAmt = MCInst_getOpVal(MI, OpNum);
+		unsigned ShAmt = MCInst_getOpVal(MI, OpNum + 2);
 		if (ShAmt) {
-			ARM_get_detail_op(MI, 2)->shift.type = ARM_SFT_LSL;
-			ARM_get_detail_op(MI, 2)->shift.value = ShAmt;
+			ARM_get_detail_op(MI, 0)->shift.type = ARM_SFT_LSL;
+			ARM_get_detail_op(MI, 0)->shift.value = ShAmt;
 		}
 		ARM_set_mem_access(MI, false);
 		break;
