@@ -1016,7 +1016,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				if (TheReg && MClassSysReg_isInRequiredFeatures(
 						      TheReg, ARM_FeatureDSP)) {
 					ARM_set_detail_op_sysreg(
-						MI, TheReg->sysreg.sysreg,
+						MI, TheReg->sysreg.mclasssysreg,
 						IsOutReg);
 					return;
 				}
@@ -1030,7 +1030,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 						SYSm);
 				if (TheReg) {
 					ARM_set_detail_op_sysreg(
-						MI, TheReg->sysreg.sysreg,
+						MI, TheReg->sysreg.mclasssysreg,
 						IsOutReg);
 					return;
 				}
@@ -1040,7 +1040,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				SYSm);
 			if (TheReg) {
 				ARM_set_detail_op_sysreg(
-					MI, TheReg->sysreg.sysreg, IsOutReg);
+					MI, TheReg->sysreg.mclasssysreg, IsOutReg);
 				return;
 			}
 
@@ -1446,7 +1446,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		const ARMBankedReg_BankedReg *TheReg =
 			ARMBankedReg_lookupBankedRegByEncoding(Banked);
 		bool IsOutReg = OpNum == 0;
-		ARM_set_detail_op_sysreg(MI, TheReg->sysreg.banked_reg,
+		ARM_set_detail_op_sysreg(MI, TheReg->sysreg.bankedreg,
 					 IsOutReg);
 		break;
 	}
