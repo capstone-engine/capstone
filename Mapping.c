@@ -179,7 +179,8 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 }
 
 /// Adds a given group to @MI->flat_insn.
-void add_group(MCInst *MI, unsigned /* arch_group */ group) {
+void add_group(MCInst *MI, unsigned /* arch_group */ group)
+{
 #ifndef CAPSTONE_DIET
 	if (!MI->flat_insn->detail)
 		return;
