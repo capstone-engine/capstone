@@ -1536,12 +1536,12 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			ARM_set_mem_access(MI, false);
 			break;
 		}
-		unsigned ImmOffs = ARM_AM_getAM3Offset(
-			MCOperand_getImm(MCInst_getOperand(MI, OpNum + 2)));
+		unsigned ImmOffs =
+			ARM_AM_getAM3Offset(MCInst_getOpVal(MI, OpNum + 2));
 
 		if (AlwaysPrintImm0 || ImmOffs || Sign == ARM_AM_sub) {
 			ARM_set_detail_op_mem(MI, OpNum + 2, false, 0, 0,
-					      MCInst_getOpVal(MI, OpNum + 2));
+					      ImmOffs);
 			ARM_get_detail_op(MI, 0)->subtracted = Sign ==
 							       ARM_AM_sub;
 		}
