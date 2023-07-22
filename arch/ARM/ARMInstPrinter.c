@@ -280,17 +280,9 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		printOperand(MI, 0, O);
 		if (Writeback) {
 			SStream_concat0(O, "!");
-			// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-			if (MI->flat_insn->detail) {
-				ARM_get_detail_op(MI, -1)->access |=
-					CS_AC_WRITE;
-				MI->flat_insn->detail->writeback = true;
-			}
 		}
 		SStream_concat0(O, ", ");
 		printRegisterList(MI, 3, O);
-		// TODO: Do this in a static function called by ARMMapping.c::ARM_printer().
-		MI->flat_insn->id = ARM_INS_VPOP;
 		return;
 	}
 
