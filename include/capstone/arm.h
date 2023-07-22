@@ -340,7 +340,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <ARMGenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_BankedReg> end
-} arm_banked_reg;
+} arm_bankedreg;
 
 typedef enum {
 	// generated content <ARMGenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_MClassSysReg> begin
@@ -405,8 +405,8 @@ typedef enum {
 } arm_sysreg;
 
 typedef union {
-  arm_sysreg sysreg;
-  arm_banked_reg banked_reg;
+  arm_sysreg mclasssysreg;
+  arm_bankedreg bankedreg;
 } arm_sysop_reg;
 
 /// Operand type for instruction's operands
