@@ -28,7 +28,7 @@ project(capstone
 if (MSVC)
     add_compile_options(/W1 /w14189)
 else()
-    add_compile_options(-Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
+    add_compile_options(-Werror -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context)
 endif()
 
 
