@@ -212,11 +212,23 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			break;
 
 	case ARM_LDR_POST_IMM:
-		if (MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP &&
-		    ARM_AM_getAM2Offset(MCOperand_getImm(
-			    MCInst_getOperand(MI, (4)))) == 4) {
+		if ((MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP) &&
+		    ((ARM_AM_getAM2Offset(MCOperand_getImm(
+			      MCInst_getOperand(MI, (4)))) == 4))) {
 			SStream_concat0(O, "pop");
 			printPredicateOperand(MI, 5, O);
+			SStream_concat0(O, " {");
+			printOperand(MI, 0, O);
+			SStream_concat0(O, "}");
+			return;
+		} else
+			break;
+	case ARM_t2LDR_POST:
+		if ((MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP) &&
+		    (Opcode == ARM_t2LDR_POST &&
+		     (MCOperand_getImm(MCInst_getOperand(MI, (3))) == 4))) {
+			SStream_concat0(O, "pop");
+			printPredicateOperand(MI, 4, O);
 			SStream_concat0(O, " {");
 			printOperand(MI, 0, O);
 			SStream_concat0(O, "}");
