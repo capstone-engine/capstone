@@ -260,7 +260,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 				Writeback = false;
 		}
 
-		SStream_concat0(O, " ldm");
+		SStream_concat0(O, "ldm");
 
 		printPredicateOperand(MI, 1, O);
 		SStream_concat0(O, " ");
