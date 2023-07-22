@@ -21,9 +21,9 @@ typedef struct insn_map {
 	unsigned short mapid;		    // The Capstone instruction id
 #ifndef CAPSTONE_DIET
 	uint16_t regs_use[MAX_IMPL_R_REGS]; ///< list of implicit registers used by
-		///< this instruction
+					    ///< this instruction
 	uint16_t regs_mod[MAX_IMPL_W_REGS]; ///< list of implicit registers modified
-		///< by this instruction
+					    ///< by this instruction
 	unsigned char groups
 		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	bool branch;		  // branch instruction?
@@ -47,7 +47,7 @@ typedef struct {
 	uint8_t /* cs_ac_type */ access; ///< The access type (read, write)
 	uint8_t				 /* cs_data_type */
 		dtypes[MAX_NO_DATA_TYPES]; ///< List of op types. Terminated by
-		///< CS_DATA_TYPE_LAST
+					   ///< CS_DATA_TYPE_LAST
 } mapping_op;
 
 #define MAX_NO_INSN_MAP_OPS 16

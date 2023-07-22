@@ -1043,7 +1043,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				SYSm);
 			if (TheReg) {
 				ARM_set_detail_op_sysreg(
-					MI, TheReg->sysreg.mclasssysreg, IsOutReg);
+					MI, TheReg->sysreg.mclasssysreg,
+					IsOutReg);
 				return;
 			}
 
