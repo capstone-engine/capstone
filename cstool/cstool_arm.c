@@ -71,7 +71,7 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: SETEND = %s\n", i, op->setend == ARM_SETEND_BE? "be" : "le");
 				break;
 			case ARM_OP_SYSREG:
-				printf("\t\toperands[%u].type: SYSREG = %u\n", i, op->reg);
+				printf("\t\toperands[%u].type: SYSREG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 		}
 
