@@ -75,7 +75,7 @@ static void snprint_insn_detail(char * buf, size_t * cur, size_t * left, cs_insn
 				_this_printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
 			case ARM_OP_IMM:
-				_this_printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				_this_printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
 			case ARM_OP_FP:
 				_this_printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
@@ -95,10 +95,10 @@ static void snprint_insn_detail(char * buf, size_t * cur, size_t * left, cs_insn
 
 				break;
 			case ARM_OP_PIMM:
-				_this_printf("\t\toperands[%u].type: P-IMM = %u\n", i, op->imm);
+				_this_printf("\t\toperands[%u].type: P-IMM = %" PRIu64 "\n", i, op->imm);
 				break;
 			case ARM_OP_CIMM:
-				_this_printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
+				_this_printf("\t\toperands[%u].type: C-IMM = %" PRIu64 "\n", i, op->imm);
 				break;
 		}
 
