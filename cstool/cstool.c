@@ -209,6 +209,10 @@ static void usage(char *prog)
 		printf("        aarch64be     aarch64 + big endian\n");
 	}
 
+	if (cs_support(CS_ARCH_ALPHA)) {
+		printf("        alpha       alpha\n");
+	}
+
 	if (cs_support(CS_ARCH_MIPS)) {
 		printf("        mips        mips32 + little endian\n");
 		printf("        mipsbe      mips32 + big endian\n");
@@ -319,10 +323,6 @@ static void usage(char *prog)
 		printf("        tc160       tricore V1.6\n");
 		printf("        tc161       tricore V1.6.1\n");
 		printf("        tc162       tricore V1.6.2\n");
-	}
-
-	if (cs_support(CS_ARCH_ALPHA)) {
-		printf("        alpha:       Alpha\n");
 	}
 
 	printf("\nExtra options:\n");

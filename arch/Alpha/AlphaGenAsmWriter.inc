@@ -19,161 +19,160 @@
 static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
 #ifndef CAPSTONE_DIET
   static const char AsmStrs[] = {
-  /* 0 */ "MSKLH \0"
-  /* 7 */ "INSLH \0"
-  /* 14 */ "EXTLH \0"
-  /* 21 */ "MSKQH \0"
-  /* 28 */ "INSQH \0"
-  /* 35 */ "EXTQH \0"
-  /* 42 */ "MSKWH \0"
-  /* 49 */ "INSWH \0"
-  /* 56 */ "EXTWH \0"
-  /* 63 */ "MSKBL \0"
-  /* 70 */ "INSBL \0"
-  /* 77 */ "EXTBL \0"
-  /* 84 */ "MSKLL \0"
-  /* 91 */ "INSLL \0"
-  /* 98 */ "EXTLL \0"
-  /* 105 */ "MSKQL \0"
-  /* 112 */ "INSQL \0"
-  /* 119 */ "EXTQL \0"
-  /* 126 */ "MSKWL \0"
-  /* 133 */ "INSWL \0"
-  /* 140 */ "EXTWL \0"
-  /* 147 */ "; ADJDOWN \0"
-  /* 158 */ "CTPOP \0"
-  /* 165 */ "; ADJUP \0"
-  /* 174 */ "CTLZ \0"
-  /* 180 */ "CTTZ \0"
-  /* 186 */ "lda \0"
-  /* 191 */ "sra \0"
-  /* 196 */ "stb \0"
-  /* 201 */ "sextb \0"
-  /* 208 */ "blbc \0"
-  /* 214 */ "cmovlbc \0"
-  /* 223 */ "rpcc \0"
-  /* 229 */ "bic \0"
-  /* 234 */ "rc \0"
-  /* 238 */ "cvttq/svc \0"
-  /* 249 */ "and \0"
-  /* 254 */ "fbge \0"
-  /* 260 */ "cmpbge \0"
-  /* 268 */ "fcmovge \0"
-  /* 277 */ "fble \0"
-  /* 283 */ "cmple \0"
-  /* 290 */ "cmpule \0"
-  /* 298 */ "fcmovle \0"
-  /* 307 */ "fbne \0"
-  /* 313 */ "jsr_coroutine \0"
-  /* 328 */ "fcmovne \0"
-  /* 337 */ "cpyse \0"
-  /* 344 */ "ldah \0"
-  /* 350 */ "umulh \0"
-  /* 357 */ "cvtqs/sui \0"
-  /* 368 */ "cvtts/sui \0"
-  /* 379 */ "cvtqt/sui \0"
-  /* 390 */ "ldl/l \0"
-  /* 397 */ "stl/l \0"
-  /* 404 */ "ldq/l \0"
-  /* 411 */ "stq/l \0"
-  /* 418 */ "s4subl \0"
-  /* 426 */ "s8subl \0"
-  /* 434 */ "s4addl \0"
-  /* 442 */ "s8addl \0"
-  /* 450 */ "ldl \0"
-  /* 455 */ "sll \0"
-  /* 460 */ "mull \0"
-  /* 466 */ "srl \0"
-  /* 471 */ "stl \0"
-  /* 476 */ "cpysn \0"
-  /* 483 */ "s4subq \0"
-  /* 491 */ "s8subq \0"
-  /* 499 */ "s4addq \0"
-  /* 507 */ "s8addq \0"
-  /* 515 */ "ldq \0"
-  /* 520 */ "fbeq \0"
-  /* 526 */ "cmpeq \0"
-  /* 533 */ "fcmoveq \0"
-  /* 542 */ "mulq \0"
-  /* 548 */ "stq \0"
-  /* 553 */ "xor \0"
-  /* 558 */ "cvtst/s \0"
-  /* 567 */ "blbs \0"
-  /* 573 */ "cmovlbs \0"
-  /* 582 */ "lds \0"
-  /* 587 */ "itofs \0"
-  /* 594 */ "bis \0"
-  /* 599 */ "ftois \0"
-  /* 606 */ "rs \0"
-  /* 610 */ "sts \0"
-  /* 615 */ "cpys \0"
-  /* 621 */ "ldt \0"
-  /* 626 */ "itoft \0"
-  /* 633 */ "fbgt \0"
-  /* 639 */ "fcmovgt \0"
-  /* 648 */ "ftoit \0"
-  /* 655 */ "fblt \0"
-  /* 661 */ "cmplt \0"
-  /* 668 */ "cmpult \0"
-  /* 676 */ "fcmovlt \0"
-  /* 685 */ "zapnot \0"
-  /* 693 */ "ornot \0"
-  /* 700 */ "stt \0"
-  /* 705 */ "ldq_u \0"
-  /* 712 */ "stq_u \0"
-  /* 719 */ "ldbu \0"
-  /* 725 */ "cmptle/su \0"
-  /* 736 */ "cmptun/su \0"
-  /* 747 */ "cmpteq/su \0"
-  /* 758 */ "subs/su \0"
-  /* 767 */ "adds/su \0"
-  /* 776 */ "muls/su \0"
-  /* 785 */ "sqrts/su \0"
-  /* 795 */ "divs/su \0"
-  /* 804 */ "subt/su \0"
-  /* 813 */ "addt/su \0"
-  /* 822 */ "cmptlt/su \0"
-  /* 833 */ "mult/su \0"
-  /* 842 */ "sqrtt/su \0"
-  /* 852 */ "divt/su \0"
-  /* 861 */ "ldwu \0"
-  /* 867 */ "eqv \0"
-  /* 872 */ "stw \0"
-  /* 877 */ "sextw \0"
-  /* 884 */ "bsr $26,$\0"
-  /* 894 */ "LSMARKER$\0"
-  /* 904 */ "wh64 (\0"
-  /* 911 */ "ecb (\0"
-  /* 917 */ "fetch (\0"
-  /* 925 */ "fetch_m (\0"
-  /* 935 */ "wh64en (\0"
-  /* 944 */ "jmp $31,\0"
-  /* 953 */ "br $31,\0"
-  /* 961 */ "# XRay Function Patchable RET.\0"
-  /* 992 */ "# XRay Typed Event Log.\0"
-  /* 1016 */ "# XRay Custom Event Log.\0"
-  /* 1041 */ "# XRay Function Enter.\0"
-  /* 1064 */ "# XRay Tail Call Exit.\0"
-  /* 1087 */ "# XRay Function Exit.\0"
-  /* 1109 */ "jsr $23,($27),0\0"
-  /* 1125 */ "jsr $26,($27),0\0"
-  /* 1141 */ "ret $31,($26),1\0"
-  /* 1157 */ "COND_BRANCH imm:\0"
-  /* 1174 */ "LIFETIME_END\0"
-  /* 1187 */ "PSEUDO_PROBE\0"
-  /* 1200 */ "BUNDLE\0"
-  /* 1207 */ "DBG_VALUE\0"
-  /* 1217 */ "DBG_INSTR_REF\0"
-  /* 1231 */ "DBG_PHI\0"
-  /* 1239 */ "DBG_LABEL\0"
-  /* 1249 */ "LIFETIME_START\0"
-  /* 1264 */ "DBG_VALUE_LIST\0"
-  /* 1279 */ "PCMARKER_\0"
-  /* 1289 */ "excb\0"
-  /* 1294 */ "wmb\0"
-  /* 1298 */ "trapb\0"
-  /* 1304 */ "#wtf\0"
-  /* 1309 */ "# FEntry call\0"
+  /* 0 */ "; ADJDOWN \0"
+  /* 11 */ "; ADJUP \0"
+  /* 20 */ "lda \0"
+  /* 25 */ "sra \0"
+  /* 30 */ "stb \0"
+  /* 35 */ "sextb \0"
+  /* 42 */ "stl_c \0"
+  /* 49 */ "stq_c \0"
+  /* 56 */ "blbc \0"
+  /* 62 */ "cmovlbc \0"
+  /* 71 */ "rpcc \0"
+  /* 77 */ "bic \0"
+  /* 82 */ "rc \0"
+  /* 86 */ "cvttq/svc \0"
+  /* 97 */ "and \0"
+  /* 102 */ "fbge \0"
+  /* 108 */ "cmpbge \0"
+  /* 116 */ "fcmovge \0"
+  /* 125 */ "fble \0"
+  /* 131 */ "cmple \0"
+  /* 138 */ "cmpule \0"
+  /* 146 */ "fcmovle \0"
+  /* 155 */ "fbne \0"
+  /* 161 */ "jsr_coroutine \0"
+  /* 176 */ "fcmovne \0"
+  /* 185 */ "cpyse \0"
+  /* 192 */ "ldah \0"
+  /* 198 */ "msklh \0"
+  /* 205 */ "inslh \0"
+  /* 212 */ "extlh \0"
+  /* 219 */ "umulh \0"
+  /* 226 */ "mskqh \0"
+  /* 233 */ "insqh \0"
+  /* 240 */ "extqh \0"
+  /* 247 */ "mskwh \0"
+  /* 254 */ "inswh \0"
+  /* 261 */ "extwh \0"
+  /* 268 */ "cvtqs/sui \0"
+  /* 279 */ "cvtts/sui \0"
+  /* 290 */ "cvtqt/sui \0"
+  /* 301 */ "ldl_l \0"
+  /* 308 */ "ldq_l \0"
+  /* 315 */ "mskbl \0"
+  /* 322 */ "insbl \0"
+  /* 329 */ "extbl \0"
+  /* 336 */ "s4subl \0"
+  /* 344 */ "s8subl \0"
+  /* 352 */ "s4addl \0"
+  /* 360 */ "s8addl \0"
+  /* 368 */ "ldl \0"
+  /* 373 */ "mskll \0"
+  /* 380 */ "insll \0"
+  /* 387 */ "extll \0"
+  /* 394 */ "mull \0"
+  /* 400 */ "mskql \0"
+  /* 407 */ "insql \0"
+  /* 414 */ "extql \0"
+  /* 421 */ "srl \0"
+  /* 426 */ "stl \0"
+  /* 431 */ "mskwl \0"
+  /* 438 */ "inswl \0"
+  /* 445 */ "extwl \0"
+  /* 452 */ "cpysn \0"
+  /* 459 */ "ctpop \0"
+  /* 466 */ "s4subq \0"
+  /* 474 */ "s8subq \0"
+  /* 482 */ "s4addq \0"
+  /* 490 */ "s8addq \0"
+  /* 498 */ "ldq \0"
+  /* 503 */ "fbeq \0"
+  /* 509 */ "cmpeq \0"
+  /* 516 */ "fcmoveq \0"
+  /* 525 */ "mulq \0"
+  /* 531 */ "stq \0"
+  /* 536 */ "xor \0"
+  /* 541 */ "cvtst/s \0"
+  /* 550 */ "blbs \0"
+  /* 556 */ "cmovlbs \0"
+  /* 565 */ "lds \0"
+  /* 570 */ "itofs \0"
+  /* 577 */ "bis \0"
+  /* 582 */ "ftois \0"
+  /* 589 */ "rs \0"
+  /* 593 */ "sts \0"
+  /* 598 */ "cpys \0"
+  /* 604 */ "ldt \0"
+  /* 609 */ "itoft \0"
+  /* 616 */ "fbgt \0"
+  /* 622 */ "fcmovgt \0"
+  /* 631 */ "ftoit \0"
+  /* 638 */ "fblt \0"
+  /* 644 */ "cmplt \0"
+  /* 651 */ "cmpult \0"
+  /* 659 */ "fcmovlt \0"
+  /* 668 */ "zapnot \0"
+  /* 676 */ "ornot \0"
+  /* 683 */ "stt \0"
+  /* 688 */ "ldq_u \0"
+  /* 695 */ "stq_u \0"
+  /* 702 */ "ldbu \0"
+  /* 708 */ "cmptle/su \0"
+  /* 719 */ "cmptun/su \0"
+  /* 730 */ "cmpteq/su \0"
+  /* 741 */ "subs/su \0"
+  /* 750 */ "adds/su \0"
+  /* 759 */ "muls/su \0"
+  /* 768 */ "sqrts/su \0"
+  /* 778 */ "divs/su \0"
+  /* 787 */ "subt/su \0"
+  /* 796 */ "addt/su \0"
+  /* 805 */ "cmptlt/su \0"
+  /* 816 */ "mult/su \0"
+  /* 825 */ "sqrtt/su \0"
+  /* 835 */ "divt/su \0"
+  /* 844 */ "ldwu \0"
+  /* 850 */ "eqv \0"
+  /* 855 */ "stw \0"
+  /* 860 */ "sextw \0"
+  /* 867 */ "ctlz \0"
+  /* 873 */ "cttz \0"
+  /* 879 */ "bsr $26,$\0"
+  /* 889 */ "LSMARKER$\0"
+  /* 899 */ "wh64 (\0"
+  /* 906 */ "ecb (\0"
+  /* 912 */ "fetch (\0"
+  /* 920 */ "fetch_m (\0"
+  /* 930 */ "wh64en (\0"
+  /* 939 */ "jmp $31,\0"
+  /* 948 */ "br $31,\0"
+  /* 956 */ "# XRay Function Patchable RET.\0"
+  /* 987 */ "# XRay Typed Event Log.\0"
+  /* 1011 */ "# XRay Custom Event Log.\0"
+  /* 1036 */ "# XRay Function Enter.\0"
+  /* 1059 */ "# XRay Tail Call Exit.\0"
+  /* 1082 */ "# XRay Function Exit.\0"
+  /* 1104 */ "jsr $23,($27),0\0"
+  /* 1120 */ "jsr $26,($27),0\0"
+  /* 1136 */ "ret $31,($26),1\0"
+  /* 1152 */ "COND_BRANCH imm:\0"
+  /* 1169 */ "LIFETIME_END\0"
+  /* 1182 */ "PSEUDO_PROBE\0"
+  /* 1195 */ "BUNDLE\0"
+  /* 1202 */ "DBG_VALUE\0"
+  /* 1212 */ "DBG_INSTR_REF\0"
+  /* 1226 */ "DBG_PHI\0"
+  /* 1234 */ "DBG_LABEL\0"
+  /* 1244 */ "LIFETIME_START\0"
+  /* 1259 */ "DBG_VALUE_LIST\0"
+  /* 1274 */ "PCMARKER_\0"
+  /* 1284 */ "excb\0"
+  /* 1289 */ "wmb\0"
+  /* 1293 */ "trapb\0"
+  /* 1299 */ "#wtf\0"
+  /* 1304 */ "# FEntry call\0"
 };
 #endif // CAPSTONE_DIET
 
@@ -191,20 +190,20 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// IMPLICIT_DEF
     0U,	// SUBREG_TO_REG
     0U,	// COPY_TO_REGCLASS
-    1208U,	// DBG_VALUE
-    1265U,	// DBG_VALUE_LIST
-    1218U,	// DBG_INSTR_REF
-    1232U,	// DBG_PHI
-    1240U,	// DBG_LABEL
+    1203U,	// DBG_VALUE
+    1260U,	// DBG_VALUE_LIST
+    1213U,	// DBG_INSTR_REF
+    1227U,	// DBG_PHI
+    1235U,	// DBG_LABEL
     0U,	// REG_SEQUENCE
     0U,	// COPY
-    1201U,	// BUNDLE
-    1250U,	// LIFETIME_START
-    1175U,	// LIFETIME_END
-    1188U,	// PSEUDO_PROBE
+    1196U,	// BUNDLE
+    1245U,	// LIFETIME_START
+    1170U,	// LIFETIME_END
+    1183U,	// PSEUDO_PROBE
     0U,	// ARITH_FENCE
     0U,	// STACKMAP
-    1310U,	// FENTRY_CALL
+    1305U,	// FENTRY_CALL
     0U,	// PATCHPOINT
     0U,	// LOAD_STACK_GUARD
     0U,	// PREALLOCATED_SETUP
@@ -213,12 +212,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LOCAL_ESCAPE
     0U,	// FAULTING_OP
     0U,	// PATCHABLE_OP
-    1042U,	// PATCHABLE_FUNCTION_ENTER
-    962U,	// PATCHABLE_RET
-    1088U,	// PATCHABLE_FUNCTION_EXIT
-    1065U,	// PATCHABLE_TAIL_CALL
-    1017U,	// PATCHABLE_EVENT_CALL
-    993U,	// PATCHABLE_TYPED_EVENT_CALL
+    1037U,	// PATCHABLE_FUNCTION_ENTER
+    957U,	// PATCHABLE_RET
+    1083U,	// PATCHABLE_FUNCTION_EXIT
+    1060U,	// PATCHABLE_TAIL_CALL
+    1012U,	// PATCHABLE_EVENT_CALL
+    988U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
     0U,	// MEMBARRIER
     0U,	// G_ASSERT_SEXT
@@ -429,261 +428,261 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_VECREDUCE_UMIN
     0U,	// G_SBFX
     0U,	// G_UBFX
-    2196U,	// ADJUSTSTACKDOWN
-    2214U,	// ADJUSTSTACKUP
-    11133U,	// ALTENT
+    2049U,	// ADJUSTSTACKDOWN
+    2060U,	// ADJUSTSTACKUP
+    11128U,	// ALTENT
     0U,	// CAS32
     0U,	// CAS64
     0U,	// LAS32
     0U,	// LAS64
-    19327U,	// MEMLABEL
-    27904U,	// PCLABEL
+    19322U,	// MEMLABEL
+    27899U,	// PCLABEL
     0U,	// SWAP32
     0U,	// SWAP64
-    1305U,	// WTF
-    37301U,	// ADDLi
-    37301U,	// ADDLr
-    37366U,	// ADDQi
-    37366U,	// ADDQr
-    37632U,	// ADDS
-    37678U,	// ADDT
-    37114U,	// ANDi
-    37114U,	// ANDr
-    35338U,	// BEQ
-    35072U,	// BGE
-    35451U,	// BGT
-    37094U,	// BICi
-    37094U,	// BICr
-    37459U,	// BISi
-    37459U,	// BISr
-    35025U,	// BLBC
-    35384U,	// BLBS
-    35095U,	// BLE
-    35473U,	// BLT
-    35125U,	// BNE
-    3002U,	// BR
-    43893U,	// BSR
-    37399U,	// CMOVEQi
-    37399U,	// CMOVEQr
-    37134U,	// CMOVGEi
-    37134U,	// CMOVGEr
-    37505U,	// CMOVGTi
-    37505U,	// CMOVGTr
-    37079U,	// CMOVLBCi
-    37079U,	// CMOVLBCr
-    37438U,	// CMOVLBSi
-    37438U,	// CMOVLBSr
-    37164U,	// CMOVLEi
-    37164U,	// CMOVLEr
-    37542U,	// CMOVLTi
-    37542U,	// CMOVLTr
-    37194U,	// CMOVNEi
-    37194U,	// CMOVNEr
-    37125U,	// CMPBGE
-    37125U,	// CMPBGEi
-    37391U,	// CMPEQ
-    37391U,	// CMPEQi
-    37148U,	// CMPLE
-    37148U,	// CMPLEi
-    37526U,	// CMPLT
-    37526U,	// CMPLTi
-    37612U,	// CMPTEQ
-    37590U,	// CMPTLE
-    37687U,	// CMPTLT
-    37601U,	// CMPTUN
-    37155U,	// CMPULE
-    37155U,	// CMPULEi
-    37533U,	// CMPULT
-    37533U,	// CMPULTi
-    52358U,	// COND_BRANCH_F
-    60550U,	// COND_BRANCH_I
-    37202U,	// CPYSES
-    37202U,	// CPYSESt
-    37202U,	// CPYSET
-    37341U,	// CPYSNS
-    37341U,	// CPYSNSt
-    37341U,	// CPYSNT
-    37341U,	// CPYSNTs
-    37480U,	// CPYSS
-    37480U,	// CPYSSt
-    37480U,	// CPYST
-    37480U,	// CPYSTs
-    37039U,	// CTLZ
-    37023U,	// CTPOP
-    37045U,	// CTTZ
-    37222U,	// CVTQS
-    37244U,	// CVTQT
-    37423U,	// CVTST
-    37103U,	// CVTTQ
-    37233U,	// CVTTS
-    37660U,	// DIVS
-    37717U,	// DIVT
-    5008U,	// ECB
-    37732U,	// EQVi
-    37732U,	// EQVr
-    1290U,	// EXCB
-    36942U,	// EXTBL
-    36942U,	// EXTBLi
-    36879U,	// EXTLH
-    36879U,	// EXTLHi
-    36963U,	// EXTLL
-    36963U,	// EXTLLi
-    36900U,	// EXTQH
-    36900U,	// EXTQHi
-    36984U,	// EXTQL
-    36984U,	// EXTQLi
-    36921U,	// EXTWH
-    36921U,	// EXTWHi
-    37005U,	// EXTWL
-    37005U,	// EXTWLi
-    35337U,	// FBEQ
-    35071U,	// FBGE
-    35450U,	// FBGT
-    35094U,	// FBLE
-    35472U,	// FBLT
-    35124U,	// FBNE
-    6678U,	// FCMOVEQS
-    6678U,	// FCMOVEQT
-    6413U,	// FCMOVGES
-    6413U,	// FCMOVGET
-    6784U,	// FCMOVGTS
-    6784U,	// FCMOVGTT
-    6443U,	// FCMOVLES
-    6443U,	// FCMOVLET
-    6821U,	// FCMOVLTS
-    6821U,	// FCMOVLTT
-    6473U,	// FCMOVNES
-    6473U,	// FCMOVNET
-    5014U,	// FETCH
-    5022U,	// FETCH_M
-    37464U,	// FTOIS
-    37513U,	// FTOIT
-    36935U,	// INSBL
-    36935U,	// INSBLi
-    36872U,	// INSLH
-    36872U,	// INSLHi
-    36956U,	// INSLL
-    36956U,	// INSLLi
-    36893U,	// INSQH
-    36893U,	// INSQHi
-    36977U,	// INSQL
-    36977U,	// INSQLi
-    36914U,	// INSWH
-    36914U,	// INSWHi
-    36998U,	// INSWL
-    36998U,	// INSWLi
-    37452U,	// ITOFS
-    37491U,	// ITOFT
-    11185U,	// JMP
-    1126U,	// JSR
-    18746U,	// JSR_COROUTINE
-    1110U,	// JSRs
-    35003U,	// LDA
-    35161U,	// LDAH
-    26969U,	// LDAHg
-    35161U,	// LDAHr
-    26811U,	// LDAg
-    35003U,	// LDAr
-    35536U,	// LDBU
-    35536U,	// LDBUr
-    35267U,	// LDL
-    35207U,	// LDL_L
-    35267U,	// LDLr
-    35332U,	// LDQ
-    35221U,	// LDQ_L
-    35522U,	// LDQ_U
-    35332U,	// LDQl
-    35332U,	// LDQr
-    35399U,	// LDS
-    35399U,	// LDSr
-    35438U,	// LDT
-    35438U,	// LDTr
-    35678U,	// LDWU
-    35678U,	// LDWUr
-    1296U,	// MB
-    36928U,	// MSKBL
-    36928U,	// MSKBLi
-    36865U,	// MSKLH
-    36865U,	// MSKLHi
-    36949U,	// MSKLL
-    36949U,	// MSKLLi
-    36886U,	// MSKQH
-    36886U,	// MSKQHi
-    36970U,	// MSKQL
-    36970U,	// MSKQLi
-    36907U,	// MSKWH
-    36907U,	// MSKWHi
-    36991U,	// MSKWL
-    36991U,	// MSKWLi
-    37325U,	// MULLi
-    37325U,	// MULLr
-    37407U,	// MULQi
-    37407U,	// MULQr
-    37641U,	// MULS
-    37698U,	// MULT
-    37558U,	// ORNOTi
-    37558U,	// ORNOTr
-    2283U,	// RC
-    1142U,	// RETDAG
-    1142U,	// RETDAGp
-    2272U,	// RPCC
-    2655U,	// RS
-    37299U,	// S4ADDLi
-    37299U,	// S4ADDLr
-    37364U,	// S4ADDQi
-    37364U,	// S4ADDQr
-    37283U,	// S4SUBLi
-    37283U,	// S4SUBLr
-    37348U,	// S4SUBQi
-    37348U,	// S4SUBQr
-    37307U,	// S8ADDLi
-    37307U,	// S8ADDLr
-    37372U,	// S8ADDQi
-    37372U,	// S8ADDQr
-    37291U,	// S8SUBLi
-    37291U,	// S8SUBLr
-    37356U,	// S8SUBQi
-    37356U,	// S8SUBQr
-    37066U,	// SEXTB
-    37742U,	// SEXTW
-    37320U,	// SLi
-    37320U,	// SLr
-    37650U,	// SQRTS
-    37707U,	// SQRTT
-    37056U,	// SRAi
-    37056U,	// SRAr
-    37331U,	// SRLi
-    37331U,	// SRLr
-    35013U,	// STB
-    35013U,	// STBr
-    35288U,	// STL
-    37262U,	// STL_C
-    35288U,	// STLr
-    35365U,	// STQ
-    37276U,	// STQ_C
-    35529U,	// STQ_U
-    35365U,	// STQr
-    35427U,	// STS
-    35427U,	// STSr
-    35517U,	// STT
-    35517U,	// STTr
-    35689U,	// STW
-    35689U,	// STWr
-    37285U,	// SUBLi
-    37285U,	// SUBLr
-    37350U,	// SUBQi
-    37350U,	// SUBQr
-    37623U,	// SUBS
-    37669U,	// SUBT
-    1299U,	// TRAPB
-    37215U,	// UMULHi
-    37215U,	// UMULHr
-    5001U,	// WH64
-    5032U,	// WH64EN
-    1295U,	// WMB
-    37418U,	// XORi
-    37418U,	// XORr
-    37550U,	// ZAPNOTi
+    1300U,	// WTF
+    37219U,	// ADDLi
+    37219U,	// ADDLr
+    37349U,	// ADDQi
+    37349U,	// ADDQr
+    37615U,	// ADDS
+    37661U,	// ADDT
+    36962U,	// ANDi
+    36962U,	// ANDr
+    35321U,	// BEQ
+    34920U,	// BGE
+    35434U,	// BGT
+    36942U,	// BICi
+    36942U,	// BICr
+    37442U,	// BISi
+    37442U,	// BISr
+    34873U,	// BLBC
+    35367U,	// BLBS
+    34943U,	// BLE
+    35456U,	// BLT
+    34973U,	// BNE
+    2997U,	// BR
+    43888U,	// BSR
+    37382U,	// CMOVEQi
+    37382U,	// CMOVEQr
+    36982U,	// CMOVGEi
+    36982U,	// CMOVGEr
+    37488U,	// CMOVGTi
+    37488U,	// CMOVGTr
+    36927U,	// CMOVLBCi
+    36927U,	// CMOVLBCr
+    37421U,	// CMOVLBSi
+    37421U,	// CMOVLBSr
+    37012U,	// CMOVLEi
+    37012U,	// CMOVLEr
+    37525U,	// CMOVLTi
+    37525U,	// CMOVLTr
+    37042U,	// CMOVNEi
+    37042U,	// CMOVNEr
+    36973U,	// CMPBGE
+    36973U,	// CMPBGEi
+    37374U,	// CMPEQ
+    37374U,	// CMPEQi
+    36996U,	// CMPLE
+    36996U,	// CMPLEi
+    37509U,	// CMPLT
+    37509U,	// CMPLTi
+    37595U,	// CMPTEQ
+    37573U,	// CMPTLE
+    37670U,	// CMPTLT
+    37584U,	// CMPTUN
+    37003U,	// CMPULE
+    37003U,	// CMPULEi
+    37516U,	// CMPULT
+    37516U,	// CMPULTi
+    52353U,	// COND_BRANCH_F
+    60545U,	// COND_BRANCH_I
+    37050U,	// CPYSES
+    37050U,	// CPYSESt
+    37050U,	// CPYSET
+    37317U,	// CPYSNS
+    37317U,	// CPYSNSt
+    37317U,	// CPYSNT
+    37317U,	// CPYSNTs
+    37463U,	// CPYSS
+    37463U,	// CPYSSt
+    37463U,	// CPYST
+    37463U,	// CPYSTs
+    37732U,	// CTLZ
+    37324U,	// CTPOP
+    37738U,	// CTTZ
+    37133U,	// CVTQS
+    37155U,	// CVTQT
+    37406U,	// CVTST
+    36951U,	// CVTTQ
+    37144U,	// CVTTS
+    37643U,	// DIVS
+    37700U,	// DIVT
+    5003U,	// ECB
+    37715U,	// EQVi
+    37715U,	// EQVr
+    1285U,	// EXCB
+    37194U,	// EXTBL
+    37194U,	// EXTBLi
+    37077U,	// EXTLH
+    37077U,	// EXTLHi
+    37252U,	// EXTLL
+    37252U,	// EXTLLi
+    37105U,	// EXTQH
+    37105U,	// EXTQHi
+    37279U,	// EXTQL
+    37279U,	// EXTQLi
+    37126U,	// EXTWH
+    37126U,	// EXTWHi
+    37310U,	// EXTWL
+    37310U,	// EXTWLi
+    35320U,	// FBEQ
+    34919U,	// FBGE
+    35433U,	// FBGT
+    34942U,	// FBLE
+    35455U,	// FBLT
+    34972U,	// FBNE
+    6661U,	// FCMOVEQS
+    6661U,	// FCMOVEQT
+    6261U,	// FCMOVGES
+    6261U,	// FCMOVGET
+    6767U,	// FCMOVGTS
+    6767U,	// FCMOVGTT
+    6291U,	// FCMOVLES
+    6291U,	// FCMOVLET
+    6804U,	// FCMOVLTS
+    6804U,	// FCMOVLTT
+    6321U,	// FCMOVNES
+    6321U,	// FCMOVNET
+    5009U,	// FETCH
+    5017U,	// FETCH_M
+    37447U,	// FTOIS
+    37496U,	// FTOIT
+    37187U,	// INSBL
+    37187U,	// INSBLi
+    37070U,	// INSLH
+    37070U,	// INSLHi
+    37245U,	// INSLL
+    37245U,	// INSLLi
+    37098U,	// INSQH
+    37098U,	// INSQHi
+    37272U,	// INSQL
+    37272U,	// INSQLi
+    37119U,	// INSWH
+    37119U,	// INSWHi
+    37303U,	// INSWL
+    37303U,	// INSWLi
+    37435U,	// ITOFS
+    37474U,	// ITOFT
+    11180U,	// JMP
+    1121U,	// JSR
+    18594U,	// JSR_COROUTINE
+    1105U,	// JSRs
+    34837U,	// LDA
+    35009U,	// LDAH
+    26817U,	// LDAHg
+    35009U,	// LDAHr
+    26645U,	// LDAg
+    34837U,	// LDAr
+    35519U,	// LDBU
+    35519U,	// LDBUr
+    35185U,	// LDL
+    35118U,	// LDL_L
+    35185U,	// LDLr
+    35315U,	// LDQ
+    35125U,	// LDQ_L
+    35505U,	// LDQ_U
+    35315U,	// LDQl
+    35315U,	// LDQr
+    35382U,	// LDS
+    35382U,	// LDSr
+    35421U,	// LDT
+    35421U,	// LDTr
+    35661U,	// LDWU
+    35661U,	// LDWUr
+    1291U,	// MB
+    37180U,	// MSKBL
+    37180U,	// MSKBLi
+    37063U,	// MSKLH
+    37063U,	// MSKLHi
+    37238U,	// MSKLL
+    37238U,	// MSKLLi
+    37091U,	// MSKQH
+    37091U,	// MSKQHi
+    37265U,	// MSKQL
+    37265U,	// MSKQLi
+    37112U,	// MSKWH
+    37112U,	// MSKWHi
+    37296U,	// MSKWL
+    37296U,	// MSKWLi
+    37259U,	// MULLi
+    37259U,	// MULLr
+    37390U,	// MULQi
+    37390U,	// MULQr
+    37624U,	// MULS
+    37681U,	// MULT
+    37541U,	// ORNOTi
+    37541U,	// ORNOTr
+    2131U,	// RC
+    1137U,	// RETDAG
+    1137U,	// RETDAGp
+    2120U,	// RPCC
+    2638U,	// RS
+    37217U,	// S4ADDLi
+    37217U,	// S4ADDLr
+    37347U,	// S4ADDQi
+    37347U,	// S4ADDQr
+    37201U,	// S4SUBLi
+    37201U,	// S4SUBLr
+    37331U,	// S4SUBQi
+    37331U,	// S4SUBQr
+    37225U,	// S8ADDLi
+    37225U,	// S8ADDLr
+    37355U,	// S8ADDQi
+    37355U,	// S8ADDQr
+    37209U,	// S8SUBLi
+    37209U,	// S8SUBLr
+    37339U,	// S8SUBQi
+    37339U,	// S8SUBQr
+    36900U,	// SEXTB
+    37725U,	// SEXTW
+    37247U,	// SLi
+    37247U,	// SLr
+    37633U,	// SQRTS
+    37690U,	// SQRTT
+    36890U,	// SRAi
+    36890U,	// SRAr
+    37286U,	// SRLi
+    37286U,	// SRLr
+    34847U,	// STB
+    34847U,	// STBr
+    35243U,	// STL
+    36907U,	// STL_C
+    35243U,	// STLr
+    35348U,	// STQ
+    36914U,	// STQ_C
+    35512U,	// STQ_U
+    35348U,	// STQr
+    35410U,	// STS
+    35410U,	// STSr
+    35500U,	// STT
+    35500U,	// STTr
+    35672U,	// STW
+    35672U,	// STWr
+    37203U,	// SUBLi
+    37203U,	// SUBLr
+    37333U,	// SUBQi
+    37333U,	// SUBQr
+    37606U,	// SUBS
+    37652U,	// SUBT
+    1294U,	// TRAPB
+    37084U,	// UMULHi
+    37084U,	// UMULHr
+    4996U,	// WH64
+    5027U,	// WH64EN
+    1290U,	// WMB
+    37401U,	// XORi
+    37401U,	// XORr
+    37533U,	// ZAPNOTi
   };
 
   static const uint8_t OpInfo1[] = {
@@ -1313,9 +1312,9 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 10:
     // JSR_COROUTINE
-    SStream_concat0(O, ",( ");
+    SStream_concat0(O, ",(");
     printOperand(MI, 1, O);
-    SStream_concat0(O, " ),");
+    SStream_concat0(O, "),");
     printOperand(MI, 2, O);
     return;
     break;
