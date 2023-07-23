@@ -85,6 +85,25 @@ void map_add_implicit_write(MCInst *MI, uint32_t Reg)
 	}
 }
 
+/// Adds a register to the implicit read register list.
+/// It will not add the same register twice.
+void map_add_implicit_read(MCInst *MI, uint32_t Reg)
+{
+	if (!MI->flat_insn->detail)
+		return;
+
+	uint16_t *regs_read = MI->flat_insn->detail->regs_read;
+	for (int i = 0; i < MAX_IMPL_W_REGS; ++i) {
+		if (i == MI->flat_insn->detail->regs_read_count) {
+			regs_read[i] = Reg;
+			MI->flat_insn->detail->regs_read_count++;
+			return;
+		}
+		if (regs_read[i] == Reg)
+			return;
+	}
+}
+
 /// Removes a register from the implicit write register list.
 void map_remove_implicit_write(MCInst *MI, uint32_t Reg)
 {
@@ -160,7 +179,8 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 }
 
 /// Adds a given group to @MI->flat_insn.
-void add_group(MCInst *MI, unsigned /* arch_group */ group) {
+void add_group(MCInst *MI, unsigned /* arch_group */ group)
+{
 #ifndef CAPSTONE_DIET
 	if (!MI->flat_insn->detail)
 		return;
