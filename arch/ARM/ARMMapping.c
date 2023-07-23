@@ -1413,10 +1413,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				      MCInst_getOpVal(MI, OpNum));
 		ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
 				      MCInst_getOpVal(MI, OpNum + 1));
-		unsigned ShAmt = MCInst_getOpVal(MI, OpNum);
+		unsigned ShAmt = MCInst_getOpVal(MI, OpNum + 2);
 		if (ShAmt) {
-			ARM_get_detail_op(MI, 2)->shift.type = ARM_SFT_LSL;
-			ARM_get_detail_op(MI, 2)->shift.value = ShAmt;
+			ARM_get_detail_op(MI, 0)->shift.type = ARM_SFT_LSL;
+			ARM_get_detail_op(MI, 0)->shift.value = ShAmt;
 		}
 		ARM_set_mem_access(MI, false);
 		break;
@@ -1627,12 +1627,12 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			ARM_set_mem_access(MI, false);
 			break;
 		}
-		unsigned ImmOffs = ARM_AM_getAM3Offset(
-			MCOperand_getImm(MCInst_getOperand(MI, OpNum + 2)));
+		unsigned ImmOffs =
+			ARM_AM_getAM3Offset(MCInst_getOpVal(MI, OpNum + 2));
 
 		if (AlwaysPrintImm0 || ImmOffs || Sign == ARM_AM_sub) {
 			ARM_set_detail_op_mem(MI, OpNum + 2, false, 0, 0,
-					      MCInst_getOpVal(MI, OpNum + 2));
+					      ImmOffs);
 			ARM_get_detail_op(MI, 0)->subtracted = Sign ==
 							       ARM_AM_sub;
 		}
