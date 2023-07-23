@@ -1130,6 +1130,9 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				return;
 			}
 
+			if (detail_is_set(MI))
+				MCOperand_CreateImm0(MI, SYSm);
+
 			ARM_set_detail_op_sysop(MI, SYSm, ARM_OP_SYSREG,
 						IsOutReg, Mask, SYSm);
 
