@@ -284,22 +284,22 @@ typedef enum MemBOpt {
 } arm_mem_bo_opt;
 
 typedef enum {
-	/// Special registers for MSR
-	ARM_SYSREG_INVALID = 0,
+	// SPSR* field flags can be OR combined
+	ARM_FIELD_SPSR_C = 1,
+	ARM_FIELD_SPSR_X = 2,
+	ARM_FIELD_SPSR_S = 4,
+	ARM_FIELD_SPSR_F = 8,
 
-	// SPSR* registers can be OR combined
-	ARM_SYSREG_SPSR_C = 1,
-	ARM_SYSREG_SPSR_X = 2,
-	ARM_SYSREG_SPSR_S = 4,
-	ARM_SYSREG_SPSR_F = 8,
+	// CPSR* field flags can be OR combined
+	ARM_FIELD_CPSR_C = 16,
+	ARM_FIELD_CPSR_X = 32,
+	ARM_FIELD_CPSR_S = 64,
+	ARM_FIELD_CPSR_F = 128,
+} arm_spsr_cspr_bits;
 
-	// CPSR* registers can be OR combined
-	ARM_SYSREG_CPSR_C = 16,
-	ARM_SYSREG_CPSR_X = 32,
-	ARM_SYSREG_CPSR_S = 64,
-	ARM_SYSREG_CPSR_F = 128,
-} arm_sysreg_bits;
-
+// From LLVM docs:
+// The values here come from B9.2.3 of the ARM ARM, where bits 4-0 are SysM field
+// and bit 5 is R.
 typedef enum {
 	// generated content <ARMGenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_BankedReg> begin
 	// clang-format off
@@ -420,8 +420,12 @@ typedef enum arm_op_type {
 	ARM_OP_PIMM = CS_OP_SPECIAL + 1, ///< P-Immediate (coprocessor registers)
 	ARM_OP_SETEND = CS_OP_SPECIAL + 2,	///< operand for SETEND instruction
 	ARM_OP_SYSREG = CS_OP_SPECIAL + 3,	///< MSR/MRS special register operand
-	ARM_OP_VPRED_R = CS_OP_SPECIAL + 4, ///< Vector predicate. Leaves inactive lanes of output vector register unchanged.
-	ARM_OP_VPRED_N = CS_OP_SPECIAL + 5, ///< Vector predicate. Don't preserved inactive lanes of output register.
+	ARM_OP_BANKEDREG = CS_OP_SPECIAL + 4,	///< Banked register operand
+	ARM_OP_SPSR = CS_OP_SPECIAL + 5,	///< Collection of SPSR bits
+	ARM_OP_CPSR = CS_OP_SPECIAL + 6,	///< Collection of CPSR bits
+	ARM_OP_SYSM = CS_OP_SPECIAL + 7,	///< Raw SYSm field
+	ARM_OP_VPRED_R = CS_OP_SPECIAL + 8, ///< Vector predicate. Leaves inactive lanes of output vector register unchanged.
+	ARM_OP_VPRED_N = CS_OP_SPECIAL + 9, ///< Vector predicate. Don't preserved inactive lanes of output register.
 	ARM_OP_MEM = CS_OP_MEM, ///< Memory operand
 } arm_op_type;
 
@@ -837,6 +841,13 @@ typedef struct arm_op_mem {
 	int lshift;
 } arm_op_mem;
 
+typedef struct {
+  arm_sysop_reg reg; ///< The system or banked register.
+  arm_spsr_cspr_bits psr_bits; ///< SPSR/CPSR bits.
+  uint16_t sysm; ///< Raw SYSm field. UINT16_MAX if unset.
+  uint8_t msr_mask; ///< Mask of MSR instructions. UINT8_MAX if invalid.
+} arm_sysop;
+
 /// Instruction operand
 typedef struct cs_arm_op {
 	int vector_index;	///< Vector Index for some vector operands (or -1 if irrelevant)
@@ -849,7 +860,8 @@ typedef struct cs_arm_op {
 	arm_op_type type;	///< operand type
 
 	union {
-		int reg;	///< register value for REG/SYSREG operand
+		int reg;	///< register value for REG
+		arm_sysop sysop;  ///< System operand.
 		int64_t imm;			///< immediate value for C-IMM, P-IMM or IMM operand
 		int pred;			///< Predicate operand value.
 		double fp;			///< floating point value for FP operand
