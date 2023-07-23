@@ -1145,7 +1145,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				assert(0 && "Unexpected mask value!");
 			case 4:
 				ARM_set_detail_op_sysop(MI,
-							ARM_MCLASSSYSREG_APSR,
+							ARM_MCLASSSYSREG_APSR_G,
 							ARM_OP_SYSREG, IsOutReg,
 							Mask, UINT16_MAX);
 				return;
@@ -1986,6 +1986,7 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 		break;
 	case ARM_OP_SPSR:
 	case ARM_OP_CPSR:
+		ARM_get_detail_op(MI, 0)->reg = type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
 		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val;
 		break;
 	}
