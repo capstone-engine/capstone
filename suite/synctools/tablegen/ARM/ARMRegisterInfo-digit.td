@@ -84,8 +84,10 @@ def R9  : ARMReg< 9, "r9">,  DwarfRegNum<[9]>;
 def R10 : ARMReg<10, "r10">, DwarfRegNum<[10]>;
 def R11 : ARMReg<11, "r11">, DwarfRegNum<[11]>;
 def R12 : ARMReg<12, "r12">, DwarfRegNum<[12]>;
-def SP  : ARMReg<13, "r13">,  DwarfRegNum<[13]>;
-def LR  : ARMReg<14, "r14">,  DwarfRegNum<[14]>;
+// R13 and R14 were given names in Capstone 4, even when the CS_OPT_SYNTAX_NOREGNAME option was specified,
+// so here they are given these names as well. See https://github.com/capstone-engine/capstone/issues/2078
+def SP  : ARMReg<13, "sp">,  DwarfRegNum<[13]>;
+def LR  : ARMReg<14, "lr">,  DwarfRegNum<[14]>;
 def PC  : ARMReg<15, "pc">,  DwarfRegNum<[15]>;
 }
 
