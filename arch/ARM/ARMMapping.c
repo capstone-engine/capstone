@@ -176,6 +176,83 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 	switch (Opcode) {
 	default:
 		return;
+	case ARM_t2MOVsra_flag:
+	case ARM_t2MOVsrl_flag:
+		ARM_insert_detail_op_imm_at(MI, 2, 1, CS_AC_READ);
+		break;
+	case ARM_VCMPEZD:
+	case ARM_VCMPZD:
+	case ARM_tRSB:
+	case ARM_VCMPEZH:
+	case ARM_VCMPEZS:
+	case ARM_VCMPZH:
+	case ARM_VCMPZS:
+		ARM_insert_detail_op_imm_at(MI, 1, 0, CS_AC_READ);
+		break;
+	case ARM_MVE_VSHLL_lws16bh:
+	case ARM_MVE_VSHLL_lws16th:
+	case ARM_MVE_VSHLL_lwu16bh:
+	case ARM_MVE_VSHLL_lwu16th:
+		ARM_insert_detail_op_imm_at(MI, 2, 16, CS_AC_READ);
+		break;
+	case ARM_MVE_VSHLL_lws8bh:
+	case ARM_MVE_VSHLL_lws8th:
+	case ARM_MVE_VSHLL_lwu8bh:
+	case ARM_MVE_VSHLL_lwu8th:
+		ARM_insert_detail_op_imm_at(MI, 2, 8, CS_AC_READ);
+		break;
+	case ARM_VCEQzv16i8:
+	case ARM_VCEQzv2f32:
+	case ARM_VCEQzv2i32:
+	case ARM_VCEQzv4f16:
+	case ARM_VCEQzv4f32:
+	case ARM_VCEQzv4i16:
+	case ARM_VCEQzv4i32:
+	case ARM_VCEQzv8f16:
+	case ARM_VCEQzv8i16:
+	case ARM_VCEQzv8i8:
+	case ARM_VCGEzv16i8:
+	case ARM_VCGEzv2f32:
+	case ARM_VCGEzv2i32:
+	case ARM_VCGEzv4f16:
+	case ARM_VCGEzv4f32:
+	case ARM_VCGEzv4i16:
+	case ARM_VCGEzv4i32:
+	case ARM_VCGEzv8f16:
+	case ARM_VCGEzv8i16:
+	case ARM_VCGEzv8i8:
+	case ARM_VCLEzv16i8:
+	case ARM_VCLEzv2f32:
+	case ARM_VCLEzv2i32:
+	case ARM_VCLEzv4f16:
+	case ARM_VCLEzv4f32:
+	case ARM_VCLEzv4i16:
+	case ARM_VCLEzv4i32:
+	case ARM_VCLEzv8f16:
+	case ARM_VCLEzv8i16:
+	case ARM_VCLEzv8i8:
+	case ARM_VCLTzv16i8:
+	case ARM_VCLTzv2f32:
+	case ARM_VCLTzv2i32:
+	case ARM_VCLTzv4f16:
+	case ARM_VCLTzv4f32:
+	case ARM_VCLTzv4i16:
+	case ARM_VCLTzv4i32:
+	case ARM_VCLTzv8f16:
+	case ARM_VCLTzv8i16:
+	case ARM_VCLTzv8i8:
+	case ARM_VCGTzv16i8:
+	case ARM_VCGTzv2f32:
+	case ARM_VCGTzv2i32:
+	case ARM_VCGTzv4f16:
+	case ARM_VCGTzv4f32:
+	case ARM_VCGTzv4i16:
+	case ARM_VCGTzv4i32:
+	case ARM_VCGTzv8f16:
+	case ARM_VCGTzv8i16:
+	case ARM_VCGTzv8i8:
+		ARM_insert_detail_op_imm_at(MI, 2, 0, CS_AC_READ);
+		break;
 	case ARM_BX_RET:
 		ARM_insert_detail_op_reg_at(MI, 0, ARM_REG_LR, CS_AC_READ);
 		break;
@@ -1045,7 +1122,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				SYSm);
 			if (TheReg) {
 				ARM_set_detail_op_sysreg(
-					MI, TheReg->sysreg.mclasssysreg, IsOutReg);
+					MI, TheReg->sysreg.mclasssysreg,
+					IsOutReg);
 				return;
 			}
 
@@ -1712,6 +1790,33 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 	ARM_setup_op(&op);
 	op.type = ARM_OP_REG;
 	op.reg = Reg;
+	op.access = access;
+
+	cs_arm_op *ops = ARM_get_detail(MI)->operands;
+	int i = ARM_get_detail(MI)->op_count - 1;
+	for (; i >= 0; --i) {
+		ops[i + 1] = ops[i];
+		if (i == index)
+			break;
+	}
+	ops[index] = op;
+	ARM_inc_op_count(MI);
+}
+
+/// Inserts a immediate to the detail operands at @index.
+/// Already present operands are moved.
+void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
+				 cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	assert(ARM_get_detail(MI)->op_count < MAX_ARM_OPS);
+
+	cs_arm_op op;
+	ARM_setup_op(&op);
+	op.type = ARM_OP_IMM;
+	op.imm = Val;
 	op.access = access;
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
