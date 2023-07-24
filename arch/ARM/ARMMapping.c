@@ -1548,7 +1548,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		bool IsOutReg = OpNum == 0;
 		ARM_set_detail_op_sysop(MI, TheReg->sysreg.bankedreg,
 					ARM_OP_BANKEDREG, IsOutReg, UINT8_MAX,
-					Banked);
+					TheReg->Encoding &
+						0xf); // Bit[4:0] are SYSm
 		break;
 	}
 	case ARM_OP_GROUP_SetendOperand: {
@@ -1986,7 +1987,8 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 		break;
 	case ARM_OP_SPSR:
 	case ARM_OP_CPSR:
-		ARM_get_detail_op(MI, 0)->reg = type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
+		ARM_get_detail_op(MI, 0)->reg =
+			type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
 		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val;
 		break;
 	}
