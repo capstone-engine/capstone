@@ -178,4 +178,30 @@ static inline cs_detail *get_detail(const MCInst *MI)
 	return MI->flat_insn->detail;
 }
 
+static inline bool set_detail_ops(const MCInst *MI)
+{
+	assert(MI && MI->flat_insn);
+	return MI->fillDetailOps;
+}
+
+/// Returns if the given instruction is an alias instruction.
+#define RETURN_IF_INSN_IS_ALIAS(MI) \
+do { \
+	if (MI->isAliasInstr) \
+		return; \
+} while(0)
+
+void map_set_fill_detail_ops(MCInst *MI, bool Val);
+
+static inline bool map_fill_detail_ops(MCInst *MI) {
+	assert(MI);
+	return MI->fillDetailOps;
+}
+
+void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias);
+
+bool map_use_alias_details(const MCInst *MI);
+
+void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size);
+
 #endif // CS_MAPPING_H

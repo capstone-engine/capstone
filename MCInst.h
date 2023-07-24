@@ -129,6 +129,8 @@ struct MCInst {
 	cs_wasm_op wasm_data;    // for WASM operand
 	MCRegisterInfo *MRI;
 	uint8_t xAcquireRelease;   // X86 xacquire/xrelease
+	bool isAliasInstr; // Flag if this MCInst is an alias.
+	bool fillDetailOps; // If set, detail->operands gets filled.
 };
 
 void MCInst_Init(MCInst *inst);
@@ -162,5 +164,11 @@ bool MCInst_opIsTied(const MCInst *MI, unsigned OpNum);
 bool MCInst_opIsTying(const MCInst *MI, unsigned OpNum);
 
 uint64_t MCInst_getOpVal(MCInst *MI, unsigned OpNum);
+
+void MCInst_setIsAlias(MCInst *MI, bool Flag);
+
+static inline bool MCInst_isAlias(const MCInst *MI) {
+	return MI->isAliasInstr;
+}
 
 #endif

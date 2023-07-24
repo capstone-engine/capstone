@@ -30,6 +30,7 @@
 #include <string.h>
 
 #include "../../LEB128.h"
+#include "../../Mapping.h"
 #include "../../MCInst.h"
 #include "../../MCInstPrinter.h"
 #include "../../MCInstrDesc.h"
@@ -201,9 +202,19 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 		}
 	}
 
-	if (!printAliasInstr(MI, Address, O))
+	bool use_alias_details = map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, use_alias_details);
+	bool isAlias = printAliasInstr(MI, Address, O);
+	MCInst_setIsAlias(MI, isAlias);
+
+	if (!isAlias || !use_alias_details) {
+		map_set_fill_detail_ops(MI, true);
+		if (isAlias)
+			SStream_Close(O);
 		printInstruction(MI, Address, O);
-	;
+		if (isAlias)
+			SStream_Open(O);
+	}
 }
 
 void printPredicateOperand(MCInst *MI, unsigned OpNo, SStream *O,

@@ -34,6 +34,8 @@ void MCInst_Init(MCInst *inst)
 	inst->xAcquireRelease = 0;
 	for (int i = 0; i < MAX_MC_OPS; ++i)
 		inst->tied_op_idx[i] = -1;
+	inst->isAliasInstr = false;
+	inst->fillDetailOps = false;
 }
 
 void MCInst_clear(MCInst *inst)
@@ -279,4 +281,10 @@ uint64_t MCInst_getOpVal(MCInst *MI, unsigned OpNum)
 		return MCOperand_getImm(op);
 	else
 		assert(0 && "Operand type not handled in this getter.");
+}
+
+void MCInst_setIsAlias(MCInst *MI, bool Flag) {
+	assert(MI);
+	MI->isAliasInstr = Flag;
+	MI->flat_insn->is_alias = Flag;
 }

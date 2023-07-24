@@ -37,78 +37,26 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	// We do this after Instruction disassembly.
 }
 
+#ifndef CAPSTONE_DIET
+
 static const char * const insn_name_maps[] = {
 #include "PPCGenCSMappingInsnName.inc"
 };
 
-// Instruction alias for MTSPR/MFSPR instruction
-static ppc_alias_id ppc_insn_alias_mnem[] = {
-	{ PPC_INS_MFXER, "mfxer" },
-	{ PPC_INS_MFUDSCR, "mfudscr" },
-	{ PPC_INS_MFRTCU, "mfrtcu" },
-	{ PPC_INS_MFRTCL, "mfrtcl" },
-	{ PPC_INS_MFUAMR, "mfuamr" },
-	{ PPC_INS_MFDSCR, "mfdscr" },
-	{ PPC_INS_MFDSISR, "mfdsisr" },
-	{ PPC_INS_MFDAR, "mfdar" },
-	{ PPC_INS_MFDEC, "mfdec" },
-	{ PPC_INS_MFSDR1, "mfsdr1" },
-	{ PPC_INS_MFSRR0, "mfsrr0" },
-	{ PPC_INS_MFSRR1, "mfsrr1" },
-	{ PPC_INS_MFCFAR, "mfcfar" },
-	{ PPC_INS_MFAMR, "mfamr" },
-	{ PPC_INS_MFPID, "mfpid" },
-	{ PPC_INS_MFASR, "mfasr" },
-	{ PPC_INS_MFPVR, "mfpvr" },
-	{ PPC_INS_MFSPEFSCR, "mfspefscr" },
-	{ PPC_INS_MFPPR, "mfppr" },
-	{ PPC_INS_MFESR, "mfesr" },
-	{ PPC_INS_MFDEAR, "mfdear" },
-	{ PPC_INS_MFTCR, "mftcr" },
-	{ PPC_INS_MFTBHI, "mftbhi" },
-	{ PPC_INS_MFTBLO, "mftblo" },
-	{ PPC_INS_MFSRR2, "mfsrr2" },
-	{ PPC_INS_MFSRR3, "mfsrr3" },
-	{ PPC_INS_MFDCCR, "mfdccr" },
-	{ PPC_INS_MFICCR, "mficcr" },
-	{ PPC_INS_MTXER, "mtxer" },
-	{ PPC_INS_MTUDSCR, "mtudscr" },
-	{ PPC_INS_MTUAMR, "mtuamr" },
-	{ PPC_INS_MTDSCR, "mtdscr" },
-	{ PPC_INS_MTDSISR, "mtdsisr" },
-	{ PPC_INS_MTDAR, "mtdar" },
-	{ PPC_INS_MTDEC, "mtdec" },
-	{ PPC_INS_MTSDR1, "mtsdr1" },
-	{ PPC_INS_MTSRR0, "mtsrr0" },
-	{ PPC_INS_MTSRR1, "mtsrr1" },
-	{ PPC_INS_MTCFAR, "mtcfar" },
-	{ PPC_INS_MTAMR, "mtamr" },
-	{ PPC_INS_MTPID, "mtpid" },
-	{ PPC_INS_MTASR, "mtasr" },
-	{ PPC_INS_MTTBL, "mttbl" },
-	{ PPC_INS_MTTBU, "mttbu" },
-	{ PPC_INS_MTSPEFSCR, "mtspefscr" },
-	{ PPC_INS_MTPPR, "mtppr" },
-	{ PPC_INS_MTESR, "mtesr" },
-	{ PPC_INS_MTDEAR, "mtdear" },
-	{ PPC_INS_MTTCR, "mttcr" },
-	{ PPC_INS_MTTBHI, "mttbhi" },
-	{ PPC_INS_MTTBLO, "mttblo" },
-	{ PPC_INS_MTSRR2, "mtsrr2" },
-	{ PPC_INS_MTSRR3, "mtsrr3" },
-	{ PPC_INS_MTDCCR, "mtdccr" },
-	{ PPC_INS_MTICCR, "mticcr" },	
+static const name_map insn_alias_mnem_map[] = {
+#include "PPCGenCSAliasMnemMap.inc"
 };
+
+#endif
 
 const char *PPC_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= PPC_MFSPR_ALIAS_FIRST) {
-		for (int i = 0; i < ARR_SIZE(ppc_insn_alias_mnem); ++i) {
-			if (ppc_insn_alias_mnem[i].id == id)
-				return ppc_insn_alias_mnem[i].mnem;
-		}
-		return NULL;
+	if (id < PPC_INS_ALIAS_END && id > PPC_INS_ALIAS_BEGIN) {
+		if (id - PPC_INS_ALIAS_BEGIN >= ARR_SIZE(insn_alias_mnem_map))
+			return NULL;
+
+		return insn_alias_mnem_map[id - PPC_INS_ALIAS_BEGIN - 1].name;
 	}
 	if (id >= PPC_INS_ENDING)
 		return NULL;
@@ -227,25 +175,6 @@ static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes, size_t B
 #endif // CAPSTONE_DIET
 }
 
-/// Sets an alternative id for some instruction.
-static void PPC_set_cs_alt_id(MCInst *MI) {
-	unsigned Opcode = MCInst_getOpcode(MI);
-	switch(Opcode) {
-	default:
-		return;
-	case PPC_MFSPR: {
-		unsigned spr = MCInst_getOpVal(MI, 1);
-		MI->flat_insn->id = PPC_MFSPR_ALIAS_FIRST + spr;
-		return;
-	}
-	case PPC_MTSPR: {
-		unsigned spr = MCInst_getOpVal(MI, 0);
-		MI->flat_insn->id = PPC_MTSPR_ALIAS_FIRST + spr;
-		return;
-	}
-	}
-}
-
 void PPC_set_instr_map_data(MCInst *MI, const uint8_t *Bytes, size_t BytesLen)
 {
 	map_cs_id(MI, ppc_insns, ARR_SIZE(ppc_insns));
@@ -269,8 +198,9 @@ void PPC_init_cs_detail(MCInst *MI)
 
 void PPC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */info) {
 	MI->MRI = (MCRegisterInfo*) info;
+	MI->fillDetailOps = detail_is_set(MI);
 	PPC_LLVM_printInst(MI, MI->address, "", O);
-	PPC_set_cs_alt_id(MI);
+	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map));
 }
 
 bool PPC_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
@@ -466,7 +396,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 /// patch `AddCSDetail` of the CppTranslator.
 void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 {
-	if (!detail_is_set(MI))
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
 	switch (op_group) {

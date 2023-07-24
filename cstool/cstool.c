@@ -330,6 +330,10 @@ static void usage(char *prog)
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 {
 	printf("\tID: %u (%s)\n", ins->id, cs_insn_name(handle, ins->id));
+	if (ins->is_alias) {
+		printf("\tIs alias: %" PRIu64 " (%s) ", ins->alias_id, cs_insn_name(handle, ins->alias_id));
+		printf("with %s operand set\n", ins->usesAliasDetails ? "ALIAS" : "REAL");
+	}
 
 	switch(arch) {
 		case CS_ARCH_X86:
