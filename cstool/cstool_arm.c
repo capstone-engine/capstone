@@ -28,9 +28,14 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 			case ARM_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
-			case ARM_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+			case ARM_OP_IMM: {
+				bool neg_imm = op->imm < 0;
+				if (neg_imm)
+					printf("\t\toperands[%u].type: IMM = -0x%" PRIx32 "\n", i, -(op->imm));
+				else
+					printf("\t\toperands[%u].type: IMM = 0x%" PRIx32 "\n", i, op->imm);
 				break;
+			}
 			case ARM_OP_FP:
 #if defined(_KERNEL_MODE)
 				// Issue #681: Windows kernel does not support formatting float point
@@ -56,10 +61,10 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 
 				break;
 			case ARM_OP_PIMM:
-				printf("\t\toperands[%u].type: P-IMM = %u\n", i, op->imm);
+				printf("\t\toperands[%u].type: P-IMM = %" PRIu32 "\n", i, op->imm);
 				break;
 			case ARM_OP_CIMM:
-				printf("\t\toperands[%u].type: C-IMM = %u\n", i, op->imm);
+				printf("\t\toperands[%u].type: C-IMM = %" PRIu32 "\n", i, op->imm);
 				break;
 			case ARM_OP_SETEND:
 				printf("\t\toperands[%u].type: SETEND = %s\n", i, op->setend == ARM_SETEND_BE? "be" : "le");
