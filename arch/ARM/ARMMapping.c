@@ -1083,7 +1083,6 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		MCOperand *Op = MCInst_getOperand(MI, OpNum);
 		unsigned SpecRegRBit = (unsigned)MCOperand_getImm(Op) >> 4;
 		unsigned Mask = (unsigned)MCOperand_getImm(Op) & 0xf;
-		unsigned reg;
 		bool IsOutReg = OpNum == 0;
 
 		if (ARM_getFeatureBits(MI->csh->mode, ARM_FeatureMClass)) {
@@ -1099,9 +1098,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 						SYSm);
 				if (TheReg && MClassSysReg_isInRequiredFeatures(
 						      TheReg, ARM_FeatureDSP)) {
-					ARM_set_detail_op_sysreg(
+					ARM_set_detail_op_sysop(
 						MI, TheReg->sysreg.mclasssysreg,
-						IsOutReg);
+						ARM_OP_SYSREG, IsOutReg, Mask,
+						SYSm);
 					return;
 				}
 			}
@@ -1113,9 +1113,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 					ARMSysReg_lookupMClassSysRegAPSRNonDeprecated(
 						SYSm);
 				if (TheReg) {
-					ARM_set_detail_op_sysreg(
+					ARM_set_detail_op_sysop(
 						MI, TheReg->sysreg.mclasssysreg,
-						IsOutReg);
+						ARM_OP_SYSREG, IsOutReg, Mask,
+						SYSm);
 					return;
 				}
 			}
@@ -1123,14 +1124,17 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			TheReg = ARMSysReg_lookupMClassSysRegBy8bitSYSmValue(
 				SYSm);
 			if (TheReg) {
-				ARM_set_detail_op_sysreg(
+				ARM_set_detail_op_sysop(
 					MI, TheReg->sysreg.mclasssysreg,
-					IsOutReg);
+					ARM_OP_SYSREG, IsOutReg, Mask, SYSm);
 				return;
 			}
 
-			if (MI->csh->detail)
+			if (detail_is_set(MI))
 				MCOperand_CreateImm0(MI, SYSm);
+
+			ARM_set_detail_op_sysop(MI, SYSm, ARM_OP_SYSREG,
+						IsOutReg, Mask, SYSm);
 
 			return;
 		}
@@ -1140,34 +1144,45 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			default:
 				assert(0 && "Unexpected mask value!");
 			case 4:
-				ARM_set_detail_op_sysreg(
-					MI, ARM_MCLASSSYSREG_APSR_G, IsOutReg);
+				ARM_set_detail_op_sysop(MI,
+							ARM_MCLASSSYSREG_APSR_G,
+							ARM_OP_SYSREG, IsOutReg,
+							Mask, UINT16_MAX);
 				return;
 			case 8:
-				ARM_set_detail_op_sysreg(
+				ARM_set_detail_op_sysop(
 					MI, ARM_MCLASSSYSREG_APSR_NZCVQ,
-					IsOutReg);
+					ARM_OP_SYSREG, IsOutReg, Mask,
+					UINT16_MAX);
 				return;
 			case 12:
-				ARM_set_detail_op_sysreg(
+				ARM_set_detail_op_sysop(
 					MI, ARM_MCLASSSYSREG_APSR_NZCVQG,
-					IsOutReg);
+					ARM_OP_SYSREG, IsOutReg, Mask,
+					UINT16_MAX);
 				return;
 			}
 		}
 
-		reg = 0;
+		unsigned field = 0;
 		if (Mask) {
 			if (Mask & 8)
-				reg += ARM_SYSREG_SPSR_F;
+				field += SpecRegRBit ? ARM_FIELD_SPSR_F :
+						       ARM_FIELD_CPSR_F;
 			if (Mask & 4)
-				reg += ARM_SYSREG_SPSR_S;
+				field += SpecRegRBit ? ARM_FIELD_SPSR_S :
+						       ARM_FIELD_CPSR_S;
 			if (Mask & 2)
-				reg += ARM_SYSREG_SPSR_X;
+				field += SpecRegRBit ? ARM_FIELD_SPSR_X :
+						       ARM_FIELD_CPSR_X;
 			if (Mask & 1)
-				reg += ARM_SYSREG_SPSR_C;
+				field += SpecRegRBit ? ARM_FIELD_SPSR_C :
+						       ARM_FIELD_CPSR_C;
 
-			ARM_set_detail_op_sysreg(MI, reg, IsOutReg);
+			ARM_set_detail_op_sysop(MI, field,
+						SpecRegRBit ? ARM_OP_SPSR :
+							      ARM_OP_CPSR,
+						IsOutReg, Mask, UINT16_MAX);
 		}
 		break;
 	}
@@ -1531,8 +1546,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		const ARMBankedReg_BankedReg *TheReg =
 			ARMBankedReg_lookupBankedRegByEncoding(Banked);
 		bool IsOutReg = OpNum == 0;
-		ARM_set_detail_op_sysreg(MI, TheReg->sysreg.bankedreg,
-					 IsOutReg);
+		ARM_set_detail_op_sysop(MI, TheReg->sysreg.bankedreg,
+					ARM_OP_BANKEDREG, IsOutReg, UINT8_MAX,
+					TheReg->Encoding &
+						0xf); // Bit[4:0] are SYSm
 		break;
 	}
 	case ARM_OP_GROUP_SetendOperand: {
@@ -1951,12 +1968,32 @@ void ARM_set_detail_op_neon_lane(MCInst *MI, unsigned OpNum)
 }
 
 /// Adds a System Register and increments op_count by one.
-void ARM_set_detail_op_sysreg(MCInst *MI, int SysReg, bool IsOutReg)
+/// @type ARM_OP_SYSREG, ARM_OP_BANKEDREG, ARM_OP_SYSM...
+/// @p Mask is the MSR mask or UINT8_MAX if not set.
+void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
+			     bool IsOutReg, uint8_t Mask, uint16_t Sysm)
 {
 	if (!detail_is_set(MI))
 		return;
-	ARM_get_detail_op(MI, 0)->type = ARM_OP_SYSREG;
-	ARM_get_detail_op(MI, 0)->reg = SysReg;
+	ARM_get_detail_op(MI, 0)->type = type;
+	switch (type) {
+	default:
+		assert(0 && "Unkown system operand type.");
+	case ARM_OP_SYSREG:
+		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val;
+		break;
+	case ARM_OP_BANKEDREG:
+		ARM_get_detail_op(MI, 0)->sysop.reg.bankedreg = Val;
+		break;
+	case ARM_OP_SPSR:
+	case ARM_OP_CPSR:
+		ARM_get_detail_op(MI, 0)->reg =
+			type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
+		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val;
+		break;
+	}
+	ARM_get_detail_op(MI, 0)->sysop.sysm = Sysm;
+	ARM_get_detail_op(MI, 0)->sysop.msr_mask = Mask;
 	ARM_get_detail_op(MI, 0)->access = IsOutReg ? CS_AC_WRITE : CS_AC_READ;
 	ARM_inc_op_count(MI);
 }
