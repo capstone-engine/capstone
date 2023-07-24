@@ -39,6 +39,7 @@ def patch_header(header: Path, inc: Path) -> None:
 
     to_write: dict[str:str] = {}
     enum_vals_id = ""
+    ev_id_given = True
     for line in inc_content.splitlines():
         # No comments and empty lines
         if "/*" == line[:2] or not line:
@@ -47,29 +48,33 @@ def patch_header(header: Path, inc: Path) -> None:
         if "#ifdef" in line:
             enum_vals_id = line[7:].strip("\n")
             to_write[enum_vals_id] = ""
-        elif "#endif" in line:
+        elif "#endif" in line and not enum_vals_id == "NOTGIVEN":
             enum_vals_id = ""
         elif "#undef" in line:
             continue
         else:
             if not enum_vals_id:
-                raise ValueError(f"{inc.name} incorrectly formatted. No #ifdef getter.")
+                ev_id_given = False
+                enum_vals_id = "NOTGIVEN"
+                to_write[enum_vals_id] = ""
+                continue
             to_write[enum_vals_id] += re.sub(r"^(\s+)?", "\t", line) + "\n"
     for ev_id in to_write.keys():
+        header_enum_id = f":{ev_id}" if ev_id != "NOTGIVEN" else ""
         regex = (
-            rf"\s*// generated content <{inc.name}:{ev_id}> begin.*(\n)"
+            rf"\s*// generated content <{inc.name}{header_enum_id}> begin.*(\n)"
             rf"(.*\n)+"
-            rf"\s*// generated content <{inc.name}:{ev_id}> end.*(\n)"
+            rf"\s*// generated content <{inc.name}{header_enum_id}> end.*(\n)"
         )
         if not re.search(regex, header_content):
             error_exit(f"Could not locate include comments for {inc.name}")
 
         new_content = (
-            f"\n\t// generated content <{inc.name}:{ev_id}> begin\n"
+            f"\n\t// generated content <{inc.name}{header_enum_id}> begin\n"
             + "\t// clang-format off\n\n"
             + to_write[ev_id]
             + "\n\t// clang-format on\n"
-            + f"\t// generated content <{inc.name}:{ev_id}> end\n"
+            + f"\t// generated content <{inc.name}{header_enum_id}> end\n"
         )
 
         header_content = re.sub(regex, new_content, header_content)
