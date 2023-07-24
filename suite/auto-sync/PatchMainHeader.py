@@ -39,7 +39,6 @@ def patch_header(header: Path, inc: Path) -> None:
 
     to_write: dict[str:str] = {}
     enum_vals_id = ""
-    ev_id_given = True
     for line in inc_content.splitlines():
         # No comments and empty lines
         if "/*" == line[:2] or not line:
@@ -54,9 +53,8 @@ def patch_header(header: Path, inc: Path) -> None:
             continue
         else:
             if not enum_vals_id:
-                ev_id_given = False
                 enum_vals_id = "NOTGIVEN"
-                to_write[enum_vals_id] = ""
+                to_write[enum_vals_id] = line + "\n"
                 continue
             to_write[enum_vals_id] += re.sub(r"^(\s+)?", "\t", line) + "\n"
     for ev_id in to_write.keys():
