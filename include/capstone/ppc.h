@@ -168,9 +168,9 @@ static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo, bool get_cr_p
 
 	if (TestCR && DecrCTR) {
 		// The CR-bit condition without the CTR condition.
-		unsigned cr_bo_cond = (bo | 0b00100) & 0b11101;
+		unsigned cr_bo_cond = (bo | PPC_BO_DECR_CTR) & ~PPC_BO_CTR_CMP;
 		// The CTR condition without the CR-bit condition.
-		unsigned ctr_bo_cond = (bo | 0b10000) & 0b10111;
+		unsigned ctr_bo_cond = (bo | PPC_BO_TEST_CR) & ~PPC_BO_CR_CMP;
 		if (get_cr_pred)
 			return ((bi % 4) << 5) | cr_bo_cond;
 		return ctr_bo_cond; // BI is ignored
