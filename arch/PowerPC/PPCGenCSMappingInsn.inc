@@ -8508,9 +8508,9 @@
 },
 {
   /* li $rD, $imm */
-  PPC_LI /* 1212 */, PPC_INS_LI,
+  PPC_LI /* 1212 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, {{ PPC_INSN_FORM_DFORM_2_R0 }}
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
@@ -8522,9 +8522,9 @@
 },
 {
   /* lis $rD, $imm */
-  PPC_LIS /* 1214 */, PPC_INS_LIS,
+  PPC_LIS /* 1214 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, {{ PPC_INSN_FORM_DFORM_2_R0 }}
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {

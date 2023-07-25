@@ -6080,21 +6080,15 @@
 {{{ /* PPC_LHZXTLS_32 (1211) - PPC_INS_INVALID - lhzx $rD, $rA, $rB */
  0
 }}},
-{ /* PPC_LI (1212) - PPC_INS_LI - li $rD, $imm */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rD */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* imm */
-  { 0 }
-}},
+{{{ /* PPC_LI (1212) - PPC_INS_INVALID - li $rD, $imm */
+ 0
+}}},
 {{{ /* PPC_LI8 (1213) - PPC_INS_INVALID - li $rD, $imm */
  0
 }}},
-{ /* PPC_LIS (1214) - PPC_INS_LIS - lis $rD, $imm */
-{
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rD */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* imm */
-  { 0 }
-}},
+{{{ /* PPC_LIS (1214) - PPC_INS_INVALID - lis $rD, $imm */
+ 0
+}}},
 {{{ /* PPC_LIS8 (1215) - PPC_INS_INVALID - lis $rD, $imm */
  0
 }}},
