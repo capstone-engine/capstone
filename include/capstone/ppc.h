@@ -15,17 +15,15 @@ extern "C" {
 #pragma warning(disable:4201)
 #endif
 
-/// Predicate enums were moved from PPCPredicates.h so we do not have duplicates.
-/// Predicate - These are "(BI << 5) | BO"  for various predicates.
+/// Enum was moved from PPCPredicates.h so we do not have duplicates.
 ///
-/// BI is not equivalent to the BI field in the instruction bits.
-/// The instruction's BI field indicates the bit in the CR register.
-/// Here, BI indicates only the index within a crX register.
-/// So: BI_Field % 4 == BI_Index
+/// Branch predicate enum. It contains the CR predicates and CTR predicates.
 ///
-/// BI encoding:
+/// Enum values are "((BI % 4) << 5) | BO"  for various predicates.
 ///
-/// CR idx: |   0   |    1    |   2   |     3    |
+/// CR field encoding:
+///
+/// Bit:    |   0   |    1    |   2   |     3    |
 ///         |-------|---------|-------|----------|
 /// Meaning | Less  | Greater | Zero  | Summary  |
 ///         | Then  | Then    |       | Overflow |
@@ -61,8 +59,12 @@ typedef enum ppc_bc {
 	PPC_PRED_GE = (0 << 5) | 4,
 	PPC_PRED_GT = (1 << 5) | 12,
 	PPC_PRED_NE = (2 << 5) | 4,
-	PPC_PRED_UN = (3 << 5) | 12,
-	PPC_PRED_NU = (3 << 5) | 4,
+	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after floating-point comparision)
+	PPC_PRED_NU = (3 << 5) | 4, ///< Not Unordered (after floating-point comparision)
+	PPC_PRED_SO = (3 << 5) | 12,	///< summary overflow
+	PPC_PRED_NS = (3 << 5) | 4,	///< not summary overflow
+
+	/// CTR predicates
 	PPC_PRED_NZ = (0 << 5) | 16,
 	PPC_PRED_Z  = (0 << 5) | 18,
 	// Likely not taken
@@ -87,10 +89,6 @@ typedef enum ppc_bc {
 	PPC_PRED_NU_PLUS = (3 << 5) | 7,
 	PPC_PRED_NZ_PLUS = (0 << 5) | 17,
 	PPC_PRED_Z_PLUS  = (0 << 5) | 19,
-
-	// extra conditions
-	PPC_PRED_SO = (4 << 5) | 12,	///< summary overflow
-	PPC_PRED_NS = (4 << 5) | 4,	///< not summary overflow
 
 	// SPE scalar compare instructions always set the GT bit.
 	PPC_PRED_SPE = PPC_PRED_GT,
@@ -155,8 +153,11 @@ static inline ppc_br_hint PPC_get_hint(uint8_t bo) {
 }
 
 /// Returns the branch predicate encoded in the BO and BI field.
-/// If get_cr_pred = true the CR-bit predicate is returned. Otherwise
-/// the CTR predicate.
+/// If get_cr_pred = true the CR-bit predicate is returned (LE, GE, EQ...).
+/// Otherwise the CTR predicate (NZ, Z)
+///
+/// It returns PPC_PRED_INVALID if the CR predicate is requested, but no
+/// CR predicate is encoded in BI and BO. Same for the CTR predicate.
 static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo, bool get_cr_pred) {
 	bool TestCR = ((bo & PPC_BO_TEST_CR) == 0);
 	bool DecrCTR = ((bo & PPC_BO_DECR_CTR) == 0);

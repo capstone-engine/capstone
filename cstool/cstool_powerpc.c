@@ -36,14 +36,14 @@ static const char* get_pred_name(ppc_pred pred)
 		case PPC_PRED_NE_MINUS:
 		case PPC_PRED_NE_PLUS:
 			return ("ne");
-		case PPC_PRED_UN:
+		case PPC_PRED_UN: // PPC_PRED_SO
 		case PPC_PRED_UN_MINUS:
 		case PPC_PRED_UN_PLUS:
-			return ("un");
-		case PPC_PRED_NU:
+			return ("so/un");
+		case PPC_PRED_NU: // PPC_PRED_NS
 		case PPC_PRED_NU_MINUS:
 		case PPC_PRED_NU_PLUS:
-			return ("nu");
+			return ("ns/nu");
 		case PPC_PRED_NZ:
 		case PPC_PRED_NZ_MINUS:
 		case PPC_PRED_NZ_PLUS:
@@ -52,10 +52,6 @@ static const char* get_pred_name(ppc_pred pred)
 		case PPC_PRED_Z_MINUS:
 		case PPC_PRED_Z_PLUS:
 			return ("z");
-		case PPC_PRED_SO:
-			return ("so");
-		case PPC_PRED_NS:
-			return ("ns");
 		case PPC_PRED_BIT_SET:
 			return "bit-set";
 		case PPC_PRED_BIT_UNSET:
