@@ -93,9 +93,37 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 			case ARM_OP_SETEND:
 				printf("\t\toperands[%u].type: SETEND = %s\n", i, op->setend == ARM_SETEND_BE? "be" : "le");
 				break;
-			case ARM_OP_SYSREG:
-				printf("\t\toperands[%u].type: SYSREG = %u\n", i, op->reg);
+			case ARM_OP_SYSM:
+				printf("\t\toperands[%u].type: SYSM = 0x%" PRIx16 "\n", i, op->sysop.sysm);
+				printf("\t\toperands[%u].type: MASK = %" PRIu8 "\n", i, op->sysop.msr_mask);
 				break;
+			case ARM_OP_SYSREG:
+				printf("\t\toperands[%u].type: SYSREG = %s\n", i, cs_reg_name(handle, (uint32_t) op->sysop.reg.mclasssysreg));
+				printf("\t\toperands[%u].type: MASK = %" PRIu8 "\n", i, op->sysop.msr_mask);
+				break;
+			case ARM_OP_BANKEDREG:
+				// FIXME: Printing the name is currenliy not supported if the encodings overlap
+				// with system registers.
+				printf("\t\toperands[%u].type: BANKEDREG = %" PRIu32 "\n", i, (uint32_t) op->sysop.reg.bankedreg);
+				if (op->sysop.msr_mask != UINT8_MAX)
+					printf("\t\toperands[%u].type: MASK = %" PRIu8 "\n", i, op->sysop.msr_mask);
+			case ARM_OP_SPSR:
+			case ARM_OP_CPSR: {
+				const char type = op->type == ARM_OP_SPSR ? 'S' : 'C';
+				printf("\t\toperands[%u].type: %cPSR = ", i, type);
+				uint16_t field = op->sysop.psr_bits;
+				if ((field & ARM_FIELD_SPSR_F) || (field & ARM_FIELD_CPSR_F))
+					printf("f");
+				if ((field & ARM_FIELD_SPSR_S) || (field & ARM_FIELD_CPSR_S))
+					printf("s");
+				if ((field & ARM_FIELD_SPSR_X) || (field & ARM_FIELD_CPSR_X))
+					printf("x");
+				if ((field & ARM_FIELD_SPSR_C) || (field & ARM_FIELD_CPSR_C))
+					printf("c");
+				printf("\n");
+				printf("\t\toperands[%u].type: MASK = %" PRIu8 "\n", i, op->sysop.msr_mask);
+				break;
+			}
 		}
 
 		if (op->neon_lane != -1) {
@@ -136,6 +164,9 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 
 	if (arm->cc != ARMCC_AL && arm->cc != ARMCC_UNDEF)
 		printf("\tCode condition: %u\n", arm->cc);
+
+	if (arm->vcc != ARMVCC_None)
+		printf("\tVector code condition: %u\n", arm->vcc);
 
 	if (arm->update_flags)
 		printf("\tUpdate-flags: True\n");
