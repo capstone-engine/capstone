@@ -43,6 +43,8 @@ extern "C" {
 /// native  | None   |   a         | None  |    a       |    t       |
 /// meaning |        | or ingored  |       | or ignored | or ignored |
 ///
+/// NOTE: If we do not decrement the counter, it is not used for the condition.
+///
 /// The bits "at" are both present if:
 /// 		- CTR is decremented, but CR is not checked.
 ///     - CR is checked, but CTR is not decremented.
@@ -105,15 +107,15 @@ typedef enum {
 	PPC_BI_GT = 1, ///< CR bit Greater Then
 	PPC_BI_Z = 2, ///< CR bit Zero
 	PPC_BI_SO = 3, ///< CR bit Summary Overflow
-	PPC_BI_INVALID = 4, ///< CR bit was not set/invalid
+	PPC_BI_INVALID = 0xff, ///< CR bit was not set/invalid
 } ppc_cr_bit;
 
 /// Masks of flags in the BO field.
 typedef enum {
-	PPC_BO_TEST_CR = 0b10000, ///< Flag: Test CR bit.
-	PPC_BO_CR_CMP = 0b01000, ///< Flag: Compare CR bit to 0 or 1.
-	PPC_BO_DECR_CTR = 0b00100, ///< Flag: Decrement counter.
-	PPC_BO_CTR_CMP = 0b00010, ///< Flag: Compare CTR to 0 or 1.
+	PPC_BO_TEST_CR = 0b10000, ///< Flag mask: Test CR bit.
+	PPC_BO_CR_CMP = 0b01000, ///< Flag mask: Compare CR bit to 0 or 1.
+	PPC_BO_DECR_CTR = 0b00100, ///< Flag mask: Decrement counter.
+	PPC_BO_CTR_CMP = 0b00010, ///< Flag mask: Compare CTR to 0 or 1.
 	PPC_BO_T = 0b00001, ///< Either ignored (z) or hint bit t
 } ppc_bo_mask;
 
@@ -126,7 +128,7 @@ typedef enum {
 	PPC_BR_RESERVED = 0b01,
 	PPC_BR_NOT_TAKEN = 0b10, ///< Minus
 	PPC_BR_TAKEN = 0b11, ///< Plus
-	PPC_BR_HINT_MASK = 0b11
+	PPC_BR_HINT_MASK = 0b11,
 } ppc_br_hint;
 
 /// Encodes the different meanings of the BH field.
@@ -750,8 +752,8 @@ typedef struct cs_ppc_op {
 } cs_ppc_op;
 
 typedef struct {
-	uint8_t bo; ///< BO field of branch condition.
-	uint8_t bi; ///< BI field of branch condition.
+	uint8_t bo; ///< BO field of branch condition. UINT8_MAX if invalid.
+	uint8_t bi; ///< BI field of branch condition. UINT8_MAX if invalid.
 	ppc_cr_bit crX_bit; ///< CR field bit to test.
 	ppc_reg crX; ///< The CR field accessed.
 	ppc_br_hint hint; ///< The encoded hint.
@@ -759,6 +761,38 @@ typedef struct {
 	ppc_pred pred_ctr; ///< CTR branch predicate
 	ppc_bh bh; ///< The BH field hint if any is present.
 } ppc_bc;
+
+/// Returns true if the CTR is decremented.
+/// False otherwise.
+static inline bool cs_ppc_bc_decr_ctr(uint8_t bo) {
+	if (bo != UINT8_MAX && (bo & PPC_BO_DECR_CTR) == 0)
+		return true;
+	return false;
+}
+
+/// Returns true if the CTR is compared to 0
+/// False otherwise.
+static inline bool cs_ppc_bc_tests_ctr_is_zero(uint8_t bo) {
+	if (bo != UINT8_MAX && (bo & PPC_BO_CTR_CMP) != 0)
+		return true;
+	return false;
+}
+
+/// Returns true if a CR bit is tested.
+/// False otherwise.
+static inline bool cs_ppc_bc_cr_is_tested(uint8_t bo) {
+	if (bo != UINT8_MAX && (bo & PPC_BO_TEST_CR) == 0)
+		return true;
+	return false;
+}
+
+/// Returns true if a CR bit is compared to 1
+/// False otherwise.
+static inline bool cs_ppc_bc_tests_cr_bit_is_set(uint8_t bo) {
+	if (bo != UINT8_MAX && (bo & PPC_BO_CR_CMP) != 0)
+		return true;
+	return false;
+}
 
 #define PPC_NUM_OPS 8
 
