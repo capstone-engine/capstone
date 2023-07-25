@@ -99,14 +99,14 @@ typedef enum ppc_bc {
 	PPC_PRED_BIT_UNSET = 1025
 } ppc_pred;
 
-/// Values for the BI field.
+/// CR field indices and their meaning.
 typedef enum {
 	PPC_BI_LT = 0, ///< CR bit Less Then
 	PPC_BI_GT = 1, ///< CR bit Greater Then
 	PPC_BI_Z = 2, ///< CR bit Zero
 	PPC_BI_SO = 3, ///< CR bit Summary Overflow
 	PPC_BI_INVALID = 4, ///< CR bit was not set/invalid
-} ppc_bi;
+} ppc_cr_bit;
 
 /// Masks of flags in the BO field.
 typedef enum {
@@ -750,9 +750,10 @@ typedef struct cs_ppc_op {
 } cs_ppc_op;
 
 typedef struct {
-	ppc_bi bi; ///< BI field of branch condition.
-	ppc_reg crX; ///< The CR register accessed.
 	uint8_t bo; ///< BO field of branch condition.
+	uint8_t bi; ///< BI field of branch condition.
+	ppc_cr_bit crX_bit; ///< CR field bit to test.
+	ppc_reg crX; ///< The CR field accessed.
 	ppc_br_hint hint; ///< The encoded hint.
 	ppc_pred pred_cr; ///< CR-bit branch predicate
 	ppc_pred pred_ctr; ///< CTR branch predicate

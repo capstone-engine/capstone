@@ -140,9 +140,10 @@ static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes, size_t B
 	else
 		bo = (Inst & PPC_INSN_FORM_XL_BO_MASK) >> 21;
 
-	PPC_get_detail(MI)->bc.bi = bi % 4;
-	PPC_get_detail(MI)->bc.crX = PPC_REG_CR0 + (bi / 4);
 	PPC_get_detail(MI)->bc.bo = bo;
+	PPC_get_detail(MI)->bc.bi = bi;
+	PPC_get_detail(MI)->bc.crX_bit = bi % 4;
+	PPC_get_detail(MI)->bc.crX = PPC_REG_CR0 + (bi / 4);
 	PPC_get_detail(MI)->bc.hint = PPC_get_hint(bo);
 	PPC_get_detail(MI)->bc.pred_cr = PPC_get_branch_pred(bi, bo, true);
 	PPC_get_detail(MI)->bc.pred_ctr = PPC_get_branch_pred(bi, bo, false);
@@ -418,7 +419,8 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 			unsigned bo = Val & 0x1f;
 			unsigned bi = (Val & 0x1e0) >> 5;
 			PPC_get_detail(MI)->bc.bo = bo;
-			PPC_get_detail(MI)->bc.bi = bi % 4;
+			PPC_get_detail(MI)->bc.bi = bi;
+			PPC_get_detail(MI)->bc.crX_bit = bi % 4;
 			PPC_get_detail(MI)->bc.crX = PPC_REG_CR0 + (bi / 4);
 			PPC_get_detail(MI)->bc.pred_cr = PPC_get_branch_pred(bi, bo, true);
 			PPC_get_detail(MI)->bc.pred_ctr = PPC_get_branch_pred(bi, bo, false);
