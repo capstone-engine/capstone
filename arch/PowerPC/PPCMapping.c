@@ -28,7 +28,13 @@ void PPC_init_mri(MCRegisterInfo *MRI)
 
 const char *PPC_reg_name(csh handle, unsigned int reg)
 {
-	return PPC_LLVM_getRegisterName(reg);
+	// Special case: To allow to check for (RA|0): RA > R1
+	if (reg == 0)
+		return NULL;
+
+	if (reg > PPC_REG_INVALID && reg < PPC_REG_ENDING)
+		return PPC_LLVM_getRegisterName(reg);
+	return NULL;
 }
 
 // given internal insn id, return public instruction info
@@ -372,7 +378,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 	// in PPCInstPrinter.
 	case PPC_OP_GROUP_MemRegImm:
 	case PPC_OP_GROUP_MemRegReg: {
-		// These cases print 0 if the register is R0.
+		// These cases print 0 if the base register is R0.
 		// So no printOperand() function is called.
 		// We must handle the zero case here.
 		unsigned OpNumReg = 0;
@@ -382,8 +388,11 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			OpNumReg = OpNum;
 
 		MCOperand *Op = MCInst_getOperand(MI, OpNumReg);
-		if (MCOperand_isReg(Op) && MCOperand_getReg(Op) == PPC_R0)
-			PPC_set_detail_op_mem(MI, OpNum, PPC_R0, false);
+		if (MCOperand_isReg(Op) && MCOperand_getReg(Op) == PPC_R0) {
+			PPC_get_detail_op(MI, 0)->mem.base = 0;
+			PPC_get_detail_op(MI, 0)->type = PPC_OP_MEM;
+			PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		}
 		break;
 	}
 	case PPC_OP_GROUP_MemRegImmHash:
