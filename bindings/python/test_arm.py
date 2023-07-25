@@ -99,8 +99,6 @@ def print_insn_detail(insn):
             print("\tWrite-back: Post")
         else:
             print("\tWrite-back: Pre")
-    if not insn.cc in [ARM_CC_AL, ARM_CC_INVALID]:
-        print("\tCode condition: %u" % insn.cc)
     if insn.cps_mode:
         print("\tCPSI-mode: %u" %(insn.cps_mode))
     if insn.cps_flag:
