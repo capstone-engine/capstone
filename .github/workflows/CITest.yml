@@ -71,7 +71,6 @@ jobs:
         python-version: ${{ matrix.config.python-version }}
 
     - name: prepare
-      shell: 'script -q -e -c "bash {0}"'
       run: |
         export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
         wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
@@ -81,37 +80,32 @@ jobs:
 
     - name: make
       if: startsWith(matrix.config.build-system, 'make')
-      shell: 'script -q -e -c "bash {0}"'
       run: |
-        ./make.sh;
-        make check;
+        ./make.sh
+        make check
+        sudo make install
         cp libcapstone.so.5 libcapstone.so.5.0
-        # sudo make install
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
-      shell: 'script -q -e -c "bash {0}"'
       run: |
-        mkdir build && cd build;
-        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 ..;
-        cmake --build . --config Release;
-        cp libcapstone.* ../;
-        # sudo make install;
-
-    - name: build python binding
-      shell: 'script -q -e -c "bash {0}"'
-      run: |
-        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so;
-        cd bindings/python;
-        make && make check ; 
-        cd ../..;
+        mkdir build && cd build
+        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr ..
+        sudo cmake --build . --config Release --target install
+        cp libcapstone.* ../
 
     - name: cstest
-      shell: 'script -q -e -c "bash {0}"'
       run: |
-        cd suite/cstest && ./build_cstest.sh;
-        python cstest_report.py -D -t build/cstest -d ../MC;
-        python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
+        cd suite/cstest && ./build_cstest.sh
+        python cstest_report.py -D -t build/cstest -d ../MC
+        python cstest_report.py -D -t build/cstest -f issues.cs; cd ..
+
+    - name: build python binding
+      run: |
+        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so
+        cd bindings/python
+        make && make check
+        cd ../..
 
   Windows:
     runs-on: ${{ matrix.config.os }}

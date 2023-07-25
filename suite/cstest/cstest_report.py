@@ -18,6 +18,13 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 	cmd = [toolpath, '-f', filepath]
 	process = Popen(cmd, stdout=PIPE, stderr=PIPE)
 	stdout, stderr = process.communicate()
+	if process.returncode != 0:
+		print('[-] Failed to run cstest on {}'.format(filepath))
+		print('[-] stdout:')
+		print(stdout)
+		print('[-] stderr:')
+		print(stderr)
+		return 0
 
 #	stdout
 	failed_tests = []
