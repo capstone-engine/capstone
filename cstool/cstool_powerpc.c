@@ -133,4 +133,25 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 
 	if (ppc->update_cr0)
 		printf("\tUpdate-CR0: True\n");
+
+	uint16_t *regs_read = ins->detail->regs_read;
+	uint16_t *regs_write = ins->detail->regs_write;
+	uint8_t regs_read_count = ins->detail->regs_read_count;
+	uint8_t regs_write_count = ins->detail->regs_write_count;
+	// Print out all registers accessed by this instruction (either implicit or explicit)
+	if (regs_read_count) {
+		printf("\tImplicit registers read:");
+		for(i = 0; i < regs_read_count; i++) {
+			printf(" %s", cs_reg_name(handle, regs_read[i]));
+		}
+		printf("\n");
+	}
+
+	if (regs_write_count) {
+		printf("\tImplicit registers modified:");
+		for(i = 0; i < regs_write_count; i++) {
+			printf(" %s", cs_reg_name(handle, regs_write[i]));
+		}
+		printf("\n");
+	}
 }
