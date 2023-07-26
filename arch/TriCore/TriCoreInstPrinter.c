@@ -225,6 +225,19 @@ static void off4_fixup(MCInst *MI, uint64_t *off4)
 	}
 }
 
+static void const8_fixup(MCInst *MI, uint64_t *const8)
+{
+	switch (MCInst_getOpcode(MI)) {
+	case TRICORE_LD_A_sc:
+	case TRICORE_ST_A_sc:
+	case TRICORE_ST_W_sc:
+	case TRICORE_LD_W_sc: {
+		*const8 *= 4;
+		break;
+	}
+	}
+}
+
 static void print_zero_ext(MCInst *MI, int OpNum, SStream *O, unsigned n)
 {
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
@@ -235,6 +248,9 @@ static void print_zero_ext(MCInst *MI, int OpNum, SStream *O, unsigned n)
 		}
 		if (n == 4) {
 			off4_fixup(MI, &imm);
+		}
+		if (n == 8) {
+			const8_fixup(MI, &imm);
 		}
 
 		printInt64Bang(O, imm);
