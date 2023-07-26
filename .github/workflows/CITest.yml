@@ -90,11 +90,15 @@ jobs:
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
         mkdir build && cd build
+        # build static library
+        cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr ..
+        cmake --build . --config Release
+        # build shared library
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr ..
         sudo cmake --build . --config Release --target install
         cp libcapstone.* ../
-        cp libcapstone.* ../tests/;
-        cp test_* ../tests/;
+        cp libcapstone.* ../tests/
+        cp test_* ../tests/
 
     - name: cstest
       run: |
@@ -123,6 +127,7 @@ jobs:
 
     - name: run python binding test
       run: |
+        cp libcapstone.* bindings/python/prebuilt
         cd bindings/python
         make install3
         cd ..

@@ -87,6 +87,15 @@ def build_libraries():
     # copy public headers
     shutil.copytree(os.path.join(BUILD_DIR, 'include', 'capstone'), os.path.join(HEADERS_DIR, 'capstone'))
 
+    # if prebuilt libraries are available, use those and cancel build
+    if os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE)) and \
+            (not STATIC_LIBRARY_FILE or os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', STATIC_LIBRARY_FILE))):
+        log.info('Using prebuilt libraries')
+        shutil.copy(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE), LIBS_DIR)
+        if STATIC_LIBRARY_FILE is not None:
+            shutil.copy(os.path.join(ROOT_DIR, 'prebuilt', STATIC_LIBRARY_FILE), LIBS_DIR)
+        return
+
     os.chdir(BUILD_DIR)
 
     # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
@@ -137,7 +146,7 @@ setup(
     author       = 'Nguyen Anh Quynh',
     author_email = 'aquynh@gmail.com',
     description  = 'Capstone disassembly engine',
-    url          = 'http://www.capstone-engine.org',
+    url          = 'https://www.capstone-engine.org',
     classifiers  = [
                 'License :: OSI Approved :: BSD License',
                 'Programming Language :: Python :: 2',
