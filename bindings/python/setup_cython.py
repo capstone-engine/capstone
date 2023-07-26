@@ -9,8 +9,6 @@ from distutils.command.build import build
 from Cython.Distutils import build_ext
 
 SYSTEM = sys.platform
-VERSION = '5.0.0'
-VERSION_PARTS = VERSION.split(".")
 
 # adapted from commit e504b81 of Nguyen Tan Cong
 # Reference: https://docs.python.org/2/library/platform.html#cross-platform
@@ -25,8 +23,38 @@ BUILD_DIR = SRC_DIR if os.path.exists(SRC_DIR) else os.path.join(ROOT_DIR, '../.
 PYPACKAGE_DIR = os.path.join(ROOT_DIR, 'capstone')
 CYPACKAGE_DIR = os.path.join(ROOT_DIR, 'pyx')
 
+# Parse version from pkgconfig.mk
+VERSION_DATA = {}
+with open(os.path.join(BUILD_DIR, 'pkgconfig.mk')) as fp:
+    lines = fp.readlines()
+    for line in lines:
+        line = line.strip()
+        if len(line) == 0:
+            continue
+        if line.startswith('#'):
+            continue
+        if '=' not in line:
+            continue
+
+        k, v = line.split('=', 1)
+        k = k.strip()
+        v = v.strip()
+        if len(k) == 0 or len(v) == 0:
+            continue
+        VERSION_DATA[k] = v
+
+if 'PKG_MAJOR' not in VERSION_DATA or \
+        'PKG_MINOR' not in VERSION_DATA or \
+        'PKG_EXTRA' not in VERSION_DATA:
+    raise Exception("Malformed pkgconfig.mk")
+
+if 'PKG_TAG' in VERSION_DATA:
+    VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}{PKG_TAG}'.format(**VERSION_DATA)
+else:
+    VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}'.format(**VERSION_DATA)
+
 if SYSTEM == 'darwin':
-    VERSIONED_LIBRARY_FILE = "libcapstone.{}.dylib".format(VERSION_PARTS[0])
+    VERSIONED_LIBRARY_FILE = "libcapstone.{PKG_MAJOR}.dylib".format(**VERSION_DATA)
     LIBRARY_FILE = "libcapstone.dylib"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
@@ -34,7 +62,7 @@ elif SYSTEM in ('win32', 'cygwin'):
     LIBRARY_FILE = "capstone.dll"
     STATIC_LIBRARY_FILE = None
 else:
-    VERSIONED_LIBRARY_FILE = "libcapstone.so.{}".format(VERSION_PARTS[0])
+    VERSIONED_LIBRARY_FILE = "libcapstone.so.{PKG_MAJOR}".format(**VERSION_DATA)
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
