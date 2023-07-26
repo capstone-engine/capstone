@@ -15605,7 +15605,7 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
   while (AsmString[I] != ' ' && AsmString[I] != '\t' &&
          AsmString[I] != '$' && AsmString[I] != '\0')
     ++I;
-  SStream_concat1(OS, '\t');
+  SStream_concat1(OS, ' ');
   char *substr = malloc(I+1);
   memcpy(substr, AsmString, I);
   substr[I] = '\0';
@@ -15613,7 +15613,7 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
   free(substr);
   if (AsmString[I] != '\0') {
     if (AsmString[I] == ' ' || AsmString[I] == '\t') {
-      SStream_concat1(OS, '\t');
+      SStream_concat1(OS, ' ');
       ++I;
     }
     do {
