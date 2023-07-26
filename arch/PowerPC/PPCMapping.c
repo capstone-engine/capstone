@@ -28,10 +28,6 @@ void PPC_init_mri(MCRegisterInfo *MRI)
 
 const char *PPC_reg_name(csh handle, unsigned int reg)
 {
-	// Special case: To allow to check for (RA|0): RA > R1
-	if (reg == 0)
-		return NULL;
-
 	if (reg > PPC_REG_INVALID && reg < PPC_REG_ENDING)
 		return PPC_LLVM_getRegisterName(reg);
 	return NULL;
@@ -389,7 +385,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 
 		MCOperand *Op = MCInst_getOperand(MI, OpNumReg);
 		if (MCOperand_isReg(Op) && MCOperand_getReg(Op) == PPC_R0) {
-			PPC_get_detail_op(MI, 0)->mem.base = 0;
+			PPC_get_detail_op(MI, 0)->mem.base = PPC_REG_ZERO;
 			PPC_get_detail_op(MI, 0)->type = PPC_OP_MEM;
 			PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		}
