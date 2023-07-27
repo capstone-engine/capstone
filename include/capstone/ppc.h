@@ -3159,6 +3159,7 @@ typedef enum ppc_insn {
 	// Hardcoded in LLVM printer
 	PPC_INS_ALIAS_SLWI, // Real instr.: PPC_RLWINM
 	PPC_INS_ALIAS_SRWI, // Real instr.: PPC_RLWINM
+	PPC_INS_ALIAS_SLDI, // Real instr.: PPC_RLDICR
 
 	PPC_INS_ALIAS_END,
 

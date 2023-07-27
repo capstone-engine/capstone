@@ -134,16 +134,23 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 		MCInst_getOpcode(MI) == PPC_RLDICR_32) {
 		unsigned char SH = MCOperand_getImm(MCInst_getOperand(MI, (2)));
 		unsigned char ME = MCOperand_getImm(MCInst_getOperand(MI, (3)));
+
+		useAliasDetails |= map_use_alias_details(MI);
+		map_set_fill_detail_ops(MI, useAliasDetails && 63 - SH == ME);
 		// rldicr RA, RS, SH, 63-SH == sldi RA, RS, SH
 		if (63 - SH == ME) {
-			SStream_concat0(O, "\tsldi ");
+			isAlias |= true;
+			MCInst_setIsAlias(MI, isAlias);
+			SStream_concat0(O, "sldi ");
 			printOperand(MI, 0, O);
 			SStream_concat0(O, ", ");
 			printOperand(MI, 1, O);
 			SStream_concat(O, "%s", ", ");
 			printUInt32(O, (unsigned int)SH);
+			PPC_insert_detail_op_imm_at(MI, 2, SH, CS_AC_READ);
 
-			return;
+			if (useAliasDetails)
+				return;
 		}
 	}
 

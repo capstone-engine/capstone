@@ -49,6 +49,8 @@ static const name_map insn_alias_mnem_map[] = {
 #include "PPCGenCSAliasMnemMap.inc"
 	{ PPC_INS_ALIAS_SLWI, "slwi" },
 	{ PPC_INS_ALIAS_SRWI, "srwi" },
+	{ PPC_INS_ALIAS_SLDI, "sldi" },
+	{ PPC_INS_ALIAS_END, NULL },
 };
 
 #endif
