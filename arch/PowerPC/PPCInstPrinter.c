@@ -102,11 +102,11 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 		unsigned char ME = MCOperand_getImm(MCInst_getOperand(MI, (4)));
 		bool useSubstituteMnemonic = false;
 		if (SH <= 31 && MB == 0 && ME == (31 - SH)) {
-			SStream_concat0(O, "\tslwi ");
+			SStream_concat0(O, "slwi ");
 			useSubstituteMnemonic = true;
 		}
 		if (SH <= 31 && MB == (32 - SH) && ME == 31) {
-			SStream_concat0(O, "\tsrwi ");
+			SStream_concat0(O, "srwi ");
 			useSubstituteMnemonic = true;
 			SH = 32 - SH;
 		}
