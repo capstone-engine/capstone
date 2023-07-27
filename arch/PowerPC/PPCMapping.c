@@ -612,7 +612,7 @@ void PPC_setup_op(cs_ppc_op *op)
 void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 				 cs_ac_type access)
 {
-	if (!detail_is_set(MI))
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
 	assert(PPC_get_detail(MI)->op_count < PPC_NUM_OPS);
