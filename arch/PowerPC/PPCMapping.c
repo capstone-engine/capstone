@@ -47,6 +47,8 @@ static const char * const insn_name_maps[] = {
 
 static const name_map insn_alias_mnem_map[] = {
 #include "PPCGenCSAliasMnemMap.inc"
+	{ PPC_INS_ALIAS_SLWI, "slwi" },
+	{ PPC_INS_ALIAS_SRWI, "srwi" },
 };
 
 #endif
@@ -594,6 +596,40 @@ void PPC_set_mem_access(MCInst *MI, bool status) {
 		// done, select the next operand slot
 		PPC_inc_op_count(MI);
 	}
+}
+
+void PPC_setup_op(cs_ppc_op *op)
+{
+	memset(op, 0, sizeof(cs_arm_op));
+	op->type = PPC_OP_INVALID;
+}
+
+
+/// Inserts a immediate to the detail operands at @index.
+/// Already present operands are moved.
+void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
+				 cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	assert(PPC_get_detail(MI)->op_count < PPC_NUM_OPS);
+
+	cs_ppc_op op;
+	PPC_setup_op(&op);
+	op.type = PPC_OP_IMM;
+	op.imm = Val;
+	op.access = access;
+
+	cs_ppc_op *ops = PPC_get_detail(MI)->operands;
+	int i = PPC_get_detail(MI)->op_count - 1;
+	for (; i >= 0; --i) {
+		ops[i + 1] = ops[i];
+		if (i == index)
+			break;
+	}
+	ops[index] = op;
+	PPC_inc_op_count(MI);
 }
 
 #endif

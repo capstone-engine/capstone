@@ -3156,6 +3156,10 @@ typedef enum ppc_insn {
 	// clang-format on
 	// generated content <PPCGenCSAliasEnum.inc> end
 
+	// Hardcoded in LLVM printer
+	PPC_INS_ALIAS_SLWI, // Real instr.: PPC_RLWINM
+	PPC_INS_ALIAS_SRWI, // Real instr.: PPC_RLWINM
+
 	PPC_INS_ALIAS_END,
 
 } ppc_insn;

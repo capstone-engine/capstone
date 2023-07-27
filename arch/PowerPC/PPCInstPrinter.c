@@ -63,6 +63,8 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 
 static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 {
+	bool isAlias = false;
+	bool useAliasDetails = false;
 	// Customize printing of the addis instruction on AIX. When an operand is a
 	// symbol reference, the instruction syntax is changed to look like a load
 	// operation, i.e:
@@ -99,23 +101,32 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 		unsigned char MB = MCOperand_getImm(MCInst_getOperand(MI, (3)));
 		unsigned char ME = MCOperand_getImm(MCInst_getOperand(MI, (4)));
 		bool useSubstituteMnemonic = false;
+		bool left_shift = false;
 		if (SH <= 31 && MB == 0 && ME == (31 - SH)) {
 			SStream_concat0(O, "\tslwi ");
 			useSubstituteMnemonic = true;
+			left_shift = true;
 		}
 		if (SH <= 31 && MB == (32 - SH) && ME == 31) {
 			SStream_concat0(O, "\tsrwi ");
 			useSubstituteMnemonic = true;
 			SH = 32 - SH;
 		}
+		useAliasDetails |= map_use_alias_details(MI);
+		map_set_fill_detail_ops(MI, useAliasDetails && useSubstituteMnemonic);
 		if (useSubstituteMnemonic) {
+			isAlias |= true;
+			MCInst_setIsAlias(MI, isAlias);
+
 			printOperand(MI, 0, O);
 			SStream_concat0(O, ", ");
 			printOperand(MI, 1, O);
 			SStream_concat(O, "%s", ", ");
 			printUInt32(O, (unsigned int)SH);
+			PPC_insert_detail_op_imm_at(MI, 2, SH, CS_AC_READ);
 
-			return;
+			if (useAliasDetails)
+				return;
 		}
 	}
 
@@ -202,12 +213,13 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 		}
 	}
 
-	bool use_alias_details = map_use_alias_details(MI);
-	map_set_fill_detail_ops(MI, use_alias_details);
-	bool isAlias = printAliasInstr(MI, Address, O);
+	// isAlias/useAliasDetails could have been set before.
+	useAliasDetails |= map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, useAliasDetails);
+	isAlias |= printAliasInstr(MI, Address, O);
 	MCInst_setIsAlias(MI, isAlias);
 
-	if (!isAlias || !use_alias_details) {
+	if (!isAlias || !useAliasDetails) {
 		map_set_fill_detail_ops(MI, true);
 		if (isAlias)
 			SStream_Close(O);

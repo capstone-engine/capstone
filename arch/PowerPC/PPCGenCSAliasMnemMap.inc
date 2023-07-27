@@ -651,4 +651,3 @@
 	{ PPC_INS_ALIAS_QVFORC, "qvforc" },
 	{ PPC_INS_ALIAS_QVFNAND, "qvfnand" },
 	{ PPC_INS_ALIAS_QVFSET, "qvfset" },
-	{ PPC_INS_ALIAS_END, NULL },
