@@ -771,9 +771,10 @@ static inline bool cs_ppc_bc_decr_ctr(uint8_t bo) {
 }
 
 /// Returns true if the CTR is compared to 0
+/// Implies that the CTR is decremented at all.
 /// False otherwise.
 static inline bool cs_ppc_bc_tests_ctr_is_zero(uint8_t bo) {
-	if (bo != UINT8_MAX && (bo & PPC_BO_CTR_CMP) != 0)
+	if (bo != UINT8_MAX && (bo & PPC_BO_CTR_CMP) != 0 && cs_ppc_bc_decr_ctr(bo))
 		return true;
 	return false;
 }
@@ -786,10 +787,11 @@ static inline bool cs_ppc_bc_cr_is_tested(uint8_t bo) {
 	return false;
 }
 
-/// Returns true if a CR bit is compared to 1
+/// Returns true if a CR bit is compared to 1.
+/// Implies that the CR field is tested at all.
 /// False otherwise.
-static inline bool cs_ppc_bc_tests_cr_bit_is_set(uint8_t bo) {
-	if (bo != UINT8_MAX && (bo & PPC_BO_CR_CMP) != 0)
+static inline bool cs_ppc_bc_cr_bit_is_one(uint8_t bo) {
+	if (bo != UINT8_MAX && (bo & PPC_BO_CR_CMP) != 0 && cs_ppc_bc_cr_is_tested(bo))
 		return true;
 	return false;
 }
