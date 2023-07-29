@@ -893,42 +893,6 @@ typedef enum ppc_insn {
 	PPC_INS_BCDUTRUNC,
 	PPC_INS_BCTR,
 	PPC_INS_BCTRL,
-	PPC_INS_BDNZ,
-	PPC_INS_BDNZA,
-	PPC_INS_BDNZAm,
-	PPC_INS_BDNZAp,
-	PPC_INS_BDNZL,
-	PPC_INS_BDNZLA,
-	PPC_INS_BDNZLAm,
-	PPC_INS_BDNZLAp,
-	PPC_INS_BDNZLR,
-	PPC_INS_BDNZLRL,
-	PPC_INS_BDNZLRLm,
-	PPC_INS_BDNZLRLp,
-	PPC_INS_BDNZLRm,
-	PPC_INS_BDNZLRp,
-	PPC_INS_BDNZLm,
-	PPC_INS_BDNZLp,
-	PPC_INS_BDNZm,
-	PPC_INS_BDNZp,
-	PPC_INS_BDZ,
-	PPC_INS_BDZA,
-	PPC_INS_BDZAm,
-	PPC_INS_BDZAp,
-	PPC_INS_BDZL,
-	PPC_INS_BDZLA,
-	PPC_INS_BDZLAm,
-	PPC_INS_BDZLAp,
-	PPC_INS_BDZLR,
-	PPC_INS_BDZLRL,
-	PPC_INS_BDZLRLm,
-	PPC_INS_BDZLRLp,
-	PPC_INS_BDZLRm,
-	PPC_INS_BDZLRp,
-	PPC_INS_BDZLm,
-	PPC_INS_BDZLp,
-	PPC_INS_BDZm,
-	PPC_INS_BDZp,
 	PPC_INS_BL,
 	PPC_INS_BLA,
 	PPC_INS_BLR,
@@ -2702,10 +2666,6 @@ typedef enum ppc_insn {
 	PPC_INS_ALIAS_BCAm, // Real instr.: PPC_gBCAat
 	PPC_INS_ALIAS_BCLm, // Real instr.: PPC_gBCLat
 	PPC_INS_ALIAS_BCLAm, // Real instr.: PPC_gBCLAat
-	PPC_INS_ALIAS_BCLR, // Real instr.: PPC_gBCLR
-	PPC_INS_ALIAS_BCLRL, // Real instr.: PPC_gBCLRL
-	PPC_INS_ALIAS_BCCTR, // Real instr.: PPC_gBCCTR
-	PPC_INS_ALIAS_BCCTRL, // Real instr.: PPC_gBCCTRL
 	PPC_INS_ALIAS_BT, // Real instr.: PPC_gBC
 	PPC_INS_ALIAS_BTA, // Real instr.: PPC_gBCA
 	PPC_INS_ALIAS_BTLR, // Real instr.: PPC_gBCLR
@@ -2714,6 +2674,36 @@ typedef enum ppc_insn {
 	PPC_INS_ALIAS_BTLRL, // Real instr.: PPC_gBCLRL
 	PPC_INS_ALIAS_BTCTR, // Real instr.: PPC_gBCCTR
 	PPC_INS_ALIAS_BTCTRL, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BDZLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZL, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDZLA, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDZ, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZL, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDNZLA, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDNZ, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDZLp, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDZLAp, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDZp, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZLp, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDNZLAp, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDNZp, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDZLm, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDZLAm, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDZm, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZLm, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDNZLAm, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDNZm, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZLRp, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZLRLp, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDNZLRp, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZLRLp, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZLRm, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZLRLm, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDNZLRm, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZLRLm, // Real instr.: PPC_gBCLRL
 	PPC_INS_ALIAS_BF, // Real instr.: PPC_gBC
 	PPC_INS_ALIAS_BFA, // Real instr.: PPC_gBCA
 	PPC_INS_ALIAS_BFLR, // Real instr.: PPC_gBCLR
