@@ -4,7 +4,7 @@
 
 #include "factory.h"
 
-static const char* get_bc_name(int bc)
+static const char* get_pred_name(int bc)
 {
 	switch(bc) {
 		default:
@@ -21,13 +21,9 @@ static const char* get_bc_name(int bc)
 		case PPC_PRED_NE:
 			return ("ne");
 		case PPC_PRED_UN:
-			return ("un");
+			return ("so/un");
 		case PPC_PRED_NU:
-			return ("nu");
-		case PPC_PRED_SO:
-			return ("so");
-		case PPC_PRED_NS:
-			return ("ns");
+			return ("ns/nu");
 	}
 }
 
@@ -66,16 +62,28 @@ char *get_detail_ppc(csh *handle, cs_mode mode, cs_insn *ins)
 					add_str(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
 
 				break;
-			case PPC_OP_CRX:
-				add_str(&result, " ; operands[%u].type: CRX", i);
-				add_str(&result, " ; operands[%u].crx.scale: %d", i, op->crx.scale);
-				add_str(&result, " ; operands[%u].crx.reg: %s", i, cs_reg_name(*handle, op->crx.reg));
-				add_str(&result, " ; operands[%u].crx.cond: %s", i, get_bc_name(op->crx.cond));
-				break;
 		}
 	}
 
-	add_str(&result, " ; Branch code: %u", ppc->bc.pred);
+	if (ppc->bc.pred_cr != PPC_PRED_INVALID ||
+			ppc->bc.pred_ctr != PPC_PRED_INVALID) {
+		printf("\tBranch:\n");
+		printf("\t\tbi: %u\n", ppc->bc.bi);
+		printf("\t\tbo: %u\n", ppc->bc.bo);
+		if (ppc->bc.bh != PPC_BH_INVALID)
+			printf("\t\tbh: %u\n", ppc->bc.bh);
+		if (ppc->bc.pred_cr != PPC_PRED_INVALID) {
+			printf("\t\tcrX: %s\n", cs_reg_name(*handle, ppc->bc.crX));
+			printf("\t\tpred CR-bit: %s\n", get_pred_name(ppc->bc.pred_cr));
+		}
+		if (ppc->bc.pred_ctr != PPC_PRED_INVALID)
+			printf("\t\tpred CTR: %s\n", get_pred_name(ppc->bc.pred_ctr));
+		if (ppc->bc.hint != PPC_BH_INVALID)
+			printf("\t\thint: %u\n", ppc->bc.hint);
+	}
+
+	if (ppc->bc.hint != PPC_BR_NOT_GIVEN)
+		printf("\tBranch hint: %u\n", ppc->bc.hint);
 
 	if (ppc->bc.hint != PPC_BR_NOT_GIVEN)
 		add_str(&result, " ; Branch hint: %u", ppc->bc.hint);
