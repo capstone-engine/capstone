@@ -232,8 +232,9 @@ bool PPC_getFeatureBits(unsigned int mode, unsigned int feature) {
     return false;
   } else if ((feature == PPC_FeatureBookE) && (mode & CS_MODE_BOOKE) == 0) {
     return false;
+  } else if ((feature == PPC_FeaturePS) && (mode & CS_MODE_PS) == 0) {
+    return false;
   }
-	// TODO: CS_MODE_PS
 
 	// No AIX support for now.
 	if (feature == PPC_FeatureModernAIXAs)

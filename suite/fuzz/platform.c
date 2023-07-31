@@ -331,6 +331,13 @@ struct platform platforms[] = {
 				"ppc64beqpx"
 		},
 		{
+				//item 46
+				CS_ARCH_PPC,
+				CS_MODE_32 | CS_MODE_BIG_ENDIAN | CS_MODE_PS,
+				"ppc+ps",
+				"ppc32beps"
+		},
+		{
 				CS_ARCH_TRICORE,
 				CS_MODE_32 | CS_MODE_BIG_ENDIAN | CS_MODE_TRICORE_110,
 				"TRICORE",
