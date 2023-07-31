@@ -48,7 +48,7 @@ extern "C" {
 #endif
 
 // Capstone API version
-#define CS_API_MAJOR 6
+#define CS_API_MAJOR 5
 #define CS_API_MINOR 0
 
 // Version for bleeding edge code of the Github's "next" branch.
