@@ -632,7 +632,7 @@ void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 /// printed with a percentage symbol as prefix.
 bool showRegistersWithPercentPrefix(const MCInst *MI, const char *RegName)
 {
-	if (!MI->csh->FullRegNamesWithPercent ||
+	if ((MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME) ||
 		PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs))
 		return false;
 
@@ -653,7 +653,7 @@ bool showRegistersWithPercentPrefix(const MCInst *MI, const char *RegName)
 const char *getVerboseConditionRegName(const MCInst *MI, unsigned RegNum,
 									   unsigned RegEncoding)
 {
-	if (MI->csh->notFullRegNames)
+	if (MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME)
 		return NULL;
 	if (RegNum < PPC_CR0EQ || RegNum > PPC_CR7UN)
 		return NULL;
@@ -671,7 +671,7 @@ const char *getVerboseConditionRegName(const MCInst *MI, unsigned RegNum,
 // should be number-only or include the prefix.
 bool showRegistersWithPrefix(const MCInst *MI)
 {
-	return MI->csh->FullRegNamesWithPercent || !MI->csh->notFullRegNames;
+	return !(MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME);
 }
 
 void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
