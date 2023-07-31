@@ -9855,4 +9855,4 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
 
 FieldFromInstruction(fieldFromInstruction_4, uint64_t)
 DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint64_t)
-DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4, decodeToMCInst_4, uint32_t)
+DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4, decodeToMCInst_4, uint64_t)
