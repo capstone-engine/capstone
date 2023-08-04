@@ -65,6 +65,10 @@ char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
 			case ARM_OP_SETEND:
 				add_str(&result, " ; operands[%u].type: SETEND = %s", i, op->setend == ARM_SETEND_BE? "be" : "le");
 				break;
+			case ARM_OP_SYSM:
+				add_str(&result, " ; operands[%u].type: SYSM = 0x%" PRIx16 "\n", i, op->sysop.sysm);
+				add_str(&result, " ; operands[%u].type: MASK = %" PRIu8 "\n", i, op->sysop.msr_mask);
+				break;
 			case ARM_OP_SYSREG:
 				add_str(&result, " ; operands[%u].type: SYSREG = %s", i, cs_reg_name(*handle, (uint32_t) op->sysop.reg.mclasssysreg));
 				add_str(&result, " ; operands[%u].type: MASK = %" PRIu8, i, op->sysop.msr_mask);
