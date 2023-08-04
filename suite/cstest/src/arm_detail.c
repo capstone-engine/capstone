@@ -66,8 +66,31 @@ char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: SETEND = %s", i, op->setend == ARM_SETEND_BE? "be" : "le");
 				break;
 			case ARM_OP_SYSREG:
-				add_str(&result, " ; operands[%u].type: SYSREG = %u", i, op->reg);
+				add_str(&result, " ; operands[%u].type: SYSREG = %s", i, cs_reg_name(*handle, (uint32_t) op->sysop.reg.mclasssysreg));
+				add_str(&result, " ; operands[%u].type: MASK = %" PRIu8, i, op->sysop.msr_mask);
 				break;
+			case ARM_OP_BANKEDREG:
+				// FIXME: Printing the name is currenliy not supported if the encodings overlap
+				// with system registers.
+				add_str(&result, " ; operands[%u].type: BANKEDREG = %" PRIu32, i, (uint32_t) op->sysop.reg.bankedreg);
+				if (op->sysop.msr_mask != UINT8_MAX)
+					add_str(&result, " ; operands[%u].type: MASK = %" PRIu8, i, op->sysop.msr_mask);
+			case ARM_OP_SPSR:
+			case ARM_OP_CPSR: {
+				const char type = op->type == ARM_OP_SPSR ? 'S' : 'C';
+				add_str(&result, " ; operands[%u].type: %cPSR = ", i, type);
+				uint16_t field = op->sysop.psr_bits;
+				if ((field & ARM_FIELD_SPSR_F) || (field & ARM_FIELD_CPSR_F))
+					add_str(&result, "f");
+				if ((field & ARM_FIELD_SPSR_S) || (field & ARM_FIELD_CPSR_S))
+					add_str(&result, "s");
+				if ((field & ARM_FIELD_SPSR_X) || (field & ARM_FIELD_CPSR_X))
+					add_str(&result, "x");
+				if ((field & ARM_FIELD_SPSR_C) || (field & ARM_FIELD_CPSR_C))
+					add_str(&result, "c");
+				add_str(&result, " ; operands[%u].type: MASK = %" PRIu8, i, op->sysop.msr_mask);
+				break;
+			}
 		}
 
 		if (op->neon_lane != -1) {
