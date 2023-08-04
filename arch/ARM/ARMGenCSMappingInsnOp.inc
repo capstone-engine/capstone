@@ -70562,7 +70562,7 @@
 	      CS_AC_READ,
 	      { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* p - i32imm */
 	    { CS_OP_IMM,
-	      CS_AC_READ,
+	      CS_AC_WRITE,
 	      { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* regs */
 	    { CS_OP_INVALID, CS_AC_READ, { CS_DATA_TYPE_LAST } }, /*  */
 	    { 0 } }
@@ -70575,7 +70575,7 @@
 	      CS_AC_READ,
 	      { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* p - i32imm */
 	    { CS_OP_IMM,
-	      CS_AC_READ,
+	      CS_AC_WRITE,
 	      { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* regs */
 	    { CS_OP_INVALID, CS_AC_READ, { CS_DATA_TYPE_LAST } }, /*  */
 	    { 0 } }
