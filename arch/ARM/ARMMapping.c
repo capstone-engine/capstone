@@ -1963,8 +1963,7 @@ void ARM_set_detail_op_neon_lane(MCInst *MI, unsigned OpNum)
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
-	ARM_dec_op_count(MI);
-	ARM_get_detail_op(MI, 0)->neon_lane = Val;
+	ARM_get_detail_op(MI, -1)->neon_lane = Val;
 }
 
 /// Adds a System Register and increments op_count by one.
