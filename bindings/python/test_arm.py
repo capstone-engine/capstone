@@ -39,22 +39,22 @@ def print_insn_detail(insn):
         for i in insn.operands:
             if i.type == ARM_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
-            if i.type == ARM_OP_IMM:
+            elif i.type == ARM_OP_IMM:
                 print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.imm)))
-            if i.type == ARM_OP_PIMM:
-                print("\t\toperands[%u].type: P-IMM = %u" % (c, i.imm))
-            if i.type == ARM_OP_CIMM:
-                print("\t\toperands[%u].type: C-IMM = %u" % (c, i.imm))
-            if i.type == ARM_OP_FP:
+            elif i.type == ARM_OP_FP:
                 print("\t\toperands[%u].type: FP = %f" % (c, i.fp))
-            if i.type == ARM_OP_SYSREG:
-                print("\t\toperands[%u].type: SYSREG = %u" % (c, i.reg))
-            if i.type == ARM_OP_SETEND:
+            elif i.type == ARM_OP_PRED:
+                print("\t\toperands[%u].type: PRED = %d" % (c, i.pred))
+            elif i.type == ARM_OP_CIMM:
+                print("\t\toperands[%u].type: C-IMM = %u" % (c, i.imm))
+            elif i.type == ARM_OP_PIMM:
+                print("\t\toperands[%u].type: P-IMM = %u" % (c, i.imm))
+            elif i.type == ARM_OP_SETEND:
                 if i.setend == ARM_SETEND_BE:
                     print("\t\toperands[%u].type: SETEND = be" % c)
                 else:
                     print("\t\toperands[%u].type: SETEND = le" % c)
-            if i.type == ARM_OP_MEM:
+            elif i.type == ARM_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
@@ -71,6 +71,31 @@ def print_insn_detail(insn):
                 if i.mem.lshift != 0:
                     print("\t\t\toperands[%u].mem.lshift: 0x%s" \
                         % (c, to_x_32(i.mem.lshift)))
+            elif i.type == ARM_OP_SYSM:
+                print("\t\toperands[%u].type: SYSM = 0x%x" % (c, i.sysop.sysm))
+                print("\t\toperands[%u].type: MASK = %u" % (c, i.sysop.msr_mask))
+            elif i.type == ARM_OP_SYSREG:
+                print("\t\toperands[%u].type: SYSREG = %s" % (c, insn.reg_name(i.sysop.reg.mclasssysreg)))
+                print("\t\toperands[%u].type: MASK = %u" % (c, i.sysop.msr_mask))
+            elif i.type == ARM_OP_BANKEDREG:
+                print("\t\toperands[%u].type: BANKEDREG = %u" % (c, i.sysop.reg.bankedreg))
+                if i.sysop.msr_mask != 2 ** (ctypes.sizeof(ctypes.c_uint8) * 8) - 1:
+                    print("\t\toperands[%u].type: MASK = %u" % (c, i.sysop.msr_mask))
+            elif i.type in [ARM_OP_SPSR, ARM_OP_CPSR]:
+                print("\t\toperands[%u].type: %sPSR = " % (c, "S" if i.type == ARM_OP_SPSR else "C"), end="")
+                field = i.sysop.psr_bits
+                if (field & ARM_FIELD_SPSR_F) > 0 or (field & ARM_FIELD_CPSR_F) > 0:
+                    print("f", end="")
+                if (field & ARM_FIELD_SPSR_S) > 0 or (field & ARM_FIELD_CPSR_S) > 0:
+                    print("s", end="")
+                if (field & ARM_FIELD_SPSR_X) > 0 or (field & ARM_FIELD_CPSR_X) > 0:
+                    print("x", end="")
+                if (field & ARM_FIELD_SPSR_C) > 0 or (field & ARM_FIELD_CPSR_C) > 0:
+                    print("c", end="")
+                print()
+                print("\t\toperands[%u].type: MASK = %u" % (c, i.sysop.msr_mask))
+            else:
+                print("\t\toperands[%u].type: UNKNOWN = %u" % (c, i.type))
 
             if i.neon_lane != -1:
                 print("\t\toperands[%u].neon_lane = %u" % (c, i.neon_lane))
@@ -83,8 +108,14 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].access: READ | WRITE\n" % (c))
 
             if i.shift.type != ARM_SFT_INVALID and i.shift.value:
-                print("\t\t\tShift: %u = %u" \
-                    % (i.shift.type, i.shift.value))
+                if i.shift.type < ARM_SFT_ASR_REG:
+                    # shift with constant value
+                    print("\t\t\tShift: %u = %u" \
+                        % (i.shift.type, i.shift.value))
+                else:
+                    # shift with register
+                    print("\t\t\tShift: %u = %s" \
+                        % (i.shift.type, insn.reg_name(i.shift.value)))
             if i.vector_index != -1:
                 print("\t\t\toperands[%u].vector_index = %u" %(c, i.vector_index))
             if i.subtracted:
@@ -92,6 +123,10 @@ def print_insn_detail(insn):
 
             c += 1
 
+    if not insn.cc in [ARMCC_AL, ARMCC_UNDEF]:
+        print("\tCode condition: %u" % insn.cc)
+    if insn.vcc != ARMVCC_None:
+        print("\tVector code condition: %u" % insn.vcc)
     if insn.update_flags:
         print("\tUpdate-flags: True")
     if insn.writeback:
@@ -99,8 +134,6 @@ def print_insn_detail(insn):
             print("\tWrite-back: Post")
         else:
             print("\tWrite-back: Pre")
-    if not insn.cc in [ARM_CC_AL, ARM_CC_INVALID]:
-        print("\tCode condition: %u" % insn.cc)
     if insn.cps_mode:
         print("\tCPSI-mode: %u" %(insn.cps_mode))
     if insn.cps_flag:
@@ -113,6 +146,8 @@ def print_insn_detail(insn):
         print("\tUser-mode: True")
     if insn.mem_barrier:
         print("\tMemory-barrier: %u" %(insn.mem_barrier))
+    if insn.pred_mask:
+        print("\tPredicate Mask: 0x%x" %(insn.pred_mask))
 
     (regs_read, regs_write) = insn.regs_access()
 

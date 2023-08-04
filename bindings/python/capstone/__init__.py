@@ -741,6 +741,23 @@ class CsInsn(object):
             return self._raw.detail.contents.groups[:self._raw.detail.contents.groups_count]
 
         raise CsError(CS_ERR_DETAIL)
+    
+    # return whether instruction has writeback operands.
+    @property
+    def writeback(self):
+        if self._raw.id == 0:
+            raise CsError(CS_ERR_SKIPDATA)
+
+        if self._cs._diet:
+            # Diet engine cannot provide @writeback.
+            raise CsError(CS_ERR_DIET)
+
+        if self._cs._detail:
+            if hasattr(self, 'arm64_writeback'):
+                return self.arm64_writeback
+            return self._raw.detail.contents.writeback
+
+        raise CsError(CS_ERR_DETAIL)
 
     def __gen_detail(self):
         if self._raw.id == 0:
@@ -749,10 +766,10 @@ class CsInsn(object):
 
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
-            (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.update_flags, \
-            self.writeback, self.post_index, self.mem_barrier, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
+            (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.vcc, self.update_flags, \
+            self.post_index, self.mem_barrier, self.pred_mask, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
         elif arch == CS_ARCH_ARM64:
-            (self.cc, self.update_flags, self.writeback, self.post_index, self.operands) = \
+            (self.cc, self.update_flags, self.arm64_writeback, self.post_index, self.operands) = \
                 arm64.get_arch_info(self._raw.detail.contents.arch.arm64)
         elif arch == CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \

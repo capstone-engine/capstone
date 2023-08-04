@@ -31,7 +31,7 @@ template = {
             'comment_close': '',
         },
     'python': {
-            'header': "from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_MEM\n"
+            'header': "from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_FP, CS_OP_PRED, CS_OP_SPECIAL, CS_OP_MEM\n"
                       "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.py]\n",
             'footer': "",
             'line_format': '%s = %s\n',

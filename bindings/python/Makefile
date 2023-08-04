@@ -4,7 +4,7 @@ PYTHON3 ?= python3
 .PHONY: gen_const install install3 install_cython sdist sdist3 bdist bdist3 clean check
 
 gen_const:
-	cd .. && $(PYTHON2) const_generator.py python
+	cd .. && $(PYTHON3) const_generator.py python
 
 install:
 	rm -rf src/
