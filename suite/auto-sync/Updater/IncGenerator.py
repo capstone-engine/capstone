@@ -63,8 +63,9 @@ inc_tables = [
 
 
 class IncGenerator:
-    def __init__(self, arch: str, llvm_path: Path, output_dir: Path) -> None:
+    def __init__(self, arch: str, inc_list: list, llvm_path: Path, output_dir: Path) -> None:
         self.arch: str = arch
+        self.inc_list = inc_list  # Names of inc files to generate. Or all if all should be generated.
         self.arch_dir_name: str = "PowerPC" if self.arch == "PPC" else self.arch
         self.llvm_root_path: Path = llvm_path
         self.llvm_include_dir: Path = self.llvm_root_path.joinpath(Path(f"llvm/include/"))
@@ -100,6 +101,10 @@ class IncGenerator:
 
     def gen_incs(self) -> None:
         for table in inc_tables:
+            if "All" not in self.inc_list and table["name"] not in self.inc_list:
+                log.debug(f"Skip {table['name']} generation")
+                continue
+
             if table["only_arch"] and self.arch not in table["only_arch"]:
                 continue
 

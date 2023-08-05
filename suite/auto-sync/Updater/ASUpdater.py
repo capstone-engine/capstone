@@ -25,13 +25,16 @@ class ASUpdater:
     The auto-sync updater.
     """
 
-    def __init__(self, arch: str, write: bool, inc_only: bool) -> None:
+    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list) -> None:
         self.arch = arch
         self.write = write
+        self.inc_list = inc_list
         self.inc_only = inc_only
         self.conf = self.get_config()
         self.check_paths()
-        self.inc_generator = IncGenerator(self.arch, self.conf["llvm_capstone_path"], self.conf["build_dir_path"])
+        self.inc_generator = IncGenerator(
+            self.arch, self.inc_list, self.conf["llvm_capstone_path"], self.conf["build_dir_path"]
+        )
 
     @staticmethod
     def get_config() -> dict:
@@ -81,6 +84,24 @@ def parse_args() -> argparse.Namespace:
         default="info",
     )
     parser.add_argument("--inc-only", dest="inc_only", help="Only generate the inc files.", action="store_true")
+    parser.add_argument(
+        "--inc-list",
+        dest="inc_list",
+        help="Only generate the following inc files.",
+        choices=[
+            "All",
+            "Disassembler",
+            "AsmWriter",
+            "RegisterInfo",
+            "InstrInfo",
+            "SubtargetInfo",
+            "Mapping",
+            "SystemOperand",
+        ],
+        nargs="+",
+        type=str,
+        default=["All"],
+    )
     arguments = parser.parse_args()
     return arguments
 
@@ -95,5 +116,5 @@ if __name__ == "__main__":
         format="%(levelname)-5s - %(message)s",
     )
 
-    Updater = ASUpdater(args.arch, args.write, args.inc_only)
+    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list)
     Updater.update()
