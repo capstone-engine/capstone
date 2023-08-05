@@ -6,15 +6,16 @@ import sys
 
 import logging as log
 
-from Helper import get_path, convert_loglevel, check_py_version
+from IncGenerator import IncGenerator
+from Helper import get_path, convert_loglevel, check_py_version, fail_exit
 from pathlib import Path
 
 CONFIG_FILE_NAME = "config.json"
 CONFIG_DEFAULT_CONTENT = """
     {
-        "llvm_capstone_path" = "{AUTO_SYNC_ROOT}/llvm-capstone/",
-        "vendor_path" = "{AUTO_SYNC_ROOT}/vendor/",
-        "build_dir_path" = "{AUTO_SYNC_ROOT}/build/"
+        "llvm_capstone_path": "{AUTO_SYNC_ROOT}/llvm-capstone/",
+        "vendor_path": "{AUTO_SYNC_ROOT}/vendor/",
+        "build_dir_path": "{AUTO_SYNC_ROOT}/build/"
     }
     """
 
@@ -24,13 +25,16 @@ class ASUpdater:
     The auto-sync updater.
     """
 
-    def __init__(self, write: bool, inc_only: bool) -> None:
+    def __init__(self, arch: str, write: bool, inc_only: bool) -> None:
+        self.arch = arch
         self.write = write
         self.inc_only = inc_only
         self.conf = self.get_config()
+        self.check_paths()
+        self.inc_generator = IncGenerator(self.arch, self.conf["llvm_capstone_path"], self.conf["build_dir_path"])
 
     @staticmethod
-    def get_config(self) -> dict:
+    def get_config() -> dict:
         if not Path.exists(Path(CONFIG_FILE_NAME)):
             log.info(f"{CONFIG_FILE_NAME} not found. Creating new one.")
             with open(CONFIG_FILE_NAME, "x") as f:
@@ -42,10 +46,22 @@ class ASUpdater:
             conf[k] = get_path(v)
         return conf
 
+    def check_paths(self) -> None:
+        if not self.conf["llvm_capstone_path"].exists():
+            fail_exit(f"Could not find {self.conf['llvm_capstone_path'].name}")
+        if not self.conf["build_dir_path"].exists():
+            fail_exit(f"Could not find {self.conf['build_dir_path'].name}")
+        if not self.conf["vendor_path"].exists():
+            fail_exit(f"Could not find {self.conf['vendor_path'].name}")
+
     def update(self) -> None:
         if self.inc_only:
-            pass
-        log.warn("Not yet implemented.")
+            self.inc_generator.gen_incs()
+            # Move them
+            exit(0)
+        fail_exit("Full update procedure not yet implemented.")
+        self.inc_generator.gen_incs()
+        # Move them
 
 
 def parse_args() -> argparse.Namespace:
@@ -56,7 +72,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64"], required=True
     )
-    parser.add_argument("-w", dest="write", help="Copy generated files to arch/<ARCH>/", default=False, type=bool)
+    parser.add_argument("-w", dest="write", help="Copy generated files to arch/<ARCH>/", action="store_true")
     parser.add_argument(
         "-v",
         dest="verbosity",
@@ -64,7 +80,7 @@ def parse_args() -> argparse.Namespace:
         choices=["debug", "info", "warning", "fatal"],
         default="info",
     )
-    parser.add_argument("--inc-only", dest="inc_only", help="Only generate the inc files.", default=False, type=bool)
+    parser.add_argument("--inc-only", dest="inc_only", help="Only generate the inc files.", action="store_true")
     arguments = parser.parse_args()
     return arguments
 
@@ -79,4 +95,5 @@ if __name__ == "__main__":
         format="%(levelname)-5s - %(message)s",
     )
 
-    Updater = ASUpdater(args.write, args.inc_only)
+    Updater = ASUpdater(args.arch, args.write, args.inc_only)
+    Updater.update()
