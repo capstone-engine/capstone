@@ -4,14 +4,14 @@
 
 from __future__ import print_function
 from capstone import *
-from capstone.arm64 import *
+from capstone.aarch64 import *
 from xprint import to_hex, to_x, to_x_32
 
 
-ARM64_CODE = b"\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c\xfd\x7b\xba\xa9\xfd\xc7\x43\xf8"
+AArch64_CODE = b"\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c\xfd\x7b\xba\xa9\xfd\xc7\x43\xf8"
 
 all_tests = (
-        (CS_ARCH_ARM64, CS_MODE_ARM, ARM64_CODE, "ARM-64"),
+        (CS_ARCH_AArch64, CS_MODE_ARM, AArch64_CODE, "AArch64"),
         )
 
 
@@ -28,15 +28,15 @@ def print_insn_detail(insn):
         c = -1
         for i in insn.operands:
             c += 1
-            if i.type == ARM64_OP_REG:
+            if i.type == AArch64_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
-            if i.type == ARM64_OP_IMM:
+            if i.type == AArch64_OP_IMM:
                 print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
-            if i.type == ARM64_OP_CIMM:
+            if i.type == AArch64_OP_CIMM:
                 print("\t\toperands[%u].type: C-IMM = %u" % (c, i.imm))
-            if i.type == ARM64_OP_FP:
+            if i.type == AArch64_OP_FP:
                 print("\t\toperands[%u].type: FP = %f" % (c, i.fp))
-            if i.type == ARM64_OP_MEM:
+            if i.type == AArch64_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
@@ -47,29 +47,29 @@ def print_insn_detail(insn):
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x_32(i.mem.disp)))
-            if i.type == ARM64_OP_REG_MRS:
+            if i.type == AArch64_OP_REG_MRS:
                 print("\t\toperands[%u].type: REG_MRS = 0x%x" % (c, i.reg))
-            if i.type == ARM64_OP_REG_MSR:
+            if i.type == AArch64_OP_REG_MSR:
                 print("\t\toperands[%u].type: REG_MSR = 0x%x" % (c, i.reg))
-            if i.type == ARM64_OP_PSTATE:
+            if i.type == AArch64_OP_PSTATE:
                 print("\t\toperands[%u].type: PSTATE = 0x%x" % (c, i.pstate))
-            if i.type == ARM64_OP_SYS:
+            if i.type == AArch64_OP_SYS:
                 print("\t\toperands[%u].type: SYS = 0x%x" % (c, i.sys))
-            if i.type == ARM64_OP_PREFETCH:
+            if i.type == AArch64_OP_PREFETCH:
                 print("\t\toperands[%u].type: PREFETCH = 0x%x" % (c, i.prefetch))
-            if i.type == ARM64_OP_BARRIER:
+            if i.type == AArch64_OP_BARRIER:
                 print("\t\toperands[%u].type: BARRIER = 0x%x" % (c, i.barrier))
-            if i.type == ARM64_OP_SVCR:
+            if i.type == AArch64_OP_SVCR:
                 print("\t\toperands[%u].type: SYS = 0x%x" % (c, i.sys))
-                if i.svcr == ARM64_SVCR_SVCRSM:
+                if i.svcr == AArch64_SVCR_SVCRSM:
                 	print("\t\t\toperands[%u].svcr: BIT = SM" % (c))
-                if i.svcr == ARM64_SVCR_SVCRZA:
+                if i.svcr == AArch64_SVCR_SVCRZA:
                 	print("\t\t\toperands[%u].svcr: BIT = ZA" % (c))
-                if i.svcr == ARM64_SVCR_SVCRSMZA:
+                if i.svcr == AArch64_SVCR_SVCRSMZA:
                 	print("\t\t\toperands[%u].svcr: BIT = SM & ZA" % (c))
-            if i.type == ARM64_OP_SME_INDEX:
+            if i.type == AArch64_OP_SME_INDEX:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
-                if i.sme_index.base != ARM64_REG_INVALID:
+                if i.sme_index.base != AArch64_REG_INVALID:
                     print("\t\t\toperands[%u].index.base: REG = %s" % (c, insn.reg_name(i.reg)))
                 if i.sme_index.disp != 0 :
                     print("\t\t\toperands[%u].index.disp: 0x%x" %(c, i.sme_index.disp))
@@ -81,13 +81,13 @@ def print_insn_detail(insn):
             elif i.access == CS_AC_READ | CS_AC_WRITE:
                 print("\t\toperands[%u].access: READ | WRITE" % (c))
 
-            if i.shift.type != ARM64_SFT_INVALID and i.shift.value:
+            if i.shift.type != AArch64_SFT_INVALID and i.shift.value:
                 print("\t\t\tShift: type = %u, value = %u" % (i.shift.type, i.shift.value))
 
-            if i.ext != ARM64_EXT_INVALID:
+            if i.ext != AArch64_EXT_INVALID:
                 print("\t\t\tExt: %u" % i.ext)
 
-            if i.vas != ARM64_VAS_INVALID:
+            if i.vas != AArch64_VAS_INVALID:
                 print("\t\t\tVector Arrangement Specifier: 0x%x" % i.vas)
 
             if i.vector_index != -1:
@@ -100,7 +100,7 @@ def print_insn_detail(insn):
         else:
             print("\tWrite-back: Pre")
             
-    if not insn.cc in [ARM64_CC_AL, ARM64_CC_INVALID]:
+    if not insn.cc in [AArch64_CC_AL, AArch64_CC_INVALID]:
         print("\tCode-condition: %u" % insn.cc)
     if insn.update_flags:
         print("\tUpdate-flags: True")

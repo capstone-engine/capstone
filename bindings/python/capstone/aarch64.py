@@ -2,51 +2,51 @@
 
 import ctypes
 from . import copy_ctypes_list
-from .arm64_const import *
+from .aarch64_const import *
 
 # define the API
-class Arm64OpMem(ctypes.Structure):
+class AArch64OpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint),
         ('index', ctypes.c_uint),
         ('disp', ctypes.c_int32),
     )
 
-class Arm64OpSmeIndex(ctypes.Structure):
+class AArch64OpSmeIndex(ctypes.Structure):
     _fileds_ = (
         ('reg', ctypes.c_uint),
         ('base', ctypes.c_uint),
         ('disp', ctypes.c_int32),
     )
 
-class Arm64OpShift(ctypes.Structure):
+class AArch64OpShift(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', ctypes.c_uint),
     )
 
-class Arm64OpValue(ctypes.Union):
+class AArch64OpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
         ('fp', ctypes.c_double),
-        ('mem', Arm64OpMem),
+        ('mem', AArch64OpMem),
         ('pstate', ctypes.c_int),
         ('sys', ctypes.c_uint),
         ('prefetch', ctypes.c_int),
         ('barrier', ctypes.c_int),
-        ('sme_index', Arm64OpSmeIndex),
+        ('sme_index', AArch64OpSmeIndex),
     )
 
-class Arm64Op(ctypes.Structure):
+class AArch64Op(ctypes.Structure):
     _fields_ = (
         ('vector_index', ctypes.c_int),
         ('vas', ctypes.c_int),
-        ('shift', Arm64OpShift),
+        ('shift', AArch64OpShift),
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),
         ('svcr', ctypes.c_uint),
-        ('value', Arm64OpValue),
+        ('value', AArch64OpValue),
         ('access', ctypes.c_uint8),
     )
 
@@ -88,14 +88,14 @@ class Arm64Op(ctypes.Structure):
 
 
 
-class CsArm64(ctypes.Structure):
+class CsAArch64(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
         ('update_flags', ctypes.c_bool),
         ('writeback', ctypes.c_bool),
         ('post_index', ctypes.c_bool),
         ('op_count', ctypes.c_uint8),
-        ('operands', Arm64Op * 8),
+        ('operands', AArch64Op * 8),
     )
 
 def get_arch_info(a):
