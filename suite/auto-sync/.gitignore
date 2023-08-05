@@ -1,2 +1,4 @@
 build/
 vendor/llvm_root
+*/.idea
+

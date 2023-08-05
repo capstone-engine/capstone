@@ -5,29 +5,30 @@ Unfortunately not all architectures are supported yet.
 
 ## Install dependencies
 
-Clone C++ grammar
+Install clang-format
 
 ```
-git submodule update --init --recursive ./vendor/
+# clang-format version must be at least 16
+sudo apt install clang-format-18
 ```
 
 Setup Python environment and Tree-sitter
 
 ```
+cd <root-dir-Capstone>
 # Python version must be at least 3.11
 sudo apt install python3-venv
-cd CppTranslator
+# Setup virtual environment in Capstone root dir
 python3 -m venv ./.venv
 source ./.venv/bin/activate
 pip3 install -r requirements.txt
-cd ..
 ```
 
-Install clang-format
+Clone C++ grammar
 
 ```
-# clang-format version must be at least 16
-sudo apt install clang-format-16
+cs suite/auto-sync/
+git submodule update --init --recursive ./vendor/
 ```
 
 ## Update
@@ -35,25 +36,15 @@ sudo apt install clang-format-16
 Check if your architecture is supported.
 
 ```
-./Update-Arch.sh -h
+./Updater/Updater.py -h
 ```
 
-Clone Capstones LLVM fork.
+Clone Capstones LLVM fork and build `llvm-tblgen`
 
 ```
 git clone https://github.com/capstone-engine/llvm-capstone
 cd llvm-capstone
-```
-
-Checkout the branch with the refactored backends
-
-```
 git checkout auto-sync
-```
-
-Build `llvm-tblgen`
-
-```
 mkdir build
 cd build
 # You can also build the "Release" version
@@ -65,6 +56,7 @@ cd ../../
 Run the updater
 
 ```
+TODO: REWORK
 mkdir build
 cd build
 ../Update-Arch.sh <ARCH> ./llvm-capstone
