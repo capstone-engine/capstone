@@ -3,6 +3,7 @@ import logging as log
 import re
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import termcolor
@@ -174,3 +175,9 @@ def fail_exit(msg: str) -> None:
     """Logs a fatal message and exits with error code 1."""
     log.fatal(msg)
     exit(1)
+
+
+def check_py_version() -> None:
+    if not sys.hexversion >= 0x030B00F0:
+        log.fatal("Python >= v3.11 required.")
+        exit(1)
