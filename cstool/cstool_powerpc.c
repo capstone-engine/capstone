@@ -105,7 +105,7 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 			case CS_AC_WRITE:
 				printf("\t\toperands[%u].access: WRITE\n", i);
 				break;
-			case CS_AC_READ | CS_AC_WRITE:
+			case CS_AC_READ_WRTE:
 				printf("\t\toperands[%u].access: READ | WRITE\n", i);
 				break;
 		}
