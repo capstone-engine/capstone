@@ -158,7 +158,7 @@ def get_ARM_includes(filename: str) -> bytes:
                 + b'#include "ARMInstPrinter.h"\n'
                 + b'#include "ARMLinkage.h"\n'
                 + b'#include "ARMMapping.h"\n\n'
-                + b'#define GET_BANKEDREG_IMPL\n'
+                + b"#define GET_BANKEDREG_IMPL\n"
                 + b'#include "ARMGenSystemRegister.inc"\n'
             )
         case "ARMInstPrinter.h":
