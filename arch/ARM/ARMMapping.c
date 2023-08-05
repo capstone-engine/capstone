@@ -474,7 +474,15 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 			ARM_get_detail(MI)->operands[0].access |= CS_AC_WRITE;
 			MI->flat_insn->detail->writeback = true;
 		}
+		break;
 	}
+	}
+	if (MI->flat_insn->id == ARM_INS_PUSH ||
+	    MI->flat_insn->id == ARM_INS_POP ||
+	    MI->flat_insn->id == ARM_INS_VPUSH ||
+	    MI->flat_insn->id == ARM_INS_VPOP) {
+		map_add_implicit_read(MI, ARM_REG_SP);
+		map_add_implicit_write(MI, ARM_REG_SP);
 	}
 }
 
