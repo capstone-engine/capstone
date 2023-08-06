@@ -1517,7 +1517,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		ARM_get_detail_op(MI, 0)->mem.scale = 1;
 		ARM_get_detail_op(MI, 0)->mem.disp = OffImm;
 		ARM_get_detail_op(MI, 0)->mem.format =
-			encoding->operand_pieces_count == 1 ? ARM_MEM_IMM : ARM_MEM_REG_IMM;
+			encoding->operand_pieces_count == 1 ? ARM_MEM_IMM :
+							      ARM_MEM_U_REG_IMM;
 		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
 		ARM_inc_op_count(MI);
 		break;
@@ -1925,8 +1926,23 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 
 	ARM_get_detail_op(MI, 0)->type = ARM_OP_MEM;
 	ARM_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
-	ARM_get_detail_op(MI, 0)->encoding = map_get_op_encoding(MI, OpNum);
+	cs_operand_encoding *encoding = &ARM_get_detail_op(MI, 0)->encoding;
+	cs_operand_encoding new_encoding = map_get_op_encoding(MI, OpNum);
 	
+	// If the operand's encoding already contains some pieces and those pieces aren't
+	// the same as the ones we just looked up then we merge the rest of the encoding.
+	if (encoding->operand_pieces_count &&
+		    encoding->indexes[0] != new_encoding.indexes[0]) {
+		for (uint8_t i = 0; i != new_encoding.operand_pieces_count;
+		     ++i) {
+			encoding->indexes[encoding->operand_pieces_count] =
+				new_encoding.indexes[i];
+			encoding->sizes[encoding->operand_pieces_count++] =
+				new_encoding.sizes[i];
+		}
+		return;
+	}
+	*encoding = new_encoding;
 }
 
 /// Sets the neon_lane in the previous operand to the value of
