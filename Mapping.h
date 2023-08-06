@@ -28,9 +28,6 @@ typedef struct insn_map {
 		groups[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	bool branch;				// branch instruction?
 	bool indirect_branch;		// indirect branch instruction?
-	union {
-		int tmp; // temporary before other archs implement this field (such as ppc)
-	} suppl_info; // Supplementary information for each instruction.
 	cs_opcode_encoding opcode_encoding; // the opcode encoding info of the instruction
 #endif
 } insn_map;
