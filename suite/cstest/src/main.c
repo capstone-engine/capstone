@@ -160,6 +160,12 @@ static int setup_state(void **state) {
 	}
 
 	arch = get_value(arches, ARR_SIZE(arches), list_params[0]);
+	if (arch == -1) {
+		fprintf(stderr, "[  ERROR   ] --- Arch is not supported!\n");
+		failed_setup = 1;
+		return -1;
+	}
+
 	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) 
 		mc_mode = 2;
 	else 
@@ -185,17 +191,21 @@ static int setup_state(void **state) {
 		}
 	}
 
-	if (arch == -1) {
-		fprintf(stderr, "[  ERROR   ] --- Arch is not supported!\n");
-		failed_setup = 1;
-		return -1;
-	}
-
 	handle = (csh *)malloc(sizeof(csh));
 	if(cs_open(arch, mode, handle) != CS_ERR_OK) {
 		fprintf(stderr, "[  ERROR   ] --- Cannot initialize capstone\n");
 		failed_setup = 1;
 		return -1;
+	}
+
+	for (i = 0; i < ARR_SIZE(options); ++i) {
+		if (strstr(list_params[2], options[i].str)) {
+			if (cs_option(*handle, options[i].first_value, options[i].second_value) != CS_ERR_OK) {
+				fprintf(stderr, "[  ERROR   ] --- Option is not supported for this arch/mode\n");
+				failed_setup = 1;
+				return -1;
+			}
+		}
 	}
 	*state = (void *)handle;
 	free_strs(list_params, size_params);

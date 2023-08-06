@@ -36,11 +36,11 @@
 
 !# issue 0 ARM operand groups 0xd3,0xe8,0x08,0xf0 == tbb [r3, r8] ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xd3,0xe8,0x08,0xf0 == tbb [r3, r8] ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = r3 ; operands[0].mem.index: REG = r8 ; operands[0].mem.scale: 0 ; operands[0].access: READ ; Registers read: r3 r8 ; Groups: jump IsThumb2
+0xd3,0xe8,0x08,0xf0 == tbb [r3, r8] ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = r3 ; operands[0].mem.index: REG = r8 ; operands[0].access: READ ; Registers read: r3 r8 ; Groups: jump IsThumb2
 
 !# issue 0 ARM operand groups 0xd3,0xe8,0x18,0xf0 == tbh [r3, r8, lsl #1] ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xd3,0xe8,0x18,0xf0 == tbh [r3, r8, lsl #1] ;  op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = r3 ; operands[0].mem.index: REG = r8 ; operands[0].mem.scale: 0 ; operands[0].mem.lshift: 0x1 ; operands[0].access: READ ; Shift: 2 = 1 ; Registers read: r3 r8 ; Groups: jump IsThumb2
+0xd3,0xe8,0x18,0xf0 == tbh [r3, r8, lsl #1] ;  op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = r3 ; operands[0].mem.index: REG = r8 ; operands[0].mem.lshift: 0x1 ; operands[0].access: READ ; Shift: 2 = 1 ; Registers read: r3 r8 ; Groups: jump IsThumb2
 
 !# issue 0 ARM operand groups 0xaf,0xf3,0x43,0x85 == cpsie i, #3 ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
@@ -86,7 +86,7 @@
 
 !# issue 0 ARM operand groups 0x80,0xfc,0x80,0x1e == vst20.16 {q0, q1}, [r0] ;
 !# CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_MCLASS, CS_OPT_DETAIL
-0x80,0xfc,0x80,0x1e == vst20.16 {q0, q1}, [r0] ; op_count: 3 ; operands[0].type: REG = q0 ; operands[0].access: READ ; operands[1].type: REG = q1 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = r0 ; operands[2].mem.scale: 0 ; operands[2].access: WRITE ; Registers read: q0 q1 r0 ; Groups: HasMVEInt
+0x80,0xfc,0x80,0x1e == vst20.16 {q0, q1}, [r0] ; op_count: 3 ; operands[0].type: REG = q0 ; operands[0].access: READ ; operands[1].type: REG = q1 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = r0 ; operands[2].access: WRITE ; Registers read: q0 q1 r0 ; Groups: HasMVEInt
 
 !# issue 0 ARM operand groups 0x98,0xfc,0x4e,0x08 == vcadd.f32 q0, q4, q7, #90 ;
 !# CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_MCLASS, CS_OPT_DETAIL
@@ -98,11 +98,11 @@
 
 !# issue 0 ARM operand groups 0x9d,0xec,0x82,0x6e == vldrb.s16 q3, [sp, q1] ;
 !# CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_MCLASS, CS_OPT_DETAIL
-0x9d,0xec,0x82,0x6e == vldrb.s16 q3, [sp, q1] ; op_count: 2 ; operands[0].type: REG = q3 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r13 ; operands[1].mem.index: REG = q1 ; operands[1].mem.scale: 0 ; operands[1].access: READ ; Registers read: r13 q1 ; Registers modified: q3 ; Groups: HasMVEInt
+0x9d,0xec,0x82,0x6e == vldrb.s16 q3, [sp, q1] ; op_count: 2 ; operands[0].type: REG = q3 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r13 ; operands[1].mem.index: REG = q1 ; operands[1].access: READ ; Registers read: r13 q1 ; Registers modified: q3 ; Groups: HasMVEInt
 
 !# issue 0 ARM operand groups 0x90,0xec,0x12,0x6f == vldrh.s32 q3, [r0, q1] ;
 !# CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_MCLASS, CS_OPT_DETAIL
-0x90,0xec,0x12,0x6f == vldrh.s32 q3, [r0, q1] ; op_count: 2 ; operands[0].type: REG = q3 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r0 ; operands[1].mem.index: REG = q1 ; operands[1].mem.scale: 0 ; operands[1].access: READ ; Registers read: r0 q1 ; Registers modified: q3 ; Groups: HasMVEInt
+0x90,0xec,0x12,0x6f == vldrh.s32 q3, [r0, q1] ; op_count: 2 ; operands[0].type: REG = q3 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r0 ; operands[1].mem.index: REG = q1 ; operands[1].access: READ ; Registers read: r0 q1 ; Registers modified: q3 ; Groups: HasMVEInt
 
 !# issue 0 ARM operand groups 0x5f,0xea,0x2d,0x83 == sqrshrl lr, r3, #64, r8 ;
 !# CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_V8 | CS_MODE_MCLASS, CS_OPT_DETAIL
@@ -114,31 +114,31 @@
 
 !# issue 0 ARM operand groups 0x06,0x16,0x72,0xe6 == ldrbt r1, [r2], -r6, lsl #12 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x06,0x16,0x72,0xe6 == ldrbt r1, [r2], -r6, lsl #0xc ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r2 ; operands[1].mem.index: REG = r6 ; operands[1].mem.scale: 0 ; operands[1].access: READ ; Shift: 2 = 12 ; Subtracted: True ; Write-back: True ; Registers read: r2 r6 ; Registers modified: r2 r1 ; Groups: IsARM
+0x06,0x16,0x72,0xe6 == ldrbt r1, [r2], -r6, lsl #12 ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r2 ; operands[1].mem.index: REG = r6 ; operands[1].access: READ ; Shift: 2 = 12 ; Subtracted: True ; Write-back: True ; Registers read: r2 r6 ; Registers modified: r2 r1 ; Groups: IsARM
 
 !# issue 0 ARM operand groups 0xf6,0x50,0x33,0xe1 == ldrsh r5, [r3, -r6]! ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0xf6,0x50,0x33,0xe1 == ldrsh r5, [r3, -r6]! ; op_count: 2 ; operands[0].type: REG = r5 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r3 ; operands[1].mem.index: REG = r6 ; operands[1].mem.scale: 0 ; operands[1].access: READ ; Subtracted: True ; Write-back: True ; Registers read: r3 r6 ; Registers modified: r3 r5 ; Groups: IsARM
+0xf6,0x50,0x33,0xe1 == ldrsh r5, [r3, -r6]! ; op_count: 2 ; operands[0].type: REG = r5 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r3 ; operands[1].mem.index: REG = r6 ; operands[1].access: READ ; Subtracted: True ; Write-back: True ; Registers read: r3 r6 ; Registers modified: r3 r5 ; Groups: IsARM
 
 !# issue 0 ARM operand groups 0x1e,0x19,0x7a,0xfd == ldc2l p9, c1, [r10, #-120]! ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x1e,0x19,0x7a,0xfd == ldc2l p9, c1, [r10, #-0x78]! ; op_count: 3 ; operands[0].type: P-IMM = 9 ; operands[0].access: READ ; operands[1].type: C-IMM = 1 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = r10 ; operands[2].mem.disp: 0xffffff88 ; operands[2].access: READ ; Registers read: r10 ; Registers modified: r10 ; Groups: IsARM PreV8
+0x1e,0x19,0x7a,0xfd == ldc2l p9, c1, [r10, #-0x78]! ; op_count: 3 ; operands[0].type: P-IMM = 9 ; operands[0].access: READ ; operands[1].type: C-IMM = 1 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = r10 ; operands[2].mem.disp: 0x78 ; operands[2].access: READ ; Registers read: r10 ; Registers modified: r10 ; Groups: IsARM PreV8
 
 !# issue 0 ARM operand groups 0x12,0x31,0x7c,0xfc == ldc2l p1, c3, [r12], #-72 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x12,0x31,0x7c,0xfc == ldc2l p1, c3, [r12], #-0x48 ; op_count: 3 ; operands[0].type: P-IMM = 1 ; operands[0].access: READ ; operands[1].type: C-IMM = 3 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = r12 ; operands[2].mem.scale: 0 ; operands[2].access: READ ; operands[2].mem.disp: 0x48 ; Subtracted: True ; Registers read: r12 ; Groups: IsARM PreV8
+0x12,0x31,0x7c,0xfc == ldc2l p1, c3, [r12], #-0x48 ; op_count: 3 ; operands[0].type: P-IMM = 1 ; operands[0].access: READ ; operands[1].type: C-IMM = 3 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = r12 ; operands[2].access: READ ; operands[2].mem.disp: 0x48 ; Subtracted: True ; Registers read: r12 ; Groups: IsARM PreV8
 
 !# issue 0 ARM operand groups 0xa4,0xf9,0x6d,0x0e == vld3.16 {d0[], d2[], d4[]}, [r4]! ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xa4,0xf9,0x6d,0x0e == vld3.16 {d0[], d2[], d4[]}, [r4]! ; op_count: 4 ; operands[0].type: REG = d0 ; operands[0].access: WRITE ; operands[1].type: REG = d2 ; operands[1].access: WRITE ; operands[2].type: REG = d4 ; operands[2].access: WRITE ; operands[3].type: MEM ; operands[3].mem.index: REG = r4 ; operands[3].mem.scale: 0 ; operands[3].access: READ ; Write-back: True ; Registers read: r4 ; Registers modified: r4 d0 d2 d4
+0xa4,0xf9,0x6d,0x0e == vld3.16 {d0[], d2[], d4[]}, [r4]! ; op_count: 4 ; operands[0].type: REG = d0 ; operands[0].access: WRITE ; operands[1].type: REG = d2 ; operands[1].access: WRITE ; operands[2].type: REG = d4 ; operands[2].access: WRITE ; operands[3].type: MEM ; operands[3].mem.index: REG = r4 ; operands[3].access: READ ; Write-back: True ; Registers read: r4 ; Registers modified: r4 d0 d2 d4
 
 !# issue 0 ARM operand groups 0x0d,0x50,0x66,0xe4 == strbt r5, [r6], #-13 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0d,0x50,0x66,0xe4 == strbt r5, [r6], #-0xd ; op_count: 2 ; operands[0].type: REG = r5 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = r6 ; operands[1].mem.scale: 0 ; operands[1].access: WRITE ; operands[1].mem.disp: 0xd ; Subtracted: True ; Write-back: True ; Registers read: r5 r6 ; Registers modified: r6 ; Groups: IsARM
+0x0d,0x50,0x66,0xe4 == strbt r5, [r6], #-0xd ; op_count: 2 ; operands[0].type: REG = r5 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = r6 ; operands[1].access: WRITE ; operands[1].mem.disp: 0xd ; Subtracted: True ; Write-back: True ; Registers read: r5 r6 ; Registers modified: r6 ; Groups: IsARM
 
 !# issue 0 ARM operand groups 0x00,0x10,0x4f,0xe2 == sub r1, pc, #0 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x00,0x10,0x4f,0xe2 == sub r1, pc, #0 ; op_count: 3 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: READ ; operands[2].type: IMM = 0x0 ; operands[2].access: READ ; Update-flags: True ; Registers read: r15 ; Registers modified: cpsr r1 ; Groups: IsARM
+0x00,0x10,0x4f,0xe2 == sub r1, pc, #0 ; op_count: 3 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: READ ; operands[2].type: IMM = 0x0 ; operands[2].access: READ ; Registers read: r15 ; Registers modified: r1 ; Groups: IsARM
 
 !# issue 0 ARM operand groups 0x9f,0x51,0xd3,0xe7 == bfc r5, #3, #17 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -146,7 +146,7 @@
 
 !# issue 0 ARM operand groups 0xd8,0xe8,0xff,0x67 == ldaexd r6, r7, [r8] ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xd8,0xe8,0xff,0x67 == ldaexd r6, r7, [r8] ; op_count: 3 ; operands[0].type: REG = r6 ; operands[0].access: WRITE ; operands[1].type: REG = r7 ; operands[1].access: WRITE ; operands[2].type: MEM ; operands[2].mem.base: REG = r8 ; operands[2].mem.scale: 0 ; operands[2].access: READ ; Registers read: r8 ; Registers modified: r6 r7 ; Groups: IsThumb HasAcquireRelease HasV7Clrex IsNotMClass
+0xd8,0xe8,0xff,0x67 == ldaexd r6, r7, [r8] ; op_count: 3 ; operands[0].type: REG = r6 ; operands[0].access: WRITE ; operands[1].type: REG = r7 ; operands[1].access: WRITE ; operands[2].type: MEM ; operands[2].mem.base: REG = r8 ; operands[2].access: READ ; Registers read: r8 ; Registers modified: r6 r7 ; Groups: IsThumb HasAcquireRelease HasV7Clrex IsNotMClass
 
 !# issue 0 ARM operand groups 0x30,0x0f,0xa6,0xe6 == ssat16 r0, #7, r0 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -158,15 +158,15 @@
 
 !# issue 0 ARM operand groups 0x40,0x1b,0xf5,0xee == vcmp.f64 d17, #0 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1b,0xf5,0xee == vcmp.f64 d17, #0 ; op_count: 1 ; operands[0].type: REG = d17 ; operands[0].access: READ ; Registers read: d17 ; Registers modified: fpscr_nzcv ; Groups: HasVFP2 HasDPVFP
+0x40,0x1b,0xf5,0xee == vcmp.f64 d17, #0 ; op_count: 2 ; operands[0].type: REG = d17 ; operands[0].access: READ ; operands[1].type: IMM = 0x0 ; operands[1].access: READ ; Update-flags: True ; Registers read: d17 ; Registers modified: fpscr_nzcv ; Groups: HasVFP2 HasDPVFP
 
 !# issue 0 ARM operand groups 0x05,0xf0,0x2f,0xe3 == msr CPSR_fsxc, #5 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x05,0xf0,0x2f,0xe3 == msr cpsr_fsxc, #5 ; op_count: 2 ; operands[0].type: SYSREG = 15 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x5 ; operands[1].access: READ ; Update-flags: True ; Registers modified: cpsr ; Groups: IsARM
+0x05,0xf0,0x2f,0xe3 == msr cpsr_fsxc, #5 ; op_count: 2 ; operands[0].type: CPSR = fsxc ; operands[0].type: MASK = 15 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x5 ; operands[1].access: READ ; Update-flags: True ; Registers modified: cpsr ; Groups: IsARM
 
 !# issue 0 ARM operand groups 0xa4,0xf9,0xed,0x0b == vld4.32 {d0[1], d2[1], d4[1], d6[1]}, [r4:128]! ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xa4,0xf9,0xed,0x0b == vld4.32 {d0[1], d2[1], d4[1], d6[1]}, [r4:0x80]! ; op_count: 5 ; operands[0].type: REG = d0 ; operands[0].neon_lane = 1 ; operands[0].access: READ | WRITE ; operands[1].type: REG = d2 ; operands[1].neon_lane = 1 ; operands[1].access: READ | WRITE ; operands[2].type: REG = d4 ; operands[2].neon_lane = 1 ; operands[2].access: READ | WRITE ; operands[3].type: REG = d6 ; operands[3].neon_lane = 1 ; operands[3].access: READ | WRITE ; operands[4].type: MEM ; operands[4].mem.index: REG = r4 ; operands[4].mem.scale: 0 ; operands[4].mem.disp: 0x80 ; operands[4].access: READ ; Write-back: True ; Registers read: d0 d2 d4 d6 r4 ; Registers modified: r4 d0 d2 d4 d6
+0xa4,0xf9,0xed,0x0b == vld4.32 {d0[1], d2[1], d4[1], d6[1]}, [r4:0x80]! ; op_count: 5 ; operands[0].type: REG = d0 ; operands[0].neon_lane = 1 ; operands[0].access: READ | WRITE ; operands[1].type: REG = d2 ; operands[1].neon_lane = 1 ; operands[1].access: READ | WRITE ; operands[2].type: REG = d4 ; operands[2].neon_lane = 1 ; operands[2].access: READ | WRITE ; operands[3].type: REG = d6 ; operands[3].neon_lane = 1 ; operands[3].access: READ | WRITE ; operands[4].type: MEM ; operands[4].mem.index: REG = r4 ; operands[4].mem.disp: 0x80 ; operands[4].access: READ ; Write-back: True ; Registers read: d0 d2 d4 d6 r4 ; Registers modified: r4 d0 d2 d4 d6
 
 !# issue 0 ARM operand groups 0x42,0x03,0xb0,0xf3 == aesd.8 q0, q1 ;
 !# CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8, CS_OPT_DETAIL
@@ -186,11 +186,11 @@
 
 !# issue 0 ARM operand groups 0xb4,0x10,0xf0,0xe0 == ldrht r1, [r0], #4 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0xb4,0x10,0xf0,0xe0 == ldrht r1, [r0], #4 ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r0 ; operands[1].mem.scale: 0 ; operands[1].access: READ ; operands[1].mem.disp: 0x4 ; Write-back: True ; Registers read: r0 ; Registers modified: r0 r1 ; Groups: IsARM
+0xb4,0x10,0xf0,0xe0 == ldrht r1, [r0], #4 ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r0 ; operands[1].access: READ ; operands[1].mem.disp: 0x4 ; Write-back: True ; Registers read: r0 ; Registers modified: r0 r1 ; Groups: IsARM
 
 !# issue 0 ARM operand groups 0x2f,0xfa,0xa1,0xf3 == sxtb16 r3, r1, ror #16 ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0x2f,0xfa,0xa1,0xf3 == sxtb16 r3, r1, ror #0x10 ; op_count: 2 ; operands[0].type: REG = r3 ; operands[0].access: WRITE ; operands[1].type: REG = r1 ; operands[1].access: READ ; Shift: 4 = 16 ; Registers read: r1 ; Registers modified: r3 ; Groups: HasDSP IsThumb2
+0x2f,0xfa,0xa1,0xf3 == sxtb16 r3, r1, ror #16 ; op_count: 2 ; operands[0].type: REG = r3 ; operands[0].access: WRITE ; operands[1].type: REG = r1 ; operands[1].access: READ ; Shift: 4 = 16 ; Registers read: r1 ; Registers modified: r3 ; Groups: HasDSP IsThumb2
 
 !# issue 0 ARM operand groups 0x00,0x02,0x01,0xf1 == setend be ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -198,9 +198,9 @@
 
 !# issue 0 ARM operand groups 0xd0,0xe8,0xaf,0x0f == lda r0, [r0]
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xd0,0xe8,0xaf,0x0f == lda r0, [r0] ; op_count: 2 ; operands[0].type: REG = r0 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r0 ; operands[1].mem.scale: 0 ; operands[1].access: READ ; Registers read: r0 ; Registers modified: r0 ; Groups: IsThumb HasAcquireRelease
+0xd0,0xe8,0xaf,0x0f == lda r0, [r0] ; op_count: 2 ; operands[0].type: REG = r0 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r0 ; operands[1].access: READ ; Registers read: r0 ; Registers modified: r0 ; Groups: IsThumb HasAcquireRelease
 
-!# issue 0 ARM operand groups 0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #0x3ef]
+!# issue 0 ARM operand groups 0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef]
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef] ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r1 ; operands[1].mem.disp: 0xfffffc11 ; operands[1].access: READ ; Code condition: 8 ; Registers read: r1 ; Registers modified: r15 ; Groups: IsARM
+0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef] ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r1 ; operands[1].mem.disp: 0x3ef ; operands[1].access: READ ; Code condition: 8 ; Registers read: cpsr r1 ; Registers modified: r15 ; Groups: IsARM
 
