@@ -134,3 +134,6 @@ cstool/cstool
 
 # android
 android-ndk-*
+
+# python virtual env
+.venv/
