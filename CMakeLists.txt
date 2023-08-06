@@ -587,6 +587,9 @@ if (CAPSTONE_ALPHA_SUPPORT)
             arch/Alpha/AlphaLinkage.h
             arch/Alpha/AlphaMapping.h
             arch/Alpha/AlphaModule.h
+            arch/Alpha/AlphaGenCSMappingInsnOp.inc
+            arch/Alpha/AlphaGenCSMappingInsn.inc
+            arch/Alpha/AlphaGenCSMappingInsnName.inc
             )
     set(TEST_SOURCES ${TEST_SOURCES} test_alpha.c)
 endif ()

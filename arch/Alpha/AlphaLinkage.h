@@ -12,7 +12,10 @@
 #include "AlphaMapping.h"
 
 const char *Alpha_LLVM_getRegisterName(csh handle, unsigned int id);
-
-void Alpha_LLVM_printInst(MCInst *MI, SStream *O, void *Info);
+void Alpha_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info);
+DecodeStatus Alpha_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
+									   size_t ByteLen, MCInst *MI,
+									   uint16_t *Size, uint64_t Address,
+									   void *Info);
 
 #endif // CS_ALPHA_LINKAGE_H

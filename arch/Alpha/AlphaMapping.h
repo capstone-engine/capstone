@@ -4,6 +4,9 @@
 #ifndef CS_ALPHA_MAP_H
 #define CS_ALPHA_MAP_H
 
+#include "../../MCDisassembler.h"
+#include "../../MCInst.h"
+#include "../../SStream.h"
 #include <capstone/capstone.h>
 
 // unsigned int Alpha_map_insn_id(cs_struct *h, unsigned int id);
@@ -16,6 +19,16 @@ const char *Alpha_insn_name(csh handle, unsigned int id);
 const char *Alpha_group_name(csh handle, unsigned int id);
 
 void Alpha_printInst(MCInst *MI, SStream *O, void *Info);
+
 const char *Alpha_getRegisterName(csh handle, unsigned int id);
+bool Alpha_getInstruction(csh handle, const uint8_t *code,
+								  size_t code_len, MCInst *instr,
+								  uint16_t *size, uint64_t address, void *info);
+void Alpha_add_cs_detail(MCInst *MI, unsigned OpNum);
+
+void Alpha_set_instr_map_data(MCInst *MI);
+void Alpha_set_detail_op_imm(MCInst *MI, unsigned OpNum, alpha_op_type ImmType,
+							 int64_t Imm);
+void Alpha_set_detail_op_reg(MCInst *MI, unsigned OpNum, alpha_op_type Reg);
 
 #endif

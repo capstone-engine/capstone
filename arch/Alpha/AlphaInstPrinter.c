@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "../../utils.h"
+#include "../../Mapping.h"
 #include "../../MCInstPrinter.h"
 
 #include "AlphaLinkage.h"
@@ -17,9 +18,8 @@
 static const char *getRegisterName(unsigned RegNo);
 
 static void printInstruction(MCInst *, uint64_t, SStream *);
-
 static void printOperand(MCInst *MI, int OpNum, SStream *O);
-
+static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O);
 
 #define GET_INSTRINFO_ENUM
 
@@ -29,37 +29,18 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O);
 
 #include "AlphaGenRegisterInfo.inc"
 
-static inline void fill_alpha_register(MCInst *MI, uint32_t reg)
-{
-	if (!(MI->csh->detail == CS_OPT_ON && MI->flat_insn->detail))
-		return;
-	cs_alpha *alpha = &MI->flat_insn->detail->alpha;
-	alpha->operands[alpha->op_count].type = ALPHA_OP_REG;
-	alpha->operands[alpha->op_count].reg = reg;
-	alpha->op_count++;
-}
-
-static inline void fill_alpha_imm(MCInst *MI, int32_t imm)
-{
-	if (!(MI->csh->detail == CS_OPT_ON && MI->flat_insn->detail))
-		return;
-	cs_alpha *alpha = &MI->flat_insn->detail->alpha;
-	alpha->operands[alpha->op_count].type = ALPHA_OP_IMM;
-	alpha->operands[alpha->op_count].imm = imm;
-	alpha->op_count++;
-}
-
 static void printOperand(MCInst *MI, int OpNum, SStream *O)
 {
-	MCOperand *Op;
 	if (OpNum >= MI->size)
 		return;
 
+	Alpha_add_cs_detail(MI, OpNum);
+	
+	MCOperand *Op;
 	Op = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isReg(Op)) {
 		unsigned reg = MCOperand_getReg(Op);
 		SStream_concat(O, "%s", getRegisterName(reg));
-		fill_alpha_register(MI, reg);
 	} else if (MCOperand_isImm(Op)) {
 		int64_t Imm = MCOperand_getImm(Op);
 		if (Imm >= 0) {
@@ -73,9 +54,18 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 			else
 				SStream_concat(O, "-%" PRIu64, -Imm);
 		}
-
-		fill_alpha_imm(MI, (int32_t)Imm);
 	}
+}
+
+static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O) 
+{
+	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
+
+	uint64_t Imm = MCOperand_getImm(Op);
+	uint64_t Target = Address + 4 + (int16_t) (Imm << 2);
+
+	Alpha_set_detail_op_imm(MI, OpNum, ALPHA_OP_IMM, Target);
+	printUInt64(O, Target);
 }
 
 #define PRINT_ALIAS_INSTR
@@ -91,7 +81,7 @@ const char *Alpha_LLVM_getRegisterName(csh handle, unsigned int id)
 #endif
 }
 
-void Alpha_LLVM_printInst(MCInst *MI, SStream *O, void *Info)
+void Alpha_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info)
 {
 	printAliasInstr(MI, MI->address, O);
 	printInstruction(MI, MI->address, O);

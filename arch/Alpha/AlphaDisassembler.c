@@ -10,22 +10,22 @@
 #include "../../utils.h"
 
 #include "../../MCFixedLenDisassembler.h"
-#include "../../MCDisassembler.h"
+#include "../../Mapping.h"
 
 #include "AlphaDisassembler.h"
 #include "AlphaLinkage.h"
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
-										    uint64_t Address,
-										    const void *Decoder);
+											uint64_t Address,
+											const void *Decoder);
 
 static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, unsigned RegNo,
-										    uint64_t Address,
-										    const void *Decoder);    
-                                            
+											uint64_t Address,
+											const void *Decoder);
+
 static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
-										    uint64_t Address,
-										    const void *Decoder);    
+											uint64_t Address,
+											const void *Decoder);
 
 #include "AlphaGenDisassemblerTables.inc"
 
@@ -35,10 +35,10 @@ static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
 #include "AlphaGenRegisterInfo.inc"
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
-										    uint64_t Address,
-										    const void *Decoder) 
+											uint64_t Address,
+											const void *Decoder)
 {
-    if (RegNo > 31)
+	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
 	unsigned Register = GPRC[RegNo];
@@ -47,10 +47,10 @@ static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, unsigned RegNo,
-										    uint64_t Address,
-										    const void *Decoder)
+											uint64_t Address,
+											const void *Decoder)
 {
-    if (RegNo > 31)
+	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
 	unsigned Register = F4RC[RegNo];
@@ -59,10 +59,10 @@ static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
-										    uint64_t Address,
-										    const void *Decoder) 
+											uint64_t Address,
+											const void *Decoder)
 {
-    if (RegNo > 31)
+	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
 	unsigned Register = F8RC[RegNo];
@@ -74,49 +74,40 @@ static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
 
 #include "AlphaGenInstrInfo.inc"
 
-static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len,
-				       MCInst *MI, uint16_t *size,
-				       uint64_t address, void *info,
-				       const uint8_t *decoderTable32)
+DecodeStatus Alpha_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
+									   size_t ByteLen, MCInst *MI,
+									   uint16_t *Size, uint64_t Address,
+									   void *Info)
 {
-	uint32_t insn = readBytes32(MI, code);
-	DecodeStatus Result;
-
-	// Calling the auto-generated decoder function.
-	Result = decodeInstruction_4(decoderTable32, MI, insn, address, NULL);
-	if (Result != MCDisassembler_Fail) {
-		*size = 4;
-		return true;
-	}
-	return false;
-}
-
-bool Alpha_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
-							      MCInst *MI, uint16_t *Size, uint64_t Address,
-							      void *Info) 
-{
-    if (!handle) {
-		return false;
-	}
-
-	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, sizeof(cs_detail));
-	} 
-
-	if (ByteLen < 4) {
+	if (!handle) {
 		return MCDisassembler_Fail;
 	}
-	return tryGetInstruction32(Bytes, ByteLen, MI, Size, Address, Info,
-				   DecoderTable32);
 
+	if (ByteLen < 4) {
+		*Size = 0;
+		return MCDisassembler_Fail;
+	}
+
+	uint32_t Insn = readBytes32(MI, Bytes);
+	// Calling the auto-generated decoder function.
+	DecodeStatus Result =
+		decodeInstruction_4(DecoderTable32, MI, Insn, Address, NULL);
+
+	if (Result != MCDisassembler_Fail) {
+		*Size = 4;
+		return Result;
+	}
+
+	*Size = 4;
+	return MCDisassembler_Fail;
 }
 
 void Alpha_init(MCRegisterInfo *MRI)
 {
 	MCRegisterInfo_InitMCRegisterInfo(
-		MRI, AlphaRegDesc, ARR_SIZE(AlphaRegDesc), 0, 0,
-		AlphaMCRegisterClasses, ARR_SIZE(AlphaMCRegisterClasses), 0,
-		0, AlphaRegDiffLists, 0, AlphaSubRegIdxLists, 1, 0);
+		MRI, AlphaRegDesc, ARR_SIZE(AlphaRegDesc), 0, 0, AlphaMCRegisterClasses,
+		ARR_SIZE(AlphaMCRegisterClasses), 0, 0, AlphaRegDiffLists, 0,
+		AlphaSubRegIdxLists, 1, 0);
 }
 
 #endif

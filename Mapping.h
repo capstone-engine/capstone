@@ -121,6 +121,7 @@ DECL_get_detail_op(arm, ARM);
 DECL_get_detail_op(ppc, PPC);
 DECL_get_detail_op(tricore, TriCore);
 DECL_get_detail_op(aarch64, AArch64);
+DECL_get_detail_op(alpha, Alpha);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
@@ -245,6 +246,7 @@ static inline void set_doing_mem(const MCInst *MI, bool status)
 DEFINE_get_arch_detail(arm, ARM);
 DEFINE_get_arch_detail(ppc, PPC);
 DEFINE_get_arch_detail(aarch64, AArch64);
+DEFINE_get_arch_detail(alpha, Alpha);
 
 static inline bool detail_is_set(const MCInst *MI)
 {

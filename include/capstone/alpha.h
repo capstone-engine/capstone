@@ -35,6 +35,7 @@ typedef struct cs_alpha_op {
 		unsigned int reg; // register value for REG operand
 		int32_t imm; // immediate value for IMM operand
 	};
+	enum cs_ac_type access;
 } cs_alpha_op;
 
 // Instruction structure
@@ -290,6 +291,7 @@ typedef enum alpha_insn_group {
 	//> Generic groups
 	Alpha_GRP_CALL, ///< = CS_GRP_CALL
 	Alpha_GRP_JUMP, ///< = CS_GRP_JUMP
+	Alpha_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 	Alpha_GRP_ENDING, ///< = mark the end of the list of groups
 } alpha_insn_group;
 

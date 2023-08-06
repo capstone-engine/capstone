@@ -1,10 +1,10 @@
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
-/* LLVM-commit: 92734d6f460a01145443e48418af3a8635ca1afa */
-/* LLVM-tag:  */
+/* LLVM-commit: 083d57d0731afc1746680d828bdfe2fa41f62a61 */
+/* LLVM-tag: llvmorg-3.0.0-2-g083d57d0731a */
 
 /* Do not edit. */
 
@@ -430,259 +430,259 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_UBFX
     2049U,	// ADJUSTSTACKDOWN
     2060U,	// ADJUSTSTACKUP
-    11128U,	// ALTENT
+    19320U,	// ALTENT
     0U,	// CAS32
     0U,	// CAS64
     0U,	// LAS32
     0U,	// LAS64
-    19322U,	// MEMLABEL
-    27899U,	// PCLABEL
+    35706U,	// MEMLABEL
+    52475U,	// PCLABEL
     0U,	// SWAP32
     0U,	// SWAP64
     1300U,	// WTF
-    37219U,	// ADDLi
-    37219U,	// ADDLr
-    37349U,	// ADDQi
-    37349U,	// ADDQr
-    37615U,	// ADDS
-    37661U,	// ADDT
-    36962U,	// ANDi
-    36962U,	// ANDr
-    35321U,	// BEQ
-    34920U,	// BGE
-    35434U,	// BGT
-    36942U,	// BICi
-    36942U,	// BICr
-    37442U,	// BISi
-    37442U,	// BISr
-    34873U,	// BLBC
-    35367U,	// BLBS
-    34943U,	// BLE
-    35456U,	// BLT
-    34973U,	// BNE
-    2997U,	// BR
-    43888U,	// BSR
-    37382U,	// CMOVEQi
-    37382U,	// CMOVEQr
-    36982U,	// CMOVGEi
-    36982U,	// CMOVGEr
-    37488U,	// CMOVGTi
-    37488U,	// CMOVGTr
-    36927U,	// CMOVLBCi
-    36927U,	// CMOVLBCr
-    37421U,	// CMOVLBSi
-    37421U,	// CMOVLBSr
-    37012U,	// CMOVLEi
-    37012U,	// CMOVLEr
-    37525U,	// CMOVLTi
-    37525U,	// CMOVLTr
-    37042U,	// CMOVNEi
-    37042U,	// CMOVNEr
-    36973U,	// CMPBGE
-    36973U,	// CMPBGEi
-    37374U,	// CMPEQ
-    37374U,	// CMPEQi
-    36996U,	// CMPLE
-    36996U,	// CMPLEi
-    37509U,	// CMPLT
-    37509U,	// CMPLTi
-    37595U,	// CMPTEQ
-    37573U,	// CMPTLE
-    37670U,	// CMPTLT
-    37584U,	// CMPTUN
-    37003U,	// CMPULE
-    37003U,	// CMPULEi
-    37516U,	// CMPULT
-    37516U,	// CMPULTi
-    52353U,	// COND_BRANCH_F
-    60545U,	// COND_BRANCH_I
-    37050U,	// CPYSES
-    37050U,	// CPYSESt
-    37050U,	// CPYSET
-    37317U,	// CPYSNS
-    37317U,	// CPYSNSt
-    37317U,	// CPYSNT
-    37317U,	// CPYSNTs
-    37463U,	// CPYSS
-    37463U,	// CPYSSt
-    37463U,	// CPYST
-    37463U,	// CPYSTs
-    37732U,	// CTLZ
-    37324U,	// CTPOP
-    37738U,	// CTTZ
-    37133U,	// CVTQS
-    37155U,	// CVTQT
-    37406U,	// CVTST
-    36951U,	// CVTTQ
-    37144U,	// CVTTS
-    37643U,	// DIVS
-    37700U,	// DIVT
+    4451U,	// ADDLi
+    4451U,	// ADDLr
+    4581U,	// ADDQi
+    4581U,	// ADDQr
+    4847U,	// ADDS
+    4893U,	// ADDT
+    4194U,	// ANDi
+    4194U,	// ANDr
+    2553U,	// BEQ
+    2152U,	// BGE
+    2666U,	// BGT
+    4174U,	// BICi
+    4174U,	// BICr
+    4674U,	// BISi
+    4674U,	// BISr
+    2105U,	// BLBC
+    2599U,	// BLBS
+    2175U,	// BLE
+    2688U,	// BLT
+    2205U,	// BNE
+    7093U,	// BR
+    23408U,	// BSR
+    4614U,	// CMOVEQi
+    4614U,	// CMOVEQr
+    4214U,	// CMOVGEi
+    4214U,	// CMOVGEr
+    4720U,	// CMOVGTi
+    4720U,	// CMOVGTr
+    4159U,	// CMOVLBCi
+    4159U,	// CMOVLBCr
+    4653U,	// CMOVLBSi
+    4653U,	// CMOVLBSr
+    4244U,	// CMOVLEi
+    4244U,	// CMOVLEr
+    4757U,	// CMOVLTi
+    4757U,	// CMOVLTr
+    4274U,	// CMOVNEi
+    4274U,	// CMOVNEr
+    4205U,	// CMPBGE
+    4205U,	// CMPBGEi
+    4606U,	// CMPEQ
+    4606U,	// CMPEQi
+    4228U,	// CMPLE
+    4228U,	// CMPLEi
+    4741U,	// CMPLT
+    4741U,	// CMPLTi
+    4827U,	// CMPTEQ
+    4805U,	// CMPTLE
+    4902U,	// CMPTLT
+    4816U,	// CMPTUN
+    4235U,	// CMPULE
+    4235U,	// CMPULEi
+    4748U,	// CMPULT
+    4748U,	// CMPULTi
+    35969U,	// COND_BRANCH_F
+    52353U,	// COND_BRANCH_I
+    4282U,	// CPYSES
+    4282U,	// CPYSESt
+    4282U,	// CPYSET
+    4549U,	// CPYSNS
+    4549U,	// CPYSNSt
+    4549U,	// CPYSNT
+    4549U,	// CPYSNTs
+    4695U,	// CPYSS
+    4695U,	// CPYSSt
+    4695U,	// CPYST
+    4695U,	// CPYSTs
+    4964U,	// CTLZ
+    4556U,	// CTPOP
+    4970U,	// CTTZ
+    4365U,	// CVTQS
+    4387U,	// CVTQT
+    4638U,	// CVTST
+    4183U,	// CVTTQ
+    4376U,	// CVTTS
+    4875U,	// DIVS
+    4932U,	// DIVT
     5003U,	// ECB
-    37715U,	// EQVi
-    37715U,	// EQVr
+    4947U,	// EQVi
+    4947U,	// EQVr
     1285U,	// EXCB
-    37194U,	// EXTBL
-    37194U,	// EXTBLi
-    37077U,	// EXTLH
-    37077U,	// EXTLHi
-    37252U,	// EXTLL
-    37252U,	// EXTLLi
-    37105U,	// EXTQH
-    37105U,	// EXTQHi
-    37279U,	// EXTQL
-    37279U,	// EXTQLi
-    37126U,	// EXTWH
-    37126U,	// EXTWHi
-    37310U,	// EXTWL
-    37310U,	// EXTWLi
-    35320U,	// FBEQ
-    34919U,	// FBGE
-    35433U,	// FBGT
-    34942U,	// FBLE
-    35455U,	// FBLT
-    34972U,	// FBNE
-    6661U,	// FCMOVEQS
-    6661U,	// FCMOVEQT
-    6261U,	// FCMOVGES
-    6261U,	// FCMOVGET
-    6767U,	// FCMOVGTS
-    6767U,	// FCMOVGTT
-    6291U,	// FCMOVLES
-    6291U,	// FCMOVLET
-    6804U,	// FCMOVLTS
-    6804U,	// FCMOVLTT
-    6321U,	// FCMOVNES
-    6321U,	// FCMOVNET
+    4426U,	// EXTBL
+    4426U,	// EXTBLi
+    4309U,	// EXTLH
+    4309U,	// EXTLHi
+    4484U,	// EXTLL
+    4484U,	// EXTLLi
+    4337U,	// EXTQH
+    4337U,	// EXTQHi
+    4511U,	// EXTQL
+    4511U,	// EXTQLi
+    4358U,	// EXTWH
+    4358U,	// EXTWHi
+    4542U,	// EXTWL
+    4542U,	// EXTWLi
+    2552U,	// FBEQ
+    2151U,	// FBGE
+    2665U,	// FBGT
+    2174U,	// FBLE
+    2687U,	// FBLT
+    2204U,	// FBNE
+    8709U,	// FCMOVEQS
+    8709U,	// FCMOVEQT
+    8309U,	// FCMOVGES
+    8309U,	// FCMOVGET
+    8815U,	// FCMOVGTS
+    8815U,	// FCMOVGTT
+    8339U,	// FCMOVLES
+    8339U,	// FCMOVLET
+    8852U,	// FCMOVLTS
+    8852U,	// FCMOVLTT
+    8369U,	// FCMOVNES
+    8369U,	// FCMOVNET
     5009U,	// FETCH
     5017U,	// FETCH_M
-    37447U,	// FTOIS
-    37496U,	// FTOIT
-    37187U,	// INSBL
-    37187U,	// INSBLi
-    37070U,	// INSLH
-    37070U,	// INSLHi
-    37245U,	// INSLL
-    37245U,	// INSLLi
-    37098U,	// INSQH
-    37098U,	// INSQHi
-    37272U,	// INSQL
-    37272U,	// INSQLi
-    37119U,	// INSWH
-    37119U,	// INSWHi
-    37303U,	// INSWL
-    37303U,	// INSWLi
-    37435U,	// ITOFS
-    37474U,	// ITOFT
-    11180U,	// JMP
+    4679U,	// FTOIS
+    4728U,	// FTOIT
+    4419U,	// INSBL
+    4419U,	// INSBLi
+    4302U,	// INSLH
+    4302U,	// INSLHi
+    4477U,	// INSLL
+    4477U,	// INSLLi
+    4330U,	// INSQH
+    4330U,	// INSQHi
+    4504U,	// INSQL
+    4504U,	// INSQLi
+    4351U,	// INSWH
+    4351U,	// INSWHi
+    4535U,	// INSWL
+    4535U,	// INSWLi
+    4667U,	// ITOFS
+    4706U,	// ITOFT
+    19372U,	// JMP
     1121U,	// JSR
-    18594U,	// JSR_COROUTINE
+    34978U,	// JSR_COROUTINE
     1105U,	// JSRs
-    34837U,	// LDA
-    35009U,	// LDAH
-    26817U,	// LDAHg
-    35009U,	// LDAHr
-    26645U,	// LDAg
-    34837U,	// LDAr
-    35519U,	// LDBU
-    35519U,	// LDBUr
-    35185U,	// LDL
-    35118U,	// LDL_L
-    35185U,	// LDLr
-    35315U,	// LDQ
-    35125U,	// LDQ_L
-    35505U,	// LDQ_U
-    35315U,	// LDQl
-    35315U,	// LDQr
-    35382U,	// LDS
-    35382U,	// LDSr
-    35421U,	// LDT
-    35421U,	// LDTr
-    35661U,	// LDWU
-    35661U,	// LDWUr
+    2069U,	// LDA
+    2241U,	// LDAH
+    51393U,	// LDAHg
+    2241U,	// LDAHr
+    51221U,	// LDAg
+    2069U,	// LDAr
+    2751U,	// LDBU
+    2751U,	// LDBUr
+    2417U,	// LDL
+    2350U,	// LDL_L
+    2417U,	// LDLr
+    2547U,	// LDQ
+    2357U,	// LDQ_L
+    2737U,	// LDQ_U
+    2547U,	// LDQl
+    2547U,	// LDQr
+    2614U,	// LDS
+    2614U,	// LDSr
+    2653U,	// LDT
+    2653U,	// LDTr
+    2893U,	// LDWU
+    2893U,	// LDWUr
     1291U,	// MB
-    37180U,	// MSKBL
-    37180U,	// MSKBLi
-    37063U,	// MSKLH
-    37063U,	// MSKLHi
-    37238U,	// MSKLL
-    37238U,	// MSKLLi
-    37091U,	// MSKQH
-    37091U,	// MSKQHi
-    37265U,	// MSKQL
-    37265U,	// MSKQLi
-    37112U,	// MSKWH
-    37112U,	// MSKWHi
-    37296U,	// MSKWL
-    37296U,	// MSKWLi
-    37259U,	// MULLi
-    37259U,	// MULLr
-    37390U,	// MULQi
-    37390U,	// MULQr
-    37624U,	// MULS
-    37681U,	// MULT
-    37541U,	// ORNOTi
-    37541U,	// ORNOTr
+    4412U,	// MSKBL
+    4412U,	// MSKBLi
+    4295U,	// MSKLH
+    4295U,	// MSKLHi
+    4470U,	// MSKLL
+    4470U,	// MSKLLi
+    4323U,	// MSKQH
+    4323U,	// MSKQHi
+    4497U,	// MSKQL
+    4497U,	// MSKQLi
+    4344U,	// MSKWH
+    4344U,	// MSKWHi
+    4528U,	// MSKWL
+    4528U,	// MSKWLi
+    4491U,	// MULLi
+    4491U,	// MULLr
+    4622U,	// MULQi
+    4622U,	// MULQr
+    4856U,	// MULS
+    4913U,	// MULT
+    4773U,	// ORNOTi
+    4773U,	// ORNOTr
     2131U,	// RC
     1137U,	// RETDAG
     1137U,	// RETDAGp
     2120U,	// RPCC
     2638U,	// RS
-    37217U,	// S4ADDLi
-    37217U,	// S4ADDLr
-    37347U,	// S4ADDQi
-    37347U,	// S4ADDQr
-    37201U,	// S4SUBLi
-    37201U,	// S4SUBLr
-    37331U,	// S4SUBQi
-    37331U,	// S4SUBQr
-    37225U,	// S8ADDLi
-    37225U,	// S8ADDLr
-    37355U,	// S8ADDQi
-    37355U,	// S8ADDQr
-    37209U,	// S8SUBLi
-    37209U,	// S8SUBLr
-    37339U,	// S8SUBQi
-    37339U,	// S8SUBQr
-    36900U,	// SEXTB
-    37725U,	// SEXTW
-    37247U,	// SLi
-    37247U,	// SLr
-    37633U,	// SQRTS
-    37690U,	// SQRTT
-    36890U,	// SRAi
-    36890U,	// SRAr
-    37286U,	// SRLi
-    37286U,	// SRLr
-    34847U,	// STB
-    34847U,	// STBr
-    35243U,	// STL
-    36907U,	// STL_C
-    35243U,	// STLr
-    35348U,	// STQ
-    36914U,	// STQ_C
-    35512U,	// STQ_U
-    35348U,	// STQr
-    35410U,	// STS
-    35410U,	// STSr
-    35500U,	// STT
-    35500U,	// STTr
-    35672U,	// STW
-    35672U,	// STWr
-    37203U,	// SUBLi
-    37203U,	// SUBLr
-    37333U,	// SUBQi
-    37333U,	// SUBQr
-    37606U,	// SUBS
-    37652U,	// SUBT
+    4449U,	// S4ADDLi
+    4449U,	// S4ADDLr
+    4579U,	// S4ADDQi
+    4579U,	// S4ADDQr
+    4433U,	// S4SUBLi
+    4433U,	// S4SUBLr
+    4563U,	// S4SUBQi
+    4563U,	// S4SUBQr
+    4457U,	// S8ADDLi
+    4457U,	// S8ADDLr
+    4587U,	// S8ADDQi
+    4587U,	// S8ADDQr
+    4441U,	// S8SUBLi
+    4441U,	// S8SUBLr
+    4571U,	// S8SUBQi
+    4571U,	// S8SUBQr
+    4132U,	// SEXTB
+    4957U,	// SEXTW
+    4479U,	// SLi
+    4479U,	// SLr
+    4865U,	// SQRTS
+    4922U,	// SQRTT
+    4122U,	// SRAi
+    4122U,	// SRAr
+    4518U,	// SRLi
+    4518U,	// SRLr
+    2079U,	// STB
+    2079U,	// STBr
+    2475U,	// STL
+    4139U,	// STL_C
+    2475U,	// STLr
+    2580U,	// STQ
+    4146U,	// STQ_C
+    2744U,	// STQ_U
+    2580U,	// STQr
+    2642U,	// STS
+    2642U,	// STSr
+    2732U,	// STT
+    2732U,	// STTr
+    2904U,	// STW
+    2904U,	// STWr
+    4435U,	// SUBLi
+    4435U,	// SUBLr
+    4565U,	// SUBQi
+    4565U,	// SUBQr
+    4838U,	// SUBS
+    4884U,	// SUBT
     1294U,	// TRAPB
-    37084U,	// UMULHi
-    37084U,	// UMULHr
+    4316U,	// UMULHi
+    4316U,	// UMULHr
     4996U,	// WH64
     5027U,	// WH64EN
     1290U,	// WMB
-    37401U,	// XORi
-    37401U,	// XORr
-    37533U,	// ZAPNOTi
+    4633U,	// XORi
+    4633U,	// XORr
+    4765U,	// ZAPNOTi
   };
 
   static const uint8_t OpInfo1[] = {
@@ -949,107 +949,107 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// SWAP32
     0U,	// SWAP64
     0U,	// WTF
-    0U,	// ADDLi
-    0U,	// ADDLr
-    0U,	// ADDQi
-    0U,	// ADDQr
-    0U,	// ADDS
-    0U,	// ADDT
-    0U,	// ANDi
-    0U,	// ANDr
-    10U,	// BEQ
-    10U,	// BGE
-    10U,	// BGT
-    0U,	// BICi
-    0U,	// BICr
-    0U,	// BISi
-    0U,	// BISr
-    10U,	// BLBC
-    10U,	// BLBS
-    10U,	// BLE
-    10U,	// BLT
-    10U,	// BNE
+    1U,	// ADDLi
+    1U,	// ADDLr
+    1U,	// ADDQi
+    1U,	// ADDQr
+    1U,	// ADDS
+    1U,	// ADDT
+    1U,	// ANDi
+    1U,	// ANDr
+    5U,	// BEQ
+    5U,	// BGE
+    5U,	// BGT
+    1U,	// BICi
+    1U,	// BICr
+    1U,	// BISi
+    1U,	// BISr
+    5U,	// BLBC
+    5U,	// BLBS
+    5U,	// BLE
+    5U,	// BLT
+    5U,	// BNE
     0U,	// BR
-    0U,	// BSR
-    0U,	// CMOVEQi
-    0U,	// CMOVEQr
-    0U,	// CMOVGEi
-    0U,	// CMOVGEr
-    0U,	// CMOVGTi
-    0U,	// CMOVGTr
-    0U,	// CMOVLBCi
-    0U,	// CMOVLBCr
-    0U,	// CMOVLBSi
-    0U,	// CMOVLBSr
-    0U,	// CMOVLEi
-    0U,	// CMOVLEr
-    0U,	// CMOVLTi
-    0U,	// CMOVLTr
-    0U,	// CMOVNEi
-    0U,	// CMOVNEr
-    0U,	// CMPBGE
-    0U,	// CMPBGEi
-    0U,	// CMPEQ
-    0U,	// CMPEQi
-    0U,	// CMPLE
-    0U,	// CMPLEi
-    0U,	// CMPLT
-    0U,	// CMPLTi
-    0U,	// CMPTEQ
-    0U,	// CMPTLE
-    0U,	// CMPTLT
-    0U,	// CMPTUN
-    0U,	// CMPULE
-    0U,	// CMPULEi
-    0U,	// CMPULT
-    0U,	// CMPULTi
-    0U,	// COND_BRANCH_F
-    0U,	// COND_BRANCH_I
-    0U,	// CPYSES
-    0U,	// CPYSESt
-    0U,	// CPYSET
-    0U,	// CPYSNS
-    0U,	// CPYSNSt
-    0U,	// CPYSNT
-    0U,	// CPYSNTs
-    0U,	// CPYSS
-    0U,	// CPYSSt
-    0U,	// CPYST
-    0U,	// CPYSTs
-    4U,	// CTLZ
-    4U,	// CTPOP
-    4U,	// CTTZ
-    4U,	// CVTQS
-    4U,	// CVTQT
-    4U,	// CVTST
-    4U,	// CVTTQ
-    4U,	// CVTTS
-    0U,	// DIVS
-    0U,	// DIVT
-    1U,	// ECB
-    0U,	// EQVi
-    0U,	// EQVr
+    1U,	// BSR
+    1U,	// CMOVEQi
+    1U,	// CMOVEQr
+    1U,	// CMOVGEi
+    1U,	// CMOVGEr
+    1U,	// CMOVGTi
+    1U,	// CMOVGTr
+    1U,	// CMOVLBCi
+    1U,	// CMOVLBCr
+    1U,	// CMOVLBSi
+    1U,	// CMOVLBSr
+    1U,	// CMOVLEi
+    1U,	// CMOVLEr
+    1U,	// CMOVLTi
+    1U,	// CMOVLTr
+    1U,	// CMOVNEi
+    1U,	// CMOVNEr
+    1U,	// CMPBGE
+    1U,	// CMPBGEi
+    1U,	// CMPEQ
+    1U,	// CMPEQi
+    1U,	// CMPLE
+    1U,	// CMPLEi
+    1U,	// CMPLT
+    1U,	// CMPLTi
+    1U,	// CMPTEQ
+    1U,	// CMPTLE
+    1U,	// CMPTLT
+    1U,	// CMPTUN
+    1U,	// CMPULE
+    1U,	// CMPULEi
+    1U,	// CMPULT
+    1U,	// CMPULTi
+    1U,	// COND_BRANCH_F
+    1U,	// COND_BRANCH_I
+    1U,	// CPYSES
+    1U,	// CPYSESt
+    1U,	// CPYSET
+    1U,	// CPYSNS
+    1U,	// CPYSNSt
+    1U,	// CPYSNT
+    1U,	// CPYSNTs
+    1U,	// CPYSS
+    1U,	// CPYSSt
+    1U,	// CPYST
+    1U,	// CPYSTs
+    9U,	// CTLZ
+    9U,	// CTPOP
+    9U,	// CTTZ
+    9U,	// CVTQS
+    9U,	// CVTQT
+    9U,	// CVTST
+    9U,	// CVTTQ
+    9U,	// CVTTS
+    1U,	// DIVS
+    1U,	// DIVT
+    2U,	// ECB
+    1U,	// EQVi
+    1U,	// EQVr
     0U,	// EXCB
-    0U,	// EXTBL
-    0U,	// EXTBLi
-    0U,	// EXTLH
-    0U,	// EXTLHi
-    0U,	// EXTLL
-    0U,	// EXTLLi
-    0U,	// EXTQH
-    0U,	// EXTQHi
-    0U,	// EXTQL
-    0U,	// EXTQLi
-    0U,	// EXTWH
-    0U,	// EXTWHi
-    0U,	// EXTWL
-    0U,	// EXTWLi
-    10U,	// FBEQ
-    10U,	// FBGE
-    10U,	// FBGT
-    10U,	// FBLE
-    10U,	// FBLT
-    10U,	// FBNE
+    1U,	// EXTBL
+    1U,	// EXTBLi
+    1U,	// EXTLH
+    1U,	// EXTLHi
+    1U,	// EXTLL
+    1U,	// EXTLLi
+    1U,	// EXTQH
+    1U,	// EXTQHi
+    1U,	// EXTQL
+    1U,	// EXTQLi
+    1U,	// EXTWH
+    1U,	// EXTWHi
+    1U,	// EXTWL
+    1U,	// EXTWLi
+    5U,	// FBEQ
+    5U,	// FBGE
+    5U,	// FBGT
+    5U,	// FBLE
+    5U,	// FBLT
+    5U,	// FBNE
     0U,	// FCMOVEQS
     0U,	// FCMOVEQT
     0U,	// FCMOVGES
@@ -1062,136 +1062,136 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// FCMOVLTT
     0U,	// FCMOVNES
     0U,	// FCMOVNET
-    1U,	// FETCH
-    1U,	// FETCH_M
-    4U,	// FTOIS
-    4U,	// FTOIT
-    0U,	// INSBL
-    0U,	// INSBLi
-    0U,	// INSLH
-    0U,	// INSLHi
-    0U,	// INSLL
-    0U,	// INSLLi
-    0U,	// INSQH
-    0U,	// INSQHi
-    0U,	// INSQL
-    0U,	// INSQLi
-    0U,	// INSWH
-    0U,	// INSWHi
-    0U,	// INSWL
-    0U,	// INSWLi
-    4U,	// ITOFS
-    4U,	// ITOFT
-    1U,	// JMP
+    2U,	// FETCH
+    2U,	// FETCH_M
+    9U,	// FTOIS
+    9U,	// FTOIT
+    1U,	// INSBL
+    1U,	// INSBLi
+    1U,	// INSLH
+    1U,	// INSLHi
+    1U,	// INSLL
+    1U,	// INSLLi
+    1U,	// INSQH
+    1U,	// INSQHi
+    1U,	// INSQL
+    1U,	// INSQLi
+    1U,	// INSWH
+    1U,	// INSWHi
+    1U,	// INSWL
+    1U,	// INSWLi
+    9U,	// ITOFS
+    9U,	// ITOFT
+    2U,	// JMP
     0U,	// JSR
-    1U,	// JSR_COROUTINE
+    2U,	// JSR_COROUTINE
     0U,	// JSRs
-    18U,	// LDA
-    18U,	// LDAH
-    1U,	// LDAHg
-    82U,	// LDAHr
-    1U,	// LDAg
-    146U,	// LDAr
-    18U,	// LDBU
-    146U,	// LDBUr
-    18U,	// LDL
-    18U,	// LDL_L
-    146U,	// LDLr
-    18U,	// LDQ
-    18U,	// LDQ_L
-    18U,	// LDQ_U
-    210U,	// LDQl
-    146U,	// LDQr
-    18U,	// LDS
-    146U,	// LDSr
-    18U,	// LDT
-    146U,	// LDTr
-    18U,	// LDWU
-    146U,	// LDWUr
+    29U,	// LDA
+    29U,	// LDAH
+    2U,	// LDAHg
+    45U,	// LDAHr
+    2U,	// LDAg
+    61U,	// LDAr
+    29U,	// LDBU
+    61U,	// LDBUr
+    29U,	// LDL
+    29U,	// LDL_L
+    61U,	// LDLr
+    29U,	// LDQ
+    29U,	// LDQ_L
+    29U,	// LDQ_U
+    77U,	// LDQl
+    61U,	// LDQr
+    29U,	// LDS
+    61U,	// LDSr
+    29U,	// LDT
+    61U,	// LDTr
+    29U,	// LDWU
+    61U,	// LDWUr
     0U,	// MB
-    0U,	// MSKBL
-    0U,	// MSKBLi
-    0U,	// MSKLH
-    0U,	// MSKLHi
-    0U,	// MSKLL
-    0U,	// MSKLLi
-    0U,	// MSKQH
-    0U,	// MSKQHi
-    0U,	// MSKQL
-    0U,	// MSKQLi
-    0U,	// MSKWH
-    0U,	// MSKWHi
-    0U,	// MSKWL
-    0U,	// MSKWLi
-    0U,	// MULLi
-    0U,	// MULLr
-    0U,	// MULQi
-    0U,	// MULQr
-    0U,	// MULS
-    0U,	// MULT
-    0U,	// ORNOTi
-    0U,	// ORNOTr
+    1U,	// MSKBL
+    1U,	// MSKBLi
+    1U,	// MSKLH
+    1U,	// MSKLHi
+    1U,	// MSKLL
+    1U,	// MSKLLi
+    1U,	// MSKQH
+    1U,	// MSKQHi
+    1U,	// MSKQL
+    1U,	// MSKQLi
+    1U,	// MSKWH
+    1U,	// MSKWHi
+    1U,	// MSKWL
+    1U,	// MSKWLi
+    1U,	// MULLi
+    1U,	// MULLr
+    1U,	// MULQi
+    1U,	// MULQr
+    1U,	// MULS
+    1U,	// MULT
+    1U,	// ORNOTi
+    1U,	// ORNOTr
     0U,	// RC
     0U,	// RETDAG
     0U,	// RETDAGp
     0U,	// RPCC
     0U,	// RS
-    0U,	// S4ADDLi
-    0U,	// S4ADDLr
-    0U,	// S4ADDQi
-    0U,	// S4ADDQr
-    0U,	// S4SUBLi
-    0U,	// S4SUBLr
-    0U,	// S4SUBQi
-    0U,	// S4SUBQr
-    0U,	// S8ADDLi
-    0U,	// S8ADDLr
-    0U,	// S8ADDQi
-    0U,	// S8ADDQr
-    0U,	// S8SUBLi
-    0U,	// S8SUBLr
-    0U,	// S8SUBQi
-    0U,	// S8SUBQr
-    4U,	// SEXTB
-    4U,	// SEXTW
-    0U,	// SLi
-    0U,	// SLr
-    4U,	// SQRTS
-    4U,	// SQRTT
-    0U,	// SRAi
-    0U,	// SRAr
-    0U,	// SRLi
-    0U,	// SRLr
-    1U,	// STB
-    146U,	// STBr
-    18U,	// STL
-    48U,	// STL_C
-    146U,	// STLr
-    18U,	// STQ
-    48U,	// STQ_C
-    1U,	// STQ_U
-    146U,	// STQr
-    18U,	// STS
-    146U,	// STSr
-    18U,	// STT
-    146U,	// STTr
-    18U,	// STW
-    146U,	// STWr
-    0U,	// SUBLi
-    0U,	// SUBLr
-    0U,	// SUBQi
-    0U,	// SUBQr
-    0U,	// SUBS
-    0U,	// SUBT
+    1U,	// S4ADDLi
+    1U,	// S4ADDLr
+    1U,	// S4ADDQi
+    1U,	// S4ADDQr
+    1U,	// S4SUBLi
+    1U,	// S4SUBLr
+    1U,	// S4SUBQi
+    1U,	// S4SUBQr
+    1U,	// S8ADDLi
+    1U,	// S8ADDLr
+    1U,	// S8ADDQi
+    1U,	// S8ADDQr
+    1U,	// S8SUBLi
+    1U,	// S8SUBLr
+    1U,	// S8SUBQi
+    1U,	// S8SUBQr
+    9U,	// SEXTB
+    9U,	// SEXTW
+    1U,	// SLi
+    1U,	// SLr
+    9U,	// SQRTS
+    9U,	// SQRTT
+    1U,	// SRAi
+    1U,	// SRAr
+    1U,	// SRLi
+    1U,	// SRLr
+    3U,	// STB
+    61U,	// STBr
+    29U,	// STL
+    81U,	// STL_C
+    61U,	// STLr
+    29U,	// STQ
+    81U,	// STQ_C
+    3U,	// STQ_U
+    61U,	// STQr
+    29U,	// STS
+    61U,	// STSr
+    29U,	// STT
+    61U,	// STTr
+    29U,	// STW
+    61U,	// STWr
+    1U,	// SUBLi
+    1U,	// SUBLr
+    1U,	// SUBQi
+    1U,	// SUBQr
+    1U,	// SUBS
+    1U,	// SUBT
     0U,	// TRAPB
-    0U,	// UMULHi
-    0U,	// UMULHr
-    1U,	// WH64
-    1U,	// WH64EN
+    1U,	// UMULHi
+    1U,	// UMULHr
+    2U,	// WH64
+    2U,	// WH64EN
     0U,	// WMB
-    0U,	// XORi
-    0U,	// XORr
-    0U,	// ZAPNOTi
+    1U,	// XORi
+    1U,	// XORr
+    1U,	// ZAPNOTi
   };
 
   // Emit the opcode for the instruction.
@@ -1220,8 +1220,8 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   uint32_t Bits = MnemonicInfo.second;
   assert(Bits != 0 && "Cannot print this instruction.");
 
-  // Fragment 0 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 11) & 3) {
+  // Fragment 0 encoded into 3 bits for 5 unique commands.
+  switch ((Bits >> 11) & 7) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_VALUE_LIST, DBG_INSTR_REF, DBG_PHI, DBG_LABEL, BUNDLE, ...
@@ -1236,6 +1236,10 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 1, O);
     break;
   case 3:
+    // BR, BSR
+    printOperandAddr(MI, Address, 0, O);
+    break;
+  case 4:
     // FCMOVEQS, FCMOVEQT, FCMOVGES, FCMOVGET, FCMOVGTS, FCMOVGTT, FCMOVLES, ...
     printOperand(MI, 3, O);
     SStream_concat1(O, ',');
@@ -1248,7 +1252,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 1 encoded into 4 bits for 13 unique commands.
-  switch ((Bits >> 13) & 15) {
+  switch ((Bits >> 14) & 15) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADJUSTSTACKDOWN, ADJUSTSTACKUP, BR, RC, RPCC, RS
@@ -1289,7 +1293,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", F8RC:");
     printOperand(MI, 1, O);
     SStream_concat0(O, ", bb:");
-    printOperand(MI, 2, O);
+    printOperandAddr(MI, Address, 2, O);
     return;
     break;
   case 7:
@@ -1297,7 +1301,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", GPRC:");
     printOperand(MI, 1, O);
     SStream_concat0(O, ", bb:");
-    printOperand(MI, 2, O);
+    printOperandAddr(MI, Address, 2, O);
     return;
     break;
   case 8:
@@ -1338,8 +1342,8 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   }
 
 
-  // Fragment 2 encoded into 2 bits for 3 unique commands.
-  switch ((Bits >> 17) & 3) {
+  // Fragment 2 encoded into 2 bits for 4 unique commands.
+  switch ((Bits >> 18) & 3) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADDLi, ADDLr, ADDQi, ADDQr, ADDS, ADDT, ANDi, ANDr, BICi, BICr, BISi, ...
@@ -1347,18 +1351,25 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 1:
     // BEQ, BGE, BGT, BLBC, BLBS, BLE, BLT, BNE, FBEQ, FBGE, FBGT, FBLE, FBLT...
-    printOperand(MI, 1, O);
+    printOperandAddr(MI, Address, 1, O);
+    return;
     break;
   case 2:
     // CTLZ, CTPOP, CTTZ, CVTQS, CVTQT, CVTST, CVTTQ, CVTTS, FTOIS, FTOIT, IT...
     printOperand(MI, 0, O);
     return;
     break;
+  case 3:
+    // LDA, LDAH, LDAHr, LDAr, LDBU, LDBUr, LDL, LDL_L, LDLr, LDQ, LDQ_L, LDQ...
+    printOperand(MI, 1, O);
+    SStream_concat1(O, '(');
+    printOperand(MI, 2, O);
+    break;
   }
 
 
-  // Fragment 3 encoded into 2 bits for 3 unique commands.
-  switch ((Bits >> 19) & 3) {
+  // Fragment 3 encoded into 3 bits for 6 unique commands.
+  switch ((Bits >> 20) & 7) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADDLi, ADDLr, ADDQi, ADDQr, ADDS, ADDT, ANDi, ANDr, BICi, BICr, BISi, ...
@@ -1367,49 +1378,30 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 1:
-    // BEQ, BGE, BGT, BLBC, BLBS, BLE, BLT, BNE, FBEQ, FBGE, FBGT, FBLE, FBLT...
-    return;
-    break;
-  case 2:
-    // LDA, LDAH, LDAHr, LDAr, LDBU, LDBUr, LDL, LDL_L, LDLr, LDQ, LDQ_L, LDQ...
-    SStream_concat1(O, '(');
-    break;
-  }
-
-
-  // Fragment 4 encoded into 1 bits for 2 unique commands.
-  if ((Bits >> 21) & 1) {
-    // STL_C, STQ_C
-    printOperand(MI, 3, O);
-    SStream_concat1(O, ')');
-    return;
-  } else {
-    // LDA, LDAH, LDAHr, LDAr, LDBU, LDBUr, LDL, LDL_L, LDLr, LDQ, LDQ_L, LDQ...
-    printOperand(MI, 2, O);
-  }
-
-
-  // Fragment 5 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 22) & 3) {
-  default: assert(0 && "Invalid command number.");
-  case 0:
     // LDA, LDAH, LDBU, LDL, LDL_L, LDQ, LDQ_L, LDQ_U, LDS, LDT, LDWU, STL, S...
     SStream_concat1(O, ')');
     return;
     break;
-  case 1:
+  case 2:
     // LDAHr
     SStream_concat0(O, ")\t\t!gprelhigh");
     return;
     break;
-  case 2:
+  case 3:
     // LDAr, LDBUr, LDLr, LDQr, LDSr, LDTr, LDWUr, STBr, STLr, STQr, STSr, ST...
     SStream_concat0(O, ")\t\t!gprellow");
     return;
     break;
-  case 3:
+  case 4:
     // LDQl
     SStream_concat0(O, ")\t\t!literal");
+    return;
+    break;
+  case 5:
+    // STL_C, STQ_C
+    SStream_concat1(O, '(');
+    printOperand(MI, 3, O);
+    SStream_concat1(O, ')');
     return;
     break;
   }
