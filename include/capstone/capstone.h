@@ -303,7 +303,6 @@ typedef struct cs_operand_encoding {
 	/// The bit positions of each piece that form the full operand in order. If
 	/// there is only one piece then there is only one index as well. Likewise
 	/// if there are 4 pieces, there are 4 indexes and so on.
-	/// Also note that these indices DON'T necessarily match the indices in the ISA
 	uint8_t indexes[MAX_NUM_OP_ENC_ITEMS];
 	/// The bit widths of each piece that form the full operand in order. If
 	/// there is only one piece then there is only one size as well. Likewise if
