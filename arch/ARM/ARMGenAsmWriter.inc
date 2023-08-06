@@ -13251,6 +13251,7 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS)
 	free(substr);
 	if (AsmString[I] != '\0') {
 		if (AsmString[I] == ' ' || AsmString[I] == '\t') {
+			SStream_concat1(OS, ' ');
 			++I;
 		}
 		do {

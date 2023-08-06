@@ -474,7 +474,15 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 			ARM_get_detail(MI)->operands[0].access |= CS_AC_WRITE;
 			MI->flat_insn->detail->writeback = true;
 		}
+		break;
 	}
+	}
+	if (MI->flat_insn->id == ARM_INS_PUSH ||
+	    MI->flat_insn->id == ARM_INS_POP ||
+	    MI->flat_insn->id == ARM_INS_VPUSH ||
+	    MI->flat_insn->id == ARM_INS_VPOP) {
+		map_add_implicit_read(MI, ARM_REG_SP);
+		map_add_implicit_write(MI, ARM_REG_SP);
 	}
 }
 
@@ -1963,8 +1971,7 @@ void ARM_set_detail_op_neon_lane(MCInst *MI, unsigned OpNum)
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 
-	ARM_dec_op_count(MI);
-	ARM_get_detail_op(MI, 0)->neon_lane = Val;
+	ARM_get_detail_op(MI, -1)->neon_lane = Val;
 }
 
 /// Adds a System Register and increments op_count by one.
