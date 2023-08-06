@@ -405,29 +405,11 @@ static void ARM_add_reglist_reg_encoding(MCInst *MI, arm_reg reg)
 	unsigned RegBitNum = reg == ARM_REG_R13 ? 13 :
 			     reg >= ARM_REG_R0	? reg - ARM_REG_R0 :
 						  reg + 1;
-
-	switch (Opcode) {
-	case ARM_tLDMIA:
-	case ARM_tLDMIA_UPD:
-	case ARM_tSTMIA_UPD:
-		encoding->indexes[0] = 15 - RegBitNum;
-		break;
-	case ARM_tPOP:
-		if (RegBitNum == 15) {
-			encoding->indexes[0] = 7;
-			return;
-		}
-		encoding->indexes[0] = 15 - RegBitNum;
-		return;
-	case ARM_tPUSH:
-		if (RegBitNum == 14) {
-			encoding->indexes[0] = 7;
-			return;
-		}
-		encoding->indexes[0] = 15 - RegBitNum;
-		return;
-	}
-	encoding->indexes[0] = 31 - RegBitNum;
+	if ((Opcode == ARM_tPOP && RegBitNum == 15) ||
+	    (Opcode == ARM_tPUSH && RegBitNum == 14))
+		encoding->indexes[0] = 8;
+	else
+		encoding->indexes[0] = RegBitNum;
 }
 
 /// Decodes the asm string for a given instruction
@@ -876,7 +858,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		// Adding the operand that might be missing, if not missing this whole
 		// thing will be overriden anyways
 		cs_operand_encoding *encoding = &ARM_get_detail_op(MI, 0)->encoding;
-		encoding->indexes[encoding->operand_pieces_count] = 28;
+		encoding->indexes[encoding->operand_pieces_count] = 0;
 		encoding->sizes[encoding->operand_pieces_count++] = 4;
 		ARM_get_detail_op(MI, 0)->mem.format = ARM_MEM_REG_ALIGN_REG;
 		ARM_set_mem_access(MI, false);
@@ -893,7 +875,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		cs_operand_encoding *encoding = &ARM_get_detail_op(MI, -1)->encoding;
 		if (encoding->sizes[encoding->operand_pieces_count - 1] != 4) {
 			encoding->sizes[encoding->operand_pieces_count - 1] -= 4;
-			encoding->indexes[encoding->operand_pieces_count] = 28;
+			encoding->indexes[encoding->operand_pieces_count] = 0;
 			encoding->sizes[encoding->operand_pieces_count++] = 4;
 		}
 		break;
@@ -1647,8 +1629,10 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			cs_operand_encoding *encoding = &ARM_get_detail_op(MI, 0)->encoding;
 			// Since it's a register then it's only in one piece (not two), so
 			// we remove one
+			// clang-format off
 			--(encoding->operand_pieces_count);
-			encoding->indexes[encoding->operand_pieces_count - 1] = 28;
+			encoding->indexes[encoding->operand_pieces_count - 1] = 0;
+			// clang-format on
 			ARM_get_detail_op(MI, 0)->mem.format = ARM_MEM_U_REG_REG;
 			ARM_set_mem_access(MI, false);
 			break;
