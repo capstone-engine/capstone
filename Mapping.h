@@ -145,6 +145,8 @@ DEFINE_inc_detail_op_count(tricore, TriCore);
 DEFINE_dec_detail_op_count(tricore, TriCore);
 DEFINE_inc_detail_op_count(aarch64, AArch64);
 DEFINE_dec_detail_op_count(aarch64, AArch64);
+DEFINE_inc_detail_op_count(alpha, Alpha);
+DEFINE_dec_detail_op_count(alpha, Alpha);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)
@@ -170,6 +172,7 @@ DEFINE_get_arch_detail(arm, ARM);
 DEFINE_get_arch_detail(ppc, PPC);
 DEFINE_get_arch_detail(tricore, TriCore);
 DEFINE_get_arch_detail(aarch64, AArch64);
+DEFINE_get_arch_detail(alpha, Alpha);
 
 static inline bool detail_is_set(const MCInst *MI)
 {
@@ -202,62 +205,5 @@ void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias);
 bool map_use_alias_details(const MCInst *MI);
 
 void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size);
-
-/// Increments the detail->arch.op_count by one.
-#define DEFINE_inc_detail_op_count(arch, ARCH)                                 \
-	static inline void ARCH##_inc_op_count(MCInst *MI)                         \
-	{                                                                          \
-		MI->flat_insn->detail->arch.op_count++;                                \
-	}
-
-/// Decrements the detail->arch.op_count by one.
-#define DEFINE_dec_detail_op_count(arch, ARCH)                                 \
-	static inline void ARCH##_dec_op_count(MCInst *MI)                         \
-	{                                                                          \
-		MI->flat_insn->detail->arch.op_count--;                                \
-	}
-
-DEFINE_inc_detail_op_count(arm, ARM);
-DEFINE_dec_detail_op_count(arm, ARM);
-DEFINE_inc_detail_op_count(ppc, PPC);
-DEFINE_dec_detail_op_count(ppc, PPC);
-DEFINE_inc_detail_op_count(aarch64, AArch64);
-DEFINE_dec_detail_op_count(aarch64, AArch64);
-DEFINE_inc_detail_op_count(alpha, Alpha);
-DEFINE_dec_detail_op_count(alpha, Alpha);
-
-/// Returns true if a memory operand is currently edited.
-static inline bool doing_mem(const MCInst *MI) { return MI->csh->doing_mem; }
-
-/// Sets the doing_mem flag to @status.
-static inline void set_doing_mem(const MCInst *MI, bool status)
-{
-	MI->csh->doing_mem = status;
-}
-
-/// Returns detail->arch
-#define DEFINE_get_arch_detail(arch, ARCH)                                     \
-	static inline cs_##arch *ARCH##_get_detail(const MCInst *MI)               \
-	{                                                                          \
-		assert(MI && MI->flat_insn && MI->flat_insn->detail);                  \
-		return &MI->flat_insn->detail->arch;                                   \
-	}
-
-DEFINE_get_arch_detail(arm, ARM);
-DEFINE_get_arch_detail(ppc, PPC);
-DEFINE_get_arch_detail(aarch64, AArch64);
-DEFINE_get_arch_detail(alpha, Alpha);
-
-static inline bool detail_is_set(const MCInst *MI)
-{
-	assert(MI && MI->flat_insn);
-	return MI->flat_insn->detail != NULL;
-}
-
-static inline cs_detail *get_detail(const MCInst *MI)
-{
-	assert(MI && MI->flat_insn);
-	return MI->flat_insn->detail;
-}
 
 #endif // CS_MAPPING_H
