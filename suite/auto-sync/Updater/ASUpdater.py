@@ -108,7 +108,7 @@ class ASUpdater:
         self.check_tree_sitter()
         translator_config = get_path("{CPP_TRANSLATOR_DIR}/arch_config.json")
         configurator = Configurator(self.arch, translator_config)
-        translator = Translator(self.arch, configurator)
+        translator = Translator(configurator)
         translator.translate()
         translator.remark_manual_files()
         # Differ
