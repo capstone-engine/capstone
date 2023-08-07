@@ -8,6 +8,7 @@
   "{AUTO_SYNC_UPDATER_DIR}": "{AUTO_SYNC_ROOT}/Updater/",
 
   "{CPP_TRANSLATOR_DIR}": "{AUTO_SYNC_ROOT}/Updater/CppTranslator/",
+  "{CPP_TRANSLATOR_CONFIG}": "{CPP_TRANSLATOR_DIR}/arch_config.json",
   "{INC_PATCH_DIR}": "{AUTO_SYNC_ROOT}/inc_patches/",
 
   "{CS_INCLUDE_DIR}": "{CS_ROOT}/include/capstone/",

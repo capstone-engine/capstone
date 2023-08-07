@@ -116,14 +116,14 @@ class ASUpdater:
 
     def translate(self) -> None:
         self.check_tree_sitter()
-        translator_config = get_path("{CPP_TRANSLATOR_DIR}/arch_config.json")
+        translator_config = get_path("{CPP_TRANSLATOR_CONFIG}")
         configurator = Configurator(self.arch, translator_config)
         translator = Translator(configurator)
         translator.translate()
         translator.remark_manual_files()
 
     def diff(self) -> None:
-        translator_config = get_path("{CPP_TRANSLATOR_DIR}/arch_config.json")
+        translator_config = get_path("{CPP_TRANSLATOR_CONFIG}")
         configurator = Configurator(self.arch, translator_config)
         from CppTranslator.Differ import Differ
 
