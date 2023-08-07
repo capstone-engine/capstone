@@ -72,6 +72,8 @@ class ASUpdater:
         Patches the main header of the arch with the .inc files.
         It returns a list of files it has patched into the main header.
         """
+        if not self.write:
+            return []
         main_header = get_path("{CS_INCLUDE_DIR}").joinpath(f"{self.arch.lower()}.h")
         # Just try every inc file
         patched = []
@@ -88,6 +90,8 @@ class ASUpdater:
         If path is a directory it copies all files in it.
         If it is a file, it only copies it.
         """
+        if not self.write:
+            return
         if not dest.is_dir():
             fail_exit(f"{dest} is not a directory.")
 
