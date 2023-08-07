@@ -111,7 +111,7 @@ class ASUpdater:
     def check_tree_sitter(self) -> None:
         ts_dir = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
         if not ts_dir.exists():
-            log.info("tree-sitter was not fetched. Clonging it now...")
+            log.info("tree-sitter was not fetched. Cloning it now...")
             subprocess.run(["git", "submodule", "update", "--init", "--recursive"], check=True)
 
     def translate(self) -> None:
