@@ -20,7 +20,7 @@ class ASUpdater:
     The auto-sync updater.
     """
 
-    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list, no_clean: bool) -> None:
+    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list, no_clean: bool, refactor: bool) -> None:
         self.arch = arch
         self.write = write
         self.no_clean_build = no_clean
@@ -153,6 +153,12 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default=["All"],
     )
+    parser.add_argument(
+        "--refactor",
+        dest="refactor",
+        help="Sets change update behavior to ease refacotring and new implementations.",
+        action="store_true",
+    )
     arguments = parser.parse_args()
     return arguments
 
@@ -167,5 +173,5 @@ if __name__ == "__main__":
         format="%(levelname)-5s - %(message)s",
     )
 
-    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list, args.no_clean)
+    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list, args.no_clean, args.refactor)
     Updater.update()
