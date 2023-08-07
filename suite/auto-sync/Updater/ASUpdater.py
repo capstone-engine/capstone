@@ -13,7 +13,7 @@ from CppTranslator.Configurator import Configurator
 from CppTranslator.CppTranslator import Translator
 from IncGenerator import IncGenerator
 from Helper import get_path, convert_loglevel, check_py_version, fail_exit
-from PatchMainHeader import HeaderPatcher
+from HeaderPatcher import HeaderPatcher
 from pathlib import Path
 
 
