@@ -587,7 +587,7 @@ class Differ:
                 src = src[:start_byte] + data + src[end_byte:]
             with open(filepath, "wb") as f:
                 f.write(src)
-        run_clang_format(list(file_patches.keys()), get_path(self.conf_general["clang_format_file"]))
+        run_clang_format(list(file_patches.keys()))
         return
 
 

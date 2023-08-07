@@ -13,7 +13,6 @@ The configuration for each architecture is set in `arch_config.json`.
 The config values have the following meaning:
 
 - `General`: Settings valid for all architectures.
-   - `clang_format_file`: Path to Capstone's `.clang-format` file.
    - `patch_persistent_file`: Path to the file which saves the selections from the `Differ`.
    - `translation_out_dir`: Path to the directory where the `CppTranslator` stores its files.
    - `diff_out_dir`: Path to the directory where the `Differ` stores its files.

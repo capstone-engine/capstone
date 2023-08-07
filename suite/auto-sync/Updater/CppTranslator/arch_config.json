@@ -1,6 +1,5 @@
 {
   "General": {
-    "clang_format_file": "{CS_ROOT}/.clang-format",
     "patch_persistence_file": "{CPP_TRANSLATOR_DIR}/saved_patches.json",
     "translation_out_dir": "{BUILD_DIR}/translate_out/",
     "diff_out_dir": "{BUILD_DIR}/diff_out/",

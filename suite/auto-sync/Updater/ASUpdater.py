@@ -80,14 +80,14 @@ class ASUpdater:
         if path.is_file():
             log.debug(f"Format {path}")
             subprocess.run(
-                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_ROOT}')}/.clang-format", str(path)], check=True
+                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_CLANG_FORMAT_FILE}')}", str(path)], check=True
             )
             return
 
         for file in path.iterdir():
             log.debug(f"Format {file}")
             subprocess.run(
-                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_ROOT}')}/.clang-format", str(file)], check=True
+                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_CLANG_FORMAT_FILE}')}", str(file)], check=True
             )
 
     def copy_files(self, path: Path, dest: Path) -> None:

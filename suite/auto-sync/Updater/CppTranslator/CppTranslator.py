@@ -416,7 +416,7 @@ class Translator:
             with open(self.current_src_path_out, "w") as f:
                 f.write(get_header())
                 f.write(self.src.decode("utf8"))
-        run_clang_format(self.out_paths, get_path(self.conf_general["clang_format_file"]))
+        run_clang_format(self.out_paths)
 
     def collect_template_instances(self):
         search_paths = [get_path(p) for p in self.conf["files_for_template_search"]]
