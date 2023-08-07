@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 import shutil
 import subprocess
 import sys
@@ -43,7 +44,7 @@ class ASUpdater:
             if path.is_dir():
                 shutil.rmtree(path)
             else:
-                shutil.remove(path)
+                os.remove(path)
 
     def patch_main_header(self) -> list:
         """
@@ -95,7 +96,7 @@ class ASUpdater:
 
         for file in path.iterdir():
             log.debug(f"Copy {path} to {dest}")
-            shutil.copy(path, dest)
+            shutil.copy(file, dest)
 
     def check_tree_sitter(self) -> None:
         ts_dir = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
