@@ -145,9 +145,9 @@ class ASUpdater:
         if self.inc_only:
             exit(0)
         self.translate()
+        self.diff()
         # Write files
         fail_exit("Full update procedure not yet implemented.")
-        # Move them
 
 
 def parse_args() -> argparse.Namespace:
