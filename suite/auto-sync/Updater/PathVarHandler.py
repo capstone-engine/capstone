@@ -26,11 +26,10 @@ class PathVarHandler(metaclass=Singleton):
             exit(1)
         repo_root = res.stdout.decode("utf8").strip("\n")
         # The main directories
-        paths = dict()
-        paths["{CS_ROOT}"] = Path(repo_root)
-        paths["{AUTO_SYNC_ROOT}"] = Path(repo_root).joinpath("suite/auto-sync/")
-        paths["{AUTO_SYNC_UPDATER_DIR}"] = paths["{AUTO_SYNC_ROOT}"].joinpath("Updater/")
-        path_config_file = paths["{AUTO_SYNC_UPDATER_DIR}"].joinpath("path_vars.json")
+        self.paths["{CS_ROOT}"] = Path(repo_root)
+        self.paths["{AUTO_SYNC_ROOT}"] = Path(repo_root).joinpath("suite/auto-sync/")
+        self.paths["{AUTO_SYNC_UPDATER_DIR}"] = self.paths["{AUTO_SYNC_ROOT}"].joinpath("Updater/")
+        path_config_file = self.paths["{AUTO_SYNC_UPDATER_DIR}"].joinpath("path_vars.json")
 
         # Load variables
         with open(path_config_file) as f:
@@ -38,15 +37,17 @@ class PathVarHandler(metaclass=Singleton):
         for p_name, path in vars.items():
             resolved = path
             for var_id in re.findall(r"\{.+}", resolved):
-                if var_id not in paths:
+                if var_id not in self.paths:
                     log.fatal(
                         f"{var_id} hasn't been added to the PathVarsHandler, yet. The var must be defined in a previous entry."
                     )
                     exit(1)
-                resolved = re.sub(var_id, str(paths[var_id]), resolved)
+                resolved = re.sub(var_id, str(self.paths[var_id]), resolved)
                 log.debug(f"Set {p_name} = {resolved}")
-                paths[p_name] = resolved
-        self.paths = paths
+                if not Path(resolved).exists():
+                    log.fatal(f"Path from config file does not exist! Path: {resolved}")
+                    exit(1)
+                self.paths[p_name] = resolved
 
     def get_path(self, name: str) -> Path:
         if name not in self.paths:

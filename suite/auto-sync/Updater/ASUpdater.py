@@ -14,16 +14,6 @@ from Helper import get_path, convert_loglevel, check_py_version, fail_exit
 from PatchMainHeader import HeaderPatcher
 from pathlib import Path
 
-CONFIG_DEFAULT_CONTENT = """{
-    "llvm_capstone_path": "{LLVM_ROOT}",
-    "vendor_path": "{VENDOR_DIR}",
-    "build_dir_path": "{BUILD_DIR}",
-    "patches_dir_path": "{INC_PATCH_DIR}",
-    "cs_include_dir": "{CS_INCLUDE_DIR}",
-    "cs_arch_module_dir": "{CS_ARCH_MODULE_DIR}"
-}
-"""
-
 
 class ASUpdater:
     """
@@ -36,11 +26,10 @@ class ASUpdater:
         self.no_clean_build = no_clean
         self.inc_list = inc_list
         self.inc_only = inc_only
-        self.conf = self.get_config()
-        self.arch_dir = self.conf["cs_arch_module_dir"].joinpath(self.arch)
+        self.refactor = refactor
+        self.arch_dir = get_path("{CS_ARCH_MODULE_DIR}").joinpath(self.arch)
         if not self.no_clean_build:
             self.clean_build_dir()
-        self.check_paths()
         self.inc_generator = IncGenerator(
             self.arch,
             self.inc_list,
@@ -49,47 +38,19 @@ class ASUpdater:
     def clean_build_dir(self) -> None:
         log.info("Clean build directory")
         path: Path
-        for path in self.conf["build_dir_path"].iterdir():
+        for path in get_path("{BUILD_DIR}").iterdir():
             log.debug(f"Delete {path}")
             if path.is_dir():
                 shutil.rmtree(path)
             else:
                 shutil.remove(path)
 
-    @staticmethod
-    def get_config() -> dict:
-        conf_file = get_path("{UPDATER_CONFIG_FILE}")
-        if not conf_file.exists():
-            log.info(f"{conf_file} not found. Creating new one.")
-            with open(conf_file, "x") as f:
-                f.write(CONFIG_DEFAULT_CONTENT)
-        with open(conf_file) as f:
-            raw_conf = json.load(f)
-        conf = dict()
-        for k, v in raw_conf.items():
-            conf[k] = get_path(v)
-        return conf
-
-    def check_paths(self) -> None:
-        if not self.conf["llvm_capstone_path"].exists():
-            fail_exit(f"Could not find {self.conf['llvm_capstone_path'].name}")
-        if not self.conf["build_dir_path"].exists():
-            fail_exit(f"Could not find {self.conf['build_dir_path'].name}")
-        if not self.conf["vendor_path"].exists():
-            fail_exit(f"Could not find {self.conf['vendor_path'].name}")
-        if not self.conf["patches_dir_path"].exists():
-            fail_exit(f"Could not find {self.conf['patches_dir_path'].name}")
-        if not self.conf["cs_include_dir"].exists():
-            fail_exit(f"Could not find {self.conf['cs_include_dir'].name}")
-        if not self.conf["cs_arch_module_dir"].exists():
-            fail_exit(f"Could not find {self.conf['cs_arch_module_dir'].name}")
-
     def patch_main_header(self) -> list:
         """
         Patches the main header of the arch with the .inc files.
         It returns a list of files it has patched into the main header.
         """
-        main_header = self.conf["cs_include_dir"].joinpath(f"{self.arch.lower()}.h")
+        main_header = get_path("{CS_INCLUDE_DIR}").joinpath(f"{self.arch.lower()}.h")
         # Just try every inc file
         patched = []
         for file in get_path("{C_INC_OUT_DIR}").iterdir():
