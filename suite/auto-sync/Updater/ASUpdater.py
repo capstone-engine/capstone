@@ -165,7 +165,9 @@ def parse_args() -> argparse.Namespace:
         "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64"], required=True
     )
     parser.add_argument("-d", dest="no_clean", help="Don't clean build dir before updating.", action="store_true")
-    parser.add_argument("-w", dest="write", help="Copy generated files to arch/<ARCH>/", action="store_true")
+    parser.add_argument(
+        "-w", dest="write", help="Write generated/translated files to arch/<ARCH>/", action="store_true"
+    )
     parser.add_argument(
         "-v",
         dest="verbosity",
