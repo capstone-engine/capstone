@@ -12,13 +12,13 @@ from Helper import get_path, convert_loglevel, check_py_version, fail_exit
 from pathlib import Path
 
 CONFIG_FILE_NAME = "config.json"
-CONFIG_DEFAULT_CONTENT = """
-    {
-        "llvm_capstone_path": "{AUTO_SYNC_ROOT}/llvm-capstone/",
-        "vendor_path": "{AUTO_SYNC_ROOT}/vendor/",
-        "build_dir_path": "{AUTO_SYNC_ROOT}/build/"
-    }
-    """
+CONFIG_DEFAULT_CONTENT = """{
+    "llvm_capstone_path": "{AUTO_SYNC_ROOT}/llvm-capstone/",
+    "vendor_path": "{AUTO_SYNC_ROOT}/vendor/",
+    "build_dir_path": "{AUTO_SYNC_ROOT}/build/",
+    "patches_dir_path": "{AUTO_SYNC_ROOT}/inc_patches/"
+}
+"""
 
 
 class ASUpdater:
