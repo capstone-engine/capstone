@@ -164,7 +164,7 @@ class Differ:
 
         t_out_dir: Path = get_path(self.conf_general["translation_out_dir"])
         self.translated_files = [t_out_dir.joinpath(sp["out"]) for sp in self.conf_arch["files_to_translate"]]
-        cs_arch_src: Path = get_path(self.conf_general["cs_arch_src"])
+        cs_arch_src: Path = get_path("{CS_ARCH_MODULE_DIR}")
         cs_arch_src = cs_arch_src.joinpath(self.arch if self.arch != "PPC" else "PowerPC")
         self.old_files = [
             cs_arch_src.joinpath(f"{cs_arch_src}/" + sp["out"]) for sp in self.conf_arch["files_to_translate"]

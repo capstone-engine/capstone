@@ -1,0 +1,21 @@
+{
+  "{LLVM_ROOT}": "{AUTO_SYNC_ROOT}/llvm-capstone/",
+  "{LLVM_TARGET_DIR}": "{AUTO_SYNC_ROOT}/llvm-capstone/llvm/lib/Target/",
+  "{LLVM_TBLGEN_BIN}": "{AUTO_SYNC_ROOT}/llvm-capstone/build/bin/llvm-tblgen",
+  "{LLVM_INCLUDE_DIR}": "{AUTO_SYNC_ROOT}/llvm-capstone/llvm/include",
+
+  "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
+  "{AUTO_SYNC_UPDATER_DIR}": "{AUTO_SYNC_ROOT}/Updater/",
+  "{UPDATER_CONFIG_FILE}": "{AUTO_SYNC_UPDATER_DIR}/updater_config.json",
+
+  "{CPP_TRANSLATOR_DIR}": "{AUTO_SYNC_ROOT}/Updater/CppTranslator/",
+  "{INC_PATCH_DIR}": "{AUTO_SYNC_ROOT}/inc_patches/",
+
+  "{CS_INCLUDE_DIR}": "{CS_ROOT}/include/capstone/",
+  "{CS_ARCH_MODULE_DIR}": "{CS_ROOT}/arch/",
+
+  "{BUILD_DIR}": "{AUTO_SYNC_ROOT}/build/",
+  "{C_INC_OUT_DIR}": "{BUILD_DIR}/llvm_c_inc/",
+  "{CPP_INC_OUT_DIR}": "{BUILD_DIR}/llvm_cpp_inc/"
+}
+

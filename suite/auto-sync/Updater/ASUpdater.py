@@ -8,19 +8,19 @@ import sys
 
 import logging as log
 
-from IncGenerator import IncGenerator, C_INC_OUT_DIR
+# from CppTranslator import CppTranslator
+from IncGenerator import IncGenerator
 from Helper import get_path, convert_loglevel, check_py_version, fail_exit
 from PatchMainHeader import HeaderPatcher
 from pathlib import Path
 
-CONFIG_FILE_NAME = "config.json"
 CONFIG_DEFAULT_CONTENT = """{
-    "llvm_capstone_path": "{AUTO_SYNC_ROOT}/llvm-capstone/",
-    "vendor_path": "{AUTO_SYNC_ROOT}/vendor/",
-    "build_dir_path": "{AUTO_SYNC_ROOT}/build/",
-    "patches_dir_path": "{AUTO_SYNC_ROOT}/inc_patches/",
-    "cs_include_dir": "{CS_ROOT}/include/capstone/",
-    "cs_arch_module_dir": "{CS_ROOT}/arch/"
+    "llvm_capstone_path": "{LLVM_ROOT}",
+    "vendor_path": "{VENDOR_DIR}",
+    "build_dir_path": "{BUILD_DIR}",
+    "patches_dir_path": "{INC_PATCH_DIR}",
+    "cs_include_dir": "{CS_INCLUDE_DIR}",
+    "cs_arch_module_dir": "{CS_ARCH_MODULE_DIR}"
 }
 """
 
@@ -61,11 +61,12 @@ class ASUpdater:
 
     @staticmethod
     def get_config() -> dict:
-        if not Path.exists(Path(CONFIG_FILE_NAME)):
-            log.info(f"{CONFIG_FILE_NAME} not found. Creating new one.")
-            with open(CONFIG_FILE_NAME, "x") as f:
+        conf_file = get_path("{UPDATER_CONFIG_FILE}")
+        if not conf_file.exists():
+            log.info(f"{conf_file} not found. Creating new one.")
+            with open(conf_file, "x") as f:
                 f.write(CONFIG_DEFAULT_CONTENT)
-        with open(CONFIG_FILE_NAME) as f:
+        with open(conf_file) as f:
             raw_conf = json.load(f)
         conf = dict()
         for k, v in raw_conf.items():
@@ -94,7 +95,7 @@ class ASUpdater:
         main_header = self.conf["cs_include_dir"].joinpath(f"{self.arch.lower()}.h")
         # Just try every inc file
         patched = []
-        for file in self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR).iterdir():
+        for file in get_path("{C_INC_OUT_DIR}").iterdir():
             patcher = HeaderPatcher(main_header, file)
             if patcher.patch_header():
                 # Save the path. This file should not be moved.
@@ -144,7 +145,7 @@ class ASUpdater:
         # self.run_clang_format(self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR))
         if self.write:
             patched = self.patch_main_header()
-            for file in self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR).iterdir():
+            for file in get_path("{C_INC_OUT_DIR}").iterdir():
                 if file in patched:
                     continue
                 self.copy_files(file, self.arch_dir)

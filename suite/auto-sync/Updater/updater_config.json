@@ -1,0 +1,8 @@
+{
+    "llvm_capstone_path": "{LLVM_ROOT}",
+    "vendor_path": "{VENDOR_DIR}",
+    "build_dir_path": "{BUILD_DIR}",
+    "patches_dir_path": "{INC_PATCH_DIR}",
+    "cs_include_dir": "{CS_INCLUDE_DIR}",
+    "cs_arch_module_dir": "{CS_ARCH_MODULE_DIR}"
+}

@@ -10,9 +10,6 @@ import logging as log
 from Helper import fail_exit, get_path
 from pathlib import Path
 
-C_INC_OUT_DIR = "llvm_c_inc"
-CPP_INC_OUT_DIR = "llvm_cpp_inc"
-
 inc_tables = [
     {
         "name": "Disassembler",
@@ -72,16 +69,15 @@ class IncGenerator:
         self.inc_list = inc_list  # Names of inc files to generate. Or all if all should be generated.
         self.arch_dir_name: str = "PowerPC" if self.arch == "PPC" else self.arch
         self.patches_dir_path: Path = patches_dir_path
-        self.llvm_root_path: Path = llvm_path
-        self.llvm_include_dir: Path = self.llvm_root_path.joinpath(Path(f"llvm/include/"))
+        self.llvm_include_dir: Path = get_path("{LLVM_INCLUDE_DIR}")
         self.output_dir: Path = output_dir
-        self.llvm_target_dir: Path = self.llvm_root_path.joinpath(Path(f"llvm/lib/Target/{self.arch_dir_name}/"))
-        self.llvm_tblgen: Path = self.llvm_root_path.joinpath("build/bin/llvm-tblgen")
+        self.llvm_target_dir: Path = get_path("{LLVM_TARGET_DIR}").joinpath(Path(f"{self.arch_dir_name}"))
+        self.llvm_tblgen: Path = get_path("{LLVM_TBLGEN_BIN}")
+        self.output_dir_c_inc = get_path("{C_INC_OUT_DIR}")
+        self.output_dir_cpp_inc = get_path("{CPP_INC_OUT_DIR}")
         self.check_paths()
 
     def check_paths(self) -> None:
-        if not self.llvm_root_path.exists():
-            fail_exit(f"{self.llvm_root_path} does not exist.")
         if not self.llvm_include_dir.exists():
             fail_exit(f"{self.llvm_include_dir} does not exist.")
         if not self.llvm_target_dir.exists():
@@ -90,13 +86,10 @@ class IncGenerator:
             fail_exit(f"{self.llvm_tblgen} does not exist. Have you build llvm-tblgen?")
         if not self.output_dir.exists():
             fail_exit(f"{self.output_dir} does not exist.")
-
-        self.output_dir_c_inc = self.output_dir.joinpath(C_INC_OUT_DIR)
-        self.output_dir_cpp_inc = self.output_dir.joinpath(CPP_INC_OUT_DIR)
-        if not self.output_dir_c_inc.is_dir():
+        if not self.output_dir_c_inc.exists():
             log.info(f"{self.output_dir_c_inc} does not exist. Creating it...")
             os.makedirs(self.output_dir_c_inc)
-        if not self.output_dir_cpp_inc.is_dir():
+        if not self.output_dir_cpp_inc.exists():
             log.info(f"{self.output_dir_cpp_inc} does not exist. Creating it...")
             os.makedirs(self.output_dir_cpp_inc)
 

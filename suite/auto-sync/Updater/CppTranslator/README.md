@@ -15,7 +15,6 @@ The config values have the following meaning:
 - `General`: Settings valid for all architectures.
    - `clang_format_file`: Path to Capstone's `.clang-format` file.
    - `patch_persistent_file`: Path to the file which saves the selections from the `Differ`.
-   - `cs_arch_src`: Path to Capstone's `arch` directory.
    - `translation_out_dir`: Path to the directory where the `CppTranslator` stores its files.
    - `diff_out_dir`: Path to the directory where the `Differ` stores its files.
    - `diff_color_new`: Color in the `Differ` for translated content.

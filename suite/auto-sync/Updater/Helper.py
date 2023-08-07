@@ -1,6 +1,5 @@
 import hashlib
 import logging as log
-import re
 import shutil
 import subprocess
 import sys
@@ -8,6 +7,7 @@ from pathlib import Path
 
 import termcolor
 
+from PathVarHandler import PathVarHandler
 from tree_sitter import Node
 
 
@@ -144,31 +144,7 @@ def run_clang_format(out_paths: list[Path], clang_format_file: Path):
 
 
 def get_path(config_path: str) -> Path:
-    try:
-        res = subprocess.run(["git", "rev-parse", "--show-toplevel"], check=True, stdout=subprocess.PIPE)
-    except subprocess.CalledProcessError:
-        log.fatal("Could not get repository top level directory.")
-        exit(1)
-    repo_root = res.stdout.decode("utf8").strip("\n")
-    if not Path(repo_root).exists():
-        log.fatal(f'The repository root directory is not not a valid path "{repo_root}"')
-        exit(1)
-    if "{CS_ROOT}" in config_path:
-        p = Path(re.sub(r"\{CS_ROOT}", repo_root, config_path))
-    elif "{AUTO_SYNC_ROOT}" in config_path:
-        auto_sync_root = Path(repo_root).joinpath(Path("suite/auto-sync/"))
-        config_path = re.sub(r"\{AUTO_SYNC_ROOT}", ".", config_path)
-        p = auto_sync_root.joinpath(Path(config_path))
-    elif "{CPP_TRANSLATOR_ROOT}" in config_path:
-        cppt_root = Path(repo_root).joinpath(Path("suite/auto-sync/CppTranslator/"))
-        config_path = re.sub(r"\{CPP_TRANSLATOR_ROOT}", ".", config_path)
-        p = cppt_root.joinpath(Path(config_path))
-    else:
-        p = Path(config_path)
-    if not p.exists():
-        log.fatal(f'Path "{p.absolute().name}" in config does not exist.')
-        exit(1)
-    return p
+    return PathVarHandler().complete_path(config_path)
 
 
 def fail_exit(msg: str) -> None:
