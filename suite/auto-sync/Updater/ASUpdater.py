@@ -44,9 +44,6 @@ class ASUpdater:
         self.inc_generator = IncGenerator(
             self.arch,
             self.inc_list,
-            self.conf["llvm_capstone_path"],
-            self.conf["patches_dir_path"],
-            self.conf["build_dir_path"],
         )
 
     def clean_build_dir(self) -> None:

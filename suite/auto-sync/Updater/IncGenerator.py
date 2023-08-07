@@ -64,14 +64,14 @@ inc_tables = [
 
 
 class IncGenerator:
-    def __init__(self, arch: str, inc_list: list, llvm_path: Path, patches_dir_path: Path, output_dir: Path) -> None:
+    def __init__(self, arch: str, inc_list: list) -> None:
         self.arch: str = arch
-        self.inc_list = inc_list  # Names of inc files to generate. Or all if all should be generated.
+        self.inc_list = inc_list  # Names of inc files to generate.
         self.arch_dir_name: str = "PowerPC" if self.arch == "PPC" else self.arch
-        self.patches_dir_path: Path = patches_dir_path
+        self.patches_dir_path: Path = get_path("{INC_PATCH_DIR}")
         self.llvm_include_dir: Path = get_path("{LLVM_INCLUDE_DIR}")
-        self.output_dir: Path = output_dir
-        self.llvm_target_dir: Path = get_path("{LLVM_TARGET_DIR}").joinpath(Path(f"{self.arch_dir_name}"))
+        self.output_dir: Path = get_path("{BUILD_DIR}")
+        self.llvm_target_dir: Path = get_path("{LLVM_TARGET_DIR}").joinpath(f"{self.arch_dir_name}")
         self.llvm_tblgen: Path = get_path("{LLVM_TBLGEN_BIN}")
         self.output_dir_c_inc = get_path("{C_INC_OUT_DIR}")
         self.output_dir_cpp_inc = get_path("{CPP_INC_OUT_DIR}")
