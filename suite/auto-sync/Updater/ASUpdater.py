@@ -3,6 +3,7 @@
 import argparse
 import json
 import shutil
+import subprocess
 import sys
 
 import logging as log
@@ -84,8 +85,29 @@ class ASUpdater:
             patcher = HeaderPatcher(main_header, file)
             patcher.patch_header()
 
+    def run_clang_format(self, path: Path) -> None:
+        """
+        Runs clang-format on path (dir and file).
+        """
+
+        log.info(f"Format files in {path} (might take a while)")
+        if path.is_file():
+            log.debug(f"Format {path}")
+            subprocess.run(
+                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_ROOT}')}/.clang-format", str(path)], check=True
+            )
+            return
+
+        for file in path.iterdir():
+            log.debug(f"Format {file}")
+            subprocess.run(
+                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_ROOT}')}/.clang-format", str(file)], check=True
+            )
+
     def update(self) -> None:
         self.inc_generator.generate()
+        # Runtime for large files is huge
+        # self.run_clang_format(self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR))
         self.patch_main_header()
 
         # Move them
