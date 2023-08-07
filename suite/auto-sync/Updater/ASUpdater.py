@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import shutil
 import sys
 
 import logging as log
@@ -25,16 +26,33 @@ class ASUpdater:
     The auto-sync updater.
     """
 
-    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list) -> None:
+    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list, clean: bool) -> None:
         self.arch = arch
         self.write = write
+        self.clean_build = clean
         self.inc_list = inc_list
         self.inc_only = inc_only
         self.conf = self.get_config()
+        if self.clean_build:
+            self.clean_build_dir()
         self.check_paths()
         self.inc_generator = IncGenerator(
-            self.arch, self.inc_list, self.conf["llvm_capstone_path"], self.conf["build_dir_path"]
+            self.arch,
+            self.inc_list,
+            self.conf["llvm_capstone_path"],
+            self.conf["patches_dir_path"],
+            self.conf["build_dir_path"],
         )
+
+    def clean_build_dir(self) -> None:
+        log.info("Clean build directory")
+        path: Path
+        for path in self.conf["build_dir_path"].iterdir():
+            log.debug(f"Delete {path}")
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                shutil.remove(path)
 
     @staticmethod
     def get_config() -> dict:
@@ -59,7 +77,8 @@ class ASUpdater:
 
     def update(self) -> None:
         if self.inc_only:
-            self.inc_generator.gen_incs()
+            self.inc_generator.generate()
+
             # Move them
             exit(0)
         fail_exit("Full update procedure not yet implemented.")
@@ -75,6 +94,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64"], required=True
     )
+    parser.add_argument("-c", dest="clean", help="Clean build dir before updating.", action="store_true")
     parser.add_argument("-w", dest="write", help="Copy generated files to arch/<ARCH>/", action="store_true")
     parser.add_argument(
         "-v",
@@ -116,5 +136,5 @@ if __name__ == "__main__":
         format="%(levelname)-5s - %(message)s",
     )
 
-    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list)
+    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list, args.clean)
     Updater.update()

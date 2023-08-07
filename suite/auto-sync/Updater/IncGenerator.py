@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
 import os
+import re
+import shutil
 import subprocess
 
 import logging as log
 
-from Helper import fail_exit
+from Helper import fail_exit, get_path
 from pathlib import Path
 
 
@@ -63,10 +65,11 @@ inc_tables = [
 
 
 class IncGenerator:
-    def __init__(self, arch: str, inc_list: list, llvm_path: Path, output_dir: Path) -> None:
+    def __init__(self, arch: str, inc_list: list, llvm_path: Path, patches_dir_path: Path, output_dir: Path) -> None:
         self.arch: str = arch
         self.inc_list = inc_list  # Names of inc files to generate. Or all if all should be generated.
         self.arch_dir_name: str = "PowerPC" if self.arch == "PPC" else self.arch
+        self.patches_dir_path: Path = patches_dir_path
         self.llvm_root_path: Path = llvm_path
         self.llvm_include_dir: Path = self.llvm_root_path.joinpath(Path(f"llvm/include/"))
         self.output_dir: Path = output_dir
@@ -97,7 +100,18 @@ class IncGenerator:
 
     def generate(self) -> None:
         self.gen_incs()
-        self.patch_incs()
+        self.move_mapping_files()
+
+    def move_mapping_files(self) -> None:
+        """
+        Moves the <ARCH>GenCS files. They are written to CWD (I know, not nice).
+        We move them manually to the build dir, as long as llvm-capstone doesn't
+        allow to specify an output dir.
+        """
+        for file in Path.cwd().iterdir():
+            if re.search(rf"{self.arch}GenCS.*\.inc", file.name):
+                log.debug(f"Move {file} to {self.output_dir_c_inc}")
+                shutil.move(file, self.output_dir_c_inc)
 
     def gen_incs(self) -> None:
         for table in inc_tables:
@@ -140,9 +154,25 @@ class IncGenerator:
                         check=True,
                     )
                 except subprocess.CalledProcessError as e:
+                    log.fatal("Generation failed")
                     raise e
 
-    def patch_incs(self) -> None:
-        # Patch LLVM commit
-        # Apply patches
-        pass
+    def apply_patches(self) -> None:
+        """
+        Applies a all patches of inc files.
+        Files must be moved to their arch/<ARCH> directory before.
+        """
+        patch_dir = self.patches_dir_path.joinpath(self.arch)
+        if not patch_dir.exists():
+            return
+
+        for patch in patch_dir.iterdir():
+            try:
+                subprocess.run(
+                    ["git", "apply", str(patch)],
+                    check=True,
+                )
+            except subprocess.CalledProcessError as e:
+                log.warn(f"Patch {patch.name} did not apply correctly!")
+                log.warn(f"git apply returned: {e}")
+                return
