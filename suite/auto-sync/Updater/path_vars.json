@@ -6,7 +6,6 @@
 
   "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
   "{AUTO_SYNC_UPDATER_DIR}": "{AUTO_SYNC_ROOT}/Updater/",
-  "{UPDATER_CONFIG_FILE}": "{AUTO_SYNC_UPDATER_DIR}/updater_config.json",
 
   "{CPP_TRANSLATOR_DIR}": "{AUTO_SYNC_ROOT}/Updater/CppTranslator/",
   "{INC_PATCH_DIR}": "{AUTO_SYNC_ROOT}/inc_patches/",
