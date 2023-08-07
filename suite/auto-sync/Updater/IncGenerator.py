@@ -111,9 +111,17 @@ class IncGenerator:
         allow to specify an output dir.
         """
         for file in Path.cwd().iterdir():
-            if re.search(rf"{self.arch}GenCS.*\.inc", file.name):
+            if re.search(rf"{self.arch}Gen.*\.inc", file.name):
                 log.debug(f"Move {file} to {self.output_dir_c_inc}")
                 shutil.move(file, self.output_dir_c_inc)
+
+        if self.arch == "AArch64":
+            # We have to rename the file SystemRegister -> SystemOperands
+            sys_ops_table_file = self.output_dir_c_inc.joinpath("AArch64GenSystemRegister.inc")
+            new_sys_ops_file = self.output_dir_c_inc.joinpath("AArch64GenSystemOperands.inc")
+            if not sys_ops_table_file.exists():
+                fail_exit(f"{sys_ops_table_file} does not exist. But it should have been generated.")
+            shutil.move(sys_ops_table_file, new_sys_ops_file)
 
     def gen_incs(self) -> None:
         for table in inc_tables:
