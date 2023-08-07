@@ -112,7 +112,9 @@ class IncGenerator:
             # We have to rename the file SystemRegister -> SystemOperands
             sys_ops_table_file = self.output_dir_c_inc.joinpath("AArch64GenSystemRegister.inc")
             new_sys_ops_file = self.output_dir_c_inc.joinpath("AArch64GenSystemOperands.inc")
-            if not sys_ops_table_file.exists():
+            if "SystemOperand" not in self.inc_list:
+                return
+            elif not sys_ops_table_file.exists():
                 fail_exit(f"{sys_ops_table_file} does not exist. But it should have been generated.")
             shutil.move(sys_ops_table_file, new_sys_ops_file)
 
