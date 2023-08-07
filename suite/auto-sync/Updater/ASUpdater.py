@@ -19,7 +19,8 @@ CONFIG_DEFAULT_CONTENT = """{
     "vendor_path": "{AUTO_SYNC_ROOT}/vendor/",
     "build_dir_path": "{AUTO_SYNC_ROOT}/build/",
     "patches_dir_path": "{AUTO_SYNC_ROOT}/inc_patches/",
-    "cs_include_dir": "{CS_ROOT}/include/capstone/"
+    "cs_include_dir": "{CS_ROOT}/include/capstone/",
+    "cs_arch_module_dir": "{CS_ROOT}/arch/"
 }
 """
 
@@ -36,6 +37,7 @@ class ASUpdater:
         self.inc_list = inc_list
         self.inc_only = inc_only
         self.conf = self.get_config()
+        self.arch_dir = self.conf["cs_arch_module_dir"].joinpath(self.arch)
         if self.clean_build:
             self.clean_build_dir()
         self.check_paths()
@@ -77,13 +79,27 @@ class ASUpdater:
             fail_exit(f"Could not find {self.conf['build_dir_path'].name}")
         if not self.conf["vendor_path"].exists():
             fail_exit(f"Could not find {self.conf['vendor_path'].name}")
+        if not self.conf["patches_dir_path"].exists():
+            fail_exit(f"Could not find {self.conf['patches_dir_path'].name}")
+        if not self.conf["cs_include_dir"].exists():
+            fail_exit(f"Could not find {self.conf['cs_include_dir'].name}")
+        if not self.conf["cs_arch_module_dir"].exists():
+            fail_exit(f"Could not find {self.conf['cs_arch_module_dir'].name}")
 
-    def patch_main_header(self) -> None:
+    def patch_main_header(self) -> list:
+        """
+        Patches the main header of the arch with the .inc files.
+        It returns a list of files it has patched into the main header.
+        """
         main_header = self.conf["cs_include_dir"].joinpath(f"{self.arch.lower()}.h")
         # Just try every inc file
+        patched = []
         for file in self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR).iterdir():
             patcher = HeaderPatcher(main_header, file)
-            patcher.patch_header()
+            if patcher.patch_header():
+                # Save the path. This file should not be moved.
+                patched.append(file)
+        return patched
 
     def run_clang_format(self, path: Path) -> None:
         """
@@ -104,11 +120,34 @@ class ASUpdater:
                 ["clang-format-18", "-i", f"--style=file:{get_path('{CS_ROOT}')}/.clang-format", str(file)], check=True
             )
 
+    def copy_files(self, path: Path, dest: Path) -> None:
+        """
+        Copies files from path to dest.
+        If path is a directory it copies all files in it.
+        If it is a file, it only copies it.
+        """
+        if not dest.is_dir():
+            fail_exit(f"{dest} is not a directory.")
+
+        if path.is_file():
+            log.debug(f"Copy {path} to {dest}")
+            shutil.copy(path, dest)
+            return
+
+        for file in path.iterdir():
+            log.debug(f"Copy {path} to {dest}")
+            shutil.copy(path, dest)
+
     def update(self) -> None:
         self.inc_generator.generate()
         # Runtime for large files is huge
         # self.run_clang_format(self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR))
-        self.patch_main_header()
+        if self.write:
+            patched = self.patch_main_header()
+            for file in self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR).iterdir():
+                if file in patched:
+                    continue
+                self.copy_files(file, self.arch_dir)
 
         # Move them
         if self.inc_only:

@@ -28,7 +28,7 @@ class HeaderPatcher:
         self.header = header
         self.inc = inc
 
-    def patch_header(self) -> None:
+    def patch_header(self) -> bool:
         if not (self.header.exists() or self.header.is_file()):
             error_exit(f"self.Header file {self.header.name} does not exist.")
 
@@ -40,7 +40,7 @@ class HeaderPatcher:
 
         if self.inc.name not in header_content:
             log.debug(f"{self.inc.name} has no include comments in {self.header.name}")
-            return
+            return False
 
         with open(self.inc) as f:
             self.inc_content = f.read()
@@ -87,6 +87,7 @@ class HeaderPatcher:
         with open(self.header, "w") as f:
             f.write(header_content)
         log.info(f"Patched {self.inc.name} into {self.header.name}")
+        return True
 
 
 if __name__ == "__main__":
