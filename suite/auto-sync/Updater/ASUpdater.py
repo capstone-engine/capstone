@@ -21,13 +21,23 @@ class ASUpdater:
     The auto-sync updater.
     """
 
-    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list, no_clean: bool, refactor: bool) -> None:
+    def __init__(
+        self,
+        arch: str,
+        write: bool,
+        inc_only: bool,
+        inc_list: list,
+        no_clean: bool,
+        refactor: bool,
+        differ_no_auto_apply: bool,
+    ) -> None:
         self.arch = arch
         self.write = write
         self.no_clean_build = no_clean
         self.inc_list = inc_list
         self.inc_only = inc_only
         self.refactor = refactor
+        self.differ_no_auto_apply = differ_no_auto_apply
         self.arch_dir = get_path("{CS_ARCH_MODULE_DIR}").joinpath(self.arch)
         if not self.no_clean_build:
             self.clean_build_dir()
@@ -111,8 +121,14 @@ class ASUpdater:
         translator = Translator(configurator)
         translator.translate()
         translator.remark_manual_files()
-        # Differ
-        # Move them
+
+    def diff(self) -> None:
+        translator_config = get_path("{CPP_TRANSLATOR_DIR}/arch_config.json")
+        configurator = Configurator(self.arch, translator_config)
+        from CppTranslator.Differ import Differ
+
+        differ = Differ(configurator, self.differ_no_auto_apply)
+        differ.diff()
 
     def update(self) -> None:
         self.inc_generator.generate()
@@ -153,6 +169,12 @@ def parse_args() -> argparse.Namespace:
         choices=["debug", "info", "warning", "fatal"],
         default="info",
     )
+    parser.add_argument(
+        "-e",
+        dest="no_auto_apply",
+        help="Differ: Do not apply saved diff resolutions. Ask for every diff again.",
+        action="store_true",
+    )
     parser.add_argument("--inc-only", dest="inc_only", help="Only generate the inc files.", action="store_true")
     parser.add_argument(
         "--inc-list",
@@ -192,5 +214,7 @@ if __name__ == "__main__":
         format="%(levelname)-5s - %(message)s",
     )
 
-    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list, args.no_clean, args.refactor)
+    Updater = ASUpdater(
+        args.arch, args.write, args.inc_only, args.inc_list, args.no_clean, args.refactor, args.no_auto_apply
+    )
     Updater.update()
