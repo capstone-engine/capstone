@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 import argparse
-import json
 import shutil
 import subprocess
 import sys
 
 import logging as log
 
-# from CppTranslator import CppTranslator
+from CppTranslator.Configurator import Configurator
+from CppTranslator.CppTranslator import Translator
 from IncGenerator import IncGenerator
 from Helper import get_path, convert_loglevel, check_py_version, fail_exit
 from PatchMainHeader import HeaderPatcher
@@ -97,6 +97,22 @@ class ASUpdater:
             log.debug(f"Copy {path} to {dest}")
             shutil.copy(path, dest)
 
+    def check_tree_sitter(self) -> None:
+        ts_dir = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
+        if not ts_dir.exists():
+            log.info("tree-sitter was not fetched. Clonging it now...")
+            subprocess.run(["git", "submodule", "update", "--init", "--recursive"], check=True)
+
+    def translate(self) -> None:
+        self.check_tree_sitter()
+        translator_config = get_path("{CPP_TRANSLATOR_DIR}/arch_config.json")
+        configurator = Configurator(self.arch, translator_config)
+        translator = Translator(self.arch, configurator)
+        translator.translate()
+        translator.remark_manual_files()
+        # Differ
+        # Move them
+
     def update(self) -> None:
         self.inc_generator.generate()
         # Runtime for large files is huge
@@ -111,6 +127,8 @@ class ASUpdater:
         # Move them
         if self.inc_only:
             exit(0)
+        self.translate()
+        # Write files
         fail_exit("Full update procedure not yet implemented.")
         # Move them
 
