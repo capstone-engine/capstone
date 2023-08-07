@@ -7,8 +7,9 @@ import sys
 
 import logging as log
 
-from IncGenerator import IncGenerator
+from IncGenerator import IncGenerator, C_INC_OUT_DIR
 from Helper import get_path, convert_loglevel, check_py_version, fail_exit
+from PatchMainHeader import HeaderPatcher
 from pathlib import Path
 
 CONFIG_FILE_NAME = "config.json"
@@ -16,7 +17,8 @@ CONFIG_DEFAULT_CONTENT = """{
     "llvm_capstone_path": "{AUTO_SYNC_ROOT}/llvm-capstone/",
     "vendor_path": "{AUTO_SYNC_ROOT}/vendor/",
     "build_dir_path": "{AUTO_SYNC_ROOT}/build/",
-    "patches_dir_path": "{AUTO_SYNC_ROOT}/inc_patches/"
+    "patches_dir_path": "{AUTO_SYNC_ROOT}/inc_patches/",
+    "cs_include_dir": "{CS_ROOT}/include/capstone/"
 }
 """
 
@@ -75,14 +77,21 @@ class ASUpdater:
         if not self.conf["vendor_path"].exists():
             fail_exit(f"Could not find {self.conf['vendor_path'].name}")
 
-    def update(self) -> None:
-        if self.inc_only:
-            self.inc_generator.generate()
+    def patch_main_header(self) -> None:
+        main_header = self.conf["cs_include_dir"].joinpath(f"{self.arch.lower()}.h")
+        # Just try every inc file
+        for file in self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR).iterdir():
+            patcher = HeaderPatcher(main_header, file)
+            patcher.patch_header()
 
-            # Move them
+    def update(self) -> None:
+        self.inc_generator.generate()
+        self.patch_main_header()
+
+        # Move them
+        if self.inc_only:
             exit(0)
         fail_exit("Full update procedure not yet implemented.")
-        self.inc_generator.gen_incs()
         # Move them
 
 

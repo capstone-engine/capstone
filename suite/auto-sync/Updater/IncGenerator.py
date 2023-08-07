@@ -10,6 +10,8 @@ import logging as log
 from Helper import fail_exit, get_path
 from pathlib import Path
 
+C_INC_OUT_DIR = "llvm_c_inc"
+CPP_INC_OUT_DIR = "llvm_cpp_inc"
 
 inc_tables = [
     {
@@ -89,8 +91,8 @@ class IncGenerator:
         if not self.output_dir.exists():
             fail_exit(f"{self.output_dir} does not exist.")
 
-        self.output_dir_c_inc = self.output_dir.joinpath("llvm_c_inc")
-        self.output_dir_cpp_inc = self.output_dir.joinpath("llvm_cpp_inc")
+        self.output_dir_c_inc = self.output_dir.joinpath(C_INC_OUT_DIR)
+        self.output_dir_cpp_inc = self.output_dir.joinpath(CPP_INC_OUT_DIR)
         if not self.output_dir_c_inc.is_dir():
             log.info(f"{self.output_dir_c_inc} does not exist. Creating it...")
             os.makedirs(self.output_dir_c_inc)
