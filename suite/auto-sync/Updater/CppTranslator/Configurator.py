@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from Helper import get_path
+from Helper import get_path, fail_exit
 from tree_sitter import Language, Parser
 import logging as log
 
@@ -21,6 +21,7 @@ class Configurator:
     def __init__(self, arch: str, config_path: Path) -> None:
         self.arch = arch
         self.config_path = config_path
+        self.ts_shared_object = get_path("{VENDOR_DIR}").joinpath("ts_cpp.so")
         self.load_config()
         self.ts_compile_cpp()
         self.ts_set_cpp_language()
@@ -55,30 +56,25 @@ class Configurator:
 
     def load_config(self) -> None:
         if not Path.exists(self.config_path):
-            log.fatal(f"Could not load arch config file at '{self.config_path}'")
-            exit(1)
+            fail_exit(f"Could not load arch config file at '{self.config_path}'")
         with open(self.config_path) as f:
             conf = json.loads(f.read())
         if self.arch not in conf:
-            log.fatal(f"{self.arch} has no configuration. Please add them in {self.config_path}!")
-            exit(1)
+            fail_exit(f"{self.arch} has no configuration. Please add them in {self.config_path}!")
         self.config = conf
 
     def ts_compile_cpp(self) -> None:
         log.info("Compile Cpp language")
         ts_grammar_path = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
         if not Path.exists(ts_grammar_path):
-            log.fatal(f"Could not load the tree-sitter grammar at '{ts_grammar_path}'")
-            exit(1)
-        shared_object_path = str(get_path("{VENDOR_DIR}"))
-        Language.build_library(shared_object_path, [self.ts_grammar_path])
+            fail_exit(f"Could not load the tree-sitter grammar at '{ts_grammar_path}'")
+        Language.build_library(str(self.ts_shared_object), [ts_grammar_path])
 
     def ts_set_cpp_language(self) -> None:
-        log.info(f"Load language '{self.ts_so_path}'")
-        if not Path.exists(self.ts_so_path):
-            log.fatal(f"Could not load the tree-sitter language shared object at '{self.ts_so_path}'")
-            exit(1)
-        self.ts_cpp_lang = Language(self.ts_so_path, "cpp")
+        log.info(f"Load language '{self.ts_shared_object}'")
+        if not Path.exists(self.ts_shared_object):
+            fail_exit(f"Could not load the tree-sitter language shared object at '{self.ts_shared_object}'")
+        self.ts_cpp_lang = Language(self.ts_shared_object, "cpp")
 
     def init_parser(self) -> None:
         log.debug("Init parser")
