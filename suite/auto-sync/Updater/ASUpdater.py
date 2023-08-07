@@ -30,15 +30,15 @@ class ASUpdater:
     The auto-sync updater.
     """
 
-    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list, clean: bool) -> None:
+    def __init__(self, arch: str, write: bool, inc_only: bool, inc_list: list, no_clean: bool) -> None:
         self.arch = arch
         self.write = write
-        self.clean_build = clean
+        self.no_clean_build = no_clean
         self.inc_list = inc_list
         self.inc_only = inc_only
         self.conf = self.get_config()
         self.arch_dir = self.conf["cs_arch_module_dir"].joinpath(self.arch)
-        if self.clean_build:
+        if not self.no_clean_build:
             self.clean_build_dir()
         self.check_paths()
         self.inc_generator = IncGenerator(
@@ -164,7 +164,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64"], required=True
     )
-    parser.add_argument("-c", dest="clean", help="Clean build dir before updating.", action="store_true")
+    parser.add_argument("-d", dest="no_clean", help="Don't clean build dir before updating.", action="store_true")
     parser.add_argument("-w", dest="write", help="Copy generated files to arch/<ARCH>/", action="store_true")
     parser.add_argument(
         "-v",
@@ -206,5 +206,5 @@ if __name__ == "__main__":
         format="%(levelname)-5s - %(message)s",
     )
 
-    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list, args.clean)
+    Updater = ASUpdater(args.arch, args.write, args.inc_only, args.inc_list, args.no_clean)
     Updater.update()
