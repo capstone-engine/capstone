@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 import logging as log
+from enum import StrEnum
 
 from CppTranslator.Configurator import Configurator
 from CppTranslator.CppTranslator import Translator
@@ -14,6 +15,13 @@ from IncGenerator import IncGenerator
 from Helper import get_path, convert_loglevel, check_py_version, fail_exit
 from PatchMainHeader import HeaderPatcher
 from pathlib import Path
+
+
+class USteps(StrEnum):
+    INC_GEN = "IncGen"
+    TRANS = "Translate"
+    DIFF = "Diff"
+    ALL = "All"
 
 
 class ASUpdater:
@@ -25,7 +33,7 @@ class ASUpdater:
         self,
         arch: str,
         write: bool,
-        inc_only: bool,
+        steps: list[USteps],
         inc_list: list,
         no_clean: bool,
         refactor: bool,
@@ -35,7 +43,10 @@ class ASUpdater:
         self.write = write
         self.no_clean_build = no_clean
         self.inc_list = inc_list
-        self.inc_only = inc_only
+        if USteps.ALL in steps:
+            self.steps = [USteps.INC_GEN, USteps.TRANS, USteps.DIFF]
+        else:
+            self.steps = steps
         self.refactor = refactor
         self.differ_no_auto_apply = differ_no_auto_apply
         self.arch_dir = get_path("{CS_ARCH_MODULE_DIR}").joinpath(self.arch)
@@ -112,22 +123,20 @@ class ASUpdater:
         differ.diff()
 
     def update(self) -> None:
-        self.inc_generator.generate()
-        # Runtime for large files is huge
-        # Use helper clang-format
-        # self.run_clang_format(self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR))
-        if self.write:
+        if USteps.INC_GEN in self.steps:
+            self.inc_generator.generate()
+            # Runtime for large files is huge
+            # Use helper clang-format
+            # self.run_clang_format(self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR))
             patched = self.patch_main_header()
             for file in get_path("{C_INC_OUT_DIR}").iterdir():
                 if file in patched:
                     continue
                 self.copy_files(file, self.arch_dir)
-
-        # Move them
-        if self.inc_only:
-            exit(0)
-        self.translate()
-        self.diff()
+        if USteps.TRANS in self.steps:
+            self.translate()
+        if USteps.DIFF in self.steps:
+            self.diff()
         # Write files
         fail_exit("Full update procedure not yet implemented.")
 
@@ -157,7 +166,20 @@ def parse_args() -> argparse.Namespace:
         help="Differ: Do not apply saved diff resolutions. Ask for every diff again.",
         action="store_true",
     )
-    parser.add_argument("--inc-only", dest="inc_only", help="Only generate the inc files.", action="store_true")
+    parser.add_argument(
+        "-s",
+        dest="steps",
+        help="List of update steps to perform. If omitted, it performs all update steps.",
+        choices=[
+            "All",
+            "IncGen",
+            "Translate",
+            "Diff",
+        ],
+        nargs="+",
+        type=USteps,
+        default=["All"],
+    )
     parser.add_argument(
         "--inc-list",
         dest="inc_list",
@@ -197,6 +219,6 @@ if __name__ == "__main__":
     )
 
     Updater = ASUpdater(
-        args.arch, args.write, args.inc_only, args.inc_list, args.no_clean, args.refactor, args.no_auto_apply
+        args.arch, args.write, args.steps, args.inc_list, args.no_clean, args.refactor, args.no_auto_apply
     )
     Updater.update()
