@@ -633,7 +633,7 @@ if __name__ == "__main__":
         stream=sys.stdout,
         format="%(levelname)-5s - %(message)s",
     )
-    cfg = Configurator(args.arch, args.config_path, args.grammar, args.lang_so)
+    cfg = Configurator(args.arch, args.config_path)
 
     differ = Differ(cfg, args.no_auto_apply)
     try:

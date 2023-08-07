@@ -464,12 +464,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-c", dest="config_path", help="Config file for architectures.", default="arch_config.json", type=Path
     )
-    parser.add_argument(
-        "-g", dest="grammar", help="Path to the tree-sitter C++ grammar.", default="vendor/tree-sitter-cpp", type=Path
-    )
-    parser.add_argument(
-        "-l", dest="lang_so", help="File to store the compiled C++ language.", default="build/ts-cpp.so", type=Path
-    )
     arguments = parser.parse_args()
     return arguments
 
@@ -485,7 +479,7 @@ if __name__ == "__main__":
         stream=sys.stdout,
         format="%(levelname)-5s - %(message)s",
     )
-    configurator = Configurator(args.arch, args.config_path, args.grammar, args.lang_so)
+    configurator = Configurator(args.arch, args.config_path)
     translator = Translator(configurator)
     translator.translate()
     translator.remark_manual_files()

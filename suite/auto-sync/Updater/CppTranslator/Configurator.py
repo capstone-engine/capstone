@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+from Helper import get_path
 from tree_sitter import Language, Parser
 import logging as log
 
@@ -13,17 +14,13 @@ class Configurator:
 
     arch: str
     config_path: Path
-    ts_so_path: Path
-    ts_grammar_path: Path
     config: dict = None
     ts_cpp_lang: Language = None
     parser: Parser = None
 
-    def __init__(self, arch: str, config_path: Path, ts_grammar_path: Path, ts_so_path: Path) -> None:
+    def __init__(self, arch: str, config_path: Path) -> None:
         self.arch = arch
         self.config_path = config_path
-        self.ts_so_path = ts_so_path
-        self.ts_grammar_path = ts_grammar_path
         self.load_config()
         self.ts_compile_cpp()
         self.ts_set_cpp_language()
@@ -69,10 +66,12 @@ class Configurator:
 
     def ts_compile_cpp(self) -> None:
         log.info("Compile Cpp language")
-        if not Path.exists(self.ts_grammar_path):
-            log.fatal(f"Could not load the tree-sitter grammar at '{self.ts_grammar_path}'")
+        ts_grammar_path = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
+        if not Path.exists(ts_grammar_path):
+            log.fatal(f"Could not load the tree-sitter grammar at '{ts_grammar_path}'")
             exit(1)
-        Language.build_library(str(self.ts_so_path), [self.ts_grammar_path])
+        shared_object_path = str(get_path("{VENDOR_DIR}"))
+        Language.build_library(shared_object_path, [self.ts_grammar_path])
 
     def ts_set_cpp_language(self) -> None:
         log.info(f"Load language '{self.ts_so_path}'")
