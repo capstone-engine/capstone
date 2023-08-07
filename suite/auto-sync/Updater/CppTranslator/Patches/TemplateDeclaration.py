@@ -1,9 +1,9 @@
 import logging as log
 from tree_sitter import Node
 
-from Patches.HelperMethods import parse_function_capture
-from Patches.Patch import Patch
-from TemplateCollector import TemplateCollector, TemplateRefInstance
+from CppTranslator.Patches.HelperMethods import parse_function_capture
+from CppTranslator.Patches.Patch import Patch
+from CppTranslator.TemplateCollector import TemplateCollector, TemplateRefInstance
 
 
 class TemplateDeclaration(Patch):

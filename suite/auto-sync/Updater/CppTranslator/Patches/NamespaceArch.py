@@ -1,7 +1,7 @@
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text, namespace_enum, namespace_fcn_def, namespace_struct
-from Patches.Patch import Patch
+from CppTranslator.Patches.HelperMethods import get_text, namespace_enum, namespace_fcn_def, namespace_struct
+from CppTranslator.Patches.Patch import Patch
 
 
 class NamespaceArch(Patch):

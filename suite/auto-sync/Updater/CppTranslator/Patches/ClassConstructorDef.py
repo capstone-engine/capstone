@@ -1,5 +1,5 @@
 from tree_sitter import Node
-from Patches.Patch import Patch
+from CppTranslator.Patches.Patch import Patch
 
 
 class ClassConstructorDef(Patch):

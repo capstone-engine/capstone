@@ -1,7 +1,7 @@
 from tree_sitter import Node
-from Patches.HelperMethods import get_text
-from Patches.Patch import Patch
-from TemplateCollector import TemplateCollector
+from CppTranslator.Patches.HelperMethods import get_text
+from CppTranslator.Patches.Patch import Patch
+from CppTranslator.TemplateCollector import TemplateCollector
 
 
 class SignExtend(Patch):

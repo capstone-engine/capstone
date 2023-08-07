@@ -5,7 +5,7 @@ from tree_sitter import Language, Parser
 import logging as log
 
 from tree_sitter.binding import Query, Node
-from Patches.HelperMethods import get_text
+from CppTranslator.Patches.HelperMethods import get_text
 
 
 class TemplateRefInstance:

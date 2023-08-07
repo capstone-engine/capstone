@@ -3,8 +3,8 @@ import re
 
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text, get_MCInst_var_name, template_param_list_to_dict
-from Patches.Patch import Patch
+from CppTranslator.Patches.HelperMethods import get_text, get_MCInst_var_name, template_param_list_to_dict
+from CppTranslator.Patches.Patch import Patch
 
 
 class AddCSDetail(Patch):

@@ -193,7 +193,7 @@ def parse_function_capture(
             case _:
                 raise NotImplementedError(f"Node type {node.type} not handled.")
 
-    from TemplateCollector import TemplateCollector
+    from CppTranslator.TemplateCollector import TemplateCollector
 
     return TemplateCollector.templ_params_to_list(temp_args), st_class_ids, ret_type, func_name, func_params, comp_stmt
 

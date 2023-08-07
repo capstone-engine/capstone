@@ -1,6 +1,6 @@
 from tree_sitter import Node
-from Patches.HelperMethods import get_text, get_MCInst_var_name
-from Patches.Patch import Patch
+from CppTranslator.Patches.HelperMethods import get_text, get_MCInst_var_name
+from CppTranslator.Patches.Patch import Patch
 
 
 class FeatureBits(Patch):

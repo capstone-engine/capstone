@@ -2,8 +2,8 @@ import logging as log
 
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text
-from Patches.Patch import Patch
+from CppTranslator.Patches.HelperMethods import get_text
+from CppTranslator.Patches.Patch import Patch
 
 
 class TemplateParamDecl(Patch):

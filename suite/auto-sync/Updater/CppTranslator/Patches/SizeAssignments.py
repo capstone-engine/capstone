@@ -2,8 +2,8 @@ import re
 
 from tree_sitter import Node
 
-from Patches.HelperMethods import get_text, get_function_params_of_node
-from Patches.Patch import Patch
+from CppTranslator.Patches.HelperMethods import get_text, get_function_params_of_node
+from CppTranslator.Patches.Patch import Patch
 
 
 class SizeAssignment(Patch):
