@@ -71,25 +71,6 @@ class ASUpdater:
                 patched.append(file)
         return patched
 
-    def run_clang_format(self, path: Path) -> None:
-        """
-        Runs clang-format on path (dir and file).
-        """
-
-        log.info(f"Format files in {path} (might take a while)")
-        if path.is_file():
-            log.debug(f"Format {path}")
-            subprocess.run(
-                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_CLANG_FORMAT_FILE}')}", str(path)], check=True
-            )
-            return
-
-        for file in path.iterdir():
-            log.debug(f"Format {file}")
-            subprocess.run(
-                ["clang-format-18", "-i", f"--style=file:{get_path('{CS_CLANG_FORMAT_FILE}')}", str(file)], check=True
-            )
-
     def copy_files(self, path: Path, dest: Path) -> None:
         """
         Copies files from path to dest.
@@ -133,6 +114,7 @@ class ASUpdater:
     def update(self) -> None:
         self.inc_generator.generate()
         # Runtime for large files is huge
+        # Use helper clang-format
         # self.run_clang_format(self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR))
         if self.write:
             patched = self.patch_main_header()
