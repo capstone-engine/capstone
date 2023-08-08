@@ -237,7 +237,7 @@ bool PPC_getFeatureBits(unsigned int mode, unsigned int feature) {
   }
 
 	// No AIX support for now.
-	if (feature == PPC_FeatureModernAIXAs)
+	if (feature == PPC_FeatureModernAIXAs || feature == PPC_AIXOS)
 		return false;
 	// TODO Make it optional
 	if (feature == PPC_FeatureMSYNC)
