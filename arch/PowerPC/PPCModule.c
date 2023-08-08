@@ -35,7 +35,7 @@ cs_err PPC_option(cs_struct *handle, cs_opt_type type, size_t value)
 		handle->syntax = (int) value;
 
 	if (type == CS_OPT_MODE) {
-		handle->mode = (cs_mode)value;
+		handle->mode |= (cs_mode)value;
 	}
 
 	return CS_ERR_OK;
