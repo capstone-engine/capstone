@@ -11808,18 +11808,18 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
     {PPC_XVCPSGNSP, 484, 1 },
     {PPC_XXPERMDI, 485, 5 },
     {PPC_XXPERMDIs, 490, 3 },
-    {PPC_gBC, 493, 10 },
-    {PPC_gBCA, 503, 10 },
-    {PPC_gBCAat, 513, 8 },
-    {PPC_gBCCTR, 521, 18 },
-    {PPC_gBCCTRL, 539, 18 },
-    {PPC_gBCL, 557, 10 },
-    {PPC_gBCLA, 567, 10 },
-    {PPC_gBCLAat, 577, 8 },
-    {PPC_gBCLR, 585, 48 },
-    {PPC_gBCLRL, 633, 48 },
-    {PPC_gBCLat, 681, 8 },
-    {PPC_gBCat, 689, 8 },
+    {PPC_gBC, 493, 11 },
+    {PPC_gBCA, 504, 11 },
+    {PPC_gBCAat, 515, 8 },
+    {PPC_gBCCTR, 523, 21 },
+    {PPC_gBCCTRL, 544, 21 },
+    {PPC_gBCL, 565, 11 },
+    {PPC_gBCLA, 576, 11 },
+    {PPC_gBCLAat, 587, 8 },
+    {PPC_gBCLR, 595, 51 },
+    {PPC_gBCLRL, 646, 51 },
+    {PPC_gBCLat, 697, 8 },
+    {PPC_gBCat, 705, 8 },
   {0},  };
 
   static const AliasPattern Patterns[] = {
@@ -12437,211 +12437,227 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
     {5080, 1608, 3, 2 },
     {5095, 1610, 3, 2 },
     {5109, 1612, 3, 2 },
-    // PPC_gBCA - 503
     {5123, 1614, 3, 2 },
-    {5136, 1616, 3, 2 },
-    {5149, 1618, 3, 2 },
-    {5163, 1620, 3, 2 },
-    {5177, 1622, 3, 2 },
-    {5191, 1624, 3, 2 },
-    {5205, 1626, 3, 2 },
-    {5221, 1628, 3, 2 },
-    {5237, 1630, 3, 2 },
-    {5252, 1632, 3, 2 },
-    // PPC_gBCAat - 513
-    {5267, 1634, 4, 3 },
-    {5287, 1637, 4, 3 },
-    {5307, 1640, 4, 3 },
-    {5316, 1643, 4, 3 },
-    {5326, 1646, 4, 3 },
-    {5336, 1649, 4, 3 },
-    {5347, 1652, 4, 3 },
-    {5357, 1655, 4, 3 },
-    // PPC_gBCCTR - 521
-    {5368, 1658, 3, 3 },
-    {5368, 1661, 3, 3 },
-    {5368, 1664, 3, 3 },
-    {5377, 1667, 3, 3 },
-    {5377, 1670, 3, 3 },
-    {5377, 1673, 3, 3 },
-    {5386, 1676, 3, 3 },
-    {5386, 1679, 3, 3 },
-    {5386, 1682, 3, 3 },
-    {5396, 1685, 3, 3 },
-    {5396, 1688, 3, 3 },
-    {5396, 1691, 3, 3 },
-    {5406, 1694, 3, 3 },
-    {5406, 1697, 3, 3 },
-    {5406, 1700, 3, 3 },
-    {5416, 1703, 3, 3 },
-    {5416, 1706, 3, 3 },
-    {5416, 1709, 3, 3 },
-    // PPC_gBCCTRL - 539
-    {5426, 1712, 3, 3 },
-    {5426, 1715, 3, 3 },
-    {5426, 1718, 3, 3 },
-    {5436, 1721, 3, 3 },
-    {5436, 1724, 3, 3 },
-    {5436, 1727, 3, 3 },
-    {5446, 1730, 3, 3 },
-    {5446, 1733, 3, 3 },
-    {5446, 1736, 3, 3 },
-    {5457, 1739, 3, 3 },
-    {5457, 1742, 3, 3 },
-    {5457, 1745, 3, 3 },
-    {5468, 1748, 3, 3 },
-    {5468, 1751, 3, 3 },
-    {5468, 1754, 3, 3 },
-    {5479, 1757, 3, 3 },
-    {5479, 1760, 3, 3 },
-    {5479, 1763, 3, 3 },
-    // PPC_gBCL - 557
-    {5490, 1766, 3, 2 },
-    {5503, 1768, 3, 2 },
-    {5516, 1770, 3, 2 },
-    {5530, 1772, 3, 2 },
-    {5544, 1774, 3, 2 },
-    {5558, 1776, 3, 2 },
-    {5572, 1778, 3, 2 },
-    {5588, 1780, 3, 2 },
-    {5604, 1782, 3, 2 },
-    {5619, 1784, 3, 2 },
-    // PPC_gBCLA - 567
-    {5634, 1786, 3, 2 },
-    {5648, 1788, 3, 2 },
-    {5662, 1790, 3, 2 },
-    {5677, 1792, 3, 2 },
-    {5692, 1794, 3, 2 },
-    {5707, 1796, 3, 2 },
-    {5722, 1798, 3, 2 },
-    {5739, 1800, 3, 2 },
-    {5756, 1802, 3, 2 },
-    {5772, 1804, 3, 2 },
-    // PPC_gBCLAat - 577
-    {5788, 1806, 4, 3 },
-    {5809, 1809, 4, 3 },
-    {5830, 1812, 4, 3 },
-    {5841, 1815, 4, 3 },
-    {5853, 1818, 4, 3 },
-    {5865, 1821, 4, 3 },
-    {5878, 1824, 4, 3 },
-    {5890, 1827, 4, 3 },
-    // PPC_gBCLR - 585
-    {5903, 1830, 3, 3 },
-    {5903, 1833, 3, 3 },
-    {5903, 1836, 3, 3 },
-    {5909, 1839, 3, 3 },
-    {5909, 1842, 3, 3 },
-    {5909, 1845, 3, 3 },
-    {5916, 1848, 3, 3 },
-    {5916, 1851, 3, 3 },
-    {5916, 1854, 3, 3 },
-    {5923, 1857, 3, 3 },
-    {5923, 1860, 3, 3 },
-    {5923, 1863, 3, 3 },
-    {5931, 1866, 3, 3 },
-    {5931, 1869, 3, 3 },
-    {5931, 1872, 3, 3 },
-    {5938, 1875, 3, 3 },
-    {5938, 1878, 3, 3 },
-    {5938, 1881, 3, 3 },
-    {5946, 1884, 3, 3 },
-    {5946, 1887, 3, 3 },
-    {5946, 1890, 3, 3 },
-    {5954, 1893, 3, 3 },
-    {5954, 1896, 3, 3 },
-    {5954, 1899, 3, 3 },
-    {5962, 1902, 3, 3 },
-    {5962, 1905, 3, 3 },
-    {5962, 1908, 3, 3 },
-    {5971, 1911, 3, 3 },
-    {5971, 1914, 3, 3 },
-    {5971, 1917, 3, 3 },
-    {5980, 1920, 3, 3 },
-    {5980, 1923, 3, 3 },
-    {5980, 1926, 3, 3 },
-    {5989, 1929, 3, 3 },
-    {5989, 1932, 3, 3 },
-    {5989, 1935, 3, 3 },
-    {5998, 1938, 3, 3 },
-    {5998, 1941, 3, 3 },
-    {5998, 1944, 3, 3 },
-    {6009, 1947, 3, 3 },
-    {6009, 1950, 3, 3 },
-    {6009, 1953, 3, 3 },
-    {6020, 1956, 3, 3 },
-    {6020, 1959, 3, 3 },
-    {6020, 1962, 3, 3 },
-    {6030, 1965, 3, 3 },
-    {6030, 1968, 3, 3 },
-    {6030, 1971, 3, 3 },
-    // PPC_gBCLRL - 633
-    {6040, 1974, 3, 3 },
-    {6040, 1977, 3, 3 },
-    {6040, 1980, 3, 3 },
-    {6047, 1983, 3, 3 },
-    {6047, 1986, 3, 3 },
-    {6047, 1989, 3, 3 },
-    {6055, 1992, 3, 3 },
-    {6055, 1995, 3, 3 },
-    {6055, 1998, 3, 3 },
-    {6063, 2001, 3, 3 },
-    {6063, 2004, 3, 3 },
-    {6063, 2007, 3, 3 },
-    {6072, 2010, 3, 3 },
-    {6072, 2013, 3, 3 },
-    {6072, 2016, 3, 3 },
-    {6080, 2019, 3, 3 },
-    {6080, 2022, 3, 3 },
-    {6080, 2025, 3, 3 },
-    {6089, 2028, 3, 3 },
-    {6089, 2031, 3, 3 },
-    {6089, 2034, 3, 3 },
-    {6098, 2037, 3, 3 },
-    {6098, 2040, 3, 3 },
-    {6098, 2043, 3, 3 },
-    {6107, 2046, 3, 3 },
-    {6107, 2049, 3, 3 },
-    {6107, 2052, 3, 3 },
-    {6117, 2055, 3, 3 },
-    {6117, 2058, 3, 3 },
-    {6117, 2061, 3, 3 },
-    {6127, 2064, 3, 3 },
-    {6127, 2067, 3, 3 },
-    {6127, 2070, 3, 3 },
-    {6137, 2073, 3, 3 },
-    {6137, 2076, 3, 3 },
-    {6137, 2079, 3, 3 },
-    {6147, 2082, 3, 3 },
-    {6147, 2085, 3, 3 },
-    {6147, 2088, 3, 3 },
-    {6159, 2091, 3, 3 },
-    {6159, 2094, 3, 3 },
-    {6159, 2097, 3, 3 },
-    {6171, 2100, 3, 3 },
-    {6171, 2103, 3, 3 },
-    {6171, 2106, 3, 3 },
-    {6182, 2109, 3, 3 },
-    {6182, 2112, 3, 3 },
-    {6182, 2115, 3, 3 },
-    // PPC_gBCLat - 681
-    {6193, 2118, 4, 3 },
-    {6213, 2121, 4, 3 },
-    {6233, 2124, 4, 3 },
-    {6243, 2127, 4, 3 },
-    {6254, 2130, 4, 3 },
-    {6265, 2133, 4, 3 },
-    {6277, 2136, 4, 3 },
-    {6288, 2139, 4, 3 },
-    // PPC_gBCat - 689
-    {6300, 2142, 4, 3 },
-    {6319, 2145, 4, 3 },
-    {6338, 2148, 4, 3 },
-    {6347, 2151, 4, 3 },
-    {6357, 2154, 4, 3 },
-    {6367, 2157, 4, 3 },
-    {6378, 2160, 4, 3 },
-    {6388, 2163, 4, 3 },
+    // PPC_gBCA - 504
+    {5130, 1616, 3, 2 },
+    {5143, 1618, 3, 2 },
+    {5156, 1620, 3, 2 },
+    {5170, 1622, 3, 2 },
+    {5184, 1624, 3, 2 },
+    {5198, 1626, 3, 2 },
+    {5212, 1628, 3, 2 },
+    {5228, 1630, 3, 2 },
+    {5244, 1632, 3, 2 },
+    {5259, 1634, 3, 2 },
+    {5274, 1636, 3, 2 },
+    // PPC_gBCAat - 515
+    {5282, 1638, 4, 3 },
+    {5302, 1641, 4, 3 },
+    {5322, 1644, 4, 3 },
+    {5331, 1647, 4, 3 },
+    {5341, 1650, 4, 3 },
+    {5351, 1653, 4, 3 },
+    {5362, 1656, 4, 3 },
+    {5372, 1659, 4, 3 },
+    // PPC_gBCCTR - 523
+    {5383, 1662, 3, 3 },
+    {5383, 1665, 3, 3 },
+    {5383, 1668, 3, 3 },
+    {5392, 1671, 3, 3 },
+    {5392, 1674, 3, 3 },
+    {5392, 1677, 3, 3 },
+    {5401, 1680, 3, 3 },
+    {5401, 1683, 3, 3 },
+    {5401, 1686, 3, 3 },
+    {5411, 1689, 3, 3 },
+    {5411, 1692, 3, 3 },
+    {5411, 1695, 3, 3 },
+    {5421, 1698, 3, 3 },
+    {5421, 1701, 3, 3 },
+    {5421, 1704, 3, 3 },
+    {5431, 1707, 3, 3 },
+    {5431, 1710, 3, 3 },
+    {5431, 1713, 3, 3 },
+    {5441, 1716, 3, 3 },
+    {5441, 1719, 3, 3 },
+    {5441, 1722, 3, 3 },
+    // PPC_gBCCTRL - 544
+    {5446, 1725, 3, 3 },
+    {5446, 1728, 3, 3 },
+    {5446, 1731, 3, 3 },
+    {5456, 1734, 3, 3 },
+    {5456, 1737, 3, 3 },
+    {5456, 1740, 3, 3 },
+    {5466, 1743, 3, 3 },
+    {5466, 1746, 3, 3 },
+    {5466, 1749, 3, 3 },
+    {5477, 1752, 3, 3 },
+    {5477, 1755, 3, 3 },
+    {5477, 1758, 3, 3 },
+    {5488, 1761, 3, 3 },
+    {5488, 1764, 3, 3 },
+    {5488, 1767, 3, 3 },
+    {5499, 1770, 3, 3 },
+    {5499, 1773, 3, 3 },
+    {5499, 1776, 3, 3 },
+    {5510, 1779, 3, 3 },
+    {5510, 1782, 3, 3 },
+    {5510, 1785, 3, 3 },
+    // PPC_gBCL - 565
+    {5516, 1788, 3, 2 },
+    {5529, 1790, 3, 2 },
+    {5542, 1792, 3, 2 },
+    {5556, 1794, 3, 2 },
+    {5570, 1796, 3, 2 },
+    {5584, 1798, 3, 2 },
+    {5598, 1800, 3, 2 },
+    {5614, 1802, 3, 2 },
+    {5630, 1804, 3, 2 },
+    {5645, 1806, 3, 2 },
+    {5660, 1808, 3, 2 },
+    // PPC_gBCLA - 576
+    {5668, 1810, 3, 2 },
+    {5682, 1812, 3, 2 },
+    {5696, 1814, 3, 2 },
+    {5711, 1816, 3, 2 },
+    {5726, 1818, 3, 2 },
+    {5741, 1820, 3, 2 },
+    {5756, 1822, 3, 2 },
+    {5773, 1824, 3, 2 },
+    {5790, 1826, 3, 2 },
+    {5806, 1828, 3, 2 },
+    {5822, 1830, 3, 2 },
+    // PPC_gBCLAat - 587
+    {5831, 1832, 4, 3 },
+    {5852, 1835, 4, 3 },
+    {5873, 1838, 4, 3 },
+    {5884, 1841, 4, 3 },
+    {5896, 1844, 4, 3 },
+    {5908, 1847, 4, 3 },
+    {5921, 1850, 4, 3 },
+    {5933, 1853, 4, 3 },
+    // PPC_gBCLR - 595
+    {5946, 1856, 3, 3 },
+    {5946, 1859, 3, 3 },
+    {5946, 1862, 3, 3 },
+    {5952, 1865, 3, 3 },
+    {5952, 1868, 3, 3 },
+    {5952, 1871, 3, 3 },
+    {5959, 1874, 3, 3 },
+    {5959, 1877, 3, 3 },
+    {5959, 1880, 3, 3 },
+    {5966, 1883, 3, 3 },
+    {5966, 1886, 3, 3 },
+    {5966, 1889, 3, 3 },
+    {5974, 1892, 3, 3 },
+    {5974, 1895, 3, 3 },
+    {5974, 1898, 3, 3 },
+    {5981, 1901, 3, 3 },
+    {5981, 1904, 3, 3 },
+    {5981, 1907, 3, 3 },
+    {5989, 1910, 3, 3 },
+    {5989, 1913, 3, 3 },
+    {5989, 1916, 3, 3 },
+    {5997, 1919, 3, 3 },
+    {5997, 1922, 3, 3 },
+    {5997, 1925, 3, 3 },
+    {6005, 1928, 3, 3 },
+    {6005, 1931, 3, 3 },
+    {6005, 1934, 3, 3 },
+    {6014, 1937, 3, 3 },
+    {6014, 1940, 3, 3 },
+    {6014, 1943, 3, 3 },
+    {6023, 1946, 3, 3 },
+    {6023, 1949, 3, 3 },
+    {6023, 1952, 3, 3 },
+    {6032, 1955, 3, 3 },
+    {6032, 1958, 3, 3 },
+    {6032, 1961, 3, 3 },
+    {6041, 1964, 3, 3 },
+    {6041, 1967, 3, 3 },
+    {6041, 1970, 3, 3 },
+    {6052, 1973, 3, 3 },
+    {6052, 1976, 3, 3 },
+    {6052, 1979, 3, 3 },
+    {6063, 1982, 3, 3 },
+    {6063, 1985, 3, 3 },
+    {6063, 1988, 3, 3 },
+    {6073, 1991, 3, 3 },
+    {6073, 1994, 3, 3 },
+    {6073, 1997, 3, 3 },
+    {6083, 2000, 3, 3 },
+    {6083, 2003, 3, 3 },
+    {6083, 2006, 3, 3 },
+    // PPC_gBCLRL - 646
+    {6087, 2009, 3, 3 },
+    {6087, 2012, 3, 3 },
+    {6087, 2015, 3, 3 },
+    {6094, 2018, 3, 3 },
+    {6094, 2021, 3, 3 },
+    {6094, 2024, 3, 3 },
+    {6102, 2027, 3, 3 },
+    {6102, 2030, 3, 3 },
+    {6102, 2033, 3, 3 },
+    {6110, 2036, 3, 3 },
+    {6110, 2039, 3, 3 },
+    {6110, 2042, 3, 3 },
+    {6119, 2045, 3, 3 },
+    {6119, 2048, 3, 3 },
+    {6119, 2051, 3, 3 },
+    {6127, 2054, 3, 3 },
+    {6127, 2057, 3, 3 },
+    {6127, 2060, 3, 3 },
+    {6136, 2063, 3, 3 },
+    {6136, 2066, 3, 3 },
+    {6136, 2069, 3, 3 },
+    {6145, 2072, 3, 3 },
+    {6145, 2075, 3, 3 },
+    {6145, 2078, 3, 3 },
+    {6154, 2081, 3, 3 },
+    {6154, 2084, 3, 3 },
+    {6154, 2087, 3, 3 },
+    {6164, 2090, 3, 3 },
+    {6164, 2093, 3, 3 },
+    {6164, 2096, 3, 3 },
+    {6174, 2099, 3, 3 },
+    {6174, 2102, 3, 3 },
+    {6174, 2105, 3, 3 },
+    {6184, 2108, 3, 3 },
+    {6184, 2111, 3, 3 },
+    {6184, 2114, 3, 3 },
+    {6194, 2117, 3, 3 },
+    {6194, 2120, 3, 3 },
+    {6194, 2123, 3, 3 },
+    {6206, 2126, 3, 3 },
+    {6206, 2129, 3, 3 },
+    {6206, 2132, 3, 3 },
+    {6218, 2135, 3, 3 },
+    {6218, 2138, 3, 3 },
+    {6218, 2141, 3, 3 },
+    {6229, 2144, 3, 3 },
+    {6229, 2147, 3, 3 },
+    {6229, 2150, 3, 3 },
+    {6240, 2153, 3, 3 },
+    {6240, 2156, 3, 3 },
+    {6240, 2159, 3, 3 },
+    // PPC_gBCLat - 697
+    {6245, 2162, 4, 3 },
+    {6265, 2165, 4, 3 },
+    {6285, 2168, 4, 3 },
+    {6295, 2171, 4, 3 },
+    {6306, 2174, 4, 3 },
+    {6317, 2177, 4, 3 },
+    {6329, 2180, 4, 3 },
+    {6340, 2183, 4, 3 },
+    // PPC_gBCat - 705
+    {6352, 2186, 4, 3 },
+    {6371, 2189, 4, 3 },
+    {6390, 2192, 4, 3 },
+    {6399, 2195, 4, 3 },
+    {6409, 2198, 4, 3 },
+    {6419, 2201, 4, 3 },
+    {6430, 2204, 4, 3 },
+    {6440, 2207, 4, 3 },
   {0},  };
 
   static const AliasPatternCond Conds[] = {
@@ -14762,751 +14778,811 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
     // (gBC 2, crbitrc:$bi, condbrtarget:$dst) - 1612
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 12, crbitrc:$bi, abscondbrtarget:$dst) - 1614
+    // (gBC 20, CR0LT, condbrtarget:$dst) - 1614
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCA 12, crbitrc:$bi, abscondbrtarget:$dst) - 1616
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 4, crbitrc:$bi, abscondbrtarget:$dst) - 1616
+    // (gBCA 4, crbitrc:$bi, abscondbrtarget:$dst) - 1618
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 14, crbitrc:$bi, abscondbrtarget:$dst) - 1618
+    // (gBCA 14, crbitrc:$bi, abscondbrtarget:$dst) - 1620
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 6, crbitrc:$bi, abscondbrtarget:$dst) - 1620
+    // (gBCA 6, crbitrc:$bi, abscondbrtarget:$dst) - 1622
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 15, crbitrc:$bi, abscondbrtarget:$dst) - 1622
+    // (gBCA 15, crbitrc:$bi, abscondbrtarget:$dst) - 1624
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 7, crbitrc:$bi, abscondbrtarget:$dst) - 1624
+    // (gBCA 7, crbitrc:$bi, abscondbrtarget:$dst) - 1626
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 8, crbitrc:$bi, abscondbrtarget:$dst) - 1626
+    // (gBCA 8, crbitrc:$bi, abscondbrtarget:$dst) - 1628
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 0, crbitrc:$bi, abscondbrtarget:$dst) - 1628
+    // (gBCA 0, crbitrc:$bi, abscondbrtarget:$dst) - 1630
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 10, crbitrc:$bi, abscondbrtarget:$dst) - 1630
+    // (gBCA 10, crbitrc:$bi, abscondbrtarget:$dst) - 1632
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCA 2, crbitrc:$bi, abscondbrtarget:$dst) - 1632
+    // (gBCA 2, crbitrc:$bi, abscondbrtarget:$dst) - 1634
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCAat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 1634
+    // (gBCA 20, CR0LT, abscondbrtarget:$dst) - 1636
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCAat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 1638
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCAat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 1637
+    // (gBCAat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 1641
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCAat 0, 18, CR0LT, abscondbrtarget:$dst) - 1640
-    {AliasPatternCond_K_Imm, (uint32_t)0},
+    // (gBCAat 18, 0, CR0LT, abscondbrtarget:$dst) - 1644
     {AliasPatternCond_K_Imm, (uint32_t)18},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCAat 0, 16, CR0LT, abscondbrtarget:$dst) - 1643
     {AliasPatternCond_K_Imm, (uint32_t)0},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCAat 16, 0, CR0LT, abscondbrtarget:$dst) - 1647
     {AliasPatternCond_K_Imm, (uint32_t)16},
+    {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCAat 3, 27, CR0LT, abscondbrtarget:$dst) - 1646
-    {AliasPatternCond_K_Imm, (uint32_t)3},
+    // (gBCAat 27, 3, CR0LT, abscondbrtarget:$dst) - 1650
     {AliasPatternCond_K_Imm, (uint32_t)27},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCAat 3, 25, CR0LT, abscondbrtarget:$dst) - 1649
     {AliasPatternCond_K_Imm, (uint32_t)3},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCAat 25, 3, CR0LT, abscondbrtarget:$dst) - 1653
     {AliasPatternCond_K_Imm, (uint32_t)25},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCAat 2, 26, CR0LT, abscondbrtarget:$dst) - 1652
-    {AliasPatternCond_K_Imm, (uint32_t)2},
+    // (gBCAat 26, 2, CR0LT, abscondbrtarget:$dst) - 1656
     {AliasPatternCond_K_Imm, (uint32_t)26},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCAat 2, 24, CR0LT, abscondbrtarget:$dst) - 1655
     {AliasPatternCond_K_Imm, (uint32_t)2},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCAat 24, 2, CR0LT, abscondbrtarget:$dst) - 1659
     {AliasPatternCond_K_Imm, (uint32_t)24},
+    {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCCTR 12, crbitrc:$bi, 0) - 1658
+    // (gBCCTR 12, crbitrc:$bi, 0) - 1662
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTR 12, crbitrc:$bi, 1) - 1661
+    // (gBCCTR 12, crbitrc:$bi, 1) - 1665
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTR 12, crbitrc:$bi, 3) - 1664
+    // (gBCCTR 12, crbitrc:$bi, 3) - 1668
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTR 4, crbitrc:$bi, 0) - 1667
+    // (gBCCTR 4, crbitrc:$bi, 0) - 1671
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTR 4, crbitrc:$bi, 1) - 1670
+    // (gBCCTR 4, crbitrc:$bi, 1) - 1674
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTR 4, crbitrc:$bi, 3) - 1673
+    // (gBCCTR 4, crbitrc:$bi, 3) - 1677
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTR 14, crbitrc:$bi, 0) - 1676
+    // (gBCCTR 14, crbitrc:$bi, 0) - 1680
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTR 14, crbitrc:$bi, 1) - 1679
+    // (gBCCTR 14, crbitrc:$bi, 1) - 1683
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTR 14, crbitrc:$bi, 3) - 1682
+    // (gBCCTR 14, crbitrc:$bi, 3) - 1686
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTR 6, crbitrc:$bi, 0) - 1685
+    // (gBCCTR 6, crbitrc:$bi, 0) - 1689
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTR 6, crbitrc:$bi, 1) - 1688
+    // (gBCCTR 6, crbitrc:$bi, 1) - 1692
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTR 6, crbitrc:$bi, 3) - 1691
+    // (gBCCTR 6, crbitrc:$bi, 3) - 1695
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTR 15, crbitrc:$bi, 0) - 1694
+    // (gBCCTR 15, crbitrc:$bi, 0) - 1698
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTR 15, crbitrc:$bi, 1) - 1697
+    // (gBCCTR 15, crbitrc:$bi, 1) - 1701
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTR 15, crbitrc:$bi, 3) - 1700
+    // (gBCCTR 15, crbitrc:$bi, 3) - 1704
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTR 7, crbitrc:$bi, 0) - 1703
+    // (gBCCTR 7, crbitrc:$bi, 0) - 1707
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTR 7, crbitrc:$bi, 1) - 1706
+    // (gBCCTR 7, crbitrc:$bi, 1) - 1710
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTR 7, crbitrc:$bi, 3) - 1709
+    // (gBCCTR 7, crbitrc:$bi, 3) - 1713
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTRL 12, crbitrc:$bi, 0) - 1712
+    // (gBCCTR 20, CR0LT, 0) - 1716
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)0},
+    // (gBCCTR 20, CR0LT, 1) - 1719
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)1},
+    // (gBCCTR 20, CR0LT, 3) - 1722
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    // (gBCCTRL 12, crbitrc:$bi, 0) - 1725
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTRL 12, crbitrc:$bi, 1) - 1715
+    // (gBCCTRL 12, crbitrc:$bi, 1) - 1728
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTRL 12, crbitrc:$bi, 3) - 1718
+    // (gBCCTRL 12, crbitrc:$bi, 3) - 1731
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTRL 4, crbitrc:$bi, 0) - 1721
+    // (gBCCTRL 4, crbitrc:$bi, 0) - 1734
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTRL 4, crbitrc:$bi, 1) - 1724
+    // (gBCCTRL 4, crbitrc:$bi, 1) - 1737
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTRL 4, crbitrc:$bi, 3) - 1727
+    // (gBCCTRL 4, crbitrc:$bi, 3) - 1740
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTRL 14, crbitrc:$bi, 0) - 1730
+    // (gBCCTRL 14, crbitrc:$bi, 0) - 1743
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTRL 14, crbitrc:$bi, 1) - 1733
+    // (gBCCTRL 14, crbitrc:$bi, 1) - 1746
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTRL 14, crbitrc:$bi, 3) - 1736
+    // (gBCCTRL 14, crbitrc:$bi, 3) - 1749
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTRL 6, crbitrc:$bi, 0) - 1739
+    // (gBCCTRL 6, crbitrc:$bi, 0) - 1752
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTRL 6, crbitrc:$bi, 1) - 1742
+    // (gBCCTRL 6, crbitrc:$bi, 1) - 1755
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTRL 6, crbitrc:$bi, 3) - 1745
+    // (gBCCTRL 6, crbitrc:$bi, 3) - 1758
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTRL 15, crbitrc:$bi, 0) - 1748
+    // (gBCCTRL 15, crbitrc:$bi, 0) - 1761
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTRL 15, crbitrc:$bi, 1) - 1751
+    // (gBCCTRL 15, crbitrc:$bi, 1) - 1764
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTRL 15, crbitrc:$bi, 3) - 1754
+    // (gBCCTRL 15, crbitrc:$bi, 3) - 1767
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCCTRL 7, crbitrc:$bi, 0) - 1757
+    // (gBCCTRL 7, crbitrc:$bi, 0) - 1770
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCCTRL 7, crbitrc:$bi, 1) - 1760
+    // (gBCCTRL 7, crbitrc:$bi, 1) - 1773
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCCTRL 7, crbitrc:$bi, 3) - 1763
+    // (gBCCTRL 7, crbitrc:$bi, 3) - 1776
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCL 12, crbitrc:$bi, condbrtarget:$dst) - 1766
+    // (gBCCTRL 20, CR0LT, 0) - 1779
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)0},
+    // (gBCCTRL 20, CR0LT, 1) - 1782
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)1},
+    // (gBCCTRL 20, CR0LT, 3) - 1785
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    // (gBCL 12, crbitrc:$bi, condbrtarget:$dst) - 1788
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 4, crbitrc:$bi, condbrtarget:$dst) - 1768
+    // (gBCL 4, crbitrc:$bi, condbrtarget:$dst) - 1790
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 14, crbitrc:$bi, condbrtarget:$dst) - 1770
+    // (gBCL 14, crbitrc:$bi, condbrtarget:$dst) - 1792
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 6, crbitrc:$bi, condbrtarget:$dst) - 1772
+    // (gBCL 6, crbitrc:$bi, condbrtarget:$dst) - 1794
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 15, crbitrc:$bi, condbrtarget:$dst) - 1774
+    // (gBCL 15, crbitrc:$bi, condbrtarget:$dst) - 1796
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 7, crbitrc:$bi, condbrtarget:$dst) - 1776
+    // (gBCL 7, crbitrc:$bi, condbrtarget:$dst) - 1798
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 8, crbitrc:$bi, condbrtarget:$dst) - 1778
+    // (gBCL 8, crbitrc:$bi, condbrtarget:$dst) - 1800
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 0, crbitrc:$bi, condbrtarget:$dst) - 1780
+    // (gBCL 0, crbitrc:$bi, condbrtarget:$dst) - 1802
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 10, crbitrc:$bi, condbrtarget:$dst) - 1782
+    // (gBCL 10, crbitrc:$bi, condbrtarget:$dst) - 1804
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCL 2, crbitrc:$bi, condbrtarget:$dst) - 1784
+    // (gBCL 2, crbitrc:$bi, condbrtarget:$dst) - 1806
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 12, crbitrc:$bi, abscondbrtarget:$dst) - 1786
+    // (gBCL 20, CR0LT, condbrtarget:$dst) - 1808
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLA 12, crbitrc:$bi, abscondbrtarget:$dst) - 1810
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 4, crbitrc:$bi, abscondbrtarget:$dst) - 1788
+    // (gBCLA 4, crbitrc:$bi, abscondbrtarget:$dst) - 1812
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 14, crbitrc:$bi, abscondbrtarget:$dst) - 1790
+    // (gBCLA 14, crbitrc:$bi, abscondbrtarget:$dst) - 1814
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 6, crbitrc:$bi, abscondbrtarget:$dst) - 1792
+    // (gBCLA 6, crbitrc:$bi, abscondbrtarget:$dst) - 1816
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 15, crbitrc:$bi, abscondbrtarget:$dst) - 1794
+    // (gBCLA 15, crbitrc:$bi, abscondbrtarget:$dst) - 1818
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 7, crbitrc:$bi, abscondbrtarget:$dst) - 1796
+    // (gBCLA 7, crbitrc:$bi, abscondbrtarget:$dst) - 1820
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 8, crbitrc:$bi, abscondbrtarget:$dst) - 1798
+    // (gBCLA 8, crbitrc:$bi, abscondbrtarget:$dst) - 1822
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 0, crbitrc:$bi, abscondbrtarget:$dst) - 1800
+    // (gBCLA 0, crbitrc:$bi, abscondbrtarget:$dst) - 1824
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 10, crbitrc:$bi, abscondbrtarget:$dst) - 1802
+    // (gBCLA 10, crbitrc:$bi, abscondbrtarget:$dst) - 1826
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLA 2, crbitrc:$bi, abscondbrtarget:$dst) - 1804
+    // (gBCLA 2, crbitrc:$bi, abscondbrtarget:$dst) - 1828
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLAat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 1806
+    // (gBCLA 20, CR0LT, abscondbrtarget:$dst) - 1830
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLAat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 1832
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLAat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 1809
+    // (gBCLAat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 1835
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLAat 0, 18, CR0LT, abscondbrtarget:$dst) - 1812
-    {AliasPatternCond_K_Imm, (uint32_t)0},
+    // (gBCLAat 18, 0, CR0LT, abscondbrtarget:$dst) - 1838
     {AliasPatternCond_K_Imm, (uint32_t)18},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLAat 0, 16, CR0LT, abscondbrtarget:$dst) - 1815
     {AliasPatternCond_K_Imm, (uint32_t)0},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLAat 16, 0, CR0LT, abscondbrtarget:$dst) - 1841
     {AliasPatternCond_K_Imm, (uint32_t)16},
+    {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLAat 3, 27, CR0LT, abscondbrtarget:$dst) - 1818
-    {AliasPatternCond_K_Imm, (uint32_t)3},
+    // (gBCLAat 27, 3, CR0LT, abscondbrtarget:$dst) - 1844
     {AliasPatternCond_K_Imm, (uint32_t)27},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLAat 3, 25, CR0LT, abscondbrtarget:$dst) - 1821
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    {AliasPatternCond_K_Imm, (uint32_t)25},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLAat 2, 26, CR0LT, abscondbrtarget:$dst) - 1824
+    // (gBCLAat 25, 3, CR0LT, abscondbrtarget:$dst) - 1847
+    {AliasPatternCond_K_Imm, (uint32_t)25},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLAat 26, 2, CR0LT, abscondbrtarget:$dst) - 1850
+    {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Imm, (uint32_t)2},
-    {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLAat 2, 24, CR0LT, abscondbrtarget:$dst) - 1827
+    // (gBCLAat 24, 2, CR0LT, abscondbrtarget:$dst) - 1853
+    {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Imm, (uint32_t)2},
-    {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLR 18, CR0LT, 0) - 1830
+    // (gBCLR 18, CR0LT, 0) - 1856
     {AliasPatternCond_K_Imm, (uint32_t)18},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 18, CR0LT, 1) - 1833
+    // (gBCLR 18, CR0LT, 1) - 1859
     {AliasPatternCond_K_Imm, (uint32_t)18},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 18, CR0LT, 3) - 1836
+    // (gBCLR 18, CR0LT, 3) - 1862
     {AliasPatternCond_K_Imm, (uint32_t)18},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 16, CR0LT, 0) - 1839
+    // (gBCLR 16, CR0LT, 0) - 1865
     {AliasPatternCond_K_Imm, (uint32_t)16},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 16, CR0LT, 1) - 1842
+    // (gBCLR 16, CR0LT, 1) - 1868
     {AliasPatternCond_K_Imm, (uint32_t)16},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 16, CR0LT, 3) - 1845
+    // (gBCLR 16, CR0LT, 3) - 1871
     {AliasPatternCond_K_Imm, (uint32_t)16},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 27, CR0LT, 0) - 1848
+    // (gBCLR 27, CR0LT, 0) - 1874
     {AliasPatternCond_K_Imm, (uint32_t)27},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 27, CR0LT, 1) - 1851
+    // (gBCLR 27, CR0LT, 1) - 1877
     {AliasPatternCond_K_Imm, (uint32_t)27},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 27, CR0LT, 3) - 1854
+    // (gBCLR 27, CR0LT, 3) - 1880
     {AliasPatternCond_K_Imm, (uint32_t)27},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 25, CR0LT, 0) - 1857
+    // (gBCLR 25, CR0LT, 0) - 1883
     {AliasPatternCond_K_Imm, (uint32_t)25},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 25, CR0LT, 1) - 1860
+    // (gBCLR 25, CR0LT, 1) - 1886
     {AliasPatternCond_K_Imm, (uint32_t)25},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 25, CR0LT, 3) - 1863
+    // (gBCLR 25, CR0LT, 3) - 1889
     {AliasPatternCond_K_Imm, (uint32_t)25},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 26, CR0LT, 0) - 1866
+    // (gBCLR 26, CR0LT, 0) - 1892
     {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 26, CR0LT, 1) - 1869
+    // (gBCLR 26, CR0LT, 1) - 1895
     {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 26, CR0LT, 3) - 1872
+    // (gBCLR 26, CR0LT, 3) - 1898
     {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 24, CR0LT, 0) - 1875
+    // (gBCLR 24, CR0LT, 0) - 1901
     {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 24, CR0LT, 1) - 1878
+    // (gBCLR 24, CR0LT, 1) - 1904
     {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 24, CR0LT, 3) - 1881
+    // (gBCLR 24, CR0LT, 3) - 1907
     {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 12, crbitrc:$bi, 0) - 1884
+    // (gBCLR 12, crbitrc:$bi, 0) - 1910
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 12, crbitrc:$bi, 1) - 1887
+    // (gBCLR 12, crbitrc:$bi, 1) - 1913
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 12, crbitrc:$bi, 3) - 1890
+    // (gBCLR 12, crbitrc:$bi, 3) - 1916
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 4, crbitrc:$bi, 0) - 1893
+    // (gBCLR 4, crbitrc:$bi, 0) - 1919
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 4, crbitrc:$bi, 1) - 1896
+    // (gBCLR 4, crbitrc:$bi, 1) - 1922
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 4, crbitrc:$bi, 3) - 1899
+    // (gBCLR 4, crbitrc:$bi, 3) - 1925
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 14, crbitrc:$bi, 0) - 1902
+    // (gBCLR 14, crbitrc:$bi, 0) - 1928
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 14, crbitrc:$bi, 1) - 1905
+    // (gBCLR 14, crbitrc:$bi, 1) - 1931
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 14, crbitrc:$bi, 3) - 1908
+    // (gBCLR 14, crbitrc:$bi, 3) - 1934
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 6, crbitrc:$bi, 0) - 1911
+    // (gBCLR 6, crbitrc:$bi, 0) - 1937
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 6, crbitrc:$bi, 1) - 1914
+    // (gBCLR 6, crbitrc:$bi, 1) - 1940
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 6, crbitrc:$bi, 3) - 1917
+    // (gBCLR 6, crbitrc:$bi, 3) - 1943
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 15, crbitrc:$bi, 0) - 1920
+    // (gBCLR 15, crbitrc:$bi, 0) - 1946
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 15, crbitrc:$bi, 1) - 1923
+    // (gBCLR 15, crbitrc:$bi, 1) - 1949
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 15, crbitrc:$bi, 3) - 1926
+    // (gBCLR 15, crbitrc:$bi, 3) - 1952
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 7, crbitrc:$bi, 0) - 1929
+    // (gBCLR 7, crbitrc:$bi, 0) - 1955
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 7, crbitrc:$bi, 1) - 1932
+    // (gBCLR 7, crbitrc:$bi, 1) - 1958
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 7, crbitrc:$bi, 3) - 1935
+    // (gBCLR 7, crbitrc:$bi, 3) - 1961
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 8, crbitrc:$bi, 0) - 1938
+    // (gBCLR 8, crbitrc:$bi, 0) - 1964
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 8, crbitrc:$bi, 1) - 1941
+    // (gBCLR 8, crbitrc:$bi, 1) - 1967
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 8, crbitrc:$bi, 3) - 1944
+    // (gBCLR 8, crbitrc:$bi, 3) - 1970
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 0, crbitrc:$bi, 0) - 1947
+    // (gBCLR 0, crbitrc:$bi, 0) - 1973
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 0, crbitrc:$bi, 1) - 1950
+    // (gBCLR 0, crbitrc:$bi, 1) - 1976
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 0, crbitrc:$bi, 3) - 1953
+    // (gBCLR 0, crbitrc:$bi, 3) - 1979
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 10, crbitrc:$bi, 0) - 1956
+    // (gBCLR 10, crbitrc:$bi, 0) - 1982
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 10, crbitrc:$bi, 1) - 1959
+    // (gBCLR 10, crbitrc:$bi, 1) - 1985
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 10, crbitrc:$bi, 3) - 1962
+    // (gBCLR 10, crbitrc:$bi, 3) - 1988
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLR 2, crbitrc:$bi, 0) - 1965
+    // (gBCLR 2, crbitrc:$bi, 0) - 1991
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLR 2, crbitrc:$bi, 1) - 1968
+    // (gBCLR 2, crbitrc:$bi, 1) - 1994
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLR 2, crbitrc:$bi, 3) - 1971
+    // (gBCLR 2, crbitrc:$bi, 3) - 1997
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 18, CR0LT, 0) - 1974
+    // (gBCLR 20, CR0LT, 0) - 2000
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)0},
+    // (gBCLR 20, CR0LT, 1) - 2003
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)1},
+    // (gBCLR 20, CR0LT, 3) - 2006
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    // (gBCLRL 18, CR0LT, 0) - 2009
     {AliasPatternCond_K_Imm, (uint32_t)18},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 18, CR0LT, 1) - 1977
+    // (gBCLRL 18, CR0LT, 1) - 2012
     {AliasPatternCond_K_Imm, (uint32_t)18},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 18, CR0LT, 3) - 1980
+    // (gBCLRL 18, CR0LT, 3) - 2015
     {AliasPatternCond_K_Imm, (uint32_t)18},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 16, CR0LT, 0) - 1983
+    // (gBCLRL 16, CR0LT, 0) - 2018
     {AliasPatternCond_K_Imm, (uint32_t)16},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 16, CR0LT, 1) - 1986
+    // (gBCLRL 16, CR0LT, 1) - 2021
     {AliasPatternCond_K_Imm, (uint32_t)16},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 16, CR0LT, 3) - 1989
+    // (gBCLRL 16, CR0LT, 3) - 2024
     {AliasPatternCond_K_Imm, (uint32_t)16},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 27, CR0LT, 0) - 1992
+    // (gBCLRL 27, CR0LT, 0) - 2027
     {AliasPatternCond_K_Imm, (uint32_t)27},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 27, CR0LT, 1) - 1995
+    // (gBCLRL 27, CR0LT, 1) - 2030
     {AliasPatternCond_K_Imm, (uint32_t)27},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 27, CR0LT, 3) - 1998
+    // (gBCLRL 27, CR0LT, 3) - 2033
     {AliasPatternCond_K_Imm, (uint32_t)27},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 25, CR0LT, 0) - 2001
+    // (gBCLRL 25, CR0LT, 0) - 2036
     {AliasPatternCond_K_Imm, (uint32_t)25},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 25, CR0LT, 1) - 2004
+    // (gBCLRL 25, CR0LT, 1) - 2039
     {AliasPatternCond_K_Imm, (uint32_t)25},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 25, CR0LT, 3) - 2007
+    // (gBCLRL 25, CR0LT, 3) - 2042
     {AliasPatternCond_K_Imm, (uint32_t)25},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 26, CR0LT, 0) - 2010
+    // (gBCLRL 26, CR0LT, 0) - 2045
     {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 26, CR0LT, 1) - 2013
+    // (gBCLRL 26, CR0LT, 1) - 2048
     {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 26, CR0LT, 3) - 2016
+    // (gBCLRL 26, CR0LT, 3) - 2051
     {AliasPatternCond_K_Imm, (uint32_t)26},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 24, CR0LT, 0) - 2019
+    // (gBCLRL 24, CR0LT, 0) - 2054
     {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 24, CR0LT, 1) - 2022
+    // (gBCLRL 24, CR0LT, 1) - 2057
     {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 24, CR0LT, 3) - 2025
+    // (gBCLRL 24, CR0LT, 3) - 2060
     {AliasPatternCond_K_Imm, (uint32_t)24},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 12, crbitrc:$bi, 0) - 2028
+    // (gBCLRL 12, crbitrc:$bi, 0) - 2063
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 12, crbitrc:$bi, 1) - 2031
+    // (gBCLRL 12, crbitrc:$bi, 1) - 2066
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 12, crbitrc:$bi, 3) - 2034
+    // (gBCLRL 12, crbitrc:$bi, 3) - 2069
     {AliasPatternCond_K_Imm, (uint32_t)12},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 4, crbitrc:$bi, 0) - 2037
+    // (gBCLRL 4, crbitrc:$bi, 0) - 2072
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 4, crbitrc:$bi, 1) - 2040
+    // (gBCLRL 4, crbitrc:$bi, 1) - 2075
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 4, crbitrc:$bi, 3) - 2043
+    // (gBCLRL 4, crbitrc:$bi, 3) - 2078
     {AliasPatternCond_K_Imm, (uint32_t)4},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 14, crbitrc:$bi, 0) - 2046
+    // (gBCLRL 14, crbitrc:$bi, 0) - 2081
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 14, crbitrc:$bi, 1) - 2049
+    // (gBCLRL 14, crbitrc:$bi, 1) - 2084
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 14, crbitrc:$bi, 3) - 2052
+    // (gBCLRL 14, crbitrc:$bi, 3) - 2087
     {AliasPatternCond_K_Imm, (uint32_t)14},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 6, crbitrc:$bi, 0) - 2055
+    // (gBCLRL 6, crbitrc:$bi, 0) - 2090
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 6, crbitrc:$bi, 1) - 2058
+    // (gBCLRL 6, crbitrc:$bi, 1) - 2093
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 6, crbitrc:$bi, 3) - 2061
+    // (gBCLRL 6, crbitrc:$bi, 3) - 2096
     {AliasPatternCond_K_Imm, (uint32_t)6},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 15, crbitrc:$bi, 0) - 2064
+    // (gBCLRL 15, crbitrc:$bi, 0) - 2099
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 15, crbitrc:$bi, 1) - 2067
+    // (gBCLRL 15, crbitrc:$bi, 1) - 2102
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 15, crbitrc:$bi, 3) - 2070
+    // (gBCLRL 15, crbitrc:$bi, 3) - 2105
     {AliasPatternCond_K_Imm, (uint32_t)15},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 7, crbitrc:$bi, 0) - 2073
+    // (gBCLRL 7, crbitrc:$bi, 0) - 2108
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 7, crbitrc:$bi, 1) - 2076
+    // (gBCLRL 7, crbitrc:$bi, 1) - 2111
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 7, crbitrc:$bi, 3) - 2079
+    // (gBCLRL 7, crbitrc:$bi, 3) - 2114
     {AliasPatternCond_K_Imm, (uint32_t)7},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 8, crbitrc:$bi, 0) - 2082
+    // (gBCLRL 8, crbitrc:$bi, 0) - 2117
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 8, crbitrc:$bi, 1) - 2085
+    // (gBCLRL 8, crbitrc:$bi, 1) - 2120
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 8, crbitrc:$bi, 3) - 2088
+    // (gBCLRL 8, crbitrc:$bi, 3) - 2123
     {AliasPatternCond_K_Imm, (uint32_t)8},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 0, crbitrc:$bi, 0) - 2091
+    // (gBCLRL 0, crbitrc:$bi, 0) - 2126
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 0, crbitrc:$bi, 1) - 2094
+    // (gBCLRL 0, crbitrc:$bi, 1) - 2129
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 0, crbitrc:$bi, 3) - 2097
+    // (gBCLRL 0, crbitrc:$bi, 3) - 2132
     {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 10, crbitrc:$bi, 0) - 2100
+    // (gBCLRL 10, crbitrc:$bi, 0) - 2135
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 10, crbitrc:$bi, 1) - 2103
+    // (gBCLRL 10, crbitrc:$bi, 1) - 2138
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 10, crbitrc:$bi, 3) - 2106
+    // (gBCLRL 10, crbitrc:$bi, 3) - 2141
     {AliasPatternCond_K_Imm, (uint32_t)10},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLRL 2, crbitrc:$bi, 0) - 2109
+    // (gBCLRL 2, crbitrc:$bi, 0) - 2144
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)0},
-    // (gBCLRL 2, crbitrc:$bi, 1) - 2112
+    // (gBCLRL 2, crbitrc:$bi, 1) - 2147
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)1},
-    // (gBCLRL 2, crbitrc:$bi, 3) - 2115
+    // (gBCLRL 2, crbitrc:$bi, 3) - 2150
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
     {AliasPatternCond_K_Imm, (uint32_t)3},
-    // (gBCLat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 2118
+    // (gBCLRL 20, CR0LT, 0) - 2153
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)0},
+    // (gBCLRL 20, CR0LT, 1) - 2156
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)1},
+    // (gBCLRL 20, CR0LT, 3) - 2159
+    {AliasPatternCond_K_Imm, (uint32_t)20},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    // (gBCLat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 2162
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 2121
+    // (gBCLat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 2165
     {AliasPatternCond_K_Ignore, 0},
     {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCLat 0, 18, CR0LT, condbrtarget:$dst) - 2124
-    {AliasPatternCond_K_Imm, (uint32_t)0},
+    // (gBCLat 18, 0, CR0LT, condbrtarget:$dst) - 2168
     {AliasPatternCond_K_Imm, (uint32_t)18},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLat 0, 16, CR0LT, condbrtarget:$dst) - 2127
     {AliasPatternCond_K_Imm, (uint32_t)0},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLat 16, 0, CR0LT, condbrtarget:$dst) - 2171
     {AliasPatternCond_K_Imm, (uint32_t)16},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLat 3, 27, CR0LT, condbrtarget:$dst) - 2130
-    {AliasPatternCond_K_Imm, (uint32_t)3},
-    {AliasPatternCond_K_Imm, (uint32_t)27},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLat 3, 25, CR0LT, condbrtarget:$dst) - 2133
-    {AliasPatternCond_K_Imm, (uint32_t)3},
-    {AliasPatternCond_K_Imm, (uint32_t)25},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLat 2, 26, CR0LT, condbrtarget:$dst) - 2136
-    {AliasPatternCond_K_Imm, (uint32_t)2},
-    {AliasPatternCond_K_Imm, (uint32_t)26},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCLat 2, 24, CR0LT, condbrtarget:$dst) - 2139
-    {AliasPatternCond_K_Imm, (uint32_t)2},
-    {AliasPatternCond_K_Imm, (uint32_t)24},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 2142
-    {AliasPatternCond_K_Ignore, 0},
-    {AliasPatternCond_K_Imm, (uint32_t)3},
-    {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 2145
-    {AliasPatternCond_K_Ignore, 0},
-    {AliasPatternCond_K_Imm, (uint32_t)2},
-    {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
-    // (gBCat 0, 18, CR0LT, condbrtarget:$dst) - 2148
     {AliasPatternCond_K_Imm, (uint32_t)0},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLat 27, 3, CR0LT, condbrtarget:$dst) - 2174
+    {AliasPatternCond_K_Imm, (uint32_t)27},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLat 25, 3, CR0LT, condbrtarget:$dst) - 2177
+    {AliasPatternCond_K_Imm, (uint32_t)25},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLat 26, 2, CR0LT, condbrtarget:$dst) - 2180
+    {AliasPatternCond_K_Imm, (uint32_t)26},
+    {AliasPatternCond_K_Imm, (uint32_t)2},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCLat 24, 2, CR0LT, condbrtarget:$dst) - 2183
+    {AliasPatternCond_K_Imm, (uint32_t)24},
+    {AliasPatternCond_K_Imm, (uint32_t)2},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCat u5imm:$bo, 3, crbitrc:$bi, condbrtarget:$dst) - 2186
+    {AliasPatternCond_K_Ignore, 0},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
+    {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
+    // (gBCat u5imm:$bo, 2, crbitrc:$bi, condbrtarget:$dst) - 2189
+    {AliasPatternCond_K_Ignore, 0},
+    {AliasPatternCond_K_Imm, (uint32_t)2},
+    {AliasPatternCond_K_RegClass, PPC_CRBITRCRegClassID},
+    // (gBCat 18, 0, CR0LT, condbrtarget:$dst) - 2192
     {AliasPatternCond_K_Imm, (uint32_t)18},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCat 0, 16, CR0LT, condbrtarget:$dst) - 2151
     {AliasPatternCond_K_Imm, (uint32_t)0},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCat 16, 0, CR0LT, condbrtarget:$dst) - 2195
     {AliasPatternCond_K_Imm, (uint32_t)16},
+    {AliasPatternCond_K_Imm, (uint32_t)0},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCat 3, 27, CR0LT, condbrtarget:$dst) - 2154
-    {AliasPatternCond_K_Imm, (uint32_t)3},
+    // (gBCat 27, 3, CR0LT, condbrtarget:$dst) - 2198
     {AliasPatternCond_K_Imm, (uint32_t)27},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCat 3, 25, CR0LT, condbrtarget:$dst) - 2157
     {AliasPatternCond_K_Imm, (uint32_t)3},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCat 25, 3, CR0LT, condbrtarget:$dst) - 2201
     {AliasPatternCond_K_Imm, (uint32_t)25},
+    {AliasPatternCond_K_Imm, (uint32_t)3},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCat 2, 26, CR0LT, condbrtarget:$dst) - 2160
-    {AliasPatternCond_K_Imm, (uint32_t)2},
+    // (gBCat 26, 2, CR0LT, condbrtarget:$dst) - 2204
     {AliasPatternCond_K_Imm, (uint32_t)26},
-    {AliasPatternCond_K_Reg, PPC_CR0LT},
-    // (gBCat 2, 24, CR0LT, condbrtarget:$dst) - 2163
     {AliasPatternCond_K_Imm, (uint32_t)2},
+    {AliasPatternCond_K_Reg, PPC_CR0LT},
+    // (gBCat 24, 2, CR0LT, condbrtarget:$dst) - 2207
     {AliasPatternCond_K_Imm, (uint32_t)24},
+    {AliasPatternCond_K_Imm, (uint32_t)2},
     {AliasPatternCond_K_Reg, PPC_CR0LT},
   {0},  };
 
@@ -15947,112 +16023,120 @@ static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
     /* 5080 */ "bdnzf $\x02, $\xFF\x03\x02\0"
     /* 5095 */ "bdzt $\x02, $\xFF\x03\x02\0"
     /* 5109 */ "bdzf $\x02, $\xFF\x03\x02\0"
-    /* 5123 */ "bta $\x02, $\xFF\x03\x03\0"
-    /* 5136 */ "bfa $\x02, $\xFF\x03\x03\0"
-    /* 5149 */ "bta- $\x02, $\xFF\x03\x03\0"
-    /* 5163 */ "bfa- $\x02, $\xFF\x03\x03\0"
-    /* 5177 */ "bta+ $\x02, $\xFF\x03\x03\0"
-    /* 5191 */ "bfa+ $\x02, $\xFF\x03\x03\0"
-    /* 5205 */ "bdnzta $\x02, $\xFF\x03\x03\0"
-    /* 5221 */ "bdnzfa $\x02, $\xFF\x03\x03\0"
-    /* 5237 */ "bdzta $\x02, $\xFF\x03\x03\0"
-    /* 5252 */ "bdzfa $\x02, $\xFF\x03\x03\0"
-    /* 5267 */ "bca+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 5287 */ "bca- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 5307 */ "bdz $\xFF\x04\x03\0"
-    /* 5316 */ "bdnz $\xFF\x04\x03\0"
-    /* 5326 */ "bdz+ $\xFF\x04\x03\0"
-    /* 5336 */ "bdnz+ $\xFF\x04\x03\0"
-    /* 5347 */ "bdz- $\xFF\x04\x03\0"
-    /* 5357 */ "bdnz- $\xFF\x04\x03\0"
-    /* 5368 */ "btctr $\x02\0"
-    /* 5377 */ "bfctr $\x02\0"
-    /* 5386 */ "btctr- $\x02\0"
-    /* 5396 */ "bfctr- $\x02\0"
-    /* 5406 */ "btctr+ $\x02\0"
-    /* 5416 */ "bfctr+ $\x02\0"
-    /* 5426 */ "btctrl $\x02\0"
-    /* 5436 */ "bfctrl $\x02\0"
-    /* 5446 */ "btctrl- $\x02\0"
-    /* 5457 */ "bfctrl- $\x02\0"
-    /* 5468 */ "btctrl+ $\x02\0"
-    /* 5479 */ "bfctrl+ $\x02\0"
-    /* 5490 */ "btl $\x02, $\xFF\x03\x02\0"
-    /* 5503 */ "bfl $\x02, $\xFF\x03\x02\0"
-    /* 5516 */ "btl- $\x02, $\xFF\x03\x02\0"
-    /* 5530 */ "bfl- $\x02, $\xFF\x03\x02\0"
-    /* 5544 */ "btl+ $\x02, $\xFF\x03\x02\0"
-    /* 5558 */ "bfl+ $\x02, $\xFF\x03\x02\0"
-    /* 5572 */ "bdnztl $\x02, $\xFF\x03\x02\0"
-    /* 5588 */ "bdnzfl $\x02, $\xFF\x03\x02\0"
-    /* 5604 */ "bdztl $\x02, $\xFF\x03\x02\0"
-    /* 5619 */ "bdzfl $\x02, $\xFF\x03\x02\0"
-    /* 5634 */ "btla $\x02, $\xFF\x03\x03\0"
-    /* 5648 */ "bfla $\x02, $\xFF\x03\x03\0"
-    /* 5662 */ "btla- $\x02, $\xFF\x03\x03\0"
-    /* 5677 */ "bfla- $\x02, $\xFF\x03\x03\0"
-    /* 5692 */ "btla+ $\x02, $\xFF\x03\x03\0"
-    /* 5707 */ "bfla+ $\x02, $\xFF\x03\x03\0"
-    /* 5722 */ "bdnztla $\x02, $\xFF\x03\x03\0"
-    /* 5739 */ "bdnzfla $\x02, $\xFF\x03\x03\0"
-    /* 5756 */ "bdztla $\x02, $\xFF\x03\x03\0"
-    /* 5772 */ "bdzfla $\x02, $\xFF\x03\x03\0"
-    /* 5788 */ "bcla+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 5809 */ "bcla- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 5830 */ "bdzla $\xFF\x04\x03\0"
-    /* 5841 */ "bdnzla $\xFF\x04\x03\0"
-    /* 5853 */ "bdzla+ $\xFF\x04\x03\0"
-    /* 5865 */ "bdnzla+ $\xFF\x04\x03\0"
-    /* 5878 */ "bdzla- $\xFF\x04\x03\0"
-    /* 5890 */ "bdnzla- $\xFF\x04\x03\0"
-    /* 5903 */ "bdzlr\0"
-    /* 5909 */ "bdnzlr\0"
-    /* 5916 */ "bdzlr+\0"
-    /* 5923 */ "bdnzlr+\0"
-    /* 5931 */ "bdzlr-\0"
-    /* 5938 */ "bdnzlr-\0"
-    /* 5946 */ "btlr $\x02\0"
-    /* 5954 */ "bflr $\x02\0"
-    /* 5962 */ "btlr- $\x02\0"
-    /* 5971 */ "bflr- $\x02\0"
-    /* 5980 */ "btlr+ $\x02\0"
-    /* 5989 */ "bflr+ $\x02\0"
-    /* 5998 */ "bdnztlr $\x02\0"
-    /* 6009 */ "bdnzflr $\x02\0"
-    /* 6020 */ "bdztlr $\x02\0"
-    /* 6030 */ "bdzflr $\x02\0"
-    /* 6040 */ "bdzlrl\0"
-    /* 6047 */ "bdnzlrl\0"
-    /* 6055 */ "bdzlrl+\0"
-    /* 6063 */ "bdnzlrl+\0"
-    /* 6072 */ "bdzlrl-\0"
-    /* 6080 */ "bdnzlrl-\0"
-    /* 6089 */ "btlrl $\x02\0"
-    /* 6098 */ "bflrl $\x02\0"
-    /* 6107 */ "btlrl- $\x02\0"
-    /* 6117 */ "bflrl- $\x02\0"
-    /* 6127 */ "btlrl+ $\x02\0"
-    /* 6137 */ "bflrl+ $\x02\0"
-    /* 6147 */ "bdnztlrl $\x02\0"
-    /* 6159 */ "bdnzflrl $\x02\0"
-    /* 6171 */ "bdztlrl $\x02\0"
-    /* 6182 */ "bdzflrl $\x02\0"
-    /* 6193 */ "bcl+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 6213 */ "bcl- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 6233 */ "bdzl $\xFF\x04\x02\0"
-    /* 6243 */ "bdnzl $\xFF\x04\x02\0"
-    /* 6254 */ "bdzl+ $\xFF\x04\x02\0"
-    /* 6265 */ "bdnzl+ $\xFF\x04\x02\0"
-    /* 6277 */ "bdzl- $\xFF\x04\x02\0"
-    /* 6288 */ "bdnzl- $\xFF\x04\x02\0"
-    /* 6300 */ "bc+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 6319 */ "bc- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
-    /* 6338 */ "bdz $\xFF\x04\x02\0"
-    /* 6347 */ "bdnz $\xFF\x04\x02\0"
-    /* 6357 */ "bdz+ $\xFF\x04\x02\0"
-    /* 6367 */ "bdnz+ $\xFF\x04\x02\0"
-    /* 6378 */ "bdz- $\xFF\x04\x02\0"
-    /* 6388 */ "bdnz- $\xFF\x04\x02\0"
+    /* 5123 */ "b $\xFF\x03\x02\0"
+    /* 5130 */ "bta $\x02, $\xFF\x03\x03\0"
+    /* 5143 */ "bfa $\x02, $\xFF\x03\x03\0"
+    /* 5156 */ "bta- $\x02, $\xFF\x03\x03\0"
+    /* 5170 */ "bfa- $\x02, $\xFF\x03\x03\0"
+    /* 5184 */ "bta+ $\x02, $\xFF\x03\x03\0"
+    /* 5198 */ "bfa+ $\x02, $\xFF\x03\x03\0"
+    /* 5212 */ "bdnzta $\x02, $\xFF\x03\x03\0"
+    /* 5228 */ "bdnzfa $\x02, $\xFF\x03\x03\0"
+    /* 5244 */ "bdzta $\x02, $\xFF\x03\x03\0"
+    /* 5259 */ "bdzfa $\x02, $\xFF\x03\x03\0"
+    /* 5274 */ "ba $\xFF\x03\x03\0"
+    /* 5282 */ "bca+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 5302 */ "bca- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 5322 */ "bdz $\xFF\x04\x03\0"
+    /* 5331 */ "bdnz $\xFF\x04\x03\0"
+    /* 5341 */ "bdz+ $\xFF\x04\x03\0"
+    /* 5351 */ "bdnz+ $\xFF\x04\x03\0"
+    /* 5362 */ "bdz- $\xFF\x04\x03\0"
+    /* 5372 */ "bdnz- $\xFF\x04\x03\0"
+    /* 5383 */ "btctr $\x02\0"
+    /* 5392 */ "bfctr $\x02\0"
+    /* 5401 */ "btctr- $\x02\0"
+    /* 5411 */ "bfctr- $\x02\0"
+    /* 5421 */ "btctr+ $\x02\0"
+    /* 5431 */ "bfctr+ $\x02\0"
+    /* 5441 */ "bctr\0"
+    /* 5446 */ "btctrl $\x02\0"
+    /* 5456 */ "bfctrl $\x02\0"
+    /* 5466 */ "btctrl- $\x02\0"
+    /* 5477 */ "bfctrl- $\x02\0"
+    /* 5488 */ "btctrl+ $\x02\0"
+    /* 5499 */ "bfctrl+ $\x02\0"
+    /* 5510 */ "bctrl\0"
+    /* 5516 */ "btl $\x02, $\xFF\x03\x02\0"
+    /* 5529 */ "bfl $\x02, $\xFF\x03\x02\0"
+    /* 5542 */ "btl- $\x02, $\xFF\x03\x02\0"
+    /* 5556 */ "bfl- $\x02, $\xFF\x03\x02\0"
+    /* 5570 */ "btl+ $\x02, $\xFF\x03\x02\0"
+    /* 5584 */ "bfl+ $\x02, $\xFF\x03\x02\0"
+    /* 5598 */ "bdnztl $\x02, $\xFF\x03\x02\0"
+    /* 5614 */ "bdnzfl $\x02, $\xFF\x03\x02\0"
+    /* 5630 */ "bdztl $\x02, $\xFF\x03\x02\0"
+    /* 5645 */ "bdzfl $\x02, $\xFF\x03\x02\0"
+    /* 5660 */ "bl $\xFF\x03\x02\0"
+    /* 5668 */ "btla $\x02, $\xFF\x03\x03\0"
+    /* 5682 */ "bfla $\x02, $\xFF\x03\x03\0"
+    /* 5696 */ "btla- $\x02, $\xFF\x03\x03\0"
+    /* 5711 */ "bfla- $\x02, $\xFF\x03\x03\0"
+    /* 5726 */ "btla+ $\x02, $\xFF\x03\x03\0"
+    /* 5741 */ "bfla+ $\x02, $\xFF\x03\x03\0"
+    /* 5756 */ "bdnztla $\x02, $\xFF\x03\x03\0"
+    /* 5773 */ "bdnzfla $\x02, $\xFF\x03\x03\0"
+    /* 5790 */ "bdztla $\x02, $\xFF\x03\x03\0"
+    /* 5806 */ "bdzfla $\x02, $\xFF\x03\x03\0"
+    /* 5822 */ "bla $\xFF\x03\x03\0"
+    /* 5831 */ "bcla+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 5852 */ "bcla- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 5873 */ "bdzla $\xFF\x04\x03\0"
+    /* 5884 */ "bdnzla $\xFF\x04\x03\0"
+    /* 5896 */ "bdzla+ $\xFF\x04\x03\0"
+    /* 5908 */ "bdnzla+ $\xFF\x04\x03\0"
+    /* 5921 */ "bdzla- $\xFF\x04\x03\0"
+    /* 5933 */ "bdnzla- $\xFF\x04\x03\0"
+    /* 5946 */ "bdzlr\0"
+    /* 5952 */ "bdnzlr\0"
+    /* 5959 */ "bdzlr+\0"
+    /* 5966 */ "bdnzlr+\0"
+    /* 5974 */ "bdzlr-\0"
+    /* 5981 */ "bdnzlr-\0"
+    /* 5989 */ "btlr $\x02\0"
+    /* 5997 */ "bflr $\x02\0"
+    /* 6005 */ "btlr- $\x02\0"
+    /* 6014 */ "bflr- $\x02\0"
+    /* 6023 */ "btlr+ $\x02\0"
+    /* 6032 */ "bflr+ $\x02\0"
+    /* 6041 */ "bdnztlr $\x02\0"
+    /* 6052 */ "bdnzflr $\x02\0"
+    /* 6063 */ "bdztlr $\x02\0"
+    /* 6073 */ "bdzflr $\x02\0"
+    /* 6083 */ "blr\0"
+    /* 6087 */ "bdzlrl\0"
+    /* 6094 */ "bdnzlrl\0"
+    /* 6102 */ "bdzlrl+\0"
+    /* 6110 */ "bdnzlrl+\0"
+    /* 6119 */ "bdzlrl-\0"
+    /* 6127 */ "bdnzlrl-\0"
+    /* 6136 */ "btlrl $\x02\0"
+    /* 6145 */ "bflrl $\x02\0"
+    /* 6154 */ "btlrl- $\x02\0"
+    /* 6164 */ "bflrl- $\x02\0"
+    /* 6174 */ "btlrl+ $\x02\0"
+    /* 6184 */ "bflrl+ $\x02\0"
+    /* 6194 */ "bdnztlrl $\x02\0"
+    /* 6206 */ "bdnzflrl $\x02\0"
+    /* 6218 */ "bdztlrl $\x02\0"
+    /* 6229 */ "bdzflrl $\x02\0"
+    /* 6240 */ "blrl\0"
+    /* 6245 */ "bcl+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 6265 */ "bcl- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 6285 */ "bdzl $\xFF\x04\x02\0"
+    /* 6295 */ "bdnzl $\xFF\x04\x02\0"
+    /* 6306 */ "bdzl+ $\xFF\x04\x02\0"
+    /* 6317 */ "bdnzl+ $\xFF\x04\x02\0"
+    /* 6329 */ "bdzl- $\xFF\x04\x02\0"
+    /* 6340 */ "bdnzl- $\xFF\x04\x02\0"
+    /* 6352 */ "bc+ $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 6371 */ "bc- $\xFF\x01\x08, $\x03, $\xFF\x04\x02\0"
+    /* 6390 */ "bdz $\xFF\x04\x02\0"
+    /* 6399 */ "bdnz $\xFF\x04\x02\0"
+    /* 6409 */ "bdz+ $\xFF\x04\x02\0"
+    /* 6419 */ "bdnz+ $\xFF\x04\x02\0"
+    /* 6430 */ "bdz- $\xFF\x04\x02\0"
+    /* 6440 */ "bdnz- $\xFF\x04\x02\0"
   ;
 
 #ifndef NDEBUG
