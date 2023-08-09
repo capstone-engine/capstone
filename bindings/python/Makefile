@@ -72,6 +72,7 @@ TESTS = test_basic.py test_detail.py test_arm.py test_arm64.py test_m68k.py test
 TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py test_tms320c64x.py
 TESTS += test_m680x.py test_skipdata.py test_mos65xx.py test_bpf.py test_riscv.py
 TESTS += test_evm.py
+TESTS += test_lite.py test_iter.py
 
 check:
 	@for t in $(TESTS); do \
