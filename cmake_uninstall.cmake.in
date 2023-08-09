@@ -13,8 +13,8 @@ foreach(file ${files})
   endif()
 endforeach()
 
-message(STATUS "Uninstalling @CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_INCLUDEDIR@/capstone")
-file(REMOVE_RECURSE @CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_INCLUDEDIR@/capstone)
+message(STATUS "Uninstalling @CMAKE_INSTALL_FULL_INCLUDEDIR@/capstone")
+file(REMOVE_RECURSE @CMAKE_INSTALL_FULL_INCLUDEDIR@/capstone)
 
-message(STATUS "Uninstalling @CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/cmake/capstone")
-file(REMOVE_RECURSE @CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/cmake/capstone)
+message(STATUS "Uninstalling @CMAKE_INSTALL_FULL_LIBDIR@/cmake/capstone")
+file(REMOVE_RECURSE @CMAKE_INSTALL_FULL_LIBDIR@/cmake/capstone)
