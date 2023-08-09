@@ -442,6 +442,29 @@ void printU12ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	printUInt32(O, (unsigned short)Value);
 }
 
+void printS12ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	add_cs_detail(MI, PPC_OP_GROUP_S12ImmOperand, OpNo);
+	if (MCOperand_isImm(MCInst_getOperand(MI, OpNo))) {
+		int Imm = (int)MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+		Imm = SignExtend32(Imm, 12);
+		printInt32(O, Imm);
+	} else
+		printOperand(MI, OpNo, O);
+}
+
+void printMemRegImmPS(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	set_mem_access(MI, true);
+
+	printS12ImmOperand(MI, OpNo, O);
+	SStream_concat0(O, "(");
+	printOperand(MI, OpNo + 1, O);
+	SStream_concat0(O, ")");
+
+	set_mem_access(MI, false);
+}
+
 void printS16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_S16ImmOperand, OpNo);

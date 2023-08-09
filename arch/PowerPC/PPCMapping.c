@@ -282,7 +282,6 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			if (!doing_mem(MI))
 				set_mem_access(MI, true);
 			handle_memory_operand(MI, OpNum);
-			set_mem_access(MI, false);
 			return;
 		}
 
@@ -318,6 +317,15 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 	case PPC_OP_GROUP_S5ImmOperand: {
 		int Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 		Imm = SignExtend32((Imm), 5);
+		PPC_set_detail_op_imm(MI, OpNum, Imm);
+		break;
+	}
+	case PPC_OP_GROUP_S12ImmOperand: {
+		int64_t Imm = SignExtend64(MCOperand_getImm(MCInst_getOperand(MI, (OpNum))), 12);
+		if (doing_mem(MI)) {
+			PPC_set_detail_op_mem(MI, OpNum, Imm, true);
+			break;
+		}
 		PPC_set_detail_op_imm(MI, OpNum, Imm);
 		break;
 	}
@@ -404,10 +412,6 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 	case PPC_OP_GROUP_MemRegImm34PCRel:
 		// Handled in other printOperand functions.
 		break;
-	case PPC_OP_GROUP_LdStmModeOperand:
-	case PPC_OP_GROUP_MandatoryInvertedPredicateOperand:
-		printf("Operand group %d not implemented.\n", op_group);
-		return;
 	}
 }
 
@@ -423,12 +427,6 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 	default:
 		printf("Operand group %d not handled!\n", op_group);
 		return;
-	case PPC_OP_GROUP_RegImmShift: {
-		// ARM_AM_ShiftOpc shift_opc = va_arg(args, ARM_AM_ShiftOpc);
-		// unsigned shift_imm = va_arg(args, unsigned);
-		// add_cs_detail_RegImmShift(MI, shift_opc, shift_imm);
-		return;
-	}
 	case PPC_OP_GROUP_PredicateOperand: {
 		unsigned OpNum = va_arg(args, unsigned);
 		const char *Modifier = va_arg(args, const char *);
@@ -447,8 +445,7 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 		}
 		return;
 	}
-	case PPC_OP_GROUP_LdStmModeOperand:
-	case PPC_OP_GROUP_MandatoryInvertedPredicateOperand:
+	case PPC_OP_GROUP_S12ImmOperand:
 	case PPC_OP_GROUP_Operand:
 	case PPC_OP_GROUP_MemRegReg:
 	case PPC_OP_GROUP_U6ImmOperand:
