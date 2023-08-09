@@ -169,7 +169,7 @@ DEFINE_get_arch_detail(tricore, TriCore);
 static inline bool detail_is_set(const MCInst *MI)
 {
 	assert(MI && MI->flat_insn);
-	return MI->flat_insn->detail != NULL;
+	return MI->flat_insn->detail != NULL && MI->csh->detail_opt & CS_OPT_ON;
 }
 
 static inline cs_detail *get_detail(const MCInst *MI)

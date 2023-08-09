@@ -319,16 +319,7 @@ DEFINE_get_detail_op(tricore, TriCore);
 /// 			So it can be toggled between disas() calls.
 bool map_use_alias_details(const MCInst *MI) {
 	assert(MI);
-	switch(MI->csh->arch) {
-	default:
-		assert(0 && "Arch does not define which detail set is prefered.");
-	case CS_ARCH_ARM:
-		MI->flat_insn->usesAliasDetails = true;
-		return true;
-	case CS_ARCH_PPC:
-		MI->flat_insn->usesAliasDetails = false;
-		return false;
-	}
+	return !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
 }
 
 /// Sets the setDetailOps flag to @p Val.

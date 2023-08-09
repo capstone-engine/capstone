@@ -70,7 +70,7 @@ struct cs_struct {
 	ARM_VPTBlock VPTBlock;  // for ARM only
 	bool PrintBranchImmNotAsAddress;
 	bool ShowVSRNumsAsVR;
-	cs_opt_value detail, imm_unsigned;
+	cs_opt_value detail_opt, imm_unsigned;
 	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
 	bool doing_mem;	// handling memory operand in InstPrinter code
 	bool doing_SME_Index; // handling a SME instruction that has index

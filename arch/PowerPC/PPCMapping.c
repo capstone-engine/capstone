@@ -212,6 +212,7 @@ void PPC_init_cs_detail(MCInst *MI)
 void PPC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */info) {
 	MI->MRI = (MCRegisterInfo*) info;
 	MI->fillDetailOps = detail_is_set(MI);
+	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	PPC_LLVM_printInst(MI, MI->address, "", O);
 	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map));
 }

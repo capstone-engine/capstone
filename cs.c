@@ -489,7 +489,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->arch = arch;
 		ud->mode = mode;
 		// by default, do not break instruction into details
-		ud->detail = CS_OPT_OFF;
+		ud->detail_opt = CS_OPT_OFF;
 
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
@@ -731,7 +731,7 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 			return CS_ERR_OK;
 
 		case CS_OPT_DETAIL:
-			handle->detail = (cs_opt_value)value;
+			handle->detail_opt |= (cs_opt_value)value;
 			return CS_ERR_OK;
 
 		case CS_OPT_SKIPDATA:
@@ -914,7 +914,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		// relative branches need to know the address & size of current insn
 		mci.address = offset;
 
-		if (handle->detail) {
+		if (handle->detail_opt) {
 			// allocate memory for @detail pointer
 			insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
 		} else {
@@ -953,7 +953,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			// encounter a broken instruction
 
 			// free memory of @detail pointer
-			if (handle->detail) {
+			if (handle->detail_opt) {
 				cs_mem_free(insn_cache->detail);
 			}
 
@@ -1008,7 +1008,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			total_size += (sizeof(cs_insn) * cache_size);
 			tmp = cs_mem_realloc(total, total_size);
 			if (tmp == NULL) {	// insufficient memory
-				if (handle->detail) {
+				if (handle->detail_opt) {
 					insn_cache = (cs_insn *)total;
 					for (i = 0; i < c; i++, insn_cache++)
 						cs_mem_free(insn_cache->detail);
@@ -1043,7 +1043,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		tmp = cs_mem_realloc(total, total_size - (cache_size - f) * sizeof(*insn_cache));
 		if (tmp == NULL) {	// insufficient memory
 			// free all detail pointers
-			if (handle->detail) {
+			if (handle->detail_opt) {
 				insn_cache = (cs_insn *)total;
 				for (i = 0; i < c; i++, insn_cache++)
 					cs_mem_free(insn_cache->detail);
@@ -1089,7 +1089,7 @@ cs_insn * CAPSTONE_API cs_malloc(csh ud)
 		handle->errnum = CS_ERR_MEM;
 		return NULL;
 	} else {
-		if (handle->detail) {
+		if (handle->detail_opt) {
 			// allocate memory for @detail pointer
 			insn->detail = cs_mem_malloc(sizeof(cs_detail));
 			if (insn->detail == NULL) {	// insufficient memory
@@ -1246,7 +1246,7 @@ bool CAPSTONE_API cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
 
-	if (!handle->detail) {
+	if (!handle->detail_opt) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -1273,7 +1273,7 @@ bool CAPSTONE_API cs_reg_read(csh ud, const cs_insn *insn, unsigned int reg_id)
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
 
-	if (!handle->detail) {
+	if (!handle->detail_opt) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -1300,7 +1300,7 @@ bool CAPSTONE_API cs_reg_write(csh ud, const cs_insn *insn, unsigned int reg_id)
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
 
-	if (!handle->detail) {
+	if (!handle->detail_opt) {
 		handle->errnum = CS_ERR_DETAIL;
 		return false;
 	}
@@ -1328,7 +1328,7 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
 
-	if (!handle->detail) {
+	if (!handle->detail_opt) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
@@ -1447,7 +1447,7 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
 
-	if (!handle->detail) {
+	if (!handle->detail_opt) {
 		handle->errnum = CS_ERR_DETAIL;
 		return -1;
 	}
@@ -1636,7 +1636,7 @@ cs_err CAPSTONE_API cs_regs_access(csh ud, const cs_insn *insn,
 	handle->errnum = CS_ERR_DIET;
 	return CS_ERR_DIET;
 #else
-	if (!handle->detail) {
+	if (!handle->detail_opt) {
 		handle->errnum = CS_ERR_DETAIL;
 		return CS_ERR_DETAIL;
 	}

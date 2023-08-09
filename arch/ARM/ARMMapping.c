@@ -825,7 +825,7 @@ static void add_cs_detail_RegImmShift(MCInst *MI, ARM_AM_ShiftOpc ShOpc,
 	if (ShOpc == ARM_AM_no_shift || (ShOpc == ARM_AM_lsl && !ShImm))
 		return;
 
-	if (!MI->csh->detail)
+	if (!detail_is_set(MI))
 		return;
 
 	if (doing_mem(MI))
@@ -849,7 +849,7 @@ static void add_cs_detail_RegImmShift(MCInst *MI, ARM_AM_ShiftOpc ShOpc,
 static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				  unsigned OpNum)
 {
-	if (!MI->csh->detail)
+	if (!detail_is_set(MI))
 		return;
 	cs_op_type op_type = map_get_op_type(MI, OpNum);
 
