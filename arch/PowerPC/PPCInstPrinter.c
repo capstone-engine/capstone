@@ -632,7 +632,7 @@ void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 /// printed with a percentage symbol as prefix.
 bool showRegistersWithPercentPrefix(const MCInst *MI, const char *RegName)
 {
-	if ((MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME) ||
+	if ((MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME) || !(MI->csh->syntax & CS_OPT_SYNTAX_PERCENT) ||
 		PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs))
 		return false;
 
