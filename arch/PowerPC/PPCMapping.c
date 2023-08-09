@@ -198,7 +198,7 @@ void PPC_init_cs_detail(MCInst *MI)
 	if (!detail_is_set(MI))
 		return;
 	memset(get_detail(MI), 0,
-		   offsetof(cs_detail, arm) + sizeof(cs_arm));
+		   offsetof(cs_detail, ppc) + sizeof(cs_ppc));
 	PPC_get_detail(MI)->bc.bi = UINT8_MAX;
 	PPC_get_detail(MI)->bc.bo = UINT8_MAX;
 	PPC_get_detail(MI)->bc.crX = PPC_REG_INVALID;
@@ -604,7 +604,7 @@ void PPC_set_mem_access(MCInst *MI, bool status) {
 
 void PPC_setup_op(cs_ppc_op *op)
 {
-	memset(op, 0, sizeof(cs_arm_op));
+	memset(op, 0, sizeof(cs_ppc_op));
 	op->type = PPC_OP_INVALID;
 }
 
