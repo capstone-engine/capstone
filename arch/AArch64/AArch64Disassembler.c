@@ -402,7 +402,10 @@ static DecodeStatus getInstruction(csh handle, const uint8_t *Bytes, size_t Byte
 DecodeStatus AArch64_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 																				 size_t ByteLen,	MCInst *MI, uint16_t *Size, uint64_t Address,
 																				 void *Info) {
-	return getInstruction(handle, Bytes, ByteLen, MI, Size, Address, Info);
+	DecodeStatus Result = MCDisassembler_Fail;
+	Result = getInstruction(handle, Bytes, ByteLen, MI, Size, Address, Info);
+	MCInst_handleWriteback(MI, AArch64Insts);
+	return Result;
 }
 
 uint64_t suggestBytesToSkip(const uint8_t *Bytes, uint64_t Address)
