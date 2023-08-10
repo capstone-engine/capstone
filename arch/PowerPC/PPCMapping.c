@@ -277,7 +277,12 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		return;
 	case PPC_OP_GROUP_Operand: {
 		cs_op_type op_type = map_get_op_type(MI, OpNum);
-		if (doing_mem(MI) || (op_type & CS_OP_MEM)) {
+
+		// Check for memory operands emitted via printOperand()
+		if (doing_mem(MI) && !(op_type & CS_OP_MEM)) {
+			// Close previous memory operand
+			set_mem_access(MI, false);
+		} else if (doing_mem(MI) || (op_type & CS_OP_MEM)) {
 			// The memory operands use printOperand() to
 			// emit their register and immediates.
 			if (!doing_mem(MI))
@@ -584,6 +589,10 @@ ppc_pred PPC_get_no_hint_pred(unsigned Code) {
 void PPC_set_mem_access(MCInst *MI, bool status) {
 	if (!detail_is_set(MI))
 		return;
+	if ((!status && !doing_mem(MI)) ||
+		(status && doing_mem(MI)))
+		return;	// Nothing to do
+
 	set_doing_mem(MI, status);
 	if (status) {
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_MEM;
