@@ -4,9 +4,9 @@
 
 #include "factory.h"
 
-char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
+char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 {
-	cs_arm64 *arm64;
+	cs_aarch64 *aarch64;
 	int i;
 	cs_regs regs_read, regs_write;
 	uint8_t regs_read_count, regs_write_count;
@@ -20,12 +20,12 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 	if (ins->detail == NULL)
 		return result;
 
-	arm64 = &(ins->detail->arm64);
-	if (arm64->op_count)
-		add_str(&result, " ; op_count: %u", arm64->op_count);
+	aarch64 = &(ins->detail->aarch64);
+	if (aarch64->op_count)
+		add_str(&result, " ; op_count: %u", aarch64->op_count);
 
-	for (i = 0; i < arm64->op_count; i++) {
-		cs_arm64_op *op = &(arm64->operands[i]);
+	for (i = 0; i < aarch64->op_count; i++) {
+		cs_aarch64_op *op = &(aarch64->operands[i]);
 		switch(op->type) {
 			default:
 				break;
@@ -62,33 +62,69 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 			case AArch64_OP_REG_MSR:
 				add_str(&result, " ; operands[%u].type: REG_MSR = 0x%x", i, op->reg);
 				break;
-			case AArch64_OP_PSTATE:
-				add_str(&result, " ; operands[%u].type: PSTATE = 0x%x", i, op->pstate);
-				break;
-			case AArch64_OP_SYS:
-				add_str(&result, " ; operands[%u].type: SYS = 0x%x", i, op->sys);
-				break;
-			case AArch64_OP_PREFETCH:
-				add_str(&result, " ; operands[%u].type: PREFETCH = 0x%x", i, op->prefetch);
-				break;
-			case AArch64_OP_BARRIER:
-				add_str(&result, " ; operands[%u].type: BARRIER = 0x%x", i, op->barrier);
-				break;
-			case AArch64_OP_SME_INDEX:
-				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->sme_index.reg));
-				if(op->sme_index.base != AArch64_REG_INVALID)
-					add_str(&result, " ; operands[%u].index.base: REG = %s", i, cs_reg_name(*handle, op->sme_index.base));
-				if(op->sme_index.disp != 0)
-					add_str(&result, " ; operands[%u].index.disp: 0x%x", i, op->sme_index.disp);
+			case AArch64_OP_SME_MATRIX:
+				add_str(&result, "\t\t ; operands[%u].type: SME_MATRIX\n", i);
+				add_str(&result, "\t\t ; operands[%u].sme.type: %d\n", i, op->sme.type);
+
+				if (op->sme.tile != AArch64_REG_INVALID)
+					add_str(&result, "\t\t ; operands[%u].sme.tile: %s\n", i, cs_reg_name(*handle, op->sme.tile));
+				if (op->sme.slice_reg != AArch64_REG_INVALID)
+					add_str(&result, "\t\t ; operands[%u].sme.slice_reg: %s\n", i, cs_reg_name(*handle, op->sme.slice_reg));
+				if (op->sme.slice_offset != -1)
+					add_str(&result, "\t\t ; operands[%u].sme.slice_offset: %d\n", i, op->sme.slice_offset);
+				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset != -1)
+					add_str(&result, "\t\t ; operands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
 				break;
 			case AArch64_OP_SVCR:
-				add_str(&result, " ; operands[%u].type: SYS = 0x%x", i, op->sys);
-				if(op->svcr == AArch64_SVCR_SVCRSM)
+				add_str(&result, " ; operands[%u].type: SYS = 0x%x", i, op->sysop.alias.svcr);
+				if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSM)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM", i);
-				if(op->svcr == AArch64_SVCR_SVCRZA)
+				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRZA)
 					add_str(&result, " ; operands[%u].svcr: BIT = ZA", i);
-				if(op->svcr == AArch64_SVCR_SVCRSMZA)
+				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSMZA)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM & ZA", i);
+				break;
+			case AArch64_OP_AT:
+				add_str(&result, "\t\t ; operands[%u].type AT = 0x%x\n", i, op->sysop.alias.at);
+				break;
+			case AArch64_OP_DB:
+				add_str(&result, "\t\t ; operands[%u].type DB = 0x%x\n", i, op->sysop.alias.db);
+				break;
+			case AArch64_OP_DC:
+				add_str(&result, "\t\t ; operands[%u].type DC = 0x%x\n", i, op->sysop.alias.dc);
+				break;
+			case AArch64_OP_ISB:
+				add_str(&result, "\t\t ; operands[%u].type ISB = 0x%x\n", i, op->sysop.alias.isb);
+				break;
+			case AArch64_OP_TSB:
+				add_str(&result, "\t\t ; operands[%u].type TSB = 0x%x\n", i, op->sysop.alias.tsb);
+				break;
+			case AArch64_OP_PRFM:
+				add_str(&result, "\t\t ; operands[%u].type PRFM = 0x%x\n", i, op->sysop.alias.prfm);
+				break;
+			case AArch64_OP_SVEPRFM:
+				add_str(&result, "\t\t ; operands[%u].type SVEPRFM = 0x%x\n", i, op->sysop.alias.sveprfm);
+				break;
+			case AArch64_OP_RPRFM:
+				add_str(&result, "\t\t ; operands[%u].type RPRFM = 0x%x\n", i, op->sysop.alias.rprfm);
+				break;
+			case AArch64_OP_PSTATEIMM0_15:
+				add_str(&result, "\t\t ; operands[%u].type PSTATEIMM0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
+				break;
+			case AArch64_OP_PSTATEIMM0_1:
+				add_str(&result, "\t\t ; operands[%u].type PSTATEIMM0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
+				break;
+			case AArch64_OP_PSB:
+				add_str(&result, "\t\t ; operands[%u].type PSB = 0x%x\n", i, op->sysop.alias.psb);
+				break;
+			case AArch64_OP_BTI:
+				add_str(&result, "\t\t ; operands[%u].type BTI = 0x%x\n", i, op->sysop.alias.bti);
+				break;
+			case AArch64_OP_SVEPREDPAT:
+				add_str(&result, "\t\t ; operands[%u].type SVEPREDPAT = 0x%x\n", i, op->sysop.alias.svepredpat);
+				break;
+			case AArch64_OP_SVEVECLENSPECIFIER:
+				add_str(&result, "\t\t ; operands[%u].type SVEVECLENSPECIFIER = 0x%x\n", i, op->sysop.alias.sveveclenspecifier);
 				break;
 		}
 		
@@ -115,21 +151,21 @@ char *get_detail_arm64(csh *handle, cs_mode mode, cs_insn *ins)
 		if (op->ext != AArch64_EXT_INVALID)
 			add_str(&result, " ; Ext: %u", op->ext);
 
-		if (op->vas != AArch64_VAS_INVALID)
+		if (op->vas != AArch64Layout_Invalid)
 			add_str(&result, " ; operands[%u].vas: 0x%x", i, op->vas);
 
 		if (op->vector_index != -1)
 			add_str(&result, " ; operands[%u].vector_index: %u", i, op->vector_index);
 	}
 
-	if (arm64->update_flags)
+	if (aarch64->update_flags)
 		add_str(&result, " ; Update-flags: True");
 
-	if (arm64->writeback)
+	if (aarch64->writeback)
 		add_str(&result, " ; Write-back: True");
 
-	if (arm64->cc)
-		add_str(&result, " ; Code-condition: %u", arm64->cc);
+	if (aarch64->cc)
+		add_str(&result, " ; Code-condition: %u", aarch64->cc);
 
 	// Print out all registers accessed by this instruction (either implicit or explicit)
 	if (!cs_regs_access(*handle, ins,

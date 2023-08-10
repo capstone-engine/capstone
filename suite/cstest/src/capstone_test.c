@@ -145,8 +145,8 @@ int set_function(int arch)
 		case CS_ARCH_ARM:
 			function = get_detail_arm;
 			break;
-		case CS_ARCH_ARM64:
-			function = get_detail_arm64;
+		case CS_ARCH_AARCH64:
+			function = get_detail_aarch64;
 			break;
 		case CS_ARCH_MIPS:
 			function = get_detail_mips;
