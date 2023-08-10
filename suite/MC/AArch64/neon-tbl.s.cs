@@ -1,4 +1,4 @@
-# CS_ARCH_ARM64, 0, None
+# CS_ARCH_AARCH64, 0, None
 0x20,0x00,0x02,0x0e = tbl v0.8b, {v1.16b}, v2.8b
 0x20,0x20,0x02,0x0e = tbl v0.8b, {v1.16b, v2.16b}, v2.8b
 0x20,0x40,0x02,0x0e = tbl v0.8b, {v1.16b, v2.16b, v3.16b}, v2.8b
