@@ -19,6 +19,16 @@
 #include "AArch64Linkage.h"
 #include "AArch64Mapping.h"
 
+#ifndef CAPSTONE_DIET
+static aarch64_reg aarch64_flag_regs[] = {
+	AArch64_REG_NZCV,
+	AArch64_SYSREG_PMOVSCLR_EL0,
+	AArch64_SYSREG_PMOVSSET_EL0,
+	AArch64_SYSREG_SPMOVSCLR_EL0,
+	AArch64_SYSREG_SPMOVSSET_EL0
+};
+#endif // CAPSTONE_DIET
+
 void AArch64_init_mri(MCRegisterInfo *MRI)
 {
 	MCRegisterInfo_InitMCRegisterInfo(
@@ -47,12 +57,31 @@ void AArch64_init_cs_detail(MCInst *MI)
 	}
 }
 
+static void AArch64_check_updates_flags(MCInst *MI)
+{
+#ifndef CAPSTONE_DIET
+	if (!detail_is_set(MI))
+		return;
+	cs_detail *detail = get_detail(MI);
+	for (int i = 0; i < detail->regs_write_count; ++i) {
+		if (detail->regs_write[i] == 0)
+			return;
+		for (int j = 0; j < ARR_SIZE(aarch64_flag_regs); ++j) {
+			if (detail->regs_write[i] == aarch64_flag_regs[j]) {
+				detail->aarch64.update_flags = true;
+				return;
+			}
+		}
+	}
+#endif // CAPSTONE_DIET
+}
 
 void AArch64_set_instr_map_data(MCInst *MI)
 {
 	map_cs_id(MI, aarch64_insns, ARR_SIZE(aarch64_insns));
 	map_implicit_reads(MI, aarch64_insns);
 	map_implicit_writes(MI, aarch64_insns);
+	AArch64_check_updates_flags(MI);
 	// Check if updates flags
 	map_groups(MI, aarch64_insns);
 }
