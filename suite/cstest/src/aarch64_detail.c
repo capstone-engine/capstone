@@ -161,7 +161,7 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 	if (aarch64->update_flags)
 		add_str(&result, " ; Update-flags: True");
 
-	if (aarch64->writeback)
+	if (ins->detail->writeback)
 		add_str(&result, " ; Write-back: True");
 
 	if (aarch64->cc)

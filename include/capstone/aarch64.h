@@ -2641,7 +2641,6 @@ typedef struct cs_aarch64_op {
 typedef struct cs_aarch64 {
   AArch64CC_CondCode cc;	     ///< conditional code for this insn
   bool update_flags; ///< does this insn update flags?
-  bool writeback;    ///< does this insn request writeback? 'True' means 'yes'
   bool post_index;   ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
   bool is_doing_sme; ///< True if a SME operand is currently edited.
 

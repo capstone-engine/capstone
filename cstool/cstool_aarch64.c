@@ -159,7 +159,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 	if (aarch64->update_flags)
 		printf("\tUpdate-flags: True\n");
 
-	if (aarch64->writeback)
+	if (ins->detail->writeback)
 		printf("\tWrite-back: True\n");
 
 	if (aarch64->cc)

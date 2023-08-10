@@ -185,7 +185,7 @@ void AArch64_reg_access(const cs_insn *insn,
 					regs_read[read_count] = (uint16_t)op->mem.index;
 					read_count++;
 				}
-				if ((aarch64->writeback) && (op->mem.base != AArch64_REG_INVALID) && !arr_exist(regs_write, write_count, op->mem.base)) {
+				if ((insn->detail->writeback) && (op->mem.base != AArch64_REG_INVALID) && !arr_exist(regs_write, write_count, op->mem.base)) {
 					regs_write[write_count] = (uint16_t)op->mem.base;
 					write_count++;
 				}

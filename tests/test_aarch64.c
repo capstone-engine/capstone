@@ -135,7 +135,7 @@ static void print_insn_detail(cs_insn *ins)
 	if (aarch64->update_flags)
 		printf("\tUpdate-flags: True\n");
 
-	if (aarch64->writeback)
+	if (ins->detail->writeback)
 		printf("\tWrite-back: %s\n", aarch64->post_index ? "Post" : "Pre");
 
 	if (aarch64->cc)
