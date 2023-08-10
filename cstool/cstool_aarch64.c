@@ -69,27 +69,11 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
 				break;
 			case AArch64_OP_REG_MRS:
-				printf("\t\toperands[%u].type: REG_MRS = 0x%x\n", i, op->reg);
+				printf("\t\toperands[%u].type: REG_MRS = 0x%x\n", i, op->sysop.reg.sysreg);
 				break;
 			case AArch64_OP_REG_MSR:
-				printf("\t\toperands[%u].type: REG_MSR = 0x%x\n", i, op->reg);
+				printf("\t\toperands[%u].type: REG_MSR = 0x%x\n", i, op->sysop.reg.sysreg);
 				break;
-			case AArch64_OP_PSTATEIMM0_1:
-				printf("\t\toperands[%u].type: PSTATE 0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
-				break;
-			case AArch64_OP_PSTATEIMM0_15:
-				printf("\t\toperands[%u].type: PSTATE 0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
-				break;
-			case AArch64_OP_AT:
-				printf("\t\toperands[%u].type: AT = 0x%x\n", i, op->sysop.alias.at);
-				break;
-			case AArch64_OP_PRFM:
-				printf("\t\toperands[%u].type: PREFETCH = 0x%x\n", i, op->sysop.alias.prfm);
-				break;
-			case AArch64_OP_DB:
-				printf("\t\toperands[%u].type: BARRIER = 0x%x\n", i, op->sysop.alias.db);
-				break;
-			// TODO Add the others.
 			case AArch64_OP_SVCR:
 				if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSM)
 					printf("\t\t\toperands[%u].svcr: BIT = SM\n", i);
@@ -98,8 +82,48 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSMZA)
 					printf("\t\t\toperands[%u].svcr: BIT = SM & ZA\n", i);
 				break;
-			// TODO Wait for https://github.com/capstone-engine/capstone/pull/2026#issuecomment-1575635261
-			// Add SME
+			case AArch64_OP_AT:
+				printf("\t\toperands[%u].type AT = 0x%x\n", i, op->sysop.alias.at);
+				break;
+			case AArch64_OP_DB:
+				printf("\t\toperands[%u].type DB = 0x%x\n", i, op->sysop.alias.db);
+				break;
+			case AArch64_OP_DC:
+				printf("\t\toperands[%u].type DC = 0x%x\n", i, op->sysop.alias.dc);
+				break;
+			case AArch64_OP_ISB:
+				printf("\t\toperands[%u].type ISB = 0x%x\n", i, op->sysop.alias.isb);
+				break;
+			case AArch64_OP_TSB:
+				printf("\t\toperands[%u].type TSB = 0x%x\n", i, op->sysop.alias.tsb);
+				break;
+			case AArch64_OP_PRFM:
+				printf("\t\toperands[%u].type PRFM = 0x%x\n", i, op->sysop.alias.prfm);
+				break;
+			case AArch64_OP_SVEPRFM:
+				printf("\t\toperands[%u].type SVEPRFM = 0x%x\n", i, op->sysop.alias.sveprfm);
+				break;
+			case AArch64_OP_RPRFM:
+				printf("\t\toperands[%u].type RPRFM = 0x%x\n", i, op->sysop.alias.rprfm);
+				break;
+			case AArch64_OP_PSTATEIMM0_15:
+				printf("\t\toperands[%u].type PSTATEIMM0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
+				break;
+			case AArch64_OP_PSTATEIMM0_1:
+				printf("\t\toperands[%u].type PSTATEIMM0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
+				break;
+			case AArch64_OP_PSB:
+				printf("\t\toperands[%u].type PSB = 0x%x\n", i, op->sysop.alias.psb);
+				break;
+			case AArch64_OP_BTI:
+				printf("\t\toperands[%u].type BTI = 0x%x\n", i, op->sysop.alias.bti);
+				break;
+			case AArch64_OP_SVEPREDPAT:
+				printf("\t\toperands[%u].type SVEPREDPAT = 0x%x\n", i, op->sysop.alias.svepredpat);
+				break;
+			case AArch64_OP_SVEVECLENSPECIFIER:
+				printf("\t\toperands[%u].type SVEVECLENSPECIFIER = 0x%x\n", i, op->sysop.alias.sveveclenspecifier);
+				break;
 		}
 		
 		access = op->access;
