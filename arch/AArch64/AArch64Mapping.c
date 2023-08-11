@@ -454,7 +454,7 @@ void AArch64_set_mem_access(MCInst *MI, bool status)
 /// specialities.
 static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 								  unsigned OpNum) {
-	if (!MI->csh->detail)
+	if (!detail_is_set(MI))
 		return;
 
 	// Fill cs_detail
