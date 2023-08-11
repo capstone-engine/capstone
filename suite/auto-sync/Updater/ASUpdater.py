@@ -142,7 +142,7 @@ class ASUpdater:
         if USteps.DIFF in self.steps:
             self.diff()
         # Write files
-        fail_exit("Full update procedure not yet implemented.")
+        exit(0)
 
 
 def parse_args() -> argparse.Namespace:
