@@ -40,10 +40,10 @@ const insn_map aarch64_insns[] = {
 #include "AArch64GenCSMappingInsn.inc"
 };
 
-static const name_map insn_alias_mnem_map[] = {
-#include "AArch64GenCSAliasMnemMap.inc"
-	{ AArch64_INS_ALIAS_END, NULL },
-};
+// static const name_map insn_alias_mnem_map[] = {
+// #include "AArch64GenCSAliasMnemMap.inc"
+// 	{ AArch64_INS_ALIAS_END, NULL },
+// };
 
 
 const char *AArch64_reg_name(csh handle, unsigned int reg)
@@ -447,7 +447,6 @@ void AArch64_set_mem_access(MCInst *MI, bool status)
 		AArch64_inc_op_count(MI);
 	}
 }
-
 
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which's original printer function has no
