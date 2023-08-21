@@ -1231,7 +1231,7 @@ static void add_cs_detail_template_4(MCInst *MI, aarch64_op_group op_group,
 
 		// Register will be added in printOperand() afterwards. Here we only handle
 		// shift and extend.
-		AArch64_get_detail_op(MI, 0)->vas = get_vl_by_suffix(Suffix);
+		AArch64_get_detail_op(MI, -1)->vas = get_vl_by_suffix(Suffix);
 
 		bool DoShift = ExtWidth != 8;
 		if (!(SignExtend || DoShift || SrcRegKind == 'w'))
@@ -1529,13 +1529,13 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 	AArch64_set_mem_access(MI, false);
 }
 
-/// Adds the shift and sign extend info of the currently edited operand.
+/// Adds the shift and sign extend info to the previous operand.
 /// op_count is *not* incremented by one.
 void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
 								  bool DoShift, unsigned ExtWidth, char SrcRegKind) {
 	bool IsLSL = !SignExtend && SrcRegKind == 'x';
 	if (IsLSL)
-		AArch64_get_detail_op(MI, 0)->shift.type = AArch64_SFT_LSL;
+		AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
 	else {
 		aarch64_extender ext = SignExtend ? AArch64_EXT_SXTB : AArch64_EXT_UXTB;
 		switch (SrcRegKind) {
@@ -1554,10 +1554,10 @@ void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
 				ext += 3;
 				break;
 		}
-		AArch64_get_detail_op(MI, 0)->ext = ext;
+		AArch64_get_detail_op(MI, -1)->ext = ext;
 	}
 	if (DoShift || IsLSL)
-		AArch64_get_detail_op(MI, 0)->shift.value = Log2_32(ExtWidth / 8);
+		AArch64_get_detail_op(MI, -1)->shift.value = Log2_32(ExtWidth / 8);
 }
 
 /// Transforms the immediate of the operand to a float and stores it.
