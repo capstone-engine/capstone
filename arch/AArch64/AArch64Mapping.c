@@ -488,13 +488,6 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
 						MCInst_getOpVal(MI, OpNum));
 			break;
-		case AArch64_OP_MEM_REG:
-		case AArch64_OP_MEM_IMM: {
-			AArch64_set_mem_access(MI, true);
-			AArch64_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum));
-			AArch64_set_mem_access(MI, false);
-			break;
-		}
 		}
 		break;
 	}
@@ -515,9 +508,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_AMNoIndex: {
-		AArch64_set_mem_access(MI, true);
 		AArch64_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum));
-		AArch64_set_mem_access(MI, false);
 		break;
 	}
 	case AArch64_OP_GROUP_ArithExtend: {
@@ -855,23 +846,8 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ImmScale_4:
 	case AArch64_OP_GROUP_ImmScale_8: {
 		unsigned Scale = temp_arg_0;
-		cs_op_type op_type = map_get_op_type(MI, OpNum);
-		switch (op_type) {
-		default:
-			printf("Unhandled operand type 0x%x\n", op_type);
-			assert(0);
-		case AArch64_OP_IMM:
-			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
-						Scale * MCInst_getOpVal(MI, OpNum));
-			break;
-		case AArch64_OP_MEM_IMM: {
-			AArch64_set_mem_access(MI, true);
-			AArch64_set_detail_op_mem(MI, OpNum,
-						Scale * MCInst_getOpVal(MI, OpNum));
-			AArch64_set_mem_access(MI, false);
-			break;
-		}
-		}
+		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
+					Scale * MCInst_getOpVal(MI, OpNum));
 		break;
 	}
 	case AArch64_OP_GROUP_LogicalImm_int16_t:
@@ -987,13 +963,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_UImm12Offset_16:
 	case AArch64_OP_GROUP_UImm12Offset_2:
 	case AArch64_OP_GROUP_UImm12Offset_4:
-	case AArch64_OP_GROUP_UImm12Offset_8: {
-		unsigned Scale = temp_arg_0;
-		AArch64_set_mem_access(MI, true);
-		AArch64_set_detail_op_mem(MI, OpNum, Scale * MCInst_getOpVal(MI, OpNum));
-		AArch64_set_mem_access(MI, false);
-		break;
-	}
+	case AArch64_OP_GROUP_UImm12Offset_8:
 	case AArch64_OP_GROUP_VectorIndex_1:
 	case AArch64_OP_GROUP_VectorIndex_8: {
 		unsigned Scale = temp_arg_0;
@@ -1474,6 +1444,11 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
+	if (map_get_op_type(MI, OpNum) & CS_OP_MEM) {
+		AArch64_set_detail_op_mem(MI, OpNum, Reg);
+		return;
+	}
+
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
@@ -1490,6 +1465,12 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum, aarch64_op_type ImmTy
 {
 	if (!detail_is_set(MI))
 		return;
+	if (map_get_op_type(MI, OpNum) & CS_OP_MEM) {
+		AArch64_set_detail_op_mem(MI, OpNum, Imm);
+		return;
+	}
+		
+
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 	assert(ImmType == AArch64_OP_IMM || ImmType == AArch64_OP_CIMM);
@@ -1507,6 +1488,9 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 	if (!detail_is_set(MI))
 		return;
 	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
+
+	AArch64_set_mem_access(MI, true);
+
 	cs_op_type secondary_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
 	switch (secondary_type) {
 	default:
@@ -1541,6 +1525,7 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 
 	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_MEM;
 	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+	AArch64_set_mem_access(MI, false);
 }
 
 /// Adds the shift and sign extend info of the currently edited operand.
