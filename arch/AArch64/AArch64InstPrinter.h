@@ -180,6 +180,9 @@ void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O);
 	static inline void CONCAT(printUImm12Offset, Scale)(MCInst * MI, unsigned OpNum, \
 										  SStream *O) \
 	{ \
+		add_cs_detail( \
+			MI, CONCAT(AArch64_OP_GROUP_UImm12Offset, Scale), \
+			OpNum, Scale); \
 		printUImm12Offset(MI, OpNum, Scale, O); \
 	}
 DEFINE_printUImm12Offset(1);

@@ -970,7 +970,13 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_UImm12Offset_16:
 	case AArch64_OP_GROUP_UImm12Offset_2:
 	case AArch64_OP_GROUP_UImm12Offset_4:
-	case AArch64_OP_GROUP_UImm12Offset_8:
+	case AArch64_OP_GROUP_UImm12Offset_8: {
+		unsigned Scale = temp_arg_0;
+		AArch64_set_mem_access(MI, true);
+		AArch64_set_detail_op_mem(MI, OpNum, Scale * MCInst_getOpVal(MI, OpNum));
+		AArch64_set_mem_access(MI, false);
+		break;
+	}
 	case AArch64_OP_GROUP_VectorIndex_1:
 	case AArch64_OP_GROUP_VectorIndex_8: {
 		unsigned Scale = temp_arg_0;
