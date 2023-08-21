@@ -266,7 +266,7 @@ static void set_sme_operand(MCInst *MI, bool init) {
 		AArch64_inc_op_count(MI);
 		return;
 	}
-	assert(AArch64_get_detail_op(MI, 0)->sme.type != AArch64_SME_OP_INVALID);
+	assert(AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_OP_INVALID);
 
 	AArch64_get_detail(MI)->is_doing_sme = true;
 	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SME_MATRIX;
@@ -872,6 +872,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	}
 	case AArch64_OP_GROUP_MatrixTileVector_0:
 	case AArch64_OP_GROUP_MatrixTileVector_1: {
+		set_sme_operand(MI, true);
 		bool isVertical = temp_arg_0;
 		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE_VEC;
 		AArch64_get_detail_op(MI, 0)->sme.tile = MCInst_getOpVal(MI, OpNum);
