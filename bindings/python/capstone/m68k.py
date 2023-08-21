@@ -66,6 +66,10 @@ class M68KOp(ctypes.Structure):
     @property
     def reg(self):
         return self.value.reg
+    
+    @property
+    def reg_pair(self):
+        return self.value.reg_pair
 
     @property
     def mem(self):
