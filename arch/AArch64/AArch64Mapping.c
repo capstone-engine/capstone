@@ -432,6 +432,15 @@ void AArch64_set_mem_access(MCInst *MI, bool status)
 		return;
 	set_doing_mem(MI, status);
 	if (status) {
+		if (AArch64_get_detail_op(MI, -1)->type == AArch64_OP_MEM &&
+				AArch64_get_detail_op(MI, -1)->mem.index == AArch64_REG_INVALID &&
+				AArch64_get_detail_op(MI, -1)->mem.disp == 0) {
+			// Previous memory operand not done yet. Select it.
+			AArch64_dec_op_count(MI);
+			return;
+		}
+
+		// Init a new one.
 		AArch64_get_detail_op(MI, 0)->type = AArch64_OP_MEM;
 		AArch64_get_detail_op(MI, 0)->mem.base = AArch64_REG_INVALID;
 		AArch64_get_detail_op(MI, 0)->mem.index = AArch64_REG_INVALID;
@@ -478,6 +487,13 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
 						MCInst_getOpVal(MI, OpNum));
 			break;
+		case AArch64_OP_MEM_REG:
+		case AArch64_OP_MEM_IMM: {
+			AArch64_set_mem_access(MI, true);
+			AArch64_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum));
+			AArch64_set_mem_access(MI, false);
+			break;
+		}
 		}
 		break;
 	}
@@ -499,7 +515,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	}
 	case AArch64_OP_GROUP_AMNoIndex: {
 		AArch64_set_mem_access(MI, true);
-		AArch64_set_detail_op_mem(MI, OpNum, false, MCInst_getOpVal(MI, OpNum));
+		AArch64_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum));
 		AArch64_set_mem_access(MI, false);
 		break;
 	}
@@ -1461,32 +1477,9 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum, aarch64_op_type ImmTy
 	AArch64_inc_op_count(MI);
 }
 
-/// Adds the operand to the previously added memory operand.
-void AArch64_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val)
-{
-	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
-
-	if (!doing_mem(MI)) {
-		assert((AArch64_get_detail_op(MI, -1) != NULL) &&
-			   (AArch64_get_detail_op(MI, -1)->type == AArch64_OP_MEM));
-		AArch64_dec_op_count(MI);
-	}
-
-	if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM)
-		AArch64_set_detail_op_mem(MI, OpNum, false, Val);
-	else if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG)
-		AArch64_set_detail_op_mem(MI, OpNum, true, Val);
-	else
-		assert(0 && "Memory type incorrect.");
-
-	if (!doing_mem(MI))
-		AArch64_inc_op_count(MI);
-}
-
 /// Adds a memory AArch64 operand at position OpNum. op_count is *not* increased by
 /// one. This is done by set_mem_access().
-void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
-						   uint64_t Val)
+void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -1497,6 +1490,7 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 		assert(0 && "Secondary type not supported yet.");
 	case CS_OP_REG: {
 		assert(secondary_type == CS_OP_REG);
+		bool is_index_reg = AArch64_get_detail_op(MI, 0)->mem.base != AArch64_REG_INVALID;
 		if (is_index_reg)
 			AArch64_get_detail_op(MI, 0)->mem.index = Val;
 		else {

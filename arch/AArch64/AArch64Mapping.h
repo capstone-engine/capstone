@@ -57,8 +57,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info);
 void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg);
 void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum, aarch64_op_type ImmType,
 							   int64_t Imm);
-void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
-							   uint64_t Val);
+void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val);
 void AArch64_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val);
 void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
 								  bool DoShift, unsigned ExtWidth, char SrcRegKind);

@@ -1831,6 +1831,8 @@ typedef enum aarch64_op_type {
   AArch64_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
   AArch64_OP_REG = CS_OP_REG,		///< = CS_OP_REG (Register operand).
   AArch64_OP_IMM = CS_OP_IMM,		///< = CS_OP_IMM (Immediate operand).
+  AArch64_OP_MEM_REG = CS_OP_REG | CS_OP_MEM,		///< Register which references memory.
+  AArch64_OP_MEM_IMM = CS_OP_IMM | CS_OP_MEM,		///< = Immediate value which references memory.
   AArch64_OP_MEM = CS_OP_MEM,		///< = CS_OP_MEM (Memory operand).
   AArch64_OP_FP = CS_OP_FP,		///< = CS_OP_FP (Floating-Point operand).
   AArch64_OP_CIMM = CS_OP_SPECIAL + 0,	///< C-Immediate
