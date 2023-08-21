@@ -472,10 +472,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		printf("ERROR: Operand group %d not handled!\n", op_group);
 		assert(0);
 	case AArch64_OP_GROUP_Operand: {
-		cs_op_type op_type = map_get_op_type(MI, OpNum);
-		switch (op_type) {
+		cs_op_type primary_op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
+		switch (primary_op_type) {
 		default:
-			printf("Unhandled operand type 0x%x\n", op_type);
+			printf("Unhandled operand type 0x%x\n", primary_op_type);
 			assert(0);
 		case AArch64_OP_REG:
 			if (AArch64_get_detail(MI)->is_doing_sme) {
