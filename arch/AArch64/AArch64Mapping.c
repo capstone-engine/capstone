@@ -432,9 +432,10 @@ void AArch64_set_mem_access(MCInst *MI, bool status)
 		return;
 	set_doing_mem(MI, status);
 	if (status) {
-		if (AArch64_get_detail_op(MI, -1)->type == AArch64_OP_MEM &&
-				AArch64_get_detail_op(MI, -1)->mem.index == AArch64_REG_INVALID &&
-				AArch64_get_detail_op(MI, -1)->mem.disp == 0) {
+		if (AArch64_get_detail(MI)->op_count > 0 &&
+			AArch64_get_detail_op(MI, -1)->type == AArch64_OP_MEM &&
+			AArch64_get_detail_op(MI, -1)->mem.index == AArch64_REG_INVALID &&
+			AArch64_get_detail_op(MI, -1)->mem.disp == 0) {
 			// Previous memory operand not done yet. Select it.
 			AArch64_dec_op_count(MI);
 			return;
