@@ -1580,6 +1580,7 @@ void AArch64_set_detail_op_float(MCInst *MI, unsigned OpNum, float Val)
 		return;
 	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_FP;
 	AArch64_get_detail_op(MI, 0)->fp = Val;
+	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	AArch64_inc_op_count(MI);
 }
 
