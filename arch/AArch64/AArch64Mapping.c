@@ -572,7 +572,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		aarch64_sysop sysop;
 		const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
-		sysop.alias = DB->SysAlias;
+		sysop.alias = DB ? DB->SysAlias : (aarch64_sysop_alias) Val;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_DB);
 		break;
 	}
@@ -583,15 +583,15 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 
 		if (Opcode == AArch64_ISB) {
 			const AArch64ISB_ISB *ISB = AArch64ISB_lookupISBByEncoding(Val);
-			sysop.alias = ISB->SysAlias;
+			sysop.alias = ISB ? ISB->SysAlias : (aarch64_sysop_alias) Val;
 			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_ISB);
 		} else if (Opcode == AArch64_TSB) {
 			const AArch64TSB_TSB *TSB = AArch64TSB_lookupTSBByEncoding(Val);
-			sysop.alias = TSB->SysAlias;
+			sysop.alias = TSB ? TSB->SysAlias : (aarch64_sysop_alias) Val;
 			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_TSB);
 		} else {
 			const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
-			sysop.alias = DB->SysAlias;
+			sysop.alias = DB ? DB->SysAlias : (aarch64_sysop_alias) Val;
 			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_DB);
 		}
 		break;
@@ -600,7 +600,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		aarch64_sysop sysop;
 		unsigned btihintop = MCInst_getOpVal(MI, OpNum) ^ 32;
 		const AArch64BTIHint_BTI *BTI = AArch64BTIHint_lookupBTIByEncoding(btihintop);
-		sysop.alias = BTI->SysAlias;
+		sysop.alias = BTI ? BTI->SysAlias : (aarch64_sysop_alias) btihintop;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_BTI);
 		break;
 	}
@@ -709,7 +709,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned psbhintop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PSBHint_PSB *PSB = AArch64PSBHint_lookupPSBByEncoding(psbhintop);
 		aarch64_sysop sysop;
-		sysop.alias = PSB->SysAlias;
+		sysop.alias = PSB ? PSB->SysAlias : (aarch64_sysop_alias) psbhintop;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PSB);
 		break;
 	}
@@ -717,7 +717,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned prfop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PRFM_PRFM *PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop);
 		aarch64_sysop sysop;
-		sysop.alias = PRFM->SysAlias;
+		sysop.alias = PRFM ? PRFM->SysAlias : (aarch64_sysop_alias) prfop;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PRFM);
 		break;
 	}
@@ -744,7 +744,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned svcrop = MCInst_getOpVal(MI, OpNum);
 		const AArch64SVCR_SVCR *SVCR = AArch64SVCR_lookupSVCRByEncoding(svcrop);
 		aarch64_sysop sysop;
-		sysop.alias = SVCR->SysAlias;
+		sysop.alias = SVCR ? SVCR->SysAlias : (aarch64_sysop_alias) svcrop;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVCR);
 		break;
 	}
