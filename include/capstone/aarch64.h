@@ -60,6 +60,8 @@ typedef enum VectorLayout {
 	AArch64Layout_VL_4S,
 	AArch64Layout_VL_2D,
 	AArch64Layout_VL_1Q,
+
+	AArch64Layout_VL_Complete, ///< Indicates that the complete matrix is used.
 } AArch64Layout_VectorLayout;
 
 // Moved from AArch64BaseInfo.h
@@ -1856,6 +1858,7 @@ typedef enum aarch64_op_type {
 	AArch64_OP_SVEPREDPAT = CS_OP_SPECIAL + 17,
 	AArch64_OP_SVEVECLENSPECIFIER = CS_OP_SPECIAL + 18,
 	AArch64_OP_SME_MATRIX = CS_OP_SPECIAL + 19,
+	AArch64_OP_IMM_RANGE = CS_OP_SPECIAL + 20,
 } aarch64_op_type;
 
 /// AArch64 registers
@@ -2598,18 +2601,36 @@ typedef struct aarch64_op_mem {
   int32_t disp;	   ///< displacement/offset value
 } aarch64_op_mem;
 
+/// Components of an SME matrix.
+/// Used when an sme operand is set to signal which part should be set.
+typedef enum {
+	AArch64_SME_MATRIX_TILE,
+	AArch64_SME_MATRIX_SLICE_REG,
+	AArch64_SME_MATRIX_SLICE_OFF,
+	AArch64_SME_MATRIX_SLICE_OFF_RANGE,
+} aarch64_sme_op_part;
+
 typedef enum {
 	AArch64_SME_OP_INVALID,
 	AArch64_SME_OP_TILE, ///< SME operand is a single tile.
 	AArch64_SME_OP_TILE_VEC, ///< SME operand is a tile indexed by a register and/or immediate
 } aarch64_sme_op_type;
 
+typedef struct {
+	int8_t first;
+	int8_t offset;
+} aarch64_imm_range;
+
 /// SME Instruction's operand has index
 typedef struct aarch64_op_sme {
-  aarch64_sme_op_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC, AArch64_SME_OP_ACC_MATRIX
+  aarch64_sme_op_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC
   aarch64_reg tile; ///< Matrix tile register
   aarch64_reg slice_reg; ///< slice index reg
-  int8_t slice_offset; ///< slice index offset
+	union {
+		int8_t imm;
+		aarch64_imm_range imm_range;
+	} slice_offset; ///< slice index offset. Is set to -1 if invalid.
+	bool has_range_offset; ///< If true, the offset is a range.
   bool is_vertical;	///< Flag if slice is vertical or horizontal
 } aarch64_op_sme;
 
@@ -2627,6 +2648,7 @@ typedef struct cs_aarch64_op {
   union {
     aarch64_reg reg;	 ///< register value for REG operand
     int64_t imm;	 ///< immediate value, or index for C-IMM or IMM operand
+		aarch64_imm_range imm_range; ///< An immediate range
     double fp;		 ///< floating point value for FP operand
     aarch64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
 		aarch64_sysop sysop; ///< System operand

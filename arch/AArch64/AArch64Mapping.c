@@ -1739,8 +1739,8 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum, aarch64_sme_op_part p
 		AArch64_dec_op_count(MI);
 		va_list args;
 		va_start(args, vas);
-		int64_t First = va_arg(args, int64_t);
-		int64_t Offset = va_arg(args, int64_t);
+		int8_t First = va_arg(args, int);
+		int8_t Offset = va_arg(args, int);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first = First;
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.offset = Offset;
 		AArch64_get_detail_op(MI, 0)->sme.has_range_offset = true;
