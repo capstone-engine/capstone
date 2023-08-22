@@ -2605,6 +2605,7 @@ typedef struct aarch64_op_mem {
 /// Used when an sme operand is set to signal which part should be set.
 typedef enum {
 	AArch64_SME_MATRIX_TILE,
+	AArch64_SME_MATRIX_TILE_LIST,
 	AArch64_SME_MATRIX_SLICE_REG,
 	AArch64_SME_MATRIX_SLICE_OFF,
 	AArch64_SME_MATRIX_SLICE_OFF_RANGE,

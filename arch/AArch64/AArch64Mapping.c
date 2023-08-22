@@ -678,9 +678,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			unsigned Reg = RegMask & (1 << I);
 			if (Reg == 0)
 				continue;
-			AArch64_set_detail_op_reg(MI, OpNum, AArch64_REG_ZAD0 + I);
+			AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE_LIST, AArch64Layout_VL_D, AArch64_REG_ZAD0 + I);
 		}
-		AArch64_get_detail_op(MI, 0)->vas = AArch64Layout_VL_D;
 		break;
 	}
 	case AArch64_OP_GROUP_MRSSystemRegister:
@@ -1690,10 +1689,19 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum, aarch64_sme_op_part p
 	if (!detail_is_set(MI))
 		return;
 
+	va_list args;
 	switch(part) {
 	default:
 		printf("Unhandled SME operand part %d\n", part);
 		assert(0);
+	case AArch64_SME_MATRIX_TILE_LIST:
+		setup_sme_operand(MI);
+		va_start(args, vas);
+		int Tile = va_arg(args, int);
+		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE;
+		AArch64_get_detail_op(MI, 0)->sme.tile = Tile;
+		AArch64_get_detail_op(MI, 0)->vas = vas;
+		break;
 	case AArch64_SME_MATRIX_TILE:
 		assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
 		setup_sme_operand(MI);
@@ -1737,7 +1745,6 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum, aarch64_sme_op_part p
 		break;
 	case AArch64_SME_MATRIX_SLICE_OFF_RANGE:
 		AArch64_dec_op_count(MI);
-		va_list args;
 		va_start(args, vas);
 		int8_t First = va_arg(args, int);
 		int8_t Offset = va_arg(args, int);
