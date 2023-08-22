@@ -661,9 +661,9 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 
 		if (Reg && !isValidSysReg)
 			Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
-
 		aarch64_sysop sysop;
-		sysop.reg = Reg->SysReg;
+		// If Reg is NULL it is a generic system register.
+		sysop.reg = Reg ? Reg->SysReg : (aarch64_sysop_reg) Val;
 		aarch64_op_type type = (op_group == AArch64_OP_GROUP_MRSSystemRegister)
 								   ? AArch64_OP_REG_MRS
 								   : AArch64_OP_REG_MSR;
