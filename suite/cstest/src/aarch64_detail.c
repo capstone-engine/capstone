@@ -70,9 +70,14 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 					add_str(&result, "\t\t ; operands[%u].sme.tile: %s\n", i, cs_reg_name(*handle, op->sme.tile));
 				if (op->sme.slice_reg != AArch64_REG_INVALID)
 					add_str(&result, "\t\t ; operands[%u].sme.slice_reg: %s\n", i, cs_reg_name(*handle, op->sme.slice_reg));
-				if (op->sme.slice_offset != -1)
-					add_str(&result, "\t\t ; operands[%u].sme.slice_offset: %d\n", i, op->sme.slice_offset);
-				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset != -1)
+				if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
+					printf("\t\toperands[%u].sme.slice_offset: ", i);
+					if (op->sme.has_range_offset)
+						printf("%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
+					else
+						printf("%d\n", op->sme.slice_offset.imm);
+				}
+				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
 					add_str(&result, "\t\t ; operands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
 				break;
 			case AArch64_OP_SVCR:
