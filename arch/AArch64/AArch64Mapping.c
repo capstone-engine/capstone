@@ -1140,6 +1140,9 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		case 'd':
 			vas = AArch64Layout_VL_D;
 			break;
+		case 'q':
+			vas = AArch64Layout_VL_Q;
+			break;
 		case '\0':
 			// Implicitly Typed register
 			break;
