@@ -63,5 +63,6 @@ void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
 								  bool DoShift, unsigned ExtWidth, char SrcRegKind);
 void AArch64_set_detail_op_float(MCInst *MI, unsigned OpNum, float Val);
 void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op, aarch64_op_type type);
+void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum, aarch64_sme_op_part part, AArch64Layout_VectorLayout vas, bool is_vertical);
 
 #endif
