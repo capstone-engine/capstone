@@ -1,10 +1,10 @@
 This file details the changelog of Capstone.
 
------------------------------
-Version 5.0.1: August 21th, 2023
+--------------------------------
+Version 5.0.1: August 23rd, 2023
 
 ## What's Changed
-* Release V5.0 by @kabeor in https://github.com/capstone-engine/capstone/pull/2076
+
 * [ARM] Fix VFP feature check by @Rot127 in https://github.com/capstone-engine/capstone/pull/2090
 * Restore the ARM register naming from v4. by @gerph in https://github.com/capstone-engine/capstone/pull/2108
 * Use OS independent printf formatting. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2109
