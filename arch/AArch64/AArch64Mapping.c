@@ -77,8 +77,9 @@ static AArch64Layout_VectorLayout sme_reg_to_vas(aarch64_reg reg) {
 void AArch64_init_mri(MCRegisterInfo *MRI)
 {
 	MCRegisterInfo_InitMCRegisterInfo(
-		MRI, AArch64RegDesc, 289, 0, 0, AArch64MCRegisterClasses, 103, 0, 0,
-		AArch64RegDiffLists, 0, AArch64SubRegIdxLists, 57, 0);
+		MRI, AArch64RegDesc, AArch64_REG_ENDING, 0, 0, AArch64MCRegisterClasses,
+		ARR_SIZE(AArch64MCRegisterClasses), 0, 0,
+		AArch64RegDiffLists, 0, AArch64SubRegIdxLists, ARR_SIZE(AArch64SubRegIdxLists), 0);
 }
 
 const insn_map aarch64_insns[] = {
