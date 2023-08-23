@@ -129,6 +129,12 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 			case AArch64_OP_SVEVECLENSPECIFIER:
 				printf("\t\toperands[%u].type SVEVECLENSPECIFIER = 0x%x\n", i, op->sysop.alias.sveveclenspecifier);
 				break;
+			case AArch64_OP_TLBI:
+				printf("\t\toperands[%u].type TLBI = 0x%x\n", i, op->sysop.reg.tlbi);
+				break;
+			case AArch64_OP_IC:
+				printf("\t\toperands[%u].type IC = 0x%x\n", i, op->sysop.reg.ic);
+				break;
 		}
 		
 		access = op->access;

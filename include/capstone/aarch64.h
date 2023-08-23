@@ -1859,6 +1859,8 @@ typedef enum aarch64_op_type {
 	AArch64_OP_SVEVECLENSPECIFIER = CS_OP_SPECIAL + 18,
 	AArch64_OP_SME_MATRIX = CS_OP_SPECIAL + 19,
 	AArch64_OP_IMM_RANGE = CS_OP_SPECIAL + 20,
+	AArch64_OP_TLBI = CS_OP_SPECIAL + 21,
+	AArch64_OP_IC = CS_OP_SPECIAL + 22,
 } aarch64_op_type;
 
 /// AArch64 registers

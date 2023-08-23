@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../../Mapping.h"
 #include "../../MCInst.h"
 #include "../../MCInstPrinter.h"
 #include "../../MCRegisterInfo.h"
@@ -1087,6 +1088,13 @@ bool printSyspAlias(MCInst *MI, SStream *O)
     if (!TLBI || !AArch64_testFeatureList(MI->csh->mode, TLBI->FeaturesRequired))
 			return false;
 
+		if (detail_is_set(MI)) {
+			aarch64_sysop sysop;
+			sysop.reg = TLBI->SysReg;
+			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_TLBI;
+			AArch64_get_detail_op(MI, 0)->sysop = sysop;
+			AArch64_inc_op_count(MI);
+		}
 		Ins = "tlbip\t";
 		Name = TLBI->Name;
 	} else
@@ -1095,12 +1103,13 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 	#define TMP_STR_LEN 32
 	char Str[TMP_STR_LEN];
 	int i = 0;
-	for (; (i < TMP_STR_LEN) || (i < strlen(Ins)); ++i) {
+	for (; (i < TMP_STR_LEN) && (i < strlen(Ins)); ++i) {
 		Str[i] = tolower(Ins[i]);
 	}
-	for (; (i < TMP_STR_LEN) || (i < strlen(Name)); ++i) {
+	for (; (i < TMP_STR_LEN) && (i < strlen(Name)); ++i) {
 		Str[i] = tolower(Name[i]);
 	}
+	assert(i < TMP_STR_LEN);
 	if (CnVal == 9) {
 		Str[++i] = 'n';
 		Str[++i] = 'X';
