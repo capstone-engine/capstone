@@ -1559,7 +1559,7 @@ void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
 		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_ImmScale, Scale), OpNum, \
 					  Scale); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		printUInt32Bang(O, \
+		printInt32Bang(O, \
 					   Scale * MCOperand_getImm( \
 						   MCInst_getOperand(MI, (OpNum)))); \
 		SStream_concat0(O, markup(">")); \
