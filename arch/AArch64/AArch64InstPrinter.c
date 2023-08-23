@@ -1366,8 +1366,7 @@ void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_LogicalImm, T), OpNum, sizeof(T)); \
 		uint64_t Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		SStream_concat0(O, "#0x"); \
-		printUInt64(O, (AArch64_AM_decodeLogicalImmediate(Val, 8 * sizeof(T)))); \
+		printUInt64Bang(O, (AArch64_AM_decodeLogicalImmediate(Val, 8 * sizeof(T)))); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printLogicalImm(int64_t);
