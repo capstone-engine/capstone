@@ -902,8 +902,16 @@ bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
 
 	SStream_concat0(O, "\trprfm ");
 	const AArch64RPRFM_RPRFM *RPRFM = AArch64RPRFM_lookupRPRFMByEncoding(RPRFOp);
-	if (RPRFM)
+	if (RPRFM) {
 		SStream_concat0(O, RPRFM->Name);
+		if (detail_is_set(MI)) {
+			aarch64_sysop sysop;
+			sysop.alias = RPRFM->SysAlias;
+			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_RPRFM;
+			AArch64_get_detail_op(MI, 0)->sysop = sysop;
+			AArch64_inc_op_count(MI);
+		}
+	}
 	SStream_concat0(O, ", [");
 	printOperand(MI, 1, O); // "Rn".
 	SStream_concat0(O, "]");
@@ -985,6 +993,13 @@ bool printSysAlias(MCInst *MI, SStream *O)
       const AArch64IC_IC *IC = AArch64IC_lookupICByEncoding(Encoding);
       if (!IC || !AArch64_testFeatureList(MI->csh->mode, IC->FeaturesRequired))
         return false;
+			if (detail_is_set(MI)) {
+				aarch64_sysop sysop;
+				sysop.reg = IC->SysReg;
+				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_IC;
+				AArch64_get_detail_op(MI, 0)->sysop = sysop;
+				AArch64_inc_op_count(MI);
+			}
 
 			NeedsReg = IC->NeedsReg;
 			Ins = "ic\t";
@@ -1002,6 +1017,13 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			const AArch64DC_DC *DC = AArch64DC_lookupDCByEncoding(Encoding);
 			if (!DC || !AArch64_testFeatureList(MI->csh->mode, DC->FeaturesRequired))
 				return false;
+			if (detail_is_set(MI)) {
+				aarch64_sysop sysop;
+				sysop.alias = DC->SysAlias;
+				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_DC;
+				AArch64_get_detail_op(MI, 0)->sysop = sysop;
+				AArch64_inc_op_count(MI);
+			}
 
 			NeedsReg = true;
 			Ins = "dc\t";
@@ -1014,6 +1036,13 @@ bool printSysAlias(MCInst *MI, SStream *O)
       if (!AT || !AArch64_testFeatureList(MI->csh->mode, AT->FeaturesRequired))
 				return false;
 
+			if (detail_is_set(MI)) {
+				aarch64_sysop sysop;
+				sysop.alias = AT->SysAlias;
+				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_AT;
+				AArch64_get_detail_op(MI, 0)->sysop = sysop;
+				AArch64_inc_op_count(MI);
+			}
 			NeedsReg = true;
 			Ins = "at\t";
 			Name = AT->Name;
@@ -1026,6 +1055,13 @@ bool printSysAlias(MCInst *MI, SStream *O)
     if (!TLBI || !AArch64_testFeatureList(MI->csh->mode, TLBI->FeaturesRequired))
 			return false;
 
+		if (detail_is_set(MI)) {
+			aarch64_sysop sysop;
+			sysop.reg = TLBI->SysReg;
+			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_TLBI;
+			AArch64_get_detail_op(MI, 0)->sysop = sysop;
+			AArch64_inc_op_count(MI);
+		}
 		NeedsReg = TLBI->NeedsReg;
 		Ins = "tlbi\t";
 		Name = TLBI->Name;
@@ -1035,12 +1071,13 @@ bool printSysAlias(MCInst *MI, SStream *O)
 	#define TMP_STR_LEN 32
 	char Str[TMP_STR_LEN];
 	int i = 0;
-	for (; (i < TMP_STR_LEN) || (i < strlen(Ins)); ++i) {
+	for (; (i < TMP_STR_LEN) && (i < strlen(Ins)); ++i) {
 		Str[i] = tolower(Ins[i]);
 	}
-	for (; (i < TMP_STR_LEN) || (i < strlen(Name)); ++i) {
+	for (; (i < TMP_STR_LEN) && (i < strlen(Name)); ++i) {
 		Str[i] = tolower(Name[i]);
 	}
+	assert(i < TMP_STR_LEN);
 	Str[++i] = '\0';
 	#undef TMP_STR_LEN
 
@@ -1049,6 +1086,7 @@ bool printSysAlias(MCInst *MI, SStream *O)
 	if (NeedsReg) {
 		SStream_concat0(O, ", ");
 		printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (4))));
+		AArch64_set_detail_op_reg(MI, 4, MCInst_getOpVal(MI, 4));
 	}
 
 	return true;
