@@ -22,8 +22,8 @@
 void PPC_init_mri(MCRegisterInfo *MRI)
 {
 	MCRegisterInfo_InitMCRegisterInfo(
-		MRI, PPCRegDesc, 289, 0, 0, PPCMCRegisterClasses, 103, 0, 0,
-		PPCRegDiffLists, 0, PPCSubRegIdxLists, 57, PPCRegEncodingTable);
+		MRI, PPCRegDesc, PPC_REG_ENDING, 0, 0, PPCMCRegisterClasses, ARR_SIZE(PPCMCRegisterClasses), 0, 0,
+		PPCRegDiffLists, 0, PPCSubRegIdxLists, ARR_SIZE(PPCSubRegIdxLists), PPCRegEncodingTable);
 }
 
 const char *PPC_reg_name(csh handle, unsigned int reg)
