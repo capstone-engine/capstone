@@ -196,8 +196,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				printRegName(O, MCOperand_getReg(Op0));
 				SStream_concat0(O, ", ");
 				printRegName(O, MCOperand_getReg(Op1));
-				SStream_concat(O, "%s%s", ", ", markup("<imm:"));
-				printUInt32(O, shift);
+				SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), shift);
 				SStream_concat0(O, markup(">"));
 				;
 				return;
