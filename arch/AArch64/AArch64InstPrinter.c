@@ -154,7 +154,22 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				printRegName(O, MCOperand_getReg(Op0));
 				SStream_concat0(O, ", ");
 				printRegName(O, getWRegFromXReg(MCOperand_getReg(Op1)));
-				;
+				if (detail_is_set(MI)) {
+					AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
+					AArch64_set_detail_op_reg(MI, 1, getWRegFromXReg(MCOperand_getReg(Op1)));
+					if (strings_match(AsmMnemonic, "uxtb"))
+						AArch64_get_detail_op(MI, -1)->ext = AArch64_EXT_UXTB;
+					else if (strings_match(AsmMnemonic, "sxtb"))
+						AArch64_get_detail_op(MI, -1)->ext = AArch64_EXT_SXTB;
+					else if (strings_match(AsmMnemonic, "uxth"))
+						AArch64_get_detail_op(MI, -1)->ext = AArch64_EXT_UXTH;
+					else if (strings_match(AsmMnemonic, "sxth"))
+						AArch64_get_detail_op(MI, -1)->ext = AArch64_EXT_SXTH;
+					else if (strings_match(AsmMnemonic, "sxtw"))
+						AArch64_get_detail_op(MI, -1)->ext = AArch64_EXT_SXTW;
+					else
+						AArch64_get_detail_op(MI, -1)->ext = AArch64_EXT_INVALID;
+				}
 				return;
 			}
 		}
