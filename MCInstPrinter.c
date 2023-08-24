@@ -188,6 +188,11 @@ unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t s
 	while(left <= right) {
 		m = (left + right) / 2;
 		if (encoding == index[m].encoding) {
+			// LLVM actually uses lower_bound for the index table search
+			// Here we need to check if a previous entry is of the same encoding
+			// and return the first one.
+			while (m >= 0 && encoding == index[m - 1].encoding)
+				--m;
 			return m;
 		}
 
