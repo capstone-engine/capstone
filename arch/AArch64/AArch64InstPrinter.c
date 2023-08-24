@@ -147,9 +147,9 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			}
 
 			if (AsmMnemonic) {
-				SStream_concat1(O, '\t');
+				SStream_concat1(O, ' ');
 				SStream_concat(O, "%s", AsmMnemonic);
-				SStream_concat0(O, "\t");
+				SStream_concat0(O, " ");
 
 				printRegName(O, MCOperand_getReg(Op0));
 				SStream_concat0(O, ", ");
@@ -189,9 +189,9 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				shift = immr;
 			}
 			if (AsmMnemonic) {
-				SStream_concat1(O, '\t');
+				SStream_concat1(O, ' ');
 				SStream_concat(O, "%s", AsmMnemonic);
-				SStream_concat0(O, "\t");
+				SStream_concat0(O, " ");
 
 				printRegName(O, MCOperand_getReg(Op0));
 				SStream_concat0(O, ", ");
@@ -206,9 +206,9 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 
 		// SBFIZ/UBFIZ aliases
 		if (MCOperand_getImm(Op2) > MCOperand_getImm(Op3)) {
-			SStream_concat1(O, '\t');
+			SStream_concat1(O, ' ');
 			SStream_concat(O, "%s", (IsSigned ? "sbfiz" : "ubfiz"));
-			SStream_concat0(O, "\t");
+			SStream_concat0(O, " ");
 
 			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat0(O, ", ");
@@ -223,9 +223,9 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		}
 
 		// Otherwise SBFX/UBFX is the preferred form
-		SStream_concat1(O, '\t');
+		SStream_concat1(O, ' ');
 		SStream_concat(O, "%s", (IsSigned ? "sbfx" : "ubfx"));
-		SStream_concat0(O, "\t");
+		SStream_concat0(O, " ");
 
 		printRegName(O, MCOperand_getReg(Op0));
 		SStream_concat0(O, ", ");
@@ -255,7 +255,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			int LSB = (BitWidth - ImmR) % BitWidth;
 			int Width = ImmS + 1;
 
-			SStream_concat0(O, "\tbfc\t");
+			SStream_concat0(O, "bfc ");
 			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt32Bang(O, LSB);
@@ -270,7 +270,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			int LSB = (BitWidth - ImmR) % BitWidth;
 			int Width = ImmS + 1;
 
-			SStream_concat0(O, "\tbfi\t");
+			SStream_concat0(O, "bfi ");
 			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat0(O, ", ");
 			printRegName(O, MCOperand_getReg(Op2));
@@ -286,7 +286,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		int LSB = ImmR;
 		int Width = ImmS - ImmR + 1;
 		// Otherwise BFXIL the preferred form
-		SStream_concat0(O, "\tbfxil\t");
+		SStream_concat0(O, "bfxil ");
 		printRegName(O, MCOperand_getReg(Op0));
 		SStream_concat0(O, ", ");
 		printRegName(O, MCOperand_getReg(Op2));
@@ -328,7 +328,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 
 		if (AArch64_AM_isMOVZMovAlias(Value, Shift,
 									  Opcode == AArch64_MOVZXi ? 64 : 32)) {
-			SStream_concat0(O, "\tmov\t");
+			SStream_concat0(O, "mov ");
 			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
@@ -348,7 +348,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			Value = Value & 0xffffffff;
 
 		if (AArch64_AM_isMOVNMovAlias(Value, Shift, RegWidth)) {
-			SStream_concat0(O, "\tmov\t");
+			SStream_concat0(O, "mov ");
 			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
@@ -365,7 +365,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		uint64_t Value = AArch64_AM_decodeLogicalImmediate(
 			MCOperand_getImm(MCInst_getOperand(MI, (2))), RegWidth);
 		if (!AArch64_AM_isAnyMOVWMovAlias(Value, RegWidth)) {
-			SStream_concat0(O, "\tmov\t");
+			SStream_concat0(O, "mov ");
 			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
@@ -375,7 +375,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 	}
 
 	if (Opcode == AArch64_SPACE) {
-		SStream_concat1(O, '\t');
+		SStream_concat1(O, ' ');
 		SStream_concat(O, "%s", " SPACE ");
 		printInt64(O, MCOperand_getImm(MCInst_getOperand(MI, (1))));
 		;
@@ -385,7 +385,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 	// Instruction TSB is specified as a one operand instruction, but 'csync' is
 	// not encoded, so for printing it is treated as a special case here:
 	if (Opcode == AArch64_TSB) {
-		SStream_concat0(O, "\ttsb\tcsync");
+		SStream_concat0(O, "tsb csync");
 		return;
 	}
 
@@ -807,8 +807,8 @@ void AArch64AppleInstPrinter_printInst(MCInst *MI, uint64_t Address, const char 
 
 	bool IsTbx;
 	if (isTblTbxInstruction(MCInst_getOpcode(MI), &Layout, &IsTbx)) {
-		SStream_concat(O, "%s%s%s", "\t", (IsTbx ? "tbx" : "tbl"), Layout);
-		SStream_concat0(O, "\t");
+		SStream_concat(O, "%s%s", (IsTbx ? "tbx" : "tbl"), Layout);
+		SStream_concat0(O, " ");
 
 		printRegNameAlt(O, MCOperand_getReg(MCInst_getOperand(MI, (0))),
 					 AArch64_vreg);
@@ -827,8 +827,8 @@ void AArch64AppleInstPrinter_printInst(MCInst *MI, uint64_t Address, const char 
 
 	const LdStNInstrDesc *LdStDesc = getLdStNInstrDesc(Opcode);
 	if (LdStDesc) {
-		SStream_concat(O, "%s%s%s", "\t", LdStDesc->Mnemonic, LdStDesc->Layout);
-		SStream_concat0(O, "\t");
+		SStream_concat(O, "%s%s", LdStDesc->Mnemonic, LdStDesc->Layout);
+		SStream_concat0(O, " ");
 
 		// Now onto the operands: first a vector list with possible lane
 		// specifier. E.g. { v0 }[2]
@@ -900,7 +900,7 @@ bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
 	unsigned RPRFOp =
 		(SignExtend << 5) | (Option0 << 4) | (Shift << 3) | (PRFOp & 0x7);
 
-	SStream_concat0(O, "\trprfm ");
+	SStream_concat0(O, "rprfm ");
 	const AArch64RPRFM_RPRFM *RPRFM = AArch64RPRFM_lookupRPRFMByEncoding(RPRFOp);
 	if (RPRFM) {
 		SStream_concat0(O, RPRFM->Name);
@@ -973,16 +973,16 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			default:
 				return false;
 			case 4:
-				Ins = "cfp\t";
+				Ins = "cfp ";
 				break;
 			case 5:
-				Ins = "dvp\t";
+				Ins = "dvp ";
 				break;
 			case 6:
-				Ins = "cosp\t";
+				Ins = "cosp ";
 				break;
 			case 7:
-				Ins = "cpp\t";
+				Ins = "cpp ";
 				break;
 			}
 			Name = "RCTX";
@@ -1002,7 +1002,7 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			}
 
 			NeedsReg = IC->NeedsReg;
-			Ins = "ic\t";
+			Ins = "ic ";
 			Name = IC->Name;
 		}
 		} break;
@@ -1026,7 +1026,7 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			}
 
 			NeedsReg = true;
-			Ins = "dc\t";
+			Ins = "dc ";
 			Name = DC->Name;
 		} break;
 		// AT aliases
@@ -1044,7 +1044,7 @@ bool printSysAlias(MCInst *MI, SStream *O)
 				AArch64_inc_op_count(MI);
 			}
 			NeedsReg = true;
-			Ins = "at\t";
+			Ins = "at ";
 			Name = AT->Name;
 		} break;
 		}
@@ -1063,7 +1063,7 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			AArch64_inc_op_count(MI);
 		}
 		NeedsReg = TLBI->NeedsReg;
-		Ins = "tlbi\t";
+		Ins = "tlbi ";
 		Name = TLBI->Name;
 	} else
 		return false;
@@ -1081,7 +1081,7 @@ bool printSysAlias(MCInst *MI, SStream *O)
 	Str[++i] = '\0';
 	#undef TMP_STR_LEN
 
-	SStream_concat1(O, '\t');
+	SStream_concat1(O, ' ');
 	SStream_concat0(O, Str);
 	if (NeedsReg) {
 		SStream_concat0(O, ", ");
@@ -1133,7 +1133,7 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 			AArch64_get_detail_op(MI, 0)->sysop = sysop;
 			AArch64_inc_op_count(MI);
 		}
-		Ins = "tlbip\t";
+		Ins = "tlbip ";
 		Name = TLBI->Name;
 	} else
 		return false;
@@ -1156,7 +1156,7 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 	}
 	#undef TMP_STR_LEN
 
-	SStream_concat1(O, '\t');
+	SStream_concat1(O, ' ');
 	SStream_concat0(O, Str);
 	SStream_concat0(O, ", ");
 	if (MCOperand_getReg(MCInst_getOperand(MI, (4))) == AArch64_XZR)
