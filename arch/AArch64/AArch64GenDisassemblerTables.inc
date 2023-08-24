@@ -27560,6 +27560,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
 static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *MI, \
 		uint64_t Address, const void *Decoder, bool *DecodeComplete) \
 { \
+  *DecodeComplete = true; \
   InsnType tmp; \
   switch (Idx) { \
   default: /* llvm_unreachable("Invalid index!"); */ \
