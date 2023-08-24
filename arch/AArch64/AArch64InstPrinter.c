@@ -1069,16 +1069,9 @@ bool printSysAlias(MCInst *MI, SStream *O)
 		return false;
 
 	#define TMP_STR_LEN 32
-	char Str[TMP_STR_LEN];
-	int i = 0;
-	for (; (i < TMP_STR_LEN) && (i < strlen(Ins)); ++i) {
-		Str[i] = tolower(Ins[i]);
-	}
-	for (; (i < TMP_STR_LEN) && (i < strlen(Name)); ++i) {
-		Str[i] = tolower(Name[i]);
-	}
-	assert(i < TMP_STR_LEN);
-	Str[++i] = '\0';
+	char Str[TMP_STR_LEN] = {0};
+	append_to_str_lower(Str, TMP_STR_LEN, Ins);
+	append_to_str_lower(Str, TMP_STR_LEN, Name);
 	#undef TMP_STR_LEN
 
 	SStream_concat1(O, ' ');
@@ -1139,20 +1132,12 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 		return false;
 
 	#define TMP_STR_LEN 32
-	char Str[TMP_STR_LEN];
-	int i = 0;
-	for (; (i < TMP_STR_LEN) && (i < strlen(Ins)); ++i) {
-		Str[i] = tolower(Ins[i]);
-	}
-	for (; (i < TMP_STR_LEN) && (i < strlen(Name)); ++i) {
-		Str[i] = tolower(Name[i]);
-	}
-	assert(i < TMP_STR_LEN);
+	char Str[TMP_STR_LEN] = {0};
+	append_to_str_lower(Str, TMP_STR_LEN, Ins);
+	append_to_str_lower(Str, TMP_STR_LEN, Name);
+
 	if (CnVal == 9) {
-		Str[++i] = 'n';
-		Str[++i] = 'X';
-		Str[++i] = 'S';
-		Str[++i] = '\0';
+		append_to_str_lower(Str, TMP_STR_LEN, "nxs");
 	}
 	#undef TMP_STR_LEN
 
