@@ -283,10 +283,8 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 
 			SStream_concat0(O, "bfc ");
 			printRegName(O, MCOperand_getReg(Op0));
-			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
-			printInt32Bang(O, LSB);
-			SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
-			printInt32Bang(O, Width);
+			SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), LSB);
+			SStream_concat(O, "%s%s%s#%d", markup(">"), ", ", markup("<imm:"), Width);
 			SStream_concat0(O, markup(">"));
 			;
 			return;
@@ -300,10 +298,8 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			printRegName(O, MCOperand_getReg(Op0));
 			SStream_concat0(O, ", ");
 			printRegName(O, MCOperand_getReg(Op2));
-			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
-			printInt32Bang(O, LSB);
-			SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
-			printInt32Bang(O, Width);
+			SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), LSB);
+			SStream_concat(O, "%s%s%s#%d", markup(">"), ", ", markup("<imm:"), Width);
 			SStream_concat0(O, markup(">"));
 			;
 			return;
