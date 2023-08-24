@@ -1132,7 +1132,8 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 		// TLBIP aliases
 
 		if (CnVal == 9) {
-			if (!AArch64_getFeatureBits(MI->csh->mode, AArch64_FeatureXS))
+			if (!AArch64_getFeatureBits(MI->csh->mode, AArch64_FeatureAll) ||
+				!AArch64_getFeatureBits(MI->csh->mode, AArch64_FeatureXS))
 				return false;
 			Encoding &= ~(1 << 7);
 		}
