@@ -5,14 +5,14 @@
 #include "AArch64DisassemblerExtension.h"
 #include "AArch64BaseInfo.h"
 
-bool AArch64_getFeatureBits(unsigned int mode, aarch64_insn_group feature)
+bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature)
 {
 	// we support everything
 	return true;
 }
 
 /// Tests a NULL terminated array of features if they are enabled.
-bool AArch64_testFeatureList(unsigned int mode, const aarch64_insn_group *features)
+bool AArch64_testFeatureList(unsigned int mode, const unsigned int *features)
 {
 	int i = 0;
 	while (features[i]) {

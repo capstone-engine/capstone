@@ -13,7 +13,7 @@
 #include "capstone/aarch64.h"
 #include "capstone/capstone.h"
 
-bool AArch64_getFeatureBits(unsigned int mode, aarch64_insn_group feature);
-bool AArch64_testFeatureList(unsigned int mode, const aarch64_insn_group *features);
+bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature);
+bool AArch64_testFeatureList(unsigned int mode, const unsigned int *features);
 
 #endif // CS_AARCH64_DISASSEMBLER_EXTENSION_H
