@@ -274,7 +274,8 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		if ((MCOperand_getReg(Op2) == AArch64_WZR ||
 			 MCOperand_getReg(Op2) == AArch64_XZR) &&
 			(ImmR == 0 || ImmS < ImmR) &&
-			AArch64_getFeatureBits(MI->csh->mode, AArch64_HasV8_2aOps)) {
+			(AArch64_getFeatureBits(MI->csh->mode, AArch64_FeatureAll) ||
+			 AArch64_getFeatureBits(MI->csh->mode, AArch64_HasV8_2aOps))) {
 			// BFC takes precedence over its entire range, sligtly differently
 			// to BFI.
 			int BitWidth = Opcode == AArch64_BFMXri ? 64 : 32;
