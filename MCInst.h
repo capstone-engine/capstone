@@ -171,4 +171,6 @@ static inline bool MCInst_isAlias(const MCInst *MI) {
 	return MI->isAliasInstr;
 }
 
+void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI);
+
 #endif

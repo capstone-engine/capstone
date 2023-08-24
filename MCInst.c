@@ -289,3 +289,14 @@ void MCInst_setIsAlias(MCInst *MI, bool Flag) {
 	MI->isAliasInstr = Flag;
 	MI->flat_insn->is_alias = Flag;
 }
+
+/// @brief Copies the relevant members of a temporary MCInst to
+/// the main MCInst. This is used if TryDecode was run on a temporary MCInst.
+/// @param MI The main MCInst
+/// @param TmpMI The temporary MCInst.
+void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI) {
+	MI->size = TmpMI->size;
+	MI->Opcode = TmpMI->Opcode;
+	assert(MI->size < MAX_MC_OPS);
+	memcpy(MI->Operands, TmpMI->Operands, sizeof(MI->Operands[0]) * MI->size);
+}

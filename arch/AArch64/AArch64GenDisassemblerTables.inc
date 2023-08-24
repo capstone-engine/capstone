@@ -34354,11 +34354,15 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip |= (*Ptr++) << 8; \
       NumToSkip |= (*Ptr++) << 16; \
       /* Perform the decode operation. */ \
-      MCInst_setOpcode(MI, Opc); \
+      MCInst TmpMI = { 0 }; \
+      TmpMI.MRI = MI->MRI; \
+      TmpMI.csh = MI->csh; \
+      MCInst_setOpcode(&TmpMI, Opc); \
       bool DecodeComplete; \
-      S = decoder(S, DecodeIdx, insn, MI, Address, Decoder, &DecodeComplete); \
+      S = decoder(S, DecodeIdx, insn, &TmpMI, Address, Decoder, &DecodeComplete); \
       if (DecodeComplete) { \
         /* Decoding complete. */ \
+        MCInst_updateWithTmpMI(MI, &TmpMI); \
         return S; \
       } else { \
         /* If the decoding was incomplete, skip. */ \
