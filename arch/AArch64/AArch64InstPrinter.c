@@ -198,7 +198,19 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				printRegName(O, MCOperand_getReg(Op1));
 				SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), shift);
 				SStream_concat0(O, markup(">"));
-				;
+				if (detail_is_set(MI)) {
+					AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
+					AArch64_set_detail_op_reg(MI, 1, MCOperand_getReg(Op1));
+					if (strings_match(AsmMnemonic, "lsl"))
+						AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
+					else if (strings_match(AsmMnemonic, "lsr"))
+						AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSR;
+					else if (strings_match(AsmMnemonic, "asr"))
+						AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_ASR;
+					else
+						AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_INVALID;
+					AArch64_get_detail_op(MI, -1)->shift.value = shift;
+				}
 				return;
 			}
 		}
