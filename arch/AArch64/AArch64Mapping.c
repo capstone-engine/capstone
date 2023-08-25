@@ -86,10 +86,28 @@ const insn_map aarch64_insns[] = {
 #include "AArch64GenCSMappingInsn.inc"
 };
 
-// static const name_map insn_alias_mnem_map[] = {
-// #include "AArch64GenCSAliasMnemMap.inc"
-// 	{ AArch64_INS_ALIAS_END, NULL },
-// };
+static const name_map insn_alias_mnem_map[] = {
+#include "AArch64GenCSAliasMnemMap.inc"
+	{ AArch64_INS_ALIAS_CFP, "cfp" },
+	{ AArch64_INS_ALIAS_DVP, "dvp" },
+	{ AArch64_INS_ALIAS_COSP, "cosp" },
+	{ AArch64_INS_ALIAS_CPP, "cpp" },
+	{ AArch64_INS_ALIAS_IC, "ic" },
+	{ AArch64_INS_ALIAS_DC, "dc" },
+	{ AArch64_INS_ALIAS_AT, "at" },
+	{ AArch64_INS_ALIAS_TLBI, "tlbi" },
+	{ AArch64_INS_ALIAS_TLBIP, "tlbip" },
+	{ AArch64_INS_ALIAS_RPRFM, "rprfm" },
+	{ AArch64_INS_ALIAS_LSL, "lsl" },
+	{ AArch64_INS_ALIAS_SBFX, "sbfx" },
+	{ AArch64_INS_ALIAS_UBFX, "ubfx" },
+	{ AArch64_INS_ALIAS_SBFIZ, "sbfiz" },
+	{ AArch64_INS_ALIAS_UBFIZ, "ubfiz" },
+	{ AArch64_INS_ALIAS_BFC, "bfc" },
+	{ AArch64_INS_ALIAS_BFI, "bfi" },
+	{ AArch64_INS_ALIAS_BFXIL, "bfxil" },
+	{ AArch64_INS_ALIAS_END, NULL },
+};
 
 
 const char *AArch64_reg_name(csh handle, unsigned int reg)
@@ -151,7 +169,10 @@ bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
+	MI->fillDetailOps = detail_is_set(MI);
+	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	AArch64_LLVM_printInstruction(MI, O, info);
+	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
 }
 
 // given internal insn id, return public instruction info
@@ -169,6 +190,12 @@ static const char *const insn_name_maps[] = {
 const char *AArch64_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	if (id < AArch64_INS_ALIAS_END && id > AArch64_INS_ALIAS_BEGIN) {
+		if (id - AArch64_INS_ALIAS_BEGIN >= ARR_SIZE(insn_alias_mnem_map))
+			return NULL;
+
+		return insn_alias_mnem_map[id - AArch64_INS_ALIAS_BEGIN - 1].name;
+	}
 	if (id >= AArch64_INS_ENDING)
 		return NULL;
 

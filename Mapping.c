@@ -364,7 +364,7 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 	for (; j < sizeof(alias_mnem) - 1; ++j, ++i) {
 		if (!asm_str_buf[i] || asm_str_buf[i] == ' ' || asm_str_buf[i] == '\t')
 			break;
-		alias_mnem[j] = O->buffer[i];
+		alias_mnem[j] = asm_str_buf[i];
 	}
 
 	MI->flat_insn->alias_id = name2id(alias_mnem_id_map, map_size, alias_mnem);

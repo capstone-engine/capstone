@@ -87,26 +87,38 @@ const char *getRegName(unsigned Reg) { return getRegisterName(Reg, AArch64_NoReg
 
 void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 {
-	// Check for special encodings and print the canonical alias instead.
+	bool isAlias = false;
+	bool useAliasDetails = map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, useAliasDetails);
 
 	unsigned Opcode = MCInst_getOpcode(MI);
 
-	if (Opcode == AArch64_SYSxt)
+	if (Opcode == AArch64_SYSxt) {
 		if (printSysAlias(MI, O)) {
-			;
-			return;
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
+			if (useAliasDetails)
+				return;
 		}
+	}
 
-	if (Opcode == AArch64_SYSPxt || Opcode == AArch64_SYSPxt_XZR)
+	if (Opcode == AArch64_SYSPxt || Opcode == AArch64_SYSPxt_XZR) {
 		if (printSyspAlias(MI, O)) {
-			;
-			return;
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
+			if (useAliasDetails)
+				return;
 		}
+	}
 
 	// RPRFM overlaps PRFM (reg), so try to print it as RPRFM here.
 	if ((Opcode == AArch64_PRFMroX) || (Opcode == AArch64_PRFMroW)) {
-		if (printRangePrefetchAlias(MI, O, Annot))
-			return;
+		if (printRangePrefetchAlias(MI, O, Annot)) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
+			if (useAliasDetails)
+				return;
+		}
 	}
 
 	// SBFM/UBFM should print to a nicer aliased form if possible.
@@ -154,7 +166,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				printRegName(O, MCOperand_getReg(Op0));
 				SStream_concat0(O, ", ");
 				printRegName(O, getWRegFromXReg(MCOperand_getReg(Op1)));
-				if (detail_is_set(MI)) {
+				if (detail_is_set(MI) && useAliasDetails) {
 					AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
 					AArch64_set_detail_op_reg(MI, 1, getWRegFromXReg(MCOperand_getReg(Op1)));
 					if (strings_match(AsmMnemonic, "uxtb"))
@@ -170,7 +182,12 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 					else
 						AArch64_get_detail_op(MI, -1)->ext = AArch64_EXT_INVALID;
 				}
-				return;
+				isAlias = true;
+				MCInst_setIsAlias(MI, isAlias);
+				if (useAliasDetails)
+					return;
+				else
+					goto add_real_detail;
 			}
 		}
 
@@ -213,7 +230,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				printRegName(O, MCOperand_getReg(Op1));
 				SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), shift);
 				SStream_concat0(O, markup(">"));
-				if (detail_is_set(MI)) {
+				if (detail_is_set(MI) && useAliasDetails) {
 					AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
 					AArch64_set_detail_op_reg(MI, 1, MCOperand_getReg(Op1));
 					if (strings_match(AsmMnemonic, "lsl"))
@@ -226,7 +243,12 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 						AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_INVALID;
 					AArch64_get_detail_op(MI, -1)->shift.value = shift;
 				}
-				return;
+				isAlias = true;
+				MCInst_setIsAlias(MI, isAlias);
+				if (useAliasDetails)
+					return;
+				else
+					goto add_real_detail;
 			}
 		}
 
@@ -244,8 +266,18 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
 			printInt64Bang(O, MCOperand_getImm(Op3) + 1);
 			SStream_concat0(O, markup(">"));
-			;
-			return;
+			if (detail_is_set(MI) && useAliasDetails) {
+				AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
+				AArch64_set_detail_op_reg(MI, 1, MCOperand_getReg(Op1));
+				AArch64_set_detail_op_imm(MI, 2, AArch64_OP_IMM, (Is64Bit ? 64 : 32) - MCOperand_getImm(Op2));
+				AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM, MCOperand_getImm(Op3) + 1);
+			}
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		}
 
 		// Otherwise SBFX/UBFX is the preferred form
@@ -261,11 +293,23 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
 		printInt64Bang(O, MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1);
 		SStream_concat0(O, markup(">"));
-		;
-		return;
+		if (detail_is_set(MI) && useAliasDetails) {
+			AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
+			AArch64_set_detail_op_reg(MI, 1, MCOperand_getReg(Op1));
+			AArch64_set_detail_op_imm(MI, 2, AArch64_OP_IMM, MCOperand_getImm(Op2));
+			AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM, MCOperand_getImm(Op3) - MCOperand_getImm(Op2) + 1);
+		}
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
+		if (useAliasDetails)
+			return;
+		else
+			goto add_real_detail;
 	}
 
 	if (Opcode == AArch64_BFMXri || Opcode == AArch64_BFMWri) {
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
 		MCOperand *Op0 = MCInst_getOperand(MI, (0)); // Op1 == Op0
 		MCOperand *Op2 = MCInst_getOperand(MI, (2));
 		int ImmR = MCOperand_getImm(MCInst_getOperand(MI, (3)));
@@ -287,8 +331,16 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), LSB);
 			SStream_concat(O, "%s%s%s#%d", markup(">"), ", ", markup("<imm:"), Width);
 			SStream_concat0(O, markup(">"));
-			;
-			return;
+			if (detail_is_set(MI) && useAliasDetails) {
+				AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
+				AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM, LSB);
+				AArch64_set_detail_op_imm(MI, 4, AArch64_OP_IMM, Width);
+			}
+
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else if (ImmS < ImmR) {
 			// BFI alias
 			int BitWidth = Opcode == AArch64_BFMXri ? 64 : 32;
@@ -302,8 +354,16 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), LSB);
 			SStream_concat(O, "%s%s%s#%d", markup(">"), ", ", markup("<imm:"), Width);
 			SStream_concat0(O, markup(">"));
-			;
-			return;
+			if (detail_is_set(MI) && useAliasDetails) {
+				AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
+				AArch64_set_detail_op_reg(MI, 2, MCOperand_getReg(Op2));
+				AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM, LSB);
+				AArch64_set_detail_op_imm(MI, 4, AArch64_OP_IMM, Width);
+			}
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		}
 
 		int LSB = ImmR;
@@ -313,13 +373,17 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		printRegName(O, MCOperand_getReg(Op0));
 		SStream_concat0(O, ", ");
 		printRegName(O, MCOperand_getReg(Op2));
-		SStream_concat(O, "%s%s", ", ", markup("<imm:"));
-		printInt32Bang(O, LSB);
-		SStream_concat(O, "%s%s%s", markup(">"), ", ", markup("<imm:"));
-		printInt32Bang(O, Width);
+		SStream_concat(O, "%s%s#%d", ", ", markup("<imm:"), LSB);
+		SStream_concat(O, "%s%s%s#%d", markup(">"), ", ", markup("<imm:"), Width);
 		SStream_concat0(O, markup(">"));
-		;
-		return;
+		if (detail_is_set(MI) && useAliasDetails) {
+			AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
+			AArch64_set_detail_op_reg(MI, 2, MCOperand_getReg(Op2));
+			AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM, LSB);
+			AArch64_set_detail_op_imm(MI, 4, AArch64_OP_IMM, Width);
+		}
+		if (useAliasDetails)
+			return;
 	}
 
 	// Symbolic operands for MOVZ, MOVN and MOVK already imply a shift
@@ -351,12 +415,19 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 
 		if (AArch64_AM_isMOVZMovAlias(Value, Shift,
 									  Opcode == AArch64_MOVZXi ? 64 : 32)) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "mov ");
 			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
 			SStream_concat0(O, markup(">"));
-			return;
+			if (detail_is_set(MI) && useAliasDetails) {
+				AArch64_set_detail_op_reg(MI, 0, MCInst_getOpVal(MI, 0));
+				AArch64_set_detail_op_imm(MI, 1, AArch64_OP_IMM, SignExtend64(Value, RegWidth));
+			}
+			if (useAliasDetails)
+				return;
 		}
 	}
 
@@ -371,12 +442,19 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			Value = Value & 0xffffffff;
 
 		if (AArch64_AM_isMOVNMovAlias(Value, Shift, RegWidth)) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "mov ");
 			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
 			SStream_concat0(O, markup(">"));
-			return;
+			if (detail_is_set(MI) && useAliasDetails) {
+				AArch64_set_detail_op_reg(MI, 0, MCInst_getOpVal(MI, 0));
+				AArch64_set_detail_op_imm(MI, 1, AArch64_OP_IMM, SignExtend64(Value, RegWidth));
+			}
+			if (useAliasDetails)
+				return;
 		}
 	}
 
@@ -388,39 +466,48 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		uint64_t Value = AArch64_AM_decodeLogicalImmediate(
 			MCOperand_getImm(MCInst_getOperand(MI, (2))), RegWidth);
 		if (!AArch64_AM_isAnyMOVWMovAlias(Value, RegWidth)) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "mov ");
 			printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (0))));
 			SStream_concat(O, "%s%s", ", ", markup("<imm:"));
 			printInt64Bang(O, SignExtend64(Value, RegWidth));
 			SStream_concat0(O, markup(">"));
-			return;
+			if (detail_is_set(MI) && useAliasDetails) {
+				AArch64_set_detail_op_reg(MI, 0, MCInst_getOpVal(MI, 0));
+				AArch64_set_detail_op_imm(MI, 1, AArch64_OP_IMM, SignExtend64(Value, RegWidth));
+			}
+			if (useAliasDetails)
+				return;
 		}
 	}
 
 	if (Opcode == AArch64_SPACE) {
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
 		SStream_concat1(O, ' ');
 		SStream_concat(O, "%s", " SPACE ");
 		printInt64(O, MCOperand_getImm(MCInst_getOperand(MI, (1))));
-		;
-		return;
+		if (detail_is_set(MI) && useAliasDetails) {
+			AArch64_set_detail_op_imm(MI, 1, AArch64_OP_IMM, MCInst_getOpVal(MI, 1));
+		}
+		if (useAliasDetails)
+			return;
 	}
 
-	// Instruction TSB is specified as a one operand instruction, but 'csync' is
-	// not encoded, so for printing it is treated as a special case here:
-	if (Opcode == AArch64_TSB) {
-		SStream_concat0(O, "tsb csync");
-		return;
-	}
+	if (!isAlias)
+		isAlias |= printAliasInstr(MI, Address, O);
 
-	if (!printAliasInstr(MI, Address, O))
+add_real_detail:
+	MCInst_setIsAlias(MI, isAlias);
+
+	if (!isAlias || !useAliasDetails) {
+		map_set_fill_detail_ops(MI, !useAliasDetails);
+		if (isAlias)
+			SStream_Close(O);
 		printInstruction(MI, Address, O);
-
-	;
-
-	if (atomicBarrierDroppedOnZero(Opcode) &&
-		(MCOperand_getReg(MCInst_getOperand(MI, (0))) == AArch64_XZR ||
-		 MCOperand_getReg(MCInst_getOperand(MI, (0))) == AArch64_WZR)) {
-		;
+		if (isAlias)
+			SStream_Open(O);
 	}
 }
 

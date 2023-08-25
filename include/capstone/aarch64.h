@@ -4390,7 +4390,24 @@ typedef enum aarch64_insn {
 	// generated content <AArch64GenCSAliasEnum.inc> end
 
 	// Hardcoded in LLVM printer
-	// None yet
+	AArch64_INS_ALIAS_CFP,
+	AArch64_INS_ALIAS_DVP,
+	AArch64_INS_ALIAS_COSP,
+	AArch64_INS_ALIAS_CPP,
+	AArch64_INS_ALIAS_IC,
+	AArch64_INS_ALIAS_DC,
+	AArch64_INS_ALIAS_AT,
+	AArch64_INS_ALIAS_TLBI,
+	AArch64_INS_ALIAS_TLBIP,
+	AArch64_INS_ALIAS_RPRFM,
+	AArch64_INS_ALIAS_LSL,
+	AArch64_INS_ALIAS_SBFX,
+	AArch64_INS_ALIAS_UBFX,
+	AArch64_INS_ALIAS_SBFIZ,
+	AArch64_INS_ALIAS_UBFIZ,
+	AArch64_INS_ALIAS_BFC,
+	AArch64_INS_ALIAS_BFI,
+	AArch64_INS_ALIAS_BFXIL,
 
 	AArch64_INS_ALIAS_END,
 } aarch64_insn;
