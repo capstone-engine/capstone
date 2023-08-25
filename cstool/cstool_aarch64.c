@@ -1,6 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013> */
 
+#include "capstone/aarch64.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,58 +27,78 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 	for (i = 0; i < aarch64->op_count; i++) {
 		cs_aarch64_op *op = &(aarch64->operands[i]);
 		switch(op->type) {
-			default:
-				break;
-			case AArch64_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
-				break;
-			case AArch64_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
-				break;
-			case AArch64_OP_FP:
+		default:
+			break;
+		case AArch64_OP_REG:
+			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+			break;
+		case AArch64_OP_IMM:
+			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
+			break;
+		case AArch64_OP_FP:
 #if defined(_KERNEL_MODE)
-				// Issue #681: Windows kernel does not support formatting float point
-				printf("\t\toperands[%u].type: FP = <float_point_unsupported>\n", i);
+			// Issue #681: Windows kernel does not support formatting float point
+			printf("\t\toperands[%u].type: FP = <float_point_unsupported>\n", i);
 #else
-				printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
+			printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
 #endif
-				break;
-			case AArch64_OP_MEM:
-				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != AArch64_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != AArch64_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+			break;
+		case AArch64_OP_MEM:
+			printf("\t\toperands[%u].type: MEM\n", i);
+			if (op->mem.base != AArch64_REG_INVALID)
+				printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
+			if (op->mem.index != AArch64_REG_INVALID)
+				printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
+			if (op->mem.disp != 0)
+				printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
-				break;
-			case AArch64_OP_SME_MATRIX:
-				printf("\t\toperands[%u].type: SME_MATRIX\n", i);
-				printf("\t\toperands[%u].sme.type: %d\n", i, op->sme.type);
+			break;
+		case AArch64_OP_SME_MATRIX:
+			printf("\t\toperands[%u].type: SME_MATRIX\n", i);
+			printf("\t\toperands[%u].sme.type: %d\n", i, op->sme.type);
 
-				if (op->sme.tile != AArch64_REG_INVALID)
-					printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->sme.tile));
-				if (op->sme.slice_reg != AArch64_REG_INVALID)
-					printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.slice_reg));
-				if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
-					printf("\t\toperands[%u].sme.slice_offset: ", i);
-					if (op->sme.has_range_offset)
-						printf("%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
-					else
-						printf("%d\n", op->sme.slice_offset.imm);
-				}
-				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
-					printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
-				break;
-			case AArch64_OP_CIMM:
-				printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
+			if (op->sme.tile != AArch64_REG_INVALID)
+				printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->sme.tile));
+			if (op->sme.slice_reg != AArch64_REG_INVALID)
+				printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.slice_reg));
+			if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
+				printf("\t\toperands[%u].sme.slice_offset: ", i);
+				if (op->sme.has_range_offset)
+					printf("%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
+				else
+					printf("%d\n", op->sme.slice_offset.imm);
+			}
+			if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
+				printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
+			break;
+		case AArch64_OP_CIMM:
+			printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
+			break;
+		case AArch64_OP_SYSREG:
+			printf("\t\toperands[%u].type: SYS REG:\n", i);
+			switch (op->sysop.sub_type) {
+			default:
+				printf("Sub type %d not handled.\n", op->sysop.sub_type);
 				break;
 			case AArch64_OP_REG_MRS:
-				printf("\t\toperands[%u].type: REG_MRS = 0x%x\n", i, op->sysop.reg.sysreg);
+				printf("\t\toperands[%u].subtype: REG_MRS = 0x%x\n", i, op->sysop.reg.sysreg);
 				break;
 			case AArch64_OP_REG_MSR:
-				printf("\t\toperands[%u].type: REG_MSR = 0x%x\n", i, op->sysop.reg.sysreg);
+				printf("\t\toperands[%u].subtype: REG_MSR = 0x%x\n", i, op->sysop.reg.sysreg);
+				break;
+			case AArch64_OP_TLBI:
+				printf("\t\toperands[%u].subtype TLBI = 0x%x\n", i, op->sysop.reg.tlbi);
+				break;
+			case AArch64_OP_IC:
+				printf("\t\toperands[%u].subtype IC = 0x%x\n", i, op->sysop.reg.ic);
+				break;
+			}
+			break;
+		case AArch64_OP_SYSALIAS:
+			printf("\t\toperands[%u].type: SYS ALIAS:\n", i);
+			switch (op->sysop.sub_type) {
+			default:
+				printf("Sub type %d not handled.\n", op->sysop.sub_type);
 				break;
 			case AArch64_OP_SVCR:
 				if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSM)
@@ -88,53 +109,63 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].svcr: BIT = SM & ZA\n", i);
 				break;
 			case AArch64_OP_AT:
-				printf("\t\toperands[%u].type AT = 0x%x\n", i, op->sysop.alias.at);
+				printf("\t\toperands[%u].subtype AT = 0x%x\n", i, op->sysop.alias.at);
 				break;
 			case AArch64_OP_DB:
-				printf("\t\toperands[%u].type DB = 0x%x\n", i, op->sysop.alias.db);
+				printf("\t\toperands[%u].subtype DB = 0x%x\n", i, op->sysop.alias.db);
 				break;
 			case AArch64_OP_DC:
-				printf("\t\toperands[%u].type DC = 0x%x\n", i, op->sysop.alias.dc);
+				printf("\t\toperands[%u].subtype DC = 0x%x\n", i, op->sysop.alias.dc);
 				break;
 			case AArch64_OP_ISB:
-				printf("\t\toperands[%u].type ISB = 0x%x\n", i, op->sysop.alias.isb);
+				printf("\t\toperands[%u].subtype ISB = 0x%x\n", i, op->sysop.alias.isb);
 				break;
 			case AArch64_OP_TSB:
-				printf("\t\toperands[%u].type TSB = 0x%x\n", i, op->sysop.alias.tsb);
+				printf("\t\toperands[%u].subtype TSB = 0x%x\n", i, op->sysop.alias.tsb);
 				break;
 			case AArch64_OP_PRFM:
-				printf("\t\toperands[%u].type PRFM = 0x%x\n", i, op->sysop.alias.prfm);
+				printf("\t\toperands[%u].subtype PRFM = 0x%x\n", i, op->sysop.alias.prfm);
 				break;
 			case AArch64_OP_SVEPRFM:
-				printf("\t\toperands[%u].type SVEPRFM = 0x%x\n", i, op->sysop.alias.sveprfm);
+				printf("\t\toperands[%u].subtype SVEPRFM = 0x%x\n", i, op->sysop.alias.sveprfm);
 				break;
 			case AArch64_OP_RPRFM:
-				printf("\t\toperands[%u].type RPRFM = 0x%x\n", i, op->sysop.alias.rprfm);
+				printf("\t\toperands[%u].subtype RPRFM = 0x%x\n", i, op->sysop.alias.rprfm);
 				break;
 			case AArch64_OP_PSTATEIMM0_15:
-				printf("\t\toperands[%u].type PSTATEIMM0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
+				printf("\t\toperands[%u].subtype PSTATEIMM0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
 				break;
 			case AArch64_OP_PSTATEIMM0_1:
-				printf("\t\toperands[%u].type PSTATEIMM0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
+				printf("\t\toperands[%u].subtype PSTATEIMM0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
 				break;
 			case AArch64_OP_PSB:
-				printf("\t\toperands[%u].type PSB = 0x%x\n", i, op->sysop.alias.psb);
+				printf("\t\toperands[%u].subtype PSB = 0x%x\n", i, op->sysop.alias.psb);
 				break;
 			case AArch64_OP_BTI:
-				printf("\t\toperands[%u].type BTI = 0x%x\n", i, op->sysop.alias.bti);
+				printf("\t\toperands[%u].subtype BTI = 0x%x\n", i, op->sysop.alias.bti);
 				break;
 			case AArch64_OP_SVEPREDPAT:
-				printf("\t\toperands[%u].type SVEPREDPAT = 0x%x\n", i, op->sysop.alias.svepredpat);
+				printf("\t\toperands[%u].subtype SVEPREDPAT = 0x%x\n", i, op->sysop.alias.svepredpat);
 				break;
 			case AArch64_OP_SVEVECLENSPECIFIER:
-				printf("\t\toperands[%u].type SVEVECLENSPECIFIER = 0x%x\n", i, op->sysop.alias.sveveclenspecifier);
+				printf("\t\toperands[%u].subtype SVEVECLENSPECIFIER = 0x%x\n", i, op->sysop.alias.sveveclenspecifier);
 				break;
-			case AArch64_OP_TLBI:
-				printf("\t\toperands[%u].type TLBI = 0x%x\n", i, op->sysop.reg.tlbi);
+			}
+			break;
+		case AArch64_OP_SYSIMM:
+			printf("\t\toperands[%u].type: SYS IMM:\n", i);
+			switch(op->sysop.sub_type) {
+			default:
+				printf("Sub type %d not handled.\n", op->sysop.sub_type);
 				break;
-			case AArch64_OP_IC:
-				printf("\t\toperands[%u].type IC = 0x%x\n", i, op->sysop.reg.ic);
+			case AArch64_OP_EXACTFPIMM:
+				printf("\t\toperands[%u].subtype EXACTFPIMM = %d\n", i, op->sysop.imm.exactfpimm);
 				break;
+			case AArch64_OP_DBNXS:
+				printf("\t\toperands[%u].subtype DBNXS = %d\n", i, op->sysop.imm.dbnxs);
+				break;
+			}
+			break;
 		}
 		
 		access = op->access;

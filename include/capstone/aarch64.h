@@ -1822,12 +1822,6 @@ typedef union {
 	aarch64_sveveclenspecifier sveveclenspecifier;
 } aarch64_sysop_alias;
 
-typedef union {
-	aarch64_sysop_reg reg;
-	aarch64_sysop_imm imm;
-	aarch64_sysop_alias alias;
-} aarch64_sysop;
-
 /// Operand type for instruction's operands
 typedef enum aarch64_op_type {
   AArch64_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
@@ -1861,7 +1855,19 @@ typedef enum aarch64_op_type {
 	AArch64_OP_IMM_RANGE = CS_OP_SPECIAL + 20,
 	AArch64_OP_TLBI = CS_OP_SPECIAL + 21,
 	AArch64_OP_IC = CS_OP_SPECIAL + 22,
+	AArch64_OP_DBNXS = CS_OP_SPECIAL + 23,
+	AArch64_OP_EXACTFPIMM = CS_OP_SPECIAL + 24,
+	AArch64_OP_SYSREG = CS_OP_SPECIAL + 25,
+	AArch64_OP_SYSIMM = CS_OP_SPECIAL + 26,
+	AArch64_OP_SYSALIAS = CS_OP_SPECIAL + 27,
 } aarch64_op_type;
+
+typedef union {
+	aarch64_sysop_reg reg;
+	aarch64_sysop_imm imm;
+	aarch64_sysop_alias alias;
+	aarch64_op_type sub_type; ///< Specifies which field is set.
+} aarch64_sysop;
 
 /// AArch64 registers
 typedef enum aarch64_reg {

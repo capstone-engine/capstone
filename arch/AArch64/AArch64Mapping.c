@@ -599,9 +599,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_BarriernXSOption: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		aarch64_sysop sysop;
-		const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
-		sysop.alias = DB ? DB->SysAlias : (aarch64_sysop_alias) Val;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_DB);
+		const AArch64DBnXS_DBnXS *DB = AArch64DBnXS_lookupDBnXSByEncoding(Val);
+		sysop.imm = DB ? DB->SysImm : (aarch64_sysop_imm) Val;
+		sysop.sub_type = AArch64_OP_DBNXS;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSIMM);
 		break;
 	}
 	case AArch64_OP_GROUP_BarrierOption: {
@@ -612,15 +613,18 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		if (Opcode == AArch64_ISB) {
 			const AArch64ISB_ISB *ISB = AArch64ISB_lookupISBByEncoding(Val);
 			sysop.alias = ISB ? ISB->SysAlias : (aarch64_sysop_alias) Val;
-			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_ISB);
+			sysop.sub_type = AArch64_OP_ISB;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		} else if (Opcode == AArch64_TSB) {
 			const AArch64TSB_TSB *TSB = AArch64TSB_lookupTSBByEncoding(Val);
 			sysop.alias = TSB ? TSB->SysAlias : (aarch64_sysop_alias) Val;
-			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_TSB);
+			sysop.sub_type = AArch64_OP_TSB;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		} else {
 			const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
 			sysop.alias = DB ? DB->SysAlias : (aarch64_sysop_alias) Val;
-			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_DB);
+			sysop.sub_type = AArch64_OP_DB;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		}
 		break;
 	}
@@ -629,7 +633,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned btihintop = MCInst_getOpVal(MI, OpNum) ^ 32;
 		const AArch64BTIHint_BTI *BTI = AArch64BTIHint_lookupBTIByEncoding(btihintop);
 		sysop.alias = BTI ? BTI->SysAlias : (aarch64_sysop_alias) btihintop;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_BTI);
+		sysop.sub_type = AArch64_OP_BTI;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
 	}
 	case AArch64_OP_GROUP_CondCode: {
@@ -729,7 +734,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		aarch64_op_type type = (op_group == AArch64_OP_GROUP_MRSSystemRegister)
 								   ? AArch64_OP_REG_MRS
 								   : AArch64_OP_REG_MSR;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, type);
+		sysop.sub_type = type;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSREG);
 		break;
 	}
 	case AArch64_OP_GROUP_PSBHintOp: {
@@ -737,7 +743,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		const AArch64PSBHint_PSB *PSB = AArch64PSBHint_lookupPSBByEncoding(psbhintop);
 		aarch64_sysop sysop;
 		sysop.alias = PSB ? PSB->SysAlias : (aarch64_sysop_alias) psbhintop;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PSB);
+		sysop.sub_type = AArch64_OP_PSB;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
 	}
 	case AArch64_OP_GROUP_RPRFMOperand: {
@@ -745,7 +752,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		const AArch64PRFM_PRFM *PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop);
 		aarch64_sysop sysop;
 		sysop.alias = PRFM ? PRFM->SysAlias : (aarch64_sysop_alias) prfop;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PRFM);
+		sysop.sub_type = AArch64_OP_PRFM;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
 	}
 	case AArch64_OP_GROUP_ShiftedRegister: {
@@ -772,7 +780,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		const AArch64SVCR_SVCR *SVCR = AArch64SVCR_lookupSVCRByEncoding(svcrop);
 		aarch64_sysop sysop;
 		sysop.alias = SVCR ? SVCR->SysAlias : (aarch64_sysop_alias) svcrop;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVCR);
+		sysop.sub_type = AArch64_OP_SVCR;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
 	}
 	case AArch64_OP_GROUP_SVEPattern: {
@@ -782,7 +791,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			break;
 		aarch64_sysop sysop;
 		sysop.alias = Pat->SysAlias;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVEPREDPAT);
+		sysop.sub_type = AArch64_OP_SVEPREDPAT;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
 	}
 	case AArch64_OP_GROUP_SVEVecLenSpecifier: {
@@ -796,7 +806,8 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			break;
 		aarch64_sysop sysop;
 		sysop.alias = Pat->SysAlias;
-		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVEVECLENSPECIFIER);
+		sysop.sub_type = AArch64_OP_SVEVECLENSPECIFIER;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
 	}
 	case AArch64_OP_GROUP_SysCROperand: {
@@ -818,11 +829,13 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		const AArch64PState_PStateImm0_1 *PStateImm1 = AArch64PState_lookupPStateImm0_1ByEncoding(Val);
 		if (PStateImm15 && AArch64_testFeatureList(MI->csh->mode, PStateImm15->FeaturesRequired)) {
 			sysop.alias = PStateImm15->SysAlias;
-			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PSTATEIMM0_15);
+		sysop.sub_type = AArch64_OP_PSTATEIMM0_15;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		}
 		else if (PStateImm1 && AArch64_testFeatureList(MI->csh->mode, PStateImm1->FeaturesRequired)) {
 			sysop.alias = PStateImm1->SysAlias;
-			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PSTATEIMM0_1);
+		sysop.sub_type = AArch64_OP_PSTATEIMM0_1;
+			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		}
 		else {
 			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Val);
@@ -986,14 +999,16 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 			const AArch64SVEPRFM_SVEPRFM *PRFM = AArch64SVEPRFM_lookupSVEPRFMByEncoding(prfop);
 			if (PRFM) {
 				sysop.alias = PRFM->SysAlias;
-				AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SVEPRFM);
+				sysop.sub_type = AArch64_OP_SVEPRFM;
+				AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 				break;
 			}
 		} else {
 			const AArch64PRFM_PRFM *PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop);
 			if (PRFM && AArch64_testFeatureList(MI->csh->mode, PRFM->FeaturesRequired)) {
 				sysop.alias = PRFM->SysAlias;
-				AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_PRFM);
+				sysop.sub_type = AArch64_OP_PRFM;
+				AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 				break;
 			}
 		}
@@ -1097,28 +1112,13 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_zero_AArch64ExactFPImm_one: {
 		aarch64_exactfpimm ImmIs0 = temp_arg_0;
 		aarch64_exactfpimm ImmIs1 = temp_arg_1;
+		const AArch64ExactFPImm_ExactFPImm *Imm0Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs0);
+		const AArch64ExactFPImm_ExactFPImm *Imm1Desc = AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs1);
 		unsigned Val = MCInst_getOpVal(MI, (OpNum));
-		aarch64_exactfpimm fp;
-		if (Val)
-			fp = ImmIs1;
-		else
-			fp = ImmIs0;
-		switch (fp) {
-		default:
-			assert(0 && "Unknown exact FP value.");
-		case AArch64_EXACTFPIMM_HALF:
-			AArch64_set_detail_op_float(MI, OpNum, 0.5);
-			break;
-		case AArch64_EXACTFPIMM_ONE:
-			AArch64_set_detail_op_float(MI, OpNum, 1.0);
-			break;
-		case AArch64_EXACTFPIMM_TWO:
-			AArch64_set_detail_op_float(MI, OpNum, 2.0);
-			break;
-		case AArch64_EXACTFPIMM_ZERO:
-			AArch64_set_detail_op_float(MI, OpNum, 0.0);
-			break;
-		}
+		aarch64_sysop sysop;
+		sysop.imm = Val ? Imm1Desc->SysImm : Imm0Desc->SysImm;
+		sysop.sub_type = AArch64_OP_EXACTFPIMM;
+		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSIMM);
 		break;
 	}
 	case AArch64_OP_GROUP_ImmRangeScale_2_1:
