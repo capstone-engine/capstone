@@ -1850,11 +1850,13 @@ typedef union {
 	aarch64_sysreg sysreg;
 	aarch64_tlbi tlbi;
 	aarch64_ic ic;
+	uint64_t raw_val;
 } aarch64_sysop_reg;
 
 typedef union {
 	aarch64_dbnxs dbnxs;
 	aarch64_exactfpimm exactfpimm;
+	uint64_t raw_val;
 } aarch64_sysop_imm;
 
 typedef union {
@@ -1873,6 +1875,7 @@ typedef union {
 	aarch64_bti bti;
 	aarch64_svepredpat svepredpat;
 	aarch64_sveveclenspecifier sveveclenspecifier;
+	uint64_t raw_val;
 } aarch64_sysop_alias;
 
 /// Operand type for instruction's operands
@@ -1915,7 +1918,7 @@ typedef enum aarch64_op_type {
 	AArch64_OP_SYSALIAS = CS_OP_SPECIAL + 27,
 } aarch64_op_type;
 
-typedef union {
+typedef struct {
 	aarch64_sysop_reg reg;
 	aarch64_sysop_imm imm;
 	aarch64_sysop_alias alias;
