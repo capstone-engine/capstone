@@ -2335,6 +2335,7 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 
 void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 {
+	add_cs_detail(MI, AArch64_OP_GROUP_AdrpLabel, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
 	// If the label has already been resolved to an immediate offset (say, when
