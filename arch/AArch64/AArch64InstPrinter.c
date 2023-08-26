@@ -1478,10 +1478,9 @@ void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 	if (AArch64_AM_getShiftType(Val) == AArch64_AM_LSL &&
 		AArch64_AM_getShiftValue(Val) == 0)
 		return;
-	SStream_concat(O, "%s%s%s%s", ", ",
+	SStream_concat(O, "%s%s%s%s#%d", ", ",
 				   AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)),
-				   " ", markup("<imm:"));
-	printUInt32Bang(O, AArch64_AM_getShiftValue(Val));
+				   " ", markup("<imm:"), AArch64_AM_getShiftValue(Val));
 	SStream_concat0(O, markup(">"));
 }
 
@@ -1527,8 +1526,7 @@ void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat(O, "%s", ", ");
 	SStream_concat0(O, AArch64_AM_getShiftExtendName(ExtType));
 	if (ShiftVal != 0) {
-		SStream_concat(O, "%s%s", " ", markup("<imm:"));
-		printUInt32Bang(O, ShiftVal);
+		SStream_concat(O, "%s%s#%d", " ", markup("<imm:"), ShiftVal);
 		SStream_concat0(O, markup(">"));
 	}
 }
@@ -1549,8 +1547,7 @@ static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
 		SStream_concat0(O, " ");
 		if (getUseMarkup)
 			SStream_concat0(O, "<imm:");
-		SStream_concat(O, "%s", "#");
-		printUInt32(O, Log2_32(Width / 8));
+		SStream_concat(O, "%s%d", "#", Log2_32(Width / 8));
 		if (getUseMarkup)
 			SStream_concat0(O, ">");
 	}
