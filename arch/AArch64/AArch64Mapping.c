@@ -183,7 +183,6 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 static const char *const insn_name_maps[] = {
-	NULL, // AArch64_INS_INVALID
 #include "AArch64GenCSMappingInsnName.inc"
 };
 

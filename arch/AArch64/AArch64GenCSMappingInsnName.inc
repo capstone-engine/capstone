@@ -1,4 +1,4 @@
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
@@ -13,7 +13,6 @@
 
   "invalid", // AArch64_INS_INVALID
   "abs", // AArch64_INS_ABS
-  "abs{", // AArch64_INS_ABS
   "adclb", // AArch64_INS_ADCLB
   "adclt", // AArch64_INS_ADCLT
   "adcs", // AArch64_INS_ADCS
@@ -22,35 +21,28 @@
   "addha", // AArch64_INS_ADDHA
   "addhnb", // AArch64_INS_ADDHNB
   "addhnt", // AArch64_INS_ADDHNT
-  "addhn{", // AArch64_INS_ADDHN
-  "addhn2{", // AArch64_INS_ADDHN2
+  "addhn", // AArch64_INS_ADDHN
+  "addhn2", // AArch64_INS_ADDHN2
   "addpl", // AArch64_INS_ADDPL
   "addp", // AArch64_INS_ADDP
-  "addp{", // AArch64_INS_ADDP
   "addqv", // AArch64_INS_ADDQV
   "addspl", // AArch64_INS_ADDSPL
   "addsvl", // AArch64_INS_ADDSVL
   "adds", // AArch64_INS_ADDS
   "addva", // AArch64_INS_ADDVA
   "addvl", // AArch64_INS_ADDVL
-  "addv{", // AArch64_INS_ADDV
+  "addv", // AArch64_INS_ADDV
   "add", // AArch64_INS_ADD
-  "add{", // AArch64_INS_ADD
   "adr", // AArch64_INS_ADR
   "adrp", // AArch64_INS_ADRP
   "aesd", // AArch64_INS_AESD
-  "aesd{", // AArch64_INS_AESD
   "aese", // AArch64_INS_AESE
-  "aese{", // AArch64_INS_AESE
   "aesimc", // AArch64_INS_AESIMC
-  "aesimc{", // AArch64_INS_AESIMC
   "aesmc", // AArch64_INS_AESMC
-  "aesmc{", // AArch64_INS_AESMC
   "andqv", // AArch64_INS_ANDQV
   "ands", // AArch64_INS_ANDS
   "andv", // AArch64_INS_ANDV
   "and", // AArch64_INS_AND
-  "and{", // AArch64_INS_AND
   "asrd", // AArch64_INS_ASRD
   "asrr", // AArch64_INS_ASRR
   "asr", // AArch64_INS_ASR
@@ -65,27 +57,22 @@
   "autizb", // AArch64_INS_AUTIZB
   "axflag", // AArch64_INS_AXFLAG
   "b", // AArch64_INS_B
-  "bcax{", // AArch64_INS_BCAX
   "bcax", // AArch64_INS_BCAX
   "bc", // AArch64_INS_BC
   "bdep", // AArch64_INS_BDEP
   "bext", // AArch64_INS_BEXT
-  "bfdot{", // AArch64_INS_BFDOT
+  "bfdot", // AArch64_INS_BFDOT
   "bfadd", // AArch64_INS_BFADD
   "bfclamp", // AArch64_INS_BFCLAMP
   "bfcvt", // AArch64_INS_BFCVT
-  "bfcvtn{", // AArch64_INS_BFCVTN
-  "bfcvtn2{", // AArch64_INS_BFCVTN2
-  "bfcvtnt", // AArch64_INS_BFCVTNT
   "bfcvtn", // AArch64_INS_BFCVTN
-  "bfdot", // AArch64_INS_BFDOT
+  "bfcvtn2", // AArch64_INS_BFCVTN2
+  "bfcvtnt", // AArch64_INS_BFCVTNT
   "bfmaxnm", // AArch64_INS_BFMAXNM
   "bfmax", // AArch64_INS_BFMAX
   "bfminnm", // AArch64_INS_BFMINNM
   "bfmin", // AArch64_INS_BFMIN
-  "bfmlalb{", // AArch64_INS_BFMLALB
   "bfmlalb", // AArch64_INS_BFMLALB
-  "bfmlalt{", // AArch64_INS_BFMLALT
   "bfmlalt", // AArch64_INS_BFMLALT
   "bfmlal", // AArch64_INS_BFMLAL
   "bfmla", // AArch64_INS_BFMLA
@@ -93,7 +80,6 @@
   "bfmlslt", // AArch64_INS_BFMLSLT
   "bfmlsl", // AArch64_INS_BFMLSL
   "bfmls", // AArch64_INS_BFMLS
-  "bfmmla{", // AArch64_INS_BFMMLA
   "bfmmla", // AArch64_INS_BFMMLA
   "bfmopa", // AArch64_INS_BFMOPA
   "bfmops", // AArch64_INS_BFMOPS
@@ -104,9 +90,8 @@
   "bgrp", // AArch64_INS_BGRP
   "bics", // AArch64_INS_BICS
   "bic", // AArch64_INS_BIC
-  "bic{", // AArch64_INS_BIC
-  "bif{", // AArch64_INS_BIF
-  "bit{", // AArch64_INS_BIT
+  "bif", // AArch64_INS_BIF
+  "bit", // AArch64_INS_BIT
   "bl", // AArch64_INS_BL
   "blr", // AArch64_INS_BLR
   "blraa", // AArch64_INS_BLRAA
@@ -135,7 +120,6 @@
   "bsl1n", // AArch64_INS_BSL1N
   "bsl2n", // AArch64_INS_BSL2N
   "bsl", // AArch64_INS_BSL
-  "bsl{", // AArch64_INS_BSL
   "cadd", // AArch64_INS_CADD
   "casab", // AArch64_INS_CASAB
   "casah", // AArch64_INS_CASAH
@@ -163,23 +147,14 @@
   "clastb", // AArch64_INS_CLASTB
   "clrex", // AArch64_INS_CLREX
   "cls", // AArch64_INS_CLS
-  "cls{", // AArch64_INS_CLS
   "clz", // AArch64_INS_CLZ
-  "clz{", // AArch64_INS_CLZ
-  "cmeq{", // AArch64_INS_CMEQ
   "cmeq", // AArch64_INS_CMEQ
-  "cmge{", // AArch64_INS_CMGE
   "cmge", // AArch64_INS_CMGE
-  "cmgt{", // AArch64_INS_CMGT
   "cmgt", // AArch64_INS_CMGT
-  "cmhi{", // AArch64_INS_CMHI
   "cmhi", // AArch64_INS_CMHI
-  "cmhs{", // AArch64_INS_CMHS
   "cmhs", // AArch64_INS_CMHS
   "cmla", // AArch64_INS_CMLA
-  "cmle{", // AArch64_INS_CMLE
   "cmle", // AArch64_INS_CMLE
-  "cmlt{", // AArch64_INS_CMLT
   "cmlt", // AArch64_INS_CMLT
   "cmpeq", // AArch64_INS_CMPEQ
   "cmpge", // AArch64_INS_CMPGE
@@ -191,7 +166,6 @@
   "cmpls", // AArch64_INS_CMPLS
   "cmplt", // AArch64_INS_CMPLT
   "cmpne", // AArch64_INS_CMPNE
-  "cmtst{", // AArch64_INS_CMTST
   "cmtst", // AArch64_INS_CMTST
   "cnot", // AArch64_INS_CNOT
   "cntb", // AArch64_INS_CNTB
@@ -200,7 +174,6 @@
   "cntp", // AArch64_INS_CNTP
   "cntw", // AArch64_INS_CNTW
   "cnt", // AArch64_INS_CNT
-  "cnt{", // AArch64_INS_CNT
   "compact", // AArch64_INS_COMPACT
   "cpye", // AArch64_INS_CPYE
   "cpyen", // AArch64_INS_CPYEN
@@ -328,10 +301,8 @@
   "dupm", // AArch64_INS_DUPM
   "dupq", // AArch64_INS_DUPQ
   "dup", // AArch64_INS_DUP
-  "mov{", // AArch64_INS_MOV
-  "dup{", // AArch64_INS_DUP
+  "mov", // AArch64_INS_MOV
   "eon", // AArch64_INS_EON
-  "eor3{", // AArch64_INS_EOR3
   "eor3", // AArch64_INS_EOR3
   "eorbt", // AArch64_INS_EORBT
   "eorqv", // AArch64_INS_EORQV
@@ -339,7 +310,6 @@
   "eortb", // AArch64_INS_EORTB
   "eorv", // AArch64_INS_EORV
   "eor", // AArch64_INS_EOR
-  "eor{", // AArch64_INS_EOR
   "eret", // AArch64_INS_ERET
   "eretaa", // AArch64_INS_ERETAA
   "eretab", // AArch64_INS_ERETAB
@@ -347,39 +317,25 @@
   "mova", // AArch64_INS_MOVA
   "extr", // AArch64_INS_EXTR
   "ext", // AArch64_INS_EXT
-  "ext{", // AArch64_INS_EXT
   "fabd", // AArch64_INS_FABD
-  "fabd{", // AArch64_INS_FABD
   "fabs", // AArch64_INS_FABS
-  "fabs{", // AArch64_INS_FABS
   "facge", // AArch64_INS_FACGE
-  "facge{", // AArch64_INS_FACGE
   "facgt", // AArch64_INS_FACGT
-  "facgt{", // AArch64_INS_FACGT
   "fadda", // AArch64_INS_FADDA
   "fadd", // AArch64_INS_FADD
   "faddp", // AArch64_INS_FADDP
-  "faddp{", // AArch64_INS_FADDP
   "faddqv", // AArch64_INS_FADDQV
   "faddv", // AArch64_INS_FADDV
-  "fadd{", // AArch64_INS_FADD
   "fcadd", // AArch64_INS_FCADD
-  "fcadd{", // AArch64_INS_FCADD
   "fccmp", // AArch64_INS_FCCMP
   "fccmpe", // AArch64_INS_FCCMPE
   "fclamp", // AArch64_INS_FCLAMP
   "fcmeq", // AArch64_INS_FCMEQ
-  "fcmeq{", // AArch64_INS_FCMEQ
   "fcmge", // AArch64_INS_FCMGE
-  "fcmge{", // AArch64_INS_FCMGE
   "fcmgt", // AArch64_INS_FCMGT
-  "fcmgt{", // AArch64_INS_FCMGT
   "fcmla", // AArch64_INS_FCMLA
-  "fcmla{", // AArch64_INS_FCMLA
   "fcmle", // AArch64_INS_FCMLE
-  "fcmle{", // AArch64_INS_FCMLE
   "fcmlt", // AArch64_INS_FCMLT
-  "fcmlt{", // AArch64_INS_FCMLT
   "fcmne", // AArch64_INS_FCMNE
   "fcmp", // AArch64_INS_FCMP
   "fcmpe", // AArch64_INS_FCMPE
@@ -387,39 +343,28 @@
   "fcpy", // AArch64_INS_FCPY
   "fcsel", // AArch64_INS_FCSEL
   "fcvtas", // AArch64_INS_FCVTAS
-  "fcvtas{", // AArch64_INS_FCVTAS
   "fcvtau", // AArch64_INS_FCVTAU
-  "fcvtau{", // AArch64_INS_FCVTAU
   "fcvt", // AArch64_INS_FCVT
   "fcvtlt", // AArch64_INS_FCVTLT
   "fcvtl", // AArch64_INS_FCVTL
   "fcvtl2", // AArch64_INS_FCVTL2
   "fcvtms", // AArch64_INS_FCVTMS
-  "fcvtms{", // AArch64_INS_FCVTMS
   "fcvtmu", // AArch64_INS_FCVTMU
-  "fcvtmu{", // AArch64_INS_FCVTMU
   "fcvtns", // AArch64_INS_FCVTNS
-  "fcvtns{", // AArch64_INS_FCVTNS
   "fcvtnt", // AArch64_INS_FCVTNT
   "fcvtnu", // AArch64_INS_FCVTNU
-  "fcvtnu{", // AArch64_INS_FCVTNU
   "fcvtn", // AArch64_INS_FCVTN
   "fcvtn2", // AArch64_INS_FCVTN2
   "fcvtps", // AArch64_INS_FCVTPS
-  "fcvtps{", // AArch64_INS_FCVTPS
   "fcvtpu", // AArch64_INS_FCVTPU
-  "fcvtpu{", // AArch64_INS_FCVTPU
   "fcvtxnt", // AArch64_INS_FCVTXNT
   "fcvtxn", // AArch64_INS_FCVTXN
   "fcvtxn2", // AArch64_INS_FCVTXN2
   "fcvtx", // AArch64_INS_FCVTX
   "fcvtzs", // AArch64_INS_FCVTZS
-  "fcvtzs{", // AArch64_INS_FCVTZS
   "fcvtzu", // AArch64_INS_FCVTZU
-  "fcvtzu{", // AArch64_INS_FCVTZU
   "fdiv", // AArch64_INS_FDIV
   "fdivr", // AArch64_INS_FDIVR
-  "fdiv{", // AArch64_INS_FDIV
   "fdot", // AArch64_INS_FDOT
   "fdup", // AArch64_INS_FDUP
   "fexpa", // AArch64_INS_FEXPA
@@ -430,58 +375,38 @@
   "fmax", // AArch64_INS_FMAX
   "fmaxnm", // AArch64_INS_FMAXNM
   "fmaxnmp", // AArch64_INS_FMAXNMP
-  "fmaxnmp{", // AArch64_INS_FMAXNMP
   "fmaxnmqv", // AArch64_INS_FMAXNMQV
   "fmaxnmv", // AArch64_INS_FMAXNMV
-  "fmaxnmv{", // AArch64_INS_FMAXNMV
-  "fmaxnm{", // AArch64_INS_FMAXNM
   "fmaxp", // AArch64_INS_FMAXP
-  "fmaxp{", // AArch64_INS_FMAXP
   "fmaxqv", // AArch64_INS_FMAXQV
   "fmaxv", // AArch64_INS_FMAXV
-  "fmaxv{", // AArch64_INS_FMAXV
-  "fmax{", // AArch64_INS_FMAX
   "fmin", // AArch64_INS_FMIN
   "fminnm", // AArch64_INS_FMINNM
   "fminnmp", // AArch64_INS_FMINNMP
-  "fminnmp{", // AArch64_INS_FMINNMP
   "fminnmqv", // AArch64_INS_FMINNMQV
   "fminnmv", // AArch64_INS_FMINNMV
-  "fminnmv{", // AArch64_INS_FMINNMV
-  "fminnm{", // AArch64_INS_FMINNM
   "fminp", // AArch64_INS_FMINP
-  "fminp{", // AArch64_INS_FMINP
   "fminqv", // AArch64_INS_FMINQV
   "fminv", // AArch64_INS_FMINV
-  "fminv{", // AArch64_INS_FMINV
-  "fmin{", // AArch64_INS_FMIN
-  "fmlal2{", // AArch64_INS_FMLAL2
+  "fmlal2", // AArch64_INS_FMLAL2
   "fmlalb", // AArch64_INS_FMLALB
   "fmlalt", // AArch64_INS_FMLALT
   "fmlal", // AArch64_INS_FMLAL
-  "fmlal{", // AArch64_INS_FMLAL
   "fmla", // AArch64_INS_FMLA
-  "fmla{", // AArch64_INS_FMLA
-  "fmlsl2{", // AArch64_INS_FMLSL2
+  "fmlsl2", // AArch64_INS_FMLSL2
   "fmlslb", // AArch64_INS_FMLSLB
   "fmlslt", // AArch64_INS_FMLSLT
   "fmlsl", // AArch64_INS_FMLSL
-  "fmlsl{", // AArch64_INS_FMLSL
   "fmls", // AArch64_INS_FMLS
-  "fmls{", // AArch64_INS_FMLS
   "fmmla", // AArch64_INS_FMMLA
   "fmopa", // AArch64_INS_FMOPA
   "fmops", // AArch64_INS_FMOPS
-  "fmov{", // AArch64_INS_FMOV
   "fmov", // AArch64_INS_FMOV
   "fmsb", // AArch64_INS_FMSB
   "fmsub", // AArch64_INS_FMSUB
   "fmul", // AArch64_INS_FMUL
   "fmulx", // AArch64_INS_FMULX
-  "fmulx{", // AArch64_INS_FMULX
-  "fmul{", // AArch64_INS_FMUL
   "fneg", // AArch64_INS_FNEG
-  "fneg{", // AArch64_INS_FNEG
   "fnmadd", // AArch64_INS_FNMADD
   "fnmad", // AArch64_INS_FNMAD
   "fnmla", // AArch64_INS_FNMLA
@@ -490,42 +415,25 @@
   "fnmsub", // AArch64_INS_FNMSUB
   "fnmul", // AArch64_INS_FNMUL
   "frecpe", // AArch64_INS_FRECPE
-  "frecpe{", // AArch64_INS_FRECPE
   "frecps", // AArch64_INS_FRECPS
-  "frecps{", // AArch64_INS_FRECPS
   "frecpx", // AArch64_INS_FRECPX
   "frint32x", // AArch64_INS_FRINT32X
-  "frint32x{", // AArch64_INS_FRINT32X
   "frint32z", // AArch64_INS_FRINT32Z
-  "frint32z{", // AArch64_INS_FRINT32Z
   "frint64x", // AArch64_INS_FRINT64X
-  "frint64x{", // AArch64_INS_FRINT64X
   "frint64z", // AArch64_INS_FRINT64Z
-  "frint64z{", // AArch64_INS_FRINT64Z
   "frinta", // AArch64_INS_FRINTA
-  "frinta{", // AArch64_INS_FRINTA
   "frinti", // AArch64_INS_FRINTI
-  "frinti{", // AArch64_INS_FRINTI
   "frintm", // AArch64_INS_FRINTM
-  "frintm{", // AArch64_INS_FRINTM
   "frintn", // AArch64_INS_FRINTN
-  "frintn{", // AArch64_INS_FRINTN
   "frintp", // AArch64_INS_FRINTP
-  "frintp{", // AArch64_INS_FRINTP
   "frintx", // AArch64_INS_FRINTX
-  "frintx{", // AArch64_INS_FRINTX
   "frintz", // AArch64_INS_FRINTZ
-  "frintz{", // AArch64_INS_FRINTZ
   "frsqrte", // AArch64_INS_FRSQRTE
-  "frsqrte{", // AArch64_INS_FRSQRTE
   "frsqrts", // AArch64_INS_FRSQRTS
-  "frsqrts{", // AArch64_INS_FRSQRTS
   "fscale", // AArch64_INS_FSCALE
   "fsqrt", // AArch64_INS_FSQRT
-  "fsqrt{", // AArch64_INS_FSQRT
   "fsub", // AArch64_INS_FSUB
   "fsubr", // AArch64_INS_FSUBR
-  "fsub{", // AArch64_INS_FSUB
   "ftmad", // AArch64_INS_FTMAD
   "ftsmul", // AArch64_INS_FTSMUL
   "ftssel", // AArch64_INS_FTSSEL
@@ -557,7 +465,7 @@
   "incw", // AArch64_INS_INCW
   "index", // AArch64_INS_INDEX
   "insr", // AArch64_INS_INSR
-  "ins{", // AArch64_INS_INS
+  "ins", // AArch64_INS_INS
   "irg", // AArch64_INS_IRG
   "isb", // AArch64_INS_ISB
   "lasta", // AArch64_INS_LASTA
@@ -779,16 +687,13 @@
   "mad", // AArch64_INS_MAD
   "match", // AArch64_INS_MATCH
   "mla", // AArch64_INS_MLA
-  "mla{", // AArch64_INS_MLA
   "mls", // AArch64_INS_MLS
-  "mls{", // AArch64_INS_MLS
   "setge", // AArch64_INS_SETGE
   "setgen", // AArch64_INS_SETGEN
   "setget", // AArch64_INS_SETGET
   "setgetn", // AArch64_INS_SETGETN
   "movaz", // AArch64_INS_MOVAZ
   "movi", // AArch64_INS_MOVI
-  "movi{", // AArch64_INS_MOVI
   "movk", // AArch64_INS_MOVK
   "movn", // AArch64_INS_MOVN
   "movprfx", // AArch64_INS_MOVPRFX
@@ -801,25 +706,20 @@
   "msrr", // AArch64_INS_MSRR
   "msub", // AArch64_INS_MSUB
   "mul", // AArch64_INS_MUL
-  "mul{", // AArch64_INS_MUL
-  "mvni{", // AArch64_INS_MVNI
+  "mvni", // AArch64_INS_MVNI
   "nands", // AArch64_INS_NANDS
   "nand", // AArch64_INS_NAND
   "nbsl", // AArch64_INS_NBSL
   "neg", // AArch64_INS_NEG
-  "neg{", // AArch64_INS_NEG
   "nmatch", // AArch64_INS_NMATCH
   "nors", // AArch64_INS_NORS
   "nor", // AArch64_INS_NOR
   "not", // AArch64_INS_NOT
-  "not{", // AArch64_INS_NOT
   "orns", // AArch64_INS_ORNS
   "orn", // AArch64_INS_ORN
-  "orn{", // AArch64_INS_ORN
   "orqv", // AArch64_INS_ORQV
   "orrs", // AArch64_INS_ORRS
   "orr", // AArch64_INS_ORR
-  "orr{", // AArch64_INS_ORR
   "orv", // AArch64_INS_ORV
   "pacda", // AArch64_INS_PACDA
   "pacdb", // AArch64_INS_PACDB
@@ -836,10 +736,9 @@
   "pmov", // AArch64_INS_PMOV
   "pmullb", // AArch64_INS_PMULLB
   "pmullt", // AArch64_INS_PMULLT
-  "pmull2{", // AArch64_INS_PMULL2
-  "pmull{", // AArch64_INS_PMULL
+  "pmull2", // AArch64_INS_PMULL2
+  "pmull", // AArch64_INS_PMULL
   "pmul", // AArch64_INS_PMUL
-  "pmul{", // AArch64_INS_PMUL
   "pnext", // AArch64_INS_PNEXT
   "prfb", // AArch64_INS_PRFB
   "prfd", // AArch64_INS_PRFD
@@ -855,12 +754,10 @@
   "punpklo", // AArch64_INS_PUNPKLO
   "raddhnb", // AArch64_INS_RADDHNB
   "raddhnt", // AArch64_INS_RADDHNT
-  "raddhn{", // AArch64_INS_RADDHN
-  "raddhn2{", // AArch64_INS_RADDHN2
-  "rax1{", // AArch64_INS_RAX1
+  "raddhn", // AArch64_INS_RADDHN
+  "raddhn2", // AArch64_INS_RADDHN2
   "rax1", // AArch64_INS_RAX1
   "rbit", // AArch64_INS_RBIT
-  "rbit{", // AArch64_INS_RBIT
   "rcwcas", // AArch64_INS_RCWCAS
   "rcwcasa", // AArch64_INS_RCWCASA
   "rcwcasal", // AArch64_INS_RCWCASAL
@@ -933,52 +830,47 @@
   "retaa", // AArch64_INS_RETAA
   "retab", // AArch64_INS_RETAB
   "rev16", // AArch64_INS_REV16
-  "rev16{", // AArch64_INS_REV16
   "rev32", // AArch64_INS_REV32
-  "rev32{", // AArch64_INS_REV32
-  "rev64{", // AArch64_INS_REV64
+  "rev64", // AArch64_INS_REV64
   "revb", // AArch64_INS_REVB
   "revd", // AArch64_INS_REVD
   "revh", // AArch64_INS_REVH
   "revw", // AArch64_INS_REVW
   "rev", // AArch64_INS_REV
-  "rmif{", // AArch64_INS_RMIF
+  "rmif", // AArch64_INS_RMIF
   "ror", // AArch64_INS_ROR
   "rprfm", // AArch64_INS_RPRFM
   "rshrnb", // AArch64_INS_RSHRNB
   "rshrnt", // AArch64_INS_RSHRNT
-  "rshrn2{", // AArch64_INS_RSHRN2
-  "rshrn{", // AArch64_INS_RSHRN
+  "rshrn2", // AArch64_INS_RSHRN2
+  "rshrn", // AArch64_INS_RSHRN
   "rsubhnb", // AArch64_INS_RSUBHNB
   "rsubhnt", // AArch64_INS_RSUBHNT
-  "rsubhn{", // AArch64_INS_RSUBHN
-  "rsubhn2{", // AArch64_INS_RSUBHN2
+  "rsubhn", // AArch64_INS_RSUBHN
+  "rsubhn2", // AArch64_INS_RSUBHN2
   "sabalb", // AArch64_INS_SABALB
   "sabalt", // AArch64_INS_SABALT
-  "sabal2{", // AArch64_INS_SABAL2
-  "sabal{", // AArch64_INS_SABAL
+  "sabal2", // AArch64_INS_SABAL2
+  "sabal", // AArch64_INS_SABAL
   "saba", // AArch64_INS_SABA
-  "saba{", // AArch64_INS_SABA
   "sabdlb", // AArch64_INS_SABDLB
   "sabdlt", // AArch64_INS_SABDLT
-  "sabdl2{", // AArch64_INS_SABDL2
-  "sabdl{", // AArch64_INS_SABDL
+  "sabdl2", // AArch64_INS_SABDL2
+  "sabdl", // AArch64_INS_SABDL
   "sabd", // AArch64_INS_SABD
-  "sabd{", // AArch64_INS_SABD
   "sadalp", // AArch64_INS_SADALP
-  "sadalp{", // AArch64_INS_SADALP
   "saddlbt", // AArch64_INS_SADDLBT
   "saddlb", // AArch64_INS_SADDLB
-  "saddlp{", // AArch64_INS_SADDLP
+  "saddlp", // AArch64_INS_SADDLP
   "saddlt", // AArch64_INS_SADDLT
-  "saddlv{", // AArch64_INS_SADDLV
-  "saddl2{", // AArch64_INS_SADDL2
-  "saddl{", // AArch64_INS_SADDL
+  "saddlv", // AArch64_INS_SADDLV
+  "saddl2", // AArch64_INS_SADDL2
+  "saddl", // AArch64_INS_SADDL
   "saddv", // AArch64_INS_SADDV
   "saddwb", // AArch64_INS_SADDWB
   "saddwt", // AArch64_INS_SADDWT
-  "saddw2{", // AArch64_INS_SADDW2
-  "saddw{", // AArch64_INS_SADDW
+  "saddw2", // AArch64_INS_SADDW2
+  "saddw", // AArch64_INS_SADDW
   "sb", // AArch64_INS_SB
   "sbclb", // AArch64_INS_SBCLB
   "sbclt", // AArch64_INS_SBCLT
@@ -987,18 +879,16 @@
   "sbfm", // AArch64_INS_SBFM
   "sclamp", // AArch64_INS_SCLAMP
   "scvtf", // AArch64_INS_SCVTF
-  "scvtf{", // AArch64_INS_SCVTF
   "sdivr", // AArch64_INS_SDIVR
   "sdiv", // AArch64_INS_SDIV
   "sdot", // AArch64_INS_SDOT
-  "sdot{", // AArch64_INS_SDOT
   "sel", // AArch64_INS_SEL
   "sete", // AArch64_INS_SETE
   "seten", // AArch64_INS_SETEN
   "setet", // AArch64_INS_SETET
   "setetn", // AArch64_INS_SETETN
-  "setf16{", // AArch64_INS_SETF16
-  "setf8{", // AArch64_INS_SETF8
+  "setf16", // AArch64_INS_SETF16
+  "setf8", // AArch64_INS_SETF8
   "setffr", // AArch64_INS_SETFFR
   "setgm", // AArch64_INS_SETGM
   "setgmn", // AArch64_INS_SETGMN
@@ -1016,90 +906,73 @@
   "setpn", // AArch64_INS_SETPN
   "setpt", // AArch64_INS_SETPT
   "setptn", // AArch64_INS_SETPTN
-  "sha1c{", // AArch64_INS_SHA1C
-  "sha1h{", // AArch64_INS_SHA1H
-  "sha1m{", // AArch64_INS_SHA1M
-  "sha1p{", // AArch64_INS_SHA1P
-  "sha1su0{", // AArch64_INS_SHA1SU0
-  "sha1su1{", // AArch64_INS_SHA1SU1
-  "sha256h2{", // AArch64_INS_SHA256H2
-  "sha256h{", // AArch64_INS_SHA256H
-  "sha256su0{", // AArch64_INS_SHA256SU0
-  "sha256su1{", // AArch64_INS_SHA256SU1
-  "sha512h{", // AArch64_INS_SHA512H
-  "sha512h2{", // AArch64_INS_SHA512H2
-  "sha512su0{", // AArch64_INS_SHA512SU0
-  "sha512su1{", // AArch64_INS_SHA512SU1
+  "sha1c", // AArch64_INS_SHA1C
+  "sha1h", // AArch64_INS_SHA1H
+  "sha1m", // AArch64_INS_SHA1M
+  "sha1p", // AArch64_INS_SHA1P
+  "sha1su0", // AArch64_INS_SHA1SU0
+  "sha1su1", // AArch64_INS_SHA1SU1
+  "sha256h2", // AArch64_INS_SHA256H2
+  "sha256h", // AArch64_INS_SHA256H
+  "sha256su0", // AArch64_INS_SHA256SU0
+  "sha256su1", // AArch64_INS_SHA256SU1
+  "sha512h", // AArch64_INS_SHA512H
+  "sha512h2", // AArch64_INS_SHA512H2
+  "sha512su0", // AArch64_INS_SHA512SU0
+  "sha512su1", // AArch64_INS_SHA512SU1
   "shadd", // AArch64_INS_SHADD
-  "shadd{", // AArch64_INS_SHADD
-  "shll2{", // AArch64_INS_SHLL2
-  "shll{", // AArch64_INS_SHLL
+  "shll2", // AArch64_INS_SHLL2
+  "shll", // AArch64_INS_SHLL
   "shl", // AArch64_INS_SHL
-  "shl{", // AArch64_INS_SHL
   "shrnb", // AArch64_INS_SHRNB
   "shrnt", // AArch64_INS_SHRNT
-  "shrn2{", // AArch64_INS_SHRN2
-  "shrn{", // AArch64_INS_SHRN
+  "shrn2", // AArch64_INS_SHRN2
+  "shrn", // AArch64_INS_SHRN
   "shsubr", // AArch64_INS_SHSUBR
   "shsub", // AArch64_INS_SHSUB
-  "shsub{", // AArch64_INS_SHSUB
   "sli", // AArch64_INS_SLI
-  "sli{", // AArch64_INS_SLI
-  "sm3partw1{", // AArch64_INS_SM3PARTW1
-  "sm3partw2{", // AArch64_INS_SM3PARTW2
-  "sm3ss1{", // AArch64_INS_SM3SS1
-  "sm3tt1a{", // AArch64_INS_SM3TT1A
-  "sm3tt1b{", // AArch64_INS_SM3TT1B
-  "sm3tt2a{", // AArch64_INS_SM3TT2A
-  "sm3tt2b{", // AArch64_INS_SM3TT2B
-  "sm4e{", // AArch64_INS_SM4E
-  "sm4ekey", // AArch64_INS_SM4EKEY
-  "sm4ekey{", // AArch64_INS_SM4EKEY
+  "sm3partw1", // AArch64_INS_SM3PARTW1
+  "sm3partw2", // AArch64_INS_SM3PARTW2
+  "sm3ss1", // AArch64_INS_SM3SS1
+  "sm3tt1a", // AArch64_INS_SM3TT1A
+  "sm3tt1b", // AArch64_INS_SM3TT1B
+  "sm3tt2a", // AArch64_INS_SM3TT2A
+  "sm3tt2b", // AArch64_INS_SM3TT2B
   "sm4e", // AArch64_INS_SM4E
+  "sm4ekey", // AArch64_INS_SM4EKEY
   "smaddl", // AArch64_INS_SMADDL
   "smaxp", // AArch64_INS_SMAXP
-  "smaxp{", // AArch64_INS_SMAXP
   "smaxqv", // AArch64_INS_SMAXQV
   "smaxv", // AArch64_INS_SMAXV
-  "smaxv{", // AArch64_INS_SMAXV
   "smax", // AArch64_INS_SMAX
-  "smax{", // AArch64_INS_SMAX
   "smc", // AArch64_INS_SMC
   "sminp", // AArch64_INS_SMINP
-  "sminp{", // AArch64_INS_SMINP
   "sminqv", // AArch64_INS_SMINQV
   "sminv", // AArch64_INS_SMINV
-  "sminv{", // AArch64_INS_SMINV
   "smin", // AArch64_INS_SMIN
-  "smin{", // AArch64_INS_SMIN
   "smlalb", // AArch64_INS_SMLALB
   "smlall", // AArch64_INS_SMLALL
   "smlalt", // AArch64_INS_SMLALT
   "smlal", // AArch64_INS_SMLAL
-  "smlal2{", // AArch64_INS_SMLAL2
-  "smlal{", // AArch64_INS_SMLAL
+  "smlal2", // AArch64_INS_SMLAL2
   "smlslb", // AArch64_INS_SMLSLB
   "smlsll", // AArch64_INS_SMLSLL
   "smlslt", // AArch64_INS_SMLSLT
   "smlsl", // AArch64_INS_SMLSL
-  "smlsl2{", // AArch64_INS_SMLSL2
-  "smlsl{", // AArch64_INS_SMLSL
-  "smmla{", // AArch64_INS_SMMLA
+  "smlsl2", // AArch64_INS_SMLSL2
   "smmla", // AArch64_INS_SMMLA
   "smopa", // AArch64_INS_SMOPA
   "smops", // AArch64_INS_SMOPS
-  "smov{", // AArch64_INS_SMOV
+  "smov", // AArch64_INS_SMOV
   "smsubl", // AArch64_INS_SMSUBL
   "smulh", // AArch64_INS_SMULH
   "smullb", // AArch64_INS_SMULLB
   "smullt", // AArch64_INS_SMULLT
-  "smull2{", // AArch64_INS_SMULL2
-  "smull{", // AArch64_INS_SMULL
+  "smull2", // AArch64_INS_SMULL2
+  "smull", // AArch64_INS_SMULL
   "splice", // AArch64_INS_SPLICE
   "sqabs", // AArch64_INS_SQABS
-  "sqabs{", // AArch64_INS_SQABS
   "sqadd", // AArch64_INS_SQADD
-  "sqadd{", // AArch64_INS_SQADD
   "sqcadd", // AArch64_INS_SQCADD
   "sqcvtn", // AArch64_INS_SQCVTN
   "sqcvtun", // AArch64_INS_SQCVTUN
@@ -1114,99 +987,73 @@
   "sqdmlalb", // AArch64_INS_SQDMLALB
   "sqdmlalt", // AArch64_INS_SQDMLALT
   "sqdmlal", // AArch64_INS_SQDMLAL
-  "sqdmlal{", // AArch64_INS_SQDMLAL
-  "sqdmlal2{", // AArch64_INS_SQDMLAL2
+  "sqdmlal2", // AArch64_INS_SQDMLAL2
   "sqdmlslbt", // AArch64_INS_SQDMLSLBT
   "sqdmlslb", // AArch64_INS_SQDMLSLB
   "sqdmlslt", // AArch64_INS_SQDMLSLT
   "sqdmlsl", // AArch64_INS_SQDMLSL
-  "sqdmlsl{", // AArch64_INS_SQDMLSL
-  "sqdmlsl2{", // AArch64_INS_SQDMLSL2
+  "sqdmlsl2", // AArch64_INS_SQDMLSL2
   "sqdmulh", // AArch64_INS_SQDMULH
-  "sqdmulh{", // AArch64_INS_SQDMULH
   "sqdmullb", // AArch64_INS_SQDMULLB
   "sqdmullt", // AArch64_INS_SQDMULLT
   "sqdmull", // AArch64_INS_SQDMULL
-  "sqdmull{", // AArch64_INS_SQDMULL
-  "sqdmull2{", // AArch64_INS_SQDMULL2
+  "sqdmull2", // AArch64_INS_SQDMULL2
   "sqincb", // AArch64_INS_SQINCB
   "sqincd", // AArch64_INS_SQINCD
   "sqinch", // AArch64_INS_SQINCH
   "sqincp", // AArch64_INS_SQINCP
   "sqincw", // AArch64_INS_SQINCW
   "sqneg", // AArch64_INS_SQNEG
-  "sqneg{", // AArch64_INS_SQNEG
   "sqrdcmlah", // AArch64_INS_SQRDCMLAH
   "sqrdmlah", // AArch64_INS_SQRDMLAH
-  "sqrdmlah{", // AArch64_INS_SQRDMLAH
   "sqrdmlsh", // AArch64_INS_SQRDMLSH
-  "sqrdmlsh{", // AArch64_INS_SQRDMLSH
   "sqrdmulh", // AArch64_INS_SQRDMULH
-  "sqrdmulh{", // AArch64_INS_SQRDMULH
   "sqrshlr", // AArch64_INS_SQRSHLR
   "sqrshl", // AArch64_INS_SQRSHL
-  "sqrshl{", // AArch64_INS_SQRSHL
   "sqrshrnb", // AArch64_INS_SQRSHRNB
   "sqrshrnt", // AArch64_INS_SQRSHRNT
   "sqrshrn", // AArch64_INS_SQRSHRN
-  "sqrshrn2{", // AArch64_INS_SQRSHRN2
-  "sqrshrn{", // AArch64_INS_SQRSHRN
+  "sqrshrn2", // AArch64_INS_SQRSHRN2
   "sqrshrunb", // AArch64_INS_SQRSHRUNB
   "sqrshrunt", // AArch64_INS_SQRSHRUNT
   "sqrshrun", // AArch64_INS_SQRSHRUN
-  "sqrshrun2{", // AArch64_INS_SQRSHRUN2
-  "sqrshrun{", // AArch64_INS_SQRSHRUN
+  "sqrshrun2", // AArch64_INS_SQRSHRUN2
   "sqrshru", // AArch64_INS_SQRSHRU
   "sqrshr", // AArch64_INS_SQRSHR
   "sqshlr", // AArch64_INS_SQSHLR
   "sqshlu", // AArch64_INS_SQSHLU
-  "sqshlu{", // AArch64_INS_SQSHLU
   "sqshl", // AArch64_INS_SQSHL
-  "sqshl{", // AArch64_INS_SQSHL
   "sqshrnb", // AArch64_INS_SQSHRNB
   "sqshrnt", // AArch64_INS_SQSHRNT
   "sqshrn", // AArch64_INS_SQSHRN
-  "sqshrn2{", // AArch64_INS_SQSHRN2
-  "sqshrn{", // AArch64_INS_SQSHRN
+  "sqshrn2", // AArch64_INS_SQSHRN2
   "sqshrunb", // AArch64_INS_SQSHRUNB
   "sqshrunt", // AArch64_INS_SQSHRUNT
   "sqshrun", // AArch64_INS_SQSHRUN
-  "sqshrun2{", // AArch64_INS_SQSHRUN2
-  "sqshrun{", // AArch64_INS_SQSHRUN
+  "sqshrun2", // AArch64_INS_SQSHRUN2
   "sqsubr", // AArch64_INS_SQSUBR
   "sqsub", // AArch64_INS_SQSUB
-  "sqsub{", // AArch64_INS_SQSUB
   "sqxtnb", // AArch64_INS_SQXTNB
   "sqxtnt", // AArch64_INS_SQXTNT
-  "sqxtn2{", // AArch64_INS_SQXTN2
+  "sqxtn2", // AArch64_INS_SQXTN2
   "sqxtn", // AArch64_INS_SQXTN
-  "sqxtn{", // AArch64_INS_SQXTN
   "sqxtunb", // AArch64_INS_SQXTUNB
   "sqxtunt", // AArch64_INS_SQXTUNT
-  "sqxtun2{", // AArch64_INS_SQXTUN2
+  "sqxtun2", // AArch64_INS_SQXTUN2
   "sqxtun", // AArch64_INS_SQXTUN
-  "sqxtun{", // AArch64_INS_SQXTUN
   "srhadd", // AArch64_INS_SRHADD
-  "srhadd{", // AArch64_INS_SRHADD
   "sri", // AArch64_INS_SRI
-  "sri{", // AArch64_INS_SRI
   "srshlr", // AArch64_INS_SRSHLR
   "srshl", // AArch64_INS_SRSHL
-  "srshl{", // AArch64_INS_SRSHL
   "srshr", // AArch64_INS_SRSHR
-  "srshr{", // AArch64_INS_SRSHR
   "srsra", // AArch64_INS_SRSRA
-  "srsra{", // AArch64_INS_SRSRA
   "sshllb", // AArch64_INS_SSHLLB
   "sshllt", // AArch64_INS_SSHLLT
-  "sshll2{", // AArch64_INS_SSHLL2
-  "sshll{", // AArch64_INS_SSHLL
-  "sshl{", // AArch64_INS_SSHL
+  "sshll2", // AArch64_INS_SSHLL2
+  "sshll", // AArch64_INS_SSHLL
   "sshl", // AArch64_INS_SSHL
   "sshr", // AArch64_INS_SSHR
-  "sshr{", // AArch64_INS_SSHR
   "ssra", // AArch64_INS_SSRA
-  "ssra{", // AArch64_INS_SSRA
   "st1b", // AArch64_INS_ST1B
   "st1d", // AArch64_INS_ST1D
   "st1h", // AArch64_INS_ST1H
@@ -1216,12 +1063,12 @@
   "ssublb", // AArch64_INS_SSUBLB
   "ssubltb", // AArch64_INS_SSUBLTB
   "ssublt", // AArch64_INS_SSUBLT
-  "ssubl2{", // AArch64_INS_SSUBL2
-  "ssubl{", // AArch64_INS_SSUBL
+  "ssubl2", // AArch64_INS_SSUBL2
+  "ssubl", // AArch64_INS_SSUBL
   "ssubwb", // AArch64_INS_SSUBWB
   "ssubwt", // AArch64_INS_SSUBWT
-  "ssubw2{", // AArch64_INS_SSUBW2
-  "ssubw{", // AArch64_INS_SSUBW
+  "ssubw2", // AArch64_INS_SSUBW2
+  "ssubw", // AArch64_INS_SSUBW
   "st1", // AArch64_INS_ST1
   "st2b", // AArch64_INS_ST2B
   "st2d", // AArch64_INS_ST2D
@@ -1288,16 +1135,14 @@
   "subg", // AArch64_INS_SUBG
   "subhnb", // AArch64_INS_SUBHNB
   "subhnt", // AArch64_INS_SUBHNT
-  "subhn{", // AArch64_INS_SUBHN
-  "subhn2{", // AArch64_INS_SUBHN2
+  "subhn", // AArch64_INS_SUBHN
+  "subhn2", // AArch64_INS_SUBHN2
   "subp", // AArch64_INS_SUBP
   "subps", // AArch64_INS_SUBPS
   "subr", // AArch64_INS_SUBR
   "subs", // AArch64_INS_SUBS
   "sub", // AArch64_INS_SUB
-  "sub{", // AArch64_INS_SUB
   "sudot", // AArch64_INS_SUDOT
-  "sudot{", // AArch64_INS_SUDOT
   "sumlall", // AArch64_INS_SUMLALL
   "sumopa", // AArch64_INS_SUMOPA
   "sumops", // AArch64_INS_SUMOPS
@@ -1305,7 +1150,6 @@
   "sunpklo", // AArch64_INS_SUNPKLO
   "sunpk", // AArch64_INS_SUNPK
   "suqadd", // AArch64_INS_SUQADD
-  "suqadd{", // AArch64_INS_SUQADD
   "suvdot", // AArch64_INS_SUVDOT
   "svc", // AArch64_INS_SVC
   "svdot", // AArch64_INS_SVDOT
@@ -1341,91 +1185,72 @@
   "tcommit", // AArch64_INS_TCOMMIT
   "trcit", // AArch64_INS_TRCIT
   "trn1", // AArch64_INS_TRN1
-  "trn1{", // AArch64_INS_TRN1
   "trn2", // AArch64_INS_TRN2
-  "trn2{", // AArch64_INS_TRN2
   "tsb", // AArch64_INS_TSB
   "tstart", // AArch64_INS_TSTART
   "ttest", // AArch64_INS_TTEST
   "uabalb", // AArch64_INS_UABALB
   "uabalt", // AArch64_INS_UABALT
-  "uabal2{", // AArch64_INS_UABAL2
-  "uabal{", // AArch64_INS_UABAL
+  "uabal2", // AArch64_INS_UABAL2
+  "uabal", // AArch64_INS_UABAL
   "uaba", // AArch64_INS_UABA
-  "uaba{", // AArch64_INS_UABA
   "uabdlb", // AArch64_INS_UABDLB
   "uabdlt", // AArch64_INS_UABDLT
-  "uabdl2{", // AArch64_INS_UABDL2
-  "uabdl{", // AArch64_INS_UABDL
+  "uabdl2", // AArch64_INS_UABDL2
+  "uabdl", // AArch64_INS_UABDL
   "uabd", // AArch64_INS_UABD
-  "uabd{", // AArch64_INS_UABD
   "uadalp", // AArch64_INS_UADALP
-  "uadalp{", // AArch64_INS_UADALP
   "uaddlb", // AArch64_INS_UADDLB
-  "uaddlp{", // AArch64_INS_UADDLP
+  "uaddlp", // AArch64_INS_UADDLP
   "uaddlt", // AArch64_INS_UADDLT
-  "uaddlv{", // AArch64_INS_UADDLV
-  "uaddl2{", // AArch64_INS_UADDL2
-  "uaddl{", // AArch64_INS_UADDL
+  "uaddlv", // AArch64_INS_UADDLV
+  "uaddl2", // AArch64_INS_UADDL2
+  "uaddl", // AArch64_INS_UADDL
   "uaddv", // AArch64_INS_UADDV
   "uaddwb", // AArch64_INS_UADDWB
   "uaddwt", // AArch64_INS_UADDWT
-  "uaddw2{", // AArch64_INS_UADDW2
-  "uaddw{", // AArch64_INS_UADDW
+  "uaddw2", // AArch64_INS_UADDW2
+  "uaddw", // AArch64_INS_UADDW
   "ubfm", // AArch64_INS_UBFM
   "uclamp", // AArch64_INS_UCLAMP
   "ucvtf", // AArch64_INS_UCVTF
-  "ucvtf{", // AArch64_INS_UCVTF
   "udf", // AArch64_INS_UDF
   "udivr", // AArch64_INS_UDIVR
   "udiv", // AArch64_INS_UDIV
   "udot", // AArch64_INS_UDOT
-  "udot{", // AArch64_INS_UDOT
   "uhadd", // AArch64_INS_UHADD
-  "uhadd{", // AArch64_INS_UHADD
   "uhsubr", // AArch64_INS_UHSUBR
   "uhsub", // AArch64_INS_UHSUB
-  "uhsub{", // AArch64_INS_UHSUB
   "umaddl", // AArch64_INS_UMADDL
   "umaxp", // AArch64_INS_UMAXP
-  "umaxp{", // AArch64_INS_UMAXP
   "umaxqv", // AArch64_INS_UMAXQV
   "umaxv", // AArch64_INS_UMAXV
-  "umaxv{", // AArch64_INS_UMAXV
   "umax", // AArch64_INS_UMAX
-  "umax{", // AArch64_INS_UMAX
   "uminp", // AArch64_INS_UMINP
-  "uminp{", // AArch64_INS_UMINP
   "uminqv", // AArch64_INS_UMINQV
   "uminv", // AArch64_INS_UMINV
-  "uminv{", // AArch64_INS_UMINV
   "umin", // AArch64_INS_UMIN
-  "umin{", // AArch64_INS_UMIN
   "umlalb", // AArch64_INS_UMLALB
   "umlall", // AArch64_INS_UMLALL
   "umlalt", // AArch64_INS_UMLALT
   "umlal", // AArch64_INS_UMLAL
-  "umlal2{", // AArch64_INS_UMLAL2
-  "umlal{", // AArch64_INS_UMLAL
+  "umlal2", // AArch64_INS_UMLAL2
   "umlslb", // AArch64_INS_UMLSLB
   "umlsll", // AArch64_INS_UMLSLL
   "umlslt", // AArch64_INS_UMLSLT
   "umlsl", // AArch64_INS_UMLSL
-  "umlsl2{", // AArch64_INS_UMLSL2
-  "umlsl{", // AArch64_INS_UMLSL
-  "ummla{", // AArch64_INS_UMMLA
+  "umlsl2", // AArch64_INS_UMLSL2
   "ummla", // AArch64_INS_UMMLA
   "umopa", // AArch64_INS_UMOPA
   "umops", // AArch64_INS_UMOPS
-  "umov{", // AArch64_INS_UMOV
+  "umov", // AArch64_INS_UMOV
   "umsubl", // AArch64_INS_UMSUBL
   "umulh", // AArch64_INS_UMULH
   "umullb", // AArch64_INS_UMULLB
   "umullt", // AArch64_INS_UMULLT
-  "umull2{", // AArch64_INS_UMULL2
-  "umull{", // AArch64_INS_UMULL
+  "umull2", // AArch64_INS_UMULL2
+  "umull", // AArch64_INS_UMULL
   "uqadd", // AArch64_INS_UQADD
-  "uqadd{", // AArch64_INS_UQADD
   "uqcvtn", // AArch64_INS_UQCVTN
   "uqcvt", // AArch64_INS_UQCVT
   "uqdecb", // AArch64_INS_UQDECB
@@ -1440,69 +1265,51 @@
   "uqincw", // AArch64_INS_UQINCW
   "uqrshlr", // AArch64_INS_UQRSHLR
   "uqrshl", // AArch64_INS_UQRSHL
-  "uqrshl{", // AArch64_INS_UQRSHL
   "uqrshrnb", // AArch64_INS_UQRSHRNB
   "uqrshrnt", // AArch64_INS_UQRSHRNT
   "uqrshrn", // AArch64_INS_UQRSHRN
-  "uqrshrn2{", // AArch64_INS_UQRSHRN2
-  "uqrshrn{", // AArch64_INS_UQRSHRN
+  "uqrshrn2", // AArch64_INS_UQRSHRN2
   "uqrshr", // AArch64_INS_UQRSHR
   "uqshlr", // AArch64_INS_UQSHLR
   "uqshl", // AArch64_INS_UQSHL
-  "uqshl{", // AArch64_INS_UQSHL
   "uqshrnb", // AArch64_INS_UQSHRNB
   "uqshrnt", // AArch64_INS_UQSHRNT
   "uqshrn", // AArch64_INS_UQSHRN
-  "uqshrn2{", // AArch64_INS_UQSHRN2
-  "uqshrn{", // AArch64_INS_UQSHRN
+  "uqshrn2", // AArch64_INS_UQSHRN2
   "uqsubr", // AArch64_INS_UQSUBR
   "uqsub", // AArch64_INS_UQSUB
-  "uqsub{", // AArch64_INS_UQSUB
   "uqxtnb", // AArch64_INS_UQXTNB
   "uqxtnt", // AArch64_INS_UQXTNT
-  "uqxtn2{", // AArch64_INS_UQXTN2
+  "uqxtn2", // AArch64_INS_UQXTN2
   "uqxtn", // AArch64_INS_UQXTN
-  "uqxtn{", // AArch64_INS_UQXTN
   "urecpe", // AArch64_INS_URECPE
-  "urecpe{", // AArch64_INS_URECPE
   "urhadd", // AArch64_INS_URHADD
-  "urhadd{", // AArch64_INS_URHADD
   "urshlr", // AArch64_INS_URSHLR
   "urshl", // AArch64_INS_URSHL
-  "urshl{", // AArch64_INS_URSHL
   "urshr", // AArch64_INS_URSHR
-  "urshr{", // AArch64_INS_URSHR
   "ursqrte", // AArch64_INS_URSQRTE
-  "ursqrte{", // AArch64_INS_URSQRTE
   "ursra", // AArch64_INS_URSRA
-  "ursra{", // AArch64_INS_URSRA
   "usdot", // AArch64_INS_USDOT
-  "usdot{", // AArch64_INS_USDOT
   "ushllb", // AArch64_INS_USHLLB
   "ushllt", // AArch64_INS_USHLLT
-  "ushll2{", // AArch64_INS_USHLL2
-  "ushll{", // AArch64_INS_USHLL
-  "ushl{", // AArch64_INS_USHL
+  "ushll2", // AArch64_INS_USHLL2
+  "ushll", // AArch64_INS_USHLL
   "ushl", // AArch64_INS_USHL
   "ushr", // AArch64_INS_USHR
-  "ushr{", // AArch64_INS_USHR
   "usmlall", // AArch64_INS_USMLALL
-  "usmmla{", // AArch64_INS_USMMLA
   "usmmla", // AArch64_INS_USMMLA
   "usmopa", // AArch64_INS_USMOPA
   "usmops", // AArch64_INS_USMOPS
   "usqadd", // AArch64_INS_USQADD
-  "usqadd{", // AArch64_INS_USQADD
   "usra", // AArch64_INS_USRA
-  "usra{", // AArch64_INS_USRA
   "usublb", // AArch64_INS_USUBLB
   "usublt", // AArch64_INS_USUBLT
-  "usubl2{", // AArch64_INS_USUBL2
-  "usubl{", // AArch64_INS_USUBL
+  "usubl2", // AArch64_INS_USUBL2
+  "usubl", // AArch64_INS_USUBL
   "usubwb", // AArch64_INS_USUBWB
   "usubwt", // AArch64_INS_USUBWT
-  "usubw2{", // AArch64_INS_USUBW2
-  "usubw{", // AArch64_INS_USUBW
+  "usubw2", // AArch64_INS_USUBW2
+  "usubw", // AArch64_INS_USUBW
   "usvdot", // AArch64_INS_USVDOT
   "uunpkhi", // AArch64_INS_UUNPKHI
   "uunpklo", // AArch64_INS_UUNPKLO
@@ -1512,9 +1319,7 @@
   "uxth", // AArch64_INS_UXTH
   "uxtw", // AArch64_INS_UXTW
   "uzp1", // AArch64_INS_UZP1
-  "uzp1{", // AArch64_INS_UZP1
   "uzp2", // AArch64_INS_UZP2
-  "uzp2{", // AArch64_INS_UZP2
   "uzpq1", // AArch64_INS_UZPQ1
   "uzpq2", // AArch64_INS_UZPQ2
   "uzp", // AArch64_INS_UZP
@@ -1532,17 +1337,14 @@
   "whilewr", // AArch64_INS_WHILEWR
   "wrffr", // AArch64_INS_WRFFR
   "xaflag", // AArch64_INS_XAFLAG
-  "xar{", // AArch64_INS_XAR
   "xar", // AArch64_INS_XAR
   "xpacd", // AArch64_INS_XPACD
   "xpaci", // AArch64_INS_XPACI
-  "xtn2{", // AArch64_INS_XTN2
-  "xtn{", // AArch64_INS_XTN
+  "xtn2", // AArch64_INS_XTN2
+  "xtn", // AArch64_INS_XTN
   "zero", // AArch64_INS_ZERO
   "zip1", // AArch64_INS_ZIP1
-  "zip1{", // AArch64_INS_ZIP1
   "zip2", // AArch64_INS_ZIP2
-  "zip2{", // AArch64_INS_ZIP2
   "zipq1", // AArch64_INS_ZIPQ1
   "zipq2", // AArch64_INS_ZIPQ2
   "zip", // AArch64_INS_ZIP
