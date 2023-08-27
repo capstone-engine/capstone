@@ -572,27 +572,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		AArch64_AM_ShiftExtendType ExtType = AArch64_AM_getArithExtendType(Val);
 		unsigned ShiftVal = AArch64_AM_getArithShiftValue(Val);
-		
-		if (ExtType == AArch64_AM_UXTW || ExtType == AArch64_AM_UXTX) {
-		unsigned Dest = MCInst_getOpVal(MI, (0));
-		unsigned Src1 = MCInst_getOpVal(MI, (1));
-		if (((Dest == AArch64_SP || Src1 == AArch64_SP) &&
-			 ExtType == AArch64_AM_UXTX) ||
-			((Dest == AArch64_WSP || Src1 == AArch64_WSP) &&
-			 ExtType == AArch64_AM_UXTW)) {
-				if (ShiftVal != 0) {
-					AArch64_get_detail_op(MI, -1)->shift.value = ShiftVal;
-					AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
-				}
-			}
-			break;
-		}
 
 		AArch64_get_detail_op(MI, -1)->ext = llvm_to_cs_ext(ExtType);
-		if (ShiftVal != 0) {
-			AArch64_get_detail_op(MI, -1)->shift.value = ShiftVal;
-			AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
-		}
+		AArch64_get_detail_op(MI, -1)->shift.value = ShiftVal;
+		AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
 		break;
 	}
 	case AArch64_OP_GROUP_BarriernXSOption: {
