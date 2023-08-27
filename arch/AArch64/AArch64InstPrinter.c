@@ -502,7 +502,7 @@ add_real_detail:
 	MCInst_setIsAlias(MI, isAlias);
 
 	if (!isAlias || !useAliasDetails) {
-		map_set_fill_detail_ops(MI, !useAliasDetails);
+		map_set_fill_detail_ops(MI, !(isAlias && useAliasDetails));
 		if (isAlias)
 			SStream_Close(O);
 		printInstruction(MI, Address, O);
