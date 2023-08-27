@@ -182,12 +182,6 @@ static inline cs_detail *get_detail(const MCInst *MI)
 	return MI->flat_insn->detail;
 }
 
-static inline bool set_detail_ops(const MCInst *MI)
-{
-	assert(MI && MI->flat_insn);
-	return MI->fillDetailOps;
-}
-
 /// Returns if the given instruction is an alias instruction.
 #define RETURN_IF_INSN_IS_ALIAS(MI) \
 do { \
