@@ -1314,6 +1314,9 @@ static void add_cs_detail_template_4(MCInst *MI, aarch64_op_group op_group,
 
 void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 					   va_list args) {
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
+		return;
+
 	switch (op_group) {
 	default:
 		printf("Operand group %d not handled\n", op_group);
