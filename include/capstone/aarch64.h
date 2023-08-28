@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "capstone/cs_operand.h"
+#include "cs_operand.h"
 #include "platform.h"
 
 #include <assert.h>
