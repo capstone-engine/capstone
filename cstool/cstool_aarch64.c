@@ -204,7 +204,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 	if (ins->detail->writeback)
 		printf("\tWrite-back: True\n");
 
-	if (aarch64->cc)
+	if (aarch64->cc != AArch64CC_Invalid)
 		printf("\tCode-condition: %u\n", aarch64->cc);
 
 	// Print out all registers accessed by this instruction (either implicit or explicit)
