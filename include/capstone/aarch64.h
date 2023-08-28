@@ -769,7 +769,7 @@ typedef enum {
 typedef enum {
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SysReg> begin
 	// clang-format off
-
+  AArch64_SYSREG_BEGIN       = 0x0,
 	AArch64_SYSREG_ACCDATA_EL1 = 0xc685,
 	AArch64_SYSREG_ACTLR_EL1 = 0xc081,
 	AArch64_SYSREG_ACTLR_EL2 = 0xe081,
@@ -1963,7 +1963,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SysReg> end
-	AArch64_SYSREG_ENDING,
+	AArch64_SYSREG_ENDING = UINT16_MAX,
 } aarch64_sysreg;
 
 typedef enum {
