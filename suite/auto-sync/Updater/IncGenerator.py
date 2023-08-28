@@ -87,10 +87,10 @@ class IncGenerator:
         if not self.output_dir.exists():
             fail_exit(f"{self.output_dir} does not exist.")
         if not self.output_dir_c_inc.exists():
-            log.info(f"{self.output_dir_c_inc} does not exist. Creating it...")
+            log.debug(f"{self.output_dir_c_inc} does not exist. Creating it...")
             os.makedirs(self.output_dir_c_inc)
         if not self.output_dir_cpp_inc.exists():
-            log.info(f"{self.output_dir_cpp_inc} does not exist. Creating it...")
+            log.debug(f"{self.output_dir_cpp_inc} does not exist. Creating it...")
             os.makedirs(self.output_dir_cpp_inc)
 
     def generate(self) -> None:
