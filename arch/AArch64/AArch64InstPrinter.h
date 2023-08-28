@@ -246,6 +246,7 @@ DECLARE_printVectorIndex(1);
 DECLARE_printVectorIndex(8);
 
 void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O);
+void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O);
 void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O);
 void printBarrierOption(MCInst *MI, unsigned OpNum, SStream *O);
 void printBarriernXSOption(MCInst *MI, unsigned OpNum, SStream *O);

@@ -2333,6 +2333,29 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	assert(0 && "Expressions are not supported.");
 }
 
+void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
+{
+	add_cs_detail(MI, AArch64_OP_GROUP_AdrLabel, OpNum);
+	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
+
+	// If the label has already been resolved to an immediate offset (say, when
+	// we're running the disassembler), just print the immediate.
+	if (MCOperand_isImm(Op)) {
+		const int64_t Offset = MCOperand_getImm(Op);
+		SStream_concat0(O, markup("<imm:"));
+		if (!MI->csh->PrintBranchImmNotAsAddress)
+			printUInt64(O, ((Address & -4096) + Offset));
+		else {
+			printUInt64Bang(O, Offset);
+		}
+		SStream_concat0(O, markup(">"));
+		return;
+	}
+
+	// Otherwise, just print the expression.
+	assert(0 && "Expressions are not supported.");
+}
+
 void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_AdrpLabel, OpNum);
