@@ -193,7 +193,7 @@ static void test()
 			CS_MODE_ARM,
 			(unsigned char *)AArch64_CODE,
 			sizeof(AArch64_CODE) - 1,
-			"ARM-64"
+			"AARCH64"
 		},
 	};
 
