@@ -635,10 +635,11 @@ bool ARM_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 
 void ARM_init_mri(MCRegisterInfo *MRI)
 {
-	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, 289, 0, 0,
-					  ARMMCRegisterClasses, 103, 0, 0,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, ARM_REG_ENDING, 0, 0,
+					  ARMMCRegisterClasses,
+					  ARR_SIZE(ARMMCRegisterClasses), 0, 0,
 					  ARMRegDiffLists, 0, ARMSubRegIdxLists,
-					  57, 0);
+					  ARR_SIZE(ARMSubRegIdxLists), 0);
 }
 
 static const map_insn_ops insn_operands[] = {
