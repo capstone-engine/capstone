@@ -262,7 +262,7 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_ARM
 	| (1 << CS_ARCH_ARM)
 #endif
-#ifdef CAPSTONE_HAS_AARCH64
+#if defined(CAPSTONE_HAS_AARCH64) || defined(CAPSTONE_HAS_ARM64)
 	| (1 << CS_ARCH_AARCH64)
 #endif
 #ifdef CAPSTONE_HAS_MIPS
