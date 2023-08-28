@@ -699,7 +699,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		aarch64_sysop sysop;
 		const AArch64DBnXS_DBnXS *DB = AArch64DBnXS_lookupDBnXSByEncoding(Val);
-		sysop.imm = DB ? DB->SysImm : (aarch64_sysop_imm) Val;
+        if (DB)
+            sysop.imm = DB->SysImm;
+        else
+            sysop.imm.raw_val = Val;
 		sysop.sub_type = AArch64_OP_DBNXS;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSIMM);
 		break;
@@ -711,17 +714,26 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 
 		if (Opcode == AArch64_ISB) {
 			const AArch64ISB_ISB *ISB = AArch64ISB_lookupISBByEncoding(Val);
-			sysop.alias = ISB ? ISB->SysAlias : (aarch64_sysop_alias) Val;
+            if (ISB)
+                sysop.alias = ISB->SysAlias;
+            else
+                sysop.alias.raw_val = Val;
 			sysop.sub_type = AArch64_OP_ISB;
 			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		} else if (Opcode == AArch64_TSB) {
 			const AArch64TSB_TSB *TSB = AArch64TSB_lookupTSBByEncoding(Val);
-			sysop.alias = TSB ? TSB->SysAlias : (aarch64_sysop_alias) Val;
+            if (TSB)
+                sysop.alias = TSB->SysAlias;
+            else
+                sysop.alias.raw_val = Val;
 			sysop.sub_type = AArch64_OP_TSB;
 			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		} else {
 			const AArch64DB_DB *DB = AArch64DB_lookupDBByEncoding(Val);
-			sysop.alias = DB ? DB->SysAlias : (aarch64_sysop_alias) Val;
+            if (DB)
+                sysop.alias = DB->SysAlias;
+            else
+                sysop.alias.raw_val = Val;
 			sysop.sub_type = AArch64_OP_DB;
 			AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		}
@@ -731,7 +743,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		aarch64_sysop sysop;
 		unsigned btihintop = MCInst_getOpVal(MI, OpNum) ^ 32;
 		const AArch64BTIHint_BTI *BTI = AArch64BTIHint_lookupBTIByEncoding(btihintop);
-		sysop.alias = BTI ? BTI->SysAlias : (aarch64_sysop_alias) btihintop;
+        if (BTI)
+            sysop.alias = BTI->SysAlias;
+        else
+            sysop.alias.raw_val = btihintop;
 		sysop.sub_type = AArch64_OP_BTI;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
@@ -785,7 +800,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		else
 			// The index is used for an SVE2 instruction.
 			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, MCInst_getOpVal(MI, OpNum));
-			
+
 		break;
 	}
 	case AArch64_OP_GROUP_MatrixTile: {
@@ -830,7 +845,11 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
 		aarch64_sysop sysop;
 		// If Reg is NULL it is a generic system register.
-		sysop.reg = Reg ? Reg->SysReg : (aarch64_sysop_reg) Val;
+        if (Reg)
+          sysop.reg = Reg->SysReg;
+        else {
+          sysop.reg.raw_val = Val;
+        }
 		aarch64_op_type type = (op_group == AArch64_OP_GROUP_MRSSystemRegister)
 								   ? AArch64_OP_REG_MRS
 								   : AArch64_OP_REG_MSR;
@@ -842,7 +861,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned psbhintop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PSBHint_PSB *PSB = AArch64PSBHint_lookupPSBByEncoding(psbhintop);
 		aarch64_sysop sysop;
-		sysop.alias = PSB ? PSB->SysAlias : (aarch64_sysop_alias) psbhintop;
+        if (PSB)
+            sysop.alias = PSB->SysAlias;
+        else
+            sysop.alias.raw_val = psbhintop;
 		sysop.sub_type = AArch64_OP_PSB;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
@@ -851,7 +873,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned prfop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PRFM_PRFM *PRFM = AArch64PRFM_lookupPRFMByEncoding(prfop);
 		aarch64_sysop sysop;
-		sysop.alias = PRFM ? PRFM->SysAlias : (aarch64_sysop_alias) prfop;
+        if (PRFM)
+            sysop.alias = PRFM->SysAlias;
+        else
+            sysop.alias.raw_val = prfop;
 		sysop.sub_type = AArch64_OP_PRFM;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
@@ -879,7 +904,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned svcrop = MCInst_getOpVal(MI, OpNum);
 		const AArch64SVCR_SVCR *SVCR = AArch64SVCR_lookupSVCRByEncoding(svcrop);
 		aarch64_sysop sysop;
-		sysop.alias = SVCR ? SVCR->SysAlias : (aarch64_sysop_alias) svcrop;
+        if (SVCR)
+            sysop.alias = SVCR->SysAlias;
+        else
+            sysop.alias.raw_val = svcrop;
 		sysop.sub_type = AArch64_OP_SVCR;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AArch64_OP_SYSALIAS);
 		break;
@@ -1676,7 +1704,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum, aarch64_op_type ImmTy
 		AArch64_set_detail_op_mem(MI, OpNum, Imm);
 		return;
 	}
-		
+
 
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
@@ -1697,7 +1725,7 @@ void AArch64_set_detail_op_imm_range(MCInst *MI, unsigned OpNum,
 	if (AArch64_get_detail(MI)->is_doing_sme && map_get_op_type(MI, OpNum) & CS_OP_MEM) {
 		AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_SLICE_OFF_RANGE, AArch64Layout_Invalid, FirstImm, Offset);
 		return;
-	}		
+	}
 
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
