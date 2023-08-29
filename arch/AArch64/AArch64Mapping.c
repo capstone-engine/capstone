@@ -1675,8 +1675,10 @@ void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
 		}
 		AArch64_get_detail_op(MI, -1)->ext = ext;
 	}
-	if (DoShift || IsLSL)
+	if (DoShift || IsLSL) {
+		AArch64_get_detail_op(MI, -1)->shift.type = AArch64_SFT_LSL;
 		AArch64_get_detail_op(MI, -1)->shift.value = Log2_32(ExtWidth / 8);
+	}
 }
 
 /// Transforms the immediate of the operand to a float and stores it.
