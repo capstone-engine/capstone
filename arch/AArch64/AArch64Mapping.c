@@ -128,6 +128,7 @@ void AArch64_init_cs_detail(MCInst *MI)
 	if (detail_is_set(MI)) {
 		memset(get_detail(MI), 0,
 			   offsetof(cs_detail, aarch64) + sizeof(cs_aarch64));
+		AArch64_get_detail(MI)->cc = AArch64CC_Invalid;
 	}
 }
 
