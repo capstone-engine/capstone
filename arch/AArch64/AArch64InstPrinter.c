@@ -1547,7 +1547,8 @@ static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
 		SStream_concat0(O, " ");
 		if (getUseMarkup)
 			SStream_concat0(O, "<imm:");
-		SStream_concat(O, "%s%d", "#", Log2_32(Width / 8));
+		unsigned ShiftAmount = DoShift ? Log2_32(Width / 8) : 0;
+		SStream_concat(O, "%s%d", "#", ShiftAmount);
 		if (getUseMarkup)
 			SStream_concat0(O, ">");
 	}
