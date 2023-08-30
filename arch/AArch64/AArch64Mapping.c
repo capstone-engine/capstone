@@ -123,11 +123,20 @@ const char *AArch64_reg_name(csh handle, unsigned int reg)
 	return AArch64_LLVM_getRegisterName(reg, AArch64_NoRegAltName);
 }
 
+void AArch64_setup_op(cs_aarch64_op *op)
+{
+	memset(op, 0, sizeof(cs_aarch64_op));
+	op->type = AArch64_OP_INVALID;
+	op->vector_index = -1;
+}
+
 void AArch64_init_cs_detail(MCInst *MI)
 {
 	if (detail_is_set(MI)) {
 		memset(get_detail(MI), 0,
 			   offsetof(cs_detail, aarch64) + sizeof(cs_aarch64));
+		for (int i = 0; i < ARR_SIZE(AArch64_get_detail(MI)->operands); i++)
+			AArch64_setup_op(&AArch64_get_detail(MI)->operands[i]);
 		AArch64_get_detail(MI)->cc = AArch64CC_Invalid;
 	}
 }
@@ -304,7 +313,7 @@ void AArch64_reg_access(const cs_insn *insn,
 					write_count++;
 				}
 				break;
-			case ARM_OP_MEM:
+			case AArch64_OP_MEM:
 				// registers appeared in memory references always being read
 				if ((op->mem.base != AArch64_REG_INVALID) && !arr_exist(regs_read, read_count, op->mem.base)) {
 					regs_read[read_count] = (uint16_t)op->mem.base;
