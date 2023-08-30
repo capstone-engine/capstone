@@ -113,8 +113,24 @@ static const name_map insn_alias_mnem_map[] = {
 	{ AArch64_INS_ALIAS_END, NULL },
 };
 
+static const char *get_custom_reg_alias(unsigned reg)
+{
+	switch (reg) {
+	case AArch64_REG_X29:
+		return "fp";
+	case AArch64_REG_X30:
+		return "lr";
+	}
+	return NULL;
+}
+
 const char *AArch64_reg_name(csh handle, unsigned int reg)
 {
+	int syntax_opt = ((cs_struct *)(uintptr_t)handle)->syntax;
+	const char *alias = get_custom_reg_alias(reg);
+	if ((syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS) && alias)
+		return alias;
+
 	if (((cs_struct *)(uintptr_t)handle)->syntax & CS_OPT_SYNTAX_NOREGNAME) {
 		return AArch64_LLVM_getRegisterName(reg, AArch64_NoRegAltName);
 	}
@@ -224,6 +240,39 @@ bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 	return Result;
 }
 
+/// Patches the register names with Capstone specific alias.
+/// Those are common alias for registers (e.g. r15 = pc)
+/// which are not set in LLVM.
+static void patch_cs_reg_alias(char *asm_str)
+{
+	bool skip_sub = false;
+	char *x29 = strstr(asm_str, "x29");
+	if (x29 > asm_str && strstr(asm_str, "0x29") == (x29 - 1)) {
+		// Check for hex prefix
+		skip_sub = true;
+	}
+	while (x29 && !skip_sub) {
+		x29[0] = 'f';
+		x29[1] = 'p';
+		memmove(x29 + 2, x29 + 3, strlen(x29 + 3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+		x29 = strstr(asm_str, "x29");
+	}
+	skip_sub = false;
+	char *x30 = strstr(asm_str, "x30");
+	if (x30 > asm_str && strstr(asm_str, "0x30") == (x30 - 1)) {
+		// Check for hex prefix
+		skip_sub = true;
+	}
+	while (x30 && !skip_sub) {
+		x30[0] = 'l';
+		x30[1] = 'r';
+		memmove(x30 + 2, x30 + 3, strlen(x30 + 3));
+		asm_str[strlen(asm_str) - 1] = '\0';
+		x30 = strstr(asm_str, "x30");
+	}
+}
+
 void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
@@ -233,6 +282,9 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	AArch64_get_detail(MI)->post_index = AArch64_check_post_index_am(MI, O);
 	AArch64_check_updates_flags(MI);
 	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
+	int syntax_opt = MI->csh->syntax;
+	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
+		patch_cs_reg_alias(O->buffer);
 }
 
 // given internal insn id, return public instruction info
