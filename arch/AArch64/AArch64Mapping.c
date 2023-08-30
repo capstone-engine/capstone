@@ -113,7 +113,6 @@ static const name_map insn_alias_mnem_map[] = {
 	{ AArch64_INS_ALIAS_END, NULL },
 };
 
-
 const char *AArch64_reg_name(csh handle, unsigned int reg)
 {
 	if (((cs_struct *)(uintptr_t)handle)->syntax & CS_OPT_SYNTAX_NOREGNAME) {
@@ -139,6 +138,35 @@ void AArch64_init_cs_detail(MCInst *MI)
 			AArch64_setup_op(&AArch64_get_detail(MI)->operands[i]);
 		AArch64_get_detail(MI)->cc = AArch64CC_Invalid;
 	}
+}
+
+/// Unfortunately, the AArch64 definitions do not indicate in any way
+/// (exception are the instruction identifiers), if memory accesses
+/// is post- or pre-indexed.
+/// So the only generic way to determine, if the memory access is in
+/// post-indexed addressing mode, is by search for "<membase>], #<memdisp>" in
+/// @p OS.
+/// Searching the asm string to determine such a property is enourmously ugly
+/// and wastes resources.
+/// Sorry, I know and do feel bad about it. But for now it works.
+static bool AArch64_check_post_index_am(const MCInst *MI, const SStream *OS) {
+	cs_aarch64_op *memop = NULL;
+	for (int i = 0; i < AArch64_get_detail(MI)->op_count; ++i) {
+		if (AArch64_get_detail(MI)->operands[i].type & CS_OP_MEM) {
+			memop = &AArch64_get_detail(MI)->operands[i];
+			break;
+		}
+	}
+	if (!memop)
+		return false;
+
+	const char *membase = AArch64_LLVM_getRegisterName(memop->mem.base, AArch64_NoRegAltName);
+	int64_t memdisp = memop->mem.disp;
+	SStream pattern = { 0 };
+	SStream_concat(&pattern, membase);
+	SStream_concat(&pattern, "], ");
+	printInt32Bang(&pattern, memdisp);
+	return strstr(OS->buffer, pattern.buffer) != NULL;
 }
 
 static void AArch64_check_updates_flags(MCInst *MI)
@@ -202,6 +230,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	MI->fillDetailOps = detail_is_set(MI);
 	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	AArch64_LLVM_printInstruction(MI, O, info);
+	AArch64_get_detail(MI)->post_index = AArch64_check_post_index_am(MI, O);
 	AArch64_check_updates_flags(MI);
 	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
 }
@@ -1660,8 +1689,6 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 			// Here we check for this case and add the memory register
 			// to the modified list.
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
-			// A writeback base register implies this is a post-indexed instruction.
-			AArch64_get_detail(MI)->post_index = true;
 		}
 		break;
 	}
