@@ -1065,12 +1065,27 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_UImm12Offset_16:
 	case AArch64_OP_GROUP_UImm12Offset_2:
 	case AArch64_OP_GROUP_UImm12Offset_4:
-	case AArch64_OP_GROUP_UImm12Offset_8:
-	case AArch64_OP_GROUP_VectorIndex_1:
-	case AArch64_OP_GROUP_VectorIndex_8: {
+	case AArch64_OP_GROUP_UImm12Offset_8: {
 		unsigned Scale = temp_arg_0;
 		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
 				Scale * MCInst_getOpVal(MI, OpNum));
+		break;
+	}
+	case AArch64_OP_GROUP_VectorIndex_1:
+	case AArch64_OP_GROUP_VectorIndex_8: {
+		assert(AArch64_get_detail(MI)->op_count > 0);
+		unsigned Scale = temp_arg_0;
+		unsigned VIndex = Scale * MCInst_getOpVal(MI, OpNum);
+		// The index can ether be for one operand, or for each operand of a list.
+		if (!AArch64_get_detail_op(MI, -1)->is_list_member) {
+			AArch64_get_detail_op(MI, -1)->vector_index = VIndex;
+			break;
+		}
+		for (int i = AArch64_get_detail(MI)->op_count - 1; i >= 0; --i) {
+			if (!AArch64_get_detail(MI)->operands[i].is_list_member)
+				break;
+			AArch64_get_detail(MI)->operands[i].vector_index = VIndex;
+		}
 		break;
 	}
 	case AArch64_OP_GROUP_ZPRasFPR_128:
