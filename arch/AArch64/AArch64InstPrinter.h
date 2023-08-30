@@ -78,6 +78,7 @@ void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O);
 	static inline void CONCAT(printPostIncOperand, Amount)(MCInst * MI, unsigned OpNo, \
 											 SStream *O) \
 	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_PostIncOperand, Amount), OpNo, Amount); \
 		printPostIncOperand(MI, OpNo, Amount, O); \
 	}
 DEFINE_printPostIncOperand(64);
