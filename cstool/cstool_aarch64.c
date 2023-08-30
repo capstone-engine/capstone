@@ -51,6 +51,8 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 				printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 			if (op->mem.disp != 0)
 				printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+			if (ins->detail->aarch64.post_index)
+				printf("\t\t\tpost-indexed: true\n");
 
 			break;
 		case AArch64_OP_SME_MATRIX:

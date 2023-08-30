@@ -1632,6 +1632,8 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 			// Here we check for this case and add the memory register
 			// to the modified list.
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+			// A writeback base register implies this is a post-indexed instruction.
+			AArch64_get_detail(MI)->post_index = true;
 		}
 		break;
 	}
