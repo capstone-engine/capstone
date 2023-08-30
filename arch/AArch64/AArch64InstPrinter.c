@@ -159,7 +159,6 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			}
 
 			if (AsmMnemonic) {
-				SStream_concat1(O, ' ');
 				SStream_concat(O, "%s", AsmMnemonic);
 				SStream_concat0(O, " ");
 
@@ -221,7 +220,6 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				shift = immr;
 			}
 			if (AsmMnemonic) {
-				SStream_concat1(O, ' ');
 				SStream_concat(O, "%s", AsmMnemonic);
 				SStream_concat0(O, " ");
 
@@ -254,7 +252,6 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 
 		// SBFIZ/UBFIZ aliases
 		if (MCOperand_getImm(Op2) > MCOperand_getImm(Op3)) {
-			SStream_concat1(O, ' ');
 			SStream_concat(O, "%s", (IsSigned ? "sbfiz" : "ubfiz"));
 			SStream_concat0(O, " ");
 
@@ -281,7 +278,6 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		}
 
 		// Otherwise SBFX/UBFX is the preferred form
-		SStream_concat1(O, ' ');
 		SStream_concat(O, "%s", (IsSigned ? "sbfx" : "ubfx"));
 		SStream_concat0(O, " ");
 
