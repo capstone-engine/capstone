@@ -729,6 +729,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			unsigned Reg = RegMask & (1 << I);
 			if (Reg == 0)
 				continue;
+			AArch64_get_detail_op(MI, 0)->is_list_member = true;
 			AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE_LIST, AArch64Layout_VL_D, AArch64_REG_ZAD0 + I);
 		}
 		break;
@@ -1245,15 +1246,18 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 				 Reg)) &&
 			NumRegs > 1 && Stride == 1 &&
 			Reg < getNextVectorRegister(Reg, NumRegs - 1)) {
+				AArch64_get_detail_op(MI, 0)->is_list_member = true;
 				AArch64_get_detail_op(MI, 0)->vas = vas;
 				AArch64_set_detail_op_reg(MI, OpNum, Reg);
 				if (NumRegs > 1) {
+					AArch64_get_detail_op(MI, 0)->is_list_member = true;
 					AArch64_get_detail_op(MI, 0)->vas = vas;
 					AArch64_set_detail_op_reg(MI, OpNum, getNextVectorRegister(Reg, NumRegs - 1));
 				}
 		} else {
 			for (unsigned i = 0; i < NumRegs;
 				 ++i, Reg = getNextVectorRegister(Reg, Stride)) {
+				AArch64_get_detail_op(MI, 0)->is_list_member = true;
 				AArch64_get_detail_op(MI, 0)->vas = vas;
 				AArch64_set_detail_op_reg(MI, OpNum, Reg);
 			}
