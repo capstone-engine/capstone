@@ -775,7 +775,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_AM_ShiftExtendType ShExtType = AArch64_AM_getShiftType(Val);
 		AArch64_get_detail_op(MI, -1)->ext = llvm_to_cs_ext(ShExtType);
 		AArch64_get_detail_op(MI, -1)->shift.type = llvm_to_cs_shift(ShExtType);
-		AArch64_get_detail_op(MI, -1)->shift.value = Val;
+		AArch64_get_detail_op(MI, -1)->shift.value = AArch64_AM_getShiftValue(Val);
 		break;
 	}
 	case AArch64_OP_GROUP_SIMDType10Operand: {
