@@ -79,8 +79,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	// Skip ARM because the duplicate disassembly messes with the IT/VPT states
 	// and laeds to wrong results.
 	cs_arch arch = ((struct cs_struct *)(uintptr_t)*handle)->arch;
-	if ((arch != CS_ARCH_ARM) &&
-			(cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK)) {
+	if (arch != CS_ARCH_ARM) {
 		cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 
 		strcpy(tmp_noreg, insn[0].mnemonic);
@@ -102,9 +101,6 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 			cs_free(insn, count);
 			_fail(__FILE__, __LINE__);
 		}
-
-		cs_option(*handle, CS_OPT_SYNTAX, 0);
-
 	} else if (strcmp(tmp, tmp_mc)) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\" ( \"%s\" != \"%s\" )\n", list_part[0], origin, list_part[1], tmp, tmp_mc);
 		free_strs(list_part, size_part);

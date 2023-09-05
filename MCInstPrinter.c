@@ -6,6 +6,7 @@
 #include <capstone/platform.h>
 
 extern bool ARM_getFeatureBits(unsigned int mode, unsigned int feature);
+extern bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
 
 static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 {
@@ -15,6 +16,8 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 		assert(0 && "Not implemented for current arch.");
 	case CS_ARCH_ARM:
 		return ARM_getFeatureBits(MI->csh->mode, Value);
+	case CS_ARCH_PPC:
+		return PPC_getFeatureBits(MI->csh->mode, Value);
 	}
 }
 

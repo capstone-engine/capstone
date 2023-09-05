@@ -56,22 +56,22 @@ Here is a boiled down explanation about these steps.
 **Step 1**
 
 ```
-                                                             Forward to               
-                                     getInstr(bytes)    ┌───┐LLVM code     ┌─────────┐            ┌──────────┐
-                                    ┌──────────────────►│ A ├────────────► │         ├───────────►│          ├────┐
-                                    │                   │ R │              │ LLVM    │            │ LLVM     │    │ Decode
-                                    │                   │ C │              │         │            │          │    │ Instr.
-                                    │                   │ H │              │         │decode(Op0) │          │◄───┘
-┌────────┐ disasm(bytes) ┌──────────┴──┐                │   │              │ Disass- │ ◄──────────┤ Decoder  │
-│CS Core ├──────────────►│ ARCH Module │                │   │              │ embler  ├──────────► │ State    │
-└────────┘               └─────────────┘                │ M │              │         │            │ Machine  │
-                                    ▲                   │ A │              │         │decode(Op1) │          │
-                                    │                   │ P │              │         │ ◄──────────┤          │
-                                    │                   │ P │              │         ├──────────► │          │
-                                    │                   │ I │              │         │            │          │
-                                    │                   │ N │              │         │            │          │
-                                    └───────────────────┤ G │◄─────────────┤         │◄───────────┤          │
-                                                        └───┘              └─────────┘            └──────────┘
+                                                                 ARCH_LLVM_getInstr(
+                                     ARCH_getInstr(bytes)   ┌───┐   bytes)           ┌─────────┐            ┌──────────┐
+                                    ┌──────────────────────►│ A ├──────────────────► │         ├───────────►│          ├────┐
+                                    │                       │ R │                    │ LLVM    │            │ LLVM     │    │ Decode
+                                    │                       │ C │                    │         │            │          │    │ Instr.
+                                    │                       │ H │                    │         │decode(Op0) │          │◄───┘
+┌────────┐ disasm(bytes) ┌──────────┴──┐                    │   │                    │ Disass- │ ◄──────────┤ Decoder  │
+│CS Core ├──────────────►│ ARCH Module │                    │   │                    │ embler  ├──────────► │ State    │
+└────────┘               └─────────────┘                    │ M │                    │         │            │ Machine  │
+                                    ▲                       │ A │                    │         │decode(Op1) │          │
+                                    │                       │ P │                    │         │ ◄──────────┤          │
+                                    │                       │ P │                    │         ├──────────► │          │
+                                    │                       │ I │                    │         │            │          │
+                                    │                       │ N │                    │         │            │          │
+                                    └───────────────────────┤ G │◄───────────────────┤         │◄───────────┤          │
+                                                            └───┘                    └─────────┘            └──────────┘
 ```
 
 In the first decoding step the instruction bytes get forwarded to the
@@ -85,25 +85,25 @@ The disassembler and the state machine are equivalent to what `llvm-objdump` use
 **Step 2**
 
 ```
-                                                        printInst(
-                                                               MCInst,
-                                                   ┌───┐       asm_buf) ┌────────┐            ┌──────────┐
-                                      ┌───────────►│ A ├──────────────► │        ├───────────►│          ├──────┐
-                                      │            │ R │                │ LLVM   │            │ LLVM     │      │ Decode
-                                      │            │ C │ add_cs_detail  │        │            │          │      │ Mnemonic
-                                      │            │ H │ (Op0)          │        │ print(Op0) │          │◄─────┘
-                                      │            │   │ ◄──────────────┤        │ ◄──────────┤          │
-           printer(MCInst,            │            │   ├──────────────► │        ├──────────► │ Asm-     │
-┌────────┐         asm_buf)┌──────────┴──┐         │   │                │ Inst   │            │ Writer   │
-│CS Core ├────────────────►│ ARCH Module │         │   │                │ Printer│            │ State    │
-└────────┘                 └─────────────┘         │ M │ add_cs_detail  │        │            │ Machine  │
-                                      ▲            │ A │ (Op1)          │        │ print(Op1) │          │
-                                      │            │ P │ ◄──────────────┤        │ ◄──────────┤          │
-                                      │            │ P ├──────────────► │        ├──────────► │          │
-                                      │            │ I │                │        │            │          │
-                                      │            │ N │                │        │            │          │
-                                      └────────────┤ G │◄───────────────┤        │◄───────────┤          │
-                                                   └───┘                └────────┘            └──────────┘
+                                      ARCH_printInst(        ARCH_LLVM_printInst(
+                                         MCInst,                MCInst,
+                                         asm_buf)      ┌───┐    asm_buf)         ┌────────┐            ┌──────────┐
+                                      ┌───────────────►│ A ├───────────────────► │        ├───────────►│          ├──────┐
+                                      │                │ R │                     │ LLVM   │            │ LLVM     │      │ Decode
+                                      │                │ C │                     │        │            │          │      │ Mnemonic
+                                      │                │ H │ add_cs_detail(Op0)  │        │ print(Op0) │          │◄─────┘
+                                      │                │   │ ◄───────────────────┤        │ ◄──────────┤          │
+           printer(MCInst,            │                │   ├───────────────────► │        ├──────────► │ Asm-     │
+┌────────┐         asm_buf)┌──────────┴──┐             │   │                     │ Inst   │            │ Writer   │
+│CS Core ├────────────────►│ ARCH Module │             │   │                     │ Printer│            │ State    │
+└────────┘                 └─────────────┘             │ M │                     │        │            │ Machine  │
+                                      ▲                │ A │ add_cs_detail(Op1)  │        │ print(Op1) │          │
+                                      │                │ P │ ◄───────────────────┤        │ ◄──────────┤          │
+                                      │                │ P ├───────────────────► │        ├──────────► │          │
+                                      │                │ I │                     │        │            │          │
+                                      │                │ N │                     │        │            │          │
+                                      └────────────────┤ G │◄────────────────────┤        │◄───────────┤          │
+                                                       └───┘                     └────────┘            └──────────┘
 ```
 
 The second decoding step passes the `MCInst` and a buffer to the printer.
@@ -115,4 +115,4 @@ Each time an operand is printed, the mapping component is called
 to populate the `cs_insn` with the operand information and details.
 
 Again the `InstPrinter` and `AsmWriter` are translated code from LLVM,
-and with that mirror the behavior of `llvm-objdump`.
+so they mirror the behavior of `llvm-objdump`.

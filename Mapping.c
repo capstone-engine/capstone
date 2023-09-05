@@ -3,6 +3,7 @@
 /*    Rot127 <unisono@quyllur.org>, 2022-2023 */
 
 #include "Mapping.h"
+#include "capstone/capstone.h"
 
 // create a cache for fast id lookup
 static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
@@ -311,3 +312,60 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 DEFINE_get_detail_op(arm, ARM);
 DEFINE_get_detail_op(ppc, PPC);
 DEFINE_get_detail_op(tricore, TriCore);
+
+/// Returns true if for this architecture the
+/// alias operands should be filled.
+/// TODO: Replace this with a proper option.
+/// 			So it can be toggled between disas() calls.
+bool map_use_alias_details(const MCInst *MI) {
+	assert(MI);
+	return !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
+}
+
+/// Sets the setDetailOps flag to @p Val.
+/// If detail == NULLit refuses to set the flag to true.
+void map_set_fill_detail_ops(MCInst *MI, bool Val) {
+	assert(MI);
+	if (!detail_is_set(MI)) {
+		MI->fillDetailOps = false;
+		return;
+	}
+
+	MI->fillDetailOps = Val;
+}
+
+/// Sets the instruction alias flags and the given alias id.
+void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias) {
+	assert(MI);
+	MI->isAliasInstr = Val;
+	MI->flat_insn->is_alias = Val;
+	MI->flat_insn->alias_id = Alias;
+}
+
+/// Sets an alternative id for some instruction.
+/// Or -1 if it fails.
+/// You must add (<ARCH>_INS_ALIAS_BEGIN + 1) to the id to get the real id.
+void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size) {
+	if (!MCInst_isAlias(MI))
+		return;
+
+	char alias_mnem[16] = { 0 };
+	int i = 0, j = 0;
+	const char *asm_str_buf = O->buffer;
+	// Skip spaces and tabs
+	while (asm_str_buf[i] == ' ' || asm_str_buf[i] == '\t') {
+		if (!asm_str_buf[i]) {
+			MI->flat_insn->alias_id = -1;
+			return;
+		}
+		++i;
+	}
+	for (; j < sizeof(alias_mnem) - 1; ++j, ++i) {
+		if (!asm_str_buf[i] || asm_str_buf[i] == ' ' || asm_str_buf[i] == '\t')
+			break;
+		alias_mnem[j] = O->buffer[i];
+	}
+
+	MI->flat_insn->alias_id = name2id(alias_mnem_id_map, map_size, alias_mnem);
+}
+

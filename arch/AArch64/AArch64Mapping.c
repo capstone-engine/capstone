@@ -410,10 +410,10 @@ void AArch64_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
-		if (h->detail) {
+		if (h->detail_opt) {
 #ifndef CAPSTONE_DIET
 			cs_struct handle;
-			handle.detail = h->detail;
+			handle.detail_opt = h->detail_opt;
 
 			memcpy(insn->detail->regs_read, insns[i].regs_use, sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
@@ -768,7 +768,7 @@ arm64_sys_op AArch64_map_sys_op(const char *name)
 
 void arm64_op_addReg(MCInst *MI, int reg)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_REG;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].reg = reg;
 		MI->flat_insn->detail->arm64.op_count++;
@@ -777,14 +777,14 @@ void arm64_op_addReg(MCInst *MI, int reg)
 
 void arm64_op_addVectorArrSpecifier(MCInst * MI, int sp)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count - 1].vas = sp;
 	}
 }
 
 void arm64_op_addFP(MCInst *MI, float fp)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_FP;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].fp = fp;
 		MI->flat_insn->detail->arm64.op_count++;
@@ -793,7 +793,7 @@ void arm64_op_addFP(MCInst *MI, float fp)
 
 void arm64_op_addImm(MCInst *MI, int64_t imm)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].type = ARM64_OP_IMM;
 		MI->flat_insn->detail->arm64.operands[MI->flat_insn->detail->arm64.op_count].imm = (int)imm;
 		MI->flat_insn->detail->arm64.op_count++;

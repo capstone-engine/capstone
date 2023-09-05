@@ -1,6 +1,3 @@
-import logging as log
-import re
-
 from tree_sitter import Node
 
 from Patches.HelperMethods import get_text
@@ -9,8 +6,8 @@ from Patches.Patch import Patch
 
 class IsOptionalDef(Patch):
     """
-    Patch   OpInfo[i].isPredicate()
-    to      MCOperandInfo_isPredicate(&OpInfo[i])
+    Patch   OpInfo[i].isOptionalDef()
+    to      MCOperandInfo_isOptionalDef(&OpInfo[i])
     """
 
     def __init__(self, priority: int):

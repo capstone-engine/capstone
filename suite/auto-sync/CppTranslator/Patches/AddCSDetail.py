@@ -19,17 +19,19 @@ class AddCSDetail(Patch):
     """
 
     # Parameter lists of printOperand() functions we need to add `add_cs_detail()` to.
-    # SPaces are removed, so we only need to check the letters.
+    # Spaces are removed, so we only need to check the letters.
     valid_param_lists = [
         b"(MCInst*MI,unsignedOpNum,SStream*O)",  # Default printOperand parameters.
-        b"(MCInst*MI,unsignedOpNo,SStream*O)",  # ARM - printComplexRotationOp
+        b"(MCInst*MI,unsignedOpNo,SStream*O)",  # ARM - printComplexRotationOp / PPC default
         b"(SStream*O,ARM_AM::ShiftOpcShOpc,unsignedShImm,boolgetUseMarkup())",  # ARM - printRegImmShift
+        b"(MCInst*MI,unsignedOpNo,SStream*O,constchar*Modifier)",  # PPC - printPredicateOperand
+        b"(MCInst*MI,uint64_tAddress,unsignedOpNo,SStream*O)",  # PPC - printBranchOperand
     ]
 
     def __init__(self, priority: int, arch: str):
         super().__init__(priority)
         self.arch = arch
-        self.apply_only_to = {"files": ["ARMInstPrinter.cpp"], "archs": list()}
+        self.apply_only_to = {"files": ["ARMInstPrinter.cpp", "PPCInstPrinter.cpp"], "archs": list()}
 
     def get_search_pattern(self) -> str:
         return (
@@ -50,7 +52,7 @@ class AddCSDetail(Patch):
         fcn_def: Node = captures[0][0]
         params = captures[2][0]
         params = get_text(src, params.start_byte, params.end_byte)
-        if re.sub(b" ", b"", params) not in self.valid_param_lists:
+        if re.sub(b"[\n \t]", b"", params) not in self.valid_param_lists:
             return get_text(src, fcn_def.start_byte, fcn_def.end_byte)
 
         fcn_id = captures[1][0]

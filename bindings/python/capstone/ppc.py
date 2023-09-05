@@ -9,13 +9,7 @@ class PpcOpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint),
         ('disp', ctypes.c_int32),
-    )
-
-class PpcOpCrx(ctypes.Structure):
-    _fields_ = (
-        ('scale', ctypes.c_uint),
-        ('reg', ctypes.c_uint),
-        ('cond', ctypes.c_uint),
+        ('offset', ctypes.c_uint),
     )
 
 class PpcOpValue(ctypes.Union):
@@ -23,13 +17,25 @@ class PpcOpValue(ctypes.Union):
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
         ('mem', PpcOpMem),
-        ('crx', PpcOpCrx),
     )
 
 class PpcOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', PpcOpValue),
+        ('access', ctypes.c_uint),
+    )
+
+class PpcBC(ctypes.Structure):
+    _fields_ = (
+        ('bo', ctypes.c_uint8),
+        ('bi', ctypes.c_uint8),
+        ('crX_bit', ctypes.c_uint),
+        ('crX', ctypes.c_uint),
+        ('hint', ctypes.c_uint),
+        ('pred_cr', ctypes.c_uint),
+        ('pred_ctr', ctypes.c_uint),
+        ('bh', ctypes.c_uint),
     )
 
     @property
@@ -44,20 +50,14 @@ class PpcOp(ctypes.Structure):
     def mem(self):
         return self.value.mem
 
-    @property
-    def crx(self):
-        return self.value.crx
-
-
 class CsPpc(ctypes.Structure):
     _fields_ = (
-        ('bc', ctypes.c_uint),
-        ('bh', ctypes.c_uint),
+        ('bc', PpcBC),
         ('update_cr0', ctypes.c_bool),
         ('op_count', ctypes.c_uint8),
         ('operands', PpcOp * 8),
     )
 
 def get_arch_info(a):
-    return (a.bc, a.bh, a.update_cr0, copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.bc, a.update_cr0, copy_ctypes_list(a.operands[:a.op_count]))
 

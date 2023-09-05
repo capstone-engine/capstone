@@ -1,10 +1,10 @@
 {
   "General": {
-    "clang_format_file": "../../../.clang-format",
-    "patch_persistence_file": "./saved_patches.json",
-    "cs_arch_src": "../../../arch/",
-    "translation_out_dir": "../build/trans_out/",
-    "diff_out_dir": "../build/diff_out/",
+    "clang_format_file": "{CS_ROOT}/.clang-format",
+    "patch_persistence_file": "{CPP_TRANSLATOR_ROOT}/saved_patches.json",
+    "cs_arch_src": "{CS_ROOT}/arch/",
+    "translation_out_dir": "{AUTO_SYNC_ROOT}/build/trans_out/",
+    "diff_out_dir": "{AUTO_SYNC_ROOT}/build/diff_out/",
     "diff_color_new": "green",
     "diff_color_old": "light_blue",
     "diff_color_saved": "yellow",
@@ -28,30 +28,61 @@
   "ARM": {
     "files_to_translate": [
       {
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
         "out": "ARMDisassembler.c"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp",
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp",
         "out": "ARMInstPrinter.c"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.h",
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.h",
         "out": "ARMInstPrinter.h"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMAddressingModes.h",
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMAddressingModes.h",
         "out": "ARMAddressingModes.h"
       },{
-        "in": "../vendor/llvm_root/llvm/lib/Target/ARM/Utils/ARMBaseInfo.cpp",
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Utils/ARMBaseInfo.cpp",
         "out": "ARMBaseInfo.c"
       }
     ],
     "files_for_template_search": [
-      "../build/llvm_inc/ARMGenDisassemblerTables.inc",
-      "../build/llvm_inc/ARMGenAsmWriter.inc",
-      "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
-      "../vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp"
+      "{AUTO_SYNC_ROOT}/build/llvm_inc/ARMGenDisassemblerTables.inc",
+      "{AUTO_SYNC_ROOT}/build/llvm_inc/ARMGenAsmWriter.inc",
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMDisassembler.cpp",
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/MCTargetDesc/ARMInstPrinter.cpp"
     ],
     "manually_edited_files": [
-      "../vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMBaseInfo.h"
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/ARM/Disassembler/ARMBaseInfo.h"
+    ]
+  },
+   "PPC": {
+    "files_to_translate": [
+      {
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/Disassembler/PPCDisassembler.cpp",
+        "out": "PPCDisassembler.c"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/MCTargetDesc/PPCInstPrinter.cpp",
+        "out": "PPCInstPrinter.c"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/MCTargetDesc/PPCInstPrinter.h",
+        "out": "PPCInstPrinter.h"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/MCTargetDesc/PPCMCTargetDesc.h",
+        "out": "PPCMCTargetDesc.h"
+      },{
+        "in": "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/MCTargetDesc/PPCPredicates.h",
+        "out": "PPCPredicates.h"
+      }
+    ],
+    "files_for_template_search": [
+      "{AUTO_SYNC_ROOT}/build/llvm_inc/PPCGenDisassemblerTables.inc",
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/Disassembler/PPCDisassembler.cpp"
+    ],
+     "templates_with_arg_deduction": [
+       "decodeRegisterClass"
+     ],
+    "manually_edited_files": [
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/PPCInstrInfo.h",
+      "{AUTO_SYNC_ROOT}/vendor/llvm_root/llvm/lib/Target/PowerPC/PPCRegisterInfo.h"
     ]
   }
 }
