@@ -42,14 +42,14 @@ static void printOperand(MCInst *MI, int opNum, SStream *O);
 
 static void Sparc_add_hint(MCInst *MI, unsigned int hint)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sparc.hint = hint;
 	}
 }
 
 static void Sparc_add_reg(MCInst *MI, unsigned int reg)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
 		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
 		MI->flat_insn->detail->sparc.op_count++;
@@ -58,7 +58,7 @@ static void Sparc_add_reg(MCInst *MI, unsigned int reg)
 
 static void set_mem_access(MCInst *MI, bool status)
 {
-	if (MI->csh->detail != CS_OPT_ON)
+	if (MI->csh->detail_opt != CS_OPT_ON)
 		return;
 
 	MI->csh->doing_mem = status;
@@ -75,7 +75,7 @@ static void set_mem_access(MCInst *MI, bool status)
 
 void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 {
-	if (((cs_struct *)ud)->detail != CS_OPT_ON)
+	if (((cs_struct *)ud)->detail_opt != CS_OPT_ON)
 		return;
 
 	// fix up some instructions
@@ -170,7 +170,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 		printRegName(O, reg);
 		reg = Sparc_map_register(reg);
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
 				if (MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base)
 					MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.index = (uint8_t)reg;
@@ -261,7 +261,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 		
 		printInt64(O, Imm);
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = Imm;
 			} else {
@@ -332,7 +332,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 
 	SStream_concat0(O, SPARCCondCodeToString((sparc_cc)CC));
 
-	if (MI->csh->detail)
+	if (MI->csh->detail_opt)
 		MI->flat_insn->detail->sparc.cc = (sparc_cc)CC;
 }
 
@@ -371,7 +371,7 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_BPXCCNT:
 			case SP_TXCCri:
 			case SP_TXCCrr:
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					// skip 'b', 't'
 					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 1);
 					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
@@ -379,7 +379,7 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 				break;
 			case SP_BPFCCANT:
 			case SP_BPFCCNT:
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					// skip 'fb'
 					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 2);
 					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
@@ -391,7 +391,7 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_FMOVQ_XCC:
 			case SP_FMOVS_ICC:
 			case SP_FMOVS_XCC:
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					// skip 'fmovd', 'fmovq', 'fmovs'
 					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 5);
 					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
@@ -401,7 +401,7 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_MOVICCrr:
 			case SP_MOVXCCri:
 			case SP_MOVXCCrr:
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					// skip 'mov'
 					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 3);
 					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
@@ -410,7 +410,7 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_V9FMOVD_FCC:
 			case SP_V9FMOVQ_FCC:
 			case SP_V9FMOVS_FCC:
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					// skip 'fmovd', 'fmovq', 'fmovs'
 					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 5);
 					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
@@ -418,7 +418,7 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 				break;
 			case SP_V9MOVFCCri:
 			case SP_V9MOVFCCrr:
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					// skip 'mov'
 					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 3);
 					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
@@ -436,7 +436,7 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 
 void Sparc_addReg(MCInst *MI, int reg)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
 		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
 		MI->flat_insn->detail->sparc.op_count++;

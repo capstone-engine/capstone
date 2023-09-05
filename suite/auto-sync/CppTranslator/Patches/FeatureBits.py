@@ -1,9 +1,5 @@
-import logging as log
-import re
-
 from tree_sitter import Node
-
-from Patches.HelperMethods import get_text, get_function_params_of_node, get_MCInst_var_name
+from Patches.HelperMethods import get_text, get_MCInst_var_name
 from Patches.Patch import Patch
 
 

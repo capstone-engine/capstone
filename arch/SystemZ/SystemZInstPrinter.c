@@ -49,7 +49,7 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 			SStream_concat(O, "%%%s, ", getRegisterName(Index));
 		SStream_concat(O, "%%%s)", getRegisterName(Base));
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
@@ -57,14 +57,14 @@ static void printAddress(MCInst *MI, unsigned Base, int64_t Disp, unsigned Index
 			MI->flat_insn->detail->sysz.op_count++;
 		}
 	} else if (!Index) {
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Disp;
 			MI->flat_insn->detail->sysz.op_count++;
 		}
 	} else {
 		SStream_concat(O, "(%%%s)", getRegisterName(Index));
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.index = (uint8_t)SystemZ_map_register(Index);
@@ -83,7 +83,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 		SStream_concat(O, "%%%s", getRegisterName(reg));
 		reg = SystemZ_map_register(reg);
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_REG;
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].reg = reg;
 			MI->flat_insn->detail->sysz.op_count++;
@@ -93,7 +93,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 
 		printInt64(O, Imm);
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Imm;
 			MI->flat_insn->detail->sysz.op_count++;
@@ -107,7 +107,7 @@ static void printU1ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	// assert(isUInt<1>(Value) && "Invalid u1imm argument");
 	printInt64(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -120,7 +120,7 @@ static void printU2ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	// assert(isUInt<2>(Value) && "Invalid u2imm argument");
 	printInt64(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -133,7 +133,7 @@ static void printU3ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	// assert(isUInt<3>(Value) && "Invalid u4imm argument");
 	printInt64(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -146,7 +146,7 @@ static void printU4ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	// assert(isUInt<4>(Value) && "Invalid u4imm argument");
 	printInt64(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -160,7 +160,7 @@ static void printU6ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	printUInt32(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -184,7 +184,7 @@ static void printS8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 			SStream_concat(O, "-%u", -Value);
 	}
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -201,7 +201,7 @@ static void printU8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	else
 		SStream_concat(O, "%u", Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -214,7 +214,7 @@ static void printU12ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	// assert(isUInt<12>(Value) && "Invalid u12imm argument");
 	printInt64(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -238,7 +238,7 @@ static void printS16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 			SStream_concat(O, "-%u", -Value);
 	}
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -255,7 +255,7 @@ static void printU16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	else
 		SStream_concat(O, "%u", Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -269,7 +269,7 @@ static void printS32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	printInt32(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -283,7 +283,7 @@ static void printU32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 
 	printUInt32(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = (int64_t)Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -296,7 +296,7 @@ static void printU48ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	// assert(isUInt<48>(Value) && "Invalid u48imm argument");
 	printInt64(O, Value);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = Value;
 		MI->flat_insn->detail->sysz.op_count++;
@@ -312,7 +312,7 @@ static void printPCRelOperand(MCInst *MI, int OpNum, SStream *O)
 
 		printInt64(O, imm);
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_IMM;
 			MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].imm = imm;
 			MI->flat_insn->detail->sysz.op_count++;
@@ -364,7 +364,7 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, ", %%%s", getRegisterName(Base));
 	SStream_concat0(O, ")");
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = Length;
@@ -391,7 +391,7 @@ static void printBDRAddrOperand(MCInst *MI, int OpNum, SStream *O)
 		SStream_concat(O, ", %%%s", getRegisterName(Base));
 	SStream_concat0(O, ")");
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].type = SYSZ_OP_MEM;
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.base = (uint8_t)SystemZ_map_register(Base);
 		MI->flat_insn->detail->sysz.operands[MI->flat_insn->detail->sysz.op_count].mem.length = (uint8_t)SystemZ_map_register(Length);
@@ -418,7 +418,7 @@ static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
 	// assert(Imm > 0 && Imm < 15 && "Invalid condition");
 	SStream_concat0(O, CondNames[Imm - 1]);
 
-	if (MI->csh->detail)
+	if (MI->csh->detail_opt)
 		MI->flat_insn->detail->sysz.cc = (sysz_cc)Imm;
 }
 

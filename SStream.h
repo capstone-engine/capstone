@@ -9,9 +9,20 @@
 typedef struct SStream {
 	char buffer[512];
 	int index;
+	bool is_closed;
 } SStream;
 
+#define SSTREAM_RETURN_IF_CLOSED(OS) \
+do { \
+	if (OS->is_closed) \
+		return; \
+} while(0)
+
 void SStream_Init(SStream *ss);
+
+void SStream_Open(SStream *ss);
+
+void SStream_Close(SStream *ss);
 
 void SStream_concat(SStream *ss, const char *fmt, ...);
 

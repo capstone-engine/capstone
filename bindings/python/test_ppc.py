@@ -30,33 +30,42 @@ def print_insn_detail(insn):
         c = 0
         for i in insn.operands:
             if i.type == PPC_OP_REG:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
+                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.value.reg)))
             if i.type == PPC_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.value.imm)))
             if i.type == PPC_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
-                if i.mem.base != 0:
+                if i.value.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
-                        % (c, insn.reg_name(i.mem.base)))
-                if i.mem.disp != 0:
+                        % (c, insn.reg_name(i.value.mem.base)))
+                if i.value.mem.offset != 0:
+                    print("\t\t\toperands[%u].mem.offset: REG = %s\n" \
+                        % (c, insn.reg_name(i.value.mem.offset)))
+                if i.value.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x_32(i.mem.disp)))
-            if i.type == PPC_OP_CRX:
-                print("\t\toperands[%u].type: CRX" % c)
-                print("\t\t\toperands[%u].crx.scale: = %u" \
-                        % (c, i.crx.scale))
-                if i.crx.reg != 0:
-                    print("\t\t\toperands[%u].crx.reg: REG = %s" \
-                        % (c, insn.reg_name(i.crx.reg)))
-                if i.crx.cond != 0:
-                    print("\t\t\toperands[%u].crx.cond: 0x%x" \
-                        % (c, i.crx.cond))
+                        % (c, to_x_32(i.value.mem.disp)))
+            if i.access == CS_AC_READ:
+                print("\t\toperands[%u].access: READ\n" % (c))
+            elif i.access == CS_AC_WRITE:
+                print("\t\toperands[%u].access: WRITE\n" % (c))
+            elif i.access == CS_AC_READ | CS_AC_WRITE:
+                print("\t\toperands[%u].access: READ | WRITE\n" % (c))
             c += 1
+        if insn.bc.pred_cr != PPC_PRED_INVALID or \
+            insn.bc.pred_ctr != PPC_PRED_INVALID:
+            print("\tBranch:\n")
+            print("\t\tbi: %u\n" % insn.bc.bi)
+            print("\t\tbo: %u\n" % insn.bc.bo)
+            if insn.bc.bh != PPC_BH_INVALID:
+                print("\t\tbh: %u\n" %insn.bc.bh)
+            if insn.bc.pred_cr != PPC_PRED_INVALID:
+                print("\t\tcrX: %s\n" % insn.reg_name(insn.bc.crX))
+                print("\t\tpred CR-bit: %u\n" % insn.bc.pred_cr)
+            if insn.bc.pred_ctr != PPC_PRED_INVALID:
+                print("\t\tpred CTR: %u\n" % insn.bc.pred_ctr)
+            if insn.bc.hint != PPC_BH_INVALID:
+                print("\t\thint: %u\n" % insn.bc.hint)
 
-    if insn.bc:
-        print("\tBranch code: %u" % insn.bc)
-    if insn.bh:
-        print("\tBranch hint: %u" % insn.bh)
     if insn.update_cr0:
         print("\tUpdate-CR0: True")
 

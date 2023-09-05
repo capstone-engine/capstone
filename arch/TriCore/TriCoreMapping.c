@@ -145,7 +145,7 @@ static const insn_ops insn_operands[] = {
 void TriCore_set_access(MCInst *MI)
 {
 #ifndef CAPSTONE_DIET
-	if (!(MI->csh->detail == CS_OPT_ON && MI->flat_insn->detail))
+	if (!(MI->csh->detail_opt == CS_OPT_ON && MI->flat_insn->detail))
 		return;
 
 	assert(MI->Opcode < ARR_SIZE(insn_operands));

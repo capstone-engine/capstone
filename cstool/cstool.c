@@ -178,7 +178,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 static void usage(char *prog)
 {
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-d|-s|-u|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("Syntax: %s [-d|-a|-r|-s|-u|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
 	printf("\nThe following <arch+mode> options are supported:\n");
 
 	if (cs_support(CS_ARCH_X86)) {
@@ -322,6 +322,8 @@ static void usage(char *prog)
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
+	printf("        -r show detailed information of the real instructions (even for alias)\n");
+	printf("        -a Print Capstone register alias (if any). Otherwise LLVM register names are emitted.\n");
 	printf("        -s decode in SKIPDATA mode\n");
 	printf("        -u show immediates as unsigned\n");
 	printf("        -v show version & Capstone core build info\n\n");
@@ -330,6 +332,10 @@ static void usage(char *prog)
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 {
 	printf("\tID: %u (%s)\n", ins->id, cs_insn_name(handle, ins->id));
+	if (ins->is_alias) {
+		printf("\tIs alias: %" PRIu64 " (%s) ", ins->alias_id, cs_insn_name(handle, ins->alias_id));
+		printf("with %s operand set\n", ins->usesAliasDetails ? "ALIAS" : "REAL");
+	}
 
 	switch(arch) {
 		case CS_ARCH_X86:
@@ -418,12 +424,16 @@ int main(int argc, char **argv)
 	bool unsigned_flag = false;
 	bool skipdata = false;
 	bool custom_reg_alias = false;
+	bool set_real_detail = false;
 	int args_left;
 
-	while ((c = getopt (argc, argv, "asudhv")) != -1) {
+	while ((c = getopt (argc, argv, "rasudhv")) != -1) {
 		switch (c) {
 			case 'a':
 				custom_reg_alias = true;
+				break;
+			case 'r':
+				set_real_detail = true;
 				break;
 			case 's':
 				skipdata = true;
@@ -591,6 +601,10 @@ int main(int argc, char **argv)
 
 	if (custom_reg_alias) {
 		cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_CS_REG_ALIAS);
+	}
+
+	if (set_real_detail) {
+		cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL);
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);

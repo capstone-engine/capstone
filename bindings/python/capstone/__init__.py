@@ -334,6 +334,7 @@ CS_GRP_BRANCH_RELATIVE = 7 # all relative branching instructions
 CS_AC_INVALID  = 0        # Invalid/unitialized access type.
 CS_AC_READ     = (1 << 0) # Operand that is read from.
 CS_AC_WRITE    = (1 << 1) # Operand that is written to.
+CS_AC_READ_WRITE = (2)
 
 # Capstone syntax value
 CS_OPT_SYNTAX_DEFAULT = 1 << 1  # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
@@ -479,11 +480,14 @@ class _cs_detail(ctypes.Structure):
 class _cs_insn(ctypes.Structure):
     _fields_ = (
         ('id', ctypes.c_uint),
+        ('alias_id', ctypes.c_uint64),
         ('address', ctypes.c_uint64),
         ('size', ctypes.c_uint16),
         ('bytes', ctypes.c_ubyte * 24),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 160),
+        ('is_alias', ctypes.c_bool),
+        ('usesAliasDetails', ctypes.c_bool),
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
@@ -784,7 +788,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(self._raw.detail.contents.arch.mips)
         elif arch == CS_ARCH_PPC:
-            (self.bc, self.bh, self.update_cr0, self.operands) = \
+            (self.bc, self.update_cr0, self.operands) = \
                 ppc.get_arch_info(self._raw.detail.contents.arch.ppc)
         elif arch == CS_ARCH_SPARC:
             (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._raw.detail.contents.arch.sparc)

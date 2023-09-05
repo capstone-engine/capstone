@@ -64,7 +64,7 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 			id = XCore_reg_id(p);
 			if (id) {
 				// register
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_REG;
 					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg = id;
 					MI->flat_insn->detail->xcore.op_count++;
@@ -86,7 +86,7 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 					id = XCore_reg_id(p2);
 					if (id) {
 						// base register
-						if (MI->csh->detail) {
+						if (MI->csh->detail_opt) {
 							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_MEM;
 							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = (uint8_t)id;
 							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = XCORE_REG_INVALID;
@@ -105,18 +105,18 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 							id = XCore_reg_id(p2);
 							if (id) {
 								// index register
-								if (MI->csh->detail) {
+								if (MI->csh->detail_opt) {
 									MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = (uint8_t)id;
 								}
 							} else {
 								// a number means disp
-								if (MI->csh->detail) {
+								if (MI->csh->detail_opt) {
 									MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = atoi(p2);
 								}
 							}
 						}
 
-						if (MI->csh->detail) {
+						if (MI->csh->detail_opt) {
 							MI->flat_insn->detail->xcore.op_count++;
 						}
 					}
@@ -125,7 +125,7 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 					id = XCore_reg_id(p2);
 					if (id) {
 						// register
-						if (MI->csh->detail) {
+						if (MI->csh->detail_opt) {
 							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_REG;
 							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg = id;
 							MI->flat_insn->detail->xcore.op_count++;
@@ -137,7 +137,7 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 			id = XCore_reg_id(p);
 			if (id) {
 				// register
-				if (MI->csh->detail) {
+				if (MI->csh->detail_opt) {
 					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_REG;
 					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg = id;
 					MI->flat_insn->detail->xcore.op_count++;
@@ -149,7 +149,7 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 
 static void set_mem_access(MCInst *MI, bool status, int reg)
 {
-	if (MI->csh->detail != CS_OPT_ON)
+	if (MI->csh->detail_opt != CS_OPT_ON)
 		return;
 
 	MI->csh->doing_mem = status;
@@ -193,7 +193,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 		reg = MCOperand_getReg(MO);
 		SStream_concat0(O, getRegisterName(reg));
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
 				if (MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base == ARM_REG_INVALID)
 					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = (uint8_t)reg;
@@ -210,7 +210,7 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 
 		printInt32(O, Imm);
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = Imm;
 			} else {

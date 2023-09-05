@@ -28,6 +28,9 @@ typedef struct insn_map {
 		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	bool branch;		  // branch instruction?
 	bool indirect_branch;	  // indirect branch instruction?
+	union {
+		ppc_suppl_info ppc;
+	} suppl_info; // Supplementary information for each instruction.
 #endif
 } insn_map;
 
@@ -166,7 +169,7 @@ DEFINE_get_arch_detail(tricore, TriCore);
 static inline bool detail_is_set(const MCInst *MI)
 {
 	assert(MI && MI->flat_insn);
-	return MI->flat_insn->detail != NULL;
+	return MI->flat_insn->detail != NULL && MI->csh->detail_opt & CS_OPT_ON;
 }
 
 static inline cs_detail *get_detail(const MCInst *MI)
@@ -174,5 +177,31 @@ static inline cs_detail *get_detail(const MCInst *MI)
 	assert(MI && MI->flat_insn);
 	return MI->flat_insn->detail;
 }
+
+static inline bool set_detail_ops(const MCInst *MI)
+{
+	assert(MI && MI->flat_insn);
+	return MI->fillDetailOps;
+}
+
+/// Returns if the given instruction is an alias instruction.
+#define RETURN_IF_INSN_IS_ALIAS(MI) \
+do { \
+	if (MI->isAliasInstr) \
+		return; \
+} while(0)
+
+void map_set_fill_detail_ops(MCInst *MI, bool Val);
+
+static inline bool map_fill_detail_ops(MCInst *MI) {
+	assert(MI);
+	return MI->fillDetailOps;
+}
+
+void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias);
+
+bool map_use_alias_details(const MCInst *MI);
+
+void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size);
 
 #endif // CS_MAPPING_H

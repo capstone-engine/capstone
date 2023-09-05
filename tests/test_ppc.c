@@ -28,35 +28,6 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 	printf("\n");
 }
 
-static const char* get_bc_name(int bc)
-{
-	switch(bc) {
-		default:
-		case PPC_BC_INVALID:
-			return ("invalid");
-		case PPC_BC_LT:
-			return ("lt");
-		case PPC_BC_LE:
-			return ("le");
-		case PPC_BC_EQ:
-			return ("eq");
-		case PPC_BC_GE:
-			return ("ge");
-		case PPC_BC_GT:
-			return ("gt");
-		case PPC_BC_NE:
-			return ("ne");
-		case PPC_BC_UN:
-			return ("un");
-		case PPC_BC_NU:
-			return ("nu");
-		case PPC_BC_SO:
-			return ("so");
-		case PPC_BC_NS:
-			return ("ns");
-	}
-}
-
 static void print_insn_detail(cs_insn *ins)
 {
 	cs_ppc *ppc;
@@ -90,20 +61,16 @@ static void print_insn_detail(cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 
 				break;
-			case PPC_OP_CRX:
-				printf("\t\toperands[%u].type: CRX\n", i);
-				printf("\t\t\toperands[%u].crx.scale: %d\n", i, op->crx.scale);
-				printf("\t\t\toperands[%u].crx.reg: %s\n", i, cs_reg_name(handle, op->crx.reg));
-				printf("\t\t\toperands[%u].crx.cond: %s\n", i, get_bc_name(op->crx.cond));
-				break;
 		}
 	}
 
-	if (ppc->bc != 0)
-		printf("\tBranch code: %u\n", ppc->bc);
+	if (ppc->bc.pred_cr != PPC_PRED_INVALID)
+		printf("\t\tpred CR-bit: %d\n", ppc->bc.pred_cr);
+	if (ppc->bc.pred_ctr != PPC_PRED_INVALID)
+		printf("\t\tpred CTR: %d\n", ppc->bc.pred_ctr);
 
-	if (ppc->bh != 0)
-		printf("\tBranch hint: %u\n", ppc->bh);
+	if (ppc->bc.hint != PPC_BR_NOT_GIVEN)
+		printf("\tBranch hint: %u\n", ppc->bc.hint);
 
 	if (ppc->update_cr0)
 		printf("\tUpdate-CR0: True\n");
