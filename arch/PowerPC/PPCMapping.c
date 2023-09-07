@@ -4,7 +4,7 @@
 #include "capstone/ppc.h"
 #ifdef CAPSTONE_HAS_POWERPC
 
-#include <stdio.h>	// debug
+#include <stdio.h> // debug
 #include <string.h>
 
 #include "../../cs_simple_types.h"
@@ -21,9 +21,12 @@
 
 void PPC_init_mri(MCRegisterInfo *MRI)
 {
-	MCRegisterInfo_InitMCRegisterInfo(
-		MRI, PPCRegDesc, PPC_REG_ENDING, 0, 0, PPCMCRegisterClasses, ARR_SIZE(PPCMCRegisterClasses), 0, 0,
-		PPCRegDiffLists, 0, PPCSubRegIdxLists, ARR_SIZE(PPCSubRegIdxLists), PPCRegEncodingTable);
+	MCRegisterInfo_InitMCRegisterInfo(MRI, PPCRegDesc, PPC_REG_ENDING, 0, 0,
+					  PPCMCRegisterClasses,
+					  ARR_SIZE(PPCMCRegisterClasses), 0, 0,
+					  PPCRegDiffLists, 0, PPCSubRegIdxLists,
+					  ARR_SIZE(PPCSubRegIdxLists),
+					  PPCRegEncodingTable);
 }
 
 const char *PPC_reg_name(csh handle, unsigned int reg)
@@ -41,7 +44,7 @@ void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 
-static const char * const insn_name_maps[] = {
+static const char *const insn_name_maps[] = {
 #include "PPCGenCSMappingInsnName.inc"
 };
 
@@ -77,14 +80,14 @@ const char *PPC_insn_name(csh handle, unsigned int id)
 static const name_map group_name_maps[] = {
 	// generic groups
 	{ PPC_GRP_INVALID, NULL },
-	{ PPC_GRP_JUMP,	"jump" },
+	{ PPC_GRP_JUMP, "jump" },
 	{ PPC_GRP_CALL, "call" },
 	{ PPC_GRP_INT, "int" },
 	{ PPC_GRP_PRIVILEGE, "privilege" },
 	{ PPC_GRP_BRANCH_RELATIVE, "branch_relative" },
 
-	// architecture-specific groups
-	#include "PPCGenCSFeatureName.inc"
+// architecture-specific groups
+#include "PPCGenCSFeatureName.inc"
 };
 #endif
 
@@ -119,7 +122,9 @@ void PPC_check_updates_cr0(MCInst *MI)
 }
 
 /// Parses and adds the branch predicate information and the BH field.
-static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes, size_t BytesLen) {
+static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes,
+				      size_t BytesLen)
+{
 	if (!detail_is_set(MI))
 		return;
 #ifndef CAPSTONE_DIET
@@ -167,10 +172,12 @@ static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes, size_t B
 	default:
 		assert(0 && "Invalid BH value.");
 	case 0b00:
-		PPC_get_detail(MI)->bc.bh = cond ? PPC_BH_NO_SUBROUTINE_RET : PPC_BH_SUBROUTINE_RET;
+		PPC_get_detail(MI)->bc.bh = cond ? PPC_BH_NO_SUBROUTINE_RET :
+						   PPC_BH_SUBROUTINE_RET;
 		break;
 	case 0b01:
-		PPC_get_detail(MI)->bc.bh = cond ? PPC_BH_RESERVED : PPC_BH_NO_SUBROUTINE_RET;
+		PPC_get_detail(MI)->bc.bh = cond ? PPC_BH_RESERVED :
+						   PPC_BH_NO_SUBROUTINE_RET;
 		break;
 	case 0b10:
 		PPC_get_detail(MI)->bc.bh = PPC_BH_RESERVED;
@@ -197,8 +204,7 @@ void PPC_init_cs_detail(MCInst *MI)
 {
 	if (!detail_is_set(MI))
 		return;
-	memset(get_detail(MI), 0,
-		   offsetof(cs_detail, ppc) + sizeof(cs_ppc));
+	memset(get_detail(MI), 0, offsetof(cs_detail, ppc) + sizeof(cs_ppc));
 	PPC_get_detail(MI)->bc.bi = UINT8_MAX;
 	PPC_get_detail(MI)->bc.bo = UINT8_MAX;
 	PPC_get_detail(MI)->bc.crX = PPC_REG_INVALID;
@@ -209,33 +215,39 @@ void PPC_init_cs_detail(MCInst *MI)
 	PPC_get_detail(MI)->bc.bh = PPC_BH_INVALID;
 }
 
-void PPC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */info) {
-	MI->MRI = (MCRegisterInfo*) info;
+void PPC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
+{
+	MI->MRI = (MCRegisterInfo *)info;
 	MI->fillDetailOps = detail_is_set(MI);
 	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	PPC_LLVM_printInst(MI, MI->address, "", O);
-	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map));
+	map_set_alias_id(MI, O, insn_alias_mnem_map,
+			 ARR_SIZE(insn_alias_mnem_map));
 }
 
 bool PPC_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
-						MCInst *instr, uint16_t *size, uint64_t address,
-						void *info) {
+			MCInst *instr, uint16_t *size, uint64_t address,
+			void *info)
+{
 	PPC_init_cs_detail(instr);
-	DecodeStatus result = PPC_LLVM_getInstruction(handle, bytes, bytes_len, instr, size, address, info);
+	DecodeStatus result = PPC_LLVM_getInstruction(
+		handle, bytes, bytes_len, instr, size, address, info);
 	PPC_set_instr_map_data(instr, bytes, bytes_len);
 	return result != MCDisassembler_Fail;
 }
 
-bool PPC_getFeatureBits(unsigned int mode, unsigned int feature) {
-  if ((feature == PPC_FeatureQPX) && (mode & CS_MODE_QPX) == 0) {
-    return false;
-  } else if ((feature == PPC_FeatureSPE) && (mode & CS_MODE_SPE) == 0) {
-    return false;
-  } else if ((feature == PPC_FeatureBookE) && (mode & CS_MODE_BOOKE) == 0) {
-    return false;
-  } else if ((feature == PPC_FeaturePS) && (mode & CS_MODE_PS) == 0) {
-    return false;
-  }
+bool PPC_getFeatureBits(unsigned int mode, unsigned int feature)
+{
+	if ((feature == PPC_FeatureQPX) && (mode & CS_MODE_QPX) == 0) {
+		return false;
+	} else if ((feature == PPC_FeatureSPE) && (mode & CS_MODE_SPE) == 0) {
+		return false;
+	} else if ((feature == PPC_FeatureBookE) &&
+		   (mode & CS_MODE_BOOKE) == 0) {
+		return false;
+	} else if ((feature == PPC_FeaturePS) && (mode & CS_MODE_PS) == 0) {
+		return false;
+	}
 
 	// No AIX support for now.
 	if (feature == PPC_FeatureModernAIXAs || feature == PPC_AIXOS)
@@ -255,19 +267,24 @@ static const map_insn_ops insn_operands[] = {
 /// @brief Handles memory operands.
 /// @param MI The MCInst.
 /// @param OpNum The operand index.
-static void handle_memory_operand(MCInst *MI, unsigned OpNum) {
+static void handle_memory_operand(MCInst *MI, unsigned OpNum)
+{
 	cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
 
 	// If this is called from printOperand() we do not know if a
 	// register is a base or an offset reg (imm is always disponent).
 	// So we assume the base register is always added before the offset register
 	// and set the flag appropriately.
-	bool is_off_reg = ((op_type == CS_OP_REG) && PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID);
-	PPC_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum), is_off_reg);
+	bool is_off_reg =
+		((op_type == CS_OP_REG) &&
+		 PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID);
+	PPC_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum),
+			      is_off_reg);
 }
 
 static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
-								  unsigned OpNum) {
+				  unsigned OpNum)
+{
 	if (!detail_is_set(MI))
 		return;
 
@@ -291,12 +308,15 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			return;
 		}
 
-		assert((op_type & CS_OP_MEM) == 0); // doing_mem should have been true.
+		assert((op_type & CS_OP_MEM) ==
+		       0); // doing_mem should have been true.
 
 		if (op_type == CS_OP_REG)
-			PPC_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
+			PPC_set_detail_op_reg(MI, OpNum,
+					      MCInst_getOpVal(MI, OpNum));
 		else if (op_type == CS_OP_IMM)
-			PPC_set_detail_op_imm(MI, OpNum, MCInst_getOpVal(MI, OpNum));
+			PPC_set_detail_op_imm(MI, OpNum,
+					      MCInst_getOpVal(MI, OpNum));
 		else
 			assert(0 && "Operand type not handled.");
 		break;
@@ -312,13 +332,15 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 	case PPC_OP_GROUP_U8ImmOperand:
 	case PPC_OP_GROUP_U10ImmOperand:
 	case PPC_OP_GROUP_U12ImmOperand:
-		PPC_set_detail_op_imm(MI, OpNum, (uint32_t) MCInst_getOpVal(MI, OpNum));
+		PPC_set_detail_op_imm(MI, OpNum,
+				      (uint32_t)MCInst_getOpVal(MI, OpNum));
 		break;
 	case PPC_OP_GROUP_U16ImmOperand:
 		if (!MCOperand_isImm(MCInst_getOperand(MI, OpNum)))
 			// Handled in printOperand()
 			return;
-		PPC_set_detail_op_imm(MI, OpNum, (uint32_t) MCInst_getOpVal(MI, OpNum));
+		PPC_set_detail_op_imm(MI, OpNum,
+				      (uint32_t)MCInst_getOpVal(MI, OpNum));
 		break;
 	case PPC_OP_GROUP_S5ImmOperand: {
 		int Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
@@ -327,7 +349,8 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		break;
 	}
 	case PPC_OP_GROUP_S12ImmOperand: {
-		int64_t Imm = SignExtend64(MCOperand_getImm(MCInst_getOperand(MI, (OpNum))), 12);
+		int64_t Imm = SignExtend64(
+			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))), 12);
 		if (doing_mem(MI)) {
 			PPC_set_detail_op_mem(MI, OpNum, Imm, true);
 			break;
@@ -360,7 +383,8 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		break;
 	}
 	case PPC_OP_GROUP_ATBitsAsHint: {
-		PPC_get_detail(MI)->bc.hint = (ppc_br_hint) MCInst_getOpVal(MI, OpNum);
+		PPC_get_detail(MI)->bc.hint =
+			(ppc_br_hint)MCInst_getOpVal(MI, OpNum);
 		break;
 	}
 	case PPC_OP_GROUP_AbsBranchOperand: {
@@ -409,7 +433,8 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		if (MCOperand_isReg(Op) && MCOperand_getReg(Op) == PPC_R0) {
 			PPC_get_detail_op(MI, 0)->mem.base = PPC_REG_ZERO;
 			PPC_get_detail_op(MI, 0)->type = PPC_OP_MEM;
-			PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+			PPC_get_detail_op(MI, 0)->access =
+				map_get_op_access(MI, OpNum);
 		}
 		break;
 	}
@@ -437,7 +462,7 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 		unsigned OpNum = va_arg(args, unsigned);
 		const char *Modifier = va_arg(args, const char *);
 		if ((strcmp(Modifier, "cc") == 0) ||
-				(strcmp(Modifier, "pm") == 0)) {
+		    (strcmp(Modifier, "pm") == 0)) {
 			unsigned Val = MCInst_getOpVal(MI, OpNum);
 			unsigned bo = Val & 0x1f;
 			unsigned bi = (Val & 0x1e0) >> 5;
@@ -445,8 +470,10 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 			PPC_get_detail(MI)->bc.bi = bi;
 			PPC_get_detail(MI)->bc.crX_bit = bi % 4;
 			PPC_get_detail(MI)->bc.crX = PPC_REG_CR0 + (bi / 4);
-			PPC_get_detail(MI)->bc.pred_cr = PPC_get_branch_pred(bi, bo, true);
-			PPC_get_detail(MI)->bc.pred_ctr = PPC_get_branch_pred(bi, bo, false);
+			PPC_get_detail(MI)->bc.pred_cr =
+				PPC_get_branch_pred(bi, bo, true);
+			PPC_get_detail(MI)->bc.pred_ctr =
+				PPC_get_branch_pred(bi, bo, false);
 			PPC_get_detail(MI)->bc.hint = PPC_get_hint(bo);
 		}
 		return;
@@ -485,7 +512,8 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 	}
 }
 
-void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val, bool is_off_reg)
+void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val,
+			   bool is_off_reg)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -544,54 +572,55 @@ void PPC_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm)
 }
 
 /// Returns the predicate wihtout branch hint information.
-ppc_pred PPC_get_no_hint_pred(unsigned Code) {
-		switch (Code) {
-		default:
-			assert(0 && "Invalid predicate code");
-		case PPC_PRED_LT:
-		case PPC_PRED_LT_MINUS:
-		case PPC_PRED_LT_PLUS:
-			return PPC_PRED_LT;
-		case PPC_PRED_LE:
-		case PPC_PRED_LE_MINUS:
-		case PPC_PRED_LE_PLUS:
-			return PPC_PRED_LE;
-		case PPC_PRED_EQ:
-		case PPC_PRED_EQ_MINUS:
-		case PPC_PRED_EQ_PLUS:
-			return PPC_PRED_EQ;
-		case PPC_PRED_GE:
-		case PPC_PRED_GE_MINUS:
-		case PPC_PRED_GE_PLUS:
-			return PPC_PRED_GE;
-		case PPC_PRED_GT:
-		case PPC_PRED_GT_MINUS:
-		case PPC_PRED_GT_PLUS:
-			return PPC_PRED_GT;
-		case PPC_PRED_NE:
-		case PPC_PRED_NE_MINUS:
-		case PPC_PRED_NE_PLUS:
-			return PPC_PRED_NE;
-		case PPC_PRED_UN:
-		case PPC_PRED_UN_MINUS:
-		case PPC_PRED_UN_PLUS:
-			return PPC_PRED_UN;
-		case PPC_PRED_NU:
-		case PPC_PRED_NU_MINUS:
-		case PPC_PRED_NU_PLUS:
-			return PPC_PRED_NU;
-		case PPC_PRED_BIT_SET:
-		case PPC_PRED_BIT_UNSET:
-			assert(0 && "Invalid use of bit predicate code");
-		}
+ppc_pred PPC_get_no_hint_pred(unsigned Code)
+{
+	switch (Code) {
+	default:
+		assert(0 && "Invalid predicate code");
+	case PPC_PRED_LT:
+	case PPC_PRED_LT_MINUS:
+	case PPC_PRED_LT_PLUS:
+		return PPC_PRED_LT;
+	case PPC_PRED_LE:
+	case PPC_PRED_LE_MINUS:
+	case PPC_PRED_LE_PLUS:
+		return PPC_PRED_LE;
+	case PPC_PRED_EQ:
+	case PPC_PRED_EQ_MINUS:
+	case PPC_PRED_EQ_PLUS:
+		return PPC_PRED_EQ;
+	case PPC_PRED_GE:
+	case PPC_PRED_GE_MINUS:
+	case PPC_PRED_GE_PLUS:
+		return PPC_PRED_GE;
+	case PPC_PRED_GT:
+	case PPC_PRED_GT_MINUS:
+	case PPC_PRED_GT_PLUS:
+		return PPC_PRED_GT;
+	case PPC_PRED_NE:
+	case PPC_PRED_NE_MINUS:
+	case PPC_PRED_NE_PLUS:
+		return PPC_PRED_NE;
+	case PPC_PRED_UN:
+	case PPC_PRED_UN_MINUS:
+	case PPC_PRED_UN_PLUS:
+		return PPC_PRED_UN;
+	case PPC_PRED_NU:
+	case PPC_PRED_NU_MINUS:
+	case PPC_PRED_NU_PLUS:
+		return PPC_PRED_NU;
+	case PPC_PRED_BIT_SET:
+	case PPC_PRED_BIT_UNSET:
+		assert(0 && "Invalid use of bit predicate code");
+	}
 }
 
-void PPC_set_mem_access(MCInst *MI, bool status) {
+void PPC_set_mem_access(MCInst *MI, bool status)
+{
 	if (!detail_is_set(MI))
 		return;
-	if ((!status && !doing_mem(MI)) ||
-		(status && doing_mem(MI)))
-		return;	// Nothing to do
+	if ((!status && !doing_mem(MI)) || (status && doing_mem(MI)))
+		return; // Nothing to do
 
 	set_doing_mem(MI, status);
 	if (status) {
@@ -616,7 +645,6 @@ void PPC_setup_op(cs_ppc_op *op)
 	memset(op, 0, sizeof(cs_ppc_op));
 	op->type = PPC_OP_INVALID;
 }
-
 
 /// Inserts a immediate to the detail operands at @index.
 /// Already present operands are moved.

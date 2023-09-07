@@ -12,7 +12,7 @@
 cs_err PPC_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-	mri = (MCRegisterInfo *) cs_mem_malloc(sizeof(*mri));
+	mri = (MCRegisterInfo *)cs_mem_malloc(sizeof(*mri));
 
 	PPC_init_mri(mri);
 	ud->printer = PPC_printer;
@@ -32,7 +32,7 @@ cs_err PPC_global_init(cs_struct *ud)
 cs_err PPC_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
-		handle->syntax = (int) value;
+		handle->syntax = (int)value;
 
 	if (type == CS_OPT_MODE) {
 		handle->mode |= (cs_mode)value;
