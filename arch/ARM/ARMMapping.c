@@ -982,8 +982,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode6Operand:
 		if (!doing_mem(MI))
 			ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, MCInst_getOpVal(MI, OpNum + 1), 3,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 				      MCInst_getOpVal(MI, OpNum));
+		ARM_get_detail_op(MI, 0)->mem.align =
+			MCInst_getOpVal(MI, OpNum + 1) << 3;
 		ARM_set_mem_access(MI, false);
 		break;
 	case ARM_OP_GROUP_AddrMode6OffsetOperand: {

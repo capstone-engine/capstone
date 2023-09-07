@@ -844,6 +844,7 @@ typedef struct arm_op_mem {
 	/// left-shift on index register, or 0 if irrelevant
 	/// NOTE: this value can also be fetched via operand.shift.value
 	int lshift;
+  unsigned align; ///< Alignment of base register. 0 If not set.
 } arm_op_mem;
 
 typedef struct {
