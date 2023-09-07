@@ -151,7 +151,7 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 
 	if (ins->detail->writeback) {
 		printf("\tWrite-back: True\n");
-		printf("\tPost index: %s\n", arm->post_index ? "true" : "false");
+		printf("\tPost index: %s\n", arm->post_index ? "True" : "False");
 	}
 
 	if (arm->cps_mode)

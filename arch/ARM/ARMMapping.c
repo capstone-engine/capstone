@@ -506,12 +506,48 @@ void ARM_add_vector_size(MCInst *MI, unsigned size)
 	ARM_get_detail(MI)->vector_size = size;
 }
 
+/// For ARM the attributation of post-indexed instructions is poor.
+/// Disponents or index register are sometimes not defined as such.
+/// Here we try to detect such cases. We check if the base register
+/// is a writeback register, but no other memory operand
+/// was disassembled.
+/// Because there must be a second memory operand (disponent/index)
+/// We assume that the following operand is actually
+/// the disponent/index reg.
+static void ARM_post_index_detection(MCInst *MI) {
+	if (!detail_is_set(MI) || ARM_get_detail(MI)->post_index || !MI->flat_insn->detail->writeback)
+		return;
+
+	int i = 0;
+	for (; i < ARM_get_detail(MI)->op_count; ++i) {
+		if (ARM_get_detail(MI)->operands[i].type & ARM_OP_MEM)
+			break;
+	}
+	if (i == ARM_get_detail(MI)->op_count)
+		return;
+
+	cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
+	cs_arm_op op_next = ARM_get_detail(MI)->operands[i + 1];
+	if (op->mem.disp != 0 || op->mem.index != ARM_REG_INVALID)
+		return;
+
+	if (op_next.type & CS_OP_IMM)
+		op->mem.disp = op_next.imm;
+	else if (op_next.type & CS_OP_REG)
+		op->mem.index = op_next.reg;
+
+	op->subtracted = op_next.subtracted;
+	ARM_get_detail(MI)->post_index = true;
+	ARM_dec_op_count(MI);
+}
+
 /// Decodes the asm string for a given instruction
 /// and fills the detail information about the instruction and its operands.
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	ARM_LLVM_printInstruction(MI, O, info);
 	ARM_add_not_defined_ops(MI);
+	ARM_post_index_detection(MI);
 	ARM_add_cs_groups(MI);
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
