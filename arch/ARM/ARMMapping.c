@@ -514,8 +514,10 @@ void ARM_add_vector_size(MCInst *MI, unsigned size)
 /// Because there must be a second memory operand (disponent/index)
 /// We assume that the following operand is actually
 /// the disponent/index reg.
-static void ARM_post_index_detection(MCInst *MI) {
-	if (!detail_is_set(MI) || ARM_get_detail(MI)->post_index || !MI->flat_insn->detail->writeback)
+static void ARM_post_index_detection(MCInst *MI)
+{
+	if (!detail_is_set(MI) || ARM_get_detail(MI)->post_index ||
+	    !MI->flat_insn->detail->writeback)
 		return;
 
 	int i = 0;
