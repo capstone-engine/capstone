@@ -61,10 +61,8 @@ typedef enum ppc_bc {
 	PPC_PRED_GE = (0 << 5) | 4,
 	PPC_PRED_GT = (1 << 5) | 12,
 	PPC_PRED_NE = (2 << 5) | 4,
-	PPC_PRED_UN = (3 << 5) |
-		      12, ///< Unordered (after floating-point comparision)
-	PPC_PRED_NU = (3 << 5) |
-		      4,  ///< Not Unordered (after floating-point comparision)
+	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after fp comparision)
+	PPC_PRED_NU = (3 << 5) | 4,  ///< Not Unordered (after fp comparision)
 	PPC_PRED_SO = (3 << 5) | 12, ///< summary overflow
 	PPC_PRED_NS = (3 << 5) | 4,  ///< not summary overflow
 
