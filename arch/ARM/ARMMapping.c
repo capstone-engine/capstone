@@ -496,6 +496,16 @@ void ARM_add_vector_data(MCInst *MI, arm_vectordata_type data_type)
 	ARM_get_detail(MI)->vector_data = data_type;
 }
 
+/// Unfortunately there is currently no way to easily extract
+/// informaion about the vector size.
+/// See: https://github.com/capstone-engine/capstone/issues/2152
+void ARM_add_vector_size(MCInst *MI, unsigned size)
+{
+	if (!detail_is_set(MI))
+		return;
+	ARM_get_detail(MI)->vector_size = size;
+}
+
 /// Decodes the asm string for a given instruction
 /// and fills the detail information about the instruction and its operands.
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)

@@ -83,5 +83,6 @@ void ARM_check_updates_flags(MCInst *MI);
 
 void ARM_setup_op(cs_arm_op *op);
 void ARM_add_vector_data(MCInst *MI, arm_vectordata_type data_type);
+void ARM_add_vector_size(MCInst *MI, unsigned size);
 
 #endif // CS_ARM_MAPPING_H
