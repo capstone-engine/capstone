@@ -525,12 +525,14 @@ static void ARM_post_index_detection(MCInst *MI)
 		if (ARM_get_detail(MI)->operands[i].type & ARM_OP_MEM)
 			break;
 	}
-	if (i == ARM_get_detail(MI)->op_count)
+	if (i >= ARM_get_detail(MI)->op_count) {
+		// Last operand
 		return;
+	}
 
 	cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
 	cs_arm_op op_next = ARM_get_detail(MI)->operands[i + 1];
-	if (op->mem.disp != 0 || op->mem.index != ARM_REG_INVALID)
+	if (op_next.type == ARM_OP_INVALID || op->mem.disp != 0 || op->mem.index != ARM_REG_INVALID)
 		return;
 
 	if (op_next.type & CS_OP_IMM)
