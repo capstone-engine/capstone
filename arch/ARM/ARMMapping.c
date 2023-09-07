@@ -982,10 +982,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode6Operand:
 		if (!doing_mem(MI))
 			ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, true, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, MCInst_getOpVal(MI, OpNum + 1), 3,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0,
-				      MCInst_getOpVal(MI, OpNum + 1) << 3);
 		ARM_set_mem_access(MI, false);
 		break;
 	case ARM_OP_GROUP_AddrMode6OffsetOperand: {
@@ -1987,9 +1985,9 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 			ARM_get_detail_op(MI, 0)->mem.base = Val;
 		else {
 			ARM_get_detail_op(MI, 0)->mem.index = Val;
-			ARM_get_detail_op(MI, 0)->mem.scale = scale;
-			ARM_get_detail_op(MI, 0)->mem.lshift = lshift;
 		}
+		ARM_get_detail_op(MI, 0)->mem.scale = scale;
+		ARM_get_detail_op(MI, 0)->mem.lshift = lshift;
 
 		if (MCInst_opIsTying(MI, OpNum)) {
 			// Especially base registers can be writeback registers.
