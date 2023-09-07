@@ -1831,11 +1831,10 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 	op.access = access;
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
-	int i = ARM_get_detail(MI)->op_count - 1;
-	for (; i >= 0; --i) {
-		ops[i + 1] = ops[i];
-		if (i == index)
-			break;
+	int i = ARM_get_detail(MI)->op_count;
+	assert(i < MAX_ARM_OPS);
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
 	}
 	ops[index] = op;
 	ARM_inc_op_count(MI);
@@ -1858,11 +1857,10 @@ void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 	op.access = access;
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
-	int i = ARM_get_detail(MI)->op_count - 1;
-	for (; i >= 0; --i) {
-		ops[i + 1] = ops[i];
-		if (i == index)
-			break;
+	int i = ARM_get_detail(MI)->op_count;
+	assert(i < MAX_ARM_OPS);
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
 	}
 	ops[index] = op;
 	ARM_inc_op_count(MI);
