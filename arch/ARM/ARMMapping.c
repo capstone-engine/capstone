@@ -516,8 +516,7 @@ void ARM_add_vector_size(MCInst *MI, unsigned size)
 /// the disponent/index reg.
 static void ARM_post_index_detection(MCInst *MI)
 {
-	if (!detail_is_set(MI) || ARM_get_detail(MI)->post_index ||
-	    !MI->flat_insn->detail->writeback)
+	if (!detail_is_set(MI) || ARM_get_detail(MI)->post_index)
 		return;
 
 	int i = 0;
@@ -542,6 +541,7 @@ static void ARM_post_index_detection(MCInst *MI)
 
 	op->subtracted = op_next.subtracted;
 	ARM_get_detail(MI)->post_index = true;
+	MI->flat_insn->detail->writeback = true;
 	ARM_dec_op_count(MI);
 }
 
@@ -1987,24 +1987,30 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 		assert(0 && "Secondary type not supported yet.");
 	case CS_OP_REG: {
 		assert(secondary_type == CS_OP_REG);
-		if (!is_index_reg)
+		if (!is_index_reg) {
 			ARM_get_detail_op(MI, 0)->mem.base = Val;
-		else {
+			if (MCInst_opIsTying(MI, OpNum) || MCInst_opIsTied(MI, OpNum)) {
+				// Base registers can be writeback registers.
+				// For this they tie an MC operand which has write
+				// access. But this one is never processed in the printer
+				// (because it is never emitted). Therefor it is never
+				// added to the modified list.
+				// Here we check for this case and add the memory register
+				// to the modified list.
+				map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+				MI->flat_insn->detail->writeback = true;
+			} else {
+				// If the base register is not tied, set the writebak flag to false.
+				// Writeback for ARM only refers to the memory base register.
+				// But other registers might be marked as tied as well.
+				MI->flat_insn->detail->writeback = false;
+			}
+		} else {
 			ARM_get_detail_op(MI, 0)->mem.index = Val;
 		}
 		ARM_get_detail_op(MI, 0)->mem.scale = scale;
 		ARM_get_detail_op(MI, 0)->mem.lshift = lshift;
 
-		if (MCInst_opIsTying(MI, OpNum)) {
-			// Especially base registers can be writeback registers.
-			// For this they tie an MC operand which has write
-			// access. But this one is never processed in the printer
-			// (because it is never emitted). Therefor it is never
-			// added to the modified list.
-			// Here we check for this case and add the memory register
-			// to the modified list.
-			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
-		}
 		break;
 	}
 	case CS_OP_IMM: {
