@@ -54,6 +54,8 @@ static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,
 
 	// Check the specific condition for the operand.
 	switch (C->Kind) {
+	default:
+		assert(0 && "invalid kind");
 	case AliasPatternCond_K_Imm:
 		// Operand must be a specific immediate.
 		return MCOperand_isImm(Opnd) &&
@@ -87,7 +89,7 @@ static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,
 	case AliasPatternCond_K_EndOrFeatures:
 		assert(0 && "handled earlier");
 	}
-	assert(0 && "invalid kind");
+	return false;
 }
 
 /// Check if PatternsForOpcode is all zero.
