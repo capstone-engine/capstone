@@ -48,7 +48,7 @@ extern "C" {
 /// The bits "at" are both present if:
 /// 		- CTR is decremented, but CR is not checked.
 ///     - CR is checked, but CTR is not decremented.
-typedef enum ppc_bc {
+typedef enum ppc_pred {
 	// Technically this could be read as a valid predicate
 	// But the ISA recommends to set the z bits to 0,
 	// so it shouldn't come to conflicts.
@@ -148,9 +148,9 @@ static inline ppc_br_hint PPC_get_hint(uint8_t bo) {
 	if (!DecrCTR && !TestCR)
 		return PPC_BR_NOT_GIVEN;
 	else if (DecrCTR && !TestCR)
-		return ((bo & PPC_BO_CR_CMP) >> 2) | (bo & PPC_BO_T);
+		return (ppc_br_hint)(((bo & PPC_BO_CR_CMP) >> 2) | (bo & PPC_BO_T));
 	else if (!DecrCTR && TestCR)
-		return (bo & PPC_BO_CTR_CMP) | (bo & PPC_BO_T);
+		return (ppc_br_hint)((bo & PPC_BO_CTR_CMP) | (bo & PPC_BO_T));
 	return PPC_BR_NOT_GIVEN;
 }
 
@@ -174,11 +174,11 @@ static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo, bool get_cr_p
 		// The CTR condition without the CR-bit condition.
 		unsigned ctr_bo_cond = (bo | PPC_BO_TEST_CR) & ~PPC_BO_CR_CMP;
 		if (get_cr_pred)
-			return ((bi % 4) << 5) | cr_bo_cond;
-		return ctr_bo_cond; // BI is ignored
+			return (ppc_pred)(((bi % 4) << 5) | cr_bo_cond);
+		return (ppc_pred)ctr_bo_cond; // BI is ignored
 	}
 	// BO doesn't need any separation
-	return ((bi % 4) << 5) | bo;
+	return (ppc_pred)(((bi % 4) << 5) | bo);
 }
 
 /// Operand type for instruction's operands
