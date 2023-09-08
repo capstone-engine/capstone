@@ -9802,7 +9802,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       Ptr += Len; \
       MCInst_clear(MI); \
       MCInst_setOpcode(MI, Opc); \
-      bool DecodeComplete; \
+      bool DecodeComplete = false; \
       S = decoder(S, DecodeIdx, insn, MI, Address, &DecodeComplete); \
       return S; \
     } \
