@@ -50,18 +50,20 @@
 
 // Static function declarations. These are functions which have the same identifiers
 // over all architectures. Therefor they need to be static.
-static void printCustomAliasOperand(MCInst *MI, uint64_t Address, unsigned OpIdx,
-							 unsigned PrintMethodIdx, SStream *O);
+static void printCustomAliasOperand(MCInst *MI, uint64_t Address,
+				    unsigned OpIdx, unsigned PrintMethodIdx,
+				    SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printPredicateOperand(MCInst *MI, unsigned OpNo, SStream *O,
-						   const char *Modifier);
+				  const char *Modifier);
 static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
-			   SStream *O);
+		      SStream *O);
 
 #define PRINT_ALIAS_INSTR
 #include "PPCGenAsmWriter.inc"
 
-static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
+static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
+		      SStream *O)
 {
 	bool isAlias = false;
 	bool useAliasDetails = false;
@@ -70,10 +72,9 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 	// operation, i.e:
 	//     Transform:  addis $rD, $rA, $src --> addis $rD, $src($rA).
 	if (PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs) &&
-		(MCInst_getOpcode(MI) == PPC_ADDIS8 ||
-		 MCInst_getOpcode(MI) == PPC_ADDIS) &&
-		MCOperand_isExpr(MCInst_getOperand(MI, (2)))) {
-
+	    (MCInst_getOpcode(MI) == PPC_ADDIS8 ||
+	     MCInst_getOpcode(MI) == PPC_ADDIS) &&
+	    MCOperand_isExpr(MCInst_getOperand(MI, (2)))) {
 		SStream_concat0(O, "\taddis ");
 		printOperand(MI, 0, O);
 		SStream_concat0(O, ", ");
@@ -111,7 +112,8 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 			SH = 32 - SH;
 		}
 		useAliasDetails |= map_use_alias_details(MI);
-		map_set_fill_detail_ops(MI, useAliasDetails && useSubstituteMnemonic);
+		map_set_fill_detail_ops(MI, useAliasDetails &&
+						    useSubstituteMnemonic);
 		if (useSubstituteMnemonic) {
 			isAlias |= true;
 			MCInst_setIsAlias(MI, isAlias);
@@ -129,7 +131,7 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 	}
 
 	if (MCInst_getOpcode(MI) == PPC_RLDICR ||
-		MCInst_getOpcode(MI) == PPC_RLDICR_32) {
+	    MCInst_getOpcode(MI) == PPC_RLDICR_32) {
 		unsigned char SH = MCOperand_getImm(MCInst_getOperand(MI, (2)));
 		unsigned char ME = MCOperand_getImm(MCInst_getOperand(MI, (3)));
 
@@ -163,8 +165,8 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 	// On AIX, only emit the extended mnemonics for dcbt and dcbtst if
 	// the "modern assembler" is available.
 	if ((MCInst_getOpcode(MI) == PPC_DCBT ||
-		 MCInst_getOpcode(MI) == PPC_DCBTST) &&
-		(!PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs))) {
+	     MCInst_getOpcode(MI) == PPC_DCBTST) &&
+	    (!PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs))) {
 		unsigned char TH = MCOperand_getImm(MCInst_getOperand(MI, (0)));
 		SStream_concat0(O, "\tdcbt");
 		if (MCInst_getOpcode(MI) == PPC_DCBTST)
@@ -173,7 +175,8 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 			SStream_concat0(O, "t");
 		SStream_concat0(O, " ");
 
-		bool IsBookE = PPC_getFeatureBits(MI->csh->mode, PPC_FeatureBookE);
+		bool IsBookE =
+			PPC_getFeatureBits(MI->csh->mode, PPC_FeatureBookE);
 		if (IsBookE && TH != 0 && TH != 16) {
 			SStream_concat(O, "%s", (unsigned int)TH);
 			SStream_concat0(O, ", ");
@@ -235,7 +238,7 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *
 }
 
 void printPredicateOperand(MCInst *MI, unsigned OpNo, SStream *O,
-						   const char *Modifier)
+			   const char *Modifier)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_PredicateOperand, OpNo, Modifier);
 	unsigned Code = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
@@ -469,7 +472,8 @@ void printS16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_S16ImmOperand, OpNo);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNo))))
-		printInt32(O, (short)MCOperand_getImm(MCInst_getOperand(MI, (OpNo))));
+		printInt32(O, (short)MCOperand_getImm(
+				      MCInst_getOperand(MI, (OpNo))));
 	else
 		printOperand(MI, OpNo, O);
 }
@@ -478,7 +482,8 @@ void printS34ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_S34ImmOperand, OpNo);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNo)))) {
-		long long Value = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
+		long long Value =
+			MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
 		printInt64(O, (long long)Value);
 	} else
@@ -489,8 +494,8 @@ void printU16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_U16ImmOperand, OpNo);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNo))))
-		printUInt32(
-			O, (unsigned short)MCOperand_getImm(MCInst_getOperand(MI, (OpNo))));
+		printUInt32(O, (unsigned short)MCOperand_getImm(
+				       MCInst_getOperand(MI, (OpNo))));
 	else
 		printOperand(MI, OpNo, O);
 }
@@ -501,7 +506,9 @@ void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo, SStream *O)
 	if (!MCOperand_isImm(MCInst_getOperand(MI, (OpNo))))
 		return printOperand(MI, OpNo, O);
 	int32_t Imm = SignExtend32(
-		((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo))) << 2), 32);
+		((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo)))
+		 << 2),
+		32);
 	if (!MI->csh->PrintBranchImmNotAsAddress) {
 		uint64_t Target = Address + Imm;
 		if (!IS_64BIT(MI->csh->mode))
@@ -528,10 +535,10 @@ void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (!MCOperand_isImm(MCInst_getOperand(MI, (OpNo))))
 		return printOperand(MI, OpNo, O);
 
-	printInt32(
-		O, SignExtend32(
-			   ((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo))) << 2),
-			   32));
+	printInt32(O, SignExtend32(((unsigned)MCOperand_getImm(
+					    MCInst_getOperand(MI, (OpNo)))
+				    << 2),
+				   32));
 }
 
 void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O)
@@ -655,8 +662,9 @@ void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 /// printed with a percentage symbol as prefix.
 bool showRegistersWithPercentPrefix(const MCInst *MI, const char *RegName)
 {
-	if ((MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME) || !(MI->csh->syntax & CS_OPT_SYNTAX_PERCENT) ||
-		PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs))
+	if ((MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME) ||
+	    !(MI->csh->syntax & CS_OPT_SYNTAX_PERCENT) ||
+	    PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs))
 		return false;
 
 	switch (RegName[0]) {
@@ -674,19 +682,21 @@ bool showRegistersWithPercentPrefix(const MCInst *MI, const char *RegName)
 /// getVerboseConditionalRegName - This method expands the condition register
 /// when requested explicitly or targetting Darwin.
 const char *getVerboseConditionRegName(const MCInst *MI, unsigned RegNum,
-									   unsigned RegEncoding)
+				       unsigned RegEncoding)
 {
 	if (MI->csh->syntax & CS_OPT_SYNTAX_NOREGNAME)
 		return NULL;
 	if (RegNum < PPC_CR0EQ || RegNum > PPC_CR7UN)
 		return NULL;
 	const char *CRBits[] = {
-		"lt",		"gt",		"eq",		"un",		"4*cr1+lt", "4*cr1+gt",
-		"4*cr1+eq", "4*cr1+un", "4*cr2+lt", "4*cr2+gt", "4*cr2+eq", "4*cr2+un",
-		"4*cr3+lt", "4*cr3+gt", "4*cr3+eq", "4*cr3+un", "4*cr4+lt", "4*cr4+gt",
-		"4*cr4+eq", "4*cr4+un", "4*cr5+lt", "4*cr5+gt", "4*cr5+eq", "4*cr5+un",
-		"4*cr6+lt", "4*cr6+gt", "4*cr6+eq", "4*cr6+un", "4*cr7+lt", "4*cr7+gt",
-		"4*cr7+eq", "4*cr7+un"};
+		"lt",	    "gt",	"eq",	    "un",	"4*cr1+lt",
+		"4*cr1+gt", "4*cr1+eq", "4*cr1+un", "4*cr2+lt", "4*cr2+gt",
+		"4*cr2+eq", "4*cr2+un", "4*cr3+lt", "4*cr3+gt", "4*cr3+eq",
+		"4*cr3+un", "4*cr4+lt", "4*cr4+gt", "4*cr4+eq", "4*cr4+un",
+		"4*cr5+lt", "4*cr5+gt", "4*cr5+eq", "4*cr5+un", "4*cr6+lt",
+		"4*cr6+gt", "4*cr6+eq", "4*cr6+un", "4*cr7+lt", "4*cr7+gt",
+		"4*cr7+eq", "4*cr7+un"
+	};
 	return CRBits[RegEncoding];
 }
 
@@ -708,8 +718,8 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				&PPCInsts[MCInst_getOpcode(MI)], Reg, OpNo);
 
 		const char *RegName;
-		RegName =
-			getVerboseConditionRegName(MI, Reg, MI->MRI->RegEncodingTable[Reg]);
+		RegName = getVerboseConditionRegName(
+			MI, Reg, MI->MRI->RegEncodingTable[Reg]);
 		if (RegName == NULL)
 			RegName = getRegisterName(Reg);
 		if (showRegistersWithPercentPrefix(MI, RegName))
@@ -727,10 +737,13 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 }
 
-const char *PPC_LLVM_getRegisterName(unsigned RegNo) {
+const char *PPC_LLVM_getRegisterName(unsigned RegNo)
+{
 	return getRegisterName(RegNo);
 }
 
-void PPC_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O) {
+void PPC_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
+			SStream *O)
+{
 	printInst(MI, Address, Annot, O);
 }

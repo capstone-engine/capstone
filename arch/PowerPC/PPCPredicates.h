@@ -58,7 +58,8 @@ static inline unsigned PPC_getPredicateHint(PPC_Predicate Opcode)
 /// Return predicate consisting of specified condition and hint bits.
 static inline PPC_Predicate PPC_getPredicate(unsigned Condition, unsigned Hint)
 {
-	return (PPC_Predicate)((Condition & ~PPC_BR_HINT_MASK) | (Hint & PPC_BR_HINT_MASK));
+	return (PPC_Predicate)((Condition & ~PPC_BR_HINT_MASK) |
+			       (Hint & PPC_BR_HINT_MASK));
 }
 
 #endif // CS_PPC_PREDICATES_H
