@@ -12,7 +12,7 @@ extern "C" {
 #include "platform.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 /// Enum was moved from PPCPredicates.h so we do not have duplicates.
@@ -61,14 +61,14 @@ typedef enum ppc_pred {
 	PPC_PRED_GE = (0 << 5) | 4,
 	PPC_PRED_GT = (1 << 5) | 12,
 	PPC_PRED_NE = (2 << 5) | 4,
-	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after floating-point comparision)
-	PPC_PRED_NU = (3 << 5) | 4, ///< Not Unordered (after floating-point comparision)
-	PPC_PRED_SO = (3 << 5) | 12,	///< summary overflow
-	PPC_PRED_NS = (3 << 5) | 4,	///< not summary overflow
+	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after fp comparision)
+	PPC_PRED_NU = (3 << 5) | 4,  ///< Not Unordered (after fp comparision)
+	PPC_PRED_SO = (3 << 5) | 12, ///< summary overflow
+	PPC_PRED_NS = (3 << 5) | 4,  ///< not summary overflow
 
 	/// CTR predicates
 	PPC_PRED_NZ = (0 << 5) | 16,
-	PPC_PRED_Z  = (0 << 5) | 18,
+	PPC_PRED_Z = (0 << 5) | 18,
 	// Likely not taken
 	PPC_PRED_LT_MINUS = (0 << 5) | 14,
 	PPC_PRED_LE_MINUS = (1 << 5) | 6,
@@ -79,7 +79,7 @@ typedef enum ppc_pred {
 	PPC_PRED_UN_MINUS = (3 << 5) | 14,
 	PPC_PRED_NU_MINUS = (3 << 5) | 6,
 	PPC_PRED_NZ_MINUS = (0 << 5) | 24,
-	PPC_PRED_Z_MINUS  = (0 << 5) | 26,
+	PPC_PRED_Z_MINUS = (0 << 5) | 26,
 	// Likely taken
 	PPC_PRED_LT_PLUS = (0 << 5) | 15,
 	PPC_PRED_LE_PLUS = (1 << 5) | 7,
@@ -90,7 +90,7 @@ typedef enum ppc_pred {
 	PPC_PRED_UN_PLUS = (3 << 5) | 15,
 	PPC_PRED_NU_PLUS = (3 << 5) | 7,
 	PPC_PRED_NZ_PLUS = (0 << 5) | 17,
-	PPC_PRED_Z_PLUS  = (0 << 5) | 19,
+	PPC_PRED_Z_PLUS = (0 << 5) | 19,
 
 	// SPE scalar compare instructions always set the GT bit.
 	PPC_PRED_SPE = PPC_PRED_GT,
@@ -103,20 +103,20 @@ typedef enum ppc_pred {
 
 /// CR field indices and their meaning.
 typedef enum {
-	PPC_BI_LT = 0, ///< CR bit Less Then
-	PPC_BI_GT = 1, ///< CR bit Greater Then
-	PPC_BI_Z = 2, ///< CR bit Zero
-	PPC_BI_SO = 3, ///< CR bit Summary Overflow
+	PPC_BI_LT = 0,	       ///< CR bit Less Then
+	PPC_BI_GT = 1,	       ///< CR bit Greater Then
+	PPC_BI_Z = 2,	       ///< CR bit Zero
+	PPC_BI_SO = 3,	       ///< CR bit Summary Overflow
 	PPC_BI_INVALID = 0xff, ///< CR bit was not set/invalid
 } ppc_cr_bit;
 
 /// Masks of flags in the BO field.
 typedef enum {
-	PPC_BO_TEST_CR = 0b10000, ///< Flag mask: Test CR bit.
-	PPC_BO_CR_CMP = 0b01000, ///< Flag mask: Compare CR bit to 0 or 1.
+	PPC_BO_TEST_CR = 0b10000,  ///< Flag mask: Test CR bit.
+	PPC_BO_CR_CMP = 0b01000,   ///< Flag mask: Compare CR bit to 0 or 1.
 	PPC_BO_DECR_CTR = 0b00100, ///< Flag mask: Decrement counter.
-	PPC_BO_CTR_CMP = 0b00010, ///< Flag mask: Compare CTR to 0 or 1.
-	PPC_BO_T = 0b00001, ///< Either ignored (z) or hint bit t
+	PPC_BO_CTR_CMP = 0b00010,  ///< Flag mask: Compare CTR to 0 or 1.
+	PPC_BO_T = 0b00001,	   ///< Either ignored (z) or hint bit t
 } ppc_bo_mask;
 
 /// Bit for branch taken (plus) or not-taken (minus) hint
@@ -127,7 +127,7 @@ typedef enum {
 	PPC_BR_NOT_GIVEN = 0b00,
 	PPC_BR_RESERVED = 0b01,
 	PPC_BR_NOT_TAKEN = 0b10, ///< Minus
-	PPC_BR_TAKEN = 0b11, ///< Plus
+	PPC_BR_TAKEN = 0b11,	 ///< Plus
 	PPC_BR_HINT_MASK = 0b11,
 } ppc_br_hint;
 
@@ -142,7 +142,8 @@ typedef enum {
 } ppc_bh;
 
 /// Returns the hint encoded in the BO bits a and t.
-static inline ppc_br_hint PPC_get_hint(uint8_t bo) {
+static inline ppc_br_hint PPC_get_hint(uint8_t bo)
+{
 	bool DecrCTR = (bo & PPC_BO_DECR_CTR) == 0;
 	bool TestCR = (bo & PPC_BO_TEST_CR) == 0;
 	if (!DecrCTR && !TestCR)
@@ -160,12 +161,13 @@ static inline ppc_br_hint PPC_get_hint(uint8_t bo) {
 ///
 /// It returns PPC_PRED_INVALID if the CR predicate is requested, but no
 /// CR predicate is encoded in BI and BO. Same for the CTR predicate.
-static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo, bool get_cr_pred) {
+static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo,
+					   bool get_cr_pred)
+{
 	bool TestCR = ((bo & PPC_BO_TEST_CR) == 0);
 	bool DecrCTR = ((bo & PPC_BO_DECR_CTR) == 0);
 
-	if ((get_cr_pred && !TestCR) ||
-			(!get_cr_pred && !DecrCTR))
+	if ((get_cr_pred && !TestCR) || (!get_cr_pred && !DecrCTR))
 		return PPC_PRED_INVALID;
 
 	if (TestCR && DecrCTR) {
@@ -184,9 +186,9 @@ static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo, bool get_cr_p
 /// Operand type for instruction's operands
 typedef enum ppc_op_type {
 	PPC_OP_INVALID = CS_OP_INVALID, ///< Uninitialized.
-	PPC_OP_REG = CS_OP_REG, ///< Register operand.
-	PPC_OP_IMM = CS_OP_IMM, ///< Immediate operand.
-	PPC_OP_MEM = CS_OP_MEM, ///< Memory operand.
+	PPC_OP_REG = CS_OP_REG,		///< Register operand.
+	PPC_OP_IMM = CS_OP_IMM,		///< Immediate operand.
+	PPC_OP_MEM = CS_OP_MEM,		///< Memory operand.
 } ppc_op_type;
 
 /// PPC registers
@@ -737,7 +739,7 @@ typedef enum ppc_reg {
 typedef struct ppc_op_mem {
 	ppc_reg base;	///< base register
 	int32_t disp;	///< displacement/offset value
-	ppc_reg offset;	///< Offset register
+	ppc_reg offset; ///< Offset register
 } ppc_op_mem;
 
 /// Instruction operand
@@ -745,8 +747,8 @@ typedef struct cs_ppc_op {
 	ppc_op_type type;	///< operand type
 	union {
 		ppc_reg reg;	///< register value for REG operand
-		int64_t imm;		///< immediate value for IMM operand
-		ppc_op_mem mem;		///< base/disp value for MEM operand
+		int64_t imm;	///< immediate value for IMM operand
+		ppc_op_mem mem; ///< base/disp value for MEM operand
 	};
 	cs_ac_type access;
 } cs_ppc_op;
@@ -755,16 +757,17 @@ typedef struct {
 	uint8_t bo; ///< BO field of branch condition. UINT8_MAX if invalid.
 	uint8_t bi; ///< BI field of branch condition. UINT8_MAX if invalid.
 	ppc_cr_bit crX_bit; ///< CR field bit to test.
-	ppc_reg crX; ///< The CR field accessed.
-	ppc_br_hint hint; ///< The encoded hint.
-	ppc_pred pred_cr; ///< CR-bit branch predicate
-	ppc_pred pred_ctr; ///< CTR branch predicate
-	ppc_bh bh; ///< The BH field hint if any is present.
+	ppc_reg crX;	    ///< The CR field accessed.
+	ppc_br_hint hint;   ///< The encoded hint.
+	ppc_pred pred_cr;   ///< CR-bit branch predicate
+	ppc_pred pred_ctr;  ///< CTR branch predicate
+	ppc_bh bh;	    ///< The BH field hint if any is present.
 } ppc_bc;
 
 /// Returns true if the CTR is decremented.
 /// False otherwise.
-static inline bool cs_ppc_bc_decr_ctr(uint8_t bo) {
+static inline bool cs_ppc_bc_decr_ctr(uint8_t bo)
+{
 	if (bo != UINT8_MAX && (bo & PPC_BO_DECR_CTR) == 0)
 		return true;
 	return false;
@@ -773,15 +776,18 @@ static inline bool cs_ppc_bc_decr_ctr(uint8_t bo) {
 /// Returns true if the CTR is compared to 0
 /// Implies that the CTR is decremented at all.
 /// False otherwise.
-static inline bool cs_ppc_bc_tests_ctr_is_zero(uint8_t bo) {
-	if (bo != UINT8_MAX && (bo & PPC_BO_CTR_CMP) != 0 && cs_ppc_bc_decr_ctr(bo))
+static inline bool cs_ppc_bc_tests_ctr_is_zero(uint8_t bo)
+{
+	if (bo != UINT8_MAX && (bo & PPC_BO_CTR_CMP) != 0 &&
+	    cs_ppc_bc_decr_ctr(bo))
 		return true;
 	return false;
 }
 
 /// Returns true if a CR bit is tested.
 /// False otherwise.
-static inline bool cs_ppc_bc_cr_is_tested(uint8_t bo) {
+static inline bool cs_ppc_bc_cr_is_tested(uint8_t bo)
+{
 	if (bo != UINT8_MAX && (bo & PPC_BO_TEST_CR) == 0)
 		return true;
 	return false;
@@ -790,8 +796,10 @@ static inline bool cs_ppc_bc_cr_is_tested(uint8_t bo) {
 /// Returns true if a CR bit is compared to 1.
 /// Implies that the CR field is tested at all.
 /// False otherwise.
-static inline bool cs_ppc_bc_cr_bit_is_one(uint8_t bo) {
-	if (bo != UINT8_MAX && (bo & PPC_BO_CR_CMP) != 0 && cs_ppc_bc_cr_is_tested(bo))
+static inline bool cs_ppc_bc_cr_bit_is_one(uint8_t bo)
+{
+	if (bo != UINT8_MAX && (bo & PPC_BO_CR_CMP) != 0 &&
+	    cs_ppc_bc_cr_is_tested(bo))
 		return true;
 	return false;
 }
@@ -3171,10 +3179,10 @@ typedef enum ppc_insn_group {
 
 	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	PPC_GRP_JUMP,	///< = CS_GRP_JUMP
-	PPC_GRP_CALL,	///< = CS_GRP_CALL
-	PPC_GRP_INT = 4, ///< = CS_GRP_INT
-	PPC_GRP_PRIVILEGE = 6, ///< = CS_GRP_PRIVILEGE
+	PPC_GRP_JUMP,		 ///< = CS_GRP_JUMP
+	PPC_GRP_CALL,		 ///< = CS_GRP_CALL
+	PPC_GRP_INT = 4,	 ///< = CS_GRP_INT
+	PPC_GRP_PRIVILEGE = 6,	 ///< = CS_GRP_PRIVILEGE
 	PPC_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
 	// Architecture-specific groups
@@ -3204,7 +3212,7 @@ typedef enum ppc_insn_group {
 	// clang-format on
 	// generated content <PPCGenCSFeatureEnum.inc> end
 
-	PPC_GRP_ENDING,   // <-- mark the end of the list of groups
+	PPC_GRP_ENDING, // <-- mark the end of the list of groups
 } ppc_insn_group;
 
 /// PPC instruction formats. To get details about them please
@@ -3340,10 +3348,11 @@ typedef enum {
 	// generated content <PPCGenCSInsnFormatsEnum.inc> end
 } ppc_insn_form;
 
-static inline bool ppc_is_b_form(ppc_insn_form form) {
+static inline bool ppc_is_b_form(ppc_insn_form form)
+{
 	switch (form) {
 	default:
-		return false;		
+		return false;
 	case PPC_INSN_FORM_BFORM:
 	case PPC_INSN_FORM_BFORM_3:
 	case PPC_INSN_FORM_BFORM_3_AT:

@@ -63,7 +63,7 @@ void printS34ImmOperand(MCInst *MI, unsigned OpNo, SStream *O);
 void printU16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O);
 void printImmZeroOperand(MCInst *MI, unsigned OpNo, SStream *O);
 void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
-						SStream *O);
+			SStream *O);
 void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O);
 void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O);
 void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O);

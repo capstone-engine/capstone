@@ -19,10 +19,10 @@ void PPC_init_cs_detail(MCInst *MI);
 // return name of regiser in friendly string
 const char *PPC_reg_name(csh handle, unsigned int reg);
 
-void PPC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */info);
+void PPC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info);
 bool PPC_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-						MCInst *instr, uint16_t *size, uint64_t address,
-						void *info);
+			MCInst *instr, uint16_t *size, uint64_t address,
+			void *info);
 
 // given internal insn id, return public instruction info
 void PPC_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
@@ -31,7 +31,7 @@ const char *PPC_insn_name(csh handle, unsigned int id);
 const char *PPC_group_name(csh handle, unsigned int id);
 
 typedef struct {
-	unsigned int id;	// instruction id
+	unsigned int id; // instruction id
 	const char *mnem;
 } ppc_alias_id;
 
@@ -60,7 +60,8 @@ static inline void add_cs_detail(MCInst *MI, ppc_op_group op_group, ...)
 
 void PPC_set_detail_op_reg(MCInst *MI, unsigned OpNum, ppc_reg Reg);
 void PPC_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm);
-void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val, bool is_off_reg);
+void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val,
+			   bool is_off_reg);
 
 void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 				 cs_ac_type access);
@@ -72,4 +73,3 @@ void PPC_check_updates_cr0(MCInst *MI);
 void PPC_set_instr_map_data(MCInst *MI, const uint8_t *Bytes, size_t BytesLen);
 
 #endif
-
