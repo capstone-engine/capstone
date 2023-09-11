@@ -6,6 +6,7 @@
 #include <capstone/platform.h>
 
 extern bool ARM_getFeatureBits(unsigned int mode, unsigned int feature);
+extern bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
 
 static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 {
@@ -15,6 +16,8 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 		assert(0 && "Not implemented for current arch.");
 	case CS_ARCH_ARM:
 		return ARM_getFeatureBits(MI->csh->mode, Value);
+	case CS_ARCH_PPC:
+		return PPC_getFeatureBits(MI->csh->mode, Value);
 	}
 }
 
@@ -51,6 +54,8 @@ static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,
 
 	// Check the specific condition for the operand.
 	switch (C->Kind) {
+	default:
+		assert(0 && "invalid kind");
 	case AliasPatternCond_K_Imm:
 		// Operand must be a specific immediate.
 		return MCOperand_isImm(Opnd) &&
@@ -84,7 +89,7 @@ static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,
 	case AliasPatternCond_K_EndOrFeatures:
 		assert(0 && "handled earlier");
 	}
-	assert(0 && "invalid kind");
+	return false;
 }
 
 /// Check if PatternsForOpcode is all zero.

@@ -62,7 +62,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
-	if (MI->csh->detail != CS_OPT_ON)
+	if (MI->csh->detail_opt != CS_OPT_ON)
 		return;
 
 	MI->csh->doing_mem = status;
@@ -312,7 +312,7 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *SegReg;
 	int reg;
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		uint8_t access[6];
 
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
@@ -334,7 +334,7 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 		_printOperand(MI, Op + 1, O);
 		SStream_concat0(O, ":");
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_register_map(reg);
 		}
 	}
@@ -350,7 +350,7 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 
 static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 {
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		uint8_t access[6];
 
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
@@ -368,7 +368,7 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 	// DI accesses are always ES-based on non-64bit mode
 	if (MI->csh->mode != CS_MODE_64) {
 		SStream_concat0(O, "%es:(");
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_REG_ES;
 		}
 	} else
@@ -436,7 +436,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *SegReg = MCInst_getOperand(MI, Op+1);
 	int reg;
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		uint8_t access[6];
 
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
@@ -457,14 +457,14 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		_printOperand(MI, Op + 1, O);
 		SStream_concat0(O, ":");
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_register_map(reg);
 		}
 	}
 
 	if (MCOperand_isImm(DispSpec)) {
 		int64_t imm = MCOperand_getImm(DispSpec);
-		if (MI->csh->detail)
+		if (MI->csh->detail_opt)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
 		if (imm < 0) {
 			SStream_concat(O, "0x%"PRIx64, arch_masks[MI->csh->mode] & imm);
@@ -476,7 +476,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 		}
 	}
 
-	if (MI->csh->detail)
+	if (MI->csh->detail_opt)
 		MI->flat_insn->detail->x86.op_count++;
 }
 
@@ -489,7 +489,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 	else
 		SStream_concat(O, "$%u", val);
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = val;
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = 1;
@@ -544,7 +544,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			else
 				SStream_concat(O, "%"PRIu64, imm);
 		}
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
 			MI->has_imm = true;
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = imm;
@@ -559,7 +559,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op)) {
 		unsigned int reg = MCOperand_getReg(Op);
 		printRegName(O, reg);
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.base = X86_register_map(reg);
 			} else {
@@ -678,7 +678,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				break;
 		}
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = imm;
@@ -711,7 +711,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	int segreg;
 	int64_t DispVal = 1;
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		uint8_t access[6];
 
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_MEM;
@@ -734,14 +734,14 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		_printOperand(MI, Op + X86_AddrSegmentReg, O);
 		SStream_concat0(O, ":");
 
-		if (MI->csh->detail) {
+		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.segment = X86_register_map(segreg);
 		}
 	}
 
 	if (MCOperand_isImm(DispSpec)) {
 		DispVal = MCOperand_getImm(DispSpec);
-		if (MI->csh->detail)
+		if (MI->csh->detail_opt)
 			MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.disp = DispVal;
 		if (DispVal) {
 			if (MCOperand_getReg(IndexReg) || MCOperand_getReg(BaseReg)) {
@@ -770,7 +770,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			SStream_concat0(O, ", ");
 			_printOperand(MI, Op + X86_AddrIndexReg, O);
 			ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
-			if (MI->csh->detail)
+			if (MI->csh->detail_opt)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
 				SStream_concat(O, ", %u", ScaleVal);
@@ -783,7 +783,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			SStream_concat0(O, "0");
 	}
 
-	if (MI->csh->detail)
+	if (MI->csh->detail_opt)
 		MI->flat_insn->detail->x86.op_count++;
 }
 
@@ -874,7 +874,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			MI->flat_insn->detail->x86.operands[0].size = MI->imm_size;
 	}
 
-	if (MI->csh->detail) {
+	if (MI->csh->detail_opt) {
 		uint8_t access[6] = {0};
 
 		// some instructions need to supply immediate 1 in the first op

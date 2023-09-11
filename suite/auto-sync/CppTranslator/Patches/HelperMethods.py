@@ -76,6 +76,7 @@ def namespace_enum(src: bytes, ns_id: bytes, enum: Node) -> bytes:
     for c in enum.named_children:
         if c.type == "enumerator_list":
             enumerator_list = c
+            break
 
     if not enumerator_list:
         log.fatal("Could not find enumerator_list.")
@@ -85,7 +86,7 @@ def namespace_enum(src: bytes, ns_id: bytes, enum: Node) -> bytes:
     for e in enumerator_list.named_children:
         if e.type == "enumerator":
             enum_entry_text = get_text(src, e.start_byte, e.end_byte)
-            res = re.sub(enum_entry_text, ns_id + b"_" + enum_entry_text, res)
+            res = res.replace(enum_entry_text, ns_id + b"_" + enum_entry_text)
     return res
 
 

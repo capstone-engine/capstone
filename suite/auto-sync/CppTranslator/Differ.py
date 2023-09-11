@@ -23,6 +23,7 @@ from Helper import (
     print_prominent_warning,
     get_sha256,
     run_clang_format,
+    get_path,
 )
 
 
@@ -162,16 +163,17 @@ class Differ:
         self.parser = self.configurator.get_parser()
         self.differ = dl.Differ()
 
-        t_out_dir = self.conf_general["translation_out_dir"]
-        self.translated_files = [Path(t_out_dir + sp["out"]) for sp in self.conf_arch["files_to_translate"]]
-        cs_arch_src = self.conf_general["cs_arch_src"]
+        t_out_dir: Path = get_path(self.conf_general["translation_out_dir"])
+        self.translated_files = [t_out_dir.joinpath(sp["out"]) for sp in self.conf_arch["files_to_translate"]]
+        cs_arch_src: Path = get_path(self.conf_general["cs_arch_src"])
+        cs_arch_src = cs_arch_src.joinpath(self.arch if self.arch != "PPC" else "PowerPC")
         self.old_files = [
-            Path(cs_arch_src + f"/{self.arch}/" + sp["out"]) for sp in self.conf_arch["files_to_translate"]
+            cs_arch_src.joinpath(f"{cs_arch_src}/" + sp["out"]) for sp in self.conf_arch["files_to_translate"]
         ]
         self.load_persistence_file()
 
     def load_persistence_file(self) -> None:
-        self.persistence_filepath = Path(self.conf_general["patch_persistence_file"])
+        self.persistence_filepath = get_path(self.conf_general["patch_persistence_file"])
         if not self.persistence_filepath.exists():
             self.saved_patches = dict()
             return
@@ -200,9 +202,9 @@ class Differ:
         Copy translated files to diff directory for editing.
         """
         log.info("Copy files for editing")
-        diff_dir = self.conf_general["diff_out_dir"]
+        diff_dir: Path = get_path(self.conf_general["diff_out_dir"])
         for f in self.translated_files:
-            dest = Path(diff_dir + f.name)
+            dest = diff_dir.joinpath(f.name)
             copy2(f, dest)
             self.diff_dest_files.append(dest)
 
@@ -515,7 +517,7 @@ class Differ:
                     continue
                 self.add_patch(saved["apply_type"], consec_old, old_filepath, patch_coord)
             elif choice == ApplyType.OLD_ALL:
-                continue
+                self.add_patch(ApplyType.OLD, consec_old, old_filepath, patch_coord)
             elif choice == ApplyType.EDIT:
                 print(f"{bold('Editing not yet implemented.', 'light_red')}")
                 continue
@@ -586,7 +588,7 @@ class Differ:
                 src = src[:start_byte] + data + src[end_byte:]
             with open(filepath, "wb") as f:
                 f.write(src)
-        run_clang_format(list(file_patches.keys()), Path(self.conf_general["clang_format_file"]))
+        run_clang_format(list(file_patches.keys()), get_path(self.conf_general["clang_format_file"]))
         return
 
 
@@ -601,7 +603,7 @@ def parse_args() -> argparse.Namespace:
         help="Do not apply saved diff resolutions. Ask for every diff again.",
         action="store_true",
     )
-    parser.add_argument("-a", dest="arch", help="Name of target architecture.", choices=["ARM"], required=True)
+    parser.add_argument("-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC"], required=True)
     parser.add_argument(
         "-v",
         dest="verbosity",

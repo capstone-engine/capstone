@@ -23,6 +23,9 @@ class ClassesDef(Patch):
         return "class_specifier"
 
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
+        if len(captures) < 2:
+            # Forward class definition. Ignore it.
+            return b""
         field_decl_list = captures[1][0]
         functions = list()
         for field_decl in field_decl_list.named_children:

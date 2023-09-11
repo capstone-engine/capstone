@@ -1,6 +1,3 @@
-import logging as log
-import re
-
 from tree_sitter import Node
 
 from Patches.HelperMethods import get_text
@@ -11,6 +8,8 @@ class GetOperandRegImm(Patch):
     """
     Patch   OPERAND.getReg()
     to      MCOperand_getReg(OPERAND)
+
+    Same for isImm()
     """
 
     def __init__(self, priority: int):
@@ -21,7 +20,7 @@ class GetOperandRegImm(Patch):
             "(call_expression"
             "    (field_expression"
             "        ((_) @operand)"
-            '        ((field_identifier) @field_id (#match? @field_id "get[RI][em][gm]"))'
+            '        ((field_identifier) @field_id (#match? @field_id "get(Reg|Imm)"))'
             "    )"
             "    (argument_list)"
             ") @get_operand"

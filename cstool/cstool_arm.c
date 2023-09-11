@@ -151,7 +151,7 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 
 	if (ins->detail->writeback) {
 		printf("\tWrite-back: True\n");
-		printf("\tPost index: %s\n", arm->post_index ? "true" : "false");
+		printf("\tPost index: %s\n", arm->post_index ? "True" : "False");
 	}
 
 	if (arm->cps_mode)
@@ -163,7 +163,7 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 	if (arm->vector_data)
 		printf("\tVector-data: %u\n", arm->vector_data);
 
-	if (arm->vector_size)
+	if (arm->vector_size != 0)
 		printf("\tVector-size: %u\n", arm->vector_size);
 
 	if (arm->usermode)

@@ -486,12 +486,72 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 	}
 }
 
+/// Unfortunately there is currently no way to easily extract
+/// informaion about the vector data usage (sign and width used).
+/// See: https://github.com/capstone-engine/capstone/issues/2152
+void ARM_add_vector_data(MCInst *MI, arm_vectordata_type data_type)
+{
+	if (!detail_is_set(MI))
+		return;
+	ARM_get_detail(MI)->vector_data = data_type;
+}
+
+/// Unfortunately there is currently no way to easily extract
+/// informaion about the vector size.
+/// See: https://github.com/capstone-engine/capstone/issues/2152
+void ARM_add_vector_size(MCInst *MI, unsigned size)
+{
+	if (!detail_is_set(MI))
+		return;
+	ARM_get_detail(MI)->vector_size = size;
+}
+
+/// For ARM the attributation of post-indexed instructions is poor.
+/// Disponents or index register are sometimes not defined as such.
+/// Here we try to detect such cases. We check if the base register
+/// is a writeback register, but no other memory operand
+/// was disassembled.
+/// Because there must be a second memory operand (disponent/index)
+/// We assume that the following operand is actually
+/// the disponent/index reg.
+static void ARM_post_index_detection(MCInst *MI)
+{
+	if (!detail_is_set(MI) || ARM_get_detail(MI)->post_index)
+		return;
+
+	int i = 0;
+	for (; i < ARM_get_detail(MI)->op_count; ++i) {
+		if (ARM_get_detail(MI)->operands[i].type & ARM_OP_MEM)
+			break;
+	}
+	if (i >= ARM_get_detail(MI)->op_count) {
+		// Last operand
+		return;
+	}
+
+	cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
+	cs_arm_op op_next = ARM_get_detail(MI)->operands[i + 1];
+	if (op_next.type == ARM_OP_INVALID || op->mem.disp != 0 || op->mem.index != ARM_REG_INVALID)
+		return;
+
+	if (op_next.type & CS_OP_IMM)
+		op->mem.disp = op_next.imm;
+	else if (op_next.type & CS_OP_REG)
+		op->mem.index = op_next.reg;
+
+	op->subtracted = op_next.subtracted;
+	ARM_get_detail(MI)->post_index = true;
+	MI->flat_insn->detail->writeback = true;
+	ARM_dec_op_count(MI);
+}
+
 /// Decodes the asm string for a given instruction
 /// and fills the detail information about the instruction and its operands.
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	ARM_LLVM_printInstruction(MI, O, info);
 	ARM_add_not_defined_ops(MI);
+	ARM_post_index_detection(MI);
 	ARM_add_cs_groups(MI);
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
@@ -635,10 +695,11 @@ bool ARM_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 
 void ARM_init_mri(MCRegisterInfo *MRI)
 {
-	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, 289, 0, 0,
-					  ARMMCRegisterClasses, 103, 0, 0,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, ARMRegDesc, ARM_REG_ENDING, 0, 0,
+					  ARMMCRegisterClasses,
+					  ARR_SIZE(ARMMCRegisterClasses), 0, 0,
 					  ARMRegDiffLists, 0, ARMSubRegIdxLists,
-					  57, 0);
+					  ARR_SIZE(ARMSubRegIdxLists), 0);
 }
 
 static const map_insn_ops insn_operands[] = {
@@ -825,7 +886,7 @@ static void add_cs_detail_RegImmShift(MCInst *MI, ARM_AM_ShiftOpc ShOpc,
 	if (ShOpc == ARM_AM_no_shift || (ShOpc == ARM_AM_lsl && !ShImm))
 		return;
 
-	if (!MI->csh->detail)
+	if (!detail_is_set(MI))
 		return;
 
 	if (doing_mem(MI))
@@ -849,7 +910,7 @@ static void add_cs_detail_RegImmShift(MCInst *MI, ARM_AM_ShiftOpc ShOpc,
 static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				  unsigned OpNum)
 {
-	if (!MI->csh->detail)
+	if (!detail_is_set(MI))
 		return;
 	cs_op_type op_type = map_get_op_type(MI, OpNum);
 
@@ -925,10 +986,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode6Operand:
 		if (!doing_mem(MI))
 			ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, true, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0,
-				      MCInst_getOpVal(MI, OpNum + 1) << 3);
+		ARM_get_detail_op(MI, 0)->mem.align =
+			MCInst_getOpVal(MI, OpNum + 1) << 3;
 		ARM_set_mem_access(MI, false);
 		break;
 	case ARM_OP_GROUP_AddrMode6OffsetOperand: {
@@ -1820,11 +1881,10 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 	op.access = access;
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
-	int i = ARM_get_detail(MI)->op_count - 1;
-	for (; i >= 0; --i) {
-		ops[i + 1] = ops[i];
-		if (i == index)
-			break;
+	int i = ARM_get_detail(MI)->op_count;
+	assert(i < MAX_ARM_OPS);
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
 	}
 	ops[index] = op;
 	ARM_inc_op_count(MI);
@@ -1847,11 +1907,10 @@ void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 	op.access = access;
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
-	int i = ARM_get_detail(MI)->op_count - 1;
-	for (; i >= 0; --i) {
-		ops[i + 1] = ops[i];
-		if (i == index)
-			break;
+	int i = ARM_get_detail(MI)->op_count;
+	assert(i < MAX_ARM_OPS);
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
 	}
 	ops[index] = op;
 	ARM_inc_op_count(MI);
@@ -1928,24 +1987,30 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 		assert(0 && "Secondary type not supported yet.");
 	case CS_OP_REG: {
 		assert(secondary_type == CS_OP_REG);
-		if (!is_index_reg)
+		if (!is_index_reg) {
 			ARM_get_detail_op(MI, 0)->mem.base = Val;
-		else {
+			if (MCInst_opIsTying(MI, OpNum) || MCInst_opIsTied(MI, OpNum)) {
+				// Base registers can be writeback registers.
+				// For this they tie an MC operand which has write
+				// access. But this one is never processed in the printer
+				// (because it is never emitted). Therefor it is never
+				// added to the modified list.
+				// Here we check for this case and add the memory register
+				// to the modified list.
+				map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+				MI->flat_insn->detail->writeback = true;
+			} else {
+				// If the base register is not tied, set the writebak flag to false.
+				// Writeback for ARM only refers to the memory base register.
+				// But other registers might be marked as tied as well.
+				MI->flat_insn->detail->writeback = false;
+			}
+		} else {
 			ARM_get_detail_op(MI, 0)->mem.index = Val;
-			ARM_get_detail_op(MI, 0)->mem.scale = scale;
-			ARM_get_detail_op(MI, 0)->mem.lshift = lshift;
 		}
+		ARM_get_detail_op(MI, 0)->mem.scale = scale;
+		ARM_get_detail_op(MI, 0)->mem.lshift = lshift;
 
-		if (MCInst_opIsTying(MI, OpNum)) {
-			// Especially base registers can be writeback registers.
-			// For this they tie an MC operand which has write
-			// access. But this one is never processed in the printer
-			// (because it is never emitted). Therefor it is never
-			// added to the modified list.
-			// Here we check for this case and add the memory register
-			// to the modified list.
-			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
-		}
 		break;
 	}
 	case CS_OP_IMM: {

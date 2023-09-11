@@ -8,293 +8,730 @@
 extern "C" {
 #endif
 
+#include "cs_operand.h"
 #include "platform.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
-/// PPC branch codes for some branch instructions
-typedef enum ppc_bc {
-	PPC_BC_INVALID  = 0,
-	PPC_BC_LT       = (0 << 5) | 12,
-	PPC_BC_LE       = (1 << 5) |  4,
-	PPC_BC_EQ       = (2 << 5) | 12,
-	PPC_BC_GE       = (0 << 5) |  4,
-	PPC_BC_GT       = (1 << 5) | 12,
-	PPC_BC_NE       = (2 << 5) |  4,
-	PPC_BC_UN       = (3 << 5) | 12,
-	PPC_BC_NU       = (3 << 5) |  4,
+/// Enum was moved from PPCPredicates.h so we do not have duplicates.
+///
+/// Branch predicate enum. It contains the CR predicates and CTR predicates.
+///
+/// Enum values are "((BI % 4) << 5) | BO"  for various predicates.
+///
+/// CR field encoding:
+///
+/// Bit:    |   0   |    1    |   2   |     3    |
+///         |-------|---------|-------|----------|
+/// Meaning | Less  | Greater | Zero  | Summary  |
+///         | Then  | Then    |       | Overflow |
+///
+/// BO encoding
+///
+/// Bit     |   0    |     1       |   2   |      3     |     4      |
+///         |--------|-------------|-------|------------|------------|
+/// If      | Test   | Test        | Decr. | test       |            |
+/// unset:  | CR(BI) | CR(BI) == 0 | CTR   | CTR != 0   |            |
+///         |--------|-------------|-------|------------|------------|
+/// If      | Don't  | Test        | Don't | test       |            |
+/// set:    | Test   | CR(BI) == 1 | decr. | CTR == 0   |            |
+///         | CR(BI) |             | CTR   |            |            |
+///         |--------|-------------|-------|------------|------------|
+/// Alter-  |        | Hint bit:   |       | Hint bit:  | Hint bit:  |
+/// native  | None   |   a         | None  |    a       |    t       |
+/// meaning |        | or ingored  |       | or ignored | or ignored |
+///
+/// NOTE: If we do not decrement the counter, it is not used for the condition.
+///
+/// The bits "at" are both present if:
+/// 		- CTR is decremented, but CR is not checked.
+///     - CR is checked, but CTR is not decremented.
+typedef enum ppc_pred {
+	// Technically this could be read as a valid predicate
+	// But the ISA recommends to set the z bits to 0,
+	// so it shouldn't come to conflicts.
+	PPC_PRED_INVALID = 0xffff,
 
-	// extra conditions
-	PPC_BC_SO = (4 << 5) | 12,	///< summary overflow
-	PPC_BC_NS = (4 << 5) | 4,	///< not summary overflow
-} ppc_bc;
+	// Name       | BI     | BO
+	PPC_PRED_LT = (0 << 5) | 12,
+	PPC_PRED_LE = (1 << 5) | 4,
+	PPC_PRED_EQ = (2 << 5) | 12,
+	PPC_PRED_GE = (0 << 5) | 4,
+	PPC_PRED_GT = (1 << 5) | 12,
+	PPC_PRED_NE = (2 << 5) | 4,
+	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after fp comparision)
+	PPC_PRED_NU = (3 << 5) | 4,  ///< Not Unordered (after fp comparision)
+	PPC_PRED_SO = (3 << 5) | 12, ///< summary overflow
+	PPC_PRED_NS = (3 << 5) | 4,  ///< not summary overflow
 
-/// PPC branch hint for some branch instructions
-typedef enum ppc_bh {
-	PPC_BH_INVALID = 0,	///< no hint
-	PPC_BH_PLUS,	///< PLUS hint
-	PPC_BH_MINUS,	///< MINUS hint
+	/// CTR predicates
+	PPC_PRED_NZ = (0 << 5) | 16,
+	PPC_PRED_Z = (0 << 5) | 18,
+	// Likely not taken
+	PPC_PRED_LT_MINUS = (0 << 5) | 14,
+	PPC_PRED_LE_MINUS = (1 << 5) | 6,
+	PPC_PRED_EQ_MINUS = (2 << 5) | 14,
+	PPC_PRED_GE_MINUS = (0 << 5) | 6,
+	PPC_PRED_GT_MINUS = (1 << 5) | 14,
+	PPC_PRED_NE_MINUS = (2 << 5) | 6,
+	PPC_PRED_UN_MINUS = (3 << 5) | 14,
+	PPC_PRED_NU_MINUS = (3 << 5) | 6,
+	PPC_PRED_NZ_MINUS = (0 << 5) | 24,
+	PPC_PRED_Z_MINUS = (0 << 5) | 26,
+	// Likely taken
+	PPC_PRED_LT_PLUS = (0 << 5) | 15,
+	PPC_PRED_LE_PLUS = (1 << 5) | 7,
+	PPC_PRED_EQ_PLUS = (2 << 5) | 15,
+	PPC_PRED_GE_PLUS = (0 << 5) | 7,
+	PPC_PRED_GT_PLUS = (1 << 5) | 15,
+	PPC_PRED_NE_PLUS = (2 << 5) | 7,
+	PPC_PRED_UN_PLUS = (3 << 5) | 15,
+	PPC_PRED_NU_PLUS = (3 << 5) | 7,
+	PPC_PRED_NZ_PLUS = (0 << 5) | 17,
+	PPC_PRED_Z_PLUS = (0 << 5) | 19,
+
+	// SPE scalar compare instructions always set the GT bit.
+	PPC_PRED_SPE = PPC_PRED_GT,
+
+	// When dealing with individual condition-register bits, we have simple set
+	// and unset predicates.
+	PPC_PRED_BIT_SET = 1024,
+	PPC_PRED_BIT_UNSET = 1025
+} ppc_pred;
+
+/// CR field indices and their meaning.
+typedef enum {
+	PPC_BI_LT = 0,	       ///< CR bit Less Then
+	PPC_BI_GT = 1,	       ///< CR bit Greater Then
+	PPC_BI_Z = 2,	       ///< CR bit Zero
+	PPC_BI_SO = 3,	       ///< CR bit Summary Overflow
+	PPC_BI_INVALID = 0xff, ///< CR bit was not set/invalid
+} ppc_cr_bit;
+
+/// Masks of flags in the BO field.
+typedef enum {
+	PPC_BO_TEST_CR = 0b10000,  ///< Flag mask: Test CR bit.
+	PPC_BO_CR_CMP = 0b01000,   ///< Flag mask: Compare CR bit to 0 or 1.
+	PPC_BO_DECR_CTR = 0b00100, ///< Flag mask: Decrement counter.
+	PPC_BO_CTR_CMP = 0b00010,  ///< Flag mask: Compare CTR to 0 or 1.
+	PPC_BO_T = 0b00001,	   ///< Either ignored (z) or hint bit t
+} ppc_bo_mask;
+
+/// Bit for branch taken (plus) or not-taken (minus) hint
+/// Encodes the meaning of the branch hint bits.
+/// Bit:  | 0 | 1 |
+/// Name: | a | t |
+typedef enum {
+	PPC_BR_NOT_GIVEN = 0b00,
+	PPC_BR_RESERVED = 0b01,
+	PPC_BR_NOT_TAKEN = 0b10, ///< Minus
+	PPC_BR_TAKEN = 0b11,	 ///< Plus
+	PPC_BR_HINT_MASK = 0b11,
+} ppc_br_hint;
+
+/// Encodes the different meanings of the BH field.
+/// The enum values does NOT match the BH field values!
+typedef enum {
+	PPC_BH_INVALID = 0,
+	PPC_BH_SUBROUTINE_RET,
+	PPC_BH_NO_SUBROUTINE_RET,
+	PPC_BH_NOT_PREDICTABLE,
+	PPC_BH_RESERVED,
 } ppc_bh;
+
+/// Returns the hint encoded in the BO bits a and t.
+static inline ppc_br_hint PPC_get_hint(uint8_t bo)
+{
+	bool DecrCTR = (bo & PPC_BO_DECR_CTR) == 0;
+	bool TestCR = (bo & PPC_BO_TEST_CR) == 0;
+	if (!DecrCTR && !TestCR)
+		return PPC_BR_NOT_GIVEN;
+	else if (DecrCTR && !TestCR)
+		return (ppc_br_hint)(((bo & PPC_BO_CR_CMP) >> 2) | (bo & PPC_BO_T));
+	else if (!DecrCTR && TestCR)
+		return (ppc_br_hint)((bo & PPC_BO_CTR_CMP) | (bo & PPC_BO_T));
+	return PPC_BR_NOT_GIVEN;
+}
+
+/// Returns the branch predicate encoded in the BO and BI field.
+/// If get_cr_pred = true the CR-bit predicate is returned (LE, GE, EQ...).
+/// Otherwise the CTR predicate (NZ, Z)
+///
+/// It returns PPC_PRED_INVALID if the CR predicate is requested, but no
+/// CR predicate is encoded in BI and BO. Same for the CTR predicate.
+static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo,
+					   bool get_cr_pred)
+{
+	bool TestCR = ((bo & PPC_BO_TEST_CR) == 0);
+	bool DecrCTR = ((bo & PPC_BO_DECR_CTR) == 0);
+
+	if ((get_cr_pred && !TestCR) || (!get_cr_pred && !DecrCTR))
+		return PPC_PRED_INVALID;
+
+	if (TestCR && DecrCTR) {
+		// The CR-bit condition without the CTR condition.
+		unsigned cr_bo_cond = (bo | PPC_BO_DECR_CTR) & ~PPC_BO_CTR_CMP;
+		// The CTR condition without the CR-bit condition.
+		unsigned ctr_bo_cond = (bo | PPC_BO_TEST_CR) & ~PPC_BO_CR_CMP;
+		if (get_cr_pred)
+			return (ppc_pred)(((bi % 4) << 5) | cr_bo_cond);
+		return (ppc_pred)ctr_bo_cond; // BI is ignored
+	}
+	// BO doesn't need any separation
+	return (ppc_pred)(((bi % 4) << 5) | bo);
+}
 
 /// Operand type for instruction's operands
 typedef enum ppc_op_type {
-	PPC_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-	PPC_OP_REG, ///< = CS_OP_REG (Register operand).
-	PPC_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
-	PPC_OP_MEM, ///< = CS_OP_MEM (Memory operand).
-	PPC_OP_CRX = 64,	///< Condition Register field
+	PPC_OP_INVALID = CS_OP_INVALID, ///< Uninitialized.
+	PPC_OP_REG = CS_OP_REG,		///< Register operand.
+	PPC_OP_IMM = CS_OP_IMM,		///< Immediate operand.
+	PPC_OP_MEM = CS_OP_MEM,		///< Memory operand.
 } ppc_op_type;
 
 /// PPC registers
 typedef enum ppc_reg {
-	PPC_REG_INVALID = 0,
+	// generated content <PPCGenCSRegEnum.inc> begin
+	// clang-format off
 
+	PPC_REG_INVALID = 0,
+	PPC_REG_BP = 1,
 	PPC_REG_CARRY = 2,
 	PPC_REG_CTR = 3,
+	PPC_REG_FP = 4,
 	PPC_REG_LR = 5,
 	PPC_REG_RM = 6,
+	PPC_REG_SPEFSCR = 7,
 	PPC_REG_VRSAVE = 8,
 	PPC_REG_XER = 9,
 	PPC_REG_ZERO = 10,
-	PPC_REG_CR0 = 12,
-	PPC_REG_CR1 = 13,
-	PPC_REG_CR2 = 14,
-	PPC_REG_CR3 = 15,
-	PPC_REG_CR4 = 16,
-	PPC_REG_CR5 = 17,
-	PPC_REG_CR6 = 18,
-	PPC_REG_CR7 = 19,
-	PPC_REG_CTR8 = 20,
-	PPC_REG_F0 = 21,
-	PPC_REG_F1 = 22,
-	PPC_REG_F2 = 23,
-	PPC_REG_F3 = 24,
-	PPC_REG_F4 = 25,
-	PPC_REG_F5 = 26,
-	PPC_REG_F6 = 27,
-	PPC_REG_F7 = 28,
-	PPC_REG_F8 = 29,
-	PPC_REG_F9 = 30,
-	PPC_REG_F10 = 31,
-	PPC_REG_F11 = 32,
-	PPC_REG_F12 = 33,
-	PPC_REG_F13 = 34,
-	PPC_REG_F14 = 35,
-	PPC_REG_F15 = 36,
-	PPC_REG_F16 = 37,
-	PPC_REG_F17 = 38,
-	PPC_REG_F18 = 39,
-	PPC_REG_F19 = 40,
-	PPC_REG_F20 = 41,
-	PPC_REG_F21 = 42,
-	PPC_REG_F22 = 43,
-	PPC_REG_F23 = 44,
-	PPC_REG_F24 = 45,
-	PPC_REG_F25 = 46,
-	PPC_REG_F26 = 47,
-	PPC_REG_F27 = 48,
-	PPC_REG_F28 = 49,
-	PPC_REG_F29 = 50,
-	PPC_REG_F30 = 51,
-	PPC_REG_F31 = 52,
-	PPC_REG_LR8 = 54,
-	PPC_REG_Q0 = 55,
-	PPC_REG_Q1 = 56,
-	PPC_REG_Q2 = 57,
-	PPC_REG_Q3 = 58,
-	PPC_REG_Q4 = 59,
-	PPC_REG_Q5 = 60,
-	PPC_REG_Q6 = 61,
-	PPC_REG_Q7 = 62,
-	PPC_REG_Q8 = 63,
-	PPC_REG_Q9 = 64,
-	PPC_REG_Q10 = 65,
-	PPC_REG_Q11 = 66,
-	PPC_REG_Q12 = 67,
-	PPC_REG_Q13 = 68,
-	PPC_REG_Q14 = 69,
-	PPC_REG_Q15 = 70,
-	PPC_REG_Q16 = 71,
-	PPC_REG_Q17 = 72,
-	PPC_REG_Q18 = 73,
-	PPC_REG_Q19 = 74,
-	PPC_REG_Q20 = 75,
-	PPC_REG_Q21 = 76,
-	PPC_REG_Q22 = 77,
-	PPC_REG_Q23 = 78,
-	PPC_REG_Q24 = 79,
-	PPC_REG_Q25 = 80,
-	PPC_REG_Q26 = 81,
-	PPC_REG_Q27 = 82,
-	PPC_REG_Q28 = 83,
-	PPC_REG_Q29 = 84,
-	PPC_REG_Q30 = 85,
-	PPC_REG_Q31 = 86,
-	PPC_REG_R0 = 87,
-	PPC_REG_R1 = 88,
-	PPC_REG_R2 = 89,
-	PPC_REG_R3 = 90,
-	PPC_REG_R4 = 91,
-	PPC_REG_R5 = 92,
-	PPC_REG_R6 = 93,
-	PPC_REG_R7 = 94,
-	PPC_REG_R8 = 95,
-	PPC_REG_R9 = 96,
-	PPC_REG_R10 = 97,
-	PPC_REG_R11 = 98,
-	PPC_REG_R12 = 99,
-	PPC_REG_R13 = 100,
-	PPC_REG_R14 = 101,
-	PPC_REG_R15 = 102,
-	PPC_REG_R16 = 103,
-	PPC_REG_R17 = 104,
-	PPC_REG_R18 = 105,
-	PPC_REG_R19 = 106,
-	PPC_REG_R20 = 107,
-	PPC_REG_R21 = 108,
-	PPC_REG_R22 = 109,
-	PPC_REG_R23 = 110,
-	PPC_REG_R24 = 111,
-	PPC_REG_R25 = 112,
-	PPC_REG_R26 = 113,
-	PPC_REG_R27 = 114,
-	PPC_REG_R28 = 115,
-	PPC_REG_R29 = 116,
-	PPC_REG_R30 = 117,
-	PPC_REG_R31 = 118,
-	PPC_REG_V0 = 151,
-	PPC_REG_V1 = 152,
-	PPC_REG_V2 = 153,
-	PPC_REG_V3 = 154,
-	PPC_REG_V4 = 155,
-	PPC_REG_V5 = 156,
-	PPC_REG_V6 = 157,
-	PPC_REG_V7 = 158,
-	PPC_REG_V8 = 159,
-	PPC_REG_V9 = 160,
-	PPC_REG_V10 = 161,
-	PPC_REG_V11 = 162,
-	PPC_REG_V12 = 163,
-	PPC_REG_V13 = 164,
-	PPC_REG_V14 = 165,
-	PPC_REG_V15 = 166,
-	PPC_REG_V16 = 167,
-	PPC_REG_V17 = 168,
-	PPC_REG_V18 = 169,
-	PPC_REG_V19 = 170,
-	PPC_REG_V20 = 171,
-	PPC_REG_V21 = 172,
-	PPC_REG_V22 = 173,
-	PPC_REG_V23 = 174,
-	PPC_REG_V24 = 175,
-	PPC_REG_V25 = 176,
-	PPC_REG_V26 = 177,
-	PPC_REG_V27 = 178,
-	PPC_REG_V28 = 179,
-	PPC_REG_V29 = 180,
-	PPC_REG_V30 = 181,
-	PPC_REG_V31 = 182,
-	PPC_REG_VS0 = 215,
-	PPC_REG_VS1 = 216,
-	PPC_REG_VS2 = 217,
-	PPC_REG_VS3 = 218,
-	PPC_REG_VS4 = 219,
-	PPC_REG_VS5 = 220,
-	PPC_REG_VS6 = 221,
-	PPC_REG_VS7 = 222,
-	PPC_REG_VS8 = 223,
-	PPC_REG_VS9 = 224,
-	PPC_REG_VS10 = 225,
-	PPC_REG_VS11 = 226,
-	PPC_REG_VS12 = 227,
-	PPC_REG_VS13 = 228,
-	PPC_REG_VS14 = 229,
-	PPC_REG_VS15 = 230,
-	PPC_REG_VS16 = 231,
-	PPC_REG_VS17 = 232,
-	PPC_REG_VS18 = 233,
-	PPC_REG_VS19 = 234,
-	PPC_REG_VS20 = 235,
-	PPC_REG_VS21 = 236,
-	PPC_REG_VS22 = 237,
-	PPC_REG_VS23 = 238,
-	PPC_REG_VS24 = 239,
-	PPC_REG_VS25 = 240,
-	PPC_REG_VS26 = 241,
-	PPC_REG_VS27 = 242,
-	PPC_REG_VS28 = 243,
-	PPC_REG_VS29 = 244,
-	PPC_REG_VS30 = 245,
-	PPC_REG_VS31 = 246,
-	PPC_REG_VS32 = 247,
-	PPC_REG_VS33 = 248,
-	PPC_REG_VS34 = 249,
-	PPC_REG_VS35 = 250,
-	PPC_REG_VS36 = 251,
-	PPC_REG_VS37 = 252,
-	PPC_REG_VS38 = 253,
-	PPC_REG_VS39 = 254,
-	PPC_REG_VS40 = 255,
-	PPC_REG_VS41 = 256,
-	PPC_REG_VS42 = 257,
-	PPC_REG_VS43 = 258,
-	PPC_REG_VS44 = 259,
-	PPC_REG_VS45 = 260,
-	PPC_REG_VS46 = 261,
-	PPC_REG_VS47 = 262,
-	PPC_REG_VS48 = 263,
-	PPC_REG_VS49 = 264,
-	PPC_REG_VS50 = 265,
-	PPC_REG_VS51 = 266,
-	PPC_REG_VS52 = 267,
-	PPC_REG_VS53 = 268,
-	PPC_REG_VS54 = 269,
-	PPC_REG_VS55 = 270,
-	PPC_REG_VS56 = 271,
-	PPC_REG_VS57 = 272,
-	PPC_REG_VS58 = 273,
-	PPC_REG_VS59 = 274,
-	PPC_REG_VS60 = 275,
-	PPC_REG_VS61 = 276,
-	PPC_REG_VS62 = 277,
-	PPC_REG_VS63 = 278,
+	PPC_REG_ACC0 = 11,
+	PPC_REG_ACC1 = 12,
+	PPC_REG_ACC2 = 13,
+	PPC_REG_ACC3 = 14,
+	PPC_REG_ACC4 = 15,
+	PPC_REG_ACC5 = 16,
+	PPC_REG_ACC6 = 17,
+	PPC_REG_ACC7 = 18,
+	PPC_REG_BP8 = 19,
+	PPC_REG_CR0 = 20,
+	PPC_REG_CR1 = 21,
+	PPC_REG_CR2 = 22,
+	PPC_REG_CR3 = 23,
+	PPC_REG_CR4 = 24,
+	PPC_REG_CR5 = 25,
+	PPC_REG_CR6 = 26,
+	PPC_REG_CR7 = 27,
+	PPC_REG_CTR8 = 28,
+	PPC_REG_DMR0 = 29,
+	PPC_REG_DMR1 = 30,
+	PPC_REG_DMR2 = 31,
+	PPC_REG_DMR3 = 32,
+	PPC_REG_DMR4 = 33,
+	PPC_REG_DMR5 = 34,
+	PPC_REG_DMR6 = 35,
+	PPC_REG_DMR7 = 36,
+	PPC_REG_DMRROW0 = 37,
+	PPC_REG_DMRROW1 = 38,
+	PPC_REG_DMRROW2 = 39,
+	PPC_REG_DMRROW3 = 40,
+	PPC_REG_DMRROW4 = 41,
+	PPC_REG_DMRROW5 = 42,
+	PPC_REG_DMRROW6 = 43,
+	PPC_REG_DMRROW7 = 44,
+	PPC_REG_DMRROW8 = 45,
+	PPC_REG_DMRROW9 = 46,
+	PPC_REG_DMRROW10 = 47,
+	PPC_REG_DMRROW11 = 48,
+	PPC_REG_DMRROW12 = 49,
+	PPC_REG_DMRROW13 = 50,
+	PPC_REG_DMRROW14 = 51,
+	PPC_REG_DMRROW15 = 52,
+	PPC_REG_DMRROW16 = 53,
+	PPC_REG_DMRROW17 = 54,
+	PPC_REG_DMRROW18 = 55,
+	PPC_REG_DMRROW19 = 56,
+	PPC_REG_DMRROW20 = 57,
+	PPC_REG_DMRROW21 = 58,
+	PPC_REG_DMRROW22 = 59,
+	PPC_REG_DMRROW23 = 60,
+	PPC_REG_DMRROW24 = 61,
+	PPC_REG_DMRROW25 = 62,
+	PPC_REG_DMRROW26 = 63,
+	PPC_REG_DMRROW27 = 64,
+	PPC_REG_DMRROW28 = 65,
+	PPC_REG_DMRROW29 = 66,
+	PPC_REG_DMRROW30 = 67,
+	PPC_REG_DMRROW31 = 68,
+	PPC_REG_DMRROW32 = 69,
+	PPC_REG_DMRROW33 = 70,
+	PPC_REG_DMRROW34 = 71,
+	PPC_REG_DMRROW35 = 72,
+	PPC_REG_DMRROW36 = 73,
+	PPC_REG_DMRROW37 = 74,
+	PPC_REG_DMRROW38 = 75,
+	PPC_REG_DMRROW39 = 76,
+	PPC_REG_DMRROW40 = 77,
+	PPC_REG_DMRROW41 = 78,
+	PPC_REG_DMRROW42 = 79,
+	PPC_REG_DMRROW43 = 80,
+	PPC_REG_DMRROW44 = 81,
+	PPC_REG_DMRROW45 = 82,
+	PPC_REG_DMRROW46 = 83,
+	PPC_REG_DMRROW47 = 84,
+	PPC_REG_DMRROW48 = 85,
+	PPC_REG_DMRROW49 = 86,
+	PPC_REG_DMRROW50 = 87,
+	PPC_REG_DMRROW51 = 88,
+	PPC_REG_DMRROW52 = 89,
+	PPC_REG_DMRROW53 = 90,
+	PPC_REG_DMRROW54 = 91,
+	PPC_REG_DMRROW55 = 92,
+	PPC_REG_DMRROW56 = 93,
+	PPC_REG_DMRROW57 = 94,
+	PPC_REG_DMRROW58 = 95,
+	PPC_REG_DMRROW59 = 96,
+	PPC_REG_DMRROW60 = 97,
+	PPC_REG_DMRROW61 = 98,
+	PPC_REG_DMRROW62 = 99,
+	PPC_REG_DMRROW63 = 100,
+	PPC_REG_DMRROWp0 = 101,
+	PPC_REG_DMRROWp1 = 102,
+	PPC_REG_DMRROWp2 = 103,
+	PPC_REG_DMRROWp3 = 104,
+	PPC_REG_DMRROWp4 = 105,
+	PPC_REG_DMRROWp5 = 106,
+	PPC_REG_DMRROWp6 = 107,
+	PPC_REG_DMRROWp7 = 108,
+	PPC_REG_DMRROWp8 = 109,
+	PPC_REG_DMRROWp9 = 110,
+	PPC_REG_DMRROWp10 = 111,
+	PPC_REG_DMRROWp11 = 112,
+	PPC_REG_DMRROWp12 = 113,
+	PPC_REG_DMRROWp13 = 114,
+	PPC_REG_DMRROWp14 = 115,
+	PPC_REG_DMRROWp15 = 116,
+	PPC_REG_DMRROWp16 = 117,
+	PPC_REG_DMRROWp17 = 118,
+	PPC_REG_DMRROWp18 = 119,
+	PPC_REG_DMRROWp19 = 120,
+	PPC_REG_DMRROWp20 = 121,
+	PPC_REG_DMRROWp21 = 122,
+	PPC_REG_DMRROWp22 = 123,
+	PPC_REG_DMRROWp23 = 124,
+	PPC_REG_DMRROWp24 = 125,
+	PPC_REG_DMRROWp25 = 126,
+	PPC_REG_DMRROWp26 = 127,
+	PPC_REG_DMRROWp27 = 128,
+	PPC_REG_DMRROWp28 = 129,
+	PPC_REG_DMRROWp29 = 130,
+	PPC_REG_DMRROWp30 = 131,
+	PPC_REG_DMRROWp31 = 132,
+	PPC_REG_DMRp0 = 133,
+	PPC_REG_DMRp1 = 134,
+	PPC_REG_DMRp2 = 135,
+	PPC_REG_DMRp3 = 136,
+	PPC_REG_F0 = 137,
+	PPC_REG_F1 = 138,
+	PPC_REG_F2 = 139,
+	PPC_REG_F3 = 140,
+	PPC_REG_F4 = 141,
+	PPC_REG_F5 = 142,
+	PPC_REG_F6 = 143,
+	PPC_REG_F7 = 144,
+	PPC_REG_F8 = 145,
+	PPC_REG_F9 = 146,
+	PPC_REG_F10 = 147,
+	PPC_REG_F11 = 148,
+	PPC_REG_F12 = 149,
+	PPC_REG_F13 = 150,
+	PPC_REG_F14 = 151,
+	PPC_REG_F15 = 152,
+	PPC_REG_F16 = 153,
+	PPC_REG_F17 = 154,
+	PPC_REG_F18 = 155,
+	PPC_REG_F19 = 156,
+	PPC_REG_F20 = 157,
+	PPC_REG_F21 = 158,
+	PPC_REG_F22 = 159,
+	PPC_REG_F23 = 160,
+	PPC_REG_F24 = 161,
+	PPC_REG_F25 = 162,
+	PPC_REG_F26 = 163,
+	PPC_REG_F27 = 164,
+	PPC_REG_F28 = 165,
+	PPC_REG_F29 = 166,
+	PPC_REG_F30 = 167,
+	PPC_REG_F31 = 168,
+	PPC_REG_FP8 = 169,
+	PPC_REG_LR8 = 170,
+	PPC_REG_QF0 = 171,
+	PPC_REG_QF1 = 172,
+	PPC_REG_QF2 = 173,
+	PPC_REG_QF3 = 174,
+	PPC_REG_QF4 = 175,
+	PPC_REG_QF5 = 176,
+	PPC_REG_QF6 = 177,
+	PPC_REG_QF7 = 178,
+	PPC_REG_QF8 = 179,
+	PPC_REG_QF9 = 180,
+	PPC_REG_QF10 = 181,
+	PPC_REG_QF11 = 182,
+	PPC_REG_QF12 = 183,
+	PPC_REG_QF13 = 184,
+	PPC_REG_QF14 = 185,
+	PPC_REG_QF15 = 186,
+	PPC_REG_QF16 = 187,
+	PPC_REG_QF17 = 188,
+	PPC_REG_QF18 = 189,
+	PPC_REG_QF19 = 190,
+	PPC_REG_QF20 = 191,
+	PPC_REG_QF21 = 192,
+	PPC_REG_QF22 = 193,
+	PPC_REG_QF23 = 194,
+	PPC_REG_QF24 = 195,
+	PPC_REG_QF25 = 196,
+	PPC_REG_QF26 = 197,
+	PPC_REG_QF27 = 198,
+	PPC_REG_QF28 = 199,
+	PPC_REG_QF29 = 200,
+	PPC_REG_QF30 = 201,
+	PPC_REG_QF31 = 202,
+	PPC_REG_R0 = 203,
+	PPC_REG_R1 = 204,
+	PPC_REG_R2 = 205,
+	PPC_REG_R3 = 206,
+	PPC_REG_R4 = 207,
+	PPC_REG_R5 = 208,
+	PPC_REG_R6 = 209,
+	PPC_REG_R7 = 210,
+	PPC_REG_R8 = 211,
+	PPC_REG_R9 = 212,
+	PPC_REG_R10 = 213,
+	PPC_REG_R11 = 214,
+	PPC_REG_R12 = 215,
+	PPC_REG_R13 = 216,
+	PPC_REG_R14 = 217,
+	PPC_REG_R15 = 218,
+	PPC_REG_R16 = 219,
+	PPC_REG_R17 = 220,
+	PPC_REG_R18 = 221,
+	PPC_REG_R19 = 222,
+	PPC_REG_R20 = 223,
+	PPC_REG_R21 = 224,
+	PPC_REG_R22 = 225,
+	PPC_REG_R23 = 226,
+	PPC_REG_R24 = 227,
+	PPC_REG_R25 = 228,
+	PPC_REG_R26 = 229,
+	PPC_REG_R27 = 230,
+	PPC_REG_R28 = 231,
+	PPC_REG_R29 = 232,
+	PPC_REG_R30 = 233,
+	PPC_REG_R31 = 234,
+	PPC_REG_S0 = 235,
+	PPC_REG_S1 = 236,
+	PPC_REG_S2 = 237,
+	PPC_REG_S3 = 238,
+	PPC_REG_S4 = 239,
+	PPC_REG_S5 = 240,
+	PPC_REG_S6 = 241,
+	PPC_REG_S7 = 242,
+	PPC_REG_S8 = 243,
+	PPC_REG_S9 = 244,
+	PPC_REG_S10 = 245,
+	PPC_REG_S11 = 246,
+	PPC_REG_S12 = 247,
+	PPC_REG_S13 = 248,
+	PPC_REG_S14 = 249,
+	PPC_REG_S15 = 250,
+	PPC_REG_S16 = 251,
+	PPC_REG_S17 = 252,
+	PPC_REG_S18 = 253,
+	PPC_REG_S19 = 254,
+	PPC_REG_S20 = 255,
+	PPC_REG_S21 = 256,
+	PPC_REG_S22 = 257,
+	PPC_REG_S23 = 258,
+	PPC_REG_S24 = 259,
+	PPC_REG_S25 = 260,
+	PPC_REG_S26 = 261,
+	PPC_REG_S27 = 262,
+	PPC_REG_S28 = 263,
+	PPC_REG_S29 = 264,
+	PPC_REG_S30 = 265,
+	PPC_REG_S31 = 266,
+	PPC_REG_UACC0 = 267,
+	PPC_REG_UACC1 = 268,
+	PPC_REG_UACC2 = 269,
+	PPC_REG_UACC3 = 270,
+	PPC_REG_UACC4 = 271,
+	PPC_REG_UACC5 = 272,
+	PPC_REG_UACC6 = 273,
+	PPC_REG_UACC7 = 274,
+	PPC_REG_V0 = 275,
+	PPC_REG_V1 = 276,
+	PPC_REG_V2 = 277,
+	PPC_REG_V3 = 278,
+	PPC_REG_V4 = 279,
+	PPC_REG_V5 = 280,
+	PPC_REG_V6 = 281,
+	PPC_REG_V7 = 282,
+	PPC_REG_V8 = 283,
+	PPC_REG_V9 = 284,
+	PPC_REG_V10 = 285,
+	PPC_REG_V11 = 286,
+	PPC_REG_V12 = 287,
+	PPC_REG_V13 = 288,
+	PPC_REG_V14 = 289,
+	PPC_REG_V15 = 290,
+	PPC_REG_V16 = 291,
+	PPC_REG_V17 = 292,
+	PPC_REG_V18 = 293,
+	PPC_REG_V19 = 294,
+	PPC_REG_V20 = 295,
+	PPC_REG_V21 = 296,
+	PPC_REG_V22 = 297,
+	PPC_REG_V23 = 298,
+	PPC_REG_V24 = 299,
+	PPC_REG_V25 = 300,
+	PPC_REG_V26 = 301,
+	PPC_REG_V27 = 302,
+	PPC_REG_V28 = 303,
+	PPC_REG_V29 = 304,
+	PPC_REG_V30 = 305,
+	PPC_REG_V31 = 306,
+	PPC_REG_VF0 = 307,
+	PPC_REG_VF1 = 308,
+	PPC_REG_VF2 = 309,
+	PPC_REG_VF3 = 310,
+	PPC_REG_VF4 = 311,
+	PPC_REG_VF5 = 312,
+	PPC_REG_VF6 = 313,
+	PPC_REG_VF7 = 314,
+	PPC_REG_VF8 = 315,
+	PPC_REG_VF9 = 316,
+	PPC_REG_VF10 = 317,
+	PPC_REG_VF11 = 318,
+	PPC_REG_VF12 = 319,
+	PPC_REG_VF13 = 320,
+	PPC_REG_VF14 = 321,
+	PPC_REG_VF15 = 322,
+	PPC_REG_VF16 = 323,
+	PPC_REG_VF17 = 324,
+	PPC_REG_VF18 = 325,
+	PPC_REG_VF19 = 326,
+	PPC_REG_VF20 = 327,
+	PPC_REG_VF21 = 328,
+	PPC_REG_VF22 = 329,
+	PPC_REG_VF23 = 330,
+	PPC_REG_VF24 = 331,
+	PPC_REG_VF25 = 332,
+	PPC_REG_VF26 = 333,
+	PPC_REG_VF27 = 334,
+	PPC_REG_VF28 = 335,
+	PPC_REG_VF29 = 336,
+	PPC_REG_VF30 = 337,
+	PPC_REG_VF31 = 338,
+	PPC_REG_VSL0 = 339,
+	PPC_REG_VSL1 = 340,
+	PPC_REG_VSL2 = 341,
+	PPC_REG_VSL3 = 342,
+	PPC_REG_VSL4 = 343,
+	PPC_REG_VSL5 = 344,
+	PPC_REG_VSL6 = 345,
+	PPC_REG_VSL7 = 346,
+	PPC_REG_VSL8 = 347,
+	PPC_REG_VSL9 = 348,
+	PPC_REG_VSL10 = 349,
+	PPC_REG_VSL11 = 350,
+	PPC_REG_VSL12 = 351,
+	PPC_REG_VSL13 = 352,
+	PPC_REG_VSL14 = 353,
+	PPC_REG_VSL15 = 354,
+	PPC_REG_VSL16 = 355,
+	PPC_REG_VSL17 = 356,
+	PPC_REG_VSL18 = 357,
+	PPC_REG_VSL19 = 358,
+	PPC_REG_VSL20 = 359,
+	PPC_REG_VSL21 = 360,
+	PPC_REG_VSL22 = 361,
+	PPC_REG_VSL23 = 362,
+	PPC_REG_VSL24 = 363,
+	PPC_REG_VSL25 = 364,
+	PPC_REG_VSL26 = 365,
+	PPC_REG_VSL27 = 366,
+	PPC_REG_VSL28 = 367,
+	PPC_REG_VSL29 = 368,
+	PPC_REG_VSL30 = 369,
+	PPC_REG_VSL31 = 370,
+	PPC_REG_VSRp0 = 371,
+	PPC_REG_VSRp1 = 372,
+	PPC_REG_VSRp2 = 373,
+	PPC_REG_VSRp3 = 374,
+	PPC_REG_VSRp4 = 375,
+	PPC_REG_VSRp5 = 376,
+	PPC_REG_VSRp6 = 377,
+	PPC_REG_VSRp7 = 378,
+	PPC_REG_VSRp8 = 379,
+	PPC_REG_VSRp9 = 380,
+	PPC_REG_VSRp10 = 381,
+	PPC_REG_VSRp11 = 382,
+	PPC_REG_VSRp12 = 383,
+	PPC_REG_VSRp13 = 384,
+	PPC_REG_VSRp14 = 385,
+	PPC_REG_VSRp15 = 386,
+	PPC_REG_VSRp16 = 387,
+	PPC_REG_VSRp17 = 388,
+	PPC_REG_VSRp18 = 389,
+	PPC_REG_VSRp19 = 390,
+	PPC_REG_VSRp20 = 391,
+	PPC_REG_VSRp21 = 392,
+	PPC_REG_VSRp22 = 393,
+	PPC_REG_VSRp23 = 394,
+	PPC_REG_VSRp24 = 395,
+	PPC_REG_VSRp25 = 396,
+	PPC_REG_VSRp26 = 397,
+	PPC_REG_VSRp27 = 398,
+	PPC_REG_VSRp28 = 399,
+	PPC_REG_VSRp29 = 400,
+	PPC_REG_VSRp30 = 401,
+	PPC_REG_VSRp31 = 402,
+	PPC_REG_VSX32 = 403,
+	PPC_REG_VSX33 = 404,
+	PPC_REG_VSX34 = 405,
+	PPC_REG_VSX35 = 406,
+	PPC_REG_VSX36 = 407,
+	PPC_REG_VSX37 = 408,
+	PPC_REG_VSX38 = 409,
+	PPC_REG_VSX39 = 410,
+	PPC_REG_VSX40 = 411,
+	PPC_REG_VSX41 = 412,
+	PPC_REG_VSX42 = 413,
+	PPC_REG_VSX43 = 414,
+	PPC_REG_VSX44 = 415,
+	PPC_REG_VSX45 = 416,
+	PPC_REG_VSX46 = 417,
+	PPC_REG_VSX47 = 418,
+	PPC_REG_VSX48 = 419,
+	PPC_REG_VSX49 = 420,
+	PPC_REG_VSX50 = 421,
+	PPC_REG_VSX51 = 422,
+	PPC_REG_VSX52 = 423,
+	PPC_REG_VSX53 = 424,
+	PPC_REG_VSX54 = 425,
+	PPC_REG_VSX55 = 426,
+	PPC_REG_VSX56 = 427,
+	PPC_REG_VSX57 = 428,
+	PPC_REG_VSX58 = 429,
+	PPC_REG_VSX59 = 430,
+	PPC_REG_VSX60 = 431,
+	PPC_REG_VSX61 = 432,
+	PPC_REG_VSX62 = 433,
+	PPC_REG_VSX63 = 434,
+	PPC_REG_WACC0 = 435,
+	PPC_REG_WACC1 = 436,
+	PPC_REG_WACC2 = 437,
+	PPC_REG_WACC3 = 438,
+	PPC_REG_WACC4 = 439,
+	PPC_REG_WACC5 = 440,
+	PPC_REG_WACC6 = 441,
+	PPC_REG_WACC7 = 442,
+	PPC_REG_WACC_HI0 = 443,
+	PPC_REG_WACC_HI1 = 444,
+	PPC_REG_WACC_HI2 = 445,
+	PPC_REG_WACC_HI3 = 446,
+	PPC_REG_WACC_HI4 = 447,
+	PPC_REG_WACC_HI5 = 448,
+	PPC_REG_WACC_HI6 = 449,
+	PPC_REG_WACC_HI7 = 450,
+	PPC_REG_X0 = 451,
+	PPC_REG_X1 = 452,
+	PPC_REG_X2 = 453,
+	PPC_REG_X3 = 454,
+	PPC_REG_X4 = 455,
+	PPC_REG_X5 = 456,
+	PPC_REG_X6 = 457,
+	PPC_REG_X7 = 458,
+	PPC_REG_X8 = 459,
+	PPC_REG_X9 = 460,
+	PPC_REG_X10 = 461,
+	PPC_REG_X11 = 462,
+	PPC_REG_X12 = 463,
+	PPC_REG_X13 = 464,
+	PPC_REG_X14 = 465,
+	PPC_REG_X15 = 466,
+	PPC_REG_X16 = 467,
+	PPC_REG_X17 = 468,
+	PPC_REG_X18 = 469,
+	PPC_REG_X19 = 470,
+	PPC_REG_X20 = 471,
+	PPC_REG_X21 = 472,
+	PPC_REG_X22 = 473,
+	PPC_REG_X23 = 474,
+	PPC_REG_X24 = 475,
+	PPC_REG_X25 = 476,
+	PPC_REG_X26 = 477,
+	PPC_REG_X27 = 478,
+	PPC_REG_X28 = 479,
+	PPC_REG_X29 = 480,
+	PPC_REG_X30 = 481,
+	PPC_REG_X31 = 482,
+	PPC_REG_ZERO8 = 483,
+	PPC_REG_CR0EQ = 484,
+	PPC_REG_CR1EQ = 485,
+	PPC_REG_CR2EQ = 486,
+	PPC_REG_CR3EQ = 487,
+	PPC_REG_CR4EQ = 488,
+	PPC_REG_CR5EQ = 489,
+	PPC_REG_CR6EQ = 490,
+	PPC_REG_CR7EQ = 491,
+	PPC_REG_CR0GT = 492,
+	PPC_REG_CR1GT = 493,
+	PPC_REG_CR2GT = 494,
+	PPC_REG_CR3GT = 495,
+	PPC_REG_CR4GT = 496,
+	PPC_REG_CR5GT = 497,
+	PPC_REG_CR6GT = 498,
+	PPC_REG_CR7GT = 499,
+	PPC_REG_CR0LT = 500,
+	PPC_REG_CR1LT = 501,
+	PPC_REG_CR2LT = 502,
+	PPC_REG_CR3LT = 503,
+	PPC_REG_CR4LT = 504,
+	PPC_REG_CR5LT = 505,
+	PPC_REG_CR6LT = 506,
+	PPC_REG_CR7LT = 507,
+	PPC_REG_CR0UN = 508,
+	PPC_REG_CR1UN = 509,
+	PPC_REG_CR2UN = 510,
+	PPC_REG_CR3UN = 511,
+	PPC_REG_CR4UN = 512,
+	PPC_REG_CR5UN = 513,
+	PPC_REG_CR6UN = 514,
+	PPC_REG_CR7UN = 515,
+	PPC_REG_G8p0 = 516,
+	PPC_REG_G8p1 = 517,
+	PPC_REG_G8p2 = 518,
+	PPC_REG_G8p3 = 519,
+	PPC_REG_G8p4 = 520,
+	PPC_REG_G8p5 = 521,
+	PPC_REG_G8p6 = 522,
+	PPC_REG_G8p7 = 523,
+	PPC_REG_G8p8 = 524,
+	PPC_REG_G8p9 = 525,
+	PPC_REG_G8p10 = 526,
+	PPC_REG_G8p11 = 527,
+	PPC_REG_G8p12 = 528,
+	PPC_REG_G8p13 = 529,
+	PPC_REG_G8p14 = 530,
+	PPC_REG_G8p15 = 531,
+	PPC_REG_ENDING, // 532
 
-	PPC_REG_CR0EQ = 312,
-	PPC_REG_CR1EQ = 313,
-	PPC_REG_CR2EQ = 314,
-	PPC_REG_CR3EQ = 315,
-	PPC_REG_CR4EQ = 316,
-	PPC_REG_CR5EQ = 317,
-	PPC_REG_CR6EQ = 318,
-	PPC_REG_CR7EQ = 319,
-	PPC_REG_CR0GT = 320,
-	PPC_REG_CR1GT = 321,
-	PPC_REG_CR2GT = 322,
-	PPC_REG_CR3GT = 323,
-	PPC_REG_CR4GT = 324,
-	PPC_REG_CR5GT = 325,
-	PPC_REG_CR6GT = 326,
-	PPC_REG_CR7GT = 327,
-	PPC_REG_CR0LT = 328,
-	PPC_REG_CR1LT = 329,
-	PPC_REG_CR2LT = 330,
-	PPC_REG_CR3LT = 331,
-	PPC_REG_CR4LT = 332,
-	PPC_REG_CR5LT = 333,
-	PPC_REG_CR6LT = 334,
-	PPC_REG_CR7LT = 335,
-	PPC_REG_CR0UN = 336,
-	PPC_REG_CR1UN = 337,
-	PPC_REG_CR2UN = 338,
-	PPC_REG_CR3UN = 339,
-	PPC_REG_CR4UN = 340,
-	PPC_REG_CR5UN = 341,
-	PPC_REG_CR6UN = 342,
-	PPC_REG_CR7UN = 343,
-
-	PPC_REG_ENDING,   // <-- mark the end of the list of registers
+	// clang-format on
+	// generated content <PPCGenCSRegEnum.inc> end
 } ppc_reg;
 
 /// Instruction's operand referring to memory
@@ -302,32 +739,77 @@ typedef enum ppc_reg {
 typedef struct ppc_op_mem {
 	ppc_reg base;	///< base register
 	int32_t disp;	///< displacement/offset value
+	ppc_reg offset; ///< Offset register
 } ppc_op_mem;
-
-typedef struct ppc_op_crx {
-	unsigned int scale;
-	ppc_reg reg;
-	ppc_bc cond;
-} ppc_op_crx;
 
 /// Instruction operand
 typedef struct cs_ppc_op {
 	ppc_op_type type;	///< operand type
 	union {
 		ppc_reg reg;	///< register value for REG operand
-		int64_t imm;		///< immediate value for IMM operand
-		ppc_op_mem mem;		///< base/disp value for MEM operand
-		ppc_op_crx crx;		///< operand with condition register
+		int64_t imm;	///< immediate value for IMM operand
+		ppc_op_mem mem; ///< base/disp value for MEM operand
 	};
+	cs_ac_type access;
 } cs_ppc_op;
+
+typedef struct {
+	uint8_t bo; ///< BO field of branch condition. UINT8_MAX if invalid.
+	uint8_t bi; ///< BI field of branch condition. UINT8_MAX if invalid.
+	ppc_cr_bit crX_bit; ///< CR field bit to test.
+	ppc_reg crX;	    ///< The CR field accessed.
+	ppc_br_hint hint;   ///< The encoded hint.
+	ppc_pred pred_cr;   ///< CR-bit branch predicate
+	ppc_pred pred_ctr;  ///< CTR branch predicate
+	ppc_bh bh;	    ///< The BH field hint if any is present.
+} ppc_bc;
+
+/// Returns true if the CTR is decremented.
+/// False otherwise.
+static inline bool cs_ppc_bc_decr_ctr(uint8_t bo)
+{
+	if (bo != UINT8_MAX && (bo & PPC_BO_DECR_CTR) == 0)
+		return true;
+	return false;
+}
+
+/// Returns true if the CTR is compared to 0
+/// Implies that the CTR is decremented at all.
+/// False otherwise.
+static inline bool cs_ppc_bc_tests_ctr_is_zero(uint8_t bo)
+{
+	if (bo != UINT8_MAX && (bo & PPC_BO_CTR_CMP) != 0 &&
+	    cs_ppc_bc_decr_ctr(bo))
+		return true;
+	return false;
+}
+
+/// Returns true if a CR bit is tested.
+/// False otherwise.
+static inline bool cs_ppc_bc_cr_is_tested(uint8_t bo)
+{
+	if (bo != UINT8_MAX && (bo & PPC_BO_TEST_CR) == 0)
+		return true;
+	return false;
+}
+
+/// Returns true if a CR bit is compared to 1.
+/// Implies that the CR field is tested at all.
+/// False otherwise.
+static inline bool cs_ppc_bc_cr_bit_is_one(uint8_t bo)
+{
+	if (bo != UINT8_MAX && (bo & PPC_BO_CR_CMP) != 0 &&
+	    cs_ppc_bc_cr_is_tested(bo))
+		return true;
+	return false;
+}
+
+#define PPC_NUM_OPS 8
 
 /// Instruction structure
 typedef struct cs_ppc {
 	/// branch code for branch instructions
 	ppc_bc bc;
-
-	/// branch hint for branch instructions
-	ppc_bh bh;
 
 	/// if update_cr0 = True, then this 'dot' insn updates CR0
 	bool update_cr0;
@@ -335,33 +817,76 @@ typedef struct cs_ppc {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_ppc_op operands[8]; ///< operands for this instruction.
+	cs_ppc_op operands[PPC_NUM_OPS]; ///< operands for this instruction.
 } cs_ppc;
 
 /// PPC instruction
 typedef enum ppc_insn {
-	PPC_INS_INVALID = 0,
+	// generated content <PPCGenCSInsnEnum.inc> begin
+	// clang-format off
 
+	PPC_INS_INVALID,
+	PPC_INS_CLRLSLDI,
+	PPC_INS_CLRLSLWI,
+	PPC_INS_CLRRDI,
+	PPC_INS_CLRRWI,
+	PPC_INS_DCBFL,
+	PPC_INS_DCBFLP,
+	PPC_INS_DCBFPS,
+	PPC_INS_DCBF,
+	PPC_INS_DCBSTPS,
+	PPC_INS_DCBTCT,
+	PPC_INS_DCBTDS,
+	PPC_INS_DCBTSTCT,
+	PPC_INS_DCBTSTDS,
+	PPC_INS_DCBTSTT,
+	PPC_INS_DCBTST,
+	PPC_INS_DCBTT,
+	PPC_INS_DCBT,
+	PPC_INS_EXTLDI,
+	PPC_INS_EXTLWI,
+	PPC_INS_EXTRDI,
+	PPC_INS_EXTRWI,
+	PPC_INS_INSLWI,
+	PPC_INS_INSRDI,
+	PPC_INS_INSRWI,
+	PPC_INS_LA,
+	PPC_INS_RLWIMI,
+	PPC_INS_RLWINM,
+	PPC_INS_RLWNM,
+	PPC_INS_ROTRDI,
+	PPC_INS_ROTRWI,
+	PPC_INS_SLDI,
+	PPC_INS_SLWI,
+	PPC_INS_SRDI,
+	PPC_INS_SRWI,
+	PPC_INS_SUBI,
+	PPC_INS_SUBIC,
+	PPC_INS_SUBIS,
+	PPC_INS_SUBPCIS,
 	PPC_INS_ADD,
+	PPC_INS_ADDO,
 	PPC_INS_ADDC,
+	PPC_INS_ADDCO,
 	PPC_INS_ADDE,
+	PPC_INS_ADDEO,
+	PPC_INS_ADDEX,
 	PPC_INS_ADDI,
 	PPC_INS_ADDIC,
 	PPC_INS_ADDIS,
 	PPC_INS_ADDME,
+	PPC_INS_ADDMEO,
 	PPC_INS_ADDPCIS,
 	PPC_INS_ADDZE,
+	PPC_INS_ADDZEO,
 	PPC_INS_AND,
 	PPC_INS_ANDC,
-	PPC_INS_ANDI,
 	PPC_INS_ANDIS,
+	PPC_INS_ANDI,
 	PPC_INS_ATTN,
 	PPC_INS_B,
 	PPC_INS_BA,
-	PPC_INS_BC,
-	PPC_INS_BCA,
-	PPC_INS_BCCTR,
-	PPC_INS_BCCTRL,
+	PPC_INS_BCDADD,
 	PPC_INS_BCDCFN,
 	PPC_INS_BCDCFSQ,
 	PPC_INS_BCDCFZ,
@@ -369,246 +894,90 @@ typedef enum ppc_insn {
 	PPC_INS_BCDCTN,
 	PPC_INS_BCDCTSQ,
 	PPC_INS_BCDCTZ,
-	PPC_INS_BCDS,
 	PPC_INS_BCDSETSGN,
 	PPC_INS_BCDSR,
+	PPC_INS_BCDSUB,
+	PPC_INS_BCDS,
 	PPC_INS_BCDTRUNC,
 	PPC_INS_BCDUS,
 	PPC_INS_BCDUTRUNC,
-	PPC_INS_BCL,
-	PPC_INS_BCLA,
-	PPC_INS_BCLR,
-	PPC_INS_BCLRL,
 	PPC_INS_BCTR,
 	PPC_INS_BCTRL,
-	PPC_INS_BDNZ,
-	PPC_INS_BDNZA,
-	PPC_INS_BDNZF,
-	PPC_INS_BDNZFA,
-	PPC_INS_BDNZFL,
-	PPC_INS_BDNZFLA,
-	PPC_INS_BDNZFLR,
-	PPC_INS_BDNZFLRL,
-	PPC_INS_BDNZL,
-	PPC_INS_BDNZLA,
-	PPC_INS_BDNZLR,
-	PPC_INS_BDNZLRL,
-	PPC_INS_BDNZT,
-	PPC_INS_BDNZTA,
-	PPC_INS_BDNZTL,
-	PPC_INS_BDNZTLA,
-	PPC_INS_BDNZTLR,
-	PPC_INS_BDNZTLRL,
-	PPC_INS_BDZ,
-	PPC_INS_BDZA,
-	PPC_INS_BDZF,
-	PPC_INS_BDZFA,
-	PPC_INS_BDZFL,
-	PPC_INS_BDZFLA,
-	PPC_INS_BDZFLR,
-	PPC_INS_BDZFLRL,
-	PPC_INS_BDZL,
-	PPC_INS_BDZLA,
-	PPC_INS_BDZLR,
-	PPC_INS_BDZLRL,
-	PPC_INS_BDZT,
-	PPC_INS_BDZTA,
-	PPC_INS_BDZTL,
-	PPC_INS_BDZTLA,
-	PPC_INS_BDZTLR,
-	PPC_INS_BDZTLRL,
-	PPC_INS_BEQ,
-	PPC_INS_BEQA,
-	PPC_INS_BEQCTR,
-	PPC_INS_BEQCTRL,
-	PPC_INS_BEQL,
-	PPC_INS_BEQLA,
-	PPC_INS_BEQLR,
-	PPC_INS_BEQLRL,
-	PPC_INS_BF,
-	PPC_INS_BFA,
-	PPC_INS_BFCTR,
-	PPC_INS_BFCTRL,
-	PPC_INS_BFL,
-	PPC_INS_BFLA,
-	PPC_INS_BFLR,
-	PPC_INS_BFLRL,
-	PPC_INS_BGE,
-	PPC_INS_BGEA,
-	PPC_INS_BGECTR,
-	PPC_INS_BGECTRL,
-	PPC_INS_BGEL,
-	PPC_INS_BGELA,
-	PPC_INS_BGELR,
-	PPC_INS_BGELRL,
-	PPC_INS_BGT,
-	PPC_INS_BGTA,
-	PPC_INS_BGTCTR,
-	PPC_INS_BGTCTRL,
-	PPC_INS_BGTL,
-	PPC_INS_BGTLA,
-	PPC_INS_BGTLR,
-	PPC_INS_BGTLRL,
 	PPC_INS_BL,
 	PPC_INS_BLA,
-	PPC_INS_BLE,
-	PPC_INS_BLEA,
-	PPC_INS_BLECTR,
-	PPC_INS_BLECTRL,
-	PPC_INS_BLEL,
-	PPC_INS_BLELA,
-	PPC_INS_BLELR,
-	PPC_INS_BLELRL,
 	PPC_INS_BLR,
 	PPC_INS_BLRL,
-	PPC_INS_BLT,
-	PPC_INS_BLTA,
-	PPC_INS_BLTCTR,
-	PPC_INS_BLTCTRL,
-	PPC_INS_BLTL,
-	PPC_INS_BLTLA,
-	PPC_INS_BLTLR,
-	PPC_INS_BLTLRL,
-	PPC_INS_BNE,
-	PPC_INS_BNEA,
-	PPC_INS_BNECTR,
-	PPC_INS_BNECTRL,
-	PPC_INS_BNEL,
-	PPC_INS_BNELA,
-	PPC_INS_BNELR,
-	PPC_INS_BNELRL,
-	PPC_INS_BNG,
-	PPC_INS_BNGA,
-	PPC_INS_BNGCTR,
-	PPC_INS_BNGCTRL,
-	PPC_INS_BNGL,
-	PPC_INS_BNGLA,
-	PPC_INS_BNGLR,
-	PPC_INS_BNGLRL,
-	PPC_INS_BNL,
-	PPC_INS_BNLA,
-	PPC_INS_BNLCTR,
-	PPC_INS_BNLCTRL,
-	PPC_INS_BNLL,
-	PPC_INS_BNLLA,
-	PPC_INS_BNLLR,
-	PPC_INS_BNLLRL,
-	PPC_INS_BNS,
-	PPC_INS_BNSA,
-	PPC_INS_BNSCTR,
-	PPC_INS_BNSCTRL,
-	PPC_INS_BNSL,
-	PPC_INS_BNSLA,
-	PPC_INS_BNSLR,
-	PPC_INS_BNSLRL,
-	PPC_INS_BNU,
-	PPC_INS_BNUA,
-	PPC_INS_BNUCTR,
-	PPC_INS_BNUCTRL,
-	PPC_INS_BNUL,
-	PPC_INS_BNULA,
-	PPC_INS_BNULR,
-	PPC_INS_BNULRL,
 	PPC_INS_BPERMD,
+	PPC_INS_BRD,
+	PPC_INS_BRH,
 	PPC_INS_BRINC,
-	PPC_INS_BSO,
-	PPC_INS_BSOA,
-	PPC_INS_BSOCTR,
-	PPC_INS_BSOCTRL,
-	PPC_INS_BSOL,
-	PPC_INS_BSOLA,
-	PPC_INS_BSOLR,
-	PPC_INS_BSOLRL,
-	PPC_INS_BT,
-	PPC_INS_BTA,
-	PPC_INS_BTCTR,
-	PPC_INS_BTCTRL,
-	PPC_INS_BTL,
-	PPC_INS_BTLA,
-	PPC_INS_BTLR,
-	PPC_INS_BTLRL,
-	PPC_INS_BUN,
-	PPC_INS_BUNA,
-	PPC_INS_BUNCTR,
-	PPC_INS_BUNCTRL,
-	PPC_INS_BUNL,
-	PPC_INS_BUNLA,
-	PPC_INS_BUNLR,
-	PPC_INS_BUNLRL,
+	PPC_INS_BRW,
+	PPC_INS_CFUGED,
 	PPC_INS_CLRBHRB,
-	PPC_INS_CLRLDI,
-	PPC_INS_CLRLSLDI,
-	PPC_INS_CLRLSLWI,
-	PPC_INS_CLRLWI,
-	PPC_INS_CLRRDI,
-	PPC_INS_CLRRWI,
-	PPC_INS_CMP,
 	PPC_INS_CMPB,
 	PPC_INS_CMPD,
 	PPC_INS_CMPDI,
 	PPC_INS_CMPEQB,
-	PPC_INS_CMPI,
-	PPC_INS_CMPL,
 	PPC_INS_CMPLD,
 	PPC_INS_CMPLDI,
-	PPC_INS_CMPLI,
 	PPC_INS_CMPLW,
 	PPC_INS_CMPLWI,
 	PPC_INS_CMPRB,
 	PPC_INS_CMPW,
 	PPC_INS_CMPWI,
 	PPC_INS_CNTLZD,
+	PPC_INS_CNTLZDM,
 	PPC_INS_CNTLZW,
 	PPC_INS_CNTTZD,
+	PPC_INS_CNTTZDM,
 	PPC_INS_CNTTZW,
+	PPC_INS_CPABORT,
 	PPC_INS_COPY,
-	PPC_INS_COPY_FIRST,
-	PPC_INS_CP_ABORT,
+	PPC_INS_PASTE,
 	PPC_INS_CRAND,
 	PPC_INS_CRANDC,
-	PPC_INS_CRCLR,
 	PPC_INS_CREQV,
-	PPC_INS_CRMOVE,
 	PPC_INS_CRNAND,
 	PPC_INS_CRNOR,
-	PPC_INS_CRNOT,
 	PPC_INS_CROR,
 	PPC_INS_CRORC,
-	PPC_INS_CRSET,
 	PPC_INS_CRXOR,
 	PPC_INS_DARN,
 	PPC_INS_DCBA,
-	PPC_INS_DCBF,
 	PPC_INS_DCBFEP,
-	PPC_INS_DCBFL,
-	PPC_INS_DCBFLP,
 	PPC_INS_DCBI,
 	PPC_INS_DCBST,
 	PPC_INS_DCBSTEP,
-	PPC_INS_DCBT,
-	PPC_INS_DCBTCT,
-	PPC_INS_DCBTDS,
 	PPC_INS_DCBTEP,
-	PPC_INS_DCBTST,
-	PPC_INS_DCBTSTCT,
-	PPC_INS_DCBTSTDS,
 	PPC_INS_DCBTSTEP,
-	PPC_INS_DCBTSTT,
-	PPC_INS_DCBTT,
 	PPC_INS_DCBZ,
 	PPC_INS_DCBZEP,
 	PPC_INS_DCBZL,
 	PPC_INS_DCBZLEP,
 	PPC_INS_DCCCI,
-	PPC_INS_DCI,
 	PPC_INS_DIVD,
 	PPC_INS_DIVDE,
+	PPC_INS_DIVDEO,
 	PPC_INS_DIVDEU,
+	PPC_INS_DIVDEUO,
+	PPC_INS_DIVDO,
 	PPC_INS_DIVDU,
+	PPC_INS_DIVDUO,
 	PPC_INS_DIVW,
 	PPC_INS_DIVWE,
+	PPC_INS_DIVWEO,
 	PPC_INS_DIVWEU,
+	PPC_INS_DIVWEUO,
+	PPC_INS_DIVWO,
 	PPC_INS_DIVWU,
+	PPC_INS_DIVWUO,
+	PPC_INS_DMMR,
+	PPC_INS_DMSETDMRZ,
+	PPC_INS_DMXOR,
+	PPC_INS_DMXXEXTFDMR256,
+	PPC_INS_DMXXEXTFDMR512,
+	PPC_INS_DMXXINSTFDMR256,
+	PPC_INS_DMXXINSTFDMR512,
 	PPC_INS_DSS,
 	PPC_INS_DSSALL,
 	PPC_INS_DST,
@@ -667,7 +1036,6 @@ typedef enum ppc_insn {
 	PPC_INS_EFSTSTEQ,
 	PPC_INS_EFSTSTGT,
 	PPC_INS_EFSTSTLT,
-	PPC_INS_EIEIO,
 	PPC_INS_EQV,
 	PPC_INS_EVABS,
 	PPC_INS_EVADDIW,
@@ -862,14 +1230,11 @@ typedef enum ppc_insn {
 	PPC_INS_EVSUBFW,
 	PPC_INS_EVSUBIFW,
 	PPC_INS_EVXOR,
-	PPC_INS_EXTLDI,
-	PPC_INS_EXTLWI,
-	PPC_INS_EXTRDI,
-	PPC_INS_EXTRWI,
 	PPC_INS_EXTSB,
 	PPC_INS_EXTSH,
 	PPC_INS_EXTSW,
 	PPC_INS_EXTSWSLI,
+	PPC_INS_EIEIO,
 	PPC_INS_FABS,
 	PPC_INS_FADD,
 	PPC_INS_FADDS,
@@ -877,6 +1242,7 @@ typedef enum ppc_insn {
 	PPC_INS_FCFIDS,
 	PPC_INS_FCFIDU,
 	PPC_INS_FCFIDUS,
+	PPC_INS_FCMPO,
 	PPC_INS_FCMPU,
 	PPC_INS_FCPSGN,
 	PPC_INS_FCTID,
@@ -918,6 +1284,10 @@ typedef enum ppc_insn {
 	PPC_INS_FSUBS,
 	PPC_INS_FTDIV,
 	PPC_INS_FTSQRT,
+	PPC_INS_HASHCHK,
+	PPC_INS_HASHCHKP,
+	PPC_INS_HASHST,
+	PPC_INS_HASHSTP,
 	PPC_INS_HRFID,
 	PPC_INS_ICBI,
 	PPC_INS_ICBIEP,
@@ -926,13 +1296,8 @@ typedef enum ppc_insn {
 	PPC_INS_ICBT,
 	PPC_INS_ICBTLS,
 	PPC_INS_ICCCI,
-	PPC_INS_ICI,
-	PPC_INS_INSLWI,
-	PPC_INS_INSRDI,
-	PPC_INS_INSRWI,
 	PPC_INS_ISEL,
 	PPC_INS_ISYNC,
-	PPC_INS_LA,
 	PPC_INS_LBARX,
 	PPC_INS_LBEPX,
 	PPC_INS_LBZ,
@@ -945,7 +1310,6 @@ typedef enum ppc_insn {
 	PPC_INS_LDAT,
 	PPC_INS_LDBRX,
 	PPC_INS_LDCIX,
-	PPC_INS_LDMX,
 	PPC_INS_LDU,
 	PPC_INS_LDUX,
 	PPC_INS_LDX,
@@ -972,10 +1336,9 @@ typedef enum ppc_insn {
 	PPC_INS_LHZU,
 	PPC_INS_LHZUX,
 	PPC_INS_LHZX,
-	PPC_INS_LI,
-	PPC_INS_LIS,
 	PPC_INS_LMW,
-	PPC_INS_LNIA,
+	PPC_INS_LQ,
+	PPC_INS_LQARX,
 	PPC_INS_LSWI,
 	PPC_INS_LVEBX,
 	PPC_INS_LVEHX,
@@ -991,7 +1354,6 @@ typedef enum ppc_insn {
 	PPC_INS_LWAX,
 	PPC_INS_LWBRX,
 	PPC_INS_LWEPX,
-	PPC_INS_LWSYNC,
 	PPC_INS_LWZ,
 	PPC_INS_LWZCIX,
 	PPC_INS_LWZU,
@@ -1010,8 +1372,19 @@ typedef enum ppc_insn {
 	PPC_INS_LXVD2X,
 	PPC_INS_LXVDSX,
 	PPC_INS_LXVH8X,
+	PPC_INS_LXVKQ,
 	PPC_INS_LXVL,
 	PPC_INS_LXVLL,
+	PPC_INS_LXVP,
+	PPC_INS_LXVPRL,
+	PPC_INS_LXVPRLL,
+	PPC_INS_LXVPX,
+	PPC_INS_LXVRBX,
+	PPC_INS_LXVRDX,
+	PPC_INS_LXVRHX,
+	PPC_INS_LXVRL,
+	PPC_INS_LXVRLL,
+	PPC_INS_LXVRWX,
 	PPC_INS_LXVW4X,
 	PPC_INS_LXVWSX,
 	PPC_INS_LXVX,
@@ -1022,31 +1395,10 @@ typedef enum ppc_insn {
 	PPC_INS_MCRF,
 	PPC_INS_MCRFS,
 	PPC_INS_MCRXRX,
-	PPC_INS_MFAMR,
-	PPC_INS_MFASR,
 	PPC_INS_MFBHRBE,
-	PPC_INS_MFBR0,
-	PPC_INS_MFBR1,
-	PPC_INS_MFBR2,
-	PPC_INS_MFBR3,
-	PPC_INS_MFBR4,
-	PPC_INS_MFBR5,
-	PPC_INS_MFBR6,
-	PPC_INS_MFBR7,
-	PPC_INS_MFCFAR,
 	PPC_INS_MFCR,
 	PPC_INS_MFCTR,
-	PPC_INS_MFDAR,
-	PPC_INS_MFDBATL,
-	PPC_INS_MFDBATU,
-	PPC_INS_MFDCCR,
 	PPC_INS_MFDCR,
-	PPC_INS_MFDEAR,
-	PPC_INS_MFDEC,
-	PPC_INS_MFDSCR,
-	PPC_INS_MFDSISR,
-	PPC_INS_MFESR,
-	PPC_INS_MFFPRD,
 	PPC_INS_MFFS,
 	PPC_INS_MFFSCDRN,
 	PPC_INS_MFFSCDRNI,
@@ -1054,163 +1406,178 @@ typedef enum ppc_insn {
 	PPC_INS_MFFSCRN,
 	PPC_INS_MFFSCRNI,
 	PPC_INS_MFFSL,
-	PPC_INS_MFIBATL,
-	PPC_INS_MFIBATU,
-	PPC_INS_MFICCR,
 	PPC_INS_MFLR,
 	PPC_INS_MFMSR,
 	PPC_INS_MFOCRF,
-	PPC_INS_MFPID,
 	PPC_INS_MFPMR,
-	PPC_INS_MFPVR,
-	PPC_INS_MFRTCL,
-	PPC_INS_MFRTCU,
-	PPC_INS_MFSDR1,
-	PPC_INS_MFSPEFSCR,
 	PPC_INS_MFSPR,
-	PPC_INS_MFSPRG,
-	PPC_INS_MFSPRG0,
-	PPC_INS_MFSPRG1,
-	PPC_INS_MFSPRG2,
-	PPC_INS_MFSPRG3,
-	PPC_INS_MFSPRG4,
-	PPC_INS_MFSPRG5,
-	PPC_INS_MFSPRG6,
-	PPC_INS_MFSPRG7,
 	PPC_INS_MFSR,
 	PPC_INS_MFSRIN,
-	PPC_INS_MFSRR0,
-	PPC_INS_MFSRR1,
-	PPC_INS_MFSRR2,
-	PPC_INS_MFSRR3,
 	PPC_INS_MFTB,
-	PPC_INS_MFTBHI,
-	PPC_INS_MFTBL,
-	PPC_INS_MFTBLO,
-	PPC_INS_MFTBU,
-	PPC_INS_MFTCR,
-	PPC_INS_MFVRD,
-	PPC_INS_MFVRSAVE,
 	PPC_INS_MFVSCR,
 	PPC_INS_MFVSRD,
 	PPC_INS_MFVSRLD,
 	PPC_INS_MFVSRWZ,
-	PPC_INS_MFXER,
 	PPC_INS_MODSD,
 	PPC_INS_MODSW,
 	PPC_INS_MODUD,
 	PPC_INS_MODUW,
-	PPC_INS_MR,
 	PPC_INS_MSGSYNC,
-	PPC_INS_MSYNC,
-	PPC_INS_MTAMR,
-	PPC_INS_MTASR,
-	PPC_INS_MTBR0,
-	PPC_INS_MTBR1,
-	PPC_INS_MTBR2,
-	PPC_INS_MTBR3,
-	PPC_INS_MTBR4,
-	PPC_INS_MTBR5,
-	PPC_INS_MTBR6,
-	PPC_INS_MTBR7,
-	PPC_INS_MTCFAR,
-	PPC_INS_MTCR,
 	PPC_INS_MTCRF,
 	PPC_INS_MTCTR,
-	PPC_INS_MTDAR,
-	PPC_INS_MTDBATL,
-	PPC_INS_MTDBATU,
-	PPC_INS_MTDCCR,
 	PPC_INS_MTDCR,
-	PPC_INS_MTDEAR,
-	PPC_INS_MTDEC,
-	PPC_INS_MTDSCR,
-	PPC_INS_MTDSISR,
-	PPC_INS_MTESR,
 	PPC_INS_MTFSB0,
 	PPC_INS_MTFSB1,
 	PPC_INS_MTFSF,
 	PPC_INS_MTFSFI,
-	PPC_INS_MTIBATL,
-	PPC_INS_MTIBATU,
-	PPC_INS_MTICCR,
 	PPC_INS_MTLR,
 	PPC_INS_MTMSR,
 	PPC_INS_MTMSRD,
 	PPC_INS_MTOCRF,
-	PPC_INS_MTPID,
 	PPC_INS_MTPMR,
-	PPC_INS_MTSDR1,
-	PPC_INS_MTSPEFSCR,
 	PPC_INS_MTSPR,
-	PPC_INS_MTSPRG,
-	PPC_INS_MTSPRG0,
-	PPC_INS_MTSPRG1,
-	PPC_INS_MTSPRG2,
-	PPC_INS_MTSPRG3,
-	PPC_INS_MTSPRG4,
-	PPC_INS_MTSPRG5,
-	PPC_INS_MTSPRG6,
-	PPC_INS_MTSPRG7,
 	PPC_INS_MTSR,
 	PPC_INS_MTSRIN,
-	PPC_INS_MTSRR0,
-	PPC_INS_MTSRR1,
-	PPC_INS_MTSRR2,
-	PPC_INS_MTSRR3,
-	PPC_INS_MTTBHI,
-	PPC_INS_MTTBL,
-	PPC_INS_MTTBLO,
-	PPC_INS_MTTBU,
-	PPC_INS_MTTCR,
-	PPC_INS_MTVRSAVE,
 	PPC_INS_MTVSCR,
+	PPC_INS_MTVSRBM,
+	PPC_INS_MTVSRBMI,
 	PPC_INS_MTVSRD,
 	PPC_INS_MTVSRDD,
+	PPC_INS_MTVSRDM,
+	PPC_INS_MTVSRHM,
+	PPC_INS_MTVSRQM,
 	PPC_INS_MTVSRWA,
+	PPC_INS_MTVSRWM,
 	PPC_INS_MTVSRWS,
 	PPC_INS_MTVSRWZ,
-	PPC_INS_MTXER,
 	PPC_INS_MULHD,
 	PPC_INS_MULHDU,
 	PPC_INS_MULHW,
 	PPC_INS_MULHWU,
 	PPC_INS_MULLD,
+	PPC_INS_MULLDO,
 	PPC_INS_MULLI,
 	PPC_INS_MULLW,
+	PPC_INS_MULLWO,
 	PPC_INS_NAND,
 	PPC_INS_NAP,
 	PPC_INS_NEG,
+	PPC_INS_NEGO,
 	PPC_INS_NOP,
 	PPC_INS_NOR,
-	PPC_INS_NOT,
 	PPC_INS_OR,
 	PPC_INS_ORC,
 	PPC_INS_ORI,
 	PPC_INS_ORIS,
-	PPC_INS_PASTE,
-	PPC_INS_PASTE_LAST,
+	PPC_INS_PADDI,
+	PPC_INS_PDEPD,
+	PPC_INS_PEXTD,
+	PPC_INS_PLBZ,
+	PPC_INS_PLD,
+	PPC_INS_PLFD,
+	PPC_INS_PLFS,
+	PPC_INS_PLHA,
+	PPC_INS_PLHZ,
+	PPC_INS_PLI,
+	PPC_INS_PLWA,
+	PPC_INS_PLWZ,
+	PPC_INS_PLXSD,
+	PPC_INS_PLXSSP,
+	PPC_INS_PLXV,
+	PPC_INS_PLXVP,
+	PPC_INS_PMXVBF16GER2,
+	PPC_INS_PMXVBF16GER2NN,
+	PPC_INS_PMXVBF16GER2NP,
+	PPC_INS_PMXVBF16GER2PN,
+	PPC_INS_PMXVBF16GER2PP,
+	PPC_INS_PMXVF16GER2,
+	PPC_INS_PMXVF16GER2NN,
+	PPC_INS_PMXVF16GER2NP,
+	PPC_INS_PMXVF16GER2PN,
+	PPC_INS_PMXVF16GER2PP,
+	PPC_INS_PMXVF32GER,
+	PPC_INS_PMXVF32GERNN,
+	PPC_INS_PMXVF32GERNP,
+	PPC_INS_PMXVF32GERPN,
+	PPC_INS_PMXVF32GERPP,
+	PPC_INS_PMXVF64GER,
+	PPC_INS_PMXVF64GERNN,
+	PPC_INS_PMXVF64GERNP,
+	PPC_INS_PMXVF64GERPN,
+	PPC_INS_PMXVF64GERPP,
+	PPC_INS_PMXVI16GER2,
+	PPC_INS_PMXVI16GER2PP,
+	PPC_INS_PMXVI16GER2S,
+	PPC_INS_PMXVI16GER2SPP,
+	PPC_INS_PMXVI4GER8,
+	PPC_INS_PMXVI4GER8PP,
+	PPC_INS_PMXVI8GER4,
+	PPC_INS_PMXVI8GER4PP,
+	PPC_INS_PMXVI8GER4SPP,
 	PPC_INS_POPCNTB,
 	PPC_INS_POPCNTD,
 	PPC_INS_POPCNTW,
-	PPC_INS_PTESYNC,
+	PPC_INS_DCBZ_L,
+	PPC_INS_PSQ_L,
+	PPC_INS_PSQ_LU,
+	PPC_INS_PSQ_LUX,
+	PPC_INS_PSQ_LX,
+	PPC_INS_PSQ_ST,
+	PPC_INS_PSQ_STU,
+	PPC_INS_PSQ_STUX,
+	PPC_INS_PSQ_STX,
+	PPC_INS_PSTB,
+	PPC_INS_PSTD,
+	PPC_INS_PSTFD,
+	PPC_INS_PSTFS,
+	PPC_INS_PSTH,
+	PPC_INS_PSTW,
+	PPC_INS_PSTXSD,
+	PPC_INS_PSTXSSP,
+	PPC_INS_PSTXV,
+	PPC_INS_PSTXVP,
+	PPC_INS_PS_ABS,
+	PPC_INS_PS_ADD,
+	PPC_INS_PS_CMPO0,
+	PPC_INS_PS_CMPO1,
+	PPC_INS_PS_CMPU0,
+	PPC_INS_PS_CMPU1,
+	PPC_INS_PS_DIV,
+	PPC_INS_PS_MADD,
+	PPC_INS_PS_MADDS0,
+	PPC_INS_PS_MADDS1,
+	PPC_INS_PS_MERGE00,
+	PPC_INS_PS_MERGE01,
+	PPC_INS_PS_MERGE10,
+	PPC_INS_PS_MERGE11,
+	PPC_INS_PS_MR,
+	PPC_INS_PS_MSUB,
+	PPC_INS_PS_MUL,
+	PPC_INS_PS_MULS0,
+	PPC_INS_PS_MULS1,
+	PPC_INS_PS_NABS,
+	PPC_INS_PS_NEG,
+	PPC_INS_PS_NMADD,
+	PPC_INS_PS_NMSUB,
+	PPC_INS_PS_RES,
+	PPC_INS_PS_RSQRTE,
+	PPC_INS_PS_SEL,
+	PPC_INS_PS_SUB,
+	PPC_INS_PS_SUM0,
+	PPC_INS_PS_SUM1,
 	PPC_INS_QVALIGNI,
 	PPC_INS_QVESPLATI,
 	PPC_INS_QVFABS,
 	PPC_INS_QVFADD,
 	PPC_INS_QVFADDS,
-	PPC_INS_QVFAND,
-	PPC_INS_QVFANDC,
 	PPC_INS_QVFCFID,
 	PPC_INS_QVFCFIDS,
 	PPC_INS_QVFCFIDU,
 	PPC_INS_QVFCFIDUS,
-	PPC_INS_QVFCLR,
 	PPC_INS_QVFCMPEQ,
 	PPC_INS_QVFCMPGT,
 	PPC_INS_QVFCMPLT,
 	PPC_INS_QVFCPSGN,
-	PPC_INS_QVFCTFB,
 	PPC_INS_QVFCTID,
 	PPC_INS_QVFCTIDU,
 	PPC_INS_QVFCTIDUZ,
@@ -1219,7 +1586,6 @@ typedef enum ppc_insn {
 	PPC_INS_QVFCTIWU,
 	PPC_INS_QVFCTIWUZ,
 	PPC_INS_QVFCTIWZ,
-	PPC_INS_QVFEQU,
 	PPC_INS_QVFLOGICAL,
 	PPC_INS_QVFMADD,
 	PPC_INS_QVFMADDS,
@@ -1229,16 +1595,11 @@ typedef enum ppc_insn {
 	PPC_INS_QVFMUL,
 	PPC_INS_QVFMULS,
 	PPC_INS_QVFNABS,
-	PPC_INS_QVFNAND,
 	PPC_INS_QVFNEG,
 	PPC_INS_QVFNMADD,
 	PPC_INS_QVFNMADDS,
 	PPC_INS_QVFNMSUB,
 	PPC_INS_QVFNMSUBS,
-	PPC_INS_QVFNOR,
-	PPC_INS_QVFNOT,
-	PPC_INS_QVFOR,
-	PPC_INS_QVFORC,
 	PPC_INS_QVFPERM,
 	PPC_INS_QVFRE,
 	PPC_INS_QVFRES,
@@ -1250,7 +1611,6 @@ typedef enum ppc_insn {
 	PPC_INS_QVFRSQRTE,
 	PPC_INS_QVFRSQRTES,
 	PPC_INS_QVFSEL,
-	PPC_INS_QVFSET,
 	PPC_INS_QVFSUB,
 	PPC_INS_QVFSUBS,
 	PPC_INS_QVFTSTNAN,
@@ -1258,7 +1618,6 @@ typedef enum ppc_insn {
 	PPC_INS_QVFXMADDS,
 	PPC_INS_QVFXMUL,
 	PPC_INS_QVFXMULS,
-	PPC_INS_QVFXOR,
 	PPC_INS_QVFXXCPNMADD,
 	PPC_INS_QVFXXCPNMADDS,
 	PPC_INS_QVFXXMADD,
@@ -1336,17 +1695,13 @@ typedef enum ppc_insn {
 	PPC_INS_RLDICL,
 	PPC_INS_RLDICR,
 	PPC_INS_RLDIMI,
-	PPC_INS_RLWIMI,
-	PPC_INS_RLWINM,
-	PPC_INS_RLWNM,
-	PPC_INS_ROTLD,
-	PPC_INS_ROTLDI,
-	PPC_INS_ROTLW,
-	PPC_INS_ROTLWI,
-	PPC_INS_ROTRDI,
-	PPC_INS_ROTRWI,
 	PPC_INS_SC,
 	PPC_INS_SETB,
+	PPC_INS_SETBC,
+	PPC_INS_SETBCR,
+	PPC_INS_SETNBC,
+	PPC_INS_SETNBCR,
+	PPC_INS_SLBFEE,
 	PPC_INS_SLBIA,
 	PPC_INS_SLBIE,
 	PPC_INS_SLBIEG,
@@ -1355,17 +1710,15 @@ typedef enum ppc_insn {
 	PPC_INS_SLBMTE,
 	PPC_INS_SLBSYNC,
 	PPC_INS_SLD,
-	PPC_INS_SLDI,
 	PPC_INS_SLW,
-	PPC_INS_SLWI,
+	PPC_INS_STW,
+	PPC_INS_STWX,
 	PPC_INS_SRAD,
 	PPC_INS_SRADI,
 	PPC_INS_SRAW,
 	PPC_INS_SRAWI,
 	PPC_INS_SRD,
-	PPC_INS_SRDI,
 	PPC_INS_SRW,
-	PPC_INS_SRWI,
 	PPC_INS_STB,
 	PPC_INS_STBCIX,
 	PPC_INS_STBCX,
@@ -1401,13 +1754,14 @@ typedef enum ppc_insn {
 	PPC_INS_STHX,
 	PPC_INS_STMW,
 	PPC_INS_STOP,
+	PPC_INS_STQ,
+	PPC_INS_STQCX,
 	PPC_INS_STSWI,
 	PPC_INS_STVEBX,
 	PPC_INS_STVEHX,
 	PPC_INS_STVEWX,
 	PPC_INS_STVX,
 	PPC_INS_STVXL,
-	PPC_INS_STW,
 	PPC_INS_STWAT,
 	PPC_INS_STWBRX,
 	PPC_INS_STWCIX,
@@ -1415,7 +1769,6 @@ typedef enum ppc_insn {
 	PPC_INS_STWEPX,
 	PPC_INS_STWU,
 	PPC_INS_STWUX,
-	PPC_INS_STWX,
 	PPC_INS_STXSD,
 	PPC_INS_STXSDX,
 	PPC_INS_STXSIBX,
@@ -1429,20 +1782,30 @@ typedef enum ppc_insn {
 	PPC_INS_STXVH8X,
 	PPC_INS_STXVL,
 	PPC_INS_STXVLL,
+	PPC_INS_STXVP,
+	PPC_INS_STXVPRL,
+	PPC_INS_STXVPRLL,
+	PPC_INS_STXVPX,
+	PPC_INS_STXVRBX,
+	PPC_INS_STXVRDX,
+	PPC_INS_STXVRHX,
+	PPC_INS_STXVRL,
+	PPC_INS_STXVRLL,
+	PPC_INS_STXVRWX,
 	PPC_INS_STXVW4X,
 	PPC_INS_STXVX,
-	PPC_INS_SUB,
-	PPC_INS_SUBC,
 	PPC_INS_SUBF,
 	PPC_INS_SUBFC,
+	PPC_INS_SUBFCO,
 	PPC_INS_SUBFE,
+	PPC_INS_SUBFEO,
 	PPC_INS_SUBFIC,
 	PPC_INS_SUBFME,
+	PPC_INS_SUBFMEO,
+	PPC_INS_SUBFO,
+	PPC_INS_SUBFUS,
 	PPC_INS_SUBFZE,
-	PPC_INS_SUBI,
-	PPC_INS_SUBIC,
-	PPC_INS_SUBIS,
-	PPC_INS_SUBPCIS,
+	PPC_INS_SUBFZEO,
 	PPC_INS_SYNC,
 	PPC_INS_TABORT,
 	PPC_INS_TABORTDC,
@@ -1452,37 +1815,7 @@ typedef enum ppc_insn {
 	PPC_INS_TBEGIN,
 	PPC_INS_TCHECK,
 	PPC_INS_TD,
-	PPC_INS_TDEQ,
-	PPC_INS_TDEQI,
-	PPC_INS_TDGE,
-	PPC_INS_TDGEI,
-	PPC_INS_TDGT,
-	PPC_INS_TDGTI,
 	PPC_INS_TDI,
-	PPC_INS_TDLE,
-	PPC_INS_TDLEI,
-	PPC_INS_TDLGE,
-	PPC_INS_TDLGEI,
-	PPC_INS_TDLGT,
-	PPC_INS_TDLGTI,
-	PPC_INS_TDLLE,
-	PPC_INS_TDLLEI,
-	PPC_INS_TDLLT,
-	PPC_INS_TDLLTI,
-	PPC_INS_TDLNG,
-	PPC_INS_TDLNGI,
-	PPC_INS_TDLNL,
-	PPC_INS_TDLNLI,
-	PPC_INS_TDLT,
-	PPC_INS_TDLTI,
-	PPC_INS_TDNE,
-	PPC_INS_TDNEI,
-	PPC_INS_TDNG,
-	PPC_INS_TDNGI,
-	PPC_INS_TDNL,
-	PPC_INS_TDNLI,
-	PPC_INS_TDU,
-	PPC_INS_TDUI,
 	PPC_INS_TEND,
 	PPC_INS_TLBIA,
 	PPC_INS_TLBIE,
@@ -1491,49 +1824,15 @@ typedef enum ppc_insn {
 	PPC_INS_TLBLD,
 	PPC_INS_TLBLI,
 	PPC_INS_TLBRE,
-	PPC_INS_TLBREHI,
-	PPC_INS_TLBRELO,
 	PPC_INS_TLBSX,
 	PPC_INS_TLBSYNC,
 	PPC_INS_TLBWE,
-	PPC_INS_TLBWEHI,
-	PPC_INS_TLBWELO,
 	PPC_INS_TRAP,
 	PPC_INS_TRECHKPT,
 	PPC_INS_TRECLAIM,
 	PPC_INS_TSR,
 	PPC_INS_TW,
-	PPC_INS_TWEQ,
-	PPC_INS_TWEQI,
-	PPC_INS_TWGE,
-	PPC_INS_TWGEI,
-	PPC_INS_TWGT,
-	PPC_INS_TWGTI,
 	PPC_INS_TWI,
-	PPC_INS_TWLE,
-	PPC_INS_TWLEI,
-	PPC_INS_TWLGE,
-	PPC_INS_TWLGEI,
-	PPC_INS_TWLGT,
-	PPC_INS_TWLGTI,
-	PPC_INS_TWLLE,
-	PPC_INS_TWLLEI,
-	PPC_INS_TWLLT,
-	PPC_INS_TWLLTI,
-	PPC_INS_TWLNG,
-	PPC_INS_TWLNGI,
-	PPC_INS_TWLNL,
-	PPC_INS_TWLNLI,
-	PPC_INS_TWLT,
-	PPC_INS_TWLTI,
-	PPC_INS_TWNE,
-	PPC_INS_TWNEI,
-	PPC_INS_TWNG,
-	PPC_INS_TWNGI,
-	PPC_INS_TWNL,
-	PPC_INS_TWNLI,
-	PPC_INS_TWU,
-	PPC_INS_TWUI,
 	PPC_INS_VABSDUB,
 	PPC_INS_VABSDUH,
 	PPC_INS_VABSDUW,
@@ -1564,11 +1863,15 @@ typedef enum ppc_insn {
 	PPC_INS_VBPERMD,
 	PPC_INS_VBPERMQ,
 	PPC_INS_VCFSX,
+	PPC_INS_VCFUGED,
 	PPC_INS_VCFUX,
 	PPC_INS_VCIPHER,
 	PPC_INS_VCIPHERLAST,
+	PPC_INS_VCLRLB,
+	PPC_INS_VCLRRB,
 	PPC_INS_VCLZB,
 	PPC_INS_VCLZD,
+	PPC_INS_VCLZDM,
 	PPC_INS_VCLZH,
 	PPC_INS_VCLZLSBB,
 	PPC_INS_VCLZW,
@@ -1577,16 +1880,19 @@ typedef enum ppc_insn {
 	PPC_INS_VCMPEQUB,
 	PPC_INS_VCMPEQUD,
 	PPC_INS_VCMPEQUH,
+	PPC_INS_VCMPEQUQ,
 	PPC_INS_VCMPEQUW,
 	PPC_INS_VCMPGEFP,
 	PPC_INS_VCMPGTFP,
 	PPC_INS_VCMPGTSB,
 	PPC_INS_VCMPGTSD,
 	PPC_INS_VCMPGTSH,
+	PPC_INS_VCMPGTSQ,
 	PPC_INS_VCMPGTSW,
 	PPC_INS_VCMPGTUB,
 	PPC_INS_VCMPGTUD,
 	PPC_INS_VCMPGTUH,
+	PPC_INS_VCMPGTUQ,
 	PPC_INS_VCMPGTUW,
 	PPC_INS_VCMPNEB,
 	PPC_INS_VCMPNEH,
@@ -1594,21 +1900,59 @@ typedef enum ppc_insn {
 	PPC_INS_VCMPNEZB,
 	PPC_INS_VCMPNEZH,
 	PPC_INS_VCMPNEZW,
+	PPC_INS_VCMPSQ,
+	PPC_INS_VCMPUQ,
+	PPC_INS_VCNTMBB,
+	PPC_INS_VCNTMBD,
+	PPC_INS_VCNTMBH,
+	PPC_INS_VCNTMBW,
 	PPC_INS_VCTSXS,
 	PPC_INS_VCTUXS,
 	PPC_INS_VCTZB,
 	PPC_INS_VCTZD,
+	PPC_INS_VCTZDM,
 	PPC_INS_VCTZH,
 	PPC_INS_VCTZLSBB,
 	PPC_INS_VCTZW,
+	PPC_INS_VDIVESD,
+	PPC_INS_VDIVESQ,
+	PPC_INS_VDIVESW,
+	PPC_INS_VDIVEUD,
+	PPC_INS_VDIVEUQ,
+	PPC_INS_VDIVEUW,
+	PPC_INS_VDIVSD,
+	PPC_INS_VDIVSQ,
+	PPC_INS_VDIVSW,
+	PPC_INS_VDIVUD,
+	PPC_INS_VDIVUQ,
+	PPC_INS_VDIVUW,
 	PPC_INS_VEQV,
+	PPC_INS_VEXPANDBM,
+	PPC_INS_VEXPANDDM,
+	PPC_INS_VEXPANDHM,
+	PPC_INS_VEXPANDQM,
+	PPC_INS_VEXPANDWM,
 	PPC_INS_VEXPTEFP,
+	PPC_INS_VEXTDDVLX,
+	PPC_INS_VEXTDDVRX,
+	PPC_INS_VEXTDUBVLX,
+	PPC_INS_VEXTDUBVRX,
+	PPC_INS_VEXTDUHVLX,
+	PPC_INS_VEXTDUHVRX,
+	PPC_INS_VEXTDUWVLX,
+	PPC_INS_VEXTDUWVRX,
+	PPC_INS_VEXTRACTBM,
 	PPC_INS_VEXTRACTD,
+	PPC_INS_VEXTRACTDM,
+	PPC_INS_VEXTRACTHM,
+	PPC_INS_VEXTRACTQM,
 	PPC_INS_VEXTRACTUB,
 	PPC_INS_VEXTRACTUH,
 	PPC_INS_VEXTRACTUW,
+	PPC_INS_VEXTRACTWM,
 	PPC_INS_VEXTSB2D,
 	PPC_INS_VEXTSB2W,
+	PPC_INS_VEXTSD2Q,
 	PPC_INS_VEXTSH2D,
 	PPC_INS_VEXTSH2W,
 	PPC_INS_VEXTSW2D,
@@ -1619,10 +1963,27 @@ typedef enum ppc_insn {
 	PPC_INS_VEXTUWLX,
 	PPC_INS_VEXTUWRX,
 	PPC_INS_VGBBD,
+	PPC_INS_VGNB,
+	PPC_INS_VINSBLX,
+	PPC_INS_VINSBRX,
+	PPC_INS_VINSBVLX,
+	PPC_INS_VINSBVRX,
+	PPC_INS_VINSD,
+	PPC_INS_VINSDLX,
+	PPC_INS_VINSDRX,
 	PPC_INS_VINSERTB,
 	PPC_INS_VINSERTD,
 	PPC_INS_VINSERTH,
 	PPC_INS_VINSERTW,
+	PPC_INS_VINSHLX,
+	PPC_INS_VINSHRX,
+	PPC_INS_VINSHVLX,
+	PPC_INS_VINSHVRX,
+	PPC_INS_VINSW,
+	PPC_INS_VINSWLX,
+	PPC_INS_VINSWRX,
+	PPC_INS_VINSWVLX,
+	PPC_INS_VINSWVRX,
 	PPC_INS_VLOGEFP,
 	PPC_INS_VMADDFP,
 	PPC_INS_VMAXFP,
@@ -1646,7 +2007,12 @@ typedef enum ppc_insn {
 	PPC_INS_VMINUH,
 	PPC_INS_VMINUW,
 	PPC_INS_VMLADDUHM,
-	PPC_INS_VMR,
+	PPC_INS_VMODSD,
+	PPC_INS_VMODSQ,
+	PPC_INS_VMODSW,
+	PPC_INS_VMODUD,
+	PPC_INS_VMODUQ,
+	PPC_INS_VMODUW,
 	PPC_INS_VMRGEW,
 	PPC_INS_VMRGHB,
 	PPC_INS_VMRGHH,
@@ -1655,10 +2021,12 @@ typedef enum ppc_insn {
 	PPC_INS_VMRGLH,
 	PPC_INS_VMRGLW,
 	PPC_INS_VMRGOW,
+	PPC_INS_VMSUMCUD,
 	PPC_INS_VMSUMMBM,
 	PPC_INS_VMSUMSHM,
 	PPC_INS_VMSUMSHS,
 	PPC_INS_VMSUMUBM,
+	PPC_INS_VMSUMUDM,
 	PPC_INS_VMSUMUHM,
 	PPC_INS_VMSUMUHS,
 	PPC_INS_VMUL10CUQ,
@@ -1666,15 +2034,24 @@ typedef enum ppc_insn {
 	PPC_INS_VMUL10EUQ,
 	PPC_INS_VMUL10UQ,
 	PPC_INS_VMULESB,
+	PPC_INS_VMULESD,
 	PPC_INS_VMULESH,
 	PPC_INS_VMULESW,
 	PPC_INS_VMULEUB,
+	PPC_INS_VMULEUD,
 	PPC_INS_VMULEUH,
 	PPC_INS_VMULEUW,
+	PPC_INS_VMULHSD,
+	PPC_INS_VMULHSW,
+	PPC_INS_VMULHUD,
+	PPC_INS_VMULHUW,
+	PPC_INS_VMULLD,
 	PPC_INS_VMULOSB,
+	PPC_INS_VMULOSD,
 	PPC_INS_VMULOSH,
 	PPC_INS_VMULOSW,
 	PPC_INS_VMULOUB,
+	PPC_INS_VMULOUD,
 	PPC_INS_VMULOUH,
 	PPC_INS_VMULOUW,
 	PPC_INS_VMULUWM,
@@ -1685,12 +2062,13 @@ typedef enum ppc_insn {
 	PPC_INS_VNEGW,
 	PPC_INS_VNMSUBFP,
 	PPC_INS_VNOR,
-	PPC_INS_VNOT,
 	PPC_INS_VOR,
 	PPC_INS_VORC,
+	PPC_INS_VPDEPD,
 	PPC_INS_VPERM,
 	PPC_INS_VPERMR,
 	PPC_INS_VPERMXOR,
+	PPC_INS_VPEXTD,
 	PPC_INS_VPKPX,
 	PPC_INS_VPKSDSS,
 	PPC_INS_VPKSDUS,
@@ -1725,6 +2103,9 @@ typedef enum ppc_insn {
 	PPC_INS_VRLDMI,
 	PPC_INS_VRLDNM,
 	PPC_INS_VRLH,
+	PPC_INS_VRLQ,
+	PPC_INS_VRLQMI,
+	PPC_INS_VRLQNM,
 	PPC_INS_VRLW,
 	PPC_INS_VRLWMI,
 	PPC_INS_VRLWNM,
@@ -1736,9 +2117,11 @@ typedef enum ppc_insn {
 	PPC_INS_VSL,
 	PPC_INS_VSLB,
 	PPC_INS_VSLD,
+	PPC_INS_VSLDBI,
 	PPC_INS_VSLDOI,
 	PPC_INS_VSLH,
 	PPC_INS_VSLO,
+	PPC_INS_VSLQ,
 	PPC_INS_VSLV,
 	PPC_INS_VSLW,
 	PPC_INS_VSPLTB,
@@ -1751,13 +2134,20 @@ typedef enum ppc_insn {
 	PPC_INS_VSRAB,
 	PPC_INS_VSRAD,
 	PPC_INS_VSRAH,
+	PPC_INS_VSRAQ,
 	PPC_INS_VSRAW,
 	PPC_INS_VSRB,
 	PPC_INS_VSRD,
+	PPC_INS_VSRDBI,
 	PPC_INS_VSRH,
 	PPC_INS_VSRO,
+	PPC_INS_VSRQ,
 	PPC_INS_VSRV,
 	PPC_INS_VSRW,
+	PPC_INS_VSTRIBL,
+	PPC_INS_VSTRIBR,
+	PPC_INS_VSTRIHL,
+	PPC_INS_VSTRIHR,
 	PPC_INS_VSUBCUQ,
 	PPC_INS_VSUBCUW,
 	PPC_INS_VSUBECUQ,
@@ -1789,11 +2179,8 @@ typedef enum ppc_insn {
 	PPC_INS_VUPKLSW,
 	PPC_INS_VXOR,
 	PPC_INS_WAIT,
-	PPC_INS_WAITIMPL,
-	PPC_INS_WAITRSV,
 	PPC_INS_WRTEE,
 	PPC_INS_WRTEEI,
-	PPC_INS_XNOP,
 	PPC_INS_XOR,
 	PPC_INS_XORI,
 	PPC_INS_XORIS,
@@ -1804,10 +2191,13 @@ typedef enum ppc_insn {
 	PPC_INS_XSADDQPO,
 	PPC_INS_XSADDSP,
 	PPC_INS_XSCMPEQDP,
+	PPC_INS_XSCMPEQQP,
 	PPC_INS_XSCMPEXPDP,
 	PPC_INS_XSCMPEXPQP,
 	PPC_INS_XSCMPGEDP,
+	PPC_INS_XSCMPGEQP,
 	PPC_INS_XSCMPGTDP,
+	PPC_INS_XSCMPGTQP,
 	PPC_INS_XSCMPODP,
 	PPC_INS_XSCMPOQP,
 	PPC_INS_XSCMPUDP,
@@ -1826,15 +2216,19 @@ typedef enum ppc_insn {
 	PPC_INS_XSCVQPDP,
 	PPC_INS_XSCVQPDPO,
 	PPC_INS_XSCVQPSDZ,
+	PPC_INS_XSCVQPSQZ,
 	PPC_INS_XSCVQPSWZ,
 	PPC_INS_XSCVQPUDZ,
+	PPC_INS_XSCVQPUQZ,
 	PPC_INS_XSCVQPUWZ,
 	PPC_INS_XSCVSDQP,
 	PPC_INS_XSCVSPDP,
 	PPC_INS_XSCVSPDPN,
+	PPC_INS_XSCVSQQP,
 	PPC_INS_XSCVSXDDP,
 	PPC_INS_XSCVSXDSP,
 	PPC_INS_XSCVUDQP,
+	PPC_INS_XSCVUQQP,
 	PPC_INS_XSCVUXDDP,
 	PPC_INS_XSCVUXDSP,
 	PPC_INS_XSDIVDP,
@@ -1850,9 +2244,11 @@ typedef enum ppc_insn {
 	PPC_INS_XSMADDQP,
 	PPC_INS_XSMADDQPO,
 	PPC_INS_XSMAXCDP,
+	PPC_INS_XSMAXCQP,
 	PPC_INS_XSMAXDP,
 	PPC_INS_XSMAXJDP,
 	PPC_INS_XSMINCDP,
+	PPC_INS_XSMINCQP,
 	PPC_INS_XSMINDP,
 	PPC_INS_XSMINJDP,
 	PPC_INS_XSMSUBADP,
@@ -1915,6 +2311,11 @@ typedef enum ppc_insn {
 	PPC_INS_XVABSSP,
 	PPC_INS_XVADDDP,
 	PPC_INS_XVADDSP,
+	PPC_INS_XVBF16GER2,
+	PPC_INS_XVBF16GER2NN,
+	PPC_INS_XVBF16GER2NP,
+	PPC_INS_XVBF16GER2PN,
+	PPC_INS_XVBF16GER2PP,
 	PPC_INS_XVCMPEQDP,
 	PPC_INS_XVCMPEQSP,
 	PPC_INS_XVCMPGEDP,
@@ -1923,12 +2324,14 @@ typedef enum ppc_insn {
 	PPC_INS_XVCMPGTSP,
 	PPC_INS_XVCPSGNDP,
 	PPC_INS_XVCPSGNSP,
+	PPC_INS_XVCVBF16SPN,
 	PPC_INS_XVCVDPSP,
 	PPC_INS_XVCVDPSXDS,
 	PPC_INS_XVCVDPSXWS,
 	PPC_INS_XVCVDPUXDS,
 	PPC_INS_XVCVDPUXWS,
 	PPC_INS_XVCVHPSP,
+	PPC_INS_XVCVSPBF16,
 	PPC_INS_XVCVSPDP,
 	PPC_INS_XVCVSPHP,
 	PPC_INS_XVCVSPSXDS,
@@ -1945,6 +2348,30 @@ typedef enum ppc_insn {
 	PPC_INS_XVCVUXWSP,
 	PPC_INS_XVDIVDP,
 	PPC_INS_XVDIVSP,
+	PPC_INS_XVF16GER2,
+	PPC_INS_XVF16GER2NN,
+	PPC_INS_XVF16GER2NP,
+	PPC_INS_XVF16GER2PN,
+	PPC_INS_XVF16GER2PP,
+	PPC_INS_XVF32GER,
+	PPC_INS_XVF32GERNN,
+	PPC_INS_XVF32GERNP,
+	PPC_INS_XVF32GERPN,
+	PPC_INS_XVF32GERPP,
+	PPC_INS_XVF64GER,
+	PPC_INS_XVF64GERNN,
+	PPC_INS_XVF64GERNP,
+	PPC_INS_XVF64GERPN,
+	PPC_INS_XVF64GERPP,
+	PPC_INS_XVI16GER2,
+	PPC_INS_XVI16GER2PP,
+	PPC_INS_XVI16GER2S,
+	PPC_INS_XVI16GER2SPP,
+	PPC_INS_XVI4GER8,
+	PPC_INS_XVI4GER8PP,
+	PPC_INS_XVI8GER4,
+	PPC_INS_XVI8GER4PP,
+	PPC_INS_XVI8GER4SPP,
 	PPC_INS_XVIEXPDP,
 	PPC_INS_XVIEXPSP,
 	PPC_INS_XVMADDADP,
@@ -1955,8 +2382,6 @@ typedef enum ppc_insn {
 	PPC_INS_XVMAXSP,
 	PPC_INS_XVMINDP,
 	PPC_INS_XVMINSP,
-	PPC_INS_XVMOVDP,
-	PPC_INS_XVMOVSP,
 	PPC_INS_XVMSUBADP,
 	PPC_INS_XVMSUBASP,
 	PPC_INS_XVMSUBMDP,
@@ -1995,6 +2420,7 @@ typedef enum ppc_insn {
 	PPC_INS_XVSUBSP,
 	PPC_INS_XVTDIVDP,
 	PPC_INS_XVTDIVSP,
+	PPC_INS_XVTLSBB,
 	PPC_INS_XVTSQRTDP,
 	PPC_INS_XVTSQRTSP,
 	PPC_INS_XVTSTDCDP,
@@ -2003,11 +2429,20 @@ typedef enum ppc_insn {
 	PPC_INS_XVXEXPSP,
 	PPC_INS_XVXSIGDP,
 	PPC_INS_XVXSIGSP,
+	PPC_INS_XXBLENDVB,
+	PPC_INS_XXBLENDVD,
+	PPC_INS_XXBLENDVH,
+	PPC_INS_XXBLENDVW,
 	PPC_INS_XXBRD,
 	PPC_INS_XXBRH,
 	PPC_INS_XXBRQ,
 	PPC_INS_XXBRW,
+	PPC_INS_XXEVAL,
 	PPC_INS_XXEXTRACTUW,
+	PPC_INS_XXGENPCVBM,
+	PPC_INS_XXGENPCVDM,
+	PPC_INS_XXGENPCVHM,
+	PPC_INS_XXGENPCVWM,
 	PPC_INS_XXINSERTW,
 	PPC_INS_XXLAND,
 	PPC_INS_XXLANDC,
@@ -2017,60 +2452,725 @@ typedef enum ppc_insn {
 	PPC_INS_XXLOR,
 	PPC_INS_XXLORC,
 	PPC_INS_XXLXOR,
-	PPC_INS_XXMRGHD,
+	PPC_INS_XXMFACC,
 	PPC_INS_XXMRGHW,
-	PPC_INS_XXMRGLD,
 	PPC_INS_XXMRGLW,
+	PPC_INS_XXMTACC,
 	PPC_INS_XXPERM,
 	PPC_INS_XXPERMDI,
 	PPC_INS_XXPERMR,
+	PPC_INS_XXPERMX,
 	PPC_INS_XXSEL,
+	PPC_INS_XXSETACCZ,
 	PPC_INS_XXSLDWI,
-	PPC_INS_XXSPLTD,
+	PPC_INS_XXSPLTI32DX,
 	PPC_INS_XXSPLTIB,
+	PPC_INS_XXSPLTIDP,
+	PPC_INS_XXSPLTIW,
 	PPC_INS_XXSPLTW,
-	PPC_INS_XXSWAPD,
+	PPC_INS_BC,
+	PPC_INS_BCA,
+	PPC_INS_BCCTR,
+	PPC_INS_BCCTRL,
+	PPC_INS_BCL,
+	PPC_INS_BCLA,
+	PPC_INS_BCLR,
+	PPC_INS_BCLRL,
 
-	PPC_INS_DCBZ_L,
-	PPC_INS_PSQ_L,
-	PPC_INS_PSQ_LU,
-	PPC_INS_PSQ_LUX,
-	PPC_INS_PSQ_LX,
-	PPC_INS_PSQ_ST,
-	PPC_INS_PSQ_STU,
-	PPC_INS_PSQ_STUX,
-	PPC_INS_PSQ_STX,
-	PPC_INS_PS_ABS,
-	PPC_INS_PS_ADD,
-	PPC_INS_PS_CMPO0,
-	PPC_INS_PS_CMPO1,
-	PPC_INS_PS_CMPU0,
-	PPC_INS_PS_CMPU1,
-	PPC_INS_PS_DIV,
-	PPC_INS_PS_MADD,
-	PPC_INS_PS_MADDS0,
-	PPC_INS_PS_MADDS1,
-	PPC_INS_PS_MERGE00,
-	PPC_INS_PS_MERGE01,
-	PPC_INS_PS_MERGE10,
-	PPC_INS_PS_MERGE11,
-	PPC_INS_PS_MR,
-	PPC_INS_PS_MSUB,
-	PPC_INS_PS_MUL,
-	PPC_INS_PS_MULS0,
-	PPC_INS_PS_MULS1,
-	PPC_INS_PS_NABS,
-	PPC_INS_PS_NEG,
-	PPC_INS_PS_NMADD,
-	PPC_INS_PS_NMSUB,
-	PPC_INS_PS_RES,
-	PPC_INS_PS_RSQRTE,
-	PPC_INS_PS_SEL,
-	PPC_INS_PS_SUB,
-	PPC_INS_PS_SUM0,
-	PPC_INS_PS_SUM1,
+	// clang-format on
+	// generated content <PPCGenCSInsnEnum.inc> end
 
-	PPC_INS_ENDING,   // <-- mark the end of the list of instructions
+	PPC_INS_ENDING,
+
+	PPC_INS_ALIAS_BEGIN,
+	// generated content <PPCGenCSAliasEnum.inc> begin
+	// clang-format off
+
+	PPC_INS_ALIAS_RFEBB, // Real instr.: PPC_RFEBB
+	PPC_INS_ALIAS_LI, // Real instr.: PPC_ADDI
+	PPC_INS_ALIAS_LIS, // Real instr.: PPC_ADDIS
+	PPC_INS_ALIAS_MR, // Real instr.: PPC_OR
+	PPC_INS_ALIAS_MR_, // Real instr.: PPC_OR_rec
+	PPC_INS_ALIAS_NOT, // Real instr.: PPC_NOR
+	PPC_INS_ALIAS_NOT_, // Real instr.: PPC_NOR_rec
+	PPC_INS_ALIAS_NOP, // Real instr.: PPC_ORI
+	PPC_INS_ALIAS_MTUDSCR, // Real instr.: PPC_MTUDSCR
+	PPC_INS_ALIAS_MFUDSCR, // Real instr.: PPC_MFUDSCR
+	PPC_INS_ALIAS_MTVRSAVE, // Real instr.: PPC_MTVRSAVE
+	PPC_INS_ALIAS_MFVRSAVE, // Real instr.: PPC_MFVRSAVE
+	PPC_INS_ALIAS_MTCR, // Real instr.: PPC_MTCRF
+	PPC_INS_ALIAS_SUB, // Real instr.: PPC_SUBF
+	PPC_INS_ALIAS_SUB_, // Real instr.: PPC_SUBF_rec
+	PPC_INS_ALIAS_SUBC, // Real instr.: PPC_SUBFC
+	PPC_INS_ALIAS_SUBC_, // Real instr.: PPC_SUBFC_rec
+	PPC_INS_ALIAS_VMR, // Real instr.: PPC_VOR
+	PPC_INS_ALIAS_VNOT, // Real instr.: PPC_VNOR
+	PPC_INS_ALIAS_ROTLWI, // Real instr.: PPC_RLWINM8
+	PPC_INS_ALIAS_ROTLWI_, // Real instr.: PPC_RLWINM8_rec
+	PPC_INS_ALIAS_ROTLW, // Real instr.: PPC_RLWNM8
+	PPC_INS_ALIAS_ROTLW_, // Real instr.: PPC_RLWNM8_rec
+	PPC_INS_ALIAS_CLRLWI, // Real instr.: PPC_RLWINM8
+	PPC_INS_ALIAS_CLRLWI_, // Real instr.: PPC_RLWINM8_rec
+	PPC_INS_ALIAS_ISELLT, // Real instr.: PPC_ISEL8
+	PPC_INS_ALIAS_ISELGT, // Real instr.: PPC_ISEL8
+	PPC_INS_ALIAS_ISELEQ, // Real instr.: PPC_ISEL8
+	PPC_INS_ALIAS_XNOP, // Real instr.: PPC_XORI8
+	PPC_INS_ALIAS_CNTLZW, // Real instr.: PPC_CNTLZW8
+	PPC_INS_ALIAS_CNTLZW_, // Real instr.: PPC_CNTLZW8_rec
+	PPC_INS_ALIAS_MTXER, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFXER, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MFRTCU, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MFRTCL, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTLR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFLR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTCTR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFCTR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTUAMR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFUAMR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTDSCR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFDSCR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTDSISR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFDSISR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTDAR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFDAR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTDEC, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFDEC, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSDR1, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFSDR1, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSRR0, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFSRR0, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSRR1, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFSRR1, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTCFAR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFCFAR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTAMR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFAMR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MFSPRG, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MFSPRG0, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSPRG, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MTSPRG0, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFSPRG1, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSPRG1, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFSPRG2, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSPRG2, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFSPRG3, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSPRG3, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFASR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTASR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MTTBL, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MTTBU, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_MFPVR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MFSPEFSCR, // Real instr.: PPC_MFSPR8
+	PPC_INS_ALIAS_MTSPEFSCR, // Real instr.: PPC_MTSPR8
+	PPC_INS_ALIAS_XVMOVDP, // Real instr.: PPC_XVCPSGNDP
+	PPC_INS_ALIAS_XVMOVSP, // Real instr.: PPC_XVCPSGNSP
+	PPC_INS_ALIAS_XXSPLTD, // Real instr.: PPC_XXPERMDI
+	PPC_INS_ALIAS_XXMRGHD, // Real instr.: PPC_XXPERMDI
+	PPC_INS_ALIAS_XXMRGLD, // Real instr.: PPC_XXPERMDI
+	PPC_INS_ALIAS_XXSWAPD, // Real instr.: PPC_XXPERMDI
+	PPC_INS_ALIAS_MFFPRD, // Real instr.: PPC_MFVSRD
+	PPC_INS_ALIAS_MTFPRD, // Real instr.: PPC_MTVSRD
+	PPC_INS_ALIAS_MFFPRWZ, // Real instr.: PPC_MFVSRWZ
+	PPC_INS_ALIAS_MTFPRWA, // Real instr.: PPC_MTVSRWA
+	PPC_INS_ALIAS_MTFPRWZ, // Real instr.: PPC_MTVSRWZ
+	PPC_INS_ALIAS_TEND_, // Real instr.: PPC_TEND
+	PPC_INS_ALIAS_TENDALL_, // Real instr.: PPC_TEND
+	PPC_INS_ALIAS_TSUSPEND_, // Real instr.: PPC_TSR
+	PPC_INS_ALIAS_TRESUME_, // Real instr.: PPC_TSR
+	PPC_INS_ALIAS_DCI, // Real instr.: PPC_DCCCI
+	PPC_INS_ALIAS_DCCCI, // Real instr.: PPC_DCCCI
+	PPC_INS_ALIAS_ICI, // Real instr.: PPC_ICCCI
+	PPC_INS_ALIAS_ICCCI, // Real instr.: PPC_ICCCI
+	PPC_INS_ALIAS_MTFSFI, // Real instr.: PPC_MTFSFI
+	PPC_INS_ALIAS_MTFSFI_, // Real instr.: PPC_MTFSFI_rec
+	PPC_INS_ALIAS_MTFSF, // Real instr.: PPC_MTFSF
+	PPC_INS_ALIAS_MTFSF_, // Real instr.: PPC_MTFSF_rec
+	PPC_INS_ALIAS_SC, // Real instr.: PPC_SC
+	PPC_INS_ALIAS_SYNC, // Real instr.: PPC_SYNC
+	PPC_INS_ALIAS_LWSYNC, // Real instr.: PPC_SYNC
+	PPC_INS_ALIAS_PTESYNC, // Real instr.: PPC_SYNC
+	PPC_INS_ALIAS_WAIT, // Real instr.: PPC_WAIT
+	PPC_INS_ALIAS_WAITRSV, // Real instr.: PPC_WAIT
+	PPC_INS_ALIAS_WAITIMPL, // Real instr.: PPC_WAIT
+	PPC_INS_ALIAS_MBAR, // Real instr.: PPC_MBAR
+	PPC_INS_ALIAS_CRSET, // Real instr.: PPC_CREQV
+	PPC_INS_ALIAS_CRCLR, // Real instr.: PPC_CRXOR
+	PPC_INS_ALIAS_CRMOVE, // Real instr.: PPC_CROR
+	PPC_INS_ALIAS_CRNOT, // Real instr.: PPC_CRNOR
+	PPC_INS_ALIAS_MFTB, // Real instr.: PPC_MFTB
+	PPC_INS_ALIAS_MFTBL, // Real instr.: PPC_MFTB
+	PPC_INS_ALIAS_MFTBU, // Real instr.: PPC_MFTB
+	PPC_INS_ALIAS_MFBR0, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR0, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MFBR1, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR1, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MFBR2, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR2, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MFBR3, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR3, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MFBR4, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR4, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MFBR5, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR5, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MFBR6, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR6, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MFBR7, // Real instr.: PPC_MFDCR
+	PPC_INS_ALIAS_MTBR7, // Real instr.: PPC_MTDCR
+	PPC_INS_ALIAS_MTMSRD, // Real instr.: PPC_MTMSRD
+	PPC_INS_ALIAS_MTMSR, // Real instr.: PPC_MTMSR
+	PPC_INS_ALIAS_MTPID, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFPID, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MFSPRG4, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTSPRG4, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFSPRG5, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTSPRG5, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFSPRG6, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTSPRG6, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFSPRG7, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTSPRG7, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MTDBATU, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFDBATU, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTDBATL, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFDBATL, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTIBATU, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFIBATU, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTIBATL, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFIBATL, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTPPR, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFPPR, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTESR, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFESR, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTDEAR, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFDEAR, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTTCR, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFTCR, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MFTBHI, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTTBHI, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFTBLO, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTTBLO, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MTSRR2, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFSRR2, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTSRR3, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFSRR3, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTDCCR, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFDCCR, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_MTICCR, // Real instr.: PPC_MTSPR
+	PPC_INS_ALIAS_MFICCR, // Real instr.: PPC_MFSPR
+	PPC_INS_ALIAS_TLBIE, // Real instr.: PPC_TLBIE
+	PPC_INS_ALIAS_TLBREHI, // Real instr.: PPC_TLBRE2
+	PPC_INS_ALIAS_TLBRELO, // Real instr.: PPC_TLBRE2
+	PPC_INS_ALIAS_TLBWEHI, // Real instr.: PPC_TLBWE2
+	PPC_INS_ALIAS_TLBWELO, // Real instr.: PPC_TLBWE2
+	PPC_INS_ALIAS_ROTLDI, // Real instr.: PPC_RLDICL
+	PPC_INS_ALIAS_ROTLDI_, // Real instr.: PPC_RLDICL_rec
+	PPC_INS_ALIAS_ROTLD, // Real instr.: PPC_RLDCL
+	PPC_INS_ALIAS_ROTLD_, // Real instr.: PPC_RLDCL_rec
+	PPC_INS_ALIAS_CLRLDI, // Real instr.: PPC_RLDICL
+	PPC_INS_ALIAS_CLRLDI_, // Real instr.: PPC_RLDICL_rec
+	PPC_INS_ALIAS_LNIA, // Real instr.: PPC_ADDPCIS
+	PPC_INS_ALIAS_BCp, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BCAp, // Real instr.: PPC_gBCAat
+	PPC_INS_ALIAS_BCLp, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BCLAp, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BCm, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BCAm, // Real instr.: PPC_gBCAat
+	PPC_INS_ALIAS_BCLm, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BCLAm, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BT, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BTA, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BTLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BTL, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BTLA, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BTLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BTCTR, // Real instr.: PPC_gBCCTR
+	PPC_INS_ALIAS_BTCTRL, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BDZLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZL, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDZLA, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDZ, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZL, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDNZLA, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDNZ, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDZLp, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDZLAp, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDZp, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZLp, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDNZLAp, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDNZp, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDZLm, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDZLAm, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDZm, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZLm, // Real instr.: PPC_gBCLat
+	PPC_INS_ALIAS_BDNZLAm, // Real instr.: PPC_gBCLAat
+	PPC_INS_ALIAS_BDNZm, // Real instr.: PPC_gBCat
+	PPC_INS_ALIAS_BDNZLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZLRp, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZLRLp, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDNZLRp, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZLRLp, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZLRm, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZLRLm, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDNZLRm, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZLRLm, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BF, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BFA, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BFLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BFL, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BFLA, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BFLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BFCTR, // Real instr.: PPC_gBCCTR
+	PPC_INS_ALIAS_BFCTRL, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BTm, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BTAm, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BTLRm, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BTLm, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BTLAm, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BTLRLm, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BTCTRm, // Real instr.: PPC_gBCCTR
+	PPC_INS_ALIAS_BTCTRLm, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BFm, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BFAm, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BFLRm, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BFLm, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BFLAm, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BFLRLm, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BFCTRm, // Real instr.: PPC_gBCCTR
+	PPC_INS_ALIAS_BFCTRLm, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BTp, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BTAp, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BTLRp, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BTLp, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BTLAp, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BTLRLp, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BTCTRp, // Real instr.: PPC_gBCCTR
+	PPC_INS_ALIAS_BTCTRLp, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BFp, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BFAp, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BFLRp, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BFLp, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BFLAp, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BFLRLp, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BFCTRp, // Real instr.: PPC_gBCCTR
+	PPC_INS_ALIAS_BFCTRLp, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BDNZT, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BDNZTA, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BDNZTLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZTL, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BDNZTLA, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BDNZTLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDNZF, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BDNZFA, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BDNZFLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDNZFL, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BDNZFLA, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BDNZFLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZT, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BDZTA, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BDZTLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZTL, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BDZTLA, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BDZTLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BDZF, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BDZFA, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BDZFLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BDZFL, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BDZFLA, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BDZFLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_B, // Real instr.: PPC_gBC
+	PPC_INS_ALIAS_BA, // Real instr.: PPC_gBCA
+	PPC_INS_ALIAS_BL, // Real instr.: PPC_gBCL
+	PPC_INS_ALIAS_BLA, // Real instr.: PPC_gBCLA
+	PPC_INS_ALIAS_BLR, // Real instr.: PPC_gBCLR
+	PPC_INS_ALIAS_BLRL, // Real instr.: PPC_gBCLRL
+	PPC_INS_ALIAS_BCTR, // Real instr.: PPC_gBCCTR
+	PPC_INS_ALIAS_BCTRL, // Real instr.: PPC_gBCCTRL
+	PPC_INS_ALIAS_BLT, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BLTA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BLTLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BLTCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BLTL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BLTLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BLTLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BLTCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BLTm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BLTAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BLTLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BLTCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BLTLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BLTLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BLTLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BLTCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BLTp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BLTAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BLTLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BLTCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BLTLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BLTLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BLTLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BLTCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BGT, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BGTA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BGTLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BGTCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BGTL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BGTLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BGTLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BGTCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BGTm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BGTAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BGTLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BGTCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BGTLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BGTLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BGTLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BGTCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BGTp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BGTAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BGTLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BGTCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BGTLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BGTLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BGTLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BGTCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BEQ, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BEQA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BEQLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BEQCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BEQL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BEQLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BEQLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BEQCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BEQm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BEQAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BEQLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BEQCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BEQLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BEQLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BEQLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BEQCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BEQp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BEQAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BEQLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BEQCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BEQLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BEQLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BEQLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BEQCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BUN, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BUNA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BUNLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BUNCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BUNL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BUNLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BUNLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BUNCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BUNm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BUNAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BUNLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BUNCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BUNLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BUNLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BUNLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BUNCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BUNp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BUNAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BUNLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BUNCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BUNLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BUNLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BUNLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BUNCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BSO, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BSOA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BSOLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BSOCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BSOL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BSOLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BSOLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BSOCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BSOm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BSOAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BSOLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BSOCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BSOLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BSOLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BSOLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BSOCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BSOp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BSOAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BSOLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BSOCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BSOLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BSOLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BSOLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BSOCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BGE, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BGEA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BGELR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BGECTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BGEL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BGELA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BGELRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BGECTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BGEm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BGEAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BGELRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BGECTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BGELm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BGELAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BGELRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BGECTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BGEp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BGEAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BGELRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BGECTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BGELp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BGELAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BGELRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BGECTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNL, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNLA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNLLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNLCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNLL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNLLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNLLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNLCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNLm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNLAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNLLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNLCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNLLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNLLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNLLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNLCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNLp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNLAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNLLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNLCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNLLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNLLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNLLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNLCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BLE, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BLEA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BLELR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BLECTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BLEL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BLELA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BLELRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BLECTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BLEm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BLEAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BLELRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BLECTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BLELm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BLELAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BLELRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BLECTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BLEp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BLEAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BLELRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BLECTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BLELp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BLELAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BLELRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BLECTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNG, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNGA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNGLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNGCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNGL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNGLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNGLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNGCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNGm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNGAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNGLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNGCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNGLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNGLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNGLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNGCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNGp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNGAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNGLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNGCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNGLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNGLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNGLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNGCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNE, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNEA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNELR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNECTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNEL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNELA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNELRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNECTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNEm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNEAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNELRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNECTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNELm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNELAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNELRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNECTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNEp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNEAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNELRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNECTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNELp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNELAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNELRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNECTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNU, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNUA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNULR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNUCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNUL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNULA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNULRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNUCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNUm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNUAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNULRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNUCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNULm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNULAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNULRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNUCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNUp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNUAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNULRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNUCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNULp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNULAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNULRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNUCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNS, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNSA, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNSLR, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNSCTR, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNSL, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNSLA, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNSLRL, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNSCTRL, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNSm, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNSAm, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNSLRm, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNSCTRm, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNSLm, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNSLAm, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNSLRLm, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNSCTRLm, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_BNSp, // Real instr.: PPC_BCC
+	PPC_INS_ALIAS_BNSAp, // Real instr.: PPC_BCCA
+	PPC_INS_ALIAS_BNSLRp, // Real instr.: PPC_BCCLR
+	PPC_INS_ALIAS_BNSCTRp, // Real instr.: PPC_BCCCTR
+	PPC_INS_ALIAS_BNSLp, // Real instr.: PPC_BCCL
+	PPC_INS_ALIAS_BNSLAp, // Real instr.: PPC_BCCLA
+	PPC_INS_ALIAS_BNSLRLp, // Real instr.: PPC_BCCLRL
+	PPC_INS_ALIAS_BNSCTRLp, // Real instr.: PPC_BCCCTRL
+	PPC_INS_ALIAS_CMPWI, // Real instr.: PPC_CMPWI
+	PPC_INS_ALIAS_CMPW, // Real instr.: PPC_CMPW
+	PPC_INS_ALIAS_CMPLWI, // Real instr.: PPC_CMPLWI
+	PPC_INS_ALIAS_CMPLW, // Real instr.: PPC_CMPLW
+	PPC_INS_ALIAS_CMPDI, // Real instr.: PPC_CMPDI
+	PPC_INS_ALIAS_CMPD, // Real instr.: PPC_CMPD
+	PPC_INS_ALIAS_CMPLDI, // Real instr.: PPC_CMPLDI
+	PPC_INS_ALIAS_CMPLD, // Real instr.: PPC_CMPLD
+	PPC_INS_ALIAS_CMPI, // Real instr.: PPC_CMPWI
+	PPC_INS_ALIAS_CMP, // Real instr.: PPC_CMPW
+	PPC_INS_ALIAS_CMPLI, // Real instr.: PPC_CMPLWI
+	PPC_INS_ALIAS_CMPL, // Real instr.: PPC_CMPLW
+	PPC_INS_ALIAS_TRAP, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLTI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLT, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLTI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLT, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLEI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLE, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLEI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLE, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDEQI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDEQ, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWEQI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWEQ, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDGEI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDGE, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWGEI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWGE, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDGTI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDGT, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWGTI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWGT, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDNLI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDNL, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWNLI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWNL, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDNEI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDNE, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWNEI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWNE, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDNGI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDNG, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWNGI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWNG, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLLTI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLLT, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLLTI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLLT, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLLEI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLLE, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLLEI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLLE, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLGEI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLGE, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLGEI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLGE, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLGTI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLGT, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLGTI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLGT, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLNLI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLNL, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLNLI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLNL, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDLNGI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDLNG, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWLNGI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWLNG, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_TDUI, // Real instr.: PPC_TDI
+	PPC_INS_ALIAS_TDU, // Real instr.: PPC_TD
+	PPC_INS_ALIAS_TWUI, // Real instr.: PPC_TWI
+	PPC_INS_ALIAS_TWU, // Real instr.: PPC_TW
+	PPC_INS_ALIAS_PASTE_, // Real instr.: PPC_CP_PASTE_rec
+	PPC_INS_ALIAS_QVFCLR, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFAND, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFANDC, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFCTFB, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFXOR, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFOR, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFNOR, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFEQU, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFNOT, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFORC, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFNAND, // Real instr.: PPC_QVFLOGICALb
+	PPC_INS_ALIAS_QVFSET, // Real instr.: PPC_QVFLOGICALb
+
+	// clang-format on
+	// generated content <PPCGenCSAliasEnum.inc> end
+
+	// Hardcoded in LLVM printer
+	PPC_INS_ALIAS_SLWI, // Real instr.: PPC_RLWINM
+	PPC_INS_ALIAS_SRWI, // Real instr.: PPC_RLWINM
+	PPC_INS_ALIAS_SLDI, // Real instr.: PPC_RLDICR
+
+	PPC_INS_ALIAS_END,
+
 } ppc_insn;
 
 /// Group of PPC instructions
@@ -2079,27 +3179,199 @@ typedef enum ppc_insn_group {
 
 	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	PPC_GRP_JUMP,	///< = CS_GRP_JUMP
+	PPC_GRP_JUMP,		 ///< = CS_GRP_JUMP
+	PPC_GRP_CALL,		 ///< = CS_GRP_CALL
+	PPC_GRP_INT = 4,	 ///< = CS_GRP_INT
+	PPC_GRP_PRIVILEGE = 6,	 ///< = CS_GRP_PRIVILEGE
+	PPC_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
 	// Architecture-specific groups
-	PPC_GRP_ALTIVEC = 128,
-	PPC_GRP_MODE32,
-	PPC_GRP_MODE64,
-	PPC_GRP_BOOKE,
-	PPC_GRP_NOTBOOKE,
-	PPC_GRP_SPE,
-	PPC_GRP_VSX,
-	PPC_GRP_E500,
-	PPC_GRP_PPC4XX,
-	PPC_GRP_PPC6XX,
-	PPC_GRP_ICBT,
-	PPC_GRP_P8ALTIVEC,
-	PPC_GRP_P8VECTOR,
-	PPC_GRP_QPX,
-	PPC_GRP_PS,
+	// generated content <PPCGenCSFeatureEnum.inc> begin
+	// clang-format off
 
-	PPC_GRP_ENDING,   // <-- mark the end of the list of groups
+	PPC_FEATURE_IsNotISAFuture = 128,
+	PPC_FEATURE_IsISA3_0,
+	PPC_FEATURE_In64BitMode,
+	PPC_FEATURE_In32BitMode,
+	PPC_FEATURE_PCRelativeMemops,
+	PPC_FEATURE_HasBPERMD,
+	PPC_FEATURE_HasSPE,
+	PPC_FEATURE_IsE500,
+	PPC_FEATURE_IsPPC4xx,
+	PPC_FEATURE_HasExtDiv,
+	PPC_FEATURE_IsISAFuture,
+	PPC_FEATURE_HasFPU,
+	PPC_FEATURE_HasICBT,
+	PPC_FEATURE_HasPartwordAtomics,
+	PPC_FEATURE_IsISA2_06,
+	PPC_FEATURE_IsBookE,
+	PPC_FEATURE_HasPS,
+	PPC_FEATURE_HasQPX,
+	PPC_FEATURE_IsPPC6xx,
+
+	// clang-format on
+	// generated content <PPCGenCSFeatureEnum.inc> end
+
+	PPC_GRP_ENDING, // <-- mark the end of the list of groups
 } ppc_insn_group;
+
+/// PPC instruction formats. To get details about them please
+/// refer to `PPCInstrFormats.td` in LLVM.
+typedef enum {
+	// generated content <PPCGenCSInsnFormatsEnum.inc> begin
+	// clang-format off
+
+	PPC_INSN_FORM_XOFORM_1,
+	PPC_INSN_FORM_Z23FORM_RTAB5_CY2,
+	PPC_INSN_FORM_DFORM_BASE,
+	PPC_INSN_FORM_DXFORM,
+	PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED,
+	PPC_INSN_FORM_DFORM_4,
+	PPC_INSN_FORM_XFORM_ATTN,
+	PPC_INSN_FORM_IFORM,
+	PPC_INSN_FORM_VX_RD5_RSP5_PS1_XO9,
+	PPC_INSN_FORM_VX_RD5_EO5_RS5_PS1_XO9,
+	PPC_INSN_FORM_VXFORM_1,
+	PPC_INSN_FORM_XLFORM_2,
+	PPC_INSN_FORM_BFORM,
+	PPC_INSN_FORM_EVXFORM_1,
+	PPC_INSN_FORM_XFORM_BASE_R3XO,
+	PPC_INSN_FORM_XFORM_16,
+	PPC_INSN_FORM_DFORM_5,
+	PPC_INSN_FORM_X_BF3_RS5_RS5,
+	PPC_INSN_FORM_X_BF3_L1_RS5_RS5,
+	PPC_INSN_FORM_XLFORM_1,
+	PPC_INSN_FORM_XFORM_45,
+	PPC_INSN_FORM_DCB_FORM,
+	PPC_INSN_FORM_DCB_FORM_HINT,
+	PPC_INSN_FORM_XFORM_ATB3,
+	PPC_INSN_FORM_XFORM_AT3,
+	PPC_INSN_FORM_XX2FORM_AT3_XBP5_P2,
+	PPC_INSN_FORM_XX3FORM_AT3_XABP5_P1,
+	PPC_INSN_FORM_DSS_FORM,
+	PPC_INSN_FORM_EFXFORM_1,
+	PPC_INSN_FORM_EFXFORM_3,
+	PPC_INSN_FORM_EVXFORM_3,
+	PPC_INSN_FORM_EVXFORM_D,
+	PPC_INSN_FORM_EVXFORM_4,
+	PPC_INSN_FORM_XSFORM_1,
+	PPC_INSN_FORM_XFORM_24_SYNC,
+	PPC_INSN_FORM_AFORM_1,
+	PPC_INSN_FORM_XFORM_17,
+	PPC_INSN_FORM_XFORM_XD6_RA5_RB5,
+	PPC_INSN_FORM_XFORM_ICBT,
+	PPC_INSN_FORM_AFORM_4,
+	PPC_INSN_FORM_DFORM_1,
+	PPC_INSN_FORM_DSFORM_1,
+	PPC_INSN_FORM_DFORM_2_R0,
+	PPC_INSN_FORM_DQFORM_RTP5_RA17_MEM,
+	PPC_INSN_FORM_XX1FORM,
+	PPC_INSN_FORM_DQ_RD6_RS5_DQ12,
+	PPC_INSN_FORM_XFORM_XT6_IMM5,
+	PPC_INSN_FORM_DQFORM_XTP5_RA17_MEM,
+	PPC_INSN_FORM_XFORMMEMOP,
+	PPC_INSN_FORM_VAFORM_1A,
+	PPC_INSN_FORM_XFORM_MBAR,
+	PPC_INSN_FORM_XLFORM_3,
+	PPC_INSN_FORM_XFXFORM_3P,
+	PPC_INSN_FORM_XFXFORM_3,
+	PPC_INSN_FORM_XFXFORM_1,
+	PPC_INSN_FORM_XFXFORM_5A,
+	PPC_INSN_FORM_XFORM_SR,
+	PPC_INSN_FORM_XFORM_SRIN,
+	PPC_INSN_FORM_VXFORM_4,
+	PPC_INSN_FORM_XFXFORM_5,
+	PPC_INSN_FORM_XFLFORM_1,
+	PPC_INSN_FORM_XLFORM_4,
+	PPC_INSN_FORM_XFORM_MTMSR,
+	PPC_INSN_FORM_VXFORM_5,
+	PPC_INSN_FORM_VXFORM_RD5_XO5_RS5,
+	PPC_INSN_FORM_DCBZL_FORM,
+	PPC_INSN_FORM_PSFORM_QD,
+	PPC_INSN_FORM_PSFORM_QI,
+	PPC_INSN_FORM_PSFORM_Y,
+	PPC_INSN_FORM_PSFORM_X,
+	PPC_INSN_FORM_PSFORM_C,
+	PPC_INSN_FORM_Z23FORM_1,
+	PPC_INSN_FORM_XFORM_18,
+	PPC_INSN_FORM_XFORM_20,
+	PPC_INSN_FORM_Z23FORM_3,
+	PPC_INSN_FORM_XLFORM_S,
+	PPC_INSN_FORM_MDSFORM_1,
+	PPC_INSN_FORM_MDFORM_1,
+	PPC_INSN_FORM_MFORM_1,
+	PPC_INSN_FORM_SCFORM,
+	PPC_INSN_FORM_XFORM_44,
+	PPC_INSN_FORM_XOFORM_RTAB5_L1,
+	PPC_INSN_FORM_XFORM_HTM0,
+	PPC_INSN_FORM_XFORM_HTM3,
+	PPC_INSN_FORM_XFORM_HTM1,
+	PPC_INSN_FORM_XFORM_TLBWS,
+	PPC_INSN_FORM_XFORM_24,
+	PPC_INSN_FORM_XFORM_HTM2,
+	PPC_INSN_FORM_VXFORM_2,
+	PPC_INSN_FORM_VXRFORM_1,
+	PPC_INSN_FORM_VXFORM_BF3_VAB5,
+	PPC_INSN_FORM_VXFORM_RD5_MP_VB5,
+	PPC_INSN_FORM_VXFORM_RD5_N3_VB5,
+	PPC_INSN_FORM_VAFORM_1,
+	PPC_INSN_FORM_VXFORM_BX,
+	PPC_INSN_FORM_VXFORM_CR,
+	PPC_INSN_FORM_VNFORM_VTAB5_SD3,
+	PPC_INSN_FORM_VAFORM_2,
+	PPC_INSN_FORM_VXFORM_3,
+	PPC_INSN_FORM_VXFORM_VTB5_RC,
+	PPC_INSN_FORM_REQUIRES,
+	PPC_INSN_FORM_XX2FORM,
+	PPC_INSN_FORM_XX3FORM,
+	PPC_INSN_FORM_XX3FORM_1,
+	PPC_INSN_FORM_XX2_RD6_XO5_RS6,
+	PPC_INSN_FORM_Z23FORM_8,
+	PPC_INSN_FORM_XX2FORM_1,
+	PPC_INSN_FORM_XX2_BF3_DCMX7_RS6,
+	PPC_INSN_FORM_X_BF3_DCMX7_RS5,
+	PPC_INSN_FORM_XX2_RD5_XO5_RS6,
+	PPC_INSN_FORM_XX3FORM_AT3_XAB6,
+	PPC_INSN_FORM_XX3FORM_RC,
+	PPC_INSN_FORM_XX2_BF3_XO5_XB6_XO9,
+	PPC_INSN_FORM_XX2_RD6_DCMX7_RS6,
+	PPC_INSN_FORM_XX2_RD6_UIM5_RS6,
+	PPC_INSN_FORM_XFORM_XT6_IMM5_VB5,
+	PPC_INSN_FORM_XX3FORM_2,
+	PPC_INSN_FORM_XX4FORM,
+	PPC_INSN_FORM_X_RD6_IMM8,
+	PPC_INSN_FORM_XX2FORM_2,
+	PPC_INSN_FORM_BFORM_3,
+	PPC_INSN_FORM_BFORM_3_AT,
+
+	// clang-format on
+	// generated content <PPCGenCSInsnFormatsEnum.inc> end
+} ppc_insn_form;
+
+static inline bool ppc_is_b_form(ppc_insn_form form)
+{
+	switch (form) {
+	default:
+		return false;
+	case PPC_INSN_FORM_BFORM:
+	case PPC_INSN_FORM_BFORM_3:
+	case PPC_INSN_FORM_BFORM_3_AT:
+		return true;
+	}
+}
+
+/// Masks for specific fields
+/// Left most bit is bit 0 according to ISA
+#define PPC_INSN_FORM_B_BO_MASK 0x03e00000
+#define PPC_INSN_FORM_XL_BO_MASK 0x03e00000
+#define PPC_INSN_FORM_B_BI_MASK 0x001f0000
+#define PPC_INSN_FORM_XL_BI_MASK 0x001f0000
+#define PPC_INSN_FORM_XL_BH_MASK 0x00001800
+#define PPC_INSN_FORM_XL_XO_MASK 0x000007fe
+
+typedef struct {
+	ppc_insn_form form;
+} ppc_suppl_info;
 
 #ifdef __cplusplus
 }

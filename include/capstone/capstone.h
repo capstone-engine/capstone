@@ -225,6 +225,8 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_MASM = 1 << 5, ///< X86 Intel Masm syntax (CS_OPT_SYNTAX).
 	CS_OPT_SYNTAX_MOTOROLA = 1 << 6, ///< MOS65XX use $ as hex prefix
 	CS_OPT_SYNTAX_CS_REG_ALIAS = 1 << 7, ///< Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
+	CS_OPT_SYNTAX_PERCENT = 1 << 8, ///< Prints the % in front of PPC registers.
+	CS_OPT_DETAIL_REAL = 1 << 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.
 } cs_opt_value;
 
 /// Common instruction groups - to be consistent across all architectures.
@@ -366,6 +368,12 @@ typedef struct cs_insn {
 	/// NOTE: in Skipdata mode, "data" instruction has 0 for this id field.
 	unsigned int id;
 
+	/// If this instruction is an alias instruction, this member is set with
+	/// the alias ID.
+	/// Otherwise to <ARCH>_INS_INVALID.
+	/// -- Only supported by auto-sync archs --
+	uint64_t alias_id;
+
 	/// Address (EIP) of this instruction
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	uint64_t address;
@@ -385,6 +393,15 @@ typedef struct cs_insn {
 	/// Ascii text of instruction operands
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	char op_str[160];
+
+	/// True: This instruction is an alias.
+	/// False: Otherwise.
+	/// -- Only supported by auto-sync archs --
+	bool is_alias;
+
+	/// True: The operands are the ones of the alias instructions.
+	/// False: The detail operands are from the real instruction.
+	bool usesAliasDetails;
 
 	/// Pointer to cs_detail.
 	/// NOTE: detail pointer is only valid when both requirements below are met:

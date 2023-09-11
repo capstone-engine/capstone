@@ -1,4 +1,4 @@
-from tree_sitter import Tree, Node
+from tree_sitter import Node
 import logging as log
 
 

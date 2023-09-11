@@ -1,5 +1,4 @@
 import logging as log
-import re
 
 from tree_sitter import Node
 
@@ -47,6 +46,8 @@ class Includes(Patch):
         res = get_general_inc()
         if self.arch == "ARM":
             return res + get_ARM_includes(filename) + get_general_macros()
+        elif self.arch == "PPC":
+            return res + get_PPC_includes(filename) + get_general_macros()
         else:
             log.fatal(f"Includes of {self.arch} not handled.")
             exit(1)
@@ -59,6 +60,60 @@ def get_general_inc() -> bytes:
         + b"#include <stdlib.h>\n"
         + b"#include <capstone/platform.h>\n\n"
     )
+
+
+def get_PPC_includes(filename: str) -> bytes:
+    if filename == "PPCDisassembler.cpp":
+        return (
+            b'#include "../../LEB128.h"\n'
+            + b'#include "../../MCDisassembler.h"\n'
+            + b'#include "../../MCFixedLenDisassembler.h"\n'
+            + b'#include "../../MCInst.h"\n'
+            + b'#include "../../MCInstrDesc.h"\n'
+            + b'#include "../../MCInstPrinter.h"\n'
+            + b'#include "../../MCRegisterInfo.h"\n'
+            + b'#include "../../SStream.h"\n'
+            + b'#include "../../utils.h"\n'
+            + b'#include "PPCLinkage.h"\n'
+            + b'#include "PPCMapping.h"\n'
+            + b'#include "PPCMCTargetDesc.h"\n'
+            + b'#include "PPCPredicates.h"\n\n'
+        )
+    elif filename == "PPCInstPrinter.cpp":
+        return (
+            b'#include "../../LEB128.h"\n'
+            + b'#include "../../MCInst.h"\n'
+            + b'#include "../../MCInstrDesc.h"\n'
+            + b'#include "../../MCInstPrinter.h"\n'
+            + b'#include "../../MCRegisterInfo.h"\n'
+            + b'#include "PPCInstrInfo.h"\n'
+            + b'#include "PPCInstPrinter.h"\n'
+            + b'#include "PPCLinkage.h"\n'
+            + b'#include "PPCMCTargetDesc.h"\n'
+            + b'#include "PPCMapping.h"\n'
+            + b'#include "PPCPredicates.h"\n\n'
+            + b'#include "PPCRegisterInfo.h"\n\n'
+        )
+    elif filename == "PPCInstPrinter.h":
+        return (
+            b'#include "../../LEB128.h"\n'
+            + b'#include "../../MCDisassembler.h"\n'
+            + b'#include "../../MCInst.h"\n'
+            + b'#include "../../MCInstrDesc.h"\n'
+            + b'#include "../../MCRegisterInfo.h"\n'
+            + b'#include "../../SStream.h"\n'
+            + b'#include "PPCMCTargetDesc.h"\n\n'
+        )
+    elif filename == "PPCMCTargetDesc.h":
+        return (
+            b'#include "../../LEB128.h"\n'
+            + b'#include "../../MathExtras.h"\n'
+            + b'#include "../../MCInst.h"\n'
+            + b'#include "../../MCInstrDesc.h"\n'
+            + b'#include "../../MCRegisterInfo.h"\n'
+        )
+    log.fatal(f"No includes given for PPC source file: {filename}")
+    exit(1)
 
 
 def get_ARM_includes(filename: str) -> bytes:
