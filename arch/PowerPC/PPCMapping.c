@@ -613,6 +613,7 @@ ppc_pred PPC_get_no_hint_pred(unsigned Code)
 	case PPC_PRED_BIT_UNSET:
 		assert(0 && "Invalid use of bit predicate code");
 	}
+	return PPC_PRED_INVALID;
 }
 
 void PPC_set_mem_access(MCInst *MI, bool status)
