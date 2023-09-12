@@ -26,18 +26,6 @@ class PpcOp(ctypes.Structure):
         ('access', ctypes.c_uint),
     )
 
-class PpcBC(ctypes.Structure):
-    _fields_ = (
-        ('bo', ctypes.c_uint8),
-        ('bi', ctypes.c_uint8),
-        ('crX_bit', ctypes.c_uint),
-        ('crX', ctypes.c_uint),
-        ('hint', ctypes.c_uint),
-        ('pred_cr', ctypes.c_uint),
-        ('pred_ctr', ctypes.c_uint),
-        ('bh', ctypes.c_uint),
-    )
-
     @property
     def imm(self):
         return self.value.imm
@@ -49,6 +37,18 @@ class PpcBC(ctypes.Structure):
     @property
     def mem(self):
         return self.value.mem
+
+class PpcBC(ctypes.Structure):
+    _fields_ = (
+        ('bo', ctypes.c_uint8),
+        ('bi', ctypes.c_uint8),
+        ('crX_bit', ctypes.c_uint),
+        ('crX', ctypes.c_uint),
+        ('hint', ctypes.c_uint),
+        ('pred_cr', ctypes.c_uint),
+        ('pred_ctr', ctypes.c_uint),
+        ('bh', ctypes.c_uint),
+    )
 
 class CsPpc(ctypes.Structure):
     _fields_ = (

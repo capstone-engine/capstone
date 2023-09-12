@@ -41,7 +41,7 @@ class CsDetail(object):
         elif arch == capstone.CS_ARCH_MIPS:
             self.operands = mips.get_arch_info(detail.arch.mips)
         elif arch == capstone.CS_ARCH_PPC:
-            (self.bc, self.bh, self.update_cr0, self.operands) = \
+            (self.bc, self.update_cr0, self.operands) = \
                 ppc.get_arch_info(detail.arch.ppc)
         elif arch == capstone.CS_ARCH_SPARC:
             (self.cc, self.hint, self.operands) = sparc.get_arch_info(detail.arch.sparc)
