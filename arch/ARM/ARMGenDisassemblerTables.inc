@@ -95167,7 +95167,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx)
 				Ptr += Len; \
 				MCInst_clear(MI); \
 				MCInst_setOpcode(MI, Opc); \
-				bool DecodeComplete; \
+				bool DecodeComplete = false; \
 				S = decoder(S, DecodeIdx, insn, MI, Address, \
 					    &DecodeComplete); \
 				return S; \
@@ -95185,7 +95185,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx)
 				NumToSkip |= (*Ptr++) << 16; \
 				/* Perform the decode operation. */ \
 				MCInst_setOpcode(MI, Opc); \
-				bool DecodeComplete; \
+				bool DecodeComplete = false; \
 				S = decoder(S, DecodeIdx, insn, MI, Address, \
 					    &DecodeComplete); \
 				if (DecodeComplete) { \
