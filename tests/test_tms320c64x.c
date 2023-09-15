@@ -59,11 +59,11 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\t\toperands[%u].mem.disptype: ", i);
 				if(op->mem.disptype == TMS320C64X_MEM_DISP_INVALID) {
 					printf("Invalid\n");
-					printf("\t\t\toperands[%u].mem.disp: %u\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 				}
 				if(op->mem.disptype == TMS320C64X_MEM_DISP_CONSTANT) {
 					printf("Constant\n");
-					printf("\t\t\toperands[%u].mem.disp: %u\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 				}
 				if(op->mem.disptype == TMS320C64X_MEM_DISP_REGISTER) {
 					printf("Register\n");

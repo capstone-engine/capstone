@@ -6,7 +6,17 @@ from capstone import *
 from capstone.mos65xx import *
 from xprint import to_hex, to_x
 
-MOS65XX_CODE = b"\x0d\x34\x12\x00\x81\x65\x6c\x01\x00\x85\xFF\x10\x00\x19\x42\x42\x00\x49\x42"
+M6502_CODE = b"\xa1\x12\xa5\x12\xa9\x12\xad\x34\x12\xb1\x12\xb5\x12\xb9\x34\x12\xbd\x34\x12\x0d\x34\x12\x00\x81\x87\x6c\x01\x00\x85\xFF\x10\x00\x19\x42\x42\x00\x49\x42"
+M65C02_CODE = b"\x1a\x3a\x02\x12\x03\x5c\x34\x12"
+MW65C02_CODE = b"\x07\x12\x27\x12\x47\x12\x67\x12\x87\x12\xa7\x12\xc7\x12\xe7\x12\x10\xfe\x0f\x12\xfd\x4f\x12\xfd\x8f\x12\xfd\xcf\x12\xfd"
+M65816_CODE = b"\xa9\x34\x12\xad\x34\x12\xbd\x34\x12\xb9\x34\x12\xaf\x56\x34\x12\xbf\x56\x34\x12\xa5\x12\xb5\x12\xb2\x12\xa1\x12\xb1\x12\xa7\x12\xb7\x12\xa3\x12\xb3\x12\xc2\x00\xe2\x00\x54\x34\x12\x44\x34\x12\x02\x12"
+
+all_tests = (
+        (CS_ARCH_MOS65XX, CS_MODE_MOS65XX_6502, M6502_CODE, "MOS65XX_6502"),
+        (CS_ARCH_MOS65XX, CS_MODE_MOS65XX_65C02, M65C02_CODE, "MOS65XX_65C02"),
+        (CS_ARCH_MOS65XX, CS_MODE_MOS65XX_W65C02, MW65C02_CODE, "MOS65XX_W65C02"),
+        (CS_ARCH_MOS65XX, CS_MODE_MOS65XX_65816_LONG_MX, M65816_CODE, "MOS65XX_65816 (long m/x)"),
+)
 
 address_modes=[
     "No address mode",
@@ -35,7 +45,7 @@ address_modes=[
     "absolute long indexed with x",
     "stack relative",
     "stack relative indirect indexed with y",
-];
+]
 
 
 def print_insn_detail(insn):
@@ -62,21 +72,23 @@ def print_insn_detail(insn):
 
 # ## Test class Cs
 def test_class():
-    print("*" * 16)
-    print("Platform: %s" % "MOS65XX")
-    print("Code: %s" % to_hex(MOS65XX_CODE))
-    print("Disasm:")
+    for (arch, mode, code, comment) in all_tests:
+        print("*" * 16)
+        print("Platform: %s" % comment)
+        print("Code: %s" % to_hex(code))
+        print("Disasm:")
 
-    try:
-        md = Cs(CS_ARCH_MOS65XX, 0)
-        md.detail = True
-        for insn in md.disasm(MOS65XX_CODE, 0x1000):
-            print_insn_detail(insn)
-            print()
+        try:
+            md = Cs(arch, mode)
+            md.detail = True
+            md.syntax = CS_OPT_SYNTAX_MOTOROLA
+            for insn in md.disasm(code, 0x1000):
+                print_insn_detail(insn)
+                print()
 
-        print("0x%x:\n" % (insn.address + insn.size))
-    except CsError as e:
-        print("ERROR: %s" % e)
+            print("0x%x:\n" % (insn.address + insn.size))
+        except CsError as e:
+            print("ERROR: %s" % e)
 
 
 if __name__ == '__main__':

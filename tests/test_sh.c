@@ -29,14 +29,6 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 	printf("\n");
 }
 
-static void print_string_hex_short(unsigned char *str, size_t len)
-{
-	unsigned char *c;
-
-	for (c = str; c < str + len; c++)
-		printf("%02x", *c & 0xff);
-}
-
 static void print_read_write_regs(csh handle, cs_detail *detail)
 {
 	int i;
@@ -73,6 +65,7 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 	cs_detail *detail = insn->detail;
 	cs_sh *sh = NULL;
 	int i;
+	int n;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (detail == NULL)
@@ -151,8 +144,12 @@ static void print_insn_detail(csh handle, cs_insn *insn)
 
 	print_read_write_regs(handle, detail);
 
-	if (detail->groups_count) {
-		printf("\tgroups_count: %u\n", detail->groups_count);
+	if (detail->groups_count > 0) {
+		printf("\tgroups: ");
+		for (n = 0; n < detail->groups_count; n++) {
+			printf("%s ", cs_group_name(handle, detail->groups[n]));
+		}
+		printf("\n");
 	}
 
 	printf("\n");
@@ -166,11 +163,11 @@ static bool consistency_checks()
 static void test()
 {
 #define SH4A_CODE \
-  "\xc\x31\x10\x20\x22\x21\x36\x64\x46\x25\x12\x12\x1c\x2\x8\xc1\x5\xc7\xc" \
-  "\x71\x1f\x2\x22\xcf\x6\x89\x23\x0\x2b\x41\xb\x0\xe\x40\x32\x0\xa\xf1\x9\x0"
+  "\x0c\x31\x10\x20\x22\x21\x36\x64\x46\x25\x12\x12\x1c\x02\x08\xc1\x05\xc7\x0c" \
+  "\x71\x1f\x02\x22\xcf\x06\x89\x23\x00\x2b\x41\x0b\x00\x0e\x40\x32\x00\x0a\xf1\x09\x00"
 
 #define SH2A_CODE \
-  "\x32\x11\x92\x0\x32\x49\x31\x0"
+  "\x32\x11\x92\x00\x32\x49\x31\x00"
 
 	struct platform platforms[] = {
 		{
@@ -194,7 +191,6 @@ static void test()
 	cs_insn *insn;
 	int i;
 	size_t count;
-	const char *nine_spaces = "         ";
 
 	if (!consistency_checks())
 		abort();
@@ -219,33 +215,25 @@ static void test()
 		if (count) {
 			size_t j;
 
-			printf("********************\n");
+			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code: ", platforms[i].code,
 				platforms[i].size);
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
-				int slen;
-				printf("0x%08x: ", (uint32_t)insn[j].address);
-				print_string_hex_short(insn[j].bytes,
-					insn[j].size);
-				printf("%.*s", 1 + ((5 - insn[j].size) * 2),
-					nine_spaces);
-				printf("%s", insn[j].mnemonic);
-				slen = (int)strlen(insn[j].mnemonic);
-				printf("%.*s", 1 + (5 - slen), nine_spaces);
-				printf("%s\n", insn[j].op_str);
+				printf("0x%"PRIx64":\t%s\t%s\n", insn[j].address, insn[j].mnemonic, insn[j].op_str);
 #ifdef WITH_DETAILS
 				print_insn_detail(handle, &insn[j]);
 #endif
 			}
+			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
 
 			// free memory allocated by cs_disasm()
 			cs_free(insn, count);
 		}
 		else {
-			printf("********************\n");
+			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code:", platforms[i].code,
 				platforms[i].size);

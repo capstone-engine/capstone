@@ -15,7 +15,7 @@ def print_insn(md, code):
     print("%s\t" % to_hex(code, False), end="")
 
     for insn in md.disasm(code, 0x1000):
-        print("\t%s\t%s\n" % (insn.mnemonic, insn.op_str))
+        print("\t%s\t%s" % (insn.mnemonic, insn.op_str))
 
 
 def test():
@@ -25,11 +25,11 @@ def test():
         print("Disassemble X86 code with default instruction mnemonic")
         print_insn(md, X86_CODE32)
 
-        print("Now customize engine to change mnemonic from 'JNE' to 'JNZ'")
+        print("\nNow customize engine to change mnemonic from 'JNE' to 'JNZ'")
         md.mnemonic_setup(X86_INS_JNE, "jnz")
         print_insn(md, X86_CODE32)
 
-        print("Reset engine to use the default mnemonic")
+        print("\nReset engine to use the default mnemonic")
         md.mnemonic_setup(X86_INS_JNE, None)
         print_insn(md, X86_CODE32)
     except CsError as e:

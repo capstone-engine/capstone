@@ -78,10 +78,20 @@ static void print_insn_detail(csh cs_handle, cs_insn *ins)
 					printf("\t\tOperand[%u] type: varuint64\n", i);
 					printf("\t\tOperand[%u] value: 0x%" PRIx64 "\n", i, wasm->operands[i].varuint64);
 					break;
+				case WASM_OP_IMM:
+					printf("\t\tOperand[%u] type: imm\n", i);
+					printf("\t\tOperand[%u] value: 0x%x 0x%x\n", i, wasm->operands[i].immediate[0], wasm->operands[i].immediate[1]);
+					break;
+				case WASM_OP_BRTABLE:
+					printf("\t\tOperand[%u] type: brtable\n", i);
+					printf("\t\tOperand[%u] value: length=0x%x, address=0x%" PRIx64 ", default_target=%x\n", i, wasm->operands[i].brtable.length, wasm->operands[i].brtable.address, wasm->operands[i].brtable.default_target);
+					break;
 			}
 			printf("\t\tOperand[%u] size: %u\n", i, wasm->operands[i].size);
 		}
 	}
+
+	printf("\n");
 }
 
 static void test()

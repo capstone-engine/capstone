@@ -74,6 +74,7 @@ tests/test_mos65xx
 tests/test_bpf
 tests/test_sh
 tests/test_riscv
+tests/test_sh
 
 # regress binaries
 suite/regress/invalid_read_in_print_operand

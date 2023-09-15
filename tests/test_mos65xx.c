@@ -23,7 +23,7 @@ static void print_string_hex(const char *comment, unsigned char *str, size_t len
 
 	printf("%s", comment);
 	for (c = str; c < str + len; c++) {
-		printf(" 0x%02x", *c & 0xff);
+		printf("0x%02x ", *c & 0xff);
 	}
 
 	printf("\n");
@@ -197,7 +197,7 @@ static void test()
 
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex("Code:", platforms[i].code, platforms[i].size);
+			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
 			printf("Disasm:\n");
 
 			for (j = 0; j < count; j++) {
