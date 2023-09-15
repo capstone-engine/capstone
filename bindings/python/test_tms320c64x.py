@@ -67,7 +67,29 @@ def print_insn_detail(insn):
             if i.type == TMS320C64X_OP_REGPAIR:
                 print("\t\toperands[%u].type: REGPAIR = %s:%s" % (c, insn.reg_name(i.reg + 1), insn.reg_name(i.reg)))
             c += 1
+    
+    print("\tFunctional unit: ", end="")
+    if insn.funit.unit == TMS320C64X_FUNIT_D:
+        print("D%u" % insn.funit.side)
+    elif insn.funit.unit == TMS320C64X_FUNIT_L:
+        print("L%u" % insn.funit.side)
+    elif insn.funit.unit == TMS320C64X_FUNIT_M:
+        print("M%u" % insn.funit.side)
+    elif insn.funit.unit == TMS320C64X_FUNIT_S:
+        print("S%u" % insn.funit.side)
+    elif insn.funit.unit == TMS320C64X_FUNIT_NO:
+        print("No Functional Unit")
+    else:
+        print("Unknown (Unit %u, Side %u)" % (insn.funit.unit, insn.funit.side))
 
+    if insn.funit.crosspath == 1:
+        print("\tCrosspath: 1")
+    
+    if insn.condition.reg != TMS320C64X_REG_INVALID:
+        print("\tCondition: [%c%s]" % ("!" if insn.condition.zero == 1 else " ", insn.reg_name(insn.condition.reg)))
+    print("\tParallel: %s" % ("true" if insn.parallel == 1 else "false"))
+
+    print()
 
 # ## Test class Cs
 def test_class():
@@ -83,7 +105,6 @@ def test_class():
             md.detail = True
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
-                print ()
             print("0x%x:\n" % (insn.address + insn.size))
         except CsError as e:
             print("ERROR: %s" %e)

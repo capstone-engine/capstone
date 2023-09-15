@@ -5,10 +5,9 @@
 from __future__ import print_function
 from capstone import *
 from capstone.tricore import *
-from xprint import to_x, to_hex
+from xprint import to_x_32, to_hex
 
-TRICORE_CODE = b"\x16\x01\x20\x01\x1d\x00\x02\x00\x8f\x70\x00\x11\x40\xae\x89\xee\x04\x09\x42\xf2\xe2\xf2\xc2\x11\x19" \
-               b"\xff\xc0\x70\x19\xff\x20\x10"
+TRICORE_CODE = b"\x09\xcf\xbc\xf5\x09\xf4\x01\x00\x89\xfb\x8f\x74\x89\xfe\x48\x01\x29\x00\x19\x25\x29\x03\x09\xf4\x85\xf9\x68\x0f\x16\x01"
 
 all_tests = (
     (CS_ARCH_TRICORE, CS_MODE_TRICORE_162, TRICORE_CODE, "TriCore"),
@@ -30,7 +29,7 @@ def print_insn_detail(insn):
             if i.type == TRICORE_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == TRICORE_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.imm)))
             if i.type == TRICORE_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
@@ -38,8 +37,9 @@ def print_insn_detail(insn):
                           % (c, insn.reg_name(i.mem.base)))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                          % (c, to_x(i.mem.disp)))
+                          % (c, to_x_32(i.mem.disp)))
             c += 1
+    print()
 
 
 # ## Test class Cs
@@ -55,8 +55,7 @@ def test_class():
             md.detail = True
             for insn in md.disasm(code, 0x1000):
                 print_insn_detail(insn)
-                print()
-                print("0x%x:\n" % (insn.address + insn.size))
+            print("0x%x:" % (insn.address + insn.size))
         except CsError as e:
             print("ERROR: %s" % e)
 

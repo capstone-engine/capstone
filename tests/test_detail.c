@@ -67,7 +67,7 @@ static void test()
 #define XCORE_CODE "\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10"
 #endif
 #ifdef CAPSTONE_HAS_M68K
-#define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28"
+#define M68K_CODE "\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4E\xB9\x00\x00\x00\x12\x4E\x75"
 #endif
 #ifdef CAPSTONE_HAS_M680X
 #define M680X_CODE "\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\x89\x7f\xff\xa6\x9d\x10\x00\xa7\x91\xa6\x9f\x10\x00\x11\xac\x99\x10\x00\x39"
@@ -75,7 +75,9 @@ static void test()
 #ifdef CAPSTONE_HAS_MOS65XX
 #define MOS65XX_CODE "\x0A\x00\xFE\x34\x12\xD0\xFF\xEA\x19\x56\x34\x46\x80"
 #endif
+#ifdef CAPSTONE_HAS_BPF
 #define EBPF_CODE "\x97\x09\x00\x00\x37\x13\x03\x00\xdc\x02\x00\x00\x20\x00\x00\x00\x30\x00\x00\x00\x00\x00\x00\x00\xdb\x3a\x00\x01\x00\x00\x00\x00\x84\x02\x00\x00\x00\x00\x00\x00\x6d\x33\x17\x02\x00\x00\x00\x00"
+#endif
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
@@ -120,13 +122,6 @@ static void test()
 		},
 		{
 			CS_ARCH_ARM,
-			CS_MODE_THUMB,
-			(unsigned char *)THUMB_CODE2,
-			sizeof(THUMB_CODE2) - 1,
-			"THUMB-2"
-		},
-		{
-			CS_ARCH_ARM,
 			CS_MODE_ARM,
 			(unsigned char *)ARM_CODE2,
 			sizeof(ARM_CODE2) - 1,
@@ -141,6 +136,13 @@ static void test()
 		},
 		{
 			CS_ARCH_ARM,
+			CS_MODE_THUMB,
+			(unsigned char *)THUMB_CODE2,
+			sizeof(THUMB_CODE2) - 1,
+			"THUMB-2"
+		},
+		{
+			CS_ARCH_ARM,
 			(cs_mode)(CS_MODE_THUMB + CS_MODE_MCLASS),
 			(unsigned char*)THUMB_MCLASS,
 			sizeof(THUMB_MCLASS) - 1,
@@ -152,6 +154,15 @@ static void test()
 			(unsigned char*)ARMV8,
 			sizeof(ARMV8) - 1,
 			"Arm-V8"
+		},
+#endif
+#ifdef CAPSTONE_HAS_ARM64
+		{
+			CS_ARCH_ARM64,
+			CS_MODE_ARM,
+			(unsigned char *)ARM64_CODE,
+			sizeof(ARM64_CODE) - 1,
+			"ARM-64"
 		},
 #endif
 #ifdef CAPSTONE_HAS_MIPS
@@ -182,15 +193,6 @@ static void test()
 			(unsigned char*)MIPS_32R6,
 			sizeof(MIPS_32R6) - 1,
 			"MIPS-32R6 (Big-endian)"
-		},
-#endif
-#ifdef CAPSTONE_HAS_ARM64
-		{
-			CS_ARCH_ARM64,
-			CS_MODE_ARM,
-			(unsigned char *)ARM64_CODE,
-			sizeof(ARM64_CODE) - 1,
-			"ARM-64"
 		},
 #endif
 #ifdef CAPSTONE_HAS_POWERPC

@@ -6,7 +6,7 @@
 from __future__ import print_function
 from capstone import *
 from capstone.bpf import *
-from xprint import to_hex, to_x_32
+from xprint import to_hex, to_x, to_x_32
 
 
 CBPF_CODE = b"\x94\x09\x00\x00\x37\x13\x03\x00\x87\x00\x00\x00\x00\x00\x00\x00\x07\x00\x00\x00\x00\x00\x00\x00\x16\x00\x00\x00\x00\x00\x00\x00\x80\x00\x00\x00\x00\x00\x00\x00"
@@ -37,7 +37,7 @@ def print_insn_detail(insn):
         if op.type == BPF_OP_REG:
             print("REG = " + insn.reg_name(op.reg))
         elif op.type == BPF_OP_IMM:
-            print("IMM = " + hex(op.imm)[:-1])
+            print("IMM = 0x" + to_x(op.imm))
         elif op.type == BPF_OP_OFF:
             print("OFF = +0x" + to_x_32(op.off))
         elif op.type == BPF_OP_MEM:
