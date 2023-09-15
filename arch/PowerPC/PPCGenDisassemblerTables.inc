@@ -9819,7 +9819,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
       NumToSkip |= (*Ptr++) << 16; \
       /* Perform the decode operation. */ \
       MCInst_setOpcode(MI, Opc); \
-      bool DecodeComplete; \
+      bool DecodeComplete = false; \
       S = decoder(S, DecodeIdx, insn, MI, Address, &DecodeComplete); \
       if (DecodeComplete) { \
         /* Decoding complete. */ \
