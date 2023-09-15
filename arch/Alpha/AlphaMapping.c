@@ -37,7 +37,7 @@ void Alpha_init_cs_detail(MCInst *MI)
 
 void Alpha_add_cs_detail(MCInst *MI, unsigned OpNum)
 {
-	if (!MI->csh->detail)
+	if (!detail_is_set(MI))
 		return;
 
 	cs_op_type op_type = map_get_op_type(MI, OpNum);
@@ -87,7 +87,7 @@ void Alpha_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	if (i != 0) {
 		insn->id = insns[i].mapid;
 
-		if (h->detail) {
+		if (insn->detail) {
 #ifndef CAPSTONE_DIET
 			memcpy(insn->detail->regs_read, insns[i].regs_use,
 				   sizeof(insns[i].regs_use));
