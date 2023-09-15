@@ -1720,7 +1720,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI,\
 \
       MCInst_clear(MI);\
       MCInst_setOpcode(MI, Opc);\
-      bool DecodeComplete;\
+      bool DecodeComplete = false;\
       S = decoder(S, DecodeIdx, insn, MI, Address, DisAsm, &DecodeComplete);\
       CS_ASSERT(DecodeComplete);\
 \
@@ -1738,7 +1738,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI,\
 \
       MCInst TmpMI;\
       MCInst_setOpcode(&TmpMI, Opc);\
-      bool DecodeComplete;\
+      bool DecodeComplete = false;\
       S = decoder(S, DecodeIdx, insn, &TmpMI, Address, DisAsm, &DecodeComplete);\
 \
       if (DecodeComplete) {\
