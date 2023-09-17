@@ -393,7 +393,10 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			return;
 		unsigned Val = MCInst_getOpVal(MI, OpNum) << 2;
 		int32_t Imm = SignExtend32(Val, 32);
-		PPC_set_detail_op_imm(MI, OpNum, Imm);
+		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
+		PPC_get_detail_op(MI, 0)->imm = Imm;
+		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		PPC_inc_op_count(MI);
 		break;
 	}
 	case PPC_OP_GROUP_TLSCall:
@@ -413,7 +416,10 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		uint64_t Address = MI->address + Imm;
 		if (IS_32BIT(MI->csh->mode))
 			Address &= 0xffffffff;
-		PPC_set_detail_op_imm(MI, OpNum, Address);
+		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
+		PPC_get_detail_op(MI, 0)->imm = Address;
+		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		PPC_inc_op_count(MI);
 		break;
 	}
 	// Memory operands have their `set_mem_access()` calls
@@ -525,15 +531,20 @@ void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val,
 	default:
 		assert(0 && "Secondary type not supported yet.");
 	case CS_OP_REG:
-		if (is_off_reg)
+		if (is_off_reg) {
 			PPC_get_detail_op(MI, 0)->mem.offset = Val;
-		else
+			if (PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID)
+				set_mem_access(MI, false);
+		}	else {
 			PPC_get_detail_op(MI, 0)->mem.base = Val;
-		if (MCInst_opIsTying(MI, OpNum))
-			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+			if (MCInst_opIsTying(MI, OpNum))
+				map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+		}
 		break;
 	case CS_OP_IMM:
 		PPC_get_detail_op(MI, 0)->mem.disp = Val;
+		if (PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID)
+			set_mem_access(MI, false);
 		break;
 	}
 
