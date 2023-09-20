@@ -15,47 +15,72 @@ static const char* get_pred_name(ppc_pred pred)
 		case PPC_PRED_LT:
 		case PPC_PRED_LT_MINUS:
 		case PPC_PRED_LT_PLUS:
+		case PPC_PRED_LT_RESERVED:
 			return ("lt");
 		case PPC_PRED_LE:
 		case PPC_PRED_LE_MINUS:
 		case PPC_PRED_LE_PLUS:
+		case PPC_PRED_LE_RESERVED:
 			return ("le");
 		case PPC_PRED_EQ:
 		case PPC_PRED_EQ_MINUS:
 		case PPC_PRED_EQ_PLUS:
+		case PPC_PRED_EQ_RESERVED:
 			return ("eq");
 		case PPC_PRED_GE:
 		case PPC_PRED_GE_MINUS:
 		case PPC_PRED_GE_PLUS:
+		case PPC_PRED_GE_RESERVED:
 			return ("ge");
 		case PPC_PRED_GT:
 		case PPC_PRED_GT_MINUS:
 		case PPC_PRED_GT_PLUS:
+		case PPC_PRED_GT_RESERVED:
 			return ("gt");
 		case PPC_PRED_NE:
 		case PPC_PRED_NE_MINUS:
 		case PPC_PRED_NE_PLUS:
+		case PPC_PRED_NE_RESERVED:
 			return ("ne");
 		case PPC_PRED_UN: // PPC_PRED_SO
 		case PPC_PRED_UN_MINUS:
 		case PPC_PRED_UN_PLUS:
+		case PPC_PRED_UN_RESERVED:
 			return ("so/un");
 		case PPC_PRED_NU: // PPC_PRED_NS
 		case PPC_PRED_NU_MINUS:
 		case PPC_PRED_NU_PLUS:
+		case PPC_PRED_NU_RESERVED:
 			return ("ns/nu");
 		case PPC_PRED_NZ:
 		case PPC_PRED_NZ_MINUS:
 		case PPC_PRED_NZ_PLUS:
+		case PPC_PRED_NZ_RESERVED:
 			return ("nz");
 		case PPC_PRED_Z:
 		case PPC_PRED_Z_MINUS:
 		case PPC_PRED_Z_PLUS:
+		case PPC_PRED_Z_RESERVED:
 			return ("z");
 		case PPC_PRED_BIT_SET:
 			return "bit-set";
 		case PPC_PRED_BIT_UNSET:
 			return "bit-unset";
+	}
+}
+
+static const char *get_pred_hint(ppc_br_hint at) {
+	switch (at) {
+	default:
+		return "invalid";
+	case PPC_BR_NOT_GIVEN:
+		return "not-given";
+	case PPC_BR_TAKEN:
+		return "likely-taken";
+	case PPC_BR_NOT_TAKEN:
+		return "likely-not-taken";
+	case PPC_BR_RESERVED:
+		return "reserved";
 	}
 }
 
@@ -125,7 +150,7 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 		if (ppc->bc.pred_ctr != PPC_PRED_INVALID)
 			printf("\t\tpred CTR: %s\n", get_pred_name(ppc->bc.pred_ctr));
 		if (ppc->bc.hint != PPC_BH_INVALID)
-			printf("\t\thint: %u\n", ppc->bc.hint);
+			printf("\t\thint: %s\n", get_pred_hint(ppc->bc.hint));
 	}
 
 	if (ppc->bc.hint != PPC_BR_NOT_GIVEN)

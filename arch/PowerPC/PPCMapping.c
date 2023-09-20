@@ -582,51 +582,6 @@ void PPC_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm)
 	PPC_inc_op_count(MI);
 }
 
-/// Returns the predicate wihtout branch hint information.
-ppc_pred PPC_get_no_hint_pred(unsigned Code)
-{
-	switch (Code) {
-	default:
-		assert(0 && "Invalid predicate code");
-	case PPC_PRED_LT:
-	case PPC_PRED_LT_MINUS:
-	case PPC_PRED_LT_PLUS:
-		return PPC_PRED_LT;
-	case PPC_PRED_LE:
-	case PPC_PRED_LE_MINUS:
-	case PPC_PRED_LE_PLUS:
-		return PPC_PRED_LE;
-	case PPC_PRED_EQ:
-	case PPC_PRED_EQ_MINUS:
-	case PPC_PRED_EQ_PLUS:
-		return PPC_PRED_EQ;
-	case PPC_PRED_GE:
-	case PPC_PRED_GE_MINUS:
-	case PPC_PRED_GE_PLUS:
-		return PPC_PRED_GE;
-	case PPC_PRED_GT:
-	case PPC_PRED_GT_MINUS:
-	case PPC_PRED_GT_PLUS:
-		return PPC_PRED_GT;
-	case PPC_PRED_NE:
-	case PPC_PRED_NE_MINUS:
-	case PPC_PRED_NE_PLUS:
-		return PPC_PRED_NE;
-	case PPC_PRED_UN:
-	case PPC_PRED_UN_MINUS:
-	case PPC_PRED_UN_PLUS:
-		return PPC_PRED_UN;
-	case PPC_PRED_NU:
-	case PPC_PRED_NU_MINUS:
-	case PPC_PRED_NU_PLUS:
-		return PPC_PRED_NU;
-	case PPC_PRED_BIT_SET:
-	case PPC_PRED_BIT_UNSET:
-		assert(0 && "Invalid use of bit predicate code");
-	}
-	return PPC_PRED_INVALID;
-}
-
 void PPC_set_mem_access(MCInst *MI, bool status)
 {
 	if (!detail_is_set(MI))
