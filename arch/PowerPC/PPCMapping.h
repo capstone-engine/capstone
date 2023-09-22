@@ -68,7 +68,6 @@ void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 
 void PPC_setup_op(cs_ppc_op *op);
 
-ppc_pred PPC_get_no_hint_pred(unsigned Code);
 void PPC_check_updates_cr0(MCInst *MI);
 void PPC_set_instr_map_data(MCInst *MI, const uint8_t *Bytes, size_t BytesLen);
 
