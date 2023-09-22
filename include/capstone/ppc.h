@@ -8,6 +8,7 @@
 extern "C" {
 #endif
 
+#include <assert.h>
 #include "cs_operand.h"
 #include "platform.h"
 
@@ -89,8 +90,19 @@ typedef enum ppc_pred {
 	PPC_PRED_NE_PLUS = (2 << 5) | 7,
 	PPC_PRED_UN_PLUS = (3 << 5) | 15,
 	PPC_PRED_NU_PLUS = (3 << 5) | 7,
-	PPC_PRED_NZ_PLUS = (0 << 5) | 17,
-	PPC_PRED_Z_PLUS = (0 << 5) | 19,
+	PPC_PRED_NZ_PLUS = (0 << 5) | 25,
+	PPC_PRED_Z_PLUS = (0 << 5) | 27,
+	// Reserved
+	PPC_PRED_LT_RESERVED = (0 << 5) | 13,
+	PPC_PRED_LE_RESERVED = (1 << 5) | 5,
+	PPC_PRED_EQ_RESERVED = (2 << 5) | 13,
+	PPC_PRED_GE_RESERVED = (0 << 5) | 5,
+	PPC_PRED_GT_RESERVED = (1 << 5) | 13,
+	PPC_PRED_NE_RESERVED = (2 << 5) | 5,
+	PPC_PRED_UN_RESERVED = (3 << 5) | 13,
+	PPC_PRED_NU_RESERVED = (3 << 5) | 5,
+	PPC_PRED_NZ_RESERVED = (0 << 5) | 17,
+	PPC_PRED_Z_RESERVED = (0 << 5) | 19,
 
 	// SPE scalar compare instructions always set the GT bit.
 	PPC_PRED_SPE = PPC_PRED_GT,
@@ -141,6 +153,71 @@ typedef enum {
 	PPC_BH_RESERVED,
 } ppc_bh;
 
+
+/// Returns the predicate wihtout branch hint information.
+inline static ppc_pred PPC_get_no_hint_pred(ppc_pred Code)
+{
+	switch (Code) {
+	default:
+		return PPC_PRED_INVALID;
+	case PPC_PRED_LT:
+	case PPC_PRED_LT_MINUS:
+	case PPC_PRED_LT_PLUS:
+	case PPC_PRED_LT_RESERVED:
+		return PPC_PRED_LT;
+	case PPC_PRED_LE:
+	case PPC_PRED_LE_MINUS:
+	case PPC_PRED_LE_PLUS:
+	case PPC_PRED_LE_RESERVED:
+		return PPC_PRED_LE;
+	case PPC_PRED_EQ:
+	case PPC_PRED_EQ_MINUS:
+	case PPC_PRED_EQ_PLUS:
+	case PPC_PRED_EQ_RESERVED:
+		return PPC_PRED_EQ;
+	case PPC_PRED_GE:
+	case PPC_PRED_GE_MINUS:
+	case PPC_PRED_GE_PLUS:
+	case PPC_PRED_GE_RESERVED:
+		return PPC_PRED_GE;
+	case PPC_PRED_GT:
+	case PPC_PRED_GT_MINUS:
+	case PPC_PRED_GT_PLUS:
+	case PPC_PRED_GT_RESERVED:
+		return PPC_PRED_GT;
+	case PPC_PRED_NE:
+	case PPC_PRED_NE_MINUS:
+	case PPC_PRED_NE_PLUS:
+	case PPC_PRED_NE_RESERVED:
+		return PPC_PRED_NE;
+	case PPC_PRED_UN:
+	case PPC_PRED_UN_MINUS:
+	case PPC_PRED_UN_PLUS:
+	case PPC_PRED_UN_RESERVED:
+		return PPC_PRED_UN;
+	case PPC_PRED_NU:
+	case PPC_PRED_NU_MINUS:
+	case PPC_PRED_NU_PLUS:
+	case PPC_PRED_NU_RESERVED:
+		return PPC_PRED_NU;
+	case PPC_PRED_NZ:
+	case PPC_PRED_NZ_MINUS:
+	case PPC_PRED_NZ_PLUS:
+	case PPC_PRED_NZ_RESERVED:
+		return PPC_PRED_NZ;
+	case PPC_PRED_Z:
+	case PPC_PRED_Z_MINUS:
+	case PPC_PRED_Z_PLUS:
+	case PPC_PRED_Z_RESERVED:
+		return PPC_PRED_Z;
+	case PPC_PRED_BIT_SET:
+		return PPC_PRED_BIT_SET;
+	case PPC_PRED_BIT_UNSET:
+		return PPC_PRED_BIT_UNSET;
+	}
+	return PPC_PRED_INVALID;
+}
+
 /// Returns the hint encoded in the BO bits a and t.
 static inline ppc_br_hint PPC_get_hint(uint8_t bo)
 {
@@ -158,6 +235,7 @@ static inline ppc_br_hint PPC_get_hint(uint8_t bo)
 /// Returns the branch predicate encoded in the BO and BI field.
 /// If get_cr_pred = true the CR-bit predicate is returned (LE, GE, EQ...).
 /// Otherwise the CTR predicate (NZ, Z)
+/// The branch hint does not include the hint of the 'at' bits.
 ///
 /// It returns PPC_PRED_INVALID if the CR predicate is requested, but no
 /// CR predicate is encoded in BI and BO. Same for the CTR predicate.
@@ -176,11 +254,11 @@ static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo,
 		// The CTR condition without the CR-bit condition.
 		unsigned ctr_bo_cond = (bo | PPC_BO_TEST_CR) & ~PPC_BO_CR_CMP;
 		if (get_cr_pred)
-			return (ppc_pred)(((bi % 4) << 5) | cr_bo_cond);
-		return (ppc_pred)ctr_bo_cond; // BI is ignored
+			return PPC_get_no_hint_pred((ppc_pred)(((bi % 4) << 5) | cr_bo_cond));
+		return PPC_get_no_hint_pred((ppc_pred)ctr_bo_cond); // BI is ignored
 	}
 	// BO doesn't need any separation
-	return (ppc_pred)(((bi % 4) << 5) | bo);
+	return PPC_get_no_hint_pred((ppc_pred)(((bi % 4) << 5) | bo));
 }
 
 /// Operand type for instruction's operands
