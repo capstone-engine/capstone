@@ -808,7 +808,7 @@ DEFINE_printAddrMode5Operand(false) DEFINE_printAddrMode5Operand(true)
 	printRegName(O, MCOperand_getReg(MO1));
 	if (MCOperand_getImm(MO2)) {
 		SStream_concat(O, "%s", ":");
-		printInt64(O, ((int32_t)MCOperand_getImm(MO2)) << 3);
+		printInt64(O, ((uint32_t)MCOperand_getImm(MO2)) << 3);
 	}
 	SStream_concat(O, "%s", "]");
 	SStream_concat0(O, markup(">"));
@@ -1177,7 +1177,7 @@ void printPCLabel(MCInst *MI, unsigned OpNum, SStream *O)
 			return; \
 		} \
 \
-		int32_t OffImm = (int32_t)MCOperand_getImm(MO) << scale; \
+		int32_t OffImm = (uint32_t)MCOperand_getImm(MO) << scale; \
 \
 		SStream_concat0(O, markup("<imm:")); \
 		if (OffImm == INT32_MIN) \
