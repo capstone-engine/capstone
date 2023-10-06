@@ -9,5 +9,6 @@ Version: @PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@
 URL: https://www.capstone-engine.org/
 archive=${libdir}/libcapstone.a
 Libs: -L${libdir} -lcapstone
+Libs.private: -L${libdir} -l:libcapstone.a
 Cflags: -I${includedir}/capstone
 archs=@CAPSTONE_ARCHITECTURES@
