@@ -631,6 +631,7 @@ define generate-pkgcfg
 	echo 'includedir=$(INCDIR)/capstone' >> $(PKGCFGF)
 	echo 'archive=$${libdir}/libcapstone.a' >> $(PKGCFGF)
 	echo 'Libs: -L$${libdir} -lcapstone' >> $(PKGCFGF)
+	echo 'Libs.private: -L$${libdir} -l:libcapstone.a' >> $(PKGCFGF)
 	echo 'Cflags: -I$${includedir}' >> $(PKGCFGF)
 	echo 'archs=${CAPSTONE_ARCHS}' >> $(PKGCFGF)
 endef
