@@ -279,7 +279,8 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	MI->fillDetailOps = detail_is_set(MI);
 	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	AArch64_LLVM_printInstruction(MI, O, info);
-	AArch64_get_detail(MI)->post_index = AArch64_check_post_index_am(MI, O);
+	if (detail_is_set(MI))
+		AArch64_get_detail(MI)->post_index = AArch64_check_post_index_am(MI, O);
 	AArch64_check_updates_flags(MI);
 	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
 	int syntax_opt = MI->csh->syntax;
