@@ -273,6 +273,29 @@ static void patch_cs_reg_alias(char *asm_str)
 	}
 }
 
+/// Adds group to the instruction which are not defined in LLVM.
+static void AArch64_add_cs_groups(MCInst *MI)
+{
+	unsigned Opcode = MI->flat_insn->id;
+	switch (Opcode) {
+	default:
+		return;
+	case AArch64_INS_SVC:
+		add_group(MI, AArch64_GRP_INT);
+		break;
+	case AArch64_INS_SMC:
+	case AArch64_INS_MSR:
+	case AArch64_INS_MRS:
+		add_group(MI, AArch64_GRP_PRIVILEGE);
+		break;
+	case AArch64_INS_RET:
+	case AArch64_INS_RETAA:
+	case AArch64_INS_RETAB:
+		add_group(MI, AArch64_GRP_RET);
+		break;
+	}
+}
+
 void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
@@ -286,6 +309,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
 		patch_cs_reg_alias(O->buffer);
+	AArch64_add_cs_groups(MI);
 }
 
 // given internal insn id, return public instruction info
