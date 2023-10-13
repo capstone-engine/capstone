@@ -563,7 +563,7 @@ static unsigned get_vec_list_first_reg(MCInst *MI, unsigned RegL) {
 			Reg)) {
 		const MCRegisterClass *FPR128RC =
 			MCRegisterInfo_getRegClass(MI->MRI, AArch64_FPR128RegClassID);
-		Reg = MCRegisterInfo_getMatchingSuperReg(MI->MRI, RegL, AArch64_dsub,
+		Reg = MCRegisterInfo_getMatchingSuperReg(MI->MRI, Reg, AArch64_dsub,
 									 FPR128RC);
 	}
 	return Reg;
