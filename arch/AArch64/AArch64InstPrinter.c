@@ -1305,8 +1305,9 @@ DEFINE_printMatrix(0);
 \
 		const char *RegName = getRegisterName(MCOperand_getReg(RegOp), AArch64_NoRegAltName); \
 \
-		char *Base = malloc(strlen(RegName) + 1); \
-		strncpy(Base, RegName, strlen(RegName) + 1); \
+		unsigned buf_len = strlen(RegName) + 1; \
+		char *Base = calloc(1, buf_len); \
+		memcpy(Base, RegName, buf_len); \
 		char *Dot = strchr(Base, '.'); \
 		if (!Dot) { \
 			SStream_concat0(O, RegName); \
