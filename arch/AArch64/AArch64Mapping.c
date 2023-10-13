@@ -1136,9 +1136,12 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_PostIncOperand_8: {
 		uint64_t Imm = temp_arg_0;
 		unsigned Reg = MCInst_getOpVal(MI, OpNum);
-		if (Reg == AArch64_XZR)
-			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, Imm);
-		else
+		if (Reg == AArch64_XZR) {
+			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_IMM;
+			AArch64_get_detail_op(MI, 0)->imm = Imm;
+			AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+			AArch64_inc_op_count(MI);
+		} else
 			AArch64_set_detail_op_reg(MI, OpNum, Reg);
 		break;
 	}
