@@ -2858,6 +2858,8 @@ typedef struct cs_aarch64_op {
   bool is_list_member; ///< True if this operand is part of a register or vector list.
 } cs_aarch64_op;
 
+#define MAX_AARCH64_OPS 8
+
 /// Instruction structure
 typedef struct cs_aarch64 {
   AArch64CC_CondCode cc;	     ///< conditional code for this insn
@@ -2869,7 +2871,7 @@ typedef struct cs_aarch64 {
   /// or 0 when instruction has no operand.
   uint8_t op_count;
 
-  cs_aarch64_op operands[8]; ///< operands for this instruction.
+  cs_aarch64_op operands[MAX_AARCH64_OPS]; ///< operands for this instruction.
 } cs_aarch64;
 
 /// AArch64 instruction

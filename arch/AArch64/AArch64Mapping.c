@@ -222,6 +222,25 @@ static void AArch64_check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
+static void AArch64_add_not_defined_ops(MCInst *MI)
+{
+	if (!detail_is_set(MI))
+		return;
+	unsigned Opcode = MCInst_getOpcode(MI);
+	switch (Opcode) {
+	default:
+		return;
+	case AArch64_FCMPDri:
+	case AArch64_FCMPEDri:
+	case AArch64_FCMPEHri:
+	case AArch64_FCMPESri:
+	case AArch64_FCMPHri:
+	case AArch64_FCMPSri:
+		AArch64_insert_detail_op_reg_at(MI, -1, AArch64_REG_XZR, CS_AC_READ);
+		break;
+	}
+}
+
 void AArch64_set_instr_map_data(MCInst *MI)
 {
 	map_cs_id(MI, aarch64_insns, ARR_SIZE(aarch64_insns));
@@ -231,12 +250,12 @@ void AArch64_set_instr_map_data(MCInst *MI)
 }
 
 bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-						MCInst *instr, uint16_t *size, uint64_t address,
+						MCInst *MI, uint16_t *size, uint64_t address,
 						void *info) {
-	AArch64_init_cs_detail(instr);
-	bool Result = AArch64_LLVM_getInstruction(handle, code, code_len, instr, size, address,
+	AArch64_init_cs_detail(MI);
+	bool Result = AArch64_LLVM_getInstruction(handle, code, code_len, MI, size, address,
 								 info) != MCDisassembler_Fail;
-	AArch64_set_instr_map_data(instr);
+	AArch64_set_instr_map_data(MI);
 	return Result;
 }
 
@@ -309,6 +328,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
 		patch_cs_reg_alias(O->buffer);
+	AArch64_add_not_defined_ops(MI);
 	AArch64_add_cs_groups(MI);
 }
 
@@ -1975,6 +1995,38 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum, aarch64_sme_op_part p
 		break;
 	}
 	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+	AArch64_inc_op_count(MI);
+}
+
+/// Inserts a register to the detail operands at @index.
+/// If @index == -1, it pushes the operand to the end of the ops array.
+/// Already present operands are moved.
+void AArch64_insert_detail_op_reg_at(MCInst *MI, unsigned index, aarch64_reg Reg,
+				 cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+
+	cs_aarch64_op op;
+	AArch64_setup_op(&op);
+	op.type = AArch64_OP_REG;
+	op.reg = Reg;
+	op.access = access;
+
+	cs_aarch64_op *ops = AArch64_get_detail(MI)->operands;
+	int i = AArch64_get_detail(MI)->op_count;
+	assert(i < MAX_AARCH64_OPS);
+	if (index == -1) {
+		ops[i] = op;
+		AArch64_inc_op_count(MI);
+		return;
+	}
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
+	}
+	ops[index] = op;
 	AArch64_inc_op_count(MI);
 }
 
