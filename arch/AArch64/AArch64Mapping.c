@@ -549,13 +549,23 @@ static unsigned get_vec_list_first_reg(MCInst *MI, unsigned RegL) {
 	return Reg;
 }
 
+static bool is_vector_reg(unsigned Reg) {
+	if ((Reg >= AArch64_Q0) && (Reg <= AArch64_Q31))
+		return true;
+	else if ((Reg >= AArch64_Z0) && (Reg <= AArch64_Z31))
+		return true;
+	else if ((Reg >= AArch64_P0) && (Reg <= AArch64_P15))
+		return true;
+	return false;
+}
+
 static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 {
 	while (Stride--) {
-		if (Reg < AArch64_Q0 && Reg > AArch64_Q31 &&
-				Reg < AArch64_Z0 && Reg > AArch64_Z31 &&
-				Reg < AArch64_P0 && Reg > AArch64_P15)
+		if (!is_vector_reg(Reg)) {
 			assert(0 && "Vector register expected!");
+			return 0;
+		}
 		// Vector lists can wrap around.
 		else if (Reg == AArch64_Q31)
 			Reg = AArch64_Q0;
