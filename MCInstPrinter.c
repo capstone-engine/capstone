@@ -15,11 +15,12 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 	switch (MI->csh->arch) {
 	default:
 		assert(0 && "Not implemented for current arch.");
+		return false;
 #ifdef CAPSTONE_HAS_ARM
 	case CS_ARCH_ARM:
 		return ARM_getFeatureBits(MI->csh->mode, Value);
 #endif
-#ifdef CAPSTONE_HAS_PPC
+#ifdef CAPSTONE_HAS_POWERPC
 	case CS_ARCH_PPC:
 		return PPC_getFeatureBits(MI->csh->mode, Value);
 #endif
