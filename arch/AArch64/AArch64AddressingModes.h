@@ -209,7 +209,7 @@ AArch64_AM_getArithExtendType(unsigned Imm)
 ///            101 ==> sxth
 ///            110 ==> sxtw
 ///            111 ==> sxtx
-inline unsigned AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType ET)
+static inline unsigned AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType ET)
 {
 	switch (ET) {
 	default:
