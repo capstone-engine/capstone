@@ -156,6 +156,7 @@ inline static const char *ARMVPTPredToString(ARMVCC_VPTCodes CC)
     return "e";
   }
   assert(0 && "Unknown VPT code");
+  return "";
 }
 
 inline static unsigned ARMVectorCondCodeFromString(const char CC)
