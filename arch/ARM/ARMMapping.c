@@ -1369,7 +1369,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		unsigned int imm3 = MCInst_getOpVal(MI, OpNum + 2);
 		unsigned ShOff = ARM_AM_getAM2Offset(imm3);
 		ARM_AM_AddrOpc subtracted = ARM_AM_getAM2Op(imm3);
-		if (!MCOperand_getReg(MCInst_getOperand(MI, OpNum + 2)) &&
+		if (!MCOperand_getReg(MCInst_getOperand(MI, OpNum + 1)) &&
 		    ShOff) {
 			ARM_get_detail_op(MI, 0)->shift.type =
 				(arm_shifter)subtracted;
