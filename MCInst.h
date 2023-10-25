@@ -42,7 +42,7 @@ struct MCOperand {
 	unsigned char Kind;
 
 	union {
-		unsigned RegVal;
+		uint64_t RegVal;
 		int64_t ImmVal;
 		double FPImmVal;
 	};
