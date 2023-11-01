@@ -124,6 +124,91 @@ static const char *get_custom_reg_alias(unsigned reg)
 	return NULL;
 }
 
+/// Very annoyingly LLVM hard codes the vector layout post-fixes into the asm string.
+/// In this function we check for these cases and add the vectorlayout/arrangement
+/// specifier.
+void AArch64_add_vas(MCInst *MI, const SStream *OS) {
+	if (!detail_is_set(MI)) {
+		return;
+	}
+
+	if (AArch64_get_detail(MI)->op_count == 0) {
+		return;
+	}
+
+	// Search for r".[0-9]{1,2}[bhsdq]\W"
+	// with poor mans regex
+	const char *vl_ptr = strchr(OS->buffer, '.');
+	while (vl_ptr) {
+		// Number after dot?
+		unsigned num = 0;
+		if (strchr("1248", vl_ptr[1])) {
+			num = atoi(vl_ptr + 1);
+			vl_ptr = num > 9 ? vl_ptr + 3 : vl_ptr + 2;
+		} else {
+			vl_ptr++;
+		}
+
+		// Layout letter
+		char letter = '\0';
+		if (strchr("bhsdq", vl_ptr[0])) {
+			letter = vl_ptr[0];
+		}
+		if (!letter) {
+			goto next_dot_continue;
+		}
+
+		AArch64Layout_VectorLayout vl = AArch64Layout_Invalid;
+		switch (letter) {
+		default:
+			assert(0 && "Unhandled vector layout letter.");
+			return;
+		case 'b':
+			vl = AArch64Layout_VL_B;
+			break;
+		case 'h':
+			vl = AArch64Layout_VL_H;
+			break;
+		case 's':
+			vl = AArch64Layout_VL_S;
+			break;
+		case 'd':
+			vl = AArch64Layout_VL_D;
+			break;
+		case 'q':
+			vl = AArch64Layout_VL_Q;
+			break;
+		}
+		vl |= (num << 8);
+
+		// Determine op index by searching for trainling commata after op string
+		uint32_t op_idx = 0;
+		const char *comma_ptr = strchr(OS->buffer, ',');;
+		while (comma_ptr && comma_ptr < vl_ptr) {
+			++op_idx;
+			comma_ptr = strchr(comma_ptr + 1, ',');
+		}
+		if (!comma_ptr) {
+			// Last op doesn't have a trailing commata.
+			op_idx = AArch64_get_detail(MI)->op_count - 1;
+		}
+		if (op_idx >= AArch64_get_detail(MI)->op_count) {
+			// A memory operand with a commata in [base, dist]
+			op_idx = AArch64_get_detail(MI)->op_count - 1;
+		}
+
+		// Search for the operand this one belongs to.
+		cs_aarch64_op *op = &AArch64_get_detail(MI)->operands[op_idx];
+		if ((op->type != AArch64_OP_REG && op->type != AArch64_OP_SME_MATRIX) || op->vas != AArch64Layout_Invalid) {
+			goto next_dot_continue;
+		}
+		op->vas = vl;
+
+next_dot_continue:
+		vl_ptr = strchr(vl_ptr + 1, '.');
+	}
+}
+
 const char *AArch64_reg_name(csh handle, unsigned int reg)
 {
 	int syntax_opt = ((cs_struct *)(uintptr_t)handle)->syntax;
@@ -330,6 +415,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 		patch_cs_reg_alias(O->buffer);
 	AArch64_add_not_defined_ops(MI);
 	AArch64_add_cs_groups(MI);
+	AArch64_add_vas(MI, O);
 }
 
 // given internal insn id, return public instruction info

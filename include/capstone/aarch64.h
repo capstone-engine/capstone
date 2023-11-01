@@ -93,7 +93,7 @@ typedef enum aarch64_extender {
   AArch64_EXT_SXTX = 8,
 } aarch64_extender;
 
-// Moved from AArch64BaseInfo.h
+// Moved from AArch64BaseInfo.h and modified
 // With extension of Q
 typedef enum VectorLayout {
 	AArch64Layout_Invalid = 0,
@@ -105,16 +105,25 @@ typedef enum VectorLayout {
 	AArch64Layout_VL_D = 64,
 	AArch64Layout_VL_Q = 128,
 
-	AArch64Layout_VL_8B,
-	AArch64Layout_VL_4H,
-	AArch64Layout_VL_2S,
-	AArch64Layout_VL_1D,
+	AArch64Layout_VL_4B = (4 << 8) | AArch64Layout_VL_B,
+	AArch64Layout_VL_2H = (2 << 8) | AArch64Layout_VL_H,
+	AArch64Layout_VL_1S = (1 << 8) | AArch64Layout_VL_S,
 
-	AArch64Layout_VL_16B,
-	AArch64Layout_VL_8H,
-	AArch64Layout_VL_4S,
-	AArch64Layout_VL_2D,
-	AArch64Layout_VL_1Q,
+	AArch64Layout_VL_8B = (8 << 8) | AArch64Layout_VL_B,
+	AArch64Layout_VL_4H = (4 << 8) | AArch64Layout_VL_H,
+	AArch64Layout_VL_2S = (2 << 8) | AArch64Layout_VL_S,
+	AArch64Layout_VL_1D = (1 << 8) | AArch64Layout_VL_D,
+
+	AArch64Layout_VL_16B = (16 << 8) | AArch64Layout_VL_B,
+	AArch64Layout_VL_8H = (8 << 8) | AArch64Layout_VL_H,
+	AArch64Layout_VL_4S = (4 << 8) | AArch64Layout_VL_S,
+	AArch64Layout_VL_2D = (2 << 8) | AArch64Layout_VL_D,
+	AArch64Layout_VL_1Q = (1 << 8) | AArch64Layout_VL_Q,
+
+	AArch64Layout_VL_64B = (64 << 8) | AArch64Layout_VL_B,
+	AArch64Layout_VL_32H = (32 << 8) | AArch64Layout_VL_H,
+	AArch64Layout_VL_16S = (16 << 8) | AArch64Layout_VL_S,
+	AArch64Layout_VL_8D = (8 << 8) | AArch64Layout_VL_D,
 
 	AArch64Layout_VL_Complete, ///< Indicates that the complete matrix is used.
 } AArch64Layout_VectorLayout;

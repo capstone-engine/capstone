@@ -43,7 +43,7 @@
 0x3e,0xff,0xd0 == notrack call rax
 
 !# issue 1924 SME Index instruction alias printing is not always valid
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0x02,0x00,0x9f,0xe0 == ld1w	{za0h.s[w12, 2]}, p0/z, [x0] ; operands[0].type: REG = zas0 ; operands[0].index.base: REG = w12 ; operands[0].index.disp: 0x2 ; operands[1].type: REG = p0 ; operands[2].type: MEM ; operands[2].mem.base: REG = x0
 
 !# issue 1912 PPC register name
@@ -59,175 +59,175 @@
 0xf3,0xec,0x0f,0xf8 == psq_st f31, -8(r12), 0, 0 ; op_count: 4 ; operands[0].type: REG = f31 ; operands[1].type: MEM ; operands[1].mem.base: REG = r12 ; operands[1].mem.disp: 0xfffffff8 ; operands[2].type: IMM = 0x0 ; operands[3].type: IMM = 0x0
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x21,0x04,0x03,0x5e == mov b1, v1.b[1] ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x04,0x03,0x5e == mov b1, v1.b[1] ; operands[1].vas: 0x8 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0xc0,0x1e,0x03,0x4e == mov v0.b[1], w22 ; operands[0].vas: 0x4 ; operands[0].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x03,0x4e == mov v0.b[1], w22 ; operands[0].vas: 0x8 ; operands[0].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0xc0,0x1e,0x06,0x4e == mov v0.h[1], w22 ; operands[0].vas: 0x8 ; operands[0].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x06,0x4e == mov v0.h[1], w22 ; operands[0].vas: 0x10 ; operands[0].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0xc0,0x1e,0x0c,0x4e == mov v0.s[1], w22 ; operands[0].vas: 0xb ; operands[0].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x0c,0x4e == mov v0.s[1], w22 ; operands[0].vas: 0x20 ; operands[0].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0xc0,0x1e,0x18,0x4e == mov v0.d[1], x22 ; operands[0].vas: 0xd ; operands[0].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x1e,0x18,0x4e == mov v0.d[1], x22 ; operands[0].vas: 0x40 ; operands[0].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x0c,0x03,0x6e == mov v0.b[1], v1.b[1] ; operands[0].vas: 0x4 ; operands[0].vector_index: 1 ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x0c,0x03,0x6e == mov v0.b[1], v1.b[1] ; operands[0].vas: 0x8 ; operands[0].vector_index: 1 ; operands[1].vas: 0x8 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x14,0x06,0x6e == mov v0.h[1], v1.h[1] ; operands[0].vas: 0x8 ; operands[0].vector_index: 1 ; operands[1].vas: 0x8 ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x14,0x06,0x6e == mov v0.h[1], v1.h[1] ; operands[0].vas: 0x10 ; operands[0].vector_index: 1 ; operands[1].vas: 0x10 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x24,0x0c,0x6e == mov v0.s[1], v1.s[1] ; operands[0].vas: 0xb ; operands[0].vector_index: 1 ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x24,0x0c,0x6e == mov v0.s[1], v1.s[1] ; operands[0].vas: 0x20 ; operands[0].vector_index: 1 ; operands[1].vas: 0x20 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x44,0x18,0x6e == mov v0.d[1], v1.d[1] ; operands[0].vas: 0xd ; operands[0].vector_index: 1 ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x44,0x18,0x6e == mov v0.d[1], v1.d[1] ; operands[0].vas: 0x40 ; operands[0].vector_index: 1 ; operands[1].vas: 0x40 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0x20 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0x20 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0x40 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0x40 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x00,0xc0,0x50,0x05 == fmov z0.h, p0/m, #2.00000000 ; operands[0].vas: 0x8
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0xc0,0x50,0x05 == fmov z0.h, p0/m, #2.00000000 ; operands[0].vas: 0x10
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x00,0xc0,0x79,0x25 == fmov z0.h, #2.00000000 ; operands[0].vas: 0x8
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0xc0,0x79,0x25 == fmov z0.h, #2.00000000 ; operands[0].vas: 0x10
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0xa1,0xca,0xf8,0x25 == mov z1.d, #0x55 ; operands[0].vas: 0xd
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xa1,0xca,0xf8,0x25 == mov z1.d, #0x55 ; operands[0].vas: 0x40
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x21,0x44,0x81,0x25 == mov p1.b, p1.b ; operands[0].vas: 0x4 ; operands[1].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x44,0x81,0x25 == mov p1.b, p1.b ; operands[0].vas: 0x8 ; operands[1].vas: 0x4
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x21,0x40,0x51,0x05 == mov z1.h, p1/m, #1 ; operands[0].vas: 0x8
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x40,0x51,0x05 == mov z1.h, p1/m, #1 ; operands[0].vas: 0x10
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x21,0x00,0x51,0x05 == mov z1.h, p1/z, #1 ; operands[0].vas: 0x8
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x00,0x51,0x05 == mov z1.h, p1/z, #1 ; operands[0].vas: 0x10
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0xc0,0x38,0x25 == mov z0.b, #1 ; operands[0].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0xc0,0x38,0x25 == mov z0.b, #1 ; operands[0].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x71,0x4a,0x01,0x25 == mov p1.b, p2/m, p3.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x71,0x4a,0x01,0x25 == mov p1.b, p2/m, p3.b ; operands[0].vas: 0x8 ; operands[2].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x61,0x48,0x03,0x25 == mov p1.b, p2/z, p3.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x61,0x48,0x03,0x25 == mov p1.b, p2/z, p3.b ; operands[0].vas: 0x8 ; operands[2].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x21,0xa8,0x28,0x05 == mov z1.b, p2/m, w1 ; operands[0].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0xa8,0x28,0x05 == mov z1.b, p2/m, w1 ; operands[0].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x21,0x38,0x20,0x05 == mov z1.b, w1 ; operands[0].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x21,0x38,0x20,0x05 == mov z1.b, w1 ; operands[0].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x01,0x88,0x20,0x05 == mov z1.b, p2/m, b0 ; operands[0].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x01,0x88,0x20,0x05 == mov z1.b, p2/m, b0 ; operands[0].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x00,0x20,0x21,0x05 == mov z0.b, b0 ; operands[0].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0x20,0x21,0x05 == mov z0.b, b0 ; operands[0].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x00,0x20,0x23,0x05 == mov z0.b, z0.b[1] ; operands[0].vas: 0x4 ; operands[1].vas: 0x4 ; operands[1].vector_index: 1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0x20,0x23,0x05 == mov z0.b, z0.b[1] ; operands[0].vas: 0x8 ; operands[1].vas: 0x8 ; operands[1].vector_index: 1
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0xc4,0x20,0x05 == mov z0.b, p1/m, z1.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0xc4,0x20,0x05 == mov z0.b, p1/m, z1.b ; operands[0].vas: 0x8 ; operands[2].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x30,0x61,0x04 == mov z0.d, z1.d ; operands[0].vas: 0xd ; operands[1].vas: 0xd
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x30,0x61,0x04 == mov z0.d, z1.d ; operands[0].vas: 0x40 ; operands[1].vas: 0x40
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x44,0x42,0x25 == movs p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x44,0x42,0x25 == movs p0.b, p1/z, p2.b ; operands[0].vas: 0x8 ; operands[2].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x20,0x44,0xc1,0x25 == movs p0.b, p1.b ; operands[0].vas: 0x4 ; operands[1].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x20,0x44,0xc1,0x25 == movs p0.b, p1.b ; operands[0].vas: 0x8 ; operands[1].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x46,0x01,0x25 == not p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x46,0x01,0x25 == not p0.b, p1/z, p2.b ; operands[0].vas: 0x8 ; operands[2].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x46,0x41,0x25 == nots p0.b, p1/z, p2.b ; operands[0].vas: 0x4 ; operands[2].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x46,0x41,0x25 == nots p0.b, p1/z, p2.b ; operands[0].vas: 0x8 ; operands[2].vas: 0x8
 
 !# issue 1856 AArch64 SYS instruction operands: tlbi 1 op
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0x1f,0x83,0x08,0xd5 == tlbi vmalle1is ; op_count: 1 ; operands[0].type: SYS = 0x9a
 
 !# issue 1856 AArch64 SYS instruction operands: tlbi 2 op
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0x22,0x87,0x08,0xd5 == tlbi vae1, x2 ; op_count: 2 ; operands[0].type: SYS = 0x75
 
 !# issue 1856 AArch64 SYS instruction operands: at
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0xc0,0x78,0x0c,0xd5 == at s12e0r, x0 ; op_count: 2 ; operands[0].type: SYS = 0xaf
 
 !# issue 1856 AArch64 SYS instruction operands: dc
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0x22,0x7b,0x0b,0xd5 == dc cvau, x2 ; op_count: 2 ; operands[0].type: SYS = 0xc5
 
 !# issue 1856 AArch64 SYS instruction operands: ic
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0x20,0x75,0x0b,0xd5 == ic ivau, x0 ; op_count: 2 ; operands[0].type: SYS = 0xd1
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x808 ; operands[1].type: REG = v18 ; operands[1].vas: 0x808
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x2 ; operands[1].type: REG = v18 ; operands[1].vas: 0x2
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x808 ; operands[1].type: REG = v18 ; operands[1].vas: 0x808
 
 !# issue 1839 AArch64 Incorrect detailed disassembly of ldr
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0x41,0x00,0x40,0xf9 == ldr x1, [x2] ; operands[0].access: WRITE ; operands[1].access: READ
 
 // !# issue 1827 x86-16 lcall 0:0xd
@@ -258,7 +258,7 @@
 0x4E,0x7A,0x00,0x02 == movec cacr, d0
 
 // !# issue 1653 AArch64 wrong register access read/write flags on cmp instruction
-// !# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
+// !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 // 0x3F,0x00,0x02,0xEB == cmp x1, x2 ; operands[0].access: READ
 
 !# issue 1643 M68K incorrect read of 32-bit imm for bsr
@@ -266,8 +266,8 @@
 0x61,0xff,0x00,0x00,0x0b,0xea == bsr.l $bec
 
 !# issue 1627 Arm64 LD1 missing immediate operand
-!# CS_ARCH_ARM64, CS_MODE_ARM, CS_OPT_DETAIL
-0xe0,0x73,0xdf,0x0c == ld1 {v0.8b}, [sp], #8 ; operands[2].type: IMM = 0x8
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xe0,0x73,0xdf,0x0c == ld1 {v0.8b}, [sp], #8 ; operands[0].vas: 0x808; operands[2].type: IMM = 0x8
 
 !# issue 1587 ARM thumb pushed registers write
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
@@ -299,8 +299,8 @@
 
 0x41,0x82,0x00,0x10 == bt eq, 0x10 ; Groups: jump
 
-!# issue 1481 ARM64 LDR operand2
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+!# issue 1481 AARCH64 LDR operand2
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
 0xe9,0x03,0x40,0xf9 == ldr x9, [sp] ; operands[1].mem.base: REG = sp
 
 !# issue 968 PPC absolute branch: bdnzla
@@ -408,7 +408,7 @@
 0x31,0x02,0xa0,0xe1 == lsr r0, r1, r2 ; operands[2].type: REG = r2
 
 !# issue 1456
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
 0x0c,0x00,0x80,0x12 == mov w12, #-1 ; operands[1].type: IMM = 0xffffffffffffffff
 
 0xb8,0x00,0x00,0x00,0x00 == movl $0, %eax
@@ -436,20 +436,20 @@
 0xf0,0x0f,0xb1,0x1e == lock cmpxchg dword ptr [esi], ebx ; Registers read: eax esi ebx
 
 !# issue 1452
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0xb
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x0c,0x0e == mov w0, v1.s[1] ; operands[1].vas: 0x20
 
 !# issue 1452
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0xd
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x18,0x4e == mov x0, v1.d[1] ; operands[1].vas: 0x40
 
 !# issue 1452
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; operands[1].vas: 0x4
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x03,0x0e == umov w0, v1.b[1] ; operands[1].vas: 0x8
 
 !# issue 1452
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
-0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; operands[1].vas: 0x8
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x20,0x3c,0x06,0x0e == umov w0, v1.h[1] ; operands[1].vas: 0x10
 
 !# issue 1211
 !# CS_ARCH_X86, CS_MODE_64, None
@@ -652,20 +652,20 @@
 0x0: 0x55,0x48,0x89,0xe5 == call 0x55222794
 
 !# issue 1144
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
-0x0: 0x00,0x00,0x02,0xb6 == tbz x0, #0x20, #0x4000
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, None
+0x0: 0x00,0x00,0x02,0xb6 == tbz x0, #0x20, 0x4000
 
 !# issue 1144
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
-0x0: 0x00,0x00,0x04,0xb6 == tbz x0, #0x20, #0xffffffffffff8000
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, None
+0x0: 0x00,0x00,0x04,0xb6 == tbz x0, #0x20, 0xffffffffffff8000
 
 !# issue 1144
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
-0x0: 0x00,0x00,0x02,0xb7 == tbnz x0, #0x20, #0x4000
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, None
+0x0: 0x00,0x00,0x02,0xb7 == tbnz x0, #0x20, 0x4000
 
 !# issue 1144
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
-0x0: 0x00,0x00,0x04,0xb7 == tbnz x0, #0x20, #0xffffffffffff8000
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, None
+0x0: 0x00,0x00,0x04,0xb7 == tbnz x0, #0x20, 0xffffffffffff8000
 
 !# issue 826
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -1024,7 +1024,7 @@
 0x0: 0xe1,0xa0,0xf0,0x0e == mov pc, lr ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: REG = r14 ; operands[1].access: READ ; Registers read: r14 ; Registers modified: r15 ; Groups: IsARM
 
 !# issue 85
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
+!# CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN, None
 0x0: 0xee,0x3f,0xbf,0x29 == stp w14, w15, [sp, #-8]!
 
 !# issue 82
@@ -1040,6 +1040,6 @@
 0x0: 0xff,0x8c,0xf9,0xff,0xff,0x9b,0xf9 == dec dword ptr [ecx + edi*8 - 0x6640001]
 
 !# issue 29
-!# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
+!# CS_ARCH_AARCH64, CS_MODE_ARM, None
 0x0: 0x00,0x00,0x00,0x4c == st4 {v0.16b, v1.16b, v2.16b, v3.16b}, [x0]
 
