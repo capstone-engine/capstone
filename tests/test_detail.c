@@ -162,7 +162,7 @@ static void test()
 			CS_MODE_ARM,
 			(unsigned char *)ARM64_CODE,
 			sizeof(ARM64_CODE) - 1,
-			"ARM-64"
+			"AARCH64"
 		},
 #endif
 #ifdef CAPSTONE_HAS_MIPS

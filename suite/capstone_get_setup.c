@@ -22,7 +22,7 @@ int main()
 	if (cs_support(CS_ARCH_ARM)) {
 		printf("arm=1 ");
 	}
-	if (cs_support(CS_ARCH_ARM64)) {
+	if (cs_support(CS_ARCH_AARCH64)) {
 		printf("arm64=1 ");
 	}
 	if (cs_support(CS_ARCH_MIPS)) {

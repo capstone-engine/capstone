@@ -81,7 +81,7 @@ def test_file(fname):
         ("CS_ARCH_ARM", "CS_MODE_THUMB+CS_MODE_V8"): 5,
         ("CS_ARCH_ARM", "CS_MODE_THUMB+CS_MODE_MCLASS"): 6,
         ("CS_ARCH_ARM", "CS_MODE_THUMB+CS_MODE_V8+CS_MODE_MCLASS"): 7,
-        ("CS_ARCH_ARM64", "0"): 8,
+        ("CS_ARCH_AARCH64", "0"): 8,
         ("CS_ARCH_MIPS", "CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN"): 9,
         ("CS_ARCH_MIPS", "CS_MODE_MIPS32+CS_MODE_MICRO"): 10,
         ("CS_ARCH_MIPS", "CS_MODE_MIPS64"): 11,
