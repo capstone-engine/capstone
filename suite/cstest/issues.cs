@@ -212,19 +212,19 @@
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1008
+0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = q0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x808 ; operands[1].type: REG = v18 ; operands[1].vas: 0x808
+0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = d0 ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 ; operands[1].vas: 0x808
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = v0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = v18 ; operands[1].vas: 0x1008
+0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = q0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = v0 ; operands[0].vas: 0x808 ; operands[1].type: REG = v18 ; operands[1].vas: 0x808
+0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = d0 ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 ; operands[1].vas: 0x808
 
 !# issue 1839 AArch64 Incorrect detailed disassembly of ldr
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
