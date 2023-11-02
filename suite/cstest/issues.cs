@@ -124,7 +124,7 @@
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x21,0x44,0x81,0x25 == mov p1.b, p1.b ; operands[0].vas: 0x8 ; operands[1].vas: 0x4
+0x21,0x44,0x81,0x25 == mov p1.b, p1.b ; operands[0].vas: 0x8 ; operands[1].vas: 0x8
 
 !# issue 1873 AArch64 missing VAS specifiers in aliased instructions
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
