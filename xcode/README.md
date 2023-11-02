@@ -7,7 +7,7 @@ targets, two of which are the most likely to be of interest:
 
 * CapstoneStatic, producing `libcapstone.a`, Capstone as a static library;
 * CapstoneDynamic, producing `libcapstone.dylib`, Capstone as a shared library;
-* test, test_arm, test_arm64, test_detail, test_mips, test_ppc, test_skipdata,
+* test, test_arm, test_aarch64, test_detail, test_mips, test_ppc, test_skipdata,
 	test_sparc, test_systemz, test_xcore, testing all the things.
 
 The project is configured to include all targets and use the system

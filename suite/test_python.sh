@@ -6,7 +6,7 @@
 ../bindings/python/test.py > /tmp/$1
 ../bindings/python/test_detail.py >> /tmp/$1
 ../bindings/python/test_arm.py >> /tmp/$1
-../bindings/python/test_arm64.py >> /tmp/$1
+../bindings/python/test_aarch64.py >> /tmp/$1
 ../bindings/python/test_mips.py >> /tmp/$1
 ../bindings/python/test_ppc.py >> /tmp/$1
 ../bindings/python/test_sparc.py >> /tmp/$1

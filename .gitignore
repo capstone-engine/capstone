@@ -37,7 +37,7 @@ bindings/ocaml/*.cmxa
 bindings/ocaml/*.mli
 bindings/ocaml/test
 bindings/ocaml/test_arm
-bindings/ocaml/test_arm64
+bindings/ocaml/test_aarch64
 bindings/ocaml/test_basic
 bindings/ocaml/test_mips
 bindings/ocaml/test_x86
@@ -54,7 +54,7 @@ tests/test_basic
 tests/test_detail
 tests/test_iter
 tests/test_arm
-tests/test_arm64
+tests/test_aarch64
 tests/test_mips
 tests/test_x86
 tests/test_ppc
