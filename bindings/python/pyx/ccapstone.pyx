@@ -2,7 +2,7 @@
 
 cimport pyx.ccapstone as cc
 import capstone, ctypes
-from . import arm, x86, mips, ppc, arm64, sparc, systemz, xcore, tms320c64x, m68k, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, CsError
+from . import arm, x86, mips, ppc, aarch64, sparc, systemz, xcore, tms320c64x, m68k, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, CsError
 
 _diet = cc.cs_support(capstone.CS_SUPPORT_DIET)
 
@@ -26,9 +26,9 @@ class CsDetail(object):
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, \
                 self.cc, self.vcc, self.update_flags, self.post_index, self.mem_barrier, self.pred_mask, self.operands) = \
                 arm.get_arch_info(detail.arch.arm)
-        elif arch == capstone.CS_ARCH_ARM64:
-            (self.cc, self.update_flags, self.arm64_writeback, self.post_index, self.operands) = \
-                arm64.get_arch_info(detail.arch.arm64)
+        elif arch == capstone.CS_ARCH_AARCH64:
+            (self.cc, self.update_flags, self.aarch64_writeback, self.post_index, self.operands) = \
+                aarch64.get_arch_info(detail.arch.aarch64)
         elif arch == capstone.CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
@@ -359,7 +359,7 @@ def debug():
     else:
         diet = "standard"
 
-    archs = { "arm": capstone.CS_ARCH_ARM, "arm64": capstone.CS_ARCH_ARM64, \
+    archs = { "arm": capstone.CS_ARCH_ARM, "aarch64": capstone.CS_ARCH_AARCH64, \
         "m68k": capstone.CS_ARCH_M68K, "mips": capstone.CS_ARCH_MIPS, \
         "ppc": capstone.CS_ARCH_PPC, "sparc": capstone.CS_ARCH_SPARC, \
         "sysz": capstone.CS_ARCH_SYSZ, "xcore": capstone.CS_ARCH_XCORE, \

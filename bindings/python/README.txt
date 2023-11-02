@@ -29,7 +29,7 @@ disasm engine for binary analysis and reversing in the security community.
 Created by Nguyen Anh Quynh, then developed and maintained by a small community,
 Capstone offers some unparalleled features:
 
-- Support multiple hardware architectures: ARM, ARM64 (ARMv8), Mips, PPC, Sparc,
+- Support multiple hardware architectures: ARM, AARCH64 (ARMv8), Mips, PPC, Sparc,
   SystemZ, XCore and X86 (including X86_64).
 
 - Having clean/simple/lightweight/intuitive architecture-neutral API.
