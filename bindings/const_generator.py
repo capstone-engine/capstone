@@ -157,6 +157,10 @@ template = {
     #     },
 }
 
+excluded_prefixes = {
+    'arm.h': ["ARMCC_CondCodes", "ARMVCC_VPTCodes"],
+}
+
 # markup for comments to be added to autogen files
 MARKUP = '//>'
 
@@ -246,6 +250,8 @@ def gen(lang):
                 line = ' '.join(xline)
 
             def is_with_prefix(x):
+                if target in excluded_prefixes and any(x.startswith(excl_pre) for excl_pre in excluded_prefixes[target]):
+                    return False
                 if prefixs:
                     return any(x.startswith(pre) for pre in prefixs)
                 else:
