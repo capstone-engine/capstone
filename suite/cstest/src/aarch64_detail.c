@@ -63,22 +63,22 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: REG_MSR = 0x%x", i, op->reg);
 				break;
 			case AArch64_OP_SME_MATRIX:
-				add_str(&result, " ; operands[%u].type: SME_MATRIX\n", i);
-				add_str(&result, " ; operands[%u].sme.type: %d\n", i, op->sme.type);
+				add_str(&result, " ; operands[%u].type: SME_MATRIX", i);
+				add_str(&result, " ; operands[%u].sme.type: %d", i, op->sme.type);
 
 				if (op->sme.tile != AArch64_REG_INVALID)
-					add_str(&result, " ; operands[%u].sme.tile: %s\n", i, cs_reg_name(*handle, op->sme.tile));
+					add_str(&result, " ; operands[%u].sme.tile: %s", i, cs_reg_name(*handle, op->sme.tile));
 				if (op->sme.slice_reg != AArch64_REG_INVALID)
-					add_str(&result, " ; operands[%u].sme.slice_reg: %s\n", i, cs_reg_name(*handle, op->sme.slice_reg));
+					add_str(&result, " ; operands[%u].sme.slice_reg: %s", i, cs_reg_name(*handle, op->sme.slice_reg));
 				if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
 					add_str(&result, " ; operands[%u].sme.slice_offset: ", i);
 					if (op->sme.has_range_offset)
-						add_str(&result, "%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
+						add_str(&result, "%hhd:%hhd", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
 					else
-						add_str(&result, "%d\n", op->sme.slice_offset.imm);
+						add_str(&result, "%d", op->sme.slice_offset.imm);
 				}
 				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
-					add_str(&result, "\t\t ; operands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
+					add_str(&result, " ; operands[%u].sme.is_vertical: %s", i, (op->sme.is_vertical ? "true" : "false"));
 				break;
 		case AArch64_OP_SYSREG:
 			add_str(&result, " ; operands[%u].type: SYS REG:", i);
