@@ -86,7 +86,7 @@ class AArch64OpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
-        ('imm_range', AArch64ImmRange)
+        ('imm_range', AArch64ImmRange),
         ('fp', ctypes.c_double),
         ('mem', AArch64OpMem),
         ('sysop', AArch64SysOp),
