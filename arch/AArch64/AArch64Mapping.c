@@ -251,6 +251,9 @@ void AArch64_init_cs_detail(MCInst *MI)
 /// and wastes resources.
 /// Sorry, I know and do feel bad about it. But for now it works.
 static bool AArch64_check_post_index_am(const MCInst *MI, const SStream *OS) {
+	if (AArch64_get_detail(MI)->post_index) {
+		return true;
+	}
 	cs_aarch64_op *memop = NULL;
 	for (int i = 0; i < AArch64_get_detail(MI)->op_count; ++i) {
 		if (AArch64_get_detail(MI)->operands[i].type & CS_OP_MEM) {
@@ -307,14 +310,14 @@ static void AArch64_check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
-static void AArch64_add_not_defined_ops(MCInst *MI)
+static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 {
 	if (!detail_is_set(MI))
 		return;
 	unsigned Opcode = MCInst_getOpcode(MI);
 	switch (Opcode) {
 	default:
-		return;
+		break;
 	case AArch64_FCMPDri:
 	case AArch64_FCMPEDri:
 	case AArch64_FCMPEHri:
@@ -323,6 +326,42 @@ static void AArch64_add_not_defined_ops(MCInst *MI)
 	case AArch64_FCMPSri:
 		AArch64_insert_detail_op_reg_at(MI, -1, AArch64_REG_XZR, CS_AC_READ);
 		break;
+	}
+
+	// Alias details
+	if (!MI->flat_insn->is_alias || !MI->flat_insn->usesAliasDetails) {
+		return;
+	}
+
+	switch(MI->flat_insn->alias_id) {
+	default:
+		return;
+	case AArch64_INS_ALIAS_FMOV:
+		AArch64_insert_detail_op_float_at(MI, -1, 0.0f, CS_AC_READ);
+		break;
+	case AArch64_INS_ALIAS_LD1:
+	case AArch64_INS_ALIAS_LD1R:
+	case AArch64_INS_ALIAS_LD2:
+	case AArch64_INS_ALIAS_LD2R:
+	case AArch64_INS_ALIAS_LD3:
+	case AArch64_INS_ALIAS_LD3R:
+	case AArch64_INS_ALIAS_LD4:
+	case AArch64_INS_ALIAS_LD4R:
+	case AArch64_INS_ALIAS_ST1:
+	case AArch64_INS_ALIAS_ST2:
+	case AArch64_INS_ALIAS_ST3:
+	case AArch64_INS_ALIAS_ST4: {
+		// Add post-index disp
+		const char *disp_off = strrchr(OS->buffer, '#');
+		if (!disp_off)
+			return;
+		unsigned disp = atoi(disp_off + 1);
+		AArch64_get_detail_op(MI, -1)->type = AArch64_OP_MEM;
+		AArch64_get_detail_op(MI, -1)->mem.base = AArch64_get_detail_op(MI, -1)->reg;
+		AArch64_get_detail_op(MI, -1)->mem.disp = disp;
+		AArch64_get_detail(MI)->post_index = true;
+		break;
+	}
 	}
 }
 
@@ -413,7 +452,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
 		patch_cs_reg_alias(O->buffer);
-	AArch64_add_not_defined_ops(MI);
+	AArch64_add_not_defined_ops(MI, O);
 	AArch64_add_cs_groups(MI);
 	AArch64_add_vas(MI, O);
 }
@@ -1243,9 +1282,8 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		uint64_t Imm = temp_arg_0;
 		unsigned Reg = MCInst_getOpVal(MI, OpNum);
 		if (Reg == AArch64_XZR) {
-			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_IMM;
-			AArch64_get_detail_op(MI, 0)->imm = Imm;
-			AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+			AArch64_get_detail_op(MI, -1)->mem.disp = Imm;
+			AArch64_get_detail(MI)->post_index = true;
 			AArch64_inc_op_count(MI);
 		} else
 			AArch64_set_detail_op_reg(MI, OpNum, Reg);
@@ -2084,6 +2122,46 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum, aarch64_sme_op_part p
 	AArch64_inc_op_count(MI);
 }
 
+static void insert_op(MCInst *MI, unsigned index, cs_aarch64_op op) {
+	if (!detail_is_set(MI)) {
+		return;
+	}
+
+	cs_aarch64_op *ops = AArch64_get_detail(MI)->operands;
+	int i = AArch64_get_detail(MI)->op_count;
+	assert(i < MAX_AARCH64_OPS);
+	if (index == -1) {
+		ops[i] = op;
+		AArch64_inc_op_count(MI);
+		return;
+	}
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
+	}
+	ops[index] = op;
+	AArch64_inc_op_count(MI);
+}
+
+/// Inserts a float to the detail operands at @index.
+/// If @index == -1, it pushes the operand to the end of the ops array.
+/// Already present operands are moved.
+void AArch64_insert_detail_op_float_at(MCInst *MI, unsigned index, double val,
+				 cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+
+	cs_aarch64_op op;
+	AArch64_setup_op(&op);
+	op.type = AArch64_OP_FP;
+	op.fp = val;
+	op.access = access;
+
+	insert_op(MI, index, op);
+}
+
 /// Inserts a register to the detail operands at @index.
 /// If @index == -1, it pushes the operand to the end of the ops array.
 /// Already present operands are moved.
@@ -2101,19 +2179,7 @@ void AArch64_insert_detail_op_reg_at(MCInst *MI, unsigned index, aarch64_reg Reg
 	op.reg = Reg;
 	op.access = access;
 
-	cs_aarch64_op *ops = AArch64_get_detail(MI)->operands;
-	int i = AArch64_get_detail(MI)->op_count;
-	assert(i < MAX_AARCH64_OPS);
-	if (index == -1) {
-		ops[i] = op;
-		AArch64_inc_op_count(MI);
-		return;
-	}
-	for (; i > 0 && i > index; --i) {
-		ops[i] = ops[i - 1];
-	}
-	ops[index] = op;
-	AArch64_inc_op_count(MI);
+	insert_op(MI, index, op);
 }
 
 #endif
