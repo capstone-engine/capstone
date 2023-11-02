@@ -63,25 +63,48 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: REG_MSR = 0x%x", i, op->reg);
 				break;
 			case AArch64_OP_SME_MATRIX:
-				add_str(&result, "\t\t ; operands[%u].type: SME_MATRIX\n", i);
-				add_str(&result, "\t\t ; operands[%u].sme.type: %d\n", i, op->sme.type);
+				add_str(&result, " ; operands[%u].type: SME_MATRIX\n", i);
+				add_str(&result, " ; operands[%u].sme.type: %d\n", i, op->sme.type);
 
 				if (op->sme.tile != AArch64_REG_INVALID)
-					add_str(&result, "\t\t ; operands[%u].sme.tile: %s\n", i, cs_reg_name(*handle, op->sme.tile));
+					add_str(&result, " ; operands[%u].sme.tile: %s\n", i, cs_reg_name(*handle, op->sme.tile));
 				if (op->sme.slice_reg != AArch64_REG_INVALID)
-					add_str(&result, "\t\t ; operands[%u].sme.slice_reg: %s\n", i, cs_reg_name(*handle, op->sme.slice_reg));
+					add_str(&result, " ; operands[%u].sme.slice_reg: %s\n", i, cs_reg_name(*handle, op->sme.slice_reg));
 				if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
-					printf("\t\toperands[%u].sme.slice_offset: ", i);
+					add_str(&result, " ; operands[%u].sme.slice_offset: ", i);
 					if (op->sme.has_range_offset)
-						printf("%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
+						add_str(&result, "%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
 					else
-						printf("%d\n", op->sme.slice_offset.imm);
+						add_str(&result, "%d\n", op->sme.slice_offset.imm);
 				}
 				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
 					add_str(&result, "\t\t ; operands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
 				break;
+		case AArch64_OP_SYSREG:
+			add_str(&result, " ; operands[%u].type: SYS REG:", i);
+			switch (op->sysop.sub_type) {
+			default:
+				break;
+			case AArch64_OP_REG_MRS:
+				add_str(&result, " ; operands[%u].subtype: REG_MRS = 0x%x", i, op->sysop.reg.sysreg);
+				break;
+			case AArch64_OP_REG_MSR:
+				add_str(&result, " ; operands[%u].subtype: REG_MSR = 0x%x", i, op->sysop.reg.sysreg);
+				break;
+			case AArch64_OP_TLBI:
+				add_str(&result, " ; operands[%u].subtype TLBI = 0x%x", i, op->sysop.reg.tlbi);
+				break;
+			case AArch64_OP_IC:
+				add_str(&result, " ; operands[%u].subtype IC = 0x%x", i, op->sysop.reg.ic);
+				break;
+			}
+			break;
+		case AArch64_OP_SYSALIAS:
+			add_str(&result, " ; operands[%u].type: SYS ALIAS:", i);
+			switch (op->sysop.sub_type) {
+			default:
+				break;
 			case AArch64_OP_SVCR:
-				add_str(&result, " ; operands[%u].type: SYS = 0x%x", i, op->sysop.alias.svcr);
 				if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSM)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM", i);
 				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRZA)
@@ -90,47 +113,62 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM & ZA", i);
 				break;
 			case AArch64_OP_AT:
-				add_str(&result, "\t\t ; operands[%u].type AT = 0x%x\n", i, op->sysop.alias.at);
+				add_str(&result, " ; operands[%u].subtype AT = 0x%x", i, op->sysop.alias.at);
 				break;
 			case AArch64_OP_DB:
-				add_str(&result, "\t\t ; operands[%u].type DB = 0x%x\n", i, op->sysop.alias.db);
+				add_str(&result, " ; operands[%u].subtype DB = 0x%x", i, op->sysop.alias.db);
 				break;
 			case AArch64_OP_DC:
-				add_str(&result, "\t\t ; operands[%u].type DC = 0x%x\n", i, op->sysop.alias.dc);
+				add_str(&result, " ; operands[%u].subtype DC = 0x%x", i, op->sysop.alias.dc);
 				break;
 			case AArch64_OP_ISB:
-				add_str(&result, "\t\t ; operands[%u].type ISB = 0x%x\n", i, op->sysop.alias.isb);
+				add_str(&result, " ; operands[%u].subtype ISB = 0x%x", i, op->sysop.alias.isb);
 				break;
 			case AArch64_OP_TSB:
-				add_str(&result, "\t\t ; operands[%u].type TSB = 0x%x\n", i, op->sysop.alias.tsb);
+				add_str(&result, " ; operands[%u].subtype TSB = 0x%x", i, op->sysop.alias.tsb);
 				break;
 			case AArch64_OP_PRFM:
-				add_str(&result, "\t\t ; operands[%u].type PRFM = 0x%x\n", i, op->sysop.alias.prfm);
+				add_str(&result, " ; operands[%u].subtype PRFM = 0x%x", i, op->sysop.alias.prfm);
 				break;
 			case AArch64_OP_SVEPRFM:
-				add_str(&result, "\t\t ; operands[%u].type SVEPRFM = 0x%x\n", i, op->sysop.alias.sveprfm);
+				add_str(&result, " ; operands[%u].subtype SVEPRFM = 0x%x", i, op->sysop.alias.sveprfm);
 				break;
 			case AArch64_OP_RPRFM:
-				add_str(&result, "\t\t ; operands[%u].type RPRFM = 0x%x\n", i, op->sysop.alias.rprfm);
+				add_str(&result, " ; operands[%u].subtype RPRFM = 0x%x", i, op->sysop.alias.rprfm);
 				break;
 			case AArch64_OP_PSTATEIMM0_15:
-				add_str(&result, "\t\t ; operands[%u].type PSTATEIMM0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
+				add_str(&result, " ; operands[%u].subtype PSTATEIMM0_15 = 0x%x", i, op->sysop.alias.pstateimm0_15);
 				break;
 			case AArch64_OP_PSTATEIMM0_1:
-				add_str(&result, "\t\t ; operands[%u].type PSTATEIMM0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
+				add_str(&result, " ; operands[%u].subtype PSTATEIMM0_1 = 0x%x", i, op->sysop.alias.pstateimm0_1);
 				break;
 			case AArch64_OP_PSB:
-				add_str(&result, "\t\t ; operands[%u].type PSB = 0x%x\n", i, op->sysop.alias.psb);
+				add_str(&result, " ; operands[%u].subtype PSB = 0x%x", i, op->sysop.alias.psb);
 				break;
 			case AArch64_OP_BTI:
-				add_str(&result, "\t\t ; operands[%u].type BTI = 0x%x\n", i, op->sysop.alias.bti);
+				add_str(&result, " ; operands[%u].subtype BTI = 0x%x", i, op->sysop.alias.bti);
 				break;
 			case AArch64_OP_SVEPREDPAT:
-				add_str(&result, "\t\t ; operands[%u].type SVEPREDPAT = 0x%x\n", i, op->sysop.alias.svepredpat);
+				add_str(&result, " ; operands[%u].subtype SVEPREDPAT = 0x%x", i, op->sysop.alias.svepredpat);
 				break;
 			case AArch64_OP_SVEVECLENSPECIFIER:
-				add_str(&result, "\t\t ; operands[%u].type SVEVECLENSPECIFIER = 0x%x\n", i, op->sysop.alias.sveveclenspecifier);
+				add_str(&result, " ; operands[%u].subtype SVEVECLENSPECIFIER = 0x%x", i, op->sysop.alias.sveveclenspecifier);
 				break;
+			}
+			break;
+		case AArch64_OP_SYSIMM:
+			add_str(&result, " ; operands[%u].type: SYS IMM:", i);
+			switch(op->sysop.sub_type) {
+			default:
+				break;
+			case AArch64_OP_EXACTFPIMM:
+				add_str(&result, " ; operands[%u].subtype EXACTFPIMM = %d", i, op->sysop.imm.exactfpimm);
+				break;
+			case AArch64_OP_DBNXS:
+				add_str(&result, " ; operands[%u].subtype DBNXS = %d", i, op->sysop.imm.dbnxs);
+				break;
+			}
+			break;
 		}
 		
 		access = op->access;

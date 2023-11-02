@@ -1013,7 +1013,8 @@ bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
 		if (detail_is_set(MI)) {
 			aarch64_sysop sysop;
 			sysop.alias = RPRFM->SysAlias;
-			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_RPRFM;
+			sysop.sub_type = AArch64_OP_RPRFM;
+			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSALIAS;
 			AArch64_get_detail_op(MI, 0)->sysop = sysop;
 			AArch64_inc_op_count(MI);
 		}
@@ -1102,7 +1103,8 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			if (detail_is_set(MI)) {
 				aarch64_sysop sysop;
 				sysop.reg = IC->SysReg;
-				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_IC;
+						sysop.sub_type = AArch64_OP_IC;
+				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSREG;
 				AArch64_get_detail_op(MI, 0)->sysop = sysop;
 				AArch64_inc_op_count(MI);
 			}
@@ -1126,7 +1128,8 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			if (detail_is_set(MI)) {
 				aarch64_sysop sysop;
 				sysop.alias = DC->SysAlias;
-				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_DC;
+					sysop.sub_type = AArch64_OP_DC;
+				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSALIAS;
 				AArch64_get_detail_op(MI, 0)->sysop = sysop;
 				AArch64_inc_op_count(MI);
 			}
@@ -1145,7 +1148,8 @@ bool printSysAlias(MCInst *MI, SStream *O)
 			if (detail_is_set(MI)) {
 				aarch64_sysop sysop;
 				sysop.alias = AT->SysAlias;
-				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_AT;
+					sysop.sub_type = AArch64_OP_AT;
+				AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSALIAS;
 				AArch64_get_detail_op(MI, 0)->sysop = sysop;
 				AArch64_inc_op_count(MI);
 			}
@@ -1164,7 +1168,8 @@ bool printSysAlias(MCInst *MI, SStream *O)
 		if (detail_is_set(MI)) {
 			aarch64_sysop sysop;
 			sysop.reg = TLBI->SysReg;
-			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_TLBI;
+			sysop.sub_type = AArch64_OP_TLBI;
+			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSREG;
 			AArch64_get_detail_op(MI, 0)->sysop = sysop;
 			AArch64_inc_op_count(MI);
 		}
@@ -1229,7 +1234,8 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 		if (detail_is_set(MI)) {
 			aarch64_sysop sysop;
 			sysop.reg = TLBI->SysReg;
-			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_TLBI;
+			sysop.sub_type = AArch64_OP_TLBI;
+			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSREG;
 			AArch64_get_detail_op(MI, 0)->sysop = sysop;
 			AArch64_inc_op_count(MI);
 		}
