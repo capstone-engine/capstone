@@ -310,10 +310,7 @@ static void AArch64_check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
-static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
-{
-	if (!detail_is_set(MI))
-		return;
+static void add_non_alias_details(MCInst *MI) {
 	unsigned Opcode = MCInst_getOpcode(MI);
 	switch (Opcode) {
 	default:
@@ -326,13 +323,112 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 	case AArch64_FCMPSri:
 		AArch64_insert_detail_op_reg_at(MI, -1, AArch64_REG_XZR, CS_AC_READ);
 		break;
+	case AArch64_CMEQv16i8rz:
+	case AArch64_CMEQv1i64rz:
+	case AArch64_CMEQv2i32rz:
+	case AArch64_CMEQv2i64rz:
+	case AArch64_CMEQv4i16rz:
+	case AArch64_CMEQv4i32rz:
+	case AArch64_CMEQv8i16rz:
+	case AArch64_CMEQv8i8rz:
+	case AArch64_CMGEv16i8rz:
+	case AArch64_CMGEv1i64rz:
+	case AArch64_CMGEv2i32rz:
+	case AArch64_CMGEv2i64rz:
+	case AArch64_CMGEv4i16rz:
+	case AArch64_CMGEv4i32rz:
+	case AArch64_CMGEv8i16rz:
+	case AArch64_CMGEv8i8rz:
+	case AArch64_CMGTv16i8rz:
+	case AArch64_CMGTv1i64rz:
+	case AArch64_CMGTv2i32rz:
+	case AArch64_CMGTv2i64rz:
+	case AArch64_CMGTv4i16rz:
+	case AArch64_CMGTv4i32rz:
+	case AArch64_CMGTv8i16rz:
+	case AArch64_CMGTv8i8rz:
+	case AArch64_CMLEv16i8rz:
+	case AArch64_CMLEv1i64rz:
+	case AArch64_CMLEv2i32rz:
+	case AArch64_CMLEv2i64rz:
+	case AArch64_CMLEv4i16rz:
+	case AArch64_CMLEv4i32rz:
+	case AArch64_CMLEv8i16rz:
+	case AArch64_CMLEv8i8rz:
+	case AArch64_CMLTv16i8rz:
+	case AArch64_CMLTv1i64rz:
+	case AArch64_CMLTv2i32rz:
+	case AArch64_CMLTv2i64rz:
+	case AArch64_CMLTv4i16rz:
+	case AArch64_CMLTv4i32rz:
+	case AArch64_CMLTv8i16rz:
+	case AArch64_CMLTv8i8rz:
+		AArch64_insert_detail_op_imm_at(MI, -1, 0);
+		break;
+	case AArch64_FCMEQv1i16rz:
+	case AArch64_FCMEQv1i32rz:
+	case AArch64_FCMEQv1i64rz:
+	case AArch64_FCMEQv2i32rz:
+	case AArch64_FCMEQv2i64rz:
+	case AArch64_FCMEQv4i16rz:
+	case AArch64_FCMEQv4i32rz:
+	case AArch64_FCMEQv8i16rz:
+	case AArch64_FCMGEv1i16rz:
+	case AArch64_FCMGEv1i32rz:
+	case AArch64_FCMGEv2i32rz:
+	case AArch64_FCMGEv2i64rz:
+	case AArch64_FCMGEv4i16rz:
+	case AArch64_FCMGEv4i32rz:
+	case AArch64_FCMGEv8i16rz:
+	case AArch64_FCMGTv2i32rz:
+	case AArch64_FCMGTv2i64rz:
+	case AArch64_FCMGTv4i16rz:
+	case AArch64_FCMGTv4i32rz:
+	case AArch64_FCMGTv8i16rz:
+	case AArch64_FCMLEv2i32rz:
+	case AArch64_FCMLEv2i64rz:
+	case AArch64_FCMLEv4i16rz:
+	case AArch64_FCMLEv4i32rz:
+	case AArch64_FCMLEv8i16rz:
+	case AArch64_FCMEQ_PPzZ0_D:
+	case AArch64_FCMEQ_PPzZ0_H:
+	case AArch64_FCMEQ_PPzZ0_S:
+	case AArch64_FCMGE_PPzZ0_D:
+	case AArch64_FCMGE_PPzZ0_H:
+	case AArch64_FCMGE_PPzZ0_S:
+	case AArch64_FCMGT_PPzZ0_D:
+	case AArch64_FCMGT_PPzZ0_H:
+	case AArch64_FCMGT_PPzZ0_S:
+	case AArch64_FCMLE_PPzZ0_D:
+	case AArch64_FCMLE_PPzZ0_H:
+	case AArch64_FCMLE_PPzZ0_S:
+	case AArch64_FCMLT_PPzZ0_D:
+	case AArch64_FCMLT_PPzZ0_H:
+	case AArch64_FCMLT_PPzZ0_S:
+	case AArch64_FCMNE_PPzZ0_D:
+	case AArch64_FCMNE_PPzZ0_H:
+	case AArch64_FCMNE_PPzZ0_S:
+	case AArch64_FCMLTv2i32rz:
+	case AArch64_FCMLTv2i64rz:
+	case AArch64_FCMLTv4i16rz:
+	case AArch64_FCMLTv4i32rz:
+	case AArch64_FCMLTv8i16rz:
+		AArch64_insert_detail_op_float_at(MI, -1, 0.0f, CS_AC_READ);
+		break;
 	}
+}
 
-	// Alias details
+static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
+{
+	if (!detail_is_set(MI))
+		return;
+
 	if (!MI->flat_insn->is_alias || !MI->flat_insn->usesAliasDetails) {
+		add_non_alias_details(MI);
 		return;
 	}
 
+	// Alias details
 	switch(MI->flat_insn->alias_id) {
 	default:
 		return;
@@ -2178,6 +2274,25 @@ void AArch64_insert_detail_op_reg_at(MCInst *MI, unsigned index, aarch64_reg Reg
 	op.type = AArch64_OP_REG;
 	op.reg = Reg;
 	op.access = access;
+
+	insert_op(MI, index, op);
+}
+
+/// Inserts a immediate to the detail operands at @index.
+/// If @index == -1, it pushes the operand to the end of the ops array.
+/// Already present operands are moved.
+void AArch64_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Imm)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+
+	cs_aarch64_op op;
+	AArch64_setup_op(&op);
+	op.type = AArch64_OP_IMM;
+	op.imm = Imm;
+	op.access = CS_AC_READ;
 
 	insert_op(MI, index, op);
 }
