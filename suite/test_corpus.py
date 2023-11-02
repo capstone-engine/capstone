@@ -24,7 +24,7 @@ def test_file(fname):
 
     archs = {
         "CS_ARCH_ARM": CS_ARCH_ARM,
-        "CS_ARCH_ARM64": CS_ARCH_ARM64,
+        "CS_ARCH_AARCH64": CS_ARCH_AARCH64,
         "CS_ARCH_MIPS": CS_ARCH_MIPS,
         "CS_ARCH_PPC": CS_ARCH_PPC,
         "CS_ARCH_SPARC": CS_ARCH_SPARC,
