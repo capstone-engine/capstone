@@ -146,5 +146,5 @@ class CsAArch64(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.cc, a.update_flags, a.writeback, a.post_index, copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.cc, a.update_flags, a.post_index, a.is_doing_sme, copy_ctypes_list(a.operands[:a.op_count]))
 

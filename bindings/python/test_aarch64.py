@@ -47,32 +47,75 @@ def print_insn_detail(insn):
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x_32(i.mem.disp)))
-            if i.type == AArch64_OP_REG_MRS:
-                print("\t\toperands[%u].type: REG_MRS = 0x%x" % (c, i.reg))
-            if i.type == AArch64_OP_REG_MSR:
-                print("\t\toperands[%u].type: REG_MSR = 0x%x" % (c, i.reg))
-            if i.type == AArch64_OP_PSTATE:
-                print("\t\toperands[%u].type: PSTATE = 0x%x" % (c, i.pstate))
-            if i.type == AArch64_OP_SYS:
-                print("\t\toperands[%u].type: SYS = 0x%x" % (c, i.sys))
-            if i.type == AArch64_OP_PREFETCH:
-                print("\t\toperands[%u].type: PREFETCH = 0x%x" % (c, i.prefetch))
-            if i.type == AArch64_OP_BARRIER:
-                print("\t\toperands[%u].type: BARRIER = 0x%x" % (c, i.barrier))
-            if i.type == AArch64_OP_SVCR:
-                print("\t\toperands[%u].type: SYS = 0x%x" % (c, i.sys))
-                if i.svcr == AArch64_SVCR_SVCRSM:
-                	print("\t\t\toperands[%u].svcr: BIT = SM" % (c))
-                if i.svcr == AArch64_SVCR_SVCRZA:
-                	print("\t\t\toperands[%u].svcr: BIT = ZA" % (c))
-                if i.svcr == AArch64_SVCR_SVCRSMZA:
-                	print("\t\t\toperands[%u].svcr: BIT = SM & ZA" % (c))
-            if i.type == AArch64_OP_SME_INDEX:
-                print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
-                if i.sme_index.base != AArch64_REG_INVALID:
-                    print("\t\t\toperands[%u].index.base: REG = %s" % (c, insn.reg_name(i.reg)))
-                if i.sme_index.disp != 0 :
-                    print("\t\t\toperands[%u].index.disp: 0x%x" %(c, i.sme_index.disp))
+            if i.type == AArch64_OP_SME_MATRIX:
+                print("\t\toperands[%u].type: SME_MATRIX\n" % (c))
+                print("\t\toperands[%u].sme.type: %d\n" % (c, i.sme.type))
+
+                if i.sme.tile != AArch64_REG_INVALID:
+                    print("\t\toperands[%u].sme.tile: %s\n" % (c, cs_reg_name(handle, i.sme.tile)))
+                if i.sme.slice_reg != AArch64_REG_INVALID:
+                    print("\t\toperands[%u].sme.slice_reg: %s\n" % (c, cs_reg_name(handle, i.sme.slice_reg)))
+                if i.sme.slice_offset.imm != -1 or i.sme.slice_offset.imm_range.first != -1:
+                    print("\t\toperands[%u].sme.slice_offset: " % (c))
+                    if i.sme.has_range_offset:
+                        print("%hhd:%hhd\n" % (i.sme.slice_offset.imm_range.first, i.sme.slice_offset.imm_range.offset))
+                    else:
+                        print("%d\n" % (i.sme.slice_offset.imm))
+                if i.sme.slice_reg != AArch64_REG_INVALID or i.sme.slice_offset.imm != -1:
+                    print("\t\toperands[%u].sme.is_vertical: %s\n" % (c, ("true" if i.sme.is_vertical else "false")))
+            if i.type == AArch64_OP_SYSREG:
+                print("\t\toperands[%u].type: SYS REG:\n" % (c))
+                if i.sysop.sub_type == AArch64_OP_REG_MRS:
+                    print("\t\toperands[%u].subtype: REG_MRS = 0x%x\n" % (c, i.sysop.reg.sysreg))
+                if i.sysop.sub_type == AArch64_OP_REG_MSR:
+                    print("\t\toperands[%u].subtype: REG_MSR = 0x%x\n" % (c, i.sysop.reg.sysreg))
+                if i.sysop.sub_type == AArch64_OP_TLBI:
+                    print("\t\toperands[%u].subtype TLBI = 0x%x\n" % (c, i.sysop.reg.tlbi))
+                if i.sysop.sub_type == AArch64_OP_IC:
+                    print("\t\toperands[%u].subtype IC = 0x%x\n" % (c, i.sysop.reg.ic))
+            if i.type == AArch64_OP_SYSALIAS:
+                print("\t\toperands[%u].type: SYS ALIAS:\n" % (c))
+                if i.sysop.sub_type == AArch64_OP_SVCR:
+                    if i.sysop.alias.svcr == AArch64_SVCR_SVCRSM:
+                        print("\t\t\toperands[%u].svcr: BIT = SM\n" % (c))
+                    elif i.sysop.alias.svcr == AArch64_SVCR_SVCRZA:
+                        print("\t\t\toperands[%u].svcr: BIT = ZA\n" % (c))
+                    elif i.sysop.alias.svcr == AArch64_SVCR_SVCRSMZA:
+                        print("\t\t\toperands[%u].svcr: BIT = SM & ZA\n" % (c))
+                if i.sysop.sub_type == AArch64_OP_AT:
+                    print("\t\toperands[%u].subtype AT = 0x%x\n" % (c, i.sysop.alias.at))
+                if i.sysop.sub_type == AArch64_OP_DB:
+                    print("\t\toperands[%u].subtype DB = 0x%x\n" % (c, i.sysop.alias.db))
+                if i.sysop.sub_type == AArch64_OP_DC:
+                    print("\t\toperands[%u].subtype DC = 0x%x\n" % (c, i.sysop.alias.dc))
+                if i.sysop.sub_type == AArch64_OP_ISB:
+                    print("\t\toperands[%u].subtype ISB = 0x%x\n" % (c, i.sysop.alias.isb))
+                if i.sysop.sub_type == AArch64_OP_TSB:
+                    print("\t\toperands[%u].subtype TSB = 0x%x\n" % (c, i.sysop.alias.tsb))
+                if i.sysop.sub_type == AArch64_OP_PRFM:
+                    print("\t\toperands[%u].subtype PRFM = 0x%x\n" % (c, i.sysop.alias.prfm))
+                if i.sysop.sub_type == AArch64_OP_SVEPRFM:
+                    print("\t\toperands[%u].subtype SVEPRFM = 0x%x\n" % (c, i.sysop.alias.sveprfm))
+                if i.sysop.sub_type == AArch64_OP_RPRFM:
+                    print("\t\toperands[%u].subtype RPRFM = 0x%x\n" % (c, i.sysop.alias.rprfm))
+                if i.sysop.sub_type == AArch64_OP_PSTATEIMM0_15:
+                    print("\t\toperands[%u].subtype PSTATEIMM0_15 = 0x%x\n" % (c, i.sysop.alias.pstateimm0_15))
+                if i.sysop.sub_type == AArch64_OP_PSTATEIMM0_1:
+                    print("\t\toperands[%u].subtype PSTATEIMM0_1 = 0x%x\n" % (c, i.sysop.alias.pstateimm0_1))
+                if i.sysop.sub_type == AArch64_OP_PSB:
+                    print("\t\toperands[%u].subtype PSB = 0x%x\n" % (c, i.sysop.alias.psb))
+                if i.sysop.sub_type == AArch64_OP_BTI:
+                    print("\t\toperands[%u].subtype BTI = 0x%x\n" % (c, i.sysop.alias.bti))
+                if i.sysop.sub_type == AArch64_OP_SVEPREDPAT:
+                    print("\t\toperands[%u].subtype SVEPREDPAT = 0x%x\n" % (c, i.sysop.alias.svepredpat))
+                if i.sysop.sub_type == AArch64_OP_SVEVECLENSPECIFIER:
+                    print("\t\toperands[%u].subtype SVEVECLENSPECIFIER = 0x%x\n" % (c, i.sysop.alias.sveveclenspecifier))
+            if i.type == AArch64_OP_SYSIMM:
+                print("\t\toperands[%u].type: SYS IMM:\n" % (c))
+                if i.sysop.sub_type == AArch64_OP_EXACTFPIMM:
+                    print("\t\toperands[%u].subtype EXACTFPIMM = %d\n" % (c, i.sysop.imm.exactfpimm))
+                if i.sysop.sub_type == AArch64_OP_DBNXS:
+                    print("\t\toperands[%u].subtype DBNXS = %d\n" % (c, i.sysop.imm.dbnxs))
 
             if i.access == CS_AC_READ:
                 print("\t\toperands[%u].access: READ" % (c))
@@ -87,12 +130,11 @@ def print_insn_detail(insn):
             if i.ext != AArch64_EXT_INVALID:
                 print("\t\t\tExt: %u" % i.ext)
 
-            if i.vas != AArch64_VAS_INVALID:
+            if i.vas != AArch64Layout_Invalid:
                 print("\t\t\tVector Arrangement Specifier: 0x%x" % i.vas)
 
             if i.vector_index != -1:
                 print("\t\t\tVector Index: %u" % i.vector_index)
-
 
     if insn.writeback:
         if insn.post_index:
@@ -100,7 +142,7 @@ def print_insn_detail(insn):
         else:
             print("\tWrite-back: Pre")
             
-    if not insn.cc in [AArch64_CC_AL, AArch64_CC_INVALID]:
+    if not insn.cc in [AArch64CC_AL, AArch64CC_Invalid]:
         print("\tCode-condition: %u" % insn.cc)
     if insn.update_flags:
         print("\tUpdate-flags: True")

@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'aarch64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h' ]
+include = [ 'arm.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h' ]
 
 template = {
     'java': {
@@ -15,7 +15,6 @@ template = {
             'out_file': './java/capstone/%s_const.java',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'Arm',
-            'aarch64.h': 'AArch64',
             'm68k.h': 'M68k',
             'mips.h': 'Mips',
             'x86.h': 'X86',
@@ -38,7 +37,6 @@ template = {
             'out_file': './python/capstone/%s_const.py',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'arm',
-            'aarch64.h': 'aarch64',
             'm68k.h': 'm68k',
             'mips.h': 'mips',
             'x86.h': 'x86',
@@ -65,7 +63,6 @@ template = {
             'out_file': './ocaml/%s_const.ml',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'arm',
-            'aarch64.h': 'aarch64',
             'mips.h': 'mips',
             'm68k.h': 'm68k',
             'x86.h': 'x86',
