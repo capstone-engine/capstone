@@ -471,7 +471,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			SStream_concat0(O, markup(">"));
 			if (detail_is_set(MI) && useAliasDetails) {
 				AArch64_set_detail_op_reg(MI, 0, MCInst_getOpVal(MI, 0));
-				AArch64_set_detail_op_imm(MI, 1, AArch64_OP_IMM, SignExtend64(Value, RegWidth));
+				AArch64_set_detail_op_imm(MI, 2, AArch64_OP_IMM, SignExtend64(Value, RegWidth));
 			}
 			if (useAliasDetails)
 				return;
