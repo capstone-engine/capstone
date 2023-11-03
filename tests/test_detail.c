@@ -156,12 +156,12 @@ static void test()
 			"Arm-V8"
 		},
 #endif
-#ifdef CAPSTONE_HAS_ARM64
+#ifdef CAPSTONE_HAS_AARCH64
 		{
-			CS_ARCH_ARM64,
+			CS_ARCH_AARCH64,
 			CS_MODE_ARM,
-			(unsigned char *)ARM64_CODE,
-			sizeof(ARM64_CODE) - 1,
+			(unsigned char *)AARCH64_CODE,
+			sizeof(AARCH64_CODE) - 1,
 			"AARCH64"
 		},
 #endif
@@ -193,15 +193,6 @@ static void test()
 			(unsigned char*)MIPS_32R6,
 			sizeof(MIPS_32R6) - 1,
 			"MIPS-32R6 (Big-endian)"
-		},
-#endif
-#ifdef CAPSTONE_HAS_AARCH64
-		{
-			CS_ARCH_AARCH64,
-			CS_MODE_ARM,
-			(unsigned char *)AARCH64_CODE,
-			sizeof(AARCH64_CODE) - 1,
-			"AARCH64"
 		},
 #endif
 #ifdef CAPSTONE_HAS_POWERPC
