@@ -1418,7 +1418,10 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 				break;
 			}
 		}
-		AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM, prfop);
+		AArch64_get_detail_op(MI, 0)->type = AArch64_OP_IMM;
+		AArch64_get_detail_op(MI, 0)->imm = prfop;
+		AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		AArch64_inc_op_count(MI);
 		break;
 	}
 	case AArch64_OP_GROUP_SImm_16:
