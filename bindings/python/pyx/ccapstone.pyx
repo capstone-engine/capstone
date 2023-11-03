@@ -27,7 +27,7 @@ class CsDetail(object):
                 self.cc, self.vcc, self.update_flags, self.post_index, self.mem_barrier, self.pred_mask, self.operands) = \
                 arm.get_arch_info(detail.arch.arm)
         elif arch == capstone.CS_ARCH_AARCH64:
-            (self.cc, self.update_flags, self.aarch64_writeback, self.post_index, self.operands) = \
+            (self.cc, self.update_flags, self.post_index, self.operands) = \
                 aarch64.get_arch_info(detail.arch.aarch64)
         elif arch == capstone.CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \

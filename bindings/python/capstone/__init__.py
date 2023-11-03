@@ -758,8 +758,6 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            if hasattr(self, 'aarch64_writeback'):
-                return self.aarch64_writeback
             return self._raw.detail.contents.writeback
 
         raise CsError(CS_ERR_DETAIL)
@@ -774,7 +772,7 @@ class CsInsn(object):
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.vcc, self.update_flags, \
             self.post_index, self.mem_barrier, self.pred_mask, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
         elif arch == CS_ARCH_AARCH64:
-            (self.cc, self.update_flags, self.aarch64_writeback, self.post_index, self.operands) = \
+            (self.cc, self.update_flags, self.post_index, self.operands) = \
                 aarch64.get_arch_info(self._raw.detail.contents.arch.aarch64)
         elif arch == CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \

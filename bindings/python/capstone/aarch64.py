@@ -14,8 +14,8 @@ class AArch64OpMem(ctypes.Structure):
 
 class AArch64ImmRange(ctypes.Structure):
     _fields_ = (
-        ('imm', ctypes.c_uint),
-        ('offset', ctypes.c_uint),
+        ('imm', ctypes.c_int8),
+        ('offset', ctypes.c_int8),
     )
 
 class AArch64SMESliceOffset(ctypes.Union):
@@ -45,14 +45,14 @@ class AArch64SysOpSysReg(ctypes.Union):
         ('sysreg', ctypes.c_uint),
         ('tlbi', ctypes.c_uint),
         ('ic', ctypes.c_uint),
-        ('raw_val', ctypes.c_uint),
+        ('raw_val', ctypes.c_uint64),
     )
 
 class AArch64SysOpSysImm(ctypes.Union):
     _fields_ = (
         ('dbnxs', ctypes.c_uint),
         ('exactfpimm', ctypes.c_uint),
-        ('raw_val', ctypes.c_uint),
+        ('raw_val', ctypes.c_uint64),
     )
 
 class AArch64SysOpSysAlias(ctypes.Union):
@@ -72,7 +72,7 @@ class AArch64SysOpSysAlias(ctypes.Union):
         ('bti', ctypes.c_uint),
         ('svepredpat', ctypes.c_uint),
         ('sveveclenspecifier', ctypes.c_uint),
-        ('raw_val', ctypes.c_uint),
+        ('raw_val', ctypes.c_uint64),
     )
 class AArch64SysOp(ctypes.Structure):
     _fields_ = (
@@ -96,7 +96,7 @@ class AArch64OpValue(ctypes.Union):
 class AArch64Op(ctypes.Structure):
     _fields_ = (
         ('vector_index', ctypes.c_int),
-        ('vas', ctypes.c_int),
+        ('vas', ctypes.c_uint),
         ('shift', AArch64OpShift),
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),
@@ -146,5 +146,5 @@ class CsAArch64(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.cc, a.update_flags, a.post_index, a.is_doing_sme, copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.cc, a.update_flags, a.post_index, copy_ctypes_list(a.operands[:a.op_count]))
 
