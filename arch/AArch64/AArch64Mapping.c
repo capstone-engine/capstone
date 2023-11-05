@@ -984,7 +984,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_BarrierOption: {
-		unsigned Val = MCInst_getOpVal(MI, OpNum);
+		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 		unsigned Opcode = MCInst_getOpcode(MI);
 		aarch64_sysop sysop;
 
