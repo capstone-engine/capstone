@@ -595,6 +595,7 @@ static const name_map group_name_maps[] = {
 	{ ARM_GRP_INVALID, NULL },
 	{ ARM_GRP_JUMP, "jump" },
 	{ ARM_GRP_CALL, "call" },
+	{ ARM_GRP_RET, "return" },
 	{ ARM_GRP_INT, "int" },
 	{ ARM_GRP_PRIVILEGE, "privilege" },
 	{ ARM_GRP_BRANCH_RELATIVE, "branch_relative" },

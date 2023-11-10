@@ -713,7 +713,7 @@
 
 !# issue 825
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0: 0x0e,0xf0,0xa0,0xe1 == mov pc, lr ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: REG = r14 ; operands[1].access: READ ; Registers read: r14 ; Registers modified: r15 ; Groups: IsARM
+0x0: 0x0e,0xf0,0xa0,0xe1 == mov pc, lr ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: REG = r14 ; operands[1].access: READ ; Registers read: r14 ; Registers modified: r15 ; Groups: jump return IsARM
 
 !# issue 813
 !# CS_ARCH_ARM, CS_MODE_THUMB | CS_MODE_BIG_ENDIAN, None
@@ -1021,7 +1021,7 @@
 
 !# issue 130
 !# CS_ARCH_ARM, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
-0x0: 0xe1,0xa0,0xf0,0x0e == mov pc, lr ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: REG = r14 ; operands[1].access: READ ; Registers read: r14 ; Registers modified: r15 ; Groups: IsARM
+0x0: 0xe1,0xa0,0xf0,0x0e == mov pc, lr ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: REG = r14 ; operands[1].access: READ ; Registers read: r14 ; Registers modified: r15 ; Groups: jump return IsARM
 
 !# issue 85
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
