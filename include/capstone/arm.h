@@ -1578,6 +1578,7 @@ typedef enum arm_insn_group {
 	// all jump instructions (conditional+direct+indirect jumps)
 	ARM_GRP_JUMP,	///< = CS_GRP_JUMP
 	ARM_GRP_CALL,	///< = CS_GRP_CALL
+	ARM_GRP_RET, ///<  = CS_GRP_RET
 	ARM_GRP_INT = 4, ///< = CS_GRP_INT
 	ARM_GRP_PRIVILEGE = 6, ///< = CS_GRP_PRIVILEGE
 	ARM_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
