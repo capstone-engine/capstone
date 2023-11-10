@@ -562,6 +562,27 @@ static int str_replace(char *result, char *target, const char *str1, char *str2)
 		return -1;
 }
 
+/// The asm string sometimes has a leading space or tab.
+/// Here we remove it.
+static void fixup_asm_string(char *asm_str) {
+	if (!asm_str) {
+		return;
+	}
+	int i = 0;
+	int k = 0;
+	bool text_reached = (asm_str[0] != ' ' && asm_str[0] != '\t');
+	while (asm_str[i]) {
+		if (!text_reached && (asm_str[i] == ' ' || asm_str[i] == '\t')) {
+			++i;
+			text_reached = true;
+			continue;
+		}
+		asm_str[k] = asm_str[i];
+		++k, ++i;
+	}
+	asm_str[k] = '\0';
+}
+
 // fill insn with mnemonic & operands info
 static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
@@ -569,6 +590,7 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 #ifndef CAPSTONE_DIET
 	char *sp, *mnem;
 #endif
+	fixup_asm_string(buffer);
 	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
