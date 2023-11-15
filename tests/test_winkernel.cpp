@@ -57,7 +57,7 @@ namespace arm {
 }  // namespace arm
 
 namespace arm64 {
-#include "test_arm64.c"
+#include "test_aarch64.c"
 }  // namespace arm64
 
 namespace mips {

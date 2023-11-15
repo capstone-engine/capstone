@@ -8,7 +8,7 @@
 # ./suite/fuzz.py x86-32   --> Fuzz X86-32 arch only
 # ./suite/fuzz.py x86-64   --> Fuzz X86-64 arch only
 # ./suite/fuzz.py arm      --> Fuzz all ARM (arm, thumb)
-# ./suite/fuzz.py aarch64  --> Fuzz ARM-64
+# ./suite/fuzz.py aarch64  --> Fuzz AARCH64
 # ./suite/fuzz.py mips     --> Fuzz all Mips (32bit, 64bit)
 # ./suite/fuzz.py ppc      --> Fuzz PPC
 
@@ -36,7 +36,7 @@ all_tests = (
         (CS_ARCH_ARM, CS_MODE_THUMB, "THUMB (ARM)", 0),
         (CS_ARCH_MIPS, CS_MODE_MIPS32 + CS_MODE_BIG_ENDIAN, "MIPS-32 (Big-endian)", 0),
         (CS_ARCH_MIPS, CS_MODE_MIPS64 + CS_MODE_LITTLE_ENDIAN, "MIPS-64-EL (Little-endian)", 0),
-        (CS_ARCH_ARM64, CS_MODE_ARM, "ARM-64 (AArch64)", 0),
+        (CS_ARCH_AARCH64, CS_MODE_ARM, "AARCH64 (AArch64)", 0),
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, "PPC", 0),
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, "PPC, print register with number only", CS_OPT_SYNTAX_NOREGNAME),
         (CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, "Sparc", 0),

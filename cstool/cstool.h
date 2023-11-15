@@ -3,7 +3,7 @@
 
 void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins);
 void print_insn_detail_arm(csh handle, cs_insn *ins);
-void print_insn_detail_arm64(csh handle, cs_insn *ins);
+void print_insn_detail_aarch64(csh handle, cs_insn *ins);
 void print_insn_detail_mips(csh handle, cs_insn *ins);
 void print_insn_detail_ppc(csh handle, cs_insn *ins);
 void print_insn_detail_sparc(csh handle, cs_insn *ins);

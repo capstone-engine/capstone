@@ -74,7 +74,7 @@ typedef size_t csh;
 /// Architecture type
 typedef enum cs_arch {
 	CS_ARCH_ARM = 0,	///< ARM architecture (including Thumb, Thumb-2)
-	CS_ARCH_ARM64,		///< ARM-64, also called AArch64
+	CS_ARCH_AARCH64,	///< AArch64
 	CS_ARCH_MIPS,		///< Mips architecture
 	CS_ARCH_X86,		///< X86 architecture (including x86 & x86-64)
 	CS_ARCH_PPC,		///< PowerPC architecture
@@ -272,7 +272,7 @@ typedef struct cs_opt_skipdata {
 	/// NOTE: if this callback pointer is NULL, Capstone would skip a number
 	/// of bytes depending on architectures, as following:
 	/// Arm:     2 bytes (Thumb mode) or 4 bytes.
-	/// Arm64:   4 bytes.
+	/// AArch64: 4 bytes.
 	/// Mips:    4 bytes.
 	/// M680x:   1 byte.
 	/// PowerPC: 4 bytes.
@@ -294,7 +294,7 @@ typedef struct cs_opt_skipdata {
 
 
 #include "arm.h"
-#include "arm64.h"
+#include "aarch64.h"
 #include "m68k.h"
 #include "mips.h"
 #include "ppc.h"
@@ -338,7 +338,7 @@ typedef struct cs_detail {
 	/// Architecture-specific instruction info
 	union {
 		cs_x86 x86;     ///< X86 architecture, including 16-bit, 32-bit & 64-bit mode
-		cs_arm64 arm64; ///< ARM64 architecture (aka AArch64)
+		cs_aarch64 aarch64; ///< AARCH64 architecture (aka AArch64)
 		cs_arm arm;     ///< ARM architecture (including Thumb/Thumb2)
 		cs_m68k m68k;   ///< M68K architecture
 		cs_mips mips;   ///< MIPS architecture

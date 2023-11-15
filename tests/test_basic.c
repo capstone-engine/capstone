@@ -49,8 +49,8 @@ static void test()
 #define MIPS_32R6M "\x00\x07\x00\x07\x00\x11\x93\x7c\x01\x8c\x8b\x7c\x00\xc7\x48\xd0"
 #define MIPS_32R6 "\xec\x80\x00\x19\x7c\x43\x22\xa0"
 #endif
-#ifdef CAPSTONE_HAS_ARM64
-#define ARM64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
+#ifdef CAPSTONE_HAS_AARCH64
+#define AARCH64_CODE "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
 #endif
 #ifdef CAPSTONE_HAS_POWERPC
 #define PPC_CODE "\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21"
@@ -103,7 +103,7 @@ static void test()
 	};
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
-		{ 
+		{
 			CS_ARCH_X86,
 			CS_MODE_16,
 			(unsigned char*)X86_CODE16,
@@ -144,7 +144,7 @@ static void test()
 		},
 #endif
 #ifdef CAPSTONE_HAS_ARM
-		{ 
+		{
 			CS_ARCH_ARM,
 			CS_MODE_ARM,
 			(unsigned char*)ARM_CODE,
@@ -158,7 +158,7 @@ static void test()
 			sizeof(THUMB_CODE2) - 1,
 			"THUMB-2"
 		},
-		{ 
+		{
 			CS_ARCH_ARM,
 			CS_MODE_ARM,
 			(unsigned char*)ARM_CODE2,
@@ -217,13 +217,13 @@ static void test()
 			"MIPS-32R6 (Big-endian)"
 		},
 #endif
-#ifdef CAPSTONE_HAS_ARM64
+#ifdef CAPSTONE_HAS_AARCH64
 		{
-			CS_ARCH_ARM64,
+			CS_ARCH_AARCH64,
 			CS_MODE_ARM,
-			(unsigned char*)ARM64_CODE,
-			sizeof(ARM64_CODE) - 1,
-			"ARM-64"
+			(unsigned char*)AARCH64_CODE,
+			sizeof(AARCH64_CODE) - 1,
+			"AARCH64"
 		},
 #endif
 #ifdef CAPSTONE_HAS_POWERPC

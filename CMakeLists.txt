@@ -45,8 +45,8 @@ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by defau
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 
-set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore)
+set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -123,7 +123,7 @@ set(HEADERS_ENGINE
 )
 
 set(HEADERS_COMMON
-    include/capstone/arm64.h
+    include/capstone/aarch64.h
     include/capstone/arm.h
     include/capstone/capstone.h
     include/capstone/cs_operand.h
@@ -181,35 +181,35 @@ if(CAPSTONE_ARM_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif()
 
-if(CAPSTONE_ARM64_SUPPORT)
-    add_definitions(-DCAPSTONE_HAS_ARM64)
-    set(SOURCES_ARM64
+if(CAPSTONE_AARCH64_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_AARCH64)
+    set(SOURCES_AARCH64
         arch/AArch64/AArch64BaseInfo.c
         arch/AArch64/AArch64Disassembler.c
+        arch/AArch64/AArch64DisassemblerExtension.c
         arch/AArch64/AArch64InstPrinter.c
         arch/AArch64/AArch64Mapping.c
         arch/AArch64/AArch64Module.c
     )
-    set(HEADERS_ARM64
+    set(HEADERS_AARCH64
         arch/AArch64/AArch64AddressingModes.h
         arch/AArch64/AArch64BaseInfo.h
-        arch/AArch64/AArch64Disassembler.h
+        arch/AArch64/AArch64DisassemblerExtension.h
         arch/AArch64/AArch64InstPrinter.h
+        arch/AArch64/AArch64Linkage.h
         arch/AArch64/AArch64Mapping.h
         arch/AArch64/AArch64GenAsmWriter.inc
         arch/AArch64/AArch64GenDisassemblerTables.inc
         arch/AArch64/AArch64GenInstrInfo.inc
         arch/AArch64/AArch64GenRegisterInfo.inc
         arch/AArch64/AArch64GenRegisterName.inc
-        arch/AArch64/AArch64GenRegisterV.inc
         arch/AArch64/AArch64GenSubtargetInfo.inc
         arch/AArch64/AArch64GenSystemOperands.inc
-        arch/AArch64/AArch64GenSystemOperands_enum.inc
-        arch/AArch64/AArch64MappingInsn.inc
-        arch/AArch64/AArch64MappingInsnName.inc
-        arch/AArch64/AArch64MappingInsnOp.inc
+        arch/AArch64/AArch64GenCSMappingInsn.inc
+        arch/AArch64/AArch64GenCSMappingInsnName.inc
+        arch/AArch64/AArch64GenCSMappingInsnOp.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_arm64.c)
+    set(TEST_SOURCES ${TEST_SOURCES} test_aarch64.c)
 endif()
 
 if(CAPSTONE_MIPS_SUPPORT)
@@ -576,7 +576,7 @@ endif()
 set(ALL_SOURCES
     ${SOURCES_ENGINE}
     ${SOURCES_ARM}
-    ${SOURCES_ARM64}
+    ${SOURCES_AARCH64}
     ${SOURCES_MIPS}
     ${SOURCES_PPC}
     ${SOURCES_X86}
@@ -599,7 +599,7 @@ set(ALL_HEADERS
     ${HEADERS_COMMON}
     ${HEADERS_ENGINE}
     ${HEADERS_ARM}
-    ${HEADERS_ARM64}
+    ${HEADERS_AARCH64}
     ${HEADERS_MIPS}
     ${HEADERS_PPC}
     ${HEADERS_X86}
@@ -662,7 +662,7 @@ endif()
 
 source_group("Source\\Engine" FILES ${SOURCES_ENGINE})
 source_group("Source\\ARM" FILES ${SOURCES_ARM})
-source_group("Source\\ARM64" FILES ${SOURCES_ARM64})
+source_group("Source\\AARCH64" FILES ${SOURCES_AARCH64})
 source_group("Source\\Mips" FILES ${SOURCES_MIPS})
 source_group("Source\\PowerPC" FILES ${SOURCES_PPC})
 source_group("Source\\Sparc" FILES ${SOURCES_SPARC})
@@ -683,7 +683,7 @@ source_group("Source\\TriCore" FILES ${SOURCES_TRICORE})
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
 source_group("Include\\ARM" FILES ${HEADERS_ARM})
-source_group("Include\\ARM64" FILES ${HEADERS_ARM64})
+source_group("Include\\AARCH64" FILES ${HEADERS_AARCH64})
 source_group("Include\\Mips" FILES ${HEADERS_MIPS})
 source_group("Include\\PowerPC" FILES ${HEADERS_PPC})
 source_group("Include\\Sparc" FILES ${HEADERS_SPARC})

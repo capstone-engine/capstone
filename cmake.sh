@@ -13,7 +13,10 @@ case $1 in
     ARCH=ARM
     ;;
   ARM64)
-    ARCH=ARM64
+    ARCH=AARCH64
+    ;;
+  AARCH64)
+    ARCH=AARCH64
     ;;
   M68K)
     ARCH=M68K

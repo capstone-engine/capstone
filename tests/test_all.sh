@@ -1,5 +1,5 @@
 ./test_arm
-./test_arm64
+./test_aarch64
 ./test_basic
 ./test_bpf
 ./test_customized_mnem

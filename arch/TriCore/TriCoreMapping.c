@@ -124,20 +124,7 @@ const char *TriCore_group_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-/// A LLVM<->CS Mapping entry of an operand.
-typedef struct insn_op {
-	uint8_t /* cs_op_type */ type;	 ///< Operand type (e.g.: reg, imm, mem)
-	uint8_t /* cs_ac_type */ access; ///< The access type (read, write)
-	uint8_t				 /* cs_data_type */
-		dtypes[10]; ///< List of op types. Terminated by CS_DATA_TYPE_LAST
-} insn_op;
-
-///< Operands of an instruction.
-typedef struct {
-	insn_op ops[16]; ///< NULL terminated array of operands.
-} insn_ops;
-
-static const insn_ops insn_operands[] = {
+static const map_insn_ops insn_operands[] = {
 #include "TriCoreGenCSMappingInsnOp.inc"
 };
 #endif

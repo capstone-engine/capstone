@@ -42,7 +42,7 @@ unsigned short insn_find(const insn_map *m, unsigned int max, unsigned int id,
 unsigned int find_cs_id(unsigned MC_Opcode, const insn_map *imap,
 			unsigned imap_size);
 
-#define MAX_NO_DATA_TYPES 10
+#define MAX_NO_DATA_TYPES 16
 
 ///< A LLVM<->CS Mapping entry of an MCOperand.
 typedef struct {
@@ -120,6 +120,7 @@ void map_cs_id(MCInst *MI, const insn_map *imap, unsigned int imap_size);
 DECL_get_detail_op(arm, ARM);
 DECL_get_detail_op(ppc, PPC);
 DECL_get_detail_op(tricore, TriCore);
+DECL_get_detail_op(aarch64, AArch64);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
@@ -141,6 +142,8 @@ DEFINE_inc_detail_op_count(ppc, PPC);
 DEFINE_dec_detail_op_count(ppc, PPC);
 DEFINE_inc_detail_op_count(tricore, TriCore);
 DEFINE_dec_detail_op_count(tricore, TriCore);
+DEFINE_inc_detail_op_count(aarch64, AArch64);
+DEFINE_dec_detail_op_count(aarch64, AArch64);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)
@@ -165,6 +168,7 @@ static inline void set_doing_mem(const MCInst *MI, bool status)
 DEFINE_get_arch_detail(arm, ARM);
 DEFINE_get_arch_detail(ppc, PPC);
 DEFINE_get_arch_detail(tricore, TriCore);
+DEFINE_get_arch_detail(aarch64, AArch64);
 
 static inline bool detail_is_set(const MCInst *MI)
 {
@@ -176,12 +180,6 @@ static inline cs_detail *get_detail(const MCInst *MI)
 {
 	assert(MI && MI->flat_insn);
 	return MI->flat_insn->detail;
-}
-
-static inline bool set_detail_ops(const MCInst *MI)
-{
-	assert(MI && MI->flat_insn);
-	return MI->fillDetailOps;
 }
 
 /// Returns if the given instruction is an alias instruction.

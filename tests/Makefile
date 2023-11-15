@@ -70,8 +70,8 @@ CFLAGS += -DCAPSTONE_HAS_ARM
 SOURCES += test_arm.c
 endif
 ifneq (,$(findstring aarch64,$(CAPSTONE_ARCHS)))
-CFLAGS += -DCAPSTONE_HAS_ARM64
-SOURCES += test_arm64.c
+CFLAGS += -DCAPSTONE_HAS_AARCH64
+SOURCES += test_aarch64.c
 endif
 ifneq (,$(findstring m68k,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_M68K

@@ -18,7 +18,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_arm", "test_arm\test_a
 		{5B01D900-2359-44CA-9914-6B0C6AFB7BE7} = {5B01D900-2359-44CA-9914-6B0C6AFB7BE7}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_arm64", "test_arm64\test_arm64.vcxproj", "{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_aarch64", "test_aarch64\test_aarch64.vcxproj", "{CBE31473-7D0E-41F5-AFCB-8C8422ED8908}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5B01D900-2359-44CA-9914-6B0C6AFB7BE7} = {5B01D900-2359-44CA-9914-6B0C6AFB7BE7}
 	EndProjectSection
