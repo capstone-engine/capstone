@@ -24,7 +24,7 @@ __all__ = [
     'CS_VERSION_EXTRA',
 
     'CS_ARCH_ARM',
-    'CS_ARCH_ARM64',
+    'CS_ARCH_AARCH64',
     'CS_ARCH_MIPS',
     'CS_ARCH_X86',
     'CS_ARCH_PPC',
@@ -200,7 +200,7 @@ __version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
 
 # architectures
 CS_ARCH_ARM = 0
-CS_ARCH_ARM64 = 1
+CS_ARCH_AARCH64 = 1
 CS_ARCH_MIPS = 2
 CS_ARCH_X86 = 3
 CS_ARCH_PPC = 4
@@ -441,11 +441,11 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, arm64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore
+from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
-        ('arm64', arm64.CsArm64),
+        ('aarch64', aarch64.CsAArch64),
         ('arm', arm.CsArm),
         ('m68k', m68k.CsM68K),
         ('mips', mips.CsMips),
@@ -758,8 +758,6 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         if self._cs._detail:
-            if hasattr(self, 'arm64_writeback'):
-                return self.arm64_writeback
             return self._raw.detail.contents.writeback
 
         raise CsError(CS_ERR_DETAIL)
@@ -773,9 +771,9 @@ class CsInsn(object):
         if arch == CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.vcc, self.update_flags, \
             self.post_index, self.mem_barrier, self.pred_mask, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
-        elif arch == CS_ARCH_ARM64:
-            (self.cc, self.update_flags, self.arm64_writeback, self.post_index, self.operands) = \
-                arm64.get_arch_info(self._raw.detail.contents.arch.arm64)
+        elif arch == CS_ARCH_AARCH64:
+            (self.cc, self.update_flags, self.post_index, self.operands) = \
+                aarch64.get_arch_info(self._raw.detail.contents.arch.aarch64)
         elif arch == CS_ARCH_X86:
             (self.prefix, self.opcode, self.rex, self.addr_size, \
                 self.modrm, self.sib, self.disp, \
@@ -1301,7 +1299,7 @@ def debug():
         diet = "standard"
 
     archs = {
-        "arm": CS_ARCH_ARM, "arm64": CS_ARCH_ARM64, "m68k": CS_ARCH_M68K,
+        "arm": CS_ARCH_ARM, "aarch64": CS_ARCH_AARCH64, "m68k": CS_ARCH_M68K,
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
         "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,

@@ -4,7 +4,7 @@
 # This is useful when we want to verify if a commit (wrongly) changes the disassemble result.
 
 ../tests/test_arm > /tmp/$1
-../tests/test_arm64 > /tmp/$1
+../tests/test_aarch64 > /tmp/$1
 ../tests/test_basic > /tmp/$1
 ../tests/test_bpf > /tmp/$1
 ../tests/test_customized_mnem > /tmp/$1

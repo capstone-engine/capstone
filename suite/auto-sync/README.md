@@ -5,27 +5,30 @@ Unfortunately not all architectures are supported yet.
 
 ## Install dependencies
 
-Clone C++ grammar
+Install clang-format
 
 ```
-git submodule update --init --recursive ./vendor/
+# clang-format version must be at least 16
+sudo apt install clang-format-18
 ```
 
 Setup Python environment and Tree-sitter
 
 ```
+cd <root-dir-Capstone>
+# Python version must be at least 3.11
 sudo apt install python3-venv
-cd CppTranslator
+# Setup virtual environment in Capstone root dir
 python3 -m venv ./.venv
 source ./.venv/bin/activate
 pip3 install -r requirements.txt
-cd ..
 ```
 
-Install clang-format
+Clone C++ grammar
 
 ```
-sudo apt install clang-format-16
+cs suite/auto-sync/
+git submodule update --init --recursive ./vendor/
 ```
 
 ## Update
@@ -33,27 +36,18 @@ sudo apt install clang-format-16
 Check if your architecture is supported.
 
 ```
-./Update-Arch.sh -h
+./Updater/Updater.py -h
 ```
 
-Clone Capstones LLVM fork.
+Clone Capstones LLVM fork and build `llvm-tblgen`
 
 ```
 git clone https://github.com/capstone-engine/llvm-capstone
 cd llvm-capstone
-```
-
-Checkout the branch with the refactored backends
-
-```
 git checkout auto-sync
-```
-
-Build `llvm-tblgen`
-
-```
 mkdir build
 cd build
+# You can also build the "Release" version
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
 cmake --build . --target llvm-tblgen --config Debug
 cd ../../
@@ -62,6 +56,7 @@ cd ../../
 Run the updater
 
 ```
+TODO: REWORK
 mkdir build
 cd build
 ../Update-Arch.sh <ARCH> ./llvm-capstone
@@ -113,3 +108,24 @@ For details about the C++ to C translation of the LLVM files refer to `CppTransl
 **Generated .inc files**
 
 Documentation about the `.inc` file generation is in the [llvm-capstone](https://github.com/capstone-engine/llvm-capstone) repository.
+
+- If some features were not generated and are missing in the `.inc` files, make sure they are defined as `AssemblerPredicate` in the `.td` files.
+
+  Correct:
+  ```
+  def In32BitMode  : Predicate<"!Subtarget->isPPC64()">,
+    AssemblerPredicate<(all_of (not Feature64Bit)), "64bit">;
+  ```
+  Incorrect:
+  ```
+  def In32BitMode  : Predicate<"!Subtarget->isPPC64()">;
+  ```
+
+**Formatting**
+
+- If you make changes to the `CppTranslator` please format the files with `black`
+  ```
+  source ./.venv/bin/activate
+  pip3 install black
+  python3 -m black --line-length=120 CppTranslator/*/*.py
+  ```

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #endif
 #include <string.h>
+#include <ctype.h>
 
 #include "utils.h"
 
@@ -106,4 +107,22 @@ uint16_t readBytes16(MCInst *MI, const uint8_t *Bytes)
 		Insn = (Bytes[1] << 8) | Bytes[0];
 
 	return Insn;
+}
+
+/// @brief Appends the string @p src to the string @p str. @p src is put to lower case.
+/// @param str The string to append to.
+/// @param str_size The lengt of @p str
+/// @param src The string to append.
+void append_to_str_lower(char *str, size_t str_size, const char *src) {
+	char *dest = strchr(str, '\0');
+	if (dest - str >= str_size) {
+		assert("str_size does not match actual string length." && 0);
+		return;
+	}
+
+	int i = dest - str;
+	for (int j = 0; (i < str_size) && (j < strlen(src)); ++i, ++j) {
+		str[i] = tolower(src[j]);
+	}
+	str[i] = '\0';
 }

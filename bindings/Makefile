@@ -6,7 +6,7 @@ TEST_BASIC = $(TMPDIR)/test_basic
 TEST_DETAIL = $(TMPDIR)/test_detail
 TEST_CUSTOMIZED_MNEM = $(TMPDIR)/test_customized_mnem
 TEST_ARM = $(TMPDIR)/test_arm
-TEST_ARM64 = $(TMPDIR)/test_arm64
+TEST_ARM64 = $(TMPDIR)/test_aarch64
 TEST_M68K = $(TMPDIR)/test_m68k
 TEST_MIPS = $(TMPDIR)/test_mips
 TEST_MOS65XX = $(TMPDIR)/test_mos65xx
@@ -47,7 +47,7 @@ expected:
 	../tests/test_detail > $(TEST_DETAIL)_e
 	../tests/test_customized_mnem > $(TEST_CUSTOMIZED_MNEM)_e
 	../tests/test_arm > $(TEST_ARM)_e
-	../tests/test_arm64 > $(TEST_ARM64)_e
+	../tests/test_aarch64 > $(TEST_ARM64)_e
 	../tests/test_m68k > $(TEST_M68K)_e
 	../tests/test_mips > $(TEST_MIPS)_e
 	../tests/test_mos65xx > $(TEST_MOS65XX)_e
@@ -71,7 +71,7 @@ python: FORCE
 	$(PYTHON3) python/test_detail.py > $(TEST_DETAIL)_o
 	$(PYTHON3) python/test_customized_mnem.py > $(TEST_CUSTOMIZED_MNEM)_o
 	$(PYTHON3) python/test_arm.py > $(TEST_ARM)_o
-	$(PYTHON3) python/test_arm64.py > $(TEST_ARM64)_o
+	$(PYTHON3) python/test_aarch64.py > $(TEST_ARM64)_o
 	$(PYTHON3) python/test_m68k.py > $(TEST_M68K)_o
 	$(PYTHON3) python/test_mips.py > $(TEST_MIPS)_o
 	$(PYTHON3) python/test_mos65xx.py > $(TEST_MOS65XX)_o

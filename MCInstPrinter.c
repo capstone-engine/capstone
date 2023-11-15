@@ -7,6 +7,7 @@
 
 extern bool ARM_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
+extern bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature);
 
 static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 {
@@ -14,10 +15,19 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 	switch (MI->csh->arch) {
 	default:
 		assert(0 && "Not implemented for current arch.");
+		return false;
+#ifdef CAPSTONE_HAS_ARM
 	case CS_ARCH_ARM:
 		return ARM_getFeatureBits(MI->csh->mode, Value);
+#endif
+#ifdef CAPSTONE_HAS_POWERPC
 	case CS_ARCH_PPC:
 		return PPC_getFeatureBits(MI->csh->mode, Value);
+#endif
+#ifdef CAPSTONE_HAS_AARCH64
+	case CS_ARCH_AARCH64:
+		return AArch64_getFeatureBits(MI->csh->mode, Value);
+#endif
 	}
 }
 
@@ -185,6 +195,11 @@ unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t s
 	while(left <= right) {
 		m = (left + right) / 2;
 		if (encoding == index[m].encoding) {
+			// LLVM actually uses lower_bound for the index table search
+			// Here we need to check if a previous entry is of the same encoding
+			// and return the first one.
+			while (m > 0 && encoding == index[m - 1].encoding)
+				--m;
 			return m;
 		}
 
@@ -218,6 +233,11 @@ unsigned int binsearch_IndexTypeStrEncoding(const struct IndexTypeStr *index, si
 	while(left <= right) {
 		m = (left + right) / 2;
 		if (strcmp(name, index[m].name) == 0) {
+			// LLVM actually uses lower_bound for the index table search
+			// Here we need to check if a previous entry is of the same encoding
+			// and return the first one.
+			while (m > 0 && (strcmp(name, index[m - 1].name) == 0))
+				--m;
 			return m;
 		}
 

@@ -1,2 +1,5 @@
 build/
 vendor/llvm_root
+*/.idea
+Updater/config.json
+

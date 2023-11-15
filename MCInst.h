@@ -68,7 +68,7 @@ unsigned MCOperand_getReg(const MCOperand *op);
 /// setReg - Set the register number.
 void MCOperand_setReg(MCOperand *op, unsigned Reg);
 
-int64_t MCOperand_getImm(MCOperand *op);
+int64_t MCOperand_getImm(const MCOperand *op);
 
 void MCOperand_setImm(MCOperand *op, int64_t Val);
 
@@ -170,5 +170,7 @@ void MCInst_setIsAlias(MCInst *MI, bool Flag);
 static inline bool MCInst_isAlias(const MCInst *MI) {
 	return MI->isAliasInstr;
 }
+
+void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI);
 
 #endif

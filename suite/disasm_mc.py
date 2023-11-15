@@ -41,7 +41,7 @@ def test_file(fname):
 
     archs = {
         "CS_ARCH_ARM": CS_ARCH_ARM,
-        "CS_ARCH_ARM64": CS_ARCH_ARM64,
+        "CS_ARCH_AARCH64": CS_ARCH_AARCH64,
         "CS_ARCH_MIPS": CS_ARCH_MIPS,
         "CS_ARCH_PPC": CS_ARCH_PPC,
         "CS_ARCH_SPARC": CS_ARCH_SPARC,
@@ -93,7 +93,7 @@ def test_file(fname):
         ("CS_ARCH_ARM", "CS_MODE_ARM+CS_MODE_V8"): ['-triple=armv8'],
         ("CS_ARCH_ARM", "CS_MODE_THUMB+CS_MODE_V8"): ['-triple=thumbv8'],
         ("CS_ARCH_ARM", "CS_MODE_THUMB+CS_MODE_MCLASS"): ['-triple=thumbv7m'],
-        ("CS_ARCH_ARM64", "0"): ['-triple=aarch64'],
+        ("CS_ARCH_AARCH64", "0"): ['-triple=aarch64'],
         ("CS_ARCH_MIPS", "CS_MODE_MIPS32+CS_MODE_BIG_ENDIAN"): ['-triple=mips'],
         ("CS_ARCH_MIPS", "CS_MODE_MIPS32+CS_MODE_MICRO"): ['-triple=mipsel', '-mattr=+micromips'],
         ("CS_ARCH_MIPS", "CS_MODE_MIPS64"): ['-triple=mips64el'],

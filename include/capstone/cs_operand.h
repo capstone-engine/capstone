@@ -26,6 +26,9 @@ typedef enum cs_op_type {
 	CS_OP_SPECIAL = 0x10, ///< Special operands from archs
 	CS_OP_MEM =
 		0x80, ///< Memory operand. Can be ORed with another operand type.
+	CS_OP_MEM_REG = CS_OP_MEM | CS_OP_REG,	   ///< Memory referenceing register operand.
+	CS_OP_MEM_IMM = CS_OP_MEM | CS_OP_IMM,	   ///< Memory referenceing immediate operand.
+
 } cs_op_type;
 
 /// Common instruction operand access types - to be consistent across all architectures.

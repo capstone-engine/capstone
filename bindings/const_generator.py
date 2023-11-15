@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'arm64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h' ]
+include = [ 'arm.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h' ]
 
 template = {
     'java': {
@@ -15,7 +15,6 @@ template = {
             'out_file': './java/capstone/%s_const.java',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'Arm',
-            'arm64.h': 'Arm64',
             'm68k.h': 'M68k',
             'mips.h': 'Mips',
             'x86.h': 'X86',
@@ -38,7 +37,6 @@ template = {
             'out_file': './python/capstone/%s_const.py',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'arm',
-            'arm64.h': 'arm64',
             'm68k.h': 'm68k',
             'mips.h': 'mips',
             'x86.h': 'x86',
@@ -65,7 +63,6 @@ template = {
             'out_file': './ocaml/%s_const.ml',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'arm',
-            'arm64.h': 'arm64',
             'mips.h': 'mips',
             'm68k.h': 'm68k',
             'x86.h': 'x86',
@@ -157,6 +154,10 @@ template = {
     #     },
 }
 
+excluded_prefixes = {
+    'arm.h': ["ARMCC_CondCodes", "ARMVCC_VPTCodes"],
+}
+
 # markup for comments to be added to autogen files
 MARKUP = '//>'
 
@@ -246,6 +247,8 @@ def gen(lang):
                 line = ' '.join(xline)
 
             def is_with_prefix(x):
+                if target in excluded_prefixes and any(x.startswith(excl_pre) for excl_pre in excluded_prefixes[target]):
+                    return False
                 if prefixs:
                     return any(x.startswith(pre) for pre in prefixs)
                 else:

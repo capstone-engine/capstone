@@ -31,7 +31,7 @@ versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
   to customize Capstone library, as followings.
 
   - CAPSTONE_HAS_ARM: support ARM. Delete this to remove ARM support.
-  - CAPSTONE_HAS_ARM64: support ARM64. Delete this to remove ARM64 support.
+  - CAPSTONE_HAS_AARCH64: support AARCH64. Delete this to remove AARCH64 support.
   - CAPSTONE_HAS_M68K: support M68K. Delete this to remove M68K support.
   - CAPSTONE_HAS_MIPS: support Mips. Delete this to remove Mips support.
   - CAPSTONE_HAS_POWERPC: support PPC. Delete this to remove PPC support.

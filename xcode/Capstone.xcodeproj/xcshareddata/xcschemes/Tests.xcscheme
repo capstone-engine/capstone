@@ -43,8 +43,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC474EE919DDEAE400BCA449"
-               BuildableName = "test_arm64"
-               BlueprintName = "test_arm64"
+               BuildableName = "test_aarch64"
+               BlueprintName = "test_aarch64"
                ReferencedContainer = "container:Capstone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
