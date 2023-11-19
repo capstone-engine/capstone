@@ -823,7 +823,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType12(uint8_t Imm)
 }
 
 
-#if __GNUC__ && defined( __has_warning )
+#if defined( __has_warning )
 #   if __has_warning( "-Wmaybe-uninitialized" )
 #       define WARNING_SUPRESSED
 #				pragma GCC diagnostic push
