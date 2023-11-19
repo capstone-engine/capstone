@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #include <capstone/capstone.h>
 #include "cstool.h"
@@ -30,13 +29,13 @@ void print_insn_detail_tricore(csh handle, cs_insn *ins)
 			       cs_reg_name(handle, op->reg));
 			break;
 		case TRICORE_OP_IMM:
-			printf("\t\toperands[%u].type: IMM = 0x%x\n", i,
-			       op->imm);
+			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n",
+			       i, op->imm);
 			break;
 		case TRICORE_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n"
 			       "\t\t\t.mem.base: REG = %s\n"
-			       "\t\t\t.mem.disp: 0x%x\n",
+			       "\t\t\t.mem.disp: 0x%" PRIx64 "\n",
 			       i, cs_reg_name(handle, op->mem.base),
 			       op->mem.disp);
 			break;

@@ -31,7 +31,7 @@ typedef enum tricore_op_type {
 /// This is associated with TRICORE_OP_MEM operand type above
 typedef struct tricore_op_mem {
 	uint8_t base; ///< base register
-	int32_t disp; ///< displacement/offset value
+	int64_t disp; ///< displacement/offset value
 } tricore_op_mem;
 
 /// Instruction operand
@@ -39,7 +39,7 @@ typedef struct cs_tricore_op {
 	tricore_op_type type;	    ///< operand type
 	union {
 		unsigned int reg;   ///< register value for REG operand
-		int32_t imm;	    ///< immediate value for IMM operand
+		int64_t imm;	    ///< immediate value for IMM operand
 		tricore_op_mem mem; ///< base/disp value for MEM operand
 	};
 	/// This field is combined of cs_ac_type.
