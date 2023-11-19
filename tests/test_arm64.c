@@ -1,6 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -222,9 +223,27 @@ static void test()
 	}
 }
 
+void test_macros() {
+	assert(CS_AARCH64(_INS_BL) == ARM64_INS_BL);
+	assert(CS_AARCH64pre(CS_ARCH_) == CS_ARCH_ARM64);
+	assert(CS_AARCH64CC(_AL) == ARM64_CC_AL);
+	assert(CS_AARCH64_VL_(16B) == ARM64_VAS_16B);
+	cs_detail detail = { 0 };
+	CS_cs_aarch64() arm64_detail = { 0 };
+	detail.arm64 = arm64_detail;
+	CS_aarch64_op() op = { 0 };
+	detail.CS_aarch64().operands[0] = op;
+	CS_aarch64_reg() reg = 1;
+	CS_aarch64_cc() cc = ARM64_CC_AL;
+	CS_aarch64_extender() arm64_extender = ARM64_EXT_SXTB;
+	CS_aarch64_shifter() arm64_shifter = ARM64_SFT_LSL;
+	CS_aarch64_vas() arm64_vas = ARM64_VAS_16B;
+}
+
 int main()
 {
 	test();
+	test_macros();
 
 	return 0;
 }
