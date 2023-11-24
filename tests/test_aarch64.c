@@ -332,9 +332,30 @@ static void test()
 	}
 }
 
+int test_macros() {
+	assert(CS_AARCH64(_INS_BL) == AArch64_INS_BL);
+	assert(CS_AARCH64pre(CS_ARCH_) == CS_ARCH_AARCH64);
+	assert(CS_AARCH64CC(_AL) == AArch64CC_AL);
+	assert(CS_AARCH64_VL_(16B) == AArch64Layout_VL_16B);
+	cs_detail detail = { 0 };
+	CS_cs_aarch64() aarch64_detail = { 0 };
+	detail.aarch64 = aarch64_detail;
+	CS_aarch64_op() op = { 0 };
+	detail.CS_aarch64().operands[0] = op;
+	CS_aarch64_reg() reg = 1;
+	CS_aarch64_cc() cc = AArch64CC_AL;
+	CS_aarch64_extender() aarch64_extender = AArch64_EXT_SXTB;
+	CS_aarch64_shifter() aarch64_shifter = AArch64_SFT_LSL;
+	CS_aarch64_vas() aarch64_vas = AArch64Layout_VL_16B;
+	// Do something with them to prevent compiler warnings.
+	return reg + cc + aarch64_extender + aarch64_shifter + aarch64_vas + detail.aarch64.cc;
+
+}
+
 int main()
 {
 	test();
+	test_macros();
 
 	return 0;
 }
