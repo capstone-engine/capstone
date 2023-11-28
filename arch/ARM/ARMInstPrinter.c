@@ -348,9 +348,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	case ARM_STREXD:
 	case ARM_LDAEXD:
 	case ARM_STLEXD: {
-		isAlias = true;
-		MCInst_setIsAlias(MI, isAlias);
-
 		const MCRegisterClass *MRC =
 			MCRegisterInfo_getRegClass(MI->MRI, ARM_GPRRegClassID);
 		bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
@@ -381,10 +378,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 						   MCInst_getOperand(MI, i));
 
 			printInstruction(&NewMI, Address, O);
-			if (useAliasDetails)
-				return;
-			else
-				goto add_real_detail;
+			return;
 		}
 		break;
 	}
