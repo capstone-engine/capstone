@@ -109,8 +109,6 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	bool useAliasDetails = map_use_alias_details(MI);
 	map_set_fill_detail_ops(MI, useAliasDetails);
 	unsigned Opcode = MCInst_getOpcode(MI);
-	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
-	MI->MRI = MRI;
 	uint64_t Address = MI->address;
 
 	switch (Opcode) {
@@ -354,7 +352,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		MCInst_setIsAlias(MI, isAlias);
 
 		const MCRegisterClass *MRC =
-			MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
+			MCRegisterInfo_getRegClass(MI->MRI, ARM_GPRRegClassID);
 		bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
 		unsigned Reg = MCOperand_getReg(
 			MCInst_getOperand(MI, isStore ? 1 : 0));
@@ -372,9 +370,9 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			MCOperand_CreateReg0(
 				&NewMI,
 				MCRegisterInfo_getMatchingSuperReg(
-					MRI, Reg, ARM_gsub_0,
+					MI->MRI, Reg, ARM_gsub_0,
 					MCRegisterInfo_getRegClass(
-						MRI, ARM_GPRPairRegClassID)));
+						MI->MRI, ARM_GPRPairRegClassID)));
 
 			// Copy the rest operands into NewMI.
 			for (unsigned i = isStore ? 3 : 2;
