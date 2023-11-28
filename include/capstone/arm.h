@@ -1607,6 +1607,8 @@ typedef enum arm_insn {
 	// Hardcoded in LLVM printer
 	ARM_INS_ALIAS_POP,
 	ARM_INS_ALIAS_PUSH,
+	ARM_INS_ALIAS_POPW,
+	ARM_INS_ALIAS_PUSHW,
 	ARM_INS_ALIAS_VPOP,
 	ARM_INS_ALIAS_VPUSH,
 

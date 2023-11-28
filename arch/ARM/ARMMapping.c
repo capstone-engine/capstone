@@ -26,6 +26,8 @@ static const name_map insn_alias_mnem_map[] = {
 	#include "ARMGenCSAliasMnemMap.inc"
 	{ ARM_INS_ALIAS_POP, "pop" },
 	{ ARM_INS_ALIAS_PUSH, "push" },
+	{ ARM_INS_ALIAS_POPW, "pop.w" },
+	{ ARM_INS_ALIAS_PUSHW, "push.w" },
 	{ ARM_INS_ALIAS_VPOP, "vpop" },
 	{ ARM_INS_ALIAS_VPUSH, "vpush" },
 	{ ARM_INS_ALIAS_END, NULL }

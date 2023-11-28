@@ -345,7 +345,7 @@ void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias) {
 }
 
 static inline bool char_ends_mnem(const char c) {
-	return (!c || c == ' ' || c == '\t' || c == '.');
+	return (!c || c == ' ' || c == '\t');
 }
 
 /// Sets an alternative id for some instruction.
