@@ -1605,6 +1605,13 @@ typedef enum arm_insn {
 	// generated content <ARMGenCSAliasEnum.inc> end
 
 	// Hardcoded in LLVM printer
+	ARM_INS_ALIAS_ASR,
+	ARM_INS_ALIAS_LSL,
+	ARM_INS_ALIAS_LSR,
+	ARM_INS_ALIAS_ROR,
+	ARM_INS_ALIAS_RRX,
+	ARM_INS_ALIAS_UXTW,
+	ARM_INS_ALIAS_LDM,
 	ARM_INS_ALIAS_POP,
 	ARM_INS_ALIAS_PUSH,
 	ARM_INS_ALIAS_POPW,

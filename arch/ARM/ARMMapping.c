@@ -24,6 +24,13 @@
 
 static const name_map insn_alias_mnem_map[] = {
 	#include "ARMGenCSAliasMnemMap.inc"
+	{ ARM_INS_ALIAS_ASR, "asr" },
+	{ ARM_INS_ALIAS_LSL, "lsl" },
+	{ ARM_INS_ALIAS_LSR, "lsr" },
+	{ ARM_INS_ALIAS_ROR, "ror" },
+	{ ARM_INS_ALIAS_RRX, "rrx" },
+	{ ARM_INS_ALIAS_UXTW, "uxtw" },
+	{ ARM_INS_ALIAS_LDM, "ldm" },
 	{ ARM_INS_ALIAS_POP, "pop" },
 	{ ARM_INS_ALIAS_PUSH, "push" },
 	{ ARM_INS_ALIAS_POPW, "pop.w" },
@@ -191,6 +198,20 @@ static void add_alias_details(MCInst *MI) {
 	case ARM_INS_ALIAS_VPOP:
 		map_add_implicit_read(MI, ARM_REG_SP);
 		map_add_implicit_write(MI, ARM_REG_SP);
+		break;
+	case ARM_INS_ALIAS_LDM: {
+		bool Writeback = true;
+		unsigned BaseReg = MCInst_getOpVal(MI, 0);
+		for (unsigned i = 3; i < MCInst_getNumOperands(MI); ++i) {
+			if (MCInst_getOpVal(MI, i) == BaseReg)
+				Writeback = false;
+		}
+		if (Writeback && detail_is_set(MI)) {
+			ARM_get_detail(MI)->operands[0].access |= CS_AC_WRITE;
+			MI->flat_insn->detail->writeback = true;
+		}
+		break;
+	}
 	}
 }
 

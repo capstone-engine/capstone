@@ -160,8 +160,8 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
 			if (useAliasDetails)
 				return;
-		else
-			goto add_real_detail;
+			else
+				goto add_real_detail;
 		}
 
 		SStream_concat(O, "%s%s%s%d", ", ", markup("<imm:"), "#",
