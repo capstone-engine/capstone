@@ -29,6 +29,9 @@ If you want to check the current state of this endavor checkout https://github.c
 Also we would very much welcome if you decide to update an architecture module!
 If you want to join the effort, please drop us a note in the issue comments so we can assist.
 
+Almost all of the new features in this release were sponsored and implemented by the Rizin team.
+The `auto-sync` updater, the additional updates of ARM, AArch64 and PPC, as well as the newly added Tricore and Alpha support, wouldn't have had happened without them.
+
 With all that said, we hope you enjoy the new release!
 
 ## Breaking changes
