@@ -36,8 +36,8 @@ class AlphaOp(ctypes.Structure):
 class CsAlpha(ctypes.Structure):
     _fields_ = (
         ('op_count', ctypes.c_uint8),
-        ('operands', AlphaOp * 8)
+        ('operands', AlphaOp * 3)
     )
 
 def get_arch_info(a):
-    return copy_ctypes_list(a.operands[:a.op_count])
+    return (copy_ctypes_list(a.operands[:a.op_count]))

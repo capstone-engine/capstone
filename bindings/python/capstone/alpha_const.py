@@ -1,3 +1,4 @@
+from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_FP, CS_OP_PRED, CS_OP_SPECIAL, CS_OP_MEM
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [alpha_const.py]
 
 # Operand type for instruction's operands
@@ -167,9 +168,9 @@ Alpha_INS_LDA = 154
 Alpha_INS_LDAH = 155
 Alpha_INS_LDBU = 156
 Alpha_INS_LDL = 157
-Alpha_INS_LDLsL = 158
+Alpha_INS_LDL_L = 158
 Alpha_INS_LDQ = 159
-Alpha_INS_LDQsL = 160
+Alpha_INS_LDQ_L = 160
 Alpha_INS_LDQ_U = 161
 Alpha_INS_LDS = 162
 Alpha_INS_LDT = 163
@@ -208,9 +209,9 @@ Alpha_INS_SRA = 195
 Alpha_INS_SRL = 196
 Alpha_INS_STB = 197
 Alpha_INS_STL = 198
-Alpha_INS_STLsL = 199
+Alpha_INS_STL_C = 199
 Alpha_INS_STQ = 200
-Alpha_INS_STQsL = 201
+Alpha_INS_STQ_C = 201
 Alpha_INS_STQ_U = 202
 Alpha_INS_STS = 203
 Alpha_INS_STT = 204
@@ -234,7 +235,8 @@ Alpha_GRP_INVALID = 218
 # Generic groups
 Alpha_GRP_CALL = 219
 Alpha_GRP_JUMP = 220
-Alpha_GRP_ENDING = 221
+Alpha_GRP_BRANCH_RELATIVE = 221
+Alpha_GRP_ENDING = 222
 
 ALPHA_FEATURE_INVALID = 0
 ALPHA_FEATURE_ENDING = 1
