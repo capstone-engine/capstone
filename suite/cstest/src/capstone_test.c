@@ -21,6 +21,11 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	char *p;
 
 	list_part = split(line, " = ", &size_part);
+	if (size_part <= 1) {
+		free_strs(list_part, size_part);
+		return;
+	}
+
 	offset_opcode = split(list_part[0], ": ", &size_offset_opcode);
 	if (size_offset_opcode > 1) {
 		offset = (unsigned int)strtol(offset_opcode[0], NULL, 16);

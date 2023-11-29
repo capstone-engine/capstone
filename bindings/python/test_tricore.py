@@ -5,7 +5,7 @@
 from __future__ import print_function
 from capstone import *
 from capstone.tricore import *
-from xprint import to_x_32, to_hex
+from xprint import to_hex, to_x
 
 TRICORE_CODE = b"\x09\xcf\xbc\xf5\x09\xf4\x01\x00\x89\xfb\x8f\x74\x89\xfe\x48\x01\x29\x00\x19\x25\x29\x03\x09\xf4\x85\xf9\x68\x0f\x16\x01"
 
@@ -29,7 +29,7 @@ def print_insn_detail(insn):
             if i.type == TRICORE_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == TRICORE_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
             if i.type == TRICORE_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
@@ -37,7 +37,7 @@ def print_insn_detail(insn):
                           % (c, insn.reg_name(i.mem.base)))
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                          % (c, to_x_32(i.mem.disp)))
+                          % (c, to_x(i.mem.disp)))
             c += 1
     print()
 
