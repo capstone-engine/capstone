@@ -711,6 +711,7 @@ static const uint8_t DecoderTableSTr32[] = {
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
   /* llvm_unreachable("Invalid index!"); */
+  return false;
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \

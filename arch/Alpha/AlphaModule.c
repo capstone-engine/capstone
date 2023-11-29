@@ -4,8 +4,10 @@
 #ifdef CAPSTONE_HAS_ALPHA
 
 #include "../../utils.h"
+#include "../../MCRegisterInfo.h"
 #include "AlphaDisassembler.h"
 #include "AlphaMapping.h"
+#include "AlphaModule.h"
 
 cs_err ALPHA_global_init(cs_struct *ud)
 {

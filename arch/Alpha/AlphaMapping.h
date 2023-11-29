@@ -24,6 +24,7 @@ const char *Alpha_getRegisterName(csh handle, unsigned int id);
 bool Alpha_getInstruction(csh handle, const uint8_t *code,
 								  size_t code_len, MCInst *instr,
 								  uint16_t *size, uint64_t address, void *info);
+void Alpha_init_cs_detail(MCInst *MI);
 void Alpha_add_cs_detail(MCInst *MI, unsigned OpNum);
 
 void Alpha_set_instr_map_data(MCInst *MI);
