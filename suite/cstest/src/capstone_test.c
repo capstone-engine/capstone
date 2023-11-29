@@ -193,7 +193,6 @@ int set_function(int arch)
 		case CS_ARCH_ALPHA:
 			function = get_detail_alpha;
 			break;
- 		default:
 		default:
 			return -1;
 	}

@@ -53,7 +53,7 @@ setup_build_dir() {
 # Main
 #
 
-supported="ARM, PPC, AArch64"
+supported="ARM, PPC, AArch64, Alpha"
 
 if [ $# -ne 3 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "$0 <arch> <path-llvm-project> <llvm-release-commit>"
