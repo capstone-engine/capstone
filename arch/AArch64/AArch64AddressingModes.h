@@ -823,14 +823,6 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType12(uint8_t Imm)
 }
 
 
-#if defined( __has_warning )
-#   if __has_warning( "-Wmaybe-uninitialized" )
-#       define WARNING_SUPRESSED
-#				pragma GCC diagnostic push
-#				pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#   endif
-#endif
-
 /// Returns true if Imm is the concatenation of a repeating pattern of type T.
 #define DEFINE_isSVEMaskOfIdenticalElements(T)                                 \
 	static inline bool CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, T)(int64_t Imm)    \
@@ -846,10 +838,6 @@ DEFINE_isSVEMaskOfIdenticalElements(int8_t);
 DEFINE_isSVEMaskOfIdenticalElements(int16_t);
 DEFINE_isSVEMaskOfIdenticalElements(int32_t);
 DEFINE_isSVEMaskOfIdenticalElements(int64_t);
-
-#ifdef WARNING_SUPRESSED
-#pragma GCC diagnostic pop
-#endif
 
 static inline bool AArch64_AM_isSVEMaskOfIdenticalElements64(int64_t Imm)
 {
