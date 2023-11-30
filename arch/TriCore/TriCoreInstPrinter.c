@@ -57,20 +57,6 @@ static inline unsigned int get_msb(uint64_t value)
 	return msb;
 }
 
-static inline int64_t sign_ext64(int64_t imm, unsigned n)
-{
-	n = get_msb(imm) > n ? get_msb(imm) : n;
-	int64_t mask = 1 << (n - 1);
-	return (imm ^ mask) - mask;
-}
-
-static inline int32_t sign_ext32(int32_t imm, unsigned n)
-{
-	n = get_msb(imm) > n ? get_msb(imm) : n;
-	int32_t mask = 1 << (n - 1);
-	return (imm ^ mask) - mask;
-}
-
 static bool fill_mem(MCInst *MI, unsigned int reg, int64_t disp);
 
 static inline void set_mem(cs_tricore_op *op, uint8_t base, int64_t disp)
@@ -203,7 +189,7 @@ static void print_sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n)
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t imm = MCOperand_getImm(MO);
-		int32_t res = sign_ext32(to_u32(imm), n);
+		int32_t res = SignExtend32(to_u32(imm), n);
 		printInt32Bang(O, res);
 		fill_imm(MI, res);
 	} else
@@ -281,9 +267,9 @@ static void printOff18Imm(MCInst *MI, int OpNum, SStream *O)
 }
 
 // PC + sext(2 * disp)
-#define DISP1(N) ((int64_t)(MI->address) + sign_ext64(disp * 2, N))
+#define DISP1(N) ((int64_t)(MI->address) + SignExtend64(disp * 2, N))
 // PC + sext(disp) * 2
-#define DISP2(N) ((int64_t)(MI->address) + sign_ext64(disp, N) * 2)
+#define DISP2(N) ((int64_t)(MI->address) + SignExtend64(disp, N) * 2)
 
 static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 {
@@ -422,16 +408,14 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 			break;
 		case TRICORE_LOOP_sbr:
 			// PC + {27b’111111111111111111111111111, disp4, 0};
-			res = (int64_t)(MI->address) +
-			      ((0b111111111111111111111111111LL << 5) |
-			       (to_u32(disp) << 1));
+			res = (int64_t) MI->address + OneExtend32(to_u32(disp) << 1, 5);
 			break;
 		default:
 			// handle other cases, if any
 			break;
 		}
 
-		printUInt32Bang(O, to_u32(res));
+		printUInt32Bang(O, (uint32_t) res);
 		fill_imm(MI, res);
 	} else
 		printOperand(MI, OpNum, O);
@@ -476,10 +460,8 @@ static void printOExtImm_4(MCInst *MI, int OpNum, SStream *O)
 	MCOperand *MO = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isImm(MO)) {
 		int64_t disp = MCOperand_getImm(MO);
-		int64_t res = (int64_t)(MI->address) +
-			      ((0b111111111111111111111111111 << 5) |
-			       (to_u32(disp) << 1));
-		printUInt32Bang(O, to_u32(res));
+		int64_t res = (int64_t)MI->address + (int64_t)OneExtend64(disp << 1, 5);
+		printUInt32Bang(O, (uint32_t)res);
 		fill_imm(MI, res);
 	} else
 		printOperand(MI, OpNum, O);
