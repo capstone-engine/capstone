@@ -4,6 +4,7 @@
 
 #include "Mapping.h"
 #include "capstone/capstone.h"
+#include "utils.h"
 
 // create a cache for fast id lookup
 static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
@@ -343,6 +344,10 @@ void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias) {
 	MI->flat_insn->alias_id = Alias;
 }
 
+static inline bool char_ends_mnem(const char c) {
+	return (!c || c == ' ' || c == '\t');
+}
+
 /// Sets an alternative id for some instruction.
 /// Or -1 if it fails.
 /// You must add (<ARCH>_INS_ALIAS_BEGIN + 1) to the id to get the real id.
@@ -354,7 +359,7 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 	int i = 0, j = 0;
 	const char *asm_str_buf = O->buffer;
 	// Skip spaces and tabs
-	while (asm_str_buf[i] == ' ' || asm_str_buf[i] == '\t') {
+	while (is_blank_char(asm_str_buf[i])) {
 		if (!asm_str_buf[i]) {
 			MI->flat_insn->alias_id = -1;
 			return;
@@ -362,7 +367,7 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 		++i;
 	}
 	for (; j < sizeof(alias_mnem) - 1; ++j, ++i) {
-		if (!asm_str_buf[i] || asm_str_buf[i] == ' ' || asm_str_buf[i] == '\t')
+		if (char_ends_mnem(asm_str_buf[i]))
 			break;
 		alias_mnem[j] = asm_str_buf[i];
 	}

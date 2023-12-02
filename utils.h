@@ -42,5 +42,8 @@ uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes);
 
 void append_to_str_lower(char *str, size_t str_size, const char *src);
 static inline bool strings_match(const char *str0, const char *str1) { return strcmp(str0, str1) == 0; }
-#endif
 
+static inline bool is_blank_char(const char c) {
+	return c == ' ' || c == '\t';
+}
+#endif

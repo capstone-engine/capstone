@@ -1559,15 +1559,67 @@ typedef enum arm_insn {
 	// clang-format on
 	// generated content <ARMGenCSInsnEnum.inc> end
 
-	// Hard coded alias in LLVM, not defined as alias or instruction.
-	// We give them a unique ID for convenience.
-	ARM_INS_VPOP,
-	ARM_INS_VPUSH,
-
 	ARM_INS_ENDING,	// <-- mark the end of the list of instructions
 
-  // Alias
-  ARM_INS_NOP = ARM_INS_HINT,
+	ARM_INS_ALIAS_BEGIN,
+	// generated content <ARMGenCSAliasEnum.inc> begin
+	// clang-format off
+
+	ARM_INS_ALIAS_VMOV, // Real instr.: ARM_MVE_VORR
+	ARM_INS_ALIAS_NOP, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_YIELD, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_WFE, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_WFI, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_SEV, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_SEVL, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_ESB, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_CSDB, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_CLRBHB, // Real instr.: ARM_HINT
+	ARM_INS_ALIAS_PACBTI, // Real instr.: ARM_t2HINT
+	ARM_INS_ALIAS_BTI, // Real instr.: ARM_t2HINT
+	ARM_INS_ALIAS_PAC, // Real instr.: ARM_t2HINT
+	ARM_INS_ALIAS_AUT, // Real instr.: ARM_t2HINT
+	ARM_INS_ALIAS_SSBB, // Real instr.: ARM_t2DSB
+	ARM_INS_ALIAS_PSSBB, // Real instr.: ARM_t2DSB
+	ARM_INS_ALIAS_DFB, // Real instr.: ARM_t2DSB
+	ARM_INS_ALIAS_CSETM, // Real instr.: ARM_t2CSINV
+	ARM_INS_ALIAS_CSET, // Real instr.: ARM_t2CSINC
+	ARM_INS_ALIAS_CINC, // Real instr.: ARM_t2CSINC
+	ARM_INS_ALIAS_CINV, // Real instr.: ARM_t2CSINV
+	ARM_INS_ALIAS_CNEG, // Real instr.: ARM_t2CSNEG
+	ARM_INS_ALIAS_VMLAV, // Real instr.: ARM_MVE_VMLADAVs8
+	ARM_INS_ALIAS_VMLAVA, // Real instr.: ARM_MVE_VMLADAVas8
+	ARM_INS_ALIAS_VRMLALVH, // Real instr.: ARM_MVE_VRMLALDAVHs32
+	ARM_INS_ALIAS_VRMLALVHA, // Real instr.: ARM_MVE_VRMLALDAVHas32
+	ARM_INS_ALIAS_VMLALV, // Real instr.: ARM_MVE_VMLALDAVs16
+	ARM_INS_ALIAS_VMLALVA, // Real instr.: ARM_MVE_VMLALDAVas16
+	ARM_INS_ALIAS_VBIC, // Real instr.: ARM_MVE_VBIC
+	ARM_INS_ALIAS_VEOR, // Real instr.: ARM_MVE_VEOR
+	ARM_INS_ALIAS_VORN, // Real instr.: ARM_MVE_VORN
+	ARM_INS_ALIAS_VORR, // Real instr.: ARM_MVE_VORR
+	ARM_INS_ALIAS_VAND, // Real instr.: ARM_MVE_VAND
+	ARM_INS_ALIAS_VPSEL, // Real instr.: ARM_MVE_VPSEL
+	ARM_INS_ALIAS_ERET, // Real instr.: ARM_t2SUBS_PC_LR
+
+	// clang-format on
+	// generated content <ARMGenCSAliasEnum.inc> end
+
+	// Hardcoded in LLVM printer
+	ARM_INS_ALIAS_ASR,
+	ARM_INS_ALIAS_LSL,
+	ARM_INS_ALIAS_LSR,
+	ARM_INS_ALIAS_ROR,
+	ARM_INS_ALIAS_RRX,
+	ARM_INS_ALIAS_UXTW,
+	ARM_INS_ALIAS_LDM,
+	ARM_INS_ALIAS_POP,
+	ARM_INS_ALIAS_PUSH,
+	ARM_INS_ALIAS_POPW,
+	ARM_INS_ALIAS_PUSHW,
+	ARM_INS_ALIAS_VPOP,
+	ARM_INS_ALIAS_VPUSH,
+
+	ARM_INS_ALIAS_END,
 } arm_insn;
 
 /// Group of ARM instructions

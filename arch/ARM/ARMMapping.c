@@ -22,6 +22,24 @@
 #include "ARMInstPrinter.h"
 #include "ARMMapping.h"
 
+static const name_map insn_alias_mnem_map[] = {
+	#include "ARMGenCSAliasMnemMap.inc"
+	{ ARM_INS_ALIAS_ASR, "asr" },
+	{ ARM_INS_ALIAS_LSL, "lsl" },
+	{ ARM_INS_ALIAS_LSR, "lsr" },
+	{ ARM_INS_ALIAS_ROR, "ror" },
+	{ ARM_INS_ALIAS_RRX, "rrx" },
+	{ ARM_INS_ALIAS_UXTW, "uxtw" },
+	{ ARM_INS_ALIAS_LDM, "ldm" },
+	{ ARM_INS_ALIAS_POP, "pop" },
+	{ ARM_INS_ALIAS_PUSH, "push" },
+	{ ARM_INS_ALIAS_POPW, "pop.w" },
+	{ ARM_INS_ALIAS_PUSHW, "push.w" },
+	{ ARM_INS_ALIAS_VPOP, "vpop" },
+	{ ARM_INS_ALIAS_VPUSH, "vpush" },
+	{ ARM_INS_ALIAS_END, NULL }
+};
+
 static const char *get_custom_reg_alias(unsigned reg)
 {
 	switch (reg) {
@@ -165,6 +183,38 @@ static void ARM_add_cs_groups(MCInst *MI)
 	}
 }
 
+static void add_alias_details(MCInst *MI) {
+	if (!detail_is_set(MI))
+		return;
+	switch (MI->flat_insn->alias_id) {
+	default:
+		return;
+	case ARM_INS_ALIAS_POP:
+		// Doesn't get set because memop is not printed.
+		ARM_get_detail(MI)->post_index = true;
+		// fallthrough
+	case ARM_INS_ALIAS_PUSH:
+	case ARM_INS_ALIAS_VPUSH:
+	case ARM_INS_ALIAS_VPOP:
+		map_add_implicit_read(MI, ARM_REG_SP);
+		map_add_implicit_write(MI, ARM_REG_SP);
+		break;
+	case ARM_INS_ALIAS_LDM: {
+		bool Writeback = true;
+		unsigned BaseReg = MCInst_getOpVal(MI, 0);
+		for (unsigned i = 3; i < MCInst_getNumOperands(MI); ++i) {
+			if (MCInst_getOpVal(MI, i) == BaseReg)
+				Writeback = false;
+		}
+		if (Writeback && detail_is_set(MI)) {
+			ARM_get_detail(MI)->operands[0].access |= CS_AC_WRITE;
+			MI->flat_insn->detail->writeback = true;
+		}
+		break;
+	}
+	}
+}
+
 /// Some instructions have their operands not defined but
 /// hardcoded as string.
 /// Here we add those oprands to detail.
@@ -172,6 +222,12 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 {
 	if (!detail_is_set(MI))
 		return;
+
+	if (MI->flat_insn->is_alias && MI->flat_insn->usesAliasDetails) {
+		add_alias_details(MI);
+		return;
+	}
+
 	unsigned Opcode = MCInst_getOpcode(MI);
 	switch (Opcode) {
 	default:
@@ -424,45 +480,6 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 		ARM_get_detail_op(MI, -1)->shift.value = translateShiftImm(
 			ARM_AM_getSORegOffset(MCInst_getOpVal(MI, 2)));
 		break;
-	case ARM_STMDB_UPD:
-	case ARM_t2STMDB_UPD:
-		if (MCInst_getOpVal(MI, 0) == ARM_SP &&
-		    MCInst_getNumOperands(MI) > 5)
-			MI->flat_insn->id = ARM_INS_PUSH;
-		break;
-	case ARM_STR_PRE_IMM:
-		if (MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP &&
-		    MCOperand_getImm(MCInst_getOperand(MI, (3))) == -4)
-			MI->flat_insn->id = ARM_INS_PUSH;
-		break;
-	case ARM_LDMIA_UPD:
-	case ARM_t2LDMIA_UPD:
-		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP &&
-		    MCInst_getNumOperands(MI) > 5)
-			MI->flat_insn->id = ARM_INS_POP;
-		break;
-	case ARM_LDR_POST_IMM:
-		if (MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP &&
-		    ARM_AM_getAM2Offset(
-			    MCOperand_getImm(MCInst_getOperand(MI, (4)))) == 4)
-			MI->flat_insn->id = ARM_INS_POP;
-		break;
-	case ARM_t2LDR_POST:
-		if ((MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP) &&
-		    (Opcode == ARM_t2LDR_POST &&
-		     (MCOperand_getImm(MCInst_getOperand(MI, (3))) == 4)))
-			MI->flat_insn->id = ARM_INS_POP;
-		break;
-	case ARM_VSTMSDB_UPD:
-	case ARM_VSTMDDB_UPD:
-		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP)
-			MI->flat_insn->id = ARM_INS_VPUSH;
-		break;
-	case ARM_VLDMSIA_UPD:
-	case ARM_VLDMDIA_UPD:
-		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP)
-			MI->flat_insn->id = ARM_INS_VPOP;
-		break;
 	case ARM_tLDMIA: {
 		bool Writeback = true;
 		unsigned BaseReg = MCInst_getOpVal(MI, 0);
@@ -476,13 +493,6 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 		}
 		break;
 	}
-	}
-	if (MI->flat_insn->id == ARM_INS_PUSH ||
-	    MI->flat_insn->id == ARM_INS_POP ||
-	    MI->flat_insn->id == ARM_INS_VPUSH ||
-	    MI->flat_insn->id == ARM_INS_VPOP) {
-		map_add_implicit_read(MI, ARM_REG_SP);
-		map_add_implicit_write(MI, ARM_REG_SP);
 	}
 }
 
@@ -549,7 +559,12 @@ static void ARM_post_index_detection(MCInst *MI)
 /// and fills the detail information about the instruction and its operands.
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
+	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
+	MI->MRI = MRI;
+	MI->fillDetailOps = detail_is_set(MI);
+	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	ARM_LLVM_printInstruction(MI, O, info);
+	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
 	ARM_add_not_defined_ops(MI);
 	ARM_post_index_detection(MI);
 	ARM_add_cs_groups(MI);
@@ -580,10 +595,20 @@ static arm_reg arm_flag_regs[] = {
 const char *ARM_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	if (id < ARM_INS_ALIAS_END && id > ARM_INS_ALIAS_BEGIN) {
+		if (id - ARM_INS_ALIAS_BEGIN >= ARR_SIZE(insn_alias_mnem_map))
+			return NULL;
+
+		return insn_alias_mnem_map[id - ARM_INS_ALIAS_BEGIN - 1].name;
+	}
 	if (id >= ARM_INS_ENDING)
 		return NULL;
 
-	return insn_name_maps[id];
+	if (id < ARR_SIZE(insn_name_maps))
+		return insn_name_maps[id];
+
+	// not found
+	return NULL;
 #else
 	return NULL;
 #endif
@@ -1818,7 +1843,7 @@ static void add_cs_detail_template_2(MCInst *MI, arm_op_group op_group,
 void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
 		       va_list args)
 {
-	if (!detail_is_set(MI))
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 	switch (op_group) {
 	case ARM_OP_GROUP_RegImmShift: {

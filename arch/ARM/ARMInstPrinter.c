@@ -105,14 +105,17 @@ static void printRegName(SStream *OS, unsigned RegNo)
 
 static void printInst(MCInst *MI, SStream *O, void *info)
 {
+	bool isAlias = false;
+	bool useAliasDetails = map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, useAliasDetails);
 	unsigned Opcode = MCInst_getOpcode(MI);
-	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
-	MI->MRI = MRI;
 	uint64_t Address = MI->address;
 
 	switch (Opcode) {
 	// Check for MOVs and print canonical forms, instead.
 	case ARM_MOVsr: {
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
 		// FIXME: Thumb variants?
 		MCOperand *MO3 = MCInst_getOperand(MI, (3));
 
@@ -131,11 +134,15 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		SStream_concat0(O, ", ");
 		printOperand(MI, 2, O);
 
-		;
-		return;
+		if (useAliasDetails)
+			return;
+		else
+			goto add_real_detail;
 	}
 
 	case ARM_MOVsi: {
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
 		// FIXME: Thumb variants?
 		MCOperand *MO2 = MCInst_getOperand(MI, (2));
 
@@ -151,15 +158,20 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		printOperand(MI, 1, O);
 
 		if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		}
 
 		SStream_concat(O, "%s%s%s%d", ", ", markup("<imm:"), "#",
 			       translateShiftImm(ARM_AM_getSORegOffset(
 				       MCOperand_getImm(MO2))));
 		SStream_concat0(O, markup(">"));
-		;
-		return;
+		if (useAliasDetails)
+			return;
+		else
+			goto add_real_detail;
 	}
 
 	// A8.6.123 PUSH
@@ -167,6 +179,8 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	case ARM_t2STMDB_UPD:
 		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP &&
 		    MCInst_getNumOperands(MI) > 5) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			// Should only print PUSH if there are at least two registers in the
 			// list.
 			SStream_concat0(O, "push");
@@ -176,20 +190,28 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else
 			break;
 
 	case ARM_STR_PRE_IMM:
 		if (MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP &&
 		    MCOperand_getImm(MCInst_getOperand(MI, (3))) == -4) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat1(O, ' ');
 			SStream_concat0(O, "push");
 			printPredicateOperand(MI, 4, O);
 			SStream_concat0(O, " {");
 			printOperand(MI, 1, O);
 			SStream_concat0(O, "}");
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else
 			break;
 
@@ -198,6 +220,8 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	case ARM_t2LDMIA_UPD:
 		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP &&
 		    MCInst_getNumOperands(MI) > 5) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			// Should only print POP if there are at least two registers in the
 			// list.
 			SStream_concat0(O, "pop");
@@ -207,7 +231,10 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else
 			break;
 
@@ -215,24 +242,34 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		if ((MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP) &&
 		    ((ARM_AM_getAM2Offset(MCOperand_getImm(
 			      MCInst_getOperand(MI, (4)))) == 4))) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "pop");
 			printPredicateOperand(MI, 5, O);
 			SStream_concat0(O, " {");
 			printOperand(MI, 0, O);
 			SStream_concat0(O, "}");
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else
 			break;
 	case ARM_t2LDR_POST:
 		if ((MCOperand_getReg(MCInst_getOperand(MI, (2))) == ARM_SP) &&
 		    (Opcode == ARM_t2LDR_POST &&
 		     (MCOperand_getImm(MCInst_getOperand(MI, (3))) == 4))) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "pop");
 			printPredicateOperand(MI, 4, O);
 			SStream_concat0(O, " {");
 			printOperand(MI, 0, O);
 			SStream_concat0(O, "}");
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else
 			break;
 
@@ -240,12 +277,17 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	case ARM_VSTMSDB_UPD:
 	case ARM_VSTMDDB_UPD:
 		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "vpush");
 			printPredicateOperand(MI, 2, O);
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else
 			break;
 
@@ -253,17 +295,24 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	case ARM_VLDMSIA_UPD:
 	case ARM_VLDMDIA_UPD:
 		if (MCOperand_getReg(MCInst_getOperand(MI, (0))) == ARM_SP) {
+			isAlias = true;
+			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat1(O, ' ');
 			SStream_concat0(O, "vpop");
 			printPredicateOperand(MI, 2, O);
 			SStream_concat0(O, " ");
 
 			printRegisterList(MI, 4, O);
-			return;
+			if (useAliasDetails)
+				return;
+			else
+				goto add_real_detail;
 		} else
 			break;
 
 	case ARM_tLDMIA: {
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
 		bool Writeback = true;
 		unsigned BaseReg = MCOperand_getReg(MCInst_getOperand(MI, (0)));
 		for (unsigned i = 3; i < MCInst_getNumOperands(MI); ++i) {
@@ -283,7 +332,10 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		}
 		SStream_concat0(O, ", ");
 		printRegisterList(MI, 3, O);
-		return;
+		if (useAliasDetails)
+			return;
+		else
+			goto add_real_detail;
 	}
 
 	// Combine 2 GPRs from disassember into a GPRPair to match with instr def.
@@ -297,7 +349,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	case ARM_LDAEXD:
 	case ARM_STLEXD: {
 		const MCRegisterClass *MRC =
-			MCRegisterInfo_getRegClass(MRI, ARM_GPRRegClassID);
+			MCRegisterInfo_getRegClass(MI->MRI, ARM_GPRRegClassID);
 		bool isStore = Opcode == ARM_STREXD || Opcode == ARM_STLEXD;
 		unsigned Reg = MCOperand_getReg(
 			MCInst_getOperand(MI, isStore ? 1 : 0));
@@ -315,9 +367,9 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			MCOperand_CreateReg0(
 				&NewMI,
 				MCRegisterInfo_getMatchingSuperReg(
-					MRI, Reg, ARM_gsub_0,
+					MI->MRI, Reg, ARM_gsub_0,
 					MCRegisterInfo_getRegClass(
-						MRI, ARM_GPRPairRegClassID)));
+						MI->MRI, ARM_GPRPairRegClassID)));
 
 			// Copy the rest operands into NewMI.
 			for (unsigned i = isStore ? 3 : 2;
@@ -332,9 +384,18 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 	}
 	case ARM_TSB:
 	case ARM_t2TSB:
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
+
 		SStream_concat0(O, " tsb csync");
-		return;
+		if (useAliasDetails)
+			return;
+		else
+			goto add_real_detail;
 	case ARM_t2DSB:
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
+
 		switch (MCOperand_getImm(MCInst_getOperand(MI, (0)))) {
 		default:
 			if (!printAliasInstr(MI, Address, O))
@@ -347,13 +408,25 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 			SStream_concat0(O, " pssbb");
 			break;
 		};
-		return;
+		if (useAliasDetails)
+			return;
+		else
+			goto add_real_detail;
 	}
 
-	if (!printAliasInstr(MI, Address, O))
-		printInstruction(MI, Address, O);
+	if (!isAlias)
+		isAlias |= printAliasInstr(MI, Address, O);
 
-	;
+add_real_detail:
+	MCInst_setIsAlias(MI, isAlias);
+	if (!isAlias || !useAliasDetails) {
+		map_set_fill_detail_ops(MI, !(isAlias && useAliasDetails));
+		if (isAlias)
+			SStream_Close(O);
+		printInstruction(MI, Address, O);
+		if (isAlias)
+			SStream_Open(O);
+	}
 }
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
