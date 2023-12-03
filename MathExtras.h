@@ -416,14 +416,30 @@ static inline int64_t abs64(int64_t x) {
 
 /// \brief Sign extend number in the bottom B bits of X to a 32-bit int.
 /// Requires 0 < B <= 32.
+/// Note that this implementation relies on right shift of signed
+/// integers being an arithmetic shift.
 static inline int32_t SignExtend32(uint32_t X, unsigned B) {
 	return (int32_t)(X << (32 - B)) >> (32 - B);
 }
 
 /// \brief Sign extend number in the bottom B bits of X to a 64-bit int.
 /// Requires 0 < B <= 64.
+/// Note that this implementation relies on right shift of signed
+/// integers being an arithmetic shift.
 static inline int64_t SignExtend64(uint64_t X, unsigned B) {
 	return (int64_t)(X << (64 - B)) >> (64 - B);
+}
+
+/// \brief One extend number X starting at bit B and returns it as int32_t.
+/// Requires 0 < B <= 32.
+static inline int32_t OneExtend32(uint32_t X, unsigned B) {
+	return (~0U << B) | X;
+}
+
+/// \brief One extend number X starting at bit B and returns it as int64_t.
+/// Requires 0 < B <= 64.
+static inline int64_t OneExtend64(uint64_t X, unsigned B) {
+	return (~0ULL << B) | X;
 }
 
 /// \brief Count number of 0's from the most significant bit to the least
