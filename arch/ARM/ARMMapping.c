@@ -159,9 +159,28 @@ static void patch_cs_reg_alias(char *asm_str)
 	}
 }
 
+/// Check if PC is updated from stack. Those POP instructions
+/// are considered of group RETURN.
+static void check_pop_return(MCInst *MI) {
+	if (!MI->flat_insn->detail)
+		return;
+	if (MI->flat_insn->id != ARM_INS_POP && MI->flat_insn->alias_id != ARM_INS_ALIAS_POP) {
+		return;
+	}
+	for (size_t i = 0; i < ARM_get_detail(MI)->op_count; ++i) {
+		cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
+		if (op->type == ARM_OP_REG && op->reg == ARM_REG_PC) {
+			add_group(MI, ARM_GRP_RET);
+		}
+	}
+}
+
 /// Adds group to the instruction which are not defined in LLVM.
 static void ARM_add_cs_groups(MCInst *MI)
 {
+	if (!MI->flat_insn->detail)
+		return;
+	check_pop_return(MI);
 	unsigned Opcode = MI->flat_insn->id;
 	switch (Opcode) {
 	default:
