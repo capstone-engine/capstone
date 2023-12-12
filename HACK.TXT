@@ -68,7 +68,7 @@ Updating an Architecture
 The update tool for Capstone is called `auto-sync` and can be found in `suite/auto-sync`.
 
 Not all architectures are supported yet.
-Run `suite/auto-sync/Update-Arch.sh -h` to get a list of currently supported architectures.
+Run `suite/auto-sync/Updater/ASUpdater.py -h` to get a list of currently supported architectures.
 
 The documentation how to update with `auto-sync` or refactor an architecture module
 can be found in [docs/AutoSync.md](docs/AutoSync.md).

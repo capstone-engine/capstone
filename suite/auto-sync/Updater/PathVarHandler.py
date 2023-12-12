@@ -34,6 +34,8 @@ class PathVarHandler(metaclass=Singleton):
         # Load variables
         with open(path_config_file) as f:
             vars = json.load(f)
+
+        missing = list()
         for p_name, path in vars.items():
             resolved = path
             for var_id in re.findall(r"\{.+}", resolved):
@@ -45,9 +47,13 @@ class PathVarHandler(metaclass=Singleton):
                 resolved = re.sub(var_id, str(self.paths[var_id]), resolved)
                 log.debug(f"Set {p_name} = {resolved}")
                 if not Path(resolved).exists():
-                    log.fatal(f"Path from config file does not exist! Path: {resolved}")
-                    exit(1)
+                    missing.append(resolved)
                 self.paths[p_name] = resolved
+        if len(missing) > 0:
+            log.fatal(f"Some paths from config file are missing!")
+            for m in missing:
+                log.fatal(f"\t{m}")
+            exit(1)
 
     def get_path(self, name: str) -> Path:
         if name not in self.paths:

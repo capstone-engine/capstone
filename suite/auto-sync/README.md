@@ -27,7 +27,7 @@ pip3 install -r requirements.txt
 Clone C++ grammar
 
 ```
-cs suite/auto-sync/
+cd suite/auto-sync/
 git submodule update --init --recursive ./vendor/
 ```
 
@@ -36,7 +36,7 @@ git submodule update --init --recursive ./vendor/
 Check if your architecture is supported.
 
 ```
-./Updater/Updater.py -h
+./Updater/ASUpdater.py -h
 ```
 
 Clone Capstones LLVM fork and build `llvm-tblgen`
@@ -56,10 +56,7 @@ cd ../../
 Run the updater
 
 ```
-TODO: REWORK
-mkdir build
-cd build
-../Update-Arch.sh <ARCH> ./llvm-capstone
+./Updater/ASUpdater.py -a <ARCH>
 ```
 
 ## Post-processing steps
