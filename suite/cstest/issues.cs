@@ -749,7 +749,7 @@
 
 !# issue 760
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM
+0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM return
 
 !# issue 750
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -769,7 +769,7 @@
 
 !# issue 744
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM
+0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM return
 
 !# issue 741
 !# CS_ARCH_X86, CS_MODE_32, None
