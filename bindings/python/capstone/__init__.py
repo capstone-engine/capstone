@@ -472,7 +472,7 @@ class _cs_detail(ctypes.Structure):
     _fields_ = (
         ('regs_read', ctypes.c_uint16 * 20),
         ('regs_read_count', ctypes.c_ubyte),
-        ('regs_write', ctypes.c_uint16 * 20),
+        ('regs_write', ctypes.c_uint16 * 47),
         ('regs_write_count', ctypes.c_ubyte),
         ('groups', ctypes.c_ubyte * 8),
         ('groups_count', ctypes.c_ubyte),
