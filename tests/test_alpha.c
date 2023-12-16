@@ -95,7 +95,7 @@ static void test()
 
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
-			print_string_hex("Code:", platforms[i].code,
+			print_string_hex("Code: ", platforms[i].code,
 					 platforms[i].size);
 			printf("Disasm:\n");
 
