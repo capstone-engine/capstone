@@ -120,7 +120,9 @@ For details about the C++ to C translation of the LLVM files refer to `CppTransl
 
 Documentation about the `.inc` file generation is in the [llvm-capstone](https://github.com/capstone-engine/llvm-capstone) repository.
 
-- If some features were not generated and are missing in the `.inc` files, make sure they are defined as `AssemblerPredicate` in the `.td` files.
+**Troubleshooting**
+
+- If some features aren't generated and are missing in the `.inc` files, make sure they are defined as `AssemblerPredicate` in the `.td` files.
 
   Correct:
   ```
