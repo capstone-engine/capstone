@@ -91,6 +91,12 @@ extern "C" {
 #endif
 
 #if CS_NEXT_VERSION < 6
+#define CS_aarch64_ arm64
+#else
+#define CS_aarch64_ aarch64
+#endif
+
+#if CS_NEXT_VERSION < 6
 #define CS_aarch64(x) arm64##x
 #else
 #define CS_aarch64(x) aarch64##x
