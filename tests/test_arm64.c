@@ -247,7 +247,7 @@ void test_macros() {
 	CS_cs_aarch64() arm64_detail = { 0 };
 	detail.arm64 = arm64_detail;
 	CS_aarch64_op() op = { 0 };
-	detail.CS_aarch64().operands[0] = op;
+	detail.CS_aarch64_.operands[0] = op;
 	CS_aarch64_reg() reg = 1;
 	CS_aarch64_cc() cc = ARM64_CC_AL;
 	CS_aarch64_extender() arm64_extender = ARM64_EXT_SXTB;
