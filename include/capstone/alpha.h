@@ -295,17 +295,6 @@ typedef enum alpha_insn_group {
 	Alpha_GRP_ENDING, ///< = mark the end of the list of groups
 } alpha_insn_group;
 
-typedef enum alpha_feature_t {
-	ALPHA_FEATURE_INVALID = 0,
-	// generated content <AlphaGenCSFeatureEnum.inc> begin
-	// clang-format off
-
-
-	// clang-format on
-	// generated content <AlphaGenCSFeatureEnum.inc> end
-	ALPHA_FEATURE_ENDING, // <-- mark the end of the list of features
-} alpha_feature;
-
 #ifdef __cplusplus
 }
 #endif
