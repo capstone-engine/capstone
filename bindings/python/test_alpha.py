@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-# Capstone Python bindings, by Sibirtsev Dmitry <sibirtsev_dl@gmail.com>
+# Capstone Python bindings, by Dmitry Sibirtsev <sibirtsev_dl@gmail.com>
 
 from __future__ import print_function
 from capstone import *

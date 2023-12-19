@@ -1,3 +1,6 @@
+/* Capstone Disassembler Engine */
+/* By Dmitry Sibirtsev <aquynh@gmail.com>, 2013-2019 */
+
 #include <stdio.h>
 
 #include <capstone/platform.h>

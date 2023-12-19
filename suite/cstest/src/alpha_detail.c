@@ -1,3 +1,6 @@
+/* Capstone testing regression */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2023 */
+
 #include "factory.h"
 
 char *get_detail_alpha(csh *p_handle, cs_mode mode, cs_insn *ins)
