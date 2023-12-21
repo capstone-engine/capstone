@@ -11,7 +11,7 @@ import difflib as dl
 import logging as log
 import sys
 
-from Configurator import Configurator
+from CppTranslator.Configurator import Configurator
 from Helper import (
     convert_loglevel,
     find_id_by_type,
