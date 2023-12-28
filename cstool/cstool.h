@@ -19,5 +19,6 @@ void print_insn_detail_mos65xx(csh handle, cs_insn *ins);
 void print_insn_detail_bpf(csh handle, cs_insn *ins);
 void print_insn_detail_sh(csh handle, cs_insn *ins);
 void print_insn_detail_tricore(csh handle, cs_insn *ins);
+void print_insn_detail_alpha(csh handle, cs_insn *ins);
 
 #endif //CAPSTONE_CSTOOL_CSTOOL_H_

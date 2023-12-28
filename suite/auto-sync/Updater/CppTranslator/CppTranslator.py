@@ -452,7 +452,7 @@ def parse_args() -> argparse.Namespace:
         description="Capstones C++ to C translator for LLVM source files",
     )
     parser.add_argument(
-        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64"], required=True
+        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64", "Alpha"], required=True
     )
     parser.add_argument(
         "-v",

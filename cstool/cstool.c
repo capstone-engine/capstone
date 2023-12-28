@@ -114,6 +114,7 @@ static struct {
 	{ "tc160", CS_ARCH_TRICORE, CS_MODE_TRICORE_160 },
 	{ "tc161", CS_ARCH_TRICORE, CS_MODE_TRICORE_161 },
 	{ "tc162", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
+	{ "alpha", CS_ARCH_ALPHA, 0 },
 	{ NULL }
 };
 
@@ -206,6 +207,10 @@ static void usage(char *prog)
 	if (cs_support(CS_ARCH_AARCH64)) {
 		printf("        aarch64       aarch64 mode\n");
 		printf("        aarch64be     aarch64 + big endian\n");
+	}
+
+	if (cs_support(CS_ARCH_ALPHA)) {
+		printf("        alpha       alpha\n");
 	}
 
 	if (cs_support(CS_ARCH_MIPS)) {
@@ -392,6 +397,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_TRICORE:
 			print_insn_detail_tricore(handle, ins);
 			break;
+		case CS_ARCH_ALPHA:
+			print_insn_detail_alpha(handle, ins);
+			break;
 		default: break;
 	}
 
@@ -526,6 +534,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_TRICORE)) {
 					printf("tricore=1 ");
+				}
+
+				if (cs_support(CS_ARCH_ALPHA)) {
+					printf("alpha=1 ");
 				}
 
 				printf("\n");

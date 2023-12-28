@@ -78,6 +78,9 @@ static void test()
 #ifdef CAPSTONE_HAS_BPF
 #define EBPF_CODE "\x97\x09\x00\x00\x37\x13\x03\x00\xdc\x02\x00\x00\x20\x00\x00\x00\x30\x00\x00\x00\x00\x00\x00\x00\xdb\x3a\x00\x01\x00\x00\x00\x00\x84\x02\x00\x00\x00\x00\x00\x00\x6d\x33\x17\x02\x00\x00\x00\x00"
 #endif
+#ifdef CAPSTONE_HAS_ALPHA
+#define ALPHA_CODE "\x02\x00\xbb\x27\x50\x7a\xbd\x23\xd0\xff\xde\x23\x00\x00\x5e\xb7"
+#endif
 
 	struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_X86
@@ -279,6 +282,15 @@ static void test()
 			(unsigned char*) EBPF_CODE,
 			sizeof(EBPF_CODE) - 1,
 			"eBPF"
+		},
+#endif
+#ifdef CAPSTONE_HAS_ALPHA
+		{
+			CS_ARCH_ALPHA,
+			CS_MODE_LITTLE_ENDIAN,
+			(unsigned char*)ALPHA_CODE,
+			sizeof(ALPHA_CODE) - 1,
+			"Alpha"
 		},
 #endif
 	};

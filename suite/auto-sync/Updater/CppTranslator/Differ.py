@@ -11,7 +11,7 @@ import difflib as dl
 import logging as log
 import sys
 
-from Configurator import Configurator
+from CppTranslator.Configurator import Configurator
 from Helper import (
     convert_loglevel,
     find_id_by_type,
@@ -603,7 +603,7 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
     )
     parser.add_argument(
-        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC, AArch64"], required=True
+        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC, AArch64", "Alpha"], required=True
     )
     parser.add_argument(
         "-v",

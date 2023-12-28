@@ -73,6 +73,9 @@ int main()
 	if (cs_support(CS_ARCH_TRICORE)) {
 		printf("tricore=1 ");
 	}
+	if (cs_support(CS_ARCH_ALPHA)) {
+		printf("alpha=1 ");
+	}
 	printf("\n");
 
 	return 0;

@@ -119,5 +119,14 @@
       "isSVEAddSubImm"
     ],
     "manually_edited_files": []
+  },
+  "Alpha": {
+    "files_to_translate": [],
+    "files_for_template_search": [
+      "{CPP_INC_OUT_DIR}/AlphaGenDisassemblerTables.inc",
+      "{CPP_INC_OUT_DIR}/AlphaGenAsmWriter.inc"
+    ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
   }
 }

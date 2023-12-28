@@ -6,6 +6,7 @@ Capstone source is organized as followings.
 .                   <- core engine + README + COMPILE.TXT etc
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- AArch64 engine
+│   ├── Alpha       <- Alpha engine
 │   ├── ARM         <- ARM engine
 │   ├── BPF         <- Berkeley Packet Filter engine
 │   ├── EVM         <- Ethereum engine

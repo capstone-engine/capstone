@@ -70,6 +70,7 @@
 #include "arch/BPF/BPFModule.h"
 #include "arch/SH/SHModule.h"
 #include "arch/TriCore/TriCoreModule.h"
+#include "arch/Alpha/AlphaModule.h"
 
 static const struct {
 	// constructor initialization
@@ -255,6 +256,15 @@ static const struct {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_ALPHA
+	{
+		ALPHA_global_init,
+		ALPHA_option,
+		0,
+	},
+#else
+	{ NULL, NULL, 0 },
+#endif
 };
 
 // bitmask of enabled architectures
@@ -312,6 +322,9 @@ static const uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_TRICORE
 	| (1 << CS_ARCH_TRICORE)
+#endif
+#ifdef CAPSTONE_HAS_ALPHA
+	| (1 << CS_ARCH_ALPHA)
 #endif
 ;
 
@@ -387,7 +400,8 @@ bool CAPSTONE_API cs_support(int query)
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
 				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    |
 				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF)        |
-				    (1 << CS_ARCH_SH)    | (1 << CS_ARCH_TRICORE));
+				    (1 << CS_ARCH_SH)    | (1 << CS_ARCH_TRICORE)    |
+					(1 << CS_ARCH_ALPHA));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -718,6 +732,9 @@ static uint8_t skipdata_size(cs_struct *handle)
 			// TriCore instruction's length can be 2 or 4 bytes,
 			// so we just skip 2 bytes
 			return 2;
+		case CS_ARCH_ALPHA:
+			// Alpha alignment is 4.
+			return 4;
 	}
 }
 
@@ -1454,6 +1471,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->tricore.operands[i].type == (tricore_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_ALPHA:
+			for (i = 0; i < insn->detail->alpha.op_count; i++)
+				if (insn->detail->alpha.operands[i].type == (alpha_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -1632,6 +1654,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_SH:
 			for (i = 0; i < insn->detail->sh.op_count; i++) {
 				if (insn->detail->sh.operands[i].type == (sh_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_ALPHA:
+			for (i = 0; i < insn->detail->alpha.op_count; i++) {
+				if (insn->detail->alpha.operands[i].type == (alpha_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

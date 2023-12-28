@@ -33,6 +33,7 @@ def test_file(fname):
         "CS_ARCH_XCORE": CS_ARCH_XCORE,
         "CS_ARCH_RISCV": CS_ARCH_RISCV,
         "CS_ARCH_TRICORE": CS_ARCH_TRICORE,
+        "CS_ARCH_ALPHA": CS_ARCH_ALPHA,
     }
     
     modes = {
@@ -115,6 +116,7 @@ def test_file(fname):
         ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_161"): 52,
         ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_162"): 53,
         ("CS_ARCH_PPC", "CS_MODE_BIG_ENDIAN+CS_MODE_QPX"): 54,
+        ("CS_ARCH_ALPHA", "CS_MODE_LITTLE_ENDIAN"): 55,
     }
 
     #if not option in ('', 'None'):

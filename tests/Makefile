@@ -137,6 +137,11 @@ ifneq (,$(findstring sh,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_SH
 SOURCES += test_sh.c
 endif
+ifneq (,$(findstring alpha,$(CAPSTONE_ARCHS)))
+CFLAGS += -DCAPSTONE_HAS_ALPHA
+SOURCES += test_alpha.c
+endif
+
 
 OBJS = $(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
 BINARY = $(addprefix $(TESTDIR)/,$(SOURCES:.c=$(BIN_EXT)))
