@@ -117,6 +117,7 @@ def test_file(fname):
         ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_162"): 53,
         ("CS_ARCH_PPC", "CS_MODE_BIG_ENDIAN+CS_MODE_QPX"): 54,
         ("CS_ARCH_ALPHA", "CS_MODE_LITTLE_ENDIAN"): 55,
+        ("CS_ARCH_ALPHA", "CS_MODE_BIG_ENDIAN"): 56,
     }
 
     #if not option in ('', 'None'):

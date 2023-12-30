@@ -114,7 +114,8 @@ static struct {
 	{ "tc160", CS_ARCH_TRICORE, CS_MODE_TRICORE_160 },
 	{ "tc161", CS_ARCH_TRICORE, CS_MODE_TRICORE_161 },
 	{ "tc162", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
-	{ "alpha", CS_ARCH_ALPHA, 0 },
+	{ "alpha", CS_ARCH_ALPHA, CS_MODE_LITTLE_ENDIAN },
+	{ "alphabe", CS_ARCH_ALPHA, CS_MODE_BIG_ENDIAN },
 	{ NULL }
 };
 
@@ -210,7 +211,8 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_ALPHA)) {
-		printf("        alpha       alpha\n");
+		printf("        alpha       alpha + little endian\n");
+		printf("        alphabe     alpha + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_MIPS)) {
