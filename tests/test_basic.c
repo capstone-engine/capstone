@@ -93,6 +93,7 @@ static void test()
 #endif
 #ifdef CAPSTONE_HAS_ALPHA
 #define ALPHA_CODE "\x02\x00\xbb\x27\x50\x7a\xbd\x23\xd0\xff\xde\x23\x00\x00\x5e\xb7"
+#define ALPHA_CODE_BE "\x27\xbb\x00\x02\x23\xbd\x7a\x50\x23\xde\xff\xd0\xb7\x5e\x00\x00"
 #endif
 
 	struct platform {
@@ -373,7 +374,14 @@ static void test()
 			CS_MODE_LITTLE_ENDIAN,
 			(unsigned char*)ALPHA_CODE,
 			sizeof(ALPHA_CODE) - 1,
-			"Alpha"
+			"Alpha (Little-endian)"
+		},
+		{
+			CS_ARCH_ALPHA,
+			CS_MODE_BIG_ENDIAN,
+			(unsigned char*)ALPHA_CODE_BE,
+			sizeof(ALPHA_CODE) - 1,
+			"Alpha (Big-endian)"
 		},
 #endif
 	};

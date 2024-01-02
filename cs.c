@@ -260,7 +260,7 @@ static const struct {
 	{
 		ALPHA_global_init,
 		ALPHA_option,
-		0,
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN),
 	},
 #else
 	{ NULL, NULL, 0 },

@@ -31,6 +31,7 @@ M680X_CODE = b"\x06\x10\x19\x1a\x55\x1e\x01\x23\xe9\x31\x06\x34\x55\xa6\x81\xa7\
 MOS65XX_CODE = b"\x0A\x00\xFE\x34\x12\xD0\xFF\xEA\x19\x56\x34\x46\x80"
 EBPF_CODE = b"\x97\x09\x00\x00\x37\x13\x03\x00\xdc\x02\x00\x00\x20\x00\x00\x00\x30\x00\x00\x00\x00\x00\x00\x00\xdb\x3a\x00\x01\x00\x00\x00\x00\x84\x02\x00\x00\x00\x00\x00\x00\x6d\x33\x17\x02\x00\x00\x00\x00"
 ALPHA_CODE = b'\x02\x00\xbb\x27\x50\x7a\xbd\x23\xd0\xff\xde\x23\x00\x00\x5e\xb7'
+ALPHA_CODE_BE = b'\x27\xbb\x00\x02\x23\xbd\x7a\x50\x23\xde\xff\xd0\xb7\x5e\x00\x00'
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", None),
@@ -58,7 +59,8 @@ all_tests = (
         (CS_ARCH_M680X, CS_MODE_M680X_6809, M680X_CODE, "M680X_M6809", None),
         (CS_ARCH_MOS65XX, 0, MOS65XX_CODE, "MOS65XX", None),
         (CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED, EBPF_CODE, "eBPF", None),
-        (CS_ARCH_ALPHA, CS_MODE_LITTLE_ENDIAN, ALPHA_CODE, "Alpha", None),
+        (CS_ARCH_ALPHA, CS_MODE_LITTLE_ENDIAN, ALPHA_CODE, "Alpha (Little-endian)", None),
+        (CS_ARCH_ALPHA, CS_MODE_BIG_ENDIAN, ALPHA_CODE_BE, "Alpha (Big-endian)", None),
 )
 
 

@@ -8,9 +8,11 @@ from capstone.alpha import *
 from xprint import to_x, to_hex
 
 ALPHA_CODE = b'\x02\x00\xbb\x27\x50\x7a\xbd\x23\xd0\xff\xde\x23\x00\x00\x5e\xb7'
+ALPHA_CODE_BE = b'\x27\xbb\x00\x02\x23\xbd\x7a\x50\x23\xde\xff\xd0\xb7\x5e\x00\x00'
 
 all_tests = (
-    (CS_ARCH_ALPHA, 0, ALPHA_CODE, "Alpha"),
+    (CS_ARCH_ALPHA, CS_MODE_LITTLE_ENDIAN, ALPHA_CODE, "Alpha (Little-endian)"),
+    (CS_ARCH_ALPHA, CS_MODE_BIG_ENDIAN, ALPHA_CODE_BE, "Alpha (Big-endian)"),
 )
 
 
