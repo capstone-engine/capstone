@@ -77,7 +77,8 @@ install() {
     fi
     ${MAKE} install
   else  # not OSX
-    test -d /usr/lib64 && ${MAKE} LIBDIRARCH=lib64
+    test -d /usr/lib64 && export LIBDIRARCH=lib64
+    ${MAKE}
     ${MAKE} install
   fi
 }
@@ -89,7 +90,7 @@ uninstall() {
     export PKGCFGDIR="$(pkg-config --variable pc_path pkg-config | cut -d ':' -f 1)"
     ${MAKE} uninstall
   else  # not OSX
-    test -d /usr/lib64 && LIBDIRARCH=lib64
+    test -d /usr/lib64 && export LIBDIRARCH=lib64
     ${MAKE} uninstall
   fi
 }
