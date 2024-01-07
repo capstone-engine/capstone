@@ -4,7 +4,7 @@ using Microsoft Visual Studio (VS).
 
 NOTE:
 
-(1) Visual Studio 2010 or newer versions is required. Open "capstone.sln" to
+(1) Visual Studio 2017 or newer versions is required. Open "capstone.sln" to
     build the libraries & test code with Visual Studio. The resulted binaries
     are put under either msvc/Debug, msvc/Release, msvc/x64/Debug, or
     msvc/x64/Release, depending on how you choose to compile them.
@@ -17,6 +17,6 @@ NOTE:
 
 (3) The capstone_static_winkernel and test_winkernel projects are for Windows
     kernel drivers and excluded from build by default. In order to build them,
-    you need to install Visual Studio 2013 or newer versions, and Windows Driver
-    Kit 8.1 Update 1 or newer versions, then check "Build" check boxes for those
-    projects on the Configuration Manager through the [Build] menu.
+    you need to install Windows Driver Kit 8.1 Update 1 or newer versions,
+    then check "Build" check boxes for those projects on
+    the Configuration Manager through the [Build] menu.

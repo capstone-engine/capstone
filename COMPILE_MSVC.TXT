@@ -11,10 +11,10 @@ Capstone requires no prerequisite packages with default configurations, so it is
 easy to compile & install. Open the Visual Studio solution "msvc/capstone.sln"
 and follow the instructions below.
 
-NOTE: This requires Visual Studio 2010 or newer versions.
+NOTE: This requires Visual Studio 2017 or newer versions.
 
-If you wish to embed Capstone in a kernel driver, Visual Studio 2013 or newer
-versions, and Windows Driver Kit 8.1 Update 1 or newer versions are required.
+If you wish to embed Capstone in a kernel driver Windows Driver Kit 8.1 Update 1
+or newer versions are required.
 
 
 (0) Tailor Capstone to your need.
