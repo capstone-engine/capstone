@@ -1,2 +1,4 @@
 tree-sitter==0.20.1
 termcolor==2.2.0
+cmake==3.27.9
+ninja==1.11.1.1

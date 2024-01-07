@@ -118,6 +118,8 @@ Rebase `llvm-capstone` onto the new LLVM release (if not already done).
 ```
 # 1. Clone Capstone's LLVM
 git clone https://github.com/capstone-engine/llvm-capstone
+cd llvm-capstone
+git checkout auto-sync
 
 # 2. Rebase onto the new LLVM release and resolve the conflicts.
 
@@ -127,14 +129,9 @@ cd build
 cmake -G Ninja -DLLVM_TARGETS_TO_BUILD=<ARCH> -DCMAKE_BUILD_TYPE=Debug ../llvm
 cmake --build . --target llvm-tblgen --config Debug
 
-# 4. Run git log and copy the hash of the release commit for the next step.
-git log
-
-# 5. Run the updater
+# 4. Run the updater
 cd ../../suite/auto-sync/
-mkdir build
-cd build
-../Update-Arch.sh <ARCH> <PATH-TO-LLVM> <LLVM-RELEASE_HASH>
+./Updater/ASUpdater.py -a <ARCH>
 ```
 
 The update script will execute the steps described above and copy the new files to their directories.
@@ -154,10 +151,14 @@ Issue: https://github.com/capstone-engine/capstone/issues/1984
 
 To refactor an architecture to use `auto-sync`, you need to add it to the configuration.
 
-1. Add the architecture to the supported architectures list in `Update-Arch.sh`.
+1. Add the architecture to the supported architectures list in `ASUpdater.py`.
 2. Configure the `CppTranslator` for your architecture (`suite/auto-sync/CppTranslator/arch_config.json`)
 
-Now, manually run the update commands within `Update-Arch.sh` but *skip* the `Differ` step.
+Now, manually run the update commands within `ASUpdater.py` but *skip* the `Differ` step:
+
+```
+./Updater/ASUpdater.py -a <ARCH> -s IncGen Translate
+```
 
 The task after this is to:
 
