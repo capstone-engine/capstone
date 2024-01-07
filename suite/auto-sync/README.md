@@ -21,7 +21,7 @@ sudo apt install python3-venv
 # Setup virtual environment in Capstone root dir
 python3 -m venv ./.venv
 source ./.venv/bin/activate
-pip3 install -r requirements.txt
+pip3 install -r dev_requirements.txt
 ```
 
 Clone C++ grammar
