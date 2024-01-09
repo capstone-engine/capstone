@@ -1,8 +1,22 @@
 auto-sync-files:
   - suite/auto-sync/*
 
+LLVM-core-files:
+  - MC*.[ch]
+
+LLVM-generated-files:
+  - any-glob-to-any-file: '**/*.inc'
+
+Documentation:
+  - any-glob-to-any-file: '**/*.md'
+
 CS-core-files:
-  - /*
+  - cs*.[ch]
+  - SStream.[ch]
+  - utis.[ch]
+  - MathExtras.h
+  - Mapping.[ch]
+  - LEB128.h
   - cstool/cstool.[ch]
   - cstool/getopt.[ch]
   - include/capstone/capstone.h
