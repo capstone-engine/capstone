@@ -24,5 +24,6 @@ char *get_detail_mos65xx(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_tms320c64x(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_bpf(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_tricore(csh *handle, cs_mode mode, cs_insn *ins);
+char *get_detail_alpha(csh *handle, cs_mode mode, cs_insn *ins);
 
 #endif /* FACTORY_H */

@@ -63,8 +63,8 @@ if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 
-set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore)
+set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE ALPHA)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore Alpha)
 
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
@@ -163,6 +163,7 @@ set(HEADERS_COMMON
     include/capstone/tricore.h
     include/capstone/platform.h
     include/capstone/sh.h
+    include/capstone/alpha.h
 )
 
 set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
@@ -587,6 +588,30 @@ if (CAPSTONE_TRICORE_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_tricore.c)
 endif ()
 
+if (CAPSTONE_ALPHA_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_ALPHA)
+    set(SOURCES_ALPHA
+            arch/Alpha/AlphaDisassembler.c
+            arch/Alpha/AlphaInstPrinter.c
+            arch/Alpha/AlphaMapping.c
+            arch/Alpha/AlphaModule.c
+            )
+    set(HEADERS_ALPHA
+            arch/Alpha/AlphaDisassembler.h
+            arch/Alpha/AlphaGenAsmWriter.inc
+            arch/Alpha/AlphaGenDisassemblerTables.inc
+            arch/Alpha/AlphaGenInstrInfo.inc
+            arch/Alpha/AlphaGenRegisterInfo.inc
+            arch/Alpha/AlphaLinkage.h
+            arch/Alpha/AlphaMapping.h
+            arch/Alpha/AlphaModule.h
+            arch/Alpha/AlphaGenCSMappingInsnOp.inc
+            arch/Alpha/AlphaGenCSMappingInsn.inc
+            arch/Alpha/AlphaGenCSMappingInsnName.inc
+            )
+    set(TEST_SOURCES ${TEST_SOURCES} test_alpha.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif()
@@ -611,6 +636,7 @@ set(ALL_SOURCES
     ${SOURCES_RISCV}
     ${SOURCES_SH}
     ${SOURCES_TRICORE}
+    ${SOURCES_ALPHA}
 )
 
 set(ALL_HEADERS
@@ -634,6 +660,7 @@ set(ALL_HEADERS
     ${HEADERS_RISCV}
     ${HEADERS_SH}
     ${HEADERS_TRICORE}
+    ${HEADERS_ALPHA}
 )
 
 ## properties
@@ -697,6 +724,7 @@ source_group("Source\\BPF" FILES ${SOURCES_BPF})
 source_group("Source\\RISCV" FILES ${SOURCES_RISCV})
 source_group("Source\\SH" FILES ${SOURCES_SH})
 source_group("Source\\TriCore" FILES ${SOURCES_TRICORE})
+source_group("Source\\Alpha" FILES ${SOURCES_ALPHA})
 
 source_group("Include\\Common" FILES ${HEADERS_COMMON})
 source_group("Include\\Engine" FILES ${HEADERS_ENGINE})
@@ -718,6 +746,7 @@ source_group("Include\\BPF" FILES ${HEADERS_BPF})
 source_group("Include\\RISCV" FILES ${HEADERS_RISCV})
 source_group("Include\\SH" FILES ${HEADERS_SH})
 source_group("Include\\TriCore" FILES ${HEADERS_TRICORE})
+source_group("Include\\Alpha" FILES ${HEADERS_ALPHA})
 
 ## installation
 if(CAPSTONE_INSTALL)

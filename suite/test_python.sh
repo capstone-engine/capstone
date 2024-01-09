@@ -11,3 +11,4 @@
 ../bindings/python/test_ppc.py >> /tmp/$1
 ../bindings/python/test_sparc.py >> /tmp/$1
 ../bindings/python/test_x86.py >> /tmp/$1
+../bindings/python/test_alpha.py >> /tmp/$1

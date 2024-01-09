@@ -115,6 +115,9 @@ build*/
 xcode/Capstone.xcodeproj/xcuserdata
 xcode/Capstone.xcodeproj/project.xcworkspace/xcuserdata
 
+# IntelliJ IDEs
+.idea/
+
 # suite/
 corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
 test_arm_regression

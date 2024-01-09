@@ -41,6 +41,7 @@
 #include "../../cs_priv.h"
 #include "../../utils.h"
 
+#include "../../MathExtras.h"
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
 #include "../../MCRegisterInfo.h"
@@ -2077,6 +2078,7 @@ static void d68020_cpgen(m68k_info *info)
 				ext->op_size.type = M68K_SIZE_TYPE_FPU;
 				ext->op_size.fpu_size = M68K_FPU_SIZE_SINGLE;
 				get_ea_mode_op(info, op0, info->ir, 4);
+				op0->simm = BitsToFloat(op0->imm);
 				op0->type = M68K_OP_FP_SINGLE;
 				break;
 

@@ -247,6 +247,10 @@
 0x33,0xc0 == xor ax, ax
 0xba,0x5a,0xff == mov dx, 0xff5a
 
+!# issue 1710 M68K floating point immediates broken on big endian hosts
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0xf2,0x3c,0x44,0x22,0x40,0x49,0x0e,0x56 == fadd.s #3.141500, fp0
+
 !# issue 1708 M68K floating point loads and stores generate the same op_str
 !# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
 0xf2,0x27,0x74,0x00 == fmove.d fp0, -(a7)

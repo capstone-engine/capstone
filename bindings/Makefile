@@ -23,6 +23,7 @@ TEST_M680X = $(TMPDIR)/test_m680x
 TEST_TRICORE = $(TMPDIR)/test_tricore
 TEST_SH = $(TMPDIR)/test_sh
 TEST_TMS320C64X = $(TMPDIR)/test_tms320c64x
+TEST_ALPHA = $(TMPDIR)/test_alpha
 
 PYTHON3 ?= python3
 
@@ -64,6 +65,7 @@ expected:
 	../tests/test_sh > $(TEST_SH)_e
 	../tests/test_tricore > $(TEST_TRICORE)_e
 	../tests/test_tms320c64x > $(TEST_TMS320C64X)_e
+	../tests/test_alpha > $(TEST_ALPHA)_e
 
 python: FORCE
 	cd python && $(MAKE)
@@ -88,6 +90,7 @@ python: FORCE
 	$(PYTHON3) python/test_sh.py > $(TEST_SH)_o
 	$(PYTHON3) python/test_tricore.py > $(TEST_TRICORE)_o
 	$(PYTHON3) python/test_tms320c64x.py > $(TEST_TMS320C64X)_o
+	$(PYTHON3) python/test_alpha.py > $(TEST_ALPHA)_o
 	$(MAKE) test_diff
 
 java: FORCE
@@ -127,6 +130,7 @@ test_diff: FORCE
 	$(DIFF) $(TEST_SH)_e $(TEST_SH)_o
 	$(DIFF) $(TEST_TRICORE)_e $(TEST_TRICORE)_o
 	$(DIFF) $(TEST_TMS320C64X)_e $(TEST_TMS320C64X)_o
+	$(DIFF) $(TEST_ALPHA)_e $(TEST_ALPHA)_o
 
 clean:
 	rm -rf $(TMPDIR)

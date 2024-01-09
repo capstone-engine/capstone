@@ -85,6 +85,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 	/usr/include/capstone/arm.h
 	/usr/include/capstone/arm64.h
+	/usr/include/capstone/alpha.h
 	/usr/include/capstone/bpf.h
 	/usr/include/capstone/capstone.h
 	/usr/include/capstone/evm.h

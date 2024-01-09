@@ -41,6 +41,7 @@ __all__ = [
     'CS_ARCH_RISCV',
     'CS_ARCH_SH',
     'CS_ARCH_TRICORE',
+    'CS_ARCH_ALPHA',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -217,7 +218,8 @@ CS_ARCH_BPF = 14
 CS_ARCH_RISCV = 15
 CS_ARCH_SH = 16
 CS_ARCH_TRICORE = 17
-CS_ARCH_MAX = 18
+CS_ARCH_ALPHA = 18
+CS_ARCH_MAX = 19
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -441,7 +443,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore
+from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -463,13 +465,14 @@ class _cs_arch(ctypes.Union):
         ('riscv', riscv.CsRISCV),
         ('sh', sh.CsSH),
         ('tricore', tricore.CsTriCore),
+        ('alpha', alpha.CsAlpha),
     )
 
 class _cs_detail(ctypes.Structure):
     _fields_ = (
         ('regs_read', ctypes.c_uint16 * 20),
         ('regs_read_count', ctypes.c_ubyte),
-        ('regs_write', ctypes.c_uint16 * 20),
+        ('regs_write', ctypes.c_uint16 * 47),
         ('regs_write_count', ctypes.c_ubyte),
         ('groups', ctypes.c_ubyte * 8),
         ('groups_count', ctypes.c_ubyte),
@@ -812,6 +815,8 @@ class CsInsn(object):
             (self.sh_insn, self.sh_size, self.operands) = sh.get_arch_info(self._raw.detail.contents.arch.sh)
         elif arch == CS_ARCH_TRICORE:
             (self.update_flags, self.operands) = tricore.get_arch_info(self._raw.detail.contents.arch.tricore)
+        elif arch == CS_ARCH_ALPHA:
+            (self.operands) = alpha.get_arch_info(self._raw.detail.contents.arch.alpha)
 
 
     def __getattr__(self, name):
@@ -1304,7 +1309,7 @@ def debug():
         "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
-        'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH,
+        'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH, 'alpha': CS_ARCH_ALPHA,
     }
 
     all_archs = ""
