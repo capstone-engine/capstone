@@ -136,14 +136,19 @@ def build_libraries():
     os.chdir(BUILD_DIR)
 
     # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
-    if SYSTEM == "win32":
+    # Use cmake for both Darwin and Windows since it can generate fat binaries
+    if SYSTEM == "win32" or SYSTEM == 'darwin':
         # Windows build: this process requires few things:
         #    - CMake + MSVC installed
         #    - Run this command in an environment setup for MSVC
         if not os.path.exists("build"): os.mkdir("build")
         os.chdir("build")
-        # Only build capstone.dll
-        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+        print("Build Directory: {}\n".format(os.getcwd()))
+        # Only build capstone.dll / libcapstone.dylib
+        if SYSTEM == "win32":
+            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+        else:
+            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
         os.system("cmake --build .")
     else:  # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
