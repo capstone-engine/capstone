@@ -116,6 +116,7 @@ static struct {
 	{ "tc162", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
 	{ "alpha", CS_ARCH_ALPHA, CS_MODE_LITTLE_ENDIAN },
 	{ "alphabe", CS_ARCH_ALPHA, CS_MODE_BIG_ENDIAN },
+	{ "hppa", CS_ARCH_HPPA, CS_MODE_BIG_ENDIAN },
 	{ NULL }
 };
 
@@ -213,6 +214,10 @@ static void usage(char *prog)
 	if (cs_support(CS_ARCH_ALPHA)) {
 		printf("        alpha       alpha + little endian\n");
 		printf("        alphabe     alpha + big endian\n");
+	}
+
+	if (cs_support(CS_ARCH_HPPA)) {
+		printf("        hppa        hppa + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_MIPS)) {
@@ -402,6 +407,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_ALPHA:
 			print_insn_detail_alpha(handle, ins);
 			break;
+		case CS_ARCH_HPPA:
+			print_insn_detail_hppa(handle, ins);
+			break;
 		default: break;
 	}
 
@@ -540,6 +548,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_ALPHA)) {
 					printf("alpha=1 ");
+				}
+				
+				if (cs_support(CS_ARCH_HPPA)) {
+					printf("hppa=1 ");
 				}
 
 				printf("\n");
