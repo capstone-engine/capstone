@@ -2,7 +2,6 @@
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 /*    Rot127 <unisono@quyllur.org>, 2022-2023 */
 
-#include <cstdint>
 #ifdef CAPSTONE_HAS_ARM
 
 #include <stdio.h>
@@ -1835,7 +1834,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 		// first operand is of size greater than 1 then it defenately isn't the
 		// U bit so it starts with the base register, otherwise it's U bit first
 		ARM_get_detail_op(MI, 0)->mem.format =
-			encoding->operand_pieces_count < 3 ? ARM_MEM_REG_IMM
+			encoding->operand_pieces_count < 3 ? ARM_MEM_FMT_REG_IMM
 			: encoding->sizes[0] != 1		   ? ARM_MEM_FMT_REG_U_IMM
 											   : ARM_MEM_FMT_U_REG_IMM;
 		ARM_set_mem_access(MI, false);
