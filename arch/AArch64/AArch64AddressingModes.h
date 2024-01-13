@@ -827,8 +827,12 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType12(uint8_t Imm)
 #define DEFINE_isSVEMaskOfIdenticalElements(T)                                 \
 	static inline bool CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, T)(int64_t Imm)    \
 	{                                                                          \
-		T Parts[sizeof(int64_t) / sizeof(T)];                  \
-		memcpy(Parts, &Imm, sizeof(int64_t) / sizeof(T) * sizeof(T));                 \
+		union {                                   \
+			uint64_t L;                                   \
+			T A[sizeof(int64_t) / sizeof(T)];                                   \
+		} U;                                   \
+		U.L = Imm;                                   \
+		T *Parts = U.A;                                   \
 		for (int i = 0; i < (sizeof(int64_t) / sizeof(T)); i++) {   \
 			if (Parts[i] != Parts[0]) \
 				return false; \
