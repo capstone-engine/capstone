@@ -7,7 +7,7 @@ import subprocess
 
 import logging as log
 
-from Helper import fail_exit, get_path
+from Helper import fail_exit, get_path, get_llvm_tag, get_llvm_commit, replace_in_file
 from pathlib import Path
 
 inc_tables = [
@@ -96,6 +96,7 @@ class IncGenerator:
     def generate(self) -> None:
         self.gen_incs()
         self.move_mapping_files()
+        self.patch_header_info()
 
     def move_mapping_files(self) -> None:
         """
@@ -181,3 +182,12 @@ class IncGenerator:
                 log.warn(f"Patch {patch.name} did not apply correctly!")
                 log.warn(f"git apply returned: {e}")
                 return
+
+    def patch_header_info(self):
+        tag = get_llvm_tag()
+        if not tag:
+            tag = "None"
+        commit = get_llvm_commit()
+        for p in self.output_dir_c_inc.iterdir():
+            replace_in_file(p, "LLVM-tag: <tag>", f"LLVM-tag: {tag}")
+            replace_in_file(p, "LLVM-commit: <commit>", f"LLVM-tag: {commit}")
