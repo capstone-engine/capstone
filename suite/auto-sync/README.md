@@ -8,7 +8,6 @@ Unfortunately not all architectures are supported yet.
 Install clang-format
 
 ```
-# clang-format version must be at least 16
 sudo apt install clang-format-18
 ```
 
