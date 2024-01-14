@@ -5,7 +5,7 @@ LLVM-core-files:
   - MC*.[ch]
 
 LLVM-generated-files:
-  - any-glob-to-any-file: '**/*.inc'
+  - arch/*/*.inc
 
 Documentation:
   - any-glob-to-any-file: '**/*.md'
