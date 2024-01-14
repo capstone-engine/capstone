@@ -10788,14 +10788,14 @@
   /* bl	$addr */
   AArch64_BL /* 1539 */, AArch64_INS_BL,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_SP, 0 }, { AArch64_REG_LR, 0 }, { AArch64_GRP_CALL, AArch64_GRP_BRANCH_RELATIVE, 0 }, 0, 0, {{ 0 }}
+    { 0 }, { AArch64_REG_LR, 0 }, { AArch64_GRP_CALL, AArch64_GRP_BRANCH_RELATIVE, 0 }, 1, 0, {{ 0 }},
   #endif
 },
 {
   /* blr	$Rn */
   AArch64_BLR /* 1540 */, AArch64_INS_BLR,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_SP, 0 }, { AArch64_REG_LR, 0 }, { AArch64_GRP_CALL, 0 }, 0, 0, {{ 0 }}
+    { 0 }, { AArch64_REG_LR, 0 }, { AArch64_GRP_CALL, 0 }, 1, 1, {{ 0 }},
   #endif
 },
 {
