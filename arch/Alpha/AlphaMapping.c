@@ -19,7 +19,7 @@
 
 #include "AlphaGenInstrInfo.inc"
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 #include "AlphaGenCSMappingInsn.inc"
 };
 
@@ -109,7 +109,7 @@ void Alpha_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 
-static const char *insn_names[] = {
+static const char * const insn_names[] = {
 #include "AlphaGenCSMappingInsnName.inc"
 };
 
@@ -133,7 +133,7 @@ const char *Alpha_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	{Alpha_GRP_INVALID, NULL},
 	{Alpha_GRP_CALL, "call"},
 	{Alpha_GRP_JUMP, "jump"},
