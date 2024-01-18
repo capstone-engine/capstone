@@ -18,7 +18,7 @@
 
 #include "TriCoreGenInstrInfo.inc"
 
-static insn_map insns[] = {
+static const insn_map insns[] = {
 	// dummy item
 	{ 0,
 	  0,
@@ -40,7 +40,7 @@ void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static tricore_reg flag_regs[] = { TRICORE_REG_PSW };
+static const tricore_reg flag_regs[] = { TRICORE_REG_PSW };
 #endif // CAPSTONE_DIET
 
 static inline void check_updates_flags(MCInst *MI)
@@ -73,14 +73,14 @@ void TriCore_set_instr_map_data(MCInst *MI)
 
 #ifndef CAPSTONE_DIET
 
-static const char *insn_names[] = {
+static const char * const insn_names[] = {
 	NULL,
 
 #include "TriCoreGenCSMappingInsnName.inc"
 };
 
 // special alias insn
-static name_map alias_insn_names[] = { { 0, NULL } };
+static const name_map alias_insn_names[] = { { 0, NULL } };
 #endif
 
 const char *TriCore_insn_name(csh handle, unsigned int id)
@@ -104,7 +104,7 @@ const char *TriCore_insn_name(csh handle, unsigned int id)
 }
 
 #ifndef CAPSTONE_DIET
-static name_map group_name_maps[] = {
+static const name_map group_name_maps[] = {
 	{ TRICORE_GRP_INVALID, NULL },
 	{ TRICORE_GRP_CALL, "call" },
 	{ TRICORE_GRP_JUMP, "jump" },
