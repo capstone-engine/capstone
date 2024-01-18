@@ -955,11 +955,8 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 			assert(TiedOp >= 0 &&
 			       "Inactive register in vpred_r is not tied to an output!");
 			// Copy the operand to ensure it's not invalidated when MI grows.
-			MCOperand *Op = malloc(sizeof(MCOperand));
-			memcpy(Op, MCInst_getOperand(MI, TiedOp),
-			       sizeof(MCOperand));
-			MCInst_insert0(MI, VCCPos + 3, Op);
-			free(Op);
+			MCOperand Op = *MCInst_getOperand(MI, TiedOp);
+			MCInst_insert0(MI, VCCPos + 3, &Op);
 		}
 	} else if (VCC != ARMVCC_None) {
 		Check(&S, MCDisassembler_SoftFail);
