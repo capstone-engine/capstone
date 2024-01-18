@@ -149,7 +149,7 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 		}
 		if (ppc->bc.pred_ctr != PPC_PRED_INVALID)
 			printf("\t\tpred CTR: %s\n", get_pred_name(ppc->bc.pred_ctr));
-		if (ppc->bc.hint != PPC_BH_INVALID)
+		if (ppc->bc.hint != PPC_BR_NOT_GIVEN)
 			printf("\t\thint: %s\n", get_pred_hint(ppc->bc.hint));
 	}
 
