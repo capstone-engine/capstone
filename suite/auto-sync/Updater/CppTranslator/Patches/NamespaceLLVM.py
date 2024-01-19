@@ -18,7 +18,7 @@ class NamespaceLLVM(Patch):
     def get_search_pattern(self) -> str:
         return (
             "(namespace_definition"
-            '   (identifier) @id (#eq? @id "llvm")'
+            '   (namespace_identifier) @id (#eq? @id "llvm")'
             "   (declaration_list) @decl_list"
             ") @namespace_def"
         )
