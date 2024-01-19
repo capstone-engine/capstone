@@ -299,12 +299,12 @@ static void push_int_modifier(hppa_ext *hppa, uint64_t modifier)
 
 static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
     uint32_t ext8 = GET_FIELD(insn, 19, 26);
+    uint32_t ext5 = GET_FIELD(insn, 11, 15);
     switch (ext8) {
     case 0x00:
         MCInst_setOpcode(MI, HPPA_INS_BREAK);
         break;
     case 0x20:
-        uint32_t ext5 = GET_FIELD(insn, 11, 15);
         if (ext5 == 0x00) {
             MCInst_setOpcode(MI, HPPA_INS_SYNC);
         }
@@ -463,6 +463,7 @@ static void fillMemmgmtInsnName(MCInst *MI, uint32_t insn) {
 }
 
 static void fillMemmgmtMods(uint32_t insn, uint32_t ext, hppa_ext* hppa_ext) {
+    uint8_t cmplt = GET_FIELD(insn, 26, 26);
     switch (ext)
     {
     case 0x08:
@@ -471,7 +472,6 @@ static void fillMemmgmtMods(uint32_t insn, uint32_t ext, hppa_ext* hppa_ext) {
     case 0x0b:
     case 0x0e:
     case 0x0d:
-        uint8_t cmplt = GET_FIELD(insn, 26, 26);
         if (cmplt == 1 || cmplt == 3) {
             hppa_ext->b_writeble = true;
         }
