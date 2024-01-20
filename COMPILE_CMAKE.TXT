@@ -42,8 +42,11 @@ Get CMake for free from http://www.cmake.org.
       Set this of OFF with -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF to disable all architectures by default.
       You can then enable them again with one of the CAPSTONE_<ARCH>_SUPPORT options.
 
-  By default, all architectures are compiled in.
-
+  By default, all architectures are compiled in. If you're building a static library that you intend to link into
+  multiple consumers, and they have differing architecture requirements, you may want -DCAPSTONE_USE_ARCH_REGISTRATION=1
+  and call cs_arch_register_*() for the architectures you need in each particular consumer. In this way you only pay
+  footprint size for the the architectures you're actually using in each consumer, without having to compile Capstone
+  multiple times.
 
   Besides, Capstone also allows some more customization via following macros.
 
