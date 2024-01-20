@@ -2110,7 +2110,9 @@ static void printInstruction(MCInst *MI, SStream *O)
   // Emit the opcode for the instruction.
   uint32_t Bits = 0;
   Bits |= OpInfo0[opcode] << 0;
+#ifndef CAPSTONE_DIET
   SStream_concat0(O, AsmStrs+(Bits & 4095)-1);
+#endif
 
 
   // Fragment 0 encoded into 6 bits for 33 unique commands.
