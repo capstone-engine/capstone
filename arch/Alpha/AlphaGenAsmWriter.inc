@@ -1501,9 +1501,7 @@ static const char *getRegisterName(unsigned RegNo) {
 #undef PRINT_ALIAS_INSTR
 
 static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS) {
-#ifndef CAPSTONE_DIET
   return false;
-#endif // CAPSTONE_DIET
 }
 
 #endif // PRINT_ALIAS_INSTR

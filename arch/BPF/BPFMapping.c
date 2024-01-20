@@ -283,6 +283,7 @@ static bpf_insn op2insn_jmp(unsigned opcode)
 	return BPF_INS_INVALID;
 }
 
+#ifndef CAPSTONE_DIET
 static void update_regs_access(cs_struct *ud, cs_detail *detail,
 		bpf_insn insn_id, unsigned int opcode)
 {
@@ -357,6 +358,7 @@ static void update_regs_access(cs_struct *ud, cs_detail *detail,
 		break;
 	}
 }
+#endif
 
 /*
  * 1. Convert opcode(id) to BPF_INS_*
@@ -366,12 +368,12 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 {
 	// No need to care the mode (cBPF or eBPF) since all checks has be done in
 	// BPF_getInstruction, we can simply map opcode to BPF_INS_*.
-	cs_detail *detail;
 	bpf_insn id = BPF_INS_INVALID;
+#ifndef CAPSTONE_DIET
+	cs_detail *detail;
 	bpf_insn_group grp;
 
 	detail = insn->detail;
-#ifndef CAPSTONE_DIET
  #define PUSH_GROUP(grp) do { \
 		if (detail) { \
 			detail->groups[detail->groups_count] = grp; \
@@ -379,7 +381,7 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 		} \
 	} while(0)
 #else
- #define PUSH_GROUP
+ #define PUSH_GROUP(grp) do {} while(0)
 #endif
 
 	switch (BPF_CLASS(opcode)) {
@@ -400,13 +402,15 @@ void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
 		PUSH_GROUP(BPF_GRP_ALU);
 		break;
 	case BPF_CLASS_JMP:
-		grp = BPF_GRP_JUMP;
 		id = op2insn_jmp(opcode);
+#ifndef CAPSTONE_DIET
+		grp = BPF_GRP_JUMP;
 		if (id == BPF_INS_CALL || id == BPF_INS_CALLX)
 			grp = BPF_GRP_CALL;
 		else if (id == BPF_INS_EXIT)
 			grp = BPF_GRP_RETURN;
 		PUSH_GROUP(grp);
+#endif
 		break;
 	case BPF_CLASS_RET:
 		id = BPF_INS_RET;

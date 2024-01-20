@@ -52,9 +52,11 @@
 
 // Static function declarations. These are functions which have the same identifiers
 // over all architectures. Therefor they need to be static.
+#ifndef CAPSTONE_DIET
 static void printCustomAliasOperand(MCInst *MI, uint64_t Address,
 				    unsigned OpIdx, unsigned PrintMethodIdx,
 				    SStream *O);
+#endif
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O);
 static void printRegName(SStream *OS, unsigned RegNo);

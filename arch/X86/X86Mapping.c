@@ -1712,7 +1712,6 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 	// not found
 	return false;
 }
-#endif
 
 // return true if the opcode is XCHG [mem]
 static bool xchg_mem(unsigned int opcode)
@@ -1727,6 +1726,7 @@ static bool xchg_mem(unsigned int opcode)
 				 return true;
 	}
 }
+#endif
 
 // given MCInst's id, find out if this insn is valid for REP prefix
 static bool valid_rep(cs_struct *h, unsigned int opcode)
@@ -1783,6 +1783,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 	return false;
 }
 
+#ifndef CAPSTONE_DIET
 // given MCInst's id, find if this is a "repz ret" instruction
 // gcc generates "repz ret" (f3 c3) instructions in some cases as an
 // optimization for AMD platforms, see:
@@ -1800,6 +1801,7 @@ static bool valid_ret_repz(cs_struct *h, unsigned int opcode)
 	// not found
 	return false;
 }
+#endif
 
 // given MCInst's id, find out if this insn is valid for REPE prefix
 static bool valid_repe(cs_struct *h, unsigned int opcode)
