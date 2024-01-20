@@ -16,7 +16,7 @@
 
 #ifdef CAPSTONE_HAS_XCORE
 
-#if defined (WIN32) || defined (WIN64) || defined (_WIN32) || defined (_WIN64)
+#ifdef _MSC_VER
 #pragma warning(disable : 4996)			// disable MSVC's warning on strcpy()
 #pragma warning(disable : 28719)		// disable MSVC's warning on strcpy()
 #endif
