@@ -25,7 +25,7 @@ class STIFeatureBits(Patch):
             "       )"
             "       (argument_list)"
             "   )"
-            "   ((qualified_identifier) @flag)"
+            "   (subscript_argument_list ((qualified_identifier) @flag))"
             ") @sti_feature_bits"
         )
 

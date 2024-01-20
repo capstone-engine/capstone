@@ -16,7 +16,7 @@ class NamespaceArch(Patch):
         super().__init__(priority)
 
     def get_search_pattern(self) -> str:
-        return "(namespace_definition" "   (identifier)" "   (declaration_list) @decl_list" ") @namespace_def"
+        return "(namespace_definition" "   (namespace_identifier)" "   (declaration_list) @decl_list" ") @namespace_def"
 
     def get_main_capture_name(self) -> str:
         return "namespace_def"

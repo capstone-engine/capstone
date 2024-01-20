@@ -18,7 +18,7 @@ class FeatureBits(Patch):
         return (
             "(subscript_expression "
             '   ((identifier) @id (#match? @id "[fF]eatureBits"))'
-            "   ((qualified_identifier) @qid)"
+            "   (subscript_argument_list ((qualified_identifier) @qid))"
             ") @feature_bits"
         )
 
