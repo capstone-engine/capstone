@@ -3018,7 +3018,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   assert(Bits != 0 && "Cannot print this instruction.");
 
   // Fragment 0 encoded into 4 bits for 13 unique commands.
-  switch ((Bits >> 12) & 15) {
+  switch ((uint32_t)((Bits >> 12) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_VALUE_LIST, DBG_INSTR_REF, DBG_PHI, DBG_LABEL, BUNDLE, ...
@@ -3092,7 +3092,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 1 encoded into 4 bits for 16 unique commands.
-  switch ((Bits >> 16) & 15) {
+  switch ((uint32_t)((Bits >> 16) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3188,7 +3188,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 2 encoded into 5 bits for 19 unique commands.
-  switch ((Bits >> 20) & 31) {
+  switch ((uint32_t)((Bits >> 20) & 31)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3289,7 +3289,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 3 encoded into 4 bits for 12 unique commands.
-  switch ((Bits >> 25) & 15) {
+  switch ((uint32_t)((Bits >> 25) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3358,7 +3358,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 4 encoded into 4 bits for 14 unique commands.
-  switch ((Bits >> 29) & 15) {
+  switch ((uint32_t)((Bits >> 29) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3440,7 +3440,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 5 encoded into 4 bits for 10 unique commands.
-  switch ((Bits >> 33) & 15) {
+  switch ((uint32_t)((Bits >> 33) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3499,7 +3499,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 6 encoded into 4 bits for 12 unique commands.
-  switch ((Bits >> 37) & 15) {
+  switch ((uint32_t)((Bits >> 37) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // ADDSC_A_rr, ADDSC_A_rr_v110, DIFSC_A_rr_v110, MULR_H_rr_v110, MULR_Q_r...
@@ -3568,7 +3568,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 7 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 41) & 3) {
+  switch ((uint32_t)((Bits >> 41) & 3)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // DEXTR_rrpw, DEXTR_rrrr, INSERT_rcrr, INSERT_rrrr

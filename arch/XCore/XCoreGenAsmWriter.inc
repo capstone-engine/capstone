@@ -431,7 +431,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
   // Fragment 0 encoded into 2 bits for 4 unique commands.
   //printf(">>%s\n", AsmStrs+(Bits & 2047)-1);
   //printf("Frag-0: %u\n", (Bits >> 11) & 3);
-  switch ((Bits >> 11) & 3) {
+  switch ((uint32_t)((Bits >> 11) & 3)) {
   default:   // unreachable.
   case 0:
     // DBG_VALUE, BUNDLE, LIFETIME_START, LIFETIME_END, CLRE_0R, DCALL_0R, DE...
@@ -456,7 +456,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 1 encoded into 5 bits for 17 unique commands.
   //printf("Frag-1: %u\n", (Bits >> 13) & 31);
-  switch ((Bits >> 13) & 31) {
+  switch ((uint32_t)((Bits >> 13) & 31)) {
   default:   // unreachable.
   case 0:
     // ADD_2rus, ADD_3r, ANDNOT_2r, AND_3r, ASHR_l2rus, ASHR_l3r, BITREV_l2r,...
@@ -577,7 +577,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 2 encoded into 3 bits for 5 unique commands.
   //printf("Frag-2: %u\n", (Bits >> 18) & 7);
-  switch ((Bits >> 18) & 7) {
+  switch ((uint32_t)((Bits >> 18) & 7)) {
   default:   // unreachable.
   case 0:
     // ADD_2rus, ADD_3r, AND_3r, ASHR_l2rus, ASHR_l3r, BITREV_l2r, BRBF_lru6,...
@@ -607,7 +607,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 3 encoded into 3 bits for 8 unique commands.
   //printf("Frag-3: %u\n", (Bits >> 21) & 7);
-  switch ((Bits >> 21) & 7) {
+  switch ((uint32_t)((Bits >> 21) & 7)) {
   default:   // unreachable.
   case 0:
     // ADD_2rus, ADD_3r, AND_3r, ASHR_l2rus, ASHR_l3r, CRC_l3r, DIVS_l3r, DIV...
@@ -664,7 +664,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 4 encoded into 3 bits for 5 unique commands.
   //printf("Frag-4: %u\n", (Bits >> 24) & 7);
-  switch ((Bits >> 24) & 7) {
+  switch ((uint32_t)((Bits >> 24) & 7)) {
   default:   // unreachable.
   case 0:
     // ADD_2rus, ADD_3r, AND_3r, ASHR_l2rus, ASHR_l3r, DIVS_l3r, DIVU_l3r, EQ...
@@ -697,7 +697,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 5 encoded into 2 bits for 4 unique commands.
   //printf("Frag-5: %u\n", (Bits >> 27) & 3);
-  switch ((Bits >> 27) & 3) {
+  switch ((uint32_t)((Bits >> 27) & 3)) {
   default:   // unreachable.
   case 0:
     // ADD_2rus, ADD_3r, AND_3r, ASHR_l2rus, ASHR_l3r, DIVS_l3r, DIVU_l3r, EQ...

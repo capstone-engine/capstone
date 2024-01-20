@@ -10473,7 +10473,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   assert(Bits != 0 && "Cannot print this instruction.");
 
   // Fragment 0 encoded into 5 bits for 22 unique commands.
-  switch ((Bits >> 15) & 31) {
+  switch ((uint32_t)((Bits >> 15) & 31)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_VALUE_LIST, DBG_INSTR_REF, DBG_PHI, DBG_LABEL, BUNDLE, ...
@@ -10604,7 +10604,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 1 encoded into 5 bits for 24 unique commands.
-  switch ((Bits >> 20) & 31) {
+  switch ((uint32_t)((Bits >> 20) & 31)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // BUILD_UACC, CLRLSLDI, CLRLSLDI_rec, CLRLSLWI, CLRLSLWI_rec, CLRRDI, CL...
@@ -10758,7 +10758,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 2 encoded into 5 bits for 31 unique commands.
-  switch ((Bits >> 25) & 31) {
+  switch ((uint32_t)((Bits >> 25) & 31)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // BUILD_UACC, CLRLSLDI, CLRLSLDI_rec, CLRLSLWI, CLRLSLWI_rec, CLRRDI, CL...
@@ -10929,7 +10929,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 3 encoded into 3 bits for 6 unique commands.
-  switch ((Bits >> 30) & 7) {
+  switch ((uint32_t)((Bits >> 30) & 7)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // BUILD_UACC, DCBTCT, DCBTDS, DCBTSTCT, DCBTSTDS, ADDME, ADDME8, ADDME8O...
@@ -10967,7 +10967,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 4 encoded into 5 bits for 23 unique commands.
-  switch ((Bits >> 33) & 31) {
+  switch ((uint32_t)((Bits >> 33) & 31)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // CLRLSLDI, CLRLSLDI_rec, CLRRDI, CLRRDI_rec, EXTLDI, EXTLDI_rec, EXTRDI...
@@ -11089,7 +11089,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 5 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 38) & 3) {
+  switch ((uint32_t)((Bits >> 38) & 3)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // CLRLSLDI, CLRLSLDI_rec, CLRLSLWI, CLRLSLWI_rec, EXTLDI, EXTLDI_rec, EX...
@@ -11113,7 +11113,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 6 encoded into 4 bits for 11 unique commands.
-  switch ((Bits >> 40) & 15) {
+  switch ((uint32_t)((Bits >> 40) & 15)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // CLRLSLDI, CLRLSLDI_rec, EXTLDI, EXTLDI_rec, EXTRDI, EXTRDI_rec, INSRDI...
@@ -11170,7 +11170,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 7 encoded into 2 bits for 4 unique commands.
-  switch ((Bits >> 44) & 3) {
+  switch ((uint32_t)((Bits >> 44) & 3)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // CLRLSLWI, CLRLSLWI_rec, EXTLWI, EXTLWI_rec, EXTRWI, EXTRWI_rec, INSLWI...
@@ -11193,7 +11193,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 8 encoded into 3 bits for 7 unique commands.
-  switch ((Bits >> 46) & 7) {
+  switch ((uint32_t)((Bits >> 46) & 7)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // PMXVBF16GER2, PMXVBF16GER2W, PMXVF16GER2, PMXVF16GER2W, PMXVF32GER, PM...
@@ -11231,7 +11231,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 9 encoded into 3 bits for 5 unique commands.
-  switch ((Bits >> 49) & 7) {
+  switch ((uint32_t)((Bits >> 49) & 7)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // PMXVBF16GER2, PMXVBF16GER2W, PMXVF16GER2, PMXVF16GER2W, PMXVI16GER2, P...
@@ -11260,7 +11260,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 10 encoded into 2 bits for 3 unique commands.
-  switch ((Bits >> 52) & 3) {
+  switch ((uint32_t)((Bits >> 52) & 3)) {
   default: assert(0 && "Invalid command number.");
   case 0:
     // PMXVBF16GER2, PMXVBF16GER2W, PMXVF16GER2, PMXVF16GER2W, PMXVI16GER2, P...

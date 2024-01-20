@@ -440,7 +440,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI) {
 
 
   // Fragment 0 encoded into 3 bits for 8 unique commands.
-  switch ((Bits >> 10) & 7) {
+  switch ((uint32_t)((Bits >> 10) & 7)) {
   default:
   case 0:
     // DBG_VALUE, BUNDLE, LIFETIME_START, LIFETIME_END, B_s7_irp, B_s7_nrp
@@ -488,7 +488,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI) {
 
 
   // Fragment 1 encoded into 3 bits for 7 unique commands.
-  switch ((Bits >> 13) & 7) {
+  switch ((uint32_t)((Bits >> 13) & 7)) {
   default:
   case 0:
     // ABS2_l2_rr, ABS_l1_rr, ADDKPC_s3_iir, ADDK_s2_ir, BDEC_s8_ir, BITC4_m2...
@@ -526,7 +526,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI) {
 
 
   // Fragment 2 encoded into 3 bits for 8 unique commands.
-  switch ((Bits >> 16) & 7) {
+  switch ((uint32_t)((Bits >> 16) & 7)) {
   default:
   case 0:
     // ABS2_l2_rr, ABS_l1_rr, ADDK_s2_ir, BDEC_s8_ir, BITC4_m2_rr, BPOS_s8_ir...

@@ -9634,7 +9634,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	assert(Bits != 0 && "Cannot print this instruction.");
 
 	// Fragment 0 encoded into 6 bits for 43 unique commands.
-	switch ((Bits >> 13) & 63) {
+	switch ((uint32_t)((Bits >> 13) & 63)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
@@ -9860,7 +9860,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	}
 
 	// Fragment 1 encoded into 7 bits for 89 unique commands.
-	switch ((Bits >> 19) & 127) {
+	switch ((uint32_t)((Bits >> 19) & 127)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
@@ -10462,7 +10462,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	}
 
 	// Fragment 2 encoded into 7 bits for 69 unique commands.
-	switch ((Bits >> 26) & 127) {
+	switch ((uint32_t)((Bits >> 26) & 127)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
@@ -10877,7 +10877,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	}
 
 	// Fragment 3 encoded into 6 bits for 39 unique commands.
-	switch ((Bits >> 33) & 63) {
+	switch ((uint32_t)((Bits >> 33) & 63)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
@@ -11085,7 +11085,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	}
 
 	// Fragment 4 encoded into 7 bits for 77 unique commands.
-	switch ((Bits >> 39) & 127) {
+	switch ((uint32_t)((Bits >> 39) & 127)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
@@ -11527,7 +11527,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	}
 
 	// Fragment 5 encoded into 5 bits for 27 unique commands.
-	switch ((Bits >> 46) & 31) {
+	switch ((uint32_t)((Bits >> 46) & 31)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
@@ -11689,7 +11689,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	}
 
 	// Fragment 6 encoded into 6 bits for 38 unique commands.
-	switch ((Bits >> 51) & 63) {
+	switch ((uint32_t)((Bits >> 51) & 63)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
@@ -11897,7 +11897,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 	}
 
 	// Fragment 7 encoded into 4 bits for 16 unique commands.
-	switch ((Bits >> 57) & 15) {
+	switch ((uint32_t)((Bits >> 57) & 15)) {
 	default:
 		assert(0 && "Invalid command number.");
 	case 0:
