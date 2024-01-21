@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0xb1,0x97,0x28,0x75 = xvorn.v $xr17, $xr29, $xr5

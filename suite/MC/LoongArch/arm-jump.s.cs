@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x04,0xc4,0x36,0x00 = setarmj $a0, 1

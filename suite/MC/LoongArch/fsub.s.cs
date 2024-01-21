@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x16,0x8c,0x32,0x75 = xvfsub.s $xr22, $xr0, $xr3
+0x24,0x3f,0x33,0x75 = xvfsub.d $xr4, $xr25, $xr15

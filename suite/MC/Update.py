@@ -92,13 +92,19 @@ def get_all_files(
     architecture are added.
     """
     files = list()
+    folders = [arch_dir]
     file: Path
-    for file in arch_dir.iterdir():
-        stem = file.stem
-        if excluded_files and stem in excluded_files:
-            continue
+    while len(folders) > 0:
+        cur_dir = folders.pop()
+        for file in cur_dir.iterdir():
+            stem = file.stem
+            if excluded_files and stem in excluded_files:
+                continue
+            if file.is_dir():
+                folders.append(file)
+                continue
 
-        files.append((file, out_path.joinpath(file.name + ".cs")))
+            files.append((file, out_path.joinpath(file.name + ".cs")))
     return files
 
 
@@ -199,7 +205,21 @@ def extract_tests(llvm_file: Path) -> str:
     asm_regex = r"(.*)"
 
     test_case_patterns = [
+        # Match against:
+        # @ CHECK: xxx @ encoding: [xx, xx]
         rf"#?\s*@?\s*CHECK:\s+{asm_regex}\s+@\s+encoding:\s+\[({hex_encoding})\]",
+        # Match against:
+        # # CHECK-INST: xxx
+        # # CHECK-ENCODING: encoding: [xx, xx]
+        rf"#\s+CHECK-INST:\s+{asm_regex}\n#\s+CHECK-ENCODING:\s+encoding:\s+\[({hex_encoding})\]",
+        # Match against:
+        # # CHECK-ASM-AND-OBJ: xxx
+        # # CHECK-ASM: encoding: [xx, xx]
+        rf"#\s+CHECK-ASM-AND-OBJ:\s+{asm_regex}\n#\s+CHECK-ASM:\s+encoding:\s+\[({hex_encoding})\]",
+        # Match against:
+        # # ASM-AND-OBJ: xxx
+        # # ASM: encoding: [xx, xx]
+        rf"#\s+ASM-AND-OBJ:\s+{asm_regex}\n#\s+ASM:\s+encoding:\s+\[({hex_encoding})\]",
     ]
 
     result = ""
@@ -208,20 +228,19 @@ def extract_tests(llvm_file: Path) -> str:
         return result
 
     f = open(llvm_file)
-    for line in f.readlines():
-        match = list()
-        for regex in test_case_patterns:
-            match: list = re.findall(regex, line)
-            if match:
-                break
-        if not match:
-            continue
-        match = match[0]
-        asm = re.sub(r"\s+", " ", match[0])
-        asm = asm.strip(" ")
-        asm = decimal_to_hex_fix(asm)
-        hexbytes = re.sub(r"\s", "", match[1])
-        result += f"{hexbytes} = {asm}\n"
+    content = f.read()
+    matches = list()
+    for regex in test_case_patterns:
+        matches: list = re.findall(regex, content)
+        if matches:
+            break
+    if matches:
+        for match in matches:
+            asm = re.sub(r"\s+", " ", match[0])
+            asm = asm.strip(" ")
+            asm = decimal_to_hex_fix(asm)
+            hexbytes = re.sub(r"\s", "", match[1])
+            result += f"{hexbytes} = {asm}\n"
     f.close()
     return result
 
@@ -277,7 +296,7 @@ def parse_args() -> argparse.Namespace:
         "-a",
         dest="arch",
         help="Name of architecture to update.",
-        choices=["ARM"],
+        choices=["ARM", "LoongArch"],
         required=True,
     )
     parser.add_argument(

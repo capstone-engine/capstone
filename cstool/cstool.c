@@ -122,6 +122,8 @@ static struct {
 	{ "hppa20be", CS_ARCH_HPPA, CS_MODE_HPPA_20 | CS_MODE_BIG_ENDIAN },
 	{ "hppa20w", CS_ARCH_HPPA, CS_MODE_HPPA_20W | CS_MODE_LITTLE_ENDIAN },
 	{ "hppa20wbe", CS_ARCH_HPPA, CS_MODE_HPPA_20W | CS_MODE_BIG_ENDIAN },
+	{ "loongarch32", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH32 },
+	{ "loongarch64", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64 },
 	{ NULL }
 };
 
@@ -342,6 +344,11 @@ static void usage(char *prog)
 		printf("        tc162       tricore V1.6.2\n");
 	}
 
+	if (cs_support(CS_ARCH_LOONGARCH)) {
+		printf("        loongarch32 LoongArch32\n");
+		printf("        loongarch64 LoongArch64\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -r show detailed information of the real instructions (even for alias)\n");
@@ -419,6 +426,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_HPPA:
 			print_insn_detail_hppa(handle, ins);
+			break;
+		case CS_ARCH_LOONGARCH:
+			print_insn_detail_loongarch(handle, ins);
 			break;
 		default: break;
 	}
@@ -562,6 +572,10 @@ int main(int argc, char **argv)
 				
 				if (cs_support(CS_ARCH_HPPA)) {
 					printf("hppa=1 ");
+				}
+
+				if (cs_support(CS_ARCH_LOONGARCH)) {
+					printf("loongarch=1 ");
 				}
 
 				printf("\n");

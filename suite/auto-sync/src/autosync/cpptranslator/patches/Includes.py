@@ -62,6 +62,8 @@ class Includes(Patch):
                 return res + get_PPC_includes(filename) + get_general_macros()
             case "AArch64":
                 return res + get_AArch64_includes(filename) + get_general_macros()
+            case "LoongArch":
+                return res + get_LoongArch_includes(filename) + get_general_macros()
             case "TEST_ARCH":
                 return res + b"test_output"
             case _:
@@ -252,6 +254,44 @@ def get_AArch64_includes(filename: str) -> bytes:
         case "AArch64AddressingModes.h":
             return b"#include <assert.h>\n" + b'#include "../../MathExtras.h"\n\n'
     log.fatal(f"No includes given for AArch64 source file: {filename}")
+    exit(1)
+
+
+def get_LoongArch_includes(filename: str) -> bytes:
+    match filename:
+        case "LoongArchDisassembler.cpp":
+            return (
+                b'#include "../../MCInst.h"\n'
+                + b'#include "../../MathExtras.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../MCFixedLenDisassembler.h"\n'
+                + b'#include "../../cs_priv.h"\n'
+                + b'#include "../../utils.h"\n'
+                + b'#include "LoongArchDisassemblerExtension.h"\n'
+                + b"#define GET_SUBTARGETINFO_ENUM\n"
+                + b'#include "LoongArchGenSubtargetInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "LoongArchGenInstrInfo.inc"\n\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "LoongArchGenRegisterInfo.inc"\n\n'
+            )
+        case "LoongArchInstPrinter.cpp":
+            return (
+                b'#include "LoongArchMapping.h"\n'
+                + b'#include "LoongArchInstPrinter.h"\n\n'
+                + b"#define GET_SUBTARGETINFO_ENUM\n"
+                + b'#include "LoongArchGenSubtargetInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "LoongArchGenInstrInfo.inc"\n\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "LoongArchGenRegisterInfo.inc"\n\n'
+            )
+        case "LoongArchInstPrinter.h":
+            return (
+                b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
+            )
+    log.fatal(f"No includes given for LoongArch source file: {filename}")
     exit(1)
 
 

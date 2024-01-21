@@ -24,6 +24,7 @@ from autosync.cpptranslator.patches.ConstMCOperand import ConstMCOperand
 from autosync.cpptranslator.patches.CppInitCast import CppInitCast
 from autosync.cpptranslator.patches.CreateOperand0 import CreateOperand0
 from autosync.cpptranslator.patches.CreateOperand1 import CreateOperand1
+from autosync.cpptranslator.patches.Data import Data
 from autosync.cpptranslator.patches.DeclarationInConditionClause import (
     DeclarationInConditionalClause,
 )
@@ -54,6 +55,7 @@ from autosync.cpptranslator.patches.NamespaceAnon import NamespaceAnon
 from autosync.cpptranslator.patches.NamespaceArch import NamespaceArch
 from autosync.cpptranslator.patches.NamespaceLLVM import NamespaceLLVM
 from autosync.cpptranslator.patches.OutStreamParam import OutStreamParam
+from autosync.cpptranslator.patches.Override import Override
 from autosync.cpptranslator.patches.Patch import Patch
 from autosync.cpptranslator.patches.PredicateBlockFunctions import (
     PredicateBlockFunctions,
@@ -65,6 +67,7 @@ from autosync.cpptranslator.patches.ReferencesDecl import ReferencesDecl
 from autosync.cpptranslator.patches.RegClassContains import RegClassContains
 from autosync.cpptranslator.patches.SetOpcode import SetOpcode
 from autosync.cpptranslator.patches.SignExtend import SignExtend
+from autosync.cpptranslator.patches.Size import Size
 from autosync.cpptranslator.patches.SizeAssignments import SizeAssignment
 from autosync.cpptranslator.patches.STIArgument import STIArgument
 from autosync.cpptranslator.patches.STIFeatureBits import STIFeatureBits
@@ -157,6 +160,9 @@ class Translator:
         NamespaceLLVM.__name__: 0,  # ◁─────┤ so they don't match in NamespaceArch.
         NamespaceArch.__name__: 1,  # ──────┘
         PredicateBlockFunctions.__name__: 0,
+        Override.__name__: 0,
+        Size.__name__: 0,
+        Data.__name__: 0,
         ClassesDef.__name__: 0,  # ◁────────┐ Declarations must be extracted first from the classes.
         MethodTypeQualifier.__name__: 1,  # ┘
         # All previous patches can contain qualified identifiers (Ids with the "::" operator) in their search patterns.
@@ -328,6 +334,12 @@ class Translator:
                     patch = PrintRegImmShift(p)
                 case IsOperandRegImm.__name__:
                     patch = IsOperandRegImm(p)
+                case Override.__name__:
+                    patch = Override(p)
+                case Size.__name__:
+                    patch = Size(p)
+                case Data.__name__:
+                    patch = Data(p)
                 case _:
                     log.fatal(f"Patch type {ptype} not in Patch init routine.")
                     exit(1)

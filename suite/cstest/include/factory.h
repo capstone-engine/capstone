@@ -26,5 +26,6 @@ char *get_detail_bpf(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_tricore(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_alpha(csh *handle, cs_mode mode, cs_insn *ins);
 char *get_detail_hppa(csh *handle, cs_mode mode, cs_insn *ins);
+char *get_detail_loongarch(csh *handle, cs_mode mode, cs_insn *ins);
 
 #endif /* FACTORY_H */

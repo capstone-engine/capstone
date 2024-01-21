@@ -44,6 +44,7 @@ class AddCSDetail(Patch):
                 "ARMInstPrinter.cpp",
                 "PPCInstPrinter.cpp",
                 "AArch64InstPrinter.cpp",
+                "LoongArchInstPrinter.cpp",
             ],
             "archs": list(),
         }

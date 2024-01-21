@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0xa6,0xd7,0x26,0x75 = xvor.v $xr6, $xr29, $xr21

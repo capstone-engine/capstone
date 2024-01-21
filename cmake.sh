@@ -63,6 +63,9 @@ case $1 in
   HPPA)
     ARCH=HPPA
     ;;
+  LOONGARCH)
+    ARCH=LOONGARCH
+    ;;
   *)
     ;;
 esac

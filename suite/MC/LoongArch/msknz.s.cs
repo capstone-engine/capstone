@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0xd6,0x62,0x9c,0x76 = xvmsknz.b $xr22, $xr22

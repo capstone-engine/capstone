@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x46,0xbc,0xd7,0x77 = xvori.b $xr6, $xr2, 0xef

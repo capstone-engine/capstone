@@ -46,6 +46,7 @@ jobs:
           ./src/autosync/ASUpdater.py -d -a Alpha -s IncGen
           ./src/autosync/ASUpdater.py -d -a ARM -s IncGen
           ./src/autosync/ASUpdater.py -d -a PPC -s IncGen
+          ./src/autosync/ASUpdater.py -d -a LoongArch -s IncGen
 
       - name: CppTranslator - Patch tests
         run: |
@@ -60,6 +61,7 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a AArch64 -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a ARM -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
+          ./src/autosync/ASUpdater.py --ci -d -a LoongArch -s Translate
 
       - name: Test Header patcher
         run: |

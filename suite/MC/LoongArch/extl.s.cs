@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x9d,0x01,0x09,0x77 = xvextl.q.d $xr29, $xr12
+0x9b,0x02,0x0d,0x77 = xvextl.qu.du $xr27, $xr20

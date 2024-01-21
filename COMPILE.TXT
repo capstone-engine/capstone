@@ -90,6 +90,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 	/usr/include/capstone/capstone.h
 	/usr/include/capstone/evm.h
 	/usr/include/capstone/hppa.h
+	/usr/include/capstone/loongarch.h
 	/usr/include/capstone/m680x.h
 	/usr/include/capstone/m68k.h
 	/usr/include/capstone/mips.h

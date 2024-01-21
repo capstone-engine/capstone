@@ -26,6 +26,7 @@
 typedef struct MCInst MCInst;
 typedef struct cs_struct cs_struct;
 typedef struct MCOperand MCOperand;
+typedef unsigned MCRegister;
 
 /// MCOperand - Instances of this class represent operands of the MCInst class.
 /// This is a simple discriminated union.
