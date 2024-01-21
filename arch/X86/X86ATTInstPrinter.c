@@ -801,6 +801,7 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_LEA64r:
 				 MI->x86opsize = 8;
 				 break;
+#ifndef CAPSTONE_X86_REDUCE
 		case X86_BNDCL32rm:
 		case X86_BNDCN32rm:
 		case X86_BNDCU32rm:
@@ -811,6 +812,7 @@ static void printanymem(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_BNDCU64rm:
 				 MI->x86opsize = 16;
 				 break;
+#endif
 	}
 
 	printMemReference(MI, OpNo, O);
