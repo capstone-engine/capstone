@@ -828,7 +828,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType12(uint8_t Imm)
 	static inline bool CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, T)(int64_t Imm)    \
 	{                                                                          \
 		union { \
-			typeof(Imm) In; \
+			int64_t In; \
 			T Out[sizeof(int64_t) / sizeof(T)]; \
 		} U_Parts; \
 		U_Parts.In = Imm; \
@@ -888,19 +888,19 @@ AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate(int64_t Imm)
 		return false;
 
 	union {
-		typeof(Imm) In;
+		int64_t In;
 		int32_t Out[2];
 	} U_S;
 	U_S.In = Imm;
 	int32_t *S = U_S.Out;
 	union {
-		typeof(Imm) In;
+		int64_t In;
 		int16_t Out[4];
 	} U_H;
 	U_H.In = Imm;
 	int16_t *H = U_H.Out;
 	union {
-		typeof(Imm) In;
+		int64_t In;
 		int8_t Out[8];
 	} U_B;
 	U_B.In = Imm;
