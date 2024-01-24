@@ -7,7 +7,14 @@ from CppTranslator.Patches.Patch import Patch
 class BitCastStdArray(Patch):
     """
     Patch   auto S = bit_cast<std::array<int32_t, 2>>(Imm);
-    to      int32_t *S = ((int32_t *)(&Imm)); // Array length = 2
+    to      union {
+                typeof(Imm) In;
+                int32_t Out[2];
+            } U_S;
+            U_S.In = Imm;
+            int32_t *S = U_S.Out;
+
+            MSVC doesn't support typeof so it has to be resolved manually.
     """
 
     def __init__(self, priority: int):
@@ -38,8 +45,15 @@ class BitCastStdArray(Patch):
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         arr_name: bytes = captures[1][0].text
         array_type: Node = captures[3][0]
-        cast_target: bytes = captures[4][0].text
+        cast_target: bytes = captures[4][0].text.strip(b"()")
         array_templ_args: bytes = array_type.named_children[0].named_children[1].named_children[1].text.strip(b"<>")
         arr_type = array_templ_args.split(b",")[0]
         arr_len = array_templ_args.split(b",")[1]
-        return arr_type + b" *" + arr_name + b" = (" + arr_type + b"*)(&" + cast_target + b"); // arr len = " + arr_len
+        return (
+            b"union {\n"
+            + b"    typeof(" + cast_target + b") In;\n"
+            + b"    " + arr_type + b" Out[" + arr_len + b"];\n"
+            + b"} U_" + arr_name + b";\n"
+            + b"U_" + arr_name + b".In = " + cast_target + b";\n"
+            + arr_type + b" *" + arr_name + b" = U_" + arr_name + b".Out;"
+        )

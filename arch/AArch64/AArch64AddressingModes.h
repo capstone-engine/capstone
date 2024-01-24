@@ -827,12 +827,12 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType12(uint8_t Imm)
 #define DEFINE_isSVEMaskOfIdenticalElements(T)                                 \
 	static inline bool CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, T)(int64_t Imm)    \
 	{                                                                          \
-		union {                                   \
-			uint64_t L;                                   \
-			T A[sizeof(int64_t) / sizeof(T)];                                   \
-		} U;                                   \
-		U.L = Imm;                                   \
-		T *Parts = U.A;                                   \
+		union { \
+			int64_t In; \
+			T Out[sizeof(int64_t) / sizeof(T)]; \
+		} U_Parts; \
+		U_Parts.In = Imm; \
+		T *Parts = U_Parts.Out; \
 		for (int i = 0; i < (sizeof(int64_t) / sizeof(T)); i++) {   \
 			if (Parts[i] != Parts[0]) \
 				return false; \
@@ -887,9 +887,24 @@ AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate(int64_t Imm)
 	if (isSVECpyImm64(Imm))
 		return false;
 
-	int32_t *S = (int32_t *)(&(Imm)); // arr len =  2
-	int16_t *H = (int16_t *)(&(Imm)); // arr len =  4
-	int8_t *B = (int8_t *)(&(Imm));	  // arr len =  8
+	union {
+		int64_t In;
+		int32_t Out[2];
+	} U_S;
+	U_S.In = Imm;
+	int32_t *S = U_S.Out;
+	union {
+		int64_t In;
+		int16_t Out[4];
+	} U_H;
+	U_H.In = Imm;
+	int16_t *H = U_H.Out;
+	union {
+		int64_t In;
+		int8_t Out[8];
+	} U_B;
+	U_B.In = Imm;
+	int8_t *B = U_B.Out;
 
 	if (CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, int32_t)(Imm) &&
 		isSVECpyImm32(S[0]))
