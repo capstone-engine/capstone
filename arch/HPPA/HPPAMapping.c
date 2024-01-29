@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-#ifdef CAPSTONE_HAS_HPPA
+// #ifdef CAPSTONE_HAS_HPPA
 
 #include <string.h>
 #include <stdlib.h>
@@ -1116,7 +1116,7 @@ static const struct pa_insn pa_insns[] =
 static void update_regs_access(cs_struct *ud, cs_detail *detail,
 		hppa_insn insn_id, unsigned int opcode)
 {
-	if (insn_id == BPF_INS_INVALID)
+	if (insn_id == HPPA_INS_INVALID)
 		return;
 
 #define PUSH_READ(r) do { \
@@ -1239,4 +1239,4 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 	// *regs_write_count = write_count;
 }
 
-#endif
+// #endif

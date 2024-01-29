@@ -231,6 +231,8 @@ typedef enum cs_mode {
 	CS_MODE_TRICORE_160 = 1 << 5, ///< Tricore 1.6
 	CS_MODE_TRICORE_161 = 1 << 6, ///< Tricore 1.6.1
 	CS_MODE_TRICORE_162 = 1 << 7, ///< Tricore 1.6.2
+	CS_MODE_HPPA_11 = 1 << 1, ///< HPPA 1.1
+	CS_MODE_HPPA_20 = 1 << 2, ///< HPPA 2.0
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);

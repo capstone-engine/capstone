@@ -116,7 +116,10 @@ static struct {
 	{ "tc162", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
 	{ "alpha", CS_ARCH_ALPHA, CS_MODE_LITTLE_ENDIAN },
 	{ "alphabe", CS_ARCH_ALPHA, CS_MODE_BIG_ENDIAN },
-	{ "hppa", CS_ARCH_HPPA, CS_MODE_BIG_ENDIAN },
+	{ "hppa11", CS_ARCH_HPPA, CS_MODE_HPPA_11 | CS_MODE_LITTLE_ENDIAN },
+	{ "hppa11be", CS_ARCH_HPPA, CS_MODE_HPPA_11 | CS_MODE_BIG_ENDIAN },
+	{ "hppa20", CS_ARCH_HPPA, CS_MODE_HPPA_20 | CS_MODE_LITTLE_ENDIAN },
+	{ "hppa20be", CS_ARCH_HPPA, CS_MODE_HPPA_20 | CS_MODE_BIG_ENDIAN },
 	{ NULL }
 };
 
@@ -217,7 +220,10 @@ static void usage(char *prog)
 	}
 
 	if (cs_support(CS_ARCH_HPPA)) {
-		printf("        hppa        hppa + big endian\n");
+		printf("        hppa11        hppa V1.1 + little endian\n");
+		printf("        hppa11be      hppa V1.1 + big endian\n");
+		printf("        hppa20        hppa V2.0 + little endian\n");
+		printf("        hppa20be      hppa V2.0 + big endian\n");
 	}
 
 	if (cs_support(CS_ARCH_MIPS)) {

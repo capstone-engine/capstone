@@ -578,6 +578,7 @@ typedef struct hppa_ext {
     uint8_t mod_num;
     uint32_t full_insn;
     bool b_writeble;
+    bool cmplt;
 } hppa_ext;
 
 

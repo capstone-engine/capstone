@@ -314,7 +314,8 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 	{
 		HPPA_global_init,
 		HPPA_option,
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN),
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | CS_MODE_HPPA_11
+		| CS_MODE_HPPA_20),
 	},
 #else
 	{ NULL, NULL, 0 },
