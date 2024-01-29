@@ -1,4 +1,4 @@
-# CS_ARCH_HPPA, CS_MODE_HPPA_11, None
+# CS_ARCH_HPPA, CS_MODE_HPPA_11+CS_MODE_BIG_ENDIAN, None
 0x0c,0x20,0x40,0x02 = ldbx flags(sr1,r1),rp
 0x0c,0x20,0x60,0x02 = ldbx,s flags(sr1,r1),rp
 0x0c,0x20,0x40,0x22 = ldbx,m flags(sr1,r1),rp

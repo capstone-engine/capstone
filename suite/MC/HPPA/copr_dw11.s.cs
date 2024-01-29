@@ -1,4 +1,4 @@
-# CS_ARCH_HPPA, CS_MODE_HPPA_11, None
+# CS_ARCH_HPPA, CS_MODE_HPPA_11+CS_MODE_BIG_ENDIAN, None
 0x24,0x41,0x40,0xc3 = cldwx,3 r1(sr1,rp),r3
 0x24,0x41,0x60,0xc3 = cldwx,3,s r1(sr1,rp),r3
 0x24,0x41,0x40,0xe3 = cldwx,3,m r1(sr1,rp),r3
