@@ -69,5 +69,4 @@
 #define HPPA_OP_TYPE_SHEXDEP4   0x3d
 #define HPPA_OP_TYPE_MULTMED    0x3e
 
-
 #endif // CS_HPPA_CONSTANTS_H

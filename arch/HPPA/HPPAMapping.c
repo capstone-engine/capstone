@@ -339,26 +339,6 @@ static const char *const space_reg[] =
   "sr0", "sr1", "sr2", "sr3", "sr4", "sr5", "sr6", "sr7"
 };
 
-static const char *const debug_reg[] =
-{
-  "dbaor0", "dbaor1", "dbaor2", "dbaor3", "dbaor4", "dbaor5", 
-  "dbaor6", "dbaor7", "dbaor8", "dbaor9", "dbaor10", "dbaor11", 
-  "dbaor12", "dbaor13", "dbaor14", "dbaor15", "dbaor16", "dbaor17", 
-  "dbaor18", "dbaor19", "dbaor20", "dbaor21", "dbaor22", "dbaor23", 
-  "dbaor24", "dbaor25", "dbaor26", "dbaor27", "dbaor28", "dbaor29", 
-  "dbaor30"
-};
-
-static const char *const debug_reg_i[] =
-{
-  "ibaor0", "ibaor1", "ibaor2", "ibaor3", "ibaor4", "ibaor5", 
-  "ibaor6", "ibaor7", "ibaor8", "ibaor9", "ibaor10", "ibaor11", 
-  "ibaor12", "ibaor13", "ibaor14", "ibaor15", "ibaor16", "ibaor17", 
-  "ibaor18", "ibaor19", "ibaor20", "ibaor21", "ibaor22", "ibaor23", 
-  "ibaor24", "ibaor25", "ibaor26", "ibaor27", "ibaor28", "ibaor29", 
-  "ibaor30"
-};
-
 static const char *const fpe_reg[] = {
   "fpe1", "fpe3", "fpe5", "fpe7",
   "fr4R" "fr5R" "fr6R" "fr7R" "fr8R"
@@ -378,10 +358,6 @@ const char *HPPA_reg_name(csh handle, unsigned int reg)
         return space_reg[reg - HPPA_REG_SR0];
     else if (reg >= HPPA_REG_CR0 && reg <= HPPA_REG_CR31)
         return control_reg[reg - HPPA_REG_CR0];
-	else if (reg >= HPPA_REG_DBAOR0 && reg <= HPPA_REG_DBAOR30)
-        return debug_reg[reg - HPPA_REG_DBAOR0];
-	else if (reg >= HPPA_REG_IBAOR0 && reg <= HPPA_REG_IBAOR30)
-        return debug_reg_i[reg - HPPA_REG_IBAOR0];
 	else if (reg >= HPPA_REG_FPE0 && reg <= HPPA_REG_FPE31)
         return fpe_reg[reg - HPPA_REG_FPE0];
 	return NULL;

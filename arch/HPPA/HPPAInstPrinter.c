@@ -274,7 +274,7 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_IDTLBP, "R(RR)", false },
 	{ HPPA_INS_IITLBP, "R(RR)", false },
 	{ HPPA_INS_PDC, "r(Rb)", false },
-	{ HPPA_INS_FDC, "r(Rb)", false },
+	{ HPPA_INS_FDC, "x(Rb)", false },
 	{ HPPA_INS_FIC, "r(Rb)", false },
 	{ HPPA_INS_FDCE, "r(Rb)", false },
 	{ HPPA_INS_FICE, "r(Rb)", false },
@@ -315,6 +315,7 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_FNEGABS, "RW", false },
 	{ HPPA_INS_FCNV, "RW", false },
 	{ HPPA_INS_FCMP, "RR", false },
+	{ HPPA_INS_FCMP, "RRi", true },
 	{ HPPA_INS_XMPYU, "RRW", false },
 	{ HPPA_INS_FMPYADD, "RRWRw", false },
 	{ HPPA_INS_FMPYSUB, "RRWRw", false },
@@ -347,6 +348,21 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_RET, "", false },
 };
 
+void hppaPrintInt64(SStream *O, int64_t val)
+{
+	if (val >= 0) {
+		if (val > 9)
+			SStream_concat(O, "0x%x", val);
+		else
+			SStream_concat(O, "%u", val);
+	} else {
+		if (val <- 9) {
+			SStream_concat(O, "-0x%x", (uint32_t)-val);
+		} else
+			SStream_concat(O, "-%u", -val);
+	}
+}
+
 static void print_operand(MCInst *MI, struct SStream *O, const cs_hppa_op *op)
 {
 	switch (op->type) {
@@ -356,18 +372,21 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_hppa_op *op)
 	case HPPA_OP_REG:
 		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->reg));
 		break;
-	case HPPA_OP_IMM:
-		printInt64(O, op->imm);
+	case HPPA_OP_IMM:		
+		printInt32(O, op->imm);
+		// SStream_concat(O, "%x", op->imm);
 		break;
     case HPPA_OP_DISP:
-		printInt64(O, op->imm);
+		// printf("imm: %d -> %d\n", op->imm, op->imm > 0);
+		printInt32(O, op->imm);
+		// SStream_concat(O, "%x", op->imm);
 		break;
 	case HPPA_OP_IDX_REG:
 		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->reg));
 		break;
 	case HPPA_OP_MEM:
 		SStream_concat(O, "(");
-		if (op->mem.space != HPPA_OP_INVALID) {
+		if (op->mem.space != HPPA_OP_INVALID && op->mem.space != HPPA_REG_SR0) {
 			SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->mem.space));
 			SStream_concat(O, ",");
 		}
@@ -501,7 +520,7 @@ static void print_modifiers(MCInst *MI, struct SStream *O)
         if (hppa_ext->modifiers[i].type == 0)
             SStream_concat(O, hppa_ext->modifiers[i].str_mod);
         else 
-            printInt64(O, hppa_ext->modifiers[i].int_mod);
+            SStream_concat(O, "%d", hppa_ext->modifiers[i].int_mod);
     }
 }
 

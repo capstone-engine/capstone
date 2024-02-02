@@ -570,10 +570,6 @@ typedef struct hppa_modifier {
 
 // Additional instruction info
 typedef struct hppa_ext {
-    // uint8_t ext[3];
-    // uint8_t uid;    // uid for float instructions
-    // uint8_t nullify; // nullify bit
-    // uint8_t fixed;   // fixed bit
     hppa_modifier modifiers[5];
     uint8_t mod_num;
     uint32_t full_insn;

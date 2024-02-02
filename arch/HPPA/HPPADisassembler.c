@@ -104,9 +104,9 @@ static const char *const float_comp_names[] =
   "!?=", "<>", "!=", "!=t", "!?", "<=>", "true?", "true"
 };
 static const char *const signed_unsigned_names[] = {"u", "s"};
-static const char *const mix_half_names[] = {"l", "r"};
+// static const char *const mix_half_names[] = {"l", "r"};
 static const char *const saturation_names[] = {"us", "ss", "", ""};
-static const char *const read_write_names[] = {"r", "w"};
+// static const char *const read_write_names[] = {"r", "w"};
 static const char *const add_compl_names[] = { "", "", "l", "tsv" };
 
 #define CREATE_GR_REG(MI, gr)       MCOperand_CreateReg0(MI, gr + HPPA_REG_GR0)
@@ -303,20 +303,16 @@ static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
     uint32_t ext5 = GET_FIELD(insn, 11, 15);
     if (MODE_IS_HPPA_20(MI->csh->mode)) {
         switch (ext8) {
-        case 0x65:
-            MCInst_setOpcode(MI, HPPA_INS_RFI);
-            push_str_modifier(&MI->hppa_ext, "R");
-            return;
         case 0xa5:
             MCInst_setOpcode(MI, HPPA_INS_MFIA);
             return;
         case 0xc6:
             MCInst_setOpcode(MI, HPPA_INS_MTSARCM);
             return;
-        case 0x45:
-            if (GET_BIT(insn, 17) == 1) {
-                push_str_modifier(&MI->hppa_ext, "W");
-            }
+        case 0x65:
+            push_str_modifier(&MI->hppa_ext, "r");
+        case 0x60:
+            MCInst_setOpcode(MI, HPPA_INS_RFI);
             break;
         }
     }
@@ -362,32 +358,33 @@ static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
         break;
     case 0x45:
         MCInst_setOpcode(MI, HPPA_INS_MFCTL);
+        if (GET_BIT(insn, 17) == 1 && MODE_IS_HPPA_20(MI->csh->mode)) {
+            push_str_modifier(&MI->hppa_ext, "w");
+        }
         break;
     }
 }
 
 static bool decodeSysop(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t ext8 = GET_FIELD(insn, 19, 26);
+    uint32_t r1 = GET_FIELD(insn, 6, 10);
+    uint32_t r2 = GET_FIELD(insn, 11, 15);
+    uint32_t t = GET_FIELD(insn, 27, 31);
+    uint32_t s = extract_3(insn);
     if (MODE_IS_HPPA_20(MI->csh->mode)) {
         switch (ext8) {
         case 0xa5:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+            CREATE_GR_REG(MI, t);
             return true;
         case 0xc6:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r2);
             return true;
-        case 0x45:
-            if (GET_BIT(insn, 17) == 1) {
-                CREATE_CR_REG(MI, 11);
-                CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-                return true;
-            }
         }
     }
 
     switch (ext8) {
     case 0x00:
-        MCOperand_CreateImm0(MI, GET_FIELD(insn, 27, 31));
+        MCOperand_CreateImm0(MI, t);
         MCOperand_CreateImm0(MI, GET_FIELD(insn, 6, 18));
     case 0x20:
     case 0x60:
@@ -396,31 +393,35 @@ static bool decodeSysop(cs_struct *ud, MCInst *MI, uint32_t insn) {
     case 0x6b:
     case 0x73:
         MCOperand_CreateImm0(MI, GET_FIELD(insn, 9, 15));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+        CREATE_GR_REG(MI, t);
         return true;
     case 0xc3:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+        CREATE_GR_REG(MI, r2);
         return true;
     case 0x85:
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, r1);
+        CREATE_GR_REG(MI, t);
         return true;
     case 0xc1:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-        CREATE_SR_REG(MI, extract_3(insn));
+        CREATE_GR_REG(MI, r2);
+        CREATE_SR_REG(MI, s);
         return true;
     case 0x25:
-        CREATE_SR_REG(MI, extract_3(insn));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, t);
         return true;
     case 0xc2:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-        CREATE_CR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_GR_REG(MI, r2);
+        CREATE_CR_REG(MI, r1);
         return true;
     case 0x45:
-        CREATE_CR_REG(MI, GET_FIELD(insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+        if (GET_BIT(insn, 17) == 1 && MODE_IS_HPPA_20(ud->mode) &&
+            r1 != 11) {
+            return false;
+        }
+        CREATE_CR_REG(MI, r1);
+        CREATE_GR_REG(MI, t);
         return true;     
     default:
         return false;
@@ -428,133 +429,120 @@ static bool decodeSysop(cs_struct *ud, MCInst *MI, uint32_t insn) {
 }
 
 static void fillMemmgmtInsnName(MCInst *MI, uint32_t insn) {
-    uint32_t ext = GET_FIELD(insn, 22, 25);
+    uint32_t ext = GET_FIELD(insn, 19, 25);
     if (MODE_IS_HPPA_20(MI->csh->mode)) {
-        if (GET_BIT(insn, 19) == 0) {
-            switch (ext) {
-            case 0x00:
-                MCInst_setOpcode(MI, HPPA_INS_IITLBT);
-                return;
-            case 0x01:
-                return;                             
+        switch (ext) {
+        case 0x20:
+            MCInst_setOpcode(MI, HPPA_INS_IITLBT);
+            return;
+        case 0x18:
+            MCInst_setOpcode(MI, HPPA_INS_PITLB);
+            push_str_modifier(&MI->hppa_ext, "l");
+            return;                           
+        case 0x60:
+            MCInst_setOpcode(MI, HPPA_INS_IDTLBT);
+            return;
+        case 0x58:
+            MCInst_setOpcode(MI, HPPA_INS_PDTLB);
+            push_str_modifier(&MI->hppa_ext, "l");
+            return;           
+        case 0x4f:
+            MCInst_setOpcode(MI, HPPA_INS_FIC);
+            return; 
+        case 0x46:
+            if (GET_BIT(insn, 18) == 0) {
+                MCInst_setOpcode(MI, HPPA_INS_PROBE);  
             }
-        }
-        else {
-            switch (ext) {
-            case 0x00:
-                MCInst_setOpcode(MI, HPPA_INS_IDTLBT);
-                return;
-            case 0x01:
-                return; 
-            case 0x0f:
-                MCInst_setOpcode(MI, HPPA_INS_FIC);
-                return;  
-            case 0x06:
-            case 0x07:
-                if (GET_BIT(insn, 18) == 0) {
-                    MCInst_setOpcode(MI, HPPA_INS_PROBE);
-                    return;                    
-                }
-                else {
-                    MCInst_setOpcode(MI, HPPA_INS_PROBEI);
-                    return; 
-                }                               
+            else {
+                MCInst_setOpcode(MI, HPPA_INS_PROBEI);
+            };
+            push_str_modifier(&MI->hppa_ext, "r");
+            return;
+        case 0x47:
+            if (GET_BIT(insn, 18) == 0) {
+                MCInst_setOpcode(MI, HPPA_INS_PROBE);
             }
+            else {
+                MCInst_setOpcode(MI, HPPA_INS_PROBEI);
+            };
+            push_str_modifier(&MI->hppa_ext, "w");
+            return;                             
         }
     }
 
-    if (GET_BIT(insn, 19) == 0) {
-        switch (ext) {
-        case 0x00:
-            MCInst_setOpcode(MI, HPPA_INS_IITLBP);
-            break;
-        case 0x01:
-            MCInst_setOpcode(MI, HPPA_INS_IITLBA);
-            break;
-        case 0x08:
-            MCInst_setOpcode(MI, HPPA_INS_PITLB);
-            break;
-        case 0x09:
-            MCInst_setOpcode(MI, HPPA_INS_PITLBE);
-            break;
-        case 0x0a:
-            MCInst_setOpcode(MI, HPPA_INS_FIC);
-            break;        
-        case 0x0b:
-            MCInst_setOpcode(MI, HPPA_INS_FICE);
-            break;
+    switch (ext) {
+    case 0x00:
+        MCInst_setOpcode(MI, HPPA_INS_IITLBP);
+        break;
+    case 0x01:
+        MCInst_setOpcode(MI, HPPA_INS_IITLBA);
+        break;
+    case 0x08:
+        MCInst_setOpcode(MI, HPPA_INS_PITLB);
+        break;
+    case 0x09:
+        MCInst_setOpcode(MI, HPPA_INS_PITLBE);
+        break;
+    case 0x0a:
+        MCInst_setOpcode(MI, HPPA_INS_FIC);
+        break;        
+    case 0x0b:
+        MCInst_setOpcode(MI, HPPA_INS_FICE);
+        break;
+    case 0x40:
+        MCInst_setOpcode(MI, HPPA_INS_IDTLBP);
+        break;
+    case 0x41:
+        MCInst_setOpcode(MI, HPPA_INS_IDTLBA);
+        break;
+    case 0x48:
+        MCInst_setOpcode(MI, HPPA_INS_PDTLB);
+        break;
+    case 0x49:
+        MCInst_setOpcode(MI, HPPA_INS_PDTLBE);
+        break;
+    case 0x4a:
+        MCInst_setOpcode(MI, HPPA_INS_FDC);
+        break;
+    case 0x4b:
+        MCInst_setOpcode(MI, HPPA_INS_FDCE);
+        break;
+    case 0x4e:
+        MCInst_setOpcode(MI, HPPA_INS_PDC);
+        break;
+    case 0x46:
+        if (GET_BIT(insn, 18) == 0) {
+            MCInst_setOpcode(MI, HPPA_INS_PROBER);  
         }
-    } 
-    else {
-        switch (ext) {
-        case 0x00:
-            MCInst_setOpcode(MI, HPPA_INS_IDTLBP);
-            break;
-        case 0x01:
-            MCInst_setOpcode(MI, HPPA_INS_IDTLBA);
-            break;
-        case 0x08:
-            MCInst_setOpcode(MI, HPPA_INS_PDTLB);
-            break;
-        case 0x09:
-            MCInst_setOpcode(MI, HPPA_INS_PDTLBE);
-            break;
-        case 0x0a:
-            MCInst_setOpcode(MI, HPPA_INS_FDC);
-            break;
-        case 0x0b:
-            MCInst_setOpcode(MI, HPPA_INS_FDCE);
-            break;
-        case 0x0e:
-            MCInst_setOpcode(MI, HPPA_INS_PDC);
-            break;
-        case 0x06:
-            if (GET_BIT(insn, 18) == 0) {
-                MCInst_setOpcode(MI, HPPA_INS_PROBER);
-            }
-            else {
-                MCInst_setOpcode(MI, HPPA_INS_PROBERI);
-            };
-            break;
-        case 0x07:
-            if (GET_BIT(insn, 18) == 0) {
-                MCInst_setOpcode(MI, HPPA_INS_PROBEW);
-            }
-            else {
-                MCInst_setOpcode(MI, HPPA_INS_PROBEWI);
-            };
-            break;
-        case 0x0d:
-            MCInst_setOpcode(MI, HPPA_INS_LPA);
-            break;
-        case 0x0c:
-            MCInst_setOpcode(MI, HPPA_INS_LCI);
-            break;
+        else {
+            MCInst_setOpcode(MI, HPPA_INS_PROBERI);
+        };
+        break;
+    case 0x47:
+        if (GET_BIT(insn, 18) == 0) {
+            MCInst_setOpcode(MI, HPPA_INS_PROBEW);
         }
+        else {
+            MCInst_setOpcode(MI, HPPA_INS_PROBEWI);
+        };
+        break;
+    case 0x4d:
+        MCInst_setOpcode(MI, HPPA_INS_LPA);
+        break;
+    case 0x4c:
+        MCInst_setOpcode(MI, HPPA_INS_LCI);
+        break;
     }
 }
 
 static void fillMemmgmtMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
     uint8_t cmplt = GET_BIT(insn, 26);
-    uint32_t ext = GET_FIELD(insn, 22, 25);
+    uint32_t ext = GET_FIELD(insn, 19, 25);
     if (MODE_IS_HPPA_20(mode)) {
         switch (ext) {
-        case 0x08:
-            if (GET_BIT(insn, 21) == 1) {
-                push_str_modifier(hppa_ext, "L");
-            }
-            break;
-        case 0x0a:
-            if (GET_BIT(insn, 18) == 1) {
-                return;
-            }
-            break;
-        case 0x06:
-            push_str_modifier(hppa_ext, "R");
-            break;
-        case 0x07:
-            push_str_modifier(hppa_ext, "W");
-            break;            
+        case 0x58:
+        case 0x4f:
+            goto success;      
         }
     }
 
@@ -563,115 +551,121 @@ static void fillMemmgmtMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
     case 0x09:
     case 0x0a:
     case 0x0b:
-    case 0x0e:
-    case 0x0d:
-    case 0x0f:
-        if (cmplt == 1) {
-            hppa_ext->b_writeble = true;
-        }
-        push_str_modifier(hppa_ext, index_compl_names[cmplt]);
+    case 0x48:
+    case 0x49:
+    case 0x4a:
+    case 0x4b:
+    case 0x4e:
+    case 0x4d:
         break;
     default:
-        break;
+        return;
     }
+success:
+    if (cmplt == 1) {
+        hppa_ext->b_writeble = true;
+    }
+    push_str_modifier(hppa_ext, index_compl_names[cmplt]);
 } 
 
 static bool decodeMemmgmt(cs_struct *ud, MCInst *MI, uint32_t insn) { 
-    uint32_t ext = GET_FIELD(insn, 22, 25);
-    if (MODE_IS_HPPA_20(MI->csh->mode)) {
-        if (GET_BIT(insn, 19) == 0) {
-            switch (ext) {
-            case 0x00:
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));  
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));  
-                fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
-                return true;
-            case 0x01:
+    uint32_t ext = GET_FIELD(insn, 19, 25);
+    uint32_t b = GET_FIELD(insn, 6, 10);
+    uint32_t r = GET_FIELD(insn, 11, 15);
+    uint32_t s3 = extract_3(insn);
+    uint32_t s2 = GET_FIELD(insn, 16, 17);
+    uint32_t t = GET_FIELD(insn, 27, 31);
+    if (ext > 0x20 && GET_BIT(insn, 18) == 1 &&
+        (ext != 0x46 && ext != 0x47)) {
+        if (MODE_IS_HPPA_20(ud->mode)) {
+            if (ext != 0x4a) {
                 return false;
             }
         }
         else {
-            switch (ext) {
-            case 0x00:
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));  
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));  
-                fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
-                return true;
-            case 0x01:
-                return false;
-            case 0x0a:
-                if (GET_BIT(insn, 18) == 1) {
-                    MCOperand_CreateImm0(MI, GET_FIELD(insn, 11, 15));
-                    CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-                    CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-                    fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
-                    return true;
-                }
-                break;
-            case 0x0f:
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-                CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-                fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
-                return true;
+            return false;
+        }
+    }
+    if (MODE_IS_HPPA_20(ud->mode)) {
+        switch (ext) {
+        case 0x20:
+        case 0x60:
+            CREATE_GR_REG(MI, r);
+            CREATE_GR_REG(MI, b);
+            goto success;
+        case 0x58:
+        case 0x4f:
+            CREATE_GR_REG(MI, r);
+            CREATE_SR_REG(MI, s2);
+            CREATE_GR_REG(MI, b);
+            goto success;
+        case 0x18:
+            CREATE_GR_REG(MI, r);
+            CREATE_SR_REG(MI, s3);
+            CREATE_GR_REG(MI, b);
+            goto success;
+        case 0x4a:
+            if (GET_BIT(insn, 18) == 1) {
+                MCOperand_CreateImm0(MI, low_sign_extend(r, 5));
             }
+            else {
+                CREATE_GR_REG(MI, r);
+            }
+            CREATE_SR_REG(MI, s2);
+            CREATE_GR_REG(MI, b);
+            goto success;
+        default:
+            break;
         }
     }
 
-    if (GET_BIT(insn, 19) == 0) {
-        switch (ext) {
-        case 0x00:
-        case 0x01:
-        case 0x08:
-        case 0x09:
-        case 0x0a:
-        case 0x0b:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_SR_REG(MI, extract_3(insn));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
-            return true;
-        default:
-            return false;
+    switch (ext) {
+    case 0x00:
+    case 0x01:
+    case 0x08:
+    case 0x09:
+    case 0x0a:
+    case 0x0b:
+        CREATE_GR_REG(MI, r);
+        CREATE_SR_REG(MI, s3);
+        CREATE_GR_REG(MI, b);
+        break;
+    case 0x40:
+    case 0x41:
+    case 0x48:
+    case 0x49:
+    case 0x4a:
+    case 0x4b:
+    case 0x4e:
+        CREATE_GR_REG(MI, r);
+        CREATE_SR_REG(MI, s2);
+        CREATE_GR_REG(MI, b);
+        break;
+    case 0x46:
+    case 0x47:
+        CREATE_SR_REG(MI, s2);
+        CREATE_GR_REG(MI, b);
+        if (GET_BIT(insn, 18) == 0) {
+            CREATE_GR_REG(MI, r);
         }
-    } 
-    else {
-        switch (ext) {
-        case 0x00:
-        case 0x01:
-        case 0x08:
-        case 0x09:
-        case 0x0a:
-        case 0x0b:
-        case 0x0e:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
-            return true;
-        case 0x06:
-        case 0x07:
-            CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            if (GET_FIELD(insn, 18, 18) == 0) {
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            } else {
-                MCOperand_CreateImm0(MI, GET_FIELD(insn, 11, 15));
-            }
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-            return true;
-        case 0x0d:
-        case 0x0c:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-            fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
-            return true;
-        default:
-            return false;
+        else {
+            MCOperand_CreateImm0(MI, r);
         }
+        CREATE_GR_REG(MI, t);
+        break;
+    case 0x4d:
+    case 0x4c:
+        CREATE_GR_REG(MI, r);
+        CREATE_SR_REG(MI, s2);
+        CREATE_GR_REG(MI, b);
+        CREATE_GR_REG(MI, t);
+        break;
+    default:
+        return false;
     }
+success:
+    fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
+    return true;
 }
 
 static void fillAluInsnName(MCInst *MI, uint32_t insn) {
@@ -856,19 +850,6 @@ static void fillAluMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
                     push_str_modifier(hppa_ext, "c");
                 }
             }
-            if (e1 == 2) {
-                    push_str_modifier(hppa_ext, "l");
-            }
-            if (e1 == 3) {
-                push_str_modifier(hppa_ext, "tsv");
-            }
-            if (d == 1) {
-                push_str_modifier(hppa_ext, add_cond_64_names[cond]);
-            }
-            else {
-                push_str_modifier(hppa_ext, add_cond_names[cond]);
-            }
-            return;
         case 0x19:
         case 0x29:
         case 0x39:
@@ -878,7 +859,7 @@ static void fillAluMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
         case 0x1b:
         case 0x2b:
         case 0x3b:
-            push_str_modifier(hppa_ext, add_compl_names[e1]); 
+            push_str_modifier(hppa_ext, add_compl_names[e1]);
             if (d == 1) {
                 push_str_modifier(hppa_ext, add_cond_64_names[cond]);
             }
@@ -925,24 +906,15 @@ static void fillAluMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
                 push_str_modifier(hppa_ext, logical_cond_names[cond]);
             }
             return;
-        case 0x26:
         case 0x27:
-            if (e1 == 3) {
-                push_str_modifier(hppa_ext, "tc");
-            }
-        case 0x0e:
-            if (d == 1) {
-                push_str_modifier(hppa_ext, unit_cond_64_names[cond]);
-            }
-            else {
-                push_str_modifier(hppa_ext, unit_cond_names[cond]);
-            }
-            return;
-        case 0x2e:
+            push_str_modifier(hppa_ext, "tc");
+            goto unit_cond;
         case 0x2f:
-            if (e1 == 3) {
-                push_str_modifier(hppa_ext, "i");
-            }
+            push_str_modifier(hppa_ext, "i");
+        case 0x26:
+        case 0x0e:
+        case 0x2e:
+        unit_cond:
             if (d == 1) {
                 push_str_modifier(hppa_ext, unit_cond_64_names[cond]);
             }
@@ -950,20 +922,16 @@ static void fillAluMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
                 push_str_modifier(hppa_ext, unit_cond_names[cond]);
             }
             return;
-        case 0x0f:
         case 0x0d:
         case 0x0c:
-        case 0x07:
         case 0x05:
         case 0x04:
             push_str_modifier(hppa_ext, saturation_names[e3]);
             return;
-        }
-              
+        }        
     }
 
-    switch (ext)
-    {
+    switch (ext) {
     case 0x18:
     case 0x38:
     case 0x1c:
@@ -1009,6 +977,9 @@ static void fillAluMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
 
 static bool decodeAlu(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t ext = GET_FIELD(insn, 20, 25);
+    uint32_t r1 = GET_FIELD(insn, 11, 15);
+    uint32_t r2 = GET_FIELD(insn, 6, 10);
+    uint32_t t = GET_FIELD(insn, 27, 31);
     if (MODE_IS_HPPA_20(ud->mode)) {
         switch (ext) {
         case 0x19:
@@ -1033,14 +1004,13 @@ static bool decodeAlu(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case 0x05:
         case 0x04:
         case 0x0b:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r1);
             if (ext > 0x10) {
                 MCOperand_CreateImm0(MI, GET_FIELD(insn, 24, 25));
             }
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-            fillAluMods(insn, &MI->hppa_ext, MI->csh->mode);
-            return true;
+            CREATE_GR_REG(MI, r2);
+            CREATE_GR_REG(MI, t);
+            goto success;
         }
     }
     switch (ext) {
@@ -1073,16 +1043,18 @@ static bool decodeAlu(cs_struct *ud, MCInst *MI, uint32_t insn) {
     case 0x29:    
     case 0x2a:    
     case 0x2b:     
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+        CREATE_GR_REG(MI, r1);
     case 0x2e:    
     case 0x2f:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        fillAluMods(insn, &MI->hppa_ext, MI->csh->mode);
-        return true;
+        CREATE_GR_REG(MI, r2);
+        CREATE_GR_REG(MI, t);
+        break;
     default:
         return false;
     }
+success:
+    fillAluMods(insn, &MI->hppa_ext, MI->csh->mode);
+    return true;
 }
 
 static void fillIdxmemInsnName(MCInst *MI, uint32_t insn) {
@@ -1202,7 +1174,7 @@ static void fillIdxmemMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode, uint
     uint32_t cmplt = (GET_BIT(insn, 18) << 1) | GET_BIT(insn, 26);
     uint32_t cc = GET_FIELD(insn, 20, 21);
     uint32_t ext = GET_FIELD(insn, 22, 25);
-    if (cmplt == 1 || cmplt == 3) {
+    if (cmplt & 1 == 1) {
         hppa_ext->b_writeble = true;
     }
     if (GET_BIT(insn, 19) == 0) {
@@ -1212,13 +1184,13 @@ static void fillIdxmemMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode, uint
         case 0x02:
         case 0x03:
         case 0x04:
-        case 0x05:
         case 0x06:
             push_str_modifier(hppa_ext, index_compl_names[cmplt]);
             if (cc == 2) {
                 push_str_modifier(hppa_ext, "sl");
             }
-            break;
+            break; 
+        case 0x05:
         case 0x07:
             push_str_modifier(hppa_ext, index_compl_names[cmplt]);
             if (cc == 1) {
@@ -1236,7 +1208,6 @@ static void fillIdxmemMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode, uint
         case 0x02:
         case 0x03:
         case 0x04:
-        case 0x05:
         case 0x06:
             if (cmplt == 1 && im5 == 0) {
                 push_str_modifier(hppa_ext, "o");
@@ -1248,6 +1219,7 @@ static void fillIdxmemMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode, uint
                 push_str_modifier(hppa_ext, "sl");
             }
             break;
+        case 0x05:
         case 0x07:
             if (cmplt == 1 && im5 == 0) {
                 push_str_modifier(hppa_ext, "o");
@@ -1297,21 +1269,22 @@ static void fillIdxmemMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode, uint
 static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t ext = GET_FIELD(insn, 22, 25);
     uint32_t im5;
+    uint32_t r = GET_FIELD(insn, 11, 15);
+    uint32_t b = GET_FIELD(insn, 6, 10);
+    uint32_t t = GET_FIELD(insn, 27, 31);
+    uint32_t s = GET_FIELD(insn, 16, 17);
     if (MODE_IS_HPPA_20(ud->mode)) {
         if (GET_BIT(insn, 19) == 0) {
             switch (ext) {
             case 0x03:
             case 0x05:
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-                CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-                fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
-                return true;
             case 0x04:
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+                CREATE_GR_REG(MI, r);
+                if (ext != 0x04) {
+                    CREATE_SR_REG(MI, s);
+                }
+                CREATE_GR_REG(MI, b);
+                CREATE_GR_REG(MI, t);
                 fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
                 return true;
             }
@@ -1320,34 +1293,26 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
             switch (ext) {
             case 0x03:
             case 0x05:
-                im5 = extract_5_load(insn);
-                MCOperand_CreateImm0(MI, im5);
-                CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));     
-                fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, im5);
-                return true;
             case 0x04:
                 im5 = extract_5_load(insn);
                 MCOperand_CreateImm0(MI, im5);
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+                if (ext != 0x04) {
+                    CREATE_SR_REG(MI, s);
+                }
+                CREATE_GR_REG(MI, b);
+                CREATE_GR_REG(MI, t);     
                 fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, im5);
                 return true;
             case 0x0b:
             case 0x0d:
-                im5 = extract_5_store(insn);
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-                MCOperand_CreateImm0(MI, im5);
-                CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-                fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, im5);
-                return true;
             case 0x0f:
                 im5 = extract_5_store(insn);
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+                CREATE_GR_REG(MI, r);
                 MCOperand_CreateImm0(MI, im5);
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+                if (ext != 0x0f) {
+                    CREATE_SR_REG(MI, s);
+                }
+                CREATE_GR_REG(MI, b);
                 fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, im5);
                 return true;
             }
@@ -1359,21 +1324,19 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case 0x01:
         case 0x02:
         case 0x07:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-            fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
-            return true;
         case 0x06:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-            fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
-            return true;
+            CREATE_GR_REG(MI, r);
+            if (ext != 0x06) {
+                CREATE_SR_REG(MI, s);
+            }
+            CREATE_GR_REG(MI, b);
+            CREATE_GR_REG(MI, t);
+            break;
         default:
             return false;
         }
+        fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
+        return true;
     }
     else {
         switch (ext) {
@@ -1381,33 +1344,27 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case 0x01:
         case 0x02:
         case 0x07:
-            im5 = extract_5_load(insn);
-            MCOperand_CreateImm0(MI, im5);
-            CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));     
-            break;
         case 0x06:
             im5 = extract_5_load(insn);
             MCOperand_CreateImm0(MI, im5);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31)); 
+            if (ext != 0x06) {
+                CREATE_SR_REG(MI, s);
+            }
+            CREATE_GR_REG(MI, b);
+            CREATE_GR_REG(MI, t);     
             break;
         case 0x08:
         case 0x09:
         case 0x0a:
         case 0x0c:
-            im5 = extract_5_store(insn);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            MCOperand_CreateImm0(MI, im5);
-            CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            break;
         case 0x0e:
             im5 = extract_5_store(insn);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r);
             MCOperand_CreateImm0(MI, im5);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            if (ext != 0x0e) {
+                CREATE_SR_REG(MI, s);
+            }
+            CREATE_GR_REG(MI, b);
             break;
         default:
             return false;
@@ -1441,38 +1398,46 @@ static void fillLoadStoreDwInsnName(MCInst *MI, uint32_t insn) {
     }
 }
 
-static void fillLoadStoreDwMods(uint32_t insn, hppa_ext* hppa_ext) {
+static void fillLoadStoreDwMods(uint32_t insn, hppa_ext* hppa_ext, uint32_t im) {
     uint32_t cmplt = (GET_BIT(insn, 29) << 1) | GET_BIT(insn, 28);
-    push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
+    if (cmplt == 1 && im == 0) {
+        push_str_modifier(hppa_ext, "o");
+    }
+    else {
+        push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
+    }
 }
 
 static bool decodeLoadStoreDw(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t opcode = insn >> 26;
     uint32_t im = extract_16(insn);
     uint32_t ext = GET_BIT(insn, 30);
+    uint32_t r = GET_FIELD(insn, 11, 15);
+    uint32_t b = GET_FIELD(insn, 6, 10);
+    uint32_t s = GET_FIELD(insn, 16, 17);
     if (opcode == 0x14) {
         MCOperand_CreateImm0(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, b);
         if (ext == 0) {
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r);
         }
         else {
-            CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_FPR_REG(MI, r);
         }
     }
     else {
         if (ext == 0) {
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r);
         }
         else {
-            CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_FPR_REG(MI, r);
         }
         MCOperand_CreateImm0(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, b);
     }
-    fillLoadStoreDwMods(insn, &MI->hppa_ext);
+    fillLoadStoreDwMods(insn, &MI->hppa_ext, im);
     return true;
 }
 
@@ -1496,7 +1461,7 @@ static void fillLoadStoreWInsnName(MCInst *MI, uint32_t insn) {
 }
 
 static void fillLoadStoreWMods(uint32_t insn, hppa_ext* hppa_ext, uint32_t im) {
-    if ((int16_t) im >= 0) {
+    if (im >= 0) {
         push_str_modifier(hppa_ext, "mb");
     } else {
         push_str_modifier(hppa_ext, "ma");
@@ -1506,29 +1471,31 @@ static void fillLoadStoreWMods(uint32_t insn, hppa_ext* hppa_ext, uint32_t im) {
 static bool decodeLoadStoreW(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t opcode = insn >> 26;
     uint32_t ext = GET_BIT(insn, 29);
-    uint32_t im;
-    im = extract_16(insn);
+    uint32_t im = extract_16(insn);
+    uint32_t r = GET_FIELD(insn, 11, 15);
+    uint32_t b = GET_FIELD(insn, 6, 10);
+    uint32_t s = GET_FIELD(insn, 16, 17);
     if (opcode == 0x17) {
         MCOperand_CreateImm0(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, b);
         if (ext == 1) {
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r);
         }
         else {
-            CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_FPR_REG(MI, r);
         }
     }
     else {
         if (ext == 1) {
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r);
         }
         else {
-            CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_FPR_REG(MI, r);
         }
         MCOperand_CreateImm0(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, b);
     } 
     if (ext == 1) {
         fillLoadStoreWMods(insn, &MI->hppa_ext, im);
@@ -1670,6 +1637,11 @@ static void fillShexdep0Mods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
     uint32_t cond = GET_FIELD(insn, 16, 18);
     uint32_t ext = GET_FIELD(insn, 19, 21);
     uint32_t d = GET_BIT(insn, 22);
+
+    if (ext >= 0x04 && MODE_IS_HPPA_20(mode)) {
+        push_str_modifier(hppa_ext, signed_unsigned_names[ext & 1]);
+    }
+
     if (MODE_IS_HPPA_20(mode)) {
         switch (ext) {
         case 0x00:
@@ -1693,63 +1665,62 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t cpos = GET_FIELD(insn, 22, 26);
     uint32_t sa = 63 - ((cp << 5) | cpos);
     uint32_t d = GET_BIT(insn, 22);
+    uint32_t r1 = GET_FIELD(insn, 11, 15);
+    uint32_t r2 = GET_FIELD(insn, 6, 10);
+    uint32_t clen_t = GET_FIELD(insn, 27, 31);
     if (MODE_IS_HPPA_20(ud->mode)) {
         switch (ext) {
         case 0x01:
         case 0x00:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_CR_REG(MI, 11);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-            break;
         case 0x03:
         case 0x02:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            MCOperand_CreateImm0(MI, sa);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+            CREATE_GR_REG(MI, r1);
+            CREATE_GR_REG(MI, r2);
+            if (ext <= 0x01) {
+                CREATE_CR_REG(MI, 11);
+            }
+            else {
+                MCOperand_CreateImm0(MI, sa);
+            }
+            CREATE_GR_REG(MI, clen_t);
             break;
         case 0x06:
         case 0x07:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            MCOperand_CreateImm0(MI, cpos);
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            break;
         case 0x04:
         case 0x05:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_CR_REG(MI, 11);
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r2);
+            if (ext >= 0x06) {
+                MCOperand_CreateImm0(MI, cpos);
+            }
+            else {
+                CREATE_CR_REG(MI, 11);
+            }
+            MCOperand_CreateImm0(MI, 32 - clen_t);
+            CREATE_GR_REG(MI, r1);
             break;
         }
     }
     else {
         switch (ext) {
         case 0x00:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-            break;
         case 0x02:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            MCOperand_CreateImm0(MI, 31 - GET_FIELD(insn, 22, 26));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+            CREATE_GR_REG(MI, r1);
+            CREATE_GR_REG(MI, r2);
+            if (ext == 0x02) {
+                MCOperand_CreateImm0(MI, 31 - cpos);
+            }
+            CREATE_GR_REG(MI, clen_t);
             break;
         case 0x04:
         case 0x05:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            break;
         case 0x06:
         case 0x07:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            MCOperand_CreateImm0(MI, GET_FIELD(insn, 22, 26));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));   
+            CREATE_GR_REG(MI, r2);
+            if (ext >= 0x06) {
+                MCOperand_CreateImm0(MI, cpos);
+            }
+            MCOperand_CreateImm0(MI, 32 - clen_t);
+            CREATE_GR_REG(MI, r1);
             break;
         default:
             return false;
@@ -1827,7 +1798,7 @@ static void fillShexdep1Mods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
     uint32_t cmplt = GET_BIT(insn, 21);
     uint32_t ext = GET_FIELD(insn, 19, 21);
     if (MODE_IS_HPPA_20(mode)) {
-        if (cmplt == 1) {
+        if (cmplt == 0) {
             push_str_modifier(hppa_ext, "z");
         }
         switch (ext) {
@@ -1837,6 +1808,8 @@ static void fillShexdep1Mods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
         case 0x05:
             push_str_modifier(hppa_ext, shift_cond_64_names[cond]);
             return;
+        default:
+            break;
         }
     }
     push_str_modifier(hppa_ext, shift_cond_names[cond]);
@@ -1847,35 +1820,38 @@ static bool decodeShexdep1(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t cl = GET_BIT(insn, 23);
     uint32_t clen = GET_FIELD(insn, 27, 31);
     uint32_t len = (cl + 1) * 32 - clen;
+    uint32_t r = GET_FIELD(insn, 11, 15);
+    uint32_t t = GET_FIELD(insn, 6, 10);
+    uint32_t cpos = GET_FIELD(insn, 22, 26);
     if (MODE_IS_HPPA_20(ud->mode)) {
         switch (ext) {
         case 0x02:
         case 0x03:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            MCOperand_CreateImm0(MI, 31 - GET_FIELD(insn, 22, 26));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            break;
         case 0x06:
         case 0x07:
-            MCOperand_CreateImm0(MI, low_sign_extend(GET_FIELD(insn, 11, 15), 5));
-            MCOperand_CreateImm0(MI, 31 - GET_FIELD(insn, 22, 26));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            if (ext >= 0x06) {
+                MCOperand_CreateImm0(MI, low_sign_extend(r, 5));
+            }
+            else {
+                CREATE_GR_REG(MI, r);
+            }
+            MCOperand_CreateImm0(MI, 31 - cpos);
+            MCOperand_CreateImm0(MI, 32 - clen);
+            CREATE_GR_REG(MI, t);
             break;
         case 0x00:
         case 0x01:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_CR_REG(MI, 11);
-            MCOperand_CreateImm0(MI, len);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            break;
         case 0x04:
         case 0x05:
-            MCOperand_CreateImm0(MI, low_sign_extend(GET_FIELD(insn, 11, 15), 5));
+            if (ext >= 0x04) {
+                MCOperand_CreateImm0(MI, low_sign_extend(r, 5));
+            }
+            else {
+                CREATE_GR_REG(MI, r);
+            }
             CREATE_CR_REG(MI, 11);
             MCOperand_CreateImm0(MI, len);
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, t);
             break;
         }
     }
@@ -1883,29 +1859,25 @@ static bool decodeShexdep1(cs_struct *ud, MCInst *MI, uint32_t insn) {
         switch (ext) {
         case 0x00:
         case 0x01:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            break;
         case 0x02:
         case 0x03:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            MCOperand_CreateImm0(MI, 31 - GET_FIELD(insn, 22, 26));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, r);
+            if (ext >= 0x02) {
+                MCOperand_CreateImm0(MI, 31 - cpos);
+            }
+            MCOperand_CreateImm0(MI, 32 - clen);
+            CREATE_GR_REG(MI, t);
             break;
         case 0x04:
         case 0x05:
-            MCOperand_CreateImm0(MI, low_sign_extend(GET_FIELD(insn, 11, 15), 5));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-            break;
         case 0x06:
         case 0x07:
-            MCOperand_CreateImm0(MI, low_sign_extend(GET_FIELD(insn, 11, 15), 5));
-            MCOperand_CreateImm0(MI, 31 - GET_FIELD(insn, 22, 26));
-            MCOperand_CreateImm0(MI, 32 - GET_FIELD(insn, 27, 31));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            MCOperand_CreateImm0(MI, low_sign_extend(r, 5));
+            if (ext >= 0x06) {
+                MCOperand_CreateImm0(MI, 31 - cpos);
+            }
+            MCOperand_CreateImm0(MI, 32 - clen);
+            CREATE_GR_REG(MI, t);
             break;
         }
     }
@@ -1916,12 +1888,7 @@ static bool decodeShexdep1(cs_struct *ud, MCInst *MI, uint32_t insn) {
 static void fillShexdep2Mods(uint32_t insn, hppa_ext* hppa_ext) {
     uint32_t cmplt = GET_BIT(insn, 21);
     uint32_t cond = GET_FIELD(insn, 16, 18);
-    if (cmplt == 0) {
-        push_str_modifier(hppa_ext, "u");
-    }
-    else {
-        push_str_modifier(hppa_ext, "s");
-    }
+    push_str_modifier(hppa_ext, signed_unsigned_names[cmplt]);
     push_str_modifier(hppa_ext, shift_cond_64_names[cond]);
 }
 
@@ -2004,19 +1971,17 @@ static void fillMultmedMods(uint32_t insn, hppa_ext* hppa_ext) {
     uint32_t eb = GET_FIELD(insn, 20, 21);
     uint32_t ea = GET_FIELD(insn, 17, 18);
     if (bit_16 == 0) {
-        uint32_t c = (GET_FIELD(insn, 17, 18) << 6) | (GET_FIELD(insn, 20, 21) << 4) |
-                     (GET_FIELD(insn, 22, 23) << 2) | GET_FIELD(insn, 24, 25);
-        push_int_modifier(hppa_ext, c);
+        char c[4];
+        sprintf(c, "%d%d%d%d", GET_FIELD(insn, 17, 18), GET_FIELD(insn, 20, 21), 
+                               GET_FIELD(insn, 22, 23), GET_FIELD(insn, 24, 25));
+        push_str_modifier(hppa_ext, c);
         return;
     }
     switch (ext) {
     case 0x0a:
     case 0x0b:
-        if (eb == 2) {
-            push_str_modifier(hppa_ext, "u");
-        }
-        else if (eb == 3) {
-            push_str_modifier(hppa_ext, "s");
+        if (eb >= 2) {
+            push_str_modifier(hppa_ext, signed_unsigned_names[eb-2]);
         }
         break;
     case 0x00:
@@ -2036,38 +2001,47 @@ static void fillMultmedMods(uint32_t insn, hppa_ext* hppa_ext) {
 static bool decodeMultmed(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t bit_16 = GET_BIT(insn, 16);
     uint32_t ext = (GET_FIELD(insn, 17, 18) << 2) | GET_FIELD(insn, 20, 21);
+    uint32_t r1 = GET_FIELD(insn, 11, 15);
+    uint32_t r2 = GET_FIELD(insn, 6, 10);
+    uint32_t t = GET_FIELD(insn, 27, 31);
+    uint32_t sa = GET_FIELD(insn, 22, 25);
     if (bit_16 == 0) {
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        return true;
+        CREATE_GR_REG(MI, r2);
+        CREATE_GR_REG(MI, t);
+        goto success;  
     }    
     switch (ext) {
     case 0x02:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-        MCOperand_CreateImm0(MI, GET_FIELD(insn, 22, 25));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        return true;
     case 0x0a:
     case 0x0b:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        MCOperand_CreateImm0(MI, GET_FIELD(insn, 22, 25));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        return true;        
+        if (ext >= 0x0a) {
+            CREATE_GR_REG(MI, r2);
+        }
+        else {
+            CREATE_GR_REG(MI, r1);
+        }
+        MCOperand_CreateImm0(MI, sa);
+        CREATE_GR_REG(MI, t);
+        break;        
     case 0x00:
     case 0x08:
     case 0x01:
     case 0x09:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        return true;   
+        CREATE_GR_REG(MI, r1);
+        CREATE_GR_REG(MI, r2);
+        CREATE_GR_REG(MI, t);
+        break;  
     default:
         return false;             
     }
+success:
+    fillMultmedMods(insn, &MI->hppa_ext);
+    return true;
 }
 
 static void fillBranchInsnName(MCInst *MI, uint32_t insn) {
     uint32_t ext = GET_FIELD(insn, 16, 18);
+    uint32_t bit_19 = GET_BIT(insn, 19);
     if (MODE_IS_HPPA_20(MI->csh->mode)) {
         switch (ext) {
         case 0x00:
@@ -2077,7 +2051,7 @@ static void fillBranchInsnName(MCInst *MI, uint32_t insn) {
             MCInst_setOpcode(MI, HPPA_INS_B);
             return; 
         case 0x06:
-            if (GET_BIT(insn, 19) == 0) {
+            if (bit_19 == 0) {
                 MCInst_setOpcode(MI, HPPA_INS_BV);
             }
             else {
@@ -2085,7 +2059,7 @@ static void fillBranchInsnName(MCInst *MI, uint32_t insn) {
             }
             return;   
         case 0x07:
-            if (GET_BIT(insn, 19) == 1) {
+            if (bit_19 == 1) {
                 MCInst_setOpcode(MI, HPPA_INS_BVE);
             }
             return;
@@ -2181,17 +2155,18 @@ static bool decodeBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t t = GET_FIELD(insn, 6, 10);
     uint32_t i = GET_FIELD(insn, 20, 28);
     uint32_t r = GET_FIELD(insn, 11, 15);
+    uint32_t bit_19 = GET_BIT(insn, 19);
     if (MODE_IS_HPPA_20(ud->mode)) {
         switch (ext) {
         case 0x01:
         case 0x00:
             MCOperand_CreateImm0(MI, extract_17(insn));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, t);
             break;
         case 0x04:
         case 0x05:
             MCOperand_CreateImm0(MI, extract_22(insn));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, t);
             break;
         case 0x02:
             if (GET_BIT(insn, 31) == 1) {
@@ -2205,21 +2180,21 @@ static bool decodeBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 MCOperand_CreateImm0(MI, i);
                 return true;
             }
-            if (GET_BIT(insn, 19) == 1) {
+            if (bit_19 == 1) {
                return false; 
             }
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, r);
+            CREATE_GR_REG(MI, t);
             break;
         case 0x06:
-            if (GET_BIT(insn, 19) == 0) {
-                CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            if (bit_19 == 0) {
+                CREATE_GR_REG(MI, r);
             }
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, t);
             break;
         case 0x07:
-            if (GET_BIT(insn, 19) == 1) {
-                CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            if (bit_19 == 1) {
+                CREATE_GR_REG(MI, t);
                 CREATE_GR_REG(MI, 2);
                 break;
             }
@@ -2234,12 +2209,12 @@ static bool decodeBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case 0x00:
         case 0x01:
             MCOperand_CreateImm0(MI, extract_17(insn));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, t);
             break;
         case 0x02:
         case 0x06:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, r);
+            CREATE_GR_REG(MI, t);
             break;
         default:
             return false;
@@ -2252,29 +2227,54 @@ static bool decodeBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
 static void fillCoprdwInsnName(MCInst *MI, uint32_t insn) {
     uint32_t ext = (GET_FIELD(insn, 19, 19) << 1) | GET_FIELD(insn, 22, 22);
     uint32_t opcode = insn >> 26;
+    uint32_t uid = GET_FIELD(insn, 23, 25);
     if (MODE_IS_HPPA_20(MI->csh->mode)) {
         if (opcode == 0x09) {
             switch (ext) {
             case 0x00:
             case 0x02:
-                MCInst_setOpcode(MI, HPPA_INS_CLDW);
+                if (uid <= 0x01) {
+                    MCInst_setOpcode(MI, HPPA_INS_FLDW);
+                }
+                else {
+                    MCInst_setOpcode(MI, HPPA_INS_CLDW);
+                }
                 return;
             case 0x01:
             case 0x03:
-                MCInst_setOpcode(MI, HPPA_INS_CSTW);
+                if (uid <= 0x01) {
+                    MCInst_setOpcode(MI, HPPA_INS_FSTW);
+                }
+                else {
+                    MCInst_setOpcode(MI, HPPA_INS_CSTW);
+                }
                 return;
+            default:
+                break;
             }
         }
         else {
             switch (ext) {
             case 0x00:
             case 0x02:
-                MCInst_setOpcode(MI, HPPA_INS_CLDD);
+                if (uid == 0x00) {
+                    MCInst_setOpcode(MI, HPPA_INS_FLDD);
+                }
+                else {
+                    MCInst_setOpcode(MI, HPPA_INS_CLDD);
+                }
                 return;
             case 0x01:
             case 0x03:
-                MCInst_setOpcode(MI, HPPA_INS_CSTD);
+                if (uid == 0x00) {
+                    MCInst_setOpcode(MI, HPPA_INS_FSTD);
+                }
+                else {
+                    MCInst_setOpcode(MI, HPPA_INS_CSTD);
+                }
                 return;
+            default:
+                break;
             }
         }
     }
@@ -2314,71 +2314,37 @@ static void fillCoprdwInsnName(MCInst *MI, uint32_t insn) {
 
 static void fillCoprdwMods(uint32_t insn, uint32_t im, hppa_ext* hppa_ext, cs_mode mode) {
     uint32_t uid = GET_FIELD(insn, 23, 25);
-    uint32_t cmplt = (GET_FIELD(insn, 18, 18) << 1) | GET_FIELD(insn, 26, 26);
+    uint32_t cmplt = (GET_BIT(insn, 18) << 1) | GET_BIT(insn, 26);
     uint32_t cc = GET_FIELD(insn, 20, 21);
-    uint32_t ext = (GET_FIELD(insn, 19, 19) << 1) | GET_FIELD(insn, 22, 22);
+    uint32_t ext = (GET_BIT(insn, 19) << 1) | GET_BIT(insn, 22);
+    uint32_t opcode = insn >> 26;
 
-    push_int_modifier(hppa_ext, uid);
-    if (cmplt == 1 || cmplt == 3) {
+    if (!(opcode == HPPA_OP_TYPE_COPRW && uid <= 0x01 ||
+          opcode == HPPA_OP_TYPE_COPRDW && uid == 0x00)) {
+        push_int_modifier(hppa_ext, uid);
+    }
+    if (cmplt & 1 == 1) {
         hppa_ext->b_writeble = true;
     }
     
-    if (MODE_IS_HPPA_20(mode)) {
-        switch (ext) {
-        case 0x00:
-            push_str_modifier(hppa_ext, index_compl_names[cmplt]);
-            break;
-        case 0x01:
-            push_str_modifier(hppa_ext, index_compl_names[cmplt]);
-            if (cc == 1) {
-                push_str_modifier(hppa_ext, "bc");
-            }
-            break;
-        case 0x02:
-            if (cmplt == 1 && im == 0) {
-                push_str_modifier(hppa_ext, "o");
-            }
-            else {
-                push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
-            }
-            break;
-        case 0x03:
-            if (cmplt == 1 && im == 0) {
-                push_str_modifier(hppa_ext, "o");
-            }
-            else {
-                push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
-            }
-            if (cc == 1) {
-                push_str_modifier(hppa_ext, "bc");
-            }
-            break;
-        }   
-        if (cc == 2) {
-            push_str_modifier(hppa_ext, "sl");
-        }
-        return;
-    }
-
     switch (ext) {
     case 0x00:
-        push_str_modifier(hppa_ext, index_compl_names[cmplt]);
-        break;
     case 0x01:
         push_str_modifier(hppa_ext, index_compl_names[cmplt]);
-        if (cc == 1) {
-            push_str_modifier(hppa_ext, "bc");
-        }
         break;
     case 0x02:
-        push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
-        break;
     case 0x03:
-        push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
-        if (cc == 1) {
-            push_str_modifier(hppa_ext, "bc");
+        if (MODE_IS_HPPA_20(mode)) {
+            if (cmplt == 1 && im == 0) {
+                push_str_modifier(hppa_ext, "o");
+                break;
+            }
         }
+        push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
         break;
+    }   
+    if (ext & 1 == 1 && cc == 1) {
+        push_str_modifier(hppa_ext, "bc");
     }
     if (cc == 2) {
         push_str_modifier(hppa_ext, "sl");
@@ -2387,36 +2353,50 @@ static void fillCoprdwMods(uint32_t insn, uint32_t im, hppa_ext* hppa_ext, cs_mo
 
 static bool decodeCoprdw(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t ext = (GET_BIT(insn, 19) << 1) | GET_BIT(insn, 22);
-    uint32_t im = GET_FIELD(insn, 11, 15);
+    uint32_t x = GET_FIELD(insn, 11, 15);
+    uint32_t b = GET_FIELD(insn, 6, 10);
+    uint32_t s = GET_FIELD(insn, 16, 17);
+    uint32_t t = GET_FIELD(insn, 27, 31);
+    uint32_t opcode = MCInst_getOpcode(MI);
     switch (ext) { 
     case 0x00:
-        CREATE_GR_REG(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
+    case 0x02:
+        if (ext == 0x02) {
+            x = low_sign_extend(x, 5);
+            MCOperand_CreateImm0(MI, x);
+        }
+        else {
+            CREATE_GR_REG(MI, x);
+        }
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, b);
+        if (opcode == HPPA_INS_FLDW || opcode == HPPA_INS_FLDD) {
+            CREATE_FPR_REG(MI, t);
+        }
+        else {
+            CREATE_GR_REG(MI, t);
+        }  
         break;
     case 0x01:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        CREATE_GR_REG(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        break;
-    case 0x02:
-        im = low_sign_extend(im, 5);
-        MCOperand_CreateImm0(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        break;
     case 0x03:
-        im = low_sign_extend(im, 5);
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31));
-        MCOperand_CreateImm0(MI, im);
-        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        if (opcode == HPPA_INS_FSTW || opcode == HPPA_INS_FSTD) {
+            CREATE_FPR_REG(MI, t);
+        }
+        else {
+            CREATE_GR_REG(MI, t);
+        }  
+        if (ext == 0x03) {
+            x = low_sign_extend(x, 5);
+            MCOperand_CreateImm0(MI, x);
+        }
+        else {
+            CREATE_GR_REG(MI, x);
+        }
+        CREATE_SR_REG(MI, s);
+        CREATE_GR_REG(MI, b);
         break;
     }
-    fillCoprdwMods(insn, im, &MI->hppa_ext, ud->mode);
+    fillCoprdwMods(insn, x, &MI->hppa_ext, ud->mode);
     return true;
 }
 
@@ -2466,18 +2446,21 @@ static void fillSpopMods(uint32_t insn, uint32_t ext, hppa_ext* hppa_ext) {
 
 static bool decodeSpop(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t ext = GET_FIELD(insn, 21, 22);
+    uint32_t r2 = GET_FIELD(insn, 11, 15);
+    uint32_t r1 = GET_FIELD(insn, 6, 10);
+    uint32_t t = GET_FIELD(insn, 27, 31);
     switch (ext) {
     case 0x00:
         break;
     case 0x01:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 27, 31)); 
+        CREATE_GR_REG(MI, t); 
         break;
     case 0x02:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_GR_REG(MI, r1);
         break;
     case 0x03:
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15)); 
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10)); 
+        CREATE_GR_REG(MI, r2); 
+        CREATE_GR_REG(MI, r1); 
         break;
     }
     fillSpopMods(insn, ext, &MI->hppa_ext);
@@ -2505,8 +2488,9 @@ static void fillCoprInsnName(MCInst *MI, uint32_t insn) {
                 }
             }
             else if (class == 1) {
-                if (GET_FIELD(insn, 14, 16) != 4) {
-                    MCInst_setOpcode(MI, HPPA_INS_FNEGABS);
+                subop = GET_FIELD(insn, 14, 16);
+                if (subop != 4) {
+                    MCInst_setOpcode(MI, HPPA_INS_FCNV);
                     return;
                 }
             }
@@ -2705,6 +2689,9 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t class = GET_FIELD(insn, 21, 22);
     uint32_t uid = GET_FIELD(insn, 23, 25);
     uint32_t subop;
+    uint32_t r1 = GET_FIELD(insn, 6, 10);
+    uint32_t r2 = GET_FIELD(insn, 11, 15);
+    uint32_t t = GET_FIELD(insn, 27, 31);
     if (MODE_IS_HPPA_20(ud->mode)) {
         if (uid == 0) {
             if (class == 0) {
@@ -2713,8 +2700,8 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
                     return false;
                 }
                 if (subop >= 0x02) {
-                    CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                    CREATE_FPR_REG(MI, GET_FIELD(insn, 27, 31));
+                    CREATE_FPR_REG(MI, r1);
+                    CREATE_FPR_REG(MI, t);
                 }
             }
             else if (class == 1) {
@@ -2722,23 +2709,25 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 if (subop == 0x04) {
                     return false;
                 }
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 27, 31));
+                CREATE_FPR_REG(MI, r1);
+                CREATE_FPR_REG(MI, t);
             }
             else if (class == 2) {
                 uint32_t n = GET_BIT(insn, 26);
                 uint32_t cond = GET_FIELD(insn, 27, 31);
                 subop = GET_FIELD(insn, 16, 18);
                 if (n == 0) {
-                    CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                    CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+                    CREATE_FPR_REG(MI, r1);
+                    CREATE_FPR_REG(MI, r2);
                     if (subop != 0) {
                         MCOperand_CreateImm0(MI, subop - 1);
+                        (&MI->hppa_ext)->cmplt = true;
                     }
                 }
                 else {
                     if (subop != 1) {
                         MCOperand_CreateImm0(MI, (subop ^ 1) - 1);
+                        (&MI->hppa_ext)->cmplt = true;
                     }
                 }
             } 
@@ -2747,9 +2736,9 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 if (subop >= 4) {
                     return false;
                 }
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 27, 31));
+                CREATE_FPR_REG(MI, r1);
+                CREATE_FPR_REG(MI, r2);
+                CREATE_FPR_REG(MI, t);
             }
             fillCoprMods(insn, uid, class, &MI->hppa_ext, subop, ud->mode);
             return true;
@@ -2763,8 +2752,8 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             case 0x03:
             case 0x04:
             case 0x05:
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 27, 31));
+                CREATE_FPR_REG(MI, r1);
+                CREATE_FPR_REG(MI, t);
             case 0x00:
                 break;
             default:
@@ -2778,8 +2767,8 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             case 0x01:
             case 0x02:
             case 0x03:
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 27, 31));
+                CREATE_FPR_REG(MI, r1);
+                CREATE_FPR_REG(MI, t);
                 break;
             }
         }
@@ -2787,8 +2776,8 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             subop = GET_FIELD(insn, 16, 18);
             switch (subop) {
             case 0x00:
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+                CREATE_FPR_REG(MI, r1);
+                CREATE_FPR_REG(MI, r2);
             case 0x01:
                 break;
             default:
@@ -2802,9 +2791,9 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             case 0x01:
             case 0x02:
             case 0x03:
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 6, 10));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
-                CREATE_FPR_REG(MI, GET_FIELD(insn, 27, 31));
+                CREATE_FPR_REG(MI, r1);
+                CREATE_FPR_REG(MI, r2);
+                CREATE_FPR_REG(MI, t);
                 break;
             default:
                 return false;
@@ -3253,6 +3242,8 @@ static void fillActionAndBranchMods(uint32_t insn, uint32_t opcode, hppa_ext* hp
 
 static bool decodeActionAndBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t opcode = insn >> 26;
+    uint32_t r1 = GET_FIELD(insn, 6, 10);
+    uint32_t r2 = GET_FIELD(insn, 11, 15);
     if (MODE_IS_HPPA_20(ud->mode)) {
         switch (opcode) {
         case HPPA_OP_TYPE_CMPBT:
@@ -3262,8 +3253,8 @@ static bool decodeActionAndBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case HPPA_OP_TYPE_ADDBT:
         case HPPA_OP_TYPE_ADDBF:
         case HPPA_OP_TYPE_MOVB:
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            CREATE_GR_REG(MI, r2);
+            CREATE_GR_REG(MI, r1);
             MCOperand_CreateImm0(MI, extract_12(insn));
             break;
         case HPPA_OP_TYPE_CMPIBT:
@@ -3272,15 +3263,15 @@ static bool decodeActionAndBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case HPPA_OP_TYPE_ADDIBT:
         case HPPA_OP_TYPE_ADDIBF:
         case HPPA_OP_TYPE_MOVIB:
-            MCOperand_CreateImm0(MI, low_sign_extend(GET_FIELD(insn, 11, 15), 5));
-            CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+            MCOperand_CreateImm0(MI, low_sign_extend(r2, 5));
+            CREATE_GR_REG(MI, r1);
             MCOperand_CreateImm0(MI, extract_12(insn));
             break;
         case HPPA_OP_TYPE_BBS:
         case HPPA_OP_TYPE_BB:    
-            CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+            CREATE_GR_REG(MI, r2);
             if (opcode & 1 == 1) {
-                MCOperand_CreateImm0(MI, GET_FIELD(insn, 6, 10));
+                MCOperand_CreateImm0(MI, r1);
             }
             else {
                 CREATE_CR_REG(MI, 11);
@@ -3294,20 +3285,19 @@ static bool decodeActionAndBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         return true;
     }
     if ((opcode & 1) == 0 || opcode == HPPA_OP_TYPE_BB) {
-        CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+        CREATE_GR_REG(MI, r2);
     } 
     else {
-        MCOperand_CreateImm0(MI, low_sign_extend(GET_FIELD(insn, 11, 15), 5));
+        MCOperand_CreateImm0(MI, low_sign_extend(r2, 5));
     }
     if (opcode == HPPA_OP_TYPE_BB) {
-        MCOperand_CreateImm0(MI, GET_FIELD(insn, 6, 10));
+        MCOperand_CreateImm0(MI, r1);
     }
     else if (opcode != HPPA_OP_TYPE_BBS) {
-        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_GR_REG(MI, r1);
     }
     MCOperand_CreateImm0(MI, extract_12(insn));
     fillActionAndBranchMods(insn, opcode, &MI->hppa_ext, ud->mode);
-
     return true;
 }
 
@@ -3356,7 +3346,8 @@ static void fillStoreInsnName(MCInst *MI, uint32_t opcode) {
 }
 
 static bool decodeCmpclr(cs_struct *ud, MCInst *MI, uint32_t insn) {
-    uint32_t cond = GET_FIELD(insn, 16, 18);
+    uint32_t cond = (GET_BIT(insn, 19) << 3) | GET_FIELD(insn, 16, 18);
+    printf("cond: %d\n", cond);
     uint32_t d = GET_BIT(insn, 20);
     if (MODE_IS_HPPA_20(ud->mode)) {
         MCInst_setOpcode(MI, HPPA_INS_CMPICLR);
@@ -3380,7 +3371,7 @@ static bool decodeCmpclr(cs_struct *ud, MCInst *MI, uint32_t insn) {
 
 static bool decodeBe(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t opcode = insn >> 26;
-    uint32_t n = GET_FIELD(insn, 30, 30);
+    uint32_t n = GET_BIT(insn, 30);
     bool mode = MODE_IS_HPPA_20(ud->mode);
     if (opcode == HPPA_OP_TYPE_BLE) {
         if (!mode) {
@@ -3409,6 +3400,114 @@ static bool decodeBe(cs_struct *ud, MCInst *MI, uint32_t insn) {
     return true;
 }
 
+static bool decodeFloatStLd(cs_struct *ud, MCInst *MI, uint32_t insn) {
+    uint32_t opcode = insn >> 26;
+    uint32_t a = GET_BIT(insn, 29);
+
+    if (opcode == HPPA_OP_TYPE_FLDW) {
+        MCInst_setOpcode(MI, HPPA_INS_FLDW);
+        MCOperand_CreateImm0(MI, extract_16(insn));
+        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
+        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+        CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+    }
+    else {
+        MCInst_setOpcode(MI, HPPA_INS_FSTW);
+        CREATE_FPR_REG(MI, GET_FIELD(insn, 11, 15));
+        MCOperand_CreateImm0(MI, extract_16(insn));
+        CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
+        CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+    }
+
+    if (a == 0) {
+        push_str_modifier(&MI->hppa_ext, "ma");
+    }
+    else {
+        push_str_modifier(&MI->hppa_ext, "mb");
+    }
+    return true;
+}
+
+static bool decodeFmpy(cs_struct *ud, MCInst *MI, uint32_t insn) {
+    uint32_t opcode = insn >> 26;
+    uint32_t rm1 = GET_FIELD(insn, 6, 10);
+    uint32_t rm2 = GET_FIELD(insn, 11, 15);
+    uint32_t ta = GET_FIELD(insn, 16, 20);
+    uint32_t ra = GET_FIELD(insn, 21, 25);
+    uint32_t tm = GET_FIELD(insn, 27, 31);
+    rm1 = rm1 < 16 ? rm1 + 16 : rm1;
+    rm2 = rm2 < 16 ? rm2 + 16 : rm2;
+    ta = ta < 16 ? ta + 16 : ta;
+    ra = ra < 16 ? ra + 16 : ra;
+    tm = tm < 16 ? tm + 16 : tm;
+    if (opcode == HPPA_OP_TYPE_FMPYADD) {
+        MCInst_setOpcode(MI, HPPA_INS_FMPYADD);
+    }
+    else {
+        MCInst_setOpcode(MI, HPPA_INS_FMPYSUB);
+    }
+    uint32_t fmt = GET_FIELD(insn, 26, 26);
+    CREATE_FPR_REG(MI, rm1);
+    CREATE_FPR_REG(MI, rm2);
+    CREATE_FPR_REG(MI, tm);
+    CREATE_FPR_REG(MI, ra);
+    CREATE_FPR_REG(MI, ta);
+    if (fmt == 0) {
+        push_str_modifier(&MI->hppa_ext, "dbl");
+    }
+    else {
+        push_str_modifier(&MI->hppa_ext, "sgl");
+    }
+    
+    return true;
+}
+
+static bool decodeLoad(cs_struct *ud, MCInst *MI, uint32_t insn) {
+    uint32_t opcode = insn >> 26;
+    if (MODE_IS_HPPA_20(ud->mode)) {
+        uint32_t d = extract_16(insn);
+        if (opcode == HPPA_OP_TYPE_LDWM) {
+            if (d < 0) {
+                push_str_modifier(&MI->hppa_ext, "mb");
+            }
+            else {
+                push_str_modifier(&MI->hppa_ext, "ma");
+            }
+        }
+        MCOperand_CreateImm0(MI, d);
+    }
+    else {
+        MCOperand_CreateImm0(MI, extract_14(insn));
+    }
+    CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
+    CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+    CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+    return true;
+}
+
+static bool decodeStore(cs_struct *ud, MCInst *MI, uint32_t insn) {
+    uint32_t opcode = insn >> 26;
+    CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
+    if (MODE_IS_HPPA_20(ud->mode)) {
+        uint32_t d = extract_16(insn);
+        if (opcode == HPPA_OP_TYPE_STWM) {
+            if (d < 0) {
+                push_str_modifier(&MI->hppa_ext, "mb");
+            }
+            else {
+                push_str_modifier(&MI->hppa_ext, "ma");
+            }
+        }
+        MCOperand_CreateImm0(MI, d);
+    }
+    else {
+        MCOperand_CreateImm0(MI, extract_14(insn));
+    }
+    CREATE_SR_REG(MI, GET_FIELD(insn, 16, 17));
+    CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
+    return true;
+}
+
 static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
                MCInst *MI)
 {
@@ -3425,7 +3524,6 @@ static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
 
     uint8_t opcode = HPPA_OP_TYPE(code[0]);
     uint32_t full_insn = readBytes32(MI, code);
-    uint32_t a;
 
     if (MODE_IS_HPPA_20(ud->mode)) {
         switch (opcode) {
@@ -3450,38 +3548,15 @@ static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
             fillFpfusedInsnName(MI, full_insn);
             return decodeFpfused(ud, MI, full_insn);  
         case HPPA_OP_TYPE_FLDW:
-            MCInst_setOpcode(MI, HPPA_INS_FLDW);
-            a = GET_BIT(full_insn, 29);
-            if (a == 0) {
-                push_str_modifier(&MI->hppa_ext, "ma");
-            }
-            else {
-                push_str_modifier(&MI->hppa_ext, "mb");
-            }
-            MCOperand_CreateImm0(MI, extract_16(full_insn));
-            CREATE_SR_REG(MI, GET_FIELD(full_insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(full_insn, 6, 10));
-            CREATE_GR_REG(MI, GET_FIELD(full_insn, 11, 15));
-            return true;
         case HPPA_OP_TYPE_FSTW:
-            MCInst_setOpcode(MI, HPPA_INS_FSTW);
-            a = GET_BIT(full_insn, 29);
-            if (a == 0) {
-                push_str_modifier(&MI->hppa_ext, "ma");
-            }
-            else {
-                push_str_modifier(&MI->hppa_ext, "mb");
-            }
-            CREATE_GR_REG(MI, GET_FIELD(full_insn, 11, 15));
-            MCOperand_CreateImm0(MI, extract_16(full_insn));
-            CREATE_SR_REG(MI, GET_FIELD(full_insn, 16, 17));
-            CREATE_GR_REG(MI, GET_FIELD(full_insn, 6, 10));
-            return true;
+            return decodeFloatStLd(ud, MI, full_insn);
         case HPPA_OP_TYPE_CMPBDWT:
         case HPPA_OP_TYPE_CMPBDWF:
         case HPPA_OP_TYPE_CMPIBDW:
             fillActionAndBranchInsnName(MI, opcode);
             return decodeActionAndBranch(ud, MI, full_insn);
+        default:
+            break;
         }
     }
 
@@ -3531,26 +3606,7 @@ static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
         return true;
     case HPPA_OP_TYPE_FMPYADD:
     case HPPA_OP_TYPE_FMPYSUB:
-        if (opcode == HPPA_OP_TYPE_FMPYADD) {
-            MCInst_setOpcode(MI, HPPA_INS_FMPYADD);
-        }
-        else {
-            MCInst_setOpcode(MI, HPPA_INS_FMPYSUB);
-        }
-        uint32_t fmt = GET_FIELD(full_insn, 26, 26);
-        CREATE_FPR_REG(MI, GET_FIELD(full_insn, 6, 10));
-        CREATE_FPR_REG(MI, GET_FIELD(full_insn, 11, 15));
-        CREATE_FPR_REG(MI, GET_FIELD(full_insn, 27, 31));
-        CREATE_FPR_REG(MI, GET_FIELD(full_insn, 21, 25));
-        CREATE_FPR_REG(MI, GET_FIELD(full_insn, 16, 20));
-        if (fmt == 0) {
-            push_str_modifier(&MI->hppa_ext, "dbl");
-        }
-        else {
-            push_str_modifier(&MI->hppa_ext, "sgl");
-        }
-        
-        return true;
+        return decodeFmpy(ud, MI, full_insn);
     case HPPA_OP_TYPE_LDIL:
     case HPPA_OP_TYPE_ADDIL:
         if (opcode == HPPA_OP_TYPE_LDIL) {
@@ -3578,49 +3634,13 @@ static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
     case HPPA_OP_TYPE_LDW:
     case HPPA_OP_TYPE_LDWM:
         fillLoadInsnName(MI, opcode);
-        if (MODE_IS_HPPA_20(ud->mode)) {
-            uint32_t d = extract_16(full_insn);
-            if (opcode == HPPA_OP_TYPE_LDWM) {
-                if (d < 0) {
-                    push_str_modifier(&MI->hppa_ext, "mb");
-                }
-                else {
-                    push_str_modifier(&MI->hppa_ext, "ma");
-                }
-            }
-            MCOperand_CreateImm0(MI, d);
-        }
-        else {
-            MCOperand_CreateImm0(MI, extract_14(full_insn));
-        }
-        CREATE_SR_REG(MI, GET_FIELD(full_insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(full_insn, 6, 10));
-        CREATE_GR_REG(MI, GET_FIELD(full_insn, 11, 15));
-        return true;
+        return decodeLoad(ud, MI, full_insn);
     case HPPA_OP_TYPE_STB:
     case HPPA_OP_TYPE_STH:
     case HPPA_OP_TYPE_STW:
     case HPPA_OP_TYPE_STWM:
         fillStoreInsnName(MI, opcode);
-        CREATE_GR_REG(MI, GET_FIELD(full_insn, 11, 15));
-        if (MODE_IS_HPPA_20(ud->mode)) {
-            uint32_t d = extract_16(full_insn);
-            if (opcode == HPPA_OP_TYPE_STWM) {
-                if (d < 0) {
-                    push_str_modifier(&MI->hppa_ext, "mb");
-                }
-                else {
-                    push_str_modifier(&MI->hppa_ext, "ma");
-                }
-            }
-            MCOperand_CreateImm0(MI, d);
-        }
-        else {
-            MCOperand_CreateImm0(MI, extract_14(full_insn));
-        }
-        CREATE_SR_REG(MI, GET_FIELD(full_insn, 16, 17));
-        CREATE_GR_REG(MI, GET_FIELD(full_insn, 6, 10));
-        return true;
+        return decodeStore(ud, MI, full_insn);
     case HPPA_OP_TYPE_CMPBT:
     case HPPA_OP_TYPE_CMPBF:
     case HPPA_OP_TYPE_ADDBT:
