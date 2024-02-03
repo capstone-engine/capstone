@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-// #ifdef CAPSTONE_HAS_HPPA
+#ifdef CAPSTONE_HAS_HPPA
 
 #include <string.h>
 #include <stdlib.h>
@@ -10,10 +10,6 @@
 #include "../../Mapping.h"
 #include "../../utils.h"
 
-#define CODE_TO_INSN(code) \
-	(code[0] << 24) | (code[1] << 16) | (code[2] << 8) | code[3]
-
-#define NUMINSNS 713
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
@@ -1089,6 +1085,8 @@ static const struct pa_insn pa_insns[] =
 
 };
 
+#define NUMINSNS ((sizeof pa_insns)/(sizeof pa_insns[0]))
+
 static void update_regs_access(cs_struct *ud, cs_detail *detail,
 		hppa_insn insn_id, unsigned int opcode)
 {
@@ -1122,8 +1120,6 @@ void HPPA_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int opcode)
  #define PUSH_GROUP
 #endif
 
-    // hppa_ext *hppa = (hppa_ext*) h->getinsn_info;
-    // uint32_t instr = hppa->full_insn;
     for (int i = 0; i < NUMINSNS; ++i) {
 		const struct pa_insn *pa_insn = &pa_insns[i];
 		if (pa_insn->insn == opcode) {
@@ -1131,7 +1127,6 @@ void HPPA_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int opcode)
 			break;
 		}
     }
-	// insn->id = MCInst_getOpcode;
 
 #undef PUSH_GROUP
 
@@ -1215,4 +1210,4 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 	// *regs_write_count = write_count;
 }
 
-// #endif
+#endif

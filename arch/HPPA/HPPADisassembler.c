@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-// #ifdef CAPSTONE_HAS_HPPA
+#ifdef CAPSTONE_HAS_HPPA
 
 #include <string.h>
 #include <stddef.h> // offsetof macro
@@ -104,9 +104,7 @@ static const char *const float_comp_names[] =
   "!?=", "<>", "!=", "!=t", "!?", "<=>", "true?", "true"
 };
 static const char *const signed_unsigned_names[] = {"u", "s"};
-// static const char *const mix_half_names[] = {"l", "r"};
 static const char *const saturation_names[] = {"us", "ss", "", ""};
-// static const char *const read_write_names[] = {"r", "w"};
 static const char *const add_compl_names[] = { "", "", "l", "tsv" };
 
 #define CREATE_GR_REG(MI, gr)       MCOperand_CreateReg0(MI, gr + HPPA_REG_GR0)
@@ -114,8 +112,6 @@ static const char *const add_compl_names[] = { "", "", "l", "tsv" };
 #define CREATE_CR_REG(MI, cr)       MCOperand_CreateReg0(MI, cr + HPPA_REG_CR0)
 #define CREATE_FPR_REG(MI, fpr)     MCOperand_CreateReg0(MI, fpr + HPPA_REG_FPR0)
 #define CREATE_FPE_REG(MI, fpe)     MCOperand_CreateReg0(MI, fpe + HPPA_REG_FPE0)
-#define CREATE_DBAOR_REG(MI, dbaor) MCOperand_CreateReg0(MI, dbaor + HPPA_REG_DBAOR0)
-#define CREATE_IBAOR_REG(MI, ibaor) MCOperand_CreateReg0(MI, ibaor + HPPA_REG_IBAOR0)
 
 static void create_float_reg_spec(MCInst *MI, uint32_t reg, uint32_t fpe_flag) {
     if (fpe_flag == 1) {
@@ -125,9 +121,6 @@ static void create_float_reg_spec(MCInst *MI, uint32_t reg, uint32_t fpe_flag) {
         CREATE_FPR_REG(MI, reg);
     }
 }
-
-/* The PA instruction set variants.  */
-enum pa_arch { pa10 = 1 << 1, pa11 = 1 << 2, pa20 = 1 << 3, pa20w = 1 << 4 };
 
 static inline int sign_extend(int x, int len)
 {
@@ -3678,4 +3671,4 @@ bool HPPA_getInstruction(csh ud, const uint8_t *code, size_t code_len,
     return true;
 }
 
-// #endif
+#endif

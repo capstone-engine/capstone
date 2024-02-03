@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-/* This file defines constants and macros used for parsing a BPF instruction */
+/* This file defines constants and macros used for parsing a HPPA instruction */
 
 #ifndef CS_HPPA_CONSTANTS_H
 #define CS_HPPA_CONSTANTS_H

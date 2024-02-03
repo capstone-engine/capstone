@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-// #ifdef CAPSTONE_HAS_HPPA
+#ifdef CAPSTONE_HAS_HPPA
 
 #include <capstone/platform.h>
 
@@ -348,21 +348,6 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_RET, "", false },
 };
 
-void hppaPrintInt64(SStream *O, int64_t val)
-{
-	if (val >= 0) {
-		if (val > 9)
-			SStream_concat(O, "0x%x", val);
-		else
-			SStream_concat(O, "%u", val);
-	} else {
-		if (val <- 9) {
-			SStream_concat(O, "-0x%x", (uint32_t)-val);
-		} else
-			SStream_concat(O, "-%u", -val);
-	}
-}
-
 static void print_operand(MCInst *MI, struct SStream *O, const cs_hppa_op *op)
 {
 	switch (op->type) {
@@ -374,12 +359,9 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_hppa_op *op)
 		break;
 	case HPPA_OP_IMM:		
 		printInt32(O, op->imm);
-		// SStream_concat(O, "%x", op->imm);
 		break;
     case HPPA_OP_DISP:
-		// printf("imm: %d -> %d\n", op->imm, op->imm > 0);
 		printInt32(O, op->imm);
-		// SStream_concat(O, "%x", op->imm);
 		break;
 	case HPPA_OP_IDX_REG:
 		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->reg));
@@ -554,4 +536,4 @@ void HPPA_printInst(MCInst *MI, struct SStream *O, void *Info)
 #endif
 }
 
-// #endif
+#endif
