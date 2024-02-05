@@ -322,14 +322,14 @@ typedef enum {
 } cs_data_type;
 
 /// Return true if this is a valid simple valuetype.
-inline bool isValid(cs_data_type SimpleTy)
+static inline bool isValid(cs_data_type SimpleTy)
 {
 	return (SimpleTy >= CS_DATA_TYPE_FIRST_VALUETYPE &&
 		SimpleTy <= CS_DATA_TYPE_LAST_VALUETYPE);
 }
 
 /// Return true if this is a FP or a vector FP type.
-inline bool isFloatingPoint(cs_data_type SimpleTy)
+static inline bool isFloatingPoint(cs_data_type SimpleTy)
 {
 	return ((SimpleTy >= CS_DATA_TYPE_FIRST_FP_VALUETYPE &&
 		 SimpleTy <= CS_DATA_TYPE_LAST_FP_VALUETYPE) ||
@@ -340,7 +340,7 @@ inline bool isFloatingPoint(cs_data_type SimpleTy)
 }
 
 /// Return true if this is an integer or a vector integer type.
-inline bool isInteger(cs_data_type SimpleTy)
+static inline bool isInteger(cs_data_type SimpleTy)
 {
 	return ((SimpleTy >= CS_DATA_TYPE_FIRST_INTEGER_VALUETYPE &&
 		 SimpleTy <= CS_DATA_TYPE_LAST_INTEGER_VALUETYPE) ||
@@ -355,14 +355,14 @@ inline bool isInteger(cs_data_type SimpleTy)
 }
 
 /// Return true if this is an integer, not including vectors.
-inline bool isScalarInteger(cs_data_type SimpleTy)
+static inline bool isScalarInteger(cs_data_type SimpleTy)
 {
 	return (SimpleTy >= CS_DATA_TYPE_FIRST_INTEGER_VALUETYPE &&
 		SimpleTy <= CS_DATA_TYPE_LAST_INTEGER_VALUETYPE);
 }
 
 /// Return true if this is a vector value type.
-inline bool isVector(cs_data_type SimpleTy)
+static inline bool isVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy >= CS_DATA_TYPE_FIRST_VECTOR_VALUETYPE &&
 		SimpleTy <= CS_DATA_TYPE_LAST_VECTOR_VALUETYPE);
@@ -370,20 +370,20 @@ inline bool isVector(cs_data_type SimpleTy)
 
 /// Return true if this is a vector value type where the
 /// runtime length is machine dependent
-inline bool isScalableVector(cs_data_type SimpleTy)
+static inline bool isScalableVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy >= CS_DATA_TYPE_FIRST_SCALABLE_VECTOR_VALUETYPE &&
 		SimpleTy <= CS_DATA_TYPE_LAST_SCALABLE_VECTOR_VALUETYPE);
 }
 
-inline bool isFixedLengthVector(cs_data_type SimpleTy)
+static inline bool isFixedLengthVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy >= CS_DATA_TYPE_FIRST_FIXEDLEN_VECTOR_VALUETYPE &&
 		SimpleTy <= CS_DATA_TYPE_LAST_FIXEDLEN_VECTOR_VALUETYPE);
 }
 
 /// Return true if this is a 16-bit vector type.
-inline bool is16BitVector(cs_data_type SimpleTy)
+static inline bool is16BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v2i8 ||
 		SimpleTy == CS_DATA_TYPE_v1i16 ||
@@ -392,7 +392,7 @@ inline bool is16BitVector(cs_data_type SimpleTy)
 }
 
 /// Return true if this is a 32-bit vector type.
-inline bool is32BitVector(cs_data_type SimpleTy)
+static inline bool is32BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v32i1 ||
 		SimpleTy == CS_DATA_TYPE_v4i8 ||
@@ -404,7 +404,7 @@ inline bool is32BitVector(cs_data_type SimpleTy)
 }
 
 /// Return true if this is a 64-bit vector type.
-inline bool is64BitVector(cs_data_type SimpleTy)
+static inline bool is64BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v64i1 ||
 		SimpleTy == CS_DATA_TYPE_v8i8 ||
@@ -418,7 +418,7 @@ inline bool is64BitVector(cs_data_type SimpleTy)
 }
 
 /// Return true if this is a 128-bit vector type.
-inline bool is128BitVector(cs_data_type SimpleTy)
+static inline bool is128BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v128i1 ||
 		SimpleTy == CS_DATA_TYPE_v16i8 ||
@@ -433,7 +433,7 @@ inline bool is128BitVector(cs_data_type SimpleTy)
 }
 
 /// Return true if this is a 256-bit vector type.
-inline bool is256BitVector(cs_data_type SimpleTy)
+static inline bool is256BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v16f16 ||
 		SimpleTy == CS_DATA_TYPE_v16bf16 ||
@@ -449,7 +449,7 @@ inline bool is256BitVector(cs_data_type SimpleTy)
 }
 
 /// Return true if this is a 512-bit vector type.
-inline bool is512BitVector(cs_data_type SimpleTy)
+static inline bool is512BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v32f16 ||
 		SimpleTy == CS_DATA_TYPE_v32bf16 ||
@@ -465,7 +465,7 @@ inline bool is512BitVector(cs_data_type SimpleTy)
 }
 
 /// Return true if this is a 1024-bit vector type.
-inline bool is1024BitVector(cs_data_type SimpleTy)
+static inline bool is1024BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v1024i1 ||
 		SimpleTy == CS_DATA_TYPE_v128i8 ||
@@ -479,7 +479,7 @@ inline bool is1024BitVector(cs_data_type SimpleTy)
 }
 
 /// Return true if this is a 2048-bit vector type.
-inline bool is2048BitVector(cs_data_type SimpleTy)
+static inline bool is2048BitVector(cs_data_type SimpleTy)
 {
 	return (SimpleTy == CS_DATA_TYPE_v256i8 ||
 		SimpleTy == CS_DATA_TYPE_v128i16 ||
@@ -492,7 +492,7 @@ inline bool is2048BitVector(cs_data_type SimpleTy)
 		SimpleTy == CS_DATA_TYPE_v2048i1);
 }
 
-inline cs_data_type getVectorElementType(cs_data_type SimpleTy)
+static inline cs_data_type getVectorElementType(cs_data_type SimpleTy)
 {
 	switch (SimpleTy) {
 	default:
@@ -684,7 +684,7 @@ inline cs_data_type getVectorElementType(cs_data_type SimpleTy)
 }
 
 /// Given a vector type, return the minimum number of elements it contains.
-inline unsigned getVectorMinNumElements(cs_data_type SimpleTy)
+static inline unsigned getVectorMinNumElements(cs_data_type SimpleTy)
 {
 	switch (SimpleTy) {
 	default:
