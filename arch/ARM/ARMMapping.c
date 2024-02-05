@@ -175,12 +175,27 @@ static void check_pop_return(MCInst *MI) {
 	}
 }
 
+/// Check if PC is directly written.Those instructions
+/// are considered of group BRANCH.
+static void check_writes_to_pc(MCInst *MI) {
+	if (!MI->flat_insn->detail)
+		return;
+	for (size_t i = 0; i < ARM_get_detail(MI)->op_count; ++i) {
+		cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
+		if (op->type == ARM_OP_REG && op->reg == ARM_REG_PC && (op->access & CS_AC_WRITE)) {
+			add_group(MI, ARM_GRP_JUMP);
+			return;
+		}
+	}
+}
+
 /// Adds group to the instruction which are not defined in LLVM.
 static void ARM_add_cs_groups(MCInst *MI)
 {
 	if (!MI->flat_insn->detail)
 		return;
 	check_pop_return(MI);
+	check_writes_to_pc(MI);
 	unsigned Opcode = MI->flat_insn->id;
 	switch (Opcode) {
 	default:

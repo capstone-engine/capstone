@@ -753,7 +753,7 @@
 
 !# issue 760
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM return
+0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM return jump
 
 !# issue 750
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -773,7 +773,7 @@
 
 !# issue 744
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM return
+0x0: 0x02,0x80,0xbd,0xe8 == pop {r1, pc} ; op_count: 2 ; operands[0].type: REG = r1 ; operands[0].access: WRITE ; operands[1].type: REG = r15 ; operands[1].access: WRITE ; Write-back: True ; Registers read: r13 ; Registers modified: r13 r1 r15 ; Groups: IsARM return jump
 
 !# issue 741
 !# CS_ARCH_X86, CS_MODE_32, None
@@ -1047,3 +1047,6 @@
 !# CS_ARCH_AARCH64, CS_MODE_ARM, None
 0x0: 0x00,0x00,0x00,0x4c == st4 { v0.16b, v1.16b, v2.16b, v3.16b }, [x0]
 
+!# issue 2233 ARM write to PC is branch
+!# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
+0x87,0x46 == mov pc, r0 ; Groups: IsThumb jump 
