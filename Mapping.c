@@ -181,6 +181,7 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 }
 
 /// Adds a given group to @MI->flat_insn.
+/// A group is never added twice.
 void add_group(MCInst *MI, unsigned /* arch_group */ group)
 {
 #ifndef CAPSTONE_DIET
@@ -191,6 +192,11 @@ void add_group(MCInst *MI, unsigned /* arch_group */ group)
 	if (detail->groups_count >= MAX_NUM_GROUPS) {
 		printf("ERROR: Too many groups defined.\n");
 		return;
+	}
+	for (int i = 0; i < detail->groups_count; ++i) {
+		if (detail->groups[i] == group) {
+			return;
+		}
 	}
 	detail->groups[detail->groups_count++] = group;
 #endif // CAPSTONE_DIET
