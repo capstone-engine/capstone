@@ -379,7 +379,7 @@ CS_OPT   = {v:k for k,v in locals().items() if k.startswith('CS_OPT_')}
 
 import ctypes, ctypes.util
 from os.path import split, join, dirname
-import distutils.sysconfig
+import sysconfig
 import pkg_resources
 
 import inspect
@@ -420,7 +420,7 @@ _path_list = [os.getenv('LIBCAPSTONE_PATH', None),
               pkg_resources.resource_filename(__name__, 'lib'),
               join(split(__file__)[0], 'lib'),
               '',
-              distutils.sysconfig.get_python_lib(),
+              sysconfig.get_path('platlib'),
               "/usr/local/lib/" if sys.platform == 'darwin' else '/usr/lib64']
 
 for _path in _path_list:
