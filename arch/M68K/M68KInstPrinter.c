@@ -276,10 +276,10 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 
 		memcpy(&detail->m68k, ext, sizeof(cs_m68k));
 
-		memcpy(&detail->regs_read, &info->regs_read, regs_read_count * sizeof(uint16_t));
+		memcpy(&detail->regs_read, &info->regs_read, regs_read_count * sizeof(info->regs_read[0]));
 		detail->regs_read_count = regs_read_count;
 
-		memcpy(&detail->regs_write, &info->regs_write, regs_write_count * sizeof(uint16_t));
+		memcpy(&detail->regs_write, &info->regs_write, regs_write_count * sizeof(info->regs_write[0]));
 		detail->regs_write_count = regs_write_count;
 
 		memcpy(&detail->groups, &info->groups, groups_count);
