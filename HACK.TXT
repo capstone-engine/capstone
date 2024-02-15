@@ -38,7 +38,7 @@ Capstone source is organized as followings.
 └── xcode           <- Xcode support (for MacOSX compile)
 
 
-Follow instructions in COMPILE.TXT for how to compile and run test code.
+Follow the instructions in COMPILE.TXT for how to compile and run test code.
 
 Note: if you find some strange bugs, it is recommended to firstly clean
 the code and try to recompile/reinstall again. This can be done with:
