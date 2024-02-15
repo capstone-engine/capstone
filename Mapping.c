@@ -95,7 +95,7 @@ void map_add_implicit_read(MCInst *MI, uint32_t Reg)
 		return;
 
 	uint16_t *regs_read = MI->flat_insn->detail->regs_read;
-	for (int i = 0; i < MAX_IMPL_W_REGS; ++i) {
+	for (int i = 0; i < MAX_IMPL_R_REGS; ++i) {
 		if (i == MI->flat_insn->detail->regs_read_count) {
 			regs_read[i] = Reg;
 			MI->flat_insn->detail->regs_read_count++;
