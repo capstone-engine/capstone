@@ -150,8 +150,8 @@ __all__ = [
     'CS_OP_INVALID',
     'CS_OP_REG',
     'CS_OP_IMM',
-    'CS_OP_FP',
     'CS_OP_MEM',
+    'CS_OP_FP',
 
     'CS_GRP_INVALID',
     'CS_GRP_JUMP',
@@ -290,8 +290,8 @@ CS_OPT_ON = 3              # Turn ON an option (CS_OPT_DETAIL)
 CS_OP_INVALID = 0  # uninitialized/invalid operand.
 CS_OP_REG = 1  # Register operand.
 CS_OP_IMM = 2  # Immediate operand.
-CS_OP_FP  = 3  # Floating-Point operand.
-CS_OP_MEM = 0x80  # Memory operand. Can be ORed with another operand type.
+CS_OP_MEM = 3  # Memory operand. Can be ORed with another operand type.
+CS_OP_FP  = 4  # Floating-Point operand.
 
 # Common instruction groups - to be consistent across all architectures.
 CS_GRP_INVALID = 0  # uninitialized/invalid group.
