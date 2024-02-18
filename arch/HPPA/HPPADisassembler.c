@@ -110,6 +110,7 @@ static const char *const add_compl_names[] = { "", "", "l", "tsv" };
 #define CREATE_CR_REG(MI, cr)       MCOperand_CreateReg0(MI, cr + HPPA_REG_CR0)
 #define CREATE_FPR_REG(MI, fpr)     MCOperand_CreateReg0(MI, fpr + HPPA_REG_FPR0)
 #define CREATE_FPE_REG(MI, fpe)     MCOperand_CreateReg0(MI, fpe + HPPA_REG_FPE0)
+#define CREATE_SP_FPR_REG(MI, fpr)     MCOperand_CreateReg0(MI, fpr + HPPA_REG_SP_FPR0)
 
 static void create_float_reg_spec(MCInst *MI, uint32_t reg, uint32_t fpe_flag) {
     if (fpe_flag == 1) {
@@ -302,7 +303,6 @@ static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
             return;
         case 0x65:
             push_str_modifier(&MI->hppa_ext, "r");
-            MCInst_setOpcode(MI, HPPA_INS_RFI);
             if (MI->flat_insn->detail != NULL) {
                 cs_detail *detail = get_detail(MI);
                 detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR1;
@@ -313,10 +313,9 @@ static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
                 detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR24;
                 detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR25;
             }
-            break;
         case 0x60:
             MCInst_setOpcode(MI, HPPA_INS_RFI);
-            break;
+            return;
         }
     }
 
@@ -543,6 +542,7 @@ static void fillMemmgmtMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
     uint32_t ext = GET_FIELD(insn, 19, 25);
     if (MODE_IS_HPPA_20(mode)) {
         switch (ext) {
+        case 0x18:
         case 0x58:
         case 0x4f:
             goto success;      
@@ -3441,30 +3441,32 @@ static bool decodeFmpy(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t ta = GET_FIELD(insn, 16, 20);
     uint32_t ra = GET_FIELD(insn, 21, 25);
     uint32_t tm = GET_FIELD(insn, 27, 31);
-    rm1 = rm1 < 16 ? rm1 + 16 : rm1;
-    rm2 = rm2 < 16 ? rm2 + 16 : rm2;
-    ta = ta < 16 ? ta + 16 : ta;
-    ra = ra < 16 ? ra + 16 : ra;
-    tm = tm < 16 ? tm + 16 : tm;
+    uint32_t fmt = GET_FIELD(insn, 26, 26);
+
     if (opcode == HPPA_OP_TYPE_FMPYADD) {
         MCInst_setOpcode(MI, HPPA_INS_FMPYADD);
     }
     else {
         MCInst_setOpcode(MI, HPPA_INS_FMPYSUB);
     }
-    uint32_t fmt = GET_FIELD(insn, 26, 26);
-    CREATE_FPR_REG(MI, rm1);
-    CREATE_FPR_REG(MI, rm2);
-    CREATE_FPR_REG(MI, tm);
-    CREATE_FPR_REG(MI, ra);
-    CREATE_FPR_REG(MI, ta);
+
     if (fmt == 0) {
         push_str_modifier(&MI->hppa_ext, "dbl");
+        CREATE_FPR_REG(MI, rm1);
+        CREATE_FPR_REG(MI, rm2);
+        CREATE_FPR_REG(MI, tm);
+        CREATE_FPR_REG(MI, ra);
+        CREATE_FPR_REG(MI, ta);
     }
     else {
         push_str_modifier(&MI->hppa_ext, "sgl");
+        CREATE_SP_FPR_REG(MI, rm1);
+        CREATE_SP_FPR_REG(MI, rm2);
+        CREATE_SP_FPR_REG(MI, tm);
+        CREATE_SP_FPR_REG(MI, ra);
+        CREATE_SP_FPR_REG(MI, ta);
     }
-    
+
     return true;
 }
 

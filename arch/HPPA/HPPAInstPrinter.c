@@ -142,7 +142,7 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_BL, "TW", false },
 	{ HPPA_INS_GATE, "TW", false },
 	{ HPPA_INS_BLR, "RW", false },
-	{ HPPA_INS_BV, "R(R)", false },
+	{ HPPA_INS_BV, "x(R)", false },
 	{ HPPA_INS_BVE, "(b)", false },
 	{ HPPA_INS_BVE, "(b)W", true },
 	{ HPPA_INS_BE, "o(RR)", false },
@@ -405,6 +405,9 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 		if (opcode == pa_fmt->insn_id && hppa_ext->cmplt == pa_fmt->cmplt) {
 			char *fmt = (char *)pa_fmt->format;
             uint8_t idx = 0;
+			uint32_t space_regs[2] = { HPPA_REG_INVALID, HPPA_REG_INVALID };
+			uint8_t space_reg_idx = 0;
+			cs_ac_type base_access = CS_AC_INVALID;
             while (*fmt)
 			{
 				switch (*fmt++)
@@ -462,11 +465,8 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 					break;
 
 				case '(':
-					uint32_t regs[2] = { HPPA_REG_INVALID, HPPA_REG_INVALID };
-					uint8_t reg_idx = 0;
-					cs_ac_type base_access = CS_AC_INVALID;
 					while (*fmt != ')') {
-						regs[reg_idx] = MCOperand_getReg(ops[idx++]);
+						space_regs[space_reg_idx] = MCOperand_getReg(ops[idx++]);
 						if (*fmt == 'R') {
 							base_access = CS_AC_READ;
 						} else if (*fmt == 'W') {
@@ -477,13 +477,13 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 								base_access |= CS_AC_WRITE;
 						}
 						fmt++;
-						reg_idx++;
+						space_reg_idx++;
 					}
 
-					if (regs[1] == HPPA_OP_INVALID)
-						set_op_mem(hppa, regs[0], regs[1], base_access);
+					if (space_regs[1] == HPPA_OP_INVALID)
+						set_op_mem(hppa, space_regs[0], space_regs[1], base_access);
 					else 
-						set_op_mem(hppa, regs[1], regs[0], base_access);
+						set_op_mem(hppa, space_regs[1], space_regs[0], base_access);
 					fmt++;
 					break;
 

@@ -338,10 +338,18 @@ static const char *const space_reg[] =
 
 static const char *const fpe_reg[] = {
   "fpe1", "fpe3", "fpe5", "fpe7",
-  "fr4R" "fr5R" "fr6R" "fr7R" "fr8R"
-  "fr9R" "fr10R" "fr11R" "fr12R" "fr13R" "fr14R" "fr15R"
-  "fr16R" "fr17R" "fr18R" "fr19R" "fr20R" "fr21R" "fr22R" "fr23R"
-  "fr24R" "fr25R" "fr26R" "fr27R" "fr28R" "fr29R" "fr30R" "fr31R"
+  "fr4R", "fr5R", "fr6R", "fr7R", "fr8R",
+  "fr9R", "fr10R", "fr11R", "fr12R", "fr13R", "fr14R", "fr15R",
+  "fr16R", "fr17R", "fr18R", "fr19R", "fr20R", "fr21R", "fr22R", "fr23R",
+  "fr24R", "fr25R", "fr26R", "fr27R", "fr28R", "fr29R", "fr30R", "fr31R"
+};
+
+static const char *const sp_fp_reg[] = {
+	"fr16L", "fr17L", "fr18L", "fr19L",
+	"fr20L", "fr21L", "fr22L", "fr23L", "fr24L",
+	"fr25L", "fr26L", "fr27L", "fr28L", "fr29L", "fr30L", "fr31L",
+	"fr16R", "fr17R", "fr18R", "fr19R", "fr20R", "fr21R", "fr22R", "fr23R",
+	"fr24R", "fr25R", "fr26R", "fr27R", "fr28R", "fr29R", "fr30R", "fr31R"
 };
 
 const char *HPPA_reg_name(csh handle, unsigned int reg)
@@ -357,6 +365,8 @@ const char *HPPA_reg_name(csh handle, unsigned int reg)
         return control_reg[reg - HPPA_REG_CR0];
 	else if (reg >= HPPA_REG_FPE0 && reg <= HPPA_REG_FPE31)
         return fpe_reg[reg - HPPA_REG_FPE0];
+	else if (reg >= HPPA_REG_SP_FPR0 && reg <= HPPA_REG_SP_FPR31)
+        return sp_fp_reg[reg - HPPA_REG_SP_FPR0];
 	return NULL;
 #else
 	return NULL;
