@@ -421,7 +421,7 @@ typedef struct cs_detail {
 		cs_sh sh;        ///< SH architecture
 		cs_tricore tricore; ///< TriCore architecture
 		cs_alpha alpha; ///< Alpha architecture
-		cs_hppa hppa; ///< Alpha architecture
+		cs_hppa hppa; ///< HPPA architecture
 	};
 } cs_detail;
 

@@ -531,7 +531,7 @@ typedef enum hppa_insn {
 } hppa_insn;
 
 
-
+/// HPPA space select operand
 typedef struct hppa_mem {
     unsigned int base;
     unsigned int space;
@@ -540,11 +540,11 @@ typedef struct hppa_mem {
 
 // Instruction operand
 typedef struct cs_hppa_op {
-	hppa_op_type type; // operand type
+	enum hppa_op_type type; // operand type
 	union {
 		unsigned int reg; // register value for REG operand
 		int64_t imm;      // immediate value for IMM operand
-        hppa_mem mem;
+        struct hppa_mem mem;
 	};
 	enum cs_ac_type access;
 } cs_hppa_op;
@@ -555,9 +555,9 @@ typedef struct cs_hppa {
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 	cs_hppa_op operands[5]; // operands for this instruction.
-    uint32_t ext[5];        // extension data
 } cs_hppa;
 
+/// hppa string/integer modifier
 typedef struct hppa_modifier {
     int type;
     union
@@ -570,9 +570,8 @@ typedef struct hppa_modifier {
 
 // Additional instruction info
 typedef struct hppa_ext {
-    hppa_modifier modifiers[5];
+    struct hppa_modifier modifiers[5];
     uint8_t mod_num;
-    uint32_t full_insn;
     bool b_writeble;
     bool cmplt;
 } hppa_ext;

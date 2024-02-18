@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-#ifdef CAPSTONE_HAS_HPPA
+// #ifdef CAPSTONE_HAS_HPPA
 
 #include <string.h>
 #include <stddef.h> // offsetof macro
@@ -18,8 +18,6 @@
 
 #define GET_BIT(X, WHICH) \
   GET_FIELD (X, WHICH, WHICH)
-
-#define MODE_IS_HPPA_20(mode) (((mode) & CS_MODE_HPPA_20) != 0)
 
 static const char *const compare_cond_names[] =
 {
@@ -277,7 +275,7 @@ static int extract_22(unsigned word)
 
 static void push_str_modifier(hppa_ext *hppa, const char *modifier)
 {
-    if (modifier != "") {
+    if (strcmp(modifier, "")) {
         hppa_modifier *mod = &hppa->modifiers[hppa->mod_num++];
         mod->type = 0;
         mod->str_mod = (char *)modifier;
@@ -304,6 +302,18 @@ static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
             return;
         case 0x65:
             push_str_modifier(&MI->hppa_ext, "r");
+            MCInst_setOpcode(MI, HPPA_INS_RFI);
+            if (MI->flat_insn->detail != NULL) {
+                cs_detail *detail = get_detail(MI);
+                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR1;
+                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR8;
+                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR9;
+                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR16;
+                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR17;
+                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR24;
+                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR25;
+            }
+            break;
         case 0x60:
             MCInst_setOpcode(MI, HPPA_INS_RFI);
             break;
@@ -1167,7 +1177,7 @@ static void fillIdxmemMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode, uint
     uint32_t cmplt = (GET_BIT(insn, 18) << 1) | GET_BIT(insn, 26);
     uint32_t cc = GET_FIELD(insn, 20, 21);
     uint32_t ext = GET_FIELD(insn, 22, 25);
-    if (cmplt & 1 == 1) {
+    if ((cmplt & 1) == 1) {
         hppa_ext->b_writeble = true;
     }
     if (GET_BIT(insn, 19) == 0) {
@@ -1657,7 +1667,7 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t cp = GET_BIT(insn, 20);
     uint32_t cpos = GET_FIELD(insn, 22, 26);
     uint32_t sa = 63 - ((cp << 5) | cpos);
-    uint32_t d = GET_BIT(insn, 22);
+    // uint32_t d = GET_BIT(insn, 22);
     uint32_t r1 = GET_FIELD(insn, 11, 15);
     uint32_t r2 = GET_FIELD(insn, 6, 10);
     uint32_t clen_t = GET_FIELD(insn, 27, 31);
@@ -1671,6 +1681,7 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
             CREATE_GR_REG(MI, r2);
             if (ext <= 0x01) {
                 CREATE_CR_REG(MI, 11);
+                (&MI->hppa_ext)->cmplt = true;
             }
             else {
                 MCOperand_CreateImm0(MI, sa);
@@ -1687,6 +1698,7 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
             }
             else {
                 CREATE_CR_REG(MI, 11);
+                (&MI->hppa_ext)->cmplt = true;
             }
             MCOperand_CreateImm0(MI, 32 - clen_t);
             CREATE_GR_REG(MI, r1);
@@ -1843,6 +1855,7 @@ static bool decodeShexdep1(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 CREATE_GR_REG(MI, r);
             }
             CREATE_CR_REG(MI, 11);
+            (&MI->hppa_ext)->cmplt = true;
             MCOperand_CreateImm0(MI, len);
             CREATE_GR_REG(MI, t);
             break;
@@ -1964,7 +1977,7 @@ static void fillMultmedMods(uint32_t insn, hppa_ext* hppa_ext) {
     uint32_t eb = GET_FIELD(insn, 20, 21);
     uint32_t ea = GET_FIELD(insn, 17, 18);
     if (bit_16 == 0) {
-        char c[4];
+        char c[5];
         sprintf(c, "%d%d%d%d", GET_FIELD(insn, 17, 18), GET_FIELD(insn, 20, 21), 
                                GET_FIELD(insn, 22, 23), GET_FIELD(insn, 24, 25));
         push_str_modifier(hppa_ext, c);
@@ -2312,11 +2325,11 @@ static void fillCoprdwMods(uint32_t insn, uint32_t im, hppa_ext* hppa_ext, cs_mo
     uint32_t ext = (GET_BIT(insn, 19) << 1) | GET_BIT(insn, 22);
     uint32_t opcode = insn >> 26;
 
-    if (!(opcode == HPPA_OP_TYPE_COPRW && uid <= 0x01 ||
-          opcode == HPPA_OP_TYPE_COPRDW && uid == 0x00)) {
+    if (!((opcode == HPPA_OP_TYPE_COPRW && uid <= 0x01) ||
+          (opcode == HPPA_OP_TYPE_COPRDW && uid == 0x00))) {
         push_int_modifier(hppa_ext, uid);
     }
-    if (cmplt & 1 == 1) {
+    if ((cmplt & 1) == 1) {
         hppa_ext->b_writeble = true;
     }
     
@@ -2336,7 +2349,7 @@ static void fillCoprdwMods(uint32_t insn, uint32_t im, hppa_ext* hppa_ext, cs_mo
         push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
         break;
     }   
-    if (ext & 1 == 1 && cc == 1) {
+    if ((ext & 1) == 1 && cc == 1) {
         push_str_modifier(hppa_ext, "bc");
     }
     if (cc == 2) {
@@ -2707,7 +2720,7 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             }
             else if (class == 2) {
                 uint32_t n = GET_BIT(insn, 26);
-                uint32_t cond = GET_FIELD(insn, 27, 31);
+                // uint32_t cond = GET_FIELD(insn, 27, 31);
                 subop = GET_FIELD(insn, 16, 18);
                 if (n == 0) {
                     CREATE_FPR_REG(MI, r1);
@@ -2805,7 +2818,7 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             return false;
         }
     }
-    fillCoprMods(insn, uid, class, &MI->hppa_ext, subop, ud->mode);
+    fillCoprMods(insn, uid, class, &MI->hppa_ext, -1, ud->mode);
     return true;
 }
 
@@ -3046,8 +3059,8 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
     else if (class == 3) {
         subop = GET_FIELD(insn, 16, 18);
         uint32_t fixed = GET_FIELD(insn, 23, 23);
-        if (fixed == 0 && subop <= 0x03 ||
-            fixed == 1 && subop == 0x02) {
+        if ((fixed == 0 && subop <= 0x03) ||
+            (fixed == 1 && subop == 0x02)) {
             create_float_reg_spec(MI, r1, r1_fpe);
             create_float_reg_spec(MI, r2, r2_fpe); 
             create_float_reg_spec(MI, t, t_fpe); 
@@ -3056,6 +3069,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
         }
         return false;
     }
+    return false;
 }
 
 static void fillFpfusedInsnName(MCInst *MI, uint32_t insn) {
@@ -3263,7 +3277,7 @@ static bool decodeActionAndBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case HPPA_OP_TYPE_BBS:
         case HPPA_OP_TYPE_BB:    
             CREATE_GR_REG(MI, r2);
-            if (opcode & 1 == 1) {
+            if ((opcode & 1) == 1) {
                 MCOperand_CreateImm0(MI, r1);
             }
             else {
@@ -3340,7 +3354,6 @@ static void fillStoreInsnName(MCInst *MI, uint32_t opcode) {
 
 static bool decodeCmpclr(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t cond = (GET_BIT(insn, 19) << 3) | GET_FIELD(insn, 16, 18);
-    printf("cond: %d\n", cond);
     uint32_t d = GET_BIT(insn, 20);
     if (MODE_IS_HPPA_20(ud->mode)) {
         MCInst_setOpcode(MI, HPPA_INS_CMPICLR);
@@ -3515,8 +3528,8 @@ static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
     MCInst_clear(MI);
     memset(&MI->hppa_ext, 0, sizeof(MI->hppa_ext));
 
-    uint8_t opcode = HPPA_OP_TYPE(code[0]);
     uint32_t full_insn = readBytes32(MI, code);
+    uint8_t opcode = full_insn >> 26;
 
     if (MODE_IS_HPPA_20(ud->mode)) {
         switch (opcode) {
@@ -3671,4 +3684,4 @@ bool HPPA_getInstruction(csh ud, const uint8_t *code, size_t code_len,
     return true;
 }
 
-#endif
+// #endif

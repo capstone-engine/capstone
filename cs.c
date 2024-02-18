@@ -954,7 +954,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 			// Alpha alignment is 4.
 			return 4;
 		case CS_ARCH_HPPA:
-			// Alpha alignment is 4.
+			// Hppa alignment is 4.
 			return 4;
 	}
 }

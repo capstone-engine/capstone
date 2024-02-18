@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-#ifdef CAPSTONE_HAS_HPPA
+// #ifdef CAPSTONE_HAS_HPPA
 
 #include <capstone/platform.h>
 
@@ -220,11 +220,15 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_PERMH, "RW", false },
 
 	{ HPPA_INS_SHRPD, "RRiW", false },
+	{ HPPA_INS_SHRPD, "RRRW", true },
 	{ HPPA_INS_SHRPW, "RRiW", false },
+	{ HPPA_INS_SHRPW, "RRRW", true },
 	{ HPPA_INS_VSHD, "RRW", false },
 	{ HPPA_INS_SHD, "RRiW", false },
 	{ HPPA_INS_EXTRD, "RiiW", false },
+	{ HPPA_INS_EXTRD, "RRiW", true },
 	{ HPPA_INS_EXTRW, "RiiW", false },
+	{ HPPA_INS_EXTRW, "RRiW", true },
 	{ HPPA_INS_VEXTRU, "RiW", false },
 	{ HPPA_INS_VEXTRS, "RiW", false },
 	{ HPPA_INS_EXTRU, "RiiW", false },
@@ -232,7 +236,9 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_DEPD, "RiiW", false },
 	{ HPPA_INS_DEPDI, "iiiW", false },
 	{ HPPA_INS_DEPW, "RiiW", false },
+	{ HPPA_INS_DEPW, "RRiW", true },
 	{ HPPA_INS_DEPWI, "iiiW", false },
+	{ HPPA_INS_DEPWI, "iRiW", true },
 	{ HPPA_INS_ZVDEP, "RiW", false },
 	{ HPPA_INS_VDEP, "RiW", false },
 	{ HPPA_INS_ZDEP, "RiiW", false },
@@ -508,10 +514,10 @@ static void print_modifiers(MCInst *MI, struct SStream *O)
 
 void HPPA_printInst(MCInst *MI, struct SStream *O, void *Info)
 {
-	cs_insn insn;
+	// cs_insn insn;
 	cs_hppa hppa;
 
-	insn.detail = NULL;
+	// insn.detail = NULL;
 	/* set pubOpcode as instruction id */
 	MCInst_setOpcodePub(MI, MCInst_getOpcode(MI));
 
@@ -536,4 +542,4 @@ void HPPA_printInst(MCInst *MI, struct SStream *O, void *Info)
 #endif
 }
 
-#endif
+// #endif

@@ -1,12 +1,13 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-#ifdef CAPSTONE_HAS_HPPA
+// #ifdef CAPSTONE_HAS_HPPA
 
 #include <string.h>
 #include <stdlib.h>
 
 #include "HPPAMapping.h"
+#include "HPPAConstants.h"
 #include "../../Mapping.h"
 #include "../../utils.h"
 
@@ -1102,6 +1103,38 @@ static void update_regs_access(cs_struct *ud, cs_detail *detail,
 		detail->regs_write[detail->regs_write_count] = r; \
 		detail->regs_write_count++; \
 	} while (0)
+
+	switch (opcode) {
+	default:
+		break;
+	case HPPA_INS_BLE:
+		PUSH_WRITE(HPPA_REG_GR31);
+		PUSH_WRITE(HPPA_REG_SR0);
+		break;
+	case HPPA_INS_BVB:
+		PUSH_READ(HPPA_REG_CR11);
+		break;
+	case HPPA_INS_RFIR:
+		PUSH_WRITE(HPPA_REG_GR1);
+		PUSH_WRITE(HPPA_REG_GR8);
+		PUSH_WRITE(HPPA_REG_GR9);
+		PUSH_WRITE(HPPA_REG_GR16);
+		PUSH_WRITE(HPPA_REG_GR17);
+		PUSH_WRITE(HPPA_REG_GR24);
+		PUSH_WRITE(HPPA_REG_GR25);
+		break;
+	case HPPA_INS_VDEP:
+	case HPPA_INS_VDEPI:
+	case HPPA_INS_VEXTRS:
+	case HPPA_INS_VEXTRU:
+	case HPPA_INS_VSHD:
+	case HPPA_INS_ZVDEPI:
+		PUSH_READ(HPPA_REG_CR11);
+		break;
+	case HPPA_INS_ADDIL:
+		PUSH_WRITE(HPPA_REG_GR1);
+		break;
+	}
 }
 
 void HPPA_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int opcode)
@@ -1123,6 +1156,7 @@ void HPPA_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int opcode)
     for (int i = 0; i < NUMINSNS; ++i) {
 		const struct pa_insn *pa_insn = &pa_insns[i];
 		if (pa_insn->insn == opcode) {
+			insn->id = pa_insn->insn;
 			PUSH_GROUP(pa_insn->grp);
 			break;
 		}
@@ -1199,15 +1233,13 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 				regs_write[write_count++] = op->mem.base;
 			}
 			break;
-
+		default:
+			break;
 		}
 	}
 
 	sort_and_uniq(regs_read, read_count, regs_read_count);
 	sort_and_uniq(regs_write, write_count, regs_write_count);
-
-	// *regs_read_count = read_count;
-	// *regs_write_count = write_count;
 }
 
-#endif
+// #endif

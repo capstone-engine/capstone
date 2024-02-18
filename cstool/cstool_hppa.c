@@ -35,34 +35,28 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
 
     hppa = &ins->detail->hppa;
 
-    printf("\tOperand count: %u\n", hppa->op_count);
-
+    printf("\top_count: %u\n", hppa->op_count);
     for (unsigned i = 0; i < hppa->op_count; i++) {
 		cs_hppa_op *op = &(hppa->operands[i]);
-        printf("\t\toperands[%u].type: ", i);
-        switch (op->type)
-        {
-        case HPPA_OP_INVALID:
-            printf("INVALID\n");
-            break;
+        switch (op->type) {
         case HPPA_OP_REG:
-            printf("REG: %s\n", cs_reg_name(handle, op->reg));
+            printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
             break;
         case HPPA_OP_IMM:
-            printf("IMM: ");
+            printf("\t\toperands[%u].type: IMM = ", i);
             printfInt64(op->imm);
             printf("\n");
             break;
         case HPPA_OP_IDX_REG:
-            printf("IDX_REG: %s\n", cs_reg_name(handle, op->reg));
+            printf("\t\toperands[%u].type: IDX_REG = %s\n", i, cs_reg_name(handle, op->reg));
             break;
         case HPPA_OP_DISP:
-            printf("IMM: ");
+            printf("\t\toperands[%u].type: DISP = ", i);
             printfInt64(op->imm);
             printf("\n");
             break;
         case HPPA_OP_MEM:
-            printf("MEM\n");
+            printf("\t\toperands[%u].type:  MEM\n", i);
             if (op->mem.space != HPPA_OP_INVALID) {
                 printf("\t\t\toperands[%u].mem.space: REG = %s\n",
 						i, cs_reg_name(handle, op->mem.space));
@@ -71,10 +65,11 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
                     i, cs_reg_name(handle, op->mem.base));
             break;
         case HPPA_OP_TARGET:
+            printf("\t\toperands[%u].type: ", i);
             if (op->imm >= 0x8000000000000000)
-                printf("TARGET: -0x%lx\n", -op->imm);
+                printf("TARGET = -0x%lx\n", -op->imm);
             else 
-                printf("TARGET: 0x%lx\n", op->imm);
+                printf("TARGET = 0x%lx\n", op->imm);
             break;
         }
     }
