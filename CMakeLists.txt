@@ -633,7 +633,7 @@ if(CAPSTONE_HPPA_SUPPORT)
         arch/HPPA/HPPAMapping.h
         arch/HPPA/HPPAModule.h
     )
-    # set(TEST_SOURCES ${TEST_SOURCES} test_hppa.c)
+    set(TEST_SOURCES ${TEST_SOURCES} test_hppa.c)
 endif()
 
 if (CAPSTONE_OSXKERNEL_SUPPORT)

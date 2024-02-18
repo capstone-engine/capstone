@@ -72,7 +72,6 @@ struct pa_insn_fmt
    r - index register (read only)
    T - offset (pc relative)
    o - displacement (imm)
-   0 - register with unknown access (in undocumented instructions)
    Y - %sr0,%r31 -- implicit target of be,l instruction
    x - [r] or [o] defined by the operand kind
    b - base register (may be writable in some cases)

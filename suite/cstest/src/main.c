@@ -22,6 +22,7 @@ static single_dict arches[] = {
 	{"CS_ARCH_RISCV", CS_ARCH_RISCV},
 	{"CS_ARCH_TRICORE", CS_ARCH_TRICORE},
 	{"CS_ARCH_ALPHA", CS_ARCH_ALPHA},
+	{"CS_ARCH_HPPA", CS_ARCH_HPPA},
 };
 
  static single_dict modes[] = {
@@ -71,6 +72,8 @@ static single_dict arches[] = {
 	{"CS_MODE_TRICORE_160", CS_MODE_TRICORE_160},
 	{"CS_MODE_TRICORE_161", CS_MODE_TRICORE_161},
 	{"CS_MODE_TRICORE_162", CS_MODE_TRICORE_162},
+	{"CS_MODE_HPPA_20", CS_MODE_HPPA_20},
+	{"CS_MODE_HPPA_11", CS_MODE_HPPA_11},
 };
 
  static double_dict options[] = {
