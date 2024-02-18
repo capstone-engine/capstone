@@ -84,8 +84,8 @@ all_tests = (
         (CS_ARCH_ALPHA, CS_MODE_LITTLE_ENDIAN, ALPHA_CODE, "Alpha (Little-endian)", None),
         (CS_ARCH_ALPHA, CS_MODE_BIG_ENDIAN, ALPHA_CODE_BE, "Alpha (Big-endian)", None),
         (CS_ARCH_HPPA, CS_MODE_BIG_ENDIAN | CS_MODE_HPPA_20, HPPA_20_CODE_BE, "HPPA 2.0 (Big-endian)", None),
-        (CS_ARCH_HPPA, CS_MODE_BIG_ENDIAN | CS_MODE_HPPA_11, HPPA_11_CODE_BE, "HPPA 1.1 (Big-endian)", None),
         (CS_ARCH_HPPA, CS_MODE_LITTLE_ENDIAN | CS_MODE_HPPA_20, HPPA_20_CODE, "HPPA 2.0 (Little-endian)", None),
+        (CS_ARCH_HPPA, CS_MODE_BIG_ENDIAN | CS_MODE_HPPA_11, HPPA_11_CODE_BE, "HPPA 1.1 (Big-endian)", None),
         (CS_ARCH_HPPA, CS_MODE_LITTLE_ENDIAN | CS_MODE_HPPA_11, HPPA_11_CODE, "HPPA 1.1 (Little-endian)", None),
 )
 
