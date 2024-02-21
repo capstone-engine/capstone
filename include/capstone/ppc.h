@@ -882,22 +882,6 @@ static inline bool cs_ppc_bc_cr_bit_is_one(uint8_t bo)
 	return false;
 }
 
-#define PPC_NUM_OPS 8
-
-/// Instruction structure
-typedef struct cs_ppc {
-	/// branch code for branch instructions
-	ppc_bc bc;
-
-	/// if update_cr0 = True, then this 'dot' insn updates CR0
-	bool update_cr0;
-
-	/// Number of operands of this instruction,
-	/// or 0 when instruction has no operand.
-	uint8_t op_count;
-	cs_ppc_op operands[PPC_NUM_OPS]; ///< operands for this instruction.
-} cs_ppc;
-
 /// PPC instruction
 typedef enum ppc_insn {
 	// generated content <PPCGenCSInsnEnum.inc> begin
@@ -3450,6 +3434,25 @@ static inline bool ppc_is_b_form(ppc_insn_form form)
 typedef struct {
 	ppc_insn_form form;
 } ppc_suppl_info;
+
+#define PPC_NUM_OPS 8
+
+/// Instruction structure
+typedef struct cs_ppc {
+	/// branch code for branch instructions
+	ppc_bc bc;
+
+	/// if update_cr0 = True, then this 'dot' insn updates CR0
+	bool update_cr0;
+
+	///< The instruction format. Can be use to determine the bit encoding of the instruction.
+	ppc_insn_form format;
+
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
+	uint8_t op_count;
+	cs_ppc_op operands[PPC_NUM_OPS]; ///< operands for this instruction.
+} cs_ppc;
 
 #ifdef __cplusplus
 }

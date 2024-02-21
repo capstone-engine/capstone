@@ -114,6 +114,8 @@ void map_groups(MCInst *MI, const insn_map *imap);
 
 void map_cs_id(MCInst *MI, const insn_map *imap, unsigned int imap_size);
 
+const void *map_get_suppl_info(MCInst *MI, const insn_map *imap);
+
 #define DECL_get_detail_op(arch, ARCH) \
 	cs_##arch##_op *ARCH##_get_detail_op(MCInst *MI, int offset);
 

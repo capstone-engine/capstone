@@ -225,6 +225,19 @@ void map_groups(MCInst *MI, const insn_map *imap)
 #endif // CAPSTONE_DIET
 }
 
+/// Returns the pointer to the supllementary information in
+/// the instruction mapping table @imap or NULL in case of failure.
+const void *map_get_suppl_info(MCInst *MI, const insn_map *imap)
+{
+#ifndef CAPSTONE_DIET
+	if (!MI->flat_insn->detail)
+		return NULL;
+
+	unsigned Opcode = MCInst_getOpcode(MI);
+	return &imap[Opcode].suppl_info;
+#endif // CAPSTONE_DIET
+}
+
 // Search for the CS instruction id for the given @MC_Opcode in @imap.
 // return -1 if none is found.
 unsigned int find_cs_id(unsigned MC_Opcode, const insn_map *imap,
