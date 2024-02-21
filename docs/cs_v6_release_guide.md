@@ -163,7 +163,10 @@ TODO
 
 **Instruction formats for PPC**
 
-TODO
+The instruction encoding formats are added for PPC. They are accessible via `cs_ppc->format`.
+They do follow loosely the ISA formats of instructions but not quite. Unfortunately,
+LLV doesn't group the instruction formats perfectly aligned with the ISA.
+Nonetheless, we hope this additional information is useful to you.
 
 ### Instruction Alias
 
