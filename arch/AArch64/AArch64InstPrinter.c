@@ -2350,7 +2350,7 @@ void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 		const int64_t Offset = MCOperand_getImm(Op);
 		SStream_concat0(O, markup("<imm:"));
 		if (!MI->csh->PrintBranchImmNotAsAddress)
-			printUInt64(O, ((Address & -4096) + Offset));
+			printUInt64(O, ((Address & -4) + Offset));
 		else {
 			printUInt64Bang(O, Offset);
 		}
