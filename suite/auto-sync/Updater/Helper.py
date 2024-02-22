@@ -1,5 +1,6 @@
 import hashlib
 import logging as log
+import re
 import shutil
 import subprocess
 import sys
@@ -123,18 +124,35 @@ def get_sha256(data: bytes) -> str:
 
 
 def get_header() -> str:
-    return (
-        "/* Capstone Disassembly Engine, http://www.capstone-engine.org */\n"
+    commit = get_llvm_commit()
+    tag = get_llvm_tag()
+    header = (
+        "/* Capstone Disassembly Engine, https://www.capstone-engine.org */\n"
         "/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */\n"
         "/*    Rot127 <unisono@quyllur.org> 2022-2023 */\n"
         "/* Automatically translated source file from LLVM. */\n\n"
-        "/* LLVM-commit: <commit> */\n"
-        "/* LLVM-tag: <tag> */\n\n"
+        f"/* LLVM-commit: {commit} */\n"
+        f"/* LLVM-tag: {tag} */\n\n"
         "/* Only small edits allowed. */\n"
         "/* For multiple similar edits, please create a Patch for the translator. */\n\n"
         "/* Capstone's C++ file translator: */\n"
         "/* https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */\n\n"
     )
+
+    return header
+
+
+def get_llvm_commit() -> str:
+    llvm_dir = PathVarHandler().get_path("{LLVM_ROOT}")
+    r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=llvm_dir, capture_output=True)
+    return r.stdout.decode("utf8").strip()
+
+
+def get_llvm_tag() -> str:
+    llvm_dir = PathVarHandler().get_path("{LLVM_ROOT}")
+    commit = get_llvm_commit()
+    r = subprocess.run(["git", "describe", "--all", "--tags", commit], cwd=llvm_dir, capture_output=True)
+    return r.stdout.split(b"/")[-1].decode("utf8").strip()
 
 
 def run_clang_format(out_paths: list[Path]):
@@ -157,3 +175,14 @@ def check_py_version() -> None:
     if not sys.hexversion >= 0x030B00F0:
         log.fatal("Python >= v3.11 required.")
         exit(1)
+
+
+def replace_in_file(file_path: Path, pattern: str, replacement: str):
+    out = []
+    with open(file_path) as f:
+        lines = f.readlines()
+    for l in lines:
+        out.append(re.sub(pattern, replacement, l))
+    with open(file_path, "w") as f:
+        f.writelines(out)
+    return f

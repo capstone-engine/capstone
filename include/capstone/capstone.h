@@ -352,7 +352,6 @@ typedef struct cs_opt_skipdata {
 	void *user_data;
 } cs_opt_skipdata;
 
-
 #include "arm.h"
 #include "aarch64.h"
 #include "m68k.h"
@@ -376,6 +375,21 @@ typedef struct cs_opt_skipdata {
 #define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20
 #define MAX_NUM_GROUPS 8
+#define MAX_NUM_OPC_BITS 64
+
+/// Provides information about an operand's opcode in the instruction
+typedef struct cs_opcode_encoding {
+	/// Contains all the bits (in order) that form the full opcode.
+	/// Note that each bit is NOT necessarily next to each other in the
+	/// instruction bytes. (see below)
+	uint64_t bits;
+	/// As mentioned above, since the opcode bits may not be next to each other
+	/// this array comes to the rescue by providing the location of each bit
+	/// individually.
+	uint8_t indexes[MAX_NUM_OPC_BITS];
+	uint8_t
+		bit_count; ///< Specifies the number of bits that form the full opcode.
+} cs_opcode_encoding;
 
 /// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 /// Initialized as memset(., 0, offsetof(cs_detail, ARCH)+sizeof(cs_ARCH))
@@ -395,6 +409,8 @@ typedef struct cs_detail {
 	uint8_t groups_count; ///< number of groups this insn belongs to
 
 	bool writeback;	      ///< Instruction has writeback operands.
+
+	cs_opcode_encoding opcode_encoding; ///< The encoding of the opcode. (If bit count is 0 then no info is provided)
 
 	/// Architecture-specific instruction info
 	union {
@@ -474,7 +490,6 @@ typedef struct cs_insn {
 	///     is not NULL, its content is still irrelevant.
 	cs_detail *detail;
 } cs_insn;
-
 
 /// Calculate the offset of a disassembled instruction in its buffer, given its position
 /// in its array of disassembled insn
