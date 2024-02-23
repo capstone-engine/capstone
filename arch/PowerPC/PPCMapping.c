@@ -197,6 +197,10 @@ void PPC_set_instr_map_data(MCInst *MI, const uint8_t *Bytes, size_t BytesLen)
 	map_groups(MI, ppc_insns);
 	PPC_add_branch_predicates(MI, Bytes, BytesLen);
 	PPC_check_updates_cr0(MI);
+	const ppc_suppl_info *suppl_info = map_get_suppl_info(MI, ppc_insns);
+	if (suppl_info) {
+		PPC_get_detail(MI)->format = suppl_info->form;
+	}
 }
 
 /// Inialize PPCs detail.

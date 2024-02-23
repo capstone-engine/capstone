@@ -54,6 +54,7 @@ class CsPpc(ctypes.Structure):
     _fields_ = (
         ('bc', PpcBC),
         ('update_cr0', ctypes.c_bool),
+        ('format', ctypes.c_uint32),
         ('op_count', ctypes.c_uint8),
         ('operands', PpcOp * 8),
     )
