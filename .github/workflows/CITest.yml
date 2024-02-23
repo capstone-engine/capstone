@@ -100,6 +100,10 @@ jobs:
         cp libcapstone.* ../tests/
         cp test_* ../tests/
 
+    - name: cstool - reaches disassembler engine
+      run: |
+        sh suite/run_invalid_cstool.sh
+
     - name: cstest
       run: |
         cd suite/cstest && ./build_cstest.sh

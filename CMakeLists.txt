@@ -76,15 +76,6 @@ foreach(i RANGE ${count})
     option("CAPSTONE_${supported_architecture}_SUPPORT" "${supported_architecture_label} support" ${CAPSTONE_ARCHITECTURE_DEFAULT})
 endforeach()
 
-# propagate architecture support variables to preprocessor
-foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
-    set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
-    if(${option_name})
-        message("Enabling ${option_name}")
-        add_definitions("-D${option_name}")
-    endif()
-endforeach()
-
 option(CAPSTONE_X86_REDUCE "x86 with reduce instruction sets to minimize library" OFF)
 option(CAPSTONE_X86_ATT_DISABLE "Disable x86 AT&T syntax" OFF)
 option(CAPSTONE_OSXKERNEL_SUPPORT "Support to embed Capstone into OS X Kernel extensions" OFF)
@@ -99,6 +90,15 @@ endif()
 
 if(CAPSTONE_USE_ARCH_REGISTRATION)
     add_definitions(-DCAPSTONE_USE_ARCH_REGISTRATION)
+elseif(CAPSTONE_ARCHITECTURE_DEFAULT)
+    # propagate architecture support variables to preprocessor
+    foreach(supported_architecture ${SUPPORTED_ARCHITECTURES})
+        set(option_name "CAPSTONE_${supported_architecture}_SUPPORT")
+        if(${option_name})
+            message("Enabling ${option_name}")
+            add_definitions("-D${option_name}")
+        endif()
+    endforeach()
 endif()
 
 if(CAPSTONE_X86_REDUCE)
