@@ -283,7 +283,8 @@ static void push_str_modifier(hppa_ext *hppa, const char *modifier)
     if (strcmp(modifier, "")) {
         hppa_modifier *mod = &hppa->modifiers[hppa->mod_num++];
         mod->type = 0;
-        mod->str_mod = (char *)modifier;
+        assert(strlen(modifier) <= 8);
+        strcpy(mod->str_mod, modifier);
     }
 }
 

@@ -497,7 +497,7 @@ typedef struct hppa_modifier {
     int type;
     union
     {
-        char* str_mod;
+        char str_mod[8];
         uint32_t int_mod;
     };
     
