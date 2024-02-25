@@ -385,13 +385,16 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_hppa_op *op)
 
 static void fill_operands(MCInst *MI, cs_hppa *hppa)
 {
+	hppa->op_count = 0;
 	unsigned mc_op_count = MCInst_getNumOperands(MI);
+	if (mc_op_count == 0)
+		return;
+		
 	MCOperand *ops[mc_op_count];
 	for (unsigned i = 0; i < mc_op_count; i++) {
 		ops[i] = MCInst_getOperand(MI, i);
 	}
 
-	hppa->op_count = 0;
 	hppa_ext *hppa_ext = &MI->hppa_ext;
 	uint32_t opcode = MCInst_getOpcode(MI);
 
