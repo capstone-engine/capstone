@@ -389,11 +389,6 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 	unsigned mc_op_count = MCInst_getNumOperands(MI);
 	if (mc_op_count == 0)
 		return;
-		
-	MCOperand *ops[mc_op_count];
-	for (unsigned i = 0; i < mc_op_count; i++) {
-		ops[i] = MCInst_getOperand(MI, i);
-	}
 
 	hppa_ext *hppa_ext = &MI->hppa_ext;
 	uint32_t opcode = MCInst_getOpcode(MI);
@@ -406,65 +401,64 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 			uint32_t space_regs[2] = { HPPA_REG_INVALID, HPPA_REG_INVALID };
 			uint8_t space_reg_idx = 0;
 			cs_ac_type base_access = CS_AC_INVALID;
+			MCOperand *op;
             while (*fmt)
 			{
 				switch (*fmt++)
 				{
            	    case 'i':
-					if (MCOperand_isReg(ops[idx])) {
-						set_op_reg(hppa, MCOperand_getReg(ops[idx]), CS_AC_READ);
+					op = MCInst_getOperand(MI, idx++);
+					if (MCOperand_isReg(op)) {
+						set_op_reg(hppa, MCOperand_getReg(op), CS_AC_READ);
 					}
 					else {
-						set_op_imm(hppa, MCOperand_getImm(ops[idx]));
+						set_op_imm(hppa, MCOperand_getImm(op));
 					}
-					idx++;
                     break;
                 case 'o':
-                    set_op_disp(hppa, MCOperand_getImm(ops[idx++]));
+					op = MCInst_getOperand(MI, idx++);
+                    set_op_disp(hppa, MCOperand_getImm(op));
                     break;
 				
 				case 'R':
-					set_op_reg(hppa, MCOperand_getReg(ops[idx++]), CS_AC_READ);
+					op = MCInst_getOperand(MI, idx++);
+					set_op_reg(hppa, MCOperand_getReg(op), CS_AC_READ);
 					break;
 
 				case 'W':
-					set_op_reg(hppa, MCOperand_getReg(ops[idx++]), CS_AC_WRITE);
+					op = MCInst_getOperand(MI, idx++);
+					set_op_reg(hppa, MCOperand_getReg(op), CS_AC_WRITE);
 					break;
 
 				case 'w':
-					set_op_reg(hppa, MCOperand_getReg(ops[idx++]), CS_AC_READ_WRTE);
+					op = MCInst_getOperand(MI, idx++);
+					set_op_reg(hppa, MCOperand_getReg(op), CS_AC_READ_WRTE);
 					break;
 
 				case 'r':
-					set_op_idx_reg(hppa, MCOperand_getReg(ops[idx++]));
+					op = MCInst_getOperand(MI, idx++);
+					set_op_idx_reg(hppa, MCOperand_getReg(op));
 					break;
 
 				case 'T':
-					set_op_target(hppa, MCOperand_getImm(ops[idx++]) + 8);
-					break;
-
-				case 'Y':
-					set_op_reg(hppa, MCOperand_getReg(ops[idx++]), CS_AC_WRITE);
-					set_op_reg(hppa, MCOperand_getReg(ops[idx++]), CS_AC_WRITE);
-					break;
-
-				case '0':
-					set_op_reg(hppa, MCOperand_getReg(ops[idx++]), CS_AC_INVALID);
+					op = MCInst_getOperand(MI, idx++);
+					set_op_target(hppa, MCOperand_getImm(op) + 8);
 					break;
 
 				case 'x':
-					if (MCOperand_isReg(ops[idx])) {
-						set_op_idx_reg(hppa, MCOperand_getReg(ops[idx]));
+					op = MCInst_getOperand(MI, idx++);
+					if (MCOperand_isReg(op)) {
+						set_op_idx_reg(hppa, MCOperand_getReg(op));
 					}
 					else {
-						set_op_disp(hppa, MCOperand_getImm(ops[idx]));
+						set_op_disp(hppa, MCOperand_getImm(op));
 					}
-					idx++;
 					break;
 
 				case '(':
 					while (*fmt != ')') {
-						space_regs[space_reg_idx] = MCOperand_getReg(ops[idx++]);
+						op = MCInst_getOperand(MI, idx++);
+						space_regs[space_reg_idx] = MCOperand_getReg(op);
 						if (*fmt == 'R') {
 							base_access = CS_AC_READ;
 						} else if (*fmt == 'W') {
