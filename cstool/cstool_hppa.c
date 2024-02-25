@@ -3,26 +3,7 @@
 #include <capstone/capstone.h>
 #include <capstone/platform.h>
 #include "cstool.h"
-
-#define LONG_MIN  (-__LONG_MAX__ -1L)
-
-void printfInt64(int64_t val)
-{
-	if (val >= 0) {
-		if (val > 9)
-			printf("0x%"PRIx64, val);
-		else
-			printf("%"PRIu64, val);
-	} else {
-		if (val <- 9) {
-			if (val == LONG_MIN)
-				printf("-0x%"PRIx64, (uint64_t)val);
-			else
-				printf("-0x%"PRIx64, (uint64_t)-val);
-		} else
-			printf("-%"PRIu64, -val);
-	}
-}
+#include "limits.h"
 
 void print_insn_detail_hppa(csh handle, cs_insn *ins)
 {
@@ -44,17 +25,19 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
             printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
             break;
         case HPPA_OP_IMM:
-            printf("\t\toperands[%u].type: IMM = ", i);
-            printfInt64(op->imm);
-            printf("\n");
+            if (op->imm < 0)
+                printf("\t\toperands[%u].type: IMM = -0x%" PRIx64 "\n", i, -(op->imm));
+            else
+                printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
             break;
         case HPPA_OP_IDX_REG:
             printf("\t\toperands[%u].type: IDX_REG = %s\n", i, cs_reg_name(handle, op->reg));
             break;
         case HPPA_OP_DISP:
-            printf("\t\toperands[%u].type: DISP = ", i);
-            printfInt64(op->imm);
-            printf("\n");
+            if (op->imm < 0)
+                printf("\t\toperands[%u].type: DISP = -0x%" PRIx64 "\n", i, -(op->imm));
+            else
+                printf("\t\toperands[%u].type: DISP = 0x%" PRIx64 "\n", i, op->imm);
             break;
         case HPPA_OP_MEM:
             printf("\t\toperands[%u].type:  MEM\n", i);
