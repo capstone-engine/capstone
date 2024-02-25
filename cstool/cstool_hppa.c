@@ -38,6 +38,7 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
     printf("\top_count: %u\n", hppa->op_count);
     for (unsigned i = 0; i < hppa->op_count; i++) {
 		cs_hppa_op *op = &(hppa->operands[i]);
+        uint64_t target_addr;
         switch (op->type) {
         case HPPA_OP_REG:
             printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
@@ -66,10 +67,8 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
             break;
         case HPPA_OP_TARGET:
             printf("\t\toperands[%u].type: ", i);
-            if (op->imm >= 0x8000000000000000)
-                printf("TARGET = -0x%lx\n", -op->imm);
-            else 
-                printf("TARGET = 0x%lx\n", op->imm);
+            target_addr = ins->address + op->imm;
+            printf("TARGET = 0x%" PRIx64 "\n", target_addr);
             break;
         }
     }
