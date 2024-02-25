@@ -131,7 +131,7 @@ struct MCInst {
 	uint8_t xAcquireRelease;   // X86 xacquire/xrelease
 	bool isAliasInstr; // Flag if this MCInst is an alias.
 	bool fillDetailOps; // If set, detail->operands gets filled.
-	hppa_ext hppa_ext;
+	hppa_ext hppa_ext;	// for HPPA operand
 };
 
 void MCInst_Init(MCInst *inst);

@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-// #ifdef CAPSTONE_HAS_HPPA
+#ifdef CAPSTONE_HAS_HPPA
 
 #include <string.h>
 #include <stdlib.h>
@@ -1252,4 +1252,4 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 	sort_and_uniq(regs_write, write_count, regs_write_count);
 }
 
-// #endif
+#endif

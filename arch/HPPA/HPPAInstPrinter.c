@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-// #ifdef CAPSTONE_HAS_HPPA
+#ifdef CAPSTONE_HAS_HPPA
 
 #include <capstone/platform.h>
 
@@ -61,7 +61,7 @@ struct pa_insn_fmt
     // unsigned long int mask;
 	hppa_insn insn_id;
     const char *format;
-	bool cmplt; 	// true if some completer affects on instruction format
+	bool is_alternative; 	// true if some completer affects on instruction format
 };
 
 /* HPPA instruction formats (access)
@@ -72,7 +72,6 @@ struct pa_insn_fmt
    r - index register (read only)
    T - offset (pc relative)
    o - displacement (imm)
-   Y - %sr0,%r31 -- implicit target of be,l instruction
    x - [r] or [o] defined by the operand kind
    b - base register (may be writable in some cases)
    
@@ -97,11 +96,8 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_MTSAR, "R", false },
 
 	{ HPPA_INS_LDD, "x(Rb)W", false },
-	// { HPPA_INS_LDW, "o(Rb)W", false },
 	{ HPPA_INS_LDW, "x(Rb)W", false },
-	// { HPPA_INS_LDH, "o(Rb)W", false },
 	{ HPPA_INS_LDH, "x(Rb)W", false },
-	// { HPPA_INS_LDB, "o(Rb)W", false },
 	{ HPPA_INS_LDB, "x(Rb)W", false },
 	{ HPPA_INS_STD, "Ro(Rb)", false },
 	{ HPPA_INS_STW, "Ro(Rb)", false },
@@ -138,7 +134,6 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_ADDIL, "iR", false },
 
 	{ HPPA_INS_B, "TW", false },
-	// { HPPA_INS_B, "TR", false },
 	{ HPPA_INS_BL, "TW", false },
 	{ HPPA_INS_GATE, "TW", false },
 	{ HPPA_INS_BLR, "RW", false },
@@ -381,7 +376,7 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_hppa_op *op)
 		SStream_concat(O, ")");
 		break;
 	case HPPA_OP_TARGET:
-		printInt64(O, MI->address + op->imm);
+		printUInt64(O, MI->address + op->imm);
 		break;
 	}
 }
@@ -402,7 +397,7 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 
     for (int i = 0; i < NUMFMTS; ++i) {
 		const struct pa_insn_fmt *pa_fmt = &pa_formats[i];
-		if (opcode == pa_fmt->insn_id && hppa_ext->cmplt == pa_fmt->cmplt) {
+		if (opcode == pa_fmt->insn_id && hppa_ext->is_alternative == pa_fmt->is_alternative) {
 			char *fmt = (char *)pa_fmt->format;
             uint8_t idx = 0;
 			uint32_t space_regs[2] = { HPPA_REG_INVALID, HPPA_REG_INVALID };
@@ -516,7 +511,6 @@ void HPPA_printInst(MCInst *MI, struct SStream *O, void *Info)
 	// cs_insn insn;
 	cs_hppa hppa;
 
-	// insn.detail = NULL;
 	/* set pubOpcode as instruction id */
 	MCInst_setOpcodePub(MI, MCInst_getOpcode(MI));
 
@@ -541,4 +535,4 @@ void HPPA_printInst(MCInst *MI, struct SStream *O, void *Info)
 #endif
 }
 
-// #endif
+#endif

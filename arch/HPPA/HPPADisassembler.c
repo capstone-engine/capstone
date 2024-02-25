@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Dmitry Sibirtsev  <sibirtsevdl@gmail.com>, 2023 */
 
-// #ifdef CAPSTONE_HAS_HPPA
+#ifdef CAPSTONE_HAS_HPPA
 
 #include <string.h>
 #include <stddef.h> // offsetof macro
@@ -18,6 +18,10 @@
 
 #define GET_BIT(X, WHICH) \
   GET_FIELD (X, WHICH, WHICH)
+
+#define CMPLT_IS_REG_MOD(CMPLT) (((CMPLT) & 1) == 1)
+
+#define HPPA_EXT_REF(MI) (&MI->hppa_ext)
 
 static const char *const compare_cond_names[] =
 {
@@ -110,7 +114,7 @@ static const char *const add_compl_names[] = { "", "", "l", "tsv" };
 #define CREATE_CR_REG(MI, cr)       MCOperand_CreateReg0(MI, cr + HPPA_REG_CR0)
 #define CREATE_FPR_REG(MI, fpr)     MCOperand_CreateReg0(MI, fpr + HPPA_REG_FPR0)
 #define CREATE_FPE_REG(MI, fpe)     MCOperand_CreateReg0(MI, fpe + HPPA_REG_FPE0)
-#define CREATE_SP_FPR_REG(MI, fpr)     MCOperand_CreateReg0(MI, fpr + HPPA_REG_SP_FPR0)
+#define CREATE_SP_FPR_REG(MI, fpr)     MCOperand_CreateReg0(MI, fpr + HPPA_REG_SP_FPR0) 
 
 static void create_float_reg_spec(MCInst *MI, uint32_t reg, uint32_t fpe_flag) {
     if (fpe_flag == 1) {
@@ -302,17 +306,14 @@ static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
             MCInst_setOpcode(MI, HPPA_INS_MTSARCM);
             return;
         case 0x65:
-            push_str_modifier(&MI->hppa_ext, "r");
-            if (MI->flat_insn->detail != NULL) {
-                cs_detail *detail = get_detail(MI);
-                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR1;
-                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR8;
-                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR9;
-                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR16;
-                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR17;
-                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR24;
-                detail->regs_write[detail->regs_write_count++] = HPPA_REG_GR25;
-            }
+            push_str_modifier(HPPA_EXT_REF(MI), "r");
+            map_add_implicit_write(MI, HPPA_REG_GR1);
+            map_add_implicit_write(MI, HPPA_REG_GR8);
+            map_add_implicit_write(MI, HPPA_REG_GR9);
+            map_add_implicit_write(MI, HPPA_REG_GR16);
+            map_add_implicit_write(MI, HPPA_REG_GR17);
+            map_add_implicit_write(MI, HPPA_REG_GR24);
+            map_add_implicit_write(MI, HPPA_REG_GR25);
         case 0x60:
             MCInst_setOpcode(MI, HPPA_INS_RFI);
             return;
@@ -361,7 +362,7 @@ static void fillSysopInsnName(MCInst *MI, uint32_t insn) {
     case 0x45:
         MCInst_setOpcode(MI, HPPA_INS_MFCTL);
         if (GET_BIT(insn, 17) == 1 && MODE_IS_HPPA_20(MI->csh->mode)) {
-            push_str_modifier(&MI->hppa_ext, "w");
+            push_str_modifier(HPPA_EXT_REF(MI), "w");
         }
         break;
     }
@@ -439,14 +440,14 @@ static void fillMemmgmtInsnName(MCInst *MI, uint32_t insn) {
             return;
         case 0x18:
             MCInst_setOpcode(MI, HPPA_INS_PITLB);
-            push_str_modifier(&MI->hppa_ext, "l");
+            push_str_modifier(HPPA_EXT_REF(MI), "l");
             return;                           
         case 0x60:
             MCInst_setOpcode(MI, HPPA_INS_IDTLBT);
             return;
         case 0x58:
             MCInst_setOpcode(MI, HPPA_INS_PDTLB);
-            push_str_modifier(&MI->hppa_ext, "l");
+            push_str_modifier(HPPA_EXT_REF(MI), "l");
             return;           
         case 0x4f:
             MCInst_setOpcode(MI, HPPA_INS_FIC);
@@ -458,7 +459,7 @@ static void fillMemmgmtInsnName(MCInst *MI, uint32_t insn) {
             else {
                 MCInst_setOpcode(MI, HPPA_INS_PROBEI);
             };
-            push_str_modifier(&MI->hppa_ext, "r");
+            push_str_modifier(HPPA_EXT_REF(MI), "r");
             return;
         case 0x47:
             if (GET_BIT(insn, 18) == 0) {
@@ -467,7 +468,7 @@ static void fillMemmgmtInsnName(MCInst *MI, uint32_t insn) {
             else {
                 MCInst_setOpcode(MI, HPPA_INS_PROBEI);
             };
-            push_str_modifier(&MI->hppa_ext, "w");
+            push_str_modifier(HPPA_EXT_REF(MI), "w");
             return;                             
         }
     }
@@ -565,7 +566,7 @@ static void fillMemmgmtMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
         return;
     }
 success:
-    if (cmplt == 1) {
+    if (CMPLT_IS_REG_MOD(cmplt)) {
         hppa_ext->b_writeble = true;
     }
     push_str_modifier(hppa_ext, index_compl_names[cmplt]);
@@ -667,7 +668,7 @@ static bool decodeMemmgmt(cs_struct *ud, MCInst *MI, uint32_t insn) {
         return false;
     }
 success:
-    fillMemmgmtMods(insn, &MI->hppa_ext, MI->csh->mode);
+    fillMemmgmtMods(insn, HPPA_EXT_REF(MI), MI->csh->mode);
     return true;
 }
 
@@ -1056,7 +1057,7 @@ static bool decodeAlu(cs_struct *ud, MCInst *MI, uint32_t insn) {
         return false;
     }
 success:
-    fillAluMods(insn, &MI->hppa_ext, MI->csh->mode);
+    fillAluMods(insn, HPPA_EXT_REF(MI), MI->csh->mode);
     return true;
 }
 
@@ -1177,7 +1178,7 @@ static void fillIdxmemMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode, uint
     uint32_t cmplt = (GET_BIT(insn, 18) << 1) | GET_BIT(insn, 26);
     uint32_t cc = GET_FIELD(insn, 20, 21);
     uint32_t ext = GET_FIELD(insn, 22, 25);
-    if ((cmplt & 1) == 1) {
+    if (CMPLT_IS_REG_MOD(cmplt)) {
         hppa_ext->b_writeble = true;
     }
     if (GET_BIT(insn, 19) == 0) {
@@ -1288,7 +1289,7 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 }
                 CREATE_GR_REG(MI, b);
                 CREATE_GR_REG(MI, t);
-                fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
+                fillIdxmemMods(insn, HPPA_EXT_REF(MI), ud->mode, -1);
                 return true;
             }
         }
@@ -1304,7 +1305,7 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 }
                 CREATE_GR_REG(MI, b);
                 CREATE_GR_REG(MI, t);     
-                fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, im5);
+                fillIdxmemMods(insn, HPPA_EXT_REF(MI), ud->mode, im5);
                 return true;
             case 0x0b:
             case 0x0d:
@@ -1316,7 +1317,7 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
                     CREATE_SR_REG(MI, s);
                 }
                 CREATE_GR_REG(MI, b);
-                fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, im5);
+                fillIdxmemMods(insn, HPPA_EXT_REF(MI), ud->mode, im5);
                 return true;
             }
         }
@@ -1338,7 +1339,7 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
         default:
             return false;
         }
-        fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
+        fillIdxmemMods(insn, HPPA_EXT_REF(MI), ud->mode, -1);
         return true;
     }
     else {
@@ -1373,10 +1374,10 @@ static bool decodeIdxmem(cs_struct *ud, MCInst *MI, uint32_t insn) {
             return false;
         }
         if (MODE_IS_HPPA_20(ud->mode)) {
-            fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, im5);
+            fillIdxmemMods(insn, HPPA_EXT_REF(MI), ud->mode, im5);
         }
         else {
-            fillIdxmemMods(insn, &MI->hppa_ext, ud->mode, -1);
+            fillIdxmemMods(insn, HPPA_EXT_REF(MI), ud->mode, -1);
         }
         return true;
     }
@@ -1440,7 +1441,7 @@ static bool decodeLoadStoreDw(cs_struct *ud, MCInst *MI, uint32_t insn) {
         CREATE_SR_REG(MI, s);
         CREATE_GR_REG(MI, b);
     }
-    fillLoadStoreDwMods(insn, &MI->hppa_ext, im);
+    fillLoadStoreDwMods(insn, HPPA_EXT_REF(MI), im);
     return true;
 }
 
@@ -1501,7 +1502,7 @@ static bool decodeLoadStoreW(cs_struct *ud, MCInst *MI, uint32_t insn) {
         CREATE_GR_REG(MI, b);
     } 
     if (ext == 1) {
-        fillLoadStoreWMods(insn, &MI->hppa_ext, im);
+        fillLoadStoreWMods(insn, HPPA_EXT_REF(MI), im);
     }
     return true;
 }
@@ -1575,7 +1576,7 @@ static bool decodeArithImm(cs_struct *ud, MCInst *MI, uint32_t insn) {
     MCOperand_CreateImm0(MI, extract_11(insn));
     CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
     CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-    fillArithImmMods(insn, &MI->hppa_ext, ud->mode);
+    fillArithImmMods(insn, HPPA_EXT_REF(MI), ud->mode);
     return true;
 }
 
@@ -1681,7 +1682,7 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
             CREATE_GR_REG(MI, r2);
             if (ext <= 0x01) {
                 CREATE_CR_REG(MI, 11);
-                (&MI->hppa_ext)->cmplt = true;
+                HPPA_EXT_REF(MI)->is_alternative = true;
             }
             else {
                 MCOperand_CreateImm0(MI, sa);
@@ -1698,7 +1699,7 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
             }
             else {
                 CREATE_CR_REG(MI, 11);
-                (&MI->hppa_ext)->cmplt = true;
+                HPPA_EXT_REF(MI)->is_alternative = true;
             }
             MCOperand_CreateImm0(MI, 32 - clen_t);
             CREATE_GR_REG(MI, r1);
@@ -1731,7 +1732,7 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
             return false;
         }
     }
-    fillShexdep0Mods(insn, &MI->hppa_ext, ud->mode);
+    fillShexdep0Mods(insn, HPPA_EXT_REF(MI), ud->mode);
     return true;
 }
 
@@ -1855,7 +1856,7 @@ static bool decodeShexdep1(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 CREATE_GR_REG(MI, r);
             }
             CREATE_CR_REG(MI, 11);
-            (&MI->hppa_ext)->cmplt = true;
+            HPPA_EXT_REF(MI)->is_alternative = true;
             MCOperand_CreateImm0(MI, len);
             CREATE_GR_REG(MI, t);
             break;
@@ -1887,7 +1888,7 @@ static bool decodeShexdep1(cs_struct *ud, MCInst *MI, uint32_t insn) {
             break;
         }
     }
-    fillShexdep1Mods(insn, &MI->hppa_ext, ud->mode);
+    fillShexdep1Mods(insn, HPPA_EXT_REF(MI), ud->mode);
     return true;
 }
 
@@ -1907,7 +1908,7 @@ static bool decodeShexdep2(cs_struct *ud, MCInst *MI, uint32_t insn) {
     MCOperand_CreateImm0(MI, pos);
     MCOperand_CreateImm0(MI, len);
     CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
-    fillShexdep2Mods(insn, &MI->hppa_ext);
+    fillShexdep2Mods(insn, HPPA_EXT_REF(MI));
     return true;
 }
 
@@ -1941,7 +1942,7 @@ static bool decodeShexdep3(cs_struct *ud, MCInst *MI, uint32_t insn) {
     MCOperand_CreateImm0(MI, pos);
     MCOperand_CreateImm0(MI, len);
     CREATE_GR_REG(MI, GET_FIELD(insn, 6, 10));
-    fillShexdep3Mods(insn, &MI->hppa_ext);
+    fillShexdep3Mods(insn, HPPA_EXT_REF(MI));
     return true;
 }
 
@@ -2041,7 +2042,7 @@ static bool decodeMultmed(cs_struct *ud, MCInst *MI, uint32_t insn) {
         return false;             
     }
 success:
-    fillMultmedMods(insn, &MI->hppa_ext);
+    fillMultmedMods(insn, HPPA_EXT_REF(MI));
     return true;
 }
 
@@ -2136,7 +2137,7 @@ static void fillBranchMods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
             }
             if (ext == 7) {
                 push_str_modifier(hppa_ext, "l");
-                hppa_ext->cmplt = true;
+                hppa_ext->is_alternative = true;
                 if (p == 1) {
                     push_str_modifier(hppa_ext, "push");
                 }
@@ -2207,7 +2208,7 @@ static bool decodeBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         default:
             return false;
         }
-        fillBranchMods(insn, &MI->hppa_ext, ud->mode);
+        fillBranchMods(insn, HPPA_EXT_REF(MI), ud->mode);
         return true;
     }
     else {
@@ -2225,7 +2226,7 @@ static bool decodeBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         default:
             return false;
         }
-        fillBranchMods(insn, &MI->hppa_ext, ud->mode);
+        fillBranchMods(insn, HPPA_EXT_REF(MI), ud->mode);
         return true;
     }
 }
@@ -2329,7 +2330,7 @@ static void fillCoprdwMods(uint32_t insn, uint32_t im, hppa_ext* hppa_ext, cs_mo
           (opcode == HPPA_OP_TYPE_COPRDW && uid == 0x00))) {
         push_int_modifier(hppa_ext, uid);
     }
-    if ((cmplt & 1) == 1) {
+    if (CMPLT_IS_REG_MOD(cmplt)) {
         hppa_ext->b_writeble = true;
     }
     
@@ -2402,7 +2403,7 @@ static bool decodeCoprdw(cs_struct *ud, MCInst *MI, uint32_t insn) {
         CREATE_GR_REG(MI, b);
         break;
     }
-    fillCoprdwMods(insn, x, &MI->hppa_ext, ud->mode);
+    fillCoprdwMods(insn, x, HPPA_EXT_REF(MI), ud->mode);
     return true;
 }
 
@@ -2469,7 +2470,7 @@ static bool decodeSpop(cs_struct *ud, MCInst *MI, uint32_t insn) {
         CREATE_GR_REG(MI, r1); 
         break;
     }
-    fillSpopMods(insn, ext, &MI->hppa_ext);
+    fillSpopMods(insn, ext, HPPA_EXT_REF(MI));
     return true;
 }
 
@@ -2727,13 +2728,13 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
                     CREATE_FPR_REG(MI, r2);
                     if (subop != 0) {
                         MCOperand_CreateImm0(MI, subop - 1);
-                        (&MI->hppa_ext)->cmplt = true;
+                        HPPA_EXT_REF(MI)->is_alternative = true;
                     }
                 }
                 else {
                     if (subop != 1) {
                         MCOperand_CreateImm0(MI, (subop ^ 1) - 1);
-                        (&MI->hppa_ext)->cmplt = true;
+                        HPPA_EXT_REF(MI)->is_alternative = true;
                     }
                 }
             } 
@@ -2746,7 +2747,7 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 CREATE_FPR_REG(MI, r2);
                 CREATE_FPR_REG(MI, t);
             }
-            fillCoprMods(insn, uid, class, &MI->hppa_ext, subop, ud->mode);
+            fillCoprMods(insn, uid, class, HPPA_EXT_REF(MI), subop, ud->mode);
             return true;
         }
     }
@@ -2805,7 +2806,7 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
                 return false;
             }
         }
-        fillCoprMods(insn, uid, class, &MI->hppa_ext, subop, ud->mode);
+        fillCoprMods(insn, uid, class, HPPA_EXT_REF(MI), subop, ud->mode);
         return true;        
     }
     else if (uid == 2) {
@@ -2818,7 +2819,7 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             return false;
         }
     }
-    fillCoprMods(insn, uid, class, &MI->hppa_ext, -1, ud->mode);
+    fillCoprMods(insn, uid, class, HPPA_EXT_REF(MI), -1, ud->mode);
     return true;
 }
 
@@ -2995,7 +2996,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
             if (subop >= 0x02) {
                 create_float_reg_spec(MI, r1, r1_fpe);
                 create_float_reg_spec(MI, t, t_fpe);
-                fillFloatMods(insn, class, &MI->hppa_ext, subop, ud->mode);
+                fillFloatMods(insn, class, HPPA_EXT_REF(MI), subop, ud->mode);
                 return true; 
             }
         }
@@ -3006,7 +3007,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
             }
             create_float_reg_spec(MI, r1, r1_fpe);
             create_float_reg_spec(MI, t, t_fpe);
-            fillFloatMods(insn, class, &MI->hppa_ext, subop, ud->mode);
+            fillFloatMods(insn, class, HPPA_EXT_REF(MI), subop, ud->mode);
             return true;
         }
         else if (class == 2) {
@@ -3016,7 +3017,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
             if (subop != 0) {
                 MCOperand_CreateImm0(MI, subop - 1);
             }
-            fillFloatMods(insn, class, &MI->hppa_ext, subop, ud->mode);
+            fillFloatMods(insn, class, HPPA_EXT_REF(MI), subop, ud->mode);
             return true;   
         }
     }
@@ -3029,7 +3030,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case 0x05:
             create_float_reg_spec(MI, r1, r1_fpe);
             create_float_reg_spec(MI, t, t_fpe);
-            fillFloatMods(insn, class, &MI->hppa_ext, subop, ud->mode);
+            fillFloatMods(insn, class, HPPA_EXT_REF(MI), subop, ud->mode);
             return true;
         default:
             return false;
@@ -3040,7 +3041,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
         if (subop <= 0x03) {
             create_float_reg_spec(MI, r1, r1_fpe);
             create_float_reg_spec(MI, t, t_fpe);
-            fillFloatMods(insn, class, &MI->hppa_ext, subop, ud->mode);
+            fillFloatMods(insn, class, HPPA_EXT_REF(MI), subop, ud->mode);
             return true; 
         }
     }
@@ -3050,7 +3051,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
         case 0x00:
             create_float_reg_spec(MI, r1, r1_fpe);
             create_float_reg_spec(MI, r2, r2_fpe);  
-            fillFloatMods(insn, class, &MI->hppa_ext, subop, ud->mode);
+            fillFloatMods(insn, class, HPPA_EXT_REF(MI), subop, ud->mode);
             return true;     
         default:
             return false;
@@ -3064,7 +3065,7 @@ static bool decodeFloat(cs_struct *ud, MCInst *MI, uint32_t insn) {
             create_float_reg_spec(MI, r1, r1_fpe);
             create_float_reg_spec(MI, r2, r2_fpe); 
             create_float_reg_spec(MI, t, t_fpe); 
-            fillFloatMods(insn, class, &MI->hppa_ext, subop, ud->mode);
+            fillFloatMods(insn, class, HPPA_EXT_REF(MI), subop, ud->mode);
             return true;
         }
         return false;
@@ -3100,7 +3101,7 @@ static bool decodeFpfused(cs_struct *ud, MCInst *MI, uint32_t insn) {
     create_float_reg_spec(MI, r2, r2_fpe); 
     create_float_reg_spec(MI, ra, ra_fpe); 
     create_float_reg_spec(MI, t, t_fpe);
-    fillFpfusedMods(insn, &MI->hppa_ext); 
+    fillFpfusedMods(insn, HPPA_EXT_REF(MI)); 
     return true;
 }
 
@@ -3288,7 +3289,7 @@ static bool decodeActionAndBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         default:
             return false;
         }
-        fillActionAndBranchMods(insn, opcode, &MI->hppa_ext, ud->mode);
+        fillActionAndBranchMods(insn, opcode, HPPA_EXT_REF(MI), ud->mode);
         return true;
     }
     if ((opcode & 1) == 0 || opcode == HPPA_OP_TYPE_BB) {
@@ -3304,7 +3305,7 @@ static bool decodeActionAndBranch(cs_struct *ud, MCInst *MI, uint32_t insn) {
         CREATE_GR_REG(MI, r1);
     }
     MCOperand_CreateImm0(MI, extract_12(insn));
-    fillActionAndBranchMods(insn, opcode, &MI->hppa_ext, ud->mode);
+    fillActionAndBranchMods(insn, opcode, HPPA_EXT_REF(MI), ud->mode);
     return true;
 }
 
@@ -3367,10 +3368,10 @@ static bool decodeCmpclr(cs_struct *ud, MCInst *MI, uint32_t insn) {
     CREATE_GR_REG(MI, GET_FIELD(insn, 11, 15));
 
     if (d == 0) {
-        push_str_modifier(&MI->hppa_ext, compare_cond_names[cond]);
+        push_str_modifier(HPPA_EXT_REF(MI), compare_cond_names[cond]);
     }
     else {
-        push_str_modifier(&MI->hppa_ext, compare_cond_64_names[cond]);
+        push_str_modifier(HPPA_EXT_REF(MI), compare_cond_64_names[cond]);
     }
     return true;
 }
@@ -3385,8 +3386,8 @@ static bool decodeBe(cs_struct *ud, MCInst *MI, uint32_t insn) {
         }
         else {
             MCInst_setOpcode(MI, HPPA_INS_BE);
-            push_str_modifier(&MI->hppa_ext, "l");
-            (&MI->hppa_ext)->cmplt = true;
+            push_str_modifier(HPPA_EXT_REF(MI), "l");
+            HPPA_EXT_REF(MI)->is_alternative = true;
         }
     }
     else {
@@ -3401,7 +3402,7 @@ static bool decodeBe(cs_struct *ud, MCInst *MI, uint32_t insn) {
         CREATE_GR_REG(MI, 31);
     }
     if (n == 1) {
-        push_str_modifier(&MI->hppa_ext, "n");
+        push_str_modifier(HPPA_EXT_REF(MI), "n");
     }
     return true;
 }
@@ -3426,10 +3427,10 @@ static bool decodeFloatStLd(cs_struct *ud, MCInst *MI, uint32_t insn) {
     }
 
     if (a == 0) {
-        push_str_modifier(&MI->hppa_ext, "ma");
+        push_str_modifier(HPPA_EXT_REF(MI), "ma");
     }
     else {
-        push_str_modifier(&MI->hppa_ext, "mb");
+        push_str_modifier(HPPA_EXT_REF(MI), "mb");
     }
     return true;
 }
@@ -3451,7 +3452,7 @@ static bool decodeFmpy(cs_struct *ud, MCInst *MI, uint32_t insn) {
     }
 
     if (fmt == 0) {
-        push_str_modifier(&MI->hppa_ext, "dbl");
+        push_str_modifier(HPPA_EXT_REF(MI), "dbl");
         CREATE_FPR_REG(MI, rm1);
         CREATE_FPR_REG(MI, rm2);
         CREATE_FPR_REG(MI, tm);
@@ -3459,7 +3460,7 @@ static bool decodeFmpy(cs_struct *ud, MCInst *MI, uint32_t insn) {
         CREATE_FPR_REG(MI, ta);
     }
     else {
-        push_str_modifier(&MI->hppa_ext, "sgl");
+        push_str_modifier(HPPA_EXT_REF(MI), "sgl");
         CREATE_SP_FPR_REG(MI, rm1);
         CREATE_SP_FPR_REG(MI, rm2);
         CREATE_SP_FPR_REG(MI, tm);
@@ -3476,10 +3477,10 @@ static bool decodeLoad(cs_struct *ud, MCInst *MI, uint32_t insn) {
         uint32_t d = extract_16(insn);
         if (opcode == HPPA_OP_TYPE_LDWM) {
             if (d < 0) {
-                push_str_modifier(&MI->hppa_ext, "mb");
+                push_str_modifier(HPPA_EXT_REF(MI), "mb");
             }
             else {
-                push_str_modifier(&MI->hppa_ext, "ma");
+                push_str_modifier(HPPA_EXT_REF(MI), "ma");
             }
         }
         MCOperand_CreateImm0(MI, d);
@@ -3500,10 +3501,10 @@ static bool decodeStore(cs_struct *ud, MCInst *MI, uint32_t insn) {
         uint32_t d = extract_16(insn);
         if (opcode == HPPA_OP_TYPE_STWM) {
             if (d < 0) {
-                push_str_modifier(&MI->hppa_ext, "mb");
+                push_str_modifier(HPPA_EXT_REF(MI), "mb");
             }
             else {
-                push_str_modifier(&MI->hppa_ext, "ma");
+                push_str_modifier(HPPA_EXT_REF(MI), "ma");
             }
         }
         MCOperand_CreateImm0(MI, d);
@@ -3528,7 +3529,7 @@ static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
         memset(detail, 0, offsetof(cs_detail, hppa) + sizeof(cs_hppa));
     }
     MCInst_clear(MI);
-    memset(&MI->hppa_ext, 0, sizeof(MI->hppa_ext));
+    memset(HPPA_EXT_REF(MI), 0, sizeof(MI->hppa_ext));
 
     uint32_t full_insn = readBytes32(MI, code);
     uint8_t opcode = full_insn >> 26;
@@ -3686,4 +3687,4 @@ bool HPPA_getInstruction(csh ud, const uint8_t *code, size_t code_len,
     return true;
 }
 
-// #endif
+#endif
