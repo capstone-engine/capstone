@@ -163,34 +163,6 @@ static int extract_5_store(unsigned word)
     return low_sign_extend(word & MASK_5, 5);
 }
 
-/* Extract the immediate field from a break instruction.  */
-
-static unsigned extract_5r_store(unsigned word)
-{
-    return (word & MASK_5);
-}
-
-/* Extract the immediate field from a {sr}sm instruction.  */
-
-static unsigned extract_5R_store(unsigned word)
-{
-    return (word >> 16 & MASK_5);
-}
-
-/* Extract the 10 bit immediate field from a {sr}sm instruction.  */
-
-static unsigned extract_10U_store(unsigned word)
-{
-    return (word >> 16 & MASK_10);
-}
-
-/* Extract the immediate field from a bb instruction.  */
-
-static unsigned extract_5Q_store(unsigned word)
-{
-    return (word >> 21 & MASK_5);
-}
-
 /* Extract an 11 bit immediate field.  */
 
 static int extract_11(unsigned word)
