@@ -10,6 +10,7 @@ Capstone source is organized as followings.
 │   ├── ARM         <- ARM engine
 │   ├── BPF         <- Berkeley Packet Filter engine
 │   ├── EVM         <- Ethereum engine
+│   ├── HPPA        <- HPPA engine
 │   ├── M680X       <- M680X engine
 │   ├── M68K        <- M68K engine
 │   ├── Mips        <- Mips engine
