@@ -395,6 +395,7 @@ static bool decodeSysop(cs_struct *ud, MCInst *MI, uint32_t insn) {
     case 0x00:
         MCOperand_CreateImm0(MI, t);
         MCOperand_CreateImm0(MI, GET_FIELD(insn, 6, 18));
+        return true;
     case 0x20:
         if (ext5 != 0x00 && ext5 != 0x10) {
             return false;
@@ -1685,7 +1686,6 @@ static bool decodeShexdep0(cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t cp = GET_BIT(insn, 20);
     uint32_t cpos = GET_FIELD(insn, 22, 26);
     uint32_t sa = 63 - ((cp << 5) | cpos);
-    // uint32_t d = GET_BIT(insn, 22);
     uint32_t r1 = GET_FIELD(insn, 11, 15);
     uint32_t r2 = GET_FIELD(insn, 6, 10);
     uint32_t clen_t = GET_FIELD(insn, 27, 31);
@@ -2738,7 +2738,6 @@ static bool decodeCopr(cs_struct *ud, MCInst *MI, uint32_t insn) {
             }
             else if (class == 2) {
                 uint32_t n = GET_BIT(insn, 26);
-                // uint32_t cond = GET_FIELD(insn, 27, 31);
                 subop = GET_FIELD(insn, 16, 18);
                 if (n == 0) {
                     CREATE_FPR_REG(MI, r1);
@@ -3561,7 +3560,6 @@ static bool getInstruction(cs_struct *ud, const uint8_t *code, size_t code_len,
     memset(HPPA_EXT_REF(MI), 0, sizeof(MI->hppa_ext));
 
     uint32_t full_insn = readBytes32(MI, code);
-    // printf("full_insn: %x\n", full_insn);
     uint8_t opcode = full_insn >> 26;
 
     if (MODE_IS_HPPA_20(ud->mode)) {

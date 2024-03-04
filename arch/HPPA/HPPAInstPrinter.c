@@ -57,8 +57,6 @@ static void set_op_mem(cs_hppa *hppa, uint32_t base, uint32_t space, cs_ac_type 
 
 struct pa_insn_fmt
 {
-    // unsigned long int match;
-    // unsigned long int mask;
 	hppa_insn insn_id;
     const char *format;
 	bool is_alternative; 	///< true if some completer affects the instruction format
@@ -505,7 +503,6 @@ static void print_modifiers(MCInst *MI, struct SStream *O)
 
 void HPPA_printInst(MCInst *MI, struct SStream *O, void *Info)
 {
-	// cs_insn insn;
 	cs_hppa hppa;
 
 	/* set pubOpcode as instruction id */
