@@ -61,7 +61,7 @@ struct pa_insn_fmt
     // unsigned long int mask;
 	hppa_insn insn_id;
     const char *format;
-	bool is_alternative; 	// true if some completer affects on instruction format
+	bool is_alternative; 	///< true if some completer affects the instruction format
 };
 
 /* HPPA instruction formats (access)
