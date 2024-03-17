@@ -8,6 +8,10 @@ extern "C" {
 #include "cs_operand.h"
 #include "platform.h"
 
+#define HPPA_MAX_OPS 5
+#define HPPA_STR_MODIFIER_LEN 8
+#define HPPA_MAX_MODIFIERS_LEN 5
+
 /// Operand type for instruction's operands
 typedef enum hppa_op_type {
 	HPPA_OP_INVALID = 0,
@@ -468,20 +472,20 @@ typedef enum hppa_insn {
 
 /// HPPA space select operand
 typedef struct hppa_mem {
-    unsigned int base;
-    unsigned int space;
-    enum cs_ac_type base_access;
+    hppa_reg base;
+    hppa_reg space;
+    cs_ac_type base_access;
 } hppa_mem;
 
 // Instruction operand
 typedef struct cs_hppa_op {
-	enum hppa_op_type type; // operand type
+	hppa_op_type type;  ///< operand type
 	union {
-		unsigned int reg; // register value for REG operand
-		int64_t imm;      // immediate value for IMM operand
-        struct hppa_mem mem;
+		hppa_reg reg;   ///< register value for REG operand
+		int64_t imm;    ///< immediate value for IMM operand
+        hppa_mem mem;
 	};
-	enum cs_ac_type access;
+	cs_ac_type access;
 } cs_hppa_op;
 
 // Instruction structure
@@ -489,15 +493,20 @@ typedef struct cs_hppa {
 	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_hppa_op operands[5]; // operands for this instruction.
+	cs_hppa_op operands[HPPA_MAX_OPS]; ///< operands for hppa instruction.
 } cs_hppa;
+
+typedef enum hppa_modifier_type {
+    HPPA_MOD_STR = 0,
+    HPPA_MOD_INT = 1
+} hppa_modifier_type;
 
 /// hppa string/integer modifier
 typedef struct hppa_modifier {
-    int type;
+    hppa_modifier_type type;
     union
     {
-        char str_mod[8];
+        char str_mod[HPPA_STR_MODIFIER_LEN];
         uint32_t int_mod;
     };
     
@@ -505,7 +514,7 @@ typedef struct hppa_modifier {
 
 // Additional instruction info
 typedef struct hppa_ext {
-    struct hppa_modifier modifiers[5];
+    hppa_modifier modifiers[HPPA_MAX_MODIFIERS_LEN];
     uint8_t mod_num;
     bool b_writeble;
     bool is_alternative;
@@ -518,7 +527,7 @@ typedef struct hppa_ext {
 typedef enum hppa_insn_group {
 	HPPA_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	HPPA_GRP_COMPUTATION,
+	HPPA_GRP_COMPUTATION = 128,
     HPPA_GRP_MULTIMEDIA,
     HPPA_GRP_MEM_REF,
     HPPA_GRP_LONG_IMM,

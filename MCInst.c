@@ -36,6 +36,7 @@ void MCInst_Init(MCInst *inst)
 		inst->tied_op_idx[i] = -1;
 	inst->isAliasInstr = false;
 	inst->fillDetailOps = false;
+	memset(&inst->hppa_ext, 0, sizeof(inst->hppa_ext));
 }
 
 void MCInst_clear(MCInst *inst)

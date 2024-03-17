@@ -54,7 +54,7 @@ template = {
             'sh.h': 'sh',
             'tricore.h': ['TRICORE', 'TriCore'],
             'alpha.h': ['ALPHA', 'Alpha'],
-            'hppa.h': ['HPPA', 'hppa'],
+            'hppa.h': 'hppa',
             'comment_open': '#',
             'comment_close': '',
         },
