@@ -2072,6 +2072,15 @@ static void fill_branch_insn_name(MCInst *MI, uint32_t insn) {
     uint32_t ext = get_insn_field(insn, 16, 18);
     uint32_t bit_19 = get_insn_bit(insn, 19);
     if (MODE_IS_HPPA_20(MI->csh->mode)) {
+        if (insn == 0xe8004005) {
+            MCInst_setOpcode(MI, HPPA_INS_CLRBTS);
+            return;
+        }
+        else if (insn == 0xe8004001) {
+            MCInst_setOpcode(MI, HPPA_INS_PUSHNOM);
+            return;
+        }
+
         switch (ext) {
         case 0x00:
         case 0x01:
@@ -2093,27 +2102,17 @@ static void fill_branch_insn_name(MCInst *MI, uint32_t insn) {
             }
             return;
         case 0x02:
-            if (get_insn_bit(insn, 31) != 1 && get_insn_bit(insn, 19) != 0) {
-                break;
-            } else if (get_insn_bit(insn, 19) == 0) {
+            if (get_insn_field(insn, 19, 29) == 0 && get_insn_bit(insn, 31) == 0) {
                 MCInst_setOpcode(MI, HPPA_INS_BLR);
                 return;
             }
-            if (get_insn_field(insn, 20, 28) == 0) {
-                if (get_insn_bit(insn, 29) == 1) {
-                    MCInst_setOpcode(MI, HPPA_INS_CLRBTS);
-                }
-                else {
-                    if (get_insn_field(insn, 11, 15) == 0) {
-                        MCInst_setOpcode(MI, HPPA_INS_PUSHNOM);
-                    }
-                    else {
-                        MCInst_setOpcode(MI, HPPA_INS_PUSHBTS);
-                    }
-                }
+            if (get_insn_field(insn, 19, 31) == 1) {
+                MCInst_setOpcode(MI, HPPA_INS_PUSHBTS);
+                return;
             }
-            else {
+            if (bit_19 == 0 && get_insn_field(insn, 29, 31) == 0x5) {
                 MCInst_setOpcode(MI, HPPA_INS_POPBTS);
+                return;
             }
             return;
         default:
@@ -2147,6 +2146,7 @@ static void fill_branch_mods(uint32_t insn, hppa_ext* hppa_ext, cs_mode mode) {
         case 0x00:
         case 0x05:
             push_str_modifier(hppa_ext, "l");
+            // fallthrough
         case 0x02:
             break;
         case 0x01:
@@ -2190,6 +2190,10 @@ static bool decode_branch(const cs_struct *ud, MCInst *MI, uint32_t insn) {
     uint32_t r = get_insn_field(insn, 11, 15);
     uint32_t bit_19 = get_insn_bit(insn, 19);
     if (MODE_IS_HPPA_20(ud->mode)) {
+        if (insn == 0xe8004005 || insn == 0xe8004001) {
+            return true;
+        }
+
         switch (ext) {
         case 0x01:
         case 0x00:
@@ -2202,23 +2206,23 @@ static bool decode_branch(const cs_struct *ud, MCInst *MI, uint32_t insn) {
             CREATE_GR_REG(MI, t);
             break;
         case 0x02:
-            if (get_insn_bit(insn, 31) == 1) {
-                if (i == 0) {
-                    if (r == 0) {
-                        return true;
-                    }
-                    CREATE_GR_REG(MI, r);
-                    return true;
-                }
-                MCOperand_CreateImm0(MI, i);
-                return true;
-            }
             if (bit_19 == 1) {
                return false; 
             }
-            CREATE_GR_REG(MI, r);
-            CREATE_GR_REG(MI, t);
-            break;
+            if (get_insn_field(insn, 20, 31) == 1 && t == 0) {
+                CREATE_GR_REG(MI, r);
+                break;
+            }
+            if (r == 0 && t == 0 && get_insn_field(insn, 29, 31) == 0x5) {
+                MCOperand_CreateImm0(MI, i);
+                break;
+            }
+            if (get_insn_bit(insn, 31) == 0 && get_insn_field(insn, 19, 29) == 0) {
+                CREATE_GR_REG(MI, r);
+                CREATE_GR_REG(MI, t);
+                break;
+            }
+            return false;
         case 0x06:
             if (bit_19 == 0) {
                 CREATE_GR_REG(MI, r);
