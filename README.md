@@ -6,6 +6,9 @@ Capstone Engine
 [![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
 [![oss-fuzz Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/capstone.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:capstone)
 
+> [!TIP]
+> Welcome to join our community group! &ensp; [<img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-squeare&logo=telegram&logoColor=white" height="22" />](https://t.me/CapstoneEngine)
+
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
 
