@@ -2,7 +2,7 @@ import re
 
 from tree_sitter import Node
 
-from autosync.cpptranslator.Patches.HelperMethods import get_MCInst_var_name, get_text
+from autosync.cpptranslator.Patches.Helper import get_MCInst_var_name, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
 
 

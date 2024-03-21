@@ -4,7 +4,7 @@ from pathlib import Path
 
 from tree_sitter import Language, Node, Parser, Query
 
-from autosync.cpptranslator.Patches.HelperMethods import get_text
+from autosync.cpptranslator.Patches.Helper import get_text
 
 
 class TemplateRefInstance:

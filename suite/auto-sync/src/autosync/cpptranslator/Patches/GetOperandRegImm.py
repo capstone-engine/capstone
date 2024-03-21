@@ -1,6 +1,6 @@
 from tree_sitter import Node
 
-from autosync.cpptranslator.Patches.HelperMethods import get_capture_node, get_text
+from autosync.cpptranslator.Patches.Helper import get_capture_node, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
 
 

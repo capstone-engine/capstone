@@ -3,7 +3,7 @@ import re
 
 from tree_sitter import Node
 
-from autosync.cpptranslator.Patches.HelperMethods import (
+from autosync.cpptranslator.Patches.Helper import (
     get_MCInst_var_name,
     get_text,
     template_param_list_to_dict,

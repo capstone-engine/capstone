@@ -10,6 +10,7 @@ import sys
 from enum import StrEnum
 from pathlib import Path
 
+from autosync.cpptranslator.Configurator import Configurator
 from autosync.cpptranslator.CppTranslator import Translator
 from autosync.HeaderPatcher import HeaderPatcher
 from autosync.Helper import check_py_version, convert_loglevel, fail_exit, get_path

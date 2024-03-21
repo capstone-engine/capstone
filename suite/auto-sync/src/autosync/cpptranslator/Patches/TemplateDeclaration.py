@@ -2,7 +2,7 @@ import logging as log
 
 from tree_sitter import Node
 
-from autosync.cpptranslator.Patches.HelperMethods import parse_function_capture
+from autosync.cpptranslator.Patches.Helper import parse_function_capture
 from autosync.cpptranslator.Patches.Patch import Patch
 from autosync.cpptranslator.TemplateCollector import (
     TemplateCollector,

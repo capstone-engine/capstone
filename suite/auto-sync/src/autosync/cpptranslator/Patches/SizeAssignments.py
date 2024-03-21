@@ -2,10 +2,7 @@ import re
 
 from tree_sitter import Node
 
-from autosync.cpptranslator.Patches.HelperMethods import (
-    get_function_params_of_node,
-    get_text,
-)
+from autosync.cpptranslator.Patches.Helper import get_function_params_of_node, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
 
 

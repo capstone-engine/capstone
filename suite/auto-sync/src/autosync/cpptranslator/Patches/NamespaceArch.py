@@ -1,6 +1,6 @@
 from tree_sitter import Node
 
-from autosync.cpptranslator.Patches.HelperMethods import (
+from autosync.cpptranslator.Patches.Helper import (
     get_text,
     namespace_enum,
     namespace_fcn_def,

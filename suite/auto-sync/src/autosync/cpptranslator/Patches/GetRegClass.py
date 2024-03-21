@@ -1,6 +1,6 @@
 from tree_sitter import Node
 
-from autosync.cpptranslator.Patches.HelperMethods import (
+from autosync.cpptranslator.Patches.Helper import (
     get_capture_node,
     get_MCInst_var_name,
     get_text,
