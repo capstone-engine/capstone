@@ -1,3 +1,7 @@
+!# issue 2258 vcmpunordss incorrect read/modified register
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x62,0xd1,0x56,0x08,0xc2,0xca,0x03 == vcmpunordss k1, xmm5, xmm10 ; operands[0].access: WRITE ; operands[1].access: READ ; operands[2].access: READ
+
 !# issue 2062 repz Prefix
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0xf3,0xc3 == repz ret ; Prefix:0xf3 0x00 0x00 0x00

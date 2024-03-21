@@ -7,10 +7,10 @@
 #include "../../MCInst.h"
 #include "../../SStream.h"
 
+#define CS_X86_MAXIMUM_OPERAND_SIZE 6
 
 void printSSEAVXCC(MCInst *MI, unsigned Op, SStream *O);
 void printXOPCC(MCInst *MI, unsigned Op, SStream *O);
 void printRoundingControl(MCInst *MI, unsigned Op, SStream *O);
 
 #endif
-
