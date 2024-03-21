@@ -2,12 +2,10 @@
 from pathlib import Path
 
 import termcolor
-from tree_sitter import Language, Parser, Tree, Node
+from tree_sitter import Language, Parser, Tree, Node, Query
 import argparse
 import logging as log
 import sys
-
-from tree_sitter.binding import Query
 
 from CppTranslator.Configurator import Configurator
 from Helper import convert_loglevel, print_prominent_warning, get_header, run_clang_format, get_path

@@ -1,10 +1,9 @@
 import re
 from pathlib import Path
 
-from tree_sitter import Language, Parser
+from tree_sitter import Language, Parser, Query, Node
 import logging as log
 
-from tree_sitter.binding import Query, Node
 from CppTranslator.Patches.HelperMethods import get_text
 
 

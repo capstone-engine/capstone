@@ -68,13 +68,15 @@ class Configurator:
         ts_grammar_path = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
         if not Path.exists(ts_grammar_path):
             fail_exit(f"Could not load the tree-sitter grammar at '{ts_grammar_path}'")
-        Language.build_library(str(self.ts_shared_object), [ts_grammar_path])
+        # build_library wll be deprecated in 0.22.0. But CPP tree-sitter doesn't have Python bindings.
+        # So we stick with it.
+        Language.build_library(str(self.ts_shared_object), [str(ts_grammar_path)])
 
     def ts_set_cpp_language(self) -> None:
         log.info(f"Load language '{self.ts_shared_object}'")
         if not Path.exists(self.ts_shared_object):
             fail_exit(f"Could not load the tree-sitter language shared object at '{self.ts_shared_object}'")
-        self.ts_cpp_lang = Language(self.ts_shared_object, "cpp")
+        self.ts_cpp_lang = Language(str(self.ts_shared_object), "cpp")
 
     def init_parser(self) -> None:
         log.debug("Init parser")
