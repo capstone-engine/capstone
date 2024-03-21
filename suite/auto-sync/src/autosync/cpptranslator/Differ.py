@@ -176,7 +176,7 @@ class Differ:
         self.parser = self.configurator.get_parser()
         self.differ = dl.Differ()
 
-        t_out_dir: Path = get_path(self.conf_general["translation_out_dir"])
+        t_out_dir: Path = get_path("{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}")
         self.translated_files = [
             t_out_dir.joinpath(sp["out"]) for sp in self.conf_arch["files_to_translate"]
         ]
@@ -191,9 +191,7 @@ class Differ:
         self.load_persistence_file()
 
     def load_persistence_file(self) -> None:
-        self.persistence_filepath = get_path(
-            self.conf_general["patch_persistence_file"]
-        )
+        self.persistence_filepath = get_path("{CPP_TRANSLATOR_PATH_PERSISTENCE_FILE}")
         if not self.persistence_filepath.exists():
             self.saved_patches = dict()
             return
@@ -224,7 +222,7 @@ class Differ:
         Copy translated files to diff directory for editing.
         """
         log.info("Copy files for editing")
-        diff_dir: Path = get_path(self.conf_general["diff_out_dir"])
+        diff_dir: Path = get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}")
         for f in self.translated_files:
             dest = diff_dir.joinpath(f.name)
             copy2(f, dest)

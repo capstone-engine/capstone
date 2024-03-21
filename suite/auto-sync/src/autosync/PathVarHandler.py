@@ -16,7 +16,6 @@ class Singleton(type):
 
 
 class PathVarHandler(metaclass=Singleton):
-    paths = {}
 
     def __init__(self) -> None:
         try:
@@ -30,6 +29,7 @@ class PathVarHandler(metaclass=Singleton):
             exit(1)
         repo_root = res.stdout.decode("utf8").strip("\n")
         # The main directories
+        self.paths: dict[str:Path] = dict()
         self.paths["{CS_ROOT}"] = Path(repo_root)
         self.paths["{AUTO_SYNC_ROOT}"] = Path(repo_root).joinpath("suite/auto-sync/")
         self.paths["{AUTO_SYNC_SRC}"] = self.paths["{AUTO_SYNC_ROOT}"].joinpath(
@@ -41,8 +41,11 @@ class PathVarHandler(metaclass=Singleton):
         with open(path_config_file) as f:
             vars = json.load(f)
 
+        paths = vars["paths"]
+        create_during_runtime = vars["create_during_runtime"]
+
         missing = list()
-        for p_name, path in vars.items():
+        for p_name, path in paths.items():
             resolved = path
             for var_id in re.findall(r"\{.+}", resolved):
                 if var_id not in self.paths:
@@ -50,11 +53,15 @@ class PathVarHandler(metaclass=Singleton):
                         f"{var_id} hasn't been added to the PathVarsHandler, yet. The var must be defined in a previous entry."
                     )
                     exit(1)
-                resolved = re.sub(var_id, str(self.paths[var_id]), resolved)
+                resolved: str = re.sub(var_id, str(self.paths[var_id]), resolved)
                 log.debug(f"Set {p_name} = {resolved}")
-                if not Path(resolved).exists():
+                if not Path(resolved).exists() and (
+                    p_name not in create_during_runtime
+                ):
                     missing.append(resolved)
-                self.paths[p_name] = resolved
+                elif var_id in create_during_runtime:
+                    self.create_path(var_id, resolved)
+                self.paths[p_name] = Path(resolved)
         if len(missing) > 0:
             log.fatal(f"Some paths from config file are missing!")
             for m in missing:
@@ -69,5 +76,25 @@ class PathVarHandler(metaclass=Singleton):
     def complete_path(self, path_str: str) -> Path:
         resolved = path_str
         for p_name in re.findall(r"\{.+}", path_str):
-            resolved = re.sub(p_name, self.get_path(p_name), resolved)
+            resolved = re.sub(p_name, str(self.get_path(p_name)), resolved)
         return Path(resolved)
+
+    @staticmethod
+    def create_path(var_id: str, path: str):
+        pp = Path(path)
+        if pp.exists():
+            return
+
+        postfix = var_id.strip("}").split("_")[-1]
+        if postfix == "FILE":
+            if not pp.parent.exists():
+                pp.parent.mkdir(parents=True)
+            pp.touch()
+        elif postfix == "DIR":
+            pp.mkdir(parents=True)
+        else:
+            from autosync.Helper import fail_exit
+
+            fail_exit(
+                f"The var_id: {var_id} must end in _FILE or _DIR. It ends in '{postfix}'"
+            )

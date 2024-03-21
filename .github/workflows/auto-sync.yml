@@ -30,13 +30,13 @@ jobs:
 
       - name: Build llvm-tblgen
         run: |
-          git clone https://github.com/capstone-engine/llvm-capstone.git
-          cd llvm-capstone
+          git clone https://github.com/capstone-engine/llvm-capstone.git vendor/llvm_root
+          cd vendor/llvm_root
           mkdir build
           cd build
           cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
           cmake --build . --target llvm-tblgen --config Debug
-          cd ../../
+          cd ../../../
 
       - name: Test generationof inc files
         run: |

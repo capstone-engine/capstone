@@ -181,7 +181,7 @@ class Translator:
         self.src_paths: [Path] = [
             get_path(sp["in"]) for sp in self.conf["files_to_translate"]
         ]
-        t_out_dir: Path = get_path(self.conf_general["translation_out_dir"])
+        t_out_dir: Path = get_path("{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}")
         self.out_paths: [Path] = [
             t_out_dir.joinpath(sp["out"]) for sp in self.conf["files_to_translate"]
         ]
