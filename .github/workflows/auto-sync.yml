@@ -16,14 +16,38 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: sudo apt install clang-format-18
+
       - name: Install auto-sync package
         run: |
           pip install .
+
       - name: Check formatting
         run: |
           python3.11 -m black --check src/autosync
+
+      - name: Build llvm-tblgen
+        run: |
+          git clone git@github.com:capstone-engine/llvm-capstone.git
+          cd llvm-capstone
+          mkdir build
+          cd build
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
+          cmake --build . --target llvm-tblgen --config Debug
+          cd ../../
+
+      - name: Test generationof inc files
+        run: |
+          ./src/autosync/ASUpdater.py -a AArch64 -s IncGen
+          ./src/autosync/ASUpdater.py -a Alpha -s IncGen
+          ./src/autosync/ASUpdater.py -a ARM -s IncGen
+          ./src/autosync/ASUpdater.py -a PPC -s IncGen
+
       - name: CppTranslator - Patch tests
         run: |
           python -m unittest discover src/autosync/cpptranslator/Tests/
