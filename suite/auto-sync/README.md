@@ -5,12 +5,6 @@ Unfortunately not all architectures are supported yet.
 
 ## Install dependencies
 
-Install clang-format
-
-```
-sudo apt install clang-format-18
-```
-
 Setup Python environment and Tree-sitter
 
 ```

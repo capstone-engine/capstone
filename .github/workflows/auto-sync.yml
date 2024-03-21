@@ -20,9 +20,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install clang-format
-        run: sudo apt install clang-format-18
-
       - name: Install auto-sync package
         run: |
           pip install .

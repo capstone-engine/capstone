@@ -142,7 +142,7 @@ def run_clang_format(out_paths: list[Path]):
         log.info(f"Format {out_file}")
         subprocess.run(
             [
-                "clang-format-18",
+                "clang-format",
                 f"-style=file:{get_path('{CS_CLANG_FORMAT_FILE}')}",
                 "-i",
                 out_file,
