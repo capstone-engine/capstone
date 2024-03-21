@@ -8,6 +8,8 @@
 
   "{CPP_TRANSLATOR_DIR}": "{AUTO_SYNC_SRC}/cpptranslator/",
   "{CPP_TRANSLATOR_CONFIG}": "{CPP_TRANSLATOR_DIR}/arch_config.json",
+  "{CPP_TRANSLATOR_TEST_DIR}": "{CPP_TRANSLATOR_DIR}/Tests/",
+  "{CPP_TRANSLATOR_TEST_CONFIG}": "{CPP_TRANSLATOR_TEST_DIR}/test_config.json",
   "{INC_PATCH_DIR}": "{AUTO_SYNC_ROOT}/inc_patches/",
 
   "{CS_INCLUDE_DIR}": "{CS_ROOT}/include/capstone/",

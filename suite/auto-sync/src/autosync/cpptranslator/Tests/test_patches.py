@@ -8,6 +8,7 @@ import autosync.cpptranslator.Patches as Patches
 from autosync.cpptranslator import CppTranslator
 
 from autosync.cpptranslator.Configurator import Configurator
+from autosync.Helper import get_path
 
 from tree_sitter import Node, Query
 
@@ -15,7 +16,7 @@ from tree_sitter import Node, Query
 class TestPatches(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        configurator = Configurator("ARCH", Path("test_config.json"))
+        configurator = Configurator("ARCH", get_path("{CPP_TRANSLATOR_TEST_CONFIG}"))
         cls.translator = CppTranslator.Translator(configurator)
         cls.ts_cpp_lang = configurator.get_cpp_lang()
         cls.parser = configurator.get_parser()

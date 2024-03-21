@@ -8,15 +8,22 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: suite/auto-sync/
     steps:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+      - name: Check out repository
+        uses: actions/checkout@v4
       - name: Install auto-sync package
         run: |
-          cd suite/auto-sync/
-          pip install -e .
+          pip install .
       - name: Check formatting
         run: |
-          ufmt check src
+          ufmt check src/autosync
+      - name: CppTranslator - Patch tests
+        run: |
+          python -m unittest discover src/autosync/cpptranslator/Tests/
