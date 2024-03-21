@@ -1,0 +1,18 @@
+{
+  "General": {
+    "patch_persistence_file": "",
+    "translation_out_dir": "",
+    "diff_out_dir": "",
+    "diff_color_new": "green",
+    "diff_color_old": "light_blue",
+    "diff_color_saved": "yellow",
+    "diff_color_edited": "light_magenta",
+    "nodes_to_diff": []
+  },
+  "ARCH": {
+    "files_to_translate": [],
+    "files_for_template_search": [],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
+  }
+}
