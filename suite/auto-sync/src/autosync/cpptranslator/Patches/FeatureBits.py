@@ -1,6 +1,6 @@
-from tree_sitter import Node
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_MCInst_var_name
+from autosync.cpptranslator.Patches.HelperMethods import get_MCInst_var_name, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class FeatureBits(Patch):
@@ -30,4 +30,11 @@ class FeatureBits(Patch):
         qualified_id: Node = captures[2][0]
         flag = get_text(src, qualified_id.start_byte, qualified_id.end_byte)
         mcinst_var_name = get_MCInst_var_name(src, qualified_id)
-        return self.arch + b"_getFeatureBits(" + mcinst_var_name + b"->csh->mode, " + flag + b")"
+        return (
+            self.arch
+            + b"_getFeatureBits("
+            + mcinst_var_name
+            + b"->csh->mode, "
+            + flag
+            + b")"
+        )

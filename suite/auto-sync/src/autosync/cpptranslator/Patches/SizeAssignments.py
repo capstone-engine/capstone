@@ -1,9 +1,12 @@
 import re
 
-from tree_sitter import Node
-
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_function_params_of_node
+from autosync.cpptranslator.Patches.HelperMethods import (
+    get_function_params_of_node,
+    get_text,
+)
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class SizeAssignment(Patch):
@@ -18,7 +21,11 @@ class SizeAssignment(Patch):
         super().__init__(priority)
 
     def get_search_pattern(self) -> str:
-        return "(assignment_expression" '    ((identifier) @id (#eq? @id "Size"))' ") @assign"
+        return (
+            "(assignment_expression"
+            '    ((identifier) @id (#eq? @id "Size"))'
+            ") @assign"
+        )
 
     def get_main_capture_name(self) -> str:
         return "assign"

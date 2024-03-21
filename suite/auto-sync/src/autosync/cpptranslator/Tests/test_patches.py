@@ -4,16 +4,15 @@
 import unittest
 from pathlib import Path
 
-from tree_sitter import Query, Node
-
 import autosync.cpptranslator.Patches as Patches
 from autosync.cpptranslator import CppTranslator
 
 from autosync.cpptranslator.Configurator import Configurator
 
+from tree_sitter import Node, Query
+
 
 class TestPatches(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         configurator = Configurator("ARCH", Path("test_config.json"))
@@ -23,9 +22,7 @@ class TestPatches(unittest.TestCase):
 
     def test_addcsdetail(self):
         patch = Patches.AddCSDetail.AddCSDetail(0, "ARCH")
-        syntax = (
-            b"void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNo, SStream *O) { int i = OpNo; }"
-        )
+        syntax = b"void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNo, SStream *O) { int i = OpNo; }"
         kwargs = self.translator.get_patch_kwargs(patch)
         query: Query = self.ts_cpp_lang.query(patch.get_search_pattern())
         captures_bundle: [[(Node, str)]] = list()

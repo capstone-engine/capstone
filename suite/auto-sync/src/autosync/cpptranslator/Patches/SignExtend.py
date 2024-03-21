@@ -1,7 +1,7 @@
-from tree_sitter import Node
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
+from tree_sitter import Node
 
 
 class SignExtend(Patch):

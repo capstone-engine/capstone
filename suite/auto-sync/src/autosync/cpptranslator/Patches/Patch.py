@@ -1,5 +1,6 @@
-from tree_sitter import Node
 import logging as log
+
+from tree_sitter import Node
 
 
 class Patch:

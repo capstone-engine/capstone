@@ -1,9 +1,12 @@
 import logging as log
-from tree_sitter import Node
 
 from autosync.cpptranslator.Patches.HelperMethods import parse_function_capture
 from autosync.cpptranslator.Patches.Patch import Patch
-from autosync.cpptranslator.TemplateCollector import TemplateCollector, TemplateRefInstance
+from autosync.cpptranslator.TemplateCollector import (
+    TemplateCollector,
+    TemplateRefInstance,
+)
+from tree_sitter import Node
 
 
 class TemplateDeclaration(Patch):
@@ -37,13 +40,24 @@ class TemplateDeclaration(Patch):
     def get_main_capture_name(self) -> str:
         return "template_decl"
 
-    def get_patch(self, captures: list[tuple[Node, str]], src: bytes, **kwargs) -> bytes:
+    def get_patch(
+        self, captures: list[tuple[Node, str]], src: bytes, **kwargs
+    ) -> bytes:
         t_params, sc, tid, f_name, f_params, _ = parse_function_capture(captures, src)
         if f_name in self.collector.templates_with_arg_deduction:
             return sc + tid + b" " + f_name + f_params + b";"
 
-        declaration = b"#define DECLARE_" + f_name + b"(" + b", ".join(t_params) + b")\n"
-        declaration += sc + b" " + tid + b" " + TemplateCollector.get_macro_c_call(f_name, t_params, f_params) + b";"
+        declaration = (
+            b"#define DECLARE_" + f_name + b"(" + b", ".join(t_params) + b")\n"
+        )
+        declaration += (
+            sc
+            + b" "
+            + tid
+            + b" "
+            + TemplateCollector.get_macro_c_call(f_name, t_params, f_params)
+            + b";"
+        )
         declaration = declaration.replace(b"\n", b" \\\n") + b"\n"
 
         template_instance: TemplateRefInstance
@@ -52,7 +66,13 @@ class TemplateDeclaration(Patch):
             self.collector.log_missing_ref_and_exit(f_name)
 
         for template_instance in self.collector.template_refs[f_name]:
-            d = b"DECLARE_" + f_name + b"(" + b", ".join(template_instance.get_args_for_decl()) + b");\n"
+            d = (
+                b"DECLARE_"
+                + f_name
+                + b"("
+                + b", ".join(template_instance.get_args_for_decl())
+                + b");\n"
+            )
             if d in declared_implementations:
                 continue
             declared_implementations.append(d)

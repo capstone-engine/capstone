@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class MethodToFunction(Patch):
@@ -35,6 +34,8 @@ class MethodToFunction(Patch):
         name = captures[1][0]
         parameter_list = captures[2][0]
         name = get_text(src, name.start_byte, name.end_byte)
-        parameter_list = get_text(src, parameter_list.start_byte, parameter_list.end_byte)
+        parameter_list = get_text(
+            src, parameter_list.start_byte, parameter_list.end_byte
+        )
         res = name + parameter_list
         return res

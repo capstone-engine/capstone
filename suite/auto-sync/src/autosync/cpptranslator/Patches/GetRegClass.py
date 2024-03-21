@@ -1,7 +1,10 @@
-from tree_sitter import Node
-
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_capture_node, get_MCInst_var_name
+from autosync.cpptranslator.Patches.HelperMethods import (
+    get_capture_node,
+    get_MCInst_var_name,
+    get_text,
+)
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class GetRegClass(Patch):
@@ -31,6 +34,8 @@ class GetRegClass(Patch):
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         arg_list: Node = get_capture_node(captures, "arg_list")
         args = get_text(src, arg_list.start_byte, arg_list.end_byte).strip(b"()")
-        mcinst_var = get_MCInst_var_name(src, get_capture_node(captures, "get_reg_class"))
+        mcinst_var = get_MCInst_var_name(
+            src, get_capture_node(captures, "get_reg_class")
+        )
         res = b"MCRegisterInfo_getRegClass(" + mcinst_var + b"->MRI, " + args + b")"
         return res

@@ -1,9 +1,9 @@
 import logging as log
 
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class Includes(Patch):
@@ -34,11 +34,17 @@ class Includes(Patch):
         include_text = get_text(src, captures[0][0].start_byte, captures[0][0].end_byte)
         # Special cases, which appear somewhere in the code.
         if b"GenDisassemblerTables.inc" in include_text:
-            return b'#include "' + bytes(self.arch, "utf8") + b'GenDisassemblerTables.inc"\n\n'
+            return (
+                b'#include "'
+                + bytes(self.arch, "utf8")
+                + b'GenDisassemblerTables.inc"\n\n'
+            )
         elif b"GenAsmWriter.inc" in include_text:
             return b'#include "' + bytes(self.arch, "utf8") + b'GenAsmWriter.inc"\n\n'
         elif b"GenSystemOperands.inc" in include_text:
-            return b'#include "' + bytes(self.arch, "utf8") + b'GenSystemOperands.inc"\n\n'
+            return (
+                b'#include "' + bytes(self.arch, "utf8") + b'GenSystemOperands.inc"\n\n'
+            )
 
         if self.include_count[filename] > 1:
             # Only the first include is replaced with all CS includes.
@@ -245,4 +251,6 @@ def get_AArch64_includes(filename: str) -> bytes:
 
 
 def get_general_macros():
-    return b"#define CONCAT(a, b) CONCAT_(a, b)\n" b"#define CONCAT_(a, b) a ## _ ## b\n"
+    return (
+        b"#define CONCAT(a, b) CONCAT_(a, b)\n" b"#define CONCAT_(a, b) a ## _ ## b\n"
+    )

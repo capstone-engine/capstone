@@ -1,10 +1,10 @@
 import logging as log
 import re
 
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class ClassesDef(Patch):
@@ -31,7 +31,9 @@ class ClassesDef(Patch):
         for field_decl in field_decl_list.named_children:
             if (
                 field_decl.type in "field_declaration"
-                and ("function_declarator" in [t.type for t in field_decl.named_children])
+                and (
+                    "function_declarator" in [t.type for t in field_decl.named_children]
+                )
             ) or field_decl.type == "template_declaration":
                 # Keep comments
                 sibling = field_decl.prev_named_sibling

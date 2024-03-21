@@ -1,8 +1,8 @@
+import logging as log
 import re
 from pathlib import Path
 
-from tree_sitter import Language, Parser, Query, Node
-import logging as log
+from tree_sitter import Language, Node, Parser, Query
 
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 
@@ -26,7 +26,9 @@ class TemplateRefInstance:
     # (parameters are set by the template parameters of the calling function).
     caller_param_indices: [{str: int}] = list()
 
-    def __init__(self, name: bytes, args: bytes, start_point, start_byte, end_point, end_byte):
+    def __init__(
+        self, name: bytes, args: bytes, start_point, start_byte, end_point, end_byte
+    ):
         self.name = name
         self.args = args
         self.start_point = start_point
@@ -40,7 +42,14 @@ class TemplateRefInstance:
         return (
             self.name == other.name
             and self.args == other.args
-            and any([a == b for a, b in zip(self.caller_param_indices, other.caller_param_indices)])
+            and any(
+                [
+                    a == b
+                    for a, b in zip(
+                        self.caller_param_indices, other.caller_param_indices
+                    )
+                ]
+            )
             and self.start_byte == other.start_byte
             and self.start_point == other.start_point
             and self.end_byte == other.end_byte
@@ -74,7 +83,13 @@ class TemplateCollector:
     incomplete_template_refs: {bytes: [TemplateRefInstance]} = dict()
     sources: [{str: bytes}] = list()
 
-    def __init__(self, ts_parser: Parser, ts_cpp: Language, searchable_files: [Path], temp_arg_deduction: [bytes]):
+    def __init__(
+        self,
+        ts_parser: Parser,
+        ts_cpp: Language,
+        searchable_files: [Path],
+        temp_arg_deduction: [bytes],
+    ):
         self.parser = ts_parser
         self.lang_cpp = ts_cpp
         self.searchable_files = searchable_files
@@ -99,10 +114,17 @@ class TemplateCollector:
                 args = get_text(src, templ_args.start_byte, templ_args.end_byte)
 
                 ti = TemplateRefInstance(
-                    name, args, cb[0][0].start_point, cb[0][0].start_byte, cb[0][0].end_point, cb[0][0].end_byte
+                    name,
+                    args,
+                    cb[0][0].start_point,
+                    cb[0][0].start_byte,
+                    cb[0][0].end_point,
+                    cb[0][0].end_byte,
                 )
 
-                log.debug(f"Found new template ref: {name.decode('utf8')}{args.decode('utf8')}")
+                log.debug(
+                    f"Found new template ref: {name.decode('utf8')}{args.decode('utf8')}"
+                )
 
                 if not self.contains_template_dependent_param(src, ti, cb[0]):
                     if name not in self.template_refs:
@@ -117,7 +139,10 @@ class TemplateCollector:
     def resolve_dependencies(self):
         # Resolve dependencies of templates until nothing new was resolved.
         prev_len = 0
-        while len(self.incomplete_template_refs) > 0 and len(self.incomplete_template_refs) != prev_len:
+        while (
+            len(self.incomplete_template_refs) > 0
+            and len(self.incomplete_template_refs) != prev_len
+        ):
             # Dict with new template calls which were previously incomplete
             # because one or more parameters were unknown.
             new_completed_tcs: {str: list} = dict()
@@ -133,7 +158,9 @@ class TemplateCollector:
                 for caller_template in tc_instance_list:
                     incomplete_tc: TemplateRefInstance
                     for incomplete_tc in self.incomplete_template_refs[caller_name]:
-                        new_tc: TemplateRefInstance = self.get_completed_tc(caller_template, incomplete_tc)
+                        new_tc: TemplateRefInstance = self.get_completed_tc(
+                            caller_template, incomplete_tc
+                        )
                         callee_name = new_tc.name
                         if callee_name not in new_completed_tcs:
                             new_completed_tcs[callee_name] = list()
@@ -148,11 +175,22 @@ class TemplateCollector:
                     self.template_refs[templ_name] = tc_list
             prev_len = len(self.incomplete_template_refs)
         if prev_len > 0:
-            log.info(f"Unresolved template calls: {self.incomplete_template_refs.keys()}. Patch them by hand!")
+            log.info(
+                f"Unresolved template calls: {self.incomplete_template_refs.keys()}. Patch them by hand!"
+            )
 
     @staticmethod
-    def get_completed_tc(tc: TemplateRefInstance, itc: TemplateRefInstance) -> TemplateRefInstance:
-        new_tc = TemplateRefInstance(itc.name, itc.args, itc.start_byte, itc.start_byte, itc.end_point, itc.end_byte)
+    def get_completed_tc(
+        tc: TemplateRefInstance, itc: TemplateRefInstance
+    ) -> TemplateRefInstance:
+        new_tc = TemplateRefInstance(
+            itc.name,
+            itc.args,
+            itc.start_byte,
+            itc.start_byte,
+            itc.end_point,
+            itc.end_byte,
+        )
         for indices in itc.caller_param_indices:
             if tc.name not in indices:
                 # Index of other caller function. Skip.
@@ -164,7 +202,9 @@ class TemplateCollector:
         new_tc.templ_name = new_tc.name + new_tc.args
         return new_tc
 
-    def contains_template_dependent_param(self, src, ti: TemplateRefInstance, parse_tree: (Node, str)) -> bool:
+    def contains_template_dependent_param(
+        self, src, ti: TemplateRefInstance, parse_tree: (Node, str)
+    ) -> bool:
         """Here we check if one of the template parameters of the given template call,
         is a parameter of the callers template definition.
 
@@ -200,14 +240,20 @@ class TemplateCollector:
             return False
 
         caller_fcn_id = node.named_children[2].named_children[0]
-        caller_fcn_name = get_text(src, caller_fcn_id.start_byte, caller_fcn_id.end_byte)
-        caller_templ_params = get_text(src, node.prev_sibling.start_byte, node.prev_sibling.end_byte)
+        caller_fcn_name = get_text(
+            src, caller_fcn_id.start_byte, caller_fcn_id.end_byte
+        )
+        caller_templ_params = get_text(
+            src, node.prev_sibling.start_byte, node.prev_sibling.end_byte
+        )
         pl = TemplateCollector.templ_params_to_list(caller_templ_params)
         has_parameter_dependency = False
         for i, param in enumerate(pl):
             if param in ti.args_list:
                 has_parameter_dependency = True
-                ti.caller_param_indices.append({caller_fcn_name: i, "self_i": ti.args_list.index(param)})
+                ti.caller_param_indices.append(
+                    {caller_fcn_name: i, "self_i": ti.args_list.index(param)}
+                )
 
         if not has_parameter_dependency:
             return False

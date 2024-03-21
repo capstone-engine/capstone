@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
+import logging as log
 import os
 import re
 import shutil
 import subprocess
-
-import logging as log
+from pathlib import Path
 
 from autosync.Helper import fail_exit, get_path
-from pathlib import Path
 
 inc_tables = [
     {
@@ -71,7 +70,9 @@ class IncGenerator:
         self.patches_dir_path: Path = get_path("{INC_PATCH_DIR}")
         self.llvm_include_dir: Path = get_path("{LLVM_INCLUDE_DIR}")
         self.output_dir: Path = get_path("{BUILD_DIR}")
-        self.llvm_target_dir: Path = get_path("{LLVM_TARGET_DIR}").joinpath(f"{self.arch_dir_name}")
+        self.llvm_target_dir: Path = get_path("{LLVM_TARGET_DIR}").joinpath(
+            f"{self.arch_dir_name}"
+        )
         self.llvm_tblgen: Path = get_path("{LLVM_TBLGEN_BIN}")
         self.output_dir_c_inc = get_path("{C_INC_OUT_DIR}")
         self.output_dir_cpp_inc = get_path("{CPP_INC_OUT_DIR}")
@@ -110,12 +111,18 @@ class IncGenerator:
 
         if self.arch == "AArch64":
             # We have to rename the file SystemRegister -> SystemOperands
-            sys_ops_table_file = self.output_dir_c_inc.joinpath("AArch64GenSystemRegister.inc")
-            new_sys_ops_file = self.output_dir_c_inc.joinpath("AArch64GenSystemOperands.inc")
+            sys_ops_table_file = self.output_dir_c_inc.joinpath(
+                "AArch64GenSystemRegister.inc"
+            )
+            new_sys_ops_file = self.output_dir_c_inc.joinpath(
+                "AArch64GenSystemOperands.inc"
+            )
             if "SystemOperand" not in self.inc_list:
                 return
             elif not sys_ops_table_file.exists():
-                fail_exit(f"{sys_ops_table_file} does not exist. But it should have been generated.")
+                fail_exit(
+                    f"{sys_ops_table_file} does not exist. But it should have been generated."
+                )
             shutil.move(sys_ops_table_file, new_sys_ops_file)
 
     def gen_incs(self) -> None:

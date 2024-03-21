@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class DecodeInstruction(Patch):
@@ -31,8 +30,12 @@ class DecodeInstruction(Patch):
         args_text = get_text(src, arg_list.start_byte, arg_list.end_byte).strip(b"()")
 
         table, mi_inst, opcode_var, address, this, sti = args_text.split(b",")
-        is_32bit = table[-2:].decode("utf8") == "32" or opcode_var[-2:].decode("utf8") == "32"
-        is_16bit = table[-2:].decode("utf8") == "16" or opcode_var[-2:].decode("utf8") == "16"
+        is_32bit = (
+            table[-2:].decode("utf8") == "32" or opcode_var[-2:].decode("utf8") == "32"
+        )
+        is_16bit = (
+            table[-2:].decode("utf8") == "16" or opcode_var[-2:].decode("utf8") == "16"
+        )
         args = table + b", " + mi_inst + b", " + opcode_var + b", " + address
 
         if is_16bit and not is_32bit:

@@ -1,9 +1,9 @@
+import logging as log
 import re
 
-from tree_sitter import Node
-import logging as log
-
 from autosync.Helper import fail_exit
+
+from tree_sitter import Node
 
 
 def get_function_params_of_node(n: Node) -> Node:
@@ -46,7 +46,9 @@ def get_MCInst_var_name(src: bytes, n: Node) -> bytes:
 
 def template_param_list_to_dict(param_list: Node) -> [dict]:
     if param_list.type != "template_parameter_list":
-        log.fatal(f"Wrong node type '{param_list.type}'. Not 'template_parameter_list'.")
+        log.fatal(
+            f"Wrong node type '{param_list.type}'. Not 'template_parameter_list'."
+        )
         exit(1)
     pl = list()
     for c in param_list.named_children:
@@ -64,7 +66,9 @@ def template_param_list_to_dict(param_list: Node) -> [dict]:
 
 def parameter_declaration_to_dict(param_decl: Node) -> dict:
     if param_decl.type != "parameter_declaration":
-        log.fatal(f"Wrong node type '{param_decl.type}'. Should be 'parameter_declaration'.")
+        log.fatal(
+            f"Wrong node type '{param_decl.type}'. Should be 'parameter_declaration'."
+        )
         exit(1)
     return {
         "prim_type": param_decl.children[0].type == "primitive_type",
@@ -152,7 +156,9 @@ def namespace_struct(src: bytes, ns_id: bytes, struct: Node) -> bytes:
     tid = get_text(src, type_id.start_byte, type_id.end_byte)
     fields = get_text(src, field_list.start_byte, field_list.end_byte)
 
-    typed_struct = b"typedef struct " + tid + b" " + fields + b"\n " + ns_id + b"_" + tid
+    typed_struct = (
+        b"typedef struct " + tid + b" " + fields + b"\n " + ns_id + b"_" + tid
+    )
     return typed_struct
 
 
@@ -195,7 +201,14 @@ def parse_function_capture(
 
     from autosync.cpptranslator.TemplateCollector import TemplateCollector
 
-    return TemplateCollector.templ_params_to_list(temp_args), st_class_ids, ret_type, func_name, func_params, comp_stmt
+    return (
+        TemplateCollector.templ_params_to_list(temp_args),
+        st_class_ids,
+        ret_type,
+        func_name,
+        func_params,
+        comp_stmt,
+    )
 
 
 def get_capture_node(captures: [(Node, str)], name: str) -> Node:

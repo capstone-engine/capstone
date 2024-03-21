@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_capture_node
+from autosync.cpptranslator.Patches.HelperMethods import get_capture_node, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class DeclarationInConditionalClause(Patch):

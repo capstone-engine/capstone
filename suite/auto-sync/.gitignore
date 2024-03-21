@@ -1,5 +1,6 @@
 build/
 vendor/llvm_root
 */.idea
-Updater/config.json
+src/auto-sync/config.json
+src/autosync.egg-info
 

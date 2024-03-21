@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class CppInitCast(Patch):
@@ -14,7 +13,12 @@ class CppInitCast(Patch):
         super().__init__(priority)
 
     def get_search_pattern(self) -> str:
-        return "(call_expression" "    (primitive_type) @cast_type" "    (argument_list) @cast_target" ") @cast"
+        return (
+            "(call_expression"
+            "    (primitive_type) @cast_type"
+            "    (argument_list) @cast_target"
+            ") @cast"
+        )
 
     def get_main_capture_name(self) -> str:
         return "cast"

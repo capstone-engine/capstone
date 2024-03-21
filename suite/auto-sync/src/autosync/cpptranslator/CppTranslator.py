@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-from pathlib import Path
-
-import termcolor
-from tree_sitter import Language, Parser, Tree, Node, Query
 import argparse
 import logging as log
 import sys
+from pathlib import Path
+
+import termcolor
+from tree_sitter import Language, Node, Parser, Query, Tree
 
 from autosync.cpptranslator.Configurator import Configurator
-from autosync.Helper import convert_loglevel, print_prominent_warning, get_header, run_clang_format, get_path
-from autosync.cpptranslator.Patches.GetRegFromClass import GetRegFromClass
 from autosync.cpptranslator.Patches.AddCSDetail import AddCSDetail
 from autosync.cpptranslator.Patches.AddOperand import AddOperand
 from autosync.cpptranslator.Patches.Assert import Assert
@@ -22,7 +20,9 @@ from autosync.cpptranslator.Patches.ConstMCOperand import ConstMCOperand
 from autosync.cpptranslator.Patches.CppInitCast import CppInitCast
 from autosync.cpptranslator.Patches.CreateOperand0 import CreateOperand0
 from autosync.cpptranslator.Patches.CreateOperand1 import CreateOperand1
-from autosync.cpptranslator.Patches.DeclarationInConditionClause import DeclarationInConditionalClause
+from autosync.cpptranslator.Patches.DeclarationInConditionClause import (
+    DeclarationInConditionalClause,
+)
 from autosync.cpptranslator.Patches.DecodeInstruction import DecodeInstruction
 from autosync.cpptranslator.Patches.DecoderCast import DecoderCast
 from autosync.cpptranslator.Patches.DecoderParameter import DecoderParameter
@@ -32,36 +32,39 @@ from autosync.cpptranslator.Patches.FeatureBitsDecl import FeatureBitsDecl
 from autosync.cpptranslator.Patches.FieldFromInstr import FieldFromInstr
 from autosync.cpptranslator.Patches.GetNumOperands import GetNumOperands
 from autosync.cpptranslator.Patches.GetOpcode import GetOpcode
-from autosync.cpptranslator.Patches.GetOperandRegImm import GetOperandRegImm
 from autosync.cpptranslator.Patches.GetOperand import GetOperand
+from autosync.cpptranslator.Patches.GetOperandRegImm import GetOperandRegImm
 from autosync.cpptranslator.Patches.GetRegClass import GetRegClass
+from autosync.cpptranslator.Patches.GetRegFromClass import GetRegFromClass
 from autosync.cpptranslator.Patches.GetSubReg import GetSubReg
 from autosync.cpptranslator.Patches.Includes import Includes
 from autosync.cpptranslator.Patches.InlineToStaticInline import InlineToStaticInline
-from autosync.cpptranslator.Patches.IsRegImm import IsOperandRegImm
 from autosync.cpptranslator.Patches.IsOptionalDef import IsOptionalDef
 from autosync.cpptranslator.Patches.IsPredicate import IsPredicate
+from autosync.cpptranslator.Patches.IsRegImm import IsOperandRegImm
 from autosync.cpptranslator.Patches.LLVMFallThrough import LLVMFallThrough
 from autosync.cpptranslator.Patches.LLVMunreachable import LLVMUnreachable
 from autosync.cpptranslator.Patches.MethodToFunctions import MethodToFunction
 from autosync.cpptranslator.Patches.MethodTypeQualifier import MethodTypeQualifier
-from autosync.cpptranslator.Patches.NamespaceLLVM import NamespaceLLVM
 from autosync.cpptranslator.Patches.NamespaceAnon import NamespaceAnon
 from autosync.cpptranslator.Patches.NamespaceArch import NamespaceArch
+from autosync.cpptranslator.Patches.NamespaceLLVM import NamespaceLLVM
 from autosync.cpptranslator.Patches.OutStreamParam import OutStreamParam
-from autosync.cpptranslator.Patches.PredicateBlockFunctions import PredicateBlockFunctions
+from autosync.cpptranslator.Patches.Patch import Patch
+from autosync.cpptranslator.Patches.PredicateBlockFunctions import (
+    PredicateBlockFunctions,
+)
 from autosync.cpptranslator.Patches.PrintAnnotation import PrintAnnotation
 from autosync.cpptranslator.Patches.PrintRegImmShift import PrintRegImmShift
 from autosync.cpptranslator.Patches.QualifiedIdentifier import QualifiedIdentifier
-from autosync.cpptranslator.Patches.Patch import Patch
 from autosync.cpptranslator.Patches.ReferencesDecl import ReferencesDecl
 from autosync.cpptranslator.Patches.RegClassContains import RegClassContains
-from autosync.cpptranslator.Patches.STIArgument import STIArgument
-from autosync.cpptranslator.Patches.STIFeatureBits import STIFeatureBits
-from autosync.cpptranslator.Patches.STParameter import SubtargetInfoParam
 from autosync.cpptranslator.Patches.SetOpcode import SetOpcode
 from autosync.cpptranslator.Patches.SignExtend import SignExtend
 from autosync.cpptranslator.Patches.SizeAssignments import SizeAssignment
+from autosync.cpptranslator.Patches.STIArgument import STIArgument
+from autosync.cpptranslator.Patches.STIFeatureBits import STIFeatureBits
+from autosync.cpptranslator.Patches.STParameter import SubtargetInfoParam
 from autosync.cpptranslator.Patches.StreamOperation import StreamOperations
 from autosync.cpptranslator.Patches.TemplateDeclaration import TemplateDeclaration
 from autosync.cpptranslator.Patches.TemplateDefinition import TemplateDefinition
@@ -70,6 +73,13 @@ from autosync.cpptranslator.Patches.TemplateRefs import TemplateRefs
 from autosync.cpptranslator.Patches.UseMarkup import UseMarkup
 from autosync.cpptranslator.Patches.UsingDeclaration import UsingDeclaration
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
+from autosync.Helper import (
+    convert_loglevel,
+    get_header,
+    get_path,
+    print_prominent_warning,
+    run_clang_format,
+)
 
 
 class Translator:
@@ -168,9 +178,13 @@ class Translator:
         self.ts_cpp_lang = self.configurator.get_cpp_lang()
         self.parser = self.configurator.get_parser()
 
-        self.src_paths: [Path] = [get_path(sp["in"]) for sp in self.conf["files_to_translate"]]
+        self.src_paths: [Path] = [
+            get_path(sp["in"]) for sp in self.conf["files_to_translate"]
+        ]
         t_out_dir: Path = get_path(self.conf_general["translation_out_dir"])
-        self.out_paths: [Path] = [t_out_dir.joinpath(sp["out"]) for sp in self.conf["files_to_translate"]]
+        self.out_paths: [Path] = [
+            t_out_dir.joinpath(sp["out"]) for sp in self.conf["files_to_translate"]
+        ]
 
         self.collect_template_instances()
         self.init_patches()
@@ -186,7 +200,9 @@ class Translator:
 
     def init_patches(self):
         log.debug("Init patches")
-        priorities = dict(sorted(self.patch_priorities.items(), key=lambda item: item[1]))
+        priorities = dict(
+            sorted(self.patch_priorities.items(), key=lambda item: item[1])
+        )
         for ptype, p in priorities.items():
             match ptype:
                 case RegClassContains.__name__:
@@ -349,8 +365,13 @@ class Translator:
 
     def apply_patch(self, patch: Patch) -> bool:
         """Tests if the given patch should be applied for the current architecture or file."""
-        has_apply_only = len(patch.apply_only_to["files"]) > 0 or len(patch.apply_only_to["archs"]) > 0
-        has_do_not_apply = len(patch.do_not_apply["files"]) > 0 or len(patch.do_not_apply["archs"]) > 0
+        has_apply_only = (
+            len(patch.apply_only_to["files"]) > 0
+            or len(patch.apply_only_to["archs"]) > 0
+        )
+        has_do_not_apply = (
+            len(patch.do_not_apply["files"]) > 0 or len(patch.do_not_apply["archs"]) > 0
+        )
 
         if not (has_apply_only or has_do_not_apply):
             # Lists empty.
@@ -372,7 +393,9 @@ class Translator:
         exit(1)
 
     def translate(self) -> None:
-        for self.current_src_path_in, self.current_src_path_out in zip(self.src_paths, self.out_paths):
+        for self.current_src_path_in, self.current_src_path_out in zip(
+            self.src_paths, self.out_paths
+        ):
             log.info(f"Translate '{self.current_src_path_in}'")
             self.parse(self.current_src_path_in)
             patch: Patch
@@ -396,7 +419,9 @@ class Translator:
                         # Add it to the bundle.
                         captures_bundle[-1].append(q)
 
-                log.debug(f"Patch {patch.__class__.__name__} (to patch: {len(captures_bundle)}).")
+                log.debug(
+                    f"Patch {patch.__class__.__name__} (to patch: {len(captures_bundle)})."
+                )
 
                 p_list: (bytes, Node) = list()
                 cb: [(Node, str)]
@@ -418,8 +443,12 @@ class Translator:
 
     def collect_template_instances(self):
         search_paths = [get_path(p) for p in self.conf["files_for_template_search"]]
-        temp_arg_deduction = [p.encode("utf8") for p in self.conf["templates_with_arg_deduction"]]
-        self.template_collector = TemplateCollector(self.parser, self.ts_cpp_lang, search_paths, temp_arg_deduction)
+        temp_arg_deduction = [
+            p.encode("utf8") for p in self.conf["templates_with_arg_deduction"]
+        ]
+        self.template_collector = TemplateCollector(
+            self.parser, self.ts_cpp_lang, search_paths, temp_arg_deduction
+        )
         self.template_collector.collect()
 
     def get_patch_kwargs(self, patch):
@@ -433,7 +462,8 @@ class Translator:
         if len(manual_edited) > 0:
             msg += (
                 termcolor.colored(
-                    "The following files are too complex to translate! Please check them by hand.", attrs=["bold"]
+                    "The following files are too complex to translate! Please check them by hand.",
+                    attrs=["bold"],
                 )
                 + "\n"
             )
@@ -450,7 +480,11 @@ def parse_args() -> argparse.Namespace:
         description="Capstones C++ to C translator for LLVM source files",
     )
     parser.add_argument(
-        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64", "Alpha"], required=True
+        "-a",
+        dest="arch",
+        help="Name of target architecture.",
+        choices=["ARM", "PPC", "AArch64", "Alpha"],
+        required=True,
     )
     parser.add_argument(
         "-v",
@@ -460,7 +494,11 @@ def parse_args() -> argparse.Namespace:
         default="info",
     )
     parser.add_argument(
-        "-c", dest="config_path", help="Config file for architectures.", default="arch_config.json", type=Path
+        "-c",
+        dest="config_path",
+        help="Config file for architectures.",
+        default="arch_config.json",
+        type=Path,
     )
     arguments = parser.parse_args()
     return arguments

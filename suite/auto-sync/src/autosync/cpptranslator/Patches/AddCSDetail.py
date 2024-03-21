@@ -1,10 +1,14 @@
 import logging as log
 import re
 
-from tree_sitter import Node
-
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_MCInst_var_name, template_param_list_to_dict
+from autosync.cpptranslator.Patches.HelperMethods import (
+    get_MCInst_var_name,
+    get_text,
+    template_param_list_to_dict,
+)
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class AddCSDetail(Patch):
@@ -33,7 +37,11 @@ class AddCSDetail(Patch):
         super().__init__(priority)
         self.arch = arch
         self.apply_only_to = {
-            "files": ["ARMInstPrinter.cpp", "PPCInstPrinter.cpp", "AArch64InstPrinter.cpp"],
+            "files": [
+                "ARMInstPrinter.cpp",
+                "PPCInstPrinter.cpp",
+                "AArch64InstPrinter.cpp",
+            ],
             "archs": list(),
         }
 
@@ -68,15 +76,31 @@ class AddCSDetail(Patch):
         comp = get_text(src, comp.start_byte, comp.end_byte)
         return b"void " + fcn_id + params + b"{ " + add_cs_detail + comp.strip(b"{")
 
-    def get_add_cs_detail(self, src: bytes, fcn_def: Node, fcn_id: bytes, params: bytes) -> bytes:
-        op_group_enum = self.arch.encode("utf8") + b"_OP_GROUP_" + fcn_id[5:]  # Remove "print" from function id
+    def get_add_cs_detail(
+        self, src: bytes, fcn_def: Node, fcn_id: bytes, params: bytes
+    ) -> bytes:
+        op_group_enum = (
+            self.arch.encode("utf8") + b"_OP_GROUP_" + fcn_id[5:]
+        )  # Remove "print" from function id
 
         is_template = fcn_def.prev_sibling.type == "template_parameter_list"
-        op_num_var_name = b"OpNum" if b"OpNum" in params else (b"OpNo" if b"OpNo" in params else b"-.-")
+        op_num_var_name = (
+            b"OpNum"
+            if b"OpNum" in params
+            else (b"OpNo" if b"OpNo" in params else b"-.-")
+        )
         if not is_template and op_num_var_name in params:
             # Standard printOperand() parameters
             mcinst_var = get_MCInst_var_name(src, fcn_def)
-            return b"add_cs_detail(" + mcinst_var + b", " + op_group_enum + b", " + op_num_var_name + b");"
+            return (
+                b"add_cs_detail("
+                + mcinst_var
+                + b", "
+                + op_group_enum
+                + b", "
+                + op_num_var_name
+                + b");"
+            )
         elif op_group_enum == b"ARM_OP_GROUP_RegImmShift":
             return b"add_cs_detail(MI, " + op_group_enum + b", ShOpc, ShImm);"
         elif is_template and op_num_var_name in params:
@@ -84,7 +108,9 @@ class AddCSDetail(Patch):
             templ_p = template_param_list_to_dict(fcn_def.prev_sibling)
             cs_args = b""
             for tp in templ_p:
-                op_group_enum = b"CONCAT(" + op_group_enum + b", " + tp["identifier"] + b")"
+                op_group_enum = (
+                    b"CONCAT(" + op_group_enum + b", " + tp["identifier"] + b")"
+                )
                 cs_args += b", " + tp["identifier"]
             return (
                 b"add_cs_detail("

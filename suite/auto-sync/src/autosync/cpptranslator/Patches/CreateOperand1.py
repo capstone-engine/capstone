@@ -1,9 +1,9 @@
 import re
 
-from tree_sitter import Node
-
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_MCInst_var_name
+from autosync.cpptranslator.Patches.HelperMethods import get_MCInst_var_name, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class CreateOperand1(Patch):
@@ -50,7 +50,11 @@ class CreateOperand1(Patch):
 
         insert_arg_t = get_text(src, insert_arg.start_byte, insert_arg.end_byte)
         # Capstone spells the function with capital letter 'C' for whatever reason.
-        fcn = re.sub(b"create", b"Create", get_text(src, op_create_fcn.start_byte, op_create_fcn.end_byte))
+        fcn = re.sub(
+            b"create",
+            b"Create",
+            get_text(src, op_create_fcn.start_byte, op_create_fcn.end_byte),
+        )
         inst = get_text(src, inst_var.start_byte, inst_var.end_byte)
         args = get_text(src, op_create_args.start_byte, op_create_args.end_byte)
         return (

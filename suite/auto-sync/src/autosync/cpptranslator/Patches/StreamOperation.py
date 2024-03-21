@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class StreamOperations(Patch):
@@ -58,11 +57,22 @@ class StreamOperations(Patch):
                         + b', "'
                         + b"%s" * len(string_ops)
                         + b'", '
-                        + b", ".join([get_text(src, o.start_byte, o.end_byte) for o in string_ops])
+                        + b", ".join(
+                            [
+                                get_text(src, o.start_byte, o.end_byte)
+                                for o in string_ops
+                            ]
+                        )
                         + b");\n"
                     )
                     string_ops.clear()
-                res += b"SStream_concat1(" + s_name + b", " + get_text(src, op.start_byte, op.end_byte) + b");\n"
+                res += (
+                    b"SStream_concat1("
+                    + s_name
+                    + b", "
+                    + get_text(src, op.start_byte, op.end_byte)
+                    + b");\n"
+                )
             else:
                 string_ops.append(op)
             i += 1
@@ -75,14 +85,22 @@ class StreamOperations(Patch):
                 + b', "'
                 + b"%s" * len(string_ops)
                 + b'", '
-                + b", ".join([get_text(src, o.start_byte, o.end_byte) for o in string_ops])
+                + b", ".join(
+                    [get_text(src, o.start_byte, o.end_byte) for o in string_ops]
+                )
                 + b");\n"
             )
             string_ops.clear()
 
         last_op_text = get_text(src, last_op.start_byte, last_op.end_byte)
         if last_op.type == "char_literal":
-            res += b"SStream_concat0(" + s_name + b", " + last_op_text.replace(b"'", b'"') + b");\n"
+            res += (
+                b"SStream_concat0("
+                + s_name
+                + b", "
+                + last_op_text.replace(b"'", b'"')
+                + b");\n"
+            )
         else:
             res += b"SStream_concat0(" + s_name + b", " + last_op_text + b");"
         stream = captures[0][0]

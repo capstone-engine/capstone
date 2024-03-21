@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_MCInst_var_name
+from autosync.cpptranslator.Patches.HelperMethods import get_MCInst_var_name, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class GetSubReg(Patch):
@@ -31,6 +30,8 @@ class GetSubReg(Patch):
         # Get arg list
         op_create_args: Node = captures[2][0]
 
-        args = get_text(src, op_create_args.start_byte, op_create_args.end_byte).strip(b"()")
+        args = get_text(src, op_create_args.start_byte, op_create_args.end_byte).strip(
+            b"()"
+        )
         mcinst_var_name = get_MCInst_var_name(src, op_create_args)
         return b"MCRegisterInfo_getSubReg(" + mcinst_var_name + b"->MRI, " + args + b")"

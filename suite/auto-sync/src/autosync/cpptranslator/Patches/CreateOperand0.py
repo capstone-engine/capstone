@@ -1,9 +1,9 @@
 import re
 
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class CreateOperand0(Patch):
@@ -44,7 +44,11 @@ class CreateOperand0(Patch):
         op_create_args: Node = captures[4][0]
 
         # Capstone spells the function with capital letter 'C' for whatever reason.
-        fcn = re.sub(b"create", b"Create", get_text(src, op_create_fcn.start_byte, op_create_fcn.end_byte))
+        fcn = re.sub(
+            b"create",
+            b"Create",
+            get_text(src, op_create_fcn.start_byte, op_create_fcn.end_byte),
+        )
         inst = get_text(src, inst_var.start_byte, inst_var.end_byte)
         args = get_text(src, op_create_args.start_byte, op_create_args.end_byte)
         if args[0] == b"(" and args[-1] == b")":

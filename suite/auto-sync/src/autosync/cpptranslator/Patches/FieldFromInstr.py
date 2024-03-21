@@ -1,10 +1,13 @@
 import logging as log
 import re
 
-from tree_sitter import Node
-
-from autosync.cpptranslator.Patches.HelperMethods import get_text, get_function_params_of_node
+from autosync.cpptranslator.Patches.HelperMethods import (
+    get_function_params_of_node,
+    get_text,
+)
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class FieldFromInstr(Patch):
@@ -32,7 +35,9 @@ class FieldFromInstr(Patch):
         ffi_call: Node = captures[0][0]
         ffi_first_arg: Node = captures[2][0]
         param_list_caller = get_function_params_of_node(ffi_call)
-        ffi_first_arg_text = get_text(src, ffi_first_arg.start_byte, ffi_first_arg.end_byte).decode("utf8")
+        ffi_first_arg_text = get_text(
+            src, ffi_first_arg.start_byte, ffi_first_arg.end_byte
+        ).decode("utf8")
 
         # Determine width of instruction by the variable name.
         if ffi_first_arg_text[-2:] == "32":

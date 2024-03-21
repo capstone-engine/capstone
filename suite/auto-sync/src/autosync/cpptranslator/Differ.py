@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
-import json
-from enum import StrEnum
-from pathlib import Path
-from typing import Iterator
-
-from tree_sitter import Language, Parser, Tree, Node
-from shutil import copy2
 import argparse
 import difflib as dl
+import json
 import logging as log
 import sys
+from enum import StrEnum
+from pathlib import Path
+from shutil import copy2
+from typing import Iterator
+
+from tree_sitter import Language, Node, Parser, Tree
 
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.Helper import (
-    convert_loglevel,
-    find_id_by_type,
-    print_prominent_info,
     bold,
     colored,
+    convert_loglevel,
+    find_id_by_type,
+    get_path,
+    get_sha256,
+    print_prominent_info,
+    print_prominent_warning,
+    run_clang_format,
     separator_line_1,
     separator_line_2,
-    print_prominent_warning,
-    get_sha256,
-    run_clang_format,
-    get_path,
 )
 
 
@@ -35,7 +35,13 @@ class PatchCoord:
     start_point: tuple[int, int]
     end_point: tuple[int, int]
 
-    def __init__(self, start_byte: int, end_byte: int, start_point: tuple[int, int], end_point: tuple[int, int]):
+    def __init__(
+        self,
+        start_byte: int,
+        end_byte: int,
+        start_point: tuple[int, int],
+        end_point: tuple[int, int],
+    ):
         self.start_byte = start_byte
         self.end_byte = end_byte
         self.start_point = start_point
@@ -58,7 +64,9 @@ class PatchCoord:
 
     @staticmethod
     def get_coordinates_from_node(node: Node):
-        return PatchCoord(node.start_byte, node.end_byte, node.start_point, node.end_point)
+        return PatchCoord(
+            node.start_byte, node.end_byte, node.start_point, node.end_point
+        )
 
 
 class ApplyType(StrEnum):
@@ -81,7 +89,13 @@ class Patch:
     new_hash: str
 
     def __init__(
-        self, node_id: str, old: bytes, new: bytes, coord: PatchCoord, apply: ApplyType, edit: bytes = None
+        self,
+        node_id: str,
+        old: bytes,
+        new: bytes,
+        coord: PatchCoord,
+        apply: ApplyType,
+        edit: bytes = None,
     ) -> None:
         if apply == ApplyType.SAVED:
             raise NotImplementedError("Not yet implemented.")
@@ -163,16 +177,23 @@ class Differ:
         self.differ = dl.Differ()
 
         t_out_dir: Path = get_path(self.conf_general["translation_out_dir"])
-        self.translated_files = [t_out_dir.joinpath(sp["out"]) for sp in self.conf_arch["files_to_translate"]]
+        self.translated_files = [
+            t_out_dir.joinpath(sp["out"]) for sp in self.conf_arch["files_to_translate"]
+        ]
         cs_arch_src: Path = get_path("{CS_ARCH_MODULE_DIR}")
-        cs_arch_src = cs_arch_src.joinpath(self.arch if self.arch != "PPC" else "PowerPC")
+        cs_arch_src = cs_arch_src.joinpath(
+            self.arch if self.arch != "PPC" else "PowerPC"
+        )
         self.old_files = [
-            cs_arch_src.joinpath(f"{cs_arch_src}/" + sp["out"]) for sp in self.conf_arch["files_to_translate"]
+            cs_arch_src.joinpath(f"{cs_arch_src}/" + sp["out"])
+            for sp in self.conf_arch["files_to_translate"]
         ]
         self.load_persistence_file()
 
     def load_persistence_file(self) -> None:
-        self.persistence_filepath = get_path(self.conf_general["patch_persistence_file"])
+        self.persistence_filepath = get_path(
+            self.conf_general["patch_persistence_file"]
+        )
         if not self.persistence_filepath.exists():
             self.saved_patches = dict()
             return
@@ -181,7 +202,9 @@ class Differ:
             try:
                 self.saved_patches = json.load(f)
             except json.decoder.JSONDecodeError as e:
-                log.fatal(f"Persistence file {bold(self.persistence_filepath.name)} corrupt.")
+                log.fatal(
+                    f"Persistence file {bold(self.persistence_filepath.name)} corrupt."
+                )
                 log.fatal("Delete it or fix it by hand.")
                 log.fatal(f"JSON Exception: {e}")
                 exit(1)
@@ -208,7 +231,12 @@ class Differ:
             self.diff_dest_files.append(dest)
 
     def get_diff_intro_msg(
-        self, old_filename: Path, new_filename: Path, current: int, total: int, num_diffs: int
+        self,
+        old_filename: Path,
+        new_filename: Path,
+        current: int,
+        total: int,
+        num_diffs: int,
     ) -> str:
         color_new = self.conf_general["diff_color_new"]
         color_old = self.conf_general["diff_color_old"]
@@ -229,7 +257,9 @@ class Differ:
             if n["node_type"] == node.type:
                 id_types = n["identifier_node_type"]
         if not id_types:
-            log.fatal(f"Diffing: Node of type {node.type} has not identifier type specified.")
+            log.fatal(
+                f"Diffing: Node of type {node.type} has not identifier type specified."
+            )
             exit(1)
         identifier = ""
         for id_type in id_types:
@@ -251,7 +281,9 @@ class Differ:
 
         tree: Tree = self.parser.parse(content, keep_text=True)
 
-        node_types_to_diff = [n["node_type"] for n in self.conf_general["nodes_to_diff"]]
+        node_types_to_diff = [
+            n["node_type"] for n in self.conf_general["nodes_to_diff"]
+        ]
         content = None
         if file.suffix == ".h":
             # Header file. Get the content in between the include guard
@@ -287,7 +319,9 @@ class Differ:
         print(f"{bold('Patch:')} {current}/{total}\n")
         print(f"{bold('Node:')} {node_id}")
         print(f"{bold('Color:')} {colored('NEW FILE - (Just translated)', new_color)}")
-        print(f"{bold('Color:')} {colored('OLD FILE - (Currently in Capstone)', old_color)}\n")
+        print(
+            f"{bold('Color:')} {colored('OLD FILE - (Currently in Capstone)', old_color)}\n"
+        )
         print(separator_line_1())
         for line in diff_lines:
             if line[0] == "+":
@@ -307,7 +341,9 @@ class Differ:
                 return False
         return True
 
-    def print_prompt(self, saved_diff_present: bool = False, saved_choice: ApplyType = None) -> str:
+    def print_prompt(
+        self, saved_diff_present: bool = False, saved_choice: ApplyType = None
+    ) -> str:
         new_color = self.conf_general["diff_color_new"]
         old_color = self.conf_general["diff_color_old"]
         edited_color = self.conf_general["diff_color_edited"]
@@ -319,11 +355,15 @@ class Differ:
         )
         return choice
 
-    def get_saved_choice_prompt(self, saved_diff_present: bool = False, saved_choice: ApplyType = None):
+    def get_saved_choice_prompt(
+        self, saved_diff_present: bool = False, saved_choice: ApplyType = None
+    ):
         new_color = self.conf_general["diff_color_new"]
         old_color = self.conf_general["diff_color_old"]
         edited_color = self.conf_general["diff_color_edited"]
-        saved_color = self.conf_general["diff_color_saved"] if saved_diff_present else "dark_grey"
+        saved_color = (
+            self.conf_general["diff_color_saved"] if saved_diff_present else "dark_grey"
+        )
         saved_selection = f"{bold('s', saved_color)}"
         if saved_choice == ApplyType.OLD:
             saved_selection += f" ({colored('old', old_color)}) "
@@ -335,7 +375,9 @@ class Differ:
             saved_selection += f" ({colored('none', 'dark_grey')}) "
         return saved_selection
 
-    def print_prompt_help(self, saved_diff_present: bool = False, saved_choice: ApplyType = None) -> None:
+    def print_prompt_help(
+        self, saved_diff_present: bool = False, saved_choice: ApplyType = None
+    ) -> None:
         new_color = self.conf_general["diff_color_new"]
         old_color = self.conf_general["diff_color_old"]
         edited_color = self.conf_general["diff_color_edited"]
@@ -352,7 +394,9 @@ class Differ:
             f"?\t\t- Show this help\n\n"
         )
 
-    def get_user_choice(self, saved_diff_present: bool, saved_choice: ApplyType) -> ApplyType:
+    def get_user_choice(
+        self, saved_diff_present: bool, saved_choice: ApplyType
+    ) -> ApplyType:
         while True:
             choice = self.print_prompt(saved_diff_present, saved_choice)
             if choice not in ["O", "o", "n", "e", "s", "p", "q", "?", "help"]:
@@ -391,10 +435,18 @@ class Differ:
             new_hash = ""
         return saved["old_hash"] == old_hash and saved["new_hash"] == new_hash
 
-    def create_patch(self, coord: PatchCoord, choice: ApplyType, saved_patch: dict = None):
+    def create_patch(
+        self, coord: PatchCoord, choice: ApplyType, saved_patch: dict = None
+    ):
         old = self.cur_old_node.text if self.cur_old_node else b""
         new = self.cur_new_node.text if self.cur_new_node else b""
-        return Patch(self.cur_nid, old, new, coord, saved_patch["apply_type"] if saved_patch else choice)
+        return Patch(
+            self.cur_nid,
+            old,
+            new,
+            coord,
+            saved_patch["apply_type"] if saved_patch else choice,
+        )
 
     def add_patch(
         self,
@@ -412,7 +464,12 @@ class Differ:
         else:
             self.patches.append(self.current_patch)
 
-    def diff_nodes(self, old_filepath: Path, new_nodes: dict[bytes, Node], old_nodes: dict[bytes, Node]) -> list[Patch]:
+    def diff_nodes(
+        self,
+        old_filepath: Path,
+        new_nodes: dict[bytes, Node],
+        old_nodes: dict[bytes, Node],
+    ) -> list[Patch]:
         """
         Asks the user for each different node, which version should be written.
         It writes the choice to a file, so the previous choice can be applied again if nothing changed.
@@ -422,8 +479,18 @@ class Differ:
         #   a) we need to apply the patches backwards (so the coordinates in the file don't change.
         #   b) If there is an old node, which is not present in the new file, we search for
         #      a node which is adjacent (random node order wouldn't allow this).
-        new_nodes = {k: v for k, v in sorted(new_nodes.items(), key=lambda item: item[1].start_byte, reverse=True)}
-        old_nodes = {k: v for k, v in sorted(old_nodes.items(), key=lambda item: item[1].start_byte, reverse=True)}
+        new_nodes = {
+            k: v
+            for k, v in sorted(
+                new_nodes.items(), key=lambda item: item[1].start_byte, reverse=True
+            )
+        }
+        old_nodes = {
+            k: v
+            for k, v in sorted(
+                old_nodes.items(), key=lambda item: item[1].start_byte, reverse=True
+            )
+        }
 
         # Collect all node ids of this file
         node_ids = set()
@@ -451,8 +518,16 @@ class Differ:
             if self.cur_nid in old_nodes:
                 self.cur_old_node = old_nodes[self.cur_nid]
 
-            n = self.cur_new_node.text.decode("utf8").splitlines() if self.cur_new_node else [""]
-            o = self.cur_old_node.text.decode("utf8").splitlines() if self.cur_old_node else [""]
+            n = (
+                self.cur_new_node.text.decode("utf8").splitlines()
+                if self.cur_new_node
+                else [""]
+            )
+            o = (
+                self.cur_old_node.text.decode("utf8").splitlines()
+                if self.cur_old_node
+                else [""]
+            )
 
             diff_lines = list(self.differ.compare(o, n))
             if self.no_difference(diff_lines):
@@ -473,7 +548,11 @@ class Differ:
                 j = old_node_ids.index(self.cur_nid)
                 while j >= 0 and (old_node_ids[j] not in new_nodes.keys()):
                     j -= 1
-                ref_new: Node = new_nodes[old_node_ids[j]] if old_node_ids[j] in new_nodes.keys() else new_nodes[0]
+                ref_new: Node = (
+                    new_nodes[old_node_ids[j]]
+                    if old_node_ids[j] in new_nodes.keys()
+                    else new_nodes[0]
+                )
                 ref_end_byte = ref_new.start_byte
                 patch_coord = PatchCoord(
                     ref_end_byte - 1,
@@ -484,7 +563,10 @@ class Differ:
 
             save_exists = False
             saved = None
-            if old_filepath.name in self.saved_patches and self.cur_nid in self.saved_patches[old_filepath.name]:
+            if (
+                old_filepath.name in self.saved_patches
+                and self.cur_nid in self.saved_patches[old_filepath.name]
+            ):
                 saved: dict = self.saved_patches[old_filepath.name][self.cur_nid]
                 save_exists = True
                 if self.saved_patch_matches(saved) and not self.no_auto_apply:
@@ -500,7 +582,9 @@ class Differ:
                 continue
 
             self.print_diff(diff_lines, self.cur_nid, i + 1, len(node_ids))
-            choice = self.get_user_choice(save_exists, None if not saved else saved["apply_type"])
+            choice = self.get_user_choice(
+                save_exists, None if not saved else saved["apply_type"]
+            )
             if choice == ApplyType.OLD:
                 if not self.cur_old_node:
                     # No data in old node. Skip
@@ -514,7 +598,9 @@ class Differ:
                 if not save_exists:
                     print(bold("Save does not exist."))
                     continue
-                self.add_patch(saved["apply_type"], consec_old, old_filepath, patch_coord)
+                self.add_patch(
+                    saved["apply_type"], consec_old, old_filepath, patch_coord
+                )
             elif choice == ApplyType.OLD_ALL:
                 self.add_patch(ApplyType.OLD, consec_old, old_filepath, patch_coord)
             elif choice == ApplyType.EDIT:
@@ -558,10 +644,16 @@ class Differ:
             old_filepath = old_file[k]["filepath"]
             new_filepath = new_file[k]["filepath"]
             diffs_to_process = max(len(new_file[k]["nodes"]), len(old_file[k]["nodes"]))
-            print_prominent_info(self.get_diff_intro_msg(old_filepath, new_filepath, k + 1, i, diffs_to_process))
+            print_prominent_info(
+                self.get_diff_intro_msg(
+                    old_filepath, new_filepath, k + 1, i, diffs_to_process
+                )
+            )
             if diffs_to_process == 0:
                 continue
-            patches[new_filepath] = self.diff_nodes(old_filepath, new_file[k]["nodes"], old_file[k]["nodes"])
+            patches[new_filepath] = self.diff_nodes(
+                old_filepath, new_file[k]["nodes"], old_file[k]["nodes"]
+            )
         self.patch_files(patches)
         log.info("Done")
 
@@ -603,7 +695,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
     )
     parser.add_argument(
-        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC, AArch64", "Alpha"], required=True
+        "-a",
+        dest="arch",
+        help="Name of target architecture.",
+        choices=["ARM", "PPC, AArch64", "Alpha"],
+        required=True,
     )
     parser.add_argument(
         "-v",
@@ -613,7 +709,11 @@ def parse_args() -> argparse.Namespace:
         default="info",
     )
     parser.add_argument(
-        "-c", dest="config_path", help="Config file for architectures.", default="arch_config.json", type=Path
+        "-c",
+        dest="config_path",
+        help="Config file for architectures.",
+        default="arch_config.json",
+        type=Path,
     )
     arguments = parser.parse_args()
     return arguments

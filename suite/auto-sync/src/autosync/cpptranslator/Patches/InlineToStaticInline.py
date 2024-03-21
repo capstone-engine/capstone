@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class InlineToStaticInline(Patch):
@@ -20,7 +19,10 @@ class InlineToStaticInline(Patch):
 
     def get_search_pattern(self) -> str:
         return (
-            "(function_definition" '   ((storage_class_specifier) @scs (#eq? @scs "inline"))' "   (_)+" ") @inline_def"
+            "(function_definition"
+            '   ((storage_class_specifier) @scs (#eq? @scs "inline"))'
+            "   (_)+"
+            ") @inline_def"
         )
 
     def get_main_capture_name(self) -> str:

@@ -1,9 +1,10 @@
 import json
+import logging as log
 from pathlib import Path
 
-from autosync.Helper import get_path, fail_exit
 from tree_sitter import Language, Parser
-import logging as log
+
+from autosync.Helper import fail_exit, get_path
 
 
 class Configurator:
@@ -60,7 +61,9 @@ class Configurator:
         with open(self.config_path) as f:
             conf = json.loads(f.read())
         if self.arch not in conf:
-            fail_exit(f"{self.arch} has no configuration. Please add them in {self.config_path}!")
+            fail_exit(
+                f"{self.arch} has no configuration. Please add them in {self.config_path}!"
+            )
         self.config = conf
 
     def ts_compile_cpp(self) -> None:
@@ -75,7 +78,9 @@ class Configurator:
     def ts_set_cpp_language(self) -> None:
         log.info(f"Load language '{self.ts_shared_object}'")
         if not Path.exists(self.ts_shared_object):
-            fail_exit(f"Could not load the tree-sitter language shared object at '{self.ts_shared_object}'")
+            fail_exit(
+                f"Could not load the tree-sitter language shared object at '{self.ts_shared_object}'"
+            )
         self.ts_cpp_lang = Language(str(self.ts_shared_object), "cpp")
 
     def init_parser(self) -> None:

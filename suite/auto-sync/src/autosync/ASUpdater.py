@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 
 import argparse
+
+import logging as log
 import os
 import shutil
 import subprocess
 import sys
-
-import logging as log
 from enum import StrEnum
+from pathlib import Path
 
 from autosync.cpptranslator.CppTranslator import Translator
-from autosync.Helper import get_path, convert_loglevel, check_py_version, fail_exit
 from autosync.HeaderPatcher import HeaderPatcher
-from pathlib import Path
+from autosync.Helper import check_py_version, convert_loglevel, fail_exit, get_path
 
 from autosync.IncGenerator import IncGenerator
 
@@ -108,7 +108,9 @@ class ASUpdater:
         ts_dir = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
         if not ts_dir.exists():
             log.info("tree-sitter was not fetched. Cloning it now...")
-            subprocess.run(["git", "submodule", "update", "--init", "--recursive"], check=True)
+            subprocess.run(
+                ["git", "submodule", "update", "--init", "--recursive"], check=True
+            )
 
     def translate(self) -> None:
         self.check_tree_sitter()
@@ -151,11 +153,23 @@ def parse_args() -> argparse.Namespace:
         description="Capstones architecture module updater.",
     )
     parser.add_argument(
-        "-a", dest="arch", help="Name of target architecture.", choices=["ARM", "PPC", "AArch64", "Alpha"], required=True
+        "-a",
+        dest="arch",
+        help="Name of target architecture.",
+        choices=["ARM", "PPC", "AArch64", "Alpha"],
+        required=True,
     )
-    parser.add_argument("-d", dest="no_clean", help="Don't clean build dir before updating.", action="store_true")
     parser.add_argument(
-        "-w", dest="write", help="Write generated/translated files to arch/<ARCH>/", action="store_true"
+        "-d",
+        dest="no_clean",
+        help="Don't clean build dir before updating.",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-w",
+        dest="write",
+        help="Write generated/translated files to arch/<ARCH>/",
+        action="store_true",
     )
     parser.add_argument(
         "-v",
@@ -223,6 +237,12 @@ if __name__ == "__main__":
     )
 
     Updater = ASUpdater(
-        args.arch, args.write, args.steps, args.inc_list, args.no_clean, args.refactor, args.no_auto_apply
+        args.arch,
+        args.write,
+        args.steps,
+        args.inc_list,
+        args.no_clean,
+        args.refactor,
+        args.no_auto_apply,
     )
     Updater.update()

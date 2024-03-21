@@ -12,8 +12,12 @@ def parse_args() -> argparse.Namespace:
         prog="PatchHeaders",
         description="Patches generated enums into the main arch header file.",
     )
-    parser.add_argument("--header", dest="header", help="Path header file.", type=Path, required=True)
-    parser.add_argument("--inc", dest="inc", help="Path inc file.", type=Path, required=True)
+    parser.add_argument(
+        "--header", dest="header", help="Path header file.", type=Path, required=True
+    )
+    parser.add_argument(
+        "--inc", dest="inc", help="Path inc file.", type=Path, required=True
+    )
     arguments = parser.parse_args()
     return arguments
 

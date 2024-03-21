@@ -6,9 +6,9 @@ import sys
 from pathlib import Path
 
 import termcolor
+from tree_sitter import Node
 
 from autosync.PathVarHandler import PathVarHandler
-from tree_sitter import Node
 
 
 def convert_loglevel(level: str) -> int:
@@ -140,7 +140,14 @@ def get_header() -> str:
 def run_clang_format(out_paths: list[Path]):
     for out_file in out_paths:
         log.info(f"Format {out_file}")
-        subprocess.run(["clang-format-18", f"-style=file:{get_path('{CS_CLANG_FORMAT_FILE}')}", "-i", out_file])
+        subprocess.run(
+            [
+                "clang-format-18",
+                f"-style=file:{get_path('{CS_CLANG_FORMAT_FILE}')}",
+                "-i",
+                out_file,
+            ]
+        )
 
 
 def get_path(config_path: str) -> Path:

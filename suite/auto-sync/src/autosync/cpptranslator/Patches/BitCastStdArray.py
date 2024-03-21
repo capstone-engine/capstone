@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class BitCastStdArray(Patch):
@@ -46,14 +45,36 @@ class BitCastStdArray(Patch):
         arr_name: bytes = captures[1][0].text
         array_type: Node = captures[3][0]
         cast_target: bytes = captures[4][0].text.strip(b"()")
-        array_templ_args: bytes = array_type.named_children[0].named_children[1].named_children[1].text.strip(b"<>")
+        array_templ_args: bytes = (
+            array_type.named_children[0]
+            .named_children[1]
+            .named_children[1]
+            .text.strip(b"<>")
+        )
         arr_type = array_templ_args.split(b",")[0]
         arr_len = array_templ_args.split(b",")[1]
         return (
             b"union {\n"
-            + b"    typeof(" + cast_target + b") In;\n"
-            + b"    " + arr_type + b" Out[" + arr_len + b"];\n"
-            + b"} U_" + arr_name + b";\n"
-            + b"U_" + arr_name + b".In = " + cast_target + b";\n"
-            + arr_type + b" *" + arr_name + b" = U_" + arr_name + b".Out;"
+            + b"    typeof("
+            + cast_target
+            + b") In;\n"
+            + b"    "
+            + arr_type
+            + b" Out["
+            + arr_len
+            + b"];\n"
+            + b"} U_"
+            + arr_name
+            + b";\n"
+            + b"U_"
+            + arr_name
+            + b".In = "
+            + cast_target
+            + b";\n"
+            + arr_type
+            + b" *"
+            + arr_name
+            + b" = U_"
+            + arr_name
+            + b".Out;"
         )

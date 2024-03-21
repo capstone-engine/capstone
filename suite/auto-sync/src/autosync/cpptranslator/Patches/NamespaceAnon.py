@@ -1,7 +1,6 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class NamespaceAnon(Patch):
@@ -16,7 +15,11 @@ class NamespaceAnon(Patch):
         super().__init__(priority)
 
     def get_search_pattern(self) -> str:
-        return "(namespace_definition" "   (declaration_list) @decl_list" ") @namespace_def"
+        return (
+            "(namespace_definition"
+            "   (declaration_list) @decl_list"
+            ") @namespace_def"
+        )
 
     def get_main_capture_name(self) -> str:
         return "namespace_def"

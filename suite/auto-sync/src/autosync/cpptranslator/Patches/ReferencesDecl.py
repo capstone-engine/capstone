@@ -1,9 +1,9 @@
 import re
 
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
+
+from tree_sitter import Node
 
 
 class ReferencesDecl(Patch):
@@ -18,7 +18,12 @@ class ReferencesDecl(Patch):
         super().__init__(priority)
 
     def get_search_pattern(self) -> str:
-        return "[" "(reference_declarator)" "(type_identifier) (abstract_reference_declarator)" "] @reference_decl"
+        return (
+            "["
+            "(reference_declarator)"
+            "(type_identifier) (abstract_reference_declarator)"
+            "] @reference_decl"
+        )
 
     def get_main_capture_name(self) -> str:
         return "reference_decl"

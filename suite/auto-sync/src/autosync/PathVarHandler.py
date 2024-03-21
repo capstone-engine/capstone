@@ -20,7 +20,11 @@ class PathVarHandler(metaclass=Singleton):
 
     def __init__(self) -> None:
         try:
-            res = subprocess.run(["git", "rev-parse", "--show-toplevel"], check=True, stdout=subprocess.PIPE)
+            res = subprocess.run(
+                ["git", "rev-parse", "--show-toplevel"],
+                check=True,
+                stdout=subprocess.PIPE,
+            )
         except subprocess.CalledProcessError:
             log.fatal("Could not get repository top level directory.")
             exit(1)
@@ -28,7 +32,9 @@ class PathVarHandler(metaclass=Singleton):
         # The main directories
         self.paths["{CS_ROOT}"] = Path(repo_root)
         self.paths["{AUTO_SYNC_ROOT}"] = Path(repo_root).joinpath("suite/auto-sync/")
-        self.paths["{AUTO_SYNC_SRC}"] = self.paths["{AUTO_SYNC_ROOT}"].joinpath("src/autosync/")
+        self.paths["{AUTO_SYNC_SRC}"] = self.paths["{AUTO_SYNC_ROOT}"].joinpath(
+            "src/autosync/"
+        )
         path_config_file = self.paths["{AUTO_SYNC_SRC}"].joinpath("path_vars.json")
 
         # Load variables

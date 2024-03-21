@@ -1,6 +1,5 @@
-from tree_sitter import Node
-
 from autosync.cpptranslator.Patches.Patch import Patch
+from tree_sitter import Node
 
 
 class LLVMFallThrough(Patch):
@@ -12,7 +11,11 @@ class LLVMFallThrough(Patch):
         super().__init__(priority)
 
     def get_search_pattern(self) -> str:
-        return "(expression_statement" '   ((identifier) @id (#eq? @id "LLVM_FALLTHROUGH"))' ") @llvm_fall_through"
+        return (
+            "(expression_statement"
+            '   ((identifier) @id (#eq? @id "LLVM_FALLTHROUGH"))'
+            ") @llvm_fall_through"
+        )
 
     def get_main_capture_name(self) -> str:
         return "llvm_fall_through"
