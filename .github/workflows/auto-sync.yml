@@ -30,7 +30,7 @@ jobs:
 
       - name: Build llvm-tblgen
         run: |
-          git clone git@github.com:capstone-engine/llvm-capstone.git
+          git clone https://github.com/capstone-engine/llvm-capstone.git
           cd llvm-capstone
           mkdir build
           cd build
