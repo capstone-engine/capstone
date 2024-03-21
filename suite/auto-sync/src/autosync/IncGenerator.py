@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# Copyright © 2022 Rot127 <unisono@quyllur.org>
+# SPDX-License-Identifier: BSD-3
+
 import logging as log
 import os
 import re

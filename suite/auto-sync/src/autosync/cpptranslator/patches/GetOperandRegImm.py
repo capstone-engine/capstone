@@ -1,3 +1,6 @@
+# Copyright © 2022 Rot127 <unisono@quyllur.org>
+# SPDX-License-Identifier: BSD-3
+
 from tree_sitter import Node
 
 from autosync.cpptranslator.patches.Helper import get_capture_node, get_text
