@@ -5,7 +5,6 @@ dependencies = [
   "termcolor >= 2.3.0",
   "tree_sitter < 0.22.0",
   "black >= 24.3.0",
-  "ufmt >= 2.5.1",
   "usort >= 1.0.8",
   "setuptools >= 69.2.0",
 ]

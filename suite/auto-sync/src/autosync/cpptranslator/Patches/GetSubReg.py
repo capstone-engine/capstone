@@ -1,6 +1,7 @@
+from tree_sitter import Node
+
 from autosync.cpptranslator.Patches.HelperMethods import get_MCInst_var_name, get_text
 from autosync.cpptranslator.Patches.Patch import Patch
-from tree_sitter import Node
 
 
 class GetSubReg(Patch):

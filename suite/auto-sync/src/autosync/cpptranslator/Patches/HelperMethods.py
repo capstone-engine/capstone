@@ -1,9 +1,9 @@
 import logging as log
 import re
 
-from autosync.Helper import fail_exit
-
 from tree_sitter import Node
+
+from autosync.Helper import fail_exit
 
 
 def get_function_params_of_node(n: Node) -> Node:

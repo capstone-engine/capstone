@@ -23,7 +23,8 @@ jobs:
           pip install .
       - name: Check formatting
         run: |
-          ufmt check src/autosync
+          python3.11 -m usort check src/autosync
+          python3.11 -m black --check src/autosync
       - name: CppTranslator - Patch tests
         run: |
           python -m unittest discover src/autosync/cpptranslator/Tests/

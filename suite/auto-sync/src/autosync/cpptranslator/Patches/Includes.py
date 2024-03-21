@@ -1,9 +1,9 @@
 import logging as log
 
+from tree_sitter import Node
+
 from autosync.cpptranslator.Patches.HelperMethods import get_text
 from autosync.cpptranslator.Patches.Patch import Patch
-
-from tree_sitter import Node
 
 
 class Includes(Patch):

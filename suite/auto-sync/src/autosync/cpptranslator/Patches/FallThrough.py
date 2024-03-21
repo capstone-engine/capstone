@@ -1,5 +1,6 @@
-from autosync.cpptranslator.Patches.Patch import Patch
 from tree_sitter import Node
+
+from autosync.cpptranslator.Patches.Patch import Patch
 
 
 class FallThrough(Patch):

@@ -1,14 +1,14 @@
 import logging as log
 import re
 
+from tree_sitter import Node
+
 from autosync.cpptranslator.Patches.HelperMethods import (
     get_MCInst_var_name,
     get_text,
     template_param_list_to_dict,
 )
 from autosync.cpptranslator.Patches.Patch import Patch
-
-from tree_sitter import Node
 
 
 class AddCSDetail(Patch):

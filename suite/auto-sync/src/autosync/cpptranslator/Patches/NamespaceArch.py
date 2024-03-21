@@ -1,3 +1,5 @@
+from tree_sitter import Node
+
 from autosync.cpptranslator.Patches.HelperMethods import (
     get_text,
     namespace_enum,
@@ -5,7 +7,6 @@ from autosync.cpptranslator.Patches.HelperMethods import (
     namespace_struct,
 )
 from autosync.cpptranslator.Patches.Patch import Patch
-from tree_sitter import Node
 
 
 class NamespaceArch(Patch):

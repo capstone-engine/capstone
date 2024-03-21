@@ -4,13 +4,13 @@
 import unittest
 from pathlib import Path
 
+from tree_sitter import Node, Query
+
 import autosync.cpptranslator.Patches as Patches
 from autosync.cpptranslator import CppTranslator
 
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.Helper import get_path
-
-from tree_sitter import Node, Query
 
 
 class TestPatches(unittest.TestCase):
