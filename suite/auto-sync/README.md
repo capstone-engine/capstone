@@ -35,7 +35,7 @@ Check if your architecture is supported.
 Clone Capstones LLVM fork and build `llvm-tblgen`
 
 ```
-git clone https://github.com/capstone-engine/llvm-capstone
+git clone https://github.com/capstone-engine/llvm-capstone vendor/llvm_root/
 cd llvm-capstone
 git checkout auto-sync
 mkdir build

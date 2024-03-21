@@ -1,8 +1,8 @@
 {
-  "{LLVM_ROOT}": "{AUTO_SYNC_ROOT}/llvm-capstone/",
-  "{LLVM_TARGET_DIR}": "{AUTO_SYNC_ROOT}/llvm-capstone/llvm/lib/Target/",
-  "{LLVM_TBLGEN_BIN}": "{AUTO_SYNC_ROOT}/llvm-capstone/build/bin/llvm-tblgen",
-  "{LLVM_INCLUDE_DIR}": "{AUTO_SYNC_ROOT}/llvm-capstone/llvm/include",
+  "{LLVM_ROOT}": "{AUTO_SYNC_ROOT}/vendor/llvm_root//",
+  "{LLVM_TARGET_DIR}": "{LLVM_ROOT}/llvm/lib/Target/",
+  "{LLVM_TBLGEN_BIN}": "{LLVM_ROOT}/build/bin/llvm-tblgen",
+  "{LLVM_INCLUDE_DIR}": "{LLVM_ROOT}/llvm/include",
 
   "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
 
