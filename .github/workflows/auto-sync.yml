@@ -1,0 +1,16 @@
+name: Auto-Sync
+on:
+  push:
+    paths:
+      - "suite/auto-sync/**"
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check formatting
+        uses: omnilib/ufmt@action-v1
+        with:
+          path: "suite/auto-sync/src/**"
+          python-version: "3.x"

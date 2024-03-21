@@ -4,6 +4,9 @@ version = "0.1.0"
 dependencies = [
   "termcolor >= 2.3.0",
   "tree_sitter < 0.22.0",
+  "black == 22.6.0",
+  "ufmt == 2.0.0",
+  "usort == 1.0.4",
 ]
 requires-python = ">= 3.11"
 
