@@ -20,7 +20,6 @@ sudo apt install python3-venv
 # Setup virtual environment in Capstone root dir
 python3 -m venv ./.venv
 source ./.venv/bin/activate
-pip3 install -r dev_requirements.txt
 ```
 
 Clone C++ grammar
@@ -28,6 +27,7 @@ Clone C++ grammar
 ```
 cd suite/auto-sync/
 git submodule update --init --recursive ./vendor/
+pip install -e .
 ```
 
 ## Update
@@ -35,7 +35,7 @@ git submodule update --init --recursive ./vendor/
 Check if your architecture is supported.
 
 ```
-./Updater/ASUpdater.py -h
+./src/autosync/ASUpdater.py -h
 ```
 
 Clone Capstones LLVM fork and build `llvm-tblgen`
@@ -55,7 +55,7 @@ cd ../../
 Run the updater
 
 ```
-./Updater/ASUpdater.py -a <ARCH>
+./src/autosync/ASUpdater.py -a <ARCH>
 ```
 
 ## Post-processing steps
