@@ -10,8 +10,7 @@
 #include "HPPAInstPrinter.h"
 #include "HPPAMapping.h"
 
-static const struct pa_insn pa_insns[] =
-{
+static const struct pa_insn pa_insns[] = {
 	{ HPPA_INS_LDI, HPPA_GRP_LONG_IMM },
 	{ HPPA_INS_CMPIB, HPPA_GRP_BRANCH },
 	{ HPPA_INS_COMIB, HPPA_GRP_BRANCH },
@@ -119,7 +118,7 @@ static const struct pa_insn pa_insns[] =
 	{ HPPA_INS_SH1ADDO, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_SH2ADD, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_SH2ADDL, HPPA_GRP_COMPUTATION },
-	{ HPPA_INS_SH2ADDO, HPPA_GRP_COMPUTATION},
+	{ HPPA_INS_SH2ADDO, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_SH3ADD, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_SH3ADDL, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_SH3ADDO, HPPA_GRP_COMPUTATION },
@@ -139,8 +138,8 @@ static const struct pa_insn pa_insns[] =
 	{ HPPA_INS_SHD, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_EXTRD, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_EXTRW, HPPA_GRP_COMPUTATION },
-	{ HPPA_INS_VEXTRU, HPPA_GRP_COMPUTATION},
-	{ HPPA_INS_VEXTRS, HPPA_GRP_COMPUTATION},
+	{ HPPA_INS_VEXTRU, HPPA_GRP_COMPUTATION },
+	{ HPPA_INS_VEXTRS, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_EXTRU, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_EXTRS, HPPA_GRP_COMPUTATION },
 	{ HPPA_INS_DEPD, HPPA_GRP_COMPUTATION },
@@ -300,7 +299,8 @@ static void set_op_target(cs_hppa *hppa, uint64_t val)
 	op->imm = val;
 }
 
-static void set_op_mem(cs_hppa *hppa, uint32_t base, uint32_t space, cs_ac_type base_access)
+static void set_op_mem(cs_hppa *hppa, uint32_t base, uint32_t space,
+		       cs_ac_type base_access)
 {
 	cs_hppa_op *op = &hppa->operands[hppa->op_count++];
 	op->type = HPPA_OP_MEM;
@@ -319,8 +319,7 @@ static void set_op_mem(cs_hppa *hppa, uint32_t base, uint32_t space, cs_ac_type 
    x - [r] or [o] defined by the operand kind
    b - base register (may be writable in some cases)
 */
-static const struct pa_insn_fmt pa_formats[] = 
-{
+static const struct pa_insn_fmt pa_formats[] = {
 	{ HPPA_INS_LDI, "iW", false },
 
 	{ HPPA_INS_CMPIB, "iRT", false },
@@ -590,8 +589,6 @@ static const struct pa_insn_fmt pa_formats[] =
 	{ HPPA_INS_RET, "", false },
 };
 
-
-
 static void print_operand(MCInst *MI, SStream *O, const cs_hppa_op *op)
 {
 	switch (op->type) {
@@ -601,10 +598,10 @@ static void print_operand(MCInst *MI, SStream *O, const cs_hppa_op *op)
 	case HPPA_OP_REG:
 		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->reg));
 		break;
-	case HPPA_OP_IMM:		
+	case HPPA_OP_IMM:
 		printInt32(O, op->imm);
 		break;
-    case HPPA_OP_DISP:
+	case HPPA_OP_DISP:
 		printInt32(O, op->imm);
 		break;
 	case HPPA_OP_IDX_REG:
@@ -612,8 +609,10 @@ static void print_operand(MCInst *MI, SStream *O, const cs_hppa_op *op)
 		break;
 	case HPPA_OP_MEM:
 		SStream_concat(O, "(");
-		if (op->mem.space != HPPA_OP_INVALID && op->mem.space != HPPA_REG_SR0) {
-			SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->mem.space));
+		if (op->mem.space != HPPA_OP_INVALID &&
+		    op->mem.space != HPPA_REG_SR0) {
+			SStream_concat(O, HPPA_reg_name((csh)MI->csh,
+							op->mem.space));
 			SStream_concat(O, ",");
 		}
 		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->mem.base));
@@ -637,9 +636,10 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 	hppa_ext *hppa_ext = &MI->hppa_ext;
 	uint32_t opcode = MCInst_getOpcode(MI);
 
-    for (int i = 0; i < NUMFMTS; ++i) {
+	for (int i = 0; i < NUMFMTS; ++i) {
 		const struct pa_insn_fmt *pa_fmt = &pa_formats[i];
-		if (opcode != pa_fmt->insn_id || hppa_ext->is_alternative != pa_fmt->is_alternative) {
+		if (opcode != pa_fmt->insn_id ||
+		    hppa_ext->is_alternative != pa_fmt->is_alternative) {
 			continue;
 		}
 		const char *fmt = pa_fmt->format;
@@ -648,33 +648,34 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 		uint8_t space_reg_idx = 0;
 		cs_ac_type base_access = CS_AC_INVALID;
 		MCOperand *op = NULL;
-		while (*fmt)
-		{
+		while (*fmt) {
 			op = MCInst_getOperand(MI, idx++);
-			switch (*fmt++)
-			{
+			switch (*fmt++) {
 			case 'i':
 				if (MCOperand_isReg(op)) {
-					set_op_reg(hppa, MCOperand_getReg(op), CS_AC_READ);
-				}
-				else {
+					set_op_reg(hppa, MCOperand_getReg(op),
+						   CS_AC_READ);
+				} else {
 					set_op_imm(hppa, MCOperand_getImm(op));
 				}
 				break;
 			case 'o':
 				set_op_disp(hppa, MCOperand_getImm(op));
 				break;
-			
+
 			case 'R':
-				set_op_reg(hppa, MCOperand_getReg(op), CS_AC_READ);
+				set_op_reg(hppa, MCOperand_getReg(op),
+					   CS_AC_READ);
 				break;
 
 			case 'W':
-				set_op_reg(hppa, MCOperand_getReg(op), CS_AC_WRITE);
+				set_op_reg(hppa, MCOperand_getReg(op),
+					   CS_AC_WRITE);
 				break;
 
 			case 'w':
-				set_op_reg(hppa, MCOperand_getReg(op), CS_AC_READ_WRTE);
+				set_op_reg(hppa, MCOperand_getReg(op),
+					   CS_AC_READ_WRTE);
 				break;
 
 			case 'r':
@@ -687,9 +688,9 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 
 			case 'x':
 				if (MCOperand_isReg(op)) {
-					set_op_idx_reg(hppa, MCOperand_getReg(op));
-				}
-				else {
+					set_op_idx_reg(hppa,
+						       MCOperand_getReg(op));
+				} else {
 					set_op_disp(hppa, MCOperand_getImm(op));
 				}
 				break;
@@ -697,53 +698,59 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 			case '(':
 				while (*fmt != ')') {
 					if (space_reg_idx > 0) {
-						op = MCInst_getOperand(MI, idx++);
+						op = MCInst_getOperand(MI,
+								       idx++);
 					}
-					assert(space_reg_idx < ARR_SIZE(space_regs));
-					space_regs[space_reg_idx] = MCOperand_getReg(op);
+					assert(space_reg_idx <
+					       ARR_SIZE(space_regs));
+					space_regs[space_reg_idx] =
+						MCOperand_getReg(op);
 					if (*fmt == 'R') {
 						base_access = CS_AC_READ;
 					} else if (*fmt == 'W') {
 						base_access = CS_AC_WRITE;
 					} else if (*fmt == 'b') {
-						base_access = CS_AC_READ; 
+						base_access = CS_AC_READ;
 						if (hppa_ext->b_writeble)
-							base_access |= CS_AC_WRITE;
+							base_access |=
+								CS_AC_WRITE;
 					}
 					fmt++;
 					space_reg_idx++;
 				}
 
 				if (space_regs[1] == HPPA_REG_INVALID)
-					set_op_mem(hppa, space_regs[0], space_regs[1], base_access);
-				else 
-					set_op_mem(hppa, space_regs[1], space_regs[0], base_access);
+					set_op_mem(hppa, space_regs[0],
+						   space_regs[1], base_access);
+				else
+					set_op_mem(hppa, space_regs[1],
+						   space_regs[0], base_access);
 				fmt++;
 				break;
 
 			default:
-				printf("Unknown: %c\n", *(fmt-1));
+				printf("Unknown: %c\n", *(fmt - 1));
 				break;
 			}
 		}
 		break;
-    }
-
+	}
 }
 
-static void print_modifiers(MCInst *MI, SStream *O) 
+static void print_modifiers(MCInst *MI, SStream *O)
 {
-    hppa_ext *hppa_ext = &MI->hppa_ext;
-    for (uint8_t i = 0; i < hppa_ext->mod_num; ++i) {
-        SStream_concat(O, ",");
-        if (hppa_ext->modifiers[i].type == HPPA_MOD_STR)
-            SStream_concat(O, hppa_ext->modifiers[i].str_mod);
-        else 
-            SStream_concat(O, "%d", hppa_ext->modifiers[i].int_mod);
-    }
+	hppa_ext *hppa_ext = &MI->hppa_ext;
+	for (uint8_t i = 0; i < hppa_ext->mod_num; ++i) {
+		SStream_concat(O, ",");
+		if (hppa_ext->modifiers[i].type == HPPA_MOD_STR)
+			SStream_concat(O, hppa_ext->modifiers[i].str_mod);
+		else
+			SStream_concat(O, "%d", hppa_ext->modifiers[i].int_mod);
+	}
 }
 
-static void add_groups(MCInst *MI) {
+static void add_groups(MCInst *MI)
+{
 	unsigned int opcode = MCInst_getOpcode(MI);
 	for (unsigned i = 0; i < ARR_SIZE(pa_insns); ++i) {
 		if (pa_insns[i].insn != opcode) {
@@ -805,14 +812,14 @@ void HPPA_printInst(MCInst *MI, SStream *O, void *Info)
 	MCInst_setOpcodePub(MI, MCInst_getOpcode(MI));
 
 	SStream_concat(O, HPPA_insn_name((csh)MI->csh, MCInst_getOpcode(MI)));
-    print_modifiers(MI, O);
+	print_modifiers(MI, O);
 	SStream_concat(O, " ");
 	fill_operands(MI, &hppa);
 	for (int i = 0; i < hppa.op_count; i++) {
 		cs_hppa_op *op = &hppa.operands[i];
 		print_operand(MI, O, op);
-		if (op->type != HPPA_OP_IDX_REG && op->type != HPPA_OP_DISP && 
-            i != hppa.op_count-1) {
+		if (op->type != HPPA_OP_IDX_REG && op->type != HPPA_OP_DISP &&
+		    i != hppa.op_count - 1) {
 			SStream_concat(O, ",");
 		}
 	}

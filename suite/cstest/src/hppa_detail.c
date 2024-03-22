@@ -37,30 +37,33 @@ char *get_detail_hppa(csh *p_handle, cs_mode mode, cs_insn *ins)
 			add_str(&result, "\t\toperands[%u].type: IMM = 0x%x\n",
 				i, op->imm);
 			break;
-        case HPPA_OP_IDX_REG:
-            add_str(&result, "\t\toperands[%u].type: IDX_REG = %s\n", i, 
-                cs_reg_name(handle, op->reg));
-            break;
-        case HPPA_OP_DISP:
-            add_str(&result, "\t\toperands[%u].type: DISP = 0x%x\n", i, 
-                op->imm);
-            break;
-        case HPPA_OP_MEM:
-            add_str(&result, "\t\toperands[%u].type:  MEM\n", i);
-            if (op->mem.space != HPPA_OP_INVALID) {
-                add_str(&result, "\t\t\toperands[%u].mem.space: REG = %s\n",
-						i, cs_reg_name(handle, op->mem.space));
-            }
-            add_str(&result, "\t\t\toperands[%u].mem.base: REG = %s\n",
-                    i, cs_reg_name(handle, op->mem.base));
-            break;
-        case HPPA_OP_TARGET:
-            add_str(&result, "\t\toperands[%u].type: ", i);
-            if (op->imm >= 0x8000000000000000)
-                add_str(&result, "TARGET = -0x%lx\n", -op->imm);
-            else 
-                add_str(&result, "TARGET = 0x%lx\n", op->imm);
-            break;       
+		case HPPA_OP_IDX_REG:
+			add_str(&result,
+				"\t\toperands[%u].type: IDX_REG = %s\n", i,
+				cs_reg_name(handle, op->reg));
+			break;
+		case HPPA_OP_DISP:
+			add_str(&result, "\t\toperands[%u].type: DISP = 0x%x\n",
+				i, op->imm);
+			break;
+		case HPPA_OP_MEM:
+			add_str(&result, "\t\toperands[%u].type:  MEM\n", i);
+			if (op->mem.space != HPPA_OP_INVALID) {
+				add_str(&result,
+					"\t\t\toperands[%u].mem.space: REG = %s\n",
+					i, cs_reg_name(handle, op->mem.space));
+			}
+			add_str(&result,
+				"\t\t\toperands[%u].mem.base: REG = %s\n", i,
+				cs_reg_name(handle, op->mem.base));
+			break;
+		case HPPA_OP_TARGET:
+			add_str(&result, "\t\toperands[%u].type: ", i);
+			if (op->imm >= 0x8000000000000000)
+				add_str(&result, "TARGET = -0x%lx\n", -op->imm);
+			else
+				add_str(&result, "TARGET = 0x%lx\n", op->imm);
+			break;
 		}
 
 		// Print out all registers accessed by this instruction (either implicit or

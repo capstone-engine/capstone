@@ -11,7 +11,6 @@
 #include "../../Mapping.h"
 #include "../../utils.h"
 
-
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
 	{ HPPA_GRP_INVALID, NULL },
@@ -303,51 +302,42 @@ const char *HPPA_insn_name(csh handle, unsigned int id)
 
 /* Integer register names, indexed by the numbers which appear in the
    opcodes.  */
-static const char *const reg_names[] =
-{
-  "flags", "r1", "rp", "r3", "r4", "r5", "r6", "r7", "r8", "r9",
-  "r10", "r11", "r12", "r13", "r14", "r15", "r16", "r17", "r18", "r19",
-  "r20", "r21", "r22", "r23", "r24", "r25", "r26", "dp", "ret0", "ret1",
-  "sp", "r31"
+static const char *const reg_names[] = {
+	"flags", "r1",	"rp",  "r3",  "r4",   "r5",   "r6",  "r7",
+	"r8",	 "r9",	"r10", "r11", "r12",  "r13",  "r14", "r15",
+	"r16",	 "r17", "r18", "r19", "r20",  "r21",  "r22", "r23",
+	"r24",	 "r25", "r26", "dp",  "ret0", "ret1", "sp",  "r31"
 };
 
 /* Floating point register names, indexed by the numbers which appear in the
    opcodes.  */
-static const char *const fp_reg_names[] =
-{
-  "fpsr", "fpe2", "fpe4", "fpe6",
-  "fr4", "fr5", "fr6", "fr7", "fr8",
-  "fr9", "fr10", "fr11", "fr12", "fr13", "fr14", "fr15",
-  "fr16", "fr17", "fr18", "fr19", "fr20", "fr21", "fr22", "fr23",
-  "fr24", "fr25", "fr26", "fr27", "fr28", "fr29", "fr30", "fr31"
+static const char *const fp_reg_names[] = {
+	"fpsr", "fpe2", "fpe4", "fpe6", "fr4",	"fr5",	"fr6",	"fr7",
+	"fr8",	"fr9",	"fr10", "fr11", "fr12", "fr13", "fr14", "fr15",
+	"fr16", "fr17", "fr18", "fr19", "fr20", "fr21", "fr22", "fr23",
+	"fr24", "fr25", "fr26", "fr27", "fr28", "fr29", "fr30", "fr31"
 };
 
-static const char *const control_reg[] =
-{
-  "rctr", "cr1", "cr2", "cr3", "cr4", "cr5", "cr6", "cr7",
-  "pidr1", "pidr2", "ccr", "sar", "pidr3", "pidr4",
-  "iva", "eiem", "itmr", "pcsq", "pcoq", "iir", "isr",
-  "ior", "ipsw", "eirr", "tr0", "tr1", "tr2", "tr3",
-  "tr4", "tr5", "tr6", "tr7"
+static const char *const control_reg[] = {
+	"rctr",	 "cr1",	  "cr2",  "cr3", "cr4",	  "cr5",   "cr6",  "cr7",
+	"pidr1", "pidr2", "ccr",  "sar", "pidr3", "pidr4", "iva",  "eiem",
+	"itmr",	 "pcsq",  "pcoq", "iir", "isr",	  "ior",   "ipsw", "eirr",
+	"tr0",	 "tr1",	  "tr2",  "tr3", "tr4",	  "tr5",   "tr6",  "tr7"
 };
 
-static const char *const space_reg[] =
-{
-  "sr0", "sr1", "sr2", "sr3", "sr4", "sr5", "sr6", "sr7"
-};
+static const char *const space_reg[] = { "sr0", "sr1", "sr2", "sr3",
+					 "sr4", "sr5", "sr6", "sr7" };
 
 static const char *const fpe_reg[] = {
-  "fpe1", "fpe3", "fpe5", "fpe7",
-  "fr4R", "fr5R", "fr6R", "fr7R", "fr8R",
-  "fr9R", "fr10R", "fr11R", "fr12R", "fr13R", "fr14R", "fr15R",
-  "fr16R", "fr17R", "fr18R", "fr19R", "fr20R", "fr21R", "fr22R", "fr23R",
-  "fr24R", "fr25R", "fr26R", "fr27R", "fr28R", "fr29R", "fr30R", "fr31R"
+	"fpe1",	 "fpe3",  "fpe5",  "fpe7",  "fr4R",  "fr5R",  "fr6R",  "fr7R",
+	"fr8R",	 "fr9R",  "fr10R", "fr11R", "fr12R", "fr13R", "fr14R", "fr15R",
+	"fr16R", "fr17R", "fr18R", "fr19R", "fr20R", "fr21R", "fr22R", "fr23R",
+	"fr24R", "fr25R", "fr26R", "fr27R", "fr28R", "fr29R", "fr30R", "fr31R"
 };
 
 static const char *const sp_fp_reg[] = {
-	"fr16L", "fr17L", "fr18L", "fr19L",
-	"fr20L", "fr21L", "fr22L", "fr23L", "fr24L",
-	"fr25L", "fr26L", "fr27L", "fr28L", "fr29L", "fr30L", "fr31L",
+	"fr16L", "fr17L", "fr18L", "fr19L", "fr20L", "fr21L", "fr22L", "fr23L",
+	"fr24L", "fr25L", "fr26L", "fr27L", "fr28L", "fr29L", "fr30L", "fr31L",
 	"fr16R", "fr17R", "fr18R", "fr19R", "fr20R", "fr21R", "fr22R", "fr23R",
 	"fr24R", "fr25R", "fr26R", "fr27R", "fr28R", "fr29R", "fr30R", "fr31R"
 };
@@ -357,16 +347,16 @@ const char *HPPA_reg_name(csh handle, unsigned int reg)
 #ifndef CAPSTONE_DIET
 	if (reg >= HPPA_REG_GR0 && reg <= HPPA_REG_GR31)
 		return reg_names[reg - HPPA_REG_GR0];
-    else if (reg >= HPPA_REG_FPR0 && reg <= HPPA_REG_FPR31)
-        return fp_reg_names[reg - HPPA_REG_FPR0];
+	else if (reg >= HPPA_REG_FPR0 && reg <= HPPA_REG_FPR31)
+		return fp_reg_names[reg - HPPA_REG_FPR0];
 	else if (reg >= HPPA_REG_SR0 && reg <= HPPA_REG_SR7)
-        return space_reg[reg - HPPA_REG_SR0];
-    else if (reg >= HPPA_REG_CR0 && reg <= HPPA_REG_CR31)
-        return control_reg[reg - HPPA_REG_CR0];
+		return space_reg[reg - HPPA_REG_SR0];
+	else if (reg >= HPPA_REG_CR0 && reg <= HPPA_REG_CR31)
+		return control_reg[reg - HPPA_REG_CR0];
 	else if (reg >= HPPA_REG_FPE0 && reg <= HPPA_REG_FPE31)
-        return fpe_reg[reg - HPPA_REG_FPE0];
+		return fpe_reg[reg - HPPA_REG_FPE0];
 	else if (reg >= HPPA_REG_SP_FPR0 && reg <= HPPA_REG_SP_FPR31)
-        return sp_fp_reg[reg - HPPA_REG_SP_FPR0];
+		return sp_fp_reg[reg - HPPA_REG_SP_FPR0];
 	return NULL;
 #else
 	return NULL;
@@ -398,8 +388,7 @@ static void sort_and_uniq(cs_regs arr, uint8_t n, uint8_t *new_n)
 		if (j != 0 && arr[iMin] == arr[j - 1]) { // duplicate ele found
 			arr[iMin] = arr[n - 1];
 			--n;
-		}
-		else {
+		} else {
 			tmp = arr[iMin];
 			arr[iMin] = arr[j];
 			arr[j] = tmp;
@@ -419,8 +408,7 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 
 	for (unsigned i = 0; i < hppa->op_count; ++i) {
 		const cs_hppa_op *op = &(hppa->operands[i]);
-		switch (op->type)
-		{
+		switch (op->type) {
 		case HPPA_OP_REG:
 		case HPPA_OP_IDX_REG:
 			if (op->access & CS_AC_READ) {
@@ -431,7 +419,7 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 			}
 			break;
 		case HPPA_OP_MEM:
-			if (op->mem.space != HPPA_OP_INVALID) 
+			if (op->mem.space != HPPA_OP_INVALID)
 				regs_read[read_count++] = op->mem.space;
 			if (op->mem.base_access & CS_AC_READ) {
 				regs_read[read_count++] = op->mem.base;

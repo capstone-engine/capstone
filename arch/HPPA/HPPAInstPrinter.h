@@ -10,15 +10,14 @@
 #include "../../SStream.h"
 
 struct pa_insn {
-    hppa_insn insn;
+	hppa_insn insn;
 	hppa_insn_group grp;
 };
 
-struct pa_insn_fmt
-{
+struct pa_insn_fmt {
 	hppa_insn insn_id;
-    const char *format;
-	bool is_alternative; 	///< true if some completer affects the instruction format
+	const char *format;
+	bool is_alternative; ///< true if some completer affects the instruction format
 };
 
 void HPPA_printInst(MCInst *MI, SStream *O, void *Info);
