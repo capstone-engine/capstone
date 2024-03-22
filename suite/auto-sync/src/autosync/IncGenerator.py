@@ -192,6 +192,6 @@ class IncGenerator:
                     check=True,
                 )
             except subprocess.CalledProcessError as e:
-                log.warn(f"Patch {patch.name} did not apply correctly!")
-                log.warn(f"git apply returned: {e}")
+                log.warning(f"Patch {patch.name} did not apply correctly!")
+                log.warning(f"git apply returned: {e}")
                 return
