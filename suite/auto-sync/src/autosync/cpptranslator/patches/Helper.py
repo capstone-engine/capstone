@@ -105,18 +105,21 @@ def namespace_enum(src: bytes, ns_id: bytes, enum: Node) -> bytes:
             type_id = c
             primary_tid_set = True
 
-    if not (enumerator_list and type_id):
+    if not enumerator_list and not type_id:
         log.fatal("Could not find enumerator_list or enum type_identifier.")
         exit(1)
 
-    tid = get_text(src, type_id.start_byte, type_id.end_byte)
+    tid = get_text(src, type_id.start_byte, type_id.end_byte) if type_id else None
     elist = get_text(src, enumerator_list.start_byte, enumerator_list.end_byte)
     for e in enumerator_list.named_children:
         if e.type == "enumerator":
             enum_entry_text = get_text(src, e.start_byte, e.end_byte)
             elist = elist.replace(enum_entry_text, ns_id + b"_" + enum_entry_text)
 
-    new_enum = b"typedef enum " + tid + b" " + elist + b"\n " + ns_id + b"_" + tid
+    if tid:
+        new_enum = b"typedef enum " + tid + b" " + elist + b"\n " + ns_id + b"_" + tid
+    else:
+        new_enum = b"enum " + b" " + elist + b"\n"
     return new_enum
 
 
