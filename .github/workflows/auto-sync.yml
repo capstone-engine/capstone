@@ -42,10 +42,10 @@ jobs:
 
       - name: Test generation of inc files
         run: |
-          ./src/autosync/ASUpdater.py -a AArch64 -s IncGen
-          ./src/autosync/ASUpdater.py -a Alpha -s IncGen
-          ./src/autosync/ASUpdater.py -a ARM -s IncGen
-          ./src/autosync/ASUpdater.py -a PPC -s IncGen
+          ./src/autosync/ASUpdater.py -a -d AArch64 -s IncGen
+          ./src/autosync/ASUpdater.py -a -d Alpha -s IncGen
+          ./src/autosync/ASUpdater.py -a -d ARM -s IncGen
+          ./src/autosync/ASUpdater.py -a -d PPC -s IncGen
 
       - name: CppTranslator - Patch tests
         run: |
