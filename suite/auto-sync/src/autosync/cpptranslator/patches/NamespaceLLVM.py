@@ -9,7 +9,7 @@ from autosync.cpptranslator.patches.Patch import Patch
 
 class NamespaceLLVM(Patch):
     """
-    Patch   namespace {CONTENT}
+    Patch   namespace  llvm {CONTENT}
     to      CONTENT
 
     Only for anonymous or llvm namespaces

@@ -14,7 +14,7 @@ from autosync.cpptranslator.patches.Patch import Patch
 class GetRegClass(Patch):
     """
     Patch   MRI.getRegClass(...)
-    to      MCRegisterClass_getRegClass(MI->MRI, ...)
+    to      MCRegisterInfo_getRegClass(Inst->MRI, ...)
     """
 
     def __init__(self, priority: int):

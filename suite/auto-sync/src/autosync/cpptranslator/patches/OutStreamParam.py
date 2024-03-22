@@ -9,8 +9,10 @@ from autosync.cpptranslator.patches.Patch import Patch
 
 class OutStreamParam(Patch):
     """
-    Patch   raw_ostream &OS
-    to      SStream *OS
+    Patches the parameter list only:
+
+    Patch   void function(int a, raw_ostream &OS)
+    to      void function(int a, SStream *OS)
     """
 
     def __init__(self, priority: int):

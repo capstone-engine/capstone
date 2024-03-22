@@ -62,6 +62,8 @@ class Includes(Patch):
                 return res + get_PPC_includes(filename) + get_general_macros()
             case "AArch64":
                 return res + get_AArch64_includes(filename) + get_general_macros()
+            case "TEST_ARCH":
+                return res + b"test_output"
             case _:
                 log.fatal(f"Includes of {self.arch} not handled.")
                 exit(1)

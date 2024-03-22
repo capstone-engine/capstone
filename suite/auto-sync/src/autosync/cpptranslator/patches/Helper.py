@@ -36,9 +36,12 @@ def get_MCInst_var_name(src: bytes, n: Node) -> bytes:
     """Searches for the name of the parameter of type MCInst and returns it."""
     params = get_function_params_of_node(n)
     mcinst_var_name = b""
-    for p in params.named_children:
-        p_text = get_text(src, p.start_byte, p.end_byte)
-        if b"MCInst" in p_text:
+
+    if params:
+        for p in params.named_children:
+            p_text = get_text(src, p.start_byte, p.end_byte)
+            if b"MCInst" not in p_text:
+                continue
             mcinst_var_name = p_text.split((b"&" if b"&" in p_text else b"*"))[1]
             break
     if mcinst_var_name == b"":

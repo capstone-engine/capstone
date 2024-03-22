@@ -9,8 +9,8 @@ from autosync.cpptranslator.patches.Patch import Patch
 
 class STIFeatureBits(Patch):
     """
-    Patch   STI.getFeatureBits()[FLAG]
-    to      ARCH_getFeatureBits(Inst->csh->mode, ...)
+    Patch   STI.getFeatureBits()[ARCH::FLAG]
+    to      ARCH_getFeatureBits(Inst->csh->mode, ARCH::FLAG)
     """
 
     def __init__(self, priority: int, arch: bytes):

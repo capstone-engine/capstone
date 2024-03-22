@@ -10,7 +10,7 @@ from autosync.cpptranslator.patches.Patch import Patch
 class FeatureBits(Patch):
     """
     Patch   featureBits[FLAG]
-    to      ARCH_getFeatureBits(Inst->csh->mode, ...)
+    to      ARCH_getFeatureBits(Inst->csh->mode, FLAG)
     """
 
     def __init__(self, priority: int, arch: bytes):

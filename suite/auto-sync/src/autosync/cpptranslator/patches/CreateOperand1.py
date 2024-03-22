@@ -69,7 +69,7 @@ class CreateOperand1(Patch):
             + b"MCOperand_"
             + fcn
             + b"1("
-            + get_MCInst_var_name(src, inst_var)
+            + inst
             + b", "
             + args
             + b"))"

@@ -12,8 +12,8 @@ from autosync.cpptranslator.patches.Patch import Patch
 
 class FieldFromInstr(Patch):
     """
-    Patch   fieldFromInstr(...)
-    to      fieldFromInstr_<instr_width>(...)
+    Patch   fieldFromInstruction(...)
+    to      fieldFromInstruction_<instr_width>(...)
     """
 
     def __init__(self, priority: int):

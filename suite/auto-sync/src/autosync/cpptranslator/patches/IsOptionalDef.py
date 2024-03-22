@@ -37,4 +37,4 @@ class IsOptionalDef(Patch):
         index = captures[2][0]
         op_info_var = get_text(src, op_info_var.start_byte, op_info_var.end_byte)
         index = get_text(src, index.start_byte, index.end_byte)
-        return b"MCOperandInfo_isOptionalDef(&" + op_info_var + b"[" + index + b"])"
+        return b"MCOperandInfo_isOptionalDef(&" + op_info_var + index + b")"
