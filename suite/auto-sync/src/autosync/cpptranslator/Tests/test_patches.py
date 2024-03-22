@@ -9,10 +9,71 @@ import unittest
 
 from tree_sitter import Node, Query
 
-import autosync.cpptranslator.patches as Patches
 from autosync.cpptranslator import CppTranslator
 
 from autosync.cpptranslator.Configurator import Configurator
+from autosync.cpptranslator.patches.AddCSDetail import AddCSDetail
+from autosync.cpptranslator.patches.AddOperand import AddOperand
+from autosync.cpptranslator.patches.Assert import Assert
+from autosync.cpptranslator.patches.BitCastStdArray import BitCastStdArray
+from autosync.cpptranslator.patches.CheckDecoderStatus import CheckDecoderStatus
+from autosync.cpptranslator.patches.ClassesDef import ClassesDef
+from autosync.cpptranslator.patches.ConstMCInstParameter import ConstMCInstParameter
+from autosync.cpptranslator.patches.ConstMCOperand import ConstMCOperand
+from autosync.cpptranslator.patches.CppInitCast import CppInitCast
+from autosync.cpptranslator.patches.CreateOperand0 import CreateOperand0
+from autosync.cpptranslator.patches.CreateOperand1 import CreateOperand1
+from autosync.cpptranslator.patches.DeclarationInConditionClause import (
+    DeclarationInConditionalClause,
+)
+from autosync.cpptranslator.patches.DecodeInstruction import DecodeInstruction
+from autosync.cpptranslator.patches.DecoderCast import DecoderCast
+from autosync.cpptranslator.patches.DecoderParameter import DecoderParameter
+from autosync.cpptranslator.patches.FallThrough import FallThrough
+from autosync.cpptranslator.patches.FeatureBits import FeatureBits
+from autosync.cpptranslator.patches.FeatureBitsDecl import FeatureBitsDecl
+from autosync.cpptranslator.patches.FieldFromInstr import FieldFromInstr
+from autosync.cpptranslator.patches.GetNumOperands import GetNumOperands
+from autosync.cpptranslator.patches.GetOpcode import GetOpcode
+from autosync.cpptranslator.patches.GetOperand import GetOperand
+from autosync.cpptranslator.patches.GetOperandRegImm import GetOperandRegImm
+from autosync.cpptranslator.patches.GetRegClass import GetRegClass
+from autosync.cpptranslator.patches.GetRegFromClass import GetRegFromClass
+from autosync.cpptranslator.patches.GetSubReg import GetSubReg
+from autosync.cpptranslator.patches.Includes import Includes
+from autosync.cpptranslator.patches.InlineToStaticInline import InlineToStaticInline
+from autosync.cpptranslator.patches.IsOptionalDef import IsOptionalDef
+from autosync.cpptranslator.patches.IsPredicate import IsPredicate
+from autosync.cpptranslator.patches.IsRegImm import IsOperandRegImm
+from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
+from autosync.cpptranslator.patches.LLVMunreachable import LLVMUnreachable
+from autosync.cpptranslator.patches.MethodToFunctions import MethodToFunction
+from autosync.cpptranslator.patches.MethodTypeQualifier import MethodTypeQualifier
+from autosync.cpptranslator.patches.NamespaceAnon import NamespaceAnon
+from autosync.cpptranslator.patches.NamespaceArch import NamespaceArch
+from autosync.cpptranslator.patches.NamespaceLLVM import NamespaceLLVM
+from autosync.cpptranslator.patches.OutStreamParam import OutStreamParam
+from autosync.cpptranslator.patches.PredicateBlockFunctions import (
+    PredicateBlockFunctions,
+)
+from autosync.cpptranslator.patches.PrintAnnotation import PrintAnnotation
+from autosync.cpptranslator.patches.PrintRegImmShift import PrintRegImmShift
+from autosync.cpptranslator.patches.QualifiedIdentifier import QualifiedIdentifier
+from autosync.cpptranslator.patches.ReferencesDecl import ReferencesDecl
+from autosync.cpptranslator.patches.RegClassContains import RegClassContains
+from autosync.cpptranslator.patches.SetOpcode import SetOpcode
+from autosync.cpptranslator.patches.SignExtend import SignExtend
+from autosync.cpptranslator.patches.SizeAssignments import SizeAssignment
+from autosync.cpptranslator.patches.STIArgument import STIArgument
+from autosync.cpptranslator.patches.STIFeatureBits import STIFeatureBits
+from autosync.cpptranslator.patches.STParameter import SubtargetInfoParam
+from autosync.cpptranslator.patches.StreamOperation import StreamOperations
+from autosync.cpptranslator.patches.TemplateDeclaration import TemplateDeclaration
+from autosync.cpptranslator.patches.TemplateDefinition import TemplateDefinition
+from autosync.cpptranslator.patches.TemplateParamDecl import TemplateParamDecl
+from autosync.cpptranslator.patches.TemplateRefs import TemplateRefs
+from autosync.cpptranslator.patches.UseMarkup import UseMarkup
+from autosync.cpptranslator.patches.UsingDeclaration import UsingDeclaration
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
 from autosync.Helper import get_path
 
@@ -46,7 +107,7 @@ class TestPatches(unittest.TestCase):
             self.assertEqual(patch.get_patch(cb, syntax, **kwargs), expected)
 
     def test_addcsdetail(self):
-        patch = Patches.AddCSDetail.AddCSDetail(0, "ARCH")
+        patch = AddCSDetail(0, "ARCH")
         syntax = b"int i = x; void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNo, SStream *O) { int i = OpNo; }"
         self.check_patching_result(
             patch,
@@ -58,7 +119,7 @@ class TestPatches(unittest.TestCase):
         )
 
     def test_addoperand(self):
-        patch = Patches.AddOperand.AddOperand(0)
+        patch = AddOperand(0)
         syntax = b"MI.addOperand(OPERAND)"
         self.check_patching_result(
             patch,
@@ -67,12 +128,12 @@ class TestPatches(unittest.TestCase):
         )
 
     def test_assert(self):
-        patch = Patches.Assert.Assert(0)
+        patch = Assert(0)
         syntax = b"assert(0 == 0)"
         self.check_patching_result(patch, syntax, b"")
 
     def test_bitcaststdarray(self):
-        patch = Patches.BitCastStdArray.BitCastStdArray(0)
+        patch = BitCastStdArray(0)
         syntax = b"auto S = bit_cast<std::array<int32_t, 2>>(Imm);"
         self.check_patching_result(
             patch,
@@ -87,12 +148,12 @@ class TestPatches(unittest.TestCase):
         )
 
     def test_checkdecoderstatus(self):
-        patch = Patches.CheckDecoderStatus.CheckDecoderStatus(0)
+        patch = CheckDecoderStatus(0)
         syntax = b"Check(S, functions())"
         self.check_patching_result(patch, syntax, b"Check(&S, functions())")
 
     def test_classesdef(self):
-        patch = Patches.ClassesDef.ClassesDef(0)
+        patch = ClassesDef(0)
         syntax = b"""class AArch64Disassembler : public MCDisassembler {
   std::unique_ptr<const MCInstrInfo> const MCII;
 
@@ -122,23 +183,23 @@ public:
         )
 
     def test_constmcinstparameter(self):
-        patch = Patches.ConstMCInstParameter.ConstMCInstParameter(0)
+        patch = ConstMCInstParameter(0)
         syntax = b"void function(const MCInst *MI);"
         expected = b"MCInst *MI"
         self.check_patching_result(patch, syntax, expected)
 
     def test_constmcoperand(self):
-        patch = Patches.ConstMCOperand.ConstMCOperand(0)
+        patch = ConstMCOperand(0)
         syntax = b"const MCOperand op = { 0 };"
         self.check_patching_result(patch, syntax, b"MCOperand op = { 0 };")
 
     def test_cppinitcast(self):
-        patch = Patches.CppInitCast.CppInitCast(0)
+        patch = CppInitCast(0)
         syntax = b"int(0x0000)"
         self.check_patching_result(patch, syntax, b"((int)(0x0000))")
 
     def test_createoperand0(self):
-        patch = Patches.CreateOperand0.CreateOperand0(0)
+        patch = CreateOperand0(0)
         syntax = b"Inst.addOperand(MCOperand::createReg(REGISTER));"
         self.check_patching_result(
             patch,
@@ -147,7 +208,7 @@ public:
         )
 
     def test_createoperand1(self):
-        patch = Patches.CreateOperand1.CreateOperand1(0)
+        patch = CreateOperand1(0)
         syntax = b"MI.insert(I, MCOperand::createReg(REGISTER));"
         self.check_patching_result(
             patch,
@@ -156,12 +217,12 @@ public:
         )
 
     def test_declarationinconditionclause(self):
-        patch = Patches.DeclarationInConditionClause.DeclarationInConditionalClause(0)
+        patch = DeclarationInConditionalClause(0)
         syntax = b"if (int i = 0) {}"
         self.check_patching_result(patch, syntax, b"int i = 0;\nif (i)\n{}")
 
     def test_decodeinstruction(self):
-        patch = Patches.DecodeInstruction.DecodeInstruction(0)
+        patch = DecodeInstruction(0)
         syntax = (
             b"decodeInstruction(DecoderTableThumb16, MI, Insn16, Address, this, STI);"
         )
@@ -179,29 +240,29 @@ public:
         )
 
     def test_decodercast(self):
-        patch = Patches.DecoderCast.DecoderCast(0)
+        patch = DecoderCast(0)
         syntax = (
             b"const MCDisassembler *Dis = static_cast<const MCDisassembler*>(Decoder);"
         )
         self.check_patching_result(patch, syntax, b"")
 
     def test_decoderparameter(self):
-        patch = Patches.DecoderParameter.DecoderParameter(0)
+        patch = DecoderParameter(0)
         syntax = b"void function(const MCDisassembler *Decoder);"
         self.check_patching_result(patch, syntax, b"const void *Decoder")
 
     def test_fallthrough(self):
-        patch = Patches.FallThrough.FallThrough(0)
+        patch = FallThrough(0)
         syntax = b"[[fallthrough]]"
         self.check_patching_result(patch, syntax, b"// fall through")
 
     def test_featurebitsdecl(self):
-        patch = Patches.FeatureBitsDecl.FeatureBitsDecl(0)
+        patch = FeatureBitsDecl(0)
         syntax = b"const FeatureBitset &FeatureBits = ((const MCDisassembler*)Decoder)->getSubtargetInfo().getFeatureBits();"
         self.check_patching_result(patch, syntax, b"")
 
     def test_featurebits(self):
-        patch = Patches.FeatureBits.FeatureBits(0, b"ARCH")
+        patch = FeatureBits(0, b"ARCH")
         syntax = b"bool hasD32 = featureBits[ARCH::HasV8Ops];"
         self.check_patching_result(
             patch,
@@ -210,7 +271,7 @@ public:
         )
 
     def test_fieldfrominstr(self):
-        patch = Patches.FieldFromInstr.FieldFromInstr(0)
+        patch = FieldFromInstr(0)
         syntax = b"unsigned Rm = fieldFromInstruction(Inst16, 0, 4);"
         self.check_patching_result(
             patch,
@@ -226,33 +287,33 @@ public:
         )
 
     def test_getnumoperands(self):
-        patch = Patches.GetNumOperands.GetNumOperands(0)
+        patch = GetNumOperands(0)
         syntax = b"MI.getNumOperands();"
         self.check_patching_result(patch, syntax, b"MCInst_getNumOperands(MI)")
 
     def test_getopcode(self):
-        patch = Patches.GetOpcode.GetOpcode(0)
+        patch = GetOpcode(0)
         syntax = b"Inst.getOpcode();"
         self.check_patching_result(patch, syntax, b"MCInst_getOpcode(Inst)")
 
     def test_getoperand(self):
-        patch = Patches.GetOperand.GetOperand(0)
+        patch = GetOperand(0)
         syntax = b"MI.getOperand(0);"
         self.check_patching_result(patch, syntax, b"MCInst_getOperand(MI, (0))")
 
     def test_getoperandregimm(self):
-        patch = Patches.GetOperandRegImm.GetOperandRegImm(0)
+        patch = GetOperandRegImm(0)
         syntax = b"OPERAND.getReg()"
         self.check_patching_result(patch, syntax, b"MCOperand_getReg(OPERAND)")
 
     def test_getregclass(self):
-        patch = Patches.GetRegClass.GetRegClass(0)
+        patch = GetRegClass(0)
         syntax = b"MRI.getRegClass(RegClass);"
         expected = b"MCRegisterInfo_getRegClass(Inst->MRI, RegClass)"
         self.check_patching_result(patch, syntax, expected)
 
     def test_getregfromclass(self):
-        patch = Patches.GetRegFromClass.GetRegFromClass(0)
+        patch = GetRegFromClass(0)
         syntax = b"ARCHMCRegisterClasses[ARCH::FPR128RegClassID].getRegister(RegNo);"
         self.check_patching_result(
             patch,
@@ -261,7 +322,7 @@ public:
         )
 
     def test_getsubreg(self):
-        patch = Patches.GetSubReg.GetSubReg(0)
+        patch = GetSubReg(0)
         syntax = b"MRI.getSubReg(REGISTER);"
         self.check_patching_result(
             patch,
@@ -270,7 +331,7 @@ public:
         )
 
     def test_includes(self):
-        patch = Patches.Includes.Includes(0, "TEST_ARCH")
+        patch = Includes(0, "TEST_ARCH")
         syntax = b'#include "some_llvm_header.h"'
         self.check_patching_result(
             patch,
@@ -284,7 +345,7 @@ public:
         )
 
     def test_inlinetostaticinline(self):
-        patch = Patches.InlineToStaticInline.InlineToStaticInline(0)
+        patch = InlineToStaticInline(0)
         syntax = b"inline void FUNCTION() {}"
         self.check_patching_result(
             patch,
@@ -293,7 +354,7 @@ public:
         )
 
     def test_isoptionaldef(self):
-        patch = Patches.IsOptionalDef.IsOptionalDef(0)
+        patch = IsOptionalDef(0)
         syntax = b"OpInfo[i].isOptionalDef()"
         self.check_patching_result(
             patch,
@@ -302,7 +363,7 @@ public:
         )
 
     def test_ispredicate(self):
-        patch = Patches.IsPredicate.IsPredicate(0)
+        patch = IsPredicate(0)
         syntax = b"OpInfo[i].isPredicate()"
         self.check_patching_result(
             patch,
@@ -311,37 +372,37 @@ public:
         )
 
     def test_isregimm(self):
-        patch = Patches.IsRegImm.IsOperandRegImm(0)
+        patch = IsOperandRegImm(0)
         syntax = b"OPERAND.isReg()"
         self.check_patching_result(patch, syntax, b"MCOperand_isReg(OPERAND)")
 
     def test_llvmfallthrough(self):
-        patch = Patches.LLVMFallThrough.LLVMFallThrough(0)
+        patch = LLVMFallThrough(0)
         syntax = b"LLVM_FALLTHROUGH;"
         self.check_patching_result(patch, syntax, b"")
 
     def test_llvmunreachable(self):
-        patch = Patches.LLVMunreachable.LLVMUnreachable(0)
+        patch = LLVMUnreachable(0)
         syntax = b'llvm_unreachable("Error msg")'
         self.check_patching_result(patch, syntax, b'assert(0 && "Error msg")')
 
     def test_methodtofunctions(self):
-        patch = Patches.MethodToFunctions.MethodToFunction(0)
+        patch = MethodToFunction(0)
         syntax = b"void CLASS::METHOD_NAME(int a) {}"
         self.check_patching_result(patch, syntax, b"METHOD_NAME(int a)")
 
     def test_methodtypequalifier(self):
-        patch = Patches.MethodTypeQualifier.MethodTypeQualifier(0)
+        patch = MethodTypeQualifier(0)
         syntax = b"void a_const_method() const {}"
         self.check_patching_result(patch, syntax, b"a_const_method()")
 
     def test_namespaceanon(self):
-        patch = Patches.NamespaceAnon.NamespaceAnon(0)
+        patch = NamespaceAnon(0)
         syntax = b"namespace { int a = 0; }"
         self.check_patching_result(patch, syntax, b" int a = 0; ")
 
     def test_namespacearch(self):
-        patch = Patches.NamespaceArch.NamespaceArch(0)
+        patch = NamespaceArch(0)
         syntax = b"namespace ArchSpecificNamespace { int a = 0; }"
         self.check_patching_result(
             patch,
@@ -352,17 +413,17 @@ public:
         )
 
     def test_namespacellvm(self):
-        patch = Patches.NamespaceLLVM.NamespaceLLVM(0)
+        patch = NamespaceLLVM(0)
         syntax = b"namespace llvm {int a = 0}"
         self.check_patching_result(patch, syntax, b"int a = 0")
 
     def test_outstreamparam(self):
-        patch = Patches.OutStreamParam.OutStreamParam(0)
+        patch = OutStreamParam(0)
         syntax = b"void function(int a, raw_ostream &OS);"
         self.check_patching_result(patch, syntax, b"(int a, SStream *OS)")
 
     def test_predicateblockfunctions(self):
-        patch = Patches.PredicateBlockFunctions.PredicateBlockFunctions(0)
+        patch = PredicateBlockFunctions(0)
         syntax = b"void function(MCInst *MI) { VPTBlock.instrInVPTBlock(); }"
         self.check_patching_result(
             patch,
@@ -371,27 +432,27 @@ public:
         )
 
     def test_predicateblockfunctions(self):
-        patch = Patches.PrintAnnotation.PrintAnnotation(0)
+        patch = PrintAnnotation(0)
         syntax = b"printAnnotation();"
         self.check_patching_result(patch, syntax, b"")
 
     def test_printregimmshift(self):
-        patch = Patches.PrintRegImmShift.PrintRegImmShift(0)
+        patch = PrintRegImmShift(0)
         syntax = b"printRegImmShift(0)"
         self.check_patching_result(patch, syntax, b"printRegImmShift(Inst, 0)")
 
     def test_qualifiedidentifier(self):
-        patch = Patches.QualifiedIdentifier.QualifiedIdentifier(0)
+        patch = QualifiedIdentifier(0)
         syntax = b"NAMESPACE::ID"
         self.check_patching_result(patch, syntax, b"NAMESPACE_ID")
 
     def test_referencesdecl(self):
-        patch = Patches.ReferencesDecl.ReferencesDecl(0)
+        patch = ReferencesDecl(0)
         syntax = b"int &Param = 0;"
         self.check_patching_result(patch, syntax, b"*Param")
 
     def test_regclasscontains(self):
-        patch = Patches.RegClassContains.RegClassContains(0)
+        patch = RegClassContains(0)
         syntax = b"if (MRI.getRegClass(AArch64::GPR32RegClassID).contains(Reg)) {}"
         self.check_patching_result(
             patch,
@@ -400,27 +461,27 @@ public:
         )
 
     def test_setopcode(self):
-        patch = Patches.SetOpcode.SetOpcode(0)
+        patch = SetOpcode(0)
         syntax = b"Inst.setOpcode(0)"
         self.check_patching_result(patch, syntax, b"MCInst_setOpcode(Inst, (0))")
 
     def test_signextend(self):
-        patch = Patches.SignExtend.SignExtend(0)
+        patch = SignExtend(0)
         syntax = b"SignExtend32<A>(0)"
         self.check_patching_result(patch, syntax, b"SignExtend32((0), A)")
 
     def test_sizeassignments(self):
-        patch = Patches.SizeAssignments.SizeAssignment(0)
+        patch = SizeAssignment(0)
         syntax = b"void function(int &Size) { Size = 0; }"
         self.check_patching_result(patch, syntax, b"*Size = 0")
 
     def test_stiargument(self):
-        patch = Patches.STIArgument.STIArgument(0)
+        patch = STIArgument(0)
         syntax = b"printSomeOperand(MI, NUM, STI, NUM)"
         self.check_patching_result(patch, syntax, b"(MI, NUM, NUM)")
 
     def test_stifeaturebits(self):
-        patch = Patches.STIFeatureBits.STIFeatureBits(0, b"ARCH")
+        patch = STIFeatureBits(0, b"ARCH")
         syntax = b"STI.getFeatureBits()[ARCH::FLAG];"
         self.check_patching_result(
             patch,
@@ -429,12 +490,12 @@ public:
         )
 
     def test_stifeaturebits(self):
-        patch = Patches.STParameter.SubtargetInfoParam(0)
+        patch = SubtargetInfoParam(0)
         syntax = b"void function(MCSubtargetInfo &STI);"
         self.check_patching_result(patch, syntax, b"()")
 
     def test_streamoperation(self):
-        patch = Patches.StreamOperation.StreamOperations(0)
+        patch = StreamOperations(0)
         syntax = b"{ OS << 'a'; }"
         self.check_patching_result(patch, syntax, b'SStream_concat0(OS, "a");\n')
 
@@ -455,9 +516,7 @@ public:
         )
 
     def test_templatedeclaration(self):
-        patch = Patches.TemplateDeclaration.TemplateDeclaration(
-            0, self.template_collector
-        )
+        patch = TemplateDeclaration(0, self.template_collector)
         syntax = b"template<A, B> void tfunction();"
         self.check_patching_result(
             patch,
@@ -469,9 +528,7 @@ public:
         )
 
     def test_templatedefinition(self):
-        patch = Patches.TemplateDefinition.TemplateDefinition(
-            0, self.template_collector
-        )
+        patch = TemplateDefinition(0, self.template_collector)
         syntax = b"template<A, B> void tfunction() {}"
         self.check_patching_result(
             patch,
@@ -483,12 +540,12 @@ public:
         )
 
     def test_templateparamdecl(self):
-        patch = Patches.TemplateParamDecl.TemplateParamDecl(0)
+        patch = TemplateParamDecl(0)
         syntax = b"void function(ArrayRef<uint8_t> x);"
         self.check_patching_result(patch, syntax, b"const uint8_t *x")
 
     def test_templaterefs(self):
-        patch = Patches.TemplateRefs.TemplateRefs(0)
+        patch = TemplateRefs(0)
         syntax = b"TemplateFunction<A, B>();"
         self.check_patching_result(
             patch,
@@ -497,11 +554,11 @@ public:
         )
 
     def test_usemarkup(self):
-        patch = Patches.UseMarkup.UseMarkup(0)
+        patch = UseMarkup(0)
         syntax = b"UseMarkup()"
         self.check_patching_result(patch, syntax, b"getUseMarkup()")
 
     def test_usingdecl(self):
-        patch = Patches.UsingDeclaration.UsingDeclaration(0)
+        patch = UsingDeclaration(0)
         syntax = b"using namespace llvm;"
         self.check_patching_result(patch, syntax, b"")
