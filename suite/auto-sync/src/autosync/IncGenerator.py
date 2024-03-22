@@ -110,6 +110,8 @@ class IncGenerator:
         for file in Path.cwd().iterdir():
             if re.search(rf"{self.arch}Gen.*\.inc", file.name):
                 log.debug(f"Move {file} to {self.output_dir_c_inc}")
+                if self.output_dir_c_inc.joinpath(file.name).exists():
+                    os.remove(self.output_dir_c_inc.joinpath(file.name))
                 shutil.move(file, self.output_dir_c_inc)
 
         if self.arch == "AArch64":
@@ -126,6 +128,8 @@ class IncGenerator:
                 fail_exit(
                     f"{sys_ops_table_file} does not exist. But it should have been generated."
                 )
+            if new_sys_ops_file.exists():
+                os.remove(new_sys_ops_file)
             shutil.move(sys_ops_table_file, new_sys_ops_file)
 
     def gen_incs(self) -> None:
