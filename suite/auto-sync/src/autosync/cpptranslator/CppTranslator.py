@@ -174,8 +174,9 @@ class Translator:
         TemplateDefinition.__name__: 6,
     }
 
-    def __init__(self, configure: Configurator):
+    def __init__(self, configure: Configurator, wait_for_user: bool = False):
         self.configurator = configure
+        self.wait_for_user = wait_for_user
         self.arch = self.configurator.get_arch()
         self.conf = self.configurator.get_arch_config()
         self.conf_general = self.configurator.get_general_config()
@@ -475,7 +476,7 @@ class Translator:
             return
         for f in manual_edited:
             msg += get_path(f).name + "\n"
-        print_prominent_warning(msg)
+        print_prominent_warning(msg, self.wait_for_user)
 
 
 def parse_args() -> argparse.Namespace:

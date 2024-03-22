@@ -40,7 +40,7 @@ jobs:
           cmake --build . --target llvm-tblgen --config Debug
           cd ../../../
 
-      - name: Test generationof inc files
+      - name: Test generation of inc files
         run: |
           ./src/autosync/ASUpdater.py -a AArch64 -s IncGen
           ./src/autosync/ASUpdater.py -a Alpha -s IncGen
@@ -50,3 +50,10 @@ jobs:
       - name: CppTranslator - Patch tests
         run: |
           python -m unittest discover src/autosync/cpptranslator/Tests/
+
+      - name: Test translation
+        run: |
+          ./src/autosync/ASUpdater.py --ci -d -a AArch64 -s Translate
+          ./src/autosync/ASUpdater.py --ci -d -a ARM -s Translate
+          ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
+

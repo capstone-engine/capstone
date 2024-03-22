@@ -82,23 +82,25 @@ def find_id_by_type(node: Node, node_types: [str], type_must_match: bool) -> byt
     return b""
 
 
-def print_prominent_warning(msg: str) -> None:
+def print_prominent_warning(msg: str, wait_for_user: bool = True) -> None:
     print("\n" + separator_line_1("yellow"))
     print(termcolor.colored("WARNING", "yellow", attrs=["bold"]) + "\n")
     print(msg)
     print(separator_line_1("yellow"))
-    input("Press enter to continue...\n")
+    if wait_for_user:
+        input("Press enter to continue...\n")
 
 
 def term_width() -> int:
     return shutil.get_terminal_size()[0]
 
 
-def print_prominent_info(msg: str) -> None:
+def print_prominent_info(msg: str, wait_for_user: bool = True) -> None:
     print("\n" + separator_line_1("blue"))
     print(msg)
     print(separator_line_1("blue"))
-    input("Press enter to continue...\n")
+    if wait_for_user:
+        input("Press enter to continue...\n")
 
 
 def bold(msg: str, color: str = None) -> str:

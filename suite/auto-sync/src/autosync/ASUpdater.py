@@ -42,11 +42,13 @@ class ASUpdater:
         no_clean: bool,
         refactor: bool,
         differ_no_auto_apply: bool,
+        wait_for_user: bool = True,
     ) -> None:
         self.arch = arch
         self.write = write
         self.no_clean_build = no_clean
         self.inc_list = inc_list
+        self.wait_for_user = wait_for_user
         if USteps.ALL in steps:
             self.steps = [USteps.INC_GEN, USteps.TRANS, USteps.DIFF]
         else:
@@ -120,7 +122,7 @@ class ASUpdater:
         self.check_tree_sitter()
         translator_config = get_path("{CPP_TRANSLATOR_CONFIG}")
         configurator = Configurator(self.arch, translator_config)
-        translator = Translator(configurator)
+        translator = Translator(configurator, self.wait_for_user)
         translator.translate()
         translator.remark_manual_files()
 
@@ -226,6 +228,12 @@ def parse_args() -> argparse.Namespace:
         help="Sets change update behavior to ease refacotring and new implementations.",
         action="store_true",
     )
+    parser.add_argument(
+        "--ci",
+        dest="wait_for_user",
+        help="The translator will not wait for user input when printing important logs.",
+        action="store_false",
+    )
     arguments = parser.parse_args()
     return arguments
 
@@ -248,5 +256,6 @@ if __name__ == "__main__":
         args.no_clean,
         args.refactor,
         args.no_auto_apply,
+        args.wait_for_user,
     )
     Updater.update()

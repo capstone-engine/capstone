@@ -82,7 +82,7 @@ class TestPatches(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         configurator = Configurator("ARCH", get_path("{CPP_TRANSLATOR_TEST_CONFIG}"))
-        cls.translator = CppTranslator.Translator(configurator)
+        cls.translator = CppTranslator.Translator(configurator, False)
         cls.ts_cpp_lang = configurator.get_cpp_lang()
         cls.parser = configurator.get_parser()
         cls.template_collector = TemplateCollector(
