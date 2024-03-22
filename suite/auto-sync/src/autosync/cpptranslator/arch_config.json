@@ -113,7 +113,8 @@
       "printImmSVE",
       "printAMIndexedWB",
       "isSVECpyImm",
-      "isSVEAddSubImm"
+      "isSVEAddSubImm",
+      "printVectorIndex"
     ],
     "manually_edited_files": []
   },
