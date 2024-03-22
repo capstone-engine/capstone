@@ -225,7 +225,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--refactor",
         dest="refactor",
-        help="Sets change update behavior to ease refacotring and new implementations.",
+        help="Sets change update behavior to ease refactoring and new implementations.",
         action="store_true",
     )
     parser.add_argument(

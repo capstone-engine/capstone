@@ -51,7 +51,7 @@ jobs:
         run: |
           python -m unittest discover src/autosync/cpptranslator/Tests/
 
-      - name: Test translation
+      - name: CppTranslator - Test translation
         run: |
           ./src/autosync/ASUpdater.py --ci -d -a AArch64 -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a ARM -s Translate
