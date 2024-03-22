@@ -57,6 +57,13 @@ EVM:
   - include/capstone/evm.h
   - tests/test_evm.c
 
+HPPA:
+  - arch/HPPA/*
+  - cstool/cstool_hppa.c
+  - include/capstone/hppa.h
+  - suite/MC/HPPA/*
+  - tests/test_hppa.c
+
 M680X:
   - arch/M680X/*
   - cstool/cstool_m680x.c
