@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: BSD-3
 
 import unittest
-from pathlib import Path
 
 from autosync.HeaderPatcher import HeaderPatcher
 from autosync.Helper import get_path

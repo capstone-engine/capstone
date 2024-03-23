@@ -7,7 +7,9 @@ import argparse
 import difflib as dl
 import json
 import logging as log
+import subprocess
 import sys
+import tempfile
 from enum import StrEnum
 from pathlib import Path
 from shutil import copy2
@@ -77,6 +79,7 @@ class ApplyType(StrEnum):
     NEW = "NEW"  # Apply version from new file (leave unchanged)
     SAVED = "SAVED"  # Use saved resolution
     EDIT = "EDIT"  # Edit patch and apply
+    SHOW_EDIT = "SHOW_EDIT"  # Show the saved edited text.
     OLD_ALL = "OLD_ALL"  # Apply all versions from old file.
     PREVIOUS = "PREVIOUS"  # Ignore diff and go to previous
 
@@ -182,6 +185,9 @@ class Differ:
         - Go back and decide on node before.
 
     Each decision is saved to the persistence file for later.
+
+    Last (optional) step is to write the patches to the new file.
+    Please note that we always write to the new file in the current version.
     """
 
     ts_cpp_lang: Language = None
@@ -201,7 +207,9 @@ class Differ:
     cur_new_node: Node | None = None
     cur_nid: str = None
 
-    def __init__(self, configurator: Configurator, no_auto_apply: bool):
+    def __init__(
+        self, configurator: Configurator, no_auto_apply: bool, testing: bool = False
+    ):
         self.configurator = configurator
         self.no_auto_apply = no_auto_apply
         self.arch = self.configurator.get_arch()
@@ -210,23 +218,41 @@ class Differ:
         self.ts_cpp_lang = self.configurator.get_cpp_lang()
         self.parser = self.configurator.get_parser()
         self.differ = dl.Differ()
+        self.testing = testing
 
-        t_out_dir: Path = get_path("{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}")
-        self.translated_files = [
-            t_out_dir.joinpath(sp["out"]) for sp in self.conf_arch["files_to_translate"]
-        ]
-        cs_arch_src: Path = get_path("{CS_ARCH_MODULE_DIR}")
-        cs_arch_src = cs_arch_src.joinpath(
-            self.arch if self.arch != "PPC" else "PowerPC"
-        )
-        self.old_files = [
-            cs_arch_src.joinpath(f"{cs_arch_src}/" + sp["out"])
-            for sp in self.conf_arch["files_to_translate"]
-        ]
-        self.load_persistence_file()
+        self.diff_out_dir = get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}")
+        if self.testing:
+            t_out_dir: Path = get_path("{DIFFER_TEST_NEW_SRC_DIR}")
+            self.translated_files = [
+                t_out_dir.joinpath(sp["out"])
+                for sp in self.conf_arch["files_to_translate"]
+            ]
+            self.old_files = [
+                get_path("{DIFFER_TEST_OLD_SRC_DIR}").joinpath(sp["out"])
+                for sp in self.conf_arch["files_to_translate"]
+            ]
+            self.load_persistence_file()
+        else:
+            t_out_dir: Path = get_path("{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}")
+            self.translated_files = [
+                t_out_dir.joinpath(sp["out"])
+                for sp in self.conf_arch["files_to_translate"]
+            ]
+            cs_arch_src: Path = get_path("{CS_ARCH_MODULE_DIR}")
+            cs_arch_src = cs_arch_src.joinpath(
+                self.arch if self.arch != "PPC" else "PowerPC"
+            )
+            self.old_files = [
+                cs_arch_src.joinpath(f"{cs_arch_src}/" + sp["out"])
+                for sp in self.conf_arch["files_to_translate"]
+            ]
+            self.load_persistence_file()
 
     def load_persistence_file(self) -> None:
-        self.persistence_filepath = get_path("{CPP_TRANSLATOR_PATH_PERSISTENCE_FILE}")
+        if self.testing:
+            self.persistence_filepath = get_path("{DIFFER_TEST_PERSISTENCE_FILE}")
+        else:
+            self.persistence_filepath = get_path("{DIFFER_PERSISTENCE_FILE}")
         if not self.persistence_filepath.exists():
             self.saved_patches = dict()
             return
@@ -247,6 +273,10 @@ class Differ:
             json.dump(self.saved_patches, f, indent=2)
 
     def persist_patch(self, filename: Path, patch: Patch) -> None:
+        """
+        :param filename: The filename this patch is saved for.
+        :param patch: The patch to apply.
+        """
         if filename.name not in self.saved_patches:
             self.saved_patches[filename.name] = dict()
         log.debug(f"Save: {patch.get_persist_info()}")
@@ -257,7 +287,7 @@ class Differ:
         Copy translated files to diff directory for editing.
         """
         log.info("Copy files for editing")
-        diff_dir: Path = get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}")
+        diff_dir: Path = self.diff_out_dir
         for f in self.translated_files:
             dest = diff_dir.joinpath(f.name)
             copy2(f, dest)
@@ -304,7 +334,7 @@ class Differ:
             exit(1)
         return identifier
 
-    def parse_file(self, file: Path) -> dict:
+    def parse_file(self, file: Path) -> dict[str:Node]:
         """
         Parse a files and return all nodes which should be diffed.
         Nodes are indexed by a unique identifier.
@@ -348,7 +378,7 @@ class Differ:
     def print_diff(self, diff_lines: list[str], node_id: str, current: int, total: int):
         new_color = self.conf_general["diff_color_new"]
         old_color = self.conf_general["diff_color_old"]
-        print(separator_line_1())
+        print(separator_line_2())
         print(f"{bold('Patch:')} {current}/{total}\n")
         print(f"{bold('Node:')} {node_id}")
         print(f"{bold('Color:')} {colored('NEW FILE - (Just translated)', new_color)}")
@@ -384,7 +414,7 @@ class Differ:
 
         choice = input(
             f"Choice: {colored('O', old_color)}, {bold('o', old_color)}, {bold('n', new_color)}, "
-            f"{saved_selection}, {colored('e', edited_color)}, p, q, ? > "
+            f"{saved_selection}, {colored('e', edited_color)}, {colored('E', edited_color)}, p, q, ? > "
         )
         return choice
 
@@ -432,7 +462,7 @@ class Differ:
     ) -> ApplyType:
         while True:
             choice = self.print_prompt(saved_diff_present, saved_choice)
-            if choice not in ["O", "o", "n", "e", "s", "p", "q", "?", "help"]:
+            if choice not in ["O", "o", "n", "e", "E", "s", "p", "q", "?", "help"]:
                 print(f"{bold(choice)} is not valid.")
                 self.print_prompt_help(saved_diff_present, saved_choice)
                 continue
@@ -449,6 +479,8 @@ class Differ:
                 return ApplyType.OLD_ALL
             elif choice == "e":
                 return ApplyType.EDIT
+            elif choice == "E":
+                return ApplyType.SHOW_EDIT
             elif choice == "s":
                 return ApplyType.SAVED
             elif choice in ["?", "help"]:
@@ -469,7 +501,11 @@ class Differ:
         return saved["old_hash"] == old_hash and saved["new_hash"] == new_hash
 
     def create_patch(
-        self, coord: PatchCoord, choice: ApplyType, saved_patch: dict = None
+        self,
+        coord: PatchCoord,
+        choice: ApplyType,
+        saved_patch: dict = None,
+        edited_text: bytes = None,
     ):
         old = self.cur_old_node.text if self.cur_old_node else b""
         new = self.cur_new_node.text if self.cur_new_node else b""
@@ -479,6 +515,7 @@ class Differ:
             new,
             coord,
             saved_patch["apply_type"] if saved_patch else choice,
+            edit=edited_text,
         )
 
     def add_patch(
@@ -487,8 +524,12 @@ class Differ:
         consec_old: int,
         old_filepath: Path,
         patch_coord: PatchCoord,
+        saved_patch: dict | None = None,
+        edited_text: bytes | None = None,
     ) -> None:
-        self.current_patch = self.create_patch(patch_coord, apply_type)
+        self.current_patch = self.create_patch(
+            patch_coord, apply_type, saved_patch, edited_text
+        )
         self.persist_patch(old_filepath, self.current_patch)
         if consec_old > 1:
             # Two or more old nodes are not present in the new file.
@@ -566,13 +607,16 @@ class Differ:
 
             diff_lines = list(self.differ.compare(o, n))
             if self.no_difference(diff_lines):
-                log.debug(f"Nodes {bold(self.cur_nid)} match.")
+                log.info(
+                    f"{bold('Patch:')} {idx + 1}/{len(node_ids)} - Nodes {bold(self.cur_nid)} match."
+                )
                 matching_nodes_count += 1
                 idx += 1
                 continue
 
             if self.cur_new_node:
                 consec_old = 0
+                # We always write to the new file. So we always take he coordinates form it.
                 patch_coord = PatchCoord.get_coordinates_from_node(self.cur_new_node)
             else:
                 consec_old += 1
@@ -589,6 +633,7 @@ class Differ:
                     else new_nodes[0]
                 )
                 ref_end_byte = ref_new.start_byte
+                # We always write to the new file. So we always take he coordinates form it.
                 patch_coord = PatchCoord(
                     ref_end_byte - 1,
                     ref_end_byte - 1,
@@ -607,7 +652,9 @@ class Differ:
                 if self.saved_patch_matches(saved) and not self.no_auto_apply:
                     apply_type = ApplyType(saved["apply_type"])
                     self.add_patch(apply_type, consec_old, old_filepath, patch_coord)
-                    log.info(f"Auto apply patch for {bold(self.cur_nid)}")
+                    log.info(
+                        f"{bold('Patch:')} {idx + 1}/{len(node_ids)} - Auto apply patch for {bold(self.cur_nid)}"
+                    )
                     idx += 1
                     continue
 
@@ -634,13 +681,34 @@ class Differ:
                     print(bold("Save does not exist."))
                     continue
                 self.add_patch(
-                    saved["apply_type"], consec_old, old_filepath, patch_coord
+                    saved["apply_type"],
+                    consec_old,
+                    old_filepath,
+                    patch_coord,
+                    saved_patch=saved,
+                    edited_text=saved["edit"].encode(),
                 )
+            elif choice == ApplyType.SHOW_EDIT:
+                if not saved or not saved["edit"]:
+                    print(bold("No edited text was saved before."))
+                    input("Press enter to continue...\n")
+                    continue
+                saved_edited_text = colored(
+                    f'\n{saved["edit"]}\n', self.conf_general["diff_color_edited"]
+                )
+                print(saved_edited_text)
+                input("Press enter to continue...\n")
+                continue
             elif choice == ApplyType.OLD_ALL:
                 self.add_patch(ApplyType.OLD, consec_old, old_filepath, patch_coord)
             elif choice == ApplyType.EDIT:
-                print(f"{bold('Editing not yet implemented.', 'light_red')}")
-                continue
+                edited_text = self.edit_patch(diff_lines)
+                if not edited_text:
+                    continue
+                self.persist_patch(
+                    old_filepath,
+                    self.create_patch(patch_coord, choice, edited_text=edited_text),
+                )
             elif choice == ApplyType.PREVIOUS:
                 if idx == 0:
                     print(bold(f"There is no previous diff for {old_filepath.name}!"))
@@ -717,6 +785,38 @@ class Differ:
         run_clang_format(list(file_patches.keys()))
         return
 
+    def edit_patch(self, diff_lines: list[str]) -> bytes | None:
+        tmp_file = tempfile.NamedTemporaryFile(suffix="c", delete=False)
+        tmp_file_name = tmp_file.name
+        tmp_file.writelines([line.encode() + b"\n" for line in diff_lines])
+        tmp_file.write(self.get_edit_explanation())
+        tmp_file.close()
+        editor = self.conf_general["patch_editor"]
+        try:
+            subprocess.run([editor, tmp_file_name])
+        except FileNotFoundError:
+            log.error(f"Could not find editor '{editor}'")
+            return None
+        edited_text = b""
+        with open(tmp_file_name, "rb") as tmp_file:
+            for line in tmp_file.readlines():
+                if self.get_separator_line() in line:
+                    break
+                edited_text += line
+        tmp_file.close()
+        return edited_text
+
+    @staticmethod
+    def get_separator_line() -> bytes:
+        return f"// {'=' * 50}".encode()
+
+    def get_edit_explanation(self) -> bytes:
+        return (
+            f"{self.get_separator_line().decode('utf8')}\n"
+            "// Everything below this line will be deleted\n"
+            "// Edit the file to your liking. The result will be written 'as is' to the source file.\n"
+        ).encode()
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -732,7 +832,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-a",
         dest="arch",
-        help="Name of target architecture.",
+        help="Name of target architecture (ignored with -t option)",
         choices=["ARM", "PPC, AArch64", "Alpha"],
         required=True,
     )
@@ -744,11 +844,7 @@ def parse_args() -> argparse.Namespace:
         default="info",
     )
     parser.add_argument(
-        "-c",
-        dest="config_path",
-        help="Config file for architectures.",
-        default="arch_config.json",
-        type=Path,
+        "-t", dest="testing", help="Run with test configuration.", action="store_true"
     )
     arguments = parser.parse_args()
     return arguments
@@ -764,9 +860,12 @@ if __name__ == "__main__":
         stream=sys.stdout,
         format="%(levelname)-5s - %(message)s",
     )
-    cfg = Configurator(args.arch, args.config_path)
+    if args.testing:
+        cfg = Configurator("ARCH", get_path("{DIFFER_TEST_CONFIG_FILE}"))
+    else:
+        cfg = Configurator(args.arch, get_path("{CPP_TRANSLATOR_CONFIG}"))
 
-    differ = Differ(cfg, args.no_auto_apply)
+    differ = Differ(cfg, args.no_auto_apply, testing=args.testing)
     try:
         differ.diff()
     except Exception as e:

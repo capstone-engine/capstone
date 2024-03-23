@@ -22,6 +22,7 @@ The config values have the following meaning:
    - `diff_color_old`: Color in the `Differ` for old/current Capstone content.
    - `diff_color_saved`: Color in the `Differ` for saved content.
    - `diff_color_edited`: Color in the `Differ` for edited content.
+   - `patch_editor`: Editor to open for patch editing.
    - `nodes_to_diff`: List of parse tree nodes which get diffed - *Mind the note below*.
       - `node_type`: The `type` of the node to be diffed.
       - `identifier_node_type`: Types of child nodes which identify the node during diffing (the identifier must be the same in the translated and the old file!). Types can be of the form `<parent-type>/<child type>`.

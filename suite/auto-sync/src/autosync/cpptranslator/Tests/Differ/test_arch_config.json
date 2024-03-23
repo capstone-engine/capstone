@@ -4,6 +4,7 @@
     "diff_color_old": "light_blue",
     "diff_color_saved": "yellow",
     "diff_color_edited": "light_magenta",
+    "patch_editor": "vim",
     "nodes_to_diff": [
       {
         "node_type": "function_definition",
