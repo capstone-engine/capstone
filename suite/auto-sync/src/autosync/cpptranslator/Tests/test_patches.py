@@ -3,7 +3,6 @@
 # Copyright © 2022 Rot127 <unisono@quyllur.org>
 # SPDX-FileCopyrightText: 2024 Rot127 <unisono@quyllur.org>
 # SPDX-License-Identifier: BSD-3
-# SPDX-License-Identifier: LGPL-3.0-only
 
 import unittest
 
