@@ -24,7 +24,7 @@ The config values have the following meaning:
    - `diff_color_edited`: Color in the `Differ` for edited content.
    - `nodes_to_diff`: List of parse tree nodes which get diffed - *Mind the note below*.
       - `node_type`: The `type` of the node to be diffed.
-      - `identifier_node_type`: Types of child nodes which identify the node during diffing (the identifier must be the same in the translated and the old file!).
+      - `identifier_node_type`: Types of child nodes which identify the node during diffing (the identifier must be the same in the translated and the old file!). Types can be of the form `<parent-type>/<child type>`.
 - `<ARCH>`: Settings valid for a specific architecture
    - `files_to_translate`: A list of file paths to translate.
       - `in`: *Path* to a specific source file.
