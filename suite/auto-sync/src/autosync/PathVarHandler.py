@@ -59,6 +59,7 @@ class PathVarHandler(metaclass=Singleton):
                 log.debug(f"Set {p_name} = {resolved}")
                 if not Path(resolved).exists() and (
                     p_name not in create_during_runtime
+                    and p_name not in vars["ignore_missing"]
                 ):
                     missing.append(resolved)
                 elif var_id in create_during_runtime:

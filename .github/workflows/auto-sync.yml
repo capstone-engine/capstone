@@ -49,7 +49,11 @@ jobs:
 
       - name: CppTranslator - Patch tests
         run: |
-          python -m unittest discover src/autosync/cpptranslator/Tests/
+          python -m unittest src/autosync/cpptranslator/Tests/test_patches.py
+
+      - name: CppTranslator - Differ tests
+        run: |
+          python -m unittest src/autosync/cpptranslator/Tests/test_differ.py
 
       - name: CppTranslator - Test translation
         run: |

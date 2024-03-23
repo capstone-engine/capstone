@@ -2,5 +2,6 @@ build/
 vendor/llvm_root
 */.idea
 src/auto-sync/config.json
+src/autosync/cpptranslator/Tests/Differ/test_saved_patches.json
 src/autosync.egg-info
 
