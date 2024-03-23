@@ -19,7 +19,6 @@ class Singleton(type):
 
 
 class PathVarHandler(metaclass=Singleton):
-
     def __init__(self) -> None:
         try:
             res = subprocess.run(

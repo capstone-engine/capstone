@@ -31,9 +31,13 @@ def error_exit(msg: str) -> None:
 
 
 class HeaderPatcher:
-    def __init__(self, header: Path, inc: Path) -> None:
+    def __init__(self, header: Path, inc: Path, write_file: bool = True) -> None:
         self.header = header
         self.inc = inc
+        self.inc_content: str = ""
+        self.write_file = write_file
+        # Gets set to the patched file content if writing to the file is disabled.
+        self.patched_header_content: str = ""
 
     def patch_header(self) -> bool:
         if not (self.header.exists() or self.header.is_file()):
@@ -76,7 +80,7 @@ class HeaderPatcher:
             header_enum_id = f":{ev_id}" if ev_id != "NOTGIVEN" else ""
             regex = (
                 rf"\s*// generated content <{self.inc.name}{header_enum_id}> begin.*(\n)"
-                rf"(.*\n)+"
+                rf"(.*\n)*"
                 rf"\s*// generated content <{self.inc.name}{header_enum_id}> end.*(\n)"
             )
             if not re.search(regex, header_content):
@@ -91,8 +95,11 @@ class HeaderPatcher:
             )
 
             header_content = re.sub(regex, new_content, header_content)
-        with open(self.header, "w") as f:
-            f.write(header_content)
+        if self.write_file:
+            with open(self.header, "w") as f:
+                f.write(header_content)
+        else:
+            self.patched_header_content = header_content
         log.info(f"Patched {self.inc.name} into {self.header.name}")
         return True
 

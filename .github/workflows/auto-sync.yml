@@ -57,3 +57,6 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a ARM -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
 
+      - name: Test Header patcher
+        run: |
+          python -m unittest src/autosync/Tests/test_header_patcher.py
