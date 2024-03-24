@@ -495,6 +495,7 @@ typedef struct cs_hppa {
 	cs_hppa_op operands[HPPA_MAX_OPS]; ///< operands for hppa instruction.
 } cs_hppa;
 
+/// HPPA modifiers type. Can be string (most of them) or int (uid, sop)
 typedef enum hppa_modifier_type {
 	HPPA_MOD_STR = 0,
 	HPPA_MOD_INT = 1
@@ -512,10 +513,10 @@ typedef struct hppa_modifier {
 
 // Additional instruction info
 typedef struct hppa_ext {
-	hppa_modifier modifiers[HPPA_MAX_MODIFIERS_LEN];
-	uint8_t mod_num;
-	bool b_writeble;
-	bool is_alternative;
+	hppa_modifier modifiers[HPPA_MAX_MODIFIERS_LEN]; ///< instruction modifiers array
+	uint8_t mod_num; ///< number of modifiers of current instruction
+	bool b_writeble; ///< true if some load/store modifier has modify base register bit
+	bool is_alternative; ///< true if some modifier affects instruction format
 } hppa_ext;
 
 // Group of HPPA instructions

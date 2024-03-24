@@ -420,6 +420,8 @@ static void fill_memmgmt_insn_name(MCInst *MI, uint32_t insn)
 			};
 			push_str_modifier(HPPA_EXT_REF(MI), "w");
 			return;
+		default:
+			break;
 		}
 	}
 
@@ -482,6 +484,8 @@ static void fill_memmgmt_insn_name(MCInst *MI, uint32_t insn)
 		break;
 	case 0x4c:
 		MCInst_setOpcode(MI, HPPA_INS_LCI);
+		break;
+	default:
 		break;
 	}
 }
@@ -847,6 +851,7 @@ static void fill_alu_mods(uint32_t insn, hppa_ext *hppa_ext, cs_mode mode)
 			if (e3 == 3) {
 				push_str_modifier(hppa_ext, "tc");
 			}
+			// fallthrough
 		case 0x22:
 			if (d == 1) {
 				push_str_modifier(hppa_ext,
@@ -1014,6 +1019,7 @@ static bool decode_alu(const cs_struct *ud, MCInst *MI, uint32_t insn)
 	case 0x2a:
 	case 0x2b:
 		CREATE_GR_REG(MI, r1);
+		// fallthrough
 	case 0x2e:
 	case 0x2f:
 		CREATE_GR_REG(MI, r2);
@@ -2236,6 +2242,7 @@ static bool decode_branch(const cs_struct *ud, MCInst *MI, uint32_t insn)
 				CREATE_GR_REG(MI, 2);
 				break;
 			}
+			// fallthrough
 		default:
 			return false;
 		}
@@ -2974,10 +2981,8 @@ static void fill_float_insn_name(MCInst *MI, uint32_t insn)
 		}
 	} else if (class == 2) {
 		subop = get_insn_field(insn, 16, 18);
-		switch (subop) {
-		case 0x00:
+		if (subop == 0x00) {
 			MCInst_setOpcode(MI, HPPA_INS_FCMP);
-			break;
 		}
 	} else if (class == 3) {
 		subop = get_insn_field(insn, 16, 18);
@@ -3000,12 +3005,8 @@ static void fill_float_insn_name(MCInst *MI, uint32_t insn)
 				break;
 			}
 		} else {
-			switch (subop) {
-			case 0x02:
+			if (subop == 0x02) {
 				MCInst_setOpcode(MI, HPPA_INS_XMPYU);
-				break;
-			default:
-				break;
 			}
 		}
 	}

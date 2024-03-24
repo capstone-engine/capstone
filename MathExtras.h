@@ -478,6 +478,7 @@ static inline uint32_t get_insn_field(uint32_t insn, uint8_t from, uint8_t to)
 {
 	return insn >> (31 - to) & ((1 << (to - from + 1)) - 1);
 }
+
 /// \brief Get specified bit from 32-bit instruction
 static inline uint32_t get_insn_bit(uint32_t insn, uint8_t bit) 
 {
