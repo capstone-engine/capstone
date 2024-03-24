@@ -252,6 +252,8 @@ static void fill_sysop_insn_name(MCInst *MI, uint32_t insn)
 		case 0x60:
 			MCInst_setOpcode(MI, HPPA_INS_RFI);
 			return;
+		default:
+			return;
 		}
 	}
 
@@ -300,6 +302,8 @@ static void fill_sysop_insn_name(MCInst *MI, uint32_t insn)
 			push_str_modifier(HPPA_EXT_REF(MI), "w");
 		}
 		break;
+	default:
+		break;
 	}
 }
 
@@ -322,6 +326,8 @@ static bool decode_sysop(const cs_struct *ud, MCInst *MI, uint32_t insn)
 		case 0xc6:
 			CREATE_GR_REG(MI, r2);
 			return true;
+		default:
+			break;
 		}
 	}
 
