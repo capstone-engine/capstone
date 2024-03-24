@@ -253,7 +253,7 @@ static void fill_sysop_insn_name(MCInst *MI, uint32_t insn)
 			MCInst_setOpcode(MI, HPPA_INS_RFI);
 			return;
 		default:
-			return;
+			break;
 		}
 	}
 
