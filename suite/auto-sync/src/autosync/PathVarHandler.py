@@ -44,7 +44,7 @@ class PathVarHandler(metaclass=Singleton):
             vars = json.load(f)
 
         paths = vars["paths"]
-        create_during_runtime = vars["create_during_runtime"]
+        self.create_during_runtime = vars["create_during_runtime"]
 
         missing = list()
         for p_name, path in paths.items():
@@ -58,11 +58,11 @@ class PathVarHandler(metaclass=Singleton):
                 resolved: str = re.sub(var_id, str(self.paths[var_id]), resolved)
                 log.debug(f"Set {p_name} = {resolved}")
                 if not Path(resolved).exists() and (
-                    p_name not in create_during_runtime
+                    p_name not in self.create_during_runtime
                     and p_name not in vars["ignore_missing"]
                 ):
                     missing.append(resolved)
-                elif var_id in create_during_runtime:
+                elif var_id in self.create_during_runtime:
                     self.create_path(var_id, resolved)
                 self.paths[p_name] = Path(resolved)
         if len(missing) > 0:
@@ -74,6 +74,8 @@ class PathVarHandler(metaclass=Singleton):
     def get_path(self, name: str) -> Path:
         if name not in self.paths:
             raise ValueError(f"Path variable {name} has no path saved.")
+        if name in self.create_during_runtime:
+            self.create_path(name, self.paths[name])
         return self.paths[name]
 
     def complete_path(self, path_str: str) -> Path:
@@ -88,6 +90,7 @@ class PathVarHandler(metaclass=Singleton):
         if pp.exists():
             return
 
+        log.debug(f"Create path {var_id} @ {path}")
         postfix = var_id.strip("}").split("_")[-1]
         if postfix == "FILE":
             if not pp.parent.exists():
