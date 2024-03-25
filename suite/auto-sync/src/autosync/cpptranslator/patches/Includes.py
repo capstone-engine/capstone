@@ -245,7 +245,6 @@ def get_AArch64_includes(filename: str) -> bytes:
         case "AArch64BaseInfo.h":
             return (
                 b'#include "../../utils.h"\n'
-                + b'#include "capstone/arm.h"\n\n'
                 + b"#define GET_REGINFO_ENUM\n"
                 + b'#include "AArch64GenRegisterInfo.inc"\n\n'
                 + b"#define GET_INSTRINFO_ENUM\n"
