@@ -707,7 +707,8 @@ typedef struct SysReg {
 #include "AArch64GenSystemOperands.inc"
 
 const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByName(const char *Name);
-const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
+const AArch64SysReg_SysReg *
+AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
 #define AARCH64_GRS_LEN 128
 void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result);
 
@@ -856,8 +857,7 @@ inline static const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 }
 
 /// Return numeric key ID for 2-letter identifier string.
-inline static AArch64PACKey_ID
-AArch64StringToPACKeyID(const char *Name)
+inline static AArch64PACKey_ID AArch64StringToPACKeyID(const char *Name)
 {
 	if (strcmp(Name, "ia") == 0)
 		return AArch64PACKey_IA;
