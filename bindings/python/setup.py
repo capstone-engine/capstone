@@ -96,7 +96,7 @@ def copy_sources():
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.mk")))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "Makefile")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSE*")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSES/*")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "README")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES")))
