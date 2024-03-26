@@ -430,6 +430,12 @@ static inline int64_t SignExtend64(uint64_t X, unsigned B) {
 	return (int64_t)(X << (64 - B)) >> (64 - B);
 }
 
+/// \brief Removes the rightmost bit of x and extends the field to the left with that
+/// bit to form a 64-bit quantity. The field is of size len
+static inline int64_t LowSignExtend64(uint64_t x, unsigned len) {
+    return (x >> 1) - ((x & 1) << (len - 1));
+}
+
 /// \brief One extend number X starting at bit B and returns it as int32_t.
 /// Requires 0 < B <= 32.
 static inline int32_t OneExtend32(uint32_t X, unsigned B) {
@@ -465,6 +471,18 @@ static inline unsigned int countLeadingZeros(int x)
 	}
 
 	return count;
+}
+
+/// \brief Get specified field from 32-bit instruction. Returns bits from the segment [from, to]
+static inline uint32_t get_insn_field(uint32_t insn, uint8_t from, uint8_t to) 
+{
+	return insn >> (31 - to) & ((1 << (to - from + 1)) - 1);
+}
+
+/// \brief Get specified bit from 32-bit instruction
+static inline uint32_t get_insn_bit(uint32_t insn, uint8_t bit) 
+{
+	return get_insn_field(insn, bit, bit);
 }
 
 #endif

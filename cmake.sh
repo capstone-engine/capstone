@@ -60,6 +60,9 @@ case $1 in
   RISCV)
     ARCH=RISCV
     ;;
+  HPPA)
+    ARCH=HPPA
+    ;;
   *)
     ;;
 esac

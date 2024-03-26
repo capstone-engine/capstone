@@ -20,3 +20,4 @@
 ./test_x86
 ./test_xcore
 ./test_alpha
+./test_hppa

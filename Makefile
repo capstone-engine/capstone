@@ -335,11 +335,22 @@ ifneq (,$(findstring alpha,$(CAPSTONE_ARCHS)))
 	LIBOBJ_ALPHA += $(LIBSRC_ALPHA:%.c=$(OBJDIR)/%.o)
 endif
 
+DEP_HPPA =
+DEP_HPPA += $(wildcard arch/HPPA/HPPA*.inc)
+
+LIBOBJ_HPPA =
+ifneq (,$(findstring hppa,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_HPPA
+	LIBSRC_HPPA += $(wildcard arch/HPPA/HPPA*.c)
+	LIBOBJ_HPPA += $(LIBSRC_HPPA:%.c=$(OBJDIR)/%.o)
+endif
+
+
 LIBOBJ =
 LIBOBJ += $(OBJDIR)/cs.o $(OBJDIR)/utils.o $(OBJDIR)/SStream.o $(OBJDIR)/MCInstrDesc.o $(OBJDIR)/MCRegisterInfo.o $(OBJDIR)/MCInst.o $(OBJDIR)/MCInstPrinter.o $(OBJDIR)/Mapping.o
 LIBOBJ += $(LIBOBJ_ARM) $(LIBOBJ_AARCH64) $(LIBOBJ_M68K) $(LIBOBJ_MIPS) $(LIBOBJ_PPC) $(LIBOBJ_RISCV) $(LIBOBJ_SPARC) $(LIBOBJ_SYSZ) $(LIBOBJ_SH)
 LIBOBJ += $(LIBOBJ_X86) $(LIBOBJ_XCORE) $(LIBOBJ_TMS320C64X) $(LIBOBJ_M680X) $(LIBOBJ_EVM) $(LIBOBJ_MOS65XX) $(LIBOBJ_WASM) $(LIBOBJ_BPF)
-LIBOBJ += $(LIBOBJ_TRICORE) $(LIBOBJ_ALPHA)
+LIBOBJ += $(LIBOBJ_TRICORE) $(LIBOBJ_ALPHA) $(LIBOBJ_HPPA)
 
 
 ifeq ($(PKG_EXTRA),)
@@ -476,6 +487,7 @@ $(LIBOBJ_MOS65XX): $(DEP_MOS65XX)
 $(LIBOBJ_BPF): $(DEP_BPF)
 $(LIBOBJ_TRICORE): $(DEP_TRICORE)
 $(LIBOBJ_ALPHA): $(DEP_ALPHA)
+$(LIBOBJ_HPPA): $(DEP_HPPA)
 
 ifeq ($(CAPSTONE_STATIC),yes)
 $(ARCHIVE): $(LIBOBJ)
@@ -561,13 +573,13 @@ dist:
 	git archive --format=tar.gz --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).tgz
 	git archive --format=zip --prefix=capstone-$(DIST_VERSION)/ $(TAG) > capstone-$(DIST_VERSION).zip
 
-TESTS  = test_basic test_detail test_arm test_aarch64 test_m68k test_mips test_ppc test_sparc test_tricore
+TESTS  = test_basic test_detail test_arm test_aarch64 test_m68k test_mips test_ppc test_sparc test_tricore test_hppa
 TESTS += test_systemz test_x86 test_xcore test_iter test_evm test_riscv test_mos65xx test_wasm test_bpf test_alpha
 TESTS += test_basic.static test_detail.static test_arm.static test_aarch64.static
 TESTS += test_m68k.static test_mips.static test_ppc.static test_sparc.static
 TESTS += test_systemz.static test_x86.static test_xcore.static test_m680x.static
 TESTS += test_skipdata test_skipdata.static test_iter.static test_evm.static test_riscv.static
-TESTS += test_mos65xx.static test_wasm.static test_bpf.static test_alpha.static
+TESTS += test_mos65xx.static test_wasm.static test_bpf.static test_alpha.static test_hppa.static
 
 check: $(TESTS)
 

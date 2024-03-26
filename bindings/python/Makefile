@@ -71,7 +71,7 @@ clean:
 TESTS = test_basic.py test_detail.py test_arm.py test_aarch64.py test_m68k.py test_mips.py
 TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py test_tms320c64x.py
 TESTS += test_m680x.py test_skipdata.py test_mos65xx.py test_bpf.py test_riscv.py
-TESTS += test_evm.py test_tricore.py test_wasm.py test_sh.py
+TESTS += test_evm.py test_tricore.py test_wasm.py test_sh.py test_hppa.py
 TESTS += test_lite.py test_iter.py test_customized_mnem.py test_alpha.py
 
 check:

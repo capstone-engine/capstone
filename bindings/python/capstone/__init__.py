@@ -42,6 +42,7 @@ __all__ = [
     'CS_ARCH_SH',
     'CS_ARCH_TRICORE',
     'CS_ARCH_ALPHA',
+    'CS_ARCH_HPPA',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -106,6 +107,9 @@ __all__ = [
     'CS_MODE_TRICORE_160',
     'CS_MODE_TRICORE_161',
     'CS_MODE_TRICORE_162',
+    'CS_MODE_HPPA_11',
+    'CS_MODE_HPPA_20',
+    'CS_MODE_HPPA_20W',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -219,7 +223,8 @@ CS_ARCH_RISCV = 15
 CS_ARCH_SH = 16
 CS_ARCH_TRICORE = 17
 CS_ARCH_ALPHA = 18
-CS_ARCH_MAX = 19
+CS_ARCH_HPPA = 19
+CS_ARCH_MAX = 20
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -285,6 +290,9 @@ CS_MODE_TRICORE_131 = 1 << 4 # Tricore 1.3.1
 CS_MODE_TRICORE_160 = 1 << 5 # Tricore 1.6
 CS_MODE_TRICORE_161 = 1 << 6 # Tricore 1.6.1
 CS_MODE_TRICORE_162 = 1 << 7 # Tricore 1.6.2
+CS_MODE_HPPA_11 = 1 << 1 # HPPA 1.1
+CS_MODE_HPPA_20 = 1 << 2 # HPPA 2.0
+CS_MODE_HPPA_20W = CS_MODE_HPPA_20 | (1 << 3) # HPPA 2.0 wide
 
 # Capstone option type
 CS_OPT_INVALID = 0   # No option specified
@@ -443,7 +451,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha
+from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha, hppa
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -466,6 +474,7 @@ class _cs_arch(ctypes.Union):
         ('sh', sh.CsSH),
         ('tricore', tricore.CsTriCore),
         ('alpha', alpha.CsAlpha),
+        ('hppa', hppa.CsHPPA),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -817,6 +826,8 @@ class CsInsn(object):
             (self.update_flags, self.operands) = tricore.get_arch_info(self._raw.detail.contents.arch.tricore)
         elif arch == CS_ARCH_ALPHA:
             (self.operands) = alpha.get_arch_info(self._raw.detail.contents.arch.alpha)
+        elif arch == CS_ARCH_HPPA:
+            (self.operands) = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
 
 
     def __getattr__(self, name):
@@ -1310,6 +1321,7 @@ def debug():
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
         'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH, 'alpha': CS_ARCH_ALPHA,
+        'hppa': CS_ARCH_HPPA
     }
 
     all_archs = ""

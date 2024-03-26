@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h', 'alpha.h' ]
+include = [ 'arm.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h', 'alpha.h', 'hppa.h' ]
 
 template = {
     'java': {
@@ -54,6 +54,7 @@ template = {
             'sh.h': 'sh',
             'tricore.h': ['TRICORE', 'TriCore'],
             'alpha.h': ['ALPHA', 'Alpha'],
+            'hppa.h': 'hppa',
             'comment_open': '#',
             'comment_close': '',
         },

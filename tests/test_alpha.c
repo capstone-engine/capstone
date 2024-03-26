@@ -1,5 +1,5 @@
 /* Capstone Disassembler Engine */
-/* By Dmitry Sibirtsev <aquynh@gmail.com>, 2013-2019 */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2023 */
 
 #include <stdio.h>
 

@@ -76,6 +76,9 @@ int main()
 	if (cs_support(CS_ARCH_ALPHA)) {
 		printf("alpha=1 ");
 	}
+	if (cs_support(CS_ARCH_HPPA)) {
+		printf("hppa=1 ");
+	}
 	printf("\n");
 
 	return 0;

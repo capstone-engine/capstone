@@ -44,6 +44,7 @@ def test_file(fname):
         "CS_ARCH_RISCV": CS_ARCH_RISCV,
         "CS_ARCH_TRICORE": CS_ARCH_TRICORE,
         "CS_ARCH_ALPHA": CS_ARCH_ALPHA,
+        "CS_ARCH_HPPA": CS_ARCH_HPPA,
     }
 
     modes = {
@@ -81,6 +82,9 @@ def test_file(fname):
         "CS_MODE_TRICORE_161": CS_MODE_TRICORE_161,
         "CS_MODE_TRICORE_162": CS_MODE_TRICORE_162,
         "CS_MODE_BIG_ENDIAN+CS_MODE_QPX": CS_MODE_BIG_ENDIAN+CS_MODE_QPX,
+        "CS_MODE_HPPA_11": CS_MODE_HPPA_11,
+        "CS_MODE_HPPA_20": CS_MODE_HPPA_20,
+        "CS_MODE_HPPA_20W": CS_MODE_HPPA_20W,
     }
 
     mc_modes = {
@@ -128,6 +132,8 @@ def test_file(fname):
         ("CS_ARCH_PPC", "CS_MODE_BIG_ENDIAN+CS_MODE_QPX"): 54,
         ("CS_ARCH_ALPHA", "CS_MODE_LITTLE_ENDIAN"): 55,
         ("CS_ARCH_ALPHA", "CS_MODE_BIG_ENDIAN"): 56,
+        ("CS_ARCH_HPPA", "CS_MODE_HPPA_11+CS_MODE_BIG_ENDIAN"): 57,
+        ("CS_ARCH_HPPA", "CS_MODE_HPPA_20+CS_MODE_BIG_ENDIAN"): 58,
     }
 
     # if not option in ('', 'None'):
