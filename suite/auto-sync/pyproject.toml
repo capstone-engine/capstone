@@ -1,0 +1,23 @@
+# Copyright © 2022 Rot127 <unisono@quyllur.org>
+# Copyright © 2024 2022 Rot127 <unisono@quyllur.org>
+# SPDX-License-Identifier: BSD-3
+
+[project]
+name = "autosync"
+version = "0.1.0"
+dependencies = [
+  "termcolor >= 2.3.0",
+  "tree_sitter < 0.22.0",
+  "black >= 24.3.0",
+  "usort >= 1.0.8",
+  "setuptools >= 69.2.0",
+  "ninja >= 1.11.1.1",
+  "cmake >= 3.28.3",
+  "reuse >= 3.0.1",
+  "clang-format >= 18.1.1",
+]
+requires-python = ">= 3.11"
+
+[tool.setuptools]
+packages = ["autosync", "autosync.cpptranslator", "autosync.cpptranslator.patches"]
+package-dir = {"" = "src"}

@@ -143,3 +143,6 @@ android-ndk-*
 
 # python virtual env
 .venv/
+
+# Auto-sync files
+suite/auto-sync/src/autosync.egg-info
