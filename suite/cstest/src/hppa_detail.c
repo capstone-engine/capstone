@@ -48,7 +48,7 @@ char *get_detail_hppa(csh *p_handle, cs_mode mode, cs_insn *ins)
 			break;
 		case HPPA_OP_MEM:
 			add_str(&result, "\t\toperands[%u].type:  MEM\n", i);
-			if (op->mem.space != HPPA_OP_INVALID) {
+			if (op->mem.space != HPPA_REG_INVALID) {
 				add_str(&result,
 					"\t\t\toperands[%u].mem.space: REG = %s\n",
 					i, cs_reg_name(handle, op->mem.space));

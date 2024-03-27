@@ -42,7 +42,7 @@ def print_insn_detail(insn):
                 print("\t\toperands[%u].type: DISP = 0x%s" % (c, to_x(i.imm)))
             if i.type == HPPA_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
-                if i.mem.space != HPPA_OP_INVALID:
+                if i.mem.space != HPPA_REG_INVALID:
                     print("\t\t\toperands[%u].mem.space: REG = %s" % (c, insn.reg_name(i.mem.space)))
                 print("\t\t\toperands[%u].mem.base: REG = %s" % (c, insn.reg_name(i.mem.base)))
             if i.type == HPPA_OP_TARGET:
