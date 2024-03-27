@@ -419,7 +419,7 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 			}
 			break;
 		case HPPA_OP_MEM:
-			if (op->mem.space != HPPA_OP_INVALID)
+			if (op->mem.space != HPPA_REG_INVALID)
 				regs_read[read_count++] = op->mem.space;
 			if (op->mem.base_access & CS_AC_READ) {
 				regs_read[read_count++] = op->mem.base;
