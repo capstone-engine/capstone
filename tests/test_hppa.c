@@ -64,7 +64,7 @@ static void print_insn_detail(cs_insn *ins)
 			break;
 		case HPPA_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
-			if (op->mem.space != HPPA_OP_INVALID) {
+			if (op->mem.space != HPPA_REG_INVALID) {
 				printf("\t\t\toperands[%u].mem.space: REG = %s\n",
 				       i, cs_reg_name(handle, op->mem.space));
 			}

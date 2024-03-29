@@ -609,7 +609,7 @@ static void print_operand(MCInst *MI, SStream *O, const cs_hppa_op *op)
 		break;
 	case HPPA_OP_MEM:
 		SStream_concat(O, "(");
-		if (op->mem.space != HPPA_OP_INVALID &&
+		if (op->mem.space != HPPA_REG_INVALID &&
 		    op->mem.space != HPPA_REG_SR0) {
 			SStream_concat(O, HPPA_reg_name((csh)MI->csh,
 							op->mem.space));
