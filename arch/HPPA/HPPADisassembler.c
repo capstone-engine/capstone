@@ -2503,7 +2503,7 @@ static void fill_spop_mods(uint32_t insn, uint32_t ext, hppa_ext *hppa_ext)
 		      get_insn_field(insn, 27, 31);
 		break;
 	default:
-		break;
+		return;
 	}
 	push_int_modifier(hppa_ext, sop);
 	if (n == 1) {
@@ -2833,7 +2833,7 @@ static bool decode_copr(const cs_struct *ud, MCInst *MI, uint32_t insn)
 							->is_alternative = true;
 					}
 				}
-			} else if (class == 3) {
+			} else {
 				subop = get_insn_field(insn, 16, 18);
 				if (subop >= 4) {
 					return false;
@@ -2888,7 +2888,7 @@ static bool decode_copr(const cs_struct *ud, MCInst *MI, uint32_t insn)
 			default:
 				return false;
 			}
-		} else if (class == 3) {
+		} else  {
 			subop = get_insn_field(insn, 16, 18);
 			switch (subop) {
 			case 0x00:
