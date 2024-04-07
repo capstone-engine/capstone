@@ -40,7 +40,7 @@ endif()
 if (MSVC)
     add_compile_options(/W1 /w14189)
 else()
-    add_compile_options(${UNIX_COMPILE_OPTIONS})
+    add_compile_options(${UNIX_COMPILER_OPTIONS})
 endif()
 
 
