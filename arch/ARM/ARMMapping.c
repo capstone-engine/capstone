@@ -1354,11 +1354,11 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				      MCInst_getOpVal(MI, OpNum) + 1);
 		break;
 	case ARM_OP_GROUP_RotImmOperand: {
-		unsigned Imm = MCInst_getOpVal(MI, OpNum);
-		if (Imm == 0)
+		unsigned RotImm = MCInst_getOpVal(MI, OpNum);
+		if (RotImm == 0)
 			return;
 		ARM_get_detail_op(MI, -1)->shift.type = ARM_SFT_ROR;
-		ARM_get_detail_op(MI, -1)->shift.value = Imm * 8;
+		ARM_get_detail_op(MI, -1)->shift.value = RotImm * 8;
 		break;
 	}
 	case ARM_OP_GROUP_FBits16:
@@ -1390,16 +1390,16 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		break;
 	}
 	case ARM_OP_GROUP_PostIdxImm8Operand: {
-		unsigned Imm = MCInst_getOpVal(MI, OpNum);
-		bool sub = !(Imm & 256);
-		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm & 0xff), sub);
+		unsigned Imm8 = MCInst_getOpVal(MI, OpNum);
+		bool sub = !(Imm8 & 256);
+		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm8 & 0xff), sub);
 		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
 	case ARM_OP_GROUP_PostIdxImm8s4Operand: {
-		unsigned Imm = MCInst_getOpVal(MI, OpNum);
-		bool sub = !(Imm & 256);
-		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm & 0xff) << 2, sub);
+		unsigned Imm8s = MCInst_getOpVal(MI, OpNum);
+		bool sub = !(Imm8s & 256);
+		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm8s & 0xff) << 2, sub);
 		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
@@ -1569,26 +1569,26 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		ARM_set_mem_access(MI, true);
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		int64_t Imm = MCInst_getOpVal(MI, OpNum + 1);
-		if (Imm)
+		int64_t Imm0_1024s4 = MCInst_getOpVal(MI, OpNum + 1);
+		if (Imm0_1024s4)
 			ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0,
-					      Imm * 4);
+					      Imm0_1024s4 * 4);
 		ARM_set_mem_access(MI, false);
 		break;
 	case ARM_OP_GROUP_PKHLSLShiftImm: {
-		unsigned Imm = MCInst_getOpVal(MI, OpNum);
-		if (Imm == 0)
+		unsigned ShiftImm = MCInst_getOpVal(MI, OpNum);
+		if (ShiftImm == 0)
 			return;
 		ARM_get_detail_op(MI, -1)->shift.type = ARM_SFT_LSL;
-		ARM_get_detail_op(MI, -1)->shift.value = Imm;
+		ARM_get_detail_op(MI, -1)->shift.value = ShiftImm;
 		break;
 	}
 	case ARM_OP_GROUP_PKHASRShiftImm: {
-		unsigned Imm = MCInst_getOpVal(MI, OpNum);
-		if (Imm == 0)
-			Imm = 32;
+		unsigned RShiftImm = MCInst_getOpVal(MI, OpNum);
+		if (RShiftImm == 0)
+			RShiftImm = 32;
 		ARM_get_detail_op(MI, -1)->shift.type = ARM_SFT_ASR;
-		ARM_get_detail_op(MI, -1)->shift.value = Imm;
+		ARM_get_detail_op(MI, -1)->shift.value = RShiftImm;
 		break;
 	}
 	case ARM_OP_GROUP_ThumbS4ImmOperand:
@@ -1596,9 +1596,9 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				      MCInst_getOpVal(MI, OpNum) * 4);
 		break;
 	case ARM_OP_GROUP_ThumbSRImm: {
-		unsigned Imm = MCInst_getOpVal(MI, OpNum);
+		unsigned SRImm = MCInst_getOpVal(MI, OpNum);
 		ARM_set_detail_op_imm(MI, OpNum, ARM_OP_IMM,
-				      Imm == 0 ? 32 : Imm);
+				      SRImm == 0 ? 32 : SRImm);
 		break;
 	}
 	case ARM_OP_GROUP_BitfieldInvMaskImmOperand: {
@@ -1610,8 +1610,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		break;
 	}
 	case ARM_OP_GROUP_CPSIMod: {
-		unsigned Imm = MCInst_getOpVal(MI, OpNum);
-		ARM_get_detail(MI)->cps_mode = Imm;
+		unsigned Mode = MCInst_getOpVal(MI, OpNum);
+		ARM_get_detail(MI)->cps_mode = Mode;
 		break;
 	}
 	case ARM_OP_GROUP_CPSIFlag: {
@@ -1730,10 +1730,10 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 		ARM_set_mem_access(MI, true);
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		int32_t Imm = MCInst_getOpVal(MI, OpNum + 1);
-		if (Imm == INT32_MIN)
-			Imm = 0;
-		ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0, Imm);
+		int32_t Imm8 = MCInst_getOpVal(MI, OpNum + 1);
+		if (Imm8 == INT32_MIN)
+			Imm8 = 0;
+		ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0, Imm8);
 		if (AlwaysPrintImm0)
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
 
@@ -1864,8 +1864,8 @@ static void add_cs_detail_template_2(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_ComplexRotationOp_180_90: {
 		unsigned Angle = temp_arg_0;
 		unsigned Remainder = temp_arg_1;
-		unsigned Imm = (MCInst_getOpVal(MI, OpNum) * Angle) + Remainder;
-		ARM_set_detail_op_imm(MI, OpNum, ARM_OP_IMM, Imm);
+		unsigned Rotation = (MCInst_getOpVal(MI, OpNum) * Angle) + Remainder;
+		ARM_set_detail_op_imm(MI, OpNum, ARM_OP_IMM, Rotation);
 		break;
 	}
 	}

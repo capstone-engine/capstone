@@ -2082,7 +2082,7 @@ static DecodeStatus DecodeAddrMode2IdxInstruction(MCInst *Inst, unsigned Insn,
 		unsigned amt = fieldFromInstruction_4(Insn, 7, 5);
 		if (Opc == ARM_AM_ror && amt == 0)
 			Opc = ARM_AM_rrx;
-		unsigned imm = ARM_AM_getAM2Opc(Op, amt, Opc, idx_mode);
+		imm = ARM_AM_getAM2Opc(Op, amt, Opc, idx_mode);
 
 		MCOperand_CreateImm0(Inst, (imm));
 	} else {
