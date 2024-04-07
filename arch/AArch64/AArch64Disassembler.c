@@ -1871,9 +1871,9 @@ static DecodeStatus DecodeUnconditionalBranch(MCInst *Inst, uint32_t insn,
 
 static bool isInvalidPState(uint64_t Op1, uint64_t Op2)
 {
-	return Op1 == 0b000 && (Op2 == 0b000 || // CFINV
-							Op2 == 0b001 || // XAFlag
-							Op2 == 0b010);	// AXFlag
+	return Op1 == 0 && (Op2 == 0 || // CFINV
+							Op2 == 1 || // XAFlag
+							Op2 == 2);  // AXFlag
 }
 
 static DecodeStatus DecodeSystemPStateImm0_15Instruction(MCInst *Inst,
@@ -1988,7 +1988,7 @@ static DecodeStatus DecodeSyspXzrInstruction(MCInst *Inst, uint32_t insn,
 	unsigned CRm = fieldFromInstruction_4(insn, 8, 4);
 	unsigned op2 = fieldFromInstruction_4(insn, 5, 3);
 	unsigned Rt = fieldFromInstruction_4(insn, 0, 5);
-	if (Rt != 0b11111)
+	if (Rt != 0x1f)
 		return Fail;
 
 	MCOperand_CreateImm0(Inst, (op1));
