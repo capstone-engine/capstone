@@ -36,6 +36,7 @@ jobs:
               python-arch: x64,
               python-version: '3.6',
               build-system: 'cmake',
+              enable-asan: 'OFF'
             }
           - {
               name: 'ubuntu-22.04 x64 python3.9 make',
@@ -44,6 +45,7 @@ jobs:
               python-arch: x64,
               python-version: '3.9',
               build-system: 'make',
+              enable-asan: 'OFF'
             }   
           - {
               name: 'ubuntu-22.04 x64 python3.9 cmake',
@@ -52,6 +54,7 @@ jobs:
               python-arch: x64,
               python-version: '3.9',
               build-system: 'cmake',
+              enable-asan: 'OFF'
             }     
           - {
               name: 'ubuntu-22.04 x64 python3.11 cmake',
@@ -60,6 +63,16 @@ jobs:
               python-arch: x64,
               python-version: '3.11',
               build-system: 'cmake',
+              enable-asan: 'OFF'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 python3.11 ASAN',
+              os: ubuntu-22.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.11',
+              build-system: 'cmake',
+              enable-asan: 'ON'
             }
 
     steps:
@@ -88,13 +101,15 @@ jobs:
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
+      env:
+        asan: ${{ matrix.config.enable-asan }}
       run: |
         mkdir build && cd build
         # build static library
         cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr ..
         cmake --build . --config Release
         # build shared library
-        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr ..
+        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} ..
         sudo cmake --build . --config Release --target install
         cp libcapstone.* ../
         cp libcapstone.* ../tests/

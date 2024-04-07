@@ -68,6 +68,13 @@ option(CAPSTONE_USE_ARCH_REGISTRATION "Use explicit architecture registration" O
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
+option(ENABLE_ASAN "Enable address sanitizer" OFF)
+
+if (ENABLE_ASAN)
+    add_definitions(-DASAN_ENABLED)
+    add_compile_options(-fsanitize=address)
+    add_link_options(-fsanitize=address)
+endif()
 
 # If building for OSX it's best to allow CMake to handle building both architectures
 if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
