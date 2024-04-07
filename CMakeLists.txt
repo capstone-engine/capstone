@@ -25,7 +25,7 @@ project(capstone
     VERSION 5.0
 )
 
-set(UNIX_COMPILER_OPTIONS -Werror -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
+set(UNIX_COMPILER_OPTIONS -Werror -Wall -Wshadow=local -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
 
 # maybe-unitialzied is only supported by newer versions of GCC.
 # Unfortunately, it is pretty unreliable and reports wrong results.
