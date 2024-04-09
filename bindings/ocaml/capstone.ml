@@ -2,7 +2,7 @@
  * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Arm
-open Arm64
+open Aarch64
 open Mips
 open Ppc
 open X86
@@ -15,7 +15,7 @@ open Printf	(* debug *)
 (* Hardware architectures *)
 type arch =
   | CS_ARCH_ARM
-  | CS_ARCH_ARM64
+  | CS_ARCH_AARCH64
   | CS_ARCH_MIPS
   | CS_ARCH_X86
   | CS_ARCH_PPC
@@ -103,7 +103,7 @@ let _CS_GRP_PRIVILEGE = 6;;  (* all privileged instructions *)
 
 type cs_arch =
 	| CS_INFO_ARM of cs_arm
-	| CS_INFO_ARM64 of cs_arm64
+	| CS_INFO_AARCH64 of cs_aarch64
 	| CS_INFO_MIPS of cs_mips
 	| CS_INFO_X86 of cs_x86
 	| CS_INFO_PPC of cs_ppc

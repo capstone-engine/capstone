@@ -5,12 +5,12 @@ LIB = capstone
 FLAGS = '-Wall -Wextra -Wwrite-strings'
 PYTHON2 ?= python
 
-all: arm_const.cmxa arm64_const.cmxa m680x_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.cmxa sysz_const.cmxa x86_const.cmxa xcore_const.cmxa arm.cmxa arm64.cmxa m680x.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test_basic.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_aarch64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx test_m680x.cmx ocaml.o
+all: arm_const.cmxa aarch64_const.cmxa m680x_const.cmxa mips_const.cmxa ppc_const.cmxa sparc_const.cmxa sysz_const.cmxa x86_const.cmxa xcore_const.cmxa arm.cmxa aarch64.cmxa m680x.cmxa mips.cmxa ppc.cmxa x86.cmxa sparc.cmxa systemz.cmxa xcore.cmxa capstone.cmxa test_basic.cmx test_detail.cmx test_x86.cmx test_arm.cmx test_aarch64.cmx test_mips.cmx test_ppc.cmx test_sparc.cmx test_systemz.cmx test_xcore.cmx test_m680x.cmx ocaml.o
 	ocamlopt -o test_basic -ccopt $(FLAGS) ocaml.o capstone.cmx test_basic.cmx -cclib -l$(LIB)
 	ocamlopt -o test_detail -ccopt $(FLAGS) capstone.cmx ocaml.o test_detail.cmx -cclib -l$(LIB)
 	ocamlopt -o test_x86 -ccopt $(FLAGS) capstone.cmx ocaml.o x86.cmx x86_const.cmx test_x86.cmx -cclib -l$(LIB)
 	ocamlopt -o test_arm -ccopt $(FLAGS) capstone.cmx ocaml.o arm.cmx arm_const.cmx test_arm.cmx -cclib -l$(LIB)
-	ocamlopt -o test_aarch64 -ccopt $(FLAGS) capstone.cmx ocaml.o arm64.cmx arm64_const.cmx test_aarch64.cmx -cclib -l$(LIB)
+	ocamlopt -o test_aarch64 -ccopt $(FLAGS) capstone.cmx ocaml.o aarch64.cmx aarch64_const.cmx test_aarch64.cmx -cclib -l$(LIB)
 	ocamlopt -o test_mips -ccopt $(FLAGS) capstone.cmx ocaml.o mips.cmx mips_const.cmx test_mips.cmx -cclib -l$(LIB)
 	ocamlopt -o test_ppc -ccopt $(FLAGS) capstone.cmx ocaml.o ppc.cmx ppc_const.cmx test_ppc.cmx -cclib -l$(LIB)
 	ocamlopt -o test_sparc -ccopt $(FLAGS) capstone.cmx ocaml.o sparc.cmx sparc_const.cmx test_sparc.cmx -cclib -l$(LIB)
@@ -115,28 +115,28 @@ arm_const.cmx: arm_const.ml arm_const.cmi
 arm_const.cmxa: arm_const.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
-arm64.mli: arm64.ml
+aarch64.mli: aarch64.ml
 	ocamlc -ccopt $(FLAGS) -i $< > $@
 
-arm64.cmi: arm64.mli
+aarch64.cmi: aarch64.mli
 	ocamlc -ccopt $(FLAGS) -c $<
 
-arm64.cmx: arm64.ml arm64.cmi
+aarch64.cmx: aarch64.ml aarch64.cmi
 	ocamlopt -ccopt $(FLAGS) -c $<
 
-arm64.cmxa: arm64.cmx
+aarch64.cmxa: aarch64.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
-arm64_const.mli: arm64_const.ml
+aarch64_const.mli: aarch64_const.ml
 	ocamlc -ccopt $(FLAGS) -i $< > $@
 
-arm64_const.cmi: arm64_const.mli
+aarch64_const.cmi: aarch64_const.mli
 	ocamlc -ccopt $(FLAGS) -c $<
 
-arm64_const.cmx: arm64_const.ml arm64_const.cmi
+aarch64_const.cmx: aarch64_const.ml aarch64_const.cmi
 	ocamlopt -ccopt $(FLAGS) -c $<
 
-arm64_const.cmxa: arm64_const.cmx
+aarch64_const.cmxa: aarch64_const.cmx
 	ocamlopt -ccopt $(FLAGS) -a -o $@ $<
 
 m680x.mli: m680x.ml

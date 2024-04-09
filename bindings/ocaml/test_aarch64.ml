@@ -3,8 +3,8 @@
 
 open Printf
 open Capstone
-open Arm64
-open Arm64_const
+open Aarch64
+open Aarch64_const
 
 
 let print_string_hex comment str =
@@ -15,20 +15,20 @@ let print_string_hex comment str =
 	printf "\n"
 
 
-let _ARM64_CODE = "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b";;
+let _AARCH64_CODE = "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b";;
 
 let all_tests = [
-        (CS_ARCH_ARM64, [CS_MODE_ARM], _ARM64_CODE, "ARM-64");
+        (CS_ARCH_AARCH64, [CS_MODE_ARM], _AARCH64_CODE, "ARM-64");
 ];;
 
 let print_op handle i op =
 	( match op.value with
-	| ARM64_OP_INVALID _ -> ();	(* this would never happens *)
-	| ARM64_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name handle reg);
-	| ARM64_OP_CIMM imm -> printf "\t\top[%d]: C-IMM = %u\n" i imm;
-	| ARM64_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
-	| ARM64_OP_FP fp -> printf "\t\top[%d]: FP = %f\n" i fp;
-	| ARM64_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
+	| AARCH64_OP_INVALID _ -> ();	(* this would never happens *)
+	| AARCH64_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name handle reg);
+	| AARCH64_OP_CIMM imm -> printf "\t\top[%d]: C-IMM = %u\n" i imm;
+	| AARCH64_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
+	| AARCH64_OP_FP fp -> printf "\t\top[%d]: FP = %f\n" i fp;
+	| AARCH64_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name handle mem.base);
 		if mem.index != 0 then
@@ -36,18 +36,18 @@ let print_op handle i op =
 		if mem.disp != 0 then
 			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
 		);
-	| ARM64_OP_REG_MRS reg -> printf "\t\top[%d]: REG_MRS = %u\n" i reg;
-	| ARM64_OP_REG_MSR reg -> printf "\t\top[%d]: REG_MSR = %u\n" i reg;
-	| ARM64_OP_PSTATE v -> printf "\t\top[%d]: PSTATE = %u\n" i v;
-	| ARM64_OP_SYS v -> printf "\t\top[%d]: SYS = %u\n" i v;
-	| ARM64_OP_PREFETCH v -> printf "\t\top[%d]: PREFETCH = %u\n" i v;
-	| ARM64_OP_BARRIER v -> printf "\t\top[%d]: BARRIER = %u\n" i v;
+	| AARCH64_OP_REG_MRS reg -> printf "\t\top[%d]: REG_MRS = %u\n" i reg;
+	| AARCH64_OP_REG_MSR reg -> printf "\t\top[%d]: REG_MSR = %u\n" i reg;
+	| AARCH64_OP_PSTATE v -> printf "\t\top[%d]: PSTATE = %u\n" i v;
+	| AARCH64_OP_SYS v -> printf "\t\top[%d]: SYS = %u\n" i v;
+	| AARCH64_OP_PREFETCH v -> printf "\t\top[%d]: PREFETCH = %u\n" i v;
+	| AARCH64_OP_BARRIER v -> printf "\t\top[%d]: BARRIER = %u\n" i v;
 	);
 
-	if op.shift.shift_type != _ARM64_SFT_INVALID && op.shift.shift_value > 0 then
+	if op.shift.shift_type != _AARCH64_SFT_INVALID && op.shift.shift_value > 0 then
 		printf "\t\t\tShift: type = %u, value = %u\n"
                 op.shift.shift_type op.shift.shift_value;
-	if op.ext != _ARM64_EXT_INVALID then
+	if op.ext != _AARCH64_EXT_INVALID then
 		printf "\t\t\tExt: %u\n" op.ext;
 
 	();;
@@ -55,20 +55,20 @@ let print_op handle i op =
 
 let print_detail handle insn =
 	match insn.arch with
-	| CS_INFO_ARM64 arm64 -> (
-			if arm64.cc != _ARM64_CC_AL && arm64.cc != _ARM64_CC_INVALID then
-			printf "\tCode condition: %u\n" arm64.cc;
+	| CS_INFO_AARCH64 aarch64 -> (
+			if aarch64.cc != _AARCH64_CC_AL && aarch64.cc != _AARCH64_CC_INVALID then
+			printf "\tCode condition: %u\n" aarch64.cc;
 
-			if arm64.update_flags then
+			if aarch64.update_flags then
 			printf "\tUpdate-flags: True\n";
 
-			if arm64.writeback then
+			if aarch64.writeback then
 			printf "\tWriteback: True\n";
 
 			(* print all operands info (type & value) *)
-			if (Array.length arm64.operands) > 0 then (
-				printf "\top_count: %d\n" (Array.length arm64.operands);
-				Array.iteri (print_op handle) arm64.operands;
+			if (Array.length aarch64.operands) > 0 then (
+				printf "\top_count: %d\n" (Array.length aarch64.operands);
+				Array.iteri (print_op handle) aarch64.operands;
 			);
 			printf "\n";
 		)
