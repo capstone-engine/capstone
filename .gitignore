@@ -31,23 +31,7 @@ bindings/python/capstone.egg-info/
 bindings/java/capstone.jar
 
 # ocaml
-bindings/ocaml/*.cmi
-bindings/ocaml/*.cmx
-bindings/ocaml/*.cmxa
-bindings/ocaml/*.mli
-bindings/ocaml/test
-bindings/ocaml/test_arm
-bindings/ocaml/test_aarch64
-bindings/ocaml/test_basic
-bindings/ocaml/test_mips
-bindings/ocaml/test_x86
-bindings/ocaml/test_detail
-bindings/ocaml/test_ppc
-bindings/ocaml/test_sparc
-bindings/ocaml/test_systemz
-bindings/ocaml/test_xcore
-bindings/ocaml/test_m680x
-
+bindings/ocaml/_build
 
 # test binaries
 tests/test_basic

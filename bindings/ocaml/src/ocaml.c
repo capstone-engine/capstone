@@ -8,7 +8,8 @@
 #include <caml/alloc.h>
 #include <caml/fail.h>
 
-#include "capstone/capstone.h"
+//#include "capstone/capstone.h"
+#include "capstone.h"
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 

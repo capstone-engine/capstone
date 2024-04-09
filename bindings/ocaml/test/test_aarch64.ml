@@ -6,15 +6,6 @@ open Capstone
 open Aarch64
 open Aarch64_const
 
-
-let print_string_hex comment str =
-	printf "%s" comment;
-	for i = 0 to (Array.length str - 1) do
-		printf "0x%02x " str.(i)
-	done;
-	printf "\n"
-
-
 let _AARCH64_CODE = "\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b";;
 
 let all_tests = [

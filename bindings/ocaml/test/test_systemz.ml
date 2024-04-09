@@ -3,50 +3,43 @@
 
 open Printf
 open Capstone
-open Xcore
+open Systemz
+
+let _SYSZ_CODE = "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78";;
 
 
-let print_string_hex comment str =
-	printf "%s" comment;
-	for i = 0 to (Array.length str - 1) do
-		printf "0x%02x " str.(i)
-	done;
-	printf "\n"
-
-
-let _XCORE_CODE = "\xfe\x0f\xfe\x17\x13\x17\xc6\xfe\xec\x17\x97\xf8\xec\x4f\x1f\xfd\xec\x37\x07\xf2\x45\x5b\xf9\xfa\x02\x06\x1b\x10";;
 
 let all_tests = [
-        (CS_ARCH_XCORE, [CS_MODE_LITTLE_ENDIAN], _XCORE_CODE, "XCore");
+	(CS_ARCH_SYSZ, [CS_MODE_LITTLE_ENDIAN], _SYSZ_CODE, "SystemZ");
 ];;
 
 let print_op handle i op =
 	( match op.value with
-	| XCORE_OP_INVALID _ -> ();	(* this would never happens *)
-	| XCORE_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name handle reg);
-	| XCORE_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
-	| XCORE_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
+	| SYSZ_OP_INVALID _ -> ();	(* this would never happens *)
+	| SYSZ_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name handle reg);
+	| SYSZ_OP_ACREG reg -> printf "\t\top[%d]: ACREG = %u\n" i reg;
+	| SYSZ_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
+	| SYSZ_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name handle mem.base);
 		if mem.index != 0 then
 			printf "\t\t\toperands[%u].mem.index: 0x%x\n" i mem.index;
-		if mem.disp != 0 then
-			printf "\t\t\toperands[%u].mem.disp: 0x%x\n" i mem.disp;
-		if mem.direct != 0 then
-			printf "\t\t\toperands[%u].mem.direct: 0x%x\n" i mem.direct;
+		if mem.length != 0L then
+			printf "\t\t\toperands[%u].mem.length: 0x%Lx\n" i mem.length;
+		if mem.disp != 0L then
+			printf "\t\t\toperands[%u].mem.disp: 0x%Lx\n" i mem.disp;
 		);
 	);
-
 	();;
 
 
 let print_detail handle insn =
 	match insn.arch with
-	| CS_INFO_XCORE xcore -> (
+	| CS_INFO_SYSZ sysz -> (
 			(* print all operands info (type & value) *)
-			if (Array.length xcore.operands) > 0 then (
-				printf "\top_count: %d\n" (Array.length xcore.operands);
-				Array.iteri (print_op handle) xcore.operands;
+			if (Array.length sysz.operands) > 0 then (
+				printf "\top_count: %d\n" (Array.length sysz.operands);
+				Array.iteri (print_op handle) sysz.operands;
 			);
 			printf "\n";
 		);

@@ -1,0 +1,24 @@
+opam-version: "2.0"
+maintainer: "Capstone developers"
+authors: ["Capstone developers"]
+homepage: "https://github.com/capstone-engine/capstone"
+bug-reports: "https://github.com/capstone-engine/capstone/issues"
+dev-repo: "git+https://github.com/capstone-engine/capstone.git"
+license: "MIT"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+depends: [
+  "ocaml" {>= "4.14.0"}
+  "dune" {>= "2.0.0"}
+  "dune-configurator"
+]
+depexts: [
+  ["capstone"] {os-family = "bsd"}
+  ["capstone-dev"] {os-family = "debian"}
+  ["capstone"] {os-distribution = "homebrew"}
+  ["capstone-dev"] {os-distribution = "alpine"}
+  ["capstone-devel"] {os-family = "suse" | os-family = "opensuse"}
+  ["capstone-devel"] {os-distribution = "centos" | os-distribution = "fedora"}
+]
+synopsis: "OCaml bindings for Capstone, a disassembly framework"

@@ -10,7 +10,6 @@ open Sparc
 open Systemz
 open Xcore
 open M680x
-open Printf	(* debug *)
 
 (* Hardware architectures *)
 type arch =
@@ -196,13 +195,13 @@ class cs_insn c a =
 		method group_name id = _cs_group_name csh.h id;
 	end;;
 
-let cs_insn_group handle insn group_id =
+let cs_insn_group _handle insn group_id =
 	List.exists (fun g -> g == group_id) (Array.to_list insn.groups);;
 
-let cs_reg_read handle insn reg_id =
+let cs_reg_read _handle insn reg_id =
 	List.exists (fun g -> g == reg_id) (Array.to_list insn.regs_read);;
 
-let cs_reg_write handle insn reg_id =
+let cs_reg_write _handle insn reg_id =
 	List.exists (fun g -> g == reg_id) (Array.to_list insn.regs_write);;
 
 

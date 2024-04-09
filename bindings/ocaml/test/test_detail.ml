@@ -69,7 +69,7 @@ let print_insn handle insn =
 
 
 let print_arch x =
-	let (arch, mode, code, comment, syntax) = x in
+	let (arch, mode, code, comment, _syntax) = x in
 		let handle = cs_open arch mode in
 		let err = cs_option handle CS_OPT_DETAIL _CS_OPT_ON in
 		match err with

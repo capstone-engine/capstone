@@ -1,8 +1,6 @@
 (* Capstone Disassembly Engine
  * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
-open Mips_const
-
 (* architecture specific info of instruction *)
 type mips_op_mem = {
 	base: int;

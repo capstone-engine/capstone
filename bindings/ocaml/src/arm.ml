@@ -1,8 +1,6 @@
 (* Capstone Disassembly Engine
  * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
-open Arm_const
-
 let _CS_OP_ARCH = 5;;
 let _CS_OP_CIMM = _CS_OP_ARCH         (* C-Immediate *)
 let _CS_OP_PIMM = _CS_OP_ARCH + 1     (* P-Immediate *)
