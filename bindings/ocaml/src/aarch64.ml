@@ -1,8 +1,6 @@
 (* Capstone Disassembly Engine
  * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
-open Aarch64_const
-
 (* architecture specific info of instruction *)
 type aarch64_op_shift = {
 	shift_type: int;
@@ -40,6 +38,5 @@ type aarch64_op = {
 type cs_aarch64 = {
 	cc: int;
 	update_flags: bool;
-	writeback: bool;
 	operands: aarch64_op array;
 }

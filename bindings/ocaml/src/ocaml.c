@@ -8,7 +8,7 @@
 #include <caml/alloc.h>
 #include <caml/fail.h>
 
-#include "capstone/capstone.h"
+#include <capstone/capstone.h>
 
 #define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
@@ -115,7 +115,6 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(op_info_val, 4, Val_int(insn[j-1].detail->arm.cps_flag));
 						Store_field(op_info_val, 5, Val_int(insn[j-1].detail->arm.cc));
 						Store_field(op_info_val, 6, Val_bool(insn[j-1].detail->arm.update_flags));
-						Store_field(op_info_val, 7, Val_bool(insn[j-1].detail->arm.writeback));
 						Store_field(op_info_val, 8, Val_int(insn[j-1].detail->arm.mem_barrier));
 
 						lcount = insn[j-1].detail->arm.op_count;
@@ -183,78 +182,77 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 						Store_field(rec_insn, 9, arch_info);
 
 						break;
-					case CS_ARCH_ARM64:
+					case CS_ARCH_AARCH64:
 						arch_info = caml_alloc(1, 1);
 
 						op_info_val = caml_alloc(4, 0);
-						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->arm64.cc));
-						Store_field(op_info_val, 1, Val_bool(insn[j-1].detail->arm64.update_flags));
-						Store_field(op_info_val, 2, Val_bool(insn[j-1].detail->arm64.writeback));
+						Store_field(op_info_val, 0, Val_int(insn[j-1].detail->aarch64.cc));
+						Store_field(op_info_val, 1, Val_bool(insn[j-1].detail->aarch64.update_flags));
 
-						lcount = insn[j-1].detail->arm64.op_count;
+						lcount = insn[j-1].detail->aarch64.op_count;
 						if (lcount > 0) {
 							array = caml_alloc(lcount, 0);
 							for (i = 0; i < lcount; i++) {
 								tmp2 = caml_alloc(6, 0);
-								switch(insn[j-1].detail->arm64.operands[i].type) {
-									case ARM64_OP_REG:
+								switch(insn[j-1].detail->aarch64.operands[i].type) {
+									case AARCH64_OP_REG:
 										tmp = caml_alloc(1, 1);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].reg));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].reg));
 										break;
-									case ARM64_OP_CIMM:
+									case AARCH64_OP_CIMM:
 										tmp = caml_alloc(1, 2);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].imm));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].imm));
 										break;
-									case ARM64_OP_IMM:
+									case AARCH64_OP_IMM:
 										tmp = caml_alloc(1, 3);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].imm));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].imm));
 										break;
-									case ARM64_OP_FP:
+									case AARCH64_OP_FP:
 										tmp = caml_alloc(1, 4);
-										Store_field(tmp, 0, caml_copy_double(insn[j-1].detail->arm64.operands[i].fp));
+										Store_field(tmp, 0, caml_copy_double(insn[j-1].detail->aarch64.operands[i].fp));
 										break;
-									case ARM64_OP_MEM:
+									case AARCH64_OP_MEM:
 										tmp = caml_alloc(1, 5);
 										tmp3 = caml_alloc(3, 0);
-										Store_field(tmp3, 0, Val_int(insn[j-1].detail->arm64.operands[i].mem.base));
-										Store_field(tmp3, 1, Val_int(insn[j-1].detail->arm64.operands[i].mem.index));
-										Store_field(tmp3, 2, Val_int(insn[j-1].detail->arm64.operands[i].mem.disp));
+										Store_field(tmp3, 0, Val_int(insn[j-1].detail->aarch64.operands[i].mem.base));
+										Store_field(tmp3, 1, Val_int(insn[j-1].detail->aarch64.operands[i].mem.index));
+										Store_field(tmp3, 2, Val_int(insn[j-1].detail->aarch64.operands[i].mem.disp));
 										Store_field(tmp, 0, tmp3);
 										break;
-									case ARM64_OP_REG_MRS:
+									case AARCH64_OP_REG_MRS:
 										tmp = caml_alloc(1, 6);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].reg));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].reg));
 										break;
-									case ARM64_OP_REG_MSR:
+									case AARCH64_OP_REG_MSR:
 										tmp = caml_alloc(1, 7);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].reg));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].reg));
 										break;
-									case ARM64_OP_PSTATE:
+									case AARCH64_OP_PSTATE:
 										tmp = caml_alloc(1, 8);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].pstate));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].pstate));
 										break;
-									case ARM64_OP_SYS:
+									case AARCH64_OP_SYS:
 										tmp = caml_alloc(1, 9);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].sys));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].sys));
 										break;
-									case ARM64_OP_PREFETCH:
+									case AARCH64_OP_PREFETCH:
 										tmp = caml_alloc(1, 10);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].prefetch));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].prefetch));
 										break;
-									case ARM64_OP_BARRIER:
+									case AARCH64_OP_BARRIER:
 										tmp = caml_alloc(1, 11);
-										Store_field(tmp, 0, Val_int(insn[j-1].detail->arm64.operands[i].barrier));
+										Store_field(tmp, 0, Val_int(insn[j-1].detail->aarch64.operands[i].barrier));
 										break;
 									default: break;
 								}
 								tmp3 = caml_alloc(2, 0);
-								Store_field(tmp3, 0, Val_int(insn[j-1].detail->arm64.operands[i].shift.type));
-								Store_field(tmp3, 1, Val_int(insn[j-1].detail->arm64.operands[i].shift.value));
+								Store_field(tmp3, 0, Val_int(insn[j-1].detail->aarch64.operands[i].shift.type));
+								Store_field(tmp3, 1, Val_int(insn[j-1].detail->aarch64.operands[i].shift.value));
 
-								Store_field(tmp2, 0, Val_int(insn[j-1].detail->arm64.operands[i].vector_index));
-								Store_field(tmp2, 1, Val_int(insn[j-1].detail->arm64.operands[i].vas));
+								Store_field(tmp2, 0, Val_int(insn[j-1].detail->aarch64.operands[i].vector_index));
+								Store_field(tmp2, 1, Val_int(insn[j-1].detail->aarch64.operands[i].vas));
 								Store_field(tmp2, 2, tmp3);
-								Store_field(tmp2, 3, Val_int(insn[j-1].detail->arm64.operands[i].ext));
+								Store_field(tmp2, 3, Val_int(insn[j-1].detail->aarch64.operands[i].ext));
 								Store_field(tmp2, 4, tmp);
 
 								Store_field(array, i, tmp2);
@@ -511,7 +509,7 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 
 						break;
 
-					case CS_ARCH_SYSZ:
+					case CS_ARCH_SYSTEMZ:
 						arch_info = caml_alloc(1, 6);
 
 						op_info_val = caml_alloc(2, 0);
@@ -524,19 +522,19 @@ CAMLprim value _cs_disasm(cs_arch arch, csh handle, const uint8_t * code, size_t
 							for (i = 0; i < lcount; i++) {
 								tmp2 = caml_alloc(1, 0);
 								switch(insn[j-1].detail->sysz.operands[i].type) {
-									case SYSZ_OP_REG:
+									case SYSTEMZ_OP_REG:
 										tmp = caml_alloc(1, 1);
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].reg));
 										break;
-									case SYSZ_OP_ACREG:
+									case SYSTEMZ_OP_ACREG:
 										tmp = caml_alloc(1, 2);
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].reg));
 										break;
-									case SYSZ_OP_IMM:
+									case SYSTEMZ_OP_IMM:
 										tmp = caml_alloc(1, 3);
 										Store_field(tmp, 0, Val_int(insn[j-1].detail->sysz.operands[i].imm));
 										break;
-									case SYSZ_OP_MEM:
+									case SYSTEMZ_OP_MEM:
 										tmp = caml_alloc(1, 4);
 										tmp3 = caml_alloc(4, 0);
 										Store_field(tmp3, 0, Val_int(insn[j-1].detail->sysz.operands[i].mem.base));
@@ -712,7 +710,7 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 			arch = CS_ARCH_ARM;
 			break;
 		case 1:
-			arch = CS_ARCH_ARM64;
+			arch = CS_ARCH_AARCH64;
 			break;
 		case 2:
 			arch = CS_ARCH_MIPS;
@@ -727,7 +725,7 @@ CAMLprim value ocaml_cs_disasm(value _arch, value _mode, value _code, value _add
 			arch = CS_ARCH_SPARC;
 			break;
 		case 6:
-			arch = CS_ARCH_SYSZ;
+			arch = CS_ARCH_SYSTEMZ;
 			break;
 		case 7:
 			arch = CS_ARCH_XCORE;
@@ -884,7 +882,7 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 			arch = CS_ARCH_ARM;
 			break;
 		case 1:
-			arch = CS_ARCH_ARM64;
+			arch = CS_ARCH_AARCH64;
 			break;
 		case 2:
 			arch = CS_ARCH_MIPS;
@@ -899,7 +897,7 @@ CAMLprim value ocaml_open(value _arch, value _mode)
 			arch = CS_ARCH_SPARC;
 			break;
 		case 6:
-			arch = CS_ARCH_SYSZ;
+			arch = CS_ARCH_SYSTEMZ;
 			break;
 		case 7:
 			arch = CS_ARCH_XCORE;

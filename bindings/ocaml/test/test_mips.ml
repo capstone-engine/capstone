@@ -5,15 +5,6 @@ open Printf
 open Capstone
 open Mips
 
-
-let print_string_hex comment str =
-	printf "%s" comment;
-	for i = 0 to (Array.length str - 1) do
-		printf "0x%02x " str.(i)
-	done;
-	printf "\n"
-
-
 let _MIPS_CODE  = "\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56";;
 let _MIPS_CODE2 = "\x56\x34\x21\x34\xc2\x17\x01\x00";;
 

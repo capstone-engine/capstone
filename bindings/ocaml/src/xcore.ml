@@ -1,8 +1,6 @@
 (* Capstone Disassembly Engine
  * By Guillaume Jeanne <guillaume.jeanne@ensimag.fr>, 2014> *)
 
-open Xcore_const
-
 type xcore_op_mem = {
 	base: int;
 	index: int;

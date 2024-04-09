@@ -1,8 +1,6 @@
 (* Capstone Disassembly Engine
  * By Guillaume Jeanne <guillaume.jeanne@ensimag.fr>, 2014> *)
 
-open Ppc_const
-
 type ppc_op_mem = {
 	base: int;
 	disp: int;

@@ -1,8 +1,6 @@
 (* Capstone Disassembly Engine
  * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
-open X86_const
-
 (* architecture specific info of instruction *)
 type x86_op_mem = {
 	segment: int;

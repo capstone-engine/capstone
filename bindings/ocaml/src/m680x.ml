@@ -1,9 +1,6 @@
 (* Capstone Disassembly Engine
  * M680X Backend by Wolfgang Schwotzer <wolfgang.schwotzer@gmx.net> 2017 *)
 
-open M680x_const
-
-
 (* architecture specific info of instruction *)
 type m680x_op_idx = {
 	base_reg: int;
