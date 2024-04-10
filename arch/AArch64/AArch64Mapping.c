@@ -1483,7 +1483,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_ZPRasFPR_32:
 	case AArch64_OP_GROUP_ZPRasFPR_64:
 	case AArch64_OP_GROUP_ZPRasFPR_8: {
-		unsigned Base;
+		unsigned Base = AArch64_NoRegister;
 		unsigned Width = temp_arg_0;
 		switch (Width) {
 		case 8:
