@@ -21,6 +21,8 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
 		cs_hppa_op *op = &(hppa->operands[i]);
 		uint64_t target_addr;
 		switch (op->type) {
+		default:
+			break;
 		case HPPA_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i,
 			       cs_reg_name(handle, op->reg));
