@@ -33535,7 +33535,7 @@ static bool AArch64InstPrinterValidateMCOperand(const MCOperand *MCOp,
   switch (PredicateIndex) {
   default:
     assert(0 && "Unknown MCOperandPredicate kind");
-    break;
+    return false;
   case 1: {
 
     if (!MCOperand_isImm(MCOp))
