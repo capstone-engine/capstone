@@ -33,6 +33,7 @@ set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -W
 include(CheckCCompilerFlag)
 check_c_compiler_flag("-Wno-maybe-unitialized" SUPPORTS_MU)
 check_c_compiler_flag("-Wshadow=local" SUPPORTS_SHADOWING)
+check_c_compiler_flag("-Wsometimes-uninitialized" SUPPORTS_SUNINIT)
 
 if (SUPPORTS_MU)
     set(UNIX_COMPILER_OPTIONS ${UNIX_COMPILER_OPTIONS} -Wno-maybe-unitialized)
@@ -40,6 +41,10 @@ endif()
 
 if (SUPPORTS_SHADOWING)
     set(UNIX_COMPILER_OPTIONS ${UNIX_COMPILER_OPTIONS} -Wshadow=local)
+endif()
+
+if (SUPPORTS_SUNINIT)
+    set(UNIX_COMPILER_OPTIONS ${UNIX_COMPILER_OPTIONS} -Wsometimes-uninitialized)
 endif()
 
 if (MSVC)
