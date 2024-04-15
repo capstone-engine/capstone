@@ -69,6 +69,9 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_BE16, "be16" },
 	{ BPF_INS_BE32, "be32" },
 	{ BPF_INS_BE64, "be64" },
+	{ BPF_INS_BSWAP16, "bswap16" },
+	{ BPF_INS_BSWAP32, "bswap32" },
+	{ BPF_INS_BSWAP64, "bswap64" },
 
 	{ BPF_INS_LDW, "ldw" },
 	{ BPF_INS_LDH, "ldh" },
@@ -211,6 +214,19 @@ static bpf_insn op2insn_alu(unsigned opcode)
 {
 	/* Endian is a special case */
 	if (BPF_OP(opcode) == BPF_ALU_END) {
+		if (BPF_CLASS(opcode) == BPF_CLASS_ALU64) {
+			switch (opcode ^ BPF_CLASS_ALU64 ^ BPF_ALU_END ^ BPF_SRC_LITTLE) {
+			case (16 << 4):
+				return BPF_INS_BSWAP16;
+			case (32 << 4):
+				return BPF_INS_BSWAP32;
+			case (64 << 4):
+				return BPF_INS_BSWAP64;
+			default:
+				return BPF_INS_INVALID;
+			}
+		}
+
 		switch (opcode ^ BPF_CLASS_ALU ^ BPF_ALU_END) {
 		case BPF_SRC_LITTLE | (16 << 4):
 			return BPF_INS_LE16;
