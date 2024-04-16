@@ -12,7 +12,7 @@
 
 **Test plan**
 
-<!-- What steps should the reviewer take to test your pull request? Demonstrate the code is solid. Or what test cases you added. -->
+<!-- What steps should the reviewer take to test your pull request? Demonstrate the code is solid. Or what test cases you added. Disassembly tests should be added in suite/cs_test/issues.cs -->
 
 ...
 
