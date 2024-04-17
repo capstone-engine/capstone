@@ -132,8 +132,8 @@ jobs:
 
     - name: cstest
       run: |
-        python suite/cstest/cstest_report.py -D -t $(which cstest | head -n 1) -d suite/MC
-        python suite/cstest/cstest_report.py -D -t $(which cstest | head -n 1) -f suite/cstest/issues.cs
+        python suite/cstest/cstest_report.py -D -d suite/MC
+        python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
 
     - name: verify python binding
       run: |

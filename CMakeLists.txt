@@ -862,16 +862,27 @@ if(CAPSTONE_BUILD_CSTOOL)
 endif()
 
 if(CAPSTONE_BUILD_CSTEST)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(CMOCKA REQUIRED IMPORTED_TARGET cmocka)
+    include(ExternalProject)
+    ExternalProject_Add(cmocka_ext
+        PREFIX extern
+        GIT_REPOSITORY "https://git.cryptomilk.org/projects/cmocka.git"
+        CONFIGURE_COMMAND cmake -DBUILD_SHARED_LIBS=OFF ../cmocka_ext/
+        BUILD_COMMAND cmake --build . --config Release
+        INSTALL_COMMAND ""
+    )
+    set(CMOCKA_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext/include)
+    set(CMOCKA_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext-build/src/)
+    add_library(cmocka STATIC IMPORTED)
+    set_target_properties(cmocka PROPERTIES IMPORTED_LOCATION ${CMOCKA_LIB_DIR}/libcmocka.a)
 
     file(GLOB CSTEST_SRC suite/cstest/src/*.c)
     add_executable(cstest ${CSTEST_SRC})
-    target_link_libraries(cstest PUBLIC capstone PkgConfig::CMOCKA)
+    add_dependencies(cstest cmocka_ext)
+    target_link_libraries(cstest PUBLIC capstone cmocka)
     target_include_directories(cstest PRIVATE
             $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
             ${PROJECT_SOURCE_DIR}/suite/cstest/include
-            ${CMOCKA_INCLUDE_DIRS}
+            ${CMOCKA_INCLUDE_DIR}
             )
 
     if(CAPSTONE_INSTALL)
