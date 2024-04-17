@@ -736,6 +736,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 		return CS_ERR_OK;
 	} else {
+		cs_mem_free(ud);
 		*handle = 0;
 		return CS_ERR_ARCH;
 	}

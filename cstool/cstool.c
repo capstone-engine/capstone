@@ -678,8 +678,11 @@ int main(int argc, char **argv)
 		}
 
 		cs_free(insn, count);
+		free(assembly);
 	} else {
 		printf("ERROR: invalid assembly code\n");
+		cs_close(&handle);
+		free(assembly);
 		return(-4);
 	}
 

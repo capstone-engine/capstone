@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 
 cstool -d x64 0x4 | grep "ERROR: invalid assembly code" &&
 cstool -d arm 0x1 | grep "ERROR: invalid assembly code" &&
