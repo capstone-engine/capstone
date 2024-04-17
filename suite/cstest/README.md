@@ -13,22 +13,18 @@ brew install cmocka
 
 - Build Cmocka
 
-```
-cd cmocka_dir
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
-```
-
 ## Build
 
 - Build `cstest`
 
+```sh
+./build_cstest.sh
 ```
-cd suite/cstest
-make
+
+To enable ASAN run
+
+```sh
+asan="ON" ./build_cstest.sh
 ```
 
 ## Usage
