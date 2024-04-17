@@ -85,6 +85,10 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	// and laeds to wrong results.
 	cs_arch arch = ((struct cs_struct *)(uintptr_t)*handle)->arch;
 	if (arch != CS_ARCH_ARM) {
+		if (insn->detail) {
+			free(insn->detail);
+		}
+		free(insn);
 		cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 
 		strcpy(tmp_noreg, insn[0].mnemonic);
