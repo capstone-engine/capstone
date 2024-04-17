@@ -121,6 +121,11 @@ jobs:
         clang -lcapstone  src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
         ./test_arm64_compatibility_header
 
+    - name: Lower number of KASL randomized address bits
+      run: |
+        # Work-around ASAN bug https://github.com/google/sanitizers/issues/1716
+        sudo sysctl vm.mmap_rnd_bits=28
+
     - name: cstool - reaches disassembler engine
       run: |
         sh suite/run_invalid_cstool.sh
