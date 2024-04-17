@@ -67,7 +67,7 @@ jobs:
             }
           - {
               name: 'ubuntu-22.04 x64 python3.11 ASAN',
-              os: ubuntu-22.04,
+              os: ubuntu-latest,
               arch: x64,
               python-arch: x64,
               python-version: '3.11',
@@ -109,7 +109,7 @@ jobs:
         cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr ..
         cmake --build . --config Release
         # build shared library
-        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} ..
+        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
         sudo cmake --build . --config Release --target install
         cp libcapstone.* ../
         cp libcapstone.* ../tests/
@@ -132,9 +132,8 @@ jobs:
 
     - name: cstest
       run: |
-        cd suite/cstest && ./build_cstest.sh
-        python cstest_report.py -D -t build/cstest -d ../MC
-        python cstest_report.py -D -t build/cstest -f issues.cs; cd ..
+        python suite/cstest/cstest_report.py -D -t $(which cstest | head -n 1) -d suite/MC
+        python suite/cstest/cstest_report.py -D -t $(which cstest | head -n 1) -f suite/cstest/issues.cs
 
     - name: verify python binding
       run: |
