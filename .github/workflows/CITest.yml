@@ -136,6 +136,7 @@ jobs:
         python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
 
     - name: verify python binding
+      if: matrix.config.enable-asan == 'OFF'
       run: |
         mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so
         cd bindings/python
@@ -155,6 +156,7 @@ jobs:
         make check
 
     - name: run python binding test
+      if: matrix.config.enable-asan == 'OFF'
       run: |
         cp libcapstone.* bindings/python/prebuilt
         cd bindings/python
@@ -163,6 +165,7 @@ jobs:
         BUILD_TESTS=no make tests
 
     - name: run cython binding test
+      if: matrix.config.enable-asan == 'OFF'
       run: |
         pip install cython
         cd bindings/python
