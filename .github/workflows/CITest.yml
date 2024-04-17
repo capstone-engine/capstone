@@ -114,6 +114,11 @@ jobs:
         cp libcapstone.* ../
         cp libcapstone.* ../tests/
         cp test_* ../tests/
+        
+    - name: Lower number of KASL randomized address bits
+      run: |
+        # Work-around ASAN bug https://github.com/google/sanitizers/issues/1716
+        sudo sysctl vm.mmap_rnd_bits=28
 
     - name: "Compatibility header test build"
       run: |
