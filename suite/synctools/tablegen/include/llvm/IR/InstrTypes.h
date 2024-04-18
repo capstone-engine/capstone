@@ -1699,7 +1699,7 @@ public:
            paramHasAttr(ArgNo, Attribute::DereferenceableOrNull);
   }
 
-  /// Determine if there are is an inalloca argument. Only the last argument can
+  /// Determine if there is an inalloca argument. Only the last argument can
   /// have the inalloca attribute.
   bool hasInAllocaArgument() const {
     return !arg_empty() && paramHasAttr(arg_size() - 1, Attribute::InAlloca);

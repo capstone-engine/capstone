@@ -926,7 +926,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			break;
 		case AArch64_OP_FP: {
 			// printOperand does not handle FP operands. But sometimes
-			// is is used to print FP operands as normal immediate.
+			// is used to print FP operands as normal immediate.
 			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_IMM;
 			AArch64_get_detail_op(MI, 0)->imm = MCInst_getOpVal(MI, OpNum);
 			AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
