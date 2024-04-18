@@ -1,7 +1,7 @@
  <!-- Filling this template is mandatory -->
 
 **Your checklist for this pull request**
-- [ ] I've documented or updated the documentation of every function and struct this PR changes. If not so I've explained why.
+- [ ] I've documented or updated the documentation of every API function and struct this PR changes.
 - [ ] I've added tests that prove my fix is effective or that my feature works (if possible)
 
 **Detailed description**
@@ -12,7 +12,7 @@
 
 **Test plan**
 
-<!-- What steps should the reviewer take to test your pull request? Demonstrate the code is solid. Example: The exact commands you ran and their output, screenshots/videos. This is your time to re-check that everything works and that you covered all the edge cases -->
+<!-- What steps should the reviewer take to test your pull request? Demonstrate the code is solid. Or what test cases you added. Disassembly tests should be added in suite/cs_test/issues.cs -->
 
 ...
 
