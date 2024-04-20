@@ -243,8 +243,6 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
-	free_strs(list_byte, size_byte);
-	free(code);
 	for (i = 0; i < count; ++i) {
 		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
@@ -297,6 +295,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 
 	cs_free(insn, count);
 	free_strs(list_part, size_part);
+	free_strs(list_byte, size_byte);
 	free(cs_result);
 	//	free_strs(list_part_cs_result, size_part_cs_result);
 	free_strs(list_part_issue_result, size_part_issue_result);

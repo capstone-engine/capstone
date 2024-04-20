@@ -3,44 +3,34 @@
 
 
 #include "helper.h"
-#include <string.h>
 
-/// Splits a string into a list of strings, separated by the given delimeter.
-/// The last element in the list is always a duplicate of @str.
-/// @str is not freed.
-/// The number of elements in the list is written to @size
-char **split(char *str, const char *delim, int *size) {
-	// Count the number of delimeters in the string
-	uint32_t elem_cnt = 0;
-	uint32_t delim_len = strlen(delim);
-	char *split_at = NULL;
-	char *str_iter = str;
-	// Count delimeters
-	while ((split_at = strstr(str_iter, delim)) != NULL) {
-		str_iter = split_at + delim_len;
-		if (split_at != str && split_at == str + strlen(str) - delim_len) {
-			// Don't increment if the delimeter is at the very beginning or end of the string.
-			elem_cnt++;
-		}
-	}
-	uint32_t table_size = elem_cnt + 2; // Last element is the whole string
+char **split(char *str, char *delim, int *size)
+{
+	char **result;
+	char *token, *src;
+	int cnt;
 
-	char **list = calloc(table_size, sizeof(char*));
-	uint32_t count = 0;
-	while ((split_at = strstr(str_iter, delim)) != NULL) {
-		unsigned sub_len = (split_at - str_iter);
-		list[count] = calloc(sub_len + 1, sizeof(char));
-		memcpy(list[count], str_iter, sub_len);
-		count++;
-		str_iter += sub_len + strlen(delim);
+	cnt = 0;
+	src = str;
+	result = NULL;
+
+	while ((token = strstr(src, delim)) != NULL) {
+		result = (char **)realloc(result, sizeof(char *) * (cnt + 1));
+		result[cnt] = (char *)calloc(1, sizeof(char) * (int)(token - src + 10));
+		memcpy(result[cnt], src, token - src);
+		result[cnt][token - src] = '\0';
+		src = token + strlen(delim);
+		cnt ++;
 	}
 
-	if (strlen(str) > 0) {
-		list[count] = strdup(str);
-		count++;
+	if (strlen(src) > 0) {
+		result = (char **)realloc(result, sizeof(char *) * (cnt + 1));
+		result[cnt] = strdup(src);
+		cnt ++;
 	}
-	*size = count;
-	return list;
+
+	*size = cnt;
+	return result;
 }
 
 void print_strs(char **list_str, int size)
