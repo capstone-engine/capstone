@@ -866,6 +866,7 @@ if(CAPSTONE_BUILD_CSTEST)
     ExternalProject_Add(cmocka_ext
         PREFIX extern
         GIT_REPOSITORY "https://git.cryptomilk.org/projects/cmocka.git"
+        GIT_TAG "origin/stable-1.1"
         CONFIGURE_COMMAND cmake -DBUILD_SHARED_LIBS=OFF ../cmocka_ext/
         BUILD_COMMAND cmake --build . --config Release
         INSTALL_COMMAND ""
