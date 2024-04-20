@@ -84,16 +84,30 @@ With all that said, we hope you enjoy the new release!
 
 `ARM64` was everywhere renamed to `AArch64`. This is a necessity to ensure that the update scripts stay reasonably simple.
 Capstone was very inconsistent with the naming before (sometimes `AArch64` sometimes `ARM64`).
-Because Capstone uses a huge amount of LLVM code, we renamed everything to `AArch64`. This reduces complexity enormously.
+Because Capstone uses a huge amount of LLVM code, we renamed everything to `AArch64`. This reduces complexity enormously because it follows the naming of LLVM.
 
-Because this would completely break maintaining Capstone `v6` and `pre-v6` in a project, we added macros for meta-programming.
+Because this would completely break maintaining Capstone `v6` and `pre-v6` in a project, we added two solutions:
 
-If you need to support the previous version of Capstone as well, you can use those macros (see below helper scripts).
-Also, your can exclude/include code by checking `CS_NEXT_VERSION < 6`.
+1. Make `arm64.h` a compatibility header which merely maps every member to the one in the `aarch64.h` header.
+2. Macros for meta-programming which select the right name.
 
-The following `sed` commands in a sh script should ease the renaming from `ARM64` to `AArch64` a lot.
+We will continue to maintain both solutions.
+So if you need to support the previous version of Capstone as well, you can use either of the solutions.
 
-Replacing with version sensitive macros:
+_Compatibility header_
+
+If you want to use the compatibility header and stick with the `ARM64` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` before including `capstone.h`.
+
+```c
+#define CAPSTONE_AARCH64_COMPAT_HEADER
+#include <capstone/capstone.h>
+
+// Your code...
+```
+
+_Meta programming macros_
+
+The following `sed` commands in a sh script should ease the replacement of `ARM64` with the macros a lot.
 
 ```sh
 #!/bin/sh
