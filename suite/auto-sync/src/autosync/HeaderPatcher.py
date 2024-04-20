@@ -173,7 +173,7 @@ class CompatHeaderBuilder:
     def remove_comments(self, aarch64_lines: list[str]) -> list[str]:
         output = list()
         for line in aarch64_lines:
-            if re.search(r"^\s*//", line):
+            if re.search(r"^\s*//", line) and "// SPDX" not in line:
                 continue
             output.append(line)
         return output
