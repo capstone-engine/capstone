@@ -52,6 +52,8 @@ char *get_detail_arm(csh *handle, cs_mode mode, cs_insn *ins)
 					add_str(&result, " ; operands[%u].mem.scale: %d", i, op->mem.scale);
 				if (op->mem.disp != 0)
 					add_str(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
+				if (op->mem.align != 0)
+					add_str(&result, " ; operands[%u].mem.align: 0x%x", i, op->mem.align);
 				if (op->mem.lshift != 0)
 					add_str(&result, " ; operands[%u].mem.lshift: 0x%x", i, op->mem.lshift);
 
