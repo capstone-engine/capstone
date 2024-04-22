@@ -27,3 +27,5 @@ cstool -d riscv64 0x1 | grep "ERROR: invalid assembly code" &&
 cstool -d sh 0x1 | grep "ERROR: invalid assembly code" &&
 cstool -d tc162 0x1 | grep "ERROR: invalid assembly code"
 
+# One successful disassembly
+cstool -d x64 0xc5,0xca,0x58,0xd4

@@ -687,7 +687,6 @@ int main(int argc, char **argv)
 	}
 
 	cs_close(&handle);
-	free(assembly);
 
 	return 0;
 }
