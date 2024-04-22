@@ -4,15 +4,12 @@
 
 #include "helper.h"
 
-char **split(char *str, char *delim, int *size)
+char **split(const char *str, const char *delim, int *size)
 {
-	char **result;
-	char *token, *src;
-	int cnt;
-
-	cnt = 0;
-	src = str;
-	result = NULL;
+	char **result = NULL;
+	char *token = NULL;
+	const char *src = str;
+	int cnt = 0;
 
 	while ((token = strstr(src, delim)) != NULL) {
 		result = (char **)realloc(result, sizeof(char *) * (cnt + 1));
