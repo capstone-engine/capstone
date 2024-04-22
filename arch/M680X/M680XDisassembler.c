@@ -209,7 +209,7 @@ static bool read_sdword(const m680x_info *info, int32_t *sdword,
 	return true;
 }
 
-// For PAGE2 and PAGE3 opcodes when using an an array of inst_page1 most
+// For PAGE2 and PAGE3 opcodes when using an array of inst_page1 most
 // entries have M680X_INS_ILLGL. To avoid wasting memory an inst_pageX is
 // used which contains the opcode. Using a binary search for the right opcode
 // is much faster (= O(log n) ) in comparison to a linear search ( = O(n) ).

@@ -3187,7 +3187,7 @@ protected:
   ///      is[Z|FP]ExtFree of the related types is not true.
   virtual bool isExtFreeImpl(const Instruction *I) const { return false; }
 
-  /// Depth that GatherAllAliases should should continue looking for chain
+  /// Depth that GatherAllAliases should continue looking for chain
   /// dependencies when trying to find a more preferable chain. As an
   /// approximation, this should be more than the number of consecutive stores
   /// expected to be merged.

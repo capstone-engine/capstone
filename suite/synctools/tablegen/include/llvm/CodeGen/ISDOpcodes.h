@@ -865,7 +865,7 @@ enum NodeType {
   STRICT_FP_TO_FP16,
 
   /// Perform various unary floating-point operations inspired by libm. For
-  /// FPOWI, the result is undefined if if the integer operand doesn't fit into
+  /// FPOWI, the result is undefined if the integer operand doesn't fit into
   /// sizeof(int).
   FNEG,
   FABS,
