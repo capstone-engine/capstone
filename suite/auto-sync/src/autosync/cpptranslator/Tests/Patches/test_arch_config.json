@@ -1,0 +1,16 @@
+{
+  "General": {
+    "diff_color_new": "green",
+    "diff_color_old": "light_blue",
+    "diff_color_saved": "yellow",
+    "diff_color_edited": "light_magenta",
+    "patch_editor": "vim",
+    "nodes_to_diff": []
+  },
+  "ARCH": {
+    "files_to_translate": [],
+    "files_for_template_search": ["{PATCHES_TEST_DIR}/template_src.c"],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
+  }
+}

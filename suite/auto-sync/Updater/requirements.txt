@@ -1,2 +1,0 @@
-termcolor>=2.3.0
-tree_sitter>=0.20.2

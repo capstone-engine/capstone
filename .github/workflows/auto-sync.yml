@@ -1,0 +1,66 @@
+name: Auto-Sync
+on:
+  push:
+    paths:
+      - "suite/auto-sync/**"
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: suite/auto-sync/
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install auto-sync package
+        run: |
+          pip install .
+
+      - name: Check formatting
+        run: |
+          python3.11 -m black --check src/autosync
+
+      - name: Build llvm-tblgen
+        run: |
+          git clone https://github.com/capstone-engine/llvm-capstone.git vendor/llvm_root
+          cd vendor/llvm_root
+          mkdir build
+          cd build
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
+          cmake --build . --target llvm-tblgen --config Debug
+          cd ../../../
+
+      - name: Test generation of inc files
+        run: |
+          ./src/autosync/ASUpdater.py -d -a AArch64 -s IncGen
+          ./src/autosync/ASUpdater.py -d -a Alpha -s IncGen
+          ./src/autosync/ASUpdater.py -d -a ARM -s IncGen
+          ./src/autosync/ASUpdater.py -d -a PPC -s IncGen
+
+      - name: CppTranslator - Patch tests
+        run: |
+          python -m unittest src/autosync/cpptranslator/Tests/test_patches.py
+
+      - name: CppTranslator - Differ tests
+        run: |
+          python -m unittest src/autosync/cpptranslator/Tests/test_differ.py
+
+      - name: CppTranslator - Test translation
+        run: |
+          ./src/autosync/ASUpdater.py --ci -d -a AArch64 -s Translate
+          ./src/autosync/ASUpdater.py --ci -d -a ARM -s Translate
+          ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
+
+      - name: Test Header patcher
+        run: |
+          python -m unittest src/autosync/Tests/test_header_patcher.py

@@ -1,0 +1,42 @@
+{
+  "paths": {
+    "{LLVM_ROOT}": "{AUTO_SYNC_ROOT}/vendor/llvm_root/",
+    "{LLVM_TARGET_DIR}": "{LLVM_ROOT}/llvm/lib/Target/",
+    "{LLVM_TBLGEN_BIN}": "{LLVM_ROOT}/build/bin/llvm-tblgen",
+    "{LLVM_INCLUDE_DIR}": "{LLVM_ROOT}/llvm/include/",
+    "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
+    "{BUILD_DIR}": "{AUTO_SYNC_ROOT}/build/",
+    "{C_INC_OUT_DIR}": "{BUILD_DIR}/llvm_c_inc/",
+    "{CPP_INC_OUT_DIR}": "{BUILD_DIR}/llvm_cpp_inc/",
+    "{CPP_TRANSLATOR_DIR}": "{AUTO_SYNC_SRC}/cpptranslator/",
+    "{CPP_TRANSLATOR_CONFIG}": "{CPP_TRANSLATOR_DIR}/arch_config.json",
+    "{CPP_TRANSLATOR_TEST_DIR}": "{CPP_TRANSLATOR_DIR}/Tests/",
+    "{PATCHES_TEST_DIR}": "{CPP_TRANSLATOR_TEST_DIR}/Patches/",
+    "{PATCHES_TEST_CONFIG}": "{PATCHES_TEST_DIR}/test_arch_config.json",
+    "{DIFFER_PERSISTENCE_FILE}": "{CPP_TRANSLATOR_DIR}/saved_patches.json",
+    "{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}": "{BUILD_DIR}/translate_out/",
+    "{CPP_TRANSLATOR_DIFF_OUT_DIR}": "{BUILD_DIR}/diff_out/",
+    "{INC_PATCH_DIR}": "{AUTO_SYNC_ROOT}/inc_patches/",
+    "{CS_INCLUDE_DIR}": "{CS_ROOT}/include/capstone/",
+    "{CS_ARCH_MODULE_DIR}": "{CS_ROOT}/arch/",
+    "{CS_CLANG_FORMAT_FILE}": "{CS_ROOT}/.clang-format",
+    "{HEADER_PATCHER_TEST_HEADER_FILE}": "{AUTO_SYNC_SRC}/Tests/test_header.h",
+    "{HEADER_PATCHER_TEST_INC_FILE}": "{AUTO_SYNC_SRC}/Tests/test_include.inc",
+    "{DIFFER_TEST_DIR}": "{CPP_TRANSLATOR_TEST_DIR}/Differ/",
+    "{DIFFER_TEST_CONFIG_FILE}": "{DIFFER_TEST_DIR}/test_arch_config.json",
+    "{DIFFER_TEST_OLD_SRC_DIR}": "{DIFFER_TEST_DIR}/old_src/",
+    "{DIFFER_TEST_NEW_SRC_DIR}": "{DIFFER_TEST_DIR}/new_src/",
+    "{DIFFER_TEST_PERSISTENCE_FILE}": "{DIFFER_TEST_DIR}/test_saved_patches.json"
+  },
+  "create_during_runtime": [
+    "{BUILD_DIR}",
+    "{C_INC_OUT_DIR}",
+    "{CPP_INC_OUT_DIR}",
+    "{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}",
+    "{CPP_TRANSLATOR_DIFF_OUT_DIR}"
+  ],
+  "ignore_missing": [
+    "{DIFFER_TEST_PERSISTENCE_FILE}"
+  ]
+}
+

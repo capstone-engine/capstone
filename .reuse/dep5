@@ -1,0 +1,20 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: CapstoneEngine
+Source: https://github.com/capstone-engine/capstone
+
+Files: src/autosync/cpptranslator/Tests/test_config.json
+Copyright: 2022 Rot127 <unisono@quyllur.org>
+License: BSD-3
+
+Files: src/autosync/cpptranslator/arch_config.json
+Copyright: 2022 Rot127 <unisono@quyllur.org>
+License: BSD-3
+
+Files: src/autosync/cpptranslator/saved_patches.json
+Copyright: 2022 Rot127 <unisono@quyllur.org>
+License: BSD-3
+
+Files: src/autosync/path_vars.json
+Copyright: 2022 Rot127 <unisono@quyllur.org>
+License: BSD-3
+

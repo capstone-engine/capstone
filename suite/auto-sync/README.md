@@ -1,15 +1,15 @@
+<!--
+Copyright © 2022 Rot127 <unisono@quyllur.org>
+Copyright © 2024 2022 Rot127 <unisono@quyllur.org>
+SPDX-License-Identifier: BSD-3
+-->
+
 # Architecture updater
 
 This is Capstones updater for some architectures.
 Unfortunately not all architectures are supported yet.
 
 ## Install dependencies
-
-Install clang-format
-
-```
-sudo apt install clang-format-18
-```
 
 Setup Python environment and Tree-sitter
 
@@ -20,7 +20,6 @@ sudo apt install python3-venv
 # Setup virtual environment in Capstone root dir
 python3 -m venv ./.venv
 source ./.venv/bin/activate
-pip3 install -r dev_requirements.txt
 ```
 
 Clone C++ grammar
@@ -28,6 +27,7 @@ Clone C++ grammar
 ```
 cd suite/auto-sync/
 git submodule update --init --recursive ./vendor/
+pip install -e .
 ```
 
 ## Update
@@ -35,13 +35,13 @@ git submodule update --init --recursive ./vendor/
 Check if your architecture is supported.
 
 ```
-./Updater/ASUpdater.py -h
+./src/autosync/ASUpdater.py -h
 ```
 
 Clone Capstones LLVM fork and build `llvm-tblgen`
 
 ```
-git clone https://github.com/capstone-engine/llvm-capstone
+git clone https://github.com/capstone-engine/llvm-capstone vendor/llvm_root/
 cd llvm-capstone
 git checkout auto-sync
 mkdir build
@@ -55,7 +55,7 @@ cd ../../
 Run the updater
 
 ```
-./Updater/ASUpdater.py -a <ARCH>
+./src/autosync/ASUpdater.py -a <ARCH>
 ```
 
 ## Post-processing steps
