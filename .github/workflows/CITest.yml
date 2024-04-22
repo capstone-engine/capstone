@@ -117,6 +117,7 @@ jobs:
       run: |
         python suite/cstest/cstest_report.py -D -d suite/MC
         python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
+        python suite/cstest/cstest_report.py -D -f tests/cs_details/issue.cs
 
     - name: verify python binding
       if: matrix.config.enable-asan == 'OFF'
