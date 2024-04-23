@@ -1070,3 +1070,7 @@
 !# issue 2128
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0x4c,0x85,0x7d,0x30 == test	qword ptr [rbp + 0x30], r15 ; operands[1].type: REG = r15 ; operands[1].access: READ ; Registers read: rbp r15 ; Registers modified: rflags
+
+!# issue 2079
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x0: 0xd1,0x10 == rcl	dword ptr [eax] ; operands[1].type: IMM = 0x1
