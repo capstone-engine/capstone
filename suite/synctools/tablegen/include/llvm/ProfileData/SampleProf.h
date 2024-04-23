@@ -1168,7 +1168,7 @@ public:
   // TrimColdContext, TrimBaseProfileOnly can be used to specify to trim all
   // cold profiles or only cold base profiles. Trimming base profiles only is
   // mainly to honor the preinliner decsion. Note that when MergeColdContext is
-  // true, preinliner decsion is not honored anyway so TrimBaseProfileOnly will
+  // true, preinliner decision is not honored anyway so TrimBaseProfileOnly will
   // be ignored.
   void trimAndMergeColdContextProfiles(uint64_t ColdCountThreshold,
                                        bool TrimColdContext,

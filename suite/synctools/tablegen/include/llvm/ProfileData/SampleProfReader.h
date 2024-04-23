@@ -167,7 +167,7 @@
 //            The minimum number of samples required to reach the target
 //            CUTOFF.
 //        NUM_COUNTS (uint64_t)
-//            Number of samples to get to the desrired percentile.
+//            Number of samples to get to the desired percentile.
 //
 // NAME TABLE
 //    SIZE (uint32_t)

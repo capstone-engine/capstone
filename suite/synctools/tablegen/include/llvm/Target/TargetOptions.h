@@ -191,7 +191,7 @@ namespace llvm {
 
     /// EnableAIXExtendedAltivecABI - This flag returns true when -vec-extabi is
     /// specified. The code generator is then able to use both volatile and
-    /// nonvolitle vector registers. When false, the code generator only uses
+    /// nonvolatile vector registers. When false, the code generator only uses
     /// volatile vector registers which is the default setting on AIX.
     unsigned EnableAIXExtendedAltivecABI : 1;
 

@@ -536,7 +536,7 @@ public:
   inline Function *getFunction(uint64_t FuncMD5Hash);
 
   /// Return the function's original assembly name by stripping off
-  /// the prefix attached (to symbols with priviate linkage). For
+  /// the prefix attached (to symbols with private linkage). For
   /// global functions, it returns the same string as getFuncName.
   inline StringRef getOrigFuncName(uint64_t FuncMD5Hash);
 
