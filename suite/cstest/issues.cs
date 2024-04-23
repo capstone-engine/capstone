@@ -1,3 +1,15 @@
+!# issue 2323 eBPF bswap16 instruction
+!# CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN+CS_MODE_BPF_EXTENDED, CS_OPT_DETAIL
+0xd7,0x53,0x3f,0x0c,0x10,0x00,0x00,0x00 == bswap16 r3
+
+!# issue 2323 eBPF bswap32 instruction
+!# CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN+CS_MODE_BPF_EXTENDED, CS_OPT_DETAIL
+0xd7,0x53,0x3f,0x0c,0x20,0x00,0x00,0x00 == bswap32 r3
+
+!# issue 2323 eBPF bswap64 instruction
+!# CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN+CS_MODE_BPF_EXTENDED, CS_OPT_DETAIL
+0xd7,0x53,0x3f,0x0c,0x40,0x00,0x00,0x00 == bswap64 r3
+
 !# issue 2258 vcmpunordss incorrect read/modified register
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x62,0xd1,0x56,0x08,0xc2,0xca,0x03 == vcmpunordss k1, xmm5, xmm10 ; operands[0].access: WRITE ; operands[1].access: READ ; operands[2].access: READ

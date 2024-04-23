@@ -131,6 +131,9 @@ typedef enum bpf_insn {
 	BPF_INS_BE16,
 	BPF_INS_BE32,
 	BPF_INS_BE64,
+	BPF_INS_BSWAP16,
+	BPF_INS_BSWAP32,
+	BPF_INS_BSWAP64,
 
 	///< Load
 	BPF_INS_LDW,	///< eBPF only

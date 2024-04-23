@@ -277,12 +277,11 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 
 	if (BPF_OP(bpf->op) > BPF_ALU_END)
 		return false;
-	/* ALU64 class doesn't have ENDian */
 	/* ENDian's imm must be one of 16, 32, 64 */
 	if (BPF_OP(bpf->op) == BPF_ALU_END) {
-		if (BPF_CLASS(bpf->op) == BPF_CLASS_ALU64)
-			return false;
 		if (bpf->k != 16 && bpf->k != 32 && bpf->k != 64)
+			return false;
+		if (BPF_CLASS(bpf->op) == BPF_CLASS_ALU64 && BPF_SRC(bpf->op) != BPF_SRC_LITTLE)
 			return false;
 	}
 
