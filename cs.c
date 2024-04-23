@@ -945,7 +945,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
 			// adjust for pseudo opcode (X86)
-			if (handle->arch == CS_ARCH_X86)
+			if (handle->arch == CS_ARCH_X86 && insn_cache->id != X86_INS_VCMP)
 				insn_cache->id += mci.popcode_adjust;
 
 			next_offset = insn_size;
