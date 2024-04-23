@@ -7,6 +7,7 @@ include ../functions.mk
 LIBNAME = capstone
 
 CFLAGS += -I../include -I.
+CFLAGS += -std=gnu99
 LDFLAGS += -O3 -Wall -L.. -l$(LIBNAME)
 
 TARGET = cstool
