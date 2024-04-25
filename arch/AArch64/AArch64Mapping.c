@@ -1142,21 +1142,6 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		AArch64_get_detail(MI)->cc = AArch64CC_getInvertedCondCode(CC);
 		break;
 	}
-	case AArch64_OP_GROUP_MatrixIndex: {
-		assert(AArch64_get_detail(MI)->op_count >= 1);
-		if (AArch64_get_detail_op(MI, -1)->type ==
-		    AArch64_OP_SME_MATRIX)
-			// The index is part of an SME matrix
-			AArch64_set_detail_op_sme(MI, OpNum,
-						  AArch64_SME_MATRIX_SLICE_OFF,
-						  AArch64Layout_Invalid);
-		else
-			// The index is used for an SVE2 instruction.
-			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
-						  MCInst_getOpVal(MI, OpNum));
-
-		break;
-	}
 	case AArch64_OP_GROUP_MatrixTile: {
 		const char *RegName = AArch64_LLVM_getRegisterName(
 			MCInst_getOpVal(MI, OpNum), AArch64_NoRegAltName);
@@ -1460,6 +1445,24 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		unsigned EltSize = temp_arg_0;
 		AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE,
 					  (AArch64Layout_VectorLayout)EltSize);
+		break;
+	}
+	case AArch64_OP_GROUP_MatrixIndex_0:
+	case AArch64_OP_GROUP_MatrixIndex_1:
+	case AArch64_OP_GROUP_MatrixIndex_8: {
+		unsigned scale = temp_arg_0;
+		assert(AArch64_get_detail(MI)->op_count >= 1);
+		if (AArch64_get_detail_op(MI, -1)->type ==
+		    AArch64_OP_SME_MATRIX) {
+			// The index is part of an SME matrix
+			AArch64_set_detail_op_sme(MI, OpNum,
+						  AArch64_SME_MATRIX_SLICE_OFF,
+						  AArch64Layout_Invalid);
+		} else {
+			// The index is used for an SVE2 instruction.
+			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
+						  MCInst_getOpVal(MI, OpNum));
+		}
 		break;
 	}
 	case AArch64_OP_GROUP_MatrixTileVector_0:
@@ -1909,7 +1912,6 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_ImmHex:
 	case AArch64_OP_GROUP_ImplicitlyTypedVectorList:
 	case AArch64_OP_GROUP_InverseCondCode:
-	case AArch64_OP_GROUP_MatrixIndex:
 	case AArch64_OP_GROUP_MatrixTile:
 	case AArch64_OP_GROUP_MatrixTileList:
 	case AArch64_OP_GROUP_MRSSystemRegister:
@@ -1955,6 +1957,9 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_Matrix_16:
 	case AArch64_OP_GROUP_Matrix_32:
 	case AArch64_OP_GROUP_Matrix_64:
+	case AArch64_OP_GROUP_MatrixIndex_0:
+	case AArch64_OP_GROUP_MatrixIndex_1:
+	case AArch64_OP_GROUP_MatrixIndex_8:
 	case AArch64_OP_GROUP_MatrixTileVector_0:
 	case AArch64_OP_GROUP_MatrixTileVector_1:
 	case AArch64_OP_GROUP_PostIncOperand_1:

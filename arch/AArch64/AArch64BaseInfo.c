@@ -165,9 +165,11 @@ void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result)
 }
 
 #define GET_TLBITable_IMPL
+
 #include "AArch64GenSystemOperands.inc"
 #undef GET_TLBITable_IMPL
 
 #define GET_SVCR_IMPL
+
 #include "AArch64GenSystemOperands.inc"
 #undef GET_SVCR_IMPL

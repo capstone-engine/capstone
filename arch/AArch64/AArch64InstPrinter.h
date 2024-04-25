@@ -27,16 +27,16 @@
 #ifndef LLVM_LIB_TARGET_AARCH64_MCTARGETDESC_AARCH64INSTPRINTER_H
 #define LLVM_LIB_TARGET_AARCH64_MCTARGETDESC_AARCH64INSTPRINTER_H
 
-#include <capstone/platform.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <capstone/platform.h>
 
 #include "AArch64Mapping.h"
 
 #include "../../MCInst.h"
-#include "../../MCInstPrinter.h"
 #include "../../MCRegisterInfo.h"
+#include "../../MCInstPrinter.h"
 #include "../../SStream.h"
 #include "../../utils.h"
 
@@ -241,6 +241,7 @@ DECLARE_printTypedVectorList(4, h);
 DECLARE_printTypedVectorList(4, s);
 DECLARE_printTypedVectorList(8, b);
 DECLARE_printTypedVectorList(8, h);
+DECLARE_printTypedVectorList(0, 0);
 
 #define DECLARE_printVectorIndex(Scale) \
 	void CONCAT(printVectorIndex, Scale)(MCInst * MI, unsigned OpNum, \
@@ -248,9 +249,8 @@ DECLARE_printTypedVectorList(8, h);
 DECLARE_printVectorIndex(1);
 DECLARE_printVectorIndex(8);
 
-void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O);
-void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O);
-void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O);
+void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum,
+		       SStream *O);
 void printBarrierOption(MCInst *MI, unsigned OpNum, SStream *O);
 void printBarriernXSOption(MCInst *MI, unsigned OpNum, SStream *O);
 void printMSRSystemRegister(MCInst *MI, unsigned OpNum, SStream *O);
@@ -338,7 +338,12 @@ DECLARE_printExactFPImm(AArch64ExactFPImm_half, AArch64ExactFPImm_one);
 DECLARE_printExactFPImm(AArch64ExactFPImm_zero, AArch64ExactFPImm_one);
 DECLARE_printExactFPImm(AArch64ExactFPImm_half, AArch64ExactFPImm_two);
 
-;
+#define DECLARE_printMatrixIndex(Scale) \
+	void CONCAT(printMatrixIndex, Scale)(MCInst * MI, unsigned OpNum, \
+					     SStream *O);
+DECLARE_printMatrixIndex(8);
+DECLARE_printMatrixIndex(0);
+DECLARE_printMatrixIndex(1);
 
 // end namespace llvm
 

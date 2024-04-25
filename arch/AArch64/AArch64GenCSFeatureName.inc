@@ -1,6 +1,6 @@
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
-/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/*    Rot127 <unisono@quyllur.org> 2022-2024 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
 /* LLVM-commit: <commit> */
@@ -32,6 +32,7 @@
 { AArch64_FEATURE_HasVH, "HasVH" },
 { AArch64_FEATURE_HasLOR, "HasLOR" },
 { AArch64_FEATURE_HasPAuth, "HasPAuth" },
+{ AArch64_FEATURE_HasPAuthLR, "HasPAuthLR" },
 { AArch64_FEATURE_HasJS, "HasJS" },
 { AArch64_FEATURE_HasCCIDX, "HasCCIDX" },
 { AArch64_FEATURE_HasComplxNum, "HasComplxNum" },
@@ -46,7 +47,6 @@
 { AArch64_FEATURE_HasRCPC_IMMO, "HasRCPC_IMMO" },
 { AArch64_FEATURE_HasFPARMv8, "HasFPARMv8" },
 { AArch64_FEATURE_HasNEON, "HasNEON" },
-{ AArch64_FEATURE_HasCrypto, "HasCrypto" },
 { AArch64_FEATURE_HasSM4, "HasSM4" },
 { AArch64_FEATURE_HasSHA3, "HasSHA3" },
 { AArch64_FEATURE_HasSHA2, "HasSHA2" },
@@ -72,11 +72,26 @@
 { AArch64_FEATURE_HasSME, "HasSME" },
 { AArch64_FEATURE_HasSMEF64F64, "HasSMEF64F64" },
 { AArch64_FEATURE_HasSMEF16F16, "HasSMEF16F16" },
+{ AArch64_FEATURE_HasSMEFA64, "HasSMEFA64" },
 { AArch64_FEATURE_HasSMEI16I64, "HasSMEI16I64" },
 { AArch64_FEATURE_HasSME2, "HasSME2" },
 { AArch64_FEATURE_HasSME2p1, "HasSME2p1" },
+{ AArch64_FEATURE_HasFPMR, "HasFPMR" },
+{ AArch64_FEATURE_HasFP8, "HasFP8" },
+{ AArch64_FEATURE_HasFAMINMAX, "HasFAMINMAX" },
+{ AArch64_FEATURE_HasFP8FMA, "HasFP8FMA" },
+{ AArch64_FEATURE_HasSSVE_FP8FMA, "HasSSVE_FP8FMA" },
+{ AArch64_FEATURE_HasFP8DOT2, "HasFP8DOT2" },
+{ AArch64_FEATURE_HasSSVE_FP8DOT2, "HasSSVE_FP8DOT2" },
+{ AArch64_FEATURE_HasFP8DOT4, "HasFP8DOT4" },
+{ AArch64_FEATURE_HasSSVE_FP8DOT4, "HasSSVE_FP8DOT4" },
+{ AArch64_FEATURE_HasLUT, "HasLUT" },
+{ AArch64_FEATURE_HasSME_LUTv2, "HasSME_LUTv2" },
+{ AArch64_FEATURE_HasSMEF8F16, "HasSMEF8F16" },
+{ AArch64_FEATURE_HasSMEF8F32, "HasSMEF8F32" },
 { AArch64_FEATURE_HasSVEorSME, "HasSVEorSME" },
 { AArch64_FEATURE_HasSVE2orSME, "HasSVE2orSME" },
+{ AArch64_FEATURE_HasSVE2orSME2, "HasSVE2orSME2" },
 { AArch64_FEATURE_HasSVE2p1_or_HasSME, "HasSVE2p1_or_HasSME" },
 { AArch64_FEATURE_HasSVE2p1_or_HasSME2, "HasSVE2p1_or_HasSME2" },
 { AArch64_FEATURE_HasSVE2p1_or_HasSME2p1, "HasSVE2p1_or_HasSME2p1" },
@@ -110,6 +125,9 @@
 { AArch64_FEATURE_HasRCPC3, "HasRCPC3" },
 { AArch64_FEATURE_HasLSE128, "HasLSE128" },
 { AArch64_FEATURE_HasD128, "HasD128" },
+{ AArch64_FEATURE_HasCHK, "HasCHK" },
+{ AArch64_FEATURE_HasGCS, "HasGCS" },
+{ AArch64_FEATURE_HasCPA, "HasCPA" },
 { AArch64_FEATURE_UseNegativeImmediates, "UseNegativeImmediates" },
 { AArch64_FEATURE_HasCCPP, "HasCCPP" },
 { AArch64_FEATURE_HasPAN, "HasPAN" },

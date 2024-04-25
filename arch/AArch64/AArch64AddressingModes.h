@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically translated source file from LLVM. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Only small edits allowed. */
 /* For multiple similar edits, please create a Patch for the translator. */
@@ -27,22 +27,25 @@
 #ifndef LLVM_LIB_TARGET_AARCH64_MCTARGETDESC_AARCH64ADDRESSINGMODES_H
 #define LLVM_LIB_TARGET_AARCH64_MCTARGETDESC_AARCH64ADDRESSINGMODES_H
 
-#include <capstone/platform.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <capstone/platform.h>
 
 #include "../../MathExtras.h"
 #include <assert.h>
+#include "../../MathExtras.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
 /// AArch64_AM - AArch64 Addressing Mode Stuff
+// CS namespace begin: AArch64_AM
+
 //===----------------------------------------------------------------------===//
 // Shifts
 //
-typedef enum {
+typedef enum ShiftExtendType {
 	AArch64_AM_InvalidShiftExtend = -1,
 	AArch64_AM_LSL = 0,
 	AArch64_AM_LSR,
@@ -627,6 +630,31 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType9(uint8_t Imm)
 // cmode: 1110, op: 1
 static inline bool AArch64_AM_isAdvSIMDModImmType10(uint64_t Imm)
 {
+#if defined(_MSC_VER) && _MSC_VER == 1937 && !defined(__clang__) && \
+	defined(_M_ARM64)
+	// The MSVC compiler 19.37 for ARM64 has an optimization bug that
+	// causes an incorrect behavior with the orignal version. Work around
+	// by using a slightly different variation.
+	// https://developercommunity.visualstudio.com/t/C-ARM64-compiler-optimization-bug/10481261
+	constexpr uint64_t Mask = 0xFFULL;
+	uint64_t ByteA = (Imm >> 56) & Mask;
+	uint64_t ByteB = (Imm >> 48) & Mask;
+	uint64_t ByteC = (Imm >> 40) & Mask;
+	uint64_t ByteD = (Imm >> 32) & Mask;
+	uint64_t ByteE = (Imm >> 24) & Mask;
+	uint64_t ByteF = (Imm >> 16) & Mask;
+	uint64_t ByteG = (Imm >> 8) & Mask;
+	uint64_t ByteH = Imm & Mask;
+
+	return (ByteA == 0ULL || ByteA == Mask) &&
+	       (ByteB == 0ULL || ByteB == Mask) &&
+	       (ByteC == 0ULL || ByteC == Mask) &&
+	       (ByteD == 0ULL || ByteD == Mask) &&
+	       (ByteE == 0ULL || ByteE == Mask) &&
+	       (ByteF == 0ULL || ByteF == Mask) &&
+	       (ByteG == 0ULL || ByteG == Mask) &&
+	       (ByteH == 0ULL || ByteH == Mask);
+#else
 	uint64_t ByteA = Imm & 0xff00000000000000ULL;
 	uint64_t ByteB = Imm & 0x00ff000000000000ULL;
 	uint64_t ByteC = Imm & 0x0000ff0000000000ULL;
@@ -644,6 +672,7 @@ static inline bool AArch64_AM_isAdvSIMDModImmType10(uint64_t Imm)
 	       (ByteF == 0ULL || ByteF == 0x0000000000ff0000ULL) &&
 	       (ByteG == 0ULL || ByteG == 0x000000000000ff00ULL) &&
 	       (ByteH == 0ULL || ByteH == 0x00000000000000ffULL);
+#endif
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType10(uint64_t Imm)
@@ -842,11 +871,6 @@ DEFINE_isSVEMaskOfIdenticalElements(int16_t);
 DEFINE_isSVEMaskOfIdenticalElements(int32_t);
 DEFINE_isSVEMaskOfIdenticalElements(int64_t);
 
-static inline bool AArch64_AM_isSVEMaskOfIdenticalElements64(int64_t Imm)
-{
-	return true;
-}
-
 static inline bool isSVECpyImm8(int64_t Imm)
 {
 	bool IsImm8 = (int8_t)Imm == Imm;
@@ -964,6 +988,8 @@ inline static bool AArch64_AM_isAnyMOVWMovAlias(uint64_t Value, int RegWidth)
 
 	return AArch64_AM_isAnyMOVZMovAlias(Value, RegWidth);
 }
+
+// CS namespace end: AArch64_AM
 
 // end namespace AArch64_AM
 

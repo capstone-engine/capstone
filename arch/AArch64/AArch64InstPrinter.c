@@ -24,11 +24,10 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include <capstone/platform.h>
-#include <ctype.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <capstone/platform.h>
 
 #include "../../Mapping.h"
 #include "../../MCInst.h"
@@ -54,11 +53,16 @@
 
 #define DEBUG_TYPE "asm-printer"
 
-#ifndef CAPSTONE_DIET
+// BEGIN Static declarations.
+// These functions must be declared statically here, because they
+// are also defined in the ARM module.
+// If they are not static, we fail during linking.
+
 static void printCustomAliasOperand(MCInst *MI, uint64_t Address,
 				    unsigned OpIdx, unsigned PrintMethodIdx,
 				    SStream *OS);
-#endif
+
+static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
 
 #define DECLARE_printComplexRotationOp(Angle, Remainder) \
 	static void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
@@ -66,7 +70,7 @@ static void printCustomAliasOperand(MCInst *MI, uint64_t Address,
 DECLARE_printComplexRotationOp(180, 90);
 DECLARE_printComplexRotationOp(90, 0);
 
-static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O);
+// END Static declarations.
 
 #define GET_INSTRUCTION_NAME
 #define PRINT_ALIAS_INSTR
@@ -1066,7 +1070,6 @@ void AArch64AppleInstPrinter_printInst(MCInst *MI, uint64_t Address,
 
 	printInst(MI, Address, Annot, O);
 }
-
 bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
 {
 	unsigned Opcode = MCInst_getOpcode(MI);
@@ -1756,7 +1759,9 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 			      OpNum, EltSize); \
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
-\
+		if (Reg < AArch64_PN0 || Reg > AArch64_PN15) \
+			assert(0 && \
+			       "Unsupported predicate-as-counter register"); \
 		SStream_concat(O, "%s", "pn"); \
 		printUInt32(O, (Reg - AArch64_P0)); \
 		switch (EltSize) { \
@@ -2253,6 +2258,19 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 DEFINE_printGPRSeqPairsClassOperand(32);
 DEFINE_printGPRSeqPairsClassOperand(64);
 
+#define DEFINE_printMatrixIndex(Scale) \
+	void CONCAT(printMatrixIndex, Scale)(MCInst * MI, unsigned OpNum, \
+					     SStream *O) \
+	{ \
+		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_MatrixIndex, Scale), \
+			      OpNum, Scale); \
+		printInt64(O, Scale *MCOperand_getImm( \
+				      MCInst_getOperand(MI, (OpNum)))); \
+	}
+DEFINE_printMatrixIndex(8);
+DEFINE_printMatrixIndex(0);
+DEFINE_printMatrixIndex(1);
+
 void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_MatrixTileList, OpNum);
@@ -2427,6 +2445,10 @@ void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
 					    NumLanes), \
 				     LaneKind), \
 			      OpNum, NumLanes, CHAR(LaneKind)); \
+		if (CHAR(LaneKind) == 0) { \
+			printVectorList(MI, OpNum, O, ""); \
+			return; \
+		} \
 		char Suffix[32]; \
 		if (NumLanes) \
 			cs_snprintf(Suffix, sizeof(Suffix), ".%u%c", NumLanes, \
@@ -2450,6 +2472,7 @@ DEFINE_printTypedVectorList(4, h);
 DEFINE_printTypedVectorList(4, s);
 DEFINE_printTypedVectorList(8, b);
 DEFINE_printTypedVectorList(8, h);
+DEFINE_printTypedVectorList(0, 0);
 
 #define DEFINE_printVectorIndex(Scale) \
 	void CONCAT(printVectorIndex, Scale)(MCInst * MI, unsigned OpNum, \
@@ -2464,12 +2487,6 @@ DEFINE_printTypedVectorList(8, h);
 	}
 DEFINE_printVectorIndex(1);
 DEFINE_printVectorIndex(8);
-
-void printMatrixIndex(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	add_cs_detail(MI, AArch64_OP_GROUP_MatrixIndex, OpNum);
-	printUInt32(O, MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
-}
 
 void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 {
@@ -2801,14 +2818,14 @@ DECLARE_printImmSVE_U32(uint32_t);
 	{ \
 		printInt64Bang(O, Val); \
 	}
-DECLARE_printImmSVE_S64(uint64_t);
+DECLARE_printImmSVE_S64(int64_t);
 
 #define DECLARE_printImmSVE_U64(T) \
 	void CONCAT(printImmSVE, T)(T Val, SStream * O) \
 	{ \
 		printUInt64Bang(O, Val); \
 	}
-DECLARE_printImmSVE_U64(int64_t);
+DECLARE_printImmSVE_U64(uint64_t);
 
 #define DEFINE_isSignedType(T) \
 	static inline bool CONCAT(isSignedType, T)() \

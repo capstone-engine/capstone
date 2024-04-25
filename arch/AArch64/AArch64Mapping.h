@@ -8,8 +8,6 @@
 #include "../../MCInst.h"
 #include "../../SStream.h"
 
-#define ARR_SIZE(a) (sizeof(a) / sizeof(a[0]))
-
 typedef enum {
 #include "AArch64GenCSOpGroup.inc"
 } aarch64_op_group;
