@@ -1043,3 +1043,6 @@
 !# CS_ARCH_ARM64, CS_MODE_LITTLE_ENDIAN, None
 0x0: 0x00,0x00,0x00,0x4c == st4 {v0.16b, v1.16b, v2.16b, v3.16b}, [x0]
 
+!# issue 2128
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x4c,0x85,0x7d,0x30 == test	qword ptr [rbp + 0x30], r15 ; operands[1].type: REG = r15 ; operands[1].access: READ ; Registers read: rbp r15 ; Registers modified: rflags
