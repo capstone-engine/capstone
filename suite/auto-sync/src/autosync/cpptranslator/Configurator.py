@@ -5,9 +5,10 @@ import json
 import logging as log
 from pathlib import Path
 
+import tree_sitter_cpp as ts_cpp
 from tree_sitter import Language, Parser
 
-from autosync.Helper import fail_exit, get_path
+from autosync.Helper import fail_exit
 
 
 class Configurator:
@@ -25,9 +26,7 @@ class Configurator:
     def __init__(self, arch: str, config_path: Path) -> None:
         self.arch = arch
         self.config_path = config_path
-        self.ts_shared_object = get_path("{VENDOR_DIR}").joinpath("ts_cpp.so")
         self.load_config()
-        self.ts_compile_cpp()
         self.ts_set_cpp_language()
         self.init_parser()
 
@@ -69,22 +68,8 @@ class Configurator:
             )
         self.config = conf
 
-    def ts_compile_cpp(self) -> None:
-        log.info("Compile Cpp language")
-        ts_grammar_path = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
-        if not Path.exists(ts_grammar_path):
-            fail_exit(f"Could not load the tree-sitter grammar at '{ts_grammar_path}'")
-        # build_library wll be deprecated in 0.22.0. But CPP tree-sitter doesn't have Python bindings.
-        # So we stick with it.
-        Language.build_library(str(self.ts_shared_object), [str(ts_grammar_path)])
-
     def ts_set_cpp_language(self) -> None:
-        log.info(f"Load language '{self.ts_shared_object}'")
-        if not Path.exists(self.ts_shared_object):
-            fail_exit(
-                f"Could not load the tree-sitter language shared object at '{self.ts_shared_object}'"
-            )
-        self.ts_cpp_lang = Language(str(self.ts_shared_object), "cpp")
+        self.ts_cpp_lang = Language(ts_cpp.language(), "cpp")
 
     def init_parser(self) -> None:
         log.debug("Init parser")
