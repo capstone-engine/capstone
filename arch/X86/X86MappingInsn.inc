@@ -18808,7 +18808,7 @@
 {
 	X86_TEST64mr, X86_INS_TEST, 1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
