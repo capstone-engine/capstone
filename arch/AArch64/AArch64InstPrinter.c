@@ -1358,7 +1358,7 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned Reg = MCOperand_getReg(Op);
 		printRegName(O, Reg);
 	} else if (MCOperand_isImm(Op)) {
-		MCOperand *Op = MCInst_getOperand(MI, (OpNo));
+		Op = MCInst_getOperand(MI, (OpNo));
 		SStream_concat(O, "%s", markup("<imm:"));
 		printInt64Bang(O, MCOperand_getImm(Op));
 		SStream_concat0(O, markup(">"));

@@ -2776,7 +2776,7 @@ static void fill_copr_mods(uint32_t insn, uint32_t uid, uint32_t class,
 			push_str_modifier(hppa_ext, "n");
 		}
 	} else {
-		uint32_t uid = get_insn_field(insn, 23, 25);
+		uid = get_insn_field(insn, 23, 25);
 		uint32_t sop = (get_insn_field(insn, 6, 22) << 5) |
 			       get_insn_field(insn, 27, 31);
 		push_int_modifier(hppa_ext, uid);

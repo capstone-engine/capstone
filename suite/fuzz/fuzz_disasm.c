@@ -60,12 +60,12 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         unsigned int n;
 
         for (j = 0; j < count; j++) {
-            cs_insn *i = &(all_insn[j]);
+            cs_insn *insn = &(all_insn[j]);
             fprintf(outfile, "0x%"PRIx64":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
-                   i->address, i->mnemonic, i->op_str,
-                   i->id, cs_insn_name(handle, i->id));
+                   insn->address, insn->mnemonic, insn->op_str,
+                   insn->id, cs_insn_name(handle, insn->id));
 
-            detail = i->detail;
+            detail = insn->detail;
 
             if (detail->regs_read_count > 0) {
                 fprintf(outfile, "\tImplicit registers read: ");

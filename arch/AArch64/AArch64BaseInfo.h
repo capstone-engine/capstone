@@ -852,6 +852,7 @@ inline static const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 	case AArch64PACKey_DB:
 		return "db";
 	}
+	return NULL;
 }
 
 /// Return numeric key ID for 2-letter identifier string.
@@ -867,6 +868,7 @@ AArch64StringToPACKeyID(const char *Name)
 	if (strcmp(Name, "db") == 0)
 		return AArch64PACKey_DB;
 	assert(0 && "Invalid PAC key");
+	return AArch64PACKey_LAST;
 }
 
 // end namespace AArch64
