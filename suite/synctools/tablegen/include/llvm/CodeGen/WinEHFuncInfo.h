@@ -32,7 +32,7 @@ class InvokeInst;
 class MachineBasicBlock;
 class MCSymbol;
 
-// The following structs respresent the .xdata tables for various
+// The following structs represent the .xdata tables for various
 // Windows-related EH personalities.
 
 using MBBOrBasicBlock = PointerUnion<const BasicBlock *, MachineBasicBlock *>;

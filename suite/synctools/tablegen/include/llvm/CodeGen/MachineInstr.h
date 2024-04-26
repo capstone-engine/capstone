@@ -96,7 +96,7 @@ public:
     FmContract   = 1 << 8,              // Instruction supports Fast math
                                         // contraction operations like fma.
     FmAfn        = 1 << 9,              // Instruction may map to Fast math
-                                        // instrinsic approximation.
+                                        // intrinsic approximation.
     FmReassoc    = 1 << 10,             // Instruction supports Fast math
                                         // reassociation of operand order.
     NoUWrap      = 1 << 11,             // Instruction supports binary operator
@@ -488,7 +488,7 @@ public:
   /// Returns the opcode of this MachineInstr.
   unsigned getOpcode() const { return MCID->Opcode; }
 
-  /// Retuns the total number of operands.
+  /// Returns the total number of operands.
   unsigned getNumOperands() const { return NumOperands; }
 
   /// Returns the total number of operands which are debug locations.

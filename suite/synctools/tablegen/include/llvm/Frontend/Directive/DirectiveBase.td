@@ -40,7 +40,7 @@ class DirectiveLanguage {
   // Generate include and macro to enable LLVM BitmaskEnum.
   bit enableBitmaskEnumInNamespace = false;
 
-  // Header file included in the implementation code generated. Ususally the
+  // Header file included in the implementation code generated. Usually the
   // output file of the declaration code generation. Can be left blank.
   string includeHeader = "";
 
@@ -108,7 +108,7 @@ class VersionedClause<Clause c, int min = 1, int max = 0x7FFFFFFF> {
   // Actual clause.
   Clause clause = c;
 
-  // Mininum version number where this clause is valid.
+  // Minimum version number where this clause is valid.
   int minVersion = min;
 
   // Maximum version number where this clause is valid.
@@ -117,7 +117,7 @@ class VersionedClause<Clause c, int min = 1, int max = 0x7FFFFFFF> {
 
 // Information about a specific directive.
 class Directive<string d> {
-  // Name of the directive. Can be composite directive sepearted by whitespace.
+  // Name of the directive. Can be composite directive separated by whitespace.
   string name = d;
 
   // Define an alternative name return in get<LanguageName>DirectiveName

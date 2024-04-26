@@ -365,7 +365,7 @@ void Mips_init(MCRegisterInfo *MRI)
 }
 
 /// Read two bytes from the ArrayRef and return 16 bit halfword sorted
-/// according to the given endianess.
+/// according to the given endianness.
 static void readInstruction16(unsigned char *code, uint32_t *insn,
 		bool isBigEndian)
 {
@@ -377,7 +377,7 @@ static void readInstruction16(unsigned char *code, uint32_t *insn,
 }
 
 /// readInstruction - read four bytes from the MemoryObject
-/// and return 32 bit word sorted according to the given endianess
+/// and return 32 bit word sorted according to the given endianness
 static void readInstruction32(unsigned char *code, uint32_t *insn, bool isBigEndian, bool isMicroMips)
 {
 	// High 16 bits of a 32-bit microMIPS instruction (where the opcode is)

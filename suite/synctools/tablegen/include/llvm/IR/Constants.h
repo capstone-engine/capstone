@@ -986,7 +986,7 @@ protected:
 
 public:
   // Static methods to construct a ConstantExpr of different kinds.  Note that
-  // these methods may return a object that is not an instance of the
+  // these methods may return an object that is not an instance of the
   // ConstantExpr class, because they will attempt to fold the constant
   // expression into something simpler if possible.
 

@@ -121,7 +121,7 @@ public:
 
 /// Subclasses of GCStrategy are made available for use during compilation by
 /// adding them to the global GCRegistry.  This can done either within the
-/// LLVM source tree or via a loadable plugin.  An example registeration
+/// LLVM source tree or via a loadable plugin.  An example registration
 /// would be:
 /// static GCRegistry::Add<CustomGC> X("custom-name",
 ///        "my custom supper fancy gc strategy");

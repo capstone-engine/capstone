@@ -107,7 +107,7 @@ class X86VectorVTInfo<int numelts, ValueType eltvt, RegisterClass rc,
 
   RegisterClass FRC = !if (!eq (EltTypeName, "f32"), FR32X, FR64X);
 
-  // A vector tye of the same width with element type i64. This is used to
+  // A vector type of the same width with element type i64. This is used to
   // create patterns for logic ops.
   ValueType i64VT = !cast<ValueType>("v" # !srl(Size, 6) # "i64");
 
@@ -251,7 +251,7 @@ multiclass AVX512_maskable_common<bits<8> O, Format F, X86VectorVTInfo _,
 
 // This multiclass generates the unconditional/non-masking, the masking and
 // the zero-masking variant of the vector instruction.  In the masking case, the
-// perserved vector elements come from a new dummy input operand tied to $dst.
+// preserved vector elements come from a new dummy input operand tied to $dst.
 // This version uses a separate dag for non-masking and masking.
 multiclass AVX512_maskable_split<bits<8> O, Format F, X86VectorVTInfo _,
                            dag Outs, dag Ins, string OpcodeStr,
@@ -272,7 +272,7 @@ multiclass AVX512_maskable_split<bits<8> O, Format F, X86VectorVTInfo _,
 
 // This multiclass generates the unconditional/non-masking, the masking and
 // the zero-masking variant of the vector instruction.  In the masking case, the
-// perserved vector elements come from a new dummy input operand tied to $dst.
+// preserved vector elements come from a new dummy input operand tied to $dst.
 multiclass AVX512_maskable<bits<8> O, Format F, X86VectorVTInfo _,
                            dag Outs, dag Ins, string OpcodeStr,
                            string AttSrcAsm, string IntelSrcAsm,
@@ -423,7 +423,7 @@ multiclass AVX512_maskable_cmp_alt<bits<8> O, Format F, X86VectorVTInfo _,
 
 // This multiclass generates the unconditional/non-masking, the masking and
 // the zero-masking variant of the vector instruction.  In the masking case, the
-// perserved vector elements come from a new dummy input operand tied to $dst.
+// preserved vector elements come from a new dummy input operand tied to $dst.
 multiclass AVX512_maskable_logic<bits<8> O, Format F, X86VectorVTInfo _,
                            dag Outs, dag Ins, string OpcodeStr,
                            string AttSrcAsm, string IntelSrcAsm,
@@ -7557,7 +7557,7 @@ multiclass avx512_cvt_fp_scalar<bits<8> opc, string OpcodeStr, X86VectorVTInfo _
   }
 }
 
-// Scalar Coversion with SAE - suppress all exceptions
+// Scalar Conversion with SAE - suppress all exceptions
 multiclass avx512_cvt_fp_sae_scalar<bits<8> opc, string OpcodeStr, X86VectorVTInfo _,
                                     X86VectorVTInfo _Src, SDNode OpNodeRnd,
                                     X86FoldableSchedWrite sched> {
@@ -7671,7 +7671,7 @@ multiclass avx512_vcvt_fp<bits<8> opc, string OpcodeStr, X86VectorVTInfo _,
                             ))>, EVEX, EVEX_B,
                          Sched<[sched.Folded]>;
 }
-// Coversion with SAE - suppress all exceptions
+// Conversion with SAE - suppress all exceptions
 multiclass avx512_vcvt_fp_sae<bits<8> opc, string OpcodeStr, X86VectorVTInfo _,
                               X86VectorVTInfo _Src, SDNode OpNodeRnd,
                               X86FoldableSchedWrite sched> {

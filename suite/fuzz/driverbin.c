@@ -77,7 +77,7 @@ int main(int argc, char** argv)
         }
         printf("\n");
 
-        //lauch fuzzer
+        //launch fuzzer
         LLVMFuzzerTestOneInput(Data, Size);
         fclose(fp);
     }

@@ -142,7 +142,7 @@ class LexicalScopes {
 public:
   LexicalScopes() = default;
 
-  /// initialize - Scan machine function and constuct lexical scope nest, resets
+  /// initialize - Scan machine function and construct lexical scope nest, resets
   /// the instance if necessary.
   void initialize(const MachineFunction &);
 

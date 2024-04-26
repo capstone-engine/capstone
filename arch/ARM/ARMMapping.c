@@ -531,7 +531,7 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 }
 
 /// Unfortunately there is currently no way to easily extract
-/// informaion about the vector data usage (sign and width used).
+/// information about the vector data usage (sign and width used).
 /// See: https://github.com/capstone-engine/capstone/issues/2152
 void ARM_add_vector_data(MCInst *MI, arm_vectordata_type data_type)
 {
@@ -541,7 +541,7 @@ void ARM_add_vector_data(MCInst *MI, arm_vectordata_type data_type)
 }
 
 /// Unfortunately there is currently no way to easily extract
-/// informaion about the vector size.
+/// information about the vector size.
 /// See: https://github.com/capstone-engine/capstone/issues/2152
 void ARM_add_vector_size(MCInst *MI, unsigned size)
 {
@@ -2110,7 +2110,7 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 	ARM_get_detail_op(MI, 0)->type = type;
 	switch (type) {
 	default:
-		assert(0 && "Unkown system operand type.");
+		assert(0 && "Unknown system operand type.");
 	case ARM_OP_SYSREG:
 		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val;
 		break;

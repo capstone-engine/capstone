@@ -815,7 +815,7 @@ typedef enum TOF {
 	/// an LDG instruction to obtain the tag value.
 	AArch64II_MO_TAGGED = 0x400,
 
-	/// MO_DLLIMPORTAUX - Symbol refers to "auxilliary" import stub. On
+	/// MO_DLLIMPORTAUX - Symbol refers to "auxiliary" import stub. On
 	/// Arm64EC, there are two kinds of import stubs used for DLL import of
 	/// functions: MO_DLLIMPORT refers to natively callable Arm64 code, and
 	/// MO_DLLIMPORTAUX refers to the original address which can be compared

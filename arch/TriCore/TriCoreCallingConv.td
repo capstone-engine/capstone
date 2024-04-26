@@ -46,7 +46,7 @@ def CC_TriCore : CallingConv<[
 	
 	// Pointer arguments are handled inside TriCoreIselLowering, because
 	// LLVM lowers i32** type into i32, hence there is no way to distingusish
-	// beetwen a pointer type and an integer type.
+	// between a pointer type and an integer type.
 	
 
 	

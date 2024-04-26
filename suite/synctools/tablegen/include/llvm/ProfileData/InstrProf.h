@@ -102,7 +102,7 @@ inline StringRef getInstrProfNamesVarName() {
   return "__llvm_prf_nm";
 }
 
-/// Return the name of a covarage mapping variable (internal linkage)
+/// Return the name of a coverage mapping variable (internal linkage)
 /// for each instrumented source module. Such variables are allocated
 /// in the __llvm_covmap section.
 inline StringRef getCoverageMappingVarName() {
@@ -485,7 +485,7 @@ public:
   /// indicates if this is called from LTO optimization passes.
   Error create(Module &M, bool InLTO = false);
 
-  /// Create InstrProfSymtab from a set of names iteratable from
+  /// Create InstrProfSymtab from a set of names iterable from
   /// \p IterRange. This interface is used by IndexedProfReader.
   template <typename NameIterRange> Error create(const NameIterRange &IterRange);
 
@@ -536,7 +536,7 @@ public:
   inline Function *getFunction(uint64_t FuncMD5Hash);
 
   /// Return the function's original assembly name by stripping off
-  /// the prefix attached (to symbols with priviate linkage). For
+  /// the prefix attached (to symbols with private linkage). For
   /// global functions, it returns the same string as getFuncName.
   inline StringRef getOrigFuncName(uint64_t FuncMD5Hash);
 
@@ -1038,7 +1038,7 @@ struct Summary {
     uint64_t Cutoff; ///< The required percentile of total execution count.
     uint64_t
         MinBlockCount;  ///< The minimum execution count for this percentile.
-    uint64_t NumBlocks; ///< Number of blocks >= the minumum execution count.
+    uint64_t NumBlocks; ///< Number of blocks >= the minimum execution count.
   };
   // The field kind enumerator to assigned value mapping should remain
   // unchanged  when a new kind is added or an old kind gets deleted in
@@ -1061,7 +1061,7 @@ struct Summary {
     NumKinds = TotalBlockCount + 1
   };
 
-  // The number of summmary fields following the summary header.
+  // The number of summary fields following the summary header.
   uint64_t NumSummaryFields;
   // The number of Cutoff Entries (Summary::Entry) following summary fields.
   uint64_t NumCutoffEntries;

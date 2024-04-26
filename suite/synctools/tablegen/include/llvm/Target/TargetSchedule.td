@@ -67,7 +67,7 @@ def instregex;
 // coarse grained instruction cost model. Default values for the
 // properties are defined in MCSchedModel. A value of "-1" in the
 // target description's SchedMachineModel indicates that the property
-// is not overriden by the target.
+// is not overridden by the target.
 //
 // Target hooks allow subtargets to associate LoadLatency and
 // HighLatency with groups of opcodes.
@@ -491,7 +491,7 @@ class SchedAlias<SchedReadWrite match, SchedReadWrite alias> {
 //
 // This is what happens for example on AMD processors (at least from Bulldozer
 // onwards), where AL and AH are not treated as independent from AX, and AX is
-// not treated as independent from EAX. A write to AL has an implicity false
+// not treated as independent from EAX. A write to AL has an implicitly false
 // dependency on the last write to EAX (or a portion of EAX).  As a consequence,
 // a write to AL cannot go in parallel with a write to AH.
 //

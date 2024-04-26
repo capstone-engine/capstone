@@ -414,7 +414,7 @@ public:
     return !mayBeDerefined();
   }
 
-  /// Return true if this global has an exact defintion.
+  /// Return true if this global has an exact definition.
   bool hasExactDefinition() const {
     // While this computes exactly the same thing as
     // isStrongDefinitionForLinker, the intended uses are different.  This

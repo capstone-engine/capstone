@@ -94,7 +94,7 @@ public:
   // packet. The resources are returned as a bitvector of functional units.
   //
   // Note that a bundle may be packed in multiple valid ways. This function
-  // returns one arbitary valid packing.
+  // returns one arbitrary valid packing.
   //
   // Requires setTrackResources(true) to have been called.
   unsigned getUsedResources(unsigned InstIdx);
@@ -179,7 +179,7 @@ public:
     return false;
   }
 
-  // Check if it is legal to prune dependece between SUI and SUJ.
+  // Check if it is legal to prune dependence between SUI and SUJ.
   virtual bool isLegalToPruneDependencies(SUnit *SUI, SUnit *SUJ) {
     return false;
   }

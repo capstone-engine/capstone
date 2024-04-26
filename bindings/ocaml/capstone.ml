@@ -63,7 +63,7 @@ type mode =
 
 (* Runtime option for the disassembled engine *)
 type opt_type =
-  |	CS_OPT_SYNTAX		(*  Asssembly output syntax *)
+  |	CS_OPT_SYNTAX		(*  Assembly output syntax *)
   |	CS_OPT_DETAIL		(* Break down instruction structure into details *)
   |	CS_OPT_MODE		(* Change engine's mode at run-time *)
   |	CS_OPT_MEM		(* User-defined dynamic memory related functions *)

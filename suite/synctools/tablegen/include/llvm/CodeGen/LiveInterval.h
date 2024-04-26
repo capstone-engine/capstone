@@ -359,7 +359,7 @@ namespace llvm {
     /// Merge all of the live segments of a specific val# in RHS into this live
     /// range as the specified value number. The segments in RHS are allowed
     /// to overlap with segments in the current range, it will replace the
-    /// value numbers of the overlaped live segments with the specified value
+    /// value numbers of the overlapped live segments with the specified value
     /// number.
     void MergeSegmentsInAsValue(const LiveRange &RHS, VNInfo *LHSValNo);
 
@@ -416,7 +416,7 @@ namespace llvm {
     }
 
     /// getVNInfoBefore - Return the VNInfo that is live up to but not
-    /// necessarilly including Idx, or NULL. Use this to find the reaching def
+    /// necessarily including Idx, or NULL. Use this to find the reaching def
     /// used by an instruction at this SlotIndex position.
     VNInfo *getVNInfoBefore(SlotIndex Idx) const {
       const_iterator I = FindSegmentContaining(Idx.getPrevSlot());
@@ -977,7 +977,7 @@ namespace llvm {
   }
 
   /// ConnectedVNInfoEqClasses - Helper class that can divide VNInfos in a
-  /// LiveInterval into equivalence clases of connected components. A
+  /// LiveInterval into equivalence classes of connected components. A
   /// LiveInterval that has multiple connected components can be broken into
   /// multiple LiveIntervals.
   ///

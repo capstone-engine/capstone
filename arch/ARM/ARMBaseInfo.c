@@ -7,7 +7,7 @@
 /* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
 
 /* Only small edits allowed. */
-/* For multiple similiar edits, please create a Patch for the translator. */
+/* For multiple similar edits, please create a Patch for the translator. */
 
 /* Capstone's C++ file translator: */
 /* https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */

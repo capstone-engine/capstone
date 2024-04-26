@@ -341,7 +341,7 @@ CS_GRP_PRIVILEGE = 6  # all privileged instructions
 CS_GRP_BRANCH_RELATIVE = 7 # all relative branching instructions
 
 # Access types for instruction operands.
-CS_AC_INVALID  = 0        # Invalid/unitialized access type.
+CS_AC_INVALID  = 0        # Invalid/uninitialized access type.
 CS_AC_READ     = (1 << 0) # Operand that is read from.
 CS_AC_WRITE    = (1 << 1) # Operand that is written to.
 CS_AC_READ_WRITE = (2)

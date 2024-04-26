@@ -153,7 +153,7 @@ public:
     return nullptr;
   }
 
-  /// Parse out the target's MachineFunctionInfo from the YAML reprsentation.
+  /// Parse out the target's MachineFunctionInfo from the YAML representation.
   virtual bool parseMachineFunctionInfo(const yaml::MachineFunctionInfo &,
                                         PerFunctionMIParsingState &PFS,
                                         SMDiagnostic &Error,
@@ -439,13 +439,13 @@ public:
                                      raw_pwrite_stream &, raw_pwrite_stream *,
                                      CodeGenFileType, CGPassBuilderOption,
                                      PassInstrumentationCallbacks *) {
-    return make_error<StringError>("buildCodeGenPipeline is not overriden",
+    return make_error<StringError>("buildCodeGenPipeline is not overridden",
                                    inconvertibleErrorCode());
   }
 
   virtual std::pair<StringRef, bool> getPassNameFromLegacyName(StringRef) {
     llvm_unreachable(
-        "getPassNameFromLegacyName parseMIRPipeline is not overriden");
+        "getPassNameFromLegacyName parseMIRPipeline is not overridden");
   }
 
   /// Add passes to the specified pass manager to get machine code emitted with

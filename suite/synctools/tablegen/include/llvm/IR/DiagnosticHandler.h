@@ -18,8 +18,8 @@ namespace llvm {
 class DiagnosticInfo;
 
 /// This is the base class for diagnostic handling in LLVM.
-/// The handleDiagnostics method must be overriden by the subclasses to handle
-/// diagnostic. The *RemarkEnabled methods can be overriden to control
+/// The handleDiagnostics method must be overridden by the subclasses to handle
+/// diagnostic. The *RemarkEnabled methods can be overridden to control
 /// which remarks are enabled.
 struct DiagnosticHandler {
   void *DiagnosticContext = nullptr;

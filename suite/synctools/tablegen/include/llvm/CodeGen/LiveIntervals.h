@@ -7,7 +7,7 @@
 //===----------------------------------------------------------------------===//
 //
 /// \file This file implements the LiveInterval analysis pass.  Given some
-/// numbering of each the machine instructions (in this implemention depth-first
+/// numbering of each the machine instructions (in this implementation depth-first
 /// order) an interval [i, j) is said to be a live interval for register v if
 /// there is no instruction with number j' > j such that v is live at j' and
 /// there is no instruction with number i' < i such that v is live at i'. In

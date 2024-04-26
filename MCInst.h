@@ -153,7 +153,7 @@ MCOperand *MCInst_getOperand(MCInst *inst, unsigned i);
 
 unsigned MCInst_getNumOperands(const MCInst *inst);
 
-// This addOperand2 function doesnt free Op
+// This addOperand2 function doesn't free Op
 void MCInst_addOperand2(MCInst *inst, MCOperand *Op);
 
 bool MCInst_isPredicable(const MCInstrDesc *MIDesc);

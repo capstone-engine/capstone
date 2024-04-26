@@ -249,7 +249,7 @@ public:
   void clearParent() { ParentMI = nullptr; }
 
   /// Print a subreg index operand.
-  /// MO_Immediate operands can also be subreg idices. If it's the case, the
+  /// MO_Immediate operands can also be subreg indices. If it's the case, the
   /// subreg index name will be printed. MachineInstr::isOperandSubregIdx can be
   /// called to check this.
   static void printSubRegIdx(raw_ostream &OS, uint64_t Index,
@@ -296,8 +296,8 @@ public:
   /// \param TiedOperandIdx - if we need to print register ties this needs to
   /// provide the index of the tied register. If not, it will be ignored.
   /// \param TRI - provide more target-specific information to the printer.
-  /// Unlike the previous function, this one will not try and get the
-  /// information from it's parent.
+  /// Unlike the previous function, this one will not try to get the
+  /// information from its parent.
   /// \param IntrinsicInfo - same as \p TRI.
   void print(raw_ostream &os, ModuleSlotTracker &MST, LLT TypeToPrint,
              Optional<unsigned> OpIdx, bool PrintDef, bool IsStandalone,

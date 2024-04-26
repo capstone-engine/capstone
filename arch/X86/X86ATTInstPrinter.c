@@ -534,7 +534,7 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		int64_t imm = MCOperand_getImm(Op) + MI->flat_insn->size + MI->address;
 
-		// truncat imm for non-64bit
+		// truncate imm for non-64bit
 		if (MI->csh->mode != CS_MODE_64) {
 			imm = imm & 0xffffffff;
 		}

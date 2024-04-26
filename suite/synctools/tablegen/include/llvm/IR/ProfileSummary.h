@@ -83,7 +83,7 @@ public:
   /// Return summary information as metadata.
   Metadata *getMD(LLVMContext &Context, bool AddPartialField = true,
                   bool AddPartialProfileRatioField = true);
-  /// Construct profile summary from metdata.
+  /// Construct profile summary from metadata.
   static ProfileSummary *getFromMD(Metadata *MD);
   const SummaryEntryVector &getDetailedSummary() { return DetailedSummary; }
   uint32_t getNumFunctions() const { return NumFunctions; }

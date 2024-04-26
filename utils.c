@@ -111,7 +111,7 @@ uint16_t readBytes16(MCInst *MI, const uint8_t *Bytes)
 
 /// @brief Appends the string @p src to the string @p str. @p src is put to lower case.
 /// @param str The string to append to.
-/// @param str_size The lengt of @p str
+/// @param str_size The length of @p str
 /// @param src The string to append.
 void append_to_str_lower(char *str, size_t str_size, const char *src) {
 	char *dest = strchr(str, '\0');

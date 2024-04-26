@@ -945,7 +945,7 @@ public:
   /// Build and insert instructions to put \p Ops together at the specified p
   /// Indices to form a larger register.
   ///
-  /// If the types of the input registers are uniform and cover the entirity of
+  /// If the types of the input registers are uniform and cover the entirety of
   /// \p Res then a G_MERGE_VALUES will be produced. Otherwise an IMPLICIT_DEF
   /// followed by a sequence of G_INSERT instructions.
   ///

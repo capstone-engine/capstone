@@ -167,7 +167,7 @@
 //            The minimum number of samples required to reach the target
 //            CUTOFF.
 //        NUM_COUNTS (uint64_t)
-//            Number of samples to get to the desrired percentile.
+//            Number of samples to get to the desired percentile.
 //
 // NAME TABLE
 //    SIZE (uint32_t)
@@ -306,7 +306,7 @@ private:
   std::unique_ptr<SymbolRemappingReader> Remappings;
   // Map remapping key to the name in the profile. By looking up the
   // key in the remapper, a given new name can be mapped to the
-  // cannonical name using the NameMap.
+  // canonical name using the NameMap.
   DenseMap<SymbolRemappingReader::Key, StringRef> NameMap;
   // The Reader the remapper is servicing.
   SampleProfileReader &Reader;
@@ -379,7 +379,7 @@ public:
     return sampleprof_error::success;
   }
 
-  /// The implementaion to read sample profiles from the associated file.
+  /// The implementation to read sample profiles from the associated file.
   virtual std::error_code readImpl() = 0;
 
   /// Print the profile for \p FContext on stream \p OS.

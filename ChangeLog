@@ -424,7 +424,7 @@ Version 3.0.5: July 18th, 2018
 [ Core ]
 
 - Fix the include path for Android builds when building cstool.
-- Add posibility to disable universal build for Mac OS.
+- Add possibility to disable universal build for Mac OS.
 - cstool: Separate instruction bytes by spaces.
 - Fix code path of pkg-config in Cmake.
 - Update XCode project for XCode 9.1.
@@ -444,7 +444,7 @@ Version 3.0.5: July 18th, 2018
 
 [ ARM ]
 
-- Fix an integer overlow bug.
+- Fix an integer overflow bug.
 
 
 [ ARM64 ]
@@ -464,12 +464,12 @@ Version 3.0.5: July 18th, 2018
 
 [ Sparc ]
 
-- Fix an integer overlow bug.
+- Fix an integer overflow bug.
 
 
 [ SystemZ ]
 
-- Fix an integer overlow bug.
+- Fix an integer overflow bug.
 
 
 [ Python binding ]
@@ -961,7 +961,7 @@ Version 2.1: March 5th, 2014
 ----------------------------------
 Version 2.0: January 22nd, 2014
 
-Release 2.0 deprecates verison 1.0 and brings a lot of crucial changes.
+Release 2.0 deprecates version 1.0 and brings a lot of crucial changes.
 
 [ API changes ]
 
@@ -973,7 +973,7 @@ Release 2.0 deprecates verison 1.0 and brings a lot of crucial changes.
   cs_option().
 - New option CS_OPT_MEM allows to specify user-defined functions for dynamically
   memory management used internally by Capstone. This is useful to embed Capstone
-  into special environments such as kernel or firware.
+  into special environments such as kernel or firmware.
 - New API cs_support() can be used to check if this lib supports a particular
   architecture (this is necessary since we now allow to choose which architectures
   to compile in).
@@ -1009,7 +1009,7 @@ Release 2.0 deprecates verison 1.0 and brings a lot of crucial changes.
 - Cython support has been added, which can further speed up over the default
   pure Python binding (up to 30% in some cases)
 - Function cs_disasm_quick() & Cs.disasm() now use generator (rather than a list)
-  to return succesfully disassembled instructions. This improves the performance
+  to return successfully disassembled instructions. This improves the performance
   and reduces memory usage.
 
 

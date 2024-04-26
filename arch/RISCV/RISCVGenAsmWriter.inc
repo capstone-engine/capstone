@@ -2619,7 +2619,7 @@ static void printCustomAliasOperand(
 static bool RISCVInstPrinterValidateMCOperand(MCOperand *MCOp,
                   unsigned PredicateIndex) {
   // TODO: need some constant untils operate the MCOperand,
-  // but current CAPSTONE does't have.
+  // but current CAPSTONE doesn't have.
   // So, We just return true
   return true;
 

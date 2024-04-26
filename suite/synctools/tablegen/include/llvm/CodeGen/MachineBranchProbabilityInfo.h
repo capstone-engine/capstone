@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 //
-// This pass is used to evaluate branch probabilties on machine basic blocks.
+// This pass is used to evaluate branch probabilities on machine basic blocks.
 //
 //===----------------------------------------------------------------------===//
 

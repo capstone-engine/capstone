@@ -18,7 +18,7 @@
 
 void MCInst_Init(MCInst *inst)
 {
-	// unnecessary to initialize in loop . its expensive and inst->size shuold be honored
+	// unnecessary to initialize in loop . its expensive and inst->size should be honored
 	inst->Operands[0].Kind = kInvalid;
 	inst->Operands[0].ImmVal = 0;
 
@@ -89,7 +89,7 @@ unsigned MCInst_getNumOperands(const MCInst *inst)
 	return inst->size;
 }
 
-// This addOperand2 function doesnt free Op
+// This addOperand2 function doesn't free Op
 void MCInst_addOperand2(MCInst *inst, MCOperand *Op)
 {
 	assert(inst->size < MAX_MC_OPS);

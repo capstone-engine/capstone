@@ -186,7 +186,7 @@ typedef struct cs_mos65xx_op {
 	};
 } cs_mos65xx_op;
 
-/// The MOS65XX address mode and it's operands
+/// The MOS65XX address mode and its operands
 typedef struct cs_mos65xx {
 	mos65xx_address_mode am;
 	bool modifies_flags;

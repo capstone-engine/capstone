@@ -203,7 +203,7 @@ void PPC_set_instr_map_data(MCInst *MI, const uint8_t *Bytes, size_t BytesLen)
 	}
 }
 
-/// Inialize PPCs detail.
+/// Initialize PPCs detail.
 void PPC_init_cs_detail(MCInst *MI)
 {
 	if (!detail_is_set(MI))

@@ -10,7 +10,7 @@ We support the following scenario regarding the build machine:
 - Build running on Microsoft Windows.
 - The C Software Develepment Kit of the target Windows CE **device** installed.
 - Only for Windows CE 7:
-  - C compiler toolchain installed, targetting **Windows Embedded Compact 7** on **ARMv7**.  We recommend the toolchain provided with [Windows Embedded Compact 7 toolkit](https://msdn.microsoft.com/en-us/library/jj200349%28v=winembedded.70%29.aspx), as the toolchain originally provided with **Visual Studio 2008** is relatively old.
+  - C compiler toolchain installed, targeting **Windows Embedded Compact 7** on **ARMv7**.  We recommend the toolchain provided with [Windows Embedded Compact 7 toolkit](https://msdn.microsoft.com/en-us/library/jj200349%28v=winembedded.70%29.aspx), as the toolchain originally provided with **Visual Studio 2008** is relatively old.
 
 Before building Capstone for Windows CE 7 (respectively, Windows CE 8), the build script `windowsce/make_windowsce7-armv7.bat` (respectively, `windowsce/make_windowsce8-armv7.bat`) needs to be modified. The variables specified in the rest of this section are set in this script file.
 

@@ -117,7 +117,7 @@ extern template class PassManager<MachineFunction>;
 ///          `PreservedAnalyses run(MachineFunction &,
 ///                                 MachineFunctionAnalysisManager &)`
 ///          But this interface wouldn't be executed. It is just a placeholder
-///          to satisfy the pass manager type-erased inteface. This
+///          to satisfy the pass manager type-erased interface. This
 ///          special-casing of machine module pass is due to its limited use
 ///          cases and the unnecessary complexity it may bring to the machine
 ///          pass manager.

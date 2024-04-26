@@ -17,7 +17,7 @@
 //
 // A schedule is, for every instruction in a block, a Cycle and a Stage. Note
 // that we only support single-block loops, so "block" and "loop" can be used
-// interchangably.
+// interchangeably.
 //
 // The Cycle of an instruction defines a partial order of the instructions in
 // the remapped loop. Instructions within a cycle must not consume the output

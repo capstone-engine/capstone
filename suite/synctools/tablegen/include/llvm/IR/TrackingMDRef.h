@@ -101,7 +101,7 @@ private:
 
 /// Typed tracking ref.
 ///
-/// Track refererences of a particular type.  It's useful to use this for \a
+/// Track references of a particular type.  It's useful to use this for \a
 /// MDNode and \a ValueAsMetadata.
 template <class T> class TypedTrackingMDRef {
   TrackingMDRef Ref;
