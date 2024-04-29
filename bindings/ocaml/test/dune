@@ -1,0 +1,54 @@
+(test
+ (name test_basic)
+ (libraries capstone)
+ (modules test_basic))
+
+(test
+ (name test_detail)
+ (libraries capstone)
+ (modules test_detail))
+
+(test
+ (name test_aarch64)
+ (libraries capstone)
+ (modules test_aarch64))
+
+(test
+ (name test_arm)
+ (libraries capstone)
+ (modules test_arm))
+
+(test
+ (name test_m680x)
+ (libraries capstone)
+ (modules test_m680x))
+
+(test
+ (name test_mips)
+ (libraries capstone)
+ (modules test_mips))
+
+(test
+ (name test_ppc)
+ (libraries capstone)
+ (modules test_ppc))
+
+(test
+ (name test_sparc)
+ (libraries capstone)
+ (modules test_sparc))
+
+(test
+ (name test_systemz)
+ (libraries capstone)
+ (modules test_systemz))
+
+(test
+ (name test_x86)
+ (libraries capstone)
+ (modules test_x86))
+
+(test
+ (name test_xcore)
+ (libraries capstone)
+ (modules test_xcore))

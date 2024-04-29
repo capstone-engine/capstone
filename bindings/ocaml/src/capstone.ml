@@ -2,7 +2,7 @@
  * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
 open Arm
-open Arm64
+open Aarch64
 open Mips
 open Ppc
 open X86
@@ -10,12 +10,11 @@ open Sparc
 open Systemz
 open Xcore
 open M680x
-open Printf	(* debug *)
 
 (* Hardware architectures *)
 type arch =
   | CS_ARCH_ARM
-  | CS_ARCH_ARM64
+  | CS_ARCH_AARCH64
   | CS_ARCH_MIPS
   | CS_ARCH_X86
   | CS_ARCH_PPC
@@ -103,7 +102,7 @@ let _CS_GRP_PRIVILEGE = 6;;  (* all privileged instructions *)
 
 type cs_arch =
 	| CS_INFO_ARM of cs_arm
-	| CS_INFO_ARM64 of cs_arm64
+	| CS_INFO_AARCH64 of cs_aarch64
 	| CS_INFO_MIPS of cs_mips
 	| CS_INFO_X86 of cs_x86
 	| CS_INFO_PPC of cs_ppc
@@ -196,13 +195,13 @@ class cs_insn c a =
 		method group_name id = _cs_group_name csh.h id;
 	end;;
 
-let cs_insn_group handle insn group_id =
+let cs_insn_group _handle insn group_id =
 	List.exists (fun g -> g == group_id) (Array.to_list insn.groups);;
 
-let cs_reg_read handle insn reg_id =
+let cs_reg_read _handle insn reg_id =
 	List.exists (fun g -> g == reg_id) (Array.to_list insn.regs_read);;
 
-let cs_reg_write handle insn reg_id =
+let cs_reg_write _handle insn reg_id =
 	List.exists (fun g -> g == reg_id) (Array.to_list insn.regs_write);;
 
 
