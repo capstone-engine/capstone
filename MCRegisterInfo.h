@@ -23,7 +23,7 @@
 
 /// An unsigned integer type large enough to represent all physical registers,
 /// but not necessarily virtual registers.
-typedef uint16_t MCPhysReg;
+typedef int16_t MCPhysReg;
 typedef const MCPhysReg* iterator;
 
 typedef struct MCRegisterClass2 {

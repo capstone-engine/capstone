@@ -192,7 +192,7 @@ static const MCPhysReg RISCVRegDiffLists[] = {
   /* 60 */ 61, 0,
   /* 62 */ 62, 0,
   /* 64 */ 63, 0,
-  /* 66 */ 65535, 0,
+  /* 66 */ -1, 0,
 };
 
 static const uint16_t RISCVSubRegIdxLists[] = {

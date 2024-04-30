@@ -97,7 +97,7 @@ enum {
 #undef GET_REGINFO_MC_DESC
 
 static const MCPhysReg AlphaRegDiffLists[] = {
-  /* 0 */ 65535, 0,
+  /* 0 */ -1, 0,
 };
 
 static const uint16_t AlphaSubRegIdxLists[] = {
@@ -276,6 +276,5 @@ static const uint16_t AlphaRegEncodingTable[] = {
   0,
 };
 #endif // GET_REGINFO_MC_DESC
-
 
 
