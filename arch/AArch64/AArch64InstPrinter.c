@@ -2557,6 +2557,32 @@ void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	assert(0 && "Expressions are not supported.");
 }
 
+void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O) {
+	add_cs_detail(MI, AArch64_OP_GROUP_AdrAdrpLabel, OpNum);
+	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
+
+  // If the label has already been resolved to an immediate offset (say, when
+  // we're running the disassembler), just print the immediate.
+	if (MCOperand_isImm(Op)) {
+		int64_t Offset = MCOperand_getImm(Op);
+    if (MCInst_getOpcode(MI) == AArch64_ADRP) {
+      Offset = Offset * 4096;
+      Address = Address & -4096;
+    }
+		SStream_concat0(O, markup(">"));
+		if (!MI->csh->PrintBranchImmNotAsAddress)
+			printUInt64(O, (Address + Offset));
+		else {
+			printUInt64Bang(O, Offset);
+		}
+		SStream_concat0(O, markup(">"));
+    return;
+  }
+
+  // Otherwise, just print the expression.
+	assert(0 && "Expressions are not supported.");
+}
+
 void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, AArch64_OP_GROUP_BarrierOption, OpNo);
