@@ -1474,7 +1474,7 @@
 },
 
 {
-	PPC_CMPD, PPC_INS_CMP,
+	PPC_CMPD, PPC_INS_CMPD,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -1495,7 +1495,7 @@
 },
 
 {
-	PPC_CMPLD, PPC_INS_CMPL,
+	PPC_CMPLD, PPC_INS_CMPLD,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -1509,14 +1509,14 @@
 },
 
 {
-	PPC_CMPLW, PPC_INS_CMPL,
+	PPC_CMPLW, PPC_INS_CMPLW,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	PPC_CMPLWI, PPC_INS_CMPLI,
+	PPC_CMPLWI, PPC_INS_CMPLWI,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -1530,14 +1530,14 @@
 },
 
 {
-	PPC_CMPW, PPC_INS_CMP,
+	PPC_CMPW, PPC_INS_CMPW,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	PPC_CMPWI, PPC_INS_CMPI,
+	PPC_CMPWI, PPC_INS_CMPWI,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -8075,21 +8075,21 @@
 },
 
 {
-	PPC_RLDICL, PPC_INS_CLRLDI,
+	PPC_RLDICL, PPC_INS_RLDICL,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	PPC_RLDICL_32_64, PPC_INS_CLRLDI,
+	PPC_RLDICL_32_64, PPC_INS_RLDICL,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
-	PPC_RLDICLo, PPC_INS_CLRLDI,
+	PPC_RLDICLo, PPC_INS_RLDICL,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
 #endif
@@ -8159,7 +8159,7 @@
 },
 
 {
-	PPC_RLWINM, PPC_INS_CLRLWI,
+	PPC_RLWINM, PPC_INS_RLWINM,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
@@ -8180,7 +8180,7 @@
 },
 
 {
-	PPC_RLWINMo, PPC_INS_CLRLWI,
+	PPC_RLWINMo, PPC_INS_RLWINM,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0
 #endif
@@ -11456,7 +11456,7 @@
 },
 
 {
-	PPC_XORI, PPC_INS_XNOP,
+	PPC_XORI, PPC_INS_XORI,
 #ifndef CAPSTONE_DIET
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
