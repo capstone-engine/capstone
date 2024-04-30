@@ -238,7 +238,7 @@ static DecodeStatus Decode3OpInstruction(unsigned Insn,
 static DecodeStatus Decode2OpInstructionFail(MCInst *Inst, unsigned Insn, uint64_t Address,
 		const void *Decoder)
 {
-	// Try and decode as a 3R instruction.
+	// Try to decode as a 3R instruction.
 	unsigned Opcode = fieldFromInstruction_4(Insn, 11, 5);
 	switch (Opcode) {
 		case 0x0:
@@ -409,7 +409,7 @@ static DecodeStatus DecodeRUSSrcDstBitpInstruction(MCInst *Inst, unsigned Insn, 
 static DecodeStatus DecodeL2OpInstructionFail(MCInst *Inst, unsigned Insn, uint64_t Address,
 		const void *Decoder)
 {
-	// Try and decode as a L3R / L2RUS instruction.
+	// Try to decode as a L3R / L2RUS instruction.
 	unsigned Opcode = fieldFromInstruction_4(Insn, 16, 4) |
 		fieldFromInstruction_4(Insn, 27, 5) << 4;
 	switch (Opcode) {
@@ -650,7 +650,7 @@ static DecodeStatus DecodeL5RInstructionFail(MCInst *Inst, unsigned Insn, uint64
 {
 	unsigned Opcode;
 
-	// Try and decode as a L6R instruction.
+	// Try to decode as a L6R instruction.
 	MCInst_clear(Inst);
 	Opcode = fieldFromInstruction_4(Insn, 27, 5);
 	switch (Opcode) {

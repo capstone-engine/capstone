@@ -181,7 +181,7 @@ void AArch64_add_vas(MCInst *MI, const SStream *OS) {
 		}
 		vl |= (num << 8);
 
-		// Determine op index by searching for trainling commata after op string
+		// Determine op index by searching for trailing commata after op string
 		uint32_t op_idx = 0;
 		const char *comma_ptr = strchr(OS->buffer, ',');;
 		while (comma_ptr && comma_ptr < vl_ptr) {
@@ -1084,7 +1084,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		const char *Dot = strstr(RegName, ".");
 		AArch64Layout_VectorLayout vas = AArch64Layout_Invalid;
 		if (!Dot) {
-			// The matrix dimensions are machine dependendent.
+			// The matrix dimensions are machine dependent.
 			// Currently we do not support differentiation of machines.
 			// So we just indicate the use of the complete matrix.
 			vas = sme_reg_to_vas(MCInst_getOpVal(MI, OpNum));
@@ -1353,7 +1353,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		const char *Dot = strstr(RegName, ".");
 		AArch64Layout_VectorLayout vas = AArch64Layout_Invalid;
 		if (!Dot) {
-			// The matrix dimensions are machine dependendent.
+			// The matrix dimensions are machine dependent.
 			// Currently we do not support differentiation of machines.
 			// So we just indicate the use of the complete matrix.
 			vas = sme_reg_to_vas(MCInst_getOpVal(MI, OpNum));
