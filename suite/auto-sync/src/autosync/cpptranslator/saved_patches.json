@@ -2408,5 +2408,31 @@
       "new_hash": "02eaaa869cf975da8203666135470c113ad9246dd2f73061dbf6ee1706683299",
       "edit": ""
     }
+  },
+  "MipsInstPrinter.h": {
+    "\"../../MCInst.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "35206acacfb2eb526e2e15078ed53b9765f79b59d9c2f2475c0e873c88d02df7",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"../../SStream.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "2b45d68382f855f8fdc8a7cf177cda2d4dee75318bab9e1304026375ba05284f",
+      "new_hash": "",
+      "edit": ""
+    },
+    "CONCAT_": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "5d1c11b9f7291b8ad9979add27229f0764723c78a7939bf15d55e9f3ba75a4c1",
+      "edit": ""
+    },
+    "DECLARE_printUImm": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "6bae637a74ba6624001e568e7b960417c99cd2b8fa2d310bc30b1328585cd223",
+      "edit": ""
+    }
   }
 }

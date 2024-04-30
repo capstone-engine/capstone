@@ -216,7 +216,7 @@ def parse_args() -> argparse.Namespace:
         "-a",
         dest="arch",
         help="Name of target architecture.",
-        choices=["ARM", "PPC", "AArch64", "Alpha", "LoongArch"],
+        choices=["ARM", "PPC", "AArch64", "Alpha", "LoongArch", "Mips"],
         required=True,
     )
     parser.add_argument(
