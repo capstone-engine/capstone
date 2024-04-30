@@ -138,7 +138,7 @@ public:
   void traverse();
 
   /// Provides the instruction id of the closest reaching def instruction of
-  /// PhysReg that reaches MI, relative to the begining of MI's basic block.
+  /// PhysReg that reaches MI, relative to the beginning of MI's basic block.
   int getReachingDef(MachineInstr *MI, MCRegister PhysReg) const;
 
   /// Return whether A and B use the same def of PhysReg.
@@ -179,7 +179,7 @@ public:
   bool isRegDefinedAfter(MachineInstr *MI, MCRegister PhysReg) const;
 
   /// Provides the clearance - the number of instructions since the closest
-  /// reaching def instuction of PhysReg that reaches MI.
+  /// reaching def instruction of PhysReg that reaches MI.
   int getClearance(MachineInstr *MI, MCRegister PhysReg) const;
 
   /// Provides the uses, in the same block as MI, of register that MI defines.
@@ -271,7 +271,7 @@ private:
   MachineInstr *getInstFromId(MachineBasicBlock *MBB, int InstId) const;
 
   /// Provides the instruction of the closest reaching def instruction of
-  /// PhysReg that reaches MI, relative to the begining of MI's basic block.
+  /// PhysReg that reaches MI, relative to the beginning of MI's basic block.
   MachineInstr *getReachingLocalMIDef(MachineInstr *MI,
                                       MCRegister PhysReg) const;
 };

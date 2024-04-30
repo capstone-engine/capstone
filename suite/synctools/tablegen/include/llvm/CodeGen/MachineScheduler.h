@@ -174,7 +174,7 @@ public:
 class ScheduleDAGMI;
 
 /// Define a generic scheduling policy for targets that don't provide their own
-/// MachineSchedStrategy. This can be overriden for each scheduling region
+/// MachineSchedStrategy. This can be overridden for each scheduling region
 /// before building the DAG.
 struct MachineSchedPolicy {
   // Allow the scheduler to disable register pressure tracking.

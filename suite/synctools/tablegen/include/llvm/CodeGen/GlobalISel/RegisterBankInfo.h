@@ -40,7 +40,7 @@ class RegisterBankInfo {
 public:
   /// Helper struct that represents how a value is partially mapped
   /// into a register.
-  /// The StartIdx and Length represent what region of the orginal
+  /// The StartIdx and Length represent what region of the original
   /// value this partial mapping covers.
   /// This can be represented as a Mask of contiguous bit starting
   /// at StartIdx bit and spanning Length bits.
@@ -77,7 +77,7 @@ public:
     void print(raw_ostream &OS) const;
 
     /// Check that the Mask is compatible with the RegBank.
-    /// Indeed, if the RegBank cannot accomadate the "active bits" of the mask,
+    /// Indeed, if the RegBank cannot accommodate the "active bits" of the mask,
     /// there is no way this mapping is valid.
     ///
     /// \note This method does not check anything when assertions are disabled.
@@ -255,7 +255,7 @@ public:
       return getID() != InvalidMappingID && OperandsMapping;
     }
 
-    /// Verifiy that this mapping makes sense for \p MI.
+    /// Verify that this mapping makes sense for \p MI.
     /// \pre \p MI must be connected to a MachineFunction.
     ///
     /// \note This method does not check anything when assertions are disabled.

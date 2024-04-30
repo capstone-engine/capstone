@@ -906,7 +906,7 @@ public:
   /// into \p MBB before \p InsertBefore.
   ///
   /// Note: Does not perform target specific adjustments; consider using
-  /// TargetInstrInfo::duplicate() intead.
+  /// TargetInstrInfo::duplicate() instead.
   MachineInstr &
   cloneMachineInstrBundle(MachineBasicBlock &MBB,
                           MachineBasicBlock::iterator InsertBefore,
@@ -1020,7 +1020,7 @@ public:
 
   /// Returns a reference to a list of cfi instructions in the function's
   /// prologue.  Used to construct frame maps for debug and exception handling
-  /// comsumers.
+  /// consumers.
   const std::vector<MCCFIInstruction> &getFrameInstructions() const {
     return FrameInstructions;
   }

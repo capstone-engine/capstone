@@ -206,7 +206,7 @@ typedef struct m68k_op_size {
 	};
 } m68k_op_size;
 
-/// The M68K instruction and it's operands
+/// The M68K instruction and its operands
 typedef struct cs_m68k {
 	// Number of operands of this instruction or 0 when instruction has no operand.
 	cs_m68k_op operands[M68K_OPERAND_COUNT]; ///< operands for this instruction.

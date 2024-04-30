@@ -4,7 +4,7 @@
 #ifndef CS_PPC_LINKAGE_H
 #define CS_PPC_LINKAGE_H
 
-// Function defintions to call static LLVM functions.
+// Function definitions to call static LLVM functions.
 
 #include "../../MCDisassembler.h"
 #include "../../MCInst.h"

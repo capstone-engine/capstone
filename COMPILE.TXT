@@ -17,7 +17,7 @@ Capstone requires no prerequisite packages, so it is easy to compile & install.
 
 (0) Tailor Capstone to your need.
 
-  Out of all archtitectures supported by Capstone, if you just need several
+  Out of all architectures supported by Capstone, if you just need several
   selected archs, choose the ones you want to compile in by editing "config.mk"
   before going to next steps.
 

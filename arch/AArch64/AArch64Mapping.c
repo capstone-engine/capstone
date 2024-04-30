@@ -247,7 +247,7 @@ void AArch64_init_cs_detail(MCInst *MI)
 /// So the only generic way to determine, if the memory access is in
 /// post-indexed addressing mode, is by search for "<membase>], #<memdisp>" in
 /// @p OS.
-/// Searching the asm string to determine such a property is enourmously ugly
+/// Searching the asm string to determine such a property is enormously ugly
 /// and wastes resources.
 /// Sorry, I know and do feel bad about it. But for now it works.
 static bool AArch64_check_post_index_am(const MCInst *MI, const SStream *OS) {
@@ -279,7 +279,7 @@ static void AArch64_check_updates_flags(MCInst *MI)
 	if (!detail_is_set(MI))
 		return;
 	cs_detail *detail = get_detail(MI);
-	// Implicity written registers
+	// Implicitly written registers
 	for (int i = 0; i < detail->regs_write_count; ++i) {
 		if (detail->regs_write[i] == 0)
 			break;

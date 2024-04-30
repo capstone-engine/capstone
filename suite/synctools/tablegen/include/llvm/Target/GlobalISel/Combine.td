@@ -73,7 +73,7 @@ class GIDefKindWithArgs;
 /// Declare a root node. There must be at least one of these in every combine
 /// rule.
 /// TODO: The plan is to elide `root` definitions and determine it from the DAG
-///       itself with an overide for situations where the usual determination
+///       itself with an override for situations where the usual determination
 ///       is incorrect.
 def root : GIDefKind;
 

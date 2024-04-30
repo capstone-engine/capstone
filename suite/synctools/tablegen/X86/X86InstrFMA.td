@@ -166,7 +166,7 @@ let ExeDomain = SSEPackedDouble in {
 }
 
 // All source register operands of FMA opcodes defined in fma3s_rm multiclass
-// can be commuted. In many cases such commute transformation requres an opcode
+// can be commuted. In many cases such commute transformation requires an opcode
 // adjustment, for example, commuting the operands 1 and 2 in FMA*132 form
 // would require an opcode change to FMA*231:
 //     FMA*132* reg1, reg2, reg3; // reg1 * reg3 + reg2;

@@ -180,7 +180,7 @@ public:
   /// Attach a DIGlobalVariableExpression.
   void addDebugInfo(DIGlobalVariableExpression *GV);
 
-  /// Fill the vector with all debug info attachements.
+  /// Fill the vector with all debug info attachments.
   void getDebugInfo(SmallVectorImpl<DIGlobalVariableExpression *> &GVs) const;
 
   /// Add attribute to this global.

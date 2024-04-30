@@ -682,7 +682,7 @@ for line in lines:
       break;
     }
   }
-  // Chech for match
+  // Check for match
   if(opcode != OpToPatterns[OpToIndex].Opcode)
     return NULL;
 

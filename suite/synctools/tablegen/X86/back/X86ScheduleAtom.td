@@ -20,8 +20,8 @@
 def AtomModel : SchedMachineModel {
   let IssueWidth = 2;  // Allows 2 instructions per scheduling group.
   let MicroOpBufferSize = 0; // In-order execution, always hide latency.
-  let LoadLatency = 3; // Expected cycles, may be overriden.
-  let HighLatency = 30;// Expected, may be overriden.
+  let LoadLatency = 3; // Expected cycles, may be overridden.
+  let HighLatency = 30;// Expected, may be overridden.
 
   // On the Atom, the throughput for taken branches is 2 cycles. For small
   // simple loops, expand by a small factor to hide the backedge cost.

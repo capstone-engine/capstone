@@ -8,7 +8,7 @@
 
 find MC/ -name *.cs | ./test_mc.py
 
-# To test just one architecture, specify the corresponsing dir:
+# To test just one architecture, specify the corresponding dir:
 # $ find MC/X86 -name *.cs | ./test_mc.py
 
 # To test just one input file, run test_mc.py with that file:

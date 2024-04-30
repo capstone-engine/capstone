@@ -650,7 +650,7 @@ void printTLSCall(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_TLSCall, OpNo);
 
-	// Expresion logic removed.
+	// Expression logic removed.
 
 	set_mem_access(MI, true);
 	SStream_concat0(O, "(");
@@ -682,7 +682,7 @@ bool showRegistersWithPercentPrefix(const MCInst *MI, const char *RegName)
 }
 
 /// getVerboseConditionalRegName - This method expands the condition register
-/// when requested explicitly or targetting Darwin.
+/// when requested explicitly or targeting Darwin.
 const char *getVerboseConditionRegName(const MCInst *MI, unsigned RegNum,
 				       unsigned RegEncoding)
 {

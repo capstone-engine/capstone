@@ -1155,8 +1155,8 @@ static int getID(struct InternalInstruction *insn)
 		}
 
 		/*
-		 * The tables can't distinquish between cases where the W-bit is used to
-		 * select register size and cases where its a required part of the opcode.
+		 * The tables can't distinguish between cases where the W-bit is used to
+		 * select register size and cases where it's a required part of the opcode.
 		 */
 		if ((insn->vectorExtensionType == TYPE_EVEX &&
 					wFromEVEX3of4(insn->vectorExtensionPrefix[2])) ||

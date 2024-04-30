@@ -1761,7 +1761,7 @@ public:
 };
 
 /// This SDNode is used for LIFETIME_START/LIFETIME_END values, which indicate
-/// the offet and size that are started/ended in the underlying FrameIndex.
+/// the offset and size that are started/ended in the underlying FrameIndex.
 class LifetimeSDNode : public SDNode {
   friend class SelectionDAG;
   int64_t Size;

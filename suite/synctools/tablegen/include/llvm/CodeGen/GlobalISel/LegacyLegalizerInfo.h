@@ -161,7 +161,7 @@ public:
   }
 
   /// The setAction calls record the non-size-changing legalization actions
-  /// to take on specificly-sized types. The SizeChangeStrategy defines what
+  /// to take on specifically-sized types. The SizeChangeStrategy defines what
   /// to do when the size of the type needs to be changed to reach a legally
   /// sized type (i.e., one that was defined through a setAction call).
   /// e.g.

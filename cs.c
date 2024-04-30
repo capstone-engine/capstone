@@ -784,7 +784,7 @@ static int str_replace(char *result, char *target, const char *str1, char *str2)
 {
 	// only perform replacement if the output fits into result
 	if (strlen(target) - strlen(str1) + strlen(str2) < CS_MNEMONIC_SIZE - 1)  {
-		// copy str2 to begining of result
+		// copy str2 to beginning of result
 		strcpy(result, str2);
 		// skip str1 - already replaced by str2
 		strcat(result, target + strlen(str1));
@@ -1120,7 +1120,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 }
 #endif
 
-// dynamicly allocate memory to contain disasm insn
+// dynamically allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 CAPSTONE_EXPORT
 size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
@@ -1288,7 +1288,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			// continue to fill in the cache after the last instruction
 			insn_cache = (cs_insn *)((char *)total + sizeof(cs_insn) * c);
 
-			// reset f back to 0, so we fill in the cache from begining
+			// reset f back to 0, so we fill in the cache from beginning
 			f = 0;
 		} else
 			insn_cache++;

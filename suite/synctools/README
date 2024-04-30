@@ -11,7 +11,7 @@ For X86
 
 2. Run disassemblertables_reduce2 & disassemblertables_reduce2 to generate optimized (index table) X86GenDisassemblerTables2.inc & X86GenDisassemblerTables_reduce2.inc
 
-    # use 2x name to avoid overwritting X86GenDisassemblerTables2.inc & X86GenDisassemblerTables_reduce2.inc
+    # use 2x name to avoid overwriting X86GenDisassemblerTables2.inc & X86GenDisassemblerTables_reduce2.inc
 
     $ make
     $ ./disassemblertables2 > X86GenDisassemblerTables2x.inc

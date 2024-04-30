@@ -7,7 +7,7 @@
 //===----------------------------------------------------------------------===//
 /// \file
 ///
-/// This file defines constans and helpers used when dealing with OpenMP.
+/// This file defines constants and helpers used when dealing with OpenMP.
 ///
 //===----------------------------------------------------------------------===//
 
@@ -62,7 +62,7 @@ enum class DefaultKind {
 #include "llvm/Frontend/OpenMP/OMPKinds.def"
 
 /// IDs for all omp runtime library ident_t flag encodings (see
-/// their defintion in openmp/runtime/src/kmp.h).
+/// their definition in openmp/runtime/src/kmp.h).
 enum class IdentFlag {
 #define OMP_IDENT_FLAG(Enum, Str, Value) Enum = Value,
 #include "llvm/Frontend/OpenMP/OMPKinds.def"

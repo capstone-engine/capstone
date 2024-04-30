@@ -161,7 +161,7 @@ typedef enum m680x_group_type {
 /// instruction mnemonic
 #define M680X_SECOND_OP_IN_MNEM   2
 
-/// The M680X instruction and it's operands
+/// The M680X instruction and its operands
 typedef struct cs_m680x {
 	uint8_t flags;		///< See: M680X instruction flags
 	uint8_t op_count;	///< number of operands for the instruction or 0

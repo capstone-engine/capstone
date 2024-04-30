@@ -16,7 +16,7 @@ void PPC_init_mri(MCRegisterInfo *MRI);
 
 void PPC_init_cs_detail(MCInst *MI);
 
-// return name of regiser in friendly string
+// return name of register in friendly string
 const char *PPC_reg_name(csh handle, unsigned int reg);
 
 void PPC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info);

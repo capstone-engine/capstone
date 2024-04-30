@@ -189,7 +189,7 @@ class TargetInstrInfo;
       return Virt2StackSlotMap[virtReg.id()];
     }
 
-    /// create a mapping for the specifed virtual register to
+    /// create a mapping for the specified virtual register to
     /// the next available stack slot
     int assignVirt2StackSlot(Register virtReg);
 

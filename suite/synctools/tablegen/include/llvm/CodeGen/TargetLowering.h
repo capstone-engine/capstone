@@ -734,10 +734,10 @@ public:
     return true;
   }
 
-  /// Should we tranform the IR-optimal check for whether given truncation
+  /// Should we transform the IR-optimal check for whether given truncation
   /// down into KeptBits would be truncating or not:
   ///   (add %x, (1 << (KeptBits-1))) srccond (1 << KeptBits)
-  /// Into it's more traditional form:
+  /// Into its more traditional form:
   ///   ((%x << C) a>> C) dstcond %x
   /// Return true if we should transform.
   /// Return false if there is no preference.
@@ -822,8 +822,8 @@ public:
   virtual EVT getSetCCResultType(const DataLayout &DL, LLVMContext &Context,
                                  EVT VT) const;
 
-  /// Return the ValueType for comparison libcalls. Comparions libcalls include
-  /// floating point comparion calls, and Ordered/Unordered check calls on
+  /// Return the ValueType for comparison libcalls. Comparison libcalls include
+  /// floating point comparison calls, and Ordered/Unordered check calls on
   /// floating point numbers.
   virtual
   MVT::SimpleValueType getCmpLibcallReturnType() const;
@@ -3269,7 +3269,7 @@ protected:
   bool isLegalRC(const TargetRegisterInfo &TRI,
                  const TargetRegisterClass &RC) const;
 
-  /// Replace/modify any TargetFrameIndex operands with a targte-dependent
+  /// Replace/modify any TargetFrameIndex operands with a target-dependent
   /// sequence of memory operands that is recognized by PrologEpilogInserter.
   MachineBasicBlock *emitPatchPoint(MachineInstr &MI,
                                     MachineBasicBlock *MBB) const;
@@ -4672,12 +4672,12 @@ public:
                               unsigned Scale, SelectionDAG &DAG) const;
 
   /// Method for building the DAG expansion of ISD::U(ADD|SUB)O. Expansion
-  /// always suceeds and populates the Result and Overflow arguments.
+  /// always succeeds and populates the Result and Overflow arguments.
   void expandUADDSUBO(SDNode *Node, SDValue &Result, SDValue &Overflow,
                       SelectionDAG &DAG) const;
 
   /// Method for building the DAG expansion of ISD::S(ADD|SUB)O. Expansion
-  /// always suceeds and populates the Result and Overflow arguments.
+  /// always succeeds and populates the Result and Overflow arguments.
   void expandSADDSUBO(SDNode *Node, SDValue &Result, SDValue &Overflow,
                       SelectionDAG &DAG) const;
 
@@ -4774,7 +4774,7 @@ public:
   // combiner can fold the new nodes.
   SDValue lowerCmpEqZeroToCtlzSrl(SDValue Op, SelectionDAG &DAG) const;
 
-  /// Give targets the chance to reduce the number of distinct addresing modes.
+  /// Give targets the chance to reduce the number of distinct addressing modes.
   ISD::MemIndexType getCanonicalIndexType(ISD::MemIndexType IndexType,
                                           EVT MemVT, SDValue Offsets) const;
 

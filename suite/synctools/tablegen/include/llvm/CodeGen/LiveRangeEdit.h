@@ -161,7 +161,7 @@ public:
   /// dead after rematerialization, we still want to keep it for following
   /// rematerializations. We save the def instruction in DeadRemats,
   /// and replace the original dst register with a new dummy register so
-  /// the live range of original dst register can be shrinked normally.
+  /// the live range of original dst register can be shrunk normally.
   /// We don't want to allocate phys register for the dummy register, so
   /// we want to drop it from the NewRegs set.
   void pop_back() { NewRegs.pop_back(); }

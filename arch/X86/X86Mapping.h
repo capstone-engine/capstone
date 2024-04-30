@@ -32,7 +32,7 @@ x86_reg x86_map_sib_index(int r);
 // map seg_override to x86_reg
 x86_reg x86_map_segment(int r);
 
-// return name of regiser in friendly string
+// return name of register in friendly string
 const char *X86_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info

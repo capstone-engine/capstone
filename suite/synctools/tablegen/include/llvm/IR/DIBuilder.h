@@ -222,7 +222,7 @@ namespace llvm {
 
     /// Create debugging information entry for a qualified
     /// type, e.g. 'const int'.
-    /// \param Tag         Tag identifing type, e.g. dwarf::TAG_volatile_type
+    /// \param Tag         Tag identifying type, e.g. dwarf::TAG_volatile_type
     /// \param FromTy      Base Type.
     DIDerivedType *createQualifiedType(unsigned Tag, DIType *FromTy);
 

@@ -129,7 +129,7 @@ public:
 
   /// Return the number of arguments to the underlying call.
   size_t actual_arg_size() const { return getNumCallArgs(); }
-  /// Return an iterator to the begining of the arguments to the underlying call
+  /// Return an iterator to the beginning of the arguments to the underlying call
   const_op_iterator actual_arg_begin() const {
     assert(CallArgsBeginPos <= (int)arg_size());
     return arg_begin() + CallArgsBeginPos;
@@ -177,7 +177,7 @@ public:
     return make_range(deopt_begin(), deopt_end());
   }
 
-  /// Returns an iterator to the begining of the argument range describing gc
+  /// Returns an iterator to the beginning of the argument range describing gc
   /// values for the statepoint.
   const_op_iterator gc_args_begin() const {
     if (auto Opt = getOperandBundle(LLVMContext::OB_gc_live))

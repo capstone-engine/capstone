@@ -233,7 +233,7 @@ public:
       std::unique_ptr<remarks::RemarkStreamer> MainRemarkStreamer);
 
   /// The "LLVM remark streamer" used by LLVM to serialize remark diagnostics
-  /// comming from IR and MIR passes.
+  /// coming from IR and MIR passes.
   ///
   /// If it does not exist, diagnostics are not saved in a file but only emitted
   /// via the diagnostic handler.

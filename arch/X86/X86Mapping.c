@@ -2098,7 +2098,7 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 #ifndef CAPSTONE_DIET
 // map instruction to its characteristics
 typedef struct insn_op {
-	uint64_t flags;	// how this instruction update EFLAGS(arithmetic instrcutions) of FPU FLAGS(for FPU instructions)
+	uint64_t flags;	// how this instruction update EFLAGS(arithmetic instructions) of FPU FLAGS(for FPU instructions)
 	uint8_t access[6];
 } insn_op;
 

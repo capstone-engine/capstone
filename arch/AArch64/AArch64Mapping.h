@@ -14,7 +14,7 @@ typedef enum {
 #include "AArch64GenCSOpGroup.inc"
 } aarch64_op_group;
 
-// return name of regiser in friendly string
+// return name of register in friendly string
 const char *AArch64_reg_name(csh handle, unsigned int reg);
 
 // given internal insn id, return public instruction info

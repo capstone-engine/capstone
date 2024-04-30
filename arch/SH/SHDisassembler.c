@@ -2108,7 +2108,7 @@ static bool sh_disassemble(const uint8_t *code, MCInst *MI, uint64_t address,
 		insn = code[1] << 8 | code[0];
 	}
 	if (mode & CS_MODE_SH2A) {
-		/* SH2A 32bit instrcution test */
+		/* SH2A 32bit instruction test */
 		if (((insn & 0xf007) == 0x3001 ||
 		     (insn & 0xf00e) == 0x0000)) {
 			if (code_len < 4)

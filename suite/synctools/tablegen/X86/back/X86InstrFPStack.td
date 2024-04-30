@@ -242,7 +242,7 @@ defm MUL : FPBinary_rr<fmul>;
 defm DIV : FPBinary_rr<fdiv>;
 }
 
-// Sets the scheduling resources for the actual NAME#_F<size>m defintions.
+// Sets the scheduling resources for the actual NAME#_F<size>m definitions.
 let SchedRW = [WriteFAddLd] in {
 defm ADD : FPBinary<fadd, MRM0m, "add">;
 defm SUB : FPBinary<fsub, MRM4m, "sub">;

@@ -72,7 +72,7 @@ public:
     None,                  ///< No attributes have been set
     #define GET_ATTR_ENUM
     #include "llvm/IR/Attributes.inc"
-    EndAttrKinds,          ///< Sentinal value useful for loops
+    EndAttrKinds,          ///< Sentinel value useful for loops
     EmptyKey,              ///< Use as Empty key for DenseMap of AttrKind
     TombstoneKey,          ///< Use as Tombstone key for DenseMap of AttrKind
   };
@@ -665,7 +665,7 @@ public:
     return removeAttributesAtIndex(C, ArgNo + FirstArgIndex);
   }
 
-  /// Replace the type contained by attribute \p AttrKind at index \p ArgNo wih
+  /// Replace the type contained by attribute \p AttrKind at index \p ArgNo with
   /// \p ReplacementTy, preserving all other attributes.
   LLVM_NODISCARD AttributeList replaceAttributeTypeAtIndex(
       LLVMContext &C, unsigned ArgNo, Attribute::AttrKind Kind,

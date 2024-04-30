@@ -176,7 +176,7 @@ public:
   ///
   /// \param Loc The location where the directive was encountered.
   /// \param IfCondition The evaluated 'if' clause expression, if any.
-  /// \param CanceledDirective The kind of directive that is cancled.
+  /// \param CanceledDirective The kind of directive that is canceled.
   ///
   /// \returns The insertion point after the barrier.
   InsertPointTy createCancel(const LocationDescription &Loc, Value *IfCondition,
@@ -392,7 +392,7 @@ public:
   /// \param AllocaIP An insertion point for Alloca instructions usable in the
   ///                 preheader of the loop.
   /// \param SchedType Type of scheduling to be passed to the init function.
-  /// \param NeedsBarrier Indicates whether a barrier must be insterted after
+  /// \param NeedsBarrier Indicates whether a barrier must be inserted after
   ///                     the loop.
   /// \param Chunk    The size of loop chunk considered as a unit when
   ///                 scheduling. If \p nullptr, defaults to 1.
@@ -418,7 +418,7 @@ public:
   /// \param CLI      A descriptor of the canonical loop to workshare.
   /// \param AllocaIP An insertion point for Alloca instructions usable in the
   ///                 preheader of the loop.
-  /// \param NeedsBarrier Indicates whether a barrier must be insterted after
+  /// \param NeedsBarrier Indicates whether a barrier must be inserted after
   ///                     the loop.
   ///
   /// \returns Point where to insert code after the workshare construct.
@@ -699,7 +699,7 @@ public:
   /// Generate control flow and cleanup for cancellation.
   ///
   /// \param CancelFlag Flag indicating if the cancellation is performed.
-  /// \param CanceledDirective The kind of directive that is cancled.
+  /// \param CanceledDirective The kind of directive that is canceled.
   /// \param ExitCB Extra code to be generated in the exit block.
   void emitCancelationCheckImpl(Value *CancelFlag,
                                 omp::Directive CanceledDirective,
@@ -873,7 +873,7 @@ public:
   ///
   /// \param Loc The insert and source location description.
   /// \param BodyGenCB Callback that will generate the region code.
-  /// \param FiniCB Callback to finialize variable copies.
+  /// \param FiniCB Callback to finalize variable copies.
   ///
   /// \returns The insertion position *after* the masked.
   InsertPointTy createMasked(const LocationDescription &Loc,
@@ -1008,7 +1008,7 @@ public:
   /// \param Loc The insert and source location description.
   /// \param InteropVar variable to be allocated
   /// \param InteropType type of interop operation
-  /// \param Device devide to which offloading will occur
+  /// \param Device device to which offloading will occur
   /// \param NumDependences  number of dependence variables
   /// \param DependenceAddress pointer to dependence variables
   /// \param HaveNowaitClause does nowait clause exist
@@ -1025,7 +1025,7 @@ public:
   ///
   /// \param Loc The insert and source location description.
   /// \param InteropVar variable to be allocated
-  /// \param Device devide to which offloading will occur
+  /// \param Device device to which offloading will occur
   /// \param NumDependences  number of dependence variables
   /// \param DependenceAddress pointer to dependence variables
   /// \param HaveNowaitClause does nowait clause exist
@@ -1041,7 +1041,7 @@ public:
   ///
   /// \param Loc The insert and source location description.
   /// \param InteropVar variable to be allocated
-  /// \param Device devide to which offloading will occur
+  /// \param Device device to which offloading will occur
   /// \param NumDependences  number of dependence variables
   /// \param DependenceAddress pointer to dependence variables
   /// \param HaveNowaitClause does nowait clause exist
@@ -1206,7 +1206,7 @@ private:
   /// \param AO     The required atomic ordering
   /// \param AK     The OpenMP atomic operation kind used.
   ///
-  /// \returns		wether a flush was emitted or not
+  /// \returns		whether a flush was emitted or not
   bool checkAndEmitFlushAfterAtomic(const LocationDescription &Loc,
                                     AtomicOrdering AO, AtomicKind AK);
 
@@ -1388,7 +1388,7 @@ public:
 ///    such that the CanonicalLoopInfo itself can be side-effect free.
 ///
 /// Keep in mind that CanonicalLoopInfo is meant to only describe a repeated
-/// execution of a loop body that satifies these constraints. It does NOT
+/// execution of a loop body that satisfies these constraints. It does NOT
 /// represent arbitrary SESE regions that happen to contain a loop. Do not use
 /// CanonicalLoopInfo for such purposes.
 ///
@@ -1425,11 +1425,11 @@ public:
 /// Latch to guarantee that there is only a single edge to the latch. It would
 /// make loop transformations easier to not needing to consider multiple
 /// predecessors of the latch (See redirectAllPredecessorsTo) and would give us
-/// an equivalant to PreheaderIP, AfterIP and BodyIP for inserting code that
+/// an equivalent to PreheaderIP, AfterIP and BodyIP for inserting code that
 /// executes after each body iteration.
 ///
 /// There must be no loop-carried dependencies through llvm::Values. This is
-/// equivalant to that the Latch has no PHINode and the Header's only PHINode is
+/// equivalent to that the Latch has no PHINode and the Header's only PHINode is
 /// for the induction variable.
 ///
 /// All code in Header, Cond, Latch and Exit (plus the terminator of the
@@ -1487,7 +1487,7 @@ private:
 public:
   /// Returns whether this object currently represents the IR of a loop. If
   /// returning false, it may have been consumed by a loop transformation or not
-  /// been intialized. Do not use in this case;
+  /// been initialized. Do not use in this case;
   bool isValid() const { return Header; }
 
   /// The preheader ensures that there is only a single edge entering the loop.

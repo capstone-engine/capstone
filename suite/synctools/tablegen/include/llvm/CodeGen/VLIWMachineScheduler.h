@@ -165,7 +165,7 @@ protected:
       CriticalPathLength = DAG->getBBSize() / SchedModel->getIssueWidth();
       if (DAG->getBBSize() < 50)
         // We divide by two as a cheap and simple heuristic to reduce the
-        // critcal path length, which increases the priority of using the graph
+        // critical path length, which increases the priority of using the graph
         // height/depth in the scheduler's cost computation.
         CriticalPathLength >>= 1;
       else {

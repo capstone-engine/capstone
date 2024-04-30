@@ -440,7 +440,7 @@ public:
   /// RegisterOperands of the instruction.
   void advance(const RegisterOperands &RegOpers);
 
-  /// Finalize the region boundaries and recored live ins and live outs.
+  /// Finalize the region boundaries and record live ins and live outs.
   void closeRegion();
 
   /// Initialize the LiveThru pressure set based on the untied defs found in

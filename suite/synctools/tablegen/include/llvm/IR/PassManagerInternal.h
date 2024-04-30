@@ -123,7 +123,7 @@ template <typename IRUnitT, typename PreservedAnalysesT, typename InvalidatorT>
 struct AnalysisResultConcept {
   virtual ~AnalysisResultConcept() = default;
 
-  /// Method to try and mark a result as invalid.
+  /// Method to try to mark a result as invalid.
   ///
   /// When the outer analysis manager detects a change in some underlying
   /// unit of the IR, it will call this method on all of the results cached.

@@ -3526,7 +3526,7 @@ static void build_regs_read_write_counts(m68k_info *info)
 		// first operand is always read
 		update_op_reg_list(info, &info->extension.operands[0], 0);
 
-		// remaning write
+		// remaining write
 		for (i = 1; i < info->extension.op_count; ++i)
 			update_op_reg_list(info, &info->extension.operands[i], 1);
 	}

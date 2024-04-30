@@ -148,7 +148,7 @@ Function AryIsEmpty(ary) As Boolean
   Dim i As Long
   
   On Error GoTo oops
-    i = UBound(ary)  '<- throws error if not initalized
+    i = UBound(ary)  '<- throws error if not initialized
     AryIsEmpty = False
   Exit Function
 oops: AryIsEmpty = True
@@ -211,7 +211,7 @@ Private Sub bpush(bAry() As Byte, b As Byte) 'this modifies parent ary object
     On Error GoTo init
     Dim x As Long
     
-    x = UBound(bAry) '<-throws Error If Not initalized
+    x = UBound(bAry) '<-throws Error If Not initialized
     ReDim Preserve bAry(UBound(bAry) + 1)
     bAry(UBound(bAry)) = b
     

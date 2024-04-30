@@ -236,7 +236,7 @@ namespace Intrinsic {
   /// This method returns true on error.
   bool matchIntrinsicVarArg(bool isVarArg, ArrayRef<IITDescriptor> &Infos);
 
-  /// Gets the type arguments of an intrinsic call by matching type contraints
+  /// Gets the type arguments of an intrinsic call by matching type constraints
   /// specified by the .td file. The overloaded types are pushed into the
   /// AgTys vector.
   ///
