@@ -10,9 +10,11 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
 
-    name: Install clang-tidy
+    name: clang-tidy
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Install clang-tidy
       run: |
         sudo apt install clang-tidy
@@ -20,10 +22,13 @@ jobs:
     - name: Build
       run: |
         mkdir build && cd build
-        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=1 ..
-        sudo cmake --build . --config Release
+        CC=clang cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=1 ..
+        CC=clang sudo cmake --build . --config Release
         cd ..
 
     - name: Check for warnings
+      env:
+        base_sha: ${{ github.event.pull_request.base.sha }}
+        head_sha: ${{ github.event.pull_request.head.sha }}
       run: |
         ./run-clang-tidy.sh build
