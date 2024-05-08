@@ -1074,3 +1074,7 @@
 !# issue 2079
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
 0x0: 0xd1,0x10 == rcl	dword ptr [eax] ; operands[1].type: IMM = 0x1
+
+!# issue 2244
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0xc5,0xfb,0xc2,0xda,0x06 == vcmpnlesd	xmm3, xmm0, xmm2 ; ID: 797

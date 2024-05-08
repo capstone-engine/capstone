@@ -776,18 +776,23 @@ cs_err CAPSTONE_API cs_close(csh *handle)
 	return CS_ERR_OK;
 }
 
-// replace str1 in target with str2; target starts with str1
-// output is put into result (which is array of char with size CS_MNEMONIC_SIZE)
-// return 0 on success, -1 on failure
+/// replace str1 in target with str2; target starts with str1
+/// output is put into result (which is array of char with size CS_MNEMONIC_SIZE)
+/// return 0 on success, -1 on failure
 #ifndef CAPSTONE_DIET
 static int str_replace(char *result, char *target, const char *str1, char *str2)
 {
+	size_t target_len = strlen(target);
+	size_t str1_len = strlen(str1);
+	if (target_len < str1_len) {
+		return -1;
+	}
+
 	// only perform replacement if the output fits into result
-	if (strlen(target) - strlen(str1) + strlen(str2) < CS_MNEMONIC_SIZE - 1)  {
+	if (target_len - str1_len + strlen(str2) <= CS_MNEMONIC_SIZE - 1)  {
 		// copy str2 to beginning of result
-		strcpy(result, str2);
 		// skip str1 - already replaced by str2
-		strcat(result, target + strlen(str1));
+		snprintf(result, CS_MNEMONIC_SIZE, "%s%s", str2, target + str1_len);
 
 		return 0;
 	} else
@@ -1209,7 +1214,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
 
 			// adjust for pseudo opcode (X86)
-			if (handle->arch == CS_ARCH_X86)
+			if (handle->arch == CS_ARCH_X86 && insn_cache->id != X86_INS_VCMP)
 				insn_cache->id += mci.popcode_adjust;
 
 			next_offset = insn_size;
