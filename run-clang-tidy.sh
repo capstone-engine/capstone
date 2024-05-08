@@ -1,8 +1,14 @@
-#!/bin/sh -x
+#!/bin/sh
 
 if [ $# -ne 1 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "$0 <build-path>"
+  echo "Set env var 'base_sha'  to upstream/next hash and 'head_sha' and your current HEAD hash."
   exit 1
+fi
+
+if [ -z $base_sha ] || [ -z $head_sha ]; then
+  echo "Set env var 'base_sha'  to upstream/next hash and 'head_sha' and your current HEAD hash."
+  exit 0
 fi
 
 BUILD_PATH="$1"
@@ -45,6 +51,8 @@ if [ -z $needs_fixes ]; then
   echo "None of the changed files has clang-tidy warnings."
   exit 0
 fi
+
+cat ct-warnings.txt
 
 echo -e "\n\nclang-tidy warnings for: $faulty_files\n"
 echo "Please fix them. Or, if completely unrelated, let us know."
