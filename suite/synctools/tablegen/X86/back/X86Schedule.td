@@ -628,8 +628,8 @@ def SchedWriteFShuffleSizes
 // Generic Processor Scheduler Models.
 
 // IssueWidth is analogous to the number of decode units. Core and its
-// descendents, including Nehalem and SandyBridge have 4 decoders.
-// Resources beyond the decoder operate on micro-ops and are bufferred
+// descendants, including Nehalem and SandyBridge have 4 decoders.
+// Resources beyond the decoder operate on micro-ops and are buffered
 // so adjacent micro-ops don't directly compete.
 //
 // MicroOpBufferSize > 1 indicates that RAW dependencies can be

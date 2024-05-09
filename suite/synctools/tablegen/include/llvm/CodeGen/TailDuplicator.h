@@ -65,7 +65,7 @@ public:
   ///     probabilities when modifying the CFG.
   /// @param LayoutMode - When true, don't use the existing layout to make
   ///     decisions.
-  /// @param TailDupSize - Maxmimum size of blocks to tail-duplicate. Zero
+  /// @param TailDupSize - Maximum size of blocks to tail-duplicate. Zero
   ///     default implies using the command line value TailDupSize.
   void initMF(MachineFunction &MF, bool PreRegAlloc,
               const MachineBranchProbabilityInfo *MBPI,

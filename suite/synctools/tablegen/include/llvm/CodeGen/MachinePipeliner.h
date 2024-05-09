@@ -17,7 +17,7 @@
 //
 // "Swing Modulo Scheduling: A Lifetime-Sensitive Approach", by J. Llosa,
 // A. Gonzalez, E. Ayguade, and M. Valero. In PACT '96 Proceedings of the 1996
-// Conference on Parallel Architectures and Compilation Techiniques.
+// Conference on Parallel Architectures and Compilation Techniques.
 //
 // "Lifetime-Sensitive Modulo Scheduling in a Production Environment", by J.
 // Llosa, E. Ayguade, A. Gonzalez, M. Valero, and J. Eckhardt. In IEEE
@@ -480,7 +480,7 @@ public:
 /// This class represents the scheduled code.  The main data structure is a
 /// map from scheduled cycle to instructions.  During scheduling, the
 /// data structure explicitly represents all stages/iterations.   When
-/// the algorithm finshes, the schedule is collapsed into a single stage,
+/// the algorithm finishes, the schedule is collapsed into a single stage,
 /// which represents instructions from different loop iterations.
 ///
 /// The SMS algorithm allows negative values for cycles, so the first cycle

@@ -26,7 +26,7 @@ template <typename PtrType> class SmallPtrSetImpl;
 
 /// The given instruction \p I contains given constant expression \p CE as one
 /// of its operands, possibly nested within constant expression trees. Convert
-/// all reachable paths from contant expression operands of \p I to \p CE into
+/// all reachable paths from constant expression operands of \p I to \p CE into
 /// corresponding instructions, insert them before \p I, update operands of \p I
 /// accordingly, and if required, return all such converted instructions at
 /// \p Insts.

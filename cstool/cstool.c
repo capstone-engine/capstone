@@ -645,8 +645,6 @@ int main(int argc, char **argv)
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
 	if (count > 0) {
-		size_t i;
-
 		for (i = 0; i < count; i++) {
 			int j;
 

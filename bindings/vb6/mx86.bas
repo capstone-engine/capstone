@@ -388,18 +388,18 @@ Public Type cs_x86
     ' prefix[3] indicates address-size override (X86_PREFIX_ADDRSIZE)
     prefix(0 To 3) As Byte        ' UNSIGNED
     
-    ' Instruction opcode, wich can be from 1 to 4 bytes in size.
+    ' Instruction opcode, which can be from 1 to 4 bytes in size.
     ' This contains VEX opcode as well.
     ' An trailing opcode byte gets value 0 when irrelevant.
     opcode(0 To 3) As Byte        ' UNSIGNED
 
-    rex As Byte                   ' REX prefix: only a non-zero value is relavant for x86_64  UNSIGNED
+    rex As Byte                   ' REX prefix: only a non-zero value is relevant for x86_64  UNSIGNED
     addr_size As Byte             ' Address size, which can be overrided with above prefix[5].  UNSIGNED
     modrm As Byte                 ' ModR/M byte  UNSIGNED
     sib As Byte                   ' SIB value, or 0 when irrelevant.  UNSIGNED
     disp As Long                  ' Displacement value, or 0 when irrelevant.
     sib_index As x86_reg          ' SIB index register, or X86_REG_INVALID when irrelevant.
-    sib_scale As Byte             ' SIB scale. only applicable if sib_index is relavant.
+    sib_scale As Byte             ' SIB scale. only applicable if sib_index is relevant.
     sib_base As x86_reg           ' SIB base register, or X86_REG_INVALID when irrelevant.
     sse_cc As x86_sse_cc          ' SSE Code Condition
     avx_cc As x86_avx_cc          ' AVX Code Condition

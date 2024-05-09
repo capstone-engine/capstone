@@ -439,7 +439,7 @@ public:
   ///
   /// Make a new global variable with an initializer that has array of i8 type
   /// filled in with the null terminated string value specified.  The new global
-  /// variable will be marked mergable with any others of the same contents.  If
+  /// variable will be marked mergeable with any others of the same contents.  If
   /// Name is specified, it is the name of the global variable created.
   ///
   /// If no module is given via \p M, it is take from the insertion point basic

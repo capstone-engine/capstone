@@ -33,7 +33,7 @@ class MachineFunction;
 /// We want to visit every instruction in every basic block in order to update
 /// it's execution domain or collect clearance information. However, for the
 /// clearance calculation, we need to know clearances from all predecessors
-/// (including any backedges), therfore we need to visit some blocks twice.
+/// (including any backedges), therefore we need to visit some blocks twice.
 /// As an example, consider the following loop.
 ///
 ///
@@ -57,7 +57,7 @@ class MachineFunction;
 /// straight-line code, and a small loop, that would be a lot of unnecessary
 /// work (since only the BBs that are part of the loop require two passes).
 ///
-/// E.g., the naive iteration order for the above exmple is as follows:
+/// E.g., the naive iteration order for the above example is as follows:
 /// Naive: PH A B C D A' B' C' D'
 ///
 /// In the optimized approach we avoid processing D twice, because we
@@ -80,7 +80,7 @@ private:
     MBBInfo() = default;
   };
   using MBBInfoMap = SmallVector<MBBInfo, 4>;
-  /// Helps keep track if we proccessed this block and all its predecessors.
+  /// Helps keep track if we processed this block and all its predecessors.
   MBBInfoMap MBBInfos;
 
 public:

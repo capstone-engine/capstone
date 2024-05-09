@@ -75,13 +75,13 @@ namespace CallingConv {
     // CXX_FAST_TLS - Calling convention for access functions.
     CXX_FAST_TLS = 17,
 
-    /// Tail - This calling convention attemps to make calls as fast as
+    /// Tail - This calling convention attempts to make calls as fast as
     /// possible while guaranteeing that tail call optimization can always
     /// be performed.
     Tail = 18,
 
     /// Special calling convention on Windows for calling the Control
-    /// Guard Check ICall funtion. The function takes exactly one argument
+    /// Guard Check ICall function. The function takes exactly one argument
     /// (address of the target function) passed in the first argument register,
     /// and has no return value. All register values are preserved.
     CFGuard_Check = 19,

@@ -190,7 +190,7 @@ public:
 };
 
 /// This class holds an abstract representation of an Accelerator Table,
-/// consisting of a sequence of buckets, each bucket containint a sequence of
+/// consisting of a sequence of buckets, each bucket containing a sequence of
 /// HashData entries. The class is parameterized by the type of entries it
 /// holds. The type template parameter also defines the hash function to use for
 /// hashing names.

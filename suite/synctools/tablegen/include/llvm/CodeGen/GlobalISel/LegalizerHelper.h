@@ -82,7 +82,7 @@ public:
   LegalizeResult legalizeInstrStep(MachineInstr &MI,
                                    LostDebugLocObserver &LocObserver);
 
-  /// Legalize an instruction by emiting a runtime library call instead.
+  /// Legalize an instruction by emitting a runtime library call instead.
   LegalizeResult libcall(MachineInstr &MI, LostDebugLocObserver &LocObserver);
 
   /// Legalize an instruction by reducing the width of the underlying scalar

@@ -19,7 +19,7 @@ mkdir build
 cd build
 cmake ..
 make
-sudo make isntall
+sudo make install
 ```
 
 ## Build

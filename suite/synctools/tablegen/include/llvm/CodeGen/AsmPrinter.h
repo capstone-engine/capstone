@@ -268,7 +268,7 @@ public:
 
   void EmitToStreamer(MCStreamer &S, const MCInst &Inst);
 
-  /// Emits inital debug location directive.
+  /// Emits initial debug location directive.
   void emitInitialRawDwarfLocDirective(const MachineFunction &MF);
 
   /// Return the current section we are emitting to.
@@ -444,7 +444,7 @@ public:
   /// Print a general LLVM constant to the .s file.
   void emitGlobalConstant(const DataLayout &DL, const Constant *CV);
 
-  /// Unnamed constant global variables solely contaning a pointer to
+  /// Unnamed constant global variables solely containing a pointer to
   /// another globals variable act like a global variable "proxy", or GOT
   /// equivalents, i.e., it's only used to hold the address of the latter. One
   /// optimization is to replace accesses to these proxies by using the GOT

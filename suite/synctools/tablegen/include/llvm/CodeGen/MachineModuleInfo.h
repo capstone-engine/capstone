@@ -64,14 +64,14 @@ public:
   virtual ~MachineModuleInfoImpl();
 
 protected:
-  /// Return the entries from a DenseMap in a deterministic sorted orer.
+  /// Return the entries from a DenseMap in a deterministic sorted order.
   /// Clears the map.
   static SymbolListTy getSortedStubs(DenseMap<MCSymbol*, StubValueTy>&);
 };
 
 //===----------------------------------------------------------------------===//
 /// This class contains meta information specific to a module.  Queries can be
-/// made by different debugging and exception handling schemes and reformated
+/// made by different debugging and exception handling schemes and reformatted
 /// for specific use.
 ///
 class MachineModuleInfo {

@@ -739,7 +739,7 @@ getLineCoverageStats(const coverage::CoverageData &CD) {
   return make_range(Begin, End);
 }
 
-// Coverage mappping data (V2) has the following layout:
+// Coverage mapping data (V2) has the following layout:
 // IPSK_covmap:
 //   [CoverageMapFileHeader]
 //   [ArrayStart]
@@ -749,7 +749,7 @@ getLineCoverageStats(const coverage::CoverageData &CD) {
 //   [ArrayEnd]
 //   [Encoded Filenames and Region Mapping Data]
 //
-// Coverage mappping data (V3) has the following layout:
+// Coverage mapping data (V3) has the following layout:
 // IPSK_covmap:
 //   [CoverageMapFileHeader]
 //   [Encoded Filenames]

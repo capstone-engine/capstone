@@ -148,7 +148,7 @@ private:
     /// register allocator.
     bool isStatepointSpillSlot = false;
 
-    /// Identifier for stack memory type analagous to address space. If this is
+    /// Identifier for stack memory type analogous to address space. If this is
     /// non-0, the meaning is target defined. Offsets cannot be directly
     /// compared between objects with different stack IDs. The object may not
     /// necessarily reside in the same contiguous memory block as other stack

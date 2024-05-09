@@ -1425,7 +1425,7 @@ public:
   /// Expand the specified \c ISD::VACOPY node as the Legalize pass would.
   SDValue expandVACopy(SDNode *Node);
 
-  /// Returs an GlobalAddress of the function from the current module with
+  /// Returns an GlobalAddress of the function from the current module with
   /// name matching the given ExternalSymbol. Additionally can provide the
   /// matched function.
   /// Panics the function doesn't exists.

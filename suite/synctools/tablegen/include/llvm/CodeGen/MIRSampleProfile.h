@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 //
-// This file contains the supoorting functions for machine level Sample FDO
+// This file contains the supporting functions for machine level Sample FDO
 // loader. This is used in Flow Sensitive SampelFDO.
 //
 //===----------------------------------------------------------------------===//

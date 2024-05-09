@@ -25,22 +25,32 @@ project(capstone
     VERSION 5.0
 )
 
-set(UNIX_COMPILER_OPTIONS -Werror -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
+set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
 
 # maybe-unitialzied is only supported by newer versions of GCC.
 # Unfortunately, it is pretty unreliable and reports wrong results.
 # So we disable it for all compilers versions which support it.
 include(CheckCCompilerFlag)
 check_c_compiler_flag("-Wno-maybe-unitialized" SUPPORTS_MU)
+check_c_compiler_flag("-Wshadow=local" SUPPORTS_SHADOWING)
+check_c_compiler_flag("-Wsometimes-uninitialized" SUPPORTS_SUNINIT)
 
 if (SUPPORTS_MU)
     set(UNIX_COMPILER_OPTIONS ${UNIX_COMPILER_OPTIONS} -Wno-maybe-unitialized)
 endif()
 
+if (SUPPORTS_SHADOWING)
+    set(UNIX_COMPILER_OPTIONS ${UNIX_COMPILER_OPTIONS} -Wshadow=local)
+endif()
+
+if (SUPPORTS_SUNINIT)
+    set(UNIX_COMPILER_OPTIONS ${UNIX_COMPILER_OPTIONS} -Wsometimes-uninitialized)
+endif()
+
 if (MSVC)
     add_compile_options(/W1 /w14189)
 else()
-    add_compile_options(${UNIX_COMPILE_OPTIONS})
+    add_compile_options(${UNIX_COMPILER_OPTIONS})
 endif()
 
 

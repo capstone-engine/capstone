@@ -203,6 +203,7 @@ char *get_detail_x86(csh *ud, cs_mode mode, cs_insn *ins)
 
 	x86 = &(ins->detail->x86);
 
+	add_str(&result, " ; ID: %" PRIu32 , ins->id);
 	print_string_hex(&result, " ; Prefix:", x86->prefix, 4);
 	print_string_hex(&result, " ; Opcode:", x86->opcode, 4);
 	add_str(&result, " ; rex: 0x%x", x86->rex);

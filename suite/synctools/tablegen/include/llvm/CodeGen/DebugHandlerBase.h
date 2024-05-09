@@ -92,7 +92,7 @@ protected:
   /// Maps instruction with label emitted after instruction.
   DenseMap<const MachineInstr *, MCSymbol *> LabelsAfterInsn;
 
-  /// Indentify instructions that are marking the beginning of or
+  /// Identify instructions that are marking the beginning of or
   /// ending of a scope.
   void identifyScopeMarkers();
 

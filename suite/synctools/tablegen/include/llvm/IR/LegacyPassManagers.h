@@ -36,7 +36,7 @@
 // derive from another pass manager.
 //
 // PassManager and FunctionPassManager are two top-level pass manager that
-// represents the external interface of this entire pass manager infrastucture.
+// represents the external interface of this entire pass manager infrastructure.
 //
 // Important classes :
 //
@@ -276,7 +276,7 @@ private:
   // all allocated nodes in one fell swoop.
   SpecificBumpPtrAllocator<AUFoldingSetNode> AUFoldingSetNodeAllocator;
 
-  // Maps from a pass to it's associated entry in UniqueAnalysisUsages.  Does
+  // Maps from a pass to its associated entry in UniqueAnalysisUsages.  Does
   // not own the storage associated with either key or value..
   DenseMap<Pass *, AnalysisUsage*> AnUsageMap;
 
@@ -305,7 +305,7 @@ public:
   /// Augment AvailableAnalysis by adding analysis made available by pass P.
   void recordAvailableAnalysis(Pass *P);
 
-  /// verifyPreservedAnalysis -- Verify analysis presreved by pass P.
+  /// verifyPreservedAnalysis -- Verify analysis preserved by pass P.
   void verifyPreservedAnalysis(Pass *P);
 
   /// Remove Analysis that is not preserved by the pass

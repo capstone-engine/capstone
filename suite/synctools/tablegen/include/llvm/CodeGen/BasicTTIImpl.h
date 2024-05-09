@@ -447,7 +447,7 @@ public:
 
     /// Relative lookup table entries consist of 32-bit offsets.
     /// Do not generate relative lookup tables for large code models
-    /// in 64-bit achitectures where 32-bit offsets might not be enough.
+    /// in 64-bit architectures where 32-bit offsets might not be enough.
     if (TM.getCodeModel() == CodeModel::Medium ||
         TM.getCodeModel() == CodeModel::Large)
       return false;
@@ -2198,7 +2198,7 @@ public:
 
     // The minimal length of the vector is limited by the real length of vector
     // operations performed on the current platform. That's why several final
-    // reduction opertions are perfomed on the vectors with the same
+    // reduction operations are performed on the vectors with the same
     // architecture-dependent length.
     ShuffleCost += NumReduxLevels * thisT()->getShuffleCost(
                                      TTI::SK_PermuteSingleSrc, Ty, None, 0, Ty);

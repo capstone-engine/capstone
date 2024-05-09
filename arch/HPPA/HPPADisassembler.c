@@ -884,7 +884,7 @@ static void fill_alu_mods(uint32_t insn, hppa_ext *hppa_ext, cs_mode mode)
 			goto unit_cond;
 		case 0x2f:
 			push_str_modifier(hppa_ext, "i");
-			// fallthough
+			// fallthrough
 		case 0x26:
 		case 0x0e:
 		case 0x2e:
@@ -2776,7 +2776,7 @@ static void fill_copr_mods(uint32_t insn, uint32_t uid, uint32_t class,
 			push_str_modifier(hppa_ext, "n");
 		}
 	} else {
-		uint32_t uid = get_insn_field(insn, 23, 25);
+		uid = get_insn_field(insn, 23, 25);
 		uint32_t sop = (get_insn_field(insn, 6, 22) << 5) |
 			       get_insn_field(insn, 27, 31);
 		push_int_modifier(hppa_ext, uid);
@@ -2857,7 +2857,7 @@ static bool decode_copr(const cs_struct *ud, MCInst *MI, uint32_t insn)
 			case 0x05:
 				CREATE_FPR_REG(MI, r1);
 				CREATE_FPR_REG(MI, t);
-				// fallthough
+				// fallthrough
 			case 0x00:
 				break;
 			default:
@@ -2882,7 +2882,7 @@ static bool decode_copr(const cs_struct *ud, MCInst *MI, uint32_t insn)
 			case 0x00:
 				CREATE_FPR_REG(MI, r1);
 				CREATE_FPR_REG(MI, r2);
-				// fallthough
+				// fallthrough
 			case 0x01:
 				break;
 			default:
@@ -3041,7 +3041,7 @@ static void fill_float_mods(uint32_t insn, uint32_t class, hppa_ext *hppa_ext,
 				return;
 			case 0x03:
 				push_str_modifier(hppa_ext, "t");
-				// fallthough
+				// fallthrough
 			case 0x02:
 				push_str_modifier(hppa_ext,
 						  float_format_names[sf]);

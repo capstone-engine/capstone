@@ -516,7 +516,7 @@ public:
     addFnAttr(Attribute::WriteOnly);
   }
 
-  /// Determine if the call can access memmory only using pointers based
+  /// Determine if the call can access memory only using pointers based
   /// on its arguments.
   bool onlyAccessesArgMemory() const {
     return hasFnAttribute(Attribute::ArgMemOnly);

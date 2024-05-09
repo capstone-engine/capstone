@@ -787,7 +787,7 @@ public:
   /// \c SkipPseudoOp should be true when it's used in optimizations that
   /// unlikely hurt profile quality, e.g., without block merging. The default
   /// value of \c SkipPseudoOp is set to true to maximize code quality in
-  /// general, with an explict false value passed in in a few places like branch
+  /// general, with an explicit false value passed in in a few places like branch
   /// folding and if-conversion to favor profile quality.
   iterator getFirstNonDebugInstr(bool SkipPseudoOp = true);
   const_iterator getFirstNonDebugInstr(bool SkipPseudoOp = true) const {
@@ -809,7 +809,7 @@ public:
   /// \c SkipPseudoOp should be true when it's used in optimizations that
   /// unlikely hurt profile quality, e.g., without block merging. The default
   /// value of \c SkipPseudoOp is set to true to maximize code quality in
-  /// general, with an explict false value passed in in a few places like branch
+  /// general, with an explicit false value passed in in a few places like branch
   /// folding and if-conversion to favor profile quality.
   iterator getLastNonDebugInstr(bool SkipPseudoOp = true);
   const_iterator getLastNonDebugInstr(bool SkipPseudoOp = true) const {

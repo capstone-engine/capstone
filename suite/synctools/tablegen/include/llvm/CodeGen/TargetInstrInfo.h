@@ -140,7 +140,7 @@ protected:
   /// set, this hook lets the target specify whether the instruction is actually
   /// trivially rematerializable, taking into consideration its operands. This
   /// predicate must return false if the instruction has any side effects other
-  /// than producing a value, or if it requres any address registers that are
+  /// than producing a value, or if it requires any address registers that are
   /// not always available.
   /// Requirements must be check as stated in isTriviallyReMaterializable() .
   virtual bool isReallyTriviallyReMaterializable(const MachineInstr &MI,

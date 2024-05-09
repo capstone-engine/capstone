@@ -360,25 +360,25 @@ static DecodeStatus getInstruction(csh handle, const uint8_t *Bytes, size_t Byte
 		// For Scalable Matrix Extension (SME) instructions that have an
 		// implicit operand for the accumulator (ZA) or implicit immediate zero
 		// which isn't encoded, manually insert operand.
-		for (unsigned i = 0; i < Desc.NumOperands; i++) {
-			if (Desc.OpInfo[i].OperandType == MCOI_OPERAND_REGISTER) {
-				switch (Desc.OpInfo[i].RegClass) {
+		for (unsigned j = 0; j < Desc.NumOperands; j++) {
+			if (Desc.OpInfo[j].OperandType == MCOI_OPERAND_REGISTER) {
+				switch (Desc.OpInfo[j].RegClass) {
 				default:
 					break;
 				case AArch64_MPRRegClassID:
-					MCInst_insert0(MI, i, MCOperand_CreateReg1(MI, AArch64_ZA));
+					MCInst_insert0(MI, j, MCOperand_CreateReg1(MI, AArch64_ZA));
 					break;
 				case AArch64_MPR8RegClassID:
-					MCInst_insert0(MI, i,
+					MCInst_insert0(MI, j,
 							  MCOperand_CreateReg1(MI, AArch64_ZAB0));
 					break;
 				case AArch64_ZTRRegClassID:
-					MCInst_insert0(MI, i, MCOperand_CreateReg1(MI, AArch64_ZT0));
+					MCInst_insert0(MI, j, MCOperand_CreateReg1(MI, AArch64_ZT0));
 					break;
 				}
-			} else if (Desc.OpInfo[i].OperandType ==
+			} else if (Desc.OpInfo[j].OperandType ==
 					   AArch64_OP_IMPLICIT_IMM_0) {
-				MCInst_insert0(MI, i, MCOperand_CreateImm1(MI, 0));
+				MCInst_insert0(MI, j, MCOperand_CreateImm1(MI, 0));
 			}
 		}
 

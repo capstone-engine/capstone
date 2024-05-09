@@ -2098,7 +2098,7 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 #ifndef CAPSTONE_DIET
 // map instruction to its characteristics
 typedef struct insn_op {
-	uint64_t flags;	// how this instruction update EFLAGS(arithmetic instrcutions) of FPU FLAGS(for FPU instructions)
+	uint64_t flags;	// how this instruction update EFLAGS(arithmetic instructions) of FPU FLAGS(for FPU instructions)
 	uint8_t access[6];
 } insn_op;
 
@@ -2243,5 +2243,28 @@ unsigned short X86_register_map(unsigned short id)
 
 	return 0;
 }
+
+/// The post-printer function. Used to fixup flaws in the disassembly information
+/// of certain instructions.
+void X86_postprinter(csh handle, cs_insn *insn, char *mnem, MCInst *mci) {
+	if (!insn || !insn->detail) {
+		return;
+	}
+	switch (insn->id) {
+	default:
+		break;
+	case X86_INS_RCL:
+		// Addmissing 1 immediate
+		if (insn->detail->x86.op_count > 1) {
+			return;
+		}
+		insn->detail->x86.operands[1].imm = 1;
+		insn->detail->x86.operands[1].type = X86_OP_IMM;
+		insn->detail->x86.operands[1].access = CS_AC_READ;
+		insn->detail->x86.op_count++;
+		break;
+	}
+}
+
 
 #endif

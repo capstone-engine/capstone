@@ -131,7 +131,7 @@ fuzz_bindisasm
 fuzz_disasm
 fuzz_decode_platform
 capstone_get_setup
-suite/fuzz/
+suite/fuzz/corpus
 suite/cstest/cmocka/
 
 *.s

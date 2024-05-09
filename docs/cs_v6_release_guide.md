@@ -157,9 +157,9 @@ Write it into `rename_arm64.sh` and run it on files with `sh rename_arm64.sh <sr
 
 These features are only supported by `auto-sync`-enabled architectures.
 
-**Instruction Encoding**
+**More code quality checks**
 
-TODO
+- `clang-tidy` is now run on all files changed by a PR.
 
 **Instruction formats for PPC**
 

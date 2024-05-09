@@ -20,13 +20,7 @@ sudo apt install python3-venv
 # Setup virtual environment in Capstone root dir
 python3 -m venv ./.venv
 source ./.venv/bin/activate
-```
-
-Clone C++ grammar
-
-```
 cd suite/auto-sync/
-git submodule update --init --recursive ./vendor/
 pip install -e .
 ```
 

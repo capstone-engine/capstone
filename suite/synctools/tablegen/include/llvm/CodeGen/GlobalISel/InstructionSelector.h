@@ -560,7 +560,7 @@ protected:
 
   /// Return true if MI can obviously be folded into IntoMI.
   /// MI and IntoMI do not need to be in the same basic blocks, but MI must
-  /// preceed IntoMI.
+  /// precede IntoMI.
   bool isObviouslySafeToFold(MachineInstr &MI, MachineInstr &IntoMI) const;
 };
 

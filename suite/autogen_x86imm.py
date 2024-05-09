@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # By Nguyen Anh Quynh, 2015
-# This tool extract sizes of immediadte operands from X86 instruction names.
+# This tool extract sizes of immediate operands from X86 instruction names.
 # Syntax: ./autogen_x86imm.py
 
 # Gather immediate sizes to put into X86ImmSize.inc

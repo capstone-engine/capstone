@@ -26,7 +26,7 @@ cs_err X86_global_init(cs_struct *ud)
 	ud->insn_id = X86_get_insn_id;
 	ud->insn_name = X86_insn_name;
 	ud->group_name = X86_group_name;
-	ud->post_printer = NULL;
+	ud->post_printer = X86_postprinter;
 #ifndef CAPSTONE_DIET
 	ud->reg_access = X86_reg_access;
 #endif

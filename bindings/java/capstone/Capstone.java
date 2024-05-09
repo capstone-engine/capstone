@@ -490,13 +490,13 @@ public class Capstone {
     }
   }
 
-  // destructor automatically caled at destroyed time.
+  // destructor automatically called at destroyed time.
   protected void finalize() {
     // FIXME: crashed on Ubuntu 14.04 64bit, OpenJDK java 1.6.0_33
     // cs.cs_close(ns.handleRef);
   }
 
-  // destructor automatically caled at destroyed time.
+  // destructor automatically called at destroyed time.
   public int close() {
     return cs.cs_close(ns.handleRef);
   }

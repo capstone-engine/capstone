@@ -139,7 +139,7 @@ public:
                                                    const Function &F) const;
 
   /// Targets should implement this method to assign a section to globals with
-  /// an explicit section specfied. The implementation of this method can
+  /// an explicit section specified. The implementation of this method can
   /// assume that GO->hasSection() is true.
   virtual MCSection *
   getExplicitSectionGlobal(const GlobalObject *GO, SectionKind Kind,

@@ -51,7 +51,7 @@ class LivePhysRegs {
   RegisterSet LiveRegs;
 
 public:
-  /// Constructs an unitialized set. init() needs to be called to initialize it.
+  /// Constructs an uninitialized set. init() needs to be called to initialize it.
   LivePhysRegs() = default;
 
   /// Constructs and initializes an empty set.

@@ -699,7 +699,7 @@ def RDPID64 : I<0xC7, MRM7r, (outs GR64:$dst), (ins), "rdpid\t$dst", []>, XS,
 
 let Predicates = [In64BitMode, HasRDPID] in {
   // Due to silly instruction definition, we have to compensate for the
-  // instruction outputing a 64-bit register.
+  // instruction outputting a 64-bit register.
   def : Pat<(int_x86_rdpid),
             (EXTRACT_SUBREG (RDPID64), sub_32bit)>;
 }

@@ -353,7 +353,7 @@ namespace llvm {
     /// If greater than 0, override TargetLoweringBase::PrefLoopAlignment.
     unsigned LoopAlignment = 0;
 
-    /// FloatABIType - This setting is set by -float-abi=xxx option is specfied
+    /// FloatABIType - This setting is set by -float-abi=xxx option is specified
     /// on the command line. This setting may either be Default, Soft, or Hard.
     /// Default selects the target's default behavior. Soft selects the ABI for
     /// software floating point, but does not indicate that FP hardware may not

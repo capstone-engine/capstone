@@ -381,7 +381,7 @@ private:
   /// Record the locations of the operands of the provided instruction in a
   /// record keyed by the provided label.  For instructions w/AnyReg calling
   /// convention the return register is also recorded if requested.  For
-  /// STACKMAP, and PATCHPOINT the label is expected to immediately *preceed*
+  /// STACKMAP, and PATCHPOINT the label is expected to immediately *precede*
   /// lowering of the MI to MCInsts.  For STATEPOINT, it expected to
   /// immediately *follow*.  It's not clear this difference was intentional,
   /// but it exists today.  

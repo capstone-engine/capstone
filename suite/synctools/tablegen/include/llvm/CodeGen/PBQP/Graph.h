@@ -352,7 +352,7 @@ namespace PBQP {
     /// Lock this graph to the given solver instance in preparation
     /// for running the solver. This method will call solver.handleAddNode for
     /// each node in the graph, and handleAddEdge for each edge, to give the
-    /// solver an opportunity to set up any requried metadata.
+    /// solver an opportunity to set up any required metadata.
     void setSolver(SolverT &S) {
       assert(!Solver && "Solver already set. Call unsetSolver().");
       Solver = &S;

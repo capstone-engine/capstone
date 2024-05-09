@@ -42,7 +42,7 @@ extern "C" {
 ///         |--------|-------------|-------|------------|------------|
 /// Alter-  |        | Hint bit:   |       | Hint bit:  | Hint bit:  |
 /// native  | None   |   a         | None  |    a       |    t       |
-/// meaning |        | or ingored  |       | or ignored | or ignored |
+/// meaning |        | or ignored  |       | or ignored | or ignored |
 ///
 /// NOTE: If we do not decrement the counter, it is not used for the condition.
 ///
@@ -62,8 +62,8 @@ typedef enum ppc_pred {
 	PPC_PRED_GE = (0 << 5) | 4,
 	PPC_PRED_GT = (1 << 5) | 12,
 	PPC_PRED_NE = (2 << 5) | 4,
-	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after fp comparision)
-	PPC_PRED_NU = (3 << 5) | 4,  ///< Not Unordered (after fp comparision)
+	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after fp comparison)
+	PPC_PRED_NU = (3 << 5) | 4,  ///< Not Unordered (after fp comparison)
 	PPC_PRED_SO = (3 << 5) | 12, ///< summary overflow
 	PPC_PRED_NS = (3 << 5) | 4,  ///< not summary overflow
 
@@ -154,7 +154,7 @@ typedef enum {
 } ppc_bh;
 
 
-/// Returns the predicate wihtout branch hint information.
+/// Returns the predicate without branch hint information.
 inline static ppc_pred PPC_get_no_hint_pred(ppc_pred Code)
 {
 	switch (Code) {

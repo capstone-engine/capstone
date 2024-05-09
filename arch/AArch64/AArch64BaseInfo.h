@@ -815,7 +815,7 @@ typedef enum TOF {
 	/// an LDG instruction to obtain the tag value.
 	AArch64II_MO_TAGGED = 0x400,
 
-	/// MO_DLLIMPORTAUX - Symbol refers to "auxilliary" import stub. On
+	/// MO_DLLIMPORTAUX - Symbol refers to "auxiliary" import stub. On
 	/// Arm64EC, there are two kinds of import stubs used for DLL import of
 	/// functions: MO_DLLIMPORT refers to natively callable Arm64 code, and
 	/// MO_DLLIMPORTAUX refers to the original address which can be compared
@@ -852,6 +852,7 @@ inline static const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 	case AArch64PACKey_DB:
 		return "db";
 	}
+	return NULL;
 }
 
 /// Return numeric key ID for 2-letter identifier string.
@@ -867,6 +868,7 @@ AArch64StringToPACKeyID(const char *Name)
 	if (strcmp(Name, "db") == 0)
 		return AArch64PACKey_DB;
 	assert(0 && "Invalid PAC key");
+	return AArch64PACKey_LAST;
 }
 
 // end namespace AArch64

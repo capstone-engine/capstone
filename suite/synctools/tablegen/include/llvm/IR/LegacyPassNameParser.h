@@ -51,7 +51,7 @@ public:
     enumeratePasses();
   }
 
-  // ignorablePassImpl - Can be overriden in subclasses to refine the list of
+  // ignorablePassImpl - Can be overridden in subclasses to refine the list of
   // which passes we want to include.
   //
   virtual bool ignorablePassImpl(const PassInfo *P) const { return false; }

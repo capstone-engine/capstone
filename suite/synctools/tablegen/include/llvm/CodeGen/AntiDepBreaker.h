@@ -39,7 +39,7 @@ public:
   /// Initialize anti-dep breaking for a new basic block.
   virtual void StartBlock(MachineBasicBlock *BB) = 0;
 
-  /// Identifiy anti-dependencies within a basic-block region and break them by
+  /// Identify anti-dependencies within a basic-block region and break them by
   /// renaming registers. Return the number of anti-dependencies broken.
   virtual unsigned BreakAntiDependencies(const std::vector<SUnit> &SUnits,
                                          MachineBasicBlock::iterator Begin,

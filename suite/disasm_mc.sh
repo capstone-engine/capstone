@@ -4,7 +4,7 @@
 
 find MC/ -name *.cs | ./disasm_mc.py
 
-# To test just one architecture, specify the corresponsing dir:
+# To test just one architecture, specify the corresponding dir:
 # $ find MC/X86 -name *.cs | ./disasm_mc.py
 
 # To test just one input file, run disasm_mc.py with that file:

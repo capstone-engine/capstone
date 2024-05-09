@@ -1066,3 +1066,15 @@
 !# issue 2233 ARM write to PC is branch
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0x87,0x46 == mov pc, r0 ; Groups: IsThumb jump 
+
+!# issue 2128
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x4c,0x85,0x7d,0x30 == test	qword ptr [rbp + 0x30], r15 ; operands[1].type: REG = r15 ; operands[1].access: READ ; Registers read: rbp r15 ; Registers modified: rflags
+
+!# issue 2079
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x0: 0xd1,0x10 == rcl	dword ptr [eax] ; operands[1].type: IMM = 0x1
+
+!# issue 2244
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0xc5,0xfb,0xc2,0xda,0x06 == vcmpnlesd	xmm3, xmm0, xmm2 ; ID: 797

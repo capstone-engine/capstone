@@ -242,7 +242,7 @@ public:
   ///
   /// This is useful when you just want to print 'int %reg126', not the
   /// instruction that generated it. If you specify a Module for context, then
-  /// even constanst get pretty-printed; for example, the type of a null
+  /// even constants get pretty-printed; for example, the type of a null
   /// pointer is printed symbolically.
   /// @{
   void printAsOperand(raw_ostream &O, bool PrintType = true,
@@ -479,8 +479,8 @@ public:
   /// Remove every uses that can safely be removed.
   ///
   /// This will remove for example uses in llvm.assume.
-  /// This should be used when performing want to perform a tranformation but
-  /// some Droppable uses pervent it.
+  /// This should be used when performing want to perform a transformation but
+  /// some Droppable uses prevent it.
   /// This function optionally takes a filter to only remove some droppable
   /// uses.
   void dropDroppableUses(llvm::function_ref<bool(const Use *)> ShouldDrop =

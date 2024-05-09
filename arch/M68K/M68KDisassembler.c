@@ -1944,9 +1944,7 @@ static void d68020_cpgen(m68k_info *info)
 	// special handling for fmovecr
 
 	if (BITFIELD(info->ir, 5, 0) == 0 && BITFIELD(next, 15, 10) == 0x17) {
-		cs_m68k_op* op0;
-		cs_m68k_op* op1;
-		cs_m68k* ext = build_init_op(info, M68K_INS_FMOVECR, 2, 0);
+		ext = build_init_op(info, M68K_INS_FMOVECR, 2, 0);
 
 		op0 = &ext->operands[0];
 		op1 = &ext->operands[1];
@@ -3528,7 +3526,7 @@ static void build_regs_read_write_counts(m68k_info *info)
 		// first operand is always read
 		update_op_reg_list(info, &info->extension.operands[0], 0);
 
-		// remaning write
+		// remaining write
 		for (i = 1; i < info->extension.op_count; ++i)
 			update_op_reg_list(info, &info->extension.operands[i], 1);
 	}

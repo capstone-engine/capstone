@@ -180,7 +180,7 @@ def print_insn_detail(mode, insn):
     # print instruction's opcode
     print_string_hex("\tOpcode:", insn.opcode)
 
-    # print operand's REX prefix (non-zero value is relavant for x86_64 instructions)
+    # print operand's REX prefix (non-zero value is relevant for x86_64 instructions)
     print("\trex: 0x%x" % (insn.rex))
 
     # print operand's address size

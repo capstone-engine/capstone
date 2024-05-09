@@ -17,7 +17,7 @@ ARMBankedReg_lookupBankedRegByEncoding(uint8_t Encoding);
 extern const ARMSysReg_MClassSysReg *
 ARMSysReg_lookupMClassSysRegByEncoding(uint16_t Encoding);
 
-// return name of regiser in friendly string
+// return name of register in friendly string
 const char *ARM_reg_name(csh handle, unsigned int reg);
 
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info);

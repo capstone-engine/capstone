@@ -19,7 +19,7 @@ or newer versions are required.
 
 (0) Tailor Capstone to your need.
 
-  Out of 9 archtitectures supported by Capstone (Arm, Arm64, M68K, Mips, PPC,
+  Out of 9 architectures supported by Capstone (Arm, Arm64, M68K, Mips, PPC,
   Sparc, SystemZ, X86 & XCore), if you just need several selected archs, choose
   the ones you want to compile in by opening Visual Studio solution "msvc\capstone.sln",
   then directly editing the projects "capstone_static" & "capstone_dll" for static
