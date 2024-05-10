@@ -49,10 +49,10 @@ class HeaderPatcher:
 
     def patch_header(self) -> bool:
         if not (self.header.exists() or self.header.is_file()):
-            error_exit(f"self.Header file {self.header.name} does not exist.")
+            error_exit(f"self.header file {self.header.name} does not exist.")
 
         if not (self.inc.exists() or self.inc.is_file()):
-            error_exit(f".self.inc file {self.inc.name} does not exist.")
+            error_exit(f"self.inc file {self.inc.name} does not exist.")
 
         with open(self.header) as f:
             header_content = f.read()
@@ -111,6 +111,12 @@ class HeaderPatcher:
             self.patched_header_content = header_content
         log.info(f"Patched {self.inc.name} into {self.header.name}")
         return True
+
+    @staticmethod
+    def file_in_main_header(header: Path, filename: str) -> bool:
+        with open(header) as f:
+            header_content = f.read()
+        return filename in header_content
 
 
 class CompatHeaderBuilder:
