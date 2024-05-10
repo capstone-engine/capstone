@@ -197,7 +197,7 @@ class TestFile:
         self.arch = arch
         self.filename = filename
         self.manager = manager
-        self.mattrs: list[str] = mattrs
+        self.mattrs: list[str] = list() if not mattrs else mattrs
         self.test_files: list[TestFile] = list()
 
     def add_mattr(self, mattr: str):
@@ -210,7 +210,22 @@ class TestFile:
         self.tests = tests
 
     def get_cs_testfile_content(self) -> str:
-        content = ""
+        old_mc_test_file = get_path("{MC_DIR}").joinpath(
+            f"{self.arch}/{self.filename}.cs"
+        )
+        if not old_mc_test_file.exists():
+            header = (
+                f"# CS_ARCH_{self.arch.upper()}, None, None\n"
+                "# This regression test file is new. The option flags could not be determined.\n"
+                f"# LLVM uses the following mattr = {self.mattrs}"
+            )
+        else:
+            with open(old_mc_test_file) as f:
+                init_line = f.readlines()[0]
+            assert init_line != "" and "# CS_ARCH_" in init_line
+            header = init_line
+
+        content = header + "\n"
         for test in self.tests:
             content += f"{test}\n"
         return content

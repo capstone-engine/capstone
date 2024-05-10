@@ -29,3 +29,20 @@ class TestHeaderPatcher(unittest.TestCase):
         self.assertEqual(
             correct, self.updater.test_files["test_a.txt"].get_cs_testfile_content()
         )
+
+    def test_adding_header_from_mc(self):
+        self.updater = MCUpdater(
+            "ARM", get_path("{MCUPDATER_TEST_DIR}"), [r".*\.cs"], list()
+        )
+        self.updater.gen_tests_in_dir(self.updater.mc_dir)
+        self.assertEqual(len(self.updater.test_files), 3)
+        self.assertListEqual(self.updater.test_files["cps.s"].mattrs, [])
+        self.assertEqual(len(self.updater.test_files["cps.s"].tests), 1)
+        self.assertEqual(
+            self.updater.test_files["test_a.txt"].manager.get_num_incomplete(), 0
+        )
+        with open(get_path("{MCUPDATER_TEST_DIR}").joinpath("cps.s.cs")) as f:
+            correct = f.read()
+        self.assertEqual(
+            correct, self.updater.test_files["cps.s"].get_cs_testfile_content()
+        )

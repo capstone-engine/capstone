@@ -1,0 +1,3 @@
+# CS_ARCH_ARM, CS_MODE_THUMB, None
+
+0x00,0x0a,0x31,0xd5 == mrs x0, TRCRSR

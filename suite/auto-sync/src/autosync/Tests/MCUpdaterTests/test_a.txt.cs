@@ -1,3 +1,6 @@
+# CS_ARCH_ARCH, None, None
+# This regression test file is new. The option flags could not be determined.
+# LLVM uses the following mattr = ['mattr=+v8.1a', 'mattr=+crc']
 0x00,0x0a,0x31,0xd5 == mrs x0, TRCRSR
 0x80,0x08,0x31,0xd5 == mrs x0, TRCEXTINSELR
 0x80,0x09,0x31,0xd5 == mrs x0, TRCEXTINSELR1
