@@ -229,6 +229,9 @@ class TestFile:
     def add_tests(self, tests: list[Test]):
         self.tests = tests
 
+    def has_tests(self) -> bool:
+        return len(self.tests) != 0
+
     def get_cs_testfile_content(self) -> str:
         old_mc_test_file = get_path("{MC_DIR}").joinpath(
             f"{self.arch}/{self.filename}.cs"
@@ -386,6 +389,8 @@ class MCUpdater:
 
     def write_to_build_dir(self):
         for filename, test in self.test_files.items():
+            if not test.has_tests():
+                continue
             with open(
                 get_path("{MCUPDATER_OUT_DIR}").joinpath(f"{filename}.cs"), "w+"
             ) as f:
