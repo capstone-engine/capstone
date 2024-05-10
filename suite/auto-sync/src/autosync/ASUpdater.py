@@ -20,11 +20,14 @@ from autosync.Helper import check_py_version, convert_loglevel, fail_exit, get_p
 
 from autosync.IncGenerator import IncGenerator
 
+from autosync.MCUpdater import MCUpdater
+
 
 class USteps(StrEnum):
     INC_GEN = "IncGen"
     TRANS = "Translate"
     DIFF = "Diff"
+    MC = "MCUpdate"
     ALL = "All"
 
 
@@ -50,7 +53,7 @@ class ASUpdater:
         self.inc_list = inc_list
         self.wait_for_user = wait_for_user
         if USteps.ALL in steps:
-            self.steps = [USteps.INC_GEN, USteps.TRANS, USteps.DIFF]
+            self.steps = [USteps.INC_GEN, USteps.TRANS, USteps.DIFF, USteps.MC]
         else:
             self.steps = steps
         self.refactor = refactor
@@ -61,6 +64,9 @@ class ASUpdater:
         self.inc_generator = IncGenerator(
             self.arch,
             self.inc_list,
+        )
+        self.mc_updater = MCUpdater(
+            self.arch, get_path("{LLVM_MC_TEST_DIR}"), None, None
         )
 
     def clean_build_dir(self) -> None:
@@ -156,6 +162,8 @@ class ASUpdater:
             self.translate()
         if USteps.DIFF in self.steps:
             self.diff()
+        if USteps.MC in self.steps:
+            self.mc_updater.gen_all()
         # Write files
         exit(0)
 
@@ -206,9 +214,9 @@ def parse_args() -> argparse.Namespace:
             "IncGen",
             "Translate",
             "Diff",
+            "MCUpdate",
         ],
         nargs="+",
-        type=USteps,
         default=["All"],
     )
     parser.add_argument(
@@ -253,6 +261,7 @@ if __name__ == "__main__":
         level=convert_loglevel(args.verbosity),
         stream=sys.stdout,
         format="%(levelname)-5s - %(message)s",
+        force=True,
     )
 
     Updater = ASUpdater(

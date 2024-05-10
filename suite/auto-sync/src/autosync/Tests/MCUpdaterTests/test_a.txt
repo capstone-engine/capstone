@@ -70,3 +70,10 @@ NOBF16-NEXT: [0x62,0xfc,0x44,0x2e]
 # But this please. It belongs to the encding above
 # CHECK: bfdot   v2.2s, v3.4h, v4.4h
 # CHECK: bfdot   v2.4s, v3.8h, v4.8h
+
+# Single digit hex numbers
+
+# CHECK: svc      #0
+# CHECK: svc      #{{65535|0xffff}}
+0x1 0x0 0x0 0xd4
+0xe1 0xff 0x1f 0xd4

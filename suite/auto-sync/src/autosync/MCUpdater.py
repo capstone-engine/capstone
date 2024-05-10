@@ -4,15 +4,17 @@
 import argparse
 import logging as log
 import re
+import sys
 from enum import Enum
 from pathlib import Path
 
-from autosync.Helper import get_path
+from autosync.Helper import convert_loglevel, get_path
 
 # The CHECK prefix for tests.
-CHECK = r"((#|//)\s*CHECK(-NEXT)?:)"
+VALID_PREFIX = r"(CHECK(-NEXT)?|FP[A-Z0-9]+)"
+CHECK = rf"((#|//)\s*{VALID_PREFIX}:)"
 ASM = r"(?P<asm_text>[^/@]+)"
-ENC = r"(\[?(?P<enc_bytes>((0x[a-fA-F0-9]{2}[, ]{0,2}))+)[^,]?\]?)"
+ENC = r"(\[?(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?\]?)"
 match_patterns = {
     # A commented encoding with only CHECK or something similar in front of it, skip it.
     "skip_pattern": (
@@ -32,7 +34,7 @@ match_patterns = {
     # Encodings in disassembly tests can have several prefixes
     "enc_prefix_disas":
     # start of line with CHECK: ... prefix
-    r"((\s*)|"
+    r"((^\s*)|"
     # start of line with `CHECK: ...` prefix and the encoding after the asm text.
     rf"({CHECK}.+encoding:\s+))",
     # The asm checking line for `MC/Disassembler/*` tests follows the pattern:
@@ -135,11 +137,10 @@ class TestManager:
             if not (
                 self.state == self.AddingState.UNSET and len(self.incomplete_tests) == 0
             ):
-                print(
-                    f"[!] Complete test found. Drop incomplete {len(self.incomplete_tests)} tests"
+                log.debug(
+                    f"Complete test found. Drop incomplete {len(self.incomplete_tests)} tests"
                 )
-                self.incomplete_tests.clear()
-                self.switched = False
+                self.reset_incomplete()
             self.state = self.AddingState.UNSET
             self.completed.append(Test(encoding, asm_text))
             return
@@ -147,23 +148,33 @@ class TestManager:
         if self.state == self.AddingState.UNSET:
             assert len(self.incomplete_tests) == 0
             # Add the first incomplete test
-            self.state = (
-                self.AddingState.ENCODING
-                if encoding is not None
-                else self.AddingState.ASM_TEXT
-            )
+            if encoding and asm_text:
+                self.state = self.AddingState.UNSET
+            elif encoding:
+                self.state = self.AddingState.ENCODING
+            else:
+                self.state = self.AddingState.ASM_TEXT
 
         # Check if we complete the already added tests
         if (self.state == self.AddingState.ENCODING and encoding is None) or (
             self.state == self.AddingState.ASM_TEXT and asm_text is None
         ):
             self.switched = True
+            oldstate = self.state
+            self.state = (
+                self.AddingState.ENCODING
+                if self.state == self.AddingState.ASM_TEXT
+                else self.AddingState.ASM_TEXT
+            )
+            log.debug(f"switch {oldstate} -> {self.state}")
 
         if self.switched:
+            log.debug(f"Add incomplete II: {encoding} {asm_text}")
             test = self.incomplete_tests.pop(0)
             test.add_missing(encoding, asm_text)
             self.completed.append(test)
         else:
+            log.debug(f"Add incomplete I: {encoding} {asm_text}")
             self.incomplete_tests.append(Test(encoding, asm_text))
 
         # Lastly check if we can reset.
@@ -171,10 +182,11 @@ class TestManager:
             # All tests are completed. Reset
             self.state = self.AddingState.UNSET
             self.switched = False
+            log.debug(f"Reset: {self.state}")
 
     def check_all_complete(self) -> bool:
         if len(self.incomplete_tests) != 0:
-            print(f"[!] We have {len(self.incomplete_tests)} incomplete tests.")
+            log.debug(f"We have {len(self.incomplete_tests)} incomplete tests.")
             return False
         return True
 
@@ -192,6 +204,11 @@ class TestManager:
     def get_num_incomplete(self) -> int:
         return len(self.incomplete_tests)
 
+    def reset_incomplete(self):
+        self.incomplete_tests.clear()
+        self.state = self.AddingState.UNSET
+        self.switched = False
+
 
 class TestFile:
     def __init__(
@@ -201,7 +218,7 @@ class TestFile:
         self.filename = filename
         self.manager = manager
         self.mattrs: list[str] = list() if not mattrs else mattrs
-        self.test_files: list[TestFile] = list()
+        self.tests = list()
 
     def add_mattr(self, mattr: str):
         if not self.mattrs:
@@ -258,6 +275,10 @@ class MCUpdater:
         test_file = TestFile(self.arch, filepath.name, TestManager(), None)
         manager = test_file.manager
         for line in lines:
+            if line == "\n":
+                # New line means new block starts. Drop all incomplete tests.
+                log.debug("New line. Drop all incomplete tests")
+                test_file.manager.reset_incomplete()
             try:
                 if mattr := self.get_mattr(line):
                     test_file.add_mattr(mattr)
@@ -266,13 +287,14 @@ class MCUpdater:
                 if not encoding and not asm_text:
                     continue
                 manager.add_test(encoding, asm_text)
-            except ValueError:
-                print(f"[!] Failed to parse {test_file.filename}. Skipping it")
+            except ValueError as e:
+                raise e
+                log.debug(f"Failed to parse {test_file.filename}. Skipping it")
                 return None
 
         manager.check_all_complete()
         test_file.add_tests(manager.get_completed())
-        print(f"[*] Parsed {manager.get_num_completed()} tests:\t{filepath.name}")
+        log.debug(f"Parsed {manager.get_num_completed()} tests:\t{filepath.name}")
         return test_file
 
     @staticmethod
@@ -325,7 +347,7 @@ class MCUpdater:
             if file.is_dir():
                 self.gen_tests_in_dir(file)
                 continue
-            if len(self.included) != 0 and any(
+            if len(self.included) != 0 and not any(
                 re.search(x, file.name) is not None for x in self.included
             ):
                 continue
@@ -338,6 +360,7 @@ class MCUpdater:
         return fails
 
     def gen_all(self):
+        log.info("Generate MC regression tests")
         assembly_tests = self.mc_dir.joinpath(f"{self.arch}")
         disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch}")
         if not disas_tests.exists() or not disas_tests.is_dir():
@@ -351,17 +374,23 @@ class MCUpdater:
 
         fails = self.gen_tests_in_dir(disas_tests)
         fails.extend(self.gen_tests_in_dir(assembly_tests))
+        sum_tests = sum([len(tf.tests) for tf in self.test_files.values()])
+        log.info(
+            f"Parse {len(self.test_files)} MC test files with a total of {sum_tests} tests."
+        )
         if fails:
-            print("\n[!] The following files failed to parse:")
+            log.warning("The following files failed to parse:")
             for f in fails:
-                print(f"\t{f}")
+                log.warning(f"\t{f}")
         self.write_to_build_dir()
 
     def write_to_build_dir(self):
         for filename, test in self.test_files.items():
-            with open(get_path("{MCUPDATER_OUT_DIR}").joinpath(filename), "w+") as f:
+            with open(
+                get_path("{MCUPDATER_OUT_DIR}").joinpath(f"{filename}.cs"), "w+"
+            ) as f:
                 f.write(test.get_cs_testfile_content())
-            log.info(f"Write {filename}")
+            log.debug(f"Write {filename}")
 
 
 def parse_args() -> argparse.Namespace:
@@ -397,12 +426,26 @@ def parse_args() -> argparse.Namespace:
         nargs="+",
         help="Specific list of file names to update (can be a regex pattern).",
     )
+    parser.add_argument(
+        "-v",
+        dest="verbosity",
+        help="Verbosity of the log messages.",
+        choices=["debug", "info", "warning", "fatal"],
+        default="info",
+    )
     arguments = parser.parse_args()
     return arguments
 
 
 if __name__ == "__main__":
     args = parse_args()
+    log.basicConfig(
+        level=convert_loglevel(args.verbosity),
+        stream=sys.stdout,
+        format="%(levelname)-5s - %(message)s",
+        force=True,
+    )
+
     MCUpdater(
         args.arch, args.mc_dir, args.excluded_files, args.included_files
     ).gen_all()
