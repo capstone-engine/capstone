@@ -15,17 +15,10 @@ brew install cmocka
 
 ## Build
 
-- Build `cstest`
+You can build `cstest` with `cmake` when building Capstone. Just pass the `CAPSTONE_BUILD_CSTEST` flag
+during configuration.
 
-```sh
-./build_cstest.sh
-```
-
-To enable ASAN run
-
-```sh
-asan="ON" ./build_cstest.sh
-```
+Alternatively you can use the `build_cstest.sh` file in this directory.
 
 ## Usage
 
