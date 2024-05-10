@@ -2,6 +2,7 @@
 # Copyright © 2024 Rot127 <unisono@quyllur.org>
 # SPDX-License-Identifier: BSD-3
 import argparse
+import logging as log
 import re
 from enum import Enum
 from pathlib import Path
@@ -11,11 +12,12 @@ from autosync.Helper import get_path
 # The CHECK prefix for tests.
 CHECK = r"((#|//)\s*CHECK(-NEXT)?:)"
 ASM = r"(?P<asm_text>[^/@]+)"
-ENC = r"(\[?(?P<enc_bytes>(0x[a-fA-F0-9]{2}[, ]?)+)\]?)"
+ENC = r"(\[?(?P<enc_bytes>((0x[a-fA-F0-9]{2}[, ]{0,2}))+)[^,]?\]?)"
 match_patterns = {
     # A commented encoding with only CHECK or something similar in front of it, skip it.
-    "skip_pattern": rf"(^((#|//)\s*[-A-Z0-9]+):\s*{ENC}\s*$)|"
-    f"(warning: invalid instruction encoding)",
+    "skip_pattern": (
+        rf"(^((#|//)\s*[-A-Z0-9]+):\s*{ENC}\s*$)|" r"(warning: .*)|" r"((#\s+)?NO.+)"
+    ),
     # The encoding bytes pattern is in every file the same.
     # But the disassembler and assembler tests pre-fix them differently.
     # This is only the pattern for the encoding bytes. Without any prefix.
@@ -130,13 +132,14 @@ class TestManager:
 
     def add_test(self, encoding: str | None, asm_text: str | None):
         if encoding is not None and asm_text is not None:
-            # No tests can be incomplete.
             if not (
                 self.state == self.AddingState.UNSET and len(self.incomplete_tests) == 0
             ):
-                raise ValueError(
-                    "If a complete test is added, all other tests need to be done."
+                print(
+                    f"[!] Complete test found. Drop incomplete {len(self.incomplete_tests)} tests"
                 )
+                self.incomplete_tests.clear()
+                self.switched = False
             self.state = self.AddingState.UNSET
             self.completed.append(Test(encoding, asm_text))
             return
@@ -245,7 +248,7 @@ class MCUpdater:
         self.included = included if included else list()
         self.test_files: dict[str:TestFile] = dict()
 
-    def parse_file(self, filepath: Path) -> TestFile:
+    def parse_file(self, filepath: Path) -> TestFile | None:
         """Parse a MC test file and return it as an object with all tests found.
         If it couldn't parse the file cleanly, it prints errors but returns it anyways.
         """
@@ -255,13 +258,17 @@ class MCUpdater:
         test_file = TestFile(self.arch, filepath.name, TestManager(), None)
         manager = test_file.manager
         for line in lines:
-            if mattr := self.get_mattr(line):
-                test_file.add_mattr(mattr)
-                continue
-            encoding, asm_text = self.get_enc_asm(line)
-            if not encoding and not asm_text:
-                continue
-            manager.add_test(encoding, asm_text)
+            try:
+                if mattr := self.get_mattr(line):
+                    test_file.add_mattr(mattr)
+                    continue
+                encoding, asm_text = self.get_enc_asm(line)
+                if not encoding and not asm_text:
+                    continue
+                manager.add_test(encoding, asm_text)
+            except ValueError:
+                print(f"[!] Failed to parse {test_file.filename}. Skipping it")
+                return None
 
         manager.check_all_complete()
         test_file.add_tests(manager.get_completed())
@@ -309,7 +316,11 @@ class MCUpdater:
 
         return enc, asm_text
 
-    def gen_tests_in_dir(self, curr_dir: Path):
+    def gen_tests_in_dir(self, curr_dir: Path) -> list[str]:
+        """Generate testcases from the files in the given dir.
+        Returns a list of files which failed to parse.
+        """
+        fails = list()
         for file in curr_dir.iterdir():
             if file.is_dir():
                 self.gen_tests_in_dir(file)
@@ -320,7 +331,11 @@ class MCUpdater:
                 continue
             if any(re.search(x, file.name) is not None for x in self.excluded):
                 continue
-            self.test_files[file.name] = self.parse_file(curr_dir.joinpath(file))
+            if test_file := self.parse_file(curr_dir.joinpath(file)):
+                self.test_files[file.name] = test_file
+            else:
+                fails.append(file.name)
+        return fails
 
     def gen_all(self):
         assembly_tests = self.mc_dir.joinpath(f"{self.arch}")
@@ -334,8 +349,19 @@ class MCUpdater:
                 f"'{assembly_tests}' does not exits or is not a directory. Cannot generate tests from there."
             )
 
-        self.gen_tests_in_dir(disas_tests)
-        self.gen_tests_in_dir(assembly_tests)
+        fails = self.gen_tests_in_dir(disas_tests)
+        fails.extend(self.gen_tests_in_dir(assembly_tests))
+        if fails:
+            print("\n[!] The following files failed to parse:")
+            for f in fails:
+                print(f"\t{f}")
+        self.write_to_build_dir()
+
+    def write_to_build_dir(self):
+        for filename, test in self.test_files.items():
+            with open(get_path("{MCUPDATER_OUT_DIR}").joinpath(filename), "w+") as f:
+                f.write(test.get_cs_testfile_content())
+            log.info(f"Write {filename}")
 
 
 def parse_args() -> argparse.Namespace:

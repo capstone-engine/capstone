@@ -66,6 +66,7 @@
 # NOBF16-NEXT: [0x62,0xfc,0x44,0x2e]
 # NOBF16: warning: invalid instruction encoding
 # NOBF16-NEXT: [0x62,0xfc,0x44,0x6e]
+NOBF16-NEXT: [0x62,0xfc,0x44,0x2e]
 # But this please. It belongs to the encding above
 # CHECK: bfdot   v2.2s, v3.4h, v4.4h
 # CHECK: bfdot   v2.4s, v3.8h, v4.8h
