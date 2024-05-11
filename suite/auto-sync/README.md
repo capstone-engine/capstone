@@ -33,7 +33,9 @@ pip install -e .
 
 ## Architecture
 
-Please read [ARCHITECTURE.md](ARCHITECTURE.md) to understand how Auto-Sync works.
+Please read [ARCHITECTURE.md](https://github.com/capstone-engine/capstone/blob/next/docs/ARCHITECTURE.md) to understand how Auto-Sync works.
+
+This step is essential! Please don't skip it.
 
 ## Update an architecture
 
