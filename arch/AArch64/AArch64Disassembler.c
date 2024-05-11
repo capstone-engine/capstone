@@ -933,7 +933,6 @@ static DecodeStatus DecodePCRelLabel16(MCInst *Inst, unsigned Imm,
 	uint64_t ImmVal = Imm;
 	if (ImmVal > (1 << 16))
 		return Fail;
-	ImmVal = -ImmVal;
 	// Symbols are not supported by Capstone
 	return Success;
 }

@@ -2330,6 +2330,7 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		setup_sme_operand(MI);
 		va_start(args, vas);
 		int Tile = va_arg(args, int);
+		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE;
 		AArch64_get_detail_op(MI, 0)->sme.tile = Tile;
 		AArch64_get_detail_op(MI, 0)->vas = vas;

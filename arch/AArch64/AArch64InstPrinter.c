@@ -1107,21 +1107,14 @@ bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
 		AArch64RPRFM_lookupRPRFMByEncoding(RPRFOp);
 	if (RPRFM) {
 		SStream_concat0(O, RPRFM->Name);
-		if (detail_is_set(MI)) {
-			aarch64_sysop sysop;
-			sysop.alias = RPRFM->SysAlias;
-			sysop.sub_type = AArch64_OP_RPRFM;
-			AArch64_get_detail_op(MI, 0)->type =
-				AArch64_OP_SYSALIAS;
-			AArch64_get_detail_op(MI, 0)->sysop = sysop;
-			AArch64_inc_op_count(MI);
-		}
+	} else {
+    printUInt32Bang(O, RPRFOp);
+    SStream_concat(O, ", ");
 	}
+  SStream_concat0(O, getRegisterName(Rm, AArch64_NoRegAltName));
 	SStream_concat0(O, ", [");
 	printOperand(MI, 1, O); // "Rn".
 	SStream_concat0(O, "]");
-
-	;
 
 	return true;
 }
@@ -1167,7 +1160,7 @@ Search_PRCTX:
 			if (Op1Val != 3 || CnVal != 7 || CmVal != 3)
 				return false;
 
-			aarch64_insn_group Requires =
+			unsigned int Requires =
 				Op2Val == 6 ? AArch64_FeatureSPECRES2 :
 					      AArch64_FeaturePredRes;
 			if (!(AArch64_getFeatureBits(MI->csh->mode,
