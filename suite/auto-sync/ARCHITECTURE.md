@@ -1,12 +1,9 @@
-# Auto-Sync
+<!--
+Copyright © 2022 Rot127 <unisono@quyllur.org>
+SPDX-License-Identifier: BSD-3
+-->
 
-`auto-sync` is the architecture update tool for Capstone.
-Because the architecture modules of Capstone use mostly code from LLVM,
-we need to update this part with every LLVM release. `auto-sync` helps
-with this synchronization between LLVM and Capstone's modules by
-automating most of it.
-
-You can find it in `suite/auto-sync`.
+# Architecture of Auto-Sync
 
 This document is split into four parts.
 
@@ -106,94 +103,8 @@ It then compares specific nodes from the just translated file to the equivalent 
 
 The user can choose if she accepts the version from the translated file or the old file.
 This decision is saved for every node.
-If there exists a saved decision for a node, the previous decision automatically applied again.
+If there exists a saved decision for two nodes, and the nodes did not change since the last time,
+it applies the previous decision automatically again.
 
 Every other syntax error must be solved manually.
 
-## Update an architecture
-
-To update an architecture do the following:
-
-Rebase `llvm-capstone` onto the new LLVM release (if not already done).
-```
-# 1. Clone Capstone's LLVM
-git clone https://github.com/capstone-engine/llvm-capstone
-cd llvm-capstone
-git checkout auto-sync
-
-# 2. Rebase onto the new LLVM release and resolve the conflicts.
-
-# 3. Build tblgen
-mkdir build
-cd build
-cmake -G Ninja -DLLVM_TARGETS_TO_BUILD=<ARCH> -DCMAKE_BUILD_TYPE=Debug ../llvm
-cmake --build . --target llvm-tblgen --config Debug
-
-# 4. Run the updater
-cd ../../suite/auto-sync/
-./Updater/ASUpdater.py -a <ARCH>
-```
-
-The update script will execute the steps described above and copy the new files to their directories.
-
-Afterward try to build Capstone and fix any build errors left.
-
-If new instructions or operands were added, add test cases for those
-(recession tests for instructions are located in `suite/MC/`).
-
-TODO: Operand and detail tests
-<!--
-TODO: Wait until `cstest` is rewritten and add description about operand testing.
-Issue: https://github.com/capstone-engine/capstone/issues/1984
--->
-
-## Refactor an architecture for `auto-sync`
-
-To refactor an architecture to use `auto-sync`, you need to add it to the configuration.
-
-1. Add the architecture to the supported architectures list in `ASUpdater.py`.
-2. Configure the `CppTranslator` for your architecture (`suite/auto-sync/CppTranslator/arch_config.json`)
-
-Now, manually run the update commands within `ASUpdater.py` but *skip* the `Differ` step:
-
-```
-./Updater/ASUpdater.py -a <ARCH> -s IncGen Translate
-```
-
-The task after this is to:
-
-- Replace leftover C++ syntax with its C equivalent.
-- Implement the `add_cs_detail()` handler in `<ARCH>Mapping` for each operand type.
-- Add any missing logic to the translated files.
-- Make it build and write tests.
-- Run the Differ again and always select the old nodes.
-
-**Notes:**
-
-- If you find yourself fixing the same syntax error multiple times,
-please consider adding a `Patch` to the `CppTranslator` for this case.
-
-- Please check out the implementation of ARM's `add_cs_detail()` before implementing your own.
-
-- Running the `Differ` after everything is done, preserves your version of syntax corrections, and the next user can auto-apply them.
-
-- Sometimes the LLVM code uses a single function from a larger source file.
-It is not worth it to translate the whole file just for this function.
-Bundle those lonely functions in `<ARCH>DisassemblerExtension.c`.
-
-- Some generated enums must be included in the `include/capstone/<ARCH>.h` header.
-At the position where the enum should be inserted, add a comment like this (don't remove the `<>` brackets):
-
-    ```
-    // generate content <FILENAME.inc> begin
-    // generate content <FILENAME.inc> end
-    ```
-
-The update script will insert the content of the `.inc` file at this place.
-
-## Adding a new architecture
-
-Adding a new architecture follows the same steps as above. With the exception that you need
-to implement all the Capstone files from scratch.
-
-Check out an `auto-sync` supporting architectures for guidance and open an issue if you need help.
