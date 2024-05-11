@@ -1,0 +1,25 @@
+# CS_ARCH_AARCH64, None, None
+0xc160a180 == {z0.h-z1.h}, {z0.h-z1.h}, z0.h
+0xc16fa19e == {z30.h-z31.h}, {z30.h-z31.h}, z15.h
+0xc1a0a180 == {z0.s-z1.s}, {z0.s-z1.s}, z0.s
+0xc1afa19e == {z30.s-z31.s}, {z30.s-z31.s}, z15.s
+0xc1e0a180 == {z0.d-z1.d}, {z0.d-z1.d}, z0.d
+0xc1efa19e == {z30.d-z31.d}, {z30.d-z31.d}, z15.d
+0xc160b180 == {z0.h-z1.h}, {z0.h-z1.h}, {z0.h-z1.h}
+0xc17eb19e == {z30.h-z31.h}, {z30.h-z31.h}, {z30.h-z31.h}
+0xc1a0b180 == {z0.s-z1.s}, {z0.s-z1.s}, {z0.s-z1.s}
+0xc1beb19e == {z30.s-z31.s}, {z30.s-z31.s}, {z30.s-z31.s}
+0xc1e0b180 == {z0.d-z1.d}, {z0.d-z1.d}, {z0.d-z1.d}
+0xc1feb19e == {z30.d-z31.d}, {z30.d-z31.d}, {z30.d-z31.d}
+0xc160a980 == {z0.h-z3.h}, {z0.h-z3.h}, z0.h
+0xc16fa99c == {z28.h-z31.h}, {z28.h-z31.h}, z15.h
+0xc1a0a980 == {z0.s-z3.s}, {z0.s-z3.s}, z0.s
+0xc1afa99c == {z28.s-z31.s}, {z28.s-z31.s}, z15.s
+0xc1e0a980 == {z0.d-z3.d}, {z0.d-z3.d}, z0.d
+0xc1efa99c == {z28.d-z31.d}, {z28.d-z31.d}, z15.d
+0xc160b980 == {z0.h-z3.h}, {z0.h-z3.h}, {z0.h-z3.h}
+0xc17cb99c == {z28.h-z31.h}, {z28.h-z31.h}, {z28.h-z31.h}
+0xc1a0b980 == {z0.s-z3.s}, {z0.s-z3.s}, {z0.s-z3.s}
+0xc1bcb99c == {z28.s-z31.s}, {z28.s-z31.s}, {z28.s-z31.s}
+0xc1e0b980 == {z0.d-z3.d}, {z0.d-z3.d}, {z0.d-z3.d}
+0xc1fcb99c == {z28.d-z31.d}, {z28.d-z31.d}, {z28.d-z31.d}
