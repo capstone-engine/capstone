@@ -13,7 +13,7 @@ This document is split into four parts.
 4. Notes about how to add a new architecture to Capstone with `auto-sync`.
 
 Please read the section about architecture module design in
-[ARCHITECTURE.md](ARCHITECTURE.md) before proceeding.
+[ARCHITECTURE.md](https://github.com/capstone-engine/capstone/blob/next/docs/ARCHITECTURE.md) before proceeding.
 The architectural understanding is important for the following.
 
 ## Update procedure
@@ -95,16 +95,30 @@ _Note_: For details about this checkout `suite/auto-sync/CppTranslator/README.md
 Because the result of the `CppTranslator` is not perfect,
 we still have many syntax problems left.
 
-Those need to be fixed by hand.
+Those need to be fixed partially by hand.
+
+**Differ**
+
 In order to ease this process we run the `Differ` after the `CppTranslator`.
 
-The `Differ` parses each _translated_ file and the corresponding source file _currently_ used in Capstone.
-It then compares specific nodes from the just translated file to the equivalent nodes in the old file.
+The `Differ` compares our two versions of C files we have now.
+One of them are the C files currently used by the architecture module.
+On the other hand we have the translated C files. Those are still faulty and need to be fixed.
+
+Most fixes are syntactical problems. Those were almost always resolved before, during the last update.
+The `Differ` helps you to compare the files and let you select which version to accept.
+
+Sometimes (not very often though), the newly translated C files contain important changes.
+Most often though, the old files are already correct.
+
+The `Differ` parses both files into an abstract syntax tree and compares certain nodes with the same name
+(mostly functions).
 
 The user can choose if she accepts the version from the translated file or the old file.
 This decision is saved for every node.
 If there exists a saved decision for two nodes, and the nodes did not change since the last time,
 it applies the previous decision automatically again.
 
-Every other syntax error must be solved manually.
-
+The `Differ` is far from perfect. It only helps to automatically apply "known to be good" fixes
+and gives the user a better interface to solve the other problems.
+But there will still be syntax errors left afterward. These must be fixed by hand.
