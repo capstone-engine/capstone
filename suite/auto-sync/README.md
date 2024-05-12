@@ -11,6 +11,8 @@ we need to update this part with every LLVM release. `auto-sync` helps
 with this synchronization between LLVM and Capstone's modules by
 automating most of it.
 
+Please refer to [intro.md](intro.md) for an introduction about this tool.
+
 ## Install
 
 Setup Python environment and Tree-sitter

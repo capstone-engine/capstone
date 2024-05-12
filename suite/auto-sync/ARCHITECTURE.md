@@ -12,7 +12,7 @@ This document is split into four parts.
 3. Instructions how to refactor an architecture to use `auto-sync`.
 4. Notes about how to add a new architecture to Capstone with `auto-sync`.
 
-Please read the section about architecture module design in
+Please read the section about capstone module design in
 [ARCHITECTURE.md](https://github.com/capstone-engine/capstone/blob/next/docs/ARCHITECTURE.md) before proceeding.
 The architectural understanding is important for the following.
 
