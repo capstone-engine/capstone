@@ -171,18 +171,18 @@ static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes,
 	switch (bh) {
 	default:
 		assert(0 && "Invalid BH value.");
-	case 0b00:
+	case 0:
 		PPC_get_detail(MI)->bc.bh = cond ? PPC_BH_NO_SUBROUTINE_RET :
 						   PPC_BH_SUBROUTINE_RET;
 		break;
-	case 0b01:
+	case 1:
 		PPC_get_detail(MI)->bc.bh = cond ? PPC_BH_RESERVED :
 						   PPC_BH_NO_SUBROUTINE_RET;
 		break;
-	case 0b10:
+	case 2:
 		PPC_get_detail(MI)->bc.bh = PPC_BH_RESERVED;
 		break;
-	case 0b11:
+	case 3:
 		PPC_get_detail(MI)->bc.bh = PPC_BH_NOT_PREDICTABLE;
 		break;
 	}

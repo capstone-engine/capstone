@@ -125,21 +125,21 @@ typedef enum VPTCodes {
 ///   Txy = xy10
 ///   Txyz = xyz1
 typedef enum PredBlockMask {
-  ARM_T = 0b1000,
-  ARM_TT = 0b0100,
-  ARM_TE = 0b1100,
-  ARM_TTT = 0b0010,
-  ARM_TTE = 0b0110,
-  ARM_TEE = 0b1110,
-  ARM_TET = 0b1010,
-  ARM_TTTT = 0b0001,
-  ARM_TTTE = 0b0011,
-  ARM_TTEE = 0b0111,
-  ARM_TTET = 0b0101,
-  ARM_TEEE = 0b1111,
-  ARM_TEET = 0b1101,
-  ARM_TETT = 0b1001,
-  ARM_TETE = 0b1011
+  ARM_T = 0x8, // 0b1000
+  ARM_TT = 0x4, // 0b0100
+  ARM_TE = 0xc, // 0b1100
+  ARM_TTT = 0x2, // 0b0010
+  ARM_TTE = 0x6, // 0b0110
+  ARM_TEE = 0xe, // 0b1110
+  ARM_TET = 0xa, // 0b1010
+  ARM_TTTT = 0x1, // 0b0001
+  ARM_TTTE = 0x3, // 0b0011
+  ARM_TTEE = 0x7, // 0b0111
+  ARM_TTET = 0x5, // 0b0101
+  ARM_TEEE = 0xf, // 0b1111
+  ARM_TEET = 0xd, // 0b1101
+  ARM_TETT = 0x9, // 0b1001
+  ARM_TETE = 0xb, // 0b1011
 } ARM_PredBlockMask;
 
 // Expands a PredBlockMask by adding an E or a T at the end, depending on Kind.
