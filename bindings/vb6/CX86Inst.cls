@@ -183,7 +183,7 @@ Friend Sub LoadDetails(lpStruct As Long, parent As CDisassembler)
     m_prefix = cs.prefix
     m_opcode = cs.opcode
     
-    ptr = lpStruct + LenB(cs) 'we dont include the operands in our vb struct..
+    ptr = lpStruct + LenB(cs) 'we don't include the operands in our vb struct..
     For i = 1 To cs.op_count
         Set o = New CX86Operand
         o.LoadDetails ptr, hEngine

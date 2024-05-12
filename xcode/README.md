@@ -1,7 +1,7 @@
 Xcode Project for Capstone
 ================================================================================
 
-The *Capstone.xcodeproj* project is an Xcode project that mimicks the Visual
+The *Capstone.xcodeproj* project is an Xcode project that mimics the Visual
 Studio solution for Capstone. It embeds nicely into Xcode workspaces. It has 13
 targets, two of which are the most likely to be of interest:
 

@@ -129,7 +129,7 @@
 // a. CFG Checksum (a.k.a. function hash):
 //   !CFGChecksum: 12345
 // b. CFG Checksum (see ContextAttributeMask):
-//   !Atribute: 1
+//   !Attribute: 1
 //
 //
 // Binary format

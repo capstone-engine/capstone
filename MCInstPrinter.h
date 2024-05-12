@@ -10,7 +10,7 @@
 
 /// Returned by getMnemonic() of the AsmPrinters.
 typedef struct {
-	const char *first; // Menmonic
+	const char *first; // Mnemonic
 	uint64_t second;   // Bits
 } MnemonicBitsInfo;
 

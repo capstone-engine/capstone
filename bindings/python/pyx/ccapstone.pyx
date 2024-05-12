@@ -335,7 +335,7 @@ cdef class Cs(object):
     # unlike disasm(), disasm_lite() only return tuples of (address, size, mnemonic, op_str),
     # rather than CsInsn objects.
     def disasm_lite(self, code, addr, count=0):
-        # TODO: dont need detail, so we might turn off detail, then turn on again when done
+        # TODO: don't need detail, so we might turn off detail, then turn on again when done
         cdef cc.cs_insn *allinsn
 
         if _diet:

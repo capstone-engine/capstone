@@ -981,7 +981,7 @@ public:
 
 protected:
   /// Target-dependent implementation for IsCopyInstr.
-  /// If the specific machine instruction is a instruction that moves/copies
+  /// If the specific machine instruction is an instruction that moves/copies
   /// value from one register to another register return destination and source
   /// registers as machine operands.
   virtual Optional<DestSourcePair>
@@ -1001,7 +1001,7 @@ protected:
   }
 
 public:
-  /// If the specific machine instruction is a instruction that moves/copies
+  /// If the specific machine instruction is an instruction that moves/copies
   /// value from one register to another register return destination and source
   /// registers as machine operands.
   /// For COPY-instruction the method naturally returns destination and source

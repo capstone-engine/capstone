@@ -194,7 +194,7 @@ Improvements:
 - Fix eflags effects for adc/sbb (#1798)
 - Update x86 operand access information (#1801)
 - CI automatically build release tarball (#1802)
-- Dont format sstreams when there's nothing to format (#1805)
+- Don't format sstreams when there's nothing to format (#1805)
 - Fix warning about Unused variables (#1815)
 - Fix insn initialization when instruction have no operands or have a prefix (#1816)
 - Avoid abort() if x86 not supported (#1818)
