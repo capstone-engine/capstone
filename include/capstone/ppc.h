@@ -124,11 +124,11 @@ typedef enum {
 
 /// Masks of flags in the BO field.
 typedef enum {
-	PPC_BO_TEST_CR = 0b10000,  ///< Flag mask: Test CR bit.
-	PPC_BO_CR_CMP = 0b01000,   ///< Flag mask: Compare CR bit to 0 or 1.
-	PPC_BO_DECR_CTR = 0b00100, ///< Flag mask: Decrement counter.
-	PPC_BO_CTR_CMP = 0b00010,  ///< Flag mask: Compare CTR to 0 or 1.
-	PPC_BO_T = 0b00001,	   ///< Either ignored (z) or hint bit t
+	PPC_BO_TEST_CR = (1 << 4),  ///< Flag mask: Test CR bit.
+	PPC_BO_CR_CMP = (1 << 3),   ///< Flag mask: Compare CR bit to 0 or 1.
+	PPC_BO_DECR_CTR = (1 << 2), ///< Flag mask: Decrement counter.
+	PPC_BO_CTR_CMP = (1 << 1),  ///< Flag mask: Compare CTR to 0 or 1.
+	PPC_BO_T = 1,               ///< Either ignored (z) or hint bit t
 } ppc_bo_mask;
 
 /// Bit for branch taken (plus) or not-taken (minus) hint
@@ -136,11 +136,11 @@ typedef enum {
 /// Bit:  | 0 | 1 |
 /// Name: | a | t |
 typedef enum {
-	PPC_BR_NOT_GIVEN = 0b00,
-	PPC_BR_RESERVED = 0b01,
-	PPC_BR_NOT_TAKEN = 0b10, ///< Minus
-	PPC_BR_TAKEN = 0b11,	 ///< Plus
-	PPC_BR_HINT_MASK = 0b11,
+	PPC_BR_NOT_GIVEN = 0x0,
+	PPC_BR_RESERVED = 0x1,
+	PPC_BR_NOT_TAKEN = 0x2, ///< Minus
+	PPC_BR_TAKEN = 0x3,     ///< Plus
+	PPC_BR_HINT_MASK = 0x3,
 } ppc_br_hint;
 
 /// Encodes the different meanings of the BH field.
