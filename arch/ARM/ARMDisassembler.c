@@ -670,7 +670,7 @@ static DecodeStatus getInstruction(csh ud, const uint8_t *Bytes,
 	else
 		Result = getARMInstruction(ud, Bytes, BytesLen, MI, Size,
 					   Address, Info);
-	MCInst_handleWriteback(MI, ARMInsts);
+	MCInst_handleWriteback(MI, ARMInsts, ARR_SIZE(ARMInsts));
 	return Result;
 }
 

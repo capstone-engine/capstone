@@ -414,7 +414,7 @@ DecodeStatus AArch64_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 	DecodeStatus Result = MCDisassembler_Fail;
 	Result =
 		getInstruction(handle, Bytes, ByteLen, MI, Size, Address, Info);
-	MCInst_handleWriteback(MI, AArch64Descs.Insts);
+	MCInst_handleWriteback(MI, AArch64Descs.Insts, ARR_SIZE(AArch64Descs.Insts));
 	return Result;
 }
 

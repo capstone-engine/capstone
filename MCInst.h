@@ -159,7 +159,7 @@ void MCInst_addOperand2(MCInst *inst, MCOperand *Op);
 
 bool MCInst_isPredicable(const MCInstrDesc *MIDesc);
 
-void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDesc);
+void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDescTable, unsigned tbl_size);
 
 bool MCInst_opIsTied(const MCInst *MI, unsigned OpNum);
 
