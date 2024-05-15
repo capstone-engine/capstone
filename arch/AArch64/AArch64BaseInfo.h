@@ -55,7 +55,7 @@
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
-inline static unsigned getWRegFromXReg(unsigned Reg)
+static inline unsigned getWRegFromXReg(unsigned Reg)
 {
 	switch (Reg) {
 	case AArch64_X0:
@@ -129,7 +129,7 @@ inline static unsigned getWRegFromXReg(unsigned Reg)
 	return Reg;
 }
 
-inline static unsigned getXRegFromWReg(unsigned Reg)
+static inline unsigned getXRegFromWReg(unsigned Reg)
 {
 	switch (Reg) {
 	case AArch64_W0:
@@ -203,7 +203,7 @@ inline static unsigned getXRegFromWReg(unsigned Reg)
 	return Reg;
 }
 
-inline static unsigned getXRegFromXRegTuple(unsigned RegTuple)
+static inline unsigned getXRegFromXRegTuple(unsigned RegTuple)
 {
 	switch (RegTuple) {
 	case AArch64_X0_X1_X2_X3_X4_X5_X6_X7:
@@ -629,7 +629,7 @@ typedef struct SVEVECLENSPECIFIER {
 
 /// Return the number of active elements for VL1 to VL256 predicate pattern,
 /// zero for all other patterns.
-inline unsigned getNumElementsFromSVEPredPattern(unsigned Pattern)
+static inline unsigned getNumElementsFromSVEPredPattern(unsigned Pattern)
 {
 	switch (Pattern) {
 	default:
@@ -657,7 +657,7 @@ inline unsigned getNumElementsFromSVEPredPattern(unsigned Pattern)
 }
 
 /// Return specific VL predicate pattern based on the number of elements.
-inline unsigned getSVEPredPatternFromNumElements(unsigned MinNumElts)
+static inline unsigned getSVEPredPatternFromNumElements(unsigned MinNumElts)
 {
 	switch (MinNumElts) {
 	default:
@@ -932,7 +932,7 @@ typedef enum ID {
 // namespace AArch64PACKey
 
 /// Return 2-letter identifier string for numeric key ID.
-inline static const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
+static inline const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 {
 	switch (KeyID) {
 	case AArch64PACKey_IA:
@@ -948,7 +948,7 @@ inline static const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 }
 
 /// Return numeric key ID for 2-letter identifier string.
-inline static AArch64PACKey_ID AArch64StringToPACKeyID(const char *Name)
+static inline AArch64PACKey_ID AArch64StringToPACKeyID(const char *Name)
 {
 	if (strcmp(Name, "ia") == 0)
 		return AArch64PACKey_IA;
