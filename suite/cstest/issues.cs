@@ -287,7 +287,7 @@
 
 !# issue 1627 Arm64 LD1 missing immediate operand
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0xe0,0x73,0xdf,0x0c == ld1 { v0.8b }, [sp], #8 ; operands[0].vas: 0x808 ; operands[1].type: MEM ; operands[1].mem.base: REG = sp ; operands[1].mem.disp: 0x8 ; operands[1].access: READ | WRITE
+0xe0,0x73,0xdf,0x0c == ld1 { v0.8b }, [sp], #8 ; operands[0].vas: 0x808 ; operands[1].type: MEM ; operands[1].mem.base: REG = sp ; operands[1].mem.disp: 0x8 ; operands[1].access: READ
 
 !# issue 1587 ARM thumb pushed registers write
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
