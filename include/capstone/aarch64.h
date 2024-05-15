@@ -4251,6 +4251,9 @@ typedef enum aarch64_insn {
 	// generated content <AArch64GenCSAliasEnum.inc> begin
 	// clang-format off
 
+	AArch64_INS_ALIAS_ADDPT, // Real instr.: AArch64_ADDPT_shift
+	AArch64_INS_ALIAS_GCSB, // Real instr.: AArch64_HINT
+	AArch64_INS_ALIAS_GCSPOPM, // Real instr.: AArch64_GCSPOPM
 	AArch64_INS_ALIAS_LDAPUR, // Real instr.: AArch64_LDAPURbi
 	AArch64_INS_ALIAS_STLLRB, // Real instr.: AArch64_STLLRB
 	AArch64_INS_ALIAS_STLLRH, // Real instr.: AArch64_STLLRH
@@ -4259,128 +4262,12 @@ typedef enum aarch64_insn {
 	AArch64_INS_ALIAS_STLRH, // Real instr.: AArch64_STLRH
 	AArch64_INS_ALIAS_STLR, // Real instr.: AArch64_STLRW
 	AArch64_INS_ALIAS_STLUR, // Real instr.: AArch64_STLURbi
-	AArch64_INS_ALIAS_EOR, // Real instr.: AArch64_EOR_ZI
-	AArch64_INS_ALIAS_AND, // Real instr.: AArch64_AND_ZI
-	AArch64_INS_ALIAS_MOV, // Real instr.: AArch64_CPY_ZPmI_H
-	AArch64_INS_ALIAS_LD1B, // Real instr.: AArch64_LD1B_H_IMM_REAL
-	AArch64_INS_ALIAS_LD1SW, // Real instr.: AArch64_LD1SW_D_IMM_REAL
-	AArch64_INS_ALIAS_LD1H, // Real instr.: AArch64_LD1H_IMM_REAL
-	AArch64_INS_ALIAS_LD1SH, // Real instr.: AArch64_LD1SH_D_IMM_REAL
-	AArch64_INS_ALIAS_LD1W, // Real instr.: AArch64_LD1W_IMM_REAL
-	AArch64_INS_ALIAS_LD1SB, // Real instr.: AArch64_LD1SB_D_IMM_REAL
-	AArch64_INS_ALIAS_LD1D, // Real instr.: AArch64_LD1D_IMM_REAL
-	AArch64_INS_ALIAS_LD1RB, // Real instr.: AArch64_LD1RB_H_IMM
-	AArch64_INS_ALIAS_LD1RSW, // Real instr.: AArch64_LD1RSW_IMM
-	AArch64_INS_ALIAS_LD1RH, // Real instr.: AArch64_LD1RH_IMM
-	AArch64_INS_ALIAS_LD1RSH, // Real instr.: AArch64_LD1RSH_D_IMM
-	AArch64_INS_ALIAS_LD1RW, // Real instr.: AArch64_LD1RW_IMM
-	AArch64_INS_ALIAS_LD1RSB, // Real instr.: AArch64_LD1RSB_D_IMM
-	AArch64_INS_ALIAS_LD1RD, // Real instr.: AArch64_LD1RD_IMM
-	AArch64_INS_ALIAS_LD1RQH, // Real instr.: AArch64_LD1RQ_H_IMM
-	AArch64_INS_ALIAS_LD1RQW, // Real instr.: AArch64_LD1RQ_W_IMM
-	AArch64_INS_ALIAS_LD1RQD, // Real instr.: AArch64_LD1RQ_D_IMM
-	AArch64_INS_ALIAS_LDNF1B, // Real instr.: AArch64_LDNF1B_IMM_REAL
-	AArch64_INS_ALIAS_LDNF1SW, // Real instr.: AArch64_LDNF1SW_D_IMM_REAL
-	AArch64_INS_ALIAS_LDNF1H, // Real instr.: AArch64_LDNF1H_IMM_REAL
-	AArch64_INS_ALIAS_LDNF1SH, // Real instr.: AArch64_LDNF1SH_D_IMM_REAL
-	AArch64_INS_ALIAS_LDNF1W, // Real instr.: AArch64_LDNF1W_IMM_REAL
-	AArch64_INS_ALIAS_LDNF1SB, // Real instr.: AArch64_LDNF1SB_D_IMM_REAL
-	AArch64_INS_ALIAS_LDNF1D, // Real instr.: AArch64_LDNF1D_IMM_REAL
-	AArch64_INS_ALIAS_LDFF1B, // Real instr.: AArch64_LDFF1B_H_REAL
-	AArch64_INS_ALIAS_LDFF1SW, // Real instr.: AArch64_LDFF1SW_D_REAL
-	AArch64_INS_ALIAS_LDFF1H, // Real instr.: AArch64_LDFF1H_REAL
-	AArch64_INS_ALIAS_LDFF1SH, // Real instr.: AArch64_LDFF1SH_D_REAL
-	AArch64_INS_ALIAS_LDFF1W, // Real instr.: AArch64_LDFF1W_REAL
-	AArch64_INS_ALIAS_LDFF1SB, // Real instr.: AArch64_LDFF1SB_D_REAL
-	AArch64_INS_ALIAS_LDFF1D, // Real instr.: AArch64_LDFF1D_REAL
-	AArch64_INS_ALIAS_LD3B, // Real instr.: AArch64_LD3B_IMM
-	AArch64_INS_ALIAS_LD4B, // Real instr.: AArch64_LD4B_IMM
-	AArch64_INS_ALIAS_LD2H, // Real instr.: AArch64_LD2H_IMM
-	AArch64_INS_ALIAS_LD3H, // Real instr.: AArch64_LD3H_IMM
-	AArch64_INS_ALIAS_LD4H, // Real instr.: AArch64_LD4H_IMM
-	AArch64_INS_ALIAS_LD2W, // Real instr.: AArch64_LD2W_IMM
-	AArch64_INS_ALIAS_LD3W, // Real instr.: AArch64_LD3W_IMM
-	AArch64_INS_ALIAS_LD4W, // Real instr.: AArch64_LD4W_IMM
-	AArch64_INS_ALIAS_LD2D, // Real instr.: AArch64_LD2D_IMM
-	AArch64_INS_ALIAS_LD3D, // Real instr.: AArch64_LD3D_IMM
-	AArch64_INS_ALIAS_LD4D, // Real instr.: AArch64_LD4D_IMM
-	AArch64_INS_ALIAS_LD2Q, // Real instr.: AArch64_LD2Q_IMM
-	AArch64_INS_ALIAS_LD3Q, // Real instr.: AArch64_LD3Q_IMM
-	AArch64_INS_ALIAS_LD4Q, // Real instr.: AArch64_LD4Q_IMM
-	AArch64_INS_ALIAS_LDNT1H, // Real instr.: AArch64_LDNT1H_ZRI
-	AArch64_INS_ALIAS_LDNT1W, // Real instr.: AArch64_LDNT1W_ZRI
-	AArch64_INS_ALIAS_LDNT1D, // Real instr.: AArch64_LDNT1D_ZRI
-	AArch64_INS_ALIAS_ST1B, // Real instr.: AArch64_ST1B_H_IMM
-	AArch64_INS_ALIAS_ST1H, // Real instr.: AArch64_ST1H_IMM
-	AArch64_INS_ALIAS_ST1W, // Real instr.: AArch64_ST1W_IMM
-	AArch64_INS_ALIAS_ST1D, // Real instr.: AArch64_ST1D_IMM
-	AArch64_INS_ALIAS_ST3B, // Real instr.: AArch64_ST3B_IMM
-	AArch64_INS_ALIAS_ST4B, // Real instr.: AArch64_ST4B_IMM
-	AArch64_INS_ALIAS_ST2H, // Real instr.: AArch64_ST2H_IMM
-	AArch64_INS_ALIAS_ST3H, // Real instr.: AArch64_ST3H_IMM
-	AArch64_INS_ALIAS_ST4H, // Real instr.: AArch64_ST4H_IMM
-	AArch64_INS_ALIAS_ST2W, // Real instr.: AArch64_ST2W_IMM
-	AArch64_INS_ALIAS_ST3W, // Real instr.: AArch64_ST3W_IMM
-	AArch64_INS_ALIAS_ST4W, // Real instr.: AArch64_ST4W_IMM
-	AArch64_INS_ALIAS_ST2D, // Real instr.: AArch64_ST2D_IMM
-	AArch64_INS_ALIAS_ST3D, // Real instr.: AArch64_ST3D_IMM
-	AArch64_INS_ALIAS_ST4D, // Real instr.: AArch64_ST4D_IMM
-	AArch64_INS_ALIAS_ST3Q, // Real instr.: AArch64_ST3Q_IMM
-	AArch64_INS_ALIAS_ST4Q, // Real instr.: AArch64_ST4Q_IMM
-	AArch64_INS_ALIAS_STNT1H, // Real instr.: AArch64_STNT1H_ZRI
-	AArch64_INS_ALIAS_STNT1W, // Real instr.: AArch64_STNT1W_ZRI
-	AArch64_INS_ALIAS_STNT1D, // Real instr.: AArch64_STNT1D_ZRI
-	AArch64_INS_ALIAS_PRFH, // Real instr.: AArch64_PRFH_PRI
-	AArch64_INS_ALIAS_PRFW, // Real instr.: AArch64_PRFW_PRI
-	AArch64_INS_ALIAS_PRFD, // Real instr.: AArch64_PRFD_PRI
-	AArch64_INS_ALIAS_CNTH, // Real instr.: AArch64_CNTH_XPiI
-	AArch64_INS_ALIAS_CNTW, // Real instr.: AArch64_CNTW_XPiI
-	AArch64_INS_ALIAS_CNTD, // Real instr.: AArch64_CNTD_XPiI
-	AArch64_INS_ALIAS_DECB, // Real instr.: AArch64_DECB_XPiI
-	AArch64_INS_ALIAS_INCH, // Real instr.: AArch64_INCH_XPiI
-	AArch64_INS_ALIAS_DECH, // Real instr.: AArch64_DECH_XPiI
-	AArch64_INS_ALIAS_INCW, // Real instr.: AArch64_INCW_XPiI
-	AArch64_INS_ALIAS_DECW, // Real instr.: AArch64_DECW_XPiI
-	AArch64_INS_ALIAS_INCD, // Real instr.: AArch64_INCD_XPiI
-	AArch64_INS_ALIAS_DECD, // Real instr.: AArch64_DECD_XPiI
-	AArch64_INS_ALIAS_SQDECB, // Real instr.: AArch64_SQDECB_XPiWdI
-	AArch64_INS_ALIAS_UQDECB, // Real instr.: AArch64_UQDECB_WPiI
-	AArch64_INS_ALIAS_UQINCB, // Real instr.: AArch64_UQINCB_XPiI
-	AArch64_INS_ALIAS_SQINCH, // Real instr.: AArch64_SQINCH_XPiWdI
-	AArch64_INS_ALIAS_UQINCH, // Real instr.: AArch64_UQINCH_WPiI
-	AArch64_INS_ALIAS_SQDECH, // Real instr.: AArch64_SQDECH_XPiWdI
-	AArch64_INS_ALIAS_UQDECH, // Real instr.: AArch64_UQDECH_WPiI
-	AArch64_INS_ALIAS_SQINCW, // Real instr.: AArch64_SQINCW_XPiWdI
-	AArch64_INS_ALIAS_UQINCW, // Real instr.: AArch64_UQINCW_WPiI
-	AArch64_INS_ALIAS_SQDECW, // Real instr.: AArch64_SQDECW_XPiWdI
-	AArch64_INS_ALIAS_UQDECW, // Real instr.: AArch64_UQDECW_WPiI
-	AArch64_INS_ALIAS_SQINCD, // Real instr.: AArch64_SQINCD_XPiWdI
-	AArch64_INS_ALIAS_UQINCD, // Real instr.: AArch64_UQINCD_WPiI
-	AArch64_INS_ALIAS_SQDECD, // Real instr.: AArch64_SQDECD_XPiWdI
-	AArch64_INS_ALIAS_UQDECD, // Real instr.: AArch64_UQDECD_WPiI
-	AArch64_INS_ALIAS_MOVS, // Real instr.: AArch64_ORRS_PPzPP
-	AArch64_INS_ALIAS_NOT, // Real instr.: AArch64_EOR_PPzPP
-	AArch64_INS_ALIAS_NOTS, // Real instr.: AArch64_EORS_PPzPP
-	AArch64_INS_ALIAS_LD1ROH, // Real instr.: AArch64_LD1RO_H_IMM
-	AArch64_INS_ALIAS_LD1ROW, // Real instr.: AArch64_LD1RO_W_IMM
-	AArch64_INS_ALIAS_LD1ROD, // Real instr.: AArch64_LD1RO_D_IMM
-	AArch64_INS_ALIAS_BCAX, // Real instr.: AArch64_BCAX_ZZZZ
-	AArch64_INS_ALIAS_BSL, // Real instr.: AArch64_BSL_ZZZZ
-	AArch64_INS_ALIAS_BSL1N, // Real instr.: AArch64_BSL1N_ZZZZ
-	AArch64_INS_ALIAS_BSL2N, // Real instr.: AArch64_BSL2N_ZZZZ
-	AArch64_INS_ALIAS_NBSL, // Real instr.: AArch64_NBSL_ZZZZ
-	AArch64_INS_ALIAS_LDNT1B, // Real instr.: AArch64_LDNT1B_ZZR_S_REAL
-	AArch64_INS_ALIAS_LDNT1SH, // Real instr.: AArch64_LDNT1SH_ZZR_S_REAL
-	AArch64_INS_ALIAS_LDNT1SW, // Real instr.: AArch64_LDNT1SW_ZZR_D_REAL
-	AArch64_INS_ALIAS_STNT1B, // Real instr.: AArch64_STNT1B_2Z_IMM
-	AArch64_INS_ALIAS_LD1Q, // Real instr.: AArch64_LD1_MXIPXX_H_Q
-	AArch64_INS_ALIAS_ST1Q, // Real instr.: AArch64_ST1_MXIPXX_H_Q
-	AArch64_INS_ALIAS_SMSTART, // Real instr.: AArch64_MSRpstatesvcrImm1
-	AArch64_INS_ALIAS_SMSTOP, // Real instr.: AArch64_MSRpstatesvcrImm1
+	AArch64_INS_ALIAS_SUBPT, // Real instr.: AArch64_SUBPT_shift
 	AArch64_INS_ALIAS_LDRAA, // Real instr.: AArch64_LDRAAindexed
 	AArch64_INS_ALIAS_ADD, // Real instr.: AArch64_ADDWrs
 	AArch64_INS_ALIAS_CMN, // Real instr.: AArch64_ADDSWri
 	AArch64_INS_ALIAS_ADDS, // Real instr.: AArch64_ADDSWrs
+	AArch64_INS_ALIAS_AND, // Real instr.: AArch64_ANDWrs
 	AArch64_INS_ALIAS_ANDS, // Real instr.: AArch64_ANDSWrs
 	AArch64_INS_ALIAS_LDR, // Real instr.: AArch64_LDRXui
 	AArch64_INS_ALIAS_STR, // Real instr.: AArch64_STRBui
@@ -4400,7 +4287,8 @@ typedef enum aarch64_insn {
 	AArch64_INS_ALIAS_STGP, // Real instr.: AArch64_STGPi
 	AArch64_INS_ALIAS_LDNP, // Real instr.: AArch64_LDNPWi
 	AArch64_INS_ALIAS_STNP, // Real instr.: AArch64_STNPWi
-	AArch64_INS_ALIAS_STG, // Real instr.: AArch64_STGOffset
+	AArch64_INS_ALIAS_STG, // Real instr.: AArch64_STGi
+	AArch64_INS_ALIAS_MOV, // Real instr.: AArch64_UMOVvi32_idx0
 	AArch64_INS_ALIAS_LD1, // Real instr.: AArch64_LD1Onev16b_POST
 	AArch64_INS_ALIAS_LD1R, // Real instr.: AArch64_LD1Rv8b_POST
 	AArch64_INS_ALIAS_STADDLB, // Real instr.: AArch64_LDADDLB
@@ -4412,21 +4300,37 @@ typedef enum aarch64_insn {
 	AArch64_INS_ALIAS_PTRUE, // Real instr.: AArch64_PTRUE_B
 	AArch64_INS_ALIAS_PTRUES, // Real instr.: AArch64_PTRUES_B
 	AArch64_INS_ALIAS_CNTB, // Real instr.: AArch64_CNTB_XPiI
+	AArch64_INS_ALIAS_SQINCH, // Real instr.: AArch64_SQINCH_ZPiI
 	AArch64_INS_ALIAS_INCB, // Real instr.: AArch64_INCB_XPiI
 	AArch64_INS_ALIAS_SQINCB, // Real instr.: AArch64_SQINCB_XPiWdI
+	AArch64_INS_ALIAS_UQINCB, // Real instr.: AArch64_UQINCB_WPiI
 	AArch64_INS_ALIAS_ORR, // Real instr.: AArch64_ORR_ZI
 	AArch64_INS_ALIAS_DUPM, // Real instr.: AArch64_DUPM_ZI
 	AArch64_INS_ALIAS_FMOV, // Real instr.: AArch64_DUP_ZI_H
 	AArch64_INS_ALIAS_EOR3, // Real instr.: AArch64_EOR3_ZZZZ
+	AArch64_INS_ALIAS_ST1B, // Real instr.: AArch64_ST1B_IMM
 	AArch64_INS_ALIAS_ST2B, // Real instr.: AArch64_ST2B_IMM
 	AArch64_INS_ALIAS_ST2Q, // Real instr.: AArch64_ST2Q_IMM
+	AArch64_INS_ALIAS_STNT1B, // Real instr.: AArch64_STNT1B_ZRI
+	AArch64_INS_ALIAS_LD1B, // Real instr.: AArch64_LD1B_IMM
+	AArch64_INS_ALIAS_LDNT1B, // Real instr.: AArch64_LDNT1B_ZRI
 	AArch64_INS_ALIAS_LD1RQB, // Real instr.: AArch64_LD1RQ_B_IMM
+	AArch64_INS_ALIAS_LD1RB, // Real instr.: AArch64_LD1RB_IMM
+	AArch64_INS_ALIAS_LDFF1B, // Real instr.: AArch64_LDFF1B_REAL
+	AArch64_INS_ALIAS_LDNF1B, // Real instr.: AArch64_LDNF1B_IMM_REAL
 	AArch64_INS_ALIAS_LD2B, // Real instr.: AArch64_LD2B_IMM
+	AArch64_INS_ALIAS_LD1SB, // Real instr.: AArch64_GLD1SB_S_IMM_REAL
 	AArch64_INS_ALIAS_PRFB, // Real instr.: AArch64_PRFB_PRI
 	AArch64_INS_ALIAS_LDNT1SB, // Real instr.: AArch64_LDNT1SB_ZZR_S_REAL
 	AArch64_INS_ALIAS_LD1ROB, // Real instr.: AArch64_LD1RO_B_IMM
+	AArch64_INS_ALIAS_LD1Q, // Real instr.: AArch64_GLD1Q
+	AArch64_INS_ALIAS_ST1Q, // Real instr.: AArch64_SST1Q
+	AArch64_INS_ALIAS_LD1W, // Real instr.: AArch64_LD1W_Q_IMM
 	AArch64_INS_ALIAS_PMOV, // Real instr.: AArch64_PMOV_PZI_B
+	AArch64_INS_ALIAS_SMSTART, // Real instr.: AArch64_MSRpstatesvcrImm1
+	AArch64_INS_ALIAS_SMSTOP, // Real instr.: AArch64_MSRpstatesvcrImm1
 	AArch64_INS_ALIAS_ZERO, // Real instr.: AArch64_ZERO_M
+	AArch64_INS_ALIAS_MOVT, // Real instr.: AArch64_MOVT
 	AArch64_INS_ALIAS_NOP, // Real instr.: AArch64_HINT
 	AArch64_INS_ALIAS_YIELD, // Real instr.: AArch64_HINT
 	AArch64_INS_ALIAS_WFE, // Real instr.: AArch64_HINT
@@ -4438,6 +4342,7 @@ typedef enum aarch64_insn {
 	AArch64_INS_ALIAS_CSDB, // Real instr.: AArch64_HINT
 	AArch64_INS_ALIAS_BTI, // Real instr.: AArch64_HINT
 	AArch64_INS_ALIAS_PSB, // Real instr.: AArch64_HINT
+	AArch64_INS_ALIAS_CHKFEAT, // Real instr.: AArch64_CHKFEAT
 	AArch64_INS_ALIAS_PACIAZ, // Real instr.: AArch64_PACIAZ
 	AArch64_INS_ALIAS_PACIBZ, // Real instr.: AArch64_PACIBZ
 	AArch64_INS_ALIAS_AUTIAZ, // Real instr.: AArch64_AUTIAZ
@@ -4452,6 +4357,7 @@ typedef enum aarch64_insn {
 	AArch64_INS_ALIAS_AUTIB1716, // Real instr.: AArch64_AUTIB1716
 	AArch64_INS_ALIAS_XPACLRI, // Real instr.: AArch64_XPACLRI
 	AArch64_INS_ALIAS_LDRAB, // Real instr.: AArch64_LDRABindexed
+	AArch64_INS_ALIAS_PACM, // Real instr.: AArch64_PACM
 	AArch64_INS_ALIAS_CLREX, // Real instr.: AArch64_CLREX
 	AArch64_INS_ALIAS_ISB, // Real instr.: AArch64_ISB
 	AArch64_INS_ALIAS_SSBB, // Real instr.: AArch64_DSB
@@ -4517,12 +4423,13 @@ typedef enum aarch64_insn {
 	AArch64_INS_ALIAS_STUMIN, // Real instr.: AArch64_LDUMINW
 	AArch64_INS_ALIAS_IRG, // Real instr.: AArch64_IRG
 	AArch64_INS_ALIAS_LDG, // Real instr.: AArch64_LDG
-	AArch64_INS_ALIAS_STZG, // Real instr.: AArch64_STZGOffset
-	AArch64_INS_ALIAS_ST2G, // Real instr.: AArch64_ST2GOffset
-	AArch64_INS_ALIAS_STZ2G, // Real instr.: AArch64_STZ2GOffset
+	AArch64_INS_ALIAS_STZG, // Real instr.: AArch64_STZGi
+	AArch64_INS_ALIAS_ST2G, // Real instr.: AArch64_ST2Gi
+	AArch64_INS_ALIAS_STZ2G, // Real instr.: AArch64_STZ2Gi
 	AArch64_INS_ALIAS_BICS, // Real instr.: AArch64_BICSWrs
 	AArch64_INS_ALIAS_BIC, // Real instr.: AArch64_BICWrs
 	AArch64_INS_ALIAS_EON, // Real instr.: AArch64_EONWrs
+	AArch64_INS_ALIAS_EOR, // Real instr.: AArch64_EORWrs
 	AArch64_INS_ALIAS_ORN, // Real instr.: AArch64_ORNWrs
 	AArch64_INS_ALIAS_MVN, // Real instr.: AArch64_ORNWrs
 	AArch64_INS_ALIAS_TST, // Real instr.: AArch64_ANDSWri
@@ -4606,6 +4513,106 @@ typedef enum aarch64_insn {
 	AArch64_INS_ALIAS_STILP, // Real instr.: AArch64_STILPW
 	AArch64_INS_ALIAS_STL1, // Real instr.: AArch64_STL1
 	AArch64_INS_ALIAS_SYSP, // Real instr.: AArch64_SYSPxt_XZR
+	AArch64_INS_ALIAS_LD1SW, // Real instr.: AArch64_LD1SW_D_IMM
+	AArch64_INS_ALIAS_LD1H, // Real instr.: AArch64_LD1H_IMM
+	AArch64_INS_ALIAS_LD1SH, // Real instr.: AArch64_LD1SH_D_IMM
+	AArch64_INS_ALIAS_LD1D, // Real instr.: AArch64_LD1D_IMM
+	AArch64_INS_ALIAS_LD1RSW, // Real instr.: AArch64_LD1RSW_IMM
+	AArch64_INS_ALIAS_LD1RH, // Real instr.: AArch64_LD1RH_IMM
+	AArch64_INS_ALIAS_LD1RSH, // Real instr.: AArch64_LD1RSH_D_IMM
+	AArch64_INS_ALIAS_LD1RW, // Real instr.: AArch64_LD1RW_IMM
+	AArch64_INS_ALIAS_LD1RSB, // Real instr.: AArch64_LD1RSB_D_IMM
+	AArch64_INS_ALIAS_LD1RD, // Real instr.: AArch64_LD1RD_IMM
+	AArch64_INS_ALIAS_LD1RQH, // Real instr.: AArch64_LD1RQ_H_IMM
+	AArch64_INS_ALIAS_LD1RQW, // Real instr.: AArch64_LD1RQ_W_IMM
+	AArch64_INS_ALIAS_LD1RQD, // Real instr.: AArch64_LD1RQ_D_IMM
+	AArch64_INS_ALIAS_LDNF1SW, // Real instr.: AArch64_LDNF1SW_D_IMM_REAL
+	AArch64_INS_ALIAS_LDNF1H, // Real instr.: AArch64_LDNF1H_IMM_REAL
+	AArch64_INS_ALIAS_LDNF1SH, // Real instr.: AArch64_LDNF1SH_D_IMM_REAL
+	AArch64_INS_ALIAS_LDNF1W, // Real instr.: AArch64_LDNF1W_IMM_REAL
+	AArch64_INS_ALIAS_LDNF1SB, // Real instr.: AArch64_LDNF1SB_D_IMM_REAL
+	AArch64_INS_ALIAS_LDNF1D, // Real instr.: AArch64_LDNF1D_IMM_REAL
+	AArch64_INS_ALIAS_LDFF1SW, // Real instr.: AArch64_LDFF1SW_D_REAL
+	AArch64_INS_ALIAS_LDFF1H, // Real instr.: AArch64_LDFF1H_REAL
+	AArch64_INS_ALIAS_LDFF1SH, // Real instr.: AArch64_LDFF1SH_D_REAL
+	AArch64_INS_ALIAS_LDFF1W, // Real instr.: AArch64_LDFF1W_REAL
+	AArch64_INS_ALIAS_LDFF1SB, // Real instr.: AArch64_LDFF1SB_D_REAL
+	AArch64_INS_ALIAS_LDFF1D, // Real instr.: AArch64_LDFF1D_REAL
+	AArch64_INS_ALIAS_LD3B, // Real instr.: AArch64_LD3B_IMM
+	AArch64_INS_ALIAS_LD4B, // Real instr.: AArch64_LD4B_IMM
+	AArch64_INS_ALIAS_LD2H, // Real instr.: AArch64_LD2H_IMM
+	AArch64_INS_ALIAS_LD3H, // Real instr.: AArch64_LD3H_IMM
+	AArch64_INS_ALIAS_LD4H, // Real instr.: AArch64_LD4H_IMM
+	AArch64_INS_ALIAS_LD2W, // Real instr.: AArch64_LD2W_IMM
+	AArch64_INS_ALIAS_LD3W, // Real instr.: AArch64_LD3W_IMM
+	AArch64_INS_ALIAS_LD4W, // Real instr.: AArch64_LD4W_IMM
+	AArch64_INS_ALIAS_LD2D, // Real instr.: AArch64_LD2D_IMM
+	AArch64_INS_ALIAS_LD3D, // Real instr.: AArch64_LD3D_IMM
+	AArch64_INS_ALIAS_LD4D, // Real instr.: AArch64_LD4D_IMM
+	AArch64_INS_ALIAS_LD2Q, // Real instr.: AArch64_LD2Q_IMM
+	AArch64_INS_ALIAS_LD3Q, // Real instr.: AArch64_LD3Q_IMM
+	AArch64_INS_ALIAS_LD4Q, // Real instr.: AArch64_LD4Q_IMM
+	AArch64_INS_ALIAS_LDNT1H, // Real instr.: AArch64_LDNT1H_ZRI
+	AArch64_INS_ALIAS_LDNT1W, // Real instr.: AArch64_LDNT1W_ZRI
+	AArch64_INS_ALIAS_LDNT1D, // Real instr.: AArch64_LDNT1D_ZRI
+	AArch64_INS_ALIAS_ST1H, // Real instr.: AArch64_ST1H_IMM
+	AArch64_INS_ALIAS_ST1W, // Real instr.: AArch64_ST1W_IMM
+	AArch64_INS_ALIAS_ST1D, // Real instr.: AArch64_ST1D_IMM
+	AArch64_INS_ALIAS_ST3B, // Real instr.: AArch64_ST3B_IMM
+	AArch64_INS_ALIAS_ST4B, // Real instr.: AArch64_ST4B_IMM
+	AArch64_INS_ALIAS_ST2H, // Real instr.: AArch64_ST2H_IMM
+	AArch64_INS_ALIAS_ST3H, // Real instr.: AArch64_ST3H_IMM
+	AArch64_INS_ALIAS_ST4H, // Real instr.: AArch64_ST4H_IMM
+	AArch64_INS_ALIAS_ST2W, // Real instr.: AArch64_ST2W_IMM
+	AArch64_INS_ALIAS_ST3W, // Real instr.: AArch64_ST3W_IMM
+	AArch64_INS_ALIAS_ST4W, // Real instr.: AArch64_ST4W_IMM
+	AArch64_INS_ALIAS_ST2D, // Real instr.: AArch64_ST2D_IMM
+	AArch64_INS_ALIAS_ST3D, // Real instr.: AArch64_ST3D_IMM
+	AArch64_INS_ALIAS_ST4D, // Real instr.: AArch64_ST4D_IMM
+	AArch64_INS_ALIAS_ST3Q, // Real instr.: AArch64_ST3Q_IMM
+	AArch64_INS_ALIAS_ST4Q, // Real instr.: AArch64_ST4Q_IMM
+	AArch64_INS_ALIAS_STNT1H, // Real instr.: AArch64_STNT1H_ZRI
+	AArch64_INS_ALIAS_STNT1W, // Real instr.: AArch64_STNT1W_ZRI
+	AArch64_INS_ALIAS_STNT1D, // Real instr.: AArch64_STNT1D_ZRI
+	AArch64_INS_ALIAS_PRFH, // Real instr.: AArch64_PRFH_PRI
+	AArch64_INS_ALIAS_PRFW, // Real instr.: AArch64_PRFW_PRI
+	AArch64_INS_ALIAS_PRFD, // Real instr.: AArch64_PRFD_PRI
+	AArch64_INS_ALIAS_CNTH, // Real instr.: AArch64_CNTH_XPiI
+	AArch64_INS_ALIAS_CNTW, // Real instr.: AArch64_CNTW_XPiI
+	AArch64_INS_ALIAS_CNTD, // Real instr.: AArch64_CNTD_XPiI
+	AArch64_INS_ALIAS_DECB, // Real instr.: AArch64_DECB_XPiI
+	AArch64_INS_ALIAS_INCH, // Real instr.: AArch64_INCH_XPiI
+	AArch64_INS_ALIAS_DECH, // Real instr.: AArch64_DECH_XPiI
+	AArch64_INS_ALIAS_INCW, // Real instr.: AArch64_INCW_XPiI
+	AArch64_INS_ALIAS_DECW, // Real instr.: AArch64_DECW_XPiI
+	AArch64_INS_ALIAS_INCD, // Real instr.: AArch64_INCD_XPiI
+	AArch64_INS_ALIAS_DECD, // Real instr.: AArch64_DECD_XPiI
+	AArch64_INS_ALIAS_SQDECB, // Real instr.: AArch64_SQDECB_XPiWdI
+	AArch64_INS_ALIAS_UQDECB, // Real instr.: AArch64_UQDECB_WPiI
+	AArch64_INS_ALIAS_UQINCH, // Real instr.: AArch64_UQINCH_WPiI
+	AArch64_INS_ALIAS_SQDECH, // Real instr.: AArch64_SQDECH_XPiWdI
+	AArch64_INS_ALIAS_UQDECH, // Real instr.: AArch64_UQDECH_WPiI
+	AArch64_INS_ALIAS_SQINCW, // Real instr.: AArch64_SQINCW_XPiWdI
+	AArch64_INS_ALIAS_UQINCW, // Real instr.: AArch64_UQINCW_WPiI
+	AArch64_INS_ALIAS_SQDECW, // Real instr.: AArch64_SQDECW_XPiWdI
+	AArch64_INS_ALIAS_UQDECW, // Real instr.: AArch64_UQDECW_WPiI
+	AArch64_INS_ALIAS_SQINCD, // Real instr.: AArch64_SQINCD_XPiWdI
+	AArch64_INS_ALIAS_UQINCD, // Real instr.: AArch64_UQINCD_WPiI
+	AArch64_INS_ALIAS_SQDECD, // Real instr.: AArch64_SQDECD_XPiWdI
+	AArch64_INS_ALIAS_UQDECD, // Real instr.: AArch64_UQDECD_WPiI
+	AArch64_INS_ALIAS_MOVS, // Real instr.: AArch64_ORRS_PPzPP
+	AArch64_INS_ALIAS_NOT, // Real instr.: AArch64_EOR_PPzPP
+	AArch64_INS_ALIAS_NOTS, // Real instr.: AArch64_EORS_PPzPP
+	AArch64_INS_ALIAS_LD1ROH, // Real instr.: AArch64_LD1RO_H_IMM
+	AArch64_INS_ALIAS_LD1ROW, // Real instr.: AArch64_LD1RO_W_IMM
+	AArch64_INS_ALIAS_LD1ROD, // Real instr.: AArch64_LD1RO_D_IMM
+	AArch64_INS_ALIAS_BCAX, // Real instr.: AArch64_BCAX_ZZZZ
+	AArch64_INS_ALIAS_BSL, // Real instr.: AArch64_BSL_ZZZZ
+	AArch64_INS_ALIAS_BSL1N, // Real instr.: AArch64_BSL1N_ZZZZ
+	AArch64_INS_ALIAS_BSL2N, // Real instr.: AArch64_BSL2N_ZZZZ
+	AArch64_INS_ALIAS_NBSL, // Real instr.: AArch64_NBSL_ZZZZ
+	AArch64_INS_ALIAS_LDNT1SH, // Real instr.: AArch64_LDNT1SH_ZZR_S_REAL
+	AArch64_INS_ALIAS_LDNT1SW, // Real instr.: AArch64_LDNT1SW_ZZR_D_REAL
 
 	// clang-format on
 	// generated content <AArch64GenCSAliasEnum.inc> end

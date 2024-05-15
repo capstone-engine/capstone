@@ -17150,7 +17150,7 @@
   /* drps */
   AArch64_DRPS /* 2323 */, AArch64_INS_DRPS,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+    { 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -17734,7 +17734,7 @@
   /* eret */
   AArch64_ERET /* 2396 */, AArch64_INS_ERET,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+    { 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -17742,7 +17742,7 @@
   /* eretaa */
   AArch64_ERETAA /* 2397 */, AArch64_INS_ERETAA,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuth, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_FEATURE_HasPAuth, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -17750,7 +17750,7 @@
   /* eretab */
   AArch64_ERETAB /* 2398 */, AArch64_INS_ERETAB,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuth, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_FEATURE_HasPAuth, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -39862,7 +39862,7 @@
   /* ret	$Rn */
   AArch64_RET /* 5162 */, AArch64_INS_RET,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
+    { 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -39870,7 +39870,7 @@
   /* retaa */
   AArch64_RETAA /* 5163 */, AArch64_INS_RETAA,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuth, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_FEATURE_HasPAuth, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -39878,7 +39878,7 @@
   /* retaasppc	$label */
   AArch64_RETAASPPCi /* 5164 */, AArch64_INS_RETAASPPC,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuthLR, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_GRP_BRANCH_RELATIVE, AArch64_FEATURE_HasPAuthLR, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -39886,7 +39886,7 @@
   /* retaasppc	$Rm */
   AArch64_RETAASPPCr /* 5165 */, AArch64_INS_RETAASPPC,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuthLR, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_FEATURE_HasPAuthLR, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -39894,7 +39894,7 @@
   /* retab */
   AArch64_RETAB /* 5166 */, AArch64_INS_RETAB,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuth, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_FEATURE_HasPAuth, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -39902,7 +39902,7 @@
   /* retabsppc	$label */
   AArch64_RETABSPPCi /* 5167 */, AArch64_INS_RETABSPPC,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuthLR, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_GRP_BRANCH_RELATIVE, AArch64_FEATURE_HasPAuthLR, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
@@ -39910,7 +39910,7 @@
   /* retabsppc	$Rm */
   AArch64_RETABSPPCr /* 5168 */, AArch64_INS_RETABSPPC,
   #ifndef CAPSTONE_DIET
-    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_FEATURE_HasPAuthLR, 0 }, 0, 0, {{ 0 }}
+    { AArch64_REG_LR, AArch64_REG_SP, 0 }, { 0 }, { AArch64_GRP_JUMP, AArch64_GRP_RET, AArch64_FEATURE_HasPAuthLR, 0 }, 1, 0, {{ 0 }}
 
   #endif
 },
