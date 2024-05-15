@@ -351,8 +351,9 @@ static DecodeStatus getInstruction(csh handle, const uint8_t *Bytes,
 		DecodeStatus Result = decodeInstruction_4(Tables[i], MI, Insn,
 							  Address, Decoder);
 
+		// Table is indexed backwards
 		const MCInstrDesc Desc =
-			AArch64Descs.Insts[MCInst_getOpcode(MI)];
+			AArch64Descs.Insts[ARR_SIZE(AArch64Descs.Insts) - 1 - MCInst_getOpcode(MI)];
 
 		// For Scalable Matrix Extension (SME) instructions that have an
 		// implicit operand for the accumulator (ZA) or implicit immediate zero
