@@ -553,6 +553,21 @@ static void AArch64_add_cs_groups(MCInst *MI)
 	}
 }
 
+static void AArch64_correct_mem_access(MCInst *MI) {
+	if (!detail_is_set(MI))
+		return;
+	cs_ac_type access = aarch64_insns[MI->Opcode].suppl_info.aarch64.mem_acc;
+	if (access == CS_AC_INVALID) {
+		return;
+	}
+	for (int i = 0; i < AArch64_get_detail(MI)->op_count; ++i) {
+		if (AArch64_get_detail_op(MI, -i)->type == AArch64_OP_MEM) {
+			AArch64_get_detail_op(MI, -i)->access = access;
+			return;
+		}
+	}
+}
+
 void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
@@ -572,6 +587,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 	AArch64_add_not_defined_ops(MI, O);
 	AArch64_add_cs_groups(MI);
 	AArch64_add_vas(MI, O);
+	AArch64_correct_mem_access(MI);
 }
 
 // given internal insn id, return public instruction info

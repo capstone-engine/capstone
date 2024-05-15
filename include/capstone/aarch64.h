@@ -2830,6 +2830,10 @@ typedef struct cs_aarch64_op {
   bool is_list_member; ///< True if this operand is part of a register or vector list.
 } cs_aarch64_op;
 
+typedef struct {
+	cs_ac_type mem_acc; ///< CGI memory access according to mayLoad and mayStore
+} aarch64_suppl_info;
+
 #define MAX_AARCH64_OPS 8
 
 /// Instruction structure
