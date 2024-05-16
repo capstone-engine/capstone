@@ -675,7 +675,7 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 
 			case 'w':
 				set_op_reg(hppa, MCOperand_getReg(op),
-					   CS_AC_READ_WRTE);
+					   CS_AC_READ_WRITE);
 				break;
 
 			case 'r':

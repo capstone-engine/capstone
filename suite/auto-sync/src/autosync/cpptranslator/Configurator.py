@@ -69,7 +69,7 @@ class Configurator:
         self.config = conf
 
     def ts_set_cpp_language(self) -> None:
-        self.ts_cpp_lang = Language(ts_cpp.language(), "cpp")
+        self.ts_cpp_lang = Language(ts_cpp.language())
 
     def init_parser(self) -> None:
         log.debug("Init parser")

@@ -37,7 +37,7 @@ typedef enum cs_ac_type {
 	CS_AC_INVALID = 0,    ///< Uninitialized/invalid access type.
 	CS_AC_READ = 1 << 0,  ///< Operand read from memory or register.
 	CS_AC_WRITE = 1 << 1, ///< Operand write to memory or register.
-	CS_AC_READ_WRTE =
+	CS_AC_READ_WRITE =
 		CS_AC_READ |
 		CS_AC_WRITE, ///< Operand reads and writes from/to memory or register.
 } cs_ac_type;
