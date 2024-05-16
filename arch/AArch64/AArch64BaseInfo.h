@@ -694,10 +694,10 @@ typedef struct ExactFPImm {
 } AArch64ExactFPImm_ExactFPImm;
 
 enum {
-	AArch64ExactFPImm_half = 0,
-	AArch64ExactFPImm_one = 1,
-	AArch64ExactFPImm_two = 2,
-	AArch64ExactFPImm_zero = 3,
+	AArch64ExactFPImm_half = 1,
+	AArch64ExactFPImm_one = 2,
+	AArch64ExactFPImm_two = 3,
+	AArch64ExactFPImm_zero = 0,
 };
 
 #define GET_EXACTFPIMM_DECL

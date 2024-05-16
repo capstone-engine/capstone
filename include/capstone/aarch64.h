@@ -541,6 +541,8 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ExactFPImm> end
+	AArch64_EXACTFPIMM_INVALID = 0x4,
+
 	AArch64_EXACTFPIMM_ENDING,
 } aarch64_exactfpimm;
 

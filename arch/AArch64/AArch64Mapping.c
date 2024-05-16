@@ -380,6 +380,9 @@ static void add_non_alias_details(MCInst *MI)
 	case AArch64_CMLTv8i8rz:
 		AArch64_insert_detail_op_imm_at(MI, -1, 0);
 		break;
+	case AArch64_FCMEQ_PPzZ0_D:
+	case AArch64_FCMEQ_PPzZ0_H:
+	case AArch64_FCMEQ_PPzZ0_S:
 	case AArch64_FCMEQv1i16rz:
 	case AArch64_FCMEQv1i32rz:
 	case AArch64_FCMEQv1i64rz:
@@ -388,48 +391,59 @@ static void add_non_alias_details(MCInst *MI)
 	case AArch64_FCMEQv4i16rz:
 	case AArch64_FCMEQv4i32rz:
 	case AArch64_FCMEQv8i16rz:
+	case AArch64_FCMGE_PPzZ0_D:
+	case AArch64_FCMGE_PPzZ0_H:
+	case AArch64_FCMGE_PPzZ0_S:
 	case AArch64_FCMGEv1i16rz:
 	case AArch64_FCMGEv1i32rz:
+	case AArch64_FCMGEv1i64rz:
 	case AArch64_FCMGEv2i32rz:
 	case AArch64_FCMGEv2i64rz:
 	case AArch64_FCMGEv4i16rz:
 	case AArch64_FCMGEv4i32rz:
 	case AArch64_FCMGEv8i16rz:
+	case AArch64_FCMGT_PPzZ0_D:
+	case AArch64_FCMGT_PPzZ0_H:
+	case AArch64_FCMGT_PPzZ0_S:
+	case AArch64_FCMGTv1i16rz:
+	case AArch64_FCMGTv1i32rz:
+	case AArch64_FCMGTv1i64rz:
 	case AArch64_FCMGTv2i32rz:
 	case AArch64_FCMGTv2i64rz:
 	case AArch64_FCMGTv4i16rz:
 	case AArch64_FCMGTv4i32rz:
 	case AArch64_FCMGTv8i16rz:
+	case AArch64_FCMLE_PPzZ0_D:
+	case AArch64_FCMLE_PPzZ0_H:
+	case AArch64_FCMLE_PPzZ0_S:
+	case AArch64_FCMLEv1i16rz:
+	case AArch64_FCMLEv1i32rz:
+	case AArch64_FCMLEv1i64rz:
 	case AArch64_FCMLEv2i32rz:
 	case AArch64_FCMLEv2i64rz:
 	case AArch64_FCMLEv4i16rz:
 	case AArch64_FCMLEv4i32rz:
 	case AArch64_FCMLEv8i16rz:
-	case AArch64_FCMEQ_PPzZ0_D:
-	case AArch64_FCMEQ_PPzZ0_H:
-	case AArch64_FCMEQ_PPzZ0_S:
-	case AArch64_FCMGE_PPzZ0_D:
-	case AArch64_FCMGE_PPzZ0_H:
-	case AArch64_FCMGE_PPzZ0_S:
-	case AArch64_FCMGT_PPzZ0_D:
-	case AArch64_FCMGT_PPzZ0_H:
-	case AArch64_FCMGT_PPzZ0_S:
-	case AArch64_FCMLE_PPzZ0_D:
-	case AArch64_FCMLE_PPzZ0_H:
-	case AArch64_FCMLE_PPzZ0_S:
 	case AArch64_FCMLT_PPzZ0_D:
 	case AArch64_FCMLT_PPzZ0_H:
 	case AArch64_FCMLT_PPzZ0_S:
-	case AArch64_FCMNE_PPzZ0_D:
-	case AArch64_FCMNE_PPzZ0_H:
-	case AArch64_FCMNE_PPzZ0_S:
+	case AArch64_FCMLTv1i16rz:
+	case AArch64_FCMLTv1i32rz:
+	case AArch64_FCMLTv1i64rz:
 	case AArch64_FCMLTv2i32rz:
 	case AArch64_FCMLTv2i64rz:
 	case AArch64_FCMLTv4i16rz:
 	case AArch64_FCMLTv4i32rz:
 	case AArch64_FCMLTv8i16rz:
-		AArch64_insert_detail_op_float_at(MI, -1, 0.0f, CS_AC_READ);
+	case AArch64_FCMNE_PPzZ0_D:
+	case AArch64_FCMNE_PPzZ0_H:
+	case AArch64_FCMNE_PPzZ0_S: {
+		aarch64_sysop sysop = { 0 };
+		sysop.imm.exactfpimm = AArch64_EXACTFPIMM_ZERO;
+		sysop.sub_type = AArch64_OP_EXACTFPIMM;
+		AArch64_insert_detail_op_sys(MI, -1, sysop, AArch64_OP_SYSIMM);
 		break;
+	}
 	}
 }
 
@@ -2497,6 +2511,20 @@ void AArch64_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Imm)
 	op.imm = Imm;
 	op.access = CS_AC_READ;
 
+	insert_op(MI, index, op);
+}
+
+void AArch64_insert_detail_op_sys(MCInst *MI, unsigned index, aarch64_sysop sys_op,
+			       aarch64_op_type type)
+{
+	if (!detail_is_set(MI))
+		return;
+	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+
+	cs_aarch64_op op;
+	AArch64_setup_op(&op);
+	op.type = type;
+	op.sysop = sys_op;
 	insert_op(MI, index, op);
 }
 

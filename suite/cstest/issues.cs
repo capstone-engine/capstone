@@ -1110,3 +1110,19 @@
 !# issue 2349
 !# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
 0x0: 0xa4, 0x18, 0x78, 0x38 == ldgt.b $a0, $a1, $a2 ; operands[1].type: MEM ; operands[1].mem.base: REG = a1 ; operands[2].type: REG = a2
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x00,0x80,0x58,0x65 == fadd z0.h, p0/m, z0.h, #0.5 ; operands[3].subtype EXACTFPIMM = 1
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x20,0x80,0x58,0x65 == fadd z0.h, p0/m, z0.h, #1.0 ; operands[3].subtype EXACTFPIMM = 2
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x3f,0x9c,0xda,0x65 == fmul z31.d, p7/m, z31.d, #2.0 ; operands[3].subtype EXACTFPIMM = 3
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x6a,0xd9,0xf8,0x7e == fcmle h10, h11, #0.0 ; operands[2].subtype EXACTFPIMM = 0
