@@ -11,7 +11,7 @@ static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
 {
 	// NOTE: assume that the max id is always put at the end of insns array
 	unsigned short max_id = insns[size - 1].id;
-	unsigned short i;
+	unsigned int i;
 
 	unsigned short *cache =
 		(unsigned short *)cs_mem_calloc(max_id + 1, sizeof(*cache));
