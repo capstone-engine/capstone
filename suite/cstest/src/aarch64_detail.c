@@ -62,23 +62,36 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 			case AArch64_OP_REG_MSR:
 				add_str(&result, " ; operands[%u].type: REG_MSR = 0x%x", i, op->reg);
 				break;
-			case AArch64_OP_SME_MATRIX:
-				add_str(&result, " ; operands[%u].type: SME_MATRIX", i);
-				add_str(&result, " ; operands[%u].sme.type: %d", i, op->sme.type);
+			case AArch64_OP_SME:
+				if (op->sme.type == AArch64_SME_MATRIX) {
+					add_str(&result, " ; operands[%u].type: SME_MATRIX", i);
+					add_str(&result, " ; operands[%u].sme.type: %d", i, op->sme.mx.type);
 
-				if (op->sme.tile != AArch64_REG_INVALID)
-					add_str(&result, " ; operands[%u].sme.tile: %s", i, cs_reg_name(*handle, op->sme.tile));
-				if (op->sme.slice_reg != AArch64_REG_INVALID)
-					add_str(&result, " ; operands[%u].sme.slice_reg: %s", i, cs_reg_name(*handle, op->sme.slice_reg));
-				if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
-					add_str(&result, " ; operands[%u].sme.slice_offset: ", i);
-					if (op->sme.has_range_offset)
-						add_str(&result, "%hhd:%hhd", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
-					else
-						add_str(&result, "%d", op->sme.slice_offset.imm);
-				}
-				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
-					add_str(&result, " ; operands[%u].sme.is_vertical: %s", i, (op->sme.is_vertical ? "true" : "false"));
+					if (op->sme.mx.tile != AArch64_REG_INVALID)
+						add_str(&result, " ; operands[%u].sme.tile: %s", i, cs_reg_name(*handle, op->sme.mx.tile));
+					if (op->sme.mx.slice_reg != AArch64_REG_INVALID)
+						add_str(&result, " ; operands[%u].sme.slice_reg: %s", i, cs_reg_name(*handle, op->sme.mx.slice_reg));
+					if (op->sme.mx.slice_offset.imm != -1 || op->sme.mx.slice_offset.imm_range.first != -1) {
+						add_str(&result, " ; operands[%u].sme.slice_offset: ", i);
+						if (op->sme.mx.has_range_offset)
+							add_str(&result, "%hhd:%hhd", op->sme.mx.slice_offset.imm_range.first, op->sme.mx.slice_offset.imm_range.offset);
+						else
+							add_str(&result, "%d", op->sme.mx.slice_offset.imm);
+					}
+					if (op->sme.mx.slice_reg != AArch64_REG_INVALID || op->sme.mx.slice_offset.imm != -1)
+						add_str(&result, " ; operands[%u].sme.is_vertical: %s", i, (op->sme.mx.is_vertical ? "true" : "false"));
+				} else if (op->sme.type == AArch64_SME_PRED) {
+					add_str(&result, " ; operands[%u].type: SME_PRED", i);
+
+					if (op->sme.pred.reg != AArch64_REG_INVALID)
+						add_str(&result, " ; operands[%u].sme.pred.reg: %s", i, cs_reg_name(*handle, op->sme.pred.reg));
+					if (op->sme.pred.vec_select != AArch64_REG_INVALID)
+						add_str(&result, " ; operands[%u].sme.pred.vec_select: %s", i, cs_reg_name(*handle, op->sme.pred.vec_select));
+					if (op->sme.pred.index != -1)
+						add_str(&result, " ; operands[%u].sme.pred.index: %u", i, op->sme.pred.index);
+			} else {
+				printf("SME operand printing not supported.\n");
+			}
 				break;
 		case AArch64_OP_SYSREG:
 			add_str(&result, " ; operands[%u].type: SYS REG:", i);

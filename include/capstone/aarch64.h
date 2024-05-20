@@ -2028,7 +2028,7 @@ typedef enum aarch64_op_type {
 	AArch64_OP_BTI = CS_OP_SPECIAL + 16,
 	AArch64_OP_SVEPREDPAT = CS_OP_SPECIAL + 17,
 	AArch64_OP_SVEVECLENSPECIFIER = CS_OP_SPECIAL + 18,
-	AArch64_OP_SME_MATRIX = CS_OP_SPECIAL + 19,
+	AArch64_OP_SME = CS_OP_SPECIAL + 19,
 	AArch64_OP_IMM_RANGE = CS_OP_SPECIAL + 20,
 	AArch64_OP_TLBI = CS_OP_SPECIAL + 21,
 	AArch64_OP_IC = CS_OP_SPECIAL + 22,
@@ -2778,12 +2778,18 @@ typedef enum {
 	AArch64_SME_MATRIX_SLICE_REG,
 	AArch64_SME_MATRIX_SLICE_OFF,
 	AArch64_SME_MATRIX_SLICE_OFF_RANGE,
-} aarch64_sme_op_part;
+} aarch64_sme_mx_part;
 
 typedef enum {
 	AArch64_SME_OP_INVALID,
 	AArch64_SME_OP_TILE, ///< SME operand is a single tile.
 	AArch64_SME_OP_TILE_VEC, ///< SME operand is a tile indexed by a register and/or immediate
+} aarch64_sme_mx_type;
+
+typedef enum {
+	AArch64_SME_NONE = 0,
+	AArch64_SME_MATRIX, ///< SME matrix
+	AArch64_SME_PRED, /// SME predicate
 } aarch64_sme_op_type;
 
 typedef struct {
@@ -2791,9 +2797,9 @@ typedef struct {
 	int8_t offset;
 } aarch64_imm_range;
 
-/// SME Instruction's operand has index
-typedef struct aarch64_op_sme {
-  aarch64_sme_op_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC
+/// SME Instruction's matrix operand
+typedef struct {
+  aarch64_sme_mx_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC
   aarch64_reg tile; ///< Matrix tile register
   aarch64_reg slice_reg; ///< slice index reg
 	union {
@@ -2802,6 +2808,22 @@ typedef struct aarch64_op_sme {
 	} slice_offset; ///< slice index offset. Is set to -1 if invalid.
 	bool has_range_offset; ///< If true, the offset is a range.
   bool is_vertical;	///< Flag if slice is vertical or horizontal
+} aarch64_op_sme_mx;
+
+/// SME Instruction's operand has index
+typedef struct {
+  aarch64_reg reg; ///< Vector predicate register
+  aarch64_reg vec_select; ///< Vector select register.
+  int32_t index; ///< Index in range 0 to one less of vector elements in a 128bit reg.
+} aarch64_op_sme_pred;
+
+/// SME operand. Either a matrix or a predicate register operand.
+typedef struct {
+	aarch64_sme_op_type type;
+	union {
+		aarch64_op_sme_mx mx;
+		aarch64_op_sme_pred pred;
+	};
 } aarch64_op_sme;
 
 /// Instruction operand

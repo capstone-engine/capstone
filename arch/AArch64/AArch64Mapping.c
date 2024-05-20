@@ -86,6 +86,32 @@ void AArch64_init_mri(MCRegisterInfo *MRI)
 		ARR_SIZE(AArch64SubRegIdxLists), 0);
 }
 
+
+/// Sets up a new SME matrix operand at the currently active detail operand.
+static void setup_sme_mx_operand(MCInst *MI)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SME;
+	AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_MATRIX;
+	AArch64_get_detail_op(MI, 0)->sme.mx.tile = AArch64_REG_INVALID;
+	AArch64_get_detail_op(MI, 0)->sme.mx.slice_reg = AArch64_REG_INVALID;
+	AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm = -1;
+	AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm_range.first = -1;
+	AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm_range.offset = -1;
+}
+
+static void setup_sme_pred_operand(MCInst *MI)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SME;
+	AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_PRED;
+	AArch64_get_detail_op(MI, 0)->sme.pred.index = -1;
+}
+
 const insn_map aarch64_insns[] = {
 #include "AArch64GenCSMappingInsn.inc"
 };
@@ -202,7 +228,7 @@ void AArch64_add_vas(MCInst *MI, const SStream *OS)
 		// Search for the operand this one belongs to.
 		cs_aarch64_op *op = &AArch64_get_detail(MI)->operands[op_idx];
 		if ((op->type != AArch64_OP_REG &&
-		     op->type != AArch64_OP_SME_MATRIX) ||
+		     op->type != AArch64_OP_SME) ||
 		    op->vas != AArch64Layout_Invalid) {
 			goto next_dot_continue;
 		}
@@ -589,9 +615,15 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 	MI->fillDetailOps = detail_is_set(MI);
 	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	AArch64_LLVM_printInstruction(MI, O, info);
-	if (detail_is_set(MI))
+	if (detail_is_set(MI)) {
+		if (AArch64_get_detail(MI)->is_doing_sme) {
+			// Last operand still needs to be closed.
+			AArch64_get_detail(MI)->is_doing_sme = false;
+			AArch64_inc_op_count(MI);
+		}
 		AArch64_get_detail(MI)->post_index =
 			AArch64_check_post_index_am(MI, O);
+	}
 	AArch64_check_updates_flags(MI);
 	map_set_alias_id(MI, O, insn_alias_mnem_map,
 			 ARR_SIZE(insn_alias_mnem_map) - 1);
@@ -994,7 +1026,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		assert(0);
 	case AArch64_OP_GROUP_Operand: {
 		cs_op_type primary_op_type = map_get_op_type(MI, OpNum) &
-					     ~CS_OP_MEM;
+					     ~(CS_OP_MEM | CS_OP_BOUND);
 		switch (primary_op_type) {
 		default:
 			printf("Unhandled operand type 0x%x\n",
@@ -1184,7 +1216,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			vas = sme_reg_to_vas(MCInst_getOpVal(MI, OpNum));
 		} else
 			vas = get_vl_by_suffix(Dot[1]);
-		AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE,
+		AArch64_set_detail_op_sme_mx(MI, OpNum, AArch64_SME_MATRIX_TILE,
 					  vas);
 		break;
 	}
@@ -1197,7 +1229,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			if (Reg == 0)
 				continue;
 			AArch64_get_detail_op(MI, 0)->is_list_member = true;
-			AArch64_set_detail_op_sme(MI, OpNum,
+			AArch64_set_detail_op_sme_mx(MI, OpNum,
 						  AArch64_SME_MATRIX_TILE_LIST,
 						  AArch64Layout_VL_D,
 						  AArch64_REG_ZAD0 + I);
@@ -1473,20 +1505,26 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_Matrix_32:
 	case AArch64_OP_GROUP_Matrix_64: {
 		unsigned EltSize = temp_arg_0;
-		AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE,
+		AArch64_set_detail_op_sme_mx(MI, OpNum, AArch64_SME_MATRIX_TILE,
 					  (AArch64Layout_VectorLayout)EltSize);
 		break;
 	}
 	case AArch64_OP_GROUP_MatrixIndex_0:
 	case AArch64_OP_GROUP_MatrixIndex_1:
 	case AArch64_OP_GROUP_MatrixIndex_8: {
-		assert(AArch64_get_detail(MI)->op_count >= 1);
-		if (AArch64_get_detail_op(MI, -1)->type ==
-		    AArch64_OP_SME_MATRIX) {
-			// The index is part of an SME matrix
-			AArch64_set_detail_op_sme(MI, OpNum,
-						  AArch64_SME_MATRIX_SLICE_OFF,
-						  AArch64Layout_Invalid);
+		if (AArch64_get_detail_op(MI, 0)->type ==
+		    AArch64_OP_SME) {
+			if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_MATRIX) {
+				// The index is part of an SME matrix
+				AArch64_set_detail_op_sme_mx(MI, OpNum,
+							  AArch64_SME_MATRIX_SLICE_OFF,
+							  AArch64Layout_Invalid);
+			} else if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_PRED) {
+				// The index is part of a predicate
+				AArch64_set_detail_op_sme_pred(MI, OpNum);
+			} else {
+				assert(0 && "Should not be reached.");
+			}
 		} else {
 			// The index is used for an SVE2 instruction.
 			AArch64_set_detail_op_imm(MI, OpNum, AArch64_OP_IMM,
@@ -1508,9 +1546,10 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 			vas = sme_reg_to_vas(MCInst_getOpVal(MI, OpNum));
 		} else
 			vas = get_vl_by_suffix(Dot[1]);
-		AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE,
+		setup_sme_mx_operand(MI);
+		AArch64_set_detail_op_sme_mx(MI, OpNum, AArch64_SME_MATRIX_TILE,
 					  vas);
-		AArch64_get_detail_op(MI, -1)->sme.is_vertical = isVertical;
+		AArch64_get_detail_op(MI, 0)->sme.mx.is_vertical = isVertical;
 		break;
 	}
 	case AArch64_OP_GROUP_PostIncOperand_1:
@@ -1626,7 +1665,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		assert(AArch64_get_detail(MI)->op_count > 0);
 		unsigned Scale = temp_arg_0;
 		unsigned VIndex = Scale * MCInst_getOpVal(MI, OpNum);
-		// The index can ether be for one operand, or for each operand of a list.
+		// The index can either be for one operand, or for each operand of a list.
 		if (!AArch64_get_detail_op(MI, -1)->is_list_member) {
 			AArch64_get_detail_op(MI, -1)->vector_index = VIndex;
 			break;
@@ -1919,6 +1958,15 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
+	unsigned op_num = va_arg(args, unsigned);
+	if (AArch64_get_detail(MI)->is_doing_sme) {
+		// Unset the flag if there is no bound operand anymore.
+		if (!(map_get_op_type(MI, op_num) & CS_OP_BOUND)) {
+			AArch64_get_detail(MI)->is_doing_sme = false;
+			AArch64_inc_op_count(MI);
+		}
+	}
+
 	switch (op_group) {
 	default:
 		printf("Operand group %d not handled\n", op_group);
@@ -1958,7 +2006,6 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_SyspXzrPair:
 	case AArch64_OP_GROUP_SystemPStateField:
 	case AArch64_OP_GROUP_VRegOperand: {
-		unsigned op_num = va_arg(args, unsigned);
 		add_cs_detail_general(MI, op_group, op_num);
 		break;
 	}
@@ -2033,7 +2080,6 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_ZPRasFPR_32:
 	case AArch64_OP_GROUP_ZPRasFPR_64:
 	case AArch64_OP_GROUP_ZPRasFPR_8: {
-		unsigned op_num = va_arg(args, unsigned);
 		uint64_t temp_arg_0 = va_arg(args, uint64_t);
 		add_cs_detail_template_1(MI, op_group, op_num, temp_arg_0);
 		break;
@@ -2068,7 +2114,6 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_TypedVectorList_4_s:
 	case AArch64_OP_GROUP_TypedVectorList_8_b:
 	case AArch64_OP_GROUP_TypedVectorList_8_h: {
-		unsigned op_num = va_arg(args, unsigned);
 		uint64_t temp_arg_0 = va_arg(args, uint64_t);
 		uint64_t temp_arg_1 = va_arg(args, uint64_t);
 		add_cs_detail_template_2(MI, op_group, op_num, temp_arg_0,
@@ -2104,7 +2149,6 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_RegWithShiftExtend_1_64_w_s:
 	case AArch64_OP_GROUP_RegWithShiftExtend_1_8_w_d:
 	case AArch64_OP_GROUP_RegWithShiftExtend_1_8_w_s: {
-		unsigned op_num = va_arg(args, unsigned);
 		uint64_t temp_arg_0 = va_arg(args, uint64_t);
 		uint64_t temp_arg_1 = va_arg(args, uint64_t);
 		uint64_t temp_arg_2 = va_arg(args, uint64_t);
@@ -2125,14 +2169,24 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 	if (Reg == AArch64_REG_ZA ||
 	    (Reg >= AArch64_REG_ZAB0 && Reg <= AArch64_REG_ZT0)) {
 		// A tile register should be treated as SME operand.
-		AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE,
+		AArch64_set_detail_op_sme_mx(MI, OpNum, AArch64_SME_MATRIX_TILE,
 					  sme_reg_to_vas(Reg));
 		return;
-	} else if (AArch64_get_detail(MI)->is_doing_sme &&
-		   map_get_op_type(MI, OpNum) & CS_OP_MEM) {
-		AArch64_set_detail_op_sme(MI, OpNum,
-					  AArch64_SME_MATRIX_SLICE_REG,
-					  AArch64Layout_Invalid);
+	} else if ((Reg >= AArch64_P0) && (Reg <= AArch64_P15)) {
+		// SME/SVE predicate register.
+		AArch64_set_detail_op_sme_pred(MI, OpNum);
+		return;
+	} else if (AArch64_get_detail(MI)->is_doing_sme) {
+		assert(map_get_op_type(MI, OpNum) & CS_OP_BOUND);
+		if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_MATRIX) {
+			AArch64_set_detail_op_sme_mx(MI, OpNum,
+						  AArch64_SME_MATRIX_SLICE_REG,
+						  AArch64Layout_Invalid);
+		} else if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_PRED) {
+			AArch64_set_detail_op_sme_pred(MI, OpNum);
+		} else {
+			assert(0 && "Unkown SME operand type");
+		}
 		return;
 	}
 	if (map_get_op_type(MI, OpNum) & CS_OP_MEM) {
@@ -2140,6 +2194,7 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 		return;
 	}
 
+	assert(!(map_get_op_type(MI, OpNum) & CS_OP_BOUND));
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
@@ -2147,8 +2202,6 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 	AArch64_get_detail_op(MI, 0)->reg = Reg;
 	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	AArch64_inc_op_count(MI);
-	AArch64_get_detail(MI)->is_doing_sme =
-		false; // Disable any sme operations.
 }
 
 /// Adds an immediate AArch64 operand at position OpNum and increases the op_count
@@ -2159,20 +2212,25 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 	if (!detail_is_set(MI))
 		return;
 
-	if (AArch64_get_detail(MI)->is_doing_sme &&
-	    map_get_op_type(MI, OpNum) & CS_OP_MEM) {
-		AArch64_set_detail_op_sme(MI, OpNum,
-					  AArch64_SME_MATRIX_SLICE_OFF,
-					  AArch64Layout_Invalid);
+	if (AArch64_get_detail(MI)->is_doing_sme) {
+		assert(map_get_op_type(MI, OpNum) & CS_OP_BOUND);
+		if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_MATRIX) {
+			AArch64_set_detail_op_sme_mx(MI, OpNum,
+						  AArch64_SME_MATRIX_SLICE_OFF,
+						  AArch64Layout_Invalid);
+		} else if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_PRED) {
+			AArch64_set_detail_op_sme_pred(MI, OpNum);
+		} else {
+			assert(0 && "Unkown SME operand type");
+		}
 		return;
 	}
-	AArch64_get_detail(MI)->is_doing_sme =
-		false; // Disable any sme operations.
 	if (map_get_op_type(MI, OpNum) & CS_OP_MEM) {
 		AArch64_set_detail_op_mem(MI, OpNum, Imm);
 		return;
 	}
 
+	assert(!(map_get_op_type(MI, OpNum) & CS_OP_BOUND));
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 	assert(ImmType == AArch64_OP_IMM || ImmType == AArch64_OP_CIMM);
@@ -2189,12 +2247,18 @@ void AArch64_set_detail_op_imm_range(MCInst *MI, unsigned OpNum,
 	if (!detail_is_set(MI))
 		return;
 
-	if (AArch64_get_detail(MI)->is_doing_sme &&
-	    map_get_op_type(MI, OpNum) & CS_OP_MEM) {
-		AArch64_set_detail_op_sme(MI, OpNum,
-					  AArch64_SME_MATRIX_SLICE_OFF_RANGE,
-					  AArch64Layout_Invalid, FirstImm,
-					  Offset);
+	if (AArch64_get_detail(MI)->is_doing_sme) {
+		assert(map_get_op_type(MI, OpNum) & CS_OP_BOUND);
+		if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_MATRIX) {
+			AArch64_set_detail_op_sme_mx(MI, OpNum,
+						  AArch64_SME_MATRIX_SLICE_OFF_RANGE,
+						  AArch64Layout_Invalid, FirstImm,
+						  Offset);
+		} else if (AArch64_get_detail_op(MI, 0)->sme.type == AArch64_SME_PRED) {
+			assert(0 && "Unkown SME predicate imm range type");
+		} else {
+			assert(0 && "Unkown SME operand type");
+		}
 		return;
 	}
 
@@ -2254,8 +2318,6 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_MEM;
 	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	AArch64_set_mem_access(MI, false);
-	AArch64_get_detail(MI)->is_doing_sme =
-		false; // Disable any sme operations.
 }
 
 /// Adds the shift and sign extend info to the previous operand.
@@ -2305,8 +2367,6 @@ void AArch64_set_detail_op_float(MCInst *MI, unsigned OpNum, float Val)
 	AArch64_get_detail_op(MI, 0)->fp = Val;
 	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	AArch64_inc_op_count(MI);
-	AArch64_get_detail(MI)->is_doing_sme =
-		false; // Disable any sme operations.
 }
 
 /// Adds a the system operand and increases the op_count by
@@ -2319,29 +2379,34 @@ void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 	AArch64_get_detail_op(MI, 0)->type = type;
 	AArch64_get_detail_op(MI, 0)->sysop = sys_op;
 	AArch64_inc_op_count(MI);
-	AArch64_get_detail(MI)->is_doing_sme =
-		false; // Disable any sme operations.
 }
 
-/// Sets up a new SME operand at the currently active detail operand.
-static void setup_sme_operand(MCInst *MI)
-{
+void AArch64_set_detail_op_sme_pred(MCInst *MI, unsigned OpNum) {
 	if (!detail_is_set(MI))
 		return;
 
-	memset(AArch64_get_detail_op(MI, 0), 0, sizeof(cs_aarch64));
-	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SME_MATRIX;
-	AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_INVALID;
-	AArch64_get_detail_op(MI, 0)->sme.tile = AArch64_REG_INVALID;
-	AArch64_get_detail_op(MI, 0)->sme.slice_reg = AArch64_REG_INVALID;
-	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm = -1;
-	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first = -1;
-	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.offset = -1;
+	if (AArch64_get_detail_op(MI, 0)->type == AArch64_OP_INVALID) {
+		setup_sme_pred_operand(MI);
+	}
+	aarch64_op_sme_pred *p = &AArch64_get_detail_op(MI, 0)->sme.pred;
+	if (p->reg == AArch64_REG_INVALID) {
+		p->reg = MCInst_getOpVal(MI, OpNum);
+		AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		AArch64_get_detail(MI)->is_doing_sme = true;
+		return;
+	} else if (p->vec_select == AArch64_REG_INVALID) {
+		p->vec_select = MCInst_getOpVal(MI, OpNum);
+		return;
+	} else if (p->index == -1) {
+		p->index = MCInst_getOpVal(MI, OpNum);
+		return;
+	}
+	assert(0 && "Should not be reached.");
 }
 
 /// Adds a SME matrix component to a SME operand.
-void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
-			       aarch64_sme_op_part part,
+void AArch64_set_detail_op_sme_mx(MCInst *MI, unsigned OpNum,
+			       aarch64_sme_mx_part part,
 			       AArch64Layout_VectorLayout vas, ...)
 {
 	/// Unfortunately SME operand components are not consistently set with unique printer functions.
@@ -2350,88 +2415,66 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 	/// And add it to it or create a new one and compine both of them.
 	if (!detail_is_set(MI))
 		return;
-
+	AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_MATRIX;
 	va_list args;
 	switch (part) {
 	default:
 		printf("Unhandled SME operand part %d\n", part);
 		assert(0);
 	case AArch64_SME_MATRIX_TILE_LIST:
-		setup_sme_operand(MI);
+		setup_sme_mx_operand(MI);
 		va_start(args, vas);
 		int Tile = va_arg(args, int);
 		va_end(args);
-		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE;
-		AArch64_get_detail_op(MI, 0)->sme.tile = Tile;
+		AArch64_get_detail_op(MI, 0)->sme.mx.type = AArch64_SME_OP_TILE;
+		AArch64_get_detail_op(MI, 0)->sme.mx.tile = Tile;
 		AArch64_get_detail_op(MI, 0)->vas = vas;
+		AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		AArch64_get_detail(MI)->is_doing_sme = true;
 		break;
 	case AArch64_SME_MATRIX_TILE:
 		assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
-		setup_sme_operand(MI);
-		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE;
-		AArch64_get_detail_op(MI, 0)->sme.tile =
+
+		setup_sme_mx_operand(MI);
+		AArch64_get_detail_op(MI, 0)->sme.mx.type = AArch64_SME_OP_TILE;
+		AArch64_get_detail_op(MI, 0)->sme.mx.tile =
 			MCInst_getOpVal(MI, OpNum);
 		AArch64_get_detail_op(MI, 0)->vas = vas;
+		AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		AArch64_get_detail(MI)->is_doing_sme = true;
 		break;
 	case AArch64_SME_MATRIX_SLICE_REG:
-		assert((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
-		assert(AArch64_get_detail(MI)->op_count > 0);
+		assert((map_get_op_type(MI, OpNum) & ~(CS_OP_MEM | CS_OP_BOUND)) == CS_OP_REG);
+		assert(AArch64_get_detail_op(MI, 0)->type == AArch64_OP_SME);
 
-		if (AArch64_get_detail_op(MI, -1)->type ==
-		    AArch64_OP_SME_MATRIX) {
-			// SME operand already present. Add the slice to it.
-			AArch64_get_detail_op(MI, -1)->sme.type =
-				AArch64_SME_OP_TILE_VEC;
-			AArch64_get_detail_op(MI, -1)->sme.slice_reg =
-				MCInst_getOpVal(MI, OpNum);
-			return;
-		}
-		// No previous SME oeprand present. But the previous one should be the tile register.
-		// Create a new one with that.
-		AArch64_dec_op_count(MI);
-		assert(AArch64_get_detail_op(MI, 0)->type == AArch64_OP_REG);
-		assert(AArch64_get_detail_op(MI, 0)->access ==
-		       map_get_op_access(MI, OpNum));
-
-		aarch64_reg tile = AArch64_get_detail_op(MI, 0)->reg;
-		setup_sme_operand(MI);
-		AArch64_get_detail_op(MI, 0)->sme.type =
+		// SME operand already present. Add the slice to it.
+		AArch64_get_detail_op(MI, 0)->sme.mx.type =
 			AArch64_SME_OP_TILE_VEC;
-		AArch64_get_detail_op(MI, 0)->sme.tile = tile;
-		AArch64_get_detail_op(MI, 0)->sme.slice_reg =
+		AArch64_get_detail_op(MI, 0)->sme.mx.slice_reg =
 			MCInst_getOpVal(MI, OpNum);
 		break;
 	case AArch64_SME_MATRIX_SLICE_OFF:
-		assert(AArch64_get_detail(MI)->op_count > 0);
-		assert((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM);
+		assert((map_get_op_type(MI, OpNum) & ~(CS_OP_MEM | CS_OP_BOUND)) == CS_OP_IMM);
 		// Because we took care of the slice register before, the op at -1 must be a SME operand.
-		assert(AArch64_get_detail_op(MI, -1)->type ==
-		       AArch64_OP_SME_MATRIX);
-		assert(AArch64_get_detail_op(MI, -1)->sme.slice_offset.imm ==
+		assert(AArch64_get_detail_op(MI, 0)->type ==
+		       AArch64_OP_SME);
+		assert(AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm ==
 		       -1);
-
-		AArch64_dec_op_count(MI);
-		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm =
+		AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm =
 			MCInst_getOpVal(MI, OpNum);
-		AArch64_get_detail(MI)->is_doing_sme = false;
 		break;
 	case AArch64_SME_MATRIX_SLICE_OFF_RANGE:
-		AArch64_dec_op_count(MI);
 		va_start(args, vas);
 		int8_t First = va_arg(args, int);
 		int8_t Offset = va_arg(args, int);
-		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first =
+		AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm_range.first =
 			First;
-		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.offset =
+		AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm_range.offset =
 			Offset;
-		AArch64_get_detail_op(MI, 0)->sme.has_range_offset = true;
-		AArch64_get_detail(MI)->is_doing_sme = false;
+		AArch64_get_detail_op(MI, 0)->sme.mx.has_range_offset = true;
 		va_end(args);
 		break;
 	}
-	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
-	AArch64_inc_op_count(MI);
 }
 
 static void insert_op(MCInst *MI, unsigned index, cs_aarch64_op op)
