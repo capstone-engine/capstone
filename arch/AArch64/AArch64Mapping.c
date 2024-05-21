@@ -2488,7 +2488,7 @@ void AArch64_set_detail_op_sme_mx(MCInst *MI, unsigned OpNum,
 		AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm =
 			MCInst_getOpVal(MI, OpNum);
 		break;
-	case AArch64_SME_MATRIX_SLICE_OFF_RANGE:
+	case AArch64_SME_MATRIX_SLICE_OFF_RANGE: {
 		int8_t First = va_arg(args, int);
 		int8_t Offset = va_arg(args, int);
 		AArch64_get_detail_op(MI, 0)->sme.mx.slice_offset.imm_range.first =
@@ -2497,6 +2497,7 @@ void AArch64_set_detail_op_sme_mx(MCInst *MI, unsigned OpNum,
 			Offset;
 		AArch64_get_detail_op(MI, 0)->sme.mx.has_range_offset = true;
 		break;
+	}
 	}
 	va_end(args);
 }
