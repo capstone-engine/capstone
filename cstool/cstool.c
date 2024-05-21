@@ -693,8 +693,8 @@ int main(int argc, char **argv)
 
 	if (dev_fuzz) {
 		uint32_t start = 0;
-		for (int i = size - 1, j = 0; i >= 0; --i, ++j) {
-			start |= assembly[i] << j * 8;
+		for (int k = size - 1, j = 0; k >= 0; --k, ++j) {
+			start |= assembly[k] << j * 8;
 		}
 		run_dev_fuzz(handle, start);
 		cs_close(&handle);
