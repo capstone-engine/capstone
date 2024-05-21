@@ -355,6 +355,7 @@ static void usage(char *prog)
 	printf("        -a Print Capstone register alias (if any). Otherwise LLVM register names are emitted.\n");
 	printf("        -s decode in SKIPDATA mode\n");
 	printf("        -u show immediates as unsigned\n");
+	printf("        -f Dev fuzzing: Disassembles <assembly-hexstring> to 0xffffffff.\n\n");
 	printf("        -v show version & Capstone core build info\n\n");
 }
 
@@ -446,6 +447,35 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 	printf("\n");
 }
 
+static void run_dev_fuzz(csh handle, uint32_t start) {
+	uint32_t address = 0xffffffff;
+	printf("Run dev fuzz\n"
+	       "Start: 0x%" PRIx32 "\n"
+	       "End: 0xffffffff\n"
+	       "Address: 0x%" PRIx32 "\n", start, address);
+	cs_insn *insn;
+	uint32_t bytes = start;
+	while (true) {
+		printf("\rProgress: 0x%08x\t\t", bytes);
+		fflush(stdout);
+		cs_disasm(handle, (uint8_t*)&bytes, 4, address, 0, &insn);
+		if (insn && insn->detail)
+			free(insn->detail);
+		free(insn);
+		bytes++;
+		if (bytes == 0xffffffff) {
+			printf("\rProgress: 0x%08x\t\t", bytes);
+			fflush(stdout);
+			cs_disasm(handle, (uint8_t*)&bytes, 4, address, 0, &insn);
+			if (insn && insn->detail)
+				free(insn->detail);
+			free(insn);
+			printf("\n");
+			return;
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
 	int i, c;
@@ -463,9 +493,10 @@ int main(int argc, char **argv)
 	bool skipdata = false;
 	bool custom_reg_alias = false;
 	bool set_real_detail = false;
+	bool dev_fuzz = false;
 	int args_left;
 
-	while ((c = getopt (argc, argv, "rasudhv")) != -1) {
+	while ((c = getopt (argc, argv, "rasudhvf")) != -1) {
 		switch (c) {
 			case 'a':
 				custom_reg_alias = true;
@@ -580,6 +611,9 @@ int main(int argc, char **argv)
 
 				printf("\n");
 				return 0;
+			case 'f':
+				dev_fuzz = true;
+				break;
 			case 'h':
 				usage(argv[0]);
 				return 0;
@@ -655,6 +689,16 @@ int main(int argc, char **argv)
 
 	if (set_real_detail) {
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL);
+	}
+
+	if (dev_fuzz) {
+		uint32_t start = 0;
+		for (int i = size - 1, j = 0; i >= 0; --i, ++j) {
+			start |= assembly[i] << j * 8;
+		}
+		run_dev_fuzz(handle, start);
+		cs_close(&handle);
+		return 0;
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
