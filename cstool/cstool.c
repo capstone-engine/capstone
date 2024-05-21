@@ -447,26 +447,44 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 	printf("\n");
 }
 
-static void run_dev_fuzz(csh handle, uint32_t start) {
+static uint32_t read_le(uint8_t *buf, size_t size) {
+	uint32_t res = 0;
+	for (size_t i = 0, j = size - 1; i < size; ++i, --j) {
+		res |= buf[i] << j * 8;
+	}
+	return res;
+}
+
+static void to_buf(uint32_t num, uint8_t *buf) {
+	for (size_t i = 0, j = 3; i < 4; ++i, --j) {
+		buf[i] = (num >> j) & 0xff;
+	}
+}
+
+static void run_dev_fuzz(csh handle, uint8_t *bytes, uint32_t size) {
+	uint8_t buf[4] = {0};
+	uint32_t bytes_as_num = read_le(bytes, size);
 	uint32_t address = 0xffffffff;
-	printf("Run dev fuzz\n"
-	       "Start: 0x%" PRIx32 "\n"
-	       "End: 0xffffffff\n"
-	       "Address: 0x%" PRIx32 "\n", start, address);
+
+	printf("Run dev fuzz\n");
+	printf("Start: 0x%" PRIx32 "\n", bytes_as_num);
+	printf("End: 0xffffffff\n"
+	       "Address: 0x%" PRIx32 "\n", address);
+
 	cs_insn *insn;
-	uint32_t bytes = start;
 	while (true) {
-		printf("\rProgress: 0x%08x\t\t", bytes);
+		printf("\rProgress: 0x%08x\t\t", bytes_as_num);
 		fflush(stdout);
-		cs_disasm(handle, (uint8_t*)&bytes, 4, address, 0, &insn);
+		cs_disasm(handle, buf, 4, address, 0, &insn);
 		if (insn && insn->detail)
 			free(insn->detail);
 		free(insn);
-		bytes++;
-		if (bytes == 0xffffffff) {
-			printf("\rProgress: 0x%08x\t\t", bytes);
+		bytes_as_num++;
+		to_buf(bytes_as_num, buf);
+		if (bytes_as_num == 0xffffffff) {
+			printf("\rProgress: 0x%08x\t\t", bytes_as_num);
 			fflush(stdout);
-			cs_disasm(handle, (uint8_t*)&bytes, 4, address, 0, &insn);
+			cs_disasm(handle, (uint8_t*)&buf, 4, address, 0, &insn);
 			if (insn && insn->detail)
 				free(insn->detail);
 			free(insn);
@@ -692,11 +710,7 @@ int main(int argc, char **argv)
 	}
 
 	if (dev_fuzz) {
-		uint32_t start = 0;
-		for (int k = size - 1, j = 0; k >= 0; --k, ++j) {
-			start |= assembly[k] << j * 8;
-		}
-		run_dev_fuzz(handle, start);
+		run_dev_fuzz(handle, assembly, size);
 		cs_close(&handle);
 		return 0;
 	}
