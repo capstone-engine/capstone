@@ -768,6 +768,30 @@ void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
 					(uint16_t)op->mem.base;
 				write_count++;
 			}
+		case AArch64_OP_SME:
+			if (op->sme.type == AArch64_SME_MATRIX) {
+				if ((op->sme.mx.tile != AArch64_REG_INVALID) &&
+				    !arr_exist(regs_read, read_count, op->sme.mx.tile)) {
+					regs_read[read_count] = (uint16_t)op->sme.mx.tile;
+					read_count++;
+				}
+				if ((op->sme.mx.slice_reg != AArch64_REG_INVALID) &&
+				    !arr_exist(regs_read, read_count, op->sme.mx.slice_reg)) {
+					regs_read[read_count] = (uint16_t)op->sme.mx.slice_reg;
+					read_count++;
+				}
+			} else {
+				if ((op->sme.pred.reg != AArch64_REG_INVALID) &&
+				    !arr_exist(regs_read, read_count, op->sme.pred.reg)) {
+					regs_read[read_count] = (uint16_t)op->sme.pred.reg;
+					read_count++;
+				}
+				if ((op->sme.pred.vec_select != AArch64_REG_INVALID) &&
+				    !arr_exist(regs_read, read_count, op->sme.pred.vec_select)) {
+					regs_read[read_count] = (uint16_t)op->sme.pred.vec_select;
+					read_count++;
+				}
+			}
 		default:
 			break;
 		}
