@@ -2196,7 +2196,7 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 		AArch64_set_detail_op_sme_mx(MI, OpNum, AArch64_SME_MATRIX_TILE,
 					  sme_reg_to_vas(Reg));
 		return;
-	} else if ((Reg >= AArch64_P0) && (Reg <= AArch64_P15)) {
+	} else if ((Reg >= AArch64_REG_P0) && (Reg <= AArch64_REG_P15)) {
 		// SME/SVE predicate register.
 		AArch64_set_detail_op_sme_pred(MI, OpNum);
 		return;
