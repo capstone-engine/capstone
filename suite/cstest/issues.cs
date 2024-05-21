@@ -60,7 +60,7 @@
 
 !# issue 1924 SME Index instruction alias printing is not always valid
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x02,0x00,0x9f,0xe0 == ld1w {za0h.s[w12, 2]}, p0/z, [x0] ; op_count: 2 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za0.s ; operands[0].sme.slice_reg: w12 ; operands[0].sme.slice_offset: 2 ; operands[0].sme.is_vertical: false ; operands[0].access: READ ; operands[0].vas: 0x20 ; operands[0].vector_index: 0 ; operands[1].type: MEM ; operands[1].mem.base: REG = p0 ; operands[1].mem.index: REG = x0 ; operands[1].access: READ ; operands[0].vector_index: 0 ; Registers read: p0 x0 ; Groups: HasSME
+0x02,0x00,0x9f,0xe0 == ld1w {za0h.s[w12, 2]}, p0/z, [x0] ; op_count: 3 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.mx.tile: za0.s ; operands[0].sme.mx.slice_reg: w12 ; operands[0].sme.mx.slice_offset: 2 ; operands[0].sme.mx.is_vertical: false ; operands[0].access: WRITE ; operands[0].vas: 0x20 ; operands[1].type: SME_PRED ; operands[1].sme.pred.reg: p0 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = x0 ; operands[2].access: READ ; Registers read: za0.s w12 p0 x0 ; Groups: HasSME
 
 !# issue 1912 PPC register name
 !# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, None
