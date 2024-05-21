@@ -768,6 +768,7 @@ void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
 					(uint16_t)op->mem.base;
 				write_count++;
 			}
+			break;
 		case AArch64_OP_SME:
 			if (op->sme.type == AArch64_SME_MATRIX) {
 				if ((op->sme.mx.tile != AArch64_REG_INVALID) &&
@@ -792,6 +793,7 @@ void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
 					read_count++;
 				}
 			}
+			break;
 		default:
 			break;
 		}
