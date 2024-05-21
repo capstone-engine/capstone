@@ -24,7 +24,7 @@ class AArch64SMESliceOffset(ctypes.Union):
         ('imm_range', AArch64ImmRange)
     )
 
-class AArch64OpSme(ctypes.Structure):
+class AArch64OpSmeMX(ctypes.Structure):
     _fileds_ = (
         ('type', ctypes.c_uint),
         ('tile', ctypes.c_uint),
@@ -32,6 +32,25 @@ class AArch64OpSme(ctypes.Structure):
         ('slice_offset', AArch64SMESliceOffset),
         ('has_range_offset', ctypes.c_bool),
         ('is_vertical', ctypes.c_bool),
+    )
+
+class AArch64OpSmePred(ctypes.Structure):
+    _fileds_ = (
+        ('reg', ctypes.c_uint),
+        ('vec_select', ctypes.c_uint),
+        ('index', ctypes.c_int),
+    )
+
+class AArch64SMEOp(ctypes.Union):
+    _fields_ = (
+        ('mx', AArch64OpSmeMX),
+        ('pred', AArch64OpSmePred)
+    )
+
+class AArch64OpSme(ctypes.Structure):
+    _fileds_ = (
+        ('type', ctypes.c_uint),
+        ('op', AArch64SMEOp),
     )
 
 class AArch64OpShift(ctypes.Structure):
