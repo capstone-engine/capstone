@@ -734,6 +734,7 @@ typedef enum {
 } aarch64_sveveclenspecifier;
 
 typedef enum {
+	AArch64_SYSREG_INVALID = 0,
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_SysReg> begin
 	// clang-format off
 

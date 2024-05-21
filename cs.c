@@ -1963,7 +1963,7 @@ cs_err CAPSTONE_API cs_regs_access(csh ud, const cs_insn *insn,
 	struct cs_struct *handle;
 
 	if (!ud)
-		return -1;
+		return CS_ERR_CSH;
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
 
