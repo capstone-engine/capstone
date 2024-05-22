@@ -84,13 +84,13 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 					add_str(&result, " ; operands[%u].sme.is_vertical: %s", i, (op->sme.is_vertical ? "true" : "false"));
 			break;
 		case AArch64_OP_PRED:
-			add_str(&result, "\t\toperands[%u].type: PREDICATE\n", i);
+			add_str(&result, " ; operands[%u].type: PREDICATE", i);
 			if (op->pred.reg != AArch64_REG_INVALID)
-				add_str(&result, "\t\toperands[%u].pred.reg: %s\n", i, cs_reg_name(*handle, op->pred.reg));
+				add_str(&result, " ; operands[%u].pred.reg: %s", i, cs_reg_name(*handle, op->pred.reg));
 			if (op->pred.vec_select != AArch64_REG_INVALID)
-				add_str(&result, "\t\toperands[%u].pred.vec_select: %s\n", i, cs_reg_name(*handle, op->pred.vec_select));
+				add_str(&result, " ; operands[%u].pred.vec_select: %s", i, cs_reg_name(*handle, op->pred.vec_select));
 			if (op->pred.imm_index != -1)
-				add_str(&result, "\t\toperands[%u].pred.imm_index: %d\n", i, op->pred.imm_index);
+				add_str(&result, " ; operands[%u].pred.imm_index: %d", i, op->pred.imm_index);
 			break;
 		case AArch64_OP_SYSREG:
 			add_str(&result, " ; operands[%u].type: SYS REG:", i);
