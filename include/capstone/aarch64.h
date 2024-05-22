@@ -2038,6 +2038,7 @@ typedef enum aarch64_op_type {
 	AArch64_OP_SYSREG = CS_OP_SPECIAL + 25,
 	AArch64_OP_SYSIMM = CS_OP_SPECIAL + 26,
 	AArch64_OP_SYSALIAS = CS_OP_SPECIAL + 27,
+	AArch64_OP_PRED = CS_OP_SPECIAL + 28,
 } aarch64_op_type;
 
 typedef struct {
@@ -2779,18 +2780,12 @@ typedef enum {
 	AArch64_SME_MATRIX_SLICE_REG,
 	AArch64_SME_MATRIX_SLICE_OFF,
 	AArch64_SME_MATRIX_SLICE_OFF_RANGE,
-} aarch64_sme_mx_part;
+} aarch64_sme_op_part;
 
 typedef enum {
 	AArch64_SME_OP_INVALID,
 	AArch64_SME_OP_TILE, ///< SME operand is a single tile.
 	AArch64_SME_OP_TILE_VEC, ///< SME operand is a tile indexed by a register and/or immediate
-} aarch64_sme_mx_type;
-
-typedef enum {
-	AArch64_SME_NONE = 0,
-	AArch64_SME_MATRIX, ///< SME matrix
-	AArch64_SME_PRED, /// SME predicate
 } aarch64_sme_op_type;
 
 typedef struct {
@@ -2800,7 +2795,7 @@ typedef struct {
 
 /// SME Instruction's matrix operand
 typedef struct {
-  aarch64_sme_mx_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC
+  aarch64_sme_op_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC
   aarch64_reg tile; ///< Matrix tile register
   aarch64_reg slice_reg; ///< slice index reg
 	union {
@@ -2809,23 +2804,14 @@ typedef struct {
 	} slice_offset; ///< slice index offset. Is set to -1 if invalid.
 	bool has_range_offset; ///< If true, the offset is a range.
   bool is_vertical;	///< Flag if slice is vertical or horizontal
-} aarch64_op_sme_mx;
+} aarch64_op_sme;
 
 /// SME Instruction's operand has index
 typedef struct {
   aarch64_reg reg; ///< Vector predicate register
   aarch64_reg vec_select; ///< Vector select register.
-  int32_t index; ///< Index in range 0 to one less of vector elements in a 128bit reg.
-} aarch64_op_sme_pred;
-
-/// SME operand. Either a matrix or a predicate register operand.
-typedef struct {
-	aarch64_sme_op_type type;
-	union {
-		aarch64_op_sme_mx mx;
-		aarch64_op_sme_pred pred;
-	};
-} aarch64_op_sme;
+  int32_t imm_index; ///< Index in range 0 to one less of vector elements in a 128bit reg.
+} aarch64_op_pred;
 
 /// Instruction operand
 typedef struct cs_aarch64_op {
@@ -2846,6 +2832,7 @@ typedef struct cs_aarch64_op {
     aarch64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
 		aarch64_sysop sysop; ///< System operand
     aarch64_op_sme sme; ///< SME matrix operand
+    aarch64_op_pred pred; ///< Predicate register
   };
 
   /// How is this operand accessed? (READ, WRITE or READ|WRITE)
@@ -2866,7 +2853,7 @@ typedef struct cs_aarch64 {
   AArch64CC_CondCode cc;	     ///< conditional code for this insn
   bool update_flags; ///< does this insn update flags?
   bool post_index;   ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
-  bool is_doing_sme; ///< True if a SME operand is currently edited.
+  bool is_doing_sme; ///< True if a SME or SVE operand is currently edited.
 
   /// Number of operands of this instruction,
   /// or 0 when instruction has no operand.

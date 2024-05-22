@@ -65,10 +65,10 @@ void AArch64_set_detail_shift_ext(MCInst *MI, unsigned OpNum, bool SignExtend,
 void AArch64_set_detail_op_float(MCInst *MI, unsigned OpNum, float Val);
 void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 			       aarch64_op_type type);
-void AArch64_set_detail_op_sme_mx(MCInst *MI, unsigned OpNum,
-			       aarch64_sme_mx_part part,
+void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
+			       aarch64_sme_op_part part,
 			       AArch64Layout_VectorLayout vas, ...);
-void AArch64_set_detail_op_sme_pred(MCInst *MI, unsigned OpNum);
+void AArch64_set_detail_op_pred(MCInst *MI, unsigned OpNum);
 void AArch64_insert_detail_op_reg_at(MCInst *MI, unsigned index,
 				     aarch64_reg Reg, cs_ac_type access);
 void AArch64_insert_detail_op_float_at(MCInst *MI, unsigned index, double val,

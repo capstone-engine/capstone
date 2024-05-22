@@ -56,34 +56,31 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 
 			break;
 		case AArch64_OP_SME:
-			if (op->sme.type == AArch64_SME_MATRIX) {
-				printf("\t\toperands[%u].type: SME_MATRIX\n", i);
-				printf("\t\toperands[%u].sme.type: %d\n", i, op->sme.mx.type);
+			printf("\t\toperands[%u].type: SME_MATRIX\n", i);
+			printf("\t\toperands[%u].sme.type: %d\n", i, op->sme.type);
 
-				if (op->sme.mx.tile != AArch64_REG_INVALID)
-					printf("\t\toperands[%u].sme.mx.tile: %s\n", i, cs_reg_name(handle, op->sme.mx.tile));
-				if (op->sme.mx.slice_reg != AArch64_REG_INVALID)
-					printf("\t\toperands[%u].sme.mx.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.mx.slice_reg));
-				if (op->sme.mx.slice_offset.imm != -1 || op->sme.mx.slice_offset.imm_range.first != -1) {
-					printf("\t\toperands[%u].sme.mx.slice_offset: ", i);
-					if (op->sme.mx.has_range_offset)
-						printf("%hhd:%hhd\n", op->sme.mx.slice_offset.imm_range.first, op->sme.mx.slice_offset.imm_range.offset);
-					else
-						printf("%d\n", op->sme.mx.slice_offset.imm);
-				}
-				if (op->sme.mx.slice_reg != AArch64_REG_INVALID || op->sme.mx.slice_offset.imm != -1)
-					printf("\t\toperands[%u].sme.mx.is_vertical: %s\n", i, (op->sme.mx.is_vertical ? "true" : "false"));
-			} else if (op->sme.type == AArch64_SME_PRED) {
-				printf("\t\toperands[%u].type: SME_PRED\n", i);
-				if (op->sme.pred.reg != AArch64_REG_INVALID)
-					printf("\t\toperands[%u].sme.pred.reg: %s\n", i, cs_reg_name(handle, op->sme.pred.reg));
-				if (op->sme.pred.vec_select != AArch64_REG_INVALID)
-					printf("\t\toperands[%u].sme.pred.vec_select: %s\n", i, cs_reg_name(handle, op->sme.pred.vec_select));
-				if (op->sme.pred.index != -1)
-					printf("\t\toperands[%u].sme.pred.index: %u\n", i, op->sme.pred.index);
-			} else {
-				printf("SME operand printing not supported.\n");
+			if (op->sme.tile != AArch64_REG_INVALID)
+				printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->sme.tile));
+			if (op->sme.slice_reg != AArch64_REG_INVALID)
+				printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.slice_reg));
+			if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
+				printf("\t\toperands[%u].sme.slice_offset: ", i);
+				if (op->sme.has_range_offset)
+					printf("%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
+				else
+					printf("%d\n", op->sme.slice_offset.imm);
 			}
+			if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
+				printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
+			break;
+		case AArch64_OP_PRED:
+			printf("\t\toperands[%u].type: PREDICATE\n", i);
+			if (op->pred.reg != AArch64_REG_INVALID)
+				printf("\t\toperands[%u].pred.reg: %s\n", i, cs_reg_name(handle, op->pred.reg));
+			if (op->pred.vec_select != AArch64_REG_INVALID)
+				printf("\t\toperands[%u].pred.vec_select: %s\n", i, cs_reg_name(handle, op->pred.vec_select));
+			if (op->pred.imm_index != -1)
+				printf("\t\toperands[%u].pred.imm_index: %d\n", i, op->pred.imm_index);
 			break;
 		case AArch64_OP_CIMM:
 			printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
