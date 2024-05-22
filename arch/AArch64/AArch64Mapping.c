@@ -1795,7 +1795,7 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		uint64_t Scale = temp_arg_0;
 		uint64_t Offset = temp_arg_1;
 		unsigned FirstImm = Scale * MCInst_getOpVal(MI, (OpNum));
-		AArch64_set_detail_op_imm_range(MI, OpNum, FirstImm, Offset);
+		AArch64_set_detail_op_imm_range(MI, OpNum, FirstImm, FirstImm + Offset);
 		break;
 	}
 	case AArch64_OP_GROUP_MemExtend_w_128:
