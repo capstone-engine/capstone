@@ -31,6 +31,9 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 				break;
 			case AArch64_OP_REG:
 				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
+			if (op->is_list_member) {
+				add_str(&result, " ; operands[%u].is_list_member: true\n", i);
+			}
 				break;
 			case AArch64_OP_IMM:
 				add_str(&result, " ; operands[%u].type: IMM = 0x%" PRIx64, i, op->imm);

@@ -31,6 +31,9 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 			break;
 		case AArch64_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+			if (op->is_list_member) {
+				printf("\t\toperands[%u].is_list_member: true\n", i);
+			}
 			break;
 		case AArch64_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
