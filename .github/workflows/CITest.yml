@@ -39,6 +39,15 @@ jobs:
               enable-asan: 'OFF'
             }
           - {
+              name: 'ubuntu-22.04 x64 python3.9 make',
+              os: ubuntu-22.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.9',
+              build-system: 'make',
+              enable-asan: 'OFF'
+            }
+          - {
               name: 'ubuntu-22.04 x64 python3.9 cmake',
               os: ubuntu-22.04,
               arch: x64,
@@ -81,6 +90,14 @@ jobs:
         unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
         git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
         chmod +x suite/cstest/build_cstest.sh
+
+    - name: make
+      if: startsWith(matrix.config.build-system, 'make')
+      run: |
+        ./make.sh
+        make check
+        sudo make install
+        cp libcapstone.so.5 libcapstone.so.5.0
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
