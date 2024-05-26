@@ -444,7 +444,7 @@ int main(int argc, char **argv)
 	uint8_t *assembly;
 	size_t count, size;
 	uint64_t address = 0LL;
-	cs_insn *insn;
+	cs_buffer *buffer;
 	cs_err err;
 	cs_mode md;
 	cs_arch arch = CS_ARCH_ALL;
@@ -454,6 +454,7 @@ int main(int argc, char **argv)
 	bool custom_reg_alias = false;
 	bool set_real_detail = false;
 	int args_left;
+	int ret = 0;
 
 	while ((c = getopt (argc, argv, "rasudhv")) != -1) {
 		switch (c) {
@@ -643,8 +644,14 @@ int main(int argc, char **argv)
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL);
 	}
 
-	count = cs_disasm(handle, assembly, size, address, 0, &insn);
+	buffer = cs_buffer_new(0);
+	if (!buffer) {
+		printf("ERROR: Failed on cs_buffer_new(), quit!\n");
+		return -1;
+	}
+	count = cs_disasm(handle, assembly, size, address, 0, buffer);
 	if (count > 0) {
+		cs_insn *insn = buffer->insn;
 		for (i = 0; i < count; i++) {
 			int j;
 
@@ -676,17 +683,14 @@ int main(int argc, char **argv)
 				print_details(handle, arch, md, &insn[i]);
 			}
 		}
-
-		cs_free(insn, count);
-		free(assembly);
 	} else {
 		printf("ERROR: invalid assembly code\n");
-		cs_close(&handle);
-		free(assembly);
-		return(-4);
+		ret = -4;
 	}
 
+	cs_buffer_free(buffer);
 	cs_close(&handle);
+	free(assembly);
 
-	return 0;
+	return ret;
 }

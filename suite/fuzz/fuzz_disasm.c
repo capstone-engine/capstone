@@ -18,7 +18,7 @@ static FILE *outfile = NULL;
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     csh handle;
-    cs_insn *all_insn;
+    cs_buffer *buffer;
     cs_detail *detail;
     cs_err err;
     unsigned int i;
@@ -52,12 +52,14 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
     }
 
+    buffer = cs_buffer_new(0);
     uint64_t address = 0x1000;
-    size_t count = cs_disasm(handle, Data+1, Size-1, address, 0, &all_insn);
+    size_t count = cs_disasm(handle, Data+1, Size-1, address, 0, buffer);
 
     if (count) {
         size_t j;
         unsigned int n;
+	cs_insn *all_insn = buffer->insn;
 
         for (j = 0; j < count; j++) {
             cs_insn *insn = &(all_insn[j]);
@@ -90,9 +92,9 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         }
 
         fprintf(outfile, "0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
-        cs_free(all_insn, count);
     }
 
+    cs_buffer_free(buffer);
     cs_close(&handle);
 
     return 0;

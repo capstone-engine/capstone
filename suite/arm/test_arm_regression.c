@@ -171,7 +171,7 @@ static void test_invalids()
 	struct invalid_instructions * invalid = NULL;
 
 	uint64_t address = 0x1000;
-	cs_insn *insn;
+	cs_buffer *buffer;
 	int i;
 	int j;
 	size_t count;
@@ -205,12 +205,14 @@ static void test_invalids()
 
 			free(hex_str);
 
-			count = cs_disasm(handle,
-					invalid_code->code, invalid_code->size, address, 0, &insn
-					);
+			buffer = cs_buffer_new(0);
+			count = cs_disasm(handle, invalid_code->code, invalid_code->size,
+					address, 0, buffer);
 
 			if (count) {
 				size_t k;
+				cs_insn *insn = buffer->insn;
+
 				printf("    ERROR:\n");
 
 				for (k = 0; k < count; k++) {
@@ -218,13 +220,13 @@ static void test_invalids()
 							insn[k].address, insn[k].mnemonic, insn[k].op_str);
 					print_insn_detail(&insn[k]);
 				}
-				cs_free(insn, count);
 
 			} else {
 				printf("    SUCCESS: invalid\n");
 			}
 		}
 
+		cs_buffer_free(buffer);
 		cs_close(&handle);
 	}
 }
@@ -286,7 +288,7 @@ static void test_valids()
 
 	struct valid_instructions *valid = NULL;
 
-	cs_insn *insn;
+	cs_buffer *buffer;
 	int i;
 	int j;
 	size_t count;
@@ -333,15 +335,17 @@ static void test_valids()
 
 			free(hex_str);
 
+			buffer = cs_buffer_new(0);
 			count = cs_disasm(handle,
 					valid_code->code, valid_code->size, 
-					valid_code->start_addr, 0, &insn
+					valid_code->start_addr, 0, buffer
 					);
 
 			if (count) {
 				size_t k;
 				size_t max_len = 0;
 				size_t tmp_len = 0;
+				cs_insn *insn = buffer->insn;
 
 				for (k = 0; k < count; k++) {
 					_this_printf(
@@ -368,14 +372,12 @@ static void test_valids()
 				} else {
 					printf("    SUCCESS: valid\n");
 				}
-
-				cs_free(insn, count);
-
 			} else {
 				printf("ERROR: invalid\n");
 			}
 		}
 
+		cs_buffer_free(buffer);
 		cs_close(&handle);
 	}
 

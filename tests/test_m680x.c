@@ -322,7 +322,7 @@ static void test()
 
 	uint64_t address = 0x1000;
 	csh handle;
-	cs_insn *insn;
+	cs_buffer *buffer;
 	int i;
 	size_t count;
 	const char *nine_spaces = "         ";
@@ -344,11 +344,13 @@ static void test()
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 #endif
 
+		buffer = cs_buffer_new(0);
 		count = cs_disasm(handle, platforms[i].code, platforms[i].size,
-				address, 0, &insn);
+				address, 0, buffer);
 
 		if (count) {
 			size_t j;
+			cs_insn *insn = buffer->insn;
 
 			printf("********************\n");
 			printf("Platform: %s\n", platforms[i].comment);
@@ -371,9 +373,6 @@ static void test()
 				print_insn_detail(handle, &insn[j]);
 #endif
 			}
-
-			// free memory allocated by cs_disasm()
-			cs_free(insn, count);
 		}
 		else {
 			printf("********************\n");
@@ -384,6 +383,7 @@ static void test()
 			abort();
 		}
 
+		cs_buffer_free(buffer);
 		cs_close(&handle);
 	}
 }

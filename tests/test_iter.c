@@ -1,7 +1,7 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 
-// This sample code demonstrates the APIs cs_malloc() & cs_disasm_iter().
+// This sample code demonstrates the APIs cs_buffer_new() & cs_disasm_iter().
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -324,7 +324,7 @@ struct platform platforms[] = {
 
 	csh handle;
 	uint64_t address;
-	cs_insn *insn;
+	cs_buffer *buffer;
 	cs_detail *detail;
 	int i;
 	cs_err err;
@@ -346,7 +346,7 @@ struct platform platforms[] = {
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
 		// allocate memory for the cache to be used by cs_disasm_iter()
-		insn = cs_malloc(handle);
+		buffer = cs_buffer_new(1);
 
 		print_string_hex(platforms[i].code, platforms[i].size);
 		printf("Disasm:\n");
@@ -354,8 +354,9 @@ struct platform platforms[] = {
 		address = 0x1000;
 		code = platforms[i].code;
 		size = platforms[i].size;
-		while(cs_disasm_iter(handle, &code, &size, &address, insn)) {
+		while(cs_disasm_iter(handle, &code, &size, &address, buffer)) {
 			int n;
+			cs_insn *insn = buffer->insn;
 
 			printf("0x%" PRIx64 ":\t%s\t\t%s // insn-ID: %u, insn-mnem: %s\n",
 					insn->address, insn->mnemonic, insn->op_str,
@@ -393,9 +394,7 @@ struct platform platforms[] = {
 
 		printf("\n");
 
-		// free memory allocated by cs_malloc()
-		cs_free(insn, 1);
-
+		cs_buffer_free(buffer);
 		cs_close(&handle);
 	}
 }

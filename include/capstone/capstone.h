@@ -501,6 +501,17 @@ typedef struct cs_insn {
 /// NOTE: this macro works with position (>=1), not index
 #define CS_INSN_OFFSET(insns, post) (insns[post - 1].address - insns[0].address)
 
+/// Dynamic buffer for disassembled instructions.
+typedef struct cs_buffer {
+	/// Private buffer data.
+	void *private;
+	/// Dynamic array for disassembled instructions.
+	cs_insn *insn;
+	/// Capacity of @insn array.
+	size_t capacity;
+	/// The number of disassembled instructions in @insn.
+	size_t count;
+} cs_buffer;
 
 /// All type of errors encountered by Capstone API.
 /// These are values returned by cs_errno()
@@ -671,32 +682,81 @@ CAPSTONE_EXPORT
 const char * CAPSTONE_API cs_strerror(cs_err code);
 
 /**
- Disassemble binary code, given the code buffer, size, address and number
+ Allocate dynamic buffer for instructions to be used by cs_disasm().
+
+ Use cs_buffer_free() to free memory.
+
+ @capacity: initial capacity of the buffer. Pass 0 to use default.
+
+ @return: returns a pointer to new instruction buffer.
+*/
+CAPSTONE_EXPORT
+cs_buffer * CAPSTONE_API cs_buffer_new(size_t capacity);
+
+/**
+ Free an instruction buffer.
+
+ @buffer: buffer returned by cs_buffer_new().
+*/
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_buffer_free(cs_buffer *buffer);
+
+/**
+ Clears an instruction buffer.
+
+ cs_buffer_clear() will not free allocated memory use cs_buffer_free() instead.
+
+ @buffer: buffer returned by cs_buffer_new().
+ */
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_buffer_clear(cs_buffer *buffer);
+
+/**
+ Reserve exact size in an instruction buffer.
+
+ If buffer instruction count is greater than @capacity then the instruction
+ count will be set to @capacity even if call fails.
+
+ @buffer: buffer returned by cs_buffer_new().
+ @capacity: required capacity.
+
+ @return: true if this API successfully reserved memory or false otherwise.
+ */
+CAPSTONE_EXPORT
+bool CAPSTONE_API cs_buffer_reserve_exact(cs_buffer *buffer, size_t capacity);
+
+/**
+ Reserve additional size in a buffer.
+
+ NOTE: cs_buffer_reserve() can reserve more capacity then requested. Use cs_buffer_reserve_exact()
+ if you need exact buffer capacity.
+
+ The minimum reserved capacity is 16. For example:
+    cs_buffer *buf = cs_buffer_new(1);
+    cs_buffer_reserve(buf, 1);
+    assert(buf->capacity == 16); // but not 2
+
+ @buffer: buffer returned by cs_buffer_new().
+ @additional: additional capacity to allocate.
+
+ @return: true if this API successfully reserved memory or false otherwise.
+ */
+CAPSTONE_EXPORT
+bool CAPSTONE_API cs_buffer_reserve(cs_buffer *buffer, size_t additional);
+
+/**
+ Disassemble binary code, given the code @buffer, size, address and number
  of instructions to be decoded.
- This API dynamically allocate memory to contain disassembled instruction.
- Resulting instructions will be put into @*insn
 
- NOTE 1: this API will automatically determine memory needed to contain
- output disassembled instructions in @insn.
+ This API dynamically expands @buffer to fill it with @count instructions.
+ Clears @buffer before filling it.
 
- NOTE 2: caller must free the allocated memory itself to avoid memory leaking.
-
- NOTE 3: for system with scarce memory to be dynamically allocated such as
- OS kernel or firmware, the API cs_disasm_iter() might be a better choice than
- cs_disasm(). The reason is that with cs_disasm(), based on limited available
- memory, we have to calculate in advance how many instructions to be disassembled,
- which complicates things. This is especially troublesome for the case @count=0,
- when cs_disasm() runs uncontrollably (until either end of input buffer, or
- when it encounters an invalid instruction).
- 
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled.
  @code_size: size of the above code buffer.
  @address: address of the first instruction in given raw code buffer.
- @insn: array of instructions filled in by this API.
-	   NOTE: @insn will be allocated by this function, and should be freed
-	   with cs_free() API.
  @count: number of instructions to be disassembled, or 0 to get all of them
+ @buffer: buffer filled in by this API.
 
  @return: the number of successfully disassembled instructions,
  or 0 if this function failed to disassemble the given code
@@ -706,61 +766,28 @@ const char * CAPSTONE_API cs_strerror(cs_err code);
 CAPSTONE_EXPORT
 size_t CAPSTONE_API cs_disasm(csh handle,
 		const uint8_t *code, size_t code_size,
-		uint64_t address,
-		size_t count,
-		cs_insn **insn);
+		uint64_t address, size_t count,
+		cs_buffer *buffer);
 
 /**
- Free memory allocated by cs_malloc() or cs_disasm() (argument @insn)
+ Wrapper around cs_disasm() to disassemble one instruction.
 
- @insn: pointer returned by @insn argument in cs_disasm() or cs_malloc()
- @count: number of cs_insn structures returned by cs_disasm(), or 1
-     to free memory allocated by cs_malloc().
-*/
-CAPSTONE_EXPORT
-void CAPSTONE_API cs_free(cs_insn *insn, size_t count);
-
-
-/**
- Allocate memory for 1 instruction to be used by cs_disasm_iter().
-
- @handle: handle returned by cs_open()
-
- NOTE: when no longer in use, you can reclaim the memory allocated for
- this instruction with cs_free(insn, 1)
-*/
-CAPSTONE_EXPORT
-cs_insn * CAPSTONE_API cs_malloc(csh handle);
-
-/**
- Fast API to disassemble binary code, given the code buffer, size, address
- and number of instructions to be decoded.
- This API puts the resulting instruction into a given cache in @insn.
+ This API puts the resulting instruction into a given @buffer.
  See tests/test_iter.c for sample code demonstrating this API.
 
- NOTE 1: this API will update @code, @size & @address to point to the next
+ NOTE 1: this API will update @code, @size and @address to point to the next
  instruction in the input buffer. Therefore, it is convenient to use
  cs_disasm_iter() inside a loop to quickly iterate all the instructions.
  While decoding one instruction at a time can also be achieved with
- cs_disasm(count=1), some benchmarks shown that cs_disasm_iter() can be 30%
- faster on random input.
+ cs_disasm(count=1).
 
- NOTE 2: the cache in @insn can be created with cs_malloc() API.
-
- NOTE 3: for system with scarce memory to be dynamically allocated such as
- OS kernel or firmware, this API is recommended over cs_disasm(), which
- allocates memory based on the number of instructions to be disassembled.
- The reason is that with cs_disasm(), based on limited available memory,
- we have to calculate in advance how many instructions to be disassembled,
- which complicates things. This is especially troublesome for the case
- @count=0, when cs_disasm() runs uncontrollably (until either end of input
- buffer, or when it encounters an invalid instruction).
- 
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled
  @size: size of above code
  @address: address of the first insn in given raw code buffer
  @insn: pointer to instruction to be filled in by this API.
+ @count: number of instructions to be disassembled, or 0 to get all of them
+ @buffer: buffer filled in by this API.
 
  @return: true if this API successfully decode 1 instruction,
  or false otherwise.
@@ -769,8 +796,8 @@ cs_insn * CAPSTONE_API cs_malloc(csh handle);
 */
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_disasm_iter(csh handle,
-	const uint8_t **code, size_t *size,
-	uint64_t *address, cs_insn *insn);
+        const uint8_t **code, size_t *size,
+        uint64_t *address, cs_buffer *buffer);
 
 /**
  Return friendly name of register in a string.

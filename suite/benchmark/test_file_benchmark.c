@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {
     csh handle = 0;
-    cs_insn *insn = NULL;
+    cs_buffer *buffer = NULL;
     int ret = 0;
     const uint8_t *code_iter = NULL;
     size_t code_len_iter = 0;
@@ -31,8 +31,8 @@ int main(int argc, char* argv[])
         goto leave;
     }
 
-    insn = cs_malloc(handle);
-    if (!insn)
+    buffer = cs_buffer_new(0);
+    if (!buffer)
     {
         fputs("Failed to allocate memory\n", stderr);
         ret = 1;
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
                 &code_iter,
                 &code_len_iter,
                 &ip,
-                insn
+                buffer
             ))
             {
                 ++code_iter;
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
     );
 
 leave:
-    if (insn) cs_free(insn, 1);
+    if (buffer) cs_buffer_free(buffer);
     if (handle) cs_close(&handle);
     if (code) free(code);
     return ret;

@@ -43,6 +43,7 @@ EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT DriverObject,
 // Hello, Capstone!
 static NTSTATUS cs_driver_hello() {
   csh handle;
+  cs_buffer *buffer;
   cs_insn *insn;
   size_t count;
   KFLOATING_SAVE float_save;
@@ -69,16 +70,18 @@ static NTSTATUS cs_driver_hello() {
     goto exit;
   }
 
+  buffer = cs_buffer_new(0);
   count = cs_disasm(handle, (uint8_t *)&cs_driver_hello, 0x80,
-                    (uint64_t)&cs_driver_hello, 0, &insn);
+                    (uint64_t)&cs_driver_hello, 0, buffer);
   if (count > 0) {
+    cs_insn *insn = buffer->insn;
     printf("cs_driver!cs_driver_hello:\n");
     for (size_t j = 0; j < count; j++) {
       printf("0x%p\t%s\t\t%s\n", (void *)(uintptr_t)insn[j].address,
              insn[j].mnemonic, insn[j].op_str);
     }
-    cs_free(insn, count);
   }
+  cs_buffer_free(buffer);
   cs_close(&handle);
 
 exit:;

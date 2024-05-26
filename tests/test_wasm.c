@@ -108,7 +108,7 @@ static void test()
 	};
 
 	uint64_t address = 0xffff;
-	cs_insn *insn;
+	cs_buffer *buffer;
 	size_t count;
 	int i;
 
@@ -121,9 +121,12 @@ static void test()
 
 		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
-		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, &insn);
+		buffer = cs_buffer_new(0);
+		count = cs_disasm(handle, platforms[i].code, platforms[i].size, address, 0, buffer);
 		if (count) {
 			size_t j;
+			cs_insn *insn = buffer->insn;
+
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
 			print_string_hex("Code: ", platforms[i].code, platforms[i].size);
@@ -134,9 +137,6 @@ static void test()
 				print_insn_detail(handle, &insn[j]);
 			}
 			printf("0x%" PRIx64 ":\n", insn[j-1].address + insn[j-1].size);
-
-			// free memory allocated by cs_disasm()
-			cs_free(insn, count);
 		} else {
 			printf("****************\n");
 			printf("Platform: %s\n", platforms[i].comment);
@@ -147,6 +147,7 @@ static void test()
 
 		printf("\n");
 
+		cs_buffer_free(buffer);
 		cs_close(&handle);
 	}
 }

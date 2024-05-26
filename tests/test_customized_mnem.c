@@ -26,19 +26,20 @@ static void print_string_hex(unsigned char *str, size_t len)
 // Print one instruction
 static void print_insn(csh handle)
 {
-	cs_insn *insn;
+	cs_buffer *buffer;
 	size_t count;
 	
-	count = cs_disasm(handle, (const uint8_t *)X86_CODE32, sizeof(X86_CODE32) - 1, 0x1000, 1, &insn);
+	buffer = cs_buffer_new(0);
+	count = cs_disasm(handle, (const uint8_t *)X86_CODE32, sizeof(X86_CODE32) - 1, 0x1000, 1, buffer);
 	if (count) {
+		cs_insn *insn = buffer->insn;
 		print_string_hex((unsigned char *)X86_CODE32, sizeof(X86_CODE32) - 1);
 		printf("\t%s\t%s\n", insn[0].mnemonic, insn[0].op_str); 
-		// Free memory allocated by cs_disasm()
-		cs_free(insn, count);
 	} else {
 		printf("ERROR: Failed to disasm given code!\n");
 		abort();
 	}
+	cs_buffer_free(buffer);
 }
 
 static void test()

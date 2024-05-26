@@ -28,6 +28,12 @@ cdef extern from "<capstone/capstone.h>":
         bool usesAliasDetails;
         cs_detail *detail
 
+    ctypedef struct cs_buffer:
+        void *private_data;
+        cs_insn *insn;
+        size_t capacity;
+        size_t count;
+
     ctypedef enum cs_err:
         pass
 
@@ -44,15 +50,23 @@ cdef extern from "<capstone/capstone.h>":
 
     cs_err cs_errno(csh handle)
 
+    cs_buffer * cs_buffer_new(size_t capacity)
+
+    void cs_buffer_free(cs_buffer *buffer)
+
+    void cs_buffer_clear(cs_buffer *buffer)
+
+    bool cs_buffer_reserve_exact(cs_buffer *buffer, size_t capacity)
+
+    bool cs_buffer_reserve(cs_buffer *buffer, size_t additional)
+
     size_t cs_disasm(csh handle,
         const uint8_t *code, size_t code_size,
         uint64_t address,
         size_t count,
-        cs_insn **insn)
+        cs_buffer *buffer)
 
     cs_err cs_option(csh handle, cs_opt_type type, size_t value)
-
-    void cs_free(cs_insn *insn, size_t count)
 
     const char *cs_reg_name(csh handle, unsigned int reg_id)
 

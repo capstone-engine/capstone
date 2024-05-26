@@ -13,6 +13,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	int size_part, size_byte;
 	int i, count;
 	unsigned char *code;
+	cs_buffer *buffer;
 	cs_insn *insn;
 	char tmp[MAXMEM], tmp_mc[MAXMEM], origin[MAXMEM], tmp_noreg[MAXMEM];
 	char **offset_opcode;
@@ -41,7 +42,9 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	}
 
 	((struct cs_struct *)(uintptr_t)*handle)->PrintBranchImmNotAsAddress = true;
-	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
+	buffer = cs_buffer_new(0);
+	count = cs_disasm(*handle, code, size_byte, offset, 0, buffer);
+	insn = buffer->insn;
 	if (count == 0) {
 		fprintf(stderr, "[  ERROR   ] --- %s --- Failed to disassemble given code!\n", list_part[0]);
 		free_strs(list_part, size_part);
@@ -85,11 +88,8 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	// and laeds to wrong results.
 	cs_arch arch = ((struct cs_struct *)(uintptr_t)*handle)->arch;
 	if (arch != CS_ARCH_ARM) {
-		if (insn->detail) {
-			free(insn->detail);
-		}
-		free(insn);
-		cs_disasm(*handle, code, size_byte, offset, 0, &insn);
+		cs_disasm(*handle, code, size_byte, offset, 0, buffer);
+		insn = buffer->insn;
 
 		strcpy(tmp_noreg, insn[0].mnemonic);
 		if (strlen(insn[0].op_str) > 0) {
@@ -107,7 +107,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 			free_strs(offset_opcode, size_offset_opcode);
 			free_strs(list_byte, size_byte);
 			free(code);
-			cs_free(insn, count);
+			cs_buffer_free(buffer);
 			_fail(__FILE__, __LINE__);
 		}
 	} else if (strcmp(tmp, tmp_mc)) {
@@ -116,7 +116,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		free_strs(offset_opcode, size_offset_opcode);
 		free_strs(list_byte, size_byte);
 		free(code);
-		cs_free(insn, count);
+		cs_buffer_free(buffer);
 		_fail(__FILE__, __LINE__);
 	}
 
@@ -124,7 +124,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	free_strs(offset_opcode, size_offset_opcode);
 	free_strs(list_byte, size_byte);
 	free(code);
-	cs_free(insn, count);
+	cs_buffer_free(buffer);
 }
 
 int get_value(single_dict d[], unsigned int size, const char *str)
@@ -217,6 +217,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	int size_part, size_byte, size_part_issue_result;
 	int i, count, j;
 	unsigned char *code;
+	cs_buffer *buffer;
 	cs_insn *insn;
 	char *cs_result, *tmp, *p;
 	char **offset_opcode;
@@ -243,7 +244,9 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		code[i] = (unsigned char)strtol(list_byte[i], NULL, 16);
 	}
 
-	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
+	buffer = cs_buffer_new(0);
+	count = cs_disasm(*handle, code, size_byte, offset, 0, buffer);
+	insn = buffer->insn;
 	free_strs(list_byte, size_byte);
 	free(code);
 	for (i = 0; i < count; ++i) {
@@ -285,7 +288,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 
 		if ((strstr(cs_result, tmptmp)) == NULL) {
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" not in \"%s\"\n", list_part[0], list_part_issue_result[i], cs_result);
-			cs_free(insn, count);
+			cs_buffer_free(buffer);
 			free_strs(list_part, size_part);
 			free(cs_result);
 			//	free_strs(list_part_cs_result, size_part_cs_result);
@@ -296,7 +299,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		free(tmptmp);
 	}
 
-	cs_free(insn, count);
+	cs_buffer_free(buffer);
 	free_strs(list_part, size_part);
 	free(cs_result);
 	//	free_strs(list_part_cs_result, size_part_cs_result);

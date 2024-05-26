@@ -144,6 +144,7 @@ int main(int argc, char **argv)
 
   // Disassemble
   csh handle;
+  cs_buffer *buffer;
   cs_insn *all_insn;
   cs_detail *detail;
   cs_err err;
@@ -166,8 +167,10 @@ int main(int argc, char **argv)
 
   cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
+  buffer = cs_buffer_new(0);
   uint64_t address = 0x1000;
-  size_t count = cs_disasm(handle, buf_ptr, buf_ptr_size, address, 0, &all_insn);
+  size_t count = cs_disasm(handle, buf_ptr, buf_ptr_size, address, 0, buffer);
+  all_insn = buffer->insn;
 
   if (count) {
     size_t j;
@@ -208,7 +211,6 @@ int main(int argc, char **argv)
       }
     }
     printf("0x%"PRIx64":\n", all_insn[j-1].address + all_insn[j-1].size);
-    cs_free(all_insn, count);
   } else {
     printf("ERROR: Failed to disasm given code!\n");
   }
@@ -216,6 +218,7 @@ int main(int argc, char **argv)
   printf("\n");
 
   free(buf);
+  cs_buffer_free(buffer);
   cs_close(&handle);
 
   return 0;

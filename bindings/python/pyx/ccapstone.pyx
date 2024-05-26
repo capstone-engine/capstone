@@ -311,11 +311,11 @@ cdef class Cs(object):
 
     # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, addr, count=0):
-        cdef cc.cs_insn *allinsn
-
-        cdef res = cc.cs_disasm(self._csh, code, len(code), addr, count, &allinsn)
+        buffer = cc.cs_buffer_new(0)
+        cdef res = cc.cs_disasm(self._csh, code, len(code), addr, count, buffer)
         detail = self._cs.detail
         arch = self._cs.arch
+        allinsn = buffer.insn
 
         try:
             for i from 0 <= i < res:
@@ -328,7 +328,7 @@ cdef class Cs(object):
                 dummy._csh = self._csh
                 yield dummy
         finally:
-            cc.cs_free(allinsn, res)
+            cc.cs_buffer_free(buffer)
 
 
     # Light function to disassemble binary. This is about 20% faster than disasm() because
@@ -336,20 +336,20 @@ cdef class Cs(object):
     # rather than CsInsn objects.
     def disasm_lite(self, code, addr, count=0):
         # TODO: don't need detail, so we might turn off detail, then turn on again when done
-        cdef cc.cs_insn *allinsn
 
         if _diet:
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(capstone.CS_ERR_DIET)
 
-        cdef res = cc.cs_disasm(self._csh, code, len(code), addr, count, &allinsn)
+        buffer = cc.cs_buffer_new(0)
+        cdef res = cc.cs_disasm(self._csh, code, len(code), addr, count, buffer)
 
         try:
             for i from 0 <= i < res:
-                insn = allinsn[i]
+                insn = buffer.insn[i]
                 yield (insn.address, insn.size, insn.mnemonic, insn.op_str)
         finally:
-            cc.cs_free(allinsn, res)
+            cc.cs_buffer_free(buffer)
 
 
 # print out debugging info

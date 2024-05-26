@@ -179,7 +179,7 @@ int LLVMFuzzerReturnOneInput(const uint8_t *Data, size_t Size, char * AssemblyTe
 
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     csh handle;
-    cs_insn *insn;
+    cs_buffer *buffer;
     cs_err err;
     const uint8_t **Datap = &Data;
     size_t * Sizep = &Size;
@@ -216,11 +216,12 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
         return 0;
     }
 
-    insn = cs_malloc(handle);
+    buffer = cs_buffer_new(1);
     Data++;
     Size--;
-    assert(insn);
-        if (cs_disasm_iter(handle, Datap, Sizep, &address, insn)) {
+    assert(buffer);
+        if (cs_disasm_iter(handle, Datap, Sizep, &address, buffer)) {
+            cs_insn *insn = buffer->insn;
             snprintf(CapstoneAssemblyText, 80, "\t%s\t%s", insn->mnemonic, insn->op_str);
             if (strcmp(CapstoneAssemblyText, LLVMAssemblyText) != 0) {
                 printf("capstone %s != llvm %s", CapstoneAssemblyText, LLVMAssemblyText);
@@ -230,7 +231,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
             printf("capstone failed with llvm %s", LLVMAssemblyText);
             abort();
         }
-    cs_free(insn, 1);
+    cs_buffer_free(buffer);
     cs_close(&handle);
 
     return 0;

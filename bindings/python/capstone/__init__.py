@@ -503,6 +503,14 @@ class _cs_insn(ctypes.Structure):
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
+class _cs_buffer(ctypes.Structure):
+    _fields_ = (
+        ('private', ctypes.c_void_p),
+        ('insn', ctypes.POINTER(_cs_insn)),
+        ('capacity', ctypes.c_size_t),
+        ('count', ctypes.c_size_t),
+    )
+
 # callback for SKIPDATA option
 CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, ctypes.c_size_t, ctypes.c_void_p)
 
@@ -525,11 +533,12 @@ def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).argtypes = argtypes
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_size_t))
+_setup_prototype(_cs, "cs_buffer_new", ctypes.POINTER(_cs_buffer), ctypes.c_size_t)
+_setup_prototype(_cs, "cs_buffer_free", None, ctypes.POINTER(_cs_buffer))
 _setup_prototype(_cs, "cs_disasm", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
-        ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(_cs_insn)))
+        ctypes.c_uint64, ctypes.c_size_t, ctypes.POINTER(_cs_buffer))
 _setup_prototype(_cs, "cs_disasm_iter", ctypes.c_bool, ctypes.c_size_t, ctypes.POINTER(ctypes.POINTER(ctypes.c_char)), ctypes.POINTER(ctypes.c_size_t), \
-                 ctypes.POINTER(ctypes.c_uint64), ctypes.POINTER(_cs_insn))
-_setup_prototype(_cs, "cs_free", None, ctypes.c_void_p, ctypes.c_size_t)
+                         ctypes.POINTER(ctypes.c_uint64), ctypes.POINTER(_cs_buffer))
 _setup_prototype(_cs, "cs_close", ctypes.c_int, ctypes.POINTER(ctypes.c_size_t))
 _setup_prototype(_cs, "cs_reg_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
 _setup_prototype(_cs, "cs_insn_name", ctypes.c_char_p, ctypes.c_size_t, ctypes.c_uint)
@@ -599,20 +608,21 @@ def cs_disasm_quick(arch, mode, code, offset, count=0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
-    all_insn = ctypes.POINTER(_cs_insn)()
-    res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
-    if res > 0:
-        try:
+    buffer = _cs.cs_buffer_new(0)
+    try:
+        res = _cs.cs_disasm(csh, code, len(code), offset, count, buffer)
+        all_insn = buffer.contents.insn
+        if res > 0:
             for i in range(res):
                 yield CsInsn(_dummy_cs(csh, arch), all_insn[i])
-        finally:
-            _cs.cs_free(all_insn, res)
-    else:
-        status = _cs.cs_errno(csh)
-        if status != CS_ERR_OK:
-            raise CsError(status)
-        return
-        yield
+        else:
+            status = _cs.cs_errno(csh)
+            if status != CS_ERR_OK:
+                raise CsError(status)
+            return
+            yield
+    finally:
+        _cs.cs_buffer_free(buffer)
 
     status = _cs.cs_close(ctypes.byref(csh))
     if status != CS_ERR_OK:
@@ -639,21 +649,22 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
-    all_insn = ctypes.POINTER(_cs_insn)()
-    res = _cs.cs_disasm(csh, code, len(code), offset, count, ctypes.byref(all_insn))
-    if res > 0:
-        try:
+    buffer = _cs.cs_buffer_new(0)
+    res = _cs.cs_disasm(csh, code, len(code), offset, count, buffer)
+    all_insn = buffer.contents.insn
+    try:
+        if res > 0:
             for i in range(res):
                 insn = all_insn[i]
                 yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
-        finally:
-            _cs.cs_free(all_insn, res)
-    else:
-        status = _cs.cs_errno(csh)
-        if status != CS_ERR_OK:
-            raise CsError(status)
-        return
-        yield
+        else:
+            status = _cs.cs_errno(csh)
+            if status != CS_ERR_OK:
+                raise CsError(status)
+            return
+            yield
+    finally:
+        _cs.cs_buffer_free(buffer)
 
     status = _cs.cs_close(ctypes.byref(csh))
     if status != CS_ERR_OK:
@@ -1214,7 +1225,6 @@ class Cs(object):
 
     # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count=0):
-        all_insn = ctypes.POINTER(_cs_insn)()
         '''if not _python2:
             print(code)
             code = code.encode()
@@ -1226,19 +1236,21 @@ class Cs(object):
             code = ctypes.byref(ctypes.c_char.from_buffer(view))
         elif not isinstance(code, bytes):
             code = view.tobytes()
-        res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
-        if res > 0:
-            try:
+        buffer = _cs.cs_buffer_new(0)
+        res = _cs.cs_disasm(self.csh, code, size, offset, count, buffer)
+        all_insn = buffer.contents.insn
+        try:
+            if res > 0:
                 for i in range(res):
                     yield CsInsn(self, all_insn[i])
-            finally:
-                _cs.cs_free(all_insn, res)
-        else:
-            status = _cs.cs_errno(self.csh)
-            if status != CS_ERR_OK:
-                raise CsError(status)
-            return
-            yield
+            else:
+                status = _cs.cs_errno(self.csh)
+                if status != CS_ERR_OK:
+                    raise CsError(status)
+                return
+                yield
+        finally:
+            _cs.cs_buffer_free(buffer)
 
     # This function matches the cs_disasm_iter implementation which
     # *should* be much faster via the C API due to pre-allocating
@@ -1264,8 +1276,13 @@ class Cs(object):
         # the typical auto conversion, so we have to cast it here.
         code = ctypes.cast(code, ctypes.POINTER(ctypes.c_char))
         address = ctypes.c_uint64(offset)
-        while _cs.cs_disasm_iter(self.csh, ctypes.byref(code), ctypes.byref(size), ctypes.byref(address), ctypes.byref(insn)):
-            yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
+        buffer = _cs.cs_buffer_new(0)
+        try:
+            while _cs.cs_disasm_iter(self.csh, ctypes.byref(code), ctypes.byref(size), ctypes.byref(address), buffer):
+                insn = buffer.contents.insn[0]
+                yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
+        finally:
+            _cs.cs_buffer_free(buffer)
 
     # Light function to disassemble binary. This is about 20% faster than disasm() because
     # unlike disasm(), disasm_lite() only return tuples of (address, size, mnemonic, op_str),
@@ -1275,7 +1292,6 @@ class Cs(object):
             # Diet engine cannot provide @mnemonic & @op_str
             raise CsError(CS_ERR_DIET)
 
-        all_insn = ctypes.POINTER(_cs_insn)()
         size = len(code)
         # Pass a bytearray by reference
         view = memoryview(code)
@@ -1283,20 +1299,22 @@ class Cs(object):
             code = ctypes.byref(ctypes.c_char.from_buffer(view))
         elif not isinstance(code, bytes):
             code = view.tobytes()
-        res = _cs.cs_disasm(self.csh, code, size, offset, count, ctypes.byref(all_insn))
-        if res > 0:
-            try:
+        buffer = _cs.cs_buffer_new(0)
+        res = _cs.cs_disasm(self.csh, code, size, offset, count, buffer)
+        all_insn = buffer.contents.insn
+        try:
+            if res > 0:
                 for i in range(res):
                     insn = all_insn[i]
                     yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
-            finally:
-                _cs.cs_free(all_insn, res)
-        else:
-            status = _cs.cs_errno(self.csh)
-            if status != CS_ERR_OK:
-                raise CsError(status)
-            return
-            yield
+            else:
+                status = _cs.cs_errno(self.csh)
+                if status != CS_ERR_OK:
+                    raise CsError(status)
+                return
+                yield
+        finally:
+            _cs.cs_buffer_free(buffer)
 
 
 # print out debugging info

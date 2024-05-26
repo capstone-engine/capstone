@@ -57,7 +57,7 @@ static void test()
 
 	csh handle;
 	uint64_t address;
-	cs_insn *insn;
+	cs_buffer *buffer;
 	int i;
 	cs_err err;
 	const uint8_t *code;
@@ -76,16 +76,16 @@ static void test()
 
 	start = clock();
 	int maxcount = 10000000;
-	insn = cs_malloc(handle);
+	buffer = cs_buffer_new(1);
 	for (i = 0; i < maxcount;) {
 		code = (const uint8_t *)X86_CODE32;
 		address = 0x1000;
 		size = sizeof(X86_CODE32) - 1;
-		while(cs_disasm_iter(handle, &code, &size, &address, insn)) {
+		while(cs_disasm_iter(handle, &code, &size, &address, buffer)) {
 			i++;
 		}
 	}
-	cs_free(insn, 1);
+	cs_buffer_free(buffer);
 	cs_close(&handle);
 	end = clock();
 	timeUsed = (double)(end - start) / CLOCKS_PER_SEC;

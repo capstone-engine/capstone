@@ -1094,6 +1094,94 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 	return arch_configs[handle->arch].arch_option(handle, type, value);
 }
 
+CAPSTONE_EXPORT
+cs_buffer * CAPSTONE_API cs_buffer_new(size_t capacity) {
+	cs_buffer *buffer = cs_mem_malloc(sizeof(cs_buffer));
+	if (!buffer) {
+		return NULL;
+	}
+	// NOTE: private is not used right now
+	buffer->private = NULL;
+	buffer->count = 0;
+	buffer->capacity = capacity ? capacity : 64;
+	buffer->insn = cs_mem_calloc(sizeof(cs_insn), buffer->capacity);
+	if (!buffer->insn) {
+		cs_mem_free(buffer);
+		return NULL;
+	}
+	return buffer;
+}
+
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_buffer_free(cs_buffer *buffer) {
+	for (size_t i = 0; i < buffer->capacity; ++i) {
+		// can be allocated in cs_disasm()
+		if (buffer->insn[i].detail) {
+			cs_mem_free(buffer->insn[i].detail);
+		}
+	}
+	cs_mem_free(buffer->insn);
+	cs_mem_free(buffer);
+}
+
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_buffer_clear(cs_buffer *buffer) {
+	buffer->count = 0;
+}
+
+CAPSTONE_EXPORT
+bool CAPSTONE_API cs_buffer_reserve_exact(cs_buffer *buffer, size_t required) {
+	cs_insn *insn;
+
+	// free is required if user requested buffer shrink
+	// details can be allocated by previous cs_disasm() calls
+	if (required < buffer->capacity) {
+		// set count to a required capacity because we will free
+		// instruction details in a loop bellow and in case realloc() will fail
+		if (required < buffer->count) {
+			buffer->count = required;
+		}
+
+		for (size_t i = required; i < buffer->capacity; ++i) {
+			if (buffer->insn[i].detail) {
+				cs_mem_free(buffer->insn[i].detail);
+			}
+		}
+	}
+
+	insn = cs_mem_realloc(buffer->insn, required * sizeof(cs_insn));
+	if (!insn) {
+		return false;
+	}
+
+	// set to NULL all pointers in cs_insn if buffer grows in size
+	if (required > buffer->capacity) {
+		size_t diff = required - buffer->capacity;
+		memset(&insn[buffer->capacity], 0, diff * sizeof(cs_insn));
+	}
+
+	buffer->insn = insn;
+	buffer->capacity = required;
+
+	return true;
+}
+
+CAPSTONE_EXPORT
+bool CAPSTONE_API cs_buffer_reserve(cs_buffer *buffer, size_t additional) {
+	size_t required = buffer->capacity + additional;
+	size_t capacity = buffer->capacity * 8 / 5; // * 1.6 ~ golden ratio
+	// increase capacity by 1.6 factor if the requested capacity change is too small
+	if (capacity < required) {
+		// use requested capacity change if it is more then 1.6 ratio increase
+		capacity = required;
+	}
+	// make sure there is some capacity to work with
+	if (capacity < 16) {
+		capacity = 16;
+	}
+	return cs_buffer_reserve_exact(buffer, capacity);
+}
+
 // generate @op_str for data instruction of SKIPDATA
 #ifndef CAPSTONE_DIET
 static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
@@ -1126,29 +1214,20 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 }
 #endif
 
-// dynamically allocate memory to contain disasm insn
-// NOTE: caller must free() the allocated memory itself to avoid memory leaking
 CAPSTONE_EXPORT
-size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *code, size_t code_size,
+		uint64_t address, size_t count, cs_buffer *buffer)
 {
-	struct cs_struct *handle;
-	MCInst mci;
-	uint16_t insn_size;
-	size_t c = 0, i;
-	unsigned int f = 0;	// index of the next instruction in the cache
-	cs_insn *insn_cache;	// cache contains disassembled instructions
-	void *total = NULL;
-	size_t total_size = 0;	// total size of output buffer containing all insns
-	bool r;
-	void *tmp;
-	size_t skipdata_bytes;
-	uint64_t offset_org; // save all the original info of the buffer
-	size_t size_org;
-	const uint8_t *buffer_org;
-	unsigned int cache_size = INSN_CACHE_SIZE;
+	cs_struct *handle = (cs_struct *) (uintptr_t) ud;
+	const uint8_t *code_org; // save all the original info of the buffer
+	size_t code_size_org;
+	uint64_t address_org;
 	size_t next_offset;
+	uint16_t insn_size;
+	cs_insn *insn;
+	MCInst mci;
+	size_t skipdata_bytes;
 
-	handle = (struct cs_struct *)(uintptr_t)ud;
 	if (!handle) {
 		// FIXME: how to handle this case:
 		// handle->errnum = CS_ERR_HANDLE;
@@ -1157,66 +1236,60 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 	handle->errnum = CS_ERR_OK;
 
-#ifdef CAPSTONE_USE_SYS_DYN_MEM
-	if (count > 0 && count <= INSN_CACHE_SIZE)
-		cache_size = (unsigned int) count;
-#endif
+	cs_buffer_clear(buffer);
 
 	// save the original offset for SKIPDATA
-	buffer_org = buffer;
-	offset_org = offset;
-	size_org = size;
+	code_org = code;
+	code_size_org = code_size;
+	address_org = address;
 
-	total_size = sizeof(cs_insn) * cache_size;
-	total = cs_mem_calloc(sizeof(cs_insn), cache_size);
-	if (total == NULL) {
-		// insufficient memory
-		handle->errnum = CS_ERR_MEM;
-		return 0;
-	}
+	for (; code_size && (count == 0 || buffer->count < count); ++buffer->count) {
+		if (buffer->capacity <= buffer->count && !cs_buffer_reserve(buffer, code_size / 4)) {
+			// insufficient memory
+			handle->errnum = CS_ERR_MEM;
+			return 0;
+		}
 
-	insn_cache = total;
-
-	while (size > 0) {
 		MCInst_Init(&mci);
 		mci.csh = handle;
-
+		mci.flat_insn = insn = &buffer->insn[buffer->count];
 		// relative branches need to know the address & size of current insn
-		mci.address = offset;
+		mci.address = address;
 
 		if (handle->detail_opt) {
-			// allocate memory for @detail pointer
-			insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
-		} else {
-			insn_cache->detail = NULL;
+			if (!insn->detail) {
+				insn->detail = cs_mem_malloc(sizeof(cs_detail));
+			}
+		} else if (insn->detail) {
+			cs_mem_free(insn->detail);
+			insn->detail = NULL;
 		}
 
 		// save all the information for non-detailed mode
-		mci.flat_insn = insn_cache;
-		mci.flat_insn->address = offset;
+		insn->address = address;
 #ifdef CAPSTONE_DIET
 		// zero out mnemonic & op_str
-		mci.flat_insn->mnemonic[0] = '\0';
-		mci.flat_insn->op_str[0] = '\0';
+		insn->mnemonic[0] = '\0';
+		insn->op_str[0] = '\0';
 #endif
 
-		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
-		if (r) {
+		if (handle->disasm(ud, code, code_size, &mci, &insn_size, address,
+				handle->getinsn_info))
+		{
 			SStream ss;
 			SStream_Init(&ss);
 
-			mci.flat_insn->size = insn_size;
+			insn->size = insn_size;
 
 			// map internal instruction opcode to public insn ID
-
-			handle->insn_id(handle, insn_cache, mci.Opcode);
-
+			handle->insn_id(handle, insn, mci.Opcode);
 			handle->printer(&mci, &ss, handle->printer_info);
-			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
+
+			fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, code);
 
 			// adjust for pseudo opcode (X86)
-			if (handle->arch == CS_ARCH_X86 && insn_cache->id != X86_INS_VCMP)
-				insn_cache->id += mci.popcode_adjust;
+			if (handle->arch == CS_ARCH_X86 && insn->id != X86_INS_VCMP)
+				insn->id += mci.popcode_adjust;
 
 			next_offset = insn_size;
 		} else	{
@@ -1224,18 +1297,19 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 			// free memory of @detail pointer
 			if (handle->detail_opt) {
-				cs_mem_free(insn_cache->detail);
+				cs_mem_free(insn->detail);
 			}
+			insn->detail = NULL;
 
 			// if there is no request to skip data, or remaining data is too small,
 			// then bail out
-			if (!handle->skipdata || handle->skipdata_size > size)
+			if (!handle->skipdata || handle->skipdata_size > code_size)
 				break;
 
 			if (handle->skipdata_setup.callback) {
-				skipdata_bytes = handle->skipdata_setup.callback(buffer_org, size_org,
-						(size_t)(offset - offset_org), handle->skipdata_setup.user_data);
-				if (skipdata_bytes > size)
+				skipdata_bytes = handle->skipdata_setup.callback(code_org, code_size_org,
+						(size_t)(address - address_org), handle->skipdata_setup.user_data);
+				if (skipdata_bytes > code_size)
 					// remaining data is not enough
 					break;
 
@@ -1246,228 +1320,42 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 				skipdata_bytes = handle->skipdata_size;
 
 			// we have to skip some amount of data, depending on arch & mode
-			insn_cache->id = 0;	// invalid ID for this "data" instruction
-			insn_cache->address = offset;
-			insn_cache->size = (uint16_t)skipdata_bytes;
-			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
+			insn->id = 0;	// invalid ID for this "data" instruction
+			insn->address = address;
+			insn->size = (uint16_t) skipdata_bytes;
+			memcpy(insn->bytes, code, skipdata_bytes);
 #ifdef CAPSTONE_DIET
-			insn_cache->mnemonic[0] = '\0';
-			insn_cache->op_str[0] = '\0';
+			insn->mnemonic[0] = '\0';
+			insn->op_str[0] = '\0';
 #else
-			strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
-					sizeof(insn_cache->mnemonic) - 1);
-			skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
+			strncpy(insn->mnemonic, handle->skipdata_setup.mnemonic,
+					sizeof(insn->mnemonic) - 1);
+			skipdata_opstr(insn->op_str, code, skipdata_bytes);
 #endif
-			insn_cache->detail = NULL;
 
 			next_offset = skipdata_bytes;
 		}
 
-		// one more instruction entering the cache
-		f++;
-
-		// one more instruction disassembled
-		c++;
-		if (count > 0 && c == count)
-			// already got requested number of instructions
-			break;
-
-		if (f == cache_size) {
-			// full cache, so expand the cache to contain incoming insns
-			cache_size = cache_size * 8 / 5; // * 1.6 ~ golden ratio
-			total_size += (sizeof(cs_insn) * cache_size);
-			tmp = cs_mem_realloc(total, total_size);
-			if (tmp == NULL) {	// insufficient memory
-				if (handle->detail_opt) {
-					insn_cache = (cs_insn *)total;
-					for (i = 0; i < c; i++, insn_cache++)
-						cs_mem_free(insn_cache->detail);
-				}
-
-				cs_mem_free(total);
-				*insn = NULL;
-				handle->errnum = CS_ERR_MEM;
-				return 0;
-			}
-
-			total = tmp;
-			// continue to fill in the cache after the last instruction
-			insn_cache = (cs_insn *)((char *)total + sizeof(cs_insn) * c);
-
-			// reset f back to 0, so we fill in the cache from beginning
-			f = 0;
-		} else
-			insn_cache++;
-
-		buffer += next_offset;
-		size -= next_offset;
-		offset += next_offset;
+		code += next_offset;
+		code_size -= next_offset;
+		address += next_offset;
 	}
 
-	if (!c) {
-		// we did not disassemble any instruction
-		cs_mem_free(total);
-		total = NULL;
-	} else if (f != cache_size) {
-		// total did not fully use the last cache, so downsize it
-		tmp = cs_mem_realloc(total, total_size - (cache_size - f) * sizeof(*insn_cache));
-		if (tmp == NULL) {	// insufficient memory
-			// free all detail pointers
-			if (handle->detail_opt) {
-				insn_cache = (cs_insn *)total;
-				for (i = 0; i < c; i++, insn_cache++)
-					cs_mem_free(insn_cache->detail);
-			}
-
-			cs_mem_free(total);
-			*insn = NULL;
-
-			handle->errnum = CS_ERR_MEM;
-			return 0;
-		}
-
-		total = tmp;
-	}
-
-	*insn = total;
-
-	return c;
+	return buffer->count;
 }
 
-CAPSTONE_EXPORT
-void CAPSTONE_API cs_free(cs_insn *insn, size_t count)
-{
-	size_t i;
-
-	// free all detail pointers
-	for (i = 0; i < count; i++)
-		cs_mem_free(insn[i].detail);
-
-	// then free pointer to cs_insn array
-	cs_mem_free(insn);
-}
-
-CAPSTONE_EXPORT
-cs_insn * CAPSTONE_API cs_malloc(csh ud)
-{
-	cs_insn *insn;
-	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
-
-	insn = cs_mem_malloc(sizeof(cs_insn));
-	if (!insn) {
-		// insufficient memory
-		handle->errnum = CS_ERR_MEM;
-		return NULL;
-	} else {
-		if (handle->detail_opt) {
-			// allocate memory for @detail pointer
-			insn->detail = cs_mem_malloc(sizeof(cs_detail));
-			if (insn->detail == NULL) {	// insufficient memory
-				cs_mem_free(insn);
-				handle->errnum = CS_ERR_MEM;
-				return NULL;
-			}
-		} else
-			insn->detail = NULL;
-	}
-
-	return insn;
-}
-
-// iterator for instruction "single-stepping"
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
-		uint64_t *address, cs_insn *insn)
+                uint64_t *address, cs_buffer *buffer)
 {
-	struct cs_struct *handle;
-	uint16_t insn_size;
-	MCInst mci;
-	bool r;
-
-	handle = (struct cs_struct *)(uintptr_t)ud;
-	if (!handle) {
-		return false;
+	bool ret = cs_disasm(ud, *code, *size, *address, 1, buffer);
+	if (ret) {
+		cs_insn *insn = &buffer->insn[0];
+		*code += insn->size;
+		*size -= insn->size;
+		*address += insn->size;
 	}
-
-	handle->errnum = CS_ERR_OK;
-
-	MCInst_Init(&mci);
-	mci.csh = handle;
-
-	// relative branches need to know the address & size of current insn
-	mci.address = *address;
-
-	// save all the information for non-detailed mode
-	mci.flat_insn = insn;
-	mci.flat_insn->address = *address;
-#ifdef CAPSTONE_DIET
-	// zero out mnemonic & op_str
-	mci.flat_insn->mnemonic[0] = '\0';
-	mci.flat_insn->op_str[0] = '\0';
-#endif
-
-	r = handle->disasm(ud, *code, *size, &mci, &insn_size, *address, handle->getinsn_info);
-	if (r) {
-		SStream ss;
-		SStream_Init(&ss);
-
-		mci.flat_insn->size = insn_size;
-
-		// map internal instruction opcode to public insn ID
-		handle->insn_id(handle, insn, mci.Opcode);
-
-		handle->printer(&mci, &ss, handle->printer_info);
-
-		fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, *code);
-
-		// adjust for pseudo opcode (X86)
-		if (handle->arch == CS_ARCH_X86)
-			insn->id += mci.popcode_adjust;
-
-		*code += insn_size;
-		*size -= insn_size;
-		*address += insn_size;
-	} else { 	// encounter a broken instruction
-		size_t skipdata_bytes;
-
-		// if there is no request to skip data, or remaining data is too small,
-		// then bail out
-		if (!handle->skipdata || handle->skipdata_size > *size)
-			return false;
-
-		if (handle->skipdata_setup.callback) {
-			skipdata_bytes = handle->skipdata_setup.callback(*code, *size,
-					0, handle->skipdata_setup.user_data);
-			if (skipdata_bytes > *size)
-				// remaining data is not enough
-				return false;
-
-			if (!skipdata_bytes)
-				// user requested not to skip data, so bail out
-				return false;
-		} else
-			skipdata_bytes = handle->skipdata_size;
-
-		// we have to skip some amount of data, depending on arch & mode
-		insn->id = 0;	// invalid ID for this "data" instruction
-		insn->address = *address;
-		insn->size = (uint16_t)skipdata_bytes;
-#ifdef CAPSTONE_DIET
-		insn->mnemonic[0] = '\0';
-		insn->op_str[0] = '\0';
-#else
-		memcpy(insn->bytes, *code, skipdata_bytes);
-		strncpy(insn->mnemonic, handle->skipdata_setup.mnemonic,
-				sizeof(insn->mnemonic) - 1);
-		skipdata_opstr(insn->op_str, *code, skipdata_bytes);
-#endif
-
-		*code += skipdata_bytes;
-		*size -= skipdata_bytes;
-		*address += skipdata_bytes;
-	}
-
-	return true;
+	return ret;
 }
 
 // return friendly name of register in a string
