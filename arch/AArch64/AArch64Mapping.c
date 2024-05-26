@@ -2209,7 +2209,7 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 	if (!detail_is_set(MI))
 		return;
 	if (Reg == AArch64_REG_ZA ||
-	    (Reg >= AArch64_REG_ZAB0 && Reg <= AArch64_REG_ZT0)) {
+	    (Reg >= AArch64_REG_ZAB0 && Reg < AArch64_REG_ZT0)) {
 		// A tile register should be treated as SME operand.
 		AArch64_set_detail_op_sme(MI, OpNum, AArch64_SME_MATRIX_TILE,
 					  sme_reg_to_vas(Reg));
