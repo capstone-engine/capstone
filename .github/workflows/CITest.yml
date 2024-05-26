@@ -130,12 +130,21 @@ jobs:
       run: |
         sh suite/run_invalid_cstool.sh
 
-    - name: cstest
+    - name: cstest (cmake)
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
         python suite/cstest/cstest_report.py -D -d suite/MC
         python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
         python suite/cstest/cstest_report.py -D -f tests/cs_details/issue.cs
+
+    - name: cstest (make)
+      if: startsWith(matrix.config.build-system, 'make')
+      run: |
+        cd suite/cstest && ./build_cstest.sh
+        python cstest_report.py -D -t build/cstest -d ../MC
+        python cstest_report.py -D -t build/cstest -f issues.cs
+        python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
+        cd ../../
 
     - name: verify python binding
       if: matrix.config.enable-asan == 'OFF'
