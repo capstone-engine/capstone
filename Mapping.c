@@ -235,6 +235,8 @@ const void *map_get_suppl_info(MCInst *MI, const insn_map *imap)
 
 	unsigned Opcode = MCInst_getOpcode(MI);
 	return &imap[Opcode].suppl_info;
+#else
+	return NULL;
 #endif // CAPSTONE_DIET
 }
 
