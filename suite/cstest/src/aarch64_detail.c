@@ -30,7 +30,7 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 			default:
 				break;
 			case AArch64_OP_REG:
-				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
+				add_str(&result, " ; operands[%u].type: REG = %s%s\n", i, cs_reg_name(*handle, op->reg), op->is_vreg ? " (vreg)" : "");
 			if (op->is_list_member) {
 				add_str(&result, " ; operands[%u].is_list_member: true\n", i);
 			}

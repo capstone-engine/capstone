@@ -30,7 +30,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 		default:
 			break;
 		case AArch64_OP_REG:
-			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+			printf("\t\toperands[%u].type: REG = %s%s\n", i, cs_reg_name(handle, op->reg), op->is_vreg ? " (vreg)" : "");
 			if (op->is_list_member) {
 				printf("\t\toperands[%u].is_list_member: true\n", i);
 			}

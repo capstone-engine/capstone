@@ -1449,6 +1449,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	}
 	case AArch64_OP_GROUP_VRegOperand: {
 		unsigned Reg = MCInst_getOpVal(MI, OpNum);
+		AArch64_get_detail_op(MI, 0)->is_vreg = true;
 		AArch64_set_detail_op_reg(MI, OpNum, Reg);
 		break;
 	}
@@ -1913,6 +1914,16 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		} else {
 			for (unsigned i = 0; i < NumRegs;
 			     ++i, Reg = getNextVectorRegister(Reg, Stride)) {
+				if (!(MCRegisterClass_contains(
+						MCRegisterInfo_getRegClass(
+							MI->MRI, AArch64_ZPRRegClassID),
+						Reg) ||
+					MCRegisterClass_contains(
+						MCRegisterInfo_getRegClass(
+							MI->MRI, AArch64_PPRRegClassID),
+						Reg))) {
+					AArch64_get_detail_op(MI, 0)->is_vreg = true;
+				}
 				AArch64_get_detail_op(MI, 0)->is_list_member =
 					true;
 				AArch64_get_detail_op(MI, 0)->vas = vas;
