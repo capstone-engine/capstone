@@ -45,7 +45,8 @@ jobs:
               python-arch: x64,
               python-version: '3.9',
               build-system: 'make',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              diet-build: 'OFF'
             }
           - {
               name: 'ubuntu-22.04 x64 python3.9 cmake',
@@ -54,7 +55,8 @@ jobs:
               python-arch: x64,
               python-version: '3.9',
               build-system: 'cmake',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              diet-build: 'OFF'
             }     
           - {
               name: 'ubuntu-22.04 x64 python3.11 cmake',
@@ -63,7 +65,8 @@ jobs:
               python-arch: x64,
               python-version: '3.11',
               build-system: 'cmake',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              diet-build: 'OFF'
             }
           - {
               name: 'ubuntu-22.04 x64 python3.11 ASAN',
@@ -72,7 +75,18 @@ jobs:
               python-arch: x64,
               python-version: '3.11',
               build-system: 'cmake',
-              enable-asan: 'ON'
+              enable-asan: 'ON',
+              diet-build: 'OFF'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 python3.11 DIET + ASAN',
+              os: ubuntu-latest,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.11',
+              build-system: 'cmake',
+              enable-asan: 'ON',
+              diet-build: 'ON'
             }
 
     steps:
@@ -103,13 +117,14 @@ jobs:
       if: startsWith(matrix.config.build-system, 'cmake')
       env:
         asan: ${{ matrix.config.enable-asan }}
+        diet_build: ${{ matrix.config.diet-build }}
       run: |
         mkdir build && cd build
         # build static library
         cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr ..
         cmake --build . --config Release
         # build shared library
-        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
+        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ..
         sudo cmake --build . --config Release --target install
         cp libcapstone.* ../
         cp libcapstone.* ../tests/
@@ -130,10 +145,14 @@ jobs:
       run: |
         sh suite/run_invalid_cstool.sh
 
-    - name: cstest (cmake)
+    - name: cstest (cmake) - MC regression
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
         python suite/cstest/cstest_report.py -D -d suite/MC
+
+    - name: cstest (cmake) - details
+      if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.diet-build, 'OFF')
+      run: |
         python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
         python suite/cstest/cstest_report.py -D -f tests/cs_details/issue.cs
 
