@@ -131,6 +131,7 @@ jobs:
         sh suite/run_invalid_cstool.sh
 
     - name: cstest
+      if: startsWith(matrix.config.build-system, 'cmake')
       run: |
         python suite/cstest/cstest_report.py -D -d suite/MC
         python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
