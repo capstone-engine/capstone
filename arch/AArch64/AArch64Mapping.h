@@ -76,6 +76,7 @@ void AArch64_insert_detail_op_float_at(MCInst *MI, unsigned index, double val,
 void AArch64_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Imm);
 void AArch64_insert_detail_op_sys(MCInst *MI, unsigned index, aarch64_sysop sys_op,
 			       aarch64_op_type type);
+void AArch64_insert_detail_op_sme(MCInst *MI, unsigned index, aarch64_op_sme sme_op);
 void AArch64_add_vas(MCInst *MI, const SStream *OS);
 
 #endif

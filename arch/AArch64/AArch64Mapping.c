@@ -472,6 +472,67 @@ static void add_non_alias_details(MCInst *MI)
 	}
 }
 
+#define ADD_ZA0_S \
+			{ aarch64_op_sme za0_op = { \
+				.type = AArch64_SME_OP_TILE, \
+			  .tile = AArch64_REG_ZAS0, \
+			  .slice_reg = AArch64_REG_INVALID, \
+				.slice_offset = { -1 }, \
+				.has_range_offset = false, \
+			  .is_vertical = false, \
+			}; \
+			AArch64_insert_detail_op_sme(MI, -1, za0_op); \
+			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			}
+#define ADD_ZA1_S \
+			{ aarch64_op_sme za1_op = { \
+				.type = AArch64_SME_OP_TILE, \
+			  .tile = AArch64_REG_ZAS1, \
+			  .slice_reg = AArch64_REG_INVALID, \
+				.slice_offset = { -1 }, \
+				.has_range_offset = false, \
+			  .is_vertical = false, \
+			}; \
+			AArch64_insert_detail_op_sme(MI, -1, za1_op); \
+			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			}
+#define ADD_ZA2_S \
+			{ aarch64_op_sme za2_op = { \
+				.type = AArch64_SME_OP_TILE, \
+			  .tile = AArch64_REG_ZAS2, \
+			  .slice_reg = AArch64_REG_INVALID, \
+				.slice_offset = { -1 }, \
+				.has_range_offset = false, \
+			  .is_vertical = false, \
+			}; \
+			AArch64_insert_detail_op_sme(MI, -1, za2_op); \
+			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			}
+#define ADD_ZA3_S \
+			{ aarch64_op_sme za3_op = { \
+				.type = AArch64_SME_OP_TILE, \
+			  .tile = AArch64_REG_ZAS3, \
+			  .slice_reg = AArch64_REG_INVALID, \
+				.slice_offset = { -1 }, \
+				.has_range_offset = false, \
+			  .is_vertical = false, \
+			}; \
+			AArch64_insert_detail_op_sme(MI, -1, za3_op); \
+			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			}
+#define ADD_ZA \
+			{ aarch64_op_sme za_op = \
+				{ \
+				.type = AArch64_SME_OP_TILE, \
+			  .tile = AArch64_REG_ZA, \
+			  .slice_reg = AArch64_REG_INVALID, \
+				.slice_offset = { -1 }, \
+				.has_range_offset = false, \
+			  .is_vertical = false, \
+			}; \
+			AArch64_insert_detail_op_sme(MI, -1, za_op); \
+			}
+
 static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 {
 	if (!detail_is_set(MI))
@@ -511,6 +572,132 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 			AArch64_get_detail_op(MI, -1)->reg;
 		AArch64_get_detail_op(MI, -1)->mem.disp = disp;
 		AArch64_get_detail(MI)->post_index = true;
+		break;
+	}
+	case AArch64_INS_ALIAS_GCSB:
+		// TODO
+		// Only CSYNC is defined in LLVM. So we need to add it.
+		//     /* 2825 */ "gcsb	dsync\0"
+		break;
+	case AArch64_INS_ALIAS_SMSTART:
+	case AArch64_INS_ALIAS_SMSTOP: {
+		const char *disp_off = NULL;
+		disp_off = strstr(OS->buffer, " za");
+		if (disp_off) {
+			aarch64_sysop sysop;
+			sysop.alias.svcr = AArch64_SVCR_SVCRZA;
+			sysop.sub_type = AArch64_OP_SVCR;
+			AArch64_insert_detail_op_sys(MI, -1, sysop,
+						  AArch64_OP_SYSALIAS);
+			return;
+		}
+		disp_off = strstr(OS->buffer, " sm");
+		if (disp_off) {
+			aarch64_sysop sysop;
+			sysop.alias.svcr = AArch64_SVCR_SVCRSM;
+			sysop.sub_type = AArch64_OP_SVCR;
+			AArch64_insert_detail_op_sys(MI, -1, sysop,
+						  AArch64_OP_SYSALIAS);
+			return;
+		}
+		break;
+	}
+	case AArch64_INS_ALIAS_ZERO: {
+		// It is ugly, but the hard coded search patterns do it for now.
+		const char *disp_off = NULL;
+
+		disp_off = strstr(OS->buffer, "{za}");
+		if (disp_off) {
+			ADD_ZA;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za1.h}");
+		if (disp_off) {
+			aarch64_op_sme op =
+				{
+				.type = AArch64_SME_OP_TILE,
+			  .tile = AArch64_REG_ZAH1,
+			  .slice_reg = AArch64_REG_INVALID,
+				.slice_offset = { -1 },
+				.has_range_offset = false,
+			  .is_vertical = false,
+			};
+			AArch64_insert_detail_op_sme(MI, -1, op);
+			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_H;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za0.s}");
+		if (disp_off) {
+			ADD_ZA0_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za1.s}");
+		if (disp_off) {
+			ADD_ZA1_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za2.s}");
+		if (disp_off) {
+			ADD_ZA2_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za3.s}");
+		if (disp_off) {
+			ADD_ZA3_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za0.s,za1.s}");
+		if (disp_off) {
+			ADD_ZA0_S;
+			ADD_ZA1_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za0.s,za3.s}");
+		if (disp_off) {
+			ADD_ZA0_S;
+			ADD_ZA3_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za1.s,za2.s}");
+		if (disp_off) {
+			ADD_ZA1_S;
+			ADD_ZA2_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za2.s,za3.s}");
+		if (disp_off) {
+			ADD_ZA2_S;
+			ADD_ZA3_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za0.s,za1.s,za2.s}");
+		if (disp_off) {
+			ADD_ZA0_S;
+			ADD_ZA1_S;
+			ADD_ZA2_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za0.s,za1.s,za3.s}");
+		if (disp_off) {
+			ADD_ZA0_S;
+			ADD_ZA1_S;
+			ADD_ZA3_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za0.s,za2.s,za3.s}");
+		if (disp_off) {
+			ADD_ZA0_S;
+			ADD_ZA2_S;
+			ADD_ZA3_S;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za1.s,za2.s,za3.s}");
+		if (disp_off) {
+			ADD_ZA1_S;
+			ADD_ZA2_S;
+			ADD_ZA3_S;
+			return;
+		}
 		break;
 	}
 	}
@@ -2619,6 +2806,20 @@ void AArch64_insert_detail_op_sys(MCInst *MI, unsigned index, aarch64_sysop sys_
 	AArch64_setup_op(&op);
 	op.type = type;
 	op.sysop = sys_op;
+	insert_op(MI, index, op);
+}
+
+
+void AArch64_insert_detail_op_sme(MCInst *MI, unsigned index, aarch64_op_sme sme_op)
+{
+	if (!detail_is_set(MI))
+		return;
+	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+
+	cs_aarch64_op op;
+	AArch64_setup_op(&op);
+	op.type = AArch64_OP_SME;
+	op.sme = sme_op;
 	insert_op(MI, index, op);
 }
 
