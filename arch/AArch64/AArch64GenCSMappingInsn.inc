@@ -37446,7 +37446,7 @@
   /* msr	$pstatefield, $imm */
   AArch64_MSRpstateImm1 /* 4860 */, AArch64_INS_MSR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { AArch64_REG_NZCV, 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -37454,7 +37454,7 @@
   /* msr	$pstatefield, $imm */
   AArch64_MSRpstateImm4 /* 4861 */, AArch64_INS_MSR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { AArch64_REG_NZCV, 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -37462,7 +37462,7 @@
   /* msr	$pstatefield, $imm */
   AArch64_MSRpstatesvcrImm1 /* 4862 */, AArch64_INS_MSR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { AArch64_REG_NZCV, 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
