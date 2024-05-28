@@ -1903,13 +1903,15 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 			AArch64_get_detail_op(MI, 0)->vas = vas;
 			AArch64_set_detail_op_reg(MI, OpNum, Reg);
 			if (NumRegs > 1) {
-				AArch64_get_detail_op(MI, 0)->is_list_member =
-					true;
-				AArch64_get_detail_op(MI, 0)->vas = vas;
-				AArch64_set_detail_op_reg(
-					MI, OpNum,
-					getNextVectorRegister(Reg,
-							      NumRegs - 1));
+				// Add all registers of the list to the details.
+				for (size_t i = 0; i < NumRegs - 1; ++i) {
+					AArch64_get_detail_op(MI, 0)->is_list_member =
+						true;
+					AArch64_get_detail_op(MI, 0)->vas = vas;
+					AArch64_set_detail_op_reg(
+						MI, OpNum,
+						getNextVectorRegister(Reg + i, 1));
+				}
 			}
 		} else {
 			for (unsigned i = 0; i < NumRegs;
