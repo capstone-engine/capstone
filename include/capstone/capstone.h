@@ -440,6 +440,21 @@ typedef struct cs_detail {
 	};
 } cs_detail;
 
+/// Instruction flags.
+typedef enum cs_insn_flags {
+	/// True: This instruction is an alias.
+	/// False: Otherwise.
+	/// -- Only supported by auto-sync archs --
+	CS_INSN_FLAG_ALIAS = 1 << 0,
+
+	/// True: The operands are the ones of the alias instructions.
+	/// False: The detail operands are from the real instruction.
+	CS_INSN_FLAG_ALIAS_DETAILS = 1 << 1,
+
+	/// Mask for architecture specific flags.
+	CS_INSN_FLAG_ARCH_MASK = 0xfff00000,
+} cs_insn_flags;
+
 /// Detail information of disassembled instruction
 typedef struct cs_insn {
 	/// Instruction ID (basically a numeric ID for the instruction mnemonic)
@@ -449,6 +464,9 @@ typedef struct cs_insn {
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	/// NOTE: in Skipdata mode, "data" instruction has 0 for this id field.
 	unsigned int id;
+
+	/// Instruction flags.
+	cs_insn_flags flags;
 
 	/// If this instruction is an alias instruction, this member is set with
 	/// the alias ID.
@@ -476,15 +494,6 @@ typedef struct cs_insn {
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	char op_str[160];
 
-	/// True: This instruction is an alias.
-	/// False: Otherwise.
-	/// -- Only supported by auto-sync archs --
-	bool is_alias;
-
-	/// True: The operands are the ones of the alias instructions.
-	/// False: The detail operands are from the real instruction.
-	bool usesAliasDetails;
-
 	/// Pointer to cs_detail.
 	/// NOTE: detail pointer is only valid when both requirements below are met:
 	/// (1) CS_OP_DETAIL = CS_OPT_ON
@@ -495,6 +504,10 @@ typedef struct cs_insn {
 	cs_detail *detail;
 } cs_insn;
 
+/// Check if all flags is set.
+#define CS_INSN_FLAGS_ALL(INSN, FLAGS) (((INSN)->flags & (FLAGS)) == (FLAGS))
+/// Check if any flag is set.
+#define CS_INSN_FLAGS_ANY(INSN, FLAGS) (((INSN)->flags & (FLAGS)) != 0)
 
 /// Calculate the offset of a disassembled instruction in its buffer, given its position
 /// in its array of disassembled insn

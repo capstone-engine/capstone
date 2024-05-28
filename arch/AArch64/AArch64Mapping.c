@@ -423,7 +423,7 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 	if (!detail_is_set(MI))
 		return;
 
-	if (!MI->flat_insn->is_alias || !MI->flat_insn->usesAliasDetails) {
+	if (!CS_INSN_FLAGS_ALL(MI->flat_insn, CS_INSN_FLAG_ALIAS | CS_INSN_FLAG_ALIAS_DETAILS)) {
 		add_non_alias_details(MI);
 		return;
 	}
@@ -539,7 +539,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) 
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
 	MI->fillDetailOps = detail_is_set(MI);
-	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
+	CS_INSN_FLAGS_SET(MI->flat_insn, map_use_alias_details(MI), CS_INSN_FLAG_ALIAS_DETAILS);
 	AArch64_LLVM_printInstruction(MI, O, info);
 	if (detail_is_set(MI))
 		AArch64_get_detail(MI)->post_index = AArch64_check_post_index_am(MI, O);

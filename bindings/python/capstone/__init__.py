@@ -355,6 +355,11 @@ CS_OPT_SYNTAX_MASM = 1 << 5  # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_MOTOROLA = 1 << 6  # MOS65XX use $ as hex prefix
 CS_OPT_SYNTAX_CS_REG_ALIAS = 1 << 7  # Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
 
+# Instruction flags
+CS_INSN_FLAG_ALIAS = 1 << 0
+CS_INSN_FLAG_ALIAS_DETAIL = 1 << 1
+CS_INSN_FLAG_ARCH_MASK = 0xfff00000
+
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
 CS_ERR_MEM = 1     # Out-Of-Memory error: cs_open(), cs_disasm()
@@ -492,14 +497,13 @@ class _cs_detail(ctypes.Structure):
 class _cs_insn(ctypes.Structure):
     _fields_ = (
         ('id', ctypes.c_uint),
+        ('flags', ctypes.c_uint),
         ('alias_id', ctypes.c_uint64),
         ('address', ctypes.c_uint64),
         ('size', ctypes.c_uint16),
         ('bytes', ctypes.c_ubyte * 24),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 160),
-        ('is_alias', ctypes.c_bool),
-        ('usesAliasDetails', ctypes.c_bool),
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 

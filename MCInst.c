@@ -288,7 +288,7 @@ uint64_t MCInst_getOpVal(MCInst *MI, unsigned OpNum)
 void MCInst_setIsAlias(MCInst *MI, bool Flag) {
 	assert(MI);
 	MI->isAliasInstr = Flag;
-	MI->flat_insn->is_alias = Flag;
+	CS_INSN_FLAGS_SET(MI->flat_insn, Flag, CS_INSN_FLAG_ALIAS);
 }
 
 /// @brief Copies the relevant members of a temporary MCInst to

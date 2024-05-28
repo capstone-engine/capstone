@@ -363,7 +363,7 @@ void map_set_fill_detail_ops(MCInst *MI, bool Val) {
 void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias) {
 	assert(MI);
 	MI->isAliasInstr = Val;
-	MI->flat_insn->is_alias = Val;
+	CS_INSN_FLAGS_SET(MI->flat_insn, Val, CS_INSN_FLAG_ALIAS);
 	MI->flat_insn->alias_id = Alias;
 }
 

@@ -257,7 +257,7 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 	if (!detail_is_set(MI))
 		return;
 
-	if (MI->flat_insn->is_alias && MI->flat_insn->usesAliasDetails) {
+	if (CS_INSN_FLAGS_ALL(MI->flat_insn, CS_INSN_FLAG_ALIAS | CS_INSN_FLAG_ALIAS_DETAILS)) {
 		add_alias_details(MI);
 		return;
 	}
@@ -596,7 +596,7 @@ void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
 	MI->fillDetailOps = detail_is_set(MI);
-	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
+	CS_INSN_FLAGS_SET(MI->flat_insn, map_use_alias_details(MI), CS_INSN_FLAG_ALIAS_DETAILS);
 	ARM_LLVM_printInstruction(MI, O, info);
 	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
 	ARM_add_not_defined_ops(MI);

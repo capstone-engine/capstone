@@ -354,9 +354,9 @@ static void usage(char *prog)
 static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 {
 	printf("\tID: %u (%s)\n", ins->id, cs_insn_name(handle, ins->id));
-	if (ins->is_alias) {
+	if (ins->flags & CS_INSN_FLAG_ALIAS) {
 		printf("\tIs alias: %" PRIu64 " (%s) ", ins->alias_id, cs_insn_name(handle, ins->alias_id));
-		printf("with %s operand set\n", ins->usesAliasDetails ? "ALIAS" : "REAL");
+		printf("with %s operand set\n", ins->flags & CS_INSN_FLAG_ALIAS_DETAILS ? "ALIAS" : "REAL");
 	}
 
 	switch(arch) {

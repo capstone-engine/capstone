@@ -13,19 +13,23 @@ cdef extern from "<capstone/capstone.h>":
     ctypedef enum cs_arch:
         pass
 
+    ctypedef enum cs_insn_flags:
+        is_alias "CS_INSN_FLAG_ALIAS" = 1 << 0
+        usesAliasDetails "CS_INSN_FLAG_ALIAS_DETAILS" = 1 << 1
+        archMask "CS_INSN_FLAG_ARCH_MASK" = 0xfff00000
+
     ctypedef struct cs_detail:
         pass
 
     ctypedef struct cs_insn:
         unsigned int id
+        cs_insn_flags flags
         uint64_t alias_id;
         uint64_t address
         uint16_t size
         uint8_t bytes[24]
         char mnemonic[32]
         char op_str[160]
-        bool is_alias;
-        bool usesAliasDetails;
         cs_detail *detail
 
     ctypedef enum cs_err:

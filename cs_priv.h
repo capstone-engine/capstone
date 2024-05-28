@@ -109,4 +109,12 @@ extern cs_vsnprintf_t cs_vsnprintf;
 #define CS_ASSERT(expr)
 #endif
 
+/// Set flags if condition is true or clear flags.
+#define CS_INSN_FLAGS_SET(INSN, COND, FLAGS) \
+	if (COND) { \
+		(INSN)->flags |= FLAGS; \
+	} else { \
+		(INSN)->flags &= ~(FLAGS); \
+	}
+
 #endif
