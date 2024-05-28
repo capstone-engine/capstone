@@ -1278,6 +1278,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 						  AArch64_SME_MATRIX_TILE_LIST,
 						  AArch64Layout_VL_D,
 						  AArch64_REG_ZAD0 + I);
+			AArch64_inc_op_count(MI);
 		}
 		break;
 	}
