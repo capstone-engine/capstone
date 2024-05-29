@@ -971,10 +971,17 @@ void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
 			}
 			break;
 		case AArch64_OP_SME:
-				if ((op->sme.tile != AArch64_REG_INVALID) &&
+				if ((op->access & CS_AC_READ) &&
+						(op->sme.tile != AArch64_REG_INVALID) &&
 				    !arr_exist(regs_read, read_count, op->sme.tile)) {
 					regs_read[read_count] = (uint16_t)op->sme.tile;
 					read_count++;
+				}
+				if ((op->access & CS_AC_WRITE) &&
+						(op->sme.tile != AArch64_REG_INVALID) &&
+				    !arr_exist(regs_write, write_count, op->sme.tile)) {
+					regs_write[write_count] = (uint16_t)op->sme.tile;
+					write_count++;
 				}
 				if ((op->sme.slice_reg != AArch64_REG_INVALID) &&
 				    !arr_exist(regs_read, read_count, op->sme.slice_reg)) {
