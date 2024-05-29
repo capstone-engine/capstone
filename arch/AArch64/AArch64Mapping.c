@@ -616,11 +616,26 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 			aarch64_op_sme op =
 				{
 				.type = AArch64_SME_OP_TILE,
-			  .tile = AArch64_REG_ZAH1,
-			  .slice_reg = AArch64_REG_INVALID,
+				.tile = AArch64_REG_ZAH1,
+				.slice_reg = AArch64_REG_INVALID,
 				.slice_offset = { -1 },
 				.has_range_offset = false,
-			  .is_vertical = false,
+				.is_vertical = false,
+			};
+			AArch64_insert_detail_op_sme(MI, -1, op);
+			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_H;
+			return;
+		}
+		disp_off = strstr(OS->buffer, "{za0.h}");
+		if (disp_off) {
+			aarch64_op_sme op =
+				{
+				.type = AArch64_SME_OP_TILE,
+				.tile = AArch64_REG_ZAH0,
+				.slice_reg = AArch64_REG_INVALID,
+				.slice_offset = { -1 },
+				.has_range_offset = false,
+				.is_vertical = false,
 			};
 			AArch64_insert_detail_op_sme(MI, -1, op);
 			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_H;
