@@ -295,7 +295,10 @@ static bool AArch64_check_post_index_am(const MCInst *MI, const SStream *OS)
 	}
 	if (!memop)
 		return false;
-
+	if (memop->mem.base == AArch64_REG_INVALID) {
+		// Load/Store from/to label. Has no register base.
+		return false;
+	}
 	const char *membase = AArch64_LLVM_getRegisterName(
 		memop->mem.base, AArch64_NoRegAltName);
 	int64_t memdisp = memop->mem.disp;
