@@ -60,7 +60,7 @@
 
 !# issue 1924 SME Index instruction alias printing is not always valid
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x02,0x00,0x9f,0xe0 == ld1w {za0h.s[w12, 2]}, p0/z, [x0] ; op_count: 3 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.mx.tile: za0.s ; operands[0].sme.mx.slice_reg: w12 ; operands[0].sme.mx.slice_offset: 2 ; operands[0].sme.mx.is_vertical: false ; operands[0].access: WRITE ; operands[0].vas: 0x20 ; operands[1].type: SME_PRED ; operands[1].sme.pred.reg: p0 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = x0 ; operands[2].access: READ ; Registers read: za0.s w12 p0 x0 ; Groups: HasSME
+0x02,0x00,0x9f,0xe0 == ld1w {za0h.s[w12, 2]}, p0/z, [x0] ; op_count: 3 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za0.s ; operands[0].sme.slice_reg: w12 ; operands[0].sme.slice_offset: 2 ; operands[0].sme.is_vertical: false ; operands[0].access: WRITE ; operands[0].vas: 0x20 ; operands[1].type: PREDICATE ; operands[1].pred.reg: p0 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = x0 ; operands[2].access: READ ; Registers read: w12 p0 x0 ; Registers modified: za0.s ; Groups: HasSME
 
 !# issue 1912 PPC register name
 !# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, None
@@ -228,19 +228,19 @@
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = q0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 ; operands[1].vas: 0x1008
+0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = q0 (vreg) ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 (vreg) ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = d0 ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 ; operands[1].vas: 0x808
+0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = d0 (vreg) ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 (vreg) ; operands[1].vas: 0x808
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = q0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 ; operands[1].vas: 0x1008
+0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = q0 (vreg) ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 (vreg) ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = d0 ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 ; operands[1].vas: 0x808
+0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = d0 (vreg) ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 (vreg) ; operands[1].vas: 0x808
 
 !# issue 1839 AArch64 Incorrect detailed disassembly of ldr
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
