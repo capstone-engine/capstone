@@ -483,6 +483,7 @@ static void add_non_alias_details(MCInst *MI)
 			}; \
 			AArch64_insert_detail_op_sme(MI, -1, za0_op); \
 			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			AArch64_get_detail_op(MI, -1)->access = CS_AC_WRITE; \
 			}
 #define ADD_ZA1_S \
 			{ aarch64_op_sme za1_op = { \
@@ -495,6 +496,7 @@ static void add_non_alias_details(MCInst *MI)
 			}; \
 			AArch64_insert_detail_op_sme(MI, -1, za1_op); \
 			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			AArch64_get_detail_op(MI, -1)->access = CS_AC_WRITE; \
 			}
 #define ADD_ZA2_S \
 			{ aarch64_op_sme za2_op = { \
@@ -507,6 +509,7 @@ static void add_non_alias_details(MCInst *MI)
 			}; \
 			AArch64_insert_detail_op_sme(MI, -1, za2_op); \
 			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			AArch64_get_detail_op(MI, -1)->access = CS_AC_WRITE; \
 			}
 #define ADD_ZA3_S \
 			{ aarch64_op_sme za3_op = { \
@@ -519,6 +522,7 @@ static void add_non_alias_details(MCInst *MI)
 			}; \
 			AArch64_insert_detail_op_sme(MI, -1, za3_op); \
 			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_S; \
+			AArch64_get_detail_op(MI, -1)->access = CS_AC_WRITE; \
 			}
 #define ADD_ZA \
 			{ aarch64_op_sme za_op = \
@@ -531,6 +535,7 @@ static void add_non_alias_details(MCInst *MI)
 			  .is_vertical = false, \
 			}; \
 			AArch64_insert_detail_op_sme(MI, -1, za_op); \
+			AArch64_get_detail_op(MI, -1)->access = CS_AC_WRITE; \
 			}
 
 static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
@@ -624,6 +629,7 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 			};
 			AArch64_insert_detail_op_sme(MI, -1, op);
 			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_H;
+			AArch64_get_detail_op(MI, -1)->access = CS_AC_WRITE;
 			return;
 		}
 		disp_off = strstr(OS->buffer, "{za0.h}");
@@ -639,6 +645,7 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 			};
 			AArch64_insert_detail_op_sme(MI, -1, op);
 			AArch64_get_detail_op(MI, -1)->vas = AArch64Layout_VL_H;
+			AArch64_get_detail_op(MI, -1)->access = CS_AC_WRITE;
 			return;
 		}
 		disp_off = strstr(OS->buffer, "{za0.s}");
