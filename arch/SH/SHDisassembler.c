@@ -1459,13 +1459,13 @@ static bool decode_long(uint32_t code, uint64_t address, MCInst *MI,
 		if (code & 0x00010000) {
 			// movi20s #imm,
 			imm <<= 8;
-			if (imm >= 1 << 27)
-				imm = -((1 << 28) - imm);
+			if (imm & (1 << (28 - 1)))
+				imm |= ~((1 << 28) - 1);
 			insn = SH_INS_MOVI20S;
 		} else {
 			// MOVI20
-			if (imm >= 1 << 19)
-				imm = -((1 << 20) - imm);
+			if (imm & (1 << (28 - 1)))
+				imm |= ~((1 << 20) - 1);
 			insn = SH_INS_MOVI20;
 		}
 		set_imm(info, 0, imm);
