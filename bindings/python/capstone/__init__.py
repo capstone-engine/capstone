@@ -489,13 +489,29 @@ class _cs_detail(ctypes.Structure):
         ('arch', _cs_arch),
     )
 
+def smallvec(ty, cap):
+    class cls(ctypes.Union):
+        _fields_ = (
+            ('arr', ty * cap),
+            ('ptr', ctypes.POINTER(ty))
+        )
+        capacity = cap
+
+        def __call__(self, size):
+            if size > self.capacity:
+                return self.ptr
+            else:
+                return self.arr
+
+    return cls
+
 class _cs_insn(ctypes.Structure):
     _fields_ = (
         ('id', ctypes.c_uint),
         ('alias_id', ctypes.c_uint64),
         ('address', ctypes.c_uint64),
         ('size', ctypes.c_uint16),
-        ('bytes', ctypes.c_ubyte * 24),
+        ('bytes', smallvec(ctypes.c_ubyte, 16)),
         ('mnemonic', ctypes.c_char * 32),
         ('op_str', ctypes.c_char * 160),
         ('is_alias', ctypes.c_bool),
@@ -705,7 +721,7 @@ class CsInsn(object):
     # return instruction's machine bytes (which should have @size bytes).
     @property
     def bytes(self):
-        return bytearray(self._raw.bytes)[:self._raw.size]
+        return bytearray(self._raw.bytes(self._raw.size))[:self._raw.size]
 
     # return instruction's mnemonic.
     @property

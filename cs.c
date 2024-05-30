@@ -822,6 +822,33 @@ static void fixup_asm_string(char *asm_str) {
 	asm_str[k] = '\0';
 }
 
+static void cs_insn_free(cs_insn *insn) {
+	if (insn->size > sizeof(insn->bytes.arr)) {
+		cs_mem_free(insn->bytes.ptr);
+	}
+	if (insn->detail) {
+		cs_mem_free(insn->detail);
+	}
+}
+
+static bool cs_insn_set_size(cs_insn *insn, uint16_t size) {
+	// TODO: reuse buffer?
+	if (insn->size > sizeof(insn->bytes.arr)) {
+		// free old buffer
+		cs_mem_free(insn->bytes.ptr);
+	}
+	if (size > sizeof(insn->bytes.arr)) {
+		// allocate new buffer
+		insn->bytes.ptr = cs_mem_malloc(size);
+		if (!insn->bytes.ptr) {
+			insn->size = 0;
+			return false;
+		}
+	}
+	insn->size = size;
+	return true;
+}
+
 // fill insn with mnemonic & operands info
 static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
@@ -830,13 +857,10 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	char *sp, *mnem;
 #endif
 	fixup_asm_string(buffer);
-	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
-	// we might skip some redundant bytes in front in the case of X86
-	memcpy(insn->bytes, code + insn->size - copy_size, copy_size);
+	memcpy(CS_INSN_BYTES(insn), code, insn->size);
 	insn->op_str[0] = '\0';
-	insn->size = copy_size;
 
 	// alias instruction might have ID saved in OpcodePub
 	if (MCInst_getOpcodePub(mci))
@@ -1115,10 +1139,7 @@ cs_buffer * CAPSTONE_API cs_buffer_new(size_t capacity) {
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_buffer_free(cs_buffer *buffer) {
 	for (size_t i = 0; i < buffer->capacity; ++i) {
-		// can be allocated in cs_disasm()
-		if (buffer->insn[i].detail) {
-			cs_mem_free(buffer->insn[i].detail);
-		}
+		cs_insn_free(&buffer->insn[i]);
 	}
 	cs_mem_free(buffer->insn);
 	cs_mem_free(buffer);
@@ -1143,9 +1164,7 @@ bool CAPSTONE_API cs_buffer_reserve_exact(cs_buffer *buffer, size_t required) {
 		}
 
 		for (size_t i = required; i < buffer->capacity; ++i) {
-			if (buffer->insn[i].detail) {
-				cs_mem_free(buffer->insn[i].detail);
-			}
+			cs_insn_free(&buffer->insn[i]);
 		}
 	}
 
@@ -1279,7 +1298,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *code, size_t code_size,
 			SStream ss;
 			SStream_Init(&ss);
 
-			insn->size = insn_size;
+			if (!cs_insn_set_size(insn, insn_size)) {
+				handle->errnum = CS_ERR_MEM;
+				return 0;
+			}
 
 			// map internal instruction opcode to public insn ID
 			handle->insn_id(handle, insn, mci.Opcode);
@@ -1322,8 +1344,11 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *code, size_t code_size,
 			// we have to skip some amount of data, depending on arch & mode
 			insn->id = 0;	// invalid ID for this "data" instruction
 			insn->address = address;
-			insn->size = (uint16_t) skipdata_bytes;
-			memcpy(insn->bytes, code, skipdata_bytes);
+			if (!cs_insn_set_size(insn, (uint16_t) skipdata_bytes)) {
+				handle->errnum = CS_ERR_MEM;
+				return 0;
+			}
+			memcpy(CS_INSN_BYTES(insn), code, skipdata_bytes);
 #ifdef CAPSTONE_DIET
 			insn->mnemonic[0] = '\0';
 			insn->op_str[0] = '\0';

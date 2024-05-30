@@ -653,13 +653,14 @@ int main(int argc, char **argv)
 	if (count > 0) {
 		cs_insn *insn = buffer->insn;
 		for (i = 0; i < count; i++) {
+			uint8_t *bytes = CS_INSN_BYTES(&insn[i]);
 			int j;
 
 			printf("%2"PRIx64"  ", insn[i].address);
 			for (j = 0; j < insn[i].size; j++) {
 				if (j > 0)
 					putchar(' ');
-				printf("%02x", insn[i].bytes[j]);
+				printf("%02x", bytes[j]);
 			}
 			// Align instruction when it varies in size.
 			// ex: x86, s390x or compressed riscv

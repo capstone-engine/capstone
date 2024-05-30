@@ -361,7 +361,7 @@ static void test()
 			for (j = 0; j < count; j++) {
 				int slen;
 				printf("0x%04x: ", (uint16_t)insn[j].address);
-				print_string_hex_short(insn[j].bytes,
+				print_string_hex_short(CS_INSN_BYTES(&insn[j]),
 					insn[j].size);
 				printf("%.*s", 1 + ((5 - insn[j].size) * 2),
 					nine_spaces);

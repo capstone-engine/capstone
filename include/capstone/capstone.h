@@ -464,9 +464,12 @@ typedef struct cs_insn {
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
 	uint16_t size;
 
-	/// Machine bytes of this instruction, with number of bytes indicated by @size above
-	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
-	uint8_t bytes[24];
+	/// Use CS_INSN_BYTES() to access instruction bytes.
+	union cs_insn_bytes {
+		// NOTE: Size is selected based on the length of x86 instructions.
+		uint8_t arr[16];
+		uint8_t *ptr;
+	} bytes;
 
 	/// Ascii text of instruction mnemonic
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
@@ -495,6 +498,10 @@ typedef struct cs_insn {
 	cs_detail *detail;
 } cs_insn;
 
+/// Machine bytes of this instruction, with number of bytes indicated by @size above
+/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF
+#define CS_INSN_BYTES(INSN) \
+	((INSN)->size > sizeof((INSN)->bytes.arr) ? (INSN)->bytes.ptr : (INSN)->bytes.arr)
 
 /// Calculate the offset of a disassembled instruction in its buffer, given its position
 /// in its array of disassembled insn

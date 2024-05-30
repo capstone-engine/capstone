@@ -16,12 +16,16 @@ cdef extern from "<capstone/capstone.h>":
     ctypedef struct cs_detail:
         pass
 
+    ctypedef union cs_insn_bytes:
+        uint8_t arr[16]
+        uint8_t *ptr
+
     ctypedef struct cs_insn:
         unsigned int id
         uint64_t alias_id;
         uint64_t address
         uint16_t size
-        uint8_t bytes[24]
+        cs_insn_bytes bytes
         char mnemonic[32]
         char op_str[160]
         bool is_alias;
