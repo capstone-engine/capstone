@@ -391,7 +391,7 @@ CS_OPT   = {v:k for k,v in locals().items() if k.startswith('CS_OPT_')}
 import ctypes, ctypes.util
 from os.path import split, join, dirname
 import sysconfig
-import pkg_resources
+from importlib import resources
 
 import inspect
 if not hasattr(sys.modules[__name__], '__file__'):
@@ -421,14 +421,14 @@ _cs = None
 
 # Loading attempts, in order
 # - user-provided environment variable
-# - pkg_resources can get us the path to the local libraries
+# - importlib.resources can get us the path to the local libraries
 # - we can get the path to the local libraries by parsing our filename
 # - global load
 # - python's lib directory
 # - last-gasp attempt at some hardcoded paths on darwin and linux
 
 _path_list = [os.getenv('LIBCAPSTONE_PATH', None),
-              pkg_resources.resource_filename(__name__, 'lib'),
+              resources.files(__name__) / "lib",
               join(split(__file__)[0], 'lib'),
               '',
               sysconfig.get_path('platlib'),
