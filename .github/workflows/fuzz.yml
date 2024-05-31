@@ -21,3 +21,5 @@ jobs:
       with:
         name: artifacts
         path: ./out/artifacts
+      - name: Install Python Dependencies
+        run: python -m pip install --upgrade setuptools build wheel
