@@ -15,7 +15,7 @@ from pathlib import Path
 
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.cpptranslator.CppTranslator import Translator
-from autosync.HeaderPatcher import HeaderPatcher
+from autosync.HeaderPatcher import CompatHeaderBuilder, HeaderPatcher
 from autosync.Helper import check_py_version, convert_loglevel, fail_exit, get_path
 
 from autosync.IncGenerator import IncGenerator
@@ -88,6 +88,13 @@ class ASUpdater:
             if patcher.patch_header():
                 # Save the path. This file should not be moved.
                 patched.append(file)
+        if self.arch == "AArch64":
+            # Update the compatibility header
+            builder = CompatHeaderBuilder(
+                aarch64_h=main_header,
+                arm64_h=get_path("{CS_INCLUDE_DIR}").joinpath(f"arm64.h"),
+            )
+            builder.generate_aarch64_compat_header()
         return patched
 
     def copy_files(self, path: Path, dest: Path) -> None:

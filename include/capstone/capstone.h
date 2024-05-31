@@ -61,6 +61,7 @@ extern "C" {
 #define CS_VERSION_MINOR CS_API_MINOR
 #define CS_VERSION_EXTRA 0
 
+#ifndef CAPSTONE_AARCH64_COMPAT_HEADER
 /// Macro for meta programming.
 /// Meant for projects using Capstone and need to support multiple
 /// versions of it.
@@ -119,6 +120,7 @@ extern "C" {
 #define CS_aarch64_shifter() aarch64_shifter
 #define CS_aarch64_vas() AArch64Layout_VectorLayout
 #endif
+#endif // CAPSTONE_AARCH64_COMPAT_HEADER
 
 /// Macro to create combined version which can be compared to
 /// result of cs_version() API.
@@ -133,7 +135,11 @@ typedef size_t csh;
 /// Architecture type
 typedef enum cs_arch {
 	CS_ARCH_ARM = 0,	///< ARM architecture (including Thumb, Thumb-2)
-	CS_ARCH_AARCH64,	///< AArch64
+#ifdef CAPSTONE_AARCH64_COMPAT_HEADER
+	CS_ARCH_ARM64 = 1,	///< ARM64
+#else
+	CS_ARCH_AARCH64 = 1,	///< AArch64
+#endif
 	CS_ARCH_MIPS,		///< Mips architecture
 	CS_ARCH_X86,		///< X86 architecture (including x86 & x86-64)
 	CS_ARCH_PPC,		///< PowerPC architecture
@@ -358,7 +364,11 @@ typedef struct cs_opt_skipdata {
 
 
 #include "arm.h"
+#ifdef CAPSTONE_AARCH64_COMPAT_HEADER
+#include "arm64.h"
+#else
 #include "aarch64.h"
+#endif
 #include "m68k.h"
 #include "mips.h"
 #include "ppc.h"
@@ -404,7 +414,11 @@ typedef struct cs_detail {
 	/// Architecture-specific instruction info
 	union {
 		cs_x86 x86;     ///< X86 architecture, including 16-bit, 32-bit & 64-bit mode
-		cs_aarch64 aarch64; ///< AARCH64 architecture (aka AArch64)
+#ifdef CAPSTONE_AARCH64_COMPAT_HEADER
+		cs_arm64 arm64;
+#else
+		cs_aarch64 aarch64; ///< AArch6464 architecture (aka ARM64)
+#endif
 		cs_arm arm;     ///< ARM architecture (including Thumb/Thumb2)
 		cs_m68k m68k;   ///< M68K architecture
 		cs_mips mips;   ///< MIPS architecture
@@ -532,6 +546,9 @@ CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_arm(void);
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_aarch64(void);
+#ifdef CAPSTONE_AARCH64_COMPAT_HEADER
+#define cs_arch_register_aarch64 cs_arch_register_arm64
+#endif
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_mips(void);
 CAPSTONE_EXPORT
