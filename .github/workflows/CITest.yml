@@ -61,6 +61,14 @@ jobs:
               python-version: '3.11',
               build-system: 'cmake',
             }
+          - {
+              name: 'ubuntu-22.04 x64 python3.12 cmake',
+              os: ubuntu-22.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.12',
+              build-system: 'cmake',
+            }
 
     steps:
     - uses: actions/checkout@v3
