@@ -22,6 +22,9 @@
     "{CS_CLANG_FORMAT_FILE}": "{CS_ROOT}/.clang-format",
     "{HEADER_PATCHER_TEST_HEADER_FILE}": "{AUTO_SYNC_SRC}/Tests/test_header.h",
     "{HEADER_PATCHER_TEST_INC_FILE}": "{AUTO_SYNC_SRC}/Tests/test_include.inc",
+    "{HEADER_GEN_TEST_AARCH64_FILE}": "{AUTO_SYNC_SRC}/Tests/test_aarch64_header.h",
+    "{HEADER_GEN_TEST_ARM64_FILE}": "{AUTO_SYNC_SRC}/Tests/test_arm64_header.h",
+    "{HEADER_GEN_TEST_ARM64_OUT_FILE}": "{AUTO_SYNC_SRC}/Tests/test_arm64_header.h.out",
     "{DIFFER_TEST_DIR}": "{CPP_TRANSLATOR_TEST_DIR}/Differ/",
     "{DIFFER_TEST_CONFIG_FILE}": "{DIFFER_TEST_DIR}/test_arch_config.json",
     "{DIFFER_TEST_OLD_SRC_DIR}": "{DIFFER_TEST_DIR}/old_src/",
@@ -33,7 +36,8 @@
     "{C_INC_OUT_DIR}",
     "{CPP_INC_OUT_DIR}",
     "{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}",
-    "{CPP_TRANSLATOR_DIFF_OUT_DIR}"
+    "{CPP_TRANSLATOR_DIFF_OUT_DIR}",
+    "{HEADER_GEN_TEST_ARM64_OUT_FILE}"
   ],
   "ignore_missing": [
     "{DIFFER_TEST_PERSISTENCE_FILE}"

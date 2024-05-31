@@ -505,8 +505,10 @@ void printU16ImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_BranchOperand, OpNo);
-	if (!MCOperand_isImm(MCInst_getOperand(MI, (OpNo))))
-		return printOperand(MI, OpNo, O);
+	if (!MCOperand_isImm(MCInst_getOperand(MI, (OpNo)))) {
+		printOperand(MI, OpNo, O);
+		return;
+	}
 	int32_t Imm = SignExtend32(
 		((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo)))
 		 << 2),
@@ -534,8 +536,10 @@ void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo, SStream *O)
 void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, PPC_OP_GROUP_AbsBranchOperand, OpNo);
-	if (!MCOperand_isImm(MCInst_getOperand(MI, (OpNo))))
-		return printOperand(MI, OpNo, O);
+	if (!MCOperand_isImm(MCInst_getOperand(MI, (OpNo)))) {
+		printOperand(MI, OpNo, O);
+		return;
+	}
 
 	printInt32(O, SignExtend32(((unsigned)MCOperand_getImm(
 					    MCInst_getOperand(MI, (OpNo)))

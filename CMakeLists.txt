@@ -157,6 +157,7 @@ set(HEADERS_ENGINE
 
 set(HEADERS_COMMON
     include/capstone/aarch64.h
+    include/capstone/arm64.h
     include/capstone/arm.h
     include/capstone/capstone.h
     include/capstone/cs_operand.h

@@ -3,7 +3,7 @@
 
 import unittest
 
-from autosync.HeaderPatcher import HeaderPatcher
+from autosync.HeaderPatcher import CompatHeaderBuilder, HeaderPatcher
 from autosync.Helper import get_path
 
 
@@ -14,6 +14,10 @@ class TestHeaderPatcher(unittest.TestCase):
             get_path("{HEADER_PATCHER_TEST_HEADER_FILE}"),
             get_path("{HEADER_PATCHER_TEST_INC_FILE}"),
             write_file=False,
+        )
+        cls.compat_gen = CompatHeaderBuilder(
+            get_path("{HEADER_GEN_TEST_AARCH64_FILE}"),
+            get_path("{HEADER_GEN_TEST_ARM64_OUT_FILE}"),
         )
 
     def test_header_patching(self):
@@ -45,3 +49,10 @@ class TestHeaderPatcher(unittest.TestCase):
                 "\n"
             ),
         )
+
+    def test_compat_header_gen(self):
+        self.compat_gen.generate_aarch64_compat_header()
+        with open(get_path("{HEADER_GEN_TEST_ARM64_FILE}")) as f:
+            correct = f.read()
+        with open(get_path("{HEADER_GEN_TEST_ARM64_OUT_FILE}")) as f:
+            self.assertEqual(f.read(), correct)

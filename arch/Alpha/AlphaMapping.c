@@ -157,7 +157,7 @@ const char *Alpha_getRegisterName(csh handle, unsigned int id)
 
 void Alpha_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	return Alpha_LLVM_printInstruction(MI, O, Info);
+	Alpha_LLVM_printInstruction(MI, O, Info);
 }
 
 void Alpha_set_instr_map_data(MCInst *MI) 

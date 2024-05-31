@@ -100,6 +100,12 @@ jobs:
         cp libcapstone.* ../tests/
         cp test_* ../tests/
 
+    - name: "Compatibility header test build"
+      run: |
+        cd "$(git rev-parse --show-toplevel)/suite/auto-sync/c_tests/"
+        clang -lcapstone  src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
+        ./test_arm64_compatibility_header
+
     - name: cstool - reaches disassembler engine
       run: |
         sh suite/run_invalid_cstool.sh
