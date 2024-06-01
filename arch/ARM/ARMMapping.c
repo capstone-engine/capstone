@@ -762,11 +762,11 @@ void ARM_init_mri(MCRegisterInfo *MRI)
 					  ARR_SIZE(ARMSubRegIdxLists), 0);
 }
 
+#ifndef CAPSTONE_DIET
 static const map_insn_ops insn_operands[] = {
 #include "ARMGenCSMappingInsnOp.inc"
 };
 
-#ifndef CAPSTONE_DIET
 void ARM_reg_access(const cs_insn *insn, cs_regs regs_read,
 		    uint8_t *regs_read_count, cs_regs regs_write,
 		    uint8_t *regs_write_count)
