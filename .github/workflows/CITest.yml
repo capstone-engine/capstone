@@ -136,10 +136,18 @@ jobs:
         sudo sysctl vm.mmap_rnd_bits=28
 
     - name: "Compatibility header test build"
+      if: matrix.config.diet-build == 'OFF'
+      env:
+        asan: ${{ matrix.config.enable-asan }}
       run: |
         cd "$(git rev-parse --show-toplevel)/suite/auto-sync/c_tests/"
-        clang -lcapstone  src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
+        if [ "$asan" = "ON" ]; then
+          clang -lcapstone -fsanitize=address src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
+        else
+          clang -lcapstone src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
+        fi
         ./test_arm64_compatibility_header
+        cd "$(git rev-parse --show-toplevel)
 
     - name: cstool - reaches disassembler engine
       run: |
