@@ -1,4 +1,4 @@
-## Why AutoSync?
+## Why the Auto-Sync framework?
 
 Capstone provides a simple API to leverage the LLVM disassemblers, without
 having the big footprint of LLVM itself.

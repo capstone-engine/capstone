@@ -3,7 +3,7 @@ Copyright © 2022 Rot127 <unisono@quyllur.org>
 SPDX-License-Identifier: BSD-3
 -->
 
-# Architecture of Auto-Sync
+# Architecture of the Auto-Sync framework
 
 This document is split into four parts.
 

@@ -26,7 +26,7 @@ python3 -m venv ./.venv
 source ./.venv/bin/activate
 ```
 
-Install auto-sync
+Install Auto-Sync framework
 
 ```
 cd suite/auto-sync/
@@ -151,11 +151,11 @@ Documentation about the `.inc` file generation is in the [llvm-capstone](https:/
 - If you make changes to the `CppTranslator` please format the files with `black` and `usort`
   ```
   pip3 install black usort
-  python3.11 -m usort format src/autosync
-  python3.11 -m black src/autosync
+  python3 -m usort format src/autosync
+  python3 -m black src/autosync
   ```
 
-## Refactor an architecture for `auto-sync`
+## Refactor an architecture for Auto-Sync framework
 
 Not all architecture modules support Auto-Sync yet.
 Here is an overview of the steps to add support for it.
