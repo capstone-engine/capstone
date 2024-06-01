@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
-from __future__ import print_function
 from capstone import *
 
 from xprint import to_hex

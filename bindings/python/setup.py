@@ -13,10 +13,6 @@ from distutils.command.build import build
 from distutils.command.sdist import sdist
 from setuptools.command.bdist_egg import bdist_egg
 
-PYTHON2 = sys.version_info[0] == 2
-if PYTHON2:
-    import io
-
 SYSTEM = sys.platform
 
 # adapted from commit e504b81 of Nguyen Tan Cong
@@ -220,13 +216,11 @@ setup(
     author_email='aquynh@gmail.com',
     description='Capstone disassembly engine',
     url='https://www.capstone-engine.org',
-    long_description=io.open('README.txt', encoding="utf8").read() if PYTHON2 else open('README.txt', encoding="utf8").read(),
+    long_description=open('README.txt', encoding="utf8").read(),
     long_description_content_type='text/markdown',
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
+    python_requires='>=3.6',
     classifiers=[
         'License :: OSI Approved :: BSD License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
     ],
     cmdclass=cmdclass,

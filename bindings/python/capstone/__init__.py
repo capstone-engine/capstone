@@ -1,9 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
-import os, sys
-from platform import system
-_python2 = sys.version_info[0] < 3
-if _python2:
-    range = xrange
+import os
+import sys
 
 __all__ = [
     'Cs',
@@ -549,13 +546,8 @@ class CsError(Exception):
     def __init__(self, errno):
         self.errno = errno
 
-    if _python2:
-        def __str__(self):
-            return _cs.cs_strerror(self.errno)
-
-    else:
-        def __str__(self):
-            return _cs.cs_strerror(self.errno).decode()
+    def __str__(self):
+        return _cs.cs_strerror(self.errno).decode()
 
 
 # return the core's version
@@ -1215,10 +1207,6 @@ class Cs(object):
     # Disassemble binary & return disassembled instructions in CsInsn objects
     def disasm(self, code, offset, count=0):
         all_insn = ctypes.POINTER(_cs_insn)()
-        '''if not _python2:
-            print(code)
-            code = code.encode()
-            print(code)'''
         # Pass a bytearray by reference
         size = len(code)
         view = memoryview(code)
