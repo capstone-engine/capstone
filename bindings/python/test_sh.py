@@ -2,7 +2,6 @@
 
 # Capstone Python bindings, by Peace-Maker <peacemakerctf@gmail.com>
 
-from __future__ import print_function
 from capstone import *
 from capstone.sh import *
 from xprint import to_x, to_hex

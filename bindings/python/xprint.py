@@ -1,28 +1,15 @@
 #!/usr/bin/env python
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-from __future__ import print_function
-import sys
-_python3 = sys.version_info.major == 3
-
 
 def to_hex(s, prefix_0x = True):
-    if _python3:
-        if prefix_0x:
-            return " ".join("0x{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
-        else:
-            return " ".join("{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
+    if prefix_0x:
+        return " ".join("0x{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
     else:
-        if prefix_0x:
-            return " ".join("0x{0:02x}".format(ord(c)) for c in s)
-        else:
-            return " ".join("{0:02x}".format(ord(c)) for c in s)
+        return " ".join("{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
 
 def to_hex2(s):
-    if _python3:
-        r = "".join("{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
-    else:
-        r = "".join("{0:02x}".format(ord(c)) for c in s)
+    r = "".join("{0:02x}".format(c) for c in s)  # <-- Python 3 is OK
     while r[0] == '0': r = r[1:]
     return r
 
