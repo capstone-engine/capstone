@@ -52,7 +52,7 @@ Get CMake for free from http://www.cmake.org.
   Besides, Capstone also allows some more customization via following macros.
 
   - CAPSTONE_USE_SYS_DYN_MEM: change this to OFF to use your own dynamic memory management.
-  - CAPSTONE_BUILD_DIET: change this to ON to make the binaries more compact. In exchange for no details.
+  - CAPSTONE_BUILD_DIET: change this to ON to make the binaries more compact.
   - CAPSTONE_X86_REDUCE: change this to ON to make X86 binary smaller.
   - CAPSTONE_X86_ATT_DISABLE: change this to ON to disable AT&T syntax on x86.
   - CAPSTONE_DEBUG: change this to ON to enable extra debug assertions.
