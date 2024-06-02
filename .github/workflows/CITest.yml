@@ -179,7 +179,7 @@ jobs:
       run: |
         cp libcapstone.* bindings/python/prebuilt
         cd bindings/python
-        make install3
+        make install
         cd ..
         BUILD_TESTS=no make tests
 
@@ -188,7 +188,7 @@ jobs:
       run: |
         pip install cython
         cd bindings/python
-        make install3_cython
+        make install_cython
         cd ..
         python -c "import capstone;print(capstone.debug())" | grep Cython
         BUILD_TESTS=no make tests

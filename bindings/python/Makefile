@@ -1,6 +1,6 @@
 PYTHON3 ?= python3
 
-.PHONY: gen_const install install3 install_cython sdist sdist3 bdist bdist3 clean check
+.PHONY: gen_const install install_cython sdist bdist clean check
 
 gen_const:
 	cd .. && $(PYTHON3) const_generator.py python
