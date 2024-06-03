@@ -54,7 +54,7 @@ else()
 endif()
 
 
-# to configure the options specify them in in the command line or change them in the cmake UI.
+# to configure the options specify them in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
 option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ${BUILD_SHARED_LIBS})
