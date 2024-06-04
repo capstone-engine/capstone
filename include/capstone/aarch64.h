@@ -104,7 +104,7 @@ typedef enum CondCode { // Meaning (integer)          Meaning (floating-point)
 	AArch64CC_ANY_ACTIVE = AArch64CC_NE,	 // (!Z)
 	AArch64CC_FIRST_ACTIVE = AArch64CC_MI, // ( N)
 	AArch64CC_LAST_ACTIVE = AArch64CC_LO,	 // (!C)
-	AArch64CC_NONE_ACTIVE = AArch64CC_EQ	 // ( Z)
+	AArch64CC_NONE_ACTIVE = AArch64CC_EQ,  // ( Z)
 } AArch64CC_CondCode;
 
 inline static const char *AArch64CC_getCondCodeName(AArch64CC_CondCode Code)

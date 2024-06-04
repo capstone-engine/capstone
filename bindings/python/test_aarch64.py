@@ -48,7 +48,7 @@ def print_insn_detail(insn):
                         % (c, to_x_32(i.mem.disp)))
                 if insn.post_index:
                     print("\t\t\tpost-indexed: true");
-            if i.type == AArch64_OP_SME_MATRIX:
+            if i.type == AArch64_OP_SME:
                 print("\t\toperands[%u].type: SME_MATRIX" % (c))
                 print("\t\toperands[%u].sme.type: %d" % (c, i.sme.type))
 
@@ -64,6 +64,15 @@ def print_insn_detail(insn):
                         print("%d" % (i.sme.slice_offset.imm))
                 if i.sme.slice_reg != AArch64_REG_INVALID or i.sme.slice_offset.imm != -1:
                     print("\t\toperands[%u].sme.is_vertical: %s" % (c, ("true" if i.sme.is_vertical else "false")))
+            if i.type == AArch64_OP_PRED:
+                print("\t\toperands[%u].type: PREDICATE\n" % c);
+                if (op.pred.reg != AArch64_REG_INVALID):
+                    print("\t\toperands[%u].pred.reg: %s\n" % (c, insn.reg_name(i.pred.reg)));
+                if (op.pred.vec_select != AArch64_REG_INVALID):
+                    print("\t\toperands[%u].pred.vec_select: %s\n" % (c, insn.reg_name(i.pred.vec_select)));
+                if (op.pred.imm_index != -1):
+                    print("\t\toperands[%u].pred.imm_index: %d\n" % (i, op.pred.imm_index));
+                break;
             if i.type == AArch64_OP_SYSREG:
                 print("\t\toperands[%u].type: SYS REG:" % (c))
                 if i.sysop.sub_type == AArch64_OP_REG_MRS:
@@ -140,7 +149,7 @@ def print_insn_detail(insn):
     if insn.writeback:
         print("\tWrite-back: True")
             
-    if not insn.cc in [AArch64CC_AL, AArch64CC_Invalid]:
+    if insn.cc != AArch64CC_Invalid:
         print("\tCode-condition: %u" % insn.cc)
     if insn.update_flags:
         print("\tUpdate-flags: True")
