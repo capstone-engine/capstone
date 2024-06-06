@@ -18,7 +18,12 @@ BUILD_PATH="$1"
 
 check_list="clang-analyzer-*,-clang-analyzer-cplusplus*,-clang-analyzer-optin.performance.Padding"
 
-clang-tidy $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" > ct-warnings.txt
+if $(hash clang-tidy-15); then
+  clang-tidy-15 $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" > ct-warnings.txt
+else
+  clang-tidy $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" > ct-warnings.txt
+fi
+
 if [ $? -ne 0 ]; then
   echo "clang-tidy failed"
   exit 1

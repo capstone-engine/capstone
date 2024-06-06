@@ -26,6 +26,10 @@ jobs:
         CC=clang sudo cmake --build . --config Release
         cd ..
 
+    - name: Install clang-tidy-15
+      run: |
+        sudo apt install clang-tidy-15
+
     - name: Check for warnings
       env:
         base_sha: ${{ github.event.pull_request.base.sha }}
