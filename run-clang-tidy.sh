@@ -11,6 +11,9 @@ if [ -z $base_sha ] || [ -z $head_sha ]; then
   exit 0
 fi
 
+echo "Running with version:"
+clang-tidy --version
+
 BUILD_PATH="$1"
 
 check_list="clang-analyzer-*,-clang-analyzer-cplusplus*,-clang-analyzer-optin.performance.Padding"
