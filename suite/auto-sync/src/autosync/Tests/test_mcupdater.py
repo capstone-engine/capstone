@@ -40,7 +40,10 @@ class TestHeaderPatcher(unittest.TestCase):
 
     def test_adding_header_from_mc(self):
         self.updater = MCUpdater(
-            arch="ARM", mc_dir=get_path("{MCUPDATER_TEST_DIR}"), excluded=[r".*\.cs"], included=None
+            arch="ARM",
+            mc_dir=get_path("{MCUPDATER_TEST_DIR}"),
+            excluded=[r".*\.cs"],
+            included=None,
         )
         self.updater.gen_tests_in_dir(self.updater.mc_dir)
         self.assertEqual(len(self.updater.test_files), 3)
