@@ -2688,14 +2688,15 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		return;
 	AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SME;
 	va_list args;
-	va_start(args, vas);
 	switch (part) {
 	default:
 		printf("Unhandled SME operand part %d\n", part);
 		assert(0);
 	case AArch64_SME_MATRIX_TILE_LIST:
 		setup_sme_operand(MI);
+		va_start(args, vas);
 		int Tile = va_arg(args, int);
+		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.type = AArch64_SME_OP_TILE;
 		AArch64_get_detail_op(MI, 0)->sme.tile = Tile;
 		AArch64_get_detail_op(MI, 0)->vas = vas;
@@ -2734,8 +2735,10 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 			MCInst_getOpVal(MI, OpNum);
 		break;
 	case AArch64_SME_MATRIX_SLICE_OFF_RANGE: {
+		va_start(args, vas);
 		int8_t First = va_arg(args, int);
 		int8_t Offset = va_arg(args, int);
+		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first =
 			First;
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.offset =
@@ -2744,7 +2747,6 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		break;
 	}
 	}
-	va_end(args);
 }
 
 static void insert_op(MCInst *MI, unsigned index, cs_aarch64_op op)
