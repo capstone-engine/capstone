@@ -904,6 +904,7 @@ endif()
 
 if(CAPSTONE_BUILD_CSTEST)
     include(ExternalProject)
+    find_library(libyaml yaml REQUIRED)
     ExternalProject_Add(cmocka_ext
         PREFIX extern
         GIT_REPOSITORY "https://git.cryptomilk.org/projects/cmocka.git"
@@ -913,19 +914,36 @@ if(CAPSTONE_BUILD_CSTEST)
         BUILD_COMMAND cmake --build . --config Release
         INSTALL_COMMAND ""
     )
+    ExternalProject_Add(libcyaml_ext
+        PREFIX extern
+        GIT_REPOSITORY "https://github.com/tlsa/libcyaml.git"
+        GIT_TAG "v1.4.1"
+        GIT_SHALLOW true
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND make
+        BUILD_IN_SOURCE true
+        INSTALL_COMMAND ""
+    )
     set(CMOCKA_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext/include)
     set(CMOCKA_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext-build/src/)
+    set(LIBCYAML_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/libcyaml_ext/include)
+    set(LIBCYAML_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/libcyaml_ext/build/release/)
     add_library(cmocka STATIC IMPORTED)
+    add_library(libcyaml STATIC IMPORTED)
     set_target_properties(cmocka PROPERTIES IMPORTED_LOCATION ${CMOCKA_LIB_DIR}/libcmocka.a)
+    set_target_properties(libcyaml PROPERTIES IMPORTED_LOCATION ${LIBCYAML_LIB_DIR}/libcyaml.a)
 
     file(GLOB CSTEST_SRC suite/cstest/src/*.c)
     add_executable(cstest ${CSTEST_SRC})
     add_dependencies(cstest cmocka_ext)
+    add_dependencies(cstest libcyaml_ext)
     target_link_libraries(cstest PUBLIC capstone cmocka)
+    target_link_libraries(cstest PUBLIC capstone libcyaml)
     target_include_directories(cstest PRIVATE
             $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
             ${PROJECT_SOURCE_DIR}/suite/cstest/include
             ${CMOCKA_INCLUDE_DIR}
+            ${LIBCYAML_INCLUDE_DIR}
             )
 
     if(CAPSTONE_INSTALL)

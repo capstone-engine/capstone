@@ -133,7 +133,6 @@ fuzz_disasm
 fuzz_decode_platform
 capstone_get_setup
 suite/fuzz/corpus
-suite/cstest/cmocka/
 
 *.s
 
@@ -147,3 +146,6 @@ android-ndk-*
 
 # Auto-sync files
 suite/auto-sync/src/autosync.egg-info
+
+# clangd cache
+/.cache
