@@ -20,8 +20,8 @@ static void help(const char *self)
 	printf("%s <test-file-dir>/<test-file.yml> ...\n", self);
 }
 
-static int handle_ftree_entry(const char *fpath, const struct stat *sb, int typeflag,
-		       struct FTW *ftwbuf)
+static int handle_ftree_entry(const char *fpath, const struct stat *sb,
+			      int typeflag, struct FTW *ftwbuf)
 {
 	if (typeflag != FTW_F) {
 		return 0;
@@ -48,12 +48,23 @@ static void get_tfiles(int argc, const char **argv)
 	}
 }
 
+void print_test_run_stats(TestRunStats *stats)
+{
+	printf("-----------------------------------------\n");
+	printf("Test run statistics\n\n");
+	printf("Total: %" PRId32 "\n", stats->total);
+	printf("Successful: %" PRId32 "\n", stats->successful);
+	printf("Failed: %" PRId32 "\n", stats->failed);
+	printf("-----------------------------------------\n");
+	printf("\n");
+}
+
 int main(int argc, const char **argv)
 {
 	if (argc < 2 || strcmp(argv[1], "-h") == 0 ||
 	    strcmp(argv[1], "--help") == 0) {
 		help(argv[0]);
-		return EXIT_ERROR;
+		exit(EXIT_FAILURE);
 	}
 	test_files = malloc(sizeof(char **));
 	*test_files = NULL;
@@ -61,9 +72,27 @@ int main(int argc, const char **argv)
 	get_tfiles(argc, argv);
 	if (!*test_files || file_count == 0) {
 		printf("Arguments are invalid. No files found.\n");
-		return EXIT_ERROR;
+		exit(EXIT_FAILURE);
 	}
-	printf("Test files: %" PRId32 "\n", file_count);
 
-	return EXIT_SUCCESS;
+	printf("Test files found: %" PRId32 "\n", file_count);
+	TestRunStats stats = { .total = file_count,
+			       .successful = 0,
+			       .failed = 0 };
+	TestRunResult res = run_tests(*test_files, &stats);
+	if (res == TRError) {
+		printf("A fatal error occured.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	print_test_run_stats(&stats);
+	if (res == TRSuccess) {
+		printf("All tests succeeded.\n");
+		exit(EXIT_SUCCESS);
+	} else if (res == TRFailure) {
+		printf("Some tests failed.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	exit(EXIT_SUCCESS);
 }
