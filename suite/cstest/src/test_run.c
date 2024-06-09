@@ -1,7 +1,7 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
-#include "cstest.h"
+#include "test_run.h"
 #include <stdbool.h>
 
 /// Runs runs all valid tests in the given @test_files

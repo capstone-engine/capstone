@@ -3,7 +3,7 @@
 
 #define _XOPEN_SOURCE 500
 #include <capstone/platform.h>
-#include "cstest.h"
+#include "test_run.h"
 #include <ftw.h>
 #include <stdio.h>
 #include <stdlib.h>

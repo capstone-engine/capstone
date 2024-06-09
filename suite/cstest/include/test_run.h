@@ -1,8 +1,8 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
-#ifndef CSTEST_H
-#define CSTEST_H
+#ifndef TESTRUN_H
+#define TESTRUN_H
 
 #include <stdint.h>
 
@@ -20,4 +20,4 @@ typedef struct {
 
 TestRunResult run_tests(char **test_files, TestRunStats *stats);
 
-#endif // CSTEST_H
+#endif // TESTRUN_H
