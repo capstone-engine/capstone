@@ -2,7 +2,6 @@
 
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-from __future__ import print_function
 from capstone import *
 from capstone.sparc import *
 from xprint import to_hex, to_x_32
