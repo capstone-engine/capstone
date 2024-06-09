@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 /// Runs runs all valid tests in the given @test_files
-/// and returns the result.
+/// and returns the result as well as statistics in @stats.
 TestRunResult run_tests(char **test_files, TestRunStats *stats)
 {
 	return stats->total == stats->successful && stats->failed == 0 ?

@@ -76,9 +76,7 @@ int main(int argc, const char **argv)
 	}
 
 	printf("Test files found: %" PRId32 "\n", file_count);
-	TestRunStats stats = { .total = file_count,
-			       .successful = 0,
-			       .failed = 0 };
+	TestRunStats stats = { .total = 0, .successful = 0, .failed = 0 };
 	TestRunResult res = run_tests(*test_files, &stats);
 	if (res == TRError) {
 		fprintf(stderr, "A fatal error occured.\n");

@@ -4,6 +4,7 @@
 #ifndef TESTRUN_H
 #define TESTRUN_H
 
+#include "test_case.h"
 #include <stdint.h>
 
 typedef enum {
@@ -17,6 +18,11 @@ typedef struct {
 	uint32_t successful; ///< Number of successful tests.
 	uint32_t failed;     ///< Number of failed tests.
 } TestRunStats;
+
+typedef struct {
+	uint32_t case_cnt;
+	TestCase *cases;
+} TestRun;
 
 TestRunResult run_tests(char **test_files, TestRunStats *stats);
 
