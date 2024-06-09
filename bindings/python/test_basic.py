@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
-from __future__ import print_function
 from capstone import *
-import binascii
-import sys
 
 from xprint import to_hex
-
-_python3 = sys.version_info.major == 3
 
 
 X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
@@ -102,10 +97,7 @@ def test_cs_disasm_quick():
 
 
 def test_different_data_formats():
-    if _python3:
-        data = bytes.fromhex('4831C948F7E1043B48BB0A2F62696E2F2F736852530A545F5257545E0F05')
-    else:
-        data = bytes(bytearray.fromhex('4831C948F7E1043B48BB0A2F62696E2F2F736852530A545F5257545E0F05'))
+    data = bytes.fromhex('4831C948F7E1043B48BB0A2F62696E2F2F736852530A545F5257545E0F05')
     mnemonics = ['xor', 'mul', 'add', 'movabs', 'push', 'pop', 'push', 'push', 'push', 'pop', 'syscall']
     disassembler = Cs(CS_ARCH_X86, CS_MODE_64)
     for name, code in (
