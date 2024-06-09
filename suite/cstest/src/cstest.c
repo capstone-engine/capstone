@@ -17,7 +17,7 @@ thread_local uint32_t file_count = 0;
 
 static void help(const char *self)
 {
-	printf("%s <test-file-dir>/<test-file.yml> ...\n", self);
+	fprintf(stderr, "%s <test-file-dir>/<test-file.yml> ...\n", self);
 }
 
 static int handle_ftree_entry(const char *fpath, const struct stat *sb,
@@ -29,7 +29,7 @@ static int handle_ftree_entry(const char *fpath, const struct stat *sb,
 	file_count++;
 	*test_files = realloc(*test_files, sizeof(char *) * file_count);
 	if (!*test_files) {
-		printf("realloc failed\n");
+		fprintf(stderr, "realloc failed\n");
 		return -1;
 	}
 	test_files[0][file_count - 1] = strdup(fpath);
@@ -42,7 +42,7 @@ static void get_tfiles(int argc, const char **argv)
 	for (size_t i = 1; i < argc; ++i) {
 		if (nftw(argv[i], handle_ftree_entry, 20,
 			 FTW_DEPTH | FTW_PHYS) == -1) {
-			printf("nftw failed.\n");
+			fprintf(stderr, "nftw failed.\n");
 			return;
 		}
 	}
@@ -71,7 +71,7 @@ int main(int argc, const char **argv)
 
 	get_tfiles(argc, argv);
 	if (!*test_files || file_count == 0) {
-		printf("Arguments are invalid. No files found.\n");
+		fprintf(stderr, "Arguments are invalid. No files found.\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -81,7 +81,7 @@ int main(int argc, const char **argv)
 			       .failed = 0 };
 	TestRunResult res = run_tests(*test_files, &stats);
 	if (res == TRError) {
-		printf("A fatal error occured.\n");
+		fprintf(stderr, "A fatal error occured.\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -90,9 +90,10 @@ int main(int argc, const char **argv)
 		printf("All tests succeeded.\n");
 		exit(EXIT_SUCCESS);
 	} else if (res == TRFailure) {
-		printf("Some tests failed.\n");
+		fprintf(stderr, "Some tests failed.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	exit(EXIT_SUCCESS);
+	fprintf(stderr, "Unhandled Test Run result\n");
+	exit(EXIT_FAILURE);
 }
