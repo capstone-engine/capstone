@@ -17,7 +17,7 @@
 #define X86_32 1
 #define X86_64 2
 
-char **split(char *str, char *delim, int *size);
+char **split(const char *str, const char *delim, int *size);
 void print_strs(char **list_str, int size);
 void free_strs(char **list_str, int size);
 void add_str(char **src, const char *format, ...);

@@ -130,7 +130,7 @@
 
 !# issue 0 ARM operand groups 0xa4,0xf9,0x6d,0x0e == vld3.16 {d0[], d2[], d4[]}, [r4]! ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xa4,0xf9,0x6d,0x0e == vld3.16 {d0[], d2[], d4[]}, [r4]! ; op_count: 4 ; operands[0].type: REG = d0 ; operands[0].access: WRITE ; operands[1].type: REG = d2 ; operands[1].access: WRITE ; operands[2].type: REG = d4 ; operands[2].access: WRITE ; operands[3].type: MEM ; operands[3].mem.index: REG = r4 ; operands[3].access: READ ; Write-back: True ; Registers read: r4 ; Registers modified: r4 d0 d2 d4
+0xa4,0xf9,0x6d,0x0e == vld3.16 {d0[], d2[], d4[]}, [r4]! ; op_count: 4 ; operands[0].type: REG = d0 ; operands[0].access: WRITE ; operands[1].type: REG = d2 ; operands[1].access: WRITE ; operands[2].type: REG = d4 ; operands[2].access: WRITE ; operands[3].type: MEM ; operands[3].mem.base: REG = r4 ; operands[3].access: READ | WRITE ; Write-back: True ; Registers read: r4 ; Registers modified: r4 d0 d2 d4
 
 !# issue 0 ARM operand groups 0x0d,0x50,0x66,0xe4 == strbt r5, [r6], #-13 ;
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
@@ -166,7 +166,7 @@
 
 !# issue 0 ARM operand groups 0xa4,0xf9,0xed,0x0b == vld4.32 {d0[1], d2[1], d4[1], d6[1]}, [r4:128]! ;
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
-0xa4,0xf9,0xed,0x0b == vld4.32 {d0[1], d2[1], d4[1], d6[1]}, [r4:0x80]! ; op_count: 5 ; operands[0].type: REG = d0 ; operands[0].neon_lane = 1 ; operands[0].access: READ | WRITE ; operands[1].type: REG = d2 ; operands[1].neon_lane = 1 ; operands[1].access: READ | WRITE ; operands[2].type: REG = d4 ; operands[2].neon_lane = 1 ; operands[2].access: READ | WRITE ; operands[3].type: REG = d6 ; operands[3].neon_lane = 1 ; operands[3].access: READ | WRITE ; operands[4].type: MEM ; operands[4].mem.index: REG = r4 ; operands[4].mem.disp: 0x80 ; operands[4].access: READ ; Write-back: True ; Registers read: d0 d2 d4 d6 r4 ; Registers modified: r4 d0 d2 d4 d6
+0xa4,0xf9,0xed,0x0b == vld4.32 {d0[1], d2[1], d4[1], d6[1]}, [r4:0x80]! ; op_count: 5 ; operands[0].type: REG = d0 ; operands[0].neon_lane = 1 ; operands[0].access: READ | WRITE ; operands[1].type: REG = d2 ; operands[1].neon_lane = 1 ; operands[1].access: READ | WRITE ; operands[2].type: REG = d4 ; operands[2].neon_lane = 1 ; operands[2].access: READ | WRITE ; operands[3].type: REG = d6 ; operands[3].neon_lane = 1 ; operands[3].access: READ | WRITE ; operands[4].type: MEM ; operands[4].mem.base: REG = r4 ; operands[4].mem.align: 0x80 ; operands[4].access: READ | WRITE ; Write-back: True ; Registers read: d0 d2 d4 d6 r4 ; Registers modified: r4 d0 d2 d4 d6
 
 !# issue 0 ARM operand groups 0x42,0x03,0xb0,0xf3 == aesd.8 q0, q1 ;
 !# CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8, CS_OPT_DETAIL
@@ -202,5 +202,5 @@
 
 !# issue 0 ARM operand groups 0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef]
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
-0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef] ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r1 ; operands[1].mem.disp: 0x3ef ; operands[1].access: READ ; Code condition: 8 ; Registers read: cpsr r1 ; Registers modified: r15 ; Groups: IsARM
+0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef] ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r1 ; operands[1].mem.disp: 0x3ef ; operands[1].access: READ ; Code condition: 8 ; Registers read: cpsr r1 ; Registers modified: r15 ; Groups: IsARM jump
 

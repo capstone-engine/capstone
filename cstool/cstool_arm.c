@@ -58,6 +58,8 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.scale: %d\n", i, op->mem.scale);
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+				if (op->mem.align != 0)
+					printf("\t\t\toperands[%u].mem.align: 0x%x\n", i, op->mem.align);
 				if (op->mem.lshift != 0)
 					printf("\t\t\toperands[%u].mem.lshift: 0x%x\n", i, op->mem.lshift);
 

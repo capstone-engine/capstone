@@ -68,6 +68,13 @@ option(CAPSTONE_USE_ARCH_REGISTRATION "Use explicit architecture registration" O
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
+option(ENABLE_ASAN "Enable address sanitizer" OFF)
+
+if (ENABLE_ASAN)
+    add_definitions(-DASAN_ENABLED)
+    add_compile_options(-fsanitize=address)
+    add_link_options(-fsanitize=address)
+endif()
 
 # If building for OSX it's best to allow CMake to handle building both architectures
 if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
@@ -855,16 +862,28 @@ if(CAPSTONE_BUILD_CSTOOL)
 endif()
 
 if(CAPSTONE_BUILD_CSTEST)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(CMOCKA REQUIRED IMPORTED_TARGET cmocka)
+    include(ExternalProject)
+    ExternalProject_Add(cmocka_ext
+        PREFIX extern
+        GIT_REPOSITORY "https://git.cryptomilk.org/projects/cmocka.git"
+        GIT_TAG "origin/stable-1.1"
+        CONFIGURE_COMMAND cmake -DBUILD_SHARED_LIBS=OFF ../cmocka_ext/
+        BUILD_COMMAND cmake --build . --config Release
+        INSTALL_COMMAND ""
+    )
+    set(CMOCKA_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext/include)
+    set(CMOCKA_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext-build/src/)
+    add_library(cmocka STATIC IMPORTED)
+    set_target_properties(cmocka PROPERTIES IMPORTED_LOCATION ${CMOCKA_LIB_DIR}/libcmocka.a)
 
     file(GLOB CSTEST_SRC suite/cstest/src/*.c)
     add_executable(cstest ${CSTEST_SRC})
-    target_link_libraries(cstest PUBLIC capstone PkgConfig::CMOCKA)
+    add_dependencies(cstest cmocka_ext)
+    target_link_libraries(cstest PUBLIC capstone cmocka)
     target_include_directories(cstest PRIVATE
             $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
             ${PROJECT_SOURCE_DIR}/suite/cstest/include
-            ${CMOCKA_INCLUDE_DIRS}
+            ${CMOCKA_INCLUDE_DIR}
             )
 
     if(CAPSTONE_INSTALL)

@@ -697,7 +697,7 @@ CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_err err;
-	struct cs_struct *ud;
+	struct cs_struct *ud = NULL;
 	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free || !cs_vsnprintf)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
@@ -736,6 +736,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 
 		return CS_ERR_OK;
 	} else {
+		cs_mem_free(ud);
 		*handle = 0;
 		return CS_ERR_ARCH;
 	}
@@ -744,8 +745,8 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_close(csh *handle)
 {
-	struct cs_struct *ud;
-	struct insn_mnem *next, *tmp;
+	struct cs_struct *ud = NULL;
+	struct insn_mnem *next = NULL, *tmp = NULL;
 
 	if (*handle == 0)
 		// invalid handle
