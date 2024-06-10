@@ -760,6 +760,7 @@ static void add_groups(MCInst *MI)
 	}
 }
 
+#ifndef CAPSTONE_DIET
 static void update_regs_access(MCInst *MI, unsigned int opcode)
 {
 	if (opcode == HPPA_INS_INVALID)
@@ -803,6 +804,7 @@ static void update_regs_access(MCInst *MI, unsigned int opcode)
 		break;
 	}
 }
+#endif
 
 void HPPA_printInst(MCInst *MI, SStream *O, void *Info)
 {

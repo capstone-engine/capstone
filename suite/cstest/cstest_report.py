@@ -15,7 +15,7 @@ def Usage(s):
 	sys.exit(-1)
 
 def get_report_file(toolpath, filepath, getDetails, cmt_out):
-	cmd = [toolpath, '-f', filepath]
+	cmd = [toolpath if toolpath else "cstest", '-f', filepath]
 	process = Popen(cmd, stdout=PIPE, stderr=PIPE)
 	stdout, stderr = process.communicate()
 	if process.returncode != 0:

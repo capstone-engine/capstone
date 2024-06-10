@@ -13,23 +13,12 @@ brew install cmocka
 
 - Build Cmocka
 
-```
-cd cmocka_dir
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
-```
-
 ## Build
 
-- Build `cstest`
+You can build `cstest` with `cmake` when building Capstone. Just pass the `CAPSTONE_BUILD_CSTEST` flag
+during configuration.
 
-```
-cd suite/cstest
-make
-```
+Alternatively you can use the `build_cstest.sh` file in this directory.
 
 ## Usage
 

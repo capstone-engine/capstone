@@ -85,6 +85,10 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	// and laeds to wrong results.
 	cs_arch arch = ((struct cs_struct *)(uintptr_t)*handle)->arch;
 	if (arch != CS_ARCH_ARM) {
+		if (insn->detail) {
+			free(insn->detail);
+		}
+		free(insn);
 		cs_disasm(*handle, code, size_byte, offset, 0, &insn);
 
 		strcpy(tmp_noreg, insn[0].mnemonic);
@@ -232,6 +236,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		offset = 0;
 		list_byte = split(offset_opcode[0], ",", &size_byte);
 	}
+	free_strs(offset_opcode, size_offset_opcode);
 
 	code = (unsigned char *)malloc(sizeof(char) * size_byte);
 	for (i = 0; i < size_byte; ++i) {
@@ -239,6 +244,8 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 	}
 
 	count = cs_disasm(*handle, code, size_byte, offset, 0, &insn);
+	free_strs(list_byte, size_byte);
+	free(code);
 	for (i = 0; i < count; ++i) {
 		tmp = (char *)malloc(strlen(insn[i].mnemonic) + strlen(insn[i].op_str) + 100);
 		strcpy(tmp, insn[i].mnemonic);
@@ -280,10 +287,10 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" not in \"%s\"\n", list_part[0], list_part_issue_result[i], cs_result);
 			cs_free(insn, count);
 			free_strs(list_part, size_part);
-			free_strs(list_byte, size_byte);
 			free(cs_result);
 			//	free_strs(list_part_cs_result, size_part_cs_result);
 			free_strs(list_part_issue_result, size_part_issue_result);
+			free(tmptmp);
 			_fail(__FILE__, __LINE__);
 		}
 		free(tmptmp);
@@ -291,7 +298,6 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 
 	cs_free(insn, count);
 	free_strs(list_part, size_part);
-	free_strs(list_byte, size_byte);
 	free(cs_result);
 	//	free_strs(list_part_cs_result, size_part_cs_result);
 	free_strs(list_part_issue_result, size_part_issue_result);

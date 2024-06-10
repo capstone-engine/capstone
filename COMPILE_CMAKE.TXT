@@ -56,6 +56,8 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_X86_REDUCE: change this to ON to make X86 binary smaller.
   - CAPSTONE_X86_ATT_DISABLE: change this to ON to disable AT&T syntax on x86.
   - CAPSTONE_DEBUG: change this to ON to enable extra debug assertions.
+  - CAPSTONE_BUILD_CSTEST: Build `cstest` in `suite/cstest/`
+  - ENABLE_ASAN: Compiles Capstone with the address sanitizer.
 
   By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE
   modes are disabled. To use your own memory allocations, turn ON both DIET &

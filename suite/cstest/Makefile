@@ -6,7 +6,7 @@ LIBRARY = -lcmocka -lcapstone -L../..
 all:
 	rm -rf $(BUILD)
 	mkdir $(BUILD)
-	$(CC) $(SOURCE)/*.c $(INCLUDE:%=-I %) -g -o $(BUILD)/cstest $(LIBRARY)
+	$(CC) $(SOURCE)/*.c $(INCLUDE:%=-I %) ${CMAKE_C_FLAGS} -g -o $(BUILD)/cstest $(LIBRARY)
 cstest:
 	$(BUILD)/cstest -d ../MC	
 clean:

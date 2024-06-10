@@ -174,6 +174,7 @@ These features are only supported by `auto-sync`-enabled architectures.
 **More code quality checks**
 
 - `clang-tidy` is now run on all files changed by a PR.
+- ASAN: All tests are now run with the address sanitizer enabled. This includes checking for leaks.
 
 **Instruction formats for PPC**
 

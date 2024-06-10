@@ -74,17 +74,27 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 /// Macro for easier access of operand types from the map.
 /// Assumes the istruction operands map is called "insn_operands"
 /// Only usable by `auto-sync` archs!
+#ifndef CAPSTONE_DIET
 #define map_get_op_type(MI, OpNum) \
 	mapping_get_op_type(MI, OpNum, (const map_insn_ops *)insn_operands, \
 			    sizeof(insn_operands) / sizeof(insn_operands[0]))
+#else
+#define map_get_op_type(MI, OpNum) \
+	CS_OP_INVALID
+#endif
 
 /// Macro for easier access of operand access flags from the map.
 /// Assumes the istruction operands map is called "insn_operands"
 /// Only usable by `auto-sync` archs!
+#ifndef CAPSTONE_DIET
 #define map_get_op_access(MI, OpNum) \
 	mapping_get_op_access(MI, OpNum, (const map_insn_ops *)insn_operands, \
 			      sizeof(insn_operands) / \
 				      sizeof(insn_operands[0]))
+#else
+#define map_get_op_access(MI, OpNum) \
+	CS_AC_INVALID
+#endif
 
 ///< Map for ids to their string
 typedef struct name_map {

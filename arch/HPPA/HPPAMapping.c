@@ -300,6 +300,7 @@ const char *HPPA_insn_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
 /* Integer register names, indexed by the numbers which appear in the
    opcodes.  */
 static const char *const reg_names[] = {
@@ -341,6 +342,7 @@ static const char *const sp_fp_reg[] = {
 	"fr16R", "fr17R", "fr18R", "fr19R", "fr20R", "fr21R", "fr22R", "fr23R",
 	"fr24R", "fr25R", "fr26R", "fr27R", "fr28R", "fr29R", "fr30R", "fr31R"
 };
+#endif
 
 const char *HPPA_reg_name(csh handle, unsigned int reg)
 {

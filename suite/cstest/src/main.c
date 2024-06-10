@@ -431,6 +431,11 @@ static void test_file(const char *filename)
 	printf("[!] Noted:\n[  ERROR   ] --- \"<capstone result>\" != \"<user result>\"\n");	
 	printf("\n\n");
 	free_strs(list_lines, size_lines);
+	for (int k = 0; tests && k < number_of_tests; k++) {
+		free((char *)tests[k].name);
+	}
+	free(tests);
+	free(content);
 }
 
 static void test_folder(const char *folder)

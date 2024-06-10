@@ -36,6 +36,7 @@ jobs:
               python-arch: x64,
               python-version: '3.6',
               build-system: 'cmake',
+              enable-asan: 'OFF'
             }
           - {
               name: 'ubuntu-22.04 x64 python3.9 make',
@@ -44,7 +45,8 @@ jobs:
               python-arch: x64,
               python-version: '3.9',
               build-system: 'make',
-            }   
+              enable-asan: 'OFF'
+            }
           - {
               name: 'ubuntu-22.04 x64 python3.9 cmake',
               os: ubuntu-22.04,
@@ -52,6 +54,7 @@ jobs:
               python-arch: x64,
               python-version: '3.9',
               build-system: 'cmake',
+              enable-asan: 'OFF'
             }     
           - {
               name: 'ubuntu-22.04 x64 python3.11 cmake',
@@ -60,6 +63,16 @@ jobs:
               python-arch: x64,
               python-version: '3.11',
               build-system: 'cmake',
+              enable-asan: 'OFF'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 python3.11 ASAN',
+              os: ubuntu-latest,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.11',
+              build-system: 'cmake',
+              enable-asan: 'ON'
             }
 
     steps:
@@ -88,35 +101,61 @@ jobs:
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
+      env:
+        asan: ${{ matrix.config.enable-asan }}
       run: |
         mkdir build && cd build
         # build static library
-        cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr ..
+        cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ..
         cmake --build . --config Release
         # build shared library
-        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr ..
+        cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
         sudo cmake --build . --config Release --target install
         cp libcapstone.* ../
         cp libcapstone.* ../tests/
         cp test_* ../tests/
 
+    - name: Lower number of KASL randomized address bits
+      run: |
+        # Work-around ASAN bug https://github.com/google/sanitizers/issues/1716
+        sudo sysctl vm.mmap_rnd_bits=28
+
     - name: "Compatibility header test build"
+      if: matrix.config.diet-build == 'OFF'
+      env:
+        asan: ${{ matrix.config.enable-asan }}
       run: |
         cd "$(git rev-parse --show-toplevel)/suite/auto-sync/c_tests/"
-        clang -lcapstone  src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
+        if [ "$asan" = "ON" ]; then
+          clang -lcapstone -fsanitize=address src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
+        else
+          clang -lcapstone src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
+        fi
         ./test_arm64_compatibility_header
+        cd "$(git rev-parse --show-toplevel)"
 
     - name: cstool - reaches disassembler engine
       run: |
         sh suite/run_invalid_cstool.sh
 
-    - name: cstest
+    - name: cstest (cmake)
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        python suite/cstest/cstest_report.py -D -d suite/MC
+        python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
+        python suite/cstest/cstest_report.py -D -f tests/cs_details/issue.cs
+
+    - name: cstest (make)
+      if: startsWith(matrix.config.build-system, 'make')
       run: |
         cd suite/cstest && ./build_cstest.sh
         python cstest_report.py -D -t build/cstest -d ../MC
-        python cstest_report.py -D -t build/cstest -f issues.cs; cd ..
+        python cstest_report.py -D -t build/cstest -f issues.cs
+        python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
+        cd ../../
 
     - name: verify python binding
+      if: matrix.config.enable-asan == 'OFF'
       run: |
         mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so
         cd bindings/python
@@ -136,6 +175,7 @@ jobs:
         make check
 
     - name: run python binding test
+      if: matrix.config.enable-asan == 'OFF'
       run: |
         cp libcapstone.* bindings/python/prebuilt
         cd bindings/python
@@ -144,6 +184,7 @@ jobs:
         BUILD_TESTS=no make tests
 
     - name: run cython binding test
+      if: matrix.config.enable-asan == 'OFF'
       run: |
         pip install cython
         cd bindings/python
