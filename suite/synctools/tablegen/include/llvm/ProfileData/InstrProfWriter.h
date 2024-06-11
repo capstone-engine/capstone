@@ -87,7 +87,7 @@ public:
       return Error::success();
     }
 
-    // Returns true if merging is should fail assuming A and B are incompatible.
+    // Returns true if merging should fail assuming A and B are incompatible.
     auto testIncompatible = [&](InstrProfKind A, InstrProfKind B) {
       return (static_cast<bool>(ProfileKind & A) &&
               static_cast<bool>(Other & B)) ||

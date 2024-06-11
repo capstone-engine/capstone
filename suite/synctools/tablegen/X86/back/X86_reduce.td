@@ -315,12 +315,12 @@ def FeatureFastLZCNT
     : SubtargetFeature<
           "fast-lzcnt", "HasFastLZCNT", "true",
           "LZCNT instructions are as fast as most simple integer ops">;
-// If the target can efficiently decode NOPs upto 11-bytes in length.
+// If the target can efficiently decode NOPs up to 11-bytes in length.
 def FeatureFast11ByteNOP
     : SubtargetFeature<
           "fast-11bytenop", "HasFast11ByteNOP", "true",
           "Target can quickly decode up to 11 byte NOPs">;
-// If the target can efficiently decode NOPs upto 15-bytes in length.
+// If the target can efficiently decode NOPs up to 15-bytes in length.
 def FeatureFast15ByteNOP
     : SubtargetFeature<
           "fast-15bytenop", "HasFast15ByteNOP", "true",

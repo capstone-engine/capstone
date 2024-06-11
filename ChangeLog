@@ -771,7 +771,7 @@ Version 3.0.1: February 03rd, 2015
   the enumeration of disassembled instructions.
 - Fix a NULL memory access issue when SKIPDATA & Detail modes are enable
   at the same time.
-- Fix a memory leaking bug when when we stop enumeration over the disassembled
+- Fix a memory leaking bug when we stop enumeration over the disassembled
   instructions prematurely.
 - Export generic operand types & groups (CS_OP_xxx & CS_GRP_xxx).
 

@@ -118,7 +118,7 @@ make check LD_LIBRARY_PATH="`pwd`"
 %doc LICENSE.TXT LICENSE_LLVM.TXT
 %else
 %license LICENSE.TXT LICENSE_LLVM.TXT
-%endif # %license workarond for RHEL<7
+%endif # %license workaround for RHEL<7
 %doc README ChangeLog
 %{_libdir}/*.so.*
 

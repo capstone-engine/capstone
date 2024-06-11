@@ -115,8 +115,8 @@ typedef enum ppc_pred {
 
 /// CR field indices and their meaning.
 typedef enum {
-	PPC_BI_LT = 0,	       ///< CR bit Less Then
-	PPC_BI_GT = 1,	       ///< CR bit Greater Then
+	PPC_BI_LT = 0,	       ///< CR bit Less Than
+	PPC_BI_GT = 1,	       ///< CR bit Greater Than
 	PPC_BI_Z = 2,	       ///< CR bit Zero
 	PPC_BI_SO = 3,	       ///< CR bit Summary Overflow
 	PPC_BI_INVALID = 0xff, ///< CR bit was not set/invalid
