@@ -30,15 +30,6 @@ jobs:
       matrix:
         config:
           - {
-              name: 'ubuntu-20.04 x64 python3.6 cmake',
-              os: ubuntu-20.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.6',
-              build-system: 'cmake',
-              enable-asan: 'OFF'
-            }
-          - {
               name: 'ubuntu-22.04 x64 python3.9 make',
               os: ubuntu-22.04,
               arch: x64,
