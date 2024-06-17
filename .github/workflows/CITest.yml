@@ -175,6 +175,7 @@ jobs:
     - name: run python binding test
       if: matrix.config.enable-asan == 'OFF'
       run: |
+        pip install --upgrade setuptools
         cp libcapstone.* bindings/python/prebuilt
         cd bindings/python
         make install
