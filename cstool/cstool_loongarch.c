@@ -27,20 +27,20 @@ void print_insn_detail_loongarch(csh handle, cs_insn *ins)
 		switch ((int)op->type) {
 		default:
 			break;
-		case LoongArch_OP_REG:
+		case LOONGARCH_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i,
 			       cs_reg_name(handle, op->reg));
 			break;
-		case LoongArch_OP_IMM:
+		case LOONGARCH_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i,
 			       (long)op->imm);
 			break;
-		case LoongArch_OP_MEM:
+		case LOONGARCH_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
-			if (op->mem.base != LoongArch_REG_INVALID)
+			if (op->mem.base != LOONGARCH_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 				       i, cs_reg_name(handle, op->mem.base));
-			if (op->mem.index != LoongArch_REG_INVALID)
+			if (op->mem.index != LOONGARCH_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 				       i, cs_reg_name(handle, op->mem.index));
 			if (op->mem.disp != 0)
