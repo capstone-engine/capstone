@@ -392,6 +392,7 @@ import ctypes, ctypes.util
 from os.path import split, join, dirname
 import sysconfig
 from importlib import resources
+from pathlib import PurePath
 
 import inspect
 if not hasattr(sys.modules[__name__], '__file__'):
@@ -431,7 +432,7 @@ _path_list = [os.getenv('LIBCAPSTONE_PATH', None),
               resources.files(__name__) / "lib",
               join(split(__file__)[0], 'lib'),
               '',
-              sysconfig.get_path('platlib'),
+              PurePath(sysconfig.get_path('platlib')),
               "/usr/local/lib/" if sys.platform == 'darwin' else '/usr/lib64']
 
 for _path in _path_list:
