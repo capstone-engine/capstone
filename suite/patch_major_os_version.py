@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # By Daniel Pistelli & Nguyen Tan Cong
 
 # This script is to patch DLL/EXE MajorVersion to 5,

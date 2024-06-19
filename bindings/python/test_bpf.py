@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Capstone Python bindings
 # BPF tests by david942j <david942j@gmail.com>, 2019
