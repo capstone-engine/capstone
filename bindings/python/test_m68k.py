@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Capstone Python bindings, by Nicolas PLANEL <nplanel@gmail.com>
 from capstone import *

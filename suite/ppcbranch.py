@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Capstone by Nguyen Anh Quynnh <aquynh@gmail.com>
 # PPC Branch testing suite by kratolp

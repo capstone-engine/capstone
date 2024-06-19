@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 from __future__ import print_function
