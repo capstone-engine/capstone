@@ -220,7 +220,7 @@ struct CounterMappingRegion {
     SkippedRegion,
 
     /// A GapRegion is like a CodeRegion, but its count is only set as the
-    /// line execution count when its the only region in the line.
+    /// line execution count when it's the only region in the line.
     GapRegion,
 
     /// A BranchRegion represents leaf-level boolean expressions and is

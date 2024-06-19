@@ -2639,7 +2639,7 @@ public:
 
   enum SignedOrUnsignedConstant { SignedConstant, UnsignedConstant };
   /// Determine whether this represents a constant value, if so
-  // return it's sign information.
+  // return its sign information.
   llvm::Optional<SignedOrUnsignedConstant> isConstant() const;
 
   /// Return the number of unique location operands referred to (via

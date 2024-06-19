@@ -41,7 +41,7 @@ public:
 
   // Since we don't know ahead of time how many instructions we're going to add
   // to the worklist, and migrating densemap's elements is quite expensive
-  // everytime we resize, only insert to the smallvector (typically during the
+  // every time we resize, only insert to the smallvector (typically during the
   // initial phase of populating lists). Before the worklist can be used,
   // finalize should be called. Also assert with NDEBUG if list is ever used
   // without finalizing. Note that unlike insert, we won't check for duplicates

@@ -175,7 +175,7 @@ class TargetRegisterInfo;
       return getKind() == Order && Contents.OrdKind == Barrier;
     }
 
-    /// Tests if this is could be any kind of memory dependence.
+    /// Tests if this could be any kind of memory dependence.
     bool isNormalMemoryOrBarrier() const {
       return (isNormalMemory() || isBarrier());
     }

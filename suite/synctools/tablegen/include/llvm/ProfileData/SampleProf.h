@@ -177,7 +177,7 @@ enum class SecCommonFlags : uint32_t {
 };
 
 // Section specific flags are defined here.
-// !!!Note: Everytime a new enum class is created here, please add
+// !!!Note: Every time a new enum class is created here, please add
 // a new check in verifySecFlag.
 enum class SecNameTableFlags : uint32_t {
   SecFlagInValid = 0,
