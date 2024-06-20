@@ -11,10 +11,10 @@
 /* Capstone's LLVM TableGen Backends: */
 /* https://github.com/capstone-engine/llvm-capstone */
 
-	LoongArch_INS_ALIAS_LA, // Real instr.: LoongArch_PseudoLA_GOT
-	LoongArch_INS_ALIAS_LA_GLOBAL, // Real instr.: LoongArch_PseudoLA_GOT
-	LoongArch_INS_ALIAS_LA_LOCAL, // Real instr.: LoongArch_PseudoLA_PCREL
-	LoongArch_INS_ALIAS_NOP, // Real instr.: LoongArch_ANDI
-	LoongArch_INS_ALIAS_MOVE, // Real instr.: LoongArch_OR
-	LoongArch_INS_ALIAS_RET, // Real instr.: LoongArch_JIRL
-	LoongArch_INS_ALIAS_JR, // Real instr.: LoongArch_JIRL
+	LOONGARCH_INS_ALIAS_LA, // Real instr.: LOONGARCH_PseudoLA_GOT
+	LOONGARCH_INS_ALIAS_LA_GLOBAL, // Real instr.: LOONGARCH_PseudoLA_GOT
+	LOONGARCH_INS_ALIAS_LA_LOCAL, // Real instr.: LOONGARCH_PseudoLA_PCREL
+	LOONGARCH_INS_ALIAS_NOP, // Real instr.: LOONGARCH_ANDI
+	LOONGARCH_INS_ALIAS_MOVE, // Real instr.: LOONGARCH_OR
+	LOONGARCH_INS_ALIAS_RET, // Real instr.: LOONGARCH_JIRL
+	LOONGARCH_INS_ALIAS_JR, // Real instr.: LOONGARCH_JIRL

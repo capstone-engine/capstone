@@ -11,10 +11,10 @@
 /* Capstone's LLVM TableGen Backends: */
 /* https://github.com/capstone-engine/llvm-capstone */
 
-	{ LoongArch_INS_ALIAS_LA, "la" },
-	{ LoongArch_INS_ALIAS_LA_GLOBAL, "la_global" },
-	{ LoongArch_INS_ALIAS_LA_LOCAL, "la_local" },
-	{ LoongArch_INS_ALIAS_NOP, "nop" },
-	{ LoongArch_INS_ALIAS_MOVE, "move" },
-	{ LoongArch_INS_ALIAS_RET, "ret" },
-	{ LoongArch_INS_ALIAS_JR, "jr" },
+	{ LOONGARCH_INS_ALIAS_LA, "la" },
+	{ LOONGARCH_INS_ALIAS_LA_GLOBAL, "la_global" },
+	{ LOONGARCH_INS_ALIAS_LA_LOCAL, "la_local" },
+	{ LOONGARCH_INS_ALIAS_NOP, "nop" },
+	{ LOONGARCH_INS_ALIAS_MOVE, "move" },
+	{ LOONGARCH_INS_ALIAS_RET, "ret" },
+	{ LOONGARCH_INS_ALIAS_JR, "jr" },

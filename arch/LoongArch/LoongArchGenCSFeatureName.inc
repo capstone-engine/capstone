@@ -11,8 +11,8 @@
 /* Capstone's LLVM TableGen Backends: */
 /* https://github.com/capstone-engine/llvm-capstone */
 
-{ LoongArch_FEATURE_IsLA64, "IsLA64" },
-{ LoongArch_FEATURE_IsLA32, "IsLA32" },
-{ LoongArch_FEATURE_HasLaGlobalWithPcrel, "HasLaGlobalWithPcrel" },
-{ LoongArch_FEATURE_HasLaGlobalWithAbs, "HasLaGlobalWithAbs" },
-{ LoongArch_FEATURE_HasLaLocalWithAbs, "HasLaLocalWithAbs" },
+{ LOONGARCH_FEATURE_ISLA64, "IsLA64" },
+{ LOONGARCH_FEATURE_ISLA32, "IsLA32" },
+{ LOONGARCH_FEATURE_HASLAGLOBALWITHPCREL, "HasLaGlobalWithPcrel" },
+{ LOONGARCH_FEATURE_HASLAGLOBALWITHABS, "HasLaGlobalWithAbs" },
+{ LOONGARCH_FEATURE_HASLALOCALWITHABS, "HasLaLocalWithAbs" },
