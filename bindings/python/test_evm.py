@@ -2,9 +2,13 @@
 
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
+from __future__ import print_function
 from capstone import *
+import sys
 
 from xprint import to_hex
+
+_python3 = sys.version_info.major == 3
 
 
 EVM_CODE = b"\x60\x61\x50"

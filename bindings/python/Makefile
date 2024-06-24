@@ -1,11 +1,20 @@
+PYTHON2 ?= python2
 PYTHON3 ?= python3
 
-.PHONY: gen_const install install_cython sdist bdist clean check
+.PHONY: gen_const install install3 install_cython sdist sdist3 bdist bdist3 clean check
 
 gen_const:
 	cd .. && $(PYTHON3) const_generator.py python
 
 install:
+	rm -rf src/
+	if test -n "${DESTDIR}"; then \
+		$(PYTHON2) setup.py build install --root="${DESTDIR}"; \
+	else \
+		$(PYTHON2) setup.py build install; \
+	fi
+
+install3:
 	rm -rf src/
 	if test -n "${DESTDIR}"; then \
 		$(PYTHON3) setup.py build install --root="${DESTDIR}"; \
@@ -17,6 +26,14 @@ install:
 install_cython:
 	rm -rf src/
 	if test -n "${DESTDIR}"; then \
+		$(PYTHON2) setup_cython.py build install --root="${DESTDIR}"; \
+	else \
+		$(PYTHON2) setup_cython.py build install; \
+	fi
+
+install3_cython:
+	rm -rf src/
+	if test -n "${DESTDIR}"; then \
 		$(PYTHON3) setup_cython.py build install --root="${DESTDIR}"; \
 	else \
 		$(PYTHON3) setup_cython.py build install; \
@@ -25,10 +42,20 @@ install_cython:
 # build & upload PyPi package with source code of the core
 sdist:
 	rm -rf src/ dist/
+	$(PYTHON2) setup.py sdist register upload
+
+# build & upload PyPi package with source code of the core
+sdist3:
+	rm -rf src/ dist/
 	$(PYTHON3) setup.py sdist register upload
 
 # build & upload PyPi package with prebuilt core
 bdist:
+	rm -rf src/ dist/
+	$(PYTHON2) setup.py bdist_wheel register upload
+
+# build & upload PyPi package with prebuilt core
+bdist3:
 	rm -rf src/ dist/
 	$(PYTHON3) setup.py bdist_wheel register upload
 

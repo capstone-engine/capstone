@@ -2,8 +2,11 @@
 
 # Capstone Python bindings, by Wolfgang Schwotzer <wolfgang.schwotzer@gmx.net>
 
+from __future__ import print_function
+import sys
 from capstone import *
 from capstone.m680x import *
+_python3 = sys.version_info.major == 3
 
 
 s_access = (
@@ -37,7 +40,10 @@ all_tests = (
 
 # print hex dump from string all upper case
 def to_hex_uc(string):
-    return " ".join("0x%02x" % c for c in string)
+    if _python3:
+        return " ".join("0x%02x" % c for c in string)
+    else:
+        return " ".join("0x%02x" % ord(c) for c in string)
 
 # print short hex dump from byte array all upper case
 def to_hex_short_uc(byte_array):
