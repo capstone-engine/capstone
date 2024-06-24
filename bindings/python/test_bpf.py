@@ -3,6 +3,7 @@
 # Capstone Python bindings
 # BPF tests by david942j <david942j@gmail.com>, 2019
 
+from __future__ import print_function
 from capstone import *
 from capstone.bpf import *
 from xprint import to_hex, to_x, to_x_32

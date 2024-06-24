@@ -6,6 +6,11 @@
 
 		$ sudo make install
 
+   To install Capstone for Python 3, run the command below:
+   (Note: this requires python3 installed in your machine)
+
+		$ sudo make install3
+
    To control the install destination, set the DESTDIR environment variable.
 
 2. For better Python performance, install cython-based binding with:
@@ -14,7 +19,7 @@
 
 	Note that this requires Cython installed first. To install Cython, see
 	below.
-
+	
 3. To install Cython, you have to ensure that the header files
    and the static library for Python are installed beforehand.
 
@@ -33,13 +38,13 @@
 	      install the required Cython version using your repository.
 
 	E.g. on Ubuntu, do:
-
+	
 		$ sudo apt-get install cython
 
 	However, our cython-based binding requires Cython version 0.19 or newer,
 	but sometimes distributions only provide older version. Make sure to
 	verify the current installed version before going into section 2 above.
-
+	
 	E.g, on Ubuntu, you can verify the current Cython version with:
 
 		$ apt-cache policy cython
