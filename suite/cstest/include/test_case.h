@@ -20,11 +20,15 @@ typedef enum {
 typedef struct {
 	uint8_t *bytes; // mandatory
 	uint32_t bytes_count; // Filled by cyaml
-	const char *arch; // mandatory
+	char *arch;	      // mandatory
 	uint64_t address;
-	const char **options; // mandatory
+	char **options;	      // mandatory
 	uint32_t options_count; // Filled by cyaml
 } TestInput;
+
+TestInput *test_input_new();
+void test_input_free(TestInput *test_input);
+TestInput *test_input_clone(TestInput *test_input);
 
 /// A single byte
 static const cyaml_schema_value_t byte_schema = {
@@ -60,6 +64,10 @@ typedef struct {
 	// TODO: details
 } TestInsnData;
 
+TestInsnData *test_insn_data_new();
+void test_insn_data_free(TestInsnData *test_insn_data);
+TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data);
+
 static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_UINT("id", CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
 			 TestInsnData, id),
@@ -84,6 +92,10 @@ typedef struct {
 	uint32_t insns_count; ///< Filled by cyaml.
 } TestExpected;
 
+TestExpected *test_expected_new();
+void test_expected_free(TestExpected *test_expected);
+TestExpected *test_expected_clone(TestExpected *test_expected);
+
 static const cyaml_schema_value_t insn_schema = {
 	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestInsnData,
 			    test_insn_data_mapping_schema),
@@ -99,10 +111,13 @@ static const cyaml_schema_field_t test_expected_mapping_schema[] = {
 typedef struct {
 	TestInput input;       ///< Input data for a test case
 	TestExpected expected; ///< Expected data of the test case.
-	const char **
-		fields_to_check; ///< If NULL, all fields are checked. Otherwise only the specified.
+	char **fields_to_check; ///< If NULL, all fields are checked. Otherwise only the specified.
 	uint32_t fields_to_check_count; // Filled by cyaml
 } TestCase;
+
+TestCase *test_case_new();
+void test_case_free(TestCase *test_case);
+TestCase *test_case_clone(TestCase *test_case);
 
 /// A single field name string
 static const cyaml_schema_value_t field_schema = {
@@ -130,6 +145,10 @@ typedef struct {
 	TestCase *test_cases;
 	uint32_t test_cases_count;
 } TestFile;
+
+TestFile *test_file_new();
+void test_file_free(TestFile *test_file);
+TestFile *test_file_clone(TestFile *test_file);
 
 static const cyaml_schema_field_t test_file_mapping_schema[] = {
 	CYAML_FIELD_SEQUENCE("test_cases", CYAML_FLAG_POINTER, TestFile,
