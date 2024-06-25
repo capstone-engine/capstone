@@ -11,4 +11,6 @@ The build requires `libyaml`. It is a fairly common package and should be provid
 
 ## Testing
 
-Files to test `cstest` itself are located in `suite/cstest/test`
+Files to test `cstest` itself are located in `suite/cstest/test`.
+And yes, testing with a shell script is not nice. But I have time constraints, and
+for integration testing it does pretty much exactly what it should.

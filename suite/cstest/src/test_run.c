@@ -3,6 +3,7 @@
 
 #include "test_run.h"
 #include "cyaml/cyaml.h"
+#include "test_case.h"
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -36,7 +37,17 @@ TestRunResult run_tests(char **test_files, uint32_t file_count,
 		if (err != CYAML_OK || !test_file) {
 			fprintf(stderr, "Failed to parse test file '%s'\n",
 				test_files[i]);
-			fprintf(stderr, "Error: '%s'\n", !test_file ? "Empty file" : cyaml_strerror(err));
+			fprintf(stderr, "Error: '%s'\n",
+				!test_file && err == CYAML_OK ?
+					"Empty file" :
+					cyaml_strerror(err));
+			stats->errors++;
+			continue;
+		}
+		err = cyaml_free(&cyaml_config, &test_file_schema, test_file,
+				 0);
+		if (err != CYAML_OK) {
+			fprintf(stderr, "Error: '%s'\n", cyaml_strerror(err));
 			stats->errors++;
 			continue;
 		}
