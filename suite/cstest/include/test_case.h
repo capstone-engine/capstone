@@ -27,9 +27,30 @@ typedef struct {
 	uint32_t options_count; // Filled by cyaml
 } TestInput;
 
+/// A single byte
+static const cyaml_schema_value_t byte = {
+	CYAML_VALUE_UINT(CYAML_FLAG_DEFAULT, uint8_t),
+};
+
+/// A single option string
+static const cyaml_schema_value_t option = {
+	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
+};
+
+static const cyaml_schema_field_t test_input_mapping_schema[] = {
+	CYAML_FIELD_SEQUENCE("bytes", CYAML_FLAG_POINTER, TestInput, bytes,
+			     &byte, 0, CYAML_UNLIMITED), // 0-MAX bytes
+	CYAML_FIELD_STRING("arch", CYAML_FLAG_POINTER, TestInput, arch, 0),
+	CYAML_FIELD_UINT("address", CYAML_FLAG_SCALAR_PLAIN, TestInput,
+			 address),
+	CYAML_FIELD_SEQUENCE("options", CYAML_FLAG_POINTER, TestInput, options,
+			     &option, 0, CYAML_UNLIMITED), // 0-MAX options
+	CYAML_FIELD_END
+};
+
 /// Data compared to the produced cs_insn.
 typedef struct {
-	unsigned int id;  // mandatory
+	uint32_t id;	  // mandatory
 	uint64_t address; // mandatory
 	char *op_str;	  // mandatory
 	bool is_alias;
@@ -38,6 +59,23 @@ typedef struct {
 	// TODO: details
 } TestInsnData;
 
+static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
+	CYAML_FIELD_UINT("id", CYAML_FLAG_SCALAR_PLAIN, TestInsnData, id),
+	CYAML_FIELD_UINT("address", CYAML_FLAG_SCALAR_PLAIN, TestInsnData,
+			 address),
+	CYAML_FIELD_STRING("op_str", CYAML_FLAG_POINTER, TestInsnData, op_str,
+			   0),
+	CYAML_FIELD_BOOL("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
+			 is_alias),
+	CYAML_FIELD_UINT("alias_id",
+			 CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
+			 TestInsnData, alias_id),
+	CYAML_FIELD_STRING("mnemonic", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			   TestInsnData, mnemonic, 0),
+	// TODO details
+	CYAML_FIELD_END
+};
+
 /// The exected data for a test. This can hold mutiple instructions
 /// if enough bytes were given.
 typedef struct {
@@ -45,13 +83,47 @@ typedef struct {
 	uint32_t insns_count; ///< Filled by cyaml.
 } TestExpected;
 
+/// A single insn in the instruction data list to check
+static const cyaml_schema_value_t insn = {
+	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestInsnData,
+			    test_insn_data_mapping_schema),
+};
+
+static const cyaml_schema_field_t test_expected_mapping_schema[] = {
+	CYAML_FIELD_SEQUENCE("insns", CYAML_FLAG_POINTER, TestExpected, insns,
+			     &insn, 0, CYAML_UNLIMITED), // 0-MAX options
+	CYAML_FIELD_END
+};
+
 /// A single test case.
 typedef struct {
 	TestInput input;       ///< Input data for a test case
 	TestExpected expected; ///< Expected data of the test case.
-	const char *
-		fields_to_check; ///< If NULL, all fields are checkd. Otherwise only the specified.
+	const char **
+		fields_to_check; ///< If NULL, all fields are checked. Otherwise only the specified.
+	uint32_t fields_to_check_count; // Filled by cyaml
 } TestCase;
+
+/// A single field name string
+static const cyaml_schema_value_t field = {
+	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
+};
+
+static const cyaml_schema_field_t test_case_mapping_schema[] = {
+	CYAML_FIELD_MAPPING("input", CYAML_FLAG_DEFAULT, TestCase, input,
+			    test_input_mapping_schema),
+	CYAML_FIELD_MAPPING("expected", CYAML_FLAG_DEFAULT, TestCase, expected,
+			    test_expected_mapping_schema),
+	CYAML_FIELD_SEQUENCE("fields_to_check", CYAML_FLAG_POINTER, TestCase,
+			     fields_to_check, &field, 0,
+			     CYAML_UNLIMITED), // 0-MAX options
+	CYAML_FIELD_END
+};
+
+static const cyaml_schema_value_t top_test_case_schema = {
+	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestCase,
+			    test_case_mapping_schema),
+};
 
 /// The result of a test case.
 typedef struct {
