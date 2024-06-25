@@ -35,6 +35,7 @@
 #include "../../SStream.h"
 #include "./priv.h"
 #include "../../Mapping.h"
+#include "XtensaMapping.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -45,28 +46,30 @@ static const char *getRegisterName(unsigned RegNo);
 
 static void printOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_OPERAND, OpNum);
 	const MCOperand *MC = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isReg(MC)) {
 		SStream_concat0(O, getRegisterName(MCOperand_getReg(MC)));
-
 	} else if (MCOperand_isImm(MC)) {
 		printInt64(O, MCOperand_getImm(MC));
 	} else if (MCOperand_isExpr(MC)) {
 		printExpr(MCOperand_getExpr(MC), O);
 	} else
-		report_fatal_error("Invalid operand");
+		CS_ASSERT("Invalid operand");
 }
 
 static inline void printMemOperand(MCInst *MI, int OpNum, SStream *OS)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_MEMOPERAND, OpNum);
 	SStream_concat0(OS, getRegisterName(MCOperand_getReg(
 				    MCInst_getOperand(MI, (OpNum)))));
 	SStream_concat0(OS, ", ");
-	printOperand(MI, OpNum + 1, OS);
+	printInt64(OS, MCOperand_getImm(MCInst_getOperand(MI, OpNum + 1)));
 }
 
 static inline void printBranchTarget(MCInst *MI, int OpNum, SStream *OS)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_BRANCHTARGET, OpNum);
 	MCOperand *MC = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Val = MCOperand_getImm(MC) + 4;
@@ -75,12 +78,15 @@ static inline void printBranchTarget(MCInst *MI, int OpNum, SStream *OS)
 			SStream_concat0(OS, "+");
 
 		printInt64(OS, Val);
-	} else
-		assert(0 && "Invalid operand");
+	} else if (MCOperand_isExpr(MC))
+		MCExpr_print(MCOperand_getExpr(MC), O, NULL, true);
+	else
+		CS_ASSERT(0 && "Invalid operand");
 }
 
 static inline void printJumpTarget(MCInst *MI, int OpNum, SStream *OS)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_JUMPTARGET, OpNum);
 	MCOperand *MC = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MC)) {
 		int64_t Val = MCOperand_getImm(MC) + 4;
@@ -89,13 +95,16 @@ static inline void printJumpTarget(MCInst *MI, int OpNum, SStream *OS)
 			SStream_concat0(OS, "+");
 
 		printInt64(OS, Val);
-	} else
+	} else if (MCOperand_isExpr(MC))
+		MCExpr_print(MCOperand_getExpr(MC), O, NULL, true);
+	else
 		assert(0 && "Invalid operand");
 	;
 }
 
 static inline void printCallOperand(MCInst *MI, int OpNum, SStream *OS)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_CALLOPERAND, OpNum);
 	MCOperand *MC = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MC)) {
 		int64_t Val = MCOperand_getImm(MC) + 4;
@@ -104,32 +113,42 @@ static inline void printCallOperand(MCInst *MI, int OpNum, SStream *OS)
 			SStream_concat0(OS, "+");
 
 		printInt64(OS, Val);
-	} else
+	} else if (MCOperand_isExpr(MC))
+		MCExpr_print(MCOperand_getExpr(MC), O, NULL, true);
+	else
 		assert(0 && "Invalid operand");
 }
 
 static inline void printL32RTarget(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_L32RTARGET, OpNum);
 	MCOperand *MC = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MC)) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 		int64_t InstrOff = Value & 0x3;
 		Value -= InstrOff;
-
+		CS_ASSERT(
+			(Value >= -262144 && Value <= -4) &&
+			"Invalid argument, value must be in ranges [-262144,-4]");
 		Value += ((InstrOff + 0x3) & 0x4) - InstrOff;
 		SStream_concat0(O, ". ");
 		printInt64(O, Value);
-	} else
+	} else if (MCOperand_isExpr(MC))
+		MCExpr_print(MCOperand_getExpr(MC), O, NULL, true);
+	else
 		assert(0 && "Invalid operand");
 }
 
 static inline void printImm8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_IMM8_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-
+		CS_ASSERT(
+			CONCAT(isInt, 8)(Value) &&
+			"Invalid argument, value must be in ranges [-128,127]");
 		printInt64(O, Value);
 	} else {
 		printOperand(MI, OpNum, O);
@@ -138,10 +157,14 @@ static inline void printImm8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printImm8_sh8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_IMM8_SH8_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-
+		CS_ASSERT(
+			(CONCAT(isInt, 16)(Value) && ((Value & 0xFF) == 0)) &&
+			"Invalid argument, value must be multiples of 256 in range "
+			"[-32768,32512]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -149,10 +172,13 @@ static inline void printImm8_sh8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printImm12m_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_IMM12M_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-
+		CS_ASSERT(
+			(Value >= -2048 && Value <= 2047) &&
+			"Invalid argument, value must be in ranges [-2048,2047]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -160,10 +186,11 @@ static inline void printImm12m_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printUimm4_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_UIMM4_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-
+		CS_ASSERT((Value >= 0 && Value <= 15) && "Invalid argument");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -171,10 +198,11 @@ static inline void printUimm4_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printUimm5_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_UIMM5_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-
+		CS_ASSERT((Value >= 0 && Value <= 31) && "Invalid argument");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -182,10 +210,12 @@ static inline void printUimm5_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printShimm1_31_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_SHIMM1_31_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-
+		CS_ASSERT((Value >= 1 && Value <= 31) &&
+			  "Invalid argument, value must be in range [1,31]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -193,10 +223,12 @@ static inline void printShimm1_31_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printImm1_16_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_IMM1_16_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-
+		CS_ASSERT((Value >= 1 && Value <= 16) &&
+			  "Invalid argument, value must be in range [1,16]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -204,6 +236,7 @@ static inline void printImm1_16_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printB4const_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_B4CONST_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
@@ -227,7 +260,7 @@ static inline void printB4const_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 		case 256:
 			break;
 		default:
-			break;
+			CS_ASSERT((0) && "Invalid B4const argument");
 		}
 		printInt64(O, Value);
 	} else
@@ -236,6 +269,7 @@ static inline void printB4const_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 
 static inline void printB4constu_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, XTENSA_OP_GROUP_B4CONSTU_ASMOPERAND, OpNum);
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
@@ -259,7 +293,7 @@ static inline void printB4constu_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 		case 256:
 			break;
 		default:
-			break;
+			CS_ASSERT((0) && "Invalid B4constu argument");
 		}
 		printInt64(O, Value);
 	} else

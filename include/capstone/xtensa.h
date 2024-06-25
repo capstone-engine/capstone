@@ -42,7 +42,7 @@ typedef enum xtensa_insn {
 	// generated content <XtensaGenCSInsnEnum.inc> begin
 	// clang-format off
 
-  XTENSA_INS_INVALID,
+	XTENSA_INS_INVALID,
 	XTENSA_INS_ABS,
 	XTENSA_INS_ADD,
 	XTENSA_INS_ADDI,
@@ -135,20 +135,20 @@ typedef enum xtensa_feature {
 	// generated content <XtensaGenCSFeatureEnum.inc> begin
 	// clang-format off
 
-XTENSA_FEATURE_HASDENSITY = 128,
+	XTENSA_FEATURE_HASDENSITY = 128,
 
 	// clang-format on
 	// generated content <XtensaGenCSFeatureEnum.inc> end
-	Xtensa_GRP_ENDING, ///< mark the end of the list of features
+	XTENSA_GRP_ENDING, ///< mark the end of the list of features
 } xtensa_feature;
 
 typedef enum cs_xtensa_op_type {
-	Xtensa_OP_INVALID = CS_OP_INVALID, ///< = (Uninitialized).
-	Xtensa_OP_REG = CS_OP_REG,	   ///< = (Register operand).
-	Xtensa_OP_IMM = CS_OP_IMM,	   ///< = (Immediate operand).
-	Xtensa_OP_MEM = CS_OP_MEM,	   ///< = (Memory operand).
-	Xtensa_OP_MEM_REG = CS_OP_MEM_REG, ///< = (Memory Register operand).
-	Xtensa_OP_MEM_IMM = CS_OP_MEM_IMM, ///< = (Memory Immediate operand).
+	XTENSA_OP_INVALID = CS_OP_INVALID, ///< = (Uninitialized).
+	XTENSA_OP_REG = CS_OP_REG,	   ///< = (Register operand).
+	XTENSA_OP_IMM = CS_OP_IMM,	   ///< = (Immediate operand).
+	XTENSA_OP_MEM = CS_OP_MEM,	   ///< = (Memory operand).
+	XTENSA_OP_MEM_REG = CS_OP_MEM_REG, ///< = (Memory Register operand).
+	XTENSA_OP_MEM_IMM = CS_OP_MEM_IMM, ///< = (Memory Immediate operand).
 } cs_xtensa_op_type;
 
 typedef struct cs_xtensa_op_mem {

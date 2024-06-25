@@ -41,6 +41,7 @@ __all__ = [
     'CS_ARCH_ALPHA',
     'CS_ARCH_HPPA',
     'CS_ARCH_LOONGARCH',
+    'CS_ARCH_XTENSA',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -243,7 +244,7 @@ CS_VERSION_MAJOR = CS_API_MAJOR
 CS_VERSION_MINOR = CS_API_MINOR
 CS_VERSION_EXTRA = 0
 
-__version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
+__version__ = "%u.%u.%u" % (CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
 
 # architectures
 CS_ARCH_ARM = 0
@@ -267,7 +268,8 @@ CS_ARCH_TRICORE = 17
 CS_ARCH_ALPHA = 18
 CS_ARCH_HPPA = 19
 CS_ARCH_LOONGARCH = 20
-CS_ARCH_MAX = 20
+CS_ARCH_XTENSA = 21
+CS_ARCH_MAX = 21
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -340,7 +342,7 @@ CS_MODE_MOS65XX_6502 = (1 << 1) # MOS65XXX MOS 6502
 CS_MODE_MOS65XX_65C02 = (1 << 2) # MOS65XXX WDC 65c02
 CS_MODE_MOS65XX_W65C02 = (1 << 3) # MOS65XXX WDC W65c02
 CS_MODE_MOS65XX_65816 = (1 << 4) # MOS65XXX WDC 65816, 8-bit m/x
-CS_MODE_MOS65XX_65816_LONG_M = (1 << 5) # MOS65XXX WDC 65816, 16-bit m, 8-bit x 
+CS_MODE_MOS65XX_65816_LONG_M = (1 << 5) # MOS65XXX WDC 65816, 16-bit m, 8-bit x
 CS_MODE_MOS65XX_65816_LONG_X = (1 << 6) # MOS65XXX WDC 65816, 8-bit m, 16-bit x
 CS_MODE_MOS65XX_65816_LONG_MX = CS_MODE_MOS65XX_65816_LONG_M | CS_MODE_MOS65XX_65816_LONG_X
 CS_MODE_SH2 = 1 << 1   # SH2
@@ -413,8 +415,8 @@ CS_OP_RESERVED_14 = 14
 CS_OP_RESERVED_15 = 15
 CS_OP_SPECIAL = 0x10  # Special operands from archs
 CS_OP_MEM = 0x80  # Memory operand. Can be ORed with another operand type.
-CS_OP_MEM_REG = CS_OP_MEM | CS_OP_IMM,
-CS_OP_MEM_IMM = CS_OP_MEM | CS_OP_IMM,
+CS_OP_MEM_REG = CS_OP_MEM | CS_OP_REG  # Memory referencing register operand.
+CS_OP_MEM_IMM = CS_OP_MEM | CS_OP_IMM  # Memory referencing immediate operand.
 
 # Common instruction groups - to be consistent across all architectures.
 CS_GRP_INVALID = 0  # uninitialized/invalid group.
@@ -498,16 +500,27 @@ else:
 
 _found = False
 
-def _load_lib(path):
-    lib_file = join(path, _lib)
-    if os.path.exists(lib_file):
-        return ctypes.cdll.LoadLibrary(lib_file)
+
+def _load_lib(_path):
+    def load_lib(path):
+        lib_file = join(path, _lib)
+        if os.path.exists(lib_file):
+            return ctypes.cdll.LoadLibrary(lib_file)
+        else:
+            # if we're on linux, try again with .so.5 extension
+            if lib_file.endswith('.so'):
+                if os.path.exists(lib_file + '.{}'.format(CS_VERSION_MAJOR)):
+                    return ctypes.cdll.LoadLibrary(lib_file + '.{}'.format(CS_VERSION_MAJOR))
+        return None
+
+    if isinstance(_path, str):
+        return load_lib(_path)
+    elif isinstance(_path, ContextManager):
+        with _path as path:
+            load_lib(path)
     else:
-        # if we're on linux, try again with .so.5 extension
-        if lib_file.endswith('.so'):
-            if os.path.exists(lib_file + '.{}'.format(CS_VERSION_MAJOR)):
-                return ctypes.cdll.LoadLibrary(lib_file + '.{}'.format(CS_VERSION_MAJOR))
-    return None
+        return None
+
 
 _cs = None
 
@@ -542,11 +555,15 @@ def copy_ctypes(src):
     ctypes.memmove(ctypes.byref(dst), ctypes.byref(src), ctypes.sizeof(type(src)))
     return dst
 
+
 def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
+
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha, hppa, loongarch
+from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, \
+    riscv, sh, tricore, alpha, hppa, loongarch, xtensa
+
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -571,7 +588,9 @@ class _cs_arch(ctypes.Union):
         ('alpha', alpha.CsAlpha),
         ('hppa', hppa.CsHPPA),
         ('loongarch', loongarch.CsLoongArch),
+        ('xtensa', xtensa.CsXtensa),
     )
+
 
 class _cs_detail(ctypes.Structure):
     _fields_ = (
@@ -584,6 +603,7 @@ class _cs_detail(ctypes.Structure):
         ('writeback', ctypes.c_bool),
         ('arch', _cs_arch),
     )
+
 
 class _cs_insn(ctypes.Structure):
     _fields_ = (
@@ -599,8 +619,11 @@ class _cs_insn(ctypes.Structure):
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
+
 # callback for SKIPDATA option
-CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, ctypes.c_size_t, ctypes.c_void_p)
+CS_SKIPDATA_CALLBACK = ctypes.CFUNCTYPE(ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t,
+                                        ctypes.c_size_t, ctypes.c_void_p)
+
 
 class _cs_opt_skipdata(ctypes.Structure):
     _fields_ = (
@@ -609,16 +632,19 @@ class _cs_opt_skipdata(ctypes.Structure):
         ('user_data', ctypes.c_void_p),
     )
 
+
 class _cs_opt_mnem(ctypes.Structure):
     _fields_ = (
         ('id', ctypes.c_uint),
         ('mnemonic', ctypes.c_char_p),
     )
 
+
 # setup all the function prototype
 def _setup_prototype(lib, fname, restype, *argtypes):
     getattr(lib, fname).restype = restype
     getattr(lib, fname).argtypes = argtypes
+
 
 _setup_prototype(_cs, "cs_open", ctypes.c_int, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_size_t))
 _setup_prototype(_cs, "cs_disasm", ctypes.c_size_t, ctypes.c_size_t, ctypes.POINTER(ctypes.c_char), ctypes.c_size_t, \
@@ -709,6 +735,7 @@ def cs_disasm_quick(arch, mode, code, offset, count=0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
+
 # Another quick, but lighter function to disasm raw binary code.
 # This function is faster than cs_disasm_quick() around 20% because
 # cs_disasm_lite() only return tuples of (address, size, mnemonic, op_str),
@@ -750,6 +777,7 @@ def cs_disasm_lite(arch, mode, code, offset, count=0):
     if status != CS_ERR_OK:
         raise CsError(status)
 
+
 def _ascii_name_or_default(name, default):
     return default if name is None else name.decode('ascii')
 
@@ -762,11 +790,12 @@ class CsInsn(object):
         if self._cs._detail and self._raw.id != 0:
             # save detail
             self._raw.detail = ctypes.pointer(all_info.detail._type_())
-            ctypes.memmove(ctypes.byref(self._raw.detail[0]), ctypes.byref(all_info.detail[0]), ctypes.sizeof(type(all_info.detail[0])))
+            ctypes.memmove(ctypes.byref(self._raw.detail[0]), ctypes.byref(all_info.detail[0]),
+                           ctypes.sizeof(type(all_info.detail[0])))
 
     def __repr__(self):
         return '<CsInsn 0x%x [%s]: %s %s>' % (self.address, self.bytes.hex(), self.mnemonic, self.op_str)
-            
+
     # return instruction's ID.
     @property
     def id(self):
@@ -864,7 +893,7 @@ class CsInsn(object):
             return self._raw.detail.contents.groups[:self._raw.detail.contents.groups_count]
 
         raise CsError(CS_ERR_DETAIL)
-    
+
     # return whether instruction has writeback operands.
     @property
     def writeback(self):
@@ -888,7 +917,7 @@ class CsInsn(object):
         arch = self._cs.arch
         if arch == CS_ARCH_ARM:
             (self.usermode, self.vector_size, self.vector_data, self.cps_mode, self.cps_flag, self.cc, self.vcc, self.update_flags, \
-            self.post_index, self.mem_barrier, self.pred_mask, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm) 
+            self.post_index, self.mem_barrier, self.pred_mask, self.operands) = arm.get_arch_info(self._raw.detail.contents.arch.arm)
         elif arch == CS_ARCH_AARCH64:
             (self.cc, self.update_flags, self.post_index, self.operands) = \
                 aarch64.get_arch_info(self._raw.detail.contents.arch.aarch64)
@@ -936,7 +965,8 @@ class CsInsn(object):
             (self.operands) = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
         elif arch == CS_ARCH_LOONGARCH:
             (self.format, self.operands) = loongarch.get_arch_info(self._raw.detail.contents.arch.loongarch)
-
+        elif arch == CS_ARCH_XTENSA:
+            (self.operands) = xtensa.get_arch_info(self._raw.detail.contents.arch.xtensa)
 
     def __getattr__(self, name):
         if not self._cs._detail:
@@ -984,7 +1014,6 @@ class CsInsn(object):
             raise CsError(CS_ERR_DIET)
 
         return _ascii_name_or_default(_cs.cs_group_name(self._cs.csh, group_id), default)
-
 
     # verify if this insn belong to group with id as @group_id
     def group(self, group_id):
@@ -1053,7 +1082,8 @@ class CsInsn(object):
         regs_write = (ctypes.c_uint16 * 64)()
         regs_write_count = ctypes.c_uint8()
 
-        status = _cs.cs_regs_access(self._cs.csh, self._raw, ctypes.byref(regs_read), ctypes.byref(regs_read_count), ctypes.byref(regs_write), ctypes.byref(regs_write_count))
+        status = _cs.cs_regs_access(self._cs.csh, self._raw, ctypes.byref(regs_read), ctypes.byref(regs_read_count),
+                                    ctypes.byref(regs_write), ctypes.byref(regs_write_count))
         if status != CS_ERR_OK:
             raise CsError(status)
 
@@ -1068,7 +1098,6 @@ class CsInsn(object):
             regs_write = []
 
         return (regs_read, regs_write)
-
 
 
 class Cs(object):
@@ -1113,8 +1142,6 @@ class Cs(object):
         self._skipdata_opt = _cs_opt_skipdata()
         self._skipdata = False
 
-
-
     # destructor to be called automatically when object is destroyed.
     def __del__(self):
         if self.csh:
@@ -1136,24 +1163,20 @@ class Cs(object):
         elif opt_type == CS_OPT_UNSIGNED:
             self._imm_unsigned = opt_value == CS_OPT_ON
 
-
     # is this a diet engine?
     @property
     def diet(self):
         return self._diet
-
 
     # is this engine compiled with X86-reduce option?
     @property
     def x86_reduce(self):
         return self._x86reduce
 
-
     # return assembly syntax.
     @property
     def syntax(self):
         return self._syntax
-
 
     # syntax setter: modify assembly syntax.
     @syntax.setter
@@ -1164,12 +1187,10 @@ class Cs(object):
         # save syntax
         self._syntax = style
 
-
     # return current skipdata status
     @property
     def skipdata(self):
         return self._skipdata
-
 
     # setter: modify skipdata status
     @skipdata.setter
@@ -1184,11 +1205,9 @@ class Cs(object):
         # save this option
         self._skipdata = opt
 
-
     @property
     def skipdata_setup(self):
         return (self._skipdata_mnem,) + self._skipdata_cb
-
 
     @skipdata_setup.setter
     def skipdata_setup(self, opt):
@@ -1196,28 +1215,25 @@ class Cs(object):
         self._skipdata_opt.mnemonic = _mnem.encode()
         self._skipdata_opt.callback = CS_SKIPDATA_CALLBACK(_cb or 0)
         self._skipdata_opt.user_data = ctypes.cast(_ud, ctypes.c_void_p)
-        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP, ctypes.cast(ctypes.byref(self._skipdata_opt), ctypes.c_void_p))
+        status = _cs.cs_option(self.csh, CS_OPT_SKIPDATA_SETUP,
+                               ctypes.cast(ctypes.byref(self._skipdata_opt), ctypes.c_void_p))
         if status != CS_ERR_OK:
             raise CsError(status)
 
         self._skipdata_mnem = _mnem
         self._skipdata_cb = (_cb, _ud)
 
-
     @property
     def skipdata_mnem(self):
         return self._skipdata_mnem
-
 
     @skipdata_mnem.setter
     def skipdata_mnem(self, mnem):
         self.skipdata_setup = (mnem,) + self._skipdata_cb
 
-
     @property
     def skipdata_callback(self):
         return self._skipdata_cb
-
 
     @skipdata_callback.setter
     def skipdata_callback(self, val):
@@ -1225,7 +1241,6 @@ class Cs(object):
             val = (val, None)
         func, data = val
         self.skipdata_setup = (self._skipdata_mnem, func, data)
-
 
     # customize instruction mnemonic
     def mnemonic_setup(self, id, mnem):
@@ -1239,18 +1254,15 @@ class Cs(object):
         if status != CS_ERR_OK:
             raise CsError(status)
 
-
     # check to see if this engine supports a particular arch,
     # or diet mode (depending on @query).
     def support(self, query):
         return cs_support(query)
 
-
     # is detail mode enable?
     @property
     def detail(self):
         return self._detail
-
 
     # modify detail mode.
     @detail.setter
@@ -1264,12 +1276,10 @@ class Cs(object):
         # save detail
         self._detail = opt
 
-
     # is detail mode enable?
     @property
     def imm_unsigned(self):
         return self._imm_unsigned
-
 
     # modify detail mode.
     @imm_unsigned.setter
@@ -1283,12 +1293,10 @@ class Cs(object):
         # save detail
         self._imm_unsigned = opt
 
-
     # return disassembly mode of this engine.
     @property
     def mode(self):
         return self._mode
-
 
     # modify engine's mode at run-time.
     @mode.setter
@@ -1368,14 +1376,15 @@ class Cs(object):
         code = ctypes.pointer(ctypes.c_char.from_buffer_copy(view))
         if view.readonly:
             code = (ctypes.c_char * len(view)).from_buffer_copy(view)
-        else: 
+        else:
             code = ctypes.pointer(ctypes.c_char.from_buffer(view))
 
         # since we are taking a pointer to a pointer, ctypes does not do
         # the typical auto conversion, so we have to cast it here.
         code = ctypes.cast(code, ctypes.POINTER(ctypes.c_char))
         address = ctypes.c_uint64(offset)
-        while _cs.cs_disasm_iter(self.csh, ctypes.byref(code), ctypes.byref(size), ctypes.byref(address), ctypes.byref(insn)):
+        while _cs.cs_disasm_iter(self.csh, ctypes.byref(code), ctypes.byref(size), ctypes.byref(address),
+                                 ctypes.byref(insn)):
             yield (insn.address, insn.size, insn.mnemonic.decode('ascii'), insn.op_str.decode('ascii'))
 
     # Light function to disassemble binary. This is about 20% faster than disasm() because
@@ -1432,7 +1441,7 @@ def debug():
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
         'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH, 'alpha': CS_ARCH_ALPHA,
-        'hppa': CS_ARCH_HPPA, 'loongarch': CS_ARCH_LOONGARCH
+        'hppa': CS_ARCH_HPPA, 'loongarch': CS_ARCH_LOONGARCH, 'xtensa': CS_ARCH_XTENSA
     }
 
     all_archs = ""

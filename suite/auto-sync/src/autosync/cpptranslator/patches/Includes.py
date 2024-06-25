@@ -68,6 +68,8 @@ class Includes(Patch):
                 return res + get_Mips_includes(filename) + get_general_macros()
             case "SystemZ":
                 return res + get_SystemZ_includes(filename) + get_general_macros()
+            case "Xtensa":
+                return res + get_Xtensa_includes(filename) + get_general_macros()
             case "TEST_ARCH":
                 return res + b"test_output"
             case _:
@@ -386,6 +388,32 @@ def get_SystemZ_includes(filename: str) -> bytes:
             )
     log.fatal(f"No includes given for SystemZ source file: {filename}")
     exit(1)
+
+
+def get_Xtensa_includes(filename: str) -> bytes:
+    match filename:
+        case "XtensaDisassembler.cpp":
+            return b"""
+#include "../../MathExtras.h"
+#include "../../MCDisassembler.h"
+#include "../../MCFixedLenDisassembler.h"
+#include "../../SStream.h"
+#include "../../cs_priv.h"
+#include "priv.h"
+
+#define GET_INSTRINFO_MC_DESC
+#include "XtensaGenInstrInfo.inc"
+
+"""
+        case "XtensaInstPrinter.cpp":
+            return b"""
+#include "../../MCInstPrinter.h"
+#include "../../SStream.h"
+#include "XtensaMapping.h"
+#include "priv.h"
+        """
+        case _:
+            return b""
 
 
 def get_general_macros():

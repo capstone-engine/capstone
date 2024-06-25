@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x00 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "dsync"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x00 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "esync"
+
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "isync"
+
+  -
+    input:
+      bytes: [ 0xf0, 0x20, 0x00 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0x03 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsr a8, sar"
+
+  -
+    input:
+      bytes: [ 0x10, 0x20, 0x00 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsync"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0x13 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "wsr a8, sar"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0x61 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "xsr a8, sar"

@@ -27,7 +27,7 @@
 typedef struct MCInst MCInst;
 typedef struct cs_struct cs_struct;
 typedef struct MCOperand MCOperand;
-typedef unsigned MCRegister;
+typedef void MCExpr;
 
 /// MCOperand - Instances of this class represent operands of the MCInst class.
 /// This is a simple discriminated union.
@@ -83,6 +83,8 @@ void MCOperand_setFPImm(MCOperand *op, double Val);
 const MCInst *MCOperand_getInst(const MCOperand *op);
 
 void MCOperand_setInst(MCOperand *op, const MCInst *Val);
+
+int64_t MCOperand_getExpr(const MCOperand *MC);
 
 // create Reg operand in the next slot
 void MCOperand_CreateReg0(MCInst *inst, unsigned Reg);

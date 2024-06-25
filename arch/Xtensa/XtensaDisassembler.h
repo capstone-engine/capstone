@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By billow <billow.fun@gmail.com>, 2024 */
+
 #ifndef XTENSA_DISASSEMBLER_H
 #define XTENSA_DISASSEMBLER_H
 

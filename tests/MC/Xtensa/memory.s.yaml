@@ -1,0 +1,70 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x22, 0x01, 0x03 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "l8ui a2, a1, 3"
+
+  -
+    input:
+      bytes: [ 0x32, 0x91, 0x02 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "l16si a3, a1, 4"
+
+  -
+    input:
+      bytes: [ 0x42, 0x11, 0x03 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "l16ui a4, a1, 6"
+
+  -
+    input:
+      bytes: [ 0x52, 0x21, 0x02 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "l32i a5, a1, 8"
+
+  -
+    input:
+      bytes: [ 0x22, 0x41, 0x03 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "s8i a2, a1, 3"
+
+  -
+    input:
+      bytes: [ 0x32, 0x51, 0x02 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "s16i a3, a1, 4"
+
+  -
+    input:
+      bytes: [ 0x52, 0x61, 0x02 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "s32i a5, a1, 8"

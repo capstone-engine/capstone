@@ -88,6 +88,10 @@ def get_text(src: bytes, start_byte: int, end_byte: int) -> bytes:
     return src[start_byte:end_byte]
 
 
+def get_text_from_node(src: bytes, node: Node) -> bytes:
+    return src[node.start_byte : node.end_byte]
+
+
 def namespace_enum(src: bytes, ns_id: bytes, enum: Node) -> bytes:
     """
     Alters an enum in the way that it prepends the namespace id to every enum member.

@@ -221,6 +221,8 @@ static struct {
 
 	{ "loongarch32", "LoongArch 32-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH32 },
 	{ "loongarch64", "LoongArch 64-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64 },
+	{ "xtensa", "Xtensa", CS_ARCH_XTENSA, CS_MODE_XTENSA },
+	{ "xtensabe", "Xtensa, big endian", CS_ARCH_XTENSA, CS_MODE_XTENSA | CS_MODE_BIG_ENDIAN },
 	{ NULL }
 };
 
@@ -341,6 +343,11 @@ static void usage(char *prog)
 		printf(")\n");
 	}
 
+	if (cs_support(CS_ARCH_XTENSA)) {
+		printf("        xtensa      Xtensa\n");
+		printf("        xtensabe    Xtensa + big endian\n");
+	}
+
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -r show detailed information of the real instructions (even for alias)\n");
@@ -421,6 +428,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_LOONGARCH:
 			print_insn_detail_loongarch(handle, ins);
+			break;
+		case CS_ARCH_XTENSA:
+			print_insn_detail_xtensa(handle, ins);
 			break;
 		default: break;
 	}
@@ -606,6 +616,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_LOONGARCH)) {
 					printf("loongarch=1 ");
+				}
+
+				if (cs_support(CS_ARCH_XTENSA)) {
+					printf("xtensa=1 ");
 				}
 
 				printf("\n");

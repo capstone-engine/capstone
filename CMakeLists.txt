@@ -697,7 +697,6 @@ if(CAPSTONE_XTENSA_SUPPORT)
         arch/Xtensa/XtensaMapping.h
         arch/Xtensa/XtensaModule.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_xtensa.c)
 endif()
 
 if (CAPSTONE_OSXKERNEL_SUPPORT)

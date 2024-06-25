@@ -146,6 +146,20 @@ uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes)
 	return Insn;
 }
 
+/// Reads 3 bytes in the endian order specified in MI->cs->mode.
+uint32_t readBytes24(MCInst *MI, const uint8_t *Bytes)
+{
+	assert(MI && Bytes);
+	uint32_t Insn;
+	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
+		Insn = (Bytes[2]) | (Bytes[1] << 8) |
+		       ((uint32_t)Bytes[0] << 16);
+	else
+		Insn = (Bytes[2] << 16) | (Bytes[1] << 8) |
+		       ((uint32_t)Bytes[0]);
+	return Insn;
+}
+
 /// Reads 2 bytes in the endian order specified in MI->cs->mode.
 uint16_t readBytes16(MCInst *MI, const uint8_t *Bytes)
 {

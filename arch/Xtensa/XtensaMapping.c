@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By billow <billow.fun@gmail.com>, 2024 */
+
 #include <capstone/xtensa.h>
 
 #include "../../MCRegisterInfo.h"
@@ -9,6 +12,7 @@
 #include "XtensaDisassembler.h"
 #include "XtensaInstPrinter.h"
 #include "priv.h"
+#include "XtensaMapping.h"
 
 #ifndef CAPSTONE_DIET
 
@@ -54,54 +58,6 @@ static void set_instr_map_data(MCInst *MI)
 	map_implicit_reads(MI, mapping_insns);
 	map_implicit_writes(MI, mapping_insns);
 	map_groups(MI, mapping_insns);
-
-	unsigned opcode = MCInst_getOpcode(MI);
-	if (opcode > ARR_SIZE(insn_operands)) {
-		return;
-	}
-
-	const map_insn_ops *ops = &insn_operands[opcode];
-	cs_xtensa *detail = &MI->flat_insn->detail->xtensa;
-	cs_xtensa_op *operand = detail->operands;
-	for (int i = 0; i < ARR_SIZE(ops->ops); ++i) {
-		const mapping_op *op = ops->ops + i;
-		if (!op->access || !op->type) {
-			break;
-		}
-		operand->access = op->access;
-		operand->type = op->type;
-		MCOperand *mc = MCInst_getOperand(MI, i);
-
-#define check(_k) if ((op->type & (_k)) == (_k))
-		check(CS_OP_IMM)
-		{
-			operand->imm = (int32_t)mc->ImmVal;
-		}
-		check(CS_OP_REG)
-		{
-			operand->reg = (uint8_t)mc->RegVal;
-		}
-		check(CS_OP_MEM_REG)
-		{
-			operand->mem.base = mc->RegVal;
-		}
-		check(CS_OP_MEM_IMM)
-		{
-			if (i > 0) {
-				cs_xtensa_op *prev = (operand - 1);
-				if (prev->type == CS_OP_MEM_REG &&
-				    prev->access == op->access) {
-					prev->type = Xtensa_OP_MEM;
-					prev->mem.disp = mc->ImmVal;
-					continue;
-				}
-			}
-			operand->mem.disp = mc->ImmVal;
-		}
-
-		detail->op_count++;
-		operand++;
-	}
 #endif
 }
 
@@ -169,7 +125,7 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 	for (i = 0; i < detail->op_count; i++) {
 		cs_xtensa_op *op = &(detail->operands[i]);
 		switch (op->type) {
-		case Xtensa_OP_REG:
+		case XTENSA_OP_REG:
 			if ((op->access & CS_AC_READ) &&
 			    !arr_exist(regs_read, read_count, op->reg)) {
 				regs_read[read_count] = (uint16_t)op->reg;
@@ -181,7 +137,7 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 				write_count++;
 			}
 			break;
-		case Xtensa_OP_MEM:
+		case XTENSA_OP_MEM:
 			// registers appeared in memory references always being read
 			if ((op->mem.base != XTENSA_REG_INVALID) &&
 			    !arr_exist(regs_read, read_count, op->mem.base)) {
@@ -204,3 +160,63 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 	*regs_write_count = write_count;
 }
 #endif
+
+void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
+{
+	int op_num = va_arg(args, int);
+	cs_xtensa_op *xop = Xtensa_get_detail_op(MI, 0);
+	switch (op_group) {
+	case XTENSA_OP_GROUP_OPERAND: {
+		const MCOperand *MC = MCInst_getOperand(MI, op_num);
+		if (MCOperand_isReg(MC)) {
+			xop->type = XTENSA_OP_REG;
+			xop->reg = MC->RegVal;
+		} else if (MCOperand_isImm(MC)) {
+			xop->type = XTENSA_OP_IMM;
+			xop->imm = MC->ImmVal;
+		}
+	} break;
+	case XTENSA_OP_GROUP_IMM8_ASMOPERAND:
+	case XTENSA_OP_GROUP_IMM8_SH8_ASMOPERAND:
+	case XTENSA_OP_GROUP_UIMM5_ASMOPERAND:
+	case XTENSA_OP_GROUP_B4CONST_ASMOPERAND:
+	case XTENSA_OP_GROUP_B4CONSTU_ASMOPERAND:
+	case XTENSA_OP_GROUP_IMM1_16_ASMOPERAND:
+	case XTENSA_OP_GROUP_IMM12M_ASMOPERAND:
+	case XTENSA_OP_GROUP_SHIMM1_31_ASMOPERAND:
+	case XTENSA_OP_GROUP_UIMM4_ASMOPERAND: {
+		int64_t val = MCOperand_getImm(MCInst_getOperand(MI, op_num));
+		xop->type = XTENSA_OP_IMM;
+		xop->imm = (int32_t)val;
+	} break;
+	case XTENSA_OP_GROUP_BRANCHTARGET:
+	case XTENSA_OP_GROUP_JUMPTARGET:
+	case XTENSA_OP_GROUP_CALLOPERAND: {
+		int64_t val =
+			MCOperand_getImm(MCInst_getOperand(MI, op_num)) + 4;
+		xop->type = XTENSA_OP_MEM_IMM;
+		xop->mem.base = (int32_t)val;
+	} break;
+	case XTENSA_OP_GROUP_L32RTARGET: {
+		int64_t val = MCOperand_getImm(MCInst_getOperand(MI, (op_num)));
+		int64_t instr_off = val & 0x3;
+		val -= instr_off;
+		val += ((instr_off + 0x3) & 0x4) - instr_off;
+		xop->type = XTENSA_OP_MEM_IMM;
+		xop->mem.base = (int32_t)val;
+	} break;
+	case XTENSA_OP_GROUP_MEMOPERAND: {
+		unsigned reg =
+			MCOperand_getReg(MCInst_getOperand(MI, (op_num)));
+		int64_t val =
+			MCOperand_getImm(MCInst_getOperand(MI, op_num + 1));
+		xop->type = XTENSA_OP_MEM;
+		xop->mem.base = reg;
+		xop->mem.disp = val;
+	} break;
+	}
+
+	const map_insn_ops *ops = insn_operands + MCInst_getOpcode(MI);
+	xop->access = (ops->ops + op_num)->access;
+	Xtensa_inc_op_count(MI);
+}

@@ -33,4 +33,8 @@ class QualifiedIdentifier(Patch):
             namespace = b""
             identifier = captures[0][0].named_children[0]
             identifier = get_text(src, identifier.start_byte, identifier.end_byte)
-        return namespace + b"_" + identifier
+        match (namespace, identifier):
+            case (b"std", b"size"):
+                return b"sizeof"
+            case _:
+                return namespace + b"_" + identifier

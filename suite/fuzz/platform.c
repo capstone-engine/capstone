@@ -379,7 +379,12 @@ struct platform platforms[] = {
 				"TRICORE",
 				"tc162"
 		},
-
+		{
+				CS_ARCH_XTENSA,
+				CS_MODE_LITTLE_ENDIAN,
+				"XTENSA",
+				"xtensa"
+		},
 		// dummy entry to mark the end of this array.
 		// DO NOT DELETE THIS
 		{

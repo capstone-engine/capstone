@@ -3,7 +3,7 @@
 
 from tree_sitter import Node
 
-from autosync.cpptranslator.patches.Helper import get_text
+from autosync.cpptranslator.patches.Helper import get_text, get_text_from_node
 from autosync.cpptranslator.patches.Patch import Patch
 
 
@@ -105,6 +105,37 @@ class StreamOperations(Patch):
                 + last_op_text.replace(b"'", b'"')
                 + b");\n"
             )
+        elif last_op.type == "identifier":
+            queue_str = f"""
+                (declaration (
+                    (primitive_type) @typ
+                    (init_declarator 
+                        (identifier) @ident (#eq? @ident "{last_op_text.decode('utf8')}")
+                    )
+                )) @decl
+"""
+            query = kwargs["ts_cpp_lang"].query(queue_str)
+            root_node = kwargs["tree"].root_node
+            query_result = list(
+                filter(
+                    lambda x: "typ" in x[1],
+                    query.matches(root_node, end_byte=last_op.start_byte),
+                )
+            )
+            if len(query_result) == 0:
+                res += b"SStream_concat0(" + s_name + b", " + last_op_text + b");"
+            else:
+                cap = query_result[-1]
+                typ = get_text_from_node(src, cap[1]["typ"])
+                match typ:
+                    case b"int":
+                        res += b"printInt32(" + s_name + b", " + last_op_text + b");"
+                    case b"int64_t":
+                        res += b"printInt64(" + s_name + b", " + last_op_text + b");"
+                    case _:
+                        res += (
+                            b"SStream_concat0(" + s_name + b", " + last_op_text + b");"
+                        )
         else:
             res += b"SStream_concat0(" + s_name + b", " + last_op_text + b");"
         stream = captures[0][0]

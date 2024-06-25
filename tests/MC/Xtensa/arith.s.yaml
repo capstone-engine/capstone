@@ -1,0 +1,159 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x60, 0x51, 0x60 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs a5, a6"
+
+  -
+    input:
+      bytes: [ 0x40, 0x39, 0x80 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "add a3, a9, a4"
+
+  -
+    input:
+      bytes: [ 0x10, 0xf9, 0x80 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "add a15, a9, a1"
+
+  -
+    input:
+      bytes: [ 0x82, 0xc1, 0x80 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi a8, a1, -128"
+
+  -
+    input:
+      bytes: [ 0x82, 0xc1, 0xf4 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi a8, a1, -12"
+
+  -
+    input:
+      bytes: [ 0x12, 0xd2, 0x7f ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        - asm_text: "addmi a1, a2, 0"
+
+  -
+    input:
+      bytes: [ 0x50, 0x21, 0x90 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "addx2 a2, a1, a5"
+
+  -
+    input:
+      bytes: [ 0x60, 0x31, 0xa0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "addx4 a3, a1, a6"
+
+  -
+    input:
+      bytes: [ 0x70, 0x41, 0xb0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "addx8 a4, a1, a7"
+
+  -
+    input:
+      bytes: [ 0x30, 0x10, 0x60 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "neg a1, a3"
+
+  -
+    input:
+      bytes: [ 0x60, 0x45, 0x20 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "or a4, a5, a6"
+
+  -
+    input:
+      bytes: [ 0x10, 0x82, 0xc0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub a8, a2, a1"
+
+  -
+    input:
+      bytes: [ 0x50, 0x21, 0xd0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "subx2 a2, a1, a5"
+
+  -
+    input:
+      bytes: [ 0x60, 0x31, 0xe0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "subx4 a3, a1, a6"
+
+  -
+    input:
+      bytes: [ 0x70, 0x41, 0xf0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "subx8 a4, a1, a7"
+
+  -
+    input:
+      bytes: [ 0x50, 0x64, 0x30 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor a6, a4, a5"

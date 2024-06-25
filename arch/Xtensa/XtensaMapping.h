@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By billow <billow.fun@gmail.com>, 2024 */
+
 #ifndef XTENSA_MAPPING_H
 #define XTENSA_MAPPING_H
 
@@ -18,5 +21,17 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 		       uint8_t *regs_read_count, cs_regs regs_write,
 		       uint8_t *regs_write_count);
 #endif
+
+void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args);
+
+static inline void add_cs_detail(MCInst *MI, xtensa_op_group op_group, ...)
+{
+	if (!MI->flat_insn->detail)
+		return;
+	va_list args;
+	va_start(args, op_group);
+	Xtensa_add_cs_detail(MI, op_group, args);
+	va_end(args);
+}
 
 #endif

@@ -444,6 +444,8 @@ class Translator:
                 cb: [(Node, str)]
                 for cb in captures_bundle:
                     patch_kwargs = self.get_patch_kwargs(patch)
+                    patch_kwargs["tree"] = self.tree
+                    patch_kwargs["ts_cpp_lang"] = self.ts_cpp_lang
                     bytes_patch: bytes = patch.get_patch(cb, self.src, **patch_kwargs)
                     p_list.append((bytes_patch, cb[0][0]))
                 self.patch_src(p_list)

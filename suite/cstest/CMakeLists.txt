@@ -26,7 +26,7 @@ ExternalProject_Add(libcyaml_ext
     URL_HASH SHA256=8dbd216e1fce90f9f7cca341e5178710adc76ee360a7793ef867edb28f3e4130
     DOWNLOAD_EXTRACT_TIMESTAMP true
     CONFIGURE_COMMAND ""
-    BUILD_COMMAND make VARIANT=${LIBCYAML_VARIANT}
+    BUILD_COMMAND make VARIANT=${LIBCYAML_VARIANT} PKG_CONFIG=pkg-config
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
 )
@@ -45,8 +45,8 @@ add_executable(cstest ${CSTEST_SRC})
 add_library(libcstest STATIC ${CSTEST_SRC})
 add_dependencies(cstest cmocka_ext)
 add_dependencies(cstest libcyaml_ext)
-target_link_libraries(cstest PUBLIC capstone cmocka libcyaml yaml)
-target_link_libraries(libcstest PUBLIC capstone cmocka libcyaml yaml)
+target_link_libraries(cstest PUBLIC capstone cmocka libcyaml ${libyaml})
+target_link_libraries(libcstest PUBLIC capstone cmocka libcyaml ${libyaml})
 target_include_directories(cstest PRIVATE
         ${PROJECT_SOURCE_DIR}/include>
         ${CSTEST_INCLUDE_DIR}
