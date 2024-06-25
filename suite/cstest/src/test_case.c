@@ -6,7 +6,9 @@
 
 TestInput *test_input_new()
 {
-	return calloc(sizeof(TestInput), 1);
+	TestInput *p = calloc(sizeof(TestInput), 1);
+	assert(p);
+	return p;
 }
 
 void test_input_free(TestInput *test_input)
@@ -42,7 +44,9 @@ TestInput *test_input_clone(TestInput *test_input)
 
 TestInsnData *test_insn_data_new()
 {
-	return calloc(sizeof(TestInsnData), 1);
+	TestInsnData *p = calloc(sizeof(TestInsnData), 1);
+	assert(p);
+	return p;
 }
 
 void test_insn_data_free(TestInsnData *test_insn_data)
@@ -72,7 +76,9 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 
 TestExpected *test_expected_new()
 {
-	return calloc(sizeof(TestExpected), 1);
+	TestExpected *p = calloc(sizeof(TestExpected), 1);
+	assert(p);
+	return p;
 }
 
 void test_expected_free(TestExpected *test_expected)
@@ -104,7 +110,9 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 
 TestCase *test_case_new()
 {
-	return calloc(sizeof(TestCase), 1);
+	TestCase *p = calloc(sizeof(TestCase), 1);
+	assert(p);
+	return p;
 }
 
 void test_case_free(TestCase *test_case)
@@ -140,7 +148,9 @@ TestCase *test_case_clone(TestCase *test_case)
 
 TestFile *test_file_new()
 {
-	return calloc(sizeof(TestFile), 1);
+	TestFile *p = calloc(sizeof(TestFile), 1);
+	assert(p);
+	return p;
 }
 
 void test_file_free(TestFile *test_file)
