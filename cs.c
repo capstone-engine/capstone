@@ -71,6 +71,7 @@
 #include "arch/Alpha/AlphaModule.h"
 #include "arch/HPPA/HPPAModule.h"
 #include "arch/LoongArch/LoongArchModule.h"
+#include "arch/Xtensa/XtensaModule.h"
 
 typedef struct cs_arch_config {
 	// constructor initialization
@@ -255,6 +256,10 @@ typedef struct cs_arch_config {
 		LoongArch_option, \
 		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | CS_MODE_LOONGARCH64), \
 	}
+#define CS_ARCH_CONFIG_XTENSA \
+	{ \
+		Xtensa_global_init, Xtensa_option, ~(CS_MODE_XTENSA), \
+	}
 
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION
 static cs_arch_config arch_configs[MAX_ARCH];
@@ -371,6 +376,11 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_XTENSA
+	CS_ARCH_CONFIG_XTENSA
+#else
+	{ NULL, NULL, 0 },
+#endif
 };
 
 // bitmask of enabled architectures
@@ -437,6 +447,9 @@ static const uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_LOONGARCH
 	| (1 << CS_ARCH_LOONGARCH)
+#endif
+#ifdef CAPSTONE_HAS_XTENSA
+				 | (1 << CS_ARCH_XTENSA)
 #endif
 ;
 #endif
@@ -680,7 +693,7 @@ bool CAPSTONE_API cs_support(int query)
 				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF)        |
 				    (1 << CS_ARCH_SH)    | (1 << CS_ARCH_TRICORE)    |
 				    (1 << CS_ARCH_ALPHA) | (1 << CS_ARCH_HPPA)       |
-				    (1 << CS_ARCH_LOONGARCH));
+				    (1 << CS_ARCH_LOONGARCH) | (1 << CS_ARCH_XTENSA));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);

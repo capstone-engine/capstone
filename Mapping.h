@@ -177,6 +177,8 @@ DEFINE_inc_detail_op_count(riscv, RISCV);
 DEFINE_dec_detail_op_count(riscv, RISCV);
 DEFINE_inc_detail_op_count(systemz, SystemZ);
 DEFINE_dec_detail_op_count(systemz, SystemZ);
+DEFINE_inc_detail_op_count(xtensa, Xtensa);
+DEFINE_dec_detail_op_count(xtensa, Xtensa);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)

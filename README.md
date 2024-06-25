@@ -7,7 +7,8 @@ Capstone Engine
 [![oss-fuzz Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/capstone.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:capstone)
 
 > [!TIP]
-> Welcome to join our community group! &ensp; [<img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-squeare&logo=telegram&logoColor=white" height="22" />](https://t.me/CapstoneEngine)
+> Welcome to join our community group!
+> &ensp; [<img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-squeare&logo=telegram&logoColor=white" height="22" />](https://t.me/CapstoneEngine)
 
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
@@ -17,7 +18,7 @@ Capstone offers some unparalleled features:
 
 - Support multiple hardware architectures: ARM, AArch64, Alpha, BPF, Ethereum VM,
   LoongArch, HP PA-RISC (HPPA), M68K, M680X, Mips, MOS65XX, PPC, RISC-V(rv32G/rv64G), SH,
-  Sparc, SystemZ, TMS320C64X, TriCore, Webassembly, XCore and X86 (16, 32, 64).
+  Sparc, SystemZ, TMS320C64X, TriCore, Webassembly, XCore and X86 (16, 32, 64), Xtensa.
 
 - Having clean/simple/lightweight/intuitive architecture-neutral API.
 
