@@ -139,7 +139,7 @@ static const cyaml_schema_field_t test_file_mapping_schema[] = {
 };
 
 static const cyaml_schema_value_t test_file_schema = {
-	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestFile,
+	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestFile,
 			    test_file_mapping_schema),
 };
 

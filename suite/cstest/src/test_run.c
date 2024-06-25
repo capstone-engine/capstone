@@ -16,9 +16,10 @@ TestRunResult run_tests(char **test_files, uint32_t file_count,
 						  &test_file_schema,
 						  (cyaml_data_t **)&test_file,
 						  NULL);
-		if (err != CYAML_OK) {
+		if (err != CYAML_OK || !test_file) {
 			fprintf(stderr, "Failed to parse test file '%s'\n",
 				test_files[i]);
+			fprintf(stderr, "Error: '%s'\n", !test_file ? "Empty file" : cyaml_strerror(err));
 			continue;
 		}
 	}

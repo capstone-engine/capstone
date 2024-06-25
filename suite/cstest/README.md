@@ -8,3 +8,7 @@ SPDX-License-Identifier: BSD-3
 `cstest` is build together with Capstone by adding the flag `-DCAPSTONE_BUILD_CSTEST`.
 
 The build requires `libyaml`. It is a fairly common package and should be provided by your package manager.
+
+## Testing
+
+Files to test `cstest` itself are located in `suite/cstest/test`

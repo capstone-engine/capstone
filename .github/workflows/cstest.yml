@@ -1,0 +1,26 @@
+name: Testing cstest
+on:
+  push:
+    paths:
+      - "suite/cstest/**"
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Build Capstone & cstest
+        run: |
+          mkdir build && cd build
+          # build shared library
+          cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON ..
+          sudo cmake --build . --config Release --target install
+          cd ..
+      - name: Parsing tests
+        run: |
+          cd suite/cstest/test/
+          ./run_tests.sh
+
