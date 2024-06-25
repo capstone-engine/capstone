@@ -24,6 +24,14 @@ typedef struct {
 	TestCase *cases;
 } TestRun;
 
-TestRunResult run_tests(char **test_files, TestRunStats *stats);
+/* CYAML configuration. */
+static const cyaml_config_t cyaml_config = {
+	.log_fn = cyaml_log,		/* Use the default logging function. */
+	.mem_fn = cyaml_mem,		/* Use the default memory allocator. */
+	.log_level = CYAML_LOG_WARNING, /* Logging errors and warnings only. */
+};
+
+TestRunResult run_tests(char **test_files, uint32_t file_count,
+			TestRunStats *stats);
 
 #endif // TESTRUN_H

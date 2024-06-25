@@ -937,8 +937,7 @@ if(CAPSTONE_BUILD_CSTEST)
     add_executable(cstest ${CSTEST_SRC})
     add_dependencies(cstest cmocka_ext)
     add_dependencies(cstest libcyaml_ext)
-    target_link_libraries(cstest PUBLIC capstone cmocka)
-    target_link_libraries(cstest PUBLIC capstone libcyaml)
+    target_link_libraries(cstest PUBLIC capstone cmocka libcyaml yaml)
     target_include_directories(cstest PRIVATE
             $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
             ${PROJECT_SOURCE_DIR}/suite/cstest/include

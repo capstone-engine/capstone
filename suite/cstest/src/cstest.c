@@ -29,6 +29,12 @@ static int handle_ftree_entry(const char *fpath, const struct stat *sb,
 	if (typeflag != FTW_F) {
 		return 0;
 	}
+	const char *suffix = strstr(fpath, ".yaml");
+	if (!suffix || suffix - fpath != strlen(fpath) - 5) {
+		// Misses the .yaml suffix.
+		return 0;
+	}
+
 	file_count++;
 	*test_files = realloc(*test_files, sizeof(char *) * file_count);
 	if (!*test_files) {
@@ -51,7 +57,7 @@ static void get_tfiles(int argc, const char **argv)
 	}
 }
 
-void print_test_run_stats(TestRunStats *stats)
+void print_test_run_stats(const TestRunStats *stats)
 {
 	printf("-----------------------------------------\n");
 	printf("Test run statistics\n\n");
@@ -80,7 +86,7 @@ int main(int argc, const char **argv)
 
 	printf("Test files found: %" PRId32 "\n", file_count);
 	TestRunStats stats = { .total = 0, .successful = 0, .failed = 0 };
-	TestRunResult res = run_tests(*test_files, &stats);
+	TestRunResult res = run_tests(*test_files, file_count, &stats);
 	if (res == TRError) {
 		fprintf(stderr, "A fatal error occured.\n");
 		exit(EXIT_FAILURE);

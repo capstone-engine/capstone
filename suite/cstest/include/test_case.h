@@ -28,23 +28,24 @@ typedef struct {
 } TestInput;
 
 /// A single byte
-static const cyaml_schema_value_t byte = {
+static const cyaml_schema_value_t byte_schema = {
 	CYAML_VALUE_UINT(CYAML_FLAG_DEFAULT, uint8_t),
 };
 
 /// A single option string
-static const cyaml_schema_value_t option = {
+static const cyaml_schema_value_t option_schema = {
 	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
 };
 
 static const cyaml_schema_field_t test_input_mapping_schema[] = {
 	CYAML_FIELD_SEQUENCE("bytes", CYAML_FLAG_POINTER, TestInput, bytes,
-			     &byte, 0, CYAML_UNLIMITED), // 0-MAX bytes
+			     &byte_schema, 0, CYAML_UNLIMITED), // 0-MAX bytes
 	CYAML_FIELD_STRING("arch", CYAML_FLAG_POINTER, TestInput, arch, 0),
 	CYAML_FIELD_UINT("address", CYAML_FLAG_SCALAR_PLAIN, TestInput,
 			 address),
 	CYAML_FIELD_SEQUENCE("options", CYAML_FLAG_POINTER, TestInput, options,
-			     &option, 0, CYAML_UNLIMITED), // 0-MAX options
+			     &option_schema, 0,
+			     CYAML_UNLIMITED), // 0-MAX options
 	CYAML_FIELD_END
 };
 
@@ -84,14 +85,14 @@ typedef struct {
 } TestExpected;
 
 /// A single insn in the instruction data list to check
-static const cyaml_schema_value_t insn = {
+static const cyaml_schema_value_t insn_schema = {
 	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestInsnData,
 			    test_insn_data_mapping_schema),
 };
 
 static const cyaml_schema_field_t test_expected_mapping_schema[] = {
 	CYAML_FIELD_SEQUENCE("insns", CYAML_FLAG_POINTER, TestExpected, insns,
-			     &insn, 0, CYAML_UNLIMITED), // 0-MAX options
+			     &insn_schema, 0, CYAML_UNLIMITED), // 0-MAX options
 	CYAML_FIELD_END
 };
 
@@ -105,7 +106,7 @@ typedef struct {
 } TestCase;
 
 /// A single field name string
-static const cyaml_schema_value_t field = {
+static const cyaml_schema_value_t field_schema = {
 	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
 };
 
@@ -115,14 +116,31 @@ static const cyaml_schema_field_t test_case_mapping_schema[] = {
 	CYAML_FIELD_MAPPING("expected", CYAML_FLAG_DEFAULT, TestCase, expected,
 			    test_expected_mapping_schema),
 	CYAML_FIELD_SEQUENCE("fields_to_check", CYAML_FLAG_POINTER, TestCase,
-			     fields_to_check, &field, 0,
+			     fields_to_check, &field_schema, 0,
 			     CYAML_UNLIMITED), // 0-MAX options
 	CYAML_FIELD_END
 };
 
-static const cyaml_schema_value_t top_test_case_schema = {
-	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestCase,
+static const cyaml_schema_value_t test_case_schema = {
+	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestCase,
 			    test_case_mapping_schema),
+};
+
+typedef struct {
+	TestCase *test_cases;
+	uint32_t test_cases_count;
+} TestFile;
+
+static const cyaml_schema_field_t test_file_mapping_schema[] = {
+	CYAML_FIELD_SEQUENCE("test_cases", CYAML_FLAG_POINTER, TestFile,
+			     test_cases, &test_case_schema, 1,
+			     CYAML_UNLIMITED), // 1-MAX options
+	CYAML_FIELD_END
+};
+
+static const cyaml_schema_value_t test_file_schema = {
+	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestFile,
+			    test_file_mapping_schema),
 };
 
 /// The result of a test case.
