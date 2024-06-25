@@ -61,9 +61,11 @@ void print_test_run_stats(const TestRunStats *stats)
 {
 	printf("-----------------------------------------\n");
 	printf("Test run statistics\n\n");
-	printf("Total: %" PRId32 "\n", stats->total);
-	printf("Successful: %" PRId32 "\n", stats->successful);
-	printf("Failed: %" PRId32 "\n", stats->failed);
+	printf("Errors: %" PRId32 "\n\n", stats->errors);
+	printf("Test cases:\n");
+	printf("\tTotal: %" PRId32 "\n", stats->total);
+	printf("\tSuccessful: %" PRId32 "\n", stats->successful);
+	printf("\tFailed: %" PRId32 "\n", stats->failed);
 	printf("-----------------------------------------\n");
 	printf("\n");
 }
@@ -85,15 +87,14 @@ int main(int argc, const char **argv)
 	}
 
 	printf("Test files found: %" PRId32 "\n", file_count);
-	TestRunStats stats = { .total = 0, .successful = 0, .failed = 0 };
+	TestRunStats stats = { 0 };
 	TestRunResult res = run_tests(*test_files, file_count, &stats);
-	if (res == TRError) {
-		fprintf(stderr, "A fatal error occured.\n");
-		exit(EXIT_FAILURE);
-	}
 
 	print_test_run_stats(&stats);
-	if (res == TRSuccess) {
+	if (res == TRError) {
+		fprintf(stderr, "An error occured.\n");
+		exit(EXIT_FAILURE);
+	} else if (res == TRSuccess) {
 		printf("All tests succeeded.\n");
 		exit(EXIT_SUCCESS);
 	} else if (res == TRFailure) {

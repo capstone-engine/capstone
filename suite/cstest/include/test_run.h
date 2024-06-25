@@ -8,15 +8,16 @@
 #include <stdint.h>
 
 typedef enum {
-	TRSuccess = 0, ///< All tests succeeded.
-	TRFailure = 1, ///< At least one test failed.
-	TRError = 2,   ///< Aborted test run due to error.
+	TRSuccess = 0, ///< All test cases succeeded.
+	TRFailure = 1, ///< At least one test case failed.
+	TRError = 2,   ///< Test run had errors.
 } TestRunResult;
 
 typedef struct {
-	uint32_t total;	     ///< Total number of tests.
-	uint32_t successful; ///< Number of successful tests.
-	uint32_t failed;     ///< Number of failed tests.
+	uint32_t total;	     ///< Total number of test cases.
+	uint32_t successful; ///< Number of successful test cases.
+	uint32_t failed;     ///< Number of failed test cases.
+	uint32_t errors;     ///< Number errors (parsing errors etc).
 } TestRunStats;
 
 typedef struct {

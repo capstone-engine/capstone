@@ -4,6 +4,23 @@
 #include "test_run.h"
 #include "cyaml/cyaml.h"
 #include <stdbool.h>
+#include <stdio.h>
+
+static TestRunResult get_test_run_result(const TestRunStats *stats)
+{
+	if (stats->total != stats->successful + stats->failed) {
+		fprintf(stderr,
+			"Inconsistent statistics: total != successful + failed");
+		return TRError;
+	}
+
+	if (stats->errors != 0) {
+		return TRError;
+	} else if (stats->failed != 0) {
+		return TRFailure;
+	}
+	return TRSuccess;
+}
 
 /// Runs runs all valid tests in the given @test_files
 /// and returns the result as well as statistics in @stats.
@@ -20,10 +37,9 @@ TestRunResult run_tests(char **test_files, uint32_t file_count,
 			fprintf(stderr, "Failed to parse test file '%s'\n",
 				test_files[i]);
 			fprintf(stderr, "Error: '%s'\n", !test_file ? "Empty file" : cyaml_strerror(err));
+			stats->errors++;
 			continue;
 		}
 	}
-	return stats->total == stats->successful && stats->failed == 0 ?
-		       TRSuccess :
-		       TRFailure;
+	return get_test_run_result(stats);
 }
