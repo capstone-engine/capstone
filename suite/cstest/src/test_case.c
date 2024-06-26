@@ -44,16 +44,25 @@ TestInput *test_input_clone(TestInput *test_input)
 	return ti;
 }
 
-char *test_input_stringify(const TestInput *test_input)
+char *test_input_stringify(const TestInput *test_input, const char *postfix)
 {
 	size_t msg_len = 256;
 	char *msg = cs_mem_calloc(sizeof(char), msg_len);
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
+	char opt_seq[128] = {0};
+	append_to_str(opt_seq, sizeof(opt_seq), "[");
+	for (size_t i = 0; i < test_input->options_count; ++i) {
+		append_to_str(opt_seq, sizeof(opt_seq), test_input->options[i]);
+		if (i < test_input->options_count - 1) {
+			append_to_str(opt_seq, sizeof(opt_seq), ", ");
+		}
+	}
+	append_to_str(opt_seq, sizeof(opt_seq), "]");
 	cs_snprintf(msg, msg_len,
-		    "TestInput { arch: %s, options: %s, addr: 0x%" PRIx64
-		    ", bytes: %s }",
-		    test_input->arch, test_input->options, test_input->address,
+		    "%sTestInput { arch: %s, options: %s, addr: 0x%" PRIx64
+		    ", bytes: %s }", postfix,
+		    test_input->arch, opt_seq, test_input->address,
 		    byte_seq);
 	cs_mem_free(byte_seq);
 	return msg;

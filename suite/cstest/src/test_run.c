@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3
 
 #include "test_run.h"
-#include "../../../cs_priv.h"
+#include "../../../utils.h"
 #include <stdarg.h>
 #include <stddef.h>
 #include <setjmp.h>
@@ -82,7 +82,7 @@ static int cstest_unit_test_setup(void **state)
 	// Setup cs handle
 	cs_err err = cs_open(0, 0, ustate->handle);
 	if (err != CS_ERR_OK) {
-		char *tc_str = test_input_stringify(ustate->tcase->input);
+		char *tc_str = test_input_stringify(ustate->tcase->input, "");
 		fail_msg("cs_open() failed with: '%s'. TestInput: %s",
 			 cs_strerror(err), tc_str);
 		cs_mem_free(tc_str);
@@ -141,11 +141,15 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 	struct CMUnitTest *utest_table =
 		cs_mem_calloc(sizeof(struct CMUnitTest), stats->total);
 
+	char utest_id[16] = { 0 };
+
 	for (size_t i = 0; i < stats->total; ++i) {
 		UnitTestState *ut_state = cs_mem_calloc(sizeof(UnitTestState), 1);
 		ut_state->tcase = test_cases[i];
 		ut_state->stats = stats;
 
+		cs_snprintf(utest_id, sizeof(utest_id), "%" PRIx32 ": ", i);
+		utest_table[i].name = test_input_stringify(ut_state->tcase->input, utest_id);
 		utest_table[i].initial_state = ut_state;
 		utest_table[i].setup_func = cstest_unit_test_setup;
 		utest_table[i].teardown_func = cstest_unit_test_teardown;
@@ -155,6 +159,7 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 	_cmocka_run_group_tests("All test cases", utest_table, stats->total,
 				NULL, NULL);
 	for (size_t i = 0; i < stats->total; ++i) {
+		cs_mem_free((char *) utest_table[i].name);
 		cs_mem_free(utest_table[i].initial_state);
 	}
 	cs_mem_free(utest_table);

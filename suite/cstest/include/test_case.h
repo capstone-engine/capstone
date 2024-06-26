@@ -22,7 +22,7 @@ typedef struct {
 TestInput *test_input_new();
 void test_input_free(TestInput *test_input);
 TestInput *test_input_clone(TestInput *test_input);
-char *test_input_stringify(const TestInput *test_case);
+char *test_input_stringify(const TestInput *test_input, const char *postfix);
 cs_arch test_input_get_cs_arch(const TestInput *test_input);
 cs_mode test_input_get_cs_mode(const TestInput *test_input);
 void test_input_get_cs_option(const TestInput *test_input, cs_opt_type *otype,
