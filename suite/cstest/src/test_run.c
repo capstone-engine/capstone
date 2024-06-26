@@ -80,7 +80,7 @@ static int cstest_unit_test_setup(void **state)
 	UnitTestState *ustate = *state;
 	assert(ustate->stats && ustate->tcase);
 	// Setup cs handle
-	cs_err err = cs_open(0, 0, ustate->handle);
+	cs_err err = cs_open(0, 0, &ustate->handle);
 	if (err != CS_ERR_OK) {
 		char *tc_str = test_input_stringify(ustate->tcase->input, "");
 		fail_msg("cs_open() failed with: '%s'. TestInput: %s",
@@ -98,7 +98,7 @@ static int cstest_unit_test_teardown(void **state)
 	}
 	UnitTestState *ustate = *state;
 	if (ustate->handle) {
-		cs_err err = cs_close(ustate->handle);
+		cs_err err = cs_close(&ustate->handle);
 		if (err != CS_ERR_OK) {
 			fail_msg("cs_close() failed with: '%s'.",
 				 cs_strerror(err));
@@ -116,12 +116,12 @@ static void cstest_unit_test(void **state)
 	assert(ustate->handle);
 	assert(ustate->stats);
 	assert(ustate->tcase);
-	csh *handle = ustate->handle;
+	csh handle = ustate->handle;
 	TestRunStats *stats = ustate->stats;
 	TestCase *tcase = ustate->tcase;
 
 	cs_insn *insns = NULL;
-	size_t insns_count = cs_disasm(*handle, tcase->input->bytes,
+	size_t insns_count = cs_disasm(handle, tcase->input->bytes,
 				       tcase->input->bytes_count,
 				       tcase->input->address, 0, &insns);
 	if (test_expected_compare(tcase->expected, insns, insns_count)) {
