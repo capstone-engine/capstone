@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x4f,0x96,0x40,0x75 = xvfmaxa.s $xr15, $xr18, $xr5
+0x82,0x76,0x41,0x75 = xvfmaxa.d $xr2, $xr20, $xr29

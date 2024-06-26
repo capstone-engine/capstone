@@ -64,6 +64,13 @@ HPPA:
   - suite/MC/HPPA/*
   - tests/test_hppa.c
 
+LoongArch:
+  - arch/LoongArch/*
+  - cstool/cstool_loongarch.c
+  - include/capstone/loongarch.h
+  - suite/MC/LoongArch/*
+  - tests/test_loongarch.c
+
 M680X:
   - arch/M680X/*
   - cstool/cstool_m680x.c

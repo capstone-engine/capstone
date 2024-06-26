@@ -24,6 +24,7 @@ if "%1"=="BPF" set %arch%=BPF
 if "%1"=="RISCV" set %arch%=RISCV
 if "%1"=="ALPHA" set %arch%=ALPHA
 if "%1"=="HPPA" set %arch%=HPPA
+if "%1"=="LOONGARCH" set %arch%=LOONGARCH
 
 if not "%arch%"=="" set flags=%flags% and " -DCAPSTONE_ARCHITECTURE_DEFAULT=OFF -DCAPSTONE_%arch%_SUPPORT=ON"
 

@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x27,0x44,0xdf,0x77 = xvnori.b $xr7, $xr1, 0xd1

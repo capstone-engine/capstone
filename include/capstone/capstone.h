@@ -158,6 +158,7 @@ typedef enum cs_arch {
 	CS_ARCH_TRICORE,	///< TriCore architecture
 	CS_ARCH_ALPHA, 		///< Alpha architecture
 	CS_ARCH_HPPA, 		///< HPPA architecture
+	CS_ARCH_LOONGARCH, 	///< LoongArch architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -240,6 +241,8 @@ typedef enum cs_mode {
 	CS_MODE_HPPA_11 = 1 << 1, ///< HPPA 1.1
 	CS_MODE_HPPA_20 = 1 << 2, ///< HPPA 2.0
 	CS_MODE_HPPA_20W = CS_MODE_HPPA_20 | (1 << 3), ///< HPPA 2.0 wide
+	CS_MODE_LOONGARCH32  = 1 << 0,        ///< LoongArch32
+	CS_MODE_LOONGARCH64  = 1 << 1,        ///< LoongArch64
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
@@ -341,21 +344,22 @@ typedef struct cs_opt_skipdata {
 	/// immediately from cs_disasm()
 	/// NOTE: if this callback pointer is NULL, Capstone would skip a number
 	/// of bytes depending on architectures, as following:
-	/// Arm:     2 bytes (Thumb mode) or 4 bytes.
-	/// AArch64: 4 bytes.
-	/// Mips:    4 bytes.
-	/// M680x:   1 byte.
-	/// PowerPC: 4 bytes.
-	/// Sparc:   4 bytes.
-	/// SystemZ: 2 bytes.
-	/// X86:     1 bytes.
-	/// XCore:   2 bytes.
-	/// EVM:     1 bytes.
-	/// RISCV:   4 bytes.
-	/// WASM:    1 bytes.
-	/// MOS65XX: 1 bytes.
-	/// BPF:     8 bytes.
-	/// TriCore: 2 bytes.
+	/// Arm:       2 bytes (Thumb mode) or 4 bytes.
+	/// AArch64:   4 bytes.
+	/// Mips:      4 bytes.
+	/// M680x:     1 byte.
+	/// PowerPC:   4 bytes.
+	/// Sparc:     4 bytes.
+	/// SystemZ:   2 bytes.
+	/// X86:       1 bytes.
+	/// XCore:     2 bytes.
+	/// EVM:       1 bytes.
+	/// RISCV:     4 bytes.
+	/// WASM:      1 bytes.
+	/// MOS65XX:   1 bytes.
+	/// BPF:       8 bytes.
+	/// TriCore:   2 bytes.
+	/// LoongArch: 4 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
 
 	/// User-defined data to be passed to @callback function pointer.
@@ -387,6 +391,7 @@ typedef struct cs_opt_skipdata {
 #include "tricore.h"
 #include "alpha.h"
 #include "hppa.h"
+#include "loongarch.h"
 
 #define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20
@@ -437,6 +442,7 @@ typedef struct cs_detail {
 		cs_tricore tricore; ///< TriCore architecture
 		cs_alpha alpha; ///< Alpha architecture
 		cs_hppa hppa; ///< HPPA architecture
+		cs_loongarch loongarch; ///< LoongArch architecture
 	};
 } cs_detail;
 
@@ -583,6 +589,8 @@ CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_tricore(void);
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_alpha(void);
+CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_loongarch(void);
 
 /**
  This API can be used to either ask for archs supported by this library,

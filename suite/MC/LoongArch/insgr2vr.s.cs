@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0xd9,0xdf,0xeb,0x76 = xvinsgr2vr.w $xr25, $s7, 7
+0xbb,0xe6,0xeb,0x76 = xvinsgr2vr.d $xr27, $r21, 1

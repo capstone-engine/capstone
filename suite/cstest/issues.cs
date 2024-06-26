@@ -1078,3 +1078,35 @@
 !# issue 2244
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0xc5,0xfb,0xc2,0xda,0x06 == vcmpnlesd	xmm3, xmm0, xmm2 ; ID: 797
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0xcf, 0x41, 0xd0, 0x28 == ld.d $t3, $t2, 0x410 ; operands[1].type: MEM ; operands[1].mem.base: REG = t2 ; operands[1].mem.disp: 0x410
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0x8d, 0x59, 0x10, 0x27 == stptr.d $t1, $t0, 0x1058 ; operands[1].type: MEM ; operands[1].mem.base: REG = t0 ; operands[1].mem.disp: 0x1058
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0xa4, 0x15, 0x20, 0x30 == vldrepl.w $vr4, $t1, 0x14 ; operands[1].type: MEM ; operands[1].mem.base: REG = t1 ; operands[1].mem.disp: 0x14
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0x68, 0x22, 0xc2, 0x2a == preld 8, $t7, 0x88 ; operands[1].type: MEM ; operands[1].mem.base: REG = t7 ; operands[1].mem.disp: 0x88
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0xe1, 0x2c, 0x30, 0x38 == fldx.s $fa1, $a3, $a7 ; operands[1].type: MEM ; operands[1].mem.base: REG = a3 ; operands[1].mem.index: REG = a7
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0xc4, 0x14, 0x57, 0x38 == sc.q $a0, $a1, $a2 ; operands[2].type: MEM ; operands[2].mem.base: REG = a2
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0xc4, 0x14, 0x61, 0x38 == amadd.w $a0, $a1, $a2 ; operands[2].type: MEM ; operands[2].mem.base: REG = a2
+
+!# issue 2349
+!# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
+0x0: 0xa4, 0x18, 0x78, 0x38 == ldgt.b $a0, $a1, $a2 ; operands[1].type: MEM ; operands[1].mem.base: REG = a1 ; operands[2].type: REG = a2

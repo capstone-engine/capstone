@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x29,0x5e,0x46,0x75 = xvfcvt.h.s $xr9, $xr17, $xr23
+0x5b,0xf5,0x46,0x75 = xvfcvt.s.d $xr27, $xr10, $xr29

@@ -89,3 +89,4 @@ Josh "blacktop" Maine: Arm64 architecture improvements.
 Finn Wilkinson: AArch64 update to Armv9.2-a (SME + SVE2 support)
 Billow & Sidneyp : TriCore architecture.
 Dmitry Sibirtsev: Alpha & HPPA architecture.
+Jiajie Chen & Yanglin Xun: LoongArch architecture.

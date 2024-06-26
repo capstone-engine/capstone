@@ -79,11 +79,12 @@ class HeaderPatcher:
             elif "#undef" in line:
                 continue
             else:
+                line = re.sub(r"^(\s+)?", "\t", line)
                 if not enum_vals_id:
                     enum_vals_id = "NOTGIVEN"
                     to_write[enum_vals_id] = line + "\n"
                     continue
-                to_write[enum_vals_id] += re.sub(r"^(\s+)?", "\t", line) + "\n"
+                to_write[enum_vals_id] += line + "\n"
         for ev_id in to_write.keys():
             header_enum_id = f":{ev_id}" if ev_id != "NOTGIVEN" else ""
             regex = (

@@ -79,6 +79,9 @@ int main()
 	if (cs_support(CS_ARCH_HPPA)) {
 		printf("hppa=1 ");
 	}
+	if (cs_support(CS_ARCH_LOONGARCH)) {
+		printf("loongarch=1 ");
+	}
 	printf("\n");
 
 	return 0;

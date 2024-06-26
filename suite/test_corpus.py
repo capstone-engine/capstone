@@ -125,6 +125,8 @@ def test_file(fname):
         ("CS_ARCH_ALPHA", "CS_MODE_BIG_ENDIAN"): 56,
         ("CS_ARCH_HPPA", "CS_MODE_HPPA_11+CS_MODE_BIG_ENDIAN"): 57,
         ("CS_ARCH_HPPA", "CS_MODE_HPPA_20+CS_MODE_BIG_ENDIAN"): 58,
+        ("CS_ARCH_LOONGARCH", "CS_MODE_LOONGARCH32"): 59,
+        ("CS_ARCH_LOONGARCH", "CS_MODE_LOONGARCH64"): 60,
     }
 
     #if not option in ('', 'None'):

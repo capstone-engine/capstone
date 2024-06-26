@@ -10,7 +10,7 @@ from autosync.cpptranslator.patches.Patch import Patch
 class DecodeInstruction(Patch):
     """
     Patch   decodeInstruction(..., this, STI)
-    to      decodeInstruction_<instr_width>(...)
+    to      decodeInstruction_<instr_width>(..., NULL)
 
     It also removes the arguments `this, STI`.
     """
@@ -40,7 +40,9 @@ class DecodeInstruction(Patch):
         is_16bit = (
             table[-2:].decode("utf8") == "16" or opcode_var[-2:].decode("utf8") == "16"
         )
-        args = table + b", " + mi_inst + b", " + opcode_var + b", " + address
+        args = (
+            table + b", " + mi_inst + b", " + opcode_var + b", " + address + b",  NULL"
+        )
 
         if is_16bit and not is_32bit:
             return b"decodeInstruction_2(" + args + b")"

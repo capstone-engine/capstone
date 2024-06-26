@@ -22,6 +22,7 @@ from autosync.cpptranslator.patches.ConstMCOperand import ConstMCOperand
 from autosync.cpptranslator.patches.CppInitCast import CppInitCast
 from autosync.cpptranslator.patches.CreateOperand0 import CreateOperand0
 from autosync.cpptranslator.patches.CreateOperand1 import CreateOperand1
+from autosync.cpptranslator.patches.Data import Data
 from autosync.cpptranslator.patches.DeclarationInConditionClause import (
     DeclarationInConditionalClause,
 )
@@ -46,6 +47,7 @@ from autosync.cpptranslator.patches.IsPredicate import IsPredicate
 from autosync.cpptranslator.patches.IsRegImm import IsOperandRegImm
 from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
 from autosync.cpptranslator.patches.LLVMunreachable import LLVMUnreachable
+from autosync.cpptranslator.patches.Override import Override
 from autosync.cpptranslator.patches.MethodToFunctions import MethodToFunction
 from autosync.cpptranslator.patches.MethodTypeQualifier import MethodTypeQualifier
 from autosync.cpptranslator.patches.NamespaceAnon import NamespaceAnon
@@ -62,6 +64,7 @@ from autosync.cpptranslator.patches.ReferencesDecl import ReferencesDecl
 from autosync.cpptranslator.patches.RegClassContains import RegClassContains
 from autosync.cpptranslator.patches.SetOpcode import SetOpcode
 from autosync.cpptranslator.patches.SignExtend import SignExtend
+from autosync.cpptranslator.patches.Size import Size
 from autosync.cpptranslator.patches.SizeAssignments import SizeAssignment
 from autosync.cpptranslator.patches.STIArgument import STIArgument
 from autosync.cpptranslator.patches.STIFeatureBits import STIFeatureBits
@@ -112,7 +115,7 @@ class TestPatches(unittest.TestCase):
             patch,
             syntax,
             b"void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNo, SStream *O){ "
-            b"add_cs_detail(MI, ARCH_OP_GROUP_ThumbLdrLabelOperand, OpNo); "
+            b"add_cs_detail(MI, ARCH_OP_GROUP_THUMBLDRLABELOPERAND, OpNo); "
             b"int i = OpNo; "
             b"}",
         )
@@ -215,6 +218,11 @@ public:
             b"MCInst_insert0(MI, I, MCOperand_CreateReg1(MI, (REGISTER)))",
         )
 
+    def test_data(self):
+        patch = Data(0)
+        syntax = b"Bytes.data()"
+        self.check_patching_result(patch, syntax, b"Bytes")
+
     def test_declarationinconditionclause(self):
         patch = DeclarationInConditionalClause(0)
         syntax = b"if (int i = 0) {}"
@@ -228,14 +236,14 @@ public:
         self.check_patching_result(
             patch,
             syntax,
-            b"decodeInstruction_2(DecoderTableThumb16,  MI,  Insn16,  Address)",
+            b"decodeInstruction_2(DecoderTableThumb16,  MI,  Insn16,  Address,  NULL)",
         )
 
         syntax = b"decodeInstruction(Table[i], MI, Insn16, Address, this, STI);"
         self.check_patching_result(
             patch,
             syntax,
-            b"decodeInstruction_2(Table[i],  MI,  Insn16,  Address)",
+            b"decodeInstruction_2(Table[i],  MI,  Insn16,  Address,  NULL)",
         )
 
     def test_decodercast(self):
@@ -421,6 +429,11 @@ public:
         syntax = b"void function(int a, raw_ostream &OS);"
         self.check_patching_result(patch, syntax, b"(int a, SStream *OS)")
 
+    def test_override(self):
+        patch = Override(0)
+        syntax = b"class a { void function(int a) override; };"
+        self.check_patching_result(patch, syntax, b"function(int a)")
+
     def test_predicateblockfunctions(self):
         patch = PredicateBlockFunctions(0)
         syntax = b"void function(MCInst *MI) { VPTBlock.instrInVPTBlock(); }"
@@ -468,6 +481,11 @@ public:
         patch = SignExtend(0)
         syntax = b"SignExtend32<A>(0)"
         self.check_patching_result(patch, syntax, b"SignExtend32((0), A)")
+
+    def test_size(self):
+        patch = Size(0)
+        syntax = b"Bytes.size()"
+        self.check_patching_result(patch, syntax, b"BytesLen")
 
     def test_sizeassignments(self):
         patch = SizeAssignment(0)
@@ -541,7 +559,7 @@ public:
     def test_templateparamdecl(self):
         patch = TemplateParamDecl(0)
         syntax = b"void function(ArrayRef<uint8_t> x);"
-        self.check_patching_result(patch, syntax, b"const uint8_t *x")
+        self.check_patching_result(patch, syntax, b"const uint8_t *x, size_t xLen")
 
     def test_templaterefs(self):
         patch = TemplateRefs(0)

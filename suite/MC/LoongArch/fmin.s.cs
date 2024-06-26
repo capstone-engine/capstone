@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0xbf,0xc0,0x3e,0x75 = xvfmin.s $xr31, $xr5, $xr16
+0xcd,0x67,0x3f,0x75 = xvfmin.d $xr13, $xr30, $xr25

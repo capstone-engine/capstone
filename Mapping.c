@@ -337,6 +337,7 @@ DEFINE_get_detail_op(tricore, TriCore);
 DEFINE_get_detail_op(aarch64, AArch64);
 DEFINE_get_detail_op(alpha, Alpha);
 DEFINE_get_detail_op(hppa, HPPA);
+DEFINE_get_detail_op(loongarch, LoongArch);
 
 /// Returns true if for this architecture the
 /// alias operands should be filled.

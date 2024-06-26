@@ -33,7 +33,7 @@ class TestHeaderPatcher(unittest.TestCase):
                 "	// generated content <test_include.inc> begin\n"
                 "	// clang-format off\n"
                 "\n"
-                "This part should be included if the whole file is included.\n"
+                "\tThis part should be included if the whole file is included.\n"
                 "\n"
                 "	// clang-format on\n"
                 "	// generated content <test_include.inc> end\n"

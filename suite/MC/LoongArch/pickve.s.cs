@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x99,0xc7,0x03,0x77 = xvpickve.w $xr25, $xr28, 1
+0x2d,0xe0,0x03,0x77 = xvpickve.d $xr13, $xr1, 0

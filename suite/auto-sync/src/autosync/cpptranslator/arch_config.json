@@ -127,5 +127,28 @@
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []
+  },
+  "LoongArch": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/LoongArch/Disassembler/LoongArchDisassembler.cpp",
+        "out": "LoongArchDisassembler.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/LoongArch/MCTargetDesc/LoongArchInstPrinter.cpp",
+        "out": "LoongArchInstPrinter.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/LoongArch/MCTargetDesc/LoongArchInstPrinter.h",
+        "out": "LoongArchInstPrinter.h"
+      }
+    ],
+    "files_for_template_search": [
+      "{CPP_INC_OUT_DIR}/LoongArchGenDisassemblerTables.inc",
+      "{CPP_INC_OUT_DIR}/LoongArchGenAsmWriter.inc",
+      "{LLVM_ROOT}/llvm/lib/Target/LoongArch/Disassembler/LoongArchDisassembler.cpp",
+      "{LLVM_ROOT}/llvm/lib/Target/LoongArch/MCTargetDesc/LoongArchInstPrinter.cpp"
+    ],
+    "templates_with_arg_deduction": [
+    ],
+    "manually_edited_files": []
   }
 }

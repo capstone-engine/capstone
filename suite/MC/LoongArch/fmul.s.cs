@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0xc9,0xf9,0x38,0x75 = xvfmul.s $xr9, $xr14, $xr30
+0x5c,0x4f,0x39,0x75 = xvfmul.d $xr28, $xr26, $xr19

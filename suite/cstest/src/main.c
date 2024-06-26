@@ -23,6 +23,7 @@ static single_dict arches[] = {
 	{"CS_ARCH_TRICORE", CS_ARCH_TRICORE},
 	{"CS_ARCH_ALPHA", CS_ARCH_ALPHA},
 	{"CS_ARCH_HPPA", CS_ARCH_HPPA},
+	{"CS_ARCH_LOONGARCH", CS_ARCH_LOONGARCH},
 };
 
  static single_dict modes[] = {
@@ -75,6 +76,8 @@ static single_dict arches[] = {
 	{"CS_MODE_HPPA_20", CS_MODE_HPPA_20},
 	{"CS_MODE_HPPA_20W", CS_MODE_HPPA_20W},
 	{"CS_MODE_HPPA_11", CS_MODE_HPPA_11},
+	{"CS_MODE_LOONGARCH32", CS_MODE_LOONGARCH32},
+	{"CS_MODE_LOONGARCH64", CS_MODE_LOONGARCH64},
 };
 
  static double_dict options[] = {
@@ -134,6 +137,8 @@ static single_dict arches[] = {
 	{"CS_MODE_HPPA_20", CS_OPT_MODE, CS_MODE_HPPA_20},
 	{"CS_MODE_HPPA_20W", CS_OPT_MODE, CS_MODE_HPPA_20W},
 	{"CS_MODE_HPPA_11", CS_OPT_MODE, CS_MODE_HPPA_11},
+	{"CS_MODE_LOONGARCH32", CS_OPT_MODE, CS_MODE_LOONGARCH32},
+	{"CS_MODE_LOONGARCH64", CS_OPT_MODE, CS_MODE_LOONGARCH64},
 };
 
 static int counter;

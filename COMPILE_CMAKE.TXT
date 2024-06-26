@@ -23,6 +23,7 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_AARCH64_SUPPORT: support AARCH64. Run cmake with -DCAPSTONE_AARCH64_SUPPORT=0 to remove AARCH64.
   - CAPSTONE_ALPHA_SUPPORT: support Alpha. Run cmake with -DCAPSTONE_ALPHA_SUPPORT=0 to remove Alpha.
   - CAPSTONE_HPPA_SUPPORT: support HPPA. Run cmake with -DCAPSTONE_HPPA_SUPPORT=0 to remove HPPA.
+  - CAPSTONE_LOONGARCH_SUPPORT: support LoongArch. Run cmake with -DCAPSTONE_LOONGARCH_SUPPORT=0 to remove LoongArch.
   - CAPSTONE_M680X_SUPPORT: support M680X. Run cmake with -DCAPSTONE_M680X_SUPPORT=0 to remove M680X.
   - CAPSTONE_M68K_SUPPORT: support M68K. Run cmake with -DCAPSTONE_M68K_SUPPORT=0 to remove M68K.
   - CAPSTONE_MIPS_SUPPORT: support Mips. Run cmake with -DCAPSTONE_MIPS_SUPPORT=0 to remove Mips.
@@ -120,7 +121,7 @@ Get CMake for free from http://www.cmake.org.
 
   Will just target the x86 architecture. The list of available architectures is: ARM,
   AARCH64, M68K, MIPS, PowerPC, Sparc, SystemZ, XCore, x86, TMS320C64x, M680x, EVM, MOS65XX,
-  WASM, BPF, RISCV, Alpha, HPPA.
+  WASM, BPF, RISCV, Alpha, HPPA, LoongArch.
   
 (4) You can also create an installation image with cmake, by using the 'install' target.
   Use:

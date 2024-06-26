@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x26,0xdc,0xff,0x76 = xvinsve0.w $xr6, $xr1, 7
+0x3c,0xe0,0xff,0x76 = xvinsve0.d $xr28, $xr1, 0
