@@ -11,11 +11,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-static TestRunResult get_test_run_result(const TestRunStats *stats)
+static TestRunResult get_test_run_result(TestRunStats *stats)
 {
 	if (stats->total != stats->successful + stats->failed) {
 		fprintf(stderr,
-			"Inconsistent statistics: total != successful + failed");
+			"[!] Inconsistent statistics: total != successful + failed\n");
+		stats->errors++;
 		return TEST_RUN_ERROR;
 	}
 
@@ -40,9 +41,9 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 			test_files[i], &cyaml_config, &test_file_schema,
 			(cyaml_data_t **)&test_file_data, NULL);
 		if (err != CYAML_OK || !test_file_data) {
-			fprintf(stderr, "Failed to parse test file '%s'\n",
+			fprintf(stderr, "[!] Failed to parse test file '%s'\n",
 				test_files[i]);
-			fprintf(stderr, "Error: '%s'\n",
+			fprintf(stderr, "[!] Error: '%s'\n",
 				!test_file_data && err == CYAML_OK ?
 					"Empty file" :
 					cyaml_strerror(err));
@@ -64,7 +65,7 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 		err = cyaml_free(&cyaml_config, &test_file_schema,
 				 test_file_data, 0);
 		if (err != CYAML_OK) {
-			fprintf(stderr, "Error: '%s'\n", cyaml_strerror(err));
+			fprintf(stderr, "[!] Error: '%s'\n", cyaml_strerror(err));
 			stats->errors++;
 			continue;
 		}

@@ -39,7 +39,7 @@ static int handle_ftree_entry(const char *fpath, const struct stat *sb,
 	file_count++;
 	*test_files = cs_mem_realloc(*test_files, sizeof(char *) * file_count);
 	if (!*test_files) {
-		fprintf(stderr, "realloc failed\n");
+		fprintf(stderr, "[!] realloc failed\n");
 		return -1;
 	}
 	test_files[0][file_count - 1] = cs_strdup(fpath);
@@ -52,7 +52,7 @@ static void get_tfiles(int argc, const char **argv)
 	for (size_t i = 1; i < argc; ++i) {
 		if (nftw(argv[i], handle_ftree_entry, 20,
 			 FTW_DEPTH | FTW_PHYS) == -1) {
-			fprintf(stderr, "nftw failed.\n");
+			fprintf(stderr, "[!] nftw failed.\n");
 			return;
 		}
 	}
@@ -60,7 +60,7 @@ static void get_tfiles(int argc, const char **argv)
 
 void print_test_run_stats(const TestRunStats *stats)
 {
-	printf("-----------------------------------------\n");
+	printf("\n-----------------------------------------\n");
 	printf("Test run statistics\n\n");
 	printf("Errors: %" PRId32 "\n\n", stats->errors);
 	printf("Test cases:\n");
@@ -93,16 +93,16 @@ int main(int argc, const char **argv)
 
 	print_test_run_stats(&stats);
 	if (res == TEST_RUN_ERROR) {
-		fprintf(stderr, "An error occured.\n");
+		fprintf(stderr, "[!] An error occured.\n");
 		exit(EXIT_FAILURE);
 	} else if (res == TEST_RUN_SUCCESS) {
-		printf("All tests succeeded.\n");
+		printf("[o] All tests succeeded.\n");
 		exit(EXIT_SUCCESS);
 	} else if (res == TEST_RUN_FAILURE) {
-		fprintf(stderr, "Some tests failed.\n");
+		fprintf(stderr, "[!] Some tests failed.\n");
 		exit(EXIT_FAILURE);
 	}
 
-	fprintf(stderr, "Unhandled Test Run result\n");
+	fprintf(stderr, "[!] Unhandled Test Run result\n");
 	exit(EXIT_FAILURE);
 }
