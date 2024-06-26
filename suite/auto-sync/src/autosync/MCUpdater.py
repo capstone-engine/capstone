@@ -46,22 +46,7 @@ match_patterns = {
     # The matched asm text can be accessed from the group "asm_text"
     "asm_check": rf"{CHECK}\s+{ASM}(\s*(#|//)\s+encoding:\s+{ENC})?",
     # Single line disassembly test
-    "single_line_disas": rf"^{ENC}\s+#\s+{ASM}|"
-    # Match against:
-    # @ CHECK: xxx @ encoding: [xx, xx]
-    rf"#?\s*@?\s*CHECK:\s+{ASM}\s+@\s+encoding:\s+\[({ENC})\]|"
-    # Match against:
-    # # CHECK-INST: xxx
-    # # CHECK-ENCODING: encoding: [xx, xx]
-    rf"#\s+CHECK-INST:\s+{ASM}\n#\s+CHECK-ENCODING:\s+encoding:\s+\[({ENC})\]|"
-    # Match against:
-    # # CHECK-ASM-AND-OBJ: xxx
-    # # CHECK-ASM: encoding: [xx, xx]
-    rf"#\s+CHECK-ASM-AND-OBJ:\s+{ASM}\n#\s+CHECK-ASM:\s+encoding:\s+\[({ENC})\]|"
-    # Match against:
-    # # ASM-AND-OBJ: xxx
-    # # ASM: encoding: [xx, xx]
-    rf"#\s+ASM-AND-OBJ:\s+{ASM}\n#\s+ASM:\s+encoding:\s+\[({ENC})\]",
+    "single_line_disas": rf"^{ENC}\s+#\s+{ASM}",
     # The RUN line, with the command to run the test file, contains sometimes the `mattr` flags.
     # These are relevant, because they enable or disable features we might need to
     # respect in our tests as well.
