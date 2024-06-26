@@ -347,7 +347,7 @@ static void markCLSInsn(MCInst *MI, uint32_t in)
 		id == RISCV_C_FLWSP || id == RISCV_C_LDSP ||
 		id == RISCV_C_FSDSP || id == RISCV_C_SWSP ||
 		id == RISCV_C_FSWSP || id == RISCV_C_SDSP) {
-		MI->flat_insn->detail->riscv.need_effective_addr = true;
+		RISCV_get_detail()->need_effective_addr = true;
 	}
 	return;
 }
