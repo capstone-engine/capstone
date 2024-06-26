@@ -124,10 +124,13 @@ static void cstest_unit_test(void **state)
 	size_t insns_count = cs_disasm(handle, tcase->input->bytes,
 				       tcase->input->bytes_count,
 				       tcase->input->address, 0, &insns);
-	if (test_expected_compare(tcase->expected, insns, insns_count)) {
+	TestCaseResult r = test_expected_compare(tcase->expected, insns, insns_count);
+	if (r == TEST_CASE_SUCCESS) {
 		stats->successful++;
-	} else {
+	} else if (r == TEST_CASE_FAIL) {
 		stats->failed++;
+	} else {
+		stats->errors++;
 	}
 	cs_free(insns, insns_count);
 }
