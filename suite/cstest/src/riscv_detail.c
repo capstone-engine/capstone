@@ -41,8 +41,6 @@ char *get_detail_riscv(csh *handle, cs_mode mode, cs_insn *ins)
 				break;
 		}
 
-		add_str(&result, " ; operands[%u].size: %u", i, op->size);
-
 		switch(op->access) {
 			default:
 				break;
