@@ -1,6 +1,10 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include "cmocka.h"
 #include "test_case.h"
 #include "../../../utils.h"
 #include <string.h>
@@ -128,15 +132,33 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 				  test_expected->insns_count);
 	for (size_t i = 0; i < test_expected->insns_count; i++) {
 		te->insns[i] = test_insn_data_clone(test_expected->insns[i]);
-		;
 		te->insns_count++;
 	}
 	return te;
 }
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
-TestCaseResult test_expected_compare(TestExpected *expected, cs_insn *insns, size_t insns_count) {
-	return TEST_CASE_FAIL;
+void test_expected_compare(TestExpected *expected, cs_insn *insns,
+			   size_t insns_count)
+{
+	assert_int_equal(expected->insns_count, insns_count);
+	for (size_t i = 0; i < insns_count; ++i) {
+		TestInsnData *expec_data = expected->insns[i];
+		// Test mandatory fields first
+		assert_string_equal(expec_data->op_str, insns[i].op_str);
+
+		// Not mandatory fields. If not initialized they should still match.
+		if (expec_data->id != 0) {
+			assert_int_equal(expec_data->id, insns[i].id);
+		}
+		assert_int_equal(expec_data->is_alias, insns[i].is_alias);
+		assert_int_equal(expec_data->alias_id, insns[i].alias_id);
+		if (expec_data->mnemonic) {
+			assert_string_equal(expec_data->mnemonic,
+					    insns[i].mnemonic);
+		}
+		// TODO: details
+	}
 }
 
 TestCase *test_case_new()

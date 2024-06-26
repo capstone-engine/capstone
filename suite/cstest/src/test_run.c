@@ -78,7 +78,7 @@ static int cstest_unit_test_setup(void **state)
 {
 	assert(state);
 	UnitTestState *ustate = *state;
-	assert(ustate->stats && ustate->tcase);
+	assert(ustate->tcase);
 	// Setup cs handle
 	cs_err err = cs_open(0, 0, &ustate->handle);
 	if (err != CS_ERR_OK) {
@@ -114,24 +114,15 @@ static void cstest_unit_test(void **state)
 	UnitTestState *ustate = *state;
 	assert(ustate);
 	assert(ustate->handle);
-	assert(ustate->stats);
 	assert(ustate->tcase);
 	csh handle = ustate->handle;
-	TestRunStats *stats = ustate->stats;
 	TestCase *tcase = ustate->tcase;
 
 	cs_insn *insns = NULL;
 	size_t insns_count = cs_disasm(handle, tcase->input->bytes,
 				       tcase->input->bytes_count,
 				       tcase->input->address, 0, &insns);
-	TestCaseResult r = test_expected_compare(tcase->expected, insns, insns_count);
-	if (r == TEST_CASE_SUCCESS) {
-		stats->successful++;
-	} else if (r == TEST_CASE_FAIL) {
-		stats->failed++;
-	} else {
-		stats->errors++;
-	}
+	test_expected_compare(tcase->expected, insns, insns_count);
 	cs_free(insns, insns_count);
 }
 
@@ -139,7 +130,7 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 {
 	assert(test_cases && stats);
 	// CMocka's API doesn't allow to init a CMUnitTest with a partially initialized state
-	// (which is later initialized in the setup_test function).
+	// (which is later initialized in the test setup).
 	// So we do it manually here.
 	struct CMUnitTest *utest_table =
 		cs_mem_calloc(sizeof(struct CMUnitTest), stats->total);
@@ -149,7 +140,6 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 	for (size_t i = 0; i < stats->total; ++i) {
 		UnitTestState *ut_state = cs_mem_calloc(sizeof(UnitTestState), 1);
 		ut_state->tcase = test_cases[i];
-		ut_state->stats = stats;
 
 		cs_snprintf(utest_id, sizeof(utest_id), "%" PRIx32 ": ", i);
 		utest_table[i].name = test_input_stringify(ut_state->tcase->input, utest_id);
@@ -159,13 +149,15 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 		utest_table[i].test_func = cstest_unit_test;
 	}
 	// Use private function here, because the API takes only constant tables.
-	_cmocka_run_group_tests("All test cases", utest_table, stats->total,
-				NULL, NULL);
+	int failed_tests = _cmocka_run_group_tests(
+		"All test cases", utest_table, stats->total, NULL, NULL);
 	for (size_t i = 0; i < stats->total; ++i) {
 		cs_mem_free((char *) utest_table[i].name);
 		cs_mem_free(utest_table[i].initial_state);
 	}
 	cs_mem_free(utest_table);
+	stats->failed += failed_tests;
+	stats->successful += stats->total - failed_tests;
 }
 
 /// Runs runs all valid tests in the given @test_files

@@ -76,19 +76,12 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_UINT("alias_id",
 			 CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
 			 TestInsnData, alias_id),
-	CYAML_FIELD_STRING_PTR("mnemonic",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestInsnData, mnemonic, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"mnemonic", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
+		TestInsnData, mnemonic, 0, CYAML_UNLIMITED),
 	// TODO details
 	CYAML_FIELD_END
 };
-
-/// The result of a test case.
-typedef enum {
-	TEST_CASE_SUCCESS, ///< Test case succeeded
-	TEST_CASE_FAIL, ///< Expected data mismatched actual data.
-	TEST_CASE_ERROR, ///< And error occurred.
-} TestCaseResult;
 
 /// The expected data for a test. This can hold multiple instructions
 /// if enough bytes were given.
@@ -100,7 +93,8 @@ typedef struct {
 TestExpected *test_expected_new();
 void test_expected_free(TestExpected *test_expected);
 TestExpected *test_expected_clone(TestExpected *test_expected);
-TestCaseResult test_expected_compare(TestExpected *expected, cs_insn *insns, size_t insns_count);
+void test_expected_compare(TestExpected *expected, cs_insn *insns,
+			   size_t insns_count);
 
 static const cyaml_schema_value_t insn_schema = {
 	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestInsnData,

@@ -33,7 +33,6 @@ static const cyaml_config_t cyaml_config = {
 };
 
 typedef struct {
-	TestRunStats *stats; ///< The test run stats.
 	TestCase *tcase;     ///< The test case to check.
 	csh handle;	     ///< The Capstone instance for this test. Setup and teared down by the cmocka handlers.
 } UnitTestState;
