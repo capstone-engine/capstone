@@ -85,6 +85,7 @@ void test_insn_data_free(TestInsnData *test_insn_data)
 	if (!test_insn_data) {
 		return;
 	}
+	cs_mem_free(test_insn_data->asm_text);
 	cs_mem_free(test_insn_data->op_str);
 	cs_mem_free(test_insn_data->mnemonic);
 	cs_mem_free(test_insn_data);
@@ -101,6 +102,8 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 				cs_strdup(test_insn_data->mnemonic) :
 				NULL;
 	tid->op_str = test_insn_data->op_str ? cs_strdup(test_insn_data->op_str) :
+					       NULL;
+	tid->asm_text = test_insn_data->asm_text ? cs_strdup(test_insn_data->asm_text) :
 					       NULL;
 	return tid;
 }
@@ -145,7 +148,17 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 	for (size_t i = 0; i < insns_count; ++i) {
 		TestInsnData *expec_data = expected->insns[i];
 		// Test mandatory fields first
-		assert_string_equal(expec_data->op_str, insns[i].op_str);
+		// The asm text is saved differently for different architectures.
+		// Either all in op_str or split in mnemonic and op_str
+		char asm_text[256] = { 0 };
+		if (insns[i].mnemonic[0] != '\0') {
+			append_to_str(asm_text, sizeof(asm_text), insns[i].mnemonic);
+			append_to_str(asm_text, sizeof(asm_text), " ");
+		}
+		if (insns[i].op_str[0] != '\0') {
+			append_to_str(asm_text, sizeof(asm_text), insns[i].op_str);
+		}
+		assert_string_equal(expec_data->asm_text, asm_text);
 
 		// Not mandatory fields. If not initialized they should still match.
 		if (expec_data->id != 0) {
@@ -156,6 +169,9 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 		if (expec_data->mnemonic) {
 			assert_string_equal(expec_data->mnemonic,
 					    insns[i].mnemonic);
+		}
+		if (expec_data->op_str) {
+			assert_string_equal(expec_data->op_str, insns[i].op_str);
 		}
 		// TODO: details
 	}

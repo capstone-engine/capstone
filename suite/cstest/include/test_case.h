@@ -55,7 +55,8 @@ static const cyaml_schema_field_t test_input_mapping_schema[] = {
 /// Data compared to the produced cs_insn.
 typedef struct {
 	uint32_t id;
-	char *op_str; // mandatory
+	char *asm_text; // mandatory
+	char *op_str;
 	bool is_alias;
 	uint64_t alias_id;
 	char *mnemonic;
@@ -69,7 +70,9 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data);
 static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_UINT("id", CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
 			 TestInsnData, id),
-	CYAML_FIELD_STRING_PTR("op_str", CYAML_FLAG_POINTER, TestInsnData,
+	CYAML_FIELD_STRING_PTR("asm_text", CYAML_FLAG_POINTER, TestInsnData,
+			       asm_text, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("op_str", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL, TestInsnData,
 			       op_str, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_BOOL("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
 			 is_alias),

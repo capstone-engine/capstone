@@ -7,7 +7,7 @@ test_cases:
   expected:
     insns:
       -
-        op_str: "mov r11, r5"
+        asm_text: "mov r11, r5"
  -
   input:
     bytes: [ 0x06, 0x10, 0xa0, 0xe1 ]
@@ -16,7 +16,7 @@ test_cases:
   expected:
     insns:
       -
-        op_str: "mov r1, r6"
+        asm_text: "mov r1, r6"
  -
   input:
     bytes: [ 0x06, 0x10, 0xa0, 0xe1, 0x05, 0xb0, 0xa0, 0xe1 ]
@@ -25,7 +25,7 @@ test_cases:
   expected:
     insns:
       -
-        op_str: "mov r1, r6"
+        asm_text: "mov r1, r6"
       -
-        op_str: "mov r11, r5"
+        asm_text: "mov r11, r5"
 
