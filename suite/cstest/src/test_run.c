@@ -3,7 +3,12 @@
 
 #include "test_run.h"
 #include "cyaml/cyaml.h"
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include "cmocka.h"
 #include "test_case.h"
+#include <capstone/capstone.h>
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -67,11 +72,78 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 	return cases;
 }
 
+static int cstest_unit_test_setup(void **state)
+{
+	assert(state);
+	UnitTestState *ustate = *state;
+	assert(ustate->stats && ustate->tcase);
+	// Setup cs handle
+	cs_err err = cs_open(0, 0, ustate->handle);
+	if (err != CS_ERR_OK) {
+		char *tc_str = test_input_stringify(&ustate->tcase->input);
+		fail_msg("cs_open() failed with: '%s'. TestInput: %s",
+			 cs_strerror(err), tc_str);
+		free(tc_str);
+		return -1;
+	}
+	return 0;
+}
+
+static int cstest_unit_test_teardown(void **state)
+{
+	if (!state) {
+		return 0;
+	}
+	UnitTestState *ustate = *state;
+	if (ustate->handle) {
+		cs_err err = cs_close(ustate->handle);
+		if (err != CS_ERR_OK) {
+			fail_msg("cs_close() failed with: '%s'.",
+				 cs_strerror(err));
+			return -1;
+		}
+	}
+	return 0;
+}
+
+static void cstest_unit_test(void **state)
+{
+}
+
+static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
+{
+	assert(test_cases);
+	// CMocka's API does't allow to init a CMUnitTest with a partially initialzed state
+	// (which is later initialized in the setup_test function).
+	// So we do it manually here.
+	struct CMUnitTest *utest_table =
+		calloc(sizeof(UnitTestState), stats->total);
+
+	for (size_t i = 0; i < stats->total; ++i) {
+		UnitTestState *ut_state = calloc(sizeof(UnitTestState), 1);
+		ut_state->tcase = test_cases[i];
+		ut_state->stats = stats;
+
+		utest_table[i].initial_state = ut_state;
+		utest_table[i].setup_func = cstest_unit_test_setup;
+		utest_table[i].teardown_func = cstest_unit_test_teardown;
+		utest_table[i].test_func = cstest_unit_test;
+	}
+	// Use private function here, because the API takes only const tables.
+	_cmocka_run_group_tests("All test cases", utest_table, stats->total,
+				NULL, NULL);
+}
+
 /// Runs runs all valid tests in the given @test_files
 /// and returns the result as well as statistics in @stats.
-TestRunResult run_tests(char **test_files, uint32_t file_count,
-			TestRunStats *stats)
+TestRunResult cstest_run_tests(char **test_files, uint32_t file_count,
+			       TestRunStats *stats)
 {
 	TestCase **cases = parse_test_cases(test_files, file_count, stats);
+	eval_test_cases(cases, stats);
+	for (size_t i = 0; i < stats->total; ++i) {
+		test_case_free(cases[i]);
+	}
+
 	return get_test_run_result(stats);
 }

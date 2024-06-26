@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3
 
 #include "test_case.h"
+#include "../../../utils.h"
 #include <string.h>
 
 TestInput *test_input_new()
@@ -40,6 +41,21 @@ TestInput *test_input_clone(TestInput *test_input)
 	ti->arch = strdup(test_input->arch);
 	memcpy(ti->bytes, test_input->bytes, test_input->bytes_count);
 	return ti;
+}
+
+char *test_input_stringify(const TestInput *test_input)
+{
+	size_t msg_len = 256;
+	char *msg = calloc(sizeof(char), msg_len);
+	char *byte_seq =
+		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
+	cs_snprintf(msg, msg_len,
+		    "TestInput { arch: %s, options: %s, addr: 0x%" PRIx64
+		    ", bytes: %s }",
+		    test_input->arch, test_input->options, test_input->address,
+		    byte_seq);
+	free(byte_seq);
+	return msg;
 }
 
 TestInsnData *test_insn_data_new()

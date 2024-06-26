@@ -4,6 +4,7 @@
 #ifndef CS_UTILS_H
 #define CS_UTILS_H
 
+#include <stdint.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
 #else
@@ -46,4 +47,6 @@ static inline bool strings_match(const char *str0, const char *str1) { return st
 static inline bool is_blank_char(const char c) {
 	return c == ' ' || c == '\t';
 }
+
+char *byte_seq_to_str(uint8_t *bytes, size_t len);
 #endif

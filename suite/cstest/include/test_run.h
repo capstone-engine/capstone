@@ -32,7 +32,13 @@ static const cyaml_config_t cyaml_config = {
 	.log_level = CYAML_LOG_WARNING, /* Logging errors and warnings only. */
 };
 
-TestRunResult run_tests(char **test_files, uint32_t file_count,
-			TestRunStats *stats);
+typedef struct {
+	TestRunStats *stats; ///< The test run stats.
+	TestCase *tcase;     ///< The test case to check.
+	csh *handle;	     ///< The Capstone instance for this test
+} UnitTestState;
+
+TestRunResult cstest_run_tests(char **test_files, uint32_t file_count,
+			       TestRunStats *stats);
 
 #endif // TESTRUN_H

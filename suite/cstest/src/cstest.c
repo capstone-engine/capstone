@@ -88,7 +88,7 @@ int main(int argc, const char **argv)
 
 	printf("Test files found: %" PRId32 "\n", file_count);
 	TestRunStats stats = { 0 };
-	TestRunResult res = run_tests(*test_files, file_count, &stats);
+	TestRunResult res = cstest_run_tests(*test_files, file_count, &stats);
 
 	print_test_run_stats(&stats);
 	if (res == TRError) {
