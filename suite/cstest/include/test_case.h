@@ -93,7 +93,7 @@ typedef enum {
 /// The expected data for a test. This can hold multiple instructions
 /// if enough bytes were given.
 typedef struct {
-	TestInsnData *insns;  ///< Zero to N disassembled instructions.
+	TestInsnData **insns; ///< Zero to N disassembled instructions.
 	uint32_t insns_count; ///< Filled by cyaml.
 } TestExpected;
 
@@ -103,7 +103,7 @@ TestExpected *test_expected_clone(TestExpected *test_expected);
 TestCaseResult test_expected_compare(TestExpected *expected, cs_insn *insns, size_t insns_count);
 
 static const cyaml_schema_value_t insn_schema = {
-	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestInsnData,
+	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestInsnData,
 			    test_insn_data_mapping_schema),
 };
 
@@ -115,8 +115,8 @@ static const cyaml_schema_field_t test_expected_mapping_schema[] = {
 
 /// A single test case.
 typedef struct {
-	TestInput input;       ///< Input data for a test case
-	TestExpected expected; ///< Expected data of the test case.
+	TestInput *input;	///< Input data for a test case
+	TestExpected *expected; ///< Expected data of the test case.
 } TestCase;
 
 TestCase *test_case_new();
@@ -124,10 +124,10 @@ void test_case_free(TestCase *test_case);
 TestCase *test_case_clone(TestCase *test_case);
 
 static const cyaml_schema_field_t test_case_mapping_schema[] = {
-	CYAML_FIELD_MAPPING("input", CYAML_FLAG_DEFAULT, TestCase, input,
-			    test_input_mapping_schema),
-	CYAML_FIELD_MAPPING("expected", CYAML_FLAG_DEFAULT, TestCase, expected,
-			    test_expected_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("input", CYAML_FLAG_POINTER, TestCase, input,
+				test_input_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("expected", CYAML_FLAG_POINTER, TestCase,
+				expected, test_expected_mapping_schema),
 	CYAML_FIELD_END
 };
 

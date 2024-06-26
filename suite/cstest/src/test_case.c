@@ -22,6 +22,7 @@ void test_input_free(TestInput *test_input)
 	for (size_t i = 0; i < test_input->options_count; i++) {
 		cs_mem_free(test_input->options[i]);
 	}
+	cs_mem_free(test_input->options);
 	cs_mem_free(test_input);
 }
 
@@ -32,7 +33,6 @@ TestInput *test_input_clone(TestInput *test_input)
 	ti->address = test_input->address;
 
 	for (size_t i = 0; i < test_input->options_count; i++) {
-		cs_strdup(test_input->options[i]);
 		ti->options = cs_mem_realloc(ti->options,
 				      sizeof(char *) * (ti->options_count + 1));
 		ti->options[i] = cs_strdup(test_input->options[i]);
@@ -104,8 +104,9 @@ void test_expected_free(TestExpected *test_expected)
 		return;
 	}
 	for (size_t i = 0; i < test_expected->insns_count; i++) {
-		test_insn_data_free(&test_expected->insns[i]);
+		test_insn_data_free(test_expected->insns[i]);
 	}
+	cs_mem_free(test_expected->insns);
 	cs_mem_free(test_expected);
 }
 
@@ -113,14 +114,12 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 {
 	assert(test_expected);
 	TestExpected *te = test_expected_new();
+	te->insns = cs_mem_calloc(sizeof(TestInsnData *),
+				  test_expected->insns_count);
 	for (size_t i = 0; i < test_expected->insns_count; i++) {
-		te->insns = cs_mem_realloc(te->insns, sizeof(TestInsnData) *
-						       (te->insns_count + 1));
-		TestInsnData *td =
-			test_insn_data_clone(&test_expected->insns[i]);
-		te->insns[i] = *td;
+		te->insns[i] = test_insn_data_clone(test_expected->insns[i]);
+		;
 		te->insns_count++;
-		cs_mem_free(td);
 	}
 	return te;
 }
@@ -142,6 +141,8 @@ void test_case_free(TestCase *test_case)
 	if (!test_case) {
 		return;
 	}
+	test_input_free(test_case->input);
+	test_expected_free(test_case->expected);
 	cs_mem_free(test_case);
 }
 
@@ -149,12 +150,10 @@ TestCase *test_case_clone(TestCase *test_case)
 {
 	assert(test_case);
 	TestCase *tc = test_case_new();
-	TestInput *ti = test_input_clone(&test_case->input);
-	tc->input = *ti;
-	cs_mem_free(ti);
-	TestExpected *te = test_expected_clone(&test_case->expected);
-	tc->expected = *te;
-	cs_mem_free(te);
+	TestInput *ti = test_input_clone(test_case->input);
+	tc->input = ti;
+	TestExpected *te = test_expected_clone(test_case->expected);
+	tc->expected = te;
 	return tc;
 }
 
@@ -170,10 +169,7 @@ void test_file_free(TestFile *test_file)
 	if (!test_file) {
 		return;
 	}
-	for (size_t i = 0; i < test_file->test_cases_count; i++) {
-		test_case_free(&test_file->test_cases[i]);
-	}
-	cs_mem_free(test_file);
+	test_file_free(test_file);
 }
 
 TestFile *test_file_clone(TestFile *test_file)

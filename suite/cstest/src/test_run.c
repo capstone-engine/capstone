@@ -35,16 +35,15 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 	stats->total = 0;
 
 	for (size_t i = 0; i < file_count; ++i) {
-		TestFile *test_file = NULL;
-		cyaml_err_t err = cyaml_load_file(test_files[i], &cyaml_config,
-						  &test_file_schema,
-						  (cyaml_data_t **)&test_file,
-						  NULL);
-		if (err != CYAML_OK || !test_file) {
+		TestFile *test_file_data = NULL;
+		cyaml_err_t err = cyaml_load_file(
+			test_files[i], &cyaml_config, &test_file_schema,
+			(cyaml_data_t **)&test_file_data, NULL);
+		if (err != CYAML_OK || !test_file_data) {
 			fprintf(stderr, "Failed to parse test file '%s'\n",
 				test_files[i]);
 			fprintf(stderr, "Error: '%s'\n",
-				!test_file && err == CYAML_OK ?
+				!test_file_data && err == CYAML_OK ?
 					"Empty file" :
 					cyaml_strerror(err));
 			stats->errors++;
@@ -52,15 +51,18 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 		}
 
 		// Copy all test cases of a test file
-		cases = cs_mem_realloc(cases, sizeof(TestCase *) * (stats->total +
-					       test_file->test_cases_count));
-		for (size_t i = 0; i < test_file->test_cases_count; ++i, stats->total++) {
+		cases = cs_mem_realloc(
+			cases, sizeof(TestCase *) *
+				       (stats->total +
+					test_file_data->test_cases_count));
+		for (size_t i = 0; i < test_file_data->test_cases_count;
+		     ++i, stats->total++) {
 			cases[stats->total] =
-				test_case_clone(&test_file->test_cases[i]);
+				test_case_clone(&test_file_data->test_cases[i]);
 			assert(cases[stats->total]);
 		}
-		err = cyaml_free(&cyaml_config, &test_file_schema, test_file,
-				 0);
+		err = cyaml_free(&cyaml_config, &test_file_schema,
+				 test_file_data, 0);
 		if (err != CYAML_OK) {
 			fprintf(stderr, "Error: '%s'\n", cyaml_strerror(err));
 			stats->errors++;
@@ -79,7 +81,7 @@ static int cstest_unit_test_setup(void **state)
 	// Setup cs handle
 	cs_err err = cs_open(0, 0, ustate->handle);
 	if (err != CS_ERR_OK) {
-		char *tc_str = test_input_stringify(&ustate->tcase->input);
+		char *tc_str = test_input_stringify(ustate->tcase->input);
 		fail_msg("cs_open() failed with: '%s'. TestInput: %s",
 			 cs_strerror(err), tc_str);
 		cs_mem_free(tc_str);
@@ -118,10 +120,10 @@ static void cstest_unit_test(void **state)
 	TestCase *tcase = ustate->tcase;
 
 	cs_insn *insns = NULL;
-	size_t insns_count = cs_disasm(*handle, tcase->input.bytes,
-				     tcase->input.bytes_count,
-				     tcase->input.address, 0, &insns);
-	if (test_expected_compare(&tcase->expected, insns, insns_count)) {
+	size_t insns_count = cs_disasm(*handle, tcase->input->bytes,
+				       tcase->input->bytes_count,
+				       tcase->input->address, 0, &insns);
+	if (test_expected_compare(tcase->expected, insns, insns_count)) {
 		stats->successful++;
 	} else {
 		stats->failed++;
@@ -131,12 +133,12 @@ static void cstest_unit_test(void **state)
 
 static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 {
-	assert(test_cases);
+	assert(test_cases && stats);
 	// CMocka's API doesn't allow to init a CMUnitTest with a partially initialized state
 	// (which is later initialized in the setup_test function).
 	// So we do it manually here.
 	struct CMUnitTest *utest_table =
-		cs_mem_calloc(sizeof(UnitTestState), stats->total);
+		cs_mem_calloc(sizeof(struct CMUnitTest), stats->total);
 
 	for (size_t i = 0; i < stats->total; ++i) {
 		UnitTestState *ut_state = cs_mem_calloc(sizeof(UnitTestState), 1);
@@ -151,6 +153,10 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 	// Use private function here, because the API takes only constant tables.
 	_cmocka_run_group_tests("All test cases", utest_table, stats->total,
 				NULL, NULL);
+	for (size_t i = 0; i < stats->total; ++i) {
+		cs_mem_free(utest_table[i].initial_state);
+	}
+	cs_mem_free(utest_table);
 }
 
 /// Runs runs all valid tests in the given @test_files
@@ -163,6 +169,7 @@ TestRunResult cstest_run_tests(char **test_files, uint32_t file_count,
 	for (size_t i = 0; i < stats->total; ++i) {
 		test_case_free(cases[i]);
 	}
+	cs_mem_free(cases);
 
 	return get_test_run_result(stats);
 }
