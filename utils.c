@@ -149,12 +149,12 @@ void append_to_str(char *str, size_t str_size, const char *src) {
 /// form: 0xXX,0xXX...
 char *byte_seq_to_str(uint8_t *bytes, size_t len)
 {
-	size_t byte_format_len = strlen("0xXX,");
-	size_t str_len = (len * byte_format_len) + 1;
-	char *s = calloc(sizeof(char), str_len);
+	char single_byte[8] = { 0 };
+	char *s = calloc(sizeof(char), 256);
 	for (size_t i = 0; i < len; ++i) {
-		cs_snprintf(s + (byte_format_len * i), len, "0x%" PRIx8 "%s",
+		cs_snprintf(single_byte, sizeof(single_byte), "0x%02" PRIx8 "%s",
 			    bytes[i], i < len - 1 ? "," : "");
+		append_to_str(s, 256, single_byte);
 	}
 	return s;
 }

@@ -40,13 +40,14 @@ TestInput *test_input_clone(TestInput *test_input)
 	}
 	ti->arch = cs_strdup(test_input->arch);
 	ti->bytes = cs_mem_calloc(sizeof(uint8_t), test_input->bytes_count);
+	ti->bytes_count = test_input->bytes_count;
 	memcpy(ti->bytes, test_input->bytes, test_input->bytes_count);
 	return ti;
 }
 
 char *test_input_stringify(const TestInput *test_input, const char *postfix)
 {
-	size_t msg_len = 256;
+	size_t msg_len = 1024;
 	char *msg = cs_mem_calloc(sizeof(char), msg_len);
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
