@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3
 
 #include "test_run.h"
-#include "cyaml/cyaml.h"
+#include "../../../cs_priv.h"
 #include <stdarg.h>
 #include <stddef.h>
 #include <setjmp.h>
@@ -52,7 +52,7 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 		}
 
 		// Copy all test cases of a test file
-		cases = realloc(cases, sizeof(TestCase *) * stats->total +
+		cases = cs_mem_realloc(cases, sizeof(TestCase *) * stats->total +
 					       test_file->test_cases_count);
 		for (size_t i = 0; i < test_file->test_cases_count; ++i) {
 			cases[stats->total] =
@@ -82,7 +82,7 @@ static int cstest_unit_test_setup(void **state)
 		char *tc_str = test_input_stringify(&ustate->tcase->input);
 		fail_msg("cs_open() failed with: '%s'. TestInput: %s",
 			 cs_strerror(err), tc_str);
-		free(tc_str);
+		cs_mem_free(tc_str);
 		return -1;
 	}
 	return 0;
@@ -136,10 +136,10 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 	// (which is later initialized in the setup_test function).
 	// So we do it manually here.
 	struct CMUnitTest *utest_table =
-		calloc(sizeof(UnitTestState), stats->total);
+		cs_mem_calloc(sizeof(UnitTestState), stats->total);
 
 	for (size_t i = 0; i < stats->total; ++i) {
-		UnitTestState *ut_state = calloc(sizeof(UnitTestState), 1);
+		UnitTestState *ut_state = cs_mem_calloc(sizeof(UnitTestState), 1);
 		ut_state->tcase = test_cases[i];
 		ut_state->stats = stats;
 

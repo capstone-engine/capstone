@@ -7,7 +7,7 @@
 
 TestInput *test_input_new()
 {
-	TestInput *p = calloc(sizeof(TestInput), 1);
+	TestInput *p = cs_mem_calloc(sizeof(TestInput), 1);
 	assert(p);
 	return p;
 }
@@ -17,12 +17,12 @@ void test_input_free(TestInput *test_input)
 	if (!test_input) {
 		return;
 	}
-	free(test_input->bytes);
-	free(test_input->arch);
+	cs_mem_free(test_input->bytes);
+	cs_mem_free(test_input->arch);
 	for (size_t i = 0; i < test_input->options_count; i++) {
-		free(test_input->options[i]);
+		cs_mem_free(test_input->options[i]);
 	}
-	free(test_input);
+	cs_mem_free(test_input);
 }
 
 TestInput *test_input_clone(TestInput *test_input)
@@ -32,14 +32,14 @@ TestInput *test_input_clone(TestInput *test_input)
 	ti->address = test_input->address;
 
 	for (size_t i = 0; i < test_input->options_count; i++) {
-		strdup(test_input->options[i]);
-		ti->options = realloc(ti->options,
+		cs_strdup(test_input->options[i]);
+		ti->options = cs_mem_realloc(ti->options,
 				      sizeof(char *) * (ti->options_count + 1));
-		ti->options[i] = strdup(test_input->options[i]);
+		ti->options[i] = cs_strdup(test_input->options[i]);
 		ti->options_count++;
 	}
-	ti->arch = strdup(test_input->arch);
-	ti->bytes = calloc(sizeof(uint8_t), test_input->bytes_count);
+	ti->arch = cs_strdup(test_input->arch);
+	ti->bytes = cs_mem_calloc(sizeof(uint8_t), test_input->bytes_count);
 	memcpy(ti->bytes, test_input->bytes, test_input->bytes_count);
 	return ti;
 }
@@ -47,7 +47,7 @@ TestInput *test_input_clone(TestInput *test_input)
 char *test_input_stringify(const TestInput *test_input)
 {
 	size_t msg_len = 256;
-	char *msg = calloc(sizeof(char), msg_len);
+	char *msg = cs_mem_calloc(sizeof(char), msg_len);
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
 	cs_snprintf(msg, msg_len,
@@ -55,13 +55,13 @@ char *test_input_stringify(const TestInput *test_input)
 		    ", bytes: %s }",
 		    test_input->arch, test_input->options, test_input->address,
 		    byte_seq);
-	free(byte_seq);
+	cs_mem_free(byte_seq);
 	return msg;
 }
 
 TestInsnData *test_insn_data_new()
 {
-	TestInsnData *p = calloc(sizeof(TestInsnData), 1);
+	TestInsnData *p = cs_mem_calloc(sizeof(TestInsnData), 1);
 	assert(p);
 	return p;
 }
@@ -71,9 +71,9 @@ void test_insn_data_free(TestInsnData *test_insn_data)
 	if (!test_insn_data) {
 		return;
 	}
-	free(test_insn_data->op_str);
-	free(test_insn_data->mnemonic);
-	free(test_insn_data);
+	cs_mem_free(test_insn_data->op_str);
+	cs_mem_free(test_insn_data->mnemonic);
+	cs_mem_free(test_insn_data);
 }
 
 TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
@@ -84,16 +84,16 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 	tid->is_alias = test_insn_data->is_alias;
 	tid->id = test_insn_data->id;
 	tid->mnemonic = test_insn_data->mnemonic ?
-				strdup(test_insn_data->mnemonic) :
+				cs_strdup(test_insn_data->mnemonic) :
 				NULL;
-	tid->op_str = test_insn_data->op_str ? strdup(test_insn_data->op_str) :
+	tid->op_str = test_insn_data->op_str ? cs_strdup(test_insn_data->op_str) :
 					       NULL;
 	return tid;
 }
 
 TestExpected *test_expected_new()
 {
-	TestExpected *p = calloc(sizeof(TestExpected), 1);
+	TestExpected *p = cs_mem_calloc(sizeof(TestExpected), 1);
 	assert(p);
 	return p;
 }
@@ -106,7 +106,7 @@ void test_expected_free(TestExpected *test_expected)
 	for (size_t i = 0; i < test_expected->insns_count; i++) {
 		test_insn_data_free(&test_expected->insns[i]);
 	}
-	free(test_expected);
+	cs_mem_free(test_expected);
 }
 
 TestExpected *test_expected_clone(TestExpected *test_expected)
@@ -114,13 +114,13 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 	assert(test_expected);
 	TestExpected *te = test_expected_new();
 	for (size_t i = 0; i < test_expected->insns_count; i++) {
-		te->insns = realloc(te->insns, sizeof(TestInsnData) *
+		te->insns = cs_mem_realloc(te->insns, sizeof(TestInsnData) *
 						       (te->insns_count + 1));
 		TestInsnData *td =
 			test_insn_data_clone(&test_expected->insns[i]);
 		te->insns[i] = *td;
 		te->insns_count++;
-		free(td);
+		cs_mem_free(td);
 	}
 	return te;
 }
@@ -132,7 +132,7 @@ TestCaseResult test_expected_compare(TestExpected *expected, cs_insn *insns, siz
 
 TestCase *test_case_new()
 {
-	TestCase *p = calloc(sizeof(TestCase), 1);
+	TestCase *p = cs_mem_calloc(sizeof(TestCase), 1);
 	assert(p);
 	return p;
 }
@@ -142,7 +142,7 @@ void test_case_free(TestCase *test_case)
 	if (!test_case) {
 		return;
 	}
-	free(test_case);
+	cs_mem_free(test_case);
 }
 
 TestCase *test_case_clone(TestCase *test_case)
@@ -151,16 +151,16 @@ TestCase *test_case_clone(TestCase *test_case)
 	TestCase *tc = test_case_new();
 	TestInput *ti = test_input_clone(&test_case->input);
 	tc->input = *ti;
-	free(ti);
+	cs_mem_free(ti);
 	TestExpected *te = test_expected_clone(&test_case->expected);
 	tc->expected = *te;
-	free(te);
+	cs_mem_free(te);
 	return tc;
 }
 
 TestFile *test_file_new()
 {
-	TestFile *p = calloc(sizeof(TestFile), 1);
+	TestFile *p = cs_mem_calloc(sizeof(TestFile), 1);
 	assert(p);
 	return p;
 }
@@ -173,7 +173,7 @@ void test_file_free(TestFile *test_file)
 	for (size_t i = 0; i < test_file->test_cases_count; i++) {
 		test_case_free(&test_file->test_cases[i]);
 	}
-	free(test_file);
+	cs_mem_free(test_file);
 }
 
 TestFile *test_file_clone(TestFile *test_file)
@@ -182,12 +182,12 @@ TestFile *test_file_clone(TestFile *test_file)
 	TestFile *tf = test_file_new();
 	for (size_t i = 0; i < test_file->test_cases_count; i++) {
 		tf->test_cases =
-			realloc(tf->test_cases,
+			cs_mem_realloc(tf->test_cases,
 				sizeof(TestCase) * (tf->test_cases_count + 1));
 		TestCase *tc = test_case_clone(&test_file->test_cases[i]);
 		tf->test_cases[i] = *tc;
 		tf->test_cases_count++;
-		free(tc);
+		cs_mem_free(tc);
 	}
 	return tf;
 }

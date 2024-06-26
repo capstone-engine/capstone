@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: BSD-3
 
 #define _XOPEN_SOURCE 500
-#include <capstone/platform.h>
+#include "../../../utils.h"
 #include "test_run.h"
+#include <capstone/platform.h>
 #include <ftw.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +15,7 @@
 // Pointer to the file list table
 // Must be a thread local, because we cannot pass argumets to nftw.
 // So the found test files can only be saved, very very annoyingly,
-// to a global/thread-local mutable variable.
+// to a global/thread-local mutable variables.
 thread_local char ***test_files = NULL;
 thread_local uint32_t file_count = 0;
 
@@ -36,12 +37,12 @@ static int handle_ftree_entry(const char *fpath, const struct stat *sb,
 	}
 
 	file_count++;
-	*test_files = realloc(*test_files, sizeof(char *) * file_count);
+	*test_files = cs_mem_realloc(*test_files, sizeof(char *) * file_count);
 	if (!*test_files) {
 		fprintf(stderr, "realloc failed\n");
 		return -1;
 	}
-	test_files[0][file_count - 1] = strdup(fpath);
+	test_files[0][file_count - 1] = cs_strdup(fpath);
 	return 0;
 }
 
