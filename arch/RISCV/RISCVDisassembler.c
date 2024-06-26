@@ -406,7 +406,7 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
     		// Note that we mark it AFTER the instruction is decoded
     		// This is because there is no obvious pattern in terms of RISC-V C instructions
     		// So we compare the instruction IDs one by one
-    		if (MI->csh->detail_opt)
+    		if (detail_is_set(MI))
     			markCLSInsn(MI, Inst);
     		*Size = 2;
   	}
