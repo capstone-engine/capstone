@@ -7,7 +7,6 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include "cmocka.h"
-#include "test_case.h"
 #include <capstone/capstone.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,15 +16,15 @@ static TestRunResult get_test_run_result(const TestRunStats *stats)
 	if (stats->total != stats->successful + stats->failed) {
 		fprintf(stderr,
 			"Inconsistent statistics: total != successful + failed");
-		return TRError;
+		return TEST_RUN_ERROR;
 	}
 
 	if (stats->errors != 0) {
-		return TRError;
+		return TEST_RUN_ERROR;
 	} else if (stats->failed != 0) {
-		return TRFailure;
+		return TEST_RUN_FAILURE;
 	}
-	return TRSuccess;
+	return TEST_RUN_SUCCESS;
 }
 
 /// Extract all test cases from the given test files.
@@ -122,7 +121,11 @@ static void cstest_unit_test(void **state)
 	size_t insns_count = cs_disasm(*handle, tcase->input.bytes,
 				     tcase->input.bytes_count,
 				     tcase->input.address, 0, &insns);
-	test_expected_compare(&tcase->expected, insns, insns_count, stats);
+	if (test_expected_compare(&tcase->expected, insns, insns_count)) {
+		stats->successful++;
+	} else {
+		stats->failed++;
+	}
 	cs_free(insns, insns_count);
 }
 
@@ -145,7 +148,7 @@ static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 		utest_table[i].teardown_func = cstest_unit_test_teardown;
 		utest_table[i].test_func = cstest_unit_test;
 	}
-	// Use private function here, because the API takes only const tables.
+	// Use private function here, because the API takes only constant tables.
 	_cmocka_run_group_tests("All test cases", utest_table, stats->total,
 				NULL, NULL);
 }

@@ -91,13 +91,13 @@ int main(int argc, const char **argv)
 	TestRunResult res = cstest_run_tests(*test_files, file_count, &stats);
 
 	print_test_run_stats(&stats);
-	if (res == TRError) {
+	if (res == TEST_RUN_ERROR) {
 		fprintf(stderr, "An error occured.\n");
 		exit(EXIT_FAILURE);
-	} else if (res == TRSuccess) {
+	} else if (res == TEST_RUN_SUCCESS) {
 		printf("All tests succeeded.\n");
 		exit(EXIT_SUCCESS);
-	} else if (res == TRFailure) {
+	} else if (res == TEST_RUN_FAILURE) {
 		fprintf(stderr, "Some tests failed.\n");
 		exit(EXIT_FAILURE);
 	}

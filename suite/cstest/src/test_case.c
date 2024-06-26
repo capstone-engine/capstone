@@ -124,12 +124,9 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 	return te;
 }
 
-/// Compares the decoded instructions @insns against the @expected values.
-/// @stats is update accordingly.
-/// Returns true: The expected values match the decoded ones.
-/// Returns false: Otherwise.
-bool test_expected_compare(TestExpected *expected, cs_insn *insns, size_t insns_count, TestRunStats *stats) {
-	return false;
+/// Compares the decoded instructions @insns against the @expected values and returns the result.
+TestCaseResult test_expected_compare(TestExpected *expected, cs_insn *insns, size_t insns_count) {
+	return TEST_CASE_FAIL;
 }
 
 TestCase *test_case_new()

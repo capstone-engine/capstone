@@ -4,7 +4,6 @@
 #ifndef TESTCASE_H
 #define TESTCASE_H
 
-#include "test_run.h"
 #include <cyaml/cyaml.h>
 #include <capstone/capstone.h>
 #include <stdbool.h>
@@ -84,6 +83,13 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_END
 };
 
+/// The result of a test case.
+typedef enum {
+	TEST_CASE_SUCCESS, ///< Test case succeeded
+	TEST_CASE_FAIL, ///< Expected data mismatched actual data.
+	TEST_CASE_ERROR, ///< And error occurred.
+} TestCaseResult;
+
 /// The expected data for a test. This can hold multiple instructions
 /// if enough bytes were given.
 typedef struct {
@@ -94,7 +100,7 @@ typedef struct {
 TestExpected *test_expected_new();
 void test_expected_free(TestExpected *test_expected);
 TestExpected *test_expected_clone(TestExpected *test_expected);
-bool test_expected_compare(TestExpected *test_expected, cs_insn *insns, size_t insns_count, TestRunStats *stats);
+TestCaseResult test_expected_compare(TestExpected *expected, cs_insn *insns, size_t insns_count);
 
 static const cyaml_schema_value_t insn_schema = {
 	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestInsnData,
@@ -151,9 +157,4 @@ static const cyaml_schema_value_t test_file_schema = {
 			    test_file_mapping_schema),
 };
 
-/// The result of a test case.
-typedef struct {
-	bool successful; ///< True if test succeeded, false otherwise.
-} TestCaseResult;
-
-#endif			 // TESTCASE_H
+#endif // TESTCASE_H

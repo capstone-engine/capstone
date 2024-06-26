@@ -8,9 +8,9 @@
 #include <stdint.h>
 
 typedef enum {
-	TRSuccess = 0, ///< All test cases succeeded.
-	TRFailure = 1, ///< At least one test case failed.
-	TRError = 2,   ///< Test run had errors.
+	TEST_RUN_SUCCESS = 0, ///< All test cases succeeded.
+	TEST_RUN_FAILURE = 1, ///< At least one test case failed.
+	TEST_RUN_ERROR = 2,   ///< Test run had errors.
 } TestRunResult;
 
 typedef struct {
