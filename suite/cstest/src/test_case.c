@@ -78,7 +78,7 @@ void test_insn_data_free(TestInsnData *test_insn_data)
 
 TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 {
-	assert(!test_insn_data);
+	assert(test_insn_data);
 	TestInsnData *tid = test_insn_data_new();
 	tid->alias_id = test_insn_data->alias_id;
 	tid->is_alias = test_insn_data->is_alias;
