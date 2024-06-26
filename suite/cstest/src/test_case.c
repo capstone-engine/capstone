@@ -39,6 +39,7 @@ TestInput *test_input_clone(TestInput *test_input)
 		ti->options_count++;
 	}
 	ti->arch = strdup(test_input->arch);
+	ti->bytes = calloc(sizeof(uint8_t), test_input->bytes_count);
 	memcpy(ti->bytes, test_input->bytes, test_input->bytes_count);
 	return ti;
 }
