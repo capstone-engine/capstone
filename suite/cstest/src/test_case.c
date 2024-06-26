@@ -124,6 +124,14 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 	return te;
 }
 
+/// Compares the decoded instructions @insns against the @expected values.
+/// @stats is update accordingly.
+/// Returns true: The expected values match the decoded ones.
+/// Returns false: Otherwise.
+bool test_expected_compare(TestExpected *expected, cs_insn *insns, size_t insns_count, TestRunStats *stats) {
+	return false;
+}
+
 TestCase *test_case_new()
 {
 	TestCase *p = calloc(sizeof(TestCase), 1);
@@ -136,9 +144,6 @@ void test_case_free(TestCase *test_case)
 	if (!test_case) {
 		return;
 	}
-	for (size_t i = 0; i < test_case->fields_to_check_count; i++) {
-		free(test_case->fields_to_check[i]);
-	}
 	free(test_case);
 }
 
@@ -146,13 +151,6 @@ TestCase *test_case_clone(TestCase *test_case)
 {
 	assert(test_case);
 	TestCase *tc = test_case_new();
-	for (size_t i = 0; i < test_case->fields_to_check_count; i++) {
-		tc->fields_to_check = realloc(
-			tc->fields_to_check,
-			sizeof(char *) * (tc->fields_to_check_count + 1));
-		tc->fields_to_check[i] = strdup(test_case->fields_to_check[i]);
-		tc->fields_to_check_count++;
-	}
 	TestInput *ti = test_input_clone(&test_case->input);
 	tc->input = *ti;
 	free(ti);

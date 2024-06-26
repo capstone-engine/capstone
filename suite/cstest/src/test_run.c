@@ -108,12 +108,28 @@ static int cstest_unit_test_teardown(void **state)
 
 static void cstest_unit_test(void **state)
 {
+	assert(state);
+	UnitTestState *ustate = *state;
+	assert(ustate);
+	assert(ustate->handle);
+	assert(ustate->stats);
+	assert(ustate->tcase);
+	csh *handle = ustate->handle;
+	TestRunStats *stats = ustate->stats;
+	TestCase *tcase = ustate->tcase;
+
+	cs_insn *insns = NULL;
+	size_t insns_count = cs_disasm(*handle, tcase->input.bytes,
+				     tcase->input.bytes_count,
+				     tcase->input.address, 0, &insns);
+	test_expected_compare(&tcase->expected, insns, insns_count, stats);
+	cs_free(insns, insns_count);
 }
 
 static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
 {
 	assert(test_cases);
-	// CMocka's API does't allow to init a CMUnitTest with a partially initialzed state
+	// CMocka's API doesn't allow to init a CMUnitTest with a partially initialized state
 	// (which is later initialized in the setup_test function).
 	// So we do it manually here.
 	struct CMUnitTest *utest_table =

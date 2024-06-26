@@ -4,17 +4,11 @@
 #ifndef TESTCASE_H
 #define TESTCASE_H
 
+#include "test_run.h"
+#include <cyaml/cyaml.h>
 #include <capstone/capstone.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-/// Enumeration of all possible fields to check.
-/// Enum is incomplete, because it is only used to mark the fields
-/// checked during DIET testing.
-typedef enum {
-	TC_FIELD_ALL, ///< (Default) Test all fields given in the yaml file.
-	TC_FIELD_ID,  ///< The cs_insn->id
-} TestCaseField;
 
 /// Input data for a test case.
 typedef struct {
@@ -90,7 +84,7 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_END
 };
 
-/// The exected data for a test. This can hold mutiple instructions
+/// The expected data for a test. This can hold multiple instructions
 /// if enough bytes were given.
 typedef struct {
 	TestInsnData *insns;  ///< Zero to N disassembled instructions.
@@ -100,6 +94,7 @@ typedef struct {
 TestExpected *test_expected_new();
 void test_expected_free(TestExpected *test_expected);
 TestExpected *test_expected_clone(TestExpected *test_expected);
+bool test_expected_compare(TestExpected *test_expected, cs_insn *insns, size_t insns_count, TestRunStats *stats);
 
 static const cyaml_schema_value_t insn_schema = {
 	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestInsnData,
@@ -116,28 +111,17 @@ static const cyaml_schema_field_t test_expected_mapping_schema[] = {
 typedef struct {
 	TestInput input;       ///< Input data for a test case
 	TestExpected expected; ///< Expected data of the test case.
-	char **fields_to_check; ///< If NULL, all fields are checked. Otherwise only the specified.
-	uint32_t fields_to_check_count; // Filled by cyaml
 } TestCase;
 
 TestCase *test_case_new();
 void test_case_free(TestCase *test_case);
 TestCase *test_case_clone(TestCase *test_case);
 
-/// A single field name string
-static const cyaml_schema_value_t field_schema = {
-	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
-};
-
 static const cyaml_schema_field_t test_case_mapping_schema[] = {
 	CYAML_FIELD_MAPPING("input", CYAML_FLAG_DEFAULT, TestCase, input,
 			    test_input_mapping_schema),
 	CYAML_FIELD_MAPPING("expected", CYAML_FLAG_DEFAULT, TestCase, expected,
 			    test_expected_mapping_schema),
-	CYAML_FIELD_SEQUENCE("fields_to_check",
-			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestCase,
-			     fields_to_check, &field_schema, 0,
-			     CYAML_UNLIMITED), // 0-MAX options
 	CYAML_FIELD_END
 };
 
