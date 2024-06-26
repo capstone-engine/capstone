@@ -26,6 +26,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../MCDisassembler.h"
 #include "../../MathExtras.h"
+#include "../../Mapping.h"
 #include "RISCVBaseInfo.h"
 #include "RISCVDisassembler.h"
 
@@ -347,7 +348,7 @@ static void markCLSInsn(MCInst *MI, uint32_t in)
 		id == RISCV_C_FLWSP || id == RISCV_C_LDSP ||
 		id == RISCV_C_FSDSP || id == RISCV_C_SWSP ||
 		id == RISCV_C_FSWSP || id == RISCV_C_SDSP) {
-		RISCV_get_detail()->need_effective_addr = true;
+		RISCV_get_detail(MI)->need_effective_addr = true;
 	}
 	return;
 }
