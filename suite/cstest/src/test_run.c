@@ -52,12 +52,12 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 		}
 
 		// Copy all test cases of a test file
-		cases = cs_mem_realloc(cases, sizeof(TestCase *) * stats->total +
-					       test_file->test_cases_count);
-		for (size_t i = 0; i < test_file->test_cases_count; ++i) {
+		cases = cs_mem_realloc(cases, sizeof(TestCase *) * (stats->total +
+					       test_file->test_cases_count));
+		for (size_t i = 0; i < test_file->test_cases_count; ++i, stats->total++) {
 			cases[stats->total] =
 				test_case_clone(&test_file->test_cases[i]);
-			stats->total++;
+			assert(cases[stats->total]);
 		}
 		err = cyaml_free(&cyaml_config, &test_file_schema, test_file,
 				 0);
