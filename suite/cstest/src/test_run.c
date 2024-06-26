@@ -56,10 +56,10 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 			cases, sizeof(TestCase *) *
 				       (stats->total +
 					test_file_data->test_cases_count));
-		for (size_t i = 0; i < test_file_data->test_cases_count;
-		     ++i, stats->total++) {
+		for (size_t k = 0; k < test_file_data->test_cases_count;
+		     ++k, stats->total++) {
 			cases[stats->total] =
-				test_case_clone(&test_file_data->test_cases[i]);
+				test_case_clone(&test_file_data->test_cases[k]);
 			assert(cases[stats->total]);
 		}
 		err = cyaml_free(&cyaml_config, &test_file_schema,
