@@ -39,6 +39,14 @@ def print_insn_detail(insn):
                 if i.mem.disp != 0:
                     print("\t\t\toperands[%u].mem.disp: 0x%s" \
                         % (c, to_x(i.mem.disp)))
+
+            if i.access == CS_AC_READ:
+                print("\t\toperands[%u].access: READ" % (c))
+            elif i.access == CS_AC_WRITE:
+                print("\t\toperands[%u].access: WRITE" % (c))
+            elif i.access == CS_AC_READ | CS_AC_WRITE:
+                print("\t\toperands[%u].access: READ | WRITE" % (c))
+
             c += 1
     
     if len(insn.groups) > 0:
