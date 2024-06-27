@@ -1205,6 +1205,7 @@
 { /* RISCV_CSRRC (263) */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
@@ -1212,11 +1213,13 @@
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
 { /* RISCV_CSRRS (265) */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
@@ -1224,17 +1227,20 @@
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
 { /* RISCV_CSRRW (267) */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
 { /* RISCV_CSRRWI (268) */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
