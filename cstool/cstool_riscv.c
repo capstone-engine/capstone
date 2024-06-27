@@ -39,6 +39,20 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 
 				break;
 		}
+
+		switch(op->access) {
+			default:
+				break;
+			case CS_AC_READ:
+				printf("\t\toperands[%u].access: READ\n", i);
+				break;
+			case CS_AC_WRITE:
+				printf("\t\toperands[%u].access: WRITE\n", i);
+				break;
+			case CS_AC_READ | CS_AC_WRITE:
+				printf("\t\toperands[%u].access: READ | WRITE\n", i);
+				break;
+		}
 	}
 
 	printf("\n");

@@ -13,6 +13,8 @@ const char *RISCV_group_name(csh handle, unsigned int id);
 
 const char *RISCV_reg_name(csh handle, unsigned int reg);
 
+void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum);
+
 // map instruction name to instruction ID
 riscv_reg RISCV_map_insn(const char *name);
 
