@@ -634,24 +634,24 @@ static inline unsigned getNumElementsFromSVEPredPattern(unsigned Pattern)
 	switch (Pattern) {
 	default:
 		return 0;
-	case AArch64_SVEPREDPAT_VL1:
-	case AArch64_SVEPREDPAT_VL2:
-	case AArch64_SVEPREDPAT_VL3:
-	case AArch64_SVEPREDPAT_VL4:
-	case AArch64_SVEPREDPAT_VL5:
-	case AArch64_SVEPREDPAT_VL6:
-	case AArch64_SVEPREDPAT_VL7:
-	case AArch64_SVEPREDPAT_VL8:
+	case AARCH64_SVEPREDPAT_VL1:
+	case AARCH64_SVEPREDPAT_VL2:
+	case AARCH64_SVEPREDPAT_VL3:
+	case AARCH64_SVEPREDPAT_VL4:
+	case AARCH64_SVEPREDPAT_VL5:
+	case AARCH64_SVEPREDPAT_VL6:
+	case AARCH64_SVEPREDPAT_VL7:
+	case AARCH64_SVEPREDPAT_VL8:
 		return Pattern;
-	case AArch64_SVEPREDPAT_VL16:
+	case AARCH64_SVEPREDPAT_VL16:
 		return 16;
-	case AArch64_SVEPREDPAT_VL32:
+	case AARCH64_SVEPREDPAT_VL32:
 		return 32;
-	case AArch64_SVEPREDPAT_VL64:
+	case AARCH64_SVEPREDPAT_VL64:
 		return 64;
-	case AArch64_SVEPREDPAT_VL128:
+	case AARCH64_SVEPREDPAT_VL128:
 		return 128;
-	case AArch64_SVEPREDPAT_VL256:
+	case AARCH64_SVEPREDPAT_VL256:
 		return 256;
 	}
 }
@@ -672,15 +672,15 @@ static inline unsigned getSVEPredPatternFromNumElements(unsigned MinNumElts)
 	case 8:
 		return MinNumElts;
 	case 16:
-		return AArch64_SVEPREDPAT_VL16;
+		return AARCH64_SVEPREDPAT_VL16;
 	case 32:
-		return AArch64_SVEPREDPAT_VL32;
+		return AARCH64_SVEPREDPAT_VL32;
 	case 64:
-		return AArch64_SVEPREDPAT_VL64;
+		return AARCH64_SVEPREDPAT_VL64;
 	case 128:
-		return AArch64_SVEPREDPAT_VL128;
+		return AARCH64_SVEPREDPAT_VL128;
 	case 256:
-		return AArch64_SVEPREDPAT_VL256;
+		return AARCH64_SVEPREDPAT_VL256;
 	}
 }
 

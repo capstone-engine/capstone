@@ -1199,7 +1199,7 @@ enum {
 #ifdef GET_REGINFO_MC_DESC
 #undef GET_REGINFO_MC_DESC
 
-static const int16_t AArch64RegDiffLists[] = {
+static const MCPhysReg AArch64RegDiffLists[] = {
   /* 0 */ -18, 22, -20, -10, -285, 0,
   /* 6 */ -10, 22, -20, -10, -285, 0,
   /* 12 */ -18, 26, -20, -10, -285, 0,

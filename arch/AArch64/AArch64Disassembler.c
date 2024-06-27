@@ -383,7 +383,7 @@ static DecodeStatus getInstruction(csh handle, const uint8_t *Bytes,
 					break;
 				}
 			} else if (Desc.OpInfo[j].OperandType ==
-				   AArch64_OP_IMPLICIT_IMM_0) {
+				   AARCH64_OP_IMPLICIT_IMM_0) {
 				MCInst_insert0(MI, j,
 					       MCOperand_CreateImm1(MI, 0));
 			}

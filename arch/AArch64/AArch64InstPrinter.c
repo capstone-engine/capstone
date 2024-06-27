@@ -187,31 +187,31 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 					if (strings_match(AsmMnemonic, "uxtb"))
 						AArch64_get_detail_op(MI, -1)
 							->ext =
-							AArch64_EXT_UXTB;
+							AARCH64_EXT_UXTB;
 					else if (strings_match(AsmMnemonic,
 							       "sxtb"))
 						AArch64_get_detail_op(MI, -1)
 							->ext =
-							AArch64_EXT_SXTB;
+							AARCH64_EXT_SXTB;
 					else if (strings_match(AsmMnemonic,
 							       "uxth"))
 						AArch64_get_detail_op(MI, -1)
 							->ext =
-							AArch64_EXT_UXTH;
+							AARCH64_EXT_UXTH;
 					else if (strings_match(AsmMnemonic,
 							       "sxth"))
 						AArch64_get_detail_op(MI, -1)
 							->ext =
-							AArch64_EXT_SXTH;
+							AARCH64_EXT_SXTH;
 					else if (strings_match(AsmMnemonic,
 							       "sxtw"))
 						AArch64_get_detail_op(MI, -1)
 							->ext =
-							AArch64_EXT_SXTW;
+							AARCH64_EXT_SXTW;
 					else
 						AArch64_get_detail_op(MI, -1)
 							->ext =
-							AArch64_EXT_INVALID;
+							AARCH64_EXT_INVALID;
 				}
 				isAlias = true;
 				MCInst_setIsAlias(MI, isAlias);
@@ -269,21 +269,21 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 					if (strings_match(AsmMnemonic, "lsl"))
 						AArch64_get_detail_op(MI, -1)
 							->shift.type =
-							AArch64_SFT_LSL;
+							AARCH64_SFT_LSL;
 					else if (strings_match(AsmMnemonic,
 							       "lsr"))
 						AArch64_get_detail_op(MI, -1)
 							->shift.type =
-							AArch64_SFT_LSR;
+							AARCH64_SFT_LSR;
 					else if (strings_match(AsmMnemonic,
 							       "asr"))
 						AArch64_get_detail_op(MI, -1)
 							->shift.type =
-							AArch64_SFT_ASR;
+							AARCH64_SFT_ASR;
 					else
 						AArch64_get_detail_op(MI, -1)
 							->shift.type =
-							AArch64_SFT_INVALID;
+							AARCH64_SFT_INVALID;
 					AArch64_get_detail_op(MI, -1)
 						->shift.value = shift;
 				}
@@ -317,11 +317,11 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				AArch64_set_detail_op_reg(
 					MI, 1, MCOperand_getReg(Op1));
 				AArch64_set_detail_op_imm(
-					MI, 2, AArch64_OP_IMM,
+					MI, 2, AARCH64_OP_IMM,
 					(Is64Bit ? 64 : 32) -
 						MCOperand_getImm(Op2));
 				AArch64_set_detail_op_imm(
-					MI, 3, AArch64_OP_IMM,
+					MI, 3, AARCH64_OP_IMM,
 					MCOperand_getImm(Op3) + 1);
 			}
 			isAlias = true;
@@ -348,10 +348,10 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		if (detail_is_set(MI) && useAliasDetails) {
 			AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
 			AArch64_set_detail_op_reg(MI, 1, MCOperand_getReg(Op1));
-			AArch64_set_detail_op_imm(MI, 2, AArch64_OP_IMM,
+			AArch64_set_detail_op_imm(MI, 2, AARCH64_OP_IMM,
 						  MCOperand_getImm(Op2));
 			AArch64_set_detail_op_imm(
-				MI, 3, AArch64_OP_IMM,
+				MI, 3, AARCH64_OP_IMM,
 				MCOperand_getImm(Op3) - MCOperand_getImm(Op2) +
 					1);
 		}
@@ -394,9 +394,9 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			if (detail_is_set(MI) && useAliasDetails) {
 				AArch64_set_detail_op_reg(
 					MI, 0, MCOperand_getReg(Op0));
-				AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM,
+				AArch64_set_detail_op_imm(MI, 3, AARCH64_OP_IMM,
 							  LSB);
-				AArch64_set_detail_op_imm(MI, 4, AArch64_OP_IMM,
+				AArch64_set_detail_op_imm(MI, 4, AARCH64_OP_IMM,
 							  Width);
 			}
 
@@ -424,9 +424,9 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 					MI, 0, MCOperand_getReg(Op0));
 				AArch64_set_detail_op_reg(
 					MI, 2, MCOperand_getReg(Op2));
-				AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM,
+				AArch64_set_detail_op_imm(MI, 3, AARCH64_OP_IMM,
 							  LSB);
-				AArch64_set_detail_op_imm(MI, 4, AArch64_OP_IMM,
+				AArch64_set_detail_op_imm(MI, 4, AARCH64_OP_IMM,
 							  Width);
 			}
 			if (useAliasDetails)
@@ -449,8 +449,8 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		if (detail_is_set(MI) && useAliasDetails) {
 			AArch64_set_detail_op_reg(MI, 0, MCOperand_getReg(Op0));
 			AArch64_set_detail_op_reg(MI, 2, MCOperand_getReg(Op2));
-			AArch64_set_detail_op_imm(MI, 3, AArch64_OP_IMM, LSB);
-			AArch64_set_detail_op_imm(MI, 4, AArch64_OP_IMM, Width);
+			AArch64_set_detail_op_imm(MI, 3, AARCH64_OP_IMM, LSB);
+			AArch64_set_detail_op_imm(MI, 4, AARCH64_OP_IMM, Width);
 		}
 		if (useAliasDetails)
 			return;
@@ -498,7 +498,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				AArch64_set_detail_op_reg(
 					MI, 0, MCInst_getOpVal(MI, 0));
 				AArch64_set_detail_op_imm(
-					MI, 1, AArch64_OP_IMM,
+					MI, 1, AARCH64_OP_IMM,
 					SignExtend64(Value, RegWidth));
 			}
 			if (useAliasDetails)
@@ -530,7 +530,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				AArch64_set_detail_op_reg(
 					MI, 0, MCInst_getOpVal(MI, 0));
 				AArch64_set_detail_op_imm(
-					MI, 1, AArch64_OP_IMM,
+					MI, 1, AARCH64_OP_IMM,
 					SignExtend64(Value, RegWidth));
 			}
 			if (useAliasDetails)
@@ -558,7 +558,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 				AArch64_set_detail_op_reg(
 					MI, 0, MCInst_getOpVal(MI, 0));
 				AArch64_set_detail_op_imm(
-					MI, 2, AArch64_OP_IMM,
+					MI, 2, AARCH64_OP_IMM,
 					SignExtend64(Value, RegWidth));
 			}
 			if (useAliasDetails)
@@ -573,7 +573,7 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		SStream_concat(O, "%s", " SPACE ");
 		printInt64(O, MCOperand_getImm(MCInst_getOperand(MI, (1))));
 		if (detail_is_set(MI) && useAliasDetails) {
-			AArch64_set_detail_op_imm(MI, 1, AArch64_OP_IMM,
+			AArch64_set_detail_op_imm(MI, 1, AARCH64_OP_IMM,
 						  MCInst_getOpVal(MI, 1));
 		}
 		if (useAliasDetails)
@@ -723,8 +723,8 @@ Search_IC: {
 	if (detail_is_set(MI)) {
 		aarch64_sysop sysop;
 		sysop.reg = IC->SysReg;
-		sysop.sub_type = AArch64_OP_IC;
-		AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSREG;
+		sysop.sub_type = AARCH64_OP_IC;
+		AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SYSREG;
 		AArch64_get_detail_op(MI, 0)->sysop = sysop;
 		AArch64_inc_op_count(MI);
 	}
@@ -750,9 +750,9 @@ Search_IC: {
 			if (detail_is_set(MI)) {
 				aarch64_sysop sysop;
 				sysop.alias = DC->SysAlias;
-				sysop.sub_type = AArch64_OP_DC;
+				sysop.sub_type = AARCH64_OP_DC;
 				AArch64_get_detail_op(MI, 0)->type =
-					AArch64_OP_SYSALIAS;
+					AARCH64_OP_SYSALIAS;
 				AArch64_get_detail_op(MI, 0)->sysop = sysop;
 				AArch64_inc_op_count(MI);
 			}
@@ -773,9 +773,9 @@ Search_IC: {
 			if (detail_is_set(MI)) {
 				aarch64_sysop sysop;
 				sysop.alias = AT->SysAlias;
-				sysop.sub_type = AArch64_OP_AT;
+				sysop.sub_type = AARCH64_OP_AT;
 				AArch64_get_detail_op(MI, 0)->type =
-					AArch64_OP_SYSALIAS;
+					AARCH64_OP_SYSALIAS;
 				AArch64_get_detail_op(MI, 0)->sysop = sysop;
 				AArch64_inc_op_count(MI);
 			}
@@ -795,8 +795,8 @@ Search_IC: {
 		if (detail_is_set(MI)) {
 			aarch64_sysop sysop;
 			sysop.reg = TLBI->SysReg;
-			sysop.sub_type = AArch64_OP_TLBI;
-			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSREG;
+			sysop.sub_type = AARCH64_OP_TLBI;
+			AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SYSREG;
 			AArch64_get_detail_op(MI, 0)->sysop = sysop;
 			AArch64_inc_op_count(MI);
 		}
@@ -864,8 +864,8 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 		if (detail_is_set(MI)) {
 			aarch64_sysop sysop;
 			sysop.reg = TLBI->SysReg;
-			sysop.sub_type = AArch64_OP_TLBI;
-			AArch64_get_detail_op(MI, 0)->type = AArch64_OP_SYSREG;
+			sysop.sub_type = AARCH64_OP_TLBI;
+			AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SYSREG;
 			AArch64_get_detail_op(MI, 0)->sysop = sysop;
 			AArch64_inc_op_count(MI);
 		}
@@ -2178,13 +2178,13 @@ void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	// Horrible hack for the one register that has identical encodings but
 	// different names in MSR and MRS. Because of this, one of MRS and MSR is
 	// going to get the wrong entry
-	if (Val == AArch64_SYSREG_DBGDTRRX_EL0) {
+	if (Val == AARCH64_SYSREG_DBGDTRRX_EL0) {
 		SStream_concat0(O, "DBGDTRRX_EL0");
 		return;
 	}
 
 	// Horrible hack for two different registers having the same encoding.
-	if (Val == AArch64_SYSREG_TRCEXTINSELR) {
+	if (Val == AARCH64_SYSREG_TRCEXTINSELR) {
 		SStream_concat0(O, "TRCEXTINSELR");
 		return;
 	}
@@ -2209,13 +2209,13 @@ void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	// Horrible hack for the one register that has identical encodings but
 	// different names in MSR and MRS. Because of this, one of MRS and MSR is
 	// going to get the wrong entry
-	if (Val == AArch64_SYSREG_DBGDTRTX_EL0) {
+	if (Val == AARCH64_SYSREG_DBGDTRTX_EL0) {
 		SStream_concat0(O, "DBGDTRTX_EL0");
 		return;
 	}
 
 	// Horrible hack for two different registers having the same encoding.
-	if (Val == AArch64_SYSREG_TRCEXTINSELR) {
+	if (Val == AARCH64_SYSREG_TRCEXTINSELR) {
 		SStream_concat0(O, "TRCEXTINSELR");
 		return;
 	}
