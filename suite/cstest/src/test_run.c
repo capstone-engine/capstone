@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3
 
 #include "test_run.h"
+#include "test_mappings.h"
 #include "../../../utils.h"
 #include <stdarg.h>
 #include <stddef.h>
@@ -74,18 +75,102 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 	return cases;
 }
 
+static bool parse_input_options(const TestInput *input, cs_arch *arch,
+				cs_mode *mode, cs_opt *opt_arr,
+				size_t opt_arr_size,
+				size_t *opt_set)
+{
+	assert(input && arch && mode && opt_arr);
+	bool arch_found = false;
+	const char *opt_str = input->arch;
+	for (size_t i = 0; i < ARR_SIZE(test_arch_map); i++) {
+		if (strcmp(opt_str, test_arch_map[i].str) == 0) {
+			*arch = test_arch_map[i].arch;
+			arch_found = true;
+			break;
+		}
+	}
+	if (!arch_found) {
+		fprintf(stderr, "[!] '%s' is not mapped to a capstone architecture.\n", input->arch);
+		return false;
+	}
+	size_t opt_idx = 0;
+	bool mode_found = false;
+	char **options = input->options;
+	for (size_t i = 0; i < input->options_count; ++i) {
+		const char *opt_str = options[i];
+		for (size_t k = 0; k < ARR_SIZE(test_mode_map) || k < ARR_SIZE(test_option_map); k++) {
+			if (k < ARR_SIZE(test_mode_map) && strcmp(opt_str, test_mode_map[k].str) == 0) {
+				if (mode_found) {
+					fprintf(stderr, "Option string contains more then one mode option: '%s'\n", opt_str);
+					return false;
+				}
+				*mode = test_mode_map[k].mode;
+				mode_found = true;
+				continue;
+			}
+			if (k < ARR_SIZE(test_option_map) && strcmp(opt_str, test_option_map[k].str) == 0) {
+				if (opt_idx >= opt_arr_size) {
+					fprintf(stderr, "Too many options given in: '%s'. Maximum is: %" PRId64 "\n", opt_str, opt_arr_size);
+					return false;
+				}
+				opt_arr[opt_idx++] = test_option_map[k].opt;
+				continue;
+			}
+		}
+	}
+	*opt_set = opt_idx;
+	if (!mode_found) {
+		*mode = 0;
+	}
+	return true;
+}
+
+/// Parses the options for cs_open/cs_option and initializes the handle.
+/// Returns true for success and false otherwise.
+static bool open_cs_handle(UnitTestState *ustate)
+{
+	cs_arch arch = 0;
+	cs_mode mode = 0;
+	cs_opt options[8] = { 0 };
+	size_t options_set = 0;
+
+	if (!parse_input_options(ustate->tcase->input, &arch, &mode, options,
+				 8, &options_set)) {
+		char *tc_str = test_input_stringify(ustate->tcase->input, "");
+		fprintf(stderr, "Could not parse options: %s\n",
+			 tc_str);
+		cs_mem_free(tc_str);
+	}
+
+	cs_err err = cs_open(arch, mode, &ustate->handle);
+	if (err != CS_ERR_OK) {
+		char *tc_str = test_input_stringify(ustate->tcase->input, "");
+		fprintf(stderr, "[!] cs_open() failed with: '%s'. TestInput: %s\n",
+			 cs_strerror(err), tc_str);
+		cs_mem_free(tc_str);
+		return false;
+	}
+	for (size_t i = 0; i < options_set; ++i) {
+		cs_err err = cs_option(ustate->handle, options[i].type, options[i].val);
+		if (err != CS_ERR_OK) {
+			char *tc_str = test_input_stringify(ustate->tcase->input, "");
+			fprintf(stderr, "[!] cs_option() failed with: '%s'. TestInput: %s\n",
+				 cs_strerror(err), tc_str);
+			cs_mem_free(tc_str);
+			return false;
+		}
+	}
+	return true;
+}
+
 static int cstest_unit_test_setup(void **state)
 {
 	assert(state);
 	UnitTestState *ustate = *state;
 	assert(ustate->tcase);
-	// Setup cs handle
-	cs_err err = cs_open(0, 0, &ustate->handle);
-	if (err != CS_ERR_OK) {
-		char *tc_str = test_input_stringify(ustate->tcase->input, "");
-		fail_msg("cs_open() failed with: '%s'. TestInput: %s",
-			 cs_strerror(err), tc_str);
-		cs_mem_free(tc_str);
+	if (!open_cs_handle(ustate)) {
+		fail_msg("Failed to initialize capston with given options.");
 		return -1;
 	}
 	return 0;

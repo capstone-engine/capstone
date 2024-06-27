@@ -302,6 +302,12 @@ typedef enum cs_opt_value {
 	CS_OPT_DETAIL_REAL = 1 << 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.
 } cs_opt_value;
 
+/// An option
+typedef struct {
+	cs_opt_type type; ///< The option type
+	cs_opt_value val; ///< The option value to set.
+} cs_opt;
+
 /// Common instruction groups - to be consistent across all architectures.
 typedef enum cs_group_type {
 	CS_GRP_INVALID = 0,  ///< uninitialized/invalid group.
