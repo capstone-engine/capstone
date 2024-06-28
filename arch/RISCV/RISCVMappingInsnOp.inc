@@ -1709,6 +1709,8 @@
 }},
 { /* RISCV_FENCE (342) */
 {
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
 { /* RISCV_FENCE_I (343) */
@@ -2256,6 +2258,8 @@
 }},
 { /* RISCV_SFENCE_VMA (423) */
 {
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_Untyped, CS_DATA_TYPE_LAST },  }, /*  */
   { 0 }
 }},
 { /* RISCV_SH (424) */
