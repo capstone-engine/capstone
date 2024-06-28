@@ -1778,19 +1778,21 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_MatrixIndex_0:
 	case AArch64_OP_GROUP_MatrixIndex_1:
 	case AArch64_OP_GROUP_MatrixIndex_8: {
+		unsigned scale = temp_arg_0;
 		if (AArch64_get_detail_op(MI, 0)->type ==
 		    AARCH64_OP_SME) {
 				// The index is part of an SME matrix
 				AArch64_set_detail_op_sme(MI, OpNum,
 							  AARCH64_SME_MATRIX_SLICE_OFF,
-							  AARCH64LAYOUT_INVALID);
+							  AARCH64LAYOUT_INVALID,
+							  MCInst_getOpVal(MI, OpNum) * scale);
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			// The index is part of a predicate
 			AArch64_set_detail_op_pred(MI, OpNum);
 		} else {
 			// The index is used for an SVE2 instruction.
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-						  MCInst_getOpVal(MI, OpNum));
+						  scale * MCInst_getOpVal(MI, OpNum));
 		}
 		break;
 	}
@@ -2492,7 +2494,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 		if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_SME) {
 			AArch64_set_detail_op_sme(MI, OpNum,
 						  AARCH64_SME_MATRIX_SLICE_OFF,
-						  AARCH64LAYOUT_INVALID);
+						  AARCH64LAYOUT_INVALID, 1);
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			AArch64_set_detail_op_pred(MI, OpNum);
 		} else {
@@ -2505,9 +2507,8 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 		return;
 	}
 
-	assert(!(map_get_op_type(MI, OpNum) & CS_OP_BOUND));
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
-	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
+	assert((map_get_op_type(MI, OpNum) & ~CS_OP_BOUND) == CS_OP_IMM);
 	assert(ImmType == AARCH64_OP_IMM || ImmType == AARCH64_OP_CIMM);
 
 	AArch64_get_detail_op(MI, 0)->type = ImmType;
@@ -2731,8 +2732,11 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		       AARCH64_OP_SME);
 		assert(AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm ==
 		       -1);
+		va_start(args, vas);
+		int64_t offset = va_arg(args, int64_t);
+		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm =
-			MCInst_getOpVal(MI, OpNum);
+			offset;
 		break;
 	case AARCH64_SME_MATRIX_SLICE_OFF_RANGE: {
 		va_start(args, vas);
