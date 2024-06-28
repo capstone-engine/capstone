@@ -100,7 +100,7 @@ static void fixDetailOfEffectiveAddr(MCInst *MI)
 
 			imm = RISCV_get_detail_op(MI, -2)->imm;
 			reg = RISCV_get_detail_op(MI, -1)->reg;
-            access = RISCV_get_detail_op(MI, -1)->access;
+			access = RISCV_get_detail_op(MI, -1)->access;
 
 			RISCV_get_detail_op(MI, -2)->type = RISCV_OP_MEM;
 			RISCV_get_detail_op(MI, -2)->mem.base = reg;

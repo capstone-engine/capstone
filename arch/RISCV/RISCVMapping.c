@@ -168,7 +168,7 @@ void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum) {
 		RISCV_inc_op_count(MI);
 	}
 	else {
-		assert(0 && "Op type not handled.");
+		CS_ASSERT(0 && "Op type not handled.");
 	}
 }
 
