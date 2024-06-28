@@ -138,20 +138,7 @@ static void fixDetailOfEffectiveAddr(MCInst *MI)
 		case RISCV_INS_SC_D:
 		case RISCV_INS_SC_D_AQ:
 		case RISCV_INS_SC_D_AQ_RL:
-		case RISCV_INS_SC_D_RL: {
-			CS_ASSERT(3 == MI->flat_insn->detail->riscv.op_count);
-			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -3)->type);
-			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -2)->type);
-			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -1)->type);
-
-			reg = RISCV_get_detail_op(MI, -2)->reg;
-
-			RISCV_get_detail_op(MI, -2)->type = RISCV_OP_MEM;
-			RISCV_get_detail_op(MI, -2)->mem.base = reg;
-			RISCV_get_detail_op(MI, -2)->mem.disp = 0;
-
-			break;
-		}
+		case RISCV_INS_SC_D_RL:
 		case RISCV_INS_AMOADD_D:
 		case RISCV_INS_AMOADD_D_AQ:
 		case RISCV_INS_AMOADD_D_AQ_RL:
