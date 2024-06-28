@@ -277,6 +277,7 @@ class Differ:
                 exit(1)
 
     def save_to_persistence_file(self) -> None:
+        print("\nSave choices...\n")
         with open(self.persistence_filepath, "w") as f:
             json.dump(self.saved_patches, f, indent=2)
 
@@ -766,6 +767,7 @@ class Differ:
                 old_filepath, new_file[k]["nodes"], old_file[k]["nodes"]
             )
         self.patch_files(patches)
+        self.save_to_persistence_file()
         log.info("Done")
 
     def patch_files(self, file_patches: dict[Path, list[Patch]]) -> None:
@@ -963,7 +965,5 @@ if __name__ == "__main__":
     try:
         differ.diff()
     except Exception as e:
-        raise e
-    finally:
-        print("\nSave choices...\n")
         differ.save_to_persistence_file()
+        raise e
