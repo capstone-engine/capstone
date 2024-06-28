@@ -1311,15 +1311,19 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_AdrLabel: {
-		int64_t Offset = MCInst_getOpVal(MI, OpNum);
-		AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-					  (MI->address & -4) + Offset);
+		if (MCOperand_isImm(MCInst_getOperand(MI, OpNum))) {
+			int64_t Offset = MCInst_getOpVal(MI, OpNum);
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  (MI->address & -4) + Offset);
+		}
 		break;
 	}
 	case AArch64_OP_GROUP_AdrpLabel: {
-		int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4096;
-		AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-					  (MI->address & -4096) + Offset);
+		if (MCOperand_isImm(MCInst_getOperand(MI, OpNum))) {
+			int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4096;
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  (MI->address & -4096) + Offset);
+		}
 		break;
 	}
 	case AArch64_OP_GROUP_AdrAdrpLabel: {
@@ -1337,9 +1341,11 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_AlignedLabel: {
-		int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4;
-		AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-					  MI->address + Offset);
+		if (MCOperand_isImm(MCInst_getOperand(MI, OpNum))) {
+			int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4;
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MI->address + Offset);
+		}
 		break;
 	}
 	case AArch64_OP_GROUP_AMNoIndex: {

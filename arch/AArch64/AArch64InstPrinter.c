@@ -462,12 +462,12 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 	if ((Opcode == AArch64_MOVZXi || Opcode == AArch64_MOVZWi ||
 	     Opcode == AArch64_MOVNXi || Opcode == AArch64_MOVNWi) &&
 	    MCOperand_isExpr(MCInst_getOperand(MI, (1)))) {
-		assert(0 && "Expressions are not supported.");
+		SStream_concat0(O, "<llvm-expr>");
 	}
 
 	if ((Opcode == AArch64_MOVKXi || Opcode == AArch64_MOVKWi) &&
 	    MCOperand_isExpr(MCInst_getOperand(MI, (2)))) {
-		assert(0 && "Expressions are not supported.");
+		SStream_concat0(O, "<llvm-expr>");
 	}
 
 	// MOVZ, MOVN and "ORR wzr, #imm" instructions are aliases for MOV, but
@@ -994,7 +994,7 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printInt64Bang(O, MCOperand_getImm(Op));
 		SStream_concat0(O, markup(">"));
 	} else {
-		assert(0 && "Expressions are not supported.");
+		SStream_concat0(O, "<llvm-expr>");
 	}
 }
 
@@ -1380,7 +1380,7 @@ void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 		printUInt32Bang(O, (MCOperand_getImm(MO) * Scale));
 		SStream_concat0(O, markup(">"));
 	} else {
-		assert(0 && "Expressions not supported.");
+		SStream_concat0(O, "<llvm-expr>");
 	}
 }
 
@@ -1395,7 +1395,7 @@ void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 		printUInt32Bang(O, MCOperand_getImm(MO1) * Scale);
 		SStream_concat0(O, markup(">"));
 	} else {
-		assert(0 && "Expressions not supported.");
+		SStream_concat0(O, "<llvm-expr>");
 	}
 	SStream_concat0(O, "]");
 }
@@ -2026,8 +2026,7 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	// If the branch target is simply an address then print it in hex.
-	assert(0 && "Expressions are not supported.");
+	SStream_concat0(O, "<llvm-expr>");
 }
 
 void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
@@ -2049,8 +2048,7 @@ void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	// Otherwise, just print the expression.
-	assert(0 && "Expressions are not supported.");
+	SStream_concat0(O, "<llvm-expr>");
 }
 
 void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
@@ -2072,8 +2070,7 @@ void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	// Otherwise, just print the expression.
-	assert(0 && "Expressions are not supported.");
+	SStream_concat0(O, "<llvm-expr>");
 }
 
 void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O) {
@@ -2098,8 +2095,7 @@ void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
     return;
   }
 
-  // Otherwise, just print the expression.
-	assert(0 && "Expressions are not supported.");
+	SStream_concat0(O, "<llvm-expr>");
 }
 
 void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
