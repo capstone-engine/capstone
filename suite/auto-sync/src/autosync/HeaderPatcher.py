@@ -153,19 +153,22 @@ class CompatHeaderBuilder:
             if typedef:
                 if not re.search(r"^}\s[\w_]+;", line):
                     # Replace name
-                    if "AArch64" not in line:
+                    if "AArch64" not in line and "AARCH64" not in line:
                         output.append(line)
                         continue
-                    entry_name: str = re.findall(r"AArch64[\w_]+", line)[0]
-                    arm64_name = entry_name.replace("AArch64", "ARM64")
+                    found = re.findall(r"(AArch64|AARCH64)([\w_]+)", line)
+                    entry_name: str = "".join(found[0])
+                    arm64_name = entry_name.replace("AArch64", "ARM64").replace(
+                        "AARCH64", "ARM64"
+                    )
                     patched_line = re.sub(
-                        r"AArch64.+", f"{arm64_name} = {entry_name},", line
+                        r"(AArch64|AARCH64).+", f"{arm64_name} = {entry_name},", line
                     )
                     output.append(patched_line)
                     continue
                 # We still have LLVM and CS naming conventions mixed
                 p = re.sub(r"aarch64", "arm64", line)
-                p = re.sub(r"AArch64", "ARM64", p)
+                p = re.sub(r"(AArch64|AARCH64)", "ARM64", p)
                 output.append(p)
                 typedef = ""
                 continue
@@ -199,7 +202,7 @@ class CompatHeaderBuilder:
                 in_typedef = True
                 output.append(line)
                 continue
-            output.append(re.sub(r"AArch64", "ARM64", line))
+            output.append(re.sub(r"(AArch64|AARCH64)", "ARM64", line))
         return output
 
     def replace_include_guards(self, aarch64_lines: list[str]) -> list[str]:
