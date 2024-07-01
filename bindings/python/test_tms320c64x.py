@@ -2,7 +2,6 @@
 
 # Capstone Python bindings, by Fotis Loukos <me@fotisl.com>
 
-from __future__ import print_function
 from capstone import *
 from capstone.tms320c64x import *
 from xprint import to_x, to_hex, to_x_32
