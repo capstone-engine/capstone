@@ -1550,10 +1550,10 @@
       "new_hash": "fd6f78c3ef24df84bc4e7d727e62d62d3ddf475f5aaa94f6b5ff35a1e287ae75",
       "edit": ""
     },
-    "DecodePPR_p8to15RegisterClass": {
+    "DecodeSyspXzrInstruction": {
       "apply_type": "OLD",
-      "old_hash": "09ba504729da7df670f07078035bbe789372f22f4b7df66f31685f82fb65dcfb",
-      "new_hash": "",
+      "old_hash": "f18f29407e58f88ca4697c770773baceaaa9824d5b2110bb8172c82cca86c706",
+      "new_hash": "b31e6d7f9c360cad5eab2c9d8d9e89784fbef9393d7839bb6079e995ff063ab4",
       "edit": ""
     },
     "DecodeSystemPStateImm0_15Instruction": {
@@ -1604,12 +1604,6 @@
       "new_hash": "45ace01a528de25e7a8cf8a7efc348c27e3df7ef7cbc11089433347e69651a9a",
       "edit": ""
     },
-    "DecodeSyspXzrInstruction": {
-      "apply_type": "OLD",
-      "old_hash": "f18f29407e58f88ca4697c770773baceaaa9824d5b2110bb8172c82cca86c706",
-      "new_hash": "b31e6d7f9c360cad5eab2c9d8d9e89784fbef9393d7839bb6079e995ff063ab4",
-      "edit": ""
-    },
     "isInvalidPState": {
       "apply_type": "OLD",
       "old_hash": "409b0c65d1377e5afdf84542cdfed9a082ec6478eff942046b749ed5e5a4db09",
@@ -1624,12 +1618,6 @@
     }
   },
   "AArch64InstPrinter.c": {
-    "AArch64AppleInstPrinter_printInst": {
-      "apply_type": "OLD",
-      "old_hash": "8165db0032cf77193277e0bdc02f5748ab31944faf132354a959ecad86fbf4ea",
-      "new_hash": "",
-      "edit": ""
-    },
     "AArch64_LLVM_getRegisterName": {
       "apply_type": "OLD",
       "old_hash": "a6fd181831f522a4b4c8c60d86902acb89f8dbef0dcb0ec6191761f7fbf7c2b9",
@@ -2060,78 +2048,6 @@
       "apply_type": "OLD",
       "old_hash": "b32871b8dfd97a2aa17d98a965060e399075a64010d740bb71364da6c2ea666e",
       "new_hash": "28013ffeef0a3b287e0277976cddf9e983fb4f334988013bf61002f7a4df5120",
-      "edit": ""
-    },
-    "DEFINE_printMatrix": {
-      "apply_type": "OLD",
-      "old_hash": "54f6a5817a364364831de1f743c46c85a976b8a93603482b4bc6433cfec2c95c",
-      "new_hash": "7f69165a5cd66ecb97002265ad8cbfe6c84818239eae282fa8bd29944df8a16c",
-      "edit": ""
-    },
-    "DEFINE_printZPRasFPR": {
-      "apply_type": "OLD",
-      "old_hash": "6888d54f79e389cde31526028502a40bfb95f516440ab6f36eabac458c72652b",
-      "new_hash": "bd5cccf9784f649bb0b5394dc087846aa627fdeb372bf4c145a5fb5fd2bfd4b7",
-      "edit": ""
-    },
-    "printAMNoIndex": {
-      "apply_type": "OLD",
-      "old_hash": "bbba6d8cff971ae40418cc7911b029a10e3ec45b0aee8fb64f892ceef9ee0e90",
-      "new_hash": "21c99e3e1126ed5e90d3f73825e0052e33add8e9226e7866e9ec99f3d2d9ed9e",
-      "edit": ""
-    },
-    "printCondCode": {
-      "apply_type": "OLD",
-      "old_hash": "85f1ad7e2473bb7fd20118d2b8cc5fbcdd03be0002993faeb02cd010ed7820a7",
-      "new_hash": "9cd9f8309d48f05c9f5f8a76b8872eb283b1d8ea326e8d25c0c186b03a9509c0",
-      "edit": ""
-    },
-    "printExtendedRegister": {
-      "apply_type": "OLD",
-      "old_hash": "81d6214598819b9e7ea9d14d1e014355c16a39aeab352e9d6ae861086b376e5d",
-      "new_hash": "ecb81f88a8006f85949f415855c98a3aa523184e7be41d601be9ec6b234aa989",
-      "edit": ""
-    },
-    "printGPR64as32": {
-      "apply_type": "OLD",
-      "old_hash": "e9ddb7d62b3b8a534d341e8352a239896749092673fb2fa5c2a95d53af9d8352",
-      "new_hash": "b598e9d1a365dc2a028bac62dfcc52a625553b356ef991418a9025b75e87917c",
-      "edit": ""
-    },
-    "printGPR64x8": {
-      "apply_type": "OLD",
-      "old_hash": "e86eb317928f55fda280d1196590a244a5f3fdf3f7ac5468c92d5752db389732",
-      "new_hash": "5c8769f54a27bbdefe9b7bef069cce14d3f7a7a0fe9daa2c2041254cf17fb886",
-      "edit": ""
-    },
-    "printImplicitlyTypedVectorList": {
-      "apply_type": "OLD",
-      "old_hash": "ff4dfb3036680071d6810dccae61297f3ca50e496ced9f2b767ccf6eb3aa79a6",
-      "new_hash": "25ea5b7362539385e4f883f69cb2dbb28e5b9bda5aac5be765e030f4f6e2feeb",
-      "edit": ""
-    },
-    "printInverseCondCode": {
-      "apply_type": "OLD",
-      "old_hash": "fdc27154f84ed624ade87c532548da5acf7832293e27638df4d620072f6d053e",
-      "new_hash": "9b7e7014a5b91015ad879dbd3c9c036fbbd53a69287f0b6e97ae9a66edb1464d",
-      "edit": ""
-    },
-    "printMatrixTile": {
-      "apply_type": "OLD",
-      "old_hash": "bafa8104cb2700dff7de96ee5d3bca217a0996108a2361a0d32ce47eee6053b3",
-      "new_hash": "c24ad1feb2ad3f35e48c8a6bd61d5e2935696c03eae05829fbdd07cac68e5f50",
-      "edit": ""
-    },
-    "printMatrixTileList": {
-      "apply_type": "OLD",
-      "old_hash": "87de1708dc24191e01d4fea89f6970eb340499fbdf9401d22ca6369b884b6335",
-      "new_hash": "cd8a533831c2e2a2cde7437033728639d95fdc22f9d0f4c0a365a6c655c4e4f4",
-      "edit": ""
-    },
-    "printShiftedRegister": {
-      "apply_type": "OLD",
-      "old_hash": "f97195b22a538ae5f6387d7e726c2ccbe44024a647a107d3dd9ab827ffb2d088",
-      "new_hash": "db7a052a255a4fa6d7dc9d2e5ae0d18287d6a87708818ec5fe83e762b20ac760",
       "edit": ""
     }
   },
