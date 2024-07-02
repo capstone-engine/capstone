@@ -39,6 +39,24 @@ jobs:
               enable-asan: 'OFF'
             }
           - {
+              name: 'ubuntu-22.04 x64 python3.7 cmake',
+              os: ubuntu-22.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.7',
+              build-system: 'cmake',
+              enable-asan: 'OFF'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 python3.8 cmake',
+              os: ubuntu-22.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.8',
+              build-system: 'cmake',
+              enable-asan: 'OFF'
+            }
+          - {
               name: 'ubuntu-22.04 x64 python3.9 cmake',
               os: ubuntu-22.04,
               arch: x64,
@@ -46,7 +64,16 @@ jobs:
               python-version: '3.9',
               build-system: 'cmake',
               enable-asan: 'OFF'
-            }     
+            }
+          - {
+              name: 'ubuntu-22.04 x64 python3.10 cmake',
+              os: ubuntu-22.04,
+              arch: x64,
+              python-arch: x64,
+              python-version: '3.10',
+              build-system: 'cmake',
+              enable-asan: 'OFF'
+            }
           - {
               name: 'ubuntu-22.04 x64 python3.11 cmake',
               os: ubuntu-22.04,
