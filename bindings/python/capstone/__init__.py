@@ -391,10 +391,15 @@ CS_OPT   = {v:k for k,v in locals().items() if k.startswith('CS_OPT_')}
 import ctypes, ctypes.util
 from os.path import split, join, dirname
 import sysconfig
-from importlib import resources
 from pathlib import PurePath
 
 import inspect
+
+if sys.version_info >= (3, 9):
+    import importlib.resources as resources
+else:
+    import importlib_resources as resources
+
 if not hasattr(sys.modules[__name__], '__file__'):
     __file__ = inspect.getfile(inspect.currentframe())
 
