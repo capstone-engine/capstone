@@ -117,6 +117,8 @@ jobs:
         git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
         chmod +x suite/cstest/build_cstest.sh
 
+        pip install "importlib_resources;python_version<'3.9'"
+
     - name: make
       if: startsWith(matrix.config.build-system, 'make')
       run: |
