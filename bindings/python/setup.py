@@ -227,7 +227,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     cmdclass=cmdclass,
-    zip_safe=True,
+    zip_safe=False,
     include_package_data=True,
     package_data={
         "capstone": ["lib/*", "include/capstone/*"],
