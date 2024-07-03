@@ -434,7 +434,7 @@ _cs = None
 # - last-gasp attempt at some hardcoded paths on darwin and linux
 
 _path_list = [os.getenv('LIBCAPSTONE_PATH', None),
-              resources.files(__name__) / "lib",
+              str(resources.files(__name__) / "lib"),
               join(split(__file__)[0], 'lib'),
               '',
               sysconfig.get_path('platlib'),
