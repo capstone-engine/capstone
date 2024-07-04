@@ -30,4 +30,4 @@ jobs:
       run: pip install ./bindings/${{ matrix.bindings }}
 
     - name: Run tests
-      run: python ./bindings/${{ matrix.bindings }}/test_all.py
+      run: python ./bindings/${{ matrix.bindings }}/tests/test_all.py
