@@ -1,10 +1,10 @@
 name: Run Test
-on: 
+on:
   push:
     paths-ignore:
       - ".gitignore"
       - "docs/**"
-      - "ChangeLog"      
+      - "ChangeLog"
       - "CREDITS.TXT"
       - "COMPILE.TXT"
       - "COMPILE_MSVC.TXT"
@@ -30,84 +30,29 @@ jobs:
       matrix:
         config:
           - {
-              name: 'ubuntu-22.04 x64 python3.9 make',
+              name: 'ubuntu-22.04 x64 make',
               os: ubuntu-22.04,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.9',
               build-system: 'make',
               enable-asan: 'OFF'
             }
           - {
-              name: 'ubuntu-22.04 x64 python3.7 cmake',
+              name: 'ubuntu-22.04 x64 cmake',
               os: ubuntu-22.04,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.7',
               build-system: 'cmake',
               enable-asan: 'OFF'
             }
           - {
-              name: 'ubuntu-22.04 x64 python3.8 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.8',
-              build-system: 'cmake',
-              enable-asan: 'OFF'
-            }
-          - {
-              name: 'ubuntu-22.04 x64 python3.9 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.9',
-              build-system: 'cmake',
-              enable-asan: 'OFF'
-            }
-          - {
-              name: 'ubuntu-22.04 x64 python3.10 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.10',
-              build-system: 'cmake',
-              enable-asan: 'OFF'
-            }
-          - {
-              name: 'ubuntu-22.04 x64 python3.11 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.11',
-              build-system: 'cmake',
-              enable-asan: 'OFF'
-            }
-          - {
-              name: 'ubuntu-22.04 x64 python3.11 ASAN',
+              name: 'ubuntu-22.04 x64 ASAN',
               os: ubuntu-latest,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.11',
               build-system: 'cmake',
               enable-asan: 'ON'
-            }
-          - {
-              name: 'ubuntu-22.04 x64 python3.12 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.12',
-              build-system: 'cmake',
             }
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.config.python-version }}
 
     - name: prepare
       run: |
@@ -116,8 +61,6 @@ jobs:
         unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
         git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
         chmod +x suite/cstest/build_cstest.sh
-
-        pip install "importlib_resources;python_version<'3.9'"
 
     - name: make
       if: startsWith(matrix.config.build-system, 'make')
@@ -181,16 +124,6 @@ jobs:
         python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
         cd ../../
 
-    - name: run cython binding test
-      if: matrix.config.enable-asan == 'OFF'
-      run: |
-        pip install cython
-        cd bindings/python
-        make install_cython
-        cd ..
-        python -c "import capstone;print(capstone.debug())" | grep Cython
-        BUILD_TESTS=no make tests
-
   Windows:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
@@ -213,7 +146,7 @@ jobs:
 
     - name: '🛠️ Win MSVC 64 setup'
       if: contains(matrix.config.name, 'MSVC 64')
-      uses: ilammy/msvc-dev-cmd@v1  
+      uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: 'x64'
 

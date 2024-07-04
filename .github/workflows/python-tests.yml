@@ -12,6 +12,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, windows-2022, macOS-14]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        bindings: [python, cython]
 
     steps:
     - uses: actions/checkout@v4
@@ -26,8 +27,7 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
 
     - name: Build and install capstone
-      run: pip install ./bindings/python
+      run: pip install ./bindings/${{ matrix.bindings }}
 
     - name: Run tests
-      run: python test_all.py
-      working-directory: ./bindings/python/tests
+      run: python ./bindings/${{ matrix.bindings }}/test_all.py
