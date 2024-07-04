@@ -184,5 +184,8 @@ setup(
     include_package_data=True,
     package_data={
         "capstone": ["lib/*", "include/capstone/*"],
-    }
+    },
+    install_requires=[
+        "importlib_resources;python_version<'3.9'",
+    ],
 )
