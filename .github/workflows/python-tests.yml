@@ -22,5 +22,5 @@ jobs:
     - name: Install dependencies
       run: pip install ./bindings/python
     - name: Run tests
-      run: python ./bindings/python/test_all.py
+      run: python test_all.py
       working-directory: ./bindings/python
