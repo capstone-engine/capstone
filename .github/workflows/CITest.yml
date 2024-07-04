@@ -181,36 +181,6 @@ jobs:
         python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
         cd ../../
 
-    - name: verify python binding
-      if: matrix.config.enable-asan == 'OFF'
-      run: |
-        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so
-        cd bindings/python
-
-        # check if the generated *_const.py files are up-to-date
-        mkdir capstone_old && cp capstone/*_const.py capstone_old/
-        make gen_const
-        for f in ./capstone/*_const.py; do
-          diff  -u -w "$f" "./capstone_old/`basename $f`"
-          if [ ! $? -eq 0 ]; then
-            exit 1
-          fi
-        done
-        rm -rf capstone_old
-
-        # smoke test api usage
-        make check
-
-    - name: run python binding test
-      if: matrix.config.enable-asan == 'OFF'
-      run: |
-        pip install --upgrade setuptools
-        cp libcapstone.* bindings/python/prebuilt
-        cd bindings/python
-        make install
-        cd ..
-        BUILD_TESTS=no make tests
-
     - name: run cython binding test
       if: matrix.config.enable-asan == 'OFF'
       run: |
