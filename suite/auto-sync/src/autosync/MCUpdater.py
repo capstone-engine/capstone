@@ -190,7 +190,17 @@ class MCUpdater:
         # Remove input stream
         matches = map(lambda m: re.sub(r"\s+<", "", m), matches)
 
-        return [LLVM_MC_Command(match) for match in matches]
+        all_cmds = list()
+        for match in matches:
+            if self.included and not any(
+                re.search(x, match) is not None for x in self.included
+            ):
+                continue
+            if any(re.search(x, match) is not None for x in self.excluded):
+                continue
+
+            all_cmds.append(LLVM_MC_Command(match))
+        return all_cmds
 
 
 def parse_args() -> argparse.Namespace:
