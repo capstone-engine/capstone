@@ -30,4 +30,4 @@ jobs:
 
     - name: Run tests
       run: python test_all.py
-      working-directory: ./bindings/python
+      working-directory: ./bindings/python/tests
