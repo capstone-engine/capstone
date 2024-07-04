@@ -15,18 +15,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Build and install capstone (Windows)
+
+    - name: Setup MSVC
       if: runner.os == 'Windows'
-      run: |
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        pip install ./bindings/python
-    - name: Build and install capstone (non-Windows)
-      if: runner.os != 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Build and install capstone
       run: pip install ./bindings/python
+
     - name: Run tests
       run: python test_all.py
       working-directory: ./bindings/python
