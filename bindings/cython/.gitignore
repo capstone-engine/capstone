@@ -7,3 +7,4 @@ pyx/lib
 pyx/include
 pyx/*.c
 pyx/*.pyx
+!pyx/ccapstone.pyx
