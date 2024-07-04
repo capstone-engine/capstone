@@ -4,6 +4,8 @@
     "{LLVM_TARGET_DIR}": "{LLVM_ROOT}/llvm/lib/Target/",
     "{LLVM_MC_TEST_DIR}": "{LLVM_ROOT}/llvm/test/MC/",
     "{LLVM_TBLGEN_BIN}": "{LLVM_ROOT}/build/bin/llvm-tblgen",
+    "{LLVM_LIT_BIN}": "{CS_ROOT}/.venv/bin/lit",
+    "{LLVM_LIT_CFG_DIR}": "{AUTO_SYNC_SRC}/lit_config/",
     "{LLVM_INCLUDE_DIR}": "{LLVM_ROOT}/llvm/include/",
     "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
     "{BUILD_DIR}": "{AUTO_SYNC_ROOT}/build/",
