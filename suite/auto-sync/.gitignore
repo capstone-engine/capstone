@@ -5,3 +5,4 @@ src/auto-sync/config.json
 src/autosync/cpptranslator/Tests/Differ/test_saved_patches.json
 src/autosync.egg-info
 src/autosync/lit_config/test_dir_*
+src/autosync/lit_config/.lit_test_times.txt

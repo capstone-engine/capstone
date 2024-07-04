@@ -42,6 +42,41 @@ class Test:
         return f"{self.encoding} == {self.asm_text}"
 
 
+class LLVM_MC_Command:
+    def __init__(self, cmd_line: str):
+        self.cmd: str = ""
+        self.opts: str = ""
+        self.file: Path | None = None
+
+        self.cmd, self.opts, self.file = self.parse_llvm_mc_line(cmd_line)
+        if not (self.cmd and self.opts and self.file):
+            raise ValueError(f"Could not parse llvm-mc command: {cmd_line}")
+
+    def parse_llvm_mc_line(self, line: str) -> tuple[str, str, Path]:
+        test_file_base_dir = str(
+            PathVarHandler().get_path("{LLVM_LIT_CFG_DIR}").absolute()
+        )
+        file = re.findall(rf"{test_file_base_dir}[^\s]+", line)
+        if not file:
+            raise ValueError(f"llvm-mc command doesn't contain a file: {line}")
+        test_file = file[0]
+        cmd = re.sub(rf"{test_file}", "", line).strip()
+        arch = re.finditer(r"(triple|arch)[=\s]([^\s]+)", cmd)
+        mattr = re.finditer(r"(mattr|mcpu)[=\s]([^\s]+)", cmd)
+        opts = ",".join([m.group(2) for m in arch]) if arch else ""
+        opts += ",".join([m.group(2) for m in mattr]) if mattr else ""
+        return cmd, opts, Path(test_file)
+
+    def exec(self) -> str:
+        result = sp.run(self.cmd, input=str(self.file.absolute()), capture_output=True)
+        if result.stderr:
+            raise ValueError(f"llvm-mc failed with: '{result.stderr}'")
+        result.stdout
+
+    def __str__(self) -> str:
+        return f"{self.cmd} < {str(self.file.absolute())}"
+
+
 class TestFile:
     def __init__(self, arch: str, filename: str, mattrs: list[str] | None):
         self.arch = arch
@@ -70,13 +105,6 @@ class MCUpdater:
         self.included = included if included else list()
         self.test_files: dict[str:TestFile] = dict()
 
-    @staticmethod
-    def get_mattr(line: str) -> str | None:
-        match = re.search(match_patterns["run_line"], line)
-        if not match or not match.group("mattr"):
-            return None
-        return match.group("mattr")
-
     def check_prerequisites(self, paths):
         for path in paths:
             if not path.exists() or not path.is_dir():
@@ -102,6 +130,8 @@ class MCUpdater:
         self.check_prerequisites(test_paths)
         log.info("Generate MC regression tests")
         llvm_mc_cmds = self.run_llvm_lit(test_paths)
+        for cmd in llvm_mc_cmds:
+            print(cmd)
 
         # self.write_to_build_dir()
 
@@ -115,7 +145,7 @@ class MCUpdater:
                 f.write(test.get_cs_testfile_content())
             log.debug(f"Write {filename}")
 
-    def run_llvm_lit(self, paths: list[Path]) -> list[str]:
+    def run_llvm_lit(self, paths: list[Path]) -> list[LLVM_MC_Command]:
         """
         Calls llvm-lit with the given paths to the tests.
         It saves the output of llvm-mc to each file in a temp directory.
@@ -131,13 +161,36 @@ class MCUpdater:
             except FileExistsError:
                 pass
 
+        log.debug(f"Run lit: {args}")
         cmds = sp.run(args, capture_output=True)
         if cmds.stderr:
-            log.error(f"llvm-lit failed with {cmds.stderr}")
-        return self.extract_llvm_mc_cmds(cmds.stdout)
+            raise ValueError(f"llvm-lit failed with {cmds.stderr}")
+        return self.extract_llvm_mc_cmds(cmds.stdout.decode("utf8"))
 
-    def extract_llvm_mc_cmds(self, cmds: str) -> list[str]:
-        pass
+    def extract_llvm_mc_cmds(self, cmds: str) -> list[LLVM_MC_Command]:
+        # Get only the RUN lines which have a show-encoding set.
+        matches = filter(
+            lambda l: l if re.search(r"^RUN.+show-encoding[^|]+", l) else None,
+            cmds.splitlines(),
+        )
+        # Don't add tests which are allowed to fail
+        matches = filter(
+            lambda m: None if re.search(r"not\s+llvm-mc", m) else m, matches
+        )
+        # Remove 'RUN: at ...' prefix
+        matches = map(lambda m: re.sub(r"^RUN: at line \d+: ", "", m), matches)
+        # Remove redirections
+        matches = map(lambda m: re.sub(r"\d>&\d", "", m), matches)
+        # Remove explicit writing to stdin
+        matches = map(lambda m: re.sub(r"-o\s?-", "", m), matches)
+        # Remove redirection of stderr to a file
+        matches = map(lambda m: re.sub(r"2>\s?[^\s]+", "", m), matches)
+        # Remove pipeing to FileCheck
+        matches = map(lambda m: re.sub(r"\|\s*FileCheck\s+.+", "", m), matches)
+        # Remove input stream
+        matches = map(lambda m: re.sub(r"\s+<", "", m), matches)
+
+        return [LLVM_MC_Command(match) for match in matches]
 
 
 def parse_args() -> argparse.Namespace:
