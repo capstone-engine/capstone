@@ -11,4 +11,4 @@ config.suffixes = [".txt", ".s"]
 
 config.excludes = ["Inputs", "CMakeLists.txt", "README.txt", "LICENSE.txt"]
 
-config.test_source_root = PathVarHandler().get_path("{LLVM_LIT_CFG_DIR}")
+config.test_source_root = PathVarHandler().get_path("{LLVM_LIT_TEST_DIR}")

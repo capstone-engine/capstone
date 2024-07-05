@@ -8,38 +8,10 @@ import re
 import sys
 import subprocess as sp
 
-from enum import Enum
 from pathlib import Path
-from lit import main
 
 from autosync.Targets import TARGETS_LLVM_NAMING
 from autosync.Helper import convert_loglevel, get_path
-from autosync.PathVarHandler import PathVarHandler
-
-# The CHECK prefix for tests.
-ASM = r"(?P<asm_text>[^/@]+)"
-ENC = r"(\[?(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?\]?)"
-match_patterns = {
-    # The asm checking line for `MC/Disassembler/*` tests follows the pattern:
-    # `# CHECK: <asm-text>`
-    # Usually multiple 'CHECK' come before or after the encoding bytes.
-    # Meaning: first comes a block of `# CHECK: ...` and afterwards for every `# CHECK: ...`
-    # line the encoding bytes.
-    # And wise versa, with the encoding bytes first and afterwards the asm text checks.
-    # The matched asm text can be accessed from the group "asm_text"
-    "asm_check": rf"\s+{ASM}\s*(#|//)\s+encoding:\s+{ENC}",
-}
-
-
-class Test:
-    def __init__(self, encoding: str, asm_text: str):
-        self.encoding: str = encoding
-        self.asm_text: str = asm_text
-
-    def __str__(self):
-        self.encoding.replace(" ", ",")
-        self.encoding = self.encoding.strip("[]")
-        return f"{self.encoding} == {self.asm_text}"
 
 
 class LLVM_MC_Command:
@@ -53,42 +25,101 @@ class LLVM_MC_Command:
             raise ValueError(f"Could not parse llvm-mc command: {cmd_line}")
 
     def parse_llvm_mc_line(self, line: str) -> tuple[str, str, Path]:
-        test_file_base_dir = str(
-            PathVarHandler().get_path("{LLVM_LIT_CFG_DIR}").absolute()
-        )
-        file = re.findall(rf"{test_file_base_dir}[^\s]+", line)
+        test_file_base_dir = str(get_path("{LLVM_LIT_TEST_DIR}").absolute())
+        file = re.findall(rf"{test_file_base_dir}\S+", line)
         if not file:
             raise ValueError(f"llvm-mc command doesn't contain a file: {line}")
         test_file = file[0]
         cmd = re.sub(rf"{test_file}", "", line).strip()
-        arch = re.finditer(r"(triple|arch)[=\s]([^\s]+)", cmd)
-        mattr = re.finditer(r"(mattr|mcpu)[=\s]([^\s]+)", cmd)
+        cmd = re.sub(r"\s+", " ", cmd)
+        arch = re.finditer(r"(triple|arch)[=\s](\S+)", cmd)
+        mattr = re.finditer(r"(mattr|mcpu)[=\s](\S+)", cmd)
         opts = ",".join([m.group(2) for m in arch]) if arch else ""
-        opts += ",".join([m.group(2) for m in mattr]) if mattr else ""
+        if mattr:
+            opts += "" if not opts else ","
+            opts += ",".join([m.group(2).strip("+") for m in mattr])
         return cmd, opts, Path(test_file)
 
-    def exec(self) -> str:
-        result = sp.run(self.cmd, input=str(self.file.absolute()), capture_output=True)
-        if result.stderr:
-            raise ValueError(f"llvm-mc failed with: '{result.stderr}'")
-        result.stdout
+    def exec(self) -> sp.CompletedProcess:
+        with open(self.file, "b+r") as f:
+            content = f.read()
+        result = sp.run(self.cmd.split(" "), input=content, capture_output=True)
+        return result
+
+    def get_opts_list(self) -> list[str]:
+        opts = re.sub(r"[, ]+", ",", self.opts)
+        return opts.split(",")
 
     def __str__(self) -> str:
         return f"{self.cmd} < {str(self.file.absolute())}"
 
 
-class TestFile:
-    def __init__(self, arch: str, filename: str, mattrs: list[str] | None):
+class Test:
+    def __init__(self, arch: str, opts: list[str], encoding: str, asm_text: str):
         self.arch = arch
-        self.filename = filename
-        self.mattrs: list[str] = list() if not mattrs else mattrs
+        self.opts = opts
+        self.encoding: str = encoding
+        self.asm_text: str = asm_text
+
+    def __str__(self):
+        self.encoding.replace(" ", ",")
+        self.encoding = self.encoding.strip("[]")
+        yaml_tc = (
+            "  -\n"
+            "    input:\n"
+            "      bytes: [ <ENCODING> ]\n"
+            '      arch: "<ARCH>"\n'
+            "      options: [ <OPTIONS> ]\n"
+            "    expected:\n"
+            "      insns:\n"
+            "        -\n"
+            '          asm_text: "<ASM_TEXT>"\n'
+        )
+        yaml_tc = yaml_tc.replace("<ENCODING>", self.encoding)
+        yaml_tc = yaml_tc.replace("<ASM_TEXT>", self.asm_text)
+        yaml_tc = yaml_tc.replace("<ARCH>", self.arch)
+        yaml_tc = yaml_tc.replace("<OPTIONS>", ", ".join([f'"{o}"' for o in self.opts]))
+        return yaml_tc
+
+
+class TestFile:
+    def __init__(
+        self, arch: str, filename: Path, opts: list[str] | None, mc_cmd: LLVM_MC_Command
+    ):
+        self.arch: str = arch
+        self.filename: Path = filename
+        self.opts: list[str] = list() if not opts else opts
+        self.mc_cmd: LLVM_MC_Command = mc_cmd
         self.tests: list[Test] = list()
+        self.init_tests()
+
+    def init_tests(self):
+        mc_output = self.mc_cmd.exec()
+        if mc_output.stderr and not mc_output.stdout:
+            log.debug(f"llvm-mc cmd stderr: {mc_output.stderr}")
+        asm_pat = "(?P<asm_text>.+)"
+        enc_pat = "(\\[?(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?\]?)"
+        for line in mc_output.stdout.splitlines():
+            match = re.search(
+                rf"^\s*{asm_pat}\s*(#|//)\s*encoding:\s*{enc_pat}", line.decode("utf8")
+            )
+            if not match:
+                continue
+            enc_bytes = match.group("enc_bytes").strip()
+            asm_text = match.group("asm_text").strip()
+            asm_text = re.sub(r"\s+", " ", asm_text)
+            self.tests.append(Test(self.arch, self.opts, enc_bytes, asm_text))
 
     def has_tests(self) -> bool:
         return len(self.tests) != 0
 
     def get_cs_testfile_content(self) -> str:
-        pass
+        content = "test_cases:\n"
+        content += "\n".join([str(t) for t in self.tests])
+        return content
+
+    def num_test_cases(self) -> int:
+        return len(self.tests)
 
 
 class MCUpdater:
@@ -103,7 +134,7 @@ class MCUpdater:
         self.mc_dir = mc_dir
         self.excluded = excluded if excluded else list()
         self.included = included if included else list()
-        self.test_files: dict[str:TestFile] = dict()
+        self.test_files: list[TestFile] = list()
 
     def check_prerequisites(self, paths):
         for path in paths:
@@ -111,47 +142,48 @@ class MCUpdater:
                 raise ValueError(
                     f"'{path}' does not exits or is not a directory. Cannot generate tests from there."
                 )
-        llvm_lit = PathVarHandler().get_path("{LLVM_LIT_BIN}")
+        llvm_lit = get_path("{LLVM_LIT_BIN}")
         if not llvm_lit.exists():
             raise ValueError(
                 f"Could not find '{llvm_lit}'. Check {{LLVM_LIT_BIN}} in path_vars.json."
             )
-        llvm_lit_cfg = PathVarHandler().get_path("{LLVM_LIT_CFG_DIR}")
+        llvm_lit_cfg = get_path("{LLVM_LIT_TEST_DIR}")
         if not llvm_lit_cfg.exists():
             raise ValueError(
-                f"Could not find '{llvm_lit_cfg}'. Check {{LLVM_LIT_CFG_DIR}} in path_vars.json."
+                f"Could not find '{llvm_lit_cfg}'. Check {{LLVM_LIT_TEST_DIR}} in path_vars.json."
             )
 
-    def gen_all(self):
-        log.info("Check prerequisites")
-        disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch}")
-        assembly_tests = self.mc_dir.joinpath(f"{self.arch}")
-        test_paths = [disas_tests, assembly_tests]
-        self.check_prerequisites(test_paths)
-        log.info("Generate MC regression tests")
-        llvm_mc_cmds = self.run_llvm_lit(test_paths)
-        for cmd in llvm_mc_cmds:
-            print(cmd)
-
-        # self.write_to_build_dir()
-
     def write_to_build_dir(self):
-        for filename, test in self.test_files.items():
+        file_cnt = 0
+        test_cnt = 0
+        for test in self.test_files:
             if not test.has_tests():
                 continue
-            with open(
-                get_path("{MCUPDATER_OUT_DIR}").joinpath(f"{filename}.cs"), "w+"
-            ) as f:
+            file_cnt += 1
+            test_cnt += test.num_test_cases()
+
+            rel_path = str(test.filename.relative_to(get_path("{LLVM_LIT_TEST_DIR}")))
+            filename = re.sub(r"test_dir_\d+", ".", rel_path)
+            filename = get_path("{MCUPDATER_OUT_DIR}").joinpath(f"{filename}.yaml")
+            filename.parent.mkdir(parents=True, exist_ok=True)
+            with open(filename, "w+") as f:
                 f.write(test.get_cs_testfile_content())
-            log.debug(f"Write {filename}")
+                log.debug(f"Write {filename}")
+        log.info(f"Wrote {file_cnt} files with {test_cnt} test cases.")
+
+    def build_test_files(self, mc_cmds: list[LLVM_MC_Command]) -> list[TestFile]:
+        log.debug("Build TestFile objects")
+        return [
+            TestFile(self.arch, mcc.file, mcc.get_opts_list(), mcc) for mcc in mc_cmds
+        ]
 
     def run_llvm_lit(self, paths: list[Path]) -> list[LLVM_MC_Command]:
         """
         Calls llvm-lit with the given paths to the tests.
-        It saves the output of llvm-mc to each file in a temp directory.
+        It parses the llvm-lit commands to LLVM_MC_Commands.
         """
-        llvm_lit = str(PathVarHandler().get_path("{LLVM_LIT_BIN}").absolute())
-        lit_cfg_dir = PathVarHandler().get_path("{LLVM_LIT_CFG_DIR}")
+        llvm_lit = str(get_path("{LLVM_LIT_BIN}").absolute())
+        lit_cfg_dir = get_path("{LLVM_LIT_TEST_DIR}")
         llvm_lit_cfg = str(lit_cfg_dir.absolute())
         args = [llvm_lit, "-v", "-a", llvm_lit_cfg]
         for i, p in enumerate(paths):
@@ -168,6 +200,7 @@ class MCUpdater:
         return self.extract_llvm_mc_cmds(cmds.stdout.decode("utf8"))
 
     def extract_llvm_mc_cmds(self, cmds: str) -> list[LLVM_MC_Command]:
+        log.debug("Parsing llvm-mc commands")
         # Get only the RUN lines which have a show-encoding set.
         matches = filter(
             lambda l: l if re.search(r"^RUN.+show-encoding[^|]+", l) else None,
@@ -177,15 +210,19 @@ class MCUpdater:
         matches = filter(
             lambda m: None if re.search(r"not\s+llvm-mc", m) else m, matches
         )
+        # Skip object file tests
+        matches = filter(
+            lambda m: None if re.search(r"filetype=obj", m) else m, matches
+        )
         # Remove 'RUN: at ...' prefix
         matches = map(lambda m: re.sub(r"^RUN: at line \d+: ", "", m), matches)
         # Remove redirections
         matches = map(lambda m: re.sub(r"\d>&\d", "", m), matches)
-        # Remove explicit writing to stdin
+        # Remove unused arguments
         matches = map(lambda m: re.sub(r"-o\s?-", "", m), matches)
         # Remove redirection of stderr to a file
-        matches = map(lambda m: re.sub(r"2>\s?[^\s]+", "", m), matches)
-        # Remove pipeing to FileCheck
+        matches = map(lambda m: re.sub(r"2>\s?\S+", "", m), matches)
+        # Remove piping to FileCheck
         matches = map(lambda m: re.sub(r"\|\s*FileCheck\s+.+", "", m), matches)
         # Remove input stream
         matches = map(lambda m: re.sub(r"\s+<", "", m), matches)
@@ -201,6 +238,17 @@ class MCUpdater:
 
             all_cmds.append(LLVM_MC_Command(match))
         return all_cmds
+
+    def gen_all(self):
+        log.info("Check prerequisites")
+        disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch}")
+        assembly_tests = self.mc_dir.joinpath(f"{self.arch}")
+        test_paths = [disas_tests, assembly_tests]
+        self.check_prerequisites(test_paths)
+        log.info("Generate MC regression tests")
+        llvm_mc_cmds = self.run_llvm_lit(test_paths)
+        self.test_files = self.build_test_files(llvm_mc_cmds)
+        self.write_to_build_dir()
 
 
 def parse_args() -> argparse.Namespace:
