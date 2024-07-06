@@ -192,6 +192,7 @@ class ASUpdater:
             log.info(f"Copied {i} files")
 
             # MC tests
+            i = 0
             mc_dir = get_path("{MC_DIR}").joinpath(self.arch)
             log.info(f"Copy MC test files to {mc_dir}")
             for file in get_path("{MCUPDATER_OUT_DIR}").iterdir():
