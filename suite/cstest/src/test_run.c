@@ -98,7 +98,7 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 	bool mode_found = false;
 	char **options = input->options;
 	for (size_t i = 0; i < input->options_count; ++i) {
-		const char *opt_str = options[i];
+		opt_str = options[i];
 		for (size_t k = 0; k < ARR_SIZE(test_mode_map) || k < ARR_SIZE(test_option_map); k++) {
 			if (k < ARR_SIZE(test_mode_map) && strcmp(opt_str, test_mode_map[k].str) == 0) {
 				if (mode_found) {
@@ -152,7 +152,7 @@ static bool open_cs_handle(UnitTestState *ustate)
 		return false;
 	}
 	for (size_t i = 0; i < options_set; ++i) {
-		cs_err err = cs_option(ustate->handle, options[i].type, options[i].val);
+		err = cs_option(ustate->handle, options[i].type, options[i].val);
 		if (err != CS_ERR_OK) {
 			char *tc_str = test_input_stringify(ustate->tcase->input, "");
 			fprintf(stderr, "[!] cs_option() failed with: '%s'. TestInput: %s\n",
