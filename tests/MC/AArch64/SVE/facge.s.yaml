@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10,0xc0,0x41,0x65 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "facge p0.h, p0/z, z0.h, z1.h"
+
+  -
+    input:
+      bytes: [ 0x10,0xc0,0x81,0x65 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "facge p0.s, p0/z, z0.s, z1.s"
+
+  -
+    input:
+      bytes: [ 0x10,0xc0,0xc1,0x65 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "facge p0.d, p0/z, z0.d, z1.d"

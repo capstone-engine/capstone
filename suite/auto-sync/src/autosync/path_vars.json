@@ -36,7 +36,7 @@
     "{AUTO_SYNC_TEST_DIR}": "{AUTO_SYNC_SRC}/Tests/",
     "{MCUPDATER_TEST_DIR}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/",
     "{MCUPDATER_OUT_DIR}": "{BUILD_DIR}/mc_out/",
-    "{MC_DIR}": "{CS_ROOT}/suite/MC/"
+    "{MC_DIR}": "{CS_ROOT}/tests/MC/"
   },
   "create_during_runtime": [
     "{BUILD_DIR}",

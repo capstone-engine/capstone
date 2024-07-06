@@ -1,0 +1,660 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc0,0xd2,0x1b,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_3_C13_C2_6, x0"
+
+  -
+    input:
+      bytes: [ 0xc0,0xd2,0x3b,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_3_C13_C2_6"
+
+  -
+    input:
+      bytes: [ 0x00,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_0, x0"
+
+  -
+    input:
+      bytes: [ 0x20,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_1, x0"
+
+  -
+    input:
+      bytes: [ 0x40,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_2, x0"
+
+  -
+    input:
+      bytes: [ 0x60,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_3, x0"
+
+  -
+    input:
+      bytes: [ 0x80,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_4, x0"
+
+  -
+    input:
+      bytes: [ 0xa0,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_5, x0"
+
+  -
+    input:
+      bytes: [ 0xc0,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_6, x0"
+
+  -
+    input:
+      bytes: [ 0xe0,0xd8,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C8_7, x0"
+
+  -
+    input:
+      bytes: [ 0x00,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_0, x0"
+
+  -
+    input:
+      bytes: [ 0x20,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_1, x0"
+
+  -
+    input:
+      bytes: [ 0x40,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_2, x0"
+
+  -
+    input:
+      bytes: [ 0x60,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_3, x0"
+
+  -
+    input:
+      bytes: [ 0x80,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_4, x0"
+
+  -
+    input:
+      bytes: [ 0xa0,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_5, x0"
+
+  -
+    input:
+      bytes: [ 0xc0,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_6, x0"
+
+  -
+    input:
+      bytes: [ 0xe0,0xd9,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C9_7, x0"
+
+  -
+    input:
+      bytes: [ 0x00,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_0"
+
+  -
+    input:
+      bytes: [ 0x20,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_1"
+
+  -
+    input:
+      bytes: [ 0x40,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_2"
+
+  -
+    input:
+      bytes: [ 0x60,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_3"
+
+  -
+    input:
+      bytes: [ 0x80,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_4"
+
+  -
+    input:
+      bytes: [ 0xa0,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_5"
+
+  -
+    input:
+      bytes: [ 0xc0,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_6"
+
+  -
+    input:
+      bytes: [ 0xe0,0xd8,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C8_7"
+
+  -
+    input:
+      bytes: [ 0x00,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_0"
+
+  -
+    input:
+      bytes: [ 0x20,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_1"
+
+  -
+    input:
+      bytes: [ 0x40,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_2"
+
+  -
+    input:
+      bytes: [ 0x60,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_3"
+
+  -
+    input:
+      bytes: [ 0x80,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_4"
+
+  -
+    input:
+      bytes: [ 0xa0,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_5"
+
+  -
+    input:
+      bytes: [ 0xc0,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_6"
+
+  -
+    input:
+      bytes: [ 0xe0,0xd9,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C9_7"
+
+  -
+    input:
+      bytes: [ 0x00,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_0, x0"
+
+  -
+    input:
+      bytes: [ 0x20,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_1, x0"
+
+  -
+    input:
+      bytes: [ 0x40,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_2, x0"
+
+  -
+    input:
+      bytes: [ 0x60,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_3, x0"
+
+  -
+    input:
+      bytes: [ 0x80,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_4, x0"
+
+  -
+    input:
+      bytes: [ 0xa0,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_5, x0"
+
+  -
+    input:
+      bytes: [ 0xc0,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_6, x0"
+
+  -
+    input:
+      bytes: [ 0xe0,0xda,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C10_7, x0"
+
+  -
+    input:
+      bytes: [ 0x00,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_0, x0"
+
+  -
+    input:
+      bytes: [ 0x20,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_1, x0"
+
+  -
+    input:
+      bytes: [ 0x40,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_2, x0"
+
+  -
+    input:
+      bytes: [ 0x60,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_3, x0"
+
+  -
+    input:
+      bytes: [ 0x80,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_4, x0"
+
+  -
+    input:
+      bytes: [ 0xa0,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_5, x0"
+
+  -
+    input:
+      bytes: [ 0xc0,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_6, x0"
+
+  -
+    input:
+      bytes: [ 0xe0,0xdb,0x1c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr S3_4_C13_C11_7, x0"
+
+  -
+    input:
+      bytes: [ 0x00,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_0"
+
+  -
+    input:
+      bytes: [ 0x20,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_1"
+
+  -
+    input:
+      bytes: [ 0x40,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_2"
+
+  -
+    input:
+      bytes: [ 0x60,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_3"
+
+  -
+    input:
+      bytes: [ 0x80,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_4"
+
+  -
+    input:
+      bytes: [ 0xa0,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_5"
+
+  -
+    input:
+      bytes: [ 0xc0,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_6"
+
+  -
+    input:
+      bytes: [ 0xe0,0xda,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C10_7"
+
+  -
+    input:
+      bytes: [ 0x00,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_0"
+
+  -
+    input:
+      bytes: [ 0x20,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_1"
+
+  -
+    input:
+      bytes: [ 0x40,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_2"
+
+  -
+    input:
+      bytes: [ 0x60,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_3"
+
+  -
+    input:
+      bytes: [ 0x80,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_4"
+
+  -
+    input:
+      bytes: [ 0xa0,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_5"
+
+  -
+    input:
+      bytes: [ 0xc0,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_6"
+
+  -
+    input:
+      bytes: [ 0xe0,0xdb,0x3c,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64", "" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, S3_4_C13_C11_7"

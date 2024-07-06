@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0,0x3f,0x01,0x04 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddv d0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0,0x3f,0x41,0x04 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddv d0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0,0x3f,0x81,0x04 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddv d0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0,0x3f,0xc1,0x04 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddv d0, p7, z31.d"

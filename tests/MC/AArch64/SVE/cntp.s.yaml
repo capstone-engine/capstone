@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00,0xbc,0x20,0x25 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, p15, p0.b"
+
+  -
+    input:
+      bytes: [ 0x00,0xbc,0x60,0x25 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, p15, p0.h"
+
+  -
+    input:
+      bytes: [ 0x00,0xbc,0xa0,0x25 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, p15, p0.s"
+
+  -
+    input:
+      bytes: [ 0x00,0xbc,0xe0,0x25 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, p15, p0.d"

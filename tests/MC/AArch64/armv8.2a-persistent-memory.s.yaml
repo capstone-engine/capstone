@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x27,0x7c,0x0b,0xd5 ]
+      arch: "AArch64"
+      options: [ "aarch64-none-linux-gnu", "v8r" ]
+    expected:
+      insns:
+        -
+          asm_text: "dc cvap, x7"
