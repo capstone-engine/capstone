@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically translated source file from LLVM. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Only small edits allowed. */
 /* For multiple similar edits, please create a Patch for the translator. */
@@ -27,22 +27,25 @@
 #ifndef LLVM_LIB_TARGET_AARCH64_MCTARGETDESC_AARCH64ADDRESSINGMODES_H
 #define LLVM_LIB_TARGET_AARCH64_MCTARGETDESC_AARCH64ADDRESSINGMODES_H
 
-#include <capstone/platform.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <capstone/platform.h>
 
 #include "../../MathExtras.h"
 #include <assert.h>
+#include "../../MathExtras.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
 /// AArch64_AM - AArch64 Addressing Mode Stuff
+// CS namespace begin: AArch64_AM
+
 //===----------------------------------------------------------------------===//
 // Shifts
 //
-typedef enum {
+typedef enum ShiftExtendType {
 	AArch64_AM_InvalidShiftExtend = -1,
 	AArch64_AM_LSL = 0,
 	AArch64_AM_LSR,
@@ -59,7 +62,7 @@ typedef enum {
 	AArch64_AM_SXTH,
 	AArch64_AM_SXTW,
 	AArch64_AM_SXTX,
-} AArch64_AM_ShiftExtendType ;
+} AArch64_AM_ShiftExtendType;
 
 /// getShiftName - Get the string encoding for the shift type.
 static inline const char *
@@ -133,9 +136,8 @@ static inline unsigned AArch64_AM_getShiftValue(unsigned Imm)
 ///   {8-6}  = shifter
 ///   {5-0}  = imm
 static inline unsigned AArch64_AM_getShifterImm(AArch64_AM_ShiftExtendType ST,
-												unsigned Imm)
+						unsigned Imm)
 {
-
 	unsigned STEnc = 0;
 	switch (ST) {
 	default:
@@ -171,7 +173,6 @@ static inline unsigned AArch64_AM_getArithShiftValue(unsigned Imm)
 /// getExtendType - Extract the extend type for operands of arithmetic ops.
 static inline AArch64_AM_ShiftExtendType AArch64_AM_getExtendType(unsigned Imm)
 {
-
 	switch (Imm) {
 	default:
 		assert(0 && "Compiler bug!");
@@ -209,7 +210,8 @@ AArch64_AM_getArithExtendType(unsigned Imm)
 ///            101 ==> sxth
 ///            110 ==> sxtw
 ///            111 ==> sxtx
-static inline unsigned AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType ET)
+static inline unsigned
+AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType ET)
 {
 	switch (ET) {
 	default:
@@ -249,7 +251,6 @@ static inline unsigned AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType E
 static inline unsigned
 AArch64_AM_getArithExtendImm(AArch64_AM_ShiftExtendType ET, unsigned Imm)
 {
-
 	return (AArch64_AM_getExtendEncoding(ET) << 3) | (Imm & 0x7);
 }
 
@@ -281,7 +282,7 @@ AArch64_AM_getMemExtendType(unsigned Imm)
 ///   {3-1}  = shifter
 ///   {0}  = doshift
 static inline unsigned AArch64_AM_getMemExtendImm(AArch64_AM_ShiftExtendType ET,
-												  bool DoShift)
+						  bool DoShift)
 {
 	return (AArch64_AM_getExtendEncoding(ET) << 1) | (unsigned)DoShift;
 }
@@ -296,12 +297,12 @@ static inline uint64_t AArch64_AM_ror(uint64_t elt, unsigned size)
 /// size.  If so, return true with "encoding" set to the encoded value in
 /// the form N:immr:imms.
 static inline bool AArch64_AM_processLogicalImmediate(uint64_t Imm,
-													  unsigned RegSize,
-													  uint64_t *Encoding)
+						      unsigned RegSize,
+						      uint64_t *Encoding)
 {
 	if (Imm == 0ULL || Imm == ~0ULL ||
-		(RegSize != 64 &&
-		 (Imm >> RegSize != 0 || Imm == (~0ULL >> (64 - RegSize)))))
+	    (RegSize != 64 &&
+	     (Imm >> RegSize != 0 || Imm == (~0ULL >> (64 - RegSize)))))
 		return false;
 
 	// First, determine the element size.
@@ -368,7 +369,7 @@ static inline bool AArch64_AM_isLogicalImmediate(uint64_t imm, unsigned regSize)
 /// encodeLogicalImmediate - Return the encoded immediate value for a logical
 /// immediate instruction of the given register size.
 static inline uint64_t AArch64_AM_encodeLogicalImmediate(uint64_t imm,
-														 unsigned regSize)
+							 unsigned regSize)
 {
 	uint64_t encoding = 0;
 	bool res = AArch64_AM_processLogicalImmediate(imm, regSize, &encoding);
@@ -381,7 +382,7 @@ static inline uint64_t AArch64_AM_encodeLogicalImmediate(uint64_t imm,
 /// "N:immr:imms" (where the immr and imms fields are each 6 bits) into the
 /// integer value it represents with regSize bits.
 static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val,
-														 unsigned regSize)
+							 unsigned regSize)
 {
 	// Extract the N, imms, and immr fields.
 	unsigned N = (val >> 12) & 1;
@@ -389,6 +390,7 @@ static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val,
 	unsigned imms = val & 0x3f;
 
 	int len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
+	assert(len >= 1);
 
 	unsigned size = (1 << len);
 	unsigned R = immr & (size - 1);
@@ -410,7 +412,7 @@ static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val,
 /// in the form "N:immr:imms" (where the immr and imms fields are each 6 bits)
 /// is a valid encoding for an integer value with regSize bits.
 static inline bool AArch64_AM_isValidDecodeLogicalImmediate(uint64_t val,
-															unsigned regSize)
+							    unsigned regSize)
 {
 	// Extract the N and imms fields needed for checking.
 	unsigned N = (val >> 12) & 1;
@@ -419,7 +421,7 @@ static inline bool AArch64_AM_isValidDecodeLogicalImmediate(uint64_t val,
 	if (regSize == 32 && N != 0) // undefined logical immediate encoding
 		return false;
 	int len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
-	if (len < 0)				 // undefined logical immediate encoding
+	if (len < 0)		     // undefined logical immediate encoding
 		return false;
 	unsigned size = (1 << len);
 	unsigned S = imms & (size - 1);
@@ -461,7 +463,7 @@ static inline float AArch64_AM_getFPImmFloat(unsigned Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType1(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   ((Imm & 0xffffff00ffffff00ULL) == 0);
+	       ((Imm & 0xffffff00ffffff00ULL) == 0);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType1(uint64_t Imm)
@@ -479,7 +481,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType1(uint8_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType2(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   ((Imm & 0xffff00ffffff00ffULL) == 0);
+	       ((Imm & 0xffff00ffffff00ffULL) == 0);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType2(uint64_t Imm)
@@ -497,7 +499,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType2(uint8_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType3(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   ((Imm & 0xff00ffffff00ffffULL) == 0);
+	       ((Imm & 0xff00ffffff00ffffULL) == 0);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType3(uint64_t Imm)
@@ -515,7 +517,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType3(uint8_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType4(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   ((Imm & 0x00ffffff00ffffffULL) == 0);
+	       ((Imm & 0x00ffffff00ffffffULL) == 0);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType4(uint64_t Imm)
@@ -533,8 +535,8 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType4(uint8_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType5(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   (((Imm & 0x00ff0000ULL) >> 16) == (Imm & 0x000000ffULL)) &&
-		   ((Imm & 0xff00ff00ff00ff00ULL) == 0);
+	       (((Imm & 0x00ff0000ULL) >> 16) == (Imm & 0x000000ffULL)) &&
+	       ((Imm & 0xff00ff00ff00ff00ULL) == 0);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType5(uint64_t Imm)
@@ -552,8 +554,8 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType5(uint8_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType6(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   (((Imm & 0xff000000ULL) >> 16) == (Imm & 0x0000ff00ULL)) &&
-		   ((Imm & 0x00ff00ff00ff00ffULL) == 0);
+	       (((Imm & 0xff000000ULL) >> 16) == (Imm & 0x0000ff00ULL)) &&
+	       ((Imm & 0x00ff00ff00ff00ffULL) == 0);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType6(uint64_t Imm)
@@ -571,7 +573,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType6(uint8_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType7(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   ((Imm & 0xffff00ffffff00ffULL) == 0x000000ff000000ffULL);
+	       ((Imm & 0xffff00ffffff00ffULL) == 0x000000ff000000ffULL);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType7(uint64_t Imm)
@@ -589,7 +591,7 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType7(uint8_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType8(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   ((Imm & 0xff00ffffff00ffffULL) == 0x0000ffff0000ffffULL);
+	       ((Imm & 0xff00ffffff00ffffULL) == 0x0000ffff0000ffffULL);
 }
 
 static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType8(uint8_t Imm)
@@ -607,8 +609,8 @@ static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType8(uint64_t Imm)
 static inline bool AArch64_AM_isAdvSIMDModImmType9(uint64_t Imm)
 {
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   ((Imm >> 48) == (Imm & 0x0000ffffULL)) &&
-		   ((Imm >> 56) == (Imm & 0x000000ffULL));
+	       ((Imm >> 48) == (Imm & 0x0000ffffULL)) &&
+	       ((Imm >> 56) == (Imm & 0x000000ffULL));
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType9(uint64_t Imm)
@@ -629,6 +631,31 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType9(uint8_t Imm)
 // cmode: 1110, op: 1
 static inline bool AArch64_AM_isAdvSIMDModImmType10(uint64_t Imm)
 {
+#if defined(_MSC_VER) && _MSC_VER == 1937 && !defined(__clang__) && \
+	defined(_M_ARM64)
+	// The MSVC compiler 19.37 for ARM64 has an optimization bug that
+	// causes an incorrect behavior with the orignal version. Work around
+	// by using a slightly different variation.
+	// https://developercommunity.visualstudio.com/t/C-ARM64-compiler-optimization-bug/10481261
+	constexpr uint64_t Mask = 0xFFULL;
+	uint64_t ByteA = (Imm >> 56) & Mask;
+	uint64_t ByteB = (Imm >> 48) & Mask;
+	uint64_t ByteC = (Imm >> 40) & Mask;
+	uint64_t ByteD = (Imm >> 32) & Mask;
+	uint64_t ByteE = (Imm >> 24) & Mask;
+	uint64_t ByteF = (Imm >> 16) & Mask;
+	uint64_t ByteG = (Imm >> 8) & Mask;
+	uint64_t ByteH = Imm & Mask;
+
+	return (ByteA == 0ULL || ByteA == Mask) &&
+	       (ByteB == 0ULL || ByteB == Mask) &&
+	       (ByteC == 0ULL || ByteC == Mask) &&
+	       (ByteD == 0ULL || ByteD == Mask) &&
+	       (ByteE == 0ULL || ByteE == Mask) &&
+	       (ByteF == 0ULL || ByteF == Mask) &&
+	       (ByteG == 0ULL || ByteG == Mask) &&
+	       (ByteH == 0ULL || ByteH == Mask);
+#else
 	uint64_t ByteA = Imm & 0xff00000000000000ULL;
 	uint64_t ByteB = Imm & 0x00ff000000000000ULL;
 	uint64_t ByteC = Imm & 0x0000ff0000000000ULL;
@@ -639,13 +666,14 @@ static inline bool AArch64_AM_isAdvSIMDModImmType10(uint64_t Imm)
 	uint64_t ByteH = Imm & 0x00000000000000ffULL;
 
 	return (ByteA == 0ULL || ByteA == 0xff00000000000000ULL) &&
-		   (ByteB == 0ULL || ByteB == 0x00ff000000000000ULL) &&
-		   (ByteC == 0ULL || ByteC == 0x0000ff0000000000ULL) &&
-		   (ByteD == 0ULL || ByteD == 0x000000ff00000000ULL) &&
-		   (ByteE == 0ULL || ByteE == 0x00000000ff000000ULL) &&
-		   (ByteF == 0ULL || ByteF == 0x0000000000ff0000ULL) &&
-		   (ByteG == 0ULL || ByteG == 0x000000000000ff00ULL) &&
-		   (ByteH == 0ULL || ByteH == 0x00000000000000ffULL);
+	       (ByteB == 0ULL || ByteB == 0x00ff000000000000ULL) &&
+	       (ByteC == 0ULL || ByteC == 0x0000ff0000000000ULL) &&
+	       (ByteD == 0ULL || ByteD == 0x000000ff00000000ULL) &&
+	       (ByteE == 0ULL || ByteE == 0x00000000ff000000ULL) &&
+	       (ByteF == 0ULL || ByteF == 0x0000000000ff0000ULL) &&
+	       (ByteG == 0ULL || ByteG == 0x000000000000ff00ULL) &&
+	       (ByteH == 0ULL || ByteH == 0x00000000000000ffULL);
+#endif
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType10(uint64_t Imm)
@@ -704,8 +732,8 @@ static inline bool AArch64_AM_isAdvSIMDModImmType11(uint64_t Imm)
 {
 	uint64_t BString = (Imm & 0x7E000000ULL) >> 25;
 	return ((Imm >> 32) == (Imm & 0xffffffffULL)) &&
-		   (BString == 0x1f || BString == 0x20) &&
-		   ((Imm & 0x0007ffff0007ffffULL) == 0);
+	       (BString == 0x1f || BString == 0x20) &&
+	       ((Imm & 0x0007ffff0007ffffULL) == 0);
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType11(uint64_t Imm)
@@ -766,7 +794,7 @@ static inline bool AArch64_AM_isAdvSIMDModImmType12(uint64_t Imm)
 {
 	uint64_t BString = (Imm & 0x7fc0000000000000ULL) >> 54;
 	return ((BString == 0xff || BString == 0x100) &&
-			((Imm & 0x0000ffffffffffffULL) == 0));
+		((Imm & 0x0000ffffffffffffULL) == 0));
 }
 
 static inline uint8_t AArch64_AM_encodeAdvSIMDModImmType12(uint64_t Imm)
@@ -822,32 +850,27 @@ static inline uint64_t AArch64_AM_decodeAdvSIMDModImmType12(uint8_t Imm)
 	return (EncVal << 32) | EncVal;
 }
 
-
 /// Returns true if Imm is the concatenation of a repeating pattern of type T.
-#define DEFINE_isSVEMaskOfIdenticalElements(T)                                 \
-	static inline bool CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, T)(int64_t Imm)    \
-	{                                                                          \
+#define DEFINE_isSVEMaskOfIdenticalElements(T) \
+	static inline bool CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, \
+				  T)(int64_t Imm) \
+	{ \
 		union { \
 			int64_t In; \
 			T Out[sizeof(int64_t) / sizeof(T)]; \
 		} U_Parts; \
 		U_Parts.In = Imm; \
 		T *Parts = U_Parts.Out; \
-		for (int i = 0; i < (sizeof(int64_t) / sizeof(T)); i++) {   \
+		for (int i = 0; i < (sizeof(int64_t) / sizeof(T)); i++) { \
 			if (Parts[i] != Parts[0]) \
 				return false; \
 		} \
-		return true;                                          \
+		return true; \
 	}
 DEFINE_isSVEMaskOfIdenticalElements(int8_t);
 DEFINE_isSVEMaskOfIdenticalElements(int16_t);
 DEFINE_isSVEMaskOfIdenticalElements(int32_t);
 DEFINE_isSVEMaskOfIdenticalElements(int64_t);
-
-static inline bool AArch64_AM_isSVEMaskOfIdenticalElements64(int64_t Imm)
-{
-	return true;
-}
 
 static inline bool isSVECpyImm8(int64_t Imm)
 {
@@ -907,13 +930,13 @@ AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate(int64_t Imm)
 	int8_t *B = U_B.Out;
 
 	if (CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, int32_t)(Imm) &&
-		isSVECpyImm32(S[0]))
+	    isSVECpyImm32(S[0]))
 		return false;
 	if (CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, int16_t)(Imm) &&
-		isSVECpyImm16(H[0]))
+	    isSVECpyImm16(H[0]))
 		return false;
 	if (CONCAT(AArch64_AM_isSVEMaskOfIdenticalElements, int8_t)(Imm) &&
-		isSVECpyImm8(B[0]))
+	    isSVECpyImm8(B[0]))
 		return false;
 	return AArch64_AM_isLogicalImmediate(Imm, 64);
 }
@@ -928,7 +951,7 @@ inline static bool AArch64_AM_isAnyMOVZMovAlias(uint64_t Value, int RegWidth)
 }
 
 inline static bool AArch64_AM_isMOVZMovAlias(uint64_t Value, int Shift,
-											 int RegWidth)
+					     int RegWidth)
 {
 	if (RegWidth == 32)
 		Value &= 0xffffffffULL;
@@ -941,7 +964,7 @@ inline static bool AArch64_AM_isMOVZMovAlias(uint64_t Value, int Shift,
 }
 
 inline static bool AArch64_AM_isMOVNMovAlias(uint64_t Value, int Shift,
-											 int RegWidth)
+					     int RegWidth)
 {
 	// MOVZ takes precedence over MOVN.
 	if (AArch64_AM_isAnyMOVZMovAlias(Value, RegWidth))
@@ -966,6 +989,8 @@ inline static bool AArch64_AM_isAnyMOVWMovAlias(uint64_t Value, int RegWidth)
 
 	return AArch64_AM_isAnyMOVZMovAlias(Value, RegWidth);
 }
+
+// CS namespace end: AArch64_AM
 
 // end namespace AArch64_AM
 

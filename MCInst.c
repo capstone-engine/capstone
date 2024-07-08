@@ -1,6 +1,5 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
-
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
 #include <libkern/libkern.h>
@@ -11,6 +10,7 @@
 #include <string.h>
 #include <assert.h>
 
+#include "MCInstrDesc.h"
 #include "MCInst.h"
 #include "utils.h"
 
@@ -105,12 +105,12 @@ bool MCOperand_isValid(const MCOperand *op)
 
 bool MCOperand_isReg(const MCOperand *op)
 {
-	return op->Kind == kRegister;
+	return op->Kind == kRegister || op->MachineOperandType == kRegister;
 }
 
 bool MCOperand_isImm(const MCOperand *op)
 {
-	return op->Kind == kImmediate;
+	return op->Kind == kImmediate || op->MachineOperandType == kImmediate;
 }
 
 bool MCOperand_isFPImm(const MCOperand *op)
@@ -224,16 +224,26 @@ bool MCInst_isPredicable(const MCInstrDesc *MIDesc)
 /// Checks if tied operands exist in the instruction and sets
 /// - The writeback flag in detail
 /// - Saves the indices of the tied destination operands.
-void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDesc)
+void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDescTable, unsigned tbl_size)
 {
-	const MCOperandInfo *OpInfo = InstDesc[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = InstDesc[MCInst_getOpcode(MI)].NumOperands;
+	const MCInstrDesc *InstDesc = NULL;
+	const MCOperandInfo *OpInfo = NULL;
+	unsigned short NumOps = 0;
+	if (MI->csh->arch == CS_ARCH_ARM) {
+		// Uses old (pre LLVM 18) indexing method.
+		InstDesc = &InstDescTable[MCInst_getOpcode(MI)];
+		OpInfo = InstDescTable[MCInst_getOpcode(MI)].OpInfo;
+		NumOps = InstDescTable[MCInst_getOpcode(MI)].NumOperands;
+	} else {
+		InstDesc = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size);
+		OpInfo = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size)->OpInfo;
+		NumOps = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size)->NumOperands;
+	}
 
-	unsigned i;
-	for (i = 0; i < NumOps; ++i) {
+	for (unsigned i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isTiedToOp(&OpInfo[i])) {
 			int idx = MCOperandInfo_getOperandConstraint(
-				&InstDesc[MCInst_getOpcode(MI)], i,
+				InstDesc, i,
 				MCOI_TIED_TO);
 
 			if (idx == -1)

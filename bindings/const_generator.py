@@ -5,7 +5,7 @@ import sys, re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h', 'alpha.h', 'hppa.h' ]
+include = [ 'arm.h', 'aarch64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h', 'alpha.h', 'hppa.h' ]
 
 template = {
     'java': {
@@ -30,13 +30,14 @@ template = {
             'comment_close': '',
         },
     'python': {
-            'header': "from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_FP, CS_OP_PRED, CS_OP_SPECIAL, CS_OP_MEM\n"
+            'header': "from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_FP, CS_OP_PRED, CS_OP_SPECIAL, CS_OP_MEM, CS_OP_MEM_REG, CS_OP_MEM_IMM, UINT16_MAX\n"
                       "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.py]\n",
             'footer': "",
             'line_format': '%s = %s\n',
             'out_file': './python/capstone/%s_const.py',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'arm',
+            'aarch64.h': ['AArch64', 'AARCH64'],
             'm68k.h': 'm68k',
             'mips.h': 'mips',
             'x86.h': 'x86',
@@ -158,6 +159,7 @@ template = {
 
 excluded_prefixes = {
     'arm.h': ["ARMCC_CondCodes", "ARMVCC_VPTCodes"],
+    'aarch64.h': ["AArch64CC_CondCode", "AArch64Layout_VectorLayout"],
 }
 
 # markup for comments to be added to autogen files
@@ -217,6 +219,7 @@ def gen(lang):
         enums = {}
         values = {}
         doc_lines = []
+        rhs = ""
 
         count = 0
         for line in lines:
@@ -277,8 +280,25 @@ def gen(lang):
                 elif len(f) > 1 and f[1] == '=':
                     rhs = ''.join(f[2:])
                 else:
-                    rhs = str(count)
-                    count += 1
+                    # Dirty fix: This line is reached for enum values which
+                    # have no value assigned (as in `ARCH_SOMETHING,`).
+                    # Because the binding constants require a fixed value,
+                    # `count` was used (as it is now the `except` case).
+                    # Which is of course incorrect,
+                    # because it doesn't match the actual value in the C code.
+                    # So we just test here if the previous `rhs` was an actual number,
+                    # and set `rhs = rhs + 1`. If it wasn't a number, we just continue the incorrect design and
+                    # set it to `str(count)`.
+                    try:
+                        if "0x" in rhs:
+                            prev_val = int(rhs, 16)
+                        else:
+                            prev_val = int(rhs)
+                        prev_val += 1
+                        rhs = str(prev_val)
+                    except ValueError:
+                        rhs = str(count)
+                        count += 1
 
                 try:
                     count = int(rhs) + 1

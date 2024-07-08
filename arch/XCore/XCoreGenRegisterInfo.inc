@@ -55,7 +55,7 @@ enum {
 #undef GET_REGINFO_MC_DESC
 
 static const MCPhysReg XCoreRegDiffLists[] = {
-  /* 0 */ 65535, 0,
+  /* 0 */ -1, 0,
 };
 
 static const uint16_t XCoreSubRegIdxLists[] = {

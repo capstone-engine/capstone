@@ -11,9 +11,19 @@ if [ -z $base_sha ] || [ -z $head_sha ]; then
   exit 0
 fi
 
+echo "Running with version:"
+clang-tidy --version
+
 BUILD_PATH="$1"
 
-clang-tidy $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks=clang-analyzer-*,-clang-analyzer-cplusplus* > ct-warnings.txt
+check_list="clang-analyzer-*,-clang-analyzer-cplusplus*,-clang-analyzer-optin.performance.Padding"
+
+if $(hash clang-tidy-15); then
+  clang-tidy-15 $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" > ct-warnings.txt
+else
+  clang-tidy $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" > ct-warnings.txt
+fi
+
 if [ $? -ne 0 ]; then
   echo "clang-tidy failed"
   exit 1

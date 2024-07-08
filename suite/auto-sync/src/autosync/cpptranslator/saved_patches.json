@@ -1500,5 +1500,881 @@
       "new_hash": "02eaaa869cf975da8203666135470c113ad9246dd2f73061dbf6ee1706683299",
       "edit": ""
     }
+  },
+  "AArch64Disassembler.c": {
+    "\"AArch64GenInstrInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "cf7aa34be7a72b5363681d20acdec9b28e904e495835884c103f3e6670de28a3",
+      "new_hash": "",
+      "edit": ""
+    },
+    "AArch64_LLVM_getInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "725effa985946d8b86b44d9f5bc3c5ae22b415d3ddeb6ed8c850ce09599faf69",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DecodeAddSubImmShift": {
+      "apply_type": "OLD",
+      "old_hash": "e4d6f979492d1caa080401a5a67a052771bafd2440ac9d95bd1c3ddc99ea40a3",
+      "new_hash": "f0abaf4318761d265396777fbe530c935878375fb4a12089aa35a782649ce01a",
+      "edit": ""
+    },
+    "DecodeAdrInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "b368887ed1bc790c7f3670e381a2860825b8665103db17f7a4339b1f920609e0",
+      "new_hash": "774343e7c81b0fba91cbb35d514910bfdd4e71df5b30b0f31c9db8a96cb7e463",
+      "edit": ""
+    },
+    "DecodeFMOVLaneInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "dac4e494466b422ed0366fe0f9fc89c252137e8254a90d051c106dcf5d88e568",
+      "new_hash": "34fcd7054e57a9efaf3acb6d99c27d739c4025446b3233ce1bd5978afcde8f85",
+      "edit": ""
+    },
+    "DecodeMRSSystemRegister": {
+      "apply_type": "OLD",
+      "old_hash": "b586961a60ec97c7c0ae0536e5744c2f4b6094618a331bdc1a2b4e0f671b35f5",
+      "new_hash": "f1062b203a1f4813f0447a5b9f8b09d9d43d328ce3b355022d84836d4e8fb9f2",
+      "edit": ""
+    },
+    "DecodePCRelLabel16": {
+      "apply_type": "OLD",
+      "old_hash": "6fe796c9319122e8126e9d5c3d8a1dbbb612dedb85b8f1ce7d543fe7990e5bd1",
+      "new_hash": "8ceaaedebd2f2438e12e51225bd52ad8155d321a46308dd65a544678cc1a83cb",
+      "edit": ""
+    },
+    "DecodePCRelLabel19": {
+      "apply_type": "OLD",
+      "old_hash": "4b926d92681cab90df5f76ca817225923046f96afbd7ddef991e9d34d4b50455",
+      "new_hash": "fd6f78c3ef24df84bc4e7d727e62d62d3ddf475f5aaa94f6b5ff35a1e287ae75",
+      "edit": ""
+    },
+    "DecodeSyspXzrInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "f18f29407e58f88ca4697c770773baceaaa9824d5b2110bb8172c82cca86c706",
+      "new_hash": "b31e6d7f9c360cad5eab2c9d8d9e89784fbef9393d7839bb6079e995ff063ab4",
+      "edit": ""
+    },
+    "DecodeSystemPStateImm0_15Instruction": {
+      "apply_type": "OLD",
+      "old_hash": "4f537b4b005000621707c91b04175d2c586a9a7320e362bf5b3cc2019d62941c",
+      "new_hash": "1ff2252bcdd3f95706b0cb52980c50bedeb2106a81696db21ba3d4c74b8c025c",
+      "edit": ""
+    },
+    "DecodeSystemPStateImm0_1Instruction": {
+      "apply_type": "OLD",
+      "old_hash": "3518d2bbc21bf37f6d4c0ac5c1e54376209172f99115357c91d10ce139ed9cca",
+      "new_hash": "880b67d4232b75842256cbd59f134af2ccdc1b3bf497e76c9720d5e9aba0f008",
+      "edit": ""
+    },
+    "DecodeTestAndBranch": {
+      "apply_type": "OLD",
+      "old_hash": "f58f0c4ece9f9bde828bf325986356a06beb3347378acc1fff7863d05edbe3c0",
+      "new_hash": "5680945bb62fd995410adce8d533790df76c4f718dbaf020af1e9e8ebd340a3e",
+      "edit": ""
+    },
+    "DecodeUnconditionalBranch": {
+      "apply_type": "OLD",
+      "old_hash": "5ffd532aeef62ee49a178535bd5c7ad6b9cbf24c48696fdb7e3d28f318d0819d",
+      "new_hash": "950c3db853fcfc490b7412f9f13e01dc94b97d40e2019a0be60306063c1f9883",
+      "edit": ""
+    },
+    "DecodeUnsignedLdStInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "cbaa0ac1813ebaeb77c095a5248fc1e8ae1691c1d281fc20af9c7f44e714918b",
+      "new_hash": "e27c2e7b376d3cb7ec92307eab3933bb11edcf4bbb84f855c8e38e28357bbd12",
+      "edit": ""
+    },
+    "createAArch64Disassembler": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "c466ea832bdaa3d577e658475e744c292a1060fc2723ae3898c22543b72a7819",
+      "edit": ""
+    },
+    "createAArch64ExternalSymbolizer": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "dd985aae4e73aa9cf93a1bc361f096c86f494d6ddd36796e0a71cd3078310d4c",
+      "edit": ""
+    },
+    "getInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "6c707dd9dcb9508f47390493354753a01f2de9f325d8e14da74b103e8db69181",
+      "new_hash": "45ace01a528de25e7a8cf8a7efc348c27e3df7ef7cbc11089433347e69651a9a",
+      "edit": ""
+    },
+    "isInvalidPState": {
+      "apply_type": "OLD",
+      "old_hash": "409b0c65d1377e5afdf84542cdfed9a082ec6478eff942046b749ed5e5a4db09",
+      "new_hash": "e92f6ab796a3e86b0c691b2b80d97bf00a56f0d6ddf789a8ae561c06cc3bba6e",
+      "edit": ""
+    },
+    "suggestBytesToSkip": {
+      "apply_type": "OLD",
+      "old_hash": "60ef872c09331b62acb268cdaf5ee70507a57494b217fb7030bd95adc08dff9f",
+      "new_hash": "c24dfddb7b663904060351f02b764560d157405d3e37656e9a6bf1ddc12b3ba7",
+      "edit": ""
+    }
+  },
+  "AArch64InstPrinter.c": {
+    "AArch64_LLVM_getRegisterName": {
+      "apply_type": "OLD",
+      "old_hash": "a6fd181831f522a4b4c8c60d86902acb89f8dbef0dcb0ec6191761f7fbf7c2b9",
+      "new_hash": "",
+      "edit": ""
+    },
+    "AArch64_LLVM_printInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "9d4a5c88e2613ae43e66c463f9c34570817dfd5aaa061b5c36b6f8d5e6c069c0",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printComplexRotationOp": {
+      "apply_type": "OLD",
+      "old_hash": "fbd871c8909aa828d35ba07e3f4910684f4e519bf58ff663498e378b6724b4be",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printImmSVE_S32": {
+      "apply_type": "OLD",
+      "old_hash": "48839ad627bca5acd0c74b9747eeade3df66defafe2d9a0718643ec70cbae6f6",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printImmSVE_S64": {
+      "apply_type": "OLD",
+      "old_hash": "29310b5b9cc852db52dfc9886471bbe2aac94cdacdafa772e4e34a8678365185",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printImmSVE_U32": {
+      "apply_type": "OLD",
+      "old_hash": "71eebb5677efd065d99c77887b6380afbc190edbc4cb37f859f9d441e5c86bfd",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printImmSVE_U64": {
+      "apply_type": "OLD",
+      "old_hash": "2303e6926c29b1fcee909c3090a929ccdd5f43c6433e12d5afa65200b8f2439b",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DEFINE_isSignedType": {
+      "apply_type": "OLD",
+      "old_hash": "3ea732e1f2870a592203da725a279d1cb48e1486220c3cb0f91c6e331e53eacf",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DEFINE_printComplexRotationOp": {
+      "apply_type": "OLD",
+      "old_hash": "ea11305972ef41cf2c7dd43e9c4498b8eb933f2c0289ce020473b186ca1cd295",
+      "new_hash": "624d7afe0268c218cd992c92098968274aa6ef375d5dd5479c84b9871e1182e5",
+      "edit": ""
+    },
+    "DEFINE_printExactFPImm": {
+      "apply_type": "OLD",
+      "old_hash": "84fb4753336b8940fe6b3b64de4cd3cc4217f40da925773c2dcc8a6a69c46880",
+      "new_hash": "9d2e650c94861d2e792aa324bc8697cdf0498fe29980220a845b5ab85eda5293",
+      "edit": ""
+    },
+    "DEFINE_printGPRSeqPairsClassOperand": {
+      "apply_type": "OLD",
+      "old_hash": "565f853c1440dc25243a5d33b14a299849463f6ea9f85b186949c400459481df",
+      "new_hash": "ec4f00b5e79d88ad6224d97b726a9e3a5dd9ae22ba344f0b53762bb45b524f66",
+      "edit": ""
+    },
+    "DEFINE_printImm8OptLsl": {
+      "apply_type": "OLD",
+      "old_hash": "33f174bc27e4cefde3bb86b0aee8fed1852e3af613c56fba6e018db72a45d242",
+      "new_hash": "2d7f93249d89e7b089de23971a0633b33e5a57ea5fd3c730f2f3c824a7db6436",
+      "edit": ""
+    },
+    "DEFINE_printImmRangeScale": {
+      "apply_type": "OLD",
+      "old_hash": "a5aa1ef98fe6f8f49d3a1fb23791ba0055a081eede26aded6b35c3eda82217fe",
+      "new_hash": "c5529caf426e1d9e57d8a0a57b6c65f2aaa9ba932ac1a45c8ee0e1371427f5ed",
+      "edit": ""
+    },
+    "DEFINE_printImmScale": {
+      "apply_type": "OLD",
+      "old_hash": "cae40008a6826b7eca0cb918383af243c7e7b8b4eb069d95027f3baa35ef4f85",
+      "new_hash": "bd78e132e05b8d26ed5d4aa733830c89c7d51f256085fbfc5ec8cf249b96efbb",
+      "edit": ""
+    },
+    "DEFINE_printLogicalImm": {
+      "apply_type": "OLD",
+      "old_hash": "8b3abd421a02b9d2ffc3ea039295e2436ad31bc7ab206375e75afcb45ded712e",
+      "new_hash": "bd1b720ec0f4f73e36b3852ad2678bb7ab32f6e67a2dda13f58857a13f46c796",
+      "edit": ""
+    },
+    "DEFINE_printMatrixIndex": {
+      "apply_type": "OLD",
+      "old_hash": "b7a30417669c37e589979b31d269ff7fd4308d45aecc9f5459731b926782fe62",
+      "new_hash": "c78315702f0d814f9de242d418508e4355cd92aba893137765a3a520d0a5cffc",
+      "edit": ""
+    },
+    "DEFINE_printMatrixTileVector": {
+      "apply_type": "OLD",
+      "old_hash": "baa308ba6d8836d37b60bce89d484f982e3b7bcea1c1baa76e7d70195854189c",
+      "new_hash": "fa77685905ff5cb6ce7f643e081c3f0dea1d12d392c11db35d1635f086c14d7d",
+      "edit": ""
+    },
+    "DEFINE_printPredicateAsCounter": {
+      "apply_type": "OLD",
+      "old_hash": "2bd81a63a0efdbb2ca9178d9fa559cabf1e672091edd134ebd85f9ab7c73df59",
+      "new_hash": "1d3e76fdff415cd4e730d4aae0a027d83db300df36cc93bb61c72c43956242f7",
+      "edit": ""
+    },
+    "DEFINE_printPrefetchOp": {
+      "apply_type": "OLD",
+      "old_hash": "653d5842dc332869863242f9370e8be13cde7e7bdd4d03978b3c94216279c14e",
+      "new_hash": "d5da8b7c19bf82dbf476c754911ea09818bf67cc14ba8c742e49fbe09c8a6281",
+      "edit": ""
+    },
+    "DEFINE_printRegWithShiftExtend": {
+      "apply_type": "OLD",
+      "old_hash": "f4a50427af56432f6563c289619e280e3eb53c6bea9d5637df16ae6b67941708",
+      "new_hash": "56638b974e9bbc89e7b0eb72131915a46f11ff3314e83c3de015e7d3b6bdc365",
+      "edit": ""
+    },
+    "DEFINE_printSImm": {
+      "apply_type": "OLD",
+      "old_hash": "15e5715e3fed848300dbb12d7c73b5a23cf879ff48e8eafa5679635c8a51a6e6",
+      "new_hash": "e80aa384b762b05f55486de724bbdc8e1e97244152ab95f996a471c4abc44dc4",
+      "edit": ""
+    },
+    "DEFINE_printSVELogicalImm": {
+      "apply_type": "OLD",
+      "old_hash": "22459ca70b2b08878d567606bea59a1bc833497d70afb7d8f8b03a3c3010c845",
+      "new_hash": "7f5e02648af514f0c434b2628446c08c25f195e605128b4579491933ed819394",
+      "edit": ""
+    },
+    "DEFINE_printSVERegOp": {
+      "apply_type": "OLD",
+      "old_hash": "6b4ca26f6f601906cc383a6b99f24fd3cf806590b33252ee5ca6ff9bc664abb7",
+      "new_hash": "29769afc28414190bbb4dd45295466c63ff5ee7ef7687733700b843731d9b3c6",
+      "edit": ""
+    },
+    "DEFINE_printTypedVectorList": {
+      "apply_type": "OLD",
+      "old_hash": "3cb6fe1ac61c6849eb71265509c85cd1a7d0dade63b4163481ce3eb75c6dcbdc",
+      "new_hash": "3c37c4f9484dbd2582a793960ef98b79a5e4079b5771842a7be02fdf1929c3b7",
+      "edit": ""
+    },
+    "DEFINE_printVectorIndex": {
+      "apply_type": "OLD",
+      "old_hash": "bad3f3c9c5302a6990137b97d6eadcbaef32a51fcdfc06ee2e8f768e7c889d82",
+      "new_hash": "",
+      "edit": ""
+    },
+    "applyTargetSpecificCLOption": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "dc34177ae1a9e57eb1c9cdda2823d7b41e35b727c984dd52a0efe8c08d20240c",
+      "edit": ""
+    },
+    "getLdStNInstrDesc": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "90405a0ff3e43a1e6a04b4471682940d3ba7e1129edb900d8c421456f4d417e7",
+      "edit": ""
+    },
+    "getNextVectorRegister": {
+      "apply_type": "OLD",
+      "old_hash": "c0f99f3985416a1cb24218ccd6cde7def7f82f1f1dc8a23bb2b4643cf39fa11f",
+      "new_hash": "b5bf66ba7df166e06126cabd0af1a4ae7a780720fffcab54539d12ec7130669c",
+      "edit": ""
+    },
+    "getRegName": {
+      "apply_type": "OLD",
+      "old_hash": "5743d8b87eeea77c3f750f55ef227bac0f96b0db4c9fde1890612e60f7afb22b",
+      "new_hash": "",
+      "edit": ""
+    },
+    "isTblTbxInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "3581dd973da17ce89535b602bc830bcbeccbac95b8be27a5d79961263c3e21df",
+      "edit": ""
+    },
+    "isValidSysReg": {
+      "apply_type": "OLD",
+      "old_hash": "82fbca3fc3f5d11400ab54ae3d4bb68ac6403fe68c9f09fe36910285fddc04dd",
+      "new_hash": "eebb7ed4a6d075c33946feb49acfe255d21ee92067d563706f5439f283acaf78",
+      "edit": ""
+    },
+    "lookupSysReg": {
+      "apply_type": "OLD",
+      "old_hash": "d07b65fbc95b1b9c876b597c7c2680e43e4dcad22ea0bbb67e9c18f9d773c33e",
+      "new_hash": "dd27a9674bdd26026e12382a9e5151a1537129cc27fd38940ea69c6a4fa7d9d0",
+      "edit": ""
+    },
+    "printAMIndexedWB": {
+      "apply_type": "OLD",
+      "old_hash": "3008a6b5f16e522f302e09cd7e05514fb448944fac7372808078671c466c3bf0",
+      "new_hash": "3e918783209f6e82f4bcdf5b8065d44c2b1b904c895d02c7ff0268001b0ad9df",
+      "edit": ""
+    },
+    "printAddSubImm": {
+      "apply_type": "OLD",
+      "old_hash": "0ec508ed20c61a37c2f9a990c3b74675cc523450ca27a353106fd0531a56979e",
+      "new_hash": "a9326a2ac2a9fb289a45aac83efdb3869581da304f08c1e99706b5ce23a7ec33",
+      "edit": ""
+    },
+    "printAdrAdrpLabel": {
+      "apply_type": "OLD",
+      "old_hash": "829d64eeb61dcbe2fbbb12176ac0f6c0724de4d77f476285d86118b00bae3ba8",
+      "new_hash": "5a1292b01d3afb61a40b2d1b7361dd45e9b0e63fd3a7033af1f81b30d08dbdaa",
+      "edit": ""
+    },
+    "printAdrLabel": {
+      "apply_type": "OLD",
+      "old_hash": "49da07f14e94a89fee05ef8f91f4a9df664be744a62233da8e2fccf728c455f5",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printAdrpLabel": {
+      "apply_type": "OLD",
+      "old_hash": "907918a2a10d59d0a16e48ff9571da49891e6c84b91410930996a9d8ead53c69",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printAlignedLabel": {
+      "apply_type": "OLD",
+      "old_hash": "318bd3c83e1624766efc40367ba62f3549ef2999e736fc72a06e12d67c9ca71e",
+      "new_hash": "099a55007ceaa4286a7f3ef43e14493e3e9825d7df13e8941c102e33864915b3",
+      "edit": ""
+    },
+    "printArithExtend": {
+      "apply_type": "OLD",
+      "old_hash": "dd1fd0d4e0fc195ad7f3c33b0b53e719f37cddf2947ad62025ffd83b450d473b",
+      "new_hash": "e98d1a7c1e8eec5662b69c45b0ce855105f8e88cf0b10ddf1e921ecac6e1ac7a",
+      "edit": ""
+    },
+    "printBTIHintOp": {
+      "apply_type": "OLD",
+      "old_hash": "7490e8f20bbb65e9532b454d655b9f71ac05d3c41471141908ebd376d530b0cf",
+      "new_hash": "391d07b1b172839d4c8c0293dcd4ac75279a8566f7a080d6e8351267964dd052",
+      "edit": ""
+    },
+    "printBarrierOption": {
+      "apply_type": "OLD",
+      "old_hash": "f7262094750aacc7f15fb6c74a7fb0f11075515bab1913850b95768dcc499cc9",
+      "new_hash": "ae1107c35d3a72b5dda21682bf12c4ff4450972d5f95d0b64a4465e7a409574b",
+      "edit": ""
+    },
+    "printBarriernXSOption": {
+      "apply_type": "OLD",
+      "old_hash": "71d1a633b96811f56e1258094601bd74de0ba60f28470ae6e4fa28b4f85d41b6",
+      "new_hash": "21d27d6fb24bb053b260e0a680896ff03e0236ed6371cc1a6b4fd7eafdcac6ab",
+      "edit": ""
+    },
+    "printFPImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "be32674a369ac0c3f283ebbeb6b183827d9c8bb19e911ba24bdeb643f8c62c33",
+      "new_hash": "ffba79af5831d2b1e18e9bbabbb1909f9f615b71e79f1aa5391df8b20c04a978",
+      "edit": ""
+    },
+    "printImm": {
+      "apply_type": "OLD",
+      "old_hash": "2455852c51c062af8132821769b407bc6c8d47d6b3ce251366904cc3ac29baa8",
+      "new_hash": "c8c71e82ee6b0e4e53f1c7f65d0d372682940e74436387d2bec97c0eef7c84d6",
+      "edit": ""
+    },
+    "printImmHex": {
+      "apply_type": "OLD",
+      "old_hash": "366549761d8a12341c5487b9bd85ef241fc334655b08721aaa8bcadff1160371",
+      "new_hash": "5a2d831c2401fa5f3f6b678144892d00b08e86548fbf5cec1187f7a135e64555",
+      "edit": ""
+    },
+    "printImmSVE": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "17f10675b64669dcd5172429ecc66cb7688f6d1d40fd634a6ab838e3310b64c0",
+      "edit": ""
+    },
+    "printInst": {
+      "apply_type": "OLD",
+      "old_hash": "d10c9bd536e404847c2e40bce4e3da86b891fbb66b15d868c0be57f485f3f1ac",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printMRSSystemRegister": {
+      "apply_type": "OLD",
+      "old_hash": "55a382b309e67dcebb369bd44546e836b95861c15fe4542ed6f892583b07e9d9",
+      "new_hash": "3992e3da8230242add5396c12ec9e3c17c11d708ed11772b934bdbf0c52f6262",
+      "edit": ""
+    },
+    "printMSRSystemRegister": {
+      "apply_type": "OLD",
+      "old_hash": "39e27621256ceb888864484a28208b1534953009f1b30be2a4d74fead721894c",
+      "new_hash": "fe666189ac3b6e280014daaeb3f5dff70fd3c429d638fe2b4d5054c0204da0f7",
+      "edit": ""
+    },
+    "printMemExtend": {
+      "apply_type": "OLD",
+      "old_hash": "5707160854c91659e030e574c5986c76e123b4f0e1ccf97509cfaa6d16627e82",
+      "new_hash": "3f6b1edb3e484e26a88d474d9755e4c0299da9c44549088e56070f92524bf4ac",
+      "edit": ""
+    },
+    "printMemExtendImpl": {
+      "apply_type": "OLD",
+      "old_hash": "c34add354a462299faae1982df71cd1301bf9a596a45121054b997b7c2505517",
+      "new_hash": "5c19335819dd87b44a6a3a2668b37478cd2860c1b8249c845670bdea2f98a9bb",
+      "edit": ""
+    },
+    "printOperand": {
+      "apply_type": "OLD",
+      "old_hash": "bad0223bc0b3d47705fcf1a3de6294040f41e619bb88baf7622f79f4a9c196fb",
+      "new_hash": "5794b32405e7d6a5c51b058e086cd978553996fe7395ddf9c046b4879620512d",
+      "edit": ""
+    },
+    "printPSBHintOp": {
+      "apply_type": "OLD",
+      "old_hash": "919dcd459eee7daf9eaf23ec4e463bd066e7c461366a2ea8754c77d33647f1d1",
+      "new_hash": "8d8bd9a276e3f9811eb213601bc07d8aa2d8c7e6914d43639427f59a2ba0ab49",
+      "edit": ""
+    },
+    "printPostIncOperand": {
+      "apply_type": "OLD",
+      "old_hash": "b055ee50d42dbe7b69adfe3625258e392ef376c74bc7a1fdd1422a108daffd13",
+      "new_hash": "1c9ca6bfc5801c5ea025419d640d7f4ef6c6a9d79321a491e7b5bfd8dde73462",
+      "edit": ""
+    },
+    "printRPRFMOperand": {
+      "apply_type": "OLD",
+      "old_hash": "4c1bb639354ce7d4be9c4ee967d571b0e6179eea23a0d651915cfb49c02a9d34",
+      "new_hash": "1b9a563b6158136a94c14fed167e61daa1279115c8d74f2272f5fa8cdb156ce6",
+      "edit": ""
+    },
+    "printRangePrefetchAlias": {
+      "apply_type": "OLD",
+      "old_hash": "6c822a316e30241156879d677559b3c0fe1bd6dfe5e219ceec81f6a39f8ed7ef",
+      "new_hash": "4d3ef668b725d469213cbf614431c3471006fb6af0b1e3d48d5675dfdab9e69c",
+      "edit": ""
+    },
+    "printRegName": {
+      "apply_type": "OLD",
+      "old_hash": "6713f913e8d8f9f2144ddb394d485a9b6dd4e2975d0d28d69252b903892c3def",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printRegNameAlt": {
+      "apply_type": "OLD",
+      "old_hash": "924a2c423f59f680ca5c9c5131ac3c52d0b525201a84eaf2288311dbd1a5fe04",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printSIMDType10Operand": {
+      "apply_type": "OLD",
+      "old_hash": "b6e562d86fd6791053fd539f53d3ad2770e5a600ccfbc2af966594d90d757827",
+      "new_hash": "dc79bb6126a53e2b35eff8a39234c513c060f9b3ed10d970e9e0f3ad8cfe19af",
+      "edit": ""
+    },
+    "printSVCROp": {
+      "apply_type": "OLD",
+      "old_hash": "0d65151f55e3938701ef097ca0a16ffd868ae191a15d8329ba3dc29bc9a36d95",
+      "new_hash": "7705462f94d6a5b21db30dab5bf0ce7b612f5f861e97c1942eb826861047067d",
+      "edit": ""
+    },
+    "printSVEPattern": {
+      "apply_type": "OLD",
+      "old_hash": "fa41064f8852c15334745f29f622a606cb341be16eb4959b340417b0a682eff7",
+      "new_hash": "77aef0a120cc4fb1cdd668113cfb6f8dfbc5018bcf375ee745d2f415e6ea1717",
+      "edit": ""
+    },
+    "printSVEVecLenSpecifier": {
+      "apply_type": "OLD",
+      "old_hash": "12546ccb31f7b4cdea8f3bab5c72164ae1174195b90b4b487e4364109bb1f025",
+      "new_hash": "d7bf289de98efd77f0e3b54329de085ddd01fc8c7953a844673a33f8f1e83d80",
+      "edit": ""
+    },
+    "printShifter": {
+      "apply_type": "OLD",
+      "old_hash": "8780e3d55b20ca3d0fcd56253bdc12e5e29c78b5ebed404468a6e62e28a6b7e1",
+      "new_hash": "1a7340ea98ddfc471529d13620851ce811605cb33374e2d2935e0a4ad23c48ca",
+      "edit": ""
+    },
+    "printSysAlias": {
+      "apply_type": "OLD",
+      "old_hash": "545512a84bc61032f5dcb350b278a03b5e46841ff8600336b077e221b15cac91",
+      "new_hash": "bb9b756f6b10697e649933c71d62f9da17a8c7b593c4640164ca4049ac278f14",
+      "edit": ""
+    },
+    "printSysCROperand": {
+      "apply_type": "OLD",
+      "old_hash": "4365ffcfb7610b3d99f1c4366c6075bea2d97f1aa0e9f6903961a044e414a92f",
+      "new_hash": "aeb33a6e608ea95c13003280a930fd4fd976035ca3952b7ef19956c84d091e6f",
+      "edit": ""
+    },
+    "printSyspAlias": {
+      "apply_type": "OLD",
+      "old_hash": "d0554a4751c8b0189f7cbbe2a41a4a6f945ad20aae9e0d17dfff0f2a0eb16609",
+      "new_hash": "5df179695096301fd3ab92a005c4b67d4c4e063a71b7da3b8b58a1c03762b27d",
+      "edit": ""
+    },
+    "printSyspXzrPair": {
+      "apply_type": "OLD",
+      "old_hash": "09aedf75d181cc9c7a9e4f942018f96ea595826d507380789ca30dcf9ad84b95",
+      "new_hash": "eae4aac4b34f6fc8501568bcd83c3a905259fd9bfc8a8a8fd06721467208cd32",
+      "edit": ""
+    },
+    "printSystemPStateField": {
+      "apply_type": "OLD",
+      "old_hash": "4c07d2a91d7998bc3b667d4cdfa31c31dbaac6535ca7735984502d955562da19",
+      "new_hash": "4297502f835ed48d48b5e637644ddd70df0189560ab60f45b708083bf01b68a0",
+      "edit": ""
+    },
+    "printUImm12Offset": {
+      "apply_type": "OLD",
+      "old_hash": "4eac20c0c67389228d78bdae46a29e5f32df7ad2202dd5893dabffba49319b7d",
+      "new_hash": "47363cd6a2686d6a9e73271238c087d86d9d6ecf32757caf60004151785270f1",
+      "edit": ""
+    },
+    "printVRegOperand": {
+      "apply_type": "OLD",
+      "old_hash": "7559da8c8c54fe9a399ef66515b2a34fc25c2312cb1331b1ca3b51d59e2a9f95",
+      "new_hash": "97ad0e3c86f991dc8f2b07a4d6188fad8f61fd15dbfb43d527dbb29b851a423a",
+      "edit": ""
+    },
+    "printVectorIndex": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "8247fcc4b244c9ac9cf912b5e34f35f010ecd75c2a637d146f290d87950e3e57",
+      "edit": ""
+    },
+    "printVectorList": {
+      "apply_type": "OLD",
+      "old_hash": "b32871b8dfd97a2aa17d98a965060e399075a64010d740bb71364da6c2ea666e",
+      "new_hash": "28013ffeef0a3b287e0277976cddf9e983fb4f334988013bf61002f7a4df5120",
+      "edit": ""
+    }
+  },
+  "AArch64InstPrinter.h": {
+    "CHAR": {
+      "apply_type": "OLD",
+      "old_hash": "124752d5ccb0a58a33fda6a56b3019e8ee64c807473745b1024920475a41b6c1",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printComplexRotationOp": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "fce2e8a1bcf52e4cee15c639d6dd1ea06daa80101a70821da09a89744770f012",
+      "edit": ""
+    },
+    "DECLARE_printImmSVE": {
+      "apply_type": "OLD",
+      "old_hash": "3a1480e4bea3cb04f44a5e38b6178bb999163db484dfe0382e09994493d5fe15",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printMatrixIndex": {
+      "apply_type": "OLD",
+      "old_hash": "1529c1641329f4a2d2671dbf20e010a0c4911185528a04e4aee0edcc9db08f21",
+      "new_hash": "a6d3e38cc44b34ee39d257a5ebf1fcc2a08873a81a76cd27379be1eae804df31",
+      "edit": ""
+    },
+    "DECLARE_printPrefetchOp": {
+      "apply_type": "OLD",
+      "old_hash": "5eabf8f14973634b0e6c3ae130701902224d800b10afcadbd528e35f1a6507ed",
+      "new_hash": "c13bb1f006d1df40067c2e231dec5ca76f5172df7b58e6b417005bb9083a19b8",
+      "edit": ""
+    },
+    "DECLARE_printSVERegOp": {
+      "apply_type": "OLD",
+      "old_hash": "0aa7571e6104798c55f0b805490867a646f05ed2f3e5c5c06446fa8abedf5599",
+      "new_hash": "9b06b1f1aa8767f9937fdfa7f3d226ac80e08fa948f7f0e910d3ffc0891c3097",
+      "edit": ""
+    },
+    "DECLARE_printVectorIndex": {
+      "apply_type": "OLD",
+      "old_hash": "812a06ae0581f7b2cbf0025580440716a39506b2f3c4511f13754eff92b40b55",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DEFINE_printMemExtend": {
+      "apply_type": "OLD",
+      "old_hash": "b4d8d692afc2e76d684f030d5e726653ab27d46189f23fd24dd59e51f93d7820",
+      "new_hash": "7937a72a3d61ce68fc93e430e85fffdc8a340f6cf36e0b4560191dc84cd0c563",
+      "edit": ""
+    },
+    "DEFINE_printPostIncOperand": {
+      "apply_type": "OLD",
+      "old_hash": "f5270534ba460fe91b3b5f32d9a689437f046f97f7aba10c3e4960c9b01544fa",
+      "new_hash": "4e307c8cda062824c3f2b3fef783c5f059a9d27864ee17885b6738d5ef3b04c8",
+      "edit": ""
+    },
+    "DEFINE_printUImm12Offset": {
+      "apply_type": "OLD",
+      "old_hash": "ec7e4542129a565d36fdf56432a21390b2f9f92e34db1f1d400791022b5cc0b2",
+      "new_hash": "c9cd1eb0352f26b7849971a253706ce9e48bbc2ed3a8ad69405631ab8acbf1d3",
+      "edit": ""
+    },
+    "printAMIndexedWB": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "db56e4bb1f56913177897f46aca4e4653980d5fdb91ea6c50370ef26ecea3820",
+      "edit": ""
+    }
+  },
+  "AArch64AddressingModes.h": {
+    "\"../../MathExtras.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "c6ce14448320faf6eb6a6386c8917b014947f3ffe02d3741941e3acbb23f408d",
+      "edit": ""
+    },
+    "AArch64_AM_decodeLogicalImmediate": {
+      "apply_type": "OLD",
+      "old_hash": "ef896c6fad724ba54d369419d5151da6c97a01b849f623b005d342609e5b90c5",
+      "new_hash": "c72862e3ad437c27691a6a099837c2d520b033c2661f3c4ec068eb722e28cb8a",
+      "edit": ""
+    },
+    "AArch64_AM_encodeLogicalImmediate": {
+      "apply_type": "OLD",
+      "old_hash": "d5dbf76f6aa06d7b3544ea5b58fb76dc8460c04d04ebcd9b82042199680205f5",
+      "new_hash": "3a661f241b3dcbd2d69c66dc2800c6fa7a02f31ea37fb7a0d3884c3a28cd3452",
+      "edit": ""
+    },
+    "AArch64_AM_getArithExtendImm": {
+      "apply_type": "OLD",
+      "old_hash": "d78dc6402e60108cb5d45527fc6e3b9f43b0100947b09bf6c00ff1c605d7825d",
+      "new_hash": "23d5a52beaf030da7dde7a29431e2ce509a3f87aa4711ce5be1b7acf466ecc47",
+      "edit": ""
+    },
+    "AArch64_AM_getArithExtendType": {
+      "apply_type": "OLD",
+      "old_hash": "79d218366f4fd5764dce211aca080a7f21db0b98e822893b87ecfa3c81e0afd9",
+      "new_hash": "9929b6d7b72e9db09978ca6556a0ddd9a5beb773ebf4251807bd8d0045785ed9",
+      "edit": ""
+    },
+    "AArch64_AM_getExtendEncoding": {
+      "apply_type": "OLD",
+      "old_hash": "70ba849a78f53b4df1e524573f708df5ade8d797b84677fb3b513d3c4ba56a56",
+      "new_hash": "06fef398cebbff353bd3ed7e0c978741528ebc17fb2faae05273f522c1cf6a43",
+      "edit": ""
+    },
+    "AArch64_AM_getFPImmFloat": {
+      "apply_type": "OLD",
+      "old_hash": "b586ad814f8de6dc3b68feb12b5d78c77a7ebbbb57b9fd88e5b9fc250f2e708e",
+      "new_hash": "2ee33736e59ccd7656ca08d9f0f7c09fe4a349cc6b806b570e1796827329f520",
+      "edit": ""
+    },
+    "AArch64_AM_getMemExtendImm": {
+      "apply_type": "OLD",
+      "old_hash": "dc341c24c839f6f1f9884346266c51c21a4306a87ac72517a2b3d7bef8f78dac",
+      "new_hash": "eef076960aa9d43428ac9cb001a11a3f596864d6914a98dcbc1f67cce12df0ed",
+      "edit": ""
+    },
+    "AArch64_AM_getMemExtendType": {
+      "apply_type": "OLD",
+      "old_hash": "53b39e3e201330bf59e2c424e95d218969d70d1af6981c3ec4ede3e713b27555",
+      "new_hash": "dcda2985a41926e4e9ed5dd4c180f5116c2b29d86d77bf8e0c171ffa505023a7",
+      "edit": ""
+    },
+    "AArch64_AM_getShiftExtendName": {
+      "apply_type": "OLD",
+      "old_hash": "762c726872355e95ce675da046ec678df04912dc92b2f2843eb104724109835e",
+      "new_hash": "ec0b773e1ff6fb58959a6e504d7d4886dd7c30d727eb5b95a4832ce79bd724d1",
+      "edit": ""
+    },
+    "AArch64_AM_isAnyMOVWMovAlias": {
+      "apply_type": "OLD",
+      "old_hash": "a4543ef52921c4c2ec3431e76e2485e52ad5cd33670575ae59a03f3c426ac42f",
+      "new_hash": "f7fa4acfe992ef730d11ebfe3f9bf00de41064b6c94d8761fceee13d20c5105c",
+      "edit": ""
+    },
+    "AArch64_AM_isLogicalImmediate": {
+      "apply_type": "OLD",
+      "old_hash": "0f2526662be162f3f7b0c7e314a4cf84b9ae06765c65936066f12403faf0514c",
+      "new_hash": "a3abc022cde5c3723e90b80893f43d6ad9fa92a9377c325e6314e53c46bb7652",
+      "edit": ""
+    },
+    "AArch64_AM_isMOVNMovAlias": {
+      "apply_type": "OLD",
+      "old_hash": "590f8dd34c9350fc0060647b59eb4993229dc4efac66e4440e5e70b60cf15393",
+      "new_hash": "d6750436eb9fdeb320ef3ca7ca1553f34aba170b784478cf7d79c6ee24b105b6",
+      "edit": ""
+    },
+    "AArch64_AM_isSVEMoveMaskPreferredLogicalImmediate": {
+      "apply_type": "OLD",
+      "old_hash": "ec6d60c57c806b265b3c9fee831a3b3a4d3dbe403a11cda55f302f15f4b734b6",
+      "new_hash": "a05137869da94d50d76f322151091ead742f454e3a8983314b680f0d1f486b92",
+      "edit": ""
+    },
+    "AArch64_AM_isValidDecodeLogicalImmediate": {
+      "apply_type": "OLD",
+      "old_hash": "d71e532a582d060cb8265bee31e653a78d604cf43942e263fbc191a4e057750f",
+      "new_hash": "1db9ec299c9011cafdb6123f35ac97adc44f60ec843303ef5b3b91f299e4f9ef",
+      "edit": ""
+    },
+    "AArch64_AM_processLogicalImmediate": {
+      "apply_type": "OLD",
+      "old_hash": "730839056756a493fdae7b7f0f7681e1374df3373c8d00fe3c4660709e9eee9a",
+      "new_hash": "531e42bc693973e0b763d46ffc6569f8642e3ab1f72f84b5a2a64770a8588971",
+      "edit": ""
+    },
+    "DEFINE_isSVEMaskOfIdenticalElements": {
+      "apply_type": "OLD",
+      "old_hash": "136da6c1f5958a0dae8ed4bb4a7511636d3ec0cabfd29dedecba160ff48007cd",
+      "new_hash": "4ed16f566a1b35668328f634f4c0675eb1ebc3bb480f2e261764a99ab4f3f401",
+      "edit": ""
+    },
+    "isSVEAddSubImm": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "cf3c537cf6b72ea8ff128bb0b95addd2b79479f55ee9f93bed22085a966df803",
+      "edit": ""
+    },
+    "isSVECpyImm": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "23d609ca42d30dbf3a3b42e4fb54e9e5036946c83f2cdc1760fbbfeb55511fc3",
+      "edit": ""
+    },
+    "isSVECpyImm16": {
+      "apply_type": "OLD",
+      "old_hash": "04550dc8758c9a70231dbae547495e72ff17bd6216b3b7c305de333078dc3481",
+      "new_hash": "",
+      "edit": ""
+    },
+    "isSVECpyImm32": {
+      "apply_type": "OLD",
+      "old_hash": "ea213479980580721c4790d3071c55eb2b2f79b6ee24e8d905dde73624efcbac",
+      "new_hash": "",
+      "edit": ""
+    },
+    "isSVECpyImm64": {
+      "apply_type": "OLD",
+      "old_hash": "26524a78bc44955a08a724c105c8afe286e76e81102365b035ee0d22ceb869ad",
+      "new_hash": "",
+      "edit": ""
+    },
+    "isSVECpyImm8": {
+      "apply_type": "OLD",
+      "old_hash": "f394152c6a340e5319daf456cdc221729c58f77f4cee887d1b0fcd1129c6b412",
+      "new_hash": "",
+      "edit": ""
+    }
+  },
+  "AArch64BaseInfo.c": {
+    "AArch64SysReg_genericRegisterString": {
+      "apply_type": "OLD",
+      "old_hash": "c568ff1f3253b97f6436ea1719d842299c8ac5ff69b8bd74a8daf280a7c69072",
+      "new_hash": "",
+      "edit": ""
+    },
+    "genericRegisterString": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "55c9a893cf10f6874c06c65c53caae5ad0d5c16d0a4cdab3eeb72d05adfbfb89",
+      "edit": ""
+    },
+    "parseGenericRegister": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "6f49608c524a871409229991fbcf547dd6ec21e9d3eb2926ecbfdfcb6cf012f1",
+      "edit": ""
+    },
+    "utostr": {
+      "apply_type": "OLD",
+      "old_hash": "b6e4b77d1010b49c82b249e3ddac01d2cf88d511944bb961d4d3ba0733ebe1e2",
+      "new_hash": "",
+      "edit": ""
+    }
+  },
+  "AArch64BaseInfo.h": {
+    "\"../../MCInstPrinter.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "ea06257675896d185a423f8471328a8b98e74c260aad3e2e614d0ef48a744004",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"AArch64GenSubtargetInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "a9ff2b4e78ccc4f810493816796ab16396e5479829e90ae95718d494220d70b8",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"capstone/aarch64.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "a2d71b877312eac71a6f71c48ddb02f65fae335a08a98fb4b2e329d092f6d227",
+      "new_hash": "",
+      "edit": ""
+    },
+    "AArch64CC_getCondCodeName": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "4b848f7f5cdaa199e6404968da52860f6a2ac5abf09ac01919d2b60ea86f46ed",
+      "edit": ""
+    },
+    "AArch64CC_getInvertedCondCode": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "099124a75fb25bc0a8b43864ceb4ec2d413afde926b655f8c96b2b1ee072a0b6",
+      "edit": ""
+    },
+    "AArch64CC_getNZCVToSatisfyCondCode": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "e25191b3c4cf4aa09d082117a09248d93db5a41cf67b9f36f07b465d8dc40223",
+      "edit": ""
+    },
+    "AArch64PACKeyIDToString": {
+      "apply_type": "OLD",
+      "old_hash": "0fcca4be061abd2b271f19fc5b87a4ae8548b66d0902dce0eda6cc0bb7faa5d1",
+      "new_hash": "dbba883cef7521240431c0a5748c629680560556638d3015a76bdadf3775c168",
+      "edit": ""
+    },
+    "AArch64StringToPACKeyID": {
+      "apply_type": "OLD",
+      "old_hash": "c5b254e0c9048d8ce32d32e3d3398b30b87bfbd7e2a3705455742cc4bd9b5d1b",
+      "new_hash": "b33b9fcbadc184ed3effc264225f5f91f038d0300948f2562c3fd392e200226a",
+      "edit": ""
+    },
+    "AArch64StringToVectorLayout": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "91524ec2f25aa66b8b0a5a07d68620e9cd11cff4447966c1cb82dc757ee99423",
+      "edit": ""
+    },
+    "AArch64VectorLayoutToString": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "8a451afd56ab781b7b84c04870723fb54e47f8bc88cd64ba4256a7c5839e269d",
+      "edit": ""
+    },
+    "getNumElementsFromSVEPredPattern": {
+      "apply_type": "OLD",
+      "old_hash": "8a848a6e53011f1cb7dc2bbc3c1f86d918d8d5de7a77bc3098593d716864707d",
+      "new_hash": "786a01cf018e9e279b5220603be74872efb74cf4dcb4235fd93ea14f04f370da",
+      "edit": ""
+    },
+    "getSVEPredPatternFromNumElements": {
+      "apply_type": "OLD",
+      "old_hash": "5f13d387326039bef5ebc7234175022a5141f7d962635f79140f6c95d7f11b55",
+      "new_hash": "e11c6579ee9319eefedcc88e4b33c7935a89c5414effa4b677b0ef920eec8494",
+      "edit": ""
+    },
+    "getWRegFromXReg": {
+      "apply_type": "OLD",
+      "old_hash": "c230e2bb05163f8ae15d6bda5ad645fbed31ebe0046e371a347f1064f9c99019",
+      "new_hash": "b67948211ab096f3a541b11be2f78d9f30ffff76034558c198e991566679eb28",
+      "edit": ""
+    },
+    "getXRegFromWReg": {
+      "apply_type": "OLD",
+      "old_hash": "d3fb4dbdea7dd52ac590777ea9aee8a03f12192addcaca4dfabe4d534a5214de",
+      "new_hash": "b2475a663b67cb2ce8d5f16994c02b275582b0f0bc663afe4ff105bd6bcbb511",
+      "edit": ""
+    },
+    "getXRegFromXRegTuple": {
+      "apply_type": "OLD",
+      "old_hash": "4c1346113fe176c3418754eb1507d88eea4865ed6d27a0b9238c2ed112667062",
+      "new_hash": "b148e4b22d7b4797a64a9a818430da372d8224dee020bf5ec049c07677bff5cc",
+      "edit": ""
+    }
   }
 }

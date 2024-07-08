@@ -51,13 +51,13 @@ static void print_insn_detail(cs_insn *ins)
 		switch(op->type) {
 		default:
 			break;
-		case AArch64_OP_REG:
+		case AARCH64_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 			break;
-		case AArch64_OP_IMM:
+		case AARCH64_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 			break;
-		case AArch64_OP_FP:
+		case AARCH64_OP_FP:
 #if defined(_KERNEL_MODE)
 			// Issue #681: Windows kernel does not support formatting float point
 			printf("\t\toperands[%u].type: FP = <float_point_unsupported>\n", i);
@@ -65,11 +65,11 @@ static void print_insn_detail(cs_insn *ins)
 			printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
 #endif
 			break;
-		case AArch64_OP_MEM:
+		case AARCH64_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
-			if (op->mem.base != AArch64_REG_INVALID)
+			if (op->mem.base != AARCH64_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
-			if (op->mem.index != AArch64_REG_INVALID)
+			if (op->mem.index != AARCH64_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
 			if (op->mem.disp != 0)
 				printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
@@ -77,13 +77,13 @@ static void print_insn_detail(cs_insn *ins)
 				printf("\t\t\tpost-indexed: true\n");
 
 			break;
-		case AArch64_OP_SME_MATRIX:
+		case AARCH64_OP_SME:
 			printf("\t\toperands[%u].type: SME_MATRIX\n", i);
 			printf("\t\toperands[%u].sme.type: %d\n", i, op->sme.type);
 
-			if (op->sme.tile != AArch64_REG_INVALID)
+			if (op->sme.tile != AARCH64_REG_INVALID)
 				printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->sme.tile));
-			if (op->sme.slice_reg != AArch64_REG_INVALID)
+			if (op->sme.slice_reg != AARCH64_REG_INVALID)
 				printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.slice_reg));
 			if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
 				printf("\t\toperands[%u].sme.slice_offset: ", i);
@@ -92,100 +92,109 @@ static void print_insn_detail(cs_insn *ins)
 				else
 					printf("%d\n", op->sme.slice_offset.imm);
 			}
-			if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
+			if (op->sme.slice_reg != AARCH64_REG_INVALID || op->sme.slice_offset.imm != -1)
 				printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
 			break;
-		case AArch64_OP_CIMM:
+		case AARCH64_OP_PRED:
+			printf("\t\toperands[%u].type: PREDICATE\n", i);
+			if (op->pred.reg != AARCH64_REG_INVALID)
+				printf("\t\toperands[%u].pred.reg: %s\n", i, cs_reg_name(handle, op->pred.reg));
+			if (op->pred.vec_select != AARCH64_REG_INVALID)
+				printf("\t\toperands[%u].pred.vec_select: %s\n", i, cs_reg_name(handle, op->pred.vec_select));
+			if (op->pred.imm_index != -1)
+				printf("\t\toperands[%u].pred.imm_index: %d\n", i, op->pred.imm_index);
+			break;
+		case AARCH64_OP_CIMM:
 			printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
 			break;
-		case AArch64_OP_SYSREG:
+		case AARCH64_OP_SYSREG:
 			printf("\t\toperands[%u].type: SYS REG:\n", i);
 			switch (op->sysop.sub_type) {
 			default:
 				printf("Sub type %d not handled.\n", op->sysop.sub_type);
 				break;
-			case AArch64_OP_REG_MRS:
+			case AARCH64_OP_REG_MRS:
 				printf("\t\toperands[%u].subtype: REG_MRS = 0x%x\n", i, op->sysop.reg.sysreg);
 				break;
-			case AArch64_OP_REG_MSR:
+			case AARCH64_OP_REG_MSR:
 				printf("\t\toperands[%u].subtype: REG_MSR = 0x%x\n", i, op->sysop.reg.sysreg);
 				break;
-			case AArch64_OP_TLBI:
+			case AARCH64_OP_TLBI:
 				printf("\t\toperands[%u].subtype TLBI = 0x%x\n", i, op->sysop.reg.tlbi);
 				break;
-			case AArch64_OP_IC:
+			case AARCH64_OP_IC:
 				printf("\t\toperands[%u].subtype IC = 0x%x\n", i, op->sysop.reg.ic);
 				break;
 			}
 			break;
-		case AArch64_OP_SYSALIAS:
+		case AARCH64_OP_SYSALIAS:
 			printf("\t\toperands[%u].type: SYS ALIAS:\n", i);
 			switch (op->sysop.sub_type) {
 			default:
 				printf("Sub type %d not handled.\n", op->sysop.sub_type);
 				break;
-			case AArch64_OP_SVCR:
-				if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSM)
+			case AARCH64_OP_SVCR:
+				if(op->sysop.alias.svcr == AARCH64_SVCR_SVCRSM)
 					printf("\t\t\toperands[%u].svcr: BIT = SM\n", i);
-				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRZA)
+				else if(op->sysop.alias.svcr == AARCH64_SVCR_SVCRZA)
 					printf("\t\t\toperands[%u].svcr: BIT = ZA\n", i);
-				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSMZA)
+				else if(op->sysop.alias.svcr == AARCH64_SVCR_SVCRSMZA)
 					printf("\t\t\toperands[%u].svcr: BIT = SM & ZA\n", i);
 				break;
-			case AArch64_OP_AT:
+			case AARCH64_OP_AT:
 				printf("\t\toperands[%u].subtype AT = 0x%x\n", i, op->sysop.alias.at);
 				break;
-			case AArch64_OP_DB:
+			case AARCH64_OP_DB:
 				printf("\t\toperands[%u].subtype DB = 0x%x\n", i, op->sysop.alias.db);
 				break;
-			case AArch64_OP_DC:
+			case AARCH64_OP_DC:
 				printf("\t\toperands[%u].subtype DC = 0x%x\n", i, op->sysop.alias.dc);
 				break;
-			case AArch64_OP_ISB:
+			case AARCH64_OP_ISB:
 				printf("\t\toperands[%u].subtype ISB = 0x%x\n", i, op->sysop.alias.isb);
 				break;
-			case AArch64_OP_TSB:
+			case AARCH64_OP_TSB:
 				printf("\t\toperands[%u].subtype TSB = 0x%x\n", i, op->sysop.alias.tsb);
 				break;
-			case AArch64_OP_PRFM:
+			case AARCH64_OP_PRFM:
 				printf("\t\toperands[%u].subtype PRFM = 0x%x\n", i, op->sysop.alias.prfm);
 				break;
-			case AArch64_OP_SVEPRFM:
+			case AARCH64_OP_SVEPRFM:
 				printf("\t\toperands[%u].subtype SVEPRFM = 0x%x\n", i, op->sysop.alias.sveprfm);
 				break;
-			case AArch64_OP_RPRFM:
+			case AARCH64_OP_RPRFM:
 				printf("\t\toperands[%u].subtype RPRFM = 0x%x\n", i, op->sysop.alias.rprfm);
 				break;
-			case AArch64_OP_PSTATEIMM0_15:
+			case AARCH64_OP_PSTATEIMM0_15:
 				printf("\t\toperands[%u].subtype PSTATEIMM0_15 = 0x%x\n", i, op->sysop.alias.pstateimm0_15);
 				break;
-			case AArch64_OP_PSTATEIMM0_1:
+			case AARCH64_OP_PSTATEIMM0_1:
 				printf("\t\toperands[%u].subtype PSTATEIMM0_1 = 0x%x\n", i, op->sysop.alias.pstateimm0_1);
 				break;
-			case AArch64_OP_PSB:
+			case AARCH64_OP_PSB:
 				printf("\t\toperands[%u].subtype PSB = 0x%x\n", i, op->sysop.alias.psb);
 				break;
-			case AArch64_OP_BTI:
+			case AARCH64_OP_BTI:
 				printf("\t\toperands[%u].subtype BTI = 0x%x\n", i, op->sysop.alias.bti);
 				break;
-			case AArch64_OP_SVEPREDPAT:
+			case AARCH64_OP_SVEPREDPAT:
 				printf("\t\toperands[%u].subtype SVEPREDPAT = 0x%x\n", i, op->sysop.alias.svepredpat);
 				break;
-			case AArch64_OP_SVEVECLENSPECIFIER:
+			case AARCH64_OP_SVEVECLENSPECIFIER:
 				printf("\t\toperands[%u].subtype SVEVECLENSPECIFIER = 0x%x\n", i, op->sysop.alias.sveveclenspecifier);
 				break;
 			}
 			break;
-		case AArch64_OP_SYSIMM:
+		case AARCH64_OP_SYSIMM:
 			printf("\t\toperands[%u].type: SYS IMM:\n", i);
 			switch(op->sysop.sub_type) {
 			default:
 				printf("Sub type %d not handled.\n", op->sysop.sub_type);
 				break;
-			case AArch64_OP_EXACTFPIMM:
+			case AARCH64_OP_EXACTFPIMM:
 				printf("\t\toperands[%u].subtype EXACTFPIMM = %d\n", i, op->sysop.imm.exactfpimm);
 				break;
-			case AArch64_OP_DBNXS:
+			case AARCH64_OP_DBNXS:
 				printf("\t\toperands[%u].subtype DBNXS = %d\n", i, op->sysop.imm.dbnxs);
 				break;
 			}
@@ -207,15 +216,15 @@ static void print_insn_detail(cs_insn *ins)
 				break;
 		}
 		
-		if (op->shift.type != AArch64_SFT_INVALID &&
+		if (op->shift.type != AARCH64_SFT_INVALID &&
 			op->shift.value)
 			printf("\t\t\tShift: type = %u, value = %u\n",
 				   op->shift.type, op->shift.value);
 
-		if (op->ext != AArch64_EXT_INVALID)
+		if (op->ext != AARCH64_EXT_INVALID)
 			printf("\t\t\tExt: %u\n", op->ext);
 
-		if (op->vas != AArch64Layout_Invalid)
+		if (op->vas != AARCH64LAYOUT_INVALID)
 			printf("\t\t\tVector Arrangement Specifier: 0x%x\n", op->vas);
 
 		if (op->vector_index != -1)
@@ -333,10 +342,10 @@ static void test()
 }
 
 int test_macros() {
-	assert(CS_AARCH64(_INS_BL) == AArch64_INS_BL);
+	assert(CS_AARCH64(_INS_BL) == AARCH64_INS_BL);
 	assert(CS_AARCH64pre(CS_ARCH_) == CS_ARCH_AARCH64);
 	assert(CS_AARCH64CC(_AL) == AArch64CC_AL);
-	assert(CS_AARCH64_VL_(16B) == AArch64Layout_VL_16B);
+	assert(CS_AARCH64_VL_(16B) == AARCH64LAYOUT_VL_16B);
 	cs_detail detail = { 0 };
 	CS_cs_aarch64() aarch64_detail = { 0 };
 	detail.aarch64 = aarch64_detail;
@@ -344,9 +353,9 @@ int test_macros() {
 	detail.CS_aarch64_.operands[0] = op;
 	CS_aarch64_reg() reg = 1;
 	CS_aarch64_cc() cc = AArch64CC_AL;
-	CS_aarch64_extender() aarch64_extender = AArch64_EXT_SXTB;
-	CS_aarch64_shifter() aarch64_shifter = AArch64_SFT_LSL;
-	CS_aarch64_vas() aarch64_vas = AArch64Layout_VL_16B;
+	CS_aarch64_extender() aarch64_extender = AARCH64_EXT_SXTB;
+	CS_aarch64_shifter() aarch64_shifter = AARCH64_SFT_LSL;
+	CS_aarch64_vas() aarch64_vas = AARCH64LAYOUT_VL_16B;
 	// Do something with them to prevent compiler warnings.
 	return reg + cc + aarch64_extender + aarch64_shifter + aarch64_vas + detail.aarch64.cc;
 

@@ -208,7 +208,11 @@ class Differ:
     cur_nid: str = None
 
     def __init__(
-        self, configurator: Configurator, no_auto_apply: bool, testing: bool = False
+        self,
+        configurator: Configurator,
+        no_auto_apply: bool,
+        testing: bool = False,
+        check_saved: bool = False,
     ):
         self.configurator = configurator
         self.no_auto_apply = no_auto_apply
@@ -219,6 +223,7 @@ class Differ:
         self.parser = self.configurator.get_parser()
         self.differ = dl.Differ()
         self.testing = testing
+        self.check_saved = check_saved
 
         self.diff_out_dir = get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}")
         if self.testing:
@@ -247,6 +252,9 @@ class Differ:
                 for sp in self.conf_arch["files_to_translate"]
             ]
             self.load_persistence_file()
+        if check_saved:
+            self.check_saved_patches()
+            print("Save file is up-to-date.")
 
     def load_persistence_file(self) -> None:
         if self.testing:
@@ -269,6 +277,7 @@ class Differ:
                 exit(1)
 
     def save_to_persistence_file(self) -> None:
+        print("\nSave choices...\n")
         with open(self.persistence_filepath, "w") as f:
             json.dump(self.saved_patches, f, indent=2)
 
@@ -758,6 +767,7 @@ class Differ:
                 old_filepath, new_file[k]["nodes"], old_file[k]["nodes"]
             )
         self.patch_files(patches)
+        self.save_to_persistence_file()
         log.info("Done")
 
     def patch_files(self, file_patches: dict[Path, list[Patch]]) -> None:
@@ -817,6 +827,81 @@ class Differ:
             "// Edit the file to your liking. The result will be written 'as is' to the source file.\n"
         ).encode()
 
+    def check_saved_patches(self):
+        new_file = dict()
+        old_file = dict()
+        i = 0
+        for old_filepath, new_filepath in zip(self.old_files, self.translated_files):
+            new_file[i] = {
+                "filepath": new_filepath,
+                "nodes": self.parse_file(new_filepath),
+            }
+            old_file[i] = {
+                "filepath": old_filepath,
+                "nodes": self.parse_file(old_filepath),
+            }
+            i += 1
+
+        # diff each file
+        for k in range(i):
+            old_filepath = old_file[k]["filepath"]
+            diffs_to_process = max(len(new_file[k]["nodes"]), len(old_file[k]["nodes"]))
+            if diffs_to_process == 0:
+                continue
+            filename, node_id = self.all_choices_saved(
+                old_filepath, new_file[k]["nodes"], old_file[k]["nodes"]
+            )
+            if filename or node_id:
+                print(
+                    f"{get_path('{DIFFER_PERSISTENCE_FILE}').name} is not up-to-date!\n"
+                    f"{filename} still requires a user decision for node {node_id}.\n"
+                    f"If the file is good as it is, "
+                    f"commit any changes to it and run the Differ again and choose 'O' to save them."
+                )
+                exit(1)
+
+    def all_choices_saved(
+        self, old_filepath, new_nodes, old_nodes
+    ) -> tuple[str, str] | tuple[None, None]:
+        """Returns the a (filename, node_id) which is not saved in the save file. Or None, if everything is ok."""
+        if old_filepath.name not in self.saved_patches:
+            return old_filepath.name, None
+
+        new_nodes = {
+            k: v
+            for k, v in sorted(
+                new_nodes.items(), key=lambda item: item[1].start_byte, reverse=True
+            )
+        }
+        old_nodes = {
+            k: v
+            for k, v in sorted(
+                old_nodes.items(), key=lambda item: item[1].start_byte, reverse=True
+            )
+        }
+
+        # Collect all node ids of this file
+        node_ids = set()
+        for new_node_id, old_node_id in zip(new_nodes.keys(), old_nodes.keys()):
+            node_ids.add(new_node_id)
+            node_ids.add(old_node_id)
+
+        for self.cur_nid in node_ids:
+            self.cur_new_node = (
+                None if self.cur_nid not in new_nodes else new_nodes[self.cur_nid]
+            )
+            self.cur_old_node = (
+                None if self.cur_nid not in old_nodes else old_nodes[self.cur_nid]
+            )
+            if (
+                old_filepath.name in self.saved_patches
+                and self.cur_nid in self.saved_patches[old_filepath.name]
+            ):
+                saved = self.saved_patches[old_filepath.name][self.cur_nid]
+                if not self.saved_patch_matches(saved):
+                    return old_filepath.name, self.cur_nid
+        return None, None
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -833,7 +918,7 @@ def parse_args() -> argparse.Namespace:
         "-a",
         dest="arch",
         help="Name of target architecture (ignored with -t option)",
-        choices=["ARM", "PPC, AArch64", "Alpha"],
+        choices=["ARM", "PPC", "AArch64", "Alpha"],
         required=True,
     )
     parser.add_argument(
@@ -845,6 +930,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "-t", dest="testing", help="Run with test configuration.", action="store_true"
+    )
+    parser.add_argument(
+        "--check_saved",
+        dest="check_saved",
+        help=f"Check if patches in {get_path('{DIFFER_PERSISTENCE_FILE}')} is up-to-date.",
+        action="store_true",
     )
     arguments = parser.parse_args()
     return arguments
@@ -865,11 +956,14 @@ if __name__ == "__main__":
     else:
         cfg = Configurator(args.arch, get_path("{CPP_TRANSLATOR_CONFIG}"))
 
-    differ = Differ(cfg, args.no_auto_apply, testing=args.testing)
+    differ = Differ(
+        cfg, args.no_auto_apply, testing=args.testing, check_saved=args.check_saved
+    )
+    if args.check_saved:
+        exit(0)
+
     try:
         differ.diff()
     except Exception as e:
-        raise e
-    finally:
-        print("\nSave choices...\n")
         differ.save_to_persistence_file()
+        raise e

@@ -1,0 +1,25 @@
+# CS_ARCH_AARCH64, None, None
+0x6420c000 == z0.s, z0.b, z0.b[0]
+0x6428cdb7 == z23.s, z13.b, z0.b[7]
+0x643fcfff == z31.s, z31.b, z7.b[15]
+0x64208800 == z0.s, z0.b, z0.b
+0x642889b7 == z23.s, z13.b, z8.b
+0x643f8bff == z31.s, z31.b, z31.b
+0x6460c000 == z0.s, z0.b, z0.b[0]
+0x6468cdb7 == z23.s, z13.b, z0.b[7]
+0x647fcfff == z31.s, z31.b, z7.b[15]
+0x64209800 == z0.s, z0.b, z0.b
+0x642899b7 == z23.s, z13.b, z8.b
+0x643f9bff == z31.s, z31.b, z31.b
+0x64a0c000 == z0.s, z0.b, z0.b[0]
+0x64a8cdb7 == z23.s, z13.b, z0.b[7]
+0x64bfcfff == z31.s, z31.b, z7.b[15]
+0x6420a800 == z0.s, z0.b, z0.b
+0x6428a9b7 == z23.s, z13.b, z8.b
+0x643fabff == z31.s, z31.b, z31.b
+0x64e0c000 == z0.s, z0.b, z0.b[0]
+0x64e8cdb7 == z23.s, z13.b, z0.b[7]
+0x64ffcfff == z31.s, z31.b, z7.b[15]
+0x6420b800 == z0.s, z0.b, z0.b
+0x6428b9b7 == z23.s, z13.b, z8.b
+0x643fbbff == z31.s, z31.b, z31.b

@@ -160,10 +160,13 @@ def test_file(fname):
             with fpath.open('wb') as fout:
                 if (arch, mode) not in mc_modes:
                     print("fail", arch, mode)
+                if mode == "None":
+                    mode = "0"
                 fout.write(mc_modes[(arch, mode)].to_bytes(1, 'little'))
                 fout.write(hex_data)
         except Exception as e:
             print(f"skipping: {hex_code} with: {e}")
+            continue
 
 
 if __name__ == '__main__':

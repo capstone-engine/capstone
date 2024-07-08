@@ -39,3 +39,10 @@ int MCOperandInfo_getOperandConstraint(const MCInstrDesc *InstrDesc,
 	}
 	return -1;
 }
+
+/// Returns the instruction description for the given MCInst opcode.
+/// Function should be called like:
+/// MCInstrDesc_get(MCInst_getOpcode(MI), ARCHInstDesc, ARR_SIZE(ARCHInstDesc));
+const MCInstrDesc *MCInstrDesc_get(unsigned opcode, const MCInstrDesc *table, unsigned tbl_size) {
+	return &table[tbl_size - 1 - opcode];
+}

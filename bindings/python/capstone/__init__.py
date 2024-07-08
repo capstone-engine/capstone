@@ -168,6 +168,8 @@ __all__ = [
     'CS_OP_RESERVED_15',
     'CS_OP_SPECIAL',
     'CS_OP_MEM',
+    'CS_OP_MEM_REG',
+    'CS_OP_MEM_IMM',
 
     'CS_GRP_INVALID',
     'CS_GRP_JUMP',
@@ -186,6 +188,8 @@ __all__ = [
 
     '__version__',
 ]
+
+UINT16_MAX = 0xffff
 
 # Capstone C interface
 
@@ -326,6 +330,8 @@ CS_OP_RESERVED_14 = 14
 CS_OP_RESERVED_15 = 15
 CS_OP_SPECIAL = 0x10  # Special operands from archs
 CS_OP_MEM = 0x80  # Memory operand. Can be ORed with another operand type.
+CS_OP_MEM_REG = CS_OP_MEM | CS_OP_IMM,
+CS_OP_MEM_IMM = CS_OP_MEM | CS_OP_IMM,
 
 # Common instruction groups - to be consistent across all architectures.
 CS_GRP_INVALID = 0  # uninitialized/invalid group.

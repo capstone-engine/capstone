@@ -55,7 +55,7 @@
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
-inline static unsigned getWRegFromXReg(unsigned Reg)
+static inline unsigned getWRegFromXReg(unsigned Reg)
 {
 	switch (Reg) {
 	case AArch64_X0:
@@ -129,7 +129,7 @@ inline static unsigned getWRegFromXReg(unsigned Reg)
 	return Reg;
 }
 
-inline static unsigned getXRegFromWReg(unsigned Reg)
+static inline unsigned getXRegFromWReg(unsigned Reg)
 {
 	switch (Reg) {
 	case AArch64_W0:
@@ -203,7 +203,7 @@ inline static unsigned getXRegFromWReg(unsigned Reg)
 	return Reg;
 }
 
-inline static unsigned getXRegFromXRegTuple(unsigned RegTuple)
+static inline unsigned getXRegFromXRegTuple(unsigned RegTuple)
 {
 	switch (RegTuple) {
 	case AArch64_X0_X1_X2_X3_X4_X5_X6_X7:
@@ -459,7 +459,10 @@ static inline bool atomicBarrierDroppedOnZero(unsigned Opcode)
 	return false;
 }
 
-// AArch64CC namespace moved to main header aarch64.h
+// MOVE-NOTICE: AArch64CC_CondCode : moved to aarch64.h
+// MOVE-NOTICE: AArch64CC_getCondCodeName : moved to aarch64.h
+// MOVE-NOTICE: AArch64CC_getInvertedCondCode : moved to aarch64.h
+// MOVE-NOTICE: AArch64CC_getNZCVToSatisfyCondCode : moved to aarch64.h
 
 typedef struct SysAlias {
 	const char *Name;
@@ -489,6 +492,7 @@ typedef struct SysAliasImm {
 #define AArch64SVCR_SVCR SysAlias
 
 #define GET_SVCR_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64SVCR
@@ -498,6 +502,7 @@ typedef struct SysAliasImm {
 #define AArch64AT_AT SysAlias
 
 #define GET_AT_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64AT
@@ -507,6 +512,7 @@ typedef struct SysAliasImm {
 #define AArch64DB_DB SysAlias
 
 #define GET_DB_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64DB
@@ -516,6 +522,7 @@ typedef struct SysAliasImm {
 #define AArch64DBnXS_DBnXS SysAliasImm
 
 #define GET_DBNXS_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64DBnXS
@@ -525,6 +532,7 @@ typedef struct SysAliasImm {
 #define AArch64DC_DC SysAlias
 
 #define GET_DC_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64DC
@@ -534,6 +542,7 @@ typedef struct SysAliasImm {
 #define AArch64IC_IC SysAliasReg
 
 #define GET_IC_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64IC
@@ -543,6 +552,7 @@ typedef struct SysAliasImm {
 #define AArch64ISB_ISB SysAlias
 
 #define GET_ISB_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64ISB
@@ -552,6 +562,7 @@ typedef struct SysAliasImm {
 #define AArch64TSB_TSB SysAlias
 
 #define GET_TSB_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64TSB
@@ -561,6 +572,7 @@ typedef struct SysAliasImm {
 #define AArch64PRFM_PRFM SysAlias
 
 #define GET_PRFM_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64PRFM
@@ -570,6 +582,7 @@ typedef struct SysAliasImm {
 #define AArch64SVEPRFM_SVEPRFM SysAlias
 
 #define GET_SVEPRFM_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64SVEPRFM
@@ -579,6 +592,7 @@ typedef struct SysAliasImm {
 #define AArch64RPRFM_RPRFM SysAlias
 
 #define GET_RPRFM_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64RPRFM
@@ -592,6 +606,7 @@ typedef struct SVEPREDPAT {
 } AArch64SVEPredPattern_SVEPREDPAT;
 
 #define GET_SVEPREDPAT_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64SVEPredPattern
@@ -605,11 +620,72 @@ typedef struct SVEVECLENSPECIFIER {
 } AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER;
 
 #define GET_SVEVECLENSPECIFIER_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64SVEVecLenSpecifier
 
+// namespace AArch64SVEVecLenSpecifier
+
+/// Return the number of active elements for VL1 to VL256 predicate pattern,
+/// zero for all other patterns.
+static inline unsigned getNumElementsFromSVEPredPattern(unsigned Pattern)
+{
+	switch (Pattern) {
+	default:
+		return 0;
+	case AARCH64_SVEPREDPAT_VL1:
+	case AARCH64_SVEPREDPAT_VL2:
+	case AARCH64_SVEPREDPAT_VL3:
+	case AARCH64_SVEPREDPAT_VL4:
+	case AARCH64_SVEPREDPAT_VL5:
+	case AARCH64_SVEPREDPAT_VL6:
+	case AARCH64_SVEPREDPAT_VL7:
+	case AARCH64_SVEPREDPAT_VL8:
+		return Pattern;
+	case AARCH64_SVEPREDPAT_VL16:
+		return 16;
+	case AARCH64_SVEPREDPAT_VL32:
+		return 32;
+	case AARCH64_SVEPREDPAT_VL64:
+		return 64;
+	case AARCH64_SVEPREDPAT_VL128:
+		return 128;
+	case AARCH64_SVEPREDPAT_VL256:
+		return 256;
+	}
+}
+
+/// Return specific VL predicate pattern based on the number of elements.
+static inline unsigned getSVEPredPatternFromNumElements(unsigned MinNumElts)
+{
+	switch (MinNumElts) {
+	default:
+		return 0;
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+		return MinNumElts;
+	case 16:
+		return AARCH64_SVEPREDPAT_VL16;
+	case 32:
+		return AARCH64_SVEPREDPAT_VL32;
+	case 64:
+		return AARCH64_SVEPREDPAT_VL64;
+	case 128:
+		return AARCH64_SVEPREDPAT_VL128;
+	case 256:
+		return AARCH64_SVEPREDPAT_VL256;
+	}
+}
+
 // CS namespace begin: AArch64ExactFPImm
+
 typedef struct ExactFPImm {
 	const char *Name;
 	aarch64_sysop_imm SysImm;
@@ -618,13 +694,14 @@ typedef struct ExactFPImm {
 } AArch64ExactFPImm_ExactFPImm;
 
 enum {
-	AArch64ExactFPImm_half = 0,
-	AArch64ExactFPImm_one = 1,
-	AArch64ExactFPImm_two = 2,
-	AArch64ExactFPImm_zero = 3,
+	AArch64ExactFPImm_half = 1,
+	AArch64ExactFPImm_one = 2,
+	AArch64ExactFPImm_two = 3,
+	AArch64ExactFPImm_zero = 0,
 };
 
 #define GET_EXACTFPIMM_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64ExactFPImm
@@ -634,11 +711,13 @@ enum {
 #define AArch64PState_PStateImm0_15 SysAlias
 
 #define GET_PSTATEIMM0_15_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 #define AArch64PState_PStateImm0_1 SysAlias
 
 #define GET_PSTATEIMM0_1_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64PState
@@ -648,6 +727,7 @@ enum {
 #define AArch64PSBHint_PSB SysAlias
 
 #define GET_PSB_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64PSBHint
@@ -657,6 +737,7 @@ enum {
 #define AArch64BTIHint_BTI SysAlias
 
 #define GET_BTI_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64BTIHint
@@ -686,7 +767,9 @@ typedef enum ShiftExtSpecifiers {
 
 // CS namespace begin: AArch64Layout
 
-// Vector layout move to aarch64.h
+// MOVE_NOTICE: AArch64Layout_VectorLayout - move to aarch64.h
+// MOVE_NOTICE: AArch64VectorLayoutToString - move to aarch64.h
+// MOVE_NOTICE: AArch64StringToVectorLayout - move to aarch64.h
 
 // CS namespace end: AArch64Layout
 
@@ -704,10 +787,12 @@ typedef struct SysReg {
 } AArch64SysReg_SysReg;
 
 #define GET_SYSREG_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByName(const char *Name);
-const AArch64SysReg_SysReg *AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
+const AArch64SysReg_SysReg *
+AArch64SysReg_lookupSysRegByEncoding(uint16_t Encoding);
 #define AARCH64_GRS_LEN 128
 void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result);
 
@@ -718,6 +803,7 @@ void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result);
 #define AArch64TLBI_TLBI SysAliasReg
 
 #define GET_TLBITable_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64TLBI
@@ -727,6 +813,7 @@ void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result);
 #define AArch64PRCTX_PRCTX SysAliasReg
 
 #define GET_PRCTX_DECL
+
 #include "AArch64GenSystemOperands.inc"
 
 // CS namespace end: AArch64PRCTX
@@ -815,19 +902,22 @@ typedef enum TOF {
 	/// an LDG instruction to obtain the tag value.
 	AArch64II_MO_TAGGED = 0x400,
 
-	/// MO_DLLIMPORTAUX - Symbol refers to "auxiliary" import stub. On
-	/// Arm64EC, there are two kinds of import stubs used for DLL import of
-	/// functions: MO_DLLIMPORT refers to natively callable Arm64 code, and
-	/// MO_DLLIMPORTAUX refers to the original address which can be compared
-	/// for equality.
-	AArch64II_MO_DLLIMPORTAUX = 0x800,
+	/// MO_ARM64EC_CALLMANGLE - Operand refers to the Arm64EC-mangled version
+	/// of a symbol, not the original. For dllimport symbols, this means it
+	/// uses "__imp_aux".  For other symbols, this means it uses the mangled
+	/// ("#" prefix for C) name.
+	AArch64II_MO_ARM64EC_CALLMANGLE = 0x800,
 } AArch64II_TOF;
+
+// CS namespace end: AArch64II
 
 // end namespace AArch64II
 
 //===----------------------------------------------------------------------===//
 // v8.3a Pointer Authentication
 //
+
+// CS namespace begin: AArch64PACKey
 
 typedef enum ID {
 	AArch64PACKey_IA = 0,
@@ -837,10 +927,12 @@ typedef enum ID {
 	AArch64PACKey_LAST = AArch64PACKey_DB
 } AArch64PACKey_ID;
 
+// CS namespace end: AArch64PACKey
+
 // namespace AArch64PACKey
 
 /// Return 2-letter identifier string for numeric key ID.
-inline static const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
+static inline const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 {
 	switch (KeyID) {
 	case AArch64PACKey_IA:
@@ -856,8 +948,7 @@ inline static const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 }
 
 /// Return numeric key ID for 2-letter identifier string.
-inline static AArch64PACKey_ID
-AArch64StringToPACKeyID(const char *Name)
+static inline AArch64PACKey_ID AArch64StringToPACKeyID(const char *Name)
 {
 	if (strcmp(Name, "ia") == 0)
 		return AArch64PACKey_IA;
@@ -870,6 +961,21 @@ AArch64StringToPACKeyID(const char *Name)
 	assert(0 && "Invalid PAC key");
 	return AArch64PACKey_LAST;
 }
+
+// CS namespace begin: AArch64
+
+// The number of bits in a SVE register is architecturally defined
+// to be a multiple of this value.  If <M x t> has this number of bits,
+// a <n x M x t> vector can be stored in a SVE register without any
+// redundant bits.  If <M x t> has this number of bits divided by P,
+// a <n x M x t> vector is stored in a SVE register by placing index i
+// in index i*P of a <n x (M*P) x t> vector.  The other elements of the
+// <n x (M*P) x t> vector (such as index 1) are undefined.
+static const unsigned SVEBitsPerBlock = 128;
+
+static const unsigned SVEMaxBitsPerVector = 2048;
+
+// CS namespace end: AArch64
 
 // end namespace AArch64
 // end namespace llvm

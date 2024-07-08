@@ -2,7 +2,7 @@
 
 Input files used to test instructions of architectures and modes.
 
-The test cases are taken from `llvm/test/MC`. Note that the LLVM tests
+The test cases are taken from `llvm/test/MC`. Note that most of the LLVM tests
 are for **encoding** of instructions (`asm_string -> bytes`).
 
 We test the decoding (`bytes -> asm_string`).
@@ -15,15 +15,7 @@ against `llvm-objdump`.
 
 ### Update test files
 
-Run the update script with the paths to LLVM's `MC` test directories
-
-```
-cd capstone/suite/MC
-./Update.py -a <ARCH> -d llvm-project/llvm/test/MC
-./Update.py -a <ARCH> -d llvm-project/llvm/test/MC/Disassembler
-```
-
-You can update more fine grained. Check the help to get the possible options.
+Check `suite/auto-sync/README.md`
 
 ### Test file formatting
 

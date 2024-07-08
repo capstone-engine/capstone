@@ -20,11 +20,15 @@ from autosync.Helper import check_py_version, convert_loglevel, fail_exit, get_p
 
 from autosync.IncGenerator import IncGenerator
 
+from autosync.MCUpdater import MCUpdater
+
 
 class USteps(StrEnum):
     INC_GEN = "IncGen"
     TRANS = "Translate"
     DIFF = "Diff"
+    MC = "MCUpdate"
+    PATCH_HEADER = "PatchArchHeader"
     ALL = "All"
 
 
@@ -50,7 +54,13 @@ class ASUpdater:
         self.inc_list = inc_list
         self.wait_for_user = wait_for_user
         if USteps.ALL in steps:
-            self.steps = [USteps.INC_GEN, USteps.TRANS, USteps.DIFF]
+            self.steps = [
+                USteps.INC_GEN,
+                USteps.TRANS,
+                USteps.DIFF,
+                USteps.MC,
+                USteps.PATCH_HEADER,
+            ]
         else:
             self.steps = steps
         self.refactor = refactor
@@ -61,6 +71,9 @@ class ASUpdater:
         self.inc_generator = IncGenerator(
             self.arch,
             self.inc_list,
+        )
+        self.mc_updater = MCUpdater(
+            self.arch, get_path("{LLVM_MC_TEST_DIR}"), None, None
         )
 
     def clean_build_dir(self) -> None:
@@ -144,19 +157,48 @@ class ASUpdater:
     def update(self) -> None:
         if USteps.INC_GEN in self.steps:
             self.inc_generator.generate()
-            # Runtime for large files is huge
-            # Use helper clang-format
-            # self.run_clang_format(self.conf["build_dir_path"].joinpath(C_INC_OUT_DIR))
-            patched = self.patch_main_header()
-            for file in get_path("{C_INC_OUT_DIR}").iterdir():
-                if file in patched:
-                    continue
-                self.copy_files(file, self.arch_dir)
+        if USteps.PATCH_HEADER in self.steps:
+            if self.write:
+                patched = self.patch_main_header()
+                log.info(f"Patched {len(patched)} .inc files into the main header.")
+            else:
+                log.info("Patching the main header requires the -w flag.")
         if USteps.TRANS in self.steps:
             self.translate()
         if USteps.DIFF in self.steps:
             self.diff()
-        # Write files
+        if USteps.MC in self.steps:
+            self.mc_updater.gen_all()
+        if self.write:
+            # Copy .inc files
+            log.info(f"Copy .inc files to {self.arch_dir}")
+            i = 0
+            arch_header = get_path("{CS_INCLUDE_DIR}").joinpath(
+                f"{self.arch.lower()}.h"
+            )
+            for file in get_path("{C_INC_OUT_DIR}").iterdir():
+                if HeaderPatcher.file_in_main_header(arch_header, file.name):
+                    continue
+                self.copy_files(file, self.arch_dir)
+                i += 1
+            log.info(f"Copied {i} files")
+
+            i = 0
+            # Diffed files
+            log.info(f"Copy diffed files to {self.arch_dir}")
+            for file in get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}").iterdir():
+                self.copy_files(file, self.arch_dir)
+                i += 1
+            log.info(f"Copied {i} files")
+
+            # MC tests
+            mc_dir = get_path("{MC_DIR}").joinpath(self.arch)
+            log.info(f"Copy MC test files to {mc_dir}")
+            for file in get_path("{MCUPDATER_OUT_DIR}").iterdir():
+                self.copy_files(file, mc_dir)
+                i += 1
+            log.info(f"Copied {i} files")
+
         exit(0)
 
 
@@ -206,9 +248,10 @@ def parse_args() -> argparse.Namespace:
             "IncGen",
             "Translate",
             "Diff",
+            "MCUpdate",
+            "PatchArchHeader",
         ],
         nargs="+",
-        type=USteps,
         default=["All"],
     )
     parser.add_argument(
@@ -253,6 +296,7 @@ if __name__ == "__main__":
         level=convert_loglevel(args.verbosity),
         stream=sys.stdout,
         format="%(levelname)-5s - %(message)s",
+        force=True,
     )
 
     Updater = ASUpdater(

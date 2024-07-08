@@ -84,7 +84,7 @@ class AddCSDetail(Patch):
         self, src: bytes, fcn_def: Node, fcn_id: bytes, params: bytes
     ) -> bytes:
         op_group_enum = (
-            self.arch.encode("utf8").upper() + b"_OP_GROUP_" + fcn_id[5:].upper()
+            self.arch.encode("utf8") + b"_OP_GROUP_" + fcn_id[5:]
         )  # Remove "print" from function id
 
         is_template = fcn_def.prev_sibling.type == "template_parameter_list"
@@ -105,7 +105,7 @@ class AddCSDetail(Patch):
                 + op_num_var_name
                 + b");"
             )
-        elif op_group_enum == b"ARM_OP_GROUP_REGIMMSHIFT":
+        elif op_group_enum == b"ARM_OP_GROUP_RegImmShift":
             return b"add_cs_detail(MI, " + op_group_enum + b", ShOpc, ShImm);"
         elif is_template and op_num_var_name in params:
             mcinst_var = get_MCInst_var_name(src, fcn_def)
