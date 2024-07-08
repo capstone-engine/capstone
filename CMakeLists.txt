@@ -907,18 +907,18 @@ if(CAPSTONE_BUILD_CSTEST)
     find_library(libyaml yaml REQUIRED)
     ExternalProject_Add(cmocka_ext
         PREFIX extern
-        GIT_REPOSITORY "https://git.cryptomilk.org/projects/cmocka.git"
-        GIT_TAG "origin/stable-1.1"
-        GIT_SHALLOW true
+        URL "https://cmocka.org/files/1.1/cmocka-1.1.7.tar.xz"
+        URL_HASH SHA256=810570eb0b8d64804331f82b29ff47c790ce9cd6b163e98d47a4807047ecad82
+        DOWNLOAD_EXTRACT_TIMESTAMP true
         CONFIGURE_COMMAND cmake -DBUILD_SHARED_LIBS=OFF ../cmocka_ext/
         BUILD_COMMAND cmake --build . --config Release
         INSTALL_COMMAND ""
     )
     ExternalProject_Add(libcyaml_ext
         PREFIX extern
-        GIT_REPOSITORY "https://github.com/tlsa/libcyaml.git"
-        GIT_TAG "v1.4.1"
-        GIT_SHALLOW true
+        URL "https://github.com/tlsa/libcyaml/archive/refs/tags/v1.4.1.tar.gz"
+        URL_HASH SHA256=8dbd216e1fce90f9f7cca341e5178710adc76ee360a7793ef867edb28f3e4130
+        DOWNLOAD_EXTRACT_TIMESTAMP true
         CONFIGURE_COMMAND ""
         BUILD_COMMAND make
         BUILD_IN_SOURCE true
