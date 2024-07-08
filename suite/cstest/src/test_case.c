@@ -189,16 +189,15 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 
 		// Not mandatory fields. If not initialized they should still match.
 		if (expec_data->id != 0) {
-			assert_int_equal(expec_data->id, insns[i].id);
+			assert_int_equal(insns[i].id, expec_data->id);
 		}
-		assert_int_equal(expec_data->is_alias, insns[i].is_alias);
-		assert_int_equal(expec_data->alias_id, insns[i].alias_id);
+		assert_int_equal(insns[i].is_alias, expec_data->is_alias);
+		assert_int_equal(insns[i].alias_id, expec_data->alias_id);
 		if (expec_data->mnemonic) {
-			assert_string_equal(expec_data->mnemonic,
-					    insns[i].mnemonic);
+			assert_string_equal(insns[i].mnemonic, expec_data->mnemonic);
 		}
 		if (expec_data->op_str) {
-			assert_string_equal(expec_data->op_str, insns[i].op_str);
+			assert_string_equal(insns[i].op_str, expec_data->op_str);
 		}
 		// TODO: details
 	}
