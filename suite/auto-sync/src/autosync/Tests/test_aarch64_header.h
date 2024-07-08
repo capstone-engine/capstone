@@ -30,6 +30,13 @@ typedef enum aarch64_op_type {
 	AArch64_OP_SYSALIASIII, // Comment
 } aarch64_op_type;
 
+typedef enum aarch64_op_type_upper {
+	AARCH64_OP_SYSALIAS = CS_OP_SPECIAL + 27, // Equal                      Equal
+	AARCH64_OP_SYSALIASI,
+	AARCH64_OP_SYSALIASII = 0,
+	AARCH64_OP_SYSALIASIII, // Comment
+} aarch64_op_type_upper;
+
 #define MAX_AARCH64_OPS 8
 
 /// Instruction structure

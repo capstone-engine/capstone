@@ -34,6 +34,13 @@ class AArch64OpSme(ctypes.Structure):
         ('is_vertical', ctypes.c_bool),
     )
 
+class AArch64OpPred(ctypes.Structure):
+    _fileds_ = (
+        ('reg', ctypes.c_uint),
+        ('vec_select', ctypes.c_uint),
+        ('imm_index', ctypes.c_int),
+    )
+
 class AArch64OpShift(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
@@ -91,6 +98,7 @@ class AArch64OpValue(ctypes.Union):
         ('mem', AArch64OpMem),
         ('sysop', AArch64SysOp),
         ('sme', AArch64OpSme),
+        ('pred', AArch64OpPred),
     )
 
 class AArch64Op(ctypes.Structure):
@@ -100,6 +108,7 @@ class AArch64Op(ctypes.Structure):
         ('shift', AArch64OpShift),
         ('ext', ctypes.c_uint),
         ('type', ctypes.c_uint),
+        ('is_vreg', ctypes.c_bool),
         ('value', AArch64OpValue),
         ('access', ctypes.c_uint8),
         ('is_list_member', ctypes.c_bool),

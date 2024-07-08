@@ -204,3 +204,43 @@
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef] ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r1 ; operands[1].mem.disp: 0x3ef ; operands[1].access: READ ; Code condition: 8 ; Registers read: cpsr r1 ; Registers modified: r15 ; Groups: IsARM jump
 
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xc0,0x08,0x9f,0xe0 == ld1w {za0h.s[w12, 0]}, p2/z, [x6] ; op_count: 3 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za0.s ; operands[0].sme.slice_reg: w12 ; operands[0].sme.slice_offset: 0 ; operands[0].sme.is_vertical: false ; operands[0].access: WRITE ; operands[0].vas: 0x20 ; operands[1].type: PREDICATE ; operands[1].pred.reg: p2 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = x6 ; operands[2].access: READ ; Registers read: w12 p2 x6 ; Registers modified: za0.s ; Groups: HasSME
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x41,0x31,0xa2,0xe0 == st1w {za0h.s[w13, 1]}, p4, [x10, x2, lsl #2] ; op_count: 3 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za0.s ; operands[0].sme.slice_reg: w13 ; operands[0].sme.slice_offset: 1 ; operands[0].sme.is_vertical: false ; operands[0].access: READ ; operands[0].vas: 0x20 ; operands[1].type: PREDICATE ; operands[1].pred.reg: p4 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = x10 ; operands[2].mem.index: REG = x2 ; operands[2].access: WRITE ; Shift: type = 1, value = 2 ; Registers read: za0.s w13 p4 x10 x2 ; Groups: HasSME
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x67,0x44,0x71,0x25 == psel p7, p1, p3.s[w13, 1] ; op_count: 3 ; operands[0].type: PREDICATE ; operands[0].pred.reg: p7 ; operands[0].access: WRITE ; operands[1].type: PREDICATE ; operands[1].pred.reg: p1 ; operands[1].access: READ ; operands[2].type: PREDICATE ; operands[2].pred.reg: p3 ; operands[2].pred.vec_select: w13 ; operands[2].pred.imm_index: 1 ; operands[2].access: READ ; operands[2].vas: 0x20 ; Registers read: p1 p3 w13 ; Registers modified: p7 ; Groups: HasSVE2p1_or_HasSME
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x7f,0x47,0x03,0xd5 == smstart ; Code-condition: 16 ; Groups: privilege
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x55,0x00,0x08,0xc0 == zero {za0.h} ; op_count: 1 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 1 ; operands[0].sme.tile: za0.h ; operands[0].access: WRITE ; operands[0].vas: 0x10 ; Code-condition: 16 ; Registers modified: za0.h ; Groups: HasSME
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x02,0xf8,0x55,0xc1 == sdot za.s[w11, 2, vgx4], { z0.h - z3.h }, z5.h[2] ; op_count: 6 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za ; operands[0].sme.slice_reg: w11 ; operands[0].sme.slice_offset: 2 ; operands[0].sme.is_vertical: false ; operands[0].access: READ | WRITE ; operands[0].vas: 0x20 ; operands[1].type: REG = z0 ; operands[1].is_list_member: true ; operands[1].access: READ ; operands[1].vas: 0x10 ; operands[2].type: REG = z1 ; operands[2].is_list_member: true ; operands[2].access: READ ; operands[2].vas: 0x10 ; operands[3].type: REG = z2 ; operands[3].is_list_member: true ; operands[3].access: READ ; operands[3].vas: 0x10 ; operands[4].type: REG = z3 ; operands[4].is_list_member: true ; operands[4].access: READ ; operands[4].vas: 0x10 ; operands[5].type: REG = z5 ; operands[5].access: READ ; operands[5].vas: 0x10 ; operands[5].vector_index: 2 ; Write-back: True ; Code-condition: 16 ; Registers read: za w11 z0 z1 z2 z3 z5 ; Registers modified: za ; Groups: HasSME2
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0xa4,0x0e,0x06,0xc0 == movaz { z4.d - z7.d }, za.d[w8, 5, vgx4] ; op_count: 5 ; operands[0].type: REG = z4 ; operands[0].is_list_member: true ; operands[0].access: WRITE ; operands[0].vas: 0x40 ; operands[1].type: REG = z5 ; operands[1].is_list_member: true ; operands[1].access: WRITE ; operands[1].vas: 0x40 ; operands[2].type: REG = z6 ; operands[2].is_list_member: true ; operands[2].access: WRITE ; operands[2].vas: 0x40 ; operands[3].type: REG = z7 ; operands[3].is_list_member: true ; operands[3].access: WRITE ; operands[3].vas: 0x40 ; operands[4].type: SME_MATRIX ; operands[4].sme.type: 2 ; operands[4].sme.tile: za ; operands[4].sme.slice_reg: w8 ; operands[4].sme.slice_offset: 5 ; operands[4].sme.is_vertical: false ; operands[4].access: READ | WRITE ; operands[4].vas: 0x40 ; Write-back: True ; Code-condition: 16 ; Registers read: za w8 ; Registers modified: z4 z5 z6 z7 za ; Groups: HasSME2p1
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x80,0xa0,0x8d,0xc0 == luti2 { z0.s - z3.s }, zt0, z4[1] ; op_count: 6 ; operands[0].type: REG = z0 ; operands[0].is_list_member: true ; operands[0].access: WRITE ; operands[0].vas: 0x20 ; operands[1].type: REG = z1 ; operands[1].is_list_member: true ; operands[1].access: WRITE ; operands[1].vas: 0x20 ; operands[2].type: REG = z2 ; operands[2].is_list_member: true ; operands[2].access: WRITE ; operands[2].vas: 0x20 ; operands[3].type: REG = z3 ; operands[3].is_list_member: true ; operands[3].access: WRITE ; operands[3].vas: 0x20 ; operands[4].type: REG = zt0 ; operands[4].access: READ ; operands[5].type: REG = z4 ; operands[5].access: READ ; operands[5].vector_index: 1 ; Code-condition: 16 ; Registers read: zt0 z4 ; Registers modified: z0 z1 z2 z3 ; Groups: HasSME2
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x00,0xb1,0x10,0xc1 == fmla za.h[w9, 0, vgx4], { z8.h - z11.h }, z0.h[0] ; op_count: 6 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za ; operands[0].sme.slice_reg: w9 ; operands[0].sme.slice_offset: 0 ; operands[0].sme.is_vertical: false ; operands[0].access: READ | WRITE ; operands[0].vas: 0x10 ; operands[1].type: REG = z8 ; operands[1].is_list_member: true ; operands[1].access: READ ; operands[1].vas: 0x10 ; operands[2].type: REG = z9 ; operands[2].is_list_member: true ; operands[2].access: READ ; operands[2].vas: 0x10 ; operands[3].type: REG = z10 ; operands[3].is_list_member: true ; operands[3].access: READ ; operands[3].vas: 0x10 ; operands[4].type: REG = z11 ; operands[4].is_list_member: true ; operands[4].access: READ ; operands[4].vas: 0x10 ; operands[5].type: REG = z0 ; operands[5].access: READ ; operands[5].vas: 0x10 ; operands[5].vector_index: 0 ; Write-back: True ; Code-condition: 16 ; Registers read: za w9 z8 z9 z10 z11 z0 ; Registers modified: za ; Groups: HasSME2p1 HasSMEF16F16
+
+!# issue 2285 AArch64 operands
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x05,0xd0,0x9b,0xc1 == fmlal za.s[w10, 2:3, vgx4], { z0.h - z3.h }, z11.h[1] ; op_count: 6 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za ; operands[0].sme.slice_reg: w10 ; operands[0].sme.slice_offset: 2:3 ; operands[0].sme.is_vertical: false ; operands[0].access: READ | WRITE ; operands[0].vas: 0x20 ; operands[1].type: REG = z0 ; operands[1].is_list_member: true ; operands[1].access: READ ; operands[1].vas: 0x10 ; operands[2].type: REG = z1 ; operands[2].is_list_member: true ; operands[2].access: READ ; operands[2].vas: 0x10 ; operands[3].type: REG = z2 ; operands[3].is_list_member: true ; operands[3].access: READ ; operands[3].vas: 0x10 ; operands[4].type: REG = z3 ; operands[4].is_list_member: true ; operands[4].access: READ ; operands[4].vas: 0x10 ; operands[5].type: REG = z11 ; operands[5].access: READ ; operands[5].vas: 0x10 ; operands[5].vector_index: 1 ; Write-back: True ; Code-condition: 16 ; Registers read: za w10 z0 z1 z2 z3 z11 ; Registers modified: za ; Groups: HasSME2
+

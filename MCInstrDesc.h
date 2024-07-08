@@ -163,5 +163,9 @@ bool MCOperandInfo_isTiedToOp(const MCOperandInfo *m);
 int MCOperandInfo_getOperandConstraint(const MCInstrDesc *OpInfo,
 				       unsigned OpNum,
 				       MCOI_OperandConstraint Constraint);
+const MCInstrDesc *MCInstrDesc_get(unsigned opcode,
+                                   const MCInstrDesc *table,
+                                   unsigned tbl_size);
+
 
 #endif

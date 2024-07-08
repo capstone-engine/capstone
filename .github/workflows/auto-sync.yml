@@ -66,3 +66,8 @@ jobs:
       - name: Test Header patcher
         run: |
           python -m unittest src/autosync/Tests/test_header_patcher.py
+          python -m unittest src/autosync/Tests/test_mcupdater.py
+
+      - name: Differ - Test save file is up-to-date
+        run: |
+          ./src/autosync/cpptranslator/Differ.py -a AArch64 --check_saved

@@ -126,14 +126,16 @@ static void utostr(uint64_t X, bool isNeg, char *result)
 	char *BufPtr = Buffer + 21;
 
 	Buffer[21] = '\0';
-	if (X == 0) *--BufPtr = '0';  // Handle special case...
+	if (X == 0)
+		*--BufPtr = '0'; // Handle special case...
 
 	while (X) {
 		*--BufPtr = X % 10 + '0';
 		X /= 10;
 	}
 
-	if (isNeg) *--BufPtr = '-';   // Add negative sign...
+	if (isNeg)
+		*--BufPtr = '-'; // Add negative sign...
 
 	// suppose that result is big enough
 	strncpy(result, BufPtr, sizeof(Buffer));
@@ -158,14 +160,16 @@ void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result)
 	utostr(CRm, false, CRmStr);
 
 	dummy = cs_snprintf(result, AARCH64_GRS_LEN, "s%s_%s_c%s_c%s_%s",
-			Op0Str, Op1Str, CRnStr, CRmStr, Op2Str);
+			    Op0Str, Op1Str, CRnStr, CRmStr, Op2Str);
 	(void)dummy;
 }
 
 #define GET_TLBITable_IMPL
+
 #include "AArch64GenSystemOperands.inc"
 #undef GET_TLBITable_IMPL
 
 #define GET_SVCR_IMPL
+
 #include "AArch64GenSystemOperands.inc"
 #undef GET_SVCR_IMPL

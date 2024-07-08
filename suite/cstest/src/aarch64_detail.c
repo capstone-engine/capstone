@@ -29,13 +29,16 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 		switch(op->type) {
 			default:
 				break;
-			case AArch64_OP_REG:
-				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
+			case AARCH64_OP_REG:
+				add_str(&result, " ; operands[%u].type: REG = %s%s", i, cs_reg_name(*handle, op->reg), op->is_vreg ? " (vreg)" : "");
+			if (op->is_list_member) {
+				add_str(&result, " ; operands[%u].is_list_member: true", i);
+			}
 				break;
-			case AArch64_OP_IMM:
+			case AARCH64_OP_IMM:
 				add_str(&result, " ; operands[%u].type: IMM = 0x%" PRIx64, i, op->imm);
 				break;
-			case AArch64_OP_FP:
+			case AARCH64_OP_FP:
 #if defined(_KERNEL_MODE)
 				// Issue #681: Windows kernel does not support formatting float point
 				add_str(&result, " ; operands[%u].type: FP = <float_point_unsupported>", i);
@@ -43,32 +46,32 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: FP = %f", i, op->fp);
 #endif
 				break;
-			case AArch64_OP_MEM:
+			case AARCH64_OP_MEM:
 				add_str(&result, " ; operands[%u].type: MEM", i);
-				if (op->mem.base != AArch64_REG_INVALID)
+				if (op->mem.base != AARCH64_REG_INVALID)
 					add_str(&result, " ; operands[%u].mem.base: REG = %s", i, cs_reg_name(*handle, op->mem.base));
-				if (op->mem.index != AArch64_REG_INVALID)
+				if (op->mem.index != AARCH64_REG_INVALID)
 					add_str(&result, " ; operands[%u].mem.index: REG = %s", i, cs_reg_name(*handle, op->mem.index));
 				if (op->mem.disp != 0)
 					add_str(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
 
 				break;
-			case AArch64_OP_CIMM:
+			case AARCH64_OP_CIMM:
 				add_str(&result, " ; operands[%u].type: C-IMM = %u", i, (int)op->imm);
 				break;
-			case AArch64_OP_REG_MRS:
+			case AARCH64_OP_REG_MRS:
 				add_str(&result, " ; operands[%u].type: REG_MRS = 0x%x", i, op->reg);
 				break;
-			case AArch64_OP_REG_MSR:
+			case AARCH64_OP_REG_MSR:
 				add_str(&result, " ; operands[%u].type: REG_MSR = 0x%x", i, op->reg);
 				break;
-			case AArch64_OP_SME_MATRIX:
+			case AARCH64_OP_SME:
 				add_str(&result, " ; operands[%u].type: SME_MATRIX", i);
 				add_str(&result, " ; operands[%u].sme.type: %d", i, op->sme.type);
 
-				if (op->sme.tile != AArch64_REG_INVALID)
+				if (op->sme.tile != AARCH64_REG_INVALID)
 					add_str(&result, " ; operands[%u].sme.tile: %s", i, cs_reg_name(*handle, op->sme.tile));
-				if (op->sme.slice_reg != AArch64_REG_INVALID)
+				if (op->sme.slice_reg != AARCH64_REG_INVALID)
 					add_str(&result, " ; operands[%u].sme.slice_reg: %s", i, cs_reg_name(*handle, op->sme.slice_reg));
 				if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
 					add_str(&result, " ; operands[%u].sme.slice_offset: ", i);
@@ -77,94 +80,103 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 					else
 						add_str(&result, "%d", op->sme.slice_offset.imm);
 				}
-				if (op->sme.slice_reg != AArch64_REG_INVALID || op->sme.slice_offset.imm != -1)
+				if (op->sme.slice_reg != AARCH64_REG_INVALID || op->sme.slice_offset.imm != -1)
 					add_str(&result, " ; operands[%u].sme.is_vertical: %s", i, (op->sme.is_vertical ? "true" : "false"));
-				break;
-		case AArch64_OP_SYSREG:
+			break;
+		case AARCH64_OP_PRED:
+			add_str(&result, " ; operands[%u].type: PREDICATE", i);
+			if (op->pred.reg != AARCH64_REG_INVALID)
+				add_str(&result, " ; operands[%u].pred.reg: %s", i, cs_reg_name(*handle, op->pred.reg));
+			if (op->pred.vec_select != AARCH64_REG_INVALID)
+				add_str(&result, " ; operands[%u].pred.vec_select: %s", i, cs_reg_name(*handle, op->pred.vec_select));
+			if (op->pred.imm_index != -1)
+				add_str(&result, " ; operands[%u].pred.imm_index: %d", i, op->pred.imm_index);
+			break;
+		case AARCH64_OP_SYSREG:
 			add_str(&result, " ; operands[%u].type: SYS REG:", i);
 			switch (op->sysop.sub_type) {
 			default:
 				break;
-			case AArch64_OP_REG_MRS:
+			case AARCH64_OP_REG_MRS:
 				add_str(&result, " ; operands[%u].subtype: REG_MRS = 0x%x", i, op->sysop.reg.sysreg);
 				break;
-			case AArch64_OP_REG_MSR:
+			case AARCH64_OP_REG_MSR:
 				add_str(&result, " ; operands[%u].subtype: REG_MSR = 0x%x", i, op->sysop.reg.sysreg);
 				break;
-			case AArch64_OP_TLBI:
+			case AARCH64_OP_TLBI:
 				add_str(&result, " ; operands[%u].subtype TLBI = 0x%x", i, op->sysop.reg.tlbi);
 				break;
-			case AArch64_OP_IC:
+			case AARCH64_OP_IC:
 				add_str(&result, " ; operands[%u].subtype IC = 0x%x", i, op->sysop.reg.ic);
 				break;
 			}
 			break;
-		case AArch64_OP_SYSALIAS:
+		case AARCH64_OP_SYSALIAS:
 			add_str(&result, " ; operands[%u].type: SYS ALIAS:", i);
 			switch (op->sysop.sub_type) {
 			default:
 				break;
-			case AArch64_OP_SVCR:
-				if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSM)
+			case AARCH64_OP_SVCR:
+				if(op->sysop.alias.svcr == AARCH64_SVCR_SVCRSM)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM", i);
-				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRZA)
+				else if(op->sysop.alias.svcr == AARCH64_SVCR_SVCRZA)
 					add_str(&result, " ; operands[%u].svcr: BIT = ZA", i);
-				else if(op->sysop.alias.svcr == AArch64_SVCR_SVCRSMZA)
+				else if(op->sysop.alias.svcr == AARCH64_SVCR_SVCRSMZA)
 					add_str(&result, " ; operands[%u].svcr: BIT = SM & ZA", i);
 				break;
-			case AArch64_OP_AT:
+			case AARCH64_OP_AT:
 				add_str(&result, " ; operands[%u].subtype AT = 0x%x", i, op->sysop.alias.at);
 				break;
-			case AArch64_OP_DB:
+			case AARCH64_OP_DB:
 				add_str(&result, " ; operands[%u].subtype DB = 0x%x", i, op->sysop.alias.db);
 				break;
-			case AArch64_OP_DC:
+			case AARCH64_OP_DC:
 				add_str(&result, " ; operands[%u].subtype DC = 0x%x", i, op->sysop.alias.dc);
 				break;
-			case AArch64_OP_ISB:
+			case AARCH64_OP_ISB:
 				add_str(&result, " ; operands[%u].subtype ISB = 0x%x", i, op->sysop.alias.isb);
 				break;
-			case AArch64_OP_TSB:
+			case AARCH64_OP_TSB:
 				add_str(&result, " ; operands[%u].subtype TSB = 0x%x", i, op->sysop.alias.tsb);
 				break;
-			case AArch64_OP_PRFM:
+			case AARCH64_OP_PRFM:
 				add_str(&result, " ; operands[%u].subtype PRFM = 0x%x", i, op->sysop.alias.prfm);
 				break;
-			case AArch64_OP_SVEPRFM:
+			case AARCH64_OP_SVEPRFM:
 				add_str(&result, " ; operands[%u].subtype SVEPRFM = 0x%x", i, op->sysop.alias.sveprfm);
 				break;
-			case AArch64_OP_RPRFM:
+			case AARCH64_OP_RPRFM:
 				add_str(&result, " ; operands[%u].subtype RPRFM = 0x%x", i, op->sysop.alias.rprfm);
 				break;
-			case AArch64_OP_PSTATEIMM0_15:
+			case AARCH64_OP_PSTATEIMM0_15:
 				add_str(&result, " ; operands[%u].subtype PSTATEIMM0_15 = 0x%x", i, op->sysop.alias.pstateimm0_15);
 				break;
-			case AArch64_OP_PSTATEIMM0_1:
+			case AARCH64_OP_PSTATEIMM0_1:
 				add_str(&result, " ; operands[%u].subtype PSTATEIMM0_1 = 0x%x", i, op->sysop.alias.pstateimm0_1);
 				break;
-			case AArch64_OP_PSB:
+			case AARCH64_OP_PSB:
 				add_str(&result, " ; operands[%u].subtype PSB = 0x%x", i, op->sysop.alias.psb);
 				break;
-			case AArch64_OP_BTI:
+			case AARCH64_OP_BTI:
 				add_str(&result, " ; operands[%u].subtype BTI = 0x%x", i, op->sysop.alias.bti);
 				break;
-			case AArch64_OP_SVEPREDPAT:
+			case AARCH64_OP_SVEPREDPAT:
 				add_str(&result, " ; operands[%u].subtype SVEPREDPAT = 0x%x", i, op->sysop.alias.svepredpat);
 				break;
-			case AArch64_OP_SVEVECLENSPECIFIER:
+			case AARCH64_OP_SVEVECLENSPECIFIER:
 				add_str(&result, " ; operands[%u].subtype SVEVECLENSPECIFIER = 0x%x", i, op->sysop.alias.sveveclenspecifier);
 				break;
 			}
 			break;
-		case AArch64_OP_SYSIMM:
+		case AARCH64_OP_SYSIMM:
 			add_str(&result, " ; operands[%u].type: SYS IMM:", i);
 			switch(op->sysop.sub_type) {
 			default:
 				break;
-			case AArch64_OP_EXACTFPIMM:
+			case AARCH64_OP_EXACTFPIMM:
 				add_str(&result, " ; operands[%u].subtype EXACTFPIMM = %d", i, op->sysop.imm.exactfpimm);
 				break;
-			case AArch64_OP_DBNXS:
+			case AARCH64_OP_DBNXS:
 				add_str(&result, " ; operands[%u].subtype DBNXS = %d", i, op->sysop.imm.dbnxs);
 				break;
 			}
@@ -186,15 +198,15 @@ char *get_detail_aarch64(csh *handle, cs_mode mode, cs_insn *ins)
 				break;
 		}
 		
-		if (op->shift.type != AArch64_SFT_INVALID &&
+		if (op->shift.type != AARCH64_SFT_INVALID &&
 			op->shift.value)
 			add_str(&result, " ; Shift: type = %u, value = %u",
 				   op->shift.type, op->shift.value);
 
-		if (op->ext != AArch64_EXT_INVALID)
+		if (op->ext != AARCH64_EXT_INVALID)
 			add_str(&result, " ; Ext: %u", op->ext);
 
-		if (op->vas != AArch64Layout_Invalid)
+		if (op->vas != AARCH64LAYOUT_INVALID)
 			add_str(&result, " ; operands[%u].vas: 0x%x", i, op->vas);
 
 		if (op->vector_index != -1)

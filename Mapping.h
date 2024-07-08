@@ -31,6 +31,7 @@ typedef struct insn_map {
 	union {
 		ppc_suppl_info ppc;
 		loongarch_suppl_info loongarch;
+		aarch64_suppl_info aarch64;
 	} suppl_info; // Supplementary information for each instruction.
 #endif
 } insn_map;

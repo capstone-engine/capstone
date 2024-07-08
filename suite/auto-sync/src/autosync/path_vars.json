@@ -2,6 +2,7 @@
   "paths": {
     "{LLVM_ROOT}": "{AUTO_SYNC_ROOT}/vendor/llvm_root/",
     "{LLVM_TARGET_DIR}": "{LLVM_ROOT}/llvm/lib/Target/",
+    "{LLVM_MC_TEST_DIR}": "{LLVM_ROOT}/llvm/test/MC/",
     "{LLVM_TBLGEN_BIN}": "{LLVM_ROOT}/build/bin/llvm-tblgen",
     "{LLVM_INCLUDE_DIR}": "{LLVM_ROOT}/llvm/include/",
     "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
@@ -29,7 +30,11 @@
     "{DIFFER_TEST_CONFIG_FILE}": "{DIFFER_TEST_DIR}/test_arch_config.json",
     "{DIFFER_TEST_OLD_SRC_DIR}": "{DIFFER_TEST_DIR}/old_src/",
     "{DIFFER_TEST_NEW_SRC_DIR}": "{DIFFER_TEST_DIR}/new_src/",
-    "{DIFFER_TEST_PERSISTENCE_FILE}": "{DIFFER_TEST_DIR}/test_saved_patches.json"
+    "{DIFFER_TEST_PERSISTENCE_FILE}": "{DIFFER_TEST_DIR}/test_saved_patches.json",
+    "{AUTO_SYNC_TEST_DIR}": "{AUTO_SYNC_SRC}/Tests/",
+    "{MCUPDATER_TEST_DIR}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/",
+    "{MCUPDATER_OUT_DIR}": "{BUILD_DIR}/mc_out/",
+    "{MC_DIR}": "{CS_ROOT}/suite/MC/"
   },
   "create_during_runtime": [
     "{BUILD_DIR}",
@@ -37,7 +42,8 @@
     "{CPP_INC_OUT_DIR}",
     "{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}",
     "{CPP_TRANSLATOR_DIFF_OUT_DIR}",
-    "{HEADER_GEN_TEST_ARM64_OUT_FILE}"
+    "{HEADER_GEN_TEST_ARM64_OUT_FILE}",
+    "{MCUPDATER_OUT_DIR}"
   ],
   "ignore_missing": [
     "{DIFFER_TEST_PERSISTENCE_FILE}"

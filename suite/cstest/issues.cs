@@ -60,7 +60,7 @@
 
 !# issue 1924 SME Index instruction alias printing is not always valid
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x02,0x00,0x9f,0xe0 == ld1w {za0h.s[w12, 2]}, p0/z, [x0] ; op_count: 2 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za0.s ; operands[0].sme.slice_reg: w12 ; operands[0].sme.slice_offset: 2 ; operands[0].sme.is_vertical: false ; operands[0].access: READ ; operands[0].vas: 0x20 ; operands[0].vector_index: 0 ; operands[1].type: MEM ; operands[1].mem.base: REG = p0 ; operands[1].mem.index: REG = x0 ; operands[1].access: READ ; operands[0].vector_index: 0 ; Registers read: p0 x0 ; Groups: HasSME
+0x02,0x00,0x9f,0xe0 == ld1w {za0h.s[w12, 2]}, p0/z, [x0] ; op_count: 3 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za0.s ; operands[0].sme.slice_reg: w12 ; operands[0].sme.slice_offset: 2 ; operands[0].sme.is_vertical: false ; operands[0].access: WRITE ; operands[0].vas: 0x20 ; operands[1].type: PREDICATE ; operands[1].pred.reg: p0 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = x0 ; operands[2].access: READ ; Registers read: w12 p0 x0 ; Registers modified: za0.s ; Groups: HasSME
 
 !# issue 1912 PPC register name
 !# CS_ARCH_PPC, CS_MODE_BIG_ENDIAN, None
@@ -228,19 +228,19 @@
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = q0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 ; operands[1].vas: 0x1008
+0x40,0x1e,0xb2,0x4e == mov v0.16b, v18.16b ; operands[0].type: REG = q0 (vreg) ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 (vreg) ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = d0 ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 ; operands[1].vas: 0x808
+0x40,0x1e,0xb2,0x0e == mov v0.8b, v18.8b ; operands[0].type: REG = d0 (vreg) ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 (vreg) ; operands[1].vas: 0x808
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = q0 ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 ; operands[1].vas: 0x1008
+0x40,0x5a,0x20,0x6e == mvn v0.16b, v18.16b ; operands[0].type: REG = q0 (vreg) ; operands[0].vas: 0x1008 ; operands[1].type: REG = q18 (vreg) ; operands[1].vas: 0x1008
 
 !# issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = d0 ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 ; operands[1].vas: 0x808
+0x40,0x5a,0x20,0x2e == mvn v0.8b, v18.8b ; operands[0].type: REG = d0 (vreg) ; operands[0].vas: 0x808 ; operands[1].type: REG = d18 (vreg) ; operands[1].vas: 0x808
 
 !# issue 1839 AArch64 Incorrect detailed disassembly of ldr
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
@@ -287,7 +287,7 @@
 
 !# issue 1627 Arm64 LD1 missing immediate operand
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
-0xe0,0x73,0xdf,0x0c == ld1 { v0.8b }, [sp], #8 ; operands[0].vas: 0x808 ; operands[1].type: MEM ; operands[1].mem.base: REG = sp ; operands[1].mem.disp: 0x8 ; operands[1].access: READ | WRITE
+0xe0,0x73,0xdf,0x0c == ld1 { v0.8b }, [sp], #8 ; operands[0].vas: 0x808 ; operands[1].type: MEM ; operands[1].mem.base: REG = sp ; operands[1].mem.disp: 0x8 ; operands[1].access: READ
 
 !# issue 1587 ARM thumb pushed registers write
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
@@ -1110,3 +1110,19 @@
 !# issue 2349
 !# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, CS_OPT_DETAIL
 0x0: 0xa4, 0x18, 0x78, 0x38 == ldgt.b $a0, $a1, $a2 ; operands[1].type: MEM ; operands[1].mem.base: REG = a1 ; operands[2].type: REG = a2
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x00,0x80,0x58,0x65 == fadd z0.h, p0/m, z0.h, #0.5 ; operands[3].subtype EXACTFPIMM = 1
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x20,0x80,0x58,0x65 == fadd z0.h, p0/m, z0.h, #1.0 ; operands[3].subtype EXACTFPIMM = 2
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x3f,0x9c,0xda,0x65 == fmul z31.d, p7/m, z31.d, #2.0 ; operands[3].subtype EXACTFPIMM = 3
+
+!# issue 2268
+!# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
+0x0: 0x6a,0xd9,0xf8,0x7e == fcmle h10, h11, #0.0 ; operands[2].subtype EXACTFPIMM = 0

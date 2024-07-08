@@ -34,7 +34,7 @@ cs_err AArch64_global_init(cs_struct *ud)
 cs_err AArch64_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX)
-		handle->syntax |= (int) value;
+		handle->syntax |= (int)value;
 
 	if (type == CS_OPT_MODE) {
 		handle->mode |= (cs_mode)value;

@@ -132,7 +132,6 @@ jobs:
           clang -lcapstone src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
         fi
         ./test_arm64_compatibility_header
-        cd "$(git rev-parse --show-toplevel)"
 
     - name: cstool - reaches disassembler engine
       run: |

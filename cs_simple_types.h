@@ -275,6 +275,7 @@ typedef enum {
 	CS_DATA_TYPE_externref = 193, // WebAssembly's externref type
 	CS_DATA_TYPE_x86amx = 194,    // This is an X86 AMX value
 	CS_DATA_TYPE_i64x8 = 195,     // 8 Consecutive GPRs (AArch64)
+	CS_DATA_TYPE_aarch64svcount = 196,// AArch64, Value is of a scalable size
 
 	CS_DATA_TYPE_FIRST_VALUETYPE =
 		1,		    // This is always the beginning of the list.

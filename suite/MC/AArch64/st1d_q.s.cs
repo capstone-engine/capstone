@@ -1,0 +1,11 @@
+# CS_ARCH_AARCH64, None, None
+0xe5c04000 == {z0.q}, p0, [x0, x0, lsl #3]
+0xe5d55555 == {z21.q}, p5, [x10, x21, lsl #3]
+0xe5c84db7 == {z23.q}, p3, [x13, x8, lsl #3]
+0xe5c84db7 == z23.q, p3, [x13, x8, lsl #3]
+0xe5c0e000 == {z0.q}, p0, [x0]
+0xe5c0e000 == z0.q, p0, [x0]
+0xe5c5f555 == {z21.q}, p5, [x10, #5, mul vl]
+0xe5c8edb7 == {z23.q}, p3, [x13, #-8, mul vl]
+0xe5cfffff == {z31.q}, p7, [sp, #-1, mul vl]
+0xe5cfffff == z31.q, p7, [sp, #-1, mul vl]
