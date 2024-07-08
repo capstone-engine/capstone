@@ -6,6 +6,7 @@
 #include <setjmp.h>
 #include "cmocka.h"
 #include "test_case.h"
+#include "helper.h"
 #include "../../../utils.h"
 #include <string.h>
 
@@ -140,6 +141,29 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 	return te;
 }
 
+/// Compares the given @asm_text to the @expected one.
+/// Because Capstone sometimes deviades from the LLVM syntax
+/// the strings don't need to be the same to be considered a valid match.
+/// E.g. Capstone sometimes prints decimal numbers instead of hexadecimal
+/// for readability.
+static bool compare_asm_text(const char *asm_text, const char *expected) {
+	if (!asm_text || !expected) {
+		fprintf(stderr, "[!] asm_text or expected was NULL\n");
+		return false;
+	}
+	if (strcmp(asm_text, expected) == 0) {
+		return true;
+	}
+	char *asm_copy = strdup(asm_text);
+	replace_hex(asm_copy);
+	if (strcmp(asm_copy, expected) == 0) {
+		cs_mem_free(asm_copy);
+		return true;
+	}
+	cs_mem_free(asm_copy);
+	return false;
+}
+
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
 void test_expected_compare(TestExpected *expected, cs_insn *insns,
 			   size_t insns_count)
@@ -158,7 +182,10 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 		if (insns[i].op_str[0] != '\0') {
 			append_to_str(asm_text, sizeof(asm_text), insns[i].op_str);
 		}
-		assert_string_equal(expec_data->asm_text, asm_text);
+		if (!compare_asm_text(asm_text, expec_data->asm_text)) {
+			// assert and fail
+			assert_string_equal(asm_text, expec_data->asm_text);
+		}
 
 		// Not mandatory fields. If not initialized they should still match.
 		if (expec_data->id != 0) {
