@@ -101,11 +101,7 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 		opt_str = options[i];
 		for (size_t k = 0; k < ARR_SIZE(test_mode_map) || k < ARR_SIZE(test_option_map); k++) {
 			if (k < ARR_SIZE(test_mode_map) && strcmp(opt_str, test_mode_map[k].str) == 0) {
-				if (mode_found) {
-					fprintf(stderr, "Option string contains more then one mode option: '%s'\n", opt_str);
-					return false;
-				}
-				*mode = test_mode_map[k].mode;
+				*mode |= test_mode_map[k].mode;
 				mode_found = true;
 				continue;
 			}
