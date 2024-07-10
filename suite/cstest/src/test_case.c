@@ -8,6 +8,7 @@
 #include "test_case.h"
 #include "helper.h"
 #include "../../../utils.h"
+#include <stdio.h>
 #include <string.h>
 
 TestInput *test_input_new()
@@ -154,31 +155,27 @@ static bool compare_asm_text(const char *asm_text, const char *expected) {
 	if (strcmp(asm_text, expected) == 0) {
 		return true;
 	}
-	char *asm_copy = strdup(asm_text);
-	replace_hex(asm_copy);
+	// Normalize both strings
+	char asm_copy[MAX_ASM_TXT_MEM] = { 0 };
+	strncpy(asm_copy, asm_text, sizeof(asm_copy));
 	trim_str(asm_copy);
+	replace_hex(asm_copy, sizeof(asm_copy));
+	replace_negative(asm_copy, sizeof(asm_copy));
 
-	// Test the different interpretation of the strings which are allowed.
-	char *no_hex_asm_text = strdup(asm_copy);
-	if (strcmp(no_hex_asm_text, expected) == 0) {
-		cs_mem_free(no_hex_asm_text);
-		goto passed;
+	char expected_copy[MAX_ASM_TXT_MEM] = { 0 };
+	strncpy(asm_copy, expected, sizeof(expected_copy));
+	trim_str(expected_copy);
+	replace_hex(expected_copy, sizeof(expected_copy));
+	replace_negative(expected_copy, sizeof(expected_copy));
+
+	if (strcmp(asm_copy, expected) == 0) {
+		return true;
 	}
-	cs_mem_free(no_hex_asm_text);
 
-	char *no_dec_imms = replace_decimal_imms(asm_copy);
-	if (strcmp(no_dec_imms, expected) == 0) {
-		cs_mem_free(no_dec_imms);
-		goto passed;
-	}
-	cs_mem_free(no_dec_imms);
-
-	cs_mem_free(asm_copy);
+	fprintf(stderr, "Normalized asm-test doesn't match:\n"
+	        "decoded:  '%s'\n"
+	        "expected: '%s'\n", asm_copy, expected_copy);
 	return false;
-
-passed:
-	cs_mem_free(asm_copy);
-	return true;
 }
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
@@ -200,8 +197,7 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 			append_to_str(asm_text, sizeof(asm_text), insns[i].op_str);
 		}
 		if (!compare_asm_text(asm_text, expec_data->asm_text)) {
-			// assert and fail
-			assert_string_equal(asm_text, expec_data->asm_text);
+			fail_msg("asm-text mismatch\n");
 		}
 
 		// Not mandatory fields. If not initialized they should still match.

@@ -33,7 +33,7 @@ void add_str(char **src, const char *format, ...)
 	free(tmp);
 }
 
-void replace_hex(char *src)
+void replace_hex(char *src, size_t src_len)
 {
 	char *tmp, *result, *found, *origin, *orig_found;
 	int valid;
@@ -68,7 +68,7 @@ void replace_hex(char *src)
 	}
 
 	add_str(&result, "%s", tmp);
-	if (strlen(result) >= MAXMEM) {
+	if (strlen(result) >= src_len) {
 		free(result);
 		free(origin);
 		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_hex()\n");
@@ -80,13 +80,11 @@ void replace_hex(char *src)
 	free(origin);
 }
 
-void replace_negative(char *src, int mode)
+void replace_negative(char *src, size_t src_len)
 {
 	char *tmp, *result, *found, *origin, *orig_found;
 	int cnt, valid;
 	char *value, *tmp_tmp;
-	unsigned short int tmp_short;
-	unsigned int tmp_int;
 	unsigned long int tmp_long;
 
 	result = (char *)malloc(sizeof(char));
@@ -114,16 +112,8 @@ void replace_negative(char *src, int mode)
 		tmp_tmp = strndup(tmp, orig_found - tmp);
 		if (valid == 1) {
 			*orig_found = '\0';
-			if (mode == X86_16) {
-				sscanf(value, "%hu", &tmp_short);
-				add_str(&result, "%s%hu", tmp_tmp, tmp_short);
-			} else if (mode == X86_32) {
-				sscanf(value, "%u", &tmp_int);
-				add_str(&result, "%s%u", tmp_tmp, tmp_int);
-			} else if (mode == X86_64) {
-				sscanf(value, "%lu", &tmp_long);
-				add_str(&result, "%s%lu", tmp_tmp, tmp_long);
-			}
+			sscanf(value, "%lu", &tmp_long);
+			add_str(&result, "%s%lu", tmp_tmp, tmp_long);
 		}
 		else add_str(&result, "%s-", tmp_tmp);
 
@@ -133,7 +123,7 @@ void replace_negative(char *src, int mode)
 	}
 
 	add_str(&result, "%s", tmp);
-	if (strlen(result) >= MAXMEM) {
+	if (strlen(result) >= src_len) {
 		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_negative()\n");
 		free(result);
 		free(origin);
@@ -147,7 +137,7 @@ void replace_negative(char *src, int mode)
 
 void trim_str(char *str)
 {
-	char tmp[MAXMEM];
+	char tmp[MAX_ASM_TXT_MEM];
 	int start, end, j, i;
 
 	start = 0;
@@ -165,29 +155,3 @@ void trim_str(char *str)
 	return;
 }
 
-char *replace_decimal_imms(const char *src) {
-	if (!src) {
-		fail_msg("[!] src was NULL\n");
-	}
-	char result[1024] = { 0 };
-	char *src_cpy = strdup(src);
-
-	char *imm_ptr = NULL;
-	char *endptr = src_cpy;
-	while ((imm_ptr = strstr(endptr, "#")) != NULL) {
-		imm_ptr += 1; // skip '#'
-		if (strstr(imm_ptr, "0x") == imm_ptr) {
-			// Hexadecimal number
-			endptr = imm_ptr;
-			continue;
-		}
-		long long val = strtoll(imm_ptr, &endptr, 10);
-		if (strlen(result) >= sizeof(result) - 1) {
-			free(src_cpy);
-			fail_msg("asm_text too long for buffer.\n");
-		}
-		snprintf(result, sizeof(result), "%s0x%" PRIx64, result, (uint64_t)val);
-	}
-	free(src_cpy);
-	return strdup(result);
-}
