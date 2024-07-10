@@ -3,6 +3,46 @@ test_cases:
     input:
       bytes: [ 0x00,0x50,0xbf,0x04 ]
       arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdvl x0, #0"
+
+  -
+    input:
+      bytes: [ 0xff,0x57,0xbf,0x04 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdvl xzr, #-1"
+
+  -
+    input:
+      bytes: [ 0xf7,0x53,0xbf,0x04 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdvl x23, #31"
+
+  -
+    input:
+      bytes: [ 0x15,0x54,0xbf,0x04 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdvl x21, #-32"
+
+  -
+    input:
+      bytes: [ 0x00,0x50,0xbf,0x04 ]
+      arch: "AArch64"
       options: [ "aarch64", "sme" ]
     expected:
       insns:

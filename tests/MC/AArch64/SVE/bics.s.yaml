@@ -3,6 +3,26 @@ test_cases:
     input:
       bytes: [ 0x10,0x40,0x40,0x25 ]
       arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "bics p0.b, p0/z, p0.b, p0.b"
+
+  -
+    input:
+      bytes: [ 0xff,0x7d,0x4f,0x25 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "bics p15.b, p15/z, p15.b, p15.b"
+
+  -
+    input:
+      bytes: [ 0x10,0x40,0x40,0x25 ]
+      arch: "AArch64"
       options: [ "aarch64", "sme" ]
     expected:
       insns:

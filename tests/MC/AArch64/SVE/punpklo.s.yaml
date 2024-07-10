@@ -3,6 +3,26 @@ test_cases:
     input:
       bytes: [ 0x00,0x40,0x30,0x05 ]
       arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "punpklo p0.h, p0.b"
+
+  -
+    input:
+      bytes: [ 0xef,0x41,0x30,0x05 ]
+      arch: "AArch64"
+      options: [ "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "punpklo p15.h, p15.b"
+
+  -
+    input:
+      bytes: [ 0x00,0x40,0x30,0x05 ]
+      arch: "AArch64"
       options: [ "aarch64", "sme" ]
     expected:
       insns:

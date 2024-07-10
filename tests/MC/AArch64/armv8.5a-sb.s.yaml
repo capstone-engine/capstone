@@ -3,6 +3,16 @@ test_cases:
     input:
       bytes: [ 0xff,0x30,0x03,0xd5 ]
       arch: "AArch64"
+      options: [ "aarch64-none-linux-gnu", "sb" ]
+    expected:
+      insns:
+        -
+          asm_text: "sb"
+
+  -
+    input:
+      bytes: [ 0xff,0x30,0x03,0xd5 ]
+      arch: "AArch64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
