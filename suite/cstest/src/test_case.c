@@ -204,8 +204,16 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 		if (expec_data->id != 0) {
 			assert_int_equal(insns[i].id, expec_data->id);
 		}
-		assert_int_equal(insns[i].is_alias, expec_data->is_alias);
-		assert_int_equal(insns[i].alias_id, expec_data->alias_id);
+		if (expec_data->is_alias != 0) {
+			if (expec_data->is_alias > 0) {
+				assert_true(insns[i].is_alias);
+			} else {
+				assert_false(insns[i].is_alias);
+			}
+		}
+		if (expec_data->alias_id != 0) {
+			assert_int_equal(insns[i].alias_id, expec_data->alias_id);
+		}
 		if (expec_data->mnemonic) {
 			assert_string_equal(insns[i].mnemonic, expec_data->mnemonic);
 		}
