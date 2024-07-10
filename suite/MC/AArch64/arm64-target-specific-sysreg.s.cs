@@ -1,2 +1,0 @@
-# CS_ARCH_AARCH64, 0, None
-0x00,0xf2,0x1f,0xd5 = msr	CPM_IOACC_CTL_EL3, x0

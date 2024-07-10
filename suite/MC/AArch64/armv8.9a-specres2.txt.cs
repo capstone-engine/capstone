@@ -1,2 +1,0 @@
-# CS_ARCH_AARCH64, 0, None
-0xc0,0x73,0x0b,0xd5 = cosp	rctx, x0
