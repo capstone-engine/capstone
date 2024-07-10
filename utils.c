@@ -142,7 +142,7 @@ void append_to_str(char *str, size_t str_size, const char *src) {
 	for (int j = 0; (i < str_size) && (j < strlen(src)); ++i, ++j) {
 		str[i] = src[j];
 	}
-	str[i] = '\0';
+	str[i-1] = '\0';
 }
 
 /// Returns the given byte sequence @bytes as a string of the
