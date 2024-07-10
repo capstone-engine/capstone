@@ -1,0 +1,145 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x17, 0x35, 0x70, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.b $xr23, $xr8, $xr13"
+  -
+    input:
+      bytes: [ 0x4d, 0xf2, 0x70, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.h $xr13, $xr18, $xr28"
+  -
+    input:
+      bytes: [ 0x3a, 0x08, 0x71, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.w $xr26, $xr1, $xr2"
+  -
+    input:
+      bytes: [ 0x22, 0xb6, 0x71, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.d $xr2, $xr17, $xr13"
+  -
+    input:
+      bytes: [ 0xe6, 0x04, 0x90, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.b $xr6, $xr7, 1"
+  -
+    input:
+      bytes: [ 0x58, 0xe5, 0x90, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.h $xr24, $xr10, -7"
+  -
+    input:
+      bytes: [ 0x58, 0x62, 0x91, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.w $xr24, $xr18, -8"
+  -
+    input:
+      bytes: [ 0xb5, 0xd4, 0x91, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.d $xr21, $xr5, -0xb"
+  -
+    input:
+      bytes: [ 0xdd, 0x2f, 0x74, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.bu $xr29, $xr30, $xr11"
+  -
+    input:
+      bytes: [ 0xe4, 0xee, 0x74, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.hu $xr4, $xr23, $xr27"
+  -
+    input:
+      bytes: [ 0x1f, 0x00, 0x75, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.wu $xr31, $xr0, $xr0"
+  -
+    input:
+      bytes: [ 0xc5, 0xa6, 0x75, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmax.du $xr5, $xr22, $xr9"
+  -
+    input:
+      bytes: [ 0x6c, 0x73, 0x94, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.bu $xr12, $xr27, 0x1c"
+  -
+    input:
+      bytes: [ 0x99, 0xc0, 0x94, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.hu $xr25, $xr4, 0x10"
+  -
+    input:
+      bytes: [ 0xfb, 0x54, 0x95, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.wu $xr27, $xr7, 0x15"
+  -
+    input:
+      bytes: [ 0xbf, 0xa5, 0x95, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmaxi.du $xr31, $xr13, 0x9"

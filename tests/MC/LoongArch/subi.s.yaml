@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x72, 0x07, 0x8c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsubi.bu $xr18, $xr27, 1"
+  -
+    input:
+      bytes: [ 0xe6, 0xce, 0x8c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsubi.hu $xr6, $xr23, 0x13"
+  -
+    input:
+      bytes: [ 0x6d, 0x14, 0x8d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsubi.wu $xr13, $xr3, 5"
+  -
+    input:
+      bytes: [ 0x9a, 0xbb, 0x8d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsubi.du $xr26, $xr28, 0xe"

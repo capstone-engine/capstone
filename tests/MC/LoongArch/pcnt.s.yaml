@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x68, 0x23, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpcnt.b $xr8, $xr27"
+  -
+    input:
+      bytes: [ 0x8c, 0x24, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpcnt.h $xr12, $xr4"
+  -
+    input:
+      bytes: [ 0xff, 0x2a, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpcnt.w $xr31, $xr23"
+  -
+    input:
+      bytes: [ 0x9a, 0x2d, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpcnt.d $xr26, $xr12"

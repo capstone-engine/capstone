@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x05, 0xa1, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetanyeqz.b $fcc5, $xr8"
+  -
+    input:
+      bytes: [ 0x85, 0xa6, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetanyeqz.h $fcc5, $xr20"
+  -
+    input:
+      bytes: [ 0xc7, 0xa8, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetanyeqz.w $fcc7, $xr6"
+  -
+    input:
+      bytes: [ 0x26, 0xae, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetanyeqz.d $fcc6, $xr17"

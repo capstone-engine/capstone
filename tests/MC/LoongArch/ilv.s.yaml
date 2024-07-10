@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xdd, 0x01, 0x1a, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvl.b $xr29, $xr14, $xr0"
+  -
+    input:
+      bytes: [ 0x3e, 0xd5, 0x1a, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvl.h $xr30, $xr9, $xr21"
+  -
+    input:
+      bytes: [ 0xd8, 0x26, 0x1b, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvl.w $xr24, $xr22, $xr9"
+  -
+    input:
+      bytes: [ 0x99, 0xaa, 0x1b, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvl.d $xr25, $xr20, $xr10"
+  -
+    input:
+      bytes: [ 0xd3, 0x6a, 0x1c, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvh.b $xr19, $xr22, $xr26"
+  -
+    input:
+      bytes: [ 0xea, 0x9e, 0x1c, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvh.h $xr10, $xr23, $xr7"
+  -
+    input:
+      bytes: [ 0x05, 0x78, 0x1d, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvh.w $xr5, $xr0, $xr30"
+  -
+    input:
+      bytes: [ 0x58, 0x88, 0x1d, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvilvh.d $xr24, $xr2, $xr2"

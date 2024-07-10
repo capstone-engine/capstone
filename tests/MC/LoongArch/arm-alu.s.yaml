@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x91, 0x14, 0x37, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armadd.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x94, 0x37, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armsub.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x14, 0x38, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armadc.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x94, 0x38, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armsbc.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x14, 0x39, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armand.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x94, 0x39, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armor.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x14, 0x3a, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armxor.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x9c, 0xc4, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armnot.w $a0, 1"

@@ -1,0 +1,19 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc0, 0x0c, 0x00, 0x48 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bceqz $fcc6, 0xc"
+  -
+    input:
+      bytes: [ 0xc0, 0x49, 0x00, 0x48 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bcnez $fcc6, 0x48"

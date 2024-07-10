@@ -1,0 +1,19 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe5, 0xff, 0x1d, 0x0a ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfmadd.s $xr5, $xr31, $xr31, $xr27"
+  -
+    input:
+      bytes: [ 0x09, 0xfe, 0x2c, 0x0a ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfmadd.d $xr9, $xr16, $xr31, $xr25"

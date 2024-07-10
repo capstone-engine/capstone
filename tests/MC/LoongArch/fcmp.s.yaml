@@ -1,0 +1,397 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x01, 0x7d, 0x90, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.caf.s $xr1, $xr8, $xr31"
+  -
+    input:
+      bytes: [ 0xf3, 0x53, 0xa0, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.caf.d $xr19, $xr31, $xr20"
+  -
+    input:
+      bytes: [ 0x28, 0x75, 0x94, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cun.s $xr8, $xr9, $xr29"
+  -
+    input:
+      bytes: [ 0xd3, 0x72, 0xa4, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cun.d $xr19, $xr22, $xr28"
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x92, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.ceq.s $xr0, $xr1, $xr0"
+  -
+    input:
+      bytes: [ 0xfd, 0x52, 0xa2, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.ceq.d $xr29, $xr23, $xr20"
+  -
+    input:
+      bytes: [ 0xa5, 0x7d, 0x96, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cueq.s $xr5, $xr13, $xr31"
+  -
+    input:
+      bytes: [ 0xc4, 0x1e, 0xa6, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cueq.d $xr4, $xr22, $xr7"
+  -
+    input:
+      bytes: [ 0x24, 0x05, 0x91, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.clt.s $xr4, $xr9, $xr1"
+  -
+    input:
+      bytes: [ 0x93, 0x54, 0xa1, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.clt.d $xr19, $xr4, $xr21"
+  -
+    input:
+      bytes: [ 0x2f, 0x0e, 0x95, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cult.s $xr15, $xr17, $xr3"
+  -
+    input:
+      bytes: [ 0x34, 0x1a, 0xa5, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cult.d $xr20, $xr17, $xr6"
+  -
+    input:
+      bytes: [ 0xd6, 0x3e, 0x93, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cle.s $xr22, $xr22, $xr15"
+  -
+    input:
+      bytes: [ 0x35, 0x33, 0xa3, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cle.d $xr21, $xr25, $xr12"
+  -
+    input:
+      bytes: [ 0x41, 0x74, 0x97, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cule.s $xr1, $xr2, $xr29"
+  -
+    input:
+      bytes: [ 0xa0, 0x2c, 0xa7, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cule.d $xr0, $xr5, $xr11"
+  -
+    input:
+      bytes: [ 0x27, 0x6a, 0x98, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cne.s $xr7, $xr17, $xr26"
+  -
+    input:
+      bytes: [ 0x32, 0x03, 0xa8, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cne.d $xr18, $xr25, $xr0"
+  -
+    input:
+      bytes: [ 0x41, 0x38, 0x9a, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cor.s $xr1, $xr2, $xr14"
+  -
+    input:
+      bytes: [ 0x6c, 0x5e, 0xaa, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cor.d $xr12, $xr19, $xr23"
+  -
+    input:
+      bytes: [ 0x35, 0x12, 0x9c, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cune.s $xr21, $xr17, $xr4"
+  -
+    input:
+      bytes: [ 0xd4, 0x33, 0xac, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.cune.d $xr20, $xr30, $xr12"
+  -
+    input:
+      bytes: [ 0x77, 0x89, 0x90, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.saf.s $xr23, $xr11, $xr2"
+  -
+    input:
+      bytes: [ 0x87, 0x9d, 0xa0, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.saf.d $xr7, $xr12, $xr7"
+  -
+    input:
+      bytes: [ 0xe0, 0xf8, 0x94, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sun.s $xr0, $xr7, $xr30"
+  -
+    input:
+      bytes: [ 0x64, 0xf9, 0xa4, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sun.d $xr4, $xr11, $xr30"
+  -
+    input:
+      bytes: [ 0xef, 0xee, 0x92, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.seq.s $xr15, $xr23, $xr27"
+  -
+    input:
+      bytes: [ 0xcf, 0x8e, 0xa2, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.seq.d $xr15, $xr22, $xr3"
+  -
+    input:
+      bytes: [ 0x4c, 0xa7, 0x96, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sueq.s $xr12, $xr26, $xr9"
+  -
+    input:
+      bytes: [ 0x45, 0xc6, 0xa6, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sueq.d $xr5, $xr18, $xr17"
+  -
+    input:
+      bytes: [ 0x59, 0xfe, 0x91, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.slt.s $xr25, $xr18, $xr31"
+  -
+    input:
+      bytes: [ 0x51, 0xe3, 0xa1, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.slt.d $xr17, $xr26, $xr24"
+  -
+    input:
+      bytes: [ 0xe8, 0xc9, 0x95, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sult.s $xr8, $xr15, $xr18"
+  -
+    input:
+      bytes: [ 0x84, 0x94, 0xa5, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sult.d $xr4, $xr4, $xr5"
+  -
+    input:
+      bytes: [ 0xa1, 0xc0, 0x93, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sle.s $xr1, $xr5, $xr16"
+  -
+    input:
+      bytes: [ 0x23, 0xdc, 0xa3, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sle.d $xr3, $xr1, $xr23"
+  -
+    input:
+      bytes: [ 0x77, 0x85, 0x97, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sule.s $xr23, $xr11, $xr1"
+  -
+    input:
+      bytes: [ 0x4b, 0xc5, 0xa7, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sule.d $xr11, $xr10, $xr17"
+  -
+    input:
+      bytes: [ 0x9b, 0xf9, 0x98, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sne.s $xr27, $xr12, $xr30"
+  -
+    input:
+      bytes: [ 0x94, 0xc6, 0xa8, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sne.d $xr20, $xr20, $xr17"
+  -
+    input:
+      bytes: [ 0xab, 0x89, 0x9a, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sor.s $xr11, $xr13, $xr2"
+  -
+    input:
+      bytes: [ 0x86, 0x9b, 0xaa, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sor.d $xr6, $xr28, $xr6"
+  -
+    input:
+      bytes: [ 0x0b, 0xa2, 0x9c, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sune.s $xr11, $xr16, $xr8"
+  -
+    input:
+      bytes: [ 0xbe, 0xec, 0xac, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcmp.sune.d $xr30, $xr5, $xr27"

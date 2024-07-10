@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc0, 0x78, 0xee, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotr.b $xr0, $xr6, $xr30"
+  -
+    input:
+      bytes: [ 0x33, 0xaa, 0xee, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotr.h $xr19, $xr17, $xr10"
+  -
+    input:
+      bytes: [ 0x52, 0x1c, 0xef, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotr.w $xr18, $xr2, $xr7"
+  -
+    input:
+      bytes: [ 0xeb, 0xae, 0xef, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotr.d $xr11, $xr23, $xr11"
+  -
+    input:
+      bytes: [ 0xa1, 0x2c, 0xa0, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotri.b $xr1, $xr5, 3"
+  -
+    input:
+      bytes: [ 0x21, 0x4e, 0xa0, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotri.h $xr1, $xr17, 3"
+  -
+    input:
+      bytes: [ 0xf9, 0xce, 0xa0, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotri.w $xr25, $xr23, 0x13"
+  -
+    input:
+      bytes: [ 0x07, 0x97, 0xa1, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrotri.d $xr7, $xr24, 0x25"

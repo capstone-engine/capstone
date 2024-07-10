@@ -1,2 +1,0 @@
-# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
-0xc0,0x0c,0x00,0x48 = bceqz $fcc6, 0xc

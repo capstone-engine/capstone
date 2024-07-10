@@ -1,0 +1,46 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa4, 0x44, 0x36, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armmove $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x9d, 0xc4, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armmov.w $a0, 1"
+  -
+    input:
+      bytes: [ 0x9e, 0xc4, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armmov.d $a0, 1"
+  -
+    input:
+      bytes: [ 0x44, 0x04, 0x5c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armmfflag $a0, 1"
+  -
+    input:
+      bytes: [ 0x64, 0x04, 0x5c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armmtflag $a0, 1"

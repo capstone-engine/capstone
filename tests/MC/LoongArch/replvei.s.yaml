@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x77, 0x8c, 0xf7, 0x72 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vreplvei.b $vr23, $vr3, 3"
+  -
+    input:
+      bytes: [ 0x1b, 0xc2, 0xf7, 0x72 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vreplvei.h $vr27, $vr16, 0"
+  -
+    input:
+      bytes: [ 0xf2, 0xee, 0xf7, 0x72 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vreplvei.w $vr18, $vr23, 3"
+  -
+    input:
+      bytes: [ 0x8f, 0xf5, 0xf7, 0x72 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vreplvei.d $vr15, $vr12, 1"

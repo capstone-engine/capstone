@@ -1,0 +1,262 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x29, 0x7c, 0x10, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "add.w $a5, $ra, $s8"
+  -
+    input:
+      bytes: [ 0x35, 0x4f, 0x11, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub.w $r21, $s2, $t7"
+  -
+    input:
+      bytes: [ 0xe5, 0xd8, 0x83, 0x02 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi.w $a1, $a3, 0xf6"
+  -
+    input:
+      bytes: [ 0x22, 0x8a, 0x05, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "alsl.w $tp, $t5, $tp, 4"
+  -
+    input:
+      bytes: [ 0x30, 0x06, 0x00, 0x14 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "lu12i.w $t4, 0x31"
+  -
+    input:
+      bytes: [ 0xe4, 0xff, 0xff, 0x15 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "lu12i.w $a0, -1"
+  -
+    input:
+      bytes: [ 0x5d, 0x0b, 0x12, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "slt $s6, $s3, $tp"
+  -
+    input:
+      bytes: [ 0xab, 0xf6, 0x12, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sltu $a7, $r21, $s6"
+  -
+    input:
+      bytes: [ 0x3b, 0xac, 0x03, 0x02 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "slti $s4, $ra, 0xeb"
+  -
+    input:
+      bytes: [ 0x00, 0x89, 0x42, 0x02 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sltui $zero, $a4, 0xa2"
+  -
+    input:
+      bytes: [ 0x69, 0x17, 0x00, 0x18 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pcaddi $a5, 0xbb"
+  -
+    input:
+      bytes: [ 0xa0, 0x04, 0x00, 0x1c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pcaddu12i $zero, 0x25"
+  -
+    input:
+      bytes: [ 0x2a, 0x0b, 0x00, 0x1a ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pcalau12i $a6, 0x59"
+  -
+    input:
+      bytes: [ 0xf3, 0x87, 0x14, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "and $t7, $s8, $ra"
+  -
+    input:
+      bytes: [ 0x11, 0x7a, 0x15, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "or $t5, $t4, $s7"
+  -
+    input:
+      bytes: [ 0x45, 0x16, 0x14, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor $a1, $t6, $a1"
+  -
+    input:
+      bytes: [ 0x6f, 0xa2, 0x15, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor $t3, $t7, $a4"
+  -
+    input:
+      bytes: [ 0x3c, 0x97, 0x16, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn $s5, $s2, $a1"
+  -
+    input:
+      bytes: [ 0x62, 0x64, 0x16, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "orn $tp, $sp, $s2"
+  -
+    input:
+      bytes: [ 0x19, 0xa8, 0x41, 0x03 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "andi $s2, $zero, 0x6a"
+  -
+    input:
+      bytes: [ 0xb1, 0xbc, 0x80, 0x03 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori $t5, $a1, 0x2f"
+  -
+    input:
+      bytes: [ 0xf2, 0x8e, 0xc1, 0x03 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xori $t6, $s0, 0x63"
+  -
+    input:
+      bytes: [ 0x44, 0x0e, 0x1c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul.w $a0, $t6, $sp"
+  -
+    input:
+      bytes: [ 0xfb, 0x82, 0x1c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulh.w $s4, $s0, $zero"
+  -
+    input:
+      bytes: [ 0x2a, 0x62, 0x1d, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulh.wu $a6, $t5, $s1"
+  -
+    input:
+      bytes: [ 0xbe, 0x65, 0x20, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "div.w $s7, $t1, $s2"
+  -
+    input:
+      bytes: [ 0x41, 0xab, 0x20, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mod.w $ra, $s3, $a6"
+  -
+    input:
+      bytes: [ 0xf3, 0x02, 0x21, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "div.wu $t7, $s0, $zero"
+  -
+    input:
+      bytes: [ 0x3b, 0xc5, 0x21, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mod.wu $s4, $a5, $t5"

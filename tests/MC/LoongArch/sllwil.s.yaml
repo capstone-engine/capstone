@@ -1,0 +1,55 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xad, 0x3a, 0x08, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsllwil.h.b $xr13, $xr21, 6"
+  -
+    input:
+      bytes: [ 0xb4, 0x43, 0x08, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsllwil.w.h $xr20, $xr29, 0"
+  -
+    input:
+      bytes: [ 0x83, 0xe2, 0x08, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsllwil.d.w $xr3, $xr20, 0x18"
+  -
+    input:
+      bytes: [ 0xef, 0x39, 0x0c, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsllwil.hu.bu $xr15, $xr15, 6"
+  -
+    input:
+      bytes: [ 0xb6, 0x43, 0x0c, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsllwil.wu.hu $xr22, $xr29, 0"
+  -
+    input:
+      bytes: [ 0xa3, 0xfc, 0x0c, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsllwil.du.wu $xr3, $xr5, 0x1f"

@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x2a, 0x72, 0x44, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrlrni.b.h $xr10, $xr17, 0xc"
+  -
+    input:
+      bytes: [ 0xf6, 0xb6, 0x44, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrlrni.h.w $xr22, $xr23, 0xd"
+  -
+    input:
+      bytes: [ 0xd2, 0xea, 0x45, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrlrni.w.d $xr18, $xr22, 0x3a"
+  -
+    input:
+      bytes: [ 0x19, 0xa9, 0x46, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrlrni.d.q $xr25, $xr8, 0x2a"

@@ -1,0 +1,19 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x72, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "dbar 0"
+  -
+    input:
+      bytes: [ 0x00, 0x80, 0x72, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ibar 0"

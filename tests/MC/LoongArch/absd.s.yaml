@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x36, 0x44, 0x60, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.b $xr22, $xr1, $xr17"
+  -
+    input:
+      bytes: [ 0x11, 0xa7, 0x60, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.h $xr17, $xr24, $xr9"
+  -
+    input:
+      bytes: [ 0x3c, 0x75, 0x61, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.w $xr28, $xr9, $xr29"
+  -
+    input:
+      bytes: [ 0xfe, 0xce, 0x61, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.d $xr30, $xr23, $xr19"
+  -
+    input:
+      bytes: [ 0x90, 0x3c, 0x62, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.bu $xr16, $xr4, $xr15"
+  -
+    input:
+      bytes: [ 0xed, 0xee, 0x62, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.hu $xr13, $xr23, $xr27"
+  -
+    input:
+      bytes: [ 0x5f, 0x3e, 0x63, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.wu $xr31, $xr18, $xr15"
+  -
+    input:
+      bytes: [ 0x5a, 0x91, 0x63, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvabsd.du $xr26, $xr10, $xr4"
