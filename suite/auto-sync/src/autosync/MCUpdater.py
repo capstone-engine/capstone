@@ -114,8 +114,8 @@ class TestFile:
     def has_tests(self) -> bool:
         return len(self.tests) != 0
 
-    def get_cs_testfile_content(self) -> str:
-        content = "test_cases:\n"
+    def get_cs_testfile_content(self, only_test: bool) -> str:
+        content = "\n" if only_test else "test_cases:\n"
         content += "\n".join([str(t) for t in self.tests])
         return content
 
@@ -166,6 +166,7 @@ class MCUpdater:
     def write_to_build_dir(self):
         file_cnt = 0
         test_cnt = 0
+        files_written = set()
         for test in self.test_files:
             if not test.has_tests():
                 continue
@@ -175,10 +176,15 @@ class MCUpdater:
             rel_path = str(test.filename.relative_to(get_path("{LLVM_LIT_TEST_DIR}")))
             filename = re.sub(r"test_dir_\d+", ".", rel_path)
             filename = get_path("{MCUPDATER_OUT_DIR}").joinpath(f"{filename}.yaml")
+            if filename in files_written:
+                write_mode = "a"
+            else:
+                write_mode = "w+"
             filename.parent.mkdir(parents=True, exist_ok=True)
-            with open(filename, "w+") as f:
-                f.write(test.get_cs_testfile_content())
+            with open(filename, write_mode) as f:
+                f.write(test.get_cs_testfile_content(only_test=(write_mode == "a")))
                 log.debug(f"Write {filename}")
+            files_written.add(filename)
         log.info(f"Wrote {file_cnt} files with {test_cnt} test cases.")
 
     def build_test_files(self, mc_cmds: list[LLVM_MC_Command]) -> list[TestFile]:
