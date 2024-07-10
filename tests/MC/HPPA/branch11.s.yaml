@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe8, 0x3f, 0x1f, 0x75 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "bl 0xffffffffffffffc0,r1"
+  -
+    input:
+      bytes: [ 0xe8, 0x3f, 0x1f, 0x6f ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "bl,n 0xffffffffffffffbc,r1"
+  -
+    input:
+      bytes: [ 0xe8, 0x41, 0x40, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "blr r1,rp"
+  -
+    input:
+      bytes: [ 0xe8, 0x41, 0x40, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "blr,n r1,rp"
+  -
+    input:
+      bytes: [ 0xe8, 0x41, 0xc0, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "bv r1(rp)"
+  -
+    input:
+      bytes: [ 0xe8, 0x41, 0xc0, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "bv,n r1(rp)"
+  -
+    input:
+      bytes: [ 0xe8, 0x5f, 0x3f, 0x45 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "gate 0xffffffffffffffa8,rp"
+  -
+    input:
+      bytes: [ 0xe8, 0x5f, 0x3f, 0x3f ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "gate,n 0xffffffffffffffa4,rp"
