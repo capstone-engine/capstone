@@ -108,7 +108,8 @@ class TestFile:
             enc_bytes = match.group("enc_bytes").strip()
             asm_text = match.group("asm_text").strip()
             asm_text = re.sub(r"\s+", " ", asm_text)
-            self.tests.append(Test(self.arch, self.opts, enc_bytes, asm_text))
+            if self.valid_byte_seq(enc_bytes):
+                self.tests.append(Test(self.arch, self.opts, enc_bytes, asm_text))
 
     def has_tests(self) -> bool:
         return len(self.tests) != 0
@@ -120,6 +121,15 @@ class TestFile:
 
     def num_test_cases(self) -> int:
         return len(self.tests)
+
+    def valid_byte_seq(self, enc_bytes):
+        match self.arch:
+            case "AArch64":
+                # It always needs 4 bytes.
+                # Otherwise it is likely a reloc or symbol test
+                return enc_bytes.count("0x") == 4
+            case _:
+                return True
 
 
 class MCUpdater:
@@ -217,6 +227,8 @@ class MCUpdater:
         matches = filter(
             lambda m: None if re.search(r"filetype=obj", m) else m, matches
         )
+        # Skip any relocation related tests.
+        matches = filter(lambda m: None if re.search(r"reloc", m) else m, matches)
         # Remove 'RUN: at ...' prefix
         matches = map(lambda m: re.sub(r"^RUN: at line \d+: ", "", m), matches)
         # Remove redirections
