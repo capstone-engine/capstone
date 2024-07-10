@@ -1,0 +1,1162 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x74, 0x41 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adcs r4, r6"
+  -
+    input:
+      bytes: [ 0xd1, 0x1c ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds r1, r2, #3"
+  -
+    input:
+      bytes: [ 0x03, 0x32 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds r2, #3"
+  -
+    input:
+      bytes: [ 0x08, 0x32 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds r2, #8"
+  -
+    input:
+      bytes: [ 0xd1, 0x18 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds r1, r2, r3"
+  -
+    input:
+      bytes: [ 0x42, 0x44 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add r2, r8"
+  -
+    input:
+      bytes: [ 0x01, 0xb0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add sp, #4"
+  -
+    input:
+      bytes: [ 0x7f, 0xb0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add sp, #0x1fc"
+  -
+    input:
+      bytes: [ 0x01, 0xb0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add sp, #4"
+  -
+    input:
+      bytes: [ 0x02, 0xaa ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add r2, sp, #8"
+  -
+    input:
+      bytes: [ 0xff, 0xaa ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add r2, sp, #0x3fc"
+  -
+    input:
+      bytes: [ 0x82, 0xb0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub sp, #8"
+  -
+    input:
+      bytes: [ 0x82, 0xb0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub sp, #8"
+  -
+    input:
+      bytes: [ 0x9d, 0x44 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add sp, r3"
+  -
+    input:
+      bytes: [ 0x6a, 0x44 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "add r2, sp, r2"
+  -
+    input:
+      bytes: [ 0x00, 0xa5 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr r5, #0"
+  -
+    input:
+      bytes: [ 0x01, 0xa2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr r2, #4"
+  -
+    input:
+      bytes: [ 0xff, 0xa3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr r3, #0x3fc"
+  -
+    input:
+      bytes: [ 0x1a, 0x10 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "asrs r2, r3, #0x20"
+  -
+    input:
+      bytes: [ 0x5a, 0x11 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "asrs r2, r3, #5"
+  -
+    input:
+      bytes: [ 0x5a, 0x10 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "asrs r2, r3, #1"
+  -
+    input:
+      bytes: [ 0x6d, 0x15 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "asrs r5, r5, #0x15"
+  -
+    input:
+      bytes: [ 0x6d, 0x15 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "asrs r5, r5, #0x15"
+  -
+    input:
+      bytes: [ 0x6b, 0x15 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "asrs r3, r5, #0x15"
+  -
+    input:
+      bytes: [ 0x15, 0x41 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "asrs r5, r2"
+  -
+    input:
+      bytes: [ 0x97, 0xe3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "b #0x72e"
+  -
+    input:
+      bytes: [ 0x2e, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "b #-0x1a4"
+  -
+    input:
+      bytes: [ 0x80, 0xd0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "beq #-0x100"
+  -
+    input:
+      bytes: [ 0x50, 0xd0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "beq #0xa0"
+  -
+    input:
+      bytes: [ 0xd8, 0xf0, 0x20, 0xe8 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "blx #0xd8040"
+  -
+    input:
+      bytes: [ 0xb0, 0xf1, 0x40, 0xe8 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "blx #0x1b0080"
+  -
+    input:
+      bytes: [ 0xb1, 0x43 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "bics r1, r6"
+  -
+    input:
+      bytes: [ 0x00, 0xbe ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "bkpt #0"
+  -
+    input:
+      bytes: [ 0xff, 0xbe ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "bkpt #0xff"
+  -
+    input:
+      bytes: [ 0xa0, 0x47 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "blx r4"
+  -
+    input:
+      bytes: [ 0x10, 0x47 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "bx r2"
+  -
+    input:
+      bytes: [ 0xcd, 0x42 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmn r5, r1"
+  -
+    input:
+      bytes: [ 0x20, 0x2e ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r6, #0x20"
+  -
+    input:
+      bytes: [ 0xa3, 0x42 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r3, r4"
+  -
+    input:
+      bytes: [ 0x88, 0x45 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r8, r1"
+  -
+    input:
+      bytes: [ 0x61, 0xb6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cpsie f"
+  -
+    input:
+      bytes: [ 0x74, 0xb6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cpsid a"
+  -
+    input:
+      bytes: [ 0x6c, 0x40 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "eors r4, r5"
+  -
+    input:
+      bytes: [ 0xff, 0xcb ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldm r3, {r0, r1, r2, r3, r4, r5, r6, r7}"
+  -
+    input:
+      bytes: [ 0xba, 0xca ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldm r2!, {r1, r3, r4, r5, r7}"
+  -
+    input:
+      bytes: [ 0x02, 0xc9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldm r1, {r1}"
+  -
+    input:
+      bytes: [ 0x29, 0x68 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r1, [r5]"
+  -
+    input:
+      bytes: [ 0x32, 0x6a ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r2, [r6, #0x20]"
+  -
+    input:
+      bytes: [ 0xfb, 0x6f ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r3, [r7, #0x7c]"
+  -
+    input:
+      bytes: [ 0x00, 0x99 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r1, [sp]"
+  -
+    input:
+      bytes: [ 0x06, 0x9a ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r2, [sp, #0x18]"
+  -
+    input:
+      bytes: [ 0xff, 0x9b ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r3, [sp, #0x3fc]"
+  -
+    input:
+      bytes: [ 0x97, 0x4b ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r3, [pc, #0x25c]"
+  -
+    input:
+      bytes: [ 0x5c, 0x4b ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r3, [pc, #0x170]"
+  -
+    input:
+      bytes: [ 0xd1, 0x58 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r1, [r2, r3]"
+  -
+    input:
+      bytes: [ 0x1c, 0x78 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrb r4, [r3]"
+  -
+    input:
+      bytes: [ 0x35, 0x78 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrb r5, [r6]"
+  -
+    input:
+      bytes: [ 0xfe, 0x7f ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrb r6, [r7, #0x1f]"
+  -
+    input:
+      bytes: [ 0x66, 0x5d ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrb r6, [r4, r5]"
+  -
+    input:
+      bytes: [ 0x1b, 0x88 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrh r3, [r3]"
+  -
+    input:
+      bytes: [ 0x74, 0x88 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrh r4, [r6, #2]"
+  -
+    input:
+      bytes: [ 0xfd, 0x8f ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrh r5, [r7, #0x3e]"
+  -
+    input:
+      bytes: [ 0x96, 0x5b ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrh r6, [r2, r6]"
+  -
+    input:
+      bytes: [ 0x96, 0x57 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrsb r6, [r2, r6]"
+  -
+    input:
+      bytes: [ 0x7b, 0x5e ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrsh r3, [r7, r1]"
+  -
+    input:
+      bytes: [ 0x2c, 0x00 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "movs r4, r5"
+  -
+    input:
+      bytes: [ 0x2c, 0x01 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsls r4, r5, #4"
+  -
+    input:
+      bytes: [ 0x1b, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsls r3, r3, #0xc"
+  -
+    input:
+      bytes: [ 0x1b, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsls r3, r3, #0xc"
+  -
+    input:
+      bytes: [ 0x19, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsls r1, r3, #0xc"
+  -
+    input:
+      bytes: [ 0xb2, 0x40 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsls r2, r6"
+  -
+    input:
+      bytes: [ 0x59, 0x08 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsrs r1, r3, #1"
+  -
+    input:
+      bytes: [ 0x19, 0x08 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsrs r1, r3, #0x20"
+  -
+    input:
+      bytes: [ 0x24, 0x0d ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsrs r4, r4, #0x14"
+  -
+    input:
+      bytes: [ 0x24, 0x0d ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsrs r4, r4, #0x14"
+  -
+    input:
+      bytes: [ 0x22, 0x0d ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsrs r2, r4, #0x14"
+  -
+    input:
+      bytes: [ 0xf2, 0x40 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsrs r2, r6"
+  -
+    input:
+      bytes: [ 0x00, 0x22 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "movs r2, #0"
+  -
+    input:
+      bytes: [ 0xff, 0x22 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "movs r2, #0xff"
+  -
+    input:
+      bytes: [ 0x17, 0x22 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "movs r2, #0x17"
+  -
+    input:
+      bytes: [ 0x23, 0x46 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov r3, r4"
+  -
+    input:
+      bytes: [ 0x19, 0x00 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "movs r1, r3"
+  -
+    input:
+      bytes: [ 0x51, 0x43 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "muls r1, r2, r1"
+  -
+    input:
+      bytes: [ 0x5a, 0x43 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "muls r2, r3, r2"
+  -
+    input:
+      bytes: [ 0x63, 0x43 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "muls r3, r4, r3"
+  -
+    input:
+      bytes: [ 0xde, 0x43 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvns r6, r3"
+  -
+    input:
+      bytes: [ 0x63, 0x42 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsbs r3, r4, #0"
+  -
+    input:
+      bytes: [ 0x4c, 0xbc ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "pop {r2, r3, r6}"
+  -
+    input:
+      bytes: [ 0x86, 0xb4 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "push {r1, r2, r7}"
+  -
+    input:
+      bytes: [ 0x1e, 0xba ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rev r6, r3"
+  -
+    input:
+      bytes: [ 0x57, 0xba ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rev16 r7, r2"
+  -
+    input:
+      bytes: [ 0xcd, 0xba ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "revsh r5, r1"
+  -
+    input:
+      bytes: [ 0xfa, 0x41 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rors r2, r7"
+  -
+    input:
+      bytes: [ 0x59, 0x42 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsbs r1, r3, #0"
+  -
+    input:
+      bytes: [ 0x9c, 0x41 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbcs r4, r3"
+  -
+    input:
+      bytes: [ 0x58, 0xb6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "setend be"
+  -
+    input:
+      bytes: [ 0x50, 0xb6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "setend le"
+  -
+    input:
+      bytes: [ 0x44, 0xc1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "stm r1!, {r2, r6}"
+  -
+    input:
+      bytes: [ 0x8e, 0xc1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "stm r1!, {r1, r2, r3, r7}"
+  -
+    input:
+      bytes: [ 0x3a, 0x60 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r2, [r7]"
+  -
+    input:
+      bytes: [ 0x3a, 0x60 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r2, [r7]"
+  -
+    input:
+      bytes: [ 0x4d, 0x60 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r5, [r1, #4]"
+  -
+    input:
+      bytes: [ 0xfb, 0x67 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r3, [r7, #0x7c]"
+  -
+    input:
+      bytes: [ 0x00, 0x92 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r2, [sp]"
+  -
+    input:
+      bytes: [ 0x00, 0x93 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r3, [sp]"
+  -
+    input:
+      bytes: [ 0x05, 0x94 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r4, [sp, #0x14]"
+  -
+    input:
+      bytes: [ 0xff, 0x95 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r5, [sp, #0x3fc]"
+  -
+    input:
+      bytes: [ 0xfa, 0x50 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r2, [r7, r3]"
+  -
+    input:
+      bytes: [ 0x1c, 0x70 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strb r4, [r3]"
+  -
+    input:
+      bytes: [ 0x35, 0x70 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strb r5, [r6]"
+  -
+    input:
+      bytes: [ 0xfe, 0x77 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strb r6, [r7, #0x1f]"
+  -
+    input:
+      bytes: [ 0x66, 0x55 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strb r6, [r4, r5]"
+  -
+    input:
+      bytes: [ 0x1b, 0x80 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strh r3, [r3]"
+  -
+    input:
+      bytes: [ 0x74, 0x80 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strh r4, [r6, #2]"
+  -
+    input:
+      bytes: [ 0xfd, 0x87 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strh r5, [r7, #0x3e]"
+  -
+    input:
+      bytes: [ 0x96, 0x53 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "strh r6, [r2, r6]"
+  -
+    input:
+      bytes: [ 0xd1, 0x1e ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs r1, r2, #3"
+  -
+    input:
+      bytes: [ 0x03, 0x3a ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs r2, #3"
+  -
+    input:
+      bytes: [ 0x08, 0x3a ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs r2, #8"
+  -
+    input:
+      bytes: [ 0x83, 0xb0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub sp, #0xc"
+  -
+    input:
+      bytes: [ 0xff, 0xb0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub sp, #0x1fc"
+  -
+    input:
+      bytes: [ 0xd1, 0x1a ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs r1, r2, r3"
+  -
+    input:
+      bytes: [ 0x00, 0xdf ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "svc #0"
+  -
+    input:
+      bytes: [ 0xff, 0xdf ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "svc #0xff"
+  -
+    input:
+      bytes: [ 0x6b, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sxtb r3, r5"
+  -
+    input:
+      bytes: [ 0x2b, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sxth r3, r5"
+  -
+    input:
+      bytes: [ 0x0e, 0x42 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "tst r6, r1"
+  -
+    input:
+      bytes: [ 0xd7, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "uxtb r7, r2"
+  -
+    input:
+      bytes: [ 0xa1, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "uxth r1, r4"

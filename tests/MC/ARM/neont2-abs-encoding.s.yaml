@@ -1,0 +1,127 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf1, 0xff, 0x20, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.s8 d16, d16"
+  -
+    input:
+      bytes: [ 0xf5, 0xff, 0x20, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.s16 d16, d16"
+  -
+    input:
+      bytes: [ 0xf9, 0xff, 0x20, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.s32 d16, d16"
+  -
+    input:
+      bytes: [ 0xf9, 0xff, 0x20, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.f32 d16, d16"
+  -
+    input:
+      bytes: [ 0xf1, 0xff, 0x60, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.s8 q8, q8"
+  -
+    input:
+      bytes: [ 0xf5, 0xff, 0x60, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.s16 q8, q8"
+  -
+    input:
+      bytes: [ 0xf9, 0xff, 0x60, 0x03 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.s32 q8, q8"
+  -
+    input:
+      bytes: [ 0xf9, 0xff, 0x60, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.f32 q8, q8"
+  -
+    input:
+      bytes: [ 0xf0, 0xff, 0x20, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vqabs.s8 d16, d16"
+  -
+    input:
+      bytes: [ 0xf4, 0xff, 0x20, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vqabs.s16 d16, d16"
+  -
+    input:
+      bytes: [ 0xf8, 0xff, 0x20, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vqabs.s32 d16, d16"
+  -
+    input:
+      bytes: [ 0xf0, 0xff, 0x60, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vqabs.s8 q8, q8"
+  -
+    input:
+      bytes: [ 0xf4, 0xff, 0x60, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vqabs.s16 q8, q8"
+  -
+    input:
+      bytes: [ 0xf8, 0xff, 0x60, 0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vqabs.s32 q8, q8"

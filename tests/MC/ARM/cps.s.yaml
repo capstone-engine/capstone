@@ -1,0 +1,28 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x61, 0xb6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cpsie f"
+  -
+    input:
+      bytes: [ 0xaf, 0xf3, 0x43, 0x85 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cpsie i, #3"
+  -
+    input:
+      bytes: [ 0xaf, 0xf3, 0x00, 0x81 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cps #0"

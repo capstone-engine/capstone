@@ -1,0 +1,163 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x91, 0x42 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r1, r2"
+  -
+    input:
+      bytes: [ 0x16, 0xbc ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "pop {r1, r2, r4}"
+  -
+    input:
+      bytes: [ 0xfe, 0xde ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "trap"
+  -
+    input:
+      bytes: [ 0xc8, 0x47 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "blx r9"
+  -
+    input:
+      bytes: [ 0xd0, 0x47 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "blx r10"
+  -
+    input:
+      bytes: [ 0x1a, 0xba ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rev r2, r3"
+  -
+    input:
+      bytes: [ 0x63, 0xba ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rev16 r3, r4"
+  -
+    input:
+      bytes: [ 0xf5, 0xba ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "revsh r5, r6"
+  -
+    input:
+      bytes: [ 0x5a, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sxtb r2, r3"
+  -
+    input:
+      bytes: [ 0x1a, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sxth r2, r3"
+  -
+    input:
+      bytes: [ 0x2c, 0x42 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "tst r4, r5"
+  -
+    input:
+      bytes: [ 0xf3, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "uxtb r3, r6"
+  -
+    input:
+      bytes: [ 0xb3, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "uxth r3, r6"
+  -
+    input:
+      bytes: [ 0x8b, 0x58 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r3, [r1, r2]"
+  -
+    input:
+      bytes: [ 0x02, 0xbe ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "bkpt #2"
+  -
+    input:
+      bytes: [ 0xc0, 0x46 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov r8, r8"
+  -
+    input:
+      bytes: [ 0x67, 0xb6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cpsie aif"
+  -
+    input:
+      bytes: [ 0x78, 0x46 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov r0, pc"

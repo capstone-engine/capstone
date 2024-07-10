@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x01, 0x4c, 0x90, 0xed ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldc p12, c4, [r0, #4]"
+  -
+    input:
+      bytes: [ 0x38, 0x6e, 0x02, 0xed ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "stc p14, c6, [r2, #-0xe0]"
+  -
+    input:
+      bytes: [ 0x01, 0x4c, 0x90, 0xed ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldc p12, c4, [r0, #4]"
+  -
+    input:
+      bytes: [ 0x38, 0x6e, 0x02, 0xed ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "stc p14, c6, [r2, #-0xe0]"

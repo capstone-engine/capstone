@@ -1,0 +1,442 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0]"
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0, lsr #0x20]"
+  -
+    input:
+      bytes: [ 0x20, 0x08, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0, lsr #0x10]"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0]"
+  -
+    input:
+      bytes: [ 0x00, 0x08, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0, lsl #0x10]"
+  -
+    input:
+      bytes: [ 0x40, 0x00, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0, asr #0x20]"
+  -
+    input:
+      bytes: [ 0x40, 0x08, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0, asr #0x10]"
+  -
+    input:
+      bytes: [ 0x60, 0x00, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0, rrx]"
+  -
+    input:
+      bytes: [ 0x60, 0x08, 0x90, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r0, r0, ror #0x10]"
+  -
+    input:
+      bytes: [ 0x00, 0xf0, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0]"
+  -
+    input:
+      bytes: [ 0x20, 0xf0, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0, lsr #0x20]"
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0, lsr #0x10]"
+  -
+    input:
+      bytes: [ 0x00, 0xf0, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0]"
+  -
+    input:
+      bytes: [ 0x00, 0xf8, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0, lsl #0x10]"
+  -
+    input:
+      bytes: [ 0x40, 0xf0, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0, asr #0x20]"
+  -
+    input:
+      bytes: [ 0x40, 0xf8, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0, asr #0x10]"
+  -
+    input:
+      bytes: [ 0x60, 0xf0, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0, rrx]"
+  -
+    input:
+      bytes: [ 0x60, 0xf8, 0xd0, 0xf7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "pld [r0, r0, ror #0x10]"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0]"
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0, lsr #0x20]"
+  -
+    input:
+      bytes: [ 0x20, 0x08, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0, lsr #0x10]"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0]"
+  -
+    input:
+      bytes: [ 0x00, 0x08, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0, lsl #0x10]"
+  -
+    input:
+      bytes: [ 0x40, 0x00, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0, asr #0x20]"
+  -
+    input:
+      bytes: [ 0x40, 0x08, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0, asr #0x10]"
+  -
+    input:
+      bytes: [ 0x60, 0x00, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0, rrx]"
+  -
+    input:
+      bytes: [ 0x60, 0x08, 0x80, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r0, [r0, r0, ror #0x10]"
+  -
+    input:
+      bytes: [ 0x62, 0x00, 0x91, 0xe6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r0, [r1], r2, rrx"
+  -
+    input:
+      bytes: [ 0x05, 0x30, 0x94, 0xe6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr r3, [r4], r5"
+  -
+    input:
+      bytes: [ 0x08, 0x60, 0x87, 0xe6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r6, [r7], r8"
+  -
+    input:
+      bytes: [ 0x0b, 0x90, 0x8a, 0xe6 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "str r9, [r10], r11"
+  -
+    input:
+      bytes: [ 0x0f, 0xd0, 0xae, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc sp, lr, pc"
+  -
+    input:
+      bytes: [ 0x29, 0x10, 0xa8, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r1, r8, r9, lsr #0x20"
+  -
+    input:
+      bytes: [ 0x2f, 0x28, 0xa7, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r2, r7, pc, lsr #0x10"
+  -
+    input:
+      bytes: [ 0x0a, 0x30, 0xa6, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r3, r6, r10"
+  -
+    input:
+      bytes: [ 0x0e, 0x48, 0xa5, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r4, r5, lr, lsl #0x10"
+  -
+    input:
+      bytes: [ 0x4b, 0x50, 0xa4, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r5, r4, r11, asr #0x20"
+  -
+    input:
+      bytes: [ 0x4d, 0x68, 0xa3, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r6, r3, sp, asr #0x10"
+  -
+    input:
+      bytes: [ 0x6c, 0x70, 0xa2, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r7, r2, r12, rrx"
+  -
+    input:
+      bytes: [ 0x60, 0x88, 0xa1, 0xe0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc r8, r1, r0, ror #0x10"
+  -
+    input:
+      bytes: [ 0x0e, 0x00, 0x5d, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp sp, lr"
+  -
+    input:
+      bytes: [ 0x28, 0x00, 0x51, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r1, r8, lsr #0x20"
+  -
+    input:
+      bytes: [ 0x27, 0x08, 0x52, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r2, r7, lsr #0x10"
+  -
+    input:
+      bytes: [ 0x06, 0x00, 0x53, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r3, r6"
+  -
+    input:
+      bytes: [ 0x05, 0x08, 0x54, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r4, r5, lsl #0x10"
+  -
+    input:
+      bytes: [ 0x44, 0x00, 0x55, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r5, r4, asr #0x20"
+  -
+    input:
+      bytes: [ 0x43, 0x08, 0x56, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r6, r3, asr #0x10"
+  -
+    input:
+      bytes: [ 0x62, 0x00, 0x57, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r7, r2, rrx"
+  -
+    input:
+      bytes: [ 0x61, 0x08, 0x58, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r8, r1, ror #0x10"
