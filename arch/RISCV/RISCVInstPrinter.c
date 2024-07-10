@@ -24,6 +24,7 @@
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
 #include "../../utils.h"
+#include "../../Mapping.h"
 #include "RISCVMapping.h"
 
 //#include "RISCVDisassembler.h"
@@ -54,28 +55,180 @@ static const char *getRegisterName(unsigned RegNo, unsigned AltIdx);
 
 static void fixDetailOfEffectiveAddr(MCInst *MI)
 {
+	// Operands for load and store instructions in RISCV vary widely
+	unsigned id = MI->flat_insn->id;
 	unsigned reg = 0;
 	int64_t imm = 0;
+    uint8_t access = 0;
+	
+	switch (id) {
+		case RISCV_INS_C_FLD:
+		case RISCV_INS_C_LW:
+		case RISCV_INS_C_FLW:
+		case RISCV_INS_C_LD:
+		case RISCV_INS_C_FSD:
+		case RISCV_INS_C_SW:
+		case RISCV_INS_C_FSW:
+		case RISCV_INS_C_SD:
+		case RISCV_INS_C_FLDSP:
+		case RISCV_INS_C_LWSP:
+		case RISCV_INS_C_FLWSP:
+		case RISCV_INS_C_LDSP:
+		case RISCV_INS_C_FSDSP:
+		case RISCV_INS_C_SWSP:
+		case RISCV_INS_C_FSWSP:
+		case RISCV_INS_C_SDSP:
+		case RISCV_INS_FLW:
+		case RISCV_INS_FSW:
+		case RISCV_INS_FLD:
+		case RISCV_INS_FSD:
+		case RISCV_INS_LB:
+		case RISCV_INS_LBU:
+		case RISCV_INS_LD:
+		case RISCV_INS_LH:
+		case RISCV_INS_LHU:
+		case RISCV_INS_LW:
+		case RISCV_INS_LWU:
+		case RISCV_INS_SB:
+		case RISCV_INS_SD:
+		case RISCV_INS_SH:
+		case RISCV_INS_SW: {
+			CS_ASSERT(3 == MI->flat_insn->detail->riscv.op_count);
+			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -3)->type);
+			CS_ASSERT(RISCV_OP_IMM == RISCV_get_detail_op(MI, -2)->type);
+			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -1)->type);
 
-	CS_ASSERT(3 == MI->flat_insn->detail->riscv.op_count);
-	CS_ASSERT(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[0].type);
+			imm = RISCV_get_detail_op(MI, -2)->imm;
+			reg = RISCV_get_detail_op(MI, -1)->reg;
+			access = RISCV_get_detail_op(MI, -1)->access;
 
-	if (RISCV_OP_IMM == MI->flat_insn->detail->riscv.operands[1].type) {
-		CS_ASSERT(RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[2].type);
-		imm = MI->flat_insn->detail->riscv.operands[1].imm;
-		reg = MI->flat_insn->detail->riscv.operands[2].reg;
-	} else if (RISCV_OP_REG == MI->flat_insn->detail->riscv.operands[1].type) {
-		CS_ASSERT(RISCV_OP_IMM == MI->flat_insn->detail->riscv.operands[2].type);
-		reg = MI->flat_insn->detail->riscv.operands[1].reg;
-		imm = MI->flat_insn->detail->riscv.operands[2].imm;
+			RISCV_get_detail_op(MI, -2)->type = RISCV_OP_MEM;
+			RISCV_get_detail_op(MI, -2)->mem.base = reg;
+			RISCV_get_detail_op(MI, -2)->mem.disp = imm;
+			RISCV_get_detail_op(MI, -2)->access = access;
+
+			RISCV_dec_op_count(MI);
+
+			break;
+		}
+		case RISCV_INS_LR_W:
+		case RISCV_INS_LR_W_AQ:
+		case RISCV_INS_LR_W_AQ_RL:
+		case RISCV_INS_LR_W_RL:
+		case RISCV_INS_LR_D:
+		case RISCV_INS_LR_D_AQ:
+		case RISCV_INS_LR_D_AQ_RL:
+		case RISCV_INS_LR_D_RL: {
+			CS_ASSERT(2 == MI->flat_insn->detail->riscv.op_count);
+			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -1)->type);
+			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -2)->type);
+
+			reg = RISCV_get_detail_op(MI, -1)->reg;
+
+			RISCV_get_detail_op(MI, -1)->type = RISCV_OP_MEM;
+			RISCV_get_detail_op(MI, -1)->mem.base = reg;
+			RISCV_get_detail_op(MI, -1)->mem.disp = 0;
+
+			break;
+		}
+		case RISCV_INS_SC_W:
+		case RISCV_INS_SC_W_AQ:
+		case RISCV_INS_SC_W_AQ_RL:
+		case RISCV_INS_SC_W_RL:
+		case RISCV_INS_SC_D:
+		case RISCV_INS_SC_D_AQ:
+		case RISCV_INS_SC_D_AQ_RL:
+		case RISCV_INS_SC_D_RL:
+		case RISCV_INS_AMOADD_D:
+		case RISCV_INS_AMOADD_D_AQ:
+		case RISCV_INS_AMOADD_D_AQ_RL:
+		case RISCV_INS_AMOADD_D_RL:
+		case RISCV_INS_AMOADD_W:
+		case RISCV_INS_AMOADD_W_AQ:
+		case RISCV_INS_AMOADD_W_AQ_RL:
+		case RISCV_INS_AMOADD_W_RL:
+		case RISCV_INS_AMOAND_D:
+		case RISCV_INS_AMOAND_D_AQ:
+		case RISCV_INS_AMOAND_D_AQ_RL:
+		case RISCV_INS_AMOAND_D_RL:
+		case RISCV_INS_AMOAND_W:
+		case RISCV_INS_AMOAND_W_AQ:
+		case RISCV_INS_AMOAND_W_AQ_RL:
+		case RISCV_INS_AMOAND_W_RL:
+		case RISCV_INS_AMOMAXU_D:
+		case RISCV_INS_AMOMAXU_D_AQ:
+		case RISCV_INS_AMOMAXU_D_AQ_RL:
+		case RISCV_INS_AMOMAXU_D_RL:
+		case RISCV_INS_AMOMAXU_W:
+		case RISCV_INS_AMOMAXU_W_AQ:
+		case RISCV_INS_AMOMAXU_W_AQ_RL:
+		case RISCV_INS_AMOMAXU_W_RL:
+		case RISCV_INS_AMOMAX_D:
+		case RISCV_INS_AMOMAX_D_AQ:
+		case RISCV_INS_AMOMAX_D_AQ_RL:
+		case RISCV_INS_AMOMAX_D_RL:
+		case RISCV_INS_AMOMAX_W:
+		case RISCV_INS_AMOMAX_W_AQ:
+		case RISCV_INS_AMOMAX_W_AQ_RL:
+		case RISCV_INS_AMOMAX_W_RL:
+		case RISCV_INS_AMOMINU_D:
+		case RISCV_INS_AMOMINU_D_AQ:
+		case RISCV_INS_AMOMINU_D_AQ_RL:
+		case RISCV_INS_AMOMINU_D_RL:
+		case RISCV_INS_AMOMINU_W:
+		case RISCV_INS_AMOMINU_W_AQ:
+		case RISCV_INS_AMOMINU_W_AQ_RL:
+		case RISCV_INS_AMOMINU_W_RL:
+		case RISCV_INS_AMOMIN_D:
+		case RISCV_INS_AMOMIN_D_AQ:
+		case RISCV_INS_AMOMIN_D_AQ_RL:
+		case RISCV_INS_AMOMIN_D_RL:
+		case RISCV_INS_AMOMIN_W:
+		case RISCV_INS_AMOMIN_W_AQ:
+		case RISCV_INS_AMOMIN_W_AQ_RL:
+		case RISCV_INS_AMOMIN_W_RL:
+		case RISCV_INS_AMOOR_D:
+		case RISCV_INS_AMOOR_D_AQ:
+		case RISCV_INS_AMOOR_D_AQ_RL:
+		case RISCV_INS_AMOOR_D_RL:
+		case RISCV_INS_AMOOR_W:
+		case RISCV_INS_AMOOR_W_AQ:
+		case RISCV_INS_AMOOR_W_AQ_RL:
+		case RISCV_INS_AMOOR_W_RL:
+		case RISCV_INS_AMOSWAP_D:
+		case RISCV_INS_AMOSWAP_D_AQ:
+		case RISCV_INS_AMOSWAP_D_AQ_RL:
+		case RISCV_INS_AMOSWAP_D_RL:
+		case RISCV_INS_AMOSWAP_W:
+		case RISCV_INS_AMOSWAP_W_AQ:
+		case RISCV_INS_AMOSWAP_W_AQ_RL:
+		case RISCV_INS_AMOSWAP_W_RL:
+		case RISCV_INS_AMOXOR_D:
+		case RISCV_INS_AMOXOR_D_AQ:
+		case RISCV_INS_AMOXOR_D_AQ_RL:
+		case RISCV_INS_AMOXOR_D_RL:
+		case RISCV_INS_AMOXOR_W:
+		case RISCV_INS_AMOXOR_W_AQ:
+		case RISCV_INS_AMOXOR_W_AQ_RL:
+		case RISCV_INS_AMOXOR_W_RL: {
+			CS_ASSERT(3 == MI->flat_insn->detail->riscv.op_count);
+			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -3)->type);
+			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -2)->type);
+			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -1)->type);
+
+			reg = RISCV_get_detail_op(MI, -1)->reg;
+
+			RISCV_get_detail_op(MI, -1)->type = RISCV_OP_MEM;
+			RISCV_get_detail_op(MI, -1)->mem.base = reg;
+			RISCV_get_detail_op(MI, -1)->mem.disp = 0;
+
+			break;
+		}
+		default: {
+			CS_ASSERT(0 && "id is not a RISC-V memory instruction");
+			break;
+		}
 	}
-
-	// set up effective address.
-	MI->flat_insn->detail->riscv.operands[1].type = RISCV_OP_MEM;
-	MI->flat_insn->detail->riscv.op_count--;
-     	MI->flat_insn->detail->riscv.operands[1].mem.base = reg;
-     	MI->flat_insn->detail->riscv.operands[1].mem.disp = imm;
-
 	return;
 }
 
@@ -118,16 +271,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
   	unsigned reg;
   	int64_t Imm = 0;
 
+  	RISCV_add_cs_detail(MI, OpNo);
+
   	MCOperand *MO = MCInst_getOperand(MI, OpNo);
   
   	if (MCOperand_isReg(MO)) {
     		reg = MCOperand_getReg(MO);
     		printRegName(O, reg);
-    		if (MI->csh->detail_opt) {
-      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_REG;
-      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].reg = reg;
-      			MI->flat_insn->detail->riscv.op_count++;
-    		}
   	} else {
 		CS_ASSERT(MCOperand_isImm(MO) && "Unknown operand kind in printOperand");
     		Imm = MCOperand_getImm(MO);
@@ -142,12 +292,6 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
       			else
 				SStream_concat(O, "-%" PRIu64, -Imm);
     		}
-
-    		if (MI->csh->detail_opt) {
-      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].type = RISCV_OP_IMM;
-      			MI->flat_insn->detail->riscv.operands[MI->flat_insn->detail->riscv.op_count].imm = Imm;
-      			MI->flat_insn->detail->riscv.op_count++;
-		}
     	}
 
   	//CS_ASSERT(MO.isExpr() && "Unknown operand kind in printOperand");

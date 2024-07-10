@@ -204,6 +204,418 @@
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef] ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r1 ; operands[1].mem.disp: 0x3ef ; operands[1].access: READ ; Code condition: 8 ; Registers read: cpsr r1 ; Registers modified: r15 ; Groups: IsARM jump
 
+!# issue 0 RISCV operand groups 0x37,0x34,0x00,0x00 == lui s0, 3
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x37,0x34,0x00,0x00 == lui s0, 3 ; op_count: 2 ; operands[0].type: REG = s0 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x3 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0x97,0x82,0x00,0x00 == auipc t0, 8
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x97,0x82,0x00,0x00 == auipc t0, 8 ; op_count: 2 ; operands[0].type: REG = t0 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x8 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0xef,0x00,0x80,0x00 == jal 8
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xef,0x00,0x80,0x00 == jal 8 ; op_count: 1 ; operands[0].type: IMM = 0x8 ; operands[0].access: READ ; Groups: call
+
+!# issue 0 RISCV operand groups 0xef,0xf0,0x1f,0xff == jal -0x10
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xef,0xf0,0x1f,0xff == jal -0x10 ; op_count: 1 ; operands[0].type: IMM = 0xfffffff0 ; operands[0].access: READ ; Groups: call
+
+!# issue 0 RISCV operand groups 0xe7,0x00,0x45,0x00 == jalr ra, a0, 4
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xe7,0x00,0x45,0x00 == jalr ra, a0, 4 ; op_count: 3 ; operands[0].type: REG = ra ; operands[0].access: WRITE ; operands[1].type: REG = a0 ; operands[1].access: READ ; operands[2].type: IMM = 0x4 ; operands[2].access: READ ; Groups: call
+
+!# issue 0 RISCV operand groups 0xe7,0x00,0xc0,0xff == jalr ra, zero, -4
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xe7,0x00,0xc0,0xff == jalr ra, zero, -4 ; op_count: 3 ; operands[0].type: REG = ra ; operands[0].access: WRITE ; operands[1].type: REG = zero ; operands[1].access: READ ; operands[2].type: IMM = 0xfffffffc ; operands[2].access: READ ; Groups: call
+
+!# issue 0 RISCV operand groups 0x63,0x05,0x41,0x00 == beq sp, tp, 0xa
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x63,0x05,0x41,0x00 == beq sp, tp, 0xa ; op_count: 3 ; operands[0].type: REG = sp ; operands[0].access: READ ; operands[1].type: REG = tp ; operands[1].access: READ ; operands[2].type: IMM = 0xa ; operands[2].access: READ ; Groups: branch_relative jump
+
+!# issue 0 RISCV operand groups 0xe3,0x9d,0x61,0xfe == bne gp, t1, -6
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xe3,0x9d,0x61,0xfe == bne gp, t1, -6 ; op_count: 3 ; operands[0].type: REG = gp ; operands[0].access: READ ; operands[1].type: REG = t1 ; operands[1].access: READ ; operands[2].type: IMM = 0xfffffffa ; operands[2].access: READ ; Groups: branch_relative jump
+
+!# issue 0 RISCV operand groups 0x63,0xca,0x93,0x00 == blt t2, s1, 0x14
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x63,0xca,0x93,0x00 == blt t2, s1, 0x14 ; op_count: 3 ; operands[0].type: REG = t2 ; operands[0].access: READ ; operands[1].type: REG = s1 ; operands[1].access: READ ; operands[2].type: IMM = 0x14 ; operands[2].access: READ ; Groups: branch_relative jump
+
+!# issue 0 RISCV operand groups 0x63,0x53,0xb5,0x00 == bge a0, a1, 6
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x63,0x53,0xb5,0x00 == bge a0, a1, 6 ; op_count: 3 ; operands[0].type: REG = a0 ; operands[0].access: READ ; operands[1].type: REG = a1 ; operands[1].access: READ ; operands[2].type: IMM = 0x6 ; operands[2].access: READ ; Groups: branch_relative jump
+
+!# issue 0 RISCV operand groups 0x63,0x65,0xd6,0x00 == bltu a2, a3, 0xa
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x63,0x65,0xd6,0x00 == bltu a2, a3, 0xa ; op_count: 3 ; operands[0].type: REG = a2 ; operands[0].access: READ ; operands[1].type: REG = a3 ; operands[1].access: READ ; operands[2].type: IMM = 0xa ; operands[2].access: READ ; Groups: branch_relative jump
+
+!# issue 0 RISCV operand groups 0x63,0x76,0xf7,0x00 == bgeu a4, a5, 0xc
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x63,0x76,0xf7,0x00 == bgeu a4, a5, 0xc ; op_count: 3 ; operands[0].type: REG = a4 ; operands[0].access: READ ; operands[1].type: REG = a5 ; operands[1].access: READ ; operands[2].type: IMM = 0xc ; operands[2].access: READ ; Groups: branch_relative jump
+
+!# issue 0 RISCV operand groups 0x03,0x88,0x18,0x00 == lb a6, 1(a7)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x03,0x88,0x18,0x00 == lb a6, 1(a7) ; op_count: 2 ; operands[0].type: REG = a6 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = a7 ; operands[1].mem.disp: 0x1 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0x03,0x99,0x49,0x00 == lh s2, 4(s3)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x03,0x99,0x49,0x00 == lh s2, 4(s3) ; op_count: 2 ; operands[0].type: REG = s2 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = s3 ; operands[1].mem.disp: 0x4 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0x03,0xaa,0x6a,0x00 == lw s4, 6(s5)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x03,0xaa,0x6a,0x00 == lw s4, 6(s5) ; op_count: 2 ; operands[0].type: REG = s4 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = s5 ; operands[1].mem.disp: 0x6 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0x03,0xcb,0x2b,0x01 == lbu s6, 0x12(s7)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x03,0xcb,0x2b,0x01 == lbu s6, 0x12(s7) ; op_count: 2 ; operands[0].type: REG = s6 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = s7 ; operands[1].mem.disp: 0x12 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0x03,0xdc,0x8c,0x01 == lhu s8, 0x18(s9)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x03,0xdc,0x8c,0x01 == lhu s8, 0x18(s9) ; op_count: 2 ; operands[0].type: REG = s8 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = s9 ; operands[1].mem.disp: 0x18 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0x23,0x86,0xad,0x03 == sb s10, 0x2c(s11)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x23,0x86,0xad,0x03 == sb s10, 0x2c(s11) ; op_count: 2 ; operands[0].type: REG = s10 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = s11 ; operands[1].mem.disp: 0x2c ; operands[1].access: WRITE
+
+!# issue 0 RISCV operand groups 0x23,0x9a,0xce,0x03 == sh t3, 0x34(t4)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x23,0x9a,0xce,0x03 == sh t3, 0x34(t4) ; op_count: 2 ; operands[0].type: REG = t3 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = t4 ; operands[1].mem.disp: 0x34 ; operands[1].access: WRITE
+
+!# issue 0 RISCV operand groups 0x23,0x8f,0xef,0x01 == sb t5, 0x1e(t6)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x23,0x8f,0xef,0x01 == sb t5, 0x1e(t6) ; op_count: 2 ; operands[0].type: REG = t5 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = t6 ; operands[1].mem.disp: 0x1e ; operands[1].access: WRITE
+
+!# issue 0 RISCV operand groups 0x93,0x00,0xe0,0x00 == addi ra, zero, 0xe
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x93,0x00,0xe0,0x00 == addi ra, zero, 0xe ; op_count: 3 ; operands[0].type: REG = ra ; operands[0].access: WRITE ; operands[1].type: REG = zero ; operands[1].access: READ ; operands[2].type: IMM = 0xe ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0xa1,0x01,0x01 == slti sp, gp, 0x10
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0xa1,0x01,0x01 == slti sp, gp, 0x10 ; op_count: 3 ; operands[0].type: REG = sp ; operands[0].access: WRITE ; operands[1].type: REG = gp ; operands[1].access: READ ; operands[2].type: IMM = 0x10 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0xb2,0x02,0x7d == sltiu tp, t0, 0x7d0
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0xb2,0x02,0x7d == sltiu tp, t0, 0x7d0 ; op_count: 3 ; operands[0].type: REG = tp ; operands[0].access: WRITE ; operands[1].type: REG = t0 ; operands[1].access: READ ; operands[2].type: IMM = 0x7d0 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0xc3,0x03,0xdd == xori t1, t2, -0x230
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0xc3,0x03,0xdd == xori t1, t2, -0x230 ; op_count: 3 ; operands[0].type: REG = t1 ; operands[0].access: WRITE ; operands[1].type: REG = t2 ; operands[1].access: READ ; operands[2].type: IMM = 0xfffffdd0 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0xe4,0xc4,0x12 == ori s0, s1, 0x12c
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0xe4,0xc4,0x12 == ori s0, s1, 0x12c ; op_count: 3 ; operands[0].type: REG = s0 ; operands[0].access: WRITE ; operands[1].type: REG = s1 ; operands[1].access: READ ; operands[2].type: IMM = 0x12c ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0xf5,0x85,0x0c == andi a0, a1, 0xc8
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0xf5,0x85,0x0c == andi a0, a1, 0xc8 ; op_count: 3 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = a1 ; operands[1].access: READ ; operands[2].type: IMM = 0xc8 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0x96,0xe6,0x01 == slli a2, a3, 0x1e
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0x96,0xe6,0x01 == slli a2, a3, 0x1e ; op_count: 3 ; operands[0].type: REG = a2 ; operands[0].access: WRITE ; operands[1].type: REG = a3 ; operands[1].access: READ ; operands[2].type: IMM = 0x1e ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0xd7,0x97,0x01 == srli a4, a5, 0x19
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0xd7,0x97,0x01 == srli a4, a5, 0x19 ; op_count: 3 ; operands[0].type: REG = a4 ; operands[0].access: WRITE ; operands[1].type: REG = a5 ; operands[1].access: READ ; operands[2].type: IMM = 0x19 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x13,0xd8,0xf8,0x40 == srai a6, a7, 0xf
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x13,0xd8,0xf8,0x40 == srai a6, a7, 0xf ; op_count: 3 ; operands[0].type: REG = a6 ; operands[0].access: WRITE ; operands[1].type: REG = a7 ; operands[1].access: READ ; operands[2].type: IMM = 0xf ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x33,0x89,0x49,0x01 == add s2, s3, s4
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x33,0x89,0x49,0x01 == add s2, s3, s4 ; op_count: 3 ; operands[0].type: REG = s2 ; operands[0].access: WRITE ; operands[1].type: REG = s3 ; operands[1].access: READ ; operands[2].type: REG = s4 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0xb3,0x0a,0x7b,0x41 == sub s5, s6, s7
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xb3,0x0a,0x7b,0x41 == sub s5, s6, s7 ; op_count: 3 ; operands[0].type: REG = s5 ; operands[0].access: WRITE ; operands[1].type: REG = s6 ; operands[1].access: READ ; operands[2].type: REG = s7 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x33,0xac,0xac,0x01 == slt s8, s9, s10
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x33,0xac,0xac,0x01 == slt s8, s9, s10 ; op_count: 3 ; operands[0].type: REG = s8 ; operands[0].access: WRITE ; operands[1].type: REG = s9 ; operands[1].access: READ ; operands[2].type: REG = s10 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0xb3,0x3d,0xde,0x01 == sltu s11, t3, t4
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xb3,0x3d,0xde,0x01 == sltu s11, t3, t4 ; op_count: 3 ; operands[0].type: REG = s11 ; operands[0].access: WRITE ; operands[1].type: REG = t3 ; operands[1].access: READ ; operands[2].type: REG = t4 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x33,0xd2,0x62,0x40 == sra tp, t0, t1
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x33,0xd2,0x62,0x40 == sra tp, t0, t1 ; op_count: 3 ; operands[0].type: REG = tp ; operands[0].access: WRITE ; operands[1].type: REG = t0 ; operands[1].access: READ ; operands[2].type: REG = t1 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0xb3,0x43,0x94,0x00 == xor t2, s0, s1
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xb3,0x43,0x94,0x00 == xor t2, s0, s1 ; op_count: 3 ; operands[0].type: REG = t2 ; operands[0].access: WRITE ; operands[1].type: REG = s0 ; operands[1].access: READ ; operands[2].type: REG = s1 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x33,0xe5,0xc5,0x00 == or a0, a1, a2
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x33,0xe5,0xc5,0x00 == or a0, a1, a2 ; op_count: 3 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = a1 ; operands[1].access: READ ; operands[2].type: REG = a2 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0xb3,0x76,0xf7,0x00 == and a3, a4, a5
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xb3,0x76,0xf7,0x00 == and a3, a4, a5 ; op_count: 3 ; operands[0].type: REG = a3 ; operands[0].access: WRITE ; operands[1].type: REG = a4 ; operands[1].access: READ ; operands[2].type: REG = a5 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0xb3,0x54,0x39,0x01 == srl s1, s2, s3
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xb3,0x54,0x39,0x01 == srl s1, s2, s3 ; op_count: 3 ; operands[0].type: REG = s1 ; operands[0].access: WRITE ; operands[1].type: REG = s2 ; operands[1].access: READ ; operands[2].type: REG = s3 ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0xb3,0x50,0x31,0x00 == srl ra, sp, gp
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xb3,0x50,0x31,0x00 == srl ra, sp, gp ; op_count: 3 ; operands[0].type: REG = ra ; operands[0].access: WRITE ; operands[1].type: REG = sp ; operands[1].access: READ ; operands[2].type: REG = gp ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x33,0x9f,0x0f,0x00 == sll t5, t6, zero
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x33,0x9f,0x0f,0x00 == sll t5, t6, zero ; op_count: 3 ; operands[0].type: REG = t5 ; operands[0].access: WRITE ; operands[1].type: REG = t6 ; operands[1].access: READ ; operands[2].type: REG = zero ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0x73,0x15,0x04,0xb0 == csrrw a0, mcycle, s0
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x73,0x15,0x04,0xb0 == csrrw a0, mcycle, s0 ; op_count: 2 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = s0 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0xf3,0x56,0x00,0x10 == csrrwi a3, sstatus, 0
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xf3,0x56,0x00,0x10 == csrrwi a3, sstatus, 0 ; op_count: 2 ; operands[0].type: REG = a3 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x0 ; operands[1].access: READ
+
+!# issue 0 RISCV operand groups 0x33,0x05,0x7b,0x03 == mul a0, s6, s7
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x33,0x05,0x7b,0x03 == mul a0, s6, s7 ; op_count: 3 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = s6 ; operands[1].access: READ ; operands[2].type: REG = s7 ; operands[2].access: READ ; Groups: hasStdExtM
+
+!# issue 0 RISCV operand groups 0xb3,0x45,0x9c,0x03 == div a1, s8, s9
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xb3,0x45,0x9c,0x03 == div a1, s8, s9 ; op_count: 3 ; operands[0].type: REG = a1 ; operands[0].access: WRITE ; operands[1].type: REG = s8 ; operands[1].access: READ ; operands[2].type: REG = s9 ; operands[2].access: READ ; Groups: hasStdExtM
+
+!# issue 0 RISCV operand groups 0x33,0x66,0xbd,0x03 == rem a2, s10, s11
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x33,0x66,0xbd,0x03 == rem a2, s10, s11 ; op_count: 3 ; operands[0].type: REG = a2 ; operands[0].access: WRITE ; operands[1].type: REG = s10 ; operands[1].access: READ ; operands[2].type: REG = s11 ; operands[2].access: READ ; Groups: hasStdExtM
+
+!# issue 0 RISCV operand groups 0x2f,0xa4,0x02,0x10 == lr.w s0, (t0)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x2f,0xa4,0x02,0x10 == lr.w s0, (t0) ; op_count: 2 ; operands[0].type: REG = s0 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = t0 ; operands[1].access: READ ; Groups: hasStdExtA
+
+!# issue 0 RISCV operand groups 0xaf,0x23,0x65,0x18 == sc.w t2, t1, (a0)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xaf,0x23,0x65,0x18 == sc.w t2, t1, (a0) ; op_count: 3 ; operands[0].type: REG = t2 ; operands[0].access: WRITE ; operands[1].type: REG = t1 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = a0 ; operands[2].access: WRITE ; Groups: hasStdExtA
+
+!# issue 0 RISCV operand groups 0x2f,0x27,0x2f,0x01 == amoadd.w a4, s2, (t5)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x2f,0x27,0x2f,0x01 == amoadd.w a4, s2, (t5) ; op_count: 3 ; operands[0].type: REG = a4 ; operands[0].access: WRITE ; operands[1].type: REG = s2 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = t5 ; operands[2].access: READ | WRITE ; Groups: hasStdExtA
+
+!# issue 0 RISCV operand groups 0x43,0xf0,0x20,0x18 == fmadd.s ft0, ft1, ft2, ft3
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x43,0xf0,0x20,0x18 == fmadd.s ft0, ft1, ft2, ft3 ; op_count: 4 ; operands[0].type: REG = ft0 ; operands[0].access: WRITE ; operands[1].type: REG = ft1 ; operands[1].access: READ ; operands[2].type: REG = ft2 ; operands[2].access: READ ; operands[3].type: REG = ft3 ; operands[3].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0xd3,0x72,0x73,0x00 == fadd.s ft5, ft6, ft7
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xd3,0x72,0x73,0x00 == fadd.s ft5, ft6, ft7 ; op_count: 3 ; operands[0].type: REG = ft5 ; operands[0].access: WRITE ; operands[1].type: REG = ft6 ; operands[1].access: READ ; operands[2].type: REG = ft7 ; operands[2].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x53,0xf4,0x04,0x58 == fsqrt.s fs0, fs1
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0xf4,0x04,0x58 == fsqrt.s fs0, fs1 ; op_count: 2 ; operands[0].type: REG = fs0 ; operands[0].access: WRITE ; operands[1].type: REG = fs1 ; operands[1].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x53,0x85,0xc5,0x28 == fmin.s fa0, fa1, fa2
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0x85,0xc5,0x28 == fmin.s fa0, fa1, fa2 ; op_count: 3 ; operands[0].type: REG = fa0 ; operands[0].access: WRITE ; operands[1].type: REG = fa1 ; operands[1].access: READ ; operands[2].type: REG = fa2 ; operands[2].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x53,0x2e,0xde,0xa1 == feq.s t3, ft8, ft9
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0x2e,0xde,0xa1 == feq.s t3, ft8, ft9 ; op_count: 3 ; operands[0].type: REG = t3 ; operands[0].access: WRITE ; operands[1].type: REG = ft8 ; operands[1].access: READ ; operands[2].type: REG = ft9 ; operands[2].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0xd3,0x84,0x05,0xf0 == fmv.w.x fs1, a1
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xd3,0x84,0x05,0xf0 == fmv.w.x fs1, a1 ; op_count: 2 ; operands[0].type: REG = fs1 ; operands[0].access: WRITE ; operands[1].type: REG = a1 ; operands[1].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x53,0x06,0x05,0xe0 == fmv.x.w a2, fa0
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0x06,0x05,0xe0 == fmv.x.w a2, fa0 ; op_count: 2 ; operands[0].type: REG = a2 ; operands[0].access: WRITE ; operands[1].type: REG = fa0 ; operands[1].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x53,0x75,0x00,0xc0 == fcvt.w.s a0, ft0
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0x75,0x00,0xc0 == fcvt.w.s a0, ft0 ; op_count: 2 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = ft0 ; operands[1].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0xd3,0xf0,0x05,0xd0 == fcvt.s.w ft1, a1
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xd3,0xf0,0x05,0xd0 == fcvt.s.w ft1, a1 ; op_count: 2 ; operands[0].type: REG = ft1 ; operands[0].access: WRITE ; operands[1].type: REG = a1 ; operands[1].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0xd3,0x15,0x08,0xe0 == fclass.s a1, fa6
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xd3,0x15,0x08,0xe0 == fclass.s a1, fa6 ; op_count: 2 ; operands[0].type: REG = a1 ; operands[0].access: WRITE ; operands[1].type: REG = fa6 ; operands[1].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x87,0xaa,0x75,0x00 == flw fs5, 7(a1)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x87,0xaa,0x75,0x00 == flw fs5, 7(a1) ; op_count: 2 ; operands[0].type: REG = fs5 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = a1 ; operands[1].mem.disp: 0x7 ; operands[1].access: READ ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x27,0x27,0x66,0x01 == fsw fs6, 0xe(a2)
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x27,0x27,0x66,0x01 == fsw fs6, 0xe(a2) ; op_count: 2 ; operands[0].type: REG = fs6 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = a2 ; operands[1].mem.disp: 0xe ; operands[1].access: WRITE ; Groups: hasStdExtF
+
+!# issue 0 RISCV operand groups 0x43,0xf0,0x20,0x1a == fmadd.d ft0, ft1, ft2, ft3
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x43,0xf0,0x20,0x1a == fmadd.d ft0, ft1, ft2, ft3 ; op_count: 4 ; operands[0].type: REG = ft0 ; operands[0].access: WRITE ; operands[1].type: REG = ft1 ; operands[1].access: READ ; operands[2].type: REG = ft2 ; operands[2].access: READ ; operands[3].type: REG = ft3 ; operands[3].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0xd3,0x72,0x73,0x02 == fadd.d ft5, ft6, ft7
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0xd3,0x72,0x73,0x02 == fadd.d ft5, ft6, ft7 ; op_count: 3 ; operands[0].type: REG = ft5 ; operands[0].access: WRITE ; operands[1].type: REG = ft6 ; operands[1].access: READ ; operands[2].type: REG = ft7 ; operands[2].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0x53,0xf4,0x04,0x5a == fsqrt.d fs0, fs1
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0xf4,0x04,0x5a == fsqrt.d fs0, fs1 ; op_count: 2 ; operands[0].type: REG = fs0 ; operands[0].access: WRITE ; operands[1].type: REG = fs1 ; operands[1].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0x53,0x85,0xc5,0x2a == fmin.d fa0, fa1, fa2
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0x85,0xc5,0x2a == fmin.d fa0, fa1, fa2 ; op_count: 3 ; operands[0].type: REG = fa0 ; operands[0].access: WRITE ; operands[1].type: REG = fa1 ; operands[1].access: READ ; operands[2].type: REG = fa2 ; operands[2].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0x53,0x2e,0xde,0xa3 == feq.d t3, ft8, ft9
+!# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
+0x53,0x2e,0xde,0xa3 == feq.d t3, ft8, ft9 ; op_count: 3 ; operands[0].type: REG = t3 ; operands[0].access: WRITE ; operands[1].type: REG = ft8 ; operands[1].access: READ ; operands[2].type: REG = ft9 ; operands[2].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0x13,0x04,0xa8,0x7a == addi s0, a6, 0x7aa
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x13,0x04,0xa8,0x7a == addi s0, a6, 0x7aa ; op_count: 3 ; operands[0].type: REG = s0 ; operands[0].access: WRITE ; operands[1].type: REG = a6 ; operands[1].access: READ ; operands[2].type: IMM = 0x7aa ; operands[2].access: READ
+
+!# issue 0 RISCV operand groups 0xbb,0x07,0x9c,0x02 == mulw a5, s8, s1
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0xbb,0x07,0x9c,0x02 == mulw a5, s8, s1 ; op_count: 3 ; operands[0].type: REG = a5 ; operands[0].access: WRITE ; operands[1].type: REG = s8 ; operands[1].access: READ ; operands[2].type: REG = s1 ; operands[2].access: READ ; Groups: hasStdExtM isrv64
+
+!# issue 0 RISCV operand groups 0xbb,0x40,0x5d,0x02 == divw ra, s10, t0
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0xbb,0x40,0x5d,0x02 == divw ra, s10, t0 ; op_count: 3 ; operands[0].type: REG = ra ; operands[0].access: WRITE ; operands[1].type: REG = s10 ; operands[1].access: READ ; operands[2].type: REG = t0 ; operands[2].access: READ ; Groups: hasStdExtM isrv64
+
+!# issue 0 RISCV operand groups 0x3b,0x63,0xb7,0x03 == remw t1, a4, s11
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x3b,0x63,0xb7,0x03 == remw t1, a4, s11 ; op_count: 3 ; operands[0].type: REG = t1 ; operands[0].access: WRITE ; operands[1].type: REG = a4 ; operands[1].access: READ ; operands[2].type: REG = s11 ; operands[2].access: READ ; Groups: hasStdExtM isrv64
+
+!# issue 0 RISCV operand groups 0x2f,0xb4,0x02,0x10 == lr.d s0, (t0)
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x2f,0xb4,0x02,0x10 == lr.d s0, (t0) ; op_count: 2 ; operands[0].type: REG = s0 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = t0 ; operands[1].access: READ ; Groups: hasStdExtA isrv64
+
+!# issue 0 RISCV operand groups 0xaf,0x33,0x65,0x18 == sc.d t2, t1, (a0)
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0xaf,0x33,0x65,0x18 == sc.d t2, t1, (a0) ; op_count: 3 ; operands[0].type: REG = t2 ; operands[0].access: WRITE ; operands[1].type: REG = t1 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = a0 ; operands[2].access: WRITE ; Groups: hasStdExtA isrv64
+
+!# issue 0 RISCV operand groups 0x2f,0x37,0x2f,0x01 == amoadd.d a4, s2, (t5)
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x2f,0x37,0x2f,0x01 == amoadd.d a4, s2, (t5) ; op_count: 3 ; operands[0].type: REG = a4 ; operands[0].access: WRITE ; operands[1].type: REG = s2 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = t5 ; operands[2].access: READ | WRITE ; Groups: hasStdExtA isrv64
+
+!# issue 0 RISCV operand groups 0x53,0x75,0x20,0xc0 == fcvt.l.s a0, ft0
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x53,0x75,0x20,0xc0 == fcvt.l.s a0, ft0 ; op_count: 2 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = ft0 ; operands[1].access: READ ; Groups: hasStdExtF isrv64
+
+!# issue 0 RISCV operand groups 0xd3,0xf0,0x25,0xd0 == fcvt.s.l ft1, a1
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0xd3,0xf0,0x25,0xd0 == fcvt.s.l ft1, a1 ; op_count: 2 ; operands[0].type: REG = ft1 ; operands[0].access: WRITE ; operands[1].type: REG = a1 ; operands[1].access: READ ; Groups: hasStdExtF isrv64
+
+!# issue 0 RISCV operand groups 0xd3,0x84,0x05,0xf2 == fmv.d.x fs1, a1
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0xd3,0x84,0x05,0xf2 == fmv.d.x fs1, a1 ; op_count: 2 ; operands[0].type: REG = fs1 ; operands[0].access: WRITE ; operands[1].type: REG = a1 ; operands[1].access: READ ; Groups: hasStdExtD isrv64
+
+!# issue 0 RISCV operand groups 0x53,0x06,0x05,0xe2 == fmv.x.d a2, fa0
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x53,0x06,0x05,0xe2 == fmv.x.d a2, fa0 ; op_count: 2 ; operands[0].type: REG = a2 ; operands[0].access: WRITE ; operands[1].type: REG = fa0 ; operands[1].access: READ ; Groups: hasStdExtD isrv64
+
+!# issue 0 RISCV operand groups 0x53,0x75,0x00,0xc2 == fcvt.w.d a0, ft0
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x53,0x75,0x00,0xc2 == fcvt.w.d a0, ft0 ; op_count: 2 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = ft0 ; operands[1].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0xd3,0x80,0x05,0xd2 == fcvt.d.w ft1, a1
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0xd3,0x80,0x05,0xd2 == fcvt.d.w ft1, a1 ; op_count: 2 ; operands[0].type: REG = ft1 ; operands[0].access: WRITE ; operands[1].type: REG = a1 ; operands[1].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0xd3,0x15,0x08,0xe2 == fclass.d a1, fa6
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0xd3,0x15,0x08,0xe2 == fclass.d a1, fa6 ; op_count: 2 ; operands[0].type: REG = a1 ; operands[0].access: WRITE ; operands[1].type: REG = fa6 ; operands[1].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0x87,0xba,0x75,0x00 == fld fs5, 7(a1)
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x87,0xba,0x75,0x00 == fld fs5, 7(a1) ; op_count: 2 ; operands[0].type: REG = fs5 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = a1 ; operands[1].mem.disp: 0x7 ; operands[1].access: READ ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0x27,0x37,0x66,0x01 == fsd fs6, 0xe(a2)
+!# CS_ARCH_RISCV, CS_MODE_RISCV64, CS_OPT_DETAIL
+0x27,0x37,0x66,0x01 == fsd fs6, 0xe(a2) ; op_count: 2 ; operands[0].type: REG = fs6 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = a2 ; operands[1].mem.disp: 0xe ; operands[1].access: WRITE ; Groups: hasStdExtD
+
+!# issue 0 RISCV operand groups 0xe8,0x1f == c.addi4spn a0, sp, 0x3fc
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0xe8,0x1f == c.addi4spn a0, sp, 0x3fc ; op_count: 3 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: REG = sp ; operands[1].access: READ ; operands[2].type: IMM = 0x3fc ; operands[2].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x7d,0x61 == c.addi16sp sp, 0x1f0
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x7d,0x61 == c.addi16sp sp, 0x1f0 ; op_count: 2 ; operands[0].type: REG = sp ; operands[0].access: READ | WRITE ; operands[1].type: IMM = 0x1f0 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x80,0x25 == c.fld fs0, 8(a1)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x80,0x25 == c.fld fs0, 8(a1) ; op_count: 2 ; operands[0].type: REG = fs0 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = a1 ; operands[1].mem.disp: 0x8 ; operands[1].access: READ ; Groups: hasStdExtC hasStdExtD
+
+!# issue 0 RISCV operand groups 0x00,0x46 == c.lw s0, 8(a2)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x00,0x46 == c.lw s0, 8(a2) ; op_count: 2 ; operands[0].type: REG = s0 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = a2 ; operands[1].mem.disp: 0x8 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x88,0xa2 == c.fsd fa0, 0(a3)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x88,0xa2 == c.fsd fa0, 0(a3) ; op_count: 2 ; operands[0].type: REG = fa0 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = a3 ; operands[1].access: WRITE ; Groups: hasStdExtC hasStdExtD
+
+!# issue 0 RISCV operand groups 0x04,0xcb == c.sw s1, 0x10(a4)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x04,0xcb == c.sw s1, 0x10(a4) ; op_count: 2 ; operands[0].type: REG = s1 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = a4 ; operands[1].mem.disp: 0x10 ; operands[1].access: WRITE ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x55,0x13 == c.addi t1, -0xb
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x55,0x13 == c.addi t1, -0xb ; op_count: 2 ; operands[0].type: REG = t1 ; operands[0].access: READ | WRITE ; operands[1].type: IMM = 0xfffffff5 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0xf2,0x93 == c.add t2, t3
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0xf2,0x93 == c.add t2, t3 ; op_count: 2 ; operands[0].type: REG = t2 ; operands[0].access: READ | WRITE ; operands[1].type: REG = t3 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x5d,0x45 == c.li a0, 0x17
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x5d,0x45 == c.li a0, 0x17 ; op_count: 2 ; operands[0].type: REG = a0 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x17 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x19,0x80 == c.srli s0, 6
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x19,0x80 == c.srli s0, 6 ; op_count: 2 ; operands[0].type: REG = s0 ; operands[0].access: READ | WRITE ; operands[1].type: IMM = 0x6 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x15,0x68 == c.lui a6, 5
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x15,0x68 == c.lui a6, 5 ; op_count: 2 ; operands[0].type: REG = a6 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x5 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x2a,0xa4 == c.fsdsp fa0, 8(sp)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x2a,0xa4 == c.fsdsp fa0, 8(sp) ; op_count: 2 ; operands[0].type: REG = fa0 ; operands[0].access: READ ; operands[1].type: MEM ; operands[1].mem.base: REG = sp ; operands[1].mem.disp: 0x8 ; operands[1].access: WRITE ; Groups: hasStdExtC hasStdExtD
+
+!# issue 0 RISCV operand groups 0x62,0x24 == c.fldsp fs0, 0x18(sp)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x62,0x24 == c.fldsp fs0, 0x18(sp) ; op_count: 2 ; operands[0].type: REG = fs0 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = sp ; operands[1].mem.disp: 0x18 ; operands[1].access: READ ; Groups: hasStdExtC hasStdExtD
+
+!# issue 0 RISCV operand groups 0xa6,0xff == c.fswsp fs1, 0xfc(sp)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0xa6,0xff == c.fswsp fs1, 0xfc(sp) ; op_count: 3 ; operands[0].type: REG = fs1 ; operands[0].access: READ ; operands[1].type: IMM = 0xfc ; operands[1].access: READ ; operands[2].type: REG = sp ; operands[2].access: WRITE ; Groups: hasStdExtC hasStdExtF isrv32
+
+!# issue 0 RISCV operand groups 0x2a,0x65 == c.flwsp fa0, 0x88(sp)
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x2a,0x65 == c.flwsp fa0, 0x88(sp) ; op_count: 3 ; operands[0].type: REG = fa0 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x88 ; operands[1].access: READ ; operands[2].type: REG = sp ; operands[2].access: READ ; Groups: hasStdExtC hasStdExtF isrv32
+
+!# issue 0 RISCV operand groups 0x76,0x86 == c.mv a2, t4
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x76,0x86 == c.mv a2, t4 ; op_count: 2 ; operands[0].type: REG = a2 ; operands[0].access: WRITE ; operands[1].type: REG = t4 ; operands[1].access: READ ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0x65,0xdd == c.beqz a0, -8
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x65,0xdd == c.beqz a0, -8 ; op_count: 2 ; operands[0].type: REG = a0 ; operands[0].access: READ ; operands[1].type: IMM = 0xfffffff8 ; operands[1].access: READ ; Groups: hasStdExtC branch_relative jump
+
+!# issue 0 RISCV operand groups 0x01,0x00 == c.nop
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x01,0x00 == c.nop ; Groups: hasStdExtC
+
+!# issue 0 RISCV operand groups 0xfd,0xaf == c.j 0x7fe
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0xfd,0xaf == c.j 0x7fe ; op_count: 1 ; operands[0].type: IMM = 0x7fe ; operands[0].access: READ ; Groups: hasStdExtC jump
+
+!# issue 0 RISCV operand groups 0x82,0x82 == c.jr t0
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x82,0x82 == c.jr t0 ; op_count: 1 ; operands[0].type: REG = t0 ; operands[0].access: READ ; Groups: hasStdExtC jump
+
+!# issue 0 RISCV operand groups 0x11,0x20 == c.jal 4
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x11,0x20 == c.jal 4 ; op_count: 1 ; operands[0].type: IMM = 0x4 ; operands[0].access: READ ; Groups: hasStdExtC isrv32 call
+
+!# issue 0 RISCV operand groups 0x82,0x94 == c.jalr s1
+!# CS_ARCH_RISCV, CS_MODE_RISCVC, CS_OPT_DETAIL
+0x82,0x94 == c.jalr s1 ; op_count: 1 ; operands[0].type: REG = s1 ; operands[0].access: READ ; Groups: hasStdExtC call
+
 !# issue 2285 AArch64 operands
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0xc0,0x08,0x9f,0xe0 == ld1w {za0h.s[w12, 0]}, p2/z, [x6] ; op_count: 3 ; operands[0].type: SME_MATRIX ; operands[0].sme.type: 2 ; operands[0].sme.tile: za0.s ; operands[0].sme.slice_reg: w12 ; operands[0].sme.slice_offset: 0 ; operands[0].sme.is_vertical: false ; operands[0].access: WRITE ; operands[0].vas: 0x20 ; operands[1].type: PREDICATE ; operands[1].pred.reg: p2 ; operands[1].access: READ ; operands[2].type: MEM ; operands[2].mem.base: REG = x6 ; operands[2].access: READ ; Registers read: w12 p2 x6 ; Registers modified: za0.s ; Groups: HasSME

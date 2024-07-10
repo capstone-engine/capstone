@@ -6,6 +6,7 @@
 
 #include "../../Mapping.h"
 #include "../../utils.h"
+#include "../../cs_simple_types.h"
 
 #include "RISCVMapping.h"
 #include "RISCVInstPrinter.h"
@@ -139,6 +140,37 @@ static const insn_map insns[] = {
 
 #include "RISCVMappingInsn.inc"
 };
+
+#ifndef CAPSTONE_DIET
+
+static const map_insn_ops insn_operands[] = {
+#include "RISCVMappingInsnOp.inc"
+};
+
+#endif
+
+void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum) {
+	if (!detail_is_set(MI))
+		return;
+
+	cs_op_type op_type = map_get_op_type(MI, OpNum);
+
+	if (op_type == CS_OP_IMM) {
+		RISCV_get_detail_op(MI, 0)->type = RISCV_OP_IMM;
+		RISCV_get_detail_op(MI, 0)->imm = MCInst_getOpVal(MI, OpNum);
+		RISCV_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		RISCV_inc_op_count(MI);
+	}
+	else if (op_type == CS_OP_REG) {
+		RISCV_get_detail_op(MI, 0)->type = RISCV_OP_REG;
+		RISCV_get_detail_op(MI, 0)->reg = MCInst_getOpVal(MI, OpNum);
+		RISCV_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		RISCV_inc_op_count(MI);
+	}
+	else {
+		CS_ASSERT(0 && "Op type not handled.");
+	}
+}
 
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id) 

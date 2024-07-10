@@ -138,6 +138,7 @@ DECL_get_detail_op(aarch64, AArch64);
 DECL_get_detail_op(alpha, Alpha);
 DECL_get_detail_op(hppa, HPPA);
 DECL_get_detail_op(loongarch, LoongArch);
+DECL_get_detail_op(riscv, RISCV);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
@@ -167,6 +168,8 @@ DEFINE_inc_detail_op_count(hppa, HPPA);
 DEFINE_dec_detail_op_count(hppa, HPPA);
 DEFINE_inc_detail_op_count(loongarch, LoongArch);
 DEFINE_dec_detail_op_count(loongarch, LoongArch);
+DEFINE_inc_detail_op_count(riscv, RISCV);
+DEFINE_dec_detail_op_count(riscv, RISCV);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)
@@ -195,6 +198,7 @@ DEFINE_get_arch_detail(aarch64, AArch64);
 DEFINE_get_arch_detail(alpha, Alpha);
 DEFINE_get_arch_detail(hppa, HPPA);
 DEFINE_get_arch_detail(loongarch, LoongArch);
+DEFINE_get_arch_detail(riscv, RISCV);
 
 static inline bool detail_is_set(const MCInst *MI)
 {

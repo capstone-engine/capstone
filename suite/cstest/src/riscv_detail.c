@@ -40,6 +40,20 @@ char *get_detail_riscv(csh *handle, cs_mode mode, cs_insn *ins)
 					add_str(&result, " ; operands[%u].mem.disp: 0x%x", i, op->mem.disp);
 				break;
 		}
+
+		switch(op->access) {
+			default:
+				break;
+			case CS_AC_READ:
+				add_str(&result, " ; operands[%u].access: READ", i);
+				break;
+			case CS_AC_WRITE:
+				add_str(&result, " ; operands[%u].access: WRITE", i);
+				break;
+			case CS_AC_READ | CS_AC_WRITE:
+				add_str(&result, " ; operands[%u].access: READ | WRITE", i);
+				break;
+		}
 	}
 
 	return result;

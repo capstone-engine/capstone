@@ -23,7 +23,7 @@ static const insn_map insns[] = {
 #include "AlphaGenCSMappingInsn.inc"
 };
 
-const map_insn_ops insn_operands[] = {
+static const map_insn_ops insn_operands[] = {
 #include "AlphaGenCSMappingInsnOp.inc"
 };
 

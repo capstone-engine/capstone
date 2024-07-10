@@ -26,6 +26,7 @@
 #include "../../MCRegisterInfo.h"
 #include "../../MCDisassembler.h"
 #include "../../MathExtras.h"
+#include "../../Mapping.h"
 #include "RISCVBaseInfo.h"
 #include "RISCVDisassembler.h"
 
@@ -322,13 +323,33 @@ static void markLSInsn(MCInst *MI, uint32_t in)
 	       st 0100011 = 0x23
 	   F/D ld 0000111 = 0x07
 	       st 0100111 = 0x27
+	       st 0101111 = 0x2f
 	*/
 #define MASK_LS_INSN 0x0000007f
 	uint32_t opcode = in & MASK_LS_INSN;
 	if (0 == (opcode ^ 0x03) || 0 == (opcode ^ 0x07) ||
-	    0 == (opcode ^ 0x23) || 0 == (opcode ^ 0x27))
+		0 == (opcode ^ 0x23) || 0 == (opcode ^ 0x27) ||
+		0 == (opcode ^ 0x2f))
 		MI->flat_insn->detail->riscv.need_effective_addr = true;
 #undef MASK_LS_INSN
+	return;
+}
+
+static void markCLSInsn(MCInst *MI, uint32_t in)
+{
+	// Unfortunately there is no obvious pattern in terms of RISC-V C instructions
+	// Thus, we compare the instruction IDs to see if it is a load/store instruction
+	unsigned id = MCInst_getOpcode(MI);
+	if (id == RISCV_C_FLD || id == RISCV_C_LW ||
+		id == RISCV_C_FLW || id == RISCV_C_LD ||
+		id == RISCV_C_FSD || id == RISCV_C_SW ||
+		id == RISCV_C_FSW || id == RISCV_C_SD ||
+		id == RISCV_C_FLDSP || id == RISCV_C_LWSP ||
+		id == RISCV_C_FLWSP || id == RISCV_C_LDSP ||
+		id == RISCV_C_FSDSP || id == RISCV_C_SWSP ||
+		id == RISCV_C_FSWSP || id == RISCV_C_SDSP) {
+		RISCV_get_detail(MI)->need_effective_addr = true;
+	}
 	return;
 }
 
@@ -382,6 +403,12 @@ static DecodeStatus RISCVDisassembler_getInstruction(int mode, MCInst *MI,
     		init_MI_insn_detail(MI);
     		// Calling the auto-generated decoder function.
     		Result = decodeInstruction(DecoderTable16, MI, Inst, Address, MRI, mode);
+    		// Now we need mark what instruction need fix effective address output.
+    		// Note that we mark it AFTER the instruction is decoded
+    		// This is because there is no obvious pattern in terms of RISC-V C instructions
+    		// So we compare the instruction IDs one by one
+    		if (detail_is_set(MI))
+    			markCLSInsn(MI, Inst);
     		*Size = 2;
   	}
 

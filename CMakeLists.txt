@@ -572,6 +572,7 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVGenRegisterInfo.inc
         arch/RISCV/RISCVGenSubtargetInfo.inc
         arch/RISCV/RISCVMappingInsn.inc
+        arch/RISCV/RISCVMappingInsnOp.inc
     )
     set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
 endif()
