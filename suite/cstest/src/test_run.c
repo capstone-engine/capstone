@@ -144,16 +144,16 @@ static bool open_cs_handle(UnitTestState *ustate)
 	if (err != CS_ERR_OK) {
 		goto option_error;
 	}
+	// We always enable this, since it is set enabled by LLVM as well.
+	err = cs_option(ustate->handle, CS_OPT_NO_BRANCH_OFFSET, CS_OPT_ON);
+	if (err != CS_ERR_OK) {
+		goto option_error;
+	}
 	for (size_t i = 0; i < options_set; ++i) {
 		err = cs_option(ustate->handle, options[i].type, options[i].val);
 		if (err != CS_ERR_OK) {
 			goto option_error;
 		}
-	}
-	// We always enable this, since it is set enabled by LLVM as well.
-	err = cs_option(ustate->handle, CS_OPT_NO_BRANCH_OFFSET, CS_OPT_ON);
-	if (err != CS_ERR_OK) {
-		goto option_error;
 	}
 	return true;
 
