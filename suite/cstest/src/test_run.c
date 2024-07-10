@@ -137,27 +137,33 @@ static bool open_cs_handle(UnitTestState *ustate)
 		fprintf(stderr, "Could not parse options: %s\n",
 			 tc_str);
 		cs_mem_free(tc_str);
+		return false;
 	}
 
 	cs_err err = cs_open(arch, mode, &ustate->handle);
 	if (err != CS_ERR_OK) {
-		char *tc_str = test_input_stringify(ustate->tcase->input, "");
-		fprintf(stderr, "[!] cs_open() failed with: '%s'. TestInput: %s\n",
-			 cs_strerror(err), tc_str);
-		cs_mem_free(tc_str);
-		return false;
+		goto option_error;
 	}
 	for (size_t i = 0; i < options_set; ++i) {
 		err = cs_option(ustate->handle, options[i].type, options[i].val);
 		if (err != CS_ERR_OK) {
-			char *tc_str = test_input_stringify(ustate->tcase->input, "");
-			fprintf(stderr, "[!] cs_option() failed with: '%s'. TestInput: %s\n",
-				 cs_strerror(err), tc_str);
-			cs_mem_free(tc_str);
-			return false;
+			goto option_error;
 		}
 	}
+	// We always enable this, since it is set enabled by LLVM as well.
+	err = cs_option(ustate->handle, CS_OPT_NO_BRANCH_OFFSET, CS_OPT_ON);
+	if (err != CS_ERR_OK) {
+		goto option_error;
+	}
 	return true;
+
+option_error: {
+		char *tc_str = test_input_stringify(ustate->tcase->input, "");
+		fprintf(stderr, "[!] cs_option() failed with: '%s'. TestInput: %s\n",
+			 cs_strerror(err), tc_str);
+		cs_mem_free(tc_str);
+		return false;
+	}
 }
 
 static int cstest_unit_test_setup(void **state)

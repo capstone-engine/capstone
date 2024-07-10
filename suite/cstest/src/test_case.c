@@ -142,7 +142,7 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 }
 
 /// Compares the given @asm_text to the @expected one.
-/// Because Capstone sometimes deviades from the LLVM syntax
+/// Because Capstone sometimes deviates from the LLVM syntax
 /// the strings don't need to be the same to be considered a valid match.
 /// E.g. Capstone sometimes prints decimal numbers instead of hexadecimal
 /// for readability.
@@ -156,12 +156,29 @@ static bool compare_asm_text(const char *asm_text, const char *expected) {
 	}
 	char *asm_copy = strdup(asm_text);
 	replace_hex(asm_copy);
-	if (strcmp(asm_copy, expected) == 0) {
-		cs_mem_free(asm_copy);
-		return true;
+	trim_str(asm_copy);
+
+	// Test the different interpretation of the strings which are allowed.
+	char *no_hex_asm_text = strdup(asm_copy);
+	if (strcmp(no_hex_asm_text, expected) == 0) {
+		cs_mem_free(no_hex_asm_text);
+		goto passed;
 	}
+	cs_mem_free(no_hex_asm_text);
+
+	char *no_dec_imms = replace_decimal_imms(asm_copy);
+	if (strcmp(no_dec_imms, expected) == 0) {
+		cs_mem_free(no_dec_imms);
+		goto passed;
+	}
+	cs_mem_free(no_dec_imms);
+
 	cs_mem_free(asm_copy);
 	return false;
+
+passed:
+	cs_mem_free(asm_copy);
+	return true;
 }
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.

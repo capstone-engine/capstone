@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 #include <stdarg.h>
+#include <stdint.h>
+#include <capstone/platform.h>
 #include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
@@ -141,4 +143,51 @@ void replace_negative(char *src, int mode)
 	strcpy(src, result);
 	free(result);
 	free(origin);
+}
+
+void trim_str(char *str)
+{
+	char tmp[MAXMEM];
+	int start, end, j, i;
+
+	start = 0;
+	end = strlen(str) - 1;
+	j = 0;
+	while (start < strlen(str) && isspace(str[start])) start++;
+	while (end >= 0 && isspace(str[end])) end--;
+
+	for (i = start; i <= end; ++i)
+		tmp[j++] = str[i];
+
+	tmp[j] = '\0';
+	strcpy(str, tmp);
+
+	return;
+}
+
+char *replace_decimal_imms(const char *src) {
+	if (!src) {
+		fail_msg("[!] src was NULL\n");
+	}
+	char result[1024] = { 0 };
+	char *src_cpy = strdup(src);
+
+	char *imm_ptr = NULL;
+	char *endptr = src_cpy;
+	while ((imm_ptr = strstr(endptr, "#")) != NULL) {
+		imm_ptr += 1; // skip '#'
+		if (strstr(imm_ptr, "0x") == imm_ptr) {
+			// Hexadecimal number
+			endptr = imm_ptr;
+			continue;
+		}
+		long long val = strtoll(imm_ptr, &endptr, 10);
+		if (strlen(result) >= sizeof(result) - 1) {
+			free(src_cpy);
+			fail_msg("asm_text too long for buffer.\n");
+		}
+		snprintf(result, sizeof(result), "%s0x%" PRIx64, result, (uint64_t)val);
+	}
+	free(src_cpy);
+	return strdup(result);
 }
