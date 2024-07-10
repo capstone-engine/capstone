@@ -1,0 +1,55 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x13, 0x04, 0xa8, 0x7a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi s0, a6, 0x7aa"
+  -
+    input:
+      bytes: [ 0x1b, 0x8e, 0xaa, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiw t3, s5, 0x2aa"
+  -
+    input:
+      bytes: [ 0x2f, 0xbe, 0xaa, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoswap.d.rl t3, a0, (s5)"
+  -
+    input:
+      bytes: [ 0x3b, 0x00, 0x31, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulw zero, sp, gp"
+  -
+    input:
+      bytes: [ 0x53, 0xa0, 0x31, 0xd0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.s.lu ft0, gp, rdn"
+  -
+    input:
+      bytes: [ 0x53, 0x81, 0x01, 0xf2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmv.d.x ft2, gp"
