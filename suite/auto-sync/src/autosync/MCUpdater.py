@@ -172,10 +172,13 @@ class MCUpdater:
         log.info(f"Wrote {file_cnt} files with {test_cnt} test cases.")
 
     def build_test_files(self, mc_cmds: list[LLVM_MC_Command]) -> list[TestFile]:
-        log.debug("Build TestFile objects")
-        return [
-            TestFile(self.arch, mcc.file, mcc.get_opts_list(), mcc) for mcc in mc_cmds
-        ]
+        log.info("Build TestFile objects")
+        test_files = list()
+        n_all = len(mc_cmds)
+        for i, mcc in enumerate(mc_cmds):
+            print(f"{i}/{n_all}", flush=True, end="\r")
+            test_files.append(TestFile(self.arch, mcc.file, mcc.get_opts_list(), mcc))
+        return test_files
 
     def run_llvm_lit(self, paths: list[Path]) -> list[LLVM_MC_Command]:
         """
@@ -193,7 +196,7 @@ class MCUpdater:
             except FileExistsError:
                 pass
 
-        log.debug(f"Run lit: {args}")
+        log.info(f"Run lit: {' '.join(args)}")
         cmds = sp.run(args, capture_output=True)
         if cmds.stderr:
             raise ValueError(f"llvm-lit failed with {cmds.stderr}")
