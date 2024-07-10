@@ -129,20 +129,20 @@ void append_to_str_lower(char *str, size_t str_size, const char *src) {
 
 /// @brief Appends the string @p src to the string @p str. @p src is put to lower case.
 /// @param str The string to append to.
-/// @param str_size The length of @p str
+/// @param str_buf_size Size of buffer @p str.
 /// @param src The string to append.
-void append_to_str(char *str, size_t str_size, const char *src) {
+void append_to_str(char *str, size_t str_buf_size, const char *src) {
 	char *dest = strchr(str, '\0');
-	if (dest - str >= str_size) {
+	if (dest - str >= str_buf_size) {
 		assert("str_size does not match actual string length." && 0);
 		return;
 	}
 
 	int i = dest - str;
-	for (int j = 0; (i < str_size) && (j < strlen(src)); ++i, ++j) {
+	for (int j = 0; (i < str_buf_size) && (j < strlen(src)); ++i, ++j) {
 		str[i] = src[j];
 	}
-	str[i-1] = '\0';
+	str[str_buf_size-1] = '\0';
 }
 
 /// Returns the given byte sequence @bytes as a string of the

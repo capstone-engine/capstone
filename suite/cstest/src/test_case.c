@@ -163,12 +163,12 @@ static bool compare_asm_text(const char *asm_text, const char *expected) {
 	replace_negative(asm_copy, sizeof(asm_copy));
 
 	char expected_copy[MAX_ASM_TXT_MEM] = { 0 };
-	strncpy(asm_copy, expected, sizeof(expected_copy));
+	strncpy(expected_copy, expected, sizeof(expected_copy));
 	trim_str(expected_copy);
 	replace_hex(expected_copy, sizeof(expected_copy));
 	replace_negative(expected_copy, sizeof(expected_copy));
 
-	if (strcmp(asm_copy, expected) == 0) {
+	if (strcmp(asm_copy, expected_copy) == 0) {
 		return true;
 	}
 
