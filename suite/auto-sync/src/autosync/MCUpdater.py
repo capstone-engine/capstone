@@ -168,7 +168,9 @@ class MCUpdater:
         excluded: list[str] | None,
         included: list[str] | None,
     ):
+        self.symbolic_links = list()
         self.arch = arch
+        self.test_dir_link_prefix = f"test_dir_{arch}_"
         self.mc_dir = mc_dir
         self.excluded = excluded if excluded else list()
         self.included = included if included else list()
@@ -202,7 +204,7 @@ class MCUpdater:
             test_cnt += test.num_test_cases()
 
             rel_path = str(test.filename.relative_to(get_path("{LLVM_LIT_TEST_DIR}")))
-            filename = re.sub(r"test_dir_\d+", ".", rel_path)
+            filename = re.sub(rf"{self.test_dir_link_prefix}\d+", ".", rel_path)
             filename = get_path("{MCUPDATER_OUT_DIR}").joinpath(f"{filename}.yaml")
             if filename in files_written:
                 write_mode = "a"
@@ -234,11 +236,14 @@ class MCUpdater:
         llvm_lit_cfg = str(lit_cfg_dir.absolute())
         args = [llvm_lit, "-v", "-a", llvm_lit_cfg]
         for i, p in enumerate(paths):
-            slink = lit_cfg_dir.joinpath(f"test_dir_{i}")
+            slink = lit_cfg_dir.joinpath(f"{self.test_dir_link_prefix}{i}")
+            self.symbolic_links.append(slink)
+            log.debug(f"Create link: {slink} -> {p}")
             try:
                 slink.symlink_to(p, target_is_directory=True)
-            except FileExistsError:
-                pass
+            except FileExistsError as e:
+                print("Failed: Link existed. Please delete it")
+                raise e
 
         log.info(f"Run lit: {' '.join(args)}")
         cmds = sp.run(args, capture_output=True)
@@ -297,6 +302,9 @@ class MCUpdater:
         log.info("Generate MC regression tests")
         llvm_mc_cmds = self.run_llvm_lit(test_paths)
         self.test_files = self.build_test_files(llvm_mc_cmds)
+        for slink in self.symbolic_links:
+            log.debug(f"Unlink {slink}")
+            slink.unlink()
         self.write_to_build_dir()
 
 
