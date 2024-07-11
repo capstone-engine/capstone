@@ -54,16 +54,27 @@ class LLVM_MC_Command:
         return f"{self.cmd} < {str(self.file.absolute())}"
 
 
-class Test:
+class MCTest:
+    """
+    A single test. It can contain multiple decoded instruction for a given byte sequence.
+    In general a MCTest always tests a sequence of instructions in a single .text segment.
+    """
+
     def __init__(self, arch: str, opts: list[str], encoding: str, asm_text: str):
         self.arch = arch
         self.opts = opts
-        self.encoding: str = encoding
-        self.asm_text: str = asm_text
+        self.encoding: list[str] = [encoding]
+        self.asm_text: list[str] = [asm_text]
+
+    def extend(self, encoding: str, asm_text: str):
+        self.encoding.append(encoding)
+        self.asm_text.append(asm_text)
 
     def __str__(self):
-        self.encoding.replace(" ", ",")
-        self.encoding = self.encoding.strip("[]")
+        encoding = ",".join(self.encoding)
+        encoding = re.sub(r"[\[\]]", "", encoding)
+        encoding = encoding.strip()
+        encoding = re.sub(r"[\s,]+", ", ", encoding)
         yaml_tc = (
             "  -\n"
             "    input:\n"
@@ -72,13 +83,16 @@ class Test:
             "      options: [ <OPTIONS> ]\n"
             "    expected:\n"
             "      insns:\n"
-            "        -\n"
-            '          asm_text: "<ASM_TEXT>"\n'
         )
-        yaml_tc = yaml_tc.replace("<ENCODING>", self.encoding)
-        yaml_tc = yaml_tc.replace("<ASM_TEXT>", self.asm_text)
-        yaml_tc = yaml_tc.replace("<ARCH>", self.arch)
+        template = "        -\n          asm_text: <ASM_TEXT>\n"
+        insn_cases = ""
+        for text in self.asm_text:
+            insn_cases += template.replace("<ASM_TEXT>", f'"{text}"')
+
+        yaml_tc = yaml_tc.replace("<ENCODING>", encoding)
+        yaml_tc = yaml_tc.replace("<ARCH>", f"CS_ARCH_{self.arch.upper()}")
         yaml_tc = yaml_tc.replace("<OPTIONS>", ", ".join([f'"{o}"' for o in self.opts]))
+        yaml_tc += insn_cases
         return yaml_tc
 
 
@@ -90,33 +104,47 @@ class TestFile:
         self.filename: Path = filename
         self.opts: list[str] = list() if not opts else opts
         self.mc_cmd: LLVM_MC_Command = mc_cmd
-        self.tests: list[Test] = list()
+        # Indexed by .text section count
+        self.tests: dict[int:MCTest] = dict()
         self.init_tests()
 
     def init_tests(self):
         mc_output = self.mc_cmd.exec()
         if mc_output.stderr and not mc_output.stdout:
+            # We can still continue. We just ignore the failed cases.
             log.debug(f"llvm-mc cmd stderr: {mc_output.stderr}")
-        asm_pat = "(?P<asm_text>.+)"
-        enc_pat = "(\\[?(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?\]?)"
+        text_section = 0  # Counts the .text sections
+        asm_pat = f"(?P<asm_text>.+)"
+        enc_pat = r"(\[?(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?\]?)"
         for line in mc_output.stdout.splitlines():
+            line = line.decode("utf8")
+            if ".text" in line:
+                text_section += 1
+                continue
             match = re.search(
-                rf"^\s*{asm_pat}\s*(#|//)\s*encoding:\s*{enc_pat}", line.decode("utf8")
+                rf"^\s*{asm_pat}\s*(#|//|@)\s*encoding:\s*{enc_pat}", line
             )
             if not match:
                 continue
             enc_bytes = match.group("enc_bytes").strip()
             asm_text = match.group("asm_text").strip()
             asm_text = re.sub(r"\s+", " ", asm_text)
-            if self.valid_byte_seq(enc_bytes):
-                self.tests.append(Test(self.arch, self.opts, enc_bytes, asm_text))
+            if not self.valid_byte_seq(enc_bytes):
+                continue
+
+            if text_section in self.tests:
+                self.tests[text_section].extend(enc_bytes, asm_text)
+            else:
+                self.tests[text_section] = MCTest(
+                    self.arch, self.opts, enc_bytes, asm_text
+                )
 
     def has_tests(self) -> bool:
         return len(self.tests) != 0
 
     def get_cs_testfile_content(self, only_test: bool) -> str:
         content = "\n" if only_test else "test_cases:\n"
-        content += "\n".join([str(t) for t in self.tests])
+        content += "\n".join([str(t) for t in self.tests.values()])
         return content
 
     def num_test_cases(self) -> int:
