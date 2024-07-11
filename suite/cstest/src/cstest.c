@@ -62,9 +62,11 @@ void print_test_run_stats(const TestRunStats *stats)
 {
 	printf("\n-----------------------------------------\n");
 	printf("Test run statistics\n\n");
+	printf("Valid files: %" PRId32 "\n", stats->valid_test_files);
+	printf("Invalid files: %" PRId32 "\n", stats->invalid_files);
 	printf("Errors: %" PRId32 "\n\n", stats->errors);
 	printf("Test cases:\n");
-	printf("\tTotal: %" PRId32 "\n", stats->total);
+	printf("\tTotal: %" PRId32 "\n", stats->tc_total);
 	printf("\tSuccessful: %" PRId32 "\n", stats->successful);
 	printf("\tFailed: %" PRId32 "\n", stats->failed);
 	printf("-----------------------------------------\n");

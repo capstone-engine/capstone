@@ -129,12 +129,13 @@ static const cyaml_schema_field_t test_case_mapping_schema[] = {
 };
 
 static const cyaml_schema_value_t test_case_schema = {
-	CYAML_VALUE_MAPPING(CYAML_FLAG_DEFAULT, TestCase,
+	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestCase,
 			    test_case_mapping_schema),
 };
 
 typedef struct {
-	TestCase *test_cases;
+	char *filename; ///< Filename. NOT filled by cyaml.
+	TestCase **test_cases;
 	uint32_t test_cases_count;
 } TestFile;
 
@@ -143,6 +144,9 @@ void test_file_free(TestFile *test_file);
 TestFile *test_file_clone(TestFile *test_file);
 
 static const cyaml_schema_field_t test_file_mapping_schema[] = {
+	CYAML_FIELD_STRING_PTR(
+		"filename", CYAML_FLAG_OPTIONAL | CYAML_FLAG_POINTER_NULL_STR,
+		TestFile, filename, 0, 0),
 	CYAML_FIELD_SEQUENCE("test_cases", CYAML_FLAG_POINTER, TestFile,
 			     test_cases, &test_case_schema, 1,
 			     CYAML_UNLIMITED), // 1-MAX options

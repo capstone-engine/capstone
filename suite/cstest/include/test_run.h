@@ -14,10 +14,12 @@ typedef enum {
 } TestRunResult;
 
 typedef struct {
-	uint32_t total;	     ///< Total number of test cases.
-	uint32_t successful; ///< Number of successful test cases.
-	uint32_t failed;     ///< Number of failed test cases.
-	uint32_t errors;     ///< Number errors (parsing errors etc).
+	uint32_t valid_test_files; ///< Total number of test files.
+	uint32_t invalid_files;	   ///< Number of invalid files.
+	uint32_t tc_total;	   ///< Total number of test cases.
+	uint32_t successful;	   ///< Number of successful test cases.
+	uint32_t failed;	   ///< Number of failed test cases.
+	uint32_t errors;	   ///< Number errors (parsing errors etc).
 } TestRunStats;
 
 typedef struct {
@@ -37,7 +39,7 @@ typedef struct {
 	csh handle;	     ///< The Capstone instance for this test. Setup and teared down by the cmocka handlers.
 } UnitTestState;
 
-TestRunResult cstest_run_tests(char **test_files, uint32_t file_count,
+TestRunResult cstest_run_tests(char **test_file_paths, uint32_t path_count,
 			       TestRunStats *stats);
 
 #endif // TESTRUN_H

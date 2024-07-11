@@ -14,7 +14,7 @@
 
 static TestRunResult get_test_run_result(TestRunStats *stats)
 {
-	if (stats->total != stats->successful + stats->failed) {
+	if (stats->tc_total != stats->successful + stats->failed) {
 		fprintf(stderr,
 			"[!] Inconsistent statistics: total != successful + failed\n");
 		stats->errors++;
@@ -30,39 +30,42 @@ static TestRunResult get_test_run_result(TestRunStats *stats)
 }
 
 /// Extract all test cases from the given test files.
-static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
+static TestFile **parse_test_files(char **tf_paths, uint32_t path_count,
 				   TestRunStats *stats)
 {
-	TestCase **cases = NULL;
-	stats->total = 0;
+	TestFile **files = NULL;
+	stats->tc_total = 0;
 
-	for (size_t i = 0; i < file_count; ++i) {
+	for (size_t i = 0; i < path_count; ++i) {
 		TestFile *test_file_data = NULL;
 		cyaml_err_t err = cyaml_load_file(
-			test_files[i], &cyaml_config, &test_file_schema,
+			tf_paths[i], &cyaml_config, &test_file_schema,
 			(cyaml_data_t **)&test_file_data, NULL);
+
 		if (err != CYAML_OK || !test_file_data) {
 			fprintf(stderr, "[!] Failed to parse test file '%s'\n",
-				test_files[i]);
+				tf_paths[i]);
 			fprintf(stderr, "[!] Error: '%s'\n",
 				!test_file_data && err == CYAML_OK ?
 					"Empty file" :
 					cyaml_strerror(err));
+			stats->invalid_files++;
 			stats->errors++;
 			continue;
 		}
 
+		size_t k = stats->valid_test_files++;
 		// Copy all test cases of a test file
-		cases = cs_mem_realloc(
-			cases, sizeof(TestCase *) *
-				       (stats->total +
-					test_file_data->test_cases_count));
-		for (size_t k = 0; k < test_file_data->test_cases_count;
-		     ++k, stats->total++) {
-			cases[stats->total] =
-				test_case_clone(&test_file_data->test_cases[k]);
-			assert(cases[stats->total]);
-		}
+		files = cs_mem_realloc(files, sizeof(TestFile *) *
+						      stats->valid_test_files);
+
+		files[k] = test_file_clone(test_file_data);
+		assert(files[k]);
+		stats->tc_total += files[k]->test_cases_count;
+		files[k]->filename = strrchr(tf_paths[i], '/') ?
+					     strdup(strrchr(tf_paths[i], '/')) :
+					     strdup(tf_paths[i]);
+
 		err = cyaml_free(&cyaml_config, &test_file_schema,
 				 test_file_data, 0);
 		if (err != CYAML_OK) {
@@ -72,7 +75,7 @@ static TestCase **parse_test_cases(char **test_files, uint32_t file_count,
 		}
 	}
 
-	return cases;
+	return files;
 }
 
 static bool parse_input_options(const TestInput *input, cs_arch *arch,
@@ -213,51 +216,64 @@ static void cstest_unit_test(void **state)
 	cs_free(insns, insns_count);
 }
 
-static void eval_test_cases(TestCase **test_cases, TestRunStats *stats)
+static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 {
-	assert(test_cases && stats);
+	assert(test_files && stats);
 	// CMocka's API doesn't allow to init a CMUnitTest with a partially initialized state
 	// (which is later initialized in the test setup).
 	// So we do it manually here.
 	struct CMUnitTest *utest_table =
-		cs_mem_calloc(sizeof(struct CMUnitTest), stats->total);
+		cs_mem_calloc(sizeof(struct CMUnitTest),
+			      stats->tc_total); // Number of test cases.
 
-	char utest_id[16] = { 0 };
+	char utest_id[128] = { 0 };
 
-	for (size_t i = 0; i < stats->total; ++i) {
-		UnitTestState *ut_state = cs_mem_calloc(sizeof(UnitTestState), 1);
-		ut_state->tcase = test_cases[i];
+	size_t tci = 0;
+	for (size_t i = 0; i < stats->valid_test_files; ++i) {
+		TestCase **test_cases = test_files[i]->test_cases;
+		const char *filename = test_files[i]->filename ?
+					       test_files[i]->filename :
+					       NULL;
 
-		cs_snprintf(utest_id, sizeof(utest_id), "%" PRIx32 ": ", i);
-		utest_table[i].name = test_input_stringify(ut_state->tcase->input, utest_id);
-		utest_table[i].initial_state = ut_state;
-		utest_table[i].setup_func = cstest_unit_test_setup;
-		utest_table[i].teardown_func = cstest_unit_test_teardown;
-		utest_table[i].test_func = cstest_unit_test;
+		for (size_t k = 0; k < test_files[i]->test_cases_count;
+		     ++k, ++tci) {
+			UnitTestState *ut_state =
+				cs_mem_calloc(sizeof(UnitTestState), 1);
+			ut_state->tcase = test_cases[k];
+			cs_snprintf(utest_id, sizeof(utest_id),
+				    "%s - TC #%" PRIx32 ": ", filename, k);
+			utest_table[tci].name = test_input_stringify(
+				ut_state->tcase->input, utest_id);
+			utest_table[tci].initial_state = ut_state;
+			utest_table[tci].setup_func = cstest_unit_test_setup;
+			utest_table[tci].teardown_func =
+				cstest_unit_test_teardown;
+			utest_table[tci].test_func = cstest_unit_test;
+		}
 	}
 	// Use private function here, because the API takes only constant tables.
 	int failed_tests = _cmocka_run_group_tests(
-		"All test cases", utest_table, stats->total, NULL, NULL);
-	for (size_t i = 0; i < stats->total; ++i) {
+		"All test cases", utest_table, stats->tc_total, NULL, NULL);
+	for (size_t i = 0; i < stats->tc_total; ++i) {
 		cs_mem_free((char *) utest_table[i].name);
 		cs_mem_free(utest_table[i].initial_state);
 	}
 	cs_mem_free(utest_table);
 	stats->failed += failed_tests;
-	stats->successful += stats->total - failed_tests;
+	stats->successful += stats->tc_total - failed_tests;
 }
 
 /// Runs runs all valid tests in the given @test_files
 /// and returns the result as well as statistics in @stats.
-TestRunResult cstest_run_tests(char **test_files, uint32_t file_count,
+TestRunResult cstest_run_tests(char **test_file_paths, uint32_t path_count,
 			       TestRunStats *stats)
 {
-	TestCase **cases = parse_test_cases(test_files, file_count, stats);
-	eval_test_cases(cases, stats);
-	for (size_t i = 0; i < stats->total; ++i) {
-		test_case_free(cases[i]);
+	TestFile **files = parse_test_files(test_file_paths, path_count, stats);
+	eval_test_cases(files, stats);
+	for (size_t i = 0; i < stats->valid_test_files; ++i) {
+		test_file_free(files[i]);
 	}
-	cs_mem_free(cases);
+	cs_mem_free(files);
 
 	return get_test_run_result(stats);
 }

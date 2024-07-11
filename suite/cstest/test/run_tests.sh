@@ -57,5 +57,15 @@ if ! $(grep -q "$expected_out" "$STDOUT_FILE"); then
   exit 1
 fi
 
+cstest . > "$STDOUT_FILE" 2> "$STDERR_FILE"
+expected_out="Test files found: 5"
+
+if ! $(grep -q "$expected_out" "$STDOUT_FILE"); then
+  echo "Test: Detecting file in directory failed."
+  print_stdout
+  print_stderr
+  exit 1
+fi
+
 echo "Test succeeded"
 exit 0

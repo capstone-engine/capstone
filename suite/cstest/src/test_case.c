@@ -53,7 +53,7 @@ TestInput *test_input_clone(TestInput *test_input)
 
 char *test_input_stringify(const TestInput *test_input, const char *postfix)
 {
-	size_t msg_len = 1024;
+	size_t msg_len = 2048;
 	char *msg = cs_mem_calloc(sizeof(char), msg_len);
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
@@ -264,21 +264,29 @@ void test_file_free(TestFile *test_file)
 	if (!test_file) {
 		return;
 	}
-	test_file_free(test_file);
+
+	for (size_t i = 0; i < test_file->test_cases_count; ++i) {
+		test_case_free(test_file->test_cases[i]);
+	}
+
+	cs_mem_free(test_file->test_cases);
+	cs_mem_free(test_file->filename);
+	test_file->filename = NULL;
+	cs_mem_free(test_file);
 }
 
 TestFile *test_file_clone(TestFile *test_file)
 {
 	assert(test_file);
 	TestFile *tf = test_file_new();
-	for (size_t i = 0; i < test_file->test_cases_count; i++) {
-		tf->test_cases =
-			cs_mem_realloc(tf->test_cases,
-				sizeof(TestCase) * (tf->test_cases_count + 1));
-		TestCase *tc = test_case_clone(&test_file->test_cases[i]);
-		tf->test_cases[i] = *tc;
-		tf->test_cases_count++;
-		cs_mem_free(tc);
+	tf->filename = test_file->filename ? strdup(test_file->filename) : NULL;
+	tf->test_cases =
+		cs_mem_calloc(sizeof(TestCase *), test_file->test_cases_count);
+
+	for (size_t i = 0; i < test_file->test_cases_count;
+	     i++, tf->test_cases_count++) {
+		TestCase *tc = test_case_clone(test_file->test_cases[i]);
+		tf->test_cases[i] = tc;
 	}
 	return tf;
 }
