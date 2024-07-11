@@ -215,14 +215,16 @@ class MCUpdater:
                 f.write(test.get_cs_testfile_content(only_test=(write_mode == "a")))
                 log.debug(f"Write {filename}")
             files_written.add(filename)
-        log.info(f"Wrote {file_cnt} files with {test_cnt} test cases.")
+        log.info(
+            f"Processed {file_cnt} files with {test_cnt} test cases. Generated {len(files_written)} files"
+        )
 
     def build_test_files(self, mc_cmds: list[LLVM_MC_Command]) -> list[TestFile]:
         log.info("Build TestFile objects")
         test_files = list()
         n_all = len(mc_cmds)
         for i, mcc in enumerate(mc_cmds):
-            print(f"{i}/{n_all}", flush=True, end="\r")
+            print(f"{i}/{n_all} {mcc.file.name}", flush=True, end="\r")
             test_files.append(TestFile(self.arch, mcc.file, mcc.get_opts_list(), mcc))
         return test_files
 
