@@ -147,7 +147,9 @@ TestExpected *test_expected_clone(TestExpected *test_expected)
 /// the strings don't need to be the same to be considered a valid match.
 /// E.g. Capstone sometimes prints decimal numbers instead of hexadecimal
 /// for readability.
-static bool compare_asm_text(const char *asm_text, const char *expected) {
+static bool compare_asm_text(const char *asm_text, const char *expected,
+			     size_t arch_bits)
+{
 	if (!asm_text || !expected) {
 		fprintf(stderr, "[!] asm_text or expected was NULL\n");
 		return false;
@@ -160,13 +162,13 @@ static bool compare_asm_text(const char *asm_text, const char *expected) {
 	strncpy(asm_copy, asm_text, sizeof(asm_copy));
 	trim_str(asm_copy);
 	replace_hex(asm_copy, sizeof(asm_copy));
-	replace_negative(asm_copy, sizeof(asm_copy));
+	replace_negative(asm_copy, sizeof(asm_copy), arch_bits);
 
 	char expected_copy[MAX_ASM_TXT_MEM] = { 0 };
 	strncpy(expected_copy, expected, sizeof(expected_copy));
 	trim_str(expected_copy);
 	replace_hex(expected_copy, sizeof(expected_copy));
-	replace_negative(expected_copy, sizeof(expected_copy));
+	replace_negative(expected_copy, sizeof(expected_copy), arch_bits);
 
 	if (strcmp(asm_copy, expected_copy) == 0) {
 		return true;
@@ -180,7 +182,7 @@ static bool compare_asm_text(const char *asm_text, const char *expected) {
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
 void test_expected_compare(TestExpected *expected, cs_insn *insns,
-			   size_t insns_count)
+			   size_t insns_count, size_t arch_bits)
 {
 	assert_int_equal(insns_count, expected->insns_count);
 	for (size_t i = 0; i < insns_count; ++i) {
@@ -196,7 +198,8 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 		if (insns[i].op_str[0] != '\0') {
 			append_to_str(asm_text, sizeof(asm_text), insns[i].op_str);
 		}
-		if (!compare_asm_text(asm_text, expec_data->asm_text)) {
+		if (!compare_asm_text(asm_text, expec_data->asm_text,
+				      arch_bits)) {
 			fail_msg("asm-text mismatch\n");
 		}
 

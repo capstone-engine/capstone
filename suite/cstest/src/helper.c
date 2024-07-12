@@ -80,11 +80,13 @@ void replace_hex(char *src, size_t src_len)
 	free(origin);
 }
 
-void replace_negative(char *src, size_t src_len)
+void replace_negative(char *src, size_t src_len, size_t arch_bits)
 {
 	char *tmp, *result, *found, *origin, *orig_found;
 	int cnt, valid;
 	char *value, *tmp_tmp;
+	unsigned short int tmp_short;
+	unsigned int tmp_int;
 	unsigned long int tmp_long;
 
 	result = (char *)malloc(sizeof(char));
@@ -112,8 +114,17 @@ void replace_negative(char *src, size_t src_len)
 		tmp_tmp = strndup(tmp, orig_found - tmp);
 		if (valid == 1) {
 			*orig_found = '\0';
-			sscanf(value, "%lu", &tmp_long);
-			add_str(&result, "%s%lu", tmp_tmp, tmp_long);
+			if (arch_bits == 16) {
+				sscanf(value, "%hu", &tmp_short);
+				add_str(&result, "%s%hu", tmp_tmp, tmp_short);
+			} else if (arch_bits == 32) {
+				sscanf(value, "%u", &tmp_int);
+				add_str(&result, "%s%u", tmp_tmp, tmp_int);
+			} else if (arch_bits == 64) {
+				sscanf(value, "%lu", &tmp_long);
+				add_str(&result, "%s%lu", tmp_tmp, tmp_long);
+			}
+
 		}
 		else add_str(&result, "%s-", tmp_tmp);
 

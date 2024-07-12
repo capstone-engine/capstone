@@ -14,6 +14,6 @@
 void trim_str(char *str);
 void add_str(char **src, const char *format, ...);
 void replace_hex(char *src, size_t src_len);
-void replace_negative(char *src, size_t src_len);
+void replace_negative(char *src, size_t src_len, size_t arch_bits);
 
 #endif /* HELPER_H */

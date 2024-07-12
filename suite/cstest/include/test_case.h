@@ -97,7 +97,7 @@ TestExpected *test_expected_new();
 void test_expected_free(TestExpected *test_expected);
 TestExpected *test_expected_clone(TestExpected *test_expected);
 void test_expected_compare(TestExpected *expected, cs_insn *insns,
-			   size_t insns_count);
+			   size_t insns_count, size_t arch_bits);
 
 static const cyaml_schema_value_t insn_schema = {
 	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestInsnData,

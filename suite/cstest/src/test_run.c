@@ -148,8 +148,27 @@ static bool open_cs_handle(UnitTestState *ustate)
 
 	cs_err err = cs_open(arch, mode, &ustate->handle);
 	if (err != CS_ERR_OK) {
+		char *tc_str = test_input_stringify(ustate->tcase->input, "");
+		fprintf(stderr,
+			"[!] cs_open() failed with: '%s'. TestInput: %s\n",
+			cs_strerror(err), tc_str);
+		cs_mem_free(tc_str);
+		return false;
+	}
+
+	// The bit mode must be set, otherwise the numbers are
+	// not normalized correctly in the asm-test comparison step.
+	if (arch == CS_ARCH_AARCH64 || mode & CS_MODE_64) {
+		ustate->arch_bits = 64;
+	} else if (mode & CS_MODE_16) {
+		ustate->arch_bits = 16;
+	} else {
+		ustate->arch_bits = 32;
+	}
+	if (err != CS_ERR_OK) {
 		goto option_error;
 	}
+
 	// We always enable this, since it is enabled by LLVM as well.
 	err = cs_option(ustate->handle, CS_OPT_NO_BRANCH_OFFSET, CS_OPT_ON);
 	if (err != CS_ERR_OK) {
@@ -168,6 +187,7 @@ option_error: {
 		fprintf(stderr, "[!] cs_option() failed with: '%s'. TestInput: %s\n",
 			 cs_strerror(err), tc_str);
 		cs_mem_free(tc_str);
+		cs_close(&ustate->handle);
 		return false;
 	}
 }
@@ -215,7 +235,8 @@ static void cstest_unit_test(void **state)
 	size_t insns_count = cs_disasm(handle, tcase->input->bytes,
 				       tcase->input->bytes_count,
 				       tcase->input->address, 0, &insns);
-	test_expected_compare(tcase->expected, insns, insns_count);
+	test_expected_compare(tcase->expected, insns, insns_count,
+			      ustate->arch_bits);
 	cs_free(insns, insns_count);
 }
 
