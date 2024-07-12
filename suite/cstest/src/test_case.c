@@ -182,7 +182,7 @@ static bool compare_asm_text(const char *asm_text, const char *expected) {
 void test_expected_compare(TestExpected *expected, cs_insn *insns,
 			   size_t insns_count)
 {
-	assert_int_equal(expected->insns_count, insns_count);
+	assert_int_equal(insns_count, expected->insns_count);
 	for (size_t i = 0; i < insns_count; ++i) {
 		TestInsnData *expec_data = expected->insns[i];
 		// Test mandatory fields first

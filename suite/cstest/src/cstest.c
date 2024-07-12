@@ -101,6 +101,7 @@ int main(int argc, const char **argv)
 		printf("[o] All tests succeeded.\n");
 		exit(EXIT_SUCCESS);
 	} else if (res == TEST_RUN_FAILURE) {
+		printf("\nNOTE: Asserts have the actual data on the left side: 'actual' != 'expected'\n\n");
 		fprintf(stderr, "[!] Some tests failed.\n");
 		exit(EXIT_FAILURE);
 	}
