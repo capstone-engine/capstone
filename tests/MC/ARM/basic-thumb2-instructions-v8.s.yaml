@@ -1,8 +1,0 @@
-test_cases:
-  -
-    input:
-      bytes: [  ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_V8", "CS_MODE_THUMB" ]
-    expected:
-      insns:
