@@ -1,0 +1,262 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x66, 0x83, 0xf0, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor ax, 12"
+  -
+    input:
+      bytes: [ 0x83, 0xf0, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor eax, 12"
+  -
+    input:
+      bytes: [ 0x48, 0x83, 0xf0, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor rax, 12"
+  -
+    input:
+      bytes: [ 0x66, 0x83, 0xc8, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "or ax, 12"
+  -
+    input:
+      bytes: [ 0x83, 0xc8, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "or eax, 12"
+  -
+    input:
+      bytes: [ 0x48, 0x83, 0xc8, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "or rax, 12"
+  -
+    input:
+      bytes: [ 0x66, 0x83, 0xf8, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp ax, 12"
+  -
+    input:
+      bytes: [ 0x83, 0xf8, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp eax, 12"
+  -
+    input:
+      bytes: [ 0x48, 0x83, 0xf8, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp rax, 12"
+  -
+    input:
+      bytes: [ 0x48, 0x89, 0x44, 0x24, 0xf0 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov qword ptr [rsp - 16], rax"
+  -
+    input:
+      bytes: [ 0x66, 0x83, 0xc0, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "add ax, -12"
+  -
+    input:
+      bytes: [ 0x83, 0xc0, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "add eax, -12"
+  -
+    input:
+      bytes: [ 0x48, 0x83, 0xc0, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "add rax, -12"
+  -
+    input:
+      bytes: [ 0x66, 0x83, 0xd0, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc ax, -12"
+  -
+    input:
+      bytes: [ 0x83, 0xd0, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc eax, -12"
+  -
+    input:
+      bytes: [ 0x48, 0x83, 0xd0, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc rax, -12"
+  -
+    input:
+      bytes: [ 0x66, 0x83, 0xd8, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbb ax, -12"
+  -
+    input:
+      bytes: [ 0x83, 0xd8, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbb eax, -12"
+  -
+    input:
+      bytes: [ 0x48, 0x83, 0xd8, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbb rax, -12"
+  -
+    input:
+      bytes: [ 0x66, 0x83, 0xf8, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp ax, -12"
+  -
+    input:
+      bytes: [ 0x83, 0xf8, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp eax, -12"
+  -
+    input:
+      bytes: [ 0x48, 0x83, 0xf8, 0xf4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp rax, -12"
+  -
+    input:
+      bytes: [ 0xf2, 0x0f, 0x10, 0x2c, 0x25, 0xf8, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "movsd xmm5, qword ptr [0xfffffffffffffff8]"
+  -
+    input:
+      bytes: [ 0xd1, 0xe7 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shl edi, 1"
+  -
+    input:
+      bytes: [ 0x0f, 0xc2, 0xd1, 0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmpltps xmm2, xmm1"
+  -
+    input:
+      bytes: [ 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret"
+  -
+    input:
+      bytes: [ 0xcb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "retf"
+  -
+    input:
+      bytes: [ 0xc2, 0x08, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret 8"
+  -
+    input:
+      bytes: [ 0xca, 0x08, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "retf 8"
