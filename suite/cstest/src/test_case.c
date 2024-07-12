@@ -174,9 +174,11 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 		return true;
 	}
 
-	fprintf(stderr, "Normalized asm-test doesn't match:\n"
-	        "decoded:  '%s'\n"
-	        "expected: '%s'\n", asm_copy, expected_copy);
+	fprintf(stderr,
+		"Normalized asm-text doesn't match:\n"
+		"decoded:  '%s'\n"
+		"expected: '%s'\n",
+		asm_copy, expected_copy);
 	return false;
 }
 

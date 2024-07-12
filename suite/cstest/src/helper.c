@@ -56,6 +56,8 @@ void replace_hex(char *src, size_t src_len)
 			valid = 1;
 			if (*found >= 'a' && *found <='f')
 				value = value*0x10 + (*found - 'a' + 10);
+			else if (*found >= 'A' && *found <= 'F')
+				value = value * 0x10 + (*found - 'A' + 10);
 			else
 				value = value*0x10 + (*found - '0');
 			found++;
