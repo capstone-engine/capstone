@@ -47,7 +47,8 @@ class LLVM_MC_Command:
         return result
 
     def get_opts_list(self) -> list[str]:
-        opts = re.sub(r"[, ]+", ",", self.opts)
+        opts = self.opts.strip().strip(",")
+        opts = re.sub(r"[, ]+", ",", opts)
         return opts.split(",")
 
     def __str__(self) -> str:
