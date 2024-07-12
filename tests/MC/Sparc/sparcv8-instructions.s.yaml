@@ -1,0 +1,55 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0x24 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmps %f0, %f4"
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0x44 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmpd %f0, %f4"
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0x64 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmpq %f0, %f4"
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0xa4 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmpes %f0, %f4"
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0xc4 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmped %f0, %f4"
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0xe4 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmpeq %f0, %f4"
