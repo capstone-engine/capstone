@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x79, 0x43, 0x4e, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "insve.b $w25[3], $w9[0]"
+  -
+    input:
+      bytes: [ 0x79, 0x62, 0x16, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "insve.h $w24[2], $w2[0]"
+  -
+    input:
+      bytes: [ 0x79, 0x72, 0x68, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "insve.w $w0[2], $w13[0]"
+  -
+    input:
+      bytes: [ 0x79, 0x78, 0x90, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "insve.d $w3[0], $w18[0]"

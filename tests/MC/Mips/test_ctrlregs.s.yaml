@@ -1,0 +1,289 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x00, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $at, $0"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x00, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $at, $0"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x08, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $v0, $1"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x08, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $v0, $1"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x10, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $v1, $2"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x10, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $v1, $2"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x19, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a0, $3"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x19, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a0, $3"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x21, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a1, $4"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x21, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a1, $4"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x29, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a2, $5"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x29, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a2, $5"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x31, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a3, $6"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x31, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $a3, $6"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x3a, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $t0, $7"
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0x3a, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfcmsa $t0, $7"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x08, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $0, $at"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x08, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $0, $at"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x10, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $1, $v0"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x10, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $1, $v0"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x18, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $2, $v1"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x18, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $2, $v1"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x20, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $3, $a0"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x20, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $3, $a0"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x29, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $4, $a1"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x29, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $4, $a1"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x31, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $5, $a2"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x31, 0x59 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $5, $a2"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x39, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $6, $a3"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x39, 0x99 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $6, $a3"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x41, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $7, $t0"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0x41, 0xd9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctcmsa $7, $t0"

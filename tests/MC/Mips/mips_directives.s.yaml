@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0x01, 0x4d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "b 1336"
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0x01, 0x4c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "j 1328"
+  -
+    input:
+      bytes: [ 0x0c, 0x00, 0x01, 0x4c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jal 1328"
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0x01, 0x4d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "b 1336"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0x01, 0x4c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "j 1328"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x0c, 0x00, 0x01, 0x4c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jal 1328"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x46, 0x00, 0x39, 0x85 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs.s $f6, $f7"
+  -
+    input:
+      bytes: [ 0x01, 0xef, 0x18, 0x24 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "and $v1, $t7, $t7"
