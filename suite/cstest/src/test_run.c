@@ -117,7 +117,7 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 				goto next_option;
 			}
 		}
-		fprintf(stderr, "Option: %s not used\n", opt_str);
+		fprintf(stderr, "[!] Option: %s not used\n", opt_str);
 		next_option:
 		continue;
 	}
