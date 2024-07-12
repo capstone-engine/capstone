@@ -103,20 +103,23 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 	for (size_t i = 0; i < input->options_count; ++i) {
 		opt_str = options[i];
 		for (size_t k = 0; k < ARR_SIZE(test_mode_map) || k < ARR_SIZE(test_option_map); k++) {
-			if (k < ARR_SIZE(test_mode_map) && strcmp(opt_str, test_mode_map[k].str) == 0) {
+			if (k < ARR_SIZE(test_mode_map) && strings_match(opt_str, test_mode_map[k].str)) {
 				*mode |= test_mode_map[k].mode;
 				mode_found = true;
-				continue;
+				goto next_option;
 			}
-			if (k < ARR_SIZE(test_option_map) && strcmp(opt_str, test_option_map[k].str) == 0) {
+			if (k < ARR_SIZE(test_option_map) && strings_match(opt_str, test_option_map[k].str)) {
 				if (opt_idx >= opt_arr_size) {
 					fprintf(stderr, "Too many options given in: '%s'. Maximum is: %" PRId64 "\n", opt_str, opt_arr_size);
 					return false;
 				}
 				opt_arr[opt_idx++] = test_option_map[k].opt;
-				continue;
+				goto next_option;
 			}
 		}
+		fprintf(stderr, "Option: %s not used\n", opt_str);
+		next_option:
+		continue;
 	}
 	*opt_set = opt_idx;
 	if (!mode_found) {

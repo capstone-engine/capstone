@@ -132,29 +132,39 @@ void append_to_str_lower(char *str, size_t str_size, const char *src) {
 /// @param str_buf_size Size of buffer @p str.
 /// @param src The string to append.
 void append_to_str(char *str, size_t str_buf_size, const char *src) {
-	char *dest = strchr(str, '\0');
-	if (dest - str >= str_buf_size) {
+	if (strlen(str) + strlen(src) + 1 > str_buf_size) {
 		assert("str_size does not match actual string length." && 0);
 		return;
 	}
+	strcat(str, src);
+}
 
-	int i = dest - str;
-	for (int j = 0; (i < str_buf_size) && (j < strlen(src)); ++i, ++j) {
-		str[i] = src[j];
-	}
-	str[str_buf_size-1] = '\0';
+
+/// Allocates memory of strlen(str_a) + strlen(str_b) + 1 chars
+/// and copies all strings into it as str_a + str_b
+/// str_a is passed to realloc and should not be used afterwards.
+/// Returns the result.
+char *str_append(char *str_a, const char *str_b) {
+	assert(str_a && str_b);
+	size_t asize = strlen(str_a) + strlen(str_b) + 1;
+	str_a = realloc(str_a, asize);
+	strcat(str_a, str_b);
+	return str_a;
 }
 
 /// Returns the given byte sequence @bytes as a string of the
 /// form: 0xXX,0xXX...
 char *byte_seq_to_str(uint8_t *bytes, size_t len)
 {
+	if (len == 0) {
+		return NULL;
+	}
 	char single_byte[8] = { 0 };
-	char *s = calloc(sizeof(char), 256);
+	char *s = calloc(sizeof(char), 32);
 	for (size_t i = 0; i < len; ++i) {
 		cs_snprintf(single_byte, sizeof(single_byte), "0x%02" PRIx8 "%s",
-			    bytes[i], i < len - 1 ? "," : "");
-		append_to_str(s, 256, single_byte);
+			    bytes[i], i == len - 1 ? "" : ",");
+		s = str_append(s, single_byte);
 	}
 	return s;
 }
