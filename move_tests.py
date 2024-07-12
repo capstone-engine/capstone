@@ -27,8 +27,9 @@ def run():
       options: [ <OPTIONS> ]
     expected:
       insns:
+        -
+          asm_text: "<ASM_TEXT>"
 """
-    single_insn_asm = '        -\n          asm_text: "<ASM_TEXT>"\n'
 
     for (dirpath, dirnames, filenames) in os.walk(mc_path):
         for filename in filenames:
@@ -50,8 +51,6 @@ def run():
             n_opts = n_opts.split(",")
             yaml_content = "test_cases:\n"
 
-            encodings = list()
-            asm_texts = list()
             for line in lines[1:]:
                 if not line.startswith("0x"):
                     continue
@@ -63,18 +62,15 @@ def run():
                     
                 encoding = re.sub(r"[ ,]+", ", ", s[0].strip())
                 encoding = conv(encoding)
-                encodings.append(encoding)
                 asm = re.sub(r"\s+", " ", s[1].strip())
-                asm_texts.append(asm)
+                tc = yaml_tc
+                tc = tc.replace("<ENCODING>", encoding)
+                tc = tc.replace("<ARCH>", f'{arch}')
+                opts = ", ".join([f'"{o}"' for o in set(n_opts) if o != "None"])
+                tc = tc.replace("<OPTIONS>", opts)
+                tc = tc.replace("<ASM_TEXT>", f'{asm}')
+                yaml_content += tc
 
-            tc = yaml_tc
-            tc = tc.replace("<ENCODING>", ", ".join(encodings))
-            tc = tc.replace("<ARCH>", f'{arch}')
-            opts = ", ".join([f'"{o}"' for o in set(n_opts) if o != "None"])
-            tc = tc.replace("<OPTIONS>", opts)
-            for a in asm_texts:
-                tc += single_insn_asm.replace("<ASM_TEXT>", f'{a}')
-            yaml_content += tc
             out_dir = Path(sys.argv[2])
             Path.mkdir(out_dir, parents=True, exist_ok=True)
             filename = filename.replace('.cs', '.yaml')
