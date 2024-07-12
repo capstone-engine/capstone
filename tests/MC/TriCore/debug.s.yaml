@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x4b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp.f d0, d0, d0"
