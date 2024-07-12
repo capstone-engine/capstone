@@ -1,73 +1,24 @@
 test_cases:
   -
     input:
-      bytes: [ 0xa0, 0x08, 0xf1, 0xf3 ]
+      bytes: [ 0xa0, 0x08, 0xf1, 0xf3, 0xa2, 0x09, 0xf0, 0xf3, 0xa4, 0x0a, 0xf0, 0xf3, 0xa4, 0x0b, 0xf0, 0xf3, 0xe1, 0x28, 0xf0, 0xf3, 0xe2, 0x39, 0xf0, 0xf3, 0xe5, 0x4a, 0xf0, 0xf3, 0xe5, 0x4b, 0xf0, 0xf3 ]
       arch: "CS_ARCH_ARM"
       options: [ "CS_MODE_ARM" ]
     expected:
       insns:
         -
           asm_text: "vtbl.8 d16, {d17}, d16"
-  -
-    input:
-      bytes: [ 0xa2, 0x09, 0xf0, 0xf3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM" ]
-    expected:
-      insns:
         -
           asm_text: "vtbl.8 d16, {d16, d17}, d18"
-  -
-    input:
-      bytes: [ 0xa4, 0x0a, 0xf0, 0xf3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM" ]
-    expected:
-      insns:
         -
           asm_text: "vtbl.8 d16, {d16, d17, d18}, d20"
-  -
-    input:
-      bytes: [ 0xa4, 0x0b, 0xf0, 0xf3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM" ]
-    expected:
-      insns:
         -
           asm_text: "vtbl.8 d16, {d16, d17, d18, d19}, d20"
-  -
-    input:
-      bytes: [ 0xe1, 0x28, 0xf0, 0xf3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM" ]
-    expected:
-      insns:
         -
           asm_text: "vtbx.8 d18, {d16}, d17"
-  -
-    input:
-      bytes: [ 0xe2, 0x39, 0xf0, 0xf3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM" ]
-    expected:
-      insns:
         -
           asm_text: "vtbx.8 d19, {d16, d17}, d18"
-  -
-    input:
-      bytes: [ 0xe5, 0x4a, 0xf0, 0xf3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM" ]
-    expected:
-      insns:
         -
           asm_text: "vtbx.8 d20, {d16, d17, d18}, d21"
-  -
-    input:
-      bytes: [ 0xe5, 0x4b, 0xf0, 0xf3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM" ]
-    expected:
-      insns:
         -
           asm_text: "vtbx.8 d20, {d16, d17, d18, d19}, d21"

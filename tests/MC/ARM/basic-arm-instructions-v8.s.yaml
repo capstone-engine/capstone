@@ -1,82 +1,26 @@
 test_cases:
   -
     input:
-      bytes: [ 0x59, 0xf0, 0x7f, 0xf5 ]
+      bytes: [ 0x59, 0xf0, 0x7f, 0xf5, 0x51, 0xf0, 0x7f, 0xf5, 0x55, 0xf0, 0x7f, 0xf5, 0x5d, 0xf0, 0x7f, 0xf5, 0x49, 0xf0, 0x7f, 0xf5, 0x41, 0xf0, 0x7f, 0xf5, 0x45, 0xf0, 0x7f, 0xf5, 0x4d, 0xf0, 0x7f, 0xf5, 0x05, 0xf0, 0x20, 0xe3 ]
       arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
+      options: [ "CS_MODE_V8", "CS_MODE_ARM" ]
     expected:
       insns:
         -
           asm_text: "dmb ishld"
-  -
-    input:
-      bytes: [ 0x51, 0xf0, 0x7f, 0xf5 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "dmb oshld"
-  -
-    input:
-      bytes: [ 0x55, 0xf0, 0x7f, 0xf5 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "dmb nshld"
-  -
-    input:
-      bytes: [ 0x5d, 0xf0, 0x7f, 0xf5 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "dmb ld"
-  -
-    input:
-      bytes: [ 0x49, 0xf0, 0x7f, 0xf5 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "dsb ishld"
-  -
-    input:
-      bytes: [ 0x41, 0xf0, 0x7f, 0xf5 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "dsb oshld"
-  -
-    input:
-      bytes: [ 0x45, 0xf0, 0x7f, 0xf5 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "dsb nshld"
-  -
-    input:
-      bytes: [ 0x4d, 0xf0, 0x7f, 0xf5 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "dsb ld"
-  -
-    input:
-      bytes: [ 0x05, 0xf0, 0x20, 0xe3 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_ARM", "CS_MODE_V8" ]
-    expected:
-      insns:
         -
           asm_text: "sevl"

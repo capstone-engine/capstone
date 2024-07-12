@@ -1,712 +1,166 @@
 test_cases:
   -
     input:
-      bytes: [ 0x40, 0xff, 0xa1, 0x04 ]
+      bytes: [ 0x40, 0xff, 0xa1, 0x04, 0x50, 0xff, 0xa1, 0x04, 0x60, 0xff, 0xa1, 0x04, 0x70, 0xff, 0xa1, 0x04, 0xcf, 0xef, 0x30, 0x05, 0xdf, 0xef, 0x30, 0x05, 0xff, 0xef, 0x30, 0x05, 0xff, 0xef, 0xb0, 0x05, 0x40, 0xff, 0xe2, 0x04, 0x50, 0xff, 0xe2, 0x04, 0x60, 0xff, 0xe2, 0x04, 0x70, 0xff, 0xe2, 0x04, 0xcf, 0xef, 0x70, 0x05, 0xdf, 0xef, 0x70, 0x05, 0xff, 0xef, 0x70, 0x05, 0xff, 0xef, 0xf0, 0x05, 0xc8, 0xff, 0x30, 0x00, 0xd0, 0xff, 0x30, 0x00, 0xe0, 0xff, 0x30, 0x00, 0xc0, 0xff, 0xb0, 0x00, 0xc8, 0xff, 0x70, 0x00, 0xd0, 0xff, 0x70, 0x00, 0xe0, 0xff, 0x70, 0x00, 0xc0, 0xff, 0xf0, 0x00, 0xc8, 0xef, 0x30, 0x00, 0xd0, 0xef, 0x30, 0x00, 0xe0, 0xef, 0x30, 0x00, 0xc0, 0xef, 0xb0, 0x00, 0xc8, 0xef, 0x70, 0x00, 0xd0, 0xef, 0x70, 0x00, 0xe0, 0xef, 0x70, 0x00, 0xc0, 0xef, 0xf0, 0x00, 0xcf, 0xef, 0x30, 0x0a, 0xdf, 0xef, 0x30, 0x0a, 0xff, 0xef, 0x30, 0x0a, 0xcf, 0xff, 0x30, 0x0a, 0xdf, 0xff, 0x30, 0x0a, 0xff, 0xff, 0x30, 0x0a, 0xf2, 0xff, 0x20, 0x03, 0xf6, 0xff, 0x20, 0x03, 0xfa, 0xff, 0x20, 0x03, 0xc8, 0xef, 0x30, 0x08, 0xd0, 0xef, 0x30, 0x08, 0xe0, 0xef, 0x30, 0x08, 0x40, 0xef, 0xa1, 0x05, 0x50, 0xef, 0xa1, 0x05, 0x60, 0xef, 0xa1, 0x05, 0x70, 0xef, 0xa1, 0x05, 0x40, 0xff, 0xa1, 0x05, 0x50, 0xff, 0xa1, 0x05, 0x60, 0xff, 0xa1, 0x05, 0x70, 0xff, 0xa1, 0x05, 0x40, 0xef, 0xe2, 0x05, 0x50, 0xef, 0xe2, 0x05, 0x60, 0xef, 0xe2, 0x05, 0x70, 0xef, 0xe2, 0x05, 0x40, 0xff, 0xe2, 0x05, 0x50, 0xff, 0xe2, 0x05, 0x60, 0xff, 0xe2, 0x05, 0x70, 0xff, 0xe2, 0x05, 0xc8, 0xef, 0x30, 0x02, 0xd0, 0xef, 0x30, 0x02, 0xe0, 0xef, 0x30, 0x02, 0xc0, 0xef, 0xb0, 0x02, 0xc8, 0xff, 0x30, 0x02, 0xd0, 0xff, 0x30, 0x02, 0xe0, 0xff, 0x30, 0x02, 0xc0, 0xff, 0xb0, 0x02, 0xc8, 0xef, 0x70, 0x02, 0xd0, 0xef, 0x70, 0x02, 0xe0, 0xef, 0x70, 0x02, 0xc0, 0xef, 0xf0, 0x02, 0xc8, 0xff, 0x70, 0x02, 0xd0, 0xff, 0x70, 0x02, 0xe0, 0xff, 0x70, 0x02, 0xc0, 0xff, 0xf0, 0x02, 0xc8, 0xef, 0x70, 0x08, 0xd0, 0xef, 0x70, 0x08, 0xe0, 0xef, 0x70, 0x08 ]
       arch: "CS_ARCH_ARM"
       options: [ "CS_MODE_THUMB" ]
     expected:
       insns:
         -
           asm_text: "vshl.u8 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x50, 0xff, 0xa1, 0x04 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.u16 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x60, 0xff, 0xa1, 0x04 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.u32 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x70, 0xff, 0xa1, 0x04 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.u64 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0xcf, 0xef, 0x30, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i8 d16, d16, #7"
-  -
-    input:
-      bytes: [ 0xdf, 0xef, 0x30, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i16 d16, d16, #0xf"
-  -
-    input:
-      bytes: [ 0xff, 0xef, 0x30, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i32 d16, d16, #0x1f"
-  -
-    input:
-      bytes: [ 0xff, 0xef, 0xb0, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i64 d16, d16, #0x3f"
-  -
-    input:
-      bytes: [ 0x40, 0xff, 0xe2, 0x04 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.u8 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x50, 0xff, 0xe2, 0x04 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.u16 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x60, 0xff, 0xe2, 0x04 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.u32 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x70, 0xff, 0xe2, 0x04 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.u64 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0xcf, 0xef, 0x70, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i8 q8, q8, #7"
-  -
-    input:
-      bytes: [ 0xdf, 0xef, 0x70, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i16 q8, q8, #0xf"
-  -
-    input:
-      bytes: [ 0xff, 0xef, 0x70, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i32 q8, q8, #0x1f"
-  -
-    input:
-      bytes: [ 0xff, 0xef, 0xf0, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshl.i64 q8, q8, #0x3f"
-  -
-    input:
-      bytes: [ 0xc8, 0xff, 0x30, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u8 d16, d16, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xff, 0x30, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u16 d16, d16, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xff, 0x30, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u32 d16, d16, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xff, 0xb0, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u64 d16, d16, #0x40"
-  -
-    input:
-      bytes: [ 0xc8, 0xff, 0x70, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u8 q8, q8, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xff, 0x70, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u16 q8, q8, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xff, 0x70, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u32 q8, q8, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xff, 0xf0, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.u64 q8, q8, #0x40"
-  -
-    input:
-      bytes: [ 0xc8, 0xef, 0x30, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s8 d16, d16, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xef, 0x30, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s16 d16, d16, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xef, 0x30, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s32 d16, d16, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xef, 0xb0, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s64 d16, d16, #0x40"
-  -
-    input:
-      bytes: [ 0xc8, 0xef, 0x70, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s8 q8, q8, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xef, 0x70, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s16 q8, q8, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xef, 0x70, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s32 q8, q8, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xef, 0xf0, 0x00 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshr.s64 q8, q8, #0x40"
-  -
-    input:
-      bytes: [ 0xcf, 0xef, 0x30, 0x0a ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.s8 q8, d16, #7"
-  -
-    input:
-      bytes: [ 0xdf, 0xef, 0x30, 0x0a ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.s16 q8, d16, #0xf"
-  -
-    input:
-      bytes: [ 0xff, 0xef, 0x30, 0x0a ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.s32 q8, d16, #0x1f"
-  -
-    input:
-      bytes: [ 0xcf, 0xff, 0x30, 0x0a ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.u8 q8, d16, #7"
-  -
-    input:
-      bytes: [ 0xdf, 0xff, 0x30, 0x0a ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.u16 q8, d16, #0xf"
-  -
-    input:
-      bytes: [ 0xff, 0xff, 0x30, 0x0a ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.u32 q8, d16, #0x1f"
-  -
-    input:
-      bytes: [ 0xf2, 0xff, 0x20, 0x03 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.i8 q8, d16, #8"
-  -
-    input:
-      bytes: [ 0xf6, 0xff, 0x20, 0x03 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.i16 q8, d16, #0x10"
-  -
-    input:
-      bytes: [ 0xfa, 0xff, 0x20, 0x03 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshll.i32 q8, d16, #0x20"
-  -
-    input:
-      bytes: [ 0xc8, 0xef, 0x30, 0x08 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshrn.i16 d16, q8, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xef, 0x30, 0x08 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshrn.i32 d16, q8, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xef, 0x30, 0x08 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vshrn.i64 d16, q8, #0x20"
-  -
-    input:
-      bytes: [ 0x40, 0xef, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s8 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x50, 0xef, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s16 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x60, 0xef, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s32 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x70, 0xef, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s64 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x40, 0xff, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u8 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x50, 0xff, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u16 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x60, 0xff, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u32 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x70, 0xff, 0xa1, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u64 d16, d17, d16"
-  -
-    input:
-      bytes: [ 0x40, 0xef, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s8 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x50, 0xef, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s16 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x60, 0xef, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s32 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x70, 0xef, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.s64 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x40, 0xff, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u8 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x50, 0xff, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u16 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x60, 0xff, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u32 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0x70, 0xff, 0xe2, 0x05 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshl.u64 q8, q9, q8"
-  -
-    input:
-      bytes: [ 0xc8, 0xef, 0x30, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s8 d16, d16, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xef, 0x30, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s16 d16, d16, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xef, 0x30, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s32 d16, d16, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xef, 0xb0, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s64 d16, d16, #0x40"
-  -
-    input:
-      bytes: [ 0xc8, 0xff, 0x30, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u8 d16, d16, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xff, 0x30, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u16 d16, d16, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xff, 0x30, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u32 d16, d16, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xff, 0xb0, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u64 d16, d16, #0x40"
-  -
-    input:
-      bytes: [ 0xc8, 0xef, 0x70, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s8 q8, q8, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xef, 0x70, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s16 q8, q8, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xef, 0x70, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s32 q8, q8, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xef, 0xf0, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.s64 q8, q8, #0x40"
-  -
-    input:
-      bytes: [ 0xc8, 0xff, 0x70, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u8 q8, q8, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xff, 0x70, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u16 q8, q8, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xff, 0x70, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u32 q8, q8, #0x20"
-  -
-    input:
-      bytes: [ 0xc0, 0xff, 0xf0, 0x02 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshr.u64 q8, q8, #0x40"
-  -
-    input:
-      bytes: [ 0xc8, 0xef, 0x70, 0x08 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshrn.i16 d16, q8, #8"
-  -
-    input:
-      bytes: [ 0xd0, 0xef, 0x70, 0x08 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshrn.i32 d16, q8, #0x10"
-  -
-    input:
-      bytes: [ 0xe0, 0xef, 0x70, 0x08 ]
-      arch: "CS_ARCH_ARM"
-      options: [ "CS_MODE_THUMB" ]
-    expected:
-      insns:
         -
           asm_text: "vrshrn.i64 d16, q8, #0x20"
