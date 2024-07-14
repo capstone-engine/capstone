@@ -2287,6 +2287,8 @@ void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
 		AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
 	if (Pat)
 		SStream_concat0(O, Pat->Name);
+	else
+		printUInt32Bang(O, Val);
 }
 
 void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)

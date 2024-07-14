@@ -1607,8 +1607,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		const AArch64SVEPredPattern_SVEPREDPAT *Pat =
 			AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
-		if (!Pat)
+		if (!Pat) {
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val);
 			break;
+		}
 		aarch64_sysop sysop;
 		sysop.alias = Pat->SysAlias;
 		sysop.sub_type = AARCH64_OP_SVEPREDPAT;
