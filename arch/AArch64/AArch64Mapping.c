@@ -1852,7 +1852,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		unsigned EltSize = temp_arg_0;
 		AArch64_get_detail_op(MI, 0)->vas = EltSize;
 		AArch64_set_detail_op_reg(
-			MI, OpNum, MCInst_getOpVal(MI, OpNum) - AArch64_P0);
+			MI, OpNum, MCInst_getOpVal(MI, OpNum) - AArch64_PN0);
 		break;
 	}
 	case AArch64_OP_GROUP_PrefetchOp_0:

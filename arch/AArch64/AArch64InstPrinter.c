@@ -1282,7 +1282,7 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 			assert(0 && \
 			       "Unsupported predicate-as-counter register"); \
 		SStream_concat(O, "%s", "pn"); \
-		printUInt32(O, (Reg - AArch64_P0)); \
+		printUInt32(O, (Reg - AArch64_PN0)); \
 		switch (EltSize) { \
 		case 0: \
 			break; \
