@@ -1964,7 +1964,7 @@ void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
 					    NumLanes), \
 				     LaneKind), \
 			      OpNum, NumLanes, CHAR(LaneKind)); \
-		if (CHAR(LaneKind) == 0) { \
+		if (CHAR(LaneKind) == '0') { \
 			printVectorList(MI, OpNum, O, ""); \
 			return; \
 		} \

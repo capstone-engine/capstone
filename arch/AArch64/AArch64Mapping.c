@@ -2054,6 +2054,7 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_TypedVectorList_0_h:
 	case AArch64_OP_GROUP_TypedVectorList_0_q:
 	case AArch64_OP_GROUP_TypedVectorList_0_s:
+	case AArch64_OP_GROUP_TypedVectorList_0_0:
 	case AArch64_OP_GROUP_TypedVectorList_16_b:
 	case AArch64_OP_GROUP_TypedVectorList_1_d:
 	case AArch64_OP_GROUP_TypedVectorList_2_d:
@@ -2111,7 +2112,7 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		case 'q':
 			vas = AARCH64LAYOUT_VL_Q;
 			break;
-		case '\0':
+		case '0':
 			// Implicitly Typed register
 			break;
 		}
@@ -2393,6 +2394,7 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_TypedVectorList_0_h:
 	case AArch64_OP_GROUP_TypedVectorList_0_q:
 	case AArch64_OP_GROUP_TypedVectorList_0_s:
+	case AArch64_OP_GROUP_TypedVectorList_0_0:
 	case AArch64_OP_GROUP_TypedVectorList_16_b:
 	case AArch64_OP_GROUP_TypedVectorList_1_d:
 	case AArch64_OP_GROUP_TypedVectorList_2_d:
