@@ -2373,7 +2373,7 @@ DECLARE_printImmSVE_U64(uint64_t);
 #define DEFINE_isSignedType(T) \
 	static inline bool CONCAT(isSignedType, T)() \
 	{ \
-		return CHAR(t) == 'i'; \
+		return CHAR(T) == 'i'; \
 	}
 DEFINE_isSignedType(int8_t);
 DEFINE_isSignedType(int16_t);

@@ -1740,6 +1740,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 				     (1 << AArch64_AM_getShiftValue(Shift));
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  Val);
+			break;
 		}
 		case AArch64_OP_GROUP_Imm8OptLsl_uint16_t:
 		case AArch64_OP_GROUP_Imm8OptLsl_uint32_t:
@@ -1749,6 +1750,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 				      (1 << AArch64_AM_getShiftValue(Shift));
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  Val);
+			break;
 		}
 		}
 		break;
