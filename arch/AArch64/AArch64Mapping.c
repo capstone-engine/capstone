@@ -20,11 +20,11 @@
 #include "AArch64Mapping.h"
 
 #ifndef CAPSTONE_DIET
-static aarch64_reg aarch64_flag_regs[] = {
+static const aarch64_reg aarch64_flag_regs[] = {
 	AARCH64_REG_NZCV,
 };
 
-static aarch64_sysreg aarch64_flag_sys_regs[] = {
+static const aarch64_sysreg aarch64_flag_sys_regs[] = {
 	AARCH64_SYSREG_NZCV, AARCH64_SYSREG_PMOVSCLR_EL0,
 	AARCH64_SYSREG_PMOVSSET_EL0, AARCH64_SYSREG_SPMOVSCLR_EL0,
 	AARCH64_SYSREG_SPMOVSSET_EL0
