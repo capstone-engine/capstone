@@ -1,6 +1,6 @@
 PYTHON3 ?= python3
 
-.PHONY: gen_const install install_cython sdist bdist clean check
+.PHONY: gen_const install sdist bdist clean check
 
 gen_const:
 	cd .. && $(PYTHON3) const_generator.py python
@@ -11,15 +11,6 @@ install:
 		$(PYTHON3) setup.py build install --root="${DESTDIR}"; \
 	else \
 		$(PYTHON3) setup.py build install; \
-	fi
-
-# NOTE: Newer cython can be installed by: sudo pip install --upgrade cython
-install_cython:
-	rm -rf src/
-	if test -n "${DESTDIR}"; then \
-		$(PYTHON3) setup_cython.py build install --root="${DESTDIR}"; \
-	else \
-		$(PYTHON3) setup_cython.py build install; \
 	fi
 
 # build & upload PyPi package with source code of the core
