@@ -221,7 +221,7 @@ setup(
     url='https://www.capstone-engine.org',
     long_description=open('README.txt', encoding="utf8").read(),
     long_description_content_type='text/markdown',
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     classifiers=[
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3',
