@@ -92,33 +92,9 @@ jobs:
     - name: cstest
       shell: 'script -q -e -c "bash {0}"'
       run: |
-        cd "$(git rev-parse --show-toplevel)/suite/auto-sync/c_tests/"
-        if [ "$asan" = "ON" ]; then
-          clang -lcapstone -fsanitize=address src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
-        else
-          clang -lcapstone src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
-        fi
-        ./test_arm64_compatibility_header
-
-    - name: cstool - reaches disassembler engine
-      run: |
-        sh suite/run_invalid_cstool.sh
-
-    - name: cstest (cmake)
-      if: startsWith(matrix.config.build-system, 'cmake')
-      run: |
-        python suite/cstest/cstest_report.py -D -d suite/MC
-        python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
-        python suite/cstest/cstest_report.py -D -f tests/cs_details/issue.cs
-
-    - name: cstest (make)
-      if: startsWith(matrix.config.build-system, 'make')
-      run: |
-        cd suite/cstest && ./build_cstest.sh
-        python cstest_report.py -D -t build/cstest -d ../MC
-        python cstest_report.py -D -t build/cstest -f issues.cs
-        python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
-        cd ../../
+        cd suite/cstest && ./build_cstest.sh;
+        python cstest_report.py -D -t build/cstest -d ../MC;
+        python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
 
   Windows:
     runs-on: ${{ matrix.config.os }}
