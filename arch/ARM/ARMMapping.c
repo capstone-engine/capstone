@@ -618,7 +618,7 @@ static const char *const insn_name_maps[] = {
 #endif
 
 #ifndef CAPSTONE_DIET
-static arm_reg arm_flag_regs[] = {
+static const arm_reg arm_flag_regs[] = {
 	ARM_REG_APSR,	      ARM_REG_APSR_NZCV, ARM_REG_CPSR,
 	ARM_REG_FPCXTNS,      ARM_REG_FPCXTS,	 ARM_REG_FPEXC,
 	ARM_REG_FPINST,	      ARM_REG_FPSCR,	 ARM_REG_FPSCR_NZCV,
