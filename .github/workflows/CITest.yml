@@ -1,10 +1,10 @@
 name: Run Test
-on: 
+on:
   push:
     paths-ignore:
       - ".gitignore"
       - "docs/**"
-      - "ChangeLog"      
+      - "ChangeLog"
       - "CREDITS.TXT"
       - "COMPILE.TXT"
       - "COMPILE_MSVC.TXT"
@@ -30,58 +30,29 @@ jobs:
       matrix:
         config:
           - {
-              name: 'ubuntu-20.04 x64 python3.6 cmake',
-              os: ubuntu-20.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.6',
-              build-system: 'cmake',
-              enable-asan: 'OFF'
-            }
-          - {
-              name: 'ubuntu-22.04 x64 python3.9 make',
+              name: 'ubuntu-22.04 x64 make',
               os: ubuntu-22.04,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.9',
               build-system: 'make',
               enable-asan: 'OFF'
             }
           - {
-              name: 'ubuntu-22.04 x64 python3.9 cmake',
+              name: 'ubuntu-22.04 x64 cmake',
               os: ubuntu-22.04,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.9',
-              build-system: 'cmake',
-              enable-asan: 'OFF'
-            }     
-          - {
-              name: 'ubuntu-22.04 x64 python3.11 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.11',
               build-system: 'cmake',
               enable-asan: 'OFF'
             }
           - {
-              name: 'ubuntu-22.04 x64 python3.11 ASAN',
+              name: 'ubuntu-22.04 x64 ASAN',
               os: ubuntu-latest,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.11',
               build-system: 'cmake',
               enable-asan: 'ON'
             }
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.config.python-version }}
 
     - name: prepare
       run: |
@@ -153,45 +124,6 @@ jobs:
         python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
         cd ../../
 
-    - name: verify python binding
-      if: matrix.config.enable-asan == 'OFF'
-      run: |
-        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so
-        cd bindings/python
-
-        # check if the generated *_const.py files are up-to-date
-        mkdir capstone_old && cp capstone/*_const.py capstone_old/
-        make gen_const
-        for f in ./capstone/*_const.py; do
-          diff  -u -w "$f" "./capstone_old/`basename $f`"
-          if [ ! $? -eq 0 ]; then
-            exit 1
-          fi
-        done
-        rm -rf capstone_old
-
-        # smoke test api usage
-        make check
-
-    - name: run python binding test
-      if: matrix.config.enable-asan == 'OFF'
-      run: |
-        cp libcapstone.* bindings/python/prebuilt
-        cd bindings/python
-        make install
-        cd ..
-        BUILD_TESTS=no make tests
-
-    - name: run cython binding test
-      if: matrix.config.enable-asan == 'OFF'
-      run: |
-        pip install cython
-        cd bindings/python
-        make install_cython
-        cd ..
-        python -c "import capstone;print(capstone.debug())" | grep Cython
-        BUILD_TESTS=no make tests
-
   Windows:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
@@ -214,7 +146,7 @@ jobs:
 
     - name: '🛠️ Win MSVC 64 setup'
       if: contains(matrix.config.name, 'MSVC 64')
-      uses: ilammy/msvc-dev-cmd@v1  
+      uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: 'x64'
 

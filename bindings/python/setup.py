@@ -6,12 +6,15 @@ import shutil
 import sys
 import platform
 
-from distutils import log
+import logging
 from setuptools import setup
-from distutils.util import get_platform
-from distutils.command.build import build
-from distutils.command.sdist import sdist
+from sysconfig import get_platform
+from setuptools.command.build import build
+from setuptools.command.sdist import sdist
 from setuptools.command.bdist_egg import bdist_egg
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 SYSTEM = sys.platform
 
@@ -102,7 +105,7 @@ def copy_sources():
 
     for filename in src:
         outpath = os.path.join(SRC_DIR, os.path.basename(filename))
-        log.info("%s -> %s" % (filename, outpath))
+        logger.info("%s -> %s" % (filename, outpath))
         shutil.copy(filename, outpath)
 
 def build_libraries():
@@ -123,7 +126,7 @@ def build_libraries():
     # if prebuilt libraries are available, use those and cancel build
     if os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE)) and \
             (not STATIC_LIBRARY_FILE or os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', STATIC_LIBRARY_FILE))):
-        log.info('Using prebuilt libraries')
+        logger.info('Using prebuilt libraries')
         shutil.copy(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE), LIBS_DIR)
         if STATIC_LIBRARY_FILE is not None:
             shutil.copy(os.path.join(ROOT_DIR, 'prebuilt', STATIC_LIBRARY_FILE), LIBS_DIR)
@@ -167,9 +170,9 @@ class custom_sdist(sdist):
 class custom_build(build):
     def run(self):
         if 'LIBCAPSTONE_PATH' in os.environ:
-            log.info('Skipping building C extensions since LIBCAPSTONE_PATH is set')
+            logger.info('Skipping building C extensions since LIBCAPSTONE_PATH is set')
         else:
-            log.info('Building C extensions')
+            logger.info('Building C extensions')
             build_libraries()
         return build.run(self)
 
@@ -191,7 +194,7 @@ try:
     from setuptools.command.develop import develop
     class custom_develop(develop):
         def run(self):
-            log.info("Building C extensions")
+            logger.info("Building C extensions")
             build_libraries()
             return develop.run(self)
 
@@ -218,15 +221,18 @@ setup(
     url='https://www.capstone-engine.org',
     long_description=open('README.txt', encoding="utf8").read(),
     long_description_content_type='text/markdown',
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     classifiers=[
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3',
     ],
     cmdclass=cmdclass,
-    zip_safe=True,
+    zip_safe=False,
     include_package_data=True,
     package_data={
         "capstone": ["lib/*", "include/capstone/*"],
-    }
+    },
+    install_requires=[
+        "importlib_resources;python_version<'3.9'",
+    ],
 )
