@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0xf1,0x57,0xe8,0x5e ]
-      arch: "AArch64"
+      bytes: [ 0xf1, 0x57, 0xe8, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xf1,0x57,0xe8,0x7e ]
-      arch: "AArch64"
+      bytes: [ 0xf1, 0x57, 0xe8, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:

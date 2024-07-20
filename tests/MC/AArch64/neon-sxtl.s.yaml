@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x20,0xa4,0x08,0x0f ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0xa4, 0x08, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0xa4,0x10,0x0f ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0xa4, 0x10, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:
@@ -21,8 +21,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0xa4,0x20,0x0f ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0xa4, 0x20, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:
@@ -31,8 +31,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0xa4,0x08,0x4f ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0xa4, 0x08, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:
@@ -41,8 +41,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0xa4,0x10,0x4f ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0xa4, 0x10, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:
@@ -51,8 +51,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0xa4,0x20,0x4f ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0xa4, 0x20, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "neon" ]
     expected:
       insns:

@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x00,0x00,0x20,0x84 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x00, 0x20, 0x84 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x45,0x15,0x35,0x84 ]
-      arch: "AArch64"
+      bytes: [ 0x45, 0x15, 0x35, 0x84 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -21,8 +21,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x00,0x20,0xc4 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x00, 0x20, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -31,8 +31,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x45,0x15,0x75,0xc4 ]
-      arch: "AArch64"
+      bytes: [ 0x45, 0x15, 0x75, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -41,8 +41,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x80,0x60,0xc4 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x80, 0x60, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -51,8 +51,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xa7,0xed,0x00,0x84 ]
-      arch: "AArch64"
+      bytes: [ 0xa7, 0xed, 0x00, 0x84 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -61,8 +61,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xa7,0xed,0x1f,0x84 ]
-      arch: "AArch64"
+      bytes: [ 0xa7, 0xed, 0x1f, 0x84 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -71,8 +71,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x45,0xf5,0x00,0xc4 ]
-      arch: "AArch64"
+      bytes: [ 0x45, 0xf5, 0x00, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:
@@ -81,8 +81,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x45,0xf5,0x1f,0xc4 ]
-      arch: "AArch64"
+      bytes: [ 0x45, 0xf5, 0x1f, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve" ]
     expected:
       insns:

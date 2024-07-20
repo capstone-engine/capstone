@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x14,0x00,0x00,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x00, 0x00, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x55,0x55,0x05,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x55, 0x55, 0x05, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -21,8 +21,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0xed,0x08,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0xed, 0x08, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -31,8 +31,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xf7,0xff,0x0f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf7, 0xff, 0x0f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -41,8 +41,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0x0e,0x00,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x0e, 0x00, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -51,8 +51,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0x84,0x0e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x84, 0x0e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -61,8 +61,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x74,0x56,0x04,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x74, 0x56, 0x04, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -71,8 +71,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x94,0x19,0x02,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x94, 0x19, 0x02, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -81,8 +81,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0xc8,0x0a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0xc8, 0x0a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -91,8 +91,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xd5,0x0a,0x0e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xd5, 0x0a, 0x0e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -101,8 +101,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x36,0xf5,0x01,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x36, 0xf5, 0x01, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -111,8 +111,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x97,0xa9,0x0b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x97, 0xa9, 0x0b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -121,258 +121,248 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x14,0x00,0x20,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x00, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx2], { z0.b, z1.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x14,0x00,0x20,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x00, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx2], { z0.b, z1.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x55,0x41,0x25,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x55, 0x41, 0x25, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx2], { z10.b, z11.b }, z5.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx2], { z10.b, z11.b }, z5.b"
 
   -
     input:
-      bytes: [ 0x55,0x41,0x25,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x55, 0x41, 0x25, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx2], { z10.b, z11.b }, z5.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx2], { z10.b, z11.b }, z5.b"
 
   -
     input:
-      bytes: [ 0xb5,0x61,0x28,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb5, 0x61, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx2], { z13.b, z14.b }, z8.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx2], { z13.b, z14.b }, z8.b"
 
   -
     input:
-      bytes: [ 0xb5,0x61,0x28,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb5, 0x61, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx2], { z13.b, z14.b }, z8.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx2], { z13.b, z14.b }, z8.b"
 
   -
     input:
-      bytes: [ 0xf5,0x63,0x2f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf5, 0x63, 0x2f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx2], { z31.b, z0.b }, z15.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx2], { z31.b, z0.b }, z15.b"
 
   -
     input:
-      bytes: [ 0xf5,0x63,0x2f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf5, 0x63, 0x2f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx2], { z31.b, z0.b }, z15.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx2], { z31.b, z0.b }, z15.b"
 
   -
     input:
-      bytes: [ 0x35,0x02,0x20,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x02, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx2], { z17.b, z18.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx2], { z17.b, z18.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x35,0x02,0x20,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x02, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx2], { z17.b, z18.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx2], { z17.b, z18.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x35,0x00,0x2e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x00, 0x2e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx2], { z1.b, z2.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx2], { z1.b, z2.b }, z14.b"
 
   -
     input:
-      bytes: [ 0x35,0x00,0x2e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x00, 0x2e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx2], { z1.b, z2.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx2], { z1.b, z2.b }, z14.b"
 
   -
     input:
-      bytes: [ 0x74,0x42,0x24,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x74, 0x42, 0x24, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 0:3, vgx2], { z19.b, z20.b }, z4.b"
+          asm_text: "sumlall za.s[w10, 0:3,  vgx2], { z19.b, z20.b }, z4.b"
 
   -
     input:
-      bytes: [ 0x74,0x42,0x24,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x74, 0x42, 0x24, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 0:3, vgx2], { z19.b, z20.b }, z4.b"
+          asm_text: "sumlall za.s[w10, 0:3,  vgx2], { z19.b, z20.b }, z4.b"
 
   -
     input:
-      bytes: [ 0x94,0x01,0x22,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x94, 0x01, 0x22, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx2], { z12.b, z13.b }, z2.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx2], { z12.b, z13.b }, z2.b"
 
   -
     input:
-      bytes: [ 0x94,0x01,0x22,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x94, 0x01, 0x22, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx2], { z12.b, z13.b }, z2.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx2], { z12.b, z13.b }, z2.b"
 
   -
     input:
-      bytes: [ 0x35,0x40,0x2a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x40, 0x2a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx2], { z1.b, z2.b }, z10.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx2], { z1.b, z2.b }, z10.b"
 
   -
     input:
-      bytes: [ 0x35,0x40,0x2a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x40, 0x2a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx2], { z1.b, z2.b }, z10.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx2], { z1.b, z2.b }, z10.b"
 
   -
     input:
-      bytes: [ 0xd5,0x02,0x2e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xd5, 0x02, 0x2e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx2], { z22.b, z23.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx2], { z22.b, z23.b }, z14.b"
 
   -
     input:
-      bytes: [ 0xd5,0x02,0x2e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xd5, 0x02, 0x2e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx2], { z22.b, z23.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx2], { z22.b, z23.b }, z14.b"
 
   -
     input:
-      bytes: [ 0x34,0x61,0x21,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x34, 0x61, 0x21, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 0:3, vgx2], { z9.b, z10.b }, z1.b"
+          asm_text: "sumlall za.s[w11, 0:3,  vgx2], { z9.b, z10.b }, z1.b"
 
   -
     input:
-      bytes: [ 0x34,0x61,0x21,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x34, 0x61, 0x21, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 0:3, vgx2], { z9.b, z10.b }, z1.b"
+          asm_text: "sumlall za.s[w11, 0:3,  vgx2], { z9.b, z10.b }, z1.b"
 
   -
     input:
-      bytes: [ 0x95,0x21,0x2b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x95, 0x21, 0x2b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w9, 4:7, vgx2], { z12.b, z13.b }, z11.b"
+          asm_text: "sumlall za.s[w9, 4:7,  vgx2], { z12.b, z13.b }, z11.b"
 
   -
     input:
-      bytes: [ 0x95,0x21,0x2b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x95, 0x21, 0x2b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w9, 4:7, vgx2], { z12.b, z13.b }, z11.b"
+          asm_text: "sumlall za.s[w9, 4:7,  vgx2], { z12.b, z13.b }, z11.b"
 
   -
     input:
-      bytes: [ 0x30,0x00,0x10,0xc1 ]
-      arch: "AArch64"
-      options: [ "aarch64", "sme2" ]
-    expected:
-      insns:
-        -
-          asm_text: "sumlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b[0]"
-
-  -
-    input:
-      bytes: [ 0x30,0x00,0x10,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x30, 0x00, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -381,8 +371,18 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x75,0x45,0x15,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x30, 0x00, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sumlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0x75, 0x45, 0x15, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -391,8 +391,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x75,0x45,0x15,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x75, 0x45, 0x15, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -401,8 +401,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0x6d,0x18,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0x6d, 0x18, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -411,8 +411,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0x6d,0x18,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0x6d, 0x18, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -421,8 +421,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xf7,0x6f,0x1f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf7, 0x6f, 0x1f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -431,8 +431,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xf7,0x6f,0x1f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf7, 0x6f, 0x1f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -441,8 +441,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0x0e,0x10,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x0e, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -451,8 +451,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0x0e,0x10,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x0e, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -461,8 +461,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0x04,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0x04, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -471,8 +471,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0x04,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0x04, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -481,8 +481,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x70,0x46,0x14,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x70, 0x46, 0x14, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -491,8 +491,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x70,0x46,0x14,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x70, 0x46, 0x14, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -501,8 +501,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb0,0x09,0x12,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb0, 0x09, 0x12, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -511,8 +511,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb0,0x09,0x12,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb0, 0x09, 0x12, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -521,8 +521,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0x48,0x1a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0x48, 0x1a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -531,8 +531,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0x48,0x1a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0x48, 0x1a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -541,8 +541,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xf5,0x0a,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf5, 0x0a, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -551,8 +551,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xf5,0x0a,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf5, 0x0a, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -561,8 +561,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x32,0x65,0x11,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x32, 0x65, 0x11, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -571,8 +571,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x32,0x65,0x11,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x32, 0x65, 0x11, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -581,8 +581,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0x29,0x1b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0x29, 0x1b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -591,8 +591,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0x29,0x1b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0x29, 0x1b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -601,258 +601,248 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x14,0x00,0x30,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x00, 0x30, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx4], { z0.b - z3.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx4], { z0.b - z3.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x14,0x00,0x30,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x00, 0x30, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx4], { z0.b - z3.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx4], { z0.b - z3.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x55,0x41,0x35,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x55, 0x41, 0x35, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx4], { z10.b - z13.b }, z5.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx4], { z10.b - z13.b }, z5.b"
 
   -
     input:
-      bytes: [ 0x55,0x41,0x35,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x55, 0x41, 0x35, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx4], { z10.b - z13.b }, z5.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx4], { z10.b - z13.b }, z5.b"
 
   -
     input:
-      bytes: [ 0xb5,0x61,0x38,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb5, 0x61, 0x38, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx4], { z13.b - z16.b }, z8.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx4], { z13.b - z16.b }, z8.b"
 
   -
     input:
-      bytes: [ 0xb5,0x61,0x38,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb5, 0x61, 0x38, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx4], { z13.b - z16.b }, z8.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx4], { z13.b - z16.b }, z8.b"
 
   -
     input:
-      bytes: [ 0xf5,0x63,0x3f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf5, 0x63, 0x3f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx4], { z31.b, z0.b, z1.b, z2.b }, z15.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx4], { z31.b, z0.b, z1.b, z2.b }, z15.b"
 
   -
     input:
-      bytes: [ 0xf5,0x63,0x3f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xf5, 0x63, 0x3f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 4:7, vgx4], { z31.b, z0.b, z1.b, z2.b }, z15.b"
+          asm_text: "sumlall za.s[w11, 4:7,  vgx4], { z31.b, z0.b, z1.b, z2.b }, z15.b"
 
   -
     input:
-      bytes: [ 0x35,0x02,0x30,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x02, 0x30, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx4], { z17.b - z20.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx4], { z17.b - z20.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x35,0x02,0x30,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x02, 0x30, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx4], { z17.b - z20.b }, z0.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx4], { z17.b - z20.b }, z0.b"
 
   -
     input:
-      bytes: [ 0x35,0x00,0x3e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x00, 0x3e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx4], { z1.b - z4.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx4], { z1.b - z4.b }, z14.b"
 
   -
     input:
-      bytes: [ 0x35,0x00,0x3e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x00, 0x3e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx4], { z1.b - z4.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx4], { z1.b - z4.b }, z14.b"
 
   -
     input:
-      bytes: [ 0x74,0x42,0x34,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x74, 0x42, 0x34, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 0:3, vgx4], { z19.b - z22.b }, z4.b"
+          asm_text: "sumlall za.s[w10, 0:3,  vgx4], { z19.b - z22.b }, z4.b"
 
   -
     input:
-      bytes: [ 0x74,0x42,0x34,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x74, 0x42, 0x34, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 0:3, vgx4], { z19.b - z22.b }, z4.b"
+          asm_text: "sumlall za.s[w10, 0:3,  vgx4], { z19.b - z22.b }, z4.b"
 
   -
     input:
-      bytes: [ 0x94,0x01,0x32,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x94, 0x01, 0x32, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx4], { z12.b - z15.b }, z2.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx4], { z12.b - z15.b }, z2.b"
 
   -
     input:
-      bytes: [ 0x94,0x01,0x32,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x94, 0x01, 0x32, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 0:3, vgx4], { z12.b - z15.b }, z2.b"
+          asm_text: "sumlall za.s[w8, 0:3,  vgx4], { z12.b - z15.b }, z2.b"
 
   -
     input:
-      bytes: [ 0x35,0x40,0x3a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x40, 0x3a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx4], { z1.b - z4.b }, z10.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx4], { z1.b - z4.b }, z10.b"
 
   -
     input:
-      bytes: [ 0x35,0x40,0x3a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x40, 0x3a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w10, 4:7, vgx4], { z1.b - z4.b }, z10.b"
+          asm_text: "sumlall za.s[w10, 4:7,  vgx4], { z1.b - z4.b }, z10.b"
 
   -
     input:
-      bytes: [ 0xd5,0x02,0x3e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xd5, 0x02, 0x3e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx4], { z22.b - z25.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx4], { z22.b - z25.b }, z14.b"
 
   -
     input:
-      bytes: [ 0xd5,0x02,0x3e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xd5, 0x02, 0x3e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w8, 4:7, vgx4], { z22.b - z25.b }, z14.b"
+          asm_text: "sumlall za.s[w8, 4:7,  vgx4], { z22.b - z25.b }, z14.b"
 
   -
     input:
-      bytes: [ 0x34,0x61,0x31,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x34, 0x61, 0x31, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 0:3, vgx4], { z9.b - z12.b }, z1.b"
+          asm_text: "sumlall za.s[w11, 0:3,  vgx4], { z9.b - z12.b }, z1.b"
 
   -
     input:
-      bytes: [ 0x34,0x61,0x31,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x34, 0x61, 0x31, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w11, 0:3, vgx4], { z9.b - z12.b }, z1.b"
+          asm_text: "sumlall za.s[w11, 0:3,  vgx4], { z9.b - z12.b }, z1.b"
 
   -
     input:
-      bytes: [ 0x95,0x21,0x3b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x95, 0x21, 0x3b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w9, 4:7, vgx4], { z12.b - z15.b }, z11.b"
+          asm_text: "sumlall za.s[w9, 4:7,  vgx4], { z12.b - z15.b }, z11.b"
 
   -
     input:
-      bytes: [ 0x95,0x21,0x3b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x95, 0x21, 0x3b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
         -
-          asm_text: "sumlall za.s[w9, 4:7, vgx4], { z12.b - z15.b }, z11.b"
+          asm_text: "sumlall za.s[w9, 4:7,  vgx4], { z12.b - z15.b }, z11.b"
 
   -
     input:
-      bytes: [ 0x30,0x80,0x10,0xc1 ]
-      arch: "AArch64"
-      options: [ "aarch64", "sme2" ]
-    expected:
-      insns:
-        -
-          asm_text: "sumlall za.s[w8, 0:3, vgx4], { z0.b - z3.b }, z0.b[0]"
-
-  -
-    input:
-      bytes: [ 0x30,0x80,0x10,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x30, 0x80, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -861,8 +851,18 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0xc5,0x15,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x30, 0x80, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sumlall za.s[w8, 0:3, vgx4], { z0.b - z3.b }, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0x35, 0xc5, 0x15, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -871,8 +871,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0xc5,0x15,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0xc5, 0x15, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -881,8 +881,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0xed,0x18,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0xed, 0x18, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -891,8 +891,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0xed,0x18,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0xed, 0x18, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -901,8 +901,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0xef,0x1f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0xef, 0x1f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -911,8 +911,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0xef,0x1f,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0xef, 0x1f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -921,8 +921,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0x8e,0x10,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x8e, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -931,8 +931,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x35,0x8e,0x10,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x35, 0x8e, 0x10, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -941,8 +941,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0x84,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0x84, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -951,8 +951,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0x84,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0x84, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -961,8 +961,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x30,0xc6,0x14,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x30, 0xc6, 0x14, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -971,8 +971,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x30,0xc6,0x14,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x30, 0xc6, 0x14, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -981,8 +981,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb0,0x89,0x12,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb0, 0x89, 0x12, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -991,8 +991,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb0,0x89,0x12,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb0, 0x89, 0x12, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1001,8 +1001,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0xc8,0x1a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0xc8, 0x1a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1011,8 +1011,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x31,0xc8,0x1a,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x31, 0xc8, 0x1a, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1021,8 +1021,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb5,0x8a,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb5, 0x8a, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1031,8 +1031,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb5,0x8a,0x1e,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb5, 0x8a, 0x1e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1041,8 +1041,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x32,0xe5,0x11,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x32, 0xe5, 0x11, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1051,8 +1051,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x32,0xe5,0x11,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0x32, 0xe5, 0x11, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1061,8 +1061,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0xa9,0x1b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0xa9, 0x1b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:
@@ -1071,8 +1071,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xb7,0xa9,0x1b,0xc1 ]
-      arch: "AArch64"
+      bytes: [ 0xb7, 0xa9, 0x1b, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2" ]
     expected:
       insns:

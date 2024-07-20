@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x00,0xb0,0x20,0x45 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0xb0, 0x20, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve2", "+lut" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x55,0xb1,0x75,0x45 ]
-      arch: "AArch64"
+      bytes: [ 0x55, 0xb1, 0x75, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve2", "+lut" ]
     expected:
       insns:
@@ -21,8 +21,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xff,0xb3,0xff,0x45 ]
-      arch: "AArch64"
+      bytes: [ 0xff, 0xb3, 0xff, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve2", "+lut" ]
     expected:
       insns:
@@ -31,8 +31,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0xa8,0x20,0x45 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0xa8, 0x20, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve2", "+lut" ]
     expected:
       insns:
@@ -41,8 +41,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x55,0xb9,0x75,0x45 ]
-      arch: "AArch64"
+      bytes: [ 0x55, 0xb9, 0x75, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve2", "+lut" ]
     expected:
       insns:
@@ -51,8 +51,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xff,0xbb,0xff,0x45 ]
-      arch: "AArch64"
+      bytes: [ 0xff, 0xbb, 0xff, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sve2", "+lut" ]
     expected:
       insns:

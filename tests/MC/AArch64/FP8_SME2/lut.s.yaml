@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x00,0x00,0x8b,0xc0 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x00, 0x8b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xdc,0x03,0x8b,0xc0 ]
-      arch: "AArch64"
+      bytes: [ 0xdc, 0x03, 0x8b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
     expected:
       insns:
@@ -21,8 +21,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x00,0x9b,0xc0 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x00, 0x9b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
     expected:
       insns:
@@ -31,8 +31,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xd3,0x03,0x9b,0xc0 ]
-      arch: "AArch64"
+      bytes: [ 0xd3, 0x03, 0x9b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
     expected:
       insns:

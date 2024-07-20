@@ -1,9 +1,9 @@
 test_cases:
   -
     input:
-      bytes: [ 0xe5,0x03,0x0b,0xaa ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0xe5, 0x03, 0x0b, 0xaa ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -11,9 +11,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xe1,0x03,0x06,0x2a ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0xe1, 0x03, 0x06, 0x2a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -21,9 +21,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xe1,0x03,0x06,0x2a ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0xe1, 0x03, 0x06, 0x2a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -31,9 +31,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x06,0xb8,0x31,0x0e ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0x06, 0xb8, 0x31, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -41,9 +41,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x85,0x04,0x0e,0x5e ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0x85, 0x04, 0x0e, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -51,9 +51,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x80,0x28,0x24,0x1e ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0x80, 0x28, 0x24, 0x1e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -61,9 +61,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x62,0x40,0x60,0x1e ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0x62, 0x40, 0x60, 0x1e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -71,9 +71,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xe2,0x03,0xc0,0x3d ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0xe2, 0x03, 0xc0, 0x3d ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -81,9 +81,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0x1c,0xa1,0x0e ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0x20, 0x1c, 0xa1, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -91,9 +91,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x06,0x00,0x00,0x8b ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0x06, 0x00, 0x00, 0x8b ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -
@@ -101,9 +101,9 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x06,0x00,0x00,0x8b ]
-      arch: "AArch64"
-      options: [ "aarch64-none-linux-gnu", "" ]
+      bytes: [ 0x06, 0x00, 0x00, 0x8b ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64-none-linux-gnu" ]
     expected:
       insns:
         -

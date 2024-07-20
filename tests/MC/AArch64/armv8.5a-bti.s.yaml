@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x1f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x5f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x5f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -21,8 +21,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x9f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x9f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -31,8 +31,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xdf,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xdf, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -41,8 +41,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x1f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -51,8 +51,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x5f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x5f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -61,8 +61,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x9f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x9f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -71,8 +71,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xdf,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xdf, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "bti" ]
     expected:
       insns:
@@ -81,8 +81,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x1f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -91,8 +91,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x5f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x5f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -101,8 +101,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x9f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x9f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -111,8 +111,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xdf,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xdf, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -121,8 +121,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x1f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -131,8 +131,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x5f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x5f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -141,8 +141,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x9f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x9f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -151,8 +151,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xdf,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xdf, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.5a" ]
     expected:
       insns:
@@ -161,80 +161,80 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x1f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #32"
+          asm_text: "bti"
 
   -
     input:
-      bytes: [ 0x5f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x5f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #34"
+          asm_text: "bti c"
 
   -
     input:
-      bytes: [ 0x9f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x9f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #36"
+          asm_text: "bti j"
 
   -
     input:
-      bytes: [ 0xdf,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xdf, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #38"
+          asm_text: "bti jc"
 
   -
     input:
-      bytes: [ 0x1f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #32"
+          asm_text: "bti"
 
   -
     input:
-      bytes: [ 0x5f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x5f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #34"
+          asm_text: "bti c"
 
   -
     input:
-      bytes: [ 0x9f,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x9f, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #36"
+          asm_text: "bti j"
 
   -
     input:
-      bytes: [ 0xdf,0x24,0x03,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xdf, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "-bti" ]
     expected:
       insns:
         -
-          asm_text: "hint #38"
+          asm_text: "bti jc"

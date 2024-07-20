@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x00,0x20,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0x20,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
@@ -21,8 +21,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x74,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x74, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
@@ -31,198 +31,198 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x60,0xd0,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x60, 0xd0, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x0, x1, S3_0_C13_C0_3"
+          asm_text: "mrrs x0, x1, RCWSMASK_EL1"
 
   -
     input:
-      bytes: [ 0xc0,0xd0,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xc0, 0xd0, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x0, x1, S3_0_C13_C0_6"
+          asm_text: "mrrs x0, x1, RCWMASK_EL1"
 
   -
     input:
-      bytes: [ 0x00,0x20,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x0, x1, S3_4_C2_C0_0"
+          asm_text: "mrrs x0, x1, TTBR0_EL2"
 
   -
     input:
-      bytes: [ 0x20,0x20,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x0, x1, S3_4_C2_C0_1"
+          asm_text: "mrrs x0, x1, TTBR1_EL2"
 
   -
     input:
-      bytes: [ 0x00,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x0, x1, S3_4_C2_C1_0"
+          asm_text: "mrrs x0, x1, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x00,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x0, x1, S3_4_C2_C1_0"
+          asm_text: "mrrs x0, x1, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x02,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x02, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x2, x3, S3_4_C2_C1_0"
+          asm_text: "mrrs x2, x3, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x04,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x04, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x4, x5, S3_4_C2_C1_0"
+          asm_text: "mrrs x4, x5, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x06,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x06, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x6, x7, S3_4_C2_C1_0"
+          asm_text: "mrrs x6, x7, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x08,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x08, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x8, x9, S3_4_C2_C1_0"
+          asm_text: "mrrs x8, x9, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x0a,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0a, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x10, x11, S3_4_C2_C1_0"
+          asm_text: "mrrs x10, x11, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x0c,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0c, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x12, x13, S3_4_C2_C1_0"
+          asm_text: "mrrs x12, x13, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x0e,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0e, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x14, x15, S3_4_C2_C1_0"
+          asm_text: "mrrs x14, x15, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x10,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x10, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x16, x17, S3_4_C2_C1_0"
+          asm_text: "mrrs x16, x17, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x12,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x12, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x18, x19, S3_4_C2_C1_0"
+          asm_text: "mrrs x18, x19, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x14,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x20, x21, S3_4_C2_C1_0"
+          asm_text: "mrrs x20, x21, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x16,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x16, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x22, x23, S3_4_C2_C1_0"
+          asm_text: "mrrs x22, x23, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x18,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x18, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x24, x25, S3_4_C2_C1_0"
+          asm_text: "mrrs x24, x25, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x1a,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1a, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "mrrs x26, x27, S3_4_C2_C1_0"
+          asm_text: "mrrs x26, x27, VTTBR_EL2"
 
   -
     input:
-      bytes: [ 0x00,0x20,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
@@ -231,8 +231,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0x20,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
@@ -241,8 +241,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x74,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x74, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
@@ -251,198 +251,198 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x60,0xd0,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x60, 0xd0, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_0_C13_C0_3, x0, x1"
+          asm_text: "msrr RCWSMASK_EL1, x0, x1"
 
   -
     input:
-      bytes: [ 0xc0,0xd0,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xc0, 0xd0, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_0_C13_C0_6, x0, x1"
+          asm_text: "msrr RCWMASK_EL1, x0, x1"
 
   -
     input:
-      bytes: [ 0x00,0x20,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C0_0, x0, x1"
+          asm_text: "msrr TTBR0_EL2, x0, x1"
 
   -
     input:
-      bytes: [ 0x20,0x20,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C0_1, x0, x1"
+          asm_text: "msrr TTBR1_EL2, x0, x1"
 
   -
     input:
-      bytes: [ 0x00,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x0, x1"
+          asm_text: "msrr VTTBR_EL2, x0, x1"
 
   -
     input:
-      bytes: [ 0x00,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x0, x1"
+          asm_text: "msrr VTTBR_EL2, x0, x1"
 
   -
     input:
-      bytes: [ 0x02,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x02, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x2, x3"
+          asm_text: "msrr VTTBR_EL2, x2, x3"
 
   -
     input:
-      bytes: [ 0x04,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x04, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x4, x5"
+          asm_text: "msrr VTTBR_EL2, x4, x5"
 
   -
     input:
-      bytes: [ 0x06,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x06, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x6, x7"
+          asm_text: "msrr VTTBR_EL2, x6, x7"
 
   -
     input:
-      bytes: [ 0x08,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x08, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x8, x9"
+          asm_text: "msrr VTTBR_EL2, x8, x9"
 
   -
     input:
-      bytes: [ 0x0a,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0a, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x10, x11"
+          asm_text: "msrr VTTBR_EL2, x10, x11"
 
   -
     input:
-      bytes: [ 0x0c,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0c, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x12, x13"
+          asm_text: "msrr VTTBR_EL2, x12, x13"
 
   -
     input:
-      bytes: [ 0x0e,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0e, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x14, x15"
+          asm_text: "msrr VTTBR_EL2, x14, x15"
 
   -
     input:
-      bytes: [ 0x10,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x10, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x16, x17"
+          asm_text: "msrr VTTBR_EL2, x16, x17"
 
   -
     input:
-      bytes: [ 0x12,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x12, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x18, x19"
+          asm_text: "msrr VTTBR_EL2, x18, x19"
 
   -
     input:
-      bytes: [ 0x14,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x20, x21"
+          asm_text: "msrr VTTBR_EL2, x20, x21"
 
   -
     input:
-      bytes: [ 0x16,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x16, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x22, x23"
+          asm_text: "msrr VTTBR_EL2, x22, x23"
 
   -
     input:
-      bytes: [ 0x18,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x18, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x24, x25"
+          asm_text: "msrr VTTBR_EL2, x24, x25"
 
   -
     input:
-      bytes: [ 0x1a,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1a, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128" ]
     expected:
       insns:
         -
-          asm_text: "msrr S3_4_C2_C1_0, x26, x27"
+          asm_text: "msrr VTTBR_EL2, x26, x27"
 
   -
     input:
-      bytes: [ 0x00,0x20,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -451,8 +451,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0x20,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -461,8 +461,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x74,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x74, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -471,8 +471,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x60,0xd0,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x60, 0xd0, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -481,8 +481,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xc0,0xd0,0x78,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xc0, 0xd0, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -491,8 +491,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x20,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -501,8 +501,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0x20,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -511,8 +511,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -521,8 +521,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -531,8 +531,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x02,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x02, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -541,8 +541,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x04,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x04, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -551,8 +551,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x06,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x06, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -561,8 +561,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x08,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x08, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -571,8 +571,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x0a,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0a, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -581,8 +581,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x0c,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0c, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -591,8 +591,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x0e,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0e, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -601,8 +601,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x10,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x10, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -611,8 +611,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x12,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x12, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -621,8 +621,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x14,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -631,8 +631,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x16,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x16, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -641,8 +641,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x18,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x18, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -651,8 +651,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x1a,0x21,0x7c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1a, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -661,8 +661,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x20,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -671,8 +671,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0x20,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -681,8 +681,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x74,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x74, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -691,8 +691,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x60,0xd0,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x60, 0xd0, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -701,8 +701,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0xc0,0xd0,0x58,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0xc0, 0xd0, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -711,8 +711,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x20,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x20, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -721,8 +721,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x20,0x20,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x20, 0x20, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -731,8 +731,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -741,8 +741,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -751,8 +751,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x02,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x02, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -761,8 +761,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x04,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x04, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -771,8 +771,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x06,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x06, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -781,8 +781,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x08,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x08, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -791,8 +791,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x0a,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0a, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -801,8 +801,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x0c,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0c, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -811,8 +811,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x0e,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x0e, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -821,8 +821,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x10,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x10, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -831,8 +831,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x12,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x12, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -841,8 +841,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x14,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x14, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -851,8 +851,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x16,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x16, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -861,8 +861,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x18,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x18, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
     expected:
       insns:
@@ -871,9 +871,449 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x1a,0x21,0x5c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x1a, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64", "d128", "+the", "+el2vmsa", "+vh" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x26, x27"
+
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, TTBR0_EL1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, TTBR1_EL1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x74, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, PAR_EL1"
+
+  -
+    input:
+      bytes: [ 0x60, 0xd0, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, RCWSMASK_EL1"
+
+  -
+    input:
+      bytes: [ 0xc0, 0xd0, 0x78, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, RCWMASK_EL1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, TTBR0_EL2"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, TTBR1_EL2"
+
+  -
+    input:
+      bytes: [ 0x00, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x00, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x0, x1, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x02, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x2, x3, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x04, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x4, x5, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x06, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x6, x7, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x08, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x8, x9, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x10, x11, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x12, x13, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x0e, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x14, x15, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x10, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x16, x17, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x12, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x18, x19, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x14, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x20, x21, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x16, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x22, x23, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x18, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x24, x25, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x1a, 0x21, 0x7c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrrs x26, x27, VTTBR_EL2"
+
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr TTBR0_EL1, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr TTBR1_EL1, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x74, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr PAR_EL1, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x60, 0xd0, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr RCWSMASK_EL1, x0, x1"
+
+  -
+    input:
+      bytes: [ 0xc0, 0xd0, 0x58, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr RCWMASK_EL1, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr TTBR0_EL2, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr TTBR1_EL2, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x0, x1"
+
+  -
+    input:
+      bytes: [ 0x02, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x2, x3"
+
+  -
+    input:
+      bytes: [ 0x04, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x4, x5"
+
+  -
+    input:
+      bytes: [ 0x06, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x6, x7"
+
+  -
+    input:
+      bytes: [ 0x08, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x8, x9"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x10, x11"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x12, x13"
+
+  -
+    input:
+      bytes: [ 0x0e, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x14, x15"
+
+  -
+    input:
+      bytes: [ 0x10, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x16, x17"
+
+  -
+    input:
+      bytes: [ 0x12, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x18, x19"
+
+  -
+    input:
+      bytes: [ 0x14, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x20, x21"
+
+  -
+    input:
+      bytes: [ 0x16, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x22, x23"
+
+  -
+    input:
+      bytes: [ 0x18, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msrr VTTBR_EL2, x24, x25"
+
+  -
+    input:
+      bytes: [ 0x1a, 0x21, 0x5c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "aarch64" ]
     expected:
       insns:
         -

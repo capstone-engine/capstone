@@ -1,8 +1,8 @@
 test_cases:
   -
     input:
-      bytes: [ 0x00,0x22,0x3c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x22, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.4a" ]
     expected:
       insns:
@@ -11,8 +11,8 @@ test_cases:
 
   -
     input:
-      bytes: [ 0x00,0x22,0x1c,0xd5 ]
-      arch: "AArch64"
+      bytes: [ 0x00, 0x22, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
       options: [ "aarch64-none-linux-gnu", "v8.4a" ]
     expected:
       insns:
