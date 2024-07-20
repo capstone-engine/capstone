@@ -295,7 +295,7 @@ static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 	}
 	cs_mem_free(utest_table);
 	stats->failed += failed_tests;
-	stats->successful += stats->tc_total - failed_tests;
+	stats->successful += stats->tc_total - failed_tests - stats->skipped;
 }
 
 /// Runs runs all valid tests in the given @test_files
