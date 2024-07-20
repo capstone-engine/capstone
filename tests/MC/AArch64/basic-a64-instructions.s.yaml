@@ -20769,7 +20769,8 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mrs x14, S1_3_C9_C2_1"
+          asm_text: "sysl	x14, #3, c9, c2, #1"
+    skip_reason: "Just a note: This test is correct, llvm-mc emits the msr variant, when it assembles. Disassembly only matches."
 
   -
     input:
@@ -20799,7 +20800,9 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "msr S1_3_C9_C2_1, x4"
+          asm_text: "sys #3, c9, c2, #1, x4"
+          asm_text: "sysl	x14, #3, c9, c2, #1"
+    skip_reason: "Just a note: This test is correct, llvm-mc emits the msr variant, when it assembles. Disassembly only matches."
 
   -
     input:
