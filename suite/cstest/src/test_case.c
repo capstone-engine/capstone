@@ -171,6 +171,7 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 	trim_str(expected_copy);
 	replace_hex(expected_copy, sizeof(expected_copy));
 	replace_negative(expected_copy, sizeof(expected_copy), arch_bits);
+	norm_spaces(expected_copy);
 	str_to_lower(expected_copy);
 
 	if (strcmp(asm_copy, expected_copy) == 0) {
