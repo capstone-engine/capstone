@@ -129,7 +129,8 @@ class TestFile:
                 continue
             enc_bytes = match.group("enc_bytes").strip()
             asm_text = match.group("asm_text").strip()
-            asm_text = re.sub(r"\s+", " ", asm_text)
+            asm_text = re.sub(r"\t+", " ", asm_text)
+            asm_text = asm_text.strip()
             if not self.valid_byte_seq(enc_bytes):
                 continue
 

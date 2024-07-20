@@ -163,6 +163,7 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 	trim_str(asm_copy);
 	replace_hex(asm_copy, sizeof(asm_copy));
 	replace_negative(asm_copy, sizeof(asm_copy), arch_bits);
+	norm_spaces(asm_copy);
 
 	char expected_copy[MAX_ASM_TXT_MEM] = { 0 };
 	strncpy(expected_copy, expected, sizeof(expected_copy));

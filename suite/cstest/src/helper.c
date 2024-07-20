@@ -1,6 +1,7 @@
 /* Capstone testing regression */
 /* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
 
+#include <assert.h>
 #include <stdbool.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -165,6 +166,23 @@ void trim_str(char *str)
 	tmp[j] = '\0';
 	strcpy(str, tmp);
 
+	return;
+}
+
+/// Normalizes the usage of spaces in the given string.
+/// It does:
+/// - Replaces '\t' with '\s'
+/// - Replace '\s\s+' with a single space.
+void norm_spaces(char *str)
+{
+	assert(str);
+	char *space_ptr = NULL;
+	while ((space_ptr = strstr(str, "\t")) != NULL) {
+		*space_ptr = ' ';
+	}
+	while ((space_ptr = strstr(str, "  ")) != NULL) {
+		memmove(space_ptr, space_ptr + 1, strlen(space_ptr));
+	}
 	return;
 }
 
