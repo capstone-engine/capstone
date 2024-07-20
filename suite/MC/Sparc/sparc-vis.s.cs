@@ -1,2 +1,0 @@
-# CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, None
-0xbf,0xb0,0x0c,0x20 = fzeros %f31
