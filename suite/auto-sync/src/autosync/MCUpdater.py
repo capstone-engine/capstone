@@ -13,12 +13,17 @@ from pathlib import Path
 from autosync.Targets import TARGETS_LLVM_NAMING
 from autosync.Helper import convert_loglevel, get_path
 
+# mattr flags which have to be added to all llvm-mc commands
+# before executing them.
+ARCH_MATTR = {"AArch64": "+all"}
+
 
 class LLVM_MC_Command:
-    def __init__(self, cmd_line: str):
+    def __init__(self, cmd_line: str, mattr: str):
         self.cmd: str = ""
         self.opts: str = ""
         self.file: Path | None = None
+        self.mattr: str = mattr
 
         self.cmd, self.opts, self.file = self.parse_llvm_mc_line(cmd_line)
         if not (self.cmd and self.opts and self.file):
@@ -43,6 +48,15 @@ class LLVM_MC_Command:
     def exec(self) -> sp.CompletedProcess:
         with open(self.file, "b+r") as f:
             content = f.read()
+        if self.mattr:
+            # If mattr exists, patch it into the cmd
+            if "mattr" in self.cmd:
+                self.cmd = re.sub(
+                    r"mattr[=\s]+", f"mattr={self.mattr} -mattr=", self.cmd
+                )
+            else:
+                self.cmd = re.sub(r"llvm-mc", f"llvm-mc -mattr={self.mattr}", self.cmd)
+
         result = sp.run(self.cmd.split(" "), input=content, capture_output=True)
         return result
 
@@ -190,6 +204,7 @@ class MCUpdater:
         self.included = included if included else list()
         self.test_files: list[TestFile] = list()
         self.unified_test_cases = unified_test_cases
+        self.mattr: str = ARCH_MATTR[self.arch] if self.arch in ARCH_MATTR else ""
 
     def check_prerequisites(self, paths):
         for path in paths:
@@ -315,7 +330,7 @@ class MCUpdater:
             if any(re.search(x, match) is not None for x in self.excluded):
                 continue
 
-            all_cmds.append(LLVM_MC_Command(match))
+            all_cmds.append(LLVM_MC_Command(match, self.mattr))
         return all_cmds
 
     def gen_all(self):
