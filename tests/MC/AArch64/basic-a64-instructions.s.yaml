@@ -4068,6 +4068,8 @@ test_cases:
       insns:
         -
           asm_text: "bfi x4, xzr, #1, #6"
+    skip: true
+    skip_reason: "Requires to disable the HasV8_2aOps feature. Which is not possible without adding unnecessary bloat."
 
   -
     input:
@@ -4528,6 +4530,8 @@ test_cases:
       insns:
         -
           asm_text: "bfi xzr, xzr, #10, #11"
+    skip: true
+    skip_reason: "Requires to disable the HasV8_2aOps feature. Which is not possible without adding unnecessary bloat."
 
   -
     input:
@@ -4778,6 +4782,8 @@ test_cases:
       insns:
         -
           asm_text: "bfxil w3, wzr, #0, #32"
+    skip: true
+    skip_reason: "Requires to disable the HasV8_2aOps feature. Which is not possible without adding unnecessary bloat."
 
   -
     input:
@@ -4788,6 +4794,8 @@ test_cases:
       insns:
         -
           asm_text: "bfi wzr, wzr, #31, #1"
+    skip: true
+    skip_reason: "Requires to disable the HasV8_2aOps feature. Which is not possible without adding unnecessary bloat."
 
   -
     input:
@@ -4798,6 +4806,8 @@ test_cases:
       insns:
         -
           asm_text: "bfi x0, xzr, #5, #9"
+    skip: true
+    skip_reason: "Requires to disable the HasV8_2aOps feature. Which is not possible without adding unnecessary bloat."
 
   -
     input:
@@ -4808,6 +4818,8 @@ test_cases:
       insns:
         -
           asm_text: "bfi xzr, xzr, #63, #1"
+    skip: true
+    skip_reason: "Requires to disable the HasV8_2aOps feature. Which is not possible without adding unnecessary bloat."
 
   -
     input:

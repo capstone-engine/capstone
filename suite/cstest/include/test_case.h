@@ -114,6 +114,8 @@ static const cyaml_schema_field_t test_expected_mapping_schema[] = {
 typedef struct {
 	TestInput *input;	///< Input data for a test case
 	TestExpected *expected; ///< Expected data of the test case.
+	bool skip; ///< If set, the test is skipped
+	char *skip_reason; ///< Reason this test is skipped.
 } TestCase;
 
 TestCase *test_case_new();
@@ -125,6 +127,10 @@ static const cyaml_schema_field_t test_case_mapping_schema[] = {
 				test_input_mapping_schema),
 	CYAML_FIELD_MAPPING_PTR("expected", CYAML_FLAG_POINTER, TestCase,
 				expected, test_expected_mapping_schema),
+	CYAML_FIELD_BOOL("skip", CYAML_FLAG_OPTIONAL, TestCase, skip),
+	CYAML_FIELD_STRING_PTR(
+		"skip_reason", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
+		TestCase, skip_reason, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 

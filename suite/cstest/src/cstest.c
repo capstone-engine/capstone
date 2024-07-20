@@ -68,6 +68,7 @@ void print_test_run_stats(const TestRunStats *stats)
 	printf("Test cases:\n");
 	printf("\tTotal: %" PRId32 "\n", stats->tc_total);
 	printf("\tSuccessful: %" PRId32 "\n", stats->successful);
+	printf("\tSkipped: %" PRId32 "\n", stats->skipped);
 	printf("\tFailed: %" PRId32 "\n", stats->failed);
 	printf("-----------------------------------------\n");
 	printf("\n");

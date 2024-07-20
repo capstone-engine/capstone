@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3
 
 #include "test_run.h"
+#include "test_case.h"
 #include "test_mappings.h"
 #include "../../../utils.h"
 #include <stdarg.h>
@@ -14,9 +15,9 @@
 
 static TestRunResult get_test_run_result(TestRunStats *stats)
 {
-	if (stats->tc_total != stats->successful + stats->failed) {
+	if (stats->tc_total != stats->successful + stats->failed + stats->skipped) {
 		fprintf(stderr,
-			"[!] Inconsistent statistics: total != successful + failed\n");
+			"[!] Inconsistent statistics: total != successful + failed + skipped\n");
 		stats->errors++;
 		return TEST_RUN_ERROR;
 	}
@@ -261,11 +262,21 @@ static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 
 		for (size_t k = 0; k < test_files[i]->test_cases_count;
 		     ++k, ++tci) {
+			cs_snprintf(utest_id, sizeof(utest_id),
+				    "%s - TC #%" PRIx32 ": ", filename, k);
+			if (test_cases[k]->skip) {
+				char *tc_name = test_input_stringify(test_cases[k]->input, utest_id);
+				fprintf(stderr, "SKIP: %s\nReason: %s\n",
+				        tc_name,
+				        test_cases[k]->skip_reason);
+				cs_mem_free(tc_name);
+				stats->skipped++;
+				continue;
+			}
+
 			UnitTestState *ut_state =
 				cs_mem_calloc(sizeof(UnitTestState), 1);
 			ut_state->tcase = test_cases[k];
-			cs_snprintf(utest_id, sizeof(utest_id),
-				    "%s - TC #%" PRIx32 ": ", filename, k);
 			utest_table[tci].name = test_input_stringify(
 				ut_state->tcase->input, utest_id);
 			utest_table[tci].initial_state = ut_state;

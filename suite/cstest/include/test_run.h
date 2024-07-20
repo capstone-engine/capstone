@@ -20,6 +20,7 @@ typedef struct {
 	uint32_t successful;	   ///< Number of successful test cases.
 	uint32_t failed;	   ///< Number of failed test cases.
 	uint32_t errors;	   ///< Number errors (parsing errors etc).
+	uint32_t skipped;	   ///< Number skipped test cases.
 } TestRunStats;
 
 typedef struct {

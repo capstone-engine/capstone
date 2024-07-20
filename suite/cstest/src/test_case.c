@@ -246,6 +246,7 @@ void test_case_free(TestCase *test_case)
 	}
 	test_input_free(test_case->input);
 	test_expected_free(test_case->expected);
+	cs_mem_free(test_case->skip_reason);
 	cs_mem_free(test_case);
 }
 
@@ -257,6 +258,10 @@ TestCase *test_case_clone(TestCase *test_case)
 	tc->input = ti;
 	TestExpected *te = test_expected_clone(test_case->expected);
 	tc->expected = te;
+	tc->skip = test_case->skip;
+	if (tc->skip) {
+		tc->skip_reason = strdup(test_case->skip_reason);
+	}
 	return tc;
 }
 
