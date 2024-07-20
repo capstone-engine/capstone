@@ -186,3 +186,10 @@ void norm_spaces(char *str)
 	return;
 }
 
+void str_to_lower(char *str)
+{
+	assert(str);
+	for (size_t i = 0; i < strlen(str); ++i)
+		str[i] = tolower(str[i]);
+}
+
