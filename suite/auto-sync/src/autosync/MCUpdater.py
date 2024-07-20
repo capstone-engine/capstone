@@ -99,17 +99,22 @@ class MCTest:
 
 class TestFile:
     def __init__(
-        self, arch: str, filename: Path, opts: list[str] | None, mc_cmd: LLVM_MC_Command
+        self,
+        arch: str,
+        filename: Path,
+        opts: list[str] | None,
+        mc_cmd: LLVM_MC_Command,
+        unified_test_cases: bool,
     ):
         self.arch: str = arch
         self.filename: Path = filename
         self.opts: list[str] = list() if not opts else opts
         self.mc_cmd: LLVM_MC_Command = mc_cmd
         # Indexed by .text section count
-        self.tests: dict[int:MCTest] = dict()
-        self.init_tests()
+        self.tests: dict[int : list[MCTest]] = dict()
+        self.init_tests(unified_test_cases)
 
-    def init_tests(self):
+    def init_tests(self, unified_test_cases: bool):
         mc_output = self.mc_cmd.exec()
         if mc_output.stderr and not mc_output.stdout:
             # We can still continue. We just ignore the failed cases.
@@ -135,18 +140,24 @@ class TestFile:
                 continue
 
             if text_section in self.tests:
-                self.tests[text_section].extend(enc_bytes, asm_text)
+                if unified_test_cases:
+                    self.tests[text_section][0].extend(enc_bytes, asm_text)
+                else:
+                    self.tests[text_section].append(
+                        MCTest(self.arch, self.opts, enc_bytes, asm_text)
+                    )
             else:
-                self.tests[text_section] = MCTest(
-                    self.arch, self.opts, enc_bytes, asm_text
-                )
+                self.tests[text_section] = [
+                    MCTest(self.arch, self.opts, enc_bytes, asm_text)
+                ]
 
     def has_tests(self) -> bool:
         return len(self.tests) != 0
 
     def get_cs_testfile_content(self, only_test: bool) -> str:
         content = "\n" if only_test else "test_cases:\n"
-        content += "\n".join([str(t) for t in self.tests.values()])
+        for tl in self.tests.values():
+            content += "\n".join([str(t) for t in tl])
         return content
 
     def num_test_cases(self) -> int:
@@ -169,6 +180,7 @@ class MCUpdater:
         mc_dir: Path,
         excluded: list[str] | None,
         included: list[str] | None,
+        unified_test_cases: bool,
     ):
         self.symbolic_links = list()
         self.arch = arch
@@ -177,6 +189,7 @@ class MCUpdater:
         self.excluded = excluded if excluded else list()
         self.included = included if included else list()
         self.test_files: list[TestFile] = list()
+        self.unified_test_cases = unified_test_cases
 
     def check_prerequisites(self, paths):
         for path in paths:
@@ -227,7 +240,15 @@ class MCUpdater:
         n_all = len(mc_cmds)
         for i, mcc in enumerate(mc_cmds):
             print(f"{i}/{n_all} {mcc.file.name}", flush=True, end="\r")
-            test_files.append(TestFile(self.arch, mcc.file, mcc.get_opts_list(), mcc))
+            test_files.append(
+                TestFile(
+                    self.arch,
+                    mcc.file,
+                    mcc.get_opts_list(),
+                    mcc,
+                    self.unified_test_cases,
+                )
+            )
         return test_files
 
     def run_llvm_lit(self, paths: list[Path]) -> list[LLVM_MC_Command]:
@@ -346,6 +367,13 @@ def parse_args() -> argparse.Namespace:
         help="Specific list of file names to update (can be a regex pattern).",
     )
     parser.add_argument(
+        "-u",
+        dest="unified_tests",
+        action="store_true",
+        default=False,
+        help="If set, all instructions of a text segment will decoded and tested at once. Should be set, if instructions depend on each other.",
+    )
+    parser.add_argument(
         "-v",
         dest="verbosity",
         help="Verbosity of the log messages.",
@@ -366,5 +394,9 @@ if __name__ == "__main__":
     )
 
     MCUpdater(
-        args.arch, args.mc_dir, args.excluded_files, args.included_files
+        args.arch,
+        args.mc_dir,
+        args.excluded_files,
+        args.included_files,
+        args.unified_tests,
     ).gen_all()

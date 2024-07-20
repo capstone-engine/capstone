@@ -73,7 +73,11 @@ class ASUpdater:
             self.inc_list,
         )
         self.mc_updater = MCUpdater(
-            self.arch, get_path("{LLVM_MC_TEST_DIR}"), None, None
+            self.arch,
+            get_path("{LLVM_MC_TEST_DIR}"),
+            None,
+            None,
+            True if self.arch == "ARM" else False,
         )
 
     def clean_build_dir(self) -> None:
