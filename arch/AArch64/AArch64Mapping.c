@@ -1315,6 +1315,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			int64_t Offset = MCInst_getOpVal(MI, OpNum);
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  (MI->address & -4) + Offset);
+		} else {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 		}
 		break;
 	}
@@ -1323,11 +1327,18 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4096;
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  (MI->address & -4096) + Offset);
+		} else {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 		}
 		break;
 	}
 	case AArch64_OP_GROUP_AdrAdrpLabel: {
 		if (!MCOperand_isImm(MCInst_getOperand(MI, OpNum))) {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 			break;
 		}
 		int64_t Offset = MCInst_getOpVal(MI, OpNum);
@@ -1345,6 +1356,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4;
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  MI->address + Offset);
+		} else {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 		}
 		break;
 	}
@@ -1929,7 +1944,8 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_UImm12Offset_2:
 	case AArch64_OP_GROUP_UImm12Offset_4:
 	case AArch64_OP_GROUP_UImm12Offset_8: {
-		unsigned Scale = temp_arg_0;
+		// Otherwise it is an expression. For which we only add the immediate
+		unsigned Scale = MCOperand_isImm(MCInst_getOperand(MI, OpNum)) ? temp_arg_0 : 1;
 		AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 					  Scale * MCInst_getOpVal(MI, OpNum));
 		break;
