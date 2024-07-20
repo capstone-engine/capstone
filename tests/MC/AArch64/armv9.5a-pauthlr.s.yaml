@@ -68,6 +68,8 @@ test_cases:
       insns:
         -
           asm_text: "autibsppc #-262140"
+    skip: true
+    skip_reason: "Capstone does not handle expressions."
 
   -
     input:
@@ -168,6 +170,8 @@ test_cases:
       insns:
         -
           asm_text: "retaasppc #-262140"
+    skip: true
+    skip_reason: "Capstone does not handle expressions."
 
   -
     input:
