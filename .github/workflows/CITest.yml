@@ -115,7 +115,7 @@ jobs:
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
         cd suite/cstest/test
-        sh suite/run_invalid_cstool.sh
+        python3 ./integration_tests.py
 
     - name: cstest MC (cmake)
       if: startsWith(matrix.config.build-system, 'cmake')
