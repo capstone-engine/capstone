@@ -639,7 +639,7 @@ void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 
 	cs_ppc_op *ops = PPC_get_detail(MI)->operands;
 	int i = PPC_get_detail(MI)->op_count - 1;
-	for (; i >= 0; --i) {
+	for (; i >= index; --i) {
 		ops[i + 1] = ops[i];
 		if (i == index)
 			break;
