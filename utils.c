@@ -136,7 +136,7 @@ void append_to_str(char *str, size_t str_buf_size, const char *src) {
 		assert("str_size does not match actual string length." && 0);
 		return;
 	}
-	strcat(str, src);
+	strncat(str, src, str_buf_size);
 }
 
 
@@ -148,7 +148,7 @@ char *str_append(char *str_a, const char *str_b) {
 	assert(str_a && str_b);
 	size_t asize = strlen(str_a) + strlen(str_b) + 1;
 	str_a = realloc(str_a, asize);
-	strcat(str_a, str_b);
+	strncat(str_a, str_b, asize);
 	return str_a;
 }
 
