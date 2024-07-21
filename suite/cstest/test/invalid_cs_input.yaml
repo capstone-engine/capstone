@@ -1,0 +1,29 @@
+test_cases:
+ -
+  input:
+    bytes: [ 0x05, 0xb0, 0xa0, 0xe1 ]
+    arch: "ar" # Wrong arch
+    options: ["arm"]
+  expected:
+    insns:
+      -
+        asm_text: "mov r11, r5"
+ -
+  input:
+    bytes: [ 0x06 ] # Wrong number of bytes.
+    arch: "aarch64"
+    options: []
+  expected:
+    insns:
+      -
+        asm_text: "mov r1, r6"
+ -
+  input:
+    bytes: [ 0xc2, 0xf3, 0x00, 0x8f ]
+    arch: "arm"
+    options: ["thum"] # Wrong mode
+  expected:
+    insns:
+      -
+          asm_text: "bxj r2"
+

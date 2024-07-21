@@ -59,7 +59,7 @@ jobs:
       with:
         python-version: ${{ matrix.config.python-version }}
 
-    - name: prepare
+    - name: Prepare fuzzing
       run: |
         export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
         wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
@@ -111,21 +111,16 @@ jobs:
       run: |
         sh suite/run_invalid_cstool.sh
 
-    - name: cstest (cmake)
+    - name: cstest integration tests (cmake)
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        python suite/cstest/cstest_report.py -D -d suite/MC
-        python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
-        python suite/cstest/cstest_report.py -D -f tests/cs_details/issue.cs
+        cd suite/cstest/test
+        sh suite/run_invalid_cstool.sh
 
-    - name: cstest (make)
-      if: startsWith(matrix.config.build-system, 'make')
+    - name: cstest MC (cmake)
+      if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        cd suite/cstest && ./build_cstest.sh
-        python cstest_report.py -D -t build/cstest -d ../MC
-        python cstest_report.py -D -t build/cstest -f issues.cs
-        python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
-        cd ../../
+        cstest tests/MC/
 
   Windows:
     runs-on: ${{ matrix.config.os }}
