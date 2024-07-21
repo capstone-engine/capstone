@@ -34,6 +34,7 @@ jobs:
               os: ubuntu-22.04,
               arch: x64,
               build-system: 'make',
+              diet-build: 'OFF',
               enable-asan: 'OFF'
             }
           - {
@@ -41,6 +42,7 @@ jobs:
               os: ubuntu-22.04,
               arch: x64,
               build-system: 'cmake',
+              diet-build: 'OFF',
               enable-asan: 'OFF'
             }
           - {
@@ -48,6 +50,7 @@ jobs:
               os: ubuntu-latest,
               arch: x64,
               build-system: 'cmake',
+              diet-build: 'OFF',
               enable-asan: 'ON'
             }
 
