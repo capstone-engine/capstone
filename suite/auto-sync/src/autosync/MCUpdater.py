@@ -212,11 +212,6 @@ class MCUpdater:
                 raise ValueError(
                     f"'{path}' does not exits or is not a directory. Cannot generate tests from there."
                 )
-        llvm_lit = get_path("{LLVM_LIT_BIN}")
-        if not llvm_lit.exists():
-            raise ValueError(
-                f"Could not find '{llvm_lit}'. Check {{LLVM_LIT_BIN}} in path_vars.json."
-            )
         llvm_lit_cfg = get_path("{LLVM_LIT_TEST_DIR}")
         if not llvm_lit_cfg.exists():
             raise ValueError(
@@ -271,10 +266,9 @@ class MCUpdater:
         Calls llvm-lit with the given paths to the tests.
         It parses the llvm-lit commands to LLVM_MC_Commands.
         """
-        llvm_lit = str(get_path("{LLVM_LIT_BIN}").absolute())
         lit_cfg_dir = get_path("{LLVM_LIT_TEST_DIR}")
         llvm_lit_cfg = str(lit_cfg_dir.absolute())
-        args = [llvm_lit, "-v", "-a", llvm_lit_cfg]
+        args = ["lit", "-v", "-a", llvm_lit_cfg]
         for i, p in enumerate(paths):
             slink = lit_cfg_dir.joinpath(f"{self.test_dir_link_prefix}{i}")
             self.symbolic_links.append(slink)
