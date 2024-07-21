@@ -79,6 +79,7 @@ static TestFile **parse_test_files(char **tf_paths, uint32_t path_count,
 	return files;
 }
 
+/// Parses the @input and saves the results in the other arguments.
 static bool parse_input_options(const TestInput *input, cs_arch *arch,
 				cs_mode *mode, cs_opt *opt_arr,
 				size_t opt_arr_size,
