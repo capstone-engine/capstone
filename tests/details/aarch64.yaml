@@ -19,6 +19,7 @@ test_cases:
               type: AARCH64_OP_SYSREG
               subtype: AARCH64_OP_REG_MRS
               raw_val: 0xc000
+          code_cond: AArch64CC_Invalid
           Update-flags: 1
           registers_modified: [ nzcv x9 ]
 
@@ -34,6 +35,7 @@ test_cases:
             type: AARCH64_OP_IMM
             imm: 0x0
             access: CS_AC_READ
+          code_cond: AArch64CC_Invalid
 
       -
         asm_text: "msr DBGDTRTX_EL0, x12"
@@ -47,6 +49,7 @@ test_cases:
             type: AARCH64_OP_REG
             reg: x12
             access: CS_AC_READ
+          code_cond: AArch64CC_Invalid
           registers_read: [ x12 ]
 
       -
@@ -78,6 +81,7 @@ test_cases:
             reg: d2
             access: CS_AC_READ
             vas: 0x808
+          code_cond: AArch64CC_Invalid
           writeback: 1
           registers_read: [ d0 q1 q2 q3 d2 ]
           registers_modified: [ d0 ]
@@ -100,6 +104,7 @@ test_cases:
             type: AARCH64_OP_IMM
             imm: 0x3
             access: CS_AC_READ
+          code_cond: AArch64CC_Invalid
           registers_read: [ d1 ]
           registers_modified: [ d0 ]
 
@@ -121,6 +126,7 @@ test_cases:
             access: CS_AC_READ
             vase: 0x20
             vector_index: 3
+          code_cond: AArch64CC_Invalid
           writeback: 1
           registers_read: [ fpcr s0 q0 ]
           registers_modified: [ s0 ]
@@ -139,6 +145,7 @@ test_cases:
             access: CS_AC_READ
             vas: 0x40
             vector_index: 1
+          code_cond: AArch64CC_Invalid
           registers_read: [ q5 ]
           registers_modified: [ x2 ]
 
@@ -150,6 +157,7 @@ test_cases:
             type: AARCH64_OP_SYSALIAS
             subtype: AARCH64_OP_DB
             raw_val: 0x7
+          code_cond: AArch64CC_Invalid
 
       -
         asm_text: "dmb osh"
@@ -159,6 +167,7 @@ test_cases:
             type: AARCH64_OP_SYSALIAS
             subtype: AARCH64_OP_DB
             raw_val: 0x3
+          code_cond: AArch64CC_Invalid
 
       -
         asm_text: "isb"
@@ -179,6 +188,7 @@ test_cases:
             type: AARCH64_OP_REG
             reg: x2
             access: CS_AC_READ
+          code_cond: AArch64CC_Invalid
           registers_read: [ x1 x2 ]
           registers_modified: [ x1 ]
 
@@ -194,6 +204,7 @@ test_cases:
             type: AARCH64_OP_REG
             reg: w1
             access: CS_AC_READ
+          code_cond: AArch64CC_Invalid
           registers_read: [ w1 ]
           registers_modified: [ w1 ]
 
@@ -214,6 +225,7 @@ test_cases:
             reg: w1
             access: CS_AC_READ
             ext: 3
+          code_cond: AArch64CC_Invalid
           registers_read: [ w0 w1 ]
           registers_modified: [ w0 ]
 
@@ -230,6 +242,7 @@ test_cases:
             mem_base: sp
             mem_disp: 0x8
             access: CS_AC_READ
+          code_cond: AArch64CC_Invalid
           registers_read: [ sp ]
           registers_modified: [ w1 ]
 
@@ -245,7 +258,7 @@ test_cases:
             type: AARCH64_OP_REG
             reg: x1
             access: CS_AC_READ
-          code_cond: 1
+          code_cond: AArch64CC_NE
           registers_read: [ nzcv x1 ]
           registers_modified: [ x0 ]
 
@@ -267,6 +280,7 @@ test_cases:
             access: CS_AC_READ
             shift_type: AARCH64_OP_1
             shift_value: 2
+          code_cond: AArch64CC_Invalid
           registers_read: [ x1 x2 ]
           registers_modified: [ x0 ]
 
@@ -286,6 +300,7 @@ test_cases:
             shift_type: AARCH64_OP_1
             shift_value: 2
             ext: 3
+          code_cond: AArch64CC_Invalid
           registers_read: [ x24 w8 ]
           registers_modified: [ q16 ]
 
@@ -306,6 +321,7 @@ test_cases:
             mem_base: sp
             mem_disp: 0xffffffa0
             access: CS_AC_WRITE
+          code_cond: AArch64CC_Invalid
           writeback: 1
           registers_read: [ x29 x30 sp ]
           registers_modified: [ sp ]
@@ -327,6 +343,7 @@ test_cases:
             type: AARCH64_OP_IMM
             imm: 0x3c
             access: CS_AC_READ
+          code_cond: AArch64CC_Invalid
           writeback: 1
           registers_read: [ sp ]
           registers_modified: [ sp x29 ]
