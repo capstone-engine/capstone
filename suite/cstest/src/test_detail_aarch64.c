@@ -98,8 +98,8 @@ bool test_expected_aarch64(cs_aarch64 *actual, TestDetailAArch64 *expected)
 {
 	assert(actual && expected);
 
-	compare_uint8_ret_false(actual->op_count, expected->operands_count);
-	compare_tbool_ret_false(actual->update_flags, expected->update_flags);
-	compare_tbool_ret_false(actual->post_index, expected->post_index);
+	compare_uint8_ret_false(actual->op_count, expected->operands_count, false);
+	compare_tbool_ret_false(actual->update_flags, expected->update_flags, false);
+	compare_tbool_ret_false(actual->post_index, expected->post_index, false);
 	return true;
 }

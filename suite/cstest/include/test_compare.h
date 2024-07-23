@@ -18,21 +18,21 @@ typedef int tbool;
 /// == 0 = unset
 /// < 0 = false
 /// > 0 = true.
-/// It returns with false, if expected is set but the values mismatch.
-#define compare_tbool_ret_false(actual, expected) \
+/// It returns with @ret_val, if expected is set but the values mismatch.
+#define compare_tbool_ret(actual, expected, ret_val) \
 	if (expected != 0 && actual != expected) { \
 		fprintf(stderr, #actual " != " #expected ": %" PRId32 " != %" PRId32 "\n", \
 			actual, expected); \
-		return false; \
+		return ret_val; \
 	}
 
 /// Compares two uint8_t values.
-/// It returns with false if they mismatch.
-#define compare_uint8_ret_false(actual, expected) \
+/// It returns with @ret_val if they mismatch.
+#define compare_uint8_ret(actual, expected, ret_val) \
 	if (actual != expected) { \
-		fprintf(stderr, #actual " != " #expected ": %" PRId32 " != %" PRId32 "\n", \
+		fprintf(stderr, #actual " != " #expected ": %" PRId8 " != %" PRId8 "\n", \
 			actual, expected); \
-		return false; \
+		return ret_val; \
 	}
 
 #endif // TEST_COMPARE_H
