@@ -24,6 +24,13 @@ typedef struct {
   cs_opt opt;
 } TestOptionMapEntry;
 
+/// A map entry, mapping a Capstone enumeration value id
+/// to its absolute value.
+typedef struct {
+  const char *id;
+  uint32_t val;
+} TestCSEnumEntry;
+
 static const TestArchMapEntry test_arch_map[] = {
 	{ .str = "CS_ARCH_ARM", .arch = CS_ARCH_ARM },
 	{ .str = "CS_ARCH_AARCH64", .arch = CS_ARCH_AARCH64 },
@@ -155,5 +162,69 @@ static const TestOptionMapEntry test_option_map[] = {
 	{ .str = "CS_OPT_SYNTAX_CS_REG_ALIAS", .opt = { .type = CS_OPT_SYNTAX, .val = CS_OPT_SYNTAX_CS_REG_ALIAS } },
 	{ .str = "CS_OPT_SYNTAX_PERCENT", .opt = { .type = CS_OPT_SYNTAX, .val = CS_OPT_SYNTAX_PERCENT } },
 };
+
+/// Mapping table from Capstone enumeration identifiers and their values.
+///
+/// This table is sorted to allow binary searches.
+/// Please always ensure the table is sorted after you added a value.
+static const TestCSEnumEntry cs_enum_map[] = {
+	{ .id = "AArch64CC_AL", .val = AArch64CC_AL },
+	{ .id = "AArch64CC_EQ", .val = AArch64CC_EQ },
+	{ .id = "AArch64CC_GE", .val = AArch64CC_GE },
+	{ .id = "AArch64CC_GT", .val = AArch64CC_GT },
+	{ .id = "AArch64CC_HI", .val = AArch64CC_HI },
+	{ .id = "AArch64CC_HS", .val = AArch64CC_HS },
+	{ .id = "AArch64CC_Invalid", .val = AArch64CC_Invalid },
+	{ .id = "AArch64CC_LE", .val = AArch64CC_LE },
+	{ .id = "AArch64CC_LO", .val = AArch64CC_LO },
+	{ .id = "AArch64CC_LS", .val = AArch64CC_LS },
+	{ .id = "AArch64CC_LT", .val = AArch64CC_LT },
+	{ .id = "AArch64CC_MI", .val = AArch64CC_MI },
+	{ .id = "AArch64CC_NE", .val = AArch64CC_NE },
+	{ .id = "AArch64CC_NV", .val = AArch64CC_NV },
+	{ .id = "AArch64CC_PL", .val = AArch64CC_PL },
+	{ .id = "AArch64CC_VC", .val = AArch64CC_VC },
+	{ .id = "AArch64CC_VS", .val = AArch64CC_VS },
+	{ .id = "AARCH64_OP_AT", .val = AARCH64_OP_AT },
+	{ .id = "AARCH64_OP_BTI", .val = AARCH64_OP_BTI },
+	{ .id = "AARCH64_OP_CIMM", .val = AARCH64_OP_CIMM },
+	{ .id = "AARCH64_OP_DB", .val = AARCH64_OP_DB },
+	{ .id = "AARCH64_OP_DBNXS", .val = AARCH64_OP_DBNXS },
+	{ .id = "AARCH64_OP_DC", .val = AARCH64_OP_DC },
+	{ .id = "AARCH64_OP_EXACTFPIMM", .val = AARCH64_OP_EXACTFPIMM },
+	{ .id = "AARCH64_OP_FP", .val = AARCH64_OP_FP },
+	{ .id = "AARCH64_OP_IC", .val = AARCH64_OP_IC },
+	{ .id = "AARCH64_OP_IMM", .val = AARCH64_OP_IMM },
+	{ .id = "AARCH64_OP_IMM_RANGE", .val = AARCH64_OP_IMM_RANGE },
+	{ .id = "AARCH64_OP_IMPLICIT_IMM_0", .val = AARCH64_OP_IMPLICIT_IMM_0 },
+	{ .id = "AARCH64_OP_ISB", .val = AARCH64_OP_ISB },
+	{ .id = "AARCH64_OP_MEM", .val = AARCH64_OP_MEM },
+	{ .id = "AARCH64_OP_MEM_IMM", .val = AARCH64_OP_MEM_IMM },
+	{ .id = "AARCH64_OP_MEM_REG", .val = AARCH64_OP_MEM_REG },
+	{ .id = "AARCH64_OP_PRED", .val = AARCH64_OP_PRED },
+	{ .id = "AARCH64_OP_PRFM", .val = AARCH64_OP_PRFM },
+	{ .id = "AARCH64_OP_PSB", .val = AARCH64_OP_PSB },
+	{ .id = "AARCH64_OP_PSTATEIMM0_1", .val = AARCH64_OP_PSTATEIMM0_1 },
+	{ .id = "AARCH64_OP_PSTATEIMM0_15", .val = AARCH64_OP_PSTATEIMM0_15 },
+	{ .id = "AARCH64_OP_REG", .val = AARCH64_OP_REG },
+	{ .id = "AARCH64_OP_REG_MRS", .val = AARCH64_OP_REG_MRS },
+	{ .id = "AARCH64_OP_REG_MSR", .val = AARCH64_OP_REG_MSR },
+	{ .id = "AARCH64_OP_RPRFM", .val = AARCH64_OP_RPRFM },
+	{ .id = "AARCH64_OP_SME", .val = AARCH64_OP_SME },
+	{ .id = "AARCH64_OP_SVCR", .val = AARCH64_OP_SVCR },
+	{ .id = "AARCH64_OP_SVEPREDPAT", .val = AARCH64_OP_SVEPREDPAT },
+	{ .id = "AARCH64_OP_SVEPRFM", .val = AARCH64_OP_SVEPRFM },
+	{ .id = "AARCH64_OP_SVEVECLENSPECIFIER", .val = AARCH64_OP_SVEVECLENSPECIFIER },
+	{ .id = "AARCH64_OP_SYSALIAS", .val = AARCH64_OP_SYSALIAS },
+	{ .id = "AARCH64_OP_SYSIMM", .val = AARCH64_OP_SYSIMM },
+	{ .id = "AARCH64_OP_SYSREG", .val = AARCH64_OP_SYSREG },
+	{ .id = "AARCH64_OP_TLBI", .val = AARCH64_OP_TLBI },
+	{ .id = "AARCH64_OP_TSB", .val = AARCH64_OP_TSB },
+	{ .id = "CS_AC_READ", .val = CS_AC_READ },
+	{ .id = "CS_AC_READ_WRITE", .val = CS_AC_READ_WRITE },
+	{ .id = "CS_AC_WRITE", .val = CS_AC_WRITE },
+};
+
+static inline uint32_t cs_enum_get_val(const char *id, bool *found);
 
 #endif // TEST_MAPPING_H
