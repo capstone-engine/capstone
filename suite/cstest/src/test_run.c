@@ -237,7 +237,7 @@ static void cstest_unit_test(void **state)
 	size_t insns_count = cs_disasm(handle, tcase->input->bytes,
 				       tcase->input->bytes_count,
 				       tcase->input->address, 0, &insns);
-	test_expected_compare(tcase->expected, insns, insns_count,
+	test_expected_compare(&ustate->handle, tcase->expected, insns, insns_count,
 			      ustate->arch_bits);
 	cs_free(insns, insns_count);
 }

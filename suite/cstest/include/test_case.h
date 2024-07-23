@@ -4,6 +4,7 @@
 #ifndef TESTCASE_H
 #define TESTCASE_H
 
+#include "test_detail.h"
 #include <cyaml/cyaml.h>
 #include <capstone/capstone.h>
 #include <stdbool.h>
@@ -60,7 +61,7 @@ typedef struct {
 	int32_t is_alias; ///< 0 == not given, >0 == true, <0 == false
 	uint64_t alias_id;
 	char *mnemonic;
-	// TODO: details
+	TestDetail *details;
 } TestInsnData;
 
 TestInsnData *test_insn_data_new();
@@ -82,7 +83,8 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR(
 		"mnemonic", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
 		TestInsnData, mnemonic, 0, CYAML_UNLIMITED),
-	// TODO details
+	CYAML_FIELD_MAPPING_PTR("details", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestInsnData, details,
+				test_detail_mapping_schema),
 	CYAML_FIELD_END
 };
 
@@ -96,7 +98,7 @@ typedef struct {
 TestExpected *test_expected_new();
 void test_expected_free(TestExpected *test_expected);
 TestExpected *test_expected_clone(TestExpected *test_expected);
-void test_expected_compare(TestExpected *expected, cs_insn *insns,
+void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			   size_t insns_count, size_t arch_bits);
 
 static const cyaml_schema_value_t insn_schema = {

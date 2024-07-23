@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include "cmocka.h"
+#include "test_detail.h"
 #include "test_case.h"
 #include "helper.h"
 #include "../../../utils.h"
@@ -187,7 +188,7 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 }
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
-void test_expected_compare(TestExpected *expected, cs_insn *insns,
+void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			   size_t insns_count, size_t arch_bits)
 {
 	assert_int_equal(insns_count, expected->insns_count);
@@ -229,7 +230,9 @@ void test_expected_compare(TestExpected *expected, cs_insn *insns,
 		if (expec_data->op_str) {
 			assert_string_equal(insns[i].op_str, expec_data->op_str);
 		}
-		// TODO: details
+		if (expec_data->details) {
+			assert(test_expected_detail(handle, insns[i].detail, expec_data->details));
+		}
 	}
 }
 

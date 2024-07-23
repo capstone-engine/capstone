@@ -31,7 +31,7 @@ TestDetailAArch64 *test_aarch64_detail_clone(TestDetailAArch64 *detail)
 	TestDetailAArch64 *clone = test_aarch64_detail_new();
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
 	clone->update_flags = detail->update_flags;
-	clone->post_index = detail->post_index;
+	clone->post_indexed = detail->post_indexed;
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
@@ -103,7 +103,7 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	compare_enum_ret(actual->cc, expected->cc, false);
 	compare_tbool_ret(actual->update_flags, expected->update_flags, false);
-	compare_tbool_ret(actual->post_index, expected->post_index, false);
+	compare_tbool_ret(actual->post_index, expected->post_indexed, false);
 	for (size_t i = 0; i < actual->op_count; ++i) {
 		cs_aarch64_op *op = &actual->operands[i];
 		TestDetailAArch64Op *eop = expected->operands[i];

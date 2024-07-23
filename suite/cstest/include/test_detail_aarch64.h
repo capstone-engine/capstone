@@ -91,7 +91,7 @@ static const cyaml_schema_value_t test_detail_aarch64_op_schema = {
 typedef struct {
 	char *cc;
 	tbool update_flags;
-	tbool post_index;
+	tbool post_indexed;
 	TestDetailAArch64Op **operands;
 	uint32_t operands_count;
 } TestDetailAArch64;
@@ -101,17 +101,12 @@ static const cyaml_schema_field_t test_detail_aarch64_mapping_schema[] = {
 			       TestDetailAArch64, cc, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("update_flags", CYAML_FLAG_OPTIONAL, TestDetailAArch64,
 			update_flags),
-	CYAML_FIELD_INT("post_index", CYAML_FLAG_OPTIONAL, TestDetailAArch64,
-			post_index),
+	CYAML_FIELD_INT("post_indexed", CYAML_FLAG_OPTIONAL, TestDetailAArch64,
+			post_indexed),
 	CYAML_FIELD_SEQUENCE("operands", CYAML_FLAG_POINTER, TestDetailAArch64,
 			     operands, &test_detail_aarch64_op_schema, 0,
 			     CYAML_UNLIMITED), // 0-MAX options
 	CYAML_FIELD_END
-};
-
-static const cyaml_schema_value_t insn_schema = {
-	CYAML_VALUE_MAPPING(CYAML_FLAG_POINTER, TestDetailAArch64,
-			    test_detail_aarch64_mapping_schema),
 };
 
 TestDetailAArch64 *test_aarch64_detail_new();

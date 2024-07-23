@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include "test_mapping.h"
+#include "../../../utils.h"
 
 /// An integer encoding a boolean value from the test files.
 /// libcyaml saves 0 by default, if an optional value was not set.

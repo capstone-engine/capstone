@@ -12,6 +12,7 @@
 #include "test_detail_aarch64.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
+#include <cyaml/cyaml.h>
 
 /// The equivalent to cs_detail in capstone.h
 /// but with pointers and no unions. Because cyaml does not support them.
@@ -38,16 +39,40 @@ typedef struct {
 	// cs_hppa_test hppa;
 	// cs_loongarch_test loongarch;
 
-	uint16_t *regs_read;
+	char **regs_read;
 	uint8_t regs_read_count;
 
-	uint16_t *regs_write;
+	char **regs_write;
 	uint8_t regs_write_count;
 
-	uint8_t groups;
+	char **groups;
 	uint8_t groups_count;
 
 	tbool writeback;
 } TestDetail;
+
+static const cyaml_schema_value_t reg_group_schema = {
+	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
+};
+
+static const cyaml_schema_field_t test_detail_mapping_schema[] = {
+	CYAML_FIELD_MAPPING_PTR("aarch64", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, aarch64,
+				test_detail_aarch64_mapping_schema),
+	CYAML_FIELD_SEQUENCE("regs_read", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, regs_read,
+			     &reg_group_schema, 0,
+			     255),
+	CYAML_FIELD_SEQUENCE("regs_write", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, regs_write,
+			     &reg_group_schema, 0,
+			     255),
+	CYAML_FIELD_SEQUENCE("groups", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, groups,
+			     &reg_group_schema, 0,
+			     255),
+	CYAML_FIELD_INT("writeback", CYAML_FLAG_OPTIONAL, TestDetail,
+			writeback),
+	CYAML_FIELD_END
+};
+
+bool test_expected_detail(csh *handle, cs_detail *actual,
+			   TestDetail *expected);
 
 #endif // TEST_DETAIL_H
