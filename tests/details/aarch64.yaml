@@ -9,341 +9,359 @@ test_cases:
       insns:
       -
         asm_text: "mrs x9, MIDR_EL1"
-        aarch64_details:
-          operands:
-            -
-              type: AARCH64_OP_REG
-              reg: x9
-              access: CS_AC_WRITE
-            -
-              type: AARCH64_OP_SYSREG
-              subtype: AARCH64_OP_REG_MRS
-              raw_val: 0xc000
-          code_cond: AArch64CC_Invalid
-          Update-flags: 1
-          registers_modified: [ nzcv x9 ]
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x9
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_SYSREG
+                sub_type: AARCH64_OP_REG_MRS
+                sys_raw_val: 0xc000
+            cc: AArch64CC_Invalid
+            update_flags: 1
+          regs_write: [ nzcv x9 ]
 
       -
         asm_text: "msr SPSel, #0"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_SYSALIAS
-            subtype: AARCH64_OP_PSTATEIMM0_15
-            raw_val: 0x5
-          -
-            type: AARCH64_OP_IMM
-            imm: 0x0
-            access: CS_AC_READ
-          code_cond: AArch64CC_Invalid
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_PSTATEIMM0_15
+              sys_raw_val: 0x5
+            -
+              type: AARCH64_OP_IMM
+              imm: 0x0
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
 
       -
         asm_text: "msr DBGDTRTX_EL0, x12"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_SYSREG
-            subtype: AARCH64_OP_REG_MSR
-            raw_val: 0x9828
-          -
-            type: AARCH64_OP_REG
-            reg: x12
-            access: CS_AC_READ
-          code_cond: AArch64CC_Invalid
-          registers_read: [ x12 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSREG
+              sub_type: AARCH64_OP_REG_MSR
+              sys_raw_val: 0x9828
+            -
+              type: AARCH64_OP_REG
+              reg: x12
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ x12 ]
 
       -
         asm_text: "tbx v0.8b, { v1.16b, v2.16b, v3.16b }, v2.8b"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: d0
-            access: CS_AC_READ_WRITE
-            vas: 0x808
-          -
-            type: AARCH64_OP_REG
-            reg: q1
-            access: CS_AC_READ
-            vas: 0x1008
-          -
-            type: AARCH64_OP_REG
-            reg: q2
-            access: CS_AC_READ
-            vas: 0x1008
-          -
-            type: AARCH64_OP_REG
-            reg: q3
-            access: CS_AC_READ
-            vas: 0x1008
-          -
-            type: AARCH64_OP_REG
-            reg: d2
-            access: CS_AC_READ
-            vas: 0x808
-          code_cond: AArch64CC_Invalid
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: d0
+              access: CS_AC_READ_WRITE
+              vas: 0x808
+            -
+              type: AARCH64_OP_REG
+              reg: q1
+              access: CS_AC_READ
+              vas: 0x1008
+            -
+              type: AARCH64_OP_REG
+              reg: q2
+              access: CS_AC_READ
+              vas: 0x1008
+            -
+              type: AARCH64_OP_REG
+              reg: q3
+              access: CS_AC_READ
+              vas: 0x1008
+            -
+              type: AARCH64_OP_REG
+              reg: d2
+              access: CS_AC_READ
+              vas: 0x808
+            cc: AArch64CC_Invalid
           writeback: 1
-          registers_read: [ d0 q1 q2 q3 d2 ]
-          registers_modified: [ d0 ]
+          regs_read: [ d0 q1 q2 q3 d2 ]
+          regs_write: [ d0 ]
 
       -
         asm_text: "scvtf v0.2s, v1.2s, #3"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: d0
-            access: CS_AC_WRITE
-            vas: 0x220
-          -
-            type: AARCH64_OP_REG
-            reg: d1
-            access: CS_AC_READ
-            vas: 0x220
-          -
-            type: AARCH64_OP_IMM
-            imm: 0x3
-            access: CS_AC_READ
-          code_cond: AArch64CC_Invalid
-          registers_read: [ d1 ]
-          registers_modified: [ d0 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: d0
+              access: CS_AC_WRITE
+              vas: 0x220
+            -
+              type: AARCH64_OP_REG
+              reg: d1
+              access: CS_AC_READ
+              vas: 0x220
+            -
+              type: AARCH64_OP_IMM
+              imm: 0x3
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ d1 ]
+          regs_write: [ d0 ]
 
       -
         asm_text: "fmla s0, s0, v0.s[3]"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: s0
-            access: CS_AC_READ_WRITE
-          -
-            type: AARCH64_OP_REG
-            reg: s0
-            access: CS_AC_READ
-          -
-            type: AARCH64_OP_REG
-            reg: q0
-            access: CS_AC_READ
-            vase: 0x20
-            vector_index: 3
-          code_cond: AArch64CC_Invalid
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: s0
+              access: CS_AC_READ_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: s0
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: q0
+              access: CS_AC_READ
+              vas: 0x20
+              vector_index: 3
+            cc: AArch64CC_Invalid
           writeback: 1
-          registers_read: [ fpcr s0 q0 ]
-          registers_modified: [ s0 ]
+          regs_read: [ fpcr s0 q0 ]
+          regs_write: [ s0 ]
 
       -
         asm_text: "fmov x2, v5.d[1]"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: x2
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_REG
-            reg: q5
-            access: CS_AC_READ
-            vas: 0x40
-            vector_index: 1
-          code_cond: AArch64CC_Invalid
-          registers_read: [ q5 ]
-          registers_modified: [ x2 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: q5
+              access: CS_AC_READ
+              vas: 0x40
+              vector_index: 1
+            cc: AArch64CC_Invalid
+          regs_read: [ q5 ]
+          regs_write: [ x2 ]
 
       -
         asm_text: "dsb nsh"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_SYSALIAS
-            subtype: AARCH64_OP_DB
-            raw_val: 0x7
-          code_cond: AArch64CC_Invalid
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_DB
+              sys_raw_val: 0x7
+            cc: AArch64CC_Invalid
 
       -
         asm_text: "dmb osh"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_SYSALIAS
-            subtype: AARCH64_OP_DB
-            raw_val: 0x3
-          code_cond: AArch64CC_Invalid
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_DB
+              sys_raw_val: 0x3
+            cc: AArch64CC_Invalid
 
       -
         asm_text: "isb"
 
       -
         asm_text: "mul x1, x1, x2"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: x1
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_REG
-            reg: x1
-            access: CS_AC_READ
-          -
-            type: AARCH64_OP_REG
-            reg: x2
-            access: CS_AC_READ
-          code_cond: AArch64CC_Invalid
-          registers_read: [ x1 x2 ]
-          registers_modified: [ x1 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ x1 x2 ]
+          regs_write: [ x1 ]
 
       -
         asm_text: "lsr w1, w1, #0"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: w1
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_REG
-            reg: w1
-            access: CS_AC_READ
-          code_cond: AArch64CC_Invalid
-          registers_read: [ w1 ]
-          registers_modified: [ w1 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ w1 ]
+          regs_write: [ w1 ]
 
       -
         asm_text: "sub w0, w0, w1, uxtw"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: w0
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_REG
-            reg: w0
-            access: CS_AC_READ
-          -
-            type: AARCH64_OP_REG
-            reg: w1
-            access: CS_AC_READ
-            ext: 3
-          code_cond: AArch64CC_Invalid
-          registers_read: [ w0 w1 ]
-          registers_modified: [ w0 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w0
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w0
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_READ
+              ext: 3
+            cc: AArch64CC_Invalid
+          regs_read: [ w0 w1 ]
+          regs_write: [ w0 ]
 
       -
         asm_text: "ldr w1, [sp, #8]"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: w1
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_MEM
-            mem_base: sp
-            mem_disp: 0x8
-            access: CS_AC_READ
-          code_cond: AArch64CC_Invalid
-          registers_read: [ sp ]
-          registers_modified: [ w1 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: sp
+              mem_disp: 0x8
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ sp ]
+          regs_write: [ w1 ]
 
       -
         asm_text: "cneg x0, x1, ne"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: x0
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_REG
-            reg: x1
-            access: CS_AC_READ
-          code_cond: AArch64CC_NE
-          registers_read: [ nzcv x1 ]
-          registers_modified: [ x0 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            cc: AArch64CC_NE
+          regs_read: [ nzcv x1 ]
+          regs_write: [ x0 ]
 
       -
         asm_text: "add x0, x1, x2, lsl #2"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: x0
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_REG
-            reg: x1
-            access: CS_AC_READ
-          -
-            type: AARCH64_OP_REG
-            reg: x2
-            access: CS_AC_READ
-            shift_type: AARCH64_OP_1
-            shift_value: 2
-          code_cond: AArch64CC_Invalid
-          registers_read: [ x1 x2 ]
-          registers_modified: [ x0 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_READ
+              shift_type: AARCH64_OP_1
+              shift_value: 2
+            cc: AArch64CC_Invalid
+          regs_read: [ x1 x2 ]
+          regs_write: [ x0 ]
 
       -
         asm_text: "ldr q16, [x24, w8, uxtw #4]"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: q16
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_MEM
-            mem_base: x24
-            mem_index: w8
-            access: CS_AC_READ
-            shift_type: AARCH64_OP_1
-            shift_value: 2
-            ext: 3
-          code_cond: AArch64CC_Invalid
-          registers_read: [ x24 w8 ]
-          registers_modified: [ q16 ]
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: q16
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x24
+              mem_index: w8
+              access: CS_AC_READ
+              shift_type: AARCH64_OP_1
+              shift_value: 2
+              ext: 3
+            cc: AArch64CC_Invalid
+          regs_read: [ x24 w8 ]
+          regs_write: [ q16 ]
 
       -
         asm_text: "stp x29, x30, [sp, #-0x60]!"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: x29
-            access: CS_AC_READ
-          -
-            type: AARCH64_OP_REG
-            reg: x30
-            access: CS_AC_READ
-          -
-            type: AARCH64_OP_MEM
-            mem_base: sp
-            mem_disp: 0xffffffa0
-            access: CS_AC_WRITE
-          code_cond: AArch64CC_Invalid
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x29
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x30
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: sp
+              mem_disp: -0x60
+              access: CS_AC_WRITE
+            cc: AArch64CC_Invalid
           writeback: 1
-          registers_read: [ x29 x30 sp ]
-          registers_modified: [ sp ]
+          regs_read: [ x29 x30 sp ]
+          regs_write: [ sp ]
 
       -
         asm_text: "ldr x29, [sp], #0x3c"
-        aarch64_details:
-          operands:
-          -
-            type: AARCH64_OP_REG
-            reg: x29
-            access: CS_AC_WRITE
-          -
-            type: AARCH64_OP_MEM
-            mem_base: sp
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x29
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: sp
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_IMM
+              imm: 0x3c
+              access: CS_AC_READ
             post_indexed: 1
-            access: CS_AC_READ
-          -
-            type: AARCH64_OP_IMM
-            imm: 0x3c
-            access: CS_AC_READ
-          code_cond: AArch64CC_Invalid
+            cc: AArch64CC_Invalid
           writeback: 1
-          registers_read: [ sp ]
-          registers_modified: [ sp x29 ]
+          regs_read: [ sp ]
+          regs_write: [ sp x29 ]
