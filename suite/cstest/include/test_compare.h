@@ -4,6 +4,8 @@
 #ifndef TEST_COMPARE_H
 #define TEST_COMPARE_H
 
+#include <stdint.h>
+
 /// An integer encoding a boolean value from the test files.
 /// libcyaml saves 0 by default, if an optional value was not set.
 /// Due to that, boolean values are represented as integer with the
@@ -12,7 +14,7 @@
 /// = 0 => unset
 /// < 0 => false
 /// > 0 => true
-typedef int tbool;
+typedef int32_t tbool;
 
 /// Compares two tbool values representing a Boolean of the form:
 /// == 0 = unset
