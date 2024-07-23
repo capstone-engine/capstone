@@ -67,19 +67,25 @@ void test_detail_free(TestDetail *detail) {
 bool test_expected_detail(csh *handle, cs_detail *actual,
 			   TestDetail *expected) {
   assert(handle && actual && expected);
-  compare_uint32_ret(actual->regs_read_count, expected->regs_read_count, false);
-  for (size_t i = 0; i < actual->regs_read_count; ++i) {
-    compare_reg_ret(*handle, actual->regs_read[i], expected->regs_read[i], false);
+  if (expected->regs_read_count > 0) {
+    compare_uint32_ret(actual->regs_read_count, expected->regs_read_count, false);
+    for (size_t i = 0; i < actual->regs_read_count; ++i) {
+      compare_reg_ret(*handle, actual->regs_read[i], expected->regs_read[i], false);
+    }
   }
 
-  compare_uint32_ret(actual->regs_write_count, expected->regs_write_count, false);
-  for (size_t i = 0; i < actual->regs_write_count; ++i) {
-    compare_reg_ret(*handle, actual->regs_write[i], expected->regs_write[i], false);
+  if (expected->regs_write_count > 0) {
+    compare_uint32_ret(actual->regs_write_count, expected->regs_write_count, false);
+    for (size_t i = 0; i < actual->regs_write_count; ++i) {
+      compare_reg_ret(*handle, actual->regs_write[i], expected->regs_write[i], false);
+    }
   }
 
-  compare_uint32_ret(actual->groups_count, expected->groups_count, false);
-  for (size_t i = 0; i < actual->groups_count; ++i) {
-    compare_reg_ret(*handle, actual->groups[i], expected->groups[i], false);
+  if (expected->groups_count > 0) {
+    compare_uint32_ret(actual->groups_count, expected->groups_count, false);
+    for (size_t i = 0; i < actual->groups_count; ++i) {
+      compare_reg_ret(*handle, actual->groups[i], expected->groups[i], false);
+    }
   }
 
   if (expected->aarch64) {
