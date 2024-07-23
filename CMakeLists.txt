@@ -904,7 +904,9 @@ endif()
 
 if(CAPSTONE_BUILD_CSTEST)
     include(ExternalProject)
-    find_library(libyaml yaml REQUIRED)
+    find_library(libyaml
+        NAMES libyaml yaml
+        REQUIRED)
     ExternalProject_Add(cmocka_ext
         PREFIX extern
         URL "https://cmocka.org/files/1.1/cmocka-1.1.7.tar.xz"
