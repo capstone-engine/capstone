@@ -305,6 +305,9 @@ TestRunResult cstest_run_tests(char **test_file_paths, uint32_t path_count,
 			       TestRunStats *stats)
 {
 	TestFile **files = parse_test_files(test_file_paths, path_count, stats);
+	if (!files) {
+		return get_test_run_result(stats);
+	}
 	eval_test_cases(files, stats);
 	for (size_t i = 0; i < stats->valid_test_files; ++i) {
 		test_file_free(files[i]);
