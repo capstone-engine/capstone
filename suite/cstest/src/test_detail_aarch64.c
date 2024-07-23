@@ -1,6 +1,7 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
+#include "test_compare.h"
 #include "test_detail_aarch64.h"
 #include "../../../cs_priv.h"
 #include <capstone/capstone.h>
@@ -93,13 +94,12 @@ void test_aarch64_detail_op_free(TestDetailAArch64Op *op)
 	cs_mem_free(op);
 }
 
-bool test_expected_aarch64(cs_detail *cs_detail, TestDetailAArch64 *expected)
+bool test_expected_aarch64(cs_aarch64 *actual, TestDetailAArch64 *expected)
 {
-	assert(cs_detail && expected);
-	if (cs_detail->aarch64.op_count != expected->operands_count) {
-		fprintf(stderr, "op_count: %" PRId32 " != %" PRId32 "\n",
-			cs_detail->aarch64.op_count, expected->operands_count);
-		return false;
-	}
+	assert(actual && expected);
+
+	compare_uint8_ret_false(actual->op_count, expected->operands_count);
+	compare_tbool_ret_false(actual->update_flags, expected->update_flags);
+	compare_tbool_ret_false(actual->post_index, expected->post_index);
 	return true;
 }
