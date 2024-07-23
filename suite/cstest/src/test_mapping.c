@@ -4,7 +4,8 @@
 #include "test_mapping.h"
 #include "../../../utils.h"
 
-static inline uint32_t cs_enum_get_val(const char *id, bool *found) {
+uint32_t cs_enum_get_val(const char *id, bool *found)
+{
 	assert(id);
 	size_t map_size = ARR_SIZE(cs_enum_map);
 	size_t id_len = strlen(id);
@@ -24,4 +25,3 @@ static inline uint32_t cs_enum_get_val(const char *id, bool *found) {
 	*found = false;
 	return 0;
 }
-

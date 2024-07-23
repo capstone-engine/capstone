@@ -53,6 +53,7 @@ TestDetailAArch64Op *test_aarch64_detail_op_new();
 TestDetailAArch64Op *test_aarch64_detail_op_clone(TestDetailAArch64Op *detail);
 void test_aarch64_detail_op_free(TestDetailAArch64Op *detail);
 
-bool test_expected_aarch64(cs_detail *cs_detail, TestDetailAArch64 *expected);
+bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
+			   TestDetailAArch64 *expected);
 
 #endif // TEST_DETAIL_AARCH64_H

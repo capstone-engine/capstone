@@ -225,6 +225,6 @@ static const TestCSEnumEntry cs_enum_map[] = {
 	{ .id = "CS_AC_WRITE", .val = CS_AC_WRITE },
 };
 
-static inline uint32_t cs_enum_get_val(const char *id, bool *found);
+uint32_t cs_enum_get_val(const char *id, bool *found);
 
 #endif // TEST_MAPPING_H

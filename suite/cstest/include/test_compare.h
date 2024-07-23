@@ -5,6 +5,7 @@
 #define TEST_COMPARE_H
 
 #include <stdint.h>
+#include "test_mapping.h"
 
 /// An integer encoding a boolean value from the test files.
 /// libcyaml saves 0 by default, if an optional value was not set.
@@ -33,5 +34,99 @@ typedef int32_t tbool;
 			actual, expected); \
 		return ret_val; \
 	}
+
+/// Compares two uint32_t values.
+/// It returns with @ret_val if they mismatch.
+#define compare_uint32_ret(actual, expected, ret_val) \
+	if (actual != expected) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": %" PRIx32 " != %" PRIx32 \
+				"\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares two uint64_t values.
+/// It returns with @ret_val if they mismatch.
+#define compare_uint64_ret(actual, expected, ret_val) \
+	if (actual != expected) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": %" PRIx64 " != %" PRIx64 \
+				"\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares two int8_t values.
+/// It returns with @ret_val if they mismatch.
+#define compare_int8_ret(actual, expected, ret_val) \
+	if (actual != expected) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": %" PRIx8 " != %" PRIx8 \
+				"\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares two int32_t values.
+/// It returns with @ret_val if they mismatch.
+#define compare_int32_ret(actual, expected, ret_val) \
+	if (actual != expected) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": %" PRIx32 " != %" PRIx32 \
+				"\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares two int64_t values.
+/// It returns with @ret_val if they mismatch.
+#define compare_int64_ret(actual, expected, ret_val) \
+	if (actual != expected) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": %" PRIx64 " != %" PRIx64 \
+				"\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares two floating point values.
+/// It returns with @ret_val if they mismatch.
+#define compare_fp_ret(actual, expected, ret_val) \
+	if (actual != expected) { \
+		fprintf(stderr, #actual " != " #expected ": %f != %f\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares enum id.
+/// Actual is the value, expected is the enum idetifer as string.
+/// It returns with @ret_val if they mismatch.
+#define compare_enum_ret(actual, expected, ret_val) \
+	do { \
+		bool found = false; \
+		uint32_t eval = cs_enum_get_val(expected, &found); \
+		if (expected && (actual != eval || !found)) { \
+			fprintf(stderr, \
+				#actual " != " #expected ": %" PRId32 \
+					" != %s\n", \
+				actual, expected); \
+			return ret_val; \
+		} \
+	} while (0)
+
+/// Compares register names.
+/// Actual is the register id, expected is name as string.
+/// It returns with @ret_val if they mismatch.
+#define compare_reg_ret(handle, actual, expected, ret_val) \
+	do { \
+		const char *reg_name = cs_reg_name(handle, actual); \
+		if (expected && strings_match(reg_name, expected)) { \
+			fprintf(stderr, \
+				#actual " != " #expected ": '%s' != '%s'\n", \
+				reg_name, expected); \
+			return ret_val; \
+		} \
+	} while (0)
 
 #endif // TEST_COMPARE_H
