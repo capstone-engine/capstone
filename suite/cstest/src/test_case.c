@@ -91,6 +91,7 @@ void test_insn_data_free(TestInsnData *test_insn_data)
 	cs_mem_free(test_insn_data->asm_text);
 	cs_mem_free(test_insn_data->op_str);
 	cs_mem_free(test_insn_data->mnemonic);
+	test_detail_free(test_insn_data->details);
 	cs_mem_free(test_insn_data);
 }
 
@@ -108,6 +109,9 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 					       NULL;
 	tid->asm_text = test_insn_data->asm_text ? cs_strdup(test_insn_data->asm_text) :
 					       NULL;
+	if (test_insn_data->details) {
+		tid->details = test_detail_clone(test_insn_data->details);
+	}
 	return tid;
 }
 
