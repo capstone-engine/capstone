@@ -9,26 +9,26 @@
 #include <stdio.h>
 #include <string.h>
 
-TestDetailAArch64 *test_aarch64_detail_new()
+TestDetailAArch64 *test_detail_aarch64_new()
 {
 	return cs_mem_calloc(sizeof(TestDetailAArch64), 1);
 }
 
-void test_aarch64_detail_free(TestDetailAArch64 *detail)
+void test_detail_aarch64_free(TestDetailAArch64 *detail)
 {
 	if (!detail) {
 		return;
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
-		test_aarch64_detail_op_free(detail->operands[i]);
+		test_detail_aarch64_op_free(detail->operands[i]);
 	}
 	cs_mem_free(detail->cc);
 	cs_mem_free(detail);
 }
 
-TestDetailAArch64 *test_aarch64_detail_clone(TestDetailAArch64 *detail)
+TestDetailAArch64 *test_detail_aarch64_clone(TestDetailAArch64 *detail)
 {
-	TestDetailAArch64 *clone = test_aarch64_detail_new();
+	TestDetailAArch64 *clone = test_detail_aarch64_new();
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
 	clone->update_flags = detail->update_flags;
 	clone->post_indexed = detail->post_indexed;
@@ -40,20 +40,20 @@ TestDetailAArch64 *test_aarch64_detail_clone(TestDetailAArch64 *detail)
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
 		clone->operands[i] =
-			test_aarch64_detail_op_clone(detail->operands[i]);
+			test_detail_aarch64_op_clone(detail->operands[i]);
 	}
 
 	return clone;
 }
 
-TestDetailAArch64Op *test_aarch64_detail_op_new()
+TestDetailAArch64Op *test_detail_aarch64_op_new()
 {
 	return cs_mem_calloc(sizeof(TestDetailAArch64Op), 1);
 }
 
-TestDetailAArch64Op *test_aarch64_detail_op_clone(TestDetailAArch64Op *op)
+TestDetailAArch64Op *test_detail_aarch64_op_clone(TestDetailAArch64Op *op)
 {
-	TestDetailAArch64Op *clone = test_aarch64_detail_op_new();
+	TestDetailAArch64Op *clone = test_detail_aarch64_op_new();
 
 	clone->type = op->type ? strdup(op->type) : NULL;
 	clone->sub_type = op->sub_type ? strdup(op->sub_type) : NULL;
@@ -78,7 +78,7 @@ TestDetailAArch64Op *test_aarch64_detail_op_clone(TestDetailAArch64Op *op)
 	return clone;
 }
 
-void test_aarch64_detail_op_free(TestDetailAArch64Op *op)
+void test_detail_aarch64_op_free(TestDetailAArch64Op *op)
 {
 	if (!op) {
 		return;

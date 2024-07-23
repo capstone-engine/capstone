@@ -72,6 +72,10 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_END
 };
 
+TestDetail *test_detail_new();
+TestDetail *test_detail_clone(TestDetail *detail);
+void test_detail_free(TestDetail *detail);
+
 bool test_expected_detail(csh *handle, cs_detail *actual,
 			   TestDetail *expected);
 

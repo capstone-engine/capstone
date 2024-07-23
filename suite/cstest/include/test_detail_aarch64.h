@@ -109,13 +109,13 @@ static const cyaml_schema_field_t test_detail_aarch64_mapping_schema[] = {
 	CYAML_FIELD_END
 };
 
-TestDetailAArch64 *test_aarch64_detail_new();
-TestDetailAArch64 *test_aarch64_detail_clone(TestDetailAArch64 *detail);
-void test_aarch64_detail_free(TestDetailAArch64 *detail);
+TestDetailAArch64 *test_detail_aarch64_new();
+TestDetailAArch64 *test_detail_aarch64_clone(TestDetailAArch64 *detail);
+void test_detail_aarch64_free(TestDetailAArch64 *detail);
 
-TestDetailAArch64Op *test_aarch64_detail_op_new();
-TestDetailAArch64Op *test_aarch64_detail_op_clone(TestDetailAArch64Op *detail);
-void test_aarch64_detail_op_free(TestDetailAArch64Op *detail);
+TestDetailAArch64Op *test_detail_aarch64_op_new();
+TestDetailAArch64Op *test_detail_aarch64_op_clone(TestDetailAArch64Op *detail);
+void test_detail_aarch64_op_free(TestDetailAArch64Op *detail);
 
 bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 			   TestDetailAArch64 *expected);
