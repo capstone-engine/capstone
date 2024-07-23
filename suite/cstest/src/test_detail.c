@@ -45,14 +45,17 @@ void test_detail_free(TestDetail *detail) {
   for (size_t i = 0; i < detail->regs_read_count; ++i) {
     cs_mem_free(detail->regs_read[i]);
   }
+  cs_mem_free(detail->regs_read);
 
   for (size_t i = 0; i < detail->regs_write_count; ++i) {
     cs_mem_free(detail->regs_write[i]);
   }
+  cs_mem_free(detail->regs_write);
 
   for (size_t i = 0; i < detail->groups_count; ++i) {
     cs_mem_free(detail->groups[i]);
   }
+  cs_mem_free(detail->groups);
 
   if (detail->aarch64) {
     test_detail_aarch64_free(detail->aarch64);
