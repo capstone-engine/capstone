@@ -4,14 +4,14 @@
 #include <capstone/capstone.h>
 
 typedef struct {
-	aarch64_op_type type;
-	aarch64_op_type sub_type;
-	uint8_t access;
+	char *type;
+	char *sub_type;
+	char *access;
 
-	aarch64_reg reg;
+	char *reg;
 	int64_t imm;
-	aarch64_reg mem_base;
-	aarch64_reg mem_index;
+	char *mem_base;
+	char *mem_index;
 	int32_t mem_disp;
 
 	int8_t imm_range_first;
@@ -22,22 +22,21 @@ typedef struct {
 	// aarch64_op_sme sme;
 	// aarch64_op_pred pred;
 
-	aarch64_shifter shift_type;
-	unsigned int shift_value;
-	aarch64_extender ext;
+	char *shift_type;
+	uint32_t shift_value;
+	char *ext;
 
+	char *vas;
 	int is_vreg; ///< 0 = unset; <0 = false; >0 = true
-	AArch64Layout_VectorLayout vas;
 	int vector_index;
 
-	bool is_list_member; ///< 0 = unset; <0 = false; >0 = true
+	int is_list_member; ///< 0 = unset; <0 = false; >0 = true
 } TestDetailAArch64Op;
 
 typedef struct {
-	AArch64CC_CondCode cc;
+	char *cc;
 	int update_flags; ///< 0 = unset; <0 = false; >0 = true
 	int post_index;	  ///< 0 = unset; <0 = false; >0 = true
-	int is_doing_sme; ///< 0 = unset; <0 = false; >0 = true
 	TestDetailAArch64Op **operands;
 	uint32_t operands_count;
 } TestDetailAArch64;
