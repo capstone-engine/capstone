@@ -1,7 +1,7 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
-#include "test_mappings.h"
+#include "test_mapping.h"
 #include "../../../utils.h"
 
 static inline uint32_t cs_enum_get_val(const char *id, bool *found) {

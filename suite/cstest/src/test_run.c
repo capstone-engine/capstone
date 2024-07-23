@@ -3,7 +3,7 @@
 
 #include "test_run.h"
 #include "test_case.h"
-#include "test_mappings.h"
+#include "test_mapping.h"
 #include "../../../utils.h"
 #include <stdarg.h>
 #include <stddef.h>
