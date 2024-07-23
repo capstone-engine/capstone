@@ -16,15 +16,12 @@
 /// > 0 => true
 typedef int32_t tbool;
 
-/// Compares two tbool values representing a Boolean of the form:
-/// == 0 = unset
-/// < 0 = false
-/// > 0 = true.
+/// Compares the @actual bool against the @expected tbool:
 /// It returns with @ret_val, if expected is set but the values mismatch.
 #define compare_tbool_ret(actual, expected, ret_val) \
-	if (expected != 0 && actual != expected) { \
-		fprintf(stderr, #actual " != " #expected ": %" PRId32 " != %" PRId32 "\n", \
-			actual, expected); \
+	if (expected != 0 && ((actual && expected <= 0) || (!actual && expected >= 0))) { \
+		fprintf(stderr, #actual " is %s but expected is %" PRId32 " (=0 unset, >0 true, <0 false)\n", \
+			actual ? "true" : "false", expected); \
 		return ret_val; \
 	}
 
