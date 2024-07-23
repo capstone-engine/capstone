@@ -4,6 +4,7 @@
 #ifndef TEST_DETAIL_AARCH64_H
 #define TEST_DETAIL_AARCH64_H
 
+#include "test_compare.h"
 #include <capstone/capstone.h>
 
 typedef struct {
@@ -30,16 +31,16 @@ typedef struct {
 	char *ext;
 
 	char *vas;
-	int is_vreg; ///< 0 = unset; <0 = false; >0 = true
+	tbool is_vreg; ///< 0 = unset; <0 = false; >0 = true
 	int vector_index;
 
-	int is_list_member; ///< 0 = unset; <0 = false; >0 = true
+	tbool is_list_member; ///< 0 = unset; <0 = false; >0 = true
 } TestDetailAArch64Op;
 
 typedef struct {
 	char *cc;
-	int update_flags; ///< 0 = unset; <0 = false; >0 = true
-	int post_index;	  ///< 0 = unset; <0 = false; >0 = true
+	tbool update_flags; ///< 0 = unset; <0 = false; >0 = true
+	tbool post_index;	  ///< 0 = unset; <0 = false; >0 = true
 	TestDetailAArch64Op **operands;
 	uint32_t operands_count;
 } TestDetailAArch64;

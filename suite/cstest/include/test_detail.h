@@ -10,6 +10,7 @@
 #define TEST_DETAIL_H
 
 #include "test_detail_aarch64.h"
+#include "test_compare.h"
 #include <capstone/capstone.h>
 
 /// The equivalent to cs_detail in capstone.h
@@ -46,7 +47,7 @@ typedef struct {
 	uint8_t groups;
 	uint8_t groups_count;
 
-	int writeback; ///< 0 = unset; <0 = false; >0 = true
+	tbool writeback;
 } TestDetail;
 
 #endif // TEST_DETAIL_H
