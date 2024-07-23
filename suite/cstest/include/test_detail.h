@@ -6,6 +6,9 @@
 /// And they won't be supported until libcyaml v2:
 /// https://github.com/tlsa/libcyaml/issues/186
 
+#ifndef TEST_DETAIL_H
+#define TEST_DETAIL_H
+
 #include "test_detail_aarch64.h"
 #include <capstone/capstone.h>
 
@@ -45,3 +48,5 @@ typedef struct {
 
 	int writeback; ///< 0 = unset; <0 = false; >0 = true
 } TestDetail;
+
+#endif // TEST_DETAIL_H

@@ -1,6 +1,9 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
+#ifndef TEST_DETAIL_AARCH64_H
+#define TEST_DETAIL_AARCH64_H
+
 #include <capstone/capstone.h>
 
 typedef struct {
@@ -50,3 +53,5 @@ TestDetailAArch64Op *test_aarch64_detail_op_clone(TestDetailAArch64Op *detail);
 void test_aarch64_detail_op_free(TestDetailAArch64Op *detail);
 
 bool test_expected_aarch64(cs_detail *cs_detail, TestDetailAArch64 *expected);
+
+#endif // TEST_DETAIL_AARCH64_H
