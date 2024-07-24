@@ -100,7 +100,7 @@ jobs:
     - name: "Compatibility header test"
       if: startsWith(matrix.config.build-system, 'cmake') && matrix.config.diet-build == 'OFF'
       run: |
-        ctest --output-on-failure -R ASCompatibilityHeaderTest
+        ctest --test-dir build --output-on-failure -R ASCompatibilityHeaderTest
 
     - name: cstool - reaches disassembler engine
       run: |
@@ -109,22 +109,22 @@ jobs:
     - name: cstest unit tests (cmake)
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --output-on-failure -R UnitCSTest
+        ctest --test-dir build --output-on-failure -R UnitCSTest
 
     - name: cstest integration tests (cmake)
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --output-on-failure -R IntegrationCSTest
+        ctest --test-dir build --output-on-failure -R IntegrationCSTest
 
     - name: cstest MC
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --output-on-failure -R MCTests
+        ctest --test-dir build --output-on-failure -R MCTests
 
     - name: cstest details
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --output-on-failure -R DetailTests
+        ctest --test-dir build --output-on-failure -R DetailTests
 
   Windows:
     runs-on: ${{ matrix.config.os }}
