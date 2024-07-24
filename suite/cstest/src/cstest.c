@@ -9,15 +9,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <threads.h>
 #include <time.h>
 
 // Pointer to the file list table
 // Must be a thread local, because we cannot pass arguments to `nftw`.
 // So the found test files can only be saved, very annoyingly,
 // to a global/thread-local mutable variables.
-thread_local char ***test_files = NULL;
-thread_local uint32_t file_count = 0;
+char ***test_files = NULL;
+uint32_t file_count = 0;
 
 static void help(const char *self)
 {
