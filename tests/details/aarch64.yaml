@@ -65,29 +65,34 @@ test_cases:
               reg: d0
               access: CS_AC_READ_WRITE
               vas: 0x808
+              is_vreg: 1
             -
               type: AARCH64_OP_REG
               reg: q1
               access: CS_AC_READ
               vas: 0x1008
+              is_vreg: 1
             -
               type: AARCH64_OP_REG
               reg: q2
               access: CS_AC_READ
               vas: 0x1008
+              is_vreg: 1
             -
               type: AARCH64_OP_REG
               reg: q3
               access: CS_AC_READ
               vas: 0x1008
+              is_vreg: 1
             -
               type: AARCH64_OP_REG
               reg: d2
               access: CS_AC_READ
               vas: 0x808
+              is_vreg: 1
             cc: AArch64CC_Invalid
           writeback: 1
-          regs_read: [ d0 q1 q2 q3 d2 ]
+          regs_read: [ d0, q1, q2, q3, d2 ]
           regs_write: [ d0 ]
 
       -
@@ -135,7 +140,7 @@ test_cases:
               vector_index_is_set: true
             cc: AArch64CC_Invalid
           writeback: 1
-          regs_read: [ fpcr s0 q0 ]
+          regs_read: [ fpcr, s0, q0 ]
           regs_write: [ s0 ]
 
       -
