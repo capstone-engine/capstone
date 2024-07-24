@@ -3,8 +3,6 @@
 
 #include "test_compare.h"
 #include "test_detail_aarch64.h"
-#include "../../../cs_priv.h"
-#include "../../../utils.h"
 #include <capstone/capstone.h>
 #include <stdio.h>
 #include <string.h>
