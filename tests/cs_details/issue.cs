@@ -204,6 +204,18 @@
 !# CS_ARCH_ARM, CS_MODE_ARM, CS_OPT_DETAIL
 0xef,0xf3,0x11,0x85 == ldrhi pc, [r1, #-0x3ef] ; op_count: 2 ; operands[0].type: REG = r15 ; operands[0].access: WRITE ; operands[1].type: MEM ; operands[1].mem.base: REG = r1 ; operands[1].mem.disp: 0x3ef ; operands[1].access: READ ; Code condition: 8 ; Registers read: cpsr r1 ; Registers modified: r15 ; Groups: IsARM jump
 
+!# issue 0 PPC operand groups 0x54,0x22,0xe0,0x06 == slwi r2, r1, 0x1c
+!# CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x54,0x22,0xe0,0x06 == slwi r2, r1, 0x1c ; op_count: 3 ; operands[0].type: REG = r2 ; operands[1].type: REG = r1 ; operands[2].type: IMM = 0x1c
+
+!# issue 0 PPC operand groups 0x54,0x66,0xf0,0xbe == srwi r6, r3, 2
+!# CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x54,0x66,0xf0,0xbe == srwi r6, r3, 2 ; op_count: 3 ; operands[0].type: REG = r6 ; operands[1].type: REG = r3 ; operands[2].type: IMM = 0x2
+
+!# issue 0 PPC operand groups 0x78,0x62,0x26,0xe4 == sldi r2, r3, 4
+!# CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x78,0x62,0x26,0xe4 == sldi r2, r3, 4 ; op_count: 3 ; operands[0].type: REG = r2 ; operands[1].type: REG = r3 ; operands[2].type: IMM = 0x4
+
 !# issue 0 RISCV operand groups 0x37,0x34,0x00,0x00 == lui s0, 3
 !# CS_ARCH_RISCV, CS_MODE_RISCV32, CS_OPT_DETAIL
 0x37,0x34,0x00,0x00 == lui s0, 3 ; op_count: 2 ; operands[0].type: REG = s0 ; operands[0].access: WRITE ; operands[1].type: IMM = 0x3 ; operands[1].access: READ
