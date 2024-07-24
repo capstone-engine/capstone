@@ -2,7 +2,7 @@ This documentation explains how to compile Capstone for:
 - Windows CE 7, a.k.a, [Windows Embedded Compact 7](https://www.microsoft.com/windowsembedded/en-us/windows-embedded-compact-7.aspx), on [ARMv7](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0406c/index.html).
 - Windows CE 8, a.k.a, [Windows Embedded Compact 2013](https://www.microsoft.com/windowsembedded/en-us/windows-embedded-compact-2013.aspx), on [ARMv7](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0406c/index.html).
 
-To build Capstone for a different platform, please refer to `COMPILE.TXT`.
+To build Capstone for a different platform, please refer to `COMPILE_CMAKE.TXT`.
 
 # Prerequisites
 

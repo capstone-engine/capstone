@@ -1,3 +1,11 @@
+
+# NOTICE
+
+> Please be aware that the Makefile build is deprecated.
+> Use cmake instead.
+
+<hr>
+
 This documentation explains how to compile, install & run Capstone on MacOSX,
 Linux, *BSD & Solaris. We also show steps to cross-compile for Microsoft Windows.
 

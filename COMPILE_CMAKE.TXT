@@ -1,8 +1,6 @@
 This documentation explains how to compile Capstone with CMake, focus on
 using Microsoft Visual C as the compiler.
 
-To compile Capstone on *nix, see COMPILE.TXT.
-
 To compile Capstone on Windows using Visual Studio, see COMPILE_MSVC.TXT.
 
                         *-*-*-*-*-*

@@ -6,7 +6,7 @@ on:
       - "docs/**"
       - "ChangeLog"
       - "CREDITS.TXT"
-      - "COMPILE.TXT"
+      - "COMPILE_MAKE.TXT"
       - "COMPILE_MSVC.TXT"
       - "COMPILE_CMAKE.TXT"
       - "HACK.TXT"
