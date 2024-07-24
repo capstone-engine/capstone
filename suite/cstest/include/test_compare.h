@@ -110,8 +110,8 @@ typedef int32_t tbool;
 		if (expected && (actual != eval || !found)) { \
 			fprintf(stderr, \
 				#actual " != " #expected ": %" PRId32 \
-					" != %s\n", \
-				actual, expected); \
+					" != %s%s\n", \
+				actual, expected, found ? "" : " <== id not found"); \
 			return ret_val; \
 		} \
 	}

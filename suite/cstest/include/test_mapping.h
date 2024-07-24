@@ -197,6 +197,38 @@ static const TestOptionMapEntry test_option_map[] = {
 /// ```
 static const TestCSEnumEntry cs_enum_map[] = {
 	{ .id = "AAAAAAAAAAAAAAAAAAAAAAAAAA", .val = 0xffffff }, // For testing
+	{ .id = "AARCH64LAYOUT_INVALID", .val = AARCH64LAYOUT_INVALID },
+	{ .id = "AARCH64LAYOUT_VL_16B", .val = AARCH64LAYOUT_VL_16B },
+	{ .id = "AARCH64LAYOUT_VL_16S", .val = AARCH64LAYOUT_VL_16S },
+	{ .id = "AARCH64LAYOUT_VL_1D", .val = AARCH64LAYOUT_VL_1D },
+	{ .id = "AARCH64LAYOUT_VL_1Q", .val = AARCH64LAYOUT_VL_1Q },
+	{ .id = "AARCH64LAYOUT_VL_1S", .val = AARCH64LAYOUT_VL_1S },
+	{ .id = "AARCH64LAYOUT_VL_2D", .val = AARCH64LAYOUT_VL_2D },
+	{ .id = "AARCH64LAYOUT_VL_2H", .val = AARCH64LAYOUT_VL_2H },
+	{ .id = "AARCH64LAYOUT_VL_2S", .val = AARCH64LAYOUT_VL_2S },
+	{ .id = "AARCH64LAYOUT_VL_32H", .val = AARCH64LAYOUT_VL_32H },
+	{ .id = "AARCH64LAYOUT_VL_4B", .val = AARCH64LAYOUT_VL_4B },
+	{ .id = "AARCH64LAYOUT_VL_4H", .val = AARCH64LAYOUT_VL_4H },
+	{ .id = "AARCH64LAYOUT_VL_4S", .val = AARCH64LAYOUT_VL_4S },
+	{ .id = "AARCH64LAYOUT_VL_64B", .val = AARCH64LAYOUT_VL_64B },
+	{ .id = "AARCH64LAYOUT_VL_8B", .val = AARCH64LAYOUT_VL_8B },
+	{ .id = "AARCH64LAYOUT_VL_8D", .val = AARCH64LAYOUT_VL_8D },
+	{ .id = "AARCH64LAYOUT_VL_8H", .val = AARCH64LAYOUT_VL_8H },
+	{ .id = "AARCH64LAYOUT_VL_B", .val = AARCH64LAYOUT_VL_B },
+	{ .id = "AARCH64LAYOUT_VL_COMPLETE", .val = AARCH64LAYOUT_VL_COMPLETE },
+	{ .id = "AARCH64LAYOUT_VL_D", .val = AARCH64LAYOUT_VL_D },
+	{ .id = "AARCH64LAYOUT_VL_H", .val = AARCH64LAYOUT_VL_H },
+	{ .id = "AARCH64LAYOUT_VL_Q", .val = AARCH64LAYOUT_VL_Q },
+	{ .id = "AARCH64LAYOUT_VL_S", .val = AARCH64LAYOUT_VL_S },
+	{ .id = "AARCH64_EXT_INVALID", .val = AARCH64_EXT_INVALID },
+	{ .id = "AARCH64_EXT_SXTB", .val = AARCH64_EXT_SXTB },
+	{ .id = "AARCH64_EXT_SXTH", .val = AARCH64_EXT_SXTH },
+	{ .id = "AARCH64_EXT_SXTW", .val = AARCH64_EXT_SXTW },
+	{ .id = "AARCH64_EXT_SXTX", .val = AARCH64_EXT_SXTX },
+	{ .id = "AARCH64_EXT_UXTB", .val = AARCH64_EXT_UXTB },
+	{ .id = "AARCH64_EXT_UXTH", .val = AARCH64_EXT_UXTH },
+	{ .id = "AARCH64_EXT_UXTW", .val = AARCH64_EXT_UXTW },
+	{ .id = "AARCH64_EXT_UXTX", .val = AARCH64_EXT_UXTX },
 	{ .id = "AARCH64_OP_AT", .val = AARCH64_OP_AT },
 	{ .id = "AARCH64_OP_BTI", .val = AARCH64_OP_BTI },
 	{ .id = "AARCH64_OP_CIMM", .val = AARCH64_OP_CIMM },
@@ -233,6 +265,12 @@ static const TestCSEnumEntry cs_enum_map[] = {
 	{ .id = "AARCH64_OP_SYSREG", .val = AARCH64_OP_SYSREG },
 	{ .id = "AARCH64_OP_TLBI", .val = AARCH64_OP_TLBI },
 	{ .id = "AARCH64_OP_TSB", .val = AARCH64_OP_TSB },
+	{ .id = "AARCH64_SFT_ASR", .val = AARCH64_SFT_ASR },
+	{ .id = "AARCH64_SFT_INVALID", .val = AARCH64_SFT_INVALID },
+	{ .id = "AARCH64_SFT_LSL", .val = AARCH64_SFT_LSL },
+	{ .id = "AARCH64_SFT_LSR", .val = AARCH64_SFT_LSR },
+	{ .id = "AARCH64_SFT_MSL", .val = AARCH64_SFT_MSL },
+	{ .id = "AARCH64_SFT_ROR", .val = AARCH64_SFT_ROR },
 	{ .id = "AArch64CC_AL", .val = AArch64CC_AL },
 	{ .id = "AArch64CC_EQ", .val = AArch64CC_EQ },
 	{ .id = "AArch64CC_GE", .val = AArch64CC_GE },
@@ -253,7 +291,9 @@ static const TestCSEnumEntry cs_enum_map[] = {
 	{ .id = "CS_AC_READ", .val = CS_AC_READ },
 	{ .id = "CS_AC_READ_WRITE", .val = CS_AC_READ_WRITE },
 	{ .id = "CS_AC_WRITE", .val = CS_AC_WRITE },
-	{ .id = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", .val = 0xffffff }, // For testing
+	{ .id = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+	  .val = 0xffffff }, // For testing
+
 };
 
 uint32_t cs_enum_get_val(const char *id, bool *found);
