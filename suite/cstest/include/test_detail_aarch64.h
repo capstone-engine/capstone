@@ -34,6 +34,7 @@ typedef struct {
 	char *vas;
 	tbool is_vreg;
 	int vector_index;
+	bool vector_index_is_set;
 
 	tbool is_list_member;
 } TestDetailAArch64Op;
@@ -78,6 +79,8 @@ static const cyaml_schema_field_t test_detail_aarch64_op_mapping_schema[] = {
 			is_vreg),
 	CYAML_FIELD_INT("vector_index", CYAML_FLAG_OPTIONAL,
 			TestDetailAArch64Op, vector_index),
+	CYAML_FIELD_BOOL("vector_index_is_set", CYAML_FLAG_OPTIONAL,
+			TestDetailAArch64Op, vector_index_is_set),
 	CYAML_FIELD_INT("is_list_member", CYAML_FLAG_OPTIONAL,
 			TestDetailAArch64Op, is_list_member),
 	CYAML_FIELD_END

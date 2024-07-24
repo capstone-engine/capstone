@@ -72,6 +72,7 @@ TestDetailAArch64Op *test_detail_aarch64_op_clone(TestDetailAArch64Op *op)
 	clone->shift_value = op->shift_value;
 	clone->is_vreg = op->is_vreg;
 	clone->vector_index = op->vector_index;
+	clone->vector_index_is_set = op->vector_index_is_set;
 	clone->is_list_member = op->is_list_member;
 
 	return clone;
@@ -165,7 +166,9 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 
 		compare_enum_ret(op->vas, eop->vas, false);
 		compare_tbool_ret(op->is_vreg, eop->is_vreg, false);
-		compare_int32_ret(op->vector_index, eop->vector_index, false);
+		if (eop->vector_index_is_set) {
+			compare_int32_ret(op->vector_index, eop->vector_index, false);
+		}
 
 		compare_tbool_ret(op->is_list_member, eop->is_list_member,
 				  false);

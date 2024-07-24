@@ -132,6 +132,7 @@ test_cases:
               access: CS_AC_READ
               vas: 0x20
               vector_index: 3
+              vector_index_is_set: true
             cc: AArch64CC_Invalid
           writeback: 1
           regs_read: [ fpcr s0 q0 ]
@@ -152,6 +153,7 @@ test_cases:
               access: CS_AC_READ
               vas: 0x40
               vector_index: 1
+              vector_index_is_set: true
             cc: AArch64CC_Invalid
           regs_read: [ q5 ]
           regs_write: [ x2 ]
