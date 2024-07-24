@@ -6,6 +6,7 @@
 
 uint32_t cs_enum_get_val(const char *id, bool *found)
 {
+	assert(id && found);
 	size_t l = 0;
 	size_t r = ARR_SIZE(cs_enum_map);
 	size_t id_len = strlen(id);

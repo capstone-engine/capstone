@@ -104,7 +104,7 @@ typedef int32_t tbool;
 /// Actual is the value, expected is the enum idetifer as string.
 /// It returns with @ret_val if they mismatch.
 #define compare_enum_ret(actual, expected, ret_val) \
-	do { \
+	if (expected) { \
 		bool found = false; \
 		uint32_t eval = cs_enum_get_val(expected, &found); \
 		if (expected && (actual != eval || !found)) { \
@@ -114,13 +114,13 @@ typedef int32_t tbool;
 				actual, expected); \
 			return ret_val; \
 		} \
-	} while (0)
+	}
 
 /// Compares register names.
 /// Actual is the register id, expected is name as string.
 /// It returns with @ret_val if they mismatch.
 #define compare_reg_ret(handle, actual, expected, ret_val) \
-	do { \
+	if (expected) { \
 		const char *reg_name = cs_reg_name(handle, actual); \
 		if (expected && !strings_match(reg_name, expected)) { \
 			fprintf(stderr, \
@@ -128,6 +128,6 @@ typedef int32_t tbool;
 				reg_name, expected); \
 			return ret_val; \
 		} \
-	} while (0)
+	}
 
 #endif // TEST_COMPARE_H
