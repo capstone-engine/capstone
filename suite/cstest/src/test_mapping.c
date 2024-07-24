@@ -6,21 +6,28 @@
 
 uint32_t cs_enum_get_val(const char *id, bool *found)
 {
-	assert(id);
-	size_t map_size = ARR_SIZE(cs_enum_map);
+	size_t l = 0;
+	size_t r = ARR_SIZE(cs_enum_map);
 	size_t id_len = strlen(id);
-	for (size_t i = 0, ti = (map_size / 2); i < id_len && ti < map_size;) {
-		size_t j = i;
-		size_t entry_len = strlen(cs_enum_map[ti].id);
-		while (j < entry_len && i < id_len && id[i] == cs_enum_map[ti].id[j]) {
+
+	while (l <= r) {
+		size_t m = (l + r) / 2;
+		size_t j = 0;
+		size_t i = 0;
+		size_t entry_len = strlen(cs_enum_map[m].id);
+
+		while (j < entry_len && i < id_len && id[i] == cs_enum_map[m].id[j]) {
 			++j, ++i;
 		}
 		if (i == id_len && j == entry_len) {
 			*found = true;
-			return cs_enum_map[ti].val;
+			return cs_enum_map[m].val;
 		}
-
-		ti = (j >= entry_len || id[i] > cs_enum_map[ti].id[j]) ? ti + ((map_size - ti) / 2) + 1 : (ti / 2);
+		if (id[i] < cs_enum_map[m].id[j]) {
+			r = m - 1;
+		} else if (id[i] > cs_enum_map[m].id[j]) {
+			l = m + 1;
+		}
 	}
 	*found = false;
 	return 0;
