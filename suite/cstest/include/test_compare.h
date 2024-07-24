@@ -41,7 +41,7 @@ typedef int32_t tbool;
 #define compare_uint32_ret(actual, expected, ret_val) \
 	if (((uint32_t) actual) != ((uint32_t) expected)) { \
 		fprintf(stderr, \
-			#actual " != " #expected ": %" PRIx32 " != %" PRIx32 \
+			#actual " != " #expected ": 0x%" PRIx32 " != 0x%" PRIx32 \
 				"\n", \
 			actual, expected); \
 		return ret_val; \
@@ -52,7 +52,7 @@ typedef int32_t tbool;
 #define compare_uint64_ret(actual, expected, ret_val) \
 	if (((uint64_t) actual) != ((uint64_t) expected)) { \
 		fprintf(stderr, \
-			#actual " != " #expected ": %" PRIx64 " != %" PRIx64 \
+			#actual " != " #expected ": 0x%" PRIx64 " != 0x%" PRIx64 \
 				"\n", \
 			actual, expected); \
 		return ret_val; \
@@ -63,7 +63,7 @@ typedef int32_t tbool;
 #define compare_int8_ret(actual, expected, ret_val) \
 	if (((int8_t) actual) != ((int8_t) expected)) { \
 		fprintf(stderr, \
-			#actual " != " #expected ": %" PRIx8 " != %" PRIx8 \
+			#actual " != " #expected ": 0x%" PRIx8 " != 0x%" PRIx8 \
 				"\n", \
 			actual, expected); \
 		return ret_val; \
@@ -74,7 +74,7 @@ typedef int32_t tbool;
 #define compare_int32_ret(actual, expected, ret_val) \
 	if (((int32_t) actual) != ((int32_t) expected)) { \
 		fprintf(stderr, \
-			#actual " != " #expected ": %" PRIx32 " != %" PRIx32 \
+			#actual " != " #expected ": 0x%" PRIx32 " != 0x%" PRIx32 \
 				"\n", \
 			actual, expected); \
 		return ret_val; \
@@ -85,7 +85,7 @@ typedef int32_t tbool;
 #define compare_int64_ret(actual, expected, ret_val) \
 	if (((int64_t) actual) != ((int64_t) expected)) { \
 		fprintf(stderr, \
-			#actual " != " #expected ": %" PRIx64 " != %" PRIx64 \
+			#actual " != " #expected ": 0x%" PRIx64 " != 0x%" PRIx64 \
 				"\n", \
 			actual, expected); \
 		return ret_val; \
