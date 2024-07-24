@@ -114,16 +114,25 @@ jobs:
       run: |
         sh suite/run_invalid_cstool.sh
 
+    - name: cstest unit tests (cmake)
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --output-on-failure -R UnitCSTest
+
     - name: cstest integration tests (cmake)
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        cd suite/cstest/test
-        python3 ./integration_tests.py
+        ctest --output-on-failure -R IntegrationCSTest
 
-    - name: cstest MC (cmake)
+    - name: cstest MC
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        cstest tests/MC/
+        ctest --output-on-failure -R MCTests
+
+    - name: cstest details
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --output-on-failure -R DetailTests
 
   Windows:
     runs-on: ${{ matrix.config.os }}
