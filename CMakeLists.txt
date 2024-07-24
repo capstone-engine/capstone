@@ -935,17 +935,37 @@ if(CAPSTONE_BUILD_CSTEST)
     set_target_properties(cmocka PROPERTIES IMPORTED_LOCATION ${CMOCKA_LIB_DIR}/libcmocka.a)
     set_target_properties(libcyaml PROPERTIES IMPORTED_LOCATION ${LIBCYAML_LIB_DIR}/libcyaml.a)
 
+    set(CSTEST_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/suite/cstest/include)
     file(GLOB CSTEST_SRC suite/cstest/src/*.c)
     add_executable(cstest ${CSTEST_SRC})
+    add_library(libcstest ${CSTEST_SRC})
     add_dependencies(cstest cmocka_ext)
     add_dependencies(cstest libcyaml_ext)
     target_link_libraries(cstest PUBLIC capstone cmocka libcyaml yaml)
+    target_link_libraries(libcstest PUBLIC capstone cmocka libcyaml yaml)
     target_include_directories(cstest PRIVATE
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-            ${PROJECT_SOURCE_DIR}/suite/cstest/include
+            ${PROJECT_SOURCE_DIR}/include>
+            ${CSTEST_INCLUDE_DIR}
             ${CMOCKA_INCLUDE_DIR}
             ${LIBCYAML_INCLUDE_DIR}
             )
+    target_include_directories(libcstest PRIVATE
+            ${PROJECT_SOURCE_DIR}/include>
+            ${CSTEST_INCLUDE_DIR}
+            ${CMOCKA_INCLUDE_DIR}
+            ${LIBCYAML_INCLUDE_DIR}
+            )
+
+    set(CSTEST_TEST_DIR ${PROJECT_SOURCE_DIR}/suite/cstest/test/)
+    add_subdirectory(${CSTEST_TEST_DIR})
+    add_test(MCTests
+        cstest ${PROJECT_SOURCE_DIR}/tests/MC
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    )
+    add_test(DetailTests
+        cstest ${PROJECT_SOURCE_DIR}/tests/details
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    )
 
     if(CAPSTONE_INSTALL)
         install(TARGETS cstest EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
