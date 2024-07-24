@@ -25,6 +25,7 @@
 # python
 bindings/python/build/
 bindings/python/capstone.egg-info/
+bindings/cython/capstone.egg-info/
 *.pyc
 
 # java

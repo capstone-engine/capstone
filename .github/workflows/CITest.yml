@@ -1,10 +1,10 @@
 name: Run Test
-on: 
+on:
   push:
     paths-ignore:
       - ".gitignore"
       - "docs/**"
-      - "ChangeLog"      
+      - "ChangeLog"
       - "CREDITS.TXT"
       - "COMPILE.TXT"
       - "COMPILE_MSVC.TXT"
@@ -30,45 +30,28 @@ jobs:
       matrix:
         config:
           - {
-              name: 'ubuntu-20.04 x64 python3.6 cmake',
-              os: ubuntu-20.04,
+              name: 'ubuntu-22.04 x64 make',
+              os: ubuntu-22.04,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.6',
-              build-system: 'cmake',
+              build-system: 'make',
             }
           - {
-              name: 'ubuntu-22.04 x64 python3.9 make',
+              name: 'ubuntu-22.04 x64 cmake',
               os: ubuntu-22.04,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.9',
-              build-system: 'make',
-            }   
-          - {
-              name: 'ubuntu-22.04 x64 python3.9 cmake',
-              os: ubuntu-22.04,
-              arch: x64,
-              python-arch: x64,
-              python-version: '3.9',
               build-system: 'cmake',
-            }     
+              enable-asan: 'OFF'
+            }
           - {
-              name: 'ubuntu-22.04 x64 python3.11 cmake',
-              os: ubuntu-22.04,
+              name: 'ubuntu-22.04 x64 ASAN',
+              os: ubuntu-latest,
               arch: x64,
-              python-arch: x64,
-              python-version: '3.11',
               build-system: 'cmake',
+              enable-asan: 'ON'
             }
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.config.python-version }}
 
     - name: prepare
       shell: 'script -q -e -c "bash {0}"'
@@ -135,7 +118,7 @@ jobs:
 
     - name: '🛠️ Win MSVC 64 setup'
       if: contains(matrix.config.name, 'MSVC 64')
-      uses: ilammy/msvc-dev-cmd@v1  
+      uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: 'x64'
 

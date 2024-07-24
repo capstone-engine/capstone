@@ -13,45 +13,7 @@
 
    To control the install destination, set the DESTDIR environment variable.
 
-2. For better Python performance, install cython-based binding with:
-
-		$ sudo make install_cython
-
-	Note that this requires Cython installed first. To install Cython, see
-	below.
-	
-3. To install Cython, you have to ensure that the header files
-   and the static library for Python are installed beforehand.
-
-	E.g. on Ubuntu, do:
-
-		$ sudo apt-get install python-dev
-
-	Depending on if you already have pip or easy_install installed, install
-	Cython with either:
-
-		$ sudo pip install cython
-	or:
-		$ sudo easy_install cython
-
-	NOTE: Depending on your distribution you might also be able to
-	      install the required Cython version using your repository.
-
-	E.g. on Ubuntu, do:
-	
-		$ sudo apt-get install cython
-
-	However, our cython-based binding requires Cython version 0.19 or newer,
-	but sometimes distributions only provide older version. Make sure to
-	verify the current installed version before going into section 2 above.
-	
-	E.g, on Ubuntu, you can verify the current Cython version with:
-
-		$ apt-cache policy cython
-
-	Which should at least print version 0.19
-
-4. This directory contains some test code to show how to use the Capstone API.
+2. The tests directory contains some test code to show how to use the Capstone API.
 
 - test_basic.py
   This code shows the most simple form of API where we only want to get basic
