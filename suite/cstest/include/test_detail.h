@@ -76,7 +76,7 @@ TestDetail *test_detail_new();
 TestDetail *test_detail_clone(TestDetail *detail);
 void test_detail_free(TestDetail *detail);
 
-bool test_expected_detail(csh *handle, cs_detail *actual,
+bool test_expected_detail(csh *handle, const cs_insn *insn,
 			   TestDetail *expected);
 
 #endif // TEST_DETAIL_H

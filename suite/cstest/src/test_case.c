@@ -236,7 +236,7 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 		}
 		if (expec_data->details) {
 			assert_non_null(insns[i].detail);
-			assert_true(test_expected_detail(handle, insns[i].detail, expec_data->details));
+			assert_true(test_expected_detail(handle, &insns[i], expec_data->details));
 		}
 	}
 }

@@ -3,6 +3,7 @@
 
 #include "test_detail.h"
 #include "test_compare.h"
+#include <capstone/capstone.h>
 
 TestDetail *test_detail_new() {
   return cs_mem_calloc(sizeof(TestDetail), 1);
@@ -64,20 +65,25 @@ void test_detail_free(TestDetail *detail) {
   cs_mem_free(detail);
 }
 
-bool test_expected_detail(csh *handle, cs_detail *actual,
+bool test_expected_detail(csh *handle, const cs_insn *insn,
 			   TestDetail *expected) {
-  assert(handle && actual && expected);
+  assert(handle && insn && insn->detail && expected);
+  cs_detail *actual = insn->detail;
+	cs_regs regs_read, regs_write;
+	uint8_t regs_read_count, regs_write_count;
+  cs_regs_access(*handle, insn, regs_read, &regs_read_count, regs_write, &regs_write_count);
+
   if (expected->regs_read_count > 0) {
-    compare_uint32_ret(actual->regs_read_count, expected->regs_read_count, false);
-    for (size_t i = 0; i < actual->regs_read_count; ++i) {
-      compare_reg_ret(*handle, actual->regs_read[i], expected->regs_read[i], false);
+    compare_uint32_ret(regs_read_count, expected->regs_read_count, false);
+    for (size_t i = 0; i < regs_read_count; ++i) {
+      compare_reg_ret(*handle, regs_read[i], expected->regs_read[i], false);
     }
   }
 
   if (expected->regs_write_count > 0) {
-    compare_uint32_ret(actual->regs_write_count, expected->regs_write_count, false);
-    for (size_t i = 0; i < actual->regs_write_count; ++i) {
-      compare_reg_ret(*handle, actual->regs_write[i], expected->regs_write[i], false);
+    compare_uint32_ret(regs_write_count, expected->regs_write_count, false);
+    for (size_t i = 0; i < regs_write_count; ++i) {
+      compare_reg_ret(*handle, regs_write[i], expected->regs_write[i], false);
     }
   }
 

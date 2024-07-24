@@ -22,7 +22,7 @@ test_cases:
                 sys_raw_val: 0xc000
             cc: AArch64CC_Invalid
             update_flags: 1
-          regs_write: [ nzcv x9 ]
+          regs_write: [ nzcv, x9 ]
 
       -
         asm_text: "msr SPSel, #0"
@@ -199,7 +199,7 @@ test_cases:
               reg: x2
               access: CS_AC_READ
             cc: AArch64CC_Invalid
-          regs_read: [ x1 x2 ]
+          regs_read: [ x1, x2 ]
           regs_write: [ x1 ]
 
       -
@@ -238,7 +238,7 @@ test_cases:
               access: CS_AC_READ
               ext: 3
             cc: AArch64CC_Invalid
-          regs_read: [ w0 w1 ]
+          regs_read: [ w0, w1 ]
           regs_write: [ w0 ]
 
       -
@@ -273,7 +273,7 @@ test_cases:
               reg: x1
               access: CS_AC_READ
             cc: AArch64CC_NE
-          regs_read: [ nzcv x1 ]
+          regs_read: [ nzcv, x1 ]
           regs_write: [ x0 ]
 
       -
@@ -296,7 +296,7 @@ test_cases:
               shift_type: AARCH64_OP_1
               shift_value: 2
             cc: AArch64CC_Invalid
-          regs_read: [ x1 x2 ]
+          regs_read: [ x1, x2 ]
           regs_write: [ x0 ]
 
       -
@@ -317,7 +317,7 @@ test_cases:
               shift_value: 2
               ext: 3
             cc: AArch64CC_Invalid
-          regs_read: [ x24 w8 ]
+          regs_read: [ x24, w8 ]
           regs_write: [ q16 ]
 
       -
@@ -340,7 +340,7 @@ test_cases:
               access: CS_AC_WRITE
             cc: AArch64CC_Invalid
           writeback: 1
-          regs_read: [ x29 x30 sp ]
+          regs_read: [ x29, x30, sp ]
           regs_write: [ sp ]
 
       -
@@ -364,4 +364,4 @@ test_cases:
             cc: AArch64CC_Invalid
           writeback: 1
           regs_read: [ sp ]
-          regs_write: [ sp x29 ]
+          regs_write: [ sp, x29 ]
