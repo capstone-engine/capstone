@@ -122,7 +122,7 @@ typedef int32_t tbool;
 #define compare_reg_ret(handle, actual, expected, ret_val) \
 	do { \
 		const char *reg_name = cs_reg_name(handle, actual); \
-		if (expected && strings_match(reg_name, expected)) { \
+		if (expected && !strings_match(reg_name, expected)) { \
 			fprintf(stderr, \
 				#actual " != " #expected ": '%s' != '%s'\n", \
 				reg_name, expected); \
