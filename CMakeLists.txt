@@ -956,8 +956,15 @@ if(CAPSTONE_BUILD_CSTEST)
             ${LIBCYAML_INCLUDE_DIR}
             )
 
+    # Unit tests for cstest
     set(CSTEST_TEST_DIR ${PROJECT_SOURCE_DIR}/suite/cstest/test/)
     add_subdirectory(${CSTEST_TEST_DIR})
+
+    # Unit tests for auto-sync
+    set(AUTO_SYNC_C_TEST_DIR ${PROJECT_SOURCE_DIR}/suite/auto-sync/c_tests/)
+    add_subdirectory(${AUTO_SYNC_C_TEST_DIR})
+
+    # Test targets
     add_test(MCTests
         cstest ${PROJECT_SOURCE_DIR}/tests/MC
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
