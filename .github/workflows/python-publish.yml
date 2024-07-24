@@ -1,63 +1,65 @@
 name: PyPI 📦 Distribution
 
-on: 
-  push:
+on: [push, pull_request]
 
 jobs:
-  build:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        platform: [x32, x64]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up MSVC x64
+        if: matrix.os == 'windows-latest'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.16.5
+        env:
+          CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
+          CIBW_ARCHS_LINUX: "x86_64 i686 aarch64" # ppc64le s390x really slow
+          CIBW_ARCHS_WINDOWS: "AMD64 x86" # ARM64  Seems ARM64 will rebuild amd64 wheel for unknow reason.
+          CIBW_BUILD: "cp36-macosx* cp39-macosx* cp312-macosx* \ 
+                       cp36-win* cp39-win_amd64 cp312-win_amd64 \ 
+                       cp36-manylinux* cp39-manylinux_x86_64 \ 
+                       cp312-manylinux_x86_64 cp312-manylinux_aarch64"
+          CIBW_SKIP: ""
+        with:
+          package-dir: bindings/python
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
+
+  make_sdist:
+    name: Make SDist
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        fetch-depth: 0  # Optional, use if you use setuptools_scm
+        submodules: true  # Optional, use if you have submodules
 
-    - name: Set up MSVC x86
-      if: matrix.os == 'windows-latest' && matrix.platform == 'x32'
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: x86
-
-    - name: Set up MSVC x64
-      if: matrix.os == 'windows-latest' && matrix.platform == 'x64'
-      uses: ilammy/msvc-dev-cmd@v1
-
-    - name: Install dependencies
+    - name: Build SDist
       run: |
-        pip install setuptools wheel
-    - name: Build distribution 📦
-      shell: bash 
-      run: |
-        if [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'windows-latest' ]; then
-             cd bindings/python && python setup.py build -p win32 bdist_wheel -p win32
-        elif [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
-             docker run --rm -v `pwd`/:/work dockcross/manylinux1-x86 > ./dockcross
-             chmod +x ./dockcross
-             chmod +x bindings/python/build_wheel.sh
-             ./dockcross bindings/python/build_wheel.sh
-        elif [ ${{ matrix.platform }} == 'x64' ] && [ ${{ matrix.os }} == 'ubuntu-latest' ]; then
-             docker run --rm -v `pwd`/:/work dockcross/manylinux1-x64 > ./dockcross
-             chmod +x ./dockcross
-             chmod +x bindings/python/build_wheel.sh
-             ./dockcross bindings/python/build_wheel.sh
-        elif [ ${{ matrix.platform }} == 'x32' ] && [ ${{ matrix.os }} == 'macos-latest' ]; then
-             cd bindings/python && python setup.py sdist
-        else
-             cd bindings/python && python setup.py bdist_wheel
-        fi
+        cd bindings/python
+        pipx run build --sdist
+
     - uses: actions/upload-artifact@v3
       with:
-         path: ${{ github.workspace }}/bindings/python/dist/*
+        path: bindings/python/dist/*.tar.gz
 
   publish:
-    needs: [build]
+    needs: [build_wheels]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags')
     permissions:
