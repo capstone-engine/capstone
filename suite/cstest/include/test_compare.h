@@ -30,7 +30,7 @@ typedef int32_t tbool;
 /// Compares two uint8_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_uint8_ret(actual, expected, ret_val) \
-	if (actual != expected) { \
+	if (((uint8_t) actual) != ((uint8_t) expected)) { \
 		fprintf(stderr, #actual " != " #expected ": %" PRId8 " != %" PRId8 "\n", \
 			actual, expected); \
 		return ret_val; \
@@ -39,7 +39,7 @@ typedef int32_t tbool;
 /// Compares two uint32_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_uint32_ret(actual, expected, ret_val) \
-	if (actual != expected) { \
+	if (((uint32_t) actual) != ((uint32_t) expected)) { \
 		fprintf(stderr, \
 			#actual " != " #expected ": %" PRIx32 " != %" PRIx32 \
 				"\n", \
@@ -50,7 +50,7 @@ typedef int32_t tbool;
 /// Compares two uint64_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_uint64_ret(actual, expected, ret_val) \
-	if (actual != expected) { \
+	if (((uint64_t) actual) != ((uint64_t) expected)) { \
 		fprintf(stderr, \
 			#actual " != " #expected ": %" PRIx64 " != %" PRIx64 \
 				"\n", \
@@ -61,7 +61,7 @@ typedef int32_t tbool;
 /// Compares two int8_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_int8_ret(actual, expected, ret_val) \
-	if (actual != expected) { \
+	if (((int8_t) actual) != ((int8_t) expected)) { \
 		fprintf(stderr, \
 			#actual " != " #expected ": %" PRIx8 " != %" PRIx8 \
 				"\n", \
@@ -72,7 +72,7 @@ typedef int32_t tbool;
 /// Compares two int32_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_int32_ret(actual, expected, ret_val) \
-	if (actual != expected) { \
+	if (((int32_t) actual) != ((int32_t) expected)) { \
 		fprintf(stderr, \
 			#actual " != " #expected ": %" PRIx32 " != %" PRIx32 \
 				"\n", \
@@ -83,7 +83,7 @@ typedef int32_t tbool;
 /// Compares two int64_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_int64_ret(actual, expected, ret_val) \
-	if (actual != expected) { \
+	if (((int64_t) actual) != ((int64_t) expected)) { \
 		fprintf(stderr, \
 			#actual " != " #expected ": %" PRIx64 " != %" PRIx64 \
 				"\n", \
