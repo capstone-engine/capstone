@@ -24,10 +24,15 @@ uint32_t cs_enum_get_val(const char *id, bool *found)
 			*found = true;
 			return cs_enum_map[m].val;
 		}
+
 		if (id[i] < cs_enum_map[m].id[j]) {
 			r = m - 1;
 		} else if (id[i] > cs_enum_map[m].id[j]) {
 			l = m + 1;
+		}
+		if (m == 0 || (l + r) / 2 >= ARR_SIZE(cs_enum_map)) {
+			// Break before we go out of bounds.
+			break;
 		}
 	}
 	*found = false;

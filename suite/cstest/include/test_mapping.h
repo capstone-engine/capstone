@@ -196,6 +196,7 @@ static const TestOptionMapEntry test_option_map[] = {
 /// print(''.join(text))
 /// ```
 static const TestCSEnumEntry cs_enum_map[] = {
+	{ .id = "AAAAAAAAAAAAAAAAAAAAAAAAAA", .val = 0xffffff }, // For testing
 	{ .id = "AARCH64_OP_AT", .val = AARCH64_OP_AT },
 	{ .id = "AARCH64_OP_BTI", .val = AARCH64_OP_BTI },
 	{ .id = "AARCH64_OP_CIMM", .val = AARCH64_OP_CIMM },
@@ -252,6 +253,7 @@ static const TestCSEnumEntry cs_enum_map[] = {
 	{ .id = "CS_AC_READ", .val = CS_AC_READ },
 	{ .id = "CS_AC_READ_WRITE", .val = CS_AC_READ_WRITE },
 	{ .id = "CS_AC_WRITE", .val = CS_AC_WRITE },
+	{ .id = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", .val = 0xffffff }, // For testing
 };
 
 uint32_t cs_enum_get_val(const char *id, bool *found);
