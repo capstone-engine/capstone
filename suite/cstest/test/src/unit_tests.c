@@ -1,6 +1,8 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
+#include "../../../utils.h"
+#include "../../../Mapping.h"
 #include "test_mapping.h"
 #include <stdint.h>
 
@@ -8,44 +10,53 @@ bool test_cs_enum_get_val()
 {
 	bool found = false;
 	// Get first value
-	uint32_t val = cs_enum_get_val("AAAAAAAAAAAAAAAAAAAAAAAAAA", &found);
+	uint32_t val = enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map),
+					   "AAAAAAAAAAAAAAAAAAAAAAAAAA",
+					   &found);
 	if (!found || val != 0xffffff) {
 		fprintf(stderr,
-			"cs_enum_get_val(AAAAAAAAAAAAAAAAAAAAAAAAAA) failed is %d.\n",
+			"enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map), AAAAAAAAAAAAAAAAAAAAAAAAAA) failed is %d.\n",
 			val);
 		return false;
 	}
 
 	// Get last value
-	val = cs_enum_get_val("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", &found);
+	val = enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map),
+				  "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", &found);
 	if (!found || val != 0xffffff) {
 		fprintf(stderr,
-			"cs_enum_get_val(zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz) failed is %d.\n",
+			"enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map), zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz) failed is %d.\n",
 			val);
 		return false;
 	}
 
 	// Some values
-	val = cs_enum_get_val("AArch64CC_EQ", &found);
+	val = enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map),
+				  "AArch64CC_EQ", &found);
 	if (!found || val != AArch64CC_EQ) {
-		fprintf(stderr, "cs_enum_get_val(AArch64CC_EQ) failed is %d.\n",
+		fprintf(stderr,
+			"enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map), AArch64CC_EQ) failed is %d.\n",
 			val);
 		return false;
 	}
-	val = cs_enum_get_val("AArch64CC_Invalid", &found);
+	val = enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map),
+				  "AArch64CC_Invalid", &found);
 	if (!found || val != AArch64CC_Invalid) {
-		fprintf(stderr, "cs_enum_get_val(AArch64CC_In) failed is %d.\n",
+		fprintf(stderr,
+			"enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map), AArch64CC_In) failed is %d.\n",
 			val);
 		return false;
 	}
 
-	cs_enum_get_val("\0", &found);
+	enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map), "\0", &found);
 	if (found) {
 		fprintf(stderr, "Out of bounds failed.\n");
 		return false;
 	}
 
-	cs_enum_get_val("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", &found);
+	enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map),
+			    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+			    &found);
 	if (found) {
 		fprintf(stderr, "Out of bounds failed.\n");
 		return false;

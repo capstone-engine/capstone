@@ -15,7 +15,8 @@
 
 static TestRunResult get_test_run_result(TestRunStats *stats)
 {
-	if (stats->tc_total != stats->successful + stats->failed + stats->skipped) {
+	if (stats->tc_total !=
+	    stats->successful + stats->failed + stats->skipped) {
 		fprintf(stderr,
 			"[!] Inconsistent statistics: total != successful + failed + skipped\n");
 		stats->errors++;
@@ -70,7 +71,8 @@ static TestFile **parse_test_files(char **tf_paths, uint32_t path_count,
 		err = cyaml_free(&cyaml_config, &test_file_schema,
 				 test_file_data, 0);
 		if (err != CYAML_OK) {
-			fprintf(stderr, "[!] Error: '%s'\n", cyaml_strerror(err));
+			fprintf(stderr, "[!] Error: '%s'\n",
+				cyaml_strerror(err));
 			stats->errors++;
 			continue;
 		}
@@ -82,37 +84,45 @@ static TestFile **parse_test_files(char **tf_paths, uint32_t path_count,
 /// Parses the @input and saves the results in the other arguments.
 static bool parse_input_options(const TestInput *input, cs_arch *arch,
 				cs_mode *mode, cs_opt *opt_arr,
-				size_t opt_arr_size,
-				size_t *opt_set)
+				size_t opt_arr_size, size_t *opt_set)
 {
 	assert(input && arch && mode && opt_arr);
 	bool arch_found = false;
 	const char *opt_str = input->arch;
-	for (size_t i = 0; i < ARR_SIZE(test_arch_map); i++) {
-		if (strcmp(opt_str, test_arch_map[i].str) == 0) {
-			*arch = test_arch_map[i].arch;
-			arch_found = true;
-			break;
-		}
-	}
-	if (!arch_found) {
-		fprintf(stderr, "[!] '%s' is not mapped to a capstone architecture.\n", input->arch);
+
+	int val = enum_map_bin_search(test_arch_map, ARR_SIZE(test_arch_map),
+				      opt_str, &arch_found);
+	if (arch_found) {
+		*arch = val;
+	} else {
+		fprintf(stderr,
+			"[!] '%s' is not mapped to a capstone architecture.\n",
+			input->arch);
 		return false;
 	}
-	size_t opt_idx = 0;
+
+	*mode = 0;
 	bool mode_found = false;
+	size_t opt_idx = 0;
 	char **options = input->options;
 	for (size_t i = 0; i < input->options_count; ++i) {
 		opt_str = options[i];
-		for (size_t k = 0; k < ARR_SIZE(test_mode_map) || k < ARR_SIZE(test_option_map); k++) {
-			if (k < ARR_SIZE(test_mode_map) && strings_match(opt_str, test_mode_map[k].str)) {
-				*mode |= test_mode_map[k].mode;
-				mode_found = true;
-				goto next_option;
-			}
-			if (k < ARR_SIZE(test_option_map) && strings_match(opt_str, test_option_map[k].str)) {
+		val = enum_map_bin_search(test_mode_map,
+					      ARR_SIZE(test_mode_map), opt_str,
+					      &mode_found);
+		if (mode_found) {
+			*mode |= val;
+			goto next_option;
+		}
+
+		// Might be an option descriptor
+		for (size_t k = 0; k < ARR_SIZE(test_option_map); k++) {
+			if (strings_match(opt_str, test_option_map[k].str)) {
 				if (opt_idx >= opt_arr_size) {
-					fprintf(stderr, "Too many options given in: '%s'. Maximum is: %" PRId64 "\n", opt_str, opt_arr_size);
+					fprintf(stderr,
+						"Too many options given in: '%s'. Maximum is: %" PRId64
+						"\n",
+						opt_str, opt_arr_size);
 					return false;
 				}
 				opt_arr[opt_idx++] = test_option_map[k].opt;
@@ -120,13 +130,10 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 			}
 		}
 		fprintf(stderr, "[!] Option: %s not used\n", opt_str);
-		next_option:
+next_option:
 		continue;
 	}
 	*opt_set = opt_idx;
-	if (!mode_found) {
-		*mode = 0;
-	}
 	return true;
 }
 
@@ -139,11 +146,10 @@ static bool open_cs_handle(UnitTestState *ustate)
 	cs_opt options[8] = { 0 };
 	size_t options_set = 0;
 
-	if (!parse_input_options(ustate->tcase->input, &arch, &mode, options,
-				 8, &options_set)) {
+	if (!parse_input_options(ustate->tcase->input, &arch, &mode, options, 8,
+				 &options_set)) {
 		char *tc_str = test_input_stringify(ustate->tcase->input, "");
-		fprintf(stderr, "Could not parse options: %s\n",
-			 tc_str);
+		fprintf(stderr, "Could not parse options: %s\n", tc_str);
 		cs_mem_free(tc_str);
 		return false;
 	}
@@ -177,7 +183,8 @@ static bool open_cs_handle(UnitTestState *ustate)
 		goto option_error;
 	}
 	for (size_t i = 0; i < options_set; ++i) {
-		err = cs_option(ustate->handle, options[i].type, options[i].val);
+		err = cs_option(ustate->handle, options[i].type,
+				options[i].val);
 		if (err != CS_ERR_OK) {
 			goto option_error;
 		}
@@ -185,13 +192,13 @@ static bool open_cs_handle(UnitTestState *ustate)
 	return true;
 
 option_error: {
-		char *tc_str = test_input_stringify(ustate->tcase->input, "");
-		fprintf(stderr, "[!] cs_option() failed with: '%s'. TestInput: %s\n",
-			 cs_strerror(err), tc_str);
-		cs_mem_free(tc_str);
-		cs_close(&ustate->handle);
-		return false;
-	}
+	char *tc_str = test_input_stringify(ustate->tcase->input, "");
+	fprintf(stderr, "[!] cs_option() failed with: '%s'. TestInput: %s\n",
+		cs_strerror(err), tc_str);
+	cs_mem_free(tc_str);
+	cs_close(&ustate->handle);
+	return false;
+}
 }
 
 static int cstest_unit_test_setup(void **state)
@@ -237,8 +244,8 @@ static void cstest_unit_test(void **state)
 	size_t insns_count = cs_disasm(handle, tcase->input->bytes,
 				       tcase->input->bytes_count,
 				       tcase->input->address, 0, &insns);
-	test_expected_compare(&ustate->handle, tcase->expected, insns, insns_count,
-			      ustate->arch_bits);
+	test_expected_compare(&ustate->handle, tcase->expected, insns,
+			      insns_count, ustate->arch_bits);
 	cs_free(insns, insns_count);
 }
 
@@ -266,10 +273,10 @@ static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 			cs_snprintf(utest_id, sizeof(utest_id),
 				    "%s - TC #%" PRIx32 ": ", filename, k);
 			if (test_cases[k]->skip) {
-				char *tc_name = test_input_stringify(test_cases[k]->input, utest_id);
+				char *tc_name = test_input_stringify(
+					test_cases[k]->input, utest_id);
 				fprintf(stderr, "SKIP: %s\nReason: %s\n",
-				        tc_name,
-				        test_cases[k]->skip_reason);
+					tc_name, test_cases[k]->skip_reason);
 				cs_mem_free(tc_name);
 				stats->skipped++;
 				continue;
@@ -291,7 +298,7 @@ static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 	int failed_tests = _cmocka_run_group_tests(
 		"All test cases", utest_table, stats->tc_total, NULL, NULL);
 	for (size_t i = 0; i < stats->tc_total; ++i) {
-		cs_mem_free((char *) utest_table[i].name);
+		cs_mem_free((char *)utest_table[i].name);
 		cs_mem_free(utest_table[i].initial_state);
 	}
 	cs_mem_free(utest_table);

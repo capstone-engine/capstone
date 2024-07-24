@@ -106,7 +106,7 @@ typedef int32_t tbool;
 #define compare_enum_ret(actual, expected, ret_val) \
 	if (expected) { \
 		bool found = false; \
-		uint32_t eval = cs_enum_get_val(expected, &found); \
+		uint32_t eval = enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map), expected, &found); \
 		if (expected && (actual != eval || !found)) { \
 			fprintf(stderr, \
 				#actual " != " #expected ": %" PRId32 \
