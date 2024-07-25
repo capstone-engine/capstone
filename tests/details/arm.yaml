@@ -1,15 +1,14 @@
 test_cases:
   -
     input:
-      bytes: [ 0x86, 0x48, 0x60, 0xf4, 0x4d, 0x0f, 0xe2, 0xf4, 0xed, 0xff, 0xff, 0xeb, 0x04, 0xe0, 0x2d, 0xe5, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x83, 0x22, 0xe5, 0xf1, 0x02, 0x03, 0x0e, 0x00, 0x00, 0xa0, 0xe3, 0x02, 0x30, 0xc1, 0xe7, 0x00, 0x00, 0x53, 0xe3, 0x00, 0x02, 0x01, 0xf1, 0x05, 0x40, 0xd0, 0xe8, 0xf4, 0x80, 0x00, 0x00  ]
+      bytes: [ 0x86, 0x48, 0x60, 0xf4, 0x4d, 0x0f, 0xe2, 0xf4, 0xed, 0xff, 0xff, 0xeb, 0x04, 0xe0, 0x2d, 0xe5, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x83, 0x22, 0xe5, 0xf1, 0x02, 0x03, 0x0e, 0x00, 0x00, 0xa0, 0xe3, 0x02, 0x30, 0xc1, 0xe7, 0x00, 0x00, 0x53, 0xe3, 0x00, 0x02, 0x01, 0xf1, 0x05, 0x40, 0xd0, 0xe8, 0xf4, 0x80, 0x00, 0x00 ]
       arch: "arm"
-      options: [  ]
-      address: 0x0
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x80001000
     expected:
       insns:
       -
         asm_text: "vld2.32 {d20, d21}, [r0], r6"
-        # Some arch specific detail
         details:
           arm:
             operands:
@@ -22,8 +21,7 @@ test_cases:
                 reg: d21
                 access: CS_AC_WRITE
               -
-                type: ARM_OP_REG
-                reg: d21
+                type: ARM_OP_MEM
                 mem_base: r0
                 mem_index: r6
                 mem_scale: 0
@@ -55,10 +53,8 @@ test_cases:
                 reg: d19
                 access: CS_AC_WRITE
               -
-                type: ARM_OP_REG
-                reg: d19
+                type: ARM_OP_MEM
                 mem_base: r2
-                mem_scale: 0
                 access: CS_AC_READ_WRITE
             post_indexed: -1
             vector_size: 16
@@ -89,7 +85,6 @@ test_cases:
                 type: ARM_OP_REG
                 reg: r14
                 mem_base: r13
-                mem_scale: 0
                 mem_disp: 0x4
                 access: CS_AC_WRITE
                 subtracted: 1
@@ -114,7 +109,7 @@ test_cases:
                 type: ARM_OP_REG
                 reg: r0
                 access: CS_AC_READ
-            cc: 0
+            cc: ARMCC_EQ
           regs_read: [ cpsr, r0 ]
           regs_write: [ r0 ]
       -
@@ -127,10 +122,8 @@ test_cases:
                 reg: r8
                 access: CS_AC_READ
               -
-                type: ARM_OP_REG
-                reg: r8
+                type: ARM_OP_MEM
                 mem_base: r2
-                mem_scale: 0
                 mem_disp: 0x3e0
                 access: CS_AC_WRITE
                 subtracted: 1
@@ -167,7 +160,7 @@ test_cases:
                 type: ARM_OP_IMM
                 imm: 0x7
                 access: CS_AC_READ
-            cc: 0
+            cc: ARMCC_EQ
           regs_read: [ cpsr, r0 ]
       -
         asm_text: "mov r0, #0"
@@ -193,11 +186,9 @@ test_cases:
                 reg: r3
                 access: CS_AC_READ
               -
-                type: ARM_OP_REG
-                reg: r3
+                type: ARM_OP_MEM
                 mem_base: r1
                 mem_index: r2
-                mem_scale: 0
                 access: CS_AC_WRITE
           regs_read: [ r3, r1, r2 ]
       -
@@ -261,24 +252,23 @@ test_cases:
                 reg: r9
                 access: CS_AC_READ
               -
-                type: ARM_OP_REG
-                reg: r9
+                type: ARM_OP_MEM
                 mem_base: r0
                 mem_index: r4
-                mem_scale: 0
                 access: CS_AC_WRITE
                 subtracted: 1
-            cc: 0
+            cc: ARMCC_EQ
             post_indexed: 1
           writeback: 1
           regs_read: [ cpsr, r8, r9, r0, r4 ]
           regs_write: [ r0 ]
 
+  -
     input:
-      bytes: [ 0x60, 0xf9, 0x1f, 0x04, 0xe0, 0xf9, 0x4f, 0x07, 0x70, 0x47, 0x00, 0xf0, 0x10, 0xe8, 0xeb, 0x46, 0x83, 0xb0, 0xc9, 0x68, 0x1f, 0xb1, 0x30, 0xbf, 0xaf, 0xf3, 0x20, 0x84, 0x52, 0xf8, 0x23, 0xf0  ]
+      bytes: [ 0x60, 0xf9, 0x1f, 0x04, 0xe0, 0xf9, 0x4f, 0x07, 0x70, 0x47, 0x00, 0xf0, 0x10, 0xe8, 0xeb, 0x46, 0x83, 0xb0, 0xc9, 0x68, 0x1f, 0xb1, 0x30, 0xbf, 0xaf, 0xf3, 0x20, 0x84, 0x52, 0xf8, 0x23, 0xf0 ]
       arch: "arm"
-      options: [  ]
-      address: 0x0
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x80001000
     expected:
       insns:
       -
@@ -432,8 +422,8 @@ test_cases:
         asm_text: "cpsie.w f"
         details:
           arm:
-            CPSI-mode: 2
-            CPSI-flag: 1
+            cps_mode: ARM_CPSMODE_IE
+            cps_flag: ARM_CPSFLAG_F
       -
         asm_text: "ldr.w pc, [r2, r3, lsl #2]"
         details:
@@ -444,21 +434,21 @@ test_cases:
                 reg: r15
                 access: CS_AC_WRITE
               -
-                type: ARM_OP_REG
-                reg: r15
+                type: ARM_OP_MEM
                 mem_base: r2
                 mem_index: r3
                 mem_scale: 0
-            shift_type: ARM_OP_2
-            shift_val: 2
+                shift_type: ARM_SFT_LSL
+                shift_value: 2
           regs_read: [ r2, r3 ]
           regs_write: [ r15 ]
 
+  -
     input:
-      bytes: [ 0xd1, 0xe8, 0x00, 0xf0, 0xf0, 0x24, 0x04, 0x07, 0x1f, 0x3c, 0xf2, 0xc0, 0x00, 0x00, 0x4f, 0xf0, 0x00, 0x01, 0x46, 0x6c  ]
+      bytes: [ 0xd1, 0xe8, 0x00, 0xf0, 0xf0, 0x24, 0x04, 0x07, 0x1f, 0x3c, 0xf2, 0xc0, 0x00, 0x00, 0x4f, 0xf0, 0x00, 0x01, 0x46, 0x6c ]
       arch: "arm"
-      options: [  ]
-      address: 0x0
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x80001000
     expected:
       insns:
       -
@@ -600,7 +590,7 @@ test_cases:
                 reg: r6
                 access: CS_AC_WRITE
               -
-                type: ARM_OP_REG
+                type: ARM_OP_MEM
                 reg: r6
                 mem_base: r0
                 mem_scale: 0
@@ -609,11 +599,12 @@ test_cases:
           regs_read: [ r0 ]
           regs_write: [ r6 ]
 
+  -
     input:
-      bytes: [ 0x4f, 0xf0, 0x00, 0x01, 0xbd, 0xe8, 0x00, 0x88, 0xd1, 0xe8, 0x00, 0xf0, 0x18, 0xbf, 0xad, 0xbf, 0xf3, 0xff, 0x0b, 0x0c, 0x86, 0xf3, 0x00, 0x89, 0x80, 0xf3, 0x00, 0x8c, 0x4f, 0xfa, 0x99, 0xf6, 0xd0, 0xff, 0xa2, 0x01  ]
+      bytes: [ 0x4f, 0xf0, 0x00, 0x01, 0xbd, 0xe8, 0x00, 0x88, 0xd1, 0xe8, 0x00, 0xf0, 0x18, 0xbf, 0xad, 0xbf, 0xf3, 0xff, 0x0b, 0x0c, 0x86, 0xf3, 0x00, 0x89, 0x80, 0xf3, 0x00, 0x8c, 0x4f, 0xfa, 0x99, 0xf6, 0xd0, 0xff, 0xa2, 0x01 ]
       arch: "arm"
-      options: [  ]
-      address: 0x0
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x80001000
     expected:
       insns:
       -
@@ -645,7 +636,7 @@ test_cases:
                 access: CS_AC_WRITE
             post_indexed: -1
           writeback: 1
-          regs_write: [ r11, pc ]
+          regs_write: [ r11, r15 ]
       -
         asm_text: "tbb [r1, r0]"
         details:
@@ -663,16 +654,16 @@ test_cases:
         asm_text: "it ne"
         details:
           arm:
-            cc: 1
-            Predicate Mask: 0x1
+            cc: ARMCC_NE
+            pred_mask: 0x1
           regs_read: [ cpsr ]
           regs_write: [ itstate ]
       -
         asm_text: "iteet ge"
         details:
           arm:
-            cc: 10
-            Predicate Mask: 0xd
+            cc: ARMCC_GE
+            pred_mask: 0xd
           regs_read: [ cpsr ]
           regs_write: [ itstate ]
       -
@@ -689,7 +680,7 @@ test_cases:
                 reg: d11
                 access: CS_AC_READ
                 vector_index: 1
-            cc: 10
+            cc: ARMCC_GE
             vector_size: 8
           regs_read: [ cpsr, d11 ]
           regs_write: [ d16 ]
@@ -700,17 +691,14 @@ test_cases:
             operands:
               -
                 type: ARM_OP_CPSR
-                cpsr: fc
-            operands:
-              -
-                type: ARM_OP_MASK
-                mask: 9
+                sys_psr_bits: [ ARM_FIELD_CPSR_C, ARM_FIELD_CPSR_C ]
+                sys_msr_mask: 9
                 access: CS_AC_WRITE
               -
                 type: ARM_OP_REG
                 reg: r6
                 access: CS_AC_READ
-            cc: 11
+            cc: ARMCC_LT
             update_flags: 1
           regs_read: [ cpsr, r6 ]
           regs_write: [ cpsr ]
@@ -722,16 +710,13 @@ test_cases:
               -
                 type: ARM_OP_SYSREG
                 reg: apsr_nzcvqg
-            operands:
-              -
-                type: ARM_OP_MASK
-                mask: 12
+                sys_msr_mask: 12
                 access: CS_AC_WRITE
               -
                 type: ARM_OP_REG
                 reg: r0
                 access: CS_AC_READ
-            cc: 11
+            cc: ARMCC_LT
             update_flags: 1
           regs_read: [ cpsr, r0 ]
           regs_write: [ cpsr ]
@@ -748,9 +733,9 @@ test_cases:
                 type: ARM_OP_REG
                 reg: r9
                 access: CS_AC_READ
-            shift_type: ARM_OP_4
-            shift_val: 8
-            cc: 10
+                shift_type: ARM_SFT_ROR
+                shift_value: 8
+            cc: ARMCC_GE
           regs_read: [ cpsr, r9 ]
           regs_write: [ r6 ]
       -
@@ -770,15 +755,16 @@ test_cases:
                 type: ARM_OP_REG
                 reg: d18
                 access: CS_AC_READ
-            Vector-data: 10
+            vector_data: ARM_VECTORDATA_U16
           regs_read: [ q8, d18 ]
           regs_write: [ q8 ]
 
+  -
     input:
-      bytes: [ 0xef, 0xf3, 0x02, 0x80  ]
+      bytes: [ 0xef, 0xf3, 0x02, 0x80 ]
       arch: "arm"
-      options: [  ]
-      address: 0x0
+      options: [ CS_MODE_THUMB, CS_MODE_MCLASS, CS_OPT_DETAIL ]
+      address: 0x80001000
     expected:
       insns:
       -
@@ -793,17 +779,16 @@ test_cases:
               -
                 type: ARM_OP_SYSREG
                 reg: eapsr
-              -
-                type: ARM_OP_MASK
-                mask: 2
+                sys_msr_mask: 2
                 access: CS_AC_READ
           regs_write: [ r0 ]
 
+  -
     input:
-      bytes: [ 0xe0, 0x3b, 0xb2, 0xee, 0x42, 0x00, 0x01, 0xe1, 0x51, 0xf0, 0x7f, 0xf5  ]
+      bytes: [ 0xe0, 0x3b, 0xb2, 0xee, 0x42, 0x00, 0x01, 0xe1, 0x51, 0xf0, 0x7f, 0xf5 ]
       arch: "arm"
-      options: [  ]
-      address: 0x0
+      options: [ CS_MODE_ARM, CS_MODE_V8, CS_OPT_DETAIL ]
+      address: 0x80001000
     expected:
       insns:
       -
@@ -819,7 +804,7 @@ test_cases:
                 type: ARM_OP_REG
                 reg: s1
                 access: CS_AC_READ
-            Vector-data: 19
+            vector_data: ARM_VECTORDATA_F64F16
           regs_read: [ s1 ]
           regs_write: [ d3 ]
       -
@@ -845,5 +830,5 @@ test_cases:
         asm_text: "dmb oshld"
         details:
           arm:
-            Memory-barrier: 1
+            mem_barrier: ARM_MB_OSHLD
 

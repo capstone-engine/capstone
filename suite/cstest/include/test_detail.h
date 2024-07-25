@@ -10,6 +10,7 @@
 #define TEST_DETAIL_H
 
 #include "test_detail_aarch64.h"
+#include "test_detail_arm.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
 #include <cyaml/cyaml.h>
@@ -18,6 +19,7 @@
 /// but with pointers and no unions. Because cyaml does not support them.
 typedef struct {
 	TestDetailAArch64 *aarch64;
+	TestDetailARM *arm;
 	// cs_x86_test x86;
 	// cs_arm_test arm;
 	// cs_m68k_test m68k;
@@ -56,17 +58,20 @@ static const cyaml_schema_value_t reg_group_schema = {
 };
 
 static const cyaml_schema_field_t test_detail_mapping_schema[] = {
-	CYAML_FIELD_MAPPING_PTR("aarch64", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, aarch64,
-				test_detail_aarch64_mapping_schema),
-	CYAML_FIELD_SEQUENCE("regs_read", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, regs_read,
-			     &reg_group_schema, 0,
-			     255),
-	CYAML_FIELD_SEQUENCE("regs_write", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, regs_write,
-			     &reg_group_schema, 0,
-			     255),
-	CYAML_FIELD_SEQUENCE("groups", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail, groups,
-			     &reg_group_schema, 0,
-			     255),
+	CYAML_FIELD_MAPPING_PTR(
+		"aarch64", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
+		aarch64, test_detail_aarch64_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("arm", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetail, arm,
+				test_detail_arm_mapping_schema),
+	CYAML_FIELD_SEQUENCE("regs_read",
+			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			     TestDetail, regs_read, &reg_group_schema, 0, 255),
+	CYAML_FIELD_SEQUENCE("regs_write",
+			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			     TestDetail, regs_write, &reg_group_schema, 0, 255),
+	CYAML_FIELD_SEQUENCE("groups", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			     TestDetail, groups, &reg_group_schema, 0, 255),
 	CYAML_FIELD_INT("writeback", CYAML_FLAG_OPTIONAL, TestDetail,
 			writeback),
 	CYAML_FIELD_END

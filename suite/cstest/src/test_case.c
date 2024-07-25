@@ -235,7 +235,10 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			assert_string_equal(insns[i].op_str, expec_data->op_str);
 		}
 		if (expec_data->details) {
-			assert_non_null(insns[i].detail);
+			if (!insns[i].detail) {
+				fprintf(stderr, "detail is NULL\n");
+				assert_non_null(insns[i].detail);
+			}
 			assert_true(test_expected_detail(handle, &insns[i], expec_data->details));
 		}
 	}

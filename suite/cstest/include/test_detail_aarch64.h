@@ -106,9 +106,10 @@ static const cyaml_schema_field_t test_detail_aarch64_mapping_schema[] = {
 			update_flags),
 	CYAML_FIELD_INT("post_indexed", CYAML_FLAG_OPTIONAL, TestDetailAArch64,
 			post_indexed),
-	CYAML_FIELD_SEQUENCE("operands", CYAML_FLAG_POINTER, TestDetailAArch64,
-			     operands, &test_detail_aarch64_op_schema, 0,
-			     CYAML_UNLIMITED), // 0-MAX options
+	CYAML_FIELD_SEQUENCE(
+		"operands", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailAArch64, operands, &test_detail_aarch64_op_schema, 0,
+		CYAML_UNLIMITED), // 0-MAX options
 	CYAML_FIELD_END
 };
 

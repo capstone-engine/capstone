@@ -27,11 +27,33 @@ typedef int32_t tbool;
 		return ret_val; \
 	}
 
+/// Compares two unsigned int values.
+/// It returns with @ret_val if they mismatch.
+#define compare_uint_ret(actual, expected, ret_val) \
+	if (((unsigned int)actual) != ((unsigned int)expected)) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": 0x%" PRIx32 \
+				" != 0x%" PRIx32 "\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
 /// Compares two uint8_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_uint8_ret(actual, expected, ret_val) \
 	if (((uint8_t) actual) != ((uint8_t) expected)) { \
 		fprintf(stderr, #actual " != " #expected ": %" PRId8 " != %" PRId8 "\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares two uint16_t values.
+/// It returns with @ret_val if they mismatch.
+#define compare_uint16_ret(actual, expected, ret_val) \
+	if (((uint16_t)actual) != ((uint16_t)expected)) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": 0x%" PRIx16 \
+				" != 0x%" PRIx16 "\n", \
 			actual, expected); \
 		return ret_val; \
 	}
@@ -54,6 +76,17 @@ typedef int32_t tbool;
 		fprintf(stderr, \
 			#actual " != " #expected ": 0x%" PRIx64 " != 0x%" PRIx64 \
 				"\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
+/// Compares two int values.
+/// It returns with @ret_val if they mismatch.
+#define compare_int_ret(actual, expected, ret_val) \
+	if (((int)actual) != ((int)expected)) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": 0x%" PRIx32 \
+				" != 0x%" PRIx32 "\n", \
 			actual, expected); \
 		return ret_val; \
 	}
@@ -113,6 +146,29 @@ typedef int32_t tbool;
 					" != %s%s\n", \
 				actual, expected, found ? "" : " <== id not found"); \
 			return ret_val; \
+		} \
+	}
+
+/// Checks if all bit flags in @expected are set in @actual.
+/// Actual is the value with all bits set.
+/// @expected is a list the @len enum identifiers as string.
+/// It returns with @ret_val if they mismatch.
+#define compare_bit_flags_ret(actual, expected, len, ret_val) \
+	if (expected) { \
+		for (size_t i = 0; i < len; ++i) { \
+			bool found = false; \
+			uint32_t eval = enum_map_bin_search( \
+				cs_enum_map, ARR_SIZE(cs_enum_map), \
+				expected[i], &found); \
+			if (!(actual & eval) || !found) { \
+				fprintf(stderr, \
+					#actual " != " #expected ": %" PRId32 \
+						" != %s%s\n", \
+					actual, expected[i], \
+					found ? " <== Flag not set" : \
+						" <== id not found"); \
+				return ret_val; \
+			} \
 		} \
 	}
 
