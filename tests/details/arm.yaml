@@ -1,0 +1,849 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x86, 0x48, 0x60, 0xf4, 0x4d, 0x0f, 0xe2, 0xf4, 0xed, 0xff, 0xff, 0xeb, 0x04, 0xe0, 0x2d, 0xe5, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x83, 0x22, 0xe5, 0xf1, 0x02, 0x03, 0x0e, 0x00, 0x00, 0xa0, 0xe3, 0x02, 0x30, 0xc1, 0xe7, 0x00, 0x00, 0x53, 0xe3, 0x00, 0x02, 0x01, 0xf1, 0x05, 0x40, 0xd0, 0xe8, 0xf4, 0x80, 0x00, 0x00  ]
+      arch: "arm"
+      options: [  ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vld2.32 {d20, d21}, [r0], r6"
+        # Some arch specific detail
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: d20
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d21
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d21
+                mem_base: r0
+                mem_index: r6
+                mem_scale: 0
+                access: CS_AC_READ_WRITE
+            post_indexed: 1
+            vector_size: 32
+          writeback: 1
+          regs_read: [ r0, r6 ]
+          regs_write: [ r0, d20, d21 ]
+      -
+        asm_text: "vld4.16 {d16[], d17[], d18[], d19[]}, [r2]!"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: d16
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d17
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d18
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d19
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d19
+                mem_base: r2
+                mem_scale: 0
+                access: CS_AC_READ_WRITE
+            post_indexed: -1
+            vector_size: 16
+          writeback: 1
+          regs_read: [ r2 ]
+          regs_write: [ r2, d16, d17, d18, d19 ]
+      -
+        asm_text: "bl 0x80000fc4"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_IMM
+                imm: 0x80000fc4
+                access: CS_AC_READ
+          regs_read: [ r13 ]
+          regs_write: [ r14 ]
+      -
+        asm_text: "str lr, [sp, #-4]!"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r14
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r14
+                mem_base: r13
+                mem_scale: 0
+                mem_disp: 0x4
+                access: CS_AC_WRITE
+                subtracted: 1
+            post_indexed: -1
+          writeback: 1
+          regs_read: [ r14, r13 ]
+          regs_write: [ r13 ]
+      -
+        asm_text: "andeq r0, r0, r0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+            cc: 0
+          regs_read: [ cpsr, r0 ]
+          regs_write: [ r0 ]
+      -
+        asm_text: "str r8, [r2, #-0x3e0]!"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r8
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r8
+                mem_base: r2
+                mem_scale: 0
+                mem_disp: 0x3e0
+                access: CS_AC_WRITE
+                subtracted: 1
+            post_indexed: -1
+          writeback: 1
+          regs_read: [ r8, r2 ]
+          regs_write: [ r2 ]
+      -
+        asm_text: "mcreq p2, #0, r0, c3, c1, #7"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_P-IMM
+                imm: 2
+                access: CS_AC_READ
+              -
+                type: ARM_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_C-IMM
+                imm: 3
+                access: CS_AC_READ
+              -
+                type: ARM_OP_C-IMM
+                imm: 1
+                access: CS_AC_READ
+              -
+                type: ARM_OP_IMM
+                imm: 0x7
+                access: CS_AC_READ
+            cc: 0
+          regs_read: [ cpsr, r0 ]
+      -
+        asm_text: "mov r0, #0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+          regs_write: [ r0 ]
+      -
+        asm_text: "strb r3, [r1, r2]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r3
+                mem_base: r1
+                mem_index: r2
+                mem_scale: 0
+                access: CS_AC_WRITE
+          regs_read: [ r3, r1, r2 ]
+      -
+        asm_text: "cmp r3, #0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: ARM_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+            update_flags: 1
+          regs_read: [ r3 ]
+          regs_write: [ cpsr ]
+      -
+        asm_text: "setend be"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_SETEND
+                setend: be
+      -
+        asm_text: "ldm r0, {r0, r2, lr} ^"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r14
+                access: CS_AC_WRITE
+          regs_read: [ r0 ]
+          regs_write: [ r0, r2, r14 ]
+      -
+        asm_text: "strdeq r8, r9, [r0], -r4"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r8
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r9
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r9
+                mem_base: r0
+                mem_index: r4
+                mem_scale: 0
+                access: CS_AC_WRITE
+                subtracted: 1
+            cc: 0
+            post_indexed: 1
+          writeback: 1
+          regs_read: [ cpsr, r8, r9, r0, r4 ]
+          regs_write: [ r0 ]
+
+    input:
+      bytes: [ 0x60, 0xf9, 0x1f, 0x04, 0xe0, 0xf9, 0x4f, 0x07, 0x70, 0x47, 0x00, 0xf0, 0x10, 0xe8, 0xeb, 0x46, 0x83, 0xb0, 0xc9, 0x68, 0x1f, 0xb1, 0x30, 0xbf, 0xaf, 0xf3, 0x20, 0x84, 0x52, 0xf8, 0x23, 0xf0  ]
+      arch: "arm"
+      options: [  ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vld3.8 {d16, d17, d18}, [r0:0x40]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: d16
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d17
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d18
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d18
+                mem_base: r0
+                mem_scale: 0
+                access: CS_AC_READ
+            vector_size: 8
+          regs_read: [ r0 ]
+          regs_write: [ d16, d17, d18 ]
+      -
+        asm_text: "vld4.16 {d16[1], d17[1], d18[1], d19[1]}, [r0]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: d16
+                neon_lane: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d17
+                neon_lane: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d18
+                neon_lane: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d19
+                neon_lane: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d19
+                mem_base: r0
+                mem_scale: 0
+                access: CS_AC_READ
+            vector_size: 16
+          regs_read: [ d16, d17, d18, d19, r0 ]
+          regs_write: [ d16, d17, d18, d19 ]
+      -
+        asm_text: "bx lr"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r14
+                access: CS_AC_READ
+          regs_read: [ r14 ]
+      -
+        asm_text: "blx 0x8000102c"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_IMM
+                imm: 0x8000102c
+                access: CS_AC_READ
+          regs_read: [ r13 ]
+          regs_write: [ r14 ]
+      -
+        asm_text: "mov r11, sp"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r11
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r13
+                access: CS_AC_READ
+          regs_read: [ r13 ]
+          regs_write: [ r11 ]
+      -
+        asm_text: "sub sp, #0xc"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r13
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_IMM
+                imm: 0xc
+                access: CS_AC_READ
+            post_indexed: -1
+          writeback: 1
+          regs_read: [ r13 ]
+          regs_write: [ r13 ]
+      -
+        asm_text: "ldr r1, [r1, #0xc]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                mem_base: r1
+                mem_scale: 0
+                mem_disp: 0xc
+                access: CS_AC_READ
+          regs_read: [ r1 ]
+          regs_write: [ r1 ]
+      -
+        asm_text: "cbz r7, 0x8000101e"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r7
+                access: CS_AC_READ
+              -
+                type: ARM_OP_IMM
+                imm: 0x8000101e
+                access: CS_AC_READ
+          regs_read: [ r7 ]
+      -
+        asm_text: "wfi"
+      -
+        asm_text: "cpsie.w f"
+        details:
+          arm:
+            CPSI-mode: 2
+            CPSI-flag: 1
+      -
+        asm_text: "ldr.w pc, [r2, r3, lsl #2]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r15
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r15
+                mem_base: r2
+                mem_index: r3
+                mem_scale: 0
+            shift_type: ARM_OP_2
+            shift_val: 2
+          regs_read: [ r2, r3 ]
+          regs_write: [ r15 ]
+
+    input:
+      bytes: [ 0xd1, 0xe8, 0x00, 0xf0, 0xf0, 0x24, 0x04, 0x07, 0x1f, 0x3c, 0xf2, 0xc0, 0x00, 0x00, 0x4f, 0xf0, 0x00, 0x01, 0x46, 0x6c  ]
+      arch: "arm"
+      options: [  ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tbb [r1, r0]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r15
+                mem_base: r1
+                mem_index: r0
+                mem_scale: 0
+                access: CS_AC_READ
+          regs_read: [ r1, r0 ]
+      -
+        asm_text: "movs r4, #0xf0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r4
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_IMM
+                imm: 0xf0
+                access: CS_AC_READ
+            update_flags: 1
+          regs_write: [ cpsr, r4 ]
+      -
+        asm_text: "lsls r4, r0, #0x1c"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r4
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_IMM
+                imm: 0x1c
+                access: CS_AC_READ
+            update_flags: 1
+          regs_read: [ r0 ]
+          regs_write: [ cpsr, r4 ]
+      -
+        asm_text: "subs r4, #0x1f"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r4
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_IMM
+                imm: 0x1f
+                access: CS_AC_READ
+            update_flags: 1
+            post_indexed: -1
+          writeback: 1
+          regs_read: [ r4 ]
+          regs_write: [ cpsr, r4 ]
+      -
+        asm_text: "stm r0!, {r1, r4, r5, r6, r7}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r4
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r5
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r6
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r7
+                access: CS_AC_READ
+            post_indexed: -1
+          writeback: 1
+          regs_read: [ r0, r1, r4, r5, r6, r7 ]
+          regs_write: [ r0 ]
+      -
+        asm_text: "movs r0, r0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+            update_flags: 1
+          regs_read: [ r0 ]
+          regs_write: [ cpsr, r0 ]
+      -
+        asm_text: "mov.w r1, #0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+          regs_write: [ r1 ]
+      -
+        asm_text: "ldr r6, [r0, #0x44]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r6
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r6
+                mem_base: r0
+                mem_scale: 0
+                mem_disp: 0x44
+                access: CS_AC_READ
+          regs_read: [ r0 ]
+          regs_write: [ r6 ]
+
+    input:
+      bytes: [ 0x4f, 0xf0, 0x00, 0x01, 0xbd, 0xe8, 0x00, 0x88, 0xd1, 0xe8, 0x00, 0xf0, 0x18, 0xbf, 0xad, 0xbf, 0xf3, 0xff, 0x0b, 0x0c, 0x86, 0xf3, 0x00, 0x89, 0x80, 0xf3, 0x00, 0x8c, 0x4f, 0xfa, 0x99, 0xf6, 0xd0, 0xff, 0xa2, 0x01  ]
+      arch: "arm"
+      options: [  ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov.w r1, #0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+          regs_write: [ r1 ]
+      -
+        asm_text: "pop.w {r11, pc}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r11
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: pc
+                access: CS_AC_WRITE
+            post_indexed: -1
+          writeback: 1
+          regs_write: [ r11, pc ]
+      -
+        asm_text: "tbb [r1, r0]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: pc
+                mem_base: r1
+                mem_index: r0
+                mem_scale: 0
+                access: CS_AC_READ
+          regs_read: [ r1, r0 ]
+      -
+        asm_text: "it ne"
+        details:
+          arm:
+            cc: 1
+            Predicate Mask: 0x1
+          regs_read: [ cpsr ]
+          regs_write: [ itstate ]
+      -
+        asm_text: "iteet ge"
+        details:
+          arm:
+            cc: 10
+            Predicate Mask: 0xd
+          regs_read: [ cpsr ]
+          regs_write: [ itstate ]
+      -
+        asm_text: "vdupge.8 d16, d11[1]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: d16
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: d11
+                access: CS_AC_READ
+                vector_index: 1
+            cc: 10
+            vector_size: 8
+          regs_read: [ cpsr, d11 ]
+          regs_write: [ d16 ]
+      -
+        asm_text: "msrlt cpsr_fc, r6"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_CPSR
+                cpsr: fc
+            operands:
+              -
+                type: ARM_OP_MASK
+                mask: 9
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r6
+                access: CS_AC_READ
+            cc: 11
+            update_flags: 1
+          regs_read: [ cpsr, r6 ]
+          regs_write: [ cpsr ]
+      -
+        asm_text: "msrlt apsr_nzcvqg, r0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_SYSREG
+                reg: apsr_nzcvqg
+            operands:
+              -
+                type: ARM_OP_MASK
+                mask: 12
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+            cc: 11
+            update_flags: 1
+          regs_read: [ cpsr, r0 ]
+          regs_write: [ cpsr ]
+      -
+        asm_text: "sxtbge.w r6, r9, ror #8"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r6
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r9
+                access: CS_AC_READ
+            shift_type: ARM_OP_4
+            shift_val: 8
+            cc: 10
+          regs_read: [ cpsr, r9 ]
+          regs_write: [ r6 ]
+      -
+        asm_text: "vaddw.u16 q8, q8, d18"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: q8
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: q8
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: d18
+                access: CS_AC_READ
+            Vector-data: 10
+          regs_read: [ q8, d18 ]
+          regs_write: [ q8 ]
+
+    input:
+      bytes: [ 0xef, 0xf3, 0x02, 0x80  ]
+      arch: "arm"
+      options: [  ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mrs r0, eapsr"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_SYSREG
+                reg: eapsr
+              -
+                type: ARM_OP_MASK
+                mask: 2
+                access: CS_AC_READ
+          regs_write: [ r0 ]
+
+    input:
+      bytes: [ 0xe0, 0x3b, 0xb2, 0xee, 0x42, 0x00, 0x01, 0xe1, 0x51, 0xf0, 0x7f, 0xf5  ]
+      arch: "arm"
+      options: [  ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vcvtt.f64.f16 d3, s1"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: d3
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: s1
+                access: CS_AC_READ
+            Vector-data: 19
+          regs_read: [ s1 ]
+          regs_write: [ d3 ]
+      -
+        asm_text: "crc32b r0, r1, r2"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_READ
+          regs_read: [ r1, r2 ]
+          regs_write: [ r0 ]
+      -
+        asm_text: "dmb oshld"
+        details:
+          arm:
+            Memory-barrier: 1
+
