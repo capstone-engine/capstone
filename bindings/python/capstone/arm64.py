@@ -13,7 +13,7 @@ class Arm64OpMem(ctypes.Structure):
     )
 
 class Arm64OpSmeIndex(ctypes.Structure):
-    _fileds_ = (
+    _fields_ = (
         ('reg', ctypes.c_uint),
         ('base', ctypes.c_uint),
         ('disp', ctypes.c_int32),
