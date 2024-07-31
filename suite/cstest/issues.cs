@@ -1126,3 +1126,7 @@
 !# issue 2268
 !# CS_ARCH_AARCH64, CS_MODE_ARM, CS_OPT_DETAIL
 0x0: 0x6a,0xd9,0xf8,0x7e == fcmle h10, h11, #0.0 ; operands[2].subtype EXACTFPIMM = 0
+
+!# issue 2419
+!# CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x0: 0x12,0xbf,0xff,0xff == bne -4 ; Code condition: 265
