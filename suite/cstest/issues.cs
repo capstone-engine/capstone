@@ -1054,3 +1054,7 @@
 !# issue 2244
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0xc5,0xfb,0xc2,0xda,0x06 == vcmpnlesd	xmm3, xmm0, xmm2 ; ID: 797
+
+!# issue 2419
+!# CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x0: 0x12,0xbf,0xff,0xff == bne -4 ; Code condition: 265
