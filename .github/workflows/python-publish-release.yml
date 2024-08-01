@@ -1,6 +1,6 @@
-name: PyPI 📦 Distribution
+name: RELEASE BUILD - PyPI 📦 Distribution
 
-on: [push, pull_request]
+on: [release, workflow_dispatch]
 
 jobs:
   build_wheels:
@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up MSVC x64
         if: matrix.os == 'windows-latest'
@@ -28,15 +28,12 @@ jobs:
           CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
           CIBW_ARCHS_LINUX: "x86_64 i686 aarch64" # ppc64le s390x really slow
           CIBW_ARCHS_WINDOWS: "AMD64 x86" # ARM64  Seems ARM64 will rebuild amd64 wheel for unknow reason.
-          CIBW_BUILD: "cp38-macosx* cp310-macosx* cp312-macosx* \
-                       cp38-win* cp310-win_amd64 cp312-win_amd64 \
-                       cp38-manylinux* cp310-manylinux_x86_64 \
-                       cp312-manylinux_x86_64 cp312-manylinux_aarch64"
+          CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-*"
           CIBW_SKIP: ""
         with:
           package-dir: bindings/python
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
 
@@ -44,7 +41,7 @@ jobs:
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Optional, use if you use setuptools_scm
         submodules: true  # Optional, use if you have submodules
@@ -54,7 +51,7 @@ jobs:
         cd bindings/python
         pipx run build --sdist
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: bindings/python/dist/*.tar.gz
 
@@ -65,7 +62,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: artifact
           path: dist
