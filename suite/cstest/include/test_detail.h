@@ -11,6 +11,7 @@
 
 #include "test_detail_aarch64.h"
 #include "test_detail_arm.h"
+#include "test_detail_ppc.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
 #include <cyaml/cyaml.h>
@@ -20,11 +21,10 @@
 typedef struct {
 	TestDetailAArch64 *aarch64;
 	TestDetailARM *arm;
+	TestDetailPPC *ppc;
 	// cs_x86_test x86;
-	// cs_arm_test arm;
 	// cs_m68k_test m68k;
 	// cs_mips_test mips;
-	// cs_ppc_test ppc;
 	// cs_sparc_test sparc;
 	// cs_sysz_test sysz;
 	// cs_xcore_test xcore;
@@ -64,6 +64,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR("arm", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 				TestDetail, arm,
 				test_detail_arm_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("ppc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetail, ppc,
+				test_detail_ppc_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),

@@ -3280,6 +3280,8 @@ typedef enum ppc_insn_group {
 /// PPC instruction formats. To get details about them please
 /// refer to `PPCInstrFormats.td` in LLVM.
 typedef enum {
+	PPC_INSN_FORM_INVALID = 0,
+
 	// generated content <PPCGenCSInsnFormatsEnum.inc> begin
 	// clang-format off
 
