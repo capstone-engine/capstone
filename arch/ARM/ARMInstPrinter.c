@@ -1805,22 +1805,22 @@ static void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 		if (Mask & 8) {
 			SStream_concat0(O, "f");
-			reg += ARM_SYSREG_SPSR_F;
+			reg += SpecRegRBit ? ARM_SYSREG_SPSR_F : ARM_SYSREG_CPSR_F;
 		}
 
 		if (Mask & 4) {
 			SStream_concat0(O, "s");
-			reg += ARM_SYSREG_SPSR_S;
+			reg += SpecRegRBit ? ARM_SYSREG_SPSR_S : ARM_SYSREG_CPSR_S;
 		}
 
 		if (Mask & 2) {
 			SStream_concat0(O, "x");
-			reg += ARM_SYSREG_SPSR_X;
+			reg += SpecRegRBit ? ARM_SYSREG_SPSR_X : ARM_SYSREG_CPSR_X;
 		}
 
 		if (Mask & 1) {
 			SStream_concat0(O, "c");
-			reg += ARM_SYSREG_SPSR_C;
+			reg += SpecRegRBit ? ARM_SYSREG_SPSR_C : ARM_SYSREG_CPSR_C;
 		}
 
 		ARM_addSysReg(MI, reg);
