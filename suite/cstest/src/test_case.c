@@ -40,8 +40,8 @@ TestInput *test_input_clone(TestInput *test_input)
 	ti->address = test_input->address;
 
 	for (size_t i = 0; i < test_input->options_count; i++) {
-		ti->options = cs_mem_realloc(ti->options,
-				      sizeof(char *) * (ti->options_count + 1));
+		ti->options = cs_mem_realloc(
+			ti->options, sizeof(char *) * (ti->options_count + 1));
 		ti->options[i] = cs_strdup(test_input->options[i]);
 		ti->options_count++;
 	}
@@ -58,7 +58,7 @@ char *test_input_stringify(const TestInput *test_input, const char *postfix)
 	char *msg = cs_mem_calloc(sizeof(char), msg_len);
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
-	char opt_seq[128] = {0};
+	char opt_seq[128] = { 0 };
 	append_to_str(opt_seq, sizeof(opt_seq), "[");
 	for (size_t i = 0; i < test_input->options_count; ++i) {
 		append_to_str(opt_seq, sizeof(opt_seq), test_input->options[i]);
@@ -69,8 +69,8 @@ char *test_input_stringify(const TestInput *test_input, const char *postfix)
 	append_to_str(opt_seq, sizeof(opt_seq), "]");
 	cs_snprintf(msg, msg_len,
 		    "%sTestInput { arch: %s, options: %s, addr: 0x%" PRIx64
-		    ", bytes: %s }", postfix,
-		    test_input->arch, opt_seq, test_input->address,
+		    ", bytes: %s }",
+		    postfix, test_input->arch, opt_seq, test_input->address,
 		    byte_seq);
 	cs_mem_free(byte_seq);
 	return msg;
@@ -105,10 +105,12 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 	tid->mnemonic = test_insn_data->mnemonic ?
 				cs_strdup(test_insn_data->mnemonic) :
 				NULL;
-	tid->op_str = test_insn_data->op_str ? cs_strdup(test_insn_data->op_str) :
-					       NULL;
-	tid->asm_text = test_insn_data->asm_text ? cs_strdup(test_insn_data->asm_text) :
-					       NULL;
+	tid->op_str = test_insn_data->op_str ?
+			      cs_strdup(test_insn_data->op_str) :
+			      NULL;
+	tid->asm_text = test_insn_data->asm_text ?
+				cs_strdup(test_insn_data->asm_text) :
+				NULL;
 	if (test_insn_data->details) {
 		tid->details = test_detail_clone(test_insn_data->details);
 	}
@@ -203,11 +205,13 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 		// Either all in op_str or split in mnemonic and op_str
 		char asm_text[256] = { 0 };
 		if (insns[i].mnemonic[0] != '\0') {
-			append_to_str(asm_text, sizeof(asm_text), insns[i].mnemonic);
+			append_to_str(asm_text, sizeof(asm_text),
+				      insns[i].mnemonic);
 			append_to_str(asm_text, sizeof(asm_text), " ");
 		}
 		if (insns[i].op_str[0] != '\0') {
-			append_to_str(asm_text, sizeof(asm_text), insns[i].op_str);
+			append_to_str(asm_text, sizeof(asm_text),
+				      insns[i].op_str);
 		}
 		if (!compare_asm_text(asm_text, expec_data->asm_text,
 				      arch_bits)) {
@@ -226,20 +230,24 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			}
 		}
 		if (expec_data->alias_id != 0) {
-			assert_int_equal(insns[i].alias_id, expec_data->alias_id);
+			assert_int_equal(insns[i].alias_id,
+					 expec_data->alias_id);
 		}
 		if (expec_data->mnemonic) {
-			assert_string_equal(insns[i].mnemonic, expec_data->mnemonic);
+			assert_string_equal(insns[i].mnemonic,
+					    expec_data->mnemonic);
 		}
 		if (expec_data->op_str) {
-			assert_string_equal(insns[i].op_str, expec_data->op_str);
+			assert_string_equal(insns[i].op_str,
+					    expec_data->op_str);
 		}
 		if (expec_data->details) {
 			if (!insns[i].detail) {
 				fprintf(stderr, "detail is NULL\n");
 				assert_non_null(insns[i].detail);
 			}
-			assert_true(test_expected_detail(handle, &insns[i], expec_data->details));
+			assert_true(test_expected_detail(handle, &insns[i],
+							 expec_data->details));
 		}
 	}
 }

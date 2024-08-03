@@ -35,7 +35,7 @@ TestDetailAArch64 *test_detail_aarch64_clone(TestDetailAArch64 *detail)
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
 		clone->operands = cs_mem_calloc(sizeof(TestDetailAArch64Op),
-							detail->operands_count);
+						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
 		clone->operands[i] =
@@ -167,7 +167,8 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 		compare_enum_ret(op->vas, eop->vas, false);
 		compare_tbool_ret(op->is_vreg, eop->is_vreg, false);
 		if (eop->vector_index_is_set) {
-			compare_int32_ret(op->vector_index, eop->vector_index, false);
+			compare_int32_ret(op->vector_index, eop->vector_index,
+					  false);
 		}
 
 		compare_tbool_ret(op->is_list_member, eop->is_list_member,

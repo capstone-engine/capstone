@@ -12,11 +12,11 @@
 
 /// Input data for a test case.
 typedef struct {
-	uint8_t *bytes; // mandatory
-	uint32_t bytes_count; // Filled by cyaml
-	char *arch;	      // mandatory
+	uint8_t *bytes;		// mandatory
+	uint32_t bytes_count;	// Filled by cyaml
+	char *arch;		// mandatory
 	uint64_t address;
-	char **options;	      // mandatory
+	char **options;		// mandatory
 	uint32_t options_count; // Filled by cyaml
 } TestInput;
 
@@ -56,7 +56,7 @@ static const cyaml_schema_field_t test_input_mapping_schema[] = {
 /// Data compared to the produced cs_insn.
 typedef struct {
 	uint32_t id;
-	char *asm_text; // mandatory
+	char *asm_text;	  // mandatory
 	char *op_str;
 	int32_t is_alias; ///< 0 == not given, >0 == true, <0 == false
 	uint64_t alias_id;
@@ -73,18 +73,20 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 			 TestInsnData, id),
 	CYAML_FIELD_STRING_PTR("asm_text", CYAML_FLAG_POINTER, TestInsnData,
 			       asm_text, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("op_str", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL, TestInsnData,
-			       op_str, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"op_str", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
+		TestInsnData, op_str, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_UINT("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
 			 is_alias),
 	CYAML_FIELD_INT("alias_id",
-			 CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
-			 TestInsnData, alias_id),
+			CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
+			TestInsnData, alias_id),
 	CYAML_FIELD_STRING_PTR(
 		"mnemonic", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
 		TestInsnData, mnemonic, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_MAPPING_PTR("details", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestInsnData, details,
-				test_detail_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR(
+		"details", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestInsnData, details, test_detail_mapping_schema),
 	CYAML_FIELD_END
 };
 
@@ -116,8 +118,8 @@ static const cyaml_schema_field_t test_expected_mapping_schema[] = {
 typedef struct {
 	TestInput *input;	///< Input data for a test case
 	TestExpected *expected; ///< Expected data of the test case.
-	bool skip; ///< If set, the test is skipped
-	char *skip_reason; ///< Reason this test is skipped.
+	bool skip;		///< If set, the test is skipped
+	char *skip_reason;	///< Reason this test is skipped.
 } TestCase;
 
 TestCase *test_case_new();
@@ -130,9 +132,10 @@ static const cyaml_schema_field_t test_case_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR("expected", CYAML_FLAG_POINTER, TestCase,
 				expected, test_expected_mapping_schema),
 	CYAML_FIELD_BOOL("skip", CYAML_FLAG_OPTIONAL, TestCase, skip),
-	CYAML_FIELD_STRING_PTR(
-		"skip_reason", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
-		TestCase, skip_reason, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("skip_reason",
+			       CYAML_FLAG_POINTER_NULL_STR |
+				       CYAML_FLAG_OPTIONAL,
+			       TestCase, skip_reason, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 

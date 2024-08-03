@@ -116,7 +116,8 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 
 	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	if (expected->vector_size) {
-		compare_int_ret(actual->vector_size, expected->vector_size, false);
+		compare_int_ret(actual->vector_size, expected->vector_size,
+				false);
 	}
 	compare_enum_ret(actual->vector_data, expected->vector_data, false);
 	compare_enum_ret(actual->cps_flag, expected->cps_flag, false);
@@ -125,7 +126,8 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 	compare_enum_ret(actual->vcc, expected->vcc, false);
 	compare_enum_ret(actual->mem_barrier, expected->mem_barrier, false);
 	if (expected->pred_mask) {
-		compare_uint8_ret(actual->pred_mask, expected->pred_mask, false);
+		compare_uint8_ret(actual->pred_mask, expected->pred_mask,
+				  false);
 	}
 	compare_tbool_ret(actual->usermode, expected->usermode, false);
 	compare_tbool_ret(actual->update_flags, expected->update_flags, false);
@@ -162,24 +164,24 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 			compare_enum_ret(op->sysop.reg.mclasssysreg,
 					 eop->sys_reg, false);
 			if (eop->sys_sysm) {
-				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-						   false);
+				compare_uint16_ret(op->sysop.sysm,
+						   eop->sys_sysm, false);
 			}
 			if (eop->sys_msr_mask) {
-				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-						  false);
+				compare_uint8_ret(op->sysop.msr_mask,
+						  eop->sys_msr_mask, false);
 			}
 			break;
 		case ARM_OP_BANKEDREG:
 			compare_enum_ret(op->sysop.reg.bankedreg, eop->sys_reg,
 					 false);
 			if (eop->sys_sysm) {
-				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-						   false);
+				compare_uint16_ret(op->sysop.sysm,
+						   eop->sys_sysm, false);
 			}
 			if (eop->sys_msr_mask) {
-				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-						  false);
+				compare_uint8_ret(op->sysop.msr_mask,
+						  eop->sys_msr_mask, false);
 			}
 			break;
 		case ARM_OP_SPSR:
@@ -188,22 +190,22 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 					      eop->sys_psr_bits,
 					      eop->sys_psr_bits_count, false);
 			if (eop->sys_sysm) {
-				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-						   false);
+				compare_uint16_ret(op->sysop.sysm,
+						   eop->sys_sysm, false);
 			}
 			if (eop->sys_msr_mask) {
-				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-						  false);
+				compare_uint8_ret(op->sysop.msr_mask,
+						  eop->sys_msr_mask, false);
 			}
 			break;
 		case ARM_OP_SYSM:
 			if (eop->sys_sysm) {
-				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-						   false);
+				compare_uint16_ret(op->sysop.sysm,
+						   eop->sys_sysm, false);
 			}
 			if (eop->sys_msr_mask) {
-				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-						  false);
+				compare_uint8_ret(op->sysop.msr_mask,
+						  eop->sys_msr_mask, false);
 			}
 			break;
 		case ARM_OP_MEM:
@@ -219,7 +221,8 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 
 		compare_enum_ret(op->shift.type, eop->shift_type, false);
 		if (eop->shift_value) {
-			compare_uint32_ret(op->shift.value, eop->shift_value, false);
+			compare_uint32_ret(op->shift.value, eop->shift_value,
+					   false);
 		}
 		if (eop->neon_lane) {
 			compare_uint8_ret(op->neon_lane, eop->neon_lane, false);

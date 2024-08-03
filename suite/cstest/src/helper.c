@@ -26,7 +26,7 @@ void add_str(char **src, const char *format, ...)
 	vsprintf(tmp, format, args);
 	va_end(args);
 
-	len1 = strlen(*src);	
+	len1 = strlen(*src);
 	len2 = strlen(tmp);
 
 	*src = (char *)realloc(*src, sizeof(char) * (len1 + len2 + 10));
@@ -55,17 +55,19 @@ void replace_hex(char *src, size_t src_len)
 		tmp_tmp = strndup(tmp, orig_found - tmp);
 		while (*found != '\0' && isxdigit(*found)) {
 			valid = 1;
-			if (*found >= 'a' && *found <='f')
-				value = value*0x10 + (*found - 'a' + 10);
+			if (*found >= 'a' && *found <= 'f')
+				value = value * 0x10 + (*found - 'a' + 10);
 			else if (*found >= 'A' && *found <= 'F')
 				value = value * 0x10 + (*found - 'A' + 10);
 			else
-				value = value*0x10 + (*found - '0');
+				value = value * 0x10 + (*found - '0');
 			found++;
 		}
 
-		if (valid == 1) add_str(&result, "%s%llu", tmp_tmp, value);
-		else add_str(&result, "%s0x", tmp_tmp);
+		if (valid == 1)
+			add_str(&result, "%s%llu", tmp_tmp, value);
+		else
+			add_str(&result, "%s0x", tmp_tmp);
 		tmp = found;
 		free(tmp_tmp);
 	}
@@ -74,7 +76,8 @@ void replace_hex(char *src, size_t src_len)
 	if (strlen(result) >= src_len) {
 		free(result);
 		free(origin);
-		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_hex()\n");
+		fprintf(stderr,
+			"[  Error   ] --- Buffer Overflow in replace_hex()\n");
 		_fail(__FILE__, __LINE__);
 	}
 
@@ -99,9 +102,9 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 
 	while ((found = strstr(tmp, "-")) != NULL) {
 		orig_found = found;
-		found ++;
+		found++;
 		valid = 0;
-		
+
 		value = strdup("-");
 		cnt = 2;
 
@@ -110,7 +113,7 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 			value = (char *)realloc(value, cnt + 1);
 			value[cnt - 1] = *found;
 			value[cnt] = '\0';
-			cnt ++;
+			cnt++;
 			found++;
 		}
 
@@ -128,8 +131,8 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 				add_str(&result, "%s%lu", tmp_tmp, tmp_long);
 			}
 
-		}
-		else add_str(&result, "%s-", tmp_tmp);
+		} else
+			add_str(&result, "%s-", tmp_tmp);
 
 		tmp = found;
 		free(value);
@@ -138,7 +141,8 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 
 	add_str(&result, "%s", tmp);
 	if (strlen(result) >= src_len) {
-		fprintf(stderr, "[  Error   ] --- Buffer Overflow in replace_negative()\n");
+		fprintf(stderr,
+			"[  Error   ] --- Buffer Overflow in replace_negative()\n");
 		free(result);
 		free(origin);
 		_fail(__FILE__, __LINE__);
@@ -157,8 +161,10 @@ void trim_str(char *str)
 	start = 0;
 	end = strlen(str) - 1;
 	j = 0;
-	while (start < strlen(str) && isspace(str[start])) start++;
-	while (end >= 0 && isspace(str[end])) end--;
+	while (start < strlen(str) && isspace(str[start]))
+		start++;
+	while (end >= 0 && isspace(str[end]))
+		end--;
 
 	for (i = start; i <= end; ++i)
 		tmp[j++] = str[i];
@@ -192,4 +198,3 @@ void str_to_lower(char *str)
 	for (size_t i = 0; i < strlen(str); ++i)
 		str[i] = tolower(str[i]);
 }
-
