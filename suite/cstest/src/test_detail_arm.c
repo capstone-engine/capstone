@@ -22,6 +22,7 @@ void test_detail_arm_free(TestDetailARM *detail)
 	}
 	cs_mem_free(detail->operands);
 	cs_mem_free(detail->cc);
+	cs_mem_free(detail->vcc);
 	cs_mem_free(detail);
 }
 
@@ -67,6 +68,7 @@ TestDetailARMOp *test_detail_arm_op_clone(TestDetailARMOp *op)
 	clone->mem_disp = op->mem_disp;
 	clone->mem_align = op->mem_align;
 	clone->sys_reg = op->sys_reg ? strdup(op->sys_reg) : NULL;
+	clone->sys_psr_bits_count = op->sys_psr_bits_count;
 	clone->sys_psr_bits =
 		op->sys_psr_bits_count == 0 ?
 			NULL :
@@ -113,14 +115,18 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 	assert(handle && actual && expected);
 
 	compare_uint8_ret(actual->op_count, expected->operands_count, false);
-	compare_int_ret(actual->vector_size, expected->vector_size, false);
+	if (expected->vector_size) {
+		compare_int_ret(actual->vector_size, expected->vector_size, false);
+	}
 	compare_enum_ret(actual->vector_data, expected->vector_data, false);
 	compare_enum_ret(actual->cps_flag, expected->cps_flag, false);
 	compare_enum_ret(actual->cps_mode, expected->cps_mode, false);
 	compare_enum_ret(actual->cc, expected->cc, false);
 	compare_enum_ret(actual->vcc, expected->vcc, false);
 	compare_enum_ret(actual->mem_barrier, expected->mem_barrier, false);
-	compare_uint8_ret(actual->pred_mask, expected->pred_mask, false);
+	if (expected->pred_mask) {
+		compare_uint8_ret(actual->pred_mask, expected->pred_mask, false);
+	}
 	compare_tbool_ret(actual->usermode, expected->usermode, false);
 	compare_tbool_ret(actual->update_flags, expected->update_flags, false);
 	compare_tbool_ret(actual->post_index, expected->post_indexed, false);
@@ -155,34 +161,50 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 		case ARM_OP_SYSREG:
 			compare_enum_ret(op->sysop.reg.mclasssysreg,
 					 eop->sys_reg, false);
-			compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-					   false);
-			compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-					  false);
+			if (eop->sys_sysm) {
+				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
+						   false);
+			}
+			if (eop->sys_msr_mask) {
+				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
+						  false);
+			}
 			break;
 		case ARM_OP_BANKEDREG:
 			compare_enum_ret(op->sysop.reg.bankedreg, eop->sys_reg,
 					 false);
-			compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-					   false);
-			compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-					  false);
+			if (eop->sys_sysm) {
+				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
+						   false);
+			}
+			if (eop->sys_msr_mask) {
+				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
+						  false);
+			}
 			break;
 		case ARM_OP_SPSR:
 		case ARM_OP_CPSR:
 			compare_bit_flags_ret(op->sysop.psr_bits,
 					      eop->sys_psr_bits,
 					      eop->sys_psr_bits_count, false);
-			compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-					   false);
-			compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-					  false);
+			if (eop->sys_sysm) {
+				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
+						   false);
+			}
+			if (eop->sys_msr_mask) {
+				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
+						  false);
+			}
 			break;
 		case ARM_OP_SYSM:
-			compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
-					   false);
-			compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
-					  false);
+			if (eop->sys_sysm) {
+				compare_uint16_ret(op->sysop.sysm, eop->sys_sysm,
+						   false);
+			}
+			if (eop->sys_msr_mask) {
+				compare_uint8_ret(op->sysop.msr_mask, eop->sys_msr_mask,
+						  false);
+			}
 			break;
 		case ARM_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
@@ -192,13 +214,16 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 			compare_int_ret(op->mem.disp, eop->mem_disp, false);
 			compare_uint_ret(op->mem.align, eop->mem_align, false);
 			compare_int_ret(op->mem.scale, eop->mem_scale, false);
-			compare_int_ret(op->mem.scale, eop->mem_scale, false);
 			break;
 		}
 
 		compare_enum_ret(op->shift.type, eop->shift_type, false);
-		compare_uint32_ret(op->shift.value, eop->shift_value, false);
-		compare_uint8_ret(op->neon_lane, eop->neon_lane, false);
+		if (eop->shift_value) {
+			compare_uint32_ret(op->shift.value, eop->shift_value, false);
+		}
+		if (eop->neon_lane) {
+			compare_uint8_ret(op->neon_lane, eop->neon_lane, false);
+		}
 
 		if (eop->vector_index_is_set) {
 			compare_int32_ret(op->vector_index, eop->vector_index,

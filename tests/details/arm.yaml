@@ -24,7 +24,6 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r0
                 mem_index: r6
-                mem_scale: 0
                 access: CS_AC_READ_WRITE
             post_indexed: 1
             vector_size: 32
@@ -82,8 +81,7 @@ test_cases:
                 reg: r14
                 access: CS_AC_READ
               -
-                type: ARM_OP_REG
-                reg: r14
+                type: ARM_OP_MEM
                 mem_base: r13
                 mem_disp: 0x4
                 access: CS_AC_WRITE
@@ -137,7 +135,7 @@ test_cases:
           arm:
             operands:
               -
-                type: ARM_OP_P-IMM
+                type: ARM_OP_PIMM
                 imm: 2
                 access: CS_AC_READ
               -
@@ -149,11 +147,11 @@ test_cases:
                 reg: r0
                 access: CS_AC_READ
               -
-                type: ARM_OP_C-IMM
+                type: ARM_OP_CIMM
                 imm: 3
                 access: CS_AC_READ
               -
-                type: ARM_OP_C-IMM
+                type: ARM_OP_CIMM
                 imm: 1
                 access: CS_AC_READ
               -
@@ -214,7 +212,7 @@ test_cases:
             operands:
               -
                 type: ARM_OP_SETEND
-                setend: be
+                setend: ARM_SETEND_BE
       -
         asm_text: "ldm r0, {r0, r2, lr} ^"
         details:
@@ -289,10 +287,9 @@ test_cases:
                 reg: d18
                 access: CS_AC_WRITE
               -
-                type: ARM_OP_REG
-                reg: d18
+                type: ARM_OP_MEM
                 mem_base: r0
-                mem_scale: 0
+                mem_align: 0x40
                 access: CS_AC_READ
             vector_size: 8
           regs_read: [ r0 ]
@@ -323,10 +320,8 @@ test_cases:
                 neon_lane: 1
                 access: CS_AC_READ_WRITE
               -
-                type: ARM_OP_REG
-                reg: d19
+                type: ARM_OP_MEM
                 mem_base: r0
-                mem_scale: 0
                 access: CS_AC_READ
             vector_size: 16
           regs_read: [ d16, d17, d18, d19, r0 ]
@@ -394,10 +389,8 @@ test_cases:
                 reg: r1
                 access: CS_AC_WRITE
               -
-                type: ARM_OP_REG
-                reg: r1
+                type: ARM_OP_MEM
                 mem_base: r1
-                mem_scale: 0
                 mem_disp: 0xc
                 access: CS_AC_READ
           regs_read: [ r1 ]
@@ -437,7 +430,6 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r2
                 mem_index: r3
-                mem_scale: 0
                 shift_type: ARM_SFT_LSL
                 shift_value: 2
           regs_read: [ r2, r3 ]
@@ -457,11 +449,9 @@ test_cases:
           arm:
             operands:
               -
-                type: ARM_OP_REG
-                reg: r15
+                type: ARM_OP_MEM
                 mem_base: r1
                 mem_index: r0
-                mem_scale: 0
                 access: CS_AC_READ
           regs_read: [ r1, r0 ]
       -
@@ -591,9 +581,7 @@ test_cases:
                 access: CS_AC_WRITE
               -
                 type: ARM_OP_MEM
-                reg: r6
                 mem_base: r0
-                mem_scale: 0
                 mem_disp: 0x44
                 access: CS_AC_READ
           regs_read: [ r0 ]
@@ -632,7 +620,7 @@ test_cases:
                 access: CS_AC_WRITE
               -
                 type: ARM_OP_REG
-                reg: pc
+                reg: r15
                 access: CS_AC_WRITE
             post_indexed: -1
           writeback: 1
@@ -643,11 +631,9 @@ test_cases:
           arm:
             operands:
               -
-                type: ARM_OP_REG
-                reg: pc
+                type: ARM_OP_MEM
                 mem_base: r1
                 mem_index: r0
-                mem_scale: 0
                 access: CS_AC_READ
           regs_read: [ r1, r0 ]
       -
@@ -680,6 +666,7 @@ test_cases:
                 reg: d11
                 access: CS_AC_READ
                 vector_index: 1
+                vector_index_is_set: true
             cc: ARMCC_GE
             vector_size: 8
           regs_read: [ cpsr, d11 ]

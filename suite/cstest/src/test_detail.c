@@ -35,6 +35,14 @@ TestDetail *test_detail_clone(TestDetail *detail) {
     clone->aarch64 = test_detail_aarch64_clone(detail->aarch64);
   }
 
+  if (detail->arm) {
+    clone->arm = test_detail_arm_clone(detail->arm);
+  }
+
+  if (detail->ppc) {
+    clone->ppc = test_detail_ppc_clone(detail->ppc);
+  }
+
   return clone;
 }
 
@@ -60,6 +68,12 @@ void test_detail_free(TestDetail *detail) {
 
   if (detail->aarch64) {
     test_detail_aarch64_free(detail->aarch64);
+  }
+  if (detail->arm) {
+    test_detail_arm_free(detail->arm);
+  }
+  if (detail->ppc) {
+    test_detail_ppc_free(detail->ppc);
   }
 
   cs_mem_free(detail);
@@ -96,6 +110,12 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 
   if (expected->aarch64) {
     return test_expected_aarch64(handle, &actual->aarch64, expected->aarch64);
+  }
+  if (expected->arm) {
+    return test_expected_arm(handle, &actual->arm, expected->arm);
+  }
+  if (expected->ppc) {
+    return test_expected_ppc(handle, &actual->ppc, expected->ppc);
   }
   return true;
 }
