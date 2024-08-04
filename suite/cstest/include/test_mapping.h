@@ -635,6 +635,9 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "PPC_PRED_Z_MINUS", .val = PPC_PRED_Z_MINUS },
 	{ .str = "PPC_PRED_Z_PLUS", .val = PPC_PRED_Z_PLUS },
 	{ .str = "PPC_PRED_Z_RESERVED", .val = PPC_PRED_Z_RESERVED },
+	{ .str = "TRICORE_OP_IMM", .val = TRICORE_OP_IMM },
+	{ .str = "TRICORE_OP_MEM", .val = TRICORE_OP_MEM },
+	{ .str = "TRICORE_OP_REG", .val = TRICORE_OP_REG },
 	{ .str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
 	  .val = 0xffffff }, // For testing
 };

@@ -54,6 +54,10 @@ TestDetail *test_detail_clone(TestDetail *detail)
 		clone->ppc = test_detail_ppc_clone(detail->ppc);
 	}
 
+	if (detail->tricore) {
+		clone->tricore = test_detail_tricore_clone(detail->tricore);
+	}
+
 	return clone;
 }
 
@@ -86,6 +90,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->ppc) {
 		test_detail_ppc_free(detail->ppc);
+	}
+	if (detail->tricore) {
+		test_detail_tricore_free(detail->tricore);
 	}
 
 	cs_mem_free(detail);
@@ -137,6 +144,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	}
 	if (expected->ppc) {
 		return test_expected_ppc(handle, &actual->ppc, expected->ppc);
+	}
+	if (expected->tricore) {
+		return test_expected_tricore(handle, &actual->tricore,
+					     expected->tricore);
 	}
 	return true;
 }
