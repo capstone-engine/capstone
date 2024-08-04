@@ -1058,3 +1058,7 @@
 !# issue 2419
 !# CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x0: 0x12,0xbf,0xff,0xff == bne -4 ; Code condition: 265
+
+!# issue 2418
+!# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
+0x0: 0x86,0xf3,0x00,0x89 == msr cpsr_fc, r6 ; operands[0].type: SYSREG = 144
