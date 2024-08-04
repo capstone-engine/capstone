@@ -33,11 +33,18 @@ class TemplateDefinition(Patch):
             "     ((template_parameter_list) @templ_params)"
             "     (function_definition"
             "        ((storage_class_specifier)* @storage_class_id)"
+            "        (type_qualifier)*"
             "        ([(type_identifier)(primitive_type)] @type_id)"
+            "        ([(pointer_declarator"
+            "           (function_declarator"
+            "               ((identifier) @fcn_name)"
+            "               ((parameter_list) @fcn_params)"
+            "           )"
+            "        )"
             "        (function_declarator"
             "            ((identifier) @fcn_name)"
             "            ((parameter_list) @fcn_params)"
-            "        )"
+            "        )])"
             "        ((compound_statement) @compound)"
             "     )"
             ") @template_def"
@@ -54,6 +61,9 @@ class TemplateDefinition(Patch):
         )
         if f_name in self.collector.templates_with_arg_deduction:
             return sc + tid + b" " + f_name + f_params + f_compound
+
+        if f_name == b"BadConditionCode":
+            return b""
 
         definition = b"#define DEFINE_" + f_name + b"(" + b", ".join(t_params) + b")\n"
         definition += (

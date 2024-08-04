@@ -50,6 +50,7 @@ from autosync.cpptranslator.patches.IsPredicate import IsPredicate
 from autosync.cpptranslator.patches.IsRegImm import IsOperandRegImm
 from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
 from autosync.cpptranslator.patches.LLVMunreachable import LLVMUnreachable
+from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
 from autosync.cpptranslator.patches.LLVM_DEBUG import LLVM_DEBUG
 from autosync.cpptranslator.patches.MethodToFunctions import MethodToFunction
 from autosync.cpptranslator.patches.MethodTypeQualifier import MethodTypeQualifier
@@ -154,6 +155,7 @@ class Translator:
         Assert.__name__: 0,  # ◁─────────┐ The llvm_unreachable calls are replaced with asserts.
         LLVMUnreachable.__name__: 1,  # ─┘ Those assert should stay.
         LLVMFallThrough.__name__: 0,
+        BadConditionCode.__name__: 0,
         LLVM_DEBUG.__name__: 0,
         DeclarationInConditionalClause.__name__: 0,
         StreamOperations.__name__: 0,
@@ -289,6 +291,10 @@ class Translator:
                     patch = Assert(p)
                 case LLVMFallThrough.__name__:
                     patch = LLVMFallThrough(p)
+                case LLVMDebug.__name__:
+                    patch = LLVMDebug(p)
+                case BadConditionCode.__name__:
+                    patch = BadConditionCode(p)
                 case DeclarationInConditionalClause.__name__:
                     patch = DeclarationInConditionalClause(p)
                 case OutStreamParam.__name__:
@@ -429,10 +435,15 @@ class Translator:
                 # Each patch has a capture which includes the whole subtree searched for.
                 # Additionally, it can include captures within this subtree.
                 # Here we bundle these captures together.
+                # if "template_declaration" in pattern:
+                #     print(self.tree.root_node)
                 query: Query = self.ts_cpp_lang.query(pattern)
                 captures_bundle: [[(Node, str)]] = list()
                 for q in query.captures(self.tree.root_node):
                     if q[1] == patch.get_main_capture_name():
+                        # from autosync.cpptranslator.patches.Helper import get_text
+                        # if patch.get_main_capture_name() == "template_def":
+                        #     print(get_text(self.src, q[0].start_byte, q[0].end_byte).decode())
                         # The main capture the patch is looking for.
                         captures_bundle.append([q])
                     else:

@@ -25,7 +25,7 @@ ARCH_LLVM_NAMING = [
     "Mips",
     "Xtensa",
     "TriCore",
-]
+    "ARC"]
 
 # Maps the target full name to the name used in code (and pretty much everywhere else).
 TARGET_TO_IN_CODE_NAME = {

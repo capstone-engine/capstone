@@ -264,5 +264,31 @@
     "files_for_template_search": [],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []
+  },
+  "ARC": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/ARC/Disassembler/ARCDisassembler.cpp",
+        "out": "ARCDisassembler.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/ARC/MCTargetDesc/ARCInstPrinter.cpp",
+        "out": "ARCInstPrinter.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/ARC/MCTargetDesc/ARCInstPrinter.h",
+        "out": "ARCInstPrinter.h"
+      },
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/ARC/MCTargetDesc/ARCInfo.h",
+        "out": "ARCInfo.h"
+      }
+    ],
+    "files_for_template_search": [
+      "{CPP_INC_OUT_DIR}/ARCGenDisassemblerTables.inc",
+      "{CPP_INC_OUT_DIR}/ARCGenAsmWriter.inc",
+      "{LLVM_ROOT}/llvm/lib/Target/ARC/Disassembler/ARCDisassembler.cpp",
+      "{LLVM_ROOT}/llvm/lib/Target/ARC/MCTargetDesc/ARCInstPrinter.cpp"
+    ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
   }
 }

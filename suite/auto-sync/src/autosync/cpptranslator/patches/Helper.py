@@ -200,8 +200,10 @@ def parse_function_capture(
             case "template_parameter_list":
                 temp_args += t if not temp_args else b" " + t
             case "storage_class_specifier":
+                # print(t)
                 st_class_ids += b" " + t
-            case "type_identifier" | "primitive_type":
+            case "type_identifier" | "primitive_type" | "type_qualifier":
+                # print(t)
                 ret_type += b" " + t
             case "identifier":
                 func_name += t if not func_name else b" " + t
