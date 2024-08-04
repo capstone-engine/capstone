@@ -76,6 +76,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->sparc) {
 		clone->sparc = test_detail_sparc_clone(detail->sparc);
 	}
+	if (detail->sh) {
+		clone->sh = test_detail_sh_clone(detail->sh);
+	}
 
 	return clone;
 }
@@ -130,6 +133,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->sparc) {
 		test_detail_sparc_free(detail->sparc);
+	}
+	if (detail->sh) {
+		test_detail_sh_free(detail->sh);
 	}
 
 	cs_mem_free(detail);
@@ -209,6 +215,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->sparc) {
 		return test_expected_sparc(handle, &actual->sparc,
 					     expected->sparc);
+	}
+	if (expected->sh) {
+		return test_expected_sh(handle, &actual->sh,
+					     expected->sh);
 	}
 	return true;
 }
