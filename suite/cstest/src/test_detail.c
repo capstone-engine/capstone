@@ -79,6 +79,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->sh) {
 		clone->sh = test_detail_sh_clone(detail->sh);
 	}
+	if (detail->mips) {
+		clone->mips = test_detail_mips_clone(detail->mips);
+	}
 
 	return clone;
 }
@@ -136,6 +139,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->sh) {
 		test_detail_sh_free(detail->sh);
+	}
+	if (detail->mips) {
+		test_detail_mips_free(detail->mips);
 	}
 
 	cs_mem_free(detail);
@@ -219,6 +225,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->sh) {
 		return test_expected_sh(handle, &actual->sh,
 					     expected->sh);
+	}
+	if (expected->mips) {
+		return test_expected_mips(handle, &actual->mips,
+					     expected->mips);
 	}
 	return true;
 }

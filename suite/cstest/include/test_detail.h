@@ -20,6 +20,7 @@
 #include "test_detail_bpf.h"
 #include "test_detail_hppa.h"
 #include "test_detail_xcore.h"
+#include "test_detail_mips.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
 #include <cyaml/cyaml.h>
@@ -38,6 +39,7 @@ typedef struct {
 	TestDetailSparc *sparc;
 	TestDetailXCore *xcore;
 	TestDetailSH *sh;
+	TestDetailMips *mips;
 	// cs_x86_test x86;
 	// cs_m68k_test m68k;
 	// cs_mips_test mips;
@@ -100,6 +102,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"sh", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		sh, test_detail_sh_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR(
+		"mips", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
+		mips, test_detail_mips_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),
