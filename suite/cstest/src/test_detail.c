@@ -58,6 +58,16 @@ TestDetail *test_detail_clone(TestDetail *detail)
 		clone->tricore = test_detail_tricore_clone(detail->tricore);
 	}
 
+	if (detail->alpha) {
+		clone->alpha = test_detail_alpha_clone(detail->alpha);
+	}
+	if (detail->bpf) {
+		clone->bpf = test_detail_bpf_clone(detail->bpf);
+	}
+	if (detail->hppa) {
+		clone->hppa = test_detail_hppa_clone(detail->hppa);
+	}
+
 	return clone;
 }
 
@@ -93,6 +103,15 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->tricore) {
 		test_detail_tricore_free(detail->tricore);
+	}
+	if (detail->alpha) {
+		test_detail_alpha_free(detail->alpha);
+	}
+	if (detail->hppa) {
+		test_detail_hppa_free(detail->hppa);
+	}
+	if (detail->bpf) {
+		test_detail_bpf_free(detail->bpf);
 	}
 
 	cs_mem_free(detail);
@@ -130,7 +149,7 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 		compare_uint32_ret(actual->groups_count, expected->groups_count,
 				   false);
 		for (size_t i = 0; i < actual->groups_count; ++i) {
-			compare_reg_ret(*handle, actual->groups[i],
+			compare_enum_ret(actual->groups[i],
 					expected->groups[i], false);
 		}
 	}
@@ -148,6 +167,18 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->tricore) {
 		return test_expected_tricore(handle, &actual->tricore,
 					     expected->tricore);
+	}
+	if (expected->alpha) {
+		return test_expected_alpha(handle, &actual->alpha,
+					     expected->alpha);
+	}
+	if (expected->bpf) {
+		return test_expected_bpf(handle, &actual->bpf,
+					     expected->bpf);
+	}
+	if (expected->hppa) {
+		return test_expected_hppa(handle, &actual->hppa,
+					     expected->hppa);
 	}
 	return true;
 }
