@@ -70,6 +70,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->xcore) {
 		clone->xcore = test_detail_xcore_clone(detail->xcore);
 	}
+	if (detail->systemz) {
+		clone->systemz = test_detail_systemz_clone(detail->systemz);
+	}
 
 	return clone;
 }
@@ -118,6 +121,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->xcore) {
 		test_detail_xcore_free(detail->xcore);
+	}
+	if (detail->systemz) {
+		test_detail_systemz_free(detail->systemz);
 	}
 
 	cs_mem_free(detail);
@@ -189,6 +195,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->xcore) {
 		return test_expected_xcore(handle, &actual->xcore,
 					     expected->xcore);
+	}
+	if (expected->systemz) {
+		return test_expected_systemz(handle, &actual->sysz,
+					     expected->systemz);
 	}
 	return true;
 }
