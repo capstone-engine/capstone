@@ -16,6 +16,7 @@
 #include "test_detail_alpha.h"
 #include "test_detail_bpf.h"
 #include "test_detail_hppa.h"
+#include "test_detail_xcore.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
 #include <cyaml/cyaml.h>
@@ -30,22 +31,19 @@ typedef struct {
 	TestDetailAlpha *alpha;
 	TestDetailHPPA *hppa;
 	TestDetailBPF *bpf;
+	TestDetailXCore *xcore;
 	// cs_x86_test x86;
 	// cs_m68k_test m68k;
 	// cs_mips_test mips;
 	// cs_sparc_test sparc;
 	// cs_sysz_test sysz;
-	// cs_xcore_test xcore;
 	// cs_tms320c64x_test tms320c64x;
 	// cs_m680x_test m680x;
 	// cs_evm_test evm;
 	// cs_mos65xx_test mos65xx;
 	// cs_wasm_test wasm;
-	// cs_bpf_test bpf;
 	// cs_riscv_test riscv;
 	// cs_sh_test sh;
-	// cs_alpha_test alpha;
-	// cs_hppa_test hppa;
 	// cs_loongarch_test loongarch;
 
 	char **regs_read;
@@ -86,6 +84,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"bpf", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		bpf, test_detail_bpf_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR(
+		"xcore", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
+		xcore, test_detail_xcore_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),

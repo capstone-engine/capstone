@@ -637,6 +637,9 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "TRICORE_OP_IMM", .val = TRICORE_OP_IMM },
 	{ .str = "TRICORE_OP_MEM", .val = TRICORE_OP_MEM },
 	{ .str = "TRICORE_OP_REG", .val = TRICORE_OP_REG },
+	{ .str = "XCORE_OP_IMM", .val = XCORE_OP_IMM },
+	{ .str = "XCORE_OP_MEM", .val = XCORE_OP_MEM },
+	{ .str = "XCORE_OP_REG", .val = XCORE_OP_REG },
 	{ .str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", .val = 0xffffff }, // For testing
 };
 

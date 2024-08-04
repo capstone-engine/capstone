@@ -67,6 +67,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->hppa) {
 		clone->hppa = test_detail_hppa_clone(detail->hppa);
 	}
+	if (detail->xcore) {
+		clone->xcore = test_detail_xcore_clone(detail->xcore);
+	}
 
 	return clone;
 }
@@ -112,6 +115,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->bpf) {
 		test_detail_bpf_free(detail->bpf);
+	}
+	if (detail->xcore) {
+		test_detail_xcore_free(detail->xcore);
 	}
 
 	cs_mem_free(detail);
@@ -179,6 +185,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->hppa) {
 		return test_expected_hppa(handle, &actual->hppa,
 					     expected->hppa);
+	}
+	if (expected->xcore) {
+		return test_expected_xcore(handle, &actual->xcore,
+					     expected->xcore);
 	}
 	return true;
 }
