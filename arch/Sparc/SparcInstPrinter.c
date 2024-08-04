@@ -354,9 +354,9 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 	mnem = printAliasInstr(MI, O, Info);
 	if (mnem) {
 		// fixup instruction id due to the change in alias instruction
-		unsigned cpy_len = sizeof(instr) < strlen(mnem) ? sizeof(instr) : strlen(mnem);
+		unsigned cpy_len = sizeof(instr) - 1 < strlen(mnem) ? sizeof(instr) - 1 : strlen(mnem);
 		memcpy(instr, mnem, cpy_len);
-		instr[cpy_len - 1] = '\0';
+		instr[cpy_len] = '\0';
 		// does this contains hint with a coma?
 		p = strchr(instr, ',');
 		if (p)
