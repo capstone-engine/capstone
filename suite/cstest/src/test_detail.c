@@ -73,6 +73,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->systemz) {
 		clone->systemz = test_detail_systemz_clone(detail->systemz);
 	}
+	if (detail->sparc) {
+		clone->sparc = test_detail_sparc_clone(detail->sparc);
+	}
 
 	return clone;
 }
@@ -124,6 +127,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->systemz) {
 		test_detail_systemz_free(detail->systemz);
+	}
+	if (detail->sparc) {
+		test_detail_sparc_free(detail->sparc);
 	}
 
 	cs_mem_free(detail);
@@ -199,6 +205,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->systemz) {
 		return test_expected_systemz(handle, &actual->sysz,
 					     expected->systemz);
+	}
+	if (expected->sparc) {
+		return test_expected_sparc(handle, &actual->sparc,
+					     expected->sparc);
 	}
 	return true;
 }

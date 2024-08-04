@@ -14,6 +14,7 @@
 #include "test_detail_ppc.h"
 #include "test_detail_tricore.h"
 #include "test_detail_systemz.h"
+#include "test_detail_sparc.h"
 #include "test_detail_alpha.h"
 #include "test_detail_bpf.h"
 #include "test_detail_hppa.h"
@@ -33,6 +34,7 @@ typedef struct {
 	TestDetailHPPA *hppa;
 	TestDetailBPF *bpf;
 	TestDetailSystemZ *systemz;
+	TestDetailSparc *sparc;
 	TestDetailXCore *xcore;
 	// cs_x86_test x86;
 	// cs_m68k_test m68k;
@@ -89,6 +91,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"systemz", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		systemz, test_detail_systemz_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR(
+		"sparc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
+		sparc, test_detail_sparc_mapping_schema),
 	CYAML_FIELD_MAPPING_PTR(
 		"xcore", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		xcore, test_detail_xcore_mapping_schema),
