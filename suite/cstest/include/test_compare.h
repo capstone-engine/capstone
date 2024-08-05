@@ -107,6 +107,17 @@ typedef int32_t tbool;
 		return ret_val; \
 	}
 
+/// Compares two int16_t values.
+/// It returns with @ret_val if they mismatch.
+#define compare_int16_ret(actual, expected, ret_val) \
+	if (((int16_t)actual) != ((int16_t)expected)) { \
+		fprintf(stderr, \
+			#actual " != " #expected ": 0x%" PRIx16 \
+				" != 0x%" PRIx16 "\n", \
+			actual, expected); \
+		return ret_val; \
+	}
+
 /// Compares two int32_t values.
 /// It returns with @ret_val if they mismatch.
 #define compare_int32_ret(actual, expected, ret_val) \

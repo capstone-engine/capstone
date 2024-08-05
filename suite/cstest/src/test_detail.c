@@ -85,6 +85,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->riscv) {
 		clone->riscv = test_detail_riscv_clone(detail->riscv);
 	}
+	if (detail->m680x) {
+		clone->m680x = test_detail_m680x_clone(detail->m680x);
+	}
 
 	return clone;
 }
@@ -148,6 +151,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->riscv) {
 		test_detail_riscv_free(detail->riscv);
+	}
+	if (detail->m680x) {
+		test_detail_m680x_free(detail->m680x);
 	}
 
 	cs_mem_free(detail);
@@ -239,6 +245,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->riscv) {
 		return test_expected_riscv(handle, &actual->riscv,
 					     expected->riscv);
+	}
+	if (expected->m680x) {
+		return test_expected_m680x(handle, &actual->m680x,
+					     expected->m680x);
 	}
 	return true;
 }

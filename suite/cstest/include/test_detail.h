@@ -23,6 +23,7 @@
 #include "test_detail_xcore.h"
 #include "test_detail_mips.h"
 #include "test_detail_riscv.h"
+#include "test_detail_m680x.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
 #include <cyaml/cyaml.h>
@@ -43,14 +44,13 @@ typedef struct {
 	TestDetailSH *sh;
 	TestDetailMips *mips;
 	TestDetailRISCV *riscv;
+	TestDetailM680x *m680x;
 	// cs_x86_test x86;
 	// cs_m68k_test m68k;
 	// cs_tms320c64x_test tms320c64x;
-	// cs_m680x_test m680x;
 	// cs_evm_test evm;
 	// cs_mos65xx_test mos65xx;
 	// cs_wasm_test wasm;
-	// cs_riscv_test riscv;
 	// cs_loongarch_test loongarch;
 
 	char **regs_read;
@@ -109,6 +109,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"riscv", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		riscv, test_detail_riscv_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR(
+		"m680x", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
+		m680x, test_detail_m680x_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),
