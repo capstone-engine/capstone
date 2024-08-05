@@ -12,6 +12,7 @@
 #include "test_detail_aarch64.h"
 #include "test_detail_arm.h"
 #include "test_detail_evm.h"
+#include "test_detail_loongarch.h"
 #include "test_detail_mos65xx.h"
 #include "test_detail_ppc.h"
 #include "test_detail_riscv.h"
@@ -51,10 +52,10 @@ typedef struct {
 	TestDetailTMS320c64x *tms320c64x;
 	TestDetailMos65xx *mos65xx;
 	TestDetailEVM *evm;
+	TestDetailLoongArch *loongarch;
 	// cs_x86_test x86;
 	// cs_m68k_test m68k;
 	// cs_wasm_test wasm;
-	// cs_loongarch_test loongarch;
 
 	char **regs_read;
 	uint8_t regs_read_count;
@@ -123,6 +124,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR("evm", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 				TestDetail, evm,
 				test_detail_evm_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR(
+		"loongarch", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetail, loongarch, test_detail_loongarch_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),

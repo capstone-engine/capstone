@@ -98,6 +98,10 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->evm) {
 		clone->evm = test_detail_evm_clone(detail->evm);
 	}
+	if (detail->loongarch) {
+		clone->loongarch =
+			test_detail_loongarch_clone(detail->loongarch);
+	}
 
 	return clone;
 }
@@ -173,6 +177,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->evm) {
 		test_detail_evm_free(detail->evm);
+	}
+	if (detail->loongarch) {
+		test_detail_loongarch_free(detail->loongarch);
 	}
 
 	cs_mem_free(detail);
@@ -277,6 +284,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	}
 	if (expected->evm) {
 		return test_expected_evm(handle, &actual->evm, expected->evm);
+	}
+	if (expected->loongarch) {
+		return test_expected_loongarch(handle, &actual->loongarch,
+					       expected->loongarch);
 	}
 	return true;
 }
