@@ -89,7 +89,8 @@ TestDetail *test_detail_clone(TestDetail *detail)
 		clone->m680x = test_detail_m680x_clone(detail->m680x);
 	}
 	if (detail->tms320c64x) {
-		clone->tms320c64x = test_detail_tms320c64x_clone(detail->tms320c64x);
+		clone->tms320c64x =
+			test_detail_tms320c64x_clone(detail->tms320c64x);
 	}
 
 	return clone;
@@ -197,8 +198,8 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 		compare_uint32_ret(actual->groups_count, expected->groups_count,
 				   false);
 		for (size_t i = 0; i < actual->groups_count; ++i) {
-			compare_enum_ret(actual->groups[i],
-					expected->groups[i], false);
+			compare_enum_ret(actual->groups[i], expected->groups[i],
+					 false);
 		}
 	}
 
@@ -218,19 +219,18 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	}
 	if (expected->alpha) {
 		return test_expected_alpha(handle, &actual->alpha,
-					     expected->alpha);
+					   expected->alpha);
 	}
 	if (expected->bpf) {
-		return test_expected_bpf(handle, &actual->bpf,
-					     expected->bpf);
+		return test_expected_bpf(handle, &actual->bpf, expected->bpf);
 	}
 	if (expected->hppa) {
 		return test_expected_hppa(handle, &actual->hppa,
-					     expected->hppa);
+					  expected->hppa);
 	}
 	if (expected->xcore) {
 		return test_expected_xcore(handle, &actual->xcore,
-					     expected->xcore);
+					   expected->xcore);
 	}
 	if (expected->systemz) {
 		return test_expected_systemz(handle, &actual->sysz,
@@ -238,27 +238,26 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	}
 	if (expected->sparc) {
 		return test_expected_sparc(handle, &actual->sparc,
-					     expected->sparc);
+					   expected->sparc);
 	}
 	if (expected->sh) {
-		return test_expected_sh(handle, &actual->sh,
-					     expected->sh);
+		return test_expected_sh(handle, &actual->sh, expected->sh);
 	}
 	if (expected->mips) {
 		return test_expected_mips(handle, &actual->mips,
-					     expected->mips);
+					  expected->mips);
 	}
 	if (expected->riscv) {
 		return test_expected_riscv(handle, &actual->riscv,
-					     expected->riscv);
+					   expected->riscv);
 	}
 	if (expected->m680x) {
 		return test_expected_m680x(handle, &actual->m680x,
-					     expected->m680x);
+					   expected->m680x);
 	}
 	if (expected->tms320c64x) {
 		return test_expected_tms320c64x(handle, &actual->tms320c64x,
-					     expected->tms320c64x);
+						expected->tms320c64x);
 	}
 	return true;
 }

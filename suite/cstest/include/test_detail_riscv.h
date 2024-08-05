@@ -21,7 +21,8 @@ typedef struct {
 static const cyaml_schema_field_t test_detail_riscv_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("type", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailRISCVOp, type, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("access", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+	CYAML_FIELD_STRING_PTR("access",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailRISCVOp, access, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailRISCVOp, reg, 0, CYAML_UNLIMITED),
@@ -61,6 +62,6 @@ TestDetailRISCVOp *test_detail_riscv_op_clone(const TestDetailRISCVOp *detail);
 void test_detail_riscv_op_free(TestDetailRISCVOp *detail);
 
 bool test_expected_riscv(csh *handle, const cs_riscv *actual,
-		       const TestDetailRISCV *expected);
+			 const TestDetailRISCV *expected);
 
 #endif // TEST_DETAIL_RISCV_H

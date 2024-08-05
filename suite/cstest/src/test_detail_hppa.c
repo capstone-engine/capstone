@@ -31,7 +31,7 @@ TestDetailHPPA *test_detail_hppa_clone(const TestDetailHPPA *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailHPPAOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailHPPAOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
@@ -57,7 +57,8 @@ TestDetailHPPAOp *test_detail_hppa_op_clone(const TestDetailHPPAOp *op)
 	clone->imm = op->imm;
 	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
 	clone->mem_space = op->mem_space ? strdup(op->mem_space) : NULL;
-	clone->mem_base_access = op->mem_base_access ? strdup(op->mem_base_access) : NULL;
+	clone->mem_base_access =
+		op->mem_base_access ? strdup(op->mem_base_access) : NULL;
 
 	return clone;
 }
@@ -77,7 +78,7 @@ void test_detail_hppa_op_free(TestDetailHPPAOp *op)
 }
 
 bool test_expected_hppa(csh *handle, const cs_hppa *actual,
-			   const TestDetailHPPA *expected)
+			const TestDetailHPPA *expected)
 {
 	assert(handle && actual && expected);
 
@@ -107,7 +108,8 @@ bool test_expected_hppa(csh *handle, const cs_hppa *actual,
 					false);
 			compare_reg_ret(*handle, op->mem.space, eop->mem_space,
 					false);
-			compare_enum_ret(op->mem.base_access, eop->mem_base_access, false);
+			compare_enum_ret(op->mem.base_access,
+					 eop->mem_base_access, false);
 			break;
 		}
 	}

@@ -27,9 +27,9 @@ static const cyaml_schema_field_t test_detail_sparc_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("mem_base",
 			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparcOp, mem_base, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("mem_index",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestDetailSparcOp, mem_index, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"mem_index", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailSparcOp, mem_index, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailSparcOp,
 			mem_disp),
 	CYAML_FIELD_END
@@ -48,11 +48,9 @@ typedef struct {
 } TestDetailSparc;
 
 static const cyaml_schema_field_t test_detail_sparc_mapping_schema[] = {
-	CYAML_FIELD_STRING_PTR("cc",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+	CYAML_FIELD_STRING_PTR("cc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparc, cc, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("hint",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+	CYAML_FIELD_STRING_PTR("hint", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparc, hint, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_SEQUENCE(
 		"operands", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
@@ -70,6 +68,6 @@ TestDetailSparcOp *test_detail_sparc_op_clone(const TestDetailSparcOp *detail);
 void test_detail_sparc_op_free(TestDetailSparcOp *detail);
 
 bool test_expected_sparc(csh *handle, const cs_sparc *actual,
-		       const TestDetailSparc *expected);
+			 const TestDetailSparc *expected);
 
 #endif // TEST_DETAIL_SPARC_H

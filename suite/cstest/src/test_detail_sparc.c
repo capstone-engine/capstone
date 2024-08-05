@@ -34,7 +34,7 @@ TestDetailSparc *test_detail_sparc_clone(const TestDetailSparc *detail)
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
 	clone->hint = detail->hint ? strdup(detail->hint) : NULL;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailSparcOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailSparcOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
@@ -77,7 +77,7 @@ void test_detail_sparc_op_free(TestDetailSparcOp *op)
 }
 
 bool test_expected_sparc(csh *handle, const cs_sparc *actual,
-		       const TestDetailSparc *expected)
+			 const TestDetailSparc *expected)
 {
 	assert(handle && actual && expected);
 
@@ -107,8 +107,8 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 		case SPARC_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.index,
-					eop->mem_index, false);
+			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+					false);
 			compare_int32_ret(op->mem.disp, eop->mem_disp, false);
 			break;
 		}

@@ -25,12 +25,12 @@ static const cyaml_schema_field_t test_detail_systemz_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSystemZOp, reg, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("imm", CYAML_FLAG_OPTIONAL, TestDetailSystemZOp, imm),
-	CYAML_FIELD_STRING_PTR("mem_base",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestDetailSystemZOp, mem_base, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("mem_index",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestDetailSystemZOp, mem_index, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"mem_base", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailSystemZOp, mem_base, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"mem_index", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailSystemZOp, mem_index, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailSystemZOp,
 			mem_disp),
 	CYAML_FIELD_INT("mem_length", CYAML_FLAG_OPTIONAL, TestDetailSystemZOp,
@@ -61,10 +61,11 @@ TestDetailSystemZ *test_detail_systemz_clone(const TestDetailSystemZ *detail);
 void test_detail_systemz_free(TestDetailSystemZ *detail);
 
 TestDetailSystemZOp *test_detail_systemz_op_new();
-TestDetailSystemZOp *test_detail_systemz_op_clone(const TestDetailSystemZOp *detail);
+TestDetailSystemZOp *
+test_detail_systemz_op_clone(const TestDetailSystemZOp *detail);
 void test_detail_systemz_op_free(TestDetailSystemZOp *detail);
 
 bool test_expected_systemz(csh *handle, const cs_sysz *actual,
-		       const TestDetailSystemZ *expected);
+			   const TestDetailSystemZ *expected);
 
 #endif // TEST_DETAIL_SYSTEMZ_H

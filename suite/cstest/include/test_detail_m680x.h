@@ -24,17 +24,22 @@ static const cyaml_schema_value_t flag_schema = {
 };
 
 static const cyaml_schema_field_t test_detail_m680x_idx_mapping_schema[] = {
-	CYAML_FIELD_STRING_PTR("base_reg",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestDetailM680xIdx, base_reg, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("offset_reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestDetailM680xIdx, offset_reg, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_INT("offset", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx, offset),
-	CYAML_FIELD_INT("offset_addr", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx, offset_addr),
-	CYAML_FIELD_INT("offset_bits", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx, offset_bits),
-	CYAML_FIELD_INT("inc_dec", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx, inc_dec),
-	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetailM680xIdx, flags,
-			     &flag_schema, 0,
+	CYAML_FIELD_STRING_PTR(
+		"base_reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailM680xIdx, base_reg, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"offset_reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailM680xIdx, offset_reg, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_INT("offset", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx,
+			offset),
+	CYAML_FIELD_INT("offset_addr", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx,
+			offset_addr),
+	CYAML_FIELD_INT("offset_bits", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx,
+			offset_bits),
+	CYAML_FIELD_INT("inc_dec", CYAML_FLAG_OPTIONAL, TestDetailM680xIdx,
+			inc_dec),
+	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			     TestDetailM680xIdx, flags, &flag_schema, 0,
 			     CYAML_UNLIMITED), // 0-MAX flags
 };
 
@@ -61,27 +66,27 @@ static const cyaml_schema_field_t test_detail_m680x_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("access",
 			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailM680xOp, access, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_MAPPING_PTR("idx", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetailM680xOp, idx,
+	CYAML_FIELD_MAPPING_PTR("idx", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetailM680xOp, idx,
 				test_detail_m680x_idx_mapping_schema),
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailM680xOp, reg, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("imm", CYAML_FLAG_OPTIONAL, TestDetailM680xOp, imm),
 	CYAML_FIELD_UINT("rel_address", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
-			rel_address),
+			 rel_address),
 	CYAML_FIELD_INT("rel_offset", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
 			rel_offset),
 	CYAML_FIELD_UINT("ext_address", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
-			ext_address),
+			 ext_address),
 	CYAML_FIELD_INT("ext_indirect", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
 			ext_indirect),
 	CYAML_FIELD_UINT("direct_addr", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
-			direct_addr),
-	CYAML_FIELD_BOOL("direct_addr_set", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
-			direct_addr_set),
+			 direct_addr),
+	CYAML_FIELD_BOOL("direct_addr_set", CYAML_FLAG_OPTIONAL,
+			 TestDetailM680xOp, direct_addr_set),
 	CYAML_FIELD_UINT("const_val", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
-			const_val),
-	CYAML_FIELD_UINT("size", CYAML_FLAG_OPTIONAL, TestDetailM680xOp,
-			size),
+			 const_val),
+	CYAML_FIELD_UINT("size", CYAML_FLAG_OPTIONAL, TestDetailM680xOp, size),
 	CYAML_FIELD_END
 };
 
@@ -98,8 +103,8 @@ typedef struct {
 } TestDetailM680x;
 
 static const cyaml_schema_field_t test_detail_m680x_mapping_schema[] = {
-	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetailM680x, flags,
-			     &flag_schema, 0,
+	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			     TestDetailM680x, flags, &flag_schema, 0,
 			     CYAML_UNLIMITED), // 0-MAX flags
 	CYAML_FIELD_SEQUENCE(
 		"operands", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
@@ -117,10 +122,11 @@ TestDetailM680xOp *test_detail_m680x_op_clone(const TestDetailM680xOp *detail);
 void test_detail_m680x_op_free(TestDetailM680xOp *detail);
 
 TestDetailM680xIdx *test_detail_m680x_idx_new();
-TestDetailM680xIdx *test_detail_m680x_idx_clone(const TestDetailM680xIdx *detail);
+TestDetailM680xIdx *
+test_detail_m680x_idx_clone(const TestDetailM680xIdx *detail);
 void test_detail_m680x_idx_free(TestDetailM680xIdx *detail);
 
 bool test_expected_m680x(csh *handle, const cs_m680x *actual,
-		       const TestDetailM680x *expected);
+			 const TestDetailM680x *expected);
 
 #endif // TEST_DETAIL_M680X_H

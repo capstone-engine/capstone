@@ -30,7 +30,7 @@ TestDetailSystemZ *test_detail_systemz_clone(const TestDetailSystemZ *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailSystemZOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailSystemZOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
@@ -74,7 +74,7 @@ void test_detail_systemz_op_free(TestDetailSystemZOp *op)
 }
 
 bool test_expected_systemz(csh *handle, const cs_sysz *actual,
-		       const TestDetailSystemZ *expected)
+			   const TestDetailSystemZ *expected)
 {
 	assert(handle && actual && expected);
 
@@ -99,10 +99,11 @@ bool test_expected_systemz(csh *handle, const cs_sysz *actual,
 		case SYSZ_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.index,
-					eop->mem_index, false);
+			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+					false);
 			compare_int64_ret(op->mem.disp, eop->mem_disp, false);
-			compare_uint64_ret(op->mem.length, eop->mem_length, false);
+			compare_uint64_ret(op->mem.length, eop->mem_length,
+					   false);
 			break;
 		}
 	}

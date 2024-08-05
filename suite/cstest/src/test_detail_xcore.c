@@ -30,7 +30,7 @@ TestDetailXCore *test_detail_xcore_clone(const TestDetailXCore *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailXCoreOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailXCoreOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
@@ -74,7 +74,7 @@ void test_detail_xcore_op_free(TestDetailXCoreOp *op)
 }
 
 bool test_expected_xcore(csh *handle, const cs_xcore *actual,
-		       const TestDetailXCore *expected)
+			 const TestDetailXCore *expected)
 {
 	assert(handle && actual && expected);
 
@@ -98,11 +98,12 @@ bool test_expected_xcore(csh *handle, const cs_xcore *actual,
 		case XCORE_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.index,
-					eop->mem_index, false);
+			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+					false);
 			compare_int_ret(op->mem.disp, eop->mem_disp, false);
 			if (eop->mem_direct) {
-				compare_int_ret(op->mem.direct, eop->mem_direct, false);
+				compare_int_ret(op->mem.direct, eop->mem_direct,
+						false);
 			}
 			break;
 		}

@@ -36,9 +36,9 @@ static const cyaml_schema_field_t test_detail_bpf_op_mapping_schema[] = {
 	CYAML_FIELD_INT("msh", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, msh),
 	CYAML_FIELD_STRING_PTR("ext", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailBPFOp, ext, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR(
-		"mem_base", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetailBPFOp, mem_base, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("mem_base",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailBPFOp, mem_base, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
 			mem_disp),
 	CYAML_FIELD_END
@@ -70,11 +70,10 @@ TestDetailBPF *test_detail_bpf_clone(const TestDetailBPF *detail);
 void test_detail_bpf_free(TestDetailBPF *detail);
 
 TestDetailBPFOp *test_detail_bpf_op_new();
-TestDetailBPFOp *
-test_detail_bpf_op_clone(const TestDetailBPFOp *detail);
+TestDetailBPFOp *test_detail_bpf_op_clone(const TestDetailBPFOp *detail);
 void test_detail_bpf_op_free(TestDetailBPFOp *detail);
 
 bool test_expected_bpf(csh *handle, const cs_bpf *actual,
-			   const TestDetailBPF *expected);
+		       const TestDetailBPF *expected);
 
 #endif // TEST_DETAIL_BPF_H

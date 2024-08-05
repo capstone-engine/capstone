@@ -51,11 +51,10 @@ TestDetailAlpha *test_detail_alpha_clone(const TestDetailAlpha *detail);
 void test_detail_alpha_free(TestDetailAlpha *detail);
 
 TestDetailAlphaOp *test_detail_alpha_op_new();
-TestDetailAlphaOp *
-test_detail_alpha_op_clone(const TestDetailAlphaOp *detail);
+TestDetailAlphaOp *test_detail_alpha_op_clone(const TestDetailAlphaOp *detail);
 void test_detail_alpha_op_free(TestDetailAlphaOp *detail);
 
 bool test_expected_alpha(csh *handle, const cs_alpha *actual,
-			   const TestDetailAlpha *expected);
+			 const TestDetailAlpha *expected);
 
 #endif // TEST_DETAIL_ALPHA_H

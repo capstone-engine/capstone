@@ -90,9 +90,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"hppa", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		hppa, test_detail_hppa_mapping_schema),
-	CYAML_FIELD_MAPPING_PTR(
-		"bpf", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
-		bpf, test_detail_bpf_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("bpf", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetail, bpf,
+				test_detail_bpf_mapping_schema),
 	CYAML_FIELD_MAPPING_PTR(
 		"systemz", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		systemz, test_detail_systemz_mapping_schema),
@@ -102,9 +102,8 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"xcore", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		xcore, test_detail_xcore_mapping_schema),
-	CYAML_FIELD_MAPPING_PTR(
-		"sh", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
-		sh, test_detail_sh_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("sh", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetail, sh, test_detail_sh_mapping_schema),
 	CYAML_FIELD_MAPPING_PTR(
 		"mips", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		mips, test_detail_mips_mapping_schema),
@@ -115,8 +114,8 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 		"m680x", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		m680x, test_detail_m680x_mapping_schema),
 	CYAML_FIELD_MAPPING_PTR(
-		"tms320c64x", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
-		tms320c64x, test_detail_tms320c64x_mapping_schema),
+		"tms320c64x", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetail, tms320c64x, test_detail_tms320c64x_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),

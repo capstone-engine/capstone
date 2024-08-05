@@ -30,7 +30,7 @@ TestDetailMips *test_detail_mips_clone(const TestDetailMips *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailMipsOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailMipsOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
@@ -71,7 +71,7 @@ void test_detail_mips_op_free(TestDetailMipsOp *op)
 }
 
 bool test_expected_mips(csh *handle, const cs_mips *actual,
-		       const TestDetailMips *expected)
+			const TestDetailMips *expected)
 {
 	assert(handle && actual && expected);
 
@@ -82,8 +82,7 @@ bool test_expected_mips(csh *handle, const cs_mips *actual,
 		compare_enum_ret(op->type, eop->type, false);
 		switch (op->type) {
 		default:
-			fprintf(stderr,
-				"sh op type %" PRId32 " not handled.\n",
+			fprintf(stderr, "sh op type %" PRId32 " not handled.\n",
 				op->type);
 			return false;
 		case MIPS_OP_REG:

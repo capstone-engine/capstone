@@ -30,7 +30,7 @@ TestDetailSH *test_detail_sh_clone(const TestDetailSH *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailSHOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailSHOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
@@ -73,7 +73,7 @@ void test_detail_sh_op_free(TestDetailSHOp *op)
 }
 
 bool test_expected_sh(csh *handle, const cs_sh *actual,
-		       const TestDetailSH *expected)
+		      const TestDetailSH *expected)
 {
 	assert(handle && actual && expected);
 
@@ -84,8 +84,7 @@ bool test_expected_sh(csh *handle, const cs_sh *actual,
 		compare_enum_ret(op->type, eop->type, false);
 		switch (op->type) {
 		default:
-			fprintf(stderr,
-				"sh op type %" PRId32 " not handled.\n",
+			fprintf(stderr, "sh op type %" PRId32 " not handled.\n",
 				op->type);
 			return false;
 		case SH_OP_REG:

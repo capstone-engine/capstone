@@ -58,6 +58,6 @@ TestDetailMipsOp *test_detail_mips_op_clone(const TestDetailMipsOp *detail);
 void test_detail_mips_op_free(TestDetailMipsOp *detail);
 
 bool test_expected_mips(csh *handle, const cs_mips *actual,
-		       const TestDetailMips *expected);
+			const TestDetailMips *expected);
 
 #endif // TEST_DETAIL_MIPS_H

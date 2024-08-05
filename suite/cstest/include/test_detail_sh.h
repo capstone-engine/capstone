@@ -62,6 +62,6 @@ TestDetailSHOp *test_detail_sh_op_clone(const TestDetailSHOp *detail);
 void test_detail_sh_op_free(TestDetailSHOp *detail);
 
 bool test_expected_sh(csh *handle, const cs_sh *actual,
-		       const TestDetailSH *expected);
+		      const TestDetailSH *expected);
 
 #endif // TEST_DETAIL_SH_H

@@ -28,12 +28,12 @@ static const cyaml_schema_field_t test_detail_hppa_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailHPPAOp, reg, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("imm", CYAML_FLAG_OPTIONAL, TestDetailHPPAOp, imm),
-	CYAML_FIELD_STRING_PTR(
-		"mem_base", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetailHPPAOp, mem_base, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR(
-		"mem_space", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetailHPPAOp, mem_space, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("mem_base",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailHPPAOp, mem_base, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("mem_space",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailHPPAOp, mem_space, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR(
 		"mem_base_access", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetailHPPAOp, mem_base_access, 0, CYAML_UNLIMITED),
@@ -63,11 +63,10 @@ TestDetailHPPA *test_detail_hppa_clone(const TestDetailHPPA *detail);
 void test_detail_hppa_free(TestDetailHPPA *detail);
 
 TestDetailHPPAOp *test_detail_hppa_op_new();
-TestDetailHPPAOp *
-test_detail_hppa_op_clone(const TestDetailHPPAOp *detail);
+TestDetailHPPAOp *test_detail_hppa_op_clone(const TestDetailHPPAOp *detail);
 void test_detail_hppa_op_free(TestDetailHPPAOp *detail);
 
 bool test_expected_hppa(csh *handle, const cs_hppa *actual,
-			   const TestDetailHPPA *expected);
+			const TestDetailHPPA *expected);
 
 #endif // TEST_DETAIL_HPPA_H

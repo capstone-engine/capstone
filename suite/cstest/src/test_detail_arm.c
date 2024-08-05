@@ -35,7 +35,7 @@ TestDetailARM *test_detail_arm_clone(TestDetailARM *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailARMOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailARMOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

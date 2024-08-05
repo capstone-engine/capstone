@@ -34,7 +34,7 @@ TestDetailAArch64 *test_detail_aarch64_clone(TestDetailAArch64 *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailAArch64Op*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailAArch64Op *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

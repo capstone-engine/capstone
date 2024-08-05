@@ -30,7 +30,7 @@ TestDetailRISCV *test_detail_riscv_clone(const TestDetailRISCV *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailRISCVOp*),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailRISCVOp *),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
@@ -73,7 +73,7 @@ void test_detail_riscv_op_free(TestDetailRISCVOp *op)
 }
 
 bool test_expected_riscv(csh *handle, const cs_riscv *actual,
-		       const TestDetailRISCV *expected)
+			 const TestDetailRISCV *expected)
 {
 	assert(handle && actual && expected);
 
@@ -85,8 +85,7 @@ bool test_expected_riscv(csh *handle, const cs_riscv *actual,
 		compare_enum_ret(op->access, eop->access, false);
 		switch (op->type) {
 		default:
-			fprintf(stderr,
-				"sh op type %" PRId32 " not handled.\n",
+			fprintf(stderr, "sh op type %" PRId32 " not handled.\n",
 				op->type);
 			return false;
 		case RISCV_OP_REG:

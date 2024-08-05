@@ -28,9 +28,9 @@ static const cyaml_schema_field_t test_detail_xcore_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("mem_base",
 			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailXCoreOp, mem_base, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("mem_index",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestDetailXCoreOp, mem_index, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"mem_index", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailXCoreOp, mem_index, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailXCoreOp,
 			mem_disp),
 	CYAML_FIELD_INT("mem_direct", CYAML_FLAG_OPTIONAL, TestDetailXCoreOp,
@@ -65,6 +65,6 @@ TestDetailXCoreOp *test_detail_xcore_op_clone(const TestDetailXCoreOp *detail);
 void test_detail_xcore_op_free(TestDetailXCoreOp *detail);
 
 bool test_expected_xcore(csh *handle, const cs_xcore *actual,
-		       const TestDetailXCore *expected);
+			 const TestDetailXCore *expected);
 
 #endif // TEST_DETAIL_XCORE_H
