@@ -11,6 +11,7 @@
 
 #include "test_detail_aarch64.h"
 #include "test_detail_arm.h"
+#include "test_detail_evm.h"
 #include "test_detail_mos65xx.h"
 #include "test_detail_ppc.h"
 #include "test_detail_riscv.h"
@@ -49,7 +50,7 @@ typedef struct {
 	TestDetailM680x *m680x;
 	TestDetailTMS320c64x *tms320c64x;
 	TestDetailMos65xx *mos65xx;
-	// cs_evm_test evm;
+	TestDetailEVM *evm;
 	// cs_x86_test x86;
 	// cs_m68k_test m68k;
 	// cs_wasm_test wasm;
@@ -119,6 +120,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"mos65xx", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		mos65xx, test_detail_mos65xx_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("evm", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetail, evm,
+				test_detail_evm_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),
