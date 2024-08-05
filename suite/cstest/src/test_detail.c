@@ -92,6 +92,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 		clone->tms320c64x =
 			test_detail_tms320c64x_clone(detail->tms320c64x);
 	}
+	if (detail->mos65xx) {
+		clone->mos65xx = test_detail_mos65xx_clone(detail->mos65xx);
+	}
 
 	return clone;
 }
@@ -161,6 +164,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->tms320c64x) {
 		test_detail_tms320c64x_free(detail->tms320c64x);
+	}
+	if (detail->mos65xx) {
+		test_detail_mos65xx_free(detail->mos65xx);
 	}
 
 	cs_mem_free(detail);
@@ -258,6 +264,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->tms320c64x) {
 		return test_expected_tms320c64x(handle, &actual->tms320c64x,
 						expected->tms320c64x);
+	}
+	if (expected->mos65xx) {
+		return test_expected_mos65xx(handle, &actual->mos65xx,
+					     expected->mos65xx);
 	}
 	return true;
 }

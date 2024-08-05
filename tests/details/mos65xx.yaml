@@ -1,0 +1,520 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa1, 0x12, 0xa5, 0x12, 0xa9, 0x12, 0xad, 0x34, 0x12, 0xb1, 0x12, 0xb5, 0x12, 0xb9, 0x34, 0x12, 0xbd, 0x34, 0x12, 0x0d, 0x34, 0x12, 0x00, 0x81, 0x87, 0x6c, 0x01, 0x00, 0x85, 0xff, 0x10, 0x00, 0x19, 0x42, 0x42, 0x00, 0x49, 0x42  ]
+      arch: "mos65xx"
+      options: [ CS_OPT_DETAIL, CS_MODE_MOS65XX_6502, CS_OPT_SYNTAX_MOTOROLA ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "lda ($12, x)"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_X_IND
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda #$12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_IMM
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_IMM
+                imm: 0x12
+      -
+        asm_text: "lda $1234"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1234
+      -
+        asm_text: "lda ($12), y"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_IND_Y
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda $12, x"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_X
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda $1234, y"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS_Y
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1234
+      -
+        asm_text: "lda $1234, x"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS_X
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1234
+      -
+        asm_text: "ora $1234"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1234
+      -
+        asm_text: "brk $81"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_INT
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x81
+  -
+    input:
+      bytes: [ 0x1a, 0x3a, 0x02, 0x12, 0x03, 0x5c, 0x34, 0x12  ]
+      arch: "mos65xx"
+      options: [ CS_OPT_DETAIL, CS_MODE_MOS65XX_65C02, CS_OPT_SYNTAX_MOTOROLA ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "inc a"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ACC
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_REG
+                reg: A
+      -
+        asm_text: "dec a"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ACC
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_REG
+                reg: A
+      -
+        asm_text: "nop"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_IMP
+            modifies_flags: -1
+      -
+        asm_text: "nop"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_IMP
+            modifies_flags: -1
+      -
+        asm_text: "nop"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_IMP
+            modifies_flags: -1
+  -
+    input:
+      bytes: [ 0x07, 0x12, 0x27, 0x12, 0x47, 0x12, 0x67, 0x12, 0x87, 0x12, 0xa7, 0x12, 0xc7, 0x12, 0xe7, 0x12, 0x10, 0xfe, 0x0f, 0x12, 0xfd, 0x4f, 0x12, 0xfd, 0x8f, 0x12, 0xfd, 0xcf, 0x12, 0xfd  ]
+      arch: "mos65xx"
+      options: [ CS_OPT_DETAIL, CS_MODE_MOS65XX_W65C02, CS_OPT_SYNTAX_MOTOROLA ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "rmb0 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "rmb2 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "rmb4 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "rmb6 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "smb0 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "smb2 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "smb4 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "smb6 $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "bpl $1010"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_REL
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1010
+      -
+        asm_text: "bbr0 $12, $1012"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_REL
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1012
+      -
+        asm_text: "bbr4 $12, $1015"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_REL
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1015
+      -
+        asm_text: "bbs0 $12, $1018"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_REL
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1018
+      -
+        asm_text: "bbs4 $12, $101b"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_REL
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x101b
+  -
+    input:
+      bytes: [ 0xa9, 0x34, 0x12, 0xad, 0x34, 0x12, 0xbd, 0x34, 0x12, 0xb9, 0x34, 0x12, 0xaf, 0x56, 0x34, 0x12, 0xbf, 0x56, 0x34, 0x12, 0xa5, 0x12, 0xb5, 0x12, 0xb2, 0x12, 0xa1, 0x12, 0xb1, 0x12, 0xa7, 0x12, 0xb7, 0x12, 0xa3, 0x12, 0xb3, 0x12, 0xc2, 0x00, 0xe2, 0x00, 0x54, 0x34, 0x12, 0x44, 0x34, 0x12, 0x02, 0x12  ]
+      arch: "mos65xx"
+      options: [ CS_OPT_DETAIL, CS_MODE_MOS65XX_65816_LONG_MX, CS_OPT_SYNTAX_MOTOROLA ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "lda #$1234"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_IMM
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_IMM
+                imm: 0x1234
+      -
+        asm_text: "lda $1234"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1234
+      -
+        asm_text: "lda $1234, x"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS_X
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1234
+      -
+        asm_text: "lda $1234, y"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS_Y
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x1234
+      -
+        asm_text: "lda $123456"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS_LONG
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x123456
+      -
+        asm_text: "lda $123456, x"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ABS_LONG_X
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x123456
+      -
+        asm_text: "lda $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda $12, x"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_X
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda ($12)"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_IND
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda ($12, x)"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_X_IND
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda ($12), y"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_IND_Y
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda [$12]"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_IND_LONG
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda [$12], y"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_ZP_IND_LONG_Y
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda $12, s"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_SR
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "lda ($12, s), y"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_SR_IND_Y
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+      -
+        asm_text: "rep #$00"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_IMM
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_IMM
+                imm: 0x0
+      -
+        asm_text: "sep #$00"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_IMM
+            modifies_flags: 1
+            operands:
+              -
+                type: MOS65XX_OP_IMM
+                imm: 0x0
+      -
+        asm_text: "mvn $12, $34"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_BLOCK
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x34
+      -
+        asm_text: "mvp $12, $34"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_BLOCK
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x34
+      -
+        asm_text: "cop $12"
+        details:
+          mos65xx:
+            am: MOS65XX_AM_INT
+            modifies_flags: -1
+            operands:
+              -
+                type: MOS65XX_OP_MEM
+                mem: 0x12
+
