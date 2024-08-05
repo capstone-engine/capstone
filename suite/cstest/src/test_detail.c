@@ -88,6 +88,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->m680x) {
 		clone->m680x = test_detail_m680x_clone(detail->m680x);
 	}
+	if (detail->tms320c64x) {
+		clone->tms320c64x = test_detail_tms320c64x_clone(detail->tms320c64x);
+	}
 
 	return clone;
 }
@@ -154,6 +157,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->m680x) {
 		test_detail_m680x_free(detail->m680x);
+	}
+	if (detail->tms320c64x) {
+		test_detail_tms320c64x_free(detail->tms320c64x);
 	}
 
 	cs_mem_free(detail);
@@ -249,6 +255,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->m680x) {
 		return test_expected_m680x(handle, &actual->m680x,
 					     expected->m680x);
+	}
+	if (expected->tms320c64x) {
+		return test_expected_tms320c64x(handle, &actual->tms320c64x,
+					     expected->tms320c64x);
 	}
 	return true;
 }
