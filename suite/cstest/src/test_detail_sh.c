@@ -30,7 +30,7 @@ TestDetailSH *test_detail_sh_clone(const TestDetailSH *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailSHOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailSHOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

@@ -34,7 +34,7 @@ TestDetailSparc *test_detail_sparc_clone(const TestDetailSparc *detail)
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
 	clone->hint = detail->hint ? strdup(detail->hint) : NULL;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailSparcOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailSparcOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

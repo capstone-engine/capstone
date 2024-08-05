@@ -30,7 +30,7 @@ TestDetailRISCV *test_detail_riscv_clone(const TestDetailRISCV *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailRISCVOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailRISCVOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

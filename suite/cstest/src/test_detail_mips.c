@@ -30,7 +30,7 @@ TestDetailMips *test_detail_mips_clone(const TestDetailMips *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailMipsOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailMipsOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

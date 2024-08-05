@@ -71,7 +71,7 @@ TestDetailPPC *test_detail_ppc_clone(const TestDetailPPC *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailPPCOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailPPCOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

@@ -30,7 +30,7 @@ TestDetailSystemZ *test_detail_systemz_clone(const TestDetailSystemZ *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailSystemZOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailSystemZOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

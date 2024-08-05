@@ -32,7 +32,7 @@ TestDetailBPF *test_detail_bpf_clone(const TestDetailBPF *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailBPFOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailBPFOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {

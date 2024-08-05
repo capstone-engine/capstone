@@ -31,7 +31,7 @@ TestDetailTriCore *test_detail_tricore_clone(const TestDetailTriCore *detail)
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
-		clone->operands = cs_mem_calloc(sizeof(TestDetailTriCoreOp),
+		clone->operands = cs_mem_calloc(sizeof(TestDetailTriCoreOp*),
 						detail->operands_count);
 	}
 	for (size_t i = 0; i < detail->operands_count; ++i) {
