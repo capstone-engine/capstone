@@ -102,6 +102,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 		clone->loongarch =
 			test_detail_loongarch_clone(detail->loongarch);
 	}
+	if (detail->wasm) {
+		clone->wasm = test_detail_wasm_clone(detail->wasm);
+	}
 
 	return clone;
 }
@@ -180,6 +183,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->loongarch) {
 		test_detail_loongarch_free(detail->loongarch);
+	}
+	if (detail->wasm) {
+		test_detail_wasm_free(detail->wasm);
 	}
 
 	cs_mem_free(detail);
@@ -288,6 +294,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->loongarch) {
 		return test_expected_loongarch(handle, &actual->loongarch,
 					       expected->loongarch);
+	}
+	if (expected->wasm) {
+		return test_expected_wasm(handle, &actual->wasm,
+					  expected->wasm);
 	}
 	return true;
 }
