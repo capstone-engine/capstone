@@ -190,6 +190,29 @@ typedef int32_t tbool;
 		} \
 	}
 
+/// Checks if all bit flags in @expected are set in @actual.
+/// Actual is the value with all bits set.
+/// @expected is a list the @len enum identifiers as string.
+/// It returns with @ret_val if they mismatch.
+#define compare_bit_flags_64_ret(actual, expected, len, ret_val) \
+	if (expected) { \
+		for (size_t i = 0; i < len; ++i) { \
+			bool found = false; \
+			uint64_t eval = enum_map_bin_search( \
+				cs_enum_map, ARR_SIZE(cs_enum_map), \
+				expected[i], &found); \
+			if (!(actual & eval) || !found) { \
+				fprintf(stderr, \
+					#actual " != " #expected ": %" PRId64 \
+						" != %s%s\n", \
+					actual, expected[i], \
+					found ? " <== Flag not set" : \
+						" <== id not found"); \
+				return ret_val; \
+			} \
+		} \
+	}
+
 /// Compares register names.
 /// Actual is the register id, expected is name as string.
 /// It returns with @ret_val if they mismatch.

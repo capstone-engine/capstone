@@ -29,6 +29,7 @@
 #include "test_detail_m680x.h"
 #include "test_detail_tms320c64x.h"
 #include "test_detail_wasm.h"
+#include "test_detail_x86.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
 #include <cyaml/cyaml.h>
@@ -55,6 +56,7 @@ typedef struct {
 	TestDetailEVM *evm;
 	TestDetailLoongArch *loongarch;
 	TestDetailWASM *wasm;
+	TestDetailX86 *x86;
 	// cs_x86_test x86;
 	// cs_m68k_test m68k;
 
@@ -131,6 +133,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"wasm", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		wasm, test_detail_wasm_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("x86", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetail, x86,
+				test_detail_x86_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &reg_group_schema, 0, 255),

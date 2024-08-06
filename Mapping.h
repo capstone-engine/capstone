@@ -249,9 +249,10 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 /// ```
 typedef struct {
 	const char *str; ///< The name of the enumeration identifier
-	int val; ///< The value of the identifier
+	uint64_t val;	 ///< The value of the identifier
 } cs_enum_id_map;
 
-int enum_map_bin_search(const cs_enum_id_map *map, size_t map_len, const char *id, bool *found);
+uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
+			     const char *id, bool *found);
 
 #endif // CS_MAPPING_H

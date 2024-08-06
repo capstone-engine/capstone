@@ -105,6 +105,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->wasm) {
 		clone->wasm = test_detail_wasm_clone(detail->wasm);
 	}
+	if (detail->x86) {
+		clone->x86 = test_detail_x86_clone(detail->x86);
+	}
 
 	return clone;
 }
@@ -186,6 +189,9 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->wasm) {
 		test_detail_wasm_free(detail->wasm);
+	}
+	if (detail->x86) {
+		test_detail_x86_free(detail->x86);
 	}
 
 	cs_mem_free(detail);
@@ -298,6 +304,9 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->wasm) {
 		return test_expected_wasm(handle, &actual->wasm,
 					  expected->wasm);
+	}
+	if (expected->x86) {
+		return test_expected_x86(handle, &actual->x86, expected->x86);
 	}
 	return true;
 }

@@ -403,10 +403,11 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 /// Does a binary search over the given map and searches for @id.
 /// If @id exists in @map, it sets @found to true and returns
 /// the value for the @id.
-/// Otherwise, @found is set to false and it returns -1.
+/// Otherwise, @found is set to false and it returns UINT64_MAX.
 ///
 /// Of course it assumes the map is sorted.
-int enum_map_bin_search(const cs_enum_id_map *map, size_t map_len, const char *id, bool *found)
+uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
+			     const char *id, bool *found)
 {
 	size_t l = 0;
 	size_t r = map_len;
@@ -437,6 +438,6 @@ int enum_map_bin_search(const cs_enum_id_map *map, size_t map_len, const char *i
 		}
 	}
 	*found = false;
-	return -1;
+	return UINT64_MAX;
 }
 
