@@ -386,3 +386,24 @@ const char *M68K_group_name(csh handle, unsigned int id)
 #endif
 }
 
+#ifndef CAPSTONE_DIET
+void M68K_reg_access(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count)
+{
+	uint8_t read_count, write_count;
+
+	read_count = insn->detail->regs_read_count;
+	write_count = insn->detail->regs_write_count;
+
+	// implicit registers
+	memcpy(regs_read, insn->detail->regs_read,
+	       read_count * sizeof(insn->detail->regs_read[0]));
+	memcpy(regs_write, insn->detail->regs_write,
+	       write_count * sizeof(insn->detail->regs_write[0]));
+
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
+}
+#endif
+
