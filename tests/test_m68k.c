@@ -29,53 +29,51 @@ static void print_string_hex(const char* comment, unsigned char* str, size_t len
 	printf("\n");
 }
 
-const char* s_addressing_modes[] = {
-	"<invalid mode>",
-
-	"Register Direct - Data",
-	"Register Direct - Address",
-
-	"Register Indirect - Address",
-	"Register Indirect - Address with Postincrement",
-	"Register Indirect - Address with Predecrement",
-	"Register Indirect - Address with Displacement",
-
-	"Address Register Indirect With Index - 8-bit displacement",
-	"Address Register Indirect With Index - Base displacement",
-
-	"Memory indirect - Postindex",
-	"Memory indirect - Preindex",
-
-	"Program Counter Indirect - with Displacement",
-
-	"Program Counter Indirect with Index - with 8-Bit Displacement",
-	"Program Counter Indirect with Index - with Base Displacement",
-
-	"Program Counter Memory Indirect - Postindexed",
-	"Program Counter Memory Indirect - Preindexed",
-
-	"Absolute Data Addressing  - Short",
-	"Absolute Data Addressing  - Long",
-	"Immediate value",
-	"Branch Displacement",
+const char *s_addressing_modes[] = {
+	"M68K_AM_NONE",
+	"M68K_AM_REG_DIRECT_DATA",
+	"M68K_AM_REG_DIRECT_ADDR",
+	"M68K_AM_REGI_ADDR",
+	"M68K_AM_REGI_ADDR_POST_INC",
+	"M68K_AM_REGI_ADDR_PRE_DEC",
+	"M68K_AM_REGI_ADDR_DISP",
+	"M68K_AM_AREGI_INDEX_8_BIT_DISP",
+	"M68K_AM_AREGI_INDEX_BASE_DISP",
+	"M68K_AM_MEMI_POST_INDEX",
+	"M68K_AM_MEMI_PRE_INDEX",
+	"M68K_AM_PCI_DISP",
+	"M68K_AM_PCI_INDEX_8_BIT_DISP",
+	"M68K_AM_PCI_INDEX_BASE_DISP",
+	"M68K_AM_PC_MEMI_POST_INDEX",
+	"M68K_AM_PC_MEMI_PRE_INDEX",
+	"M68K_AM_ABSOLUTE_DATA_SHORT",
+	"M68K_AM_ABSOLUTE_DATA_LONG",
+	"M68K_AM_IMMEDIATE",
+	"M68K_AM_BRANCH_DISPLACEMENT",
 };
 
 static void print_read_write_regs(cs_detail* detail)
 {
 	int i;
 
-	for (i = 0; i < detail->regs_read_count; ++i)
-	{
-		uint16_t reg_id = detail->regs_read[i];
-		const char* reg_name = cs_reg_name(handle, reg_id);
-		printf("\treading from reg: %s\n", reg_name);
+	if (detail->regs_read_count > 0) {
+		printf("\t\tregs_read: [ ");
+		for (i = 0; i < detail->regs_read_count; ++i) {
+			uint16_t reg_id = detail->regs_read[i];
+			const char *reg_name = cs_reg_name(handle, reg_id);
+			printf("%s, ", reg_name);
+		}
+		printf("]\n");
 	}
 
-	for (i = 0; i < detail->regs_write_count; ++i)
-	{
-		uint16_t reg_id = detail->regs_write[i];
-		const char* reg_name = cs_reg_name(handle, reg_id);
-		printf("\twriting to reg:   %s\n", reg_name);
+	if (detail->regs_write_count > 0) {
+		printf("\t\tregs_write: [ ");
+		for (i = 0; i < detail->regs_write_count; ++i) {
+			uint16_t reg_id = detail->regs_write[i];
+			const char *reg_name = cs_reg_name(handle, reg_id);
+			printf("%s, ", reg_name);
+		}
+		printf("]\n");
 	}
 }
 
@@ -91,12 +89,11 @@ static void print_insn_detail(cs_insn *ins)
 
 	detail = ins->detail;
 	m68k = &detail->m68k;
-	if (m68k->op_count)
-		printf("\top_count: %u\n", m68k->op_count);
 
 	print_read_write_regs(detail);
 
-	printf("\tgroups_count: %u\n", detail->groups_count);
+	if (m68k->op_count)
+		printf("\top_count: %u\n", m68k->op_count);
 
 	for (i = 0; i < m68k->op_count; i++) {
 		cs_m68k_op* op = &(m68k->operands[i]);
@@ -145,8 +142,10 @@ static void print_insn_detail(cs_insn *ins)
 					cs_reg_name(handle, op->reg_pair.reg_1));
 				break;
 			case M68K_OP_BR_DISP:
-				printf("\t\toperands[%u].br_disp.disp: 0x%x", i, op->br_disp.disp);
-				printf("\t\toperands[%u].br_disp.disp_size: %d", i, op->br_disp.disp_size);
+				printf("\t\toperands[%u].br_disp_disp: 0x%x", i,
+				       op->br_disp.disp);
+				printf("\t\toperands[%u].br_disp_disp_size: %d",
+				       i, op->br_disp.disp_size);
 				break;
 		}
 	}

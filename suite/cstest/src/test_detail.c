@@ -45,19 +45,15 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->aarch64) {
 		clone->aarch64 = test_detail_aarch64_clone(detail->aarch64);
 	}
-
 	if (detail->arm) {
 		clone->arm = test_detail_arm_clone(detail->arm);
 	}
-
 	if (detail->ppc) {
 		clone->ppc = test_detail_ppc_clone(detail->ppc);
 	}
-
 	if (detail->tricore) {
 		clone->tricore = test_detail_tricore_clone(detail->tricore);
 	}
-
 	if (detail->alpha) {
 		clone->alpha = test_detail_alpha_clone(detail->alpha);
 	}
@@ -107,6 +103,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	}
 	if (detail->x86) {
 		clone->x86 = test_detail_x86_clone(detail->x86);
+	}
+	if (detail->m68k) {
+		clone->m68k = test_detail_m68k_clone(detail->m68k);
 	}
 
 	return clone;
@@ -193,6 +192,9 @@ void test_detail_free(TestDetail *detail)
 	if (detail->x86) {
 		test_detail_x86_free(detail->x86);
 	}
+	if (detail->m68k) {
+		test_detail_m68k_free(detail->m68k);
+	}
 
 	cs_mem_free(detail);
 }
@@ -204,8 +206,13 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	cs_detail *actual = insn->detail;
 	cs_regs regs_read, regs_write;
 	uint8_t regs_read_count, regs_write_count;
-	cs_regs_access(*handle, insn, regs_read, &regs_read_count, regs_write,
-		       &regs_write_count);
+	cs_err err = cs_regs_access(*handle, insn, regs_read, &regs_read_count,
+				    regs_write, &regs_write_count);
+	if (err != CS_ERR_OK) {
+		fprintf(stderr, "cs_regs_access() failed with '%s'\n",
+			cs_strerror(err));
+		return false;
+	}
 
 	if (expected->regs_read_count > 0) {
 		compare_uint32_ret(regs_read_count, expected->regs_read_count,
@@ -307,6 +314,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	}
 	if (expected->x86) {
 		return test_expected_x86(handle, &actual->x86, expected->x86);
+	}
+	if (expected->m68k) {
+		return test_expected_m68k(handle, &actual->m68k,
+					  expected->m68k);
 	}
 	return true;
 }
