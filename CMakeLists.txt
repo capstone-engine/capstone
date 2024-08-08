@@ -60,7 +60,7 @@ option(BUILD_SHARED_LIBS "Build shared library" OFF)
 option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ${BUILD_SHARED_LIBS})
 option(CAPSTONE_BUILD_MACOS_THIN "Disable universal2 builds on macOS" OFF)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
-option(CAPSTONE_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
+option(CAPSTONE_BUILD_LEGACY_TESTS "Build legacy tests" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTEST "Build cstest" OFF)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
@@ -208,8 +208,6 @@ set(HEADERS_COMMON
     include/capstone/loongarch.h
 )
 
-set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
-
 ## architecture support
 if(CAPSTONE_ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
@@ -239,7 +237,6 @@ if(CAPSTONE_ARM_SUPPORT)
         arch/ARM/ARMGenCSMappingInsnName.inc
         arch/ARM/ARMGenSystemRegister.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif()
 
 if(CAPSTONE_AARCH64_SUPPORT)
@@ -270,7 +267,6 @@ if(CAPSTONE_AARCH64_SUPPORT)
         arch/AArch64/AArch64GenCSMappingInsnName.inc
         arch/AArch64/AArch64GenCSMappingInsnOp.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_aarch64.c)
 endif()
 
 if(CAPSTONE_MIPS_SUPPORT)
@@ -302,7 +298,6 @@ if(CAPSTONE_MIPS_SUPPORT)
         arch/Mips/MipsInstPrinter.h
         arch/Mips/MipsMapping.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_mips.c)
 endif()
 
 if(CAPSTONE_PPC_SUPPORT)
@@ -332,7 +327,6 @@ if(CAPSTONE_PPC_SUPPORT)
         arch/PowerPC/PPCGenSubtargetInfo.inc
         arch/PowerPC/PPCGenRegisterInfo.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
 endif()
 
 if(CAPSTONE_X86_SUPPORT)
@@ -386,7 +380,6 @@ if(CAPSTONE_X86_SUPPORT)
     if(NOT CAPSTONE_BUILD_DIET)
         set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
     endif()
-    set(TEST_SOURCES ${TEST_SOURCES} test_x86.c test_customized_mnem.c)
 endif()
 
 if(CAPSTONE_SPARC_SUPPORT)
@@ -409,7 +402,6 @@ if(CAPSTONE_SPARC_SUPPORT)
         arch/Sparc/SparcMapping.h
         arch/Sparc/SparcMappingInsn.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
 endif()
 
 if(CAPSTONE_SYSZ_SUPPORT)
@@ -434,7 +426,6 @@ if(CAPSTONE_SYSZ_SUPPORT)
         arch/SystemZ/SystemZMappingInsn.inc
         arch/SystemZ/SystemZMCTargetDesc.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
 endif()
 
 if(CAPSTONE_XCORE_SUPPORT)
@@ -455,7 +446,6 @@ if(CAPSTONE_XCORE_SUPPORT)
         arch/XCore/XCoreMapping.h
         arch/XCore/XCoreMappingInsn.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
 endif()
 
 if(CAPSTONE_M68K_SUPPORT)
@@ -468,7 +458,6 @@ if(CAPSTONE_M68K_SUPPORT)
     set(HEADERS_M68K
         arch/M68K/M68KDisassembler.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_m68k.c)
 endif()
 
 if(CAPSTONE_TMS320C64X_SUPPORT)
@@ -488,7 +477,6 @@ if(CAPSTONE_TMS320C64X_SUPPORT)
         arch/TMS320C64x/TMS320C64xInstPrinter.h
         arch/TMS320C64x/TMS320C64xMapping.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_tms320c64x.c)
 endif()
 
 if(CAPSTONE_M680X_SUPPORT)
@@ -503,7 +491,6 @@ if(CAPSTONE_M680X_SUPPORT)
         arch/M680X/M680XDisassembler.h
         arch/M680X/M680XDisassemblerInternals.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_m680x.c)
 endif()
 
 if(CAPSTONE_EVM_SUPPORT)
@@ -520,7 +507,6 @@ if(CAPSTONE_EVM_SUPPORT)
         arch/EVM/EVMMapping.h
         arch/EVM/EVMMappingInsn.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_evm.c)
 endif()
 
 if(CAPSTONE_WASM_SUPPORT)
@@ -536,7 +522,6 @@ if(CAPSTONE_WASM_SUPPORT)
         arch/WASM/WASMInstPrinter.h
         arch/WASM/WASMMapping.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_wasm.c)
 endif()
 
 if(CAPSTONE_MOS65XX_SUPPORT)
@@ -547,7 +532,6 @@ if(CAPSTONE_MOS65XX_SUPPORT)
     set(HEADERS_SOURCES_MOS65XX
             arch/MOS65XX/MOS65XXDisassembler.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_mos65xx.c)
 endif()
 
 if(CAPSTONE_BPF_SUPPORT)
@@ -565,7 +549,6 @@ if(CAPSTONE_BPF_SUPPORT)
         arch/BPF/BPFMapping.h
         arch/BPF/BPFModule.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_bpf.c)
 endif()
 
 if(CAPSTONE_RISCV_SUPPORT)
@@ -591,7 +574,6 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVMappingInsn.inc
         arch/RISCV/RISCVMappingInsnOp.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
 endif()
 
 if(CAPSTONE_SH_SUPPORT)
@@ -607,7 +589,6 @@ if(CAPSTONE_SH_SUPPORT)
         arch/SH/SHModule.h
         arch/SH/SHInsnTable.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_sh.c)
 endif()
 
 if (CAPSTONE_TRICORE_SUPPORT)
@@ -628,7 +609,6 @@ if (CAPSTONE_TRICORE_SUPPORT)
             arch/TriCore/TriCoreMapping.h
             arch/TriCore/TriCoreModule.h
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_tricore.c)
 endif ()
 
 if (CAPSTONE_ALPHA_SUPPORT)
@@ -652,7 +632,6 @@ if (CAPSTONE_ALPHA_SUPPORT)
             arch/Alpha/AlphaGenCSMappingInsn.inc
             arch/Alpha/AlphaGenCSMappingInsnName.inc
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_alpha.c)
 endif ()
 
 if(CAPSTONE_HPPA_SUPPORT)
@@ -670,7 +649,6 @@ if(CAPSTONE_HPPA_SUPPORT)
         arch/HPPA/HPPAMapping.h
         arch/HPPA/HPPAModule.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_hppa.c)
 endif()
 
 if (CAPSTONE_LOONGARCH_SUPPORT)
@@ -688,7 +666,6 @@ if (CAPSTONE_LOONGARCH_SUPPORT)
             arch/LoongArch/LoongArchModule.h
             arch/LoongArch/LoongArchLinkage.h
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_loongarch.c)
 endif ()
 
 if (CAPSTONE_OSXKERNEL_SUPPORT)
@@ -766,27 +743,8 @@ if(BUILD_SHARED_LIBS)
     )
 endif()
 
-if(CAPSTONE_BUILD_TESTS)
-    set(CMAKE_FOLDER "Tests")
-    enable_testing()
-    foreach(TSRC ${TEST_SOURCES})
-        string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
-        add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} PRIVATE capstone)
-        add_test(NAME "capstone_${TBIN}" COMMAND ${TBIN})
-    endforeach()
-    if(CAPSTONE_ARM_SUPPORT)
-        set(ARM_REGRESS_TEST test_arm_regression.c)
-        string(REGEX REPLACE ".c$" "" ARM_REGRESS_BIN ${ARM_REGRESS_TEST})
-        add_executable(${ARM_REGRESS_BIN} "suite/arm/${ARM_REGRESS_TEST}")
-        target_link_libraries(${ARM_REGRESS_BIN} PRIVATE capstone)
-        add_test(NAME "capstone_${ARM_REGRESS_BIN}" COMMAND ${ARM_REGRESS_BIN})
-    endif()
-    # fuzz target built with the tests
-    add_executable(fuzz_disasm suite/fuzz/onefile.c suite/fuzz/fuzz_disasm.c suite/fuzz/platform.c)
-    target_link_libraries(fuzz_disasm PRIVATE capstone)
-    unset(CMAKE_FOLDER)
-endif()
+set(TESTS_DIR ${PROJECT_SOURCE_DIR}/tests)
+add_subdirectory(${TESTS_DIR})
 
 source_group("Source\\Engine" FILES ${SOURCES_ENGINE})
 source_group("Source\\ARM" FILES ${SOURCES_ARM})
@@ -884,7 +842,6 @@ if(CAPSTONE_INSTALL)
             "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
             IMMEDIATE @ONLY
         )
-        set(CMAKE_FOLDER)
         add_custom_target(UNINSTALL COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
         set_target_properties(UNINSTALL PROPERTIES
             FOLDER CMakePredefinedTargets
@@ -903,6 +860,7 @@ if(CAPSTONE_BUILD_CSTOOL)
 endif()
 
 if(CAPSTONE_BUILD_CSTEST)
+    enable_testing()
     set(CSTEST_DIR ${PROJECT_SOURCE_DIR}/suite/cstest)
     add_subdirectory(${CSTEST_DIR})
 

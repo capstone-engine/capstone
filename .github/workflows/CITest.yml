@@ -126,6 +126,11 @@ jobs:
       run: |
         ctest --test-dir build --output-on-failure -R DetailTests
 
+    - name: Legacy integration tests
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R legacy*
+
   Windows:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
