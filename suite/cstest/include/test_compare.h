@@ -173,16 +173,16 @@ typedef int32_t tbool;
 /// It returns with @ret_val if they mismatch.
 #define compare_bit_flags_ret(actual, expected, len, ret_val) \
 	if (expected) { \
-		for (size_t i = 0; i < len; ++i) { \
+		for (size_t cmp_i = 0; cmp_i < len; ++cmp_i) { \
 			bool found = false; \
 			uint32_t eval = enum_map_bin_search( \
 				cs_enum_map, ARR_SIZE(cs_enum_map), \
-				expected[i], &found); \
+				expected[cmp_i], &found); \
 			if (!(actual & eval) || !found) { \
 				fprintf(stderr, \
 					#actual " != " #expected ": %" PRId32 \
 						" != %s%s\n", \
-					actual, expected[i], \
+					actual, expected[cmp_i], \
 					found ? " <== Flag not set" : \
 						" <== id not found"); \
 				return ret_val; \
@@ -196,16 +196,16 @@ typedef int32_t tbool;
 /// It returns with @ret_val if they mismatch.
 #define compare_bit_flags_64_ret(actual, expected, len, ret_val) \
 	if (expected) { \
-		for (size_t i = 0; i < len; ++i) { \
+		for (size_t cmp_i = 0; cmp_i < len; ++cmp_i) { \
 			bool found = false; \
 			uint64_t eval = enum_map_bin_search( \
 				cs_enum_map, ARR_SIZE(cs_enum_map), \
-				expected[i], &found); \
+				expected[cmp_i], &found); \
 			if (!(actual & eval) || !found) { \
 				fprintf(stderr, \
 					#actual " != " #expected ": %" PRId64 \
 						" != %s%s\n", \
-					actual, expected[i], \
+					actual, expected[cmp_i], \
 					found ? " <== Flag not set" : \
 						" <== id not found"); \
 				return ret_val; \
