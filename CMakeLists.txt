@@ -837,10 +837,26 @@ source_group("Include\\LoongArch" FILES ${HEADERS_LOONGARCH})
 
 ## installation
 if(CAPSTONE_INSTALL)
-    include("GNUInstallDirs")
+    include(GNUInstallDirs)
 
     install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
     install(FILES ${HEADERS_INC} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone/inc)
+
+    # Support absolute installation paths (discussion: https://github.com/NixOS/nixpkgs/issues/144170)
+    if(IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
+        set(CAPSTONE_PKGCONFIG_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR})
+        set(CAPSTONE_CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR})
+    else()
+        set(CAPSTONE_PKGCONFIG_INSTALL_LIBDIR "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
+        set(CAPSTONE_CMAKE_INSTALL_LIBDIR "\${PACKAGE_PREFIX_DIR}/${CMAKE_INSTALL_LIBDIR}")
+    endif()
+    if(IS_ABSOLUTE ${CMAKE_INSTALL_INCLUDEDIR})
+        set(CAPSTONE_PKGCONFIG_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR})
+        set(CAPSTONE_CMAKE_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR})
+    else()
+        set(CAPSTONE_PKGCONFIG_INSTALL_INCLUDEDIR "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+        set(CAPSTONE_CMAKE_INSTALL_INCLUDEDIR "\${PACKAGE_PREFIX_DIR}/${CMAKE_INSTALL_INCLUDEDIR}")
+    endif()
 
     configure_file(capstone.pc.in ${CMAKE_BINARY_DIR}/capstone.pc @ONLY)
     install(FILES ${CMAKE_BINARY_DIR}/capstone.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
