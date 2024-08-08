@@ -88,9 +88,6 @@ jobs:
         # build shared library
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
         sudo cmake --build . --config Release --target install
-        cp libcapstone.* ../
-        cp libcapstone.* ../tests/
-        cp test_* ../tests/
 
     - name: Lower number of KASL randomized address bits
       run: |
