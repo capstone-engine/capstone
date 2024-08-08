@@ -77,7 +77,7 @@ class MCTest:
 
     def __init__(self, arch: str, opts: list[str], encoding: str, asm_text: str):
         self.arch = arch
-        if arch.lower() in ["arm", "powerpc", "ppc"]:
+        if arch.lower() in ["arm", "powerpc", "ppc", "aarch64"]:
             # Arch and PPC require this option for MC tests.
             self.opts = ["CS_OPT_NO_BRANCH_OFFSET"] + opts
         else:
