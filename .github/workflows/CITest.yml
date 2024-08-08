@@ -106,12 +106,12 @@ jobs:
       run: |
         sh suite/run_invalid_cstool.sh
 
-    - name: cstest unit tests (cmake)
+    - name: cstest unit tests
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
         ctest --test-dir build --output-on-failure -R UnitCSTest
 
-    - name: cstest integration tests (cmake)
+    - name: cstest integration tests
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
         ctest --test-dir build --output-on-failure -R IntegrationCSTest
@@ -163,5 +163,25 @@ jobs:
       run: |
         cmake --version
         cmake --preset=${{ matrix.config.platform }}-x64
-        cmake --build --preset build-${{ matrix.config.platform }}-release
-        cmake --build --preset install-${{ matrix.config.platform }}-release
+        cmake --build -DCAPSTONE_BUILD_CSTEST=ON --preset build-${{ matrix.config.platform }}-release
+        cmake --build -DCAPSTONE_BUILD_CSTEST=ON --preset install-${{ matrix.config.platform }}-release
+
+    - name: cstest unit tests - Windows
+      run: |
+        ctest --test-dir build --output-on-failure -R UnitCSTest
+
+    - name: cstest integration tests - Windows
+      run: |
+        ctest --test-dir build --output-on-failure -R IntegrationCSTest
+
+    - name: cstest MC - Windows
+      run: |
+        ctest --test-dir build --output-on-failure -R MCTests
+
+    - name: cstest details - Windows
+      run: |
+        ctest --test-dir build --output-on-failure -R DetailTests
+
+    - name: Legacy integration tests - Windows
+      run: |
+        ctest --test-dir build --output-on-failure -R legacy*
