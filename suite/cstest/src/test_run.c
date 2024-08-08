@@ -205,7 +205,7 @@ static int cstest_unit_test_setup(void **state)
 	UnitTestState *ustate = *state;
 	assert(ustate->tcase);
 	if (!open_cs_handle(ustate)) {
-		fail_msg("Failed to initialize capston with given options.");
+		fail_msg("Failed to initialize Capstone with given options.");
 		return -1;
 	}
 	return 0;

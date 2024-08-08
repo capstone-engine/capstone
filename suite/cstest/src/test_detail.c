@@ -33,6 +33,26 @@ TestDetail *test_detail_clone(TestDetail *detail)
 		clone->regs_write[i] = strdup(detail->regs_write[i]);
 	}
 
+	clone->regs_impl_read =
+		detail->regs_impl_read_count > 0 ?
+			cs_mem_calloc(sizeof(char *),
+				      detail->regs_impl_read_count) :
+			NULL;
+	clone->regs_impl_read_count = detail->regs_impl_read_count;
+	for (size_t i = 0; i < detail->regs_impl_read_count; ++i) {
+		clone->regs_impl_read[i] = strdup(detail->regs_impl_read[i]);
+	}
+
+	clone->regs_impl_write =
+		detail->regs_impl_write_count > 0 ?
+			cs_mem_calloc(sizeof(char *),
+				      detail->regs_impl_write_count) :
+			NULL;
+	clone->regs_impl_write_count = detail->regs_impl_write_count;
+	for (size_t i = 0; i < detail->regs_impl_write_count; ++i) {
+		clone->regs_impl_write[i] = strdup(detail->regs_impl_write[i]);
+	}
+
 	clone->groups =
 		detail->groups_count > 0 ?
 			cs_mem_calloc(sizeof(char *), detail->groups_count) :
@@ -127,6 +147,16 @@ void test_detail_free(TestDetail *detail)
 	}
 	cs_mem_free(detail->regs_write);
 
+	for (size_t i = 0; i < detail->regs_impl_read_count; ++i) {
+		cs_mem_free(detail->regs_impl_read[i]);
+	}
+	cs_mem_free(detail->regs_impl_read);
+
+	for (size_t i = 0; i < detail->regs_impl_write_count; ++i) {
+		cs_mem_free(detail->regs_impl_write[i]);
+	}
+	cs_mem_free(detail->regs_impl_write);
+
 	for (size_t i = 0; i < detail->groups_count; ++i) {
 		cs_mem_free(detail->groups[i]);
 	}
@@ -199,11 +229,14 @@ void test_detail_free(TestDetail *detail)
 	cs_mem_free(detail);
 }
 
-bool test_expected_detail(csh *handle, const cs_insn *insn,
-			  TestDetail *expected)
+static bool test_reg_rw_access(csh *handle, const cs_insn *insn,
+			       TestDetail *expected)
 {
-	assert(handle && insn && insn->detail && expected);
-	cs_detail *actual = insn->detail;
+	assert(handle && insn && expected);
+	if (expected->regs_read_count <= 0 && expected->regs_write_count <= 0) {
+		return true;
+	}
+
 	cs_regs regs_read, regs_write;
 	uint8_t regs_read_count, regs_write_count;
 	cs_err err = cs_regs_access(*handle, insn, regs_read, &regs_read_count,
@@ -231,11 +264,63 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 					expected->regs_write[i], false);
 		}
 	}
+	return true;
+}
+
+static bool test_impl_reg_rw_access(csh *handle, const cs_insn *insn,
+				    TestDetail *expected)
+{
+	assert(handle && insn && expected);
+	if (expected->regs_impl_read_count <= 0 &&
+	    expected->regs_impl_write_count <= 0) {
+		return true;
+	}
+	cs_detail *actual = insn->detail;
+
+	// Test exclusively the implicitly read or written register.
+	if (expected->regs_impl_read_count > 0) {
+		compare_uint32_ret(actual->regs_read_count,
+				   expected->regs_impl_read_count, false);
+		for (size_t i = 0; i < actual->regs_read_count; ++i) {
+			compare_reg_ret(*handle, actual->regs_read[i],
+					expected->regs_impl_read[i], false);
+		}
+	}
+
+	if (expected->regs_impl_write_count > 0) {
+		compare_uint32_ret(actual->regs_write_count,
+				   expected->regs_impl_write_count, false);
+		for (size_t i = 0; i < actual->regs_write_count; ++i) {
+			compare_reg_ret(*handle, actual->regs_write[i],
+					expected->regs_impl_write[i], false);
+		}
+	}
+	return true;
+}
+
+bool test_expected_detail(csh *handle, const cs_insn *insn,
+			  TestDetail *expected)
+{
+	assert(handle && insn && insn->detail && expected);
+	cs_detail *actual = insn->detail;
+
+	if (!test_reg_rw_access(handle, insn, expected)) {
+		return false;
+	}
+
+	if (!test_impl_reg_rw_access(handle, insn, expected)) {
+		return false;
+	}
 
 	if (expected->groups_count > 0) {
 		compare_uint32_ret(actual->groups_count, expected->groups_count,
 				   false);
 		for (size_t i = 0; i < actual->groups_count; ++i) {
+			if (strings_match(cs_group_name(*handle,
+							actual->groups[i]),
+					  expected->groups[i])) {
+				continue;
+			}
 			compare_enum_ret(actual->groups[i], expected->groups[i],
 					 false);
 		}

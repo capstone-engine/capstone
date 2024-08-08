@@ -66,6 +66,12 @@ typedef struct {
 	char **regs_write;
 	uint8_t regs_write_count;
 
+	// Implicit read/writes only
+	char **regs_impl_read;
+	uint8_t regs_impl_read_count;
+	char **regs_impl_write;
+	uint8_t regs_impl_write_count;
+
 	char **groups;
 	uint8_t groups_count;
 
@@ -145,6 +151,12 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_SEQUENCE("regs_write",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_write, &reg_group_schema, 0, 255),
+	CYAML_FIELD_SEQUENCE(
+		"regs_impl_read", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetail, regs_impl_read, &reg_group_schema, 0, 255),
+	CYAML_FIELD_SEQUENCE(
+		"regs_impl_write", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetail, regs_impl_write, &reg_group_schema, 0, 255),
 	CYAML_FIELD_SEQUENCE("groups", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, groups, &reg_group_schema, 0, 255),
 	CYAML_FIELD_INT("writeback", CYAML_FLAG_OPTIONAL, TestDetail,
