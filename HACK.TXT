@@ -111,13 +111,13 @@ Compile:
 Tests:
 - tests/Makefile
 - tests/test_basic.c
-- tests/test_detail.c
 - tests/test_iter.c
 - tests/test_newarch.c
 - suite/fuzz/platform.c: add the architecture and its modes to the list of fuzzed platforms
 - suite/capstone_get_setup.c
 - suite/MC/newarch/mode.mc: samples
 - suite/test_corpus.py: correspondence between architecture and mode as text and architecture number for fuzzing
+- suite/cstest/
 
 Bindings:
 - bindings/Makefile
