@@ -1,6 +1,6 @@
 name: RELEASE BUILD - PyPI 📦 Distribution
 
-on: [release, workflow_dispatch]
+on: [push, release, workflow_dispatch]
 
 jobs:
   build_wheels:
@@ -33,7 +33,7 @@ jobs:
         with:
           package-dir: bindings/python
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
 
@@ -41,7 +41,7 @@ jobs:
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0  # Optional, use if you use setuptools_scm
         submodules: true  # Optional, use if you have submodules
@@ -51,7 +51,7 @@ jobs:
         cd bindings/python
         pipx run build --sdist
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v3
       with:
         path: bindings/python/dist/*.tar.gz
 
@@ -62,7 +62,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v3
         with:
           name: artifact
           path: dist
