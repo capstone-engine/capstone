@@ -1,6 +1,37 @@
 This file details the changelog of Capstone.
 
 --------------------------------
+Version 5.0.2: August 8th, 2024
+
+## What's Changed
+* [v5] Add meta-programming macros for ARM64/AArch64 name change to capstone.h by @Rot127 in https://github.com/capstone-engine/capstone/pull/2199
+* [v5] Add CS_aarch64 macro without parameter. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2219
+* [v5] python: Fix definition of capstone syntax value option constants by @nmeum in https://github.com/capstone-engine/capstone/pull/2240
+* Constify TriCore by @rth7680 in https://github.com/capstone-engine/capstone/pull/2246
+* Revert constant value of CS_OP_MEM to `v5.0.1` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2275
+* Do not use 0b prefix, not supported on old compilers by @trufae in https://github.com/capstone-engine/capstone/pull/2306
+* Update CMakeLists.txt version (See #2310) by @PerikiyoXD in https://github.com/capstone-engine/capstone/pull/2311
+* [v5] Fix #2128 by adding missing mapping values. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2334
+* [v5] Fix #2079: Add missing 1 immediate to `rcl` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2329
+* [v5] Fix incorrect ID mappings for PPC by @Rot127 in https://github.com/capstone-engine/capstone/pull/2333
+* [v5] Fix #2244: Don't apply pseudo-instr. offset to `vcmp` id by @Rot127 in https://github.com/capstone-engine/capstone/pull/2332
+* Fix comparison using narrow types in loop condition by @trufae in https://github.com/capstone-engine/capstone/pull/2360
+* SH: Use bitwise OR with mask for sign extension by @lhsazevedo in https://github.com/capstone-engine/capstone/pull/2371
+* Remove deprecated packaging and cython by @twizmwazin in https://github.com/capstone-engine/capstone/pull/2400
+* [v5] Fix typo in AArch64 Python binding by @david942j in https://github.com/capstone-engine/capstone/pull/2412
+* Backport python-publish.yml from next by @twizmwazin in https://github.com/capstone-engine/capstone/pull/2408
+* [v5] Add release wheel build workflow for all Python versions by @Rot127 in https://github.com/capstone-engine/capstone/pull/2415
+* [v5] Fix unintended zero set in Sparc printInst by @david942j in https://github.com/capstone-engine/capstone/pull/2420
+* [v5][arm] Consider SpecRegRBit on setting SYSREG by @david942j in https://github.com/capstone-engine/capstone/pull/2422
+* Prepare for release v5.0.2 by @kabeor in https://github.com/capstone-engine/capstone/pull/2425
+
+## New Contributors
+* @nmeum made their first contribution in https://github.com/capstone-engine/capstone/pull/2240
+* @PerikiyoXD made their first contribution in https://github.com/capstone-engine/capstone/pull/2311
+* @lhsazevedo made their first contribution in https://github.com/capstone-engine/capstone/pull/2371
+
+
+--------------------------------
 Version 5.0.1: August 23rd, 2023
 
 ## What's Changed
