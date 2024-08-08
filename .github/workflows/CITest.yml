@@ -159,9 +159,9 @@ jobs:
       shell: bash
       run: |
         cmake --version
-        cmake --preset=${{ matrix.config.platform }}-x64
-        cmake --build -DCAPSTONE_BUILD_CSTEST=ON --preset build-${{ matrix.config.platform }}-release
-        cmake --build -DCAPSTONE_BUILD_CSTEST=ON --preset install-${{ matrix.config.platform }}-release
+        cmake --preset=${{ matrix.config.platform }}-x64 -DCAPSTONE_BUILD_CSTEST=ON
+        cmake --build --preset build-${{ matrix.config.platform }}-release
+        cmake --build --preset install-${{ matrix.config.platform }}-release
 
     - name: cstest unit tests - Windows
       run: |
