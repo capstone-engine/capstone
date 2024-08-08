@@ -241,7 +241,9 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "b .+1024"
+          asm_text: "b 1024"
+    skip_reason: "Note: The assemble accepts it with .+. But the disassembler just returns the scalar."
+
   -
     input:
       bytes: [ 0x48, 0x00, 0x04, 0x02 ]
@@ -259,7 +261,9 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bt 2, .+1024"
+          asm_text: "bt 2, 1024"
+    skip_reason: "Note: The assemble accepts it with .+. But the disassembler just returns the scalar."
+
   -
     input:
       bytes: [ 0x41, 0x82, 0x04, 0x02 ]
