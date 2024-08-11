@@ -24,6 +24,7 @@ void test_input_free(TestInput *test_input)
 	if (!test_input) {
 		return;
 	}
+	cs_mem_free(test_input->name);
 	cs_mem_free(test_input->bytes);
 	cs_mem_free(test_input->arch);
 	for (size_t i = 0; i < test_input->options_count; i++) {
@@ -45,6 +46,7 @@ TestInput *test_input_clone(TestInput *test_input)
 		ti->options[i] = cs_strdup(test_input->options[i]);
 		ti->options_count++;
 	}
+	ti->name = test_input->name ? cs_strdup(test_input->name) : NULL;
 	ti->arch = cs_strdup(test_input->arch);
 	ti->bytes = cs_mem_calloc(sizeof(uint8_t), test_input->bytes_count);
 	ti->bytes_count = test_input->bytes_count;

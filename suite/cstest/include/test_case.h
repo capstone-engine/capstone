@@ -12,6 +12,7 @@
 
 /// Input data for a test case.
 typedef struct {
+	char *name;
 	uint8_t *bytes;		// mandatory
 	uint32_t bytes_count;	// Filled by cyaml
 	char *arch;		// mandatory
@@ -40,6 +41,8 @@ static const cyaml_schema_value_t option_schema = {
 };
 
 static const cyaml_schema_field_t test_input_mapping_schema[] = {
+	CYAML_FIELD_STRING_PTR("name", CYAML_FLAG_POINTER, TestInput, name,
+			     0, CYAML_UNLIMITED),
 	CYAML_FIELD_SEQUENCE("bytes", CYAML_FLAG_POINTER, TestInput, bytes,
 			     &byte_schema, 0, CYAML_UNLIMITED), // 0-MAX bytes
 	CYAML_FIELD_STRING_PTR("arch", CYAML_FLAG_POINTER, TestInput, arch, 0,
