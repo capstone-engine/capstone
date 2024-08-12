@@ -64,6 +64,11 @@ TestDetailAArch64Op *test_detail_aarch64_op_clone(TestDetailAArch64Op *op)
 	clone->ext = op->ext ? strdup(op->ext) : NULL;
 	clone->vas = op->vas ? strdup(op->vas) : NULL;
 	clone->imm = op->imm;
+	clone->sme = op->sme ? test_detail_aarch64_op_sme_clone(op->sme) : NULL;
+	clone->pred_reg = op->pred_reg ? strdup(op->pred_reg) : NULL;
+	clone->pred_vec_select =
+		op->pred_vec_select ? strdup(op->pred_vec_select) : NULL;
+	clone->pred_imm_index = op->pred_imm_index;
 	clone->mem_disp = op->mem_disp;
 	clone->imm_range_first = op->imm_range_first;
 	clone->imm_range_offset = op->imm_range_offset;
@@ -92,7 +97,41 @@ void test_detail_aarch64_op_free(TestDetailAArch64Op *op)
 	cs_mem_free(op->shift_type);
 	cs_mem_free(op->ext);
 	cs_mem_free(op->vas);
+	cs_mem_free(op->pred_reg);
+	cs_mem_free(op->pred_vec_select);
 	cs_mem_free(op);
+}
+
+TestDetailAArch64SME *test_detail_aarch64_op_sme_new()
+{
+	return cs_mem_calloc(sizeof(TestDetailAArch64SME), 1);
+}
+
+TestDetailAArch64SME *test_detail_aarch64_op_sme_clone(TestDetailAArch64SME *sme)
+{
+	TestDetailAArch64SME *clone = test_detail_aarch64_op_sme_new();
+
+	clone->type = sme->type ? strdup(sme->type) : NULL;
+	clone->tile = sme->tile ? strdup(sme->tile) : NULL;
+	clone->slice_reg = sme->slice_reg ? strdup(sme->slice_reg) : NULL;
+	clone->slice_offset_imm = sme->slice_offset_imm;
+	clone->slice_offset_ir_first = sme->slice_offset_ir_first;
+	clone->slice_offset_ir_offset = sme->slice_offset_ir_offset;
+	clone->has_range_offset = sme->has_range_offset;
+	clone->is_vertical = sme->is_vertical;
+
+	return clone;
+}
+
+void test_detail_aarch64_op_sme_free(TestDetailAArch64SME *sme)
+{
+	if (!sme) {
+		return;
+	}
+	cs_mem_free(sme->type);
+	cs_mem_free(sme->tile);
+	cs_mem_free(sme->slice_reg);
+	cs_mem_free(sme);
 }
 
 bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
@@ -155,10 +194,29 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 					false);
 			compare_int32_ret(op->mem.disp, eop->mem_disp, false);
 			break;
+		case AARCH64_OP_PRED:
+			compare_reg_ret(*handle, op->pred.reg, eop->pred_reg,
+					false);
+			compare_reg_ret(*handle, op->pred.vec_select, eop->pred_vec_select,
+					false);
+			compare_int32_ret(op->pred.imm_index, eop->pred_imm_index, false);
+			break;
+		case AARCH64_OP_SME:
+			compare_enum_ret(op->sme.type, eop->sme->type,
+					false);
+			compare_reg_ret(*handle, op->sme.tile, eop->sme->tile,
+					false);
+			compare_reg_ret(*handle, op->sme.slice_reg, eop->sme->slice_reg,
+					false);
+			compare_tbool_ret(op->sme.has_range_offset, eop->sme->has_range_offset,
+					false);
+			compare_tbool_ret(op->sme.is_vertical, eop->sme->is_vertical,
+					false);
+			compare_int32_ret(op->sme.slice_offset.imm, eop->sme->slice_offset_imm, false);
+			compare_int32_ret(op->sme.slice_offset.imm_range.first, eop->sme->slice_offset_ir_first, false);
+			compare_int32_ret(op->sme.slice_offset.imm_range.offset, eop->sme->slice_offset_ir_offset, false);
+			break;
 		}
-
-		// // aarch64_op_sme sme;
-		// // aarch64_op_pred pred;
 
 		compare_enum_ret(op->shift.type, eop->shift_type, false);
 		compare_uint32_ret(op->shift.value, eop->shift_value, false);
