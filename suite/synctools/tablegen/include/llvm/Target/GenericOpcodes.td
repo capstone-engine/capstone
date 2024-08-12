@@ -51,7 +51,7 @@ def G_SEXT : GenericInstruction {
   let hasSideEffects = false;
 }
 
-// Sign extend the a value from an arbitrary bit position, copying the sign bit
+// Sign extend the value from an arbitrary bit position, copying the sign bit
 // into all bits above it. This is equivalent to a shl + ashr pair with an
 // appropriate shift amount. $sz is an immediate (MachineOperand::isImm()
 // returns true) to allow targets to have some bitwidths legal and others
