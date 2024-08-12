@@ -40,6 +40,7 @@ TestDetailTMS320c64x *test_detail_tms320c64x_clone(TestDetailTMS320c64x *detail)
 	clone->funit_crosspath_set = detail->funit_crosspath_set;
 
 	clone->parallel = detail->parallel;
+	clone->parallel_set = detail->parallel_set;
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
@@ -116,7 +117,7 @@ bool test_expected_tms320c64x(csh *handle, cs_tms320c64x *actual,
 		compare_uint8_ret(actual->funit.side, expected->funit_side,
 				  false);
 	} else {
-		assert(expected->funit_unit == 0);
+		assert(expected->funit_side == 0);
 	}
 	if (expected->funit_crosspath_set) {
 		compare_uint8_ret(actual->funit.crosspath,

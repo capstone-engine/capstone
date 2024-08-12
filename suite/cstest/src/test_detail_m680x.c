@@ -112,6 +112,7 @@ TestDetailM680xOp *test_detail_m680x_op_clone(const TestDetailM680xOp *op)
 	clone->ext_address = op->ext_address;
 	clone->ext_indirect = op->ext_indirect;
 	clone->direct_addr = op->direct_addr;
+	clone->direct_addr_set = op->direct_addr_set;
 	clone->const_val = op->const_val;
 	clone->size = op->size;
 
