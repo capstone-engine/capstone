@@ -556,6 +556,9 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 	default:
 		return;
 	case AARCH64_INS_ALIAS_FMOV:
+		if (AArch64_get_detail_op(MI, -1)->type == AARCH64_OP_FP) {
+			break;
+		}
 		AArch64_insert_detail_op_float_at(MI, -1, 0.0f, CS_AC_READ);
 		break;
 	case AARCH64_INS_ALIAS_LD1:
