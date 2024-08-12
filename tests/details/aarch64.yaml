@@ -372,3 +372,424 @@ test_cases:
           writeback: 1
           regs_read: [ sp ]
           regs_write: [ sp, x29 ]
+  -
+    input:
+      bytes: [ 0xc0,0x08,0x9f,0xe0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld1w {za0h.s[w12, 0]}, p2/z, [x6]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  tile: za0.s
+                  slice_reg: w12
+                  slice_offset_imm: 0
+                  is_vertical: -1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p2
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x6
+                access: CS_AC_READ
+          regs_read: [ w12, p2, x6 ]
+          regs_write: [ za0.s ]
+          groups: [ HasSME ]
+  -
+    input:
+      bytes: [ 0x41,0x31,0xa2,0xe0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "st1w {za0h.s[w13, 1]}, p4, [x10, x2, lsl #2]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  tile: za0.s
+                  slice_reg: w13
+                  slice_offset_imm: 1
+                  is_vertical: -1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p4
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x10
+                mem_index: x2
+                access: CS_AC_WRITE
+                shift_type: ARM_SFT_ASR
+                shift_value: 2
+          regs_read: [ za0.s, w13, p4, x10, x2 ]
+          groups: [ HasSME ]
+  -
+    input:
+      bytes: [ 0x67,0x44,0x71,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "psel p7, p1, p3.s[w13, 1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p7
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p3
+                pred_vec_select: w13
+                pred_imm_index: 1
+                pred_imm_index_set: true
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_S
+          regs_read: [ p1, p3, w13 ]
+          regs_write: [ p7 ]
+          groups: [ HasSVE2p1_or_HasSME ]
+  -
+    input:
+      bytes: [ 0x7f,0x47,0x03,0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "smstart"
+        details:
+          aarch64:
+            cc: AArch64CC_Invalid
+          groups: [ privilege ]
+  -
+    input:
+      bytes: [ 0x55,0x00,0x08,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "zero {za0.h}"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_TILE_LIST
+                  tile: za0.h
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_H
+            cc: AArch64CC_Invalid
+          regs_write: [ za0.h ]
+          groups: [ HasSME ]
+  -
+    input:
+      bytes: [ 0x02,0xf8,0x55,0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sdot za.s[w11, 2, vgx4], { z0.h - z3.h }, z5.h[2]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  tile: za
+                  slice_reg: w11
+                  slice_offset_imm: 2
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z2
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z3
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 2
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w11, z0, z1, z2, z3, z5 ]
+          regs_write: [ za ]
+          groups: [ HasSME2 ]
+  -
+    input:
+      bytes: [ 0xa4,0x0e,0x06,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movaz { z4.d - z7.d }, za.d[w8, 5, vgx4]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z4
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_REG
+                reg: z6
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_REG
+                reg: z7
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  tile: za
+                  slice_reg: w8
+                  slice_offset_imm: 5
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w8 ]
+          regs_write: [ z4, z5, z6, z7, za ]
+          groups: [ HasSME2p1 ]
+  -
+    input:
+      bytes: [ 0x80,0xa0,0x8d,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "luti2 { z0.s - z3.s }, zt0, z4[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z2
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z3
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: zt0
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z4
+                access: CS_AC_READ
+                vector_index: 1
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          regs_read: [ zt0, z4 ]
+          regs_write: [ z0, z1, z2, z3 ]
+          groups: [ HasSME2 ]
+  -
+    input:
+      bytes: [ 0x00,0xb1,0x10,0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmla za.h[w9, 0, vgx4], { z8.h - z11.h }, z0.h[0]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  tile: za
+                  slice_reg: w9
+                  slice_offset_imm: 0
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z8
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z9
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z10
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z11
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 0
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w9, z8, z9, z10, z11, z0 ]
+          regs_write: [ za ]
+          groups: [ HasSME2p1, HasSMEF16F16 ]
+  -
+    input:
+      bytes: [ 0x05,0xd0,0x9b,0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmlal za.s[w10, 2:3, vgx4], { z0.h - z3.h }, z11.h[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  tile: za
+                  slice_reg: w10
+                  slice_offset_ir_first: 2
+                  slice_offset_ir_offset: 3
+                  slice_offset_ir_set: true
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z2
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z3
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z11
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 1
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w10, z0, z1, z2, z3, z11 ]
+          regs_write: [ za ]
+          groups: [ HasSME2 ]

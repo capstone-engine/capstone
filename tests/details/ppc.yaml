@@ -1430,4 +1430,69 @@ test_cases:
                 type: PPC_OP_REG
                 reg: f5
                 access: CS_AC_READ
-
+  -
+    input:
+      bytes: [ 0x54,0x22,0xe0,0x06 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "slwi r2, r1, 0x1c"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r2
+              -
+                type: PPC_OP_REG
+                reg: r1
+              -
+                type: PPC_OP_IMM
+                imm: 0x1c
+  -
+    input:
+      bytes: [ 0x54,0x66,0xf0,0xbe ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "srwi r6, r3, 2"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r6
+              -
+                type: PPC_OP_REG
+                reg: r3
+              -
+                type: PPC_OP_IMM
+                imm: 0x2
+  -
+    input:
+      bytes: [ 0x78,0x62,0x26,0xe4 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sldi r2, r3, 4"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r2
+              -
+                type: PPC_OP_REG
+                reg: r3
+              -
+                type: PPC_OP_IMM
+                imm: 0x4
