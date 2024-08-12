@@ -237,6 +237,8 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 		if (eop->vector_index_is_set) {
 			compare_int32_ret(op->vector_index, eop->vector_index,
 					  false);
+		} else {
+			assert(eop->vector_index == 0);
 		}
 		compare_tbool_ret(op->subtracted, eop->subtracted, false);
 	}

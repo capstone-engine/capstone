@@ -115,13 +115,19 @@ bool test_expected_tms320c64x(csh *handle, cs_tms320c64x *actual,
 	if (expected->funit_side_set) {
 		compare_uint8_ret(actual->funit.side, expected->funit_side,
 				  false);
+	} else {
+		assert(expected->funit_unit == 0);
 	}
 	if (expected->funit_crosspath_set) {
 		compare_uint8_ret(actual->funit.crosspath,
 				  expected->funit_crosspath, false);
+	} else {
+		assert(expected->funit_crosspath == 0);
 	}
 	if (expected->parallel_set) {
 		compare_uint8_ret(actual->parallel, expected->parallel, false);
+	} else {
+		assert(expected->parallel == 0);
 	}
 	for (size_t i = 0; i < actual->op_count; ++i) {
 		cs_tms320c64x_op *op = &actual->operands[i];

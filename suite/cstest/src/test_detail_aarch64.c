@@ -69,6 +69,7 @@ TestDetailAArch64Op *test_detail_aarch64_op_clone(TestDetailAArch64Op *op)
 	clone->pred_vec_select =
 		op->pred_vec_select ? strdup(op->pred_vec_select) : NULL;
 	clone->pred_imm_index = op->pred_imm_index;
+	clone->pred_imm_index_set = op->pred_imm_index_set;
 	clone->mem_disp = op->mem_disp;
 	clone->imm_range_first = op->imm_range_first;
 	clone->imm_range_offset = op->imm_range_offset;
@@ -118,6 +119,7 @@ TestDetailAArch64SME *test_detail_aarch64_op_sme_clone(TestDetailAArch64SME *sme
 	clone->slice_offset_imm = sme->slice_offset_imm;
 	clone->slice_offset_ir_first = sme->slice_offset_ir_first;
 	clone->slice_offset_ir_offset = sme->slice_offset_ir_offset;
+	clone->slice_offset_ir_set = sme->slice_offset_ir_set;
 	clone->has_range_offset = sme->has_range_offset;
 	clone->is_vertical = sme->is_vertical;
 
@@ -204,7 +206,11 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 					false);
 			compare_reg_ret(*handle, op->pred.vec_select, eop->pred_vec_select,
 					false);
-			compare_int32_ret(op->pred.imm_index, eop->pred_imm_index, false);
+			if (eop->pred_imm_index_set) {
+				compare_int32_ret(op->pred.imm_index, eop->pred_imm_index, false);
+			} else {
+				assert(eop->pred_imm_index == 0);
+			}
 			break;
 		case AARCH64_OP_SME:
 			compare_enum_ret(op->sme.type, eop->sme->type,
@@ -218,8 +224,12 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 			compare_tbool_ret(op->sme.is_vertical, eop->sme->is_vertical,
 					false);
 			compare_int32_ret(op->sme.slice_offset.imm, eop->sme->slice_offset_imm, false);
-			compare_int32_ret(op->sme.slice_offset.imm_range.first, eop->sme->slice_offset_ir_first, false);
-			compare_int32_ret(op->sme.slice_offset.imm_range.offset, eop->sme->slice_offset_ir_offset, false);
+			if (eop->sme->slice_offset_ir_set) {
+				compare_int32_ret(op->sme.slice_offset.imm_range.first, eop->sme->slice_offset_ir_first, false);
+				compare_int32_ret(op->sme.slice_offset.imm_range.offset, eop->sme->slice_offset_ir_offset, false);
+			} else {
+				assert(eop->sme->slice_offset_ir_first == 0 && eop->sme->slice_offset_ir_offset == 0);
+			}
 			break;
 		}
 
@@ -232,6 +242,8 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 		if (eop->vector_index_is_set) {
 			compare_int32_ret(op->vector_index, eop->vector_index,
 					  false);
+		} else {
+			assert(eop->vector_index == 0);
 		}
 
 		compare_tbool_ret(op->is_list_member, eop->is_list_member,

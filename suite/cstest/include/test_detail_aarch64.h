@@ -15,6 +15,7 @@ typedef struct {
 	int8_t slice_offset_imm;
 	int8_t slice_offset_ir_first;
 	int8_t slice_offset_ir_offset;
+	bool slice_offset_ir_set;
 	tbool has_range_offset;
 	tbool is_vertical;
 } TestDetailAArch64SME;
@@ -33,6 +34,8 @@ static const cyaml_schema_field_t test_detail_aarch64_sme_mapping_schema[] = {
 			TestDetailAArch64SME, slice_offset_ir_first),
 	CYAML_FIELD_INT("slice_offset_ir_offset", CYAML_FLAG_OPTIONAL,
 			TestDetailAArch64SME, slice_offset_ir_offset),
+	CYAML_FIELD_BOOL("slice_offset_ir_set", CYAML_FLAG_OPTIONAL,
+			TestDetailAArch64SME, slice_offset_ir_set),
 	CYAML_FIELD_INT("has_range_offset", CYAML_FLAG_OPTIONAL,
 			TestDetailAArch64SME, has_range_offset),
 	CYAML_FIELD_INT("is_vertical", CYAML_FLAG_OPTIONAL,
@@ -61,6 +64,7 @@ typedef struct {
 	char *pred_reg;
 	char *pred_vec_select;
 	int32_t pred_imm_index;
+	bool pred_imm_index_set;
 
 	char *shift_type;
 	uint32_t shift_value;
@@ -111,6 +115,8 @@ static const cyaml_schema_field_t test_detail_aarch64_op_mapping_schema[] = {
 		TestDetailAArch64Op, pred_vec_select, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("pred_imm_index", CYAML_FLAG_OPTIONAL,
 			TestDetailAArch64Op, pred_imm_index),
+	CYAML_FIELD_BOOL("pred_imm_index_set", CYAML_FLAG_OPTIONAL,
+			TestDetailAArch64Op, pred_imm_index_set),
 	CYAML_FIELD_STRING_PTR(
 		"shift_type", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetailAArch64Op, shift_type, 0, CYAML_UNLIMITED),

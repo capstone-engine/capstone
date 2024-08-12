@@ -157,10 +157,14 @@ bool test_expected_ppc(csh *handle, const cs_ppc *actual,
 			if (expected->bc->bi_set) {
 				compare_uint8_ret(actual->bc.bi,
 						  expected->bc->bi, false);
+			} else {
+				assert(expected->bc->bi == 0);
 			}
 			if (expected->bc->bo_set) {
 				compare_uint8_ret(actual->bc.bo,
 						  expected->bc->bo, false);
+			} else {
+				assert(expected->bc->bo == 0);
 			}
 			compare_enum_ret(actual->bc.bh, expected->bc->bh,
 					 false);

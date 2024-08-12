@@ -166,6 +166,8 @@ bool test_expected_m680x(csh *handle, const cs_m680x *actual,
 			if (eop->direct_addr_set) {
 				compare_uint8_ret(op->direct_addr,
 						  eop->direct_addr, false);
+			} else {
+				assert(eop->direct_addr == 0);
 			}
 			break;
 		case M680X_OP_RELATIVE:
