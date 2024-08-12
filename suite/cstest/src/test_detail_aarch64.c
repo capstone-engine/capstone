@@ -223,7 +223,9 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 					false);
 			compare_tbool_ret(op->sme.is_vertical, eop->sme->is_vertical,
 					false);
-			compare_int32_ret(op->sme.slice_offset.imm, eop->sme->slice_offset_imm, false);
+			if (eop->sme->slice_offset_imm) {
+				compare_int32_ret(op->sme.slice_offset.imm, eop->sme->slice_offset_imm, false);
+			}
 			if (eop->sme->slice_offset_ir_set) {
 				compare_int32_ret(op->sme.slice_offset.imm_range.first, eop->sme->slice_offset_ir_first, false);
 				compare_int32_ret(op->sme.slice_offset.imm_range.offset, eop->sme->slice_offset_ir_offset, false);
