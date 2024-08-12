@@ -78,7 +78,7 @@ typedef struct {
 	tbool writeback;
 } TestDetail;
 
-static const cyaml_schema_value_t reg_group_schema = {
+static const cyaml_schema_value_t single_string_schema = {
 	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
 };
 
@@ -147,18 +147,18 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 		m68k, test_detail_m68k_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			     TestDetail, regs_read, &reg_group_schema, 0, 255),
+			     TestDetail, regs_read, &single_string_schema, 0, 255),
 	CYAML_FIELD_SEQUENCE("regs_write",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			     TestDetail, regs_write, &reg_group_schema, 0, 255),
+			     TestDetail, regs_write, &single_string_schema, 0, 255),
 	CYAML_FIELD_SEQUENCE(
 		"regs_impl_read", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetail, regs_impl_read, &reg_group_schema, 0, 255),
+		TestDetail, regs_impl_read, &single_string_schema, 0, 255),
 	CYAML_FIELD_SEQUENCE(
 		"regs_impl_write", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetail, regs_impl_write, &reg_group_schema, 0, 255),
+		TestDetail, regs_impl_write, &single_string_schema, 0, 255),
 	CYAML_FIELD_SEQUENCE("groups", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			     TestDetail, groups, &reg_group_schema, 0, 255),
+			     TestDetail, groups, &single_string_schema, 0, 255),
 	CYAML_FIELD_INT("writeback", CYAML_FLAG_OPTIONAL, TestDetail,
 			writeback),
 	CYAML_FIELD_END
