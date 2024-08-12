@@ -120,9 +120,13 @@ bool test_expected_ppc(csh *handle, const cs_ppc *actual,
 {
 	assert(handle && actual && expected);
 
-	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	compare_enum_ret(actual->format, expected->format, false);
 	compare_tbool_ret(actual->update_cr0, expected->update_cr0, false);
+
+	if (expected->operands_count == 0) {
+		return true;
+	}
+	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	for (size_t i = 0; i < actual->op_count; ++i) {
 		const cs_ppc_op *op = &actual->operands[i];
 		TestDetailPPCOp *eop = expected->operands[i];

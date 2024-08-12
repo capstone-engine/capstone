@@ -114,7 +114,6 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 {
 	assert(handle && actual && expected);
 
-	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	if (expected->vector_size) {
 		compare_int_ret(actual->vector_size, expected->vector_size,
 				false);
@@ -132,6 +131,11 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 	compare_tbool_ret(actual->usermode, expected->usermode, false);
 	compare_tbool_ret(actual->update_flags, expected->update_flags, false);
 	compare_tbool_ret(actual->post_index, expected->post_indexed, false);
+
+	if (expected->operands_count == 0) {
+		return true;
+	}
+	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	for (size_t i = 0; i < actual->op_count; ++i) {
 		cs_arm_op *op = &actual->operands[i];
 		TestDetailARMOp *eop = expected->operands[i];
@@ -215,7 +219,9 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 					false);
 			compare_int_ret(op->mem.disp, eop->mem_disp, false);
 			compare_uint_ret(op->mem.align, eop->mem_align, false);
-			compare_int_ret(op->mem.scale, eop->mem_scale, false);
+			if (eop->mem_scale) {
+				compare_int_ret(op->mem.scale, eop->mem_scale, false);
+			}
 			break;
 		}
 

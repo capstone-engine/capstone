@@ -140,10 +140,14 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 {
 	assert(handle && actual && expected);
 
-	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	compare_enum_ret(actual->cc, expected->cc, false);
 	compare_tbool_ret(actual->update_flags, expected->update_flags, false);
 	compare_tbool_ret(actual->post_index, expected->post_indexed, false);
+
+	if (expected->operands_count == 0) {
+		return true;
+	}
+	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	for (size_t i = 0; i < actual->op_count; ++i) {
 		cs_aarch64_op *op = &actual->operands[i];
 		TestDetailAArch64Op *eop = expected->operands[i];

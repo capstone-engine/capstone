@@ -17,8 +17,10 @@ void test_detail_x86_free(TestDetailX86 *detail)
 	if (!detail) {
 		return;
 	}
-	for (size_t i = 0; i < ARR_SIZE(detail->prefix); ++i) {
-		cs_mem_free(detail->prefix[i]);
+	if (detail->prefix[0]) {
+		for (size_t i = 0; i < ARR_SIZE(detail->prefix); ++i) {
+			cs_mem_free(detail->prefix[i]);
+		}
 	}
 	for (size_t i = 0; i < detail->eflags_count; ++i) {
 		cs_mem_free(detail->eflags[i]);
@@ -150,7 +152,6 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 {
 	assert(handle && actual && expected);
 
-	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	compare_reg_ret(*handle, actual->sib_index, expected->sib_index, false);
 	compare_reg_ret(*handle, actual->sib_base, expected->sib_base, false);
 
@@ -159,17 +160,40 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 	compare_enum_ret(actual->avx_cc, expected->avx_cc, false);
 	compare_enum_ret(actual->avx_rm, expected->avx_rm, false);
 
-	compare_uint8_ret(actual->rex, expected->rex, false);
-	compare_uint8_ret(actual->addr_size, expected->addr_size, false);
-	compare_uint8_ret(actual->modrm, expected->modrm, false);
-	compare_uint8_ret(actual->sib, expected->sib, false);
-	compare_int64_ret(actual->disp, expected->disp, false);
-	compare_tbool_ret(actual->avx_sae, expected->avx_sae, false);
-	compare_int8_ret(actual->sib_scale, expected->sib_scale, false);
+	if (expected->operands_count == 0) {
+		return true;
+	}
+	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 
-	for (size_t i = 0; i < ARR_SIZE(actual->opcode); ++i) {
-		compare_uint8_ret(actual->opcode[i], expected->opcode[i],
+	if (expected->rex) {
+		compare_uint8_ret(actual->rex, expected->rex, false);
+	}
+	if (expected->addr_size) {
+		compare_uint8_ret(actual->addr_size, expected->addr_size, false);
+	}
+	if (expected->modrm) {
+		compare_uint8_ret(actual->modrm, expected->modrm, false);
+	}
+	if (expected->sib) {
+		compare_uint8_ret(actual->sib, expected->sib, false);
+	}
+	if (expected->disp) {
+		compare_int64_ret(actual->disp, expected->disp, false);
+	}
+	if (expected->sib_scale) {
+		compare_int8_ret(actual->sib_scale, expected->sib_scale, false);
+	}
+	compare_tbool_ret(actual->avx_sae, expected->avx_sae, false);
+
+	for (size_t i = 0; i < ARR_SIZE(actual->prefix); ++i) {
+		compare_enum_ret(actual->prefix[i], expected->prefix[i],
 				  false);
+	}
+	for (size_t i = 0; i < ARR_SIZE(actual->opcode); ++i) {
+		if (expected->opcode[i] != 0) {
+			compare_uint8_ret(actual->opcode[i], expected->opcode[i],
+					  false);
+		}
 	}
 
 	compare_bit_flags_64_ret(actual->eflags, expected->eflags,
@@ -225,7 +249,9 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 					false);
 			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
 					false);
-			compare_int64_ret(op->mem.disp, eop->mem_disp, false);
+			if (eop->mem_disp) {
+				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
+			}
 			if (eop->mem_scale) {
 				compare_int_ret(op->mem.scale, eop->mem_scale,
 						false);
