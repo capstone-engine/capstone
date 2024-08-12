@@ -1,7 +1,7 @@
 This file details the changelog of Capstone.
 
 --------------------------------
-Version 5.0.2: August 8th, 2024
+Version 5.0.2: August 12th, 2024
 
 ## What's Changed
 * [v5] Add meta-programming macros for ARM64/AArch64 name change to capstone.h by @Rot127 in https://github.com/capstone-engine/capstone/pull/2199
