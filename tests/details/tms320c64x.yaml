@@ -23,7 +23,9 @@ test_cases:
                 reg: a3
             funit_unit: TMS320C64X_FUNIT_D
             funit_side: 1
-            parallel: -1
+            funit_side_set: true
+            parallel: 0
+            parallel_set: true
       -
         asm_text: "[ a1] add.D2 b11, b4, b3 ||"
         details:
@@ -40,15 +42,18 @@ test_cases:
                 reg: b3
             funit_unit: TMS320C64X_FUNIT_D
             funit_side: 2
+            funit_side_set: true
             cond_reg: a1
             cond_zero: -1
             parallel: 1
+            parallel_set: true
       -
         asm_text: "NOP"
         details:
           tms320c64x:
             funit_unit: TMS320C64X_FUNIT_NO
             parallel: 0
+            parallel_set: true
       -
         asm_text: "ldbu.D1T2 *++a4[1], b5"
         details:
@@ -68,7 +73,9 @@ test_cases:
                 reg: b5
             funit_unit: TMS320C64X_FUNIT_D
             funit_side: 2
+            funit_side_set: true
             parallel: 0
+            parallel_set: true
       -
         asm_text: "ldbu.D2T2 *+b15[0x46], b5"
         details:
@@ -88,7 +95,9 @@ test_cases:
                 reg: b5
             funit_unit: TMS320C64X_FUNIT_D
             funit_side: 2
+            funit_side_set: true
             parallel: 0
+            parallel_set: true
       -
         asm_text: "lddw.D1T2 *+a15[4], b11:b10"
         details:
@@ -109,7 +118,9 @@ test_cases:
                 reg_pair_1: b10
             funit_unit: TMS320C64X_FUNIT_D
             funit_side: 2
+            funit_side_set: true
             parallel: 0
+            parallel_set: true
       -
         asm_text: "ldndw.D1T1 *+a3(a4), a23:a22"
         details:
@@ -130,5 +141,7 @@ test_cases:
                 reg_pair_1: a22
             funit_unit: TMS320C64X_FUNIT_D
             funit_side: 1
+            funit_side_set: true
             parallel: 0
+            parallel_set: true
 
