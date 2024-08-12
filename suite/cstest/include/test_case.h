@@ -41,7 +41,7 @@ static const cyaml_schema_value_t option_schema = {
 };
 
 static const cyaml_schema_field_t test_input_mapping_schema[] = {
-	CYAML_FIELD_STRING_PTR("name", CYAML_FLAG_POINTER, TestInput, name,
+	CYAML_FIELD_STRING_PTR("name", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestInput, name,
 			     0, CYAML_UNLIMITED),
 	CYAML_FIELD_SEQUENCE("bytes", CYAML_FLAG_POINTER, TestInput, bytes,
 			     &byte_schema, 0, CYAML_UNLIMITED), // 0-MAX bytes
