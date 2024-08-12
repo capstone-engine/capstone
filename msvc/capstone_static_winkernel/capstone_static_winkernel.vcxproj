@@ -59,6 +59,7 @@
     <ClCompile Include="..\..\arch\XCore\XCoreMapping.c" />
     <ClCompile Include="..\..\arch\XCore\XCoreModule.c" />
     <ClCompile Include="..\..\cs.c" />
+    <ClCompile Include="..\..\Mapping.c" />
     <ClCompile Include="..\..\MCInst.c" />
     <ClCompile Include="..\..\MCInstrDesc.c" />
     <ClCompile Include="..\..\MCRegisterInfo.c" />
