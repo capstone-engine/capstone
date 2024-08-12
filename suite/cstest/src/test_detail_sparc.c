@@ -88,7 +88,7 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 	if (expected->hint) {
 		compare_enum_ret(actual->hint, expected->hint, false);
 	}
-	for (size_t i = 0; i < actual->op_count; ++i) {
+	for (size_t i = 0; i < expected->operands_count; ++i) {
 		const cs_sparc_op *op = &actual->operands[i];
 		TestDetailSparcOp *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
