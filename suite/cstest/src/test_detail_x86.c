@@ -52,8 +52,10 @@ TestDetailX86 *test_detail_x86_clone(TestDetailX86 *detail)
 	clone->avx_cc = detail->avx_cc ? strdup(detail->avx_cc) : NULL;
 	clone->avx_rm = detail->avx_rm ? strdup(detail->avx_rm) : NULL;
 
-	for (size_t i = 0; i < ARR_SIZE(clone->prefix); ++i) {
-		clone->prefix[i] = strdup(detail->prefix[i]);
+	if (detail->prefix[0]) {
+		for (size_t i = 0; i < ARR_SIZE(clone->prefix); ++i) {
+			clone->prefix[i] = strdup(detail->prefix[i]);
+		}
 	}
 	memcpy(clone->opcode, detail->opcode, sizeof(clone->opcode));
 
