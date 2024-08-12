@@ -88,6 +88,7 @@ void test_detail_aarch64_op_free(TestDetailAArch64Op *op)
 	if (!op) {
 		return;
 	}
+	test_detail_aarch64_op_sme_free(op->sme);
 	cs_mem_free(op->type);
 	cs_mem_free(op->sub_type);
 	cs_mem_free(op->access);
