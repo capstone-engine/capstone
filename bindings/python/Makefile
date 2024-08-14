@@ -41,7 +41,7 @@ TESTS += test_lite.py test_iter.py test_customized_mnem.py test_alpha.py
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
-		./$$t > /dev/null; \
+		./tests/$$t > /dev/null; \
 		if [ $$? -eq 0 ]; then echo OK; else echo FAILED; exit 1; fi \
 	done
 
