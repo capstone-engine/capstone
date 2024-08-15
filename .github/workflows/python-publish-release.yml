@@ -18,12 +18,12 @@ jobs:
 
       - name: Set up QEMU
         if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: all
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.5
+        uses: pypa/cibuildwheel@v2.20.0
         env:
           CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
           CIBW_ARCHS_LINUX: "x86_64 i686 aarch64" # ppc64le s390x really slow
@@ -33,9 +33,10 @@ jobs:
         with:
           package-dir: bindings/python
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
+          name: artifacts-${{ matrix.os }}
 
   make_sdist:
     name: Make SDist
@@ -51,7 +52,7 @@ jobs:
         cd bindings/python
         pipx run build --sdist
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: bindings/python/dist/*.tar.gz
 
@@ -62,17 +63,9 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: artifact
           path: dist
-
-      # - name: Publish distribution 📦 to test PyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     user: __token__
-      #     password: ${{ secrets.test_pypi_pass }}
-      #     repository_url: https://test.pypi.org/legacy/
 
       - name: Publish distribution 📦 to PyPI
         if: ${{ success() }}
