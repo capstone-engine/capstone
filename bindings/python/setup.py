@@ -92,14 +92,11 @@ def copy_sources():
     shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.mk")))
 
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "Makefile")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSES/*")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "README")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "make.sh")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "pkgconfig.mk")))
 
@@ -136,21 +133,18 @@ def build_libraries():
 
     # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
     # Use cmake for both Darwin and Windows since it can generate fat binaries
-    if SYSTEM == "win32" or SYSTEM == 'darwin':
-        # Windows build: this process requires few things:
-        #    - CMake + MSVC installed
-        #    - Run this command in an environment setup for MSVC
-        if not os.path.exists("build"): os.mkdir("build")
-        os.chdir("build")
-        print("Build Directory: {}\n".format(os.getcwd()))
-        # Only build capstone.dll / libcapstone.dylib
-        if SYSTEM == "win32":
-            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
-        else:
-            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
-        os.system("cmake --build .")
-    else:  # Unix incl. cygwin
-        os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
+    # Windows build: this process requires few things:
+    #    - MSVC installed
+    #    - Run this command in an environment setup for MSVC
+    if not os.path.exists("build"): os.mkdir("build")
+    os.chdir("build")
+    print("Build Directory: {}\n".format(os.getcwd()))
+    # Only build capstone.dll / libcapstone.dylib
+    if SYSTEM == "win32":
+        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+    else:
+        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
+    os.system("cmake --build .")
 
     shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
 
