@@ -84,6 +84,23 @@ endif()
 set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE ALPHA HPPA LOONGARCH)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore Alpha HPPA LoongArch)
 
+# If building for OSX it's best to allow CMake to handle building both architectures
+if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
+    # The cibuildwheel on Github Actions sets this env variable
+    # with the architecture flags it wants to build for.
+    if(DEFINED ENV{ARCHFLAGS})
+        if("$ENV{ARCHFLAGS}" STREQUAL "-arch arm64 -arch x86_64")
+            set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+        elseif("$ENV{ARCHFLAGS}" STREQUAL "-arch arm64")
+            set(CMAKE_OSX_ARCHITECTURES "arm64")
+        elseif("$ENV{ARCHFLAGS}" STREQUAL "-arch x86_64")
+            set(CMAKE_OSX_ARCHITECTURES "x86_64")
+        endif()
+    else()
+        set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+    endif()
+endif()
+
 list(LENGTH SUPPORTED_ARCHITECTURES count)
 math(EXPR count "${count}-1")
 # create options controlling whether support for a particular architecture is needed
