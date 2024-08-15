@@ -134,7 +134,7 @@ def build_libraries():
 
     os.chdir(BUILD_DIR)
 
-    # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
+    # platform description refers at https://docs.python.org/3/library/sys.html#sys.platform
     # Use cmake for both Darwin and Windows since it can generate fat binaries
     if SYSTEM == "win32" or SYSTEM == 'darwin':
         # Windows build: this process requires few things:

@@ -18,16 +18,16 @@ jobs:
 
       - name: Set up QEMU
         if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: all
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.5
+        uses: pypa/cibuildwheel@v2.20.0
         env:
           CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
-          CIBW_ARCHS_LINUX: "x86_64 i686 aarch64" # ppc64le s390x really slow
-          CIBW_ARCHS_WINDOWS: "AMD64 x86" # ARM64  Seems ARM64 will rebuild amd64 wheel for unknow reason.
+          CIBW_ARCHS_LINUX: "x86_64 i686" # ppc64le s390x really slow
+          CIBW_ARCHS_WINDOWS: "AMD64" # ARM64  Seems ARM64 will rebuild amd64 wheel for unknow reason.
           CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-*"
           CIBW_SKIP: ""
         with:
@@ -36,6 +36,17 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
+          name: artifacts-${{ matrix.os }}
+
+      - name: Check binaries (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          python3.exe suite/check_wheel_bin_arch.py ./wheelhouse/
+
+      - name: Check binaries (Unix)
+        if: matrix.os != 'windows-latest'
+        run: |
+          ./suite/check_wheel_bin_arch.py ./wheelhouse/
 
   make_sdist:
     name: Make SDist
@@ -64,15 +75,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: artifact
           path: dist
-
-      # - name: Publish distribution 📦 to test PyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     user: __token__
-      #     password: ${{ secrets.test_pypi_pass }}
-      #     repository_url: https://test.pypi.org/legacy/
 
       - name: Publish distribution 📦 to PyPI
         if: ${{ success() }}
