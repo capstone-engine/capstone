@@ -13,13 +13,6 @@ typedef struct {
 	cs_opt opt;
 } TestOptionMapEntry;
 
-/// A map entry, mapping a Capstone enumeration value id
-/// to its absolute value.
-typedef struct {
-	const char *id;
-	uint32_t val;
-} TestCSEnumEntry;
-
 /// REMEMBER TO SORT AFTER EDIT
 static const cs_enum_id_map test_arch_map[] = {
 	{ .str = "AArch64", .val = CS_ARCH_AARCH64 },
