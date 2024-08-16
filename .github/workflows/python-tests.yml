@@ -28,6 +28,9 @@ jobs:
     - name: Build and install capstone
       run: pip install ./bindings/python
 
+    - name: Install cstest dependencies
+      run: pip install pyyaml
+
     - name: Run legacy tests
       run: python ./bindings/python/tests/test_all.py
 
