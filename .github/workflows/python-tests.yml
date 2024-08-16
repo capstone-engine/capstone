@@ -28,8 +28,8 @@ jobs:
     - name: Build and install capstone
       run: pip install ./bindings/python
 
-    - name: Install cstest dependencies
-      run: pip install pyyaml
+    - name: Install py_cstest
+      run: pip install ./bindings/python/py_cstest
 
     - name: Run legacy tests
       run: python ./bindings/python/tests/test_all.py
@@ -37,4 +37,4 @@ jobs:
     - name: cstest.py integration tests
       run: |
         cd suite/cstest/test/
-        python3 ./integration_tests.py "python3 ../../../bindings/python/py_cstest/cstest.py"
+        python3 ./integration_tests.py py_cstest

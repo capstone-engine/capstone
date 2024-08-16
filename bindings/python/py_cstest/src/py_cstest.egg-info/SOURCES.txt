@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+src/py_cstest/compare.py
+src/py_cstest/cs_modes.py
+src/py_cstest/cstest.py
+src/py_cstest.egg-info/PKG-INFO
+src/py_cstest.egg-info/SOURCES.txt
+src/py_cstest.egg-info/dependency_links.txt
+src/py_cstest.egg-info/entry_points.txt
+src/py_cstest.egg-info/requires.txt
+src/py_cstest.egg-info/top_level.txt

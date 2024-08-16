@@ -9,10 +9,11 @@ import sys
 import os
 import yaml
 import capstone
-import cs_modes
 
 from capstone import CsInsn, Cs, CS_ARCH_AARCH64, CS_MODE_64, CS_MODE_16
-from compare import (
+
+from py_cstest.cs_modes import configs
+from py_cstest.compare import (
     compare_asm_text,
     compare_str,
     compare_tbool,
@@ -185,8 +186,8 @@ class TestInput:
                 if mode:
                     new_mode |= mode
                     continue
-            if "CS_OPT_" in opt and opt in cs_modes.configs:
-                mtype, val = cs_modes.configs[opt]
+            if "CS_OPT_" in opt and opt in configs:
+                mtype, val = configs[opt]
                 self.handle.option(mtype, val)
                 continue
             log.warning(f"Option: '{opt}' not used")
@@ -452,7 +453,7 @@ def parse_args() -> argparse.Namespace:
     return arguments
 
 
-if __name__ == "__main__":
+def main():
     log_levels = {
         "debug": logging.DEBUG,
         "info": logging.INFO,
@@ -477,3 +478,7 @@ if __name__ == "__main__":
     log.addHandler(h1)
     log.addHandler(h2)
     CSTest(args.search_dir, args.exclude, args.include).run_tests()
+
+
+if __name__ == "__main__":
+    main()
