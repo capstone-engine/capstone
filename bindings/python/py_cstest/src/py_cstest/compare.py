@@ -1,6 +1,9 @@
 # Copyright © 2024 Rot127 <unisono@quyllur.org>
 # SPDX-License-Identifier: BSD-3
 
+# Typing for Python3.8
+from __future__ import annotations
+
 import capstone
 import logging as log
 import re
