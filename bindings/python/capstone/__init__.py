@@ -350,13 +350,15 @@ CS_AC_WRITE    = (1 << 1) # Operand that is written to.
 CS_AC_READ_WRITE = (2)
 
 # Capstone syntax value
-CS_OPT_SYNTAX_DEFAULT = 1 << 1  # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
-CS_OPT_SYNTAX_INTEL = 1 << 2  # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_ATT = 1 << 3  # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_NOREGNAME = 1 << 4  # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
-CS_OPT_SYNTAX_MASM = 1 << 5  # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_MOTOROLA = 1 << 6  # MOS65XX use $ as hex prefix
-CS_OPT_SYNTAX_CS_REG_ALIAS = 1 << 7  # Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
+CS_OPT_SYNTAX_DEFAULT = (1 << 1)  # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
+CS_OPT_SYNTAX_INTEL = (1 << 2)  # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_ATT = (1 << 3)  # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_NOREGNAME = (1 << 4)  # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
+CS_OPT_SYNTAX_MASM = (1 << 5)  # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_MOTOROLA = (1 << 6)  # MOS65XX use $ as hex prefix
+CS_OPT_SYNTAX_CS_REG_ALIAS = (1 << 7)  # Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
+CS_OPT_SYNTAX_PERCENT = (1 << 8)  # Prints the % in front of PPC registers.
+CS_OPT_DETAIL_REAL = (1 << 1)  # If enabled, always sets the real instruction detail.Even if the instruction is an alias.
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -1021,9 +1023,10 @@ class Cs(object):
             except: # _cs might be pulled from under our feet
                 pass
 
-
-    # def option(self, opt_type, opt_value):
-    #    return _cs.cs_option(self.csh, opt_type, opt_value)
+    def option(self, opt_type, opt_value):
+        status = _cs.cs_option(self.csh, opt_type, opt_value)
+        if status != CS_ERR_OK:
+            raise CsError(status)
 
 
     # is this a diet engine?
