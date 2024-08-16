@@ -1,6 +1,6 @@
 name: RELEASE BUILD - PyPI 📦 Distribution
 
-on: [release, workflow_dispatch]
+on: [push, pull_request, release, workflow_dispatch]
 
 jobs:
   build_wheels:
