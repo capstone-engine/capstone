@@ -203,12 +203,19 @@ except ImportError:
     print("Proper 'develop' support unavailable.")
 
 if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
+    # Inject the platform identifier into argv.
+    # Platform tags are described here:
+    # https://packaging.python.org/en/latest/specifications/platform-compatibility-tags
+    #
+    # I couldn't really find out in time why we need to inject the platform here?
+    # The cibuildwheel doesn't need it for the Windows job. But for Mac and Linux.
+    # This here is very dirty and will maybe break in the future.
+    # Sorry if this is the case and you read this.
+    # See: https://github.com/capstone-engine/capstone/issues/2445
     idx = sys.argv.index('bdist_wheel') + 1
     sys.argv.insert(idx, '--plat-name')
     name = get_platform()
-    pyversion = platform.python_version()
-    major_version, minor_version = map(int, pyversion.split('.')[:2])
-    sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_') + "_" + str(major_version) + str(minor_version))
+    sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_'))
 
 setup(
     provides=['capstone'],
