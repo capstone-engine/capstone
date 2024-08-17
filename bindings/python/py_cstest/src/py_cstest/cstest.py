@@ -77,13 +77,18 @@ class TestStats:
         self.invalid_files = 0
         self.total_valid_files = 0
         self.err_msgs: list[str] = list()
+        self.failing_files = set()
+
+    def add_failing_file(self, test_file: Path):
+        self.failing_files.add(test_file)
 
     def add_error_msg(self, msg: str):
         self.err_msgs.append(msg)
 
-    def add_invalid_file_dp(self):
+    def add_invalid_file_dp(self, tfile: Path):
         self.invalid_files += 1
         self.errors += 1
+        self.add_failing_file(tfile)
 
     def add_test_case_data_point(self, dp: TestResult):
         if dp == TestResult.SUCCESS:
@@ -114,6 +119,11 @@ class TestStats:
         if self.test_case_count == 0:
             log.error("No test cases found!")
             exit(-1)
+        if self.failing_files:
+            print("Test files with failures:")
+            for tf in self.failing_files:
+                print(f" - {tf}")
+            print()
         if self.err_msgs:
             print("Error messages:")
             for error in self.err_msgs:
@@ -371,13 +381,13 @@ class CSTest:
                 self.test_files.append(tf)
             except yaml.YAMLError as e:
                 self.stats.add_error_msg(str(e))
-                self.stats.add_invalid_file_dp()
+                self.stats.add_invalid_file_dp(tfile)
                 log.error("Error: 'libyaml parser error'")
                 log.error(f"{e}")
                 log.error(f"Failed to parse test file '{tfile}'")
             except ValueError as e:
                 self.stats.add_error_msg(str(e))
-                self.stats.add_invalid_file_dp()
+                self.stats.add_invalid_file_dp(tfile)
                 log.error(f"Error: ValueError: {e}")
                 log.error(f"Failed to parse test file '{tfile}'")
             finally:
@@ -397,6 +407,8 @@ class CSTest:
                 except Exception as e:
                     result = TestResult.ERROR
                     self.stats.add_error_msg(str(e))
+                if result == TestResult.FAILED or result == TestResult.ERROR:
+                    self.stats.add_failing_file(tf)
                 self.stats.add_test_case_data_point(result)
                 log.info(result)
                 print()
